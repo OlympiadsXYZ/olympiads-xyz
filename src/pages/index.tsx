@@ -14,6 +14,9 @@ import classNames from 'classnames';
 import { Link, navigate } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
 import * as React from 'react';
+import { I18nextProvider } from 'react-i18next';
+import i18n from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { CPIProjectCard } from '../components/Index/CPIProjectCard';
 import ContributorsSection from '../components/Index/ContributorsSection';
 import { Feature } from '../components/Index/Feature';
@@ -23,6 +26,8 @@ import { ProgressTrackingFeature } from '../components/Index/features/ProgressTr
 import { ResourcesFeature } from '../components/Index/features/ResourcesFeature';
 import { EasyFunCoding, Vercel } from '../components/Index/sponsor-logos';
 import TopNavigationBar from '../components/TopNavigationBar/TopNavigationBar';
+import LanguageSwitcher from '../components/LanguageSwitcher';
+import '../i18n';
 import { GlowingRing } from '../components/elements/landing/GlowingRing';
 import { GlowingText } from '../components/elements/landing/GlowingText';
 import { GradientText } from '../components/elements/landing/GradientText';
@@ -51,6 +56,7 @@ const linkTextStyles =
   'text-blue-600 dark:text-blue-300 transition hover:text-purple-600 dark:hover:text-purple-300';
 
 export default function IndexPage(): JSX.Element {
+  const { t } = useTranslation();
   const firebaseUser = useFirebaseUser();
   const loading = useIsUserDataLoaded();
   const location = useLocation();
@@ -80,7 +86,7 @@ export default function IndexPage(): JSX.Element {
       {/*  &larr; Back to usaco.org*/}
       {/*</a>*/}
       <div className="bg-black">
-        <TopNavigationBar />
+        <TopNavigationBar hideLanguageSwitcher={false} hidePromoBar={false} />
       </div>
 
       {/* Begin Hero */}
@@ -93,14 +99,14 @@ export default function IndexPage(): JSX.Element {
 
             <div className="flex md:justify-center dark:hidden">
               <div className={classNames(usacoTitleClasses, 'text-black mt-4')}>
-                USACO Guide
+                Olympiads XYZ
               </div>
             </div>
             <div className="flex md:justify-center invisible h-0 dark:visible dark:h-auto">
               <GlowingText
                 className={classNames(usacoTitleClasses, 'text-white mt-4')}
               >
-                USACO Guide
+                Olympiads XYZ
               </GlowingText>
             </div>
 
@@ -119,13 +125,13 @@ export default function IndexPage(): JSX.Element {
                 dark:text-gray-300
               "
             >
-              A free collection of{' '}
-              <GradientText>curated, high-quality resources</GradientText>{' '}
+              {t('index_a-free-collection-of')}{' '}
+              <GradientText>{t('index_curated-resources')}</GradientText>{' '}
               <br className="hidden md:block" />
-              to take you from Bronze to Platinum and beyond.
+              {t('index_to-help-you-prepare-for-olympiads')}
             </p>
 
-            <div className="h-8 sm:h-12"></div>
+            <div className="h-8 sm:h-8"></div>
 
             <div className="flex md:justify-center">
               <GlowingRing>
@@ -133,17 +139,23 @@ export default function IndexPage(): JSX.Element {
                   to="/dashboard"
                   className={classNames(whiteButtonClassesBig, 'inline-block')}
                 >
-                  Get Started
+                  {t('index_get_started')}
                 </Link>
               </GlowingRing>
             </div>
           </div>
 
-          <div className="h-16 sm:h-24"></div>
+          <div className="h-16 sm:h-10"></div>
+
+          <div className="flex md:justify-center md:text-xl text-gray-600 dark:text-gray-400 font-medium">
+            <span className="text-xs">{t('index_only-in-languages')}</span>
+          </div>
+          <div className="h-16 sm:h-14"></div>
+
 
           <div className="flex md:justify-center md:text-xl text-gray-600 dark:text-gray-400">
             <a
-              href="https://joincpi.org/"
+              href="https://usaco.guide/"
               className="inline-flex items-center space-x-3 md:space-x-4"
             >
               <div className="h-9 w-9">
@@ -195,7 +207,7 @@ export default function IndexPage(): JSX.Element {
                 </svg>
               </div>
 
-              <span>Created by the CP Initiative</span>
+              <span>{t('index_inspired-by')} USACO Guide</span>
             </a>
           </div>
           <div className="h-4 sm:h-6 md:h-16"></div>
@@ -203,9 +215,9 @@ export default function IndexPage(): JSX.Element {
       </div>
       {/* End Hero */}
 
-      {/* Learn USACO. Efficiently. */}
+      {/* Learn olympiad-level problem solving. Efficiently. */}
       <div className="bg-white dark:bg-gray-900">
-        <div className="h-12 sm:h-20 md:h-36 2xl:h-48"></div>
+        <div className="h-12 sm:h-20 md:h-36 2xl:h-16"></div>
 
         <div className={containerClasses}>
           <h2
@@ -215,24 +227,22 @@ export default function IndexPage(): JSX.Element {
             )}
           >
             <div className="dark:hidden">
-              Learn USACO. <HighlightedText>Efficiently.</HighlightedText>
+              {t('index_learn-olympiad-level-problem-solving')} <HighlightedText>{t('index_efficiently')}</HighlightedText>
             </div>
             <div className="invisible h-0 dark:visible dark:h-auto">
-              Learn USACO. <HighlightedText dark>Efficiently.</HighlightedText>
+              {t('index_learn-olympiad-level-problem-solving')}, <HighlightedText dark>{t('index_efficiently')}</HighlightedText>
             </div>
           </h2>
           <div className={headerSubtextSpacerClasses}></div>
           <p className={subtextClasses}>
-            Stop wasting time searching for problems and tutorials. The USACO
-            Guide provides a{' '}
+            {t('index_stop-wasting-time')}{' '}
             <b className="text-black dark:text-white">
-              comprehensive, organized roadmap
+              {t('index_comprehensive-organized-roadmap')}
             </b>{' '}
-            carefully designed and crafted for USACO contestants – available to
-            everyone, for free.
+            {t('index_carefully-designed-crafted')}.
           </p>
 
-          <div className="h-12 md:h-20 2xl:h-36"></div>
+          {/* <div className="h-12 md:h-20 2xl:h-36"></div>}
 
           <Feature
             icon={DatabaseIcon}
@@ -308,13 +318,14 @@ export default function IndexPage(): JSX.Element {
             >
               View Forum &rarr;
             </a>
-          </Feature>
+          </Feature> */}
         </div>
-        <div className="h-16 md:h-20 2xl:h-36"></div>
+        <div className="h-16 md:h-20 2xl:h-16"></div>
       </div>
       {/* End Learn USACO. Efficiently. */}
 
-      <div className="bg-gray-100 dark:bg-black">
+      {/* Begin Trusted by thousands */}
+      {/* <div className="bg-gray-100 dark:bg-black">
         <div className="h-16 md:h-20 2xl:h-36"></div>
         <div className={containerClasses}>
           <div className="dark:hidden">
@@ -354,9 +365,11 @@ export default function IndexPage(): JSX.Element {
           </div>
         </div>
         <div className="h-16 md:h-20 2xl:h-36"></div>
-      </div>
+      </div> */}
+      {/* End Trusted by thousands */}
 
-      <div className="bg-white dark:bg-gray-900">
+      {/* Begin Created by the CP Initiative */}
+      {/* <div className="bg-white dark:bg-gray-900">
         <div className="h-16 md:h-20 2xl:h-36"></div>
         <div className="px-4 sm:px-6 lg:px-8 2xl:px-16">
           <h2 className={classNames(headerClasses, 'md:text-center')}>
@@ -427,9 +440,11 @@ export default function IndexPage(): JSX.Element {
           </div>
         </div>
         <div className="h-16 md:h-20 2xl:h-36"></div>
-      </div>
+      </div> */}
+      {/* End Created by the CP Initiative */}
 
-      <div className="bg-gray-100 dark:bg-black">
+      {/* Begin Join our Team */} 
+      {/* <div className="bg-gray-100 dark:bg-black">
         <div className="h-16 md:h-20 xl:h-36 2xl:h-48"></div>
 
         <div className={containerClasses}>
@@ -544,7 +559,7 @@ export default function IndexPage(): JSX.Element {
 
           <p className="uppercase text-gray-700 dark:text-gray-400 font-medium text-lg md:text-xl">
             Our Sponsors
-          </p>
+          </p> */}
           {/* Sponsor logos don't fit well in the light theme */}
           {/*<p className="uppercase text-gray-600 dark:text-gray-400 font-semibold pt-6 md:text-lg">
             Platinum Sponsors
@@ -556,7 +571,7 @@ export default function IndexPage(): JSX.Element {
               </a>
             </div>
           </div> */}
-          <p className="uppercase text-gray-600 dark:text-gray-400 font-semibold pt-6 md:text-lg">
+          {/* <p className="uppercase text-gray-600 dark:text-gray-400 font-semibold pt-6 md:text-lg">
             Bronze Sponsors
           </p>
           <div className="my-8 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:grid-cols-4 lg:my-6 text-gray-400 items-center">
@@ -587,91 +602,75 @@ export default function IndexPage(): JSX.Element {
         </div>
 
         <div className="h-16 md:h-20 xl:h-36 2xl:h-48"></div>
-      </div>
+      </div> */}
+      {/* End Join our Team */}
 
       {/* Begin FAQ */}
       <div className="bg-white dark:bg-dark-surface">
         <div className="max-w-screen-xl mx-auto pt-12 pb-16 sm:pt-16 sm:pb-20 px-4 sm:px-6 lg:pt-20 lg:pb-28 lg:px-8">
           <h2 className={classNames(headerClasses, 'dark:text-gray-100')}>
-            Frequently asked questions
+            {t('index_faq')}
           </h2>
           <div className="pt-10 md:pt-16">
             <dl className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <div>
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    What is the USACO?
+                    {t('index_q_what-is-olympiads-xyz')}
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      USACO stands for the{' '}
-                      <a
-                        href="http://www.usaco.org/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-600 dark:text-blue-400 underline"
-                      >
-                        USA Computing Olympiad
-                      </a>
-                      . Check out the{' '}
-                      <Link
-                        to="/general/usaco-faq"
-                        className="text-blue-600 dark:text-blue-400 underline"
-                      >
-                        USACO FAQ Page
-                      </Link>{' '}
-                      for more information.
+                      {t('index_a_what-is-olympiads-xyz')} {t('index_inspired-by')} <a href="https://usaco.guide" target="_blank" rel="noreferrer" className="text-blue-600 dark:text-blue-400 underline">{t('index_usaco_guide')}</a>.
                     </p>
                   </dd>
                 </div>
                 <div className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    Is this an official syllabus?
+                    {t('index_q_who-is-this-website-for')}
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      No, USACO does not have an official syllabus. This guide
-                      merely lists topics that have <i>historically</i> appeared
-                      in USACO contests; it makes no guarantees about the topics
-                      in future USACO contests.
+                      {t('index_a_who-is-this-website-for')}
                     </p>
                   </dd>
                 </div>
                 <div className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    How do I report a problem or ask a question?
+                    {t('index_q_multiple-languages')}
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      If you encounter an issue while using the guide (website
-                      bug, typo, broken link, unclear explanation, etc), use the
-                      "Contact Us" button. Alternatively, email us at{' '}
-                      <a
-                        href="mailto:usacoguide@gmail.com"
-                        className="text-blue-600 dark:text-blue-400 underline"
-                      >
-                        usacoguide@gmail.com
-                      </a>
-                      .
+                      {t('index_a_multiple-languages')}
                     </p>
                   </dd>
                 </div>
                 <div className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    I'm looking for classes, club curriculum...
+                    {t('index_q_topics')}
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      Check out the{' '}
-                      <a
-                        href="https://joincpi.org/?ref=home"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-600 dark:text-blue-400 underline"
-                      >
-                        Competitive Programming Initiative
-                      </a>
-                      !
+                      {t('index_a_topics')}
+                    </p>
+                  </dd>
+                </div>
+                <div className="mt-12">
+                  <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                    {t('index_q_how-do-i-use-modules')}
+                  </dt>
+                  <dd className="mt-2">
+                    <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
+                      {t('index_a_how-do-i-use-modules')}
+                    </p>
+                  </dd>
+                </div>
+                <div className="mt-12">
+                  <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                    {t('index_q_practice-problem-selection')}
+                  </dt>
+                  <dd className="mt-2">
+                    <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
+                      {t('index_a_practice-problem-selection')}
                     </p>
                   </dd>
                 </div>
@@ -679,68 +678,61 @@ export default function IndexPage(): JSX.Element {
               <div className="mt-12 md:mt-0">
                 <div>
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    Is this guide for non-USACO competitive programmers?
+                    {t('index_q_how-can-i-track-my-progress')}
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      Of course! While we structure our content around USACO,
-                      feel free to use this guide even if you don't do USACO.
-                      You will still learn a lot from it!
+                      {t('index_a_how-can-i-track-my-progress')}
                     </p>
                   </dd>
                 </div>
                 <div className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    How can I get help?
+                    {t('index_q_official-syllabus')}
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      If you get stuck, head over to the{' '}
-                      <a
-                        href="https://forum.usaco.guide"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-600 dark:text-blue-400 underline"
-                      >
-                        USACO Forum
-                      </a>{' '}
-                      for help.
+                      {t('index_a_official-syllabus')}
                     </p>
                   </dd>
                 </div>
                 <div className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    How can I contribute?
+                    {t('index_q_contribute')}
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      To learn more about contributing, please visit{' '}
-                      <Link
-                        to="/general/contributing"
-                        className="text-blue-600 dark:text-blue-400 underline"
-                      >
-                        this page
-                      </Link>
-                      . We appreciate any and all contributions!
+                      {t('index_a_contribute')}
                     </p>
                   </dd>
                 </div>
                 <div className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                    Is this open source?
+                    {t('index_q_free')}
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      Yes! Check out our{' '}
-                      <a
-                        href="https://github.com/cpinitiative/usaco-guide/?ref=home"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-600 dark:text-blue-400 underline"
-                      >
-                        GitHub Repository
-                      </a>
-                      .
+                      {t('index_a_free')}
+                    </p>
+                  </dd>
+                </div>
+                <div className="mt-12">
+                  <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                    {t('index_q_is-there-a-catch')}
+                  </dt>
+                  <dd className="mt-2">
+                    <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
+                      {t('index_a_is-there-a-catch')}
+                    </p>
+                  </dd>
+                </div>
+                <div className="mt-12">
+                  <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                    {t('index_q_stuck-on-problem')}
+                  </dt>
+                  <dd className="mt-2">
+                    <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
+                      {t('index_a_stuck-on-problem')}
                     </p>
                   </dd>
                 </div>
@@ -751,27 +743,15 @@ export default function IndexPage(): JSX.Element {
       </div>
       {/*End FAQ*/}
 
-      <ContributorsSection />
 
       <div className="bg-gray-100 dark:bg-gray-900">
         <div className="max-w-screen-xl mx-auto py-12 px-4">
           <p className="text-center text-base leading-6 text-gray-400 dark:text-dark-med-emphasis">
-            &copy; {new Date().getFullYear()} Competitive Programming
-            Initiative. Powered by{' '}
-            <a
-              href="https://vercel.com/?utm_source=cp-initiative&utm_campaign=oss"
-              target="_blank"
-              className="underline"
-              rel="noreferrer"
-            >
-              Vercel
-            </a>
-            .
+            &copy; {new Date().getFullYear()} Olympiads XYZ. {t("index_powered-by")}
             <br />
-            No part of this website may be reproduced or commercialized in any
-            manner without prior written permission.{' '}
+            {t('index_copyright')}{' '}
             <Link to="/license" className="underline">
-              Learn More.
+              {t('index_learn-more')}
             </Link>
           </p>
         </div>

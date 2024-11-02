@@ -35,13 +35,18 @@ import { LoadingSpinner } from '../elements/LoadingSpinner';
 import Banner from './Banner';
 import { SearchModal } from './SearchModal';
 import { UserAvatarMenu } from './UserAvatarMenu';
+import { useLocation } from '@gatsbyjs/reach-router';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
+
 
 export default function TopNavigationBar({
   transparent = false,
   linkLogoToIndex = false,
   currentSection = null,
-  hidePromoBar = false,
+  hidePromoBar = true,
   redirectToDashboard = false,
+  hideLanguageSwitcher = true
 }) {
   const firebaseUser = useFirebaseUser();
   const signOut = useSignOutAction();
@@ -50,48 +55,59 @@ export default function TopNavigationBar({
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isContactUsActive, setIsContactUsActive] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const location = useLocation();
+  const isIndexPage = location.pathname === '/';
+
+  const { t } = useTranslation();
 
   const resources = [
     {
-      name: 'USACO Forum',
-      description: 'An unofficial Q&A forum for USACO contestants.',
-      href: 'https://forum.usaco.guide/',
+      name: t('top-nav_physics'),
+      description: t('top-nav_physics_description'),
+      href: '',
       icon: ChatAlt2Icon,
+      backgroundColor: '',
+      iconBackgroundColor: 'rgba(59, 130, 246, 1)',
     },
     {
-      name: 'USACO IDE',
-      description:
-        'A realtime collaborative online IDE designed for competitive programming and USACO.',
-      href: 'https://ide.usaco.guide/',
+      name: t('top-nav_math'),
+      description: t('top-nav_math_description'),
+      href: '',
       icon: TerminalIcon,
+      backgroundColor: '',
+      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
     {
-      name: 'Classes',
-      description:
-        'Learn USACO through high-quality classes with material developed by past USACO Finalists',
-      href: 'https://joincpi.org/classes',
-      icon: AcademicCapIcon,
+      name: t('top-nav_informatics'),
+      description: t('top-nav_informatics_description'),
+      href: '',
+      icon: TerminalIcon,
+      backgroundColor: '',
+      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
     {
-      name: 'Contests',
-      description:
-        'Participate in high-quality programming contests targeted towards pre-college students!',
-      href: 'https://joincpi.org/contests',
+      name: t('top-nav_chemistry'),
+      description: t('top-nav_chemistry_description'),
+      href: '',
       icon: ChartBarIcon,
+      backgroundColor: '',
+      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
     {
-      name: 'Clubs',
-      description:
-        'Get access to a curriculum tailored for competitive programming clubs.',
-      href: 'https://joincpi.org/clubs',
+      name: t('top-nav_biology'),
+      description: t('top-nav_biology_description'),
+      href: '',
       icon: UserGroupIcon,
+      backgroundColor: '',
+      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
     {
-      name: 'Workshops',
-      description:
-        'Access workshops providing you everything you need to know about USACO.',
-      href: 'https://joincpi.org/workshop',
+      name: t('top-nav_geography'),
+      description: t('top-nav_geography_description'),
+      href: '',
       icon: PresentationChartLineIcon,
+      backgroundColor: '',
+      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
   ];
 
@@ -138,9 +154,9 @@ export default function TopNavigationBar({
       {!hidePromoBar && (
         <>
           <Banner
-            text="Registration for Fall Semester Live Classes Open"
-            action="Register"
-            link="https://joincpi.org/classes"
+            text="Есенно състезание по физика 8-10 ноември, гр. Бургас"
+            action="Информация"
+            link="https://www.prirodninauki.bg/archives/20475"
           />
         </>
       )}
@@ -160,7 +176,7 @@ export default function TopNavigationBar({
                 className="flex-shrink-0 flex items-center"
               >
                 <div className="block sm:hidden">
-                  <LogoSquare className="h-10 w-10" />
+                  {/*<LogoSquare className="h-10 w-10" />*/}
                 </div>
                 <div className={'hidden sm:block h-9'}>
                   <Logo />
@@ -176,8 +192,9 @@ export default function TopNavigationBar({
                       : 'inline-flex items-center px-1 pt-0.5 border-b-2 border-transparent text-base font-medium leading-6 text-gray-500 hover:text-gray-900 hover:border-gray-300  focus:outline-none focus:text-gray-900 focus:border-gray-300 dark:text-dark-high-emphasis dark:hover:border-gray-500 dark:focus:border-gray-500 transition',
                   })}
                 >
-                  Problems
+                  {t('top-nav_problems')}
                 </Link>
+                {/* Begin Resources Dropdown*/}
                 <Popover.Group as="nav" className="h-full">
                   <Popover className="h-full">
                     {({ open }) => (
@@ -190,7 +207,7 @@ export default function TopNavigationBar({
                             'group inline-flex items-center h-full border-b-2 border-transparent space-x-2 text-base leading-6 font-medium hover:text-gray-900 focus:outline-none focus:text-gray-900  transition ease-in-out duration-150 dark:text-dark-high-emphasis'
                           )}
                         >
-                          <span className="mt-0.5">Resources</span>
+                          <span className="mt-0.5">{t('top-nav_archive')}</span>
                           <ChevronDownIcon
                             className={classNames(
                               open ? 'text-gray-500' : 'text-gray-400',
@@ -214,35 +231,17 @@ export default function TopNavigationBar({
                           >
                             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                               <div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
-                                <Link
-                                  to="/groups/"
-                                  className="-m-3 p-3 flex items-start rounded-lg dark:hover:bg-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                                >
-                                  <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-500 text-white sm:h-12 sm:w-12">
-                                    <UserGroupIcon
-                                      className="h-6 w-6"
-                                      aria-hidden="true"
-                                    />
-                                  </div>
-                                  <div className="ml-4">
-                                    <p className="text-base font-medium text-gray-900 dark:text-dark-high-emphasis">
-                                      Groups
-                                    </p>
-                                    <p className="mt-1 text-sm text-gray-500 dark:text-dark-med-emphasis">
-                                      A Learning Management System fully
-                                      integrated with the USACO Guide.
-                                    </p>
-                                  </div>
-                                </Link>
+                                {/* Begin Archive Dropdown*/}
                                 {resources.map(item => (
                                   <a
                                     key={item.name}
                                     href={item.href}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="-m-3 p-3 flex items-start rounded-lg dark:hover:bg-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                                    className="-m-3 p-3 flex items-start rounded-lg transition ease-in-out duration-150"
+                                    style={{ backgroundColor: item.backgroundColor }}
                                   >
-                                    <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-500 text-white sm:h-12 sm:w-12">
+                                    <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md text-white sm:h-12 sm:w-12" style={{ backgroundColor: item.iconBackgroundColor }}>
                                       <item.icon
                                         className="h-6 w-6"
                                         aria-hidden="true"
@@ -269,12 +268,14 @@ export default function TopNavigationBar({
                     )}
                   </Popover>
                 </Popover.Group>
+                {/* End Resources Dropdown*/}
                 <button
                   className="cursor-pointer inline-flex items-center px-1 border-b-2 border-transparent text-base font-medium leading-6 text-gray-500 hover:text-gray-900 hover:border-gray-300 focus:outline-none focus:text-gray-900 focus:border-gray-300 dark:text-dark-high-emphasis dark:hover:border-gray-500 dark:focus:border-gray-500 transition"
                   onClick={() => setIsContactUsActive(true)}
                 >
-                  Contact Us
+                  {t('top-nav_contact-us')}
                 </button>
+                {!hideLanguageSwitcher && (<LanguageSwitcher/>)}
               </div>
             </div>
             <div
@@ -290,7 +291,7 @@ export default function TopNavigationBar({
                   aria-hidden="true"
                 />
 
-                <span className="ml-2 font-medium">Search</span>
+                <span className="ml-2 font-medium">{t('top-nav_search')}</span>
               </button>
             </div>
             <div className="flex items-center lg:hidden">
@@ -350,7 +351,7 @@ export default function TopNavigationBar({
                     onClick={() => signIn()}
                     className="relative inline-flex items-center px-2 py-1 border border-transparent text-base leading-6 font-medium rounded-md text-gray-500 hover:text-gray-700 dark:text-dark-high-emphasis focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
-                    Login
+                    {t('top-nav_login')}
                   </button>
 
                   {/* Settings button */}
@@ -411,7 +412,8 @@ export default function TopNavigationBar({
                 ))}
               </div>
             </div>
-            <div className="py-5 px-4">
+            {/* Begin idk what this does probably some menu for the groups*/}
+            {/* <div className="py-5 px-4">
               <div className="grid grid-cols-2 gap-y-4 gap-x-8">
                 <Link
                   to="/groups/"
@@ -443,7 +445,7 @@ export default function TopNavigationBar({
                   </a>
                 ))}
               </div>
-            </div>
+            </div> */}
             <div className="pt-5 px-4">
               <nav className="grid gap-y-8">
                 <Link
@@ -456,7 +458,7 @@ export default function TopNavigationBar({
                     aria-hidden="true"
                   />
                   <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                    Problems
+                    {t('top-nav_problems')}
                   </span>
                 </Link>
                 <a
@@ -468,7 +470,7 @@ export default function TopNavigationBar({
                     aria-hidden="true"
                   />
                   <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                    Contact Us
+                    {t('top-nav_contact-us')}
                   </span>
                 </a>
                 <Link
@@ -481,7 +483,7 @@ export default function TopNavigationBar({
                     aria-hidden="true"
                   />
                   <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                    Settings
+                    {t('top-nav_settings')}
                   </span>
                 </Link>
                 {firebaseUser ? (
@@ -494,7 +496,7 @@ export default function TopNavigationBar({
                       aria-hidden="true"
                     />
                     <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                      Sign Out
+                      {t('top-nav_sign-out')}
                     </span>
                   </a>
                 ) : (
@@ -507,7 +509,7 @@ export default function TopNavigationBar({
                       aria-hidden="true"
                     />
                     <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                      Sign In
+                      {t('top-nav_login')}
                     </span>
                   </a>
                 )}
