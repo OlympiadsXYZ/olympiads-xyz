@@ -4,6 +4,8 @@ import type { User } from 'firebase/auth';
 import { Link } from 'gatsby';
 import React from 'react';
 import Transition from '../Transition';
+import '../../i18n';
+import { useTranslation } from 'react-i18next';
 
 export interface UserAvatarMenuProps {
   firebaseUser: User;
@@ -11,13 +13,15 @@ export interface UserAvatarMenuProps {
 }
 
 export const UserAvatarMenu: React.FC<UserAvatarMenuProps> = props => {
+  const { t } = useTranslation();
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       {({ open }) => (
         <>
           <div>
             <Menu.Button className="flex text-sm border-2 border-transparent rounded-full focus:outline-none dark:focus:border-white focus:border-blue-500 transition">
-              <span className="sr-only">Open user menu</span>
+              <span className="sr-only">{t('user-avatar-menu_open-user-menu')}</span>
               <img
                 className="h-8 w-8 rounded-full"
                 src={props.firebaseUser.photoURL ?? undefined}
@@ -50,7 +54,7 @@ export const UserAvatarMenu: React.FC<UserAvatarMenuProps> = props => {
                         'block w-full text-left px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-100 focus:outline-none'
                       )}
                     >
-                      Settings
+                      {t('top-nav_settings')}
                     </Link>
                   )}
                 </Menu.Item>
@@ -66,7 +70,7 @@ export const UserAvatarMenu: React.FC<UserAvatarMenuProps> = props => {
                       )}
                       role="menuitem"
                     >
-                      Sign out
+                      {t('user-avatar-menu_sign-out')}
                     </button>
                   )}
                 </Menu.Item>

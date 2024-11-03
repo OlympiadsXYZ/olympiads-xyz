@@ -4,8 +4,11 @@ import {
   useThemeSetting,
 } from '../../context/UserDataContext/properties/simpleProperties';
 import RadioList from '../elements/RadioList';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
 export default function DarkMode() {
+  const { t } = useTranslation();
   const theme = useThemeSetting();
   const setTheme = useSetThemeSetting();
 
@@ -13,7 +16,7 @@ export default function DarkMode() {
     <div>
       <div className="space-y-1">
         <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-          Theme
+          {t('settings_theme')}
         </h3>
       </div>
       <div className="h-4" />
@@ -24,7 +27,7 @@ export default function DarkMode() {
         onChange={newValue => {
           setTheme(newValue);
         }}
-        labelMap={{ light: 'Light Mode', dark: 'Dark Mode', system: 'System' }}
+        labelMap={{ light: t('settings_light-mode'), dark: t('settings_dark-mode'), system: t('settings_system-theme') }}
         descriptionMap={{}}
       />
     </div>

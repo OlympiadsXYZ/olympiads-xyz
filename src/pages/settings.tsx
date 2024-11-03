@@ -12,6 +12,8 @@ import UnderlinedTabs from '../components/elements/UnderlinedTabs';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { useUserPermissions } from '../context/UserDataContext/UserPermissionsContext';
+import '../i18n';
+import { useTranslation } from 'react-i18next';
 
 /*
 1. General
@@ -62,9 +64,11 @@ export default function SettingsPage() {
     return () => window.removeEventListener('hashChange', handleHashChange);
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <Layout>
-      <SEO title="Settings" />
+      <SEO title={t('settings_title')} />
 
       <TopNavigationBar />
 
@@ -86,15 +90,15 @@ export default function SettingsPage() {
                 clipRule="evenodd"
               />
             </svg>
-            Back
+            {t('settings_back')}
           </button>
           <div className="pt-4 sm:pt-6 pb-16">
             <div className="px-4 sm:px-6 md:px-0">
               <h1 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100">
-                Settings
+                {t('settings_title')}
               </h1>
               <p className="text-gray-500 dark:text-gray-400 mt-2">
-                If you're signed in, settings sync across devices.
+                {t('settings_sync-across-devices')}
               </p>
             </div>
             <div className="px-4 sm:px-6 md:px-0">
@@ -102,11 +106,11 @@ export default function SettingsPage() {
                 <UnderlinedTabs
                   options={tabs}
                   labelMap={{
-                    general: 'General',
-                    profile: 'Profile',
-                    auth: 'Sign In Methods',
-                    'user-data': 'User Data',
-                    admin: 'Admin Settings',
+                    general: t('settings_general'),
+                    profile: t('settings_profile'),
+                    auth: t('settings_sign-in-methods'),
+                    'user-data': t('settings_user-data'),
+                    admin: t('settings_admin-settings'),
                   }}
                   value={tab}
                   onChange={x => setTab(x)}
@@ -117,7 +121,7 @@ export default function SettingsPage() {
                 <div className="space-y-10">
                   {tab === 'general' && (
                     <>
-                      <Language />
+                      {/* <Language />  */}
                       <DarkMode />
                       <General />
                     </>

@@ -16,6 +16,12 @@ import {
   TerminalIcon,
   UserGroupIcon,
 } from '@heroicons/react/solid';
+import { FaReact } from "react-icons/fa";
+import { HiVariable } from "react-icons/hi2";
+import { PiCodeFill } from "react-icons/pi";
+import { GiChemicalDrop } from "react-icons/gi";
+import { PiPlantFill } from "react-icons/pi";
+import { IoEarth } from "react-icons/io5";
 import classNames from 'classnames';
 import { Link } from 'gatsby';
 import * as React from 'react';
@@ -37,6 +43,7 @@ import { SearchModal } from './SearchModal';
 import { UserAvatarMenu } from './UserAvatarMenu';
 import { useLocation } from '@gatsbyjs/reach-router';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
+
 import { useTranslation } from 'react-i18next';
 
 
@@ -46,7 +53,7 @@ export default function TopNavigationBar({
   currentSection = null,
   hidePromoBar = true,
   redirectToDashboard = false,
-  hideLanguageSwitcher = true
+  hideLanguageSwitcher = false
 }) {
   const firebaseUser = useFirebaseUser();
   const signOut = useSignOutAction();
@@ -65,7 +72,7 @@ export default function TopNavigationBar({
       name: t('top-nav_physics'),
       description: t('top-nav_physics_description'),
       href: '',
-      icon: ChatAlt2Icon,
+      icon: FaReact,
       backgroundColor: '',
       iconBackgroundColor: 'rgba(59, 130, 246, 1)',
     },
@@ -73,7 +80,7 @@ export default function TopNavigationBar({
       name: t('top-nav_math'),
       description: t('top-nav_math_description'),
       href: '',
-      icon: TerminalIcon,
+      icon: HiVariable,
       backgroundColor: '',
       iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
@@ -81,7 +88,7 @@ export default function TopNavigationBar({
       name: t('top-nav_informatics'),
       description: t('top-nav_informatics_description'),
       href: '',
-      icon: TerminalIcon,
+      icon: PiCodeFill,
       backgroundColor: '',
       iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
@@ -89,7 +96,7 @@ export default function TopNavigationBar({
       name: t('top-nav_chemistry'),
       description: t('top-nav_chemistry_description'),
       href: '',
-      icon: ChartBarIcon,
+      icon: GiChemicalDrop,
       backgroundColor: '',
       iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
@@ -97,7 +104,7 @@ export default function TopNavigationBar({
       name: t('top-nav_biology'),
       description: t('top-nav_biology_description'),
       href: '',
-      icon: UserGroupIcon,
+      icon: PiPlantFill,
       backgroundColor: '',
       iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
@@ -105,7 +112,7 @@ export default function TopNavigationBar({
       name: t('top-nav_geography'),
       description: t('top-nav_geography_description'),
       href: '',
-      icon: PresentationChartLineIcon,
+      icon: IoEarth,
       backgroundColor: '',
       iconBackgroundColor: 'rgba(220, 38, 38, 1)',
     },
@@ -113,39 +120,45 @@ export default function TopNavigationBar({
 
   const solutions = [
     {
-      name: 'General',
+      name: t('sections_general'),
       href: '/general',
       icon: BookmarkIcon,
+      iconColor: 'rgba(59, 130, 246, 1)',
       key: 'general',
     },
     {
-      name: 'Bronze',
-      href: '/bronze',
+      name: t('sections_beginner'),
+      href: '/freshman',
       icon: BookmarkIcon,
-      key: 'bronze',
+      iconColor: 'rgba(59, 130, 246, 1)',
+      key: 'freshman',
     },
     {
-      name: 'Silver',
-      href: '/silver',
+      name: t('sections_intermediate'),
+      href: '/junior',
       icon: BookmarkIcon,
-      key: 'silver',
+      iconColor: 'rgba(59, 130, 246, 1)',
+      key: 'junior',
     },
     {
-      name: 'Gold',
-      href: '/gold',
+      name: t('sections_advanced'),
+      href: '/senior',
       icon: BookmarkIcon,
-      key: 'gold',
+      iconColor: 'rgba(59, 130, 246, 1)',
+      key: 'senior',
     },
     {
-      name: 'Platinum',
-      href: '/plat',
+      name: t('sections_special'),
+      href: '/special',
       icon: BookmarkIcon,
-      key: 'plat',
+      iconColor: 'rgba(59, 130, 246, 1)',
+      key: 'special',
     },
     {
-      name: 'Advanced',
+      name: t('sections_beyond'),
       href: '/adv',
       icon: BookmarkIcon,
+      iconColor: 'rgba(59, 130, 246, 1)',
       key: 'adv',
     },
   ];
@@ -176,7 +189,7 @@ export default function TopNavigationBar({
                 className="flex-shrink-0 flex items-center"
               >
                 <div className="block sm:hidden">
-                  {/*<LogoSquare className="h-10 w-10" />*/}
+                  <LogoSquare className="h-10 w-10" />
                 </div>
                 <div className={'hidden sm:block h-9'}>
                   <Logo />
@@ -194,7 +207,7 @@ export default function TopNavigationBar({
                 >
                   {t('top-nav_problems')}
                 </Link>
-                {/* Begin Resources Dropdown*/}
+                {/* Begin Archive Dropdown*/}
                 <Popover.Group as="nav" className="h-full">
                   <Popover className="h-full">
                     {({ open }) => (
@@ -231,7 +244,7 @@ export default function TopNavigationBar({
                           >
                             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                               <div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
-                                {/* Begin Archive Dropdown*/}
+                                {/* Different archive sections */}
                                 {resources.map(item => (
                                   <a
                                     key={item.name}
@@ -268,13 +281,16 @@ export default function TopNavigationBar({
                     )}
                   </Popover>
                 </Popover.Group>
-                {/* End Resources Dropdown*/}
+                {/* End Archive Dropdown*/}
+
+                {/* Contact Us Button */}
                 <button
                   className="cursor-pointer inline-flex items-center px-1 border-b-2 border-transparent text-base font-medium leading-6 text-gray-500 hover:text-gray-900 hover:border-gray-300 focus:outline-none focus:text-gray-900 focus:border-gray-300 dark:text-dark-high-emphasis dark:hover:border-gray-500 dark:focus:border-gray-500 transition"
                   onClick={() => setIsContactUsActive(true)}
                 >
                   {t('top-nav_contact-us')}
                 </button>
+                {/* Language Switcher ei tova mi izqde dushata*/}
                 {!hideLanguageSwitcher && (<LanguageSwitcher/>)}
               </div>
             </div>
@@ -358,7 +374,7 @@ export default function TopNavigationBar({
                   <Link
                     to="/settings"
                     className="p-1 border-2 border-transparent text-gray-400 dark:text-dark-med-emphasis rounded-full hover:text-gray-300 dark:hover:text-dark-high-emphasis focus:outline-none focus:text-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700 transition"
-                    aria-label="Settings"
+                    aria-label={t('top-nav_settings')}
                   >
                     <svg
                       className="h-6 w-6"
@@ -402,7 +418,8 @@ export default function TopNavigationBar({
                     className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <item.icon
-                      className="flex-shrink-0 h-6 w-6 text-gray-600 dark:group-hover:text-gray-400"
+                      className="flex-shrink-0 h-6 w-6"
+                      style={{ color: item.iconColor }}
                       aria-hidden="true"
                     />
                     <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
@@ -412,10 +429,10 @@ export default function TopNavigationBar({
                 ))}
               </div>
             </div>
-            {/* Begin idk what this does probably some menu for the groups*/}
-            {/* <div className="py-5 px-4">
+            {/* Begin nz kakvo pravi tova probably some menu for the groups*/}
+            <div className="py-5 px-4">
               <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                <Link
+                {/* <Link
                   to="/groups/"
                   className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
@@ -426,7 +443,7 @@ export default function TopNavigationBar({
                   <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
                     Groups
                   </span>
-                </Link>
+                </Link> */}
                 {resources.map(item => (
                   <a
                     key={item.name}
@@ -445,7 +462,7 @@ export default function TopNavigationBar({
                   </a>
                 ))}
               </div>
-            </div> */}
+            </div>
             <div className="pt-5 px-4">
               <nav className="grid gap-y-8">
                 <Link

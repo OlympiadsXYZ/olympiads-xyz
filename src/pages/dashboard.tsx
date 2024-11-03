@@ -38,12 +38,16 @@ import {
   useProblemsProgressInfo,
 } from '../utils/getProgressInfo';
 
+import '../i18n';
+import { useTranslation } from 'react-i18next';
+
 export default function DashboardPage(props: PageProps) {
   const { navigate, modules, announcements, problems } = props.data as any;
   const moduleIDToName = modules.edges.reduce((acc, cur) => {
     acc[cur.node.frontmatter.id] = cur.node.frontmatter.title;
     return acc;
   }, {});
+  const { t } = useTranslation();
   const problemIDMap = React.useMemo(() => {
     // 1. problems in modules
     const res = problems.edges.reduce((acc, cur) => {
@@ -164,7 +168,7 @@ export default function DashboardPage(props: PageProps) {
 
   return (
     <Layout>
-      <SEO title="Dashboard" />
+      <SEO title={t('dashboard_title')} />
 
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar linkLogoToIndex={true} redirectToDashboard={false} />
@@ -176,11 +180,11 @@ export default function DashboardPage(props: PageProps) {
                 <div className="w-full text-center">
                   {firebaseUser ? (
                     <>
-                      Signed in as <i>{firebaseUser.email}</i>.
+                      {t('dashboard_signed-in-as')} <i>{firebaseUser.email}</i>.
                     </>
                   ) : (
                     <span>
-                      Not signed in.{' '}
+                      {t('dashboard_not-signed-in')}.{' '}
                       <a
                         href="#"
                         onClick={e => {
@@ -189,7 +193,7 @@ export default function DashboardPage(props: PageProps) {
                         }}
                         className="text-blue-600 dark:text-blue-300 underline"
                       >
-                        Sign in now!
+                        {t('dashboard_sign-in-now')}
                       </a>{' '}
                     </span>
                   )}
@@ -204,13 +208,13 @@ export default function DashboardPage(props: PageProps) {
           <header id="announcements">
             <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-10">
               <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-dark-high-emphasis">
-                Announcements
+                {t('dashboard_announcements')}
               </h1>
               <Link
                 to="/announcements"
                 className="hover:underline transition-all duration-300"
               >
-                View all &rarr;
+                {t('dashboard_view-all')} &rarr;
               </Link>
             </div>
           </header>
@@ -239,7 +243,7 @@ export default function DashboardPage(props: PageProps) {
           <header>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-dark-high-emphasis">
-                Activity
+                {t('dashboard_activity')}
               </h1>
             </div>
           </header>
@@ -249,7 +253,7 @@ export default function DashboardPage(props: PageProps) {
           <header>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-dark-high-emphasis">
-                Statistics
+                {t('dashboard_statistics')}
               </h1>
             </div>
           </header>
@@ -259,7 +263,7 @@ export default function DashboardPage(props: PageProps) {
                 <Card>
                   <div className="px-4 py-5 sm:p-6">
                     <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
-                      Modules Progress - {SECTION_LABELS[lastViewedSection]}
+                      {t('dashboard_module-progress')} - {SECTION_LABELS[lastViewedSection]}
                     </h3>
                     <div className="mt-6">
                       <DashboardProgress
@@ -274,7 +278,7 @@ export default function DashboardPage(props: PageProps) {
                 <Card>
                   <div className="px-4 py-5 sm:p-6">
                     <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
-                      Problems Progress - {SECTION_LABELS[lastViewedSection]}
+                      {t('dashboard_problems-progress')} - {SECTION_LABELS[lastViewedSection]}
                     </h3>
                     <div className="mt-6">
                       <DashboardProgress
@@ -303,7 +307,8 @@ export default function DashboardPage(props: PageProps) {
                 {/*  </div>*/}
                 {/*</div>*/}
               </div>
-              <DailyStreak streak={consecutiveVisits} />
+              {/* TODO: Tova mozhe da se napravi po-qko i togava da go slozhim */}
+              {/* <DailyStreak streak={consecutiveVisits} /> */}
             </div>
           </div>
         </main>

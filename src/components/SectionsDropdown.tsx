@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'gatsby';
 import * as React from 'react';
 import { SECTIONS, SECTION_LABELS } from '../../content/ordering';
+import { useTranslation } from 'react-i18next';
 
 export default function SectionsDropdown({
   currentSection = null as string | null,
@@ -11,6 +12,7 @@ export default function SectionsDropdown({
   onSelect = null as ((section: string) => void) | null,
   noDarkMode = false,
 }): JSX.Element {
+  const { t } = useTranslation();
   return (
     <Menu as="div">
       {({ open }) => (
@@ -24,7 +26,7 @@ export default function SectionsDropdown({
               }`}
             >
               <span>
-                {currentSection ? SECTION_LABELS[currentSection] : 'Sections'}
+                {currentSection ? SECTION_LABELS[currentSection] : t('sections')}
               </span>
               <ChevronDownIcon
                 className={`${
@@ -46,7 +48,7 @@ export default function SectionsDropdown({
               }`}
             >
               <span className="mt-0.5">
-                {currentSection ? SECTION_LABELS[currentSection] : 'Sections'}
+                {currentSection ? SECTION_LABELS[currentSection] : t('sections')}
               </span>
               <ChevronDownIcon
                 className={`${

@@ -1,8 +1,11 @@
 import { CheckIcon, XIcon } from '@heroicons/react/solid';
 import * as React from 'react';
 import { useFirebaseUser } from '../../context/UserDataContext/UserDataContext';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
 export default function Authentication() {
+  const { t } = useTranslation();
   const firebaseUser = useFirebaseUser();
 
   let linkedWithGoogle = false;
@@ -21,14 +24,16 @@ export default function Authentication() {
     <div>
       <div className="space-y-1">
         <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-          Linked Providers
+          {t('settings_linked-providers')}
         </h3>
       </div>
       <div className="h-4" />
       {firebaseUser ? (
         <div>
           <fieldset className="border-b border-gray-200 dark:border-gray-700">
-            <legend className="sr-only">Notifications</legend>
+            <legend className="sr-only">
+              {t('settings_linked-providers')}
+            </legend>
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               <div className="relative flex items-start pb-4">
                 <svg
@@ -113,7 +118,7 @@ export default function Authentication() {
           </fieldset>
         </div>
       ) : (
-        <p>You need to be logged in to update your profile.</p>
+        <p>{t('settings_you-need-to-be-logged-in-to-update-your-profile')}</p>
       )}
     </div>
   );

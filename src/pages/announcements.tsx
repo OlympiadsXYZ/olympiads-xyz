@@ -4,12 +4,15 @@ import Announcements from '../components/Dashboard/Announcements';
 import TopNavigationBar from '../components/TopNavigationBar/TopNavigationBar';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+import '../i18n';
+import { useTranslation } from 'react-i18next';
 import {
   AnnouncementInfo,
   graphqlToAnnouncementInfo,
 } from '../models/announcement';
 
 export default function AnnouncementsPage(props: PageProps) {
+  const { t } = useTranslation();
   const { announcements } = props.data as any;
   const parsedAnnouncements: AnnouncementInfo[] = React.useMemo(() => {
     return announcements.edges.map(node =>
@@ -19,11 +22,11 @@ export default function AnnouncementsPage(props: PageProps) {
 
   return (
     <Layout>
-      <SEO title="Announcements" />
+      <SEO title={t('announcements_title')} />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar linkLogoToIndex={true} redirectToDashboard={true} />
         <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-dark-high-emphasis text-center mx-auto mt-6">
-          Announcements
+          {t('announcements_title')}
         </h1>
         <main className="pb-12">
           <Announcements

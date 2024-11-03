@@ -4,8 +4,11 @@ import {
   useImportUserDataAction,
   useUserData,
 } from '../../context/UserDataContext/UserDataContext';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
 export default function UserData() {
+  const { t } = useTranslation();
   const userData = useUserData();
   const importUserData = useImportUserDataAction();
 
@@ -57,7 +60,7 @@ export default function UserData() {
       <div>
         <div className="space-y-1">
           <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-            Export User Data
+            {t('settings_export-user-data')}
           </h3>
         </div>
         <div className="h-4" />
@@ -65,18 +68,17 @@ export default function UserData() {
           className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm leading-5 font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150"
           onClick={handleExportUserData}
         >
-          Export User Data
+          {t('settings_export-user-data')}
         </button>
       </div>
 
       <div>
         <div className="space-y-1">
           <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-            Import User Data
+            {t('settings_import-user-data')}
           </h3>
           <p className="max-w-2xl text-sm text-gray-500">
-            Note that this will permanently override all existing user data. Use
-            at your own risk!
+            {t('settings_note-that-this-will-permanently-override-all-existing-user-data')}
           </p>
         </div>
 
@@ -103,7 +105,7 @@ export default function UserData() {
           disabled={!file}
           onClick={handleImportUserData}
         >
-          Import User Data
+          {t('settings_import-user-data')}
         </button>
       </div>
     </>

@@ -4,16 +4,19 @@ import * as React from 'react';
 import TopNavigationBar from '../components/TopNavigationBar/TopNavigationBar';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+import '../i18n';
+import { useTranslation } from 'react-i18next';
 
 export default function LicensePage(props: PageProps) {
+  const { t } = useTranslation();
   return (
     <Layout>
-      <SEO title="License and Usage" />
+      <SEO title={t('license_title')} />
 
       <TopNavigationBar />
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="mt-8 text-4xl font-extrabold">License and Usage</h1>
+        <h1 className="mt-8 text-4xl font-extrabold">{t('license_title')}</h1>
 
         <div className="mt-6 text-gray-900 text-lg dark:text-dark-high-emphasis">
           <p className="mb-4">
@@ -122,7 +125,7 @@ export default function LicensePage(props: PageProps) {
               href="mailto:usacoguide@gmail.com"
               className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline"
             >
-              usacoguide@gmail.com
+              olympiads.xyz@gmail.com
             </a>
             .
             {/* While USACO Director Dr. Brian Dean will make all final decisions, */}
@@ -133,7 +136,7 @@ export default function LicensePage(props: PageProps) {
             to="/"
             className="block mb-4 underline text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
           >
-            &larr; Back to Home
+            &larr; {t('license_back-to-home')}
           </Link>
         </div>
       </div>

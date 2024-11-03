@@ -10,8 +10,11 @@ import {
   useShowTagsSetting,
 } from '../../context/UserDataContext/properties/simpleProperties';
 import Switch from '../elements/Switch';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
 export default function General(): JSX.Element {
+  const { t } = useTranslation();
   // todo: I think we should actually just use one massive useUserSettings() hook lol
   const showIgnored = useShowIgnoredSetting();
   const setShowIgnored = useSetShowIgnoredSetting();
@@ -46,7 +49,7 @@ export default function General(): JSX.Element {
     <div>
       <div className="space-y-1">
         <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-          Options
+          {t('settings_options')}
         </h3>
       </div>
       <div>
@@ -57,7 +60,7 @@ export default function General(): JSX.Element {
                 className="text-sm font-medium text-gray-500 dark:text-gray-300"
                 id="privacy-option-1-label"
               >
-                Problem Lists and Search: Show Tags
+                {t('settings_problem-lists-and-search-show-tags')}
               </p>
             </div>
             <Switch checked={showTags} onChange={b => setShowTags(b)} />
@@ -68,7 +71,7 @@ export default function General(): JSX.Element {
                 className="text-sm font-medium text-gray-500 dark:text-gray-300"
                 id="privacy-option-1-label"
               >
-                Problem Lists and Search: Hide Difficulty
+                {t('settings_problem-lists-and-search-hide-difficulty')}
               </p>
             </div>
             <Switch
@@ -82,7 +85,7 @@ export default function General(): JSX.Element {
                 className="text-sm font-medium text-gray-500 dark:text-gray-300"
                 id="privacy-option-1-label"
               >
-                Problem Search: Hide Modules
+                {t('settings_problem-search-hide-modules')}
               </p>
             </div>
             <Switch checked={hideModules} onChange={b => setHideModules(b)} />
@@ -93,7 +96,7 @@ export default function General(): JSX.Element {
                 className="text-sm font-medium text-gray-500 dark:text-gray-300"
                 id="privacy-option-2-label"
               >
-                Dashboard: Show Ignored Problems & Modules
+                {t('settings_dashboard-show-ignored-problems-and-modules')}
               </p>
             </div>
             <Switch checked={showIgnored} onChange={b => setShowIgnored(b)} />
@@ -104,10 +107,9 @@ export default function General(): JSX.Element {
                 className="text-sm font-medium text-gray-500 dark:text-gray-300"
                 id="privacy-option-2-label"
               >
-                Use Long Polling (Close and reopen tab after toggling) -{' '}
+                {t('settings_use-long-polling')} -{' '}
                 <span className="font-bold">
-                  Enable this option ONLY if you encounter issues connecting to
-                  Firebase (nothing loads).
+                  {t('settings_use-long-polling-description')}
                 </span>
               </p>
             </div>

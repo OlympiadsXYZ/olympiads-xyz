@@ -21,6 +21,8 @@ import SEO from '../components/seo';
 import TopNavigationBar from '../components/TopNavigationBar/TopNavigationBar';
 import { useUserProgressOnProblems } from '../context/UserDataContext/properties/userProgress';
 import { searchClient } from '../utils/algoliaSearchClient';
+import '../i18n';
+import { useTranslation } from 'react-i18next';
 
 const indexName = `${process.env.GATSBY_ALGOLIA_INDEX_NAME ?? 'dev'}_problems`;
 
@@ -33,6 +35,7 @@ type DataProps = {
 };
 
 export default function ProblemsPage(props: PageProps<DataProps>) {
+  const { t } = useTranslation();
   const {
     allProblemInfo: { nodes: problems },
   } = props.data;
@@ -111,7 +114,7 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
   ];
   return (
     <Layout>
-      <SEO title="All Problems" />
+      <SEO title={t('problems_all-problems-title')} />
 
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
@@ -120,7 +123,7 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
           <div className="py-16 bg-blue-600 dark:bg-blue-900 px-5">
             <div className="max-w-3xl mx-auto mb-6">
               <h1 className="text-center text-3xl sm:text-5xl font-bold text-white dark:text-dark-high-emphasis mb-6">
-                Problems
+                {t('problems_title')}
               </h1>
               <SearchBox />
             </div>
@@ -148,9 +151,9 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
                 <Pagination showLast={true} className="pr-4" />
                 <HitsPerPage
                   items={[
-                    { label: '24 hits per page', value: 24, default: true },
-                    { label: '32 hits per page', value: 32 },
-                    { label: '48 hits per page', value: 48 },
+                    { label: `24 ${t('problems_items-per-page')}`, value: 24, default: true },
+                    { label: `32 ${t('problems_items-per-page')}`, value: 32 },
+                    { label: `48 ${t('problems_items-per-page')}`, value: 48 },
                   ]}
                   className="mt-1 lg:mt-0"
                 />

@@ -5,11 +5,11 @@ const flags = {
 };
 
 const siteMetadata = {
-  title: `USACO Guide`,
-  description: `A free collection of curated, high-quality competitive programming resources to take you from USACO Bronze to USACO Platinum and beyond. Written by top USACO Finalists, these tutorials will guide you through your competitive programming journey.`,
-  author: `@usacoguide`,
-  siteUrl: `https://usaco.guide/`,
-  keywords: ['USACO', 'Competitive Programming', 'USACO Guide'],
+  title: `Olympiads XYZ`,
+  description: `A free comprehensive, well-organized resource from bulgarian science olympiad contenders designed to help students prepare for science olympiads, with a current focus on physics. Made by students, for students.`,
+  author: `@olympiadsxyz`,
+  siteUrl: `https://olympiads.xyz/`,
+  keywords: ['Olympiads XYZ', 'Physics', 'Student olympiads'],
 };
 
 const plugins = [
@@ -82,13 +82,13 @@ const plugins = [
   {
     resolve: `gatsby-plugin-manifest`,
     options: {
-      name: `USACO Guide`,
-      short_name: `USACO`,
+      name: `Olympiads XYZ`,
+      short_name: `OlympXYZ`,
       start_url: `/`,
       background_color: `#113399`,
       theme_color: `#113399`,
       display: `minimal-ui`,
-      icon: `src/assets/logo-square.png`, // This path is relative to the root of the site.
+      icon: `src/assets/icon.png`, // This path is relative to the root of the site.
     },
   },
   {

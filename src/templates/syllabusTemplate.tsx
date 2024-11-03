@@ -24,6 +24,8 @@ import {
 } from '../utils/getProgressInfo';
 import { getModulesForDivision } from '../utils/utils';
 
+import { useTranslation } from 'react-i18next';
+
 const DottedLineContainer = styled.div`
   ${tw`space-y-6 relative`}
 
@@ -79,34 +81,24 @@ const HeroTextColor: { [key in SectionID]: string } = {
 
 const topicsWarning = (
   <>
-    The topics below are not exhaustive for this division.
+    {useTranslation().t('topics-warning')}
     <br />
-    Contest problems may contain topics not covered in the guide, or topics
-    listed under different divisions!
+    {useTranslation().t('topics-warning-extra')}
   </>
 );
 const SECTION_DESCRIPTION: { [key in SectionID]: React.ReactNode } = {
   general: (
     <>
-      You don't have to complete all the modules in this section before moving
-      on to Bronze.
+      {useTranslation().t('general-description')}
       <br />
-      Feel free to mark some as "skipped" and revisit them at a later time!
+      {useTranslation().t('general-description-extra')}
     </>
   ),
   bronze: (
     <>
       {topicsWarning}
       <br />
-      If you prefer videos instead of text, check out CPI's free{' '}
-      <a
-        href="https://joincpi.org/video-classes"
-        target="_blank"
-        rel="noreferrer"
-        className="underline"
-      >
-        self-study Bronze course.
-      </a>
+      {useTranslation().t('freshman-description')}
     </>
   ),
   silver: topicsWarning,
@@ -120,11 +112,7 @@ const SECTION_DESCRIPTION: { [key in SectionID]: React.ReactNode } = {
   ),
   adv: (
     <>
-      Some of these topics have not appeared in Platinum and probably never will
-      (ex. Matroid Intersection).
-      <br />
-      Others have appeared in Old Gold or Platinum very infrequently (ex. BCC,
-      Suffix Array).
+      {useTranslation().t('adv-description')}
     </>
   ),
 };

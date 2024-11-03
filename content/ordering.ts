@@ -1,6 +1,15 @@
 // Section -> Chapter -> Module
 
+import { useTranslation } from 'react-i18next';
+import '../src/i18n';
+
 export type SectionID =
+  // | 'general'
+  // | 'bronze'
+  // | 'silver'
+  // | 'gold'
+  // | 'plat'
+  // | 'adv'
   | 'general'
   | 'bronze'
   | 'silver'

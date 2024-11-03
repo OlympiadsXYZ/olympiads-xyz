@@ -6,6 +6,8 @@ import {
   useUserProgressOnProblemsActivity,
 } from '../../context/UserDataContext/properties/userProgress';
 import './heatmap-styles.css';
+import '../../i18n';
+import { useTranslation } from 'react-i18next';
 
 type ModuleActivity = ReturnType<typeof useUserProgressOnModulesActivity>[0];
 type ProblemActivity = ReturnType<typeof useUserProgressOnProblemsActivity>[0];
@@ -37,6 +39,7 @@ export function ActivityHeatmap({
     (activeDate && problemActivities[activeDate.getTime()]?.length) ?? 0;
   const activeDateModulesCompleted =
     (activeDate && moduleActivities[activeDate.getTime()]?.length) ?? 0;
+  const { t } = useTranslation();
   return (
     <div className="sm:px-6 lg:px-8 py-4">
       <div className="bg-white dark:bg-gray-800 shadow transition sm:rounded-lg px-4 py-5 sm:p-6">
@@ -64,23 +67,21 @@ export function ActivityHeatmap({
             {activeDate ? (
               <div className="text-gray-800 dark:text-gray-200">
                 <b>{activeDate.toString().substring(0, 16)}</b> <br />
-                <p>{activeDateProblemsSolved} problem(s) solved</p>
+                <p>{activeDateProblemsSolved} {t('activity_problems-solved')}</p>
                 <p>
-                  {activeDateModulesCompleted} module(s) marked practicing /
-                  completed
+                  {activeDateModulesCompleted} {t('activity_modules-completed')}
                 </p>
               </div>
             ) : (
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-3">
-                Hover over a square to view more details!
+                {t('activity_hover-to-view-details')}
               </p>
             )}
           </div>
         </div>
 
         <p className="text-sm text-gray-600 dark:text-gray-400 mt-3">
-          Note that activity calculations are very much in development and will
-          change in the near future.
+          {t('activity_note')}
         </p>
       </div>
     </div>

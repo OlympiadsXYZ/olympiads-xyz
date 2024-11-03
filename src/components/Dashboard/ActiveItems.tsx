@@ -2,6 +2,8 @@ import { Link } from 'gatsby';
 import * as React from 'react';
 import { difficultyClasses } from '../DifficultyBox';
 import DashboardCard from './DashboardCard';
+import '../../i18n';
+import { useTranslation } from 'react-i18next';
 
 type ActiveItemStatus =
   | 'Skipped'

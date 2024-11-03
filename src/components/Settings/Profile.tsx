@@ -2,8 +2,11 @@ import { updateProfile } from 'firebase/auth';
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useFirebaseUser } from '../../context/UserDataContext/UserDataContext';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
 export default function Profile(): JSX.Element {
+  const { t } = useTranslation();
   const firebaseUser = useFirebaseUser();
 
   const [name, setName] = React.useState(firebaseUser?.displayName);
@@ -28,7 +31,7 @@ export default function Profile(): JSX.Element {
     <div>
       <div className="space-y-1">
         <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-          Profile
+          {t('settings_profile')}
         </h3>
       </div>
       <div className="h-4" />
@@ -39,7 +42,7 @@ export default function Profile(): JSX.Element {
               htmlFor="display_name"
               className="block text-sm font-medium text-gray-700 dark:text-gray-200"
             >
-              Display Name
+              {t('settings_display-name')}
             </label>
             <div className="mt-1">
               <input
@@ -55,12 +58,12 @@ export default function Profile(): JSX.Element {
 
           <div className="flex">
             <button type="submit" className="btn-primary">
-              Save
+              {t('settings_save')}
             </button>
           </div>
         </form>
       ) : (
-        <p>You need to be logged in to update your profile.</p>
+        <p>{t('settings_you-need-to-be-logged-in-to-update-your-profile')}</p>
       )}
     </div>
   );

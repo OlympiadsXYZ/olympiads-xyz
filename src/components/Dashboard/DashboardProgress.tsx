@@ -1,5 +1,7 @@
 import * as React from 'react';
 import Tooltip from '../Tooltip/Tooltip';
+import { useTranslation } from 'react-i18next';
+import '../../i18n';
 
 const ProgressBar = ({ text, green, yellow, blue }) => {
   return (
@@ -65,30 +67,31 @@ export default function DashboardProgress({
   notStarted,
   total,
 }: ProgressCounts): JSX.Element {
+  const { t } = useTranslation();
   return (
     <div>
       <div className="grid grid-cols-4 gap-2 mb-4">
         <FancyNumber
           number={completed}
-          text="Completed"
+          text={t('dashboard_completed')}
           textColor="text-green-800 dark:text-green-100"
           bgColor="bg-green-100 dark:bg-green-800"
         />
         <FancyNumber
           number={inProgress}
-          text="In Progress"
+          text={t('dashboard_in-progress')}
           textColor="text-yellow-800 dark:text-yellow-100"
           bgColor="bg-yellow-100 dark:bg-yellow-800"
         />
         <FancyNumber
           number={skipped}
-          text="Skipped"
+          text={t('dashboard_skipped')}
           textColor="text-blue-800 dark:text-blue-50"
           bgColor="bg-blue-50 dark:bg-blue-800"
         />
         <FancyNumber
           number={notStarted}
-          text="Not Started"
+          text={t('dashboard_not-started')}
           textColor="text-gray-800"
           bgColor="bg-gray-100"
           subTextColor="text-gray-800 dark:text-gray-100"
@@ -98,7 +101,7 @@ export default function DashboardProgress({
         green={total === 0 ? 0 : (completed / total) * 100}
         yellow={total === 0 ? 0 : (inProgress / total) * 100}
         blue={total === 0 ? 0 : (skipped / total) * 100}
-        text={`${total} total`}
+        text={`${total} ${t('dashboard_total')}`}
       />
     </div>
   );
@@ -174,11 +177,12 @@ export function UsacoTableProgress({
     blue = yellow;
     yellow = 0;
   }
+  const { t } = useTranslation();
   return (
     <Tooltip
       content={
         is_nan
-          ? 'No Information Available'
+          ? t('table-progress_no-information-available')
           : `${Math.round(completed * 1000) / 10}%`
       }
     >

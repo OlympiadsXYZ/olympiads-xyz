@@ -1,5 +1,7 @@
 import { BaseHit, Hit } from 'instantsearch.js';
 import { SectionID } from '../../content/ordering';
+import { useTranslation } from 'react-i18next';
+import '../i18n';
 
 export type MarkdownLayoutSidebarModuleLinkInfo = {
   id: string;
