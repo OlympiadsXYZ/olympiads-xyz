@@ -24,6 +24,7 @@ import {
 } from '../utils/getProgressInfo';
 import { getModulesForDivision } from '../utils/utils';
 
+import '../i18n';
 import { useTranslation } from 'react-i18next';
 
 const DottedLineContainer = styled.div`
@@ -81,24 +82,24 @@ const HeroTextColor: { [key in SectionID]: string } = {
 
 const topicsWarning = (
   <>
-    {useTranslation().t('topics-warning')}
+    asdsadsd
     <br />
-    {useTranslation().t('topics-warning-extra')}
+    warning extra
   </>
 );
 const SECTION_DESCRIPTION: { [key in SectionID]: React.ReactNode } = {
   general: (
     <>
-      {useTranslation().t('general-description')}
+      djshakjshkadhas
       <br />
-      {useTranslation().t('general-description-extra')}
+      general askjdhasdj
     </>
   ),
   bronze: (
     <>
       {topicsWarning}
       <br />
-      {useTranslation().t('freshman-description')}
+      bronze
     </>
   ),
   silver: topicsWarning,
@@ -112,7 +113,7 @@ const SECTION_DESCRIPTION: { [key in SectionID]: React.ReactNode } = {
   ),
   adv: (
     <>
-      {useTranslation().t('adv-description')}
+      advanced fslkdjfaskjd
     </>
   ),
 };
@@ -155,7 +156,7 @@ export default function Template(props) {
       )
     );
   };
-
+  const { t } = useTranslation();
   return (
     <Layout>
       <SEO
