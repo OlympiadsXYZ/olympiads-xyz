@@ -9,6 +9,7 @@ import {
   useStore,
 } from 'jotai';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const finalAnswersAtom = atom<number[]>([]); //saved previous answers
 
@@ -170,6 +171,7 @@ const ActualQuiz = props => {
       }
     }
   );
+  const { t } = useTranslation();
 
   return (
     <div className="quiz">
@@ -181,11 +183,10 @@ const ActualQuiz = props => {
           disabled={currentQuestion === 0}
           onClick={() => handleQuestionChange(currentQuestion - 1)}
         >
-          <ArrowLeftIcon className="-ml-0.5 mr-2 h-4 w-4" /> Previous
+          <ArrowLeftIcon className="-ml-0.5 mr-2 h-4 w-4" /> {t('previous')}
         </button>
         <span>
-          Question {currentQuestion + 1} of{' '}
-          {React.Children.count(props.children)}
+          {t('question')} {currentQuestion + 1} {t('of')} {React.Children.count(props.children)}
         </span>
         <button
           className="btn"
@@ -199,7 +200,7 @@ const ActualQuiz = props => {
             }
           }}
         >
-          {selectedAnswer === null ? 'Skip' : submitted ? 'Next' : 'Submit'}{' '}
+          {selectedAnswer === null ? t('skip') : submitted ? t('next') : t('submit')}{' '}
           {canMoveOn && <ArrowRightIcon className="-mr-0.5 ml-2 h-4 w-4" />}
         </button>
       </div>

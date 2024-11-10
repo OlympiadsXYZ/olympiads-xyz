@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface WarningProps {
   /**
@@ -11,9 +12,12 @@ export interface WarningProps {
   children: React.ReactNode;
 }
 
-const Warning: React.FC<WarningProps> = ({ children, title }) => (
-  <div className="rounded-md bg-yellow-50 dark:bg-yellow-700 dark:bg-opacity-25 p-4 mb-4">
-    <div className="flex">
+const Warning: React.FC<WarningProps> = ({ children, title }) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="rounded-md bg-yellow-50 dark:bg-yellow-700 dark:bg-opacity-25 p-4 mb-4">
+      <div className="flex">
       <div className="flex-shrink-0">
         <svg
           className="h-5 w-5 text-yellow-400 dark:text-yellow-500"
@@ -29,14 +33,15 @@ const Warning: React.FC<WarningProps> = ({ children, title }) => (
       </div>
       <div className="ml-3">
         <h3 className="text-sm leading-5 font-medium text-yellow-800 dark:text-yellow-200">
-          Warning{title ? ': ' + title : '!'}
+          {t('warning')}{title ? ': ' + title : '!'}
         </h3>
         <div className="mt-2 text-sm leading-5 text-yellow-700 dark:text-yellow-300 no-y-margin tailwind-alert tailwind-alert--warning">
           {children}
         </div>
       </div>
     </div>
-  </div>
-);
+    </div>
+  );
+};
 
 export default Warning;

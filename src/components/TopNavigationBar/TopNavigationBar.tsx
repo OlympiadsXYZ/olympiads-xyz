@@ -67,7 +67,7 @@ export default function TopNavigationBar({
 
   const { t } = useTranslation();
 
-  const resources = [
+  const archive = [
     {
       name: t('top-nav_physics'),
       description: t('top-nav_physics_description'),
@@ -245,7 +245,7 @@ export default function TopNavigationBar({
                             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                               <div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
                                 {/* Different archive sections */}
-                                {resources.map(item => (
+                                {archive.map(item => (
                                   <a
                                     key={item.name}
                                     href={item.href}
@@ -444,7 +444,7 @@ export default function TopNavigationBar({
                     Groups
                   </span>
                 </Link> */}
-                {resources.map(item => (
+                {archive.map(item => (
                   <a
                     key={item.name}
                     href={item.href}

@@ -64,56 +64,70 @@ const SectionContainer = styled.div`
 
 const HeroBGColor: { [key in SectionID]: string } = {
   general: 'bg-blue-700 dark:bg-blue-900',
-  bronze: 'bg-orange-800 dark:bg-orange-900',
-  silver: 'bg-teal-700 dark:bg-teal-900',
-  gold: 'bg-yellow-700 dark:bg-yellow-900',
-  plat: 'bg-purple-700 dark:bg-purple-900',
-  adv: 'bg-green-700 dark:bg-green-900',
+  beginner: 'bg-yellow-800 dark:bg-yellow-900',
+  intermediate: 'bg-teal-700 dark:bg-teal-900',
+  advanced: 'bg-indigo-700 dark:bg-indigo-900',
+  special: 'bg-purple-700 dark:bg-purple-900',
+  beyond: 'bg-green-700 dark:bg-green-900',
 };
 
 const HeroTextColor: { [key in SectionID]: string } = {
   general: 'text-teal-200',
-  bronze: 'text-orange-100',
-  silver: 'text-teal-100',
-  gold: 'text-yellow-100',
-  plat: 'text-purple-100',
-  adv: 'text-green-100',
+  beginner: 'text-yellow-100',
+  intermediate: 'text-teal-100',
+  advanced: 'text-indigo-100',
+  special: 'text-purple-100',
+  beyond: 'text-green-100',
 };
 
 const topicsWarning = (
   <>
-    asdsadsd
+    Темите тук не са напълно изчерпателни за тази категория!
     <br />
-    warning extra
+    Задачите може да съдържат допълнителни теми, които не са включени тук, или пък са от друг раздел. Стараем се да бъдем максимално изчерпателни, но това не винаги е възможно.
   </>
 );
 const SECTION_DESCRIPTION: { [key in SectionID]: React.ReactNode } = {
   general: (
     <>
-      djshakjshkadhas
+      Не е нужно да правите всичко тук. Това е само въведение в олимпиадите и състезанията, плюс някой друг съвет как да ползвате уебсайта.
       <br />
-      general askjdhasdj
+      Чуствайте се свободни да пропуснете нещата тук, които не ви интересуват.
     </>
   ),
-  bronze: (
+  beginner: (
     <>
       {topicsWarning}
       <br />
-      bronze
+      Включва материал, който е подходящ за състезателни групи 7-8 клас.
     </>
   ),
-  silver: topicsWarning,
-  gold: topicsWarning,
-  plat: (
+  intermediate: (
     <>
       {topicsWarning}
       <br />
-      Some lower-frequency topics are included in "Advanced."
+      Включва материал, който е подходящ за състезателни групи 9-10 клас.
     </>
   ),
-  adv: (
+  advanced: (
     <>
-      advanced fslkdjfaskjd
+      {topicsWarning}
+      <br />
+      Включва материал, който е подходящ за състезателни групи 11-12 клас.
+    </>
+  ),
+  special: (
+    <>
+      {topicsWarning}
+      <br />
+      Включва материал, който е подходящ за Международните олимпиади и подбора за тях.
+    </>
+  ),
+  beyond: (
+    <>
+      Отвъд учебното съдържание на олимпиадите. Всичко останало, което може да ви бъде интересно.
+      <br />
+      Материал, който не ви трябва за олимпиадите, но задълбочава познанията.
     </>
   ),
 };
@@ -181,7 +195,7 @@ export default function Template(props) {
                 <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg">
                   <div className="px-4 py-5 sm:p-6">
                     <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
-                      Modules Progress
+                      {t('syllabus_modules-progress')}
                     </h3>
                     <div className="mt-6">
                       <DashboardProgress
@@ -194,7 +208,7 @@ export default function Template(props) {
                 <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg">
                   <div className="px-4 py-5 sm:p-6">
                     <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
-                      Problems Progress
+                      {t('syllabus_problems-progress')}
                     </h3>
                     <div className="mt-6">
                       <DashboardProgress
@@ -234,9 +248,6 @@ export default function Template(props) {
                           item.frontmatter.description,
                           item.frontmatter.frequency as ModuleFrequency,
                           item.isIncomplete,
-                          item.cppOc,
-                          item.javaOc,
-                          item.pyOc,
                           [],
                           item.fields?.gitAuthorTime
                         )

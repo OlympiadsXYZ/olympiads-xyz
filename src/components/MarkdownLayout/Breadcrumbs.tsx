@@ -3,8 +3,10 @@ import * as React from 'react';
 import { SECTION_LABELS } from '../../../content/ordering';
 import { useMarkdownLayout } from '../../context/MarkdownLayoutContext';
 import { SolutionInfo } from '../../models/solution';
+import { useTranslation } from 'react-i18next';
 
 const Breadcrumbs = () => {
+  const { t } = useTranslation();
   const moduleLayoutInfo = useMarkdownLayout();
   const module = moduleLayoutInfo.markdownLayoutInfo;
   if (module instanceof SolutionInfo) return null;
@@ -14,7 +16,7 @@ const Breadcrumbs = () => {
         to="/dashboard/"
         className="hover:text-gray-700 dark:hover:text-dark-high-emphasis transition"
       >
-        Home
+        {t('home')}
       </Link>
       <svg
         className="flex-shrink-0 mx-2 h-5 w-5 text-gray-400"

@@ -4,6 +4,7 @@ import { ResourceInfo } from '../../models/resource';
 import { books } from '../../utils/books';
 import PGS from './PGS';
 import ResourcesListItem from './ResourcesListItem';
+import { useTranslation } from 'react-i18next';
 
 export function ResourcesList({
   title,
@@ -12,6 +13,7 @@ export function ResourcesList({
   title?: string;
   children?: React.ReactNode;
 }): JSX.Element {
+  const { t } = useTranslation();
   return (
     <div className="-mx-4 sm:-mx-6 md:mx-0">
       <div className="flex flex-col mb-4">
@@ -26,7 +28,7 @@ export function ResourcesList({
                     colSpan={5}
                     className={`px-4 sm:px-6 border-b text-left font-medium text-sm uppercase py-3 border-gray-200 dark:border-transparent bg-purple-50 text-purple-500 dark:bg-purple-700 dark:bg-opacity-25 dark:text-purple-200`}
                   >
-                    Resources{title ? `: ${title}` : ''}
+                    {t('resources')}{title ? `: ${title}` : ''}
                   </th>
                 </tr>
               </thead>
@@ -40,43 +42,44 @@ export function ResourcesList({
 }
 
 const moduleSources = {
-  AryanshS: [
-    'https://sendtoaryansh.gitbook.io/informatics-notes/',
-    'sendtoaryansh.gitbook.io',
+  Zhou: [
+    'https://knzhou.github.io/',
+    'Kevin Zhou Handouts',
   ],
-  AoPS: ['http://aops.com/', 'Art of Problem Solving'],
-  Benq: [
-    'https://github.com/bqi343/USACO/blob/master/Implementations/content/',
-    'github.com/bqi343/USACO',
+  Kalda: [
+    'https://www.ioc.ee/~kalda/ipho/', 
+    'Jaan Kalda Handouts',
   ],
-  Errichto: [
-    'https://www.youtube.com/c/Errichto/about',
-    'youtube.com/c/Errichto/about',
+  IPhO: [
+    'https://www.ipho-new.org',
+    'https://ipho-unofficial.org/',
   ],
-  CSA: ['https://csacademy.com/lesson/', 'CS Academy'],
-  CF: ['https://codeforces.com/blog/entry/', 'Codeforces'],
-  'CF EDU': [
-    'https://codeforces.com/edu/courses',
-    'Codeforces Edu (enroll to view)',
+  EuPhO: [
+    'https://eupho.ee/',
   ],
-  HE: ['https://hackerearth.com/', 'HackerEarth'],
-  KA: ['https://www.khanacademy.org/', 'KhanAcademy'],
-  TC: [
-    'https://www.topcoder.com/community/competitive-programming/tutorials/',
-    'TopCoder',
+  APhO: [
+    '', 
+    'Asian Physics Olympiad'
   ],
-  'cp-algo': ['https://cp-algorithms.com/', 'CP Algorithms'],
-  USACO: ['http://www.usaco.org/', 'USACO'],
-  SO: ['https://stackoverflow.com/', 'StackOverflow'],
-  GFG: ['https://www.geeksforgeeks.org/', 'Geeks For Geeks'],
-  CPC: [
-    'https://github.com/SuprDewd/T-414-AFLV/tree/master/',
-    'Competitive Programming Course (taught at Reykjavík University, Iceland)',
+  'НОФ': [
+    'https://www.prirodninauki.bg/archives/category/%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0-%D0%BF%D0%BE-%D1%84%D0%B8%D0%B7%D0%B8%D0%BA%D0%B0', 
+    'Национална олимпиада по физика', 
+    'Bulgaria National Olympiad in Physics'
   ],
-  GCC: ['https://gcc.gnu.org/onlinedocs/gcc/', 'GNU Compiler Collection'],
-  CPP: ['http://www.cplusplus.com/reference/algorithm/', 'cplusplus.com'],
-  CPPR: ['https://en.cppreference.com/w/cpp/language/', 'en.cppreference.com'],
-  LCPP: ['https://www.learncpp.com/cpp-tutorial/', 'learncpp.com'],
+  'Есенни': [
+    'https://www.prirodninauki.bg/archives/category/%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D1%84%D0%B8%D0%B7%D0%B8%D0%BA%D0%B0', 
+    'Национално есенно състезание по физика', 
+    'Bulgaria National Fall Competition in Physics'
+  ],
+  'Пролетни': [
+    'https://www.prirodninauki.bg/archives/category/%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D1%84%D0%B8%D0%B7%D0%B8%D0%BA%D0%B0',
+    'Национално пролетно състезание по физика', 
+    'Bulgaria National Spring Competition in Physics'
+  ],
+  NBPhO: [
+    'https://nbpho.ee/', 
+    'Nord-Baltic Physics Olympiad',
+  ]
 };
 
 export function Resource({

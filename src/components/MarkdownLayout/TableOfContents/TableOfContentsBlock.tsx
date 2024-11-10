@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { TOCHeading } from '../../../models/module';
 import genLinksFromTOCHeadings from './genLinksFromTOCHeadings';
+import { useTranslation } from 'react-i18next';
 
 const TableOfContentsBlock = ({
   tableOfContents,
 }: {
   tableOfContents: TOCHeading[];
 }) => {
+  const { t } = useTranslation();
   const links = genLinksFromTOCHeadings(
     tableOfContents,
     _ =>
@@ -17,7 +19,7 @@ const TableOfContentsBlock = ({
       {tableOfContents.length > 1 && (
         <>
           <h2 className="uppercase text-gray-500 dark:text-dark-high-emphasis font-bold mt-8 mb-3 tracking-wider">
-            Table of Contents
+            {t('table_of_contents')}
           </h2>
           {links}
         </>

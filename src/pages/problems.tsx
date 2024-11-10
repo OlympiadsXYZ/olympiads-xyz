@@ -45,46 +45,46 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
     {
       attribute: 'difficulty',
       limit: 500,
-      placeholder: 'Difficulty',
+      placeholder: t('difficulty'),
       searchable: false,
       isMulti: true,
     },
     {
       attribute: 'problemModules.title',
       limit: 500,
-      placeholder: 'Modules',
+      placeholder: t('modules'),
       searchable: true,
       isMulti: true,
     },
     {
       attribute: 'source',
       limit: 500,
-      placeholder: 'Source',
+      placeholder: t('source'),
       searchable: true,
       isMulti: true,
     },
     {
       attribute: 'isStarred',
       limit: 500,
-      placeholder: 'Starred',
+      placeholder: t('starred'),
       searchable: false,
-      transformLabel: label => (label == 'true' ? 'Yes' : 'No'),
+      transformLabel: label => (label == 'true' ? t('yes') : t('no')),
       isMulti: false,
     },
     {
       attribute: 'problemModules.id',
       limit: 500,
-      placeholder: 'Section',
+      placeholder: t('sections'),
       searchable: false,
       isMulti: true,
       items: (
         [
-          ['General', SECTIONS.general],
-          ['Bronze', SECTIONS.bronze],
-          ['Silver', SECTIONS.silver],
-          ['Gold', SECTIONS.gold],
-          ['Platinum', SECTIONS.plat],
-          ['Advanced', SECTIONS.adv],
+          [t('sections_general'), SECTIONS.general],
+          [t('sections_beginner'), SECTIONS.beginner],
+          [t('sections_intermediate'), SECTIONS.intermediate],
+          [t('sections_advanced'), SECTIONS.advanced],
+          [t('sections_special'), SECTIONS.special],
+          [t('sections_beyond'), SECTIONS.beyond],
         ] as unknown as [string, Chapter[]][]
       ).map(([section, chapters]) => ({
         label: section,
@@ -94,20 +94,20 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
     {
       attribute: 'objectID',
       limit: 500,
-      placeholder: 'Status',
+      placeholder: t('status'),
       searchable: false,
       isMulti: true,
       items: [
-        'Not Attempted',
-        'Solving',
-        'Reviewing',
-        'Skipped',
-        'Ignored',
-        'Solved',
+        t('not-attempted'),
+        t('solving'),
+        t('reviewing'),
+        t('skipped'),
+        t('ignored'),
+        t('solved'),
       ].map(label => ({
         label,
         value: problemIds.filter(
-          id => (userProgress[id] ?? 'Not Attempted') == label
+          id => (userProgress[id] ?? t('not-attempted')) == label
         ),
       })),
     },

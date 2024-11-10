@@ -5,8 +5,10 @@ import { useMarkdownLayout } from '../../context/MarkdownLayoutContext';
 import { MarkdownLayoutSidebarModuleLinkInfo } from '../../models/module';
 import { SolutionInfo } from '../../models/solution';
 import Breadcrumbs from './Breadcrumbs';
+import { useTranslation } from 'react-i18next';
 
 const NavBar = ({ alignNavButtonsRight = true }) => {
+  const { t } = useTranslation();
   const moduleLayoutInfo = useMarkdownLayout();
   const { markdownLayoutInfo, sidebarLinks } = moduleLayoutInfo;
 
@@ -68,7 +70,7 @@ const NavBar = ({ alignNavButtonsRight = true }) => {
           >
             <path d="M15 19l-7-7 7-7" />
           </svg>
-          Prev
+          {t('prev')}
         </Link>
       </span>
       <div className="hidden sm:flex items-center">
@@ -82,7 +84,7 @@ const NavBar = ({ alignNavButtonsRight = true }) => {
             (nextModule === null ? disabledClasses : activeClasses)
           }
         >
-          Next
+          {t('next')}
           <svg
             className="-mr-0.5 ml-1 h-4 w-4"
             fill="none"

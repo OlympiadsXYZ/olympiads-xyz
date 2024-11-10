@@ -11,11 +11,11 @@ export type SectionID =
   // | 'plat'
   // | 'adv'
   | 'general'
-  | 'bronze'
-  | 'silver'
-  | 'gold'
-  | 'plat'
-  | 'adv';
+  | 'beginner'
+  | 'intermediate'
+  | 'advanced'
+  | 'special'
+  | 'beyond';
 
 export type Chapter = {
   name: string;
@@ -77,7 +77,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       items: ['usaco-faq', 'usaco-monthlies', 'usaco-camp', 'resources-usa'],
     },
   ],
-  bronze: [
+  beginner: [
     {
       name: 'Getting Started',
       items: ['time-comp', 'intro-ds', 'simulation'],
@@ -100,7 +100,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       items: ['bronze-conclusion'],
     },
   ],
-  silver: [
+  intermediate: [
     {
       name: 'Prefix Sums',
       items: ['prefix-sums', 'more-prefix-sums'],
@@ -132,7 +132,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       items: ['silver-conclusion'],
     },
   ],
-  gold: [
+  advanced: [
     {
       name: 'Math',
       items: ['divisibility', 'modular', 'combo'],
@@ -182,7 +182,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       items: ['gold-conclusion'],
     },
   ],
-  plat: [
+  special: [
     {
       name: 'Range Queries',
       items: [
@@ -212,7 +212,7 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       items: ['plat-conclusion'],
     },
   ],
-  adv: [
+  beyond: [
     {
       name: 'Data Structures',
       items: [
@@ -279,31 +279,34 @@ export const SECTIONS: SectionID[] = Object.keys(
   MODULE_ORDERING
 ) as SectionID[];
 export const SECTION_LABELS: { [key in SectionID]: string } = {
-  general: 'General',
-  bronze: 'Bronze',
-  silver: 'Silver',
-  gold: 'Gold',
-  plat: 'Platinum',
-  adv: 'Advanced',
+  general: 'Предговор',
+  beginner: 'Начинаещ 7-8 клас',
+  intermediate: 'Междинен 9-10 клас',
+  advanced: 'Напреднал 11-12 клас',
+  special: 'Специален',
+  beyond: 'Отвъд',
 } as const;
 export const SECTION_SEO_DESCRIPTION: { [key in SectionID]: string } = {
   general:
-    'General information for USACO and Competitive Programming. Includes resources to pick a language, set up an IDE, practice tips, and more!',
-  bronze:
-    'Topics for USACO Bronze include time complexity, data structures, sorting, simulation, complete search, ad hoc, greedy, graphs, rectangle geometry, sets and maps, and recursion.',
-  silver:
-    'Topics for USACO Silver include binary search on the answer, prefix sums, two pointers, dfs, floodfill, trees, custom comparators, greedy with sorting, and more!',
-  gold: 'Topics for USACO Gold include dynamic programming, union-find, shortest paths, point update range sum, topological sort, minimum spanning trees, euler tour, hashing, and more!',
-  plat: 'Topics for USACO Platinum include segment trees, advanced tree techniques, advanced dynamic programming, computational geometry, matrix exponentiation, and more!',
-  adv: 'Topics usually outside the scope of most USACO contests include segment tree beats, treaps, slope trick, strongly connected components, max-flow, suffix arrays, fast fourier transform, and more!',
+    'Обща информация за какво представлява този сайт, как да го ползвате и какво са олимпиадите и състезанията по природни науки.',
+  beginner:
+    'Секция, която включва подходящ материал на ниво 7-8 клас, нужен при подготовката за олимпиадите и състезания по природни науки.',
+  intermediate:
+    'Секция, която включва подходящ материал на ниво 9-10 клас, нужен при подготовката за олимпиадите и състезания по природни науки.',
+  advanced:
+    'Секция, която включва подходящ материал на ниво 11-12 клас, нужен при подготовката за олимпиадите и състезания по природни науки.',
+  special:
+    'Секция, която включва допълнителен материал на по-високо ниво, нужен при подготовката за Международните олимпиади по природни науки.',
+  beyond:
+    'Секция, която включва материал отвъд учебния план в училищата, както и отвъд стандарта на олимпиадите, но който задълбочава знанията на състезателите, особено на тези с напреднали интереси. Включва "университетски" теми и всичко на високо ниво, неподходящо за останалите секции.',
 };
 export const SECTION_SEO_TITLES: { [key in SectionID]: string } = {
-  general: 'General USACO Information',
-  bronze: 'USACO Bronze Topics',
-  silver: 'USACO Silver Topics',
-  gold: 'USACO Gold Topics',
-  plat: 'USACO Platinum Topics',
-  adv: 'Advanced USACO Topics',
+  general: 'Предговор',
+  beginner: 'Начинаещ 7-8 клас',
+  intermediate: 'Междинен 9-10 клас',
+  advanced: 'Напреднал 11-12 клас',
+  special: 'Специален, международния кръг',
+  beyond: 'Отвъд, по-надълбоко',
 };
 
 const moduleIDToSectionMap: { [key: string]: SectionID } = {};

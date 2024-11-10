@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface OptionalProps {
   /**
@@ -11,9 +12,11 @@ export interface OptionalProps {
   children: React.ReactNode;
 }
 
-const Optional: React.FC<OptionalProps> = ({ children, title }) => (
-  <div className="rounded-md bg-purple-50 dark:bg-purple-700 dark:bg-opacity-25 p-4 mb-4">
-    <div className="flex">
+const Optional: React.FC<OptionalProps> = ({ children, title }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="rounded-md bg-purple-50 dark:bg-purple-700 dark:bg-opacity-25 p-4 mb-4">
+      <div className="flex">
       <div className="flex-shrink-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -26,14 +29,16 @@ const Optional: React.FC<OptionalProps> = ({ children, title }) => (
       </div>
       <div className="ml-3">
         <h3 className="text-sm leading-5 font-medium text-purple-800 dark:text-purple-200">
-          Optional{title ? `: ${title}` : ''}
+          {t('optional')}
+          {title ? `: ${title}` : ''}
         </h3>
         <div className="mt-2 text-sm leading-5 text-purple-700 dark:text-purple-300 no-y-margin tailwind-alert tailwind-alert--optional">
           {children}
         </div>
       </div>
     </div>
-  </div>
-);
+    </div>
+  );
+};
 
 export default Optional;

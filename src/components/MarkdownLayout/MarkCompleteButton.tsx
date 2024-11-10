@@ -3,6 +3,10 @@ import { ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import React, { Fragment } from 'react';
 import { ModuleProgress, ModuleProgressOptions } from '../../models/module';
+import { useTranslation } from 'react-i18next';
+import { PiPencilSimpleLineBold } from "react-icons/pi";
+import { BiSolidPencil } from "react-icons/bi";
+import { FaPencil } from "react-icons/fa6";
 
 const moduleProgressToIcon = (status: ModuleProgress): JSX.Element => {
   switch (status) {
@@ -19,14 +23,15 @@ const moduleProgressToIcon = (status: ModuleProgress): JSX.Element => {
       );
     case 'Practicing':
       return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="h-5 w-5 text-orange-500"
-        >
-          <path d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" />
-        </svg>
+        // <svg
+        //   xmlns="http://www.w3.org/2000/svg"
+        //   viewBox="0 0 20 20"
+        //   fill="currentColor"
+        //   className="h-5 w-5 text-orange-500"
+        // >
+        //   <path d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" />
+        // </svg>
+        <PiPencilSimpleLineBold className="h-5 w-5 align-center text-orange-500"/>
       );
     case 'Complete':
       return (
@@ -88,6 +93,7 @@ const MarkCompleteButton = ({
   onChange: (option: ModuleProgress) => void;
   dropdownAbove?: boolean;
 }): JSX.Element => {
+  const { t } = useTranslation();
   return (
     <Menu as="div" className="relative inline-block text-left">
       {({ open }) => (
@@ -103,7 +109,12 @@ const MarkCompleteButton = ({
               <span
                 className={`flex-1${state === 'Not Started' ? '' : ' ml-1.5'}`}
               >
-                {state}
+                {state === 'Not Started' && t('not-started')}
+                {state === 'Reading' && t('reading')}
+                {state === 'Practicing' && t('practicing')}
+                {state === 'Complete' && t('completed')}
+                {state === 'Skipped' && t('skipped')}
+                {state === 'Ignored' && t('ignored')}
               </span>
 
               <ChevronDownIcon
@@ -148,7 +159,14 @@ const MarkCompleteButton = ({
                         <span className="w-7">
                           {moduleProgressToIcon(option)}
                         </span>
-                        <span className="flex-1">{option}</span>
+                        <span className="flex-1">
+                          {option === 'Not Started' && t('not-started')}
+                          {option === 'Reading' && t('reading')}
+                          {option === 'Practicing' && t('practicing')}
+                          {option === 'Complete' && t('completed')}
+                          {option === 'Skipped' && t('skipped')}
+                          {option === 'Ignored' && t('ignored')}
+                        </span>
                       </button>
                     )}
                   </Menu.Item>

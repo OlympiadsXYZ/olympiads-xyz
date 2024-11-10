@@ -10,6 +10,7 @@ import { ResourceInfo } from '../../models/resource';
 import TextTooltip from '../Tooltip/TextTooltip';
 import Tooltip from '../Tooltip/Tooltip';
 import ResourceStatusCheckbox from './ResourceStatusCheckbox';
+import { useTranslation } from 'react-i18next';
 
 export const Anchor = styled.a`
   ${tw`text-blue-600 font-semibold`}
@@ -37,6 +38,7 @@ export default function ResourcesListItem({
 }: {
   resource: ResourceInfo;
 }): JSX.Element {
+  const { t } = useTranslation();
   const userLang = useUserLangSetting();
   const darkMode = useDarkMode();
   const [isActive, setIsActive] = React.useState(false);
@@ -88,7 +90,7 @@ export default function ResourcesListItem({
     >
       <div className="flex items-center">
         {resource.starred && (
-          <Tooltip content="You should read all starred resources (unless you already know it) before proceeding!">
+          <Tooltip content={t('starred-resources-tooltip')}>
             <svg
               className="h-4 w-4 text-blue-400"
               fill="currentColor"
@@ -132,15 +134,11 @@ export default function ResourcesListItem({
                   e.preventDefault();
                   setCopied(true);
                   navigator.clipboard.writeText(
-                    window.location.href.split(/[?#]/)[0] +
-                      '?lang=' +
-                      userLang +
-                      '#' +
-                      id
+                    window.location.href.split(/[?#]/)[0]
                   );
                 }}
               >
-                {copied ? 'Copied!' : 'Copy Permalink'}
+                {copied ? t('copied') : t('copy-permalink')}
               </button>
             </div>
           </div>

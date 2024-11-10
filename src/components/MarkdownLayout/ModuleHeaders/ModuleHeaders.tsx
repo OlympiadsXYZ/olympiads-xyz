@@ -23,12 +23,13 @@ import { DashboardProgressSmall } from '../../Dashboard/DashboardProgress';
 import { Frequency } from '../../Frequency';
 import MarkCompleteButton from '../MarkCompleteButton';
 import useSuffix from '../TableOfContents/useSuffix';
-
+import { useTranslation } from 'react-i18next';
 export default function ModuleHeaders({
   moduleLinks,
 }: {
   moduleLinks: ModuleLinkInfo[];
 }): JSX.Element {
+  const { t } = useTranslation();
   const {
     markdownLayoutInfo: markdownData,
     moduleProgress,
@@ -111,15 +112,15 @@ export default function ModuleHeaders({
           </h1>
           {markdownData.author && (
             <p className={`text-gray-500 dark:text-dark-med-emphasis mt-1`}>
-              Author
-              {markdownData.author.indexOf(',') !== -1 ? 's' : ''}:{' '}
+              {t('author')}
+              {markdownData.author.indexOf(',') !== -1 ? t('author-multiple-suffix') : ''}:{' '}
               {markdownData.author}
             </p>
           )}
           {markdownData instanceof ModuleInfo && markdownData.contributors && (
             <p className={`text-gray-500 dark:text-dark-med-emphasis text-xs`}>
-              Contributor
-              {markdownData.contributors.indexOf(',') !== -1 ? 's' : ''}:{' '}
+              {t('contributor')}
+              {markdownData.contributors.indexOf(',') !== -1 ? t('contributors-multiple-suffix') : ''}:{' '}
               {markdownData.contributors}
             </p>
           )}
@@ -152,10 +153,10 @@ export default function ModuleHeaders({
 
       <div className="rounded-md bg-gray-50 dark:bg-gray-900 px-4 py-5 sm:p-6 mb-4">
         <div className="flex items-center justify-between">
-          <Menu as="div" className="inline-block text-left relative">
+          {/* <Menu as="div" className="inline-block text-left relative">
             {({ open }) => (
               <>
-                <div className="-mt-1">
+                {/* <div className="-mt-1">
                   <Menu.Button
                     className="inline-flex items-center w-full px-1 -mx-1 rounded-md text-sm font-medium text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 dark:focus:ring-offset-gray-900 focus:ring-blue-500"
                     style={{ width: 'fit-content' }}
@@ -205,13 +206,13 @@ export default function ModuleHeaders({
                 </Transition>
               </>
             )}
-          </Menu>
+          </Menu> */}
 
           <Link
             to={`/editor?filepath=${useSuffix()}`}
             className="text-sm font-medium text-gray-600 hover:text-gray-900 my-0 dark:text-gray-400 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
           >
-            <span>Edit This Page</span>
+            <span>{t('edit_this_page')}</span>
             <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300" />
           </Link>
         </div>
@@ -221,8 +222,8 @@ export default function ModuleHeaders({
             <div className="h-4 sm:h-6" />
             <h3 className="text-sm leading-5 font-medium text-gray-800 my-0 dark:text-gray-200">
               {markdownData instanceof ModuleInfo
-                ? 'Prerequisites'
-                : 'Appears In'}
+                ? t('prerequisites')
+                : t('appears_in')}
             </h3>
             <div className="text-sm leading-5 text-gray-700 mt-1 no-y-margin dark:text-gray-300">
               <ul className="list-disc list-inside pl-3 space-y-1">
@@ -258,7 +259,7 @@ export default function ModuleHeaders({
               rel="noreferrer"
               className="text-sm font-medium text-gray-800 hover:text-gray-900 my-0 dark:text-gray-200 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
             >
-              <span>View Problem Statement</span>
+              <span>{t('view_problem_statement')}</span>
               <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300" />
             </a>
           </div>

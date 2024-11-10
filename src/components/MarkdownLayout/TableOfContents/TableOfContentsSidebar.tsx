@@ -3,12 +3,14 @@ import { useMemo } from 'react';
 import { useActiveHash } from '../../../hooks/useActiveHash';
 import { TOCHeading } from '../../../models/module';
 import genLinksFromTOCHeadings from './genLinksFromTOCHeadings';
+import { useTranslation } from 'react-i18next';
 
 const TableOfContentsSidebar = ({
   tableOfContents,
 }: {
   tableOfContents: TOCHeading[];
 }) => {
+  const { t } = useTranslation();
   const hashes = useMemo(
     () => tableOfContents.map(heading => heading.slug),
     [tableOfContents]
@@ -25,7 +27,7 @@ const TableOfContentsSidebar = ({
   return (
     <div className="sticky" style={{ top: '2.5rem' }}>
       <h2 className="uppercase text-gray-500 dark:text-dark-med-emphasis font-bold mb-4 text-sm tracking-wider">
-        Table of Contents
+        {t('table_of_contents')}
       </h2>
       {links}
 

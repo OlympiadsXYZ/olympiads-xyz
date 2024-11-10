@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import React, { FormEvent, Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type SlideoverProps = {
   isOpen: boolean;
@@ -13,6 +14,7 @@ type SlideoverProps = {
 };
 
 export default function SlideoverForm(props: SlideoverProps): JSX.Element {
+  const { t } = useTranslation();
   return (
     <Transition.Root show={props.isOpen} as={Fragment}>
       <Dialog
@@ -61,7 +63,7 @@ export default function SlideoverForm(props: SlideoverProps): JSX.Element {
                           className="text-blue-200 hover:text-white"
                           onClick={() => props.onClose()}
                         >
-                          <span className="sr-only">Close panel</span>
+                          <span className="sr-only">{t('close_panel')}</span>
                           <XIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                       </div>

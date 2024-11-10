@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import 'tippy.js/themes/light.css';
 import ConfettiContext from '../../context/ConfettiContext';
 import { useDarkMode } from '../../context/DarkModeContext';
+import { PiPencilSimpleLineBold } from "react-icons/pi";
+import { useTranslation } from 'react-i18next';
 import MarkdownLayoutContext from '../../context/MarkdownLayoutContext';
 import {
   replaceIllegalFirebaseCharacters,
@@ -44,19 +46,39 @@ const ProgressDropdown = ({
       Skipped: 'text-blue-400',
       Ignored: 'text-purple-400',
     };
-    const pathMap: { [key in ResourceProgress]: JSX.Element } = {
+    const iconMap: { [key in ResourceProgress]: JSX.Element } = {
       'Not Started': <> </>,
       Reading: (
-        <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+          className={`h-5 w-5 ${equal ? 'text-white' : colorMap[status]}`}
+        >
+          <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+        </svg>
       ),
       Practicing: (
-        <path d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" />
+        <PiPencilSimpleLineBold fill="currentColor"
+        className={`h-5 w-5 ${equal ? 'text-white' : colorMap[status]}`} />
       ),
       Complete: (
-        <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+          className={`h-5 w-5 ${equal ? 'text-white' : colorMap[status]}`}
+        >
+          <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
+        </svg>
       ),
       Skipped: (
-        <>
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+          className={`h-5 w-5 ${equal ? 'text-white' : colorMap[status]}`}
+        >
           <path
             fillRule="evenodd"
             d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
@@ -67,27 +89,26 @@ const ProgressDropdown = ({
             d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
             clipRule="evenodd"
           />
-        </>
+        </svg>
       ),
       Ignored: (
-        <path
-          fillRule="evenodd"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className={`h-5 w-5 ${equal ? 'text-white' : colorMap[status]}`}
+        >
+          <path
+            fillRule="evenodd"
           d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-          clipRule="evenodd"
-        />
+            clipRule="evenodd"
+          />
+        </svg>
       ),
     };
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        className={`h-5 w-5 ${equal ? 'text-white' : colorMap[status]}`}
-      >
-        {pathMap[status]}
-      </svg>
-    );
+    return iconMap[status];
   };
+  const { t } = useTranslation();
 
   return (
     <ul
@@ -111,7 +132,12 @@ const ProgressDropdown = ({
               progress === status ? 'font-semibold' : 'font-normal'
             } block truncate`}
           >
-            {progress}
+            {progress === 'Not Started' && t('not-started')}
+            {progress === 'Reading' && t('reading')}
+            {progress === 'Practicing' && t('practicing')}
+            {progress === 'Complete' && t('completed')}
+            {progress === 'Skipped' && t('skipped')}
+            {progress === 'Ignored' && t('ignored')}
           </span>
 
           <span className={`absolute inset-y-0 left-0 flex items-center pl-3`}>

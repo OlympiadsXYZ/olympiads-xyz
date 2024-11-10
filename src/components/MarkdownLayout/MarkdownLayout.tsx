@@ -156,7 +156,7 @@ export default function MarkdownLayout({
 
               <ModuleProgressUpdateBanner />
 
-              <ForumCTA />
+              {/* <ForumCTA /> */}
 
               {/*<div className="my-8">*/}
               {/*  <ModuleFeedback markdownData={markdownData} />*/}

@@ -13,6 +13,7 @@ import React, { Fragment } from 'react';
 import { useForceFirebaseUserRerender } from '../context/UserDataContext/UserDataContext';
 import { useFirebaseApp } from '../hooks/useFirebase';
 import { LoadingSpinner } from './elements/LoadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 export interface SignInModalProps {
   isOpen: boolean;
@@ -23,6 +24,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { t } = useTranslation();
   const firebaseApp = useFirebaseApp();
   // TODO: test to see whether this actually works
   const forceFirebaseUserRerender = useForceFirebaseUserRerender();
@@ -115,6 +117,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
   React.useEffect(() => {
     if (isOpen) setError(null);
   }, [isOpen]);
+  
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -161,14 +164,11 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                   as="h3"
                   className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200"
                 >
-                  Sign In
+                  {t('sign_in')}
                 </Dialog.Title>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Signing in allows you to sync your data with our servers
-                    (highly recommended). If this is your first time signing in,
-                    you will have the option to upload your local data to the
-                    server.
+                    {t('sign_in_tooltip')}
                   </p>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                         <path fill="none" d="M0 0h48v48H0z" />
                       </g>
                     </svg>
-                    <span className="ml-3">Sign In With Google</span>
+                    <span className="ml-3">{t('sign_in_with')} Google</span>
                   </button>
                   <button
                     type="button"
@@ -239,7 +239,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                         </g>
                       </g>
                     </svg>
-                    <span className="ml-3">Sign In With GitHub</span>
+                    <span className="ml-3">{t('sign_in_with')} GitHub</span>
                   </button>
                   {isSigningIn && <LoadingSpinner />}
                 </div>
@@ -253,8 +253,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                 {isLinking && (
                   <div>
                     <p className="text-red-700 dark:text-red-300">
-                      An account with this email already exists, please sign in
-                      with Google to link the two accounts:
+                      {t('sign_in_with_email_already_exists')}
                     </p>
                     <button
                       type="button"
@@ -262,7 +261,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                       onClick={handleLinkAccounts}
                       // disabled={!firebaseApp || isSigningIn}
                     >
-                      Link Accounts
+                      {t('link_accounts')}
                     </button>
                   </div>
                 )}
@@ -276,7 +275,7 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                     onClose();
                   }}
                 >
-                  <span className="sr-only">Close</span>
+                  <span className="sr-only">{t('close')}</span>
                   <XIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
               </div>

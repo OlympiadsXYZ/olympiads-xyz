@@ -4,12 +4,14 @@ import { useMarkdownProblemLists } from '../../context/MarkdownProblemListsConte
 import { getProblemURL, ProblemInfo } from '../../models/problem';
 import ProblemsListItemDropdown from './ProblemsList/ProblemsListItemDropdown';
 import ProblemStatusCheckbox from './ProblemsList/ProblemStatusCheckbox';
+import { useTranslation } from 'react-i18next';
 
 export default function FocusProblem({
   problem: problemID,
 }: {
   problem: string;
 }) {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = React.useState(false);
 
   const problemLists = useMarkdownProblemLists()!;
@@ -83,15 +85,14 @@ export default function FocusProblem({
         </div>
         <div className="border-t border-gray-100 dark:border-gray-700 sm:flex sm:justify-between">
           <p className="text-xs italic text-gray-400 font-normal pt-3 px-4 sm:px-6 !mb-0 sm:pb-3">
-            Focus Problem – try your best to solve this problem before
-            continuing!
+            {t('focus-problem')}
           </p>
           {problem.solution?.kind === 'internal' && (
             <a
               href={`${getProblemURL(problem)}/solution`}
               className="text-xs italic !text-gray-400 !font-normal py-3 px-4 sm:px-6 !mb-0 inline-flex hover:underline"
             >
-              <span className="mr-1">View Internal Solution</span>
+              <span className="mr-1">{t('view-internal-solution')}</span>
               <ExternalLinkIcon className="h-4 w-4" />
             </a>
           )}

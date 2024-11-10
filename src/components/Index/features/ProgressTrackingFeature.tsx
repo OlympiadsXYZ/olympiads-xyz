@@ -1,13 +1,15 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ProgressTrackingFeature = (): JSX.Element => {
+  const { t } = useTranslation();
   return (
     <div className="-m-4">
       <div className="w-full p-4">
         <div className="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
             <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-300">
-              Modules Progress
+              {t('modules-progress')}
             </h3>
             <div className="mt-6">
               <div>
@@ -17,7 +19,7 @@ export const ProgressTrackingFeature = (): JSX.Element => {
                       6
                     </span>
                     <span className="block mt-1 text-sm font-medium uppercase text-green-800 dark:text-green-100">
-                      Completed
+                      {t('completed')}
                     </span>
                   </div>
                   <div className="text-center">
@@ -25,7 +27,7 @@ export const ProgressTrackingFeature = (): JSX.Element => {
                       3
                     </span>
                     <span className="block mt-1 text-sm font-medium uppercase text-yellow-800 dark:text-yellow-100">
-                      In Progress
+                      {t('in-progress')}
                     </span>
                   </div>
                   <div className="text-center">
@@ -33,7 +35,7 @@ export const ProgressTrackingFeature = (): JSX.Element => {
                       2
                     </span>
                     <span className="block mt-1 text-sm font-medium uppercase text-blue-800 dark:text-blue-100">
-                      Skipped
+                      {t('skipped')}
                     </span>
                   </div>
                   <div className="text-center">
@@ -41,7 +43,7 @@ export const ProgressTrackingFeature = (): JSX.Element => {
                       1
                     </span>
                     <span className="block mt-1 text-sm font-medium uppercase text-gray-800 dark:text-gray-100">
-                      Not Started
+                      {t('not-started')}
                     </span>
                   </div>
                 </div>
@@ -62,7 +64,7 @@ export const ProgressTrackingFeature = (): JSX.Element => {
                   </div>
                   <div className="text-right">
                     <span className="text-sm font-semibold inline-block text-gray-800 dark:text-gray-300">
-                      12 total
+                      {t('total')}: 12
                     </span>
                   </div>
                 </div>
