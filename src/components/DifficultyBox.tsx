@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ProblemDifficulty } from '../models/problem';
 import TextTooltip from './Tooltip/TextTooltip';
+import { useTranslation } from 'react-i18next';
 
 export const difficultyClasses = {
   'N/A': 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100',
@@ -17,6 +18,7 @@ export default function DifficultyBox({
 }: {
   difficulty: ProblemDifficulty;
 }) {
+  const { t } = useTranslation()
   return (
     <span
       className={
@@ -30,10 +32,10 @@ export default function DifficultyBox({
             'This problem was added automatically; if you want to suggest a difficulty, feel free to make a pull request!'
           }
         >
-          {difficulty}
+          {t('n/a')}
         </TextTooltip>
       ) : (
-        difficulty
+        difficulty === 'Very Easy' ? (t('very-easy'))  : (difficulty === 'Easy' ? (t('easy')) : (difficulty === 'Normal' ? (t('normal')) : (difficulty === 'Hard' ? (t('hard')) : (difficulty === 'Very Hard' ? (t('very-hard')) : (difficulty === 'Insane' ? t('insane') : '' )))))
       )}
     </span>
   );

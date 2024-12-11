@@ -8,7 +8,7 @@ import TextTooltip from '../../Tooltip/TextTooltip';
 import { DivisionProblemInfo } from './DivisionList/DivisionProblemInfo';
 import ProblemListItemSolution from './ProblemListItemSolution';
 import { ProblemsListItemProps } from './ProblemsListItem';
-
+import { useTranslation } from 'react-i18next';
 function ViewSolutionsContent({
   problem,
 }: {
@@ -16,15 +16,16 @@ function ViewSolutionsContent({
 }): JSX.Element {
   const { solutions, currentUserSolutions } =
     useUserSolutionsForProblem(problem);
+  const { t } = useTranslation();
   let viewSolutionsContent = (
-    <>View User Solutions ({solutions?.length ?? '...'})</>
+    <>{t('view-user-solutions')} ({solutions?.length ?? '...'})</>
   );
   if (currentUserSolutions?.length) {
     viewSolutionsContent = (
       <>
         <TextTooltip
           position="bottom"
-          content={"You've submitted a solution to this problem."}
+          content={t('you-ve-submitted-a-solution-to-this-problem')}
         >
           {viewSolutionsContent}
         </TextTooltip>
@@ -42,6 +43,7 @@ function ViewSolutionsContent({
       </>
     );
   }
+  //const { t } = useTranslation();
   return (
     <a
       className="focus:outline-none block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900"
@@ -73,6 +75,7 @@ export default function ProblemsListItemDropdown(
 
   const tippyRef = React.useRef<Instance>();
   const [isDropdownShown, setIsDropdownShown] = React.useState(false);
+  const { t } = useTranslation();
 
   return (
     <Tippy
@@ -82,6 +85,7 @@ export default function ProblemsListItemDropdown(
           <div className="-mx-2 text-left">
             {solutionContent}
             <ViewSolutionsContent problem={problem} />
+            
             <button
               type="button"
               className="focus:outline-none block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900"
@@ -95,7 +99,7 @@ export default function ProblemsListItemDropdown(
                 );
               }}
             >
-              {copied ? 'Copied!' : 'Copy Permalink'}
+              {copied ? t('copied') : t('copy-permalink')}
             </button>
             {isUsaco(problem.source) && (
               <a
@@ -106,7 +110,7 @@ export default function ProblemsListItemDropdown(
                 target="_blank"
                 rel="noreferrer"
               >
-                Open in IDE
+                {t('open-in-ide')}
               </a>
             )}
           </div>

@@ -13,6 +13,8 @@ import ProblemsListHeader from './ProblemsListHeader';
 import ProblemsListItem from './ProblemsListItem';
 import SuggestProblemRow from './SuggestProblemRow';
 
+import { useTranslation } from 'react-i18next';
+
 /* eslint-disable react/prop-types */
 
 type ProblemsListProps =
@@ -47,6 +49,7 @@ type AnnotatedProblemsListProps =
       modules?: boolean; // only if is division table
     };
 export function ProblemsList(unannotatedProps: ProblemsListProps): JSX.Element {
+  const { t } = useTranslation();
   const markdownProblems = useMarkdownProblemLists()!;
   let problems: ProblemInfo[] | DivisionProblemInfo[];
   if (typeof unannotatedProps.problems === 'string') {
@@ -215,7 +218,7 @@ export function ProblemsList(unannotatedProps: ProblemsListProps): JSX.Element {
                       className="text-lg leading-6 font-medium text-gray-900"
                       id="modal-headline"
                     >
-                      Solution Sketch: {problem?.name}
+                      {t('solution-sketch')}: {problem?.name}
                     </h3>
                     <div className="mt-4">
                       <p className="text-gray-700">{problem.solution.sketch}</p>

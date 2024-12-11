@@ -32,20 +32,21 @@ function replaceSearch(newSearch): string {
 }
 
 const shouldLangParamApply = () => {
-  const splitPath = window.location.pathname.split('/').filter(i => i);
-  const posi = [
-    'general',
-    'bronze',
-    'silver',
-    'gold',
-    'plat',
-    'adv',
-    'solutions',
-  ];
-  if (splitPath.length > 1 && posi.includes(splitPath[0])) {
-    // if markdown layout
-    return true;
-  }
+  //would add only if needed for an informatics division of olympiads xyz
+  // const splitPath = window.location.pathname.split('/').filter(i => i);
+  // const posi = [
+  //   'general',
+  //   'bronze',
+  //   'silver',
+  //   'gold',
+  //   'plat',
+  //   'adv',
+  //   'solutions',
+  // ];
+  // if (splitPath.length > 1 && posi.includes(splitPath[0])) {
+  //   // if markdown layout
+  //   return true;
+  // }
   return false;
 };
 

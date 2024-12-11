@@ -9,6 +9,7 @@ import Tooltip from '../../Tooltip/Tooltip';
 import { DivisionProblemInfo } from './DivisionList/DivisionProblemInfo';
 import ProblemsListItemDropdown from './ProblemsListItemDropdown';
 import ProblemStatusCheckbox from './ProblemStatusCheckbox';
+import { useTranslation } from 'react-i18next';
 
 export type ProblemsListItemProps = {
   showTags: boolean;
@@ -53,6 +54,7 @@ const StyledProblemRow = styled.tr<{ isActive: boolean }>`
 export default function ProblemsListItem(
   props: ProblemsListItemProps
 ): JSX.Element {
+  const { t } = useTranslation();
   const [isActive, setIsActive] = React.useState(false);
   const { isDivisionTable, problem } = props;
   const id = `problem-${problem.uniqueId}`;
@@ -121,7 +123,7 @@ export default function ProblemsListItem(
     <td className="pl-4 md:px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium">
       <div className="flex items-center">
         {isDivisionTable == false && problem.isStarred && (
-          <Tooltip content="We highly recommend you do all starred problems!">
+          <Tooltip content={t('starred-tooltip')}>
             <svg
               className="h-4 w-4 text-blue-400"
               fill="currentColor"
@@ -173,7 +175,7 @@ export default function ProblemsListItem(
             open={props.showTags}
             className="text-gray-500 dark:text-dark-med-emphasis"
           >
-            <summary>Show Tags</summary>
+            <summary>{t('show-tags')}</summary>
             <span className="text-xs">{problem.tags.sort().join(', ')}</span>
           </details>
         ) : null}

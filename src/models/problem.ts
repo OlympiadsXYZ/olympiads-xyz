@@ -8,6 +8,53 @@ export const recentUsaco = ['Bronze', 'Silver', 'Gold', 'Platinum'];
 
 // abbreviation -> [URL, description or full name, instructions to view solutions]
 export const probSources = {
+  APhO: [
+    '',
+    'Азиатска олимпиада по физика',
+    'Asian Physics Olympiad',
+  ],
+
+  EuPhO: [
+    '',
+    'Европейска олимпиада по физика',
+    'European Physics Olympiad',
+  ],
+  NBPhO: [
+    '',
+    'Северно-Балтийска олимпиада по физика',
+    'Nord-Baltic Physics Olympiad',
+  ],
+  IPhO: [
+    '',
+    'Международна олимпиада по физика',
+    'International Physics Olympiad',
+    
+  ],
+  'НОФ': [
+    '',
+    'Национална олимпиада по физика',
+    'Bulgarian National Olympiad in Physics'
+  ],
+  'НОФ-2': [
+    '',
+    'Областен кръг на НОФ',
+    'Regional Round of NOF'
+  ],
+  'НОФ-3': [
+    '',
+    'Национален кръг на НОФ',
+    'National Round of NOF'
+  ],
+  'Есенни': [
+    '',
+    'Национално есенно състезание по физика',
+    'Bulgarian National Fall Competition in Physics'
+  ],
+  'Пролетни': [
+    '',
+    'Национално пролетно състезание по физика',
+    'Bulgarian National Spring Competition in Physics'
+  ],
   Bronze: [
     'http://www.usaco.org/index.php?page=viewproblem2&cpid=',
     'USACO 2015-16 to present',
@@ -95,6 +142,13 @@ export const probSources = {
 // olympiads on DMOJ and oj.uz
 // abbreviation -> [OJ, full name]
 export const olympiads = {
+  APhO: ['', 'Asian Physics Olympiad'],
+  EuPhO: ['', 'European Physics Olympiad'],
+  NBPhO: ['', 'Nord-Baltic Physics Olympiad'],
+  IPhO: ['', 'International Physics Olympiad'],
+  'НОФ': ['', 'Bulgarian National Olympiad in Physics'],
+  'Есенни': ['', 'Bulgarian National Fall Competition in Physics'],
+  'Пролетни': ['', 'Bulgarian National Spring Competition in Physics'],
   CCC: ['DMOJ', 'Canadian Computing Competition'],
   CCO: ['DMOJ', 'Canadian Computing Olympiad'],
   DMOPC: ['DMOJ', 'DMOJ Monthly Open Programming Competition'],
@@ -300,6 +354,7 @@ const getTrailingCodeFromProblemURL = (url: string): number => {
   return parseInt(match[1]);
 };
 
+
 export const getProblemInfo = (
   metadata: ProblemMetadata,
   ordering?: any
@@ -345,7 +400,7 @@ export const getProblemInfo = (
     }
     sol = {
       kind: 'label',
-      label: 'Check ' + site,
+      label: 'Виж ' + site,
       labelTooltip: probSources[key][2],
     };
   } else if (solutionMetadata.kind === 'internal') {
@@ -357,7 +412,7 @@ export const getProblemInfo = (
     sol = {
       kind: 'link',
       url: solutionMetadata.url,
-      label: 'External Sol',
+      label: 'Външно решение',
     };
   } else if (solutionMetadata.kind === 'CPH') {
     const getSec = (dictKey, book, sec) => {
@@ -386,7 +441,7 @@ export const getProblemInfo = (
     }
     sol = {
       kind: 'link',
-      label: 'External Sol',
+      label: 'Външно решение',
       url:
         `http://www.usaco.org/current/data/` +
         id_to_sol[solutionMetadata.usacoId],
@@ -396,7 +451,7 @@ export const getProblemInfo = (
     const num = year - 1994 + 20;
     sol = {
       kind: 'link',
-      label: 'External Sol',
+      label: 'Външно решение',
       url: `https://ioinformatics.org/page/ioi-${year}/` + num.toString(),
     };
   } else if (solutionMetadata.kind === 'none') {
@@ -409,8 +464,8 @@ export const getProblemInfo = (
     }
     sol = {
       kind: 'link',
-      label: 'In Module',
-      url: `https://usaco.guide/${
+      label: 'В модула',
+      url: `/${
         ordering.moduleIDToSectionMap[solutionMetadata.moduleId]
       }/${solutionMetadata.moduleId}#problem-${info.uniqueId}`,
     };

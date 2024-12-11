@@ -3,6 +3,7 @@ import { getProblemURL, ProblemInfo } from '../../../models/problem';
 import TextTooltip from '../../Tooltip/TextTooltip';
 import Tooltip from '../../Tooltip/Tooltip';
 import { Anchor } from './ProblemsListItem';
+import { useTranslation } from 'react-i18next';
 
 type ProblemListItemSolutionProps = {
   problem: ProblemInfo;
@@ -12,15 +13,14 @@ type ProblemListItemSolutionProps = {
 export default function ProblemListItemSolution(
   props: ProblemListItemSolutionProps
 ): JSX.Element {
+  const { t } = useTranslation();
   const { problem } = props;
   let contents: JSX.Element | null = null;
   if (!problem.solution) {
     contents = (
       <div className="px-4 py-2 text-sm text-gray-300 dark:text-gray-500">
-        <Tooltip
-          content={`We haven't written a solution for this problem yet. If needed, request one using the "Contact Us" button!`}
-        >
-          <span>View Solution</span>
+        <Tooltip content={t('no-solution')}>
+          <span>{t('view-solution')}</span>
         </Tooltip>
       </div>
     );
@@ -31,8 +31,8 @@ export default function ProblemListItemSolution(
         onClick={() => props.onShowSolutionSketch(problem)}
       >
         <span className="inline-flex items-center group h-5">
-          Show Solution Sketch
-          <Tooltip content="This solution is still a work-in-progress. It may be vague or incomplete.">
+          {t('show-solution-sketch')}
+          <Tooltip content={t('solution-sketch-tooltip')}>
             <svg
               className="h-5 w-5 text-gray-300 ml-1 group-hover:text-yellow-300 transition"
               viewBox="0 0 20 20"
@@ -49,7 +49,7 @@ export default function ProblemListItemSolution(
       </div>
     );
   } else if (problem.solution.kind === 'label') {
-    const textContent = <>Solution: {problem.solution.label}</>;
+    const textContent = <>{t('solution')}: {problem.solution.label}</>;
     contents = (
       <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300">
         {problem.solution.labelTooltip ? (
@@ -80,7 +80,7 @@ export default function ProblemListItemSolution(
         rel="noreferrer"
       >
         <div className="text-left">
-          {problem.solution.hasHints && 'Hints + '}Internal Sol
+          {problem.solution.hasHints && t('hints') + ' + '}{t('internal-sol')}
         </div>
       </a>
     );
