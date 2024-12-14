@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
+import moment from 'moment';
 
 const LANGUAGES = ['en', 'bg', 'de'];
 const LANGUAGE_LABELS = {

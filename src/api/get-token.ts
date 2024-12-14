@@ -3,7 +3,7 @@ import { GatsbyFunctionRequest, GatsbyFunctionResponse } from 'gatsby';
 
 const app = new OAuthApp({
   clientType: 'github-app',
-  clientId: process.env.GATSBY_EDITOR_CLIENT_ID ?? '',
+  clientId: process.env.GATSBY_EDITOR_CLIENT_ID ?? '', //TODO: create a Github OAuth app and link to firebase
   clientSecret: process.env.EDITOR_CLIENT_SECRET ?? '',
 });
 interface RequestBody {

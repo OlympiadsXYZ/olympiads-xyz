@@ -2,13 +2,13 @@ export const fetchFileContent = async (
   filePath: string
 ): Promise<{ markdown: string; problems?: string }> => {
   const githubURL = encodeURI(
-    `https://raw.githubusercontent.com/cpinitiative/usaco-guide/master/${filePath}`
-  );
+    `https://raw.githubusercontent.com/OlympiadsXYZ/olympiads-xyz/master/${filePath}`
+  ); //TODO: change to the new repo if needed
   const promises = [fetch(githubURL)];
   if (filePath.startsWith('content/')) {
     // module
     const githubProblemsURL = encodeURI(
-      `https://raw.githubusercontent.com/cpinitiative/usaco-guide/master/${filePath.replace(
+      `https://raw.githubusercontent.com/OlympiadsXYZ/olympiads-xyz/master/${filePath.replace(
         /\.mdx$/,
         '.problems.json'
       )}`

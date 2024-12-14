@@ -129,7 +129,7 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
             </div>
           </div>
           <div className="flex mt-4 mb-1 mx-9 justify-center">
-            <PoweredBy />
+            {/* <PoweredBy /> */}
           </div>
           <div className="pt-3 px-9 pb-4 grid grid-cols-10">
             <div className="sm:col-span-4 md:col-span-3 lg:col-span-2 xl:col-span-2 col-span-5 overflow-y-auto">

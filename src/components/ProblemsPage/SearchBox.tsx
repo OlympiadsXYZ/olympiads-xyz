@@ -2,8 +2,10 @@ import * as React from 'react';
 import { useEffect, useRef } from 'react';
 import { useSearchBox, type UseSearchBoxProps } from 'react-instantsearch';
 import useDebounce from '../../hooks/useDebounce';
+import { useTranslation } from 'react-i18next';
 
 export default function SearchBox(props: UseSearchBoxProps): JSX.Element {
+  const { t } = useTranslation();
   // https://stackoverflow.com/questions/53314857/how-to-focus-something-on-next-render-with-react-hooks
   const { query, refine: setQuery } = useSearchBox(props);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,7 +39,7 @@ export default function SearchBox(props: UseSearchBoxProps): JSX.Element {
       <input
         id="search"
         className="block w-full pl-12 pr-3 py-3 rounded-md bg-blue-100 dark:bg-blue-100 placeholder-gray-900 dark:placeholder-blue-900 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition text-black dark:text-blue-900"
-        placeholder="Search"
+        placeholder={t('search')}
         type="search"
         autoComplete="off"
         value={searchTerm}

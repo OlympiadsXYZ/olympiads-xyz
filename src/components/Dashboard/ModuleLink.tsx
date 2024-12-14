@@ -12,6 +12,14 @@ import { FrequencyLabels } from '../Frequency';
 import ModuleFrequencyDots from '../MarkdownLayout/ModuleFrequencyDots';
 import { LinkWithProgress as SidebarLinkWithProgress } from '../MarkdownLayout/SidebarNav/ItemLink';
 import Tooltip from '../Tooltip/Tooltip';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
+import 'moment/locale/bg' 
+import 'moment/locale/de'
+import 'moment/locale/en-gb'
+
+import i18next from 'i18next';
+
 
 const LinkWithProgress = styled(SidebarLinkWithProgress)<{ small: boolean }>`
   &&::after {
@@ -105,62 +113,30 @@ const FrequencyTextColors = [
   'group-hover:text-green-700 dark:group-hover:text-green-400',
 ];
 
-// https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
+
+
+
+const ModuleLink = ({ link }: { link: ModuleLinkInfo }): JSX.Element => {
+  const { t } = useTranslation();
+  // https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
 function time_ago(time: unknown): string {
   if (typeof time == 'string') time = +new Date(time);
   else if (time instanceof Date) time = time.getTime();
   else time = +new Date();
-  const time_formats = [
-    [60, 'seconds', 1], // 60
-    [120, '1 minute ago', '1 minute from now'], // 60*2
-    [3600, 'minutes', 60], // 60*60, 60
-    [7200, '1 hour ago', '1 hour from now'], // 60*60*2
-    [86400, 'hours', 3600], // 60*60*24, 60*60
-    [172800, 'Yesterday', 'Tomorrow'], // 60*60*24*2
-    [604800, 'days', 86400], // 60*60*24*7, 60*60*24
-    [1209600, 'Last week', 'Next week'], // 60*60*24*7*4*2
-    [2419200, 'weeks', 604800], // 60*60*24*7*4, 60*60*24*7
-    [4838400, 'Last month', 'Next month'], // 60*60*24*7*4*2
-    [29030400, 'months', 2419200], // 60*60*24*7*4*12, 60*60*24*7*4
-    [58060800, 'Last year', 'Next year'], // 60*60*24*7*4*12*2
-    [2903040000, 'years', 29030400], // 60*60*24*7*4*12*100, 60*60*24*7*4*12
-    [5806080000, 'Last century', 'Next century'], // 60*60*24*7*4*12*100*2
-    [58060800000, 'centuries', 2903040000], // 60*60*24*7*4*12*100*20, 60*60*24*7*4*12*100
-  ] as [number, string, string | number][];
-  let seconds = (+new Date() - (time as number)) / 1000,
-    token = 'ago',
-    list_choice = 1;
-
-  if (seconds == 0) {
-    return 'Just Now';
-  }
-  if (seconds < 0) {
-    seconds = Math.abs(seconds);
-    token = 'from now';
-    list_choice = 2;
-  }
+  moment.locale(i18next.language);
+  let seconds = (+new Date() - (time as number)) / 1000
   if (seconds > 4838400) {
     return '';
   }
-  let i = 0,
-    format;
-  while ((format = time_formats[i++])) {
-    if (seconds < format[0]) {
-      if (typeof format[2] == 'string') return format[list_choice] as string;
-      else {
-        return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
-      }
-    }
+  else {
+    //works fantastically omfg
+    return moment(time as string).fromNow();
   }
-  return time as string;
 }
-
-function timeAgoString(time: unknown): string {
-  const res = time_ago(time);
-  return res && `Updated: ${res}`;
-}
-
-const ModuleLink = ({ link }: { link: ModuleLinkInfo }): JSX.Element => {
+  function timeAgoString(time: unknown): string {
+    const res = time_ago(time);
+    return res && `${t('updated')}: ${res}`;
+  }
   const userProgressOnModules = useUserProgressOnModules();
   const progress = userProgressOnModules[link.id] || 'Not Started';
 
@@ -227,8 +203,8 @@ const ModuleLink = ({ link }: { link: ModuleLinkInfo }): JSX.Element => {
                 <Tooltip
                   content={
                     link.isIncomplete
-                      ? 'This module has incomplete sections.'
-                      : `This module is missing sections in your language (${LANGUAGE_LABELS[userLang]}).`
+                      ? t('module_incomplete')
+                      : t('module_something-missing')
                   }
                 >
                   <svg
@@ -262,7 +238,11 @@ const ModuleLink = ({ link }: { link: ModuleLinkInfo }): JSX.Element => {
                   FrequencyTextColors[link.frequency ?? 0]
                 }
               >
-                {FrequencyLabels[link.frequency ?? 0]}
+                {FrequencyLabels[link.frequency ?? 0] === 'Has Not Appeared' && t('has-not-appeared')}
+                {FrequencyLabels[link.frequency ?? 0] === 'Rare' && t('rare')}
+                {FrequencyLabels[link.frequency ?? 0] === 'Not Frequent' && t('not-frequent')}
+                {FrequencyLabels[link.frequency ?? 0] === 'Somewhat Frequent' && t('somewhat-frequent')}
+                {FrequencyLabels[link.frequency ?? 0] === 'Very Frequent' && t('very-frequent')}
               </span>
             </p>
           )}

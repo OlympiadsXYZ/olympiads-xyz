@@ -35,6 +35,11 @@ export const probSources = {
     'Национална олимпиада по физика',
     'Bulgarian National Olympiad in Physics'
   ],
+  'НОФ-1': [
+    '',
+    'Общински кръг на НОФ',
+    'Municipal Round of NOF'
+  ],
   'НОФ-2': [
     '',
     'Областен кръг на НОФ',
@@ -44,6 +49,11 @@ export const probSources = {
     '',
     'Национален кръг на НОФ',
     'National Round of NOF'
+  ],
+  'НОФ-4': [
+    '',
+    'Подбор на националния отбор',
+    'Selection of the National Team'
   ],
   'Есенни': [
     '',
@@ -149,6 +159,7 @@ export const olympiads = {
   'НОФ': ['', 'Bulgarian National Olympiad in Physics'],
   'Есенни': ['', 'Bulgarian National Fall Competition in Physics'],
   'Пролетни': ['', 'Bulgarian National Spring Competition in Physics'],
+  RMPh: ['', 'Romanian Master of Physics'],
   CCC: ['DMOJ', 'Canadian Computing Competition'],
   CCO: ['DMOJ', 'Canadian Computing Olympiad'],
   DMOPC: ['DMOJ', 'DMOJ Monthly Open Programming Competition'],

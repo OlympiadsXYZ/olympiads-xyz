@@ -1,9 +1,9 @@
 {
-  "name": "usaco-guide",
+  "name": "olympiads-xyz",
   "private": true,
-  "description": "A free collection of curated, high-quality resources to take you from Bronze to Platinum and beyond.",
+  "description": "A free collection of curated, high-quality resources for olympiads.",
   "version": "0.1.0",
-  "author": "Nathan Wang <nathan.r.wang@gmail.com>",
+  "author": "Margulan Ismoldayev, Petar Petrov",
   "devDependencies": {
     "@babel/core": "^7.18.5",
     "@babel/plugin-syntax-typescript": "^7.17.12",
@@ -159,7 +159,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "cp ./content/problems.schema.json ./static/problems.schema.json && gatsby build",
+    "build": "cross-env GATSBY_CPU_COUNT=1 NODE_OPTIONS=\"--max-old-space-size=4096\" gatsby build",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
     "format": "prettier --write .",
@@ -179,10 +179,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thecodingwizard/usaco-guide"
+    "url": "https://github.com/OlympiadsXYZ/olympiads-xyz"
   },
   "bugs": {
-    "url": "https://github.com/thecodingwizard/usaco-guide/issues"
+    "url": "https://github.com/OlympiadsXYZ/olympiads-xyz/pulls"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": "eslint --config .eslintrc.js --resolve-plugins-relative-to .",
@@ -197,7 +197,9 @@
     "@vercel/analytics": "^1.1.3",
     "@vercel/speed-insights": "^1.0.9",
     "clsx": "^2.1.0",
+    "cross-env": "^7.0.3",
     "i18next": "^23.16.4",
+    "moment": "^2.30.1",
     "next-i18next": "^15.3.1",
     "react-i18next": "^15.1.0",
     "react-icons": "^5.3.0",

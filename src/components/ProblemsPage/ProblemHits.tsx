@@ -19,6 +19,7 @@ import {
 import DifficultyBox from '../DifficultyBox';
 import Info from '../markdown/Info';
 import ProblemStatusCheckbox from '../markdown/ProblemsList/ProblemStatusCheckbox';
+import { useTranslation } from 'react-i18next';
 
 type AlgoliaProblemInfoHit = Hit<BaseHit> & AlgoliaProblemInfo;
 interface ProblemHitProps {
@@ -29,6 +30,7 @@ function ProblemHit({ hit }: ProblemHitProps) {
   const hideDifficulty = useHideDifficultySetting();
   const showTags = useShowTagsSetting();
   const hideModules = useHideModulesSetting();
+  const { t } = useTranslation();
   if (hit.problemModules.length == 0 && recentUsaco.includes(hit.source)) {
     hit.problemModules.push({
       id: 'usaco-monthlies',
@@ -102,7 +104,7 @@ function ProblemHit({ hit }: ProblemHitProps) {
             rel="noreferrer"
             className="text-gray-500 dark:text-dark-med-emphasis text-sm"
           >
-            View Solution
+            {t('view-solution')}
             <svg
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -124,7 +126,7 @@ function ProblemHit({ hit }: ProblemHitProps) {
             rel="noreferrer"
             className="text-gray-500 dark:text-dark-med-emphasis text-sm"
           >
-            Open in IDE
+            {t('open-in-ide')}
             <svg
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -139,7 +141,7 @@ function ProblemHit({ hit }: ProblemHitProps) {
       {!hideModules && (
         <>
           <p className="text-sm text-gray-500 dark:text-dark-med-emphasis  mt-2">
-            Appears In:
+            {t('appears-in')}:
           </p>
           <ul className="list-disc ml-6">
             {hit.problemModules.map(({ id: moduleID, title: moduleLabel }) => (
@@ -174,11 +176,11 @@ function ProblemHit({ hit }: ProblemHitProps) {
 
 export default function ProblemHits() {
   const { hits } = useHits() as { hits: AlgoliaProblemInfoHit[] };
+  const { t } = useTranslation();
   if (!hits.length) {
     return (
-      <Info title="No Problems Found">
-        No problems were found matching your search criteria. Try changing your
-        search or filters.
+      <Info title={t('no-problems-found')}>
+        {t('no-problems-found-description')}
       </Info>
     );
   }

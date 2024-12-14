@@ -88,12 +88,12 @@ export default function ContactUsSlideover({
   const [location, setLocation] = useState(defaultLocation);
   const [topic, setTopic] = useStickyState('', 'contact_form_topic');
   const topics = [
-    ['Грешка', 'печатна грешка, счупен линк, грешни мерни единици, пропуснат минус'],
-    ['Неясно обяснение'],
-    ['Бъг в сайта'],
-    ['Предложение'],
-    ['Заявка - Пропуснат раздел или решение'],
-    ['Друго'],
+    [t('mistake'), t('mistake_examples')],
+    [t('unclear_explanation')],
+    [t('website_bug')],
+    [t('suggestion')],
+    [t('request_missing_section_or_solution')],
+    [t('other')],
   ];
   const [message, setMessage] = useStickyState('', 'contact_form_message');
   const [showSuccess, setShowSuccess] = useState(false);
@@ -342,9 +342,9 @@ export default function ContactUsSlideover({
                           htmlFor={`contact_topic_${idx}`}
                           className="font-medium text-gray-900 dark:text-dark-high-emphasis"
                         >
-                          {top[0]} {top.length > 1 ? `(${t('e.g.')}, ${top[1]})` : ''}
+                          {top[0]} {top.length > 1 ? `(${t('e.g.')} ${top[1]})` : ''}
                         </label>
-                        {topic === top[0] && top[0].startsWith('Грешка') && (
+                        {topic === top[0] && top[0].startsWith(t('mistake')) && (
                           <div>
                             {t('submit_pull_request')}{' '}
                             <a
@@ -367,12 +367,12 @@ export default function ContactUsSlideover({
                             {t('for_how_to_contribute')}
                           </div>
                         )}
-                        {topic === top[0] && top[0].startsWith('Неясно') && (
+                        {topic === top[0] && top[0].startsWith(t('unclear_explanation')) && (
                           <div>
                             {t('unclear_explanation_info')}
                           </div>
                         )}
-                        {topic === top[0] && top[0].includes('Бъг') && (
+                        {topic === top[0] && top[0].includes(t('website_bug')) && (
                           <div>
                             {t('website_bug_info')}
                           </div>
