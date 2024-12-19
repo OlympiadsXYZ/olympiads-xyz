@@ -7,6 +7,7 @@ import { useQuizOpen } from '../context/QuizGeneratorContext';
 import CopyButton from './Editor/CopyButton';
 import Modal from './Modal';
 import CodeBlock from './markdown/CodeBlock/CodeBlock';
+import { useTranslation } from 'react-i18next';
 
 interface Answer {
   answer: string;
@@ -20,6 +21,7 @@ interface Question {
 }
 
 export default function QuizGeneratorModal(): JSX.Element {
+  const { t } = useTranslation();
   const { open, setOpen } = useQuizOpen();
   const isDarkMode = useDarkMode();
   const [quiz, setQuiz] = React.useState<Question[]>([
@@ -130,10 +132,10 @@ export default function QuizGeneratorModal(): JSX.Element {
               as="h3"
               className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-200"
             >
-              Quiz Generator
+              {t('quiz-generator')}
             </Dialog.Title>
             <button className={'btn'} onClick={() => addQuestion()}>
-              Add question
+              {t('add-question')}
             </button>
           </div>
           <div className={'space-y-8 mt-4'}>
@@ -149,7 +151,7 @@ export default function QuizGeneratorModal(): JSX.Element {
                 </div>
                 <div className={'flex-grow'}>
                   <label htmlFor={`question-${idx + 1}`}>
-                    Question {idx + 1}
+                    {t('question')} {idx + 1}
                   </label>
                   <textarea
                     id={`question-${idx + 1}`}
@@ -160,7 +162,7 @@ export default function QuizGeneratorModal(): JSX.Element {
                     }
                   />
                   <div className={'ml-4'}>
-                    <h5 className={'font-medium my-2'}>Answers</h5>
+                    <h5 className={'font-medium my-2'}>{t('answers')}</h5>
                     <div className={'space-y-4'}>
                       {question.answers.map((answer, i) => (
                         <div key={i} className={'flex'}>
@@ -183,9 +185,9 @@ export default function QuizGeneratorModal(): JSX.Element {
                                   )
                                 }
                                 className={
-                                  'flex-grow shadow-sm focus:ring-blue-500 focus:border-blue-500 block text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-700'
+                                  'flex-grow w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 block text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-700'
                                 }
-                                placeholder={`Answer ${i + 1}`}
+                                placeholder={`${t('answer')} ${i + 1}`}
                               />
                               <button
                                 onClick={() =>
@@ -211,7 +213,7 @@ export default function QuizGeneratorModal(): JSX.Element {
                                       className={'h-4 w-4 md:h-6 md:w-6'}
                                     />
                                     <span className={'text-xs md:text-sm'}>
-                                      Correct
+                                      {t('correct')}
                                     </span>
                                   </div>
                                 ) : (
@@ -224,7 +226,7 @@ export default function QuizGeneratorModal(): JSX.Element {
                                       className={'h-4 w-4 md:h-6 md:w-6'}
                                     />
                                     <span className={'text-xs md:text-sm'}>
-                                      Incorrect
+                                      {t('incorrect')}
                                     </span>
                                   </div>
                                 )}
@@ -244,7 +246,7 @@ export default function QuizGeneratorModal(): JSX.Element {
                                   i
                                 )
                               }
-                              placeholder={'Explanation'}
+                              placeholder={t('explanation')}
                             />
                           </div>
                         </div>
@@ -252,7 +254,7 @@ export default function QuizGeneratorModal(): JSX.Element {
                     </div>
                     <div className={'w-full flex justify-end my-2'}>
                       <button className={'btn'} onClick={() => addAnswer(idx)}>
-                        Add answer
+                        {t('add-answer')}
                       </button>
                     </div>
                   </div>

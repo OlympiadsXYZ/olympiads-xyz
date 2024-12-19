@@ -115,7 +115,7 @@ function ProblemHit({ hit }: ProblemHitProps) {
             </svg>
           </a>
         )}
-      {isUsaco(problem.source) && (
+      {/* {isUsaco(problem.source) && (
         <>
           <br />
           <a
@@ -137,7 +137,7 @@ function ProblemHit({ hit }: ProblemHitProps) {
             </svg>
           </a>
         </>
-      )}
+      )} */}
       {!hideModules && (
         <>
           <p className="text-sm text-gray-500 dark:text-dark-med-emphasis  mt-2">

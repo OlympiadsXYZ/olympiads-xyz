@@ -2,8 +2,10 @@ import { atom } from 'jotai';
 import { atomFamily, atomWithStorage } from 'jotai/utils';
 import { Octokit } from 'octokit';
 import { fetchFileContent } from '../components/Editor/editorUtils';
-import { AlgoliaEditorSolutionFile } from '../models/algoliaEditorFile';
+import { AlgoliaEditorSolutionFile, AlgoliaEditorModuleFile } from '../models/algoliaEditorFile';
 import { formatProblems } from '../utils/prettierFormatter';
+import { AlgoliaModuleInfo } from '../models/module';
+
 
 export type EditorFile = {
   path: string;
@@ -117,11 +119,12 @@ export const createNewInternalSolutionFileAtom = atom(
   null,
   async (get, set, file: AlgoliaEditorSolutionFile) => {
     const module = file.problemModules[0]?.path.split('/')[1];
-    const division =
-      file.division ||
-      (!module ? 'orphaned' : module.split('_')[1].toLowerCase());
+    const section =
+      file.section;
+      // (!module ? 'orphaned' : module.split('_')[1].toLowerCase());
     const newFile: EditorFile = {
-      path: `solutions/${division}/${file.id}.mdx`,
+      path: `solutions/${section}/${file.id}.mdx`,
+      //TODO: add automatically the solution metadata to the file
       markdown: `---
 id: ${file.id}
 source: ${
@@ -131,10 +134,6 @@ title: ${file.title}
 author: TODO -- insert your name here
 ---
 
-We found the following solution metadata for this problem:
-\`\`\`
-${JSON.stringify(file.solutions, null, 2)}
-\`\`\`
 
 When adding an internal solution, you have to update relevant modules to point to this new internal solution. This process is partially automated; modules containing this problem have been updated in the editor (see file list to the left).
 
@@ -263,4 +262,83 @@ export const monacoEditorInstanceAtom = atom(
   (get, _set, val: any) => {
     get(baseMonacoEditorInstanceAtom).monaco = val;
   }
+);
+
+export const createNewModuleFileAtom = atom(
+  null,
+  async (get, set, module: AlgoliaEditorModuleFile) => {
+    const moduleProblemsPath = `content/${module.section}/${module.id}.problems.json`;
+    const moduleMarkdownPath = `content/${module.section}/${module.id}.mdx`;
+     // Create and save the problems file first
+     const problemsFile: EditorFile = {
+      path: moduleProblemsPath,
+      markdown: '',
+      problems: JSON.stringify({
+        MODULE_ID: module.id,
+        module_problem: [
+          {
+
+            "uniqueId": "unique-problem-id-in-this-format",
+          
+            "name": "Име на задачата",
+          
+            "url": "https://mega.nz/folder/3ZpAGKYJ#hp_Z2CtDlJjhR9shIMHP8w",
+          
+            "source": "НОФ-3",
+          
+            "difficulty": "Easy",
+          
+            "isStarred": false,
+          
+            "tags": ["Някакви тагове за по-лесна индентификация при търсене като напр:", "Национален кръг"],
+          
+            "solutionMetadata": {
+          
+              "kind": "in-module",
+          
+              "hasHints": false
+          
+            }   
+          }     
+        ]
+      }, null, 2)
+    };
+    
+    // TODO: make the template better for the user
+    const markdownFile: EditorFile = {
+      path: moduleMarkdownPath,
+      markdown: `---
+id: ${module.id}
+title: ${module.title}
+author: Създателя/Създателите на модула
+contributors: Ако някой е помогнал (примерно поправял нещо, дал идея и т.н.), добавете го тук
+prerequisites:
+  - Ако се изисква знания от предходен модул, добавете му ID-то тук, или ако са няколко, добавете ги всички с тиренца
+description: '${module.description || 'Кратко описание на какво ще има в модула'}'
+frequency: Не е задължително, но ако имате представа, добавете колко често се среща тази тема в олимпиади или състезания (0-4)
+---
+
+## Prerequisites
+
+ - TODO
+
+## Resources
+ - TODO
+
+## Content
+
+TODO -- add module content
+
+## Problems
+
+<Problems problems="module_problem" />`,
+problems: problemsFile.problems // Reference the same problems content
+};
+
+// Save both files
+set(filesListAtom, prev => [...new Set([...prev, moduleMarkdownPath])]);
+set(saveFileAtom, problemsFile);
+set(saveFileAtom, markdownFile);
+set(activeFileAtom, moduleMarkdownPath);
+}
 );

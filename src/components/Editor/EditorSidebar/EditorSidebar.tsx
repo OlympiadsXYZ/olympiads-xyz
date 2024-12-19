@@ -16,6 +16,7 @@ import {
   AlgoliaEditorSolutionFile,
 } from '../../../models/algoliaEditorFile';
 import { FileListSidebar } from './FileListSidebar';
+import { useTranslation } from 'react-i18next';
 
 function GithubActions() {
   const [fork, setFork] = useAtom(forkAtom);
@@ -52,8 +53,9 @@ function GithubActions() {
         },
       })
       .then(res =>
-        setFork(
-          res.data.find(repo => repo.name === 'usaco-guide')?.html_url ??
+        setFork( 
+          //TODO: change to the new repo if needed and fix the fork detection
+          res.data.find(repo => repo.name === 'olympiads-xyz')?.html_url ??
             undefined
         )
       );
@@ -71,7 +73,7 @@ function GithubActions() {
         // @ts-ignore
         (await octokit.paginate('GET /repos/{owner}/{repo}/branches', {
           owner: githubInfo.login,
-          repo: 'usaco-guide',
+          repo: 'olympiads-xyz',
           per_page: 100,
           headers: {
             'X-GitHub-Api-Version': '2022-11-28',
@@ -92,8 +94,8 @@ function GithubActions() {
         await octokit?.request(
           'GET /repos/{owner}/{repo}/git/matching-refs/{ref}',
           {
-            owner: 'cpinitiative',
-            repo: 'usaco-guide',
+            owner: 'OlympiadsXYZ',
+            repo: 'olympiads-xyz',
             ref: 'heads/master',
             headers: {
               'X-GitHub-Api-Version': '2022-11-28',
@@ -104,7 +106,7 @@ function GithubActions() {
       octokit
         .request('POST /repos/{owner}/{repo}/git/refs', {
           owner: githubInfo.login,
-          repo: 'usaco-guide',
+          repo: 'olympiads-xyz',
           ref: `refs/heads/${branchName}`,
           sha: masterSha,
           headers: {
@@ -125,6 +127,7 @@ function GithubActions() {
         installed === undefined ? (
           <p>Detecting app installation...</p>
         ) : (
+          //TODO: create a similar app for olympiads-xyz and change the link
           <a className="btn" href="https://github.com/apps/usaco-guide-editor">
             Install GitHub App
           </a>
@@ -163,7 +166,7 @@ function GithubActions() {
                 <p>
                   Current branch:{' '}
                   <a
-                    href={`https://github.com/${githubInfo.login}/usaco-guide/tree/${branch}`}
+                    href={`https://github.com/${githubInfo.login}/olympiads-xyz/tree/${branch}`}
                     target="_blank"
                     rel="noreferrer"
                     className="text-blue-500 hover:underline"
@@ -187,7 +190,7 @@ function GithubActions() {
               {branch && githubInfo && (
                 <a
                   className="btn mt-4"
-                  href={`https://github.com/${githubInfo.login}/usaco-guide/pull/new/${branch}`}
+                  href={`https://github.com/${githubInfo.login}/olympiads-xyz/pull/new/${branch}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -204,6 +207,7 @@ function GithubActions() {
 
 function GithubSidebar({ loading }: { loading: boolean }) {
   const githubInfo = useAtomValue(githubInfoAtom);
+  const { t } = useTranslation();
   return (
     <div className="px-4 py-4">
       {!githubInfo ? (
@@ -220,12 +224,12 @@ function GithubSidebar({ loading }: { loading: boolean }) {
             }`}
             className="btn"
           >
-            Login with GitHub &rarr;
+            {t('log-in-with')} GitHub &rarr;
           </a>
         )
       ) : (
         <div className="flex flex-col items-start">
-          <p>{`Welcome, ${githubInfo.login}!`}</p>
+          <p>{`${t('welcome')}, ${githubInfo.login}!`}</p>
           <React.Suspense fallback={<p>Loading...</p>}>
             <GithubActions />
           </React.Suspense>
@@ -236,6 +240,7 @@ function GithubSidebar({ loading }: { loading: boolean }) {
 }
 
 export const EditorSidebar = (props): JSX.Element => {
+  const { t } = useTranslation();
   const files = useAtomValue(filesListAtom);
   const [activeFile, setActiveFile] = useAtom(activeFileAtom);
   const openOrCreateExistingFile = useSetAtom(openOrCreateExistingFileAtom);
@@ -251,7 +256,7 @@ export const EditorSidebar = (props): JSX.Element => {
   const handleCloseFile = (file: string) => {
     if (
       confirm(
-        "Are you sure you want to close this file? You'll lose your changes."
+        t('confirm-close-this-file')
       )
     ) {
       closeFile(file);
@@ -261,7 +266,7 @@ export const EditorSidebar = (props): JSX.Element => {
   const handleCloseAllFiles = () => {
     if (
       confirm(
-        "Are you sure you want to close all files? You'll lose all your changes."
+        t('confirm-close-all-files')
       )
     ) {
       for (const file of files) closeFile(file);

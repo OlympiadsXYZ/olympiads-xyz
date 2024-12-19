@@ -4,8 +4,10 @@ import { ProblemSolutionInfo } from './problem';
 export type AlgoliaEditorModuleFile = {
   title: string;
   id: string;
+  description: string | null;
   // content/1_Bronze/Complete_Rec.mdx
-  path: string;
+  path: string; //if it doesn't exist, then it's a new file probably
+  section: string;
 };
 
 export type AlgoliaEditorSolutionFile = {
@@ -15,7 +17,7 @@ export type AlgoliaEditorSolutionFile = {
   path: string | null; // null if file doesn't yet exist
   problemModules: AlgoliaEditorModuleFile[];
   solutions: ProblemSolutionInfo[];
-  division?: string;
+  section: string;
 };
 
 export type AlgoliaEditorFile =

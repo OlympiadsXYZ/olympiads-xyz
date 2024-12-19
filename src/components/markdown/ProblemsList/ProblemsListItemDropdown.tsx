@@ -98,10 +98,11 @@ export default function ProblemsListItemDropdown(
                     problem.uniqueId
                 );
               }}
+              onBlur={() => setCopied(false)}
             >
               {copied ? t('copied') : t('copy-permalink')}
             </button>
-            {isUsaco(problem.source) && (
+            {/* {isUsaco(problem.source) && (
               <a
                 className="!font-normal focus:outline-none block w-full text-left px-4 py-2 text-sm !text-gray-700 dark:!text-gray-300 hover:!bg-gray-100 dark:hover:!bg-gray-800 hover:!text-gray-900"
                 href={`https://ide.usaco.guide/usaco/${problem.uniqueId.substring(
@@ -112,7 +113,7 @@ export default function ProblemsListItemDropdown(
               >
                 {t('open-in-ide')}
               </a>
-            )}
+            )} */}
           </div>
         ) : (
           ''

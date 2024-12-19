@@ -7,6 +7,7 @@ import { SolutionInfo } from '../../models/solution';
 import Breadcrumbs from './Breadcrumbs';
 import { useTranslation } from 'react-i18next';
 
+
 const NavBar = ({ alignNavButtonsRight = true }) => {
   const { t } = useTranslation();
   const moduleLayoutInfo = useMarkdownLayout();
@@ -26,12 +27,9 @@ const NavBar = ({ alignNavButtonsRight = true }) => {
   const moduleIdx = React.useMemo(
     () => sortedModuleLinks?.findIndex(x => x.id === markdownLayoutInfo.id),
     [markdownLayoutInfo, sortedModuleLinks]
-  );
-  if (
-    !sortedModuleLinks ||
-    !moduleIdx ||
-    markdownLayoutInfo instanceof SolutionInfo
-  ) {
+  ) as number;
+  //why the frick was !moduleIdx part of the condition???
+  if (!sortedModuleLinks || markdownLayoutInfo instanceof SolutionInfo) {
     return null;
   }
   const prevModule = moduleIdx === 0 ? null : sortedModuleLinks[moduleIdx - 1];

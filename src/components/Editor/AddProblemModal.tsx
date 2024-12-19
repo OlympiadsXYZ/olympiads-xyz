@@ -4,6 +4,7 @@ import babelParser from 'prettier/parser-babel';
 import React, { useState } from 'react';
 import Modal from '../Modal';
 import CopyButton from './CopyButton';
+import { useTranslation } from 'react-i18next';
 async function addProblem(
   url: string,
   setMetadata: (metadata: string) => void,
@@ -51,17 +52,18 @@ export default function AddProblemModal(props: {
   const [status, setStatus] = useState<'Get Metadata' | 'Fetching metadata...'>(
     'Get Metadata'
   );
+  const { t } = useTranslation();
   return (
     <Modal {...props}>
       <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-black text-white p-6 text-left align-middle shadow-xl transition-all">
         <Dialog.Title as="h3" className="text-lg font-medium leading-6">
-          Add Problem
+          {t('add-problem')}
         </Dialog.Title>
         <div className="mt-2 relative rounded-md shadow-sm">
           <input
             type="text"
             className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-700"
-            placeholder="Enter Problem URL"
+            placeholder={t('enter-problem-url')}
             onChange={e => setLink(e.target.value)}
           />
         </div>
@@ -72,7 +74,9 @@ export default function AddProblemModal(props: {
             disabled={status === 'Fetching metadata...'}
             onClick={() => addProblem(link, setMetadata, setStatus)}
           >
-            {status}
+            {status === 'Fetching metadata...'
+              ? t('fetching-metadata')
+              : t('get-metadata')}
           </button>
         </div>
         <div className="mt-4 relative">

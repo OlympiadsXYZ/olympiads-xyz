@@ -12,6 +12,8 @@ import {
 } from '../../context/UserDataContext/properties/simpleProperties';
 import LogoSquare from '../LogoSquare';
 import { fetchFileContent } from './editorUtils';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 export const EditorTopNav = (): JSX.Element => {
   const activeFile = useAtomValue(activeFileAtom);
@@ -33,7 +35,7 @@ export const EditorTopNav = (): JSX.Element => {
       });
     }
   };
-
+  const { t } = useTranslation();
   return (
     <div className="block px-4 border-b border-gray-200 dark:border-gray-800 dark:bg-gray-900 flex items-center justify-between">
       <div className="flex items-center space-x-4">
@@ -42,7 +44,7 @@ export const EditorTopNav = (): JSX.Element => {
             <LogoSquare />
           </div>
           <span className="font-medium text-xl tracking-tight">
-            Guide Editor
+            {t('editor')}
           </span>
         </div>
         {/*<button className="inline-flex items-center space-x-2 text-gray-600 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 font-medium text-sm rounded-md focus:outline-none transition">*/}
@@ -87,25 +89,26 @@ export const EditorTopNav = (): JSX.Element => {
             className="inline-flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 font-medium text-sm rounded-md focus:outline-none transition"
             onClick={handleReloadContent}
           >
-            Reload Content from GitHub
+            {t('reload-content-from-github')}
           </button>
         )}
         {activeFile?.path && (
           <a
-            href={`https://github.com/cpinitiative/usaco-guide/blob/master/${encodeURI(
+            href={`https://github.com/OlympiadsXYZ/olympiads-xyz/blob/master/${encodeURI(
               activeFile?.path
             )}`}
             target="_blank"
             className="inline-flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 font-medium text-sm rounded-md focus:outline-none transition"
             rel="noreferrer"
           >
-            View File on GitHub &rarr;
+            {t('view-file-on-github')} &rarr;
           </a>
         )}
       </div>
       <div className="flex items-center">
-        <nav className="flex space-x-1" aria-label="Tabs">
-          {(['cpp', 'java', 'py'] as const).map(tab => (
+        <LanguageSwitcher/> {/* TODO: Probably should change it to look a bit different but it does the job for now */}
+        {/* <nav className="flex space-x-1" aria-label="Tabs">
+          {(['BG', 'java', 'py'] as const).map(tab => (
             <button
               key={tab}
               className={classNames(
@@ -119,7 +122,8 @@ export const EditorTopNav = (): JSX.Element => {
               {LANGUAGE_LABELS[tab]}
             </button>
           ))}
-        </nav>
+        </nav> */}
+        
 
         <div className="mx-4 block border-l border-gray-200 dark:border-gray-700 h-6 self-center" />
 
@@ -130,7 +134,7 @@ export const EditorTopNav = (): JSX.Element => {
           className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center space-x-2 font-medium text-sm group transition"
         >
           <InformationCircleIcon className="h-6 w-6 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300 transition" />
-          <span>Documentation</span>
+          <span>{t('documentation')}</span>
         </a>
 
         <div className="mx-4 block border-l border-gray-200 dark:border-gray-700 h-6 self-center" />

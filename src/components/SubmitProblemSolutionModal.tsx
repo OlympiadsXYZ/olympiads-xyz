@@ -42,6 +42,7 @@ export default function SubmitProblemSolutionModal({
       alert('Your solution seems too short!');
       return;
     }
+    // TODO: Remove the code language and use a check for natural language en, bg, de, etc.
     if (!codeLang) {
       alert('Please select a language.');
       return;
@@ -58,7 +59,7 @@ export default function SubmitProblemSolutionModal({
       .catch(e => alert('Error: ' + e.message))
       .finally(() => setLoading(false));
   };
-
+  //TODO: translate this section
   const solutionForm = (
     <>
       <div>

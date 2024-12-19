@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import { AlgoliaEditorFile } from '../../../models/algoliaEditorFile';
 import { EditorFileModal } from '../EditorFileModal';
+import { useTranslation } from 'react-i18next';
 
 export const FileListSidebar: React.FC<{
   className?: string;
@@ -26,12 +27,13 @@ export const FileListSidebar: React.FC<{
     setIsFileModalOpen(false);
     onNewFile(file);
   };
+  const { t } = useTranslation();
 
   return (
     <div className={`w-full overflow-y-auto`}>
       <div className="text-gray-300 text-sm font-medium border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
         <span className="px-4 py-2 text-gray-600 dark:text-gray-300">
-          Files
+          {t('files')}
         </span>
         <div className="flex-shrink-0">
           <button
@@ -41,7 +43,7 @@ export const FileListSidebar: React.FC<{
             )}
             onClick={() => onCloseAllFiles()}
           >
-            Close All
+            {t('close-all')}
           </button>
         </div>
       </div>
@@ -75,7 +77,7 @@ export const FileListSidebar: React.FC<{
         )}
         onClick={() => setIsFileModalOpen(true)}
       >
-        Open File
+        {t('open-file')}
       </button>
       <EditorFileModal
         isOpen={isFileModalOpen}

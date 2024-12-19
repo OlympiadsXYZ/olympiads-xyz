@@ -14,6 +14,7 @@ import {
   AlgoliaEditorFileHit,
 } from '../../models/algoliaEditorFile';
 import { searchClient } from '../../utils/algoliaSearchClient';
+import { useTranslation } from 'react-i18next';
 
 const SearchResultDescription = styled.p`
   ${tw`leading-4`}
@@ -50,6 +51,7 @@ const FileSearch = ({
   onSelect: (file: AlgoliaEditorFile | undefined) => void;
   openAddFile: () => void;
 }) => {
+  const { t } = useTranslation();
   const { query, refine: setQuery } = useSearchBox();
   const { hits } = useHits() as { hits: AlgoliaEditorFileHit[] };
   return (
@@ -57,7 +59,7 @@ const FileSearch = ({
       <div className="flex items-center p-2">
         <input
           type="search"
-          placeholder="Search"
+          placeholder={t('search')}
           className="focus:outline-none focus:ring-0 text-gray-700 dark:bg-dark-surface dark:text-gray-200 dark:placeholder-gray-400 border-0 flex-1"
           value={query}
           onChange={e => setQuery(e.target.value)}
@@ -96,16 +98,16 @@ const FileSearch = ({
                 }}
               >
                 <h3 className="text-gray-600 dark:text-gray-200 font-medium">
-                  Add New Problem (Solution)
+                  {t('add-new-m-s')}
                 </h3>
                 <SearchResultDescription className="text-gray-700 dark:text-gray-400 text-sm">
-                  Create New Internal Solution
+                  {t('add-new-m-s-description')}
                 </SearchResultDescription>
               </button>
             </div>
-            <div className="px-5 py-3 border-t border-gray-200 dark:border-gray-700">
+            {/* <div className="px-5 py-3 border-t border-gray-200 dark:border-gray-700">
               <PoweredBy theme="dark" />
-            </div>
+            </div> */}
           </SearchResultsContainer>
         </div>
       )}

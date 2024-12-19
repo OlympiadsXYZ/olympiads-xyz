@@ -13,6 +13,7 @@ import {
 } from '../../atoms/editor';
 import { useQuizOpen } from '../../context/QuizGeneratorContext';
 import AddProblemModal from './AddProblemModal';
+import { useTranslation } from 'react-i18next';
 
 export interface EditorTab {
   label: string;
@@ -35,6 +36,7 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
   onTabSelect,
   onFormatCode,
 }) => {
+  const { t } = useTranslation();
   const { setOpen } = useQuizOpen();
   const githubInfo = useAtomValue(githubInfoAtom);
   const octokit = useAtomValue(octokitAtom);
@@ -153,7 +155,7 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
           onClick={() => setOpen(true)}
           type="button"
         >
-          Generate Quiz
+          {t('generate-quiz')}
         </button>
         <button
           className={classNames(
@@ -162,7 +164,7 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
           )}
           onClick={() => onFormatCode()}
         >
-          Format Code
+          {t('format-code')}
         </button>
         {useAtomValue(tabAtom) === 'problems' && (
           <button
@@ -172,7 +174,7 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
             )}
             onClick={() => setDialogOpen(true)}
           >
-            Add Problem
+            {t('add-problem')}
           </button>
         )}
         {githubInfo && octokit && file && branch && (

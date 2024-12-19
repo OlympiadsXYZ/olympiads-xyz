@@ -6,7 +6,10 @@ import { books } from '../utils/books';
 
 export const recentUsaco = ['Bronze', 'Silver', 'Gold', 'Platinum'];
 
+// TODO: make it possible to have problems without urls - mainly for original problems
+
 // abbreviation -> [URL, description or full name, instructions to view solutions]
+// TODO: add more sources
 export const probSources = {
   APhO: [
     '',
@@ -538,10 +541,25 @@ export function generateProblemUniqueId(
         return str.replace(/\s+/g, '');
       }
     };
+
+    // Handle generic URLs by creating a hash of the URL
+    const createURLHash = (url: string) => {
+      let hash = 0;
+      for (let i = 0; i < url.length; i++) {
+        const char = url.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32-bit integer
+          }
+        return Math.abs(hash).toString(36); // Convert to base36 for shorter string
+     };
+
+
     if (source === 'Baltic OI') {
       return `baltic-${camelCase(name)}`;
     } else if (source === 'Balkan OI') {
       return `balkan-${camelCase(name)}`;
+    } else if (url.endsWith('.pdf')) {
+      return `pdf-${createURLHash(url)}-${camelCase(name)}`;
     } else {
       return `${camelCase(source)}-${camelCase(name)}`;
     }

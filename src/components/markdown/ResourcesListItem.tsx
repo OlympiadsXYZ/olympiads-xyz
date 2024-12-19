@@ -137,6 +137,7 @@ export default function ResourcesListItem({
                     window.location.href.split(/[?#]/)[0]
                   );
                 }}
+                onBlur={() => setCopied(false)}
               >
                 {copied ? t('copied') : t('copy-permalink')}
               </button>

@@ -144,7 +144,7 @@ export const MainEditorInterface = ({ className }): JSX.Element => {
             schemas: [
               {
                 fileMatch: ['*.json'],
-                uri: 'https://usaco.guide/problems.schema.json',
+                uri: 'https://usaco.guide/problems.schema.json', //TODO: change to olympiads.xyz/problems.schema.json
                 schema: problemsSchema,
               },
             ],

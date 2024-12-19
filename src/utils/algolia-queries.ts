@@ -190,6 +190,8 @@ const queries = [
             title: node.frontmatter.title,
             id: node.frontmatter.id,
             path: `${node.parent.sourceInstanceName}/${node.parent.relativePath}`,
+            description: null,
+            section: moduleIDToSectionMap[node.frontmatter.id],
           });
         }
       });
@@ -209,6 +211,7 @@ const queries = [
           id: node.uniqueId,
           title: node.name,
           source: node.source,
+          section: moduleIDToSectionMap[node.module?.frontmatter.id],
           solutions: [],
           path: relativePath ? `solutions/${relativePath}` : null,
           problemModules: [],
