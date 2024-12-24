@@ -22,6 +22,8 @@ import { ShortProblemInfo } from '../models/problem';
 import CodeBlock from './markdown/CodeBlock/CodeBlock';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
+import DynamicMarkdownRenderer from './DynamicMarkdownRenderer/DynamicMarkdownRenderer';
+import CollapsibleMarkdown from './markdown/CollapsibleMarkdown/CollapsibleMarkdown';
 
 export default function ProblemSolutions({
   modulesThatHaveProblem,
@@ -159,7 +161,7 @@ export default function ProblemSolutions({
           {currentUserSolutions?.map(submission => (
             <div key={submission.id}>
               <h4 className="mb-2 text-gray-700 dark:text-gray-100">
-                | {t('votes')}: {submission.upvotes.length}. (
+                | {t('votes')}: {submission.upvotes.length} (
                 {submission.isPublic ? t('public') : t('private')}){' '}
                 <button
                   className="hover:underline text-blue-600 dark:text-blue-300"
@@ -177,16 +179,12 @@ export default function ProblemSolutions({
                 </button>
               </h4>
               <div className="text-sm leading-normal">
-                <CodeBlock
-                  className={
-                    submission.language !== 'unknown'
-                      ? `language-${submission.language}`
-                      : undefined
-                  }
-                  isDarkMode={isDarkMode}
-                >
-                  {submission.solutionCode}
-                </CodeBlock>
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                  <CollapsibleMarkdown
+                    markdown={submission.solutionCode}
+                    isDarkMode={isDarkMode}
+                  />
+                </div>
               </div>
             </div>
           ))}
@@ -262,17 +260,12 @@ export default function ProblemSolutions({
                 )}
               </h4>
               <div className="text-sm leading-normal">
-                {/* TODO: Remove the code block and remake with markdown, and latex? */}
-                <CodeBlock
-                  className={
-                    submission.language !== 'unknown'
-                      ? `language-${submission.language}`
-                      : undefined
-                  }
-                  isDarkMode={isDarkMode}
-                >
-                  {submission.solutionCode}
-                </CodeBlock>
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                  <CollapsibleMarkdown
+                    markdown={submission.solutionCode}
+                    isDarkMode={isDarkMode}
+                  />
+                </div>
               </div>
             </div>
           ))}

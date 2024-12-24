@@ -21,13 +21,13 @@ export default functions.https.onCall(
     context
   ) => {
     const callerUid = context.auth?.uid;
-
+    // TODO: Enter the admin UIDs here
     const caller = await admin.auth().getUser(callerUid);
     if (
       !caller.customClaims.isAdmin &&
       ![
-        'BKFOe33Ym7Pc7aQuET57MiljpF03',
-        '7G0y8xGyv4gkowb33Vmn478znod2',
+        'iPSWxVddIXcgq7J0QioWyYCAY4I2',
+        'SSQBJvkh1ygkNuObl3ZK43u6q5x1',
       ].includes(callerUid)
     ) {
       throw new functions.https.HttpsError(

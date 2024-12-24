@@ -1,4 +1,5 @@
 import React from 'react';
+// TODO: change this to olympiads-xyz.firebaseio.com
 
 export const useAnalyticsEffect = () => {
   React.useEffect(() => {
@@ -7,7 +8,7 @@ export const useAnalyticsEffect = () => {
     } else {
       // google analytics got blocked
       fetch(
-        'https://usaco-guide.firebaseio.com/analytics/no_ga_pageviews.json',
+        'https://olympiads-xyz-default-rtdb.europe-west1.firebasedatabase.app/analytics/no_ga_pageviews.json',
         {
           method: 'PUT',
           headers: {
@@ -17,7 +18,7 @@ export const useAnalyticsEffect = () => {
         }
       );
     }
-    fetch('https://usaco-guide.firebaseio.com/pageviews.json', {
+    fetch('https://olympiads-xyz-default-rtdb.europe-west1.firebasedatabase.app/pageviews.json', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -43,6 +43,8 @@ import { SearchModal } from './SearchModal';
 import { UserAvatarMenu } from './UserAvatarMenu';
 import { useLocation } from '@gatsbyjs/reach-router';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
+import { MdLanguage } from 'react-icons/md';
+
 
 import { useTranslation } from 'react-i18next';
 
@@ -118,48 +120,48 @@ export default function TopNavigationBar({
     },
   ];
 
-  const solutions = [
+  const sections = [
     {
-      name: 'General',
+      name: t('sections_general'),
       href: '/general',
       icon: BookmarkIcon,
-      iconColor: 'rgba(59, 130, 246, 1)',
+      iconColor: 'rgb(37 99 235)',
       key: 'general',
     },
     {
-      name: 'Bronze',
-      href: '/bronze',
+      name: t('sections_beginner'),
+      href: '/beginner',
       icon: BookmarkIcon,
-      iconColor: 'rgba(59, 130, 246, 1)',
-      key: 'bronze',
+      iconColor: 'rgb(202 138 4)',
+      key: 'beginner',
     },
     {
-      name: 'Silver',
-      href: '/silver',
+      name: t('sections_intermediate'),
+      href: '/intermediate',
       icon: BookmarkIcon,
-      iconColor: 'rgba(59, 130, 246, 1)',
-      key: 'silver',
+      iconColor: 'rgb(13 148 136)',
+      key: 'intermediate',
     },
     {
-      name: 'Gold',
-      href: '/gold',
+      name: t('sections_advanced'),
+      href: '/advanced',
       icon: BookmarkIcon,
-      iconColor: 'rgba(59, 130, 246, 1)',
-      key: 'gold',
+      iconColor: 'rgb(79 70 229)',
+      key: 'advanced',
     },
     {
-      name: 'Platinum',
-      href: '/plat',
+      name: t('sections_special'),
+      href: '/special',
       icon: BookmarkIcon,
-      iconColor: 'rgba(59, 130, 246, 1)',
-      key: 'plat',
+      iconColor: 'rgb(147 51 234)',
+      key: 'special',
     },
     {
-      name: 'Advanced',
-      href: '/adv',
+      name: t('sections_beyond'),
+      href: '/beyond',
       icon: BookmarkIcon,
-      iconColor: 'rgba(59, 130, 246, 1)',
-      key: 'adv',
+      iconColor: 'rgb(22 163 74)',
+      key: 'beyond',
     },
   ];
   return (
@@ -411,7 +413,7 @@ export default function TopNavigationBar({
           <div className="grid grid-cols-1 divide-y divide-gray-300 dark:divide-gray-800 pb-6">
             <div className="py-5 px-4">
               <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                {solutions.map(item => (
+                {sections.map(item => (
                   <Link
                     key={item.name}
                     to={item.href}
@@ -448,12 +450,13 @@ export default function TopNavigationBar({
                   <a
                     key={item.name}
                     href={item.href}
-                    target="_blank"
+                    target=""
                     rel="noreferrer"
                     className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <item.icon
-                      className="flex-shrink-0 h-6 w-6 text-gray-600 dark:group-hover:text-gray-400"
+                      className="flex-shrink-0 h-6 w-6"
+                      style={{ color: item.iconBackgroundColor }}
                       aria-hidden="true"
                     />
                     <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
@@ -530,6 +533,15 @@ export default function TopNavigationBar({
                     </span>
                   </a>
                 )}
+                <div className="group -m-3 p-3 cursor-pointer flex items-center rounded-md">
+                <MdLanguage className="h-6 w-6 text-gray-600 float-left dark:group-hover:text-gray-400 transition ease-in-out duration-150" />
+                <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
+                      {t('language')}: 
+                </span>
+                <div className="ml-3 text-gray-600 -m-3 p-3 cursor-pointer flex items-center rounded-md float-right hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <LanguageSwitcher/>
+                </div>
+                </div>
               </nav>
             </div>
           </div>

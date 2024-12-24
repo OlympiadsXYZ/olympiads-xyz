@@ -46,9 +46,11 @@ class ErrorBoundary extends React.Component<{ children?: React.ReactNode }> {
 export default function DynamicMarkdownRenderer({
   markdown,
   problems,
+  onContentLoaded,
 }: {
   markdown: string;
   problems: string;
+  onContentLoaded?: (content: any) => void;
 }): JSX.Element {
   const [mdxContent, setMdxContent] = useState(null);
   const [
@@ -92,9 +94,12 @@ export default function DynamicMarkdownRenderer({
           if (e instanceof Error) setError(e);
           else setError(new Error('Unknown Error: ' + e));
         }
-        if (content) setError(null);
-        setMdxContent(content);
-        setMarkdownProblemListsProviderValue(data.problemsList);
+        if (content) {
+          setError(null);
+          setMdxContent(content);
+          setMarkdownProblemListsProviderValue(data.problemsList);
+          onContentLoaded?.(content);
+        }
       } else {
         setError(data.error);
         setMdxContent(null);

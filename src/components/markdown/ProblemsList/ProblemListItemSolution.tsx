@@ -68,7 +68,8 @@ export default function ProblemListItemSolution(
         target="_blank"
         className="block w-full px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
       >
-        {problem.solution.label}
+        {problem.solution.label === 'В модула' ? t('in-module-sol') :
+         (problem.solution.label === 'Външно решение' ? t('external-sol') : problem.solution.label)}
       </Anchor>
     );
   } else if (problem.solution.kind === 'internal') {

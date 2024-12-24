@@ -6,6 +6,8 @@ import useUserProblemSolutionActions from '../hooks/useUserProblemSolutionAction
 import { ShortProblemInfo } from '../models/problem';
 import ButtonGroup from './ButtonGroup';
 import TabIndentableTextarea from './elements/TabIndentableTextarea';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'gatsby';
 
 export default function SubmitProblemSolutionModal({
   isOpen,
@@ -16,8 +18,9 @@ export default function SubmitProblemSolutionModal({
   onClose: () => void;
   problem: ShortProblemInfo;
 }) {
+  const { t } = useTranslation();
   const [solutionCode, setSolutionCode] = React.useState('');
-  const [codeLang, setCodeLang] = React.useState<'cpp' | 'java' | 'py' | null>(
+  const [codeLang, setCodeLang] = React.useState<'bg' | 'en' | 'de' | null>(
     null
   );
   const [isCodePublic, setIsCodePublic] = React.useState(true);
@@ -39,14 +42,22 @@ export default function SubmitProblemSolutionModal({
     event.preventDefault();
 
     if (solutionCode.length < 10) {
-      alert('Your solution seems too short!');
+      alert(t('submit-user-sol_solution-too-short'));
       return;
     }
     // TODO: Remove the code language and use a check for natural language en, bg, de, etc.
     if (!codeLang) {
-      alert('Please select a language.');
+      alert(t('submit-user-sol_please-select-language'));
       return;
     }
+
+    // TODO: This could be a bit too much or too little idk yet?
+    if (solutionCode.length > 2500) {
+      // TODO: Update the translation to include the maximum length
+      alert(t('submit-user-sol_solution-too-long'));
+      return;
+    }
+
 
     setLoading(true);
     submitAction({
@@ -56,7 +67,7 @@ export default function SubmitProblemSolutionModal({
       language: codeLang,
     })
       .then(() => setShowSuccess(true))
-      .catch(e => alert('Error: ' + e.message))
+      .catch(e => alert(t('submit-user-sol_error-submitting-solution') + e.message))
       .finally(() => setLoading(false));
   };
   //TODO: translate this section
@@ -64,25 +75,32 @@ export default function SubmitProblemSolutionModal({
     <>
       <div>
         <label className="block font-medium text-gray-700 dark:text-gray-200">
-          Solution Code
+          {t('submit-user-sol_solution-code')}
         </label>
         <div>
           <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
-            Please keep these in mind when submitting a solution.
+            {t('submit-user-sol_solution-code-instructions')}
+            <br />
+            <br />
             <ol className="list-decimal ml-5">
               <li>
-                Especially if sharing your code, consider cleaning it up and{' '}
-                <b> adding solution notes</b> as a comment at the top.
+                {t('submit-user-sol_solution-code-instruction-1')}
+              </li>
+              <li> {/* TODO: fix link to Contribute Module */}
+                {t('submit-user-sol_solution-code-instruction-2')} <Link to="/general"><strong>{t('submit-user-sol_solution-code-instruction-2-link')}</strong></Link>
               </li>
               <li>
-                Make sure not to leave out any headers/templates, and that your
-                code passes all test cases!
+                {/* TODO: translate this in a better way */}
+                <Trans i18nKey="submit-user-sol_solution-code-instruction-3">
+                Гледайте решенията да са <strong>кратки</strong> и <strong>без грешки</strong>. Ако се изискват повече обяснения или сметки, може да направо да подадете заявка за добавяне на вградено решение чрез <Link to="/editor"><strong>Редактора</strong></Link> на сайта
+                </Trans>
               </li>
             </ol>
           </p>
+          {/* TODO: Remove this button group maybe? */}
           <ButtonGroup
-            options={['cpp', 'java', 'py']}
-            labelMap={LANGUAGE_LABELS}
+            options={['bg', 'en', 'de']}
+            labelMap={{ bg: "БГ", en: "EN", de: "DE" }}
             value={codeLang}
             onChange={x => setCodeLang(x)}
           />
@@ -100,11 +118,10 @@ export default function SubmitProblemSolutionModal({
       <div className="flex items-center justify-between">
         <span className="flex-grow flex flex-col" id="toggleLabel">
           <span className="leading-5 font-medium text-gray-900 dark:text-gray-100">
-            Share Solution Code
+            {t('submit-user-sol_share-solution')}
           </span>
           <span className="text-sm leading-normal text-gray-500 dark:text-gray-400">
-            This will allow other users to view your solution code if they are
-            stuck.
+            {t('submit-user-sol_share-solution-description')}
           </span>
         </span>
         <span
@@ -185,10 +202,10 @@ export default function SubmitProblemSolutionModal({
         </div>
         <div className="ml-3">
           <h3 className="text-sm leading-5 font-medium text-green-800 dark:text-dark-high-emphasis">
-            Solution Submitted!
+            {t('submit-user-sol_solution-submitted')}
           </h3>
           <div className="mt-2 text-sm leading-5 text-green-700 dark:text-dark-high-emphasis">
-            <p>Thanks for helping to improve the USACO Guide.</p>
+            <p>{t('submit-user-sol_solution-submitted-description')}</p>
           </div>
         </div>
       </div>
@@ -241,7 +258,7 @@ export default function SubmitProblemSolutionModal({
                 onClick={() => onClose()}
                 className="bg-white dark:bg-dark-surface rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 focus:outline-none"
               >
-                <span className="sr-only">Close</span>
+                <span className="sr-only">{t('close')}</span>
                 {/* Heroicon name: x */}
                 <svg
                   className="h-6 w-6"
@@ -265,10 +282,10 @@ export default function SubmitProblemSolutionModal({
               className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100"
               id="modal-headline"
             >
-              Submit Solution for {problem?.name}
+              {t('submit-user-sol_solution-for')} {problem?.name}
             </h3>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Help others out by submitting a solution for {problem?.name}!
+              {t('help-others-out-by-submitting-a-solution-for')} {problem?.name}
             </p>
             <div className="mt-6 space-y-6">
               {showSuccess ? successMessage : solutionForm}
@@ -282,7 +299,7 @@ export default function SubmitProblemSolutionModal({
                   onClick={() => onClose()}
                   className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                 >
-                  Done
+                  {t('done')}
                 </button>
               </span>
             ) : (
@@ -293,7 +310,7 @@ export default function SubmitProblemSolutionModal({
                     className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                     disabled={loading}
                   >
-                    {loading ? 'Submitting...' : 'Submit Solution'}
+                    {loading ? t('submit-user-sol_submit-solution-loading') : t('submit-user-sol_submit-solution')}
                   </button>
                 </span>
                 <span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
@@ -303,7 +320,7 @@ export default function SubmitProblemSolutionModal({
                     onClick={() => onClose()}
                     disabled={loading}
                   >
-                    Cancel
+                    {t('cancel')}
                   </button>
                 </span>
               </>

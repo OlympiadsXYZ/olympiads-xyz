@@ -38,7 +38,7 @@ export default functions.https.onCall(
 
     if (
       permissionLevel === 'OWNER' &&
-      groupData.ownerIds.filter(id => id !== callerUid).length == 0
+      groupData.ownerIds.filter(id => id !== callerUid).length === 0
     ) {
       return {
         success: false,

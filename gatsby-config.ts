@@ -8,7 +8,7 @@ const siteMetadata = {
   title: `Olympiads XYZ`,
   description: `A free comprehensive, well-organized resource from bulgarian science olympiad contenders designed to help students prepare for science olympiads, with a current focus on physics. Made by students, for students.`,
   author: `@olympiadsxyz`,
-  siteUrl: `https://olympiads.xyz/`,
+  siteUrl: `https://olympiads.xyz/`, // TODO: change to new domain
   keywords: ['Olympiads XYZ', 'Physics', 'Student olympiads'],
 };
 
@@ -94,7 +94,7 @@ const plugins = [
   {
     resolve: `gatsby-plugin-google-gtag`,
     options: {
-      trackingIds: ['G-1JGYFFBHXN'], // TODO: change from google analytics to the new one
+      trackingIds: ['G-PK3S0MFEFQ'], // TODO: change from google analytics to the new one
       pluginConfig: {
         head: false,
       },

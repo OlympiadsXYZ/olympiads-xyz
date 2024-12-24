@@ -15,7 +15,7 @@ import {
 // Questionable hack to get full commit history so that timestamps work
 try {
   execSync(
-    `git fetch --unshallow https://github.com/cpinitiative/usaco-guide.git`
+    `git fetch --unshallow https://github.com/OlympiadsXYZ/olympiads-xyz.git`
   );
 } catch (e) {
   console.warn(

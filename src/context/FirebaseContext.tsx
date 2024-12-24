@@ -11,13 +11,14 @@ import { createContext } from 'react';
 
 export const FirebaseAppContext = createContext<FirebaseApp | null>(null);
 const firebaseConfig = {
-  apiKey: 'AIzaSyAvm-cvPgEFer3MVQtCiKegFTc1E9RHGG4',
-  authDomain: 'usaco-guide.firebaseapp.com',
-  databaseURL: 'https://usaco-guide.firebaseio.com',
-  projectId: 'usaco-guide',
-  storageBucket: 'usaco-guide.appspot.com',
-  messagingSenderId: '862152331454',
-  appId: '1:862152331454:web:8ba85fda47360ef9fe8eef',
+  apiKey: process.env.GATSBY_FIREBASE_API_KEY,
+  authDomain: process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.GATSBY_FIREBASE_DATABASE_URL,
+  projectId: process.env.GATSBY_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.GATSBY_FIREBASE_APP_ID,
+  measurementId: process.env.GATSBY_FIREBASE_MEASUREMENT_ID
 };
 
 export const FirebaseProvider = ({ children }) => {
@@ -30,6 +31,7 @@ export const FirebaseProvider = ({ children }) => {
       const firebaseApp =
         getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
       setFirebaseApp(firebaseApp);
+      //TODO: change this to olympiads-xyz long polling
       if (localStorage.getItem('USACO_GUIDE_LONG_POLLING') === 'true') {
         // console.log('Initializing long polling');
         initializeFirestore(firebaseApp, {
@@ -37,6 +39,7 @@ export const FirebaseProvider = ({ children }) => {
         });
       }
 
+      //TODO: do not forget to remove this
       const shouldUseEmulator = false;
       if (shouldUseEmulator) {
         connectAuthEmulator(getAuth(firebaseApp), 'http://localhost:9099');

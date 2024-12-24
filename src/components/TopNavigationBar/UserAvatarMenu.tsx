@@ -6,6 +6,7 @@ import React from 'react';
 import Transition from '../Transition';
 import '../../i18n';
 import { useTranslation } from 'react-i18next';
+import { FaUser } from "react-icons/fa6";
 
 export interface UserAvatarMenuProps {
   firebaseUser: User;
@@ -22,11 +23,17 @@ export const UserAvatarMenu: React.FC<UserAvatarMenuProps> = props => {
           <div>
             <Menu.Button className="flex text-sm border-2 border-transparent rounded-full focus:outline-none dark:focus:border-white focus:border-blue-500 transition">
               <span className="sr-only">{t('user-avatar-menu_open-user-menu')}</span>
-              <img
-                className="h-8 w-8 rounded-full"
-                src={props.firebaseUser.photoURL ?? undefined}
-                alt="User photo URL"
-              />
+              {props.firebaseUser.photoURL && props.firebaseUser.photoURL.startsWith('https://') ? (
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src={props.firebaseUser.photoURL}
+                  loading="lazy"
+                  decoding="async"
+                  alt="User avatar"
+                />
+              ) : (
+                <FaUser className="h-8 w-8 p-1 rounded-full bg-gray-200 dark:bg-gray-700" />
+              )}
             </Menu.Button>
           </div>
 

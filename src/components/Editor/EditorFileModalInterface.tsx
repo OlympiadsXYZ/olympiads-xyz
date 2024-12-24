@@ -77,7 +77,7 @@ const FileSearch = ({
               {hits.map(hit => (
                 <button
                   className="block hover:bg-blue-100 dark:hover:bg-gray-700 py-3 px-5 transition focus:outline-none w-full text-left"
-                  key={hit.id}
+                  key={hit.objectID}
                   onClick={() => onSelect(hit)}
                 >
                   <h3 className="text-gray-600 dark:text-gray-200 font-medium">
