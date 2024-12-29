@@ -10,6 +10,7 @@ import { ArchiveSection, ArchiveSubsection, ArchiveItem, ARCHIVE_DATA } from '..
 import { RecentlyViewed } from '../components/Archive/RecentlyViewed';
 import Breadcrumbs, { BreadcrumbItem } from '../components/Archive/Breadcrumbs';
 import { useEffect } from 'react';
+import { ArchiveGraph } from '../components/Archive/ArchiveGraph';
 
 // First, let's create a unified type for all section items
 type SectionProps = {
@@ -659,6 +660,18 @@ export default function ArchiveTemplate({ pageContext }) {
               </h1>
             </div>
           </div>
+          
+          {/* Add the graph container with proper sizing
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              <div className="rounded-xl overflow-hidden">
+                <ArchiveGraph 
+                  data={ARCHIVE_DATA.physics} 
+                  width={1500}
+                  height={500}
+                />
+              </div>
+          </div> */}
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Object.entries(ARCHIVE_DATA).map(([key, value]) => (
@@ -695,6 +708,36 @@ export default function ArchiveTemplate({ pageContext }) {
             <h1 className="text-center text-3xl sm:text-5xl font-bold text-white dark:text-dark-high-emphasis mb-6">
               {t('archive')} - {archiveData.name}
             </h1>
+          </div>
+          <div className="flex flex-col gap-2">
+          {/* Archive Graph - made it optional with a checkbox because it can be gpu exhaustive */}
+            {(localStorage.getItem('showArchiveGraph') !== 'false') && (
+              <div className="w-full">
+                <div className="w-full rounded-xl overflow-hidden">
+                  <ArchiveGraph 
+                    data={archiveData} 
+                    width={window.innerWidth}
+                    height={600}
+                  />
+                </div>
+              </div>
+            )}
+
+            <label className="flex items-center gap-2 text-white">
+              <input
+                type="checkbox"
+                className="w-4 h-4 rounded"
+                onChange={(e) => {
+                  // Use localStorage to persist the preference
+                  localStorage.setItem('showArchiveGraph', (!e.target.checked).toString());
+                  // Force a re-render
+                  window.location.reload();
+                }}
+                defaultChecked={localStorage.getItem('showArchiveGraph') === 'false'}
+              />
+              <span>{t('hide-archive-graph')}</span>
+            </label>
+
           </div>
         </div>
 
