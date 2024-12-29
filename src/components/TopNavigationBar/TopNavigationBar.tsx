@@ -73,7 +73,7 @@ export default function TopNavigationBar({
     {
       name: t('top-nav_physics'),
       description: t('top-nav_physics_description'),
-      href: '',
+      href: '/archive/physics',
       icon: FaReact,
       backgroundColor: '',
       iconBackgroundColor: 'rgba(59, 130, 246, 1)',

@@ -259,6 +259,107 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (result.errors) {
     reporter.panicOnBuild('🚨 ERROR: Loading "createPages" query');
   }
+
+  // Generate Archive Pages
+const archiveTemplate = path.resolve(`./src/templates/archiveTemplate.tsx`);
+const subjects = ['physics', 'math', 'informatics', 'chemistry', 'biology', 'geography'];
+
+// Create the main archive page
+createPage({
+  path: '/archive',
+  component: archiveTemplate,
+  context: {
+    subject: null,
+  },
+});
+
+// Create individual subject archive pages
+subjects.forEach(subject => {
+  createPage({
+    path: `/archive/${subject}`,
+    component: archiveTemplate,
+    context: {
+      subject: subject,
+    },
+  });
+});
+
+// Create archive file pages based on filesystem
+const archiveFiles = await graphql(`
+  {
+    allFile(
+      filter: { sourceInstanceName: { eq: "archive" } }
+      sort: { fields: name }
+    ) {
+      edges {
+        node {
+          relativePath
+          name
+          extension
+        }
+      }
+    }
+  }
+`);
+
+if (archiveFiles.errors) {
+  reporter.panicOnBuild('Error loading archive files');
+  return;
+}
+
+//TODO: it would be good if this was autmated but the best solution right now is to just copy it over by hand (talking about the archive folder)
+
+// const copyDirectory = (source, destination) => {
+//   // Create destination directory if it doesn't exist
+//   if (!fs.existsSync(destination)) {
+//     fs.mkdirSync(destination, { recursive: true });
+//   }
+
+//   // Read source directory
+//   const files = fs.readdirSync(source);
+
+//   // Copy each file/directory
+//   files.forEach(file => {
+//     const sourcePath = path.join(source, file);
+//     const destPath = path.join(destination, file);
+    
+//     if (fs.lstatSync(sourcePath).isDirectory()) {
+//       // Recursively copy subdirectories
+//       copyDirectory(sourcePath, destPath);
+//     } else {
+//       // Copy file
+//       fs.copyFileSync(sourcePath, destPath);
+//     }
+//   });
+// };
+
+// exports.onPostBuild = () => {
+//   const sourceDir = path.join(__dirname, 'archive');
+//   const destDir = path.join(__dirname, 'public', 'archive');
+  
+//   try {
+//     copyDirectory(sourceDir, destDir);
+//     console.log('Successfully copied archive files to public directory');
+//   } catch (err) {
+//     console.error('Error copying archive files:', err);
+//   }
+// };
+
+
+
+// // Create file access routes
+// archiveFiles.data.allFile.edges.forEach(({ node }) => {
+//   createPage({
+//     path: `/archive/${node.relativePath}`,
+//     component: path.resolve(`./src/templates/fileViewer.tsx`),
+//     context: {
+//       filePath: node.relativePath,
+//     },
+//   });
+// });
+
+
+
   // Check to make sure problems with the same unique ID have consistent information, and that there aren't duplicate slugs
   // Also creates user solution pages for each problem
   const problems = result.data.problems.edges;
@@ -550,3 +651,5 @@ exports.onCreateWebpackConfig = ({ actions, stage, loaders, plugins }) => {
     });
   }
 };
+
+

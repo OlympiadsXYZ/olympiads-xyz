@@ -13,6 +13,7 @@ const siteMetadata = {
 };
 
 const plugins = [
+  
   {
     resolve: 'gatsby-plugin-sitemap',
     options: {
@@ -26,6 +27,13 @@ const plugins = [
     },
   },
   /* any images referenced by .mdx needs to be loaded before the mdx file is loaded. */
+  {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `archive`,
+      path: `${__dirname}/archive`,
+    },
+  },
   {
     resolve: `gatsby-source-filesystem`,
     options: {
@@ -68,6 +76,13 @@ const plugins = [
     options: {
       path: `${__dirname}/announcements`,
       name: `announcements`,
+    },
+  },
+  {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      path: `${__dirname}/archive`,
+      name: `archive`,
     },
   },
   `gatsby-plugin-image`,
