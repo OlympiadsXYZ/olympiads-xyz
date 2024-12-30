@@ -5,10 +5,10 @@ import { ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import moment from 'moment';
 
-const LANGUAGES = ['en', 'bg', 'de'];
+const LANGUAGES = ['bg', 'en', 'de'];
 const LANGUAGE_LABELS = {
-  en: 'English',
   bg: 'Български',
+  en: 'English',
   de: 'Deutsch',
 };
 

@@ -309,54 +309,37 @@ if (archiveFiles.errors) {
 
 //TODO: it would be good if this was autmated but the best solution right now is to just copy it over by hand (talking about the archive folder)
 
-// const copyDirectory = (source, destination) => {
-//   // Create destination directory if it doesn't exist
-//   if (!fs.existsSync(destination)) {
-//     fs.mkdirSync(destination, { recursive: true });
-//   }
+const copyDirectory = (source, destination) => {
+  if (!fs.existsSync(destination)) {
+    fs.mkdirSync(destination, { recursive: true });
+  }
 
-//   // Read source directory
-//   const files = fs.readdirSync(source);
+  const files = fs.readdirSync(source);
 
-//   // Copy each file/directory
-//   files.forEach(file => {
-//     const sourcePath = path.join(source, file);
-//     const destPath = path.join(destination, file);
+  files.forEach(file => {
+    const sourcePath = path.join(source, file);
+    const destPath = path.join(destination, file);
     
-//     if (fs.lstatSync(sourcePath).isDirectory()) {
-//       // Recursively copy subdirectories
-//       copyDirectory(sourcePath, destPath);
-//     } else {
-//       // Copy file
-//       fs.copyFileSync(sourcePath, destPath);
-//     }
-//   });
-// };
+    if (fs.lstatSync(sourcePath).isDirectory()) {
+      copyDirectory(sourcePath, destPath);
+    } else {
+      fs.copyFileSync(sourcePath, destPath);
+    }
+  });
+};
 
-// exports.onPostBuild = () => {
-//   const sourceDir = path.join(__dirname, 'archive');
-//   const destDir = path.join(__dirname, 'public', 'archive');
+exports.onPostBuild = () => {
+  const sourceDir = path.join(__dirname, 'archive');
+  const destDir = path.join(__dirname, 'public', 'archive');
   
-//   try {
-//     copyDirectory(sourceDir, destDir);
-//     console.log('Successfully copied archive files to public directory');
-//   } catch (err) {
-//     console.error('Error copying archive files:', err);
-//   }
-// };
+  try {
+    copyDirectory(sourceDir, destDir);
+    console.log('Successfully copied archive files to public directory');
+  } catch (err) {
+    console.error('Error copying archive files:', err);
+  }
+};
 
-
-
-// // Create file access routes
-// archiveFiles.data.allFile.edges.forEach(({ node }) => {
-//   createPage({
-//     path: `/archive/${node.relativePath}`,
-//     component: path.resolve(`./src/templates/fileViewer.tsx`),
-//     context: {
-//       filePath: node.relativePath,
-//     },
-//   });
-// });
 
 
 

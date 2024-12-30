@@ -711,7 +711,9 @@ export default function ArchiveTemplate({ pageContext }) {
           </div>
           <div className="flex flex-col gap-2">
           {/* Archive Graph - made it optional with a checkbox because it can be gpu exhaustive */}
-            {(localStorage.getItem('showArchiveGraph') !== 'false') && (
+
+            {(typeof window !== 'undefined') && (
+            (localStorage.getItem('showArchiveGraph') !== 'false') && (
               <div className="w-full">
                 <div className="w-full rounded-xl overflow-hidden">
                   <ArchiveGraph 
@@ -721,19 +723,21 @@ export default function ArchiveTemplate({ pageContext }) {
                   />
                 </div>
               </div>
-            )}
+            ))}
 
             <label className="flex items-center gap-2 text-white">
               <input
                 type="checkbox"
                 className="w-4 h-4 rounded"
                 onChange={(e) => {
-                  // Use localStorage to persist the preference
-                  localStorage.setItem('showArchiveGraph', (!e.target.checked).toString());
-                  // Force a re-render
-                  window.location.reload();
+                  if (typeof window !== 'undefined') {
+                    // Use localStorage to persist the preference
+                    localStorage.setItem('showArchiveGraph', (!e.target.checked).toString());
+                    // Force a re-render
+                    window.location.reload();
+                  }
                 }}
-                defaultChecked={localStorage.getItem('showArchiveGraph') === 'false'}
+                defaultChecked={typeof window !== 'undefined' && localStorage.getItem('showArchiveGraph') === 'false'}
               />
               <span>{t('hide-archive-graph')}</span>
             </label>
