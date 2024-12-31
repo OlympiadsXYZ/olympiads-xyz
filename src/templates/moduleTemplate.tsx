@@ -46,17 +46,17 @@ export default function Template(props): JSX.Element {
               "@type": "ListItem",
               "position": 1,
               "name": "Home",
-              "item": "https://usaco.guide/"
+              "item": "https://olympiads-xyz-bg.vercel.app/"
             },{
               "@type": "ListItem",
               "position": 2,
               "name": "${SECTION_LABELS[module.section]}",
-              "item": "https://usaco.guide/${module.section}"
+              "item": "https://olympiads-xyz-bg.vercel.app/${module.section}"
             },{
               "@type": "ListItem",
               "position": 3,
               "name": "${module.title}",
-              "item": "https://usaco.guide/${module.section}/${module.id}"
+              "item": "https://olympiads-xyz-bg.vercel.app/${module.section}/${module.id}"
             }]
           }
         `}</script>

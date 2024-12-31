@@ -4,7 +4,7 @@ import * as functions from 'firebase-functions';
 const backupsClient = new firestore.v1.FirestoreAdminClient();
 
 export default functions.pubsub.schedule('every 24 hours').onRun(context => {
-  const bucket = 'gs://backups.usaco.guide';
+  const bucket = 'gs://backups'; //TODO: change to olympiads-xyz backups
   const projectId = process.env.GCP_PROJECT || process.env.GCLOUD_PROJECT;
   const databaseName = backupsClient.databasePath(projectId, '(default)');
 

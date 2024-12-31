@@ -8,7 +8,7 @@ const siteMetadata = {
   title: `Olympiads XYZ`,
   description: `A free comprehensive, well-organized resource from bulgarian science olympiad contenders designed to help students prepare for science olympiads, with a current focus on physics. Made by students, for students.`,
   author: `@olympiadsxyz`,
-  siteUrl: `https://olympiads.xyz/`, // TODO: change to new domain
+  siteUrl: `https://olympiads-xyz-bg.vercel.app/`, // TODO: change to new domain
   keywords: ['Olympiads XYZ', 'Physics', 'Student olympiads'],
 };
 
