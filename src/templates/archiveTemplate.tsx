@@ -737,7 +737,7 @@ export default function ArchiveTemplate({ pageContext }) {
                     window.location.reload();
                   }
                 }}
-                defaultChecked={typeof window !== 'undefined' && localStorage.getItem('showArchiveGraph') === 'false'}
+                defaultChecked={typeof window !== 'undefined' && (localStorage.getItem('showArchiveGraph') === 'false' || localStorage.getItem('showArchiveGraph') === null)}
               />
               <span>{t('hide-archive-graph')}</span>
             </label>

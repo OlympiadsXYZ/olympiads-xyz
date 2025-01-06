@@ -132,10 +132,10 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
             {/* <PoweredBy /> */}
           </div>
           <div className="pt-3 px-9 pb-4 grid grid-cols-10">
-            <div className="sm:col-span-4 md:col-span-3 lg:col-span-2 xl:col-span-2 col-span-5 overflow-y-auto">
+            {/* <div className="sm:col-span-4 md:col-span-3 lg:col-span-2 xl:col-span-2 col-span-5 overflow-y-auto">
               <TagsRefinementList />
-            </div>
-            <div className="py-0.5 px-1 sm:col-span-6 md:col-span-7 lg:col-span-8 xl:col-span-8 col-span-5">
+            </div> */}
+            <div className="py-0.5 px-1 col-span-10">
               <div className="mb-5 items-center grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-x-5 gap-y-3">
                 {selectionMetadata.map(props => (
                   <div

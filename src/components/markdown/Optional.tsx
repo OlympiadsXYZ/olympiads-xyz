@@ -29,8 +29,7 @@ const Optional: React.FC<OptionalProps> = ({ children, title }) => {
       </div>
       <div className="ml-3">
         <h3 className="text-sm leading-5 font-medium text-purple-800 dark:text-purple-200">
-          {t('optional')}
-          {title ? `: ${title}` : ''}
+          {title ? title : t('optional')}
         </h3>
         <div className="mt-2 text-sm leading-5 text-purple-700 dark:text-purple-300 no-y-margin tailwind-alert tailwind-alert--optional">
           {children}

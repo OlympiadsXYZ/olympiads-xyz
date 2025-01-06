@@ -173,10 +173,10 @@ export const SignInModal: React.FC<SignInModalProps> = ({
                 </div>
               </div>
               <div className="mt-5 sm:mt-6 space-y-4">
-                <div className="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:space-x-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
                   <button
                     type="button"
-                    className="btn pl-3"
+                    className="btn pl-3 mb-4 sm:mb-0"
                     onClick={handleSignInWithGoogle}
                     disabled={!firebaseApp || isSigningIn}
                   >

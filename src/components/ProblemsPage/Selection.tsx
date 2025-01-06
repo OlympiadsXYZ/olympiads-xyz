@@ -5,6 +5,7 @@ import {
   useRefinementList,
 } from 'react-instantsearch';
 import Select from '../Select';
+import { useTranslation } from 'react-i18next';
 
 export type SelectionProps = UseRefinementListProps & {
   placeholder: string;
@@ -24,6 +25,7 @@ export default function Selection({
   items,
   ...props
 }: SelectionProps) {
+  const { t } = useTranslation();
   const { items: refineItems } = useRefinementList({
     attribute,
     limit,
@@ -45,6 +47,31 @@ export default function Selection({
       },
     }));
   }, [refinements]);
+
+  const transformDifficultyLabel = (label: string) => {
+    if (attribute === 'difficulty') {
+      switch (label) {
+        case 'Very Easy':
+          return t('very-easy');
+        case 'Easy':
+          return t('easy');
+        case 'Normal':
+          return t('normal');
+        case 'Hard':
+          return t('hard');
+        case 'Very Hard':
+          return t('very-hard');
+        case 'Insane':
+          return t('insane');
+        case 'N/A':
+          return t('n/a');
+        default:
+          return label;
+      }
+    }
+    return transform ? transform(label) : label;
+  };
+
   return (
     <Select
       onChange={(items: any) => {
@@ -58,7 +85,7 @@ export default function Selection({
       isSearchable={searchable}
       options={items.map(item => ({
         ...item,
-        label: transform ? transform(item.label) : item.label,
+        label: transformDifficultyLabel(item.label),
       }))}
       className="text-black dark:text-white"
       classNamePrefix="select"

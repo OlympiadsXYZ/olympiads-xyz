@@ -78,13 +78,6 @@ const plugins = [
       name: `announcements`,
     },
   },
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      path: `${__dirname}/archive`,
-      name: `archive`,
-    },
-  },
   `gatsby-plugin-image`,
   `gatsby-plugin-sharp`,
   {

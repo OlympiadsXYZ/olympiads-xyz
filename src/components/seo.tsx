@@ -22,7 +22,7 @@ function SEO({
           siteUrl
         }
       }
-      image: file(relativePath: { eq: "social-media-image.jpg" }) {
+      image: file(relativePath: { eq: "social-media-image.png" }) {
         childImageSharp {
           resize(width: 1200, quality: 100) {
             src
@@ -72,11 +72,19 @@ function SEO({
         },
         {
           property: `og:title`,
-          content: title || 'USACO Guide',
+          content: title || 'Olympiads XYZ',
         },
         {
           property: `og:description`,
           content: metaDescription,
+        },
+        {
+          property: `og:site_name`,
+          content: 'Olympiads XYZ',
+        },
+        {
+          property: `og:url`,
+          content: 'https://olympiads-xyz-bg.vercel.app',
         },
         {
           property: `og:type`,
@@ -88,7 +96,7 @@ function SEO({
         },
         {
           name: `twitter:title`,
-          content: title || 'USACO Guide',
+          content: title || 'Olympiads XYZ',
         },
         {
           name: `twitter:description`,
@@ -111,14 +119,18 @@ function SEO({
                   content: metaImage.height,
                 },
                 {
+                  name: 'twitter:image',
+                  content: image,
+                },
+                {
                   name: 'twitter:card',
-                  content: 'summary_large_image',
+                  content: image,
                 },
               ]
             : [
                 {
                   name: 'twitter:card',
-                  content: 'summary',
+                  content: 'Olympiads XYZ',
                 },
               ]
         )

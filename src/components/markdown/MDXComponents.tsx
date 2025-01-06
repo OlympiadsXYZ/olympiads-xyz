@@ -23,6 +23,7 @@ import { Resource, ResourcesList } from './ResourcesList';
 import Spoiler from './Spoiler';
 import Warning from './Warning';
 import YouTube from './YouTube';
+import DifficultyBox from '../DifficultyBox';
 
 const MATHDIV = props => {
   return (
@@ -66,6 +67,7 @@ export const components = {
   YouTube,
   PrefixSumInteractive,
   Quiz,
+  DifficultyBox,
   MATHDIV,
   MATHSPAN,
 

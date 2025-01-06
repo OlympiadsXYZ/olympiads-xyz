@@ -24,7 +24,6 @@ import TrustedBy from '../components/Index/TrustedBy';
 import { ProblemsetsFeature } from '../components/Index/features/ProblemsetsFeature';
 import { ProgressTrackingFeature } from '../components/Index/features/ProgressTrackingFeature';
 import { ResourcesFeature } from '../components/Index/features/ResourcesFeature';
-import { EasyFunCoding, Vercel } from '../components/Index/sponsor-logos';
 import TopNavigationBar from '../components/TopNavigationBar/TopNavigationBar';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import '../i18n';
@@ -581,7 +580,7 @@ export default function IndexPage(): JSX.Element {
                 target="_blank"
                 rel="noreferrer"
               >
-                <EasyFunCoding />
+                a
               </a>
             </div>
           </div>

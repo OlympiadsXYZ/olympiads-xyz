@@ -12,7 +12,9 @@ const TextTooltip = ({
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    <Tooltip {...props}>
+    <Tooltip {...props}
+             trigger="mouseenter click"
+             hideOnClick={true}>
       <span
         className={classNames(
           'border-b border-dashed border-gray-600 cursor-pointer dark:border-gray-500',

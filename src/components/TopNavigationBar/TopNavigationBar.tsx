@@ -125,42 +125,42 @@ export default function TopNavigationBar({
       name: t('sections_general'),
       href: '/general',
       icon: BookmarkIcon,
-      iconColor: 'rgb(37 99 235)',
+      iconColor: '#a3a3a3',
       key: 'general',
     },
     {
       name: t('sections_beginner'),
       href: '/beginner',
       icon: BookmarkIcon,
-      iconColor: 'rgb(202 138 4)',
+      iconColor: '#b91c1c',
       key: 'beginner',
     },
     {
       name: t('sections_intermediate'),
       href: '/intermediate',
       icon: BookmarkIcon,
-      iconColor: 'rgb(13 148 136)',
+      iconColor: '#f59e0b',
       key: 'intermediate',
     },
     {
       name: t('sections_advanced'),
       href: '/advanced',
       icon: BookmarkIcon,
-      iconColor: 'rgb(79 70 229)',
+      iconColor: '#65a30d',
       key: 'advanced',
     },
     {
       name: t('sections_special'),
       href: '/special',
       icon: BookmarkIcon,
-      iconColor: 'rgb(147 51 234)',
+      iconColor: '#0ea5e9',
       key: 'special',
     },
     {
       name: t('sections_beyond'),
       href: '/beyond',
       icon: BookmarkIcon,
-      iconColor: 'rgb(22 163 74)',
+      iconColor: '#c026d3',
       key: 'beyond',
     },
   ];
@@ -169,9 +169,9 @@ export default function TopNavigationBar({
       {!hidePromoBar && (
         <>
           <Banner
-            text="Есенно състезание по физика 8-10 ноември, гр. Бургас"
+            text="Сайтът е отново достъпен! И честита Нова година!"
             action="Информация"
-            link="https://www.prirodninauki.bg/archives/20475"
+            link=""
           />
         </>
       )}

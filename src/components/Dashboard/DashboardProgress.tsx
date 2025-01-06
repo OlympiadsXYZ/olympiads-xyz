@@ -2,6 +2,10 @@ import * as React from 'react';
 import Tooltip from '../Tooltip/Tooltip';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
+import { FaCheck } from "react-icons/fa";
+import { FaPenToSquare } from "react-icons/fa6";
+import { MdDoubleArrow } from "react-icons/md";
+import { PiEmptyBold } from "react-icons/pi";
 
 const ProgressBar = ({ text, green, yellow, blue }) => {
   return (
@@ -35,22 +39,38 @@ const FancyNumber = ({
   textColor,
   bgColor,
   subTextColor = null as string | null,
-}) => (
-  <div className="text-center">
-    <span
-      className={`text-3xl font-bold ${textColor} ${bgColor} rounded-full h-16 w-16 inline-block inline-flex items-center justify-center`}
-    >
-      {number}
-    </span>
-    <span
-      className={`block mt-1 text-sm font-medium uppercase ${
-        subTextColor ? subTextColor : textColor
-      }`}
-    >
-      {text}
-    </span>
-  </div>
-);
+  icon = null as React.ComponentType<React.SVGProps<SVGSVGElement>> | null,
+}) => {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+
+  const Icon = icon;
+
+  return (
+    <div className="text-center">
+      <span
+        className={`text-3xl font-bold ${textColor} ${bgColor} rounded-full h-16 w-16 inline-block inline-flex items-center justify-center`}
+      >
+        {number}
+      </span>
+      <span
+        className={`block mt-1 text-sm font-medium uppercase ${
+          subTextColor ? subTextColor : textColor
+        }`}
+      >
+        {isMobile && Icon ? <Icon className="h-5 w-5 mx-auto" /> : text}
+      </span>
+    </div>
+  );
+};
 
 type ProgressCounts = {
   completed: number;
@@ -74,24 +94,28 @@ export default function DashboardProgress({
         <FancyNumber
           number={completed}
           text={t('dashboard_completed')}
+          icon={FaCheck}
           textColor="text-green-800 dark:text-green-100"
           bgColor="bg-green-100 dark:bg-green-800"
         />
         <FancyNumber
           number={inProgress}
           text={t('dashboard_in-progress')}
+          icon={FaPenToSquare}
           textColor="text-yellow-800 dark:text-yellow-100"
           bgColor="bg-yellow-100 dark:bg-yellow-800"
         />
         <FancyNumber
           number={skipped}
           text={t('dashboard_skipped')}
+          icon={MdDoubleArrow}
           textColor="text-blue-800 dark:text-blue-50"
           bgColor="bg-blue-50 dark:bg-blue-800"
         />
         <FancyNumber
           number={notStarted}
           text={t('dashboard_not-started')}
+          icon={PiEmptyBold}
           textColor="text-gray-800"
           bgColor="bg-gray-100"
           subTextColor="text-gray-800 dark:text-gray-100"

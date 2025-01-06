@@ -18,6 +18,8 @@ const Asterisk: React.FC<Omit<TooltipProps, 'type'>> = ({
         content={children}
         position={position}
         type="asterisk"
+        trigger="mouseenter click"
+        hideOnClick={true}
       >
         <button
           className="absolute block cursor-pointer focus:outline-none"
