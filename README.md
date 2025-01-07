@@ -1,5 +1,5 @@
 
-# <img src="./src/assets/social-media-image.png" alt="logo" width="27"/> Olympiads XYZ
+# <img src="./src/assets/social-media-image.png" alt="logo" width="50" style="vertical-align: middle"/> Olympiads XYZ
 
 A free collection of curated, high-quality resources that can help you prepare for science olympiads and competitions.
 
