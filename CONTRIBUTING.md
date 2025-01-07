@@ -1,3 +1,3 @@
 # Contributing
 
-Check the [Contributing](https://usaco.guide/general/contributing) module.
+Погледнете този модул: [Допринасяне](https://olympiads-xyz-bg.vercel.app/general/contributing).

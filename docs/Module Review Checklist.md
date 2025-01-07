@@ -1,13 +1,7 @@
 # Module Review Checklist
 
 Read through the module and check for errors. Also see:
-https://usaco.guide/general/contributing
-
-Languages Checked:
-
-- [ ] C++
-- [ ] Java (Lower priority)
-- [ ] Python (Optional)
+https://olympiads-xyz-bg.vercel.app/general/contributing
 
 Things to check:
 

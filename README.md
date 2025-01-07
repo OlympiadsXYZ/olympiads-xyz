@@ -1,33 +1,24 @@
 ![USACO Guide](./src/assets/banner-image-big.jpg)
 
-# USACO Guide
+# Olympiads XYZ
 
-A free collection of curated, high-quality resources to take you from Bronze to
-Platinum and beyond.
+A free collection of curated, high-quality resources that can help you prepare for science olympiads and competitions.
 
-Thank you to the following companies:
-
-- [Vercel](https://vercel.com/?utm_source=cp-initiative&utm_campaign=oss),
-  hosting & continuous deployment
-- [Microsoft for Nonprofits](https://microsoft.com/)
-- [Algolia](https://algolia.com/), search functionality
-- And [more](docs/Companies.md)!
+A very big thank you to the [CP Initiative](https://joincpi.org/) and the creators of [USACO Guide](https://usaco.guide/) for providing us with the opportunity to build upon their work.
 
 ## Documentation + Contributing
 
-See the [contributing module](https://usaco.guide/general/contributing). All
-contributions are welcome! To get started, simply pick an
-[issue](https://github.com/cpinitiative/usaco-guide/issues) you'd like to work
-on, leave a comment, and submit a Pull Request!
-
-Join our Discord server: https://discord.gg/VCxUzdYhzN
+See the [contributing module](https://olympiads-xyz-bg.vercel.app/general/contributing). All
+contributions are welcome (and even encouraged)!
 
 ## Our Team
 
-The USACO Guide is run by the
-[Competitive Programming Initiative](https://joincpi.org/). We're looking for
-Content Authors to join our team to help us improve the Guide! Learn more
-[here](https://docs.google.com/document/d/13QpXqdiYQwjBLnywGL1FUG7GFdh8SM_1NigIkJl-A7k/edit).
+Main creators:
+- @ismoldaev ([https://github.com/ismoldaev](https://github.com/ismoldayev))
+- @pe60 ([https://github.com/pe60](https://github.com/pe60))
+
+We're looking for Module Authors to help us improve the website! Learn more
+[here](https://olympiads-xyz-bg.vercel.app/general/become-author).
 
 ## Tech Stack
 
@@ -37,16 +28,16 @@ Our front-end is built with:
 - Gatsby
 - Typescript
 - Tailwind CSS & Tailwind UI
-- [Storybook](https://storybook.js.org/) and
+- [Storybook](https://storybook.js.org/) (currently there are some issues with it, but it's still useful) and
   [Chromatic](https://www.chromatic.com/)
 - MDX (JSX in Markdown) with XDM compiler
 - Firebase
 - Deployed with
-  [Vercel](https://vercel.com/?utm_source=cp-initiative&utm_campaign=oss)
+  [Vercel](https://vercel.com/)
 
 ## Contact Info
 
-If you have any questions, please reach out to us at usacoguide@gmail.com.
+If you have any questions, please reach out to us at olympiadsxyz@gmail.com.
 
 ## License
 

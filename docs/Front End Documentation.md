@@ -79,6 +79,7 @@ Every time XDM is updated this will have to be rerun and re-copy-pasted.
 
 ## Credits
 
+- Original website design from [USACO Guide](https://usaco.guide/)
 - Confetti taken from Josh Comeau:
   https://github.com/joshwcomeau/react-europe-talk-2018
 - Lots of inspiration from Josh Comeau's blog and Gatsbyjs documentation site

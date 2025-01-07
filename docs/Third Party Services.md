@@ -1,53 +1,34 @@
 # Third Party Services
 
-The following is a list of third party services that the USACO Guide /
-Competitive Programming Initiative uses.
+The following is a list of third party services that Olympiads XYZ uses.
 
-Note: This may be out of date.
+Note: This may be out of date. Current version is from 07.01.2025
 
-## USACO Guide
+## Olympiads XYZ
 
-- Hosted on Vercel (sponsored hosting, but the free hobby tier will likely
-  suffice)
-  - Can also host on Netlify
-  - Can also host by yourself
+- Hosted on Vercel
+  - Uses free tier and pay as you go plan (not very generous free tier, so an upgrade might be needed in the future, depending on the internet traffic)
+  - Can be replaced with any other hosting service
 - Firebase backend (pay-as-you-go plan, pretty generous free tier)
   - No easy replacement
   - Technically can function without Firebase -- user login wouldn't work,
     classes wouldn't work, but everything else will still work (including local
     progress tracking)
 - Algolia for Search
-  - Open source plan. With some optimizations you _might_ be able to get by with
-    the free tier plan. Otherwise pay as you go.
+  - Currently squeezing in free tier with some optimizations, but it's expected to not suffice in the long run. Otherwise pay as you go.
   - No easy replacement. Without this, module search + problems search won't
     work.
+- GitHub LFS for storage of archive files
+  - Basic plan - 5$/month
+  - Can be replaced with any other storage service
 
-## IDE
+## Discussion & Forum
 
-- https://github.com/thecodingwizard/ide
-- Our custom serverless online judge is hosted on AWS Lambda.
-
-## Forum
-
-- Hosted on Microsoft Azure
-  - Can host on any VPS
-- Uses Discourse (open source, free)
-  - One-click setup on DigitalOcean doesn't work -- manually configure app.yml
-- Uses Mailgun as email provider (currently on pay-as-you-go plan, may or may
-  not cost some \$\$ depending on scale)
+- In development, currently using Github Discussions
 
 ## Domain Names
 
-- https://joincpi.org/ -- Registered under Google Domains, \$12/yr
-- https://usaco.guide/ -- Registered under NameCheap, \$40/yr (?)
+- https://olympiads-xyz-bg.vercel.app/ 
 - Google Search Console
 - Google Analytics
 
-## Competitive Programming Initiative
-
-- Google Nonprofits
-  - gsuite for Nonprofits
-  - Google Ad Grant
-- Microsoft Nonprofits
-- Github Nonprofits
-- Mailgun
