@@ -27,7 +27,6 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       name: 'Обща информация',
       description: "Какво представлява този сайт и как да го използвате.",
       items: [
-        'general-test',
         'general-intro',
         'about-us',
         'using-modules',
@@ -40,9 +39,9 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       name: 'Допринасяне към Olympiads XYZ',
       description: "Как вие можете да ни помогнете.",
       items: [
-        'donate-site-support',
+        'contributing',
         'become-author',
-        'module-redaction',
+        'adding-solutions',
         'editor-work-mdx',
       ],
     }
