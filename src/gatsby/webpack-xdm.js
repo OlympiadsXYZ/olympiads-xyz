@@ -11,6 +11,7 @@ const remarkSlug = require('remark-slug');
 const remarkAutolinkHeadings = require('remark-autolink-headings');
 const { getOptions } = require('loader-utils');
 const { xdm } = require('./xdm');
+const remarkEmoji = require('remark-emoji');
 
 module.exports = function (code) {
   const callback = this.async();
@@ -23,6 +24,10 @@ module.exports = function (code) {
       {
         remarkPlugins: [
           gfm,
+          [remarkEmoji, {
+            emoticon: true,
+            padSpaceAfter: true,
+          }],
           remarkMath,
           remarkExternalLinks,
           remarkFrontmatter,

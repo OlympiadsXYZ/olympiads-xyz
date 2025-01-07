@@ -9,6 +9,7 @@ import { compile as xdmCompile } from 'xdm/lib/compile';
 import customRehypeKatex from '../../mdx-plugins/rehype-math';
 import rehypeSnippets from '../../mdx-plugins/rehype-snippets';
 import remarkToC from '../../mdx-plugins/remark-toc';
+import remarkEmoji from 'remark-emoji';
 
 // See: https://github.com/mdx-js/mdx/blob/main/packages/runtime/src/index.js
 const compile = async ({ markdown, problems }) => {
@@ -29,6 +30,10 @@ const compile = async ({ markdown, problems }) => {
       {
         remarkPlugins: [
           gfm,
+          [remarkEmoji, {
+            emoticon: true,
+            padSpaceAfter: true,
+          }],
           remarkMath,
           remarkExternalLinks,
           remarkFrontmatter,
