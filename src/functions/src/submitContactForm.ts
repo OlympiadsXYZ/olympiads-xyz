@@ -7,66 +7,84 @@ if (admin.apps.length === 0) {
 }
 
 const submitContactForm = functions.https.onCall(async data => {
-  const { name, email, moduleName, url, lang, topic, message } = data;
+  const { name, email, moduleName, url, lang, topic, message, includeNameInIssue } = data;
   if (!name || !topic || !message || !email) {
     throw new functions.https.HttpsError(
       'invalid-argument',
       'One or more required arguments were not passed.'
     );
   }
-  const body =
-    `Someone submitted the contact form!\n\n` +
-    `**URL**: ${url}\n` +
-    `**Module**: ${moduleName ? moduleName : 'None'}\n` +
-    `**Topic**: ${topic}\n` +
-    `**Message**: \n${message}`;
 
-  const key = functions.config().contactform.issueapikey;
-  const githubAPI = axios.create({
-    baseURL: 'https://api.github.com',
-    auth: {
-      username: 'maggieliu05',
-      password: key,
-    },
-  });
-  const labels = [];
-  if (
-    topic.includes('Mistake') ||
-    topic.includes('Unclear Explanation') ||
-    topic.includes('Request')
-  ) {
-    labels.push('content');
-    labels.push('good first issue');
-  }
-  if (topic.includes('Website Bug')) {
-    labels.push('website');
-    labels.push('bug');
-  }
-  if (topic.includes('Suggestion')) labels.push('enhancement');
-  let title = `Contact Form Submission - ${topic}`;
-  if (moduleName) {
-    title += ` (${moduleName})`;
-  }
-  const createdIssue = await githubAPI.post(
-    '/repos/cpinitiative/usaco-guide/issues',
-    {
-      title: title,
-      body: body,
-      labels: labels,
+  const body = `
+## Обратна връзка
+
+${includeNameInIssue ? `**От**: ${name}\n` : ''}
+**URL**: ${url}
+${moduleName ? `**Модул**: ${moduleName}` : ''}
+**Вид**: ${topic}
+**Съобщение**: \n
+${message}
+---
+*Автоматично генерирано от Olympiads XYZ*`;
+
+  try {
+    const key = functions.config().contactform.issueapikey;
+    const githubAPI = axios.create({
+      baseURL: 'https://api.github.com',
+      headers: {
+        Authorization: `token ${key}`,
+        Accept: 'application/vnd.github.v3+json',
+      },
+    });
+
+    const labels = [];
+    if (
+      topic.includes('Грешка') ||
+      topic.includes('Неясно обяснение') ||
+      topic.includes('Заявка')
+    ) {
+      labels.push('content');
+      labels.push('good first issue');
     }
-  );
+    if (topic.includes('Бъг')) {
+      labels.push('website');
+      labels.push('bug');
+    }
+    if (topic.includes('Предложение')) labels.push('enhancement');
 
-  await admin.firestore().collection('contactFormSubmissions').add({
-    name: name,
-    email: email,
-    moduleName: moduleName,
-    url: url,
-    lang: lang,
-    topic: topic,
-    message: message,
-    issueNumber: createdIssue.data.number,
-  });
+    const title = `Обратна връзка - ${topic}${moduleName ? ` (${moduleName})` : ''}`;
 
-  return createdIssue.data.html_url;
+    const createdIssue = await githubAPI.post(
+      '/repos/OlympiadsXYZ/olympiads-xyz/issues',
+      {
+        title,
+        body,
+        labels,
+      }
+    );
+
+    await admin.firestore().collection('contactFormSubmissions').add({
+      name,
+      email,
+      moduleName,
+      url,
+      lang,
+      topic,
+      message,
+      includeNameInIssue,
+      issueNumber: createdIssue.data.number,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+
+    return createdIssue.data.html_url;
+  } catch (error) {
+    console.error('GitHub API Error:', error.response?.data || error);
+    throw new functions.https.HttpsError(
+      'internal',
+      `Failed to create GitHub issue: ${error.response?.data?.message || error.message}`
+    );
+  }
 });
+
 export default submitContactForm;

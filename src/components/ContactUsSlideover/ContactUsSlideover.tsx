@@ -100,6 +100,7 @@ export default function ContactUsSlideover({
   const [issueLink, setIssueLink] = useState('');
   const [submitEnabled, setSubmitEnabled] = useState(true);
   const [showErrors, setShowErrors] = useState(false);
+  const [includeNameInIssue, setIncludeNameInIssue] = useState(true);
 
   const markdownContext = useContext(MarkdownLayoutContext);
   const userLang = useUserLangSetting();
@@ -154,6 +155,7 @@ export default function ContactUsSlideover({
     try {
       const response = await submitForm({
         name,
+        includeNameInIssue,
         email,
         moduleName: location,
         url: window.location.href,
@@ -174,6 +176,7 @@ export default function ContactUsSlideover({
   };
 
   return (
+  
     <SlideoverForm
       isOpen={isOpen}
       onClose={onClose}
@@ -182,7 +185,7 @@ export default function ContactUsSlideover({
         <>
           {t('contact_us_subtitle')} {t('contact_us_subtitle_extra')}{' '}
           <a
-            href="https://github.com/OlympiadsXYZ/olympiads-xyz"
+            href="https://github.com/OlympiadsXYZ/olympiads-xyz/issues"
             target="_blank"
             rel="noreferrer"
             className="underline"
@@ -269,16 +272,6 @@ export default function ContactUsSlideover({
                       {issueLink}
                     </a>
                   </p>
-                  {/* <p className="pt-2">
-                    For urgent requests, please feel free to email{' '}
-                    <a
-                      href="mailto:nathan.r.wang@gmail.com"
-                      className="underline text-blue-600"
-                    >
-                      nathan.r.wang@gmail.com
-                    </a>
-                    .
-                  </p> */}
                 </div>
               </div>
             </div>
@@ -351,7 +344,7 @@ export default function ContactUsSlideover({
                               className="hover:underline text-blue-600 dark:text-blue-300"
                               target="_blank"
                               rel="noreferrer"
-                              href="https://github.com/cpinitiative/usaco-guide/pulls"
+                              href="https://github.com/OlympiadsXYZ/olympiads-xyz/pulls"
                             >
                               {t('here')}
                             </a>{' '}
@@ -429,6 +422,55 @@ export default function ContactUsSlideover({
                   {t('message_must_be_at_least_10_chars')}
                 </p>
               )}
+            </div>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {t('include-name-in-issue')}
+              </span>
+              <button
+                type="button"
+                className={`${
+                  includeNameInIssue ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'
+                } relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                onClick={() => {
+                  setIncludeNameInIssue(!includeNameInIssue);
+                }}
+              >
+                <span
+                  className={`${
+                    includeNameInIssue ? 'translate-x-5' : 'translate-x-0'
+                  } pointer-events-none relative inline-block h-5 w-5 rounded-full bg-white dark:bg-gray-200 shadow transform ring-0 transition ease-in-out duration-200`}
+                >
+                  <span
+                    className={`${
+                      includeNameInIssue
+                        ? 'opacity-0 ease-out duration-100'
+                        : 'opacity-100 ease-in duration-200'
+                    } absolute inset-0 h-full w-full flex items-center justify-center transition-opacity`}
+                  >
+                    <svg className="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+                      <path
+                        d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    className={`${
+                      includeNameInIssue
+                        ? 'opacity-100 ease-in duration-200'
+                        : 'opacity-0 ease-out duration-100'
+                    } absolute inset-0 h-full w-full flex items-center justify-center transition-opacity`}
+                  >
+                    <svg className="h-3 w-3 text-blue-600" fill="currentColor" viewBox="0 0 12 12">
+                      <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                    </svg>
+                  </span>
+                </span>
+              </button>
             </div>
           </div>
         )}

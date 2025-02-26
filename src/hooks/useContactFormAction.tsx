@@ -6,7 +6,7 @@ export default function useContactFormAction() {
   const firebaseApp = useFirebaseApp();
 
   return useCallback(
-    async ({ name, email, moduleName, url, lang, topic, message }) => {
+    async ({ name, email, moduleName, url, lang, topic, message, includeNameInIssue }) => {
       if (!name) {
         throw new Error('Please enter your name.');
       }
@@ -35,6 +35,7 @@ export default function useContactFormAction() {
         lang,
         topic,
         message,
+        includeNameInIssue
       });
     },
     [firebaseApp]

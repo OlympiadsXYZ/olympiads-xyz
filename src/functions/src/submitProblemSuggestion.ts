@@ -114,7 +114,7 @@ const submitProblemSuggestion = functions.https.onCall(
       '/repos/cpinitiative/usaco-guide/git/refs/heads'
     );
     const masterRef = masterRefsReq.data.find(
-      r => r.ref == 'refs/heads/master'
+      r => r.ref === 'refs/heads/master'
     );
     const masterHash = masterRef.object.sha;
 

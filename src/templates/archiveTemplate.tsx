@@ -713,7 +713,7 @@ export default function ArchiveTemplate({ pageContext }) {
           {/* Archive Graph - made it optional with a checkbox because it can be gpu exhaustive */}
 
             {(typeof window !== 'undefined') && (
-            (localStorage.getItem('showArchiveGraph') !== 'false') && (
+            (localStorage.getItem('showArchiveGraph') === 'true') && (
               <div className="w-full">
                 <div className="w-full rounded-xl overflow-hidden">
                   <ArchiveGraph 
@@ -732,14 +732,17 @@ export default function ArchiveTemplate({ pageContext }) {
                 onChange={(e) => {
                   if (typeof window !== 'undefined') {
                     // Use localStorage to persist the preference
-                    localStorage.setItem('showArchiveGraph', (!e.target.checked).toString());
+                    localStorage.setItem('showArchiveGraph', (e.target.checked).toString());
+                    // Set initial checked state based on localStorage
                     // Force a re-render
                     window.location.reload();
                   }
+
                 }}
-                defaultChecked={typeof window !== 'undefined' && (localStorage.getItem('showArchiveGraph') === 'false' || localStorage.getItem('showArchiveGraph') === null)}
+                checked={typeof window !== 'undefined' && localStorage.getItem('showArchiveGraph') === 'true'}  
+
               />
-              <span>{t('hide-archive-graph')}</span>
+              <span>{t('show-archive-graph')}</span>
             </label>
 
           </div>
