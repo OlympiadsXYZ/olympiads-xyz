@@ -23,10 +23,10 @@ export class ModuleLinkInfo {
     public cppOc: number | null = 0,
     public javaOc: number | null = 0,
     public pyOc: number | null = 0,
-    public probs?: any,
-    public gitAuthorTime?: any
+    public gitAuthorTime?: any,
+    public probs?: any
   ) {
-    if (this.id === 'using-this-guide') {
+    if (this.id === 'editor-work-mdx') {
       // The "Using This Guide" module is complete already, but it contains an <IncompleteModule> tag
       // We want to ignore it and manually mark it as complete
       this.isIncomplete = false;

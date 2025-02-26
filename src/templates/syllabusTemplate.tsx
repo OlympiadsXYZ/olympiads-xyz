@@ -248,8 +248,11 @@ export default function Template(props) {
                           item.frontmatter.description,
                           item.frontmatter.frequency as ModuleFrequency,
                           item.isIncomplete,
-                          [],
-                          item.fields?.gitAuthorTime
+                          null,
+                          null,
+                          null,
+                          item.fields?.gitAuthorTime,
+                          []
                         )
                       }
                     />

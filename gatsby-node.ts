@@ -166,9 +166,8 @@ exports.onCreateNode = async api => {
       value: freshOrdering.moduleIDToSectionMap[node.frontmatter.id],
     });
     // https://angelos.dev/2019/09/add-support-for-modification-times-in-gatsby/
-    const gitAuthorTime = execSync(
-      `git log -1 --pretty=format:%aI ${node.fileAbsolutePath}`
-    ).toString();
+    // Decided to do a custom function for better implementation and readability
+    const gitAuthorTime = getGitAuthorTime(node.fileAbsolutePath);
     createNodeField({
       node,
       name: 'gitAuthorTime',
@@ -632,6 +631,34 @@ exports.onCreateWebpackConfig = ({ actions, stage, loaders, plugins }) => {
         ],
       },
     });
+  }
+};
+
+const getGitAuthorTime = (filePath: string): string => {
+  try {
+    // Handle paths with spaces or special characters
+    const escapedPath = filePath.replace(/(\s+)/g, '\\$1');
+    
+    // Get the last meaningful content change (not just formatting)
+    // The -w flag ignores whitespace changes
+    const lastContentChange = execSync(
+      `git log -1 --format=%aI --follow -w -- "${escapedPath}"`
+    ).toString().trim();
+    
+    if (lastContentChange) {
+      return lastContentChange;
+    }
+    
+    // Fallback to file creation date if no content changes found
+    const fileCreationDate = execSync(
+      `git log --diff-filter=A --format=%aI -- "${escapedPath}"`
+    ).toString().trim();
+    
+    return fileCreationDate || new Date().toISOString();
+  } catch (e) {
+    console.warn(`Failed to get git history for ${filePath}`, e);
+    // Provide a fallback value to prevent build failures
+    return new Date().toISOString();
   }
 };
 
