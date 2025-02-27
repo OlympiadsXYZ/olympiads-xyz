@@ -47,10 +47,12 @@ export default function DynamicMarkdownRenderer({
   markdown,
   problems,
   onContentLoaded,
+  onError,
 }: {
   markdown: string;
   problems: string;
   onContentLoaded?: (content: any) => void;
+  onError?: (error: Error) => void;
 }): JSX.Element {
   const [mdxContent, setMdxContent] = useState(null);
   const [
@@ -91,17 +93,20 @@ export default function DynamicMarkdownRenderer({
             jsxs,
           }).default({ components });
         } catch (e) {
-          if (e instanceof Error) setError(e);
-          else setError(new Error('Unknown Error: ' + e));
+          if (e instanceof Error) {setError(e); onError?.(e);}
+          else {setError(new Error('Unknown Error: ' + e)); onError?.(new Error('Unknown Error: ' + e));}
         }
         if (content) {
           setError(null);
+          // Don't pass null to onError as it expects an Error object
+          if (onError) onError(undefined as unknown as Error);
           setMdxContent(content);
           setMarkdownProblemListsProviderValue(data.problemsList);
           onContentLoaded?.(content);
         }
       } else {
         setError(data.error);
+        onError?.(data.error);
         setMdxContent(null);
       }
       requestMarkdownCompilation();
@@ -109,7 +114,7 @@ export default function DynamicMarkdownRenderer({
     workerRef.current = worker;
     requestMarkdownCompilation();
     return () => worker.terminate();
-  }, []);
+  }, [onContentLoaded, onError]);
 
   useEffect(() => {
     waitingToBeCompiledRef.current = {

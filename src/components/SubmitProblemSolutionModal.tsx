@@ -8,6 +8,7 @@ import ButtonGroup from './ButtonGroup';
 import TabIndentableTextarea from './elements/TabIndentableTextarea';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'gatsby';
+import DynamicMarkdownRenderer from './DynamicMarkdownRenderer/DynamicMarkdownRenderer';
 
 export default function SubmitProblemSolutionModal({
   isOpen,
@@ -27,6 +28,8 @@ export default function SubmitProblemSolutionModal({
   const [loading, setLoading] = React.useState(false);
   const [showSuccess, setShowSuccess] = React.useState(false);
   const { submitSolution: submitAction } = useUserProblemSolutionActions();
+  const [previewMode, setPreviewMode] = React.useState(false);
+  const [markdownError, setMarkdownError] = React.useState<Error | null>(null);
 
   React.useEffect(() => {
     if (isOpen) {
@@ -35,11 +38,25 @@ export default function SubmitProblemSolutionModal({
       setCodeLang(null);
       setLoading(false);
       setShowSuccess(false);
+      setPreviewMode(false); // Reset to edit mode when opening
     }
   }, [isOpen]);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
+
+      // If we're in preview mode and there's an error, prevent submission
+  if (previewMode && markdownError) {
+    alert(t('submit-user-sol_fix-markdown-errors-before-submitting'));
+    return;
+  }
+
+  // If we're not in preview mode, switch to preview mode first to validate
+  if (!previewMode) {
+    setPreviewMode(true);
+    // We'll need to wait for the preview to render and validate
+    return;
+  }
 
     if (solutionCode.length < 10) {
       alert(t('submit-user-sol_solution-too-short'));
@@ -87,7 +104,7 @@ export default function SubmitProblemSolutionModal({
                 {t('submit-user-sol_solution-code-instruction-1')}
               </li>
               <li> {/* TODO: fix link to Contribute Module */}
-                {t('submit-user-sol_solution-code-instruction-2')} <Link to="/general"><strong>{t('submit-user-sol_solution-code-instruction-2-link')}</strong></Link>
+                {t('submit-user-sol_solution-code-instruction-2')} <Link to="/general/adding-solutions"><strong>{t('submit-user-sol_solution-code-instruction-2-link')}</strong></Link>
               </li>
               <li>
                 {/* TODO: translate this in a better way */}
@@ -104,14 +121,56 @@ export default function SubmitProblemSolutionModal({
             value={codeLang}
             onChange={x => setCodeLang(x)}
           />
+          <div className="flex justify-end mb-2">
+            <button
+              type="button"
+              className={`px-3 py-1 text-sm rounded-l-md ${
+                !previewMode
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+              }`}
+              onClick={() => setPreviewMode(false)}
+            >
+              {t('submit-user-sol_edit')}
+            </button>
+            <button
+              type="button"
+              className={`px-3 py-1 text-sm rounded-r-md ${
+                previewMode
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+              }`}
+              onClick={() => setPreviewMode(true)}
+            >
+              {t('submit-user-sol_preview')}
+            </button>
+          </div>
 
           <div className="rounded-md shadow-sm mt-3">
-            <TabIndentableTextarea
-              rows={10}
-              className="textarea font-mono"
-              value={solutionCode}
-              onChange={e => setSolutionCode(e.target.value)}
-            />
+  {previewMode ? (
+    <div 
+      className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md p-4 min-h-[200px] prose dark:prose-invert max-w-none"
+    >
+      <DynamicMarkdownRenderer 
+      markdown={solutionCode} 
+      problems=""
+      onContentLoaded={() => setMarkdownError(null)}
+      onError={setMarkdownError}
+      />
+    </div>
+  ) : (
+    <TabIndentableTextarea
+      rows={10}
+      className="textarea font-mono"
+      value={solutionCode}
+      onChange={e => setSolutionCode(e.target.value)}
+    />
+  )}
+</div>
+          <div className="flex justify-end text-sm text-gray-500 dark:text-gray-400 mt-1">
+            <span className={solutionCode.length > 2500 ? 'text-red-500' : ''}>
+              {solutionCode.length}/2500
+            </span>
           </div>
         </div>
       </div>

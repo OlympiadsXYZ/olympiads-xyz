@@ -169,9 +169,9 @@ export default function TopNavigationBar({
       {!hidePromoBar && (
         <>
           <Banner
-            text="Сайтът е отново достъпен! И честита Нова година!"
+            text="Пролетното състезание по физика предстои на 14-16.03.2025 в Ловеч."
             action="Информация"
-            link=""
+            link="https://www.prirodninauki.bg/archives/20873"
           />
         </>
       )}

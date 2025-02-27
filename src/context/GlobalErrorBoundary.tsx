@@ -16,7 +16,7 @@ const GlobalErrorBoundary = ({ children }) => {
           <p className="mt-8 text-center">
             Try{' '}
             <a
-              href="mailto:usacoguide@gmail.com"
+              href="mailto:olympiads.xyz@gmail.com"
               target="_blank"
               className="text-blue-600 underline dark:text-blue-400"
               rel="noreferrer"
@@ -25,7 +25,7 @@ const GlobalErrorBoundary = ({ children }) => {
             </a>{' '}
             or{' '}
             <a
-              href="https://github.com/cpinitiative/usaco-guide/issues"
+              href="https://github.com/OlympiadsXYZ/olympiads-xyz/issues"
               target="_blank"
               className="text-blue-600 underline dark:text-blue-400"
               rel="noreferrer"

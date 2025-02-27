@@ -147,7 +147,8 @@ export default function ContactUsSlideover({
       email === '' ||
       !validateEmail(email) ||
       topic === '' ||
-      message.length < 10
+      message.length < 10 ||
+      message.length > 1200
     ) {
       return;
     }
@@ -394,14 +395,19 @@ export default function ContactUsSlideover({
                   rows={4}
                   className={
                     'textarea ' +
-                    (showErrors && message.length < 10
+                    (showErrors && (message.length < 10 || message.length > 1200)
                       ? 'border-red-300 dark:border-red-300 text-red-900 dark:text-red-300 placeholder-red-300 focus:border-red-300 dark:focus:border-red-300  focus:ring-red-300 dark:focus:ring-red-300'
                       : '')
                   }
                   value={message}
                   onChange={e => setMessage(e.target.value)}
                 />
-                {showErrors && message.length < 10 && (
+                <div className="flex justify-end text-sm text-gray-500 dark:text-gray-400 mt-1">
+                   <span className={message.length > 1200 ? 'text-red-500' : ''}>
+                      {message.length}/1200
+                  </span>
+                </div>
+                {showErrors && (message.length < 10 || message.length > 1200) && (
                   <div className="absolute top-0 pt-2 right-0 pr-3 flex items-center pointer-events-none">
                     <svg
                       className="h-5 w-5 text-red-500"
@@ -417,9 +423,13 @@ export default function ContactUsSlideover({
                   </div>
                 )}
               </div>
-              {showErrors && message.length < 10 && (
+              {showErrors && (message.length < 10 || message.length > 1200) && (
                 <p className="mt-2 text-sm text-red-600 dark:text-red-400">
-                  {t('message_must_be_at_least_10_chars')}
+                  {
+                    message.length < 10 
+                    ? t('message_must_be_at_least_10_chars') 
+                    : t('message_must_be_at_most_1200_chars')
+                  }
                 </p>
               )}
             </div>

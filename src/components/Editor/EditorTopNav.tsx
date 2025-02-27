@@ -128,7 +128,7 @@ export const EditorTopNav = (): JSX.Element => {
         <div className="mx-4 block border-l border-gray-200 dark:border-gray-700 h-6 self-center" />
 
         <a
-          href="/general/adding-solution"
+          href="/general/adding-solutions"
           target="_blank"
           rel="noreferrer"
           className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center space-x-2 font-medium text-sm group transition"
