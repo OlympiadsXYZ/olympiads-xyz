@@ -193,6 +193,13 @@ export default function ContactUsSlideover({
           >
             Github {t('issue')}
           </a>
+          . {t('contact_us_subtitle_further_email')}
+          <a
+            href="mailto:olympiads.xyz@gmail.com"
+            className="underline"
+          >
+            olympiads.xyz@gmail.com
+          </a>
           .
         </>
       }
