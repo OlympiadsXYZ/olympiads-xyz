@@ -21,6 +21,7 @@ import { HiVariable } from "react-icons/hi2";
 import { PiCodeFill } from "react-icons/pi";
 import { GiChemicalDrop } from "react-icons/gi";
 import { PiPlantFill } from "react-icons/pi";
+import { IoTelescope } from "react-icons/io5";
 import { IoEarth } from "react-icons/io5";
 import classNames from 'classnames';
 import { Link } from 'gatsby';
@@ -76,47 +77,55 @@ export default function TopNavigationBar({
       href: '/archive/physics',
       icon: FaReact,
       backgroundColor: '',
-      iconBackgroundColor: 'rgba(59, 130, 246, 1)',
+      iconBackgroundColor: 'rgb(59, 130, 246)',
+    },
+    {
+      name: t('top-nav_astronomy'),
+      description: t('top-nav_astronomy_description'),
+      href: '/archive/astronomy',
+      icon: IoTelescope,
+      backgroundColor: '',
+      iconBackgroundColor: 'rgb(147, 51, 234)',
     },
     {
       name: t('top-nav_math'),
       description: t('top-nav_math_description'),
-      href: '',
+      href: '/archive/math',
       icon: HiVariable,
       backgroundColor: '',
-      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
+      iconBackgroundColor: 'rgb(15, 118, 110)',
     },
     {
       name: t('top-nav_informatics'),
       description: t('top-nav_informatics_description'),
-      href: '',
+      href: '/archive/informatics',
       icon: PiCodeFill,
       backgroundColor: '',
-      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
+      iconBackgroundColor: 'rgb(12, 169, 15)',
     },
     {
       name: t('top-nav_chemistry'),
       description: t('top-nav_chemistry_description'),
-      href: '',
+      href: '/archive/chemistry',
       icon: GiChemicalDrop,
       backgroundColor: '',
-      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
+      iconBackgroundColor: 'rgb(185, 28, 28)',
     },
-    {
-      name: t('top-nav_biology'),
-      description: t('top-nav_biology_description'),
-      href: '',
-      icon: PiPlantFill,
-      backgroundColor: '',
-      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
-    },
+    // {
+    //   name: t('top-nav_biology'),
+    //   description: t('top-nav_biology_description'),
+    //   href: '',
+    //   icon: PiPlantFill,
+    //   backgroundColor: '',
+    //   iconBackgroundColor: 'rgba(220, 38, 38, 1)',
+    // },
     {
       name: t('top-nav_geography'),
       description: t('top-nav_geography_description'),
-      href: '',
+      href: '/archive/geography',
       icon: IoEarth,
       backgroundColor: '',
-      iconBackgroundColor: 'rgba(220, 38, 38, 1)',
+      iconBackgroundColor: 'rgb(161, 98, 7)',
     },
   ];
 

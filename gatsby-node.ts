@@ -261,7 +261,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // Generate Archive Pages
 const archiveTemplate = path.resolve(`./src/templates/archiveTemplate.tsx`);
-const subjects = ['physics', 'math', 'informatics', 'chemistry', 'biology', 'geography'];
+const subjects = ['physics', 'astronomy', 'math', 'informatics', 'chemistry', 'biology', 'geography'];
 
 // Create the main archive page
 createPage({

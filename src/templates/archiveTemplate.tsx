@@ -12,6 +12,61 @@ import Breadcrumbs, { BreadcrumbItem } from '../components/Archive/Breadcrumbs';
 import { useEffect } from 'react';
 import { ArchiveGraph } from '../components/Archive/ArchiveGraph';
 
+import { FaReact } from "react-icons/fa";
+import { HiVariable } from "react-icons/hi2";
+import { PiCodeFill } from "react-icons/pi";
+import { GiChemicalDrop } from "react-icons/gi";
+import { PiPlantFill } from "react-icons/pi";
+import { IoTelescope } from "react-icons/io5";
+import { IoEarth } from "react-icons/io5";
+
+
+const archiveColorScheme = [
+  {
+    name: 'physics',
+    href: '/archive/physics',
+    icon: FaReact,
+    backgroundColor: 'rgb(15, 75, 172)',
+  },
+  {
+    name: 'astronomy',
+    href: '/archive/astronomy',
+    icon: IoTelescope,
+    backgroundColor: 'rgb(104, 30, 174)',
+  },
+  {
+    name: 'math',
+    href: '/archive/math',
+    icon: HiVariable,
+    backgroundColor: 'rgb(3, 99, 91)',
+  },
+  {
+    name: 'informatics',
+    href: '/archive/informatics',
+    icon: PiCodeFill,
+    backgroundColor: 'rgb(5, 79, 6)',
+  },
+  {
+    name: 'chemistry',
+    href: '/archive/chemistry',
+    icon: GiChemicalDrop,
+    backgroundColor: 'rgb(103, 3, 3)',
+  },
+  // {
+  //   name: 'biology',
+  //   href: '',
+  //   icon: PiPlantFill,
+  //   backgroundColor: 'rgba(220, 38, 38, 1)',
+  // },
+  {
+    name: 'geography',
+    href: '/archive/geography',
+    icon: IoEarth,
+    backgroundColor: 'rgb(119, 73, 9)',
+  },
+];
+
+
 // First, let's create a unified type for all section items
 type SectionProps = {
   name: string;
@@ -315,7 +370,7 @@ const Section: React.FC<SectionProps & {
         <div className="flex items-center space-x-3">
           <svg
             className={`
-              w-5 h-5 
+              w-5 h-5 flex-shrink-0
               text-gray-400 dark:text-gray-500
               transition-transform duration-200
               ${isOpen ? 'transform rotate-90' : ''}
@@ -427,7 +482,7 @@ const Section: React.FC<SectionProps & {
                     }}
                   >
                     <svg 
-                      className="h-4 w-4 text-gray-400 dark:text-gray-500 mr-3 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" 
+                      className="h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-500 mr-3 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" 
                       fill="none" 
                       viewBox="0 0 24 24" 
                       stroke="currentColor"
@@ -612,6 +667,8 @@ const ArchiveContent: React.FC<{ data: ArchiveSection }> = ({ data }) => {
     }
   };
 
+  const { t } = useTranslation();
+
   return (
     <div>
       <Breadcrumbs items={breadcrumbs.map((item, index) => ({
@@ -624,6 +681,68 @@ const ArchiveContent: React.FC<{ data: ArchiveSection }> = ({ data }) => {
         onCollapseAll={handleCollapseAll}
       />
       <RecentlyViewed />
+
+      {/* Render top-level items if they exist */}
+      {data.items && data.items.length > 0 && (
+        <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-md border border-gray-100 dark:border-gray-700/50">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">
+            {t('non-categorized-resources')}
+          </h3>
+          <div className="space-y-2">
+            {data.items.map(item => (
+              <a
+                key={item.path}
+                href={process.env.NODE_ENV === 'development' 
+                  ? `http://localhost:8000${item.path}`
+                  : item.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="
+                  group flex items-center
+                  w-full px-4 py-2.5
+                  text-sm text-gray-700 dark:text-gray-200
+                  bg-gray-50 dark:bg-gray-800/50
+                  hover:bg-blue-50 dark:hover:bg-blue-900/20
+                  border border-gray-100 dark:border-gray-700/50
+                  hover:border-blue-200 dark:hover:border-blue-800
+                  rounded-md
+                  transition-all duration-200
+                  hover:translate-x-1
+                "
+                onClick={() => {
+                  const recentItems = JSON.parse(localStorage.getItem('recentlyViewedArchiveItems') || '[]');
+                  const newItem = {
+                    title: item.title,
+                    path: item.path,
+                    timestamp: Date.now()
+                  };
+                  const updatedItems = [
+                    newItem,
+                    ...recentItems.filter(i => i.path !== item.path)
+                  ].slice(0, 10);
+                  localStorage.setItem('recentlyViewedArchiveItems', JSON.stringify(updatedItems));
+                }}
+              >
+                <svg 
+                  className="h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-500 mr-3 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+                  />
+                </svg>
+                {item.title}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="space-y-6" key={forceUpdateKey}>
         {(searchTerm ? searchResults.map(r => r.section) : data.sections).map(section => (
           <Section
@@ -703,9 +822,9 @@ export default function ArchiveTemplate({ pageContext }) {
       <SEO title={`${archiveData.name} - ${t('archive')}`} />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
-        <div className="py-16 bg-blue-600 dark:bg-blue-900 px-5">
+        <div className="py-16 px-5" style={{ backgroundColor: archiveColorScheme.find(scheme => scheme.name === subject)?.backgroundColor || 'rgb(59, 130, 246)' }}>
           <div className="max-w-3xl mx-auto mb-6">
-            <h1 className="text-center text-3xl sm:text-5xl font-bold text-white dark:text-dark-high-emphasis mb-6">
+            <h1 className="text-center text-3xl sm:text-5xl font-bold text-dark-high-emphasis dark:text-dark-high-emphasis mb-6">
               {t('archive')} - {archiveData.name}
             </h1>
           </div>
