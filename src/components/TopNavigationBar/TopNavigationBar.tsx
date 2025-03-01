@@ -45,9 +45,16 @@ import { UserAvatarMenu } from './UserAvatarMenu';
 import { useLocation } from '@gatsbyjs/reach-router';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import { MdLanguage } from 'react-icons/md';
-
-
 import { useTranslation } from 'react-i18next';
+
+import {
+  RiNumber0,
+  RiNumber1,
+  RiNumber2,
+  RiNumber3,
+  RiNumber4,
+  RiNumber5,
+} from "react-icons/ri";
 
 
 export default function TopNavigationBar({
@@ -78,6 +85,7 @@ export default function TopNavigationBar({
       icon: FaReact,
       backgroundColor: '',
       iconBackgroundColor: 'rgb(59, 130, 246)',
+      iconColor: 'rgb(59, 130, 246)',
     },
     {
       name: t('top-nav_astronomy'),
@@ -86,6 +94,7 @@ export default function TopNavigationBar({
       icon: IoTelescope,
       backgroundColor: '',
       iconBackgroundColor: 'rgb(147, 51, 234)',
+      iconColor: 'rgb(147, 51, 234)',
     },
     {
       name: t('top-nav_math'),
@@ -94,6 +103,7 @@ export default function TopNavigationBar({
       icon: HiVariable,
       backgroundColor: '',
       iconBackgroundColor: 'rgb(15, 118, 110)',
+      iconColor: 'rgb(1, 195, 178)',
     },
     {
       name: t('top-nav_informatics'),
@@ -102,6 +112,7 @@ export default function TopNavigationBar({
       icon: PiCodeFill,
       backgroundColor: '',
       iconBackgroundColor: 'rgb(12, 169, 15)',
+      iconColor: 'rgb(0, 193, 3)',
     },
     {
       name: t('top-nav_chemistry'),
@@ -110,6 +121,7 @@ export default function TopNavigationBar({
       icon: GiChemicalDrop,
       backgroundColor: '',
       iconBackgroundColor: 'rgb(185, 28, 28)',
+      iconColor: 'rgb(220, 14, 14)',
     },
     // {
     //   name: t('top-nav_biology'),
@@ -118,6 +130,7 @@ export default function TopNavigationBar({
     //   icon: PiPlantFill,
     //   backgroundColor: '',
     //   iconBackgroundColor: 'rgba(220, 38, 38, 1)',
+    //   iconColor: 'rgb(220, 38, 38)',
     // },
     {
       name: t('top-nav_geography'),
@@ -126,6 +139,7 @@ export default function TopNavigationBar({
       icon: IoEarth,
       backgroundColor: '',
       iconBackgroundColor: 'rgb(161, 98, 7)',
+      iconColor: 'rgb(205, 159, 22)',
     },
   ];
 
@@ -133,43 +147,43 @@ export default function TopNavigationBar({
     {
       name: t('sections_general'),
       href: '/general',
-      icon: BookmarkIcon,
-      iconColor: '#a3a3a3',
+      icon: RiNumber0,
+      iconColor: '#3151ff',
       key: 'general',
     },
     {
       name: t('sections_beginner'),
       href: '/beginner',
-      icon: BookmarkIcon,
-      iconColor: '#b91c1c',
+      icon: RiNumber1,
+      iconColor: '#4e48de',
       key: 'beginner',
     },
     {
       name: t('sections_intermediate'),
       href: '/intermediate',
-      icon: BookmarkIcon,
-      iconColor: '#f59e0b',
+      icon: RiNumber2,
+      iconColor: '#733db4',
       key: 'intermediate',
     },
     {
       name: t('sections_advanced'),
       href: '/advanced',
-      icon: BookmarkIcon,
-      iconColor: '#65a30d',
+      icon: RiNumber3,
+      iconColor: '#a92d77',
       key: 'advanced',
     },
     {
       name: t('sections_special'),
       href: '/special',
-      icon: BookmarkIcon,
-      iconColor: '#0ea5e9',
+      icon: RiNumber4,
+      iconColor: '#d22148',
       key: 'special',
     },
     {
       name: t('sections_beyond'),
       href: '/beyond',
-      icon: BookmarkIcon,
-      iconColor: '#c026d3',
+      icon: RiNumber5,
+      iconColor: '#ff1414',
       key: 'beyond',
     },
   ];
@@ -421,23 +435,31 @@ export default function TopNavigationBar({
         <div className={`${isMobileNavOpen ? 'block' : 'hidden'} lg:hidden`}>
           <div className="grid grid-cols-1 divide-y divide-gray-300 dark:divide-gray-800 pb-6">
             <div className="py-5 px-4">
-              <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                {sections.map(item => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <item.icon
-                      className="flex-shrink-0 h-6 w-6"
-                      style={{ color: item.iconColor }}
-                      aria-hidden="true"
-                    />
-                    <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                      {item.name}
-                    </span>
-                  </Link>
-                ))}
+              <div className="grid grid-cols-2 gap-y-4 gap-x-8 auto-rows-auto">
+                {sections.map((item, index) => {
+                  // Calculate new position to display in column-first order
+                  const row = index % 3;
+                  const col = Math.floor(index / 3);
+                  const order = row * 2 + col;
+                  
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                      style={{ order: order }}
+                    >
+                      <item.icon
+                        className="flex-shrink-0 h-6 w-6"
+                        style={{ color: item.iconColor }}
+                        aria-hidden="true"
+                      />
+                      <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
+                        {item.name}
+                      </span>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
             {/* Begin nz kakvo pravi tova probably some menu for the groups*/}
@@ -465,7 +487,7 @@ export default function TopNavigationBar({
                   >
                     <item.icon
                       className="flex-shrink-0 h-6 w-6"
-                      style={{ color: item.iconBackgroundColor }}
+                      style={{ color: item.iconColor }}
                       aria-hidden="true"
                     />
                     <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">

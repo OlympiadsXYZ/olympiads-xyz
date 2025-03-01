@@ -822,8 +822,8 @@ export default function ArchiveTemplate({ pageContext }) {
       <SEO title={`${archiveData.name} - ${t('archive')}`} />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
-        <div className="py-16 px-5" style={{ backgroundColor: archiveColorScheme.find(scheme => scheme.name === subject)?.backgroundColor || 'rgb(59, 130, 246)' }}>
-          <div className="max-w-3xl mx-auto mb-6">
+        <div className="pt-16 pb-2 px-5" style={{ backgroundColor: archiveColorScheme.find(scheme => scheme.name === subject)?.backgroundColor || 'rgb(59, 130, 246)' }}>
+          <div className="max-w-3xl mx-auto mb-6 pb-8">
             <h1 className="text-center text-3xl sm:text-5xl font-bold text-dark-high-emphasis dark:text-dark-high-emphasis mb-6">
               {t('archive')} - {archiveData.name}
             </h1>
@@ -844,7 +844,10 @@ export default function ArchiveTemplate({ pageContext }) {
               </div>
             ))}
 
-            <label className="flex items-center gap-2 text-white">
+          </div>
+          
+          <div className="flex mt-4">
+          <label className="flex items-center gap-2 text-white">
               <input
                 type="checkbox"
                 className="w-4 h-4 rounded"
@@ -863,9 +866,9 @@ export default function ArchiveTemplate({ pageContext }) {
               />
               <span>{t('show-archive-graph')}</span>
             </label>
-
           </div>
         </div>
+
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <ArchiveContent data={archiveData} />
