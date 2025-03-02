@@ -101,16 +101,16 @@ export default function SubmitProblemSolutionModal({
             <br />
             <ol className="list-decimal ml-5">
               <li>
-                {t('submit-user-sol_solution-code-instruction-1')}
+                {t('submit-user-sol_solution-code-instruction-1')};
               </li>
-              <li> {/* TODO: fix link to Contribute Module */}
+              {/* <li> * TODO: fix link to Contribute Module *
                 {t('submit-user-sol_solution-code-instruction-2')} <Link to="/general/adding-solutions"><strong>{t('submit-user-sol_solution-code-instruction-2-link')}</strong></Link>
-              </li>
+              </li> */}
               <li>
                 {/* TODO: translate this in a better way */}
                 <Trans i18nKey="submit-user-sol_solution-code-instruction-3">
                 Гледайте решенията да са <strong>кратки</strong> и <strong>без грешки</strong>. Ако се изискват повече обяснения или сметки, може да направо да подадете заявка за добавяне на вградено решение чрез <Link to="/editor"><strong>Редактора</strong></Link> на сайта
-                </Trans>
+                </Trans>.
               </li>
             </ol>
           </p>

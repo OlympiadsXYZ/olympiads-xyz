@@ -24,6 +24,8 @@ ${moduleName ? `**Модул**: ${moduleName}` : ''}
 **Вид**: ${topic}
 **Съобщение**: \n
 ${message}
+
+\n
 ---
 *Автоматично генерирано от Olympiads XYZ*`;
 
