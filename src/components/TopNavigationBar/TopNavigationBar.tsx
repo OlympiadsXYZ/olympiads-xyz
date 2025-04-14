@@ -192,9 +192,9 @@ export default function TopNavigationBar({
       {!hidePromoBar && (
         <>
           <Banner
-            text="Пролетното състезание по физика предстои на 14-16.03.2025 в Ловеч."
-            action="Информация"
-            link="https://www.prirodninauki.bg/archives/20873"
+            text="Националният кръг по физика (НОФ-3) предстои на 25-27.04.2025 в Казанлък."
+            action="Списък с класирани ученици"
+            link="https://www.mon.bg/nfs/2025/03/dopusnati-nk-fizika_18032025.pdf"
           />
         </>
       )}
