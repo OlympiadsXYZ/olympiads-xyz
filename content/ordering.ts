@@ -14,7 +14,7 @@ export const LEVEL_LABELS: { [key in Level]: string } = {
   '7-8': '7–8 клас',
   '9-10': '9–10 клас',
   '11-12': '11–12 клас',
-  olymp: 'Подбор и международни',
+  olymp: 'Специална тема',
 };
 
 export const DEFAULT_LEVEL: Level = '9-10';

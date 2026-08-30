@@ -3,6 +3,7 @@ import * as React from 'react';
 import AdminSettings from '../components/Settings/AdminSettings';
 import Authentication from '../components/Settings/Authentication';
 import DarkMode from '../components/Settings/DarkMode';
+import ContactUs from '../components/Settings/ContactUs';
 import General from '../components/Settings/General';
 import Language from '../components/Settings/Language';
 import Profile from '../components/Settings/Profile';
@@ -124,6 +125,7 @@ export default function SettingsPage() {
                       {/* <Language />  */}
                       <DarkMode />
                       <General />
+                      <ContactUs />
                     </>
                   )}
                   {tab === 'profile' && (

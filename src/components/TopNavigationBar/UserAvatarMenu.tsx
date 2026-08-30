@@ -11,6 +11,7 @@ import { FaUser } from "react-icons/fa6";
 export interface UserAvatarMenuProps {
   firebaseUser: User;
   onSignOut: () => void;
+  onContactUs?: () => void;
 }
 
 export const UserAvatarMenu: React.FC<UserAvatarMenuProps> = props => {
@@ -65,6 +66,22 @@ export const UserAvatarMenu: React.FC<UserAvatarMenuProps> = props => {
                     </Link>
                   )}
                 </Menu.Item>
+                {props.onContactUs && (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => props.onContactUs?.()}
+                        className={classNames(
+                          active && 'bg-gray-100 dark:bg-gray-700',
+                          'block w-full text-left px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-100 focus:outline-none'
+                        )}
+                        role="menuitem"
+                      >
+                        {t('top-nav_contact-us')}
+                      </button>
+                    )}
+                  </Menu.Item>
+                )}
                 <Menu.Item>
                   {({ active }) => (
                     <button
