@@ -14,7 +14,7 @@ export const LEVEL_LABELS: { [key in Level]: string } = {
   '7-8': '7–8 клас',
   '9-10': '9–10 клас',
   '11-12': '11–12 клас',
-  olymp: 'Подбор и международни',
+  olymp: 'Специална тема',
 };
 
 export const DEFAULT_LEVEL: Level = '9-10';
@@ -144,7 +144,14 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       levels: ['11-12'],
       items: [],
     },
-    // Подбор (doc `modules` categories)
+    // Специална тема (една категория ≈ един handout на Zhou; Кинематика = M1)
+    {
+      name: 'Кинематика',
+      description:
+        'Диференциални уравнения на движението, трикове с отправни системи, двумерно движение и оптимални траектории — по Zhou M1.',
+      levels: ['olymp'],
+      items: ['st-kin-odes', 'st-kin-tricks', 'st-kin-2d', 'st-kin-optimal'],
+    },
     {
       name: 'Динамика на материална точка',
       description: 'Morin/Kleppner ниво: сили, ЗЗИ, ЗЗМИ, виртуална работа.',

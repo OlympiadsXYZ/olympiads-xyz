@@ -424,7 +424,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     if (
       problemURLToUniqueID.hasOwnProperty(node.url) &&
       problemURLToUniqueID[node.url] !== node.uniqueId &&
-      !urlsThatCanHaveMultipleUniqueIDs.includes(node.url)
+      !urlsThatCanHaveMultipleUniqueIDs.includes(node.url) &&
+      // handout PDFs hold many problems per page (e.g. Zhou), so the same
+      // page anchor legitimately backs multiple problem IDs
+      !node.url.includes('/Handouts/')
     ) {
       throw new Error(
         `The URL ${node.url} is assigned to both problem unique ID ${
