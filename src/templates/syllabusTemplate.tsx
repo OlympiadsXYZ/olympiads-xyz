@@ -155,12 +155,22 @@ export default function Template(props) {
   const { level, levelReady, setLevel } = useLevel();
 
   const allChapters = getModulesForDivision(allModules, division);
-  // site-wide level filter (docs/Structure.md): a chapter without `levels`
-  // is visible everywhere; before hydration show everything (SSR stability)
-  const section = allChapters.filter(
-    chapter =>
-      !levelReady || !chapter.levels || chapter.levels.includes(level)
+  // Levels this section actually differentiates on (docs/Structure.md).
+  // No tagged chapters (astronomy, general) => level-independent section.
+  const taggedLevels = LEVELS.filter(option =>
+    allChapters.some(chapter => chapter.levels?.includes(option))
   );
+  // Never show an empty section: if the global level has no categories
+  // here, display the first level that does (global level stays unchanged).
+  const displayLevel =
+    taggedLevels.length === 0 || taggedLevels.includes(level)
+      ? level
+      : taggedLevels[0];
+  // a chapter without `levels` is visible everywhere; before hydration
+  // show everything (SSR stability)
+  const chapterVisible = (chapter: (typeof allChapters)[0]) =>
+    !levelReady || !chapter.levels || chapter.levels.includes(displayLevel);
+  const section = allChapters.filter(chapterVisible);
 
   const moduleIDs = section.reduce(
     (acc, cur) => [...acc, ...cur.items.map(x => x.frontmatter.id)],
@@ -210,14 +220,14 @@ export default function Template(props) {
               >
                 {SECTION_DESCRIPTION[division]}
               </p>
-              {division !== 'general' && (
+              {division !== 'general' && taggedLevels.length > 0 && (
                 <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-12 px-4">
-                  {LEVELS.map(option => (
+                  {taggedLevels.map(option => (
                     <button
                       key={option}
                       onClick={() => setLevel(option)}
                       className={`px-3 py-1 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-white/60 ${
-                        levelReady && option === level
+                        levelReady && option === displayLevel
                           ? 'bg-white text-gray-900'
                           : 'bg-white/20 text-white hover:bg-white/30'
                       }`}
@@ -258,20 +268,9 @@ export default function Template(props) {
             </div>
           </div>
           <DottedLineContainer className="py-12 px-4 max-w-screen-xl mx-auto">
-            {levelReady && section.length === 0 && (
-              <p className="text-center text-gray-500 dark:text-dark-med-emphasis">
-                На ниво „{LEVEL_LABELS[level]}“ тази секция още няма категории —
-                изберете друго ниво от бутоните горе.
-              </p>
-            )}
             {allChapters.map((category, categoryIdx) => (
               <React.Fragment key={`${category.name}-${categoryIdx}`}>
-                {renderChapter(
-                  category,
-                  !levelReady ||
-                    !category.levels ||
-                    category.levels.includes(level)
-                )}
+                {renderChapter(category, chapterVisible(category))}
               </React.Fragment>
             ))}
           </DottedLineContainer>
