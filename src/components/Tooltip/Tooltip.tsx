@@ -68,6 +68,7 @@ const Tooltip: React.FC<TooltipProps> = ({
       animation="scale-subtle"
       theme="material"
       duration={200}
+      trigger="mouseenter focus click"
       placement={position}
       {...other}
     >

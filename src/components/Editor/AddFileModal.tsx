@@ -16,7 +16,7 @@ export default function AddFileModal(props) {
     process.env.GATSBY_ALGOLIA_SEARCH_KEY ?? ''
   );
   const { t } = useTranslation();
-  const [section, setSection] = useState<'1_General' | '2_Physics_7_8' | '3_Physics_9_10' | '4_Physics_11_12' | '5_Physics_Olymp'>('1_General');
+  const [section, setSection] = useState<'1_General' | '2_Physics_7_8' | '3_Physics_9_10' | '4_Physics_11_12' | '5_Physics_Olymp' | '6_Astronomy'>('1_General');
   const [fileType, setFileType] = useState<'solution' | 'module' >('module');
   const [fileStatus, setFileStatus] = useState<'Create File' | 'Creating File...'>('Create File');
   const [fileURL, setFileURL] = useState('');
@@ -37,6 +37,7 @@ export default function AddFileModal(props) {
     { label: t('sections_physics_9_10'), value: '3_Physics_9_10' },
     { label: t('sections_physics_11_12'), value: '4_Physics_11_12' },
     { label: t('sections_physics_olymp'), value: '5_Physics_Olymp' },
+    { label: t('sections_astronomy'), value: '6_Astronomy' },
   ] as const;
 
   return (

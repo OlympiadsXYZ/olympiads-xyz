@@ -68,6 +68,7 @@ const HeroBGColor: { [key in SectionID]: string } = {
   'physics/9-10': 'bg-teal-700 dark:bg-teal-900',
   'physics/11-12': 'bg-indigo-700 dark:bg-indigo-900',
   'physics/olymp': 'bg-purple-700 dark:bg-purple-900',
+  astronomy: 'bg-violet-800 dark:bg-violet-950',
 };
 
 const HeroTextColor: { [key in SectionID]: string } = {
@@ -76,6 +77,7 @@ const HeroTextColor: { [key in SectionID]: string } = {
   'physics/9-10': 'text-teal-100',
   'physics/11-12': 'text-indigo-100',
   'physics/olymp': 'text-purple-100',
+  astronomy: 'text-violet-100',
 };
 
 const topicsWarning = (
@@ -119,6 +121,13 @@ const SECTION_DESCRIPTION: { [key in SectionID]: React.ReactNode } = {
       {topicsWarning}
       <br/>
       Подготовка за подбора на националния отбор и за международните олимпиади по физика.
+    </>
+  ),
+  astronomy: (
+    <>
+      {topicsWarning}
+      <br/>
+      Модули по астрономия — от небесната сфера до космологията, за НОА, IAO и IOAA.
     </>
   ),
 };

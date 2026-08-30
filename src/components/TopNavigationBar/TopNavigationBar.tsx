@@ -178,6 +178,13 @@ export default function TopNavigationBar({
       iconColor: '#ff1414',
       key: 'physics/olymp',
     },
+    {
+      name: t('sections_astronomy'),
+      href: '/astronomy',
+      icon: IoTelescope,
+      iconColor: '#7c5cff',
+      key: 'astronomy',
+    },
   ];
   return (
     <>

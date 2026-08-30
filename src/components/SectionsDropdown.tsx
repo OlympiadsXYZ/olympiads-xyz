@@ -85,6 +85,11 @@ export default function SectionsDropdown({
                         Физика
                       </div>
                     )}
+                    {section === 'astronomy' && (
+                      <div className="px-4 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-dark-med-emphasis border-t border-gray-100 dark:border-gray-700 mt-1">
+                        Астрономия
+                      </div>
+                    )}
                     {section === currentSection ? (
                     <Menu.Item disabled>
                       <span className="block px-4 py-2 text-base font-medium leading-6 text-gray-400 dark:text-dark-med-emphasis relative">

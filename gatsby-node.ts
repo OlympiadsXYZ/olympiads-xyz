@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import * as freshOrdering from './content/ordering';
 import { typeDefs } from './graphql-types';
-import div_to_probs from './src/components/markdown/ProblemsList/DivisionList/div_to_probs.json';
 import { createXdmNode } from './src/gatsby/create-xdm-node';
 import {
   checkInvalidUsacoMetadata,
@@ -383,10 +382,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   let problemInfo = {}; // maps unique problem ID to problem info
   let problemURLToUniqueID = {}; // maps problem URL to problem unique ID
   let urlsThatCanHaveMultipleUniqueIDs = ['https://cses.fi/107/list/'];
-  const userSolutionTemplate = path.resolve(
-    `./src/templates/userSolutionTemplate.tsx`
-  );
-  let usaco_uids: string[] = [];
   problems.forEach(({ node }) => {
     let slug = getProblemURL(node);
     if (
@@ -433,45 +428,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       );
     }
 
-    // skipping usaco problems to be created with div_to_probs
-    if (node.uniqueId.startsWith('usaco')) {
-      usaco_uids.push(node.uniqueId);
-    }
     problemSlugs[slug] = node.uniqueId;
     problemInfo[node.uniqueId] = node;
     problemURLToUniqueID[node.url] = node.uniqueId;
-    const path = `problems/${node.uniqueId}/user-solutions`;
-    const problem = node as ShortProblemInfo;
-    createPage({
-      path: path,
-      component: userSolutionTemplate,
-      context: {
-        problem: problem,
-        id: problem.uniqueId,
-      },
-    });
-  });
-  const divisions = ['Bronze', 'Silver', 'Gold', 'Platinum'];
-  divisions.forEach(division => {
-    div_to_probs[division].forEach(problem => {
-      const uniqueId = 'usaco-' + problem[0];
-      const name = problem[2];
-      const path = `problems/${uniqueId}/user-solutions`;
-
-      if (!usaco_uids.includes(uniqueId)) {
-        createPage({
-          path: path,
-          component: userSolutionTemplate,
-          context: {
-            problem: {
-              uniqueId: uniqueId,
-              name: name,
-            },
-            id: uniqueId,
-          },
-        });
-      }
-    });
   });
 
   // End problems check

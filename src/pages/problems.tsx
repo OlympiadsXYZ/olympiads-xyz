@@ -84,6 +84,7 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
           [t('sections_physics_9_10'), SECTIONS['physics/9-10']],
           [t('sections_physics_11_12'), SECTIONS['physics/11-12']],
           [t('sections_physics_olymp'), SECTIONS['physics/olymp']],
+          [t('sections_astronomy'), SECTIONS.astronomy],
         ] as unknown as [string, Chapter[]][]
       ).map(([section, chapters]) => ({
         label: section,
