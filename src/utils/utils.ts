@@ -11,6 +11,7 @@ export const getModulesForDivision = (
 ) => {
   return MODULE_ORDERING[division].map(k => ({
     name: k.name,
+    levels: k.levels,
     items: k.items.map(k2 => {
       if (!allModules.hasOwnProperty(k2)) {
         throw 'Module not found: ' + k2;

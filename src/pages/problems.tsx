@@ -80,10 +80,11 @@ export default function ProblemsPage(props: PageProps<DataProps>) {
       items: (
         [
           [t('sections_general'), SECTIONS.general],
-          [t('sections_physics_7_8'), SECTIONS['physics/7-8']],
-          [t('sections_physics_9_10'), SECTIONS['physics/9-10']],
-          [t('sections_physics_11_12'), SECTIONS['physics/11-12']],
-          [t('sections_physics_olymp'), SECTIONS['physics/olymp']],
+          [t('sections_mechanics'), SECTIONS.mechanics],
+          [t('sections_thermodynamics'), SECTIONS.thermodynamics],
+          [t('sections_electromagnetism'), SECTIONS.electromagnetism],
+          [t('sections_optics'), SECTIONS.optics],
+          [t('sections_modern_physics'), SECTIONS['modern-physics']],
           [t('sections_astronomy'), SECTIONS.astronomy],
         ] as unknown as [string, Chapter[]][]
       ).map(([section, chapters]) => ({

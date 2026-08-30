@@ -44,18 +44,9 @@ import { SearchModal } from './SearchModal';
 import { UserAvatarMenu } from './UserAvatarMenu';
 import { useLocation } from '@gatsbyjs/reach-router';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
-import GradeSwitcher from '../../components/GradeSwitcher';
+import LevelSwitcher from '../../components/LevelSwitcher';
 import { MdLanguage } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
-
-import {
-  RiNumber0,
-  RiNumber1,
-  RiNumber2,
-  RiNumber3,
-  RiNumber4,
-} from "react-icons/ri";
-
 
 export default function TopNavigationBar({
   transparent = false,
@@ -143,50 +134,6 @@ export default function TopNavigationBar({
     },
   ];
 
-  const sections = [
-    {
-      name: t('sections_general'),
-      href: '/general',
-      icon: RiNumber0,
-      iconColor: '#3151ff',
-      key: 'general',
-    },
-    {
-      name: t('sections_physics_7_8'),
-      href: '/physics/7-8',
-      icon: RiNumber1,
-      iconColor: '#4e48de',
-      key: 'physics/7-8',
-    },
-    {
-      name: t('sections_physics_9_10'),
-      href: '/physics/9-10',
-      icon: RiNumber2,
-      iconColor: '#733db4',
-      key: 'physics/9-10',
-    },
-    {
-      name: t('sections_physics_11_12'),
-      href: '/physics/11-12',
-      icon: RiNumber3,
-      iconColor: '#a92d77',
-      key: 'physics/11-12',
-    },
-    {
-      name: t('sections_physics_olymp'),
-      href: '/physics/olymp',
-      icon: RiNumber4,
-      iconColor: '#ff1414',
-      key: 'physics/olymp',
-    },
-    {
-      name: t('sections_astronomy'),
-      href: '/astronomy',
-      icon: IoTelescope,
-      iconColor: '#7c5cff',
-      key: 'astronomy',
-    },
-  ];
   return (
     <>
       {!hidePromoBar && (
@@ -222,6 +169,16 @@ export default function TopNavigationBar({
               </Link>
               <div className={`hidden lg:ml-8 lg:flex space-x-8`}>
                 <SectionsDropdown currentSection={currentSection} />
+                <Link
+                  to="/astronomy/"
+                  getProps={({ isCurrent }) => ({
+                    className: isCurrent
+                      ? 'inline-flex items-center px-1 pt-0.5 border-b-2 border-blue-500 dark:border-blue-700 text-base font-medium leading-6 text-gray-900 dark:text-dark-high-emphasis focus:outline-none focus:border-blue-700 dark:focus:border-blue-500 transition'
+                      : 'inline-flex items-center px-1 pt-0.5 border-b-2 border-transparent text-base font-medium leading-6 text-gray-500 hover:text-gray-900 hover:border-gray-300  focus:outline-none focus:text-gray-900 focus:border-gray-300 dark:text-dark-high-emphasis dark:hover:border-gray-500 dark:focus:border-gray-500 transition',
+                  })}
+                >
+                  {t('sections_astronomy')}
+                </Link>
                 <Link
                   to="/problems/"
                   getProps={({ isCurrent }) => ({
@@ -315,6 +272,8 @@ export default function TopNavigationBar({
                 >
                   {t('top-nav_contact-us')}
                 </button>
+                {/* Level Switcher (класова група) — site-wide, like the language switcher */}
+                <LevelSwitcher />
                 {/* Language Switcher ei tova mi izqde dushata*/}
                 {!hideLanguageSwitcher && (<LanguageSwitcher/>)}
               </div>
@@ -436,18 +395,26 @@ export default function TopNavigationBar({
           <div className="grid grid-cols-1 divide-y divide-gray-300 dark:divide-gray-800 pb-6">
             <div className="py-5 px-4">
               <div className="group -m-3 p-3 flex items-center rounded-md">
-                <RiNumber0
-                  className="h-6 w-6 flex-shrink-0"
-                  style={{ color: '#3151ff' }}
-                  aria-hidden="true"
-                />
-                <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
+                <span className="text-base font-medium text-gray-700 dark:text-gray-300">
                   Ниво:
                 </span>
                 <div className="ml-3">
-                  <GradeSwitcher options={sections} />
+                  <LevelSwitcher />
                 </div>
               </div>
+              <Link
+                to="/astronomy/"
+                className="group mt-2 -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                <IoTelescope
+                  className="h-6 w-6 flex-shrink-0"
+                  style={{ color: '#7c5cff' }}
+                  aria-hidden="true"
+                />
+                <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
+                  {t('sections_astronomy')}
+                </span>
+              </Link>
             </div>
             {/* Begin nz kakvo pravi tova probably some menu for the groups*/}
             <div className="py-5 px-4">

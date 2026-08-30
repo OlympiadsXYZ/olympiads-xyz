@@ -1,10 +1,19 @@
+// Physics sections dropdown (Секции — docs/Structure.md). Astronomy is a
+// separate subject with its own top-level nav item, so it is excluded here.
+// The list is filtered by the site-wide level: a section with no categories
+// at the active level (e.g. Модерна физика at 7–8) is hidden.
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import { Link } from 'gatsby';
 import * as React from 'react';
-import { SECTIONS, SECTION_LABELS } from '../../content/ordering';
-import { storeGrade } from './GradeSwitcher';
+import {
+  SECTIONS,
+  SECTION_LABELS,
+  SectionID,
+  chaptersForLevel,
+} from '../../content/ordering';
+import { useLevel } from '../context/LevelContext';
 import { useTranslation } from 'react-i18next';
 
 export default function SectionsDropdown({
@@ -14,6 +23,13 @@ export default function SectionsDropdown({
   noDarkMode = false,
 }): JSX.Element {
   const { t } = useTranslation();
+  const { level, levelReady } = useLevel();
+  const visibleSections = SECTIONS.filter(
+    section =>
+      section !== 'astronomy' &&
+      // before hydration show everything to keep SSR markup stable
+      (!levelReady || chaptersForLevel(section, level).length > 0)
+  );
   return (
     <Menu as="div">
       {({ open }) => (
@@ -79,16 +95,11 @@ export default function SectionsDropdown({
               }`}
             >
               <div className="py-1">
-                {SECTIONS.map(section => (
+                {visibleSections.map(section => (
                   <React.Fragment key={section}>
-                    {section === 'physics/7-8' && (
+                    {section === 'mechanics' && (
                       <div className="px-4 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-dark-med-emphasis border-t border-gray-100 dark:border-gray-700 mt-1">
                         Физика
-                      </div>
-                    )}
-                    {section === 'astronomy' && (
-                      <div className="px-4 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-dark-med-emphasis border-t border-gray-100 dark:border-gray-700 mt-1">
-                        Астрономия
                       </div>
                     )}
                     {section === currentSection ? (
@@ -134,7 +145,6 @@ export default function SectionsDropdown({
                       {({ active }) => (
                         <Link
                           to={`/${section}/`}
-                          onClick={() => storeGrade(section)}
                           className={classNames(
                             'block px-4 py-2 text-base font-medium leading-6 focus:outline-none',
                             active

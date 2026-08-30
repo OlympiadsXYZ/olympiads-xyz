@@ -3,12 +3,21 @@ export const typeDefs = `
       body: String
       fileAbsolutePath: String
       frontmatter: XdmFrontmatter!
+      fields: XdmFields
       isIncomplete: Boolean
       cppOc: Int
       javaOc: Int
       pyOc: Int
       toc: TableOfContents
       mdast: String
+    }
+
+    # created in onCreateNode; declared here so schema and typegen are
+    # stable whether or not drafts are sourced (GATSBY_INCLUDE_DRAFTS)
+    type XdmFields {
+      division: String
+      gitAuthorTime: Date @dateformat
+      isDraft: Boolean
     }
 
     type XdmFrontmatter implements Node {

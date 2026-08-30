@@ -1,28 +1,45 @@
-// Section -> Chapter -> Module
+// Ниво (site-wide selector) -> Секция -> Категория -> Модул
+// (docs/Structure.md; source docs: `modules`, `intro`, `plan-phys`)
 //
-// Sections follow science -> grade level (see docs/Structure.md):
-// 'general' is the site-wide foreword; the rest are per-science levels
-// whose IDs double as URL paths (e.g. /physics/7-8/<module-id>).
+// Sections are science fields whose IDs double as URL paths
+// (/mechanics/<module-id>). The level is NEVER part of the URL — it is a
+// site-wide filter (LevelContext): a chapter is visible on a section page
+// only when its `levels` include the active level (no `levels` = always).
+
+export type Level = '7-8' | '9-10' | '11-12' | 'olymp';
+
+export const LEVELS: Level[] = ['7-8', '9-10', '11-12', 'olymp'];
+
+export const LEVEL_LABELS: { [key in Level]: string } = {
+  '7-8': '7–8 клас',
+  '9-10': '9–10 клас',
+  '11-12': '11–12 клас',
+  olymp: 'Подбор и международни',
+};
+
+export const DEFAULT_LEVEL: Level = '9-10';
 
 export type SectionID =
   | 'general'
-  | 'physics/7-8'
-  | 'physics/9-10'
-  | 'physics/11-12'
-  | 'physics/olymp'
+  | 'mechanics'
+  | 'thermodynamics'
+  | 'electromagnetism'
+  | 'optics'
+  | 'modern-physics'
   | 'astronomy';
 
 export type Chapter = {
   name: string;
   items: string[];
   description?: string;
+  levels?: Level[];
 };
 
 const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
   general: [
     {
       name: 'Обща информация',
-      description: "Какво представлява този сайт и как да го използвате.",
+      description: 'Какво представлява този сайт и как да го използвате.',
       items: [
         'general-intro',
         'about-us',
@@ -34,177 +51,294 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
     },
     {
       name: 'Допринасяне към Olympiads XYZ',
-      description: "Как вие можете да ни помогнете.",
+      description: 'Как вие можете да ни помогнете.',
       items: [
         'contributing',
         'become-author',
         'adding-solutions',
         'editor-work-mdx',
       ],
-    }
+    },
+    {
+      name: 'Математически апарат',
+      description: 'Вектори, функции, координатни системи и тригонометрия.',
+      levels: ['7-8'],
+      items: [],
+    },
+    {
+      name: 'Математически апарат',
+      description:
+        'Математически анализ: граници, производни, интеграли и приложението им във физиката.',
+      levels: ['9-10'],
+      items: [],
+    },
+    {
+      name: 'Математически апарат',
+      description:
+        'Висша математика: диференциални уравнения, ред на Тейлър, комплексни числа.',
+      levels: ['11-12', 'olymp'],
+      items: [],
+    },
+    {
+      name: 'Експерименти',
+      description:
+        'Експериментална техника, статистика, анализ на данни и грешки.',
+      levels: ['9-10', '11-12', 'olymp'],
+      items: [],
+    },
   ],
-  'physics/7-8': [
+  mechanics: [
+    // 7–8 (plan-phys, 1 ниво)
     {
       name: 'Кинематика',
-      description: 'Движение, скорост, ускорение, окръжност и хвърляния.',
+      description:
+        'Движение с постоянна скорост и ускорение, относително движение, окръжност, хвърляния.',
+      levels: ['7-8'],
       items: [],
     },
     {
       name: 'Динамика',
-      description: 'Сили, принципи на Нютон, импулс, статика и хидростатика.',
+      description:
+        'Сили, принципи на Нютон, импулс, момент на сила, Архимед и хидростатика.',
+      levels: ['7-8'],
       items: [],
     },
     {
       name: 'Работа и енергия',
-      description: 'Работа, мощност, кинетична и потенциална енергия.',
+      description: 'Работа, мощност, кинетична и потенциална енергия, ЗЗЕ.',
+      levels: ['7-8'],
       items: [],
     },
-    {
-      name: 'Топлинни явления',
-      description: 'Температура, топлообмен, фазови преходи.',
-      items: [],
-    },
-    {
-      name: 'Електричество',
-      description: 'Електростатика и постоянен ток.',
-      items: [],
-    },
-    {
-      name: 'Геометрична оптика',
-      description: 'Отражение, пречупване, лещи и уреди.',
-      items: [],
-    },
-    {
-      name: 'Математически апарат',
-      description: 'Вектори, функции и тригонометрия за физици.',
-      items: [],
-    },
-  ],
-  'physics/9-10': [
+    // 9–10 (plan-phys, 2 ниво)
     {
       name: 'Гравитация',
-      description: 'Орбити, закони на Кеплер, космически скорости.',
+      description:
+        'Кръгови и елиптични орбити, закони на Кеплер, момент на импулса.',
+      levels: ['9-10'],
       items: [],
     },
     {
       name: 'Трептения',
-      description: 'Хармонично трептене, енергия, махала.',
+      description:
+        'Уравнение на хармоничното трептене — динамичен и енергетичен подход.',
+      levels: ['9-10'],
       items: [],
     },
     {
       name: 'Динамика на твърдо тяло',
-      description: 'Инерчен момент, търкаляне, момент на импулса.',
+      description:
+        'Инерчен момент, теорема на Щайнер, търкаляне без хлъзгане, ЗЗМИ.',
+      levels: ['9-10'],
+      items: [],
+    },
+    // 11–12 (plan-phys, 3 ниво)
+    {
+      name: 'Осцилации',
+      description: 'Затихващи и принудени трептения, резонанс.',
+      levels: ['11-12'],
       items: [],
     },
     {
-      name: 'Постоянен ток',
-      description: 'Правила на Кирхоф, сложни вериги, уреди.',
+      name: 'Относителност на движението',
+      description: 'Неинерциални отправни системи, инерчни сили, Кориолис.',
+      levels: ['11-12'],
+      items: [],
+    },
+    // Подбор (doc `modules` categories)
+    {
+      name: 'Динамика на материална точка',
+      description: 'Morin/Kleppner ниво: сили, ЗЗИ, ЗЗМИ, виртуална работа.',
+      levels: ['olymp'],
       items: [],
     },
     {
-      name: 'Геометрична оптика',
-      description: 'Системи от лещи и огледала, принцип на Ферма.',
+      name: 'Динамика на идеално твърдо тяло',
+      description: 'Триизмерно въртене, физично махало, жироскопи.',
+      levels: ['olymp'],
       items: [],
     },
     {
-      name: 'Математически апарат',
-      description: 'Производни, интеграли и прости диференциални уравнения.',
+      name: 'Еластични свойства на реални твърди тела',
+      description: 'Деформации, закон на Хук, енергия на деформация.',
+      levels: ['olymp'],
+      items: [],
+    },
+    {
+      name: 'Механика на флуиди',
+      description: 'Хидростатика, Бернули, вискозитет, реални флуиди.',
+      levels: ['olymp'],
+      items: [],
+    },
+    {
+      name: 'Механични вълни',
+      description: 'Вълново уравнение, стоящи вълни, звук.',
+      levels: ['olymp'],
       items: [],
     },
   ],
-  'physics/11-12': [
+  thermodynamics: [
     {
-      name: 'Механика',
-      description: 'Затихващи и принудени трептения, неинерциални системи.',
+      name: 'Основни понятия',
+      description:
+        'Агрегатни състояния, температура, топлопроводимост, конвекция и излъчване.',
+      levels: ['7-8'],
       items: [],
     },
     {
-      name: 'Електромагнетизъм',
-      description: 'Гаус, кондензатори, магнитостатика, индукция и RLC.',
+      name: 'Топлообмен',
+      description:
+        'Топлинен капацитет, топене и изпарение, топлинен баланс.',
+      levels: ['7-8'],
       items: [],
     },
     {
       name: 'Термодинамика',
-      description: 'Първи принцип, процеси, МКТ и реални газове.',
+      description:
+        'Идеален газ, първи принцип, адиабати, политропни процеси, реален газ.',
+      levels: ['11-12'],
       items: [],
     },
     {
       name: 'Статистическа физика',
-      description: 'Разпределения, ентропия, втори принцип.',
+      description:
+        'Разпределения на Максуел и Болцман, ентропия, фазови преходи.',
+      levels: ['11-12'],
       items: [],
     },
     {
-      name: 'Специална теория на относителността',
-      description: 'Кинематика и динамика на СТО.',
-      items: [],
-    },
-    {
-      name: 'Математически апарат',
-      description: 'Ред на Тейлър, комплексни числа, диференциални уравнения.',
+      name: 'Олимпиадна термодинамика',
+      description:
+        'Blundell/Wang-Ricardo ниво: квантова статистика, излъчване, повърхностно напрежение.',
+      levels: ['olymp'],
       items: [],
     },
   ],
-  'physics/olymp': [
+  electromagnetism: [
     {
-      name: 'Подготовка за подбора',
-      description: 'Как работи подборът и как се тренира за него.',
+      name: 'Електростатика',
+      description:
+        'Закон на Кулон, електрично поле, потенциал, суперпозиция.',
+      levels: ['7-8'],
       items: [],
     },
     {
-      name: 'Механика',
-      description: 'Morin, Kleppner, лагранжев подход.',
+      name: 'Постоянен ток',
+      description:
+        'Закон на Ом, свързване на резистори, работа и мощност на тока.',
+      levels: ['7-8'],
       items: [],
     },
     {
-      name: 'Електромагнетизъм',
-      description: 'Purcell, сложни вериги и трептения.',
+      name: 'Постоянен ток',
+      description:
+        'Правила на Кирхоф, амперметри и волтметри, сложни схеми.',
+      levels: ['9-10'],
       items: [],
     },
     {
-      name: 'Термодинамика',
-      description: 'Олимпиадна термодинамика и статистическа физика.',
+      name: 'Електричество',
+      description:
+        'Дипол, кондензатори, теорема на Гаус, трептения в електрична верига.',
+      levels: ['11-12'],
       items: [],
     },
     {
-      name: 'Вълни и оптика',
-      description: 'Вълнова оптика и интерференция.',
+      name: 'Магнетизъм',
+      description:
+        'Магнитно поле на ток, Ампер, Лоренц, индукция, RLC, уравнения на Максуел.',
+      levels: ['11-12'],
       items: [],
     },
     {
-      name: 'Относителност',
-      description: 'СТО на олимпиадно ниво.',
+      name: 'Олимпиаден електромагнетизъм',
+      description:
+        'Purcell/Griffiths ниво: метод на изображенията, излъчване, електродинамика.',
+      levels: ['olymp'],
+      items: [],
+    },
+  ],
+  optics: [
+    {
+      name: 'Светлина',
+      description:
+        'Отражение и пречупване, плоско огледало, лещи и построяване на изображения.',
+      levels: ['7-8'],
       items: [],
     },
     {
-      name: 'Модерна физика',
-      description: 'Квантова и атомна физика.',
+      name: 'Оптични системи',
+      description: 'Камера, телескоп, микроскоп, човешкото око.',
+      levels: ['7-8'],
+      items: [],
+    },
+    {
+      name: 'Геометрична оптика',
+      description:
+        'Снелиус, пълно вътрешно отражение, системи от лещи и огледала, принцип на Ферма.',
+      levels: ['9-10', '11-12'],
+      items: [],
+    },
+    {
+      name: 'Вълнова оптика',
+      description: 'Интерференция, дифракция, поляризация.',
+      levels: ['olymp'],
+      items: [],
+    },
+  ],
+  'modern-physics': [
+    {
+      name: 'Специална теория на относителността',
+      description:
+        'Лоренцови трансформации, релативистки импулс и енергия, ефект на Доплер.',
+      levels: ['11-12', 'olymp'],
+      items: [],
+    },
+    {
+      name: 'Квантова физика',
+      description:
+        'Фотоефект, атоми и ядра, радиоактивен разпад, светлинно налягане.',
+      levels: ['olymp'],
       items: [],
     },
   ],
   astronomy: [
     {
       name: 'Координатни системи и време',
-      description: 'Небесна сфера, координати, звездно време.',
+      description:
+        'Небесна сфера, екваториална/хоризонтална/еклиптична КС, звездно време.',
       items: [],
     },
     {
       name: 'Небесна механика',
-      description: 'Кеплер, гравитация, орбитални маневри.',
+      description:
+        'Закони на Кеплер, космически скорости, видове орбити и трансфери.',
       items: [],
     },
     {
-      name: 'Телескопи и наблюдения',
-      description: 'Оптика на телескопа, наблюдателна астрономия.',
+      name: 'Телескопи',
+      description:
+        'Видове телескопи, характеристики, критерий на Рейли, системи.',
       items: [],
     },
     {
-      name: 'Физика на звездите',
-      description: 'Звездни величини, излъчване, еволюция.',
+      name: 'Физика на планети и звезди',
+      description: 'Излъчване на звездите, ядрени реакции, планетни процеси.',
       items: [],
     },
     {
-      name: 'Галактики и космология',
-      description: 'Доплер, закон на Хъбъл, космология.',
+      name: 'Звездни наблюдения',
+      description:
+        'Звездни величини, филтри, поглъщане, цветови ексцес.',
+      items: [],
+    },
+    {
+      name: 'Галактическа астрономия',
+      description: 'Въртене и видове галактики, ефект на Доплер.',
+      items: [],
+    },
+    {
+      name: 'Извънгалактическа астрономия',
+      description: 'Основи на космологията, закон на Хъбъл, ранна Вселена.',
       items: [],
     },
   ],
@@ -216,34 +350,51 @@ export const SECTIONS: SectionID[] = Object.keys(
 ) as SectionID[];
 export const SECTION_LABELS: { [key in SectionID]: string } = {
   general: 'Предговор',
-  'physics/7-8': '7–8 клас',
-  'physics/9-10': '9–10 клас',
-  'physics/11-12': '11–12 клас',
-  'physics/olymp': 'Подбор и международни',
+  mechanics: 'Механика',
+  thermodynamics: 'Термодинамика',
+  electromagnetism: 'Електромагнетизъм',
+  optics: 'Оптика',
+  'modern-physics': 'Модерна физика',
   astronomy: 'Астрономия',
 } as const;
 export const SECTION_SEO_DESCRIPTION: { [key in SectionID]: string } = {
   general:
     'Обща информация за какво представлява този сайт, как да го ползвате и какво са олимпиадите и състезанията по природни науки.',
-  'physics/7-8':
-    'Физика за 7–8 клас — основите по механика, топлинни явления, електричество и геометрична оптика, необходими за първите стъпки в олимпиадите и състезанията по физика.',
-  'physics/9-10':
-    'Физика за 9–10 клас — материалът, нужен за областния и националния кръг на олимпиадата по физика и националните състезания.',
-  'physics/11-12':
-    'Физика за 11–12 клас — задълбоченият материал за националните кръгове, състезанията и кандидатстудентската подготовка по физика.',
-  'physics/olymp':
-    'Подготовка за подбора на националния отбор и за международните олимпиади по физика — IPhO, EuPhO, APhO и други.',
+  mechanics:
+    'Механика за олимпиади по физика — кинематика, динамика, енергия, гравитация, трептения и твърдо тяло, от първите стъпки до нивото на IPhO.',
+  thermodynamics:
+    'Термодинамика за олимпиади по физика — топлинни явления, идеален газ, статистическа физика, от училищното ниво до IPhO.',
+  electromagnetism:
+    'Електромагнетизъм за олимпиади по физика — електростатика, вериги, магнетизъм и индукция, от училищното ниво до IPhO.',
+  optics:
+    'Оптика за олимпиади по физика — геометрична и вълнова оптика, лещи, огледала и оптични уреди.',
+  'modern-physics':
+    'Модерна физика за олимпиади — специална теория на относителността, квантова и атомна физика.',
   astronomy:
     'Модули по астрономия — координатни системи, небесна механика, телескопи, звезди и космология — за националната олимпиада по астрономия, IAO и IOAA.',
 };
 export const SECTION_SEO_TITLES: { [key in SectionID]: string } = {
   general: 'Предговор',
-  'physics/7-8': 'Физика · 7–8 клас',
-  'physics/9-10': 'Физика · 9–10 клас',
-  'physics/11-12': 'Физика · 11–12 клас',
-  'physics/olymp': 'Физика · Подбор и международни олимпиади',
+  mechanics: 'Механика',
+  thermodynamics: 'Термодинамика',
+  electromagnetism: 'Електромагнетизъм',
+  optics: 'Оптика',
+  'modern-physics': 'Модерна физика',
   astronomy: 'Астрономия',
 };
+
+// Chapters visible at a given level (no `levels` on a chapter = visible at all)
+export const chaptersForLevel = (
+  section: SectionID,
+  level: Level
+): Chapter[] =>
+  MODULE_ORDERING[section].filter(
+    chapter => !chapter.levels || chapter.levels.includes(level)
+  );
+
+// Sections that have any content at a given level (drives nav visibility)
+export const sectionsForLevel = (level: Level): SectionID[] =>
+  SECTIONS.filter(section => chaptersForLevel(section, level).length > 0);
 
 const moduleIDToSectionMap: { [key: string]: SectionID } = {};
 

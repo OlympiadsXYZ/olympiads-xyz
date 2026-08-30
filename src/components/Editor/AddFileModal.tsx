@@ -33,11 +33,12 @@ export default function AddFileModal(props) {
   ] as const;
   const sections = [
     { label: t('sections_general'), value: '1_General' },
-    { label: t('sections_physics_7_8'), value: '2_Physics_7_8' },
-    { label: t('sections_physics_9_10'), value: '3_Physics_9_10' },
-    { label: t('sections_physics_11_12'), value: '4_Physics_11_12' },
-    { label: t('sections_physics_olymp'), value: '5_Physics_Olymp' },
-    { label: t('sections_astronomy'), value: '6_Astronomy' },
+    { label: t('sections_mechanics'), value: '2_Mechanics' },
+    { label: t('sections_thermodynamics'), value: '3_Thermodynamics' },
+    { label: t('sections_electromagnetism'), value: '4_Electromagnetism' },
+    { label: t('sections_optics'), value: '5_Optics' },
+    { label: t('sections_modern_physics'), value: '6_Modern_Physics' },
+    { label: t('sections_astronomy'), value: '7_Astronomy' },
   ] as const;
 
   return (
