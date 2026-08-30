@@ -3,7 +3,6 @@ import { Link } from 'gatsby';
 import * as React from 'react';
 import {
   entryUrl,
-  formatBytes,
   groupLabel,
   label,
   LANG_LABELS,
@@ -94,9 +93,6 @@ export function EntryRow({ entry }: { entry: ClientEntry }): JSX.Element {
         {entry.lang && entry.lang !== 'bg' && (
           <Badge>{label(LANG_LABELS, entry.lang)}</Badge>
         )}
-        <span className="text-xs text-gray-400 dark:text-gray-500 tabular-nums w-16 text-right">
-          {formatBytes(entry.size)}
-        </span>
       </span>
     </>
   );

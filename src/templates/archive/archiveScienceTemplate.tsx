@@ -4,7 +4,6 @@ import type { ClientEntry, CompetitionSummary } from '../../archive/catalog-node
 import {
   competitionName,
   competitionShort,
-  formatBytes,
   SCIENCE_COLORS,
   SCIENCE_LABELS,
 } from '../../archive/labels';
@@ -101,8 +100,7 @@ export default function ArchiveScienceTemplate({ pageContext }: Props): JSX.Elem
                         ? c.yearMin === c.yearMax
                           ? c.yearMin
                           : `${c.yearMin}–${c.yearMax}`
-                        : 'без години'}{' '}
-                      · {c.count} файла · {formatBytes(c.bytes)}
+                        : 'без години'}
                     </p>
                   </Link>
                 ))}

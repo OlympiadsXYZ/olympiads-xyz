@@ -1,6 +1,6 @@
 import { Link } from 'gatsby';
 import * as React from 'react';
-import { formatBytes, SCIENCE_COLORS, SCIENCE_LABELS } from '../../archive/labels';
+import { SCIENCE_COLORS, SCIENCE_LABELS } from '../../archive/labels';
 import TopNavigationBar from '../../components/TopNavigationBar/TopNavigationBar';
 import Layout from '../../components/layout';
 import SEO from '../../components/seo';
@@ -42,9 +42,6 @@ export default function ArchiveIndexTemplate({ pageContext }: Props): JSX.Elemen
                 >
                   {SCIENCE_LABELS[s.science] ?? s.science}
                 </div>
-                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
-                  {s.count} файла · {formatBytes(s.bytes)}
-                </p>
               </Link>
             ))}
           </div>
