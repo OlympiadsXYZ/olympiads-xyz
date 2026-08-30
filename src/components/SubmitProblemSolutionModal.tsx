@@ -21,7 +21,7 @@ export default function SubmitProblemSolutionModal({
 }) {
   const { t } = useTranslation();
   const [solutionCode, setSolutionCode] = React.useState('');
-  const [codeLang, setCodeLang] = React.useState<'bg' | 'en' | 'de' | null>(
+  const [codeLang, setCodeLang] = React.useState<'bg' | 'en' | null>(
     null
   );
   const [isCodePublic, setIsCodePublic] = React.useState(true);
@@ -116,8 +116,8 @@ export default function SubmitProblemSolutionModal({
           </p>
           {/* TODO: Remove this button group maybe? */}
           <ButtonGroup
-            options={['bg', 'en', 'de']}
-            labelMap={{ bg: "БГ", en: "EN", de: "DE" }}
+            options={['bg', 'en']}
+            labelMap={{ bg: "БГ", en: "EN" }}
             value={codeLang}
             onChange={x => setCodeLang(x)}
           />

@@ -4,11 +4,10 @@ import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 
-const LANGUAGES = ['en', 'bg', 'de'];
+const LANGUAGES = ['en', 'bg'];
 const LANGUAGE_LABELS = {
   en: 'English',
   bg: 'Български',
-  de: 'Deutsch',
 };
 
 export default function LanguageDropdown({

@@ -16,9 +16,6 @@ i18n
         },
         bg: {
           translation: require('../translations/bg.json')
-        },
-        de: {
-          translation: require('../translations/de.json')
         }
        }
      });

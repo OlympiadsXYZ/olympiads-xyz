@@ -8,6 +8,6 @@ export type UserSolutionForProblem = {
   isPublic: boolean;
   solutionCode: string;
   upvotes: string[];
-  language: 'bg' | 'en' | 'de' | 'unknown';
+  language: 'bg' | 'en' | 'unknown';
   timestamp: Timestamp;
 };
