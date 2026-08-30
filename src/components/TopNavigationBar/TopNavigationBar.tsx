@@ -44,6 +44,7 @@ import { SearchModal } from './SearchModal';
 import { UserAvatarMenu } from './UserAvatarMenu';
 import { useLocation } from '@gatsbyjs/reach-router';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
+import GradeSwitcher from '../../components/GradeSwitcher';
 import { MdLanguage } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 
@@ -434,31 +435,18 @@ export default function TopNavigationBar({
         <div className={`${isMobileNavOpen ? 'block' : 'hidden'} lg:hidden`}>
           <div className="grid grid-cols-1 divide-y divide-gray-300 dark:divide-gray-800 pb-6">
             <div className="py-5 px-4">
-              <div className="grid grid-cols-2 gap-y-4 gap-x-8 auto-rows-auto">
-                {sections.map((item, index) => {
-                  // Calculate new position to display in column-first order
-                  const row = index % 3;
-                  const col = Math.floor(index / 3);
-                  const order = row * 2 + col;
-                  
-                  return (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
-                      style={{ order: order }}
-                    >
-                      <item.icon
-                        className="flex-shrink-0 h-6 w-6"
-                        style={{ color: item.iconColor }}
-                        aria-hidden="true"
-                      />
-                      <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                        {item.name}
-                      </span>
-                    </Link>
-                  );
-                })}
+              <div className="group -m-3 p-3 flex items-center rounded-md">
+                <RiNumber0
+                  className="h-6 w-6 flex-shrink-0"
+                  style={{ color: '#3151ff' }}
+                  aria-hidden="true"
+                />
+                <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
+                  Ниво:
+                </span>
+                <div className="ml-3">
+                  <GradeSwitcher options={sections} />
+                </div>
               </div>
             </div>
             {/* Begin nz kakvo pravi tova probably some menu for the groups*/}

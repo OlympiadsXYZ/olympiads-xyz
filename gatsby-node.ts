@@ -174,6 +174,13 @@ exports.onCreateNode = async api => {
     }
   } else if (
     node.internal.type === 'Xdm' &&
+    node.fileAbsolutePath.includes('/drafts/')
+  ) {
+    // Draft modules (preview builds only): no ordering registration, no
+    // module page — they render via the gated /drafts/* templates.
+    createNodeField({ name: 'isDraft', node, value: true });
+  } else if (
+    node.internal.type === 'Xdm' &&
     node.fileAbsolutePath.includes('content')
   ) {
     // const ordering = importFresh<any>('./content/ordering.ts');
@@ -558,6 +565,50 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     // However, somehow sending SIGINT to this process exits fine.
     process.kill(process.pid, 'SIGINT');
   }
+  if (process.env.GATSBY_INCLUDE_DRAFTS === 'true') {
+    const draftsResult = await graphql(`
+      {
+        allXdm(filter: { fields: { isDraft: { eq: true } } }) {
+          nodes {
+            fileAbsolutePath
+            frontmatter {
+              id
+              title
+              description
+            }
+          }
+        }
+      }
+    `);
+    if (!draftsResult.errors) {
+      const draftTemplate = path.resolve(
+        `./src/templates/drafts/draftTemplate.tsx`
+      );
+      const drafts = draftsResult.data.allXdm.nodes.map(nd => ({
+        id: nd.frontmatter.id,
+        title: nd.frontmatter.title,
+        description: nd.frontmatter.description ?? null,
+        group: (nd.fileAbsolutePath.split('/drafts/modules/')[1] ?? '').split(
+          '/'
+        )[0],
+      }));
+      drafts.forEach(d => {
+        createPage({
+          path: `/drafts/${d.id}/`,
+          component: draftTemplate,
+          context: { id: d.id },
+        });
+      });
+      createPage({
+        path: `/drafts/`,
+        component: path.resolve(
+          `./src/templates/drafts/draftsIndexTemplate.tsx`
+        ),
+        context: { drafts },
+      });
+    }
+  }
+
   // Generate Syllabus Pages //
   const syllabusTemplate = path.resolve(`./src/templates/syllabusTemplate.tsx`);
   freshOrdering.SECTIONS.forEach(division => {

@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'gatsby';
 import * as React from 'react';
 import { SECTIONS, SECTION_LABELS } from '../../content/ordering';
+import { storeGrade } from './GradeSwitcher';
 import { useTranslation } from 'react-i18next';
 
 export default function SectionsDropdown({
@@ -133,6 +134,7 @@ export default function SectionsDropdown({
                       {({ active }) => (
                         <Link
                           to={`/${section}/`}
+                          onClick={() => storeGrade(section)}
                           className={classNames(
                             'block px-4 py-2 text-base font-medium leading-6 focus:outline-none',
                             active

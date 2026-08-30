@@ -58,6 +58,17 @@ const plugins = [
       name: `content`,
     },
   },
+  ...(process.env.GATSBY_INCLUDE_DRAFTS === 'true'
+    ? [
+        {
+          resolve: `gatsby-source-filesystem`,
+          options: {
+            path: `${__dirname}/drafts/modules`,
+            name: `drafts`,
+          },
+        },
+      ]
+    : []),
   {
     resolve: `gatsby-source-filesystem`,
     options: {
