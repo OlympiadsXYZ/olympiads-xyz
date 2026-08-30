@@ -192,9 +192,9 @@ export default function TopNavigationBar({
       {!hidePromoBar && (
         <>
           <Banner
-            text="Националният кръг по физика (НОФ-3) предстои на 25-27.04.2025 в Казанлък."
-            action="Списък с класирани ученици"
-            link="https://www.mon.bg/nfs/2025/03/dopusnati-nk-fizika_18032025.pdf"
+            text="Olympiads XYZ се завръща — сайтът отново е онлайн и се обновява. Архивът е в процес на възстановяване."
+            action="Научете повече"
+            link="/announcements"
           />
         </>
       )}
