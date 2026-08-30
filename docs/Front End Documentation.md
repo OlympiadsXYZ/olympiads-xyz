@@ -12,10 +12,12 @@ experience.
    - Install [node.js](https://nodejs.org/en/)
      - Gatsby docs:
        https://www.gatsbyjs.org/tutorial/part-zero/#install-nodejs-for-your-appropriate-operating-system
+     - Recommended runtime: Node 20 (see `.nvmrc` in repo root)
+     - If you use `nvm`: `nvm install && nvm use`
    - Install [yarn 1](https://classic.yarnpkg.com/en/)
      - `npm install -g yarn`? might work
 2. Clone repo
-   - `git clone https://github.com/cpinitiative/usaco-guide.git`
+   - `git clone https://github.com/OlympiadsXYZ/olympiads-xyz.git`
 3. Install Dependencies
    - `yarn`
 4. Run development server

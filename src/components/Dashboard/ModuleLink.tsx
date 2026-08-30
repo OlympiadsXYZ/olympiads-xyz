@@ -124,7 +124,7 @@ function time_ago(time: unknown): string {
   else if (time instanceof Date) time = time.getTime();
   else time = +new Date();
   moment.locale(i18next.language);
-  let seconds = (+new Date() - (time as number)) / 1000
+  const seconds = (+new Date() - (time as number)) / 1000
   if (seconds > 4838400) {
     return '';
   }

@@ -1,4 +1,3 @@
-import { graphql } from 'gatsby';
 import * as React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
@@ -6,7 +5,12 @@ import TopNavigationBar from '../components/TopNavigationBar/TopNavigationBar';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 import { useTranslation } from 'react-i18next';
-import { ArchiveSection, ArchiveSubsection, ArchiveItem, ARCHIVE_DATA } from '../../archive/archiveOrdering';
+import {
+  ArchiveSection,
+  ArchiveSubsection,
+  ArchiveItem,
+  ARCHIVE_DATA,
+} from '../archive/archiveOrdering';
 import { RecentlyViewed } from '../components/Archive/RecentlyViewed';
 import Breadcrumbs, { BreadcrumbItem } from '../components/Archive/Breadcrumbs';
 import { useEffect } from 'react';
@@ -271,6 +275,7 @@ const Section: React.FC<SectionProps & {
   searchTerm,
   searchMatches
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(false);
   const initializedRef = React.useRef(false);
   const [contentHeight, setContentHeight] = React.useState(0);
@@ -343,8 +348,6 @@ const Section: React.FC<SectionProps & {
   // Calculate total matches for this section
   const totalMatches = (searchMatches?.items?.length || 0) + 
     (searchMatches?.subsections?.length || 0);
-
-  const { t } = useTranslation();
 
   // Render section with subsections
   return (
@@ -587,6 +590,7 @@ const ArchiveContent: React.FC<{ data: ArchiveSection }> = ({ data }) => {
   const [forceUpdateKey, setForceUpdateKey] = React.useState(0);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [searchResults, setSearchResults] = React.useState<SearchMatch[]>([]);
+  const sections = data.sections ?? [];
 
   // Filter function for sections and items
   const filterSection = (section: any, term: string): boolean => {
@@ -610,10 +614,10 @@ const ArchiveContent: React.FC<{ data: ArchiveSection }> = ({ data }) => {
 
   // Filter sections based on search term
   const filteredSections = React.useMemo(() => {
-    if (!searchTerm) return data.sections;
+    if (!searchTerm) return sections;
     
-    return data.sections.filter(section => filterSection(section, searchTerm));
-  }, [data.sections, searchTerm]);
+    return sections.filter(section => filterSection(section, searchTerm));
+  }, [sections, searchTerm]);
 
   const handleExpandAll = () => {
     setExpandAll(true);
@@ -654,7 +658,7 @@ const ArchiveContent: React.FC<{ data: ArchiveSection }> = ({ data }) => {
   const handleSearch = (term: string) => {
     setSearchTerm(term);
     if (term) {
-      const results = data.sections
+      const results = sections
         .map(section => findMatches(section, term))
         .filter((match): match is SearchMatch => match !== null);
       setSearchResults(results);
@@ -744,7 +748,7 @@ const ArchiveContent: React.FC<{ data: ArchiveSection }> = ({ data }) => {
       )}
 
       <div className="space-y-6" key={forceUpdateKey}>
-        {(searchTerm ? searchResults.map(r => r.section) : data.sections).map(section => (
+        {(searchTerm ? searchResults.map(r => r.section) : sections).map(section => (
           <Section
             key={section.name}
             {...section}
@@ -793,7 +797,7 @@ export default function ArchiveTemplate({ pageContext }) {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Object.entries(ARCHIVE_DATA).map(([key, value]) => (
+              {(Object.entries(ARCHIVE_DATA) as [string, ArchiveSection][]).map(([key, value]) => (
                 <a
                   key={key}
                   href={`/archive/${key}`}
@@ -877,20 +881,3 @@ export default function ArchiveTemplate({ pageContext }) {
     </Layout>
   );
 }
-
-export const query = graphql`
-  query ArchiveQuery {
-    allFile(
-      filter: { sourceInstanceName: { eq: "archive" } }
-      sort: { fields: name }
-    ) {
-      edges {
-        node {
-          relativePath
-          name
-          extension
-        }
-      }
-    }
-  }
-`;

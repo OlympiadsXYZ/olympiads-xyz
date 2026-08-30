@@ -28,7 +28,7 @@ Note: This may be out of date. Current version is from 07.01.2025
 
 ## Domain Names
 
-- https://olympiads-xyz-bg.vercel.app/ 
+- https://olympiads-xyz.vercel.app/ 
 - Google Search Console
 - Google Analytics
 

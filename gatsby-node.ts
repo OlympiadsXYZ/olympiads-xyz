@@ -12,6 +12,9 @@ import {
   ProblemMetadata,
   ShortProblemInfo,
 } from './src/models/problem';
+
+const ARCHIVE_ENABLED = process.env.ARCHIVE_ENABLED === 'true';
+
 // Questionable hack to get full commit history so that timestamps work
 try {
   execSync(
@@ -23,9 +26,30 @@ try {
   );
 }
 
+const copyDirectory = (source, destination) => {
+  if (!fs.existsSync(destination)) {
+    fs.mkdirSync(destination, { recursive: true });
+  }
+
+  const files = fs.readdirSync(source);
+
+  files.forEach(file => {
+    const sourcePath = path.join(source, file);
+    const destPath = path.join(destination, file);
+
+    if (fs.lstatSync(sourcePath).isDirectory()) {
+      copyDirectory(sourcePath, destPath);
+    } else {
+      fs.copyFileSync(sourcePath, destPath);
+    }
+  });
+};
+
 // ideally problems would be its own query with
 // source nodes: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#sourceNodes
-let stream = fs.createWriteStream('ids.log', { flags: 'a' });
+const stream = process.env.CI
+  ? fs.createWriteStream('ids.log', { flags: 'a' })
+  : null;
 exports.onCreateNode = async api => {
   const { node, actions, loadNodeContent, createContentDigest, createNodeId } =
     api;
@@ -98,7 +122,7 @@ exports.onCreateNode = async api => {
       try {
         parsedContent[tableId].forEach((metadata: ProblemMetadata) => {
           checkInvalidUsacoMetadata(metadata);
-          if (process.env.CI) stream.write(metadata.uniqueId + '\n');
+          if (stream) stream.write(metadata.uniqueId + '\n');
           transformObject(
             {
               ...getProblemInfo(metadata, freshOrdering),
@@ -259,88 +283,52 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     reporter.panicOnBuild('🚨 ERROR: Loading "createPages" query');
   }
 
-  // Generate Archive Pages
-const archiveTemplate = path.resolve(`./src/templates/archiveTemplate.tsx`);
-const subjects = ['physics', 'astronomy', 'math', 'informatics', 'chemistry', 'biology', 'geography'];
+  if (ARCHIVE_ENABLED) {
+    const archiveTemplate = path.resolve(`./src/templates/archiveTemplate.tsx`);
+    const subjects = [
+      'physics',
+      'astronomy',
+      'math',
+      'informatics',
+      'chemistry',
+      'biology',
+      'geography',
+    ];
 
-// Create the main archive page
-createPage({
-  path: '/archive',
-  component: archiveTemplate,
-  context: {
-    subject: null,
-  },
-});
+    // Create individual subject archive pages
+    subjects.forEach(subject => {
+      createPage({
+        path: `/archive/${subject}`,
+        component: archiveTemplate,
+        context: {
+          subject: subject,
+        },
+      });
+    });
 
-// Create individual subject archive pages
-subjects.forEach(subject => {
-  createPage({
-    path: `/archive/${subject}`,
-    component: archiveTemplate,
-    context: {
-      subject: subject,
-    },
-  });
-});
-
-// Create archive file pages based on filesystem
-const archiveFiles = await graphql(`
-  {
-    allFile(
-      filter: { sourceInstanceName: { eq: "archive" } }
-      sort: { fields: name }
-    ) {
-      edges {
-        node {
-          relativePath
-          name
-          extension
+    // Create archive file pages based on filesystem
+    const archiveFiles = await graphql(`
+      {
+        allFile(
+          filter: { sourceInstanceName: { eq: "archive" } }
+          sort: { fields: name }
+        ) {
+          edges {
+            node {
+              relativePath
+              name
+              extension
+            }
+          }
         }
       }
+    `);
+
+    if (archiveFiles.errors) {
+      reporter.panicOnBuild('Error loading archive files');
+      return;
     }
   }
-`);
-
-if (archiveFiles.errors) {
-  reporter.panicOnBuild('Error loading archive files');
-  return;
-}
-
-//TODO: it would be good if this was autmated but the best solution right now is to just copy it over by hand (talking about the archive folder)
-
-const copyDirectory = (source, destination) => {
-  if (!fs.existsSync(destination)) {
-    fs.mkdirSync(destination, { recursive: true });
-  }
-
-  const files = fs.readdirSync(source);
-
-  files.forEach(file => {
-    const sourcePath = path.join(source, file);
-    const destPath = path.join(destination, file);
-    
-    if (fs.lstatSync(sourcePath).isDirectory()) {
-      copyDirectory(sourcePath, destPath);
-    } else {
-      fs.copyFileSync(sourcePath, destPath);
-    }
-  });
-};
-
-exports.onPostBuild = () => {
-  const sourceDir = path.join(__dirname, 'archive');
-  const destDir = path.join(__dirname, 'public', 'archive');
-  
-  try {
-    copyDirectory(sourceDir, destDir);
-    console.log('Successfully copied archive files to public directory');
-  } catch (err) {
-    console.error('Error copying archive files:', err);
-  }
-};
-
-
-
 
   // Check to make sure problems with the same unique ID have consistent information, and that there aren't duplicate slugs
   // Also creates user solution pages for each problem
@@ -579,6 +567,24 @@ exports.onPostBuild = () => {
   // End Generate Syllabus Pages //
 };
 
+exports.onPostBuild = () => {
+  if (stream) {
+    stream.end();
+  }
+
+  if (!ARCHIVE_ENABLED) return;
+
+  const sourceDir = path.join(__dirname, 'archive');
+  const destDir = path.join(__dirname, 'public', 'archive');
+
+  try {
+    copyDirectory(sourceDir, destDir);
+    console.log('Successfully copied archive files to public directory');
+  } catch (err) {
+    console.error('Error copying archive files:', err);
+  }
+};
+
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
   createTypes(typeDefs);
@@ -661,5 +667,3 @@ const getGitAuthorTime = (filePath: string): string => {
     return new Date().toISOString();
   }
 };
-
-

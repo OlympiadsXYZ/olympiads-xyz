@@ -14,6 +14,7 @@ import { graphqlToModuleInfo } from '../utils/utils';
 
 export default function Template(props): JSX.Element {
   const { xdm, moduleProblemLists } = props.data; // data.markdownRemark holds your post data
+  const siteUrl = props.data.site.siteMetadata.siteUrl.replace(/\/$/, '');
   const { body } = xdm;
   const module = React.useMemo(() => graphqlToModuleInfo(xdm), [xdm]);
   const isLoaded = useIsUserDataLoaded();
@@ -46,17 +47,17 @@ export default function Template(props): JSX.Element {
               "@type": "ListItem",
               "position": 1,
               "name": "Home",
-              "item": "https://olympiads-xyz-bg.vercel.app/"
+              "item": "${siteUrl}/"
             },{
               "@type": "ListItem",
               "position": 2,
               "name": "${SECTION_LABELS[module.section]}",
-              "item": "https://olympiads-xyz-bg.vercel.app/${module.section}"
+              "item": "${siteUrl}/${module.section}"
             },{
               "@type": "ListItem",
               "position": 3,
               "name": "${module.title}",
-              "item": "https://olympiads-xyz-bg.vercel.app/${module.section}/${module.id}"
+              "item": "${siteUrl}/${module.section}/${module.id}"
             }]
           }
         `}</script>
@@ -139,6 +140,11 @@ export const pageQuery = graphql`
             sketch
           }
         }
+      }
+    }
+    site {
+      siteMetadata {
+        siteUrl
       }
     }
   }

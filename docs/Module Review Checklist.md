@@ -1,7 +1,7 @@
 # Module Review Checklist
 
 Read through the module and check for errors. Also see:
-https://olympiads-xyz-bg.vercel.app/general/contributing
+https://olympiads-xyz.vercel.app/general/contributing
 
 Things to check:
 

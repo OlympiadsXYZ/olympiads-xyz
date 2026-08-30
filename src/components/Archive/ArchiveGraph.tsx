@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import { ArchiveSection, ArchiveSubsection } from '../../../archive/archiveOrdering';
+import { ArchiveSection, ArchiveSubsection } from '../../archive/archiveOrdering';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { useTranslation } from 'react-i18next';
@@ -110,7 +110,8 @@ const transformToGraphData = (archiveData: ArchiveSection): GraphData => {
     return true;
   };
   
-  archiveData.sections.some(section => {
+  const rootSections = archiveData.sections ?? [];
+  rootSections.some(section => {
     if (nodeCount >= MAX_NODES) return true;
     return !processSection(rootId, section, 1);
   });
@@ -132,10 +133,10 @@ const GraphContainer = styled.div`
   background: transparent;  // Make container background transparent
 `;
 
-export const ArchiveGraph: React.FC<ArchiveGraphProps> = ({ 
+export const ArchiveGraph: React.FC<ArchiveGraphProps> = ({
   data,
-  width,
-  height
+  width = 1500,
+  height = 600,
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -264,10 +265,10 @@ export const ArchiveGraph: React.FC<ArchiveGraphProps> = ({
             (sourceNode?.size || 30) + (targetNode?.size || 30) : 
             ((sourceNode?.size || 30) + (targetNode?.size || 30)) * 1.5; // Reduced multiplier
         }))
-      .force("charge", d3.forceManyBody()
+      .force("charge", d3.forceManyBody<Node>()
         .strength(d => -(d.size || 30) * 30))
       .force("center", d3.forceCenter(width/2, height/2))
-      .force("collision", d3.forceCollide().radius(d => (d.size || 30) * 0.7))
+      .force("collision", d3.forceCollide<Node>().radius(d => (d.size || 30) * 0.7))
       .alphaDecay(0.02) // Faster cooling
       .velocityDecay(0.4) // More damping
       // Add cluster force
@@ -307,8 +308,8 @@ export const ArchiveGraph: React.FC<ArchiveGraphProps> = ({
         });
       })
       // Add additional forces for better layout
-      .force("x", d3.forceX(width/2).strength(0.05))
-      .force("y", d3.forceY(height/2).strength(0.05));
+      .force("x", d3.forceX<Node>(width / 2).strength(0.05))
+      .force("y", d3.forceY<Node>(height / 2).strength(0.05));
 
     // Add links with enhanced styling
     const links = g.append("g")
@@ -320,7 +321,7 @@ export const ArchiveGraph: React.FC<ArchiveGraphProps> = ({
         const targetNode = typeof d.target === 'object' ? d.target : graphData.nodes.find(n => n.id === d.target);
         // Use different gradients for intra-cluster and inter-cluster links
         if (sourceNode?.clusterId === targetNode?.clusterId) {
-          return `url(#linkGradient${(sourceNode?.group % 3) + 1})`;
+          return `url(#linkGradient${((sourceNode?.group ?? 0) % 3) + 1})`;
         }
         return "#2a2a2a"; // Subtle color for inter-cluster links
       })
@@ -430,16 +431,16 @@ export const ArchiveGraph: React.FC<ArchiveGraphProps> = ({
       })
       .on("mouseout", function() {
         // Reset styles
-        nodes.selectAll("circle")
+        nodes.selectAll<SVGCircleElement, Node>("circle")
           .transition()
           .duration(300)
-          .attr("r", d => d.size || 5)
+          .attr("r", (d: Node) => d.size || 5)
           .attr("opacity", 1);
 
-        nodes.selectAll("text")
+        nodes.selectAll<SVGTextElement, Node>("text")
           .transition()
           .duration(300)
-          .attr("opacity", d => d.group === 0 ? 0.9 : 0);
+          .attr("opacity", (d: Node) => d.group === 0 ? 0.9 : 0);
 
         links
           .transition()

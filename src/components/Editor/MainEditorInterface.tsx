@@ -144,7 +144,7 @@ export const MainEditorInterface = ({ className }): JSX.Element => {
             schemas: [
               {
                 fileMatch: ['*.json'],
-                uri: 'https://olympiads-xyz-bg.vercel.app/problems.schema.json', //TODO: change to olympiads.xyz/problems.schema.json
+                uri: '/problems.schema.json',
                 schema: problemsSchema,
               },
             ],

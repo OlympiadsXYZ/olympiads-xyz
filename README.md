@@ -8,7 +8,7 @@ A very big thank you to the [CP Initiative](https://joincpi.org/) and the creato
 
 ## Contributing
 
-See the [contributing module](https://olympiads-xyz-bg.vercel.app/general/contributing). All contributions are welcome (and even encouraged)!
+See the [contributing module](https://olympiads-xyz.vercel.app/general/contributing). All contributions are welcome (and even encouraged)!
 
 ## Our Team
 
@@ -16,7 +16,7 @@ Main creators:
 - [@ismoldaev](https://github.com/ismoldayev)
 - [@PE-60](https://github.com/PE-60)
 
-We're looking for Module Authors and Moderators to help us improve the website! Learn more [here](https://olympiads-xyz-bg.vercel.app/general/become-author).
+We're looking for Module Authors and Moderators to help us improve the website! Learn more [here](https://olympiads-xyz.vercel.app/general/become-author).
 
 ## Tech Stack
 

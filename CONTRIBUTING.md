@@ -1,3 +1,3 @@
 # Contributing
 
-Погледнете този модул: [Допринасяне](https://olympiads-xyz-bg.vercel.app/general/contributing).
+Погледнете този модул: [Допринасяне](https://olympiads-xyz.vercel.app/general/contributing).

@@ -131,10 +131,14 @@ export function Resource({
       } else url = books[source][0];
     }
   } else if (source in moduleSources) {
-    if (!url?.startsWith('http')) url = moduleSources[source][0] + url;
+    if (!url?.startsWith('http') && !url?.startsWith('/')) {
+      url = moduleSources[source][0] + url;
+    }
     sourceDescription = moduleSources[source][1];
   } else {
-    if (!url?.startsWith('http')) {
+    const isHttpUrl = url?.startsWith('http');
+    const isRootRelativeUrl = url?.startsWith('/');
+    if (!isHttpUrl && !isRootRelativeUrl) {
       throw `URL ${url} is not valid. Did you make a typo in the source (${source}), or in the URL? Resource name: ${title}`;
     }
   }

@@ -37,12 +37,18 @@ function SEO({
     metaImage = defaultImage.childImageSharp.resize;
   }
 
+  const siteUrl = site.siteMetadata.siteUrl.replace(/\/$/, '');
+  const normalizedPathname = pathname
+    ? pathname.startsWith('/')
+      ? pathname
+      : `/${pathname}`
+    : null;
   const metaDescription = description || site.siteMetadata.description;
   const image =
-    metaImage && metaImage.src
-      ? `${site.siteMetadata.siteUrl}${metaImage.src}`
-      : null;
-  const canonical = pathname ? `${site.siteMetadata.siteUrl}${pathname}` : null;
+    metaImage && metaImage.src ? `${siteUrl}${metaImage.src}` : null;
+  const canonical =
+    normalizedPathname != null ? `${siteUrl}${normalizedPathname}` : null;
+  const ogUrl = canonical || siteUrl;
   return (
     <Helmet
       htmlAttributes={{
@@ -84,7 +90,7 @@ function SEO({
         },
         {
           property: `og:url`,
-          content: 'https://olympiads-xyz-bg.vercel.app',
+          content: ogUrl,
         },
         {
           property: `og:type`,
@@ -124,7 +130,7 @@ function SEO({
                 },
                 {
                   name: 'twitter:card',
-                  content: image,
+                  content: 'summary_large_image',
                 },
               ]
             : [

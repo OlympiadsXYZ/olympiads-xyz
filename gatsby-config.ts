@@ -1,5 +1,9 @@
 require('dotenv').config();
 
+const SITE_URL = (process.env.SITE_URL || 'https://olympiads-xyz.vercel.app')
+  .replace(/\/$/, '');
+const ARCHIVE_ENABLED = process.env.ARCHIVE_ENABLED === 'true';
+
 const flags = {
   FAST_DEV: true,
 };
@@ -8,12 +12,22 @@ const siteMetadata = {
   title: `Olympiads XYZ`,
   description: `A free comprehensive, well-organized resource from bulgarian science olympiad contenders designed to help students prepare for science olympiads, with a current focus on physics. Made by students, for students.`,
   author: `@olympiadsxyz`,
-  siteUrl: `https://olympiads-xyz-bg.vercel.app/`, // TODO: change to new domain
+  siteUrl: `${SITE_URL}/`,
   keywords: ['Olympiads XYZ', 'Physics', 'Student olympiads'],
 };
 
 const plugins = [
-  
+  ...(ARCHIVE_ENABLED
+    ? [
+        {
+          resolve: `gatsby-source-filesystem`,
+          options: {
+            name: `archive`,
+            path: `${__dirname}/archive`,
+          },
+        },
+      ]
+    : []),
   {
     resolve: 'gatsby-plugin-sitemap',
     options: {
@@ -24,14 +38,6 @@ const plugins = [
     resolve: `gatsby-plugin-typescript`,
     options: {
       allowNamespaces: true,
-    },
-  },
-  /* any images referenced by .mdx needs to be loaded before the mdx file is loaded. */
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `archive`,
-      path: `${__dirname}/archive`,
     },
   },
   {
