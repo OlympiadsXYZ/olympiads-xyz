@@ -184,9 +184,9 @@ export default function TopNavigationBar({
       {!hidePromoBar && (
         <>
           <Banner
-            text="Olympiads XYZ се завръща — сайтът отново е онлайн и се обновява. Архивът е в процес на възстановяване."
-            action="Научете повече"
-            link="/announcements"
+            text="Olympiads XYZ се завръща — Архивът е отново онлайн с над 4000 материала, заедно с изцяло нови модули по физика."
+            action="Разгледай Архива"
+            link="/archive/"
           />
         </>
       )}
