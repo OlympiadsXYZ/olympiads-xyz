@@ -45,6 +45,12 @@ import { UserAvatarMenu } from './UserAvatarMenu';
 import { useLocation } from '@gatsbyjs/reach-router';
 import LanguageSwitcher from '../../components/LanguageSwitcher';
 import LevelSwitcher from '../../components/LevelSwitcher';
+import { useLevel } from '../../context/LevelContext';
+import {
+  SECTIONS,
+  SECTION_LABELS,
+  chaptersForLevel,
+} from '../../../content/ordering';
 import { MdLanguage } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 
@@ -67,6 +73,10 @@ export default function TopNavigationBar({
   const isIndexPage = location.pathname === '/';
 
   const { t } = useTranslation();
+  const { level, levelReady } = useLevel();
+  const visibleSections = SECTIONS.filter(
+    section => !levelReady || chaptersForLevel(section, level).length > 0
+  );
 
   const archive = [
     {
@@ -169,16 +179,6 @@ export default function TopNavigationBar({
               </Link>
               <div className={`hidden lg:ml-8 lg:flex space-x-8`}>
                 <SectionsDropdown currentSection={currentSection} />
-                <Link
-                  to="/astronomy/"
-                  getProps={({ isCurrent }) => ({
-                    className: isCurrent
-                      ? 'inline-flex items-center px-1 pt-0.5 border-b-2 border-blue-500 dark:border-blue-700 text-base font-medium leading-6 text-gray-900 dark:text-dark-high-emphasis focus:outline-none focus:border-blue-700 dark:focus:border-blue-500 transition'
-                      : 'inline-flex items-center px-1 pt-0.5 border-b-2 border-transparent text-base font-medium leading-6 text-gray-500 hover:text-gray-900 hover:border-gray-300  focus:outline-none focus:text-gray-900 focus:border-gray-300 dark:text-dark-high-emphasis dark:hover:border-gray-500 dark:focus:border-gray-500 transition',
-                  })}
-                >
-                  {t('sections_astronomy')}
-                </Link>
                 <Link
                   to="/problems/"
                   getProps={({ isCurrent }) => ({
@@ -402,19 +402,19 @@ export default function TopNavigationBar({
                   <LevelSwitcher />
                 </div>
               </div>
-              <Link
-                to="/astronomy/"
-                className="group mt-2 -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <IoTelescope
-                  className="h-6 w-6 flex-shrink-0"
-                  style={{ color: '#7c5cff' }}
-                  aria-hidden="true"
-                />
-                <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                  {t('sections_astronomy')}
-                </span>
-              </Link>
+              <div className="mt-4 grid grid-cols-2 gap-y-4 gap-x-8">
+                {visibleSections.map(section => (
+                  <Link
+                    key={section}
+                    to={`/${section}/`}
+                    className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    <span className="text-base font-medium text-gray-700 dark:text-gray-300">
+                      {SECTION_LABELS[section]}
+                    </span>
+                  </Link>
+                ))}
+              </div>
             </div>
             {/* Begin nz kakvo pravi tova probably some menu for the groups*/}
             <div className="py-5 px-4">

@@ -1,5 +1,5 @@
-// Physics sections dropdown (Секции — docs/Structure.md). Astronomy is a
-// separate subject with its own top-level nav item, so it is excluded here.
+// Sections dropdown (Секции — docs/Structure.md), grouped by science:
+// ФИЗИКА heading over the physics sections, АСТРОНОМИЯ over astronomy.
 // The list is filtered by the site-wide level: a section with no categories
 // at the active level (e.g. Модерна физика at 7–8) is hidden.
 import { Menu, Transition } from '@headlessui/react';
@@ -25,10 +25,8 @@ export default function SectionsDropdown({
   const { t } = useTranslation();
   const { level, levelReady } = useLevel();
   const visibleSections = SECTIONS.filter(
-    section =>
-      section !== 'astronomy' &&
-      // before hydration show everything to keep SSR markup stable
-      (!levelReady || chaptersForLevel(section, level).length > 0)
+    // before hydration show everything to keep SSR markup stable
+    section => !levelReady || chaptersForLevel(section, level).length > 0
   );
   return (
     <Menu as="div">
@@ -100,6 +98,11 @@ export default function SectionsDropdown({
                     {section === 'mechanics' && (
                       <div className="px-4 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-dark-med-emphasis border-t border-gray-100 dark:border-gray-700 mt-1">
                         Физика
+                      </div>
+                    )}
+                    {section === 'astronomy' && (
+                      <div className="px-4 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-dark-med-emphasis border-t border-gray-100 dark:border-gray-700 mt-1">
+                        Астрономия
                       </div>
                     )}
                     {section === currentSection ? (
