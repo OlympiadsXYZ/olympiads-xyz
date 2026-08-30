@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const SITE_URL = (process.env.SITE_URL || 'https://olympiads-xyz.vercel.app')
   .replace(/\/$/, '');
-const ARCHIVE_ENABLED = process.env.ARCHIVE_ENABLED === 'true';
 
 const flags = {
   FAST_DEV: true,
@@ -17,17 +16,6 @@ const siteMetadata = {
 };
 
 const plugins = [
-  ...(ARCHIVE_ENABLED
-    ? [
-        {
-          resolve: `gatsby-source-filesystem`,
-          options: {
-            name: `archive`,
-            path: `${__dirname}/archive`,
-          },
-        },
-      ]
-    : []),
   {
     resolve: 'gatsby-plugin-sitemap',
     options: {

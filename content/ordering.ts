@@ -43,16 +43,129 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
     }
   ],
   'physics/7-8': [
-
+    {
+      name: 'Кинематика',
+      items: [
+        'p78-pravolineino-dvizhenie',
+        'p78-otnositelno-dvizhenie',
+        'p78-okrazhnost-i-hvarlyaniya',
+      ],
+    },
+    {
+      name: 'Динамика',
+      items: [
+        'p78-forces-newton-laws',
+        'p78-momentum-com',
+        'p78-statics-hydrostatics',
+      ],
+    },
+    {
+      name: 'Работа и енергия',
+      items: ['p78-work-power', 'p78-energy'],
+    },
+    {
+      name: 'Топлинни явления',
+      items: ['p78-heat-calorimetry', 'p78-phase-transitions'],
+    },
+    {
+      name: 'Електричество',
+      items: ['p78-electrostatics', 'p78-dc-circuits'],
+    },
+    {
+      name: 'Геометрична оптика',
+      items: ['p78-reflection-refraction', 'p78-lenses'],
+    },
+    {
+      name: 'Математически апарат',
+      items: ['p78-vectors', 'p78-functions-trig'],
+    },
   ],
   'physics/9-10': [
-
+    {
+      name: 'Гравитация',
+      items: ['p910-circular-orbits', 'p910-kepler'],
+    },
+    {
+      name: 'Трептения',
+      items: ['p910-harmonic-motion', 'p910-oscillations-energy'],
+    },
+    {
+      name: 'Динамика на твърдо тяло',
+      items: ['p910-moment-of-inertia', 'p910-rolling-angular-momentum'],
+    },
+    {
+      name: 'Постоянен ток',
+      items: ['p910-kirchhoff-slozhni-verigi', 'p910-uredi-nelineini-elementi'],
+    },
+    {
+      name: 'Геометрична оптика',
+      items: ['p910-sistemi-leshti-ogledala', 'p910-fermat-debeli-leshti'],
+    },
+    {
+      name: 'Математически апарат',
+      items: ['p910-derivatives', 'p910-integrals'],
+    },
   ],
   'physics/11-12': [
-
+    {
+      name: 'Механика',
+      items: ['p1112-damped-driven-oscillations', 'p1112-noninertial-frames'],
+    },
+    {
+      name: 'Електромагнетизъм',
+      items: [
+        'p1112-gauss-potential',
+        'p1112-capacitors-dipoles',
+        'p1112-magnetostatics',
+        'p1112-induction-circuits',
+      ],
+    },
+    {
+      name: 'Термодинамика',
+      items: ['p1112-first-law-processes', 'p1112-mkt-real-gases'],
+    },
+    {
+      name: 'Статистическа физика',
+      items: ['p1112-distributions-entropy'],
+    },
+    {
+      name: 'Специална теория на относителността',
+      items: ['p1112-sr-kinematics', 'p1112-relativistic-dynamics'],
+    },
+    {
+      name: 'Математически апарат',
+      items: ['p1112-taylor-complex-ode'],
+    },
   ],
   'physics/olymp': [
-
+    {
+      name: 'Подготовка за подбора',
+      items: ['polymp-selection'],
+    },
+    {
+      name: 'Механика',
+      items: ['polymp-mechanics-morin-kleppner', 'polymp-lagrangian'],
+    },
+    {
+      name: 'Електромагнетизъм',
+      items: ['polymp-purcell-electrodynamics', 'polymp-circuits-oscillations'],
+    },
+    {
+      name: 'Термодинамика',
+      items: ['polymp-olympiad-thermo'],
+    },
+    {
+      name: 'Вълни и оптика',
+      items: ['polymp-wave-optics'],
+    },
+    {
+      name: 'Относителност',
+      items: ['polymp-special-relativity'],
+    },
+    {
+      name: 'Модерна физика',
+      items: ['polymp-quantum-atomic'],
+    },
   ],
 };
 

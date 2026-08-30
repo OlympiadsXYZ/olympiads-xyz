@@ -13,7 +13,9 @@ import {
   ShortProblemInfo,
 } from './src/models/problem';
 
-const ARCHIVE_ENABLED = process.env.ARCHIVE_ENABLED === 'true';
+const ARCHIVE_ENABLED =
+  process.env.GATSBY_ARCHIVE_ENABLED === 'true' ||
+  process.env.ARCHIVE_ENABLED === 'true';
 
 // Questionable hack to get full commit history so that timestamps work
 try {
@@ -284,50 +286,94 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   if (ARCHIVE_ENABLED) {
-    const archiveTemplate = path.resolve(`./src/templates/archiveTemplate.tsx`);
-    const subjects = [
-      'physics',
-      'astronomy',
-      'math',
-      'informatics',
-      'chemistry',
-      'biology',
-      'geography',
-    ];
+    // Catalog-driven archive: pages are generated from archive-catalog/*.json;
+    // the site never touches the actual archive files (they live on external
+    // hosting, linked via GATSBY_ARCHIVE_BASE_URL). See docs/Archive-Architecture.md.
+    const {
+      loadCatalog,
+      groupCatalog,
+      competitionSummaries,
+    } = require('./src/archive/catalog-node');
+    const { competitionSlug } = require('./src/archive/labels');
+    const grouped = groupCatalog(loadCatalog(__dirname));
+    const sciences = Object.keys(grouped).sort();
 
-    // Create individual subject archive pages
-    subjects.forEach(subject => {
-      createPage({
-        path: `/archive/${subject}`,
-        component: archiveTemplate,
-        context: {
-          subject: subject,
-        },
-      });
+    createPage({
+      path: `/archive/`,
+      component: path.resolve(`./src/templates/archive/archiveIndexTemplate.tsx`),
+      context: {
+        sciences: sciences.map(science => {
+          const s = grouped[science];
+          const all = [
+            ...Object.values(s.competitions).flat(),
+            ...s.library,
+            ...s.uncategorized,
+          ];
+          return {
+            science,
+            count: all.length,
+            bytes: all.reduce((a, b) => a + b.size, 0),
+          };
+        }),
+      },
     });
 
-    // Create archive file pages based on filesystem
-    const archiveFiles = await graphql(`
-      {
-        allFile(
-          filter: { sourceInstanceName: { eq: "archive" } }
-          sort: { fields: name }
-        ) {
-          edges {
-            node {
-              relativePath
-              name
-              extension
-            }
-          }
-        }
-      }
-    `);
+    sciences.forEach(science => {
+      const s = grouped[science];
+      createPage({
+        path: `/archive/${science}/`,
+        component: path.resolve(
+          `./src/templates/archive/archiveScienceTemplate.tsx`
+        ),
+        context: {
+          science,
+          competitions: competitionSummaries(s),
+          library: s.library,
+          uncategorized: s.uncategorized,
+        },
+      });
 
-    if (archiveFiles.errors) {
-      reporter.panicOnBuild('Error loading archive files');
-      return;
-    }
+      Object.keys(s.competitions).forEach(code => {
+        const slug = competitionSlug(code);
+        const entries = s.competitions[code];
+        const years = [
+          ...new Set(
+            entries.map(e => e.year).filter(y => y != null)
+          ),
+        ].sort((a, b) => (b as number) - (a as number)) as number[];
+        createPage({
+          path: `/archive/${science}/${slug}/`,
+          component: path.resolve(
+            `./src/templates/archive/archiveCompetitionTemplate.tsx`
+          ),
+          context: {
+            science,
+            competition: code,
+            slug,
+            years,
+            undatedCount: entries.filter(e => e.year == null).length,
+            entries,
+          },
+        });
+        years.forEach((year, i) => {
+          createPage({
+            path: `/archive/${science}/${slug}/${year}/`,
+            component: path.resolve(
+              `./src/templates/archive/archiveYearTemplate.tsx`
+            ),
+            context: {
+              science,
+              competition: code,
+              slug,
+              year,
+              entries: entries.filter(e => e.year === year),
+              prevYear: years[i + 1] ?? null,
+              nextYear: years[i - 1] ?? null,
+            },
+          });
+        });
+      });
+    });
   }
 
   // Check to make sure problems with the same unique ID have consistent information, and that there aren't duplicate slugs
@@ -571,17 +617,61 @@ exports.onPostBuild = () => {
   if (stream) {
     stream.end();
   }
+};
 
+// Write the per-science archive search indexes into static/ so the science
+// pages can lazily fetch them client-side.
+exports.onPreBootstrap = () => {
   if (!ARCHIVE_ENABLED) return;
+  const {
+    loadCatalog,
+    groupCatalog,
+    writeSearchIndexes,
+  } = require('./src/archive/catalog-node');
+  writeSearchIndexes(__dirname, groupCatalog(loadCatalog(__dirname)));
+};
 
-  const sourceDir = path.join(__dirname, 'archive');
-  const destDir = path.join(__dirname, 'public', 'archive');
-
-  try {
-    copyDirectory(sourceDir, destDir);
-    console.log('Successfully copied archive files to public directory');
-  } catch (err) {
-    console.error('Error copying archive files:', err);
+// When the archive is enabled, the built /archive/ index page replaces the
+// static maintenance page (which stays in the tree as the flag-off fallback).
+exports.onCreatePage = ({ page, actions }) => {
+  // Static src/pages are created AFTER the createPages API, so the maintenance
+  // page would otherwise shadow the catalog-built /archive/ index. Replace it
+  // here (the maintenance page stays in the tree as the flag-off fallback).
+  if (ARCHIVE_ENABLED && page.path === '/archive/') {
+    if (
+      page.component &&
+      page.component.indexOf('src/pages/archive.tsx') !== -1
+    ) {
+      actions.deletePage(page);
+      const {
+        loadCatalog,
+        groupCatalog,
+      } = require('./src/archive/catalog-node');
+      const grouped = groupCatalog(loadCatalog(__dirname));
+      actions.createPage({
+        path: `/archive/`,
+        component: path.resolve(
+          `./src/templates/archive/archiveIndexTemplate.tsx`
+        ),
+        context: {
+          sciences: Object.keys(grouped)
+            .sort()
+            .map(science => {
+              const s = grouped[science];
+              const all = [
+                ...Object.values(s.competitions).flat(),
+                ...s.library,
+                ...s.uncategorized,
+              ];
+              return {
+                science,
+                count: all.length,
+                bytes: all.reduce((a, b) => a + b.size, 0),
+              };
+            }),
+        },
+      });
+    }
   }
 };
 
