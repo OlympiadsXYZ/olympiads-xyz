@@ -78,9 +78,15 @@ export default function SectionsDropdown({
               }`}
             >
               <div className="py-1">
-                {SECTIONS.map(section =>
-                  section === currentSection ? (
-                    <Menu.Item key={section} disabled>
+                {SECTIONS.map(section => (
+                  <React.Fragment key={section}>
+                    {section === 'physics/7-8' && (
+                      <div className="px-4 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-dark-med-emphasis border-t border-gray-100 dark:border-gray-700 mt-1">
+                        Физика
+                      </div>
+                    )}
+                    {section === currentSection ? (
+                    <Menu.Item disabled>
                       <span className="block px-4 py-2 text-base font-medium leading-6 text-gray-400 dark:text-dark-med-emphasis relative">
                         {SECTION_LABELS[section]}
 
@@ -100,7 +106,7 @@ export default function SectionsDropdown({
                       </span>
                     </Menu.Item>
                   ) : sidebarNav ? (
-                    <Menu.Item key={section}>
+                    <Menu.Item>
                       {({ active }) => (
                         <button
                           onClick={() => {
@@ -118,7 +124,7 @@ export default function SectionsDropdown({
                       )}
                     </Menu.Item>
                   ) : (
-                    <Menu.Item key={section}>
+                    <Menu.Item>
                       {({ active }) => (
                         <Link
                           to={`/${section}/`}
@@ -133,8 +139,9 @@ export default function SectionsDropdown({
                         </Link>
                       )}
                     </Menu.Item>
-                  )
-                )}
+                  )}
+                  </React.Fragment>
+                ))}
               </div>
             </Menu.Items>
           </Transition>

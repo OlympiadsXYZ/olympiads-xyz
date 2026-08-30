@@ -1,19 +1,15 @@
 // Section -> Chapter -> Module
-
+//
+// Sections follow science -> grade level (see docs/Structure.md):
+// 'general' is the site-wide foreword; the rest are per-science levels
+// whose IDs double as URL paths (e.g. /physics/7-8/<module-id>).
 
 export type SectionID =
-  // | 'general'
-  // | 'bronze'
-  // | 'silver'
-  // | 'gold'
-  // | 'plat'
-  // | 'adv'
   | 'general'
-  | 'beginner'
-  | 'intermediate'
-  | 'advanced'
-  | 'special'
-  | 'beyond';
+  | 'physics/7-8'
+  | 'physics/9-10'
+  | 'physics/11-12'
+  | 'physics/olymp';
 
 export type Chapter = {
   name: string;
@@ -46,20 +42,17 @@ const MODULE_ORDERING: { [key in SectionID]: Chapter[] } = {
       ],
     }
   ],
-  beginner: [
-    
+  'physics/7-8': [
+
   ],
-  intermediate: [
-    
+  'physics/9-10': [
+
   ],
-  advanced: [
-    
+  'physics/11-12': [
+
   ],
-  special: [
-    
-  ],
-  beyond: [
-    
+  'physics/olymp': [
+
   ],
 };
 
@@ -69,33 +62,29 @@ export const SECTIONS: SectionID[] = Object.keys(
 ) as SectionID[];
 export const SECTION_LABELS: { [key in SectionID]: string } = {
   general: 'Предговор',
-  beginner: 'Начинаещ 7-8 клас',
-  intermediate: 'Междинен 9-10 клас',
-  advanced: 'Напреднал 11-12 клас',
-  special: 'Специален',
-  beyond: 'Отвъд',
+  'physics/7-8': '7–8 клас',
+  'physics/9-10': '9–10 клас',
+  'physics/11-12': '11–12 клас',
+  'physics/olymp': 'Подбор и международни',
 } as const;
 export const SECTION_SEO_DESCRIPTION: { [key in SectionID]: string } = {
   general:
     'Обща информация за какво представлява този сайт, как да го ползвате и какво са олимпиадите и състезанията по природни науки.',
-  beginner:
-    'Секция, която включва подходящ материал на ниво 7-8 клас, нужен при подготовката за олимпиадите и състезания по природни науки.',
-  intermediate:
-    'Секция, която включва подходящ материал на ниво 9-10 клас, нужен при подготовката за олимпиадите и състезания по природни науки.',
-  advanced:
-    'Секция, която включва подходящ материал на ниво 11-12 клас, нужен при подготовката за олимпиадите и състезания по природни науки.',
-  special:
-    'Секция, която включва допълнителен материал на по-високо ниво, нужен при подготовката за Международните олимпиади по природни науки.',
-  beyond:
-    'Секция, която включва материал отвъд учебния план в училищата, както и отвъд стандарта на олимпиадите, но който задълбочава знанията на състезателите, особено на тези с напреднали интереси. Включва "университетски" теми и всичко на високо ниво, неподходящо за останалите секции.',
+  'physics/7-8':
+    'Физика за 7–8 клас — основите по механика, топлинни явления, електричество и геометрична оптика, необходими за първите стъпки в олимпиадите и състезанията по физика.',
+  'physics/9-10':
+    'Физика за 9–10 клас — материалът, нужен за областния и националния кръг на олимпиадата по физика и националните състезания.',
+  'physics/11-12':
+    'Физика за 11–12 клас — задълбоченият материал за националните кръгове, състезанията и кандидатстудентската подготовка по физика.',
+  'physics/olymp':
+    'Подготовка за подбора на националния отбор и за международните олимпиади по физика — IPhO, EuPhO, APhO и други.',
 };
 export const SECTION_SEO_TITLES: { [key in SectionID]: string } = {
   general: 'Предговор',
-  beginner: 'Начинаещ 7-8 клас',
-  intermediate: 'Междинен 9-10 клас',
-  advanced: 'Напреднал 11-12 клас',
-  special: 'Специален, международния кръг',
-  beyond: 'Отвъд, по-надълбоко',
+  'physics/7-8': 'Физика · 7–8 клас',
+  'physics/9-10': 'Физика · 9–10 клас',
+  'physics/11-12': 'Физика · 11–12 клас',
+  'physics/olymp': 'Физика · Подбор и международни олимпиади',
 };
 
 const moduleIDToSectionMap: { [key: string]: SectionID } = {};
@@ -108,8 +97,6 @@ SECTIONS.forEach(section => {
   });
 });
 
-export { moduleIDToSectionMap, moduleIDToURLMap };
-
 const moduleIDToURLMap: { [key: string]: string } = {};
 
 SECTIONS.forEach(section => {
@@ -119,3 +106,5 @@ SECTIONS.forEach(section => {
     });
   });
 });
+
+export { moduleIDToSectionMap, moduleIDToURLMap };

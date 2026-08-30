@@ -53,7 +53,6 @@ import {
   RiNumber2,
   RiNumber3,
   RiNumber4,
-  RiNumber5,
 } from "react-icons/ri";
 
 
@@ -152,39 +151,32 @@ export default function TopNavigationBar({
       key: 'general',
     },
     {
-      name: t('sections_beginner'),
-      href: '/beginner',
+      name: t('sections_physics_7_8'),
+      href: '/physics/7-8',
       icon: RiNumber1,
       iconColor: '#4e48de',
-      key: 'beginner',
+      key: 'physics/7-8',
     },
     {
-      name: t('sections_intermediate'),
-      href: '/intermediate',
+      name: t('sections_physics_9_10'),
+      href: '/physics/9-10',
       icon: RiNumber2,
       iconColor: '#733db4',
-      key: 'intermediate',
+      key: 'physics/9-10',
     },
     {
-      name: t('sections_advanced'),
-      href: '/advanced',
+      name: t('sections_physics_11_12'),
+      href: '/physics/11-12',
       icon: RiNumber3,
       iconColor: '#a92d77',
-      key: 'advanced',
+      key: 'physics/11-12',
     },
     {
-      name: t('sections_special'),
-      href: '/special',
+      name: t('sections_physics_olymp'),
+      href: '/physics/olymp',
       icon: RiNumber4,
-      iconColor: '#d22148',
-      key: 'special',
-    },
-    {
-      name: t('sections_beyond'),
-      href: '/beyond',
-      icon: RiNumber5,
       iconColor: '#ff1414',
-      key: 'beyond',
+      key: 'physics/olymp',
     },
   ];
   return (

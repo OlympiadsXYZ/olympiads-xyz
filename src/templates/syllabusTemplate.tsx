@@ -64,20 +64,18 @@ const SectionContainer = styled.div`
 
 const HeroBGColor: { [key in SectionID]: string } = {
   general: 'bg-blue-700 dark:bg-blue-900',
-  beginner: 'bg-yellow-800 dark:bg-yellow-900',
-  intermediate: 'bg-teal-700 dark:bg-teal-900',
-  advanced: 'bg-indigo-700 dark:bg-indigo-900',
-  special: 'bg-purple-700 dark:bg-purple-900',
-  beyond: 'bg-green-700 dark:bg-green-900',
+  'physics/7-8': 'bg-yellow-800 dark:bg-yellow-900',
+  'physics/9-10': 'bg-teal-700 dark:bg-teal-900',
+  'physics/11-12': 'bg-indigo-700 dark:bg-indigo-900',
+  'physics/olymp': 'bg-purple-700 dark:bg-purple-900',
 };
 
 const HeroTextColor: { [key in SectionID]: string } = {
   general: 'text-teal-200',
-  beginner: 'text-yellow-100',
-  intermediate: 'text-teal-100',
-  advanced: 'text-indigo-100',
-  special: 'text-purple-100',
-  beyond: 'text-green-100',
+  'physics/7-8': 'text-yellow-100',
+  'physics/9-10': 'text-teal-100',
+  'physics/11-12': 'text-indigo-100',
+  'physics/olymp': 'text-purple-100',
 };
 
 const topicsWarning = (
@@ -95,39 +93,32 @@ const SECTION_DESCRIPTION: { [key in SectionID]: React.ReactNode } = {
       Чуствайте се свободни да пропуснете нещата тук, които не ви интересуват.
     </>
   ),
-  beginner: (
+  'physics/7-8': (
     <>
       {topicsWarning}
       <br/>
-      Включва материал, който е подходящ за състезателни групи 7-8 клас.
+      Физика за състезателна група 7-8 клас.
     </>
   ),
-  intermediate: (
+  'physics/9-10': (
     <>
       {topicsWarning}
       <br/>
-      Включва материал, който е подходящ за състезателни групи 9-10 клас.
+      Физика за състезателна група 9-10 клас.
     </>
   ),
-  advanced: (
+  'physics/11-12': (
     <>
       {topicsWarning}
       <br/>
-      Включва материал, който е подходящ за състезателни групи 11-12 клас.
+      Физика за състезателна група 11-12 клас.
     </>
   ),
-  special: (
+  'physics/olymp': (
     <>
       {topicsWarning}
       <br/>
-      Включва материал, който е подходящ за Международните олимпиади и подбора за тях.
-    </>
-  ),
-  beyond: (
-    <>
-      Отвъд учебното съдържание на олимпиадите. Всичко останало, което може да ви бъде интересно.
-      <br/>
-      Материал, който не ви трябва за олимпиадите, но задълбочава познанията.
+      Подготовка за подбора на националния отбор и за международните олимпиади по физика.
     </>
   ),
 };
