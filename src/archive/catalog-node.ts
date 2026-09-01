@@ -76,12 +76,19 @@ export function loadCatalog(repoRoot: string): CatalogEntry[] {
   const seen = new Set<string>();
   const all: CatalogEntry[] = [];
   for (const f of fs.readdirSync(dir)) {
-    if (!f.endsWith('.json')) continue;
+    // schema.json describes the catalog, it is not part of it
+    if (!f.endsWith('.json') || f === 'schema.json') continue;
     let arr: CatalogEntry[];
     try {
       arr = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
     } catch (err) {
       console.warn(`[archive] skipping malformed catalog file ${f}: ${err}`);
+      continue;
+    }
+    // a non-array here used to throw and kill onPreBootstrap, taking the whole
+    // build down; any future non-catalog JSON dropped in this folder is skipped
+    if (!Array.isArray(arr)) {
+      console.warn(`[archive] skipping ${f}: expected an array of entries`);
       continue;
     }
     for (const e of arr) {
