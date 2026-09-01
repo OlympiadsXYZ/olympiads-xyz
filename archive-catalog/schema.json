@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olympiads.xyz/schema/archive-catalog-entry-1.json",
+  "title": "Olympiads XYZ archive catalog",
+  "description": "Каноничната схема на архивния каталог. Всеки файл в archive-catalog/*.json е масив от записи по тази схема. Виж docs/Archive-Schema.md.",
+  "type": "array",
+  "items": { "$ref": "#/$defs/entry" },
+
+  "$defs": {
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "subject",
+        "kind",
+        "competition",
+        "year",
+        "round",
+        "group",
+        "type",
+        "lang",
+        "title",
+        "file",
+        "size"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160,
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Стабилен уникален идентификатор, kebab-case, само малки латински букви и цифри."
+        },
+        "subject": { "$ref": "#/$defs/subject" },
+        "kind": { "$ref": "#/$defs/kind" },
+        "competition": {
+          "description": "Код на състезанието от регистъра в src/archive/labels.ts, или null.",
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 40,
+              "pattern": "^[A-Za-zА-Яа-яЁё0-9][A-Za-zА-Яа-яЁё0-9.\\-]*$"
+            },
+            { "type": "null" }
+          ]
+        },
+        "year": {
+          "oneOf": [
+            { "type": "integer", "minimum": 1950, "maximum": 2100 },
+            { "type": "null" }
+          ]
+        },
+        "round": { "$ref": "#/$defs/round" },
+        "group": { "$ref": "#/$defs/group" },
+        "type": { "$ref": "#/$defs/type" },
+        "lang": { "$ref": "#/$defs/lang" },
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 300,
+          "pattern": "\\S",
+          "description": "Човешко заглавие на български (латински имена на състезания се запазват)."
+        },
+        "file": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 400,
+          "pattern": "^(Физика|Астрономия|Химия|География|Математика|Информатика)/[^/].*[^/]$",
+          "description": "Ключ в кофата, релативен, без водеща наклонена черта."
+        },
+        "size": { "type": "integer", "minimum": 1 },
+        "sourceUrl": {
+          "type": "string",
+          "pattern": "^https://",
+          "maxLength": 2000
+        },
+        "source": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "addedAt": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "note": { "type": "string", "minLength": 2, "maxLength": 1000 },
+        "unparsed": { "type": "boolean" }
+      },
+
+      "allOf": [
+        {
+          "$comment": "subject-root: коренната папка трябва да съответства на subject",
+          "allOf": [
+            { "$comment": "коренната папка не съответства на subject",
+              "if": { "properties": { "subject": { "const": "physics" } }, "required": ["subject"] },
+              "then": { "properties": { "file": { "pattern": "^Физика/" } } } },
+            { "$comment": "коренната папка не съответства на subject",
+              "if": { "properties": { "subject": { "const": "astronomy" } }, "required": ["subject"] },
+              "then": { "properties": { "file": { "pattern": "^Астрономия/" } } } },
+            { "$comment": "коренната папка не съответства на subject",
+              "if": { "properties": { "subject": { "const": "chemistry" } }, "required": ["subject"] },
+              "then": { "properties": { "file": { "pattern": "^Химия/" } } } },
+            { "$comment": "коренната папка не съответства на subject",
+              "if": { "properties": { "subject": { "const": "geography" } }, "required": ["subject"] },
+              "then": { "properties": { "file": { "pattern": "^География/" } } } },
+            { "$comment": "коренната папка не съответства на subject",
+              "if": { "properties": { "subject": { "const": "mathematics" } }, "required": ["subject"] },
+              "then": { "properties": { "file": { "pattern": "^Математика/" } } } },
+            { "$comment": "коренната папка не съответства на subject",
+              "if": { "properties": { "subject": { "const": "informatics" } }, "required": ["subject"] },
+              "then": { "properties": { "file": { "pattern": "^Информатика/" } } } }
+          ]
+        },
+        {
+          "$comment": "kind=competition изисква competition",
+          "if": { "properties": { "kind": { "const": "competition" } }, "required": ["kind"] },
+          "then": { "properties": { "competition": { "type": "string" } } }
+        },
+        {
+          "$comment": "книги и материали не принадлежат на състезание",
+          "if": {
+            "properties": { "kind": { "enum": ["book", "handout"] } },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "competition": { "type": "null" },
+              "round": { "type": "null" }
+            }
+          }
+        },
+        {
+          "$comment": "round има смисъл само в контекста на състезание",
+          "if": {
+            "properties": { "competition": { "type": "null" } },
+            "required": ["competition"]
+          },
+          "then": { "properties": { "round": { "type": "null" } } }
+        },
+        {
+          "$comment": "type=book/handout само при съответния kind",
+          "allOf": [
+            { "if": { "properties": { "type": { "const": "book" } }, "required": ["type"] },
+              "then": { "properties": { "kind": { "const": "book" } } } },
+            { "if": { "properties": { "type": { "const": "handout" } }, "required": ["type"] },
+              "then": { "properties": { "kind": { "const": "handout" } } } },
+            { "if": { "properties": { "kind": { "const": "results" } }, "required": ["kind"] },
+              "then": { "properties": { "type": { "const": "results" } } } },
+            { "if": { "properties": { "kind": { "const": "syllabus" } }, "required": ["kind"] },
+              "then": { "properties": { "type": { "enum": ["official", "other"] } } } }
+          ]
+        }
+      ]
+    },
+
+    "subject": {
+      "description": "Научна област. Едно към едно с коренната папка в кофата.",
+      "enum": [
+        "physics",
+        "astronomy",
+        "chemistry",
+        "geography",
+        "mathematics",
+        "informatics"
+      ]
+    },
+
+    "kind": {
+      "description": "Какъв е документът на ниво архив. Принадлежността към състезание се чете от competition, не от kind.",
+      "enum": [
+        "competition",
+        "book",
+        "handout",
+        "syllabus",
+        "results",
+        "misc"
+      ]
+    },
+
+    "round": {
+      "description": "Етап (I–IV, regional, selection, camp, distance) или тур (theory, experiment, practical, observational, data-analysis, team, creative, day-N). Един слот, един канон.",
+      "oneOf": [
+        {
+          "enum": [
+            "I",
+            "II",
+            "III",
+            "IV",
+            "regional",
+            "selection",
+            "camp",
+            "distance",
+            "theory",
+            "experiment",
+            "practical",
+            "observational",
+            "data-analysis",
+            "team",
+            "creative",
+            "day-1",
+            "day-2",
+            "day-3"
+          ]
+        },
+        { "type": "null" }
+      ]
+    },
+
+    "group": {
+      "description": "Класова група: цифра или диапазон без думата „клас“, или именована група (ML, ST, SP, alpha, beta).",
+      "oneOf": [
+        { "type": "string", "pattern": "^(1[0-2]|[1-9])(-(1[0-2]|[1-9]))?$" },
+        { "enum": ["ML", "ST", "SP", "alpha", "beta"] },
+        { "type": "null" }
+      ]
+    },
+
+    "type": {
+      "description": "Вид на самия документ.",
+      "oneOf": [
+        {
+          "enum": [
+            "problems",
+            "solutions",
+            "answers",
+            "answer-sheet",
+            "criteria",
+            "instructions",
+            "results",
+            "data",
+            "translation",
+            "official",
+            "book",
+            "handout",
+            "other"
+          ]
+        },
+        { "type": "null" }
+      ]
+    },
+
+    "lang": {
+      "description": "ISO 639-1, малки букви. Езикът на самия документ, не на заглавието.",
+      "enum": ["bg", "en", "ru", "fr", "sr", "cs", "kk", "ro", "mk"]
+    }
+  }
+}

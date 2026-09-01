@@ -424,7 +424,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     if (
       problemURLToUniqueID.hasOwnProperty(node.url) &&
       problemURLToUniqueID[node.url] !== node.uniqueId &&
-      !urlsThatCanHaveMultipleUniqueIDs.includes(node.url)
+      !urlsThatCanHaveMultipleUniqueIDs.includes(node.url) &&
+      // One archive PDF is one exam paper holding several problems, and one
+      // handout page holds several too — many unique IDs per URL is correct.
+      !node.url.includes('/Handouts/') &&
+      !node.url.includes('/archive/')
     ) {
       throw new Error(
         `The URL ${node.url} is assigned to both problem unique ID ${
