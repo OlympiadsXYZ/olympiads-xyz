@@ -30,6 +30,14 @@ export const COMPETITION_META: { [code: string]: CompetitionMeta } = {
   IOAA: { slug: 'ioaa', name: 'Международна олимпиада по астрономия и астрофизика', short: 'IOAA' },
   GeCAA: { slug: 'gecaa', name: 'Глобално електронно състезание по астрономия и астрофизика', short: 'GeCAA' },
   'VsOA-ru': { slug: 'vsoa', name: 'Всерусийска олимпиада по астрономия', short: 'ВсОА' },
+  // Районният (в Санкт-Петербург) и общинският (в Ленинградска област) етап на
+  // ВсОШ по астрономия. Листовете се хостват на сайта на СПбАО, но носят главата
+  // на ВсОШ — виж docs/Archive-SPbAO-Investigation.md §5.3.
+  'VsOA-SPb': {
+    slug: 'vsoa-spb',
+    name: 'Всерусийска олимпиада по астрономия – районен етап (Санкт-Петербург)',
+    short: 'ВсОШ (СПб)',
+  },
   'ZAO-ru': { slug: 'zao', name: 'Задочна руска олимпиада по астрономия', short: 'ЗАО' },
   MosA: { slug: 'mosa', name: 'Московска олимпиада по астрономия', short: 'МАО' },
   SPbA: { slug: 'spba', name: 'Санкт-Петербургска олимпиада по астрономия', short: 'СПбАО' },
@@ -90,36 +98,50 @@ export const ROUND_LABELS: { [code: string]: string } = {
   'data-analysis': 'Анализ на данни',
   team: 'Отборен тур',
   selection: 'Подбор',
-  regional: 'Областен кръг',
+  // 'Регионален кръг', не 'Областен' — областният е II етап.
+  regional: 'Регионален кръг',
+  camp: 'Учебен сбор',
   creative: 'Творчески тур',
   distance: 'Задочен кръг',
+  'day-1': 'Ден 1',
+  'day-2': 'Ден 2',
+  'day-3': 'Ден 3',
 };
 
 export const ROUND_ORDER = [
-  'I', 'II', 'III', 'IV', 'regional', 'selection',
+  // етапи
+  'I', 'II', 'III', 'IV', 'regional', 'selection', 'camp', 'distance',
+  // турове
   'theory', 'experiment', 'practical', 'observational',
-  'data-analysis', 'team', 'creative', 'distance',
+  'data-analysis', 'team', 'creative',
+  'day-1', 'day-2', 'day-3',
 ];
 
 export const TYPE_LABELS: { [code: string]: string } = {
   problems: 'Условия',
   solutions: 'Решения',
   answers: 'Отговори',
+  'answer-sheet': 'Лист за отговори',
+  criteria: 'Критерии',
+  instructions: 'Инструкции',
   results: 'Резултати',
   data: 'Данни',
   translation: 'Превод',
+  official: 'Официални документи',
   book: 'Книга',
   handout: 'Материал',
   other: 'Друго',
 };
 
 export const TYPE_ORDER = [
-  'problems', 'solutions', 'answers', 'data', 'translation',
-  'results', 'book', 'handout', 'other',
+  'problems', 'solutions', 'answers', 'answer-sheet', 'criteria',
+  'instructions', 'data', 'translation', 'results', 'official',
+  'book', 'handout', 'other',
 ];
 
 export const LANG_LABELS: { [code: string]: string } = {
   bg: 'БГ', en: 'EN', ru: 'РУ', mk: 'МК', kk: 'КЗ', ro: 'РО', cs: 'ЧЕ', fr: 'ФР',
+  sr: 'СР',
 };
 
 export const SCIENCE_LABELS: { [code: string]: string } = {
@@ -127,7 +149,7 @@ export const SCIENCE_LABELS: { [code: string]: string } = {
   astronomy: 'Астрономия',
   chemistry: 'Химия',
   geography: 'География',
-  math: 'Математика',
+  mathematics: 'Математика',
   informatics: 'Информатика',
   biology: 'Биология',
 };
@@ -137,7 +159,7 @@ export const SCIENCE_COLORS: { [code: string]: { bg: string; text: string } } = 
   astronomy: { bg: 'bg-indigo-700 dark:bg-indigo-900', text: 'text-indigo-100' },
   chemistry: { bg: 'bg-red-700 dark:bg-red-900', text: 'text-red-100' },
   geography: { bg: 'bg-yellow-700 dark:bg-yellow-800', text: 'text-yellow-100' },
-  math: { bg: 'bg-green-700 dark:bg-green-900', text: 'text-green-100' },
+  mathematics: { bg: 'bg-green-700 dark:bg-green-900', text: 'text-green-100' },
   informatics: { bg: 'bg-sky-700 dark:bg-sky-900', text: 'text-sky-100' },
 };
 
@@ -145,6 +167,7 @@ export function groupLabel(group: string | null): string | null {
   if (!group) return null;
   if (group === 'ST') return 'Старша';
   if (group === 'ML') return 'Младша';
+  if (group === 'SP') return 'Спец. група';
   if (group === 'alpha') return 'Група α';
   if (group === 'beta') return 'Група β';
   if (/^[0-9]/.test(group)) return `${group} клас`;

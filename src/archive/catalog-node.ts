@@ -8,7 +8,7 @@ import { competitionSlug, entryExt } from './labels';
 export type CatalogEntry = {
   id: string;
   subject: string;
-  kind: 'competition' | 'book' | 'handout' | 'other';
+  kind: 'competition' | 'book' | 'handout' | 'syllabus' | 'results' | 'misc';
   competition: string | null;
   year: number | null;
   round: string | null;
