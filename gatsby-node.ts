@@ -631,7 +631,45 @@ exports.onPostBuild = () => {
   if (stream) {
     stream.end();
   }
+  stripNulBytesFromHtml(path.join(__dirname, 'public'));
 };
+
+// Gatsby's HTML writer occasionally inserts a stray NUL byte at a write-buffer
+// boundary in pages past ~320KB — always mid-word, so it surfaces to readers as
+// a replacement glyph inside a Bulgarian word ("Предварите<NUL>лни"). page-data
+// and the JS bundles are unaffected, so only the server-rendered HTML needs
+// repairing. A NUL is never valid in HTML, so dropping it is lossless.
+function stripNulBytesFromHtml(dir) {
+  let scanned = 0;
+  let repaired = 0;
+  const walk = d => {
+    let entries;
+    try {
+      entries = fs.readdirSync(d, { withFileTypes: true });
+    } catch (e) {
+      return;
+    }
+    for (const entry of entries) {
+      const p = path.join(d, entry.name);
+      if (entry.isDirectory()) {
+        walk(p);
+      } else if (entry.isFile() && entry.name.endsWith('.html')) {
+        scanned++;
+        const buf = fs.readFileSync(p);
+        if (buf.includes(0)) {
+          fs.writeFileSync(p, Buffer.from(buf.filter(b => b !== 0)));
+          repaired++;
+        }
+      }
+    }
+  };
+  walk(dir);
+  if (repaired > 0) {
+    console.info(
+      `[html] stripped stray NUL bytes from ${repaired} of ${scanned} pages`
+    );
+  }
+}
 
 // Write the per-science archive search indexes into static/ so the science
 // pages can lazily fetch them client-side.
