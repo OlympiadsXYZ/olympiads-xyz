@@ -49,7 +49,11 @@ export default function ProblemListItemSolution(
       </div>
     );
   } else if (problem.solution.kind === 'label') {
-    const textContent = <>{t('solution')}: {problem.solution.label}</>;
+    const textContent = (
+      <>
+        {t('solution')}: {problem.solution.label}
+      </>
+    );
     contents = (
       <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300">
         {problem.solution.labelTooltip ? (
@@ -68,22 +72,38 @@ export default function ProblemListItemSolution(
         target="_blank"
         className="block w-full px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
       >
-        {problem.solution.label === 'В модула' ? t('in-module-sol') :
-         (problem.solution.label === 'Външно решение' ? t('external-sol') : problem.solution.label)}
+        {problem.solution.label === 'В модула'
+          ? t('in-module-sol')
+          : problem.solution.label === 'Външно решение'
+          ? t('external-sol')
+          : problem.solution.label}
       </Anchor>
     );
   } else if (problem.solution.kind === 'internal') {
     contents = (
-      <a
-        className={`flex items-center group px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800`}
-        href={`${getProblemURL(problem)}/solution`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <div className="text-left">
-          {problem.solution.hasHints && t('hints') + ' + '}{t('internal-sol')}
-        </div>
-      </a>
+      <>
+        <a
+          className={`flex items-center group px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800`}
+          href={`${getProblemURL(problem)}/solution`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <div className="text-left">
+            {problem.solution.hasHints && t('hints') + ' + '}
+            {t('internal-sol')}
+          </div>
+        </a>
+        {problem.url && (
+          <a
+            className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+            href={problem.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t('original-pdf')}
+          </a>
+        )}
+      </>
     );
   } else {
     throw new Error(

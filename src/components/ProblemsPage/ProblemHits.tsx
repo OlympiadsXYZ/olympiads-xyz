@@ -1,7 +1,6 @@
 import { Link } from 'gatsby';
-import { BaseHit, Hit } from 'instantsearch.js';
 import * as React from 'react';
-import { Highlight, useHits } from 'react-instantsearch';
+import { useTranslation } from 'react-i18next';
 import { moduleIDToSectionMap } from '../../../content/ordering';
 import { ConfettiProvider } from '../../context/ConfettiContext';
 import {
@@ -9,53 +8,82 @@ import {
   useHideModulesSetting,
   useShowTagsSetting,
 } from '../../context/UserDataContext/properties/simpleProperties';
-import {
-  AlgoliaProblemInfo,
-  ProblemInfo,
-  getProblemURL,
-  isUsaco,
-  recentUsaco,
-} from '../../models/problem';
+import { ProblemDifficulty, ProblemInfo } from '../../models/problem';
+import type { ProblemsIndexEntry } from '../../problems/index-node';
 import DifficultyBox from '../DifficultyBox';
 import Info from '../markdown/Info';
 import ProblemStatusCheckbox from '../markdown/ProblemsList/ProblemStatusCheckbox';
-import { useTranslation } from 'react-i18next';
 
-type AlgoliaProblemInfoHit = Hit<BaseHit> & AlgoliaProblemInfo;
-interface ProblemHitProps {
-  hit: AlgoliaProblemInfoHit;
+/**
+ * Renders `text`, with every case-insensitive occurrence of `query` marked.
+ * Replaces Algolia's <Highlight>, which needs a search-response hit.
+ */
+function Highlighted({ text, query }: { text: string; query: string }) {
+  const needle = query.trim();
+  if (!needle) return <>{text}</>;
+  const parts: React.ReactNode[] = [];
+  const haystack = text.toLowerCase();
+  const lowered = needle.toLowerCase();
+  let from = 0;
+  for (;;) {
+    const at = haystack.indexOf(lowered, from);
+    if (at === -1) break;
+    if (at > from) parts.push(text.slice(from, at));
+    parts.push(
+      <mark
+        key={at}
+        className="bg-transparent text-current font-semibold underline"
+      >
+        {text.slice(at, at + needle.length)}
+      </mark>
+    );
+    from = at + needle.length;
+  }
+  if (parts.length === 0) return <>{text}</>;
+  parts.push(text.slice(from));
+  return <>{parts}</>;
 }
 
-function ProblemHit({ hit }: ProblemHitProps) {
+export function ProblemHit({
+  problem,
+  query = '',
+}: {
+  problem: ProblemsIndexEntry;
+  query?: string;
+}) {
   const hideDifficulty = useHideDifficultySetting();
   const showTags = useShowTagsSetting();
   const hideModules = useHideModulesSetting();
   const { t } = useTranslation();
-  if (hit.problemModules.length == 0 && recentUsaco.includes(hit.source)) {
-    hit.problemModules.push({
-      id: 'usaco-monthlies',
-      title: 'USACO Monthlies',
-    });
-  }
-  const problem = hit as unknown as ProblemInfo;
-  problem.uniqueId = hit.objectID;
+  const solution = problem.solution;
+  // A transcribed problem's own page (statement, figures, official solution)
+  // is the primary destination; the source PDF becomes the secondary link.
+  const internalURL =
+    solution?.kind === 'internal' ? `${problem.problemURL}/solution` : null;
+  const solutionURL = solution?.kind === 'link' ? solution.url : null;
   return (
     <div className="bg-white dark:bg-gray-900 shadow p-4 sm:p-6 rounded-lg ">
       <div className="flex flex-row justify-between w-full">
         <span>
           <span className="text-blue-700 dark:text-blue-400 font-medium text-sm">
-            {hit.source}
+            {problem.source}
           </span>
           <p className="text-xl leading-6 mt-1 mb-2">
-            <a
-              href={hit.url}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:underline"
-            >
-              <Highlight hit={hit} attribute="name" />
-            </a>
-            {hit.isStarred && (
+            {internalURL ? (
+              <Link to={internalURL} className="hover:underline">
+                <Highlighted text={problem.name} query={query} />
+              </Link>
+            ) : (
+              <a
+                href={problem.url}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:underline"
+              >
+                <Highlighted text={problem.name} query={query} />
+              </a>
+            )}
+            {problem.isStarred && (
               <svg
                 className="h-6 w-4 text-blue-400 ml-2 pb-1 inline-block"
                 fill="currentColor"
@@ -67,17 +95,21 @@ function ProblemHit({ hit }: ProblemHitProps) {
           </p>
         </span>
         <ConfettiProvider>
-          <ProblemStatusCheckbox problem={problem} size="large" />
+          <ProblemStatusCheckbox
+            problem={problem as unknown as ProblemInfo}
+            size="large"
+          />
         </ConfettiProvider>
       </div>
-      {/* <div>
+
+      {(internalURL || solutionURL) && (
         <a
-          href={hit.url}
+          href={internalURL ? problem.url : (solutionURL as string)}
           target="_blank"
           rel="noreferrer"
           className="text-gray-500 dark:text-dark-med-emphasis text-sm"
         >
-          View Problem Statement
+          {internalURL ? t('original-pdf') : t('view-solution')}
           <svg
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -87,81 +119,41 @@ function ProblemHit({ hit }: ProblemHitProps) {
             <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
           </svg>
         </a>
-      </div> */}
-
-      {hit.solution &&
-        (hit.solution.kind === 'internal' || hit.solution.kind === 'link') && (
-          <a
-            href={
-              hit.solution.kind === 'internal'
-                ? `${getProblemURL({
-                    ...hit,
-                    uniqueId: hit.objectID,
-                  })}/solution`
-                : hit.solution.url
-            }
-            target="_blank"
-            rel="noreferrer"
-            className="text-gray-500 dark:text-dark-med-emphasis text-sm"
-          >
-            {t('view-solution')}
-            <svg
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-4 w-4 inline ml-0.5 mb-1"
-            >
-              <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-            </svg>
-          </a>
-        )}
-      {/* {isUsaco(problem.source) && (
-        <>
-          <br />
-          <a
-            href={`https://ide.usaco.guide/usaco/${problem.uniqueId.substring(
-              problem.uniqueId.indexOf('-') + 1
-            )}`}
-            target="_blank"
-            rel="noreferrer"
-            className="text-gray-500 dark:text-dark-med-emphasis text-sm"
-          >
-            {t('open-in-ide')}
-            <svg
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-4 w-4 inline ml-0.5 mb-1"
-            >
-              <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-            </svg>
-          </a>
-        </>
-      )} */}
-      {!hideModules && (
+      )}
+      {!hideModules && problem.problemModules.length > 0 && (
         <>
           <p className="text-sm text-gray-500 dark:text-dark-med-emphasis  mt-2">
             {t('appears-in')}:
           </p>
           <ul className="list-disc ml-6">
-            {hit.problemModules.map(({ id: moduleID, title: moduleLabel }) => (
-              <li key={moduleID}>
-                <Link
-                  to={`/${moduleIDToSectionMap[moduleID]}/${moduleID}/#problem-${hit.objectID}`}
-                  className="text-sm text-blue-600 dark:text-blue-400"
-                >
-                  {moduleLabel}
-                </Link>
-              </li>
-            ))}
+            {problem.problemModules.map(
+              ({ id: moduleID, title: moduleLabel }) => (
+                <li key={moduleID}>
+                  {moduleIDToSectionMap[moduleID] ? (
+                    <Link
+                      to={`/${moduleIDToSectionMap[moduleID]}/${moduleID}/#problem-${problem.uniqueId}`}
+                      className="text-sm text-blue-600 dark:text-blue-400"
+                    >
+                      {moduleLabel}
+                    </Link>
+                  ) : (
+                    <span className="text-sm text-gray-500 dark:text-dark-med-emphasis">
+                      {moduleLabel}
+                    </span>
+                  )}
+                </li>
+              )
+            )}
           </ul>
         </>
       )}
 
       <div className="pt-4">
-        {!hideDifficulty && <DifficultyBox difficulty={hit.difficulty} />}
+        {!hideDifficulty && (
+          <DifficultyBox difficulty={problem.difficulty as ProblemDifficulty} />
+        )}
         {showTags &&
-          hit.tags?.map(tag => (
+          problem.tags?.map(tag => (
             <span
               className="mr-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-dark-high-emphasis"
               key={tag}
@@ -174,10 +166,15 @@ function ProblemHit({ hit }: ProblemHitProps) {
   );
 }
 
-export default function ProblemHits() {
-  const { hits } = useHits() as { hits: AlgoliaProblemInfoHit[] };
+export default function ProblemHits({
+  problems,
+  query = '',
+}: {
+  problems: ProblemsIndexEntry[];
+  query?: string;
+}) {
   const { t } = useTranslation();
-  if (!hits.length) {
+  if (!problems.length) {
     return (
       <Info title={t('no-problems-found')}>
         {t('no-problems-found-description')}
@@ -186,8 +183,8 @@ export default function ProblemHits() {
   }
   return (
     <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {hits.map(hit => (
-        <ProblemHit hit={hit} key={hit.objectID} />
+      {problems.map(problem => (
+        <ProblemHit problem={problem} query={query} key={problem.uniqueId} />
       ))}
     </div>
   );

@@ -1,52 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import {
-  UseRefinementListProps,
-  useInstantSearch,
-  useRefinementList,
-} from 'react-instantsearch';
-import Select from '../Select';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import Select from '../Select';
 
-export type SelectionProps = UseRefinementListProps & {
+export type SelectionOption = {
+  /** Label shown in the dropdown. */
+  label: string;
+  /** The value(s) this option selects. Grouped options (e.g. sections) map to several. */
+  value: string | string[];
+};
+
+export type SelectionProps = {
+  /** Identifies the facet; used as a React key and for difficulty label translation. */
+  attribute: string;
   placeholder: string;
   searchable: boolean;
   isMulti: boolean;
+  /** Options to show. Previously derived from Algolia refinements; now computed from the static index. */
+  items: SelectionOption[];
   transformLabel?: (label: string) => string;
-  items?: { label: string; value: string | string[] }[];
+  /** Currently selected values, flattened. */
+  selected: string[];
+  onChange: (values: string[]) => void;
 };
 
+/**
+ * One facet dropdown. Purely controlled — the page owns the filter state and
+ * does the filtering; this no longer talks to Algolia.
+ */
 export default function Selection({
   attribute,
-  limit,
   placeholder,
   searchable,
   isMulti,
-  transformLabel: transform,
   items,
-  ...props
+  transformLabel: transform,
+  selected,
+  onChange,
 }: SelectionProps) {
   const { t } = useTranslation();
-  const { items: refineItems } = useRefinementList({
-    attribute,
-    limit,
-    ...props,
-  });
-  if (!items) items = refineItems;
-  for (const key in items) {
-    if (items[key].value instanceof Array) {
-      (items[key].value as string[]).push('null');
-    }
-  }
-  const [refinements, setRefinements] = useState<string[]>([]);
-  const { setIndexUiState } = useInstantSearch();
-  useEffect(() => {
-    setIndexUiState(prevIndexUiState => ({
-      refinementList: {
-        ...prevIndexUiState.refinementList,
-        [attribute]: refinements,
-      },
-    }));
-  }, [refinements]);
 
   const transformDifficultyLabel = (label: string) => {
     if (attribute === 'difficulty') {
@@ -72,21 +63,38 @@ export default function Selection({
     return transform ? transform(label) : label;
   };
 
+  const options = items.map(item => ({
+    ...item,
+    label: transformDifficultyLabel(item.label),
+  }));
+  const selectedSet = new Set(selected);
+  const isSelected = (item: SelectionOption) => {
+    const values = Array.isArray(item.value) ? item.value : [item.value];
+    return values.length > 0 && values.every(v => selectedSet.has(v));
+  };
+  const value = isMulti
+    ? options.filter(isSelected)
+    : options.find(isSelected) ?? null;
+
   return (
     <Select
       onChange={(items: any) => {
-        if (isMulti) setRefinements(items.map(item => item.value).flat());
-        else if (items) setRefinements([items.value]);
-        else setRefinements([]);
+        if (isMulti) {
+          onChange(
+            ((items ?? []) as SelectionOption[]).map(i => i.value).flat()
+          );
+        } else if (items) {
+          onChange([items.value].flat());
+        } else {
+          onChange([]);
+        }
       }}
+      value={value}
       isClearable
       placeholder={placeholder}
       isMulti={isMulti}
       isSearchable={searchable}
-      options={items.map(item => ({
-        ...item,
-        label: transformDifficultyLabel(item.label),
-      }))}
+      options={options}
       className="text-black dark:text-white"
       classNamePrefix="select"
     />

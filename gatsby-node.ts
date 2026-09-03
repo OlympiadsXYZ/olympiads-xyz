@@ -267,6 +267,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             url
             tags
             source
+            isStarred
             solution {
               kind
               label
@@ -385,6 +386,23 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // Check to make sure problems with the same unique ID have consistent information, and that there aren't duplicate slugs
   // Also creates user solution pages for each problem
   const problems = result.data.problems.edges;
+
+  // Static index for the /problems page: written here (rather than in
+  // onPreBootstrap, where the archive writes its indexes) because it needs the
+  // ProblemInfo nodes, which only exist once sourcing is done. static/ is
+  // copied into public/ after bootstrap, so this lands at
+  // /problems-data/index.json. See src/problems/index-node.ts.
+  {
+    const {
+      writeProblemsIndex,
+    } = require('./src/problems/index-node');
+    const count = writeProblemsIndex(
+      __dirname,
+      problems.map(({ node }) => node)
+    );
+    console.info(`[problems] wrote static/problems-data/index.json (${count} problems)`);
+  }
+
   let problemSlugs = {}; // maps slug to problem unique ID
   let problemInfo = {}; // maps unique problem ID to problem info
   let problemURLToUniqueID = {}; // maps problem URL to problem unique ID

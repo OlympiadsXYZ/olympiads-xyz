@@ -1,7 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
-import { olympiads, ProblemInfo, probSources } from '../../../models/problem';
+import {
+  getProblemURL,
+  olympiads,
+  ProblemInfo,
+  probSources,
+} from '../../../models/problem';
 import { UsacoTableProgress } from '../../Dashboard/DashboardProgress';
 import DifficultyBox from '../../DifficultyBox';
 import TextTooltip from '../../Tooltip/TextTooltip';
@@ -119,6 +124,12 @@ export default function ProblemsListItem(
     </td>
   );
 
+  // Transcribed problems have their own page on this site (statement +
+  // official solution); that page, not the source PDF, is where the name goes.
+  const internalURL =
+    isDivisionTable == false && problem.solution?.kind === 'internal'
+      ? `${getProblemURL(problem)}/solution`
+      : null;
   const nameCol = (
     <td className="pl-4 md:px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium">
       <div className="flex items-center">
@@ -134,15 +145,15 @@ export default function ProblemsListItem(
           </Tooltip>
         )}
         <Anchor
-          href={problem.url}
+          href={internalURL ?? problem.url}
           className={
             (isDivisionTable == false && problem.isStarred
               ? 'pl-1 sm:pl-2'
               : 'sm:pl-6') + ' truncate'
           }
           style={{ maxWidth: '20rem' }}
-          target="_blank"
-          rel="nofollow noopener noreferrer"
+          target={internalURL ? undefined : '_blank'}
+          rel={internalURL ? undefined : 'nofollow noopener noreferrer'}
         >
           {problem.name}
         </Anchor>
