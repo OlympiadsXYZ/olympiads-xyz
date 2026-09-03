@@ -51,15 +51,54 @@ function figureMarkdown(fig) {
   return `<figure>\n<img src="${fig.url}" alt="${alt}" />${cap}\n</figure>`;
 }
 
+// Short Bulgarian names, same as the archive's COMPETITION_META (src/archive/labels.ts).
+const COMPETITION_SHORT = { NOF: 'НОФ', NAO: 'НОА', ESF: 'НЕСФ', PSF: 'НПСФ' };
+const MONTHS_BG = ['януари', 'февруари', 'март', 'април', 'май', 'юни', 'юли', 'август', 'септември', 'октомври', 'ноември', 'декември'];
+
+// "9" -> "9. клас", "9-10 клас" -> "9–10 клас"; anything else is left as printed.
+function gradeLabel(grade) {
+  if (!grade) return null;
+  const g = String(grade).replace(/\s*клас\.?$/u, '').trim().replace(/\s*-\s*/g, '–');
+  if (/^\d+$/.test(g)) return `${g}. клас`;
+  if (/^\d+–\d+$/.test(g)) return `${g} клас`;
+  return String(grade);
+}
+
+function dateBg(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+  if (!m) return null;
+  return `${Number(m[3])} ${MONTHS_BG[Number(m[2]) - 1]} ${m[1]} г.`;
+}
+
+// "НОА 2026, II кръг (областен), 9–10 клас" — what the page heading leads with.
+function paperDescriptor(paper) {
+  return [
+    `${COMPETITION_SHORT[paper.competition] ?? paper.competition} ${paper.year}`,
+    paper.round || null,
+    gradeLabel(paper.grade),
+  ].filter(Boolean).join(', ');
+}
+
+function yamlStr(s) {
+  return `'${String(s).replace(/'/g, "''")}'`;
+}
+
 function problemMdx(paper, problem) {
   const lines = [];
   lines.push('---');
   lines.push(`id: ${problem.id}`);
-  lines.push(`source: ${paper.competition} ${paper.year}`);
-  lines.push(`title: '${(problem.title || `Задача ${problem.number}`).replace(/'/g, "''")}'`);
-  lines.push(`author: 'Транскрипция: Olympiads XYZ'`);
+  lines.push(`source: ${yamlStr(paperDescriptor(paper))}`);
+  lines.push(`title: ${yamlStr(`Задача ${problem.number}${problem.title ? '. ' + problem.title : ''}`)}`);
+  lines.push(`author: 'Olympiads XYZ · транскрипция на официалните материали'`);
   lines.push('---');
   lines.push('');
+  // Lead line: the paper's printed masthead (ground truth), the date and the points.
+  const lead = [
+    paper.title || null,
+    paper.held?.from ? dateBg(paper.held.from) : null,
+    problem.points != null ? `${String(problem.points).replace('.', ',')} т.` : null,
+  ].filter(Boolean);
+  if (lead.length) lines.push(`*${lead.join(' · ')}*`, '');
   lines.push(`## Условие`);
   lines.push('');
   lines.push(problem.statement);

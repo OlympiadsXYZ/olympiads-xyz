@@ -24,7 +24,7 @@ export default function Template(props) {
     return new SolutionInfo(
       xdm.frontmatter.id,
       xdm.frontmatter.source,
-      `${xdm.frontmatter.source} - ${xdm.frontmatter.title}`,
+      `${xdm.frontmatter.source} — ${xdm.frontmatter.title}`,
       xdm.frontmatter.author,
       xdm.toc,
       xdm.parent.relativePath
@@ -39,7 +39,7 @@ export default function Template(props) {
   return (
     <Layout>
       <SEO
-        title={`Solution - ${xdm.frontmatter.title} (${xdm.frontmatter.source})`}
+        title={`${xdm.frontmatter.title} · ${xdm.frontmatter.source}`}
       />
 
       <ConfettiProvider>
