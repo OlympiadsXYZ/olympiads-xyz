@@ -51,6 +51,14 @@ function figureMarkdown(fig) {
   return `<figure>\n<img src="${fig.url}" alt="${alt}" />${cap}\n</figure>`;
 }
 
+// Some transcriptions place a figure inline in the text (![…](url)) AND list it
+// in figures[]; emitting both rendered the figure twice. Only emit the block
+// for figures the surrounding text does not already show.
+function figuresNotInline(figs, ...texts) {
+  const joined = texts.filter(Boolean).join('\n');
+  return (figs ?? []).filter(f => !(f.url && joined.includes(f.url)));
+}
+
 // Short Bulgarian names, same as the archive's COMPETITION_META (src/archive/labels.ts).
 const COMPETITION_SHORT = { NOF: 'НОФ', NAO: 'НОА', ESF: 'НЕСФ', PSF: 'НПСФ' };
 const MONTHS_BG = ['януари', 'февруари', 'март', 'април', 'май', 'юни', 'юли', 'август', 'септември', 'октомври', 'ноември', 'декември'];
@@ -103,13 +111,14 @@ function problemMdx(paper, problem) {
   lines.push('');
   lines.push(problem.statement);
   lines.push('');
-  for (const fig of problem.figures ?? []) lines.push(figureMarkdown(fig), '');
+  const partTexts = (problem.parts ?? []).map(p => p.statement);
+  for (const fig of figuresNotInline(problem.figures, problem.statement, ...partTexts)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
     for (const part of problem.parts) {
       const pts = part.points != null ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
       lines.push(`**${part.label}** ${part.statement}${pts}`);
       lines.push('');
-      for (const fig of part.figures ?? []) lines.push(figureMarkdown(fig), '');
+      for (const fig of figuresNotInline(part.figures, part.statement)) lines.push(figureMarkdown(fig), '');
     }
   }
   const answers = (problem.parts ?? []).filter(p => p.answer && (p.answer.value != null || p.answer.latex));
@@ -130,7 +139,7 @@ function problemMdx(paper, problem) {
       lines.push('<Warning title="Непълно решение">', sol.incompleteReason || 'Решението предстои да бъде довършено.', '</Warning>', '');
     }
     lines.push(sol.statement, '');
-    for (const fig of sol.figures ?? []) lines.push(figureMarkdown(fig), '');
+    for (const fig of figuresNotInline(sol.figures, sol.statement)) lines.push(figureMarkdown(fig), '');
   }
   const src = paper.source?.archiveKey;
   if (src) {
