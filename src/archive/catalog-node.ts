@@ -18,6 +18,11 @@ export type CatalogEntry = {
   title: string;
   file: string;
   size: number;
+  note?: string;
+  // hidden: true = дубликат/плейсхолдър/боклук — не се рисува и не се брои;
+  // duplicateOf сочи каноничния запис (D1/D4, docs/Archive-Decisions-2026-09.md).
+  hidden?: boolean;
+  duplicateOf?: string;
   unparsed?: boolean;
 };
 
@@ -75,6 +80,7 @@ export function loadCatalog(repoRoot: string): CatalogEntry[] {
   if (!fs.existsSync(dir)) return [];
   const seen = new Set<string>();
   const all: CatalogEntry[] = [];
+  let hidden = 0;
   for (const f of fs.readdirSync(dir)) {
     // schema.json describes the catalog, it is not part of it
     if (!f.endsWith('.json') || f === 'schema.json') continue;
@@ -101,8 +107,17 @@ export function loadCatalog(repoRoot: string): CatalogEntry[] {
         continue;
       }
       seen.add(e.id);
+      // hidden entries (byte-identical duplicates, placeholders, junk) stay in
+      // the catalog for reversibility but never render or count on the site
+      if (e.hidden === true) {
+        hidden += 1;
+        continue;
+      }
       all.push(e);
     }
+  }
+  if (hidden > 0) {
+    console.log(`[archive] skipped ${hidden} hidden catalog entries (duplicates/placeholders)`);
   }
   return all;
 }

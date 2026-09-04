@@ -51,6 +51,18 @@ export const COMPETITION_META: { [code: string]: CompetitionMeta } = {
   iGeo: { slug: 'igeo', name: 'Международна олимпиада по география', short: 'iGeo' },
 };
 
+// Стари/разцепени кодове, слети в каноничните (D11, vocabulary.decisions.md).
+// Ingest скриптове минават през canonicalCompetition(); каталогът вече е слят.
+export const COMPETITION_ALIASES: { [legacy: string]: string } = {
+  'Олимпиада на мегаполисите': 'IOM',
+  'Online Physics Brawl': 'OPB',
+  'Московска олимпиада по физика': 'Московска',
+};
+
+export function canonicalCompetition(code: string): string {
+  return COMPETITION_ALIASES[code] ?? code;
+}
+
 const SLUG_TO_CODE: { [slug: string]: string } = {};
 Object.keys(COMPETITION_META).forEach(code => {
   SLUG_TO_CODE[COMPETITION_META[code].slug] = code;
@@ -90,6 +102,9 @@ export const ROUND_LABELS: { [code: string]: string } = {
   I: 'I кръг (общински)',
   II: 'II кръг (областен)',
   III: 'III кръг (национален)',
+  // Петият етап на ВсОШ 2002–2008 („Окружной этап“) — между регионалния и
+  // финала; финалът е IV през всички години (D11).
+  zonal: 'Зонален етап',
   IV: 'IV кръг',
   theory: 'Теоретичен тур',
   experiment: 'Експериментален тур',
@@ -110,7 +125,7 @@ export const ROUND_LABELS: { [code: string]: string } = {
 
 export const ROUND_ORDER = [
   // етапи
-  'I', 'II', 'III', 'IV', 'regional', 'selection', 'camp', 'distance',
+  'I', 'II', 'III', 'zonal', 'IV', 'regional', 'selection', 'camp', 'distance',
   // турове
   'theory', 'experiment', 'practical', 'observational',
   'data-analysis', 'team', 'creative',
@@ -138,6 +153,17 @@ export const TYPE_ORDER = [
   'instructions', 'data', 'translation', 'results', 'official',
   'book', 'handout', 'other',
 ];
+
+// Рафтът на записа (schema.json → kind). Сайтът групира по competition, не по
+// kind, затова етикетите служат за филтри/бележки, не за навигация.
+export const KIND_LABELS: { [code: string]: string } = {
+  competition: 'Състезателни материали',
+  book: 'Книга',
+  handout: 'Учебен материал',
+  syllabus: 'Регламент',
+  results: 'Протокол',
+  misc: 'Разни',
+};
 
 export const LANG_LABELS: { [code: string]: string } = {
   bg: 'БГ', en: 'EN', ru: 'РУ', mk: 'МК', kk: 'КЗ', ro: 'РО', cs: 'ЧЕ', fr: 'ФР',
@@ -192,9 +218,26 @@ export function formatBytes(n: number): string {
   return `${s} ${units[i]}`;
 }
 
+// Кодове, които entryExt() връща; етикетите са за списъци и tooltip-и.
+export const EXT_LABELS: { [code: string]: string } = {
+  pdf: 'PDF',
+  doc: 'Документ',
+  img: 'Изображение',
+  zip: 'Архив',
+  xls: 'Таблица',
+  book: 'Електронна книга',
+  exe: 'Изпълним файл',
+  other: 'Файл',
+};
+
 export function entryExt(file: string): string {
-  const ext = (file.split('.').pop() ?? '').toLowerCase();
+  const base = file.split('/').pop() ?? '';
+  // Без разширение = изпълним файл (EuPhO 2021 програми); схемата допуска
+  // такъв ключ само при kind: "misc", type: "data" (D8).
+  if (!base.includes('.')) return 'exe';
+  const ext = (base.split('.').pop() ?? '').toLowerCase();
   if (ext === 'pdf') return 'pdf';
+  if (['exe', 'linux', 'macos'].includes(ext)) return 'exe';
   if (['doc', 'docx', 'odt', 'rtf', 'txt', 'tex'].includes(ext)) return 'doc';
   if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tif', 'tiff'].includes(ext)) return 'img';
   if (['zip', 'rar', '7z', 'gz', 'tar'].includes(ext)) return 'zip';

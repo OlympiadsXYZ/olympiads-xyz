@@ -179,7 +179,11 @@ const ALLOWED_EXT = new Set([
   'pdf', 'djvu', 'doc', 'docx', 'rtf', 'txt', 'html', 'note',
   'xls', 'xlsx', 'csv', 'ppt', 'pptx', 'ppsx', 'nb',
   'jpg', 'jpeg', 'png', 'gif', 'mp4', 'wmv', 'zip', 'rar',
+  // изпълними файлове към практически кръгове (D8, docs/Archive-Decisions-2026-09.md)
+  'exe', 'linux', 'macos',
 ]);
+// Файл без разширение се допуска (EuPhO 2021 програми, D8); схемата ограничава
+// такива записи до kind: "misc", type: "data".
 
 /* ------------------------------------------------------------------ */
 
@@ -260,8 +264,8 @@ function main() {
 
         const base = entry.file.split('/').pop() ?? '';
         const ext = base.includes('.') ? base.split('.').pop().toLowerCase() : '';
-        if (!ALLOWED_EXT.has(ext)) {
-          record('file: непознато разширение', ctx, ext ? `.${ext}` : 'без разширение');
+        if (ext && !ALLOWED_EXT.has(ext)) {
+          record('file: непознато разширение', ctx, `.${ext}`);
         }
         if (bucket && !bucket.has(entry.file)) {
           record('file: липсва в кофата', ctx, entry.file);

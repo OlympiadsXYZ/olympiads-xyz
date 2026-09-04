@@ -81,7 +81,23 @@
           "type": "string",
           "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
         },
-        "note": { "type": "string", "minLength": 2, "maxLength": 1000 },
+        "note": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 1000,
+          "description": "Свободна бележка за куратора: варианти, дефекти, спорна класификация, липсващ материал (D5/D9)."
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "true = записът не се показва и не се брои в сайта (дубликат, плейсхолдър, боклук). Файлът остава в кофата (D1)."
+        },
+        "duplicateOf": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160,
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "id на каноничния запис, чийто файл този запис дублира. Изисква hidden: true (D1/D4)."
+        },
         "unparsed": { "type": "boolean" }
       },
 
@@ -115,15 +131,32 @@
           "then": { "properties": { "competition": { "type": "string" } } }
         },
         {
-          "$comment": "книги и материали не принадлежат на състезание",
+          "$comment": "книги и материали нямат кръг (competition е позволено: сборник със задачи от олимпиада стои и на страницата на състезанието)",
           "if": {
             "properties": { "kind": { "enum": ["book", "handout"] } },
             "required": ["kind"]
           },
           "then": {
             "properties": {
-              "competition": { "type": "null" },
               "round": { "type": "null" }
+            }
+          }
+        },
+        {
+          "$comment": "duplicateOf изисква hidden: true",
+          "if": { "required": ["duplicateOf"] },
+          "then": { "properties": { "hidden": { "const": true } }, "required": ["hidden"] }
+        },
+        {
+          "$comment": "файл без разширение е допустим само за изпълним файл: kind=misc, type=data (D8)",
+          "if": {
+            "properties": { "file": { "pattern": "(^|/)[^/.]+$" } },
+            "required": ["file"]
+          },
+          "then": {
+            "properties": {
+              "kind": { "const": "misc" },
+              "type": { "const": "data" }
             }
           }
         },
@@ -176,13 +209,14 @@
     },
 
     "round": {
-      "description": "Етап (I–IV, regional, selection, camp, distance) или тур (theory, experiment, practical, observational, data-analysis, team, creative, day-N). Един слот, един канон.",
+      "description": "Етап (I–IV, zonal, regional, selection, camp, distance) или тур (theory, experiment, practical, observational, data-analysis, team, creative, day-N). Един слот, един канон.",
       "oneOf": [
         {
           "enum": [
             "I",
             "II",
             "III",
+            "zonal",
             "IV",
             "regional",
             "selection",
