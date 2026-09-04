@@ -3,65 +3,218 @@
   "$id": "https://olympiads.xyz/schemas/problems.json",
   "title": "Olympiads XYZ — изпитна тема (paper) със задачи",
   "type": "object",
-  "required": ["paper", "problems"],
+  "required": [
+    "paper",
+    "problems"
+  ],
   "additionalProperties": false,
   "properties": {
     "paper": {
       "type": "object",
-      "required": ["id", "subject", "competition", "year", "roundType", "lang", "source", "status"],
+      "required": [
+        "id",
+        "subject",
+        "competition",
+        "year",
+        "roundType",
+        "lang",
+        "source",
+        "status"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
-        "subject": { "enum": ["physics", "astronomy", "chemistry", "geography", "mathematics", "informatics"] },
-        "competition": { "type": "string", "description": "Код от контролирания речник на Архива (docs/Archive-Schema.md)" },
-        "year": { "type": "integer", "minimum": 1950, "maximum": 2100 },
-        "round": { "type": ["string", "null"], "description": "Канонично име на кръга — същият речник като Архива" },
-        "roundType": { "enum": ["theory", "experiment", "practical", "observation", "data-analysis", "test", "mixed"] },
-        "grade": { "type": ["string", "null"], "description": "Клас/възрастова група, напр. \"9\", \"10-12\", \"junior\"" },
-        "lang": { "enum": ["bg", "en", "ru", "de", "fr", "other"] },
-        "title": { "type": "string" },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "subject": {
+          "enum": [
+            "physics",
+            "astronomy",
+            "chemistry",
+            "geography",
+            "mathematics",
+            "informatics"
+          ]
+        },
+        "competition": {
+          "type": "string",
+          "description": "Код от контролирания речник на Архива (docs/Archive-Schema.md)"
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1950,
+          "maximum": 2100
+        },
+        "round": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Канонично име на кръга — същият речник като Архива"
+        },
+        "roundType": {
+          "enum": [
+            "theory",
+            "experiment",
+            "practical",
+            "observation",
+            "data-analysis",
+            "test",
+            "mixed"
+          ]
+        },
+        "grade": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Клас/възрастова група, напр. \"9\", \"10-12\", \"junior\""
+        },
+        "lang": {
+          "enum": [
+            "bg",
+            "en",
+            "ru",
+            "de",
+            "fr",
+            "other"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
         "held": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "from": { "type": "string", "format": "date" },
-            "to": { "type": "string", "format": "date" },
-            "place": { "type": "string" }
+            "from": {
+              "type": "string",
+              "format": "date"
+            },
+            "to": {
+              "type": "string",
+              "format": "date"
+            },
+            "place": {
+              "type": "string"
+            }
           }
         },
-        "organiser": { "type": "string" },
-        "totalPoints": { "type": ["number", "null"] },
-        "timeLimitMin": { "type": ["number", "null"] },
-        "source": { "$ref": "#/$defs/pdfSource" },
-        "solutionSource": { "$ref": "#/$defs/pdfSource" },
-        "resultsSource": { "$ref": "#/$defs/pdfSource" },
-        "status": { "enum": ["draft", "review", "published"], "description": "published се задава само след човешки преглед" },
+        "organiser": {
+          "type": "string"
+        },
+        "totalPoints": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "timeLimitMin": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/pdfSource"
+        },
+        "solutionSource": {
+          "$ref": "#/$defs/pdfSource"
+        },
+        "resultsSource": {
+          "$ref": "#/$defs/pdfSource"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "review",
+            "published"
+          ],
+          "description": "published се задава само след човешки преглед"
+        },
         "transcription": {
           "type": "object",
-          "required": ["method", "model", "at"],
+          "required": [
+            "method",
+            "model",
+            "at"
+          ],
           "additionalProperties": false,
           "properties": {
-            "method": { "enum": ["vision", "text-layer", "manual"] },
-            "model": { "type": "string" },
-            "at": { "type": "string" },
-            "renderDpi": { "type": "number" },
-            "figureDpi": { "type": "number" },
-            "verifiedBy": { "type": ["string", "null"] },
-            "verifiedAt": { "type": ["string", "null"] },
-            "notes": { "type": "string" }
+            "method": {
+              "enum": [
+                "vision",
+                "text-layer",
+                "manual"
+              ]
+            },
+            "model": {
+              "type": "string"
+            },
+            "at": {
+              "type": "string"
+            },
+            "renderDpi": {
+              "type": "number"
+            },
+            "figureDpi": {
+              "type": "number"
+            },
+            "verifiedBy": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "verifiedAt": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "notes": {
+              "type": "string"
+            }
           }
         },
-        "apparatus": { "type": "array", "items": { "type": "string" }, "description": "experiment/practical" },
-        "safetyNotes": { "type": "string", "description": "practical" },
+        "apparatus": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "experiment/practical"
+        },
+        "safetyNotes": {
+          "type": "string",
+          "description": "practical"
+        },
         "sky": {
           "type": "object",
           "description": "observation: условия на наблюдението",
           "additionalProperties": false,
           "properties": {
-            "date": { "type": "string" }, "timeLocal": { "type": "string" },
-            "place": { "type": "string" }, "latitude": { "type": "number" },
-            "longitude": { "type": "number" }, "instrument": { "type": "string" },
-            "conditions": { "type": "string" }
+            "date": {
+              "type": "string"
+            },
+            "timeLocal": {
+              "type": "string"
+            },
+            "place": {
+              "type": "string"
+            },
+            "latitude": {
+              "type": "number"
+            },
+            "longitude": {
+              "type": "number"
+            },
+            "instrument": {
+              "type": "string"
+            },
+            "conditions": {
+              "type": "string"
+            }
           }
         },
         "datasets": {
@@ -69,120 +222,335 @@
           "description": "data-analysis: прикачени данни (в R2)",
           "items": {
             "type": "object",
-            "required": ["id", "url", "format"],
+            "required": [
+              "id",
+              "url",
+              "format"
+            ],
             "properties": {
-              "id": { "type": "string" }, "url": { "type": "string" },
-              "format": { "enum": ["csv", "tsv", "json", "txt", "xlsx"] },
-              "caption": { "type": "string" }, "columns": { "type": "array", "items": { "type": "string" } }
+              "id": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "format": {
+                "enum": [
+                  "csv",
+                  "tsv",
+                  "json",
+                  "txt",
+                  "xlsx"
+                ]
+              },
+              "caption": {
+                "type": "string"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
             }
           }
+        },
+        "caveat": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Кратка бележка към читателя, показвана на всяка страница от темата — напр. непълен архивен източник. Не дублира transcription.notes."
         }
       }
     },
     "problems": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/problem" }
+      "items": {
+        "$ref": "#/$defs/problem"
+      }
     }
   },
   "$defs": {
     "pdfSource": {
       "type": "object",
-      "required": ["archiveKey"],
+      "required": [
+        "archiveKey"
+      ],
       "additionalProperties": false,
       "properties": {
-        "archiveKey": { "type": "string", "description": "Ключ в R2 кофата olympiads-archive" },
-        "pages": { "type": "array", "items": { "type": "integer", "minimum": 1 } }
+        "archiveKey": {
+          "type": "string",
+          "description": "Ключ в R2 кофата olympiads-archive"
+        },
+        "pages": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
       }
     },
     "figure": {
       "type": "object",
-      "required": ["id", "url"],
+      "required": [
+        "id",
+        "url"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string" },
-        "url": { "type": "string" },
-        "width": { "type": "integer" },
-        "height": { "type": "integer" },
-        "caption": { "type": "string" },
-        "alt": { "type": "string" },
+        "id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "width": {
+          "type": "integer"
+        },
+        "height": {
+          "type": "integer"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "alt": {
+          "type": "string"
+        },
         "source": {
           "type": "object",
           "description": "Откъде е изрязана — прави изрязването проверимо и повторимо",
-          "required": ["page", "pdfRect"],
+          "required": [
+            "page",
+            "pdfRect"
+          ],
           "additionalProperties": false,
           "properties": {
-            "page": { "type": "integer" },
-            "pdfRect": { "type": "array", "items": { "type": "number" }, "minItems": 4, "maxItems": 4 },
-            "dpi": { "type": "number" }
+            "page": {
+              "type": "integer"
+            },
+            "pdfRect": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "dpi": {
+              "type": "number"
+            }
           }
         }
       }
     },
     "answer": {
       "type": "object",
-      "required": ["kind"],
+      "required": [
+        "kind"
+      ],
       "additionalProperties": false,
       "properties": {
-        "kind": { "enum": ["numeric", "expression", "choice", "text", "derivation"] },
-        "value": { "type": ["number", "string", "null"] },
-        "unit": { "type": ["string", "null"] },
-        "tolerance": { "type": "number", "description": "numeric: абсолютно допустимо отклонение" },
-        "latex": { "type": "string" },
-        "equivalentForms": { "type": "array", "items": { "type": "string" } },
-        "choices": { "type": "array", "items": { "type": "string" } },
-        "correct": { "type": ["integer", "string"] },
-        "note": { "type": "string" }
+        "kind": {
+          "enum": [
+            "numeric",
+            "expression",
+            "choice",
+            "text",
+            "derivation"
+          ]
+        },
+        "value": {
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tolerance": {
+          "type": "number",
+          "description": "numeric: абсолютно допустимо отклонение"
+        },
+        "latex": {
+          "type": "string"
+        },
+        "equivalentForms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "correct": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "note": {
+          "type": "string"
+        }
       }
     },
     "problem": {
       "type": "object",
-      "required": ["id", "number", "statement"],
+      "required": [
+        "id",
+        "number",
+        "statement"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": { "type": "string" },
-        "number": { "type": ["integer", "string"] },
-        "title": { "type": "string" },
-        "points": { "type": ["number", "null"] },
-        "problemType": { "enum": ["theory", "experiment", "practical", "observation", "data-analysis", "test"] },
-        "statement": { "type": "string", "description": "Markdown + LaTeX, ДОСЛОВНО от оригинала. Таблиците са Markdown таблици, никога изображения." },
-        "figures": { "type": "array", "items": { "$ref": "#/$defs/figure" } },
+        "id": {
+          "type": "string"
+        },
+        "number": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "points": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "problemType": {
+          "enum": [
+            "theory",
+            "experiment",
+            "practical",
+            "observation",
+            "data-analysis",
+            "test"
+          ]
+        },
+        "statement": {
+          "type": "string",
+          "description": "Markdown + LaTeX, ДОСЛОВНО от оригинала. Таблиците са Markdown таблици, никога изображения."
+        },
+        "figures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/figure"
+          }
+        },
         "parts": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["label", "statement"],
+            "required": [
+              "label",
+              "statement"
+            ],
             "additionalProperties": false,
             "properties": {
-              "label": { "type": "string" },
-              "statement": { "type": "string" },
-              "points": { "type": ["number", "null"] },
-              "figures": { "type": "array", "items": { "$ref": "#/$defs/figure" } },
-              "answer": { "$ref": "#/$defs/answer" }
+              "label": {
+                "type": "string"
+              },
+              "statement": {
+                "type": "string"
+              },
+              "points": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "figures": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/figure"
+                }
+              },
+              "answer": {
+                "$ref": "#/$defs/answer"
+              }
             }
           }
         },
-        "answer": { "$ref": "#/$defs/answer" },
-        "topics": { "type": "array", "items": { "type": "string" }, "description": "Пътеки от таксономията, напр. mechanics/energy" },
-        "difficulty": { "enum": ["Very Easy", "Easy", "Normal", "Hard", "Very Hard"] },
-        "importance": { "type": "integer", "minimum": 0, "maximum": 3, "description": "0 = по избор, 3 = задължителна за подготовка" },
-        "apparatus": { "type": "array", "items": { "type": "string" } },
+        "answer": {
+          "$ref": "#/$defs/answer"
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Пътеки от таксономията, напр. mechanics/energy"
+        },
+        "difficulty": {
+          "enum": [
+            "Very Easy",
+            "Easy",
+            "Normal",
+            "Hard",
+            "Very Hard"
+          ]
+        },
+        "importance": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "0 = по избор, 3 = задължителна за подготовка"
+        },
+        "apparatus": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "measurementTable": {
           "type": "object",
           "description": "experiment: шаблон за данните, които ученикът попълва",
           "properties": {
-            "columns": { "type": "array", "items": { "type": "string" } },
-            "rows": { "type": "integer" }
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rows": {
+              "type": "integer"
+            }
           }
         },
         "solution": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "statement": { "type": "string" },
-            "figures": { "type": "array", "items": { "$ref": "#/$defs/figure" } },
-            "incomplete": { "type": "boolean" },
-            "incompleteReason": { "type": "string" }
+            "statement": {
+              "type": "string"
+            },
+            "figures": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/figure"
+              }
+            },
+            "incomplete": {
+              "type": "boolean"
+            },
+            "incompleteReason": {
+              "type": "string"
+            }
           }
         }
       }

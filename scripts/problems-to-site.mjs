@@ -107,6 +107,7 @@ function problemMdx(paper, problem) {
     problem.points != null ? `${String(problem.points).replace('.', ',')} т.` : null,
   ].filter(Boolean);
   if (lead.length) lines.push(`*${lead.join(' · ')}*`, '');
+  if (paper.caveat) lines.push('<Warning title="Бележка към темата">', paper.caveat, '</Warning>', '');
   lines.push(`## Условие`);
   lines.push('');
   lines.push(problem.statement);
