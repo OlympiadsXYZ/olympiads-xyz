@@ -1,10 +1,16 @@
 # Builds the full site (archive enabled) on GitHub's runners — free for a public
-# repo, 6-hour limit, 16 GB RAM — and deploys the prebuilt output to Vercel.
-# Vercel Hobby's own builder has a 45-minute cap that the archive + transcribed
-# problem pages exceed. Needs the repository secret VERCEL_TOKEN (Vercel →
-# Account Settings → Tokens); until it exists the job exits early and Vercel's
-# git integration keeps building as before.
-name: Build and deploy (prebuilt)
+# repo, 6-hour limit, 16 GB RAM — and publishes the finished output to the
+# `deploy` branch. Vercel's git integration deploys that branch with its build
+# step switched off (see the generated vercel.json), so the 8 GB / 45-minute
+# Hobby builder never has to build Gatsby again. No Vercel token is involved:
+# the only credential is the workflow's own GITHUB_TOKEN, used to push the
+# branch inside this repository.
+#
+# Vercel project settings that make this work (Settings → Git):
+#   Production Branch = deploy
+#   Ignored Build Step = bash -c '[ "$VERCEL_GIT_COMMIT_REF" = "deploy" ] && exit 1 || exit 0'
+# (exit 1 = build this commit, exit 0 = skip; so only `deploy` is ever deployed).
+name: Build and publish to deploy branch
 
 on:
   push:
@@ -12,40 +18,54 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: deploy-prebuilt
+  group: build-deploy
   cancel-in-progress: true   # always build the last thing
 
+permissions:
+  contents: write
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 300
-    env:
-      VERCEL_ORG_ID: team_Ae3fCkgFGckm051xrK4vNtpa
-      VERCEL_PROJECT_ID: prj_xgEh3BJRhWHxi06a1rJz4guOrZLM
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    timeout-minutes: 120
     steps:
-      - name: Skip until VERCEL_TOKEN is configured
-        if: env.VERCEL_TOKEN == ''
-        run: echo "VERCEL_TOKEN secret not set — skipping prebuilt deploy" && exit 0
       - uses: actions/checkout@v4
-        if: env.VERCEL_TOKEN != ''
       - uses: actions/setup-node@v4
-        if: env.VERCEL_TOKEN != ''
         with:
           node-version: 22
           cache: yarn
       - name: Install
-        if: env.VERCEL_TOKEN != ''
         run: yarn install --frozen-lockfile
-      - name: Pull Vercel project settings and production env
-        if: env.VERCEL_TOKEN != ''
-        run: npx vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
-      - name: Build (archive on, 3 workers)
-        if: env.VERCEL_TOKEN != ''
+      - name: Build (archive on)
         env:
-          GATSBY_CPU_COUNT: 3
-          NODE_OPTIONS: --max-old-space-size=8192
-        run: npx vercel@latest build --prod --token="$VERCEL_TOKEN"
-      - name: Deploy prebuilt output
-        if: env.VERCEL_TOKEN != ''
-        run: npx vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+          GATSBY_ARCHIVE_ENABLED: "true"
+          GATSBY_ARCHIVE_BASE_URL: https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev
+          SITE_URL: https://olympiads-xyz.vercel.app
+          GATSBY_CPU_COUNT: "3"
+          GATSBY_VERBOSE_LOGGING: "2"
+          NODE_OPTIONS: --max-old-space-size=10240
+          CI: "true"
+        run: npx gatsby build
+      - name: Assemble deploy tree
+        run: |
+          set -euo pipefail
+          rm -rf out && mkdir out
+          cp -r public out/public
+          # Same redirects/rewrites as master, build step off, output = public/.
+          jq '. + {"framework": null, "buildCommand": "", "installCommand": "", "outputDirectory": "public"}' vercel.json > out/vercel.json
+          echo "Built from ${GITHUB_SHA} on $(date -u +%FT%TZ)" > out/BUILD.txt
+          du -sh out/public
+          # GitHub refuses files over 100 MB; fail loudly rather than push a broken branch.
+          big=$(find out -type f -size +95M | head -5); if [ -n "$big" ]; then echo "files over 95 MB:"; echo "$big"; exit 1; fi
+      - name: Push to deploy branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          cd out
+          git init -q -b deploy
+          git config user.name "olympiads-xyz build"
+          git config user.email "build@olympiads.xyz"
+          git add -A
+          git commit -q -m "Site build from ${GITHUB_SHA:0:9}: $(git -C .. log -1 --format=%s | cut -c1-72)"
+          git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" deploy
