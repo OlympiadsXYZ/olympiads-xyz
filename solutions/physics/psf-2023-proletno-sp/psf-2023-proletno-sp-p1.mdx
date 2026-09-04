@@ -1,0 +1,100 @@
+---
+id: psf-2023-proletno-sp-p1
+source: 'НПСФ 2023, ST'
+title: 'Задача 1. Търкалящо се тяло по наклонена равнина'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+---
+
+*Пролетно национално състезание по физика, Варна, 5 март 2023 г. — Специална тема (седма възрастова група) · 5 март 2023 г. · 10 т.*
+
+## Условие
+
+Тяло с осева симетрия (цилиндър, кълбо и т.н.) има маса $m$, радиус $r$ и инерчен момент $I = kmr^2$ (спрямо ос, минаваща през центъра на масата му и перпендикулярна на чертежа, $k$ е известно число) се поставя върху наклонена равнина, сключваща ъгъл $\alpha$ с хоризонта. Началната му скорост е нула, а началната му ъглова скорост е $\omega_0$ (в посоката, показана на чертежа). Земното ускорение е $g$. Коефициентът на триене при хлъзгане между тялото и наклонената равнина е $\mu$. Тялото тръгва нагоре.
+
+*Изразявайте всички отговори чрез параметъра $n = \dfrac{\mu}{\tan\alpha}$! Също така не рационализирайте (в математическия смисъл на думата) отговорите, а ги представяйте във вид, съдържащ параметри на най-малко места и най-лесен за проверка в частни случаи или при изчисления!*
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/psf-2023-proletno-sp/p1-fig1.png" alt="Наклонена равнина с ъгъл α; кръгло тяло с радиус r и маса m в долния край с ъглова скорост ω₀; пунктирните положения по-нагоре по склона отбелязват края на пътя l и края на пътя L." />
+<figcaption>Тялото върху наклонената равнина: начална ъглова скорост $\omega_0$, изминат при хлъзгане път $l$ и допълнителен път $L$ без хлъзгане.</figcaption>
+</figure>
+
+**а)** При какви стойности на коефициента на триене $\mu$ тялото ще тръгне нагоре. **[0.5 т.]** **[0,5 т.]**
+
+**б)** С какво ускорение $a_{\mathrm{хл}}$ ще се движи тялото, докато има хлъзгане? **[0.5 т.]** **[0,5 т.]**
+
+**в)** Колко време $t_{\mathrm{хл}}$ ще се движи тялото с хлъзгане? **[2.0 т.]** **[2 т.]**
+
+**г)** Колко ще е скоростта $v_{\mathrm{хл}}$ в момента, когато хлъзгането изчезне и тялото започне да се търкаля без хлъзгане? **[0.5 т.]** **[0,5 т.]**
+
+**д)** Какъв път $l$ ще измине тялото, докато се хлъзга? **[0.5 т.]** **[0,5 т.]**
+
+**е)** При каква стойност на параметъра $n$ пътят $l$ ще бъде максимален? **[1.5 т.]** Получете израз за този максимален път $l_{max}$. **[1.0 т.]** **[2,5 т.]**
+
+**ж)** Какъв допълнителен път $L$ ще измине тялото нагоре без хлъзгане, преди да се върне обратно надолу? **[1.5 т.]** **[1,5 т.]**
+
+**з)** С какво ускорение $a_{\mathrm{безхл}}$ ще се движи тялото, докато изминава пътя $L$? **[0.5 т.]** **[0,5 т.]**
+
+**и)** Колко е отношението $\dfrac{E_{\mathrm{кр}}}{E_0}$ на крайната (когато тя престане да се променя) механична енергия $E_{\mathrm{кр}}$ и началната механична енергия $E_0$? При каква стойност на $n$ това отношение ще бъде максимално? **[1.5 т.]** **[1,5 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **а)** $\mu > \tan\alpha \iff n > 1$
+- **б)** $a_{\mathrm{хл}} = g\sin\alpha\,(n-1)$
+- **в)** $t_{\mathrm{хл}} = \frac{\omega_0 r}{g\sin\alpha\left[n\left(1+\frac{1}{k}\right)-1\right]}$
+- **г)** $v_{\mathrm{хл}} = \frac{\omega_0 r}{1+\frac{1}{k\left(1-\frac{1}{n}\right)}}$
+- **д)** $l = \frac{(\omega_0 r)^2(n-1)}{2g\sin\alpha\left[n\left(1+\frac{1}{k}\right)-1\right]^2}$
+- **е)** $n = 2 - \frac{1}{1+\frac{1}{k}},\qquad l_{max} = \frac{(\omega_0 r)^2}{2g\sin\alpha}\cdot\frac{k^2}{4(k+1)}$
+- **ж)** $L = \frac{(k+1)r^2\omega_0^{\,2}}{2g\sin\alpha\left[1+\frac{1}{k\left(1-\frac{1}{n}\right)}\right]^2}$
+- **з)** $a_{\mathrm{безхл}} = \frac{g\sin\alpha}{k+1}$
+- **и)** $\frac{E_{\mathrm{кр}}}{E_0} = \frac{1}{1+\frac{1}{k\left(1-\frac{1}{n}\right)}},\qquad \left.\frac{E_{\mathrm{кр}}}{E_0}\right|_{max} = \frac{1}{1+\frac{1}{k}}\ \text{при } n\to\infty$
+
+</Spoiler>
+
+## Решение
+
+**а)** За да тръгне тялото нагоре, трябва силата на триене $F_{\mathrm{тр}} > mg\sin\alpha$. Тъй като $F_{\mathrm{тр}} = \mu R$, а реакцията на опората $R = mg\cos\alpha$, то $\mu mg\cos\alpha > mg\sin\alpha$, откъдето $\mu > \tan\alpha$ или $n > 1$. **[0.5 т.]**
+
+**б)** $F_{\mathrm{тр}} - mg\sin\alpha = ma_{\mathrm{хл}}$, откъдето $a_{\mathrm{хл}} = \mu g\cos\alpha - g\sin\alpha = g(\mu\cos\alpha - \sin\alpha) = g\sin\alpha\,(n-1)$. **[0.5 т.]**
+
+**в)** Хлъзгането ще изчезне, когато линейната скорост $v$ на центъра на масата на тялото и неговата ъглова скорост $\omega$ са свързани така: $v = \omega r$. **[0.2 т.]** Линейната скорост нараства така: $v = a_{\mathrm{хл}}\,t$, **[0.2 т.]** а ъгловата скорост $\omega$ намалява така: $\omega = \omega_0 - \varepsilon t$, **[0.2 т.]** където ъгловото ускорение $\varepsilon = \dfrac{F_{\mathrm{тр}}\,r}{I}$. **[0.2 т.]** Следователно $a_{\mathrm{хл}}\,t_{\mathrm{хл}} = (\omega_0 - \varepsilon t_{\mathrm{хл}})r$. **[0.2 т.]** Така
+
+$$t_{\mathrm{хл}} = \frac{\omega_0 r}{a_{\mathrm{хл}}+\varepsilon r} = \frac{\omega_0 r}{g\sin\alpha(n-1)+\dfrac{\mu mg\cos\alpha\cdot r}{kmr^2}r},\qquad t_{\mathrm{хл}} = \frac{\omega_0 r}{g\sin\alpha(n-1)+\dfrac{\mu g\cos\alpha}{k}} = \frac{\omega_0 r}{g\sin\alpha(n-1)+\dfrac{ng\sin\alpha}{k}},$$
+
+$$t_{\mathrm{хл}} = \frac{\omega_0 r}{g\sin\alpha\left[n\left(1+\dfrac{1}{k}\right)-1\right]}\quad \textbf{[1.0 т.]}$$
+
+**г)** Скоростта $v_{\mathrm{хл}}$ в момента, когато хлъзгането изчезне, е $v_{\mathrm{хл}} = a_{\mathrm{хл}}\,t_{\mathrm{хл}}$.
+
+$$v_{\mathrm{хл}} = g\sin\alpha\,(n-1)\frac{\omega_0 r}{g\sin\alpha\left[n\left(1+\frac{1}{k}\right)-1\right]} = \frac{\omega_0 r(n-1)}{n\left(1+\frac{1}{k}\right)-1} = \frac{\omega_0 r(n-1)}{n-1+\frac{n}{k}} = \frac{\omega_0 r}{1+\dfrac{1}{k\left(1-\dfrac{1}{n}\right)}}. \quad \textbf{[0.5 т.]}$$
+
+**д)** Докато се хлъзга, тялото ще измине път $l = \dfrac{1}{2}a_{\mathrm{хл}}t_{\mathrm{хл}}^{\,2}$,
+
+$$l = \frac{g\sin\alpha(n-1)(\omega_0 r)^2}{2(g\sin\alpha)^2\left[n\left(1+\frac{1}{k}\right)-1\right]^2},\qquad l = \frac{(\omega_0 r)^2(n-1)}{2g\sin\alpha\left[n\left(1+\frac{1}{k}\right)-1\right]^2}. \quad \textbf{[0.5 т.]}$$
+
+**е)** За да бъде пътят $l$ максимален, функцията $f(n) = \dfrac{n-1}{\left[n\left(1+\frac{1}{k}\right)-1\right]^2}$, зависеща от $n$, трябва да има максимум. **[0.2 т.]** Тогава първата ѝ производна трябва да е нула.
+
+$$\frac{df}{dn} = \frac{1\cdot\left[n\left(1+\frac{1}{k}\right)-1\right]^2 - (n-1)\cdot 2\cdot\left[n\left(1+\frac{1}{k}\right)-1\right]\left(1+\frac{1}{k}\right)}{\left[n\left(1+\frac{1}{k}\right)-1\right]^4} = 0, \quad \textbf{[0.8 т.]}$$
+
+откъдето $\left[n\left(1+\frac{1}{k}\right)-1\right] - (n-1)\cdot 2\cdot\left(1+\frac{1}{k}\right) = 0$. **[0.2 т.]** След опростяване $n = 2 - \dfrac{1}{1+\frac{1}{k}}$. **[0.3 т.]** Замествайки във формулата за пътя
+
+$$l = \frac{(\omega_0 r)^2\left(2-\frac{1}{1+\frac{1}{k}}-1\right)}{2g\sin\alpha\left[\left(2-\frac{1}{1+\frac{1}{k}}\right)\left(1+\frac{1}{k}\right)-1\right]^2} = \frac{(\omega_0 r)^2}{2g\sin\alpha}\frac{k^2}{4(k+1)}. \quad \textbf{[1.0 т.]}$$
+
+**ж)** След изчезването на хлъзгането механичната енергия на тялото се запазва. Затова приравнявайки тази енергия в положението, когато хлъзгането изчезва, с положението, когато тялото е спряло в най-високата точка на движението си, $\dfrac{(kmr^2+mr^2)\omega_{\mathrm{хл}}^{\,2}}{2} = mgL\sin\alpha$ **[0.5 т.]** и замествайки $\omega_{\mathrm{хл}} = \dfrac{v_{\mathrm{хл}}}{r}$,
+
+$$L = \frac{(k+1)r^2\omega_0^{\,2}}{2g\sin\alpha\left[1+\dfrac{1}{k\left(1-\frac{1}{n}\right)}\right]^2}. \quad \textbf{[1.0 т.]}$$
+
+**з)** Ускорението $a_{\mathrm{безхл}} = \dfrac{v_{\mathrm{хл}}^{\,2}}{2L}$, които вече са изчислени.
+
+$$a_{\mathrm{безхл}} = \frac{\left[\dfrac{\omega_0 r}{1+\frac{1}{k\left(1-\frac{1}{n}\right)}}\right]^2}{2\dfrac{(k+1)r^2\omega_0^{\,2}}{2g\sin\alpha\left[1+\frac{1}{k\left(1-\frac{1}{n}\right)}\right]^2}} = \frac{g\sin\alpha}{k+1}. \quad \textbf{[0.5 т.]}$$
+
+**и)** Началната енергия е $E_0 = \dfrac{kmr^2\omega_0^{\,2}}{2}$. Енергията $E_{\mathrm{кр}}$ в момента, когато хлъзгането изчезва, е $E_{\mathrm{кр}} = \dfrac{(kmr^2+mr^2)\omega_{\mathrm{хл}}^{\,2}}{2} + mgl\sin\alpha$. Замествайки с получените $\omega_{\mathrm{хл}}$ и $l$,
+
+$$\frac{\frac{(kmr^2+mr^2)\omega_{\mathrm{хл}}^{\,2}}{2}+mgl\sin\alpha}{\frac{kmr^2\omega_0^{\,2}}{2}} = \frac{\frac{(kmr^2+mr^2)\left[\frac{\omega_0 r}{1+\frac{1}{k\left(1-\frac{1}{n}\right)}}\right]^2}{2}+mg\sin\alpha\frac{(\omega_0 r)^2(n-1)}{2g\sin\alpha\left[n\left(1+\frac{1}{k}\right)-1\right]^2}}{\frac{kmr^2\omega_0^{\,2}}{2}}. \quad \textbf{[0.4 т.]}$$
+
+След съкращаване $\dfrac{E_{\mathrm{кр}}}{E_0} = \dfrac{k+1}{k\left[1+\frac{1}{k\left(1-\frac{1}{n}\right)}\right]^2} + \dfrac{n-1}{k\left[n\left(1+\frac{1}{k}\right)-1\right]^2}$. **[0.2 т.]** След опростяване $\dfrac{E_{\mathrm{кр}}}{E_0} = \dfrac{1}{1+\frac{1}{k\left(1-\frac{1}{n}\right)}}$. **[0.6 т.]** Максималната стойност на отношението се получава при $n \to \infty$, $\left.\dfrac{E_{\mathrm{кр}}}{E_0}\right|_{max} = \dfrac{1}{1+\frac{1}{k}}$. **[0.3 т.]**
+
+---
+
+Оригинал в Архива: [proletni_2023_STproblems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9F%D1%80%D0%BE%D0%BB%D0%B5%D1%82%D0%BD%D0%B8/2023/proletni_2023_STproblems.pdf)
+· официални решения: [proletni_2023_STsolutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9F%D1%80%D0%BE%D0%BB%D0%B5%D1%82%D0%BD%D0%B8/2023/proletni_2023_STsolutions.pdf)

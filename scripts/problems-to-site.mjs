@@ -91,6 +91,19 @@ function yamlStr(s) {
   return `'${String(s).replace(/'/g, "''")}'`;
 }
 
+// Prose inequalities like "φ<90-|δ|<68º" make MDX try to parse a JSX tag and
+// the build fails ("Unexpected character `9` before name"). A `<` directly
+// followed by a digit or a minus is escaped as `\<` — but only outside
+// $…$ / $$…$$ math, where KaTeX needs the bare character. ("a < b" with a
+// space is already plain text to MDX and is left alone.)
+function mdText(s) {
+  if (s == null) return s;
+  return String(s)
+    .split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/)
+    .map((seg, i) => (i % 2 ? seg : seg.replace(/<(?=[\d-])/g, '\\<')))
+    .join('');
+}
+
 function problemMdx(paper, problem) {
   const lines = [];
   lines.push('---');
@@ -107,17 +120,17 @@ function problemMdx(paper, problem) {
     problem.points != null ? `${String(problem.points).replace('.', ',')} т.` : null,
   ].filter(Boolean);
   if (lead.length) lines.push(`*${lead.join(' · ')}*`, '');
-  if (paper.caveat) lines.push('<Warning title="Бележка към темата">', paper.caveat, '</Warning>', '');
+  if (paper.caveat) lines.push('<Warning title="Бележка към темата">', mdText(paper.caveat), '</Warning>', '');
   lines.push(`## Условие`);
   lines.push('');
-  lines.push(problem.statement);
+  lines.push(mdText(problem.statement));
   lines.push('');
   const partTexts = (problem.parts ?? []).map(p => p.statement);
   for (const fig of figuresNotInline(problem.figures, problem.statement, ...partTexts)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
     for (const part of problem.parts) {
       const pts = part.points != null ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
-      lines.push(`**${part.label}** ${part.statement}${pts}`);
+      lines.push(`**${part.label}** ${mdText(part.statement)}${pts}`);
       lines.push('');
       for (const fig of figuresNotInline(part.figures, part.statement)) lines.push(figureMarkdown(fig), '');
     }
@@ -137,9 +150,9 @@ function problemMdx(paper, problem) {
   if (sol?.statement) {
     lines.push('## Решение', '');
     if (sol.incomplete) {
-      lines.push('<Warning title="Непълно решение">', sol.incompleteReason || 'Решението предстои да бъде довършено.', '</Warning>', '');
+      lines.push('<Warning title="Непълно решение">', mdText(sol.incompleteReason) || 'Решението предстои да бъде довършено.', '</Warning>', '');
     }
-    lines.push(sol.statement, '');
+    lines.push(mdText(sol.statement), '');
     for (const fig of figuresNotInline(sol.figures, sol.statement)) lines.push(figureMarkdown(fig), '');
   }
   const src = paper.source?.archiveKey;
