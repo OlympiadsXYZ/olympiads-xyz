@@ -5,6 +5,7 @@ import Layout from '../components/layout';
 import Markdown from '../components/markdown/Markdown';
 import SEO from '../components/seo';
 import { ConfettiProvider } from '../context/ConfettiContext';
+import { ComparePanelProvider } from '../components/ComparePanel/ComparePanelContext';
 import { ProblemSolutionContext } from '../context/ProblemSolutionContext';
 import { SolutionInfo } from '../models/solution';
 import { removeDuplicates } from '../utils/utils';
@@ -34,6 +35,8 @@ export default function Template(props) {
   const problem = {
     url: problemInfo.url,
     uniqueId: problemInfo.uniqueId,
+    // null in GraphQL when the paper has no official solutions PDF
+    solutionUrl: problemInfo.solutionUrl ?? undefined,
   };
 
   return (
@@ -46,11 +49,13 @@ export default function Template(props) {
         <ProblemSolutionContext.Provider
           value={{ modulesThatHaveProblem, problem }}
         >
-          <MarkdownLayout markdownData={markdownData}>
-            <div className="py-4">
-              <Markdown body={body} />
-            </div>
-          </MarkdownLayout>
+          <ComparePanelProvider>
+            <MarkdownLayout markdownData={markdownData}>
+              <div className="py-4">
+                <Markdown body={body} />
+              </div>
+            </MarkdownLayout>
+          </ComparePanelProvider>
         </ProblemSolutionContext.Provider>
       </ConfettiProvider>
       {/*<p className="text-base text-center leading-6 text-blue-600 font-semibold tracking-wide uppercase">*/}
@@ -121,6 +126,7 @@ export const pageQuery = graphql`
     problemInfo: problemInfo(uniqueId: { eq: $id }) {
       uniqueId
       url
+      solutionUrl
     }
   }
 `;

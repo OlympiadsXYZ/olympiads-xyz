@@ -190,6 +190,11 @@ function problemInfo(paper, problem) {
     // verbose name produces an unreadable URL. Round and grade live in tags.
     name: `Задача ${problem.number}${problem.title ? '. ' + problem.title : ''}`,
     url: archiveUrl(paper.subject, paper.source.archiveKey),
+    // The official solutions PDF, when the paper has one; the problem page's
+    // compare panel offers it next to the problems PDF.
+    ...(paper.solutionSource?.archiveKey
+      ? { solutionUrl: archiveUrl(paper.subject, paper.solutionSource.archiveKey) }
+      : {}),
     source: `${paper.competition} ${paper.year}${paper.round ? ' ' + shortRound(paper.round) : ''}${paper.grade ? ' ' + paper.grade : ''}`,
     difficulty: problem.difficulty ?? 'Normal',
     isStarred: (problem.importance ?? 0) >= 3,

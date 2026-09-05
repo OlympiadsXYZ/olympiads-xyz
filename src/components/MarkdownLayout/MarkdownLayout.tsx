@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { graphql, useStaticQuery } from 'gatsby';
 import * as React from 'react';
 import { useContext, useState } from 'react';
@@ -7,6 +8,8 @@ import {
 } from '../../../content/ordering';
 import ConfettiContext from '../../context/ConfettiContext';
 import { ContactUsSlideoverProvider } from '../../context/ContactUsSlideoverContext';
+import ComparePanel from '../ComparePanel/ComparePanel';
+import { useComparePanelOptional } from '../ComparePanel/ComparePanelContext';
 import MarkdownLayoutContext from '../../context/MarkdownLayoutContext';
 import { ProblemSolutionContext } from '../../context/ProblemSolutionContext';
 import { ProblemSuggestionModalProvider } from '../../context/ProblemSuggestionModalContext';
@@ -28,39 +31,65 @@ import NotSignedInWarning from './NotSignedInWarning';
 import TableOfContentsBlock from './TableOfContents/TableOfContentsBlock';
 import TableOfContentsSidebar from './TableOfContents/TableOfContentsSidebar';
 
-const ContentContainer = ({ children, tableOfContents }) => (
-  <main
-    className="relative z-0 pt-6 lg:pt-2 focus:outline-none overflow-x-hidden"
-    tabIndex={0}
-  >
-    <div className="mx-auto">
-      <div className="flex justify-center">
-        {/* Placeholder for the sidebar */}
-        <div
-          className="flex-shrink-0 hidden lg:block order-1"
-          style={{ width: '20rem' }}
-        />
-        {tableOfContents.length > 1 && (
-          <div className="hidden 2xl:block ml-6 mr-6 w-64 mt-48 flex-shrink-0 order-3">
-            <TableOfContentsSidebar tableOfContents={tableOfContents} />
-          </div>
-        )}
-        <div className="flex-1 max-w-4xl px-4 sm:px-6 lg:px-8 w-0 min-w-0 order-2 overflow-x-auto">
-          <div className="hidden lg:block">
-            <NavBar />
-            <div className="h-8" />
-          </div>
+const ContentContainer = ({ children, tableOfContents }) => {
+  // null on module pages; on problem pages, the side-by-side PDF panel state
+  const compare = useComparePanelOptional();
+  const isSplit = !!compare?.isSplit;
+  // the flex row that the divider measures its percentage against
+  const splitRef = React.useRef<HTMLDivElement>(null);
+  return (
+    <main
+      className={classNames(
+        'relative z-0 pt-6 lg:pt-2 focus:outline-none',
+        // overflow on an ancestor would break the panel's position: sticky
+        !isSplit && 'overflow-x-hidden'
+      )}
+      tabIndex={0}
+    >
+      <div className="mx-auto">
+        <div className="flex justify-center">
+          {/* Placeholder for the sidebar */}
+          <div
+            className="flex-shrink-0 hidden lg:block order-1"
+            style={{ width: '20rem' }}
+          />
+          {/* The table of contents makes room for the compare panel */}
+          {tableOfContents.length > 1 && !isSplit && (
+            <div className="hidden 2xl:block ml-6 mr-6 w-64 mt-48 flex-shrink-0 order-3">
+              <TableOfContentsSidebar tableOfContents={tableOfContents} />
+            </div>
+          )}
+          <div
+            ref={splitRef}
+            className={classNames(
+              'flex-1 min-w-0 order-2',
+              isSplit ? 'flex items-start' : 'max-w-4xl'
+            )}
+          >
+            <div
+              className={classNames(
+                'min-w-0 px-4 sm:px-6 lg:px-8 overflow-x-auto',
+                isSplit ? 'flex-1' : 'w-full'
+              )}
+            >
+              <div className="hidden lg:block">
+                <NavBar />
+                <div className="h-8" />
+              </div>
 
-          {children}
+              {children}
 
-          <div className="pt-4 pb-6">
-            <NavBar alignNavButtonsRight={false} />
+              <div className="pt-4 pb-6">
+                <NavBar alignNavButtonsRight={false} />
+              </div>
+            </div>
+            {isSplit && <ComparePanel containerRef={splitRef} />}
           </div>
         </div>
       </div>
-    </div>
-  </main>
-);
+    </main>
+  );
+};
 
 export default function MarkdownLayout({
   markdownData,
@@ -115,6 +144,8 @@ export default function MarkdownLayout({
 
   // problemSolutionContext is null when markdownData is a ModuleInfo
   const problemSolutionContext = useContext(ProblemSolutionContext);
+  // null on module pages
+  const comparePanel = useComparePanelOptional();
   let activeIDs: string[] = [];
   if (markdownData instanceof ModuleInfo) {
     activeIDs.push(markdownData.id);
@@ -148,7 +179,13 @@ export default function MarkdownLayout({
 
               <ModuleHeaders moduleLinks={moduleLinks} />
 
-              <div className={tableOfContents.length > 1 ? '2xl:hidden' : ''}>
+              <div
+                className={
+                  tableOfContents.length > 1 && !comparePanel?.isSplit
+                    ? '2xl:hidden'
+                    : ''
+                }
+              >
                 <TableOfContentsBlock tableOfContents={tableOfContents} />
               </div>
 

@@ -57,6 +57,7 @@ export const typeDefs = `
       uniqueId: String!
       name: String!
       url: String!
+      solutionUrl: String
       source: String!
       sourceDescription: String
       isStarred: Boolean!

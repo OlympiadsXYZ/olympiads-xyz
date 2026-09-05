@@ -187,6 +187,12 @@ export type ProblemInfo = {
   name: string;
   url: string;
   /**
+   * URL of the official solutions PDF, for transcribed papers that have one
+   * (set by scripts/problems-to-site.mjs). Shown in the problem page's
+   * compare panel next to the problems PDF (url).
+   */
+  solutionUrl?: string;
+  /**
    * Source of the problem. More information about some problem sources can be found in the probSources and the olympiads map.
    */
   source: string;

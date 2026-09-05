@@ -19,6 +19,10 @@ import {
 } from '../../../context/UserDataContext/properties/simpleProperties';
 import { ModuleInfo, ModuleLinkInfo } from '../../../models/module';
 import { useProblemsProgressInfo } from '../../../utils/getProgressInfo';
+import {
+  CompareToggleButton,
+  ReportIssueLink,
+} from '../../ComparePanel/ProblemPageActions';
 import { DashboardProgressSmall } from '../../Dashboard/DashboardProgress';
 import { Frequency } from '../../Frequency';
 import MarkCompleteButton from '../MarkCompleteButton';
@@ -253,15 +257,21 @@ export default function ModuleHeaders({
         {problem && (
           <div>
             <div className="h-4 sm:h-6" />
-            <a
-              href={problem.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm font-medium text-gray-800 hover:text-gray-900 my-0 dark:text-gray-200 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
-            >
-              <span>{t('view_problem_statement')}</span>
-              <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300" />
-            </a>
+            {/* Problem-page actions for quality testers: the original PDF,
+                the side-by-side compare panel and a prefilled issue. */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+              <a
+                href={problem.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm font-medium text-gray-800 hover:text-gray-900 my-0 dark:text-gray-200 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
+              >
+                <span>{t('view_problem_statement')}</span>
+                <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300" />
+              </a>
+              <CompareToggleButton />
+              <ReportIssueLink />
+            </div>
           </div>
         )}
       </div>
