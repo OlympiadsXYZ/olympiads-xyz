@@ -78,15 +78,30 @@ export type ComparePanelContextValue = {
 const ComparePanelContext =
   React.createContext<ComparePanelContextValue | null>(null);
 
+/**
+ * The provider lives in the problem page template, so it remounts on every
+ * client-side navigation through the problems tree. Without this the first
+ * render of the new page would show the panel closed (SSR defaults) until the
+ * effect below has read localStorage: a flash of the single-column layout on
+ * every click. Seeding the state from the last mounted provider keeps the
+ * split view stable; the first mount after SSR still starts from DEFAULTS so
+ * hydration matches the server markup.
+ */
+let lastKnown: { state: Persisted; isDesktop: boolean } | null = null;
+
 export function ComparePanelProvider({
   children,
 }: {
   children: React.ReactNode;
 }): JSX.Element {
-  const [state, setState] = React.useState<Persisted>(DEFAULTS);
-  const [isDesktop, setIsDesktop] = React.useState(false);
+  const [state, setState] = React.useState<Persisted>(
+    () => lastKnown?.state ?? DEFAULTS
+  );
+  const [isDesktop, setIsDesktop] = React.useState(
+    () => lastKnown?.isDesktop ?? false
+  );
   // don't persist the SSR defaults before the stored preference is read
-  const loadedRef = React.useRef(false);
+  const loadedRef = React.useRef(lastKnown !== null);
 
   React.useEffect(() => {
     setState(readPersisted());
@@ -101,6 +116,10 @@ export function ComparePanelProvider({
   React.useEffect(() => {
     if (loadedRef.current) writePersisted(state);
   }, [state]);
+
+  React.useEffect(() => {
+    if (loadedRef.current) lastKnown = { state, isDesktop };
+  }, [state, isDesktop]);
 
   const value = React.useMemo<ComparePanelContextValue>(
     () => ({
