@@ -29,6 +29,10 @@ export const typeDefs = `
       prerequisites: [String]
       redirects: [String]
       frequency: Int
+      # transcribed problem pages only (scripts/problems-to-site.mjs)
+      canonicalSource: String
+      verification: String
+      verifiedAt: String
     }
 
     type Heading {

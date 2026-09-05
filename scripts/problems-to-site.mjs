@@ -9,11 +9,20 @@
 //
 // Nothing new is rendered: this only produces input for the inherited UI.
 //
-//   node scripts/problems-to-site.mjs [--check]
+//   node scripts/problems-to-site.mjs [--check] [--root DIR]
+//
+// Publication gate (docs/Problems-Decisions-2026-09.md, D-P1): a paper is
+// emitted only when content/problem-publication.json holds an entry for its
+// exact content hash. Everything the generator writes is listed in
+// content/problem-generated.json, so withdrawn/quarantined papers lose their
+// pages and index entries on the next run. --check exits 1 on any drift.
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
+import { readPapers, readJson, publicationState, atomicWrite, jsonText, sha256, controlledTopics, walkJson } from './lib/problem-data.mjs';
 
-const ROOT = path.resolve(new URL('..', import.meta.url).pathname);
+const rootArg = process.argv.indexOf('--root');
+const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PROBLEMS_DIR = path.join(ROOT, 'content', 'problems');
 const SOLUTIONS_DIR = path.join(ROOT, 'solutions');
 const EXTRA = path.join(ROOT, 'content', 'extraProblems.json');
@@ -111,13 +120,16 @@ function mdText(s) {
     .join('');
 }
 
-function problemMdx(paper, problem) {
+function problemMdx(paper, problem, state, sourceFile) {
   const lines = [];
   lines.push('---');
   lines.push(`id: ${problem.id}`);
   lines.push(`source: ${yamlStr(paperDescriptor(paper))}`);
   lines.push(`title: ${yamlStr(problemName(problem))}`);
   lines.push(`author: 'Olympiads XYZ · транскрипция на официалните материали'`);
+  lines.push(`canonicalSource: ${yamlStr(sourceFile)}`);
+  lines.push(`verification: ${yamlStr(state.quality)}`);
+  if (state.quality === 'reviewed' && state.verifiedAt) lines.push(`verifiedAt: ${yamlStr(state.verifiedAt)}`);
   lines.push('---');
   lines.push('');
   // Lead line: the paper's printed masthead (ground truth), the date and the points.
@@ -142,25 +154,27 @@ function problemMdx(paper, problem) {
       for (const fig of figuresNotInline(part.figures, part.statement)) lines.push(figureMarkdown(fig), '');
     }
   }
-  const answers = (problem.parts ?? []).filter(p => p.answer && (p.answer.value != null || p.answer.latex));
+  const answers = [
+    ...(problem.answer ? [{ label: '', answer: problem.answer }] : []),
+    ...(problem.parts ?? []).filter(p => p.answer),
+  ].map(p => ({ label: p.label, shown: renderAnswer(p.answer) })).filter(p => p.shown);
   if (answers.length) {
     lines.push('## Отговори', '');
     lines.push('<Spoiler title="Покажи отговорите">', '');
     for (const p of answers) {
-      const a = p.answer;
-      const shown = a.latex ? `$${a.latex}$` : `${a.value}${a.unit ? ' ' + a.unit : ''}`;
-      lines.push(`- **${p.label}** ${shown}`);
+      lines.push(`- ${p.label ? `**${p.label}** ` : ''}${p.shown}`);
     }
     lines.push('', '</Spoiler>', '');
   }
   const sol = problem.solution;
-  if (sol?.statement) {
+  if (sol?.statement || sol?.incomplete) {
     lines.push('## Решение', '');
     if (sol.incomplete) {
       lines.push('<Warning title="Непълно решение">', mdText(sol.incompleteReason) || 'Решението предстои да бъде довършено.', '</Warning>', '');
     }
-    lines.push(mdText(sol.statement), '');
+    if (sol.statement) lines.push('<Spoiler title="Покажи официалното решение">', '', mdText(sol.statement), '');
     for (const fig of figuresNotInline(sol.figures, sol.statement)) lines.push(figureMarkdown(fig), '');
+    if (sol.statement) lines.push('', '</Spoiler>', '');
   }
   const src = paper.source?.archiveKey;
   if (src) {
@@ -191,84 +205,137 @@ function problemName(problem) {
 }
 
 function problemInfo(paper, problem) {
-  const grade = paper.grade ? `${paper.grade}. клас` : null;
+  const grade = gradeLabel(paper.grade, paper.subject);
   return {
     uniqueId: problem.id,
     // Kept short on purpose: getProblemURL() slugifies source + name, so a
     // verbose name produces an unreadable URL. Round and grade live in tags.
     name: problemName(problem),
-    url: archiveUrl(paper.subject, paper.source.archiveKey),
+    url: withPage(archiveUrl(paper.subject, paper.source.archiveKey), problem.sourceSpans?.find(s => s.document === 'problems')?.page),
     // The official solutions PDF, when the paper has one; the problem page's
     // compare panel offers it next to the problems PDF.
     ...(paper.solutionSource?.archiveKey
-      ? { solutionUrl: archiveUrl(paper.subject, paper.solutionSource.archiveKey) }
+      ? { solutionUrl: withPage(archiveUrl(paper.subject, paper.solutionSource.archiveKey), problem.sourceSpans?.find(s => s.document === 'solutions')?.page) }
       : {}),
     source: `${paper.competition} ${paper.year}${paper.round ? ' ' + shortRound(paper.round) : ''}${paper.grade ? ' ' + paper.grade : ''}`,
     difficulty: problem.difficulty ?? 'Normal',
     isStarred: (problem.importance ?? 0) >= 3,
-    tags: [...(problem.topics ?? []), ...(grade ? [grade] : []), paper.roundType].filter(Boolean),
+    tags: [...controlledTopics(problem.topics, taxonomy).map(id => taxonomy.topics.find(t => t.id === id).label), ...(grade ? [grade] : []), paper.roundType].filter(Boolean),
     solutionMetadata: { kind: 'internal' },
   };
 }
 
-const papers = walk(PROBLEMS_DIR);
-const extra = JSON.parse(fs.readFileSync(EXTRA, 'utf8'));
-const existing = new Map(extra.EXTRA_PROBLEMS.map(p => [p.uniqueId, p]));
-let written = 0, added = 0, skipped = 0;
-
-for (const file of papers) {
-  const { paper, problems } = JSON.parse(fs.readFileSync(file, 'utf8'));
-  // A paper owns its solutions dir: MDX for ids that no longer exist (renamed
-  // problems) would register a second page with the same slug and break the build.
-  if (!check) {
-    const dir = path.join(SOLUTIONS_DIR, paper.subject, paper.id);
-    const live = new Set(problems.map(p => `${p.id}.mdx`));
-    if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir)) {
-      if (f.endsWith('.mdx') && !live.has(f)) { fs.unlinkSync(path.join(dir, f)); console.log(`removed stale ${path.relative(ROOT, path.join(dir, f))}`); }
-    }
+function withPage(url, page) { return Number.isInteger(page) && page > 0 ? `${url}#page=${page}` : url; }
+function renderAnswer(answer) {
+  if (answer.latex) return `$${answer.latex}$`;
+  if (answer.value != null) return mdText(String(answer.value)) + (answer.unit ? ` ${answer.unit}` : '');
+  // An integer choice index is zero-based only when the source explicitly
+  // includes the choices array; otherwise preserve the printed identifier.
+  if (answer.kind === 'choice' && answer.correct != null) {
+    const choice = Number.isInteger(answer.correct) && answer.choices?.[answer.correct] != null ? answer.choices[answer.correct] : answer.correct;
+    return mdText(String(choice));
   }
-  for (const problem of problems) {
-    const dir = path.join(SOLUTIONS_DIR, paper.subject, paper.id);
-    const out = path.join(dir, `${problem.id}.mdx`);
-    const mdx = problemMdx(paper, problem);
-    if (check) {
-      if (!fs.existsSync(out) || fs.readFileSync(out, 'utf8') !== mdx) skipped++;
-    } else {
-      fs.mkdirSync(dir, { recursive: true });
-      fs.writeFileSync(out, mdx);
-      written++;
-    }
-    const info = problemInfo(paper, problem);
-    if (!existing.has(info.uniqueId)) added++;
-    existing.set(info.uniqueId, info);
-  }
+  return answer.note ? mdText(answer.note) : '';
 }
 
-// Entries generated from a paper whose problem ids have since changed would
-// claim an internal solution that no longer exists and break the build: drop
-// any internal-kind entry that has no MDX anywhere under solutions/.
-function pruneStale(map) {
-  const mdxIds = new Set();
-  (function scan(dir) {
+const records = readPapers(ROOT);
+const ledger = readJson(path.join(ROOT, 'content/problem-publication.json'), { papers: {} });
+const taxonomy = readJson(path.join(ROOT, 'content/problem-topics.json'), { topics: [] });
+const curation = readJson(path.join(ROOT, 'content/problem-curation.json'), { modules: {} });
+const manifestFile = path.join(ROOT, 'content/problem-generated.json');
+const prior = readJson(manifestFile, { version: 1, files: {}, problemIds: [], moduleTables: [] });
+const extra = readJson(EXTRA, { EXTRA_PROBLEMS: [] });
+const routesFile = path.join(ROOT, 'content/problem-routes.json');
+const routes = readJson(routesFile, {});
+const allIds = new Set(records.flatMap(r => r.data.problems.map(p => p.id)));
+const owned = new Set(prior.problemIds);
+const planned = new Map(), generated = new Map(), excluded = [];
+
+// Bootstrap ownership only from the exact generator signature. Never sweep
+// arbitrary authored solutions merely because they live under solutions/.
+if (!fs.existsSync(manifestFile)) {
+  const scan = dir => {
+    if (!fs.existsSync(dir)) return;
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-      const p = path.join(dir, e.name);
-      if (e.isDirectory()) scan(p); else if (e.name.endsWith('.mdx')) mdxIds.add(e.name.slice(0, -4));
+      const file = path.join(dir, e.name);
+      if (e.isDirectory()) scan(file);
+      else if (e.name.endsWith('.mdx')) {
+        const bytes = fs.readFileSync(file), text = bytes.toString('utf8');
+        const id = /^id: ([^\n]+)$/m.exec(text)?.[1];
+        if (id && text.includes("author: 'Olympiads XYZ · транскрипция на официалните материали'")) {
+          prior.files[path.relative(ROOT, file)] = sha256(bytes);
+          owned.add(id);
+        }
+      }
     }
-  })(SOLUTIONS_DIR);
-  let dropped = 0;
-  for (const [id, info] of map) {
-    if (info.solutionMetadata?.kind === 'internal' && !mdxIds.has(id)) { map.delete(id); dropped++; console.log(`dropped stale index entry ${id} (no solution MDX)`); }
+  };
+  scan(SOLUTIONS_DIR);
+}
+const oldMetadata = new Map(extra.EXTRA_PROBLEMS.map(p => [p.uniqueId, p]));
+const moduleFiles = walkJson(path.join(ROOT, 'content')).filter(f => f.endsWith('.problems.json'));
+const modules = moduleFiles.map(file => ({ file, data: readJson(file) }));
+for (const { data } of modules) for (const [key, entries] of Object.entries(data)) if (key !== 'MODULE_ID' && Array.isArray(entries)) for (const p of entries) oldMetadata.set(p.uniqueId, p);
+for (const record of records) {
+  const state = publicationState(record, ledger);
+  if (!state.eligible) { excluded.push(`${record.data.paper.id}: ${state.reason}`); continue; }
+  const { paper, problems } = record.data;
+  for (const problem of problems) {
+    const relative = `solutions/${paper.subject}/${paper.id}/${problem.id}.mdx`;
+    planned.set(relative, problemMdx(paper, problem, state, record.relativePath));
+    generated.set(problem.id, problemInfo(paper, problem));
+    // D-P5: ids that were live before the route freeze keep their slug URL
+    // (content/problem-routes.json, bootstrapped from production); any id not
+    // in the frozen map is new and gets a stable id-based route.
+    if (!routes[problem.id]) routes[problem.id] = `/problems/${problem.id}`;
   }
-  return dropped;
 }
-
-if (!check) {
-  pruneStale(existing);
-  extra.EXTRA_PROBLEMS = [...existing.values()];
-  fs.writeFileSync(EXTRA, JSON.stringify(extra, null, 2) + '\n');
+// Keep routes reserved after withdrawal, so a title edit or later restoration
+// cannot change bookmarks or accidentally give an old route to another ID.
+const routeOwners = new Map();
+for (const [id, route] of Object.entries(routes)) {
+  if (!route.startsWith('/problems/') || route.includes('..')) throw new Error(`Invalid route for ${id}`);
+  if (routeOwners.has(route) && routeOwners.get(route) !== id) throw new Error(`Route collision: ${id}, ${routeOwners.get(route)}`);
+  routeOwners.set(route, id);
 }
-console.log(
-  check
-    ? `${papers.length} papers, ${skipped} MDX files out of date`
-    : `${papers.length} papers → ${written} solution MDX written, ${added} new problems in extraProblems.json (${existing.size} total)`
-);
+const inModules = new Set(), moduleTables = [];
+for (const { file, data } of modules) {
+  const selected = curation.modules[data.MODULE_ID];
+  if (selected || prior.moduleTables.includes(path.relative(ROOT, file))) {
+    data.archivePractice = (selected || []).filter(item => generated.has(item.problemId)).map(item => generated.get(item.problemId));
+    moduleTables.push(path.relative(ROOT, file));
+    planned.set(path.relative(ROOT, file), jsonText(data));
+  }
+  for (const [key, entries] of Object.entries(data)) if (key !== 'MODULE_ID' && Array.isArray(entries)) for (const item of entries) {
+    if (allIds.has(item.uniqueId) && !generated.has(item.uniqueId)) throw new Error(`Ineligible paper referenced by authored module table: ${file}:${item.uniqueId}`);
+    inModules.add(item.uniqueId);
+  }
+}
+const unmanaged = extra.EXTRA_PROBLEMS.filter(p => !owned.has(p.uniqueId) && !allIds.has(p.uniqueId));
+const metadata = [...unmanaged, ...[...generated.values()].filter(p => !inModules.has(p.uniqueId))].sort((a, b) => a.uniqueId.localeCompare(b.uniqueId));
+planned.set('content/extraProblems.json', jsonText({ ...extra, EXTRA_PROBLEMS: metadata }));
+planned.set('content/problem-routes.json', jsonText(Object.fromEntries(Object.entries(routes).sort(([a], [b]) => a.localeCompare(b)))));
+const manifest = { version: 1, files: Object.fromEntries([...planned].filter(([p]) => p.startsWith('solutions/')).map(([p, text]) => [p, sha256(text)])), problemIds: [...generated.keys()].sort(), moduleTables };
+planned.set('content/problem-generated.json', jsonText(manifest));
+let stale = 0;
+for (const [relative, digest] of Object.entries(prior.files)) {
+  if (planned.has(relative)) continue;
+  if (!relative.startsWith('solutions/') || relative.includes('..') || path.isAbsolute(relative)) throw new Error('Unsafe owned path: ' + relative);
+  const file = path.join(ROOT, relative);
+  if (!fs.existsSync(file)) continue;
+  stale++;
+  if (!check) {
+    if (sha256(fs.readFileSync(file)) !== digest) throw new Error(`Refusing to remove edited generated file: ${relative}; move the edit to canonical JSON first.`);
+    fs.unlinkSync(file);
+  }
+}
+let changed = 0;
+for (const [relative, text] of planned) {
+  const file = path.join(ROOT, relative);
+  if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== text) {
+    changed++;
+    if (!check) atomicWrite(file, text);
+  }
+}
+console.log(`${records.length} papers; ${generated.size} eligible problems; ${excluded.length} excluded papers; ${changed} ${check ? 'stale' : 'updated'} artifacts; ${stale} obsolete pages${check ? '' : ' removed'}.`);
+if (excluded.length) console.log(excluded.join('\n'));
+if (check && (changed || stale)) process.exitCode = 1;

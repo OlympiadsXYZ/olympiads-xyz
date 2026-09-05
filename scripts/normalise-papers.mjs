@@ -3,7 +3,7 @@
 // so that headings, facets and counts line up:
 //   grade: digits only — "9", "9-10", "11-12"; special groups keep their code (SP, ST, ML, junior)
 //   round: the archive vocabulary — "I кръг (общински)", "II кръг (областен)", "III кръг (национален)", "IV кръг"
-// Run with --check to only report.  Never touches statements or solutions.
+// Run with --check to only report (exit 1 if anything would change).  Never touches statements or solutions.
 import fs from 'fs';
 import path from 'path';
 const ROOT = path.resolve(new URL('..', import.meta.url).pathname);
@@ -60,3 +60,4 @@ for (const f of walk(DIR)) {
   }
 }
 console.log(`${changed} paper(s) ${check ? 'would change' : 'normalised'}`);
+if (check && changed) process.exitCode = 1;

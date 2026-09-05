@@ -53,7 +53,7 @@ content/problems/<subject>/<competition>/<year>/<paper-id>.json
     "grade": "9", "lang": "bg",
     "source": { "archiveKey": "Физика/…/NOF3_2019_9problems.pdf", "pages": [1,2] },
     "solutionSource": { "archiveKey": "…9solutions.pdf" },
-    "status": "draft",                    // draft -> review -> published (публикува се само след човешки преглед)
+    "status": "draft",                    // draft | review | published | quarantined | withdrawn — виж „Публикуване и проверка“
     "transcription": { "model": "claude-opus-5", "at": "2026-09-01", "verifiedBy": null }
   },
   "problems": [{
@@ -115,12 +115,64 @@ content/problems/<subject>/<competition>/<year>/<paper-id>.json
              число, сгрешен индекс, разменени точки, невалиден LaTeX → връща
              дефекти, не оценки
 9. upload    фигурите → R2 под problems/<paper-id>/ ; JSON → repo
-10. emit     scripts/problems-to-site.mjs → MDX решение + запис в extraProblems.json
-11. review   човек одобрява преди status: published
+10. record   scripts/publication.mjs approve --paper … --receipt … → запис в
+             content/problem-publication.json за ТОЧНИЯ хеш на файла (D-P1)
+11. emit     scripts/problems-to-site.mjs → MDX страница + запис в extraProblems.json,
+             само за темите със валиден запис в регистъра; CI отказва застояли артефакти
+12. human    редактор преглежда → status: published (не се прави масово)
 ```
 
 Стъпка 8 не е формалност: транскрипцията греши тихо (изпуснат долен индекс,
 `v_0/2` вместо `v_0`), а тиха грешка в условие е по-лоша от липсваща задача.
+
+## Публикуване и проверка
+
+Решенията D-P1…D-P9 са записани в `docs/Problems-Decisions-2026-09.md`; тук е
+как работят в кода.
+
+**Статуси на темата (`paper.status`, D-P3).** `draft` = още не е минала
+машинна проверка; `review` = транскрибирана машинно и проверена от независим
+модел (публикува се, с видима бележка на страницата); `published` = прегледана
+от човек. `quarantined` и `withdrawn` спират публикуването независимо от
+всичко друго. Статусите не се сменят масово.
+
+**Регистър на публикуването (`content/problem-publication.json`, D-P1).**
+Генераторът издава страница само за тема, чийто запис в регистъра носи
+`contentHash` на точните байтове на JSON-а. Видове записи:
+
+| kind | какво удостоверява | quality на страницата |
+|---|---|---|
+| `legacy` | съдържание, пуснато преди регистъра (`sourceCommit` + `recordedAt`); може да носи `evidence` от журналите — история, не проверка | `legacy` |
+| `reviewed` | машинна разписка за точните байтове: проверяващ модел/доставчик/заявка, `checkedAt`, хешове на източниците, нула нерешени дефекти | `reviewed` |
+| `human` | (предстои) човешки преглед → `status: published` | `human` |
+
+Всяка редакция на файла променя хеша и темата пада от сайта до нов запис
+(`revision-needs-review`). `scripts/publication.mjs status` показва състоянието.
+
+**Манифест на генерираното (`content/problem-generated.json`).** Всичко, което
+генераторът е написал, е изброено с хеш; при повторно пускане остарели или
+недопустими страници и индексни записи се махат, а ръчно редактирана
+генерирана страница спира изпълнението (редакцията отива в каноничния JSON).
+
+**Замразени адреси (`content/problem-routes.json`, D-P5).** Всяка задача,
+която е била на сайта, запазва точно досегашния си URL; нова задача получава
+`/problems/<problemId>`. `getProblemURL()` първо гледа тази карта; сблъсък на
+адреси е грешка на генератора.
+
+**Контролирани теми (`content/problem-topics.json`, D-P6).** Суровите низове
+на моделите остават в `problems[].topics`; сайтът показва само етикетите от
+речника (български), съотнесени по id/alias с префиксно съвпадение.
+
+**Бележка за проверката на страницата (D-P7).** Челният ред под заглавието
+казва откъде идва доверието: `legacy` → „Автоматична транскрипция · предстои
+повторна проверка срещу оригинала“; `reviewed` → „Проверена срещу оригинала
+на <дата> от независим модел“; `human` → „Проверена от редактор“
+(`translations/*.json`, полета `verification`/`verifiedAt`/`canonicalSource` в
+frontmatter-а на генерираната страница).
+
+**Порти в CI (D-P8).** Преди Gatsby: `validate-papers.py` (схема),
+`normalise-papers.mjs --check`, `problems-to-site.mjs --check`, `node --test
+scripts/tests/`, `check-mdx.mjs`. Отклонение = провален build.
 
 ## Как се сервира — през СЪЩЕСТВУВАЩИЯ механизъм за задачи
 

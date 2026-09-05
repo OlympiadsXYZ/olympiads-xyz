@@ -28,6 +28,12 @@ import { Frequency } from '../../Frequency';
 import MarkCompleteButton from '../MarkCompleteButton';
 import useSuffix from '../TableOfContents/useSuffix';
 import { useTranslation } from 'react-i18next';
+// "2026-09-06T…" -> "6.9.2026"; deterministic on server and client (no locale).
+function formatVerifiedAt(iso?: string): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? '');
+  return m ? `${Number(m[3])}.${Number(m[2])}.${m[1]}` : '';
+}
+
 export default function ModuleHeaders({
   moduleLinks,
 }: {
@@ -57,6 +63,7 @@ export default function ModuleHeaders({
   // this is for solutions
   const problemSolutionContext = useContext(ProblemSolutionContext);
   const problem = problemSolutionContext?.problem;
+  const verification = problemSolutionContext?.verification;
 
   // either prerequisites for modules or appears in for problems
   let moduleHeaderLinks: { label: string; url?: string }[];
@@ -119,6 +126,17 @@ export default function ModuleHeaders({
               {t('author')}
               {markdownData.author.indexOf(',') !== -1 ? t('author-multiple-suffix') : ''}:{' '}
               {markdownData.author}
+            </p>
+          )}
+          {verification && (
+            <p className="text-gray-500 dark:text-dark-med-emphasis text-xs mt-1">
+              {verification.kind === 'reviewed'
+                ? t('problem-verification-reviewed', {
+                    date: formatVerifiedAt(verification.verifiedAt),
+                  })
+                : verification.kind === 'human'
+                ? t('problem-verification-human')
+                : t('problem-verification-legacy')}
             </p>
           )}
           {markdownData instanceof ModuleInfo && markdownData.contributors && (

@@ -36,6 +36,20 @@ jobs:
           cache: yarn
       - name: Install
         run: yarn install --frozen-lockfile
+      # Source gates (D-P8): nothing is built from invalid, non-normalised, stale
+      # or ineligible problem sources. Any drift fails the job before Gatsby runs.
+      - name: Install schema validator
+        run: python3 -m pip install --user "$(grep -i '^jsonschema==' scripts/requirements-transcription.txt)"
+      - name: Validate papers against schema
+        run: python3 scripts/validate-papers.py
+      - name: Normalisation drift check
+        run: node scripts/normalise-papers.mjs --check
+      - name: Generated pages and index are current
+        run: node scripts/problems-to-site.mjs --check
+      - name: Generator tests
+        run: node --test scripts/tests/
+      - name: Compile every solution MDX
+        run: node scripts/check-mdx.mjs
       - name: Build (archive on)
         timeout-minutes: 40
         env:

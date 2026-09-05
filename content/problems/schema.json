@@ -129,7 +129,9 @@
           "enum": [
             "draft",
             "review",
-            "published"
+            "published",
+            "quarantined",
+            "withdrawn"
           ],
           "description": "published се задава само след човешки преглед"
         },
@@ -341,6 +343,12 @@
             },
             "dpi": {
               "type": "number"
+            },
+            "document": {
+              "enum": [
+                "problems",
+                "solutions"
+              ]
             }
           }
         }
@@ -552,6 +560,40 @@
               "type": "string"
             }
           }
+        },
+        "sourceSpans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceSpan"
+          }
+        }
+      }
+    },
+    "sourceSpan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document",
+        "page"
+      ],
+      "properties": {
+        "document": {
+          "enum": [
+            "problems",
+            "solutions"
+          ]
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "pdfRect": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 4,
+          "maxItems": 4
         }
       }
     }

@@ -38,6 +38,15 @@ export default function Template(props) {
     // null in GraphQL when the paper has no official solutions PDF
     solutionUrl: problemInfo.solutionUrl ?? undefined,
   };
+  // Transcribed pages carry their publication quality (D-P1/D-P7); authored
+  // solutions have no such frontmatter and show no notice.
+  const verification = xdm.frontmatter.verification
+    ? {
+        kind: xdm.frontmatter.verification,
+        verifiedAt: xdm.frontmatter.verifiedAt ?? undefined,
+        canonicalSource: xdm.frontmatter.canonicalSource ?? undefined,
+      }
+    : undefined;
 
   return (
     <Layout>
@@ -47,7 +56,7 @@ export default function Template(props) {
 
       <ConfettiProvider>
         <ProblemSolutionContext.Provider
-          value={{ modulesThatHaveProblem, problem }}
+          value={{ modulesThatHaveProblem, problem, verification }}
         >
           <ComparePanelProvider>
             <MarkdownLayout markdownData={markdownData}>
@@ -85,6 +94,9 @@ export const pageQuery = graphql`
         source
         title
         author
+        canonicalSource
+        verification
+        verifiedAt
       }
       parent {
         ... on File {
