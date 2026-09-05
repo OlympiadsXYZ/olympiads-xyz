@@ -63,13 +63,20 @@ function figuresNotInline(figs, ...texts) {
 const COMPETITION_SHORT = { NOF: 'НОФ', NAO: 'НОА', ESF: 'НЕСФ', PSF: 'НПСФ' };
 const MONTHS_BG = ['януари', 'февруари', 'март', 'април', 'май', 'юни', 'юли', 'август', 'септември', 'октомври', 'ноември', 'декември'];
 
-// "9" -> "9. клас", "9-10 клас" -> "9–10 клас"; anything else is left as printed.
-function gradeLabel(grade) {
+// "9" -> "9. клас", "9-10 клас" -> "9–10 клас"; group codes get their names
+// (physics ST/SP = the special-theme group; astronomy ML/ST = age groups);
+// anything else is left as printed.
+const GROUP_NAMES = {
+  physics: { ST: 'Специална тема', SP: 'Специална тема' },
+  astronomy: { ML: 'Младша възраст', ST: 'Старша възраст' },
+};
+function gradeLabel(grade, subject) {
   if (!grade) return null;
   const g = String(grade).replace(/\s*клас\.?$/u, '').trim().replace(/\s*-\s*/g, '–');
   if (/^\d+$/.test(g)) return `${g}. клас`;
   if (/^\d+–\d+$/.test(g)) return `${g} клас`;
-  return String(grade);
+  const named = GROUP_NAMES[subject]?.[g.toUpperCase()];
+  return named ?? String(grade);
 }
 
 function dateBg(iso) {
@@ -83,7 +90,7 @@ function paperDescriptor(paper) {
   return [
     `${COMPETITION_SHORT[paper.competition] ?? paper.competition} ${paper.year}`,
     paper.round || null,
-    gradeLabel(paper.grade),
+    gradeLabel(paper.grade, paper.subject),
   ].filter(Boolean).join(', ');
 }
 
