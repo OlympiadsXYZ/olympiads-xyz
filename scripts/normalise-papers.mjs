@@ -31,11 +31,25 @@ function canonGrade(g) {
   return s;
 }
 function walk(d) { return fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : (e.name.endsWith('.json') && e.name !== 'schema.json' ? [path.join(d, e.name)] : [])); }
+// Problem ids must be paper-prefixed ("<paperId>-p<N>"); a bare "p1" would collide
+// with the next paper that does the same (uniqueId is global across the site).
+function canonProblemIds(d) {
+  const pid = d.paper.id; let renamed = 0;
+  for (const pr of d.problems ?? []) {
+    if (typeof pr.id === 'string' && !pr.id.startsWith(`${pid}-`)) {
+      const suffix = /^p\d+$/.test(pr.id) ? pr.id : `p${pr.number}`;
+      pr.id = `${pid}-${suffix}`; renamed++;
+    }
+  }
+  return renamed;
+}
+
 let changed = 0;
 for (const f of walk(DIR)) {
-  const raw = fs.readFileSync(f, 'utf8'); const d = JSON.parse(raw); const p = d.paper; const before = JSON.stringify([p.grade, p.round]);
-  p.grade = canonGrade(p.grade); p.round = canonRound(p.round);
-  if (JSON.stringify([p.grade, p.round]) !== before) {
+  const raw = fs.readFileSync(f, 'utf8'); const d = JSON.parse(raw); const p = d.paper; const before = JSON.stringify([p.grade, p.round, (d.problems ?? []).map(x => x.id)]);
+  p.grade = canonGrade(p.grade); p.round = canonRound(p.round); const renamed = canonProblemIds(d);
+  if (renamed) console.log(`${path.relative(ROOT, f)}: ${renamed} problem id(s) prefixed with ${p.id}-`);
+  if (JSON.stringify([p.grade, p.round, (d.problems ?? []).map(x => x.id)]) !== before) {
     changed++; console.log(`${path.relative(ROOT, f)}: ${before} -> ${JSON.stringify([p.grade, p.round])}`);
     if (!check) fs.writeFileSync(f, JSON.stringify(d, null, 1) + '\n');
   }

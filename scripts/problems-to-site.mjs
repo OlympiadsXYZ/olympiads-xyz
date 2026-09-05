@@ -227,7 +227,26 @@ for (const file of papers) {
   }
 }
 
+// Entries generated from a paper whose problem ids have since changed would
+// claim an internal solution that no longer exists and break the build: drop
+// any internal-kind entry that has no MDX anywhere under solutions/.
+function pruneStale(map) {
+  const mdxIds = new Set();
+  (function scan(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) scan(p); else if (e.name.endsWith('.mdx')) mdxIds.add(e.name.slice(0, -4));
+    }
+  })(SOLUTIONS_DIR);
+  let dropped = 0;
+  for (const [id, info] of map) {
+    if (info.solutionMetadata?.kind === 'internal' && !mdxIds.has(id)) { map.delete(id); dropped++; console.log(`dropped stale index entry ${id} (no solution MDX)`); }
+  }
+  return dropped;
+}
+
 if (!check) {
+  pruneStale(existing);
   extra.EXTRA_PROBLEMS = [...existing.values()];
   fs.writeFileSync(EXTRA, JSON.stringify(extra, null, 2) + '\n');
 }
