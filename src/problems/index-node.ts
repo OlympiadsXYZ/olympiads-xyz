@@ -9,6 +9,7 @@
 import fs from 'fs';
 import path from 'path';
 import { getProblemURL, recentUsaco } from '../models/problem';
+import { assembleProblemsTree, PaperFile, ProblemsTreeData } from './tree';
 
 export type ProblemsIndexModule = {
   id: string;
@@ -123,4 +124,69 @@ export function writeProblemsIndex(
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(entries));
   return entries.length;
+}
+
+// ---------------------------------------------------------------------------
+// Problems tree (sidebar of problem pages) — see src/problems/tree.ts.
+
+/** Reads content/problems/**\/*.json (skipping schema.json), sorted by path. */
+export function readPaperFiles(repoRoot: string): PaperFile[] {
+  const root = path.join(repoRoot, 'content', 'problems');
+  const files: string[] = [];
+  const walk = (dir: string) => {
+    if (!fs.existsSync(dir)) return;
+    for (const name of fs.readdirSync(dir).sort()) {
+      const full = path.join(dir, name);
+      if (fs.statSync(full).isDirectory()) walk(full);
+      else if (name.endsWith('.json') && name !== 'schema.json') {
+        files.push(full);
+      }
+    }
+  };
+  walk(root);
+  const papers: PaperFile[] = [];
+  for (const file of files) {
+    try {
+      const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (data && data.paper && Array.isArray(data.problems)) {
+        papers.push(data as PaperFile);
+      }
+    } catch (e) {
+      console.warn(`[problems] skipping unreadable ${file}: ${e}`);
+    }
+  }
+  return papers;
+}
+
+/**
+ * Builds the tree from the paper files, joining each problem to its
+ * ProblemInfo node (by uniqueId) for the solution page URL. Problems without a
+ * node are skipped with a warning.
+ */
+export function buildProblemsTree(
+  nodes: ProblemNode[],
+  repoRoot: string
+): ProblemsTreeData {
+  const urlById = new Map<string, string>();
+  for (const node of nodes) {
+    if (!node || !node.uniqueId || urlById.has(node.uniqueId)) continue;
+    urlById.set(node.uniqueId, getProblemURL(node) + '/solution');
+  }
+  return assembleProblemsTree(readPaperFiles(repoRoot), urlById, (pid, paper) =>
+    console.warn(
+      `[problems] tree: ${pid} (paper ${paper}) has no ProblemInfo node, skipped`
+    )
+  );
+}
+
+/** Writes static/problems-data/tree.json. Returns the tree. */
+export function writeProblemsTree(
+  repoRoot: string,
+  nodes: ProblemNode[]
+): ProblemsTreeData {
+  const tree = buildProblemsTree(nodes, repoRoot);
+  const dir = path.join(repoRoot, 'static', 'problems-data');
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, 'tree.json'), JSON.stringify(tree));
+  return tree;
 }

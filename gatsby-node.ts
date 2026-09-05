@@ -395,12 +395,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   {
     const {
       writeProblemsIndex,
+      writeProblemsTree,
     } = require('./src/problems/index-node');
-    const count = writeProblemsIndex(
-      __dirname,
-      problems.map(({ node }) => node)
-    );
+    const problemNodes = problems.map(({ node }) => node);
+    const count = writeProblemsIndex(__dirname, problemNodes);
     console.info(`[problems] wrote static/problems-data/index.json (${count} problems)`);
+    // Sidebar of problem pages: subject → competition → year → paper → problems.
+    // Read by src/components/ProblemsTree at /problems-data/tree.json.
+    const tree = writeProblemsTree(__dirname, problemNodes);
+    console.info(`[problems] wrote static/problems-data/tree.json (${tree.count} problems)`);
   }
 
   let problemSlugs = {}; // maps slug to problem unique ID

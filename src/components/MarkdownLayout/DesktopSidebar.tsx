@@ -3,8 +3,10 @@ import * as React from 'react';
 import Logo from '../Logo';
 import SidebarBottomButtons from './SidebarBottomButtons';
 import { SidebarNav } from './SidebarNav/SidebarNav';
+import { useSidebarContent } from './useSidebarContent';
 
 export default function DesktopSidebar() {
+  const sidebarContent = useSidebarContent();
   return (
     <div
       className="hidden lg:block fixed z-10 top-0 left-0 bottom-0"
@@ -21,8 +23,8 @@ export default function DesktopSidebar() {
           >
             <Logo />
           </Link>
-          {/* Sidebar component, swap this element with another sidebar if you like */}
-          <SidebarNav />
+          {/* Module pages: the handbook nav; problem pages: the problems tree */}
+          {sidebarContent ?? <SidebarNav />}
         </div>
         <SidebarBottomButtons />
       </div>

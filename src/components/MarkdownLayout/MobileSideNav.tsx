@@ -6,9 +6,11 @@ import Transition from '../Transition';
 import Breadcrumbs from './Breadcrumbs';
 import SidebarBottomButtons from './SidebarBottomButtons';
 import { SidebarNav } from './SidebarNav/SidebarNav';
+import { useSidebarContent } from './useSidebarContent';
 
 export default function MobileSideNav() {
   const { isMobileNavOpen, setIsMobileNavOpen } = useMarkdownLayout();
+  const sidebarContent = useSidebarContent();
 
   return (
     <Transition show={isMobileNavOpen} timeout={300}>
@@ -70,7 +72,7 @@ export default function MobileSideNav() {
                 <div className="px-4">
                   <Breadcrumbs />
                 </div>
-                <SidebarNav />
+                {sidebarContent ?? <SidebarNav />}
               </div>
               <SidebarBottomButtons />
             </div>
