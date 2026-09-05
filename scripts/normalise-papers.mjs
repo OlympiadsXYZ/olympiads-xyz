@@ -33,14 +33,19 @@ function canonGrade(g) {
 function walk(d) { return fs.readdirSync(d, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : (e.name.endsWith('.json') && e.name !== 'schema.json' ? [path.join(d, e.name)] : [])); }
 // Problem ids must be paper-prefixed ("<paperId>-p<N>"); a bare "p1" would collide
 // with the next paper that does the same (uniqueId is global across the site).
+const SAFE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 function canonProblemIds(d) {
   const pid = d.paper.id; let renamed = 0;
-  for (const pr of d.problems ?? []) {
-    if (typeof pr.id === 'string' && !pr.id.startsWith(`${pid}-`)) {
-      const suffix = /^p\d+$/.test(pr.id) ? pr.id : `p${pr.number}`;
-      pr.id = `${pid}-${suffix}`; renamed++;
-    }
-  }
+  (d.problems ?? []).forEach((pr, i) => {
+    const id = typeof pr.id === 'string' ? pr.id : '';
+    if (id.startsWith(`${pid}-`) && SAFE.test(id)) return;
+    // keep an existing safe suffix ("prakt-1" -> "<pid>-prakt-1"); otherwise number the problem
+    let suffix;
+    if (SAFE.test(id) && !id.startsWith(pid)) suffix = id;
+    else if (Number.isInteger(pr.number)) suffix = `p${pr.number}`;
+    else suffix = `p${i + 1}`;
+    pr.id = `${pid}-${suffix}`; renamed++;
+  });
   return renamed;
 }
 

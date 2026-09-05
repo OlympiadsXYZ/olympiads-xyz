@@ -116,7 +116,7 @@ function problemMdx(paper, problem) {
   lines.push('---');
   lines.push(`id: ${problem.id}`);
   lines.push(`source: ${yamlStr(paperDescriptor(paper))}`);
-  lines.push(`title: ${yamlStr(`Задача ${problem.number}${problem.title ? '. ' + problem.title : ''}`)}`);
+  lines.push(`title: ${yamlStr(problemName(problem))}`);
   lines.push(`author: 'Olympiads XYZ · транскрипция на официалните материали'`);
   lines.push('---');
   lines.push('');
@@ -182,13 +182,21 @@ function shortRound(round) {
   return m ? m[1] : String(round).split(' ')[0];
 }
 
+// "Задача 3. Title"; a title that already starts with "Задача" is used as is,
+// and a non-numeric number ("Практически 1") is used as the label itself.
+function problemName(problem) {
+  if (problem.title && /^Задача\b/u.test(problem.title)) return problem.title;
+  const label = Number.isInteger(problem.number) ? `Задача ${problem.number}` : String(problem.number);
+  return `${label}${problem.title ? '. ' + problem.title : ''}`;
+}
+
 function problemInfo(paper, problem) {
   const grade = paper.grade ? `${paper.grade}. клас` : null;
   return {
     uniqueId: problem.id,
     // Kept short on purpose: getProblemURL() slugifies source + name, so a
     // verbose name produces an unreadable URL. Round and grade live in tags.
-    name: `Задача ${problem.number}${problem.title ? '. ' + problem.title : ''}`,
+    name: problemName(problem),
     url: archiveUrl(paper.subject, paper.source.archiveKey),
     // The official solutions PDF, when the paper has one; the problem page's
     // compare panel offers it next to the problems PDF.
@@ -210,6 +218,15 @@ let written = 0, added = 0, skipped = 0;
 
 for (const file of papers) {
   const { paper, problems } = JSON.parse(fs.readFileSync(file, 'utf8'));
+  // A paper owns its solutions dir: MDX for ids that no longer exist (renamed
+  // problems) would register a second page with the same slug and break the build.
+  if (!check) {
+    const dir = path.join(SOLUTIONS_DIR, paper.subject, paper.id);
+    const live = new Set(problems.map(p => `${p.id}.mdx`));
+    if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir)) {
+      if (f.endsWith('.mdx') && !live.has(f)) { fs.unlinkSync(path.join(dir, f)); console.log(`removed stale ${path.relative(ROOT, path.join(dir, f))}`); }
+    }
+  }
   for (const problem of problems) {
     const dir = path.join(SOLUTIONS_DIR, paper.subject, paper.id);
     const out = path.join(dir, `${problem.id}.mdx`);
