@@ -25,6 +25,7 @@
 // attempt is appended to tmp/tx/runs.jsonl.
 // No SDKs: the repo forbids new npm dependencies; undici is already present.
 import fs from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import {
@@ -90,8 +91,20 @@ function buildText(window, images) {
   return parts.join('\n\n');
 }
 
+// JPEG re-encode for providers with small request caps (Z.ai 20 MB). Cached as
+// <name>.q80w1400.jpg next to the PNG; returns a new image descriptor.
+function compressImage(i) {
+  const out = i.file.replace(/\.png$/i, '') + '.q80w1400.jpg';
+  if (!fs.existsSync(out)) {
+    const py = "import sys; from PIL import Image\nim=Image.open(sys.argv[1]).convert('RGB')\nw,h=im.size\nif w>1400: im=im.resize((1400, round(h*1400/w)), Image.LANCZOS)\nim.save(sys.argv[2],'JPEG',quality=80,optimize=True)";
+    const r = spawnSync('python3', ['-c', py, i.file, out], { encoding: 'utf8' });
+    if (r.status !== 0) fail(`could not re-encode ${path.basename(i.file)}: ${r.stderr.slice(0, 200)}`);
+  }
+  return { ...i, file: out, mime: 'image/jpeg', bytes: fs.statSync(out).size, original: i.file };
+}
+
 function buildRequest(images, userText) {
-  const imgs = images.map(i => ({ file: i.file }));
+  const imgs = images.map(i => ({ file: i.file, mime: i.mime || 'image/png' }));
   if (provider === 'anthropic') return {
     url: 'https://api.anthropic.com/v1/messages',
     headers: key => ({ 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' }),
@@ -99,7 +112,7 @@ function buildRequest(images, userText) {
       model, max_tokens: maxTokens, temperature: 0,
       system: 'You transcribe and verify competition papers. Output exactly one JSON object and nothing else.',
       messages: [{ role: 'user', content: [
-        ...imgs.map(i => ({ type: 'image', source: { type: 'base64', media_type: 'image/png', data: b64(i.file) } })),
+        ...imgs.map(i => ({ type: 'image', source: { type: 'base64', media_type: i.mime, data: b64(i.file) } })),
         { type: 'text', text: userText },
       ] }],
     },
@@ -114,7 +127,7 @@ function buildRequest(images, userText) {
     headers: key => ({ 'content-type': 'application/json', 'x-goog-api-key': key }),
     body: {
       contents: [{ role: 'user', parts: [
-        ...imgs.map(i => ({ inline_data: { mime_type: 'image/png', data: b64(i.file) } })),
+        ...imgs.map(i => ({ inline_data: { mime_type: i.mime, data: b64(i.file) } })),
         { text: userText },
       ] }],
       generationConfig: { responseMimeType: 'application/json', maxOutputTokens: maxTokens, temperature: 0 },
@@ -134,7 +147,7 @@ function buildRequest(images, userText) {
       model, max_tokens: maxTokens, temperature: 0, reasoning_effort: reasoning,
       response_format: { type: 'json_object' },
       messages: [{ role: 'user', content: [
-        ...imgs.map(i => ({ type: 'image_url', image_url: { url: `data:image/png;base64,${b64(i.file)}` } })),
+        ...imgs.map(i => ({ type: 'image_url', image_url: { url: `data:${i.mime};base64,${b64(i.file)}` } })),
         { type: 'text', text: userText },
       ] }],
     },
@@ -210,8 +223,18 @@ for (const window of windows) {
   if (tooBig.length) fail(`image(s) over ${provider}'s ${(limits.imageBytes / 1048576).toFixed(0)} MB limit: ${tooBig.map(i => path.basename(i.file)).join(', ')}`);
   if (images.length > limits.images) fail(`${images.length} images exceed ${provider}'s limit of ${limits.images} per request; use --window-pages`);
   const userText = buildText(window, images);
-  const req = buildRequest(images, userText);
-  const payloadBytes = Buffer.byteLength(JSON.stringify(req.body));
+  let req = buildRequest(images, userText);
+  let payloadBytes = Buffer.byteLength(JSON.stringify(req.body));
+  let imagesCompressed = false;
+  if (payloadBytes > limits.requestBytes) {
+    // Over the provider's request cap: re-encode every image as JPEG (max 1400 px wide, q80)
+    // and rebuild. Cached beside the originals; the model sees the same pages, smaller.
+    const small = images.map(compressImage);
+    const req2 = buildRequest(small, userText);
+    const bytes2 = Buffer.byteLength(JSON.stringify(req2.body));
+    console.error(`[transcribe] payload ${(payloadBytes / 1048576).toFixed(1)} MB over ${provider}'s cap; re-encoded ${small.length} images as JPEG -> ${(bytes2 / 1048576).toFixed(1)} MB`);
+    req = req2; payloadBytes = bytes2; imagesCompressed = true; images.splice(0, images.length, ...small);
+  }
   if (payloadBytes > limits.requestBytes) fail(`payload ${(payloadBytes / 1048576).toFixed(1)} MB exceeds ${provider}'s ${(limits.requestBytes / 1048576).toFixed(0)} MB request cap; use --window-pages (reader) or lower the render dpi`);
   const label = windowLabel(window);
   const target = window ? partFile(window) : outFile;
@@ -231,7 +254,7 @@ for (const window of windows) {
   if (!hasKey) fail(`${keyName} is not set in ${cfg.file}`);
   const parsed = await send(req, label);
   const costUsd = estimateCost(model, parsed.inputTokens, parsed.outputTokens);
-  appendRun({ paperId, stage, provider, model, window: label, ok: true, attempts: parsed.attempts, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' ? reasoning : null, at: nowIso() });
+  appendRun({ paperId, stage, provider, model, window: label, ok: true, imagesCompressed, attempts: parsed.attempts, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' ? reasoning : null, at: nowIso() });
   const obj = extractJson(parsed.text, target.replace(/\.json$/, '.raw.txt'), parsed.stopReason);
   const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' ? { reasoning } : {}) };
   if (stage === 'reader') obj.tx = { ...(obj.tx || {}), ...(window ? { window } : {}), reader: ident };
