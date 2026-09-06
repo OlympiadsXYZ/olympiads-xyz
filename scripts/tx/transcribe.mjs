@@ -181,12 +181,19 @@ async function send(req, label) {
   }
 }
 
+let jsonRepaired = null;
 function extractJson(text, rawFile, stopReason) {
   let t = String(text).trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
   const first = t.indexOf('{'), last = t.lastIndexOf('}');
   if (first < 0 || last < 0) { fs.writeFileSync(rawFile, text); fail(`no JSON object in the response (saved ${path.relative(ROOT, rawFile)}); stop reason ${stopReason}`); }
   try { return JSON.parse(t.slice(first, last + 1)); }
-  catch (e) { fs.writeFileSync(rawFile, text); fail(`response JSON does not parse (${e.message}); raw text saved to ${path.relative(ROOT, rawFile)}. Stop reason ${stopReason} — if length/max_tokens, raise --max-tokens or use --window-pages`); }
+  catch (e) {
+    // Models occasionally leave one LaTeX backslash un-escaped (\' or \, inside a
+    // JSON string). Repair only invalid escapes — \X where X is not one of "\/bfnrtu —
+    // and retry; the candidate is flagged so the checker knows a repair happened.
+    const repaired = t.slice(first, last + 1).replace(/\\(?!["\\\/bfnrtu])/g, '\\\\');
+    try { const v = JSON.parse(repaired); jsonRepaired = e.message; console.error(`[transcribe] JSON needed escape repair: ${e.message}`); return v; } catch {}
+    fs.writeFileSync(rawFile, text); fail(`response JSON does not parse (${e.message}); raw text saved to ${path.relative(ROOT, rawFile)}. Stop reason ${stopReason} — if length/max_tokens, raise --max-tokens or use --window-pages`); }
 }
 
 const summaries = [];
@@ -229,6 +236,7 @@ for (const window of windows) {
   const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' ? { reasoning } : {}) };
   if (stage === 'reader') obj.tx = { ...(obj.tx || {}), ...(window ? { window } : {}), reader: ident };
   else obj.checker = { ...ident, candidate: candidatePath, candidateSha256: sha256File(candidatePath), viewSha256: sha256(JSON.stringify(view)), crops: crops.map(c => c.id) };
+  if (jsonRepaired && obj?.tx?.reader) obj.tx.reader.jsonRepaired = jsonRepaired;
   writeJson(target, stage === 'reader' ? sanitizeCandidate(obj) : obj);
   parts.push({ window, file: target, data: obj });
   summaries.push({ paperId, stage, provider, model, window: label, out: target, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, requestId: parsed.requestId, stopReason: parsed.stopReason });
