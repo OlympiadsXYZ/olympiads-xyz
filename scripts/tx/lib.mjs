@@ -585,3 +585,21 @@ export function sanitizeCandidate(node) {
   }
   return node;
 }
+
+// Repair invalid JSON escapes left by a model writing LaTeX: scan runs of
+// backslashes; an even run is fine, an odd run followed by a valid escape
+// character is fine, a lone backslash before anything else gets doubled
+// (forgot to escape), and an odd run of 3+ loses one (over-escaped, e.g. \\\left).
+export function repairJsonEscapes(s) {
+  let out = '';
+  for (let i = 0; i < s.length;) {
+    if (s[i] !== '\\') { out += s[i++]; continue; }
+    let j = i; while (j < s.length && s[j] === '\\') j++;
+    const n = j - i, c = s[j];
+    if (n % 2 === 0 || '"\\/bfnrtu'.includes(c)) out += s.slice(i, j);
+    else if (n === 1) out += '\\\\';
+    else out += '\\'.repeat(n - 1);
+    i = j;
+  }
+  return out;
+}

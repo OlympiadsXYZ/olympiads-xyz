@@ -28,7 +28,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import {
-  parseArgs, fail, readJson, writeJson, readManifest, loadPrompt, pageImages, pageWindows, windowBlock, windowLabel, contextBlock, sanitizeCandidate,
+  parseArgs, fail, readJson, writeJson, readManifest, loadPrompt, pageImages, pageWindows, windowBlock, windowLabel, contextBlock, sanitizeCandidate, repairJsonEscapes,
   candidateFile, checkFile, loadProviderKeys, PROVIDER_KEY_NAME, PROVIDER_LIMITS, TOKENS_PER_PAGE, estimateCost, appendRun, nowIso,
   checkerView, candidateCrops, sha256File, sha256, sleep, ROOT,
 } from './lib.mjs';
@@ -191,7 +191,7 @@ function extractJson(text, rawFile, stopReason) {
     // Models occasionally leave one LaTeX backslash un-escaped (\' or \, inside a
     // JSON string). Repair only invalid escapes — \X where X is not one of "\/bfnrtu —
     // and retry; the candidate is flagged so the checker knows a repair happened.
-    const repaired = t.slice(first, last + 1).replace(/\\(?!["\\\/bfnrtu])/g, '\\\\');
+    const repaired = repairJsonEscapes(t.slice(first, last + 1));
     try { const v = JSON.parse(repaired); jsonRepaired = e.message; console.error(`[transcribe] JSON needed escape repair: ${e.message}`); return v; } catch {}
     fs.writeFileSync(rawFile, text); fail(`response JSON does not parse (${e.message}); raw text saved to ${path.relative(ROOT, rawFile)}. Stop reason ${stopReason} — if length/max_tokens, raise --max-tokens or use --window-pages`); }
 }
