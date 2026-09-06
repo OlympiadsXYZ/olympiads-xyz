@@ -7,8 +7,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import {
   parseArgs, fail, readJson, compileSchema, mathSpans, splitMath, proseOnly, walkStrings, allFigures, RENDER_DPI, R2_PUBLIC,
-  BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx,
-} from './lib.mjs';
+  BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx, stripTx } from './lib.mjs';
 
 const require = createRequire(import.meta.url);
 const katex = require('katex');
@@ -29,7 +28,10 @@ if (args.manifest && !manifest) err('', `manifest not readable: ${args.manifest}
 
 // 1. schema
 const { validate, schema } = compileSchema(mode);
-if (!validate(data)) for (const e of validate.errors) err(e.dataPath || '', `${e.message}${e.params?.additionalProperty ? ` (${e.params.additionalProperty})` : ''}${e.params?.allowedValues ? ` [${e.params.allowedValues.join('|')}]` : ''}`);
+// Candidate mode: readers may put a tx block on any object (solution, part…); promote strips them all,
+// so the schema check runs on the same stripped shape promote will write.
+const schemaInput = mode === 'candidate' ? stripTx(data) : data;
+if (!validate(schemaInput)) for (const e of validate.errors) err(e.dataPath || '', `${e.message}${e.params?.additionalProperty ? ` (${e.params.additionalProperty})` : ''}${e.params?.allowedValues ? ` [${e.params.allowedValues.join('|')}]` : ''}`);
 
 const paper = data.paper || {};
 const paperId = args['paper-id'] || paper.id;
