@@ -24,7 +24,8 @@ if (!manifest) fail(`no manifest for ${paperId}; run prepare.mjs first`);
 const data = readJson(path.resolve(candFile));
 if (!data) fail(`candidate not readable: ${candFile}`);
 const outFile = path.resolve(args.out || candFile.replace(/\.json$/, '') + '.figs.json');
-const figDir = path.join(paperDir(paperId), 'figs');
+// One crop folder per candidate: several readers write into the same paper dir.
+const figDir = path.join(paperDir(paperId), 'figs', path.basename(candFile).replace(/\.json$/, ''));
 fs.mkdirSync(figDir, { recursive: true });
 if (!which('python3')) fail('python3 not found');
 if (!dry && !which('rclone')) fail('rclone not found');
