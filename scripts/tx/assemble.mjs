@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parseArgs, fail, readJson, writeJson, readManifest, WINDOW_PLACEHOLDER, allFigures, nowIso } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, readManifest, WINDOW_PLACEHOLDER, allFigures, nowIso, sanitizeCandidate } from './lib.mjs';
 
 const textLen = pr => String(pr.statement || '').length + (pr.parts || []).reduce((a, p) => a + String(p.statement || '').length, 0);
 const isPlaceholder = pr => String(pr.statement || '').trim() === WINDOW_PLACEHOLDER;
@@ -90,7 +90,7 @@ export function assembleWindows(parts, manifest) {
     } : undefined,
   };
   for (const k of Object.keys(tx)) if (tx[k] === undefined) delete tx[k];
-  const data = { paper, problems, tx };
+  const data = sanitizeCandidate({ paper, problems, tx });
   report.ok = report.problems.length === 0;
   report.figures = allFigures(data).length;
   return { data, report };

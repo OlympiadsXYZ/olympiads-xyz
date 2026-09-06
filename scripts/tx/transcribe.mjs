@@ -28,7 +28,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import {
-  parseArgs, fail, readJson, writeJson, readManifest, loadPrompt, pageImages, pageWindows, windowBlock, windowLabel, contextBlock,
+  parseArgs, fail, readJson, writeJson, readManifest, loadPrompt, pageImages, pageWindows, windowBlock, windowLabel, contextBlock, sanitizeCandidate,
   candidateFile, checkFile, loadProviderKeys, PROVIDER_KEY_NAME, PROVIDER_LIMITS, TOKENS_PER_PAGE, estimateCost, appendRun, nowIso,
   checkerView, candidateCrops, sha256File, sha256, sleep, ROOT,
 } from './lib.mjs';
@@ -229,7 +229,7 @@ for (const window of windows) {
   const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' ? { reasoning } : {}) };
   if (stage === 'reader') obj.tx = { ...(obj.tx || {}), ...(window ? { window } : {}), reader: ident };
   else obj.checker = { ...ident, candidate: candidatePath, candidateSha256: sha256File(candidatePath), viewSha256: sha256(JSON.stringify(view)), crops: crops.map(c => c.id) };
-  writeJson(target, obj);
+  writeJson(target, stage === 'reader' ? sanitizeCandidate(obj) : obj);
   parts.push({ window, file: target, data: obj });
   summaries.push({ paperId, stage, provider, model, window: label, out: target, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, requestId: parsed.requestId, stopReason: parsed.stopReason });
 }

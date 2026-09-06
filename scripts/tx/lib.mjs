@@ -570,3 +570,18 @@ export function contextBlock(manifest) {
     `- figure boxes are [x0, y0, x1, y1] in PERMILLE of the page (0–${BBOX_SCALE} across the width and across the height, origin top-left), independent of image resolution.`,
   ].join('\n');
 }
+
+// Readers (GLM especially) emit `"caption": null` for optional fields the
+// schema types as string/array; that is a formatting slip, not a transcription
+// error. Drop null-valued optional keys everywhere before validation.
+const NULLABLE_OPTIONAL = new Set(['caption', 'alt', 'title', 'held', 'organiser', 'caveat', 'incompleteReason', 'note', 'latex', 'unit', 'tolerance', 'difficulty', 'importance', 'topics', 'parts', 'figures', 'answer', 'solutionSource', 'problemType', 'apparatus', 'measurementTable', 'label']);
+export function sanitizeCandidate(node) {
+  if (Array.isArray(node)) return node.map(sanitizeCandidate);
+  if (node && typeof node === 'object') {
+    for (const k of Object.keys(node)) {
+      if (node[k] === null && NULLABLE_OPTIONAL.has(k)) { delete node[k]; continue; }
+      node[k] = sanitizeCandidate(node[k]);
+    }
+  }
+  return node;
+}
