@@ -22,6 +22,10 @@ export function assembleWindows(parts, manifest) {
   const report = { ok: true, windows: parts.map(p => p.tx?.window || null), problems: [], uncoveredPages: [], duplicates: [] };
   const first = parts[0];
   const paper = JSON.parse(JSON.stringify(first.paper || {}));
+  // Windows that start mid-document often omit paper fields (lang, title, held…):
+  // fill each missing/null field from the first window that has it.
+  for (const part of parts) for (const [k, v] of Object.entries(part.paper || {})) if ((paper[k] == null) && v != null) paper[k] = JSON.parse(JSON.stringify(v));
+  if (paper.lang == null) paper.lang = manifest?.meta?.lang || 'bg';
   const pagesOf = (doc) => [...new Set(parts.flatMap(p => (p.paper?.[doc]?.pages || [])))].sort((a, b) => a - b);
   if (paper.source) paper.source.pages = pagesOf('source');
   const solSrc = parts.find(p => p.paper?.solutionSource)?.paper.solutionSource;
@@ -53,6 +57,11 @@ export function assembleWindows(parts, manifest) {
     const figsOf = (pick) => uniqBy(seen.flatMap(s => pick(s.pr) || []), f => f.id);
     const stFigs = figsOf(pr => pr.figures); if (stFigs.length) out.figures = stFigs; else delete out.figures;
     if (out.solution) { const sf = figsOf(pr => pr.solution?.figures); if (sf.length) out.solution.figures = sf; else delete out.solution.figures; }
+    // A solutions-only window sometimes lists a solution figure in BOTH lists; keep
+    // each id in the list its id names (pN-sol-figM → solution, pN-figM → statement).
+    const solIds = new Set((out.solution?.figures || []).map(f => f.id)), stIds = new Set((out.figures || []).map(f => f.id));
+    if (out.figures) { out.figures = out.figures.filter(f => !(/-sol-/.test(f.id) && solIds.has(f.id))); if (!out.figures.length) delete out.figures; }
+    if (out.solution?.figures) { out.solution.figures = out.solution.figures.filter(f => !(!/-sol-/.test(f.id) && stIds.has(f.id))); if (!out.solution.figures.length) delete out.solution.figures; }
     // source spans: union
     const spans = uniqBy(seen.flatMap(s => s.pr.tx?.sourceSpans || []), spanKey).sort((a, b) => spanKey(a).localeCompare(spanKey(b)));
     out.tx = { ...(out.tx || {}), sourceSpans: spans, windows: [...new Set(seen.map(s => s.wi))] };
