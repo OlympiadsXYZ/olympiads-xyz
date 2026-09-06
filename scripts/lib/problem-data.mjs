@@ -43,7 +43,7 @@ export function publicationState(record, ledger) {
   if (entry.contentHash !== record.contentHash) return { eligible: false, reason: 'revision-needs-review' };
   if (entry.kind === 'legacy' && /^[a-f0-9]{40}$/.test(entry.sourceCommit || '') && entry.recordedAt) return { eligible: true, quality: 'legacy' };
   const review = entry.review;
-  if (entry.kind === 'reviewed' && paper.status !== 'draft' && review?.verdict === 'pass' && review.contentHash === record.contentHash && review.reviewer?.provider && review.reviewer?.model && review.reviewer?.requestId && review.checkedAt && review.sourceHashes?.problems && Array.isArray(review.defects) && review.defects.length === 0) return { eligible: true, quality: 'reviewed', verifiedAt: review.checkedAt };
+  if (entry.kind === 'reviewed' && paper.status !== 'draft' && review?.verdict === 'pass' && review.contentHash === record.contentHash && review.reviewer?.provider && review.reviewer?.model && review.reviewer?.requestId && review.checkedAt && review.sourceHashes?.problems && Array.isArray(review.defects) && review.defects.length === 0 && !(review.blockers?.length) && (!review.independence || review.independence.independent === true || review.independence.allowSameModel === true)) return { eligible: true, quality: 'reviewed', verifiedAt: review.checkedAt };
   return { eligible: false, reason: 'invalid-publication-record' };
 }
 

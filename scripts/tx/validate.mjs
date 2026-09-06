@@ -7,6 +7,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import {
   parseArgs, fail, readJson, compileSchema, mathSpans, splitMath, proseOnly, walkStrings, allFigures, RENDER_DPI, R2_PUBLIC,
+  BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx,
 } from './lib.mjs';
 
 const require = createRequire(import.meta.url);
@@ -53,6 +54,7 @@ problems.forEach((pr, i) => {
   if (Number.isInteger(pr.number)) { if (pr.number !== i + 1) err(`${p}/number`, `expected ${i + 1}, got ${pr.number} (numbering must be contiguous 1..N)`); }
   else warn(`${p}/number`, `non-integer number "${pr.number}"`);
   if (!pr.statement || !String(pr.statement).trim()) err(`${p}/statement`, 'empty statement');
+  else if (String(pr.statement).includes(WINDOW_PLACEHOLDER)) err(`${p}/statement`, `window placeholder "${WINDOW_PLACEHOLDER}" left unresolved (assemble.mjs did not find the statement in any window)`);
   if (pr.points != null && (typeof pr.points !== 'number' || pr.points < 0 || pr.points > 200)) err(`${p}/points`, `implausible points ${pr.points}`);
   const labels = new Set();
   let partSum = 0, partsWithPoints = 0;
@@ -107,6 +109,7 @@ walkStrings(data, (p, s) => {
 });
 
 // 4. figures
+if (data.tx?.window) err('/tx/window', 'candidate is a page-window part; run assemble.mjs before validating');
 const figIds = new Set();
 for (const { fig, path: p } of allFigures(data)) {
   if (figIds.has(fig.id)) err(`${p}/id`, `duplicate figure id ${fig.id}`); figIds.add(fig.id);
@@ -118,20 +121,24 @@ for (const { fig, path: p } of allFigures(data)) {
     if (!['problems', 'solutions'].includes(t.document)) err(`${p}/tx/document`, `unknown document "${t.document}"`);
     if (!Number.isInteger(t.page) || t.page < 1) err(`${p}/tx/page`, 'page must be a positive integer');
     const b = t.bbox;
+    // Boxes are permille of the page (0..1000 on each axis), see lib.mjs BBOX_SCALE.
     if (!Array.isArray(b) || b.length !== 4 || b.some(v => typeof v !== 'number')) err(`${p}/tx/bbox`, 'bbox must be [x0,y0,x1,y1] numbers');
     else {
-      if (b[2] - b[0] < 20 || b[3] - b[1] < 20) err(`${p}/tx/bbox`, `box too small (${b[2] - b[0]}x${b[3] - b[1]} px)`);
+      if (b[0] < 0 || b[1] < 0 || b[2] > BBOX_SCALE || b[3] > BBOX_SCALE) err(`${p}/tx/bbox`, `box [${b}] outside 0..${BBOX_SCALE} permille of the page (boxes are page-relative, not pixels)`);
+      if (b[2] <= b[0] || b[3] <= b[1]) err(`${p}/tx/bbox`, `box [${b}] has no area (x1 > x0 and y1 > y0 required)`);
+      else if (b[2] - b[0] < 15 || b[3] - b[1] < 15) err(`${p}/tx/bbox`, `box too small (${b[2] - b[0]}x${b[3] - b[1]} permille)`);
+      else if ((b[2] - b[0]) * (b[3] - b[1]) > 0.85 * BBOX_SCALE * BBOX_SCALE) warn(`${p}/tx/bbox`, 'box covers >85% of the page — is this really a figure?');
       const doc = manifest?.documents?.[t.document];
       if (doc) {
         if (t.page > doc.pages) err(`${p}/tx/page`, `page ${t.page} outside ${t.document} (1..${doc.pages})`);
         else {
-          const sz = doc.pageSizes[t.page - 1];
-          const W = sz.widthPt * (manifest.renderDpi || RENDER_DPI) / 72, H = sz.heightPt * (manifest.renderDpi || RENDER_DPI) / 72;
-          if (b[0] < 0 || b[1] < 0 || b[2] > W + 1 || b[3] > H + 1) err(`${p}/tx/bbox`, `box [${b}] outside page ${t.page} (${Math.round(W)}x${Math.round(H)} px at ${manifest.renderDpi || RENDER_DPI} dpi)`);
-          if ((b[2] - b[0]) * (b[3] - b[1]) > 0.85 * W * H) warn(`${p}/tx/bbox`, 'box covers >85% of the page — is this really a figure?');
+          const { w, h } = pagePx(doc.pageSizes[t.page - 1], manifest.renderDpi || RENDER_DPI);
+          const pw = (b[2] - b[0]) * w / BBOX_SCALE, ph = (b[3] - b[1]) * h / BBOX_SCALE;
+          if (pw < 20 || ph < 20) err(`${p}/tx/bbox`, `box is only ${Math.round(pw)}x${Math.round(ph)} px on the ${manifest.renderDpi || RENDER_DPI}-dpi page`);
         }
       }
     }
+    if (t.dryRun) warn(`${p}/tx`, 'figure comes from figures.mjs --dry-run; receipt.mjs will refuse it');
   }
   if (!fig.alt) warn(`${p}/alt`, 'figure without alt text');
 }

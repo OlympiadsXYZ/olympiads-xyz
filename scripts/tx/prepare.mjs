@@ -2,7 +2,8 @@
 // prepare.mjs <paperId> [--problems <key>] [--solutions <key>] [--force] [--gc]
 // Downloads the source PDFs once, records hashes/page geometry, renders pages at
 // 160 dpi and dumps the text layer. Idempotent by content hash: a second run
-// with unchanged sources does no network and no rendering.
+// with the same keys and unchanged bytes does no network and no rendering; a
+// changed key, a hash mismatch or --force re-downloads and re-renders.
 //   --gc   remove src/ and pages/ (large, reproducible) but keep manifest.json,
 //          text/ and candidates/.
 import fs from 'node:fs';
@@ -32,7 +33,7 @@ fs.mkdirSync(path.join(dir, 'pages'), { recursive: true });
 fs.mkdirSync(path.join(dir, 'text'), { recursive: true });
 fs.mkdirSync(path.join(dir, 'candidates'), { recursive: true });
 
-const previous = args.force ? null : readManifest(paperId);
+const previous = readManifest(paperId); // --force re-downloads and re-renders regardless of it
 const manifest = {
   paperId, meta, origin, renderDpi: RENDER_DPI,
   documents: {},
@@ -59,7 +60,12 @@ for (const doc of ['problems', 'solutions']) {
   const file = path.join(dir, 'src', `${doc}.pdf`);
   const prev = previous?.documents?.[doc];
   let downloaded = false;
-  if (!fs.existsSync(file) || (prev && prev.key === key && sha256File(file) !== prev.sha256)) {
+  // Re-download when there is no file, when --force was given, when the archive
+  // key differs from the one the cached file came from, or when the cached bytes
+  // no longer match the manifest (a partial or tampered file).
+  const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || sha256File(file) !== prev.sha256;
+  if (stale) {
+    fs.rmSync(file, { force: true });
     run('rclone', ['copyto', `${R2_REMOTE}/${key}`, file]);
     downloaded = true;
   }
@@ -67,7 +73,7 @@ for (const doc of ['problems', 'solutions']) {
   const bytes = fs.statSync(file).size;
   const info = pdfInfo(file);
   // Render only when the cached pages do not correspond to these exact bytes.
-  let pageImages = prev && prev.sha256 === sha256 && prev.renderDpi === RENDER_DPI ? renderedPages(doc, info.pages) : null;
+  let pageImages = !args.force && prev && prev.sha256 === sha256 && prev.renderDpi === RENDER_DPI ? renderedPages(doc, info.pages) : null;
   if (!pageImages) {
     for (const f of fs.readdirSync(path.join(dir, 'pages'))) if (f.startsWith(`${doc}-`)) fs.rmSync(path.join(dir, 'pages', f));
     run('pdftoppm', ['-r', String(RENDER_DPI), '-png', file, path.join(dir, 'pages', doc)]);
@@ -82,7 +88,8 @@ for (const doc of ['problems', 'solutions']) {
     if (!pageImages) throw new Error(`rendering ${doc} produced an unexpected page count`);
   }
   const textFile = path.join(dir, 'text', `${doc}.txt`);
-  if (!fs.existsSync(textFile) || prev?.sha256 !== sha256) run('pdftotext', ['-layout', file, textFile], { allowFail: true });
+  // The text layer belongs to these exact bytes: regenerate after any download or hash change.
+  if (!fs.existsSync(textFile) || downloaded || prev?.sha256 !== sha256) { fs.rmSync(textFile, { force: true }); run('pdftotext', ['-layout', file, textFile], { allowFail: true }); }
   const text = fs.existsSync(textFile) ? fs.readFileSync(textFile, 'utf8') : '';
   manifest.documents[doc] = {
     key, file: `src/${doc}.pdf`, sha256, bytes, pages: info.pages, pageSizes: info.pageSizes, producer: info.producer,

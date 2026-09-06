@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 // figures.mjs <paperId> <candidate.json> [--dry-run] [--out <file>]
-// Executes the reader's figure proposals mechanically: crop with pdfcrop.py
-// from the right document, reject trivial/blank crops, upload to R2 only when
-// the key is absent (never overwrite), verify the public URL, and write a copy
-// of the candidate (<name>.figs.json) with url/width/height/source filled in.
+// Executes the reader's figure proposals mechanically: convert the permille box
+// to preview pixels of the right page, crop with pdfcrop.py from the right
+// document, reject trivial/blank crops, upload to R2 only when no object with
+// the same content exists (never overwrite; a different object under the same
+// name gets a -vN suffix), verify the public URL, and write a copy of the
+// candidate (<name>.figs.json) with url/width/height/source filled in.
+// --dry-run crops and inspects but assigns NO url (so the result can never be
+// mistaken for uploaded figures); it is for looking at crops before spending.
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  parseArgs, fail, readJson, writeJson, readManifest, paperDir, allFigures, run, which,
-  PDFCROP, RENDER_DPI, FIGURE_DPI, R2_REMOTE, figureUrl, nowIso,
+  parseArgs, fail, readJson, writeJson, readManifest, paperDir, allFigures, run, which, md5, headStatuses,
+  PDFCROP, RENDER_DPI, FIGURE_DPI, R2_REMOTE, figureUrl, nowIso, bboxToPreviewPx, sha256File,
 } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['dry-run'] });
@@ -23,10 +27,12 @@ const outFile = path.resolve(args.out || candFile.replace(/\.json$/, '') + '.fig
 const figDir = path.join(paperDir(paperId), 'figs');
 fs.mkdirSync(figDir, { recursive: true });
 if (!which('python3')) fail('python3 not found');
+if (!dry && !which('rclone')) fail('rclone not found');
 
 const proposals = allFigures(data).filter(f => f.fig.tx?.bbox);
 const report = { paperId, dryRun: dry, at: nowIso(), figures: [], errors: [] };
 const MIN_PX = 40, MIN_BYTES = 1500;
+const dpi = manifest.renderDpi || RENDER_DPI;
 
 // 1. crop, grouped per document (one pdfcrop invocation per document)
 const byDoc = new Map();
@@ -40,9 +46,15 @@ const cropInfo = new Map();
 for (const [doc, list] of byDoc) {
   const pdf = path.join(paperDir(paperId), manifest.documents[doc].file);
   if (!fs.existsSync(pdf)) fail(`source PDF missing (${pdf}); re-run prepare.mjs`);
-  const boxes = list.flatMap(p => ['--box', `page=${p.fig.tx.page},x0=${p.fig.tx.bbox[0]},y0=${p.fig.tx.bbox[1]},x1=${p.fig.tx.bbox[2]},y1=${p.fig.tx.bbox[3]},id=${p.fig.id}`]);
+  const boxes = list.flatMap(p => {
+    const size = manifest.documents[doc].pageSizes[p.fig.tx.page - 1];
+    if (!size) return [];
+    const px = bboxToPreviewPx(p.fig.tx.bbox, size, dpi);
+    return ['--box', `page=${p.fig.tx.page},x0=${px[0]},y0=${px[1]},x1=${px[2]},y1=${px[3]},id=${p.fig.id}`];
+  });
+  if (!boxes.length) continue;
   const outDir = path.join(figDir, doc);
-  run('python3', [PDFCROP, pdf, outDir, '--dpi', String(FIGURE_DPI), '--preview-dpi', String(manifest.renderDpi || RENDER_DPI), ...boxes]);
+  run('python3', [PDFCROP, pdf, outDir, '--dpi', String(FIGURE_DPI), '--preview-dpi', String(dpi), ...boxes]);
   for (const m of readJson(path.join(outDir, 'figures.json'), [])) cropInfo.set(m.id, m);
 }
 
@@ -54,19 +66,21 @@ function inspect(file) {
   return JSON.parse(r.stdout);
 }
 
-// 3. upload (never overwrite) and verify
-const lsfCache = new Map();
+// 3. upload (never overwrite) and verify. The listing MUST succeed: an auth or
+// network failure is not "nothing there" — it would turn every figure into a
+// fresh upload over whatever exists.
+let listingCache = null;
 function remoteListing() {
-  if (lsfCache.has(paperId)) return lsfCache.get(paperId);
-  const r = run('rclone', ['lsf', '--format', 'ps', `${R2_REMOTE}/problems/${paperId}/`], { allowFail: true });
+  if (listingCache) return listingCache;
+  const r = run('rclone', ['lsf', '--format', 'psh', '--hash', 'MD5', `${R2_REMOTE}/problems/${paperId}/`], { allowFail: true });
+  if (r.status !== 0) fail(`rclone lsf failed (exit ${r.status}) — refusing to upload without a trustworthy listing: ${(r.stderr || '').slice(0, 300)}`);
   const map = new Map();
-  if (r.status === 0) for (const line of r.stdout.split('\n').filter(Boolean)) { const [name, size] = line.split(';'); map.set(name, Number(size)); }
-  lsfCache.set(paperId, map);
+  for (const line of r.stdout.split('\n').filter(Boolean)) {
+    const [name, size, hash] = line.split(';');
+    map.set(name, { size: Number(size), md5: (hash || '').trim() || null });
+  }
+  listingCache = map;
   return map;
-}
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-async function headOk(url) {
-  try { const r = await fetch(url, { method: 'HEAD' }); return r.status === 200; } catch { return false; }
 }
 
 const results = [];
@@ -82,40 +96,43 @@ for (const p of proposals) {
   else if (st.std < 4) entry.error = `crop looks blank (stddev ${st.std.toFixed(1)})`;
   if (entry.error) { report.errors.push({ id: fig.id, message: entry.error }); results.push(entry); continue; }
   entry.stddev = +st.std.toFixed(1);
-  // choose the remote key: reuse an identical-size existing object, otherwise a free -vN suffix
-  let key = fig.id;
-  if (!dry) {
-    const listing = remoteListing();
-    for (let v = 1; v <= 6; v++) {
-      const name = v === 1 ? `${fig.id}.png` : `${fig.id}-v${v}.png`;
-      if (!listing.has(name)) { key = name.replace(/\.png$/, ''); entry.upload = 'new'; break; }
-      if (listing.get(name) === info.bytes) { key = name.replace(/\.png$/, ''); entry.upload = 'reused-existing-identical-size'; break; }
-      if (v === 6) { entry.error = 'six versions of this figure already exist remotely; refusing to add more'; }
-    }
-    if (entry.error) { report.errors.push({ id: fig.id, message: entry.error }); results.push(entry); continue; }
-    if (entry.upload === 'new') run('rclone', ['copyto', info.file, `${R2_REMOTE}/problems/${paperId}/${key}.png`]);
-  } else entry.upload = 'skipped (dry-run)';
+  const bytes = fs.readFileSync(info.file);
+  entry.md5 = md5(bytes); entry.sha256 = sha256File(info.file);
+  entry.relFile = path.relative(paperDir(paperId), info.file);
+  if (dry) { entry.upload = 'skipped (dry-run)'; results.push(entry); continue; }
+  // choose the remote key: reuse an object with identical content (MD5), otherwise a free -vN suffix
+  const listing = remoteListing();
+  let key = null;
+  for (let v = 1; v <= 6; v++) {
+    const name = v === 1 ? `${fig.id}.png` : `${fig.id}-v${v}.png`;
+    const remote = listing.get(name);
+    if (!remote) { key = name.replace(/\.png$/, ''); entry.upload = 'new'; break; }
+    if (remote.md5 && remote.md5 === entry.md5) { key = name.replace(/\.png$/, ''); entry.upload = 'reused-identical-md5'; break; }
+    if (v === 6) entry.error = 'six versions of this figure already exist remotely; refusing to add more';
+  }
+  if (entry.error) { report.errors.push({ id: fig.id, message: entry.error }); results.push(entry); continue; }
+  if (entry.upload === 'new') run('rclone', ['copyto', '--ignore-existing', info.file, `${R2_REMOTE}/problems/${paperId}/${key}.png`]);
   entry.remoteKey = `problems/${paperId}/${key}.png`;
   entry.url = figureUrl(paperId, key);
   results.push(entry);
 }
-// verify public URLs: at most 2 in flight, 150 ms spacing
+// verify public URLs (throttled)
 if (!dry) {
   const pending = results.filter(r => r.url && !r.error);
-  for (let i = 0; i < pending.length; i += 2) {
-    const batch = pending.slice(i, i + 2);
-    const ok = await Promise.all(batch.map(r => headOk(r.url)));
-    batch.forEach((r, j) => { r.public200 = ok[j]; if (!ok[j]) { r.error = 'public URL did not return 200'; report.errors.push({ id: r.id, message: r.error }); } });
-    if (i + 2 < pending.length) await sleep(150);
+  const statuses = await headStatuses(pending.map(r => r.url));
+  for (const r of pending) {
+    r.public200 = statuses.get(r.url) === 200;
+    if (!r.public200) { r.error = `public URL returned ${statuses.get(r.url) || 'no response'}`; report.errors.push({ id: r.id, message: r.error }); }
   }
 }
-// 4. write the enriched copy
+// 4. write the enriched copy. Dry runs keep url/width/height empty on purpose.
 for (const r of results) {
   if (r.error) continue;
   const f = allFigures(data).find(x => x.path === r.path).fig;
+  if (dry) { f.tx = { ...f.tx, file: r.relFile, cropped: true, dryRun: true, upload: r.upload, px: r.px, pdfRect: r.pdfRect }; continue; }
   f.url = r.url; f.width = r.px[0]; f.height = r.px[1];
   f.source = { page: r.page, pdfRect: r.pdfRect, dpi: FIGURE_DPI, ...(r.document === 'solutions' ? { document: 'solutions' } : {}) };
-  f.tx = { ...f.tx, remoteKey: r.remoteKey, upload: r.upload, cropped: true, dryRun: dry };
+  f.tx = { ...f.tx, file: r.relFile, remoteKey: r.remoteKey, upload: r.upload, cropped: true, dryRun: false, public200: r.public200 === true, md5: r.md5, sha256: r.sha256 };
 }
 report.figures = results;
 report.ok = report.errors.length === 0 && results.length === proposals.length;

@@ -6,11 +6,18 @@
 // old Opus output) — the report says which, because the Opus JSON is not gold.
 //
 // fixtures.json: [ { "paperId": "psf-2004-proletno-7", "reference": "tmp/bench/truth/psf-2004-proletno-7.json"? } ]
-// candidates: files named <provider>__<model>.json (as transcribe.mjs writes); a
-// `*` matches within a path segment, `**` matches across segments.
+// candidates: files named <provider>__<model>.json (as transcribe.mjs writes); the
+// derived .figs/.view/.dryrun/.window-*/.rN copies next to them are skipped so a
+// candidate is scored once. `*` matches within a path segment, `**` across.
+// Acceptance columns come from the pipeline artefacts in tmp/tx/<paperId>/:
+// validate.mjs is run on each candidate, checks/*.json whose candidateSha256
+// matches give the checker verdict, receipt.json the receipt verdict, and
+// runs.jsonl the total cost (reader + checker, all attempts) — so the table shows
+// $ per ACCEPTED paper, not $ per request.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseArgs, fail, readJson, writeJson, findContentFile, mathSpans, proseOnly, allFigures, readRuns, ROOT, nowIso } from './lib.mjs';
+import { spawnSync } from 'node:child_process';
+import { parseArgs, fail, readJson, writeJson, findContentFile, mathSpans, proseOnly, normaliseLatex, allFigures, readRuns, isPrimaryCandidate, paperDir, sha256File, ROOT, nowIso } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2));
 if (!args.fixtures || !args.candidates) fail("usage: bench.mjs --fixtures tmp/bench/fixtures.json --candidates 'tmp/tx/*/candidates/*.json' [--out-dir tmp/bench]");
@@ -86,10 +93,13 @@ function compare(ref, cand) {
     const sd = multisetDiff(numericTokens(rs), numericTokens(cs));
     const ra = answers(rp), ca = answers(cp);
     const answerMismatches = ra.filter(a => !ca.some(b => b.where === a.where && String(b.value) === String(a.value) && (b.unit || null) === (a.unit || null))).map(a => a.where);
+    const latexOf = t => mathSpans(t).map(sp => normaliseLatex(sp.inner));
+    const ld = multisetDiff(latexOf(rt), latexOf(ct)), lds = multisetDiff(latexOf(rs), latexOf(cs));
     per.push({
       number: k,
       statementSimilarity: similarity(rt, ct), solutionSimilarity: rs || cs ? similarity(rs, cs) : null,
       numericMismatches: { statement: nd, solution: sd },
+      latexMismatches: { statement: ld, solution: lds },
       latexSpanDelta: mathSpans(ct).length - mathSpans(rt).length,
       latexSpanDeltaSolution: mathSpans(cs).length - mathSpans(rs).length,
       tableCellDiff: multisetDiff(tableCells(rt + '\n' + rs), tableCells(ct + '\n' + cs)),
@@ -109,6 +119,8 @@ function compare(ref, cand) {
     solutionNumericMismatchCount: per.reduce((a, p) => a + p.numericMismatches.solution.missing.length + p.numericMismatches.solution.extra.length, 0),
     tableCellDiffCount: per.reduce((a, p) => a + p.tableCellDiff.missing.length + p.tableCellDiff.extra.length, 0),
     latexSpanDelta: per.reduce((a, p) => a + p.latexSpanDelta, 0),
+    latexMismatchCount: per.reduce((a, p) => a + p.latexMismatches.statement.missing.length + p.latexMismatches.statement.extra.length, 0),
+    solutionLatexMismatchCount: per.reduce((a, p) => a + p.latexMismatches.solution.missing.length + p.latexMismatches.solution.extra.length, 0),
     answerMismatchCount: per.reduce((a, p) => a + p.answerMismatches.length, 0),
     pointsMismatchCount: per.filter(p => p.pointsMismatch).length,
     problems: per,
@@ -119,10 +131,34 @@ const runs = readRuns();
 function costFor(paperId, provider, model) {
   const rs = runs.filter(r => r.paperId === paperId && r.provider === provider && r.model === model && r.ok !== false);
   const sum = (stage, k) => rs.filter(r => r.stage === stage).reduce((a, r) => a + (r[k] || 0), 0) || null;
-  return { readerCostUsd: sum('reader', 'costUsd'), readerSeconds: sum('reader', 'seconds'), readerInputTokens: sum('reader', 'inputTokens'), readerOutputTokens: sum('reader', 'outputTokens'), checkerCostUsd: sum('checker', 'costUsd'), runs: rs.length };
+  const failed = runs.filter(r => r.paperId === paperId && r.provider === provider && r.model === model && r.ok === false).length;
+  // every checker run on this paper counts towards the price of accepting it, whichever model checked
+  const checkerAll = runs.filter(r => r.paperId === paperId && r.stage === 'checker' && r.ok !== false).reduce((a, r) => a + (r.costUsd || 0), 0) || null;
+  const total = (sum('reader', 'costUsd') || 0) + (checkerAll || 0);
+  return { readerCostUsd: sum('reader', 'costUsd'), readerSeconds: sum('reader', 'seconds'), readerInputTokens: sum('reader', 'inputTokens'), readerOutputTokens: sum('reader', 'outputTokens'), readerAttempts: sum('reader', 'attempts'), failedAttempts: failed, checkerCostUsd: checkerAll, totalCostUsd: total ? +total.toFixed(6) : null, runs: rs.length };
+}
+// acceptance evidence from the pipeline artefacts next to the candidate
+function acceptance(paperId, file) {
+  const dir = paperDir(paperId);
+  const manifest = path.join(dir, 'manifest.json');
+  const v = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', 'validate.mjs'), file, '--paper-id', paperId, ...(fs.existsSync(manifest) ? ['--manifest', manifest] : []), '--quiet'], { encoding: 'utf8' });
+  const shas = new Set([sha256File(file)]);
+  const figs = file.replace(/\.json$/, '.figs.json');
+  if (fs.existsSync(figs)) shas.add(sha256File(figs));
+  let checkerVerdict = null, checkedBy = null;
+  const checkDir = path.join(dir, 'checks');
+  if (fs.existsSync(checkDir)) for (const f of fs.readdirSync(checkDir)) {
+    const c = readJson(path.join(checkDir, f), null);
+    const sha = c?.candidateSha256 || c?.checker?.candidateSha256;
+    if (sha && shas.has(sha)) { checkerVerdict = c.verdict ?? null; checkedBy = c.checker ? `${c.checker.provider}:${c.checker.model}` : f; }
+  }
+  const receipt = readJson(path.join(dir, 'receipt.json'), null);
+  const receiptVerdict = receipt && shas.has(receipt.candidateSha256) ? receipt.verdict : null;
+  const jobs = readJson(path.join(path.dirname(dir), 'jobs.json'), null)?.jobs?.[paperId] || null;
+  return { validateOk: v.status === 0, checkerVerdict, checkedBy, receiptVerdict, escalated: jobs?.stage === 'escalated' || receiptVerdict === 'escalate', repairRounds: jobs?.round ?? null };
 }
 
-const files = glob(args.candidates);
+const files = glob(args.candidates).filter(isPrimaryCandidate);
 const report = { at: nowIso(), fixtures: path.relative(ROOT, path.resolve(args.fixtures)), candidatesGlob: args.candidates, papers: [] };
 for (const fx of fixtures) {
   const refFile = fx.reference ? path.resolve(ROOT, fx.reference) : findContentFile(fx.paperId);
@@ -134,7 +170,8 @@ for (const fx of fixtures) {
     if (!cand || cand.paper?.id !== fx.paperId) continue;
     const m = /^([^_]+)__(.+)\.json$/.exec(path.basename(f));
     const provider = cand.tx?.reader?.provider || m?.[1] || 'unknown', model = cand.tx?.reader?.model || m?.[2] || path.basename(f, '.json');
-    entry.candidates.push({ file: path.relative(ROOT, f), provider, model, ...compare(ref, cand), ...costFor(fx.paperId, provider, model) });
+    const acc = acceptance(fx.paperId, f), cost = costFor(fx.paperId, provider, model);
+    entry.candidates.push({ file: path.relative(ROOT, f), provider, model, ...compare(ref, cand), ...cost, ...acc, acceptedCostUsd: acc.receiptVerdict === 'pass' ? cost.totalCostUsd : null });
   }
   report.papers.push(entry);
 }
@@ -142,18 +179,18 @@ for (const fx of fixtures) {
 // ---- markdown
 const md = [];
 md.push(`# Transcription benchmark — ${report.at}`, '', `Fixtures: \`${report.fixtures}\`; candidates: \`${report.candidatesGlob}\`.`, '', 'Reference kind matters: "existing-opus-json" is the old workflow\'s output, not adjudicated truth; a difference is a disagreement, not necessarily a candidate error.', '');
-md.push('| paper | reference | candidate | problems (ref/cand, missing, extra) | stmt sim | sol sim | numeric mismatches (stmt/sol) | table cells | LaTeX Δ | figures Δ | answers ≠ | points ≠ | reader $ | reader s |');
-md.push('|---|---|---|---|---|---|---|---|---|---|---|---|---|---|');
+md.push('| paper | reference | candidate | problems (ref/cand, missing, extra) | stmt sim | sol sim | numeric mismatches (stmt/sol) | LaTeX ≠ (stmt/sol) | table cells | LaTeX Δ | figures Δ | answers ≠ | points ≠ | valid | checker | receipt | reader $ | total $ | accepted $ | reader s |');
+md.push('|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|');
 for (const p of report.papers) {
-  if (p.error) { md.push(`| ${p.paperId} | — | — | ${p.error} | | | | | | | | | | |`); continue; }
-  if (!p.candidates.length) md.push(`| ${p.paperId} | ${p.referenceKind} | (no candidates) | | | | | | | | | | | |`);
-  for (const c of p.candidates) md.push(`| ${p.paperId} | ${p.referenceKind} | ${c.provider}/${c.model} | ${c.problemsRef}/${c.problemsCand}, ${c.missing.length}, ${c.extra.length} | ${c.meanStatementSimilarity} | ${c.meanSolutionSimilarity ?? '—'} | ${c.numericMismatchCount}/${c.solutionNumericMismatchCount} | ${c.tableCellDiffCount} | ${c.latexSpanDelta} | ${c.figureCountDelta} | ${c.answerMismatchCount} | ${c.pointsMismatchCount} | ${c.readerCostUsd ?? '—'} | ${c.readerSeconds ?? '—'} |`);
+  if (p.error) { md.push(`| ${p.paperId} | — | — | ${p.error} | | | | | | | | | | | | | | | | |`); continue; }
+  if (!p.candidates.length) md.push(`| ${p.paperId} | ${p.referenceKind} | (no candidates) | | | | | | | | | | | | | | | | | |`);
+  for (const c of p.candidates) md.push(`| ${p.paperId} | ${p.referenceKind} | ${c.provider}/${c.model} | ${c.problemsRef}/${c.problemsCand}, ${c.missing.length}, ${c.extra.length} | ${c.meanStatementSimilarity} | ${c.meanSolutionSimilarity ?? '—'} | ${c.numericMismatchCount}/${c.solutionNumericMismatchCount} | ${c.latexMismatchCount}/${c.solutionLatexMismatchCount} | ${c.tableCellDiffCount} | ${c.latexSpanDelta} | ${c.figureCountDelta} | ${c.answerMismatchCount} | ${c.pointsMismatchCount} | ${c.validateOk ? 'yes' : 'no'} | ${c.checkerVerdict ?? '—'} | ${c.receiptVerdict ?? '—'}${c.escalated ? ' (escalated)' : ''} | ${c.readerCostUsd ?? '—'} | ${c.totalCostUsd ?? '—'} | ${c.acceptedCostUsd ?? '—'} | ${c.readerSeconds ?? '—'} |`);
 }
-md.push('', '## Per-problem detail', '');
+md.push('', 'Columns: *valid* = validate.mjs exit 0; *checker* = verdict of the checker output whose candidateSha256 matches; *receipt* = receipt.json verdict for these bytes; *total $* = reader (all attempts) + every checker run on the paper; *accepted $* = total $ only when the receipt passed. LaTeX ≠ counts normalised math spans (whitespace, `{,}`/`,`, `\\mathrm` ignored) present on one side only — a wrong subscript or sign shows here.', '', '## Per-problem detail', '');
 for (const p of report.papers) for (const c of p.candidates || []) {
   md.push(`### ${p.paperId} — ${c.provider}/${c.model}`, '');
   for (const q of c.problems) {
-    const bits = [`stmt ${q.statementSimilarity}`, q.solutionSimilarity != null ? `sol ${q.solutionSimilarity}` : null, q.numericMismatches.statement.missing.length ? `missing numbers: ${q.numericMismatches.statement.missing.join(' ')}` : null, q.numericMismatches.statement.extra.length ? `extra numbers: ${q.numericMismatches.statement.extra.join(' ')}` : null, q.tableCellDiff.missing.length + q.tableCellDiff.extra.length ? `table cells ±${q.tableCellDiff.missing.length}/${q.tableCellDiff.extra.length}` : null, q.answerMismatches.length ? `answers ≠ ${q.answerMismatches.join(', ')}` : null, q.pointsMismatch ? 'points ≠' : null, q.partsDelta ? `parts Δ${q.partsDelta}` : null].filter(Boolean);
+    const bits = [`stmt ${q.statementSimilarity}`, q.solutionSimilarity != null ? `sol ${q.solutionSimilarity}` : null, q.numericMismatches.statement.missing.length ? `missing numbers: ${q.numericMismatches.statement.missing.join(' ')}` : null, q.numericMismatches.statement.extra.length ? `extra numbers: ${q.numericMismatches.statement.extra.join(' ')}` : null, q.latexMismatches.statement.missing.length + q.latexMismatches.statement.extra.length ? `LaTeX ≠ ${q.latexMismatches.statement.missing.map(x => `−${x}`).concat(q.latexMismatches.statement.extra.map(x => `+${x}`)).slice(0, 6).join(' ')}` : null, q.latexMismatches.solution.missing.length + q.latexMismatches.solution.extra.length ? `solution LaTeX ≠ ${q.latexMismatches.solution.missing.length}/${q.latexMismatches.solution.extra.length}` : null, q.tableCellDiff.missing.length + q.tableCellDiff.extra.length ? `table cells ±${q.tableCellDiff.missing.length}/${q.tableCellDiff.extra.length}` : null, q.answerMismatches.length ? `answers ≠ ${q.answerMismatches.join(', ')}` : null, q.pointsMismatch ? 'points ≠' : null, q.partsDelta ? `parts Δ${q.partsDelta}` : null].filter(Boolean);
     md.push(`- problem ${q.number}: ${bits.join('; ')}`);
   }
   md.push('');

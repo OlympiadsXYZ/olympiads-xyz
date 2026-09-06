@@ -147,12 +147,31 @@
             "method": {
               "enum": [
                 "vision",
+                "vision-pages",
                 "text-layer",
                 "manual"
               ]
             },
+            "provider": {
+              "type": "string",
+              "description": "API/агентен доставчик на модела-четец (anthropic, gemini, zai, agent)"
+            },
             "model": {
               "type": "string"
+            },
+            "promptVersion": {
+              "type": "string"
+            },
+            "promptSha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "requestId": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "Идентификатор на заявката към доставчика, ако има"
             },
             "at": {
               "type": "string"
@@ -162,6 +181,24 @@
             },
             "figureDpi": {
               "type": "number"
+            },
+            "sourceSha256": {
+              "type": "object",
+              "required": [
+                "problems"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "problems": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "solutions": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              },
+              "description": "SHA-256 на точните PDF байтове, от които е четено"
             },
             "verifiedBy": {
               "type": [
@@ -178,7 +215,8 @@
             "notes": {
               "type": "string"
             }
-          }
+          },
+          "description": "Машинна провенанс на транскрипцията; полетата provider/promptVersion/promptSha256/requestId/sourceSha256 се записват от scripts/tx/promote.mjs, никога ръчно в notes"
         },
         "apparatus": {
           "type": "array",

@@ -6,13 +6,14 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { execFileSync, spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-export const TX_DIR = path.join(ROOT, 'tmp', 'tx');
+// OLYMPIADS_TX_DIR lets the tests point the pipeline at a throw-away directory.
+export const TX_DIR = process.env.OLYMPIADS_TX_DIR ? path.resolve(process.env.OLYMPIADS_TX_DIR) : path.join(ROOT, 'tmp', 'tx');
 export const CONTENT_DIR = path.join(ROOT, 'content', 'problems');
 export const SCHEMA_FILE = path.join(CONTENT_DIR, 'schema.json');
 export const BACKLOG_FILE = path.join(ROOT, 'tmp', 'shards', 'all.json');
@@ -26,9 +27,18 @@ export const R2_PUBLIC = 'https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev';
 export const RENDER_DPI = 160;
 export const FIGURE_DPI = 300;
 export const PDFCROP = path.join(ROOT, 'scripts', 'pdfcrop.py');
+export const STAGES = ['reader', 'checker', 'adjudicator'];
+// Figure boxes travel as permille of the page (0..1000, origin top-left, x right,
+// y down) so that a model which internally rescales the page image still
+// produces a usable box; figures.mjs converts to preview pixels via the manifest.
+export const BBOX_SCALE = 1000;
+// Statement placeholder a windowed reader emits for a problem whose statement
+// lies outside its page window; assemble.mjs must replace every one of them.
+export const WINDOW_PLACEHOLDER = '[извън прозореца]';
 
 export const nowIso = () => new Date().toISOString();
 export const sha256 = value => crypto.createHash('sha256').update(value).digest('hex');
+export const md5 = value => crypto.createHash('md5').update(value).digest('hex');
 export const sha256File = file => sha256(fs.readFileSync(file));
 export const readJson = (file, fallback) => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
 export function writeJson(file, value, indent = 2) {
@@ -69,14 +79,18 @@ export function run(cmd, args, { input, maxBuffer = 64 * 1024 * 1024, allowFail 
 export const which = cmd => spawnSync('which', [cmd], { encoding: 'utf8' }).status === 0;
 
 // ---------------------------------------------------------------- paper ids
-// Replicates the id vocabulary the previous agent workflows settled on:
+// Approximates the id vocabulary the previous agent workflows settled on:
 //   <comp>-<printed year>-<round token>-<grade token>
 //   round token: ESF -> esenno, PSF -> proletno, NOF/NAO -> roman numeral lower-cased
-//   grade token: digits/ranges as printed ("9", "11-12"), special groups lower-cased
-//   ("sp", "st", "ml"); NAO IV practical papers -> "prakt" + group ("praktml");
-//   grade-less papers take a slug of the archive file name ("obs", "exp-var1").
-// Examples: psf-2026-proletno-12, nao-2016-iii-11-12, esf-2013-esenno-9,
-// nof-2014-ii-7, nao-2024-iv-praktml.
+//   grade token: digits/ranges as printed ("9", "11-12"); special groups lower-cased
+//   ("st", "ml"; ESF's "SP" group was committed as "st"); NAO IV practical papers
+//   -> "<group>-prak" ("ml-prak"); grade-less papers take a slug of the file name.
+// Examples: psf-2026-proletno-12, nao-2016-iii-11-12, esf-2013-esenno-st,
+// nof-2014-ii-7, nao-2024-iv-ml-prak.
+// The historical ids are NOT fully regular (nao-2023-iv-nabl vs nao-2024-iv-obs,
+// nof-2015-iii-10-12-d1, nao-2024-iii-11-12-test …), so this function is only a
+// proposal for papers that do not exist yet: paperIdFor()/resolvePaper() look the
+// archive key up in content/problems first and an existing id always wins.
 export function derivePaperId(entry) {
   const comp = String(entry.competition).toLowerCase();
   let roundTok = null;
@@ -87,31 +101,63 @@ export function derivePaperId(entry) {
   let gradeTok;
   if (entry.grade) {
     gradeTok = String(entry.grade).toLowerCase().replace(/\s*[–—-]\s*/g, '-').replace(/[^a-z0-9-]+/g, '');
-    if (comp === 'nao' && /^(ml|st)$/.test(gradeTok) && /prak/.test(base)) gradeTok = `prakt${gradeTok}`;
+    if (comp === 'esf' && gradeTok === 'sp') gradeTok = 'st';
+    if (comp === 'nao' && /^(ml|st)$/.test(gradeTok) && /prak/.test(base)) gradeTok = `${gradeTok}-prak`;
   } else if (/nabl|obs/.test(base)) {
-    gradeTok = 'obs' + (/map/.test(base) ? '-maps' : '');
+    gradeTok = 'nabl' + (/map/.test(base) ? '-maps' : '');
   } else {
     gradeTok = base.replace(/(problems?|zad|prob|tema|noa\d?_\d{4}_?|nof\d?_\d{4}_?|proletni_\d{4}_?|esenni_\d{4}_?)/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x';
   }
   return [comp, entry.year, roundTok, gradeTok].filter(Boolean).join('-');
 }
 export const loadBacklog = () => readJson(BACKLOG_FILE, []);
-export function findContentFile(paperId) {
+export function listContentFiles() {
+  const out = [];
   const stack = [CONTENT_DIR];
   while (stack.length) {
     const d = stack.pop();
+    if (!fs.existsSync(d)) continue;
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
       const p = path.join(d, e.name);
       if (e.isDirectory()) stack.push(p);
-      else if (e.name === `${paperId}.json`) return p;
+      else if (e.name.endsWith('.json') && e.name !== 'schema.json') out.push(p);
     }
   }
-  return null;
+  return out.sort();
+}
+export function findContentFile(paperId) {
+  return listContentFiles().find(f => path.basename(f) === `${paperId}.json`) || null;
+}
+// Index of already transcribed papers by id and by problems archive key. Reading
+// ~550 files takes well under a second and is the only reliable way to know
+// which PDF is already on the site under which id.
+let indexCache = null;
+export function existingPaperIndex(force = false) {
+  if (indexCache && !force) return indexCache;
+  const byId = new Map(), byKey = new Map();
+  for (const file of listContentFiles()) {
+    let data;
+    try { data = readJson(file); } catch { continue; }
+    const p = data?.paper;
+    if (!p?.id) continue;
+    byId.set(p.id, { file, paper: p });
+    if (p.source?.archiveKey) byKey.set(p.source.archiveKey, p.id);
+  }
+  indexCache = { byId, byKey };
+  return indexCache;
+}
+// The id a backlog entry should be worked under: the id of the paper that already
+// holds the same problems PDF, otherwise the derived proposal.
+export function paperIdFor(entry, index = existingPaperIndex()) {
+  return index.byKey.get(entry.problemsKey) || derivePaperId(entry);
 }
 // Resolve archive keys and catalogue metadata for a paper id: explicit overrides
 // win, then an already-transcribed paper's own source block, then the backlog.
+// Refuses to start a second paper for a PDF that is already transcribed under a
+// different id (the old workflow's ids are not fully derivable).
 export function resolvePaper(paperId, { problems, solutions } = {}) {
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(paperId)) throw new Error(`unsafe paper id: ${paperId}`);
+  const index = existingPaperIndex();
   let meta = null, keys = { problems: problems || null, solutions: solutions || null }, origin = null;
   const existing = findContentFile(paperId);
   if (existing) {
@@ -122,13 +168,20 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
     origin = path.relative(ROOT, existing);
   }
   if (!meta || !keys.problems) {
-    const hit = loadBacklog().find(e => derivePaperId(e) === paperId);
+    const backlog = loadBacklog();
+    const hit = backlog.find(e => paperIdFor(e, index) === paperId) || backlog.find(e => derivePaperId(e) === paperId);
     if (hit) {
+      const owner = index.byKey.get(hit.problemsKey);
+      if (owner && owner !== paperId) throw new Error(`${hit.problemsKey} is already transcribed as ${owner}; use that id (derived proposal ${derivePaperId(hit)} is not the committed one)`);
       meta ||= { competition: hit.competition, year: hit.year, round: hit.round ?? null, grade: hit.grade ?? null, subject: hit.subject, lang: hit.lang || 'bg' };
       keys.problems ||= hit.problemsKey || null;
       keys.solutions ||= hit.solutionsKey || null;
       origin ||= 'tmp/shards/all.json';
     }
+  }
+  if (keys.problems) {
+    const owner = index.byKey.get(keys.problems);
+    if (owner && owner !== paperId) throw new Error(`${keys.problems} is already transcribed as ${owner}; refusing to prepare it under ${paperId}`);
   }
   if (!meta) {
     const m = /^([a-z]+)-(\d{4})-/.exec(paperId);
@@ -181,11 +234,34 @@ export function mathSpans(text) {
   });
 }
 export const proseOnly = text => splitMath(text).filter(s => !s.math).map(s => s.text).join(' ');
+// Normalised form of a LaTeX span for comparison: whitespace and decimal-comma
+// spelling differences vanish, a changed subscript, sign or exponent does not.
+export function normaliseLatex(inner) {
+  return String(inner)
+    .replace(/\\[,;:! ]/g, ' ').replace(/~/g, ' ')
+    .replace(/\\left|\\right/g, '').replace(/\\mathrm\{([^}]*)\}/g, '$1').replace(/\\text\{([^}]*)\}/g, '$1')
+    .replace(/\{,\}/g, ',').replace(/\\cdot/g, '*').replace(/\\times/g, '*')
+    .replace(/\\dfrac|\\tfrac/g, '\\frac')
+    .replace(/\s+/g, '')
+    .replace(/([_^])\{([A-Za-z0-9])\}/g, '$1$2');
+}
 // Walk every string field of a paper with its JSON pointer-ish path.
 export function walkStrings(value, cb, p = '') {
   if (typeof value === 'string') cb(p, value);
   else if (Array.isArray(value)) value.forEach((v, i) => walkStrings(v, cb, `${p}/${i}`));
   else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) walkStrings(v, cb, `${p}/${k}`);
+}
+// JSON-pointer get/set for repair.mjs ("/problems/1/parts/0/statement").
+export function pointerGet(obj, pointer) {
+  return pointer.split('/').filter(Boolean).reduce((o, k) => (o == null ? undefined : o[k]), obj);
+}
+export function pointerSet(obj, pointer, value) {
+  const keys = pointer.split('/').filter(Boolean);
+  let o = obj;
+  for (const k of keys.slice(0, -1)) { if (o == null || typeof o !== 'object') return false; o = o[k]; }
+  if (o == null || typeof o !== 'object') return false;
+  o[keys.at(-1)] = value;
+  return true;
 }
 // Every figure in a paper with the path to it and which text it belongs to.
 export function allFigures(data) {
@@ -205,6 +281,47 @@ export function stripTx(value) {
     return out;
   }
   return value;
+}
+// What the checker is allowed to see (Codex §4): the content plus the location
+// data it needs to look things up — figure document/page/box (+ crop file) and
+// problem sourceSpans. Never the reader's notes, identity, cost, text-layer
+// verdict or catalogue disagreement flag.
+export function checkerView(candidate) {
+  const view = stripTx(candidate);
+  (candidate.problems || []).forEach((src, i) => {
+    const spans = src.tx?.sourceSpans;
+    if (spans) view.problems[i].tx = { sourceSpans: spans.map(s => ({ document: s.document, page: s.page })) };
+  });
+  const srcFigs = allFigures(candidate), dstFigs = allFigures(view);
+  srcFigs.forEach((s, k) => {
+    const t = s.fig.tx;
+    if (!t) return;
+    const keep = {};
+    for (const key of ['document', 'page', 'bbox', 'file']) if (t[key] !== undefined) keep[key] = t[key];
+    if (Object.keys(keep).length) dstFigs[k].fig.tx = keep;
+  });
+  return view;
+}
+// Figure evidence a receipt needs before a candidate may pass: no dry-run
+// leftovers, and every pipeline-produced figure verified public (HEAD 200).
+export function figureEvidenceProblems(candidate) {
+  const problems = [];
+  for (const { fig, path: p } of allFigures(candidate)) {
+    if (fig.tx?.dryRun) problems.push({ path: p, message: 'figure comes from a figures.mjs --dry-run (never uploaded)' });
+    else if (fig.tx?.bbox && fig.tx.public200 !== true) problems.push({ path: p, message: 'figure proposal was not uploaded and HEAD-verified by figures.mjs' });
+    else if (!fig.url) problems.push({ path: p, message: 'figure has no url' });
+  }
+  return problems;
+}
+// Geometry helpers: permille boxes <-> preview pixels of a rendered page.
+export const pagePx = (size, dpi = RENDER_DPI) => ({ w: size.widthPt * dpi / 72, h: size.heightPt * dpi / 72 });
+export function bboxToPreviewPx(bbox, size, dpi = RENDER_DPI) {
+  const { w, h } = pagePx(size, dpi);
+  return [bbox[0] * w / BBOX_SCALE, bbox[1] * h / BBOX_SCALE, bbox[2] * w / BBOX_SCALE, bbox[3] * h / BBOX_SCALE].map(v => +v.toFixed(1));
+}
+export function previewPxToBbox(px, size, dpi = RENDER_DPI) {
+  const { w, h } = pagePx(size, dpi);
+  return [px[0] * BBOX_SCALE / w, px[1] * BBOX_SCALE / h, px[2] * BBOX_SCALE / w, px[3] * BBOX_SCALE / h].map(v => Math.round(v));
 }
 
 // ---------------------------------------------------------------- canonicalisation
@@ -243,9 +360,20 @@ export function canonProblemIds(d) {
 }
 export const serialisePaper = data => JSON.stringify(data, null, 1) + '\n';
 
+// Reader/checker independence (Codex §4): a different model at least, ideally a
+// different provider family. Recorded in the receipt; publicationState requires it.
+export function independence(reader, checker) {
+  const same = (a, b) => String(a || '').toLowerCase() === String(b || '').toLowerCase();
+  const sameModel = same(reader?.provider, checker?.provider) && same(reader?.model, checker?.model);
+  return { independent: !!reader?.model && !!checker?.model && !sameModel, differentProvider: !!reader?.provider && !!checker?.provider && !same(reader.provider, checker.provider) };
+}
+
 // Build the exact paper promote.mjs writes: strip the working block, hoist
-// what the committed schema can hold, stamp provenance, canonicalise.
-// `prov` = { provider, model, promptVersion, at, verifiedBy, verifiedAt, notes, sourceSha256 }.
+// what the committed schema holds, stamp provenance, canonicalise.
+// `prov` = { provider, model, promptVersion, promptSha256, requestId, at, verifiedBy, verifiedAt, sourceSha256 }.
+// Every provenance field is a real schema field (content/problems/schema.json →
+// paper.transcription); nothing is serialised into notes. If the schema ever
+// lacks a field this throws — extend the schema, do not smuggle.
 export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
   const data = stripTx(candidate);
   const paper = data.paper;
@@ -255,26 +383,28 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
     const spans = src.tx?.sourceSpans;
     if (spans && problemProps.sourceSpans) data.problems[i].sourceSpans = spans.map(s => ({ document: s.document, page: s.page, ...(s.pdfRect ? { pdfRect: s.pdfRect } : {}) }));
   });
-  // figure.source.document exists only in the extended schema; drop it otherwise
   const sourceProps = schema.$defs?.figure?.properties?.source?.properties || {};
   for (const { fig } of allFigures(data)) {
     if (fig.source && fig.source.document && !sourceProps.document) delete fig.source.document;
     for (const k of Object.keys(fig)) if (!schema.$defs?.figure?.properties?.[k]) delete fig[k];
   }
   const trProps = schema.properties?.paper?.properties?.transcription?.properties || {};
-  const methods = schema.properties?.paper?.properties?.transcription?.properties?.method?.enum || [];
+  const methods = trProps.method?.enum || [];
+  const notes = typeof txPaper.notes === 'string' && txPaper.notes.trim() ? txPaper.notes.trim() : undefined;
   const full = {
     method: methods.includes('vision-pages') ? 'vision-pages' : 'vision',
     provider: prov.provider,
     model: prov.model,
     promptVersion: prov.promptVersion,
+    promptSha256: prov.promptSha256 ?? undefined,
+    requestId: prov.requestId ?? null,
     at: prov.at,
     renderDpi: RENDER_DPI,
     figureDpi: FIGURE_DPI,
     sourceSha256: prov.sourceSha256,
     verifiedBy: prov.verifiedBy ?? null,
     verifiedAt: prov.verifiedAt ?? null,
-    notes: [txPaper.notes, prov.notes].filter(Boolean).join(' ') || undefined,
+    notes,
   };
   const transcription = {};
   const dropped = [];
@@ -282,12 +412,7 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
     if (v === undefined) continue;
     if (trProps[k]) transcription[k] = v; else dropped.push(k);
   }
-  if (dropped.length) {
-    // The committed schema cannot hold these yet; keep them human-readable in notes
-    // so nothing is lost, and let the receipt carry the machine copy.
-    const extra = dropped.map(k => `${k}=${typeof full[k] === 'object' ? JSON.stringify(full[k]) : full[k]}`).join('; ');
-    transcription.notes = [transcription.notes, `[tx] ${extra}`].filter(Boolean).join(' ');
-  }
+  if (dropped.length) throw new Error(`content/problems/schema.json paper.transcription lacks ${dropped.join(', ')}; extend the schema instead of serialising provenance into notes`);
   paper.transcription = transcription;
   paper.status = 'review';
   if (txPaper.caveat && !paper.caveat && schema.properties?.paper?.properties?.caveat) paper.caveat = txPaper.caveat;
@@ -309,6 +434,14 @@ export function loadProviderKeys() {
   return { file: KEYS_FILE, exists: true, keys };
 }
 export const PROVIDER_KEY_NAME = { anthropic: 'ANTHROPIC_API_KEY', gemini: 'GEMINI_API_KEY', zai: 'ZAI_API_KEY' };
+// Documented request limits (checked before anything is sent). Anthropic: 5 MB per
+// image, 100 images, ~32 MB request. Gemini: 20 MB total inline request. Z.ai:
+// not documented in the repo — 20 MB is an assumption to be corrected on first error.
+export const PROVIDER_LIMITS = {
+  anthropic: { imageBytes: 5 * 1024 * 1024, images: 100, requestBytes: 32 * 1024 * 1024 },
+  gemini: { imageBytes: 20 * 1024 * 1024, images: 3000, requestBytes: 20 * 1024 * 1024 },
+  zai: { imageBytes: 20 * 1024 * 1024, images: 100, requestBytes: 20 * 1024 * 1024 },
+};
 export const readPrices = () => readJson(PRICES_FILE, { models: {} });
 export function estimateCost(model, inputTokens, outputTokens, prices = readPrices()) {
   const p = prices.models?.[model];
@@ -322,7 +455,58 @@ export function appendRun(record) {
 export const readRuns = () => fs.existsSync(RUNS_FILE) ? fs.readFileSync(RUNS_FILE, 'utf8').split('\n').filter(Boolean).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean) : [];
 export const safeLabel = s => String(s).replace(/[^a-zA-Z0-9._-]+/g, '-');
 export const candidateFile = (paperId, provider, model) => path.join(paperDir(paperId), 'candidates', `${safeLabel(provider)}__${safeLabel(model)}.json`);
+export const checkFile = (paperId, provider, model) => path.join(paperDir(paperId), 'checks', `${safeLabel(provider)}__${safeLabel(model)}.json`);
 export const figureUrl = (paperId, figId) => `${R2_PUBLIC}/problems/${paperId}/${figId}.png`;
+// Only primary candidates: <provider>__<model>.json (the model may contain dots),
+// not the derived .figs/.view/.dryrun/.window-*/.rN/.gold copies next to them.
+export const DERIVED_SUFFIX = /\.(figs|view|dryrun|window-[^.]+|r\d+|gold|repaired)\.json$/;
+export const isPrimaryCandidate = file => { const b = path.basename(file); return /^[^_]+__.+\.json$/.test(b) && !DERIVED_SUFFIX.test(b); };
+// Crop PNGs figures.mjs produced for a candidate (dry or real): what a checker
+// must look at to judge a box, keyed by figure id.
+export function candidateCrops(candidate, paperId) {
+  const out = [];
+  for (const { fig, path: p } of allFigures(candidate)) {
+    if (!fig.tx?.file) continue;
+    const file = path.isAbsolute(fig.tx.file) ? fig.tx.file : path.join(paperDir(paperId), fig.tx.file);
+    out.push({ id: fig.id, path: p, file, exists: fs.existsSync(file), document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox });
+  }
+  return out;
+}
+// Measured/guessed prompt tokens per 160-dpi A4 page image, for --dry-run estimates.
+// zai: measured 2026-09-06 (494 KB PSF 2024 page = 3,230 prompt tokens). Others: guesses.
+export const TOKENS_PER_PAGE = { zai: 3230, gemini: 1600, anthropic: 1600 };
+export const sleep = ms => new Promise(r => setTimeout(r, ms));
+// Provenance block shared by receipt.mjs and promote.mjs so both build the same
+// bytes. `ctx` = { reviewer: {provider, model}, promptVersion, checkedAt,
+// sourceHashes, independent, adjudicator? }.
+export function provenanceFor(candidate, ctx) {
+  const reader = candidate.tx?.reader || {};
+  const sha = v => (typeof v === 'string' && /^[a-f0-9]{64}$/.test(v) ? v : undefined);
+  const who = `${ctx.reviewer.provider}:${ctx.reviewer.model}`;
+  const how = ctx.independent ? 'independent checker' : 'same-model checker';
+  const adj = ctx.adjudicator ? `; adjudicated by ${ctx.adjudicator.provider}:${ctx.adjudicator.model}` : '';
+  return {
+    provider: reader.provider || 'unknown', model: reader.model || 'unknown',
+    promptVersion: reader.promptVersion || ctx.promptVersion, promptSha256: sha(reader.promptSha256),
+    requestId: reader.requestId ?? null,
+    at: String(reader.at || candidate.tx?.at || ctx.checkedAt).slice(0, 10),
+    sourceSha256: ctx.sourceHashes,
+    verifiedBy: `${who} (${how}, prompt ${ctx.promptVersion}${adj})`,
+    verifiedAt: String(ctx.checkedAt).slice(0, 10),
+  };
+}
+
+// Throttled HEAD verification of public URLs: at most 2 in flight, 150 ms apart.
+export async function headStatuses(urls) {
+  const out = new Map();
+  const one = async url => { try { const r = await fetch(url, { method: 'HEAD' }); out.set(url, r.status); } catch { out.set(url, 0); } };
+  const list = [...new Set(urls)];
+  for (let i = 0; i < list.length; i += 2) {
+    await Promise.all(list.slice(i, i + 2).map(one));
+    if (i + 2 < list.length) await sleep(150);
+  }
+  return out;
+}
 
 // ---------------------------------------------------------------- prompts & pages
 export function loadPrompt(stage, version = 'v1') {
@@ -331,14 +515,49 @@ export function loadPrompt(stage, version = 'v1') {
   return { file: f, text: fs.readFileSync(f, 'utf8'), version, sha256: sha256File(f) };
 }
 // Ordered page images for a prepared paper: problems first, then solutions.
-export function pageImages(manifest) {
+// `window` = { problems: [from, to], solutions: [from, to] } restricts the pages.
+export function pageImages(manifest, window = null) {
   const out = [];
   for (const doc of ['problems', 'solutions']) {
     const d = manifest.documents?.[doc];
     if (!d) continue;
-    d.pageImages.forEach((rel, i) => out.push({ document: doc, page: i + 1, file: path.join(paperDir(manifest.paperId), rel), size: d.pageSizes[i] }));
+    const range = window?.[doc];
+    if (window && !range) continue;
+    d.pageImages.forEach((rel, i) => {
+      const page = i + 1;
+      if (range && (page < range[0] || page > range[1])) return;
+      out.push({ document: doc, page, file: path.join(paperDir(manifest.paperId), rel), size: d.pageSizes[i] });
+    });
   }
   return out;
+}
+// Page windows for long documents: `size` pages each, 1-page overlap, per document.
+export function pageWindows(manifest, size) {
+  const docs = Object.entries(manifest.documents || {});
+  const total = docs.reduce((a, [, d]) => a + d.pages, 0);
+  if (!size || total <= size) return [null];
+  const out = [];
+  for (const [doc, d] of docs) {
+    if (d.pages <= size) { out.push({ [doc]: [1, d.pages] }); continue; }
+    for (let from = 1; from <= d.pages; from += size - 1) {
+      const to = Math.min(d.pages, from + size - 1);
+      out.push({ [doc]: [from, to] });
+      if (to === d.pages) break;
+    }
+  }
+  return out;
+}
+export const windowLabel = window => window ? Object.entries(window).map(([d, [a, b]]) => `${d}-${String(a).padStart(2, '0')}-${String(b).padStart(2, '0')}`).join('_') : 'all';
+export function windowBlock(manifest, window) {
+  if (!window) return null;
+  const parts = Object.entries(window).map(([d, [a, b]]) => `${d} pages ${a}–${b} of ${manifest.documents[d].pages}`);
+  return [
+    `PAGE WINDOW: you see only ${parts.join(' and ')}. The paper is transcribed in windows and assembled afterwards; other windows cover the rest.`,
+    `- Transcribe every problem whose statement BEGINS on one of your pages, completely (a statement that continues onto the next page is in your window because windows overlap by one page).`,
+    `- For an official solution on your pages whose problem statement is NOT on your pages, still emit the problem with its "number", "id", the "solution" and "tx.sourceSpans", and set "statement" to exactly "${WINDOW_PLACEHOLDER}" (parts: []). Assembly replaces the placeholder with the statement from the window that has it.`,
+    `- Do not emit a problem that merely continues from a previous page — it belongs to the window where it begins.`,
+    `- paper.source.pages / solutionSource.pages list only the pages you actually used; set "tx.window" to ${JSON.stringify(window)}.`,
+  ].join('\n');
 }
 export function contextBlock(manifest) {
   const m = manifest.meta;
@@ -348,6 +567,6 @@ export function contextBlock(manifest) {
     `- paperId: ${manifest.paperId}`,
     `- subject: ${m.subject}; competition: ${m.competition}; catalogue year: ${m.year}; catalogue round: ${m.round ?? 'null'}; catalogue grade: ${m.grade ?? 'null'}; lang: ${m.lang || 'bg'}`,
     `- documents:\n${docs}`,
-    `- page images were rendered at ${manifest.renderDpi} dpi; figure boxes are in pixels of those images.`,
+    `- figure boxes are [x0, y0, x1, y1] in PERMILLE of the page (0–${BBOX_SCALE} across the width and across the height, origin top-left), independent of image resolution.`,
   ].join('\n');
 }
