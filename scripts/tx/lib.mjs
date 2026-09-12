@@ -604,6 +604,7 @@ export function normaliseCandidate(c) {
   (c.problems || []).forEach((pr, i) => { fixAnswer(pr.answer, `/problems/${i}/answer`); (pr.parts || []).forEach((part, j) => fixAnswer(part.answer, `/problems/${i}/parts/${j}/answer`)); });
   const h = c.paper?.held;
   if (h && typeof h === 'object') {
+    for (const k of ['from', 'to', 'place']) if (h[k] === null) { delete h[k]; changes.push(`/paper/held/${k}: null dropped`); }
     for (const k of ['from', 'to']) if (h[k] != null && !/^\d{4}-\d{2}-\d{2}$/.test(String(h[k]))) { delete h[k]; changes.push(`/paper/held/${k}: not a date, dropped`); }
     if (h.place != null && typeof h.place !== 'string') { h.place = Array.isArray(h.place) ? h.place.join(', ') : String(h.place); changes.push('/paper/held/place: made a string'); }
     if (h.from && !h.to) h.to = h.from; else if (!h.from && h.to) h.from = h.to;
