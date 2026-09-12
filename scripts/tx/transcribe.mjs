@@ -31,10 +31,11 @@ import { createRequire } from 'node:module';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, loadPrompt, pageImages, pageWindows, windowBlock, windowLabel, contextBlock, sanitizeCandidate, repairJsonEscapes,
   candidateFile, checkFile, loadProviderKeys, PROVIDER_KEY_NAME, PROVIDER_LIMITS, TOKENS_PER_PAGE, estimateCost, appendRun, nowIso,
-  checkerView, candidateCrops, sha256File, sha256, sleep, ROOT,
+  checkerView, candidateCrops, sha256File, sha256, sleep, ROOT, pointerGet,
 } from './lib.mjs';
 import { assembleWindows } from './assemble.mjs';
 import { bindCheckerResult } from './evidence.mjs';
+import { applyFixes } from './fixes.mjs';
 
 const require = createRequire(import.meta.url);
 const { fetch: ufetch, Agent } = require('undici');
@@ -42,8 +43,8 @@ const { fetch: ufetch, Agent } = require('undici');
 const args = parseArgs(process.argv.slice(2), { flags: ['dry-run'] });
 const paperId = args._[0];
 const { provider, model, stage } = args;
-if (!paperId || !['anthropic', 'gemini', 'zai'].includes(provider) || !model || !['reader', 'checker'].includes(stage)) {
-  fail('usage: transcribe.mjs <paperId> --provider anthropic|gemini|zai --model <m> --stage reader|checker [--candidate f] [--dry-run] [--reasoning low|high|max] [--timeout-min 20] [--window-pages N] [--max-tokens N] [--out f]');
+if (!paperId || !['anthropic', 'gemini', 'zai'].includes(provider) || !model || !['reader', 'checker', 'refix'].includes(stage)) {
+  fail('usage: transcribe.mjs <paperId> --provider anthropic|gemini|zai --model <m> --stage reader|checker|refix [--candidate f] [--defects repair-report.json] [--dry-run] [--reasoning low|high|max] [--timeout-min 20] [--window-pages N] [--max-tokens N] [--out f]');
 }
 const dry = !!args['dry-run'];
 const manifest = readManifest(paperId);
@@ -72,6 +73,28 @@ if (stage === 'checker') {
   if (missing.length) fail(`${missing.length} figure crop(s) referenced by the candidate are missing on disk (${missing.map(c => c.id).join(', ')}); re-run figures.mjs`);
   writeJson(candidatePath.replace(/\.json$/, '') + '.view.json', view);
 }
+// ---- refix input: the current candidate and the defects the mechanical repair could not apply.
+// Only the pages those defects live on are sent (defect.document/page, else the
+// problem's source spans, else every page).
+let refix = null;
+if (stage === 'refix') {
+  if (!args.candidate || !args.defects || !args.out) fail('--candidate, --defects <repair report or checker output> and --out are required for the refix stage');
+  candidatePath = path.resolve(args.candidate);
+  const candidate = readJson(candidatePath, null);
+  if (!candidate) fail(`candidate not readable: ${candidatePath}`);
+  const src = readJson(path.resolve(args.defects), null);
+  const defects = (src?.unapplied || src?.defects || []).filter(d => d?.path && d.severity !== 'info');
+  if (!defects.length) fail('no defects to refix');
+  const wanted = new Set();
+  for (const d of defects) {
+    if (d.document && d.page) { wanted.add(`${d.document}#${d.page}`); continue; }
+    const m = /^\/problems\/(\d+)/.exec(d.path);
+    const spans = m ? candidate.problems?.[Number(m[1])]?.tx?.sourceSpans : null;
+    if (Array.isArray(spans) && spans.length) for (const s of spans) wanted.add(`${s.document}#${s.page}`);
+    else for (const p of pageImages(manifest)) wanted.add(`${p.document}#${p.page}`);
+  }
+  refix = { candidate, defects, wanted, round: Number(args.round || 1) };
+}
 const windows = stage === 'reader' && args['window-pages'] ? pageWindows(manifest, Number(args['window-pages'])) : [null];
 if (stage === 'checker' && args['window-pages']) console.error('note: --window-pages applies to the reader stage only; the checker always sees the whole paper');
 
@@ -90,6 +113,10 @@ function buildText(window, images) {
     if (cropImgs.length) parts.push(`FIGURE CROPS produced from the candidate's boxes, in order after the pages: ${cropImgs.map((i, k) => `crop #${k + 1} = figure "${i.id}" (${i.document} p.${i.page}, box ${JSON.stringify(i.bbox)})`).join('; ')}. Judge each crop itself: whole figure, nothing clipped, no swallowed body text.`);
     else parts.push('The candidate proposes no figures; verify that the pages indeed contain no figure a student needs.');
     parts.push('CANDIDATE TRANSCRIPTION (JSON, sanitised — the reader\'s notes and identity are withheld on purpose):\n' + JSON.stringify(view));
+  }
+  if (stage === 'refix') {
+    const clip = v => { const s = JSON.stringify(v === undefined ? null : v); return s.length > 6000 ? s.slice(0, 6000) + '…(truncated)' : s; };
+    parts.push('DEFECTS TO FIX (return one entry per path, in this order):\n' + refix.defects.map((d, i) => `${i + 1}. path ${d.path}\n   kind: ${d.kind || '?'}; severity: ${d.severity || '?'}${d.document ? `; on ${d.document} p.${d.page}` : ''}\n   defect: ${d.description || ''}\n   current value: ${clip(pointerGet(refix.candidate, d.path))}`).join('\n'));
   }
   parts.push('Respond with the single JSON object only.');
   return parts.join('\n\n');
@@ -216,7 +243,7 @@ function extractJson(text, rawFile, stopReason) {
 const summaries = [];
 const parts = [];
 for (const window of windows) {
-  const pages = pageImages(manifest, window);
+  const pages = pageImages(manifest, window).filter(p => !refix || refix.wanted.has(`${p.document}#${p.page}`));
   const missing = pages.filter(p => !fs.existsSync(p.file));
   if (missing.length) fail(`${missing.length} rendered page(s) missing; re-run prepare.mjs`);
   const images = [
@@ -261,6 +288,12 @@ for (const window of windows) {
   appendRun({ paperId, stage, provider, model, window: label, ok: true, imagesCompressed, attempts: parsed.attempts, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' ? reasoning : null, at: nowIso() });
   const obj = extractJson(parsed.text, target.replace(/\.json$/, '.raw.txt'), parsed.stopReason);
   const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' ? { reasoning } : {}) };
+  if (stage === 'refix') {
+    const result = applyFixes(refix.candidate, obj.fixes, { defects: refix.defects, round: refix.round, by: `${provider}:${model} refix`, requestId: parsed.requestId });
+    writeJson(target, sanitizeCandidate(refix.candidate));
+    console.log(JSON.stringify({ paperId, stage, provider, model, out: target, applied: result.applied.length, skipped: result.skipped.length, changes: result.applied, unapplied: result.skipped, figuresToRedo: result.figuresToRedo, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, costUsd, requestId: parsed.requestId }, null, 2));
+    process.exit(result.skipped.length ? 3 : 0);
+  }
   if (stage === 'reader') obj.tx = { ...(obj.tx || {}), ...(window ? { window } : {}), reader: ident };
   else Object.assign(obj, bindCheckerResult(obj, { ...ident, candidate: candidatePath, candidateSha256: candidateHash, viewSha256: sha256(JSON.stringify(view)), crops: crops.map(c => c.id) }));
   if (jsonRepaired && obj?.tx?.reader) obj.tx.reader.jsonRepaired = jsonRepaired;

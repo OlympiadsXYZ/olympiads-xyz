@@ -22,7 +22,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
 if (!paperId) fail('usage: run.mjs <paperId> --reader <provider:model|agent:label> --checker <provider:model|agent:label> [--continue] [--repaired f] [--no-promote] [--allow-same-model]');
 const jobs = readJson(JOBS_FILE, { version: 2, jobs: {} });
@@ -49,6 +49,11 @@ if (!args.continue) {
   jobs.jobs[paperId] = job;
 }
 job.options ||= { maxRounds: 2 };
+// --continue may raise the round budget, and --retry re-enters an escalated job
+// at the repair stage (its last receipt is still on disk) — used after the
+// pipeline learned a new trick, so escalations need not wait for an adjudicator.
+if (args.continue && args['max-rounds']) job.options.maxRounds = Number(args['max-rounds']);
+if (args.continue && args.retry && job.stage === 'escalated') { job.stage = job.artefacts?.receipt ? 'repair' : 'validate'; job.history.push({ at: nowIso(), stage: job.stage, note: 'retry after escalation' }); }
 // Re-read before writing: several run.mjs processes share jobs.json and must not clobber each other's entries.
 const save = (note) => { job.updatedAt = nowIso(); if (note) job.history.push({ at: job.updatedAt, stage: job.stage, note }); const current = readJson(JOBS_FILE, { version: 2, jobs: {} }); current.jobs[paperId] = job; jobs.jobs = current.jobs; writeJson(JOBS_FILE, current); };
 const node = (script, argv, opts = {}) => spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', script), ...argv], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
@@ -154,7 +159,22 @@ for (;;) {
     if (r.status === 1) { save(`repair failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
     const rep = JSON.parse(r.stdout || '{}');
     job.artefacts.candidate = rel(repaired); delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256;
-    if (r.status === 3) escalate(`repair.mjs could not apply ${rep.skipped} defect(s) (no usable suggestedFix); applied ${rep.applied}`);
+    if (r.status === 3) {
+      // What the checker could not phrase as an exact fix goes back to the reader
+      // model together with the relevant pages (transcribe.mjs --stage refix); an
+      // agent reader has no API, so its leftovers go straight to adjudication.
+      if (job.reader.provider === 'agent') escalate(`repair.mjs could not apply ${rep.skipped} defect(s) (no usable suggestedFix); applied ${rep.applied}`);
+      const reportFile = repaired.replace(/\.json$/, '.repair.json');
+      writeJson(reportFile, rep);
+      const refixed = repaired.replace(/\.json$/, '.x.json');
+      const x = node('transcribe.mjs', [paperId, '--provider', job.reader.provider, '--model', job.reader.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed, '--round', String(job.round), ...transcribeOpts]);
+      process.stdout.write(x.stdout);
+      if ((x.status !== 0 && x.status !== 3) || !fs.existsSync(refixed)) { save(`refix failed: ${(x.stderr || '').slice(0, 300)}`); escalate(`repair.mjs could not apply ${rep.skipped} defect(s) and refix failed: ${(x.stderr || '').slice(0, 200)}`); }
+      const xr = JSON.parse(x.stdout || '{}');
+      job.artefacts.candidate = rel(refixed);
+      if (x.status === 3) escalate(`refix could not settle ${xr.skipped} defect(s) from the pages (applied ${rep.applied} + ${xr.applied || 0})`);
+      save(`refix applied ${xr.applied} defect(s) the checker could not phrase, round ${job.round}`);
+    }
     job.stage = 'validate'; save(`repaired ${rep.applied} defect(s), round ${job.round}; re-validating, re-cropping, fresh check`);
   } else if (job.stage === 'promote') {
     const r = node('promote.mjs', [paperId, '--candidate', currentCandidate(), '--receipt', receiptOut]);

@@ -8,8 +8,8 @@
 // state promoted, or present in content/problems) is skipped. Safe to re-run.
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
-import { parseArgs, fail, readJson, JOBS_FILE, ROOT, nowIso, paperDir, findContentFile, loadBacklog, existingPaperIndex } from './lib.mjs';
+import { spawn, spawnSync } from 'node:child_process';
+import { parseArgs, fail, readJson, JOBS_FILE, ROOT, nowIso, paperDir, findContentFile } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'allow-same-model', 'no-promote', 'dry-run'] });
 if (!args.ids && !args.backlog) fail('usage: batch.mjs --ids a,b | --backlog [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote]');
@@ -22,14 +22,10 @@ const log = entry => fs.appendFileSync(logFile, JSON.stringify({ at: nowIso(), .
 let ids = [];
 if (args.ids) ids = String(args.ids).split(',').map(s => s.trim()).filter(Boolean);
 if (args.backlog) {
-  // same rule as backlog.mjs: catalogue entries in neither content/problems nor tmp/staging
-  const index = existingPaperIndex();
-  const staging = new Set(fs.existsSync(path.join(ROOT, 'tmp', 'staging')) ? fs.readdirSync(path.join(ROOT, 'tmp', 'staging')).map(f => f.replace(/\.json$/, '')) : []);
-  for (const e of loadBacklog()) {
-    const id = e.paperId;
-    if (!id || index.byId.has(id) || index.byKey.has(e.problemsKey) || staging.has(id)) continue;
-    ids.push(id);
-  }
+  // backlog.mjs owns the rule (catalogue entries in neither content/problems nor tmp/staging) and derives the ids
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', 'backlog.mjs'), '--json'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  if (r.status !== 0) fail(`backlog.mjs failed: ${r.stderr}`);
+  ids = JSON.parse(r.stdout).map(e => e.paperId).filter(Boolean);
   if (args.limit) ids = ids.slice(0, Number(args.limit));
 }
 ids = [...new Set(ids)];

@@ -273,3 +273,34 @@ test('figure proposals snap onto detected graphics, never onto scans or merged g
   assert.equal(snapBox([122, 313, 455, 540], pair), null);                      // a good left-half proposal is left alone (not merged into the block)
   assert.deepEqual(snapBox([140, 340, 455, 500], pair).bbox, [134, 313, 461, 540]); // a short left-half proposal keeps its width, takes the block's height
 });
+
+test('refix applies model-supplied values like repair.mjs and never invents a field', async () => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  const defects = [
+    { path: '/problems/0/statement', kind: 'omission', severity: 'major', description: 'sentence missing' },
+    { path: '/problems/0/figures/0/tx/bbox', kind: 'figure', severity: 'critical', description: 'clips the label' },
+    { path: '/problems/0/points', kind: 'points', severity: 'minor', description: 'printed 12' },
+    { path: '/problems/0/solution/statement', kind: 'omission', severity: 'critical', description: 'unreadable' },
+    { path: '/problems/0/parts/0/answer', kind: 'wrong-value', severity: 'major', description: 'unit' },
+  ];
+  const fixes = [
+    { path: '/problems/0/statement', value: 'Токът е $I = 1\ \mathrm{mA}$ и $v_0/2$. Определете заряда.', note: 'p.1' },
+    { path: '/problems/0/figures/0/tx/bbox', value: [360, 270, 630, 445] },
+    { path: '/problems/0/points', value: '12' },
+    { path: '/problems/0/solution/statement', value: null, note: 'page 1 of the solutions is blank' },
+    { path: '/problems/0/parts/0/answer', value: 'C' },
+  ];
+  const r = applyFixes(c, fixes, { defects, round: 2, by: 'zai:test refix', requestId: 'req-9' });
+  assert.equal(r.applied.length, 3);
+  assert.equal(r.skipped.length, 2);
+  assert.match(r.skipped.map(s => s.reason).join(' | '), /could not settle/);
+  assert.match(r.skipped.map(s => s.reason).join(' | '), /cannot apply a string fix to a object field/);
+  assert.equal(c.problems[0].points, 12);
+  assert.deepEqual(c.problems[0].figures[0].tx, { document: 'problems', page: 1, bbox: [360, 270, 630, 445] });
+  assert.equal(c.problems[0].figures[0].url, undefined);
+  assert.deepEqual(r.figuresToRedo, ['/problems/0/figures/0']);
+  assert.equal(c.tx.repairs.length, 3);
+  assert.equal(c.tx.repairs[0].by, 'zai:test refix');
+  assert.equal(c.tx.repairs[0].requestId, 'req-9');
+});
