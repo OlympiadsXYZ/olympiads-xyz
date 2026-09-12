@@ -135,6 +135,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     for (const pg of pages) joinFragments(pg.tokens, allWords);
     const tokens = pages.flatMap(p => p.tokens);
     const layerSet = new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])]));
+    const layerRaw = new Map(); for (const t of tokens) if (!t.fragment && !layerRaw.has(t.w)) layerRaw.set(t.w, t.raw);
     layerSets[doc] = layerSet;
     // the solutions document reprints statements before solving them, so for it every transcribed word counts as present
     const own = hasSolutions && doc === 'problems' ? wordsOf('problems') : allWords;
@@ -243,6 +244,19 @@ export function textLayerCheck(candidate, manifest, paperId) {
       if (!extras.length) continue;
       info.unprinted += extras.length;
       const minor = /\/(caption|title|label)$/.test(f.path);
+      // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically
+      if (!minor && extras.length === 1) {
+        const w = norm(extras[0]);
+        const near = [...layerSet].filter(x => x.length >= 5 && CYR.test(x) && !allWords.has(x) && similar(x, w));
+        if (near.length === 1) {
+          const fixed = replaceWord(f.text, extras[0], layerRaw.get(near[0]) || near[0]);
+          if (fixed !== f.text) {
+            result.defects.push({ path: f.path, document: doc, page: pages[0]?.page || 1, severity: 'major', kind: 'reworded', source: 'text-layer', confidence: 0.8,
+              description: `Text-layer check: the transcription has „${extras[0]}“ where the ${doc} document prints „${layerRaw.get(near[0]) || near[0]}“ — keep the printed spelling.`, suggestedFix: fixed });
+            continue;
+          }
+        }
+      }
       // the page where most of the field's words are printed
       let page = pages[0]?.page || 1, bestHit = -1;
       for (const pg of pages) { const set = new Set(pg.tokens.map(t => t.w)); const hit = f.tokens.filter(t => t.w.length >= 4 && set.has(t.w)).length; if (hit > bestHit) { bestHit = hit; page = pg.page; } }

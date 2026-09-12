@@ -139,6 +139,24 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     }
     const current = pointerGet(candidate, p);
     const sameShape = (a, b) => (Array.isArray(a) && Array.isArray(b)) || (typeof a === 'object' && a !== null && !Array.isArray(a) && typeof b === 'object' && b !== null && !Array.isArray(b));
+    // A printed-graphic defect answered with a figures array that still covers no part of the
+    // region (the same array, [], or an array changed elsewhere) means "not a figure": remember
+    // the region so figures.mjs never raises it again, whatever else happens to the array.
+    if (d.region && Array.isArray(f.value)) {
+      const box = d.region.bbox;
+      const covers = f.value.some(g => { const b = g?.tx?.bbox; if (!Array.isArray(b) || b.length !== 4) return false; const x0 = Math.max(b[0], box[0]), y0 = Math.max(b[1], box[1]), x1 = Math.min(b[2], box[2]), y1 = Math.min(b[3], box[3]); const i = x1 > x0 && y1 > y0 ? (x1 - x0) * (y1 - y0) : 0; return i >= 0.3 * Math.max(1, (box[2] - box[0]) * (box[3] - box[1])); });
+      if (!covers) {
+        candidate.tx = { ...(candidate.tx || {}), notFigures: [...(candidate.tx?.notFigures || []), { ...d.region, note: String(f.note || '').slice(0, 200) }] };
+        if (current === undefined || JSON.stringify(current) === JSON.stringify(f.value)) { applied.push({ ...entry, from: null, to: null, notFigure: d.region, note: f.note || null }); continue; }
+      }
+    }
+    if (typeof current === 'boolean' && typeof f.value === 'boolean') {
+      if (current === f.value) { skipped.push({ ...entry, reason: 'model returned the current value unchanged' }); continue; }
+      pointerSet(candidate, p, f.value);
+      if (p.endsWith('/incomplete') && f.value === false) { const parent = pointerGet(candidate, p.replace(/\/[^/]+$/, '')); if (parent && typeof parent === 'object') delete parent.incompleteReason; }
+      applied.push({ ...entry, from: current, to: f.value, note: f.note || null });
+      continue;
+    }
     // An omitted field (a whole solution the reader skipped) is missing, not
     // wrong: create it, and any missing object on the way, as long as no array
     // element has to be invented (a missing problem/part is not a field fix).
@@ -187,12 +205,6 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       continue;
     }
     if (sameShape(current, f.value)) {
-      // a region the model judged not to be a figure (array returned unchanged) is remembered so it is never raised again
-      if (d.region && Array.isArray(current) && JSON.stringify(current) === JSON.stringify(f.value)) {
-        candidate.tx = { ...(candidate.tx || {}), notFigures: [...(candidate.tx?.notFigures || []), { ...d.region, note: String(f.note || '').slice(0, 200) }] };
-        applied.push({ ...entry, from: null, to: null, notFigure: d.region, note: f.note || null });
-        continue;
-      }
       pointerSet(candidate, p, f.value);
       applied.push({ ...entry, from: current, to: f.value, note: f.note || null });
       continue;

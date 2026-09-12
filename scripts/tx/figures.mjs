@@ -62,7 +62,9 @@ function unplacedGraphics(candidate, manifest, paperId) {
         const above = heads.filter(h => h.y <= g.bbox[1]).at(-1) || null;
         const heading = above || lastHeading;
         if (!g.kind || g.kind === 'drawing') {
-          if (g.areaFrac < 0.004) continue; // a symbol, a small equation image
+          // a symbol or a small equation image; on a scan (pixel regions) also handwritten marks, so the bar is higher there
+          if (g.areaFrac < (g.raster ? 0.015 : 0.004)) continue;
+          if (g.bbox[3] <= 100 || g.bbox[1] >= 930) continue; // header/footer band: logos, stamps, page numbers
           if (figs.some(f => f.fig.tx?.document === doc && f.fig.tx?.page === pg.page && f.fig.tx?.bbox && coverFrac(g.core, f.fig.tx.bbox) >= 0.5)) continue;
           if (notFigures.some(x => x.document === doc && x.page === pg.page && iou(x.bbox, g.bbox) >= 0.5)) continue;
           let idx = heading ? byNumber.get(key(heading.number)) : undefined;
