@@ -62,9 +62,11 @@ $0.35); Haiku reader 2.24 M subscription tokens for 24 papers; Sonnet reader 4.1
 
 ## Production result so far (2026-09-12, backlog of 41 Bulgarian papers, GLM reader + GLM same-model checker)
 
-First pass, while the fixes above were landing: 7 papers promoted with `reviewed` receipts (23 problems, now live);
-the rest escalated or errored, mostly for reasons since fixed (crop failures, schema slips, path bugs, a corrupted repair).
-A second pass with the full loop is running; its outcome goes into the next handoff. Z.ai spend for the day: $0.82.
+Seven passes over the day, each after another fix to the loop: 36 backlog papers promoted with `reviewed` receipts by the
+GLM reader, 5 backlog papers still open. The 27 staged Opus transcriptions did far better through `from-final.mjs`
+(Opus text, GLM check): 15 promoted, whereas fresh GLM reads of the same papers promoted 0 of 12 before that pass was
+stopped. End of day: 51 reviewed papers, 606 papers and 2,197 problems on the site, 16 papers open with 32 remaining
+defects (5 critical). Z.ai for the day: $2.97 for 503 calls (287 checks, 60 reads, 156 refix calls).
 
 ## Decision (recorded as D-P10 in `docs/Problems-Decisions-2026-09.md`)
 
