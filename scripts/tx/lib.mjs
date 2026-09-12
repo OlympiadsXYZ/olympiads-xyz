@@ -461,7 +461,7 @@ export const checkFile = (paperId, provider, model) => path.join(paperDir(paperI
 export const figureUrl = (paperId, figId) => `${R2_PUBLIC}/problems/${paperId}/${figId}.png`;
 // Only primary candidates: <provider>__<model>.json (the model may contain dots),
 // not the derived .figs/.view/.dryrun/.window-*/.rN/.gold copies next to them.
-export const DERIVED_SUFFIX = /.(figs|view|dryrun|window-[^.]+|rd+|gold|repaired|repair|x|sd+|defects|response).json$/;
+export const DERIVED_SUFFIX = /\.(figs|view|dryrun|window-[^.]+|r\d+|gold|repaired|repair|x|s\d+|defects|response)\.json$/;
 export const isPrimaryCandidate = file => { const b = path.basename(file); return /^[^_]+__.+\.json$/.test(b) && !DERIVED_SUFFIX.test(b); };
 // Crop PNGs figures.mjs produced for a candidate (dry or real): what a checker
 // must look at to judge a box, keyed by figure id.
