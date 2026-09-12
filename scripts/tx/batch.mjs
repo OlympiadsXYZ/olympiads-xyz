@@ -44,8 +44,12 @@ console.log(`${plan.length} paper(s) to run with ${workers} worker(s); log: ${pa
 function runOne({ id, resume }) {
   return new Promise(resolve => {
     const argv = [path.join(ROOT, 'scripts', 'tx', 'run.mjs'), id];
-    if (resume) argv.push('--continue');
-    else {
+    if (resume) {
+      argv.push('--continue');
+      // an escalated or failed-repair job re-enters at validate with a fresh round budget
+      const stage = jobs()[id]?.stage;
+      if (['escalated', 'repair'].includes(stage)) argv.push('--retry', '--max-rounds', String(args['max-rounds'] || 3));
+    } else {
       argv.push('--reader', args.reader, '--checker', args.checker);
       if (args['allow-same-model']) argv.push('--allow-same-model');
       if (args['no-promote']) argv.push('--no-promote');

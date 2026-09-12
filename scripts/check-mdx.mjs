@@ -21,7 +21,7 @@ import rehypeRaw from 'rehype-raw';
 const require = createRequire(import.meta.url);
 const customRehypeKatex = require('../src/mdx-plugins/rehype-math.js');
 
-const ROOT = path.resolve(new URL('..', import.meta.url).pathname);
+const ROOT = path.resolve(fileURLToPath(new URL('..', import.meta.url))); // not .pathname: that yields D:D:… on Windows
 const args = process.argv.slice(2);
 const warn = args.includes('--warn');
 const given = args.filter(a => !a.startsWith('--'));

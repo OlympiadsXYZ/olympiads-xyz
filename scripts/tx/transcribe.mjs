@@ -226,10 +226,12 @@ async function send(req, label) {
 }
 
 let jsonRepaired = null;
-function extractJson(text, rawFile, stopReason) {
+// soft: return null instead of failing (the caller asks the model once more)
+function extractJson(text, rawFile, stopReason, soft = false) {
   let t = String(text).trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
   const first = t.indexOf('{'), last = t.lastIndexOf('}');
-  if (first < 0 || last < 0) { fs.writeFileSync(rawFile, text); fail(`no JSON object in the response (saved ${path.relative(ROOT, rawFile)}); stop reason ${stopReason}`); }
+  const saveRaw = () => { fs.mkdirSync(path.dirname(rawFile), { recursive: true }); fs.writeFileSync(rawFile, text); };
+  if (first < 0 || last < 0) { saveRaw(); if (soft) return null; fail(`no JSON object in the response (saved ${path.relative(ROOT, rawFile)}); stop reason ${stopReason}`); }
   try { return JSON.parse(t.slice(first, last + 1)); }
   catch (e) {
     // Models occasionally leave one LaTeX backslash un-escaped (\' or \, inside a
@@ -237,7 +239,7 @@ function extractJson(text, rawFile, stopReason) {
     // and retry; the candidate is flagged so the checker knows a repair happened.
     const repaired = repairJsonEscapes(t.slice(first, last + 1));
     try { const v = JSON.parse(repaired); jsonRepaired = e.message; console.error(`[transcribe] JSON needed escape repair: ${e.message}`); return v; } catch {}
-    fs.writeFileSync(rawFile, text); fail(`response JSON does not parse (${e.message}); raw text saved to ${path.relative(ROOT, rawFile)}. Stop reason ${stopReason} — if length/max_tokens, raise --max-tokens or use --window-pages`); }
+    saveRaw(); if (soft) return null; fail(`response JSON does not parse (${e.message}); raw text saved to ${path.relative(ROOT, rawFile)}. Stop reason ${stopReason} — if length/max_tokens, raise --max-tokens or use --window-pages`); }
 }
 
 const summaries = [];
@@ -286,10 +288,15 @@ for (const window of windows) {
   }
   if (!cfg.exists) fail(`${cfg.file} does not exist; create it with ${keyName}=<key> (never commit it)`);
   if (!hasKey) fail(`${keyName} is not set in ${cfg.file}`);
-  const parsed = await send(req, label);
-  const costUsd = estimateCost(model, parsed.inputTokens, parsed.outputTokens);
-  appendRun({ paperId, stage, provider, model, window: label, ok: true, imagesCompressed, attempts: parsed.attempts, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' ? reasoning : null, at: nowIso() });
-  const obj = extractJson(parsed.text, target.replace(/\.json$/, '.raw.txt'), parsed.stopReason);
+  // A model occasionally answers with prose or truncated JSON; one more ask is far cheaper than a lost paper.
+  let parsed = null, obj = null, costUsd = 0;
+  for (let ask = 1; ask <= 2 && !obj; ask++) {
+    parsed = await send(req, label);
+    costUsd = estimateCost(model, parsed.inputTokens, parsed.outputTokens);
+    appendRun({ paperId, stage, provider, model, window: label, ok: true, imagesCompressed, attempts: parsed.attempts, ask, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' ? reasoning : null, at: nowIso() });
+    obj = extractJson(parsed.text, target.replace(/\.json$/, '.raw.txt'), parsed.stopReason, ask < 2);
+    if (!obj) console.error(`[transcribe] ${label}: no usable JSON in the reply (raw text saved); asking once more`);
+  }
   const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' ? { reasoning } : {}) };
   if (stage === 'refix') {
     const responseFile = target.replace(/\.json$/, '') + '.response.json';

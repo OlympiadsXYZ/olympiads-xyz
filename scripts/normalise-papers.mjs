@@ -6,7 +6,7 @@
 // Run with --check to only report (exit 1 if anything would change).  Never touches statements or solutions.
 import fs from 'fs';
 import path from 'path';
-const ROOT = path.resolve(new URL('..', import.meta.url).pathname);
+const ROOT = path.resolve(fileURLToPath(new URL('..', import.meta.url))); // not .pathname: that yields D:D:… on Windows
 const DIR = path.join(ROOT, 'content', 'problems');
 const check = process.argv.includes('--check');
 
