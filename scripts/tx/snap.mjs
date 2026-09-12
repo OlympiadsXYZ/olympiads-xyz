@@ -13,6 +13,7 @@ import path from 'node:path';
 import { run, paperDir, readJson, writeJson, sha256File, ROOT } from './lib.mjs';
 
 const PDFREGIONS = path.join(ROOT, 'scripts', 'pdfregions.py');
+const REGIONS_VERSION = 2; // bump with pdfregions.py VERSION: cached regions are recomputed
 const PAD = 6;            // permille added around a snapped region
 const MIN_IOU = 0.2;      // overlap that ties a proposal to a region
 const MIN_CORE_IN = 0.5;  // or: this much of the region's drawing lies inside the proposal
@@ -37,7 +38,7 @@ export function regionsFor(paperId, manifest, doc) {
   if (!fs.existsSync(pdf)) return null;
   const cacheFile = path.join(paperDir(paperId), 'regions', `${doc}.json`);
   const cached = readJson(cacheFile, null);
-  if (cached && cached.sha256 === d.sha256) return cached;
+  if (cached && cached.sha256 === d.sha256 && cached.version === REGIONS_VERSION) return cached;
   const r = run('python3', [PDFREGIONS, pdf], { allowFail: true });
   if (r.status !== 0) return null;
   const data = { sha256: d.sha256, at: new Date().toISOString(), ...JSON.parse(r.stdout) };

@@ -127,7 +127,7 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push(`source: ${yamlStr(paperDescriptor(paper))}`);
   lines.push(`title: ${yamlStr(problemName(problem))}`);
   lines.push(`author: 'Olympiads XYZ · транскрипция на официалните материали'`);
-  lines.push(`canonicalSource: ${yamlStr(sourceFile)}`);
+  lines.push(`canonicalSource: ${yamlStr(String(sourceFile).split(path.sep).join('/'))}`); // repo-relative with forward slashes on every OS
   lines.push(`verification: ${yamlStr(state.quality)}`);
   if (state.quality === 'reviewed' && state.verifiedAt) lines.push(`verifiedAt: ${yamlStr(state.verifiedAt)}`);
   lines.push('---');
