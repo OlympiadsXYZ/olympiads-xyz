@@ -299,7 +299,7 @@ export function checkerView(candidate) {
     const t = s.fig.tx;
     if (!t) return;
     const keep = {};
-    for (const key of ['document', 'page', 'bbox', 'file']) if (t[key] !== undefined) keep[key] = t[key];
+    for (const key of ['document', 'page', 'bbox', 'file', 'cropError']) if (t[key] !== undefined) keep[key] = t[key]; // cropError: the box produced no usable crop — a figure defect for the checker
     if (Object.keys(keep).length) dstFigs[k].fig.tx = keep;
   });
   return view;

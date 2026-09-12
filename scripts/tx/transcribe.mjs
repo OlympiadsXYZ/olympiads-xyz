@@ -250,8 +250,11 @@ for (const window of windows) {
     ...pages.map(p => ({ kind: 'page', document: p.document, page: p.page, file: p.file, bytes: fs.statSync(p.file).size })),
     ...crops.map(c => ({ kind: 'crop', id: c.id, document: c.document, page: c.page, bbox: c.bbox, file: c.file, bytes: fs.statSync(c.file).size })),
   ];
+  // A single rasterised page can exceed the per-image cap on its own (a 160-dpi
+  // PNG of a scanned page); re-encode just those as JPEG before sizing the payload.
+  for (let k = 0; k < images.length; k++) if (images[k].bytes > limits.imageBytes) images[k] = compressImage(images[k]);
   const tooBig = images.filter(i => i.bytes > limits.imageBytes);
-  if (tooBig.length) fail(`image(s) over ${provider}'s ${(limits.imageBytes / 1048576).toFixed(0)} MB limit: ${tooBig.map(i => path.basename(i.file)).join(', ')}`);
+  if (tooBig.length) fail(`image(s) over ${provider}'s ${(limits.imageBytes / 1048576).toFixed(0)} MB limit even as JPEG: ${tooBig.map(i => path.basename(i.file)).join(', ')}`);
   if (images.length > limits.images) fail(`${images.length} images exceed ${provider}'s limit of ${limits.images} per request; use --window-pages`);
   const userText = buildText(window, images);
   let req = buildRequest(images, userText);

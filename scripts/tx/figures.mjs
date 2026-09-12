@@ -132,8 +132,16 @@ if (!dry) {
   }
 }
 // 4. write the enriched copy. Dry runs keep url/width/height empty on purpose.
+// A crop that is blank, tiny or missing is the reader's box being wrong — that is
+// a finding for the checker (the figure keeps its box and carries tx.cropError,
+// no file, no url), not a reason to abandon the paper. Upload, listing and
+// public-URL failures are infrastructure and stay fatal.
+const SOFT = /^(crop too small|crop nearly empty|crop looks blank|crop did not run|could not inspect PNG)/;
 for (const r of results) {
-  if (r.error) continue;
+  if (r.error) {
+    if (SOFT.test(r.error)) { const f = allFigures(data).find(x => x.path === r.path).fig; delete f.url; delete f.width; delete f.height; delete f.source; f.tx = { document: f.tx.document, page: f.tx.page, bbox: f.tx.bbox, ...(f.tx.bboxProposed ? { bboxProposed: f.tx.bboxProposed, snapped: f.tx.snapped } : {}), cropError: r.error }; }
+    continue;
+  }
   const f = allFigures(data).find(x => x.path === r.path).fig;
   if (dry) { f.tx = { ...f.tx, file: r.relFile, cropped: true, dryRun: true, upload: r.upload, px: r.px, pdfRect: r.pdfRect }; continue; }
   f.url = r.url; f.width = r.px[0]; f.height = r.px[1];
@@ -141,7 +149,8 @@ for (const r of results) {
   f.tx = { ...f.tx, file: r.relFile, remoteKey: r.remoteKey, upload: r.upload, cropped: true, dryRun: false, public200: r.public200 === true, md5: r.md5, sha256: r.sha256 };
 }
 report.figures = results;
-report.ok = report.errors.length === 0 && results.length === proposals.length;
+report.softErrors = report.errors.filter(e => SOFT.test(e.message));
+report.ok = report.errors.length === report.softErrors.length && results.length === proposals.length;
 if (report.ok || dry) writeJson(outFile, data);
 report.out = report.ok || dry ? outFile : null;
 console.log(JSON.stringify(report, null, 2));
