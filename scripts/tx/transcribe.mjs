@@ -237,7 +237,9 @@ function extractJson(text, rawFile, stopReason, soft = false) {
     // Models occasionally leave one LaTeX backslash un-escaped (\' or \, inside a
     // JSON string). Repair only invalid escapes — \X where X is not one of "\/bfnrtu —
     // and retry; the candidate is flagged so the checker knows a repair happened.
-    const repaired = repairJsonEscapes(t.slice(first, last + 1));
+    let repaired = repairJsonEscapes(t.slice(first, last + 1));
+    // A checker once wrote `"text".replace("a", "б")` in a string position (a homoglyph fix as code): keep the literal.
+    repaired = repaired.replace(/("(?:[^"\\]|\\.)*")\.replace\((?:"(?:[^"\\]|\\.)*"|'[^']*')\s*,\s*(?:"(?:[^"\\]|\\.)*"|'[^']*')\)/g, '$1');
     try { const v = JSON.parse(repaired); jsonRepaired = e.message; console.error(`[transcribe] JSON needed escape repair: ${e.message}`); return v; } catch {}
     saveRaw(); if (soft) return null; fail(`response JSON does not parse (${e.message}); raw text saved to ${path.relative(ROOT, rawFile)}. Stop reason ${stopReason} — if length/max_tokens, raise --max-tokens or use --window-pages`); }
 }
