@@ -22,7 +22,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet } from './lib.mjs';
 import { textLayerCheck } from './textlayer.mjs';
-import { spliceFragment } from './fixes.mjs';
+import { spliceFragment, repairDefectPath } from './fixes.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
@@ -102,6 +102,9 @@ function mergeTextLayer(candFile, checkOut) {
   const manifest = readJson(manifestPath, null);
   const candidate = readJson(candFile, null);
   if (!check || !manifest || !candidate) return null;
+  // a mangled checker path ("/problems/2/problems/2/…", "/p2/statement") is repaired when the repair resolves in the candidate
+  let repairedPaths = 0;
+  for (const d of check.defects || []) { const p = repairDefectPath(candidate, d.path); if (p !== d.path) { d.pathAsWritten = d.path; d.path = p; repairedPaths++; } }
   const tl = textLayerCheck(candidate, manifest, paperId);
   const tlFile = checkOut.replace(/\.json$/, '.textlayer.json');
   writeJson(tlFile, tl);
@@ -136,7 +139,7 @@ function mergeTextLayer(candFile, checkOut) {
     const dis = (candidate.tx?.disputed || []).find(x => x.path === d.path);
     if (dis) { d.severity = 'info'; d.disputed = dis.note || true; d.description = `[disputed: the refix model kept the current text — ${dis.note || 'no note'}] ${d.description}`; disputed++; }
   }
-  check.textLayer = { version: tl.version, checked: trusted, notes: tl.notes, defects: tl.defects.length, vetoedModelFixes: vetoed, disputedMinors: disputed, unmapped: (tl.unmapped || []).length, file: rel(tlFile) };
+  check.textLayer = { version: tl.version, checked: trusted, notes: tl.notes, defects: tl.defects.length, vetoedModelFixes: vetoed, disputedMinors: disputed, repairedPaths, unmapped: (tl.unmapped || []).length, file: rel(tlFile) };
   if (tl.defects.length) {
     check.defects = [...(check.defects || []), ...tl.defects];
     if (check.verdict === 'pass') check.verdict = 'fail';

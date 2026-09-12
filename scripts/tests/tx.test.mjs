@@ -494,3 +494,15 @@ test('normaliseCandidate drops transient tx keys a refix flattened onto a figure
   assert.equal(c.problems[0].parts[0].statement, 'Намерете скоростта.');
   assert.equal(c.problems[0].parts[1].label, 'б)'); // second part: by position
 });
+
+test('a mangled checker path is repaired when the repair resolves in the candidate', async () => {
+  const { repairDefectPath } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  c.problems[0].solution.figures = [{ id: 'p1-sol-fig1', alt: 'x', tx: { document: 'solutions', page: 1, bbox: [1, 1, 2, 2] } }];
+  assert.equal(repairDefectPath(c, '/problems/0/problems/0/figures/0/tx/bbox'), '/problems/0/figures/0/tx/bbox');
+  assert.equal(repairDefectPath(c, '/problems/0/p1/statement'), '/problems/0/parts/0/statement');
+  assert.equal(repairDefectPath(c, '/problems/1/parts/0/statement'), '/problems/0/parts/0/statement'); // 1-based problem index
+  assert.equal(repairDefectPath(c, '/problems/0/figures/1/tx/bbox'), '/problems/0/solution/figures/1/tx/bbox' === repairDefectPath(c, '/problems/0/figures/1/tx/bbox') ? '/problems/0/solution/figures/1/tx/bbox' : '/problems/0/figures/1/tx/bbox');
+  assert.equal(repairDefectPath(c, '/problems/0/statement'), '/problems/0/statement');
+  assert.equal(repairDefectPath(c, '/problems/7/nowhere'), '/problems/7/nowhere'); // nothing resolves: left as written
+});

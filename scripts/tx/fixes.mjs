@@ -27,6 +27,23 @@ const parseBox = v => {
 const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see |split|repoint|use |replace|restore|move|add |insert|merge|set |the (statement|solution|text)|пълен текст|виж|запази|премахни|добави|изтрий|замени|премести|обедин|раздел|постав|върн|използва|коригира|поправ|махн|отстран)/i;
 export const looksLikeInstruction = s => typeof s === 'string' && (INSTRUCTION.test(s) || /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s.slice(0, 200)));
 const words = s => new Set(String(s).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 1));
+// Checker paths come back mangled now and then: a doubled prefix ("/problems/2/problems/2/figures/0"),
+// a part written as "/p2/statement" (the second part), a solution figure under "/figures" instead
+// of "/solution/figures". Try the obvious repairs and keep the first that resolves in the candidate.
+export function repairDefectPath(candidate, path) {
+  if (typeof path !== 'string' || !path.startsWith('/')) return path;
+  const resolves = p => { const keys = p.split('/').filter(Boolean); let o = candidate; for (let i = 0; i < keys.length; i++) { if (o == null || typeof o !== 'object') return false; if (!(keys[i] in o)) { return i === keys.length - 1 && /^(bbox|tx|caption|alt|label|points|title|statement|figures|solution|incomplete)$/.test(keys[i]) && o !== null; } o = o[keys[i]]; } return true; };
+  if (resolves(path)) return path;
+  const tries = [];
+  let p = path.replace(/^(\/problems\/\d+)(?:\/problems\/\d+)+/, '$1');
+  tries.push(p);
+  tries.push(p.replace(/\/p(\d+)\/(statement|points|answer|figures|label)/, (m, n, f) => `/parts/${Number(n) - 1}/${f}`));
+  tries.push(p.replace(/\/parts\/(\d+)\//, (m, n) => `/parts/${Number(n) - 1}/`)); // 1-based part index
+  tries.push(p.replace(/^(\/problems\/(\d+))\/figures\//, '$1/solution/figures/'));
+  tries.push(p.replace(/^\/problems\/(\d+)\//, (m, n) => `/problems/${Number(n) - 1}/`)); // 1-based problem index
+  for (const t of tries) if (t !== path && resolves(t)) return t;
+  return path;
+}
 // A model asked for one field sometimes answers with the whole problem: a statement that
 // now contains its parts, a part that contains its neighbours. Such a fix duplicates text
 // that lives in sibling fields and is refused (the current value is the reference: text the
