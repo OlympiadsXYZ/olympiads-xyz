@@ -25,7 +25,13 @@ if (args.backlog) {
   // backlog.mjs owns the rule (catalogue entries in neither content/problems nor tmp/staging) and derives the ids
   const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', 'backlog.mjs'), '--json'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   if (r.status !== 0) fail(`backlog.mjs failed: ${r.stderr}`);
-  ids = JSON.parse(r.stdout).map(e => e.paperId).filter(Boolean);
+  // benchmark fixtures (by id or by PDF) stay out of production until the benchmark is closed:
+  // a production run would overwrite the candidates their adjudications are bound to
+  const fixtures = readJson(path.join(ROOT, 'tmp', 'bench', 'fixtures.json'), []);
+  const fxIds = new Set(fixtures.map(f => f.paperId)), fxKeys = new Set(fixtures.map(f => f.problemsKey));
+  const entries = JSON.parse(r.stdout).filter(e => e.paperId);
+  for (const e of entries) if (fxIds.has(e.paperId) || fxKeys.has(e.problemsKey)) log({ paperId: e.paperId, outcome: 'skipped', reason: 'benchmark fixture' });
+  ids = entries.filter(e => !fxIds.has(e.paperId) && !fxKeys.has(e.problemsKey)).map(e => e.paperId);
   if (args.limit) ids = ids.slice(0, Number(args.limit));
 }
 ids = [...new Set(ids)];
