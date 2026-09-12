@@ -1,21 +1,21 @@
-# Transcription benchmark evidence — 2026-09-08T16:46:35.500Z
+# Transcription benchmark evidence — 2026-09-12T09:22:54.336Z
 
-8/24 adjudications complete; 7 usable model-adjudicated references.
+9/24 adjudications complete; 8 usable model-adjudicated references.
 
 ## Readers
 
 | workflow | available | schema valid | adjudicated | pass | papers with critical defects |
 |---|---:|---:|---:|---:|---:|
-| agent__haiku | 24 | 24 | 7 | 0 | 7 |
-| zai__glm-5.3-flash | 24 | 16 | 7 | 0 | 7 |
-| agent__sonnet | 21 | 20 | 6 | 0 | 4 |
+| agent__haiku | 24 | 24 | 8 | 0 | 8 |
+| zai__glm-5.3-flash | 24 | 16 | 8 | 0 | 8 |
+| agent__sonnet | 21 | 20 | 7 | 0 | 5 |
 
 ## Checkers
 
 | checker | calls | structurally valid* | adjudicated | true findings | false findings | false passes / raw passes on adjudicated candidates |
 |---|---:|---:|---:|---:|---:|---|
-| agent/haiku | 24 | 16 | 7 | 20 | 3 | 1 / 1 |
-| zai/glm-5.3-flash | 45 | 37 | 13 | 43 | 8 | 5 / 5 |
+| agent/haiku | 24 | 16 | 8 | 22 | 4 | 1 / 1 |
+| zai/glm-5.3-flash | 45 | 37 | 15 | 67 | 9 | 5 / 5 |
 
 *After normalizing the historical transport-hash integration defect in memory. Original artifacts are unchanged. Structural validity does not prove visual accuracy.
 
@@ -37,14 +37,14 @@
 | nof-2012-iii-7 | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 | nof-2015-i-8 | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 | nao-2023-ii-5-6 | 3 | complete | yes |   |
-| nof-2024-iii-11-12 | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
+| nof-2024-iii-11-12 | 3 | complete | yes |   |
 | nof-2018-iii-10-12 | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 | nao-2023-iv-nabl | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 | nao-2021-iv-st-prak | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 | psf-2016-proletno-sp | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 | esf-2022-esenno-st | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 | nof-2025-iii-11-12 | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
-| nao-2025-iv-nabl | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
+| nao-2025-iv-nabl | 3 | incomplete | no | adjudication is missing or incomplete  |
 | psf-2026-proletno-8 | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 | nao-2001-iii-9-10 | 3 | incomplete | no | truth missing or unreadable; adjudication is missing or incomplete  |
 

@@ -12,5 +12,5 @@ rsync -a "$B/staging/" tmp/staging/
 cp "$B/verification-evidence.json" "$B/tx-provider-notes.md" tmp/
 echo "restored candidates, checks, adjudications, fixtures, shards, staging and run logs into tmp/"
 echo "Page images and source PDFs are NOT in the bundle (reproducible). To re-render the 24 fixtures"
-echo "(needs the rclone remote 'r2', poppler-utils, python3 with PIL):"
-echo '  for p in $(python3 -c "import json;print(\" \".join(f[\"paperId\"] for f in json.load(open(\"tmp/bench/fixtures.json\"))))"); do node scripts/tx/prepare.mjs "$p"; done'
+echo "(needs the rclone remote 'r2', poppler-utils, python3 with PyMuPDF + Pillow; runs sequentially, 15-25 min):"
+echo "  bash bench/2026-09-06/re-render.sh"
