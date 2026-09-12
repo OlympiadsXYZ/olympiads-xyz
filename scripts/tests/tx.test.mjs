@@ -266,7 +266,9 @@ test('figure proposals snap onto detected graphics, never onto scans or merged g
   assert.equal(snapBox([100, 400, 400, 600], page).reason, 'nearest');          // on text: nearest free graphic
   assert.equal(snapBox([100, 400, 400, 600], page, { taken: [0] }), null);          // the near graphic is taken and the other one is far: stay
   assert.equal(snapBox([100, 100, 900, 300], page).reason, 'union');            // spans both: their union
-  assert.equal(snapBox([120, 120, 380, 280], { scanned: true, regions: page.regions }), null);
+  assert.equal(snapBox([120, 120, 380, 280], { scanned: true, regions: page.regions }).reason, 'region'); // a scan's regions come from its pixels (pdfregions v3+)
+  assert.equal(snapBox([120, 120, 380, 280], { scanned: true, regions: [] }), null);
+  assert.equal(snapBox([120, 120, 380, 280], { scanned: false, regions: [{ ...page.regions[0], kind: 'formula' }] }), null); // never onto a formula
   const group = { scanned: false, regions: [{ bbox: [0, 0, 1000, 600], core: [0, 0, 1000, 600] }] };
   assert.equal(snapBox([100, 100, 300, 300], group), null);                     // region 30x the box: a merged group, keep the reader's box
   const pair = { scanned: false, regions: [{ bbox: [128, 319, 906, 534], core: [128, 319, 906, 534] }] }; // Фиг. 1 (а) | Фиг. 1 (б) clustered together
@@ -372,4 +374,107 @@ test('a Latin homoglyph inside a Cyrillic word is mapped, math and Latin words a
   assert.equal(lib.fixHomoglyphs('Виждa ли се звездата, ако скоростта e $v_p = 3$ km/s и Fc е силата?'), 'Вижда ли се звездата, ако скоростта e $v_p = 3$ km/s и Fc е силата?');
   assert.equal(lib.fixHomoglyphs('да го снимa с телескопa'), 'да го снима с телескопа');
   assert.equal(lib.fixHomoglyphs('Hello свят'), 'Hello свят');
+});
+
+test('text-layer check: omitted sentence, misread word (mechanical fix), unprinted words; a wordless layer is skipped', async t => {
+  const s = sandbox(t);
+  fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
+  const printed = 'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напреч-\nното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата. Отговорът дайте в кулони.';
+  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), `МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО\nЗадача 1. Ток в проводник\n${printed}\nа) Колко е зарядът за t = 1 min?\n\f`);
+  fs.writeFileSync(path.join(s.dir, 'text', 'solutions.txt'), 'Решения\nЗадача 1. Зарядът е q = I t = 0,06 C.\n');
+  const c = candidate();
+  c.paper.title = 'МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО';
+  c.problems[0].title = 'Ток в проводник';
+  // the reader dropped "Приемете, че…", typed "милиамер" and added a sentence the page does not print
+  c.problems[0].statement = printed.replace(/напреч-\nното/, 'напречното').replace(' Приемете, че съпротивлението на проводника не зависи от температурата.', '').replace('милиампер', 'милиамер') + ' Отговорът закръглете до стотни.';
+  const f = s.write('candidates/tl.json', c);
+  const out = path.join(s.dir, 'checks', 'tl.json');
+  const r = s.run('textlayer.mjs', [PAPER, '--candidate', f, '--out', out]);
+  assert.equal(r.status, 3, r.stderr);
+  const res = s.read(out);
+  assert.equal(res.documents.problems.trusted, true);
+  assert.equal(res.documents.solutions.trusted, false);
+  assert.match(res.documents.solutions.reason, /only \d+ words/);
+  const fix = res.defects.find(d => d.suggestedFix);
+  assert.ok(fix, 'a misread word gets a mechanical fix');
+  assert.equal(fix.path, '/problems/0/statement');
+  assert.match(fix.suggestedFix, /милиампер/);
+  assert.doesNotMatch(fix.suggestedFix, /милиамер\b/);
+  const rest = res.defects.filter(d => !d.suggestedFix);
+  assert.equal(rest.length, 1, JSON.stringify(res.defects, null, 1)); // omission and unprinted words merged per field
+  assert.equal(rest[0].path, '/problems/0/statement');
+  assert.match(rest[0].description, /Приемете, че съпротивлението/);
+  assert.match(rest[0].description, /закръглете/);
+  assert.doesNotMatch(rest[0].description, /напречното|напреч/); // a word broken over two lines is present
+});
+
+test('refix drops an unprinted caption, adds a figures array, and remembers a region that is not a figure', async () => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  c.problems[0].figures[0].caption = 'Схема на опита';
+  const region = { document: 'solutions', page: 1, bbox: [100, 100, 400, 300] };
+  const defects = [
+    { path: '/problems/0/figures/0/caption', kind: 'reworded', severity: 'minor', description: 'not printed' },
+    { path: '/problems/0/solution/figures', kind: 'figure', severity: 'major', description: 'graphic not covered', region },
+  ];
+  const added = { id: 'p1-sol-fig1', alt: 'Сили', tx: { document: 'solutions', page: 1, bbox: [100, 100, 400, 300] } };
+  const r = applyFixes(c, [{ path: '/problems/0/figures/0/caption', value: '' }, { path: '/problems/0/solution/figures', value: [added] }], { defects });
+  assert.equal(r.skipped.length, 0, JSON.stringify(r.skipped));
+  assert.equal(c.problems[0].figures[0].caption, undefined);
+  assert.deepEqual(c.problems[0].solution.figures, [added]);
+  // the same region judged "not a figure": the array comes back unchanged and the region is remembered
+  const c2 = candidate();
+  c2.problems[0].solution.figures = [];
+  const r2 = applyFixes(c2, [{ path: '/problems/0/solution/figures', value: [], note: 'a formula' }], { defects: [defects[1]] });
+  assert.equal(r2.applied.length, 1);
+  assert.deepEqual(c2.tx.notFigures[0].bbox, region.bbox);
+  // no solution at all: a figures array may not conjure one up
+  const c3 = candidate();
+  delete c3.problems[0].solution;
+  const r3 = applyFixes(c3, [{ path: '/problems/0/solution/figures', value: [added] }], { defects: [defects[1]] });
+  assert.equal(r3.skipped.length, 1);
+  assert.equal(c3.problems[0].solution, undefined);
+});
+
+test('LaTeX spacing and text commands outside math are normalised; a leftover command fails validation', async t => {
+  const c = candidate();
+  c.problems[0].solution.statement = '(2.1) \\quad $a_1 = \\dfrac{F}{m_1}$ \\ \\text{и} \\ $a_2 = \\dfrac{F}{m_2}$. \\quad **[1 т.]**';
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].solution.statement, '(2.1) $a_1 = \\dfrac{F}{m_1}$ и $a_2 = \\dfrac{F}{m_2}$. **[1 т.]**');
+  assert.match(c.tx.normalised.join(), /LaTeX spacing/);
+  const s = sandbox(t);
+  const bad = candidate();
+  bad.problems[0].statement = 'Ъгълът \\alpha е даден.';
+  const r = s.run('validate.mjs', [s.write('candidates/latex.json', bad), '--paper-id', PAPER, '--manifest', path.join(s.dir, 'manifest.json')]);
+  assert.notEqual(r.status, 0);
+  assert.match(r.stdout, /LaTeX command outside math \((\\\\|\\)alpha\)/); // the JSON report escapes the backslash
+});
+
+test('normaliseCandidate cleans parts: duplicated label, printed points markers, a statement that repeats its parts', () => {
+  const c = candidate();
+  const pr = c.problems[0];
+  pr.parts = [
+    { label: 'а)', statement: 'а) а) Намерете отношението на масите на двете колички. [3 т.]', points: 3 },
+    { label: 'б)', statement: 'След колко време ще се ударят количките, ако и двете бъдат освободени? **[4 т.]**' },
+    { label: 'в)', statement: 'Пресметнете отношението на кинетичните енергии в момента на удара. [2 т]', points: 5 },
+  ];
+  pr.statement = 'Два магнита са закрепени върху две колички.\n\nа) Намерете отношението на масите на двете колички. [3 т.]\n\nб) След колко време ще се ударят количките, ако и двете бъдат освободени?\n\nПриемете, че силата не зависи от разстоянието.';
+  lib.normaliseCandidate(c);
+  assert.equal(pr.parts[0].statement, 'Намерете отношението на масите на двете колички.');
+  assert.equal(pr.parts[1].points, 4);
+  assert.equal(pr.parts[1].statement, 'След колко време ще се ударят количките, ако и двете бъдат освободени?');
+  assert.match(pr.parts[2].statement, /\[2 т\]$/); // disagrees with the points field: left for the checker
+  assert.equal(pr.statement, 'Два магнита са закрепени върху две колички.\n\nПриемете, че силата не зависи от разстоянието.');
+});
+
+test('a fix that pastes a sibling field into this one is refused', async () => {
+  const { applyFixes, duplicatesSiblings } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  c.problems[0].parts = [{ label: 'а)', statement: 'Колко е зарядът, който преминава през сечението за една минута?', points: 10 }];
+  const whole = 'Токът е $I = 1\ \mathrm{mA}$ и $v_0/2$. Определете заряда.\n\nа) Колко е зарядът, който преминава през сечението за една минута?';
+  assert.equal(duplicatesSiblings(c, '/problems/0/statement', whole, c.problems[0].statement), 'part а)');
+  assert.equal(duplicatesSiblings(c, '/problems/0/statement', 'Токът е $I = 1\ \mathrm{mA}$ и $v_0/2$. Определете заряда.', c.problems[0].statement), null);
+  const r = applyFixes(c, [{ path: '/problems/0/statement', value: whole }], { defects: [{ path: '/problems/0/statement', kind: 'omission', severity: 'major', description: 'sentence missing' }] });
+  assert.equal(r.applied.length, 0);
+  assert.match(r.skipped[0].reason, /pastes the text of part а\)/);
 });

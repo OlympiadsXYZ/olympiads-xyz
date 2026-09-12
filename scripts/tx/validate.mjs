@@ -104,7 +104,7 @@ walkStrings(data, (p, s) => {
   // Only fields the generator renders as MDX prose can break the build; answer fields, notes and caveats get a warning.
   const rendered = /\/(statement|caption|alt|title|label)$/.test(p) && !/\/answer\//.test(p);
   const bare = /[{}]/.test(prose) ? `braces outside math (MDX treats {…} as an expression): ${/[^{}]{0,20}[{}][^{}]{0,20}/.exec(prose)?.[0]?.trim()} — put the LaTeX inside $…$`
-    : /\\(frac|sqrt|cdot|times|alpha|beta|gamma|delta|lambda|omega|pi|mathrm|circ|left|right|sum|int)\b/.test(prose) ? 'a LaTeX command outside math; put it inside $…$' : null;
+    : /\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.test(prose) ? `LaTeX command outside math (${/\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.exec(prose)?.[0].trim()}); put it inside $…$ or write it as text` : null;
   if (bare && !/\/(latex|notes|caveat)$/.test(p) && !/\/answer\/(value|equivalentForms\/\d+)$/.test(p)) (rendered ? err : warn)(p, bare);
   if (/<[\d-]/.test(prose)) warn(p, '"<" glued to a digit/minus outside math (mdText escapes it, but check it is prose)');
   if (/\/parts\/\d+\/statement$/.test(p) && /\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]\s*$/u.test(s)) warn(p, 'printed points marker left at the end of the part text; the points field is canonical and the page would show it twice');

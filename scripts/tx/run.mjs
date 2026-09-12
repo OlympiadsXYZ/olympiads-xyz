@@ -20,7 +20,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256 } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet } from './lib.mjs';
+import { textLayerCheck } from './textlayer.mjs';
+import { spliceFragment } from './fixes.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
@@ -53,11 +55,13 @@ job.options ||= { maxRounds: 2 };
 // at the repair stage (its last receipt is still on disk) — used after the
 // pipeline learned a new trick, so escalations need not wait for an adjudicator.
 if (args.continue && args['max-rounds']) job.options.maxRounds = Number(args['max-rounds']);
-if (args.continue && args.retry && ['escalated', 'repair'].includes(job.stage)) {
-  // the budget is N more rounds from here, not N in total (earlier rounds already count)
+if (args.continue && args.retry && ['escalated', 'repair', 'done'].includes(job.stage)) {
+  // the budget is N more rounds from here, not N in total (earlier rounds already count);
+  // a done job re-enters the same way when the pipeline learned a new check (re-promotion replaces the paper)
   job.options.maxRounds = (job.round || 0) + Number(args['max-rounds'] || 2);
+  const was = job.stage;
   job.stage = 'validate'; delete job.artefacts.validatedSha256;
-  job.history.push({ at: nowIso(), stage: job.stage, note: `retry after escalation: re-validate the current candidate, fresh check; up to ${job.options.maxRounds} rounds` });
+  job.history.push({ at: nowIso(), stage: job.stage, note: `retry after ${was === 'done' ? 'promotion' : 'escalation'}: re-validate the current candidate, fresh check; up to ${job.options.maxRounds} rounds` });
 }
 // Re-read before writing: several run.mjs processes share jobs.json and must not clobber each other's entries.
 const save = (note) => { job.updatedAt = nowIso(); if (note) job.history.push({ at: job.updatedAt, stage: job.stage, note }); const current = readJson(JOBS_FILE, { version: 2, jobs: {} }); current.jobs[paperId] = job; jobs.jobs = current.jobs; writeJson(JOBS_FILE, current); };
@@ -86,6 +90,70 @@ function escalate(note) {
   console.error(`[run] ${paperId} escalated: ${note}`);
   console.error(`[run] adjudication (Opus/Fable tier, D-P9):\n  node scripts/tx/task.mjs ${paperId} --stage adjudicator --out ${rel(gold)} --model opus\n  # after the agent wrote the gold JSON and adjudication.json:\n  node scripts/tx/run.mjs ${paperId} --continue --repaired ${rel(gold)}`);
   process.exit(3);
+}
+// The model checker re-reads the page with the reader's eyes; the PDF's own text
+// layer does not. Its mechanical verdict (textlayer.mjs) is merged into the
+// checker output the receipt is built from: omissions, misreadings and unprinted
+// words become defects of the same shape (a pass becomes a fail), and a model
+// "fix" that would introduce words the document never prints is demoted to info
+// — that is how a printed typo gets "corrected" round after round.
+function mergeTextLayer(candFile, checkOut) {
+  const check = readJson(checkOut, null);
+  const manifest = readJson(manifestPath, null);
+  const candidate = readJson(candFile, null);
+  if (!check || !manifest || !candidate) return null;
+  const tl = textLayerCheck(candidate, manifest, paperId);
+  const tlFile = checkOut.replace(/\.json$/, '.textlayer.json');
+  writeJson(tlFile, tl);
+  const trusted = Object.entries(tl.documents).filter(([, i]) => i.trusted).map(([d]) => d);
+  let vetoed = 0;
+  if (trusted.length && Array.isArray(check.defects)) {
+    const printed = new Set();
+    for (const doc of trusted) { const f = path.join(dir, manifest.documents[doc].text); for (const m of fs.readFileSync(f, 'utf8').matchAll(/\p{L}+/gu)) printed.add(fixHomoglyphs(m[0]).toLowerCase()); }
+    const wordsOf = s => [...splitMath(String(s)).filter(x => !x.math).map(x => x.text).join(' ').matchAll(/\p{L}+/gu)].map(m => m[0].toLowerCase()).filter(w => w.length >= 4 && /^[а-я]+$/u.test(w));
+    for (const d of check.defects) {
+      if (typeof d.suggestedFix !== 'string' || d.severity === 'info' || !trusted.includes(d.document)) continue;
+      // (a) the fix introduces words the document never prints (a rewording, a "corrected" typo)
+      const bad = [...new Set(wordsOf(d.suggestedFix).filter(w => w.length >= 5 && !printed.has(w)))];
+      // (b) the fix makes a printed word disappear from the field (the checker "fixing" a printed typo the transcription kept)
+      const current = pointerGet(candidate, d.path);
+      let gone = [];
+      if (typeof current === 'string') {
+        const after = spliceFragment(current, d.suggestedFix) || d.suggestedFix;
+        const keep = new Set(wordsOf(after));
+        gone = [...new Set(wordsOf(current).filter(w => printed.has(w) && !keep.has(w)))];
+      }
+      if (!bad.length && !gone.length) continue;
+      d.textLayerVeto = { unprinted: bad, removesPrinted: gone }; d.severity = 'info';
+      d.description = `[demoted: the suggested fix ${bad.length ? `uses words the ${d.document} document never prints (${bad.join(', ')})` : ''}${bad.length && gone.length ? ' and ' : ''}${gone.length ? `drops printed words (${gone.join(', ')})` : ''}] ${d.description}`;
+      d.suggestedFix = null; vetoed++;
+    }
+  }
+  // a minor model finding the refix model has already disputed (it re-read the page and kept the text) is recorded, not blocking
+  let disputed = 0;
+  for (const d of check.defects || []) {
+    if (d.severity !== 'minor' || d.source) continue;
+    const dis = (candidate.tx?.disputed || []).find(x => x.path === d.path);
+    if (dis) { d.severity = 'info'; d.disputed = dis.note || true; d.description = `[disputed: the refix model kept the current text — ${dis.note || 'no note'}] ${d.description}`; disputed++; }
+  }
+  check.textLayer = { version: tl.version, checked: trusted, notes: tl.notes, defects: tl.defects.length, vetoedModelFixes: vetoed, disputedMinors: disputed, unmapped: (tl.unmapped || []).length, file: rel(tlFile) };
+  if (tl.defects.length) {
+    check.defects = [...(check.defects || []), ...tl.defects];
+    if (check.verdict === 'pass') check.verdict = 'fail';
+    check.summary = `${check.summary || ''} Text-layer check (${trusted.join(', ')}): ${tl.summary.critical} critical, ${tl.summary.major} major, ${tl.summary.minor} minor defect(s), ${tl.summary.withFix} with a mechanical fix.`.trim();
+  }
+  // graphics the PDF prints that no figure box covers (figures.mjs, from the same candidate bytes)
+  const figRep = readJson(path.join(dir, 'figures-report.json'), null);
+  const unplaced = (figRep?.unplaced || []).filter(u => u.defect).map(u => u.defect);
+  check.regions = { unplaced: (figRep?.unplaced || []).length, raised: unplaced.length };
+  if (unplaced.length) {
+    check.defects = [...(check.defects || []), ...unplaced];
+    if (check.verdict === 'pass') check.verdict = 'fail';
+    check.summary = `${check.summary || ''} Region check: ${unplaced.length} printed graphic(s) not covered by any figure.`.trim();
+  }
+  writeJson(checkOut, check);
+  tl.regionDefects = unplaced.length;
+  return tl;
 }
 // an operator- or adjudicator-supplied candidate re-enters at validate
 if (args.continue && args.repaired) {
@@ -170,11 +238,12 @@ for (;;) {
     if (needsRevalidate()) { job.stage = 'validate'; save('candidate bytes changed since validation; re-validating'); continue; }
     const cand = currentCandidate();
     const checkerOut = checkerOutFor(job.round);
-    if (fs.existsSync(checkerOut) && job.waitingFor?.stage === 'checker') { job.waitingFor = null; job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save('agent checker output received'); continue; }
+    if (fs.existsSync(checkerOut) && job.waitingFor?.stage === 'checker') { job.waitingFor = null; const tl = mergeTextLayer(cand, checkerOut); job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`agent checker output received; text-layer check: ${tl ? tl.defects.length : '?'} defect(s)`); continue; }
     if (job.checker.provider === 'agent') waitForAgent('checker', checkerOut, ['--candidate', cand]);
     const r = node('transcribe.mjs', [paperId, '--provider', job.checker.provider, '--model', job.checker.model, '--stage', 'checker', '--candidate', cand, '--out', checkerOut, ...transcribeOpts]);
     if (r.status !== 0) { save(`checker failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
-    job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save('checker done');
+    const tl = mergeTextLayer(cand, checkerOut);
+    job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`checker done; text-layer check (${tl ? tl.summary.checked.join(', ') || 'no trusted layer' : 'skipped'}): ${tl ? tl.defects.length : '?'} defect(s)`);
   } else if (job.stage === 'receipt') {
     const check = readJson(abs(job.artefacts.checker));
     const rid = check?.checker?.requestId || check?.requestId || check?.reviewer?.split(':').slice(2).join(':') || `${job.checker.provider}-${Date.now()}`;

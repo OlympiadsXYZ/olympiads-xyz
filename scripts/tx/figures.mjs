@@ -14,7 +14,7 @@ import {
   parseArgs, fail, readJson, writeJson, readManifest, paperDir, allFigures, run, which, md5, headStatuses,
   PDFCROP, RENDER_DPI, FIGURE_DPI, R2_REMOTE, figureUrl, nowIso, bboxToPreviewPx, sha256File,
 } from './lib.mjs';
-import { snapCandidate } from './snap.mjs';
+import { snapCandidate, regionsFor, coverFrac, iou } from './snap.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['dry-run', 'no-snap'] });
 const [paperId, candFile] = args._;
@@ -36,7 +36,52 @@ const proposals = allFigures(data).filter(f => f.fig.tx?.bbox);
 // only; scans are left alone). Recorded per figure as tx.bboxProposed/tx.snapped;
 // --no-snap keeps the reader's boxes (benchmarking raw reader quality).
 const snap = args['no-snap'] ? null : snapCandidate(data, manifest, paperId, allFigures);
-const report = { paperId, dryRun: dry, at: nowIso(), snap, figures: [], errors: [] };
+const report = { paperId, dryRun: dry, at: nowIso(), snap, figures: [], errors: [], unplaced: args['no-snap'] ? [] : unplacedGraphics(data, manifest, paperId) };
+
+// Graphics the PDF prints that no figure box covers: a drawing the reader left
+// out (the solution's "Фиг. 2" with the force arrows). Each becomes a checker-shaped
+// defect on the owning problem's figures array (run.mjs merges them into the
+// check); one the refix model has judged not to be a figure is remembered in
+// tx.notFigures and never raised again. Attribution: the last printed problem
+// heading above the graphic (native text), else the only problem whose source
+// spans include the page, else the only problem with a figure on that page.
+function unplacedGraphics(candidate, manifest, paperId) {
+  const out = [];
+  const problems = candidate.problems || [];
+  const key = n => { const s = String(n ?? '').trim().toLowerCase(); const roman = { i: 1, ii: 2, iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9, x: 10 }; return String(roman[s] || Number(s) || s); };
+  const byNumber = new Map(problems.map((p, i) => [key(p.number), i]));
+  const figs = allFigures(candidate);
+  const notFigures = candidate.tx?.notFigures || [];
+  for (const doc of Object.keys(manifest.documents)) {
+    const regs = regionsFor(paperId, manifest, doc);
+    if (!regs?.pages) continue;
+    let lastHeading = null; // carried across pages of the document
+    for (const pg of regs.pages) {
+      const heads = (pg.headings || []).slice().sort((a, b) => a.y - b.y);
+      for (const g of pg.regions || []) {
+        const above = heads.filter(h => h.y <= g.bbox[1]).at(-1) || null;
+        const heading = above || lastHeading;
+        if (!g.kind || g.kind === 'drawing') {
+          if (g.areaFrac < 0.004) continue; // a symbol, a small equation image
+          if (figs.some(f => f.fig.tx?.document === doc && f.fig.tx?.page === pg.page && f.fig.tx?.bbox && coverFrac(g.core, f.fig.tx.bbox) >= 0.5)) continue;
+          if (notFigures.some(x => x.document === doc && x.page === pg.page && iou(x.bbox, g.bbox) >= 0.5)) continue;
+          let idx = heading ? byNumber.get(key(heading.number)) : undefined;
+          if (idx === undefined) { const spanning = problems.map((p, i) => (p.tx?.sourceSpans || []).some(s => s.document === doc && s.page === pg.page) ? i : -1).filter(i => i >= 0); if (spanning.length === 1) idx = spanning[0]; }
+          if (idx === undefined) { const withFig = [...new Set(figs.filter(f => f.fig.tx?.document === doc && f.fig.tx?.page === pg.page).map(f => problems.indexOf(f.problem)))]; if (withFig.length === 1) idx = withFig[0]; }
+          const solutionSide = doc === 'solutions';
+          const parentOk = idx !== undefined && (!solutionSide || (problems[idx].solution && typeof problems[idx].solution === 'object'));
+          const path = parentOk ? `/problems/${idx}/${solutionSide ? 'solution/' : ''}figures` : null;
+          const pct = Math.round(g.areaFrac * 1000) / 10;
+          out.push({ document: doc, page: pg.page, bbox: g.bbox, areaFrac: g.areaFrac, raster: !!g.raster, problemIndex: idx ?? null, path,
+            defect: path ? { path, document: doc, page: pg.page, severity: 'major', kind: 'figure', source: 'regions', confidence: 0.6, region: { document: doc, page: pg.page, bbox: g.bbox },
+              description: `Region check: the ${doc} document prints a graphic on p.${pg.page} at [${g.bbox.map(Math.round).join(', ')}] (permille; ≈${pct}% of the page) that no figure of problem ${problems[idx].number} covers. If a student needs it, return the complete figures array with it added (a new id, the printed caption if any, an alt line, tx box = that region); if it is a formula, a table or decoration, return the array unchanged and say so in the note.`, suggestedFix: null } : null });
+        }
+      }
+      if (heads.length) lastHeading = heads.at(-1);
+    }
+  }
+  return out;
+}
 const MIN_PX = 40, MIN_BYTES = 1500;
 const dpi = manifest.renderDpi || RENDER_DPI;
 

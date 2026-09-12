@@ -11,7 +11,7 @@ import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, JOBS_FILE, ROOT, nowIso, paperDir, findContentFile } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'allow-same-model', 'no-promote', 'dry-run'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'allow-same-model', 'no-promote', 'dry-run', 'redo'] });
 if (!args.ids && !args.backlog) fail('usage: batch.mjs --ids a,b | --backlog [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
 const workers = Number(args.workers || 2);
@@ -41,6 +41,9 @@ const jobs = () => readJson(JOBS_FILE, { version: 2, jobs: {} }).jobs;
 const plan = [];
 for (const id of ids) {
   const job = jobs()[id];
+  // --redo sends a promoted paper back through validate → figures → checker with the
+  // current rules (a re-promotion replaces the published paper with a new receipt)
+  if (args.redo && job?.stage === 'done') { plan.push({ id, resume: true }); continue; }
   if (findContentFile(id)) { log({ paperId: id, outcome: 'skipped', reason: 'already in content/problems' }); continue; }
   if (job?.stage === 'promoted' || job?.stage === 'done') { log({ paperId: id, outcome: 'skipped', reason: `job already ${job.stage}` }); continue; }
   plan.push({ id, resume: !!job });
@@ -54,7 +57,7 @@ function runOne({ id, resume }) {
       argv.push('--continue');
       // an escalated or failed-repair job re-enters at validate with a fresh round budget
       const stage = jobs()[id]?.stage;
-      if (['escalated', 'repair'].includes(stage)) argv.push('--retry', '--max-rounds', String(args['max-rounds'] || 3));
+      if (['escalated', 'repair'].includes(stage) || (args.redo && stage === 'done')) argv.push('--retry', '--max-rounds', String(args['max-rounds'] || 3));
     } else {
       argv.push('--reader', args.reader, '--checker', args.checker);
       if (args['allow-same-model']) argv.push('--allow-same-model');

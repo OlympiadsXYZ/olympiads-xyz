@@ -13,7 +13,8 @@ import path from 'node:path';
 import { run, paperDir, readJson, writeJson, sha256File, ROOT } from './lib.mjs';
 
 const PDFREGIONS = path.join(ROOT, 'scripts', 'pdfregions.py');
-const REGIONS_VERSION = 2; // bump with pdfregions.py VERSION: cached regions are recomputed
+const REGIONS_VERSION = 4; // bump with pdfregions.py VERSION: cached regions are recomputed
+const SNAPPABLE = g => !g.kind || g.kind === 'drawing' || g.kind === 'table'; // never onto a formula or a rule
 const PAD = 6;            // permille added around a snapped region
 const MIN_IOU = 0.2;      // overlap that ties a proposal to a region
 const MIN_CORE_IN = 0.5;  // or: this much of the region's drawing lies inside the proposal
@@ -24,6 +25,7 @@ const SUB_COVER = 0.6;    // a proposal covering less of a region's width/height
 const area = b => Math.max(0, b[2] - b[0]) * Math.max(0, b[3] - b[1]);
 const inter = (a, b) => { const x0 = Math.max(a[0], b[0]), y0 = Math.max(a[1], b[1]), x1 = Math.min(a[2], b[2]), y1 = Math.min(a[3], b[3]); return x1 > x0 && y1 > y0 ? (x1 - x0) * (y1 - y0) : 0; };
 export const iou = (a, b) => { const i = inter(a, b); return i ? i / (area(a) + area(b) - i) : 0; };
+export const coverFrac = (core, box) => area(core) ? inter(core, box) / area(core) : 0; // how much of a graphic a box contains
 const union = (a, b) => [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])];
 const centre = b => [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
 const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
@@ -48,9 +50,10 @@ export function regionsFor(paperId, manifest, doc) {
 
 // Decide one box. Returns { bbox, reason, region } or null when the proposal stays.
 export function snapBox(bbox, pageRegions, { taken = [] } = {}) {
-  if (!pageRegions || pageRegions.scanned || !pageRegions.regions?.length) return null;
+  // a scanned page has regions too since pdfregions.py v3 (from its pixels); an empty list means nothing to snap to
+  if (!pageRegions || !pageRegions.regions?.length) return null;
   const regions = pageRegions.regions;
-  const scored = regions.map((g, i) => ({ i, g, iou: iou(bbox, g.bbox), coreIn: area(g.core) ? inter(bbox, g.core) / area(g.core) : 0 }));
+  const scored = regions.map((g, i) => ({ i, g, iou: iou(bbox, g.bbox), coreIn: area(g.core) ? inter(bbox, g.core) / area(g.core) : 0 })).filter(s => SNAPPABLE(s.g));
   const hits = scored.filter(s => s.iou >= MIN_IOU || s.coreIn >= MIN_CORE_IN);
   if (hits.length === 1) {
     const g = hits[0].g;

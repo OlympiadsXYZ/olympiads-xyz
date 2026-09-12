@@ -27,6 +27,29 @@ const parseBox = v => {
 const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see |split|repoint|use |replace|restore|move|add |insert|the (statement|solution|text)|пълен текст|виж|запази|премахни|добави|изтрий|замени|премести)\b/i;
 export const looksLikeInstruction = s => typeof s === 'string' && (INSTRUCTION.test(s) || /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s.slice(0, 200)));
 const words = s => new Set(String(s).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 1));
+// A model asked for one field sometimes answers with the whole problem: a statement that
+// now contains its parts, a part that contains its neighbours. Such a fix duplicates text
+// that lives in sibling fields and is refused (the current value is the reference: text the
+// field already shared with a sibling is not new duplication).
+const opening = (s, n = 6) => String(s || '').replace(/\$\$[\s\S]*?\$\$|\$[^$\n]*\$/g, ' ').toLowerCase().replace(/^\s*[а-яa-z0-9]{1,3}[).]\s*/u, '').split(/[^\p{L}\p{N}]+/u).filter(Boolean).slice(0, n).join(' ');
+export function duplicatesSiblings(candidate, path, value, current) {
+  const m = /^\/problems\/(\d+)\/(statement|parts\/(\d+)\/statement|solution\/statement)$/.exec(String(path));
+  if (!m || typeof value !== 'string') return null;
+  const pr = candidate?.problems?.[Number(m[1])];
+  if (!pr) return null;
+  const siblings = [];
+  if (m[2] !== 'statement') siblings.push({ what: 'the statement', text: pr.statement });
+  (pr.parts || []).forEach((x, j) => { if (!(m[3] != null && Number(m[3]) === j)) siblings.push({ what: `part ${x.label || j + 1}`, text: x.statement }); });
+  if (m[2] !== 'solution/statement' && pr.solution?.statement) siblings.push({ what: 'the solution', text: pr.solution.statement });
+  const flat = s => opening(s, 1000);
+  const v = flat(value), cur = flat(current);
+  for (const s of siblings) {
+    const head = opening(s.text);
+    if (head.split(' ').length < 5) continue;
+    if (v.includes(head) && !cur.includes(head)) return s.what;
+  }
+  return null;
+}
 export function plausibleReplacement(current, fix, kind) {
   if (typeof fix !== 'string' || typeof current !== 'string') return true;
   if (looksLikeInstruction(fix)) return false;
@@ -119,23 +142,36 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     // An omitted field (a whole solution the reader skipped) is missing, not
     // wrong: create it, and any missing object on the way, as long as no array
     // element has to be invented (a missing problem/part is not a field fix).
-    if (current === undefined && (typeof f.value === 'string' || sameShape({}, f.value))) {
+    // an unprinted caption/alt is dropped when the model answers ""
+    if (typeof current === 'string' && f.value === '' && /\/(caption|alt|title)$/.test(p)) {
+      const parent = pointerGet(candidate, p.replace(/\/[^/]+$/, ''));
+      if (parent && typeof parent === 'object') { delete parent[p.split('/').at(-1)]; applied.push({ ...entry, from: current, to: null, removed: true, note: f.note || null }); continue; }
+    }
+    if (current === undefined && (typeof f.value === 'string' || Array.isArray(f.value) || sameShape({}, f.value))) {
       const keys = p.split('/').filter(Boolean);
       let o = candidate, ok = true;
       for (let i = 0; i < keys.length - 1; i++) {
         const k = keys[i], next = keys[i + 1];
-        if (o[k] === undefined) { if (/^\d+$/.test(k) || /^\d+$/.test(next)) { ok = false; break; } o[k] = {}; }
+        // a figures array may not conjure up a solution object around itself (a solution needs its text)
+        if (o[k] === undefined) { if (/^\d+$/.test(k) || /^\d+$/.test(next) || (k === 'solution' && Array.isArray(f.value))) { ok = false; break; } o[k] = {}; }
         o = o[k];
         if (o === null || typeof o !== 'object') { ok = false; break; }
       }
-      if (!ok) { skipped.push({ ...entry, reason: 'field is missing and its parent cannot be created (array element)' }); continue; }
+      if (!ok) { skipped.push({ ...entry, reason: 'field is missing and its parent cannot be created (array element or absent solution)' }); continue; }
       pointerSet(candidate, p, f.value);
       applied.push({ ...entry, from: null, to: f.value, note: f.note || null, created: true });
       continue;
     }
     if (typeof current === 'string' && typeof f.value === 'string') {
-      if (current === f.value) { skipped.push({ ...entry, reason: 'model returned the current value unchanged' }); continue; }
+      if (current === f.value) {
+        // the refix model, pages in hand, stands by the current text: the defect is disputed between two
+        // model readings; run.mjs demotes a disputed *minor* model defect so it cannot park the paper
+        candidate.tx = { ...(candidate.tx || {}), disputed: [...(candidate.tx?.disputed || []).filter(x => x.path !== p), { path: p, kind: d.kind, severity: d.severity, round, note: String(f.note || '').slice(0, 300) }] };
+        skipped.push({ ...entry, reason: 'model returned the current value unchanged (disputed)' }); continue;
+      }
       if (looksLikeInstruction(f.value)) { skipped.push({ ...entry, reason: 'fix is an instruction, not a replacement' }); continue; }
+      const dup = duplicatesSiblings(candidate, p, f.value, current);
+      if (dup) { skipped.push({ ...entry, reason: `fix pastes the text of ${dup} into this field` }); continue; }
       const spliced = spliceFragment(current, f.value);
       if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: f.value, note: f.note || null }); continue; }
       if (!plausibleReplacement(current, f.value, d.kind)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
@@ -151,6 +187,12 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       continue;
     }
     if (sameShape(current, f.value)) {
+      // a region the model judged not to be a figure (array returned unchanged) is remembered so it is never raised again
+      if (d.region && Array.isArray(current) && JSON.stringify(current) === JSON.stringify(f.value)) {
+        candidate.tx = { ...(candidate.tx || {}), notFigures: [...(candidate.tx?.notFigures || []), { ...d.region, note: String(f.note || '').slice(0, 200) }] };
+        applied.push({ ...entry, from: null, to: null, notFigure: d.region, note: f.note || null });
+        continue;
+      }
       pointerSet(candidate, p, f.value);
       applied.push({ ...entry, from: current, to: f.value, note: f.note || null });
       continue;

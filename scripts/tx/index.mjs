@@ -57,6 +57,7 @@ let downloading = Promise.resolve(); // R2 downloads stay serial (the public bas
 const serialDownload = fn => { const p = downloading.then(fn, fn); downloading = p.catch(() => {}); return p; };
 const b64 = f => fs.readFileSync(f).toString('base64');
 const IMAGE_EXT = /\.(jpe?g|png)$/i;
+const OFFICE_EXT = /\.(docx?|rtf|odt)$/i;
 
 async function indexOne(e) {
   const started = Date.now();
@@ -68,8 +69,17 @@ async function indexOne(e) {
     await serialDownload(() => { run('rclone', ['copyto', `${R2_REMOTE}/${e.file}`, src]); });
     let pages = [];
     let pageCount = null, truncated = false;
+    let pdf = src, converted = false;
+    if (OFFICE_EXT.test(ext)) {
+      // a Word document: printed to PDF by the installed Word (scripts/tx/office2pdf.ps1), then read like any PDF
+      pdf = path.join(dir, 'src.pdf');
+      const r = run('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(ROOT, 'scripts', 'tx', 'office2pdf.ps1'), '-In', src, '-Out', pdf], { allowFail: true });
+      if (r.status !== 0 || !fs.existsSync(pdf)) throw new Error(`Word to PDF conversion failed: ${(r.stderr || r.stdout || '').trim().slice(0, 200)}`);
+      converted = true;
+    }
     if (IMAGE_EXT.test(ext)) { pages = [src]; pageCount = 1; }
-    else if (ext === '.pdf') {
+    else if (ext === '.pdf' || converted) {
+      const src = pdf;
       const info = run('pdfinfo', [src], { allowFail: true }).stdout || '';
       pageCount = Number(/^Pages:\s+(\d+)/m.exec(info)?.[1]) || null;
       if (!pageCount) throw new Error('pdfinfo could not read the file');
@@ -111,7 +121,7 @@ async function indexOne(e) {
     const costUsd = estimateCost(MODEL, inputTokens, outputTokens);
     const row = {
       id: e.id, subject: e.subject, competition: e.competition, year: e.year, round: e.round ?? null, group: e.group ?? null, lang: e.lang, type: e.type, file: e.file,
-      pageCount, pagesShown: pages.length, truncated, sourceSha256: sha256(fs.readFileSync(src)),
+      pageCount, pagesShown: pages.length, truncated, sourceSha256: sha256(fs.readFileSync(src)), ...(converted ? { convertedFrom: ext, converter: 'Microsoft Word (office2pdf.ps1)' } : {}),
       index: parsed.obj,
       tx: { provider: 'zai', model: MODEL, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens, outputTokens, costUsd, dpi: DPI },
     };

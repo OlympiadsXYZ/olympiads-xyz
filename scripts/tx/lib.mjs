@@ -624,6 +624,36 @@ export function normaliseCandidate(c) {
     if (a.tolerance != null && typeof a.tolerance !== 'number') { const t = Number(String(a.tolerance).replace(',', '.')); if (Number.isFinite(t)) a.tolerance = t; else delete a.tolerance; changes.push(`${p}: tolerance normalised`); }
   };
   (c.problems || []).forEach((pr, i) => { fixAnswer(pr.answer, `/problems/${i}/answer`); (pr.parts || []).forEach((part, j) => fixAnswer(part.answer, `/problems/${i}/parts/${j}/answer`)); });
+  // Parts: a label typed into the text again ("в) в) Пресметнете…") is dropped; a printed
+  // points marker at the end of a part ("[2 т]", "**[3 т.]**") is the points field, not
+  // prose — it sets the field when empty and is stripped when it agrees with it.
+  const MARKER = /\s*\**\[\s*(\d+(?:[.,]\d+)?)\s*т\.?\s*\]\**\s*$/u;
+  (c.problems || []).forEach((pr, i) => (pr.parts || []).forEach((part, j) => {
+    if (typeof part.statement !== 'string') return;
+    const p = `/problems/${i}/parts/${j}/statement`;
+    if (part.label) {
+      const lab = String(part.label).trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(`^(?:\\s*${lab}\\s+)+`, 'u');
+      if (re.test(part.statement)) { part.statement = part.statement.replace(re, ''); changes.push(`${p}: leading part label removed`); }
+    }
+    const m = MARKER.exec(part.statement);
+    if (m) {
+      const n = Number(m[1].replace(',', '.'));
+      if (part.points == null) { part.points = n; part.statement = part.statement.replace(MARKER, ''); changes.push(`${p}: points ${n} taken from the printed marker`); }
+      else if (Math.abs(part.points - n) < 1e-9) { part.statement = part.statement.replace(MARKER, ''); changes.push(`${p}: printed points marker stripped`); }
+    }
+  }));
+  // A statement that repeats its own parts (a refix pasted the whole problem back): drop
+  // every paragraph that opens like one of the parts; the closing paragraphs stay.
+  const firstWords = (s, n = 6) => proseOnly(String(s || '')).toLowerCase().replace(/^\s*[а-яa-z0-9]{1,3}[).]\s*/u, '').split(/\s+/).filter(Boolean).slice(0, n).join(' ');
+  (c.problems || []).forEach((pr, i) => {
+    if (typeof pr.statement !== 'string' || !(pr.parts || []).length || !/\n\s*\n/.test(pr.statement)) return;
+    const heads = (pr.parts || []).map(x => firstWords(x.statement)).filter(h => h.split(' ').length >= 4);
+    if (!heads.length) return;
+    const paras = pr.statement.split(/\n\s*\n/);
+    const kept = paras.filter(para => { const w = firstWords(para); return !heads.some(h => w === h); });
+    if (kept.length !== paras.length) { pr.statement = kept.join('\n\n').trim(); changes.push(`/problems/${i}/statement: ${paras.length - kept.length} paragraph(s) repeating the parts dropped`); }
+  });
   const h = c.paper?.held;
   if (h && typeof h === 'object') {
     for (const k of ['from', 'to', 'place']) if (h[k] === null) { delete h[k]; changes.push(`/paper/held/${k}: null dropped`); }
@@ -633,6 +663,18 @@ export function normaliseCandidate(c) {
     if (!h.from && !h.to && !h.place) { delete c.paper.held; changes.push('/paper/held: empty, dropped'); }
   } else if (h != null) { delete c.paper.held; changes.push('/paper/held: not an object, dropped'); }
   walkStrings(c, (p, s) => { if (/\\[,;: ][\^_]/.test(s)) { pointerSet(c, p, s.replace(/(\\[,;: ])([\^_])/g, '$1{}$2')); changes.push(`${p}: KaTeX spacing before ^/_`); } });
+  // LaTeX spacing and text commands OUTSIDE math ("(2.1) \quad $a = b$ \ \text{и} \ $c$",
+  // a display-equation habit) render literally on the page: spacing becomes a
+  // space, \text{}/\mathrm{} their content, \textbf{} **bold**, \textit{} *italic*.
+  walkStrings(c, (p, s) => {
+    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p) || !/\\/.test(s)) return;
+    let out = splitMath(s).map(seg => seg.math ? seg.text : seg.text
+      .replace(/\\(?:text|textrm|textnormal|mathrm)\{([^{}]*)\}/g, '$1')
+      .replace(/\\textbf\{([^{}]*)\}/g, '**$1**')
+      .replace(/\\(?:textit|emph)\{([^{}]*)\}/g, '*$1*')
+      .replace(/\\(?:quad|qquad)(?![a-zA-Z])|\\[,;:! ]/g, ' ')).join('');
+    if (out !== s) { out = out.replace(/(?<=\S)[ \t]{2,}(?=\S)/g, ' '); pointerSet(c, p, out); changes.push(`${p}: LaTeX spacing/text command outside math`); }
+  });
   // A Latin letter inside a Cyrillic word ("Виждa", "снимa", "скоростта e") is a
   // text-layer artefact no model types back reliably; map the homoglyph, outside math only.
   walkStrings(c, (p, s) => {
