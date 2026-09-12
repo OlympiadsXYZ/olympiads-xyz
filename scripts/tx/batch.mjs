@@ -43,7 +43,7 @@ for (const id of ids) {
   const job = jobs()[id];
   // --redo sends a promoted paper back through validate → figures → checker with the
   // current rules (a re-promotion replaces the published paper with a new receipt)
-  if (args.redo && job?.stage === 'done') { plan.push({ id, resume: true }); continue; }
+  if (args.redo && job) { plan.push({ id, resume: true }); continue; } // whatever stage the job is in (a redo interrupted mid-way resumes)
   if (findContentFile(id)) { log({ paperId: id, outcome: 'skipped', reason: 'already in content/problems' }); continue; }
   if (job?.stage === 'promoted' || job?.stage === 'done') { log({ paperId: id, outcome: 'skipped', reason: `job already ${job.stage}` }); continue; }
   plan.push({ id, resume: !!job });

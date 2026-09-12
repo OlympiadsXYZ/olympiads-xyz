@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   parseArgs, fail, run, resolvePaper, paperDir, manifestFile, readManifest, writeJson,
-  sha256File, nowIso, RENDER_DPI, R2_REMOTE, which,
+  sha256File, nowIso, RENDER_DPI, R2_REMOTE, which, ROOT,
 } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['force', 'gc', 'json'] });
@@ -75,7 +75,13 @@ for (const doc of ['problems', 'solutions']) {
   const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || sha256File(file) !== prev.sha256;
   if (stale) {
     fs.rmSync(file, { force: true });
-    run('rclone', ['copyto', `${R2_REMOTE}/${key}`, file]);
+    if (/\.(docx?|rtf|odt)$/i.test(key)) {
+      // a Word document in the archive: fetched as is, printed to PDF by the installed Word (office2pdf.ps1)
+      const office = file.replace(/\.pdf$/, path.extname(key).toLowerCase());
+      run('rclone', ['copyto', `${R2_REMOTE}/${key}`, office]);
+      const r = run('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(ROOT, 'scripts', 'tx', 'office2pdf.ps1'), '-In', office, '-Out', file], { allowFail: true });
+      if (r.status !== 0 || !fs.existsSync(file)) fail(`Word to PDF conversion failed for ${key}: ${(r.stderr || r.stdout || '').trim().slice(0, 300)}`);
+    } else run('rclone', ['copyto', `${R2_REMOTE}/${key}`, file]);
     downloaded = true;
   }
   const sha256 = sha256File(file);

@@ -68,7 +68,35 @@ GLM reader, 5 backlog papers still open. The 27 staged Opus transcriptions did f
 stopped. End of day: 51 reviewed papers, 606 papers and 2,197 problems on the site, 16 papers open with 32 remaining
 defects (5 critical). Z.ai for the day: $2.97 for 503 calls (287 checks, 60 reads, 156 refix calls).
 
-## Decision (recorded as D-P10 in `docs/Problems-Decisions-2026-09.md`)
+## Addendum 2026-09-13 — what the same-model check let through, and the mechanical checks that now catch it
+
+Margulan read one `reviewed` page (psf-2006-proletno-8, problem 2, a born-digital PDF) and found: two misread words
+("разнозначни" for the printed "разноименни"; "ударят" twice for the printed "удрят"), a whole printed sentence missing
+("Приемете, че: …"), raw `\quad` outside math in the solution, and the solution's Фиг. 2 never transcribed. On a scan
+(nof-2012-i-8) a graph crop started below its axis label. The GLM checker had passed the paper twice, and its own
+suggested fix for the statement contained the same misreadings — the checker re-reads the page with the reader's eyes,
+and all three GLM roles (reader, checker, refix) silently "correct" printed typos.
+
+The loop now has three mechanical checks, none of which involve a model (`scripts/tx`, commit 42f507cf3, 28 tests):
+
+- **Text layer** (`textlayer.mjs`, merged into every check by `run.mjs`): for each document whose pdftotext layer covers
+  ≥ 80 % of the candidate's own words, a run of ≥ 3 printed words absent from the transcription is an omission (critical
+  from 6 words), a single absent word on an otherwise transcribed line is a misreading with a mechanical replacement
+  located by its printed neighbours, and words the document prints nowhere are reported per field. A model fix that adds
+  unprinted words or drops printed ones is demoted to a note; a minor model finding the refix model has disputed is too.
+  Over the 51 reviewed papers this found 231 defects (4 critical, 150 major, 77 minor; 39 with a mechanical fix); 11 papers
+  were scans or garbled layers and were skipped.
+- **Printed graphics** (`figures.mjs` after snapping): every drawing region no figure box covers becomes a defect on the
+  owning problem's figures array (attributed by the printed heading above it, else source spans, else existing figures);
+  the refix model adds it or returns the array unchanged, which is remembered in `tx.notFigures`.
+- **Scans** (`pdfregions.py` v4): scanned pages get regions from their pixels (OpenCV: letter height, text rows vs. strokes,
+  labels folded, bleed-through and big-font headings filtered, fraction bars and underlines dropped), so `snap.mjs` corrects
+  a reader's box on a scan as well; a native table is one drawn with rulings only.
+
+Guards the first live run exposed: a refix asked for one field may return the whole problem (statement + parts) — refused
+when the fix pastes a sibling field; a duplicated part label and a printed points marker at the end of a part are normalised
+away; a merged text-layer defect keeps the "omission fix must be longer" protection. psf-2006-proletno-8 then re-promoted
+with all four findings fixed and the Фиг. 2 crop added, after 10 loop rounds in total at about 6 ¢ of Z.ai.
 
 1. Bulk transcription uses **GLM-5.3-Flash as the reader**, boxes snapped to the PDF's own graphics, the mechanical
    repair plus refix loop, and a checker run after every repair. Sonnet 5 is the better cheap reader on quality but it

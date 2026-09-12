@@ -78,7 +78,8 @@ export function run(cmd, args, { input, maxBuffer = 64 * 1024 * 1024, allowFail 
   if (r.status !== 0 && !allowFail) throw new Error(`${cmd} ${args.join(' ')} failed (${r.status}): ${(r.stderr || '').slice(0, 2000)}`);
   return r;
 }
-export const which = cmd => spawnSync('which', [cmd], { encoding: 'utf8' }).status === 0;
+// `which` lives in Git's usr/bin; a node started from PowerShell may not have it, so fall back to where.exe
+export const which = cmd => spawnSync('which', [cmd], { encoding: 'utf8' }).status === 0 || (process.platform === 'win32' && spawnSync('where.exe', [cmd], { encoding: 'utf8' }).status === 0);
 
 // ---------------------------------------------------------------- paper ids
 // Approximates the id vocabulary the previous agent workflows settled on:
