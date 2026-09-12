@@ -234,7 +234,7 @@ test('repair.mjs applies text/box/points fixes, resets touched figures, and repo
   assert.match(fixed.problems[0].parts[0].statement, /60/);
   assert.equal(fixed.problems[0].points, 12);
   const fig = fixed.problems[0].figures[0];
-  assert.deepEqual(fig.tx, { document: 'problems', page: 1, bbox: [365, 275, 625, 445] });
+  assert.deepEqual(fig.tx, { document: 'problems', page: 1, bbox: [365, 275, 625, 445], boxFrom: 'checker' }); // a judged box: snap.mjs leaves it alone
   assert.equal(fig.url, undefined);
   assert.equal(fixed.tx.repairs.length, 3); assert.equal(fixed.tx.repairs[0].round, 1);
 });
@@ -299,7 +299,7 @@ test('refix applies model-supplied values like repair.mjs and never invents a fi
   assert.match(r.skipped.map(s => s.reason).join(' | '), /could not settle/);
   assert.match(r.skipped.map(s => s.reason).join(' | '), /cannot apply a string fix to a object field/);
   assert.equal(c.problems[0].points, 12);
-  assert.deepEqual(c.problems[0].figures[0].tx, { document: 'problems', page: 1, bbox: [360, 270, 630, 445] });
+  assert.deepEqual(c.problems[0].figures[0].tx, { document: 'problems', page: 1, bbox: [360, 270, 630, 445], boxFrom: 'refix' });
   assert.equal(c.problems[0].figures[0].url, undefined);
   assert.deepEqual(r.figuresToRedo, ['/problems/0/figures/0']);
   assert.equal(c.tx.repairs.length, 3);

@@ -131,7 +131,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       // an object fix may also move the figure to another document/page and correct its caption/alt
       const o = f.value && typeof f.value === 'object' && !Array.isArray(f.value) ? f.value : null;
       const tx = o?.tx && typeof o.tx === 'object' ? o.tx : o || {};
-      fig.tx = { ...(fig.tx || {}), ...(['problems', 'solutions'].includes(tx.document) ? { document: tx.document } : {}), ...(Number.isInteger(tx.page) && tx.page > 0 ? { page: tx.page } : {}), bbox: box };
+      fig.tx = { ...(fig.tx || {}), ...(['problems', 'solutions'].includes(tx.document) ? { document: tx.document } : {}), ...(Number.isInteger(tx.page) && tx.page > 0 ? { page: tx.page } : {}), bbox: box, boxFrom: 'refix' }; // a judged box: snap.mjs leaves it alone
       if (o) for (const k of ['caption', 'alt']) if (typeof o[k] === 'string' && o[k]) fig[k] = o[k];
       touched.add(figMatch[1]);
       applied.push({ ...entry, from, to: box, ...(o?.tx ? { moved: `${fig.tx.document} p.${fig.tx.page}` } : {}), note: f.note || null });
@@ -215,7 +215,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
   for (const { fig, path: p } of allFigures(candidate)) {
     if (!touched.has(p)) continue;
     delete fig.url; delete fig.width; delete fig.height; delete fig.source;
-    fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox };
+    fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
   }
   candidate.tx = { ...(candidate.tx || {}), repairs: [...(candidate.tx?.repairs || []), ...applied.map(a => ({ round, at: nowIso(), by, requestId, ...a }))] };
   return { applied, skipped, figuresToRedo: [...touched] };

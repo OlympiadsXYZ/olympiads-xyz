@@ -91,7 +91,7 @@ export function snapCandidate(candidate, manifest, paperId, allFigures) {
   for (const { fig, path: p } of allFigures(candidate)) {
     const t = fig.tx;
     if (!t?.bbox || !t.document || !t.page) continue;
-    if (t.snapped || t.bboxProposed) { summary.skipped++; continue; }
+    if (t.snapped || t.bboxProposed || t.boxFrom) { summary.skipped++; continue; } // already snapped, or a box a checker/refix judged from the crop
     if (!cache.has(t.document)) cache.set(t.document, regionsFor(paperId, manifest, t.document));
     const regs = cache.get(t.document)?.pages?.find(pg => pg.page === t.page) || null;
     if (regs?.scanned) summary.scannedPages++;

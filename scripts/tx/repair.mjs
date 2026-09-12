@@ -46,7 +46,7 @@ for (const d of receipt.defects || []) {
     const box = parseBox(d.suggestedFix);
     const fig = pointerGet(candidate, figMatch[1]);
     if (!box || !fig || typeof fig !== 'object') { skipped.push({ ...entry, reason: 'suggestedFix is not a 4-number box or figure path unknown' }); continue; }
-    fig.tx = { ...(fig.tx || {}), bbox: box };
+    fig.tx = { ...(fig.tx || {}), bbox: box, boxFrom: 'checker' }; // a judged box: snap.mjs leaves it alone
     touchedFigures.add(figMatch[1]);
     applied.push({ ...entry, from: pointerGet(candidate, figMatch[1] + '/tx/bbox'), to: box });
     continue;
@@ -81,7 +81,7 @@ for (const d of receipt.defects || []) {
 for (const { fig, path: p } of allFigures(candidate)) {
   if (!touchedFigures.has(p)) continue;
   delete fig.url; delete fig.width; delete fig.height; delete fig.source;
-  fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox };
+  fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
 }
 candidate.tx = { ...(candidate.tx || {}), repairs: [...(candidate.tx?.repairs || []), ...applied.map(a => ({ round, at: nowIso(), by, receipt: path.relative(process.cwd(), path.resolve(args.receipt)), ...a }))] };
 const out = path.resolve(args.out);
