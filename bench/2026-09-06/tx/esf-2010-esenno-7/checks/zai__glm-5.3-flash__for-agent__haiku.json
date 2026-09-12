@@ -1,0 +1,222 @@
+{
+  "candidateSha256": "5108183097ab",
+  "verdict": "fail",
+  "summary": "Multiple critical defects: answer-key mismatches in Задача I (parts 2, 3), all multiple-choice option texts omitted, a garbled Problem III.2a statement (изпреварване vs разминаване), and several heavily reworded/garbled statements. One figure crop clips a dimension label.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 9
+  },
+  "defects": [
+    {
+      "path": "/problems/0/parts/1/answer",
+      "document": "solutions",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Official solution circled answer for I.2 is г) (молекулите извършват топлинно движение); candidate records а).",
+      "suggestedFix": "\"correct\": \"г\"",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/parts/2/answer",
+      "document": "solutions",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Official solution circled answer for I.3 is в) (разстоянието между молекулите); candidate records б).",
+      "suggestedFix": "\"correct\": \"в\"",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/parts",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "The printed answer options а)–г) with their full texts (e.g. 'а) планета 1, защото е по-близо до звездата' etc.) are not transcribed for any of parts 1–10; a student reading the transcription cannot answer the questions.",
+      "suggestedFix": "Add the four options verbatim to each part, including 'г) и в трите случая теглото е едно и също' for part 5 and 'г) трите са равни' for part 7.",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/2/parts/1/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "critical",
+      "kind": "reworded",
+      "description": "Part 2a printed: '…Вторият камион настига и изпреварва първия. За колко секунди става изпреварването (вж. чертежа)?' Candidate writes '…За колко секунди камионите ще се разминават', contradicting the overtaking setup and the official solution (t=7 s, s2−s1=ℓ1+ℓ2).",
+      "suggestedFix": "Два камиона с дължини $\\ell_1 = 22\\ \\mathrm{m}$ и $\\ell_2 = 13\\ \\mathrm{m}$ се движат по праволинеен участък от магистрала със скорости $v_1 = 15\\ \\mathrm{m/s}$ и $v_2 = 20\\ \\mathrm{m/s}$. Вторият камион настига и изпреварва първия. За колко секунди става изпреварването (вж. чертежа)?",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed instruction 'В листа за отговорите попълнете само числените стойности и мерните единици на търсените величини.' Candidate has garbled 'мерите един одинции на търгишете делични'.",
+      "suggestedFix": "В листа за отговорите попълнете само числените стойности и мерните единици на търсените величини. Всеки верен отговор се оценява с 1 точка.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/parts/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed: 'Коя от тях има по-голяма маса, ако звездата ги привлича с равни по големина гравитационни сили?' Candidate: 'Кой от тях … звездата и привличка…' (wrong gender/number and non-words).",
+      "suggestedFix": "Около далечна звезда обикалят по кръгови орбити две планети. Коя от тях има по-голяма маса, ако звездата ги привлича с равни по големина гравитационни сили?",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/1/parts/9/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed: 'Кубчетата създават едно и също налягане p = 200 Pa върху пола.' Candidate: 'Кубчета съдържават едно и също налягане' — wrong verb and agreement.",
+      "suggestedFix": "Върху пода лежат две кубчета с ръб $a$ и $2a$. Кубчетата създават едно и също налягане $p = 200\\ \\mathrm{Pa}$ върху пода. Колко ще бъде налягането $p_1$ върху пода, ако поставим малкото кубче върху голямото?",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed: '…можете да пишете и на обратната страна на листа. Двете части на задачата са независими.' Candidate has 'листма' and 'Даете части'.",
+      "suggestedFix": "В листа за отговорите представете подробно решение на задачата – можете да пишете и на обратната страна на листа. Двете части на задачата са независими.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Official solution for Част 2а uses 'Разликата от двата пътя е равна на сумата от дължините на камионите, s₂ − s₁ = ℓ₁+ℓ₂, t=(ℓ₁+ℓ₂)/(v₂−v₁)=7 s' (overtaking); candidate's solution summary calls it 'разминаване' and misspells 'Часть'. Final values are correct.",
+      "suggestedFix": "Част 2. а) За времето на изпреварване t първият камион изминава s₁=v₁t, а вторият s₂=v₂t; s₂−s₁=ℓ₁+ℓ₂, откъдето t=(ℓ₁+ℓ₂)/(v₂−v₁)=7 s. Част 2. б) При разминаване s₁+s₂=ℓ₁+ℓ₂, t=(ℓ₁+ℓ₂)/(v₁+v₂)=1 s.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/figures/2/tx",
+      "document": "problems",
+      "page": 3,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Figure p3-fig3 (край на изпреварването/разминаването diagram) has no 'file' field, unlike all other figures.",
+      "suggestedFix": "Add \"file\": \"figs/agent__haiku/problems/p3-fig3.png\"",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 3,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop p3-fig1 clips the right-hand dimension label: only '20 m' is visible instead of '20 mm' (label cut at right edge of box [100,240,450,480]).",
+      "suggestedFix": "[100, 240, 475, 480]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed 'оградете с кръгче верния отговор'; candidate has 'огреждете с кръге' (typos).",
+      "suggestedFix": "В листа за отговорите оградете с кръгче верния отговор. Всеки верен отговор се оценява с 1 точка.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/parts/1/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed 'Пресметнете пътя s'; candidate has 'Преместете пътя' (also in part 3 'Пресметнете скоростта').",
+      "suggestedFix": "Пресметнете пътя $s$, който велосипедистът ще измине за време $t = 10\\ \\mathrm{min}$.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/parts/4/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed 'Масата на макарите се пренебрегва'; candidate has 'се пренебрева'.",
+      "suggestedFix": "…Масата на макарите се пренебрегва.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/parts/8/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed 'тече винаги един и същ ток'; candidate has 'течче'.",
+      "suggestedFix": "През два консуматора тече винаги един и същ ток, ако консуматорите са:",
+      "confidence": 0.9
+    },
+    {
+      "path": "/paper/totalPoints",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "other",
+      "description": "totalPoints 30 = 10+10+10, consistent with per-problem point allocations (Задача I and II: 10×1; Задача III: 4+3+3). Correct.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906105018a23deca0d5ac453a",
+    "at": "2026-09-06T02:51:30.297Z",
+    "inputTokens": 29336,
+    "outputTokens": 3458,
+    "reasoningTokens": 839,
+    "costUsd": 0.006129,
+    "seconds": 73.6,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/esf-2010-esenno-7/candidates/agent__haiku.figs.json",
+    "candidateSha256": "7746865d6abaa34b2e9f34d21c33c35a8df024d82a2c1e25fd0a2528543ec50c",
+    "viewSha256": "7aa25c29ac04ec4984a02dffb0977e815dd9df3d36654a47aa63d92bff20ed33",
+    "crops": [
+      "p1-fig1",
+      "p1-fig2",
+      "p1-fig3",
+      "p1-fig4",
+      "p2-fig1",
+      "p2-fig2",
+      "p2-fig3",
+      "p3-fig1",
+      "p3-fig2"
+    ]
+  }
+}

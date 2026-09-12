@@ -1,0 +1,324 @@
+{
+  "candidateSha256": "168ec4f3bcaaa9b2c5f3f1f0e4c9d2b7a8e6f4c3d2b1a0987f6e5d4c3b2a1f0e",
+  "verdict": "fail",
+  "summary": "Extensive problems: wrong totals and missing points, 'Враца' misread as 'Брана' in title, solution fragments (p2 В.а) inserted as problem parts, entire solution equations (3) and (13) of problem 3 dropped, problem 4 ж) statement truncated mid-sentence, plus pervasive OCR-level rewording ('Гюлелтаскач'/'голе', 'дълго' for 'дъното', 'Утраскулени' for 'Ултрастудени') and a mangled problem-4 solution.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "problems",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      },
+      {
+        "document": "solutions",
+        "page": 7
+      },
+      {
+        "document": "solutions",
+        "page": 8
+      },
+      {
+        "document": "solutions",
+        "page": 9
+      },
+      {
+        "document": "solutions",
+        "page": 10
+      }
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 11
+  },
+  "defects": [
+    {
+      "path": "/paper/title",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Printed 'Враца, 29–31 март 2024 г.'; candidate reads 'Брана, 29-31 март 2024 г.' (both in title and held.place).",
+      "suggestedFix": "Враца, 29–31 март 2024 г.",
+      "confidence": 0.99
+    },
+    {
+      "path": "/paper/totalPoints",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "points",
+      "description": "Candidate total 80. Sum of printed points: P1 = 15, P2 = 15, P3 = 15, P4 = 15 → 60; no total is printed on the paper.",
+      "suggestedFix": "null",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed 'Гюлетласкач хвърля гюле от височина h…'; candidate has 'Гюлелтаскач хвърля голе от височина h' (title likewise 'Гюлелтаскач' vs printed 'Гюлетласкач').",
+      "suggestedFix": "Гюлетласкач хвърля гюле от височина h над земята под ъгъл θ спрямо хоризонта.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/parts/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed θ₁ (subscript 1) throughout parts б) and в); candidate writes θᵢ. Also 'пресметнете' → 'преметнете', 'в градуси' → 'в градусин'.",
+      "suggestedFix": "Намерете оптималния ъгъл на хвърляне θ₁ за максимална далечина на полета, ако h ≠ 0 m. Докажете, че при v₀² ≫ 2gh, θ₁ ≈ θ₀.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Solution line after (2) reads 'Тогава получаваме θ = v₀ tₐ sin θ − gt²ₐ/2'; the source prints 'получаваме 0 = …' (left side is 0).",
+      "suggestedFix": "Тогава получаваме 0 = v₀tₐ sin θ − gt²ₐ/2",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/points",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "points",
+      "description": "Candidate problem 2 points = 20; sum of printed points ([2,5]+[1,0]+[2,5]+[1,75]+[3,0]+[1,75]+[2,5]) is 15; no total is printed. Same invented totals for problem 3 (20 vs 15) and problem 4 (25 vs 15).",
+      "suggestedFix": "15",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/parts/4/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "reworded",
+      "description": "Part В. а) printed '…с ос y, насочена успоредно на пластините, като началото на системата е върху пластината A.'; candidate has 'насочена условно на пластините … върху пластинката A'.",
+      "suggestedFix": "…и с ос y, насочена успоредно на пластините, като началото на системата е върху пластината A.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/parts/6",
+      "document": "solutions",
+      "page": 4,
+      "severity": "critical",
+      "kind": "pairing",
+      "description": "A second part labeled 'В. а)' whose statement is actually solution text ('Положителният заряд q се разпределя по вътрешната…') from solutions p.4 — solution content misplaced as a problem part.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/parts/3/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Part Б: printed 'действаща върху дъното с площ S'; candidate has 'върху дълго с площ S'.",
+      "suggestedFix": "Намерете зависимостта от времето на силата F, действаща върху дъното с площ S на цилиндрична чаша…",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/parts/7/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Part Г: printed 'Ултрастудени неутрони'; candidate has 'Утраскулени неутрони'. Also 'по такъв начин' → 'по така начин'.",
+      "suggestedFix": "Ултрастудени неутрони с постоянна хоризонтална скорост…",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/parts/2",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "pairing",
+      "description": "The paragraph 'Едва към средата на XX в. било установено…' is unnumbered problem-statement text, not a part; candidate invents a second part labeled 'в)' for it (duplicate label with the real в)).",
+      "suggestedFix": null,
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 6,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Equation (3) E_ion = hν_ion = hc/λ_ion = hcR_H ≈ 2,182.10⁻¹⁸ J (13,63 eV) [0,5 т.] is entirely missing from the б) solution.",
+      "suggestedFix": "(3) E_ion = hν_ion = hc/λ_ion = hcR_H ≈ 2,182.10⁻¹⁸ J (13,63 eV). [0,5 т.]",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 7,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Equation (13) r_n = 4n²ℏ²/(3m_e k_C e²) [1,0 т.] is missing; candidate jumps from (12) straight to д).",
+      "suggestedFix": "(13) r_n = 4n²ℏ²/(3m_e k_C e²). [1,0 т.]",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/parts/0/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed 'какви са съответните им дължини на вълната?'; candidate has 'какви са съответстват им дължини'.",
+      "suggestedFix": "…и какви са съответните им дължини на вълната?",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 4,
+      "severity": "major",
+      "kind": "omission",
+      "description": "The 'Упътване: За ваше удобно може да изразите някои от крайните отговори посредством т.нар. „редуцирана константа на Планк“…ℏ = h/(2π) = 1,05.10⁻³⁴ J.s.' note printed after е) on problems p.4 is omitted.",
+      "suggestedFix": "Упътване. За ваше удобно може да изразите някои от крайните отговори посредством т.нар. „редуцирана константа на Планк“ или „h-черта“: ℏ = h/(2π) = 1,05.10⁻³⁴ J.s.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/3/parts/5/statement",
+      "document": "problems",
+      "page": 4,
+      "severity": "critical",
+      "kind": "points",
+      "description": "Part б) merges two printed point values: 'Колко е Γ? [1.5 т]' and 'Колко е оптичната сила Φ на телескопа? [1,0 т]'; candidate lists one part with points 1.5, dropping the [1,0 т].",
+      "suggestedFix": "Split into two point-bearing items (1.5 and 1.0) or set points to 2.5 with both brackets preserved.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/3/parts/6/statement",
+      "document": "problems",
+      "page": 4,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Part ж) is truncated: printed text continues on p.5 'призми, ако предположите че на първата пада успореден сноп с напречно сечение под формата на буквата F. Нарисувайте на фигурата как изглежда тази буква след преминаване през първата призма (т.е. между двете призми) и как изглежда след преминаване през втората призма.' — all missing.",
+      "suggestedFix": "…Обяснете работата на тези призми, ако предположите че на първата пада успореден сноп с напречно сечение под формата на буквата F. Нарисувайте на фигурата как изглежда тази буква след преминаване през първата призма (т.е. между двете призми) и как изглежда след преминаване през втората призма.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/3/parts/7/statement",
+      "document": "problems",
+      "page": 5,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Part з) heavily garbled: printed 'така че отраженията на границата въздух - слой и на границата слой – стъкло взаимно да се потиснат в резултат на деструктивна интерференция'; candidate reads 'както връзките с дебелина…чокълко взаимно да се потипинат'.",
+      "suggestedFix": "така че отраженията на границата въздух - слой и на границата слой – стъкло взаимно да се потиснат в резултат на деструктивна интерференция.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 9,
+      "severity": "critical",
+      "kind": "pairing",
+      "description": "Solution to problem 4 is scrambled: б) solution text replaced by the beam-diameter content of д) ('диаметрите на входния и изходния сноп…'), the printed 'Г = β/α = f_об/f_ок' moved into в), and д) repeats the beam-diameter text; printed structure б)/в)/д) not preserved.",
+      "suggestedFix": "б) От чертежа [1 т.] се вижда, че Γ = β/α = f_об/f_ок. [0.5 т.] Оптичната сила Φ на телескопа е нула. [1 т.] в) f_ok = d/(Γ−1). [0.5 т.] f_об = Γd/(Γ−1). [0.5 т.] д) D/l = f_об/f_ок, откъдето D = l·f_об/f_ок [0.5 т.] = 102 mm. [0.5 т.]",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 10,
+      "severity": "major",
+      "kind": "omission",
+      "description": "Solution з) drops the intensity-derivation lines (I₁ = I₀((n'−1)/(n'+1))², I₂ expression, I₁ = I₂ ⇒ n' = √n [0.5 т.] each) and misprints '2n'h = (k+1/2)λ' as '2π'h', with h_k = ((k+1/2)λ)/(2π) instead of /(2n').",
+      "suggestedFix": "Restore I₁, I₂, I₁ = I₂ ⇒ n' = √n; then 2n'h = (k+1/2)λ, h_k = ((k+1/2)λ)/(2n'). [0.5 т.]",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/3/figures/0",
+      "document": "solutions",
+      "page": 10,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop p4-sol-fig2 (box [450,100,750,400]) swallows body text on the left ('ж) Изследвайки…' paragraph) and clips the right edge of the Porro-prisms drawing.",
+      "suggestedFix": "[560, 120, 880, 560]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/3/figures",
+      "document": "problems",
+      "page": 5,
+      "severity": "major",
+      "kind": "figure",
+      "description": "The letter-F / Porro-prism diagram on problems p.5 (right column, showing F entering the prisms), explicitly referenced by part ж), has no figure entry; p4-fig1 points at the binocular photo instead.",
+      "suggestedFix": "Add figure with bbox approx [560, 640, 950, 960] on problems p.5.",
+      "confidence": 0.85
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906110851b99986ef06d345c9",
+    "at": "2026-09-06T03:11:27.060Z",
+    "inputTokens": 67713,
+    "outputTokens": 6481,
+    "reasoningTokens": 2662,
+    "costUsd": 0.013397,
+    "seconds": 159.3,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2024-iii-11-12/candidates/agent__haiku.figs.json",
+    "candidateSha256": "03f1af685cefc7fe1c94532f6c22fa4b4f1676a0013f8bcaa2f66f0160177730",
+    "viewSha256": "0bb81929d77df2923ce7bb1c280515ec48dd6387c7634778c3bef2cc0ca8635d",
+    "crops": [
+      "p1-sol-fig1",
+      "p2-fig1",
+      "p2-fig2",
+      "p2-fig3",
+      "p2-fig4",
+      "p2-sol-fig1",
+      "p2-sol-fig2",
+      "p3-fig1",
+      "p4-fig1",
+      "p4-sol-fig1",
+      "p4-sol-fig2"
+    ]
+  }
+}

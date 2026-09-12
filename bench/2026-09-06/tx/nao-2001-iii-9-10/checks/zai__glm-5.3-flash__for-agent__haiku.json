@@ -1,0 +1,239 @@
+{
+  "candidateSha256": "unknown (not provided in task)",
+  "verdict": "fail",
+  "summary": "Problem statements are largely faithful, but the solutions for problems 1–5 are heavily garbled, condensed or truncated relative to the printed solutions, and one figure crop (p1-sol-fig2) captures text instead of the figure while p1-sol-fig1 swallows body text.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      },
+      {
+        "document": "solutions",
+        "page": 7
+      },
+      {
+        "document": "solutions",
+        "page": 8
+      },
+      {
+        "document": "solutions",
+        "page": 9
+      },
+      {
+        "document": "solutions",
+        "page": 10
+      },
+      {
+        "document": "solutions",
+        "page": 11
+      },
+      {
+        "document": "solutions",
+        "page": 12
+      }
+    ],
+    "problemsChecked": 5,
+    "figuresChecked": 10
+  },
+  "defects": [
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "critical",
+      "kind": "reworded",
+      "description": "Solution 1 is heavily garbled: 'ъглов диаметър' rendered as 'тълов диаметър', 'б' instead of 'δ', 'издвач' for 'идващ', sentences reordered/merged; the explanation of the two moments T1/T2 (fig. 1б/1в situations) and the sentence introducing the displacement of the Sun are missing; a fragment of the fig.2 discussion ('В случай разглеждаме само лъча b₁…') is wrongly appended inside the fig.2 paragraph, replacing the printed text about the visual ray to the zenith and the half of the solar disk.",
+      "suggestedFix": "Retranscribe solutions pp.1–3 verbatim: the beam/penumbra paragraph, the T1/T2 paragraph with 'Пълтната сянка на колоната ще изчезне, когато Слънцето … западен край на видимия слънчев диск застане в зенита…', ΔT = (δ/360°)·24ʰ ≈ 2min, and the fig.2 paragraph 'Зрителен лъч от наблюдателя Р към зенита ще съвпада с правата… над хоризонта ще бъде точно половината от слънчевия диск. Това ще е и частта от него, която осветява точката Р.'",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/solution/figures/1/tx/bbox",
+      "document": "solutions",
+      "page": 2,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop for fig.2 (box [300,500,650,850]) shows a fragment of body text from the right column, not the drawing of the solar disk above the horizon with the column cross-section; the figure occupies roughly the lower-left/centre of page 2 (approx. x 250–700, y 560–840 permille) with caption 'Фиг. 2' at ~y 820.",
+      "suggestedFix": "[250, 555, 700, 845]",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/0/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop for figs 1a/1б/1в (box [0,0,1000,500]) extends far below the drawings and swallows the entire body paragraph 'Означаваме с T1…' and the ΔT formula.",
+      "suggestedFix": "[0, 30, 1000, 440]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Solution 2 is condensed and garbled: the reasoning that M31 lies ~20° from the Galactic plane, that the observer in M31 sees the SOUTH galactic pole (hence A is nearer than B), the apex coordinates α≈18ʰ, δ≈+30°, the clockwise-vs-counterclockwise argument, and the Sun's position at 2a/3 on the major axis are all missing or replaced by invented connectors ('Северният галактичен полюс е в посока към съзвездието на север. При движението на Луната…').",
+      "suggestedFix": "Retranscribe solutions pp.4–5 verbatim, including 'Ние виждаме M31 приблизително на 90° вляво от Стрелец…', the figure caption text with the Sun at distance 2a/3 right of centre, and the rotation-direction paragraph.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/solution/tx",
+      "document": "solutions",
+      "page": 5,
+      "severity": "minor",
+      "kind": "other",
+      "description": "sourceSpans list only solutions p.4, but the solution continues on p.5 (rotation direction, solar position figure).",
+      "suggestedFix": "Add {\"document\":\"solutions\",\"page\":5}",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 6,
+      "severity": "major",
+      "kind": "omission",
+      "description": "Solution 3 drops the earthshine derivation: WЗ ~ (LС/rС²)AЗπRЗ², WЛН ~ (WЗ/rЛ²)AЛSЛ, the ratio WПП/WЛН = rЛ²/(AЗπRЗ²) ≈ 3000, and the sentence concluding that full moon is ~3000× brighter; 'свети' is twice written with a Latin 'i' ('светi'); 'WПН' printed as 'Wлн' vs candidate's 'WПН' inconsistency.",
+      "suggestedFix": "Retranscribe solutions pp.6–7 verbatim including the WПП/WЛН derivation, WПП/WЛН ≈ 3000, and Pogson line m₁ = m + 2,5 lg(WПП/WЛН).",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/parts/1/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "wrong-value",
+      "description": "Printed magnitude uses a dot: '–12ᵐ.7'; candidate normalised to a comma '-12^{\\mathrm{m}}{,}7'.",
+      "suggestedFix": "$-12^{\\mathrm{m}}{.}7$",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 7,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Solution 4 is truncated: the Kepler's-second-law derivation vПrП = vАrА, ωПrП² = ωАrА, δП/δА = rА/rП, TП/TА = rП/rА < 1, the conclusion that occultations are longest at apogee, and all three 'other conditions' (rotation direction/equator proximity, orbital sections parallel to the equator near solstices, Moon near zenith) are missing; the surviving text contains garbles ('в периця Луната в перигей е свое видимо движение закрива…', 'таза посока', 'тълов').",
+      "suggestedFix": "Retranscribe solutions pp.7–8 verbatim, ending with the three bulleted conditions on equatorial observers, solstice-position orbits and the Moon's proximity to the zenith.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/parts/1/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "omission",
+      "description": "Second bullet of problem 5 is truncated: printed text continues '…съответстващи на означените със същите букви точки върху кривата на лъчевите скорости. Как е ориентирана тя спрямо зрителния лъч?' and adds 'Приемете, че зрителният лъч лежи в орбиталната равнина на тясната двойна система.' before the third bullet; also the printed clause 'и означете характерните точки – a, b, c, d' precedes the curve reference.",
+      "suggestedFix": "Нарисувайте приблизително как изглежда орбитата на тази звезда и означете характерните точки – a, b, c, d – съответстващи на означените със същите букви точки върху кривата на лъчевите скорости. Как е ориентирана тя спрямо зрителния лъч?",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed 'пресметнато'; candidate has 'преметното'.",
+      "suggestedFix": "пресметнато",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/4/solution/statement",
+      "document": "solutions",
+      "page": 9,
+      "severity": "major",
+      "kind": "omission",
+      "description": "Solution 5 is condensed: missing the correspondence of the velocity-curve parts (ab symmetric to bc, cd to da → major axis perpendicular to the line of sight; V_R = 0 at a and c; b approaching, d receding at periastron), the two possible orbit orientations, the momentum conservation M₁v₁ + M₂v₂ = 0 and v₁/v₂ = M₂/M₁ derivation, and the fact that the heavy component's radial velocity is three times smaller and opposite.",
+      "suggestedFix": "Retranscribe solutions pp.9–12 verbatim including the momentum equations and the periastron/apoastron identification of points d and b.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/4/solution/tx",
+      "document": "solutions",
+      "page": 9,
+      "severity": "minor",
+      "kind": "other",
+      "description": "sourceSpans list only solutions p.9, but the solution spans pp.9–12.",
+      "suggestedFix": "Add pages 10, 11, 12 to sourceSpans",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/4/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Crop p5-fig1 (box [150,200,600,500]) slightly clips the leftmost point '7' of the ellipse and the caption line 'фиг.1' just below; suggest widening left and bottom.",
+      "suggestedFix": "[130, 195, 620, 530]",
+      "confidence": 0.65
+    },
+    {
+      "path": "/paper/totalPoints",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "metadata",
+      "description": "No points are printed anywhere in the paper; null is correct.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906110848db84d5cd6b964ffd",
+    "at": "2026-09-06T03:10:38.633Z",
+    "inputTokens": 90442,
+    "outputTokens": 3651,
+    "reasoningTokens": 1024,
+    "costUsd": 0.015392,
+    "seconds": 112,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nao-2001-iii-9-10/candidates/agent__haiku.figs.json",
+    "candidateSha256": "f170b71d4453f4665d8b3dfe806a63f40c25a23e277dfd8f5f3d13ea98c80fe6",
+    "viewSha256": "a5507ebeb14f842fed07a08b66d129347e2fd8f0143a16eb9f1b1457d4be4732",
+    "crops": [
+      "p1-sol-fig1",
+      "p1-sol-fig2",
+      "p1-sol-fig3",
+      "p2-fig1",
+      "p2-sol-fig1",
+      "p2-sol-fig2",
+      "p5-fig1",
+      "p5-sol-fig1",
+      "p5-sol-fig2",
+      "p5-sol-fig3"
+    ]
+  }
+}

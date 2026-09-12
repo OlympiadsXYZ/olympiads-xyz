@@ -1,0 +1,58 @@
+{
+  "candidateSha256": "8dacfbf5247868e70a3cc1e88c0ced3ee91b09279b03df8a571f9072bc7d9ed9",
+  "verdict": "fail",
+  "summary": "Three defects found: duplicate part label in Problem 4 (structural error), missing symbolic form in Problem 3 part е), and typo in figure alt text. The duplicate label creates ambiguity in problem structure.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "problems", "page": 3},
+      {"document": "problems", "page": 4},
+      {"document": "problems", "page": 5},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2},
+      {"document": "solutions", "page": 3},
+      {"document": "solutions", "page": 4},
+      {"document": "solutions", "page": 5},
+      {"document": "solutions", "page": 6},
+      {"document": "solutions", "page": 7},
+      {"document": "solutions", "page": 8},
+      {"document": "solutions", "page": 9},
+      {"document": "solutions", "page": 10}
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 11
+  },
+  "defects": [
+    {
+      "path": "/problems/3/parts/5/answer/latex",
+      "document": "solutions",
+      "page": 8,
+      "severity": "major",
+      "kind": "omission",
+      "description": "Formula for E_dis is incomplete. The candidate provides 'E_{dis} = (-E_1) - h\\nu_{ion} = 2,73·10^-19 J = 1,70 eV' but the official solution shows the symbolic form 'E_{dis} = h\\nu_{dis} = (-E_1) - h\\nu_{ion}' to explicitly define E_dis as the photon energy h\\nu_{dis}.",
+      "suggestedFix": "E_{dis} = h\\nu_{dis} = (-E_1) - h\\nu_{ion} = 2{,}73\\cdot 10^{-19}\\ \\mathrm{J} = 1{,}70\\ \\mathrm{eV}",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/figures/3/alt",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "other",
+      "description": "Typo in alt text for figure p2-fig4: 'хактерни' (missing 'ар') should be 'характерни' (characteristic).",
+      "suggestedFix": "Траектория на неутрон, извършващ периодично движение с дъги над хоризонтална плоскост (неутронно огледало), характерни арки с еднаква височина.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/3/parts",
+      "document": "problems",
+      "page": 4,
+      "severity": "major",
+      "kind": "pairing",
+      "description": "Problem 4 has two separate JSON entries both labeled 'б)' (parts at indices 1 and 2). According to the problems page, there is one б) part with two sub-questions: 'Колко е Γ?' [1.5 т] and 'Колко е оптичната сила Φ?' [1.0 т]. The duplicate label creates structural ambiguity and violates the requirement that each part have a unique label within a problem.",
+      "suggestedFix": "Merge the two 'б)' entries into a single part with both sub-statements, or label the second one with an appropriate sub-label (e.g., 'б)-i)' and 'б)-ii)') rather than duplicating 'б)'.",
+      "confidence": 0.95
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "candidateSha256": null,
+  "verdict": "fail",
+  "summary": "Част 1 на Задача 3 е с пропуснати печатни 8 точки (null), има няколко дребни изкривявания на текста и мълчалива 'корекция' на печатна грешка в решенията; останалото съдържание и фигурите съответстват на страниците.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 9
+  },
+  "defects": [
+    {
+      "path": "/problems/2/parts/0/points",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "points",
+      "description": "Печатът дава „Част 1. (8 точки)“ за трите подточки а)–в) на Задача 3; кандидатът поставя points: null и така 8-те точки са загубени (общите 10 остават, но разпределението 8+2 липсва).",
+      "suggestedFix": "Поставете points: 8 на Част 1 (разпределение между а)/б)/в) според решенията: 1+0,5+1+0,5 и 0,5+1+0,5+0,5) и задръжте points: 2 на Част 2.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Печатът гласи „По план пътят S1 + S2 е трябвало да бъде изминат със скорост v1“ (печатна грешка в източника — трябва S1+S2+S3). Кандидатът го поправя мълчаливо на „S1 + S2 + S3“ без бележка за източника.",
+      "suggestedFix": "Възстановете печатния текст „По план пътят $S_1 + S_2$ е трябвало…“ и добавете бележка (source-error), че в източника липсва $S_3$.",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Печатното уравнение (1) е $t = S_2/v_1 + S_3/v_1$; кандидатът го записва като $t = (S_2+S_3)/v_1$ — математически еквивалентно, но не буквално.",
+      "suggestedFix": "$$t = \\frac{S_2}{v_1} + \\frac{S_3}{v_1}$$",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/0/parts/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Печатът: „За да пристигне навреме в Хасково…“ и „които автобусът изминава“; кандидатът има „наврем“ и „който автобусът“.",
+      "suggestedFix": "„…за да пристигне навреме в Хасково…“ и „…още 60 km, които автобусът изминава…“",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/parts/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Печатът е „От метално фолио“; кандидатът пише „От металлно фолио“ (двойна л).",
+      "suggestedFix": "„От метално фолио с дебелина $d = 0{,}20$ mm…“",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/parts/3/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Печатът: „…определете мястото на фокуса на лещата“; кандидатът пише „определете място на фокуса“.",
+      "suggestedFix": "„…и определете мястото на фокуса на лещата.“",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "info",
+      "kind": "source-error",
+      "description": "В решенията третият абзац е отпечатан повторно като „За фиг. 36:“ (вместо 3в) — печатна грешка на източника; кандидатът го предава като „За фиг. 3в“ без бележка. Смисълът е верен, но корекцията не е отбелязана.",
+      "suggestedFix": null,
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Печатът: „За определяне на мястото на лещата“; кандидатът пише „на място на лещата“ (на две места).",
+      "suggestedFix": "„За определяне на мястото на лещата…“",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/figures/4/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Кадърът за Фиг. 2б завършва на y=570‰; етикетът на абсцисата „Напрежение U, V“ лежи непосредствено под него и рискува да бъде отрязан. Осите/скалата са вътре в кадъра.",
+      "suggestedFix": "[450, 420, 620, 590]",
+      "confidence": 0.6
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906105150addf36b4b7f94715",
+    "at": "2026-09-06T02:53:00.956Z",
+    "inputTokens": 22316,
+    "outputTokens": 3338,
+    "reasoningTokens": 1822,
+    "costUsd": 0.005016,
+    "seconds": 71.1,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2012-iii-7/candidates/agent__haiku.figs.json",
+    "candidateSha256": "aaaace110519b9fa1ea88fd3caa783ae74840be298983dcf87e5c5d6e3e4f744",
+    "viewSha256": "23497dba624700dcc38ed321a01331ac30fab76f534775bb125a66f4e7eacf3f",
+    "crops": [
+      "p2-fig1a",
+      "p2-fig1b",
+      "p2-fig1v",
+      "p2-fig2a",
+      "p2-fig2b",
+      "p3-fig3a",
+      "p3-fig3b",
+      "p3-fig3v",
+      "p3-fig3g"
+    ]
+  }
+}

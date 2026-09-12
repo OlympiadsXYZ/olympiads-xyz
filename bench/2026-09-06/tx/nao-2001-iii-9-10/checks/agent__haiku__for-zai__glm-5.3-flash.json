@@ -1,0 +1,41 @@
+{
+  "candidateSha256": "99621bd6bd055b0e7789b8d39d5ca67dc9ee7547a6af965998c3fb3f2cec8962",
+  "verdict": "fail",
+  "summary": "Two critical figure crop defects: p2-fig1 is clipped on the right edge (missing ellipse completion and point B label), and p2-sol-fig2 contains only page text instead of the required diagram.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2},
+      {"document": "solutions", "page": 3},
+      {"document": "solutions", "page": 5},
+      {"document": "solutions", "page": 11},
+      {"document": "solutions", "page": 12}
+    ],
+    "problemsChecked": 5,
+    "figuresChecked": 9
+  },
+  "defects": [
+    {
+      "path": "/problems/1/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop bbox [160, 345, 500, 460] clips the ellipse on the right edge, cutting off the right half of the ellipse continuation and the point B label at the bottom. The printed figure shows a complete ellipse with points A (top) and B (bottom), semi-major axis a, semi-minor axis b, and vertical orientation marker. The crop ends before reaching these elements.",
+      "suggestedFix": "[160, 345, 650, 460]",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/figures/1/tx/bbox",
+      "document": "solutions",
+      "page": 5,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Figure ID p2-sol-fig2 crop at bbox [220, 760, 790, 965] on solutions page 5 contains only page heading text ('III крьг на IV национална олимпиада по астрономия, април 2001г.' and Problem 3 statement) instead of the ellipse diagram that should appear on this page. The actual figure with points A and B, semi-major axis a, semi-minor axis b, the Sun position marking, and rotation direction arrow is not shown. The crop boundaries are incorrect.",
+      "suggestedFix": "[55, 320, 960, 650]",
+      "confidence": 0.92
+    }
+  ]
+}

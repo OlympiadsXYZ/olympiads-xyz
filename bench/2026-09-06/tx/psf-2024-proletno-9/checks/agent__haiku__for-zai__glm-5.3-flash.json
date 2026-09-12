@@ -1,0 +1,75 @@
+{
+  "candidateSha256": "ec3bb0647f032b47efd9a5726b3d0b05f03d3301a576722ba8a8923014149939",
+  "verdict": "fail",
+  "summary": "Two critical defects found: Problem 3.1 has missing subscript on time variable (t instead of t₁), and Problem 3.2 has systematic spelling errors (асаньора instead of асансьора). Figure crops include surrounding body text.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 3
+  },
+  "defects": [
+    {
+      "path": "/problems/2/parts/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Problem 3.1 statement uses 'време $t$' in first sentence but page shows 'време t1'. Should be 'след време $t_1$' to match the solution which uses t₁ and t₂ consistently. The subscript 1 was misread as no subscript.",
+      "suggestedFix": "Когато асансьор се движи нагоре с постоянно ускорение $a$, монета пусната от тавана му се удря в пода след време $t_1$. Когато асансьорът се движи надолу със същото ускорение, монетата пада за време $t_2$.",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/2/parts/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Problem 3.2 statement contains 5 instances of spelling error: 'асаньора' (ньо) instead of correct 'асансьора' (нс). Appears in: 'задвижването на асаньора', 'за кабината на асаньора', 'Асаньорът се движи', 'на асаньора' (appears twice).",
+      "suggestedFix": "Replace all instances of 'асаньор' with 'асансьор'. Correct text: 'Да разгледаме опростен случай, в който задвижването на асансьора става чрез электромотор. Електромоторът върти макара, на която се навива стоманено въже захванато за кабината на асансьора. Асансьорът се движи нагоре с вече известното ускорение...' (and remaining instances in the statement).",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/0/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Figure p1-fig1 crop includes body text below the diagram ('бичка. Цилиндрите има' from the problem statement). The figure itself (two cylinders with height marker) is complete, but the crop swallows text that should not be included.",
+      "suggestedFix": "[680, 175, 880, 310]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/1/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Figure p2-fig1 crop [680,460,960,700] includes surrounding body text from the problem statement above and below the circuit diagram (visible text fragments in crop: 'МНИК', 'ето', 'КДУ' above and 'ани', '(3 т.)' below).",
+      "suggestedFix": "[695, 480, 945, 680]",
+      "confidence": 0.80
+    },
+    {
+      "path": "/problems/0/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 1,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Figure p1-sol-fig1 crop includes surrounding solution text (visible text above '0.5 т.)' and below 'е начални...'). The diagram showing cylinders with water and air separation is present but surrounded by solution statement text.",
+      "suggestedFix": "[800, 260, 950, 370]",
+      "confidence": 0.75
+    }
+  ]
+}

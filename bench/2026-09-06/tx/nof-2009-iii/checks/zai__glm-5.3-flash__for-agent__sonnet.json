@@ -1,0 +1,152 @@
+{
+  "candidateSha256": "d033160c9dae",
+  "verdict": "fail",
+  "summary": "All four problems and their solutions are present with correct points and final answers; the defects found are one dubious numeric constant (atmospheric pressure), one incorrect figure alt-text direction of B, and one clipped solution-figure crop on solutions p.2.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      }
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 9
+  },
+  "defects": [
+    {
+      "path": "/problems/1/parts/0/answer",
+      "document": "solutions",
+      "page": 1,
+      "severity": "info",
+      "kind": "other",
+      "description": "ν₁ ≈ 10 Hz and ν₂ ≈ 17 Hz match the official solution; parts б)–г) numeric answers (6.3×10⁻² V, 1.97×10⁻⁷ J, 1400 s) all agree with the printed solution.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/figures/0/alt",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Alt text says the field symbol is 'кръгче с точка вътре, насочено към читателя', but the printed figure shows B ⊗ (cross), and the statement says the field points away from the reader ('от вас към чертежа'). The alt text contradicts both.",
+      "suggestedFix": "означено е полето B (кръгче с кръст/лепесткова стрелка вътре, ⊗ — насочено от читателя към чертежа)",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "wrong-value",
+      "description": "Printed 'p₀ = 1 atm = 1·10⁵ Pa'; candidate has '1,10×10⁵ Pa' (adds a digit/decimal comma not present in the print).",
+      "suggestedFix": "Атмосферно налягане $p_0 = 1\\ \\mathrm{atm} = 1{\\cdot}10^{5}\\ \\mathrm{Pa}$",
+      "confidence": 0.6
+    },
+    {
+      "path": "/problems/2/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "The crop p2-sol-fig1 ends at the V_т mark; the right part of the pV diagram (the second adiabat, the V_п label, the V axis arrow/label) is clipped at the right edge of the box.",
+      "suggestedFix": "[30, 675, 420, 835]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "info",
+      "kind": "source-error",
+      "description": "Source solution prints the Cauchy formula as n(λ)=A−B/λ² while the problem statement (and physics) has A+B/λ²; candidate preserves the solution's sign verbatim — correct handling of a printed source error.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4",
+      "document": "solutions",
+      "page": 5,
+      "severity": "info",
+      "kind": "other",
+      "description": "Problem 4 points (1,1,2,7,4), the minimum angle θ_min = 60°, and E₁ = 252 MeV / E₂ = 18 MeV all match the official solution; figure crops #8 and #9 contain the complete vector diagrams with captions.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/3/figures/0",
+      "document": "problems",
+      "page": 3,
+      "severity": "info",
+      "kind": "figure",
+      "description": "Crop #4 (p3-fig1) contains the whole two-lens achromat figure including F_c ≡ F_ч and n_въздух(λ)=1; nothing clipped.",
+      "suggestedFix": null,
+      "confidence": 0.9
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906111551de4c3da1a6d948ae",
+    "at": "2026-09-06T03:16:49.329Z",
+    "inputTokens": 50018,
+    "outputTokens": 2471,
+    "reasoningTokens": 1359,
+    "costUsd": 0.008738,
+    "seconds": 59.5,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2009-iii/candidates/agent__sonnet.figs.json",
+    "candidateSha256": "740aba39e0710a553492bdf61ed6e9d6db14848edfbf3f54763acdcb3ba90c2b",
+    "viewSha256": "aec9029760ff7cde5668ec576b976780ab9acd2b3aeac615f98a7553fdee3eb1",
+    "crops": [
+      "p1-fig1",
+      "p1-fig2",
+      "p2-sol-fig1",
+      "p3-fig1",
+      "p3-sol-fig1",
+      "p3-sol-fig2",
+      "p3-sol-fig3",
+      "p4-sol-fig1",
+      "p4-sol-fig2"
+    ]
+  }
+}

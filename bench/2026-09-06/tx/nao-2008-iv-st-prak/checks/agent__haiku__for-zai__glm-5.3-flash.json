@@ -1,0 +1,32 @@
+{
+  "candidateSha256": "5c42e7a861c96b806199a9b71d7bce91afa24398727ba0e7974e8cc16414892c",
+  "verdict": "fail",
+  "summary": "One major defect found: grade field contains '11-12' but the printed page clearly states 'Старша възраст'. All other content (statements, tables, figures, solutions, metadata) matches the source accurately.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "problems", "page": 3},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2},
+      {"document": "solutions", "page": 3},
+      {"document": "solutions", "page": 4},
+      {"document": "solutions", "page": 5},
+      {"document": "solutions", "page": 6}
+    ],
+    "problemsChecked": 2,
+    "figuresChecked": 3
+  },
+  "defects": [
+    {
+      "path": "/paper/grade",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Metadata field 'grade' contains '11-12' but the printed header on page 1 clearly states 'Старша възраст' (Senior age). Must match the source exactly.",
+      "suggestedFix": "Старша възраст",
+      "confidence": 0.99
+    }
+  ]
+}

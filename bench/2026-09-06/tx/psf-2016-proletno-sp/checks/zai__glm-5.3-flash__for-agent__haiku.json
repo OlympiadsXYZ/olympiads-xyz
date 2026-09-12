@@ -1,0 +1,226 @@
+{
+  "candidateSha256": "a2e8f8f351da",
+  "verdict": "fail",
+  "summary": "All three problems are present, but the transcription is heavily corrupted with garbled/meaning-changing words throughout, problem 3 part В carries 2 points instead of the printed 5, a key sign word ('неразличими' → 'различими') is inverted in solution 2Е, solution 2Б has a wrong dimensionality exponent, and both solution-figure crops appear to miss their printed graphs.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "problems",
+        "page": 5
+      },
+      {
+        "document": "problems",
+        "page": 6
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 9
+  },
+  "defects": [
+    {
+      "path": "/problems/2/parts/2/points",
+      "document": "problems",
+      "page": 5,
+      "severity": "critical",
+      "kind": "points",
+      "description": "Printed 'В) Дифузия в хексагонален кристал [5 т]'; candidate gives points 2.",
+      "suggestedFix": "5",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed 'Гравитационните вълни се излъчват от масивни обекти … въртящо се несиметрично тяло, двойка звезди, обикалящи … свръхнова, сблъсък между космически обекти'; candidate has 'се изчислват', 'вртящо', 'обикаляши', 'сърхвова', 'събльск' — garbled words changing meaning.",
+      "suggestedFix": "Гравитационните вълни се излъчват от масивни обекти, които се движат с ускорение, например: въртящо се несиметрично тяло, двойка звезди, обикалящи около общия им център на масата, неизотропен взрив на свръхнова, сблъсък между космически обекти и др.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "critical",
+      "kind": "reworded",
+      "description": "Printed 'звездите заемат неразличими от гледна точка на гравитационното поле положения'; candidate has 'различими' — meaning inverted (this is why the wave period is half the orbital period).",
+      "suggestedFix": "звездите заемат неразличими от гледна точка на гравитационното поле положения",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Dimensional equation in Б): printed kg^{1−x}·s^{−2x−y−2}·m^{3x+y+1}; candidate has kg^{x+1}.",
+      "suggestedFix": "\\mathrm{kg}^{1-x} \\cdot s^{-2x-y-2} \\cdot m^{3x+y+1}",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "major",
+      "kind": "latex",
+      "description": "In В) the candidate compresses two printed steps into one garbled formula 'γ ω²(γE_k)²(M₁M₂)²(M₁+M₂)/c⁵r⁵'; the print reads P ∝ IR² ∝ (c³ω²/γ)(γE_k/Rc⁴)²R² = (γ/c⁵)ω²E_k², and E_k = γM₁M₂/2r is derived separately afterwards.",
+      "suggestedFix": "P \\propto IR^2 \\propto \\frac{c^3 \\omega^2}{\\gamma}\\left(\\frac{\\gamma E_k}{Rc^4}\\right)^2 R^2 = \\frac{\\gamma}{c^5}\\omega^2 E_k^2",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed 'От получените в точка В съотношения, намираме (M₁ = M₂ = M)'; candidate says 'От получените в т. Д имаме' — wrong reference and dropped '(M₁ = M₂ = M)'.",
+      "suggestedFix": "От получените в точка В съотношения, намираме (M_1 = M_2 = M):",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/3/parts/2/statement",
+      "document": "problems",
+      "page": 5,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed 'в даден момент електрон се намира в т. А … последва със същата вероятност'; candidate has 'в далечен момент', 'преносенето', 'тоководите', 'блужда', 'последе със съшата' — garbled wording.",
+      "suggestedFix": "В някои кристали пренасянето на електричен ток се дължи на т.нар. „скокова“ проводимост. В отсъствие на електрично поле, токовите носители „блуждат“ по кристала, като извършват случайни скокове от атом на атом. В хексагоналния кристал, показан на фиг. 3.4, в даден момент електрон се намира в т. А. Електронът може да прескочи с еднаква вероятност 1/3 на всеки от трите съседни атома, после със същата вероятност на някой от следващата тройка съседни атоми и т.н.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 5,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "In В) the candidate invents paths 'ABDA или ACDA' for P(D) (printed: paths ABCD or AFED) and mangles the parity argument ('Електронът може да се вErie в т. A…'), and lists 'ABNB, AGCB' instead of printed 'ABHB, AGAB'.",
+      "suggestedFix": "Електронът може да се върне в т. А или да попадне в точките С и Е само след четен брой подскоци. Следователно P(A) = P(C) = P(E) = 0. Вероятността електронът да избере конкретна последователност от три отсечки е (1/3)³ = 1/27. За три стъпки електронът може да попадне в т. D само по два начина – като следва пътя ABCD или пътя AFED. P(D) = 2×1/27 = 2/27. Електронът може да попадне в т. В по пет различни пътя: ABCB, ABHB, ABAB, AFAB, AGAB. P(B) = 5×1/27 = 5/27.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Several garbled words: 'в далечен момент i' (printed 'в даден момент i'), 'голямата на скоростта' (printed 'голямината на скоростта'), 'Таблица със пресметнатите' (printed 'Така пресметнатите стойности са дадени в таблицата'), 'апроксимирачката' (printed 'апроксимиращата').",
+      "suggestedFix": "За определяне на ускорението и скоростта в даден момент i … голямината на скоростта … апроксимиращата права",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Candidate merges the two printed centre-of-mass equations into 'M₁r₁ = M₂r₂ = γM₁M₂/r²'; print has 'M₁r₁ = M₂r₂' and separately the force equation 'M₁ω²r₁ = M₂ω²r₂ = γM₁M₂/r²'.",
+      "suggestedFix": "M_1 r_1 = M_2 r_2; \\quad r_1 + r_2 = r",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/1/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop [500,230,750,430] sits in the upper right of solutions p.2, while the a_x vs vv_x graph with axes labels occupies roughly the lower right of the page; the crop will clip/miss most of the plot.",
+      "suggestedFix": "[500,360,980,920]",
+      "confidence": 0.7
+    },
+    {
+      "path": "/problems/3/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 5,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop [650,150,950,450] is placed high on solutions p.5; the hexagon figure with points A–F and D′, H, G sits noticeably lower (roughly middle-right of the page), so the crop risks clipping the lettering.",
+      "suggestedFix": "[640,430,960,780]",
+      "confidence": 0.65
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "source-error",
+      "description": "Source prints molar mass units as 'kg/m³' (should be kg/mol); candidate preserves it verbatim — correct handling of a printed source error.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/paper/roundType",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "metadata",
+      "description": "Printed header says 'Специална тема' (special topic, theory-style), candidate sets roundType 'practical'; printed text should win.",
+      "suggestedFix": "special-topic",
+      "confidence": 0.6
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "202609061108485df2c78e3a5949ad",
+    "at": "2026-09-06T03:10:36.163Z",
+    "inputTokens": 50291,
+    "outputTokens": 4179,
+    "reasoningTokens": 1519,
+    "costUsd": 0.009633,
+    "seconds": 108.4,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/psf-2016-proletno-sp/candidates/agent__haiku.figs.json",
+    "candidateSha256": "04e5ad2bb13deb9615c0de104e38bd36eafa67384a11c91aa8bc7a7b7fc3ad3d",
+    "viewSha256": "202dd1ff5c9687333381215d22fc78b3f833bd6efdcb14cf8bb8ef138d291044",
+    "crops": [
+      "p1-fig1",
+      "p1-fig2",
+      "p1-sol-fig1",
+      "p2-fig1",
+      "p2-fig2",
+      "p3-fig1",
+      "p3-fig2",
+      "p3-fig3",
+      "p3-sol-fig1"
+    ]
+  }
+}

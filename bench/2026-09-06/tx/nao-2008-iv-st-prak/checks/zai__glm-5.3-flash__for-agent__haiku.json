@@ -1,0 +1,163 @@
+{
+  "candidateSha256": "unknown",
+  "verdict": "fail",
+  "summary": "Problem 2's solution drops four printed tables (chord lengths, intervals, distances, translation lengths), the occultation table is proposed as a figure instead of a table, and the solution texts contain heavy OCR garble including γ misread as y and V_T as V_r.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      }
+    ],
+    "problemsChecked": 2,
+    "figuresChecked": 4
+  },
+  "defects": [
+    {
+      "path": "/problems/1/problemStatementNotPertinent",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "other",
+      "description": "Placeholder info entry only to structure report beginning; see real defects below.",
+      "suggestedFix": null,
+      "confidence": 1
+    },
+    {
+      "path": "/problems/1/parts/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed „пресметнете средната скорост“; candidate has „преметнете“.",
+      "suggestedFix": "пресметнете",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Printed $v_{II} = \\sqrt{2\\gamma M/R} \\approx 620$ km/s with „γ е гравитационната константа“; candidate writes \\sqrt{2yM/R} and „y е гравитационната константа“ (γ misread as y). Also candidate duplicates the sentence „вълната много бързо забавя…“ and garbles the following clause („Вбрази тюа туй им противречение…“ vs printed „Въпреки това тук няма противоречие защото…“).",
+      "suggestedFix": "Получаваме $v_{II} = \\sqrt{2\\gamma M/R} \\approx 620$ km/s ($\\gamma$ е гравитационната константа). Въпреки това тук няма противоречие защото в действителност получените скорости са скорости на разпространение на вълнов процес, при което не се пренася вещество, а само енергия.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Multiple OCR-garbled sentences in problem 1 solution: „Построиваме елна хорда“ (print: Построяваме една хорда), „на които се делидруга. Отттук“ (print: на които се дели другата. Оттук), „Съшто“ (Същото), „Свързваме центъра изображенното с центъра… с дясна линия“ (print: Свързваме центъра на избухването с центъра на слънчевия диск с права линия и пренасяме успоредно тази права), „Измеряме“, „разстоянята“, „дъгата 1“ (print: дъгата l), „За 1 получаваме“ (За l получаваме), „дъгата 0“ (дъгата l₀).",
+      "suggestedFix": "Транскрипцията трябва да следва печатния текст буквално, вкл. l и l₀ вместо 1 и 0.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/figures/1",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "table",
+      "description": "The occultation times table (Наблюдател 1–10 with Закриване/Откриване columns) is proposed as a figure (p2-fig2, crop #3). A printed table must be transcribed as a table, cell for cell.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/parts/0/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed „откриването и закриването са мигновенни“; candidate has „descobриването и закриването…“. Also printed name „225 Хенриета“; candidate has „225 Хеиристa“. Decimal commas in print (11,67; 12,46; 5,56″; 24,84″/h) rendered with dots.",
+      "suggestedFix": "225 Хенриета на 16 юни 2007 г. … 11,67ᵐ … 12,46ᵐ … 5,56″ … 24,84″/h … (откриването и закриването са мигновенни)",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 5,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Four printed tables in problem 2's solution are missing entirely: (1) chord lengths per observer (80, 41, 38, 78, 14, 27, 76, 36, 25, 77 km and second row 44, 38, 25, 33), (2) intervals between coverings (3,1 / 2,4 / 6,9 / 5,5 s for observers 2,3,6,8), (3) distances between end of first and start of second covering (25, 19, 55, 44 km), (4) translation distances (241, 220, 279, 274, 321, 407, 408, 220, 125 km / 4,8 … 2,5 cm). The candidate replaces them with one vague prose sentence.",
+      "suggestedFix": "Добави четирите таблици както са отпечатани на решения стр. 5–6.",
+      "confidence": 0.98
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Heavy OCR garble: „събем близо“ (съвсем близо), „координатите на звезда, респективно“ (на звездата, респективно), „точката зимното“ (точката зимното слънцестояние), „по-малка от земната“, „изпреварва сянката му“ (print has quotes around изправка: Земята „изправка“ сянката му — candidate drops the distinctive quotation), „по земята повърхност“, „Начертаваме гази посока“ (тази), and the whole second paragraph of А) is garbled: „цялата орбиталния параллакс примерно е близозрид-дургурите например, цялата планета ни не се движи строго сянката…“ vs printed „цялата орбитална скорост на Земята е насочена към него. Тогава планетата ни не се движи спрямо сянката на астероида…“. Also „ВТ“ printed as V_T (candidate has V_r), „извлечена като произведение на ъгловото преместване за единица време μ и разстоянието r от Земята до астероида“ garbled, „пресмятане дължината“ garbled as „преместене дължината“, „Спрямо“ as „Справо“, „отворащ“ vs „отвърдящ“ (print: отговорящ на профила), „светлинен сноп“ as „снон“, „успореден“ as „успоредшен“, „чертаем и двете хорди с прекъсването между тях“ garbled.",
+      "suggestedFix": "Препиши решенията буквално от печатния текст (стр. 4–6).",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 6,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop #4 box [500,250,950,650] clips the composite figure: the horizontal x-axis line with the x←O arrow sits below y≈650 (around 83–87% of page height) and extends left of x=500; several chord segments also lie left of x=500.",
+      "suggestedFix": "[430, 280, 980, 900]",
+      "confidence": 0.7
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906105018b86955b8cc484bc9",
+    "at": "2026-09-06T02:51:33.883Z",
+    "inputTokens": 45399,
+    "outputTokens": 2783,
+    "reasoningTokens": 500,
+    "costUsd": 0.008201,
+    "seconds": 77.4,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nao-2008-iv-st-prak/candidates/agent__haiku.figs.json",
+    "candidateSha256": "dd948004a9dbf2c3b9789f14d63d7cea9131d16ff9e82d10082a70401241964b",
+    "viewSha256": "f514f34fd839bb7011d419335402ef25d516c149a8510dcd50cf8c2913139766",
+    "crops": [
+      "p1-sol-fig1",
+      "p2-fig1",
+      "p2-fig2",
+      "p2-sol-fig1"
+    ]
+  }
+}

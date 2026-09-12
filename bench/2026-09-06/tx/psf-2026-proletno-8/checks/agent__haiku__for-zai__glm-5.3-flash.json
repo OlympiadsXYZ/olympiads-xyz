@@ -1,0 +1,81 @@
+{
+  "candidateSha256": "42cf1c7cbdb606d3738a4147d1b2e4680d05c8fc4a1fe05056e04de443714c78",
+  "verdict": "fail",
+  "summary": "One critical defect: totalPoints is 25 but should be 30 (sum of all problem point values). Additionally, Problem 1 parts a), в), and г) request specific numerical answers but lack answer fields.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 2
+  },
+  "defects": [
+    {
+      "path": "/totalPoints",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "totalPoints is 25, but the sum of all individual problem points is 30: Problem 1 (10) + Problem 2 (10) + Problem 3 (10) = 30.",
+      "suggestedFix": 30,
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/0/parts/0/answer",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "omission",
+      "description": "Part а) asks 'Определете хидростатичното налягане' (Find the pressure), which requires a specific numerical answer (2800 Pa from solution), but no answer field is provided. Problem 2 and Problem 3 provide answer fields for all parts; this is inconsistent.",
+      "suggestedFix": "{\"kind\": \"numeric\", \"value\": 2800, \"unit\": \"Pa\"}",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/0/parts/2/answer",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "omission",
+      "description": "Part в) asks 'Определете каква част от височината на кубчето е потопена във водата и каква в маслото' (Find what fraction of the cube height is submerged in water and oil), but no answer field is provided. The solution shows specific values: x = 0.05 m = 5 cm in water, and (a - x) = 5 cm in oil.",
+      "suggestedFix": "{\"kind\": \"text\", \"value\": \"5 cm във водата и 5 cm в маслото\"}",
+      "confidence": 0.70
+    },
+    {
+      "path": "/problems/0/parts/3/answer",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "omission",
+      "description": "Part г) asks 'С колко сантиметра ще се повиши общото ниво на течността' (By how many centimeters will the fluid level rise), requesting a specific numerical answer. The solution shows Δh ≈ 0.59 cm, but no answer field is provided.",
+      "suggestedFix": "{\"kind\": \"numeric\", \"value\": 0.59, \"unit\": \"cm\", \"tolerance\": 0.05}",
+      "confidence": 0.70
+    }
+  ]
+}

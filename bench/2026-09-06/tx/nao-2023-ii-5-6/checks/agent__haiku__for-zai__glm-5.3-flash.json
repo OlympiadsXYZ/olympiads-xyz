@@ -1,0 +1,44 @@
+{
+  "candidateSha256": "c4fee1c5c8d76cfa0d56a57fe4575fd3d45e639c951b0fab4fb1e4397c5165f0",
+  "verdict": "fail",
+  "summary": "Two defects found: problem 4 figure crop is missing (critical), and problem 1 solution is incorrectly marked as incomplete with a transcription note instead of an incompleteness reason (major).",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "problems", "page": 3},
+      {"document": "problems", "page": 4},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2},
+      {"document": "solutions", "page": 3},
+      {"document": "solutions", "page": 4},
+      {"document": "solutions", "page": 5},
+      {"document": "solutions", "page": 6},
+      {"document": "solutions", "page": 7}
+    ],
+    "problemsChecked": 5,
+    "figuresChecked": 12
+  },
+  "defects": [
+    {
+      "path": "/problems/3/figures/0/tx/file",
+      "document": "problems",
+      "page": 3,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Problem 4 figure p4-fig1 (butterfly monarch) is identified with ID, alt text, and bounding box [150, 535, 435, 695] in permille, but the tx object lacks the mandatory file field that should point to the crop image. Without the crop file, the figure cannot be visually verified for completeness or correctness.",
+      "suggestedFix": "Regenerate the crop file for p4-fig1 and add the file path field, e.g., 'figs/zai__glm-5.3-flash/problems/p4-fig1.png', or confirm the bbox coordinates are valid slugs for cropping.",
+      "confidence": 1.0
+    },
+    {
+      "path": "/problems/0/solution/incomplete",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "metadata",
+      "description": "Problem 1 solution is marked with incomplete: true and incompleteReason: 'Решението е транскрибирано от изображенията; верифицирано по печатния текст.' (The solution was transcribed from images; verified against printed text.) This reason describes the transcription method and verification process, not the reason for incompleteness. The solution text is complete when compared to the printed source on solutions pages 1-2, addressing all four images with explanations.",
+      "suggestedFix": "Set incomplete to false. If a verification note is needed, move the reason text to tx.notes instead.",
+      "confidence": 0.95
+    }
+  ]
+}

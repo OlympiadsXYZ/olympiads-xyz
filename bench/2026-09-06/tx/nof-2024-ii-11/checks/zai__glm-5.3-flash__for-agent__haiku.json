@@ -1,0 +1,149 @@
+{
+  "candidateSha256": "unknown-not-provided",
+  "verdict": "fail",
+  "summary": "Structure, points, quantities and answers are correct, but the solutions contain garbled/missing passages (solution 2a and solution 3a omit whole printed sentences and equations), plus several typos ('рыба', 'курщум', 'сгадата') and two clipped figure crops on problems p.1/p.2.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 4
+  },
+  "defects": [
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Several transcription typos vs print: „(рыба на сградата)“ should be „(ръба на сградата)“; „Y-координата на покрива“ → „Y-координатата на покрива“; „минимална начална скорост“ → „минималната начална скорост“; „0,5 т за букве отговор“ → „за буквен отговор“ (twice); „a разстоянието до стена на контейнера“ → „а разстоянието до стената на контейнера“; „на този стойност“ → „на тази стойност“; „От таблицата на тригонометричните функции“ → „От таблицата на тригонометричните функции“ (print has no 'на').",
+      "suggestedFix": "Restore verbatim wording per solutions p.1, notably „(ръба на сградата)“ and „(0,5 т за буквен отговор + 0,5 т за верен числен отговор със записана единица)“ (print: „записана“, candidate has „написана“).",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Print „допиращ се до стената на сградата“; candidate has „сгадата“ (typo). Also print uses \\vec{v}_0, candidate \\bar{v}_0.",
+      "suggestedFix": "допиращ се до стената на сградата ... $\\vec{v}_0$",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Print „куршум с маса“ (also on p.2); candidate has „курщум с маса“.",
+      "suggestedFix": "куршум с маса $m = 0{,}010\\ \\mathrm{kg}$",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "The third justification sentence of 2a is garbled and drops the key content. Print: „Запазва се единствено моментът на импулса спрямо оста, защото всички външни сили или са приложени в оста, или действат по права, минаваща през оста. [0,5 т]“ Candidate instead has the non-sentence „Но в момента на удара в горния край на дъската не се приемат никакви сили или сложени в оста, или действат по право, минаваща през оста.“ Also „Инерчният момент“ → „Инерционият момент“, „й край“ → „ий край“, „Отклето“ → „Откъдето“.",
+      "suggestedFix": "Запазва се единствено моментът на импулса спрямо оста, защото всички външни сили или са приложени в оста, или действат по права, минаваща през оста. **[0,5 т]**",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Printed equations (1) a_n = v0^2/r (with direction: хоризонтална посока – към оста на въртене) and (2) r = ℓ sin α, plus the surrounding sentences („Когато обикаля по окръжност с радиус r, топчето има центростремително (нормално) ускорение…“, „Радиусът на окръжността се дава с израза…“) and the grading remark about direction points, are missing; replaced by the garbled sentence „Когато обикалянията система с хоризонтална ос X…“. Also „етиго вектор“ → „стига векторите“, „силата на нишката към оста на въртене“ → print „силата на опън R на нишката към точката на окачване“, „Обиколката на окръжност“ → „Обиколката на окръжността“, „Като заместим този стойност“ → „тази стойност“.",
+      "suggestedFix": "Insert verbatim from solutions p.4: „Когато обикаля по окръжност с радиус r, топчето има центростремително (нормално) ускорение: (1) a_n = v_0^2/r [1,0 т] в хоризонтална посока – към оста на въртене… Радиусът на окръжността се дава с израза: (2) r = ℓ sin α. [0,5 т]“",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/figures/1/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop p1-fig2 box [600,300,900,600] starts too high (swallows whitespace/possible body text) and its bottom edge at y=600‰ clips the lower part of Фиг. 2 including the θ_max label (figure sits at roughly y 560–720‰ on the page).",
+      "suggestedFix": "[620, 540, 880, 740]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/3/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop p3-fig3 box [200,200,850,500] top is too high and bottom edge at y=500‰ clips the lower half of Фиг. 3 (the conical-pendulum circle, labels O', а, б and the caption „Фиг. 3“ lie at roughly y 440–660‰).",
+      "suggestedFix": "[250, 430, 790, 670]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/1/parts/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "other",
+      "description": "The shared lead sentence „Ако велосипедистът скочи с минималната възможна начална скорост, определете:“ is merged into part б). Content preserved; acceptable structural judgment call.",
+      "suggestedFix": null,
+      "confidence": 0.8
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "2026090610481740420d58e6fd4473",
+    "at": "2026-09-06T02:49:52.319Z",
+    "inputTokens": 36925,
+    "outputTokens": 3691,
+    "reasoningTokens": 1844,
+    "costUsd": 0.007384,
+    "seconds": 96,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2024-ii-11/candidates/agent__haiku.figs.json",
+    "candidateSha256": "d8421dbe612211fc0aab45a88998c86d252580215b5aca7ad004957c3cc5f49c",
+    "viewSha256": "59d3538a0768ee6620def1975ba6db0987f645bad8f7b2cdb8a463f1efea8e58",
+    "crops": [
+      "p1-fig1",
+      "p1-fig2",
+      "p3-fig3",
+      "p3-sol-fig1"
+    ]
+  }
+}

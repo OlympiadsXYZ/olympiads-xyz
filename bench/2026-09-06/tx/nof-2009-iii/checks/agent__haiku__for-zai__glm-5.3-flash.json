@@ -1,0 +1,63 @@
+{
+  "candidateSha256": "fd3ace63c94a183ed3aebd595acc97da02c776efafb0f8d283ca1d886de510ae",
+  "verdict": "fail",
+  "summary": "Critical figure crop misalignments: p1-fig1b, p2-sol-fig1, p3-sol-fig1, and p4-sol-fig2 are capturing problem/solution text instead of the intended diagrams, making them unusable for students.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "problems", "page": 3},
+      {"document": "problems", "page": 4},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2},
+      {"document": "solutions", "page": 3},
+      {"document": "solutions", "page": 4},
+      {"document": "solutions", "page": 5},
+      {"document": "solutions", "page": 6}
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 9
+  },
+  "defects": [
+    {
+      "path": "/problems/0/figures/1/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "p1-fig1b crop at [660, 450, 950, 665] captures problem text from part б) statement instead of the actual figure (б) diagram. The figure should show the inclined rod with springs in opposite directions.",
+      "suggestedFix": "[660, 430, 950, 680]",
+      "confidence": 0.92
+    },
+    {
+      "path": "/problems/1/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 2,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "p2-sol-fig1 crop at [130, 505, 500, 720] captures mostly solution text (formulas) with minimal diagram content. Should show the complete pV-diagram for the Carnot cycle with isotherms and adiabats clearly visible.",
+      "suggestedFix": "[130, 430, 500, 720]",
+      "confidence": 0.88
+    },
+    {
+      "path": "/problems/2/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 3,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "p3-sol-fig1 crop at [560, 380, 960, 560] captures solution text and formulas instead of the ray path diagram through the double-convex lens. Diagram showing angles α, β, γ, δ, ε, ζ, η and focal distance f is not properly visible.",
+      "suggestedFix": "[520, 340, 960, 560]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/3/solution/figures/1/tx/bbox",
+      "document": "solutions",
+      "page": 6,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "p4-sol-fig2 crop at [110, 165, 580, 320] captures solution text and equations instead of the momentum vector diagram for maximum scattering angle. Should show p (horizontal), p₁ and p₂ at 180° angle.",
+      "suggestedFix": "[110, 225, 580, 340]",
+      "confidence": 0.87
+    }
+  ]
+}

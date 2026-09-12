@@ -1,0 +1,48 @@
+{
+  "candidateSha256": "6bb23887c614dcd1442cba2514481ed9d156b1fa4811aa0368f448e0bc32b0fb",
+  "verdict": "fail",
+  "summary": "Candidate preserves all problem statements and correct answers accurately, but two figure bboxes point to wrong content: p2-fig3 captures problem 4 (parachutist) instead of the cubes diagram, and p1-fig3 captures problem 9 text instead of problem 8 circuit.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "problems", "page": 3},
+      {"document": "problems", "page": 4},
+      {"document": "solutions", "page": 1}
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 9
+  },
+  "defects": [
+    {
+      "path": "/problems/1/figures/2/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "The bbox [660,760,970,960] for p1-fig3 (problem 8 circuit) is incorrect. The crop shows text from problem 9 ('През два консуматора тече винаги един и същ ток, ако консуматорите са:') instead of the electrical circuit diagram for problem 8 ('Когато ключът от схемата е отворен:'). The figure is displaced downward or to the wrong location.",
+      "suggestedFix": "Adjust bbox to point to the circuit diagram location; likely [660,730,970,850] or similar to capture problem 8's circuit properly.",
+      "confidence": 0.90
+    },
+    {
+      "path": "/problems/1/figures/1/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "figure",
+      "description": "The bbox [640,340,960,470] for p1-fig2 (problem 5 box positions) captures mostly white space and text ('ая теглото е едно и същ') with only a small partial box diagram visible. The three distinct box position diagrams (labeled 1, 2, 3) are not clearly shown in the crop.",
+      "suggestedFix": "Expand or reposition bbox to capture all three box position diagrams; may need to adjust y-range upward and/or x-range.",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/1/figures/2/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "The bbox [60,870,560,990] for p2-fig3 (cubes pressure diagram for problem 10) is incorrect. The crop shows text from problem 4 (parachutist: 'скорост 6 m/s. Колко е приблизително големи-ната на силата на съпротивление на въздуха F') instead of the pressure diagram showing two cubes with different sizes creating equal/different pressures. The figure is located in the right column of page 2, not the left column.",
+      "suggestedFix": "Reposition bbox to right column; approximately [560,850,980,990] to capture the cubes diagram for problem 10.",
+      "confidence": 0.95
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "candidateSha256": "eb78aa473c8d",
+  "verdict": "fail",
+  "summary": "Heavy OCR-quality garbling throughout (wrong words in problem statements, contaminated solutions: problem 2's solution contains chunks of problem 5's solution and problem 5's solution contains problem 2's galaxy text), the problem-3 'Забележка' is missing from the statement, and p5-fig1 is attributed to the wrong document/page (problems p.2 has no such figure; фиг.1 is on solutions p.9).",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      },
+      {
+        "document": "solutions",
+        "page": 7
+      },
+      {
+        "document": "solutions",
+        "page": 8
+      },
+      {
+        "document": "solutions",
+        "page": 9
+      },
+      {
+        "document": "solutions",
+        "page": 10
+      },
+      {
+        "document": "solutions",
+        "page": 11
+      },
+      {
+        "document": "solutions",
+        "page": 12
+      }
+    ],
+    "problemsChecked": 5,
+    "figuresChecked": 8
+  },
+  "defects": [
+    {
+      "path": "/problems/1/parts",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "other",
+      "description": "Задача 1 has no sub-parts in the print; empty parts array is correct. Numbering of the four printed problems + Практическа задача as 1–5 is a legitimate judgment call.",
+      "suggestedFix": null,
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Print: „Тъй като видимият ъглов диаметър…“; candidate: „Той като видимият тъгол диаметър…“. Also „изместим окуляра така, че неговият фокус да съвпадне с фокуса на обектива“ is garbled to „трябва да използвестим окуляра така, че фокуса на събиращия с фокуса на обектива“ and „полученете стойности“ vs „получените стойности“, „по-кратък път“ dropped the „и по по-кратък път“ phrasing, „защитавани“ vs „защриховани“.",
+      "suggestedFix": "Тъй като видимият ъглов диаметър на Слънцето δ е малък… при правото наблюдение трябва да изместим окуляра така, че неговият фокус да съвпадне с фокуса на обектива… дори и по по-кратък път… подобието на двата защриховани триъгълника на чертежа",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Print „обобщавайки (5) и (6)“; candidate „Обединявайки (5) и (6)“. Print „От (3) и (4) пресмятаме“ preserved.",
+      "suggestedFix": "Обединявайки → печатът пише „Обединявайки (5) и (6), получаваме“ — правилото е вярно; поправете „използвестим“→„изместим“, „Същия резултат… дори и по по-кратък път“.",
+      "confidence": 0.7
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Print: „ще изглежда като светло петно с елиптична форма“; candidate: „ще изглежда както светло петно“.",
+      "suggestedFix": "дискът на нашата Галактика ще изглежда като светло петно с елиптична форма.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/parts/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Print: „Коя точка от нашата Галактика…“; candidate: „Кой точка…“.",
+      "suggestedFix": "Коя точка от нашата Галактика се намира по-близо до наблюдателя в М31 – А или В?",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/parts/2/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Print: „В каква посока от негова гледна точка се върти нашата Галактика…“; candidate: „В какво посока…“.",
+      "suggestedFix": "В каква посока от негова гледна точка се върти нашата Галактика – по часовниковата стрелка или обратно?",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/parts/3/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Print: „прерисувайте чертежа и означете положението на Слънцето с точка“; candidate: „преристъйте чертежа и означете положението…“.",
+      "suggestedFix": "Къде приблизително се намира Слънцето – прерисувайте чертежа и означете положението на Слънцето с точка.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Large chunk of the printed solution is missing/garbled: the passage about the south galactic hemisphere and the observer in M31 is heavily reworded („Северният галактичен полюс е в звездния трион Далия (туристи имаме предвид…“ is nonsense), and the paragraph explaining that point A is nearer („Наблюдателят в М31 вижда южния полюс… точка А от чертежа е по-близо…“) is absent. The candidate instead pastes content of problem 5's solution („Възможните орбити са две…“, „Той както двойната звезда… M1 v1 + M2 v2 = 0…“) and a stray line „Северен полюс“ — wrong-problem contamination.",
+      "suggestedFix": "Restore the printed text of solutions pp.2–3 incl. „От звездната карта… Северноът галактичен полюс е в северната небесна полусфера… Това означава, че М31… е от южната страна спрямо равнината… точка А от чертежа е по-близо до този наблюдател от точка В“, and delete the misplaced binary-star/orbit passages and the stray „Северен полюс“ line.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/figures/0/alt",
+      "document": "solutions",
+      "page": 4,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Alt text describes generic angular measures; the figure actually shows our Galaxy's disk with north/south galactic poles, points A and B, the 20° tilt and the arrow 'към наблюдател в М31'.",
+      "suggestedFix": "Диск на нашата Галактика с Северен/Южен полюс, точки А и В, ъгъл 20° и стрелка към наблюдателя в М31",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/2/solution/figures/1/alt",
+      "document": "solutions",
+      "page": 5,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Alt text mentions 'посока към българската посока на вятъра' — nonsense; figure shows ellipse with А, В, b, a, Слънце, посока на въртене.",
+      "suggestedFix": "Елипса с точки А и В, полуоси a и b, положение на Слънцето върху голямата ос на 2a/3 от центъра и стрелка 'посока на въртене'",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/3/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "omission",
+      "description": "The whole 'Забележка:' paragraph of the problem statement (about the thin crescent being disregarded) is missing from the statement; it was instead appended to the end of the solution text where the print does not have it.",
+      "suggestedFix": "Add to statement: „Забележка: Известно е, че дори във фаза новолуние Луната в повечето случаи изглежда като много тънък сърп, защото поради наклона на лунната орбита към еклиптиката, Луната в новолуние не се намира точно на правата, свързваща Земята и Слънцето. При тази задача светенето на тънкия сърп на Луната в новолуние да не се разглежда и размерите му в сравнение с тези на \"тъмната\" част от Луната да се пренебрегнат.“",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/3/parts/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Print: „Оценете колко пъти видимият блясък на Луната в пълнолуние е по-силен от пепелната светлина на Луната в новолуние.“; candidate text is garbled/duplicated („колко пъти е по-силен блясък… в сравнение с блясъка на Луната в новолуние е по-силен“) and loses the comparison to пепелната светлина.",
+      "suggestedFix": "Оценете колко пъти видимият блясък на Луната в пълнолуние е по-силен от пепелната светлина на Луната в новолуние.",
+      "confidence": 0.96
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 6,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Several OCR-style corruptions: „която е обърната“ → „с който свети“, „Двете“→„Двата случая“, „паралелна на дневната орбита към екліптиката“ (забележка) vs print „наклона на лунната орбита към еклиптиката“, „разделята“ vs „размерите“, „един и също“ vs „едно и също“.",
+      "suggestedFix": null,
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/4/parts/1/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Print: „какви биха били пространствените скорости“; candidate: „какви биха были…“. Also „избухналата звезда“ printed, candidate repeatedly „избухвалата“.",
+      "suggestedFix": "Ако масата на остатъка е $M_3 = 1M_\\odot$, то какви биха били пространствените скорости на звездата на Барнард и остатъка от масивната звезда след раздалечаването им?",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/solution/statement",
+      "document": "solutions",
+      "page": 7,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Middle of the solution is heavily garbled vs print: „поради намалявалата маса… системата се разпада“ is compressed/rewritten; the printed sentences „но те вече не се движат по кръгови орбити… привличат много по-слабо и системата се разпада. След като се разлетят на голямо разстояние, скоростите… стават съответно v1' и v2'. Това са пространствените скорости, които търсим.“ are corrupted; „Tъй като“ → „Той както“, „вече“ → „веће“, „трябва“ → „тръбва“; the speeds after the explosion are given as $v'_{1c}=v_{1c}$ and $v'_{2c}=(v_1+v_2)/2$ while print says $v_{1C}=v_{2C}=(v_1+v_2)/2$.",
+      "suggestedFix": "Restore the printed wording of solutions p.7 (including „привличат много по-слабо и системата се разпада“ and „v_{1C} = v_{2C} = (v_1 + v_2)/2“).",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/5/figures/0",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Candidate places 'p5-fig1' in problems p.2 at [50,280,450,450], but problems page 2 contains only text of problems 4 and the practical task — no figure. The printed фиг.1 (orbit with numbered points 1–7) appears in the SOLUTIONS document on page 9. Wrong document/page.",
+      "suggestedFix": "Move the figure to {\"document\":\"solutions\",\"page\":9,\"bbox\":[330,530,950,780]} (approx., permille), and note in tx that the print numbers the practical task as 'Практическа задача', not as problem 5.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/5/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Print: „е пресметнато, че едната звезда е два пъти по-лека от другата“; candidate „епреметнато“. Parts: print „Постройте върху нея…“, „характерните точки“, „съответстващи на означените със същите букви“, „спрямо зрителния лъч“; candidate has „Построите“, „характеристите“, „означенете“, „справо“.",
+      "suggestedFix": "Fix to the printed words: пресметнато; Постройте; характерните; означените; спрямо.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/5/solution/statement",
+      "document": "solutions",
+      "page": 9,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "The solution for problem 5 is contaminated and incomplete: it duplicates the whole problem-2 galaxy text („От звездната карта… обратно на часовниковата стрелка“, „b = a sin 20°, k ≈ 0.34“) which does not belong here, the geometric construction paragraph is garbled into nonsense („От събражение за подобие… Един диаграма се вижда, че разстоянието на разстоянието…“), the printed discussion of the radial-velocity curve (points a, b, c, d, periapsis in d, major axis perpendicular to line of sight) is largely missing or merged with problem-2 text, and the passage about the heavier component's radial velocities (M1 v1 = −M2 v2, 3× smaller) is duplicated twice.",
+      "suggestedFix": "Rebuild from solutions pp.9–10: keep only the centroid-of-mass construction, the ellipse/orientation reasoning (ab symmetric to bc, cd to da, major axis perpendicular to the line of sight, d at periapsis, two possible orbits), and the impulse-conservation paragraph with the 3× smaller radial velocity of the heavier component (fig.3); delete all galaxy/M31 text.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/tx/sourceSpans",
+      "document": "solutions",
+      "page": 2,
+      "severity": "minor",
+      "kind": "metadata",
+      "description": "sourceSpans for problem 2 list only solutions p.2, but its solution text and figures come from pp.2, 3, 4 and 5.",
+      "suggestedFix": "[{\"document\":\"problems\",\"page\":1},{\"document\":\"solutions\",\"page\":2},{\"document\":\"solutions\",\"page\":3},{\"document\":\"solutions\",\"page\":4},{\"document\":\"solutions\",\"page\":5}]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/5/tx/sourceSpans",
+      "document": "solutions",
+      "page": 9,
+      "severity": "minor",
+      "kind": "metadata",
+      "description": "sourceSpans for problem 5 list only solutions p.9; the solution and figures span pp.9–12.",
+      "suggestedFix": "Add solutions pages 10, 11, 12.",
+      "confidence": 0.85
+    },
+    {
+      "path": "/paper/title",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "metadata",
+      "description": "Title 'УЧЕНИЦИИ XI - XII КЛАС' preserves the printed typo (УЧЕНИЦИ); solutions header prints 'УЧЕНИЦИ XI ÷ XII КЛАС' — kept as printed per document, acceptable.",
+      "suggestedFix": null,
+      "confidence": 0.8
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "202609061108487dd3af60d06e45d5",
+    "at": "2026-09-06T03:10:34.974Z",
+    "inputTokens": 71479,
+    "outputTokens": 5229,
+    "reasoningTokens": 944,
+    "costUsd": 0.013336,
+    "seconds": 107.7,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nao-2001-iii-11-12/candidates/agent__haiku.figs.json",
+    "candidateSha256": "79a2413a335da13a54bb35022317ee7820cb9b86d732044d2ff63bc7146f6d1d",
+    "viewSha256": "e5c9542a1918a4e18ed98eea78e6c3ed53bb3a902422d4bd4534b3ad374ed85b",
+    "crops": [
+      "p1-sol-fig1",
+      "p2-fig1",
+      "p2-sol-fig1",
+      "p2-sol-fig2",
+      "p5-fig1",
+      "p5-sol-fig1",
+      "p5-sol-fig2",
+      "p5-sol-fig3"
+    ]
+  }
+}

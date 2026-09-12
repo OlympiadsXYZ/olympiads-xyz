@@ -1,0 +1,123 @@
+{
+  "candidateSha256": "ed2cfdaacc50cbc84033c7b5c8bc5092e8e79fd28ac4cffcd1811b67efaecc09",
+  "verdict": "fail",
+  "summary": "Multiple critical figure crop defects: p1-sol-fig1 appears blank/missing content, and p2-sol-fig1/p2-sol-fig2/p3-fig1/p3-fig2/p3-fig3 all include extraneous surrounding text (body text, point markers) that should not be in figure crops. All figure bboxes need adjustment. Content transcription appears verbatim-accurate.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "problems", "page": 3},
+      {"document": "problems", "page": 4},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2},
+      {"document": "solutions", "page": 3},
+      {"document": "solutions", "page": 4},
+      {"document": "solutions", "page": 5},
+      {"document": "solutions", "page": 6}
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 10
+  },
+  "defects": [
+    {
+      "path": "/problems/0/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Figure p1-fig1 appears correctly cropped with complete diagram, axes labels (x, y, O, A, L), and caption 'Фиг. 1'. Crop is clean and complete.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "p1-sol-fig1 crop at [510, 575, 900, 800] appears to show mostly blank space with text fragments at top, not the expected wave diagram with force vector and angle α that should be on solutions page 1 at this location. Figure content is missing or incorrectly extracted.",
+      "suggestedFix": "[450, 480, 950, 850]",
+      "confidence": 0.92
+    },
+    {
+      "path": "/problems/0/solution/figures/1/tx/bbox",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "p1-sol-fig2 crop includes extraneous text at top and bottom (table row data, scoring brackets '[1 т]', '[0,5 т]') that should not be part of the figure. The actual graph of y=cotg(x) and y=x with their intersection is present and correct, but the crop extends into body text.",
+      "suggestedFix": "[275, 345, 995, 725]",
+      "confidence": 0.88
+    },
+    {
+      "path": "/problems/1/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "p2-fig1 magnetic capacitor diagram appears correctly extracted with the two parallel plates, magnetic field notation S, charge e, and velocity v vector labeled properly.",
+      "suggestedFix": null,
+      "confidence": 0.93
+    },
+    {
+      "path": "/problems/1/figures/1/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "p2-fig2 conducting ring diagram appears correctly cropped showing the ring R with radius a on the z-axis.",
+      "suggestedFix": null,
+      "confidence": 0.94
+    },
+    {
+      "path": "/problems/1/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "figure",
+      "description": "p2-sol-fig1 crop includes text fragments above and below the figure ('in( ωt) .', '[0,25 т]', 'в пръстена е:', '[0,5 т]', 'уравнение (11) намираме:', '[1 т]') that are body text from the solution, not part of the figure itself. The cone diagram with particle ge is present but the crop swallows surrounding solution text.",
+      "suggestedFix": "[540, 45, 850, 365]",
+      "confidence": 0.86
+    },
+    {
+      "path": "/problems/1/solution/figures/1/tx/bbox",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "figure",
+      "description": "p2-sol-fig2 crop includes extraneous text above and below ('[0,5 т]', '[1 т]', text about 'гление (по правилото на дяната ръка...') that is solution body text, not part of the figure. The ring and particle diagram is shown but the crop is too loose and captures surrounding text.",
+      "suggestedFix": "[540, 460, 855, 720]",
+      "confidence": 0.84
+    },
+    {
+      "path": "/problems/2/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "figure",
+      "description": "p3-fig1 crop includes body text at the top from the problem statement ('ериал с дебелина Δx и с площ на напречните върху двете основи на слоя са различни, T и T + ΔT, през слоя започва пренос на топлина. Пренесеното за време t') that should not be part of the pure figure crop. The thermal layer diagram with labels T, S, Q, Δx is present and correct.",
+      "suggestedFix": "[555, 215, 975, 390]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/2/figures/1/tx/bbox",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "figure",
+      "description": "p3-fig2 crop includes body text at the top ('овиши до 10 °C при пост') that is from the problem statement above the figure, not part of the figure itself. The wall diagram with window and dimensions (a, b, c) is shown correctly but the crop should start lower.",
+      "suggestedFix": "[450, 765, 660, 945]",
+      "confidence": 0.87
+    },
+    {
+      "path": "/problems/2/figures/2/tx/bbox",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "figure",
+      "description": "p3-fig3 crop includes body text at the top ('ие с термопомпа, ако стоянна температура на стъкло') from the problem statement that should not be in the figure crop. The double-window diagram with glass panes d2 and air layer d3 is shown but crop includes surrounding text.",
+      "suggestedFix": "[650, 750, 940, 945]",
+      "confidence": 0.86
+    }
+  ]
+}

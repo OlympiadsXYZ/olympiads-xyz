@@ -1,0 +1,196 @@
+{
+  "candidateSha256": "unknown",
+  "verdict": "fail",
+  "summary": "All five problems are present with correct points, but the solution texts for problems 1–4 are heavily OCR-garbled (dozens of wrong words), problem 5 part А contains 'emperador' instead of 'император', and the butterfly figure is assigned to the wrong problems page (2 instead of 3).",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      },
+      {
+        "document": "solutions",
+        "page": 7
+      }
+    ],
+    "problemsChecked": 5,
+    "figuresChecked": 9
+  },
+  "defects": [
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Solution text is heavily garbled vs print: 'На картина 1' vs printed 'Повече от очевидно е, че…'; 'Напстигнали го са обхванени в скафандъри…отседят в окритата космос' vs 'Наистина, те са облечени в скафандри, с които могат да оцелеят в открития космос'; 'със сгъстен въздух' vs 'със сгъстен въздух' (ok) but 'в титан и ракетния огън' vs 'в тиган на ракетния огън'; final sentence 'един дори си е възел' vs 'един дори си е взел чиния и вилица, само че как ще си хапва от космическата храна? Нали ако си свали шлема на скафандъра, ще остане без въздух! Въпреки всичко обаче, нека признаем, че картинката е смешна и забавна, това е просто картинка – шега.' Entire closing passage dropped.",
+      "suggestedFix": "Transcribe solutions pages 1–2 verbatim, including the dropped closing sentences about the plate/fork and the helmet.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Multiple garbled words vs print: 'скачат на вяхе' vs 'на въже'; 'потребинат' vs 'потренират'; 'капсули вода' vs 'капчици вода'; 'изленем върху нейной облак' vs 'излегнем върху някой облак'; 'изцяло сред атмосферата' vs 'изцяло потопени в ниските слоеве на земната атмосфера'; 'не може Луната да се намират в космоса' vs 'не може Луната да се намира пред облака'; picture Д passage 'като помощта на вятър вътрошните на земната атмосфера. Задържат вътъх въздуха' vs 'като с помощта на бързо въртящи се перки се задържат във въздуха'; 'Но това веч е реалност' vs 'вече'.",
+      "suggestedFix": "Transcribe solutions page 2–3 verbatim.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Solution garbled and circular: printed text explains that the dark-Earth („новоземие“) photo was taken on 5 February when the Moon was full, and that Earth phases look like negatives of the Moon phases; candidate repeats 'Луната трябва да е била във фаза последна четвърт – основната фаза преди пълнолуние' three times, drops the 5 February date, and drops the negatives explanation.",
+      "suggestedFix": "Transcribe solutions page 3 verbatim (including 'на 5 февруари' and the 'негативни изображения' passage).",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Garbled: 'Следователно на 1° по съответствието дъга от меридиана с дължина' vs 'Следователно на 1° ще съответства дъга от меридиана с дължина'; 'Веч лесно' vs 'Вече лесно'; 'За правилно преместяне на дължината' vs printed 'За правилно престмяне на дължината' (source typo also differs).",
+      "suggestedFix": "'Следователно на 1° ще съответства дъга от меридиана с дължина:' and 'Вече лесно можем…'; criteria line as printed ('престмяне').",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/5/parts/0/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Candidate has 'Великият emperador на Оранжевата планета'; print reads 'Великият император'. Also 'да съставни календар' vs printed 'да състави календар'.",
+      "suggestedFix": "Великият император на Оранжевата планета е заповядал на своя придворен астроном да състави календар.",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/4/parts/1/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed '…за да променим нашата географска ширина с една дългова минута – 1′. Пресметнете… Градусът се дели на 60 дългови минути.' Candidate has 'с един градус минута – 1′. Преметете… Градусът се дели на 60 дълги минути.'",
+      "suggestedFix": "…с една дългова минута – 1'. Пресметнете на колко метра се равнява една морска миля. Градусът се дели на 60 дългови минути.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/figures/0/tx",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Butterfly figure is assigned to problems page 2; it is printed on problems page 3 (next to problem 4's intro). Crop #9 is therefore cut from the wrong page.",
+      "suggestedFix": "Set document 'problems', page 3, bbox approx [430,600,770,810] (butterfly image on problems p.3).",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/3/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "'тайнствен лунен живей' vs printed 'лунен жител'; 'се опитате да решите' vs 'се опитвате'; part Б 'Вие се намираме' vs printed 'Вие се намирате'.",
+      "suggestedFix": "лунен жител; се опитвате; Вие се намирате.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed 'и обяснете много кратко защо според вас…'; candidate has 'и обосновете много кратко защо според вас…'.",
+      "suggestedFix": "и обяснете много кратко защо според вас даденият начин е правилен или неправилен.",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/2/figures/0/caption",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Caption 'А. Скачане с вяхе на Луната' vs printed 'въже'.",
+      "suggestedFix": "А. Скачане с въже на Луната",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/figures/2/alt",
+      "document": "problems",
+      "page": 2,
+      "severity": "info",
+      "kind": "other",
+      "description": "Alt text says 'Еденикорн спи на облак'; the print (solution) calls it 'зайче' (bunny/rabbit) sleeping on a cloud — cosmetic, alt only.",
+      "suggestedFix": "Зайче спи на облак в звездно небе",
+      "confidence": 0.8
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "2026090610481714d62c86774044fe",
+    "at": "2026-09-06T02:49:48.863Z",
+    "inputTokens": 60687,
+    "outputTokens": 3089,
+    "reasoningTokens": 888,
+    "costUsd": 0.010648,
+    "seconds": 92.4,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nao-2023-ii-5-6/candidates/agent__haiku.figs.json",
+    "candidateSha256": "867172fca92ce30cd7fe0247a5a939a0cba2798c06c7072e3de4a07dca191f38",
+    "viewSha256": "15b5f93faa05ade09ff0feb9def867a294a09add29b6f5aaf17156c691d5e2c7",
+    "crops": [
+      "p1-fig1",
+      "p2-fig1",
+      "p2-fig2",
+      "p2-fig3",
+      "p2-fig4",
+      "p2-fig5",
+      "p3-fig1",
+      "p3-sol-fig1",
+      "p4-fig1"
+    ]
+  }
+}

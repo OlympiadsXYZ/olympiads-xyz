@@ -1,0 +1,88 @@
+{
+  "candidateSha256": "c19ffecab30a",
+  "verdict": "fail",
+  "summary": "Statements, answers, points and metadata match the print, but one solution figure crop swallows body text („б) За…“ heading) and the g-note in Problem 3 is reordered into the statement.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 5
+  },
+  "defects": [
+    {
+      "path": "/problems/2/solution/figures/1/tx/bbox",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "The crop for the p3-sol-fig2 box [30,790,210,940] includes the printed body-text heading „б) За“ above the force diagram; body text is swallowed by the figure crop.",
+      "suggestedFix": "[30,830,210,940]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/3/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "The sentence „При числените пресмятания приемете земното ускорение g = 10 m/s².“ is printed after part в) at the bottom of the page; the candidate moved it into the statement before the parts, changing the printed order.",
+      "suggestedFix": "Move the sentence out of the statement and keep it as printed after part в).",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/1/figures",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "figure",
+      "description": "The photograph of cyclists on problems p.1 is decorative/illustrative (no labels or data) and is legitimately omitted from the candidate's figures.",
+      "suggestedFix": null,
+      "confidence": 0.8
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "2026090611195274bffa26f8c74a7a",
+    "at": "2026-09-06T03:20:24.465Z",
+    "inputTokens": 25335,
+    "outputTokens": 1130,
+    "reasoningTokens": 713,
+    "costUsd": 0.004365,
+    "seconds": 33.3,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2015-i-8/candidates/agent__sonnet.figs.json",
+    "candidateSha256": "11a37bc2d5b97a54f7b3e5cde4e506a76ebf32af4b730ab52f3cc6195c03e1f8",
+    "viewSha256": "f16688cbc03ea6229815c2fadd0d08c7d41eb3af13504c10c212607f1d8b9f4a",
+    "crops": [
+      "p2-sol-fig1",
+      "p2-sol-fig2",
+      "p3-sol-fig1",
+      "p3-sol-fig2",
+      "p3-sol-fig3"
+    ]
+  }
+}

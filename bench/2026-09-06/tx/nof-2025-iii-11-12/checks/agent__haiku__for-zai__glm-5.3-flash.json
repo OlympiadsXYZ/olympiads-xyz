@@ -1,0 +1,57 @@
+{
+  "candidateSha256": "880ce99a37fc0b5492533d1991cb00ca1c1f5e3f6a80e520724e4d8a80c7d303",
+  "verdict": "fail",
+  "summary": "The candidate has three figure defects: two figure bboxes include swallowed text (problem text above p2-fig2 and body text below p3-sol-fig1), and the alt text for p2-fig2 contains corrupted text (\"наrowse BACKS\").",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "problems", "page": 3},
+      {"document": "problems", "page": 4},
+      {"document": "problems", "page": 5},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2},
+      {"document": "solutions", "page": 3},
+      {"document": "solutions", "page": 4},
+      {"document": "solutions", "page": 5},
+      {"document": "solutions", "page": 6},
+      {"document": "solutions", "page": 7},
+      {"document": "solutions", "page": 8},
+      {"document": "solutions", "page": 9}
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 3
+  },
+  "defects": [
+    {
+      "path": "/problems/1/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "The crop at bbox [60, 610, 800, 970] includes text from above the figure (problem conditions points 2 and 3: \"2) релсите са достатъчно дълги...\" and \"3) електрическото съпротивление...\"). These are swallowed text that should not be included in the figure crop.",
+      "suggestedFix": "[80, 640, 800, 970]",
+      "confidence": 0.92
+    },
+    {
+      "path": "/problems/1/figures/0/alt",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "other",
+      "description": "The alt text contains corrupted text \"наrowse BACKS\" which does not make sense in Bulgarian. This should describe the magnetic field direction, likely \"перпендикулярна на равнината\" (perpendicular to the plane) or similar.",
+      "suggestedFix": "Три схеми на две вертикални релси с хоризонтална жичка със маса m, магнитно поле B перпендикулярна на равнината, разстояние l между релсите, ос x надолу: (а) резистор R горе, (б) кондензатор C горе, (в) намотка L горе.",
+      "confidence": 0.88
+    },
+    {
+      "path": "/problems/2/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 6,
+      "severity": "major",
+      "kind": "figure",
+      "description": "The crop at bbox [560, 640, 1000, 960] includes body text from below the figure (the explanation text continuation: \"ост\", т.е. с апогей..., \"ка. [0.5 т.]\"). This text should not be included in the figure crop.",
+      "suggestedFix": "[560, 640, 1000, 920]",
+      "confidence": 0.90
+    }
+  ]
+}

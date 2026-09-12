@@ -1,0 +1,97 @@
+{
+  "candidateSha256": "6084b47137ff",
+  "verdict": "fail",
+  "summary": "The candidate misses the printed paragraph after Задача 1.2.Б („Приемете, че атмосферното налягане p0 = const …“) that introduces p0, g and ρ for the whole problem — a critical omission. Otherwise the statements, points and solutions match the pages well; the two figure boxes look acceptable though crop #1 extends into the text column.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 2
+  },
+  "defects": [
+    {
+      "path": "/problems/0/parts/2/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "The print, immediately after подусловие Б of Задача 1.2, contains the paragraph „Приемете, че атмосферното налягане p0 = const и в двата случая е известно. Температурното разширение на водата се пренебрегва. Земното ускорение е g, плътността на водата е ρ.“ The candidate drops it entirely, so p0, g and ρ used in the statements and solution are undefined for the reader.",
+      "suggestedFix": "Приемете, че атмосферното налягане $p_0 = \\mathrm{const}$ и в двата случая е известно. Температурното разширение на водата се пренебрегва. Земното ускорение е $g$, плътността на водата е $\\rho$.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/0/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Box [550,240,950,480] extends well to the left of the cylinders drawing (which starts around x≈680 permille); the left strip 550–680 overlaps the end of the body-text column of Задача 1.1 and risks swallowing printed text in the crop.",
+      "suggestedFix": "[675, 235, 955, 480]",
+      "confidence": 0.7
+    },
+    {
+      "path": "/paper/roundType",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "metadata",
+      "description": "The page header reads „ПРОЛЕТНО НАЦИОНАЛНО СЪСТЕЗАНИЕ ПО ФИЗИКА“ — a national olympiad round, not a „test“; roundType „test“ does not fit the paper.",
+      "suggestedFix": "roundType: \"competition\"",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/2/parts/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "other",
+      "description": "The print shows the first fall time possibly as plain „t“ while the candidate writes t₁; at scan resolution the subscript is barely legible and the official solutions use t₁ and t₂, so the candidate's reading is consistent with the solutions.",
+      "suggestedFix": null,
+      "confidence": 0.5
+    },
+    {
+      "path": "/problems/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "other",
+      "description": "Top-level statements of problems 1 and 3 are placeholder text („Задача с подчасти.“) not present in the print; harmless since all printed content is in the parts, but it is invented wording.",
+      "suggestedFix": null,
+      "confidence": 0.8
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906105952662637e1bba94afe",
+    "at": "2026-09-06T03:00:46.485Z",
+    "inputTokens": 19087,
+    "outputTokens": 2175,
+    "reasoningTokens": 1288,
+    "costUsd": 0.003951,
+    "seconds": 55.3,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/psf-2024-proletno-9/candidates/agent__haiku.figs.json",
+    "candidateSha256": "05d10f94a6b356c55fe6c07ff1a831a9a2b6b3305aa1eab4344e96bd88302ce6",
+    "viewSha256": "a83cc8e2f2e73584424ac59aa1d418435a5ceb5cbeddfb2c35bdc3a58dde5dfd",
+    "crops": [
+      "p1-fig1",
+      "p2-fig1"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "candidateSha256": "494533c66671603c3c4ef5a39e32f22c9e81072237114b783bea43c16bba102d",
+  "verdict": "fail",
+  "summary": "Critical defect: entire problem 3 (Task 3 about lunar observations and ash light / пепелна светлина) is missing from the candidate. The candidate incorrectly labels the practical task as problem 3 and problem 4 as problem 4, causing a cascade of misaligned problem numbers.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2},
+      {"document": "solutions", "page": 3},
+      {"document": "solutions", "page": 4},
+      {"document": "solutions", "page": 10},
+      {"document": "solutions", "page": 11},
+      {"document": "solutions", "page": 12}
+    ],
+    "problemsChecked": 5,
+    "figuresChecked": 7
+  },
+  "defects": [
+    {
+      "path": "/problems",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Task 3 (Задача 3) about lunar observations and ash light (пепелна светлина) is completely missing from the candidate. The printed problems page 1 clearly lists Task 3 with two parts: (1) estimate how many times brighter the Moon is at full moon vs new moon in ash light, (2) calculate the magnitude at new moon given magnitude −12m.7 at full moon. The candidate skips this entirely and labels the practical task as problem 3.",
+      "suggestedFix": "Add problem 3 with number 3, statement beginning 'Задача 3. Вероятно сте наблюдавали как около новолуние...' and two parts marked with asterisks. Include the note about the Remark (Забележка). Map its solution from solutions pages 5-9.",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/2/number",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Problem numbering is incorrect. The practical task (first one listed) is numbered 3 in the candidate but should be numbered 5 (it comes after Task 4). This happens because Task 3 is missing, pushing all subsequent problems down by one in the candidate's numbering.",
+      "suggestedFix": "Renumber the first practical task (binary stars with mass ratio 2:1) as problem 5. Renumber what is currently problem 4 (Barnard's star) to problem 4 (where it belongs, after the missing Task 3).",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/3/number",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "What the candidate calls problem 4 (Barnard's star task) is numbered 4 in the candidate JSON, but this should be numbered 4 (which is correct IF the missing Task 3 were inserted before it). The problem itself is correct but its numbering only becomes proper once Task 3 is restored.",
+      "suggestedFix": "Keep Barnard's star task numbered 4 (correct position after Task 3 is added).",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/number",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "The second practical task (binary stars with mass ratio 1:1 and 3:1 components) is numbered 5 in the candidate, but this numbering only makes sense within the broken structure missing Task 3. The candidate appears to have the same practical task listed twice (as problems 3 and 5), creating duplication or severe confusion about what the actual problem set is.",
+      "suggestedFix": "Replace the duplicate/second practical task at position 5 with the unique practical task from the problems pages (the one with the mass ratio 2:1 and 3:1 components). Verify this appears only once.",
+      "confidence": 0.90
+    }
+  ]
+}

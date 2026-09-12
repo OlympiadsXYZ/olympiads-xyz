@@ -1,0 +1,320 @@
+{
+  "candidateSha256": "not-provided-with-task",
+  "verdict": "fail",
+  "summary": "Multiple critical defects: Problem 2 statement omits the given data (ℓ₀=0,50 m, h=5,0 cm) and its solution systematically writes t₀ instead of ℓ₀; Problem 3 omits the 4-measurement table and the middle-branch current formula in the answer table is wrong; Problem 4.3 statement is destroyed by repeated garbled text, its subparts а)/б)/в) with points [1,5/1,5/2 т.] are missing (total printed as 7 instead of 5); several figure boxes crop the wrong page regions.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "problems",
+        "page": 5
+      },
+      {
+        "document": "problems",
+        "page": 6
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      },
+      {
+        "document": "solutions",
+        "page": 7
+      },
+      {
+        "document": "solutions",
+        "page": 8
+      },
+      {
+        "document": "solutions",
+        "page": "9\""
+      }
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 7
+  },
+  "defects": [
+    {
+      "path": "/problems/1/parts/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed part а) begins „а) максималната височина Hмах, която достига тялото…“; candidate has „което достига тилото“ (тило→тило) and drops the leading „Намерете:“ list structure.",
+      "suggestedFix": "Намерете: а) максималната височина $H_{max}$, която достига тялото, и скоростта на тялото $v_{min}$ в момента на достигане на максимална височина. [1т.]",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Box [450,120,750,300] sits too high: the three-trajectory figure (with m₁, m₂, m₃, v₀, α, x=0, x_мах labels) occupies roughly the right half of page 1 below the header; crop clips the lower trajectories and part b) region.",
+      "suggestedFix": "[500,240,920,580]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/1/figures/1/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Box [600,380,800,550] for the groove figure (Фиг. 2) is misplaced; the printed Фиг. 2 (circle, v₁, points 1–5, angle α) is near the bottom-right of page 1 (~y 640–880), and the box instead swallows body text of Part 2.",
+      "suggestedFix": "[590,630,880,880]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "OCR typos: „Миниималната“, „Решаване системата“, „измиранията разстояния“, „Събиско така“ vs printed „Минималната“, „Решаваме системата“, „изминатите разстояния“, „Също така“.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/parts/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "points",
+      "description": "Printed marks „[1т.]“ after б) and „[3т.]“ after в) (and the standalone „Намерете:“) are not represented; candidate part б) merges the „Намерете:“ sentence.",
+      "suggestedFix": null,
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/1/parts/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed „то се пръсва на две парчета…които се разлитат в хоризонтални направления“; candidate has „се първа на две парчета…разлитат в хоризонталния направления“.",
+      "suggestedFix": "то се пръсва на две парчета с маси $m_2$ и $m_3$, които се разлитат в хоризонтални направления.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Printed statement includes essential data: „Дължините на двете пълни с въздух части на тръбата са ℓ₀ = 0,50 m всяка. Дължината на капката живак е h = 5,0 cm. Приемете, че капката има цилиндрична форма, т.е. двете ѝ свободни повърхности са плоски.“ Candidate replaces this with garbled text („От двете страни е капак е затворен газ…“) — ℓ₀ and h are absent, so parts а)–в) are unsolvable.",
+      "suggestedFix": "От двете страни на капката има въздух с нормално атмосферно налягане $p_0 = 1,0 \\cdot 10^5$ Pa и с температура $t_0 = 20°C$, равна на температурата на околната среда. Дължините на двете пълни с въздух части на тръбата са $\\ell_0 = 0,50$ m всяка. Дължината на капката живак е $h = 5,0$ cm. Приемете, че капката има цилиндрична форма, т.е. двете ѝ свободни повърхности са плоски.",
+      "confidence": 0.98
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Throughout the solution the printed tube half-length ℓ₀ (script ell) is transcribed as t₀: equations (3)–(9) read p₁ = p₀t₀/(t₀+x) etc., and „Основни данни“/„Приемете, че“ blocks (which belong to the problem statement) were moved into the solution.",
+      "suggestedFix": "Use $\\ell_0$ everywhere: $p_1 = \\frac{p_0\\ell_0}{\\ell_0+x}$, $p_2 = \\frac{p_0\\ell_0}{\\ell_0-x}$, $\\frac{p_0\\ell_0}{\\ell_0-x} = \\frac{p_0\\ell_0}{\\ell_0+x} + \\rho g h$, $x^2 + \\frac{2p_0\\ell_0}{\\rho gh}x - \\ell_0^2 = 0$, $x = \\ell_0\\left(\\sqrt{(p_0/\\rho gh)^2 + 1} - \\frac{p_0}{\\rho gh}\\right)$; move „Основни данни“ and „Приемете, че“ to the problem statement.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Sub-point label printed „б)“ rendered as „b)“; also garbled phrases: „След както“ (След като), „газета при ъжие“ (нагретия въздух), „Како комбинираме“ (Като комбинираме).",
+      "suggestedFix": null,
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Box [40,390,350,500] for Фиг. 2а is misplaced; the printed horizontal-tube figure with ℓ₀, h and „живак“ label is at the bottom of page 2 (~y 790–900). The crop swallows body text instead.",
+      "suggestedFix": "[150,780,600,900]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/2/figures/1/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Box [700,380,800,540] for Фиг. 2б is too small/misplaced; the printed vertical tube with x and the mercury drop is at the right edge of page 2 (~y 580–950).",
+      "suggestedFix": "[680,560,860,960]",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/3/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "The 4-measurement table (E_x,V: 0,0/12,0/20,0/30,0 and I,mA: 40,0/45,0/55,0/75,0) printed between parts а) and б) on page 3 is missing entirely; part б) references it.",
+      "suggestedFix": "Add table with columns „$\\varepsilon_x$, V | I, mA“ and rows (0,0|40,0), (12,0|45,0), (20,0|55,0), (30,0|75,0), preceded by „Схемата е сглобена, като изследователят не знаел конкретните стойности (R, R₁, R₂, ε₁) на използваните елементи. Направил само 4 измервания (дадени в таблицата). След като начертал данните на графика, той решил, че те са достатъчни за изчисляването на стойностите на R, R₁, R₂, ε₁.“",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "critical",
+      "kind": "table",
+      "description": "Second table row formula is wrong: printed I = (ε₁/R₁ + εₓ/R₂)/(1 + R/R₁ + R/R₂); candidate has garbled „I = ((ε₁+εₓ)/(R+R₁) + R/(R+R₂))/(1 + R/(R₁+R₂))“. Also „няма ситуация“ rendered as „NUMA ситуация“ and duplicated garbled paragraph inserted into part a) of the solution.",
+      "suggestedFix": "$I = \\left(\\frac{\\varepsilon_1}{R_1} + \\frac{\\varepsilon_x}{R_2}\\right) / \\left(1 + \\frac{R}{R_1} + \\frac{R}{R_2}\\right)$; fix „NUMA“→„няма“; remove duplicated paragraph.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/3/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 3,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Circuit crop [40,70,500,300] slightly clips the right end of the middle branch / R₂ resistor region.",
+      "suggestedFix": "[40,60,560,330]",
+      "confidence": 0.7
+    },
+    {
+      "path": "/problems/3/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 5,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Box [50,140,550,350] for the I–Eₓ graph on solutions p.5 is misplaced; the printed graph (axes 0–80 mA, 0–30 V, points A and B) occupies roughly y 250–780, x 230–640; the crop region contains text instead.",
+      "suggestedFix": "[220,240,660,800]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/4/title",
+      "document": "problems",
+      "page": 5,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed title „Задача 4. Задача – оценка.“; candidate has „Задача – оценска“ (also inside statement/solution).",
+      "suggestedFix": "Задача – оценка",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/parts/2/statement",
+      "document": "problems",
+      "page": 6,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Part 4.3 statement is destroyed: printed text „Повърхността на всяка течност с плътност ρ се стреми да заеме своята равновесна форма основно под влияние на два фактора – действащата върху течността сила на тежестта, държаща се на земното ускорение g, и силите на повърхностно напрежение, които са определени от коефициента на повърхностно напрежение σ. Ако под влияние на външно въздействие повърхността…възниква вълново движение.“ is replaced by dozens of repeated garbled fragments „действащо се на земното ускорение g“.",
+      "suggestedFix": "Transcribe the printed paragraph verbatim from problems p.6 (see description).",
+      "confidence": 0.98
+    },
+    {
+      "path": "/problems/4/parts/2",
+      "document": "problems",
+      "page": 6,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Printed subparts а) [1,5 т.], б) [1,5 т.], в) [2 т.] of 4.3 (with u₁~√λ, u₂~1/√λ, u²=u₁²+u₂², ρ=1·10³ kg/m³, σ≈0,1 N/m, g≈10 m/s²) are absent; total points 5 printed as 1,5+1,5+2 but candidate stores points:7.",
+      "suggestedFix": "Split part 4.3 into а), б), в) with points 1.5, 1.5, 2 and include the numeric data; set total to 5.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/4/parts/2/points",
+      "document": "problems",
+      "page": 6,
+      "severity": "critical",
+      "kind": "points",
+      "description": "Candidate stores points 7 for 4.3; printed marks sum to 1,5+1,5+2 = 5 т.",
+      "suggestedFix": 5,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/solution/statement",
+      "document": "solutions",
+      "page": 6,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "4.2 solution garbled: printed „В него процесите са с обратна посока на процесите в идеален топлинен двигател…“ becomes „В него процесса са идеални“; the first η-equation (η = A′/Q₁ = A/(A+λm)) is dropped and only η = 1 − T₂/T₁ is kept twice; also „Визда се“ (Виждa се), „тължество“ (тъждество), „крайно ясно“ (крайно дясно).",
+      "suggestedFix": "Restore η = A/(A+λm) step and the corrected wording per solutions pp.6–7.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/4/solution/statement",
+      "document": "solutions",
+      "page": 8,
+      "severity": "minor",
+      "kind": "latex",
+      "description": "In 4.1 solution the potential-energy formula is printed U(x) = (k/2)(Δl)² ≈ (k/8l²)x⁴; candidate writes (kl⁴/8l²)x⁴ (superscript/subscript confusion).",
+      "suggestedFix": "U(x) = \\frac{k}{2}(\\Delta l)^2 \\approx \\frac{k}{8l^2}x^4",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/4/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 5,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Box [200,300,500,420] for Фиг. 4.1 on problems p.5 is misplaced: the spring/ball figure (labels A, l, m, x) sits roughly x 350–650, y 400–600; the crop region contains the 4.1 heading text instead.",
+      "suggestedFix": "[340,390,660,620]",
+      "confidence": 0.8
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906110848071827d4aec54be6",
+    "at": "2026-09-06T03:11:01.362Z",
+    "inputTokens": 65037,
+    "outputTokens": 5743,
+    "reasoningTokens": 1574,
+    "costUsd": 0.012627,
+    "seconds": 134.6,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2018-iii-10-12/candidates/agent__haiku.figs.json",
+    "candidateSha256": "792674c93c3d9453cbb994aac6e161c27daf326f2e4fe49bc9f54d38c3aca8fe",
+    "viewSha256": "6821a4bf6751c01e758d1caf3dafe2a0bd5ceb01d28455b50d16c486d67864d1",
+    "crops": [
+      "p1-fig1",
+      "p1-fig2",
+      "p2-fig2a",
+      "p2-fig2b",
+      "p3-fig3",
+      "p3-sol-fig1",
+      "p4-fig1"
+    ]
+  }
+}

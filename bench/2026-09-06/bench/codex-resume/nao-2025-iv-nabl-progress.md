@@ -1,0 +1,22 @@
+# nao-2025-iv-nabl adjudication progress
+
+2026-09-08. Started from agent__sonnet.figs.json; output is currently an uncorrected checkpoint, NOT final gold.
+Read PDF skill, reader/adjudicator contracts, complete checker outputs, all candidate P1 entries and metadata.
+Visual source pages reviewed: problems 1–3; solutions 1–4.
+Decisions:
+- Source masthead is XXVIII, Подборен кръг, 12 юли 2025 г., Варна. Canonical round IV кръг (do not flag canonical field for not repeating printed wording). Overall total/time not printed; 20 min only applies P1.
+- Cyrillic part labels А) Б) В) Г) Д) Е); checker claims mixed alphabet unsupported, Б visibly not Latin B.
+- Sonnet omitted both blank statement tables, converted symbol table into incorrectly placed crop; omits completed solution tables. Need actual Markdown tables and symbol fidelity.
+- P1 statement map frame approx x84–916 y296–879; Sonnet clips bottom. Solution map x176–861 y426–910, caption at 914+; Sonnet clips top and includes footer.
+- P1 photos first pair x233–766 y551–737, second y766–953; current Sonnet second crop clips top.
+- Printed source typo retained: solution P1 E criteria ends 5.0 h°; Sonnet silently removes degree. Printed estimates differ: answer blanks102.4°,53.8°; narrative102.3°,54.1°.
+- P1 Sonnet changes printed colon after изглежда така to invented (Фигура А1).
+- Haiku P1 severe omissions/garbling; GLM P1 drops photos, hallucinates descriptions incl M27, omits solution completed tables/answers and misspells Колар as Колап. Both drop P1-only20min instruction.
+Next: review problems4–10, solutions5–16 and every supplied crop; correct truth incrementally, complete candidate defect lists and all27 checker finding decisions, dry-run crop review, validation.
+
+Reviewed problems4–6 and solutions5–8. P2 source star-table and both response tables are omitted by Sonnet (answers retain most values); P2 map crop points at lower half+P3 body rather than full map: frame x76–912,y44–617. P3 Earth crop includes caption/table and clips top: correct frame x298–707,y375–676. P3 sky frame x92–900,y40–327.
+Additional Sonnet defects: P2 raw `< 2^m` outside LaTeX; P2 criteria silently normalizes printed missing/doubled //; P3 opening changes printed 'от гледна точка на Земята' to 'на Луната'; P3 'Изброй те' vs printed 'Избройте'; P3 blank and completed response tables missing. Source includes illogical Moon/Earth wording and date calculation15.07 differing from answer16.07; preserve and note. P3 solutions continue onto9 (criterion E), so sourceSpans must include9. GLM falsely marks P3 incomplete and erroneously includes solutions14 in spans; corrupts Спика to Силка, period decimal0.28 to comma0,28; omits filled answers/tables. Haiku P2 misses whole grading block and answer tables, garbles narrative; P3 omits most actual reasoning and imports P4 tolerance53.7–54.0 into P3 longitude criteria.
+
+Reviewed problems7–10 and solutions9–12. All source problem pages complete. Source P4 title is 'Пътуваме във времето' (Sonnet correct; checker incorrectly says Пътуване; Haiku/GLM wrong). P4 source uses ректасцензия, candidate Sonnet repeatedly substitutes ректасценция. Source P4 prose after A and C must retain original relative order in common statement; Sonnet moves reference data before these paragraphs. P4 source conditions Δα=-3.58m, Δδ=+3.90′; proper-motion tableA38.78,B18.87,C32.76; time37373. P4 source response Δα=+2.25m missing prime (source error), Δδ′=+30.7′. Haiku drops all these common data/table/instructions/reference block. GLM drops instructions and reference block. Sonnet P4 chart bbox139 starts BELOW reference block (ends114), so checker allegation of swallowed reference data is false; actual defect is caption inclusion. P4 statement chart frame x138–861,y146–662; unannotated2025 frame x174–818,y38–890;37373 frame x183–827,y39–888. P3 spans need solutions9 for final criteria.
+
+Reviewed solutions13–16: ALL26source pages now visually reviewed. Sonnet P4 silently changes plural ректасцензии/деклинации to singular, отстоянието to разстоянието; adds figure-reference sentences, changes printed R и R to R и M in criterion В, uses cosδ instead of printed cosδ′ in E. Source δ′=60.4° alongside PV=39.6° is inconsistent but must preserve. P4 source criterion fallback53.7′–54.0′ correctly arcmin, source source titleПътуваме, all figure captions A1–A6 checked. Need all candidate crop sheets and textlayer spelling crosscheck, then author corrections.

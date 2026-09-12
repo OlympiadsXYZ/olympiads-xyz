@@ -1,0 +1,146 @@
+{
+  "candidateSha256": "168ec4f3bcaa7acafe1932b3",
+  "verdict": "fail",
+  "summary": "All four problems, parts, points and final answers match the print; only minor issues remain: printed equation numbers in the Problem 3 solution are dropped, a solution figure's caption is clipped by the crop, and the point breakdown of Problem 2 part В.а is consolidated (sum preserved).",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "problems",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      },
+      {
+        "document": "solutions",
+        "page": 7
+      },
+      {
+        "document": "solutions",
+        "page": 8
+      },
+      {
+        "document": "solutions",
+        "page": 9
+      },
+      {
+        "document": "solutions",
+        "page": 10
+      }
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 13
+  },
+  "defects": [
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "minor",
+      "kind": "points",
+      "description": "Printed breakdown for В.а is 0,25 т. + 0,25 т. + [1 т.] + 0,25 т. as separate awards; candidate merges them into two awards (0,25 т. and 1,25 т.). Total 1,75 т. is conserved, but the per-step point markers no longer match the print.",
+      "suggestedFix": "Restore four separate markers: (0,25 т.) после първото изречение, (0,25 т.) за полетата, (1 т.) за фигурата/хода на потенциала, (0,25 т.) за симетрията.",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 6,
+      "severity": "minor",
+      "kind": "omission",
+      "description": "The printed solution numbers its equations (1)–(22); the candidate transcribes the equations without these printed numbers (e.g. (1) Ридберг, (2) λ_ion, (4) a=v²/r, (8) v, (13) r_n, (20) E_1, (21), (22)). Content is otherwise verbatim, including the preserved reference to 'уравнение (4)' which dangles without the numbering.",
+      "suggestedFix": "Reinsert the printed equation numbers (1)–(22) at the corresponding display equations.",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/2/solution/figures/1/tx/bbox",
+      "document": "solutions",
+      "page": 5,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Crop p2-sol-fig2 [615,595,1000,765] ends above the printed caption 'Фиг. 2.2' (situated just below y≈765), so the caption is clipped from the crop.",
+      "suggestedFix": "[615, 595, 1000, 790]",
+      "confidence": 0.6
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 7,
+      "severity": "info",
+      "kind": "source-error",
+      "description": "Printed solution references 'уравнение (4)' when substituting the speed expression, but the relevant equation is (8) — a printed source error; the candidate preserves it verbatim (correct handling, aggravated by the dropped numbering).",
+      "suggestedFix": null,
+      "confidence": 0.9
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906110352e73bbf7a682347d1",
+    "at": "2026-09-06T03:05:09.135Z",
+    "inputTokens": 72708,
+    "outputTokens": 3257,
+    "reasoningTokens": 2315,
+    "costUsd": 0.012535,
+    "seconds": 77.3,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2024-iii-11-12/candidates/agent__sonnet.figs.json",
+    "candidateSha256": "d0412b2aae439f11a47b7766ea41abe8bfff62ddcbaf29ff3fab93647c1d9b96",
+    "viewSha256": "9dba065e11500b87a2533a0d6a5e026cfa3b610b4a355d4203ff0c30fdfe9b74",
+    "crops": [
+      "p1-sol-fig1",
+      "p2-fig1",
+      "p2-fig2",
+      "p2-fig3",
+      "p2-fig4",
+      "p2-sol-fig1",
+      "p2-sol-fig2",
+      "p3-fig1",
+      "p4-fig1",
+      "p4-fig2",
+      "p4-sol-fig1",
+      "p4-sol-fig2",
+      "p4-sol-fig3"
+    ]
+  }
+}

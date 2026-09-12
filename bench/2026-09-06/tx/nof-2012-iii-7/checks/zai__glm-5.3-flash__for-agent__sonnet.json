@@ -1,0 +1,102 @@
+{
+  "candidateSha256": "not-provided-in-prompt",
+  "verdict": "fail",
+  "summary": "Transcription is essentially faithful: all three problems, parts, points, answers and figure crops match the pages. One minor verbatim deviation in the solutions text and one unnoted printed source error (repeated 'За фиг. 3б:' heading) plus missing explicit answers for Problem 3 Part 1 sub-cases.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 13
+  },
+  "defects": [
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Source prints „Обемът на използваното за изготовянето на кубчето метално фолио е“; candidate has „изготвянето“ instead of „изготовянето“.",
+      "suggestedFix": "Обемът на използваното за изготовянето на кубчето метално фолио е",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "info",
+      "kind": "source-error",
+      "description": "The source prints „За фиг. 3б:“ a second time where „За фиг. 3в:“ is meant (the dispersing-lens case). The candidate preserves it verbatim, which is correct, but does not note the source error.",
+      "suggestedFix": null,
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/parts/0/answer",
+      "document": "problems",
+      "page": 2,
+      "severity": "info",
+      "kind": "omission",
+      "description": "Problem 3 Part 1 has no answer object for the three sub-cases (а/б/в); the official solution page 2 contains the per-case answers (действителен/събирателна, недействителен/събирателна, недействителен/разсейвателна + constructions). Not an error of content, but an answer field that could be populated.",
+      "suggestedFix": null,
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/0/parts/0/figures",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "figure",
+      "description": "All 13 figure crops checked: figs 1а/1б/1в, 2а/2б, 3а/3б/3в/3г and solutions figs 4а/4б/4в/5 each contain the complete drawing with axis labels, lettering and no swallowed body text or clipped edges.",
+      "suggestedFix": null,
+      "confidence": 0.9
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "2026090611235366a7e45188e24d9e",
+    "at": "2026-09-06T03:24:46.325Z",
+    "inputTokens": 28450,
+    "outputTokens": 2059,
+    "reasoningTokens": 1300,
+    "costUsd": 0.005297,
+    "seconds": 53.8,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2012-iii-7/candidates/agent__sonnet.figs.json",
+    "candidateSha256": "14f488a9be1b91b93ece7fc136a25fd87e252bb926cc2f36ccd7a73f9e84dc25",
+    "viewSha256": "0068b293a228393f33904516c941326022d3eaf00b8d3ccb9717085ebed5aff3",
+    "crops": [
+      "p2-fig1",
+      "p2-fig2",
+      "p2-fig3",
+      "p2-fig4",
+      "p2-fig5",
+      "p3-fig1",
+      "p3-fig2",
+      "p3-fig3",
+      "p3-fig4",
+      "p3-sol-fig1",
+      "p3-sol-fig2",
+      "p3-sol-fig3",
+      "p3-sol-fig4"
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "candidateSha256": "cdcf0f976ab820abdf37eb02ba86f074caf2620a90d02ca5df94fd75aaae762e",
+  "verdict": "fail",
+  "summary": "Two major defects found: part labels normalized from mixed Latin/Cyrillic to all-Cyrillic; table symbols in Problem 1 Part A converted from visual symbols to text descriptions.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "problems", "page": 2},
+      {"document": "problems", "page": 3},
+      {"document": "problems", "page": 4},
+      {"document": "problems", "page": 5},
+      {"document": "problems", "page": 6},
+      {"document": "problems", "page": 7},
+      {"document": "problems", "page": 8},
+      {"document": "problems", "page": 9},
+      {"document": "problems", "page": 10},
+      {"document": "solutions", "page": 1}
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 5
+  },
+  "defects": [
+    {
+      "path": "/problems/0/parts/0/label",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Part labels in Problem 1 use mixed Latin (A, B) and Cyrillic (В, Г, Д, Е) letters in the source, but candidate normalized to all-Cyrillic (А, Б, В, Г, Д, Е). Original page 2 shows 'A)' and 'B)' (Latin) while pages 3+ show Cyrillic.",
+      "suggestedFix": "Restore original mixed Latin/Cyrillic part labeling: A) Б) В) Г) Д) Е)",
+      "confidence": 0.80
+    },
+    {
+      "path": "/problems/1/parts/0/label",
+      "document": "problems",
+      "page": 4,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Part labels in Problem 2 use mixed Latin (A, B) and Cyrillic (В, Г, Д, Е) letters in the source, but candidate normalized to all-Cyrillic (А, Б, В, Г, Д, Е).",
+      "suggestedFix": "Restore original mixed Latin/Cyrillic part labeling: A) B) В) Г) Д) Е)",
+      "confidence": 0.78
+    },
+    {
+      "path": "/problems/2/parts/0/label",
+      "document": "problems",
+      "page": 5,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Part labels in Problem 3 use mixed Latin (A, B) and Cyrillic (В, Г, Д, Е) letters in the source, but candidate normalized to all-Cyrillic (А, Б, В, Г, Д, Е).",
+      "suggestedFix": "Restore original mixed Latin/Cyrillic part labeling: A) B) В) Г) Д) Е)",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/3/parts/0/label",
+      "document": "problems",
+      "page": 7,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Part labels in Problem 4 use mixed Latin (A, B) and Cyrillic (В, Г, Д, Е) letters in the source, but candidate normalized to all-Cyrillic (А, Б, В, Г, Д, Е).",
+      "suggestedFix": "Restore original mixed Latin/Cyrillic part labeling: A) B) В) Г) Д) Е)",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/0/parts/0/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Table in Problem 1 Part A contains visual symbol designations (oval, crossed-circle, diamond, ring) that mark different object types on the star map. Source shows these as actual visual symbols in the first column, but candidate transcribed them as text descriptions in parentheses: '(елипса/овал)', '(кръг с кръст)', '(четирилъчен ромб)', '(кръг/пръстен)'. This converts visual symbols to text representation.",
+      "suggestedFix": "Represent symbols more faithfully: use actual symbol characters/emoji or more accurate descriptions without parentheses, maintaining the table structure showing symbol in first column matching the objects labeled with those symbols on Figure 1.",
+      "confidence": 0.90
+    }
+  ]
+}

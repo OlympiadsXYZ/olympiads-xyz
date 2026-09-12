@@ -1,0 +1,177 @@
+{
+  "candidateSha256": "c19ffecab30a",
+  "verdict": "fail",
+  "summary": "Problem 3's statement contains critical misread words („вълшебникът и мечтателят, надарен“ rendered as „възвишеният, нарален“), and all four figure crops swallow adjacent body text and misplace the figures. Several small typos and decimal-comma normalisations are also present.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 4
+  },
+  "defects": [
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "reworded",
+      "description": "Printed: „Малкият принц е вълшебникът и мечтателят, надарен с неземна сила да птува…“. Candidate has „Малкият принц е възвишеният, нарален с неземна сила…“ — words misread/garbled, meaning changed.",
+      "suggestedFix": "Малкият принц е вълшебникът и мечтателят, надарен с неземна сила да птува от астероид на астероид, да посещава различни планети, за да опознае света.",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop [650,150,1000,420] starts far too high and left: it swallows the title/subtitle body text („…грама за VIII клас…астрономически часа…“) and the photo itself sits lower. The cyclists photo occupies roughly x 690–905, y 295–460 permille.",
+      "suggestedFix": "[690, 295, 910, 460]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/2/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop [650,200,1000,350] includes body text fragments on the left („…принц, …теж и“); the drawing occupies roughly x 700–900, y 215–350.",
+      "suggestedFix": "[695, 215, 900, 350]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/2/figures/1/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop [650,380,1000,500] includes body text fragments on the left („…рашут.“); the parachute drawing occupies roughly x 700–900, y 380–500.",
+      "suggestedFix": "[700, 378, 900, 500]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/2/figures/2/tx/bbox",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop [650,550,1000,700] clips the suspension line/hook above the dome and swallows the body text below („…амира в асансьор, движещ се“). The figure with its hanging line occupies roughly x 690–900, y 525–675.",
+      "suggestedFix": "[690, 522, 900, 675]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/0/parts/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed „за целия изминат път“; candidate has „за целия измин на пътя“ (dropped „ат“).",
+      "suggestedFix": "Определете средната скорост на всеки колоездач за целия изминат път s.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed „Пилот изпробва възможностите“; candidate has „Пилотът изпробва възможностите“ (extra „ъ“). Also printed „При числените пресмятания“; candidate has „При численгите пресмятания“ (typo).",
+      "suggestedFix": "Пилот изпробва възможностите на нов самолет. … При числените пресмятания приемете земното ускорение g = 10 m/s².",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed „Антоан дьо Сент-Екзюпери“; candidate has „Антоан д'о Сент-Екзюпери“.",
+      "suggestedFix": "…на писателя Антоан дьо Сент-Екзюпери.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/0",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "other",
+      "description": "Source uses decimal commas (12,48; 0,38; 4,8; 12,5; 16,2; 11,2; 406…) throughout; candidate systematically converts to decimal points in statements/answers/solutions (12.48, 0.38, 16.2…), while p3 в) keeps $1{,}6$ — inconsistent normalisation of the original notation.",
+      "suggestedFix": null,
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Printed „Тогава разстоянието между тях ще бъде“; candidate has „Тогава разстоянието между тях още е“. Also printed „т.е. колоездач B е изпреварил колоездач A с 4,8 m“; candidate has „т.е. колоездача B е изпревари колоездач A с 4.8 m“.",
+      "suggestedFix": "Тогава разстоянието между тях ще бъде … т.е. колоездач B е изпреварил колоездач A с 4,8 m.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/tx/sourceSpans",
+      "document": "solutions",
+      "page": 3,
+      "severity": "minor",
+      "kind": "metadata",
+      "description": "Problem 3's solution part в) is printed on solutions page 3, but the candidate's tx.sourceSpans list only solutions page 2 for problem 3.",
+      "suggestedFix": "Add {\"document\":\"solutions\",\"page\":3} to /problems/2/tx/sourceSpans.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/parts/1/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "info",
+      "kind": "other",
+      "description": "Candidate part б) contains „правoлинейно“ with a Latin 'o' instead of Cyrillic 'о' in two places (statement and solution); cosmetic encoding slip, meaning intact.",
+      "suggestedFix": "праволинейно",
+      "confidence": 0.85
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906105018ec0c5ac270634c84",
+    "at": "2026-09-06T02:51:19.338Z",
+    "inputTokens": 25356,
+    "outputTokens": 3149,
+    "reasoningTokens": 1278,
+    "costUsd": 0.005378,
+    "seconds": 62.4,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/nof-2015-i-8/candidates/agent__haiku.figs.json",
+    "candidateSha256": "3eb10015949f57a316cbcdb8fc60ae53171d086fb6d5e4591396acea4035d375",
+    "viewSha256": "ac155f8f33e95a0754658b0ea3cca9a660d43cd41da6721c37b668fefebf3b78",
+    "crops": [
+      "p1-fig1",
+      "p3-fig1",
+      "p3-fig2",
+      "p3-fig3"
+    ]
+  }
+}

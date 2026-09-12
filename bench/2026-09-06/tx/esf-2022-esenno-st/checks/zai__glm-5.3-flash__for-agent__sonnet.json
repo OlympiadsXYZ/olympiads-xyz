@@ -1,0 +1,139 @@
+{
+  "candidateSha256": "unknown-not-provided-in-prompt",
+  "verdict": "fail",
+  "summary": "Content is faithfully transcribed (statements, quantities, points, answers all match the print), but one solution figure crop swallows clipped body text (the 'Задача 3. Сапунен мехур' heading), several figure captions are clipped, and equation numbers (1)-(6)/(14)-(18) of Problem 2's solution are dropped.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 8
+  },
+  "defects": [
+    {
+      "path": "/problems/2/solution/figures/0/tx/bbox",
+      "document": "solutions",
+      "page": 3,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop p3-sol-fig1 [240,350,480,485] extends too high: the clipped section heading text '…апунен мехур' (body text) is visible inside the figure crop of the circle diagram.",
+      "suggestedFix": "[240,400,480,500]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/1/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Crop p1-fig1 [0,582,830,685] ends right at the caption line; the printed caption 'Фиг. 1' is clipped from the crop.",
+      "suggestedFix": "[0,582,830,710]",
+      "confidence": 0.7
+    },
+    {
+      "path": "/problems/2/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Crop p2-fig1 [560,730,995,880] excludes the printed caption 'Фиг. 2' just below the drawing.",
+      "suggestedFix": "[560,730,995,905]",
+      "confidence": 0.7
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "minor",
+      "kind": "omission",
+      "description": "The print numbers the equations (1)–(6) in part а) and (14)–(18) in part г); the candidate's solution text omits these equation numbers while keeping others.",
+      "suggestedFix": "Restore equation numbers (1)-(6) and (14)-(18) as in the print.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "info",
+      "kind": "source-error",
+      "description": "Print shows $\\sqrt{n^2-r^2/R^2} = m\\lambda/2a + C$ in eq. (8) — '2a' is evidently a typo for '2d'; candidate preserves it verbatim and does not annotate. Acceptable preservation; an explanatory note would be better.",
+      "suggestedFix": null,
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/3/solution/figures/2/tx/bbox",
+      "document": "solutions",
+      "page": 4,
+      "severity": "minor",
+      "kind": "figure",
+      "description": "Crop p3-sol-fig3 [570,655,1000,900] leaves the y-axis label at the extreme top-left edge, partially cut.",
+      "suggestedFix": "[555,650,1000,905]",
+      "confidence": 0.6
+    },
+    {
+      "path": "/paper",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "metadata",
+      "description": "Catalogue archive keys place the files in a '2023' folder while the printed pages and paper.year say 2022; the candidate correctly follows the print but does not record tx.catalogDisagrees.",
+      "suggestedFix": "Set tx.catalogDisagrees noting the 2023 folder path vs printed year 2022.",
+      "confidence": 0.9
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "2026090611115091f17553688349bf",
+    "at": "2026-09-06T03:12:28.610Z",
+    "inputTokens": 49371,
+    "outputTokens": 2792,
+    "reasoningTokens": 1763,
+    "costUsd": 0.008802,
+    "seconds": 39.1,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/esf-2022-esenno-st/candidates/agent__sonnet.figs.json",
+    "candidateSha256": "62935d48e1a688d65682dcdaec5a888b131bb9ce507166bf35b011186157da5a",
+    "viewSha256": "db4eb67e6b4ce97670c26649bab212f6819ffc98bade33102afd3eb1651134ca",
+    "crops": [
+      "p1-fig1",
+      "p1-sol-fig1",
+      "p2-fig1",
+      "p2-sol-fig1",
+      "p3-fig1",
+      "p3-sol-fig1",
+      "p3-sol-fig2",
+      "p3-sol-fig3"
+    ]
+  }
+}

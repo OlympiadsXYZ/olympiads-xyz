@@ -1,0 +1,224 @@
+{
+  "candidateSha256": "f49419f56279",
+  "verdict": "fail",
+  "summary": "Numerous critical and major defects: mis-transcribed physics in Problem 1's solution (wrong equation I_o·ω̇, missing eq. 4), Problem 2 statement says the field is along axis X instead of Z and omits the whole p_m = 1.40×10⁻²⁶ A·m² paragraph, solution 2 drops ω from eq. (18) and corrupts eq. (7), solution 3 omits eqs. (7), (9)–(11), the graph and several scoring notes, and both statements and solutions are pervasively reworded with invented words ('справо край маса', 'влияю', 'пилетa').",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 3
+  },
+  "defects": [
+    {
+      "path": "/problems/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Printed: 'навън спрямо ръба на масата', 'около ръба на масата', 'Коефициентът на триене между пръчката и масата', 'еднородна'. Candidate: 'навън справо край маса', 'около край маса', 'Коефишиентът', 'маса', 'еденородна' — meaning distorted and misspelled.",
+      "suggestedFix": "Тънка еднородна пръчка с дължина $\\ell = 10\\ \\mathrm{cm}$ е поставена върху хоризонтална маса, както е показано на фиг. 1 а. Центърът C на пръчката е отместен на разстояние $x = 1\\ \\mathrm{cm}$ навън спрямо ръба на масата. ... пръчката започва да се преобръща около ръба на масата. ... ще започне да се хлъзга спрямо ръба на масата? ... Коефициентът на триене между пръчката и масата е $\\mu = 0.50$.",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Candidate inserts an equation not in the source: 'I_o ω̇ = f − G sin α' and loses the printed equation (4) 'ma_n = f − G sin α [0.5]'. The printed solution never writes I_o ω̇ = f − G sin α.",
+      "suggestedFix": "От II принцип на механиката, записан в проекции по дължината на пръчката: ma_n = f − G sin α, [0.5] изразяваме силата на триене: f = ma_n + mg sin α = ((ℓ²+36x²)/(ℓ²+12x²))mg sin α. [0.5]",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "'ърти около ръба О' → 'около рыба О', 'сключва' → 'скръчва', 'за вътрешна около неподвижна ос' → 'за въртене около неподвижна ос', 'Знакът' → 'Знаект', 'съответства' → 'сътветствува'; also 'неподвижна' split as 'непод движна'.",
+      "suggestedFix": null,
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "The whole paragraph defining the proton magnetic moment is missing: 'Поради спина протонът е еквивалентен на кръгов ток и притежава собствен магнитен момент p⃗_m с големина: p_m = 1.40 × 10⁻²⁶ A·m².' Without p_m parts а)–г) are unsolvable.",
+      "suggestedFix": "Поради спина протонът е еквивалентен на кръгов ток и притежава собствен магнитен момент $\\vec{p}_m$ с големина: $$p_m = 1{,}40 \\times 10^{-26}\\ \\mathrm{A\\cdot m^2}.$$",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Printed 'в посока на оста Z на координатната система'; candidate says the field B₀ = 5.00 T is 'в посока на оста X'. Axis is wrong (X is the direction of the extra field in part б).",
+      "suggestedFix": "в посока на оста $Z$ на координатната система",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Multiple mangled words: 'оприличен' → 'описличен', 'наричан' → 'нарічан', 'еднопосочен' → 'еденосочен', 'Пресметнете' → 'Преместнете/Преметнете', 'за кратко' → 'за краико', 'спрямо оста Z' → 'справо оста Z', 'обръща/описва' → 'ъртящ/опиева', 'израз' → 'изражение', 'усOrHaven' etc. Also printed б) gives the extra field 'с индукция по оста X' without a B₁ symbol; candidate invents $\\vec{B}_1$.",
+      "suggestedFix": null,
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Eq. (7): printed $\\vec{T} = (M\\sin\\theta\\,\\hat{x} + M\\cos\\theta\\,\\hat{z}) \\times B_0\\,\\hat{z}$ with the identities $\\hat{x}\\times\\hat{z}=0$ и $\\hat{x}\\times\\hat{z}=-\\hat{y}$ (as printed); candidate replaces $B_0\\hat{z}$ with $B_o\\hat{y}$ and the identities with invented $\\vec{x}\\times\\vec{y}=\\vec{z}$, $\\vec{z}\\times\\vec{y}=-\\hat{x}$.",
+      "suggestedFix": "$\\vec{T} = \\vec{M} \\times \\vec{B}_0 = (M \\sin\\theta\\,\\hat{x} + M \\cos\\theta\\,\\hat{z}) \\times B_0\\,\\hat{z} = -MB_0 \\sin\\theta\\,\\hat{y}$",
+      "confidence": 0.93
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Eq. (18): printed ε_eff = √2 μ₀ ωMA sinθ / (4πd³) ≈ 4.1×10⁻⁵ V — the factor ω is dropped in the candidate's formula (numeric result kept).",
+      "suggestedFix": "$$\\varepsilon_{eff} = \\frac{\\varepsilon_{max}}{\\sqrt{2}} = \\frac{\\sqrt{2}\\mu_0 \\omega M A \\sin\\theta}{4\\pi d^3} \\approx 4.1\\times 10^{-5}\\ \\mathrm{V}.$$ [1.0]",
+      "confidence": 0.96
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "'е издет сферичен мехур' → 'е изхвърчен', 'осветен' → 'освътен', 'сниман' → 'снимани', 'Ако решението налага' → 'падага', 'да чертаете графики' → 'да четате графики', 'дебелината' → 'дебелина'.",
+      "suggestedFix": "От сапунен разтвор с показател на пречупване $n = 1.35$ е издет сферичен мехур. Мехурът е осветен с естествена разсеяна светлина и е сниман през цветен филтър ... Ако решението налага, можете да чертаете графики на координатната мрежа ...",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Solution 3 omits equation (7) for dark rings (2d√(n² − r²/R²) = kλ, [0.5]), equations (9)–(11) (x ≡ m, y ≡ √(n² − r²/R²), y = Ax + C, A = λ/2d with point tags), the scoring notes ('За всяка правилно нанесена точка – 0.25', 'За надписи върху осите – общо 0.25', 'За поне 50% запълване – 0.5', 'За измерването на диаметъра – 0.25 точки' as separate table note), and the measurement procedure paragraph.",
+      "suggestedFix": null,
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/figures",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "figure",
+      "description": "The printed graph of y versus m = x on solutions p.4 (with approximating line and axis labels 0.9–1.4 / 1–5) is not transcribed as a figure anywhere.",
+      "suggestedFix": "Add a figure crop of the y(m) graph on solutions page 4.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "table",
+      "description": "Table 1 is mangled: '2R = 5.1 cm' is merged into the first data row as a cell, and the note 'За измерване на диаметъра на мехура – 0.25 точки' is placed inside the table as a data row. Printed table has header (m = x | 2r (cm) | y) with '2R = 5.1 cm' as a caption line.",
+      "suggestedFix": "Header/caption: 'Таблица 1. 2R = 5.1 cm'; columns m=x, 2r (cm), y with rows (1, 4.9, 0.95), (2, 4.4, 1.04), (3, 3.8, 1.13), (4, 3.1, 1.21), (5, 2.0, 1.29).",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 3,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Pervasive invented words: 'От фигурата вляво/вдясно' → 'влияю', 'външната повърхност' → 'вътрешната' (twice, inverting the physics text), 'пласта/цицата' → 'пилата', 'Затова нумерираме пръстените' → 'Затова номериране пръстевете', 'най-външния' → 'най-вишийя', 'стойността' → 'стойност', 'фит' for 'fit'.",
+      "suggestedFix": null,
+      "confidence": 0.92
+    },
+    {
+      "path": "/problems/1/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Box [700,400,1000,700] sits far above figure 2, which occupies the lower-right quadrant of page 1 (roughly x 640–1000, y 650–980 permille, caption 'Фиг. 2' near y≈930). The crop would miss most of the figure and its caption.",
+      "suggestedFix": "[640, 640, 1000, 980]",
+      "confidence": 0.75
+    },
+    {
+      "path": "/paper/roundType",
+      "document": "problems",
+      "page": 1,
+      "severity": "info",
+      "kind": "metadata",
+      "description": "roundType 'test' is a judgment call for a 'Специална тема' paper; not contradicted by the print. Catalogue lists archive year folder 2023 for a 2022 paper — catalogue metadata, not a transcription defect.",
+      "suggestedFix": null,
+      "confidence": 0.6
+    },
+    {
+      "path": "/problems/1/answer",
+      "document": "solutions",
+      "page": 4,
+      "severity": "info",
+      "kind": "source-error",
+      "description": "Final numeric answer d ≈ 3.1 µm with A ≈ 0.088 agrees with the official solution; tolerance 0.1 is the candidate's estimate, acceptable.",
+      "suggestedFix": null,
+      "confidence": 0.9
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906110848132688d9395445fc",
+    "at": "2026-09-06T03:10:41.291Z",
+    "inputTokens": 40868,
+    "outputTokens": 4908,
+    "reasoningTokens": 1537,
+    "costUsd": 0.008584,
+    "seconds": 114.4,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/esf-2022-esenno-st/candidates/agent__haiku.figs.json",
+    "candidateSha256": "9347a58ac360a498fc6e810054fb82b92c002dd329d85c939fa465bb958d79fd",
+    "viewSha256": "93d67948f136a01f9f033f04bc422fb934a875f070f4d74ba71ef80904366157",
+    "crops": [
+      "p1-fig1",
+      "p2-fig2",
+      "p3-fig3"
+    ]
+  }
+}

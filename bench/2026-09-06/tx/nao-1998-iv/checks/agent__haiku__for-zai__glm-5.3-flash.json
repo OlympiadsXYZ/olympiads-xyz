@@ -1,0 +1,36 @@
+{
+  "candidateSha256": "88b76a59e09e6ac8a5a74a0b1db4e2de79e8717b0189515574b1b61e26914e34",
+  "verdict": "fail",
+  "summary": "One major defect found: Problem 4's answer field silently corrects a source error (lists/describes) instead of preserving it verbatim. The candidate's own note acknowledges the source text but the answer value contradicts this. One additional suspicious formula in Problem 2 solution could not be definitively verified from the low-resolution scan but appears inconsistent with standard physics notation.",
+  "coverage": {
+    "pagesRead": [
+      {"document": "problems", "page": 1},
+      {"document": "solutions", "page": 1},
+      {"document": "solutions", "page": 2}
+    ],
+    "problemsChecked": 4,
+    "figuresChecked": 4
+  },
+  "defects": [
+    {
+      "path": "/problems/3/answer/value",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "The answer field contains 'Описват се блясък, цвят и ъглово отстояние...' (describe), but the candidate's own answer.note field explicitly states the source prints 'се списват' (lists), not 'се описват' (describes). A source error should be preserved verbatim in the answer.value field with the error noted separately, not silently corrected in the main field.",
+      "suggestedFix": "...разглеждат се визуално и се списват - блясък, цвят, ъглово отстояние... (restore original text; preserve the source error verbatim)",
+      "confidence": 0.98
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "The solution contains the formula '$V_r = c\\,\\Delta\\lambda/\\lambda_0^2$' with squared lambda_0 in denominator. Standard Doppler shift formula uses first power: $V_r = c\\,\\Delta\\lambda/\\lambda_0$. Later in same formula block, candidate has '$V_\\theta = c\\,\\Delta_\\lambda/\\lambda_0$' (correct form). This inconsistency suggests either a misreading or source error. Candidate's note acknowledges formulas are partially illegible in source.",
+      "suggestedFix": "Verify formula against original PDF; likely should be '$V_r = c\\,\\Delta\\lambda/\\lambda_0$' (remove ^2 from denominator)",
+      "confidence": 0.68
+    }
+  ]
+}

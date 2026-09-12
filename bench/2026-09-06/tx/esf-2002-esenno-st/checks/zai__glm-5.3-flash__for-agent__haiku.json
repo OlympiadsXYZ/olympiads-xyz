@@ -1,0 +1,209 @@
+{
+  "candidateSha256": "unknown-not-provided",
+  "verdict": "fail",
+  "summary": "The transcription is severely corrupted: problem 6 is entirely missing, and the statements of problems 1–5 are garbled/hallucinated (wrong formulas like $l=CE^x$ instead of $l=CE^{3/2}$, wrong values like x=25 m instead of 10 m, invented sentences), points are dropped everywhere, and the solutions for problems 1, 2 and 4 contain wrong formulas; figure boxes appear mislocated.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      }
+    ],
+    "problemsChecked": 5,
+    "figuresChecked": 4
+  },
+  "defects": [
+    {
+      "path": "/problems",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Printed paper has 6 problems; problem 6 (electrons entering a magnetic field region of width h=0.1 m, B=5·10⁻³ T, α=60°, 10 т) is entirely absent from the candidate.",
+      "suggestedFix": "Add problem 6: 'Задача 6. Електрони навлиза под ъгъл α = 60° в област с широчина h = 0,1 m, в която има еднородно магнитно поле, насочено перпендикулярно спрямо скоростта на електрона. Големината на магнитната индукция е B = 5.10⁻³ T. При каква минимална скорост v електронът може да пресече областта? ......................(10 т)'",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/0/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "reworded",
+      "description": "Problem 1 statement is garbled and factually wrong: printed law is l = CE^(3/2), candidate has $l = CE^x$; printed text 'Опитно е установено...' became 'Отличие е установено'; printed task is a single question about f(v) (8 т), candidate invents parts а) and б) with nonsensical text ('schrijащото', 'С какв скорост на пробег...').",
+      "suggestedFix": "Опитно е установено, че дължината l на пробег на алфа-частиците във вещество зависи от тяхната начална кинетична енергия E по закона: l = CE^(3/2), където C е константа, характерна за дадената среда. Ако приемете, че спирането на алфа-частицата се дължи на сила на триене f, чиято големина зависи от моментната скорост v на частицата, намерете функционалната зависимост на f от v (означете масата на алфа-частицата с m) ......................(8 т)",
+      "confidence": 0.98
+    },
+    {
+      "path": "/problems/1/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "reworded",
+      "description": "Problem 2 statement is garbled and invents sub-questions not printed on the page ('Отговор на монетата е: а) Намерете силата F... че момента на удара' etc.). Printed text asks for the average force F during the impact Δt = 10⁻³ s, with moment of inertia I_x = mr²/4 about axis x through the centre parallel to the coin's plane.",
+      "suggestedFix": "Монета с маса m = 3,5 g и радиус r = 1 cm е закрепена неподвижно във вертикално положение. Върху горния край на монетата е нанесен краткотраен удар, в резултат на който той придобива скорост v = 5 m/s, насочена хоризонтално, перпендикулярно спрямо равнината на монетата. Непосредствено след удара долният край на монетата е неподвижен. Колко е средната сила F, която действа върху горния край на монетата по време на удара, ако приемете, че продължителността на удара е Δt = 10⁻³ s? Инерчният момент на монетата спрямо ос x, която минава през нейният център и е успоредна на нейната равнината е I_x = mr²/4 ......................(7 т)",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Solution 2 formulas corrupted: printed ΔL = I'ω = (5/8)mrv; candidate has ΔL = mrv. Printed F̄ = 5mv/(16Δt); candidate has F̄ = 5mv/(16M).",
+      "suggestedFix": "$\\Delta L = I'\\omega = \\frac{5}{8}mrv$ ... $\\overline{F} = \\frac{5mv}{16\\Delta t}$, $F \\approx 5,5$ N",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/2/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Problem 3: printed distance is x = 10 m; candidate has x = 25 m. Printed text has no invented 'височина на удара на рачката е h = 2,0 m' clause; candidate adds garbled duplicate clauses. Points (10 т) dropped.",
+      "suggestedFix": "С каква начална скорост v₀ трябва да бъде изстреляна топка за тенис в хоризонтална посока така, че да удари вертикална стена, разположена на разстояние x = 10 m с минимална кинетична енергия? При такава подбраната начална скорост, какъв ъгъл спрямо хоризонта ще сключва скоростта на топката непосредствено преди удара със стената? Приемете, че земното ускорение е g = 10 m/s² ......................(10 т)",
+      "confidence": 0.97
+    },
+    {
+      "path": "/problems/3/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "reworded",
+      "description": "Problem 4 statement is garbled: 'От тъкна металната жилка', 'еддорошно магнитно поле', 'Отсет, който се измира...', 'запалба крупива форма'. Part б) invents r = 2 cm and wrong question; printed б) asks for the mechanical work A for full tightening of the loop if the initial radius is r₀ (4 т). Parts а) 6 т and б) 4 т points dropped.",
+      "suggestedFix": "а) Намерете тока I, който тече в примката ......................(6 т) б) Каква механична работа A трябва да извърши външната сила, приложена към възела за пълното затягане на примката, ако началният радиус на примката е r₀? ......................(4 т)",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/3/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "critical",
+      "kind": "wrong-value",
+      "description": "Solution 4 corrupted: printed U = r(t)Bv; candidate 'U = U(t)Bv'; printed t_затягане = 2πr₀/v; candidate 't_extrace = 2πv√...'; printed A = Q = (Br₀)²v/λ; candidate 'A = Q - (Bv_e)²V/λ'.",
+      "suggestedFix": "$U = r(t)Bv$; $t_{затягане} = 2\\pi r_0/v$; $A = Q = \\frac{(Br_0)^2 v}{\\lambda}$",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/4/statement",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "Problem 5 statement is truncated after the first sentence. The printed text continues with the sound source S (ν = 680 Hz), the questions a) minimum angular offset θ so the phase difference is not smaller than 0,1 rad (5 т) and b) relative amplitude change |ΔA/A_max| not smaller than 1% (10 т), plus the assumptions (equal amplitudes, signal proportional to sound wave amplitude, c = 340 m/s).",
+      "suggestedFix": "Append the full remaining statement: 'приемат звуков сигнал с честота ν = 680 Hz, който се излъчва от точков източник S. Разстоянието между микрофоните е много по-малко от d. Електрontите сигналите u₁(t) и u₂(t) от двата микрофона се подават към схема, която по електронен път определя разликата δ между техните фази и амплитудата A на сумата u(t) от двата сигнала (u(t) = u₁(t) + u₂(t)). Какво минимално ъглово отместване θ на източника спрямо оста на симетрия OO' може да установи роботът, ако електронната схема: а) е в състояние да измери фазова разлика между сигналите, която е не по-малка от 0,1 rad; ......................(5 т) б) е в състояние да измери относително изменение |ΔA/A_max| на амплитудата на сумарния сигнал, което е не по-малко от 1%? ......................(10 т) Приемете, че: ... скоростта на звука във въздуха е c = 340 m/s.'",
+      "confidence": 0.98
+    },
+    {
+      "path": "/problems/4/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Solution 5: candidate attaches problem 6's solution content inside problem 5's solution ('6. Правилно изобразена посока...'), and formulas are corrupted (Δν = δsinθ should be Δl = d sinθ; |ΔA/A_max| = δ²/8 line missing its fraction form; θ = δλ/(2πd) with δ ≈ 0,28 rad giving 0,11 rad = 6,3°).",
+      "suggestedFix": "Split the '6.' block into a separate solution for problem 6 and correct: $\\Delta l = d\\sin\\theta$; $\\frac{|\\Delta A|}{A_{max}} = \\frac{\\delta^2}{8}$; $\\theta = \\frac{\\delta\\lambda}{2\\pi d} \\approx 0,11\\ \\mathrm{rad} = 6,3°$",
+      "confidence": 0.93
+    },
+    {
+      "path": "/problems/1/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop p2-fig1 at [100,200,200,280] does not correspond to the printed 'Към задача 2' coin diagram, which sits lower on the page (roughly [95,430,235,560] in permille, just above the 'Към задача 2' caption).",
+      "suggestedFix": "[95, 425, 240, 570]",
+      "confidence": 0.8
+    },
+    {
+      "path": "/problems/2/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop p3-fig1 at [100,320,250,400] does not match the 'Към задача 3' figure (ball, v₀ arrow, dashed trajectory, wall), which is located near the caption 'Към задача 3' at roughly [100,555,310,640] permille.",
+      "suggestedFix": "[100, 550, 320, 645]",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/3/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "figure",
+      "description": "Crop p4-fig1 at [100,450,250,530] does not match the 'Към задача 4' figure (loop with v, B into page, sliding wire), which is near the 'Към задача 4.' caption at roughly [195,760,300,855] permille.",
+      "suggestedFix": "[190, 750, 310, 860]",
+      "confidence": 0.75
+    },
+    {
+      "path": "/problems/0/parts",
+      "document": "problems",
+      "page": 1,
+      "severity": "critical",
+      "kind": "points",
+      "description": "All printed point values are dropped (problems: 1→8 т, 2→7 т, 3→10 т, 4→а) 6 т / б) 4 т, 5→а) 5 т / б) 10 т, 6→10 т); every points field in the candidate is null and garbled problem text assigns points to invented parts.",
+      "suggestedFix": "Restore the printed points as listed; problem 1 has a single part (8 т), problem 3 a single part (10 т).",
+      "confidence": 0.99
+    },
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "latex",
+      "description": "Solution 1 formulas corrupted: printed l = CE^(3/2) and x = l − CE(x)^(3/2); candidate has $l = CE^x$, $x = l - CE(x)^x$, and f = −(dx/dE)^(−1) rendered with wrong sign/structure; final f = (2√2/(3C√m))·(1/√v) should be f = (2√2/(3C√m))·(1/v)·√... i.e. f = (2√2)/(3C)·(1/√m)·(1/v)·(1/1) per print 'f = 2√2/(3C√m) × 1/v'.",
+      "suggestedFix": "$l = CE^{3/2}$; $x = l - CE(x)^{3/2}$; $f = \\frac{2\\sqrt{2}}{3C\\sqrt{m}} \\cdot \\frac{1}{v} \\cdot \\frac{m v^2}{2}^{...}$ per print: $f = \\frac{2\\sqrt{2}}{3C\\sqrt{m}} \\times \\frac{1}{v}$ applied to $E = \\frac{mv^2}{2}$ giving $f = \\frac{2\\sqrt{2}}{3C} \\cdot \\frac{1}{v}$-form as printed",
+      "confidence": 0.7
+    },
+    {
+      "path": "/problems/4/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Solution 5.а numeric line corrupted: printed θ = (0,1 rad · 0,5 m)/(2·3,14·0,2 m) ≈ 0,04 rad = 2,3°; candidate has '2,3 · 4 · 0,2 m' and '2,3°' mixed with wrong numerator symbol (Δν instead of δλ).",
+      "suggestedFix": "$\\theta = \\frac{\\delta\\lambda}{2\\pi d} = \\frac{0,1\\ \\mathrm{rad} \\cdot 0,5\\ \\mathrm{m}}{2 \\cdot 3{,}14 \\cdot 0{,}2\\ \\mathrm{m}} \\approx 0{,}04\\ \\mathrm{rad} = 2{,}3°$",
+      "confidence": 0.92
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 1,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Solution 3.б: printed E_k = mv²/2 = mgx (energy equality) and v = √(2gx); candidate has $E_k = \\frac{mv^2}{2} - mgx$ and $v = \\sqrt{\\frac{2gx}{m}}$, both wrong.",
+      "suggestedFix": "$E_k = \\frac{mv^2}{2} = mgx$; $v = \\sqrt{2gx}$",
+      "confidence": 0.95
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "20260906110848755b4575439745d1",
+    "at": "2026-09-06T03:10:23.792Z",
+    "inputTokens": 16676,
+    "outputTokens": 4372,
+    "reasoningTokens": 378,
+    "costUsd": 0.004687,
+    "seconds": 96,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/esf-2002-esenno-st/candidates/agent__haiku.figs.json",
+    "candidateSha256": "46177d50b8b9657e62801da23b33a46d656b30b33ff7963a91b34746db27aa8d",
+    "viewSha256": "823ae477b4701278c7aee168f9b90e4bd241ed4b65bd90171da72ae739e084e0",
+    "crops": [
+      "p2-fig1",
+      "p3-fig1",
+      "p4-fig1",
+      "p5-fig1"
+    ]
+  }
+}

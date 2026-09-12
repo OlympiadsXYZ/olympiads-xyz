@@ -1,0 +1,143 @@
+{
+  "candidateSha256": "f4ece540423e",
+  "verdict": "fail",
+  "summary": "All three problems and their part/point structures are present, but the solutions have serious defects: the printed solution to P1 part е) (equilibrium equation, x = 8.4 cm / 1.6 cm) is entirely omitted, the printed answer to P3 part з) (Δh = 4 cm) is missing and replaced by mislabelled content, subscripts h_н/h_в are changed to h_d/h_b in P3, and the p1-fig1 crop is clipped.",
+  "coverage": {
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      }
+    ],
+    "problemsChecked": 3,
+    "figuresChecked": 2
+  },
+  "defects": [
+    {
+      "path": "/problems/0/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "The printed solution of part е) continues on solutions p.2 with the equilibrium equation ρ_w gV_w + ρ_o gV_o = ρ_d gV + T, the derivation x = 0,084 m = 8,4 cm (0.75 т.) and 'Следователно в масло е: 1,6 cm' (0.25 т.). The candidate jumps from T = 0,68 N straight to ж), omitting the entire final answer of part е).",
+      "suggestedFix": "За да имаме равновесие: $\\rho_w g V_w + \\rho_o g V_o = \\rho_d g V + T$. Отново $V_w = a^2 x$, $V_o = a^2(a-x)$. Делим на $ga^2$: $\\rho_w x + \\rho_o(a-x) = \\rho_d a + \\frac{T}{ga^2}$. Пресмятаме: $1000x + 80 - 800x = 90 + 6{,}8 \\Rightarrow 200x = 16{,}8 \\Rightarrow x = 0{,}084\\ \\mathrm{m} = 8{,}4\\ \\mathrm{cm}$ (0.75 т.) Следователно в масло е: $a - x = 1{,}6\\ \\mathrm{cm}$ (0.25 т.)",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "critical",
+      "kind": "omission",
+      "description": "The printed solution of part з) is 'ρ_м g h_м = ρ_Hg g Δh (0.5 т.); Δh = h_м·(ρ_м/ρ_Hg) = 68·800/13600 = 4 cm (0.5 т.)'. The candidate instead places part of the printed и) content there and never gives the answer Δh = 4 cm.",
+      "suggestedFix": "**з)** $\\rho_м g h_м = \\rho_{Hg} g \\Delta h$ (0.5 т.); $\\Delta h = h_м \\frac{\\rho_м}{\\rho_{Hg}} = 68 \\cdot \\frac{800}{13600} = 4\\ \\mathrm{cm}$ (0.5 т.)",
+      "confidence": 0.95
+    },
+    {
+      "path": "/problems/2/parts/8/statement",
+      "document": "problems",
+      "page": 3,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Printed uses subscript h_н ('новата вертикална височина h_н на живачния стълб') and h_в = 17 cm for the oil layer; candidate writes $h_d$ and $h_b$.",
+      "suggestedFix": "…слой с височина $h_в = 17\\ \\mathrm{cm}$ над живака вътре в нея. … Да се намери новата вертикална височина $h_н$ на живачния стълб в тръбата.",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "wrong-value",
+      "description": "Candidate's solution д) writes 'p_h' and е) 'p_b' where the print uses p_в (p_0 = ρ_Hg g h_т + p_в; p_в = p_0 − ρ_Hg g h_т). Also ж) has ρ_o g h_w instead of ρ_м g h_м.",
+      "suggestedFix": "$p_0 = \\rho_{Hg} g h_т + p_в$; $p_в = p_0 - \\rho_{Hg} g h_т$; ж) $p_в = p_0 + \\rho_м g h_м$",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/2/solution/statement",
+      "document": "solutions",
+      "page": 4,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "Candidate's и) solution invents an expanded derivation ('107440 − 1360 = 106080 …') not present in the print; the printed solution simply states 'Изравняваме наляганията… 107440 = ρ_Hg g h_н + ρ_м g h_в (0.5 т.); h_н = 106080/136000 = 0,78 m (0.5 т.)'.",
+      "suggestedFix": "**и)** Изравняваме наляганията на хоризонталното ниво на разделятелната повърхност живак–масло във ваната. Във ваната: $p_{външно} = p_0 + \\rho_м g h_м = 107440\\ \\mathrm{Pa}$ (0.5 т.) В тръбата: $p_{вътре} = \\rho_{Hg} g h_н + \\rho_м g h_в$ (0.5 т.) $107440 = \\rho_{Hg} g h_н + \\rho_м g h_в$ (0.5 т.) $h_н = \\frac{106080}{136000} = 0{,}78\\ \\mathrm{m}$ (или 78 cm) (0.5 т.)",
+      "confidence": 0.9
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "major",
+      "kind": "reworded",
+      "description": "The Случай Б introduction in part г) is heavily garbled beyond the print ('Тък търябя да съобразим… времето на вижданието на задачата част от влака от пътника спрямо първо t = 0 пътника спрямо т = 0'). The print reads: 'Тук трябва да съобразим, че товарният влак се ускорява и следователно си променя скоростта. Задачата може да я решим като извадим времето на виждане на задната част от влака от пътника спрямо t = 0 и времето на виждане на предната част от влака от пътника спрямо t = 0.'",
+      "suggestedFix": "Тук трябва да съобразим, че товарният влак се ускорява и следователно си променя скоростта. Задачата може да я решим като извадим времето на виждане на задната част от влака от пътника спрямо t = 0 и времето на виждане на предната част от влака от пътника спрямо t = 0.",
+      "confidence": 0.92
+    },
+    {
+      "path": "/problems/0/figures/0/tx/bbox",
+      "document": "problems",
+      "page": 1,
+      "severity": "major",
+      "kind": "figure",
+      "description": "Crop p1-fig1 [620,170,760,290] captures only the top of the cylinder illustration: the water layer, the height labels (10 cm, 20 cm) and the legend text (дървено кубче, Масло, вода) are cut off at the bottom/right.",
+      "suggestedFix": "[630, 175, 800, 560]",
+      "confidence": 0.85
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "document": "solutions",
+      "page": 2,
+      "severity": "minor",
+      "kind": "reworded",
+      "description": "Part г) Случай А: print says 'Той спира да го вижда, когато подмина носа на товарния влак (тъй като Експресът е по-бърз). Следователно: s = 60m.'; candidate condenses and slightly rewords.",
+      "suggestedFix": "В t = 0 пътникът е на позиция 60 m (спрямо носовете). Той спира да го вижда, когато подмина носа на товарния влак (тъй като Експресът е по-бърз). Следователно: s = 60 m.",
+      "confidence": 0.8
+    }
+  ],
+  "checker": {
+    "provider": "zai",
+    "model": "glm-5.3-flash",
+    "promptVersion": "v1",
+    "promptSha256": "0b144faaaa92fe4e33c29458e7832e70901e24d616f0f9db246922b42b9bfe15",
+    "requestId": "202609061051507310e09edd154d50",
+    "at": "2026-09-06T02:53:01.567Z",
+    "inputTokens": 33195,
+    "outputTokens": 3957,
+    "reasoningTokens": 1680,
+    "costUsd": 0.006958,
+    "seconds": 71.7,
+    "attempts": 1,
+    "reasoning": "low",
+    "candidate": "/Users/ismoldayev/Documents/Projects/olympiads-xyz/tmp/tx/psf-2026-proletno-8/candidates/agent__haiku.figs.json",
+    "candidateSha256": "d8855069250f52171e1597c70f00d1ce1e045a08e82c076ddee0a9411ff5ffff",
+    "viewSha256": "d8f3de2bfe521c1a9672ddf4b8b17d8225e448a907e975ad3a7d5c3a39017858",
+    "crops": [
+      "p1-fig1",
+      "p3-fig1"
+    ]
+  }
+}
