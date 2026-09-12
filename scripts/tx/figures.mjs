@@ -99,7 +99,7 @@ for (const p of proposals) {
   entry.stddev = +st.std.toFixed(1);
   const bytes = fs.readFileSync(info.file);
   entry.md5 = md5(bytes); entry.sha256 = sha256File(info.file);
-  entry.relFile = path.relative(paperDir(paperId), info.file);
+  entry.relFile = path.relative(paperDir(paperId), info.file).split(path.sep).join('/'); // stored in the candidate: keep it portable
   if (dry) { entry.upload = 'skipped (dry-run)'; results.push(entry); continue; }
   // choose the remote key: reuse an object with identical content (MD5), otherwise a free -vN suffix
   const listing = remoteListing();
