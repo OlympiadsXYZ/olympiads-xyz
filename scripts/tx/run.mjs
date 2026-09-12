@@ -20,7 +20,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
@@ -113,6 +113,21 @@ for (;;) {
     if (job.dryRun) { save('dry-run: reader payload built, stopping'); console.log(r.stdout); process.exit(0); }
     job.artefacts.candidate = rel(readerOut); job.stage = 'validate'; save(r.status === 3 ? 'reader done (assembly incomplete; validate will report)' : 'reader done');
   } else if (job.stage === 'validate') {
+    // rule-based normalisation first (figure geometry under tx, numeric answers, dates, KaTeX spacing)
+    {
+      const src = abs(job.artefacts.candidate);
+      const data = readJson(src, null);
+      if (data && typeof data === 'object') {
+        const before = JSON.stringify(data);
+        normaliseCandidate(data);
+        if (JSON.stringify(data) !== before && !/\.norm\.json$/.test(src)) {
+          const out = src.replace(/\.json$/, '.norm.json');
+          writeJson(out, data);
+          job.artefacts.candidate = rel(out); delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256;
+          save(`normalised: ${(data.tx?.normalised || []).slice(-3).join('; ').slice(0, 200)}`);
+        }
+      }
+    }
     const cand = abs(job.artefacts.candidate);
     const r = node('validate.mjs', [cand, '--paper-id', paperId, '--manifest', manifestPath, '--quiet']);
     process.stdout.write(r.stdout);

@@ -461,7 +461,7 @@ export const checkFile = (paperId, provider, model) => path.join(paperDir(paperI
 export const figureUrl = (paperId, figId) => `${R2_PUBLIC}/problems/${paperId}/${figId}.png`;
 // Only primary candidates: <provider>__<model>.json (the model may contain dots),
 // not the derived .figs/.view/.dryrun/.window-*/.rN/.gold copies next to them.
-export const DERIVED_SUFFIX = /\.(figs|view|dryrun|window-[^.]+|r\d+|gold|repaired|repair|x|s\d+|defects|response)\.json$/;
+export const DERIVED_SUFFIX = /\.(figs|view|dryrun|window-[^.]+|r\d+|gold|repaired|repair|x|s\d+|norm|defects|response)\.json$/;
 export const isPrimaryCandidate = file => { const b = path.basename(file); return /^[^_]+__.+\.json$/.test(b) && !DERIVED_SUFFIX.test(b); };
 // Crop PNGs figures.mjs produced for a candidate (dry or real): what a checker
 // must look at to judge a box, keyed by figure id.
@@ -577,6 +577,42 @@ export function contextBlock(manifest) {
 // schema types as string/array; that is a formatting slip, not a transcription
 // error. Drop null-valued optional keys everywhere before validation.
 const NULLABLE_OPTIONAL = new Set(['caption', 'alt', 'title', 'held', 'organiser', 'caveat', 'incompleteReason', 'note', 'latex', 'unit', 'tolerance', 'difficulty', 'importance', 'topics', 'parts', 'figures', 'answer', 'solutionSource', 'problemType', 'apparatus', 'measurementTable', 'label']);
+// Structural slips readers make that a rule can settle without a model — applied
+// to every candidate before validation (reader output, refix output, run.mjs
+// validate stage). Nothing here touches transcribed text except a KaTeX
+// spelling ("0\,^{\circ}" -> "0\,{}^{\circ}", which KaTeX rejects otherwise).
+export function normaliseCandidate(c) {
+  if (!c || typeof c !== 'object') return c;
+  const changes = [];
+  for (const { fig, path: p } of allFigures(c)) {
+    // document/page/bbox belong under tx (the schema forbids them on the figure)
+    for (const k of ['document', 'page', 'bbox']) if (fig[k] !== undefined) { if (fig.tx?.[k] === undefined) fig.tx = { ...(fig.tx || {}), [k]: fig[k] }; delete fig[k]; changes.push(`${p}: ${k} moved under tx`); }
+    if (typeof fig.tx?.bbox === 'string') { const m = fig.tx.bbox.match(/-?\d+(?:\.\d+)?/g); if (m?.length === 4) { fig.tx.bbox = m.map(Number); changes.push(`${p}: bbox parsed`); } }
+    if (typeof fig.tx?.page === 'string' && /^\d+$/.test(fig.tx.page)) { fig.tx.page = Number(fig.tx.page); changes.push(`${p}: page parsed`); }
+  }
+  const fixAnswer = (a, p) => {
+    if (!a || typeof a !== 'object') return;
+    if (a.kind === 'numeric' && typeof a.value !== 'number') {
+      const n = typeof a.value === 'string' ? Number(a.value.trim().replace(',', '.').replace(/\s+/g, '')) : NaN;
+      if (Number.isFinite(n)) { a.value = n; changes.push(`${p}: numeric value parsed`); }
+      else if (a.value == null && typeof a.latex === 'string') { a.kind = 'expression'; changes.push(`${p}: numeric without a value -> expression`); }
+      else { const v = String(a.value ?? ''); if (/[\\^_{}]/.test(v)) { a.kind = 'expression'; if (!a.latex) a.latex = v; delete a.value; } else { a.kind = 'text'; a.value = v; } delete a.tolerance; changes.push(`${p}: numeric value is not a number -> ${a.kind}`); }
+    }
+    if (a.kind === 'expression' && !a.latex && typeof a.value === 'string') { a.latex = a.value; delete a.value; changes.push(`${p}: expression value -> latex`); }
+    if (a.tolerance != null && typeof a.tolerance !== 'number') { const t = Number(String(a.tolerance).replace(',', '.')); if (Number.isFinite(t)) a.tolerance = t; else delete a.tolerance; changes.push(`${p}: tolerance normalised`); }
+  };
+  (c.problems || []).forEach((pr, i) => { fixAnswer(pr.answer, `/problems/${i}/answer`); (pr.parts || []).forEach((part, j) => fixAnswer(part.answer, `/problems/${i}/parts/${j}/answer`)); });
+  const h = c.paper?.held;
+  if (h && typeof h === 'object') {
+    for (const k of ['from', 'to']) if (h[k] != null && !/^\d{4}-\d{2}-\d{2}$/.test(String(h[k]))) { delete h[k]; changes.push(`/paper/held/${k}: not a date, dropped`); }
+    if (h.place != null && typeof h.place !== 'string') { h.place = Array.isArray(h.place) ? h.place.join(', ') : String(h.place); changes.push('/paper/held/place: made a string'); }
+    if (h.from && !h.to) h.to = h.from; else if (!h.from && h.to) h.from = h.to;
+    if (!h.from && !h.to && !h.place) { delete c.paper.held; changes.push('/paper/held: empty, dropped'); }
+  } else if (h != null) { delete c.paper.held; changes.push('/paper/held: not an object, dropped'); }
+  walkStrings(c, (p, s) => { if (/\\[,;: ][\^_]/.test(s)) { pointerSet(c, p, s.replace(/(\\[,;: ])([\^_])/g, '$1{}$2')); changes.push(`${p}: KaTeX spacing before ^/_`); } });
+  if (changes.length) c.tx = { ...(c.tx || {}), normalised: [...(c.tx?.normalised || []), ...changes] };
+  return c;
+}
 export function sanitizeCandidate(node) {
   if (Array.isArray(node)) return node.map(sanitizeCandidate);
   if (node && typeof node === 'object') {

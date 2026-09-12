@@ -322,3 +322,22 @@ test('refix may create a field the reader omitted, but never an array element', 
   assert.equal(r.skipped.length, 1);
   assert.match(r.skipped[0].reason, /array element/);
 });
+
+test('normaliseCandidate settles structural slips without touching the transcription', () => {
+  const c = candidate();
+  const fig = c.problems[0].figures[0];
+  delete fig.tx; Object.assign(fig, { document: 'problems', page: '1', bbox: '[365, 275, 625, 430]' });
+  c.problems[0].parts[0].answer = { kind: 'numeric', value: '0,06', unit: 'C' };
+  c.problems[0].answer = { kind: 'numeric', value: 'R(\\sqrt{5}-1)/2' };
+  c.paper.held = { from: 'ноември 2011', to: '2011-11-12', place: ['Пловдив'] };
+  c.problems[0].statement = 'Ъгъл $0\\,^{\\circ}$ и $T_1$.';
+  lib.normaliseCandidate(c);
+  assert.deepEqual(fig.tx, { document: 'problems', page: 1, bbox: [365, 275, 625, 430] });
+  assert.equal(fig.document, undefined);
+  assert.equal(c.problems[0].parts[0].answer.value, 0.06);
+  assert.equal(c.problems[0].answer.kind, 'expression');
+  assert.equal(c.problems[0].answer.latex, 'R(\\sqrt{5}-1)/2');
+  assert.deepEqual(c.paper.held, { from: '2011-11-12', to: '2011-11-12', place: 'Пловдив' });
+  assert.equal(c.problems[0].statement, 'Ъгъл $0\\,{}^{\\circ}$ и $T_1$.');
+  assert.ok(c.tx.normalised.length >= 5);
+});
