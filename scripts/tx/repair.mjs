@@ -25,10 +25,13 @@ const by = args.by || 'repair.mjs';
 const round = Number(args.round || ((candidate.tx?.repairs || []).reduce((m, r) => Math.max(m, r.round || 0), 0) + 1));
 
 const parseBox = v => {
-  if (Array.isArray(v) && v.length === 4 && v.every(n => typeof n === 'number')) return v;
+  if (Array.isArray(v) && v.length === 4 && v.every(n => typeof n === 'number')) return v[2] > v[0] && v[3] > v[1] ? v : null;
   if (typeof v !== 'string') return null;
-  const m = v.match(/-?\d+(?:\.\d+)?/g);
-  return m && m.length === 4 ? m.map(Number) : null;
+  // only a string that IS a box, never four numbers fished out of a sentence ("page 2, fig 1 … 4 … 1" once became [2,1,4,1])
+  const m = /^\s*\[?\s*(-?\d+(?:\.\d+)?)\s*[,\s]\s*(-?\d+(?:\.\d+)?)\s*[,\s]\s*(-?\d+(?:\.\d+)?)\s*[,\s]\s*(-?\d+(?:\.\d+)?)\s*\]?\s*$/.exec(v);
+  if (!m) return null;
+  const box = m.slice(1, 5).map(Number);
+  return box[2] > box[0] && box[3] > box[1] ? box : null;
 };
 const applied = [], skipped = [];
 const touchedFigures = new Set();

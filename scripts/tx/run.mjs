@@ -120,8 +120,8 @@ for (;;) {
       if (data && typeof data === 'object') {
         const before = JSON.stringify(data);
         normaliseCandidate(data);
-        if (JSON.stringify(data) !== before && !/\.norm\.json$/.test(src)) {
-          const out = src.replace(/\.json$/, '.norm.json');
+        if (JSON.stringify(data) !== before) {
+          const out = /\.norm\.json$/.test(src) ? src : src.replace(/\.json$/, '.norm.json'); // a later rule may still apply to an already-normalised file
           writeJson(out, data);
           job.artefacts.candidate = rel(out); delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256;
           save(`normalised: ${(data.tx?.normalised || []).slice(-3).join('; ').slice(0, 200)}`);

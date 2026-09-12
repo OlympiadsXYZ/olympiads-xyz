@@ -11,8 +11,11 @@ const parseBox = v => {
   if (Array.isArray(v) && v.length === 4 && v.every(n => typeof n === 'number' && Number.isFinite(n))) return v.map(n => Math.round(n));
   if (v && typeof v === 'object' && !Array.isArray(v)) return parseBox(v.bbox ?? v.tx?.bbox ?? null);
   if (typeof v !== 'string') return null;
-  const m = v.match(/-?\d+(?:\.\d+)?/g);
-  return m && m.length === 4 ? m.map(Number).map(Math.round) : null;
+  // only a string that IS a box ("[x0, y0, x1, y1]" or "x0 y0 x1 y1"), never four numbers fished out of a sentence
+  const m = /^\s*\[?\s*(-?\d+(?:\.\d+)?)\s*[,\s]\s*(-?\d+(?:\.\d+)?)\s*[,\s]\s*(-?\d+(?:\.\d+)?)\s*[,\s]\s*(-?\d+(?:\.\d+)?)\s*\]?\s*$/.exec(v);
+  if (!m) return null;
+  const box = m.slice(1, 5).map(Number).map(Math.round);
+  return box[2] > box[0] && box[3] > box[1] ? box : null;
 };
 
 // Checkers sometimes answer with an instruction ("full text per pp. 2–3", "keep the
