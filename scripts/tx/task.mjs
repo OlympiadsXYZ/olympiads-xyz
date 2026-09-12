@@ -29,7 +29,7 @@ if (pages.some(p => !fs.existsSync(p.file))) fail('rendered pages are missing (p
 const prompt = loadPrompt(stage, args['prompt-version'] || 'v1');
 const out = path.resolve(args.out);
 const model = args.model || 'agent';
-const rel = f => path.relative(ROOT, f);
+const rel = f => path.relative(ROOT, f).split(path.sep).join('/'); // forward slashes: the printed commands run in a POSIX shell on every OS
 const textFiles = Object.values(manifest.documents).map(d => path.join(paperDir(paperId), d.text));
 const validateFor = f => `node scripts/tx/validate.mjs ${rel(f)} --paper-id ${paperId} --manifest ${rel(path.join(paperDir(paperId), 'manifest.json'))}`;
 
