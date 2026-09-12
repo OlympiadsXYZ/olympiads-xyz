@@ -62,7 +62,9 @@ export function spliceFragment(current, fix) {
     end = i + m[0].length;
   }
   const old = current.slice(i, end);
-  const keep = /[.!?:;]$/.test(old.trim()) && !/[.!?:;]$/.test(f) ? old.trim().slice(-1) : '';
+  // punctuation glued to the last replaced word stays when the fix does not carry its own
+  const trail = (old.trim().match(/[.,;:!?)»“”]+$/) || [''])[0];
+  const keep = trail && !/[.,;:!?)»“”]$/.test(f) ? trail : '';
   if (old.trim() === f) return null;
   return current.slice(0, i) + f + keep + current.slice(end);
 }
