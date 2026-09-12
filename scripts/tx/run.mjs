@@ -139,11 +139,11 @@ for (;;) {
       // refix stage; every validator error becomes a defect at its path.
       let report = null; try { report = JSON.parse(full.stdout); } catch {}
       const tries = job.schemaTries || 0;
-      if (job.reader.provider !== 'agent' && report?.errors?.length && tries < 2) {
+      if ((job.reader.provider !== 'agent' || job.checker.provider !== 'agent') && report?.errors?.length && tries < 2) {
         const defectsFile = cand.replace(/\.json$/, `.s${tries + 1}.defects.json`);
         writeJson(defectsFile, { unapplied: report.errors.map(e => ({ path: e.path || '/paper', kind: 'schema', severity: 'major', description: `validator: ${e.message}` })) });
         const fixed = cand.replace(/\.json$/, `.s${tries + 1}.json`);
-        const x = node('transcribe.mjs', [paperId, '--provider', job.reader.provider, '--model', job.reader.model, '--stage', 'refix', '--candidate', cand, '--defects', defectsFile, '--out', fixed, '--round', String(job.round), ...transcribeOpts]);
+        const who = job.reader.provider === 'agent' ? job.checker : job.reader; const x = node('transcribe.mjs', [paperId, '--provider', who.provider, '--model', who.model, '--stage', 'refix', '--candidate', cand, '--defects', defectsFile, '--out', fixed, '--round', String(job.round), ...transcribeOpts]);
         process.stdout.write(x.stdout);
         job.schemaTries = tries + 1;
         if ((x.status === 0 || x.status === 3) && fs.existsSync(fixed)) { job.artefacts.candidate = rel(fixed); save(`schema refix ${tries + 1}: ${(x.stdout.match(/"applied": (\d+)/) || [])[1] || '?'} fix(es) applied; re-validating`); continue; }
@@ -198,11 +198,13 @@ for (;;) {
       // What the checker could not phrase as an exact fix goes back to the reader
       // model together with the relevant pages (transcribe.mjs --stage refix); an
       // agent reader has no API, so its leftovers go straight to adjudication.
-      if (job.reader.provider === 'agent') escalate(`repair.mjs could not apply ${rep.skipped} defect(s) (no usable suggestedFix); applied ${rep.applied}`);
+      // the re-read is done by the reader model, or by the checker model when the reader was a harness agent (from-final route)
+      const refixWho = job.reader.provider === 'agent' ? job.checker : job.reader;
+      if (refixWho.provider === 'agent') escalate(`repair.mjs could not apply ${rep.skipped} defect(s) (no usable suggestedFix); applied ${rep.applied}`);
       const reportFile = repaired.replace(/\.json$/, '.repair.json');
       writeJson(reportFile, rep);
       const refixed = repaired.replace(/\.json$/, '.x.json');
-      const x = node('transcribe.mjs', [paperId, '--provider', job.reader.provider, '--model', job.reader.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed, '--round', String(job.round), ...transcribeOpts]);
+      const x = node('transcribe.mjs', [paperId, '--provider', refixWho.provider, '--model', refixWho.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed, '--round', String(job.round), ...transcribeOpts]);
       process.stdout.write(x.stdout);
       if ((x.status !== 0 && x.status !== 3) || !fs.existsSync(refixed)) { save(`refix failed: ${(x.stderr || '').slice(0, 300)}`); escalate(`repair.mjs could not apply ${rep.skipped} defect(s) and refix failed: ${(x.stderr || '').slice(0, 200)}`); }
       const xr = JSON.parse(x.stdout || '{}');
