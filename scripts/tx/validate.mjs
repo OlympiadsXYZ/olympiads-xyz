@@ -106,6 +106,7 @@ walkStrings(data, (p, s) => {
     if (/\\(frac|sqrt|cdot|times|alpha|beta|gamma|delta|lambda|omega|pi|mathrm|circ|left|right|sum|int)\b/.test(prose)) err(p, 'a LaTeX command outside math; put it inside $…$');
   }
   if (/<[\d-]/.test(prose)) warn(p, '"<" glued to a digit/minus outside math (mdText escapes it, but check it is prose)');
+  if (/\/parts\/\d+\/statement$/.test(p) && /\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]\s*$/u.test(s)) warn(p, 'printed points marker left at the end of the part text; the points field is canonical and the page would show it twice');
   // unbalanced single dollars: after removing the recognised spans nothing may contain a lone $
   const rest = splitMath(s).filter(x => !x.math).map(x => x.text).join('');
   if (/\$/.test(rest.replace(/\\\$/g, ''))) err(p, 'unbalanced $ (math delimiter without a closing one on the same line)');

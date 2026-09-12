@@ -44,6 +44,7 @@ export default function Template(props) {
     ? {
         kind: xdm.frontmatter.verification,
         verifiedAt: xdm.frontmatter.verifiedAt ?? undefined,
+        verifier: xdm.frontmatter.verifier ?? undefined,
         canonicalSource: xdm.frontmatter.canonicalSource ?? undefined,
       }
     : undefined;
@@ -97,6 +98,7 @@ export const pageQuery = graphql`
         canonicalSource
         verification
         verifiedAt
+        verifier
       }
       parent {
         ... on File {

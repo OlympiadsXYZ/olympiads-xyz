@@ -131,9 +131,14 @@ export default function ModuleHeaders({
           {verification && (
             <p className="text-gray-500 dark:text-dark-med-emphasis text-xs mt-1">
               {verification.kind === 'reviewed'
-                ? t('problem-verification-reviewed', {
-                    date: formatVerifiedAt(verification.verifiedAt),
-                  })
+                ? t(
+                    verification.verifier === 'same-model'
+                      ? 'problem-verification-reviewed-same-model'
+                      : 'problem-verification-reviewed',
+                    {
+                      date: formatVerifiedAt(verification.verifiedAt),
+                    }
+                  )
                 : verification.kind === 'human'
                 ? t('problem-verification-human')
                 : t('problem-verification-legacy')}

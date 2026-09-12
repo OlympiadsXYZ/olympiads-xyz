@@ -134,6 +134,8 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push(`canonicalSource: ${yamlStr(String(sourceFile).split(path.sep).join('/'))}`); // repo-relative with forward slashes on every OS
   lines.push(`verification: ${yamlStr(state.quality)}`);
   if (state.quality === 'reviewed' && state.verifiedAt) lines.push(`verifiedAt: ${yamlStr(state.verifiedAt)}`);
+  // the page must not claim an independent model when the receipt records a same-model check (D-P7, D-P10)
+  if (state.quality === 'reviewed') lines.push(`verifier: ${yamlStr(state.independent === false ? 'same-model' : 'independent')}`);
   lines.push('---');
   lines.push('');
   // Lead line: the paper's printed masthead (ground truth), the date and the points.
@@ -153,7 +155,9 @@ function problemMdx(paper, problem, state, sourceFile) {
   if (problem.parts?.length) {
     for (const part of problem.parts) {
       const pts = part.points != null ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
-      lines.push(`**${part.label}** ${mdText(part.statement)}${pts}`);
+      // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
+      const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
+      lines.push(`**${part.label}** ${mdText(text)}${pts}`);
       lines.push('');
       for (const fig of figuresNotInline(part.figures, part.statement)) lines.push(figureMarkdown(fig), '');
     }

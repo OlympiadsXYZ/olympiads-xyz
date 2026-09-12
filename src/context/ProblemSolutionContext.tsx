@@ -15,6 +15,8 @@ export type ProblemVerification = {
   kind: string;
   /** ISO timestamp of the review receipt, when kind is 'reviewed' */
   verifiedAt?: string;
+  /** 'independent' (a different model checked the transcription) or 'same-model' (recorded on the receipt), when kind is 'reviewed' */
+  verifier?: string;
   /** repo path of the canonical paper JSON */
   canonicalSource?: string;
 };
