@@ -53,7 +53,6 @@ export function snapBox(bbox, pageRegions, { taken = [] } = {}) {
   const hits = scored.filter(s => s.iou >= MIN_IOU || s.coreIn >= MIN_CORE_IN);
   if (hits.length === 1) {
     const g = hits[0].g;
-    if (area(g.bbox) > MAX_GROW * area(bbox)) return null; // one region for a whole group of figures: keep the reader's choice
     // Sub-figures printed side by side (Фиг. 1 (а) | Фиг. 1 (б)) cluster into ONE
     // region; a proposal that covers only part of the region's width or height is
     // aimed at one of them, so it keeps its own extent on that axis and takes the
