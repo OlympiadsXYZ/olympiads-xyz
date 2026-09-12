@@ -112,11 +112,15 @@ function yamlStr(s) {
 // followed by a digit or a minus is escaped as `\<` — but only outside
 // $…$ / $$…$$ math, where KaTeX needs the bare character. ("a < b" with a
 // space is already plain text to MDX and is left alone.)
+// Braces outside math are JSX expressions to MDX: "(23^{h}56^{m})" compiled
+// fine and then crashed the static build with "h is not defined". They are
+// escaped as \{ \} so the page shows the text as written; validate.mjs rejects
+// them upstream so the pipeline puts such LaTeX into $…$ instead.
 function mdText(s) {
   if (s == null) return s;
   return String(s)
     .split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/)
-    .map((seg, i) => (i % 2 ? seg : seg.replace(/<(?=[\d-])/g, '\\<')))
+    .map((seg, i) => (i % 2 ? seg : seg.replace(/<(?=[\d-])/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
     .join('');
 }
 

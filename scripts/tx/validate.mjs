@@ -99,6 +99,12 @@ walkStrings(data, (p, s) => {
   const prose = proseOnly(s);
   if (HTML.test(prose)) err(p, `raw HTML tag in prose: ${HTML.exec(prose)[0].slice(0, 40)}`);
   if (/<<|>>/.test(prose)) err(p, 'bare << or >> outside math (MDX parses it as JSX); use $\\ll$ / $\\gg$');
+  // bare LaTeX in prose: "(23^{h}56^{m})" — MDX reads {h} as a JavaScript expression and the site build dies.
+  // answer.latex fields are raw LaTeX by design and notes are never rendered as MDX.
+  if (!/\/(latex|notes|caveat)$/.test(p) && !/\/answer\/(value|equivalentForms\/\d+)$/.test(p)) {
+    if (/[{}]/.test(prose)) err(p, `braces outside math (MDX treats {…} as an expression): ${/[^{}]{0,20}[{}][^{}]{0,20}/.exec(prose)?.[0]?.trim()} — put the LaTeX inside $…$`);
+    if (/\\(frac|sqrt|cdot|times|alpha|beta|gamma|delta|lambda|omega|pi|mathrm|circ|left|right|sum|int)\b/.test(prose)) err(p, 'a LaTeX command outside math; put it inside $…$');
+  }
   if (/<[\d-]/.test(prose)) warn(p, '"<" glued to a digit/minus outside math (mdText escapes it, but check it is prose)');
   // unbalanced single dollars: after removing the recognised spans nothing may contain a lone $
   const rest = splitMath(s).filter(x => !x.math).map(x => x.text).join('');

@@ -20,7 +20,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
@@ -197,7 +197,7 @@ for (;;) {
     }
     job.stage = 'validate'; save(`repaired ${rep.applied} defect(s), round ${job.round}; re-validating, re-cropping, fresh check`);
   } else if (job.stage === 'promote') {
-    const r = node('promote.mjs', [paperId, '--candidate', currentCandidate(), '--receipt', receiptOut]);
+    const r = node('promote.mjs', [paperId, '--candidate', currentCandidate(), '--receipt', receiptOut, ...(job.history.some(h => h.note === 'promoted') || fs.existsSync(path.join(ROOT, 'content', 'problems')) && findContentFile(paperId) ? ['--replace'] : [])]); // a re-run of a promoted paper replaces it (new hash, new approval)
     process.stdout.write(r.stdout);
     if (r.status !== 0) { save(`promote failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
     job.stage = 'done'; save('promoted');
