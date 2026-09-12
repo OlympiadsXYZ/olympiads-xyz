@@ -18,6 +18,7 @@ const MIN_IOU = 0.2;      // overlap that ties a proposal to a region
 const MIN_CORE_IN = 0.5;  // or: this much of the region's drawing lies inside the proposal
 const MAX_GROW = 3;       // never replace a box by a region more than 3x its area (a merged group of figures)
 const MAX_NEAREST = 350;  // permille (centre distance) for rescuing a box that overlaps no graphic
+const SUB_COVER = 0.6;    // a proposal covering less of a region's width/height than this targets a sub-figure
 
 const area = b => Math.max(0, b[2] - b[0]) * Math.max(0, b[3] - b[1]);
 const inter = (a, b) => { const x0 = Math.max(a[0], b[0]), y0 = Math.max(a[1], b[1]), x1 = Math.min(a[2], b[2]), y1 = Math.min(a[3], b[3]); return x1 > x0 && y1 > y0 ? (x1 - x0) * (y1 - y0) : 0; };
@@ -53,7 +54,18 @@ export function snapBox(bbox, pageRegions, { taken = [] } = {}) {
   if (hits.length === 1) {
     const g = hits[0].g;
     if (area(g.bbox) > MAX_GROW * area(bbox)) return null; // one region for a whole group of figures: keep the reader's choice
-    const snapped = pad(g.bbox);
+    // Sub-figures printed side by side (Фиг. 1 (а) | Фиг. 1 (б)) cluster into ONE
+    // region; a proposal that covers only part of the region's width or height is
+    // aimed at one of them, so it keeps its own extent on that axis and takes the
+    // region's extent on the other (where the labels are).
+    const axis = (p0, p1, r0, r1) => {
+      const cover = (Math.min(p1, r1) - Math.max(p0, r0)) / (r1 - r0);
+      const kept = [Math.max(r0, p0), Math.min(r1, p1)];
+      return cover >= SUB_COVER || kept[1] - kept[0] < 20 ? [r0, r1] : kept;
+    };
+    const [x0, x1] = axis(bbox[0], bbox[2], g.bbox[0], g.bbox[2]);
+    const [y0, y1] = axis(bbox[1], bbox[3], g.bbox[1], g.bbox[3]);
+    const snapped = pad([x0, y0, x1, y1]);
     return iou(snapped, bbox) > 0.98 ? null : { bbox: snapped, reason: 'region', region: hits[0].i };
   }
   if (hits.length > 1) {

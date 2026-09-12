@@ -269,4 +269,7 @@ test('figure proposals snap onto detected graphics, never onto scans or merged g
   assert.equal(snapBox([120, 120, 380, 280], { scanned: true, regions: page.regions }), null);
   const group = { scanned: false, regions: [{ bbox: [0, 0, 1000, 600], core: [0, 0, 1000, 600] }] };
   assert.equal(snapBox([100, 100, 300, 300], group), null);                     // region 30x the box: a merged group, keep the reader's box
+  const pair = { scanned: false, regions: [{ bbox: [128, 319, 906, 534], core: [128, 319, 906, 534] }] }; // Фиг. 1 (а) | Фиг. 1 (б) clustered together
+  assert.equal(snapBox([122, 313, 455, 540], pair), null);                      // a good left-half proposal is left alone (not merged into the block)
+  assert.deepEqual(snapBox([140, 340, 455, 500], pair).bbox, [134, 313, 461, 540]); // a short left-half proposal keeps its width, takes the block's height
 });
