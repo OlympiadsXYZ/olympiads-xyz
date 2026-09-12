@@ -39,6 +39,23 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     }
     const current = pointerGet(candidate, p);
     const sameShape = (a, b) => (Array.isArray(a) && Array.isArray(b)) || (typeof a === 'object' && a !== null && !Array.isArray(a) && typeof b === 'object' && b !== null && !Array.isArray(b));
+    // An omitted field (a whole solution the reader skipped) is missing, not
+    // wrong: create it, and any missing object on the way, as long as no array
+    // element has to be invented (a missing problem/part is not a field fix).
+    if (current === undefined && (typeof f.value === 'string' || sameShape({}, f.value))) {
+      const keys = p.split('/').filter(Boolean);
+      let o = candidate, ok = true;
+      for (let i = 0; i < keys.length - 1; i++) {
+        const k = keys[i], next = keys[i + 1];
+        if (o[k] === undefined) { if (/^\d+$/.test(k) || /^\d+$/.test(next)) { ok = false; break; } o[k] = {}; }
+        o = o[k];
+        if (o === null || typeof o !== 'object') { ok = false; break; }
+      }
+      if (!ok) { skipped.push({ ...entry, reason: 'field is missing and its parent cannot be created (array element)' }); continue; }
+      pointerSet(candidate, p, f.value);
+      applied.push({ ...entry, from: null, to: f.value, note: f.note || null, created: true });
+      continue;
+    }
     if (typeof current === 'string' && typeof f.value === 'string') {
       if (current === f.value) { skipped.push({ ...entry, reason: 'model returned the current value unchanged' }); continue; }
       pointerSet(candidate, p, f.value);

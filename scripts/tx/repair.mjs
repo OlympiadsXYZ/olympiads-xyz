@@ -50,6 +50,9 @@ for (const d of receipt.defects || []) {
   const current = pointerGet(candidate, p);
   if (typeof current === 'string' && typeof d.suggestedFix === 'string') {
     if (current === d.suggestedFix) { skipped.push({ ...entry, reason: 'already identical' }); continue; }
+    // A checker sometimes "fixes" an omission with a pointer ("full text per pp. 2–3, starting …")
+    // instead of the text; restoring an omission can only make the field longer.
+    if (d.kind === 'omission' && d.suggestedFix.length <= current.length) { skipped.push({ ...entry, reason: 'omission fix is not longer than the current text (not a replacement)' }); continue; }
     pointerSet(candidate, p, d.suggestedFix);
     applied.push({ ...entry, from: current, to: d.suggestedFix });
     continue;

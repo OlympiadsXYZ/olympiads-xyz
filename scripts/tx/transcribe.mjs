@@ -289,9 +289,11 @@ for (const window of windows) {
   const obj = extractJson(parsed.text, target.replace(/\.json$/, '.raw.txt'), parsed.stopReason);
   const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' ? { reasoning } : {}) };
   if (stage === 'refix') {
+    const responseFile = target.replace(/\.json$/, '') + '.response.json';
+    writeJson(responseFile, { ...ident, fixes: obj.fixes ?? null });
     const result = applyFixes(refix.candidate, obj.fixes, { defects: refix.defects, round: refix.round, by: `${provider}:${model} refix`, requestId: parsed.requestId });
     writeJson(target, sanitizeCandidate(refix.candidate));
-    console.log(JSON.stringify({ paperId, stage, provider, model, out: target, applied: result.applied.length, skipped: result.skipped.length, changes: result.applied, unapplied: result.skipped, figuresToRedo: result.figuresToRedo, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, costUsd, requestId: parsed.requestId }, null, 2));
+    console.log(JSON.stringify({ paperId, stage, provider, model, out: target, responseFile, applied: result.applied.length, skipped: result.skipped.length, changes: result.applied, unapplied: result.skipped, figuresToRedo: result.figuresToRedo, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, costUsd, requestId: parsed.requestId }, null, 2));
     process.exit(result.skipped.length ? 3 : 0);
   }
   if (stage === 'reader') obj.tx = { ...(obj.tx || {}), ...(window ? { window } : {}), reader: ident };

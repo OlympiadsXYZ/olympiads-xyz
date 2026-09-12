@@ -304,3 +304,21 @@ test('refix applies model-supplied values like repair.mjs and never invents a fi
   assert.equal(c.tx.repairs[0].by, 'zai:test refix');
   assert.equal(c.tx.repairs[0].requestId, 'req-9');
 });
+
+test('refix may create a field the reader omitted, but never an array element', async () => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  delete c.problems[0].solution;
+  const defects = [
+    { path: '/problems/0/solution/statement', kind: 'omission', severity: 'critical', description: 'solution missing' },
+    { path: '/problems/0/parts/1/statement', kind: 'omission', severity: 'critical', description: 'part б) missing' },
+  ];
+  const r = applyFixes(c, [
+    { path: '/problems/0/solution/statement', value: 'Решение: $q = I t$.' },
+    { path: '/problems/0/parts/1/statement', value: 'б) …' },
+  ], { defects });
+  assert.equal(c.problems[0].solution.statement, 'Решение: $q = I t$.');
+  assert.equal(r.applied[0].created, true);
+  assert.equal(r.skipped.length, 1);
+  assert.match(r.skipped[0].reason, /array element/);
+});
