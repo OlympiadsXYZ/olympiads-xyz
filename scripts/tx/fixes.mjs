@@ -24,7 +24,7 @@ const parseBox = v => {
 // candidate. A replacement is applied only when it is text of the same kind as
 // what it replaces: not an instruction, and sharing enough words with the current
 // value (an omission fix must contain most of the current text and be longer).
-const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see |split|repoint|use |replace|restore|move|add |insert|the (statement|solution|text)|пълен текст|виж|запази|премахни|добави|изтрий|замени|премести)\b/i;
+const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see |split|repoint|use |replace|restore|move|add |insert|merge|set |the (statement|solution|text)|пълен текст|виж|запази|премахни|добави|изтрий|замени|премести|обедин|раздел|постав|върн|използва|коригира|поправ|махн|отстран)/i;
 export const looksLikeInstruction = s => typeof s === 'string' && (INSTRUCTION.test(s) || /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s.slice(0, 200)));
 const words = s => new Set(String(s).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 1));
 // A model asked for one field sometimes answers with the whole problem: a statement that
@@ -109,6 +109,12 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     const entry = { path: d.path, kind: d.kind, severity: d.severity, description: d.description };
     const f = byPath.get(d.path);
     if (!f) { skipped.push({ ...entry, reason: 'model returned no fix for this path' }); continue; }
+    if (f.value == null && d.region) {
+      // asked whether a printed region is a figure, the model looked and did not add one: not a figure
+      candidate.tx = { ...(candidate.tx || {}), notFigures: [...(candidate.tx?.notFigures || []), { ...d.region, note: `unsettled: ${String(f.note || '').slice(0, 180)}` }] };
+      applied.push({ ...entry, from: null, to: null, notFigure: d.region, note: f.note || null });
+      continue;
+    }
     if (f.value == null) { skipped.push({ ...entry, reason: `model could not settle it: ${String(f.note || '').slice(0, 200)}` }); continue; }
     const p = String(d.path);
     if (!p.startsWith('/')) { skipped.push({ ...entry, reason: 'path is not a JSON pointer' }); continue; }

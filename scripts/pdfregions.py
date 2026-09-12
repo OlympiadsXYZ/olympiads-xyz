@@ -25,7 +25,7 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 SCALE = 1000.0
-VERSION = 4
+VERSION = 5
 CAPTION = re.compile(r'^\s*(фиг\.?|фигура|figure|fig\.?|задача|табл\.?|таблица|схема|снимка)\b', re.I)
 HEADING = re.compile(r'^\s*(?:(?:задача|з\s*а\s*д\s*а\s*ч\s*а)\s*(?:№\s*)?(\d+|[ivx]+)\b|(\d+)\s*(?:-?\s*(?:ва|ра|та|а|и))?\s+задача\b)', re.I)
 ROMAN = {'i': 1, 'ii': 2, 'iii': 3, 'iv': 4, 'v': 5, 'vi': 6, 'vii': 7, 'viii': 8, 'ix': 9, 'x': 10}
@@ -68,6 +68,13 @@ def merge(rects, tol):
     return rects
 
 
+def overlap_h(a, b):
+    """Height of the intersection of two rects, 0 when they do not intersect (fitz gives a
+    non-empty height for rects that overlap vertically but not horizontally)."""
+    i = fitz.Rect(a) & fitz.Rect(b)
+    return 0.0 if i.is_empty or i.width <= 0 or i.height <= 0 else i.height
+
+
 def text_lines(page):
     """Lines of text with displayed rect, word count, font size, bold flag."""
     out = []
@@ -105,10 +112,12 @@ def page_regions(page, min_area, max_area):
     prect = page.rect  # displayed
     page_area = prect.width * prect.height
     raw = []
+    image_rects = []
     for info in page.get_image_info(xrefs=True):
         r = displayed(fitz.Rect(info['bbox']), page)
         if not r.is_empty:
             raw.append(r)
+            image_rects.append(r)
     try:
         clusters = page.cluster_drawings(x_tolerance=4, y_tolerance=4)
     except Exception:
@@ -157,8 +166,8 @@ def page_regions(page, min_area, max_area):
             if not is_body(ln):
                 continue
             lr = ln['rect']
-            inter = box & lr
-            if inter.is_empty or inter.height >= 0.5 * lr.height:
+            oh = overlap_h(box, lr)
+            if oh == 0 or oh >= 0.5 * lr.height:
                 continue
             if lr.y0 < box.y0 < lr.y1:
                 box.y0 = lr.y1 + 1
@@ -168,10 +177,32 @@ def page_regions(page, min_area, max_area):
         if box.is_empty or box.width < 12 or box.height < 12:
             continue
         # rulings only (no curve, no slanted line, no image) with several text lines inside are a table, not a drawing
-        inside = [ln for ln in lines if (r & ln['rect']).height >= 0.5 * ln['rect'].height and ln['words'] >= 1]
+        inside = [ln for ln in lines if overlap_h(r, ln['rect']) >= 0.5 * ln['rect'].height and ln['words'] >= 1]
         touching = [p for p in paths if p['rect'].intersects(r)]
-        has_image = any(displayed(fitz.Rect(x['bbox']), page).intersects(r) for x in page.get_image_info())
-        kind = 'table' if len(inside) >= 4 and touching and all(p['ruled'] for p in touching) and not has_image else 'drawing'
+        has_image = any(ir.intersects(r) for ir in image_rects)
+        ruled_only = bool(touching) and all(p['ruled'] for p in touching) and not has_image
+        kind = 'table' if len(inside) >= 4 and ruled_only else 'drawing'
+        # An equation: fraction bars and brackets are the only vector paths (rulings, no curve, no
+        # slanted line, no image) around typed symbols, no taller than a few text lines — Word exports
+        # draw them that way. A picture of an equation (an image no taller than a few lines, sitting in
+        # the text flow between two body lines or beside one) is the other form.
+        if kind == 'drawing' and body and r.height <= 8 * body and (r.width * r.height) / page_area < 0.04:
+            beside = [ln for ln in lines if ln['words'] >= 2 and overlap_h(fitz.Rect(r.x0 - 0.04 * prect.width, r.y0, r.x1 + 0.04 * prect.width, r.y1), ln['rect']) >= 0.5 * min(r.height, ln['rect'].height)
+                      and (ln['rect'].x1 <= r.x0 + 2 or ln['rect'].x0 >= r.x1 - 2)]
+            above = [ln for ln in lines if ln['words'] >= 3 and 0 <= r.y0 - ln['rect'].y1 <= 2 * body and ln['rect'].x1 > r.x0 and ln['rect'].x0 < r.x1]
+            below = [ln for ln in lines if ln['words'] >= 3 and 0 <= ln['rect'].y0 - r.y1 <= 2 * body and ln['rect'].x1 > r.x0 and ln['rect'].x0 < r.x1]
+            near = [ln for ln in lines if (0 <= r.y0 - ln['rect'].y1 <= 2.5 * body or 0 <= ln['rect'].y0 - r.y1 <= 2.5 * body) and ln['rect'].x1 > r.x0 - 0.05 * prect.width and ln['rect'].x0 < r.x1 + 0.05 * prect.width]
+            captioned = any(CAPTION.match(ln['text']) for ln in near + inside)
+            image_formula = has_image and not touching and not inside and not captioned and (
+                (r.height <= 4 * body and (beside or r.width < 0.35 * prect.width)) or (above and below))
+            # typed symbols (each its own short "line") around a handful of strokes (fraction bars, brackets):
+            # a drawing has many paths (axes, curves, boxes) or an image, and its labels are few
+            typed_formula = not has_image and not captioned and r.height <= 4 * body and len(touching) <= 6 and len(inside) >= 3 and all(ln['words'] <= 2 for ln in inside)
+            is_formula = (ruled_only and not captioned) or image_formula or typed_formula
+            if DEBUG:
+                print(f'[pdfregions]   region {to_permille(r, prect)} h/body {r.height / body:.1f} paths {len(touching)} ruled {ruled_only} image {has_image} inside {len(inside)} beside {len(beside)} above {len(above)} below {len(below)} -> {"formula" if is_formula else "drawing"}', file=sys.stderr)
+            if is_formula:
+                kind = 'formula'
         regions.append({'bbox': to_permille(box, prect), 'core': to_permille(r, prect), 'areaFrac': round((box.width * box.height) / page_area, 4), 'kind': kind})
     regions.sort(key=lambda g: (g['bbox'][1], g['bbox'][0]))
     return regions, headings(lines, prect)

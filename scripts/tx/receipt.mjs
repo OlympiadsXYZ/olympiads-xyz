@@ -74,7 +74,7 @@ const receipt = {
   independence: { ...indep, allowSameModel: allowSame },
   adjudicator,
   checkerVerdict: checker.verdict ?? null, summary: checker.summary || null, coverage: checker.coverage || null,
-  defects: unresolved.map(d => ({ path: d.path, document: d.document, page: d.page, severity: d.severity, kind: d.kind, description: d.description, suggestedFix: d.suggestedFix ?? null, confidence: d.confidence })),
+  defects: unresolved.map(d => ({ path: d.path, document: d.document, page: d.page, severity: d.severity, kind: d.kind, description: d.description, suggestedFix: d.suggestedFix ?? null, confidence: d.confidence, ...(d.source ? { source: d.source } : {}), ...(d.region ? { region: d.region } : {}) })),
   informational: defects.filter(d => d.severity === 'info').length,
   ignoredResolvedFlags,
   blockers,

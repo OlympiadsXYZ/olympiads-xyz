@@ -36,7 +36,8 @@ const parseBox = v => {
 const applied = [], skipped = [];
 const touchedFigures = new Set();
 for (const d of receipt.defects || []) {
-  const entry = { path: d.path, kind: d.kind, severity: d.severity, description: d.description };
+  // document/page steer the refix to the right pages; region lets it remember a graphic it rules out
+  const entry = { path: d.path, kind: d.kind, severity: d.severity, description: d.description, ...(d.document ? { document: d.document, page: d.page } : {}), ...(d.region ? { region: d.region } : {}) };
   if (d.suggestedFix == null || d.suggestedFix === '') { skipped.push({ ...entry, reason: 'no suggestedFix' }); continue; }
   const p = String(d.path || '');
   if (!p.startsWith('/')) { skipped.push({ ...entry, reason: 'path is not a JSON pointer' }); continue; }
