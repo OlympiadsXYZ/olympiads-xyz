@@ -478,3 +478,19 @@ test('a fix that pastes a sibling field into this one is refused', async () => {
   assert.equal(r.applied.length, 0);
   assert.match(r.skipped[0].reason, /pastes the text of part а\)/);
 });
+
+test('normaliseCandidate drops transient tx keys a refix flattened onto a figure and gives label-less parts their labels', () => {
+  const c = candidate();
+  const fig = c.problems[0].figures[0];
+  Object.assign(fig, { file: 'x.png', remoteKey: 'k', upload: 'new', cropped: true, dryRun: false, boxFrom: 'refix', bbox: [1, 2, 3, 4] });
+  c.problems[0].parts = [
+    { statement: 'б) Намерете скоростта.', points: 2 },
+    { statement: 'Намерете ускорението.', points: 3 },
+  ];
+  lib.normaliseCandidate(c);
+  for (const k of ['file', 'remoteKey', 'upload', 'cropped', 'dryRun', 'boxFrom', 'bbox']) assert.equal(fig[k], undefined, k);
+  assert.deepEqual(fig.tx.bbox, [365, 275, 625, 430]); // the tx block keeps its own box
+  assert.equal(c.problems[0].parts[0].label, 'б)');
+  assert.equal(c.problems[0].parts[0].statement, 'Намерете скоростта.');
+  assert.equal(c.problems[0].parts[1].label, 'б)'); // second part: by position
+});

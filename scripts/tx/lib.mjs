@@ -595,8 +595,10 @@ export function normaliseCandidate(c) {
   if (!c || typeof c !== 'object') return c;
   const changes = [];
   for (const { fig, path: p } of allFigures(c)) {
-    // document/page/bbox belong under tx (the schema forbids them on the figure)
+    // document/page/bbox belong under tx (the schema forbids them on the figure); a refix that copies
+    // a figure back sometimes flattens the rest of its tx block onto the figure as well
     for (const k of ['document', 'page', 'bbox']) if (fig[k] !== undefined) { if (fig.tx?.[k] === undefined) fig.tx = { ...(fig.tx || {}), [k]: fig[k] }; delete fig[k]; changes.push(`${p}: ${k} moved under tx`); }
+    for (const k of ['file', 'remoteKey', 'upload', 'cropped', 'dryRun', 'public200', 'md5', 'sha256', 'bboxProposed', 'snapped', 'boxFrom', 'cropError']) if (fig[k] !== undefined) { delete fig[k]; changes.push(`${p}: stray ${k} dropped from the figure`); }
     if (typeof fig.tx?.bbox === 'string') { const m = fig.tx.bbox.match(/-?\d+(?:\.\d+)?/g); if (m?.length === 4) { fig.tx.bbox = m.map(Number); changes.push(`${p}: bbox parsed`); } }
     if (typeof fig.tx?.page === 'string' && /^\d+$/.test(fig.tx.page)) { fig.tx.page = Number(fig.tx.page); changes.push(`${p}: page parsed`); }
   }
@@ -629,9 +631,16 @@ export function normaliseCandidate(c) {
   // points marker at the end of a part ("[2 т]", "**[3 т.]**") is the points field, not
   // prose — it sets the field when empty and is stripped when it agrees with it.
   const MARKER = /\s*\**\[\s*(\d+(?:[.,]\d+)?)\s*т\.?\s*\]\**\s*$/u;
+  const LETTERS = 'абвгдежзийклмнопрст';
   (c.problems || []).forEach((pr, i) => (pr.parts || []).forEach((part, j) => {
     if (typeof part.statement !== 'string') return;
     const p = `/problems/${i}/parts/${j}/statement`;
+    // a part without its label: the printed label opens the text ("б) …", "2. …"), else the position gives it
+    if (part.label == null || part.label === '') {
+      const m = /^\s*((?:[а-я]|\d{1,2}|[ivx]{1,4})\s*[).])\s+/iu.exec(part.statement);
+      if (m) { part.label = m[1].replace(/\s+/g, ''); part.statement = part.statement.slice(m[0].length); changes.push(`${p}: label taken from the text`); }
+      else if (j < LETTERS.length) { part.label = `${LETTERS[j]})`; changes.push(`${p}: label ${part.label} assigned by position`); }
+    }
     if (part.label) {
       const lab = String(part.label).trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const re = new RegExp(`^(?:\\s*${lab}\\s+)+`, 'u');
