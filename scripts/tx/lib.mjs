@@ -601,7 +601,7 @@ export function normaliseCandidate(c) {
   }
   // a reader sometimes emits the same problem twice (the second copy headed "Задача N."): drop the later copy
   if (Array.isArray(c.problems)) {
-    const norm = s => String(s || '').replace(/^\s*задача\s*\d+\s*[.:)]?\s*/iu, '').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 160);
+    const norm = s => String(s || '').replace(/^\s*задача\s*\d+\s*[.:)]?\s*/iu, '').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 80);
     const firstByNumber = new Map();
     const keep = [];
     c.problems.forEach((pr, i) => {
