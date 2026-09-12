@@ -45,6 +45,15 @@ function pdfInfo(file) {
   const pages = Number(/^Pages:\s+(\d+)/m.exec(out)?.[1]);
   const pageSizes = [];
   for (const m of out.matchAll(/^Page\s+(\d+) size:\s+([\d.]+) x ([\d.]+) pts/gm)) pageSizes[Number(m[1]) - 1] = { page: Number(m[1]), widthPt: Number(m[2]), heightPt: Number(m[3]) };
+  // pdfinfo reports the unrotated media box, but pdftoppm renders the page as
+  // displayed (/Rotate applied) and every box a reader proposes is relative to
+  // that image; pdfcrop.py's page.rect is rotated too. Record the displayed size.
+  for (const m of out.matchAll(/^Page\s+(\d+) rot:\s+(\d+)/gm)) {
+    const s = pageSizes[Number(m[1]) - 1], rot = Number(m[2]) % 360;
+    if (!s || !rot) continue;
+    s.rotation = rot;
+    if (rot === 90 || rot === 270) [s.widthPt, s.heightPt] = [s.heightPt, s.widthPt];
+  }
   if (!pages || pageSizes.length !== pages) throw new Error(`pdfinfo could not read page geometry of ${file}`);
   return { pages, pageSizes, producer: /^Producer:\s+(.*)$/m.exec(out)?.[1] || null };
 }

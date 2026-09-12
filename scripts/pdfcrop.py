@@ -81,6 +81,11 @@ def main():
     for b in [parse_box(x) for x in a.box]:
         page = doc[b['page'] - 1]
         r = fitz.Rect(*[v * to_pdf for v in b['rect']]) & page.rect
+        if r.is_empty or r.width < 1 or r.height < 1:
+            # a box outside the (rotated) page: report it instead of crashing the batch;
+            # figures.mjs turns the missing entry into a per-figure error
+            print(f"{b['id']}: box {b['rect']} lies outside page {b['page']} ({page.rect}); skipped", file=sys.stderr)
+            continue
         pix = page.get_pixmap(clip=r, dpi=int(a.dpi), alpha=False)
         path = os.path.join(a.out_dir, f"{b['id']}.png")
         pix.save(path)
