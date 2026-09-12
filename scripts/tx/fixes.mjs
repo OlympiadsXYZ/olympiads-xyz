@@ -9,10 +9,31 @@ import { pointerGet, pointerSet, allFigures, nowIso } from './lib.mjs';
 
 const parseBox = v => {
   if (Array.isArray(v) && v.length === 4 && v.every(n => typeof n === 'number' && Number.isFinite(n))) return v.map(n => Math.round(n));
+  if (v && typeof v === 'object' && !Array.isArray(v)) return parseBox(v.bbox ?? v.tx?.bbox ?? null);
   if (typeof v !== 'string') return null;
   const m = v.match(/-?\d+(?:\.\d+)?/g);
   return m && m.length === 4 ? m.map(Number).map(Math.round) : null;
 };
+
+// Checkers sometimes answer with an instruction ("full text per pp. 2–3", "keep the
+// intro paragraph", "remove this figure") instead of the replacement, and sometimes
+// point a real fix at the wrong problem index. Pasting either corrupts the
+// candidate. A replacement is applied only when it is text of the same kind as
+// what it replaces: not an instruction, and sharing enough words with the current
+// value (an omission fix must contain most of the current text and be longer).
+const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see |split|repoint|use |replace|restore|move|add |insert|the (statement|solution|text)|пълен текст|виж|запази|премахни|добави|изтрий|замени|премести)\b/i;
+export const looksLikeInstruction = s => typeof s === 'string' && (INSTRUCTION.test(s) || /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s.slice(0, 200)));
+const words = s => new Set(String(s).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 1));
+export function plausibleReplacement(current, fix, kind) {
+  if (typeof fix !== 'string' || typeof current !== 'string') return true;
+  if (looksLikeInstruction(fix)) return false;
+  if (current.length < 40 || looksLikeInstruction(current)) return true; // anything printed beats a stub or an earlier bad paste
+  const a = words(current), b = words(fix);
+  if (!a.size) return true;
+  const shared = [...a].filter(w => b.has(w)).length;
+  if (kind === 'omission') return fix.length > current.length && shared / a.size >= 0.6;
+  return shared / (a.size + b.size - shared) >= 0.3;
+}
 
 export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix', requestId = null } = {}) {
   const byPath = new Map();
@@ -27,14 +48,28 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     const p = String(d.path);
     if (!p.startsWith('/')) { skipped.push({ ...entry, reason: 'path is not a JSON pointer' }); continue; }
     const figMatch = /^(.*\/figures\/\d+)(?:\/tx(?:\/bbox)?)?$/.exec(p);
-    if (figMatch && (d.kind === 'figure' || /bbox$/.test(p) || parseBox(f.value))) {
-      const box = parseBox(f.value);
+    if (figMatch && (d.kind === 'figure' || /bbox$/.test(p) || parseBox(f.value) || f.value?.remove === true)) {
       const fig = pointerGet(candidate, figMatch[1]);
-      if (!box || !fig || typeof fig !== 'object') { skipped.push({ ...entry, reason: 'fix is not a 4-number box or the figure path is unknown' }); continue; }
+      if (!fig || typeof fig !== 'object') { skipped.push({ ...entry, reason: 'figure path unknown' }); continue; }
+      // {"remove": true}: a decorative element or a duplicate that should not be a figure
+      if (f.value && typeof f.value === 'object' && f.value.remove === true) {
+        const arrPath = figMatch[1].replace(/\/\d+$/, ''), idx = Number(figMatch[1].match(/(\d+)$/)[1]);
+        const arr = pointerGet(candidate, arrPath);
+        if (!Array.isArray(arr)) { skipped.push({ ...entry, reason: 'figure list unknown' }); continue; }
+        arr.splice(idx, 1);
+        applied.push({ ...entry, from: fig.id || null, to: null, removed: true, note: f.note || null });
+        continue;
+      }
+      const box = parseBox(f.value);
+      if (!box) { skipped.push({ ...entry, reason: 'fix is not a 4-number box' }); continue; }
       const from = fig.tx?.bbox ?? null;
-      fig.tx = { ...(fig.tx || {}), bbox: box };
+      // an object fix may also move the figure to another document/page and correct its caption/alt
+      const o = f.value && typeof f.value === 'object' && !Array.isArray(f.value) ? f.value : null;
+      const tx = o?.tx && typeof o.tx === 'object' ? o.tx : o || {};
+      fig.tx = { ...(fig.tx || {}), ...(['problems', 'solutions'].includes(tx.document) ? { document: tx.document } : {}), ...(Number.isInteger(tx.page) && tx.page > 0 ? { page: tx.page } : {}), bbox: box };
+      if (o) for (const k of ['caption', 'alt']) if (typeof o[k] === 'string' && o[k]) fig[k] = o[k];
       touched.add(figMatch[1]);
-      applied.push({ ...entry, from, to: box, note: f.note || null });
+      applied.push({ ...entry, from, to: box, ...(o?.tx ? { moved: `${fig.tx.document} p.${fig.tx.page}` } : {}), note: f.note || null });
       continue;
     }
     const current = pointerGet(candidate, p);
@@ -58,6 +93,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     }
     if (typeof current === 'string' && typeof f.value === 'string') {
       if (current === f.value) { skipped.push({ ...entry, reason: 'model returned the current value unchanged' }); continue; }
+      if (!plausibleReplacement(current, f.value, d.kind)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
       pointerSet(candidate, p, f.value);
       applied.push({ ...entry, from: current, to: f.value, note: f.note || null });
       continue;
