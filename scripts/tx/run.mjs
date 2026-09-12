@@ -49,7 +49,8 @@ if (!args.continue) {
   jobs.jobs[paperId] = job;
 }
 job.options ||= { maxRounds: 2 };
-const save = (note) => { job.updatedAt = nowIso(); if (note) job.history.push({ at: job.updatedAt, stage: job.stage, note }); writeJson(JOBS_FILE, jobs); };
+// Re-read before writing: several run.mjs processes share jobs.json and must not clobber each other's entries.
+const save = (note) => { job.updatedAt = nowIso(); if (note) job.history.push({ at: job.updatedAt, stage: job.stage, note }); const current = readJson(JOBS_FILE, { version: 2, jobs: {} }); current.jobs[paperId] = job; jobs.jobs = current.jobs; writeJson(JOBS_FILE, current); };
 const node = (script, argv, opts = {}) => spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', script), ...argv], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
 const rel = f => path.relative(ROOT, f);
 const abs = f => path.isAbsolute(f) ? f : path.join(ROOT, f);

@@ -254,3 +254,19 @@ test('adjudication evidence written on another machine still binds by its tmp/-r
   assert.equal(evidenceKey(win + 'tmp\\tx\\p\\x.json', repo), 'tmp/tx/p/x.json');
   assert.equal(evidenceKey('tmp/tx/p/x.json', repo), 'tmp/tx/p/x.json');
 });
+
+test('figure proposals snap onto detected graphics, never onto scans or merged groups', async () => {
+  const { snapBox } = await import(txModule('snap.mjs'));
+  const page = { scanned: false, regions: [
+    { bbox: [100, 100, 400, 300], core: [110, 110, 390, 290] },
+    { bbox: [600, 100, 900, 300], core: [610, 110, 890, 290] },
+  ] };
+  assert.equal(snapBox([120, 120, 380, 280], page).reason, 'region');           // overlaps one graphic: take its frame
+  assert.deepEqual(snapBox([120, 120, 380, 280], page).bbox, [94, 94, 406, 306]);
+  assert.equal(snapBox([100, 400, 400, 600], page).reason, 'nearest');          // on text: nearest free graphic
+  assert.equal(snapBox([100, 400, 400, 600], page, { taken: [0] }), null);          // the near graphic is taken and the other one is far: stay
+  assert.equal(snapBox([100, 100, 900, 300], page).reason, 'union');            // spans both: their union
+  assert.equal(snapBox([120, 120, 380, 280], { scanned: true, regions: page.regions }), null);
+  const group = { scanned: false, regions: [{ bbox: [0, 0, 1000, 600], core: [0, 0, 1000, 600] }] };
+  assert.equal(snapBox([100, 100, 300, 300], group), null);                     // region 30x the box: a merged group, keep the reader's box
+});
