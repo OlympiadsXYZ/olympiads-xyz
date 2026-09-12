@@ -581,6 +581,15 @@ const NULLABLE_OPTIONAL = new Set(['caption', 'alt', 'title', 'held', 'organiser
 // to every candidate before validation (reader output, refix output, run.mjs
 // validate stage). Nothing here touches transcribed text except a KaTeX
 // spelling ("0\,^{\circ}" -> "0\,{}^{\circ}", which KaTeX rejects otherwise).
+const HOMOGLYPHS = { a: 'а', e: 'е', o: 'о', p: 'р', c: 'с', x: 'х', y: 'у', i: 'і', A: 'А', B: 'В', C: 'С', E: 'Е', H: 'Н', K: 'К', M: 'М', O: 'О', P: 'Р', T: 'Т', X: 'Х' };
+export function fixHomoglyphs(s) {
+  if (typeof s !== 'string' || !/[A-Za-z]/.test(s) || !/[Ѐ-ӿ]/.test(s)) return s;
+  return splitMath(s).map(seg => seg.math ? seg.text : seg.text.replace(/\p{L}+/gu, w => {
+    const cyr = (w.match(/[Ѐ-ӿ]/g) || []).length, lat = w.match(/[A-Za-z]/g) || [];
+    if (cyr < 2 || !lat.length || !lat.every(ch => HOMOGLYPHS[ch])) return w;
+    return w.replace(/[A-Za-z]/g, ch => HOMOGLYPHS[ch]);
+  })).join('');
+}
 export function normaliseCandidate(c) {
   if (!c || typeof c !== 'object') return c;
   const changes = [];
@@ -624,6 +633,13 @@ export function normaliseCandidate(c) {
     if (!h.from && !h.to && !h.place) { delete c.paper.held; changes.push('/paper/held: empty, dropped'); }
   } else if (h != null) { delete c.paper.held; changes.push('/paper/held: not an object, dropped'); }
   walkStrings(c, (p, s) => { if (/\\[,;: ][\^_]/.test(s)) { pointerSet(c, p, s.replace(/(\\[,;: ])([\^_])/g, '$1{}$2')); changes.push(`${p}: KaTeX spacing before ^/_`); } });
+  // A Latin letter inside a Cyrillic word ("Виждa", "снимa", "скоростта e") is a
+  // text-layer artefact no model types back reliably; map the homoglyph, outside math only.
+  walkStrings(c, (p, s) => {
+    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p)) return;
+    const out = fixHomoglyphs(s);
+    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: Latin homoglyph in a Cyrillic word`); }
+  });
   if (changes.length) c.tx = { ...(c.tx || {}), normalised: [...(c.tx?.normalised || []), ...changes] };
   return c;
 }

@@ -367,3 +367,9 @@ test('normaliseCandidate drops a second copy of the same problem', () => {
   assert.deepEqual(c.problems.map(x => x.number), [1, 2]);
   assert.match(c.tx.normalised.join(), /duplicate of problem 1/);
 });
+
+test('a Latin homoglyph inside a Cyrillic word is mapped, math and Latin words are left alone', () => {
+  assert.equal(lib.fixHomoglyphs('Виждa ли се звездата, ако скоростта e $v_p = 3$ km/s и Fc е силата?'), 'Вижда ли се звездата, ако скоростта e $v_p = 3$ km/s и Fc е силата?');
+  assert.equal(lib.fixHomoglyphs('да го снимa с телескопa'), 'да го снима с телескопа');
+  assert.equal(lib.fixHomoglyphs('Hello свят'), 'Hello свят');
+});
