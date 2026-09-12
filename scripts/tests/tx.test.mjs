@@ -7,14 +7,15 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const txScript = name => path.join(repo, 'scripts', 'tx', name);
-const lib = await import(txScript('lib.mjs'));
-const { assembleWindows } = await import(txScript('assemble.mjs'));
-const { bindCheckerResult, adjudicationEvidenceProblems } = await import(txScript('evidence.mjs'));
+const txModule = name => pathToFileURL(txScript(name)).href; // Windows needs file:// URLs for absolute imports
+const lib = await import(txModule('lib.mjs'));
+const { assembleWindows } = await import(txModule('assemble.mjs'));
+const { bindCheckerResult, adjudicationEvidenceProblems, evidenceKey } = await import(txModule('evidence.mjs'));
 
 test('API checker binding uses the bytes sent, preserving a bad model echo for audit', () => {
   const response = { candidateSha256: 'not supplied by old request', verdict: 'fail', defects: [] };
@@ -236,4 +237,20 @@ test('repair.mjs applies text/box/points fixes, resets touched figures, and repo
   assert.deepEqual(fig.tx, { document: 'problems', page: 1, bbox: [365, 275, 625, 445] });
   assert.equal(fig.url, undefined);
   assert.equal(fixed.tx.repairs.length, 3); assert.equal(fixed.tx.repairs[0].round, 1);
+});
+
+test('adjudication evidence written on another machine still binds by its tmp/-relative path', () => {
+  const candidates = [{ view: 'tmp/tx/p/candidates/agent__sonnet.figs.view.json', sha256: 'b'.repeat(64) }];
+  const checks = [{ file: 'tmp/tx/p/checks/zai__glm-5.3-flash__for-agent__sonnet.json', data: { defects: [{ severity: 'major' }] } }];
+  const mac = '/Users/someone/Projects/olympiads-xyz/';
+  const win = 'D:\\Projects\\olympiads-xyz\\';
+  const adjudication = {
+    candidates: [{ view: mac + candidates[0].view, candidateSha256: candidates[0].sha256, verdict: 'pass', defects: [] }],
+    checkerFindings: [{ check: win + checks[0].file.replace(/\//g, '\\'), index: 0, truePositive: false, note: 'label is visible on the page' }],
+    escalations: [],
+  };
+  assert.deepEqual(adjudicationEvidenceProblems(adjudication, candidates, checks, repo), []);
+  assert.equal(evidenceKey(mac + 'tmp/tx/p/x.json', repo), 'tmp/tx/p/x.json');
+  assert.equal(evidenceKey(win + 'tmp\\tx\\p\\x.json', repo), 'tmp/tx/p/x.json');
+  assert.equal(evidenceKey('tmp/tx/p/x.json', repo), 'tmp/tx/p/x.json');
 });

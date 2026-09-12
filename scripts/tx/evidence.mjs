@@ -3,6 +3,18 @@
 import { allFigures } from './lib.mjs';
 import path from 'node:path';
 
+// Evidence files name each other by the absolute paths task.mjs printed on the
+// machine that wrote them; the same bundle is inventoried elsewhere (Mac -> PC),
+// so two paths are the same file when their repo-relative tail below tmp/ agrees.
+export function evidenceKey(file, root) {
+  if (typeof file !== 'string' || !file) return '';
+  const posix = file.replace(/\\/g, '/');
+  const i = posix.lastIndexOf('/tmp/');
+  if (i >= 0) return posix.slice(i + 1);
+  if (posix.startsWith('tmp/')) return posix;
+  return path.resolve(root, file).replace(/\\/g, '/');
+}
+
 export function checkerEvidenceProblems(check, candidate, manifest, candidateSha256) {
   const errors = [];
   const claimed = check?.candidateSha256 || check?.checker?.candidateSha256;
@@ -54,7 +66,7 @@ export function bindCheckerResult(result, identity) {
 export function adjudicationEvidenceProblems(adjudication, candidates, checks, root) {
   const errors = [];
   if (!adjudication || !Array.isArray(adjudication.candidates)) return ['adjudication is missing or incomplete'];
-  const resolved = file => typeof file === 'string' ? path.resolve(root, file) : '';
+  const resolved = file => evidenceKey(file, root);
   for (const c of candidates) {
     const matches = adjudication.candidates.filter(a => resolved(a.view) === resolved(c.view));
     if (matches.length !== 1) { errors.push(`need exactly one adjudication for ${c.view}`); continue; }

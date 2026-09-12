@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 python3 - <<'PY'
 import subprocess, sys
-for line in open('tmp/bench/prepare-args.txt'):
+for line in open('tmp/bench/prepare-args.txt', encoding='utf-8'):
     args = [a for a in line.rstrip('\n').split('\t') if a]
     if not args: continue
     print('prepare', args[0], flush=True)

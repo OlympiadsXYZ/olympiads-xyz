@@ -27,8 +27,9 @@ const outDir = path.resolve(args['out-dir'] || path.dirname(path.resolve(args.fi
 
 function glob(pattern) {
   const abs = path.resolve(pattern);
-  const parts = abs.split(path.sep).filter(Boolean);
-  let paths = [path.sep];
+  const root = path.parse(abs).root; // '/' on POSIX, the drive root on Windows
+  const parts = abs.slice(root.length).split(path.sep).filter(Boolean);
+  let paths = [root];
   for (let i = 0; i < parts.length; i++) {
     const seg = parts[i];
     const next = [];

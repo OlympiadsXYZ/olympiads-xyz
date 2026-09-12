@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { ROOT, parseArgs, writeJson, sha256File, isPrimaryCandidate, readRuns, paperDir } from './lib.mjs';
-import { checkerEvidenceProblems, adjudicationEvidenceProblems, bindCheckerResult } from './evidence.mjs';
+import { checkerEvidenceProblems, adjudicationEvidenceProblems, bindCheckerResult, evidenceKey } from './evidence.mjs';
 
 const args = parseArgs(process.argv.slice(2));
 const fixturesFile = path.resolve(args.fixtures || 'tmp/bench/fixtures.json');
@@ -70,12 +70,12 @@ for (const fx of fixtures) {
     ...candidates.map(c => ({ file: c.file, sha256: c.sha256 })), ...checks.map(c => ({ file: c.file, sha256: c.sha256 })),
   ] });
   const findAdjudicated = c => {
-    const a = adjudication?.candidates?.find(a => path.resolve(ROOT, a.view) === path.resolve(ROOT, c.view));
+    const a = adjudication?.candidates?.find(a => evidenceKey(a.view, ROOT) === evidenceKey(c.view, ROOT));
     return a ? { ...a, reportedVerdict: a.verdict, verdict: a.defects.length ? 'fail' : a.verdict, verdictNormalized: a.verdict === 'pass' && a.defects.length > 0 } : null;
   };
   reports.push({ paperId: id, family: fx.family, heldOut: !!fx.heldOut, pages: Object.values(manifest.documents).reduce((s, d) => s + d.pages, 0), missingReaders: ['agent__haiku', 'agent__sonnet', 'zai__glm-5.3-flash'].filter(n => !candidates.some(c => c.name === n)), sourceHashes, complete, usableReference, blockers, escalations, adjudicator: adjudication?.adjudicator || null, truthSha256: truth ? sha256File(truthFile) : null, adjudicationSha256: adjudication ? sha256File(adjudicationFile) : null,
     candidates: candidates.map(({ data, ...c }) => ({ ...c, adjudicated: complete ? findAdjudicated(c) : null })),
-    checks: checks.map(({ data, ...c }) => ({ ...c, findings: (data?.defects || []).map((d, index) => ({ severity: d.severity, kind: d.kind, path: d.path, adjudicated: complete ? adjudication.checkerFindings.find(f => path.resolve(ROOT, f.check) === path.resolve(ROOT, c.file) && f.index === index) : null })) })),
+    checks: checks.map(({ data, ...c }) => ({ ...c, findings: (data?.defects || []).map((d, index) => ({ severity: d.severity, kind: d.kind, path: d.path, adjudicated: complete ? adjudication.checkerFindings.find(f => evidenceKey(f.check, ROOT) === evidenceKey(c.file, ROOT) && f.index === index) : null })) })),
   });
 }
 const readerStats = {}, checkerStats = {};

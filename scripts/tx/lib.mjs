@@ -27,6 +27,8 @@ export const R2_PUBLIC = 'https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev';
 export const RENDER_DPI = 160;
 export const FIGURE_DPI = 300;
 export const PDFCROP = path.join(ROOT, 'scripts', 'pdfcrop.py');
+// Windows Python defaults to the ANSI code page; archive keys and figure ids are Cyrillic.
+if (process.platform === 'win32' && !process.env.PYTHONUTF8) process.env.PYTHONUTF8 = '1';
 export const STAGES = ['reader', 'checker', 'adjudicator'];
 // Figure boxes travel as permille of the page (0..1000, origin top-left, x right,
 // y down) so that a model which internally rescales the page image still
