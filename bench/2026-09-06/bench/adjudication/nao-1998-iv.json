@@ -200,6 +200,79 @@
         }
       ],
       "verdict": "fail"
+    },
+    {
+      "view": "D:\\Projects\\olympiads-xyz\\tmp\\tx\\nao-1998-iv\\candidates\\agent__sonnet.figs.view.json",
+      "candidateSha256": "a886f7f297507b0b7efa1c124f7093fc029752bb537b897b8955c395cf621e58",
+      "defects": [
+        {
+          "path": "/problems/0/statement",
+          "severity": "minor",
+          "kind": "reworded",
+          "description": "Printed „Предлагаме ви, като използувате наш наблюдателен материал“ vs candidate „използвате“ (orthography modernised)."
+        },
+        {
+          "path": "/problems/0/statement",
+          "severity": "minor",
+          "kind": "reworded",
+          "description": "Printed „Периодът на орбитално движение на компонентите“ vs candidate „орбиталното движение“."
+        },
+        {
+          "path": "/problems/0/figures/0/tx/bbox",
+          "severity": "critical",
+          "kind": "figure",
+          "description": "Crop [39,205,326,398] cuts the rightmost data points of the orbit ellipse and the closing parenthesis of „50 mas (0\".050)“ (printed ellipse reaches ≈329‰, candidate x1=326) and swallows the lower half of the body-text line „копи, с които се провеждат спекл-ин-“ at the top; printed figure spans ≈[85,219,334,397]."
+        },
+        {
+          "path": "/problems/0/figures/1/tx/bbox",
+          "severity": "minor",
+          "kind": "figure",
+          "description": "Top edge y0=388 swallows the bottom data points of the orbit ellipse of the figure above; the velocity plot itself is complete with all axis labels, K_a, K_b and „скорост“/„фаза“."
+        },
+        {
+          "path": "/problems/1/statement",
+          "severity": "minor",
+          "kind": "reworded",
+          "description": "Printed „И. Д. Караченцев и негови сътрудници“ vs candidate „неговите сътрудници“."
+        },
+        {
+          "path": "/problems/1/solution/statement",
+          "severity": "major",
+          "kind": "omission",
+          "description": "Printed „V_r=c.Δλ_r/λ_0.2“ carries the index r on Δλ (verified at 5x); candidate „V_r=c\\Delta\\lambda/\\lambda_0\\cdot2“ drops it. (The printed „Δλ_2“ in V_rg is correctly kept verbatim.)"
+        },
+        {
+          "path": "/problems/1/solution/statement",
+          "severity": "minor",
+          "kind": "reworded",
+          "description": "Printed explicit multiplication dots „m.V_r²/R_g=G.m.M_g/R_g², M_g=V_r².R_g/G“ are dropped (mV_r^2/R_g=GmM_g/R_g^2, V_r^2R_g/G) and printed „λ_0=6563A“ is rendered „6563 Å“."
+        },
+        {
+          "path": "/problems/1/figures/0/tx/bbox",
+          "severity": "critical",
+          "kind": "figure",
+          "description": "Crop [345,635,643,832] clips the tops of the vertical labels „[NII] 6548“ and „[NII] 6584“ (digit tops at ≈632‰, candidate y0=635; digits remain legible) and its left edge catches letter edges of the left column; it correctly includes the printed thin edge-on galaxy image with the slit arrow. Printed figure incl. the galaxy image spans ≈[356,628,645,835]."
+        },
+        {
+          "path": "/problems/2/statement",
+          "severity": "minor",
+          "kind": "reworded",
+          "description": "Printed „РАТАН - 600“ (spaced) and „диаграмата на насоченост“ vs candidate „РАТАН-600“ and „насочеността“."
+        },
+        {
+          "path": "/problems/2/figures/0/tx/bbox",
+          "severity": "critical",
+          "kind": "figure",
+          "description": "Crop [630,231,1000,513] swallows the upper half of the body-text line „вашата зарисовка с детайлите от ед-“ at the bottom (y1=513 vs text line at ≈508‰) and the trailing letters of middle-column lines at the left (x0=630 vs column edge ≈638‰); the empty disc and the three radio profiles with A–D, R_c, λ=4cm and dates are complete. Printed figure spans ≈[646,233,930,501]."
+        },
+        {
+          "path": "/paper/title",
+          "severity": "minor",
+          "kind": "metadata",
+          "description": "Printed problems-page head is „ОЛИМПИАДА“ with section heads „ПРАКТИЧЕСКИ КРЪГ“/„НАБЛЮДАТЕЛЕН КРЪГ“; candidate composes „Международна олимпиада — Практически кръг; Наблюдателен кръг“ by importing the solutions-page header — a caveat-level inference, not a printed title (round:null and held.place „САО, Русия“ are defensible and consistent with the existing escalation)."
+        }
+      ],
+      "verdict": "fail"
     }
   ],
   "checkerFindings": [
@@ -321,13 +394,31 @@
       "path": "/problems/1/figures/1/tx/bbox",
       "truePositive": true,
       "note": "Actual crop confirms severe clipping/wrong region; proposed checker coordinates are also inaccurate and were replaced by visually checked boxes."
+    },
+    {
+      "check": "D:\\Projects\\olympiads-xyz\\tmp\\tx\\nao-1998-iv\\checks\\zai__glm-5.3-flash__for-agent__sonnet.json",
+      "index": 0,
+      "path": "/paper",
+      "truePositive": true,
+      "note": "Observation confirmed on solutions p.2: the four matching solutions sit under „МЕЖДУНАРОДНА ОЛИМПИАДА — РЕШЕНИЯ - САО, РУСИЯ“ while the catalogue says NAO 1998 IV, and the candidate records this in paper.caveat with round:null. Info-level, not a defect; consistent with the existing escalation."
+    },
+    {
+      "check": "D:\\Projects\\olympiads-xyz\\tmp\\tx\\nao-1998-iv\\checks\\zai__glm-5.3-flash__for-agent__sonnet.json",
+      "index": 1,
+      "path": "/problems/0/answer/value",
+      "truePositive": true,
+      "note": "Observation confirmed on solutions p.2: „(M_a+M_b)~4-5M_з“ and „M_g~10^10M_з“ are printed with the index „з“, and the candidate keeps it verbatim with an answer.note (its guess that з stands for „звезда“ is speculation, but the transcription is verbatim). Info-level, not a defect. The checker's overall „pass“ is nevertheless a false pass: it asserted verbatim text and unclipped crops, missing the dropped Δλ_r index, four wording changes and three crops that clip labels/points or swallow body text."
     }
   ],
   "escalations": [
     {
       "path": "/paper/competition",
       "description": "Check archive identity: problems page 1 has no year/contest identity; matching solutions are under МЕЖДУНАРОДНА ОЛИМПИАДА — САО, РУСИЯ on solution p.2, while catalogue says NAO 1998 IV. Canonical ID retained pending human decision."
+    },
+    {
+      "path": "/problems/1/solution/statement",
+      "description": "Solutions p.2, right column, last formula of Задача 2 (Маса на галактика): the two adjudicators read the Δλ index differently — codex-gpt-6 as „g“, fable (5x zoom of the 160-dpi render) as the digit „2“ with no descender, unlike the „g“ in the adjacent V_rg. Gold now keeps the printed „Δλ_2“ verbatim; confirm on the PDF at full resolution."
     }
   ],
-  "summary": "Both candidates fail. GLM preserves most prose but corrupts names, formulas, dates/page provenance and every crop; Haiku drops readable solutions and heavily corrupts statements. Corrected transcription checked against all three source pages, all ten candidate crops, and all seventeen checker findings; catalogue provenance remains explicitly escalated."
+  "summary": "Both candidates fail. GLM preserves most prose but corrupts names, formulas, dates/page provenance and every crop; Haiku drops readable solutions and heavily corrupts statements. Corrected transcription checked against all three source pages, all ten candidate crops, and all seventeen checker findings; catalogue provenance remains explicitly escalated. Sonnet candidate adjudicated 2026-09-12 by agent:fable: fail (3 critical figure-crop defects — nicked label tops in p2-fig1, clipped orbit edge plus a swallowed half-line in p1-fig1, a swallowed half-line and column fragments in p3-fig1 — 1 major dropped Δλ_r index in the galaxy solution, 7 minor wording/notation/metadata deviations), yet its text is the closest read so far and exposed four gold errors (използувана→използвана, the silently normalised Δλ_2→Δλ_g, the Bulgarianised Frost epigraph, and a p2-fig1 box that excluded the printed galaxy image) which were corrected in the gold; the GLM checker's „pass“ with two accurate info findings is a false pass, since it certified verbatim text and unclipped crops that the pages contradict."
 }

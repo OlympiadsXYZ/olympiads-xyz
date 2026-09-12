@@ -146,6 +146,37 @@
         }
       ],
       "verdict": "fail"
+    },
+    {
+      "view": "D:\\Projects\\olympiads-xyz\\tmp\\tx\\psf-2025-proletno-10\\candidates\\agent__sonnet.figs.view.json",
+      "candidateSha256": "2cb3f8f22e28ff25d0455b270e067c96391460144617549e7199175d2f1e891d",
+      "defects": [
+        {
+          "path": "/problems/0/statement",
+          "kind": "omission",
+          "description": "Printed banner above Задача 1, „Всички задачи са съставени от две независими части!“, is absent from the transcription content (the gold carries it at the head of problem 1); the candidate kept it only in its reader notes.",
+          "severity": "major"
+        },
+        {
+          "path": "/problems/0/statement",
+          "kind": "reworded",
+          "description": "Printed section labels are „Част I“ / „Част II“ with no punctuation; candidate writes „Част I.“ / „Част II.“ (period added). Same change in problems 2 and 3.",
+          "severity": "minor"
+        },
+        {
+          "path": "/problems/1/figures/0",
+          "kind": "figure",
+          "description": "Actual p2-fig1 crop (box [91, 776, 499, 827]) swallows body text on its right edge: fragments „Част I…“, „еднакв…“, „показа…“ of the Част II paragraph; the drawing itself is complete. Corrected box [104, 785, 432, 824].",
+          "severity": "critical"
+        },
+        {
+          "path": "/problems/2/figures/0",
+          "kind": "figure",
+          "description": "Actual p3-fig1 crop (box [95, 179, 257, 339]) swallows the lower half of the bold heading „Задача 3. Електри…“ along its top edge; the circuit itself is complete. Corrected box [101, 184, 252, 334].",
+          "severity": "critical"
+        }
+      ],
+      "verdict": "fail"
     }
   ],
   "checkerFindings": [
@@ -193,5 +224,5 @@
     }
   ],
   "escalations": [],
-  "summary": "Neither candidate passes: every figure crop is unsuitable and both readers have material formula errors. GLM is the base after visual correction; all six checker findings are confirmed, but the checks missed multiple critical formula defects."
+  "summary": "Neither candidate passes: every figure crop is unsuitable and both readers have material formula errors. GLM is the base after visual correction; all six checker findings are confirmed, but the checks missed multiple critical formula defects. Sonnet candidate adjudicated 2026-09-12 by agent:fable: fail (2 critical figure crops that swallow page text, 1 major omission of the printed banner, 1 minor punctuation change); the GLM checker's zero-defect pass of it (zai__glm-5.3-flash__for-agent__sonnet.json) is a false pass, though its text and formulas are otherwise verbatim, and its 2k denominator in the q/Q second radicals exposed a wrong digit in the gold, now corrected."
 }

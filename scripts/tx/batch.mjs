@@ -71,8 +71,9 @@ function runOne({ id, resume }) {
     child.on('close', code => {
       const job = jobs()[id] || null;
       const receipt = readJson(path.join(paperDir(id), 'receipt.json'), null);
+      const promoted = job?.stage === 'done' && job.history?.some(h => h.note === 'promoted');
       const entry = {
-        paperId: id, outcome: code === 0 ? (job?.stage === 'promoted' ? 'promoted' : 'finished') : code === 2 ? 'waiting-for-agent' : code === 3 ? 'escalated' : 'error',
+        paperId: id, outcome: code === 0 ? (promoted ? 'promoted' : 'finished') : code === 2 ? 'waiting-for-agent' : code === 3 ? 'escalated' : 'error',
         exit: code, stage: job?.stage || null, round: job?.round ?? null, receipt: receipt?.verdict || null,
         blockers: receipt?.blockers?.slice(0, 3) || [], seconds: Math.round((Date.now() - started) / 1000),
         tail: (err || out).trim().split('\n').slice(-3).join(' | ').slice(0, 400),
