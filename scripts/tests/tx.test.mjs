@@ -341,3 +341,15 @@ test('normaliseCandidate settles structural slips without touching the transcrip
   assert.equal(c.problems[0].statement, 'Ъгъл $0\\,{}^{\\circ}$ и $T_1$.');
   assert.ok(c.tx.normalised.length >= 5);
 });
+
+test('a quoted sentence from the checker is spliced over the passage it corrects, not over the whole field', async () => {
+  const { spliceFragment } = await import(txModule('fixes.mjs'));
+  const solution = 'Означаваме с Tк и Tз периодите на кометата и Земята. Ако не се включат двигателите в тчка А, по-нататъшното движение е по елипса. Следователно отговорът е 2 години.';
+  const out = spliceFragment(solution, 'Ако не се включат двигателите в точка А, по-нататъшното движение е по елипса.');
+  assert.equal(out, 'Означаваме с Tк и Tз периодите на кометата и Земята. Ако не се включат двигателите в точка А, по-нататъшното движение е по елипса. Следователно отговорът е 2 години.');
+  // the typo sits in the last words: replace the same number of words from the anchor on
+  const out2 = spliceFragment(solution, 'Ако не се включат двигателите в точка А');
+  assert.equal(out2, solution.replace('в тчка А', 'в точка А'));
+  assert.equal(spliceFragment(solution, 'Съвсем друг текст без котва в решението'), null);
+  assert.equal(spliceFragment('кратко', 'по-дълъг текст от полето'), null);
+});

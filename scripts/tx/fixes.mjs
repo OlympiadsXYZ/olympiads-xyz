@@ -35,6 +35,38 @@ export function plausibleReplacement(current, fix, kind) {
   return shared / (a.size + b.size - shared) >= 0.3;
 }
 
+// Checkers quote the sentence they object to, not the whole field: "Print reads
+// 'в точка А'; candidate has 'в тчка А'" with the corrected sentence as the fix.
+// Replacing the whole solution with that sentence (what a plain replacement does)
+// throws the rest of the solution away, and the next checker asks for it back —
+// the loop ping-pongs until its rounds run out. When a fix is a fragment of the
+// field, splice it over the passage it corrects: anchor on its first words, end
+// at its last words or, when those hold the typo, at the nearest sentence end.
+export function spliceFragment(current, fix) {
+  if (typeof current !== 'string' || typeof fix !== 'string') return null;
+  const f = fix.trim();
+  if (f.length < 8 || f.length >= 0.7 * current.length) return null;
+  const words = f.split(/\s+/);
+  if (words.length < 3) return null;
+  let i = current.indexOf(words.slice(0, Math.min(4, words.length)).join(' '));
+  if (i < 0 && words.length >= 4) i = current.indexOf(words.slice(0, 3).join(' '));
+  if (i < 0) return null;
+  const tail = words.slice(-3).join(' ');
+  const j = current.indexOf(tail, i);
+  let end;
+  if (j >= 0 && j - i <= f.length * 1.5) end = j + tail.length;
+  else {
+    // the last words hold the typo: replace the same number of words from the anchor on
+    const m = new RegExp(`^(?:\\S+\\s+){${words.length - 1}}\\S+`).exec(current.slice(i));
+    if (!m) return null;
+    end = i + m[0].length;
+  }
+  const old = current.slice(i, end);
+  const keep = /[.!?:;]$/.test(old.trim()) && !/[.!?:;]$/.test(f) ? old.trim().slice(-1) : '';
+  if (old.trim() === f) return null;
+  return current.slice(0, i) + f + keep + current.slice(end);
+}
+
 export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix', requestId = null } = {}) {
   const byPath = new Map();
   for (const f of Array.isArray(fixes) ? fixes : []) if (f && typeof f.path === 'string') byPath.set(f.path, f);
@@ -93,6 +125,9 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     }
     if (typeof current === 'string' && typeof f.value === 'string') {
       if (current === f.value) { skipped.push({ ...entry, reason: 'model returned the current value unchanged' }); continue; }
+      if (looksLikeInstruction(f.value)) { skipped.push({ ...entry, reason: 'fix is an instruction, not a replacement' }); continue; }
+      const spliced = spliceFragment(current, f.value);
+      if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: f.value, note: f.note || null }); continue; }
       if (!plausibleReplacement(current, f.value, d.kind)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
       pointerSet(candidate, p, f.value);
       applied.push({ ...entry, from: current, to: f.value, note: f.note || null });

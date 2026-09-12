@@ -10,7 +10,7 @@
 // fresh checker before a new receipt. Exit 0 all applied, 3 some skipped, 1 error.
 import path from 'node:path';
 import { parseArgs, fail, readJson, writeJson, pointerGet, pointerSet, allFigures, nowIso, sha256File } from './lib.mjs';
-import { plausibleReplacement } from './fixes.mjs';
+import { plausibleReplacement, spliceFragment, looksLikeInstruction } from './fixes.mjs';
 
 const args = parseArgs(process.argv.slice(2));
 const paperId = args._[0];
@@ -54,6 +54,10 @@ for (const d of receipt.defects || []) {
     // A checker sometimes "fixes" an omission with a pointer ("full text per pp. 2–3, starting …")
     // instead of the text; restoring an omission can only make the field longer.
     if (d.kind === 'omission' && d.suggestedFix.length <= current.length) { skipped.push({ ...entry, reason: 'omission fix is not longer than the current text (not a replacement)' }); continue; }
+    if (looksLikeInstruction(d.suggestedFix)) { skipped.push({ ...entry, reason: 'suggestedFix is an instruction, not a replacement' }); continue; }
+    // a quoted sentence replaces the passage it corrects, not the whole field
+    const spliced = spliceFragment(current, d.suggestedFix);
+    if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: d.suggestedFix }); continue; }
     if (!plausibleReplacement(current, d.suggestedFix, d.kind)) { skipped.push({ ...entry, reason: 'suggestedFix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
     pointerSet(candidate, p, d.suggestedFix);
     applied.push({ ...entry, from: current, to: d.suggestedFix });
