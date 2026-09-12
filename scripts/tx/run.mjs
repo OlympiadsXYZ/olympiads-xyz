@@ -20,7 +20,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256 } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
@@ -96,6 +96,7 @@ if (args.continue && args.repaired) {
   job.stage = 'validate'; save(`repaired candidate supplied (${rel(f)}), round ${job.round}`);
 }
 const currentCandidate = () => abs(job.artefacts.candidateWithFigures || job.artefacts.candidate);
+const require_sig = report => sha256(JSON.stringify((report?.errors || []).map(e => `${e.path}|${e.message}`).sort())).slice(0, 12);
 const needsRevalidate = () => !job.artefacts.validatedSha256 || sha256File(abs(job.artefacts.candidate)) !== job.artefacts.validatedSha256;
 
 // ---- state machine
@@ -138,14 +139,17 @@ for (;;) {
       // (a malformed date, a part without its label, an unbalanced $) through the
       // refix stage; every validator error becomes a defect at its path.
       let report = null; try { report = JSON.parse(full.stdout); } catch {}
-      const tries = job.schemaTries || 0;
+      // two attempts per distinct set of validator errors (a new slip after repairs gets its own budget)
+      const sig = require_sig(report);
+      job.schemaAttempts ||= {};
+      const tries = job.schemaAttempts[sig] || 0;
       if ((job.reader.provider !== 'agent' || job.checker.provider !== 'agent') && report?.errors?.length && tries < 2) {
         const defectsFile = cand.replace(/\.json$/, `.s${tries + 1}.defects.json`);
         writeJson(defectsFile, { unapplied: report.errors.map(e => ({ path: e.path || '/paper', kind: 'schema', severity: 'major', description: `validator: ${e.message}` })) });
         const fixed = cand.replace(/\.json$/, `.s${tries + 1}.json`);
         const who = job.reader.provider === 'agent' ? job.checker : job.reader; const x = node('transcribe.mjs', [paperId, '--provider', who.provider, '--model', who.model, '--stage', 'refix', '--candidate', cand, '--defects', defectsFile, '--out', fixed, '--round', String(job.round), ...transcribeOpts]);
         process.stdout.write(x.stdout);
-        job.schemaTries = tries + 1;
+        job.schemaAttempts[sig] = tries + 1; job.schemaTries = (job.schemaTries || 0) + 1;
         if ((x.status === 0 || x.status === 3) && fs.existsSync(fixed)) { job.artefacts.candidate = rel(fixed); save(`schema refix ${tries + 1}: ${(x.stdout.match(/"applied": (\d+)/) || [])[1] || '?'} fix(es) applied; re-validating`); continue; }
         save(`schema refix failed: ${(x.stderr || '').slice(0, 200)}`);
       }
