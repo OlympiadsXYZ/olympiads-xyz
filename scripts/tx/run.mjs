@@ -55,7 +55,7 @@ job.options ||= { maxRounds: 2 };
 // at the repair stage (its last receipt is still on disk) — used after the
 // pipeline learned a new trick, so escalations need not wait for an adjudicator.
 if (args.continue && args['max-rounds']) job.options.maxRounds = Number(args['max-rounds']);
-if (args.continue && args.retry && ['escalated', 'repair', 'done'].includes(job.stage)) {
+if (args.continue && args.retry && !job.waitingFor) { // from any stage: an escalation can also be parked at validate (schema budget) or figures
   // the budget is N more rounds from here, not N in total (earlier rounds already count);
   // a done job re-enters the same way when the pipeline learned a new check (re-promotion replaces the paper)
   job.options.maxRounds = (job.round || 0) + Number(args['max-rounds'] || 2);
