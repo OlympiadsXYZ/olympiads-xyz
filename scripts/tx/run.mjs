@@ -53,7 +53,7 @@ job.options ||= { maxRounds: 2 };
 // at the repair stage (its last receipt is still on disk) — used after the
 // pipeline learned a new trick, so escalations need not wait for an adjudicator.
 if (args.continue && args['max-rounds']) job.options.maxRounds = Number(args['max-rounds']);
-if (args.continue && args.retry && job.stage === 'escalated') { job.stage = job.artefacts?.receipt ? 'repair' : 'validate'; job.history.push({ at: nowIso(), stage: job.stage, note: 'retry after escalation' }); }
+if (args.continue && args.retry && job.stage === 'escalated') { job.stage = 'validate'; delete job.artefacts.validatedSha256; job.history.push({ at: nowIso(), stage: job.stage, note: 'retry after escalation: re-validate the current candidate, fresh check' }); }
 // Re-read before writing: several run.mjs processes share jobs.json and must not clobber each other's entries.
 const save = (note) => { job.updatedAt = nowIso(); if (note) job.history.push({ at: job.updatedAt, stage: job.stage, note }); const current = readJson(JOBS_FILE, { version: 2, jobs: {} }); current.jobs[paperId] = job; jobs.jobs = current.jobs; writeJson(JOBS_FILE, current); };
 const node = (script, argv, opts = {}) => spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', script), ...argv], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
