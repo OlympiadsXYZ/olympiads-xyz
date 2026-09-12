@@ -590,6 +590,19 @@ export function normaliseCandidate(c) {
     if (typeof fig.tx?.bbox === 'string') { const m = fig.tx.bbox.match(/-?\d+(?:\.\d+)?/g); if (m?.length === 4) { fig.tx.bbox = m.map(Number); changes.push(`${p}: bbox parsed`); } }
     if (typeof fig.tx?.page === 'string' && /^\d+$/.test(fig.tx.page)) { fig.tx.page = Number(fig.tx.page); changes.push(`${p}: page parsed`); }
   }
+  // a reader sometimes emits the same problem twice (the second copy headed "Задача N."): drop the later copy
+  if (Array.isArray(c.problems)) {
+    const norm = s => String(s || '').replace(/^\s*задача\s*\d+\s*[.:)]?\s*/iu, '').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 160);
+    const firstByNumber = new Map();
+    const keep = [];
+    c.problems.forEach((pr, i) => {
+      const prev = firstByNumber.get(pr.number);
+      if (prev !== undefined && norm(pr.statement) === norm(c.problems[prev].statement) && !(pr.parts?.length > (c.problems[prev].parts?.length || 0))) { changes.push(`/problems/${i}: duplicate of problem ${pr.number}, dropped`); return; }
+      if (prev === undefined) firstByNumber.set(pr.number, i);
+      keep.push(pr);
+    });
+    if (keep.length !== c.problems.length) c.problems = keep;
+  }
   const fixAnswer = (a, p) => {
     if (!a || typeof a !== 'object') return;
     if (a.kind === 'numeric' && typeof a.value !== 'number') {

@@ -356,3 +356,14 @@ test('a quoted sentence from the checker is spliced over the passage it corrects
   assert.equal(spliceFragment(solution, 'Съвсем друг текст без котва в решението'), null);
   assert.equal(spliceFragment('кратко', 'по-дълъг текст от полето'), null);
 });
+
+test('normaliseCandidate drops a second copy of the same problem', () => {
+  const c = candidate();
+  const p = c.problems[0];
+  c.problems.push({ ...p, id: `${PAPER}-problem-1`, statement: 'Задача 1. ' + p.statement, parts: [] });
+  c.problems.push({ ...p, number: 2, id: `${PAPER}-p2`, statement: 'Друга задача.' });
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems.length, 2);
+  assert.deepEqual(c.problems.map(x => x.number), [1, 2]);
+  assert.match(c.tx.normalised.join(), /duplicate of problem 1/);
+});
