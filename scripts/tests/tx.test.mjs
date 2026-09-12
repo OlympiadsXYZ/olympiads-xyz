@@ -14,6 +14,48 @@ const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const txScript = name => path.join(repo, 'scripts', 'tx', name);
 const lib = await import(txScript('lib.mjs'));
 const { assembleWindows } = await import(txScript('assemble.mjs'));
+const { bindCheckerResult, adjudicationEvidenceProblems } = await import(txScript('evidence.mjs'));
+
+test('API checker binding uses the bytes sent, preserving a bad model echo for audit', () => {
+  const response = { candidateSha256: 'not supplied by old request', verdict: 'fail', defects: [] };
+  const bound = bindCheckerResult(response, { candidateSha256: 'a'.repeat(64), requestId: 'request-1' });
+  assert.equal(bound.candidateSha256, 'a'.repeat(64));
+  assert.equal(bound.modelClaimedCandidateSha256, response.candidateSha256);
+  assert.equal(response.candidateSha256, 'not supplied by old request');
+});
+
+test('an interrupted adjudication or stale candidate cannot become benchmark truth', () => {
+  const candidates = [{ view: 'candidate.view.json', sha256: 'a'.repeat(64) }];
+  const checks = [{ file: 'check.json', data: { defects: [{ severity: 'critical' }] } }];
+  const complete = { candidates: [{ ...candidates[0], candidateSha256: candidates[0].sha256, verdict: 'fail', defects: [{ path: '/problems/0/statement', severity: 'critical', description: 'wrong unit' }] }], checkerFindings: [{ check: 'check.json', index: 0, truePositive: true, note: 'confirmed from page' }], escalations: [] };
+  assert.deepEqual(adjudicationEvidenceProblems(complete, candidates, checks, repo), []);
+  assert.match(adjudicationEvidenceProblems(null, candidates, checks, repo).join(), /incomplete/);
+  assert.match(adjudicationEvidenceProblems({ ...complete, checkerFindings: [] }, candidates, checks, repo).join(), /missing checker/);
+  assert.match(adjudicationEvidenceProblems(complete, [{ ...candidates[0], sha256: 'b'.repeat(64) }], checks, repo).join(), /stale candidate/);
+  assert.match(adjudicationEvidenceProblems({ ...complete, checkerFindings: [...complete.checkerFindings, ...complete.checkerFindings] }, candidates, checks, repo).join(), /duplicate checker/);
+  const cosmeticPass = { ...complete, candidates: [{ ...complete.candidates[0], verdict: 'pass' }] };
+  assert.deepEqual(adjudicationEvidenceProblems(cosmeticPass, candidates, checks, repo), []); // report tightens it to fail; evidence is still complete
+  assert.match(adjudicationEvidenceProblems({ ...complete, candidates: [{ ...complete.candidates[0], defects: [] }] }, candidates, checks, repo).join(), /without explaining defects/);
+});
+
+test('benchmark does not call an arbitrary reference gold or charge competing checks to a reader', t => {
+  const s = sandbox(t);
+  const cand = s.write('candidates/zai__glm-5.3-flash.json', candidate());
+  fs.mkdirSync(path.join(s.dir, 'checks'));
+  s.write('checks/own.json', { verdict: 'pass', candidateSha256: lib.sha256File(cand), checker: { provider: 'gemini', model: 'gemini-test', candidateSha256: lib.sha256File(cand), costUsd: 2 } });
+  s.write('checks/competitor.json', { verdict: 'pass', checker: { candidateSha256: 'f'.repeat(64), costUsd: 100 } });
+  fs.writeFileSync(path.join(s.root, 'runs.jsonl'), JSON.stringify({ paperId: PAPER, provider: 'zai', model: 'glm-5.3-flash', stage: 'reader', costUsd: 1, ok: true }) + '\n');
+  const fx = s.write('fixtures.json', [{ paperId: PAPER, reference: cand }]);
+  const out = path.join(s.dir, 'report');
+  const run = s.run('bench.mjs', ['--fixtures', fx, '--candidates', cand, '--out-dir', out]);
+  assert.equal(run.status, 0, run.stderr);
+  const row = s.read(path.join(out, 'report.json')).papers[0];
+  assert.equal(row.referenceKind, 'unverified-reference (not gold)');
+  assert.equal(row.candidates[0].totalCostUsd, 3);
+  s.write('checks/own.json', { verdict: 'pass', candidateSha256: lib.sha256File(cand) });
+  assert.equal(s.run('bench.mjs', ['--fixtures', fx, '--candidates', cand, '--out-dir', out]).status, 0);
+  assert.equal(s.read(path.join(out, 'report.json')).papers[0].candidates[0].totalCostUsd, null);
+});
 
 const PAPER = 'zz-2099-test-7';
 const size = { page: 1, widthPt: 595.276, heightPt: 841.89 };
@@ -145,7 +187,7 @@ test('receipt.mjs: pass only with candidateSha256, independent checker, uploaded
   const s = sandbox(t);
   const cand = s.write('candidates/zai__glm-5.3-flash.figs.json', candidate());
   const sha = lib.sha256File(cand);
-  const base = { verdict: 'pass', summary: 'ok', coverage: {}, defects: [] };
+  const base = { verdict: 'pass', summary: 'ok', coverage: { pagesRead: [{ document: 'problems', page: 1 }, { document: 'problems', page: 2 }, { document: 'solutions', page: 1 }], problemsChecked: 1, figuresChecked: 1 }, defects: [] };
   const rec = (name, check, extra = []) => {
     const r = s.run('receipt.mjs', [PAPER, '--candidate', cand, '--defects', s.write(`checks/${name}.json`, check), '--reviewer', 'gemini:gemini-3.8-flash:req-9', '--out', path.join(s.dir, `${name}.receipt.json`), ...extra]);
     return { status: r.status, receipt: s.read(path.join(s.dir, `${name}.receipt.json`)), out: r.stdout + r.stderr };
@@ -155,6 +197,10 @@ test('receipt.mjs: pass only with candidateSha256, independent checker, uploaded
   assert.equal(noSha.status, 1); assert.match(noSha.receipt.blockers.join(), /candidateSha256/);
   const good = rec('good', { ...base, candidateSha256: sha });
   assert.equal(good.status, 0, good.out); assert.equal(good.receipt.verdict, 'pass'); assert.equal(good.receipt.independence.independent, true);
+  const incomplete = rec('incomplete', { ...base, candidateSha256: sha, coverage: { ...base.coverage, pagesRead: base.coverage.pagesRead.slice(0, 1) } });
+  assert.equal(incomplete.status, 1); assert.match(incomplete.receipt.blockers.join(), /not covered 2 source page/);
+  const absentDefects = rec('absent-defects', { ...base, candidateSha256: sha, defects: undefined });
+  assert.equal(absentDefects.status, 1); assert.match(absentDefects.receipt.blockers.join(), /missing is not empty/);
   assert.equal(good.receipt.contentHash, lib.buildFinalPaper(candidate(), lib.provenanceFor(candidate(), { reviewer: { provider: 'gemini', model: 'gemini-3.8-flash' }, promptVersion: 'v1', checkedAt: good.receipt.checkedAt, sourceHashes: good.receipt.sourceHashes, independent: true })).contentHash);
   const resolved = rec('resolved', { ...base, candidateSha256: sha, defects: [{ path: '/problems/0/statement', severity: 'critical', kind: 'wrong-value', description: '1mA vs 1A', resolved: true }] });
   assert.equal(resolved.status, 1); assert.equal(resolved.receipt.defects.length, 1); assert.equal(resolved.receipt.ignoredResolvedFlags, 1);

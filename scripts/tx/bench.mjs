@@ -128,14 +128,23 @@ function compare(ref, cand) {
 }
 
 const runs = readRuns();
-function costFor(paperId, provider, model) {
+function costFor(paperId, provider, model, file) {
   const rs = runs.filter(r => r.paperId === paperId && r.provider === provider && r.model === model && r.ok !== false);
   const sum = (stage, k) => rs.filter(r => r.stage === stage).reduce((a, r) => a + (r[k] || 0), 0) || null;
   const failed = runs.filter(r => r.paperId === paperId && r.provider === provider && r.model === model && r.ok === false).length;
-  // every checker run on this paper counts towards the price of accepting it, whichever model checked
-  const checkerAll = runs.filter(r => r.paperId === paperId && r.stage === 'checker' && r.ok !== false).reduce((a, r) => a + (r.costUsd || 0), 0) || null;
-  const total = (sum('reader', 'costUsd') || 0) + (checkerAll || 0);
-  return { readerCostUsd: sum('reader', 'costUsd'), readerSeconds: sum('reader', 'seconds'), readerInputTokens: sum('reader', 'inputTokens'), readerOutputTokens: sum('reader', 'outputTokens'), readerAttempts: sum('reader', 'attempts'), failedAttempts: failed, checkerCostUsd: checkerAll, totalCostUsd: total ? +total.toFixed(6) : null, runs: rs.length };
+  // Attribute checks to this candidate by transport hash. A competing reader's
+  // checks are experiment overhead, not the cost of accepting this candidate.
+  const hashes = new Set([sha256File(file)]), figs = file.replace(/\.json$/, '.figs.json');
+  if (fs.existsSync(figs)) hashes.add(sha256File(figs));
+  const checkDir = path.join(paperDir(paperId), 'checks');
+  const checks = fs.existsSync(checkDir) ? fs.readdirSync(checkDir).filter(n => n.endsWith('.json')).map(n => readJson(path.join(checkDir, n), null)).filter(c => hashes.has(c?.checker?.candidateSha256 || c?.candidateSha256)) : [];
+  const priced = checks.filter(c => Number.isFinite(c.checker?.costUsd));
+  const checkerKnown = priced.reduce((a, c) => a + c.checker.costUsd, 0);
+  const checkerComplete = checks.length > 0 && priced.length === checks.length;
+  const readerCost = sum('reader', 'costUsd');
+  const knownSubtotal = (readerCost || 0) + checkerKnown;
+  const total = readerCost != null && checkerComplete && failed === 0 ? knownSubtotal : null;
+  return { readerCostUsd: readerCost, readerSeconds: sum('reader', 'seconds'), readerInputTokens: sum('reader', 'inputTokens'), readerOutputTokens: sum('reader', 'outputTokens'), readerAttempts: sum('reader', 'attempts'), failedAttempts: failed, checkerCostUsd: checkerComplete ? checkerKnown : null, knownSubtotalUsd: +knownSubtotal.toFixed(6), costCoverageComplete: total != null, totalCostUsd: total == null ? null : +total.toFixed(6), runs: rs.length };
 }
 // acceptance evidence from the pipeline artefacts next to the candidate
 function acceptance(paperId, file) {
@@ -149,7 +158,7 @@ function acceptance(paperId, file) {
   const checkDir = path.join(dir, 'checks');
   if (fs.existsSync(checkDir)) for (const f of fs.readdirSync(checkDir)) {
     const c = readJson(path.join(checkDir, f), null);
-    const sha = c?.candidateSha256 || c?.checker?.candidateSha256;
+    const sha = c?.checker?.candidateSha256 || c?.candidateSha256;
     if (sha && shas.has(sha)) { checkerVerdict = c.verdict ?? null; checkedBy = c.checker ? `${c.checker.provider}:${c.checker.model}` : f; }
   }
   const receipt = readJson(path.join(dir, 'receipt.json'), null);
@@ -164,13 +173,17 @@ for (const fx of fixtures) {
   const refFile = fx.reference ? path.resolve(ROOT, fx.reference) : findContentFile(fx.paperId);
   if (!refFile || !fs.existsSync(refFile)) { report.papers.push({ paperId: fx.paperId, error: 'no reference available' }); continue; }
   const ref = readJson(refFile);
-  const entry = { paperId: fx.paperId, reference: path.relative(ROOT, refFile), referenceKind: fx.reference ? 'adjudicated-truth' : 'existing-opus-json (not gold)', candidates: [] };
+  const boundReference = fx.referenceKind === 'model-adjudicated' && Array.isArray(fx.referenceEvidence) && fx.referenceEvidence.length >= 2 &&
+    fx.referenceEvidence.some(e => path.resolve(ROOT, e.file) === refFile) &&
+    fx.referenceEvidence.some(e => path.resolve(ROOT, e.file) === path.resolve(ROOT, fx.adjudication || '')) &&
+    fx.referenceEvidence.every(e => fs.existsSync(path.resolve(ROOT, e.file)) && sha256File(path.resolve(ROOT, e.file)) === e.sha256);
+  const entry = { paperId: fx.paperId, reference: path.relative(ROOT, refFile), referenceKind: boundReference ? 'model-adjudicated' : fx.reference ? 'unverified-reference (not gold)' : 'existing-opus-json (not gold)', candidates: [] };
   for (const f of files) {
     const cand = readJson(f, null);
     if (!cand || cand.paper?.id !== fx.paperId) continue;
     const m = /^([^_]+)__(.+)\.json$/.exec(path.basename(f));
     const provider = cand.tx?.reader?.provider || m?.[1] || 'unknown', model = cand.tx?.reader?.model || m?.[2] || path.basename(f, '.json');
-    const acc = acceptance(fx.paperId, f), cost = costFor(fx.paperId, provider, model);
+    const acc = acceptance(fx.paperId, f), cost = costFor(fx.paperId, provider, model, f);
     entry.candidates.push({ file: path.relative(ROOT, f), provider, model, ...compare(ref, cand), ...cost, ...acc, acceptedCostUsd: acc.receiptVerdict === 'pass' ? cost.totalCostUsd : null });
   }
   report.papers.push(entry);
@@ -186,7 +199,7 @@ for (const p of report.papers) {
   if (!p.candidates.length) md.push(`| ${p.paperId} | ${p.referenceKind} | (no candidates) | | | | | | | | | | | | | | | | | |`);
   for (const c of p.candidates) md.push(`| ${p.paperId} | ${p.referenceKind} | ${c.provider}/${c.model} | ${c.problemsRef}/${c.problemsCand}, ${c.missing.length}, ${c.extra.length} | ${c.meanStatementSimilarity} | ${c.meanSolutionSimilarity ?? '—'} | ${c.numericMismatchCount}/${c.solutionNumericMismatchCount} | ${c.latexMismatchCount}/${c.solutionLatexMismatchCount} | ${c.tableCellDiffCount} | ${c.latexSpanDelta} | ${c.figureCountDelta} | ${c.answerMismatchCount} | ${c.pointsMismatchCount} | ${c.validateOk ? 'yes' : 'no'} | ${c.checkerVerdict ?? '—'} | ${c.receiptVerdict ?? '—'}${c.escalated ? ' (escalated)' : ''} | ${c.readerCostUsd ?? '—'} | ${c.totalCostUsd ?? '—'} | ${c.acceptedCostUsd ?? '—'} | ${c.readerSeconds ?? '—'} |`);
 }
-md.push('', 'Columns: *valid* = validate.mjs exit 0; *checker* = verdict of the checker output whose candidateSha256 matches; *receipt* = receipt.json verdict for these bytes; *total $* = reader (all attempts) + every checker run on the paper; *accepted $* = total $ only when the receipt passed. LaTeX ≠ counts normalised math spans (whitespace, `{,}`/`,`, `\\mathrm` ignored) present on one side only — a wrong subscript or sign shows here.', '', '## Per-problem detail', '');
+md.push('', 'Columns: *valid* = validate.mjs exit 0; *checker* = recorded verdict, not a guarantee of quality; *receipt* = receipt.json verdict for these bytes; *total $* = recorded reader + checks bound to this candidate, shown only with complete recorded costs and no unpriced failed attempts; *accepted $* requires a passed receipt. Agent subscription usage is unpriced. Dollar figures are list-price equivalents, not invoices. LaTeX ≠ counts normalised math spans present on one side only; these are review signals, not adjudicated errors.', '', '## Per-problem detail', '');
 for (const p of report.papers) for (const c of p.candidates || []) {
   md.push(`### ${p.paperId} — ${c.provider}/${c.model}`, '');
   for (const q of c.problems) {

@@ -34,6 +34,7 @@ import {
   checkerView, candidateCrops, sha256File, sha256, sleep, ROOT,
 } from './lib.mjs';
 import { assembleWindows } from './assemble.mjs';
+import { bindCheckerResult } from './evidence.mjs';
 
 const require = createRequire(import.meta.url);
 const { fetch: ufetch, Agent } = require('undici');
@@ -57,11 +58,13 @@ const limits = PROVIDER_LIMITS[provider];
 const MAX_ATTEMPTS = 3;
 
 // ---- checker input: the sanitised view + crops (never the raw candidate)
-let candidatePath = null, view = null, crops = [];
+let candidatePath = null, candidateHash = null, view = null, crops = [];
 if (stage === 'checker') {
   if (!args.candidate) fail('--candidate is required for the checker stage');
   candidatePath = path.resolve(args.candidate);
-  const candidate = readJson(candidatePath, null);
+  const candidateBytes = fs.readFileSync(candidatePath);
+  const candidate = JSON.parse(candidateBytes.toString('utf8'));
+  candidateHash = sha256(candidateBytes);
   if (!candidate) fail(`candidate not readable: ${candidatePath}`);
   view = checkerView(candidate);
   crops = candidateCrops(candidate, paperId);
@@ -82,6 +85,7 @@ function buildText(window, images) {
   if (wb) parts.push(wb);
   parts.push(`PAGE IMAGES, in order: ${images.filter(i => i.kind === 'page').map((i, k) => `#${k + 1} ${i.document} p.${i.page}`).join('; ')}.`);
   if (stage === 'checker') {
+    parts.push(`Candidate bytes SHA-256 (copy as candidateSha256): ${candidateHash}`);
     const cropImgs = images.filter(i => i.kind === 'crop');
     if (cropImgs.length) parts.push(`FIGURE CROPS produced from the candidate's boxes, in order after the pages: ${cropImgs.map((i, k) => `crop #${k + 1} = figure "${i.id}" (${i.document} p.${i.page}, box ${JSON.stringify(i.bbox)})`).join('; ')}. Judge each crop itself: whole figure, nothing clipped, no swallowed body text.`);
     else parts.push('The candidate proposes no figures; verify that the pages indeed contain no figure a student needs.');
@@ -258,7 +262,7 @@ for (const window of windows) {
   const obj = extractJson(parsed.text, target.replace(/\.json$/, '.raw.txt'), parsed.stopReason);
   const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' ? { reasoning } : {}) };
   if (stage === 'reader') obj.tx = { ...(obj.tx || {}), ...(window ? { window } : {}), reader: ident };
-  else obj.checker = { ...ident, candidate: candidatePath, candidateSha256: sha256File(candidatePath), viewSha256: sha256(JSON.stringify(view)), crops: crops.map(c => c.id) };
+  else Object.assign(obj, bindCheckerResult(obj, { ...ident, candidate: candidatePath, candidateSha256: candidateHash, viewSha256: sha256(JSON.stringify(view)), crops: crops.map(c => c.id) }));
   if (jsonRepaired && obj?.tx?.reader) obj.tx.reader.jsonRepaired = jsonRepaired;
   writeJson(target, stage === 'reader' ? sanitizeCandidate(obj) : obj);
   parts.push({ window, file: target, data: obj });

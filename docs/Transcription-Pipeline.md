@@ -30,6 +30,48 @@ recommendations, adopted as decisions D-P1…D-P9
 Opus/Fable-class models are reserved for adjudication and escalations.
 International competitions stay on hold pending Margulan's go (D-P9).
 
+## Resuming and scoring an interrupted benchmark
+
+`node scripts/tx/bench-status.mjs --fixtures tmp/bench/fixtures.json` inventories
+the saved candidates, reruns schema/KaTeX validation, verifies source PDF hashes,
+and checks each adjudication against the exact candidate bytes and every checker
+finding. It writes `tmp/bench/results/summary.{json,md}` and
+`tmp/bench/results/fixtures.complete.json`. A truth file alone is an unfinished
+draft. Adjudications with unresolved source escalations are reported separately
+and excluded from quality aggregates. These are **model-adjudicated references**,
+not human gold. Missing reader runs remain missing; a replacement model must
+never be labelled as the unavailable reader.
+
+Run the detailed text-difference report only after that inventory:
+
+```
+node scripts/tx/bench.mjs --fixtures tmp/bench/results/fixtures.complete.json --candidates 'tmp/tx/*/candidates/*.json' --out-dir tmp/bench/results/comparison
+```
+
+The fixture list binds the truth, adjudication, candidates and checks by hash;
+changed or arbitrary references are labelled unverified by `bench.mjs`. Text,
+math and number differences are review signals, not automatic error verdicts.
+The evidence summary scores the adjudicator's field-level decisions, separates
+figure defects from other critical errors, and reports false checker passes.
+Neither fixture selection nor partial results support a production-wide rate.
+
+The September 2026 benchmark compared different workflows: Claude agents could
+inspect and repair with tools, while GLM readers used API calls and scripted
+assembly. Treat its results as workflow comparisons. API prices in saved runs
+are list-price equivalents; Claude/Codex subscription usage is unpriced. The
+comparison attributes checker costs to the candidate they checked and leaves
+total cost unknown when usage is incomplete.
+
+A resumed run found that older API requests asked the checker to copy a hash
+without supplying it. Correct transport hashes were recorded in
+`checker.candidateSha256`; model echoes were wrong. New requests supply the hash
+and bind the result to the captured input bytes in code, retaining a bad model
+echo separately. Historical files stay unchanged: the evidence report separates
+this integration defect from checker accuracy. Receipts now reject missing
+defect arrays, inconsistent pass verdicts and incomplete reported page/problem/
+figure coverage. Reported coverage remains a model claim, so independent source
+review is still necessary.
+
 ## Architecture
 
 ```

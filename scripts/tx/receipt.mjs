@@ -17,6 +17,7 @@
 // Otherwise verdict is fail (or escalate when the checker said so) and the
 // blockers are listed. Exit 0 pass / 3 escalate / 1 fail.
 import path from 'node:path';
+import { checkerEvidenceProblems } from './evidence.mjs';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, paperDir, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems,
   independence, nowIso, sha256File,
@@ -37,11 +38,9 @@ const reviewer = parseWho(args.reviewer, 'reviewer');
 const promptVersion = args['prompt-version'] || checker.checker?.promptVersion || 'v1';
 const adjudicator = args.adjudicator ? parseWho(args.adjudicator, 'adjudicator') : (candidate.tx?.adjudicator ? { provider: candidate.tx.adjudicator.provider || 'agent', model: candidate.tx.adjudicator.model || 'unknown', requestId: candidate.tx.adjudicator.requestId || candidate.tx.adjudicator.at || 'n/a' } : null);
 
-const blockers = [];
 const candidateSha256 = sha256File(candFile);
+const blockers = checkerEvidenceProblems(checker, candidate, manifest, candidateSha256);
 const claimedSha = checker.candidateSha256 || checker.checker?.candidateSha256 || null;
-if (!claimedSha) blockers.push('checker output does not state candidateSha256 (which bytes it checked)');
-else if (claimedSha !== candidateSha256) blockers.push(`checker checked different candidate bytes (${claimedSha.slice(0, 12)}… vs ${candidateSha256.slice(0, 12)}…); re-run the checker on this candidate`);
 
 const defects = Array.isArray(checker.defects) ? checker.defects : [];
 const unresolved = defects.filter(d => d.severity !== 'info');
