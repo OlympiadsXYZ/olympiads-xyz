@@ -350,6 +350,9 @@ test('a quoted sentence from the checker is spliced over the passage it corrects
   // the typo sits in the last words: replace the same number of words from the anchor on
   const out2 = spliceFragment(solution, 'Ако не се включат двигателите в точка А');
   assert.equal(out2, solution.replace('в тчка А', 'в точка А'));
+  // a typo in the first word, and a quote the checker truncated with an ellipsis
+  const st = 'Младият астроном стои в къщи. След той се заема да пресмята орбитата на Юпитер и записва резултата.';
+  assert.equal(spliceFragment(st, 'После той се заема да пресмята…'), st.replace('След той', 'После той'));
   assert.equal(spliceFragment(solution, 'Съвсем друг текст без котва в решението'), null);
   assert.equal(spliceFragment('кратко', 'по-дълъг текст от полето'), null);
 });

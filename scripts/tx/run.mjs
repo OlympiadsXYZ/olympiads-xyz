@@ -206,9 +206,13 @@ for (;;) {
       process.stdout.write(x.stdout);
       if ((x.status !== 0 && x.status !== 3) || !fs.existsSync(refixed)) { save(`refix failed: ${(x.stderr || '').slice(0, 300)}`); escalate(`repair.mjs could not apply ${rep.skipped} defect(s) and refix failed: ${(x.stderr || '').slice(0, 200)}`); }
       const xr = JSON.parse(x.stdout || '{}');
+      writeJson(refixed.replace(/\.json$/, '.report.json'), xr);
       job.artefacts.candidate = rel(refixed);
-      if (x.status === 3) escalate(`refix could not settle ${xr.skipped} defect(s) from the pages (applied ${rep.applied} + ${xr.applied || 0})`);
-      save(`refix applied ${xr.applied} defect(s) the checker could not phrase, round ${job.round}`);
+      // Leftovers are not the end of the road while the round made progress: the
+      // fresh checker sees the repaired candidate and may phrase them next time.
+      // Escalate only when nothing at all could be applied this round.
+      if (x.status === 3 && rep.applied + (xr.applied || 0) === 0) escalate(`nothing could be applied this round: repair skipped ${rep.skipped}, refix could not settle ${xr.skipped} defect(s) from the pages`);
+      save(`refix applied ${xr.applied} defect(s) the checker could not phrase${x.status === 3 ? `, ${xr.skipped} left for the next round` : ''}, round ${job.round}`);
     }
     job.stage = 'validate'; save(`repaired ${rep.applied} defect(s), round ${job.round}; re-validating, re-cropping, fresh check`);
   } else if (job.stage === 'promote') {

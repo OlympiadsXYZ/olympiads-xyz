@@ -44,12 +44,17 @@ export function plausibleReplacement(current, fix, kind) {
 // at its last words or, when those hold the typo, at the nearest sentence end.
 export function spliceFragment(current, fix) {
   if (typeof current !== 'string' || typeof fix !== 'string') return null;
-  const f = fix.trim();
+  const f = fix.trim().replace(/(\s*(…|\.\.\.))+$/, '').trim(); // checkers truncate their quotes with an ellipsis
   if (f.length < 8 || f.length >= 0.7 * current.length) return null;
   const words = f.split(/\s+/);
   if (words.length < 3) return null;
   let i = current.indexOf(words.slice(0, Math.min(4, words.length)).join(' '));
   if (i < 0 && words.length >= 4) i = current.indexOf(words.slice(0, 3).join(' '));
+  if (i < 0 && words.length >= 4) {
+    // the typo is in the first word: anchor on the next words and start one word earlier
+    const k = current.indexOf(words.slice(1, Math.min(5, words.length)).join(' '));
+    if (k > 0) { const before = current.slice(0, k).replace(/\s+$/, ''); i = Math.max(0, before.search(/\S+$/)); if (i < 0 || k - i > 40) i = -1; }
+  }
   if (i < 0) return null;
   const tail = words.slice(-3).join(' ');
   const j = current.indexOf(tail, i);
