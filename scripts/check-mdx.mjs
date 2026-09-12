@@ -10,6 +10,7 @@
 // render as red text on the page).
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'node:url';
 import { createRequire } from 'module';
 import { compile } from 'xdm';
 import gfm from 'remark-gfm';
