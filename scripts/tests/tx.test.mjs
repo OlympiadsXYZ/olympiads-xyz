@@ -299,6 +299,13 @@ test('a passage moves between sibling fields when both are returned; a solution 
   assert.equal(c6.problems[0].solution.incomplete, true);
 });
 
+test('an empty part that is a printed section heading is folded into the next part; a bare empty part is dropped', () => {
+  const c = candidate();
+  c.problems[0].parts = [{ label: '2.16', statement: 'Sketch the graph.' }, { label: 'Part 3. Engine with a Governor', statement: '' }, { label: '2.17', statement: 'Find the dependence.' }, { label: 'в)', statement: '  ' }];
+  lib.normaliseCandidate(c);
+  assert.deepEqual(c.problems[0].parts.map(p => [p.label, p.statement]), [['2.16', 'Sketch the graph.'], ['2.17', '**Part 3. Engine with a Governor**\n\nFind the dependence.']]);
+});
+
 test('display math that lost a closing $$ is closed at the paragraph break, so the blocks after it are not inverted', () => {
   const good = 'The force is\n\n$$f = G\\frac{Mm}{r^2}. \\qquad (24)$$\n\nwhich means that the motion is described by\n\n$$m\\frac{dV}{dt} = f - f_g. \\qquad (25)$$\n\nBearing in mind that $V \\ll c$, we get\n\n$$R = \\frac{R_0}{1 - x}. \\qquad (26)$$\n\nThe end.';
   assert.equal(lib.balanceDisplayMath(good), good);

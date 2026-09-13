@@ -812,6 +812,23 @@ export function normaliseCandidate(c) {
     const out = fixHomoglyphs(s);
     if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: Latin homoglyph in a Cyrillic word`); }
   });
+  // A printed section heading read as a part of its own ("Part 3. Engine with a Governor", empty statement) is
+  // folded into the next part as a bold heading line (or the previous one when it is the last); a bare empty part
+  // is dropped (izho-2026-theory-eng: the schema refix could not settle it).
+  (c.problems || []).forEach((pr, i) => {
+    const parts = pr.parts;
+    if (!Array.isArray(parts)) return;
+    for (let k = parts.length - 1; k >= 0; k--) {
+      const pt = parts[k];
+      if (!pt || typeof pt !== 'object' || String(pt.statement || '').trim() || (pt.figures || []).length) continue;
+      const label = String(pt.label || '').trim();
+      const heading = /\p{L}{3,}/u.test(label) && label.length > 6;
+      const host = heading ? (parts[k + 1] || parts[k - 1]) : null;
+      if (host && typeof host.statement === 'string') host.statement = parts[k + 1] ? `**${label}**\n\n${host.statement}` : `${host.statement}\n\n**${label}**`;
+      parts.splice(k, 1);
+      changes.push(`/problems/${i}/parts/${k}: empty part ${heading ? `"${label}" folded into the neighbouring part as a heading` : 'dropped'}`);
+    }
+  });
   // a solution with no text and no figures is incomplete by definition (a refix once flipped the flag to false and
   // the candidate could not validate again: ipho-2023-experiment-q4)
   (c.problems || []).forEach((pr, i) => {
