@@ -71,6 +71,19 @@ const node = (script, argv, opts = {}) => spawnSync(process.execPath, [path.join
 const rel = f => path.relative(ROOT, f);
 const abs = f => path.isAbsolute(f) ? f : path.join(ROOT, f);
 const dir = paperDir(paperId);
+// One loop per paper: a second run.mjs on the same paper (two batch parents, a hand retry next to a batch worker)
+// would race on the candidates and the job (ipho-2023-experiment-q4 was promoted and "escalated" within a second).
+{
+  const lockFile = path.join(dir, '.running');
+  fs.mkdirSync(dir, { recursive: true });
+  const held = readJson(lockFile, null);
+  const alive = pid => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+  if (held?.pid && held.pid !== process.pid && alive(held.pid)) fail(`another run.mjs (pid ${held.pid}, since ${held.at}) is working on ${paperId}; not starting a second loop`);
+  writeJson(lockFile, { pid: process.pid, at: nowIso() });
+  const release = () => { try { const cur = readJson(lockFile, null); if (cur?.pid === process.pid) fs.unlinkSync(lockFile); } catch {} };
+  process.on('exit', release);
+  for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { release(); process.exit(130); });
+}
 const manifestPath = path.join(dir, 'manifest.json');
 const readerOut = candidateFile(paperId, job.reader.provider, job.reader.model);
 const checkerOutFor = round => checkFile(paperId, job.checker.provider, job.checker.model).replace(/\.json$/, round ? `.r${round}.json` : '.json');
