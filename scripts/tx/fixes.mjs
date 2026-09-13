@@ -84,10 +84,21 @@ const opening = (s, n = 6) => String(s || '').replace(/\$\$[\s\S]*?\$\$|\$[^$\n]
 // opening words open another problem's statement, part or solution holds a paste, not printed text of its own.
 export function duplicatesOtherProblem(candidate, path, text) {
   const m = /^\/problems\/(\d+)\//.exec(String(path));
-  if (!m || typeof text !== 'string') return false;
+  if (!m || typeof text !== 'string') return null;
   const head = opening(text, 8);
-  if (head.split(' ').length < 6) return false;
-  return (candidate?.problems || []).some((pr, i) => i !== Number(m[1]) && [pr.statement, ...(pr.parts || []).map(x => x.statement), pr.solution?.statement].some(s => typeof s === 'string' && opening(s, 100000).includes(head)));
+  if (head.split(' ').length < 6) return null;
+  for (const [i, pr] of (candidate?.problems || []).entries()) {
+    if (i === Number(m[1])) continue;
+    const fields = [[`/problems/${i}/statement`, pr.statement], ...(pr.parts || []).map((x, j) => [`/problems/${i}/parts/${j}/statement`, x.statement]), [`/problems/${i}/solution/statement`, pr.solution?.statement]];
+    for (const [fp, s] of fields) if (typeof s === 'string' && opening(s, 100000).includes(head)) return { what: `problem ${pr.number ?? i + 1}`, path: fp };
+  }
+  return null;
+}
+// nearly every word of `text` (4+ letters) occurs in `other`: the field is a copy, not its own text
+export function mostlyContainedIn(text, other) {
+  if (typeof text !== 'string' || typeof other !== 'string') return false;
+  const a = [...words(text)].filter(w => w.length >= 4), b = words(other);
+  return a.length >= 5 && a.filter(w => b.has(w)).length >= 0.8 * a.length;
 }
 export function duplicatesSiblings(candidate, path, value, current) {
   const m = /^\/problems\/(\d+)\/(statement|parts\/(\d+)\/statement|solution\/statement)$/.exec(String(path));
@@ -337,10 +348,15 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: f.value, note: f.note || null }); continue; }
       // a field that currently holds a copy of a sibling's text (a reader carried part c's question into part d) is
       // a paste: the printed replacement need not resemble it (eupho-2025-experiment-x, seven rounds)
-      const currentIsPaste = current.length >= 40 && (!!duplicatesSiblings(original, p, current, '') || duplicatesOtherProblem(original, p, current));
+      // (mostly the sibling's text, not merely opening like it: a solution that restates the problem before solving
+      // it is not a paste — ipho-2025-experiment-q4 lost a 23k-character solution to a 286-character answer)
+      const pasteOf = current.length >= 40 ? (duplicatesSiblings(original, p, current, '') || duplicatesOtherProblem(original, p, current)) : null;
+      const currentIsPaste = !!pasteOf && mostlyContainedIn(current, pointerGet(original, pasteOf.path));
       // an alt text or caption rewritten in the paper's language shares no words with the old one by design
       const languageFix = /\/(alt|caption)$/.test(p) && /paper's language|език/i.test(String(d.description || ''));
       if (!currentIsPaste && !languageFix && !plausibleReplacement(current, f.value, d.kind, p)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
+      // whatever let it through: a long field never shrinks to a fraction of itself unless it was a paste
+      if (!currentIsPaste && current.length > 800 && f.value.length < 0.3 * current.length) { skipped.push({ ...entry, reason: `fix drops most of the field (${current.length} → ${f.value.length} characters)` }); continue; }
       pointerSet(candidate, p, f.value);
       applied.push({ ...entry, from: current, to: f.value, note: f.note || null });
       continue;
