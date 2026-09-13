@@ -1,0 +1,105 @@
+---
+id: ioaa-2019-theory-th-final-p12
+source: 'IOAA 2019, theory'
+title: 'Задача 12. Distance to a Near-Earth Asteroid'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2019/ioaa-2019-theory-th-final.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T21:41:51.080Z'
+verifier: 'same-model'
+---
+
+*Theory problem sheet · 25 т.*
+
+## Условие
+
+Assume that a Near-Earth Asteroid is observed by two astronomers, one from Nagykanizsa, Hungary and one from Windhoek, Namibia. The longitudes of the two cities are exactly 17° east of Greenwich. They observe the asteroid when it crosses their respective meridians. The Nagykanizsa-observer sees the asteroid 25° south of his zenith at this instant, while the Windhoek-observer sees it 45° north of his zenith at the same instant. The latitudes of the two cities are 46°27’ N and 22°34’ S, respectively. The sites of both astronomers are at sea level.
+
+**a)** Draw a diagram of the geometric configuration. **[5 т.]**
+
+**b)** What is the distance of this asteroid from the centre of the Earth, expressed in units of Earth-radii and the average Earth-Moon distance? Provide a solution which makes use of all available information. Neglect the effect of the atmospheric refraction. **[20 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) The geometric situation is the following: **(5 p)**
+
+**Fig. 12.1:** $N$: Nagykanizsa, $W$: Windhoek, $O$: centre of Earth, $A$: asteroid, $D$: distance from the centre of Earth to the asteroid $(D = \overline{OA})$, $R$: radius of the Earth
+
+b) One can recognize that the triangle $NOW$ is an isosceles triangle, two sides $(ON$ and $OW)$ are equal to each other in length:
+
+(12.1) $ON = OW = R$ **(1 p)**
+
+Therefore the angles $\alpha = ONW\sphericalangle = OWN\sphericalangle$. For the $NOW$ triangle we can write, that:
+
+(12.2) $2\alpha + \varphi_1 + \varphi_2 = 180^{\circ} \rightarrow \alpha = 90^{\circ} - \dfrac{\varphi_1 + \varphi_2}{2}$ **(1 p)**
+
+Let us denote the direct -- i.e. measured through the body of the Earth, not on the surface -- distance between Nagykanizsa and Windhoek by $d$: $d = \overline{NW}$. This distance can be obtained straightforward by the cosine theorem (one has to take care that the absolute values of the latitudes should be added inside the cosine function):
+
+(12.3) $d = \sqrt{R^2 + R^2 - 2R^2\cos(\varphi_1 + \varphi_2)} = R\sqrt{2(1 - \cos(\varphi_1 + \varphi_2))}$ **(2 p)**
+
+With numerical values:
+
+$d = 1.133\,05\,R$ **(1 p)**
+
+Let us use the following notations:
+
+(12.4) $x_1 = \overline{NA}$, $x_2 = \overline{WA}$, $p = p_1 + p_2$
+
+For the $NOWA$ quadrilateral we can write that:
+
+(12.5) $\varphi_1 + \varphi_2 + (180^{\circ} - z_1) + p + (180^{\circ} - z_2) = 360^{\circ}$ **(1 p)**
+
+and therefore:
+
+(12.6) $p = z_1 + z_2 - (\varphi_1 + \varphi_2)$ **(1 p)**
+
+For the $NWA$ triangle we can write that:
+
+(12.7) $\dfrac{x_1}{d} = \dfrac{\sin(180^{\circ} - z_2 - \alpha)}{\sin p}$ and $\dfrac{x_2}{d} = \dfrac{\sin(180^{\circ} - z_1 - \alpha)}{\sin p}$ **(2 p)**
+
+Thus:
+
+(12.8) $x_1 = d\,\dfrac{\sin(z_2 + \alpha)}{\sin(z_1 + z_2 - (\varphi_1 + \varphi_2))}$ and $x_2 = d\,\dfrac{\sin(z_1 + \alpha)}{\sin(z_1 + z_2 - (\varphi_1 + \varphi_2))}$ **(2 p)**
+
+$D$ can be obtained either from the triangle $NOA$ or $WOA$ by the cosine theorem:
+
+(12.9) $D^2 = R^2 + x_1^2 - 2Rx_1\cos(180^{\circ} - z_1)$
+
+or
+
+(12.10) $D^2 = R^2 + x_2^2 - 2Rx_2\cos(180^{\circ} - z_2)$ **(2 p)**
+
+Let us take the sum of them:
+
+(12.11) $2D^2 = 2R^2 + (x_1^2 + x_2^2) + 2R(x_1\cos z_1 + x_2\cos z_2)$, **(1 p)**
+
+where we have used that $\cos(180^{\circ} - x) = -\cos x$.
+
+(If someone determines $D$ only from one of the two $(NOA, WOA)$ triangles, 1 point can be deducted, because that means, we ignore the error bars of one of the measurements in a significant way.)
+
+After substitution and dividing by two one gets:
+
+(12.12) $D^2 = R^2 + d^2\,\dfrac{\sin^2(z_1 + \alpha) + \sin^2(z_2 + \alpha)}{2\sin^2(z_1 + z_2 - (\varphi_1 + \varphi_2))} + Rd\,\dfrac{\sin(z_2 + \alpha)\cos z_1 + \sin(z_1 + \alpha)\cos z_2}{\sin(z_1 + z_2 - (\varphi_1 + \varphi_2))}$ **(3 p)**
+
+This contains only known quantities. After substitution we get (notice that for alpha and $D$ we need the absolute values of the geographical latitudes):
+
+$\alpha = 55.5^{\circ}$ **(1 p)**
+
+$D = \boxed{65.8\,R} = \boxed{1.1\ d_{\mathrm{Moon}}}$ **(2 p)**
+
+So, the asteroid is at 65.8 Earth-radii from the centre of the Earth. This is slightly more than the distance to the Moon.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p12-sol-fig1.png" alt="Geometry diagram: circle (Earth) with centre O, equator line, points N (Nagykanizsa) and W (Windhoek) on the surface with radii R and angles φ₁, φ₂ to the equator; zenith directions at N and W with zenith angles z₁ and z₂; asteroid A at top right connected by lines x₁, x₂ to N and W and D to O, with small angles p₁, p₂ and angle δ at O." />
+<figcaption>Fig. 12.1: N: Nagykanizsa, W: Windhoek, O: centre of Earth, A: asteroid, D: distance from the centre of Earth to the asteroid (D = OA̅), R: radius of the Earth</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [TH-problem-final.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2019/TH-problem-final.pdf)
+· официални решения: [TH-solution-final.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2019/TH-solution-final.pdf)

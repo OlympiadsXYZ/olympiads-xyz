@@ -1,0 +1,623 @@
+{
+ "paper": {
+  "id": "eupho-2025-experiment-x",
+  "subject": "physics",
+  "competition": "EuPhO",
+  "year": 2025,
+  "round": null,
+  "roundType": "experiment",
+  "grade": null,
+  "lang": "en",
+  "title": "Experimental Problems Language: English",
+  "held": {
+   "place": "Sofia, Bulgaria"
+  },
+  "totalPoints": 20,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/EuPhO/2025/eupho2025_experiment_problems.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "status": "review",
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/EuPhO/2025/eupho2025_experiment_solutions.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "zai",
+   "model": "glm-5.3-flash",
+   "promptVersion": "v1",
+   "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
+   "requestId": "20260913123815cfe75daf515140cf,20260913123958159ae0360c634124,20260913124336feee8fd9a6d24366,20260913124631926349a149294a29",
+   "at": "2026-09-13",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "39aab1c42e4b06505fc285519d5a7791880cd8f2a983cc78e709a08ec912648b",
+    "solutions": "b7f5fd8d239e63ba5422a793627fbdddd791888aeb2dff46033ba856629e5661"
+   },
+   "verifiedBy": "zai:glm-5.3-flash (same-model checker, prompt v1)",
+   "verifiedAt": "2026-09-13",
+   "notes": "[window 1] Both problems fit the 2-page problems document; no continuation. Sub-structure: E1 has printed tasks 'Task 1 (0.5 pts)' … 'Task 6 - (2.5 pts)' transcribed as parts with labels verbatim; within Task 6 the printed sub-items 'a'/'b' are kept inside the part statement. E2 tasks a–d are transcribed as parts; the first part label includes the printed heading 'Tasks (10.0 pts)'. Figures: the sigmoid graph, the neuron block diagram and the three Task-1 schemes (page 1); Figures 1–3 of E2 (page 2). The official solutions file (14 pages) was not shown in this window, so solutions are marked incomplete. Task point sums check out (0.5+0.5+1.5+3.5+1.5+2.5 = 10; 2+2+3+3 = 10).\n[window 2] Решателен прозорец: само страници 1–6 от документа с решения; констатацията на задачата е в отделния документ с проблеми и се транскрибира от друг прозорец (statement = [извън прозореца]). Решението на Task 6 (част b) продължава на стр. 7+ — маркирано като incomplete. Решението съдържа печатна печатна грешка „fulfils“ с интервал — запазена дословно. Стойността „-0,22“ в уравнение (6) е отпечатана с десетична запета в противоречие с останалите числа — запазена като -0.22 в LaTeX контекста на източника.\n[window 3] Window covers solutions pages 6-11 only. Solutions page 6 (Task 5 continuation and beginning of Task 6 solution) belongs to the previous window and is not transcribed here; problem 1 is therefore a continuation with only page-7 content. Solutions pages 8 and the top of page 9 reproduce the E2 problem statement (problem text, equipment list, tasks) which is transcribed from the problems document by another window — it was not duplicated here. Figures 10, 11, 12 on solutions page 8 are statement figures and were likewise not cropped. Task c of E2 continues past page 11. The grading tables use abbreviated rubric wording exactly as printed (compact rows transcribed into table cells with their point values).\n[window 4] Window covers only solutions pages 11–14. The solution of Task E2.b began on a previous page (the text 'where L = 74.6 cm …' continues from page 10), hence tx.continuation = true and only the text printed on pages 11–14 is transcribed. Typos preserved verbatim: 'chossing' (E2.b row B), 'the laterally points' (Approach B of Task b), '–as a sample standard deviation of d' (incomplete sentence printed as such), 'the laser wave length'. In Table 6 the column header reads 's (μm)' but the printed values (1.08E-05 etc.) are evidently in metres; transcribed as printed. Grading tables contain cells with several alternative point values; these are kept inside the cell with semicolons and italicised sub-values since Markdown tables cannot hold sub-rows. Figure 13 (photo of secondary pattern) and Tables 1–5 belong to earlier windows."
+  },
+  "caveat": "Task 6 solution continues beyond this window; Tab. 5, Figures 8 and 9 and the final verification are on later pages."
+ },
+ "problems": [
+  {
+   "id": "eupho-2025-experiment-x-p1",
+   "number": 1,
+   "title": "E1 – Deep Learning (10 pts)",
+   "points": 10,
+   "problemType": "experiment",
+   "statement": "Modern ANNs (artificial neural networks) are made of billions of neurons. Each neuron transforms its input(s) $x_1, x_2, \\ldots, x_n$ to an output $y$. First,\n$$z = w_1x_1 + w_2x_2 + \\cdots + w_nx_n + b$$\nis calculated, with real numbered *weights* $w_i$ and real numbered *bias* $b$. Then an *activation function* is applied to $z$ to produce the final output $y(x_1, x_2, \\ldots)$. In the present problem you will investigate a physical model of a neuron with the electric voltages $x_1$ and $x_2$ as inputs, with the activation function being $A\\sigma(z)$, graphed below, where $\\sigma(z) = 1/(1+\\exp\\,(-z))$ is called sigmoid function.\n\n**Equipment**\n\n**Important! Do not switch off any power outlets.**\n\n(i) A box containing a voltage source, an electronic circuit that models the neuron, and two potentiometers (the A-potentiometer and the B-potentiometer). The electric terminals on the box are denoted as follows:\n\n1. Two electrically connected GND terminals: the electrical *ground* serving as a common negative terminal for $+\\mathrm{V}$, $x_1$, $x_2$, and $y$.\n2. $+\\mathrm{V}$: the positive terminal of the voltage source.\n3. X1 and X2: the positive terminals of the neuron input voltages $x_1$ and $x_2$, respectively. **The neuron output behaves unpredictably if either of these terminals has no input voltage.**\n4. Y: the positive output terminal. It behaves like a real voltage source, consisting of an ideal voltage source of voltage $y$ and a series output resistor $R_{\\mathrm{out}}$, and operates as shown below.\n5. A1, A2, A3: terminals of the A-potentiometer.\n6. B1, B2, B3: terminals of the B-potentiometer.\n7. T: a terminal not to be used in this task.\n\n(ii) Digital multimeter with two probe wires.\n\n(iii) Wires with banana connectors. Two or more wires could be connected to the same terminal in the box by using the holes in the banana connectors. Using the banana connectors with the multimeter may form an unstable connection. Use the alligator clamp if needed.\n\n(iv) Graph paper. You can ask for more if needed.\n\n*Training* involves optimizing the network weights to achieve desired functionality. This allows ANNs to approximate arbitrary functions. For each of the following tasks you have to approximate a different function of a single input voltage using the given equipment. Make sure that the input and output that you define are clearly marked in your circuits.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "Graph of the sigmoid activation function y = Aσ(z) versus z, with dashed horizontal asymptote at level A; z axis marked at −4, −2, 0, 2, 4.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-fig1.png",
+     "width": 254,
+     "height": 300,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       163.12,
+       215.51,
+       223.83,
+       287.1
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "alt": "Block diagram of the neuron model: inputs X1 and X2 enter a box with z(x) = w₁x₁ + w₂x₂ + b, followed by a circle Aσ(z), a series resistor R_out, and output terminal Y.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-fig2.png",
+     "width": 1149,
+     "height": 289,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       36.31,
+       564.93,
+       311.94,
+       633.96
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig3",
+     "alt": "Three candidate connection schemes of terminals A1, A2, A3 with the potentiometer R_P and load resistor R_L: (1) A1–R_P–R_L–A2 with A3 tapped at the junction; (2) A1–R_P–A2 with R_L between the tap and A3; (3) A1–R_L–R_P–A2 with A3 tapped between them.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-fig3-v2.png",
+     "width": 1141,
+     "height": 317,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       303.61,
+       105.25,
+       577.44,
+       180.99
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "Task 1 (0.5 pts)",
+     "points": 0.5,
+     "statement": "Terminals A1, A2, and A3 are connected to the A-potentiometer $R_P$ and an additional load resistor $R_L$. Which of the schemes below corresponds to the circuit in the box? Determine the resistances $R_L$ and $R_P$; document the measurements made.\n\n**Note** The B-potentiometer is connected to terminals B1, B2, B3 in exactly the same way with the same resistances $R_L$ and $R_P$, within manufacturing tolerances."
+    },
+    {
+     "label": "Task 2 - (0.5 pts)",
+     "points": 0.5,
+     "statement": "Sketch how the terminals have to be connected so that the neuron input voltages can be varied with the widest possible range."
+    },
+    {
+     "label": "Task 3 - (1.5 pts)",
+     "points": 1.5,
+     "statement": "Devise (and document) a strategy allowing you to find the combination of input voltages $x_1$ and $x_2$ that maximizes the output voltage $y$ with the least possible number of measurements, irrespectively of with which set of input voltages you start the search. Determine this maximal voltage $y_{\\max}$ that will be henceforth used as an approximation for the amplitude $A$, and document your measurements."
+    },
+    {
+     "label": "Task 4 - (3.5 pts)",
+     "points": 3.5,
+     "statement": "Determine the weights $w_1$, $w_2$ and the bias $b$. Describe your measurements and document your data in a table. Estimate $w_1$, $w_2$, and $b$ by using a graphical proach."
+    },
+    {
+     "label": "Task 5 - (1.5 pts)",
+     "points": 1.5,
+     "statement": "Connect the terminal X1 directly to $+\\mathrm{V}$. Design a circuit to approximate the function $y_5(x) = A\\sigma\\,(w_2x/2 + b_5)$, where $x$ is the voltage applied to your newly defined input terminal. Determine $b_5$ theoretically. Implement the circuit, take measurements and verify that your setup works as expected. Validate the value of $b_5$ from your data."
+    },
+    {
+     "label": "Task 6 - (2.5 pts)",
+     "points": 2.5,
+     "statement": "a Determine the internal series output resistance $R_{\\mathrm{out}}$ of the Y terminal. (0.5 pts)\n\nb Design and implement a circuit to approximate the function $y_6(x) = A_6 \\cdot \\sigma(w_2x + b) + B_6$, where $B_6 = 1.48\\,\\mathrm{V}$. Determine $A_6$ theoretically. Implement the circuit and verify experimentally that your setup works as expected. Confirm the values of $A_6$ and $B_6$ from your data. (2.0 pts)"
+    }
+   ],
+   "topics": [
+    "electricity/dc-circuits",
+    "electronics/opamps",
+    "modelling/nonlinear-functions"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**E1- Solution**\n\nThe term “neuron” has been chosen in analogy to the cells of the nervous system, which transmit electrochemical signals across the nerves (variable $y$) depending on the integral stimulus ($z$) on their input extremities (variables $x_i$). The theory behind the artificial neurons and artificial neural networks has been developed in a close analogy to basic physical concepts. In recognition of this fact, the Nobel Prize in physics in 2024 was awarded to John J. Hopfield and Geoffrey E. Hinton “for foundational discoveries and inventions that enable machine learning with artificial neural networks”. The artificial neurons could also be real physical systems, which transform mechanical, electrical, or optical signals.\n\n**Task 1**\n\nThe multimeter is connected in an ohmmeter mode to the three possible pairs of output terminals of A-potentiometer. By turning the knob of the potentiometer we measure the maximum and minimum resistance for each pair:\n\n| Terminals: | $R_{\\min}\\,(\\Omega)$ | $R_{\\max}(\\Omega)$ |\n|---|---|---|\n| A1-A2 | 1000 | 1000 |\n| A1-A3 | 222 | 1222 |\n| A2-A3 | 222 | 1222 |\n\nIf the load resistor was connected to either A1 or A2, then the $R_{\\min}$ for A1-A3 and A2-A3 pairs would close to zero, in contrast to measurements. Therefore the load resistor is connected between A3 and the potentiometer slider. In this case, for either of A1-A3 and A2-A3 pairs we have: $R_{\\min} = R_L$ and $R_{\\max} = R_P + R_L$ and\n\n$$R_L = 222\\,\\Omega \\quad R_P = 1000\\,\\Omega$$\n\n| | Task 1 | Pts |\n|---|---|---|\n| A | States or shows in a drawing that the resistance between the three pairs of terminals has been measured. | 0.2 |\n| B | Results for the resistances: $R_P \\approx 1000\\,\\Omega \\pm 120\\,\\Omega$ | 0.1 |\n| C | $R_L \\approx 220\\,\\Omega \\pm 6\\,\\Omega$ | 0.1 |\n| D | Concludes that the resistor is connected to terminal 3. | 0.1 |\n| | **Total on Task 1** | 0.5 |\n\n**Task 2**\n\nThe necessary connections are shown in Fig. 1.\n\n| | Task 2 | Pts |\n|---|---|---|\n| A | Potentiometers are connected to X1 and X2 | 0.2 |\n| | Correct connections to ground and supply | 0.3 |\n| | -0.1 per wrong connection | |\n| | -0.2 fixed penalty for the specific case that X1 / X2 are connected to A1/A2 and V+ and GND on the remaining terminals of the potentiometer. This setup gives only limited variation of the input voltage (0V - 2.67V) | |\n| | -0.5 if only 2 terminals the potentiometers are connected. | |\n| | **Total on Task 2** | 0.5 |\n\n**Task 3**\n\nBy turning the potentiometers’ knobs one can establish that the input voltages change independently between $0\\,\\mathrm{V}$ and $\\approx 3.25\\,\\mathrm{V}$ (Note that due to the protection circuit inside the box, this voltage decreases slightly with connected circuitry). Therefore, any combination of input voltages could be mapped to a point inside the shaded square area in the $x_1-x_2$ plane, as shown in Fig 2. Points corresponding to a constant output voltage $y$ satisfy the equation:\n\n$$w_1 x_1 + w_2 x_2 + b = const,$$\n\nwhich defines a family of parallel straight lines, perpendicular to the vector $\\vec{w} = (w_1, w_2)$ (see the dashed lines in Fig. 2). It is clear that for any set of weights, the maximum voltage $y_{\\max}$ and the minimum voltage $y_{\\min}$ are always met at the vertices of the rectangle. Therefore, only three corners need to be measured in order to determine the maximum voltage $y_{\\max}$. First, two corners are measured, which are next to each other. Therefore, the maximum along the connecting edge can be found. Using the corner with the higher voltage, the other edge from that corner is followed to a third corner. Consequently, the highest voltage can be determined, as the fourth corner needs to be lower than the third measured corner. Table 1 summarizes the measurements of the output voltage at the four vertices. The maximum of the output voltage is:\n\n$$y_{\\max} = 2.73\\,\\mathrm{V}$$\n\ncorresponding to the input voltages:\n\n$$x_1 = 0.00\\,\\mathrm{V}; \\quad x_2 = 3.15\\,\\mathrm{V}.$$\n\nTable 1: Output voltage at the vertices\n\n| $x_1\\,(V)$ | $x_2\\,(V)$ | $y\\,(V)$ |\n|---|---|---|\n| 0.00 | 0.00 | 2.30 |\n| 3.15 | 0.00 | 1.15 |\n| 3.15 | 3.15 | 2.56 |\n| 0.00 | 3.15 | 2.73 |\n\n| | Task 3 | Pts |\n|---|---|---|\n| A | Strategy that three measurements are sufficient to obtain $y_{\\max}$ | 0.7 |\n| | Penalty for four measurements | -0.3 |\n| | No points for more than four measurements | |\n| | **Note** that turning the knob for $x_i$ and watching the change of $y$ does count as at least 2 measurements per $x_i$. For solutions where the knob is turned a little for $x_1$, then the other for $x_2$, the conclusion about the signs of the $w_i$ is made and only then the input gets adjusted to reach $y_{max}$, this counts as at least 5 measurements, which is awarded no points here. | |\n| B | Lower bound of measurements < 0.02V | 0.1 |\n| C | Upper bound of measurements > 3V | 0.2 |\n| | *Note* that to obtain these 0.1 + 0.2 points, the student must write its input values for $x_1$ and $x_2$ down explicitly, or, at least write that they are directly connected to GND or +V if that is the case. | |\n| D | Per measurement 0.1 up to 0.3 | 0.3 |\n| E | Value for $y_{\\max} = 2.73\\,\\mathrm{V} \\pm 0.04\\,\\mathrm{V}$ | 0.2 |\n| | Penalty for more than three significant digits | -0.2 |\n| | Penalty for only one significant digit | -0.2 |\n| | **Total on Task 3** | 1.5 |\n\n**Task 4**\n\nThe three parameters could be determined in two series of measurements of the output voltage by setting each of the input voltages constant and changing the other input voltage. The dependence of the output voltage on $x_1$ and $x_2$ can be linearized by transforming $y$ to the auxiliary variable:\n\n$$z = \\ln\\frac{y}{A-y} \\approx \\ln\\frac{y}{y_{\\max}-y} \\qquad (1)$$\n\nsince:\n\n$$z = w_1 x_1 + w_2 x_2 + b \\qquad (2)$$\n\nMeasurements close to the maximum output voltage should be avoided because of the large systematic error in calculated values of $z$ when approximating in equation (1) the unknown A with ymax. Therefore, the suitable set of measurements is along the path $(0,0)-(3,0)-(3,3)\\,\\mathrm{V}$ in the $x_1, x_2$-plane. Tables 2 and 3 summarize the results of measurements along the lines $(0,0)-(3,0)\\,\\mathrm{V}$ and $(3,0)-(3,3)\\,\\mathrm{V}$ respectively. The values of the variable $z$ calculated by means of (1) are shown in the last column of the tables. Figure 3 shows the data in Table 2 in variables $z$ and $x_1$ with the corresponding linear fit. The weight $w_1$ corresponds to the slope of the fitting line:\n\n$$w_1 = \\frac{\\Delta z}{\\Delta x_1} = -0.62\\,\\mathrm{V}^{-1} \\qquad (3)$$\n\nSince $x_2 = 0.00\\,\\mathrm{V}$, the bias $b$ could be estimated by crossing point of the fitting line with the $z$-axis:\n\n$$b = 1.67 \\qquad (4)$$\n\nTable 2: Measurements for $x_2 = 0.00\\,\\mathrm{V}$\n\n| $x_1\\,(V)$ | $y\\,(V)$ | $z$ |\n|---|---|---|\n| 0.00 | 2.31 | 1.68 |\n| 0.26 | 2.24 | 1.50 |\n| 0.59 | 2.15 | 1.29 |\n| 0.83 | 2.08 | 1.15 |\n| 1.09 | 2.00 | 0.99 |\n| 1.32 | 1.92 | 0.85 |\n| 1.72 | 1.76 | 0.59 |\n| 1.98 | 1.65 | 0.41 |\n| 2.20 | 1.57 | 0.29 |\n| 2.53 | 1.44 | 0.10 |\n| 2.88 | 1.29 | -0.12 |\n| 3.02 | 1.23 | -0.21 |\n\nTable 3: Measurements for $x_1 = 3.02\\,\\mathrm{V}$\n\n| $x_2\\,(V)$ | $y\\,(V)$ | $z$ |\n|---|---|---|\n| 0.00 | 1.23 | -0.21 |\n| 0.22 | 1.38 | 0.01 |\n| 0.51 | 1.56 | 0.28 |\n| 0.81 | 1.74 | 0.55 |\n| 1.06 | 1.88 | 0.78 |\n| 1.37 | 2.04 | 1.07 |\n| 1.75 | 2.21 | 1.43 |\n| 1.99 | 2.30 | 1.65 |\n| 2.22 | 2.38 | 1.89 |\n| 2.53 | 2.47 | 2.21 |\n| 2.74 | 2.52 | 2.44 |\n| 3.02 | 2.57 | 2.72 |\n\nThe data for $z$ and $x_2$ in Table 3, and the corresponding linear fit are shown in Figure 4. The slope of the fitting line gives the weight $w_2$:\n\n$$w_2 = \\frac{\\Delta z}{\\Delta x_2} = 0.96\\,\\mathrm{V}^{-1} \\qquad (5)$$\n\nAccording to equation (2) the crossing point, -0,22, of the fitting line with $z$ axis at $x_1 = 3.02\\,\\mathrm{V}$ satisfies the equation\n\n$$-0.22 = w_1 x_1 + b = -1.87 + b \\qquad (6)$$\n\nTherefore, we obtain a second estimate for the bias $b = 1.65$. As a most likely estimate of $b$, the mean of the $b$-values obtained from the two graphs should be taken:\n\n$$b = 1.66 \\pm 0.01 \\qquad (7)$$\n\n| | Task 4 | Pts |\n|---|---|---|\n| A | Linearizes the $y-x$ dependence by means of formulae (1) and (2) or equivalent | 0.4 |\n| | **No points are awarded** for the following parts B-Q if there is no documentation of a circuit that is able to provide varying voltages to the X1 and/or X2 terminals at all. | |\n| B | Avoiding (0,3) corner (even without explicit reasoning) but award points only if two usable data-sets have been recorded | 0.3 |\n| C | Raw measurement values of $y$ for varying $x_1$ — Roughly linear distribution of $x_1$ | 0.1 |\n| | Number of Points ≤ 3 | 0 |\n| D | 4-5 | 0.1 |\n| | 6-7 | 0.2 |\n| | ≥ 8 | 0.3 |\n| E | Raw measurement values of $y$ for varying $x_2$ | |\n| | Roughly linear distribution of $x_2$ | 0.1 |\n| | Number of Points ≤ 3 | 0 |\n| F | 4-5 | 0.1 |\n| | 6-7 | 0.2 |\n| | ≥ 8 | 0.3 |\n| G | Conversion of $y$ into $z$ | 0.2 |\n| H | Plot for $z$ versus $x_1$ — Size & Axes | 0.2 |\n| I | Values in plot | 0.2 |\n| J | Linear regression line (only if data is actually linear, which is not the case when plotting $y$ vs $x_1$) | 0.2 |\n| K | Plot for $z$ versus $x_2$ — Size & Axes | 0.2 |\n| L | Values in plot | 0.2 |\n| M | Linear regression line (only if data is actually linear, which is not the case when plotting $y$ vs $x_2$) | 0.2 |\n| N | Value for $w_1$ between $-0.6\\,\\mathrm{V}^{-1}$ and $-0.65\\,\\mathrm{V}^{-1}$ | 0.2 |\n| O | Value for $w_2$ between $0.93\\,\\mathrm{V}^{-1}$ and $1.01\\,\\mathrm{V}^{-1}$ | 0.2 |\n| P | Value for $b$ between 1.64 and 1.70 | 0.2 |\n| | **Note** that these boundaries are strict and outside no points are awarded here, even if they are close. | |\n| Q | Overall penalty for significant digits other than 2-3 (rare occasion only -0.2) | -0.4 |\n| | **Total on Task 4** | 3.5 |\n\n**Task 5**\n\nSince X1 is connected to +V, the input voltage $x$ must somehow be supplied through X2. Conveniently, the neuron that we have to build in this task requires a weight of $w_2/2$, which we can effectively achieve by reducing the input voltage on X2 by a factor of two. For this, one of the potentiometers can be used to halve the input voltage. To find the correct position, the resistance between terminals 1-2 and 2-3 is measured while adjusting the knob. Due to the non-linear behavior of the potentiometer, the final position is not the physical middle position. Alternatively, if a voltage is applied to the potentiometer, this can be tuned with the voltmeter function. The circuit for the modified neuron is visible in Fig. 5.\n\nFor this circuit, the input voltage $x$ is converted to $x_2$ via the following relation:\n\n$$x_2 = \\frac{1}{2}x$$\n\nTherefore, the intermediate function $z$ becomes\n\n$$z = w_1 U_{+V} + \\frac{w_2}{2} x + b.$$\n\nThis means that our new bias $b_5$ is the constant part, so\n\n$$b_5 = w_1 U_{+V} + b \\approx -0.35.$$\n\nNote that it is also possible and fully correct to connect the other end of the potentiometer to +V instead of the ground, which leads to the same effective weight but a different $b_5$ of approximately 1.2.\n\nTable 4\n\n| $x\\,(V)$ | $y\\,(V)$ | $z$ |\n|---|---|---|\n| 0.00 | 1.13 | -0.36 |\n| 0.20 | 1.19 | -0.27 |\n| 0.40 | 1.25 | -0.18 |\n| 0.60 | 1.32 | -0.08 |\n| 0.80 | 1.39 | 0.02 |\n| 1.00 | 1.46 | 0.12 |\n| 1.20 | 1.51 | 0.20 |\n| 1.40 | 1.58 | 0.30 |\n| 1.60 | 1.63 | 0.38 |\n| 1.80 | 1.69 | 0.47 |\n| 2.00 | 1.77 | 0.59 |\n| 2.20 | 1.82 | 0.67 |\n| 2.40 | 1.87 | 0.75 |\n| 2.56 | 1.93 | 0.86 |\n\nHowever, in this solution we only consider the case shown in Fig. 5. When the circuit is assembled, we can use the A-potentiometer (connected to +V and GND) to supply a variable voltage to the input of the new neuron. This way, we can take a few measurements to confirm that our circuit behaves as desired, which leads to the data in Tab. 4.\n\nBy linearization via the inverse activation function\n\n$$z = -\\left(\\ln\\frac{A}{y} - 1\\right)$$\n\nwe can plot $z$ vs $x$ and determine the effective weight from the slope and the bias $b_5$ from the intercept, see Fig. 6.\n\nExperimentally, we obtain $b_5 \\approx -0.36$, which is close to the theoretical value and an effective weight of $0.47\\,\\mathrm{V}^{-1} \\approx w_2/2$. Since the linear fit is also in good agreement with the data points, we have shown that our circuit fulfils the expectations.\n\n| | Task 5 | Pts |\n|---|---|---|\n| A | Idea and drawing of circuit | 0.3 |\n| B | Theoretical derivation and calculation of $b_5$ | 0.2 |\n| | partial credit for just the formula $b_5 = w_1 U_{+V} + b$ | 0.1 |\n| | **No points are awarded** for the following parts C-I if the circuit used is no different than the one used in task 4 or the only change is that X1 is connected to +V, or if there is no documentation of a circuit that is able to provide varying voltages here or in previous tasks. | |\n| C | Raw measurement values of $y$ for varying $x$ | |\n| | Usage of whole span for $x$ | 0.1 |\n| D | Number of Points ≤ 2 | 0 |\n| | 3-4 | 0.1 |\n| | ≥ 5 | 0.2 |\n| E | Plot for $z$ versus $x$ — Size & Axes | 0.2 |\n| F | Converted values in plot | 0.2 |\n| G | Linear regression line | 0.2 |\n| H | Comparison of $b_5$ | 0.1 |\n| I | Overall penalty for significant digits other than 2-3 | -0.2 |\n| | **Total on Task 5** | 1.5 |\n\n**Task 6**\n\na To determine the internal series output resistance $R_{out}$, we have (at least) two options. We can either set the output of the neuron to a known value and connect the $Y$ terminal via an ampere-meter directly to ground - essentially shorting it - and dividing the neuron output voltage by the measured short-circuit current.\n\nAlternatively, we can set the neuron to a known open-circuit voltage $U_{\\mathrm{open}}$ by connecting +V to X2, connect Y to ground via the potentiometer resistance $R_P$ and measure the voltage drop $U_{\\mathrm{P}}$ over it. This is the safer version, in case we do not know how small $R_{\\mathrm{out}}$ is and we prevent dangerous currents. We measure:\n\n$$U_{\\mathrm{open}} \\approx 2.71\\,\\mathrm{V}, \\qquad U_{\\mathrm{P}} \\approx 2.11\\,\\mathrm{V}$$\n\nThis results in:\n\n$$R_{\\mathrm{out}} = \\left(\\frac{U_{\\mathrm{open}}}{U_{\\mathrm{P}}} - 1\\right) R_{\\mathrm{P}} \\approx 284\\,\\Omega$$\n\nb We want our circuit to approximate the function\n\n$$y_6(x) = A_6 \\cdot \\sigma(w_2 x + b) + B_6$$\n\nwith $B_6 = 1.48\\,\\mathrm{V}$. First, it is obvious that $w_1$ does not influence $y_6$, and therefore terminal X1 needs to be connected to ground. To increase the voltage of terminal Y, we need to add a voltage divider in the form of a potentiometer between terminal Y and the supply voltage, as shown in Fig. 7.\n\nThe output voltage can be expressed by\n\n$$y = (1-\\eta)A\\sigma(w_2 x + b) + \\eta U_{+V},$$\n\nwhere $\\eta$ is the voltage division ratio of the $R_P$ and $R_{out}$ combined:\n\n$$\\eta = \\frac{R_{out} + R_a}{R_{out} + R_P}$$\n\nwith $R_a$ being the fraction of $R_P$ that lies in between B1 and B3. With this, we can use the given value of $B_6$ to get $\\eta$:\n\n$$\\eta = \\frac{B_6}{U_{+V}} \\approx 0.458 \\Rightarrow \\frac{R_a}{R_P} = \\frac{1}{R_P}\\left(\\frac{R_{out} + R_P}{2} - R_{out}\\right) \\approx 0.389$$\n\nAnd thus we gain a theoretical value for $A_6$:\n\n$$A_6 = A(1-\\eta) = A\\left(1 - \\frac{B_6}{U_{+V}}\\right) \\approx 1.5\\,\\mathrm{V}. \\qquad (8)$$\n\nTo experimentally verify that our neuron behaves as expected, once again, the remaining potentiometer can be used to apply different input voltages $x$ and the output $y$ is recorded. The multimeter can be used to set the *internal* B-potentiometer to the right ratio - do not forget to measure in the ohmmeter mode only if there are no currents running through the potentiometer. To linearize the data, we rescale the $x$-values by applying the sigmoid function $\\sigma(z(x))$ to it. The resulting numerical values can be seen in Tab. 5.\n\nIf one plots $\\sigma(w_2 x + b)$ against $x$, one expects a linear function with slope $A_6$ and intercept $B_6$. The raw data is shown in Fig. 8 and the linear fit in Fig. 9.\n\n| $x(V)$ | $y(V)$ | $A\\sigma(w_2x+b)(V)$ |\n|---|---|---|\n| 0.00 | 2.73 | 1.38 |\n| 0.15 | 2.76 | 1.48 |\n| 0.30 | 2.78 | 1.58 |\n| 0.45 | 2.80 | 1.68 |\n| 0.60 | 2.83 | 1.78 |\n| 0.75 | 2.85 | 1.87 |\n| 0.90 | 2.86 | 1.96 |\n| 1.20 | 2.89 | 2.11 |\n| 1.50 | 2.91 | 2.25 |\n| 1.80 | 2.92 | 2.36 |\n| 2.10 | 2.94 | 2.45 |\n| 2.40 | 2.95 | 2.52 |\n| 2.70 | 2.96 | 2.58 |\n| 3.00 | 2.96 | 2.62 |\n| 3.23 | 2.97 | 2.65 |\n\nTable 5\n\nFrom the fit, we read $A_6 \\approx 1.53$ and $B_6 \\approx 1.45$, which is in agreement with our theoretical values up to 2 significant digits. The fact that the linear fit function agrees well with the data points further confirms that the neuron behaves as intended.\n\n| | Task 6 | Pts |\n|---|---|---|\n| A | Idea for output resistance | 0.2 |\n| B | Measurements | 0.2 |\n| C | $R_{\\mathrm{out}} = 284\\,\\Omega \\pm 15\\,\\Omega$ | 0.1 |\n| D | **Idea and drawing of circuit** | 0.5 |\n| | **No points are awarded** for the following parts E-L if the circuit used is the same as used in task 4 or task 5 or the only change is that X1 is connected to GND or if there is no documentation of a circuit that is able to provide varying voltages here or in previous tasks. | |\n| E | Derivation of $A_6$ (8) | 0.4 |\n| | Penalty for neglecting $R_{\\mathrm{out}}$ | -0.2 |\n| F | Raw measurement values of $y_6$ for varying $x$ | |\n| | Usage of whole span for $x$ | 0.1 |\n| G | Number of Points <= 2 | 0 |\n| | 3-4 | 0.1 |\n| | >= 5 | 0.2 |\n| H | Plot for $y_6$ versus $\\sigma(z(x))$ — Size & Axes | 0.2 |\n| I | Converted values in plot | 0.2 |\n| J | Linear regression line | 0.2 |\n| K | Alignment of measured and theoretical values | 0.2 |\n| L | Overall penalty for significant digits other than 2-3 | -0.2 |\n| | **Total on Task 6** | 2.5 |",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "caption": "Figure 1: Correct Setup Task 2",
+      "alt": "Circuit diagram: two potentiometers wired to the grey box (terminals +V, GND, X2, Y, X1) so their sliders feed X2 and X1.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig1.png",
+      "width": 1266,
+      "height": 667,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        291.69,
+        235.71,
+        595.26,
+        395.68
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "caption": "Figure 2: Task 3",
+      "alt": "Two side-by-side plots of the x1–x2 plane with a shaded square [0,3]×[0,3], dashed parallel lines of constant y labelled y_min and y_max, vector w, and points A and B with an arrow.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig2.png",
+      "width": 1440,
+      "height": 1088,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        250.02,
+        580.91,
+        595.26,
+        841.89
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig3",
+      "caption": "Figure 3: Graph of $x_1(V)$ vs $z$ for Task 4",
+      "alt": "Scatter plot of z versus x1 (0–4 V) with data points from 1.68 down to −0.21 and a describing linear fit.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig3.png",
+      "width": 266,
+      "height": 302,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        25.02,
+        21.87,
+        88.69,
+        94.28
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig4",
+      "caption": "Figure 4: Graph of $x_2(V)$ vs $z$ for Task 4",
+      "alt": "Scatter plot of z versus x2 (0–4 V) with data points rising from −0.21 to 2.72 and an ascending linear fit.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig4.png",
+      "width": 1167,
+      "height": 1053,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        17.86,
+        463.05,
+        297.63,
+        715.59
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig5",
+      "caption": "Figure 5",
+      "alt": "Circuit diagram: +V to X1; B-potentiometer (B1 INPUT x, B2 to GND, B3) wired as a divider halving x into X2; neuron box with Aσ(z) and R_out to OUTPUT y.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig5.png",
+      "width": 1266,
+      "height": 1018,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        291.69,
+        42.08,
+        595.26,
+        286.24
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig6",
+      "caption": "Figure 6",
+      "alt": "Dual-axis plot: red curve Raw Output y (1.13–1.93 V) and blue points Inverse activation function(y) versus x1 (0–2.5 V), with dashed linear fit y = 0.47x − 0.36.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig6.png",
+      "width": 1021,
+      "height": 938,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        38.12,
+        60.62,
+        282.78,
+        285.39
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig7",
+      "caption": "Figure 7",
+      "alt": "Circuit diagram: GND to X1, INPUT x to X2; neuron box with Aσ(z) and R_out to Y; B-potentiometer connected between +V (B2) and Y via B1, slider B3 giving OUTPUT y.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig7.png",
+      "width": 1031,
+      "height": 517,
+      "source": {
+       "page": 6,
+       "pdfRect": [
+        311.94,
+        260.14,
+        558.99,
+        383.89
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig8",
+      "caption": "Figure 8",
+      "alt": "Red scatter plot 'Raw Output (y)' of y (2.73–2.97 V) versus x (0–3.2 V) rising with saturation, with a fitted curve.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig8-v2.png",
+      "width": 794,
+      "height": 1141,
+      "source": {
+       "page": 7,
+       "pdfRect": [
+        23.81,
+        16.83,
+        214.29,
+        290.43
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig9",
+      "caption": "Figure 9",
+      "alt": "Blue scatter plot 'Sigmoid rescaled x' of y (2.73–2.97 V) versus rescaled x (0.83–0.99 V) with dashed linear fit y = 1.53x + 1.45.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p1-sol-fig9.png",
+      "width": 1020,
+      "height": 748,
+      "source": {
+       "page": 7,
+       "pdfRect": [
+        312.52,
+        60.62,
+        557.19,
+        239.94
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ],
+    "incomplete": false
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    }
+   ]
+  },
+  {
+   "id": "eupho-2025-experiment-x-p2",
+   "number": 2,
+   "title": "E2 – Hidden pattern (10 pts)",
+   "points": 10,
+   "problemType": "experiment",
+   "statement": "You are given a flat semi-transparent foil with a micro-pattern printed on its surface that is invisible to the naked eye. The pattern consists of a large number of identical sinusoids with amplitude $A$, running horizontally with spatial period $\\Lambda$, and vertically shifted by distance $d$ relative to each other, as schematically shown in Fig. 1. Under a microscope, one can see that the printed pattern is composed of strictly horizontal line segments, each vertically displaced from its neighbours by a constant pitch $s$, as shown in Fig. 2.\n\n**Equipment (see also Fig. 3)**\n\nA Semi-transparent foil with a micro-pattern printed on its surface.\n\nB Laser diode with wavelength $\\lambda = (654 \\pm 5)\\ \\mathrm{nm}$. The laser diode can be focused to the desired distance by rotating the end cap with a lens inside.\n\n**Warning:** Do not completely unscrew the end cap! Inside, there is an oriented lens and a spring. No replacement laser will be given if damaged or disassembled.\n\nC Two 90-degree L-shaped steel planks serving as stands for the foil and the laser diode. The foil can be fixed to one of the planks using the provided small clips. The laser diode can be mounted to the other plank with a larger colored clip or with the provided rubber band.\n\nD A sheet of paper with a printed goniometer – a polar coordinate frame with 1-mm radial steps and angular divisions in degrees.\n\nE A screen: the large surface of the box containing the experimental materials. Empty the box and place it on the desk with its large surface vertical.\n\nF Ruler.\n\nG Measuring tape.\n\nH Adhesive tape attached to the ruler. Use pieces of the tape to fix the printed goniometer to the screen or to secure components to the table. You can ask for more tape if needed.\n\nI Millimeter graph paper.\n\nJ An 80 mm paper measuring scale with diagonal reference lines that allow you to measure fractions of the main scale divisions, accurate to $\\pm 0.1\\ \\mathrm{mm}$.\n\n*Hint*: In all of your measurements you are free to draw or put marks on the screen.\n\n*Important*: Assume that the surface of the experimental desk is flat, and the screen is strictly perpendicular to the desk.\n\nIn all of the tasks you are expected to:\n1. sketch a setup and/or rationalize a method for measuring the corresponding quantities;\n2. report your measurements and calculations in a tabular form;\n3. estimate the desired quantities and their uncertainties graphically, whenever reasonable.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "caption": "Figure 1: Pattern (not to scale)",
+     "alt": "Stack of identical horizontal sinusoids with spatial period Λ marked on top, peak-to-peak amplitude 2A marked, and vertical shift d between neighbouring sinusoids marked on the right.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-fig1.png",
+     "width": 790,
+     "height": 836,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       66.69,
+       223.11,
+       255.96,
+       423.45
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p2-fig2",
+     "caption": "Figure 2: Pattern as seen under microscope",
+     "alt": "Microscope view of the pattern: horizontal grey line segments shifted stepwise, with vertical offsets d (between sinusoids) and s (step height between adjacent segments) marked.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-fig2.png",
+     "width": 983,
+     "height": 426,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       42.84,
+       447.03,
+       278.6,
+       548.91
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p2-fig3",
+     "caption": "Figure 3: Components A, B, C, H, and J arranged for the experiment.",
+     "alt": "Photo of the setup: foil A on an L-shaped plank, laser diode B mounted on another plank, printed goniometer J and steel plank C on the desk, adhesive tape H.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-fig3.png",
+     "width": 1502,
+     "height": 1422,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       235.12,
+       32.85,
+       595.26,
+       373.82
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a",
+     "points": 2,
+     "statement": "Determine as precisely as possible: The sinusoid period $\\Lambda$. (2 pts)"
+    },
+    {
+     "label": "b",
+     "points": 2,
+     "statement": "The vertical offset $d$ of the neighbouring sinusoids (2 pts)"
+    },
+    {
+     "label": "c",
+     "points": 3,
+     "statement": "The sinusoid amplitude $A$ (3 pts)"
+    },
+    {
+     "label": "d",
+     "points": 3,
+     "statement": "The step height $s$ (3 pts)"
+    }
+   ],
+   "topics": [
+    "optics/interference",
+    "optics/laser",
+    "measurement/uncertainty"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**E2 – Solution**\n\n**Task a.**\nThe light transmitted through the film forms a primary and secondary diffraction pattern as displayed in Fig. 13.\n\n[[figure p2-sol-fig1]]\n\nFigure 13: Photo of the diffraction pattern with the primary and secondary pattern marked.\n\nThe secondary diffraction pattern is only required for task d. For the primary diffraction pattern, a number of bright interference maxima lying on the same line is visible. This fact implies that locally, within the cross section of the laser spot, the printed lines on the film surface form a diffraction grating consisting of a large number of practically linear parallel fringes. Therefore, the diffraction maxima are situated on a straight line, perpendicular to the tangent to the illuminated sinusoids, like illustrated in Fig. 14.\n\nBy scanning the laser in a horizontal direction, the diffraction pattern will tilt according to the line slope in the illuminated spot. The pattern will be vertical when the laser incidents on crests or valleys of the illuminated sinusoids. Therefore, the distance between two consecutive vertical positions of the diffraction pattern is $l = \\Lambda/2$, hence $\\Lambda = 2l$.\n\nThe experimental setup is designed as follows: As a first step, we fix the foil with two clips to the L-shaped stand and align it carefully vertically. The goniometer is glued to the screen with the $0^{\\circ}$-division pointing vertically. Next we fix the laser to another L-shaped stand and align it so that the beam hits the centre of the goniometer. We place the screen (goniometer) as far as possible from the foil to achieve larger displacements of the maxima and hence a better precision, also see Fig. 15.\n\n[[figure p2-sol-fig3]]\n\nFigure 15: Setup with optimized usage of the table space for improved precision.\n\nThe stand with the foil is being displaced in small steps across the laser beam, and the angle of inclination $\\theta$ of the diffraction pattern is being measured as function of the distance $x$ between the laser spot and the edge of the film.\n\nFurther we put the ruler on the diagonal scale so that one of its edges is aligned with the alignment line on the scale; we'll be sliding the L-shaped stand with the foil along the edge of the ruler. That way we can focus on observing how the diffraction maxima shift while we slide the stand, without a need for sharing our attention between the diffraction maxima and alignment of the stand. A sample data set is recorded in the first two columns of Table 7, while the corresponding graph of $\\theta$ vs. $x$ is shown in Fig. 16.\n\n[[figure p2-sol-fig4]]\n\nFigure 16: Graph of $\\theta$ vs. $x$.\n\nIn what follows we'll be outlining two possible approaches for achieving precise experimental results of the quantities asked in this problem: **approach A**: graphical; **approach B**: carefully scanning the diffraction pattern around critical configurations.\n\n**Approach A.** Points $x_1$ and $x_2$ in Fig. 16 corresponding to $\\theta = 0^{\\circ}$, i.e. consecutive crest and valley of the sinusoid, can be obtained by linear fits of the four points nearest to the zero-crossing points:\n\n$$x_1 = (10.0 \\pm 0.5)\\ \\mathrm{mm} \\qquad x_2 = (40.5 \\pm 0.5)\\ \\mathrm{mm}\\,.$$\n\nTherefore, $l = x_2 - x_1 = 30.5$ mm with uncertainty $\\delta l = \\sqrt{\\delta x_1^2 + \\delta x_2^2} = 0.7$ mm, and\n\n$$\\Lambda = (61.0 \\pm 1.4)\\ \\mathrm{mm}\\,.$$\n\n**Approach B.** Alternatively, we move the stand with the foil so that the diffraction maxima align along a vertical line and take the reading $x_1$ from the diagonal scale. Next we slide the stand along the ruler to find the other position where the diffraction maxima align along a vertical line and take the corresponding reading $x_2$. We can see that achieving a vertical alignment is not easy and incurs an uncertainty, so we need to repeat the measurements. The measurement data are shown in the table below.\n\n| No | $x_1$/mm | $x_2$/mm |\n|---|---|---|\n| 1 | 77.8 | 47.3 |\n| 2 | 78.0 | 47.4 |\n| 3 | 77.7 | 47.5 |\n| 4 | 77.6 | 47.3 |\n| 5 | 77.7 | 47.4 |\n| avg | 77.76 | 47.38 |\n\nAccording to this we calculate\n\n$$\\Lambda = 2(x_2 - x_1) = 60.8\\ \\mathrm{mm}\\,.$$\n\nand $\\Delta\\Lambda = 0.16$ mm\n\n| | Task E2.a | Pts |\n|---|---|---|\n| A | Idea for linking the changing tilt of the primary diffraction pattern to phase of sinusoid. Partial credit if full $\\Lambda$ is measured between consecutive vertical positions of the diffraction pattern | 0.3, 0.1 |\n| B | Sketch of the correct setup (shifting the laser laterally to scan foil position and screen behind); partial credit if $\\Lambda/2$ is measured between two \"maximal\" inclinations | 0.2, 0.1 |\n| C | Using the diagonal scale for measuring $x$ (data recorded with the precision of 0.1 mm) | 0.2 |\n| D | **If Approach A is chosen:** Usage of at least half the sinusoid period (30.5 mm) for variation of $x$ | 0.2 |\n| E | Number of recorded points: ≥ 6 but < 10 points recorded: 0.2; ≥ 10 points recorded: 0.3 | |\n| E! | **If Approach B is chosen:** Number of measurements $n$ for both $x_1$ and $x_2$: $0.1(n-2)$, in total up to | 0.3 |\n| D! | Quality of data: standard deviation between individual measurements of $\\|x_1 - x_2\\| \\le 0.2$ mm: 0.2; $\\|x_1 - x_2\\| \\le 0.3$ mm: 0.1 | |\n| F | Distance between the foil and the screen at least 60 cm | 0.2 |\n| G | Partial points for value of $\\Lambda$ between 58 mm and 64 mm: 0.1; Partial points for value of $\\Lambda$ between 59.5 mm and 62.5 mm: 0.2; between 60 mm and 62 mm: 0.3; Full points: between 60.5 mm and 61.5 mm: 0.4 | |\n| H | Suitable error estimation. If the error estimation is based on a reasonable approach, but the numerical estimates of the direct measurement uncertainties are clearly under- or overestimated: 0.1; If the error estimation method itself is flawed or not provided: 0 | 0.2 |\n| | **Total on Task E2.a** | 2.0 |\n\n**Task b.**\n**Approach A.** It can be easily deduced from Fig. 14 that the period of the diffraction grating, perpendicularly to the printed lines, is\n\n$$d' = d\\cos\\theta\\,.$$\n\nThe angle to the $n$-th order diffraction maximum is:\n\n$$\\varphi = \\sin^{-1}\\left(\\frac{n\\Lambda}{d\\cos\\theta}\\right).$$\n\nThe distance between the 0-th and the $n$-th maxima on the screen is\n\n$$R_n = L\\tan\\varphi \\approx \\frac{n\\Lambda L}{d\\cos\\theta}\\,,$$  (9)\n\nwhere $L = 74.6$ cm is the distance between the film and the screen, and $\\sin\\varphi \\approx \\tan\\varphi$ since involved angles are much smaller than 1 rad. Therefore, if we choose a specific order maximum and measure the distance $R$ at different points on the screen, i.e. for different angles $\\theta$, the distance $d$ can be calculated as a sample average:\n\n$$d = n\\lambda L\\left\\langle \\frac{1}{R\\cos\\theta} \\right\\rangle$$\n\nWhile the uncertainty – as a sample standard deviation of $d$. Since the 0-th order could be slightly offset from the goniometer center, we measure the corresponding distances between the two symmetric, $n$-th and $-n$-th, maxima: $D_n = R_n + R_{-n}$ and calculate\n\n$$d = 2\\lambda L\\left\\langle \\frac{1}{D_n\\cos\\theta} \\right\\rangle$$\n\nThe last four columns of Table 7 summarize the measured distances and calculated value of $d$ for the 5-th maximum. By averaging the $d$ values, we obtain:\n\n$$d = (60.1 \\pm 0.5)\\ \\mu\\mathrm{m}\\,.$$\n\nHowever, we need to keep in mind the uncertainty of the laser wave length. Adding the relative errors of the measurement data and laser wavelength according to the Pythagorean rule (applicable for uncorrelated error sources), we obtain\n\n$$d = (60.1 \\pm 0.7)\\ \\mu\\mathrm{m}\\,.$$\n\nWe note that if we use the data at $\\theta = 0^{\\circ}$, the diffraction maxima yield directly the line distance $d$ according to\n\n$$d = 2\\lambda/\\sin\\alpha_n = 2\\lambda\\sqrt{L^2 + D_n^2/4}/D_n\\,.$$  (10)\n\n**Approach B.** Alternatively to using many data points for different $\\theta$, we can choose the positions $x = x_1$ or $x = x_2$ found in the previous task since they are the laterally points offering the highest precision. Analogously to approach A, we determine the distance between the symmetric diffraction maxima of highest observable order, $n = 6$, to achieve the highest possible precision. The best way to determine the distance $D_n$ is by marking dots onto the screen at the positions of the maxima, and measure the distance between the dots by ruler (to keep the goniometer clean, one can attach another sheet of paper to the stand). Since a single measurement will be very precise if done carefully, repeated measurements are not required for this task. The result of the measurement is $D_6 = 105.5$ mm with $L = 810$ mm, resulting in $d = 59.7\\ \\mu$m. Estimated error is $\\pm 0.7\\ \\mu$m.\n\n| | Task E2.b | Pts |\n|---|---|---|\n| A | Understanding that the primary diffraction pattern is created by the distance of the sinusoids to each other | 0.2 |\n| B | Using ≥ 5, ≥ 7, ≥ 10 $(\\theta, D_n)$ data points to receive 0.1, 0.2, 0.4 pts. (*approach* A) or choosing to record data at $x = x_1$ or $x = x_2$ (*approach* B) if vertical interference pattern is used without an explanation (*approach* B) | 0.4, 0.2 |\n| C | Expression equivalent to Eq. 10: 0.3; simplified Eq. 10 (without Pythagorean correction): 0.2 | |\n| D | Usage of at least a total span of 6+6=12 diffraction orders for measurement of $\\phi$: 0.3; Total span from 9 to 11 diffraction orders for measurement of $\\phi$: 0.2; Total span from 6 to 8 diffraction orders for measurement of $\\phi$: 0.1; If measurement data is not consistent with real experiment: 0 | |\n| E | Distance to the screen at least $L \\ge 70$ cm: 0.3; Partial credit for $L$ between 40 cm and 70 cm: 0.2; $L$ between 20 cm and 40 cm: 0.1 | |\n| F | Partial points for value of $d$ between 58 μm and 62 μm: 0.1; between 58.5 μm and 61.5 μm: 0.2; Full points for value of $d$ between 59 μm and 61 μm: 0.3 | |\n| G | Suitable error estimation. If the error estimation is based on a reasonable approach, but the numerical estimates of the direct measurement uncertainties are clearly under- or overestimated: 0.1; If the error estimation method itself is flawed or not provided: 0 | 0.2 |\n| | **Total on Task E2.b** | 2.0 |\n\n**Task c.**\n**Approach A:** The point where a sinusoid crosses the $x$-axis corresponds to a maximum angle of inclination of the diffraction pattern $\\theta = (27 \\pm 1)^{\\circ}$ and can be obtained as:\n\n$$x_0 = \\frac{x_1 + x_2}{2} = (25.3 \\pm 0.7)\\ \\mathrm{mm}\\,.$$\n\nThe sinusoid equation can be written as\n\n$$y = A\\sin\\left(k(x - x_0)\\right)$$\n\nwhere:\n\n$$k = \\frac{2\\pi}{\\Lambda} = (0.103 \\pm 0.002)\\ \\mathrm{mm}^{-1}$$\n\nis the sinusoid wavevector. Since $\\tan\\theta = dy/dx$, we obtain:\n\n$$\\tan\\theta = kA\\cos\\left(k(x - x_0)\\right).$$\n\nTherefore, the auxiliary variables $z = \\cos(k(x - x_0))$ and $t = \\tan\\theta$ are related by a linear dependence\n\n$$t = kAz \\equiv mz$$  (11)\n\nand the amplitude of the sinusoid can be calculated by determining the slope coefficient $m$:\n\n$$A = \\frac{m}{k}.$$\n\nCalculated values of $t$ and $z$ are shown in the third and fourth column of Table 7, and the corresponding graph is shown in Fig. 17.\n\n[[figure p2-sol-fig5]]\n\nFigure 17: Graph of $\\tan\\theta$ vs. $\\cos(k(x - x_0))$.\n\nThe slope coefficient is\n\n$$m = (0.52 \\pm 0.01)$$.\n\nTherefore:\n\n$$A = (5.0 \\pm 0.2)\\ \\mathrm{mm}$$ .\n\n**Approach B.** The amplitude of the sinusoids on the foil can be determined if we know the maximal slope the printed lines $\\max_x \\frac{dy}{dx} = Ak$ as we already know the wave vector $k = 2\\pi/\\Lambda$. We notice that the diffraction maxima lay on a line perpendicular to the lines on the foil at the point where the laser beam passes it, hence we can find the maximal slope of the lines as the maximal angle $\\theta$ that the array of diffraction maxima form with the vertical axis,\n\n$$\\max_x \\frac{dy}{dx} = \\max\\tan\\theta = \\tan\\theta_{\\max} \\tag{12}$$\n\nThis is done easily by using the same setup as in part A, by sliding the stand of the foil along the edge of the ruler and observing how the maxima move on the screen. As a result we obtain $\\theta_{\\max} = (27.5 \\pm 0.3)^{\\circ}$, corresponding to\n\n$$A = \\Lambda\\tan\\theta_{\\max}/2\\pi = (5.05 \\pm 0.06)\\ \\mathrm{mm}$$ .\n\n| | Task E2.c | Pts |\n|---|---|---|\n| A | Recognition that the slope of the sinusoid is perpendicular to the primary diffraction pattern | 0.3 |\n| B | Idea to use that the first derivative of the sinusoid is $\\tan\\theta$ | 0.3 |\n| C | Correct linearization equivalent to Eq. 11 (approach A) or deriving Eq. (12) (approach B) | 0.5 |\n| D | **If approach A has been chosen** Computing the auxiliary (linearized) value-pairs ($z$ and $t$) for $\\le 5$ points — *0.0*; 6-9 points — *0.2*; $\\ge 10$ points — *0.4*; Plot for $t$ versus $z$ — 0.2 | |\n| E | Suitable graphical evaluation to find $A$ (approach A) | 0.2 |\n| E! | **If approach B has been chosen** Idea of using the maximal inclination point | 0.2 |\n| D! | Obtaining $\\theta_{\\max}$; Partial points within $\\theta_{\\max} = (27.5 \\pm 1.0)^{\\circ}$ — *0.2*; Full points within $\\theta_{\\max} = (27.5 \\pm 0.5)^{\\circ}$ — *0.4* | |\n| F | Distance to the screen at least $L \\ge 70$ cm — 0.3; Partial credit for $L$ between 40 cm and 70 cm — *0.2*; $L$ between 20 cm and 40 cm — *0.1* | 0.3 |\n| G | Partial points for value of $A$ between 4.5 mm and 5.5 mm — 0.2; Partial points for value of $A$ between 4.7 mm and 5.3 mm — *0.5*; Full points for value of $A$ between 4.8 mm and 5.2 mm — *0.8* | 0.2 |\n| H | Suitable error estimation — 0.2; If the error estimation is based on a reasonable approach, but the numerical estimates of the direct measurement uncertainties are clearly under- or overestimated — *0.1*; If the error estimation method itself is flawed or not provided — *0* | 0.2 |\n| | **Total on Task E2.c** | **3.0** |\n\n**Task d.**\n\nThe vertical slabs that come from the printing technique lead to the secondary diffraction pattern as can be seen from the photo in Fig. 13. In this task, there also exist two different approaches that differ in the way the diffraction vectors are modelled but lead to the same and valid result.\n\n**Approach A:** In the model of Huygen's elementary waves, the elementary wave sources along each of the vertical edges, as shown in thick red dotted lines in Fig. 18, will create wavefronts that propagate towards the screen and create interference pattern.\n\nThese edges have a regular distance $g$ of each other that depends on $\\theta$, specifically:\n\n$$g = \\frac{s}{\\tan\\theta}.$$\n\n[[figure p2-sol-fig2]]\n\nFigure 18: Sketch for explanation of the relevant quantities for secondary diffraction pattern\n\nFrom the diffraction angle $\\omega$ of the maxima of the secondary diffraction pattern, $g$ can be expressed via:\n\n$$\\frac{\\lambda}{g} = \\sin\\omega \\approx \\omega.$$\n\nExperimentally, we can obtain $\\omega$ via\n\n$$\\omega \\approx \\tan\\omega = \\frac{R_+ + R_-}{2L},$$\n\nwhere $R_+ + R_-$ (cm) is the distance between the two diffraction orders visible (left and right from the centre) in the secondary pattern. We can combine this knowledge to obtain $g$:\n\n$$g = \\frac{2L\\lambda}{R_+ + R_-}$$\n\nThus, we get $s$ via the trigonometric relation\n\n$$s = g\\tan\\theta = \\frac{2L\\lambda\\tan\\theta}{R_+ + R_-} \\tag{13}$$\n\nIt is important to notice that the secondary pattern can only be observed distinctly for large $\\theta$ since only in these regions, the slope of the sinusoid barely changes, which in turn means that $\\theta$ and the resulting diffraction angle $\\omega$ is rather constant. In Tab. 6, the recorded measurement points for the same $L = 74.6$ cm is shown.\n\n| $\\theta$ | $\\tan(\\theta)$ | $R_+ + R_-$ (cm) | $s\\ (\\mu m)$ |\n|---|---|---|---|\n| 27.8 | 0.527 | 4.75 | 1.08E-05 |\n| 25.7 | 0.481 | 4.65 | 1.01E-05 |\n| 24.5 | 0.456 | 4.50 | 9.88E-06 |\n| 24.7 | 0.460 | 4.60 | 9.76E-06 |\n| 21.8 | 0.400 | 3.90 | 1.00E-05 |\n| 18.1 | 0.327 | 3.00 | 1.06E-05 |\n\nA graphical evaluation has no benefit over computing the average of the point-wise results here, so we use the average of $s$ as the result and its standard deviation as the error estimate. Thus, we get:\n\n$$s \\approx (10.2 \\pm 0.4)\\ \\mu\\mathrm{m}$$ .\n\n**Approach B:** Alternatively the characteristic diffraction length is the hypotenuse of length $h$ of the blue triangle shown in Fig. 18, which is $h = s/\\sin\\theta$. Subsequently, the diffraction angle is\n\n$$\\omega \\approx \\sin\\omega = \\frac{\\lambda}{h} = \\frac{\\tilde{R}_+ + \\tilde{R}_-}{2L},$$\n\nWhere $\\tilde{R}_+$ and $\\tilde{R}_-$ are the positions of the secondary diffraction pattern orthogonal to the primary pattern. Thus, the formula for s becomes\n\n$$s = \\frac{2L\\lambda\\sin\\theta}{\\tilde{R}_+ + \\tilde{R}_-}, \\tag{14}$$\n\nwhich leads to the same outcome as in approach A since $\\tilde{R}_+ = \\cos\\theta R_+$ and $\\tilde{R}_- = \\cos\\theta R_-$.\n\n| | Task E2.d | Pts |\n|---|---|---|\n| A | Linking the horizontal line segments of the discrete printer resolution to the secondary diffraction pattern | 0.3 |\n| B | Understanding that the diffraction angle depends on $\\theta$ | 0.3 |\n| C | Deriving the final formula to compute $s$ as in Eq. 13, or, alternatively Eq. 14 | 0.4 |\n| D | Sketching or describing a suitable setup and procedure to measure the relevant quantities to determine $s$ | 0.3 |\n| E | Using both the plus and minus diffraction order for improved measurement precision | 0.2 |\n| F | Method of measuring $R_+$ and $R_-$: Marking the secondary diffraction maxima with pen on screen and linear regression - evidence either via screen paper that shows this method or concise description of this — 0.3; Making just a single measurement between two horizontal interference points — *0.1* | 0.3 |\n| G | Distance to the screen at least $L \\ge 70$ cm — 0.3; Partial credit for $L$ between 40 cm and 70 cm — *0.2*; $L$ between 20 cm and 40 cm — *0.1* | 0.3 |\n| H | Choosing $\\theta > 27^{\\circ}$ — 0.2; partial credit for $\\theta > 25^{\\circ}$ — *0.1* | 0.2 |\n| I | Partial points for value of $s$ between 8 μm and 12 μm — 0.1; Partial points for value of $s$ between 9 μm and 11 μm — *0.3*; Full points for value of $s$ between 9.4 μm and 10.6 μm — *0.5* | 0.1 |\n| J | Suitable error estimation — 0.2; If the error estimation is based on a reasonable approach, but the numerical estimates of the direct measurement uncertainties are clearly under- or overestimated — *0.1*; If the error estimation method itself is flawed or not provided — *0* | 0.2 |\n| | **Total on Task E2.d** | **3.0** |\n\n**Table 7: Measurement data for experiment “hidden pattern”**\n\n| $x$ (mm) | $\\theta$ ($^{\\circ}$) | $z$ | $t$ | $R_5$ (cm) | $R_{-5}$ (cm) | $D_5$ (cm) | $d$ (cm) |\n|---|---|---|---|---|---|---|---|\n| 0 | -23 | -0.86 | -0.42447 | 4.4 | 4.4 | 8.8 | 0.00602 |\n| 2 | -20 | -0.74 | -0.36397 | 4.4 | 4.3 | 8.7 | 0.00597 |\n| 4 | -16 | -0.58 | -0.28675 | 4.2 | 4.2 | 8.4 | 0.00604 |\n| 6 | -11 | -0.41 | -0.19438 | 4.1 | 4.1 | 8.2 | 0.00606 |\n| 8 | -7 | -0.21 | -0.12278 | 4.1 | 4.1 | 8.2 | 0.00599 |\n| 10 | -1 | -0.01 | -0.01746 | 4.1 | 4.1 | 8.2 | 0.00595 |\n| 12 | 6 | 0.20 | 0.105104 | 4.1 | 4.1 | 8.2 | 0.00598 |\n| 14 | 13 | 0.40 | 0.230868 | 4.2 | 4.2 | 8.4 | 0.00596 |\n| 16 | 17 | 0.58 | 0.305731 | 4.3 | 4.3 | 8.6 | 0.00593 |\n| 18 | 21 | 0.73 | 0.383864 | 4.3 | 4.3 | 8.6 | 0.00608 |\n| 20 | 25 | 0.85 | 0.466308 | 4.4 | 4.4 | 8.8 | 0.00612 |\n| 22 | 26 | 0.94 | 0.487733 | 4.5 | 4.6 | 9.1 | 0.00597 |\n| 24 | 27 | 0.99 | 0.509525 | 4.6 | 4.5 | 9.1 | 0.00602 |\n| 26 | 27 | 1.00 | 0.509525 | 4.6 | 4.5 | 9.1 | 0.00602 |\n| 28 | 26 | 0.96 | 0.487733 | 4.5 | 4.6 | 9.1 | 0.00597 |\n| 30 | 23 | 0.89 | 0.424475 | 4.4 | 4.4 | 8.8 | 0.00602 |\n| 32 | 18 | 0.77 | 0.32492 | 4.2 | 4.2 | 8.4 | 0.00611 |\n| 34 | 16 | 0.62 | 0.286745 | 4.2 | 4.3 | 8.5 | 0.00597 |\n| 36 | 12 | 0.45 | 0.212557 | 4.1 | 4.1 | 8.2 | 0.00608 |\n| 38 | 6 | 0.26 | 0.105104 | 4.1 | 4.1 | 8.2 | 0.00598 |\n| 40 | -1 | 0.06 | -0.01746 | 4.1 | 4.1 | 8.2 | 0.00595 |\n| 42 | -8 | -0.15 | -0.14054 | 4.1 | 4.1 | 8.2 | 0.00601 |\n| 44 | -12 | -0.35 | -0.21256 | 4.2 | 4.1 | 8.3 | 0.00601 |\n| 46 | -21 | -0.53 | -0.38386 | 4.4 | 4.4 | 8.8 | 0.00594 |\n| 48 | -22 | -0.69 | -0.40403 | 4.4 | 4.4 | 8.8 | 0.00598 |\n| 50 | -24 | -0.83 | -0.44523 | 4.4 | 4.4 | 8.8 | 0.00607 |",
+    "figures": [
+     {
+      "id": "p2-sol-fig1",
+      "caption": "Figure 13: Photo of the diffraction pattern with the primary and secondary pattern marked.",
+      "alt": "Photo of a laser diffraction pattern: concentric grids of pink dots with a bright central maximum; cyan arrows labelled R_-n, R_-, R_+, R_+n along the primary diagonal direction (labelled \"primary\"), and green horizontal arrows labelled \"secondary\".",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-sol-fig1.png",
+      "width": 1075,
+      "height": 1001,
+      "source": {
+       "page": 9,
+       "pdfRect": [
+        25.02,
+        127.12,
+        282.78,
+        367.07
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig2",
+      "caption": "Figure 14: Qualitative sketch of interference pattern.",
+      "alt": "Sketch with x-y axes, a sinusoid curve, a red dashed line labelled \"normal\" at angle θ to the y axis, a blue dashed line labelled \"tangent\", the perpendicular offset d' and red diffraction dots along the normal.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-sol-fig2.png",
+      "width": 1077,
+      "height": 1116,
+      "source": {
+       "page": 9,
+       "pdfRect": [
+        298.85,
+        60.62,
+        557.19,
+        328.32
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig3",
+      "caption": "Figure 15: Setup with optimized usage of the table space for improved precision.",
+      "alt": "Photo of the experimental setup on a table: L-shaped stand with the foil and laser, a screen with a circular diffraction pattern, and a measuring tape along the table edge.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-sol-fig3-v4.png",
+      "width": 772,
+      "height": 815,
+      "source": {
+       "page": 9,
+       "pdfRect": [
+        342.27,
+        340.96,
+        527.4,
+        536.27
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig4",
+      "caption": "Figure 16: Graph of θ vs. x.",
+      "alt": "Scatter plot of θ (degrees, -30 to 30) versus x (mm, 0 to 50) with two red linear-fit segments marked x1 near 10 mm and x2 near 40.5 mm crossing θ = 0.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-sol-fig4.png",
+      "width": 1021,
+      "height": 885,
+      "source": {
+       "page": 10,
+       "pdfRect": [
+        38.12,
+        60.62,
+        282.78,
+        272.79
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig5",
+      "caption": "Figure 17: Graph of tan θ vs. cos(k(x−x₀)).",
+      "alt": "Scatter plot of t = tan θ (-0.6 to 0.6) versus z = cos(k(x−x₀)) (-1.0 to 1.0) with a red linear-fit line of slope ≈0.52 through the origin.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-sol-fig5.png",
+      "width": 1021,
+      "height": 875,
+      "source": {
+       "page": 12,
+       "pdfRect": [
+        38.12,
+        170.05,
+        282.78,
+        379.71
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig6",
+      "caption": "Figure 18: Sketch for explanation of the relevant quantities for secondary diffraction pattern",
+      "alt": "Black staircase-like step profile with red dotted vertical edges; a blue right triangle marks the angle θ, the horizontal edge length g and the vertical step height s.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-experiment-x/p2-sol-fig6.png",
+      "width": 1015,
+      "height": 383,
+      "source": {
+       "page": 13,
+       "pdfRect": [
+        38.7,
+        60.62,
+        282.15,
+        152.37
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 11
+    },
+    {
+     "document": "solutions",
+     "page": 12
+    },
+    {
+     "document": "solutions",
+     "page": 13
+    },
+    {
+     "document": "solutions",
+     "page": 14
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    }
+   ]
+  }
+ ]
+}

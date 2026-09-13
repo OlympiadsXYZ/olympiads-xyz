@@ -1,0 +1,153 @@
+---
+id: eupho-2026-experiment-x-p1
+source: 'EuPhO 2026, experiment'
+title: 'Задача 1. Task E1: Probing the acoustic field (1.0 pts)'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2026/eupho-2026-experiment-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T20:48:56.752Z'
+verifier: 'same-model'
+---
+
+*Experimental task Language: English · 1 т.*
+
+<Warning title="Бележка към темата">
+Solutions document exists in the archive but was not included in this window; official answers for all tasks are missing.
+</Warning>
+
+## Условие
+
+An acoustic levitator consists of transducers which convert an electrical signal into intense sound waves. The acoustic pressure of the resulting interference pattern can levitate small objects close to the nodes of the pattern.
+
+**Warning:** Avoid short-circuiting the connections on the top and bottom of the levitator.
+
+The tasks E1-E7 of this exam are designed to be independent of each other's results. You may skip tasks you are struggling with.
+
+For the following tasks, consider only the nodes on the z-axis. For task E3 and onward, use only the centremost node. The Mode X switch on the electrical box (F), see Fig. 1, should be in position O.
+
+**Equipment**
+
+A. Two green Light Emitting Diodes (LEDs). Do not connect the LEDs to the power supply (G).
+
+B. Individual transducer.
+
+C. Metal frame with a levitator module and a red LED, which can be modeled as a *point source*.
+
+D. Capture unit for collecting falling objects.
+
+E. 2 hex keys for mounting and aligning the setup.
+
+F. Electrical enclosure with switches *LED* and *Mode X*.
+
+G. Power supply.
+
+H. Banana cables.
+
+I. Screen.
+
+J. Tape.
+
+K. Transparent ruler.
+
+L. Metal net.
+
+M. Tweezers.
+
+N. 15 blue styrofoam beads.
+
+O. Multiple white spherical beads of unknown material (⌀ 2.0 mm).
+
+P. Multiple transparent spherical glass beads (⌀ 2.0 mm, $\rho_{\mathrm{glass}} = 2500\ \mathrm{kg\ m^{-3}}$).
+
+Q. 3 different unknown liquids labelled I, II and III. They are all safe to touch with your hands, but should not be ingested.
+
+R. 3 syringes.
+
+S. 3 blunt end needles for the syringes (be careful!).
+
+T. 2 clothes pegs.
+
+U. Stop watch.
+
+V. Lamp.
+
+W. Power cord.
+
+X. Piece of paper to dry the metal net (not in image).
+
+If you suspect that a component has failed for some reason during the competition, inform the invigilator to get help.
+
+To get familiar with the acoustic field, use the green LEDs (A) and the transducer (B) to construct a tool that emits light according to the local acoustic intensity. A transducer is a capacitor whose charge depends on the mechanical pressure applied to it.
+
+**Task E8: Intentional damage penalty (-0.5 pts)**
+
+All equipment and packaging is left on the table after the competition in working condition. For breaking components or packaging due to careless handling or failing to follow the warning in red text, a penalty will be applied. (-0.5 pts)
+
+**a)** Draw a circuit diagram for your tool. **[0,5 т.]**
+
+**b)** Use your tool to roughly estimate the distance between two adjacent antinodes on the $z$ axis in the centre of the levitator. **[0,5 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+# Solutions
+
+**General grading instructions:**
+
+- Common small penalties
+  - Missing units in measurements, only penalized once per subtask. **-0.1 pts**
+  - Solution in different units than asked: **-0.1 pts**
+  - Minor arithmetic error: **-0.1 pts**
+  - When graphically evaluating data - using less than half the area on graph paper for plots: **-0.1 pts**
+- When grading numerical results, we do not award points for correct values achieved by guessing (e.g. just stating $n = 1.35$), without a effective measurement method presented and raw data recorded.
+- When determining the parameters from a linear fit, both a graphical solution as well as using a linear regression on a permitted calculator can be awarded full points for data evaluation. However in the latter case, it is necessary to state that a linear regression on a calculator was used and all raw data used must be presented in a table on paper.
+- For all items in a grading scheme, we only award either the full points for this item-ID, zero points, or specified partial points. We avoid awarding non-documented partial points.
+- The two grading items E2-A3 and E2-A4 labeled with **GLOBAL** can be awarded for a criterion fulfilled in the specific subtask or anywhere else in the exam.
+
+> **Överkurs, i.e. extra information**
+>
+> All solutions are given as a numerical result ± two statistical standard deviations, and all possible systematic errors are ignored. This is not required by the students.
+
+## E1 Probing the acoustic field
+
+### a) Circuit diagram
+
+The transducers in the levitator act as transmitters and are arranged such that a standing acoustic field with pressure nodes and antinodes is created. In the nodes, the pressure variation is minimal due to destructive interference, whereas in the antinodes it oscillates most strongly. An additional transducer can be used as a receiver to probe this field and convert the pressure differences into an alternating voltage. This spatial variation can be visualized using light-emitting diodes.
+
+Depending on the circuit configuration (see Fig. 3), the brightness differs significantly. With two antiparallel LEDs, the light output is strongest because one LED conducts in each half-cycle of the signal. If only a single LED is used, the light output is weak because only one half of the signal contributes and the LED is mainly operated in reverse-bias. Interestingly, if both leads of the LED are touched with the hand, a reasonable brightness can be observed. The human body introduces finite resistance, which reduces the reverse-bias problem and yields better brightness than in the completely open case, but still not as good as in the antiparallel case.
+
+> **Överkurs, technical excursion**
+>
+> To probe the acoustic field, a piezoelectric transducer is used as a receiver. The incident sound wave induces a periodic mechanical deformation of the piezoelectric crystal, which displaces charges in the lattice and generates an alternating voltage across the electrodes. Thus, electrically, the transducer behaves like a capacitive AC source with position-dependent amplitude. The circuit rapidly reaches a steady state in which the net transferred charge is zero, meaning that only alternating currents flow. Grounding one node does not change this behavior; it merely sets a DC reference potential without improving the signal or light output. Using antiparallel LEDs provides the most efficient use of the available current, as each half-cycle has a forward conduction path. Replacing a diode with a resistor introduces a bidirectional current path that diverts current away from the LED, reducing brightness. The resistance value is critical: a short circuit bypasses the LED completely, while an open circuit forces charge balance through the LED alone, where the very small reverse current severely limits the forward current and thus light output. Touching both terminals with the hand introduces moderate resistance for this scenario, allowing sufficient current for visible light, though still significantly less than in the antiparallel configuration.
+
+### b) Distance between antinodes
+
+The transducer head is vertically moved and the approximate height change is recorded using the ruler. For a vertical distance of $h_5 \approx 20\ \mathrm{mm}$, the LEDs light up five times, starting and ending with lit up LEDs. Thus, five anti-nodes have been measured. This yields the estimate:
+
+$$h = \frac{h_5}{5-1} \approx (5 \pm 2)\ \mathrm{mm} \qquad (5)$$
+
+Grading scheme E1
+
+| ID | Scoring Item | Points |
+|----|--------------|--------|
+| E1-A1 | Correct circuit diagram (does mot require correct symbol for transducer or diode, but alternate polarity should be clearly indicated). | **0.5 pts** |
+| | Second circuit diagram (with resistor/hands) | 0.3 pts |
+| | Transducer and one diode only | 0.2 pts |
+| | In case diode symbol without polarity is used, independent of remaining circuit | 0.1 pts |
+| | Any circuit with a voltage source (power supply or levitator top rails): | 0.0 pts |
+| E1-B1 | Transducer head is moved along the z-axis and vertical distance between at least two anti-nodes is measured. | **0.2 pts** |
+| E1-B2 | Result for $h$ between adjacent antinodes is $\in [3, 8]$ mm. | **0.3 pts** |
+| | **Total points** | **1.0 pts** |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-experiment-x/p1-sol-fig3.png" alt="Two circuit diagrams: left shows a transducer T with two antiparallel LEDs; right shows a transducer T with a resistor and one LED in parallel." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2026_experiment_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2026/eupho2026_experiment_problems.pdf)
+· официални решения: [eupho2026_experiment_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2026/eupho2026_experiment_solutions.pdf)

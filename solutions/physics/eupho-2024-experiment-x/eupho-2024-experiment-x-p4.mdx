@@ -1,0 +1,144 @@
+---
+id: eupho-2024-experiment-x-p4
+source: 'EuPhO 2024'
+title: 'Задача 4. Task E.4 - Deformation of the ball'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2024/eupho-2024-experiment-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T20:45:15.635Z'
+verifier: 'same-model'
+---
+
+*"EuPhO 2024, Kutaisi, Georgia — Experimental Problems" · 4,5 т.*
+
+<Warning title="Бележка към темата">
+Solutions-only window; statements to be assembled from the problems-document window. E.4 solution is incomplete (continues beyond page 6).
+</Warning>
+
+## Условие
+
+In this part you will be dropping the more elastic rubber ball on the piezo element. During the collision between the ball and the piezo, the ball experiences deformations. You can assume that the force $F$ acting on the ball depends on the ball's elastic deformation $x$ as a power law:
+
+$$F = kx^{\alpha}\,.$$
+
+Find the exponent $\alpha$ and the material constant $k$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p4-sol-fig9-v2.png" alt="Circuit diagram: piezo capacitor C_p on the left with a switch, a diode in series into a node connecting capacitor C, a discharge switch, and a voltmeter measuring U_C." />
+<figcaption>Figure 9: .</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p4-sol-fig10.png" alt="Plot of elastic energy E_elast in joules (0.000 to 0.020) versus maximum force F_max in newtons (40 to 160), with blue square/diamond experimental points with error bars in both directions." />
+<figcaption>Figure 10</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p4-sol-fig11-v2.png" alt="Plot of log E_elast in arbitrary units (-7.0 to -4.0) versus log F_max in arbitrary units (3.75 to 5.00), with dark-blue diamond experimental points, a red fitted line labelled 'linear fit, γ = 2.34 ± 0.1' and a teal fitted line labelled 'linear fit, γ = 1.94 ± 0.06'." />
+<figcaption>Figure 11</figcaption>
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $\alpha = \frac{1}{\gamma-1} \approx 0.75 \pm 0.06 \ (\gamma_2 = 1.06 \pm 0.05),\qquad k = ((\exp y_0)(\alpha+1))^{-\alpha} \approx (84000 \pm 7000)\,\mathrm{N/m^{\alpha}}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Task E.4 - Deformation of the ball**
+
+When the ball is dropped onto the piezo element, the kinetic energy just before the collision is partially converted into elastic deformation and the remainder dissipated as heat and sound. At the point of maximal deformation, the kinetic energy is zero and the force on the ball and piezo is also at its maximum. By using the diode that is soldered to the capacitor, we can prevent charges from flowing backwards and therefore store the maximum voltage during the measurement. You can see the corresponding circuit diagram in Fig. 9.
+
+If we drop the ball onto the piezo element from different heights, we will provide different kinetic energies before the impact. Each time, we read the maximum voltage from the capacitor and convert it into piezo voltage by multiplying with $C/C_p$. Multiplying again with the linear slope $\beta$ found in task E.2c, we get the maximum force during the impact $F_m$. With that, we can, for each initial kinetic energy, compute the maximum deformation $x_m$.
+
+$$F = k x_m^{\alpha} \Rightarrow x_m = \left(\frac{F}{k}\right)^{1/\alpha} \qquad (14)$$
+
+We integrate the force and find the maximum elastic energy the ball reaches during the collision.
+
+$$E_{elastic} = \int_0^{x_m} F(x)\,\mathrm{d}x = \frac{1}{\alpha+1} k x_m^{\alpha+1} = \frac{k^{-1/\alpha}}{\alpha+1} F_m^{1+1/\alpha} \qquad (15)$$
+
+From task E.1, we can express the elastic energy of the ball, when dropped from height $h$:
+
+$$E_{elastic} = \eta m g h \qquad (16)$$
+
+where $m = (8 \pm 0.5)\,\mathrm{g}$ can be measured using the scales. Using that, we can plot the elastic energy as a function of the maximum force. However, this linear plot (Fig. 10) was not required from the students, we only show it here for illustration.
+
+Taking the logarithm of both $F_m$ and $E_{elastic}$, we arrive at a linear function, which we can plot (Fig. 11).
+
+$$\ln E_{elastic} = \ln \frac{k^{-1/\alpha}}{\alpha+1} + \left(1 + \frac{1}{\alpha}\right) \ln F_m\,. \qquad (17)$$
+
+Extracting the slope $\gamma$, we arrive at a value of $\alpha$ of:
+
+$$\gamma = \left(1 + \frac{1}{\alpha}\right) \Rightarrow \alpha = \frac{1}{\gamma - 1} \approx 0.75 \pm 0.06\,, \qquad (18)$$
+
+A more correct way is to take into account only the nicely linear region in the center of the range. The reason for dropping the leftmost datapoint is that the relative uncertainty of the underlying height measurement is very low. The reason for dropping the rightmost datapoints lies in the force-voltage curve: we are already starting to approach the saturation region.
+
+$$\gamma_2 = 1.06 \pm 0.05\,.$$
+
+*Note: This result is actually surprising, since, according to the Hertz theory, we would have expected an exponent of 3/2. This is again something related to the piezo element being glued to the plates: while the crystal tries to take a bowl-like shape, plate moves slightly towards the ball, hence the deformation of the ball does no longer strictly correspond to its displacement during the impact.*
+
+With Eq. 17, we can compute $k$ from the interception of the fit ($y_0 = -15.7$), so:
+
+$$k = ((\exp y_0)(\alpha+1))^{-\alpha} \approx (84000 \pm 7000)\,\mathrm{N/m^{\alpha}} \qquad (20)$$
+
+**E.4 - Deformation of the ball**
+
+| | | Points |
+|---|---|---|
+| a | **Aproach** | **1.5** |
+| | Idea to use the diode in combination with the capacitor for extracting the maximum piezo voltage during a drop | 0.5 |
+| | using switch to discharge piezo (documented via circuit diagram or detailed description!) | 0.5 |
+| | Approach that the elastic kinetic energy part from dropping is the same as deformation energy | 0.5 |
+| b | **Measurement** | **1.0** or **0.5** |
+| | If the piezo has not been discharged before each individual measurement, the points are halved (it is assumed that the piezo has not been discharged if the voltage readings of the datapoints fluctuate significantly around the expected values) | |
+| | 0.1 per measured 2 height values, up to 8 different height values | 0.4 |
+| | 0.1 per measured 10 cm of height range | 0.3 |
+| | 0.1 per repetition per data point, up to 3 repetitions | 0.3 |
+| c | **Evaluation and result** | **2.0** |
+| | Linearisation equivalent to Eq. 17 | 0.8 |
+| | Graphical evaluation for $\alpha$ and $k$, or fit via calculator | 0.7 |
+| | Value of $\alpha$ between $1 \pm 0.5$ | 0.3 |
+| | Value of $k$ between $(84000 \pm 40000)\,\mathrm{N/m^{\alpha}}$ | 0.2 |
+| | **Total on E.4** | **4.5** |
+
+***Special cases and penalties***
+
+- *If no circuit diagram was provided, the first 1.0 points are deducted for the measurement technique with the diode and discharging the piezo on the capacitor.*
+- *If the voltmeter has been used directly for measuring the piezo voltage (without capacitor and diode), the data are unusable. Therefore, we cannot award the first 0.5 + 0.5 points in the approach, and also, no points are awarded for the measurement data taken. However, for the evaluation part, we do not subtract points even if it is done with these unusable data as long as a correct evaluation method has been used.*
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p4-sol-fig2.png" alt="See p4-sol-fig10" />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p4-sol-fig4-v2.png" alt="Plot of log E_elast in arbitrary units (about -4.0 to -7.0) versus log F_m in arbitrary units (3.75 to 5.0), with dark-blue experimental points and two fitted straight lines: red 'linear fit, γ = 2.34 ± 0.1' and teal 'linear fit, γ = 1.94 ± 0.06'." />
+<figcaption>Figure 11</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p4-sol-fig1-v3.png" alt="Plot of E_elast in joules (0.000 to 0.020) versus F_max in newtons (40 to 160) with dark-blue experimental data points rising nonlinearly." />
+<figcaption>Figure 10</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p4-sol-fig3-v2.png" alt="Circuit diagram for the ball-impact measurement: piezo capacitor C_p on the left with a discharge switch, a diode, capacitor C with a discharge switch, and a voltmeter V reading U_C on the right." />
+<figcaption>Figure 9: .</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p4-sol-fig5.png" alt="Plot of E_elast in joules (0.000 to 0.020) versus F_max in newtons (40 to 160) with dark-blue experimental data points rising nonlinearly." />
+<figcaption>Figure 10</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2024_experiment_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2024/eupho2024_experiment_problems.pdf)
+· официални решения: [eupho2024_experiment_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2024/eupho2024_experiment_solutions.pdf)

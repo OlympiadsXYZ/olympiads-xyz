@@ -1,0 +1,423 @@
+{
+ "paper": {
+  "id": "apho-2023-theory-t1",
+  "subject": "physics",
+  "competition": "APhO",
+  "year": 2023,
+  "round": "theory",
+  "roundType": "theory",
+  "grade": null,
+  "lang": "en",
+  "title": "Theory — XXIII APhO Mongolia 2023 — Theoretical Problem 1: ISS Orbital Decay Dynamics [10.0 points]",
+  "totalPoints": 10,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/APhO/2023/Theory/T1.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/APhO/2023/Theory/T1_sol.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "status": "review",
+  "caveat": "Transcribed from a partial window (solutions pages 1–6 of 9); the problem statement and the remaining solution pages are covered by other windows.",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "zai",
+   "model": "glm-5.3-flash",
+   "promptVersion": "v1",
+   "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
+   "requestId": "202609140518086b6acd8292d34526,2026091405195338ee41692b63432a,20260914052025c5c3519c7aa74b1d,20260914052221f9d7cdcc8671445d",
+   "at": "2026-09-13",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "c107325e7d34217900653f8dc337ceddb80aa9e7cd2e1ff53c591f2cd92c8e28",
+    "solutions": "b96f04c5f589bcddb0076c92f7e691786ca5f411734001136215b30546d7fac2"
+   },
+   "verifiedBy": "zai:glm-5.3-flash (same-model checker, prompt v1)",
+   "verifiedAt": "2026-09-13",
+   "notes": "[window 1] Window covers problems pages 1-6 of 7. Part F ('Numerical results and conclusion [1.0 points]') heading appears at the bottom of page 6 but its sub-tasks are printed on page 7, outside this window, and are therefore not transcribed here. Part D intro paragraph starts on page 5 and continues onto page 6 ('containing electrons and ions of oxygen atoms appear on the day side... n_ion ~ 10^12 m^-3'). Source typos preserved verbatim: 'Progess-60' (should be Progress-60); '. where p,V,T,M and mu...' (lowercase after full stop in the Clapeyron law sentence); 'enery' (instead of 'energy') in B.3; 'decent' (instead of 'descent') in B.5; 'averagely' in Remark 1; 'de-orbiting )' spacing in B.4; 'molecules were at rest' as printed in Part C intro. Parts points sum: A 2.0 + B 3.0 + C 1.0 + D 1.0 + E 2.0 + F 1.0 = 10.0 total, consistent with the printed 10.0 points. The one top-level problem convention matches the archive inventory: Parts A-F and sub-tasks A.1...E.3 are parts[] of problem 1. The statement field aggregates the running problem text (introduction, remarks, table); the figure captions are transcribed both in the figure records and referenced in the statement flow.\n[window 2] Window transcription: the top-level problem 1 (ISS Orbital Decay Dynamics) began before page 6, so its statement is a placeholder; parts D.1-D.2, E.1-E.3 and F.1-F.3 as printed on pages 6-7 are transcribed with their printed point values (0.3pt, 0.7pt, 0.6pt, 0.6pt, 0.8pt, 0.4pt, 0.4pt, 0.2pt). Section headings printed on page 6: 'Part E: Drag by the Earth's magnetic field [2.0 points]' and 'Part F: Numerical results and conclusion [1.0 points]'; the Part D heading precedes page 6. No figures on these pages. No solution pages were provided in this window.\n[window 3] Partial window: solutions pages 1–6 of 9 only; problem statement is emitted as placeholder and the numbered sub-tasks with their point values are expected on later pages (7–9), covered by other windows. Source idiosyncrasies preserved verbatim: inclination printed as \"51.6^0\" (superscript 0 instead of degrees); \"inconsiderable\" used where \"considerably\" is meant; \"attitude\" for \"altitude\" in Eq.(2) context; \"Particulary\"; \"Progess-60\"; \"averagely\"; electron charge unit printed as \"Q\" instead of \"C\" in the constants table; Eq.(9) exponent printed as h^2/(h0*RE). Equations and tables rendered as LaTeX/Markdown per rules; the constants box is transcribed as a Markdown table. Figure bboxes are estimates in permille of the page.\n[window 4] Window covers solutions pages 6–9 only (sections C–F of the official solution of problem 1, ISS Orbital Decay Dynamics). The solution began on earlier pages (Eqs. 18–20 referenced), so this entry is a continuation. The source prints '\\leq 70)' with a stray closing parenthesis in Table 1, kept verbatim. Equation numbers (18)–(35) are as printed; (18)–(20) are on a previous page."
+  }
+ },
+ "problems": [
+  {
+   "id": "apho-2023-theory-t1-p1",
+   "number": 1,
+   "title": "Theoretical Problem 1: ISS Orbital Decay Dynamics [10.0 points]",
+   "points": 10,
+   "problemType": "theory",
+   "statement": "Introduction\n\n**Figure 1:** The International Space Station orbiting above the Earth.\n\nThe ISS is currently maintained in a nearly circular orbit with a minimum mean altitude of $370\\,km$ and a maximum of $460\\,km$, in the center of the thermosphere, at an inclination of $\\theta = 51.6^{\\circ}$ (degrees) to Earth's equator. The trajectory of the spacecraft is similar to a spiral with a slowly changing distance from the station to the Earth's surface, and during one cycle of revolution the change in altitude is inconsiderable.\n\nThe ISS mass is $M_S = 4.5 \\times 10^{5}\\,kg$ and overall length is $L_S = 109m$. Huge solar panels with a width of $W_S = 73m$ provide the ISS with electrical energy [NASA Official Report (2023)].\n\nIncluding all batteries and other parts, the effective cross area (section) of the station is approximately $S \\approx 2.5 \\times 10^{3}\\,\\mathrm{m}^2$ [European Space Agency, SDC6-23].\n\nThe ISS orbital decay is caused by one or more mechanisms which absorb energy from the orbital motion, the essential ones being:\n\n- atmospheric drag at orbital altitude is caused by frequent collisions of gas molecules with the satellite,\n- the Ampere force arising from the motion of the conductive apparatus in the Earth's magnetic field,\n- the interaction with the atomic oxygen ions.\n\n\"... In May 2008, the altitude was 350 kilometers, the ISS lost $4.5km$ and was re-boosted by the Progess-60 supply ship by $5.5km$. Again, the ISS continued to lose altitude by $5.5km$ ...\" [https://mod.jsc.nasa.gov]\n\n**Figure 2:** The altitude of ISS ($km$) over the years.\n\n**Figure 3:** The ISS mean height ($km$) in 2022-2023.\n\n\". . . The ISS loses up to $330ft$ ( $100m$) of altitude each day . . . \" [NASA Control Data (2021)]. In 2023 the ISS flies at altitudes of 410 km, with an orbital decay about $70m$ every day ( $\\sim 2km$ per month), and during magnetic storms the daily descent reaches $300m$. The ISS accomplishes the de-orbit maneuvers by using the propulsion capabilities of the ISS and its visiting vehicles [International Space Station Transition Report (2022)].\n\n**Figure 4:** ISS model with the cross sections from different aspect angles ($dm^2$). The CROC provides $2481m^2$ cross section.\n\n**Denotations and Physical constants:**\n\n| | | |\n|---|---|---|\n| Universal gas constant | $R$ | $= 8.31\\,J\\cdot K^{-1}\\cdot mol^{-1}$ |\n| Avogadro's number | $N_A$ | $= 6.022\\cdot 10^{23}\\,mol^{-1}$ |\n| The molar mass of gas (for air) | $\\mu$ | $= 0.029\\,kg\\cdot mol^{-1}$ |\n| Mass of the Earth | $M_E$ | $= 5.97\\cdot 10^{24}\\,kg$ |\n| Radius of the Earth | $R_E$ | $= 6.38\\cdot 10^{6}\\,m$ |\n| Gravitational universal constant | $G$ | $= 6.67\\cdot 10^{-11}\\,m^3\\cdot s^{-2}\\cdot kg^{-1}$ |\n| Density of air at Earth's surface | $\\rho_0$ | $= 1.29\\,kg/m^{3}$ |\n| Gravitational acceleration at Earth's surface | $g_0$ | $= 9.81\\,m\\cdot s^{-2}$ |\n| Average magnitude of Earth's magnetic field | $B$ | $= 5.0\\cdot 10^{-5}\\,T$ |\n| The electron absolute charge | $e$ | $= 1.60\\cdot 10^{-19}\\,C$ |\n\n**Part A: Modified barometric formula [2.0 points]**\n\nThe pressure of atmospheric air, composed mainly of neutral $O_2$ and $N_2$ molecules, can be found by using the Clapeyron-Mendeleev law (the ideal gas law): $pV = \\frac{M}{\\mu}RT$. where $p,V,T,M$ and $\\mu$ are the pressure, volume, temperature, mass and molar mass of a portion of air, $R$ is the ideal gas universal constant.\n\nThere are two equations for computing air pressure as a function of height. The first equation is applicable to the standard model of the **troposphere** ($h < 100km$) in which the temperature is assumed to vary with altitude at a lapse rate.\n\nThe second equation belongs to the standard model of the **thermosphere** ($h > 250km$) in which the temperature is assumed not to change considerably with altitude and is applicable to ISS.\n\nWe may assume that all pressure is hydrostatic and isotropic (i.e., it acts with equal magnitude in all directions).\n\n**Remark 1.** The temperature of Earth's thermosphere at altitude $300-600\\,km$ does not change considerably and reaches averagely about $800-900\\,K$ on the solar side [NASA data]. Therefore, one may put $T_h = T = const$ by investigating the ISS orbital flight. Particularly, since the spacecraft spends almost half of its flight time in the shadow side of the Earth, where the temperature drops sharply, we may take the value of $T = 425K$ as the average temperature at these altitudes. This temperature is also in agreement with the air density value $\\rho_h \\sim 10^{-12}kg/m^3$ [MSISE-90 Model of Earth's Upper Atmosphere] at $h = 400km$.\n\n**Figure 5:** The Earth's thermosphere.\n\n**Part B: Orbital deceleration and station descent rate [3.0 points]**\n\nLet us consider the problem of determining the rate of orbital decay of a satellite with mass $M_S$ that experiences constant friction force $\\vec{F}_{drag}$ acting on it. We assume that the decrease in altitude $dh$ is much less than the flight altitude $h$ itself ($dh \\ll h$).\n\n**Part C: Atmospheric drag [1.0 points]**\n\nThe speed of the satellite $v$ is many times greater than the average velocities (hundreds m/s) of the thermal motion of atmospheric molecules at a height $h \\approx 300 - 400km$, so we can assume that the molecules were at rest before the collision with the ISS. To roughly estimate the drag force, we assume that after the collision the molecules acquire the same speed as the satellite.\n\n**Part D: Drag by atomic oxygen ion [1.0 points]**\n\nIn the thermosphere, under the influence of ultraviolet and X-ray solar radiation and cosmic radiation, air ionization occurs (``polar lights''). Unlike $O_2$, $N_2$ does not undergo strong dissociation under the action of solar radiation, therefore, in general, there is much less atomic nitrogen $N$ in the Earth's upper atmosphere than atomic oxygen. At altitudes above $250km$, atomic oxygen $O$ predominates. Layers containing electrons and ions of oxygen atoms appear on the day side of the atmosphere. In this case, the concentration of atomic oxygen ions reaches $n_{ion} \\sim 10^{12}m^{-3}$\n\n**Part E: Drag by the Earth's magnetic field [2.0 points]**\n\nWe consider the influence on the motion of the satellite of the Earth's magnetic field, the value of which near the Earth's surface is equal to $(3.5 - 6.5)\\cdot 10^{-5}T$ with an average value of $B = 5\\cdot 10^{-5}T$.\n\nWhen a satellite moves at high speed in a magnetic field, an inducted electric current (electromotive force (EMF) ) occurs in the current-conducting elements of the satellite's structure. This electromotive force causes a redistribution of electric charges in the current-conducting elements of the satellite structure. An electric field appears around the satellite, which affects the movement electrically charged particles in the environment. Electrons are attracted to those parts of the satellite that have a positive potential (relative to the middle part of the satellite), and positively charged ions are attracted to those parts of the satellite that have a negative potential. Electrons and ions that hit the surface of the satellite structures are combined into neutral oxygen atoms, while the electrons 'travel' in the satellite's conductive structures, creating an electric current. The satellite, moving in space, 'collects' electrons and ions from the surrounding space and collides with them. For a rough estimate of the magnitude of the current that can flow through the conductive structures of the satellite, we will assume that the collection occurs only from an area equal to the cross-sectional area $S$ of the satellite, and all ions and electrons participate in the creation of this current.\n\n**Part F: Numerical results and conclusion [1.0 points]**\n\nF.2 Calculate and fill Table 2 in the Answer Sheet. **[0.4pt]** F.3 Rank these three orbital slowing processes in order of how strong an impact they have on ISS orbital altitudes higher than $380km$.\nFor the International Space Station, orbiting at an altitude above $380km$, write down the most significant factors contributing to orbital decay. **[0.2pt]**",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "caption": "Figure 1: The International Space Station orbiting above the Earth.",
+     "alt": "Photograph of the International Space Station with its large solar panels against the dark sky, with the blue curvature of the Earth below.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-fig1.png",
+     "width": 1033,
+     "height": 544,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       173.84,
+       232.38,
+       421.47,
+       362.83
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "caption": "Figure 2: The altitude of ISS $(km)$ over the years.",
+     "alt": "Noisy line plot of ISS altitude (km) from 1998 to 2018, y-axis 300–440 km, showing sawtooth decay with re-boosts, rising to about 410–420 km after 2012.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-fig2-v2.png",
+     "width": 1033,
+     "height": 702,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       173.84,
+       162.49,
+       421.47,
+       330.89
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig3",
+     "caption": "Figure 3: The ISS mean height $(km)$ in 2022-2023.",
+     "alt": "Line plot titled 'ISS - mean height in km', May 2022 to May 2023, y-axis 415–420 km, sawtooth pattern of decay and re-boosts.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-fig3-v2.png",
+     "width": 1033,
+     "height": 762,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       173.84,
+       383.04,
+       421.47,
+       565.74
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig4",
+     "caption": "Figure 4: ISS model with the cross sections from different aspect angles $(dm^2)$. The CROC provides $2481m^2$ cross section.",
+     "alt": "Scatter plot of cross-section (color scale 50000–450000) versus azimuth (−150 to 150 deg) and elevation (−80 to 80 deg), with symmetric colored dots; a color bar is at the right.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-fig4-v2.png",
+     "width": 1435,
+     "height": 674,
+     "source": {
+      "page": 3,
+      "pdfRect": [
+       77.4,
+       162.49,
+       421.47,
+       324.14
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig5",
+     "caption": "Figure 5: The Earth's thermosphere.",
+     "alt": "Diagram of Earth's atmosphere layers (Troposphere, Stratosphere, Mesosphere, Thermosphere) with a temperature scale (100–1200 K), solar radiation bands (X-Rays, Extreme UV, Far UV, Middle UV, Near UV, Visible and IR), IR Cooling, and a density scale (log10 n, cm-3, 4–20) with curves for O2, N2, O, He, H and electron density.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-fig5.png",
+     "width": 1033,
+     "height": 748,
+     "source": {
+      "page": 4,
+      "pdfRect": [
+       173.84,
+       320.76,
+       421.47,
+       500.08
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "A.1",
+     "statement": "Derive the general integral expression for the air pressure $p_h$ at ISS altitude $h$. This equation is called the general barometric formula. Hint: the temperature and gravitation may depend on $h$.",
+     "points": 0.5
+    },
+    {
+     "label": "A.2",
+     "statement": "Write down the air pressure (the standard barometric formula) $p_h^{sta}$, when the temperature and gravitation $g_h$ do not depend on $h$. Calculate the parameter $h_0 = \\frac{RT}{\\mu g_0}$ for $T = 425K$.",
+     "points": 0.3
+    },
+    {
+     "label": "A.3",
+     "statement": "Write down the air pressure (the improved barometric formula) $p_h^{imp}$ when the temperature is constant but the gravitation depends on $h$. Hint: Use the leading-order correction only, with accuracy $O(z_h^2)$. Hereby, the flight altitude $h$ above the Earth's surface is significantly smaller than the Earth's radius: $z_h \\doteq h/R_E \\ll 1$.",
+     "points": 0.6
+    },
+    {
+     "label": "A.4",
+     "statement": "Write down the ratio of the 'standard' and 'improved' versions of the barometric formula $p_h^{imp}/p_h^{sta}$. Estimate it for $h = 4.0 \\times 10^{5}m$. Further use the 'improved' version.",
+     "points": 0.4
+    },
+    {
+     "label": "A.5",
+     "statement": "Write down the air density $\\rho_h$ and the concentration of neutral air molecules $n_h$ at height $h$, with accuracy $O(z_h^2)$.",
+     "points": 0.2
+    },
+    {
+     "label": "B.1",
+     "statement": "Write down the satellite velocity $v_h$ and revolution period $\\tau_h$ on a stable orbit of altitude $h$.",
+     "points": 0.5
+    },
+    {
+     "label": "B.2",
+     "statement": "Write down the total energy $E_S$ of a satellite moving along a circular orbit with radius $R_E + h$.",
+     "points": 0.5
+    },
+    {
+     "label": "B.3",
+     "statement": "The total decelerating force exerted on a satellite of constant mass is given by some external braking force $\\vec{F}_{drag}$. As a result, the ISS slows down and its altitude decreases by a height $dh$ for a small time interval, $dt$. Write down the equation for the total enery balance of the ISS and surrounding system, given a value of $F_{drag}$.",
+     "points": 1
+    },
+    {
+     "label": "B.4",
+     "statement": "Define the rate of descent (de-orbiting ) speed $u_h$ of the satellite. Hint: The de-orbiting speed depends on the friction force, and on the altitude of the satellite, and on the mass of the satellite.",
+     "points": 0.5
+    },
+    {
+     "label": "B.5",
+     "statement": "Write down the amount of decent $H_h$ for a revolution around the Earth and the total time $T_h$ for which the satellite will fall from the altitude $h$ to the earth's surface due to the friction. Hint: Take into account relations $h_0 \\ll h \\ll R_E$.",
+     "points": 0.5
+    },
+    {
+     "label": "C.1",
+     "statement": "Write down the air drag force $F_{air}$, the de-orbiting descending velocity $u_h^{air}$ and the descent rate $H_h^{air}$.",
+     "points": 0.5
+    },
+    {
+     "label": "C.2",
+     "statement": "Define the total time $T_h^{air}$ for which the satellite will fall from the altitude $h$ to the earth's surface due to air drag effect. Hint: Take into account relations $h_0 \\ll h \\ll R_E$.",
+     "points": 0.5
+    },
+    {
+     "label": "D.1",
+     "statement": "Write down the decelerating force $F_{ion}$, averaged during a 24-hour, associated with the mechanical collisions of these particles. Take into account the strong decrease in ionized layers are negligible during the night. Express the density of ionized oxygen molecules $\\rho_{ion}$.",
+     "points": 0.3
+    },
+    {
+     "label": "D.2",
+     "statement": "Define the speed of fall of the satellite $u_h^{ion}$ due to deceleration by ions of atomic oxygen. Write down the descent rate $H_h^{ion}$ for a revolution caused by the ionization effect. Hint: Take into account relations $h_0 \\ll h \\ll R_E$.",
+     "points": 0.7
+    },
+    {
+     "label": "E.1",
+     "statement": "Evaluate approximately the magnitude of the induced electric current $I_{ind}$.",
+     "points": 0.6
+    },
+    {
+     "label": "E.2",
+     "statement": "Determine an approximate expression for the induced 'braking' Ampere force $F_{ind}$ in the direction opposite to the direction of the satellite's motion. Let $\\phi$ be the angle between the Earth magnetic field $B$ along the longitude lines. To simplify, you may approximate the length of the satellite $L$ as the square root of the satellite area $S$. Additionally, instead of computing the average of $\\sin(\\phi)$, you may approximate it with $\\sin(\\pi/2 - \\theta)$. You may use a discrete number of sample points to compute an average value.",
+     "points": 0.6
+    },
+    {
+     "label": "E.3",
+     "statement": "Write down the descent speed $u_{ind}$ of the satellite due to Earth's magnetic field. Write down the descent rate $H_h^{ind}$ for a revolution caused by the magnetic drag effect. Hint: Take into account relations $h \\ll R_E$.",
+     "points": 0.8
+    }
+   ],
+   "topics": [
+    "mechanics/orbital-mechanics",
+    "fluid/atmosphere",
+    "electromagnetism/induction"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**ISS Orbital Decay Dynamics**\n**(Gurjav Ganbold)**\n\nThe International Space Station (ISS) is the largest modular space station in low Earth orbit. The station serves as a microgravity and space environment research laboratory in which scientific research is conducted in astrobiology, astronomy, meteorology, physics, and other fields. The ISS is suited for testing the spacecraft systems and equipment required for possible future long-duration missions to the Moon and Mars. An international partnership of five space agencies from 15 countries operates ISS.\n\n![The International Space Station orbiting above the Earth.](p1-sol-fig1)\n\nFigure 1: The International Space Station orbiting above the Earth.\n\nThe ISS is currently maintained in a nearly circular orbit with a minimum mean altitude of 370 km and a maximum of 460 km, in the centre of the thermosphere, at an inclination of $\\theta = 51.6^{0}$ (degrees) to Earth's equator. The trajectory of the spacecraft is similar to a spiral with a slowly changing distance from the station to the Earth's surface, and during one cycle of revolution this distance changes inconsiderable.\n\n![The altitude of ISS (km) over the years.](p1-sol-fig2)\n\nFigure 2: The altitude of ISS (km) over the years.\n\n\"In May 2008, the altitude was 350 kilometers, the ISS lost 4.5 km and was re-boosted by the Progess-60 supply ship by 5.5 km. Again, in June, the ISS continued to lose altitude by 5.5 km.\" [*https://mod.jsc.nasa.gov/*] .\n\n![The ISS mean height (km) in 2022-2023.](p1-sol-fig3)\n\nFigure 3: The ISS mean height (km) in 2022-2023.\n\n![ISS model with the cross sections from different aspect angles ($\\mathrm{dm}^2 = 10^{-2}\\mathrm{m}^2$).](p1-sol-fig4)\n\nFigure 4: ISS model with the cross sections from different aspect angles ($\\mathrm{dm}^2 = 10^{-2}\\mathrm{m}^2$).\nThe DRAMA CROC provides $2481\\,\\mathrm{m}^2$ cross section.\n\n\"The ISS loses up to 330 ft ( 100 m) of altitude each day.\" [*NASA Control Data (2021)*].\nIn 2023 the ISS flies at altitudes of 410 km, with an orbital decay about 70 m every day ($\\sim$ 2 km per month), and during magnetic storms the daily descent reaches 300 m. The ISS accomplishes the de-orbit maneuvers by using the propulsion capabilities of the ISS and its visiting vehicles [*International Space Station Transition Report (2022)*].\n\nThe ISS mass is $M_S = 4.5\\times 10^5\\ \\mathrm{kg}$ and overall length is $L_S = 109\\ \\mathrm{m}$. Huge solar panels with a width of $W_S = 73\\ \\mathrm{m}$ provide the ISS with electrical energy [*NASA Official Report (2023)*].\nIncluding all batteries and other parts, the effective cross area (section) of the station is approximately $S \\approx 2.5\\times 10^3\\ \\mathrm{m}^2$ [*European Space Agency, SDC6-23*].\nThe ISS orbital decay is caused by one or more mechanisms which absorb energy from the orbital motion, the essential ones being:\n- atmospheric drag at orbital altitude is caused by frequent collisions of gas molecules with the satellite,\n- the Ampere force arising from the motion of the conductive apparatus in the Earth's magnetic field,\n- the interaction with the atomic oxygen ions.\n\n**Denotations and Physical constants:**\n\n- $R$ - Universal gas constant ($8.31\\ \\mathrm{J\\cdot K^{-1}\\cdot mol^{-1}}$)\n- $N_A$ - Avogadro's number ($6.022\\cdot 10^{23}\\ \\mathrm{mol}^{-1}$)\n- $\\mu$ - The molar mass of gas (for air: $0.029\\ \\mathrm{kg\\cdot mol}^{-1}$, for $O_2$: $0.032\\ \\mathrm{kg\\cdot mol}^{-1}$)\n- $M_E$ - Mass of the Earth ($5.97\\cdot 10^{24}\\ \\mathrm{kg}$)\n- $R_E$ - Radius of the Earth ($6.38\\cdot 10^{6}\\ \\mathrm{m}$)\n- $G$ - Gravitational universal constant ($6.67\\cdot 10^{-11}\\ \\mathrm{m}^3\\cdot \\mathrm{s}^{-2}\\cdot \\mathrm{kg}^{-1}$ )\n- $\\rho_0$ - Density of air at Earth's surface ($1.29\\ \\mathrm{kg/m}^3$)\n- $g_0$ - Gravitational acceleration at Earth's surface ($9.81\\ \\mathrm{m\\cdot s}^{-2}$)\n- $B$ - Average magnitude of Earth's magnetic field ($5.0\\cdot 10^{-5}\\ \\mathrm{T}$ )\n- $e$ - The electron absolute charge ($1.60\\cdot 10^{-19}\\ \\mathrm{Q}$)\n\n**A. Modified barometric formula**\n\nThe pressure of atmospheric air, composed mainly of neutral $O_2$ and $N_2$ molecules, can be found by using the Clapeyron-Mendeleev law:\n\n$$pV = \\frac{M}{\\mu}RT. \\tag{1}$$\n\nwhere $p, V, T, M$ and $\\mu$ are the pressure, volume, temperature, mass and molar mass of a portion of air, $R$ is the ideal gas universal constant.\nThere are two equations for computing air pressure as a function of height. The first equation is applicable to the standard model of the **troposphere** ($h < 100\\ \\mathrm{km}$) in which the temperature is assumed to vary with altitude at a lapse rate.\nThe second equation belongs to the standard model of the **thermosphere** ($h > 250\\ \\mathrm{km}$) in which the temperature is assumed not to change considerably with altitude and is applicable to ISS.\n\n![The Earth's thermosphere.](p1-sol-fig5)\n\nFigure 5: The Earth's thermosphere.\n\nWe may assume that all pressure is hydrostatic (i.e., it acts with equal magnitude in all directions).\nThen, a perturbation of the air pressure $dp_h$ on a variation of attitude $dh$ may be written:\n\n$$dp_h \\doteq p_{h+dh} - p_h = -g_h\\,(M/V)\\,dh \\tag{2}$$\n\nand dividing the $dp_h$ by the $p_h$ expressed from the Clapeyron-Mendeleev law we obtain\n\n$$\\frac{dp_h}{p_h} = -\\frac{g_h\\mu}{RT_h}dh\\,. \\tag{3}$$\n\nIntegrating this expression from the surface $h = 0$ to the altitude $h$ we get the air pressure as follows:\n\n$$p_h = p_0\\exp\\left(-\\frac{\\mu}{R}\\int_0^h dh\\,\\frac{g_h}{T_h}\\right), \\tag{4}$$\n\nwhere $p_0$ is the air pressure at altitude $h = 0$.\n*Remark 1.* The temperature of Earth's thermosphere at altitude 300 - 600 km does not change considerably (see Fig.3) and reaches averagely about 800 - 900 K at solar side [*NASA data*]. Therefore, one may put $T_h = T = const$ by investigating the ISS orbital flight. Particulary, since the spacecraft spends almost half of its flight time in the shadow side of the Earth, where the temperature drops sharply, we may take the value of **T = 425 K** as the average temperature at these altitudes. This temperature is also in agreement with the air density value $\\rho_h \\sim 10^{-12}\\,\\mathrm{m}^{-3}$ [MSISE-90 Model of Earth's Upper Atmosphere] at $h = 400\\ \\mathrm{km}$.\nFurther, by accepting an approximation $g_h = g_0$ one obtains the **standard barometric formula** as follows:\n\n$$p_h^{sta} = p_0\\exp\\left(-\\frac{h}{h_0}\\right), \\qquad h_0 \\doteq \\frac{RT}{\\mu g_0}. \\tag{5}$$\n\nWe fix the parameter $h_0$ as follows:\n\n$$h_0 \\doteq \\frac{RT}{\\mu g_0} = \\frac{8.31\\ \\mathrm{J\\ K}^{-1}\\cdot\\mathrm{mol}^{-1}\\,425\\mathrm{K}}{0.029\\ \\mathrm{kg}\\cdot\\mathrm{mol}^{-1}\\,9.81\\ \\mathrm{m}\\cdot\\mathrm{s}^{-2}} \\approx 12400\\ \\mathrm{m}\\,. \\tag{6}$$\n\n*Remark 2.* The integral in Eq.(4) may be calculated by taking into account the dependence of $g_h$ on $h$ in the leading-order correction, with accuracy $O(z_h^2)$.\nIn the leading-order approximation one gets:\n\n$$g_h \\simeq g_0\\,(1 - 2z_h)\\,, \\qquad \\int_0^h dh\\,g_h \\simeq g_0\\,h\\,(1 - z_h)\\,. \\tag{7}$$\n\nThen, we obtain a **improved barometric formula**\n\n$$p_h^{imp} = p_0\\exp\\left(-\\frac{h\\,(1-z_h)}{h_0}\\right). \\tag{8}$$\n\nLet us estimate the ratio of the 'standard' and 'improved' versions of the barometric formula:\n\n$$\\frac{p_h^{imp}}{p_h^{sta}} = \\frac{\\exp\\left(-\\frac{h\\,(1-z_h)}{h_0}\\right)}{\\exp\\left(-\\frac{h}{h_0}\\right)} = e^{\\frac{h^2}{h_0 R_E}} \\approx 7.54 \\quad \\mathrm{for} \\quad h = 4.0\\times 10^5\\ \\mathrm{m}\\,. \\tag{9}$$\n\nThe gas density rises by almost **eight times** when the weakening of gravity at ISS altitude is taken into account in the leading order.\nTherefore, to avoid significant error in calculation for the ISS, when the air pressure or air density is involved, one should use the improved barometric formula in Eq.(8) instead of Eq.(5).\nAccording to Eq.(8), the air density at height $h$ may be expressed by the formula\n\n$$\\rho_h \\doteq \\frac{M}{V} = \\rho_0\\exp(-h\\,(1-z_h)/h_0)\\,. \\tag{10}$$\n\nThe concentration of neutral air molecules at altitude is expressed through a similar law\n\n$$n_h = N_A\\frac{\\rho_0}{\\mu}\\exp(-h\\,(1-z_h)/h_0)\\,. \\tag{11}$$\n\n**B. Orbital deceleration and station descent rate**\n\nLet us consider the problem of determining the rate of orbital decay of a satellite with mass $M_S$ that experiences friction force $\\vec{F}_{drag}$ acting against its velocity $\\vec{v}$ during the time $dt$. We assume that the decrease in altitude $dh$ is much less than the flight altitude $h$ itself ($dh \\ll h$).\n\nThe satellite's velocity may be found from its equation of motion in orbit (Newton's second law) where the Earth's gravitational force is balanced by the centrifugal force:\n\n$$g_h = \\frac{v_h^2}{R_E(1+z_h)}, \\qquad g_h \\doteq \\frac{g_0}{(1+z_h)^2}\\,. \\tag{12}$$\n\nThe solutions read\n\n$$v_h = \\sqrt{\\frac{g_0 R_E}{1+z_h}}, \\qquad \\tau_h \\doteq 2\\pi\\frac{R_E+h}{v_h} = 2\\pi\\sqrt{\\frac{R_E}{g_0}}\\,(1+z_h)^{3/2}. \\tag{13}$$\n\nBy the conservation of mechanical energy, the total energy of a satellite moving along an almost circular orbit with radius $R_E+h$ is the sum of kinetic and gravitational potential energies, in an unperturbed two-body orbit:\n\n$$E_S = \\frac{M_S\\cdot v_h^2}{2} - M_S\\,g_h R_E\\,(1+z_h) = -\\frac{M_S\\,g_0\\,R_E}{2(1+z_h)}\\,. \\tag{14}$$\n\nThe total decelerating force exerted on a satellite of constant mass is given by some external braking force $\\vec{F}_{drag}$. The rate of loss of orbital energy $dE_S$ is simply the rate at the external force does negative work $dA_{drag}$ on the satellite as the satellite traverses an infinitesimal circular arc-length $dL = vdt$ :\n\n$$dA_{drag} = -F_{drag}\\cdot v_h\\cdot dt\\,. \\tag{15}$$\n\nThe perturbation $dE_S$ of the orbital energy at a change of the radius $dh$ reads:\n\n$$dE_S = +\\frac{M_S\\,g_0}{2(1+z_h)^2}dh\\,. \\tag{16}$$\n\nThe total energy conservation $dE_S + dA_{drag} = 0$ leads to the equation\n\n$$\\frac{M_S\\,g_0}{2(1+z_h)^2}dh = F_{drag}\\cdot v_h\\cdot dt\\,. \\tag{17}$$\n\nThen, we can find the rate of descent speed of the satellite as follows:\n\n$$u_h \\doteq \\frac{dh}{dt} = \\frac{2F_{drag}}{M_S g_0}\\,v_h\\,(1+z_h)^2 = \\frac{2F_{drag}}{M_S}\\sqrt{\\frac{R_E}{g_0}}\\,(1+z_h)^{3/2}. \\tag{18}$$\n\nThe de-orbiting speed depends on the friction force, and on the altitude of the satellite, and on the mass of the satellite.\nThe friction force $\\vec{F}_{drag}$ itself, in turn, depends on the flight altitude, on the effective cross section of the satellite $S$, and on the composition of the space environment at the satellite's flight altitude $h$.\nThe descent rate $H_h$ for a revolution around the Earth reads:\n\n$$H_h \\doteq u_h\\,\\tau_h = \\frac{4\\pi\\,R_E}{M_S\\,g_0}F_{drag}(h)\\cdot(1+z_h)^3. \\tag{19}$$\n\nThe differential equation in Eq.(18) may be integrated out. Then, the total time $T_h$ for which the satellite will fall from the attitude $h$ to the earth's surface due to the friction may be found from the relation:\n\n$$T_h \\doteq \\int_0^{T_h} dt = \\frac{M_S}{2}\\sqrt{\\frac{g_0}{R_E}}\\int_0^h dh\\,\\frac{1}{F_{drag}(h)\\cdot(1+z_h)^{3/2}}. \\tag{20}$$\n\n**C. Atmospheric drag**\n\nThe speed of the satellite $v$ is many times greater than the average velocities (hundreds m/s) of the thermal motion of atmospheric molecules at a height $h \\approx 300-400\\ \\mathrm{km}$, so we can assume that the molecules were at rest before the collision with the ISS. To roughly estimate the drag force, we assume that after the collision the molecules acquire the same speed as the satellite. In this case, the air drag force can be estimated as follows:\n\n$$F_{air} = n_h m_{air}\\cdot v_h^2\\cdot S = \\frac{N_{air}m_{air}}{V}\\cdot v_h^2\\cdot S = \\rho_h\\cdot v_h^2\\cdot S\\,. \\tag{21}$$\n\nBy substituting this expression into the formula in Eq.(18), we obtain\n\n$$u_h^{air} = \\frac{2\\rho_0 S\\sqrt{g_0 R_E^3}}{M_S}(1+z_h)^{1/2}\\cdot\\exp(-h\\,(1-z_h)/h_0)\\,. \\tag{22}$$\n\nThe descent rate $H_h^{air}$ for a revolution around the Earth reads:\n\n$$H_h^{air} \\doteq u_h^{air}\\,\\tau_h = \\frac{4\\pi S\\,R_E^2}{M_S}\\rho_0\\cdot(1+z_h)^2\\cdot\\exp(-h\\,(1-z_h)/h_0)\\,. \\tag{23}$$\n\nTo find the total time $T_h^{air}$ for which the satellite will fall to the earth's surface, we use Eq.(20). We obtain:\n\n$$T_h^{air} \\simeq \\frac{M_S}{2\\rho_0\\,S\\sqrt{g_0\\,R_E^3}}\\int_0^h dh\\left(1-\\frac{h}{2R_E}\\right)e^{+h/h_0} \\approx \\frac{M_S h_0}{2\\rho_0 S\\sqrt{g_0\\,R_E^3}}(1-\\frac{h}{2R_E})\\cdot e^{+h/h_0}, \\tag{24}$$\n\nwhere we took into account relations $h_0 \\ll h \\ll R_E$.\n\n**D. Drag by atomic oxygen ions**\n\nIn the thermosphere, under the influence of ultraviolet and X-ray solar radiation and cosmic radiation, air ionization occurs (\"polar lights\"). Unlike $O_2$, $N_2$ does not undergo strong dissociation under the action of solar radiation, therefore, in general, there is much less atomic nitrogen $N$ in the Earth's upper atmosphere than atomic oxygen. At altitudes above 250 km, atomic oxygen $O$ predominates. Layers containing electrons and ions of oxygen atoms appear on the day side of the atmosphere. In this case, the concentration of atomic oxygen ions reaches $n_{ion} \\sim 10^{13}\\ m^{-3}$.\n\nThe decelerating force associated with the mechanical collisions of these particles on the satellite can be calculated using the formula in Eq.(21) but taking into account the strong decrease in ionization at night. Let the average value of the ion concentration be half the maximum value. Then we have\n\n$$F_{ion} = \\frac{1}{2} \\rho_{ion} \\cdot S \\cdot v_h^2\\,, \\tag{25}$$\n\nwhere\n\n$$\\rho_{ion} = \\frac{\\mu_{ion}}{N_A} \\cdot n_{ion}\\,. \\tag{26}$$\n\nTherefore, the speed of fall of the satellite due to deceleration by ions of atomic oxygen may be roughly estimated as follows:\n\n$$u_h^{ion} = \\rho_{ion} \\cdot \\frac{S \\sqrt{g_0\\,R_E^3}}{M_S} (1+z_h)^{1/2}\\,. \\tag{27}$$\n\nThe descent rate $H_h^{ion}$ for a revolution around the Earth reads:\n\n$$H_h^{ion} \\doteq u_h^{ion}\\,\\tau_h = \\rho_{ion}\\, \\frac{2\\pi S\\,R_E^2}{M_S} \\cdot (1+z_h)^2\\,. \\tag{28}$$\n\n**E. Drag by the Earth's magnetic field**\n\nWe consider the influence on the motion of the satellite of the Earth's magnetic field, the value of which near the Earth's surface is equal to $(3.5-6.5)\\cdot 10^{-5}T$ with an average value of $B = 5\\cdot 10^{-5}T$.\n\nWhen a satellite moves at high speed in a magnetic field, an induced electric current (electro-motive force, EMF) occurs in the current-conducting elements of the satellite's structure. This electromotive force causes a redistribution of electric charges in the current-conducting elements of the satellite structure. An electric field appears around the satellite, which affects on the movement of electrically charged particles in the environment. Electrons are attracted to those parts of the satellite that have a positive potential (relative to the middle part of the satellite), and positively charged ions are attracted to those parts of the satellite that have a negative potential. Electrons and ions that hit the surface of the satellite structures are combined into neutral oxygen atoms, while the electrons 'travel' in the satellite's conductive structures, creating an electric current. The satellite, moving in space, 'collects' electrons and ions from the surrounding space and collides with them. For a rough estimate of the magnitude of the current that can flow through the conductive structures of the satellite, we will assume that the collection occurs only from an area equal to the cross-sectional area $S$ of the ISS, and all ions and electrons participate in the creation of this current.\n\nThe number of electrons hitting the structure of the ISS body during the short time interval $dt$ is\n\n$$dN = n_{ion} \\cdot v_h \\cdot S \\cdot dt\\,. \\tag{29}$$\n\nTherefore, the magnitude of the current is of the order\n\n$$I_{ind} \\approx e\\,\\frac{dN}{dt} = e \\cdot S \\cdot n_{ion} \\cdot \\sqrt{\\frac{g_0\\,R_E}{1+z_h}}\\,. \\tag{30}$$\n\nThe orbital 'braking' Ampere's force is proportional to $[\\vec{v}_h \\times \\vec{B}] = v_h B|\\sin(\\phi)|$, where $\\phi$ is the angle between the Earth's magnetic field $\\vec{B}$ and the velocity of the ISS $\\vec{v}_h$. Hereby, $\\theta = 51.6^0$ (degrees) is the inclination angle of the ISS orbit to Earth's equator.\n\nLet us consider a revolution starting from the 'north' sample point in the ISS orbit with the highest latitude ($\\phi = \\pi/2 - \\theta$). After a half revolution the ISS arrives at the 'south' point with the lowest latitude ($\\phi = \\pi/2 + \\theta$). The second part of the revolution cycle ends at the 'north point'.\n\nThe averaging of the value $|\\sin(\\phi)|$ during a revolution period may be performed as follows:\n\n$$\\langle |\\sin(\\phi)| \\rangle = \\frac{1}{2\\theta} \\int_{\\pi/2-\\theta}^{\\pi/2+\\theta} d\\phi\\, |\\sin(\\phi)| = 0.93 \\approx 1\\,. \\tag{31}$$\n\nAn approximate result may be obtained by using four equidistant sample positions in the ISS orbit as follows:\n\n$$\\langle |\\sin(\\phi)| \\rangle = \\{\\sin(\\pi/2-\\theta) + \\sin(\\pi/2) + \\sin(\\pi/2+\\theta) + \\sin(\\pi/2)\\}\\,/4 = 0.89 \\approx 1\\,. \\tag{32}$$\n\nFurther, we will use an approximation $\\langle |\\sin(\\phi)| \\rangle \\approx 1$.\n\nWhen the induced current flows through the conductive parts of the satellite, they are affected by the 'braking' Ampere force directed opposite to the direction of the satellite's speed:\n\n$$F_{ind} = B \\cdot I_{ind} \\cdot \\langle |\\sin(\\phi)| \\rangle \\cdot L \\approx B \\cdot I_{ind} \\cdot \\sqrt{S} = e \\cdot B \\cdot S^{3/2} \\cdot n_{ion} \\cdot \\sqrt{\\frac{g_0\\,R_E}{1+z_h}}\\,, \\tag{33}$$\n\nwhere for the external linear size of the station, we can use the approximation $L \\sim S^{1/2}$.\n\nThen for the rate of descent of the satellite we obtain\n\n$$u_h^{ind} \\approx 2 n_{ion}\\, \\frac{eBS^{3/2} R_E}{M_S} \\cdot (1+z_h)\\,. \\tag{34}$$\n\nThe descent rate $H_h^{ind}$ for a revolution around the Earth reads:\n\n$$H_h^{ind} \\doteq u_h^{ind}\\,\\tau_h = \\frac{4\\pi\\, e\\, B\\ (S\\,R_E)^{3/2}}{M_S \\sqrt{g_0}} \\cdot (1+z_h)^{5/2}\\,. \\tag{35}$$\n\n**F. Numerical results and conclusion**\n\nTable 1: Various deorbit velocities on the height $h$ above the Earth surface, compared to the ISS-NASA data estimated for $n_{ion} = 10^{13} m^{-3}$. For $n_{ion} = 10^{12} m^{-3}$ the results for $u_{ion}$ and $u_{ind}$ will decrease in 10 times.\n\n| h [km] | $T_h^{air}$ [day] | $u_{air}[m/day]$ | $u_{ion}[m/day]$ | $u_{ind}[m/day]$ | $\\sum[m/day]$ | $w_{ISS}[m/day]$ |\n|--------|-------------------|------------------|------------------|------------------|----------------|-------------------|\n| 350    | 316               | 184              | 14               | 28               | 226            | $\\sim$ 170 [in 2008] |\n| 375    | 2360              | 30.9             | 14               | 29               | 73             | -                 |\n| 400    | 17700             | 5.3              | 14               | 29               | 47             | $\\leq$ 100 [in 2021] |\n| 410    | 39500             | 2.6              | 14               | 29               | 45             | $\\leq$ 70) [in 2022] |\n\nTable 2: The descent rates for a revolution of the ISS around the Earth for $n_{ion} = 10^{13} m^{-3}$. For $n_{ion} = 10^{12} m^{-3}$ the results for $H_h^{ion}$ and $H_H^{ind}$ will decrease in 10 times.\n\n| h (km) | $H_h^{air}$ [m] | $H_h^{ion}$ [m] | $H_h^{ind}$ [m] |\n|--------|-----------------|-----------------|-----------------|\n| 350    | 11.7            | 0.9             | 1.8             |\n| 375    | 2.0             | 0.9             | 1.8             |\n| 400    | 0.3             | 0.9             | 1.8             |\n| 410    | 0.2             | 0.9             | 1.8             |\n\nFor the International Space Station, orbiting at an altitude above 380 km, the most significant factors ensuring orbital decay are ranked as follows:\n1) the Ampere force arising from the motion of the conductive apparatus in the Earth's magnetic field.\n2) Collisions of the station with ionized atoms of oxygen.\n3) The atmospheric drag caused by frequent collisions of neutral $O_2$ molecules.",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "caption": "Figure 1: The International Space Station orbiting above the Earth.",
+      "alt": "Photograph of the International Space Station with its large solar panels orbiting above the blue Earth.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-sol-fig1.png",
+      "width": 1132,
+      "height": 593,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        169.07,
+        232.38,
+        440.51,
+        374.62
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "caption": "Figure 2: The altitude of ISS (km) over the years.",
+      "alt": "Line chart titled \"Altitude of International Space Station (km)\", years 1998–2018 on the x-axis, altitude 300–440 km on the y-axis, jagged blue curve rising from about 340 km to about 410 km.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-sol-fig2-v2.png",
+      "width": 1097,
+      "height": 871,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        153,
+        488.3,
+        416.11,
+        697.09
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig3",
+      "caption": "Figure 3: The ISS mean height (km) in 2022-2023.",
+      "alt": "Line chart \"ISS - mean height in km\", months May 2022 to May 2023 on the x-axis, 415–420 km on the y-axis, black saw-tooth curve.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-sol-fig3.png",
+      "width": 1075,
+      "height": 826,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        167.85,
+        46.31,
+        425.61,
+        244.17
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig4",
+      "caption": "Figure 4: ISS model with the cross sections from different aspect angles (dm² = 10⁻²m²). The DRAMA CROC provides 2481m² cross section.",
+      "alt": "Scatter plot \"DRAMA - Cross-section under different aspect angles\" with elevation (deg) -80 to 80 versus azimuth (deg) -150 to 150, dots coloured by a colour bar 50000–450000.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-sol-fig4-v2.png",
+      "width": 1286,
+      "height": 804,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        143.46,
+        266.04,
+        451.8,
+        458.82
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig5",
+      "caption": "Figure 5: The Earth's thermosphere.",
+      "alt": "Educational diagram of the Earth's upper atmosphere: temperature (K) and density (log10 cm-3) profiles versus altitude (km), layers Troposphere to Thermosphere, solar radiation bands (X-Rays, Extreme UV, Far UV, Middle UV, Near UV, Visible and IR), IR Cooling, and ionospheric layers D, E, F.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t1/p1-sol-fig5.png",
+      "width": 1326,
+      "height": 952,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        110.11,
+        521.96,
+        427.99,
+        750.1
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    }
+   ]
+  }
+ ]
+}

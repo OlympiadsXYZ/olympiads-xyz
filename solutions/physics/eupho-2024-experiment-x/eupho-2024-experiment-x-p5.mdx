@@ -1,0 +1,222 @@
+---
+id: eupho-2024-experiment-x-p5
+source: 'EuPhO 2024'
+title: 'Задача 5. Task E.5 - Interaction time'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2024/eupho-2024-experiment-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T20:45:15.635Z'
+verifier: 'same-model'
+---
+
+*"EuPhO 2024, Kutaisi, Georgia — Experimental Problems" · 2,5 т.*
+
+<Warning title="Бележка към темата">
+Solutions-only window; statements to be assembled from the problems-document window. E.4 solution is incomplete (continues beyond page 6).
+</Warning>
+
+## Условие
+
+With the result from the previous task, it would be possible to determine the interaction time $\tau$ of the more elastic ball with the wooden surface. However, for the less elastic ball, there is no simple description such as Eq. 1. Alternatively, we can make the following assumption.
+
+If, for a certain collision speed $v_0$, the force experienced by the ball as a function of time can be described as $F_0(t) = f(t)$, then for any other speed $v_1$, the time dependence takes a similar shape and we can express the force as:
+
+$$F_1(t) = a_1 f(b_1 t)\,.$$
+
+Estimate and plot how the interaction time $\tau$ scales with the collision speed $v$ for collisions of the less elastic rubber ball with a solid surface.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-experiment-x/p5-sol-fig12-v2.png" alt="Scatter plot of delta v_coission / a.u. (vertical axis 0.00 to 0.05) versus gamma * tau / a.u. (horizontal axis ~4 to 18); experimental values with error bars and a shaded band, roughly horizontal around 0.03. The axis label contains the printed typo 'v_coission'." />
+<figcaption>Figure 12</figcaption>
+</figure>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Task E.5 - Interaction time**
+
+When the less elastic ball bounces, we can estimate the change of its momentum $\Delta p_1$ as:
+
+$$\Delta p_1 = \int_t F_1(t)\mathrm{d}t = \frac{a_1}{b_1}\int f(t)\mathrm{d}t \propto F_{1\max}\tau_1,$$
+
+where $F_{1\max} = a_1 F_{0\max}$ is the maximal force during the collision and $\tau_1 \approx \tau_0/b_1$ is the interaction time.
+
+In other words,
+
+$$\frac{\Delta p_1}{\Delta p_0} = \frac{v_1}{v_0} = \frac{F_{1\max}}{F_{0\max}}\cdot\frac{\tau_1}{\tau_0}.$$
+
+By measuring $v_1/v_0 = \sqrt{h_1/h_0}$ and $\frac{F_{1\max}}{F_{0\max}} = \frac{U_1}{U_0}$ we can estimate the time scaling $\tau_1/\tau_0$:
+
+$$\frac{U_1}{U_0} = \frac{\tau_1}{\tau_0}\cdot\frac{\sqrt{h_1}}{\sqrt{h_0}}, \qquad \text{or} \qquad \tau \propto \frac{U}{\sqrt{h}}$$
+
+The measurements are in the table 7. We plot the dependency of $U/\sqrt{h_1}$ on $\sqrt{h_1}$ and find that it is horizontal up to the measurement errors (Fig. 12). In other words, $\tau$ does not change too much within the range of forces.
+
+**Answer:** $\tau$ does not depend on the collision speed $v$.
+
+| E.5 - Interaction time | Points |
+| --- | --- |
+| **Theory** | **0.5** |
+| find how $a_1/b_1$ depends on $v$ | 0.3 |
+| express it through measurable ratios | 0.2 |
+| **Measurements and plots** | **1.5** |
+| 0.1 per measured force value, up to 7 different force values | 0.7 |
+| 0.1 per repetition per data point, up to 3 repetitions | 0.3 |
+| Plot | 0.2 |
+| coordinates are related to theory | 0.3 |
+| **Conclusion ($\tau$ doesn't depend on $v$)** | **0.5** |
+| **Total on E.5** | **2.5** |
+
+**Raw data tables**
+
+Table 1: Data for 1
+
+| $S$ | 364 | 305 | 250 | 200 |
+| --- | --- | --- | --- | --- |
+| $s1$ | 286 | 237 | 195 | 152 |
+| $s2$ | 286 | 241 | 193 | 151 |
+| $s3$ | 287 | 239 | 194 | 154 |
+| $s4$ | 282 | 238 | 196 | 155 |
+| $s5$ | 286 | 237 | 193 | 155 |
+| $h$ | 373 | 314 | 259 | 209 |
+| $h1$ | 290 | 241 | 199 | 156 |
+| $h2$ | 290 | 245 | 197 | 155 |
+| $h3$ | 291 | 243 | 198 | 158 |
+| $h4$ | 286 | 242 | 200 | 159 |
+| $h5$ | 290 | 241 | 197 | 159 |
+
+Table 2: Data for 2a
+
+| $U$ | $t$ |
+| --- | --- |
+| mV | s |
+| 1408 | 0 |
+| 1138 | 5 |
+| 943 | 10 |
+| 762 | 15 |
+| 623 | 20 |
+| 502 | 25 |
+| 424 | 30 |
+| 333 | 35 |
+| 276 | 40 |
+| 223 | 45 |
+| 180 | 50 |
+| 151 | 55 |
+| 124 | 60 |
+| 102 | 65 |
+| 81 | 70 |
+
+Table 3: Data for 2b
+
+| charges | $U_c$ |
+| --- | --- |
+| | mV |
+| 1 | 15 |
+| 2 | 31 |
+| 3 | 43 |
+| 4 | 64 |
+| 5 | 78 |
+| 6 | 86 |
+| 7 | 97 |
+| 8 | 117 |
+| 9 | 138 |
+| 10 | 142 |
+| 15 | 206 |
+| 20 | 261 |
+| 25 | 322 |
+| 30 | 372 |
+
+Table 4: Data for 2c
+
+| $m$ | $U1$ | $U2$ | $U3$ | $U4$ | $U5$ |
+| --- | --- | --- | --- | --- | --- |
+| kg | mV | mV | mV | mV | mV |
+| 0.0 | 0 | 0 | 0 | 0 | 0 |
+| 0.1 | 30 | 34 | 39 | 42 | 37 |
+| 0.2 | 63 | 78 | 87 | 82 | 77 |
+| 0.3 | 126 | 110 | 119 | 119 | 116 |
+| 0.4 | 142 | 173 | 153 | 156 | 153 |
+| 0.5 | 176 | 206 | 187 | 186 | 206 |
+| 0.6 | 240 | 224 | 216 | 249 | 230 |
+| 0.7 | 286 | 285 | 259 | 270 | 272 |
+| 0.8 | 304 | 295 | 306 | 306 | 296 |
+| 0.9 | 335 | 328 | 337 | 338 | 334 |
+| 1.0 | 367 | 346 | 373 | 357 | 339 |
+| 1.3 | 429 | 390 | 447 | 432 | 458 |
+| 1.7 | 557 | 576 | 550 | 541 | 575 |
+| 2.0 | 620 | 629 | 625 | 635 | 600 |
+| 2.3 | 702 | 711 | 711 | 676 | 671 |
+| 2.7 | 812 | 798 | 759 | 762 | 787 |
+| 3.0 | 823 | 847 | 820 | 838 | 841 |
+| 3.3 | 856 | 855 | 840 | 888 | 854 |
+| 3.7 | 994 | 911 | 926 | 916 | 884 |
+| 4.0 | 977 | 881 | 881 | 887 | 911 |
+| 4.5 | 1060 | 1024 | 830 | 799 | 812 |
+| 5.0 | 977 | 918 | 852 | 893 | 766 |
+| 5.5 | 954 | 817 | 789 | 820 | 839 |
+| 6.0 | 802 | 890 | 907 | 1089 | 942 |
+| 6.5 | 892 | 736 | 836 | 903 | 842 |
+| 7.0 | 985 | 867 | 859 | 815 | 795 |
+| 7.5 | 984 | 968 | 833 | 1068 | 981 |
+| 8.0 | 1110 | 993 | 1247 | 1022 | 1061 |
+| 8.5 | 988 | 814 | 971 | 1003 | 874 |
+| 9.0 | 1181 | 1267 | 944 | 1022 | 907 |
+
+Table 5: Data for 3
+
+| $m$ | $U1$ | $U2$ | $U3$ | $U4$ | $U5$ | $U6$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| kg | mV | mV | mV | mV | mV | mV |
+| 0.15 | 52 | 50 | 49 | 55 | 52 | 56 |
+| 0.3 | 105 | 102 | 98 | 109 | 111 | 110 |
+| 0.5 | 175 | 178 | 166 | 184 | 170 | 172 |
+| 0.7 | 245 | 250 | 258 | 233 | 242 | 239 |
+| 1.0 | 355 | 340 | 354 | 351 | 345 | 357 |
+
+Table 6: Data for 4
+
+| $S$ | $h$ | $U1$ | $U2$ | $U3$ | $U4$ | $U5$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| mm | mm | mV | mV | mV | mV | mV |
+| 363 | 334 | 437 | 411 | 410 | 424 | 422 |
+| 341 | 312 | 399 | 395 | 380 | 398 | 413 |
+| 320 | 291 | 411 | 414 | 414 | 378 | 425 |
+| 300 | 271 | 337 | 358 | 423 | 385 | 369 |
+| 280 | 251 | 356 | 345 | 393 | 401 | 358 |
+| 260 | 231 | 320 | 311 | 361 | 461 | 373 |
+| 240 | 211 | 303 | 364 | 361 | 332 | 371 |
+| 220 | 191 | 315 | 340 | 329 | 287 | 365 |
+| 200 | 171 | 332 | 326 | 336 | 345 | 347 |
+| 180 | 151 | 305 | 322 | 280 | 316 | 315 |
+| 160 | 131 | 297 | 297 | 284 | 295 | 273 |
+| 140 | 111 | 276 | 271 | 269 | 260 | 261 |
+| 120 | 91 | 253 | 238 | 235 | 241 | 252 |
+| 100 | 71 | 215 | 203 | 205 | 217 | 217 |
+| 80 | 51 | 178 | 177 | 176 | 180 | 181 |
+| 60 | 31 | 150 | 141 | 138 | 146 | 146 |
+| 40 | 11 | 103 | 103 | 116 | 102 | 104 |
+
+Table 7: Data for 5
+
+| $S$ | $h$ | $U1$ | $U2$ | $U3$ | $U4$ | $U5$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| mm | mm | mV | mV | mV | mV | mV |
+| 40 | 11 | 106 | 103 | 103 | 104 | 103 |
+| 60 | 31 | 162 | 175 | 153 | 172 | 153 |
+| 100 | 71 | 240 | 252 | 227 | 249 | 284 |
+| 140 | 111 | 320 | 312 | 367 | 328 | 330 |
+| 160 | 131 | 399 | 387 | 361 | 388 | 403 |
+| 200 | 171 | 456 | 450 | 451 | 457 | 411 |
+| 220 | 191 | 464 | 485 | 484 | 486 | 448 |
+| 240 | 211 | 482 | 494 | 514 | 497 | 498 |
+| 280 | 251 | 554 | 555 | 567 | 549 | 550 |
+| 320 | 291 | 606 | 602 | 507 | 569 | 550 |
+| 360 | 331 | 660 | 628 | 645 | 652 | 650 |
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2024_experiment_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2024/eupho2024_experiment_problems.pdf)
+· официални решения: [eupho2024_experiment_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2024/eupho2024_experiment_solutions.pdf)

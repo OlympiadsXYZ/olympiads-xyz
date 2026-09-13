@@ -1,0 +1,475 @@
+---
+id: apho-2023-theory-t2-p1
+source: 'APhO 2023, theory'
+title: 'Задача 1. Theoretical Problem 2: A ball on a turntable'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2023/apho-2023-theory-t2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T21:41:11.208Z'
+verifier: 'same-model'
+---
+
+*Theoretical Problem 2: A ball on a turntable [10.0 points] — XXIII APhO MONGOLIA 2023, Theory, Q2 (English Official) · 10 т.*
+
+<Warning title="Бележка към темата">
+Прозорецът покрива само стр. 6–11 от решенията; решението е непълно (продължава на стр. 12+), а условието на задачата е в отделния документ с проблеми.
+</Warning>
+
+## Условие
+
+**Preamble**
+
+Notations and conventions: The length of a vector $\vec{A}$ is simply denoted as $A \equiv |\vec{A}|$. It's $x, y, z$ components are denoted by $A_x, A_y, A_z$, respectively. The time derivative of a quantity is denoted by the dot over the quantity: $\dot{\vec{A}} \equiv d\vec{A}/dt$, $\dot{A} \equiv dA/dt$. The unit vector along the direction of vector $\vec{A}$ is denoted as $\hat{A}$. The unit vectors along the Cartesian coordinates are, therefore, $\hat{x}$, $\hat{y}$ and $\hat{z}$. The definitions of scalar and vector products are:
+
+$$(\vec{A} \cdot \vec{B}) = (\vec{B} \cdot \vec{A}) = A_x B_x + A_y B_y + A_z B_z = AB\cos\theta$$
+
+$$(\vec{A} \times \vec{B}) = -(\vec{B} \times \vec{A})$$
+$$= (A_y B_z - A_z B_y)\hat{x} + (A_z B_x - A_x B_z)\hat{y} + (A_x B_x - A_y B_x)\hat{z}$$
+
+$$|\vec{A} \times \vec{B}| = AB\sin\theta,$$
+
+where $\theta$ is the angle between $\vec{A}$ and $\vec{B}$. You may need the following properties of vectors and their multiplications. Triple product rules for vectors:
+
+$$(\vec{A} \times \vec{B}) \times \vec{C} = (\vec{A} \cdot \vec{C})\vec{B} - (\vec{B} \cdot \vec{C})\vec{A},$$
+$$(\vec{A} \times \vec{B}) \cdot \vec{C} = (\vec{B} \times \vec{C}) \cdot \vec{A} = (\vec{C} \times \vec{A}) \cdot \vec{B}.$$
+
+The vector products are very useful in describing many relations in physics. For example:
+
+$$\vec{v} = \vec{\omega} \times \vec{r},$$
+$$\vec{F}_{Lorentz} = Q\vec{v} \times \vec{B},$$
+
+and, often, saves time combining three equations for vector components into a single equation.
+
+**The statement**
+
+A ball of mass $m$ and radius $r$ is rolling on a horizontal turntable without slipping (see Figure 1). Its mass density has a spherical symmetry, i.e. only depends on the distance from its center. The moment of inertia of the ball is $I$. In part B and C, where the turntable can rotate freely, the moment of inertia of the turntable is denoted as $I_d$. The purpose of the problem is to analyze the motion and trajectory of the ball with respect to the laboratory frame. Throughout the problem, assume the turntable is large enough so that the ball does not fall off. The following notations are used:
+
+$\Omega$ - the magnitude of the turntable angular velocity,
+
+$\vec{\omega}$ - the spinning angular velocity of the ball with respect to its spinning axis,
+
+$\vec{R}$ - the horizontal position of the ball center with respect to the rotation axis of the turn table,
+
+$\vec{v}$ - the velocity of the ball at $\vec{R}$ with respect to the laboratory frame.
+
+Assume that the initial position $\vec{R}_0 \equiv \vec{R}(0)$ and velocity $\vec{v}_0 \equiv \vec{v}(0)$ of the ball, the angular velocity of the turn table $\Omega_0 \equiv \Omega(0)$ are known. For the initial vector quantities $\vec{R}_0 \equiv \vec{R}(0)$ and $\vec{v}_0 \equiv \vec{v}(0)$, assume that their directions are known. In addition, whenever you need to express a vector quantity, you may use $\hat{z}$ in your expression. Also, if asked to write your expression in terms of the known quantity you may use any or all of $m$, $r$, $I$ and $I_d$. Unless otherwise stated, keep $I$ as general. The following notations are recommended:
+
+$$\alpha = \frac{I}{I+mr^2}, \quad \delta = \frac{I_d}{mr^2},$$
+
+You may write the final answers as vector expressions involving cross product (vector product), dot product (scalar product) and unit vectors in axis directions.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t2/p1-fig1.png" alt="Perspective drawing of a horizontal disc-shaped turntable rotating with angular velocity Ω about the vertical z axis; a ball of radius r touches the disc at horizontal distance R from the rotation axis." />
+<figcaption>Figure 1. Ball rolling on the turntable without slipping</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t2/p1-fig2.png" alt="Same turntable drawing as Figure 1, with an additional vertical arrow labelled B indicating a uniform magnetic field in the z direction." />
+<figcaption>Figure 2. Ball rolling on the turntable in a constant magnetic field $\vec{B}$</figcaption>
+</figure>
+
+**Part A: Ball on turntable with constant angular velocity [1.5 points]** First we start with the simplest case wherein the turntable angular velocity with respect to vertical axis $\hat{z}$ is constant, therefore $\Omega = \Omega_0$.
+
+**A.1** Express the ball's velocity $\vec{v}$ in terms of $\Omega, \vec{\omega}, r$ and $\vec{R}$ from a kinematic constraint. **[0,1 т.]**
+
+**A.2** Using Newton's equation and torque equation with respect to its center, find the acceleration of the ball $\vec{a} \equiv \dot{\vec{v}}$ in terms of $\Omega, \vec{\omega}, r, m$ and $I$. **[0,2 т.]**
+
+**A.3** Find the velocity $\vec{v}$ in terms of $\Omega, \vec{R}, \vec{v}_0, \vec{R}_0, r, m$ and $I$. **[0,2 т.]**
+
+**A.4** Write an explicit solution for the trajectory of the ball given the initial conditions $\vec{v}_0$ and $\vec{R}_0$. **[0,5 т.]**
+
+**A.5** Assume this time that the ball has a uniform mass density, i.e. $I = 2mr^2/5$. Trajectory you have found is a circle and it's radius is $R_t$. Choose its magnitude to be the same as $R_0$. How long does it take for the ball to approach the initial spot on the table (the position on the turntable at $t = 0$) with the closest distance? **[0,5 т.]**
+
+**Part B: Ball on freely rotating turntable [4.0 points]** In this part, the turntable can rotate freely without any friction around $z$-axis. Therefore its free rotation is hindered only by the ball's friction.
+
+**B.1** Find the velocity $\vec{v}$ and acceleration $\dot{\vec{v}}$ of the ball in terms of $\Omega, \vec{R}, \Omega_0, \vec{R}_0, \dot{\Omega}, r, m$ and $I$. **[0,2 т.]**
+
+**B.2** Find the magnitude of the angular acceleration of the turntable $\dot{\Omega}$ in terms of $\Omega, \Omega_0, \vec{R}, \vec{R}_0, \vec{v}_0, r, m, I$ and $I_d$. You may use the constants $\alpha$ and $\delta$ defined in the beginning of the problem. **[0,6 т.]**
+
+**B.3** Find the magnitude of the angular velocity of the turntable $\Omega$ as a function of $R$ only. Use this constants in your expression: $\Omega_0, R_0, r, m, I, I_d$. **[0,6 т.]**
+
+**B.4** From the result of B.3, for a given $\Omega_0, R_0$, find the maximum possible $\Omega$. **[0,1 т.]**
+
+**B.5** Write down the vertical component the angular momentum $\hat{z} M_z$ of the whole system. Subtract any constant term and rename the remaining part as $\hat{z} L$. In part B.1 you found the velocity of the ball $\vec{v}$, which can be written as the sum of a part that depends on the position of the ball $\vec{R}$ and a constant vector. Let us call this constant vector $\vec{c}$. Choose the direction of $x$-axis along this vector and $y$-axis along $\hat{z} \times \vec{c}$. In this frame of reference, find $\Omega$ in terms of $L, \vec{R}, \vec{c}, \hat{z}, R^2, r, m, I$ and $I_d$. Combining this with the result of B.3, write down an equation only containing $R^2$ and $y$ variables and $L, r, m, I, c$ and $I_d$. Here $c$ is the magnitude of $\vec{c}$. Substituting $R^2 = x^2 + y^2$, write down an expression containing only $x$ and $y$ variables and describing a curve. From this, list all possible types of trajectories. **[2,5 т.]**
+
+**Part C: Ball on turntable in magnetic field [4.5 points]** In this part, we consider a density profile so that $I = mr^2/10$. This can be realized, for example, if the ball is filled up to half of its radius with uniform density and the remaining part has a negligible mass. In addition, on its outer surface, the ball has a uniform charge density $Q/(4\pi r^2)$, where $Q$ is the total surface charge. The whole setup is in a uniform magnetic field $\vec{B}$ that is in $\hat{z}$ direction. The turntable rotates with constant $\Omega$ like in Part A.
+
+**C.1** Write down Newton's equation and the torque $\vec{\tau}_s$ equation for the ball. Find expression for the torque due to the spinning of the ball around its axis in terms of $Q, r, \vec{\omega}$ and $\vec{B}$. **[0,5 т.]**
+
+**C.2** Using the results of C.1, find expression for the linear acceleration of the ball with respect to the laboratory frame in terms of $Q, r, \vec{\omega}$ and $\vec{B}$. **[0,5 т.]**
+
+**C.3** We assume all quantities of unit lenght are measured by meter, all angular velocities have unit of 1 Hertz, and all quantities of time have the unit of 1 second. The equation for the linear acceleration you found in part C.2 is a second order differential equation for $\vec{R}$ of the following form:
+
+$$\frac{d^2\vec{R}}{dt^2} - \gamma \frac{d\vec{R}}{dt} \times \hat{z} + \beta \vec{R} = 0.$$
+
+Write down $\gamma$ and $\beta$ constants in terms of $Q, r, B, I, m, \Omega$. Make the following transformation to a polar coordinates for the components of $\vec{R}$:
+
+$$x(t) = \rho(t)\cos(\eta(t)),$$
+$$y(t) = \rho(t)\sin(\eta(t))$$
+
+so that the new equations do not have the first time derivative term. Here the polar angle $\eta(t)$ is a function of time. Find the form of this function.
+
+Express the coefficient $\beta'$ of $\rho(t)$ in the new equation in terms of $\gamma$ and $\beta$.
+
+Write down the conditions for different types of behavior of $\rho(t)$ with respect to time: harmonic, exponential etc. **[1 т.]**
+
+**C.4** Consider the following initial conditions for the solution found in part C.3:
+
+$x(0) = 1\ m$, $y = 0\ m$, $v_x(0) = \dot{x}\big|_{t=0} = 1\ m/s$, , $v_y(0) = \dot{y}\big|_{t=0} = -1\ m/s$.
+
+From these conditions, find $\beta$ and $\gamma$. Using them find the corresponding $\Omega$.
+
+Sketch the trajectory. Is the charge of the surface negative or positive? For the negative write $-$ and for the positive write $+$ on your answer sheet. **[0,9 т.]**
+
+**C.5** Consider the solution you have found in part C.4. If you identified it correctly your solution should have a rotating $\vec{R}(t)$. Find the expressions for the total and per rotation changes in energy for $N \gg 1$ number of rotations. Here you may ignore the terms small compared to $N$. In this part assume the mass and the radius of the ball are $m = 1\,kg$ and $r = 1\,m$ so that $I = 1/11\,kg \cdot m^2$. **[1,6 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+## 2 Solution
+
+### 2.1 Part A
+
+**A.1**
+The velocity of the ball $\vec v_b$ with respect to the turntable from the non-slipping condition is given by:
+$$\vec v_b = \vec\omega \times (r\hat z). \qquad (16)$$
+The ball velocity with respect to the Lab frame is then
+$$\vec v\ =\ \Omega \hat z \times \vec R + \vec v_b, \vec v = \Omega \hat z \times \vec R + \vec\omega \times \hat z r. \qquad (17)$$
+
+**A.2**
+The force $\vec F$ and torque $\vec\tau$ due to friction are:
+$$\vec F = m\dot{\vec v}, \qquad (18)$$
+$$\vec\tau = (-r\hat z) \times \vec F = I\frac{d\vec\omega}{dt}. \qquad (19)$$
+The time derivative of equation (16) gives
+$$\dot{\vec v} = \Omega\hat z \times \vec v + \frac{d\vec\omega}{dt} \times (r\hat z) \qquad (20)$$
+$$ \qquad (21)$$
+and substituting Eq. (18) and (19) in results in:
+$$\dot{\vec v} = \Omega\hat z \times \vec v - \frac{mr^2}{I}\left(\hat z \times \dot{\vec v}\right) \times \hat z. \qquad (22)$$
+Using the triple vector product rule in the last term of the above equation and keeping in mind that both $\vec v$ and $d\vec v/dt$ are orthogonal to $\hat z$ yields
+$$\dot{\vec v} = \Omega\hat z \times \vec v - \frac{mr^2}{I}\dot{\vec v} \rightarrow \qquad (23)$$
+$$\dot{\vec v} = \frac{\Omega}{1+mr^2/I}\hat z \times \vec v. \qquad (24)$$
+
+**A.3**
+
+The last equation unequivocally shows that the motion of the ball is circular and the corresponding angular velocity of its center is $\frac{\Omega}{1+mr^2/I}$. Now we integrate this equation to find the radius and its center:
+
+$$\vec v - \vec v_0 = \frac{\Omega}{1+mr^2/I}\,\hat z \times (\vec R - \vec R_0), \qquad (25)$$
+$$\vec v = \frac{\Omega}{1+mr^2/I}\,\hat z \times \left(\vec R - \vec R_0 - \frac{1+mr^2/I}{\Omega}\,\hat z \times \vec v_0\right) \to \qquad (26)$$
+$$\vec v = \frac{\Omega}{1+mr^2/I}\,\hat z \times (\vec R - \vec R_0) + \vec v_0 \qquad (27)$$
+
+A.4
+From this we see that the circle trajectory has radius $R_t$ and its center is located at
+
+$$\vec R_c = \vec R_0 + \frac{1+mr^2/I}{\Omega}\,\hat z \times \vec v_0. \qquad (28)$$
+$$R_t = |\vec R_0 - \vec R_c| = \frac{1+mr^2/I}{\Omega}\,|\hat z \times \vec v| = \frac{1+mr^2/I}{\Omega}\,v_0 \qquad (29)$$
+
+A.5
+In the case of a solid ball of uniform density, the moment of inertia is
+
+$$I = \frac{2mr^2}{5}, \qquad (30)$$
+
+and therefore the angular velocity of the ball's center is
+
+$$\omega_c = \frac{2}{7}\Omega. \qquad (31)$$
+
+The time to return the initial point on the turntable is then
+
+$$t = \frac{14\pi}{\Omega}. \qquad (32)$$
+
+This solution is true for most cases. But there are special cases where this time is shorter. Trajectory is a circle and its size is defined by its radius $R_t$ and , as stated, we solve for $R_t = R_0$. It could happen that the red spot happens to cross path with the ball at a moment before the turntable could make a full circle. In this case we can find the distance between the starting and the crossing positions:
+
+$$2R_0\sin\left(\frac{\omega_c t}{2}\right) = 2R_t\sin\left(\frac{2\pi - \Omega t}{2}\right), \qquad (33)$$
+$$t = \frac{2\pi}{\omega_c+\Omega} = \frac{14\pi}{9\Omega}. \qquad (34)$$
+
+## 2.2 Part B
+
+Now we examine the case wherein the turntable rotates freely, i.e. without friction, around vertical axis. In this case the total kinetic energy and the angular momentum are conserved.
+
+B.1
+Integrating the torque equation for the ball one gets:
+
+$$\vec\omega \times \hat z = \vec\omega_0 \times \hat z - \frac{mr}{I}(\vec v - \vec v_0). \qquad (35)$$
+
+Substituting this into the non slipping condition we get
+
+$$\vec v = \Omega\hat z \times \vec R + \vec\omega_0 \times \hat z\, r - \frac{mr}{I}(\vec v - \vec v_0), \qquad (36)$$
+$$\vec v_0 = \Omega_0\hat z \times \vec R_0 + \vec\omega(0) \times \hat z\, r, \qquad (37)$$
+
+which gives
+
+$$\vec v = \frac{I}{I+mr^2}\,\hat z \times \left(\Omega\vec R - \Omega_0\vec R_0\right) + \vec v_0, \qquad (38)$$
+$$\dot{\vec v} = \frac{I}{I+mr^2}\,\hat z \times \left(\dot\Omega(t)\vec R + \Omega\vec v\right). \qquad (39)$$
+
+B.2
+The torque equation for the turntable is:
+
+$$I_d\dot\Omega\hat z = -m\vec R \times \dot{\vec v}. \qquad (40)$$
+
+If we substitute the velocity and acceleration in the above equation and use the triple vector product rule we get
+
+$$I_d\dot\Omega\hat z = -m\vec R \times \left(\frac{I}{I+mr^2}\,\hat z \times \left(\dot\Omega\vec R + \Omega\vec v\right)\right)$$
+$$I_d\dot\Omega = -\frac{mI}{I+mr^2}\left(\dot\Omega R^2 + \Omega\left(\vec v \cdot \vec R\right)\right) \qquad (41)$$
+
+$\vec v \cdot R$ can be obtained using equation 44 as:
+
+$$\vec v \cdot \vec R = \left(\vec v_0 + \frac{I}{I+mr^2}\,\hat z \times \left(\Omega\vec R - \Omega_0\vec R_0\right)\right) \cdot \vec R, \qquad (42)$$
+$$= \left(\vec v_0 - \frac{I}{I+mr^2}\Omega_0\hat z \times \vec R_0\right) \cdot \vec R. \qquad (43)$$
+
+Applying this to the turntable torque equation (41), we obtain:
+
+$$\left(I_d + \frac{mI}{I+mr^2}R^2\right)\dot\Omega = -\frac{mI}{I+mr^2}\Omega\left(\vec v_0 - \frac{I}{I+mr^2}\Omega_0\hat z \times \vec R_0\right) \cdot \vec R. \qquad (44)$$
+
+We may rewrite the equation into a simpler form as:
+
+$$\dot\Omega = -\frac{\alpha\Omega/r^2\left(\vec C \cdot \vec R\right)}{\delta + \alpha R^2/r^2}, \qquad (45)$$
+
+where
+
+$$\alpha \equiv \frac{I}{I+mr^2}, \qquad (46)$$
+$$\delta \equiv \frac{I_d}{mr^2}, \qquad (47)$$
+$$\vec c \equiv \vec v_0 - \alpha\Omega_0\hat z \times \vec R_0. \qquad (48)$$
+
+B.3
+Observe that the velocity of the ball can be written as
+
+$$\vec v = \alpha\Omega\hat z \times \vec R + \vec c, \qquad (49)$$
+
+and, therefore, using equation (42) we see that:
+
+$$\vec v \cdot \vec R = \frac{1}{2}\frac{d(\vec R \cdot \vec R)}{dt} = \frac{1}{2}\dot R^2 = \vec R \cdot \vec c. \qquad (50)$$
+
+Substituting this in equation (45) we get:
+
+$$\frac{1}{\Omega}\frac{d\Omega}{dt} = -\frac{1}{2}\frac{1}{\delta+\alpha R^2/r^2}\frac{d\left(\alpha R^2/r^2\right)}{dt}. \qquad (51)$$
+
+The integration of this leads to:
+
+$$\ln\left(\frac{\Omega}{\Omega_0}\right)^2 = \ln\left(\frac{\delta+\alpha R_0^2/r^2}{\delta+\alpha R^2/r^2}\right), \qquad (52)$$
+$$\Omega^2 = \Omega_0^2\frac{\delta+\alpha R_0^2/r^2}{\delta+\alpha R^2/r^2} \qquad (53)$$
+
+B.4 From this result we see that the maximum possible $\Omega$ is achieved when $R^2$, i.e when the ball crosses the center of the turntable:
+
+$$\Omega_{max} = \Omega_0\sqrt{1+\frac{\alpha R_0^2}{\delta r^2}} \qquad (54)$$
+
+B.5
+Now we determine the trajectory of the ball. The total angular momentum along $\hat z$ is:
+
+$$M_z\hat z = I_d\Omega\hat z + m\vec R \times \vec v + I\omega_z\hat z. \qquad (55)$$
+
+Since there is no torque along $\hat z$ acting on the ball $\omega_z$ is constant. So we define the following conserved quantity:
+
+$$L\hat z = I_d\Omega\hat z + m\vec R \times \vec v = I_d\Omega_0\hat z + m\vec R_0 \times \vec v_0. \qquad (56)$$
+
+The velocity of the ball $\vec v$ was written as the sum of a part that depends on the position of the ball $\vec R$ and a constant vector $\vec c$. Then, we have:
+
+$$\vec R \times \vec v = \vec R \times \left(\alpha\Omega\hat z \times \vec R + \vec c\right) \qquad (57)$$
+$$= -\alpha\Omega R^2\hat z + \vec R \times \vec c. \qquad (58)$$
+
+Substituting this in equation (59) one gets:
+
+$$L\hat z = I_d\Omega\hat z + \alpha\Omega mR^2\hat z + m\vec R \times \vec c, \qquad (59)$$
+$$\Omega = \frac{L - m\hat z \cdot \left(\vec R \times \vec c\right)}{I_d + \alpha m R^2} \qquad (60)$$
+
+Choosing the direction of $x$-axis along $\hat c$ and $y$-axis along $\hat z \times \hat c$,
+
+$$\Omega = \frac{L/mr^2 + cy/r^2}{\delta + \alpha R^2/r^2}, \qquad (61)$$
+
+Combining this with equation (52) we have:
+
+$$\Omega_0^2\frac{\delta+\alpha R_0^2/r^2}{\delta+\alpha R^2/r^2} = \left(\frac{L/mr^2 + cy/r^2}{\delta+\alpha R^2/r^2}\right)^2, \qquad (62)$$
+$$\Omega_0^2\left(\delta+\alpha R_0^2/r^2\right)\left(\delta+\alpha R^2/r^2\right) = \left(L/mr^2 + cy/r^2\right)^2. \qquad (63)$$
+
+Observe that this is the equation for conic section. Let us elaborate on this fact. Let us introduce the following constants:
+
+$$k \equiv \Omega_0^2\left(\delta r^2 + \alpha R_0^2\right), \quad \lambda \equiv L/m. \qquad (64)$$
+
+Expanding in Cartesian coordinates $\vec R = x\hat x + y\hat y$, we obtain:
+
+$$k\alpha\left(\delta r^2 + \alpha(x^2+y^2)\right) - \left(\lambda^2 + 2\lambda cy + c^2y^2\right) = 0, \qquad (65)$$
+$$k\alpha^2x^2 + (k\alpha^2 - c^2)y^2 - 2\lambda cy = \lambda^2 - k\alpha\delta r^2 \qquad (66)$$
+
+Since $k\alpha^2 > 0$, the trajectory is determined by the sign of $k\alpha^2 - c^2$:
+
+$$\text{Ellipse if } k\alpha^2 > c^2. \qquad (67)$$
+$$\text{Parabola if } k\alpha^2 = c^2. \qquad (68)$$
+$$\text{Hyperbola if } k\alpha^2 < c^2. \qquad (69)$$
+
+## 2.3 Part C
+
+It is often useful to analyze the equations governing the evolution of a system in a unitless form so that the general behavior can be studied without worrying about a specific values or units. For this purpose, we divide the $\vec R$ and $\Omega$ by 1 meter and 1 Hertz respectively. Also we divide the time variable by 1 second.
+
+C.1
+Here it is given that $\Omega = const$. In addition, for the given mass distribution where the ball is filled up to half of its radius, the momentum of inertia becomes
+
+$$I = \frac{mr^2}{10}. \qquad (70)$$
+
+. In the presence of vertical uniform magnetic field $\vec B$ and if the ball is charged with uniform surface density $\rho = Q/4\pi r^2$, the equation of motions are changed as follows:
+
+$$m\dot{\vec v} = \vec F_f + Q\vec v \times \vec B \qquad (71)$$
+$$I\dot{\vec\omega} = -r\hat z \times \vec F_f + \vec\tau_s, \qquad (72)$$
+
+where $\tau_s = Qr^2\vec\omega \times \vec B/3$ is the torque due to spinning of the charged sphere and $F_f$ is the friction force. Calculation of $\tau_s$ is essentially identical to the mechanical moment of inertia for thin spherical shell. The torque is calculated as:
+
+$$\vec\tau_s = \int d\cos\theta\, d\phi\, \rho\, \vec r \times \left((\vec\omega \times \vec r) \times \vec B\right) \qquad (73)$$
+$$= \int r^2 d\cos\theta\, d\phi\, \rho\,(\vec\omega \times \vec r)\left(\vec r \cdot \vec B\right) \qquad (74)$$
+$$= \rho\vec\omega \times \int r^2 d\cos\theta\, d\phi\, \vec r\left(\vec r \cdot \vec B\right) \qquad (75)$$
+$$= \rho B r^4 \vec\omega \times \int d\cos\theta\, d\phi\, \cos\theta\left(\sin\theta\cos\phi\,\hat x + \sin\theta\sin\phi\,\hat y + \cos\theta\,\hat z\right) \qquad (76)$$
+$$= \rho B r^4 \vec\omega \times \hat z \int_{-1}^{1} d\cos\theta\,\cos^2\theta \int_0^{2\pi} d\phi \qquad (77)$$
+$$= \frac{Qr^2}{3}\vec\omega \times \vec B. \qquad (78)$$
+
+C.2
+
+**2.3 Part C**
+
+C.1
+
+Here it is given that $\Omega = const$. In addition, for the given mass distribution where the ball is filled up to half of its radius, the momentum of inertia becomes
+
+$$I = \frac{mr^2}{10}. \qquad (70)$$
+
+In the presence of vertical uniform magnetic field $\vec{B}$ and if the ball is charged with uniform surface density $\rho = Q/4\pi r^2$, the equation of motions are changed as follows:
+
+$$m\dot{\vec{v}} = \vec{F}_f + Q\vec{v}\times\vec{B} \qquad (71)$$
+$$I\dot{\vec{\omega}} = -r\hat{z}\times\vec{F}_f + \vec{\tau}_s, \qquad (72)$$
+
+where $\tau_s = Qr^2\vec{\omega}\times\vec{B}/3$ is the torque due to spinning of the charged sphere and $F_f$ is the friction force. Calculation of $\tau_s$ is essentially identical to the mechanical moment of inertia for thin spherical shell. The torque is calculated as:
+
+$$\vec{\tau}_s = \int d\cos\theta d\phi \rho \vec{r}\times\left((\vec{\omega}\times\vec{r})\times\vec{B}\right) \qquad (73)$$
+$$= \int r^2 d\cos\theta d\phi\,\rho\,(\vec{\omega}\times\vec{r})\left(\vec{r}\cdot\vec{B}\right) \qquad (74)$$
+$$= \rho\vec{\omega}\times\int r^2 d\cos\theta d\phi\,\vec{r}\left(\vec{r}\cdot\vec{B}\right) \qquad (75)$$
+$$= \rho Br^4\vec{\omega}\times\int d\cos\theta d\phi \cos\theta\left(\sin\theta\cos\phi\hat{x} + \sin\theta\sin\phi\hat{y} + \cos\theta\hat{z}\right) \qquad (76)$$
+$$= \rho Br^4\vec{\omega}\times\hat{z}\int_{-1}^{1}d\cos\theta\,\cos^2\theta\int_0^{2\pi}d\phi \qquad (77)$$
+$$= \frac{Qr^2}{3}\vec{\omega}\times\vec{B}. \qquad (78)$$
+
+C.2
+
+In addition we have the non–slipping condition from which we get:
+
+$$\vec{v} = \Omega\hat{z}\times\vec{R} + \omega\times\hat{z}r, \qquad (79)$$
+$$\dot{\vec{v}} = \Omega\hat{z}\times\vec{v} + \dot{\vec{\omega}}\times\hat{z}r \to \qquad (80)$$
+$$\dot{\vec{\omega}}r = \Omega\vec{v} - \dot{\vec{v}}\times\hat{z}. \qquad (81)$$
+
+Substituting these and $F_f$ from the Newton's equation into the torque equation, one gets:
+
+$$I\dot{\vec{\omega}} = -r\hat{z}\left(m\dot{\vec{v}} - Q\vec{v}\times\vec{B}\right) + \frac{Qr^2}{3}\vec{\omega}\times\vec{B} \qquad (82)$$
+$$I(\Omega\vec{v} + \hat{z}\times\dot{\vec{v}}) = -r^2\hat{z}\times\left(m\dot{\vec{v}} - Q\vec{v}\times\vec{B}\right) + \frac{Qr^2B}{3}\left(\vec{v} - \Omega\hat{z}\times\vec{R}\right) \qquad (83)$$
+$$\left(I + mr^2\right)\ddot{\vec{v}} = \left(\frac{4Qr^2B}{3} - I\Omega\right)\vec{v}\times\hat{z} - \frac{Qr^2B}{3}\Omega\vec{R}. \qquad (84)$$
+
+The last equation maybe written as:
+
+$$\frac{d^2\vec{R}}{dt^2} - \gamma\frac{d\vec{R}}{dt}\times\hat{z} + \beta\vec{R} = 0, \qquad (85)$$
+
+where
+
+$$\beta \equiv \frac{Qr^2B}{3\left(I + mr^2\right)}, \qquad (86)$$
+$$\gamma \equiv \frac{4Qr^2B - 3I\Omega}{3\left(I + mr^2\right)} = \frac{4\beta}{\Omega} - \alpha\Omega. \qquad (87)$$
+
+C.3
+
+Here we divide $\vec{R}$ and $\Omega$ respectively by 1 meter and 1 Hz, so we will deal with unitless quantities. Then, in terms of components $\vec{R} = \{x, y\}$, we have the following unitless equations:
+
+$$\ddot{x} - \gamma\dot{y} + \beta x = 0, \qquad (88)$$
+$$\ddot{y} + \gamma\dot{x} + \beta y = 0. \qquad (89)$$
+
+Substituting the following coordinate transformation
+
+$$x(t) = \rho(t)\cos(\eta(t)), \qquad (90)$$
+$$y(t) = \rho(t)\sin(\eta(t)), \qquad (91)$$
+
+in the component equation leads to
+
+$$\ddot{\rho} + \left(\beta - \gamma\dot{\eta} - \dot{\eta}^2\right)\rho = 0, \qquad (92)$$
+$$\dot{\rho}\left(\gamma + 2\dot{\eta}\right) = 0. \qquad (93)$$
+
+The first equation comes from the requirement that the coefficients of $\cos\eta$ $(\sin\eta)$ and the terms containing first time derivative $\dot{\rho}$ and $\eta$ vanish separately. It is straightforward to see this is equivalent to both $\dot{x}$ and $\dot{y}$ terms vanish. From this we find:
+
+$$\eta = -\frac{\gamma}{2}t + \phi, \qquad (94)$$
+$$\beta' \equiv \beta - \gamma\dot{\eta} - \dot{\eta}^2 = \beta + \frac{\gamma^2}{4}. \qquad (95)$$
+
+It is clear that for $\ddot{\rho} + \beta'\rho = 0$ one gets three distinct behavior for $\rho(t)$:
+
+$$\beta' > 0, \text{ for harmonic oscillation} \qquad (96)$$
+$$\beta' < 0, \text{ for exponential run away} \qquad (97)$$
+$$\beta' = 0 \qquad (98)$$
+
+We examine the case $\beta' = 0$ in part C.4.
+
+C.4
+
+If $\beta' = 0$ we have $\beta = -\frac{\gamma^2}{4}$. Therefore, $\ddot{\rho} = 0$ and we have $\rho(t) = A + Dt$, where $A$ and $D$ are constants to be determined.
+
+From the initial conditions
+
+$$x(0) = 1, \ y = 0, \ v_x(0) = \dot{x}|_{t=0} = 1, \ , v_y(0) = \dot{y}|_{t=0} = -1. \qquad (99)$$
+
+we find:
+
+$$A = 1, \ D = 1, \ \gamma = 2, \ \beta = -1. \qquad (100)$$
+
+Then the solution for the coordinates are:
+
+$$x(t) = (1 + t)\cos(t), \ y(t) = -(1 + t)\sin(t). \qquad (101)$$
+
+From this, the length of $\vec{R}$ can be calculated:
+
+$$R^2 = x(t)^2 + y(t)^2 = (1 + t)^2. \qquad (102)$$
+
+Using the definitions of $\beta$ and $\gamma$, the solutions for $\Omega$ are found as:
+
+$$\Omega = -11 \pm \sqrt{77}. \qquad (103)$$
+
+Since the both solutions for $\Omega < 0$ and $B > 0$ ($\vec{B}$ is in $\hat{z}$ direction), from $\beta < 0$ we see that $Q < 0$.
+
+C.6
+
+From the solution we see that for every $t = 2\pi$ time $\vec{R}$ makes one revolution. After $N \gg 1$ rotations, $R^2 = (1 + t)^2 = t^2$ or $R = 1 + t$ and we find the change in $R$ per rotation to be $\Delta R = \Delta t = 2\pi$.
+
+Scalar multiplying the acceleration by velocity and integrating it we obtain:
+
+$$\vec{v}\cdot\dot{\vec{v}} = -\beta\vec{v}\cdot\vec{R} \to \qquad (104)$$
+$$v^2 - v_0^2 = -\beta\left(R^2 - R_0^2\right) = t^2. \qquad (105)$$
+
+Then the total and per rotation changes in the kinetic energy associated to the motion of the ball's center per rotation are:
+
+$$\vec{v}\cdot\dot{\vec{v}} = \beta\vec{R}\cdot\vec{R} \to \qquad (106)$$
+$$\Delta K = \frac{v^2 - v_0^2}{2} = \left(\frac{R^2 - R_0^2}{2}\right) = \frac{t^2}{2}, \qquad (107)$$
+$$\Delta K_N = \frac{v_{N+1}^2 - v_N^2}{2} = \Delta\left(\frac{R^2}{2}\right) = t\Delta t = 4\pi^2 N. \qquad (108)$$
+
+Now we estimate the change in the kinetic energy associated with the spinning of the ball. From non-slipping condition we get
+
+$$\omega^2 = v^2 + \Omega^2R^2 + 2\Omega\vec{v}\cdot\left(\hat{z}\times\vec{R}\right). \qquad (109)$$
+
+For our initial condition $\vec{v}_0\cdot\left(\hat{z}\times\vec{R}_0\right) = -v_0R_0$ and, for large $N$, $\vec{v}$ and $\vec{R}$ are approximately orthogonal to a very good approximation, so $\vec{v}\cdot\left(\hat{z}\times\vec{R}\right) = -vR$. Our calculated $\Omega < 0$, so we can write this term as $|\Omega|vR$. So the kinetic energy for spinning and its change are
+
+$$K_s = \frac{I\omega^2}{2} = \frac{I\left(v^2 + \Omega^2R^2 + 2|\Omega|vR\right)}{2}, \qquad (110)$$
+$$\Delta K_s = \frac{I\left((v^2 - v_0^2 + \Omega^2(R^2 - R_0^2) + 2|\Omega|(vR - v_0R_0)\right)}{2}. \qquad (111)$$
+
+Finally, combining all the results we have:
+
+$$\Delta E = \frac{I(\omega^2 - \omega_0^2)}{2} + \Delta K \simeq \frac{I\left(v^2 + \Omega^2R^2 + 2|\Omega|vR\right)}{2} + \frac{t^2}{2}, \qquad (112)$$
+$$= \frac{t^2}{2}\left(\frac{(1 + |\Omega|)^2}{11} + 1\right), \qquad (113)$$
+$$\Delta E_N = \frac{I(\omega_N^2 - \omega_{N-1}^2)}{2} + \Delta K_N \qquad (114)$$
+$$= 4\pi N\left(\frac{(1 + |\Omega|)^2}{11} + 1\right) \text{ with:} \qquad (115)$$
+$$|\Omega| = |11 \pm \sqrt{77}|. \qquad (116)$$
+
+## References
+
+[1] Warren Weckesser , “A ball rolling on a freely spinning turntable” AM. J.Phys. **65** (8), 736-738(1997).
+
+[2] Luis Rodriguez, Comment on “A ball rolling on a freely spinning turntable” by Warren Weckesser AM. J.Phys. **66** (10), 927 (1998).
+
+[3] Hector A. Munera, “A ball rolling on a freely spinning turntable: Insights from a solution in polar coordinates” Latin American Journal of Physical Education Vol. **5** (1), 49 (2011).
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t2/p1-sol-fig1-v2.png" alt="Sketch of a spiral trajectory winding outwards from the origin of the coordinate system; arrows along the curve show the direction of motion; the axes have numerical markings from about -20 to 15." />
+<figcaption>The sketch of the trajectory looks like</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [T2.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2023/Theory/T2.pdf)
+· официални решения: [T2_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2023/Theory/T2_sol.pdf)
