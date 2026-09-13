@@ -1,0 +1,199 @@
+---
+id: izho-2021-experiment-exp-eng-p4
+source: 'IZhO 2021'
+title: 'Задача 4. 4. Experiment: the dependence of the period on the amplitude.'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IZhO/2021/izho-2021-experiment-exp-eng.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T20:15:28.634Z'
+verifier: 'same-model'
+---
+
+*XVII International Zhautykov Olimpiad/Experimental Competition — January 9, 2021 — COMPUTER EXPERIMENT: A mathematical pendulum or what angle can be considered rather small ...
+
+At its core, physics is an experimental science and this is definitely its strength. However, without comprehending a large number of experimental facts, physics would degenerate into a description of a huge amount of phenomena and processes. This is how the physical laws and the corresponding models came to life in the remote past by ignoring insignificant features of the subject under consideration. In recent decades, rapid progress has been witnessed in such a field as computer modeling or, as it has become common to say, a computer experiment. The point is that the developed physical models can be directly implemented on a computer in the form of a computational process and the regularities of interest can be thoroughly investigated in their pure forms. In this competition, you are asked to carry out such a computer experiment for a well-known system of a mathematical pendulum.
+
+A formula is well known for the period of oscillation of a mathematical pendulum of length $l$ subject to a uniform gravity field of the Earth, characterized by the acceleration of gravity $g$. However, this formula is only applicable for rather small deflection angles. The main question that you have to answer when doing this computational experiment is: *"What angular deflection can be considered small?"*
+
+In the educational literature on laboratory experiments, you can find an indication that the maximum deflection angle should not exceed $1°$, $2°$, $5°$, etc. You must answer the above question on the basis of this computer experiment! Namely, you are asked to study the dependence of the oscillation period of a mathematical pendulum on its amplitude, which is the maximum angular deflection from the vertical.
+
+The order of conducting and processing the results of a computer experiment does not differ much from the order of a real, full-scale experiment. Therefore, the parts of this problem directly correspond to the main stages of a real physical experiment. · 9 януари 2021 г.*
+
+<Warning title="Бележка към темата">
+Solution of problem 4 begins on page 5 (outside this window); header rows of the two tables at the top of page 6 are cut off.
+</Warning>
+
+## Условие
+
+At this stage of the computer experiment, we determine the dependence of the oscillation period of the mathematical pendulum on the amplitude, $T(\varphi_0)$, which is described by the formula
+
+$$T(\varphi_0) = T_0\left(a + \frac{\varphi_0^2}{b}\right),$$
+
+where $T_0$ designates the period of small oscillations of the pendulum, $a, b$ are constant values.
+
+Let the error in measuring the oscillation period of the pendulum in a real experiment be approximately equal to 5%.
+
+**4.1** Calculate the periods of oscillation of the mathematical pendulum for the following set of amplitudes $\varphi_0$ : $15^\circ, 30^\circ, 45^\circ, 60^\circ, 75^\circ$ and $90^\circ$, which you have already determined.
+
+**4.2** Prove in Graph 3 the applicability of the above formula for the dependence of the oscillation period of the pendulum on its amplitude.
+
+**4.3** Determine the values of parameters $a, b$.
+
+**4.4** Determine at what angles $\varphi_0$, expressed in degrees, the oscillations of the mathematical pendulum can be considered small.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**4. Experiment: the dependence of the period on the amplitude.**
+
+**4.1** The results of calculating the periods of oscillations for various amplitudes of oscillations are shown in Table 4.
+
+Table 4. Calculation of periods of oscillations. (For each amplitude $\varphi_0$ with $N = 8$ intervals:)
+
+$\varphi_0 = 0{,}2618$ (15°), $N = 8$, $\Delta\varphi = 0{,}0327$:
+
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+|---|---|---|---|---|
+| 0 | 0,2618 | 0,0000 | | 0,0000 |
+| 1 | 0,2291 | 0,1261 | 0,5190 | 0,5190 |
+| 2 | 0,1963 | 0,1724 | 0,2193 | 0,7383 |
+| 3 | 0,1636 | 0,2036 | 0,1741 | 0,9124 |
+| 4 | 0,1309 | 0,2259 | 0,1524 | 1,0648 |
+| 5 | 0,0982 | 0,2419 | 0,1399 | 1,2047 |
+| 6 | 0,0654 | 0,2527 | 0,1323 | 1,3370 |
+| 7 | 0,0327 | 0,2590 | 0,1279 | 1,4649 |
+| 8 | 0,0000 | 0,2611 | 0,1259 | 1,5908 |
+| | | | T= | 6,3630 |
+| | | | T/To= | 1,0127 |
+
+$\varphi_0 = 0{,}5236$ (30°), $N = 8$, $\Delta\varphi = 0{,}0654$:
+
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+|---|---|---|---|---|
+| 0 | 0,5236 | 0,0000 | | 0,0000 |
+| 1 | 0,4581 | 0,2484 | 0,5270 | 0,5270 |
+| 2 | 0,3927 | 0,3402 | 0,2224 | 0,7494 |
+| 3 | 0,3272 | 0,4023 | 0,1763 | 0,9257 |
+| 4 | 0,2618 | 0,4470 | 0,1541 | 1,0799 |
+| 5 | 0,1963 | 0,4791 | 0,1413 | 1,2212 |
+| 6 | 0,1309 | 0,5008 | 0,1336 | 1,3548 |
+| 7 | 0,0654 | 0,5135 | 0,1291 | 1,4839 |
+| 8 | 0,0000 | 0,5176 | 0,1269 | 1,6108 |
+| | | | T= | 6,4432 |
+| | | | T/To= | 1,0255 |
+
+$\varphi_0 = 0{,}7854$ (45°), $N = 8$, $\Delta\varphi = 0{,}0982$:
+
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+|---|---|---|---|---|
+| 0 | 0,7854 | 0,0000 | | 0,0000 |
+| 1 | 0,6872 | 0,3631 | 0,5408 | 0,5408 |
+| 2 | 0,5890 | 0,4987 | 0,2278 | 0,7687 |
+| 3 | 0,4909 | 0,5913 | 0,1801 | 0,9488 |
+| 4 | 0,3927 | 0,6584 | 0,1571 | 1,1059 |
+| 5 | 0,2945 | 0,7069 | 0,1438 | 1,2497 |
+| 6 | 0,1963 | 0,7398 | 0,1357 | 1,3855 |
+| 7 | 0,0982 | 0,7590 | 0,1310 | 1,5165 |
+| 8 | 0,0000 | 0,7654 | 0,1288 | 1,6453 |
+| | | | T= | 6,5810 |
+| | | | T/To= | 1,0474 |
+
+$\varphi_0 = 1{,}0472$ (60°), $N = 8$, $\Delta\varphi = 0{,}1309$:
+
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+|---|---|---|---|---|
+| 0 | 1,0472 | 0,0000 | | 0,0000 |
+| 1 | 0,9163 | 0,4664 | 0,5613 | 0,5613 |
+| 2 | 0,7854 | 0,6436 | 0,2359 | 0,7972 |
+| 3 | 0,6545 | 0,7660 | 0,1857 | 0,9829 |
+| 4 | 0,5236 | 0,8556 | 0,1614 | 1,1444 |
+| 5 | 0,3927 | 0,9207 | 0,1474 | 1,2917 |
+| 6 | 0,2618 | 0,9653 | 0,1388 | 1,4306 |
+| 7 | 0,1309 | 0,9914 | 0,1338 | 1,5643 |
+| 8 | 0,0000 | 1,0000 | 0,1315 | 1,6958 |
+| | | | T= | 6,7832 |
+| | | | T/To= | 1,0796 |
+
+$\varphi_0 = 1{,}3090$ (75°), $N = 8$, $\Delta\varphi = 0{,}1636$:
+
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+|---|---|---|---|---|
+| 0 | 1,3090 | 0,0000 | | 0,0000 |
+| 1 | 1,1454 | 0,5548 | 0,5899 | 0,5899 |
+| 2 | 0,9817 | 0,7704 | 0,2469 | 0,8368 |
+| 3 | 0,8181 | 0,9217 | 0,1934 | 1,0302 |
+| 4 | 0,6545 | 1,0340 | 0,1673 | 1,1976 |
+| 5 | 0,4909 | 1,1163 | 0,1522 | 1,3497 |
+| 6 | 0,3272 | 1,1731 | 0,1429 | 1,4927 |
+| 7 | 0,1636 | 1,2065 | 0,1375 | 1,6302 |
+| 8 | 0,0000 | 1,2175 | 0,1350 | 1,7652 |
+| | | | T= | 7,0608 |
+| | | | T/To= | 1,1238 |
+
+$\varphi_0 = 1{,}5708$ (90°), $N = 8$, $\Delta\varphi = 0{,}1963$:
+
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+|---|---|---|---|---|
+| 0 | 1,5708 | 0,0000 | | 0,0000 |
+| 1 | 1,3744 | 0,6246 | 0,6287 | 0,6287 |
+| 2 | 1,1781 | 0,8749 | 0,2619 | 0,8906 |
+| 3 | 0,9817 | 1,0541 | 0,2036 | 1,0941 |
+| 4 | 0,7854 | 1,1892 | 0,1751 | 1,2692 |
+| 5 | 0,5890 | 1,2896 | 0,1584 | 1,4276 |
+| 6 | 0,3927 | 1,3593 | 0,1483 | 1,5759 |
+| 7 | 0,1963 | 1,4006 | 0,1423 | 1,7182 |
+| 8 | 0,0000 | 1,4142 | 0,1395 | 1,8577 |
+| | | | T= | 7,4307 |
+| | | | T/To= | 1,1826 |
+
+Below is a summary table for calculations of the oscillation period for different amplitudes.
+
+Table 5.
+
+| $\varphi_0,^\circ$ | $\varphi_0$ | $T$ | $\dfrac{T}{T_0}$ | $\varphi_0^2$ | $\dfrac{T}{T_0}-1$ |
+|---|---|---|---|---|---|
+| 15 | 0,2618 | 6,3630 | 1,0127 | 0,0685 | 0,0127 |
+| 30 | 0,5236 | 6,4432 | 1,0255 | 0,2742 | 0,0255 |
+| 45 | 0,7854 | 6,5810 | 1,0474 | 0,6169 | 0,0474 |
+| 60 | 1,0472 | 7,0608 | 1,0796 | 1,0966 | 0,0796 |
+| 75 | 1,3090 | 7,0608 | 1,1238 | 1,7135 | 0,1238 |
+| 90 | 1,5708 | 7,4307 | 1,1826 | 2,4674 | 0,1826 |
+
+**4.2 – 4.3** For small oscillations, the formula for the oscillation period
+
+$$T(\varphi_0) = T_0\left(a + \frac{\varphi_0^2}{b}\right) \qquad (20)$$
+
+must coincide with formula (1), whence it follows that the parameter $a = 1$. To check the applicability of formula (20) to the description of the calculation results, it is necessary to draw a graph of the dependence of the value $\left(\dfrac{T}{T_0} - 1\right)$ on the square of the amplitude $\varphi_0^2$, which is shown in the figure on the right.
+
+The slope coefficient of the obtained dependence is 0,0706, therefore, the parameter $b$ appearing in formula (20) is approximately equal to
+
+$$b \approx 14. \qquad (21)$$
+
+**4.4** With an acceptable error of a real experiment is 5%, the deviation of the period from the period of small oscillations would not be noticeable if the inequality holds
+
+$$\frac{\varphi_0^2}{b} < 0{,}05, \qquad (22)$$
+
+whence it follows that the angles can be considered rather small for $\varphi_0 < 45^\circ$.
+
+**4. Experiment: the dependence of the period on the amplitude.** (Total for each part **8.0**)
+
+| | Content | Total for each part | Points |
+|---|---|---|---|
+| 4.1 | *Graded only if the periods obtained differ from those in this official solution lees than 0,02* / For each period obtained / One period is added from part 3 | **4.2** | 0.8 / 0.2 |
+| 4.2 | Graph of the linearized dependence / Correct linearization is used $T\left(\varphi_0^2\right)$ / Graph is plotted / Linearized dependence is obtained | **1.5** | 0.5 / 0.5 / 0.5 |
+| 4.3 | Parameters of the linearized dependence / Parameter $a = 1$ (only exact value is accepted) / Parameter $b$ in the range 13-16 | **1.3** | 0.3 / 1.0 |
+| 4.4 | Small angle is estimated as $\varphi < 45^\circ$ | **1.0** | 1.0 |
+| | **TOTAL** | **20.0** | |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2021-experiment-exp-eng/p4-sol-fig1-v3.png" alt="Graph of T/T0−1 versus φ0²: six points on a straight line through the origin up to about (2,47; 0,18); axes 0,0–3,0 and 0,00–0,20. The caption word 'perios' is printed as in the source." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [IZhO-2021-Exp_eng.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2021/Experiment/IZhO-2021-Exp_eng.pdf)
+· официални решения: [IZhO-2021-Exp_eng_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2021/Experiment/IZhO-2021-Exp_eng_sol.pdf)

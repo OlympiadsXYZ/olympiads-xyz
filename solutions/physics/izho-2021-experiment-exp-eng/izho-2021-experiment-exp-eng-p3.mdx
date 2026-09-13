@@ -1,0 +1,214 @@
+---
+id: izho-2021-experiment-exp-eng-p3
+source: 'IZhO 2021'
+title: 'Задача 3. 3. Trial experiment, estimation of errors.'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IZhO/2021/izho-2021-experiment-exp-eng.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T20:15:28.634Z'
+verifier: 'same-model'
+---
+
+*XVII International Zhautykov Olimpiad/Experimental Competition — January 9, 2021 — COMPUTER EXPERIMENT: A mathematical pendulum or what angle can be considered rather small ...
+
+At its core, physics is an experimental science and this is definitely its strength. However, without comprehending a large number of experimental facts, physics would degenerate into a description of a huge amount of phenomena and processes. This is how the physical laws and the corresponding models came to life in the remote past by ignoring insignificant features of the subject under consideration. In recent decades, rapid progress has been witnessed in such a field as computer modeling or, as it has become common to say, a computer experiment. The point is that the developed physical models can be directly implemented on a computer in the form of a computational process and the regularities of interest can be thoroughly investigated in their pure forms. In this competition, you are asked to carry out such a computer experiment for a well-known system of a mathematical pendulum.
+
+A formula is well known for the period of oscillation of a mathematical pendulum of length $l$ subject to a uniform gravity field of the Earth, characterized by the acceleration of gravity $g$. However, this formula is only applicable for rather small deflection angles. The main question that you have to answer when doing this computational experiment is: *"What angular deflection can be considered small?"*
+
+In the educational literature on laboratory experiments, you can find an indication that the maximum deflection angle should not exceed $1°$, $2°$, $5°$, etc. You must answer the above question on the basis of this computer experiment! Namely, you are asked to study the dependence of the oscillation period of a mathematical pendulum on its amplitude, which is the maximum angular deflection from the vertical.
+
+The order of conducting and processing the results of a computer experiment does not differ much from the order of a real, full-scale experiment. Therefore, the parts of this problem directly correspond to the main stages of a real physical experiment. · 9 януари 2021 г.*
+
+<Warning title="Бележка към темата">
+Solution of problem 4 begins on page 5 (outside this window); header rows of the two tables at the top of page 6 are cut off.
+</Warning>
+
+## Условие
+
+At this stage, it is necessary to make sure that the installation is operational, which in this case means the possibility of performing calculations according to the algorithm developed above, and to assess whether the required accuracy of results is achieved.
+
+As noted earlier, calculation errors depend on the number of partition intervals $N$. In this task, you have to carry out calculations not on a computer, but "manually" using your calculator. A growth of $N$ reduces the error of calculations, but increases the time of their execution. Therefore, it is important to choose its optimal value, i.e. the minimum value at which the required accuracy is achieved. At this stage, carry out all calculations at $\varphi_0 = \dfrac{\pi}{2}$.
+
+*ATTENTION! Hereinafter, calculations should be carried out with an accuracy of 4 decimal digits. To save time, carefully think over the entire sequence of calculations: use previously calculated values, define necessary constants that are present in the formulas (so as not to recalculate them several times), write down results of intermediate calculations in the most convenient form.*
+
+As an estimate of the relative error in calculating the oscillation period when dividing into $N$ intervals, we use the following value
+
+$$\varepsilon_N = \frac{T_N - T_{32}}{T_{32}},$$
+
+where $T_{32}$ stands for the period calculated at $N = 32$, which is closest to the true value.
+
+The dependence of the relative calculation error $\varepsilon_N$ on the number of partition intervals $N$ is described by the approximate formula
+
+$$\varepsilon_N = \frac{C}{N^{\gamma}},$$
+
+where $C$ and $\gamma$ are some constants.
+
+In further calculations, use only the found value $N_{\min}$ for the number of partition intervals.
+
+**3.1** Calculate the travel times $t_k$ for the points with angles $\varphi_k$ for $N = 1, 2, 4, 8, 16, 32$. Find the approximate values of the periods of oscillation $T_N$, calculated for a given $N$. The results should be complied in Table 1.
+
+**3.2** Plot Graph 1 of the law of motion $\varphi(t)$ of the pendulum for a quarter of the period based on the results of calculations at $N = 16$.
+
+**3.3** On the same Graph 1, plot the law of motion $\varphi(t)$, assuming that the oscillations are small. The results of calculations of the law of motion should be presented in Table 2.
+
+**3.4** Calculate the relative errors $\varepsilon_N$ in determining the periods. The results must be presented in Table 3.
+
+**3.5** Prove in Graph 2 the applicability of the above formula for the relative error and find the values of the parameters $C$ and $\gamma$.
+
+**3.6** Determine the minimum value $N_{\min}$ at which the relative error in calculating the period does not exceed 0.2%.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**3. Trial experiment, estimation of errors.**
+
+**3.1** The results of calculating the angular velocities, times and periods of oscillations for the indicated values of the number of partition intervals are shown in Table 1.
+
+Table 1. Calculation of periods of oscillations with different numbers of partition intervals.
+
+| $N=$ | **32** | | | | $N=$ | **16** | | | |
+|---|---|---|---|---|---|---|---|---|---|
+| $\Delta\varphi$ | 0,0491 | | | | $\Delta\varphi$ | 0,0982 | | | |
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ | $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+| 0 | 1,5708 | 0,0000 | | 0,0000 | 0 | 1,5708 | 0,0000 | | 0,0000 |
+| 1 | 1,5217 | 0,3133 | 0,3134 | 0,3134 | 1 | 1,4726 | 0,4428 | 0,4435 | 0,4435 |
+| 2 | 1,4726 | 0,4428 | 0,1299 | 0,4432 | 2 | 1,3744 | 0,6246 | 0,1840 | 0,6274 |
+| 3 | 1,4235 | 0,5417 | 0,0997 | 0,5430 | 3 | 1,2763 | 0,7620 | 0,1416 | 0,7690 |
+| 4 | 1,3744 | 0,6246 | 0,0842 | 0,6271 | 4 | 1,1781 | 0,8749 | 0,1200 | 0,8890 |
+| 5 | 1,3254 | 0,6971 | 0,0743 | 0,7014 | 5 | 1,0799 | 0,9710 | 0,1064 | 0,9954 |
+| 6 | 1,2763 | 0,7620 | 0,0673 | 0,7687 | 6 | 0,9817 | 1,0541 | 0,0970 | 1,0923 |
+| 7 | 1,2272 | 0,8208 | 0,0620 | 0,8307 | 7 | 0,8836 | 1,1264 | 0,0900 | 1,1824 |
+| 8 | 1,1781 | 0,8749 | 0,0579 | 0,8886 | 8 | 0,7854 | 1,1892 | 0,0848 | 1,2672 |
+| 9 | 1,1290 | 0,9247 | 0,0546 | 0,9432 | 9 | 0,6872 | 1,2434 | 0,0807 | 1,3479 |
+| 10 | 1,0799 | 0,9710 | 0,0518 | 0,9950 | 10 | 0,5890 | 1,2896 | 0,0775 | 1,4254 |
+| 11 | 1,0308 | 1,0140 | 0,0495 | 1,0444 | 11 | 0,4909 | 1,3281 | 0,0750 | 1,5004 |
+| 12 | 0,9817 | 1,0541 | 0,0475 | 1,0919 | 12 | 0,3927 | 1,3593 | 0,0731 | 1,5735 |
+| 13 | 0,9327 | 1,0915 | 0,0458 | 1,1377 | 13 | 0,2945 | 1,3834 | 0,0716 | 1,6451 |
+| 14 | 0,8836 | 1,1264 | 0,0443 | 1,1819 | 14 | 0,1963 | 1,4006 | 0,0705 | 1,7156 |
+| 15 | 0,8345 | 1,1589 | 0,0430 | 1,2249 | 15 | 0,0982 | 1,4108 | 0,0698 | 1,7854 |
+| 16 | 0,7854 | 1,1892 | 0,0418 | 1,2667 | 16 | 0,0000 | 1,4142 | 0,0695 | 1,8549 |
+| 17 | 0,7363 | 1,2173 | 0,0408 | 1,3075 | | | | | |
+| 18 | 0,6872 | 1,2434 | 0,0399 | 1,3474 | | | | | |
+| 19 | 0,6381 | 1,2674 | 0,0391 | 1,3865 | | | | | |
+| 20 | 0,5890 | 1,2896 | 0,0384 | 1,4249 | | | | | |
+| 21 | 0,5400 | 1,3098 | 0,0378 | 1,4626 | | | | | |
+| 22 | 0,4909 | 1,3281 | 0,0372 | 1,4999 | | | | | |
+| 23 | 0,4418 | 1,3446 | 0,0367 | 1,5366 | | | | | |
+| 24 | 0,3927 | 1,3593 | 0,0363 | 1,5729 | | | | | |
+| 25 | 0,3436 | 1,3723 | 0,0359 | 1,6088 | | | | | |
+| 26 | 0,2945 | 1,3834 | 0,0356 | 1,6445 | | | | | |
+| 27 | 0,2454 | 1,3929 | 0,0354 | 1,6798 | | | | | |
+| 28 | 0,1963 | 1,4006 | 0,0351 | 1,7150 | | | | | |
+| 29 | 0,1473 | 1,4065 | 0,0350 | 1,7500 | | | | | |
+| 30 | 0,0982 | 1,4108 | 0,0348 | 1,7848 | | | | | |
+| 31 | 0,0491 | 1,4134 | 0,0348 | 1,8196 | | | | | |
+| 32 | 0,0000 | 1,4142 | 0,0347 | 1,8543 | | | | | |
+| | | | $T_N=$ | **7,4171** | | | | $T_N=$ | **7,4197** |
+
+| $N=$ | **8** | | | | $N=$ | **4** | | | |
+|---|---|---|---|---|---|---|---|---|---|
+| $\Delta\varphi$ | 0,1963 | | | | $\Delta\varphi$ | 0,3927 | | | |
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ | $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+| 0 | 1,5708 | 0,0000 | | 0,0000 | 0 | 1,5708 | 0,0000 | | 0,0000 |
+| 1 | 1,3744 | 0,6246 | 0,6287 | 0,6287 | 1 | 1,1781 | 0,8749 | 0,8977 | 0,8977 |
+| 2 | 1,1781 | 0,8749 | 0,2619 | 0,8906 | 2 | 0,7854 | 1,1892 | 0,3805 | 1,2783 |
+| 3 | 0,9817 | 1,0541 | 0,2036 | 1,0941 | 3 | 0,3927 | 1,3593 | 0,3082 | 1,5864 |
+| 4 | 0,7854 | 1,1892 | 0,1751 | 1,2692 | 4 | 0,0000 | 1,4142 | 0,2832 | 1,8696 |
+| 5 | 0,5890 | 1,2896 | 0,1584 | 1,4276 | | | | | |
+| 6 | 0,3927 | 1,3593 | 0,1483 | 1,5759 | | | | | |
+| 7 | 0,1963 | 1,4006 | 0,1423 | 1,7182 | | | | | |
+| 8 | 0,0000 | 1,4142 | 0,1395 | 1,8577 | | | | | |
+| | | | $T_N=$ | **7,4307** | | | | $T_N=$ | **7,4785** |
+
+| $N=$ | **2** | | | | $N=$ | **1** | | | |
+|---|---|---|---|---|---|---|---|---|---|
+| $\Delta\varphi$ | 0,7854 | | | | $\Delta\varphi$ | 1,5708 | | | |
+| $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ | $k$ | $\varphi$ | $\omega$ | $\Delta t_k$ | $t_k$ |
+| 0 | 1,5708 | 0,0000 | | 0,0000 | 0 | 1,5708 | 0,0000 | | 0,0000 |
+| 1 | 0,7854 | 1,1892 | 1,3209 | 1,3209 | 1 | 0,0000 | 1,4142 | 2,2214 | 2,2214 |
+| 2 | 0,0000 | 1,4142 | 0,6034 | 1,9242 | | | | | |
+| | | | $T_N=$ | **7,6969** | | | | $T_N=$ | **8,8858** |
+
+**3.2 – 3.3** To calculate the graph points of the law of motion in the approximation of small oscillations, it is necessary to use the formula
+$$\varphi(t) = \frac{\pi}{2}\cos t. \qquad (16)$$
+
+The calculation results for this law are presented in Table 2 and in the graph. There is also a line in the graph representing the calculated law of motion (16). It is interesting to note that in the first case, the time values are set, and the corresponding deflection angles are calculated; and in the second one, on the contrary, the deflection angles are set and corresponding times are calculated.
+
+Table 2.
+
+| k | t | $\varphi$ |
+|---|---|---|
+| 0 | 0,0000 | 1,5708 |
+| 1 | 0,0982 | 1,5632 |
+| 2 | 0,1963 | 1,5406 |
+| 3 | 0,2945 | 1,5032 |
+| 4 | 0,3927 | 1,4512 |
+| 5 | 0,4909 | 1,3853 |
+| 6 | 0,5890 | 1,3061 |
+| 7 | 0,6872 | 1,2142 |
+| 8 | 0,7854 | 1,1107 |
+| 9 | 0,8836 | 0,9965 |
+| 10 | 0,9817 | 0,8727 |
+| 11 | 1,0799 | 0,7405 |
+| 12 | 1,1781 | 0,6011 |
+| 13 | 1,2763 | 0,4560 |
+| 14 | 1,3744 | 0,3064 |
+| 15 | 1,4726 | 0,1540 |
+| 16 | 1,5708 | 0,0000 |
+
+**3.4 – 3.5** The results of calculating the errors $\varepsilon_N$ of the oscillation periods for different numbers $N$ of partition intervals are shown in Table 3.
+
+Table 3. Calculation errors.
+
+| $N$ | $T$ | $\varepsilon_N$ | $\ln N$ | $\ln \varepsilon_N$ |
+|---|---|---|---|---|
+| 1 | 8,8858 | 1,98E-01 | 0,0000 | -1,6195 |
+| 2 | 7,6969 | 3,77E-02 | 0,6931 | -3,2774 |
+| 4 | 7,4785 | 8,27E-03 | 1,3863 | -4,7952 |
+| 8 | 7,4307 | 1,83E-03 | 2,0794 | -6,3026 |
+| 16 | 7,4197 | 3,50E-04 | 2,7726 | -7,9584 |
+| 32 | 7,4171 | 0,00E+00 | | |
+
+To determine the parameters of the dependence $\varepsilon_N = \dfrac{C}{N^\gamma}$, it must be represented on a double logarithmic scale as
+$$\ln \varepsilon_N = \ln C - \gamma \ln N. \qquad (17)$$
+
+The figure on the right shows a graph of this dependence, drawn according to the data in Table 3. The linearity of the obtained dependence clearly proves the applicability of the formula for the dependence of the calculation error on the number $N$.
+
+The parameters of this linear relationship, calculated using the least squares method, are equal: the slope coefficient $a \approx -2{,}3$ and the shift $b \approx -1{,}65$. Therefore, the sought parameters of the dependence are found as
+$$\gamma \approx -a = 2{,}3$$
+$$C = \exp(b) \approx 0{,}19 \qquad (18)$$
+
+**3.6** It is easy to find from formula (17) that the number of partition intervals required to achieve the error $\varepsilon = 0{,}002$ is expressed as
+$$N_{\min} = \left(\frac{C}{\varepsilon}\right)^{1/\gamma} \approx 8. \qquad (19)$$
+
+So, all further calculations should be carried out at $N = N_{\min} = 8$.
+
+Grading of section 3 (solutions p.7–8):
+
+| | | | |
+|---|---|---|---|
+| 3.1 | *Graded only if the periods obtained differ from those in this official solution lees than.* Periods are correctly calculated for N=32; N=16; N=8; N=4; N=2; N=1 | **4.2** | 1.2 / 1.0 / 0.8 / 0.6 / 0.4 / 0.2 |
+| 3.2 | Graph: All points are plotted in accordance with the table; Smooth line is drawn; | **0.5** | 0.3 / 0.2 |
+| 3.3 | Graph: Law of motion is obtained, table 2; All points are plotted in accordance with the table; Smooth line is drawn; | **1.0** | 0.5 / 0.3 / 0.2 |
+| 3.4 | Errors are correctly evaluated, table 3 | **0.5** | 0.5 |
+| 3.5 | Graph: Double logarithm scale is used; Linearized dependence is drawn; Linear dependence is obtained; The power is found as $\gamma \approx 2{,}3 \pm 0{,}1$; The coefficient is found as $C \approx 0{,}19 \pm 0{,}1$ | **2.3** | 0.5 / 0.5 / 0.3 / 0.5 / 0.5 |
+| 3.6 | Concluded that $N = 8 \pm 1$ | **0.5** | 0.5 |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2021-experiment-exp-eng/p3-sol-fig1-v2.png" alt="Graph of deflection angle versus time: two data series (blue and red points) with fitted curves, time axis 0,0–2,0, deflection angle axis 0,0–1,8." />
+<figcaption>Laws of motion</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2021-experiment-exp-eng/p3-sol-fig2-v6.png" alt="Graph of ln(eps) versus ln(N): five points on a straight descending line from about (0,0; −1,6) to (2,77; −8,0)." />
+<figcaption>Calculation error</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [IZhO-2021-Exp_eng.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2021/Experiment/IZhO-2021-Exp_eng.pdf)
+· официални решения: [IZhO-2021-Exp_eng_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2021/Experiment/IZhO-2021-Exp_eng_sol.pdf)
