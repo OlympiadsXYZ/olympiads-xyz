@@ -845,6 +845,21 @@ export function normaliseCandidate(c) {
     out = out.replace(/\\nicefrac\b/g, '\\frac');
     if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac`); }
   });
+  // Inline HTML a reader types for the print's formatting (<u>underlined</u>, <b>, <i>, <sub>, <sup>, <br>) is
+  // refused by the validator (MDX reads it as JSX) and no refix settles it (ioaa-2019-no-final, three refix
+  // rounds wrote the tag back): the formatting becomes Markdown/LaTeX, the words stay. Unknown tags are left
+  // for the validator.
+  walkStrings(c, (p, s) => {
+    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p) || !/<\/?[a-zA-Z]/.test(s)) return;
+    const out = splitMath(s).map(seg => seg.math ? seg.text : seg.text
+      .replace(/<\/?u>/gi, '')
+      .replace(/<(b|strong)>([\s\S]*?)<\/\1>/gi, '**$2**')
+      .replace(/<(i|em)>([\s\S]*?)<\/\1>/gi, '*$2*')
+      .replace(/<sub>([^<$]*)<\/sub>/gi, (_, x) => `$_{${x.trim()}}$`)
+      .replace(/<sup>([^<$]*)<\/sup>/gi, (_, x) => `$^{${x.trim()}}$`)
+      .replace(/<br\s*\/?>/gi, '\n')).join('');
+    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: inline HTML formatting turned into Markdown`); }
+  });
   // LaTeX spacing and text commands OUTSIDE math ("(2.1) \quad $a = b$ \ \text{и} \ $c$",
   // a display-equation habit) render literally on the page: spacing becomes a
   // space, \text{}/\mathrm{} their content, \textbf{} **bold**, \textit{} *italic*.
@@ -883,9 +898,25 @@ export function normaliseCandidate(c) {
   });
   // a solution with no text and no figures is incomplete by definition (a refix once flipped the flag to false and
   // the candidate could not validate again: ipho-2023-experiment-q4)
+  // A paper without a solutions document: the reader writes statement: null (schema: "should be string") or a remark
+  // in place of a solution ("No official solutions document was provided in the archive for this paper." — the
+  // text-layer check then lists its words as printed nowhere; ioaa-2021-theory-tq-10-q/-15-q/-4-q). Neither is
+  // solution text: the remark becomes the incompleteReason and the solution is marked incomplete.
+  const REMARK = (() => {
+    const L = '(?<![\\p{L}\\p{N}])', R = '(?![\\p{L}\\p{N}])'; // \b is ASCII-only: Cyrillic words need lookarounds
+    return new RegExp(`^(?:[^.\\n]{0,80}${L}(?:solutions?|answer key|marking scheme|official answers?|решени[ея]|отговори)${R}[^.\\n]{0,120}${L}(?:not|no|never|missing|absent|unavailable|provided|available|included|supplied|found|exists?|липсва|липсват|няма|не е|не са|не бяха)${R}[^.\\n]{0,80}|(?:no|няма|липсва)\\s[^.\\n]{0,60}${L}(?:solutions?|решени[ея])${R}[^.\\n]{0,80})\\.?\\s*$`, 'iu');
+  })();
   (c.problems || []).forEach((pr, i) => {
     const s = pr.solution;
-    if (s && typeof s === 'object' && !String(s.statement || '').trim() && !s.incomplete && !(s.figures || []).length) { s.incomplete = true; s.incompleteReason = s.incompleteReason || 'no solution text'; changes.push(`/problems/${i}/solution: empty solution marked incomplete`); }
+    if (!s || typeof s !== 'object') return;
+    if (s.statement != null && typeof s.statement !== 'string') return; // an object or array is the schema refix's to settle
+    if (s.statement === null) { delete s.statement; changes.push(`/problems/${i}/solution: null statement dropped`); }
+    const text = String(s.statement || '').trim();
+    if (text && text.length <= 220 && !/\$/.test(text) && REMARK.test(text) && !(s.figures || []).length) {
+      delete s.statement; s.incomplete = true; s.incompleteReason = s.incompleteReason || text;
+      changes.push(`/problems/${i}/solution: a remark about the missing solutions stood in for the solution; marked incomplete`);
+    }
+    if (!String(s.statement || '').trim() && !s.incomplete && !(s.figures || []).length) { s.incomplete = true; s.incompleteReason = s.incompleteReason || 'no solution text'; changes.push(`/problems/${i}/solution: empty solution marked incomplete`); }
   });
   if (changes.length) c.tx = { ...(c.tx || {}), normalised: [...(c.tx?.normalised || []), ...changes] };
   return c;

@@ -72,6 +72,13 @@ function runOne({ id, resume, fresh }) {
       const state = readJson(JOBS_FILE, { version: 2, jobs: {} });
       if (state.jobs[id]) { delete state.jobs[id]; writeJson(JOBS_FILE, state); }
     }
+    if (!fresh) {
+      // the plan was drawn at start; a job that appeared since (another batch parent, an orphan worker, a hand
+      // retry) or reached done belongs to that loop — run.mjs would refuse or, worse, replace it
+      const now = jobs()[id];
+      if (!resume && now) { const e = { paperId: id, outcome: 'skipped', reason: `job appeared since planning (stage ${now.stage}); another loop has it` }; log(e); return resolve(e); }
+      if (resume && now?.stage === 'done' && !args.redo) { const e = { paperId: id, outcome: 'skipped', reason: 'job done since planning' }; log(e); return resolve(e); }
+    }
     const argv = [path.join(ROOT, 'scripts', 'tx', 'run.mjs'), id];
     if (resume) {
       argv.push('--continue');

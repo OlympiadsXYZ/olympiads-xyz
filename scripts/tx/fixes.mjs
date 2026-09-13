@@ -344,6 +344,12 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       const moved = dup && ((typeof sib === 'string' && sib.trim() !== String(pointerGet(original, dup.path) || '').trim()) || (sib && typeof sib === 'object' && sib.remove === true) || byPath.get(dup.path.replace(/\/statement$/, ''))?.value?.remove === true);
       if (dup && !moved) { skipped.push({ ...entry, reason: `fix pastes the text of ${dup.what} into this field` }); continue; }
       if (dup && moved) { pointerSet(candidate, p, f.value); applied.push({ ...entry, from: current, to: f.value, movedFrom: dup.path, note: f.note || null }); continue; } // the text is printed (it sat in the sibling); resemblance to the old value is not expected
+      // text that opens like another problem's statement, part or solution is a paste from that problem, unless that
+      // field is rewritten in the same batch (eupho-2025-experiment-x: a refix wrote E1's Task 4 sentence into E2's
+      // part d over a correct value, and the checker flagged the wrong content five rounds later)
+      const other = duplicatesOtherProblem(original, p, f.value);
+      const otherMoved = other && typeof byPath.get(other.path)?.value === 'string' && byPath.get(other.path).value.trim() !== String(pointerGet(original, other.path) || '').trim();
+      if (other && !otherMoved) { skipped.push({ ...entry, reason: `fix pastes the text of ${other.what} into this field` }); continue; }
       const spliced = spliceFragment(current, f.value);
       if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: f.value, note: f.note || null }); continue; }
       // a field that currently holds a copy of a sibling's text (a reader carried part c's question into part d) is

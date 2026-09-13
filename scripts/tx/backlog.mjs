@@ -77,9 +77,12 @@ const catalogueRows = () => {
       const multiPair = isMulti(a.problemsKey) !== isMulti(b.problemsKey) && !!(a.round || b.round) && a.round === b.round;
       const ta = titlesOf(a.problemsKey), tb = titlesOf(b.problemsKey);
       if (!multiPair && (ta.length < 2 || ta.length !== tb.length || !ta.every((t, n) => t === tb[n]))) continue;
-      // files that differ by a small number (10_prob / 11_prob: two grades whose problems share titles) are two papers
+      // files that differ by a small number on each side (10_prob / 11_prob: two grades whose problems share titles)
+      // are two papers; a small number on one side only is a date or a download marker ("ver Jul 29 (1)" next to
+      // "ver 20150730_1717": ioaa-2015-data-analysis ran twice)
       const ia = idTokens(a.problemsKey), ib = idTokens(b.problemsKey);
-      if ([...ia].filter(t => !ib.has(t)).concat([...ib].filter(t => !ia.has(t))).some(t => /^\d{1,2}$/.test(t))) continue;
+      const small = list => list.some(t => /^\d{1,2}$/.test(t));
+      if (small([...ia].filter(t => !ib.has(t))) && small([...ib].filter(t => !ia.has(t)))) continue;
       const score = r => (r.solutionsKey ? 4 : 0) + (isMulti(r.problemsKey) ? 0 : 2) + Math.min(1, pagesOf(r.problemsKey) / 100);
       const [keep, drop] = score(a) >= score(b) ? [a, b] : [b, a];
       drop.duplicateOf = keep.problemsKey; dropped.add(drop);

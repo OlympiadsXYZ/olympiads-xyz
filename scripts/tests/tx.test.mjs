@@ -823,3 +823,51 @@ test('text-layer lettering: math-italic formula lines and equation-editor leftov
   for (const w of ['cos', 'min', 'ln', 'problems', 'figure']) assert.ok(lat.stop.test(w), `${w} is structural`);
   for (const w of ['cosine', 'minimum', 'lens', 'along']) assert.ok(!lat.stop.test(w), `${w} is prose`);
 });
+
+test('inline HTML formatting becomes Markdown/LaTeX; the words stay and math is untouched', () => {
+  const c = candidate();
+  c.problems[0].statement = 'Note the field <u>after 5 minutes</u> and H<sub>2</sub>O with <b>bold</b>, <i>italic</i>, x<sup>2</sup>, a<br/>break and $a < b$ in math.';
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].statement, 'Note the field after 5 minutes and H$_{2}$O with **bold**, *italic*, x$^{2}$, a\nbreak and $a < b$ in math.');
+  const d = candidate(); d.problems[0].statement = 'An unknown <table> tag stays for the validator.';
+  lib.normaliseCandidate(d);
+  assert.match(d.problems[0].statement, /<table>/);
+});
+
+test('a refix that pastes another problem\'s text into a field is refused unless that field moves in the same batch', async () => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const sentence = 'Estimate $w_1$, $w_2$, and $b$ by using a graphical proach.';
+  const mk = () => {
+    const c = candidate();
+    c.problems[0].parts = [{ label: 'Task 4', statement: `Determine the weights $w_1$, $w_2$ and the bias $b$. Describe your measurements and document your data in a table. ${sentence}` }];
+    c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p2`, number: 2, statement: 'Hidden pattern.', figures: [], parts: [{ label: 'c', statement: 'The sinusoid amplitude $A$ (3 pts)' }, { label: 'd', statement: 'The step height $s$ (3 pts)' }] });
+    return c;
+  };
+  const defects = [{ path: '/problems/1/parts/1/statement', kind: 'reworded', severity: 'minor', description: 'x' }];
+  const c1 = mk();
+  const r1 = applyFixes(c1, [{ path: '/problems/1/parts/1/statement', value: sentence }], { defects, round: 7 });
+  assert.equal(r1.applied.length, 0);
+  assert.match(r1.skipped[0].reason, /pastes the text of problem 1/);
+  assert.equal(c1.problems[1].parts[1].statement, 'The step height $s$ (3 pts)');
+  // the same sentence moving out of problem 1's part in the same batch is a move, not a paste
+  const c2 = mk();
+  const r2 = applyFixes(c2, [{ path: '/problems/1/parts/1/statement', value: sentence }, { path: '/problems/0/parts/0/statement', value: 'Determine the weights $w_1$, $w_2$ and the bias $b$; describe your measurements and document your data in a table.' }], { defects: [...defects, { path: '/problems/0/parts/0/statement', kind: 'other', severity: 'minor', description: 'y' }], round: 7 });
+  assert.equal(r2.skipped.length, 0, JSON.stringify(r2.skipped));
+});
+
+test('a null solution statement or a remark about missing solutions is not solution text: the solution is marked incomplete', () => {
+  const c = candidate();
+  c.problems[0].solution = { statement: null };
+  c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p2`, number: 2, figures: [], solution: { statement: 'No official solutions document was provided in the archive for this paper.' } });
+  c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p3`, number: 3, figures: [], solution: { statement: 'Решение: няма официално решение в архива.' } });
+  c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p4`, number: 4, figures: [], solution: { statement: 'The solution is not unique: any $v$ with $v^2 = 2gh$ solves the equation, as the marking scheme notes.' } });
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].solution.statement, undefined);
+  assert.equal(c.problems[0].solution.incomplete, true);
+  assert.equal(c.problems[1].solution.statement, undefined);
+  assert.equal(c.problems[1].solution.incompleteReason, 'No official solutions document was provided in the archive for this paper.');
+  assert.equal(c.problems[2].solution.statement, undefined);
+  assert.equal(c.problems[2].solution.incomplete, true);
+  assert.match(c.problems[3].solution.statement, /not unique/); // real solution prose with math stays
+  assert.notEqual(c.problems[3].solution.incomplete, true);
+});

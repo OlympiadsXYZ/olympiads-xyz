@@ -33,6 +33,9 @@ if (!paperId) fail('usage: run.mjs <paperId> --reader <provider:model|agent:labe
 const jobs = readJson(JOBS_FILE, { version: 2, jobs: {} });
 let job = jobs.jobs[paperId];
 if (args.continue && !job) fail(`no job state for ${paperId} in ${path.relative(ROOT, JOBS_FILE)}`);
+// a fresh start on a promoted paper (a second batch parent working through the same plan) would replace the job
+// and re-read the paper from scratch; the re-verification route is --continue --retry, the re-read route batch --fresh
+if (!args.continue && job?.stage === 'done') fail(`${paperId} is already promoted (job done): re-verify with --continue --retry, or re-read it with batch.mjs --fresh`);
 function parseWho(s) {
   const [provider, ...rest] = String(s).split(':');
   const model = rest.join(':');
