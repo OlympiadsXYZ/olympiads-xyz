@@ -87,11 +87,13 @@ if (stage === 'refix') {
   if (!defects.length) fail('no defects to refix');
   const wanted = new Set();
   for (const d of defects) {
-    if (d.document && d.page) { wanted.add(`${d.document}#${d.page}`); continue; }
+    // the defect's own page, plus every page the problem spans in that document (a fix often needs the
+    // page before or after the one the checker named: a formula on p.4 for a table that ends on p.6)
+    if (d.document && d.page) wanted.add(`${d.document}#${d.page}`);
     const m = /^\/problems\/(\d+)/.exec(d.path);
     const spans = m ? candidate.problems?.[Number(m[1])]?.tx?.sourceSpans : null;
-    if (Array.isArray(spans) && spans.length) for (const s of spans) wanted.add(`${s.document}#${s.page}`);
-    else for (const p of pageImages(manifest)) wanted.add(`${p.document}#${p.page}`);
+    if (Array.isArray(spans) && spans.length) { for (const s of spans) if (!d.document || s.document === d.document) wanted.add(`${s.document}#${s.page}`); }
+    else if (!(d.document && d.page)) for (const p of pageImages(manifest)) wanted.add(`${p.document}#${p.page}`);
   }
   refix = { candidate, defects, wanted, round: Number(args.round || 1) };
 }
@@ -115,7 +117,8 @@ function buildText(window, images) {
     parts.push('CANDIDATE TRANSCRIPTION (JSON, sanitised — the reader\'s notes and identity are withheld on purpose):\n' + JSON.stringify(view));
   }
   if (stage === 'refix') {
-    const clip = v => { const s = JSON.stringify(v === undefined ? null : v); return s.length > 6000 ? s.slice(0, 6000) + '…(truncated)' : s; };
+    // the current value goes whole: a clipped value comes back clipped (the model echoes the marker) and cuts the field
+    const clip = v => { const s = JSON.stringify(v === undefined ? null : v); return s.length > 40000 ? s.slice(0, 40000) + '…(the value is longer than 40,000 characters; return null for this path)' : s; };
     parts.push('DEFECTS TO FIX (return one entry per path, in this order):\n' + refix.defects.map((d, i) => `${i + 1}. path ${d.path}\n   kind: ${d.kind || '?'}; severity: ${d.severity || '?'}${d.document ? `; on ${d.document} p.${d.page}` : ''}\n   defect: ${d.description || ''}\n   current value: ${clip(pointerGet(refix.candidate, d.path))}`).join('\n'));
   }
   parts.push('Respond with the single JSON object only.');

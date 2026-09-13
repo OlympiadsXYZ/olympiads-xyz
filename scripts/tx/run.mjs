@@ -210,6 +210,14 @@ for (;;) {
     const r = node('transcribe.mjs', [paperId, '--provider', job.reader.provider, '--model', job.reader.model, '--stage', 'reader', ...transcribeOpts, ...(job.options.windowPages ? ['--window-pages', String(job.options.windowPages)] : []), ...(job.dryRun ? ['--dry-run'] : [])]);
     if (r.status !== 0 && r.status !== 3) { save(`reader failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
     if (job.dryRun) { save('dry-run: reader payload built, stopping'); console.log(r.stdout); process.exit(0); }
+    // The model ran out of output tokens (stop reason "length"): the JSON was truncated and repaired, which
+    // loses the tail of a long solution. Read again in smaller page windows, once per halving down to 3 pages.
+    if (/"stopReason":\s*"(length|max_tokens)"/.test(r.stdout)) {
+      const pages = Object.values(readJson(manifestPath, { documents: {} }).documents).reduce((a, d) => a + (d.pages || 0), 0);
+      const current = job.options.windowPages || pages;
+      const smaller = Math.max(3, Math.floor(current / 2));
+      if (smaller < current) { job.options.windowPages = smaller; job.readerRetries = (job.readerRetries || 0) + 1; save(`reader output was cut off (stop reason length); reading again in windows of ${smaller} page(s)`); continue; }
+    }
     job.artefacts.candidate = rel(readerOut); job.stage = 'validate'; save(r.status === 3 ? 'reader done (assembly incomplete; validate will report)' : 'reader done');
   } else if (job.stage === 'validate') {
     // rule-based normalisation first (figure geometry under tx, numeric answers, dates, KaTeX spacing)

@@ -90,9 +90,14 @@ export function plausibleReplacement(current, fix, kind, path = '') {
   if (looksLikeInstruction(fix)) return false;
   if (/\/label$/.test(path) && fix.trim().length <= 6) return true; // a label is a few characters; the current value may be a leaked instruction
   if (current.length < 40 || looksLikeInstruction(current)) return true; // anything printed beats a stub or an earlier bad paste
-  // a fix that is the leading part of the current text trims pasted trailing content (the next problem, a repeated part)
+  // a fix that is the leading part of the current text trims pasted trailing content, but only when what it
+  // drops is a paste (it opens like a sibling field or a problem heading) — otherwise it is a truncation
   const flat = s => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
-  if (kind !== 'omission' && fix.length >= 40 && flat(current).startsWith(flat(fix).slice(0, Math.min(flat(fix).length, 200)))) return true;
+  if (kind !== 'omission' && fix.length >= 40 && !/(…|\.\.\.)\s*\(truncated\)\s*$/.test(fix) && flat(current).startsWith(flat(fix))) {
+    const dropped = flat(current).slice(flat(fix).length);
+    if (/^\s*(задача|problem|question|task|aufgabe|probl[eè]me)\s*\d+/i.test(dropped)) return true;
+    return false;
+  }
   const a = words(current), b = words(fix);
   if (!a.size) return true;
   const shared = [...a].filter(w => b.has(w)).length;
@@ -226,6 +231,8 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       continue;
     }
     if (typeof current === 'string' && typeof f.value === 'string') {
+      // an echo of a clipped prompt value ("…(truncated)") would cut the field
+      if (/\(truncated\)\s*$/.test(f.value) || /…\(truncated\)/.test(f.value)) { skipped.push({ ...entry, reason: 'fix carries a truncation marker (an echo of the clipped prompt value)' }); continue; }
       if (current === f.value) {
         // the refix model, pages in hand, stands by the current text: the defect is disputed between two
         // model readings; run.mjs demotes a disputed *minor* model defect so it cannot park the paper

@@ -539,8 +539,11 @@ test('a statement that runs on into the next problem is cut where that problem o
   c.problems[0].statement = 'Странността трябва да запази знака си.\n\nЗадача 2. Измерената лъчева скорост на звездата се променя периодично с амплитуда 30 km/s. Определете масата.';
   lib.normaliseCandidate(c);
   assert.equal(c.problems[0].statement, 'Странността трябва да запази знака си.');
-  const cur = 'Странността трябва да запази знака си при всяко взаимодействие. Измерената лъчева скорост на звездата се променя периодично.';
-  assert.equal(plausibleReplacement(cur, 'Странността трябва да запази знака си при всяко взаимодействие.', 'other', '/problems/0/statement'), true);
+  const cur = 'Странността трябва да запази знака си при всяко взаимодействие. Задача 2. Измерената лъчева скорост на звездата се променя периодично.';
+  assert.equal(plausibleReplacement(cur, 'Странността трябва да запази знака си при всяко взаимодействие.', 'other', '/problems/0/statement'), true); // drops a pasted next problem
+  const plain = 'Странността трябва да запази знака си при всяко взаимодействие. Измерената лъчева скорост на звездата се променя периодично.';
+  assert.equal(plausibleReplacement(plain, 'Странността трябва да запази знака си при всяко взаимодействие.', 'other', '/problems/0/statement'), false); // a truncation
+  assert.equal(plausibleReplacement(plain, 'Странността трябва да запази знака си при всяко взаимодействие. Измерената лъчева…(truncated)', 'other', '/problems/0/statement'), false);
   assert.equal(plausibleReplacement(cur, 'Съвсем различен текст, който няма нищо общо с полето и е достатъчно дълъг.', 'other', '/problems/0/statement'), false);
 });
 
