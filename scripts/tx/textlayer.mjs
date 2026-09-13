@@ -25,7 +25,8 @@ import { parseArgs, fail, readJson, writeJson, readManifest, paperDir, walkStrin
 export const TEXTLAYER_VERSION = 1;
 const MIN_TRUST = 0.8, MIN_LAYER_WORDS = 40;
 // fields whose words are the reader's own (alt text, notes) or not prose
-const SKIP_PATH = /\/(tx|alt|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
+const SKIP_PATH = /\/(tx|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
+const ALT_PATH = /\/alt$/; // the reader's own words: never "unprinted", but a misread printed term in it is still worth fixing
 const NO_EXTRAS = /\/answer(\/|$)/; // answers are summarised by the reader, not printed as such
 // structural words the transcription encodes as fields, not prose
 const STOP = /^(задач|решени|отговор|критери|фиг|точк|общо|подусловие|бележк|забележк)/u;
@@ -93,7 +94,7 @@ function candidateFields(c, hasSolutions) {
     const doc = hasSolutions && /\/(solution|answer)(\/|$)/.test(p) ? 'solutions' : 'problems';
     const prose = splitMath(s).map(seg => seg.math ? seg.text.replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
     const tokens = tokenise(prose);
-    fields.push({ path: p, doc, text: s, tokens, set: new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])])) });
+    fields.push({ path: p, doc, text: s, tokens, set: new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])])), altText: ALT_PATH.test(p) });
   });
   return fields;
 }
@@ -242,26 +243,30 @@ export function textLayerCheck(candidate, manifest, paperId) {
       const other = Object.values(layerSets).filter(s => s !== layerSet);
       const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && CYR.test(x.w) && !layerSet.has(x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`)).map(x => x.raw))];
       if (!extras.length) continue;
-      info.unprinted += extras.length;
       const minor = /\/(caption|title|label)$/.test(f.path);
-      // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically
-      if (!minor && extras.length === 1) {
-        const w = norm(extras[0]);
-        const near = [...layerSet].filter(x => x.length >= 5 && CYR.test(x) && !allWords.has(x) && similar(x, w));
-        if (near.length === 1) {
-          const fixed = replaceWord(f.text, extras[0], layerRaw.get(near[0]) || near[0]);
-          if (fixed !== f.text) {
-            result.defects.push({ path: f.path, document: doc, page: pages[0]?.page || 1, severity: 'major', kind: 'reworded', source: 'text-layer', confidence: 0.8,
-              description: `Text-layer check: the transcription has „${extras[0]}“ where the ${doc} document prints „${layerRaw.get(near[0]) || near[0]}“ — keep the printed spelling.`, suggestedFix: fixed });
-            continue;
-          }
+      // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically;
+      // in alt text (the reader's own words) that is the only rule applied, as a minor defect
+      // in alt text only a difference in the stem counts ("разнозначните"/"разноименните"); an ending is the reader's own inflection
+      const stemDiffers = (a, b) => commonPrefix(a, b) < Math.min(a.length, b.length) - 3;
+      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && CYR.test(x) && (f.altText ? stemDiffers(x, w) : !allWords.has(x)) && similar(x, w)); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
+      let rest = extras;
+      if (!minor && misread.length) {
+        let fixed = f.text; for (const m of misread) fixed = replaceWord(fixed, m.raw, m.printed);
+        if (fixed !== f.text) {
+          info.unprinted += misread.length;
+          result.defects.push({ path: f.path, document: doc, page: pages[0]?.page || 1, severity: f.altText ? 'minor' : 'major', kind: 'reworded', source: 'text-layer', confidence: 0.8,
+            description: `Text-layer check: the transcription has ${misread.map(m => `„${m.raw}“`).join(', ')} where the ${doc} document prints ${misread.map(m => `„${m.printed}“`).join(', ')} — keep the printed spelling.`, suggestedFix: fixed });
+          rest = extras.filter(e => !misread.some(m => m.raw === e));
         }
       }
+      if (f.altText || !rest.length) continue;
+      const extrasLeft = rest;
+      info.unprinted += extrasLeft.length;
       // the page where most of the field's words are printed
       let page = pages[0]?.page || 1, bestHit = -1;
       for (const pg of pages) { const set = new Set(pg.tokens.map(t => t.w)); const hit = f.tokens.filter(t => t.w.length >= 4 && set.has(t.w)).length; if (hit > bestHit) { bestHit = hit; page = pg.page; } }
       result.defects.push({ path: f.path, document: doc, page, severity: minor ? 'minor' : 'major', kind: 'reworded', source: 'text-layer', confidence: 0.6,
-        description: `Text-layer check: ${extras.length === 1 ? 'the word' : 'the words'} ${extras.map(w => `„${w}“`).join(', ')} in this field ${extras.length === 1 ? 'is' : 'are'} printed nowhere in the ${doc} document (a typo or a rewording); re-read the passage on the page and transcribe it verbatim.`, suggestedFix: null, words: extras });
+        description: `Text-layer check: ${extrasLeft.length === 1 ? 'the word' : 'the words'} ${extrasLeft.map(w => `„${w}“`).join(', ')} in this field ${extrasLeft.length === 1 ? 'is' : 'are'} printed nowhere in the ${doc} document (a typo or a rewording); re-read the passage on the page and transcribe it verbatim.`, suggestedFix: null, words: extrasLeft });
     }
   }
   for (const [doc, info] of Object.entries(result.documents)) if (!info.trusted) result.notes.push(`${doc}: not checked — ${info.reason}`);
