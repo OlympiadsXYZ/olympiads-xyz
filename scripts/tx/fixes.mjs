@@ -80,6 +80,15 @@ export function repointByContent(candidate, path, fix) {
 // that lives in sibling fields and is refused (the current value is the reference: text the
 // field already shared with a sibling is not new duplication).
 const opening = (s, n = 6) => String(s || '').replace(/\$\$[\s\S]*?\$\$|\$[^$\n]*\$/g, ' ').toLowerCase().replace(/^\s*[а-яa-z0-9]{1,3}[).]\s*/u, '').split(/[^\p{L}\p{N}]+/u).filter(Boolean).slice(0, n).join(' ');
+// A legacy transcription sometimes carries one problem's statement under the next problem too: a field whose
+// opening words open another problem's statement, part or solution holds a paste, not printed text of its own.
+export function duplicatesOtherProblem(candidate, path, text) {
+  const m = /^\/problems\/(\d+)\//.exec(String(path));
+  if (!m || typeof text !== 'string') return false;
+  const head = opening(text, 8);
+  if (head.split(' ').length < 6) return false;
+  return (candidate?.problems || []).some((pr, i) => i !== Number(m[1]) && [pr.statement, ...(pr.parts || []).map(x => x.statement), pr.solution?.statement].some(s => typeof s === 'string' && opening(s, 100000).includes(head)));
+}
 export function duplicatesSiblings(candidate, path, value, current) {
   const m = /^\/problems\/(\d+)\/(statement|parts\/(\d+)\/statement|solution\/statement)$/.exec(String(path));
   if (!m || typeof value !== 'string') return null;
@@ -327,7 +336,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: f.value, note: f.note || null }); continue; }
       // a field that currently holds a copy of a sibling's text (a reader carried part c's question into part d) is
       // a paste: the printed replacement need not resemble it (eupho-2025-experiment-x, seven rounds)
-      const currentIsPaste = current.length >= 40 && !!duplicatesSiblings(original, p, current, '');
+      const currentIsPaste = current.length >= 40 && (!!duplicatesSiblings(original, p, current, '') || duplicatesOtherProblem(original, p, current));
       // an alt text or caption rewritten in the paper's language shares no words with the old one by design
       const languageFix = /\/(alt|caption)$/.test(p) && /paper's language|език/i.test(String(d.description || ''));
       if (!currentIsPaste && !languageFix && !plausibleReplacement(current, f.value, d.kind, p)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }

@@ -172,6 +172,8 @@ export function textLayerCheck(candidate, manifest, paperId) {
   // the layer glues a word to its neighbour at a lost space („flowsIn“ for „flows In“): the transcribed word is
   // present when a layer token is it plus another transcribed word (else the check would "fix" flows → flowsIn)
   const gluedInLayer = (set, w) => { for (const t of set) { if (t.length <= w.length) continue; if (t.startsWith(w) && allWords.has(t.slice(w.length))) return true; if (t.endsWith(w) && allWords.has(t.slice(0, t.length - w.length))) return true; } return false; };
+  // and the reverse: a word broken at a line end without a hyphen („компонен“ / „тите“) is two layer tokens
+  const brokenInLayer = (set, w) => { if (w.length < 7) return false; for (let i = 3; i <= w.length - 3; i++) if (set.has(w.slice(0, i)) && set.has(w.slice(i))) return true; return false; };
   const layerSets = {};
   for (const [doc, d] of Object.entries(manifest.documents)) {
     const file = d.text ? path.join(paperDir(paperId), d.text) : null;
@@ -296,7 +298,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     for (const f of docFields) {
       if (NO_EXTRAS.test(f.path)) continue;
       const other = Object.values(layerSets).filter(s => s !== layerSet);
-      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`) && !gluedInLayer(layerSet, x.w)).map(x => x.raw))];
+      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`) && !gluedInLayer(layerSet, x.w) && !brokenInLayer(layerSet, x.w)).map(x => x.raw))];
       if (!extras.length) continue;
       const minor = /\/(caption|title|label)$/.test(f.path);
       // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically;
@@ -304,7 +306,9 @@ export function textLayerCheck(candidate, manifest, paperId) {
       // in alt text only a difference in the stem counts ("разнозначните"/"разноименните"); an ending is the reader's own inflection
       const commonSuffix = (a, b) => { let i = 0; while (i < a.length && i < b.length && a[a.length - 1 - i] === b[b.length - 1 - i]) i++; return i; };
       const altMisread = (a, b) => Math.abs(a.length - b.length) <= 1 && commonPrefix(a, b) >= 4 && commonSuffix(a, b) >= 3 && commonPrefix(a, b) < Math.min(a.length, b.length) - 3 && lev(a, b) <= 0.35 * Math.max(a.length, b.length);
-      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && P.content.test(x) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
+      // a layer word that is the transcribed word cut at a line break („компонен“ + „тите“) is a fragment, not the printed spelling
+      const fragmentOf = (x, w) => (w.startsWith(x) && layerSet.has(w.slice(x.length))) || (w.endsWith(x) && layerSet.has(w.slice(0, w.length - x.length)));
+      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && P.content.test(x) && !fragmentOf(x, w) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
       let rest = extras;
       if (!minor && misread.length) {
         let fixed = f.text; for (const m of misread) fixed = replaceWord(fixed, m.raw, m.printed);
