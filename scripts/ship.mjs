@@ -28,11 +28,20 @@ const gates = [
   ['node', ['scripts/check-mdx.mjs']],
   ['node', ['--test', 'scripts/tests/problems.test.mjs', 'scripts/tests/tx.test.mjs']],
   ['python3', ['scripts/validate-papers.py']],
-  ['node', ['scripts/problems-to-site.mjs', '--check']],
 ];
 for (const [cmd, args] of gates) {
   const r = run(cmd, args);
   if (r.status !== 0) { log(`gate failed: ${cmd} ${args.join(' ')}\n${(r.stderr || r.stdout).trim().split('\n').slice(-6).join('\n')}`); process.exit(2); }
+}
+// Currency of the generated pages: while the loop workers keep promoting, papers land between the generate step
+// and this check ("stale artifacts"); regenerate and check again a few times before calling it a failure.
+for (let attempt = 1; ; attempt++) {
+  const r = run('node', ['scripts/problems-to-site.mjs', '--check']);
+  if (r.status === 0) break;
+  if (attempt >= 4) { log(`gate failed: node scripts/problems-to-site.mjs --check\n${(r.stderr || r.stdout).trim().split('\n').slice(-6).join('\n')}`); process.exit(2); }
+  log(`generated pages went stale during the gates (attempt ${attempt}); regenerating`);
+  const g = run('node', ['scripts/problems-to-site.mjs']);
+  if (g.status !== 0) { log(`gate failed: node scripts/problems-to-site.mjs\n${(g.stderr || g.stdout).trim().split('\n').slice(-6).join('\n')}`); process.exit(2); }
 }
 const summary = (run('node', ['scripts/problems-to-site.mjs', '--check']).stdout.match(/\d+ papers; \d+ eligible problems/) || [''])[0];
 log(`gates green (${summary})`);
