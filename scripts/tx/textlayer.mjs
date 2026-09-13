@@ -169,6 +169,9 @@ export function textLayerCheck(candidate, manifest, paperId) {
   const ligPiecesOf = w => LIG.test(w) ? w.split(/ffi|ffl|ff|fi|fl/).filter(p => p.length >= 3) : [];
   const ligPresent = (set, w) => { const ps = ligPiecesOf(w); return ps.length > 0 && ps.every(p => set.has(p)); };
   const ligPieces = new Set([...allWords].flatMap(ligPiecesOf));
+  // the layer glues a word to its neighbour at a lost space („flowsIn“ for „flows In“): the transcribed word is
+  // present when a layer token is it plus another transcribed word (else the check would "fix" flows → flowsIn)
+  const gluedInLayer = (set, w) => { for (const t of set) { if (t.length <= w.length) continue; if (t.startsWith(w) && allWords.has(t.slice(w.length))) return true; if (t.endsWith(w) && allWords.has(t.slice(0, t.length - w.length))) return true; } return false; };
   const layerSets = {};
   for (const [doc, d] of Object.entries(manifest.documents)) {
     const file = d.text ? path.join(paperDir(paperId), d.text) : null;
@@ -293,7 +296,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     for (const f of docFields) {
       if (NO_EXTRAS.test(f.path)) continue;
       const other = Object.values(layerSets).filter(s => s !== layerSet);
-      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`)).map(x => x.raw))];
+      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`) && !gluedInLayer(layerSet, x.w)).map(x => x.raw))];
       if (!extras.length) continue;
       const minor = /\/(caption|title|label)$/.test(f.path);
       // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically;

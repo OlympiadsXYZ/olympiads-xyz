@@ -186,7 +186,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
   // A passage in the wrong field takes two changes: the listed field and the destination. The refix
   // returns the destination as an extra entry; it is taken along when it is a prose field of a problem
   // that has a listed defect (never a field of an untouched problem).
-  const PROSE = /^\/problems\/(\d+)\/(statement|parts\/\d+\/statement|solution\/statement)$/;
+  const PROSE = /^\/problems\/(\d+)\/(statement|parts\/\d+\/statement|solution\/statement|(?:solution\/)?figures\/\d+\/(?:caption|alt))$/;
   const listed = new Set((defects || []).map(d => d.path)), problemsListed = new Set((defects || []).map(d => (/^\/problems\/(\d+)/.exec(String(d.path)) || [])[1]).filter(Boolean));
   const extras = [...byPath.values()].filter(f => !listed.has(f.path) && PROSE.test(f.path) && problemsListed.has(PROSE.exec(f.path)[1]) && typeof f.value === 'string' && f.value.trim())
     .map(f => ({ path: f.path, kind: 'other', severity: 'minor', description: 'destination field returned alongside a listed defect (moved text)', extra: true }));
