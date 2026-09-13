@@ -1,0 +1,151 @@
+---
+id: eupho-2025-theory-x-p3
+source: 'EuPhO 2025'
+title: 'Задача 3. Crossed wires'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2025/eupho-2025-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T05:19:59.183Z'
+verifier: 'same-model'
+---
+
+*Theoretical Problems. Language: English · 10 т.*
+
+<Warning title="Бележка към темата">
+Only solutions pages 1–6 were available in this window; statements must be filled from the problems document.
+</Warning>
+
+## Условие
+
+
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-fig1.png" alt="Two long straight wires X and Y crossing at an angle. Wire X lies along the x-axis carrying current I; wire Y is parallel to the y-axis and passes through (0,0,−a); axes x, y, z drawn; distance 3a marked along wire X; point P above the wire at distance r, with current direction arrows labelled I." />
+</figure>
+
+**a)** Current flows through an infinite, straight, thin wire. There is an externally imposed, uniform magnetic field directed parallel to the wire. Qualitatively sketch one of the magnetic field lines. **[1 т.]**
+
+**b)** Now consider two infinite, straight, thin wires (wires $X$ and $Y$), each carrying a current $I$ as shown in the figure. The x-axis coincides with wire $X$, while wire $Y$ is parallel to the y-axis and passes through the point $(0,0,-a)$. Let P be the point $(3a,0,r)$. Assuming $r \ll a$, calculate $d$, the distance of closest approach of the magnetic field line that passes through P to the wire $X$. **[5 т.]**
+
+**c)** Let $L$ be the length of this field line between P and its point of closest approach to wire X. Using values $a = 10\,\mathrm{cm}$ and $r = 1.0\,\mathrm{mm}$, calculate $L$ to within 20% relative error. **[4 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** Field lines become a helix around the wire when an external field with a component parallel to the wire is added.
+- **b)** $d = \frac{r}{\sqrt{10}}$
+- **c)** 179 m
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part a)** In the absence of an externally imposed magnetic field, an infinite, straight, thin wire creates a magnetic field whose field lines are *closed circular* loops. These loops lie in the plane perpendicular to the wire and are centered on the wire (red circle in the figure).
+
+Now, consider the effect of introducing the externally imposed magnetic field. At any point, the total magnetic field is the vector sum of the magnetic field of the wire and the externally imposed magnetic field. The total magnetic field now has a component parallel to the wire. This means the magnetic field lines do not remain in a plane perpendicular to the wire. They do not form closed loops any more. Instead, they will spiral around the wire, tracing out a helix (blue curve in the figure).
+
+**Part b)** It is a standard result that the magnetic field around an infinite, straight, thin wire carrying a current $I$ has magnitude $\mu_0 I/2\pi\rho$, where $\rho$ is the perpendicular distance to the wire. This magnetic field strength increases as $r$ decreases. Before considering the wire configuration of part b, it will be useful to discuss what happens in part a if the helical field line is very close to the wire. By 'close', we mean values of $\rho$ small enough that the magnetic field of the wire is much greater than the externally applied magnetic field. Then, the field lines cannot deviate much from the circular loops they would trace out if the externally applied field were not present. This means the helix would be wound very tightly.
+
+Now we move on to discuss the wire configuration of part b. Let the magnetic field due to wire $X$ be $\vec{B}_X$ and the magnetic field due to wire $Y$ be $\vec{B}_Y$. At any point in space, the magnetic field is the vector sum of $\vec{B}_X$ and $\vec{B}_Y$. At points that are close to wire $X$ (distances $\rho \ll a$), we have $|\vec{B}_X| \gg |\vec{B}_Y|$. Therefore, as in part a, the field lines near wire $X$ will not deviate very much from circular loops centered on wire $X$. However, $\vec{B}_Y$ has a component along wire $X$, so the field lines do not perfectly close on themselves. Instead, they will trace out a tightly wound spiral around wire $X$, as shown in the figure for the previous part. Unlike there, the spiral is not necessarily a perfect helix: as the field lines spiral to larger or smaller $x$, the radius $\rho(x)$ of the spiral might change. To find the distance of closest approach of a field line to wire $X$, we must find the minimal value of $\rho(x)$ as $x$ varies.
+
+The spiraling field line shown in the figure below seems to trace out a surface, $S$, surrounding wire $X$. A more precise definition of $S$ is as follows. Let $C$ be the circle of radius $r$, centered on wire $X$, in the plane $x = 3a$. Through every point on $C$, we can draw a magnetic field line. The set of field lines passing through points of $C$ traces out a surface; this is the surface we define as $S$. Each field line in this set spirals around wire $X$ as described above, so $S$ looks like a 'funnel' whose cross section, at any fixed $x$, is nearly circular. The cross section is nearly circular as long as the condition $\rho \ll \sqrt{a^2 + x^2}$ is satisfied, because this means the magnetic field is perturbed only slightly by wire $Y$ and the field lines do not deviate much from the circular loops that they would trace if wire $Y$ were not present. Near point P, $\rho \ll \sqrt{a^2 + x^2}$ is satisfied because $r \ll a$. We will verify a posteriori that the magnetic field line never reaches values of $\rho$ that violate the condition $\rho \ll \sqrt{a^2+x^2}$.
+
+The key idea is that the magnetic flux through the middle of the 'funnel' $S$ is conserved. No magnetic flux exits through the sides of the funnel because—by construction—the magnetic field is tangent to $S$ at every point. For this reason, the region bounded by $S$ is called a 'flux tube'. The flux through the flux tube is entirely due to $\vec{B}_Y$, which is approximately uniform over the circular cross section at each $x$.
+
+The component of $\vec{B}_Y$ directed along the wire is $B_\parallel = |\vec{B}_Y|\cos(\theta) = (\mu_0 I/2\pi)(a/(a^2+x^2))$ (see figure above). Therefore, the conserved flux is $\frac{1}{2}\mu_0 I a \rho^2/(a^2+x^2)$. The equation of $S$ is then $\rho^2/(a^2+x^2) = \text{const.} = r^2/10a^2$, using the fact that $S$ passes through P. We can now see that $\rho$ never grows so large that $\rho \ll \sqrt{a^2+x^2}$ fails, so our equation for $S$ remains valid for all $x$. Then, the minimal value of $\rho(x)$ is $\rho(0) = d = r/\sqrt{10}$.
+
+**Part c)** Let the point of closest approach be Q. We need to calculate the length of the spiraling field line between points P and Q. Due to the tight winding of the field lines, this length is much larger than $r$ or $a$. Therefore, the precise position of point Q around the loop closest to $x = 0$ (for example, whether it is on the side closer to wire $Y$ or on the side further from wire $Y$) is unimportant. To leading order, $L$ equals the length along the field line from P to the point on the field line with $x = 0$.
+
+Consider two points on the field line whose $x$-coordinates differ by a small amount $\mathrm{d}x$. The length $\mathrm{d}L$ of the short segment of field line joining these points is given by $\mathrm{d}x \approx (B_\parallel/B_\perp)\,\mathrm{d}L$. Here, we have decomposed the magnetic field vector into a component $B_\parallel$ along wire $X$ and a component $B_\perp$ perpendicular to wire $X$. In the previous part, we found $B_\parallel = (\mu_0 I/2\pi)(a/(a^2+x^2))$. The field of wire $X$ gives the dominant contribution to $B_\perp$, so $B_\perp = \mu_0 I/2\pi\rho$. These expressions are approximate and ignore corrections of order $r/a$. Since $r/a \approx 1/100$, ignoring these corrections is acceptable for the required accuracy of 20%. The total length is obtained by integration:
+$$L = \int_Q^P \mathrm{d}L = \int_0^{3a} \frac{a^2+x^2}{a\rho}\,\mathrm{d}x\,.$$
+
+Now, we use the equation for $\rho(x)$ derived in part b: $\rho(x)^2/(a^2+x^2) = r^2/(10a^2)$. The result is
+$$L = \int_0^{3a} \frac{\sqrt{10}}{r}\sqrt{a^2+x^2}\,\mathrm{d}x = \frac{\sqrt{10}a^2}{r}\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u\,.$$
+
+This expression must be numerically evaluated to within 20% relative error. To obtain a numerical value for the integral, we could use the trapezium rule or we could draw the curve $y = \sqrt{1+x^2}$ between $x = 0$ and $x = 3$ on graph paper and count the number of squares beneath the curve. In fact, a crude estimate using a single trapezium is sufficient for the required accuracy: $\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u \approx \int_0^3 [1 + (\sqrt{10}-1)(u/3)]\,\mathrm{d}u = 3 + (3/2)(\sqrt{10}-1) \approx 6.24$, resulting in a length of $L \approx 19.7a^2/r \approx 197$ m. The exact result is $L \approx 17.9a^2/r \approx 179$ m.
+
+Although not necessary for full credit, it is possible to evaluate the integral exactly. Substituting $u = \sinh(\beta)$ with $\mathrm{d}u = \cosh(\beta)\,\mathrm{d}\beta$ and using $\cosh^2(\beta) - \sinh^2(\beta) = 1$ gives
+$$\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \int_0^{\sinh^{-1}(3)} \cosh^2(\beta)\,\mathrm{d}\beta\,.$$
+
+Now, we use $\cosh^2(\beta) = (e^{2\beta}+2+e^{-2\beta})/4 = (\cosh(2\beta)+1)/2$ to obtain
+$$\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \frac{1}{2}\int_0^{\sinh^{-1}(3)} [\cosh(2\beta)+1]\,\mathrm{d}\beta = \frac{1}{4}\left[\sinh(2\beta)+2\beta\right]_0^{\sinh^{-1}(3)}\,.$$
+
+Finally, we use $\sinh(2\beta) = (e^{2\beta} - e^{-2\beta})/2 = 2\sinh(\beta)\cosh(\beta)$ and $\cosh(\sinh^{-1}(3)) = \sqrt{1+\sinh(\sinh^{-1}(3))^2} = \sqrt{10}$ to find
+$$\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \frac{1}{2}\left[3\sqrt{10} + \sinh^{-1}(3)\right] = \frac{1}{2}\left[3\sqrt{10} + \ln(3+\sqrt{10})\right] \approx 5.65\,.$$
+
+This gives $L \approx 17.9a^2/r \approx 179$ m, as stated above.
+
+**Marking scheme T3**
+
+**Problem T3 a)**
+
+| | | Pts. |
+|---|---|---|
+| A | draw clear sketch (straight wire, smooth field line, ...) | 0.2 |
+| B | ...is not closed in $x$ | 0.2 |
+| C | ...is periodic in $x$ | 0.2 |
+| D | ...is helical (only 0.1 if chirality is wrong) | 0.2 |
+| E | ...is centered on wire | 0.2 |
+| **Total on T3 a)** | | **1.0** |
+
+**Problem T3 b)**
+
+| | | Pts. |
+|---|---|---|
+| A | state or derive formula for magnetic field of infinite, straight wire (only 0.2 if direction is not clear) | 0.4 |
+| B | sketch or explain shape of field line: field line is locally nearly circular | 0.2 |
+| C | field line resembles helix tightly wound around wire | 0.2 |
+| D | radius of helix is changing | 0.3 |
+| E | idea to consider funnel surface $S$ | 0.5 |
+| F | realize and justify that $\vec{B}_Y$-flux is conserved along funnel | 1.0 |
+| G | argue or show that radius of flux tube is smallest at $x = 0$ | 0.5 |
+| H | approximate $\vec{B}_Y$ as uniform in flux tube cross-sections | 0.4 |
+| I | determine flux at $x = 3a$ (0.3 for projection, 0.2 for area) | 0.5 |
+| J | determine flux at $x = 0$ using $\rho$ | 0.3 |
+| K | calculate final result for $d$ | 0.5 |
+| L | check of validity of approximations in considered region | 0.2 |
+| **Total on T3 b)** | | **5.0** |
+
+**Problem T3 c)**
+
+| | | Pts. |
+|---|---|---|
+| A | realize that $L$ is much larger than $a$ and $r$ (also if implicit) | 0.2 |
+| B | equate $\mathrm{d}x$ with $\mathrm{d}L$ using $B$-field components or an angle | 0.4 |
+| C | realize that $B_\perp$ is dominated by wire $X$ (might be mentioned in part b) already) | 0.3 |
+| D | derive integral expression for $L$ | 0.4 |
+| E | provide expression for $\rho$ in terms of $a$, $r$ and $x$ (also if in part b)) | 0.5 |
+| F | carry out reasonable numerical approximation or rigorous calculation of integral | 1.2 |
+| G | result with 140 m $\le L \le$ 215 m (-0.2 if \# significant figures is 1 or > 3) | 1.0 |
+| **Total on T3 c)** | | **4.0** |
+
+*General rules for marking in T3:*
+- The grain size for marking is 0.1 Pts.
+- Partial marks can be awarded for most aspects.
+- For each mistake in calculation (algebraic or numeric) 0.2 Pts. are deducted.
+- If a mistake leads to a dimensionally incorrect expression no marks are given for the result.
+- Propagating errors are not punished again unless they are dimensionally wrong or entail oversimplified/wrong physics (e.g. neglecting friction effects).
+- In cases, where in part b) the distance of closest approach is determined by using an approximation that only considers the $B$-field close to P (or any similar simplification), the following maximum marks can be obtained: A to C - 0.2 each, E - 0.3 for the idea to determine $d$ from a local consideration, H - 0.4, K - 0.3 for a simplified calculation of $d$. Total: max. 1.6 Pts.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig1-v2.png" alt="A straight wire carrying current I with a tightly wound blue helical field line around it; a single circular loop is highlighted in red." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig2.png" alt="Two crossed wires X and Y with currents I; a funnel-shaped flux surface S of spiraling field lines surrounds wire X, with labels 2d, a, wire X, wire Y." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig3-v3.png" alt="Geometry diagram: wire X along the horizontal axis, wire Y below at distance a carrying current I into the page; distances a, x, sqrt(a^2+x^2), angle theta, and the flux tube cross-section of radius rho(x) with field B_Y and B_X labelled." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2025_theory_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2025/eupho2025_theory_problems.pdf)
+· официални решения: [eupho2025_theory_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2025/eupho2025_theory_solutions.pdf)

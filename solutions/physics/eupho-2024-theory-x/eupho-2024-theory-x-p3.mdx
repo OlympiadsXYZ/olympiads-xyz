@@ -1,0 +1,310 @@
+---
+id: eupho-2024-theory-x-p3
+source: 'EuPhO 2024'
+title: 'Задача 3. T3: Fabry–Pérot interferometer (10 pts)'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2024/eupho-2024-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T05:19:06.320Z'
+verifier: 'same-model'
+---
+
+*EuPhO 2024. KUTAISI. GEORGIA — Theoretical Problems. Language: English · 10 т.*
+
+<Warning title="Бележка към темата">
+Solution transcribed from a mid-document window; its beginning (Solution 1 parts a,b and the problem statement) lies on earlier pages.
+</Warning>
+
+## Условие
+
+A Fabry–Pérot interferometer consists of two identical parallel planar mirrors separated by a distance $L$. The space between and outside the mirrors is filled with air. The mirrors are partially reflective; when light is aimed towards one of these mirrors along the normal direction, the reflected beam has intensity $R < 1$ times the intensity of the incident beam. Assume that the mirrors are symmetric, meaning they interact the same way with light incident from either side, and lossless. Assume also that they are highly reflective, meaning $1 - R \ll 1$. A monochromatic laser beam of power $P$ is aimed towards the interferometer perpendicular to the mirrors. The distance $L$ is chosen so that the back-reflected beam vanishes, i.e. all the optical power is transmitted through the interferometer.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-fig1.png" alt="A laser emitting a beam of power P towards two parallel mirrors separated by distance L; the beam is transmitted through the interferometer with power P on the right." />
+</figure>
+
+**a)** Show that the laser beam must acquire a nonzero phase shift $\phi$ when it passes through either of the mirrors. **[3 т.]**
+
+**b)** Find the magnitude of $\phi$. **[2 т.]**
+
+**c)** At a certain moment, the incident laser beam is switched off rapidly. Find the total energy of the light that travels back from the interferometer towards the laser after the laser is switched off. **[4 т.]**
+
+**d)** Estimate the duration of the light pulse that travels back towards the laser. **[1 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**T3: Fabry–Pérot interferometer - Solution**
+
+Throughout these solutions, we use a Cartesian coordinate system aligned so that the x axis points along the normal to mirrors. Let one mirror be positioned at x = 0 and the other at x = L, and suppose the beam approaches the interferometer from the negative-x direction. Let regions I, II and III be defined by x < 0, 0 < x < L and x < L respectively. Note that the mirrors are assumed thin for convenience here, but this does not change the answers.
+
+**Solution 1**
+
+**Part a** Where the laser beam meets the first mirror of the interferometer, some light is reflected back towards the laser and the rest is transmitted into the space between the mirrors (region II). This transmitted light bounces back and forth between the mirrors. With every reflection, some light is transmitted and leaves the interferometer. To find the complex amplitude of the wave returning to the laser, we need to sum the complex amplitudes of the wave that reflects immediately (without ever entering the interferometer), as well as those of the waves that bounced back and forth once, twice, thrice, etc.
+
+Each region therefore contains a superposition of infinitely many waves. Crucially, a superposition of any number of sinusoidal waves with the same frequency, wavelength and propagation direction can be represented by a single sinusoidal wave with the same frequency, wavelength and propagation direction. Therefore, the electric field due to the waves in regions I, II and III must take the following form.
+
+Region I: $E(x,t) = A\,\mathrm{e}^{\mathrm{i}(kx-\omega t)}$ ,
+
+Region II: $E(x,t) = B\,\mathrm{e}^{\mathrm{i}(kx-\omega t)} + C\,\mathrm{e}^{\mathrm{i}(-kx-\omega t)}$ ,
+
+Region III: $E(x,t) = D\,\mathrm{e}^{\mathrm{i}(kx-\omega t)}$ .
+
+In region I, we have a travelling wave moving in the positive x direction with wavenumber $k$, angular frequency $\omega$ and amplitude $A$. The condition that there is no back-reflected beam means there is no oppositely-propagating wave in region I. In region II, the electric field is a sum of two waves propagating in either direction, which we give complex amplitudes $B$ and $C$. Finally, in region III, there is only a wave propagating in the positive-x direction, which we give complex amplitude $D$.
+
+Let us introduce an amplitude reflection coefficient $r$ and transmission coefficient $t$ for the mirrors. These coefficients, which may be complex, are characteristic of the mirrors. The ratio between the complex amplitude of the reflected wave and the incident wave is $r$, while the ratio between the complex amplitude of the transmitted wave and the incident wave is $t$. We are interested in $\phi$, which is the relative phase between the complex numbers $r$ and $t$.
+
+Let us work out how the waves on either side of the first mirror (in regions I and II) are related. In region II, the forward-propagating wave is a result of the transmitted part of the incident wave in region I, and the reflected part of the backwards-propagating wave in region II. Therefore,
+
+$$B = tA + rC\ . \tag{12}$$
+
+Similarly, for the backwards-propagating wave in region I to vanish, the sum of the reflected part of the incident wave and the transmitted part of the backwards-propagating wave in region II must be zero:
+
+$$0 = rA + tC\ . \tag{13}$$
+
+Furthermore, applying similar reasoning at the second mirror, using the complex amplitudes evaluated at $x = L$, leads to
+
+$$D\,\mathrm{e}^{\mathrm{i}kL} = tB\,\mathrm{e}^{\mathrm{i}kL}\ , \tag{14}$$
+$$C\,\mathrm{e}^{-\mathrm{i}kL} = rB\,\mathrm{e}^{\mathrm{i}kL}\ . \tag{15}$$
+
+If $r$ and $t$ are given, along with the amplitude of the initial wave $A$, equations (12)–(15) contain four unknowns: $B$, $C$, $D$ and $k$. We find
+
+$$\mathrm{e}^{-2\mathrm{i}kL} = r^2 - t^2\ . \tag{16}$$
+
+This relation tell us the argument of the complex number $r^2 - t^2$; it must be $-2kL$. It also provides a constraint on the magnitude of this complex number; we must have
+
+$$\left|r^2 - t^2\right| = 1\ . \tag{17}$$
+
+This is a condition that $r$ and $t$ must satisfy in order for the setup in the question, with no back-reflected light from the interferometer, to be realizable.
+
+With lossless mirrors, there is one additional constraint that $r$ and $t$ must satisfy. When a wave passes through one of these mirrors, the incident power must equal the sum of the reflected and transmitted powers. Since every wave in the problem has the same speed, the power carried by them is proportional their amplitude squared, which means it is proportional to the modulus squared of the complex amplitude. Therefore, conservation of energy requires
+
+$$|r|^2 + |t|^2 = 1\ . \tag{18}$$
+
+Together, (17) and (18) imply that $r$ and $t$ cannot both be real; there must be some phase shift between the transmitted and reflected light.
+
+**Part b** Using conditions (17) and (18), we can show that the magnitude of $\phi$ is $90^\circ$. Here are two ways we could do this.
+
+First, we could square both conditions and subtract:
+
+$$\left|r^2 - t^2\right|^2 = |r|^4 + |t|^4 - r^2t^{*2} - r^{*2}t^2 = 1$$
+$$\left(|r|^2 + |t|^2\right)^2 = |r|^4 + |t|^4 - r|r|^2|t|^2 = 1$$
+$$\Longrightarrow\ 2|r|^2|t|^2 = r^2t^{*2} + r^{*2}t^2\ .$$
+
+Here, an asterisk denotes complex conjugation. This is equivalent to $(rt^* + r^*t)^2 = 1$ or
+
+$$\frac{r}{t} + \frac{r^*}{t^*} = 0\ .$$
+
+This says that $r/t$ is purely imaginary, so $r$ and $t$ must have arguments that differ by $\pm 90^{\circ}$.
+
+Alternatively, we could let $a = r^2$ and $b = t^2$, so that (17) and (18) read
+$$|a - b| = 1$$
+$$|a| + |b| = 1\ .$$
+
+Using $O$ to denote the origin and A and B, respectively, to denote the points $a$ and $b$ in the complex plane, consider the triangle OAB. The first condition above implies that the length of side AB is 1. The second implies that the sum of the lengths OA and OB is also 1. Thus, the points O, A and B must actually be collinear, with O in between A and B. So, $b$ and $a$ have arguments that differ by $180^{\circ}$. Since $a$ and $b$ have twice the arguments of $r$ and $t$ (respectively), this means $r$ and $t$ must have arguments that differ by $\pm 90^{\circ}$.
+
+**Part c** When the laser is rapidly switched off, after the amount of time it takes light to travel from the laser to the first mirror, the incident wave will be removed.
+
+Since $|t| \ll |r|$, the amplitudes $|B|$ and $|C|$ are very large. Furthermore, the difference between them is small. Physically, the interferometer contains a large amount of electromagnetic energy in two waves of roughly equal intensity, propagating in either direction. This means, when this stored energy is released from the interferometer, the release will be very nearly symmetrical. Approximately the same amount of energy will be released in either direction. So, the energy contained in the pulse that propagates towards the laser is must be about half of the stored initial energy.
+
+To find the stored energy, suppose the power contained in each wave (forwards- and backwards-propagating) in region II is $P'$. The power transmitting through the mirrors to leave the interferometer is $(1-R)P'$. Since this transmitted wave must perfectly cancel out the wave that reflects from the first mirror, which has power $Rp \approx P$, we must have $P' \approx P/(1-R)$. This means the initial energy stored inside the interferometer is
+$$U \approx \frac{2}{1-R}\frac{LP}{c}\ ,$$
+since the energy of the two waves travelling in either direction simply adds. Therefore, the energy in the pulse that returns to the laser is
+$$E \approx \frac{1}{1-R}\frac{LP}{c}\ .$$
+
+**Part d** There are at least two ways of doing this part; see Solution 2 below for a second approach.
+
+The stored energy is initially given by (19). The Poynting flux out of the interferometer at the moment when the incoming beam has just switched off all the way to the surface of the first mirror is roughly
+$$\frac{\mathrm{d}U}{\mathrm{d}t} = -2P = -\frac{(1-R)c}{L}\,U\ , \tag{19}$$
+since the amplitudes of the waves propagating away from the interferometer in regions I and III are both roughly $|A|$. We can assume that the stored energy decays exponentially: if the field inside the device reduces by a certain factor, then the amplitude of the waves just outside will have reduced by the same factor. So, the ratio between the stored energy inside and the outwards Poynting flux is roughly constant. Finding the time constant $T$ so that $U \propto \mathrm{e}^{-t/T}$ satisfies (19) leads to
+$$T \approx \frac{1}{1-R}\frac{L}{c}\ .$$
+Since this is an estimate, and since the exact numerical prefactor depends on whether we chose to use the time constant for the decay in amplitude or energy, students can have any order-unity prefactor. Since the combination $L/c$ can be deduced by dimensional analysis, the marks should be awarded for getting the correct dependence on $R$ on.
+
+**Solution 2**
+
+**Part a** It is possible to solve this problem by summing up an infinite series of complex amplitudes corresponding to the light waves that are reflected once, twice, thrice, etc. from the mirror.
+
+Let us focus on the backwards-propagating wave in region I, which must vanish. In steady state, before the laser is switched off, let the amplitude of the incident beam at x = 0 be $A$. Then, introducing amplitude reflection coefficients $r$ and $t$ as in Solution #1, the amplitude of the backwards-propagating beam is
+$$rA[1 + t^2(\mathrm{e}^{2ikL} + r^2\mathrm{e}^{4ikL} + r^4\mathrm{e}^{6ikL} + \ldots)]\ .$$
+The first term represents the light that is reflected immediately off the first mirror (factor $r$, without every entering region II. The remaining terms represent light that transmits through the first mirror (one factor $t$), propagates from $x = 0$ to $x = L$ and back some number $N$ of times (factor $\mathrm{e}^{2NikL}$ due to the propagation and $r^{2N-1}$ for the correct number of reflections) and transmits through the first mirror again (second factor of $t$. Summing the geometric series, the backwards-propagating amplitude is
+$$rA\left(1 + \frac{t^2\mathrm{e}^{2ikL}}{1 - r^2\mathrm{e}^{2ikL}}\right) = 0\ .$$
+Rearranging leads to the same condition (16) as in Solution #1. The rest of the solution, to conclude that $r$ and $t$ meet at a right angle and that $t$ must have a nonzero phase, can proceed as in Solution #1.
+
+**Part b** As in Solution #1.
+
+**Part c** After the incident beam has switched off all the way to the interferometer, the beam the is reflected immediately off the first mirror switches off. The other beams, corresponding to light that bounces some number $N$ of times between the mirrors, switches off slightly later. So, the backwards-reflected beam at first becomes
+$$rA[t^2(\mathrm{e}^{2ikL} + r^2\mathrm{e}^{4ikL} + r^4\mathrm{e}^{6ikL} + \ldots)] = -rA\ .$$
+At $x = 0$, this is the amplitude of the backwards-reflected beam for time $\Delta t = 2L/c$.
+
+Then, the wave that reflects once before leaving also switches off, after time $\Delta t$. The amplitude becomes
+$$rA[t^2(r^2\mathrm{e}^{4ikL} + r^4\mathrm{e}^{6ikL} + \ldots)] = rA\,\frac{t^2 r^2 \mathrm{e}^{4ikL}}{1 - r^2\mathrm{e}^{2ikL}} = rA r^2\,\mathrm{e}^{2ikL}$$
+for the next $\Delta t$. Then, the wave that is reflected three times before leaving switches off, after time $2\Delta t$. The amplitude becomes
+$$rA[t^2(r^4\mathrm{e}^{6ikL} + \ldots)] = rA\,\frac{t^2 r^4 \mathrm{e}^{6ikL}}{1 - r^2\mathrm{e}^{2ikL}} = rA r^4\,\mathrm{e}^{4ikL}\ ,$$
+and so on. After time $n\Delta t$, the amplitude is $-rAr^{2n}\mathrm{e}^{2nikL}$. The modulus decreases by a factor of $R$ every $\Delta t$. This can be argued without a geometric series; each wave has reflected two more times that the previous one, so should have an amplitude that is a factor of $R$ smaller.
+
+The energy in the backwards-propagating pulse is the sum of the energies during the first, second, third, etc $\Delta t$ interval. This is
+$$P\Delta t(|r|^2 + |r|^6 + |r|^8 + \ldots) = \frac{|r|^2}{1 - |r|^4}\frac{2LP}{c} \approx \frac{1}{1-R}\frac{LP}{c}\ .$$
+
+**Part d** Since the amplitude decays like
+$$R^n = \mathrm{e}^{-n\log 1/R} = \mathrm{e}^{-\log(1/R)t/\Delta t}\ ,$$
+the energy decays like $\mathrm{e}^{-2\log(1/R)t/\Delta t}$. The time constant of this roughly-exponential decay in energy is
+$$T = \frac{\Delta t}{2\log(1/R)} \approx \frac{1}{1-R}\frac{L}{c}$$
+for $1-R \ll 1$.
+
+**Solution 3**
+
+**Part a** Students might assume that the perpendicular electric field is continuous across each of the mirrors. While this is not the intended solution, since the question tells us nothing about the internal workings of the mirror, they should get credit for this. If the electric field is continuous, then $1 + r = t$. Combined with $|r|^2 + |t|^2 = 1$, if $r$ and $t$ are real, these equations can only be satisfied if $(r,t) = (0,1)$ or $(r,t) = (-1,0)$. Since there is reflected and transmitted light in this problem, $r$ and $t$ must be complex numbers with a nonzero imaginary part.
+
+**Part b** Using Pythagorus's theorem, the angle between $r$ and $t$ must be $\pm 90^{\circ}$ (see figure).
+
+**Part c** As in Solutions #2 and #3.
+
+**Part d** As in Solutions #2 and #3.
+
+**Solution 4**
+
+Here is an alternative approach to parts a and b that does not require complex numbers or a geometric series.
+
+**Parts a and b** Consider the first mirror in isolation and suppose a light wave is incident upon it from the left with amplitude $A$, as shown in the diagram below. The reflected wave will have amplitude $A\sqrt{R}$ and may undergo a phase shift; we use $\theta$ to denote its phase angle relative to the incident wave. Similarly, the transmitted wave has amplitude $A\sqrt{1-R}$ and phase angle $\psi$ relative to the incident wave.
+
+[Diagram: incident wave from the left, amplitude $A$, phase 0; reflected wave to the left, amplitude $A\sqrt{R}$, phase $\theta$; transmitted wave to the right, amplitude $A\sqrt{1-R}$, phase $\psi$.]
+
+Now imagine a different scenario, in which there is a wave incident on the mirror from the right, as shown in Fig BLAH. This incident wave will have amplitude $A\sqrt{R}/\sqrt{1-R}$ and a phase angle $\pi + \theta - \psi$. There will be a reflected wave with amplitude $AR/\sqrt{1-R}$ (we multiply the amplitude by $\sqrt{R}$ upon reflection) and phase angle $\pi + 2\theta - \psi$ (we add $\theta$ to the phase upon reflection). There will be a transmitted wave with amplitude $A\sqrt{R}$ (we multiply the amplitude by $\sqrt{1-R}$ upon reflection) and phase angle $\pi + \theta$ (we add $\psi$ to the phase upon reflection).
+
+[Diagram: incident wave from the right, amplitude $A\sqrt{R}/\sqrt{1-R}$, phase $\pi + \theta - \psi$; reflected wave to the right, amplitude $AR/\sqrt{1-R}$, phase $\pi + 2\theta - \psi$; transmitted wave to the left, amplitude $A\sqrt{R}$, phase $\pi + \theta$.]
+
+Now we consider the superposition of these two scenarios. On the left side, the waves travelling to the left cancel out, since they have the same amplitude but have phases differing by $\pi$. This destructive interference leaves a wave travelling to the right with amplitude $A$. This is exactly what is happening at the first mirror of the interferometer. On the right side, there is a leftwards-propagating wave and two rightwards-propagating waves, as shown below.
+
+[Diagram: incident wave from the left, amplitude $A$, phase 0; leftwards wave, amplitude $A\sqrt{R}/\sqrt{1-R}$, phase $\pi + \theta - \psi$; rightwards waves, amplitude $AR/\sqrt{1-R}$, phase $\pi + 2\theta - \psi$ and amplitude $A\sqrt{1-R}$, phase $\psi$.]
+
+Now we use the fact that the mirror is lossless, so the light energy in the incoming waves in the figure above must equal the light energy in the outgoing waves. Since energy is proportional to the square of the electric field, the incoming energy flux is propor­tional to
+$$I_{\mathrm{in}} = A^2 + A^2\left(\frac{R}{1-R}\right)\ .$$
+The outgoing energy flux is a little trickier to work out, since there are two superimposed waves travelling out with different phases. It is
+$$I_{\mathrm{out}} = A^2(1-R) + A^2\left(\frac{R^2}{1-R}\right) - 2A^2R\cos(\pi + 2(\theta - \psi))\ .$$
+$I_{\mathrm{in}} = I_{\mathrm{out}}$ can be rearranged to give $\cos(\pi + 2(\theta - \psi)) = 0$, so $2(\theta - \psi)$ is a multiple of $\pi$ and $\theta - \psi$ is $\pm\pi/2$. The reflected and transmitted waves must be out of phase by $90^{\circ}$.
+
+## Grading
+
+### Part a
+
+**Part T3.a): Using sinusoidal waves**
+
+| Part T3.a): Using sinusoidal waves | Pts. |
+| --- | --- |
+| understanding that some light is initially reflected without entering the interferometer | 0.3 |
+| understanding that light bounces back and forth between the mirrors | 0.3 |
+| using one or two travelling waves in each region | 0.4 |
+| writing equations relating amplitudes via $r$ and $t$ | 0.5 |
+| solving to obtain (16) | 0.6 |
+| using $|r|^2 + |t|^2 = 1$ or $R + T = 1$ | 0.5 |
+| stating that this is a consequence of conservation of energy | 0.2 |
+| indicating that the solutions $r$ and $t$ should be complex | 0.2 |
+| **Total on T3.a)** | **3.0** |
+
+**Part T3.a): Summing geometric series**
+
+| Part T3.a): Summing geometric series | Pts. |
+| --- | --- |
+| understanding that some light is initially reflected without entering the interferometer | 0.3 |
+| understanding that light bounces back and forth between the mirrors | 0.3 |
+| idea of superposition of complex amplitudes | 0.2 |
+| correctly including the effect on the amplitudes of reflection, transmission and propagation | 0.5 |
+| summing up complex amplitudes as a geometric series | 0.4 |
+| obtaining (16) | 0.4 |
+| using $|r|^2 + |t|^2 = 1$ or $R + T = 1$ | 0.5 |
+| stating that this is a consequence of conservation of energy | 0.2 |
+| understanding that the solutions $r$ and $t$ should be complex | 0.2 |
+| **Total on T3.a)** | **3.0** |
+
+**Part T3.a): Assuming $1 + r = t$**
+
+| Part T3.a): Assuming $1 + r = t$ | Pts. |
+| --- | --- |
+| understanding that some light is initially reflected without entering the interferometer | 0.3 |
+| understanding that light bounces back and forth between the mirrors | 0.3 |
+| using $1 + r = t$ | 0.7 |
+| justification using continuity of electric field or thin-mirror arguments | 0.8 |
+| using $|r|^2 + |t|^2 = 1$ or $R + T = 1$ | 0.5 |
+| stating that this is a consequence of conservation of energy | 0.2 |
+| understanding that the solutions $r$ and $t$ should be complex | 0.2 |
+| **Total on T3.a)** | **3.0** |
+
+### Part b
+
+| Part T3.b: Algebraic method | Pts. |
+| --- | --- |
+| writing $90^{\circ}$ | 0.5 |
+| taking modulus of (16) to get a condition involving $r$ and $t$ only | 0.7 |
+| Solving with $r$, $t$, $r^*$ and $t^*$ to find that $r$ is an imaginary number times $t$ | 0.8 |
+| **Total on T3.b** | **2.0** |
+
+| Part T3.b: Geometric method | Pts. |
+| --- | --- |
+| writing $90^{\circ}$ | 0.5 |
+| taking modulus of (16) to get a condition involving $r$ and $t$ only | 0.7 |
+| using a geometric argument to show that $r$ and $t$ must make a right angle | 0.8 |
+| **Total on T3.b** | **2.0** |
+
+Notes on T3.a) and T3.b): different conventions for $r$ and $t$ (eg using $-r$ instead of $r$, different phase factors) are allowed.
+
+### Part c
+
+| Part T3.c: Destructive interference | Pts. |
+| --- | --- |
+| $|B|$ and $|C|$ are the same if $|t| \ll |r|$ | 0.5 |
+| Applying symmetry to show $2E = U$ | 1.0 |
+| Finding relation between P' and P | 1.5 |
+| Correct value for U | 0.5 |
+| Correct value for E | 0.5 |
+| **Total on T3.c** | **4.0** |
+
+| Part T3.c: Geometric series | Pts. |
+| --- | --- |
+| Showing, perhaps just by reasoning, that the power propagating out through the first mirror decreases by a factor $R^2$ every $\Delta t$ | 1.5 |
+| Multiplying by $\Delta t$ to convert power or intensity to energy | 0.5 |
+| Summing a geometric series to find the total energy E | 1.5 |
+| Correct value for E | 0.5 |
+| **Total on T3.c** | **4.0** |
+
+### Part d
+
+| Part T3.d: Removing waves | Pts. |
+| --- | --- |
+| Stated that energy reduces by factor $R^2$ each time a wave is removed | 0.2 |
+| Using the fact that this reduction occurs at intervals $\Delta t$ | 0.4 |
+| Some valid mathematical argument from here that obtains the correct $T$ when $1 - R \ll 1$ | 0.4 |
+| **Total on T3.d** | **1.0** |
+
+| Part T3.d: Exponential decay m | Pts. |
+| --- | --- |
+| Stated the decay is roughly exponential | 0.2 |
+| State the outwards energy flux | 0.4 |
+| Use this to determine decay constant | 0.4 |
+| **Total on T3.d** | **1.0** |
+
+Notes on T3.d): no marks for dimensional analysis to obtain the combination $L/c$. The numerical prefactor is irrelevant provided it is order unity (e.g. ln2 for half-life). Any equivalent form, assuming $1 - R \ll 1$, is acceptable.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig1.png" alt="Complex-plane diagram: a circle through the origin with diameter along the real axis ending at 1; chords labelled $-r$ and $t$ from the origin meeting at a right angle on the circle." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig2.png" alt="Diagram of a vertical mirror slab: incident wave from the left (amplitude A, phase 0), reflected wave to the left (amplitude A√R, phase θ), transmitted wave to the right (amplitude A√(1−R), phase ψ)." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig3.png" alt="Diagram of the second scenario: wave incident from the right (amplitude A√R/√(1−R), phase π+θ−ψ), wave to the left (amplitude A√R, phase π+θ), wave to the right (amplitude AR/√(1−R), phase π+2θ−ψ)." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig4.png" alt="Diagram of the superposition at the first mirror: incident wave from the left (amplitude A, phase 0); leftwards wave (amplitude A√R/√(1−R), phase π+θ−ψ); rightwards waves (amplitude AR/√(1−R), phase π+2θ−ψ and amplitude A√(1−R), phase ψ)." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2024_theory_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2024/eupho2024_theory_problems.pdf)
+· официални решения: [eupho2024_theory_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2024/eupho2024_theory_solutions.pdf)

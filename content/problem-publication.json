@@ -3790,120 +3790,270 @@
       }
     },
     "nao-2012-iv-ml": {
-      "kind": "legacy",
-      "contentHash": "7e70831ee82d3f7785ba93472e112228513a316b39dfbc50e1a9f65d1030513c",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.193Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "a63044db050cf803d",
-          "finishedAt": "2026-09-05T07:22:07.710864Z",
-          "finishedAtSource": "journal-mtime",
-          "run": "wf_a402f290-7a1",
-          "ok": true,
-          "problems": 5,
-          "figures": 1
+      "kind": "reviewed",
+      "contentHash": "493bb6877ebf6982ce753f490227104cdfa7a812d59b406ebc92585a2e071e60",
+      "recordedAt": "2026-09-13T04:36:09.089Z",
+      "review": {
+        "paperId": "nao-2012-iv-ml",
+        "verdict": "pass",
+        "contentHash": "493bb6877ebf6982ce753f490227104cdfa7a812d59b406ebc92585a2e071e60",
+        "sourceHashes": {
+          "problems": "691dbccf3ca4c982e2f721f687906beb3cae038ea568c4a6ed32894b5d8a35f3",
+          "solutions": "bc97804a4c2f80243146087f371c21b85cd302c1b0f23782b67ecfefe3d94ff8"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "a5b54f6b5ddcd03dd",
-          "finishedAt": "2026-09-05T07:22:07.710864Z",
-          "finishedAtSource": "journal-mtime",
-          "run": "wf_a402f290-7a1",
-          "verdict": "fixed",
-          "defectsFound": 2,
-          "defectsFixed": 2,
-          "remaining": [
-            "No blocking items. Informational: source errors preserved verbatim and documented in transcription.notes - (a) problem 2 prints -2,3^m where Pogson from ratio 0,57 gives -2,1^m; (b) problem 2 solution uses Mars albedo 0,17 while reference data print 0.15; (c) problem 4 printed results 26 500 and 1/4300 correspond to the SQUARE of the temperature ratio although the printed formulas show the fourth power (correct: ~6 600 and ~1/1550); (d) problem 4 prints 'R3 = 6 4000km' for 6400 km; (e) problem 3 solution says the 20'/day arc is along the parallel though latitude changes along the meridian; (f) problem 1 solution sentence about polodia is garbled in print.",
-            "Operational: the downloaded source PDFs in tmp/shards/work/verify/ were deleted mid-run twice by a concurrent process; re-fetched each time. Worth checking for a race between parallel verifier shards sharing tmp/shards/work/."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "2026091312351641d7c17a03784a14"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T07:17:29.047071Z",
-        "fileCommittedAt": "2026-09-05T14:47:45+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:36:08.488Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-05"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All five problems, the reference data, the tables and all five solutions match the printed pages verbatim, including preserved source errors (0.5°, 0.17 vs 0.15, -2.3m, '6 4000км'). Both figure crops are complete and unclipped; only informational observations remain.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            }
+          ],
+          "problemsChecked": 5,
+          "figuresChecked": 2
+        },
+        "defects": [],
+        "informational": 3,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "77d4d003b62d4ddc5ce7dd2ca2482fead7d9e1a8dab254ae908aaf43cd0cbfc8",
+        "checkerCandidateSha256": "77d4d003b62d4ddc5ce7dd2ca2482fead7d9e1a8dab254ae908aaf43cd0cbfc8",
+        "checkerCrops": [
+          "p5-fig1",
+          "p5-sol-fig1"
+        ],
+        "promotedAt": "2026-09-13T04:36:08.856Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2012\\nao-2012-iv-ml.json"
       }
     },
     "nao-2012-iv-st-prak": {
-      "kind": "legacy",
-      "contentHash": "83af6c2dcdbe3753f50d688d361f2c64ddfd1716e5e62add46004a599fc76096",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.205Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "add39f9eaee00cdcb",
-          "finishedAt": "2026-09-05T12:07:33.750Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_11d62c58-e66",
-          "ok": true,
-          "problems": 1,
-          "figures": 3
+      "kind": "reviewed",
+      "contentHash": "d5aca0dd3804da7fc80b1d77a7ce962b816235b1c24df352b89f3a75605d4e95",
+      "recordedAt": "2026-09-13T04:36:47.232Z",
+      "review": {
+        "paperId": "nao-2012-iv-st-prak",
+        "verdict": "pass",
+        "contentHash": "d5aca0dd3804da7fc80b1d77a7ce962b816235b1c24df352b89f3a75605d4e95",
+        "sourceHashes": {
+          "problems": "a6bb68859bf580aeeff234f910be6156bdd16a10fb8863f418f1ac6f2655890c",
+          "solutions": "c003e831c5946c6572575f791f83837b9bfb8267241227889d69bf8112e4f4ea"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "a5d552aa1ffb51be7",
-          "finishedAt": "2026-09-05T12:39:12.882Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_91c59b91-c85",
-          "verdict": "clean",
-          "defectsFound": 0,
-          "defectsFixed": 0,
-          "remaining": [
-            "Cosmetic, not fixed: source prints the display formula as \"m – M ≈ 15,5^m .\" with a trailing period; JSON renders $$m - M \\approx 15,5^m$$ without it. Punctuation inside display math — left as-is, noted in transcription.notes.",
-            "Documented structural deviation (not a defect): in the printed paper the lifetime-formula paragraph and the sentence about the second diagram appear AFTER parts А/Б/В; the JSON gathers them into the statement before the parts. Wording is verbatim; recorded in transcription.notes.",
-            "Source errors deliberately preserved verbatim: „Херцшпруг-Ръсел\", „техните възрасти са достигат\", „Начертаваме оста на звездните величина\", „толкова по – ниски светимост имат\", „който е означен в 4\". Solution text cites regions „означени с 1, 2, 3 и 4\" but no such labels are printed on the solution diagram.",
-            "Right edge of the solution figure (sol page 3) runs past the print margin and is cut in the original PDF itself; the crop preserves the source clipping — unrecoverable.",
-            "grade is \"Старша възраст\" rather than digits, matching the established convention in the promoted corpus for NAO IV-кръг age-group papers (10 existing files use Старша/Младша възраст); left unchanged."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "20260913123628fa8407ecdce84126"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T12:38:28.185951Z",
-        "fileCommittedAt": "2026-09-05T15:54:24+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:36:46.631Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-05"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "The single problem is fully and faithfully transcribed: statement, table (all 36 rows), both problem figures, parts А/Б/В with correct points summing to 20, and the complete official solution including the grading criteria. All five figure crops contain the whole figures with no clipping or swallowed text; no defects found.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            }
+          ],
+          "problemsChecked": 1,
+          "figuresChecked": 5
+        },
+        "defects": [],
+        "informational": 0,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "6eeca34c874acc212e10b774337acfb0da9664739183d1ab06e4cf54bfd82368",
+        "checkerCandidateSha256": "6eeca34c874acc212e10b774337acfb0da9664739183d1ab06e4cf54bfd82368",
+        "checkerCrops": [
+          "p1-fig1",
+          "p1-fig2",
+          "p1-sol-fig1",
+          "p1-sol-fig2",
+          "p1-sol-fig3"
+        ],
+        "promotedAt": "2026-09-13T04:36:46.993Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2012\\nao-2012-iv-st-prak.json"
       }
     },
     "nao-2013-ii-11-12": {
-      "kind": "legacy",
-      "contentHash": "d1e7283e0b0b48e87e22265538a6eaeb2017133ce76007c1d9e493075bf7b8bb",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.217Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "a85189637a696a117",
-          "finishedAt": "2026-09-05T06:38:19.259689Z",
-          "finishedAtSource": "journal-mtime",
-          "run": "wf_d7aceea9-3de",
-          "ok": true,
-          "problems": 5,
-          "figures": 4
+      "kind": "reviewed",
+      "contentHash": "27782616743a2ff398b433eb878b3b24505e606ce406bcef28a53f7603989b7a",
+      "recordedAt": "2026-09-13T04:39:51.234Z",
+      "review": {
+        "paperId": "nao-2013-ii-11-12",
+        "verdict": "pass",
+        "contentHash": "27782616743a2ff398b433eb878b3b24505e606ce406bcef28a53f7603989b7a",
+        "sourceHashes": {
+          "problems": "c99ba3e5929532570559dbcd46d009a766b037e4f0ef0dc785069e6a92f22aab",
+          "solutions": "037996e9c60efd2c5c606720a659f0a33233fa0d5c609b9485bb1af8d2b53a51"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "a1afb65feb79b9de7",
-          "finishedAt": "2026-09-04T21:21:47.951786Z",
-          "finishedAtSource": "journal-mtime",
-          "run": "wf_1e6cad88-651",
-          "verdict": "fixed",
-          "defectsFound": 4,
-          "defectsFixed": 4,
-          "remaining": [
-            "Cosmetic, left as-is: p1 solution uses Latin \"A\" for the point label where the PDF text layer has Cyrillic \"А\" (renders identically); closing Bulgarian quote normalised from the source's „…” to the repo-wide „…“; Справочни данни values separated by an en dash instead of the source's space alignment (both noted in transcription.notes).",
-            "Superseded R2 object problems/nao-2013-ii-11-12/p3-sol-fig1.png (the clipped crop) was left in place per the never-overwrite rule and is now unreferenced — delete only if the project prunes orphaned figures."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "2026091312385377b8696010ce436f"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-04T21:10:04.413453Z",
-        "fileCommittedAt": "2026-09-05T00:51:08+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:39:50.565Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-04"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All five problems and all five official solutions are present, verbatim (including preserved source typos like 'тодини', 'опрделяне', the doubled 'му..'), points sum to 60, and all four figure crops are complete and unclipped. One uncertain letter-level reading noted as info.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            }
+          ],
+          "problemsChecked": 5,
+          "figuresChecked": 5
+        },
+        "defects": [],
+        "informational": 4,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "5bafc15d74451204f58696a958ae50a6489c0b61349bb95afb8197fcc1f04ec7",
+        "checkerCandidateSha256": "5bafc15d74451204f58696a958ae50a6489c0b61349bb95afb8197fcc1f04ec7",
+        "checkerCrops": [
+          "p1-sol-fig1",
+          "p3-fig1",
+          "p3-sol-fig1",
+          "p3-sol-fig2",
+          "p3-sol-fig3"
+        ],
+        "promotedAt": "2026-09-13T04:39:50.972Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2013\\nao-2013-ii-11-12.json"
       }
     },
     "nao-2013-ii-5-6": {
@@ -3945,129 +4095,323 @@
       }
     },
     "nao-2013-ii-7-8": {
-      "kind": "legacy",
-      "contentHash": "7249453294041b015f11d9ee023f49537368ff2e82ebaad4e1989343d5340533",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.239Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "a15fb89695f1c4b05",
-          "finishedAt": "2026-09-05T07:22:07.710864Z",
-          "finishedAtSource": "journal-mtime",
-          "run": "wf_a402f290-7a1",
-          "ok": true,
-          "problems": 5,
-          "figures": 5
+      "kind": "reviewed",
+      "contentHash": "06d88f5ceb87696c17cb3665ef6684c136489cd20f75214452c9a11ce6361827",
+      "recordedAt": "2026-09-13T04:39:22.907Z",
+      "review": {
+        "paperId": "nao-2013-ii-7-8",
+        "verdict": "pass",
+        "contentHash": "06d88f5ceb87696c17cb3665ef6684c136489cd20f75214452c9a11ce6361827",
+        "sourceHashes": {
+          "problems": "11d90d668b8386434f63865a470b3640b6c36732e77eaee3c244ad457aa07947",
+          "solutions": "1f5002cea524059fddad4ce9af6eacdc91d15f76488a8120266db343cc0cab17"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "ab8351b45594b99b6",
-          "finishedAt": "2026-09-05T06:24:38.370392Z",
-          "finishedAtSource": "journal-mtime",
-          "run": "wf_bae20188-59d",
-          "verdict": "fixed",
-          "defectsFound": 2,
-          "defectsFixed": 2,
-          "remaining": [
-            "Source error preserved and noted: the annotated star chart on p.9 of the solutions PDF labels Процион, while the solution text lists Белатрикс among the six brightest objects.",
-            "Source typos preserved verbatim (денононщие, Тоза, точноста, съответсгва, Слевователно, съзведията, and the double period in „23.IX.1846 г..“).",
-            "Problem 4's trailing assumptions paragraph is printed after the sub-parts in the original; it is placed at the end of the problem statement here (documented in transcription.notes).",
-            "Points are not printed on the exam sheet; per-problem and per-part values are derived from the marking criteria in the solutions PDF (10+10+10+15+15 = 60) — documented in transcription.notes."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "20260913123844dcde636a19f84838"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T06:14:08.607412Z",
-        "fileCommittedAt": "2026-09-05T09:48:24+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:39:22.301Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-05"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All five problems, part labels, points (10/10/10/15/15, sum 60) and official solutions match the printed pages verbatim, including preserved source typos („точноста“, „съответсгва“, „Слевователно“); all seven figure crops contain the full figures without clipping. No critical, major or minor defects found.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            },
+            {
+              "document": "solutions",
+              "page": 9
+            }
+          ],
+          "problemsChecked": 5,
+          "figuresChecked": 7
+        },
+        "defects": [],
+        "informational": 2,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "692d95a36ab7f409decfbcacf820cc4a7dc73f5a9fe3a5ec93465c2a308947a0",
+        "checkerCandidateSha256": "692d95a36ab7f409decfbcacf820cc4a7dc73f5a9fe3a5ec93465c2a308947a0",
+        "checkerCrops": [
+          "p3-sol-fig1",
+          "p3-sol-fig2",
+          "p4-fig1",
+          "p4-sol-fig1",
+          "p5-fig1",
+          "p5-sol-fig1",
+          "p5-sol-fig2"
+        ],
+        "promotedAt": "2026-09-13T04:39:22.661Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2013\\nao-2013-ii-7-8.json"
       }
     },
     "nao-2013-ii-9-10": {
-      "kind": "legacy",
-      "contentHash": "5144bd658d47bcf657d56f026019cb024cfe6bb1d56915156686cccaf8584ca0",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.251Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "aa691d62f3583d658",
-          "finishedAt": "2026-09-05T12:07:01.800Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_11d62c58-e66",
-          "ok": true,
-          "problems": 5,
-          "figures": 4
+      "kind": "reviewed",
+      "contentHash": "161d64262d87f5b32c6838c4c5393b41db1601cf1fa7224abb367d87e43b04e3",
+      "recordedAt": "2026-09-13T04:41:19.520Z",
+      "review": {
+        "paperId": "nao-2013-ii-9-10",
+        "verdict": "pass",
+        "contentHash": "161d64262d87f5b32c6838c4c5393b41db1601cf1fa7224abb367d87e43b04e3",
+        "sourceHashes": {
+          "problems": "7c844ff8a70fb79cdf75614266d7d458cc3c064384c530062dcbb051907cb96d",
+          "solutions": "532e82ee14e230d7d10e1e4aae405dbc1f21b29fa56fdbaa93ac4cc3f40ae634"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "a550d4a04efc10cfb",
-          "finishedAt": "2026-09-05T12:42:50.457Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_91c59b91-c85",
-          "verdict": "clean",
-          "defectsFound": 0,
-          "defectsFixed": 0,
-          "remaining": [
-            "JSON was complete (not truncated): all 5 printed problems, all 13 sub-parts, all 5 solutions, 4 figures.",
-            "Verbatim check was mechanical, not just visual: extracted the PDF text layer (digital PDF, no OCR risk) and confirmed every JSON statement/part/solution paragraph appears as a whitespace-insensitive exact substring of the source. Only formula paragraphs and 2 paragraphs split by an interleaved page number failed that test, and each was confirmed by eye on the rendered page.",
-            "Reverse coverage check (223 source sentences -> JSON) found no dropped source sentence; all 41 non-matches were headers, page numbers, figure labels, LaTeX-encoded formulas, or the restated statements in the solutions PDF (which use lowercase 'за вас'/'вашата' where the theme uses 'Вас'/'Вашата' - correctly noted in transcription.notes).",
-            "Every number verified against the embedded text layer: 26 km / 2.8 km / 29.5, 6.5x / 10 kW / 17.5 deg / 1.17h = 1h10min / 22.83h / 10.5 kW, 99 min / 26 / 27 / 6378 km / 42.9h / 1436 min / 645.29 deg / 285.29 deg / 74.71 deg / 8317 km / 24.82 deg / 2763 km, 164 x 365 + 40 = 59900 / 292 / 60192 : 365.25 = 164.80 / 233.67 : 164.80 = 1.42 / 12 x 0.42 = 5, 12 deg / 180-2x12=156 / 14.75 x 156/180 = 12.78, 37 deg / 90-37=53.",
-            "Points cross-checked against the printed criteria: 3+2+2+2+(4+1)=14, (4+1)+(1+3+1)=10, 3+3+3+3=12, 2+(3+1)+(3+1)+2=12, (2+5+1)+(3+1)=12; sum 60 = paper.totalPoints. Points are not printed in the theme itself - correctly sourced from the solutions PDF criteria and disclosed in transcription.notes.",
-            "All 4 figure PNGs downloaded and visually inspected: p1-sol-fig1 (crater profile with h, a, alpha, A), p3-fig1 (Callisto vista), p4-sol-fig1 (Earth orbit / solstice-equinox schema), p4-sol-fig2 (Earth shadow, angle delta). All complete, not clipped, no body text swallowed, all URLs HTTP 200, all dimensions match their pdfRect at 300 dpi.",
-            "paper.year/round/grade confirmed against page 1: 2013, 'II kryg (oblasten)' from 'OBLASTEN KRYG - 23.02.2013', grade '9-10' from 'IX-X KLAS'.",
-            "No bare << or >>, no raw HTML tags. LaTeX is valid (KaTeX-compatible); Cyrillic inside \\text{} matches the convention already used in promoted files.",
-            "Preserved source errors all verified on the pages and already documented in transcription.notes: 'Toza', 'tochnosta', 'syotvetsgva', 'Slevovatelno', 'po malka', 'obyaknenie', 'datymnenieto', 'energi', double periods in '23.IX.1846 g..', 'zatymneieto - 3 t..', 'poleta mu..', and the mislabelled sub-parts (b./v. instead of a./b.) in the solutions' restatement of problem 5. The source's '2*pi*R * 24.82/360' (asterisk instead of times) is also preserved.",
-            "Non-blocking observation, no action taken: the solutions PDF's embedded Word title is 'a13-II-56.doc' (a 5-6 grade filename), but its printed header and full content are unambiguously 'KRITERII ... ZA VYZRASTOVA GRUPA - IX-X KLAS' matching this paper. Filename metadata artifact only.",
-            "Non-blocking: transcription.at is 2026-09-05 while verifiedAt is 2026-09-04 (the date string the task specified), so the verification date reads as earlier than the transcription date."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "2026091312402960bae5a3fa2a48df"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T12:42:06.243914Z",
-        "fileCommittedAt": "2026-09-05T15:54:24+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:41:18.875Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-05"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All five problems, parts, numeric answers, figures and solutions match the printed pages; source typos are preserved verbatim and figure crops are complete. The only observation is that per-part points are not printed on the problem sheets and were inferred from the official criteria (they sum correctly).",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            }
+          ],
+          "problemsChecked": 5,
+          "figuresChecked": 5
+        },
+        "defects": [],
+        "informational": 3,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "2dbc03fbf486e0bbb3352536c3b6599ddf072a8c354706d05c07d714a49fe176",
+        "checkerCandidateSha256": "2dbc03fbf486e0bbb3352536c3b6599ddf072a8c354706d05c07d714a49fe176",
+        "checkerCrops": [
+          "p1-sol-fig1",
+          "p3-fig1",
+          "p4-sol-fig1",
+          "p4-sol-fig2",
+          "p4-sol-fig3"
+        ],
+        "promotedAt": "2026-09-13T04:41:19.263Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2013\\nao-2013-ii-9-10.json"
       }
     },
     "nao-2013-iii-7-8": {
-      "kind": "legacy",
-      "contentHash": "976b25c9c6565e5d9bae7a9ec3aaf2d30c7bf9db212cd4b976e0b0f2c15de88b",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.263Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "aaaad9f5ec9fcf503",
-          "finishedAt": "2026-09-05T21:51:46.003Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_7d0babd0-94f",
-          "ok": true,
-          "problems": 4,
-          "figures": 9
+      "kind": "reviewed",
+      "contentHash": "4a0574cdec8c4655305bc7260d8bfe0666cc8b5eaeccf0308d782bb55424bc53",
+      "recordedAt": "2026-09-13T04:41:57.635Z",
+      "review": {
+        "paperId": "nao-2013-iii-7-8",
+        "verdict": "pass",
+        "contentHash": "4a0574cdec8c4655305bc7260d8bfe0666cc8b5eaeccf0308d782bb55424bc53",
+        "sourceHashes": {
+          "problems": "4564ab00911c8820712272896a2edd4e78862349018d870d1cf4cbb485f1ebb8",
+          "solutions": "f911582045c3fbc6732f42e9211db8360045abf10d760903f802da8739106e86"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "a7d7eb0dbfa64d05a",
-          "finishedAt": "2026-09-05T22:04:48.084Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_e7c2e178-291",
-          "verdict": "fixed",
-          "defectsFound": 2,
-          "defectsFixed": 2,
-          "remaining": [
-            "Cosmetic: p2-sol-fig1 crop (pdfRect top 276.75 pt) includes two ~10px descender fragments from the text line above; no readable body text swallowed, so not re-cropped/re-uploaded (would require a new asset id since overwriting is forbidden).",
-            "Source deficiency preserved: the published solution to problem 3 does not answer the sub-question about how the tidal waves affect Earth's axial rotation — already recorded via solution.incomplete/incompleteReason.",
-            "Points are not printed in the problem PDFs; per-part values are derived from the marking criteria in the solutions PDF (documented in transcription.notes) — worth a human glance at the 6/2/2 split for problem 1."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "2026091312411293ef5a14f9f44b31"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T22:04:01.414657Z",
-        "fileCommittedAt": null,
-        "fileDirty": true,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:41:57.017Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-06"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All four printed problems (3 theory + practical) are present with verbatim statements, correct totals (10+12+14+15=51) and matching official solutions; all nine figure crops contain the complete drawings without clipping or swallowed text. Only point-distribution ambiguity and preserved source typos noted as info.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            },
+            {
+              "document": "problems",
+              "page": 4
+            },
+            {
+              "document": "problems",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            }
+          ],
+          "problemsChecked": 4,
+          "figuresChecked": 9
+        },
+        "defects": [],
+        "informational": 5,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "53a842473f0c91c2c8eeb3165933027f42b9ee07275500e030931526e5c8ab7b",
+        "checkerCandidateSha256": "53a842473f0c91c2c8eeb3165933027f42b9ee07275500e030931526e5c8ab7b",
+        "checkerCrops": [
+          "p1-fig1",
+          "p1-fig2",
+          "p1-sol-fig1",
+          "p2-fig1",
+          "p2-sol-fig1",
+          "p2-sol-fig2",
+          "p3-sol-fig1",
+          "p3-sol-fig2",
+          "p4-fig1"
+        ],
+        "promotedAt": "2026-09-13T04:41:57.388Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2013\\nao-2013-iii-7-8.json"
       }
     },
     "nao-2013-iii-9-10": {
@@ -4186,120 +4530,322 @@
       }
     },
     "nao-2014-ii-7-8": {
-      "kind": "legacy",
-      "contentHash": "0f7991055e79eecacb2acd94a62a5eb0a8cdfcdfe9fe82ad01fbb59c64925e38",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.309Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "a939ba4de2486b73b",
-          "finishedAt": "2026-09-05T21:49:00.815Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_7d0babd0-94f",
-          "ok": true,
-          "problems": 5,
-          "figures": 9
+      "kind": "reviewed",
+      "contentHash": "150651860b0ac7d0edc1540bdbf91445de25cc7c18c1db6fea143bed94b39780",
+      "recordedAt": "2026-09-13T04:51:02.935Z",
+      "review": {
+        "paperId": "nao-2014-ii-7-8",
+        "verdict": "pass",
+        "contentHash": "150651860b0ac7d0edc1540bdbf91445de25cc7c18c1db6fea143bed94b39780",
+        "sourceHashes": {
+          "problems": "37f0ed1b0c86ec57b576747e4cc3f68f555294c542eb4afaad9ca0c2725ae780",
+          "solutions": "5f051a69dcfddd80ed692e946efdb8e0968aa668a6b11ae69d284eb3aaceb64c"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "a8e0d4a884006cbd8",
-          "finishedAt": "2026-09-05T22:01:39.796Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_e7c2e178-291",
-          "verdict": "fixed",
-          "defectsFound": 3,
-          "defectsFixed": 3,
-          "remaining": [
-            "Source arithmetic error preserved verbatim (not a transcription defect): problem 3 solution prints Δλ = 27°55′ − 23°20′ = 4°33′ = 4.55° — the true difference is 4°35′ ≈ 4.583°, so the printed Δt₁ = 18.2 min should be ≈18.3 min and Δt ≈ 20.4 min. Now documented in transcription.notes; the JSON keeps the printed numbers.",
-            "Other preserved source typos already documented in notes and re-verified against the pages: „около планетат“, „тяхното разположение ще от другата страна“, „те нма са срещнат там“, „За mредположението“ (latin m, confirmed in the PDF text layer), „Тя трабва“, „нейна фаза“, and the stray comma in „(φ = 44° с.ш.,)“.",
-            "Human review still pending — paper.status is \"review\", not \"published\"."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "20260913125010661a98678c9540a0"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T22:00:31.919399Z",
-        "fileCommittedAt": null,
-        "fileDirty": true,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:51:02.306Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-06"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "Statements, quantities, points, metadata and all 14 figure crops check out against the pages; the only defect found is a dropped letter in one solution sentence ('нма' for the printed 'няма').",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            },
+            {
+              "document": "solutions",
+              "page": 9
+            }
+          ],
+          "problemsChecked": 5,
+          "figuresChecked": 14
+        },
+        "defects": [],
+        "informational": 2,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "062fc97b5434cca5d065927a2231346c03418775b36f215587e0f5a10a3654d9",
+        "checkerCandidateSha256": "062fc97b5434cca5d065927a2231346c03418775b36f215587e0f5a10a3654d9",
+        "checkerCrops": [
+          "p1-sol-scheme1",
+          "p1-sol-scheme2",
+          "p2-sol-sphere",
+          "p4-fig1",
+          "p3-sol-fig1",
+          "p3-sol-fig2",
+          "p5-fig1",
+          "p5-fig2",
+          "p5-fig3",
+          "p4-sol-fig1",
+          "p4-sol-fig2",
+          "p4-sol-fig3",
+          "p5-sol-fig2",
+          "p5-sol-fig3"
+        ],
+        "promotedAt": "2026-09-13T04:51:02.677Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2014\\nao-2014-ii-7-8.json"
       }
     },
     "nao-2014-ii-9-10": {
-      "kind": "legacy",
-      "contentHash": "df7ce25b295bc5d7dcf8316f94117203c17ff3edfbd028f85a35bd33e5babd0e",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.323Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "ac6e2dcbc95e61e7e",
-          "finishedAt": "2026-09-05T21:43:53.449Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_e7d4406c-985",
-          "ok": true,
-          "problems": 5,
-          "figures": 2
+      "kind": "reviewed",
+      "contentHash": "ac78e195520c3b4af80cc30b39b2dc6f90304cd05fd1fbbba231d18a0d98d226",
+      "recordedAt": "2026-09-13T04:47:50.615Z",
+      "review": {
+        "paperId": "nao-2014-ii-9-10",
+        "verdict": "pass",
+        "contentHash": "ac78e195520c3b4af80cc30b39b2dc6f90304cd05fd1fbbba231d18a0d98d226",
+        "sourceHashes": {
+          "problems": "bde642c512fee4db6b89e67bf96f150b8a879432a01e2d69391851f8f0a1fc06",
+          "solutions": "a33d81fef4a303b2efc2244e3acd4f787da6d327d6af09b57b347e5b71ff9bf2"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "a0c47fbaab781f4cd",
-          "finishedAt": "2026-09-05T21:55:25.511Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_e7c2e178-291",
-          "verdict": "fixed",
-          "defectsFound": 1,
-          "defectsFixed": 1,
-          "remaining": [
-            "Source errors preserved deliberately (documented in transcription.notes): printed 365.25/366.25 = 0.934471 and 24h x 0.934471 = 23h56m04s in the solution to problem 2; typos 'околоосноно', 'относто', 'В парихелий', 'Крайщата', 'звездата изгрява', 'може за изгрява'; 'валеви' for 'залези' in the solutions' restatement of problem 2; the sign of Delta t = t1 - t2 in the solution to problem 5.",
-            "Per-part point values are not printed in the source, so points are recorded only at problem level (12 т. each, 60 total)."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "2026091312471352fd60c58f2e44bd"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T21:54:44.453890Z",
-        "fileCommittedAt": null,
-        "fileDirty": true,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:47:50.000Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-06"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All five problems and their official solutions are present, verbatim including printed typos (напр. „може за изгрява“, „относто“, „околоосноно“), points and criteria match, and all four figure crops contain the complete intended images without clipping.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            },
+            {
+              "document": "solutions",
+              "page": 9
+            }
+          ],
+          "problemsChecked": 5,
+          "figuresChecked": 4
+        },
+        "defects": [],
+        "informational": 0,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "2d3b875f5bb2df04229e3f3ddef15d81871e2d2aeb407e6314d44a7cbb4c27d6",
+        "checkerCandidateSha256": "2d3b875f5bb2df04229e3f3ddef15d81871e2d2aeb407e6314d44a7cbb4c27d6",
+        "checkerCrops": [
+          "p3-fig1",
+          "p3-fig2",
+          "p4-sol-fig1",
+          "p5-sol-fig1"
+        ],
+        "promotedAt": "2026-09-13T04:47:50.374Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2014\\nao-2014-ii-9-10.json"
       }
     },
     "nao-2014-iii-11-12": {
-      "kind": "legacy",
-      "contentHash": "40158cf84e729ac29fea6967d8b04f5ae1d6f17bfe17b27cafe0c53f61f95385",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.335Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "a54237581a712ebf9",
-          "finishedAt": "2026-09-05T06:44:28.691073Z",
-          "finishedAtSource": "journal-mtime",
-          "run": "wf_869cf0ce-429",
-          "ok": true,
-          "problems": 4,
-          "figures": 4
+      "kind": "reviewed",
+      "contentHash": "a6349cb4736561bb1ac86522944d9628acf84fad1312073e71e0daf8c7cae8b0",
+      "recordedAt": "2026-09-13T04:53:38.603Z",
+      "review": {
+        "paperId": "nao-2014-iii-11-12",
+        "verdict": "pass",
+        "contentHash": "a6349cb4736561bb1ac86522944d9628acf84fad1312073e71e0daf8c7cae8b0",
+        "sourceHashes": {
+          "problems": "3a422fc97d63b987a415b1f72132fcb81302e2000dd12976783479b9c97ce28d",
+          "solutions": "38db644bad543535ac0ae9fb275fd21cb6e03c6b8799cd5b22ff831275e46574"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "ac21177e8ffe9b753",
-          "finishedAt": "2026-09-04T21:21:47.951786Z",
-          "finishedAtSource": "journal-mtime",
-          "run": "wf_1e6cad88-651",
-          "verdict": "fixed",
-          "defectsFound": 6,
-          "defectsFixed": 6,
-          "remaining": [
-            "Judgement call left as-is (documented in transcription.notes): the paper's Справочни данни block is printed at the foot of page 2 after problem 3's last bullet, but is stored in problem 3's statement preamble, so it appears before the bullets rather than after them.",
-            "Judgement call left as-is: p2 part 3 asks for the height above the horizon, while the printed solution only derives the zenith distance z ≈ 56'; answer.value records 56 with unit ′ and the note states explicitly that this is the zenith distance as derived in the source.",
-            "The page-3 footer line 'Предайте този лист заедно с писмената си работа на квесторите!' is not transcribed (boilerplate instruction to candidates, consistent with other papers).",
-            "Solution figures' captions are partly baked into the crops (e.g. 'Фиг.1' appears both inside the p2 image and as the italic caption line beneath it in the markdown)."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "202609131252563feb455884044ec3"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-04T21:10:01.418533Z",
-        "fileCommittedAt": "2026-09-05T00:51:08+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:53:37.987Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-04"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All four problems, their parts, points and official solution values match the printed pages, including preserved source typos („де е“, „правлен“, „ва земния наблюдател“); both figure crops are complete. Only a minor structural note: the справочни данни block is embedded in problem 3's statement with added dashes, losing no content.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            },
+            {
+              "document": "solutions",
+              "page": 9
+            }
+          ],
+          "problemsChecked": 4,
+          "figuresChecked": 2
+        },
+        "defects": [],
+        "informational": 2,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "c0c375d8cb79a01b383d55c999e20142952ffc952eedbc1bc40479d487cd97eb",
+        "checkerCandidateSha256": "c0c375d8cb79a01b383d55c999e20142952ffc952eedbc1bc40479d487cd97eb",
+        "checkerCrops": [
+          "p3-sol-fig1",
+          "p4-fig1"
+        ],
+        "promotedAt": "2026-09-13T04:53:38.361Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2014\\nao-2014-iii-11-12.json"
       }
     },
     "nao-2014-iii-7-8": {
@@ -4417,40 +4963,69 @@
       }
     },
     "nao-2014-iv-st-prak": {
-      "kind": "legacy",
-      "contentHash": "d3cbc1edcaa7fcd59059e1b1f1efdab1dde6c39108c14c6d21a51e39d11661b8",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.379Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "a16eadbe8867c4243",
-          "finishedAt": "2026-09-05T11:51:30.504Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_11d62c58-e66",
-          "ok": true,
-          "problems": 2,
-          "figures": 2
+      "kind": "reviewed",
+      "contentHash": "6d63eb8e55b2c58c4aca241c79c26a253fb694c8cc56fbad2aed154e31f52fca",
+      "recordedAt": "2026-09-13T04:54:39.569Z",
+      "review": {
+        "paperId": "nao-2014-iv-st-prak",
+        "verdict": "pass",
+        "contentHash": "6d63eb8e55b2c58c4aca241c79c26a253fb694c8cc56fbad2aed154e31f52fca",
+        "sourceHashes": {
+          "problems": "80b81ee6d02049c15769828d53ea5cb15367ae417a323557f4be2801494306eb"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "af1087364c249194d",
-          "finishedAt": "2026-09-05T12:38:25.723Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_91c59b91-c85",
-          "verdict": "fixed",
-          "defectsFound": 2,
-          "defectsFixed": 2,
-          "remaining": [
-            "No solutions exist in the archive for the 2014 IV кръг practical tour (senior age group) — problems are published without solutions/answers; documented in paper.caveat and transcription.notes. Verified: NOA4_2014_STsolutions.pdf is the theoretical tour of 9 July 2014."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "202609131254213c13b60bb9e74e78"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T12:37:50.125335Z",
-        "fileCommittedAt": "2026-09-05T15:54:24+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T04:54:38.905Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-05"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "Both problems are transcribed verbatim with correct numbers, units, bullet parts and figure boxes; both crops contain the full figures with captions and no swallowed text; no solutions document exists for this practical round, correctly flagged.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            }
+          ],
+          "problemsChecked": 2,
+          "figuresChecked": 2
+        },
+        "defects": [],
+        "informational": 2,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "433ae0fcf5783c0c5809dcb0830f7c737ea01ca7b5d4456476e91a09cac479fe",
+        "checkerCandidateSha256": "433ae0fcf5783c0c5809dcb0830f7c737ea01ca7b5d4456476e91a09cac479fe",
+        "checkerCrops": [
+          "p1-fig1",
+          "p2-fig1"
+        ],
+        "promotedAt": "2026-09-13T04:54:39.292Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2014\\nao-2014-iv-st-prak.json"
       }
     },
     "nao-2015-ii-11-12": {
@@ -4495,80 +5070,192 @@
       }
     },
     "nao-2015-ii-5-6": {
-      "kind": "legacy",
-      "contentHash": "9116d5fca67b22125a3e777510ebb5ee58c2b71a201f3ee09f40bbf4e739571b",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.401Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "a6e37a3c71b10b1a5",
-          "finishedAt": "2026-09-05T11:46:09.855Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_11d62c58-e66",
-          "ok": true,
-          "problems": 5,
-          "figures": 8
+      "kind": "reviewed",
+      "contentHash": "d78cc85a8acbd15095677f4f6fe944bb83fa4fc4f393c48a4754d8bfd0ccaeda",
+      "recordedAt": "2026-09-13T05:02:29.642Z",
+      "review": {
+        "paperId": "nao-2015-ii-5-6",
+        "verdict": "pass",
+        "contentHash": "d78cc85a8acbd15095677f4f6fe944bb83fa4fc4f393c48a4754d8bfd0ccaeda",
+        "sourceHashes": {
+          "problems": "97269ce11732cb6d0c2e1974aff6e951848ed296e13d7c4f9f1cae03a90fa642",
+          "solutions": "52e6e9d678b54e860f393c25e818bca8cc4e06c6beb8cdcc46bddc798117086f"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "ac9d5c4051c2d0973",
-          "finishedAt": "2026-09-05T12:44:12.634Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_91c59b91-c85",
-          "verdict": "clean",
-          "defectsFound": 0,
-          "defectsFixed": 0,
-          "remaining": [
-            "Underlining of „Церера\" and „Плутон\" in the solution-1 list is lost (Markdown has no underline); documented in transcription.notes.",
-            "Problem 2's single printed bullet is folded into the statement as a one-item list instead of a parts[] entry — faithful to print but inconsistent with problems 1/3/4.",
-            "Per-part points left null: the grading criteria do not decompose unambiguously onto the printed sub-items (А/Б/В); only the 12 т. per-problem total is certain."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "202609131302013cd01ee28937407d"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T12:43:35.928060Z",
-        "fileCommittedAt": "2026-09-05T15:54:24+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T05:02:28.653Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-05"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All five problems, parts, figures and solutions match the printed pages verbatim, including the two printed typos; crops contain the full figures without clipped edges or swallowed text. Only an informational note: the preserved source typos carry no explicit source-error remark.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            }
+          ],
+          "problemsChecked": 5,
+          "figuresChecked": 8
+        },
+        "defects": [],
+        "informational": 1,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "4442e57ac9d7132ab7b274236b4af39ee3b9d46d64e5d67c7dad58b3373192fb",
+        "checkerCandidateSha256": "4442e57ac9d7132ab7b274236b4af39ee3b9d46d64e5d67c7dad58b3373192fb",
+        "checkerCrops": [
+          "p1-fig1",
+          "p1-sol-fig1",
+          "p2-fig1",
+          "p2-sol-fig1",
+          "p4-fig1",
+          "p4-sol-fig1",
+          "p5-fig1",
+          "p5-sol-fig1"
+        ],
+        "promotedAt": "2026-09-13T05:02:29.221Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2015\\nao-2015-ii-5-6.json"
       }
     },
     "nao-2015-ii-7-8": {
-      "kind": "legacy",
-      "contentHash": "88aa2da152784666fd5779c75ce86f43fd8b3944b746d87ec87bdf0e18f35f90",
-      "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
-      "recordedAt": "2026-09-05T22:35:18.414Z",
-      "evidence": {
-        "transcriber": {
-          "model": "claude-opus-5",
-          "agentId": "a55551021eef41dab",
-          "finishedAt": "2026-09-05T12:47:40.348Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_95a06e56-ad8",
-          "ok": true,
-          "problems": 5,
-          "figures": 9
+      "kind": "reviewed",
+      "contentHash": "12567cf9e17b02990161c571b32febf71fa448c70934bb2fd2fba808c1db928a",
+      "recordedAt": "2026-09-13T05:05:37.170Z",
+      "review": {
+        "paperId": "nao-2015-ii-7-8",
+        "verdict": "pass",
+        "contentHash": "12567cf9e17b02990161c571b32febf71fa448c70934bb2fd2fba808c1db928a",
+        "sourceHashes": {
+          "problems": "8e245956f7e003c3f02d192f848a01f7a3f6fb5fe305baecbdb6cf8c0969e504",
+          "solutions": "35db3868056452a5b4cf1ddc81c348215424e686256f08897f9ae5b92d2a2239"
         },
-        "verifier": {
-          "model": "claude-opus-5",
-          "agentId": "a00459c4a6c3168c6",
-          "finishedAt": "2026-09-05T16:18:52.001Z",
-          "finishedAtSource": "transcript",
-          "run": "wf_beb2d493-106",
-          "verdict": "fixed",
-          "defectsFound": 2,
-          "defectsFixed": 2,
-          "remaining": [
-            "Source errors deliberately preserved and documented in transcription.notes: solution 1 month-name/day-sum typos ('11 (март) + 30 (април) + 31 (март) + 30 (април) + ... = 225') and '29.5 – 18.5 = 12.5'; solution 3 'хелиоцентичната' and 'За отразяванена факта'; solution 4 'ще злезе'; solution 5 'предид' and the mislabelled '19.1 см / 4 = 4.775 а.е.' (that is the whole Earth–asteroid–Mars path); figure captions 'Геоцентрича система' and 'обита на Венера'.",
-            "The problems PDF prints no per-problem point values; the 12 т. per problem and the per-part splits are derived from the 'Критерии за оценяване (общо 12 т.)' blocks in the solutions PDF — each verified to sum to 12, total 60."
-          ]
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "20260913130411e972dedcbb86438a"
         },
-        "postVerificationEdits": false,
-        "fileTime": "2026-09-05T16:17:23.668457Z",
-        "fileCommittedAt": "2026-09-05T19:27:20+03:00",
-        "fileDirty": false,
-        "evidenceQuality": "journal",
-        "attachedAt": "2026-09-05T22:37:13.797Z"
+        "checkedAt": "2026-09-13T05:05:36.204Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "agent",
+          "model": "claude-opus-5",
+          "promptVersion": "agent-workflow-2026-09",
+          "promptSha256": null,
+          "requestId": null,
+          "at": "2026-09-05"
+        },
+        "independence": {
+          "independent": true,
+          "differentProvider": true,
+          "allowSameModel": false
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All five problems and their official solutions are present and verbatim (including preserved source typos like „злезе“, „предид“, „Отразяванена“); figure crops are complete and uncropped; metadata, points (5×12=60) and final answers match the printed solutions.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            }
+          ],
+          "problemsChecked": 5,
+          "figuresChecked": 11
+        },
+        "defects": [],
+        "informational": 3,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "f77c22bf84f34dc606a6c1d1b27d7b654dec5aa0de612b8e5a96d6c011b66a5d",
+        "checkerCandidateSha256": "f77c22bf84f34dc606a6c1d1b27d7b654dec5aa0de612b8e5a96d6c011b66a5d",
+        "checkerCrops": [
+          "p2-fig1",
+          "p2-sol-fig1",
+          "p2-sol-fig2",
+          "p2-sol-fig0",
+          "p2-sol-fig3",
+          "p3-fig1",
+          "p3-fig2",
+          "p3-sol-fig1",
+          "p3-sol-fig2",
+          "p3-sol-fig0",
+          "p5-sol-fig1"
+        ],
+        "promotedAt": "2026-09-13T05:05:36.762Z",
+        "promotedFile": "content\\problems\\astronomy\\NAO\\2015\\nao-2015-ii-7-8.json"
       }
     },
     "nao-2015-ii-9-10": {
@@ -28054,6 +28741,560 @@
         ],
         "promotedAt": "2026-09-13T01:46:58.286Z",
         "promotedFile": "content\\problems\\physics\\ESF\\2010\\esf-2010-esenno-st.json"
+      }
+    },
+    "ipho-2022-theory-q1": {
+      "kind": "reviewed",
+      "contentHash": "66817d38af630187940849c52650e53832d6a10afd5e836ccd3e1e901fa55729",
+      "recordedAt": "2026-09-13T04:51:39.631Z",
+      "review": {
+        "paperId": "ipho-2022-theory-q1",
+        "verdict": "pass",
+        "contentHash": "66817d38af630187940849c52650e53832d6a10afd5e836ccd3e1e901fa55729",
+        "sourceHashes": {
+          "problems": "0f90f13d7fc724fdda8393698e0e7450f3c1e47970bd91b36dbd96eefeaff99d"
+        },
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "2026091312512047e0f238397f4639"
+        },
+        "checkedAt": "2026-09-13T04:51:39.006Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "promptVersion": "v1",
+          "promptSha256": "a25e8ba983d0a171507dfdaa0dcb72064d5315885a9972410004f2ff1865f1d1",
+          "requestId": "20260913115920f4a040b73f3b413c",
+          "at": "2026-09-13"
+        },
+        "independence": {
+          "independent": false,
+          "differentProvider": false,
+          "allowSameModel": true
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "Single-problem paper transcribed verbatim: all ten parts (A.1–C.2) present with correct points (sum = 10), quantities and LaTeX match the print, and all four figure crops are complete and correctly placed.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            },
+            {
+              "document": "problems",
+              "page": 4
+            }
+          ],
+          "problemsChecked": 1,
+          "figuresChecked": 4
+        },
+        "defects": [],
+        "informational": 0,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "490b1804984115e988eabe1644d16b832b8bae087f7f9fff2cdb8f96c9dc2781",
+        "checkerCandidateSha256": "490b1804984115e988eabe1644d16b832b8bae087f7f9fff2cdb8f96c9dc2781",
+        "checkerCrops": [
+          "p1-fig1",
+          "p1-fig2",
+          "p1-fig3",
+          "p1-fig4"
+        ],
+        "promotedAt": "2026-09-13T04:51:39.385Z",
+        "promotedFile": "content\\problems\\physics\\IPhO\\2022\\ipho-2022-theory-q1.json"
+      }
+    },
+    "ipho-2022-theory-q3": {
+      "kind": "reviewed",
+      "contentHash": "9388a476c61dd6efc91f93bb062e199181048a3846c13605f9409032bef99b5d",
+      "recordedAt": "2026-09-13T04:55:39.175Z",
+      "review": {
+        "paperId": "ipho-2022-theory-q3",
+        "verdict": "pass",
+        "contentHash": "9388a476c61dd6efc91f93bb062e199181048a3846c13605f9409032bef99b5d",
+        "sourceHashes": {
+          "problems": "d3fc5f300c6854c3a0d91554f7c52b9cb54d2bb3b9d15dfcea0a2d38ea983bf6"
+        },
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "20260913125514f8c59a6eb9fe477c"
+        },
+        "checkedAt": "2026-09-13T04:55:38.554Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "promptVersion": "v1",
+          "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
+          "requestId": "20260913125149b7f0a3e4d5fa41f2",
+          "at": "2026-09-13"
+        },
+        "independence": {
+          "independent": false,
+          "differentProvider": false,
+          "allowSameModel": true
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All four printed parts (A–D) are present with correct 2.0-point values, verbatim statements and quantities; the figure crop is complete. Only a minor placement quibble: the document-level heading 'Scaling laws (8 points)' and its intro paragraph were embedded inside problem 3's statement rather than at paper level.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            }
+          ],
+          "problemsChecked": 4,
+          "figuresChecked": 1
+        },
+        "defects": [],
+        "informational": 3,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "98200570980c3d0c54f59c30a2d07463168c3725d8a657f799508440efde497b",
+        "checkerCandidateSha256": "98200570980c3d0c54f59c30a2d07463168c3725d8a657f799508440efde497b",
+        "checkerCrops": [
+          "p1-fig1"
+        ],
+        "promotedAt": "2026-09-13T04:55:38.931Z",
+        "promotedFile": "content\\problems\\physics\\IPhO\\2022\\ipho-2022-theory-q3.json"
+      }
+    },
+    "eupho-2026-theory-x": {
+      "kind": "reviewed",
+      "contentHash": "d5b9d69cd6a83f0e2539769344bc2fdd26d5bae1dd3c00163ea686171cbf4cdd",
+      "recordedAt": "2026-09-13T05:01:14.774Z",
+      "review": {
+        "paperId": "eupho-2026-theory-x",
+        "verdict": "pass",
+        "contentHash": "d5b9d69cd6a83f0e2539769344bc2fdd26d5bae1dd3c00163ea686171cbf4cdd",
+        "sourceHashes": {
+          "problems": "f200074e0fb1f54db6b97cc949cf51cc0d44bb8198286f89d59435da79726f35",
+          "solutions": "a3d5ad42277de2ab294b209a722a67ac48772551db0ad9560551f9aea738165c"
+        },
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "2026091313001343090c102d0e4391"
+        },
+        "checkedAt": "2026-09-13T05:01:13.779Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "promptVersion": "v1",
+          "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
+          "requestId": "2026091312412684fd2456a78648d8,20260913124215a794db07c0074136,202609131244478e1c755c9da64260",
+          "at": "2026-09-13"
+        },
+        "independence": {
+          "independent": false,
+          "differentProvider": false,
+          "allowSameModel": true
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All three problems, parts, points and totals match the print; solution texts, equations, tables and marking schemes are verbatim including preserved source quirks ('Skating' heading, 'over over', item O exponent). All eight figure crops contain their complete figures without clipping or swallowed text. Text-layer check (problems, solutions): 0 critical, 1 major, 0 minor defect(s), 0 with a mechanical fix.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            },
+            {
+              "document": "solutions",
+              "page": 9
+            },
+            {
+              "document": "solutions",
+              "page": 10
+            }
+          ],
+          "problemsChecked": 3,
+          "figuresChecked": 8
+        },
+        "defects": [],
+        "informational": 6,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "83eb2a5ca463ed5763cc2277c57ad94a5b04c82ee46fbd82b6cd8793366cdf14",
+        "checkerCandidateSha256": "83eb2a5ca463ed5763cc2277c57ad94a5b04c82ee46fbd82b6cd8793366cdf14",
+        "checkerCrops": [
+          "p1-fig1",
+          "p1-sol-fig1",
+          "p1-sol-fig2",
+          "p1-sol-fig3",
+          "p2-fig1",
+          "p3-fig1",
+          "p3-sol-fig1",
+          "p3-sol-fig2"
+        ],
+        "promotedAt": "2026-09-13T05:01:14.337Z",
+        "promotedFile": "content\\problems\\physics\\EuPhO\\2026\\eupho-2026-theory-x.json"
+      }
+    },
+    "ipho-2023-theory-q3": {
+      "kind": "reviewed",
+      "contentHash": "722efa1e37a4fcbc643f908ee9e87a12c0f966ae253b86f9eb04da5c273885b1",
+      "recordedAt": "2026-09-13T05:03:09.728Z",
+      "review": {
+        "paperId": "ipho-2023-theory-q3",
+        "verdict": "pass",
+        "contentHash": "722efa1e37a4fcbc643f908ee9e87a12c0f966ae253b86f9eb04da5c273885b1",
+        "sourceHashes": {
+          "problems": "fe25d0f5ef076db853d8b64a1a9d58ca343665087ab8afe1dec294e53d8a9016"
+        },
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "20260913130250fd36ed36b4d5400e"
+        },
+        "checkedAt": "2026-09-13T05:03:08.786Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "promptVersion": "v1",
+          "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
+          "requestId": "20260913130137ab798e39de4e484d",
+          "at": "2026-09-13"
+        },
+        "independence": {
+          "independent": false,
+          "differentProvider": false,
+          "allowSameModel": true
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "The single problem is transcribed verbatim with all part statements, quantities, points and figures matching the four printed pages; all five figure crops are complete and unclipped; the missing-solutions flag is correct.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "problems",
+              "page": 2
+            },
+            {
+              "document": "problems",
+              "page": 3
+            },
+            {
+              "document": "problems",
+              "page": 4
+            }
+          ],
+          "problemsChecked": 1,
+          "figuresChecked": 5
+        },
+        "defects": [],
+        "informational": 0,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "61c29aa0ae884d29b2c3c43b5d46559e59b561c7fcff761eee9c5c0b63c84fea",
+        "checkerCandidateSha256": "61c29aa0ae884d29b2c3c43b5d46559e59b561c7fcff761eee9c5c0b63c84fea",
+        "checkerCrops": [
+          "p1-fig1",
+          "p1-fig2",
+          "p1-fig3",
+          "p1-fig4",
+          "p1-fig5"
+        ],
+        "promotedAt": "2026-09-13T05:03:09.315Z",
+        "promotedFile": "content\\problems\\physics\\IPhO\\2023\\ipho-2023-theory-q3.json"
+      }
+    },
+    "eupho-2024-theory-x": {
+      "kind": "reviewed",
+      "contentHash": "522d3f142d167e69d08f6606cb40880072c9fedc7073044d6b1b7eaae7b30c29",
+      "recordedAt": "2026-09-13T05:19:07.291Z",
+      "review": {
+        "paperId": "eupho-2024-theory-x",
+        "verdict": "pass",
+        "contentHash": "522d3f142d167e69d08f6606cb40880072c9fedc7073044d6b1b7eaae7b30c29",
+        "sourceHashes": {
+          "problems": "43438581a9bacd766dc485a4518c649c281ad89c7f426589ccbde4228c1d0883",
+          "solutions": "f4e69866fd6e6c53c8bf49ba11b4bb80aff1e546bf9f017ae36a2df0bd3e0de0"
+        },
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "20260913131558829f27b3a8d642b5"
+        },
+        "checkedAt": "2026-09-13T05:19:06.320Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "promptVersion": "v1",
+          "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
+          "requestId": "202609131202464b65aec3ef074cf4,20260913120325c5da35bb3ca2460a,202609131206103ac0fdcbac784a9c,202609131209114ff9255fe044410b",
+          "at": "2026-09-13"
+        },
+        "independence": {
+          "independent": false,
+          "differentProvider": false,
+          "allowSameModel": true
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All three problems, their points, statements, solutions and figures are present and numerically faithful; the only defects found are a misread Greek gamma rendered as 'y' in three marking-table rows and some merged table cells; several printed source errors are correctly preserved verbatim. Text-layer check (problems, solutions): 0 critical, 1 major, 0 minor defect(s), 0 with a mechanical fix.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            },
+            {
+              "document": "solutions",
+              "page": 9
+            },
+            {
+              "document": "solutions",
+              "page": 10
+            },
+            {
+              "document": "solutions",
+              "page": 11
+            },
+            {
+              "document": "solutions",
+              "page": 12
+            },
+            {
+              "document": "solutions",
+              "page": 13
+            },
+            {
+              "document": "solutions",
+              "page": 14
+            }
+          ],
+          "problemsChecked": 3,
+          "figuresChecked": 20
+        },
+        "defects": [],
+        "informational": 8,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "6ffb598781e6d1f896dc4432c773cb1fb378c5b887472608ad0cedd156e4ca64",
+        "checkerCandidateSha256": "6ffb598781e6d1f896dc4432c773cb1fb378c5b887472608ad0cedd156e4ca64",
+        "checkerCrops": [
+          "p1-fig1",
+          "p1-sol-fig1",
+          "p1-sol-fig2",
+          "p1-sol-fig3",
+          "p2-sol-fig1",
+          "p2-sol-fig2",
+          "p2-sol-fig3",
+          "p2-sol-fig4",
+          "p2-sol-fig5",
+          "p2-sol-fig6",
+          "p2-sol-fig7",
+          "p2-sol-fig8",
+          "p2-sol-fig9",
+          "p2-sol-fig10",
+          "p2-sol-fig11",
+          "p3-fig1",
+          "p3-sol-fig1",
+          "p3-sol-fig2",
+          "p3-sol-fig3",
+          "p3-sol-fig4"
+        ],
+        "promotedAt": "2026-09-13T05:19:06.873Z",
+        "promotedFile": "content\\problems\\physics\\EuPhO\\2024\\eupho-2024-theory-x.json"
+      }
+    },
+    "eupho-2025-theory-x": {
+      "kind": "reviewed",
+      "contentHash": "82939633ab02f08e7d09edee2ad522683de601e5e0433aa55a390747b91013a2",
+      "recordedAt": "2026-09-13T05:20:00.234Z",
+      "review": {
+        "paperId": "eupho-2025-theory-x",
+        "verdict": "pass",
+        "contentHash": "82939633ab02f08e7d09edee2ad522683de601e5e0433aa55a390747b91013a2",
+        "sourceHashes": {
+          "problems": "0dfca9e9912695719359a8f628af396834ca9bb99ff1f5677c317dc5752cb8c5",
+          "solutions": "b36aa6570598f1f9b1bfe1445fc740b74784f72f2ce414deea880d2ae04ce346"
+        },
+        "reviewer": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "requestId": "2026091313190312b87bb078934ce2"
+        },
+        "checkedAt": "2026-09-13T05:19:59.183Z",
+        "promptVersion": "v1",
+        "reader": {
+          "provider": "zai",
+          "model": "glm-5.3-flash",
+          "promptVersion": "v1",
+          "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
+          "requestId": "20260913120243d3aa19fc5e9246f8,202609131203294d0dcc91d308432d,202609131206577f643fd756a747c6",
+          "at": "2026-09-13"
+        },
+        "independence": {
+          "independent": false,
+          "differentProvider": false,
+          "allowSameModel": true
+        },
+        "adjudicator": null,
+        "checkerVerdict": "pass",
+        "summary": "All three problems (T1, T2, T3) with correct part labels, points and totals are present; statements, solutions, marking schemes and final answers match the printed pages, and all 17 figure crops contain the complete figures without clipping. The candidate correctly preserves printed source typos verbatim.",
+        "coverage": {
+          "pagesRead": [
+            {
+              "document": "problems",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 1
+            },
+            {
+              "document": "solutions",
+              "page": 2
+            },
+            {
+              "document": "solutions",
+              "page": 3
+            },
+            {
+              "document": "solutions",
+              "page": 4
+            },
+            {
+              "document": "solutions",
+              "page": 5
+            },
+            {
+              "document": "solutions",
+              "page": 6
+            },
+            {
+              "document": "solutions",
+              "page": 7
+            },
+            {
+              "document": "solutions",
+              "page": 8
+            },
+            {
+              "document": "solutions",
+              "page": 9
+            }
+          ],
+          "problemsChecked": 3,
+          "figuresChecked": 17
+        },
+        "defects": [],
+        "informational": 3,
+        "ignoredResolvedFlags": 0,
+        "blockers": [],
+        "candidateSha256": "506617ec50b9bb6fdb476ecdfc4e58a7bd6fbb87680df9c04066f11a57998333",
+        "checkerCandidateSha256": "506617ec50b9bb6fdb476ecdfc4e58a7bd6fbb87680df9c04066f11a57998333",
+        "checkerCrops": [
+          "p1-fig1",
+          "p1-fig2",
+          "p1-sol-fig1",
+          "p1-sol-fig2",
+          "p2-fig1",
+          "p2-sol-fig3",
+          "p2-sol-fig4",
+          "p2-sol-fig5",
+          "p2-sol-fig6",
+          "p2-sol-fig7",
+          "p2-sol-fig8",
+          "p2-sol-fig9",
+          "p2-sol-fig10",
+          "p3-fig1",
+          "p3-sol-fig1",
+          "p3-sol-fig2",
+          "p3-sol-fig3"
+        ],
+        "promotedAt": "2026-09-13T05:19:59.795Z",
+        "promotedFile": "content\\problems\\physics\\EuPhO\\2025\\eupho-2025-theory-x.json"
       }
     }
   }

@@ -1,0 +1,194 @@
+---
+id: eupho-2024-theory-x-p1
+source: 'EuPhO 2024'
+title: 'Задача 1. T1: Sliding puck (10 pts)'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2024/eupho-2024-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T05:19:06.320Z'
+verifier: 'same-model'
+---
+
+*EuPhO 2024. KUTAISI. GEORGIA — Theoretical Problems. Language: English · 10 т.*
+
+<Warning title="Бележка към темата">
+Solution transcribed from a mid-document window; its beginning (Solution 1 parts a,b and the problem statement) lies on earlier pages.
+</Warning>
+
+## Условие
+
+A puck (a small disc) with radius $r$ and uniform density is moving on a horizontal plane with the velocity $v_0$ without rotation. The puck meets a fixed half-circular wall with a radius $R \gg r$ and starts to move along the wall. The coefficient of friction with the wall is $\mu$, and friction with the horizontal plane is negligible.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-fig1-v2.png" alt="A half-circular wall of radius R opening to the right; the coefficient of friction μ is marked at the wall; a puck of radius r approaches with velocity v0 and exits with velocity ve." />
+</figure>
+
+**a)** Find the velocity of the puck $v_e$ when it leaves the wall. **[8 т.]**
+
+**b)** Sketch the graph $v_e(\mu)$. Indicate important features of the graph. You are encouraged to sketch the graph even if you haven't found the exact formula for $v_e$. **[2 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**T1: Sliding puck - Solution**
+
+When the puck moves along the wall, two forces (in addition to gravity and the normal force of the horizontal ground, which cancel each other out) act on it: the normal force of the wall (which changes the direction of motion of the puck) and the friction between the puck and the wall (which changes the speed of the puck and also causes the puck to start rotating).
+
+So as the puck moves along the circular wall, the speed of the puck decreases and the angular velocity of the puck's rotation around its vertical axis increases. The motion of the puck is rolling with sliding along the wall. At a certain point in time $t_1$, the contact point of the puck *may* have zero velocity and kinetic friction becomes static. From this point onwards, the puck will be rolling without sliding along the wall.
+
+From the zero velocity of the contact point, we find the relationship $\omega = v/r$.
+
+Let's focus on rolling with sliding first. The normal force $\vec{N}$ of the wall on the puck is also perpendicular to the velocity of the puck $\vec{v}$ at any instantaneous position of the puck. Force $\vec{N}$ changes the direction of the velocity $\vec{v}$. From Newton's law in normal direction, we find $N = mv^2/R$, where $m$ is the mass of the puck. Thus, the magnitude of the frictional force is $F_f = \mu N = \mu mv^2/R$.
+
+**Solution 1:** The equation for the translational motion of the puck is
+
+$$m\frac{dv}{dt} = -\mu m\frac{v^2}{R}$$
+
+and in the integral form including the initial conditions
+
+$$\int_{v_0}^{v}\frac{dv}{v^2} = -\frac{\mu}{R}\int_0^t\,dt$$
+
+where the time $t = 0$ is the time at which the puck meets the semicircular wall and has the initial velocity $v_0$. Solving the integrals gives
+
+$$-\frac{1}{v} + \frac{1}{v_0} = -\frac{\mu}{R}t \qquad (1)$$
+
+which leads to
+
+$$v(t) = \frac{v_0}{1+t/\tau} \qquad (2)$$
+
+where $\tau = R/v_0\mu$. The graph drawn with the solid red line shows the time dependence of $v$.
+
+The rotation of the puck around its axis of symmetry is caused by the torque of the frictional force acting on the puck at the point of contact between the puck and the wall, $M_f = rF_f = r\mu mv^2/R$, where the radius of the puck $r$ is the arm. The equation for the rotational motion of the puck, which results from Newton's second law $I\,d\omega/dt = M_f$, can be written as
+
+$$r\frac{d\omega}{dt} = \frac{\mu m r^2}{RI}v^2 = \frac{2\mu}{R}\cdot\frac{v_0^2}{(1+t/\tau)^2}$$
+
+where $I = mr^2/2$ is the moment of inertia of the puck for rotations around its axis of symmetry and $\omega$ is the angular velocity of this rotation. The product $r\omega$ gives the relative speed of the point of contact between the puck and the wall with respect to the puck's center of mass. The integral form of this equation, including the initial conditions, is
+
+$$r\int_0^{\omega}\,d\omega = \frac{2v_0}{\tau}\int_0^t\frac{dt}{(1+t/\tau)^2}$$
+
+and the solution is
+
+$$r\omega = v_0\frac{2t/\tau}{1+t/\tau}. \qquad (3)$$
+
+The graph of $r\omega(t)$ is drawn by the blue line.
+
+The two solutions (2) and (3) are only valid up to the time $t_1$ at which the functions $v(t)$ and $r\omega(t)$ intersect, $v(t_1) = r\omega(t_1)$. At this moment, the points on the puck that touch the wall no longer move in relation to the wall and the puck no longer slides along the wall. There is no more friction. From this moment on, the motion of the puck is a frictionless translation and rotation with $v = v(t_1) = v_1$ and $\omega = v_1/r$. For $t_1$ we get $t_1 = \tau/2$. At $t_1$, the translational speed is $v_1 = 2v_0/3$.
+
+There are two possible scenarios for the motion of the puck along the semicircular wall: it rolls with sliding along the entire wall or it starts rolling somewhere along this path without sliding. To see what happens, and also to get the exit velocity of the puck $v_e$, we need to calculate how the path of the puck increases with time, which is defined by equation (2), $dl/dt = v(t)$. We integrate in time from $t = 0$ to $t$ and in distance from $0$ to $l$ and get
+
+$$t = \tau\left(\exp\left(\frac{l}{v_0\tau}\right) - 1\right). \qquad (4)$$
+
+If we use $l_e = \pi R$, equation (4) gives the time $t_e = t(l_e) = \tau\left(\exp\pi\mu - 1\right)$.
+
+If $t_e > t_1 = \tau/2$ i.e. $\pi\mu > \ln\frac{3}{2}$, then the puck starts to roll somewhere on its semicircular path along the wall without sliding and its speed when leaving the wall is $v_e = v_1 = 2v_0/3$.
+
+If $t_e \le t_1 = \tau/2$ i.e. $\pi\mu \le \ln\frac{3}{2}$, then the puck still rolls with sliding when it leaves the wall, since its translational speed $v_e$ is still greater than $2v_0/3$. The exit speed is obtained from (4) by inserting $t = t_e$,
+
+$$v_e = v(t = t_e) = v_0\exp(-\pi\mu). \qquad (5)$$
+
+The graph $v_e(\mu)$ is shown in the figure.
+
+**Solution 2:** The equation for the translational motion of the puck is
+
+$$m\frac{dv}{dt} = -\mu m\frac{v^2}{R}$$
+
+which can be rewritten with $dl = v\,dt = R\,d\varphi$ as
+
+$$\frac{dv}{v} = -\frac{\mu}{R}\,dl = -\mu\,d\varphi.$$
+
+We recognize the dependence of $v$ on $\varphi$;
+
+$$v = v_0\exp(-\mu\varphi), \qquad (6)$$
+
+where $\varphi = 0$ at the beginning of the semicircular wall and $\varphi = \pi$ at its end. It describes the dependence of $v$ on $\varphi$ under the condition that the puck rolls and slides at the same time.
+
+Due to the torque of the frictional force the puck also starts to roll along the wall and its instantaneous angular velocity is $\omega$. Let us introduce the speed $v' = r\omega$: when $v'$ reaches the instantaneous speed $v$, it no longer changes (see Solution #1 for explanation). The equation for the rotational motion of the puck is (see Solution #1 for explanation)
+
+$$r\frac{d\omega}{dt} = \frac{dv'}{dt} = \frac{\mu mr^2}{RI}v^2.$$
+
+Having already written the function $v(\varphi)$ (6), we also want to write $v'$ as a function of $\varphi$. We start with the relation
+
+$$\frac{dv'}{dt} = \frac{dv'}{d\varphi}\frac{d\varphi}{dt}$$
+
+and with the use of $d\varphi/dt = v/R$ we get
+
+$$dv' = 2\mu v_0\exp(-\mu\varphi)\,d\varphi$$
+
+and solving a simple integral
+
+$$\int_0^{v'}\,dv' = 2\mu v_0\int_0^{\varphi}\exp(-\mu\varphi)\,d\varphi$$
+
+we get
+
+$$v'(\varphi) = r\omega(\varphi) = 2v_0(1 - \exp(-\mu\varphi)). \qquad (7)$$
+
+If we equate $v$ and $v'$, we get a critical angle $\varphi_c$ at which rolling with sliding changes to rolling without sliding,
+
+$$\mu\varphi_c = \ln\frac{3}{2}.$$
+
+At the critical angle, the final velocity is $v_f = v_0\exp(-\mu\varphi_c) = 2v_0/3$.
+
+If $\varphi_c > \pi$ i.e. $\mu\pi < \ln\frac{3}{2}$, the puck still slides at the exit with the exit speed $v_e = v_0\exp(-\mu\pi)$ and if $\varphi_c \le \pi$ i.e. $\mu\pi \ge \ln\frac{3}{2}$, the puck rolls at the exit without sliding with the final speed $v_e = v_f = v(\varphi_c) = 2v_0/3$.
+
+From the way the problem is solved in the second solution, it can be seen that the exit speed of the puck does not depend on a particular shape of the wall; the speed and the angular velocity depend only on $\varphi$ (and the friction coefficient $\mu$). For example, the wall could be elliptical instead of a semicircle (or have a different shape).
+
+**suggestions for marking scheme**
+
+| **Part T1.a): Scores** | **Pts.** |
+|---|---|
+| realizing that puck is sliding initially | 0.3 |
+| realizing that puck may roll without sliding | 0.3 |
+| stating that sliding ends when roll condition $v = r\omega$ is met | 0.3 |
+| equating the normal force with $mv^2/R$ | 0.3 |
+| using $F_f = \mu N$ for the friction force | 0.3 |
+| equation of motion (eom) for translation (-0.2 for wrong sign) | 0.4 |
+| giving integral expression for translational eom with correct initial conditions | 0.5 |
+| giving expression for $v$ as function of time or angle as in eq. (2) or (6) | 1.0 |
+| equation of motion (eom) for rotation | 0.4 |
+| using $I = mr^2/2$ as moment of inertia | 0.3 |
+| giving integral expression for rotational eom with correct initial conditions | 0.5 |
+| giving expression for $r\omega$ as function of time or angle as in eq. (3) or (7) | 1.0 |
+| getting time $\frac{R}{2v_0\mu}$ or angle $\ln(\frac{3}{2})/\mu$ for transition to rolling without sliding | 0.5 |
+| obtaining critical coefficient of friction $\mu_c = \ln(3/2)/\pi$ | 0.5 |
+| finding final velocity $\frac{2}{3}v_0$ for rolling without sliding | 0.4 |
+| finding velocity $v_e$ if puck slides the whole time | 1.0 |
+| **Total on T1.a)** | **8.0** |
+
+| **Part T1.b): Scores** | **Pts.** |
+|---|---|
+| graph has suitably labelled axis | 0.2 |
+| initial speed $v_0$ indicated in graph | 0.2 |
+| graph shows $v_e$ decreasing with $\mu$ initially | 0.3 |
+| initial exponential decrease of $v_e$ with $\mu$ indicated in graph | 0.3 |
+| critical point exists and is indicated in graph | 0.4 |
+| constant speed after the critical point | 0.4 |
+| obviously not smooth function at critical point | 0.2 |
+| **Total on T1.b)** | **2.0** |
+
+*General rules for marking in T1:*
+- The grain size for marking is 0.1 Pts.
+- Partial marks can be awarded for most aspects.
+- For each mistake in calculation (algebraic or numeric) 0.2 Pts. are deducted.
+- If a mistake leads to a dimensionally incorrect expression no marks are given for the result.
+- Propagating errors are not punished again unless they are dimensionally wrong or entail oversimplified/wrong physics (e.g. neglecting friction effects).
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig1.png" alt="Graph of $v$ (red solid line decreasing from $v_0$ to $v_1$), $r\omega$ (blue line increasing to $v_1$) and a black dashed/solid curve versus time $t$; the curves meet at $t_1$ at level $v_1$." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig2.png" alt="Puck (grey circle) inside a circular wall arc; force vectors $\vec{F}_f$, $\vec{N}$, velocity $\vec{v}$ and rotation angular velocity $\omega$ labelled." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig3.png" alt="Graph of $v_e(\mu)$: starts at $v_0$ and decreases exponentially as $v_e = v_0 e^{-\pi\mu}$ until $\pi\mu = \ln\frac{3}{2}$, then stays constant at $\frac{2}{3}v_0$." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2024_theory_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2024/eupho2024_theory_problems.pdf)
+· официални решения: [eupho2024_theory_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2024/eupho2024_theory_solutions.pdf)

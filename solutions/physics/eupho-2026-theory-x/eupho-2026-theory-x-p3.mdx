@@ -1,0 +1,224 @@
+---
+id: eupho-2026-theory-x-p3
+source: 'EuPhO 2026'
+title: 'Задача 3. Dry ice hockey (10 pts)'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2026/eupho-2026-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T05:01:13.779Z'
+verifier: 'same-model'
+---
+
+*Theoretical Problems · 10 т.*
+
+## Условие
+
+At pressure $p_0 = 100\ \mathrm{kPa}$, solid $\mathrm{CO_2}$ (dry ice) sublimates (goes from solid to gaseous state) at $T_\mathrm{s} = -78.5\,{}^{\circ}\mathrm{C}$. Its saturated vapour pressure follows the Clausius–Clapeyron relation:
+
+$$\frac{\mathrm{d}p_{\mathrm{sat}}}{\mathrm{d}T} = \frac{\mu\lambda p_{\mathrm{sat}}}{RT^2},$$
+
+where the latent heat of sublimation is $\lambda = 600\ \mathrm{kJ/kg}$, the molar mass is $\mu = 0.044\ \mathrm{kg/mol}$, and the gas constant is $R = 8.3\ \mathrm{J/(mol \cdot K)}$. The thermal conductivity of the $\mathrm{CO_2}$ gas is $\kappa = 10\ \mathrm{mW/(m \cdot K)}$ and its dynamic viscosity is $\eta = 10\ \mu\mathrm{Pa \cdot s}$. The density of dry ice is $\rho = 1500\ \mathrm{kg/m^3}$ and the gravitational acceleration is $g = 10\ \mathrm{m/s^2}$.
+
+A puck of radius $r = 10\ \mathrm{mm}$ consists of a disc of dry ice of thickness $h = 1\ \mathrm{mm}$, and a metal disc of mass $M = 0.01\ \mathrm{kg}$ on top of it. The initial temperature of the puck is $T_\mathrm{s}$ and the ambient pressure is $p_0$.
+
+The puck is placed on a horizontal metal plate which is held at a constant temperature $T = T_\mathrm{s} + \Delta T$, and given an initial horizontal velocity $v = 10\ \mathrm{mm/s}$. After a very long time, the horizontal displacement $L$ of the metal disc is measured.
+
+Treat the $\mathrm{CO_2}$ gas as ideal. Assume no tilting of the puck at any moment, all surfaces are perfectly smooth, and the thermal conductivities of the metal, dry ice, and gas satisfy $\kappa_\mathrm{metal} \gg \kappa_\mathrm{ice} \gg \kappa$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-fig1.png" alt="Side-view schematic of a puck over a horizontal metal plate at temperature $T$: the yellow metal disc (thickness $h$) carries mass $M$ on top and moves with velocity $v$ to the right; below it is a gap of height $h$ containing gas, the gap radius is labelled $r$, the arrow $g$ points downward, and $v$ points to the right at the level of the disc." />
+</figure>
+
+**a)** When $\Delta T$ is sufficiently small, $L$ is negligible and independent of $\Delta T$. However, when $\Delta T$ reaches a critical value $\Delta T_c$, the function $L(\Delta T)$ starts to grow. Estimate $\Delta T_c$. **[2 т.]**
+
+**b)** Estimate the maximal value $L_{\max}$ of the function $L(\Delta T)$. **[8 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+# T3: Skating (10 pts)
+
+## Part a
+
+**Summary:** The friction force on the sliding puck behaves differently depending on whether $\Delta T$ is larger or smaller than a threshold $\Delta T_c$. When $\Delta T$ is sufficiently large (i.e. the plate is hot enough), sublimation occurs on the lower surface of the puck. The gaseous $\mathrm{CO_2}$ formed by sublimation pushes the puck upwards, creating a gap between the puck and the plate. The friction in this regime is relatively low. If $\Delta T$ is too small, sublimation does not occur on the lower surface. In this regime, the puck remains in contact with the plate and the dry friction between the puck and the plate is large and independent of $\Delta T$. Thus, $\Delta T_c$ is the temperature above which sublimation can occur and create a gap.
+
+![p3-sol-fig1]
+
+**Calculation:** Suppose $\Delta T$ is slightly larger than $\Delta T_c$, so that sublimation occurs but the resulting gap is extremely narrow. Such a narrow layer of $\mathrm{CO_2}$ gas provides negligible thermal insulation between the puck and the disc. Therefore, the temperature of the gas and the lower surface of the puck must be close to $T_s + \Delta T_c$, the temperature of the plate.
+
+For sublimation to occur on the lower surface at this temperature, the pressure of the $\mathrm{CO_2}$ gas in contact with this surface must be the saturated vapour pressure for $T = T_s + \Delta T_c$. This saturated vapour pressure, which we denote by $p_0 + \Delta p_c$, can be found from the Clausius-Clapeyron relation given in the question:
+
+$$\frac{\mathrm{d}p_{\mathrm{sat}}}{\mathrm{d}T} = \frac{\mu\lambda p_{\mathrm{sat}}}{RT^2}. \tag{25}$$
+
+On the other hand, $\Delta p_c$ must also be such that the upwards force on the puck due to the excess pressure of the gas in the gap (above $p_0$) balances the weight of the puck. The dry ice mass $\pi r^2 h\rho \approx 0.5\ \mathrm{g}$ is much smaller than the mass of the metal disc, $M \approx 10\ \mathrm{g}$. Therefore, $\pi r^2 \Delta p_c \approx M g$. This implies $\Delta p_c/p_0 \approx 3\cdot 10^{-3} \ll 1$, so (25) gives $\Delta T_c/T_s \sim (RT_s/\mu\lambda)(\Delta p_c/p_0) \ll 1$ (since $RT_s/\mu\lambda \approx 0.1$ is not large). Therefore, (25) reduces to
+
+$$\frac{\Delta p_c}{\Delta T_c} \approx \frac{\mu\lambda p_0}{RT_s^2}, \tag{26}$$
+
+so we find
+
+$$\Delta T_c \approx \frac{R}{\mu\lambda}\frac{MgT_s^2}{p_0\pi r^2} \approx 40\ \mathrm{mK}. \tag{27}$$
+
+Alternatively, if we ignore the order-unity coefficient ($1/\pi$ in this case), $\Delta T_c \approx RMgT_s^2/\mu\lambda p_0 r^2 \approx 120\ \mathrm{mK}$. Throughout the rest of this solution, we will ignore order-unity coefficients (like $\pi$) in our estimates.
+
+**Extra detail**
+
+In this problem, we must assume there is no sublimation on the upper surface of the dry ice i.e. between the dry-ice disc and the metal disc. This is realistic because the temperature gradient across the gap ($\sim \Delta T/d$) is much greater than the temperature gradient between the upper and lower surfaces of the dry-ice disc, $\Delta T_{\mathrm{ice}}$, that would exist if sublimation were occurring at both surfaces. As a result, the heat flux upwards through the dry ice is negligible compared to the heat flux through the gap, so insufficient thermal energy will flow to the top surface to cause another gaseous layer to form.
+
+We can estimate $\Delta T_{\mathrm{ice}}$ using the fact that, if sublimation is occurring at the upper surface, then the gas layer there must be at a pressure below the pressure in the bottom layer by $\Delta p_{\mathrm{ice}} \approx \rho h g$, the pressure required to support the dry-ice disc. The temperature difference would then be $\Delta T_{\mathrm{ice}} \approx T_s(RT_s/\mu\lambda)(\Delta p_{\mathrm{ice}}/p_0)$ using (25). But this is only $\Delta T_{\mathrm{ice}} \approx 0.002\ \mathrm{K}$.
+
+## Part b
+
+**Summary:** As $\Delta T$ increases above $\Delta T_c$, the rate of sublimation increases. More $\mathrm{CO_2}$ gas is created and the gap between the puck and the plate widens. The gas needs to flow out of the gap, and calculating the resulting flow (treating the $\mathrm{CO_2}$ gas as a fluid) will allow us to determine the gap width $d$ as a function of $\Delta T$. When the puck slides, the flow beneath it has a non-zero shear. The viscous force due to this shear is what slows the puck down. If $\Delta T$ is not too large, the viscous friction is large and the puck will come to a stop well before the dry ice has fully sublimated. We will refer to this regime as the 'low-temperature regime', $L \approx L_1(\Delta T)$.
+
+When $\Delta T$ increases, $d$ increases and the viscous friction decreases, which means $L_1(\Delta T)$ is an increasing function of $\Delta T$. However, as $\Delta T$ increases, the dry ice also sublimates faster. Once $\Delta T$ is sufficiently large, the final displacement of the metal disc is determined by the distance the puck travels before the dry ice evaporates completely. When there is no dry ice remaining, the metal disc drops down onto the plate and moves no further (as we assume a relatively large dry friction between the disc and the plate). We will refer to this range of $\Delta T$ as the 'high-temperature regime', $L \approx L_2(\Delta T)$.
+
+We will find that the distance $L(\Delta T)$ is maximised approximately at the value $\Delta T_m$ where the two regimes meet: $L_{\max} \approx L_1(\Delta T_m) = L_2(\Delta T_m)$.
+
+![p3-sol-fig2]
+
+**Calculation:** First we estimate $L_2(\Delta T)$ in the high-temperature regime. For this, we need to know the rate of dry-ice sublimation for a given $\Delta T$. Sublimation requires energy; this energy is supplied by a flow of heat from the hotter plate to the cooler dry ice. The heat is conducted through the $\mathrm{CO_2}$ gas in the gap.
+
+The temperature of the gas in the gap will, to a good approximation, vary linearly with height between $T_s + \Delta T$ at the plate and $T_s$ at the lower surface of the puck. In reality, the temperature at the lower surface of the puck will deviate slightly from $T_s$ because the pressure of the $\mathrm{CO_2}$ gas in the gap is slightly higher than $p_0$, as in part a), and varies with position, as explained after (35). However, by similar reasoning to that of part a), the size of this deviation is $\sim \Delta T_c$. We will find that $\Delta T_m \gg \Delta T_c$, so this deviation can be neglected. Then, the small width of the gap ensures that the temperature profile is similar to what we would find in the gap between two infinite planes held at different temperatures, which is a linear profile. The vertical temperature gradient in the gap is therefore $\sim \Delta T/d$, which means there is an upwards heat flux in the gap of size $\sim \kappa \Delta T/d$. Note that the fact that the temperature profile is linear is not essential here; what matters for these estimates is that the gradient is set by $\Delta T$ and the gap width. The energy flowing into the dry ice per unit time is $\sim \kappa \Delta T\,(r^2/d)$, by integrating the heat flux over the area of the lower surface. Therefore, $\mathrm{CO_2}$ gas in the gap is produced by sublimation at a rate (mass per unit time) of
+
+$$\dot{m} \sim \frac{\kappa}{\lambda}\,\Delta T\,\frac{r^2}{d}, \tag{28}$$
+
+since sublimation at the sides of the dry-ice disc can be neglected. The time $\tau$ taken for all the mass of the dry ice to sublimate is
+
+$$\tau \sim \frac{r^2 h\rho}{\dot{m}} \sim \frac{\rho\lambda}{\kappa}\,\frac{hd}{\Delta T}, \tag{29}$$
+
+using (28). Thus, the distance that the puck slides is
+
+$$L_2(\Delta T) \sim v\,\frac{\rho\lambda}{\kappa}\,\frac{hd}{\Delta T}. \tag{30}$$
+
+Note that this estimate assumes the puck speed does not fall significantly below $v$ on the sublimation timescale. This assumption is valid when $\Delta T \gg \Delta T_m$, which defines the high-temperature regime (we show this more explicitly in (42)).
+
+Next we consider the low-temperature regime $0 < \Delta T \ll \Delta T_m$. This regime is easiest to understand if we first discuss what happens when the disc is not given any horizontal velocity.
+
+Without any horizontal velocity, the system is symmetric under rotations about the axis of the puck (axisymmetric). The flow of the $\mathrm{CO_2}$ out from underneath the puck is then radial and axisymmetric. If the dry ice sublimates slowly ($\dot{m}/\rho r^2 h \ll u/r$), the flow will be close to a steady flow at all times (the process is quasi-stationary). It will be useful to estimate the typical speed $u$ of the flow. At steady state, all the $\mathrm{CO_2}$ gas sourced beneath the puck must flow out at the rate that it is created. The rate at which mass flows out through the outer radial edge of the gap (which is a cylindrical surface of surface area $\sim rd$) is $\sim \rho_{\mathrm{CO_2}} u r d$, where $\rho_{\mathrm{CO_2}}$ is the mass density of the $\mathrm{CO_2}$ gas. This must equal $\dot{m}$, so $u \sim \dot{m}/\rho_{\mathrm{CO_2}} r d \sim (\kappa/\rho_{\mathrm{CO_2}}\lambda)(r/d^2)\,\Delta T$ using (28). The density is given by the ideal-gas law $\rho_{\mathrm{CO_2}} \sim \mu p_0/RT_s$, which means
+
+$$u \sim \frac{\kappa}{\mu\lambda}\,\frac{RT_s}{p_0}\,\frac{r}{d^2}\,\Delta T. \tag{31}$$
+
+We took the temperature to be $T_s$ in the ideal-gas law because the temperature of the gas and puck will be close to $T_s$ when $\Delta T_m \ll T_s$. This also means we can approximate the density of the gas in the gap as a constant (in reality, the linear temperature profile in the gap will cause some variation of density with height, but this is negligible when $\Delta T_m \ll T_s$). For estimate (31) to be useful, we need to find another relation involving $u$. Such a relation will be provided by the balance between pressure and viscosity in the gas.
+
+Since the gap width is small, $d \ll r$, the Reynolds number of the flow is very low and the flow is similar to the Poiseuille flow of a viscous fluid between two infinite planes. The very low Reynolds number means the injection of $\mathrm{CO_2}$ gas due to sublimation at the dry-ice surface will have a small effect on the velocity profile, provided the gas is not injected with an unrealistically large normal velocity. Then, the characteristic size of the flow is
+
+$$u \sim \frac{\Delta p}{\eta}\,\frac{d^2}{r}, \tag{32}$$
+
+as in a Poiseuille flow between two infinite planes. This can also be obtained from dimensional analysis, or via the following more advanced derivation.
+
+Treating the shear viscosity $\eta$ as a constant (in reality, the viscosity of a gas depends on temperature, but the temperature variation is small, $\Delta T_m \ll T_s$), the radial flow speed $u(\varrho, z)$ satisfies
+
+$$\frac{\mathrm{d}p}{\mathrm{d}\varrho} \approx \eta\,\frac{\partial^2 u}{\partial z^2} \tag{33}$$
+
+in cylindrical coordinates $(\varrho, \varphi, z)$ (this is known as the 'lubrication', or 'thin film', approximation). Equation (33) says that a steady flow results from a balance between radial pressure gradients and viscous forces in the fluid. We have used the fact that the pressure $p(\varrho)$ is approximately independent of $z$, as it would be in a Poiseuille flow between two infinite planes. The solution to (33) is
+
+$$u(\varrho, z) = -\frac{1}{2\eta}\,\frac{\mathrm{d}p}{\mathrm{d}\varrho}\,z(d-z), \tag{34}$$
+
+where we use no-slip boundary conditions at the surfaces at $z = 0$ or $z = d$. Note that, as required by axisymmetry, $u(\varrho, z)$ vanishes at $\varrho = 0$, where $p$ has a local maximum so $\mathrm{d}p/\mathrm{d}\varrho = 0$.
+
+For the estimates in this problem, equation (33) and its solution are not necessary. All that is required is the fact that the characteristic size of the flow satisfies (32).
+
+**Extra detail**
+
+In order for the gas in the gap to be accurately modelled by fluid equations like (33), the gap cannot be too small. The first reason is that molecules of the gas must experience many collisions with each other in the time it would take for them to traverse the gap. Molecular collisions are the microscopic cause of viscosity and the reason heat is transported by conduction (instead of being transported by hot molecules travelling, uninterrupted, from the hotter plate to the puck). The mean free path is $\lambda_{\mathrm{mfp}} \sim 1/n_{\mathrm{CO_2}} r_{\mathrm{CO_2}}^2$, where $n_{\mathrm{CO_2}}$ is the $\mathrm{CO_2}$ number density and $r_{\mathrm{CO_2}}$ is an approximate radius of a $\mathrm{CO_2}$ molecule. The gap must be large enough that $d \gg \lambda_{\mathrm{mfp}}$. Second, the gap must be large enough that the surfaces can be treated as smooth rather than rough: $d$ must be larger than the characteristic height of any 'bumps' in the surfaces. We are instructed to assume this in the problem.
+
+How large is $\Delta p$? As in part a, the excess pressure must support the weight of the puck, so
+
+$$\Delta p \sim \frac{Mg}{r^2}. \tag{35}$$
+
+Note that, in part a, $\Delta p$ was uniform over the lower surface of the puck. In this part, $\Delta p(\varrho)$ decreases with $\varrho$, because the radial pressure gradient must drive the outflow of $\mathrm{CO_2}$ gas. As a result, the pressure at the dry-ice surface is larger at smaller $\varrho$, and (according to Clausius-Clapeyron) the temperature $T_s + \Delta T(\varrho)$ at the dry-ice surface is also larger at smaller $\varrho$.
+
+Combining (32) and (35), we find
+
+$$u \sim \frac{Mg}{\eta}\,\frac{d^2}{r^3}. \tag{36}$$
+
+Then, substituting (31) into (36) gives
+
+$$d \sim \left(\frac{\eta\kappa}{\mu\lambda}\,\frac{RT_s}{p_0}\,\frac{\Delta T}{Mg}\right)^{\frac{1}{4}} r. \tag{37}$$
+
+This is the relation that determines the gap width as a function of $\Delta T$.
+
+Let us now return to the situation where the puck is given an initial horizontal speed $v$. The flow velocity of the gas beneath the puck must change, because the radial flow (34) no longer satisfies the no-slip boundary condition at $z = d$. Fortunately, we can correct this by simply adding the linear shear flow $u_2(z) = vz/d$ (in the direction of $\boldsymbol{v}$) to the axisymmetric flow discussed above (i.e. to the flow described by (34)). The resulting combination satisfies the no-slip boundary conditions at each surface. This simple superposition is possible because fluid flow in a low-Reynolds number regime is a linear phenomenon (the governing differential equation (33) is linear).
+
+The new flow exerts a viscous force on the lower surface of the puck, of size $\sim \eta v r^2/d$. Therefore, the equation of motion for the puck takes the form
+
+$$M\,\frac{\mathrm{d}\boldsymbol{v}}{\mathrm{d}t} \approx -\eta\,\frac{r^2}{d}\,\frac{\mathrm{d}\boldsymbol{x}}{\mathrm{d}t}. \tag{38}$$
+
+Integrating over time, we find
+
+$$L_1(\Delta T) \sim \frac{Mv}{\eta}\,\frac{d}{r^2}. \tag{39}$$
+
+Note that $L_2(\Delta T)$ in the high-temperature regime increases as the temperature decreases, while $L_1(\Delta T)$ in the low-temperature regime increases as the temperature increases. The temperature at which $L(\Delta T)$ is maximised is therefore the temperature $\Delta T \approx \Delta T_m$ at which the two regimes meet, so that neither (30) nor (39) is valid. Equating (30) and (39), we find
+
+$$\Delta T_m \sim \frac{\eta\rho\lambda}{\kappa}\,\frac{hr^2}{M} \sim 9\ \mathrm{K}. \tag{40}$$
+
+Interestingly, $\Delta T_m$ is independent of $d$. Therefore, result (40) could be derived without solving for the radial flow and obtaining (37). To calculate $L_{\max}$, we can substitute (40) into either (30) or (39); we constructed $\Delta T_m$ so that the result would be the same either way. Using, in addition, equation (37) for $d$, we find
+
+$$L_{\max} \sim v\left(\frac{\rho}{\mu\eta^2}\,\frac{RT_s}{p_0}\,\frac{M^2}{g}\,\frac{h}{r^2}\right)^{1/4} \sim 1.7\ \mathrm{m}. \tag{41}$$
+
+One could equally use an 'average' temperature such as $T_s + \Delta T_m/2$ to estimate $\rho_{\mathrm{CO_2}}$, which would give a slightly higher value of $L_{\max}$.
+
+Alternatively, instead of using $L_1(\Delta T_m) = L_2(\Delta T_m)$, we can say that around the maximum $\Delta T = \Delta T_{\max}$, the puck still slows according to $\mathrm{d}L/\mathrm{d}t = v\exp[-(\eta r^2/Md)t]$ due to viscous friction, but it must stop moving when the dry ice has fully sublimated. This occurs at time $\tau(\Delta T) = \rho\lambda hd/\kappa\Delta T$, according to (29). Thus
+
+$$L(\Delta T) = v\int_0^{\tau(\Delta T)}\exp\left(-\frac{\eta r^2}{Md}t\right)\mathrm{d}t = \frac{vMd}{\eta r^2}\left[1 - \exp\left(-\frac{\eta r^2\rho\lambda h}{M\kappa\Delta T}\right)\right] = L_1(\Delta T)\left(1 - e^{-\Delta T_m/\Delta T}\right). \tag{42}$$
+
+Since $L_1(\Delta T) \sim \Delta T^{1/4}$, there is no elementary analytical formula for the maximum value of $L(\Delta T)$. But we can still estimate that the maximum happens around $\Delta T \approx \Delta T_m$ and $L_{\max} \approx L_1(\Delta T_m)(1 - e^{-1}) \approx L_1(\Delta T_m)$, which is consistent with the previous estimate.
+
+*General rules for marking T3:*
+
+- Marks for one part of the problem should be awarded even if it is contained in a student's working for another part. For example, make sure to check whether students can obtain marks for part b) even if they only worked on part a) (the only exception is item T3 b) L).
+- Similarly, students do not need to obtain points in the same order as listed in the mark scheme or solution. They can, for example, calculate $\Delta T_m$ before they calculate $d$, or the other way around.
+- Estimates do not require correct order-unity coefficients (such as $\pi$ or 2); what is required is the correct scaling with physical quantities. When numbers are computed, the mark scheme provides the acceptable range in the format $X_{\min}\ldots X_{\max}$.
+- If students obtain an estimate in the mark scheme in a rearranged form (e.g. they write down $\Delta T$ in terms of $d$ instead of $d$ in terms of $\Delta T$), they obtain full credit.
+- For part a) item F and part b) item Q, students who obtain a correct formula but make a mistake when substituting numbers into it receive 0.4 points.
+
+## Marking scheme T3
+
+| **Problem T3 a) 2pts** | | **Pts:** |
+|---|---|---|
+| A | State/use that $L$ is negligible and independent of $\Delta T$ when the puck and plate are in direct physical contact | 0.2 |
+| B | Use $T_s + \Delta T_c$ for the puck temperature | 0.3 |
+| C | Realise that Clausius-Clapeyron must be satisfied at the lower surface (argument about extremely small gap does not need to be explicit) | 0.3 |
+| D | Use Clausius-Clapeyron to connect $\Delta p_c$ and $\Delta T_c$ (or in integrated form) | 0.2 |
+| E | Estimate the excess pressure in the gas using $\pi r^2 \Delta p_c \approx Mg$ | 0.3 |
+| F | Numerical value $\Delta T_c = 3\ \mathrm{mK}\ldots 300\ \mathrm{mK}$ | 0.7 |
+
+| **Problem T3 b) 8pts** | | **Pts:** |
+|---|---|---|
+| **High temperature regime, 2pts** | | |
+| A | State/use that $L(\Delta T)$ can be limited by complete sublimation of the dry ice | 0.5 |
+| B | Temperature gradient in gap is $\sim \Delta T/d$, or heat flux in gap is $\sim \kappa\Delta T/d$ | 0.3 |
+| C | Obtain $\dot{m} \sim (\kappa/\lambda)\,\Delta T\,(r^2/d)$ | 0.4 |
+| D | Obtain $L(\Delta T) \sim v(\rho\lambda/\kappa)(hd/\Delta T)$ | 0.7 |
+| E | State/use that the temperature on the lower puck surface is $\sim T_s + \Delta T_c$ | 0.1 |
+| **Low temperature regime, 2pts** | | |
+| F | State/use that $L(\Delta T)$ can be limited by friction from viscosity | 0.5 |
+| G | Estimate $\dot{m} \sim \rho_{\mathrm{CO_2}}urd$ | 0.3 |
+| H | Estimate $\rho_{\mathrm{CO_2}} \sim \mu p_0/RT_s$ (or any reasonable pressure/temperature on RHS) | 0.2 |
+| I | State/use that friction force is $F_f \sim \eta v r^2/d$ | 0.3 |
+| J | Obtain $L(\Delta T) \sim (Mv/\eta)(d/r^2)$. | 0.7 |
+| **Intersection of regimes, 4pts** | | |
+| K | Estimate $u \sim (\Delta p/\eta)(d^2/r)$ | 0.7 |
+| L | State/use $\Delta p \sim Mg/r^2$ still holds in part b) | 0.3 |
+| M | State/use no-slip boundary conditions apply, or state parabolic solution for $u(r,z)$ | 0.3 |
+| N | Obtain $d \sim [(\eta\kappa/\mu\lambda)(RT_s/p_0)(\Delta T/Mg)]^{1/4}r$ | 0.7 |
+| O | Idea to estimate $L_{\max}$ from the point where the regimes meet or overlap *or* integrated $L \sim L_1(1 - e^{\Delta T_m/\Delta T})$ with both effects taken into account | 0.6 |
+| P | Obtain $\Delta T_m \sim (\eta\rho\lambda/\kappa)(hr^2/M)$ or a numerical value for $\Delta T_m = 1\ \mathrm{K}\ldots 100\ \mathrm{K}$ | 0.7 |
+| Q | Numerical value for $L_{\max} = 0.1\ \mathrm{m}\ldots 10\ \mathrm{m}$ | 0.7 |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-sol-fig1.png" alt="Схема на пързалката: правоъгълник (пързалка) с маса M на разстояние d над плоча с температура T; стрелка g надолу вляво; хоризонтална стрелка r вдясно към p0; p_sat в пространството под пързалката; плочата е обозначена с T." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-sol-fig2-v2.png" alt="Логаритмичен график на L (m) спрямо ΔT (K); черна плътна крива с максимум около 10 K, червена прекъсната права L1 ~ ΔT^(1/4), синя прекъсната права L2 ~ ΔT^(-3/4); осите от 10^-1 до 10^1 m и от 10^-1 до над 10^2 K." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2026_theory_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2026/eupho2026_theory_problems.pdf)
+· официални решения: [eupho2026_theory_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2026/eupho2026_theory_solutions.pdf)

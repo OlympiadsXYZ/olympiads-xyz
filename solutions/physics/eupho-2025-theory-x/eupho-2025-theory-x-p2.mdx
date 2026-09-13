@@ -1,0 +1,189 @@
+---
+id: eupho-2025-theory-x-p2
+source: 'EuPhO 2025'
+title: 'Задача 2. Floating table'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2025/eupho-2025-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-13T05:19:59.183Z'
+verifier: 'same-model'
+---
+
+*Theoretical Problems. Language: English · 10 т.*
+
+<Warning title="Бележка към темата">
+Only solutions pages 1–6 were available in this window; statements must be filled from the problems document.
+</Warning>
+
+## Условие
+
+A table is made by fastening a metal frame to a massive uniform plate (so they form a rigid body) and attaching it with chains to another frame that is fixed on the horizontal ground. The motion of the table is limited to the plane of the side view (right picture).
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-fig1.png" alt="Left: 3D sketch of a grey tabletop plate on a blue metal frame hanging on chains from a blue base frame. Right: side view on a grid showing chain attachment dimensions a and a, the vector g pointing down, the fixed top frame and the hanging frame with chains." />
+</figure>
+
+**a)** Show that in the configuration on the side view, the table is in a stable equilibrium. **[4 т.]**
+
+**b)** Find the period $T$ of the small oscillations. **[6 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution with forces**  First, let us consider the forces and torques and show that in the configuration shown in the figure, the table is indeed in equilibrium. By the word “table”, we understand the rigid body formed by the plate and the frame attached to it.  In the following considerations and descriptions of the table position we often use positions of points A, B and C, which belong to the rigid table: distances between them do not change. Since in the problem statement, the motion is limited to the side view only, the pair of short chains will always have the same position when viewed from the side. So we will consider them as a single chain (chain 1) with the tension doubled. The same is true for the pair of long chains (chain 2).
+
+There are 3 forces acting on a table (see Fig. 3): plate weight $m\vec{g}$ (at the center of mass of the table C), and 2 tension forces from the chains: $\vec{F}_1$ (at point A, chain 1) and $\vec{F}_2$ (at point B, chain 2). Since all the forces only have vertical components different from 0, their horizontal components are balanced and for their vertical components, the balance equation is:
+$$-mg + F_1 - F_2 = 0. \qquad (8)$$
+
+Finally, consider the torque balance around the point $B$:
+$$mg\cdot 4a - F_1\cdot 2a = 0. \qquad (9)$$
+
+Solving the system of equations (8-9), we get $F_1 = 2mg$ and $F_2 = mg$. Since both $F_1, F_2 > 0$, we conclude that the chains are indeed tensioned and the system is in equilibrium.
+
+Now let's analyze how the table rotates, when it is displaced. Since the chains are tensioned and inextensible, the point $B$ can only travel along the circle $c_b$. Similarly, the distance between the point $A_0$ and any point inside the circle $c_a$ is smaller than the length of the short chain (4a); the distance between the point $A_0$ and any point outside of the circle $c_a$ is larger than $4a$.
+
+Since the table is rigid, if we fix the point B and rotate the table around it, point A would travel along the circle $c_t$. From the way how $c_t$ intersects with $c_a$, we can conclude that if the table is rotated clockwise, the distance $A_0A$ decreases. And if it is rotated counter-clockwise, $A_0A$ increases.
+
+Let's imagine we translate (move without rotation) the table to the left, so the point $B$ travels to the point $B'$. Point $A$ would move to the point $A'$, as shown in Fig. 4. Since $A'$ is outside of the circle $c_a$, $A_0A' > A_0A$ and the table has to rotate clockwise (around B') to compensate for this change and return the point $A'$ back to the circle $c_a$ (point A'') to satisfy the constant chain length constraint.
+
+If we translate the table in the opposite direction, following similar arguments, we find that the table rotates clockwise in this case too, see Fig. 5.
+
+Since the table rotates in the same direction for both positive and negative horizontal displacements, the Taylor expansion of the angle of rotation $\varphi(x)$ does not contain a linear term in $x$: $\varphi(x) \sim x^2$. This means that for small horizontal displacements, we can neglect the table rotation.
+
+Let's look at what happens when the table is displaced infinitesimally from its initial position in the horizontal direction (it will also move in the vertical direction, but the displacement in the vertical direction is an order of magnitude smaller and we will neglect it). The vertical components of the forces in the chains do not change significantly, but as you can see in the Fig. 6, the horizontal components of the forces in both chains appear in the direction opposite to the displacement. This means that the equilibrium is stable.
+
+Since we have already drawn a figure showing the displaced position of the table, let us write the equation of motion for the table plate for small horizontal displacements $x$, where $\theta_1$ and $\theta_2$ are small angles between the chains 1 and 2 respectively and the vertical. Since the table displacement is small, tension forces $F_1$ and $F_2$ cannot change significantly (the force change is of the same order as the displacement). Thus, we can use the previously found values:
+$$m\ddot{x} = -F_1\sin\theta_1 - F_2\sin\theta_2 = -F_1\theta_1 - F_2\theta_2 = -2mg\frac{x}{4a} - mg\frac{x}{6a} = -mg\frac{2x}{3a},$$
+where we have also considered the lengths of the chains $4a$ (chain 1) and $6a$ (chain 2), neglected the rotation of the plate and used small angle approximations. Rearranging this equation, we get:
+$$\ddot{x} + \frac{2g}{3a}x = 0,$$
+which describes horizontal oscillations of the table plate with $\omega = \sqrt{2g/(3a)} = 8.09\ \mathrm{s^{-1}}$, frequency $\nu = 1.29\ \mathrm{Hz}$ and period
+$$T = 777\ \mathrm{ms}.$$
+
+**Solution with energies**  Let's denote the small displacement of the centre of mass from equilibrium position C to C′ as $(x, y)$, where $x, y \ll a$, and the small tilt of the table as $\varphi$, as shown in Fig. 7.
+
+Given the small angle approximation $\varphi \ll 1$ ($\sin\varphi \approx \varphi$ and $\cos\varphi \approx 1$), the displacement of points from equilibrium positions A and B to A′ and B′ are:
+
+$\Delta A_x = x - 5a\sin\varphi - 2a(1-\cos\varphi) \approx x - 5a\varphi,$
+
+$\Delta A_y = y - 2a\sin\varphi + 5a(1-\cos\varphi) \approx y - 2a\varphi,$
+
+$\Delta B_x = x - 4a(1-\cos\varphi) \approx x,$
+
+$\Delta B_y = y - 4a\sin\varphi \approx y - 4a\varphi.$
+
+Now we can write a condition that the squared length of the small chain remains the same:
+
+$(x - 5a\varphi)^2 + (4a - y + 2a\varphi)^2 = (4a)^2$
+
+$x^2 - 10ax\varphi + 25a^2\varphi^2 - 8a(y - 2a\varphi) + (y - 2a\varphi)^2 = 0$
+
+Let's notice that the largest term in $x$ is $x^2$ and in $y$ and $a\varphi$, it's $8a(y+2a\varphi)$. Thus, we can omit all other terms, since they are of the higher order (and therefore smaller):
+$$x^2 - 8a(y - 2a\varphi) = 0, \qquad \frac{x^2}{8a} - y + 2a\varphi = 0. \qquad (10)$$
+
+Doing the same for the long chain we get:
+
+$x^2 + (6a + y - 4a\varphi)^2 = (6a)^2$
+
+$x^2 + 12a(y - 4a\varphi) + (y - 4a\varphi)^2 = 0$
+
+Omitting higher order terms we get:
+$$x^2 + 12a(y - 4a\varphi) = 0, \qquad \frac{x^2}{12a} + y - 4a\varphi = 0. \qquad (11)$$
+
+Solving (10) and (11) as linear equations on $y$ and $\varphi$, we get:
+
+$y = \dfrac{x^2}{3a}, \qquad \varphi = \dfrac{5x^2}{48a^2}.$
+
+Since the potential energy of the table
+$$U = mgy = \frac{2}{3a}mg\frac{x^2}{2}, \qquad (12)$$
+doesn't have a term linear in $x$, we conclude that the system is in equilibrium. And since the coefficient for $x^2$ is positive, the equilibrium is stable.
+
+The kinetic energy of the table is:
+$$E = m\frac{\dot{x}^2 + \dot{y}^2}{2} + I\frac{\dot{\varphi}^2}{2} \approx m\frac{\dot{x}^2}{2}, \qquad (13)$$
+where $I$ is a moment of inertia with respect to rotation around the axis through the centre of mass C. Since both $y$ and $\varphi$ depend on $x^2$, their squared derivatives will be proportional to $x^2\dot{x}^2$ and can be neglected when compared to $\dot{x}^2$ term.
+
+Finally, we can find the period of oscillations from the ratio of coefficients of (13) and (12):
+$$T = 2\pi\sqrt{m\big/\frac{2mg}{3a}} = 2\pi\sqrt{\frac{3a}{2g}} = 0.777\ \mathrm{s}.$$
+
+**Solution with the curvature**  We begin with the observation that at the initial horizontal position, points A and B in Fig. 3 move horizontally. Therefore, the instantaneous centre of table's rotation is at infinity (found as the intersection of lines perpendicular to the velocity vectors, which are parallel in this case), or in other words there is no rotation. Another way to see it is to consider the projections of the velocities $v_A$ and $v_B$ to the line $AB$ which should be the same in a rigid body. Thus $v_A = v_B = v$ and all the points of the table move with the same velocity, i.e. there is no immediate rotation.
+
+Consequently, no rotational kinetic energy is involved, and the motion of the table can be treated as the motion of a point mass located at the centre of mass, point C. Since at the given configuration, the $v_C$ can only be horizontal, we conclude that initially table is at equilibrium. All that remains is to find the radius of curvature $R$ of its trajectory and calculate $T = 2\pi\sqrt{R/g}$.
+
+To find the radius of curvature, we note that for an arbitrary point $P$ on the table, the curvature $\vec{c} = \hat{n}/R$ of its trajectory is a linear function of its coordinates, where $\hat{n}$ denotes a unit vector pointing towards the centre of curvature. Indeed, using a non-inertial reference frame where the rigid body remains at rest with origin at O, the acceleration of a point $P$ is the superposition of: the acceleration of $O$, the centripetal acceleration $-\overline{OP}\omega^2$, and the tangential acceleration $\vec{\varepsilon}\times\overline{OP}$. All of these are linear functions of the coordinates of point $P$, where $\vec{\varepsilon}$ denotes the angular acceleration and $\omega$ the angular speed.  Hence, in the lab frame, the acceleration of point $P$ is a linear function of coordinates, as must be its centripetal acceleration $v^2\vec{c}$. Since the angular speed of the table is zero, all points move with the same speed, so $\vec{c}$ must be a linear function of coordinates.
+
+The remaining calculation is straightforward: due to the translational motion of the body, curvatures depend only on the horizontal coordinate $x$. The curvature of $B$ at $x = 4a$ is $c_B = -1/(6a)$, with the minus sign indicating that the vector points downwards.  The curvature of $A$ at $x = 2a$ is $c_A = 1/(4a)$.  Hence, the curvature of $C$ is $1/(4a) + (1/(4a) + 1/(6a)) = 2/(3a)$, giving $R = 1.5\ \mathrm{dm}$ and resulting in $T = 777\ \mathrm{ms}$.  Positive curvature means that the position is a stable equilibrium.
+
+Another way to see it, is to consider normal acceleration $w_C$ of point C.  For 2 points of a rigid body $C$ and $B$, the projections of their accelerations $w_C$, $w_B$ to the segment $BC$ differ by the value $\omega^2|BC|$. However, in our case since there is no rotation, the projections of acceleration are equal (like velocities). This means that the acceleration $w_B$ is also normal and equal to $w_B = v^2/(6a)$. Point A has both normal and tangential acceleration.  Comparing projections of points $A$, $B$, and $A$, $C$, we get:
+
+$-w_B\cos\alpha = w_{Ay}\cos\alpha - w_{Ay}\sin\alpha,$
+
+$w_C\cos\alpha = w_{Ay}\cos\alpha + w_{Ay}\sin\alpha,$
+
+Thus, we find that
+$$w_C = w_B + 2w_{Ay} = \frac{v^2}{6a} + 2\frac{v^2}{4a} = \frac{v^2}{3a/2},$$
+so radius of curvature is $R = 3a/2$.
+
+You can visualize the motion of the table using a GeoGebra tool, following the web link or the qr code https://www.geogebra.org/m/wbqwp3tf
+
+## Marking scheme T2
+
+| | | Pts |
+|---|---|---|
+| A | Table is in equilibrium. *Partial points:* (1pt) Sketch of forces or eqn for forces | 2.0 |
+| B | The equilibrium is stable. *Partial points:* (1pt) Sketch with returning forces, but there is no proof that $\omega_0 = 0$; (1pt) There is a statement that the stability comes from $y = kx^2$ if $k > 0$, but $k$ is not found correctly (and thus could potentially be negative) | 2.0 |
+| C | Table can rotate: whether it is clear from the sketch or from the equations, i.e. $\varphi$ is introduced | 1.0 |
+| D | Table does not have immediate rotation whether it is proved separately or follows naturally from the results of calculations: geometry considered $\Rightarrow \varphi \sim x^2$; eqn for constraints $\Rightarrow \varphi \sim x^2$; immediate velocities $\Rightarrow$ no rotation | 1.0 |
+| E | The plan how to find the period of oscillation: 2nd Newton's law $\ddot{x} \sim -x$; idea to find kinetic and potential energies; using the curvature of the trajectory | 1.0 |
+| F | Finding all the elements for the plan above: small horizontal forces; energies to the correct approximations; accelerations/curvatures. *Partial points:* (1pt) if not all elements are found or they are found with mistakes; (1pt) if there is no proof $\omega_0 = 0$ (or no consideration about the rotation at all), but other than that, everything is correct; (0pts) if some elements are there, but the plan was different (e.g. the student was looking for energies, but has the expression for forces) | 2.0 |
+| G | Formula and number for $T$. *Partial points:* (0.5pts) only formula or a number; (0.5pts) simple mistake (like inverse formula under the root) | 1.0 |
+| | **Total** | **10.0** |
+
+- Only a single partial point is applied (whatever is larger)
+- If there is a single simple arithemetic error/typo in calculations in item F, which leads to a wrong formula value in item G, then F and G receive 1 pt each (no propagation of error). This doesn't apply to more profound errors in physics/geometry
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-sol-fig3.png" alt="Side view of the table: horizontal plate with points C and B (distance 4a), vertical frame, chains of length 4a (chain 1, to point A) and 6a (chain 2, to point B); forces mg, F1 (up, red) and F2 (down) drawn." />
+<figcaption>Figure 3: Scheme of forces for the initial state.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-sol-fig4-v2.png" alt="Geometric construction: circle cb through B and B', circle ca through A, A', A'', circle ct; grey triangle (table) tilted clockwise; red dashed lines from A0 to A', A''; B0 at the bottom." />
+<figcaption>Figure 4: Translation to the left and clockwise rotation of the table</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-sol-fig5-v2.png" alt="Similar construction for translation to the right: circle cb through B and B', circle ca with A, A', A'', circle ct, tilted grey table triangle, red dashed lines from A0, B0 at bottom." />
+<figcaption>Figure 5: Translation to the right and clockwise rotation of the table</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-sol-fig6-v2.png" alt="Displaced table with forces mg, F1 (tilted) and F2 (tilted), horizontal force components opposing the displacement; points C, B, A marked." />
+<figcaption>Figure 6: Horizontal displacement of the table</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-sol-fig7-v2.png" alt="Displaced table: C to C' by (x, y), tilt angle φ of the plate; blue chain 5a and 2a segments with angles φ; red chain to A'; points A, A', B, B', C', distances 4a marked." />
+<figcaption>Figure 7: Infinitesimal displacement of the table</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-sol-fig8-v3.png" alt="Table with velocity vectors vA and vB both horizontal (leftwards); dashed perpendicular lines intersecting at infinity; arcs of circle cb (purple) and ca (red) through B and A; points A, B, C marked." />
+<figcaption>Figure 8: Immediate velocities given the constraints</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-sol-fig9-v2.png" alt="Vector diagram of accelerations: wC (vertical, down from C), wB (vertical at B with angle α), wAy (vertical at A), wAx (horizontal at A), with angles α marked between vectors and dashed construction lines." />
+<figcaption>Figure 9: Immediate accelerations</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p2-sol-fig10.png" alt="QR code linking to the GeoGebra visualization tool (https://www.geogebra.org/m/wbqwp3tf)." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2025_theory_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2025/eupho2025_theory_problems.pdf)
+· официални решения: [eupho2025_theory_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2025/eupho2025_theory_solutions.pdf)
