@@ -103,7 +103,7 @@ function mergeTextLayer(candFile, checkOut) {
   const candidate = readJson(candFile, null);
   if (!check || !manifest || !candidate) return null;
   // page numbers typed as strings ("5") make the receipt see an unknown page every round
-  const num = o => { if (o && typeof o.page === 'string' && /^\d+$/.test(o.page)) o.page = Number(o.page); };
+  const num = o => { if (o && typeof o.page === 'string') { const m = /^\s*["']?(\d+)["']?\s*$/.exec(o.page); if (m) o.page = Number(m[1]); } }; // "5" or a stray-quoted 5"
   for (const p of check.coverage?.pagesRead || []) num(p);
   for (const d of check.defects || []) num(d);
   if (typeof check.coverage?.problemsChecked === 'string') check.coverage.problemsChecked = Number(check.coverage.problemsChecked);
