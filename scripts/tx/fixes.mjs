@@ -88,6 +88,9 @@ export function plausibleReplacement(current, fix, kind, path = '') {
   if (looksLikeInstruction(fix)) return false;
   if (/\/label$/.test(path) && fix.trim().length <= 6) return true; // a label is a few characters; the current value may be a leaked instruction
   if (current.length < 40 || looksLikeInstruction(current)) return true; // anything printed beats a stub or an earlier bad paste
+  // a fix that is the leading part of the current text trims pasted trailing content (the next problem, a repeated part)
+  const flat = s => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
+  if (kind !== 'omission' && fix.length >= 40 && flat(current).startsWith(flat(fix).slice(0, Math.min(flat(fix).length, 200)))) return true;
   const a = words(current), b = words(fix);
   if (!a.size) return true;
   const shared = [...a].filter(w => b.has(w)).length;

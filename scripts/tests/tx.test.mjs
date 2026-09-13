@@ -531,3 +531,15 @@ test('a fix quoted under the wrong problem is re-pointed to the one prose field 
   assert.equal(repointByContent(c, '/problems/1/parts/0/statement', fix), '/problems/1/parts/0/statement'); // already right
   assert.equal(repointByContent(c, '/problems/0/statement', 'Нещо съвсем друго, което никъде го няма в тази тема.'), '/problems/0/statement'); // nothing resembles it: left alone
 });
+
+test('a statement that runs on into the next problem is cut where that problem opens; a leading-part fix is a truncation', async () => {
+  const { plausibleReplacement } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  c.problems.push({ id: `${PAPER}-p2`, number: 2, points: 5, problemType: 'theory', statement: 'Измерената лъчева скорост на звездата се променя периодично с амплитуда 30 km/s.', parts: [] });
+  c.problems[0].statement = 'Странността трябва да запази знака си.\n\nЗадача 2. Измерената лъчева скорост на звездата се променя периодично с амплитуда 30 km/s. Определете масата.';
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].statement, 'Странността трябва да запази знака си.');
+  const cur = 'Странността трябва да запази знака си при всяко взаимодействие. Измерената лъчева скорост на звездата се променя периодично.';
+  assert.equal(plausibleReplacement(cur, 'Странността трябва да запази знака си при всяко взаимодействие.', 'other', '/problems/0/statement'), true);
+  assert.equal(plausibleReplacement(cur, 'Съвсем различен текст, който няма нищо общо с полето и е достатъчно дълъг.', 'other', '/problems/0/statement'), false);
+});
