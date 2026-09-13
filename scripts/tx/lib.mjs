@@ -762,6 +762,12 @@ export function normaliseCandidate(c) {
     const out = fixHomoglyphs(s);
     if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: Latin homoglyph in a Cyrillic word`); }
   });
+  // a solution with no text and no figures is incomplete by definition (a refix once flipped the flag to false and
+  // the candidate could not validate again: ipho-2023-experiment-q4)
+  (c.problems || []).forEach((pr, i) => {
+    const s = pr.solution;
+    if (s && typeof s === 'object' && !String(s.statement || '').trim() && !s.incomplete && !(s.figures || []).length) { s.incomplete = true; s.incompleteReason = s.incompleteReason || 'no solution text'; changes.push(`/problems/${i}/solution: empty solution marked incomplete`); }
+  });
   if (changes.length) c.tx = { ...(c.tx || {}), normalised: [...(c.tx?.normalised || []), ...changes] };
   return c;
 }

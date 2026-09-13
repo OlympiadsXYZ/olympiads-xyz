@@ -25,10 +25,14 @@ const parseBox = v => {
 // what it replaces: not an instruction, and sharing enough words with the current
 // value (an omission fix must contain most of the current text and be longer).
 // whole words only: "Използвайки получения резултат…" and "Вижда се, че…" open printed statements
-const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see|split|repoint|use|replace|restore|move|add|insert|merge|set|the (statement|solution|text)|пълен текст|виж|запази|запазете|премахни|премахнете|добави|добавете|изтрий|изтрийте|замени|заменете|премести|преместете|обедини|обединете|раздели|разделете|постави|поставете|върни|върнете|коригирай|коригирайте|поправи|поправете|махни|махнете|отстрани|отстранете)\b/i;
+const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|split|repoint|replace|restore|move|merge|the (statement|solution|text)|пълен текст|виж|запази|запазете|премахни|премахнете|добави|добавете|изтрий|изтрийте|замени|заменете|премести|преместете|обедини|обединете|раздели|разделете|постави|поставете|върни|върнете|коригирай|коригирайте|поправи|поправете|махни|махнете|отстрани|отстранете)\b/i;
 const META = /(кандидат|транскрипци|полето|стойността на полето|етикет|label field|the field|the candidate|the transcription|^\s*(label|caption|alt|value|statement)\s*:|\bkeep the\b|\bunbulleted\b)/i;
-// An instruction is a sentence or two; a long field ("The graph should present…", a solution) is content
-export const looksLikeInstruction = s => typeof s === 'string' && ((s.length < 400 && INSTRUCTION.test(s)) || META.test(s.slice(0, 160)) || (s.length < 300 && /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s)));
+// An editorial verb followed by an editorial noun ("Move the paragraph …", "Remove this figure entry", "Премести
+// изречението …") is an instruction at any length — a checker quoting the paragraph it wants moved runs past 400
+// characters (ipho-2022-theory-q2 r12, written into the field). The broader verb list applies to short strings only,
+// and the should/must/e.g. heuristic to very short ones: a long field ("The graph should present…") is content.
+const META_VERB = /^\s*(?:(?:keep|remove|delete|drop|move|replace|restore|insert|merge|split|repoint|add|use|see|put|change|swap|fold|append|prepend|strip|cut|trim|fix|correct|reword|rewrite)\s+(?:the\s+|this\s+|that\s+|these\s+|all\s+|its\s+|both\s+)?(?:paragraph|sentence|text|statement|solution|figure|entry|entries|field|caption|label|part|intro|introduction|note|line|passage|clause|words?|value|box|crop|heading|title|bullet|item)s?\b|(?:премести|преместете|махни|махнете|премахни|премахнете|запази|запазете|добави|добавете|замени|заменете|изтрий|изтрийте|постави|поставете|обедини|обединете|раздели|разделете|поправи|поправете|коригирай|коригирайте)\s+(?:този\s+|тази\s+|това\s+|тези\s+|целия\s+|цялото\s+)?(?:параграф|абзац|изречени|текст|условие|решени|фигур|запис|поле|надпис|етикет|част|бележк|ред|пасаж|дум|стойност|кути))/iu;
+export const looksLikeInstruction = s => typeof s === 'string' && (META_VERB.test(s) || (s.length < 400 && INSTRUCTION.test(s)) || META.test(s.slice(0, 160)) || (s.length < 300 && /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s)));
 // a fix that is JSON (a spans list, a figure object) is bookkeeping echoed back, never the text of a field
 export const looksLikeJson = s => typeof s === 'string' && /^\s*[\[{]\s*["{\[]/.test(s);
 const words = s => new Set(String(s).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 1));

@@ -289,6 +289,11 @@ test('a long printed field is never an "instruction", and a JSON answer never re
   const solution = '**(a) Drawing a $T(r)$ graph**\n\nThe graph should present or clearly infer the four elements shown in the figure. ' + 'The temperature falls with the radius as the gas expands adiabatically. '.repeat(40);
   assert.equal(looksLikeInstruction(solution), false);
   assert.equal(looksLikeInstruction('keep the intro paragraph'), true);
+  // an editorial verb + noun is an instruction at any length (a checker quoting the paragraph it wants moved)
+  const long = "Move the paragraph 'On the left is a simple model of two adjacent sheets 1 and 2 separated by a distance h. The sheets are not connected, and the perimeter is open to space. Assume the sheets are large enough that edge effects can be neglected and that thermal radiation can be exchanged between the sheets, and thermal radiation escapes through the perimeter gap.' from C.1's statement to the end of Part C's statement, where it is printed, and keep C.1 as the question only.";
+  assert.ok(long.length > 400); assert.equal(looksLikeInstruction(long), true);
+  assert.equal(looksLikeInstruction('Премести изречението „Приемете, че…“ в края на условието на задачата, където е отпечатано.'), true);
+  assert.equal(looksLikeInstruction('Use the following data: the speed of light is 3e8 m/s, the mass of the electron is 9.1e-31 kg and the elementary charge is 1.6e-19 C; all surfaces are smooth and the gas is ideal throughout the whole experiment described below in parts a) to d) of this problem.'), false);
   assert.equal(looksLikeInstruction('The value should be 3/5 c, e.g. see the solutions'), true);
   const spans = '[{"document":"problems","page":1},{"document":"solutions","page":10}]';
   assert.equal(plausibleReplacement(solution, spans, 'metadata', '/problems/0/solution/statement'), false);
