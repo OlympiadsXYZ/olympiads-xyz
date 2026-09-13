@@ -99,8 +99,8 @@ away; a merged text-layer defect keeps the "omission fix must be longer" protect
 with all four findings fixed and the Фиг. 2 crop added, after 10 loop rounds in total at about 6 ¢ of Z.ai.
 
 **The redo of all 67 papers (night of 2026-09-12/13).** Every reviewed paper and every open one went back through the
-loop with the new checks: 65 of 67 re-promoted (11 of them open since the first day), 617 papers / 2,237 problems on the
-site, about $3.60 of Z.ai for 650 checker and refix calls. The escalations of the first passes were almost all loop gaps
+loop with the new checks: 55 of 67 re-promoted (13 of them open since the first day), 619 papers / 2,243 problems on the
+site, $4.25 of Z.ai for 754 checker and refix calls; 12 parked for adjudication. The escalations of the first passes were almost all loop gaps
 rather than paper problems, and each became a rule with a test the same night: region verdicts have to travel through the
 receipt and the repair report to the refix or a ruled-out graphic is raised every round; a box a checker has judged from
 the crop must not be re-snapped; equations typed as symbols around a few strokes, and equation images in the text flow,
