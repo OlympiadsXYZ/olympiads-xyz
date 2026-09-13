@@ -864,6 +864,18 @@ export function normaliseCandidate(c, opts = {}) {
     out = out.replace(/\\nicefrac\b/g, '\\frac');
     if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac`); }
   });
+  // A transcriber's remark typed into the text ("*Забележка към транскрипцията: в оригинала … текстът е предаден
+  // дословно.*", "Transcriber's note: …") is never printed; it moves to tx.notes (nao-2021-iii-9-10).
+  walkStrings(c, (p, s) => {
+    if (!/\/(statement|caption|alt)$/.test(p) || /\/tx\b/.test(p) || !/транскрипци|transcri(?:ber|ption)/i.test(s)) return;
+    const NOTE = /(?:^|\n)[ \t]*[*_]{0,2}[ \t]*(?:(?:забележка|бележка)\s+(?:към|на|от|за)\s+транскрип\S*|transcri(?:ber'?s?|ption)\s+note|note\s+(?:on|about)\s+the\s+transcription)[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/giu;
+    const notes = [];
+    const out = s.replace(NOTE, m => { notes.push(m.trim().replace(/^[*_]+|[*_]+$/g, '').trim()); return '\n'; }).replace(/\n{3,}/g, '\n\n').trim();
+    if (!notes.length || out === s) return;
+    pointerSet(c, p, out);
+    c.tx = { ...(c.tx || {}), notes: [c.tx?.notes, ...notes.map(n => `[${p}] ${n}`)].filter(Boolean).join('\n') };
+    changes.push(`${p}: transcriber's remark moved to tx.notes`);
+  });
   // Inline HTML a reader types for the print's formatting (<u>underlined</u>, <b>, <i>, <sub>, <sup>, <br>) is
   // refused by the validator (MDX reads it as JSX) and no refix settles it (ioaa-2019-no-final, three refix
   // rounds wrote the tag back): the formatting becomes Markdown/LaTeX, the words stay. Unknown tags are left

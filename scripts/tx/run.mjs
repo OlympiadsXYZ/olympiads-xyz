@@ -156,6 +156,15 @@ function mergeTextLayer(candFile, checkOut) {
     if (d.kind === 'metadata' && /sourceSpans|\btx\.|\btx\b/.test(String(d.description || ''))) d.severity = 'info';
     // "10.0 pts" printed, 10 recorded: a points defect whose fix is the same number is a note, not a defect
     if (d.kind === 'points' && /\/(points|totalPoints)$/.test(String(d.path))) { const cur = pointerGet(candidate, String(d.path)); const fix = d.suggestedFix == null ? NaN : Number(String(d.suggestedFix).replace(/[^\d.,-]/g, '').replace(',', '.')); if (typeof cur === 'number' && Number.isFinite(fix) && Math.abs(fix - cur) < 1e-9) { d.severity = 'info'; d.description = `[same number: a formatting remark] ${d.description}`; } }
+    // "No point value is printed for Problem 1; candidate invents points: 10": a problem total that is the sum of its
+    // parts' printed points is a note; one with nothing printed under it is dropped (ioaa-2014-theory-short-theoretical)
+    if (d.kind === 'points' && /^\/problems\/(\d+)\/points$/.test(String(d.path)) && /no point|not printed|nowhere|invent|does not print|no printed/i.test(String(d.description || '')) && d.suggestedFix == null) {
+      const pr = candidate.problems?.[Number(/^\/problems\/(\d+)/.exec(String(d.path))[1])];
+      const partPoints = (pr?.parts || []).map(x => x.points).filter(x => typeof x === 'number');
+      const sum = partPoints.reduce((s, x) => s + x, 0);
+      if (typeof pr?.points === 'number' && partPoints.length && Math.abs(sum - pr.points) < 1e-9) { d.severity = 'info'; d.description = `[the problem total is the sum of its parts' printed points (${partPoints.join(' + ')})] ${d.description}`; }
+      else if (typeof pr?.points === 'number') { d.suggestedFix = 'none'; d.description = `[no points printed for the problem: the value is dropped] ${d.description}`; }
+    }
     let p = repairDefectPath(candidate, d.path);
     if (typeof d.suggestedFix === 'string' && !d.source) p = repointByContent(candidate, p, d.suggestedFix);
     // a textual defect addressed to a whole problem or part object belongs to its statement

@@ -46,6 +46,13 @@ for (const d of receipt.defects || []) {
     const key = p.split('/').at(-1);
     if (parent && typeof parent === 'object' && typeof parent[key] === 'string') { const from = parent[key]; delete parent[key]; applied.push({ ...entry, from, to: null, removed: true }); continue; }
   }
+  // "none" on a points field drops a value the print does not carry (run.mjs sets it for a problem total nothing
+  // printed supports)
+  if (d.suggestedFix === 'none' && /\/points$/.test(p)) {
+    const parent = pointerGet(candidate, p.replace(/\/[^/]+$/, ''));
+    if (parent && typeof parent === 'object' && typeof parent.points === 'number') { const from = parent.points; delete parent.points; applied.push({ ...entry, from, to: null, removed: true }); continue; }
+    skipped.push({ ...entry, reason: 'no points value to drop' }); continue;
+  }
   if (d.suggestedFix == null || d.suggestedFix === '') { skipped.push({ ...entry, reason: 'no suggestedFix' }); continue; }
   // figure boxes: /…/figures/N/tx/bbox, /…/figures/N/tx, /…/figures/N
   const figMatch = /^(.*\/figures\/\d+)(?:\/tx(?:\/bbox)?)?$/.exec(p);

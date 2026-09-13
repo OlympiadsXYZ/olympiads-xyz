@@ -945,3 +945,12 @@ test('a multi-line fix is a block replacement, never a fragment splice', async (
   assert.equal(spliceFragment(current, fix), null);
   assert.match(spliceFragment('Скоростта в точка А е нла. Останалото следва, както и още едно изречение.', 'Скоростта в точка А е нула.'), /е нула\. Останалото/, 'a one-sentence fix still splices');
 });
+
+test('a transcriber\'s remark typed into a field moves to tx.notes', () => {
+  const c = candidate();
+  c.problems[0].solution.statement = 'Метеорите биха се виждали от борда на станцията. **(3 т.)**\n\n*Забележка към транскрипцията: в оригинала е изписано „100 000 години“ (вероятно вместо „светлинни години“); текстът е предаден дословно.*\n\nСледва още текст.';
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].solution.statement, 'Метеорите биха се виждали от борда на станцията. **(3 т.)**\n\nСледва още текст.');
+  assert.match(c.tx.notes, /Забележка към транскрипцията: в оригинала/);
+  assert.match(c.tx.notes, /reader rationale/, 'the earlier notes stay');
+});
