@@ -150,6 +150,9 @@ export function spliceFragment(current, fix) {
   if (typeof current !== 'string' || typeof fix !== 'string') return null;
   const f = fix.trim().replace(/(\s*(…|\.\.\.))+$/, '').trim(); // checkers truncate their quotes with an ellipsis
   if (f.length < 8 || f.length >= 0.7 * current.length) return null;
+  // a fix that spans several lines is a block (an answer key, a list), not the one sentence a splice corrects
+  // (ioaa-2022 day-time observation: a five-line key spliced over its first line came out "I. M81 (2.5 M101, UMa…")
+  if (/\n/.test(f)) return null;
   const words = f.split(/\s+/);
   if (words.length < 3) return null;
   let i = current.indexOf(words.slice(0, Math.min(4, words.length)).join(' '));

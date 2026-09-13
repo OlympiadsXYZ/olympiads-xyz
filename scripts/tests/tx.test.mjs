@@ -937,3 +937,11 @@ test('a formula fragment closed by a lone $$ is a typed-again equation tail: dro
   assert.match(lib.proseOnly(s), /Declination = ZA \+ Latitude/, 'the sentence after it is prose, not math');
   assert.match(s, /\$\$x = 2y\$\$/, 'a fragment no block ends with becomes its own block');
 });
+
+test('a multi-line fix is a block replacement, never a fragment splice', async () => {
+  const { spliceFragment } = await import(txModule('fixes.mjs'));
+  const current = 'I. M64, Coma Berenices (Com) — deduced by right ascension.\nII. M51, Canes Venatici (CVn).\nIII. M27 (2.5 pt). Vul Vulpecua (1.5 pt)\nIV. M42 (2.5 pt). Ori (Orion) (1.5 pt)\nV. M73 (2.5pt). Aqr (Aquatus) (1.5 pt)\n\nNotes on the ordering follow here at some length so that the key is under seventy percent of the field.';
+  const fix = 'I. M81 (2.5 pt). UMa (Ursa Major) (1.5 pt)\nII. M101 (2.5 pt). UMa (Ursa Major) (1.5 pt)\nIII. M27 (2.5 pt). Vul Vulpecua (1.5 pt)';
+  assert.equal(spliceFragment(current, fix), null);
+  assert.match(spliceFragment('Скоростта в точка А е нла. Останалото следва, както и още едно изречение.', 'Скоростта в точка А е нула.'), /е нула\. Останалото/, 'a one-sentence fix still splices');
+});

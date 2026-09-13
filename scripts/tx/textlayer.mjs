@@ -52,7 +52,9 @@ const WORD = /\p{L}+/gu;
 // "tобщо" / "Vmax" / "Tобщо": a variable glued to a Cyrillic word, or a Latin
 // homoglyph inside one — both readings are kept (alt = the script-split parts)
 const splitScripts = w => w.split(/(?<=[a-z])(?=[а-я])|(?<=[а-я])(?=[a-z])/u);
-const isNeutral = t => t.skip || (t.fragment && !t.joined) || t.w.length < 3 || !P.content.test(t.w) || P.stop.test(t.w);
+// a token set entirely in mathematical alphanumerics (𝑝ℎ𝑠𝑡𝑎 — a formula's variables the layer strings together) is
+// lettering, never a printed prose word (apho-2023-theory-t1 was asked to transcribe it)
+const isNeutral = t => t.skip || (t.fragment && !t.joined) || t.w.length < 3 || !P.content.test(t.w) || P.stop.test(t.w) || /^[\u{1D400}-\u{1D7FF}\u{2100}-\u{214F}]+$/u.test(String(t.raw || ''));
 
 function tokenise(s) {
   const out = [];
