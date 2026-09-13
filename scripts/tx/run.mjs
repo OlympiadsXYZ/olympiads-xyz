@@ -21,7 +21,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet } from './lib.mjs';
-import { textLayerCheck } from './textlayer.mjs';
+import { textLayerCheck, profileFor } from './textlayer.mjs';
 import { spliceFragment, repairDefectPath, repointByContent } from './fixes.mjs';
 import { regionsFor, coverFrac } from './snap.mjs';
 
@@ -135,7 +135,10 @@ function mergeTextLayer(candFile, checkOut) {
   if (trusted.length && Array.isArray(check.defects)) {
     const printed = new Set();
     for (const doc of trusted) { const f = path.join(dir, manifest.documents[doc].text); for (const m of fs.readFileSync(f, 'utf8').matchAll(/\p{L}+/gu)) printed.add(fixHomoglyphs(m[0]).toLowerCase()); }
-    const wordsOf = s => [...splitMath(String(s)).filter(x => !x.math).map(x => x.text).join(' ').matchAll(/\p{L}+/gu)].map(m => m[0].toLowerCase()).filter(w => w.length >= 4 && /^[а-я]+$/u.test(w));
+    // the prose words of the paper's script (Cyrillic on a Bulgarian paper, Latin on an English one): the veto was
+    // blind to every Latin paper until 2026-09-13 (ipho-2022-theory-q3: a checker "fixed" spaghetto → spaghetti)
+    const content = profileFor(manifest?.meta?.lang || candidate?.paper?.lang || 'bg').content;
+    const wordsOf = s => [...splitMath(String(s)).filter(x => !x.math).map(x => x.text).join(' ').matchAll(/\p{L}+/gu)].map(m => m[0].toLowerCase()).filter(w => w.length >= 4 && content.test(w));
     for (const d of check.defects) {
       if (typeof d.suggestedFix !== 'string' || d.severity === 'info' || !trusted.includes(d.document)) continue;
       // (a) the fix introduces words the document never prints (a rewording, a "corrected" typo)
