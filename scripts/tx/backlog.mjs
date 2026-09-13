@@ -19,7 +19,8 @@ const catalogueRows = () => {
   for (const e of cat) if (isSolution(e)) { const k = bucket(e); if (!sols.has(k)) sols.set(k, []); sols.get(k).push(e); }
   // file-name tokens minus the words that only say which side of the paper a file is
   const ROLE = /^(problems?|tasks?|task|zad|zadachi|zadania|uslovia|uslov|solutions?|sol|answers?|ans|resh|resheniya|otg|otgovori|criteria|criterion|key|keys|q|s|t|p|a|en|ru|bg|fr|de|final|v\d+|pdf)$/;
-  const tokens = f => new Set(path.basename(f).toLowerCase().replace(/\.[a-z0-9]+$/, '').split(/[^a-z0-9]+/).filter(t => t && !ROLE.test(t)));
+  // a role letter glued to the number (IPhO_2023_Q1 / IPhO_2023_S1, T2 / T2sol, prob3 / sol3) is the same token: the number
+  const tokens = f => new Set(path.basename(f).toLowerCase().replace(/\.[a-z0-9]+$/, '').split(/[^a-z0-9]+/).map(t => t.replace(/^(?:q|s|a|t|p|e|z|r|sol|ans|prob|task|zad|resh|otg)(\d+)(?:sol|ans|resh|otg)?$/, '$1')).filter(t => t && !ROLE.test(t)));
   const jaccard = (a, b) => { const i = [...a].filter(x => b.has(x)).length; const u = new Set([...a, ...b]).size; return u ? i / u : 0; };
   const rows = [];
   let images = 0;
@@ -27,10 +28,15 @@ const catalogueRows = () => {
     if (e.type !== 'problems') continue;
     if (/\.(zip|txt|gif)$/i.test(e.file)) continue; // bundles and plain text: not a paper
     if (/\.(jpe?g|png)$/i.test(e.file)) { images++; continue; } // photographed sheets: often one paper split over several files — grouped later
-    const cands = sols.get(bucket(e)) || [];
+    // a theory file never takes the practical round's answers (10-IV-praktML ↔ a10-IV-teor share every other
+    // token); photographed solution sheets are several files of one paper and are grouped later, not paired
+    const kindOf = f => /teor|theor/i.test(path.basename(f)) ? 'theory' : /prakt|prak|practic|exper|(^|[^a-z])exp([^a-z]|$)/i.test(path.basename(f)) ? 'practical' : null;
+    const kind = kindOf(e.file);
+    const all = sols.get(bucket(e)) || [];
+    const cands = all.filter(s => !/\.(jpe?g|png|gif)$/i.test(s.file) && !(kind && kindOf(s.file) && kindOf(s.file) !== kind));
     let solution = null;
-    if (cands.length === 1) solution = cands[0];
-    else if (cands.length > 1) {
+    if (all.length === 1 && cands.length === 1) solution = cands[0]; // the bucket's only solutions file
+    else if (cands.length) { // several in the bucket (some ruled out above): the names must agree
       // an exact token match wins; else the best overlap, ties broken by a file typed as solutions; a real tie pairs nothing
       const t = tokens(e.file);
       const scored = cands.map(s => { const u = tokens(s.file); const eq = u.size === t.size && [...t].every(x => u.has(x)); return { s, j: eq ? 1 : jaccard(t, u), typed: s.type === 'solutions' ? 1 : 0 }; }).sort((a, b) => b.j - a.j || b.typed - a.typed);
