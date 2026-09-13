@@ -112,6 +112,10 @@ function mergeTextLayer(candFile, checkOut) {
   // a mangled checker path ("/problems/2/problems/2/…", "/p2/statement") is repaired when the repair resolves in the candidate
   let repairedPaths = 0;
   for (const d of check.defects || []) {
+    // a JSON "fix" (a spans list, a figure object) on a prose path is bookkeeping echoed back, not text:
+    // it must not reach the mechanical merge; a defect about tx bookkeeping (sourceSpans) is a note
+    if (typeof d.suggestedFix === 'string' && /^\s*[\[{]\s*["{\[]/.test(d.suggestedFix) && /\/(statement|caption|alt|title|label)$/.test(String(d.path))) { d.suggestedFixAsWritten = d.suggestedFix; delete d.suggestedFix; }
+    if (d.kind === 'metadata' && /sourceSpans|\btx\.|\btx\b/.test(String(d.description || ''))) d.severity = 'info';
     let p = repairDefectPath(candidate, d.path);
     if (typeof d.suggestedFix === 'string' && !d.source) p = repointByContent(candidate, p, d.suggestedFix);
     // a textual defect addressed to a whole problem or part object belongs to its statement

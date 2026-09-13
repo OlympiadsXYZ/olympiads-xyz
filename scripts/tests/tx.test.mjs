@@ -215,6 +215,22 @@ test('a problem entry the paper does not print is removed last, and the ones aft
   assert.ok(r.applied.some(a => a.removed && a.path === '/problems/1'));
 });
 
+test('a long printed field is never an "instruction", and a JSON answer never replaces a text field', async () => {
+  const { applyFixes, looksLikeInstruction, plausibleReplacement } = await import(txModule('fixes.mjs'));
+  const solution = '**(a) Drawing a $T(r)$ graph**\n\nThe graph should present or clearly infer the four elements shown in the figure. ' + 'The temperature falls with the radius as the gas expands adiabatically. '.repeat(40);
+  assert.equal(looksLikeInstruction(solution), false);
+  assert.equal(looksLikeInstruction('keep the intro paragraph'), true);
+  assert.equal(looksLikeInstruction('The value should be 3/5 c, e.g. see the solutions'), true);
+  const spans = '[{"document":"problems","page":1},{"document":"solutions","page":10}]';
+  assert.equal(plausibleReplacement(solution, spans, 'metadata', '/problems/0/solution/statement'), false);
+  const c = candidate(); c.problems[0].solution.statement = solution;
+  const defects = [{ path: '/problems/0/solution/statement', kind: 'metadata', severity: 'minor', description: 'spans under-reported' }];
+  const r = applyFixes(c, [{ path: '/problems/0/solution/statement', value: spans }], { defects, round: 1 });
+  assert.equal(r.applied.length, 0);
+  assert.match(r.skipped[0].reason, /JSON/);
+  assert.equal(c.problems[0].solution.statement, solution);
+});
+
 test('"" drops a problem statement that is a copy of its own solution when the printed problem is only its parts', async () => {
   const { applyFixes } = await import(txModule('fixes.mjs'));
   const narrative = 'In the absence of an externally imposed magnetic field, an infinite, straight, thin wire creates a magnetic field whose field lines are closed circles centred on the wire, and the flux tube argument gives the radius.';

@@ -27,7 +27,10 @@ const parseBox = v => {
 // whole words only: "Използвайки получения резултат…" and "Вижда се, че…" open printed statements
 const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see|split|repoint|use|replace|restore|move|add|insert|merge|set|the (statement|solution|text)|пълен текст|виж|запази|запазете|премахни|премахнете|добави|добавете|изтрий|изтрийте|замени|заменете|премести|преместете|обедини|обединете|раздели|разделете|постави|поставете|върни|върнете|коригирай|коригирайте|поправи|поправете|махни|махнете|отстрани|отстранете)\b/i;
 const META = /(кандидат|транскрипци|полето|стойността на полето|етикет|label field|the field|the candidate|the transcription|^\s*(label|caption|alt|value|statement)\s*:|\bkeep the\b|\bunbulleted\b)/i;
-export const looksLikeInstruction = s => typeof s === 'string' && (INSTRUCTION.test(s) || META.test(s.slice(0, 160)) || /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s.slice(0, 200)));
+// An instruction is a sentence or two; a long field ("The graph should present…", a solution) is content
+export const looksLikeInstruction = s => typeof s === 'string' && ((s.length < 400 && INSTRUCTION.test(s)) || META.test(s.slice(0, 160)) || (s.length < 300 && /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s)));
+// a fix that is JSON (a spans list, a figure object) is bookkeeping echoed back, never the text of a field
+export const looksLikeJson = s => typeof s === 'string' && /^\s*[\[{]\s*["{\[]/.test(s);
 const words = s => new Set(String(s).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 1));
 // Checker paths come back mangled now and then: a doubled prefix ("/problems/2/problems/2/figures/0"),
 // a part written as "/p2/statement" (the second part), a solution figure under "/figures" instead
@@ -87,10 +90,10 @@ export function duplicatesSiblings(candidate, path, value, current) {
 }
 export function plausibleReplacement(current, fix, kind, path = '') {
   if (typeof fix !== 'string' || typeof current !== 'string') return true;
-  if (looksLikeInstruction(fix)) return false;
+  if (looksLikeInstruction(fix) || looksLikeJson(fix)) return false;
   if (/\(truncated\)\s*$/.test(fix) || /…\(truncated\)/.test(fix)) return false; // an echo of a clipped prompt value
   if (/\/label$/.test(path) && fix.trim().length <= 6) return true; // a label is a few characters; the current value may be a leaked instruction
-  if (current.length < 40 || looksLikeInstruction(current)) return true; // anything printed beats a stub or an earlier bad paste
+  if (current.length < 40 || (current.length < 400 && looksLikeInstruction(current))) return true; // anything printed beats a stub or an earlier bad paste
   // a fix that is the leading part of the current text trims pasted trailing content, but only when what it
   // drops is a paste (it opens like a sibling field or a problem heading) — otherwise it is a truncation
   const flat = s => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
@@ -273,6 +276,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
         skipped.push({ ...entry, reason: 'model returned the current value unchanged (disputed)' }); continue;
       }
       if (looksLikeInstruction(f.value)) { skipped.push({ ...entry, reason: 'fix is an instruction, not a replacement' }); continue; }
+      if (looksLikeJson(f.value)) { skipped.push({ ...entry, reason: 'fix is JSON, not the text of the field' }); continue; }
       const dup = duplicatesSiblings(candidate, p, f.value, current);
       if (dup) { skipped.push({ ...entry, reason: `fix pastes the text of ${dup} into this field` }); continue; }
       const spliced = spliceFragment(current, f.value);
