@@ -36,6 +36,9 @@ for (const [cmd, args] of gates) {
 // Currency of the generated pages: while the loop workers keep promoting, papers land between the generate step
 // and this check ("stale artifacts"); regenerate and check again a few times before calling it a failure.
 for (let attempt = 1; ; attempt++) {
+  // stage before the check: a paper promoted after this add stays out of the commit, so the committed set of papers
+  // and generated pages is the one the check saw (CI regenerates from the commit and refuses a mismatch)
+  git(['add', 'content', 'solutions']);
   const r = run('node', ['scripts/problems-to-site.mjs', '--check']);
   if (r.status === 0) break;
   if (attempt >= 4) { log(`gate failed: node scripts/problems-to-site.mjs --check\n${(r.stderr || r.stdout).trim().split('\n').slice(-6).join('\n')}`); process.exit(2); }
