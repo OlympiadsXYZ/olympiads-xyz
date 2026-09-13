@@ -272,8 +272,20 @@ function mergeTextLayer(candFile, checkOut) {
   if (tightened) check.regions = { ...(check.regions || {}), tightened };
   // graphics the PDF prints that no figure box covers (figures.mjs, from the same candidate bytes)
   const figRep = readJson(path.join(dir, 'figures-report.json'), null);
-  const unplaced = (figRep?.unplaced || []).filter(u => u.defect).map(u => u.defect);
-  check.regions = { unplaced: (figRep?.unplaced || []).length, raised: unplaced.length };
+  // A solutions document that reprints the problem before solving it reprints its figure too: a graphic on the
+  // solutions side whose box is the box of a figure the same problem already has on the problems side is that
+  // figure again, not one to add (rmph-2023-theory-t1-eng: three rounds of add / "it is a duplicate" / remove).
+  const reprints = [];
+  const isReprint = u => {
+    if (u.document !== 'solutions' || !Array.isArray(u.bbox)) return false;
+    const pr = candidate.problems?.[u.problemIndex];
+    const own = [...(pr?.figures || []), ...(pr?.parts || []).flatMap(x => x.figures || [])].map(f => f?.tx).filter(t => t?.document === 'problems' && Array.isArray(t.bbox));
+    const iou = (a, b) => { const ix = Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])), iy = Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1])); const inter = ix * iy; const ua = (a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - inter; return ua > 0 ? inter / ua : 0; };
+    return own.some(t => iou(t.bbox, u.bbox) >= 0.6);
+  };
+  const unplaced = (figRep?.unplaced || []).filter(u => u.defect && !(isReprint(u) && reprints.push(u))).map(u => u.defect);
+  check.regions = { unplaced: (figRep?.unplaced || []).length, raised: unplaced.length, ...(reprints.length ? { reprints: reprints.map(u => ({ page: u.page, bbox: u.bbox.map(Math.round) })) } : {}) };
+  if (reprints.length) (check.defects ||= []).push(...reprints.map(u => ({ path: u.path, document: u.document, page: u.page, severity: 'info', kind: 'figure', source: 'regions', confidence: 0.9, description: `[the solutions page reprints the problem's figure at ${JSON.stringify(u.bbox.map(Math.round))}; not a figure to add] ` })));
   if (unplaced.length) {
     check.defects = [...(check.defects || []), ...unplaced];
     if (check.verdict === 'pass') check.verdict = 'fail';
