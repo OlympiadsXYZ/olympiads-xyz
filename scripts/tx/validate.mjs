@@ -57,7 +57,8 @@ problems.forEach((pr, i) => {
   else warn(`${p}/number`, `non-integer number "${pr.number}"`);
   if (!pr.statement || !String(pr.statement).trim()) { if ((pr.parts || []).length) warn(`${p}/statement`, 'empty statement (the printed problem is only its parts)'); else err(`${p}/statement`, 'empty statement'); }
   else if (String(pr.statement).includes(WINDOW_PLACEHOLDER)) err(`${p}/statement`, `window placeholder "${WINDOW_PLACEHOLDER}" left unresolved (assemble.mjs did not find the statement in any window)`);
-  if (pr.points != null && (typeof pr.points !== 'number' || pr.points < 0 || pr.points > 200)) err(`${p}/points`, `implausible points ${pr.points}`);
+  if (typeof pr.points === 'number' && pr.points < 0) err(p, `negative points (${pr.points}): a penalty rule printed as a problem entry is not a problem — remove this entry ({"remove": true}); its printed text, if any, goes to the end of the previous problem's statement`);
+  else if (pr.points != null && (typeof pr.points !== 'number' || pr.points > 200)) err(`${p}/points`, `implausible points ${pr.points}`);
   const labels = new Set();
   let partSum = 0, partsWithPoints = 0;
   (pr.parts || []).forEach((pt, k) => {

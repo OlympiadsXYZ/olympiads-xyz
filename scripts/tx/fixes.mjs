@@ -59,11 +59,17 @@ export function repointByContent(candidate, path, fix) {
   if (b.size < 4) return path;
   const score = s => { if (typeof s !== 'string') return 0; const a = words(s); if (!a.size) return 0; const shared = [...b].filter(w => a.has(w)).length; return shared / b.size; };
   const current = candidate && path.split('/').filter(Boolean).reduce((o, k) => (o == null ? undefined : o[k]), candidate);
-  if (score(current) >= 0.3) return path;
+  const own = score(current);
   const hits = [];
-  const walk = (v, p) => { if (typeof v === 'string') { if (PROSE_PATH.test(p) && !/\/tx\b/.test(p)) { const s = score(v); if (s >= 0.6) hits.push({ p, s }); } } else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${p}/${i}`)); else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walk(x, `${p}/${k}`); };
+  const walk = (v, p) => { if (typeof v === 'string') { if (PROSE_PATH.test(p) && !/\/tx\b/.test(p) && p !== path) { const s = score(v); if (s >= 0.6) hits.push({ p, s }); } } else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${p}/${i}`)); else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walk(x, `${p}/${k}`); };
   walk(candidate, '');
-  return hits.length === 1 ? hits[0].p : path;
+  hits.sort((a, b) => b.s - a.s);
+  // the addressed field shares little with the fix and exactly one other field shares most of it; or —
+  // neighbouring parts about the same thing (D.1/D.2 of one problem) share plenty — one other field is
+  // nearly the fix itself while the addressed one is clearly not (an off-by-one part index)
+  if (own < 0.3) return hits.length === 1 ? hits[0].p : path;
+  if (hits.length && hits[0].s >= 0.85 && hits[0].s >= own + 0.3 && (hits.length === 1 || hits[1].s < own)) return hits[0].p;
+  return path;
 }
 // A model asked for one field sometimes answers with the whole problem: a statement that
 // now contains its parts, a part that contains its neighbours. Such a fix duplicates text

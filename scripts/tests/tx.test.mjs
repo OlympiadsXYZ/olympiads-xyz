@@ -215,6 +215,27 @@ test('a problem entry the paper does not print is removed last, and the ones aft
   assert.ok(r.applied.some(a => a.removed && a.path === '/problems/1'));
 });
 
+test('a fix that is nearly one neighbouring part is re-pointed there even when the addressed part shares its vocabulary (off-by-one part index)', async () => {
+  const { repointByContent } = await import(txModule('fixes.mjs'));
+  const d1 = 'Compute the mean squared displacement MSD of the particle for small times and for large times, and express the power law using the quantities D, u0, delta0 and t.';
+  const d2 = 'Determine how the mean squared displacement MSD changes from small times to large times, as well as the characteristic time t star where this change occurs. Draw a rough graph of the MSD in a log-log plot, indicating the approximate location of t star. The histogram data in Fig. 3 are:';
+  const d3 = 'Figure 5 displays the MSD of those particles for several times; obtain the power law for each time range and express it using the quantities D, u0, delta0 and t.';
+  const c = { problems: [{ statement: 'Brownian motion.', parts: [{ label: 'D.1', statement: d1 }, { label: 'D.2', statement: d2 }, { label: 'D.3', statement: d3 }] }] };
+  const fix = d2.replace(' The histogram data in Fig. 3 are:', '');
+  assert.equal(repointByContent(c, '/problems/0/parts/2/statement', fix), '/problems/0/parts/1/statement');
+  assert.equal(repointByContent(c, '/problems/0/parts/1/statement', fix), '/problems/0/parts/1/statement');
+});
+
+test('validate: a problem entry with negative points is a penalty rule and is reported on the entry itself', t => {
+  const s = sandbox(t);
+  const bad = candidate();
+  bad.problems.push({ ...JSON.parse(JSON.stringify(bad.problems[0])), id: `${PAPER}-p2`, number: 2, title: 'Intentional damage penalty (-0.5 pts)', points: -0.5, figures: undefined, parts: [] });
+  delete bad.problems[1].figures; delete bad.problems[1].solution;
+  const r = s.run('validate.mjs', [s.write('candidates/neg.json', bad), '--paper-id', PAPER, '--manifest', path.join(s.dir, 'manifest.json')]);
+  assert.notEqual(r.status, 0);
+  assert.match(r.stdout + r.stderr, /"\/problems\/1"[\s\S]*negative points/);
+});
+
 test('a long printed field is never an "instruction", and a JSON answer never replaces a text field', async () => {
   const { applyFixes, looksLikeInstruction, plausibleReplacement } = await import(txModule('fixes.mjs'));
   const solution = '**(a) Drawing a $T(r)$ graph**\n\nThe graph should present or clearly infer the four elements shown in the figure. ' + 'The temperature falls with the radius as the gas expands adiabatically. '.repeat(40);
