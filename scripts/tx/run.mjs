@@ -154,6 +154,9 @@ function mergeTextLayer(candFile, checkOut) {
     // it must not reach the mechanical merge; a defect about tx bookkeeping (sourceSpans) is a note
     if (typeof d.suggestedFix === 'string' && /^\s*[\[{]\s*["{\[]/.test(d.suggestedFix) && /\/(statement|caption|alt|title|label)$/.test(String(d.path))) { d.suggestedFixAsWritten = d.suggestedFix; delete d.suggestedFix; }
     if (d.kind === 'metadata' && /sourceSpans|\btx\.|\btx\b/.test(String(d.description || ''))) d.severity = 'info';
+    // Cyrillic letters in a printed subscript ("\delta_В", "\delta_{СЛ}") are the print; KaTeX draws them (strict mode
+    // warns) — a latex defect about them is a note, not a repair (nao-2024-ii-11-12)
+    if (d.kind === 'latex' && /cyrillic|кирилиц|кирилски/i.test(String(d.description || '')) && d.severity !== 'info') { d.severity = 'info'; d.description = `[printed Cyrillic in math renders as printed] ${d.description}`; }
     // "10.0 pts" printed, 10 recorded: a points defect whose fix is the same number is a note, not a defect
     if (d.kind === 'points' && /\/(points|totalPoints)$/.test(String(d.path))) { const cur = pointerGet(candidate, String(d.path)); const fix = d.suggestedFix == null ? NaN : Number(String(d.suggestedFix).replace(/[^\d.,-]/g, '').replace(',', '.')); if (typeof cur === 'number' && Number.isFinite(fix) && Math.abs(fix - cur) < 1e-9) { d.severity = 'info'; d.description = `[same number: a formatting remark] ${d.description}`; } }
     // "No point value is printed for Problem 1; candidate invents points: 10": a problem total that is the sum of its
@@ -344,7 +347,7 @@ for (;;) {
       const data = readJson(src, null);
       if (data && typeof data === 'object') {
         const before = JSON.stringify(data);
-        normaliseCandidate(data, { solutionsDocument: !!readJson(manifestPath, null)?.documents?.solutions });
+        { const docs = readJson(manifestPath, null)?.documents || {}; normaliseCandidate(data, { solutionsDocument: !!docs.solutions, documents: Object.keys(docs) }); }
         // the archive keys are the manifest's, never the reader's copy of a long Cyrillic path
         const man = readJson(manifestPath, null);
         if (man?.documents?.problems && data.paper) {
@@ -432,7 +435,15 @@ for (;;) {
         job.stage = 'validate'; save(`the checker counts one printed problem and the inventory lists one: ${cand.problems[0].parts.length} parts now, re-validating`); continue;
       }
     }
-    if (receipt.blockers?.length && !receipt.defects?.length) escalate(`receipt blocked without repairable defects: ${receipt.blockers.join('; ')}`);
+    if (receipt.blockers?.length && !receipt.defects?.length) {
+      // a checker that skipped pages ("has not covered 2 source page(s)") gets one fresh check before the paper is
+      // parked (nao-2018-ii-7-8, nao-2023-iii-11-12, nao-2016-iii-7-8-prak: the escalation queue was the only route)
+      if (receipt.blockers.every(b => /has not covered/.test(b)) && !job.options.coverageRetried && job.round < job.options.maxRounds) {
+        job.options.coverageRetried = true; job.round = (job.round || 0) + 1; job.stage = 'checker';
+        save(`checker skipped pages (${receipt.blockers[0].slice(0, 100)}); a fresh check, round ${job.round}`); continue;
+      }
+      escalate(`receipt blocked without repairable defects: ${receipt.blockers.join('; ')}`);
+    }
     if (job.round >= job.options.maxRounds) escalate(`still ${receipt.defects?.length} defect(s) after ${job.round} repair round(s)`);
     job.stage = 'repair'; save(`receipt: fail (${receipt.defects?.length} defects); repairing`);
   } else if (job.stage === 'repair') {

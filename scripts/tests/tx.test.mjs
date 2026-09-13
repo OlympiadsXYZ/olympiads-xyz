@@ -991,3 +991,16 @@ test('an equation that ends in a bar keeps its closing $$ (the table-frame rule 
   lib.normaliseCandidate(d);
   assert.equal(d.problems[0].solution.statement, before);
 });
+
+test('with one document in the paper, figures and spans filed under another document name go to that one', () => {
+  const c = candidate();
+  c.problems[0].solution.figures = [{ id: 'p1-sol-fig1', alt: 'x', tx: { document: 'solutions', page: 3, bbox: [100, 100, 400, 400] } }];
+  c.problems[0].tx.sourceSpans = [{ document: 'problems', page: 1 }, { document: 'solutions', page: 3 }];
+  lib.normaliseCandidate(c, { documents: ['problems'] });
+  assert.equal(c.problems[0].solution.figures[0].tx.document, 'problems');
+  assert.equal(c.problems[0].solution.figures[0].tx.documentAsWritten, 'solutions');
+  assert.deepEqual(c.problems[0].tx.sourceSpans.map(s => s.document), ['problems', 'problems']);
+  const d = candidate(); d.problems[0].solution.figures = [{ id: 'p1-sol-fig1', alt: 'x', tx: { document: 'solutions', page: 3, bbox: [100, 100, 400, 400] } }];
+  lib.normaliseCandidate(d, { documents: ['problems', 'solutions'] });
+  assert.equal(d.problems[0].solution.figures[0].tx.document, 'solutions', 'two documents: nothing moves');
+});

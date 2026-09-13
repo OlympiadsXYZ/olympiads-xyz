@@ -721,6 +721,14 @@ export function normaliseCandidate(c, opts = {}) {
     const drop = (holder, p) => { const a = holder?.answer; if (a && typeof a === 'object' && a.kind !== 'choice') { delete holder.answer; changes.push(`${p}/answer: dropped — no solutions document and no solution text (a derived answer is not a transcription)`); } };
     drop(pr, `/problems/${i}`); (pr.parts || []).forEach((pt, j) => drop(pt, `/problems/${i}/parts/${j}`));
   });
+  // A paper with one document (a compilation that prints problems and solutions together: icho-best-1980-1990) whose
+  // reader filed solution figures and spans under "solutions": the only document there is is the one meant
+  // (figures.mjs failed every crop with "document solutions not prepared")
+  if (Array.isArray(opts.documents) && opts.documents.length === 1) {
+    const only = opts.documents[0];
+    for (const { fig, path: p } of allFigures(c)) if (fig.tx?.document && fig.tx.document !== only) { fig.tx.documentAsWritten = fig.tx.document; fig.tx.document = only; changes.push(`${p}: document ${fig.tx.documentAsWritten} → ${only} (the paper's only document)`); }
+    (c.problems || []).forEach((pr, i) => { for (const s of pr.tx?.sourceSpans || []) if (s.document && s.document !== only) { s.document = only; changes.push(`/problems/${i}/tx/sourceSpans: document → ${only}`); } });
+  }
   for (const { fig, path: p } of allFigures(c)) {
     // document/page/bbox belong under tx (the schema forbids them on the figure); a refix that copies
     // a figure back sometimes flattens the rest of its tx block onto the figure as well

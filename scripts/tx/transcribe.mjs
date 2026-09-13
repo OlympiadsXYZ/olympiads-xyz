@@ -328,14 +328,14 @@ for (const window of windows) {
     writeJson(responseFile, { ...ident, fixes: obj.fixes ?? null });
     const problemsText = (() => { const d = manifest.documents?.problems; if (!d?.text) return null; try { return fs.readFileSync(path.join(paperDir(paperId), d.text), 'utf8'); } catch { return null; } })();
     const result = applyFixes(refix.candidate, obj.fixes, { defects: refix.defects, round: refix.round, by: `${provider}:${model} refix`, requestId: parsed.requestId, problemsText });
-    writeJson(target, sanitizeCandidate(normaliseCandidate(refix.candidate, { solutionsDocument: !!manifest.documents?.solutions })));
+    writeJson(target, sanitizeCandidate(normaliseCandidate(refix.candidate, { solutionsDocument: !!manifest.documents?.solutions, documents: Object.keys(manifest.documents || {}) })));
     console.log(JSON.stringify({ paperId, stage, provider, model, out: target, responseFile, applied: result.applied.length, skipped: result.skipped.length, changes: result.applied, unapplied: result.skipped, figuresToRedo: result.figuresToRedo, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, costUsd, requestId: parsed.requestId }, null, 2));
     process.exit(result.skipped.length ? 3 : 0);
   }
   if (stage === 'reader') obj.tx = { ...(obj.tx || {}), ...(window ? { window } : {}), reader: ident };
   else Object.assign(obj, bindCheckerResult(obj, { ...ident, candidate: candidatePath, candidateSha256: candidateHash, viewSha256: sha256(JSON.stringify(view)), crops: crops.map(c => c.id) }));
   if (jsonRepaired && obj?.tx?.reader) obj.tx.reader.jsonRepaired = jsonRepaired;
-  writeJson(target, stage === 'reader' ? sanitizeCandidate(normaliseCandidate(obj, { solutionsDocument: !!manifest.documents?.solutions })) : obj);
+  writeJson(target, stage === 'reader' ? sanitizeCandidate(normaliseCandidate(obj, { solutionsDocument: !!manifest.documents?.solutions, documents: Object.keys(manifest.documents || {}) })) : obj);
   parts.push({ window, file: target, data: obj });
   summaries.push({ paperId, stage, provider, model, window: label, out: target, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, requestId: parsed.requestId, stopReason: parsed.stopReason });
 }
