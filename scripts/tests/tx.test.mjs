@@ -299,6 +299,16 @@ test('a passage moves between sibling fields when both are returned; a solution 
   assert.equal(c6.problems[0].solution.incomplete, true);
 });
 
+test('display math that lost a closing $$ is closed at the paragraph break, so the blocks after it are not inverted', () => {
+  const good = 'The force is\n\n$$f = G\\frac{Mm}{r^2}. \\qquad (24)$$\n\nwhich means that the motion is described by\n\n$$m\\frac{dV}{dt} = f - f_g. \\qquad (25)$$\n\nBearing in mind that $V \\ll c$, we get\n\n$$R = \\frac{R_0}{1 - x}. \\qquad (26)$$\n\nThe end.';
+  assert.equal(lib.balanceDisplayMath(good), good);
+  const broken = good.replace('(24)$$', '(24)'); // the first equation never closes
+  assert.equal(lib.balanceDisplayMath(broken), good);
+  const c = candidate(); c.problems[0].solution.statement = broken + ' Also $\\nicefrac{1}{2}V_0^2$.';
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].solution.statement, good + ' Also $\\frac{1}{2}V_0^2$.');
+});
+
 test('a long printed field is never an "instruction", and a JSON answer never replaces a text field', async () => {
   const { applyFixes, looksLikeInstruction, plausibleReplacement } = await import(txModule('fixes.mjs'));
   const solution = '**(a) Drawing a $T(r)$ graph**\n\nThe graph should present or clearly infer the four elements shown in the figure. ' + 'The temperature falls with the radius as the gas expands adiabatically. '.repeat(40);

@@ -637,6 +637,28 @@ export function fixHomoglyphs(s) {
     return w.replace(/[A-Za-z]/g, ch => HOMOGLYPHS[ch]);
   })).join('');
 }
+// A $$-block that runs into prose (paragraph break + a sentence, or inline $…$ inside it) is an unclosed
+// equation: close it at that paragraph break, then look again (each repair shifts the pairing that follows).
+export function balanceDisplayMath(s) {
+  let text = String(s);
+  for (let guard = 0; guard < 40; guard++) {
+    const parts = text.split('$$');
+    if (parts.length < 3) return text;
+    let fixed = false;
+    for (let i = 1; i < parts.length; i += 2) {
+      const inside = parts[i];
+      const m = /\n[ \t]*\n(?=[ \t]*(?:[A-Za-zА-Яа-я*(]))/.exec(inside);
+      const prosey = m && (inside.length > 400 || /\$[^$\n]+\$/.test(inside) || /\n[ \t]*\n[ \t]*[A-Za-zА-Яа-я][a-zа-я]+ [a-zа-я]+ [a-zа-я]+/.test(inside));
+      if (!prosey) continue;
+      parts[i] = inside.slice(0, m.index) + '$$' + inside.slice(m.index); // closes the equation, the next $$ opens again
+      text = parts.join('$$');
+      fixed = true;
+      break;
+    }
+    if (!fixed) return text;
+  }
+  return text;
+}
 export function normaliseCandidate(c) {
   if (!c || typeof c !== 'object') return c;
   const changes = [];
@@ -758,6 +780,17 @@ export function normaliseCandidate(c) {
     if (!h.from && !h.to && !h.place) { delete c.paper.held; changes.push('/paper/held: empty, dropped'); }
   } else if (h != null) { delete c.paper.held; changes.push('/paper/held: not an object, dropped'); }
   walkStrings(c, (p, s) => { if (/\\[,;: ][\^_]/.test(s)) { pointerSet(c, p, s.replace(/(\\[,;: ])([\^_])/g, '$1{}$2')); changes.push(`${p}: KaTeX spacing before ^/_`); } });
+  // Display math that lost a closing $$ flips every later block: the prose after it is "inside" math and the next
+  // equation's opener closes it (izho-2022-theory-eng-docx: 121 delimiters, everything after block 31 inverted).
+  // When a $$-block reads like prose (a paragraph break followed by a sentence, or inline $…$ inside it), the
+  // block is closed at that paragraph break — before the rule below, which would otherwise strip the spacing
+  // commands of the equations it mistakes for prose. Word-exported LaTeX also brings \nicefrac, which KaTeX lacks.
+  walkStrings(c, (p, s) => {
+    if (!/\/(statement|caption|alt|title)$/.test(p) || !/\$\$|\\nicefrac/.test(s)) return;
+    let out = balanceDisplayMath(s);
+    out = out.replace(/\\nicefrac\b/g, '\\frac');
+    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / \\nicefrac`); }
+  });
   // LaTeX spacing and text commands OUTSIDE math ("(2.1) \quad $a = b$ \ \text{и} \ $c$",
   // a display-equation habit) render literally on the page: spacing becomes a
   // space, \text{}/\mathrm{} their content, \textbf{} **bold**, \textit{} *italic*.

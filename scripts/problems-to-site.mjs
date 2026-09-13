@@ -122,7 +122,9 @@ function mdText(s) {
     .split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/)
     // prose never carries HTML (validate.mjs refuses tags), so any "<" glued to what follows is text: '<', <=, <1
     // (MDX would read <' or <a as the start of a JSX tag and the build would die)
-    .map((seg, i) => (i % 2 ? seg : seg.replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
+    // inside math: KaTeX in the site pipeline has no \nicefrac and rejects \tag outside a display environment
+    // (IPhO 2023 Q1 rendered its numbered equations raw); the printed equation number becomes "\qquad (n)"
+    .map((seg, i) => (i % 2 ? seg.replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
     .join('');
 }
 
