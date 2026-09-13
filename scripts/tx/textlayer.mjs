@@ -78,8 +78,14 @@ export function layerPages(text) {
       // lines down: both halves are marked as fragments and joinFragments pairs
       // them when the join is a transcribed word.
       const heads = new Set(); for (const m of line.matchAll(/(\p{L}+)-(?=\s|$)/gu)) heads.add(m.index);
+      // a formula line (symbols and digits against few letters) or a shouted header line (mostly capitals)
+      // is lettering, not prose: its tokens count for nothing either way
+      const letters = (line.match(/\p{L}/gu) || []).length, symbols = (line.match(/[0-9=+*/^_()<>≤≥±·√∙×∑∫|\\{}\[\]]/g) || []).length, caps = (line.match(/\p{Lu}/gu) || []).length;
+      const words = line.match(/\p{L}+/gu) || [], singles = words.filter(w => w.length === 1).length; // variables: "m mS S W t Q p"
+      const lettering = letters > 0 && (symbols > 0.25 * letters || (letters >= 12 && caps > 0.7 * letters) || (words.length >= 6 && singles >= 0.25 * words.length));
       for (const t of tokenise(line)) {
         const tok = { ...t, line: li, page: pi + 1 };
+        if (lettering || /^\p{L}\p{Ll}*\p{Lu}/u.test(t.raw)) tok.skip = true; // formula/lettering line, or a variable like rPS, mMS
         if (heads.has(t.index)) { tok.fragment = 'head'; tok.raw = t.raw + '-'; }
         else if (/^\p{Ll}/u.test(t.raw) && (t.index === line.search(/\S/) || /\s{2,}$/.test(line.slice(0, t.index)))) tok.fragment = 'tail';
         tokens.push(tok);
@@ -150,8 +156,10 @@ export function textLayerCheck(candidate, manifest, paperId) {
     const layerSet = new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])]));
     const layerRaw = new Map(); for (const t of tokens) if (!t.fragment && !layerRaw.has(t.w)) layerRaw.set(t.w, t.raw);
     layerSets[doc] = layerSet;
-    // the solutions document reprints statements before solving them, so for it every transcribed word counts as present
-    const own = hasSolutions && doc === 'problems' ? wordsOf('problems') : allWords;
+    // the solutions document reprints statements before solving them, so for it every transcribed word counts as
+    // present; a "problems" document that prints solutions too (a marking scheme, "Detailed solution") is treated the same
+    const solutionCues = pages.reduce((n, pg) => n + pg.lines.filter(l => /^\s*(solution|marking scheme|answer|detailed solution|решени|отговор|критери|ответ)/i.test(l)).length, 0);
+    const own = hasSolutions && doc === 'problems' && solutionCues < 3 ? wordsOf('problems') : allWords;
     const ownWords = [...(hasSolutions ? wordsOf(doc) : allWords)].filter(w => w.length >= 4 && P.content.test(w));
     info.layerWords = tokens.filter(t => !isNeutral(t)).length;
     info.candidateWords = ownWords.length;

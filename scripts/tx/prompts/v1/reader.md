@@ -25,7 +25,7 @@ Shape:
 
 ## Language
 
-The paper's language is given in the context (`lang`: bg, en, ru, fr, de, …). Transcribe in that language exactly as printed — never translate — and keep that language's printed conventions: its decimal separator (`0,06` or `0.06` as printed), its quotation marks, its point markers (`[2 т.]`, `(2 points)`, `[2 балла]`). The Bulgarian examples in this prompt only illustrate the JSON shape. Mark an unreadable passage as `[нечетливо: …]` / `[illegible: …]` / `[неразборчиво: …]` in the paper's language.
+The paper's language is given in the context (`lang`: bg, en, ru, fr, de, …). Transcribe in that language exactly as printed — never translate — and keep that language's printed conventions: its decimal separator (`0,06` or `0.06` as printed), its quotation marks, its point markers (`[2 т.]`, `(2 points)`, `[2 балла]`). The Bulgarian examples in this prompt only illustrate the JSON shape. Mark an unreadable passage as `[нечетливо: …]` / `[illegible: …]` / `[неразборчиво: …]` in the paper's language. Everything you write yourself — figure `alt` texts, answer notes, `tx.notes` — is also in the paper's language.
 
 ## Rules (each one exists because it was violated before)
 
