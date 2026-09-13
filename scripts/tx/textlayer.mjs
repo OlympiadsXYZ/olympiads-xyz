@@ -82,7 +82,8 @@ export function layerPages(text) {
       // a formula line (symbols and digits against few letters) or a shouted header line (mostly capitals)
       // is lettering, not prose: its tokens count for nothing either way
       // Word-processor formulas come through as mathematical alphanumeric glyphs (𝑎, 𝑅, 𝛼, U+1D400–U+1D7FF): variables, so symbols
-      const letters = (line.match(/\p{L}/gu) || []).length, symbols = (line.match(/[0-9=+*/^_()<>≤≥±·√∙×∑∫|\\{}\[\]]|[\u{1D400}-\u{1D7FF}]|[α-ωΑ-Ω]/gu) || []).length, caps = (line.match(/\p{Lu}/gu) || []).length;
+      // (plain Greek letters stay letters: a Bulgarian solution line naming ъглите α и β is prose; Word's math Greek is in the U+1D400 range)
+      const letters = (line.match(/\p{L}/gu) || []).length, symbols = (line.match(/[0-9=+*/^_()<>≤≥±·√∙×∑∫|\\{}\[\]]|[\u{1D400}-\u{1D7FF}]/gu) || []).length, caps = (line.match(/\p{Lu}/gu) || []).length;
       const words = line.match(/\p{L}+/gu) || [], singles = words.filter(w => w.length === 1).length; // variables: "m mS S W t Q p"
       // equation editors leave their source in the text layer (LaTeXiT: latexit sha1_base64="…" followed by base64): never printed
       const junk = /latexit|sha1_base64|[A-Za-z0-9+/]{40,}={0,2}(?:\s|$)/.test(line);
@@ -144,6 +145,19 @@ export function textLayerCheck(candidate, manifest, paperId) {
   const fields = candidateFields(candidate, hasSolutions);
   const problemIndexByNumber = new Map((candidate.problems || []).map((pr, i) => [problemKey(pr.number), i]));
   const result = { version: TEXTLAYER_VERSION, paperId, at: nowIso(), documents: {}, defects: [], notes: [] };
+  // Alt text and captions are in the paper's language: a Cyrillic description on an English paper (or Latin
+  // prose on a Bulgarian one) is the reader's own language slipping in (eupho-2026-theory-x solution figures).
+  // Independent of the text layer; minor, no mechanical fix — the refix rewrites it.
+  const lang = String(manifest?.meta?.lang || candidate?.paper?.lang || 'bg').toLowerCase();
+  for (const f of fields) {
+    if (!/\/(alt|caption)$/.test(f.path)) continue;
+    const prose = splitMath(f.text).filter(seg => !seg.math).map(seg => seg.text).join(' ');
+    const cyr = (prose.match(/[Ѐ-ӿ]/g) || []).length, lat = (prose.match(/[A-Za-zÀ-ɏ]/g) || []).length;
+    if (cyr + lat < 15) continue;
+    const wrong = P === PROFILES.lat ? cyr >= 0.7 * (cyr + lat) : lat >= 0.7 * (cyr + lat) && !/^(ru|uk|kk|sr|mk|be)$/.test(lang) && !/^[A-Z][a-z]*(\s+[A-Z][a-z]*)*$/.test(prose.trim());
+    if (wrong) result.defects.push({ path: f.path, severity: 'minor', kind: 'other', source: 'text-layer', confidence: 0.9,
+      description: `The ${f.path.endsWith('/alt') ? 'alt text' : 'caption'} is not in the paper's language (${lang}): „${prose.trim().slice(0, 80)}“ — rewrite it in the paper's language${f.path.endsWith('/caption') ? ' (a caption is the printed caption line only)' : ''}.` });
+  }
   // the solutions document repeats the masthead and the problem headings: those words are the problems document's, but count as present on both
   const shared = /^\/paper\/|^\/problems\/\d+\/(title|number)$/;
   const wordsOf = doc => new Set(fields.filter(f => f.doc === doc || shared.test(f.path)).flatMap(f => [...f.set]));
