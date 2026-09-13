@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseArgs, fail, readJson, writeJson, readManifest, allFigures, sha256File, nowIso, BBOX_SCALE } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2));
+const args = parseArgs(process.argv.slice(2), { flags: ['drop-unplaced'] });
 const paperId = args._[0];
 if (!paperId || !args.in || !args.out) fail('usage: from-final.mjs <paperId> --in <final.json> --out <candidate.json>');
 const manifest = readManifest(paperId);
@@ -26,13 +26,18 @@ for (const { fig, path: p } of allFigures(data)) {
   const s = fig.source;
   const doc = s?.document || (/\/solution\//.test(p) ? 'solutions' : 'problems');
   const size = manifest.documents[doc]?.pageSizes?.[(s?.page || 0) - 1];
-  if (!s?.pdfRect || !size) { report.unplaced.push({ id: fig.id, path: p, reason: !s?.pdfRect ? 'no source.pdfRect' : `no page ${s.page} in ${doc}` }); }
+  if (!s?.pdfRect || !size) { report.unplaced.push({ id: fig.id, path: p, reason: !s?.pdfRect ? 'no source.pdfRect' : `no page ${s.page} in ${doc}`, dropped: !!args['drop-unplaced'] }); if (args['drop-unplaced']) { fig.__drop = true; continue; } }
   else {
     const [x0, y0, x1, y1] = s.pdfRect;
     fig.tx = { document: doc, page: s.page, bbox: [x0 / size.widthPt, y0 / size.heightPt, x1 / size.widthPt, y1 / size.heightPt].map(v => Math.round(v * BBOX_SCALE)) };
     report.converted++;
   }
   delete fig.url; delete fig.width; delete fig.height; delete fig.source;
+}
+// --drop-unplaced: a figure with no source rectangle cannot be proposed as a box; without it the
+// printed-graphics check raises the drawing and the refix proposes a box from the page
+for (const pr of data.problems) {
+  for (const holder of [pr, ...(pr.parts || []), pr.solution].filter(Boolean)) if (Array.isArray(holder.figures)) { holder.figures = holder.figures.filter(f => !f.__drop); if (!holder.figures.length) delete holder.figures; }
 }
 for (const pr of data.problems) {
   if (Array.isArray(pr.sourceSpans) && pr.sourceSpans.length) { pr.tx = { ...(pr.tx || {}), sourceSpans: pr.sourceSpans.map(x => ({ document: x.document, page: x.page })) }; report.spans++; }
@@ -49,4 +54,4 @@ data.tx = {
 };
 writeJson(path.resolve(args.out), data);
 console.log(JSON.stringify({ paperId, out: path.resolve(args.out), reader: data.tx.reader, ...report }, null, 2));
-if (report.unplaced.length) process.exit(3);
+if (report.unplaced.length && !args['drop-unplaced']) process.exit(3);
