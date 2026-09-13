@@ -46,6 +46,7 @@ if (!args.continue) {
   job = {
     paperId, reader, checker, stage: 'prepare', promote: !args['no-promote'], dryRun: !!args['dry-run'], allowSameModel: !!args['allow-same-model'],
     options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2) },
+    ...(args.problems ? { keys: { problems: args.problems, solutions: args.solutions || null } } : {}), // a paper outside the Bulgarian shards names its archive keys
     round: 0, createdAt: nowIso(), history: [], artefacts: {},
   };
   jobs.jobs[paperId] = job;
@@ -199,7 +200,7 @@ const needsRevalidate = () => !job.artefacts.validatedSha256 || sha256File(abs(j
 // ---- state machine
 for (;;) {
   if (job.stage === 'prepare') {
-    const r = node('prepare.mjs', [paperId]);
+    const r = node('prepare.mjs', [paperId, ...(job.keys?.problems ? ['--problems', job.keys.problems] : []), ...(job.keys?.solutions ? ['--solutions', job.keys.solutions] : [])]);
     if (r.status !== 0) { save(`prepare failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
     job.artefacts.manifest = rel(manifestPath);
     job.stage = 'reader'; save('prepared');

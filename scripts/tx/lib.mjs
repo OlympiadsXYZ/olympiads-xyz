@@ -94,8 +94,11 @@ export const which = cmd => spawnSync('which', [cmd], { encoding: 'utf8' }).stat
 // nof-2015-iii-10-12-d1, nao-2024-iii-11-12-test …), so this function is only a
 // proposal for papers that do not exist yet: paperIdFor()/resolvePaper() look the
 // archive key up in content/problems first and an existing id always wins.
+// Competition codes in Cyrillic ("Всерусийска", "Балкански", "ПУ") become ASCII slugs, as src/archive/labels.ts does.
+const CYR_TO_LAT = { а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ж: 'zh', з: 'z', и: 'i', й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'ts', ч: 'ch', ш: 'sh', щ: 'sht', ъ: 'a', ь: 'y', ю: 'yu', я: 'ya', ы: 'y', э: 'e', ё: 'yo' };
+export const competitionSlug = code => String(code).toLowerCase().split('').map(c => CYR_TO_LAT[c] ?? c).join('').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
 export function derivePaperId(entry) {
-  const comp = String(entry.competition).toLowerCase();
+  const comp = competitionSlug(entry.competition);
   let roundTok = null;
   if (comp === 'esf') roundTok = 'esenno';
   else if (comp === 'psf') roundTok = 'proletno';
@@ -109,9 +112,20 @@ export function derivePaperId(entry) {
   } else if (/nabl|obs/.test(base)) {
     gradeTok = 'nabl' + (/map/.test(base) ? '-maps' : '');
   } else {
-    gradeTok = base.replace(/(problems?|zad|prob|tema|noa\d?_\d{4}_?|nof\d?_\d{4}_?|proletni_\d{4}_?|esenni_\d{4}_?)/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x';
+    // the file name minus the words every paper carries (problems, the competition code, the year, the round)
+    const strip = new RegExp(`(problems?|zad|prob|tema|noa\\d?_\\d{4}_?|nof\\d?_\\d{4}_?|proletni_\\d{4}_?|esenni_\\d{4}_?|${comp.replace(/-/g, '[-_]?')}|${entry.year}|${roundTok ? roundTok.replace(/-/g, '[-_]?') : 'NOMATCH'})`, 'g');
+    gradeTok = base.replace(strip, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x';
   }
-  return [comp, entry.year, roundTok, gradeTok].filter(Boolean).join('-');
+  return [comp, entry.year, roundTok, gradeTok].filter(Boolean).join('-').replace(/-+/g, '-');
+}
+// The archive catalogue (every archive-catalog/*.json array), cached.
+let catalogueCache = null;
+export function loadCatalogue() {
+  if (catalogueCache) return catalogueCache;
+  const dir = path.join(ROOT, 'archive-catalog');
+  let all = [];
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'schema.json')) { const j = readJson(path.join(dir, f), []); if (Array.isArray(j)) all = all.concat(j); }
+  return (catalogueCache = all);
 }
 export const loadBacklog = () => readJson(BACKLOG_FILE, []);
 export function listContentFiles() {
@@ -185,6 +199,11 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
   if (keys.problems) {
     const owner = index.byKey.get(keys.problems);
     if (owner && owner !== paperId) throw new Error(`${keys.problems} is already transcribed as ${owner}; refusing to prepare it under ${paperId}`);
+  }
+  // a paper outside the Bulgarian shards: its catalogue entry (found by the problems key) carries the metadata
+  if (!meta && keys.problems) {
+    const e = loadCatalogue().find(x => x.file === keys.problems && x.kind === 'competition');
+    if (e) { meta = { competition: e.competition, year: e.year, round: e.round ?? null, grade: e.group ?? null, subject: e.subject, lang: e.lang || 'other' }; origin ||= 'archive-catalog'; }
   }
   if (!meta) {
     const m = /^([a-z]+)-(\d{4})-/.exec(paperId);

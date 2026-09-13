@@ -4,9 +4,61 @@
 // nor in tmp/staging (matched by derived paper id or by archive key). Read-only.
 import fs from 'node:fs';
 import path from 'node:path';
-import { paperIdFor, existingPaperIndex, ROOT } from './lib.mjs';
+import { paperIdFor, existingPaperIndex, loadCatalogue, ROOT } from './lib.mjs';
 
-const all = JSON.parse(fs.readFileSync(path.join(ROOT, 'tmp/shards/all.json'), 'utf8'));
+// --catalogue: every problems document of the archive catalogue (all subjects, competitions and
+// languages), each paired with the solutions document of its bucket (same subject, competition,
+// year, round, group, language; when several, the one whose file name matches best). The
+// Bulgarian shards stay the default.
+const catalogueRows = () => {
+  const cat = loadCatalogue().filter(e => e.kind === 'competition' && !e.hidden);
+  const bucket = e => [e.subject, e.competition, e.year, e.round ?? '', e.group ?? '', e.lang].join('|');
+  // a solutions document: typed as such, or an "answers"/"other" file whose name says so (ans-phys-10…, criteria_t_en, DA_Solution)
+  const isSolution = e => e.type === 'solutions' || e.type === 'answers' || (e.type === 'other' && /(^|[^a-z])(ans|sol|resh|otg|criteri|key|reshen|otgov)/i.test(path.basename(e.file)));
+  const sols = new Map();
+  for (const e of cat) if (isSolution(e)) { const k = bucket(e); if (!sols.has(k)) sols.set(k, []); sols.get(k).push(e); }
+  // file-name tokens minus the words that only say which side of the paper a file is
+  const ROLE = /^(problems?|tasks?|task|zad|zadachi|zadania|uslovia|uslov|solutions?|sol|answers?|ans|resh|resheniya|otg|otgovori|criteria|criterion|key|keys|q|s|t|p|a|en|ru|bg|fr|de|final|v\d+|pdf)$/;
+  const tokens = f => new Set(path.basename(f).toLowerCase().replace(/\.[a-z0-9]+$/, '').split(/[^a-z0-9]+/).filter(t => t && !ROLE.test(t)));
+  const jaccard = (a, b) => { const i = [...a].filter(x => b.has(x)).length; const u = new Set([...a, ...b]).size; return u ? i / u : 0; };
+  const rows = [];
+  let images = 0;
+  for (const e of cat) {
+    if (e.type !== 'problems') continue;
+    if (/\.(zip|txt|gif)$/i.test(e.file)) continue; // bundles and plain text: not a paper
+    if (/\.(jpe?g|png)$/i.test(e.file)) { images++; continue; } // photographed sheets: often one paper split over several files — grouped later
+    const cands = sols.get(bucket(e)) || [];
+    let solution = null;
+    if (cands.length === 1) solution = cands[0];
+    else if (cands.length > 1) {
+      // an exact token match wins; else the best overlap, ties broken by a file typed as solutions; a real tie pairs nothing
+      const t = tokens(e.file);
+      const scored = cands.map(s => { const u = tokens(s.file); const eq = u.size === t.size && [...t].every(x => u.has(x)); return { s, j: eq ? 1 : jaccard(t, u), typed: s.type === 'solutions' ? 1 : 0 }; }).sort((a, b) => b.j - a.j || b.typed - a.typed);
+      const [a, b] = scored;
+      if (a && (a.j >= 0.5 || (t.size === 0 && a.j === 0 && a.typed)) && !(b && b.j === a.j && b.typed === a.typed)) solution = a.s;
+    }
+    rows.push({ competition: e.competition, year: e.year, round: e.round ?? null, grade: e.group ?? null, subject: e.subject, lang: e.lang, problemsKey: e.file, solutionsKey: solution?.file || null, catalogueId: e.id });
+  }
+  // two rows of one bucket derive the same id (theory and practical files, two problem files of one round):
+  // the file-name tokens they do not share tell them apart; identical names get a running number
+  const byId = new Map();
+  for (const r of rows) { const id = paperIdFor(r); (byId.get(id) || byId.set(id, []).get(id)).push(r); }
+  for (const [id, group] of byId) {
+    if (group.length < 2) { group[0].derivedId = id; continue; }
+    const sets = group.map(r => tokens(r.problemsKey));
+    const common = [...sets[0]].filter(t => sets.every(s => s.has(t)));
+    const used = new Set();
+    group.forEach((r, i) => {
+      const own = [...sets[i]].filter(t => !common.includes(t)).slice(0, 2).join('-').replace(/[^a-z0-9-]/g, '');
+      let cand = own ? `${id}-${own}` : `${id}-${i + 1}`;
+      if (used.has(cand)) cand = `${cand}-${i + 1}`;
+      used.add(cand); r.derivedId = cand;
+    });
+  }
+  if (images) console.error(`${images} image-only problem sheets left out (grouping needed)`);
+  return rows;
+};
+const all = process.argv.includes('--catalogue') ? catalogueRows() : JSON.parse(fs.readFileSync(path.join(ROOT, 'tmp/shards/all.json'), 'utf8'));
 const live = existingPaperIndex();
 const staged = new Map();
 (function walk(d) {
@@ -22,10 +74,10 @@ const staged = new Map();
 const stagedKeys = new Set([...staged.values()].filter(Boolean));
 const remaining = [];
 for (const row of all) {
-  let id; try { id = paperIdFor(row); } catch { id = null; }
+  let id; try { id = row.derivedId || paperIdFor(row); } catch { id = null; }
   const inLive = (id && live.byId.has(id)) || live.byKey.has(row.problemsKey);
   const inStaged = (id && staged.has(id)) || stagedKeys.has(row.problemsKey);
-  if (!inLive && !inStaged) remaining.push({ paperId: id, competition: row.competition, year: row.year, round: row.round, grade: row.grade, problemsKey: row.problemsKey, solutionsKey: row.solutionsKey });
+  if (!inLive && !inStaged) remaining.push({ paperId: id, competition: row.competition, year: row.year, round: row.round, grade: row.grade, subject: row.subject, lang: row.lang, catalogueId: row.catalogueId, problemsKey: row.problemsKey, solutionsKey: row.solutionsKey });
 }
 if (process.argv.includes('--json')) console.log(JSON.stringify(remaining, null, 1));
 else { for (const r of remaining) console.log(`${r.paperId ?? '?'}\t${r.competition} ${r.year} ${r.round ?? ''} ${r.grade ?? ''}\t${r.problemsKey}`); console.error(`${remaining.length} backlog entries not in content/problems or tmp/staging (of ${all.length})`); }

@@ -25,6 +25,7 @@ Severity: **critical** — a student would be misled (missing problem or clause,
 ## Checklist (all of it, every time)
 
 1. **Coverage.** Count the printed problems; every one is present with the right `number`, and none is invented. Compare part labels one by one.
+0. **Language.** The paper's language is in the context (`lang`). Verbatim means verbatim in that language with its own printed conventions (decimal separator, quotation marks, point markers); a translation into Bulgarian, or Bulgarian conventions imposed on an English or Russian paper, is a defect. The Bulgarian examples below only illustrate the shape.
 2. **Verbatim statements.** Read each statement and part against the page: no dropped clause, no reworded sentence, no translated or "normalised" wording, original decimal commas and quotes kept. Printed source errors must be preserved verbatim and noted (in `tx.notes` or `answer.note`) — a "fix" of the source is a defect (`reworded`), an unnoted source error is `info` at most.
 3. **Quantities.** Every number, subscript, superscript, sign and unit exactly as printed (classic failures: $v_0/2$ vs $v_0$, $\ell_1$ vs $\ell_2$, lost minus, misread digit on a scan, `mA` vs `A`, `kΩ` vs `Ω`).
 4. **Points.** Per problem, per part and `totalPoints` match the print; `null` where nothing is printed. Sums that do not add up in the source are not defects if transcribed as printed.

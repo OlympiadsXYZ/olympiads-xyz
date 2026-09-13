@@ -75,7 +75,13 @@ for (const doc of ['problems', 'solutions']) {
   const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || sha256File(file) !== prev.sha256;
   if (stale) {
     fs.rmSync(file, { force: true });
-    if (/\.(docx?|rtf|odt)$/i.test(key)) {
+    if (/\.(jpe?g|png|gif)$/i.test(key)) {
+      // a photographed or scanned sheet: one image becomes a one-page PDF (PIL), then the usual route
+      const img = file.replace(/\.pdf$/, path.extname(key).toLowerCase());
+      run('rclone', ['copyto', `${R2_REMOTE}/${key}`, img]);
+      const r = run('python3', ['-c', "import sys; from PIL import Image\nim=Image.open(sys.argv[1]); im=im.convert('RGB')\nim.save(sys.argv[2], 'PDF', resolution=150.0)", img, file], { allowFail: true });
+      if (r.status !== 0 || !fs.existsSync(file)) fail(`image to PDF conversion failed for ${key}: ${(r.stderr || '').trim().slice(0, 300)}`);
+    } else if (/\.(docx?|rtf|odt)$/i.test(key)) {
       // a Word document in the archive: fetched as is, printed to PDF by the installed Word (office2pdf.ps1)
       const office = file.replace(/\.pdf$/, path.extname(key).toLowerCase());
       run('rclone', ['copyto', `${R2_REMOTE}/${key}`, office]);

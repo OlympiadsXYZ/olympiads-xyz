@@ -11,7 +11,7 @@ import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, JOBS_FILE, ROOT, nowIso, paperDir, findContentFile } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'allow-same-model', 'no-promote', 'dry-run', 'redo'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo'] });
 if (!args.ids && !args.backlog) fail('usage: batch.mjs --ids a,b | --backlog [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
 const workers = Number(args.workers || 2);
@@ -20,18 +20,26 @@ fs.mkdirSync(path.dirname(logFile), { recursive: true });
 const log = entry => fs.appendFileSync(logFile, JSON.stringify({ at: nowIso(), ...entry }) + '\n');
 
 let ids = [];
+const keysById = new Map(); // archive keys for papers outside the Bulgarian shards (--catalogue)
 if (args.ids) ids = String(args.ids).split(',').map(s => s.trim()).filter(Boolean);
-if (args.backlog) {
-  // backlog.mjs owns the rule (catalogue entries in neither content/problems nor tmp/staging) and derives the ids
-  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', 'backlog.mjs'), '--json'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+if (args.backlog || args.catalogue) {
+  // backlog.mjs owns the rule (catalogue entries in neither content/problems nor tmp/staging) and derives the ids;
+  // --catalogue widens it from the Bulgarian shards to the whole archive catalogue (all subjects and languages)
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', 'backlog.mjs'), '--json', ...(args.catalogue ? ['--catalogue'] : [])], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   if (r.status !== 0) fail(`backlog.mjs failed: ${r.stderr}`);
   // benchmark fixtures (by id or by PDF) stay out of production until the benchmark is closed:
   // a production run would overwrite the candidates their adjudications are bound to
   const fixtures = readJson(path.join(ROOT, 'tmp', 'bench', 'fixtures.json'), []);
   const fxIds = new Set(fixtures.map(f => f.paperId)), fxKeys = new Set(fixtures.map(f => f.problemsKey));
-  const entries = JSON.parse(r.stdout).filter(e => e.paperId);
+  let entries = JSON.parse(r.stdout).filter(e => e.paperId);
+  // --subjects physics,astronomy / --langs en,ru / --competitions IPhO,IAO narrow a catalogue run
+  const pick = (opt, field) => { if (!args[opt]) return; const want = new Set(String(args[opt]).split(',').map(s => s.trim().toLowerCase())); entries = entries.filter(e => want.has(String(e[field] ?? '').toLowerCase())); };
+  pick('subjects', 'subject'); pick('langs', 'lang'); pick('competitions', 'competition');
   for (const e of entries) if (fxIds.has(e.paperId) || fxKeys.has(e.problemsKey)) log({ paperId: e.paperId, outcome: 'skipped', reason: 'benchmark fixture' });
-  ids = entries.filter(e => !fxIds.has(e.paperId) && !fxKeys.has(e.problemsKey)).map(e => e.paperId);
+  entries = entries.filter(e => !fxIds.has(e.paperId) && !fxKeys.has(e.problemsKey));
+  // two catalogue rows may derive the same id (a paper split over files): the first wins, the rest are logged
+  const seen = new Set();
+  for (const e of entries) { if (seen.has(e.paperId)) { log({ paperId: e.paperId, outcome: 'skipped', reason: `duplicate derived id for ${e.problemsKey}` }); continue; } seen.add(e.paperId); ids.push(e.paperId); if (args.catalogue) keysById.set(e.paperId, { problems: e.problemsKey, solutions: e.solutionsKey || null }); }
   if (args.limit) ids = ids.slice(0, Number(args.limit));
 }
 ids = [...new Set(ids)];
@@ -60,6 +68,8 @@ function runOne({ id, resume }) {
       if (['escalated', 'repair'].includes(stage) || (args.redo && stage === 'done')) argv.push('--retry', '--max-rounds', String(args['max-rounds'] || 3));
     } else {
       argv.push('--reader', args.reader, '--checker', args.checker);
+      const keys = keysById.get(id);
+      if (keys?.problems) { argv.push('--problems', keys.problems); if (keys.solutions) argv.push('--solutions', keys.solutions); }
       if (args['allow-same-model']) argv.push('--allow-same-model');
       if (args['no-promote']) argv.push('--no-promote');
       if (args['dry-run']) argv.push('--dry-run');

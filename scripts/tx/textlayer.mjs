@@ -29,20 +29,28 @@ const SKIP_PATH = /\/(tx|notes|note|caveat|url|id|archiveKey|topics|problemType|
 const ALT_PATH = /\/alt$/; // the reader's own words: never "unprinted", but a misread printed term in it is still worth fixing
 const NO_EXTRAS = /\/answer(\/|$)/; // answers are summarised by the reader, not printed as such
 // structural words the transcription encodes as fields, not prose
-const STOP = /^(задач|решени|отговор|критери|фиг|точк|общо|подусловие|бележк|забележк)/u;
-// "Задача 2.", "ЗАДАЧА 1. – 10 точки", "Задача II.", "Задача №3", "1 задача.", "2-ра задача"
-const HEADING = /^\s*(?:(?:задача|з\s*а\s*д\s*а\s*ч\s*а)\s*(?:№\s*)?(\d+|[ivx]+)\b|(\d+)\s*(?:-?\s*(?:ва|ра|та|а|и))?\s+задача\b)/iu;
+// The paper's language decides which script carries the prose (the other script is formulas and
+// units), which structural words the transcription encodes as fields, and how a problem heading reads.
+const PROFILES = {
+  cyr: { content: /^[а-яѝё]+$/u, stop: /^(задач|решени|отговор|критери|фиг|рис|точк|балл|общо|подусловие|бележк|забележк|примечани|указани)/u,
+    // "Задача 2.", "ЗАДАЧА 1. – 10 точки", "Задача II.", "Задача №3", "1 задача.", "2-ра задача"
+    heading: /^\s*(?:(?:задача|з\s*а\s*д\s*а\s*ч\s*а)\s*(?:№\s*)?(\d+|[ivx]+)\b|(\d+)\s*(?:-?\s*(?:ва|ра|та|а|и|я))?\s+задача\b)/iu },
+  lat: { content: /^[a-zäöüßéèêàâçñáíóúœæ]+$/u, stop: /^(problem|question|task|solution|answer|figure|fig|table|point|mark|part|section|hint|note|probl[eè]me|partie|aufgabe|l[öo]sung|abbildung|punkt|teil)/u,
+    // "Problem 1", "Question 2.", "Task 3", "Q1", "Problème 1", "Aufgabe 2", "1. Problem"
+    heading: /^\s*(?:(?:problem|question|task|q|probl[eè]me|aufgabe|exercice)\s*(?:no\.?\s*|n[°o]\s*)?(\d+|[ivx]+)\b|(\d+)\s*[.)]?\s+(?:problem|question|task|probl[eè]me|aufgabe)\b)/iu },
+};
+export const profileFor = lang => (['en', 'fr', 'de', 'ro', 'kk-lat'].includes(String(lang || '').toLowerCase()) ? PROFILES.lat : PROFILES.cyr);
+let P = PROFILES.cyr; // set per paper by textLayerCheck
 const ROMAN = { i: 1, ii: 2, iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9, x: 10 };
-const headingNumber = line => { const h = HEADING.exec(line); if (!h) return null; const n = (h[1] || h[2]).toLowerCase(); return String(ROMAN[n] || Number(n) || n); };
+const headingNumber = line => { const h = P.heading.exec(line); if (!h) return null; const n = (h[1] || h[2]).toLowerCase(); return String(ROMAN[n] || Number(n) || n); };
 const problemKey = n => { const s = String(n ?? '').trim().toLowerCase(); return String(ROMAN[s] || Number(s) || s); };
-const CYR = /^[а-яѝ]+$/u;
 
 const norm = w => fixHomoglyphs(w).toLowerCase().replace(/ё/g, 'е').replace(/ѝ/g, 'и');
 const WORD = /\p{L}+/gu;
 // "tобщо" / "Vmax" / "Tобщо": a variable glued to a Cyrillic word, or a Latin
 // homoglyph inside one — both readings are kept (alt = the script-split parts)
 const splitScripts = w => w.split(/(?<=[a-z])(?=[а-я])|(?<=[а-я])(?=[a-z])/u);
-const isNeutral = t => t.skip || (t.fragment && !t.joined) || t.w.length < 3 || !CYR.test(t.w) || STOP.test(t.w);
+const isNeutral = t => t.skip || (t.fragment && !t.joined) || t.w.length < 3 || !P.content.test(t.w) || P.stop.test(t.w);
 
 function tokenise(s) {
   const out = [];
@@ -121,6 +129,7 @@ function replaceWord(text, from, to) {
 }
 
 export function textLayerCheck(candidate, manifest, paperId) {
+  P = profileFor(manifest?.meta?.lang || candidate?.paper?.lang || 'bg');
   const hasSolutions = !!manifest.documents.solutions;
   const fields = candidateFields(candidate, hasSolutions);
   const problemIndexByNumber = new Map((candidate.problems || []).map((pr, i) => [problemKey(pr.number), i]));
@@ -143,7 +152,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     layerSets[doc] = layerSet;
     // the solutions document reprints statements before solving them, so for it every transcribed word counts as present
     const own = hasSolutions && doc === 'problems' ? wordsOf('problems') : allWords;
-    const ownWords = [...(hasSolutions ? wordsOf(doc) : allWords)].filter(w => w.length >= 4 && CYR.test(w));
+    const ownWords = [...(hasSolutions ? wordsOf(doc) : allWords)].filter(w => w.length >= 4 && P.content.test(w));
     info.layerWords = tokens.filter(t => !isNeutral(t)).length;
     info.candidateWords = ownWords.length;
     if (info.layerWords < MIN_LAYER_WORDS) { info.reason = `text layer has only ${info.layerWords} words (scan or image-only document)`; continue; }
@@ -221,7 +230,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
             }
           }
           if (!fixed) {
-            const extra = f.tokens.map(x => x.w).filter(w => w.length >= 4 && CYR.test(w) && !layerSet.has(w) && similar(w, t.w));
+            const extra = f.tokens.map(x => x.w).filter(w => w.length >= 4 && P.content.test(w) && !layerSet.has(w) && similar(w, t.w));
             if (extra.length === 1) { wrong = extra[0]; consumed.add(`${f.path}|${extra[0]}`); const out = replaceWord(f.text, extra[0], t.raw.replace(/-$/, '') || t.w); if (out !== f.text) fixed = out; }
           }
           if (fixed) {
@@ -250,7 +259,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     for (const f of docFields) {
       if (NO_EXTRAS.test(f.path)) continue;
       const other = Object.values(layerSets).filter(s => s !== layerSet);
-      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && CYR.test(x.w) && !layerSet.has(x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`)).map(x => x.raw))];
+      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !layerSet.has(x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`)).map(x => x.raw))];
       if (!extras.length) continue;
       const minor = /\/(caption|title|label)$/.test(f.path);
       // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically;
@@ -258,7 +267,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
       // in alt text only a difference in the stem counts ("разнозначните"/"разноименните"); an ending is the reader's own inflection
       const commonSuffix = (a, b) => { let i = 0; while (i < a.length && i < b.length && a[a.length - 1 - i] === b[b.length - 1 - i]) i++; return i; };
       const altMisread = (a, b) => Math.abs(a.length - b.length) <= 1 && commonPrefix(a, b) >= 4 && commonSuffix(a, b) >= 3 && commonPrefix(a, b) < Math.min(a.length, b.length) - 3 && lev(a, b) <= 0.35 * Math.max(a.length, b.length);
-      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && CYR.test(x) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
+      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && P.content.test(x) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
       let rest = extras;
       if (!minor && misread.length) {
         let fixed = f.text; for (const m of misread) fixed = replaceWord(fixed, m.raw, m.printed);
@@ -278,7 +287,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
       // A printed caption is a short cue line ("Фиг. 2", "Снимка 1", "Фигура 3а"); a caption with unprinted
       // words that starts with no cue, or runs past a few words, is the reader's own description: drop it.
       if (/\/caption$/.test(f.path)) {
-        const content = f.tokens.filter(x => x.w.length >= 4 && CYR.test(x.w) && !STOP.test(x.w));
+        const content = f.tokens.filter(x => x.w.length >= 4 && P.content.test(x.w) && !P.stop.test(x.w));
         const cue = /^\s*(фиг|figure|fig|табл|схема|снимка|карта|диаграма|графика|рис)/iu.test(f.text);
         if (!cue || content.length >= 6 || extrasLeft.length >= 0.5 * Math.max(1, content.length)) {
           result.defects.push({ path: f.path, document: doc, page, severity: 'minor', kind: 'reworded', source: 'text-layer', confidence: 0.7,

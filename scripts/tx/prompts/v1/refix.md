@@ -25,6 +25,7 @@ Some defects come from a mechanical comparison with the PDF's own text layer ("T
 
 ## Rules
 
+0. The paper's language is in the context (`lang`); every value is in that language exactly as printed, with its printed decimal separator, quotation marks and point markers. Never translate.
 1. The pages are the only truth. Re-read every number, sign, subscript and unit against the image before writing it.
 2. Keep everything in the current value that the page confirms; change only what the defect names, plus anything on the same field the page contradicts. Never drop a printed sentence from a field because it "belongs elsewhere": a paragraph printed after the last part (assumptions, data for all parts) stays where the transcription has it, or goes to the end of the problem's `statement` as its own paragraph — moving text is allowed only when the destination field is also listed and you return both.
 3. A printed source error stays as printed (the transcription reports it elsewhere).

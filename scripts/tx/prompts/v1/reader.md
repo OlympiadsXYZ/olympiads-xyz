@@ -23,6 +23,10 @@ Shape:
           "textLayerTrustworthy": true|false|null, "notes": "<source errors, illegible spots, layout decisions>", "caveat"? } }
 ```
 
+## Language
+
+The paper's language is given in the context (`lang`: bg, en, ru, fr, de, …). Transcribe in that language exactly as printed — never translate — and keep that language's printed conventions: its decimal separator (`0,06` or `0.06` as printed), its quotation marks, its point markers (`[2 т.]`, `(2 points)`, `[2 балла]`). The Bulgarian examples in this prompt only illustrate the JSON shape. Mark an unreadable passage as `[нечетливо: …]` / `[illegible: …]` / `[неразборчиво: …]` in the paper's language.
+
 ## Rules (each one exists because it was violated before)
 
 1. **Verbatim.** Copy the statement word for word: no rewording, no translation, no unit conversion, no "improvement". Keep the original decimal comma (`0,06`), Bulgarian quotes („ “), original punctuation and paragraphing. Preserve errors printed in the source exactly (a wrong unit, a typo such as „измервании“) and list each one in `tx.notes`; never silently fix the source. Only three edits are allowed: mathematics marked as LaTeX, tables rendered as Markdown tables, figures cut out as images.
