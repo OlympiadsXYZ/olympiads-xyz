@@ -336,8 +336,12 @@ export function textLayerCheck(candidate, manifest, paperId) {
           continue;
         }
       }
-      result.defects.push({ path: f.path, document: doc, page, severity: minor ? 'minor' : 'major', kind: 'reworded', source: 'text-layer', confidence: 0.6,
-        description: `Text-layer check: ${extrasLeft.length === 1 ? 'the word' : 'the words'} ${extrasLeft.map(w => `„${w}“`).join(', ')} in this field ${extrasLeft.length === 1 ? 'is' : 'are'} printed nowhere in the ${doc} document (a typo or a rewording); re-read the passage on the page and transcribe it verbatim.`, suggestedFix: null, words: extrasLeft });
+      // a whole block of unprinted words on a page that carries a large graphic is text set as an image (a data table,
+      // a figure's heading — nao-2016-iii-11-12): the layer cannot see it, the refix can; minor, so a dispute settles it
+      const graphicOnPage = (regs?.pages?.find(pg => pg.page === page)?.regions || []).some(g => (g.areaFrac || 0) >= 0.08);
+      const imageText = extrasLeft.length >= 8 && graphicOnPage;
+      result.defects.push({ path: f.path, document: doc, page, severity: minor || imageText ? 'minor' : 'major', kind: 'reworded', source: 'text-layer', confidence: imageText ? 0.4 : 0.6,
+        description: `Text-layer check: ${extrasLeft.length === 1 ? 'the word' : 'the words'} ${extrasLeft.map(w => `„${w}“`).join(', ')} in this field ${extrasLeft.length === 1 ? 'is' : 'are'} printed nowhere in the ${doc} document (a typo or a rewording${imageText ? ' — or text set as an image: the page carries a large graphic, which the text layer cannot read' : ''}); re-read the passage on the page and transcribe it verbatim.`, suggestedFix: null, words: extrasLeft });
     }
   }
   for (const [doc, info] of Object.entries(result.documents)) if (!info.trusted) result.notes.push(`${doc}: not checked — ${info.reason}`);
