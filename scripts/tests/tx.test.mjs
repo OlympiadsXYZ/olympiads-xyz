@@ -339,6 +339,9 @@ test('display math that lost a closing $$ is closed at the paragraph break, so t
   assert.equal(lib.balanceDisplayMath(good), good);
   const broken = good.replace('(24)$$', '(24)'); // the first equation never closes
   assert.equal(lib.balanceDisplayMath(broken), good);
+  // $$ used as a paragraph frame around prose with inline math: the frame goes
+  const framed = 'Intro.\n\n$$ **3.11** Исходя из графика, имеем $x_1 = -2{,}50$ и $x_2 = 1{,}20$. $$\n\n$$E = mc^2$$';
+  assert.equal(lib.balanceDisplayMath(framed), 'Intro.\n\n **3.11** Исходя из графика, имеем $x_1 = -2{,}50$ и $x_2 = 1{,}20$. \n\n$$E = mc^2$$');
   const c = candidate(); c.problems[0].solution.statement = broken + ' Also $\\nicefrac{1}{2}V_0^2$.';
   lib.normaliseCandidate(c);
   assert.equal(c.problems[0].solution.statement, good + ' Also $\\frac{1}{2}V_0^2$.');

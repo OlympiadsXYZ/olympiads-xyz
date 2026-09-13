@@ -72,8 +72,11 @@ const catalogueRows = () => {
     for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) {
       const a = list[i], b = list[j];
       if (dropped.has(a) || dropped.has(b)) continue;
+      // a multilingual "_multi" edition next to a single-language file of the same bucket is that file again
+      // (its inventory titles may be in another language); otherwise the inventory titles must match
+      const multiPair = isMulti(a.problemsKey) !== isMulti(b.problemsKey) && !!(a.round || b.round) && a.round === b.round;
       const ta = titlesOf(a.problemsKey), tb = titlesOf(b.problemsKey);
-      if (ta.length < 2 || ta.length !== tb.length || !ta.every((t, n) => t === tb[n])) continue;
+      if (!multiPair && (ta.length < 2 || ta.length !== tb.length || !ta.every((t, n) => t === tb[n]))) continue;
       // files that differ by a small number (10_prob / 11_prob: two grades whose problems share titles) are two papers
       const ia = idTokens(a.problemsKey), ib = idTokens(b.problemsKey);
       if ([...ia].filter(t => !ib.has(t)).concat([...ib].filter(t => !ia.has(t))).some(t => /^\d{1,2}$/.test(t))) continue;

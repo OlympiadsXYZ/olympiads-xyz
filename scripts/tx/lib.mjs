@@ -648,6 +648,14 @@ export function balanceDisplayMath(s) {
     let fixed = false;
     for (let i = 1; i < parts.length; i += 2) {
       const inside = parts[i];
+      // a "$$…$$" wrapped around prose that carries its own inline $…$ (a reader using $$ as a paragraph frame):
+      // the frame goes, the prose and its inline math stay
+      if (/\$[^$\n]+\$/.test(inside) && !/\n[ \t]*\n/.test(inside)) {
+        parts.splice(i - 1, 3, parts[i - 1] + inside + parts[i + 1]);
+        text = parts.join('$$');
+        fixed = true;
+        break;
+      }
       // the paragraph after the break must read like a sentence (three lowercase words in its first line): an equation
       // broken over blank lines ("\mat\n\nrm\n\nn_0\left(…") is not prose (izho-2022-theory-eng-docx)
       const m = /\n[ \t]*\n(?=[ \t]*(?:\*\*)?[A-Za-zА-Яа-я(][^\n$\\]*?\b[a-zа-я]{2,} [a-zа-я]{2,} [a-zа-я]{2,}\b)/.exec(inside);
