@@ -22,7 +22,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet } from './lib.mjs';
 import { textLayerCheck } from './textlayer.mjs';
-import { spliceFragment, repairDefectPath } from './fixes.mjs';
+import { spliceFragment, repairDefectPath, repointByContent } from './fixes.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
@@ -104,7 +104,11 @@ function mergeTextLayer(candFile, checkOut) {
   if (!check || !manifest || !candidate) return null;
   // a mangled checker path ("/problems/2/problems/2/…", "/p2/statement") is repaired when the repair resolves in the candidate
   let repairedPaths = 0;
-  for (const d of check.defects || []) { const p = repairDefectPath(candidate, d.path); if (p !== d.path) { d.pathAsWritten = d.path; d.path = p; repairedPaths++; } }
+  for (const d of check.defects || []) {
+    let p = repairDefectPath(candidate, d.path);
+    if (typeof d.suggestedFix === 'string' && !d.source) p = repointByContent(candidate, p, d.suggestedFix);
+    if (p !== d.path) { d.pathAsWritten = d.path; d.path = p; repairedPaths++; }
+  }
   const tl = textLayerCheck(candidate, manifest, paperId);
   const tlFile = checkOut.replace(/\.json$/, '.textlayer.json');
   writeJson(tlFile, tl);

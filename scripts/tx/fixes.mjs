@@ -44,6 +44,22 @@ export function repairDefectPath(candidate, path) {
   for (const t of tries) if (t !== path && resolves(t)) return t;
   return path;
 }
+// A checker sometimes quotes the right sentence under the wrong problem's path. When the
+// addressed field shares almost nothing with the fix and exactly one other prose field of
+// the paper shares most of it, the fix belongs there.
+const PROSE_PATH = /\/(statement|caption|title)$/;
+export function repointByContent(candidate, path, fix) {
+  if (typeof fix !== 'string' || fix.trim().length < 20) return path;
+  const b = words(fix);
+  if (b.size < 4) return path;
+  const score = s => { if (typeof s !== 'string') return 0; const a = words(s); if (!a.size) return 0; const shared = [...b].filter(w => a.has(w)).length; return shared / b.size; };
+  const current = candidate && path.split('/').filter(Boolean).reduce((o, k) => (o == null ? undefined : o[k]), candidate);
+  if (score(current) >= 0.3) return path;
+  const hits = [];
+  const walk = (v, p) => { if (typeof v === 'string') { if (PROSE_PATH.test(p) && !/\/tx\b/.test(p)) { const s = score(v); if (s >= 0.6) hits.push({ p, s }); } } else if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${p}/${i}`)); else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walk(x, `${p}/${k}`); };
+  walk(candidate, '');
+  return hits.length === 1 ? hits[0].p : path;
+}
 // A model asked for one field sometimes answers with the whole problem: a statement that
 // now contains its parts, a part that contains its neighbours. Such a fix duplicates text
 // that lives in sibling fields and is refused (the current value is the reference: text the

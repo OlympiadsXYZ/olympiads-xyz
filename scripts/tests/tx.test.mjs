@@ -519,3 +519,15 @@ test('normaliseCandidate renames a figure that repeats an earlier id and clears 
   assert.equal(dup.url, undefined);
   assert.deepEqual(Object.keys(dup.tx).sort(), ['bbox', 'document', 'page']);
 });
+
+test('a fix quoted under the wrong problem is re-pointed to the one prose field it resembles', async () => {
+  const { repointByContent } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  c.problems.push({ id: `${PAPER}-p2`, number: 2, points: 5, problemType: 'theory', statement: 'Газ в затворен съд се нагрява.', parts: [
+    { label: 'а)', statement: 'Какво ще бъде това отнемиение, ако температурата в съда се увеличи 2 пъти?', points: 2 },
+  ] });
+  const fix = 'Какво ще бъде това отношение, ако температурата в съда се увеличи 2 пъти?';
+  assert.equal(repointByContent(c, '/problems/0/parts/0/statement', fix), '/problems/1/parts/0/statement');
+  assert.equal(repointByContent(c, '/problems/1/parts/0/statement', fix), '/problems/1/parts/0/statement'); // already right
+  assert.equal(repointByContent(c, '/problems/0/statement', 'Нещо съвсем друго, което никъде го няма в тази тема.'), '/problems/0/statement'); // nothing resembles it: left alone
+});
