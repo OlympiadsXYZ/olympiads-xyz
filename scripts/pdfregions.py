@@ -25,7 +25,7 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 SCALE = 1000.0
-VERSION = 7
+VERSION = 8
 CAPTION = re.compile(r'^\s*(фиг\.?|фигура|figure|fig\.?|задача|табл\.?|таблица|схема|снимка)\b', re.I)
 HEADING = re.compile(r'^\s*(?:(?:задача|з\s*а\s*д\s*а\s*ч\s*а)\s*(?:№\s*)?(\d+|[ivx]+)\b|(\d+)\s*(?:-?\s*(?:ва|ра|та|а|и))?\s+задача\b)', re.I)
 ROMAN = {'i': 1, 'ii': 2, 'iii': 3, 'iv': 4, 'v': 5, 'vi': 6, 'vii': 7, 'viii': 8, 'ix': 9, 'x': 10}
@@ -162,7 +162,10 @@ def page_regions(page, min_area, max_area):
     paths = []
     try:
         for p in drawings:
-            if is_glyph(fitz.Rect(p['rect'])):
+            pr = fitz.Rect(p['rect'])
+            if pr.width <= 0 or pr.height <= 0:  # a hairline rule: give it one point, as above, or it "touches" nothing
+                pr = fitz.Rect(pr.x0, pr.y0, max(pr.x1, pr.x0 + 1), max(pr.y1, pr.y0 + 1))
+            if is_glyph(pr):
                 continue  # letters drawn as paths are text, not the region's strokes
             ruled = True
             for it in p.get('items', []):
@@ -174,7 +177,7 @@ def page_regions(page, min_area, max_area):
                         ruled = False
                 else:
                     ruled = False
-            paths.append({'rect': displayed(fitz.Rect(p['rect']), page), 'ruled': ruled})
+            paths.append({'rect': displayed(pr, page), 'ruled': ruled})
     except Exception:
         pass
     is_label = lambda ln: (ln['words'] <= 3 and ln['rect'].width < 0.3 * prect.width and not CAPTION.match(ln['text'])
