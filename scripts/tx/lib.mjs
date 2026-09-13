@@ -616,6 +616,7 @@ export function contextBlock(manifest) {
     `- subject: ${m.subject}; competition: ${m.competition}; catalogue year: ${m.year}; catalogue round: ${m.round ?? 'null'}; catalogue grade: ${m.grade ?? 'null'}; lang: ${m.lang || 'bg'}`,
     `- documents:\n${docs}`,
     ...(m.listed?.problems ? [`- the archive inventory lists ${m.listed.problems} top-level problem(s) in the problems document (${m.listed.titles.join('; ')})${m.listed.parts ? ` with about ${m.listed.parts} printed sub-tasks` : ''}: emit exactly one problems[] entry per top-level problem; printed sections and sub-tasks inside one (Part A/B/C, A.1, E1.3, а)/б)) are its parts[] — one entry per printed sub-task with its label and points — never problems of their own and never folded into the statement. Say so in tx.notes if the page really prints a different number.`] : []),
+    ...(Object.values(manifest.documents || {}).some(d => /multi/i.test(String(d.key || d.file || ''))) ? [`- this file prints the same paper in SEVERAL LANGUAGES one after another: transcribe ONLY the ${m.lang || 'en'} version of every problem and solution — never the other languages' copies, never a mixture. Say in tx.notes which pages hold the ${m.lang || 'en'} version.`] : []),
     `- figure boxes are [x0, y0, x1, y1] in PERMILLE of the page (0–${BBOX_SCALE} across the width and across the height, origin top-left), independent of image resolution.`,
   ].join('\n');
 }

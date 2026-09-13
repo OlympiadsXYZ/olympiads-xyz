@@ -55,6 +55,33 @@ const catalogueRows = () => {
     }
     rows.push({ competition: e.competition, year: e.year, round: e.round ?? null, grade: e.group ?? null, subject: e.subject, lang: e.lang, problemsKey: e.file, solutionsKey: solution?.file || null, catalogueId: e.id });
   }
+  // Two problems documents of one bucket that the inventory lists with the same problem titles are one paper twice
+  // (a multilingual "_multi" file next to the English one, "ver Jul 29" next to "ver 0730", a 1-page duplicate of
+  // eupho2023_theory_problems.pdf): the one with a solutions file wins, then the single-language file, then the one
+  // with more pages; the other is dropped here (batch logs it as skipped: duplicate).
+  const inventory = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'archive-index.json'), 'utf8')).rows || []; } catch { return []; } })();
+  const invByFile = new Map(inventory.map(r => [r.file, r]));
+  const titlesOf = f => (invByFile.get(f)?.problems || []).map(p => String(p.title || '').toLowerCase().replace(/\s+/g, ' ').trim()).filter(Boolean);
+  const pagesOf = f => Number(invByFile.get(f)?.pages) || 0;
+  const isMulti = f => /multi/i.test(path.basename(f));
+  const groups = new Map();
+  for (const r of rows) { const k = bucket({ subject: r.subject, competition: r.competition, year: r.year, round: r.round, group: r.grade, lang: r.lang }); (groups.get(k) || groups.set(k, []).get(k)).push(r); }
+  const dropped = new Set();
+  for (const list of groups.values()) {
+    if (list.length < 2) continue;
+    for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) {
+      const a = list[i], b = list[j];
+      if (dropped.has(a) || dropped.has(b)) continue;
+      const ta = titlesOf(a.problemsKey), tb = titlesOf(b.problemsKey);
+      if (ta.length < 2 || ta.length !== tb.length || !ta.every((t, n) => t === tb[n])) continue;
+      // files that differ by a small number (10_prob / 11_prob: two grades whose problems share titles) are two papers
+      const ia = idTokens(a.problemsKey), ib = idTokens(b.problemsKey);
+      if ([...ia].filter(t => !ib.has(t)).concat([...ib].filter(t => !ia.has(t))).some(t => /^\d{1,2}$/.test(t))) continue;
+      const score = r => (r.solutionsKey ? 4 : 0) + (isMulti(r.problemsKey) ? 0 : 2) + Math.min(1, pagesOf(r.problemsKey) / 100);
+      const [keep, drop] = score(a) >= score(b) ? [a, b] : [b, a];
+      drop.duplicateOf = keep.problemsKey; dropped.add(drop);
+    }
+  }
   // two rows of one bucket derive the same id (theory and practical files, two problem files of one round):
   // the file-name tokens they do not share tell them apart; identical names get a running number
   const byId = new Map();
@@ -89,7 +116,9 @@ const staged = new Map();
 })(path.join(ROOT, 'tmp/staging'));
 const stagedKeys = new Set([...staged.values()].filter(Boolean));
 const remaining = [];
+let duplicates = 0;
 for (const row of all) {
+  if (row.duplicateOf) { duplicates++; continue; } // the same paper under another file name (see catalogueRows)
   let id; try { id = row.derivedId || paperIdFor(row); } catch { id = null; }
   const inLive = (id && live.byId.has(id)) || live.byKey.has(row.problemsKey);
   const inStaged = (id && staged.has(id)) || stagedKeys.has(row.problemsKey);
@@ -97,4 +126,4 @@ for (const row of all) {
   if ((!inLive && !inStaged) || (process.argv.includes('--include-live') && inLive)) remaining.push({ paperId: id, competition: row.competition, year: row.year, round: row.round, grade: row.grade, subject: row.subject, lang: row.lang, catalogueId: row.catalogueId, problemsKey: row.problemsKey, solutionsKey: row.solutionsKey, ...(inLive ? { live: true } : {}) });
 }
 if (process.argv.includes('--json')) console.log(JSON.stringify(remaining, null, 1));
-else { for (const r of remaining) console.log(`${r.paperId ?? '?'}\t${r.competition} ${r.year} ${r.round ?? ''} ${r.grade ?? ''}\t${r.problemsKey}`); console.error(`${remaining.length} backlog entries not in content/problems or tmp/staging (of ${all.length})`); }
+else { for (const r of remaining) console.log(`${r.paperId ?? '?'}\t${r.competition} ${r.year} ${r.round ?? ''} ${r.grade ?? ''}\t${r.problemsKey}`); console.error(`${remaining.length} backlog entries not in content/problems or tmp/staging (of ${all.length}${duplicates ? `, ${duplicates} duplicate document(s) left out` : ''})`); }
