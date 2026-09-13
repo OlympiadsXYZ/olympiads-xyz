@@ -262,7 +262,8 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     // the region so figures.mjs never raises it again, whatever else happens to the array.
     if (d.region && Array.isArray(f.value)) {
       const box = d.region.bbox;
-      const covers = f.value.some(g => { const b = g?.tx?.bbox; if (!Array.isArray(b) || b.length !== 4) return false; const x0 = Math.max(b[0], box[0]), y0 = Math.max(b[1], box[1]), x1 = Math.min(b[2], box[2]), y1 = Math.min(b[3], box[3]); const i = x1 > x0 && y1 > y0 ? (x1 - x0) * (y1 - y0) : 0; return i >= 0.3 * Math.max(1, (box[2] - box[0]) * (box[3] - box[1])); });
+      // (on the region's own page and document: a figure box on page 4 says nothing about page 5 — ipho-2024-experiment-q5)
+      const covers = f.value.some(g => { const b = g?.tx?.bbox; if (!Array.isArray(b) || b.length !== 4) return false; if (g.tx.page !== d.region.page || (d.region.document && g.tx.document && g.tx.document !== d.region.document)) return false; const x0 = Math.max(b[0], box[0]), y0 = Math.max(b[1], box[1]), x1 = Math.min(b[2], box[2]), y1 = Math.min(b[3], box[3]); const i = x1 > x0 && y1 > y0 ? (x1 - x0) * (y1 - y0) : 0; return i >= 0.3 * Math.max(1, (box[2] - box[0]) * (box[3] - box[1])); });
       if (!covers) {
         candidate.tx = { ...(candidate.tx || {}), notFigures: [...(candidate.tx?.notFigures || []), { ...d.region, note: String(f.note || '').slice(0, 200) }] };
         if (current === undefined || JSON.stringify(current) === JSON.stringify(f.value)) { applied.push({ ...entry, from: null, to: null, notFigure: d.region, note: f.note || null }); continue; }
