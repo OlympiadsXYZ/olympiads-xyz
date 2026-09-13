@@ -247,8 +247,9 @@ export function textLayerCheck(candidate, manifest, paperId) {
       // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically;
       // in alt text (the reader's own words) that is the only rule applied, as a minor defect
       // in alt text only a difference in the stem counts ("разнозначните"/"разноименните"); an ending is the reader's own inflection
-      const stemDiffers = (a, b) => commonPrefix(a, b) < Math.min(a.length, b.length) - 3;
-      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && CYR.test(x) && (f.altText ? stemDiffers(x, w) : !allWords.has(x)) && similar(x, w)); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
+      const commonSuffix = (a, b) => { let i = 0; while (i < a.length && i < b.length && a[a.length - 1 - i] === b[b.length - 1 - i]) i++; return i; };
+      const altMisread = (a, b) => Math.abs(a.length - b.length) <= 1 && commonPrefix(a, b) >= 4 && commonSuffix(a, b) >= 3 && commonPrefix(a, b) < Math.min(a.length, b.length) - 3 && lev(a, b) <= 0.35 * Math.max(a.length, b.length);
+      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && CYR.test(x) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
       let rest = extras;
       if (!minor && misread.length) {
         let fixed = f.text; for (const m of misread) fixed = replaceWord(fixed, m.raw, m.printed);
