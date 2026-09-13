@@ -98,6 +98,20 @@ when the fix pastes a sibling field; a duplicated part label and a printed point
 away; a merged text-layer defect keeps the "omission fix must be longer" protection. psf-2006-proletno-8 then re-promoted
 with all four findings fixed and the Фиг. 2 crop added, after 10 loop rounds in total at about 6 ¢ of Z.ai.
 
+**The redo of all 67 papers (night of 2026-09-12/13).** Every reviewed paper and every open one went back through the
+loop with the new checks: 65 of 67 re-promoted (11 of them open since the first day), 617 papers / 2,237 problems on the
+site, about $3.60 of Z.ai for 650 checker and refix calls. The escalations of the first passes were almost all loop gaps
+rather than paper problems, and each became a rule with a test the same night: region verdicts have to travel through the
+receipt and the repair report to the refix or a ruled-out graphic is raised every round; a box a checker has judged from
+the crop must not be re-snapped; equations typed as symbols around a few strokes, and equation images in the text flow,
+are not graphics; an OCR layer on a scanned page (Office Lens and the like) is a reading, not the print — its "typos"
+were about to be written into a correct transcription; the instruction filter has to match whole words (a stem match
+refused "Използвайки получения резулат…"); a statement that runs on into the next problem is cut there; mangled checker
+paths are repaired or re-pointed by content; a "pass" that lists defects is a fail; page numbers come back as strings;
+figure ids must be unique; a crop may need more than six remote versions. What still parks a paper after all that is a
+genuine model limit: a figure attributed to the wrong problem, figure descriptions typed into a statement, a checker that
+asks for a human.
+
 1. Bulk transcription uses **GLM-5.3-Flash as the reader**, boxes snapped to the PDF's own graphics, the mechanical
    repair plus refix loop, and a checker run after every repair. Sonnet 5 is the better cheap reader on quality but it
    is subscription-bound; it is not used for bulk.
