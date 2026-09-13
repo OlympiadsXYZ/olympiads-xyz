@@ -173,6 +173,23 @@ test('assembleWindows merges parts by number and replaces placeholders', () => {
   assert.deepEqual(report.uncoveredPages, [{ document: 'problems', page: 2 }]);
 });
 
+test('assembleWindows: a statement read from the solutions document never outranks the one from the problems document', () => {
+  const c = candidate();
+  const p1 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } }, problems: [{ ...c.problems[0], solution: undefined, tx: { sourceSpans: [{ document: 'problems', page: 1 }] } }], tx: { window: { problems: [1, 2] }, reader: c.tx.reader } };
+  delete p1.paper.solutionSource; delete p1.problems[0].solution;
+  const narrative = 'Part a) Since the current is steady, the field is that of an infinite wire and the field lines are circles; '.repeat(6);
+  const p2 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [] } }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: narrative, parts: [{ label: 'а)', statement: narrative }], solution: c.problems[0].solution, tx: { sourceSpans: [{ document: 'solutions', page: 1 }] } }], tx: { window: { solutions: [1, 1] }, reader: c.tx.reader } };
+  const { data, report } = assembleWindows([p1, p2], manifest);
+  assert.match(data.problems[0].statement, /Токът/, 'problems-window statement kept although the solutions window returned a longer one');
+  assert.equal(data.problems[0].parts.length, c.problems[0].parts.length);
+  assert.match(data.problems[0].solution.statement, /Решение/);
+  assert.deepEqual(report.solutionWindowStatements, []);
+  // with no problems-window version at all, the solutions-window one is the fallback and is reported
+  const only = assembleWindows([{ ...p1, problems: [] }, p2], manifest);
+  assert.equal(only.data.problems[0].statement, narrative);
+  assert.deepEqual(only.report.solutionWindowStatements, [1]);
+});
+
 test('validate.mjs accepts the synthetic candidate and rejects a pixel-sized box', t => {
   const s = sandbox(t);
   const f = s.write('candidates/zai__glm-5.3-flash.json', candidate());

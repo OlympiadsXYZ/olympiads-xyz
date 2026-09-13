@@ -32,20 +32,29 @@ export function assembleWindows(parts, manifest) {
   if (solSrc) paper.solutionSource = { ...solSrc, pages: pagesOf('solutionSource') };
 
   const byNumber = new Map();
+  const windowDoc = part => { const w = part.tx?.window; return w && typeof w === 'object' ? Object.keys(w)[0] || null : null; };
+  const separateSolutions = !!(manifest?.documents?.problems && manifest?.documents?.solutions);
   parts.forEach((part, wi) => {
     for (const pr of part.problems || []) {
       const n = Number(pr.number);
       if (!byNumber.has(n)) byNumber.set(n, []);
-      byNumber.get(n).push({ pr, wi });
+      byNumber.get(n).push({ pr, wi, doc: windowDoc(part) });
     }
   });
   const problems = [];
+  report.solutionWindowStatements = [];
   for (const n of [...byNumber.keys()].sort((a, b) => a - b)) {
     const seen = byNumber.get(n);
     const full = seen.filter(s => !isPlaceholder(s.pr));
     if (full.length > 1) report.duplicates.push({ number: n, windows: full.map(s => s.wi) });
-    // statement: the most complete non-placeholder version (windows overlap by a page)
-    const base = full.sort((a, b) => textLen(b.pr) - textLen(a.pr))[0];
+    // statement: the most complete non-placeholder version (windows overlap by a page). When the
+    // statements are a document of their own, a version read from a solutions window never outranks
+    // one read from the problems document: a solutions-only window that "finds" the statement on its
+    // pages is usually pasting the solution's narrative (eupho-2025-theory-x); it is a fallback only.
+    const fromProblems = separateSolutions ? full.filter(s => s.doc !== 'solutions') : full;
+    const pool = fromProblems.length ? fromProblems : full;
+    const base = pool.sort((a, b) => textLen(b.pr) - textLen(a.pr))[0];
+    if (base && separateSolutions && !fromProblems.length) report.solutionWindowStatements.push(n);
     if (!base) { report.problems.push(`problem ${n}: statement not found in any window (placeholder only)`); }
     const out = JSON.parse(JSON.stringify((base || seen[0]).pr));
     // solution: the longest one any window produced

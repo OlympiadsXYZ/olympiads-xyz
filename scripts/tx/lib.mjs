@@ -585,6 +585,7 @@ export function windowBlock(manifest, window) {
     `PAGE WINDOW: you see only ${parts.join(' and ')}. The paper is transcribed in windows and assembled afterwards; other windows cover the rest.`,
     `- Transcribe every problem whose statement BEGINS on one of your pages, completely (a statement that continues onto the next page is in your window because windows overlap by one page).`,
     `- For an official solution on your pages whose problem statement is NOT on your pages, still emit the problem with its "number", "id", the "solution" and "tx.sourceSpans", and set "statement" to exactly "${WINDOW_PLACEHOLDER}" (parts: []). Assembly replaces the placeholder with the statement from the window that has it.`,
+    ...(window.solutions && !window.problems && manifest.documents.problems ? [`- Your pages are the SOLUTIONS document only. The problem statements are printed in the separate problems document and are transcribed from there by another window: set "statement" to "${WINDOW_PLACEHOLDER}" (parts: []) for EVERY problem you emit, even when the solutions restate the problem. Solution text never goes into "statement" or "parts".`] : []),
     `- Do not emit a problem that merely continues from a previous page — it belongs to the window where it begins.`,
     `- paper.source.pages / solutionSource.pages list only the pages you actually used; set "tx.window" to ${JSON.stringify(window)}.`,
   ].join('\n');
