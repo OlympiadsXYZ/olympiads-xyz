@@ -598,7 +598,7 @@ export function normaliseCandidate(c) {
     // document/page/bbox belong under tx (the schema forbids them on the figure); a refix that copies
     // a figure back sometimes flattens the rest of its tx block onto the figure as well
     for (const k of ['document', 'page', 'bbox']) if (fig[k] !== undefined) { if (fig.tx?.[k] === undefined) fig.tx = { ...(fig.tx || {}), [k]: fig[k] }; delete fig[k]; changes.push(`${p}: ${k} moved under tx`); }
-    for (const k of ['file', 'remoteKey', 'upload', 'cropped', 'dryRun', 'public200', 'md5', 'sha256', 'bboxProposed', 'snapped', 'boxFrom', 'cropError']) if (fig[k] !== undefined) { delete fig[k]; changes.push(`${p}: stray ${k} dropped from the figure`); }
+    for (const k of Object.keys(fig)) if (!['id', 'caption', 'alt', 'url', 'width', 'height', 'source', 'tx'].includes(k)) { delete fig[k]; changes.push(`${p}: stray ${k} dropped from the figure`); }
     if (typeof fig.tx?.bbox === 'string') { const m = fig.tx.bbox.match(/-?\d+(?:\.\d+)?/g); if (m?.length === 4) { fig.tx.bbox = m.map(Number); changes.push(`${p}: bbox parsed`); } }
     if (typeof fig.tx?.page === 'string' && /^\d+$/.test(fig.tx.page)) { fig.tx.page = Number(fig.tx.page); changes.push(`${p}: page parsed`); }
   }
