@@ -67,9 +67,10 @@ export function duplicatesSiblings(candidate, path, value, current) {
   }
   return null;
 }
-export function plausibleReplacement(current, fix, kind) {
+export function plausibleReplacement(current, fix, kind, path = '') {
   if (typeof fix !== 'string' || typeof current !== 'string') return true;
   if (looksLikeInstruction(fix)) return false;
+  if (/\/label$/.test(path) && fix.trim().length <= 6) return true; // a label is a few characters; the current value may be a leaked instruction
   if (current.length < 40 || looksLikeInstruction(current)) return true; // anything printed beats a stub or an earlier bad paste
   const a = words(current), b = words(fix);
   if (!a.size) return true;
@@ -215,7 +216,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       if (dup) { skipped.push({ ...entry, reason: `fix pastes the text of ${dup} into this field` }); continue; }
       const spliced = spliceFragment(current, f.value);
       if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: f.value, note: f.note || null }); continue; }
-      if (!plausibleReplacement(current, f.value, d.kind)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
+      if (!plausibleReplacement(current, f.value, d.kind, p)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
       pointerSet(candidate, p, f.value);
       applied.push({ ...entry, from: current, to: f.value, note: f.note || null });
       continue;

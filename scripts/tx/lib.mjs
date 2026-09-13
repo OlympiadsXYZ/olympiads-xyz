@@ -653,7 +653,6 @@ export function normaliseCandidate(c) {
   // points marker at the end of a part ("[2 т]", "**[3 т.]**") is the points field, not
   // prose — it sets the field when empty and is stripped when it agrees with it.
   const MARKER = /\s*\**\[\s*(\d+(?:[.,]\d+)?)\s*т\.?\s*\]\**\s*$/u;
-  const LETTERS = 'абвгдежзийклмнопрст';
   (c.problems || []).forEach((pr, i) => (pr.parts || []).forEach((part, j) => {
     if (typeof part.statement !== 'string') return;
     const p = `/problems/${i}/parts/${j}/statement`;
@@ -661,7 +660,7 @@ export function normaliseCandidate(c) {
     if (part.label == null || part.label === '') {
       const m = /^\s*((?:[а-я]|\d{1,2}|[ivx]{1,4})\s*[).])\s+/iu.exec(part.statement);
       if (m) { part.label = m[1].replace(/\s+/g, ''); part.statement = part.statement.slice(m[0].length); changes.push(`${p}: label taken from the text`); }
-      else if (j < LETTERS.length) { part.label = `${LETTERS[j]})`; changes.push(`${p}: label ${part.label} assigned by position`); }
+      else { part.label = ''; changes.push(`${p}: no printed label — left empty (the page shows none)`); } // never invent lettering the print does not have
     }
     if (part.label) {
       const lab = String(part.label).trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

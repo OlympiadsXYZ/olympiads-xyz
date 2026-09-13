@@ -157,7 +157,7 @@ function problemMdx(paper, problem, state, sourceFile) {
       const pts = part.points != null ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
       // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
       const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
-      lines.push(`**${part.label}** ${mdText(text)}${pts}`);
+      lines.push(`${part.label && part.label !== '*' ? `**${part.label}** ` : ''}${mdText(text)}${pts}`); // an unlabelled printed part has an empty label
       lines.push('');
       for (const fig of figuresNotInline(part.figures, part.statement)) lines.push(figureMarkdown(fig), '');
     }

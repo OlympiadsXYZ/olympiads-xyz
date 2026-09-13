@@ -492,7 +492,7 @@ test('normaliseCandidate drops transient tx keys a refix flattened onto a figure
   assert.deepEqual(fig.tx.bbox, [365, 275, 625, 430]); // the tx block keeps its own box
   assert.equal(c.problems[0].parts[0].label, 'б)');
   assert.equal(c.problems[0].parts[0].statement, 'Намерете скоростта.');
-  assert.equal(c.problems[0].parts[1].label, 'б)'); // second part: by position
+  assert.equal(c.problems[0].parts[1].label, ''); // no printed label: left empty, never invented
 });
 
 test('a mangled checker path is repaired when the repair resolves in the candidate', async () => {

@@ -70,7 +70,7 @@ for (const d of receipt.defects || []) {
     // a quoted sentence replaces the passage it corrects, not the whole field
     const spliced = spliceFragment(current, d.suggestedFix);
     if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: d.suggestedFix }); continue; }
-    if (!plausibleReplacement(current, d.suggestedFix, d.kind)) { skipped.push({ ...entry, reason: 'suggestedFix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
+    if (!plausibleReplacement(current, d.suggestedFix, d.kind, p)) { skipped.push({ ...entry, reason: 'suggestedFix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
     pointerSet(candidate, p, d.suggestedFix);
     applied.push({ ...entry, from: current, to: d.suggestedFix });
     continue;
