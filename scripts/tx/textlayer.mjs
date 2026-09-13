@@ -54,7 +54,10 @@ function tokenise(s) {
   }
   return out;
 }
-const inSet = (set, t) => set.has(t.w) || (t.alt != null && t.alt.every(w => w.length < 3 || set.has(w)));
+// A text layer glues words across a column gap or a lost space ("замразенав" = "замразена" + "в"):
+// a missing token that splits into two transcribed words (the first ≥ 4 letters) counts as present.
+const glued = (set, w) => { if (w.length < 6) return false; for (let i = 4; i <= w.length - 1; i++) if (set.has(w.slice(0, i)) && set.has(w.slice(i))) return true; return false; };
+const inSet = (set, t) => set.has(t.w) || (t.alt != null && t.alt.every(w => w.length < 3 || set.has(w))) || glued(set, t.w);
 export function layerPages(text) {
   const clean = text.replace(/­/g, '').replace(/\r/g, '');
   return clean.split('\f').map((pageText, pi) => {
