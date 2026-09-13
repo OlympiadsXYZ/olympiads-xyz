@@ -220,6 +220,12 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
     origin ||= 'paper-id';
   }
   if (!keys.problems) throw new Error(`no problems key known for ${paperId}; pass --problems <archive key>`);
+  // what the archive inventory (content/archive-index.json, GLM-indexed) lists in the problems document: the reader is
+  // told how many top-level problems there are (an IPhO question with Parts A–C is one problem, not three)
+  if (keys.problems) {
+    const row = (readJson(path.join(ROOT, 'content', 'archive-index.json'), null)?.rows || []).find(r => r.file === keys.problems && Array.isArray(r.problems) && r.problems.length);
+    if (row) meta.listed = { problems: row.problems.length, titles: row.problems.map(p => [p.number, p.title].filter(Boolean).join(' · ')).slice(0, 12) };
+  }
   return { paperId, meta, keys, origin, existingFile: existing };
 }
 export const contentPathFor = (paperId, meta) => path.join(CONTENT_DIR, meta.subject, meta.competition, String(meta.year), `${paperId}.json`);
@@ -601,6 +607,7 @@ export function contextBlock(manifest) {
     `- paperId: ${manifest.paperId}`,
     `- subject: ${m.subject}; competition: ${m.competition}; catalogue year: ${m.year}; catalogue round: ${m.round ?? 'null'}; catalogue grade: ${m.grade ?? 'null'}; lang: ${m.lang || 'bg'}`,
     `- documents:\n${docs}`,
+    ...(m.listed?.problems ? [`- the archive inventory lists ${m.listed.problems} top-level problem(s) in the problems document (${m.listed.titles.join('; ')}): emit exactly one problems[] entry per top-level problem; printed sections and sub-tasks inside one (Part A/B/C, A.1, E1.3, а)/б)) are its parts, never problems of their own. Say so in tx.notes if the page really prints a different number.`] : []),
     `- figure boxes are [x0, y0, x1, y1] in PERMILLE of the page (0–${BBOX_SCALE} across the width and across the height, origin top-left), independent of image resolution.`,
   ].join('\n');
 }
