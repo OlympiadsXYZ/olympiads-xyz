@@ -196,6 +196,11 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       applied.push({ ...entry, from: null, to: null, notFigure: d.region, note: f.note || null });
       continue;
     }
+    // null for points means "nothing printed": the invented number goes (the prompt says so); elsewhere null is unsettled
+    if (f.value === null && /\/(points|totalPoints)$/.test(String(d.path)) && typeof pointerGet(candidate, String(d.path)) === 'number') {
+      const parent = pointerGet(candidate, String(d.path).replace(/\/[^/]+$/, '')); const key = String(d.path).split('/').at(-1);
+      if (parent && typeof parent === 'object') { const from = parent[key]; delete parent[key]; applied.push({ ...entry, from, to: null, removed: true, note: f.note || null }); continue; }
+    }
     if (f.value == null) { skipped.push({ ...entry, reason: `model could not settle it: ${String(f.note || '').slice(0, 200)}` }); continue; }
     let p = String(d.path);
     if (!p.startsWith('/')) { skipped.push({ ...entry, reason: 'path is not a JSON pointer' }); continue; }
@@ -297,7 +302,8 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       // something else: then the passage is being moved (a swapped header and first part, an intro
       // that sat in part a), and both fields change together
       const dup = duplicatesSiblings(original, p, f.value, pointerGet(original, p));
-      const moved = dup && typeof byPath.get(dup.path)?.value === 'string' && byPath.get(dup.path).value.trim() !== String(pointerGet(original, dup.path) || '').trim();
+      const sib = dup && byPath.get(dup.path)?.value;
+      const moved = dup && ((typeof sib === 'string' && sib.trim() !== String(pointerGet(original, dup.path) || '').trim()) || (sib && typeof sib === 'object' && sib.remove === true) || byPath.get(dup.path.replace(/\/statement$/, ''))?.value?.remove === true);
       if (dup && !moved) { skipped.push({ ...entry, reason: `fix pastes the text of ${dup.what} into this field` }); continue; }
       if (dup && moved) { pointerSet(candidate, p, f.value); applied.push({ ...entry, from: current, to: f.value, movedFrom: dup.path, note: f.note || null }); continue; } // the text is printed (it sat in the sibling); resemblance to the old value is not expected
       const spliced = spliceFragment(current, f.value);

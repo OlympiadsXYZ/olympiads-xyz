@@ -262,6 +262,17 @@ test('a passage moves between sibling fields when both are returned; a solution 
   const c4 = mk(); c4.problems.push({ ...JSON.parse(JSON.stringify(c4.problems[0])), id: `${PAPER}-p2`, number: 2 });
   applyFixes(c4, [{ path: '/problems/1/statement', value: 'Something else entirely.' }], { defects: [{ path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'x' }], round: 1 });
   assert.equal(c4.problems[1].statement, 'Imaging a star.');
+  // an invented part label goes with its text folded into the statement: the removal and the statement fix together
+  const c7 = mk(); c7.problems[0].parts = [{ label: '', statement: intro }]; c7.problems[0].statement = 'Imaging a star.';
+  const r7 = applyFixes(c7, [{ path: '/problems/0/parts/0', value: { remove: true } }, { path: '/problems/0/statement', value: `Imaging a star. ${intro}` }], { defects: [
+    { path: '/problems/0/parts/0', kind: 'other', severity: 'major', description: 'invented empty label; the printed problem is one statement' },
+    { path: '/problems/0/statement', kind: 'omission', severity: 'major', description: 'the text of the invented part belongs here' }], round: 1 });
+  assert.equal(r7.skipped.length, 0, JSON.stringify(r7.skipped));
+  assert.equal(c7.problems[0].parts.length, 0); assert.match(c7.problems[0].statement, /Red Giant/);
+  // null for points means nothing is printed: the invented number is dropped
+  const c8 = mk(); c8.problems[0].parts[0].points = 6;
+  const r8 = applyFixes(c8, [{ path: '/problems/0/parts/0/points', value: null, note: 'no per-part points printed' }], { defects: [{ path: '/problems/0/parts/0/points', kind: 'points', severity: 'minor', description: 'invented points' }], round: 1 });
+  assert.equal(r8.applied.length, 1); assert.equal(c8.problems[0].parts[0].points, undefined);
   // incomplete: false on a blank solution is refused, and a blank solution is marked incomplete
   const c5 = mk(); c5.problems[0].solution = { statement: '', incomplete: true, incompleteReason: 'no solutions document' };
   const r5 = applyFixes(c5, [{ path: '/problems/0/solution/incomplete', value: false }], { defects: [{ path: '/problems/0/solution/incomplete', kind: 'other', severity: 'minor', description: 'flag' }], round: 1 });
