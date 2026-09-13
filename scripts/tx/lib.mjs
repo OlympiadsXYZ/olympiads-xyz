@@ -709,9 +709,18 @@ export function wrapBareFormulaParagraphs(s) {
     return words.length <= 1 ? par.replace(p, () => `$$${p}$$`) : par; // a function: replace() reads "$$" in a string as one "$"
   }).join('\n\n');
 }
-export function normaliseCandidate(c) {
+export function normaliseCandidate(c, opts = {}) {
   if (!c || typeof c !== 'object') return c;
   const changes = [];
+  // No solutions document and no solution text: an answer the reader still wrote is its own derivation, not a
+  // transcription (ioaa-2021-theory-tq-14-q: eight "derived results", one of them wrong; tq-6-q: a self-contradicting
+  // note). A choice key may be printed with the problem and stays.
+  if (opts.solutionsDocument === false) (c.problems || []).forEach((pr, i) => {
+    const s = pr.solution;
+    if (s && typeof s === 'object' && String(s.statement || '').trim()) return;
+    const drop = (holder, p) => { const a = holder?.answer; if (a && typeof a === 'object' && a.kind !== 'choice') { delete holder.answer; changes.push(`${p}/answer: dropped — no solutions document and no solution text (a derived answer is not a transcription)`); } };
+    drop(pr, `/problems/${i}`); (pr.parts || []).forEach((pt, j) => drop(pt, `/problems/${i}/parts/${j}`));
+  });
   for (const { fig, path: p } of allFigures(c)) {
     // document/page/bbox belong under tx (the schema forbids them on the figure); a refix that copies
     // a figure back sometimes flattens the rest of its tx block onto the figure as well
@@ -734,7 +743,8 @@ export function normaliseCandidate(c) {
           if (!fig || typeof fig !== 'object') continue;
           // a version suffix belongs to the remote key (p2-sol-fig2-v3.png), never to the id
           if (typeof fig.id === 'string' && /-v\d+$/.test(fig.id)) { const from = fig.id; fig.id = fig.id.replace(/-v\d+$/, ''); changes.push(`/problems/${i}: figure id ${from} stripped of its version suffix`); }
-          if (typeof fig.id === 'string' && fig.id && !seen.has(fig.id)) { seen.add(fig.id); continue; }
+          // an id that is not a slug (a refix once wrote its advice into the id field: nao-2020-ii-9-10) counts as missing
+          if (typeof fig.id === 'string' && /^p[a-z0-9]+-(?:sol-)?fig\d+$/.test(fig.id) && !seen.has(fig.id)) { seen.add(fig.id); continue; }
           let k = 1; while (seen.has(`${stem}${k}`)) k++;
           const from = fig.id; fig.id = `${stem}${k}`; seen.add(fig.id);
           delete fig.url; delete fig.width; delete fig.height; delete fig.source;

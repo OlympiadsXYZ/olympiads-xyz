@@ -139,6 +139,13 @@ function mergeTextLayer(candFile, checkOut) {
   // A printed penalty rule ("Task E8: Intentional damage penalty (-0.5 pts)") is not a problem: validate has the
   // reader fold it away, and a checker that still counts it must not block the receipt (eupho-2026-experiment-x)
   if (check.coverage?.problemsChecked === (candidate.problems || []).length + 1 && /penalt|наказ|штраф/i.test(`${check.summary || ''} ${(check.defects || []).map(d => d.description).join(' ')}`)) { check.coverage.problemsCheckedAsWritten = check.coverage.problemsChecked; check.coverage.problemsChecked = candidate.problems.length; }
+  // A checker that counts the printed sub-tasks ("10.1 and 10.2": problemsChecked 2 for one problem with two parts)
+  // checked the same paper; the count is the paper's problems (ioaa-2021-theory-tq-10-q, blocked twice on the count)
+  {
+    const nProblems = (candidate.problems || []).length, nParts = (candidate.problems || []).reduce((s, p) => s + (p.parts || []).length, 0);
+    const pc = check.coverage?.problemsChecked;
+    if (Number.isInteger(pc) && pc !== nProblems && nParts > 0 && (pc === nParts || pc === nProblems + nParts)) { check.coverage.problemsCheckedAsWritten = pc; check.coverage.problemsChecked = nProblems; }
+  }
   if (typeof check.coverage?.figuresChecked === 'string') check.coverage.figuresChecked = Number(check.coverage.figuresChecked);
   // a mangled checker path ("/problems/2/problems/2/…", "/p2/statement") is repaired when the repair resolves in the candidate
   let repairedPaths = 0;
@@ -258,14 +265,39 @@ function mergeTextLayer(candFile, checkOut) {
   }
   // the verdict follows the defect list (a model sometimes says pass while listing defects, and the receipt refuses that every round)
   if (check.verdict !== 'escalate') { const open = (check.defects || []).some(d => d.severity && d.severity !== 'info'); if (open && check.verdict === 'pass') { check.verdict = 'fail'; check.verdictAdjusted = 'pass with defects listed'; } else if (!open && check.verdict === 'fail') { check.verdict = 'pass'; check.verdictAdjusted = 'fail with no open defect'; } }
+  // every defect the receipt will read — the checker's, the text layer's, the region check's, a disputed one carried
+  // from an earlier round — needs a page the document has (ioaa-2014-theory-short-theoretical: a carried text-layer
+  // defect on "solutions p.50" of 24 blocked nine receipts)
+  for (const d of check.defects || []) {
+    const pages = manifest.documents?.[d.document]?.pages;
+    if (!d.document || !pages) { const doc = Object.keys(manifest.documents || {})[0]; if (doc && (!d.document || !manifest.documents[d.document])) { d.documentAsWritten = d.document; d.document = doc; } }
+    const n = manifest.documents?.[d.document]?.pages;
+    if (n && !(Number.isInteger(d.page) && d.page >= 1 && d.page <= n)) {
+      const m = /^\/problems\/(\d+)/.exec(String(d.path || ''));
+      const span = (m && candidate.problems?.[Number(m[1])]?.tx?.sourceSpans || []).find(s => s.document === d.document);
+      d.pageAsWritten = d.page; d.page = span?.page || 1;
+    }
+  }
   writeJson(checkOut, check);
   tl.regionDefects = unplaced.length;
   return tl;
 }
 // an operator- or adjudicator-supplied candidate re-enters at validate
 if (args.continue && args.repaired) {
-  const f = path.resolve(args.repaired);
+  let f = path.resolve(args.repaired);
   if (!fs.existsSync(f)) fail(`--repaired file not found: ${f}`);
+  // a repaired candidate built from a checker view (no tx block) inherits the current candidate's tx: notFigures,
+  // disputed and repairs are evidence the region check and the dispute rounds rely on (eupho-2025-experiment-x
+  // came back with nine region defects the earlier rounds had already settled)
+  {
+    const supplied = readJson(f, null), current = job.artefacts.candidate ? readJson(abs(job.artefacts.candidate), null) : null;
+    if (supplied && !supplied.tx && current?.tx) {
+      const merged = f.replace(/\.json$/, '') + '.tx.json';
+      writeJson(merged, { ...supplied, tx: current.tx });
+      console.log(`[run] repaired candidate has no tx block; ${rel(merged)} carries the current candidate's tx (${Object.keys(current.tx).join(', ')})`);
+      f = merged;
+    }
+  }
   job.round = (job.round || 0) + 1;
   job.artefacts.candidate = rel(f); delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256; job.waitingFor = null;
   job.stage = 'validate'; save(`repaired candidate supplied (${rel(f)}), round ${job.round}`);
@@ -303,7 +335,7 @@ for (;;) {
       const data = readJson(src, null);
       if (data && typeof data === 'object') {
         const before = JSON.stringify(data);
-        normaliseCandidate(data);
+        normaliseCandidate(data, { solutionsDocument: !!readJson(manifestPath, null)?.documents?.solutions });
         // the archive keys are the manifest's, never the reader's copy of a long Cyrillic path
         const man = readJson(manifestPath, null);
         if (man?.documents?.problems && data.paper) {

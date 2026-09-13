@@ -335,6 +335,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
         skipped.push({ ...entry, reason: 'model returned the current value unchanged (disputed)' }); continue;
       }
       if (looksLikeInstruction(f.value)) { skipped.push({ ...entry, reason: 'fix is an instruction, not a replacement' }); continue; }
+      if (/\/figures\/\d+\/id$/.test(p) && !/^p[a-z0-9]+-(?:sol-)?fig\d+$/.test(f.value.trim())) { skipped.push({ ...entry, reason: 'a figure id is a slug (pN-figM / pN-sol-figM), not text' }); continue; }
       if (looksLikeJson(f.value)) { skipped.push({ ...entry, reason: 'fix is JSON, not the text of the field' }); continue; }
       // text that lives in a sibling field is a paste — unless this batch also rewrites that sibling to
       // something else: then the passage is being moved (a swapped header and first part, an intro

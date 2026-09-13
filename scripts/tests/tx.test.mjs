@@ -893,3 +893,36 @@ test('assembleWindows: printed labels in the titles pair a solutions-window plac
   assert.equal(plain.report.relabelled, undefined);
   assert.match(plain.data.problems[0].solution.statement, /Reflector answers/);
 });
+
+test('text-layer check: a legacy inline image and its caption line are not the field\'s prose; a derived answer is dropped when the paper has no solutions', async t => {
+  const s = sandbox(t);
+  fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
+  const printed = 'На фигурата виждате илюстрация от астрономическа книга, издадена през хиляда шестстотин и шестдесета година. Тя показва хелиоцентричния модел на света според Коперник с планетите около Слънцето. Определете кои обекти са означени с цифрите от едно до пет и обяснете подредбата им. Планетите обикалят около Слънцето по почти кръгови орбити, а Луната обикаля около Земята и заедно с нея около Слънцето. Сравнете подредбата на планетите в този модел с подредбата, която познавате от съвременната астрономия, и посочете разликите.';
+  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), `Задача 1. Хелиоцентрична система\n${printed}\nФиг. 1. Хелиоцентрична система – към задача 1.\n\f`);
+  fs.writeFileSync(path.join(s.dir, 'text', 'solutions.txt'), 'Решения\nЗадача 1. Отговорът следва от подредбата на планетите около Слънцето според Коперник, както е показано на гравюрата.\n');
+  const c = candidate();
+  c.problems[0].title = 'Хелиоцентрична система';
+  c.problems[0].statement = `${printed}\n\n![Гравюра „Planisphaerium Copernicanum“ – хелиоцентрична система с обекти, означени с цифрите 1–5.](${lib.R2_PUBLIC}/problems/${PAPER}/p1-fig1.png)\n\n*Фиг. 1. Хелиоцентрична система – към задача 1.*`;
+  c.problems[0].parts = [];
+  const f = s.write('candidates/tl.json', c);
+  const out = path.join(s.dir, 'checks', 'tl.json');
+  s.run('textlayer.mjs', [PAPER, '--candidate', f, '--out', out]);
+  const res = s.read(out);
+  assert.equal(res.documents.problems.trusted, true, res.documents.problems.reason);
+  const unprinted = res.defects.filter(d => d.path === '/problems/0/statement' && /printed nowhere/.test(d.description));
+  assert.deepEqual(unprinted.map(d => d.words), [], JSON.stringify(unprinted));
+  // derived answers: no solutions document, no solution text → the answers go (a choice key stays)
+  const d = candidate();
+  d.problems[0].solution = { incomplete: true, incompleteReason: 'no solutions file' };
+  d.problems[0].answer = { kind: 'expression', latex: 'v = \sqrt{GM/R}' };
+  d.problems[0].parts[0].answer = { kind: 'choice', correct: 'B' };
+  lib.normaliseCandidate(d, { solutionsDocument: false });
+  assert.equal(d.problems[0].answer, undefined);
+  assert.deepEqual(d.problems[0].parts[0].answer, { kind: 'choice', correct: 'B' });
+  const e = candidate(); e.problems[0].answer = { kind: 'expression', latex: 'x' };
+  lib.normaliseCandidate(e, { solutionsDocument: false }); // a solution with text keeps its answers
+  assert.ok(e.problems[0].answer);
+  const g = candidate(); g.problems[0].solution = { incomplete: true }; g.problems[0].answer = { kind: 'expression', latex: 'x' };
+  lib.normaliseCandidate(g); // without the flag nothing is dropped
+  assert.ok(g.problems[0].answer);
+});

@@ -123,7 +123,11 @@ function candidateFields(c, hasSolutions) {
   walkStrings(c, (p, s) => {
     if (SKIP_PATH.test(p) || !/\p{L}/u.test(s)) return;
     const doc = hasSolutions && /\/(solution|answer)(\/|$)/.test(p) ? 'solutions' : 'problems';
-    const prose = splitMath(s).map(seg => seg.math ? seg.text.replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
+    // A legacy transcription carries its figures inline: "![alt](url)" plus an italic caption line under the image.
+    // The alt text is a description by design and the caption line is the figure's caption, not the field's prose
+    // (nao-2018-ii-7-8, nao-2020-i-5-6, nao-2021-iv-ml-prak: „Гравюра“, „Снимка“, „Изображение“ printed nowhere).
+    const noImages = s.replace(/(?:!\[[^\]\n]*\]\([^)\n]*\)[ \t|]*)+\n+[ \t]*(\*{1,2}|_{1,2})[^\n*_]{1,200}\1[ \t]*(?=\n|$)/g, ' ').replace(/!\[[^\]\n]*\]\([^)\n]*\)/g, ' ');
+    const prose = splitMath(noImages).map(seg => seg.math ? seg.text.replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
     const tokens = tokenise(prose);
     fields.push({ path: p, doc, text: s, tokens, set: new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])])), altText: ALT_PATH.test(p) });
   });
@@ -247,6 +251,9 @@ export function textLayerCheck(candidate, manifest, paperId) {
           const f = fieldFor(ctx, problemIdx, problemIdx == null ? 4 : 3) || (problemIdx != null ? { path: doc === 'solutions' || !hasSolutions && /решени/i.test(pg.lines[run[0].line] || '') ? `/problems/${problemIdx}/solution/statement` : `/problems/${problemIdx}/statement`, fallback: true } : null);
           const text = quote(run[0], run.at(-1));
           const lines = pg.lines.slice(run[0].line, run.at(-1).line + 1).join(' ').replace(/\s+/g, ' ').trim();
+          // a run whose printed span is mostly symbols is equation lettering the layer strings together ("Rp /Rs = , "
+          // p 2 # 1/2 tF (1 ) b2 = p 1.0 tT": ioaa-2016-theory-qp), not a passage a transcription can omit
+          if (text.length >= 20 && text.replace(/[\p{L}\s]/gu, '').length > 0.3 * text.length) { run = []; return; }
           info.omissions++;
           result.defects.push({ path: f?.path || null, document: doc, page: pg.page, severity: run.length >= 6 ? 'critical' : 'major', kind: 'omission', source: 'text-layer', confidence: f && !f.fallback ? 0.9 : 0.6,
             description: `Text-layer check: the printed passage „${text}“ (${doc} p.${pg.page}, printed line: „${lines.slice(0, 160)}“) does not appear in the transcription; restore it verbatim in its printed place${f?.fallback ? ' (field guessed from the problem heading)' : ''}.`, suggestedFix: null, words: run.map(t => t.raw) });
