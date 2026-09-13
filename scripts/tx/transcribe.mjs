@@ -90,9 +90,12 @@ if (stage === 'refix') {
     // the defect's own page, plus every page the problem spans in that document (a fix often needs the
     // page before or after the one the checker named: a formula on p.4 for a table that ends on p.6)
     if (d.document && d.page) wanted.add(`${d.document}#${d.page}`);
-    const m = /^\/problems\/(\d+)/.exec(d.path);
+    const m = /^\/problems\/(\d+)(\/solution\b)?/.exec(d.path);
     const spans = m ? candidate.problems?.[Number(m[1])]?.tx?.sourceSpans : null;
-    if (Array.isArray(spans) && spans.length) { for (const s of spans) if (!d.document || s.document === d.document) wanted.add(`${s.document}#${s.page}`); }
+    // the field's own document always comes along: a statement pasted from the solutions is attributed
+    // to the solutions page by the checker, but only the problems page can say what is printed instead
+    const fieldDoc = m && !m[2] ? 'problems' : (manifest.documents.solutions ? 'solutions' : 'problems');
+    if (Array.isArray(spans) && spans.length) { for (const s of spans) if (!d.document || s.document === d.document || s.document === fieldDoc) wanted.add(`${s.document}#${s.page}`); }
     else if (!(d.document && d.page)) for (const p of pageImages(manifest)) wanted.add(`${p.document}#${p.page}`);
   }
   refix = { candidate, defects, wanted, round: Number(args.round || 1) };
