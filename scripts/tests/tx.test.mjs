@@ -871,3 +871,25 @@ test('a null solution statement or a remark about missing solutions is not solut
   assert.match(c.problems[3].solution.statement, /not unique/); // real solution prose with math stays
   assert.notEqual(c.problems[3].solution.incomplete, true);
 });
+
+test('assembleWindows: printed labels in the titles pair a solutions-window placeholder with its problem when the two readings numbered the paper differently', () => {
+  const c = candidate();
+  const WP = lib.WINDOW_PLACEHOLDER || '[извън прозореца]';
+  const prob = (n, title, statement) => ({ id: `${PAPER}-p${n}`, number: n, title, statement, parts: [], tx: { sourceSpans: [{ document: 'problems', page: 1 }] } });
+  const sol = (n, title, text, page = 1) => ({ id: `${PAPER}-p${n}`, number: n, title, statement: WP, parts: [], solution: { statement: text }, tx: { sourceSpans: [{ document: 'solutions', page }] } });
+  const p1 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } }, problems: [prob(1, 'O5', 'Three reflectors are shown.'), prob(2, 'O6', 'Fill in the constellations.')], tx: { window: { problems: [1, 1] }, reader: c.tx.reader } };
+  const p2 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [] } }, problems: [sol(1, 'Sol: O1', 'Night problem one.'), sol(5, 'Sol: O5', 'Reflector answers.'), sol(6, 'Sol: O6', 'Constellation answers.')], tx: { window: { solutions: [1, 1] }, reader: c.tx.reader } };
+  const { data, report } = assembleWindows([p1, p2], manifest);
+  assert.deepEqual(data.problems.map(p => p.number), [1, 2]);
+  assert.match(data.problems[0].solution.statement, /Reflector answers/);
+  assert.match(data.problems[1].solution.statement, /Constellation answers/);
+  assert.deepEqual(report.relabelled, [{ from: 5, to: 1, label: 'O5' }, { from: 6, to: 2, label: 'O6' }]);
+  assert.deepEqual(report.droppedSolutions, [{ number: 1, label: 'O1' }]);
+  assert.equal(report.problems.length, 0, JSON.stringify(report.problems));
+  // without labels on every side nothing moves: a placeholder numbered like its problem is that problem
+  const q1 = { ...p1, problems: [prob(1, 'Reflectors', 'Three reflectors are shown.'), prob(2, 'Constellations', 'Fill in the constellations.')] };
+  const q2 = { ...p2, problems: [sol(1, null, 'Reflector answers.'), sol(2, null, 'Constellation answers.')] };
+  const plain = assembleWindows([q1, q2], manifest);
+  assert.equal(plain.report.relabelled, undefined);
+  assert.match(plain.data.problems[0].solution.statement, /Reflector answers/);
+});

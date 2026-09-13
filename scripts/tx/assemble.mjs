@@ -54,6 +54,31 @@ export function assembleWindows(parts, manifest) {
       byNumber.delete(n); report.renumbered.push({ from: n, to: target });
     }
   }
+  // Printed labels tell the two readings apart when they numbered the paper differently: the problems window
+  // numbers "O5…O9" 1–5 (its own count), the solutions window keeps the printed 5–9 and also reads O1–O4, whose
+  // problems this file does not hold (ioaa-2022 day-time observation: O5's solution landed under O9, O1–O4 became
+  // placeholder problems). When every problem and every placeholder carries a label in its title ("O5", "Sol: O5",
+  // "Q3", "T2 solution"), a placeholder goes to the problem of its label, and one whose label no problem carries
+  // is another paper's solution and is dropped.
+  if (separateSolutions) {
+    const labelOf = pr => { const m = /(?:^|[\s:(–-])([A-Za-z]{1,2}\s?\d{1,2})(?=$|[\s:).,–-])/.exec(String(pr.title || '').trim()); return m ? m[1].replace(/\s+/g, '').toUpperCase() : null; };
+    const fullLabel = new Map();
+    let fullCount = 0, fullLabelled = 0;
+    for (const [n, seen] of byNumber) for (const s of seen) if (!isPlaceholder(s.pr)) { fullCount++; const l = labelOf(s.pr); if (l) { fullLabelled++; if (!fullLabel.has(l)) fullLabel.set(l, n); } }
+    const placeholders = [...byNumber.entries()].flatMap(([n, seen]) => seen.filter(s => isPlaceholder(s.pr)).map(s => ({ n, s })));
+    const systematic = fullLabel.size >= 2 && fullLabelled === fullCount && placeholders.length && placeholders.every(({ s }) => labelOf(s.pr));
+    if (systematic) {
+      report.relabelled = []; report.droppedSolutions = [];
+      for (const { n, s } of placeholders) {
+        const label = labelOf(s.pr), target = fullLabel.get(label);
+        if (target === n) continue;
+        byNumber.set(n, byNumber.get(n).filter(x => x !== s));
+        if (target == null) report.droppedSolutions.push({ number: n, label });
+        else { s.pr.number = target; byNumber.get(target).push(s); report.relabelled.push({ from: n, to: target, label }); }
+      }
+      for (const [n, seen] of [...byNumber.entries()]) if (!seen.length) byNumber.delete(n);
+    }
+  }
   const problems = [];
   report.solutionWindowStatements = [];
   for (const n of [...byNumber.keys()].sort((a, b) => a - b)) {
