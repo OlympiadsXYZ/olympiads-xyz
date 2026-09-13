@@ -20,7 +20,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet, mergeProblemsIntoOne } from './lib.mjs';
 import { textLayerCheck, profileFor } from './textlayer.mjs';
 import { spliceFragment, repairDefectPath, repointByContent } from './fixes.mjs';
 import { regionsFor, coverFrac } from './snap.mjs';
@@ -334,6 +334,18 @@ for (;;) {
     fs.copyFileSync(receiptOut, path.join(dir, `receipt.r${job.round}.json`));
     if (r.status === 0 && receipt?.verdict === 'pass') { job.stage = job.promote ? 'promote' : 'done'; save('receipt: pass'); continue; }
     if (receipt?.verdict === 'escalate') escalate(`checker escalated: ${receipt.summary || ''}`);
+    // The reader split one printed problem into several: when the checker counts one and the archive inventory
+    // lists one, the extra entries are folded into the first as parts and the loop goes on (izho-2013-experiment).
+    if (receipt.blockers?.some(b => /problemsChecked/.test(b)) && check?.coverage?.problemsChecked === 1 && manifest?.meta?.listed?.problems === 1 && !job.options.foldedProblems) {
+      const cand = readJson(currentCandidate());
+      if ((cand?.problems || []).length > 1 && mergeProblemsIntoOne(cand)) {
+        const folded = currentCandidate().replace(/\.json$/, '.folded.json');
+        writeJson(folded, normaliseCandidate(cand));
+        job.options.foldedProblems = true; job.round = (job.round || 0) + 1;
+        job.artefacts.candidate = rel(folded); delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256;
+        job.stage = 'validate'; save(`the checker counts one printed problem and the inventory lists one: ${cand.problems[0].parts.length} parts now, re-validating`); continue;
+      }
+    }
     if (receipt.blockers?.length && !receipt.defects?.length) escalate(`receipt blocked without repairable defects: ${receipt.blockers.join('; ')}`);
     if (job.round >= job.options.maxRounds) escalate(`still ${receipt.defects?.length} defect(s) after ${job.round} repair round(s)`);
     job.stage = 'repair'; save(`receipt: fail (${receipt.defects?.length} defects); repairing`);

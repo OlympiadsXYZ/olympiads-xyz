@@ -309,6 +309,24 @@ test('a paragraph that is nothing but LaTeX is wrapped as display math; prose wi
   assert.match(c.problems[0].solution.statement, /В \*\*тази\*\* задача/);
 });
 
+test('several problem entries read from one printed problem fold into the first as parts, with figures and solutions along', () => {
+  const c = candidate();
+  const p1 = c.problems[0];
+  c.problems = [
+    { ...JSON.parse(JSON.stringify(p1)), title: 'Advertising tricks [15 points]', points: 15, parts: [{ label: '1.1', statement: 'Estimate the mass.' }] },
+    { id: `${PAPER}-p2`, number: 2, title: 'Part 2. The tricky mirror', points: null, statement: 'Now consider the mirror.', parts: [{ label: '2.1', statement: 'Find the focal length.' }], figures: [{ id: 'p2-fig1', alt: 'mirror', tx: { document: 'problems', page: 2, bbox: [100, 100, 400, 400] } }], solution: { statement: 'The focal length follows from the mirror equation.' }, tx: { sourceSpans: [{ document: 'problems', page: 2 }] } },
+  ];
+  assert.equal(lib.mergeProblemsIntoOne(c), true);
+  assert.equal(c.problems.length, 1);
+  const q = c.problems[0];
+  assert.deepEqual(q.parts.map(p => p.label), ['1.1', 'Part 2. The tricky mirror', '2.1']);
+  assert.equal(q.parts[1].statement, 'Now consider the mirror.');
+  assert.equal(q.figures.length, 2);
+  assert.match(q.solution.statement, /\*\*Part 2\. The tricky mirror\*\*\n\nThe focal length/);
+  assert.deepEqual(q.tx.sourceSpans.map(s => `${s.document}#${s.page}`), ['problems#1', 'solutions#1', 'problems#2']);
+  assert.equal(q.points, 15);
+});
+
 test('an empty part that is a printed section heading is folded into the next part; a bare empty part is dropped', () => {
   const c = candidate();
   c.problems[0].parts = [{ label: '2.16', statement: 'Sketch the graph.' }, { label: 'Part 3. Engine with a Governor', statement: '' }, { label: '2.17', statement: 'Find the dependence.' }, { label: 'в)', statement: '  ' }];

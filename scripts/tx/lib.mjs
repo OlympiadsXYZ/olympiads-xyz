@@ -662,6 +662,35 @@ export function balanceDisplayMath(s) {
   }
   return text;
 }
+// A reader that split one printed problem into several (a title per Part) is folded back: the extra entries become
+// parts of the first — their statement as a part carrying their title, their own parts after it — with figures and
+// solutions carried along. Used when the archive inventory and the checker both count one problem.
+export function mergeProblemsIntoOne(c) {
+  const list = c?.problems || [];
+  if (list.length < 2) return false;
+  const base = list[0];
+  base.parts = base.parts || [];
+  for (const extra of list.slice(1)) {
+    const label = String(extra.title || (extra.number != null ? `Part ${extra.number}` : 'Part')).trim();
+    if (String(extra.statement || '').trim() || !(extra.parts || []).length) base.parts.push({ label, statement: String(extra.statement || '').trim(), ...(extra.points != null ? { points: extra.points } : {}) });
+    for (const pt of extra.parts || []) base.parts.push(pt);
+    if ((extra.figures || []).length) base.figures = [...(base.figures || []), ...extra.figures];
+    if (extra.solution && (String(extra.solution.statement || '').trim() || (extra.solution.figures || []).length)) {
+      base.solution = base.solution || { statement: '' };
+      const text = String(extra.solution.statement || '').trim();
+      if (text) base.solution.statement = [String(base.solution.statement || '').trim(), `**${label}**`, text].filter(Boolean).join('\n\n');
+      if ((extra.solution.figures || []).length) base.solution.figures = [...(base.solution.figures || []), ...extra.solution.figures];
+      if (extra.solution.incomplete && !text) { base.solution.incomplete = true; base.solution.incompleteReason = base.solution.incompleteReason || extra.solution.incompleteReason; }
+    }
+    const spans = [...(base.tx?.sourceSpans || []), ...(extra.tx?.sourceSpans || [])];
+    const seen = new Set(); base.tx = { ...(base.tx || {}), sourceSpans: spans.filter(s => { const k = `${s.document}#${s.page}`; if (seen.has(k)) return false; seen.add(k); return true; }) };
+    if (base.points == null && typeof extra.points === 'number') base.points = list.reduce((a, p) => a + (typeof p.points === 'number' ? p.points : 0), 0) || null;
+  }
+  c.problems = [base];
+  base.number = 1;
+  c.tx = { ...(c.tx || {}), normalised: [...(c.tx?.normalised || []), `problems 2–${list.length} folded into problem 1 as parts (one printed problem)`] };
+  return true;
+}
 // A paragraph that is nothing but LaTeX (a formula the reader left without its $$: "n_0\left(\frac{R_0}{r}\right)^2.
 // \qquad (18)") is wrapped as display math; a paragraph with real words in it is prose and stays.
 export function wrapBareFormulaParagraphs(s) {
