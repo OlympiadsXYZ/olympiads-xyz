@@ -506,3 +506,16 @@ test('a mangled checker path is repaired when the repair resolves in the candida
   assert.equal(repairDefectPath(c, '/problems/0/statement'), '/problems/0/statement');
   assert.equal(repairDefectPath(c, '/problems/7/nowhere'), '/problems/7/nowhere'); // nothing resolves: left as written
 });
+
+test('normaliseCandidate renames a figure that repeats an earlier id and clears its crop evidence', () => {
+  const c = candidate();
+  c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p2`, number: 2 });
+  const dup = c.problems[1].figures[0];
+  assert.equal(dup.id, 'p1-fig1');
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].figures[0].id, 'p1-fig1');
+  assert.equal(c.problems[0].figures[0].url !== undefined, true); // the first keeps its evidence
+  assert.equal(dup.id, 'p2-fig1');
+  assert.equal(dup.url, undefined);
+  assert.deepEqual(Object.keys(dup.tx).sort(), ['bbox', 'document', 'page']);
+});

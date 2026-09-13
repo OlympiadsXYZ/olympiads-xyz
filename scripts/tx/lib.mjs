@@ -602,6 +602,28 @@ export function normaliseCandidate(c) {
     if (typeof fig.tx?.bbox === 'string') { const m = fig.tx.bbox.match(/-?\d+(?:\.\d+)?/g); if (m?.length === 4) { fig.tx.bbox = m.map(Number); changes.push(`${p}: bbox parsed`); } }
     if (typeof fig.tx?.page === 'string' && /^\d+$/.test(fig.tx.page)) { fig.tx.page = Number(fig.tx.page); changes.push(`${p}: page parsed`); }
   }
+  // Figure ids are unique and positional (pN-figM under problem N, pN-sol-figM under its solution); a
+  // figure that repeats an earlier id (a refix copied a neighbour's) is renamed by its position, and loses
+  // its crop/upload evidence, which was bound to the old name.
+  {
+    const seen = new Set();
+    (c.problems || []).forEach((pr, i) => {
+      const n = String(pr.number ?? i + 1).replace(/[^a-z0-9]/gi, '').toLowerCase() || String(i + 1);
+      const lists = [[pr.figures, `p${n}-fig`], ...(pr.parts || []).map(pt => [pt.figures, `p${n}-fig`]), [pr.solution?.figures, `p${n}-sol-fig`]];
+      for (const [arr, stem] of lists) {
+        if (!Array.isArray(arr)) continue;
+        for (const fig of arr) {
+          if (!fig || typeof fig !== 'object') continue;
+          if (typeof fig.id === 'string' && fig.id && !seen.has(fig.id)) { seen.add(fig.id); continue; }
+          let k = 1; while (seen.has(`${stem}${k}`)) k++;
+          const from = fig.id; fig.id = `${stem}${k}`; seen.add(fig.id);
+          delete fig.url; delete fig.width; delete fig.height; delete fig.source;
+          if (fig.tx) fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
+          changes.push(`/problems/${i}: figure id ${from ?? '(none)'} renamed to ${fig.id} (duplicate or missing); crop evidence cleared`);
+        }
+      }
+    });
+  }
   // a reader sometimes emits the same problem twice (the second copy headed "Задача N."): drop the later copy
   if (Array.isArray(c.problems)) {
     const norm = s => String(s || '').replace(/^\s*задача\s*\d+\s*[.:)]?\s*/iu, '').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 80);
