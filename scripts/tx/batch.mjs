@@ -12,7 +12,7 @@ import { spawn, spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, JOBS_FILE, ROOT, nowIso, paperDir, findContentFile } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo'] });
-if (!args.ids && !args.backlog) fail('usage: batch.mjs --ids a,b | --backlog [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote]');
+if (!args.ids && !args.backlog && !args.catalogue) fail('usage: batch.mjs --ids a,b | --backlog | --catalogue [--subjects s,s] [--langs l,l] [--competitions c,c] [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote] [--redo]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
 const workers = Number(args.workers || 2);
 const logFile = path.resolve(args.log || path.join(ROOT, 'tmp', 'tx', 'batch.log'));
