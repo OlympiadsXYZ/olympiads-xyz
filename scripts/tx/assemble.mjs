@@ -70,8 +70,11 @@ export function assembleWindows(parts, manifest) {
       out.solution = JSON.parse(JSON.stringify(first.pr.solution));
       out.solution.statement = [solText(first), ...conts.map(solText)].join('\n\n');
       if (conts.length) {
-        const last = conts.at(-1).pr.solution; // whether the solution is complete is known only at its end
-        if (last.incomplete) { out.solution.incomplete = true; if (last.incompleteReason) out.solution.incompleteReason = last.incompleteReason; }
+        // whether the solution is complete is known only at its end; a continuation that calls itself
+        // incomplete because its beginning lies in an earlier window is complete once stitched
+        const last = conts.at(-1).pr.solution;
+        const aboutBeginning = /begin|earlier|previous|preceding|start|prior|начал|предишн|по-ран|предход/iu.test(String(last.incompleteReason || ''));
+        if (last.incomplete && !aboutBeginning) { out.solution.incomplete = true; if (last.incompleteReason) out.solution.incompleteReason = last.incompleteReason; }
         else { delete out.solution.incomplete; delete out.solution.incompleteReason; }
       }
       if (!head) (report.orphanContinuations ||= []).push(n);

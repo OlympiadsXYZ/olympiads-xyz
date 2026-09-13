@@ -241,7 +241,8 @@ test('assembleWindows stitches a solution that runs across windows: the beginnin
   delete p1.paper.solutionSource; delete p1.problems[0].solution;
   const head = { ...c.problems[0].solution, statement: 'Решение. Първата част на решението. [извън прозореца — продължава]', incomplete: true, incompleteReason: 'продължава в следващия прозорец' };
   const p2 = { paper: { ...c.paper }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: lib.WINDOW_PLACEHOLDER, parts: [], solution: head, tx: { sourceSpans: [{ document: 'solutions', page: 1 }] } }], tx: { window: { solutions: [1, 1] }, reader: c.tx.reader } };
-  const p3 = { paper: { ...c.paper }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: lib.WINDOW_PLACEHOLDER, parts: [], solution: { statement: 'Втората част на решението, до края.' }, tx: { continuation: true, sourceSpans: [{ document: 'solutions', page: 2 }] } }], tx: { window: { solutions: [1, 2] }, reader: c.tx.reader } };
+  // the continuation calls itself incomplete only because its beginning is in the earlier window: complete once stitched
+  const p3 = { paper: { ...c.paper }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: lib.WINDOW_PLACEHOLDER, parts: [], solution: { statement: 'Втората част на решението, до края.', incomplete: true, incompleteReason: 'the beginning of the solution is on earlier pages covered by another window' }, tx: { continuation: true, sourceSpans: [{ document: 'solutions', page: 2 }] } }], tx: { window: { solutions: [1, 2] }, reader: c.tx.reader } };
   const { data, report } = assembleWindows([p1, p2, p3], { ...manifest, documents: { ...manifest.documents, solutions: { ...manifest.documents.solutions, pages: 2 } } });
   assert.equal(data.problems[0].solution.statement, 'Решение. Първата част на решението.\n\nВтората част на решението, до края.');
   assert.equal(data.problems[0].solution.incomplete, undefined);
