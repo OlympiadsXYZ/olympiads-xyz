@@ -543,3 +543,13 @@ test('a statement that runs on into the next problem is cut where that problem o
   assert.equal(plausibleReplacement(cur, 'Странността трябва да запази знака си при всяко взаимодействие.', 'other', '/problems/0/statement'), true);
   assert.equal(plausibleReplacement(cur, 'Съвсем различен текст, който няма нищо общо с полето и е достатъчно дълъг.', 'other', '/problems/0/statement'), false);
 });
+
+test('a printed statement that opens with an imperative-looking word is not an instruction; a note about the field is', async () => {
+  const { looksLikeInstruction } = await import(txModule('fixes.mjs'));
+  assert.equal(looksLikeInstruction('Използвайки получения резулат за $P_x$, попълнете таблицата.'), false);
+  assert.equal(looksLikeInstruction('Вижда се, че силата не зависи от разстоянието.'), false);
+  assert.equal(looksLikeInstruction('Използвайте следните свойства на оптичните лещи:'), false);
+  assert.equal(looksLikeInstruction('Обединете въпроса в основното изявление и махнете етикета.'), true);
+  assert.equal(looksLikeInstruction('label: null (or "") — keep the paragraph as unbulleted statement text'), true);
+  assert.equal(looksLikeInstruction('Remove this figure entry from problem 4'), true);
+});

@@ -24,8 +24,10 @@ const parseBox = v => {
 // candidate. A replacement is applied only when it is text of the same kind as
 // what it replaces: not an instruction, and sharing enough words with the current
 // value (an omission fix must contain most of the current text and be longer).
-const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see |split|repoint|use |replace|restore|move|add |insert|merge|set |the (statement|solution|text)|пълен текст|виж|запази|премахни|добави|изтрий|замени|премести|обедин|раздел|постав|върн|използва|коригира|поправ|махн|отстран)/i;
-export const looksLikeInstruction = s => typeof s === 'string' && (INSTRUCTION.test(s) || /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s.slice(0, 200)));
+// whole words only: "Използвайки получения резултат…" and "Вижда се, че…" open printed statements
+const INSTRUCTION = /^\s*(keep|remove|delete|drop|full (solution )?text|see|split|repoint|use|replace|restore|move|add|insert|merge|set|the (statement|solution|text)|пълен текст|виж|запази|запазете|премахни|премахнете|добави|добавете|изтрий|изтрийте|замени|заменете|премести|преместете|обедини|обединете|раздели|разделете|постави|поставете|върни|върнете|коригирай|коригирайте|поправи|поправете|махни|махнете|отстрани|отстранете)\b/i;
+const META = /(кандидат|транскрипци|полето|стойността на полето|етикет|label field|the field|the candidate|the transcription|^\s*(label|caption|alt|value|statement)\s*:|\bkeep the\b|\bunbulleted\b)/i;
+export const looksLikeInstruction = s => typeof s === 'string' && (INSTRUCTION.test(s) || META.test(s.slice(0, 160)) || /\be\.g\.|\betc\.|\(approximate|\bshould\b|\bmust\b/i.test(s.slice(0, 200)));
 const words = s => new Set(String(s).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 1));
 // Checker paths come back mangled now and then: a doubled prefix ("/problems/2/problems/2/figures/0"),
 // a part written as "/p2/statement" (the second part), a solution figure under "/figures" instead
