@@ -46,7 +46,8 @@ const ROMAN = { i: 1, ii: 2, iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9,
 const headingNumber = line => { const h = P.heading.exec(line); if (!h) return null; const n = (h[1] || h[2]).toLowerCase(); return String(ROMAN[n] || Number(n) || n); };
 const problemKey = n => { const s = String(n ?? '').trim().toLowerCase(); return String(ROMAN[s] || Number(s) || s); };
 
-const norm = w => fixHomoglyphs(w).toLowerCase().replace(/ё/g, 'е').replace(/ѝ/g, 'и');
+// NFKC folds Word's math-italic glyphs (𝑐𝑜𝑛𝑠𝑡 → const) and ligature glyphs (ﬁ → fi) into plain letters before comparing
+const norm = w => fixHomoglyphs(w.normalize('NFKC')).toLowerCase().replace(/ё/g, 'е').replace(/ѝ/g, 'и');
 const WORD = /\p{L}+/gu;
 // "tобщо" / "Vmax" / "Tобщо": a variable glued to a Cyrillic word, or a Latin
 // homoglyph inside one — both readings are kept (alt = the script-split parts)
@@ -65,7 +66,15 @@ function tokenise(s) {
 }
 // A text layer glues words across a column gap or a lost space ("замразенав" = "замразена" + "в"):
 // a missing token that splits into two transcribed words (the first ≥ 4 letters) counts as present.
-const glued = (set, w) => { if (w.length < 6) return false; for (let i = 4; i <= w.length - 1; i++) if (set.has(w.slice(0, i)) && set.has(w.slice(i))) return true; return false; };
+// (a single letter on either side is a variable glued to a word: „𝑉diagram“ = V + diagram, "kmwhere" = km + where)
+const glued = (set, w) => {
+  if (w.length < 5) return false;
+  for (let i = 1; i <= w.length - 1; i++) {
+    const a = w.slice(0, i), b = w.slice(i);
+    if ((a.length === 1 || (a.length >= 2 && set.has(a))) && (b.length === 1 || set.has(b)) && Math.max(a.length, b.length) >= 4) return true;
+  }
+  return false;
+};
 const inSet = (set, t) => set.has(t.w) || (t.alt != null && t.alt.every(w => w.length < 3 || set.has(w))) || glued(set, t.w);
 export function layerPages(text) {
   const clean = text.replace(/­/g, '').replace(/\r/g, '');
@@ -298,7 +307,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     for (const f of docFields) {
       if (NO_EXTRAS.test(f.path)) continue;
       const other = Object.values(layerSets).filter(s => s !== layerSet);
-      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`) && !gluedInLayer(layerSet, x.w) && !brokenInLayer(layerSet, x.w)).map(x => x.raw))];
+      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !P.stop.test(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`) && !gluedInLayer(layerSet, x.w) && !brokenInLayer(layerSet, x.w)).map(x => x.raw))];
       if (!extras.length) continue;
       const minor = /\/(caption|title|label)$/.test(f.path);
       // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically;
