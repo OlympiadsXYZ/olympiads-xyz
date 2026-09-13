@@ -146,15 +146,36 @@ export function plausibleReplacement(current, fix, kind, path = '') {
 // the loop ping-pongs until its rounds run out. When a fix is a fragment of the
 // field, splice it over the passage it corrects: anchor on its first words, end
 // at its last words or, when those hold the typo, at the nearest sentence end.
-export function spliceFragment(current, fix) {
+export function spliceFragment(current, fix, kind = null) {
   if (typeof current !== 'string' || typeof fix !== 'string') return null;
   const f = fix.trim().replace(/(\s*(…|\.\.\.))+$/, '').trim(); // checkers truncate their quotes with an ellipsis
-  if (f.length < 8 || f.length >= 0.7 * current.length) return null;
-  // a fix that spans several lines is a block (an answer key, a list), not the one sentence a splice corrects
-  // (ioaa-2022 day-time observation: a five-line key spliced over its first line came out "I. M81 (2.5 M101, UMa…")
-  if (/\n/.test(f)) return null;
+  if (f.length < 8) return null;
   const words = f.split(/\s+/);
   if (words.length < 3) return null;
+  // a fix that spans several lines is a block (an answer key, a list), not the one sentence a splice corrects
+  // (ioaa-2022 day-time observation: a five-line key spliced over its first line came out "I. M81 (2.5 M101, UMa…").
+  // One block shape is placeable: an omitted passage followed by text the field already has ("**Use of
+  // approximation … full credit.**\n\n**(T12.8)** Combine…" — ioaa-2016-theory-qp, six rounds): the opening goes in
+  // before the first line of the fix the field contains, and the field's own text stays. Only for an omission:
+  // a wrong-value block replaces its lines.
+  if (/\n/.test(f)) {
+    if (kind !== 'omission') return null;
+    const lines = f.split('\n').map(l => l.trim()).filter(l => l.length >= 12);
+    for (let k = 1; k < lines.length; k++) {
+      const head = lines[k].split(/\s+/).slice(0, 4).join(' ');
+      const at = current.indexOf(head);
+      if (at < 0) continue;
+      const opening = f.slice(0, f.indexOf(lines[k])).trim();
+      if (!opening || current.includes(opening)) return null;
+      const tail = words.slice(-3).join(' ');
+      const j = current.indexOf(tail, at);
+      if (j < 0 || j - at > f.length * 1.5) return null;
+      const before = current.slice(0, at).replace(/\s+$/, '');
+      return `${before}${before ? '\n\n' : ''}${opening}\n\n${current.slice(at)}`;
+    }
+    return null;
+  }
+  if (f.length >= 0.7 * current.length) return null;
   let i = current.indexOf(words.slice(0, Math.min(4, words.length)).join(' '));
   if (i < 0 && words.length >= 4) i = current.indexOf(words.slice(0, 3).join(' '));
   if (i < 0 && words.length >= 4) {
@@ -354,7 +375,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       const other = duplicatesOtherProblem(original, p, f.value);
       const otherMoved = other && typeof byPath.get(other.path)?.value === 'string' && byPath.get(other.path).value.trim() !== String(pointerGet(original, other.path) || '').trim();
       if (other && !otherMoved) { skipped.push({ ...entry, reason: `fix pastes the text of ${other.what} into this field` }); continue; }
-      const spliced = spliceFragment(current, f.value);
+      const spliced = spliceFragment(current, f.value, d.kind);
       if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: f.value, note: f.note || null }); continue; }
       // a field that currently holds a copy of a sibling's text (a reader carried part c's question into part d) is
       // a paste: the printed replacement need not resemble it (eupho-2025-experiment-x, seven rounds)

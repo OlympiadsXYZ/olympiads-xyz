@@ -54,7 +54,7 @@ const WORD = /\p{L}+/gu;
 const splitScripts = w => w.split(/(?<=[a-z])(?=[а-я])|(?<=[а-я])(?=[a-z])/u);
 // a token set entirely in mathematical alphanumerics (𝑝ℎ𝑠𝑡𝑎 — a formula's variables the layer strings together) is
 // lettering, never a printed prose word (apho-2023-theory-t1 was asked to transcribe it)
-const isNeutral = t => t.skip || (t.fragment && !t.joined) || t.w.length < 3 || !P.content.test(t.w) || P.stop.test(t.w) || /^[\u{1D400}-\u{1D7FF}\u{2100}-\u{214F}]+$/u.test(String(t.raw || ''));
+const isNeutral = t => t.skip || (t.fragment && !t.joined) || t.w.length < 3 || !P.content.test(t.w) || P.stop.test(t.w) || /[\u{1D400}-\u{1D7FF}\u{2100}-\u{214F}]/u.test(String(t.raw || '')); // any such letter: „𝑚𝑚and“ is a formula glued to a word (apho-2023-experiment-e1)
 
 function tokenise(s) {
   const out = [];

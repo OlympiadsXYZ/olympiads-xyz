@@ -954,3 +954,13 @@ test('a transcriber\'s remark typed into a field moves to tx.notes', () => {
   assert.match(c.tx.notes, /Забележка към транскрипцията: в оригинала/);
   assert.match(c.tx.notes, /reader rationale/, 'the earlier notes stay');
 });
+
+test('an omission fix that opens with the missing passage and continues with text the field has is inserted before that text', async () => {
+  const { spliceFragment } = await import(txModule('fixes.mjs'));
+  const current = '**Solution:**\n\nExpressions lacking the approximation but otherwise correct will get a penalty of 2.0.\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet. This takes a few lines of algebra and a table of values.';
+  const fix = '**Use of approximation with proper justification at a later stage than at the first step will get full credit.**\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet.';
+  const out = spliceFragment(current, fix, 'omission');
+  assert.equal(spliceFragment(current, fix), null, 'not for a wrong-value fix');
+  assert.equal(out, '**Solution:**\n\nExpressions lacking the approximation but otherwise correct will get a penalty of 2.0.\n\n**Use of approximation with proper justification at a later stage than at the first step will get full credit.**\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet. This takes a few lines of algebra and a table of values.');
+  assert.equal(spliceFragment(out, fix, 'omission'), null, 'already present: nothing to insert');
+});

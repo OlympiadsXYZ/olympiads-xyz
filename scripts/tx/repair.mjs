@@ -70,13 +70,14 @@ for (const d of receipt.defects || []) {
     if (current === d.suggestedFix) { skipped.push({ ...entry, reason: 'already identical' }); continue; }
     // A checker sometimes "fixes" an omission with a pointer ("full text per pp. 2–3, starting …")
     // instead of the text; restoring an omission can only make the field longer.
-    if (d.kind === 'omission' && d.suggestedFix.length <= current.length) { skipped.push({ ...entry, reason: 'omission fix is not longer than the current text (not a replacement)' }); continue; }
     if (looksLikeInstruction(d.suggestedFix)) { skipped.push({ ...entry, reason: 'suggestedFix is an instruction, not a replacement' }); continue; }
     const dup = duplicatesSiblings(candidate, p, d.suggestedFix, current);
     if (dup) { skipped.push({ ...entry, reason: `suggestedFix pastes the text of ${dup} into this field` }); continue; }
-    // a quoted sentence replaces the passage it corrects, not the whole field
-    const spliced = spliceFragment(current, d.suggestedFix);
+    // a quoted sentence replaces the passage it corrects, not the whole field (an omitted passage followed by text
+    // the field has is inserted before that text)
+    const spliced = spliceFragment(current, d.suggestedFix, d.kind);
     if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: d.suggestedFix }); continue; }
+    if (d.kind === 'omission' && d.suggestedFix.length <= current.length) { skipped.push({ ...entry, reason: 'omission fix is not longer than the current text (not a replacement)' }); continue; }
     if (!plausibleReplacement(current, d.suggestedFix, d.kind, p)) { skipped.push({ ...entry, reason: 'suggestedFix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
     pointerSet(candidate, p, d.suggestedFix);
     applied.push({ ...entry, from: current, to: d.suggestedFix });
