@@ -158,6 +158,8 @@ function mergeTextLayer(candFile, checkOut) {
     if (check.verdict === 'pass') check.verdict = 'fail';
     check.summary = `${check.summary || ''} Region check: ${unplaced.length} printed graphic(s) not covered by any figure.`.trim();
   }
+  // the verdict follows the defect list (a model sometimes says pass while listing defects, and the receipt refuses that every round)
+  if (check.verdict !== 'escalate') { const open = (check.defects || []).some(d => d.severity && d.severity !== 'info'); if (open && check.verdict === 'pass') { check.verdict = 'fail'; check.verdictAdjusted = 'pass with defects listed'; } else if (!open && check.verdict === 'fail') { check.verdict = 'pass'; check.verdictAdjusted = 'fail with no open defect'; } }
   writeJson(checkOut, check);
   tl.regionDefects = unplaced.length;
   return tl;
