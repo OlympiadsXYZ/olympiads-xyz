@@ -148,7 +148,7 @@ export function spliceFragment(current, fix) {
 export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix', requestId = null } = {}) {
   const byPath = new Map();
   for (const f of Array.isArray(fixes) ? fixes : []) if (f && typeof f.path === 'string') byPath.set(f.path, f);
-  const applied = [], skipped = [];
+  const applied = [], skipped = [], removals = [];
   const touched = new Set();
   for (const d of defects || []) {
     const entry = { path: d.path, kind: d.kind, severity: d.severity, description: d.description };
@@ -201,6 +201,15 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
         if (current === undefined || JSON.stringify(current) === JSON.stringify(f.value)) { applied.push({ ...entry, from: null, to: null, notFigure: d.region, note: f.note || null }); continue; }
       }
     }
+    // {"remove": true} on a problem or a part the paper does not print as such (a sub-task listed as a
+    // problem of its own, a duplicate): applied after every other fix, highest index first, so the
+    // paths of the fixes in this batch stay valid; the entries after it move up (numbers, ids follow)
+    if (f.value && typeof f.value === 'object' && f.value.remove === true && /^\/problems\/\d+(\/parts\/\d+)?$/.test(p)) {
+      if (!current || typeof current !== 'object') { skipped.push({ ...entry, reason: 'no such entry to remove' }); continue; }
+      removals.push({ entry, p, note: f.note || null });
+      continue;
+    }
+    if (typeof current === 'boolean' && typeof f.value === 'string' && /^(true|false)$/i.test(f.value.trim())) f.value = f.value.trim().toLowerCase() === 'true';
     if (typeof current === 'boolean' && typeof f.value === 'boolean') {
       if (current === f.value) { skipped.push({ ...entry, reason: 'model returned the current value unchanged' }); continue; }
       pointerSet(candidate, p, f.value);
@@ -263,6 +272,18 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       continue;
     }
     skipped.push({ ...entry, reason: `cannot apply a ${Array.isArray(f.value) ? 'array' : typeof f.value} fix to a ${current === undefined ? 'missing' : Array.isArray(current) ? 'array' : typeof current} field` });
+  }
+  for (const r of removals.sort((a, b) => b.p.localeCompare(a.p, undefined, { numeric: true }))) {
+    const arrPath = r.p.replace(/\/\d+$/, ''), idx = Number(r.p.split('/').at(-1));
+    const arr = pointerGet(candidate, arrPath);
+    if (!Array.isArray(arr) || !arr[idx]) { skipped.push({ ...r.entry, reason: 'no such entry to remove' }); continue; }
+    const [gone] = arr.splice(idx, 1);
+    if (arrPath === '/problems') arr.forEach((pr, i) => {
+      if (Number.isInteger(pr.number)) pr.number = i + 1;
+      if (typeof pr.id === 'string' && /-p\d+$/.test(pr.id)) pr.id = pr.id.replace(/-p\d+$/, `-p${i + 1}`);
+      for (const list of [pr.figures, pr.solution?.figures, ...(pr.parts || []).map(pt => pt.figures)]) for (const fig of list || []) if (typeof fig?.id === 'string') fig.id = fig.id.replace(/^p\d+-/, `p${i + 1}-`);
+    });
+    applied.push({ ...r.entry, from: gone.id || gone.label || null, to: null, removed: true, note: r.note });
   }
   // a changed box invalidates the crop, upload and public-URL evidence of that figure
   for (const { fig, path: p } of allFigures(candidate)) {

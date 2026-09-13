@@ -190,6 +190,50 @@ test('assembleWindows: a statement read from the solutions document never outran
   assert.deepEqual(only.report.solutionWindowStatements, [1]);
 });
 
+test('a problem entry the paper does not print is removed last, and the ones after it move up with their numbers and ids', async () => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  const p1 = c.problems[0];
+  const mk = (n, extra = {}) => ({ ...JSON.parse(JSON.stringify(p1)), id: `${PAPER}-p${n}`, number: n, figures: [{ id: `p${n}-fig1`, alt: 'x', tx: { document: 'problems', page: 1, bbox: [100, 100, 400, 400] } }], ...extra });
+  c.problems = [mk(1), mk(2, { statement: 'Task E1.3 — a sub-task listed as a problem' }), mk(3, { statement: 'Третата задача.' })];
+  const defects = [
+    { path: '/problems/1', kind: 'metadata', severity: 'critical', description: 'invented problem entry (a sub-task of problem 1)' },
+    { path: '/problems/2/statement', kind: 'reworded', severity: 'major', description: 'wording' },
+    { path: '/problems/2/solution/incomplete', kind: 'other', severity: 'minor', description: 'the solution is complete' },
+  ];
+  c.problems[2].solution.incomplete = true; c.problems[2].solution.incompleteReason = 'x';
+  const r = applyFixes(c, [
+    { path: '/problems/1', value: { remove: true }, note: 'sub-task of E1' },
+    { path: '/problems/2/statement', value: 'Третата задача, както е отпечатана.' },
+    { path: '/problems/2/solution/incomplete', value: 'false' },
+  ], { defects, round: 1 });
+  assert.equal(r.skipped.length, 0, JSON.stringify(r.skipped));
+  assert.equal(c.problems.length, 2);
+  assert.deepEqual(c.problems.map(p => [p.number, p.id, p.figures[0].id]), [[1, `${PAPER}-p1`, 'p1-fig1'], [2, `${PAPER}-p2`, 'p2-fig1']]);
+  assert.equal(c.problems[1].statement, 'Третата задача, както е отпечатана.'); // applied before the removal shifted it
+  assert.equal(c.problems[1].solution.incomplete, false); assert.equal(c.problems[1].solution.incompleteReason, undefined);
+  assert.ok(r.applied.some(a => a.removed && a.path === '/problems/1'));
+});
+
+test('assembleWindows stitches a solution that runs across windows: the beginning, then each continuation in window order', () => {
+  const c = candidate();
+  const p1 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } }, problems: [{ ...c.problems[0], solution: undefined, tx: { sourceSpans: [{ document: 'problems', page: 1 }] } }], tx: { window: { problems: [1, 2] }, reader: c.tx.reader } };
+  delete p1.paper.solutionSource; delete p1.problems[0].solution;
+  const head = { ...c.problems[0].solution, statement: 'Решение. Първата част на решението. [извън прозореца — продължава]', incomplete: true, incompleteReason: 'продължава в следващия прозорец' };
+  const p2 = { paper: { ...c.paper }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: lib.WINDOW_PLACEHOLDER, parts: [], solution: head, tx: { sourceSpans: [{ document: 'solutions', page: 1 }] } }], tx: { window: { solutions: [1, 1] }, reader: c.tx.reader } };
+  const p3 = { paper: { ...c.paper }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: lib.WINDOW_PLACEHOLDER, parts: [], solution: { statement: 'Втората част на решението, до края.' }, tx: { continuation: true, sourceSpans: [{ document: 'solutions', page: 2 }] } }], tx: { window: { solutions: [1, 2] }, reader: c.tx.reader } };
+  const { data, report } = assembleWindows([p1, p2, p3], { ...manifest, documents: { ...manifest.documents, solutions: { ...manifest.documents.solutions, pages: 2 } } });
+  assert.equal(data.problems[0].solution.statement, 'Решение. Първата част на решението.\n\nВтората част на решението, до края.');
+  assert.equal(data.problems[0].solution.incomplete, undefined);
+  assert.equal(data.problems[0].solution.incompleteReason, undefined);
+  assert.equal(data.problems[0].tx.continuation, undefined);
+  assert.equal(report.orphanContinuations, undefined);
+  // a continuation whose beginning no window produced is kept and reported, not dropped
+  const orphan = assembleWindows([p1, p3], manifest);
+  assert.equal(orphan.data.problems[0].solution.statement, 'Втората част на решението, до края.');
+  assert.deepEqual(orphan.report.orphanContinuations, [1]);
+});
+
 test('validate.mjs accepts the synthetic candidate and rejects a pixel-sized box', t => {
   const s = sandbox(t);
   const f = s.write('candidates/zai__glm-5.3-flash.json', candidate());

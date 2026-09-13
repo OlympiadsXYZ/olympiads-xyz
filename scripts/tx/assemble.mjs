@@ -57,10 +57,25 @@ export function assembleWindows(parts, manifest) {
     if (base && separateSolutions && !fromProblems.length) report.solutionWindowStatements.push(n);
     if (!base) { report.problems.push(`problem ${n}: statement not found in any window (placeholder only)`); }
     const out = JSON.parse(JSON.stringify((base || seen[0]).pr));
-    // solution: the longest one any window produced
-    const sols = seen.map(s => s.pr.solution).filter(s => s && (s.statement || '').trim());
-    if (sols.length) out.solution = sols.sort((a, b) => String(b.statement).length - String(a.statement).length)[0];
-    else if (!out.solution) out.solution = seen.map(s => s.pr.solution).find(Boolean) || undefined;
+    // solution: the longest beginning any window produced, followed by the continuations later
+    // windows read (tx.continuation: the part printed after the overlap page). A window's own
+    // "[извън прозореца …]" notes inside a solution are not printed text.
+    const solText = s => String(s.pr.solution?.statement || '').replace(/\[извън прозореца[^\]]*\]/g, '').trim();
+    const pieces = seen.filter(s => s.pr.solution && solText(s));
+    const heads = pieces.filter(s => !s.pr.tx?.continuation).sort((a, b) => solText(b).length - solText(a).length);
+    const head = heads[0] || null;
+    const conts = pieces.filter(s => s.pr.tx?.continuation && (!head || s.wi > head.wi)).sort((a, b) => a.wi - b.wi);
+    if (head || conts.length) {
+      const first = head || conts.shift();
+      out.solution = JSON.parse(JSON.stringify(first.pr.solution));
+      out.solution.statement = [solText(first), ...conts.map(solText)].join('\n\n');
+      if (conts.length) {
+        const last = conts.at(-1).pr.solution; // whether the solution is complete is known only at its end
+        if (last.incomplete) { out.solution.incomplete = true; if (last.incompleteReason) out.solution.incompleteReason = last.incompleteReason; }
+        else { delete out.solution.incomplete; delete out.solution.incompleteReason; }
+      }
+      if (!head) (report.orphanContinuations ||= []).push(n);
+    } else if (!out.solution) out.solution = seen.map(s => s.pr.solution).find(Boolean) || undefined;
     if (out.solution === undefined) delete out.solution;
     // figures: union by id, in statement and solution
     const figsOf = (pick) => uniqBy(seen.flatMap(s => pick(s.pr) || []), f => f.id);
@@ -74,7 +89,7 @@ export function assembleWindows(parts, manifest) {
     // source spans: union
     const spans = uniqBy(seen.flatMap(s => s.pr.tx?.sourceSpans || []), spanKey).sort((a, b) => spanKey(a).localeCompare(spanKey(b)));
     out.tx = { ...(out.tx || {}), sourceSpans: spans, windows: [...new Set(seen.map(s => s.wi))] };
-    delete out.tx.window;
+    delete out.tx.window; delete out.tx.continuation;
     problems.push(out);
   }
   problems.forEach((pr, i) => { if (Number(pr.number) !== i + 1) report.problems.push(`numbering gap: position ${i + 1} holds problem ${pr.number}`); });
