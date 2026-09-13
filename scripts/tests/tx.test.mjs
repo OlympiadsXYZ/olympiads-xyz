@@ -261,6 +261,11 @@ test('a passage moves between sibling fields when both are returned; a solution 
   const r9 = applyFixes(c9, [{ path: '/problems/0/parts/1/statement', value: 'The step height s (3 pts): estimate the height of the step from the recorded oscillation and give its uncertainty.' }], { defects: [{ path: '/problems/0/parts/1/statement', kind: 'omission', severity: 'critical', description: 'part d carries part c text' }], round: 1 });
   assert.equal(r9.skipped.length, 0, JSON.stringify(r9.skipped));
   assert.match(c9.problems[0].parts[1].statement, /step height/);
+  // an alt text rewritten in the paper's language shares nothing with the old one and is still accepted
+  const c10 = mk(); c10.problems[0].solution.figures = [{ id: 'p1-sol-fig1', alt: 'График в логаритмични оси: крива, която първо расте линейно и после се насища.', tx: { document: 'solutions', page: 1, bbox: [100, 100, 500, 500] } }];
+  const r10 = applyFixes(c10, [{ path: '/problems/0/solution/figures/0/alt', value: 'Log-log plot of the mean squared displacement against time: a curve rising linearly at first and saturating later.' }], { defects: [{ path: '/problems/0/solution/figures/0/alt', kind: 'other', severity: 'minor', source: 'text-layer', description: "The alt text is not in the paper's language (en): „График…“ — rewrite it in the paper's language." }], round: 1 });
+  assert.equal(r10.skipped.length, 0, JSON.stringify(r10.skipped));
+  assert.match(c10.problems[0].solution.figures[0].alt, /^Log-log plot/);
   // one side only, nothing returned for the destination: still a paste, refused
   const c3 = mk();
   const r3 = applyFixes(c3, [{ path: '/problems/0/parts/0/statement', value: intro }], { defects: [{ path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'x' }], round: 1 });

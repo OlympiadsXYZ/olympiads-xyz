@@ -328,7 +328,9 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       // a field that currently holds a copy of a sibling's text (a reader carried part c's question into part d) is
       // a paste: the printed replacement need not resemble it (eupho-2025-experiment-x, seven rounds)
       const currentIsPaste = current.length >= 40 && !!duplicatesSiblings(original, p, current, '');
-      if (!currentIsPaste && !plausibleReplacement(current, f.value, d.kind, p)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
+      // an alt text or caption rewritten in the paper's language shares no words with the old one by design
+      const languageFix = /\/(alt|caption)$/.test(p) && /paper's language|език/i.test(String(d.description || ''));
+      if (!currentIsPaste && !languageFix && !plausibleReplacement(current, f.value, d.kind, p)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
       pointerSet(candidate, p, f.value);
       applied.push({ ...entry, from: current, to: f.value, note: f.note || null });
       continue;
