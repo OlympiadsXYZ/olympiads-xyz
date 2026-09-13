@@ -145,7 +145,26 @@ export function spliceFragment(current, fix) {
   return current.slice(0, i) + f + keep + current.slice(end);
 }
 
-export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix', requestId = null } = {}) {
+// A solutions-only reader window sometimes "finds" a problem's statement on its pages and pastes the
+// solution's narrative; the checker sees it, the refix answers "" (the printed problem is only its parts).
+// "" is accepted for /problems/N/statement only when the problem has parts, the statement opens like the
+// problem's own solution, and — when the problems document's text layer is at hand — that text is not
+// printed there (a statement the solutions merely reprint is printed in the problems document too).
+export function pastedSolutionStatement(candidate, path, current, problemsText = null) {
+  const m = /^\/problems\/(\d+)\/statement$/.exec(String(path));
+  if (!m) return false;
+  const pr = candidate?.problems?.[Number(m[1])];
+  if (!pr || !(pr.parts || []).length || !pr.solution?.statement) return false;
+  const head = opening(current, 8);
+  if (head.split(' ').length < 6 || !opening(pr.solution.statement, 100000).includes(head)) return false;
+  if (typeof problemsText === 'string' && problemsText.trim()) {
+    const printed = new Set(problemsText.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length >= 4));
+    const ws = [...new Set(opening(current, 100000).split(' ').filter(w => w.length >= 4))];
+    if (ws.length >= 10 && ws.filter(w => printed.has(w)).length >= 0.6 * ws.length) return false;
+  }
+  return true;
+}
+export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix', requestId = null, problemsText = null } = {}) {
   const byPath = new Map();
   for (const f of Array.isArray(fixes) ? fixes : []) if (f && typeof f.path === 'string') byPath.set(f.path, f);
   const applied = [], skipped = [], removals = [];
@@ -161,7 +180,7 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       continue;
     }
     if (f.value == null) { skipped.push({ ...entry, reason: `model could not settle it: ${String(f.note || '').slice(0, 200)}` }); continue; }
-    const p = String(d.path);
+    let p = String(d.path);
     if (!p.startsWith('/')) { skipped.push({ ...entry, reason: 'path is not a JSON pointer' }); continue; }
     const figMatch = /^(.*\/figures\/\d+)(?:\/tx(?:\/bbox)?)?$/.exec(p);
     if (figMatch && (d.kind === 'figure' || /bbox$/.test(p) || parseBox(f.value) || f.value?.remove === true)) {
@@ -188,7 +207,10 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       applied.push({ ...entry, from, to: box, ...(o?.tx ? { moved: `${fig.tx.document} p.${fig.tx.page}` } : {}), note: f.note || null });
       continue;
     }
-    const current = pointerGet(candidate, p);
+    let current = pointerGet(candidate, p);
+    // a checker that names the solution or a part (an object) and a refix that answers its text mean the
+    // object's statement: the fix goes there
+    if (typeof f.value === 'string' && current && typeof current === 'object' && !Array.isArray(current) && typeof current.statement === 'string' && !/\/figures\/\d+$/.test(p)) { p = `${p}/statement`; current = current.statement; }
     const sameShape = (a, b) => (Array.isArray(a) && Array.isArray(b)) || (typeof a === 'object' && a !== null && !Array.isArray(a) && typeof b === 'object' && b !== null && !Array.isArray(b));
     // A printed-graphic defect answered with a figures array that still covers no part of the
     // region (the same array, [], or an array changed elsewhere) means "not a figure": remember
@@ -220,8 +242,9 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     // An omitted field (a whole solution the reader skipped) is missing, not
     // wrong: create it, and any missing object on the way, as long as no array
     // element has to be invented (a missing problem/part is not a field fix).
-    // an unprinted caption/alt is dropped when the model answers ""
-    if (typeof current === 'string' && f.value === '' && /\/(caption|alt|title)$/.test(p)) {
+    // an unprinted caption/alt is dropped when the model answers ""; so is a problem statement that is
+    // a copy of the problem's own solution when the printed problem is only its parts
+    if (typeof current === 'string' && f.value === '' && (/\/(caption|alt|title)$/.test(p) || pastedSolutionStatement(candidate, p, current, problemsText))) {
       const parent = pointerGet(candidate, p.replace(/\/[^/]+$/, ''));
       if (parent && typeof parent === 'object') { delete parent[p.split('/').at(-1)]; applied.push({ ...entry, from: current, to: null, removed: true, note: f.note || null }); continue; }
     }

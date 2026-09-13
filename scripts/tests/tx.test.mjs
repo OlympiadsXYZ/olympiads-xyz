@@ -215,6 +215,26 @@ test('a problem entry the paper does not print is removed last, and the ones aft
   assert.ok(r.applied.some(a => a.removed && a.path === '/problems/1'));
 });
 
+test('"" drops a problem statement that is a copy of its own solution when the printed problem is only its parts', async () => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const narrative = 'In the absence of an externally imposed magnetic field, an infinite, straight, thin wire creates a magnetic field whose field lines are closed circles centred on the wire, and the flux tube argument gives the radius.';
+  const mk = () => { const c = candidate(); const p = c.problems[0]; p.statement = narrative; p.parts = [{ label: 'a)', statement: 'Sketch one of the field lines.' }]; p.solution.statement = `**Part a)** ${narrative} Hence the result.`; return c; };
+  const defects = [{ path: '/problems/0/statement', kind: 'other', severity: 'critical', description: 'the statement field holds the solution text' }];
+  const c1 = mk();
+  const r1 = applyFixes(c1, [{ path: '/problems/0/statement', value: '' }], { defects, round: 1, problemsText: 'T3: Crossed wires. a) Current flows through an infinite, straight, thin wire. Sketch one of the field lines. b) Calculate d.' });
+  assert.equal(r1.skipped.length, 0, JSON.stringify(r1.skipped));
+  assert.equal(c1.problems[0].statement, undefined);
+  // the same text printed in the problems document is a statement the solutions merely reprint: kept
+  const c2 = mk();
+  const r2 = applyFixes(c2, [{ path: '/problems/0/statement', value: '' }], { defects, round: 1, problemsText: `T3. ${narrative} a) Sketch one of the field lines.` });
+  assert.equal(r2.applied.length, 0);
+  assert.equal(c2.problems[0].statement, narrative);
+  // a statement that does not open like the solution is never dropped by ""
+  const c3 = mk(); c3.problems[0].statement = 'A genuinely printed introduction about two crossed wires carrying equal currents in vacuum.';
+  const r3 = applyFixes(c3, [{ path: '/problems/0/statement', value: '' }], { defects, round: 1 });
+  assert.equal(r3.applied.length, 0);
+});
+
 test('assembleWindows stitches a solution that runs across windows: the beginning, then each continuation in window order', () => {
   const c = candidate();
   const p1 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } }, problems: [{ ...c.problems[0], solution: undefined, tx: { sourceSpans: [{ document: 'problems', page: 1 }] } }], tx: { window: { problems: [1, 2] }, reader: c.tx.reader } };

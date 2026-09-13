@@ -31,7 +31,7 @@ import { createRequire } from 'node:module';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, loadPrompt, pageImages, pageWindows, windowBlock, windowLabel, contextBlock, sanitizeCandidate, repairJsonEscapes,
   candidateFile, checkFile, loadProviderKeys, PROVIDER_KEY_NAME, PROVIDER_LIMITS, TOKENS_PER_PAGE, estimateCost, appendRun, nowIso,
-  checkerView, candidateCrops, sha256File, sha256, sleep, ROOT, pointerGet, normaliseCandidate,
+  checkerView, candidateCrops, sha256File, sha256, sleep, ROOT, pointerGet, normaliseCandidate, paperDir,
 } from './lib.mjs';
 import { assembleWindows } from './assemble.mjs';
 import { bindCheckerResult } from './evidence.mjs';
@@ -309,7 +309,8 @@ for (const window of windows) {
   if (stage === 'refix') {
     const responseFile = target.replace(/\.json$/, '') + '.response.json';
     writeJson(responseFile, { ...ident, fixes: obj.fixes ?? null });
-    const result = applyFixes(refix.candidate, obj.fixes, { defects: refix.defects, round: refix.round, by: `${provider}:${model} refix`, requestId: parsed.requestId });
+    const problemsText = (() => { const d = manifest.documents?.problems; if (!d?.text) return null; try { return fs.readFileSync(path.join(paperDir(paperId), d.text), 'utf8'); } catch { return null; } })();
+    const result = applyFixes(refix.candidate, obj.fixes, { defects: refix.defects, round: refix.round, by: `${provider}:${model} refix`, requestId: parsed.requestId, problemsText });
     writeJson(target, sanitizeCandidate(normaliseCandidate(refix.candidate)));
     console.log(JSON.stringify({ paperId, stage, provider, model, out: target, responseFile, applied: result.applied.length, skipped: result.skipped.length, changes: result.applied, unapplied: result.skipped, figuresToRedo: result.figuresToRedo, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, costUsd, requestId: parsed.requestId }, null, 2));
     process.exit(result.skipped.length ? 3 : 0);
