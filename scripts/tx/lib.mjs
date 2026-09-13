@@ -224,7 +224,14 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
   // told how many top-level problems there are (an IPhO question with Parts A–C is one problem, not three)
   if (keys.problems) {
     const row = (readJson(path.join(ROOT, 'content', 'archive-index.json'), null)?.rows || []).find(r => r.file === keys.problems && Array.isArray(r.problems) && r.problems.length);
-    if (row) meta.listed = { problems: row.problems.length, titles: row.problems.map(p => [p.number, p.title].filter(Boolean).join(' · ')).slice(0, 12) };
+    if (row) {
+      // the inventory sometimes lists a problem's printed sections as problems of their own ("Experiment 1 (Part A) · The
+      // short copper rod" next to "Experiment 1 · Heat Conduction…"): those are parts, and are not counted
+      const titles = row.problems.map(p => [p.number, p.title].filter(Boolean).join(' · '));
+      const isSection = t => /\((?:part|section|част)\s*[a-zа-я0-9]+\)|^\s*(?:part|част)\s+[a-zа-я0-9]+\b/i.test(t) || /^[^·]*\((?:part|част) [a-z0-9]+\)/i.test(String(t));
+      const top = titles.filter(t => !isSection(t));
+      meta.listed = { problems: Math.max(1, top.length), titles: top.slice(0, 12) };
+    }
   }
   return { paperId, meta, keys, origin, existingFile: existing };
 }
