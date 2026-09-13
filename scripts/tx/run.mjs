@@ -24,6 +24,8 @@ import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFil
 import { textLayerCheck, profileFor } from './textlayer.mjs';
 import { spliceFragment, repairDefectPath, repointByContent } from './fixes.mjs';
 import { regionsFor, coverFrac } from './snap.mjs';
+import { allFigures } from './lib.mjs';
+const allFigureBoxes = c => allFigures(c).map(({ fig }) => fig?.tx || {}).filter(t => Array.isArray(t.bbox) && t.bbox.length === 4 && t.page);
 
 const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
@@ -121,6 +123,15 @@ function mergeTextLayer(candFile, checkOut) {
   const num = o => { if (o && typeof o.page === 'string') { const m = /^\s*["']?(\d+)["']?\s*$/.exec(o.page); if (m) o.page = Number(m[1]); } }; // "5" or a stray-quoted 5"
   for (const p of check.coverage?.pagesRead || []) num(p);
   for (const d of check.defects || []) num(d);
+  // a page the document does not have (p.50 of 24: a checker mixing up the two documents) would block the receipt
+  // outright; the defect goes to the addressed problem's first page in that document instead
+  for (const d of check.defects || []) {
+    const pages = manifest.documents?.[d.document]?.pages;
+    if (!d.document || !pages || (Number.isInteger(d.page) && d.page >= 1 && d.page <= pages)) continue;
+    const m = /^\/problems\/(\d+)/.exec(String(d.path || ''));
+    const span = (m && candidate.problems?.[Number(m[1])]?.tx?.sourceSpans || []).find(s => s.document === d.document);
+    d.pageAsWritten = d.page; d.page = span?.page || 1;
+  }
   if (typeof check.coverage?.problemsChecked === 'string') check.coverage.problemsChecked = Number(check.coverage.problemsChecked);
   // A printed penalty rule ("Task E8: Intentional damage penalty (-0.5 pts)") is not a problem: validate has the
   // reader fold it away, and a checker that still counts it must not block the receipt (eupho-2026-experiment-x)
@@ -208,14 +219,28 @@ function mergeTextLayer(candFile, checkOut) {
     if (!/text|paragraph|caption|body|sentence|line|includes|swallow|extend|too (large|big|wide|tall)|below|above/i.test(String(d.description || ''))) continue;
     const fig = pointerGet(candidate, m[1]); const t = fig?.tx; if (!t?.bbox || !t.document || !t.page) continue;
     const regs = regionsFor(paperId, manifest, t.document)?.pages?.find(pg => pg.page === t.page)?.regions || [];
-    const inside = regs.filter(g => (!g.kind || g.kind === 'drawing' || g.kind === 'table') && coverFrac(g.core || g.bbox, t.bbox) >= 0.9);
-    if (!inside.length) continue;
-    const u = inside.map(g => g.bbox).reduce((a, b) => [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])]);
+    const graphic = g => !g.kind || g.kind === 'drawing' || g.kind === 'table';
+    const inside = regs.filter(g => graphic(g) && coverFrac(g.core || g.bbox, t.bbox) >= 0.9);
     const area = b => Math.max(0, b[2] - b[0]) * Math.max(0, b[3] - b[1]);
-    if (area(t.bbox) < 1.25 * area(u)) continue; // the box already hugs the drawing: one model opinion against another
     const PAD = 6, clamp = v => Math.round(Math.min(1000, Math.max(0, v)));
+    let u = null, verb = 'tightened to';
+    if (inside.length) {
+      u = inside.map(g => g.bbox).reduce((a, b) => [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])]);
+      // the box hugs the drawing already (one model opinion against another) unless it is notably larger or
+      // runs past the drawing by a text line on some side (a clipped line of body text under it)
+      const over = Math.max(t.bbox[2] - u[2], u[0] - t.bbox[0], t.bbox[3] - u[3], u[1] - t.bbox[1]);
+      if (area(t.bbox) < 1.1 * area(u) && over < 12) continue;
+    } else {
+      // the box sits on no drawing at all: when exactly one printed drawing of that page is covered by no figure,
+      // the box was put in the wrong place and moves there (ioaa-2014: a celestial sphere in the upper half,
+      // the box in the lower middle)
+      const boxes = allFigureBoxes(candidate).filter(b => b.document === t.document && b.page === t.page).map(b => b.bbox);
+      const free = regs.filter(g => graphic(g) && (g.areaFrac || 0) >= 0.01 && !boxes.some(b => coverFrac(g.core || g.bbox, b) >= 0.3));
+      if (free.length !== 1) continue;
+      u = free[0].bbox; verb = 'moved to';
+    }
     d.suggestedFix = [clamp(u[0] - PAD), clamp(u[1] - PAD), clamp(u[2] + PAD), clamp(u[3] + PAD)];
-    d.description = `[box tightened to the printed drawing at ${JSON.stringify(u.map(Math.round))}] ${d.description}`;
+    d.description = `[box ${verb} the printed drawing at ${JSON.stringify(u.map(Math.round))}] ${d.description}`;
     d.source = 'regions'; tightened++;
   }
   if (tightened) check.regions = { ...(check.regions || {}), tightened };
