@@ -43,7 +43,7 @@ const { fetch: ufetch, Agent } = require('undici');
 const args = parseArgs(process.argv.slice(2), { flags: ['dry-run'] });
 const paperId = args._[0];
 const { provider, model, stage } = args;
-if (!paperId || !['anthropic', 'gemini', 'zai'].includes(provider) || !model || !['reader', 'checker', 'refix'].includes(stage)) {
+if (!paperId || !['anthropic', 'gemini', 'zai', 'chatgpt'].includes(provider) || !model || !['reader', 'checker', 'refix'].includes(stage)) {
   fail('usage: transcribe.mjs <paperId> --provider anthropic|gemini|zai --model <m> --stage reader|checker|refix [--candidate f] [--defects repair-report.json] [--dry-run] [--reasoning low|high|max] [--timeout-min 20] [--window-pages N] [--max-tokens N] [--out f]');
 }
 const dry = !!args['dry-run'];
@@ -144,6 +144,11 @@ function compressImage(i) {
 
 function buildRequest(images, userText) {
   const imgs = images.map(i => ({ file: i.file, mime: i.mime || 'image/png' }));
+  if (provider === 'chatgpt') return { // the ChatGPT desktop app, driven by scripts/tx/chatgpt-app/driver.ps1: files attached, prompt pasted, reply copied
+    url: 'chatgpt-app://' + model, headers: () => ({}),
+    body: { files: imgs.map(i => i.file), text: 'You transcribe and verify competition papers. Reply with exactly one JSON object inside a ```json code block and nothing else.' + String.fromCharCode(10,10) + userText },
+    parse: (json) => ({ text: json.text, inputTokens: null, outputTokens: null, reasoningTokens: null, requestId: json.chat ? `chat:${json.chat}` : null, stopReason: json.ok ? 'stop' : 'error' }),
+  };
   if (provider === 'anthropic') return {
     url: 'https://api.anthropic.com/v1/messages',
     headers: key => ({ 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' }),
@@ -206,7 +211,50 @@ const redact = s => String(s).slice(0, 400).replace(/[A-Za-z0-9_-]{32,}/g, '…'
 const agent = dry ? null : new Agent({ headersTimeout: timeoutMs, bodyTimeout: timeoutMs, connectTimeout: 60_000 });
 const retryable = (status, err) => (status && (status === 429 || status >= 500)) || (err && /TIMEOUT|ECONNRESET|ECONNREFUSED|EAI_AGAIN|fetch failed|socket hang up|UND_ERR/i.test(String(err.code || err.cause?.code || err.message)));
 
+// One conversation at a time: the app has one composer. Workers of a batch queue on a lock file.
+const APP_LOCK = path.join(ROOT, 'tmp', 'tx', 'chatgpt-app.lock');
+async function withAppLock(fn) {
+  const alive = pid => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+  for (;;) {
+    try { fs.writeFileSync(APP_LOCK, JSON.stringify({ pid: process.pid, at: nowIso() }), { flag: 'wx' }); break; }
+    catch (e) {
+      if (e.code !== 'EEXIST') throw e;
+      let held = null; try { held = JSON.parse(fs.readFileSync(APP_LOCK, 'utf8')); } catch {}
+      if (!held?.pid || !alive(held.pid)) { try { fs.unlinkSync(APP_LOCK); } catch {} continue; }
+      await sleep(3000);
+    }
+  }
+  try { return await fn(); } finally { try { if (JSON.parse(fs.readFileSync(APP_LOCK, 'utf8')).pid === process.pid) fs.unlinkSync(APP_LOCK); } catch {} }
+}
+async function sendViaApp(req, label) {
+  const dir = path.join(paperDir(paperId), 'chatgpt-app');
+  fs.mkdirSync(dir, { recursive: true });
+  const stamp = `${stage}-${label}-${Date.now()}`.replace(/[^a-z0-9_-]/gi, '_');
+  const promptFile = path.join(dir, `${stamp}.prompt.txt`), listFile = path.join(dir, `${stamp}.files.txt`), outFile = path.join(dir, `${stamp}.reply.md`);
+  fs.writeFileSync(promptFile, req.body.text);
+  fs.writeFileSync(listFile, req.body.files.join(String.fromCharCode(10)));
+  return withAppLock(async () => {
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      const started = Date.now();
+      const r = spawnSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(ROOT, 'scripts', 'tx', 'chatgpt-app', 'driver.ps1'), '-PromptFile', promptFile, '-FileList', listFile, '-OutFile', outFile, '-TimeoutSec', String(Math.round(timeoutMs / 1000))], { cwd: ROOT, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+      const seconds = +((Date.now() - started) / 1000).toFixed(1);
+      let summary = null; try { summary = JSON.parse((r.stdout || '').trim().split(String.fromCharCode(10)).filter(Boolean).pop() || 'null'); } catch {}
+      if (r.status === 0 && summary?.ok && fs.existsSync(outFile)) {
+        const text = fs.readFileSync(outFile, 'utf8');
+        return { ...req.parse({ ok: true, text, chat: summary.chat }), seconds, attempts: attempt, status: 200, replySeconds: summary.replySeconds };
+      }
+      const reason = summary?.error || (r.stderr || '').trim().split(String.fromCharCode(10)).slice(-2).join(' | ').slice(0, 300) || `driver exit ${r.status}`;
+      appendRun({ paperId, stage, provider, model, window: label, ok: false, attempt, error: reason, seconds, at: nowIso() });
+      const again = attempt < MAX_ATTEMPTS;
+      console.error(`[transcribe] ${label} attempt ${attempt}/${MAX_ATTEMPTS} through the ChatGPT app failed after ${seconds}s — ${reason}${again ? '; retrying' : ''}`);
+      if (!again) fail(`ChatGPT app request failed (${label}): ${reason}`);
+      await sleep(15_000 * attempt);
+    }
+  });
+}
+
 async function send(req, label) {
+  if (provider === 'chatgpt') return sendViaApp(req, label);
   const body = JSON.stringify(req.body);
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const started = Date.now();
@@ -311,8 +359,10 @@ for (const window of windows) {
     summaries.push(summary);
     continue;
   }
-  if (!cfg.exists) fail(`${cfg.file} does not exist; create it with ${keyName}=<key> (never commit it)`);
-  if (!hasKey) fail(`${keyName} is not set in ${cfg.file}`);
+  if (provider !== 'chatgpt') {
+    if (!cfg.exists) fail(`${cfg.file} does not exist; create it with ${keyName}=<key> (never commit it)`);
+    if (!hasKey) fail(`${keyName} is not set in ${cfg.file}`);
+  }
   // A model occasionally answers with prose or truncated JSON; one more ask is far cheaper than a lost paper.
   let parsed = null, obj = null, costUsd = 0;
   for (let ask = 1; ask <= 2 && !obj; ask++) {

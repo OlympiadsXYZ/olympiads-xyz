@@ -40,7 +40,7 @@ function parseWho(s) {
   const [provider, ...rest] = String(s).split(':');
   const model = rest.join(':');
   if (!provider || !model) fail(`bad stage spec "${s}" (provider:model or agent:label)`);
-  if (!['anthropic', 'gemini', 'zai', 'agent'].includes(provider)) fail(`unknown provider "${provider}"`);
+  if (!['anthropic', 'gemini', 'zai', 'chatgpt', 'agent'].includes(provider)) fail(`unknown provider "${provider}"`);
   return { provider, model };
 }
 if (!args.continue) {

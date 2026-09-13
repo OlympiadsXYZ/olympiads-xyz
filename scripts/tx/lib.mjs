@@ -477,7 +477,7 @@ export function loadProviderKeys() {
   }
   return { file: KEYS_FILE, exists: true, keys };
 }
-export const PROVIDER_KEY_NAME = { anthropic: 'ANTHROPIC_API_KEY', gemini: 'GEMINI_API_KEY', zai: 'ZAI_API_KEY' };
+export const PROVIDER_KEY_NAME = { anthropic: 'ANTHROPIC_API_KEY', gemini: 'GEMINI_API_KEY', zai: 'ZAI_API_KEY', chatgpt: null }; // chatgpt: the desktop app, signed in by hand
 // Documented request limits (checked before anything is sent). Anthropic: 5 MB per
 // image, 100 images, ~32 MB request. Gemini: 20 MB total inline request. Z.ai:
 // not documented in the repo — 20 MB is an assumption to be corrected on first error.
@@ -485,6 +485,8 @@ export const PROVIDER_LIMITS = {
   anthropic: { imageBytes: 5 * 1024 * 1024, images: 100, requestBytes: 32 * 1024 * 1024 },
   gemini: { imageBytes: 20 * 1024 * 1024, images: 3000, requestBytes: 20 * 1024 * 1024 },
   zai: { imageBytes: 20 * 1024 * 1024, images: 100, requestBytes: 20 * 1024 * 1024 },
+  // the ChatGPT desktop app took 20 files in one message on 2026-09-13 (scripts/tx/chatgpt-app); the cap beyond that is untested
+  chatgpt: { imageBytes: 20 * 1024 * 1024, images: 20, requestBytes: 200 * 1024 * 1024 },
 };
 export const readPrices = () => readJson(PRICES_FILE, { models: {} });
 export function estimateCost(model, inputTokens, outputTokens, prices = readPrices()) {
@@ -518,7 +520,7 @@ export function candidateCrops(candidate, paperId) {
 }
 // Measured/guessed prompt tokens per 160-dpi A4 page image, for --dry-run estimates.
 // zai: measured 2026-09-06 (494 KB PSF 2024 page = 3,230 prompt tokens). Others: guesses.
-export const TOKENS_PER_PAGE = { zai: 3230, gemini: 1600, anthropic: 1600 };
+export const TOKENS_PER_PAGE = { zai: 3230, gemini: 1600, anthropic: 1600, chatgpt: 1600 };
 export const sleep = ms => new Promise(r => setTimeout(r, ms));
 // Provenance block shared by receipt.mjs and promote.mjs so both build the same
 // bytes. `ctx` = { reviewer: {provider, model}, promptVersion, checkedAt,
