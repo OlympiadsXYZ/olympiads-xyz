@@ -47,7 +47,11 @@ if (!validate(final.data)) fail(`final paper fails schema before writing: ${JSON
 const target = contentPathFor(paperId, { subject: final.data.paper.subject, competition: final.data.paper.competition, year: final.data.paper.year });
 if (fs.existsSync(target) && !args.replace) fail(`${path.relative(ROOT, target)} already exists; pass --replace to overwrite (the publication ledger will then need a new approval)`);
 fs.mkdirSync(path.dirname(target), { recursive: true });
-fs.writeFileSync(target, final.bytes);
+{ // atomic, with the same rename retry writeJson has (the ship and other workers read this tree)
+  const tmp = `${target}.${process.pid}.partial`;
+  fs.writeFileSync(tmp, final.bytes);
+  for (let attempt = 1; ; attempt++) { try { fs.renameSync(tmp, target); break; } catch (e) { if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) { try { fs.unlinkSync(tmp); } catch {} throw e; } Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt); } }
+}
 
 // normalise must be a no-op on what we wrote; if it changes bytes the receipt no longer applies
 run('node', [path.join(ROOT, 'scripts', 'normalise-papers.mjs')]);

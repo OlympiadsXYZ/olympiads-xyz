@@ -47,7 +47,15 @@ export function writeJson(file, value, indent = 2) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const tmp = `${file}.${process.pid}.partial`;
   fs.writeFileSync(tmp, JSON.stringify(value, null, indent) + '\n');
-  fs.renameSync(tmp, file);
+  // Windows refuses the rename while another process has the target open (eight workers and the
+  // ship share the ledger and jobs.json): wait a little and try again before giving up
+  for (let attempt = 1; ; attempt++) {
+    try { fs.renameSync(tmp, file); return; }
+    catch (e) {
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) { try { fs.unlinkSync(tmp); } catch {} throw e; }
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt);
+    }
+  }
 }
 export const paperDir = paperId => path.join(TX_DIR, paperId);
 export const manifestFile = paperId => path.join(paperDir(paperId), 'manifest.json');

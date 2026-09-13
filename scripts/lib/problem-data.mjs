@@ -9,7 +9,15 @@ export function atomicWrite(file, text) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const temporary = `${file}.${process.pid}.partial`;
   fs.writeFileSync(temporary, text);
-  fs.renameSync(temporary, file);
+  // Windows refuses the rename while another process holds the target open (several loop workers
+  // and the ship share the ledger): wait a little and try again before giving up
+  for (let attempt = 1; ; attempt++) {
+    try { fs.renameSync(temporary, file); return; }
+    catch (e) {
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) { try { fs.unlinkSync(temporary); } catch {} throw e; }
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt);
+    }
+  }
 }
 export function walkJson(dir) {
   if (!fs.existsSync(dir)) return [];
