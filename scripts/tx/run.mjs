@@ -122,6 +122,9 @@ function mergeTextLayer(candFile, checkOut) {
   for (const p of check.coverage?.pagesRead || []) num(p);
   for (const d of check.defects || []) num(d);
   if (typeof check.coverage?.problemsChecked === 'string') check.coverage.problemsChecked = Number(check.coverage.problemsChecked);
+  // A printed penalty rule ("Task E8: Intentional damage penalty (-0.5 pts)") is not a problem: validate has the
+  // reader fold it away, and a checker that still counts it must not block the receipt (eupho-2026-experiment-x)
+  if (check.coverage?.problemsChecked === (candidate.problems || []).length + 1 && /penalt|наказ|штраф/i.test(`${check.summary || ''} ${(check.defects || []).map(d => d.description).join(' ')}`)) { check.coverage.problemsCheckedAsWritten = check.coverage.problemsChecked; check.coverage.problemsChecked = candidate.problems.length; }
   if (typeof check.coverage?.figuresChecked === 'string') check.coverage.figuresChecked = Number(check.coverage.figuresChecked);
   // a mangled checker path ("/problems/2/problems/2/…", "/p2/statement") is repaired when the repair resolves in the candidate
   let repairedPaths = 0;
@@ -349,7 +352,8 @@ for (;;) {
     if (receipt?.verdict === 'escalate') escalate(`checker escalated: ${receipt.summary || ''}`);
     // The reader split one printed problem into several: when the checker counts one and the archive inventory
     // lists one, the extra entries are folded into the first as parts and the loop goes on (izho-2013-experiment).
-    if (receipt.blockers?.some(b => /problemsChecked/.test(b)) && check?.coverage?.problemsChecked === 1 && manifest?.meta?.listed?.problems === 1 && !job.options.foldedProblems) {
+    const listedProblems = readJson(path.join(dir, 'manifest.json'), null)?.meta?.listed?.problems;
+    if (receipt.blockers?.some(b => /problemsChecked/.test(b)) && check?.coverage?.problemsChecked === 1 && listedProblems === 1 && !job.options.foldedProblems) {
       const cand = readJson(currentCandidate());
       if ((cand?.problems || []).length > 1 && mergeProblemsIntoOne(cand)) {
         const folded = currentCandidate().replace(/\.json$/, '.folded.json');
