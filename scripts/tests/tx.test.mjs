@@ -236,6 +236,41 @@ test('validate: a problem entry with negative points is a penalty rule and is re
   assert.match(r.stdout + r.stderr, /"\/problems\/1"[\s\S]*negative points/);
 });
 
+test('a passage moves between sibling fields when both are returned; a solution left without text stays incomplete', async () => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const intro = 'The nearest Red Giant is 89 light-years distant, has a temperature of 3600 K and a diameter of 1.7e11 m; the telescope has a focal length of 20 m.';
+  const q1 = 'Calculate the diameter of a focused image of the star on the detector, assuming a perfect lens without diffraction.';
+  const mk = () => { const c = candidate(); const p = c.problems[0]; p.statement = 'Imaging a star.'; p.parts = [{ label: 'Part A', statement: q1 }, { label: 'A.1', statement: intro }]; return c; };
+  // both sides listed: a swap
+  const c1 = mk();
+  const r1 = applyFixes(c1, [{ path: '/problems/0/parts/0/statement', value: intro }, { path: '/problems/0/parts/1/statement', value: q1 }], { defects: [
+    { path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'header carries A.1 question' },
+    { path: '/problems/0/parts/1/statement', kind: 'reworded', severity: 'minor', description: 'A.1 carries the intro' }], round: 1 });
+  assert.equal(r1.skipped.length, 0, JSON.stringify(r1.skipped));
+  assert.equal(c1.problems[0].parts[0].statement, intro); assert.equal(c1.problems[0].parts[1].statement, q1);
+  // only one side listed, the refix returns the destination as an extra entry
+  const c2 = mk();
+  const r2 = applyFixes(c2, [{ path: '/problems/0/parts/0/statement', value: intro }, { path: '/problems/0/parts/1/statement', value: q1 }], { defects: [
+    { path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'header carries A.1 question' }], round: 1 });
+  assert.equal(r2.skipped.length, 0, JSON.stringify(r2.skipped));
+  assert.equal(c2.problems[0].parts[0].statement, intro); assert.equal(c2.problems[0].parts[1].statement, q1);
+  // one side only, nothing returned for the destination: still a paste, refused
+  const c3 = mk();
+  const r3 = applyFixes(c3, [{ path: '/problems/0/parts/0/statement', value: intro }], { defects: [{ path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'x' }], round: 1 });
+  assert.match(r3.skipped[0].reason, /pastes the text of part A\.1/);
+  // an extra entry for a problem with no listed defect is ignored
+  const c4 = mk(); c4.problems.push({ ...JSON.parse(JSON.stringify(c4.problems[0])), id: `${PAPER}-p2`, number: 2 });
+  applyFixes(c4, [{ path: '/problems/1/statement', value: 'Something else entirely.' }], { defects: [{ path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'x' }], round: 1 });
+  assert.equal(c4.problems[1].statement, 'Imaging a star.');
+  // incomplete: false on a blank solution is refused, and a blank solution is marked incomplete
+  const c5 = mk(); c5.problems[0].solution = { statement: '', incomplete: true, incompleteReason: 'no solutions document' };
+  const r5 = applyFixes(c5, [{ path: '/problems/0/solution/incomplete', value: false }], { defects: [{ path: '/problems/0/solution/incomplete', kind: 'other', severity: 'minor', description: 'flag' }], round: 1 });
+  assert.match(r5.skipped[0].reason, /stays incomplete/);
+  const c6 = mk(); c6.problems[0].solution = { statement: '  ', incomplete: false };
+  applyFixes(c6, [], { defects: [], round: 1 });
+  assert.equal(c6.problems[0].solution.incomplete, true);
+});
+
 test('a long printed field is never an "instruction", and a JSON answer never replaces a text field', async () => {
   const { applyFixes, looksLikeInstruction, plausibleReplacement } = await import(txModule('fixes.mjs'));
   const solution = '**(a) Drawing a $T(r)$ graph**\n\nThe graph should present or clearly infer the four elements shown in the figure. ' + 'The temperature falls with the radius as the gas expands adiabatically. '.repeat(40);
@@ -591,7 +626,7 @@ test('a fix that pastes a sibling field into this one is refused', async () => {
   const c = candidate();
   c.problems[0].parts = [{ label: 'а)', statement: 'Колко е зарядът, който преминава през сечението за една минута?', points: 10 }];
   const whole = 'Токът е $I = 1\ \mathrm{mA}$ и $v_0/2$. Определете заряда.\n\nа) Колко е зарядът, който преминава през сечението за една минута?';
-  assert.equal(duplicatesSiblings(c, '/problems/0/statement', whole, c.problems[0].statement), 'part а)');
+  assert.equal(duplicatesSiblings(c, '/problems/0/statement', whole, c.problems[0].statement)?.what, 'part а)');
   assert.equal(duplicatesSiblings(c, '/problems/0/statement', 'Токът е $I = 1\ \mathrm{mA}$ и $v_0/2$. Определете заряда.', c.problems[0].statement), null);
   const r = applyFixes(c, [{ path: '/problems/0/statement', value: whole }], { defects: [{ path: '/problems/0/statement', kind: 'omission', severity: 'major', description: 'sentence missing' }] });
   assert.equal(r.applied.length, 0);

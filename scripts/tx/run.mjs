@@ -23,6 +23,7 @@ import { spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet } from './lib.mjs';
 import { textLayerCheck } from './textlayer.mjs';
 import { spliceFragment, repairDefectPath, repointByContent } from './fixes.mjs';
+import { regionsFor, coverFrac } from './snap.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
 const paperId = args._[0];
@@ -174,6 +175,27 @@ function mergeTextLayer(candFile, checkOut) {
     if (check.verdict === 'pass') check.verdict = 'fail';
     check.summary = `${check.summary || ''} Text-layer check (${trusted.join(', ')}): ${tl.summary.critical} critical, ${tl.summary.major} major, ${tl.summary.minor} minor defect(s), ${tl.summary.withFix} with a mechanical fix.`.trim();
   }
+  // A box a checker says swallows body text, while the page's own drawing lies inside it and the box is
+  // notably larger: the drawing's extent is the fix — decided by the PDF, not by a third model opinion
+  // (ipho-2022-theory-q2: refix and checker traded the same box for five rounds).
+  let tightened = 0;
+  for (const d of check.defects || []) {
+    if (d.source || d.kind !== 'figure' || d.severity === 'info') continue;
+    const m = /^(.*\/figures\/\d+)(?:\/tx(?:\/bbox)?)?$/.exec(String(d.path)); if (!m) continue;
+    if (!/text|paragraph|caption|body|sentence|line|includes|swallow|extend|too (large|big|wide|tall)|below|above/i.test(String(d.description || ''))) continue;
+    const fig = pointerGet(candidate, m[1]); const t = fig?.tx; if (!t?.bbox || !t.document || !t.page) continue;
+    const regs = regionsFor(paperId, manifest, t.document)?.pages?.find(pg => pg.page === t.page)?.regions || [];
+    const inside = regs.filter(g => (!g.kind || g.kind === 'drawing' || g.kind === 'table') && coverFrac(g.core || g.bbox, t.bbox) >= 0.9);
+    if (!inside.length) continue;
+    const u = inside.map(g => g.bbox).reduce((a, b) => [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])]);
+    const area = b => Math.max(0, b[2] - b[0]) * Math.max(0, b[3] - b[1]);
+    if (area(t.bbox) < 1.25 * area(u)) continue; // the box already hugs the drawing: one model opinion against another
+    const PAD = 6, clamp = v => Math.round(Math.min(1000, Math.max(0, v)));
+    d.suggestedFix = [clamp(u[0] - PAD), clamp(u[1] - PAD), clamp(u[2] + PAD), clamp(u[3] + PAD)];
+    d.description = `[box tightened to the printed drawing at ${JSON.stringify(u.map(Math.round))}] ${d.description}`;
+    d.source = 'regions'; tightened++;
+  }
+  if (tightened) check.regions = { ...(check.regions || {}), tightened };
   // graphics the PDF prints that no figure box covers (figures.mjs, from the same candidate bytes)
   const figRep = readJson(path.join(dir, 'figures-report.json'), null);
   const unplaced = (figRep?.unplaced || []).filter(u => u.defect).map(u => u.defect);

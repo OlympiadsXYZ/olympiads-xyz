@@ -81,16 +81,16 @@ export function duplicatesSiblings(candidate, path, value, current) {
   if (!m || typeof value !== 'string') return null;
   const pr = candidate?.problems?.[Number(m[1])];
   if (!pr) return null;
-  const siblings = [];
-  if (m[2] !== 'statement') siblings.push({ what: 'the statement', text: pr.statement });
-  (pr.parts || []).forEach((x, j) => { if (!(m[3] != null && Number(m[3]) === j)) siblings.push({ what: `part ${x.label || j + 1}`, text: x.statement }); });
-  if (m[2] !== 'solution/statement' && pr.solution?.statement) siblings.push({ what: 'the solution', text: pr.solution.statement });
+  const siblings = [], base = `/problems/${m[1]}`;
+  if (m[2] !== 'statement') siblings.push({ what: 'the statement', text: pr.statement, path: `${base}/statement` });
+  (pr.parts || []).forEach((x, j) => { if (!(m[3] != null && Number(m[3]) === j)) siblings.push({ what: `part ${x.label || j + 1}`, text: x.statement, path: `${base}/parts/${j}/statement` }); });
+  if (m[2] !== 'solution/statement' && pr.solution?.statement) siblings.push({ what: 'the solution', text: pr.solution.statement, path: `${base}/solution/statement` });
   const flat = s => opening(s, 1000);
   const v = flat(value), cur = flat(current);
   for (const s of siblings) {
     const head = opening(s.text);
     if (head.split(' ').length < 5) continue;
-    if (v.includes(head) && !cur.includes(head)) return s.what;
+    if (v.includes(head) && !cur.includes(head)) return { what: s.what, path: s.path };
   }
   return null;
 }
@@ -178,7 +178,15 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
   for (const f of Array.isArray(fixes) ? fixes : []) if (f && typeof f.path === 'string') byPath.set(f.path, f);
   const applied = [], skipped = [], removals = [];
   const touched = new Set();
-  for (const d of defects || []) {
+  const original = JSON.parse(JSON.stringify(candidate)); // duplication is judged against the state before this batch (the second half of a swap sees the first already applied)
+  // A passage in the wrong field takes two changes: the listed field and the destination. The refix
+  // returns the destination as an extra entry; it is taken along when it is a prose field of a problem
+  // that has a listed defect (never a field of an untouched problem).
+  const PROSE = /^\/problems\/(\d+)\/(statement|parts\/\d+\/statement|solution\/statement)$/;
+  const listed = new Set((defects || []).map(d => d.path)), problemsListed = new Set((defects || []).map(d => (/^\/problems\/(\d+)/.exec(String(d.path)) || [])[1]).filter(Boolean));
+  const extras = [...byPath.values()].filter(f => !listed.has(f.path) && PROSE.test(f.path) && problemsListed.has(PROSE.exec(f.path)[1]) && typeof f.value === 'string' && f.value.trim())
+    .map(f => ({ path: f.path, kind: 'other', severity: 'minor', description: 'destination field returned alongside a listed defect (moved text)', extra: true }));
+  for (const d of [...(defects || []), ...extras]) {
     const entry = { path: d.path, kind: d.kind, severity: d.severity, description: d.description };
     const f = byPath.get(d.path);
     if (!f) { skipped.push({ ...entry, reason: 'model returned no fix for this path' }); continue; }
@@ -243,6 +251,8 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     if (typeof current === 'boolean' && typeof f.value === 'string' && /^(true|false)$/i.test(f.value.trim())) f.value = f.value.trim().toLowerCase() === 'true';
     if (typeof current === 'boolean' && typeof f.value === 'boolean') {
       if (current === f.value) { skipped.push({ ...entry, reason: 'model returned the current value unchanged' }); continue; }
+      // a solution with no text is incomplete by definition (ipho-2023-experiment-q4: flipped to false, then invalid)
+      if (p.endsWith('/incomplete') && f.value === false) { const sol = pointerGet(candidate, p.replace(/\/[^/]+$/, '')); if (sol && !String(sol.statement || '').trim()) { skipped.push({ ...entry, reason: 'a solution without text stays incomplete' }); continue; } }
       pointerSet(candidate, p, f.value);
       if (p.endsWith('/incomplete') && f.value === false) { const parent = pointerGet(candidate, p.replace(/\/[^/]+$/, '')); if (parent && typeof parent === 'object') delete parent.incompleteReason; }
       applied.push({ ...entry, from: current, to: f.value, note: f.note || null });
@@ -283,8 +293,13 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       }
       if (looksLikeInstruction(f.value)) { skipped.push({ ...entry, reason: 'fix is an instruction, not a replacement' }); continue; }
       if (looksLikeJson(f.value)) { skipped.push({ ...entry, reason: 'fix is JSON, not the text of the field' }); continue; }
-      const dup = duplicatesSiblings(candidate, p, f.value, current);
-      if (dup) { skipped.push({ ...entry, reason: `fix pastes the text of ${dup} into this field` }); continue; }
+      // text that lives in a sibling field is a paste — unless this batch also rewrites that sibling to
+      // something else: then the passage is being moved (a swapped header and first part, an intro
+      // that sat in part a), and both fields change together
+      const dup = duplicatesSiblings(original, p, f.value, pointerGet(original, p));
+      const moved = dup && typeof byPath.get(dup.path)?.value === 'string' && byPath.get(dup.path).value.trim() !== String(pointerGet(original, dup.path) || '').trim();
+      if (dup && !moved) { skipped.push({ ...entry, reason: `fix pastes the text of ${dup.what} into this field` }); continue; }
+      if (dup && moved) { pointerSet(candidate, p, f.value); applied.push({ ...entry, from: current, to: f.value, movedFrom: dup.path, note: f.note || null }); continue; } // the text is printed (it sat in the sibling); resemblance to the old value is not expected
       const spliced = spliceFragment(current, f.value);
       if (spliced) { pointerSet(candidate, p, spliced); applied.push({ ...entry, from: current, to: spliced, spliced: f.value, note: f.note || null }); continue; }
       if (!plausibleReplacement(current, f.value, d.kind, p)) { skipped.push({ ...entry, reason: 'fix is an instruction or does not resemble the field it replaces (wrong path?)' }); continue; }
@@ -306,6 +321,8 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     }
     skipped.push({ ...entry, reason: `cannot apply a ${Array.isArray(f.value) ? 'array' : typeof f.value} fix to a ${current === undefined ? 'missing' : Array.isArray(current) ? 'array' : typeof current} field` });
   }
+  // a solution left without text is incomplete by definition, whatever a fix said about its flag
+  for (const pr of candidate.problems || []) { const s = pr.solution; if (s && typeof s === 'object' && !String(s.statement || '').trim() && !s.incomplete && !(s.figures || []).length) { s.incomplete = true; s.incompleteReason = s.incompleteReason || 'no solution text'; } }
   for (const r of removals.sort((a, b) => b.p.localeCompare(a.p, undefined, { numeric: true }))) {
     const arrPath = r.p.replace(/\/\d+$/, ''), idx = Number(r.p.split('/').at(-1));
     const arr = pointerGet(candidate, arrPath);
