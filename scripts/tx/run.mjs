@@ -117,6 +117,8 @@ function mergeTextLayer(candFile, checkOut) {
     // it must not reach the mechanical merge; a defect about tx bookkeeping (sourceSpans) is a note
     if (typeof d.suggestedFix === 'string' && /^\s*[\[{]\s*["{\[]/.test(d.suggestedFix) && /\/(statement|caption|alt|title|label)$/.test(String(d.path))) { d.suggestedFixAsWritten = d.suggestedFix; delete d.suggestedFix; }
     if (d.kind === 'metadata' && /sourceSpans|\btx\.|\btx\b/.test(String(d.description || ''))) d.severity = 'info';
+    // "10.0 pts" printed, 10 recorded: a points defect whose fix is the same number is a note, not a defect
+    if (d.kind === 'points' && /\/(points|totalPoints)$/.test(String(d.path))) { const cur = pointerGet(candidate, String(d.path)); const fix = d.suggestedFix == null ? NaN : Number(String(d.suggestedFix).replace(/[^\d.,-]/g, '').replace(',', '.')); if (typeof cur === 'number' && Number.isFinite(fix) && Math.abs(fix - cur) < 1e-9) { d.severity = 'info'; d.description = `[same number: a formatting remark] ${d.description}`; } }
     let p = repairDefectPath(candidate, d.path);
     if (typeof d.suggestedFix === 'string' && !d.source) p = repointByContent(candidate, p, d.suggestedFix);
     // a textual defect addressed to a whole problem or part object belongs to its statement

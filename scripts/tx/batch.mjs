@@ -9,9 +9,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, JOBS_FILE, ROOT, nowIso, paperDir, findContentFile } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, JOBS_FILE, ROOT, nowIso, paperDir, findContentFile } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh'] });
 if (!args.ids && !args.backlog && !args.catalogue) fail('usage: batch.mjs --ids a,b | --backlog | --catalogue [--subjects s,s] [--langs l,l] [--competitions c,c] [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote] [--redo]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
 const workers = Number(args.workers || 2);
@@ -25,7 +25,7 @@ if (args.ids) ids = String(args.ids).split(',').map(s => s.trim()).filter(Boolea
 if (args.backlog || args.catalogue) {
   // backlog.mjs owns the rule (catalogue entries in neither content/problems nor tmp/staging) and derives the ids;
   // --catalogue widens it from the Bulgarian shards to the whole archive catalogue (all subjects and languages)
-  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', 'backlog.mjs'), '--json', ...(args.catalogue ? ['--catalogue'] : [])], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', 'backlog.mjs'), '--json', ...(args.catalogue ? ['--catalogue'] : []), ...(args.fresh ? ['--include-live'] : [])], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   if (r.status !== 0) fail(`backlog.mjs failed: ${r.stderr}`);
   // benchmark fixtures (by id or by PDF) stay out of production until the benchmark is closed:
   // a production run would overwrite the candidates their adjudications are bound to
@@ -42,6 +42,10 @@ if (args.backlog || args.catalogue) {
   for (const e of entries) { if (seen.has(e.paperId)) { log({ paperId: e.paperId, outcome: 'skipped', reason: `duplicate derived id for ${e.problemsKey}` }); continue; } seen.add(e.paperId); ids.push(e.paperId); if (args.catalogue) keysById.set(e.paperId, { problems: e.problemsKey, solutions: e.solutionsKey || null }); }
   if (args.limit) ids = ids.slice(0, Number(args.limit));
 }
+// --fresh: read the listed papers again from scratch (new job, both documents, the current prompts) — for a paper
+// whose catalogue pairing changed after it was promoted (IPhO papers promoted without their solutions file). Only
+// with an explicit --ids list; the catalogue is consulted for the keys only.
+if (args.fresh) { if (!args.ids) fail('--fresh needs --ids a,b (the papers to re-read from scratch)'); ids = String(args.ids).split(',').map(s => s.trim()).filter(Boolean); }
 ids = [...new Set(ids)];
 if (!ids.length) fail('nothing to do');
 
@@ -51,6 +55,7 @@ for (const id of ids) {
   const job = jobs()[id];
   // --redo sends a promoted paper back through validate → figures → checker with the
   // current rules (a re-promotion replaces the published paper with a new receipt)
+  if (args.fresh) { if (!keysById.get(id)?.problems) { log({ paperId: id, outcome: 'skipped', reason: 'no catalogue keys for a fresh read' }); continue; } plan.push({ id, resume: false, fresh: true }); continue; }
   if (args.redo && job) { plan.push({ id, resume: true }); continue; } // whatever stage the job is in (a redo interrupted mid-way resumes)
   if (findContentFile(id)) { log({ paperId: id, outcome: 'skipped', reason: 'already in content/problems' }); continue; }
   if (job?.stage === 'promoted' || job?.stage === 'done') { log({ paperId: id, outcome: 'skipped', reason: `job already ${job.stage}` }); continue; }
@@ -58,8 +63,15 @@ for (const id of ids) {
 }
 console.log(`${plan.length} paper(s) to run with ${workers} worker(s); log: ${path.relative(ROOT, logFile)}`);
 
-function runOne({ id, resume }) {
+function runOne({ id, resume, fresh }) {
   return new Promise(resolve => {
+    if (fresh) {
+      // the old working directory is kept aside (its candidates and receipts are evidence) and the job entry goes
+      const dir = paperDir(id);
+      if (fs.existsSync(dir)) fs.renameSync(dir, `${dir}.superseded-${new Date().toISOString().replace(/[:.]/g, '-')}`);
+      const state = readJson(JOBS_FILE, { version: 2, jobs: {} });
+      if (state.jobs[id]) { delete state.jobs[id]; writeJson(JOBS_FILE, state); }
+    }
     const argv = [path.join(ROOT, 'scripts', 'tx', 'run.mjs'), id];
     if (resume) {
       argv.push('--continue');

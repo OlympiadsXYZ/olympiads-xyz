@@ -19,9 +19,15 @@ const catalogueRows = () => {
   for (const e of cat) if (isSolution(e)) { const k = bucket(e); if (!sols.has(k)) sols.set(k, []); sols.get(k).push(e); }
   // file-name tokens minus the words that only say which side of the paper a file is
   const ROLE = /^(problems?|tasks?|task|zad|zadachi|zadania|uslovia|uslov|solutions?|sol|answers?|ans|resh|resheniya|otg|otgovori|criteria|criterion|key|keys|q|s|t|p|a|en|ru|bg|fr|de|final|v\d+|pdf)$/;
-  // a role letter glued to the number (IPhO_2023_Q1 / IPhO_2023_S1, T2 / T2sol, prob3 / sol3) is the same token: the number
-  const tokens = f => new Set(path.basename(f).toLowerCase().replace(/\.[a-z0-9]+$/, '').split(/[^a-z0-9]+/).map(t => t.replace(/^(?:q|s|a|t|p|e|z|r|sol|ans|prob|task|zad|resh|otg)(\d+)(?:sol|ans|resh|otg)?$/, '$1')).filter(t => t && !ROLE.test(t)));
+  // idTokens: the raw name words (derived ids depend on them and must stay stable). tokens: the same for pairing, with a
+  // role letter glued to a number folded into the number (IPhO_2023_Q1 / IPhO_2023_S1, T2 / T2sol, prob3 / sol3).
+  const stem = f => path.basename(f).toLowerCase().replace(/\.[a-z0-9]+$/, '').replace(/\s*\(\d+\)$/, ''); // "T1_solution (1).pdf": a download's duplicate marker, not a number of the paper
+  const idTokens = f => new Set(path.basename(f).toLowerCase().replace(/\.[a-z0-9]+$/, '').split(/[^a-z0-9]+/).filter(t => t && !ROLE.test(t)));
+  const tokens = f => new Set(stem(f).split(/[^a-z0-9]+/).map(t => t.replace(/^(?:q|s|a|t|p|e|z|r|sol|ans|prob|task|zad|resh|otg)(\d+)(?:sol|ans|resh|otg)?$/, '$1')).filter(t => t && !ROLE.test(t)));
   const jaccard = (a, b) => { const i = [...a].filter(x => b.has(x)).length; const u = new Set([...a, ...b]).size; return u ? i / u : 0; };
+  // the short numbers in a name (Q1 / T1_solution, not the year) — equal sets pair the files whatever else the names carry
+  const numbers = s => new Set([...s].filter(t => /^\d{1,2}$/.test(t)));
+  const sameNumbers = (a, b) => { const x = numbers(a), y = numbers(b); return x.size > 0 && x.size === y.size && [...x].every(n => y.has(n)); };
   const rows = [];
   let images = 0;
   for (const e of cat) {
@@ -39,7 +45,9 @@ const catalogueRows = () => {
     else if (cands.length) { // several in the bucket (some ruled out above): the names must agree
       // an exact token match wins; else the best overlap, ties broken by a file typed as solutions; a real tie pairs nothing
       const t = tokens(e.file);
-      const scored = cands.map(s => { const u = tokens(s.file); const eq = u.size === t.size && [...t].every(x => u.has(x)); return { s, j: eq ? 1 : jaccard(t, u), typed: s.type === 'solutions' ? 1 : 0 }; }).sort((a, b) => b.j - a.j || b.typed - a.typed);
+      // an exact name match wins outright; else the name overlap, plus half a point when the short numbers agree
+      // (Q1 ↔ T1_solution), so two candidates with the same number are still told apart by the rest of the name
+      const scored = cands.map(s => { const u = tokens(s.file); const eq = u.size === t.size && [...t].every(x => u.has(x)); return { s, j: eq ? 2 : jaccard(t, u) + (sameNumbers(t, u) ? 0.5 : 0), typed: s.type === 'solutions' ? 1 : 0 }; }).sort((a, b) => b.j - a.j || b.typed - a.typed);
       const [a, b] = scored;
       if (a && (a.j >= 0.5 || (t.size === 0 && a.j === 0 && a.typed)) && !(b && b.j === a.j && b.typed === a.typed)) solution = a.s;
     }
@@ -51,7 +59,7 @@ const catalogueRows = () => {
   for (const r of rows) { const id = paperIdFor(r); (byId.get(id) || byId.set(id, []).get(id)).push(r); }
   for (const [id, group] of byId) {
     if (group.length < 2) { group[0].derivedId = id; continue; }
-    const sets = group.map(r => tokens(r.problemsKey));
+    const sets = group.map(r => idTokens(r.problemsKey));
     const common = [...sets[0]].filter(t => sets.every(s => s.has(t)));
     const used = new Set();
     group.forEach((r, i) => {
@@ -83,7 +91,8 @@ for (const row of all) {
   let id; try { id = row.derivedId || paperIdFor(row); } catch { id = null; }
   const inLive = (id && live.byId.has(id)) || live.byKey.has(row.problemsKey);
   const inStaged = (id && staged.has(id)) || stagedKeys.has(row.problemsKey);
-  if (!inLive && !inStaged) remaining.push({ paperId: id, competition: row.competition, year: row.year, round: row.round, grade: row.grade, subject: row.subject, lang: row.lang, catalogueId: row.catalogueId, problemsKey: row.problemsKey, solutionsKey: row.solutionsKey });
+  // --include-live lists the published papers too (marked live: true), for a fresh re-read of a paper whose pairing changed
+  if ((!inLive && !inStaged) || (process.argv.includes('--include-live') && inLive)) remaining.push({ paperId: id, competition: row.competition, year: row.year, round: row.round, grade: row.grade, subject: row.subject, lang: row.lang, catalogueId: row.catalogueId, problemsKey: row.problemsKey, solutionsKey: row.solutionsKey, ...(inLive ? { live: true } : {}) });
 }
 if (process.argv.includes('--json')) console.log(JSON.stringify(remaining, null, 1));
 else { for (const r of remaining) console.log(`${r.paperId ?? '?'}\t${r.competition} ${r.year} ${r.round ?? ''} ${r.grade ?? ''}\t${r.problemsKey}`); console.error(`${remaining.length} backlog entries not in content/problems or tmp/staging (of ${all.length})`); }

@@ -240,6 +240,14 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     // a figures array answered for a problem or its solution (an object) is that object's figures array
     if (Array.isArray(f.value) && /^\/problems\/\d+(\/solution)?$/.test(p) && current && typeof current === 'object' && !Array.isArray(current)) { p = `${p}/figures`; current = current.figures; }
     const sameShape = (a, b) => (Array.isArray(a) && Array.isArray(b)) || (typeof a === 'object' && a !== null && !Array.isArray(a) && typeof b === 'object' && b !== null && !Array.isArray(b));
+    // A figures array may be answered with just the one entry to add ({"add": {…}}) — lighter for the
+    // model than returning the whole array — or with {"notFigure": true} for a printed graphic that is
+    // a table, a formula or decoration. Both are turned into the array forms handled below.
+    if (/\/figures$/.test(p) && f.value && typeof f.value === 'object' && !Array.isArray(f.value)) {
+      const arr = Array.isArray(current) ? current : [];
+      if (f.value.notFigure === true) f.value = [...arr];
+      else if (f.value.add && typeof f.value.add === 'object' && f.value.add.tx?.bbox) f.value = [...arr, f.value.add];
+    }
     // A printed-graphic defect answered with a figures array that still covers no part of the
     // region (the same array, [], or an array changed elsewhere) means "not a figure": remember
     // the region so figures.mjs never raises it again, whatever else happens to the array.
