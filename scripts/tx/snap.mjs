@@ -13,7 +13,7 @@ import path from 'node:path';
 import { run, paperDir, readJson, writeJson, sha256File, ROOT } from './lib.mjs';
 
 const PDFREGIONS = path.join(ROOT, 'scripts', 'pdfregions.py');
-const REGIONS_VERSION = 6; // bump with pdfregions.py VERSION: cached regions are recomputed
+const REGIONS_VERSION = 7; // bump with pdfregions.py VERSION: cached regions are recomputed (v7: text set as paths is kind text)
 const SNAPPABLE = g => !g.kind || g.kind === 'drawing' || g.kind === 'table'; // never onto a formula, a rule or a framed text box
 const PAD = 6;            // permille added around a snapped region
 const MIN_IOU = 0.2;      // overlap that ties a proposal to a region

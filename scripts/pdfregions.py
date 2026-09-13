@@ -25,7 +25,7 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 SCALE = 1000.0
-VERSION = 6
+VERSION = 7
 CAPTION = re.compile(r'^\s*(фиг\.?|фигура|figure|fig\.?|задача|табл\.?|таблица|схема|снимка)\b', re.I)
 HEADING = re.compile(r'^\s*(?:(?:задача|з\s*а\s*д\s*а\s*ч\s*а)\s*(?:№\s*)?(\d+|[ivx]+)\b|(\d+)\s*(?:-?\s*(?:ва|ра|та|а|и))?\s+задача\b)', re.I)
 ROMAN = {'i': 1, 'ii': 2, 'iii': 3, 'iv': 4, 'v': 5, 'vi': 6, 'vii': 7, 'viii': 8, 'ix': 9, 'x': 10}
@@ -124,6 +124,15 @@ def page_regions(page, min_area, max_area):
         drawings = page.get_drawings()
     except Exception:
         drawings = []
+    lines, body = text_lines(page)
+    # A Type 3 font (cairo exports, some LaTeX routes) draws every glyph as a path: a paragraph is hundreds of
+    # small curves. Those paths sit inside the text lines the page still reports; leave them out of the graphics.
+    try:
+        type3 = any(f[2] == 'Type3' for f in page.get_fonts())
+    except Exception:
+        type3 = False
+    glyph_boxes = [fitz.Rect(ln['rect'].x0 - 2, ln['rect'].y0 - 2, ln['rect'].x1 + 2, ln['rect'].y1 + 2) for ln in lines] if type3 else []
+    is_glyph = lambda pr: bool(glyph_boxes) and body > 0 and pr.height <= 2.0 * body and any(gb.contains(pr) for gb in glyph_boxes)
     for p in drawings:
         pr = fitz.Rect(p['rect'])
         # a horizontal or vertical line has a zero extent on one axis (fitz calls that empty): give it one point
@@ -131,6 +140,8 @@ def page_regions(page, min_area, max_area):
             pr = fitz.Rect(pr.x0, pr.y0, max(pr.x1, pr.x0 + 1), max(pr.y1, pr.y0 + 1))
         if pr.is_empty:
             continue
+        if is_glyph(pr):
+            continue  # a letter drawn as a path
         items = [it[0] for it in p.get('items', [])]
         only_rect = items and all(k == 're' for k in items)
         if only_rect and pr.width > 0.5 * page.rect.width:
@@ -147,11 +158,12 @@ def page_regions(page, min_area, max_area):
         if frac < min_area or frac > max_area or r.width < 12 or r.height < 12:
             continue
         merged.append(r)
-    lines, body = text_lines(page)
     # vector paths per region: a table is rulings only (axis-aligned lines and rectangles); a curve or a slanted line is a drawing
     paths = []
     try:
-        for p in page.get_drawings():
+        for p in drawings:
+            if is_glyph(fitz.Rect(p['rect'])):
+                continue  # letters drawn as paths are text, not the region's strokes
             ruled = True
             for it in p.get('items', []):
                 if it[0] == 're':
@@ -197,6 +209,14 @@ def page_regions(page, min_area, max_area):
         ruled_only = bool(touching) and all(p['ruled'] for p in touching) and not has_image
         # rulings only around text: a table (several lines) or a framed text box (an IPhO task box, a boxed note)
         kind = 'table' if len(inside) >= 4 and ruled_only else ('frame' if ruled_only and inside else 'drawing')
+        # Type 3 fonts (cairo, some LaTeX exports) draw every letter as a path: a paragraph becomes hundreds of
+        # curves. When the body text lines inside cover most of the region, it is text, not a graphic.
+        if not has_image:
+            # (such glyph runs come back without spaces: a long line of characters is a body line as well)
+            body_lines = [ln for ln in inside if ln['words'] >= 5 or len(ln['text'].strip()) >= 30]
+            covered = sum((ln['rect'] & r).get_area() for ln in body_lines) if body_lines else 0.0
+            if body_lines and covered >= 0.5 * max(1e-6, r.get_area()):
+                kind = 'text'
         if DEBUG:
             unruled = [p for p in touching if not p['ruled']]
             print(f'[pdfregions]   native region {to_permille(r, prect)} paths {len(touching)} unruled {len(unruled)} image {has_image} inside {len(inside)} -> {kind}', file=sys.stderr)
