@@ -102,6 +102,12 @@ function mergeTextLayer(candFile, checkOut) {
   const manifest = readJson(manifestPath, null);
   const candidate = readJson(candFile, null);
   if (!check || !manifest || !candidate) return null;
+  // page numbers typed as strings ("5") make the receipt see an unknown page every round
+  const num = o => { if (o && typeof o.page === 'string' && /^\d+$/.test(o.page)) o.page = Number(o.page); };
+  for (const p of check.coverage?.pagesRead || []) num(p);
+  for (const d of check.defects || []) num(d);
+  if (typeof check.coverage?.problemsChecked === 'string') check.coverage.problemsChecked = Number(check.coverage.problemsChecked);
+  if (typeof check.coverage?.figuresChecked === 'string') check.coverage.figuresChecked = Number(check.coverage.figuresChecked);
   // a mangled checker path ("/problems/2/problems/2/…", "/p2/statement") is repaired when the repair resolves in the candidate
   let repairedPaths = 0;
   for (const d of check.defects || []) {
