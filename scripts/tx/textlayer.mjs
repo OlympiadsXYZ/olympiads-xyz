@@ -149,6 +149,12 @@ export function textLayerCheck(candidate, manifest, paperId) {
     if (info.layerWords < MIN_LAYER_WORDS) { info.reason = `text layer has only ${info.layerWords} words (scan or image-only document)`; continue; }
     info.candidateCovered = ownWords.length ? Number((ownWords.filter(w => layerSet.has(w)).length / ownWords.length).toFixed(3)) : null;
     if (info.candidateCovered != null && info.candidateCovered < MIN_TRUST) { info.reason = `text layer covers only ${Math.round(info.candidateCovered * 100)}% of the transcription's words (garbled or lossy layer)`; continue; }
+    // An OCR layer is a reading, not the print: on a scanned document (pages that are images) or from an
+    // OCR producer its "typos" are recognition errors, and a mechanical fix would write them into the text.
+    const regs = readJson(path.join(paperDir(paperId), 'regions', `${doc}.json`), null);
+    const scannedPages = (regs?.pages || []).filter(p => p.scanned).length;
+    if (regs?.pages?.length && scannedPages >= 0.5 * regs.pages.length) { info.reason = `OCR text layer: ${scannedPages} of ${regs.pages.length} pages are scanned images`; continue; }
+    if (/office lens|abbyy|finereader|tesseract|\bocr\b|camscanner|scansnap|paper capture|readiris|omnipage/i.test(d.producer || '')) { info.reason = `OCR text layer (producer ${d.producer})`; continue; }
     info.trusted = true;
     const present = t => inSet(allWords, t);
     const presentInDoc = t => inSet(own, t);
