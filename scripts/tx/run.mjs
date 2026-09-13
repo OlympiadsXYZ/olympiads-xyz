@@ -219,6 +219,13 @@ for (;;) {
       if (data && typeof data === 'object') {
         const before = JSON.stringify(data);
         normaliseCandidate(data);
+        // the archive keys are the manifest's, never the reader's copy of a long Cyrillic path
+        const man = readJson(manifestPath, null);
+        if (man?.documents?.problems && data.paper) {
+          data.paper.source = { ...(data.paper.source || {}), archiveKey: man.documents.problems.key };
+          if (man.documents.solutions) data.paper.solutionSource = { ...(data.paper.solutionSource || {}), archiveKey: man.documents.solutions.key };
+          else if (data.paper.solutionSource) delete data.paper.solutionSource;
+        }
         if (JSON.stringify(data) !== before) {
           const out = /\.norm\.json$/.test(src) ? src : src.replace(/\.json$/, '.norm.json'); // a later rule may still apply to an already-normalised file
           writeJson(out, data);
