@@ -299,6 +299,16 @@ test('a passage moves between sibling fields when both are returned; a solution 
   assert.equal(c6.problems[0].solution.incomplete, true);
 });
 
+test('a paragraph that is nothing but LaTeX is wrapped as display math; prose with a stray command is not', () => {
+  const s = 'yields the final answer of the form\n\nn_0\\left(\\frac{R_0}{r}\\right)^{2}. \\qquad (18)\n\nThe initial momentum is $p_0$.\n\nВ \\textbf{тази} задача се търси скоростта на тялото.';
+  const out = lib.wrapBareFormulaParagraphs(s);
+  assert.equal(out, 'yields the final answer of the form\n\n$$n_0\\left(\\frac{R_0}{r}\\right)^{2}. \\qquad (18)$$\n\nThe initial momentum is $p_0$.\n\nВ \\textbf{тази} задача се търси скоростта на тялото.');
+  const c = candidate(); c.problems[0].solution.statement = s;
+  lib.normaliseCandidate(c);
+  assert.match(c.problems[0].solution.statement, /\$\$n_0\\left\(\\frac\{R_0\}\{r\}\\right\)\^\{2\}\. \\qquad \(18\)\$\$/);
+  assert.match(c.problems[0].solution.statement, /В \*\*тази\*\* задача/);
+});
+
 test('an empty part that is a printed section heading is folded into the next part; a bare empty part is dropped', () => {
   const c = candidate();
   c.problems[0].parts = [{ label: '2.16', statement: 'Sketch the graph.' }, { label: 'Part 3. Engine with a Governor', statement: '' }, { label: '2.17', statement: 'Find the dependence.' }, { label: 'в)', statement: '  ' }];

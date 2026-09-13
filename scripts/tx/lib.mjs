@@ -661,6 +661,16 @@ export function balanceDisplayMath(s) {
   }
   return text;
 }
+// A paragraph that is nothing but LaTeX (a formula the reader left without its $$: "n_0\left(\frac{R_0}{r}\right)^2.
+// \qquad (18)") is wrapped as display math; a paragraph with real words in it is prose and stays.
+export function wrapBareFormulaParagraphs(s) {
+  return String(s).split(/\n[ \t]*\n/).map(par => {
+    const p = par.trim();
+    if (!p || p.includes('$') || !/\\[a-zA-Z]+|[{}^_]/.test(p) || p.length > 600) return par;
+    const words = p.replace(/\\[a-zA-Z]+\*?/g, ' ').replace(/[{}^_()\[\]\\|=+\-*/.,;:0-9]/g, ' ').split(/\s+/).filter(w => /^[A-Za-zА-Яа-я]{3,}$/.test(w));
+    return words.length <= 1 ? par.replace(p, () => `$$${p}$$`) : par; // a function: replace() reads "$$" in a string as one "$"
+  }).join('\n\n');
+}
 export function normaliseCandidate(c) {
   if (!c || typeof c !== 'object') return c;
   const changes = [];
@@ -788,10 +798,14 @@ export function normaliseCandidate(c) {
   // block is closed at that paragraph break — before the rule below, which would otherwise strip the spacing
   // commands of the equations it mistakes for prose. Word-exported LaTeX also brings \nicefrac, which KaTeX lacks.
   walkStrings(c, (p, s) => {
-    if (!/\/(statement|caption|alt|title)$/.test(p) || !/\$\$|\\nicefrac/.test(s)) return;
+    if (!/\/(statement|caption|alt|title)$/.test(p) || !/\$\$|\\nicefrac|\\[a-zA-Z]+/.test(s)) return;
     let out = balanceDisplayMath(s);
+    // a lone "$$" after a formula fragment (a duplicated equation tail) leaves an empty block once balanced:
+    // drop it, so the fragment is a bare formula paragraph for the wrapper below
+    out = out.replace(/\$\$[ \t]*\$\$/g, '');
+    out = /\/(statement)$/.test(p) ? wrapBareFormulaParagraphs(out) : out;
     out = out.replace(/\\nicefrac\b/g, '\\frac');
-    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / \\nicefrac`); }
+    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac`); }
   });
   // LaTeX spacing and text commands OUTSIDE math ("(2.1) \quad $a = b$ \ \text{и} \ $c$",
   // a display-equation habit) render literally on the page: spacing becomes a
