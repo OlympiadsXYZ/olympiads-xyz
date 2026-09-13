@@ -29,12 +29,18 @@ const catalogueRows = () => {
   // the short numbers in a name (Q1 / T1_solution, not the year) — equal sets pair the files whatever else the names carry
   const numbers = s => new Set([...s].filter(t => /^\d{1,2}$/.test(t)));
   const sameNumbers = (a, b) => { const x = numbers(a), y = numbers(b); return x.size > 0 && x.size === y.size && [...x].every(n => y.has(n)); };
+  const inventory = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'archive-index.json'), 'utf8')).rows || []; } catch { return []; } })();
+  const invByFile = new Map(inventory.map(r => [r.file, r]));
   const rows = [];
   let images = 0;
+  const instructions = [];
   for (const e of cat) {
     if (e.type !== 'problems') continue;
     if (/\.(zip|txt|gif)$/i.test(e.file)) continue; // bundles and plain text: not a paper
     if (/\.(jpe?g|png)$/i.test(e.file)) { images++; continue; } // photographed sheets: often one paper split over several files — grouped later
+    // a general-instructions or cover sheet typed as problems (APhO "exam-experiment-G0-english.pdf": rules, a constants
+    // table as an image, no problem) is not a paper; the inventory lists no problem in it
+    if (/(^|[^a-z0-9])g0([^a-z0-9]|$)|instruction|general|cover/i.test(path.basename(e.file)) && !(invByFile.get(e.file)?.problems || []).length) { instructions.push(e.file); continue; }
     // a theory file never takes the practical round's answers (10-IV-praktML ↔ a10-IV-teor share every other
     // token); photographed solution sheets are several files of one paper and are grouped later, not paired
     const kindOf = f => /teor|theor/i.test(path.basename(f)) ? 'theory' : /prakt|prak|practic|exper|(^|[^a-z])exp([^a-z]|$)/i.test(path.basename(f)) ? 'practical' : null;
@@ -59,8 +65,6 @@ const catalogueRows = () => {
   // (a multilingual "_multi" file next to the English one, "ver Jul 29" next to "ver 0730", a 1-page duplicate of
   // eupho2023_theory_problems.pdf): the one with a solutions file wins, then the single-language file, then the one
   // with more pages; the other is dropped here (batch logs it as skipped: duplicate).
-  const inventory = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'archive-index.json'), 'utf8')).rows || []; } catch { return []; } })();
-  const invByFile = new Map(inventory.map(r => [r.file, r]));
   const titlesOf = f => (invByFile.get(f)?.problems || []).map(p => String(p.title || '').toLowerCase().replace(/\s+/g, ' ').trim()).filter(Boolean);
   const pagesOf = f => Number(invByFile.get(f)?.pages) || 0;
   const isMulti = f => /multi/i.test(path.basename(f));
@@ -105,6 +109,7 @@ const catalogueRows = () => {
     });
   }
   if (images) console.error(`${images} image-only problem sheets left out (grouping needed)`);
+  if (instructions.length) console.error(`${instructions.length} instructions/cover sheet(s) left out: ${instructions.map(f => path.basename(f)).join(', ')}`);
   return rows;
 };
 const all = process.argv.includes('--catalogue') ? catalogueRows() : JSON.parse(fs.readFileSync(path.join(ROOT, 'tmp/shards/all.json'), 'utf8'));
