@@ -82,6 +82,8 @@ const total = problems.reduce((a, pr) => a + (typeof pr.points === 'number' ? pr
 if (paper.totalPoints != null && problems.every(pr => typeof pr.points === 'number') && Math.abs(total - paper.totalPoints) > 1e-9) warn('/paper/totalPoints', `problems sum to ${total}, totalPoints is ${paper.totalPoints}`);
 const listed = manifest?.meta?.listed?.problems;
 if (listed && problems.length !== listed) warn('/problems', `${problems.length} problem entries, the archive inventory lists ${listed} (printed sections and sub-tasks of one problem are its parts, not problems of their own)`);
+const listedParts = manifest?.meta?.listed?.parts, haveParts = problems.reduce((a, p) => a + (p.parts || []).length, 0);
+if (listedParts >= 3 && haveParts === 0) warn('/problems', `no parts at all, the archive inventory lists about ${listedParts} printed sub-tasks — they were folded into the statement`);
 if (manifest) for (const doc of ['source', 'solutionSource']) {
   const d = doc === 'source' ? 'problems' : 'solutions';
   for (const pg of paper[doc]?.pages || []) if (manifest.documents[d] && (pg < 1 || pg > manifest.documents[d].pages)) err(`/paper/${doc}/pages`, `page ${pg} outside ${d} (1..${manifest.documents[d].pages})`);

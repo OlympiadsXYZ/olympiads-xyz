@@ -230,7 +230,8 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
       const titles = row.problems.map(p => [p.number, p.title].filter(Boolean).join(' · '));
       const isSection = t => /\((?:part|section|част)\s*[a-zа-я0-9]+\)|^\s*(?:part|част)\s+[a-zа-я0-9]+\b/i.test(t) || /^[^·]*\((?:part|част) [a-z0-9]+\)/i.test(String(t));
       const top = titles.filter(t => !isSection(t));
-      meta.listed = { problems: Math.max(1, top.length), titles: top.slice(0, 12) };
+      const parts = row.problems.filter((p, i) => !isSection(titles[i])).reduce((a, p) => a + (Number(p.parts) || 0), 0);
+      meta.listed = { problems: Math.max(1, top.length), titles: top.slice(0, 12), ...(parts ? { parts } : {}) };
     }
   }
   return { paperId, meta, keys, origin, existingFile: existing };
@@ -614,7 +615,7 @@ export function contextBlock(manifest) {
     `- paperId: ${manifest.paperId}`,
     `- subject: ${m.subject}; competition: ${m.competition}; catalogue year: ${m.year}; catalogue round: ${m.round ?? 'null'}; catalogue grade: ${m.grade ?? 'null'}; lang: ${m.lang || 'bg'}`,
     `- documents:\n${docs}`,
-    ...(m.listed?.problems ? [`- the archive inventory lists ${m.listed.problems} top-level problem(s) in the problems document (${m.listed.titles.join('; ')}): emit exactly one problems[] entry per top-level problem; printed sections and sub-tasks inside one (Part A/B/C, A.1, E1.3, а)/б)) are its parts, never problems of their own. Say so in tx.notes if the page really prints a different number.`] : []),
+    ...(m.listed?.problems ? [`- the archive inventory lists ${m.listed.problems} top-level problem(s) in the problems document (${m.listed.titles.join('; ')})${m.listed.parts ? ` with about ${m.listed.parts} printed sub-tasks` : ''}: emit exactly one problems[] entry per top-level problem; printed sections and sub-tasks inside one (Part A/B/C, A.1, E1.3, а)/б)) are its parts[] — one entry per printed sub-task with its label and points — never problems of their own and never folded into the statement. Say so in tx.notes if the page really prints a different number.`] : []),
     `- figure boxes are [x0, y0, x1, y1] in PERMILLE of the page (0–${BBOX_SCALE} across the width and across the height, origin top-left), independent of image resolution.`,
   ].join('\n');
 }
