@@ -162,6 +162,13 @@ export function textLayerCheck(candidate, manifest, paperId) {
   const shared = /^\/paper\/|^\/problems\/\d+\/(title|number)$/;
   const wordsOf = doc => new Set(fields.filter(f => f.doc === doc || shared.test(f.path)).flatMap(f => [...f.set]));
   const allWords = new Set(fields.flatMap(f => [...f.set]));
+  // A LaTeX text layer whose fi/fl/ff/ffi/ffl glyphs carry no Unicode mapping prints „signi cant gures“, „e ective“,
+  // „di erential“: a transcribed word is present when the pieces around its ligatures are, and such a piece is a
+  // present printed word (ipho-2024-theory-q3: 11 defects from this alone).
+  const LIG = /ffi|ffl|ff|fi|fl/;
+  const ligPiecesOf = w => LIG.test(w) ? w.split(/ffi|ffl|ff|fi|fl/).filter(p => p.length >= 3) : [];
+  const ligPresent = (set, w) => { const ps = ligPiecesOf(w); return ps.length > 0 && ps.every(p => set.has(p)); };
+  const ligPieces = new Set([...allWords].flatMap(ligPiecesOf));
   const layerSets = {};
   for (const [doc, d] of Object.entries(manifest.documents)) {
     const file = d.text ? path.join(paperDir(paperId), d.text) : null;
@@ -191,8 +198,9 @@ export function textLayerCheck(candidate, manifest, paperId) {
     if (regs?.pages?.length && scannedPages >= 0.5 * regs.pages.length) { info.reason = `OCR text layer: ${scannedPages} of ${regs.pages.length} pages are scanned images`; continue; }
     if (/office lens|abbyy|finereader|tesseract|\bocr\b|camscanner|scansnap|paper capture|readiris|omnipage/i.test(d.producer || '')) { info.reason = `OCR text layer (producer ${d.producer})`; continue; }
     info.trusted = true;
-    const present = t => inSet(allWords, t);
-    const presentInDoc = t => inSet(own, t);
+    const ownLig = own === allWords ? ligPieces : new Set([...own].flatMap(ligPiecesOf));
+    const present = t => inSet(allWords, t) || ligPieces.has(t.w);
+    const presentInDoc = t => inSet(own, t) || ownLig.has(t.w);
     info.layerCovered = Number((tokens.filter(t => !isNeutral(t) && present(t)).length / Math.max(1, info.layerWords)).toFixed(3));
     const docFields = fields.filter(f => f.doc === (hasSolutions ? doc : 'problems'));
     // which field a printed line belongs to: the field sharing the most of the line's transcribed words
@@ -285,7 +293,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     for (const f of docFields) {
       if (NO_EXTRAS.test(f.path)) continue;
       const other = Object.values(layerSets).filter(s => s !== layerSet);
-      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !layerSet.has(x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`)).map(x => x.raw))];
+      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`)).map(x => x.raw))];
       if (!extras.length) continue;
       const minor = /\/(caption|title|label)$/.test(f.path);
       // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically;

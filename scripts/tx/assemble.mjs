@@ -73,7 +73,21 @@ export function assembleWindows(parts, manifest) {
     // solution: the longest beginning any window produced, followed by the continuations later
     // windows read (tx.continuation: the part printed after the overlap page). A window's own
     // "[извън прозореца …]" notes inside a solution are not printed text.
-    const solText = s => String(s.pr.solution?.statement || '').replace(/\[извън прозореца[^\]]*\]/g, '').trim();
+    const solText = s => String(s.pr.solution?.statement || '').replace(/\[извън прозореца[^\]]*\]/g, '').replace(/\[(?:the )?(?:solution |решението )?(?:continues|continued|продължава)[^\]]*\]/gi, '').trim();
+    // A continuation window sometimes re-transcribes the overlap page before going on (ipho-2024-theory-q3: the
+    // B-4 derivation twice). The longest stretch of words that opens the continuation and already ends the
+    // beginning is dropped (8 words or more, so a repeated formula line alone is not mistaken for an overlap).
+    const words = t => [...t.matchAll(/\S+/g)].map(m => ({ w: m[0], end: m.index + m[0].length }));
+    const dropOverlap = (head, cont) => {
+      const h = words(head).map(x => x.w), c = words(cont);
+      if (c.length < 8 || h.length < 8) return cont;
+      const key = c.slice(0, 8).map(x => x.w).join(' ');
+      let start = -1;
+      for (let i = h.length - 8; i >= 0; i--) if (h.slice(i, i + 8).join(' ') === key) { start = i; break; }
+      if (start < 0) return cont;
+      let k = 0; while (start + k < h.length && k < c.length && h[start + k] === c[k].w) k++;
+      return k >= 8 ? cont.slice(c[k - 1].end).trim() : cont;
+    };
     const pieces = seen.filter(s => s.pr.solution && solText(s));
     const heads = pieces.filter(s => !s.pr.tx?.continuation).sort((a, b) => solText(b).length - solText(a).length);
     const head = heads[0] || null;
@@ -81,7 +95,9 @@ export function assembleWindows(parts, manifest) {
     if (head || conts.length) {
       const first = head || conts.shift();
       out.solution = JSON.parse(JSON.stringify(first.pr.solution));
-      out.solution.statement = [solText(first), ...conts.map(solText)].join('\n\n');
+      let text = solText(first);
+      for (const s of conts) { const piece = dropOverlap(text, solText(s)); if (piece) text = `${text}\n\n${piece}`; }
+      out.solution.statement = text;
       if (conts.length) {
         // whether the solution is complete is known only at its end; a continuation that calls itself
         // incomplete because its beginning lies in an earlier window is complete once stitched

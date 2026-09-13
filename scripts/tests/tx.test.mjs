@@ -339,6 +339,12 @@ test('assembleWindows stitches a solution that runs across windows: the beginnin
   assert.equal(data.problems[0].solution.incompleteReason, undefined);
   assert.equal(data.problems[0].tx.continuation, undefined);
   assert.equal(report.orphanContinuations, undefined);
+  // a continuation that re-transcribes the end of the beginning (the overlap page) is trimmed to what is new
+  const tail = 'Оттук за периода получаваме израз, който зависи само от дължината на махалото и от ускорението.';
+  const p2d = JSON.parse(JSON.stringify(p2)); p2d.problems[0].solution.statement = `Решение. Първата част на решението. ${tail}`;
+  const p3d = JSON.parse(JSON.stringify(p3)); p3d.problems[0].solution.statement = `[solution continues on the next page]\n\n${tail}\n\nВтората част на решението, до края.`;
+  const dedup = assembleWindows([p1, p2d, p3d], { ...manifest, documents: { ...manifest.documents, solutions: { ...manifest.documents.solutions, pages: 2 } } });
+  assert.equal(dedup.data.problems[0].solution.statement, `Решение. Първата част на решението. ${tail}\n\nВтората част на решението, до края.`);
   // a solutions window that numbers the paper's only problem as the print does ("3") still feeds that problem
   const p3b = JSON.parse(JSON.stringify(p3)); p3b.problems[0].number = 3; p3b.problems[0].id = `${PAPER}-p3`; p3b.problems[0].parts = [{ label: 'B-1', statement: 'not a part' }];
   const renum = assembleWindows([p1, p2, p3b], { ...manifest, documents: { ...manifest.documents, solutions: { ...manifest.documents.solutions, pages: 2 } } });
