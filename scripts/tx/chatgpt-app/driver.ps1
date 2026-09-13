@@ -161,6 +161,11 @@ if (-not $SameChat) {
   if (-not $ok) { Fail 'the new chat still shows messages' }
   Log 'new chat'
 }
+# the composer keeps its draft across "New chat": drop leftover attachments and text (a failed attempt's, or the user's)
+$leftover = Find-All $win $CT::Button '^Remove ' $false
+if ($leftover.Count) { Log ("removing {0} leftover attachment(s)" -f $leftover.Count); foreach ($b in $leftover) { try { Invoke-El $b; Start-Sleep -Milliseconds 200 } catch {} }; Start-Sleep -Milliseconds 500 }
+$composer0 = Wait-For 'composer' { $e = Find-All $win $CT::Edit 'Message ChatGPT'; if ($e.Count) { $e[0] } } 10
+if ($composer0) { $v0 = ''; try { $v0 = $composer0.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value } catch {}; if ($v0.Trim() -and $v0.Trim() -ne 'Message ChatGPT') { Show-App; $composer0.SetFocus(); Start-Sleep -Milliseconds 200; [System.Windows.Forms.SendKeys]::SendWait('^a{DEL}'); Start-Sleep -Milliseconds 300; Log 'cleared leftover text' } }
 $copiesBefore = Count-Copy
 
 # ---- attachments, through the app's own Open dialog (files are copied into one folder: the dialog's
@@ -226,10 +231,20 @@ $composer = Wait-For 'composer' { $e = Find-All $win $CT::Edit 'Message ChatGPT'
 if (-not $composer) { Fail 'no composer' }
 Show-App
 $composer.SetFocus(); Start-Sleep -Milliseconds 300
-[System.Windows.Forms.Clipboard]::SetText($promptText)
-[System.Windows.Forms.SendKeys]::SendWait('^v'); Start-Sleep -Milliseconds 800
-$typed = Wait-For 'prompt in composer' { try { $v = $composer.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value; if ($v.Length -ge [Math]::Min(200, $promptText.Length) * 0.8) { $true } } catch {} } 10
-if (-not $typed) { Fail 'the prompt did not land in the composer' }
+# a single paste of 10,000+ characters becomes a "Pasted text.txt" attachment (measured: 8,000 stays inline, 10,000
+# does not); pasted in chunks under that, the text accumulates inline (24k measured)
+$normalised = $promptText -replace "`r`n", "`n"
+$chunks = @(); $pos = 0; $LIMIT = 7500
+while ($pos -lt $normalised.Length) {
+  $len = [Math]::Min($LIMIT, $normalised.Length - $pos)
+  if ($pos + $len -lt $normalised.Length) { $cut = $normalised.LastIndexOf("`n", $pos + $len - 1, $len); if ($cut -gt $pos + 1000) { $len = $cut - $pos + 1 } }
+  $chunks += $normalised.Substring($pos, $len); $pos += $len
+}
+foreach ($chunk in $chunks) { [System.Windows.Forms.Clipboard]::SetText($chunk); [System.Windows.Forms.SendKeys]::SendWait('^v'); Start-Sleep -Milliseconds ([Math]::Max(500, [Math]::Min(2000, $chunk.Length / 8))) }
+Start-Sleep -Milliseconds 500
+$typed = Wait-For 'prompt in composer' { try { $v = $composer.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value; if ($v.Length -ge $normalised.Length * 0.9) { $true } } catch {} } 15
+if (-not $typed) { $vlen = -1; try { $vlen = $composer.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value.Length } catch {}; Fail ("the prompt did not land in the composer ({0} of {1} characters, {2} chunk(s))" -f $vlen, $normalised.Length, $chunks.Count) }
+Log ("prompt pasted: {0} characters in {1} chunk(s)" -f $normalised.Length, $chunks.Count)
 $send = Wait-For 'send button' { $b = Find-All $win $CT::Button 'Send'; if ($b.Count -and $b[0].Current.IsEnabled) { $b[0] } } 30
 if (-not $send) { Fail 'the Send button never enabled (uploads still running?)' }
 Invoke-El $send

@@ -33,3 +33,11 @@ D-P9. Как са реализирани в кода — в `docs/Problems-Archi
 - `sourceSpans` (страница/регион за условие и решение) са в схемата, но нито
   една тема още не ги носи — `#page=` котвите се появяват, когато конвейерът ги
   запише.
+
+## D-P14 (2026-09-13) — the ChatGPT desktop app as the bulk reader/checker
+
+Z.ai ran dry twice in one day ($20 for 235 papers; ~$150–200 projected for the rest). Margulan's decision: drive
+his ChatGPT subscription's desktop app instead ("small hobby project", the chat interface is the one he treats as
+unlimited; the Codex CLI has usage limits like Claude Code). Automating the consumer app is against OpenAI's terms;
+he was told and reaffirmed. Implementation: `scripts/tx/chatgpt-app/driver.ps1` + provider `chatgpt` in
+`transcribe.mjs` (handoff §12f). Z.ai remains available for a paid burst (`--reader zai:glm-5.3-flash`).
