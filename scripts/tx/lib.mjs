@@ -614,6 +614,8 @@ export function normaliseCandidate(c) {
         if (!Array.isArray(arr)) continue;
         for (const fig of arr) {
           if (!fig || typeof fig !== 'object') continue;
+          // a version suffix belongs to the remote key (p2-sol-fig2-v3.png), never to the id
+          if (typeof fig.id === 'string' && /-v\d+$/.test(fig.id)) { const from = fig.id; fig.id = fig.id.replace(/-v\d+$/, ''); changes.push(`/problems/${i}: figure id ${from} stripped of its version suffix`); }
           if (typeof fig.id === 'string' && fig.id && !seen.has(fig.id)) { seen.add(fig.id); continue; }
           let k = 1; while (seen.has(`${stem}${k}`)) k++;
           const from = fig.id; fig.id = `${stem}${k}`; seen.add(fig.id);

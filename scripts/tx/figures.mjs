@@ -156,12 +156,13 @@ for (const p of proposals) {
   // choose the remote key: reuse an object with identical content (MD5), otherwise a free -vN suffix
   const listing = remoteListing();
   let key = null;
-  for (let v = 1; v <= 6; v++) {
+  const MAX_VERSIONS = 12; // a long repair loop re-crops a figure several times; identical bytes are reused, not re-uploaded
+  for (let v = 1; v <= MAX_VERSIONS; v++) {
     const name = v === 1 ? `${fig.id}.png` : `${fig.id}-v${v}.png`;
     const remote = listing.get(name);
     if (!remote) { key = name.replace(/\.png$/, ''); entry.upload = 'new'; break; }
     if (remote.md5 && remote.md5 === entry.md5) { key = name.replace(/\.png$/, ''); entry.upload = 'reused-identical-md5'; break; }
-    if (v === 6) entry.error = 'six versions of this figure already exist remotely; refusing to add more';
+    if (v === MAX_VERSIONS) entry.error = `${MAX_VERSIONS} versions of this figure already exist remotely; refusing to add more`;
   }
   if (entry.error) { report.errors.push({ id: fig.id, message: entry.error }); results.push(entry); continue; }
   if (entry.upload === 'new') run('rclone', ['copyto', '--ignore-existing', info.file, `${R2_REMOTE}/problems/${paperId}/${key}.png`]);
