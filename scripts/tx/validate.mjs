@@ -55,7 +55,7 @@ problems.forEach((pr, i) => {
   if (ids.has(pr.id)) err(`${p}/id`, `duplicate id ${pr.id}`); ids.add(pr.id);
   if (Number.isInteger(pr.number)) { if (pr.number !== i + 1) err(`${p}/number`, `expected ${i + 1}, got ${pr.number} (numbering must be contiguous 1..N)`); }
   else warn(`${p}/number`, `non-integer number "${pr.number}"`);
-  if (!pr.statement || !String(pr.statement).trim()) err(`${p}/statement`, 'empty statement');
+  if (!pr.statement || !String(pr.statement).trim()) { if ((pr.parts || []).length) warn(`${p}/statement`, 'empty statement (the printed problem is only its parts)'); else err(`${p}/statement`, 'empty statement'); }
   else if (String(pr.statement).includes(WINDOW_PLACEHOLDER)) err(`${p}/statement`, `window placeholder "${WINDOW_PLACEHOLDER}" left unresolved (assemble.mjs did not find the statement in any window)`);
   if (pr.points != null && (typeof pr.points !== 'number' || pr.points < 0 || pr.points > 200)) err(`${p}/points`, `implausible points ${pr.points}`);
   const labels = new Set();
