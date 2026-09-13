@@ -565,6 +565,8 @@ export function pageImages(manifest, window = null) {
 export function pageWindows(manifest, size) {
   const docs = Object.entries(manifest.documents || {});
   const total = docs.reduce((a, [, d]) => a + d.pages, 0);
+  size = Math.floor(Number(size) || 0);
+  if (size === 1) size = 2; // windows overlap by one page: a 1-page window never advances (heap blow-up, 2026-09-13)
   if (!size || total <= size) return [null];
   const out = [];
   for (const [doc, d] of docs) {
