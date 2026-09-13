@@ -41,6 +41,19 @@ export function assembleWindows(parts, manifest) {
       byNumber.get(n).push({ pr, wi, doc: windowDoc(part) });
     }
   });
+  // A solutions-only window sometimes numbers the paper's single problem as the print does ("Q3", 3) while the
+  // problems window numbered it 1: when exactly one problem has a statement anywhere, every placeholder-only
+  // number is that problem (ipho-2024-theory-q3: the continuation came back as "problem 3").
+  const fullNumbers = [...byNumber.entries()].filter(([, seen]) => seen.some(s => !isPlaceholder(s.pr))).map(([n]) => n);
+  report.renumbered = [];
+  if (fullNumbers.length === 1) {
+    const target = fullNumbers[0];
+    for (const [n, seen] of [...byNumber.entries()]) {
+      if (n === target || !seen.every(s => isPlaceholder(s.pr))) continue;
+      for (const s of seen) { s.pr.number = target; byNumber.get(target).push(s); }
+      byNumber.delete(n); report.renumbered.push({ from: n, to: target });
+    }
+  }
   const problems = [];
   report.solutionWindowStatements = [];
   for (const n of [...byNumber.keys()].sort((a, b) => a - b)) {

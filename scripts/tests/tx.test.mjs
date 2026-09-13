@@ -339,6 +339,13 @@ test('assembleWindows stitches a solution that runs across windows: the beginnin
   assert.equal(data.problems[0].solution.incompleteReason, undefined);
   assert.equal(data.problems[0].tx.continuation, undefined);
   assert.equal(report.orphanContinuations, undefined);
+  // a solutions window that numbers the paper's only problem as the print does ("3") still feeds that problem
+  const p3b = JSON.parse(JSON.stringify(p3)); p3b.problems[0].number = 3; p3b.problems[0].id = `${PAPER}-p3`; p3b.problems[0].parts = [{ label: 'B-1', statement: 'not a part' }];
+  const renum = assembleWindows([p1, p2, p3b], { ...manifest, documents: { ...manifest.documents, solutions: { ...manifest.documents.solutions, pages: 2 } } });
+  assert.equal(renum.data.problems.length, 1);
+  assert.deepEqual(renum.report.renumbered, [{ from: 3, to: 1 }]);
+  assert.equal(renum.data.problems[0].solution.statement, 'Решение. Първата част на решението.\n\nВтората част на решението, до края.');
+  assert.equal(renum.data.problems[0].parts.length, c.problems[0].parts.length);
   // a continuation whose beginning no window produced is kept and reported, not dropped
   const orphan = assembleWindows([p1, p3], manifest);
   assert.equal(orphan.data.problems[0].solution.statement, 'Втората част на решението, до края.');
