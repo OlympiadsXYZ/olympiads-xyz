@@ -258,9 +258,24 @@ for (const window of windows) {
   const pages = pageImages(manifest, window).filter(p => !refix || refix.wanted.has(`${p.document}#${p.page}`));
   const missing = pages.filter(p => !fs.existsSync(p.file));
   if (missing.length) fail(`${missing.length} rendered page(s) missing; re-run prepare.mjs`);
+  // A long paper with many figures can exceed the provider's image cap (izho-2023-theory-multi: 106): the pages
+  // come first, crops fill what is left; when the pages alone exceed it, only the pages the candidate spans go.
+  let pageList = pages, cropList = crops, imagesLeftOut = 0;
+  if (pageList.length + cropList.length > limits.images) {
+    const src = view || refix?.candidate; // the checker's sanitised view keeps each problem's source pages
+    if (pageList.length > limits.images && src) {
+      const spanned = new Set((src.problems || []).flatMap(pr => (pr.tx?.sourceSpans || pr.sourceSpans || []).map(s => `${s.document}#${s.page}`)));
+      if (spanned.size) pageList = pageList.filter(p => spanned.has(`${p.document}#${p.page}`));
+    }
+    const room = Math.max(0, limits.images - pageList.length);
+    imagesLeftOut = Math.max(0, cropList.length - room);
+    cropList = cropList.slice(0, room);
+    if (imagesLeftOut) console.error(`[transcribe] ${imagesLeftOut} crop image(s) left out to stay under ${provider}'s ${limits.images}-image cap`);
+    crops = cropList;
+  }
   const images = [
-    ...pages.map(p => ({ kind: 'page', document: p.document, page: p.page, file: p.file, bytes: fs.statSync(p.file).size })),
-    ...crops.map(c => ({ kind: 'crop', id: c.id, document: c.document, page: c.page, bbox: c.bbox, file: c.file, bytes: fs.statSync(c.file).size })),
+    ...pageList.map(p => ({ kind: 'page', document: p.document, page: p.page, file: p.file, bytes: fs.statSync(p.file).size })),
+    ...cropList.map(c => ({ kind: 'crop', id: c.id, document: c.document, page: c.page, bbox: c.bbox, file: c.file, bytes: fs.statSync(c.file).size })),
   ];
   // A single rasterised page can exceed the per-image cap on its own (a 160-dpi
   // PNG of a scanned page); re-encode just those as JPEG before sizing the payload.
