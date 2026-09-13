@@ -195,7 +195,7 @@ test('a problem entry the paper does not print is removed last, and the ones aft
   const c = candidate();
   const p1 = c.problems[0];
   const mk = (n, extra = {}) => ({ ...JSON.parse(JSON.stringify(p1)), id: `${PAPER}-p${n}`, number: n, figures: [{ id: `p${n}-fig1`, alt: 'x', tx: { document: 'problems', page: 1, bbox: [100, 100, 400, 400] } }], ...extra });
-  c.problems = [mk(1), mk(2, { statement: 'Task E1.3 — a sub-task listed as a problem' }), mk(3, { statement: 'Третата задача.' })];
+  c.problems = [mk(1), mk(2, { statement: 'Task E1.3 — a sub-task listed as a problem', tx: { sourceSpans: [{ document: 'solutions', page: 2 }] } }), mk(3, { statement: 'Третата задача.' })];
   const defects = [
     { path: '/problems/1', kind: 'metadata', severity: 'critical', description: 'invented problem entry (a sub-task of problem 1)' },
     { path: '/problems/2/statement', kind: 'reworded', severity: 'major', description: 'wording' },
@@ -210,6 +210,8 @@ test('a problem entry the paper does not print is removed last, and the ones aft
   assert.equal(r.skipped.length, 0, JSON.stringify(r.skipped));
   assert.equal(c.problems.length, 2);
   assert.deepEqual(c.problems.map(p => [p.number, p.id, p.figures[0].id]), [[1, `${PAPER}-p1`, 'p1-fig1'], [2, `${PAPER}-p2`, 'p2-fig1']]);
+  // the removed sub-task's source pages now belong to the problem before it
+  assert.deepEqual(c.problems[0].tx.sourceSpans.map(s => `${s.document}#${s.page}`), ['problems#1', 'solutions#1', 'solutions#2']);
   assert.equal(c.problems[1].statement, 'Третата задача, както е отпечатана.'); // applied before the removal shifted it
   assert.equal(c.problems[1].solution.incomplete, false); assert.equal(c.problems[1].solution.incompleteReason, undefined);
   assert.ok(r.applied.some(a => a.removed && a.path === '/problems/1'));

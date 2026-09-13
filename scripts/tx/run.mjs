@@ -121,6 +121,8 @@ function mergeTextLayer(candFile, checkOut) {
     if (typeof d.suggestedFix === 'string' && !d.source) p = repointByContent(candidate, p, d.suggestedFix);
     // a textual defect addressed to a whole problem or part object belongs to its statement
     if (['omission', 'reworded', 'wrong-value', 'wrong-unit', 'other', 'latex'].includes(d.kind)) { const o = pointerGet(candidate, p); if (o && typeof o === 'object' && !Array.isArray(o) && typeof o.statement === 'string') p = `${p}/statement`; }
+    // a missing-figure defect addressed to a problem or its solution (an object) belongs to that object's figures array
+    if (d.kind === 'figure' && /^\/problems\/\d+(\/solution)?$/.test(p)) { const o = pointerGet(candidate, p); if (o && typeof o === 'object' && !Array.isArray(o)) p = `${p}/figures`; }
     if (p !== d.path) { d.pathAsWritten = d.path; d.path = p; repairedPaths++; }
   }
   const tl = textLayerCheck(candidate, manifest, paperId);

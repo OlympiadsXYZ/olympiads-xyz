@@ -233,6 +233,8 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     // a checker that names the solution or a part (an object) and a refix that answers its text mean the
     // object's statement: the fix goes there
     if (typeof f.value === 'string' && current && typeof current === 'object' && !Array.isArray(current) && typeof current.statement === 'string' && !/\/figures\/\d+$/.test(p)) { p = `${p}/statement`; current = current.statement; }
+    // a figures array answered for a problem or its solution (an object) is that object's figures array
+    if (Array.isArray(f.value) && /^\/problems\/\d+(\/solution)?$/.test(p) && current && typeof current === 'object' && !Array.isArray(current)) { p = `${p}/figures`; current = current.figures; }
     const sameShape = (a, b) => (Array.isArray(a) && Array.isArray(b)) || (typeof a === 'object' && a !== null && !Array.isArray(a) && typeof b === 'object' && b !== null && !Array.isArray(b));
     // A printed-graphic defect answered with a figures array that still covers no part of the
     // region (the same array, [], or an array changed elsewhere) means "not a figure": remember
@@ -337,6 +339,13 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     const arr = pointerGet(candidate, arrPath);
     if (!Array.isArray(arr) || !arr[idx]) { skipped.push({ ...r.entry, reason: 'no such entry to remove' }); continue; }
     const [gone] = arr.splice(idx, 1);
+    // a sub-task listed as a problem of its own was read from pages that belong to the problem before it:
+    // its source spans move there, so the refix still gets those pages (Figure 6 on the sub-task's page)
+    if (arrPath === '/problems' && arr.length && Array.isArray(gone?.tx?.sourceSpans)) {
+      const host = arr[Math.max(0, idx - 1)]; host.tx = host.tx || {};
+      const seen = new Set((host.tx.sourceSpans || []).map(s => `${s.document}#${s.page}`));
+      host.tx.sourceSpans = [...(host.tx.sourceSpans || []), ...gone.tx.sourceSpans.filter(s => !seen.has(`${s.document}#${s.page}`))].sort((a, b) => a.document.localeCompare(b.document) || a.page - b.page);
+    }
     if (arrPath === '/problems') arr.forEach((pr, i) => {
       if (Number.isInteger(pr.number)) pr.number = i + 1;
       if (typeof pr.id === 'string' && /-p\d+$/.test(pr.id)) pr.id = pr.id.replace(/-p\d+$/, `-p${i + 1}`);

@@ -90,6 +90,8 @@ if (stage === 'refix') {
     // the defect's own page, plus every page the problem spans in that document (a fix often needs the
     // page before or after the one the checker named: a formula on p.4 for a table that ends on p.6)
     if (d.document && d.page) wanted.add(`${d.document}#${d.page}`);
+    // a checker's page for a figure is off by one now and then ("Figure 6 on p.4" printed on p.5): the neighbours come along
+    if (d.document && d.page && d.kind === 'figure') for (const q of [d.page - 1, d.page + 1]) if (q >= 1 && q <= (manifest.documents[d.document]?.pages || 0)) wanted.add(`${d.document}#${q}`);
     const m = /^\/problems\/(\d+)(\/solution\b)?/.exec(d.path);
     const spans = m ? candidate.problems?.[Number(m[1])]?.tx?.sourceSpans : null;
     // the field's own document always comes along: a statement pasted from the solutions is attributed
