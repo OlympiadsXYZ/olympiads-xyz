@@ -248,9 +248,12 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     // {"remove": true} on a problem or a part the paper does not print as such (a sub-task listed as a
     // problem of its own, a duplicate): applied after every other fix, highest index first, so the
     // paths of the fixes in this batch stay valid; the entries after it move up (numbers, ids follow)
-    if (f.value && typeof f.value === 'object' && f.value.remove === true && /^\/problems\/\d+(\/parts\/\d+)?$/.test(p)) {
-      if (!current || typeof current !== 'object') { skipped.push({ ...entry, reason: 'no such entry to remove' }); continue; }
-      removals.push({ entry, p, note: f.note || null });
+    // (a checker often addresses the duplicate entry by its statement: the removal is of the entry, when the defect says so)
+    const rm = /^(\/problems\/\d+(?:\/parts\/\d+)?)(\/statement)?$/.exec(p);
+    if (f.value && typeof f.value === 'object' && f.value.remove === true && rm && (!rm[2] || /duplicat|invent|extra|not printed|does not exist|should not exist|no such|remove|дублир|измислен|излиш|няма такава|премахн/i.test(String(d.description || '')))) {
+      const target = pointerGet(candidate, rm[1]);
+      if (!target || typeof target !== 'object') { skipped.push({ ...entry, reason: 'no such entry to remove' }); continue; }
+      removals.push({ entry, p: rm[1], note: f.note || null });
       continue;
     }
     if (typeof current === 'boolean' && typeof f.value === 'string' && /^(true|false)$/i.test(f.value.trim())) f.value = f.value.trim().toLowerCase() === 'true';
