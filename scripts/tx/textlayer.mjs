@@ -27,7 +27,7 @@ const MIN_TRUST = 0.8, MIN_LAYER_WORDS = 40;
 // fields whose words are the reader's own (alt text, notes) or not prose
 const SKIP_PATH = /\/(tx|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
 const ALT_PATH = /\/alt$/; // the reader's own words: never "unprinted", but a misread printed term in it is still worth fixing
-const NO_EXTRAS = /\/answer(\/|$)/; // answers are summarised by the reader, not printed as such
+const NO_EXTRAS = /\/answer(\/|$)|^\/paper\//; // answers are summarised by the reader; masthead fields come from letterheads that are often images
 // structural words the transcription encodes as fields, not prose
 // The paper's language decides which script carries the prose (the other script is formulas and
 // units), which structural words the transcription encodes as fields, and how a problem heading reads.
