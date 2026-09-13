@@ -556,3 +556,22 @@ test('a printed statement that opens with an imperative-looking word is not an i
   assert.equal(looksLikeInstruction('label: null (or "") — keep the paragraph as unbulleted statement text'), true);
   assert.equal(looksLikeInstruction('Remove this figure entry from problem 4'), true);
 });
+
+test('text-layer lettering: math-italic formula lines and equation-editor leftovers are not printed prose; function names are not content words', async () => {
+  const { layerPages, profileFor } = await import(txModule('textlayer.mjs'));
+  const lines = [
+    'The ball rolls without slipping on the inclined plane',
+    '𝑅min + 4𝑎𝑅min cos 𝛼 + 3𝑎2 cos 𝛼 = 0',
+    'latexit sha1_base64="+HfglMsVvcTmMP0y8DbCOCYhyWU=">AAAnN3ic7VrNc+O2FXfSr1TNtkl76vRQtLvekXclWZTXu5ukmrGbJm1mmplN',
+    'The answer is the minimum radius of the loop',
+  ];
+  const [page] = layerPages(lines.join('\n'));
+  const skipped = n => page.tokens.filter(t => t.line === n).map(t => !!t.skip);
+  assert.ok(skipped(0).length && skipped(0).every(s => !s), 'prose line kept');
+  assert.ok(skipped(1).length && skipped(1).every(s => s), 'math-italic formula line is lettering');
+  assert.ok(skipped(2).length && skipped(2).every(s => s), 'LaTeXiT source is lettering');
+  assert.ok(skipped(3).length && skipped(3).every(s => !s), 'prose after it kept');
+  const lat = profileFor('en');
+  for (const w of ['cos', 'min', 'ln', 'problems', 'figure']) assert.ok(lat.stop.test(w), `${w} is structural`);
+  for (const w of ['cosine', 'minimum', 'lens', 'along']) assert.ok(!lat.stop.test(w), `${w} is prose`);
+});

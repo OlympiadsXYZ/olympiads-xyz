@@ -35,7 +35,8 @@ const PROFILES = {
   cyr: { content: /^[а-яѝё]+$/u, stop: /^(задач|решени|отговор|критери|фиг|рис|точк|балл|общо|подусловие|бележк|забележк|примечани|указани)/u,
     // "Задача 2.", "ЗАДАЧА 1. – 10 точки", "Задача II.", "Задача №3", "1 задача.", "2-ра задача"
     heading: /^\s*(?:(?:задача|з\s*а\s*д\s*а\s*ч\s*а)\s*(?:№\s*)?(\d+|[ivx]+)\b|(\d+)\s*(?:-?\s*(?:ва|ра|та|а|и|я))?\s+задача\b)/iu },
-  lat: { content: /^[a-zäöüßéèêàâçñáíóúœæ]+$/u, stop: /^(problem|question|task|solution|answer|figure|fig|table|point|mark|part|section|hint|note|probl[eè]me|partie|aufgabe|l[öo]sung|abbildung|punkt|teil)/u,
+  // function names printed inside formulas (cos, min, ln) are Latin words to the content rule but never prose
+  lat: { content: /^[a-zäöüßéèêàâçñáíóúœæ]+$/u, stop: /^(problem|question|task|solution|answer|figure|fig|table|point|mark|part|section|hint|note|probl[eè]me|partie|aufgabe|l[öo]sung|abbildung|punkt|teil)|^(sin|cos|tan|cot|min|max|log|ln|exp|lim|const|arcsin|arccos|arctan|sinh|cosh|tanh|det|grad|div|rot|mod|sgn)$/u,
     // "Problem 1", "Question 2.", "Task 3", "Q1", "Problème 1", "Aufgabe 2", "1. Problem"
     heading: /^\s*(?:(?:problem|question|task|q|probl[eè]me|aufgabe|exercice)\s*(?:no\.?\s*|n[°o]\s*)?(\d+|[ivx]+)\b|(\d+)\s*[.)]?\s+(?:problem|question|task|probl[eè]me|aufgabe)\b)/iu },
 };
@@ -80,9 +81,12 @@ export function layerPages(text) {
       const heads = new Set(); for (const m of line.matchAll(/(\p{L}+)-(?=\s|$)/gu)) heads.add(m.index);
       // a formula line (symbols and digits against few letters) or a shouted header line (mostly capitals)
       // is lettering, not prose: its tokens count for nothing either way
-      const letters = (line.match(/\p{L}/gu) || []).length, symbols = (line.match(/[0-9=+*/^_()<>≤≥±·√∙×∑∫|\\{}\[\]]/g) || []).length, caps = (line.match(/\p{Lu}/gu) || []).length;
+      // Word-processor formulas come through as mathematical alphanumeric glyphs (𝑎, 𝑅, 𝛼, U+1D400–U+1D7FF): variables, so symbols
+      const letters = (line.match(/\p{L}/gu) || []).length, symbols = (line.match(/[0-9=+*/^_()<>≤≥±·√∙×∑∫|\\{}\[\]]|[\u{1D400}-\u{1D7FF}]|[α-ωΑ-Ω]/gu) || []).length, caps = (line.match(/\p{Lu}/gu) || []).length;
       const words = line.match(/\p{L}+/gu) || [], singles = words.filter(w => w.length === 1).length; // variables: "m mS S W t Q p"
-      const lettering = letters > 0 && (symbols > 0.25 * letters || (letters >= 12 && caps > 0.7 * letters) || (words.length >= 6 && singles >= 0.25 * words.length));
+      // equation editors leave their source in the text layer (LaTeXiT: latexit sha1_base64="…" followed by base64): never printed
+      const junk = /latexit|sha1_base64|[A-Za-z0-9+/]{40,}={0,2}(?:\s|$)/.test(line);
+      const lettering = junk || (letters > 0 && (symbols > 0.25 * letters || (letters >= 12 && caps > 0.7 * letters) || (words.length >= 6 && singles >= 0.25 * words.length)));
       for (const t of tokenise(line)) {
         const tok = { ...t, line: li, page: pi + 1 };
         if (lettering || /^\p{L}\p{Ll}*\p{Lu}/u.test(t.raw)) tok.skip = true; // formula/lettering line, or a variable like rPS, mMS
