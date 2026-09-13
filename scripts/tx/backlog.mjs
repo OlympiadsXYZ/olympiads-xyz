@@ -12,6 +12,7 @@ import { paperIdFor, existingPaperIndex, loadCatalogue, ROOT } from './lib.mjs';
 // Bulgarian shards stay the default.
 const catalogueRows = () => {
   const cat = loadCatalogue().filter(e => e.kind === 'competition' && !e.hidden);
+  const overrides = (() => { try { const o = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'solution-pairing-overrides.json'), 'utf8')); delete o._comment; return o; } catch { return {}; } })();
   const bucket = e => [e.subject, e.competition, e.year, e.round ?? '', e.group ?? '', e.lang].join('|');
   // a solutions document: typed as such, or an "answers"/"other" file whose name says so (ans-phys-10…, criteria_t_en, DA_Solution)
   const isSolution = e => e.type === 'solutions' || e.type === 'answers' || (e.type === 'other' && /(^|[^a-z])(ans|sol|resh|otg|criteri|key|reshen|otgov)/i.test(path.basename(e.file)));
@@ -41,7 +42,8 @@ const catalogueRows = () => {
     const all = sols.get(bucket(e)) || [];
     const cands = all.filter(s => !/\.(jpe?g|png|gif)$/i.test(s.file) && !(kind && kindOf(s.file) && kindOf(s.file) !== kind));
     let solution = null;
-    if (all.length === 1 && cands.length === 1) solution = cands[0]; // the bucket's only solutions file
+    if (overrides[e.file]) solution = { file: overrides[e.file] }; // a name that pairs wrongly, settled by hand (content/solution-pairing-overrides.json)
+    else if (all.length === 1 && cands.length === 1) solution = cands[0]; // the bucket's only solutions file
     else if (cands.length) { // several in the bucket (some ruled out above): the names must agree
       // an exact token match wins; else the best overlap, ties broken by a file typed as solutions; a real tie pairs nothing
       const t = tokens(e.file);
