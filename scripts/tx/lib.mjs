@@ -647,8 +647,10 @@ export function balanceDisplayMath(s) {
     let fixed = false;
     for (let i = 1; i < parts.length; i += 2) {
       const inside = parts[i];
-      const m = /\n[ \t]*\n(?=[ \t]*(?:[A-Za-zА-Яа-я*(]))/.exec(inside);
-      const prosey = m && (inside.length > 400 || /\$[^$\n]+\$/.test(inside) || /\n[ \t]*\n[ \t]*[A-Za-zА-Яа-я][a-zа-я]+ [a-zа-я]+ [a-zа-я]+/.test(inside));
+      // the paragraph after the break must read like a sentence (three lowercase words in its first line): an equation
+      // broken over blank lines ("\mat\n\nrm\n\nn_0\left(…") is not prose (izho-2022-theory-eng-docx)
+      const m = /\n[ \t]*\n(?=[ \t]*(?:\*\*)?[A-Za-zА-Яа-я(][^\n$\\]*?\b[a-zа-я]{2,} [a-zа-я]{2,} [a-zа-я]{2,}\b)/.exec(inside);
+      const prosey = m && (inside.length > 400 || /\$[^$\n]+\$/.test(inside) || true);
       if (!prosey) continue;
       parts[i] = inside.slice(0, m.index) + '$$' + inside.slice(m.index); // closes the equation, the next $$ opens again
       text = parts.join('$$');

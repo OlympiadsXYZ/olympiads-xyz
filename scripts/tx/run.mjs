@@ -364,7 +364,13 @@ for (;;) {
       // Leftovers are not the end of the road while the round made progress: the
       // fresh checker sees the repaired candidate and may phrase them next time.
       // Escalate only when nothing at all could be applied this round.
-      if (x.status === 3 && rep.applied + (xr.applied || 0) === 0) escalate(`nothing could be applied this round: repair skipped ${rep.skipped}, refix could not settle ${xr.skipped} defect(s) from the pages`);
+      // When everything left is a minor defect the refix disputed (it re-read the page and kept the text), the
+      // next check records them as notes — but only if there is a next check: grant one more round, once
+      // (izho-2021-experiment-exp-eng parked at max rounds on two disputed minors).
+      const leftovers = xr.unapplied || [];
+      const allDisputedMinor = leftovers.length > 0 && leftovers.every(u => /disputed/.test(String(u.reason)) && u.severity === 'minor');
+      if (allDisputedMinor && !job.options.disputeRound) { job.options.disputeRound = true; job.options.maxRounds = Math.max(job.options.maxRounds, job.round + 1); save(`every leftover is a minor defect the refix disputed: one more check to record them as notes`); }
+      else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0) escalate(`nothing could be applied this round: repair skipped ${rep.skipped}, refix could not settle ${xr.skipped} defect(s) from the pages`);
       save(`refix applied ${xr.applied} defect(s) the checker could not phrase${x.status === 3 ? `, ${xr.skipped} left for the next round` : ''}, round ${job.round}`);
     }
     job.stage = 'validate'; save(`repaired ${rep.applied} defect(s), round ${job.round}; re-validating, re-cropping, fresh check`);
