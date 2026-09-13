@@ -141,6 +141,14 @@ function mergeTextLayer(candFile, checkOut) {
     return true;
   };
   for (const d of check.defects || []) if (d.severity === 'minor' && !d.source) demoteDisputed(d);
+  // a minor crop-edge remark on a box a checker or refix already set from the crop is a second opinion, not a defect
+  let rejudged = 0;
+  for (const d of check.defects || []) {
+    if (d.severity !== 'minor' || d.kind !== 'figure' || d.source) continue;
+    const m = /^(.*\/figures\/\d+)/.exec(String(d.path || '')); if (!m) continue;
+    const fig = pointerGet(candidate, m[1]);
+    if (fig?.tx?.boxFrom) { d.severity = 'info'; d.rejudged = true; d.description = `[noted: this box was already set from the crop by the ${fig.tx.boxFrom}] ${d.description}`; rejudged++; }
+  }
   check.textLayer = { version: tl.version, checked: trusted, notes: tl.notes, defects: tl.defects.length, vetoedModelFixes: vetoed, disputedMinors: disputed, repairedPaths, unmapped: (tl.unmapped || []).length, file: rel(tlFile) };
   // an "unprinted word" the refix model kept after re-reading the page (no mechanical fix existed) is a text-layer artefact more often than not
   for (const d of tl.defects) if (d.kind === 'reworded' && !d.suggestedFix) demoteDisputed(d);
