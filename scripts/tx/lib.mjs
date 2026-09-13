@@ -847,7 +847,16 @@ export function normaliseCandidate(c, opts = {}) {
   // commands of the equations it mistakes for prose. Word-exported LaTeX also brings \nicefrac, which KaTeX lacks.
   walkStrings(c, (p, s) => {
     if (!/\/(statement|caption|alt|title)$/.test(p) || !/\$\$|\\nicefrac|\\[a-zA-Z]+/.test(s)) return;
-    let out = balanceDisplayMath(s);
+    // a paragraph that is a formula fragment closed by a lone "$$" ("58.80^{\circ}$$": the tail of the previous
+    // equation typed again — ioaa-2016-theory-x-1, where balancing then swallowed the next sentence into math)
+    // is dropped when an earlier display block of the field already ends with it, else becomes its own block
+    let out = s.replace(/(^|\n[ \t]*\n)([^\n$]{1,120}?)[ \t]*\$\$[ \t]*(?=\n|$)/g, (m, pre, frag, offset) => {
+      const f = frag.trim();
+      if (!/[\\^_{}=]/.test(f)) return m; // prose, not a formula
+      const tails = [...s.slice(0, offset).matchAll(/\$\$([\s\S]*?)\$\$/g)].map(x => x[1].replace(/\s+/g, ''));
+      return tails.some(t => t.endsWith(f.replace(/\s+/g, ''))) ? pre : `${pre}$$${f}$$`;
+    });
+    out = balanceDisplayMath(out);
     // a lone "$$" after a formula fragment (a duplicated equation tail) leaves an empty block once balanced:
     // drop it, so the fragment is a bare formula paragraph for the wrapper below
     out = out.replace(/\$\$[ \t]*\$\$/g, '');

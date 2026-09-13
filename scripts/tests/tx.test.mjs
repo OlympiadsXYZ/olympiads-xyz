@@ -926,3 +926,14 @@ test('text-layer check: a legacy inline image and its caption line are not the f
   lib.normaliseCandidate(g); // without the flag nothing is dropped
   assert.ok(g.problems[0].answer);
 });
+
+test('a formula fragment closed by a lone $$ is a typed-again equation tail: dropped when an earlier block ends with it, else its own block', () => {
+  const c = candidate();
+  c.problems[0].solution.statement = 'Thus,\n\n$$\delta = 90.00^{\circ} - 50.30^{\circ} + 19.10^{\circ} = 58.80^{\circ} \quad \textbf{[2.0]}$$\n\n- **Missing $\cos\delta$ gets a penalty of 2.0.**\n\n58.80^{\circ}$$\n**Declination = ZA + Latitude also gets full credit.**\n\nFWHM beam size will be\n\nx = 2y$$\n\nas printed.';
+  lib.normaliseCandidate(c);
+  const s = c.problems[0].solution.statement;
+  assert.doesNotMatch(s, /2\.0\.\*\*\n\n58\.80/, 'the typed-again tail is gone');
+  assert.match(s, /\*\*Declination = ZA \+ Latitude also gets full credit\.\*\*/);
+  assert.match(lib.proseOnly(s), /Declination = ZA \+ Latitude/, 'the sentence after it is prose, not math');
+  assert.match(s, /\$\$x = 2y\$\$/, 'a fragment no block ends with becomes its own block');
+});
