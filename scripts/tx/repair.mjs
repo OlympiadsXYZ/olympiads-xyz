@@ -38,9 +38,15 @@ const touchedFigures = new Set();
 for (const d of receipt.defects || []) {
   // document/page steer the refix to the right pages; region lets it remember a graphic it rules out
   const entry = { path: d.path, kind: d.kind, severity: d.severity, description: d.description, ...(d.document ? { document: d.document, page: d.page } : {}), ...(d.region ? { region: d.region } : {}) };
-  if (d.suggestedFix == null || d.suggestedFix === '') { skipped.push({ ...entry, reason: 'no suggestedFix' }); continue; }
   const p = String(d.path || '');
   if (!p.startsWith('/')) { skipped.push({ ...entry, reason: 'path is not a JSON pointer' }); continue; }
+  // "" on a caption/title/alt drops the field (an invented caption has no printed replacement)
+  if (d.suggestedFix === '' && /\/(caption|title|alt)$/.test(p)) {
+    const parent = pointerGet(candidate, p.replace(/\/[^/]+$/, ''));
+    const key = p.split('/').at(-1);
+    if (parent && typeof parent === 'object' && typeof parent[key] === 'string') { const from = parent[key]; delete parent[key]; applied.push({ ...entry, from, to: null, removed: true }); continue; }
+  }
+  if (d.suggestedFix == null || d.suggestedFix === '') { skipped.push({ ...entry, reason: 'no suggestedFix' }); continue; }
   // figure boxes: /…/figures/N/tx/bbox, /…/figures/N/tx, /…/figures/N
   const figMatch = /^(.*\/figures\/\d+)(?:\/tx(?:\/bbox)?)?$/.exec(p);
   if (figMatch && (d.kind === 'figure' || /bbox$/.test(p))) {

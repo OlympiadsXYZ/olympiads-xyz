@@ -266,6 +266,15 @@ export function textLayerCheck(candidate, manifest, paperId) {
       // the page where most of the field's words are printed
       let page = pages[0]?.page || 1, bestHit = -1;
       for (const pg of pages) { const set = new Set(pg.tokens.map(t => t.w)); const hit = f.tokens.filter(t => t.w.length >= 4 && set.has(t.w)).length; if (hit > bestHit) { bestHit = hit; page = pg.page; } }
+      // a caption most of whose words the document never prints is the reader's description, not a printed caption: drop it
+      if (/\/caption$/.test(f.path)) {
+        const content = f.tokens.filter(x => x.w.length >= 4 && CYR.test(x.w) && !STOP.test(x.w));
+        if (content.length >= 2 && extrasLeft.length >= 0.5 * content.length) {
+          result.defects.push({ path: f.path, document: doc, page, severity: 'minor', kind: 'reworded', source: 'text-layer', confidence: 0.7,
+            description: `Text-layer check: the caption „${f.text.slice(0, 80)}“ is not printed (${extrasLeft.length} of its ${content.length} words appear nowhere in the ${doc} document) — a caption is the printed caption line only; the field is dropped.`, suggestedFix: '' });
+          continue;
+        }
+      }
       result.defects.push({ path: f.path, document: doc, page, severity: minor ? 'minor' : 'major', kind: 'reworded', source: 'text-layer', confidence: 0.6,
         description: `Text-layer check: ${extrasLeft.length === 1 ? 'the word' : 'the words'} ${extrasLeft.map(w => `„${w}“`).join(', ')} in this field ${extrasLeft.length === 1 ? 'is' : 'are'} printed nowhere in the ${doc} document (a typo or a rewording); re-read the passage on the page and transcribe it verbatim.`, suggestedFix: null, words: extrasLeft });
     }

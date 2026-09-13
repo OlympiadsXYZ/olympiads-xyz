@@ -134,12 +134,16 @@ function mergeTextLayer(candFile, checkOut) {
   }
   // a minor model finding the refix model has already disputed (it re-read the page and kept the text) is recorded, not blocking
   let disputed = 0;
-  for (const d of check.defects || []) {
-    if (d.severity !== 'minor' || d.source) continue;
+  const demoteDisputed = d => {
     const dis = (candidate.tx?.disputed || []).find(x => x.path === d.path);
-    if (dis) { d.severity = 'info'; d.disputed = dis.note || true; d.description = `[disputed: the refix model kept the current text — ${dis.note || 'no note'}] ${d.description}`; disputed++; }
-  }
+    if (!dis) return false;
+    d.severity = 'info'; d.disputed = dis.note || true; d.description = `[disputed: the refix model re-read the page and kept the current text — ${dis.note || 'no note'}] ${d.description}`; disputed++;
+    return true;
+  };
+  for (const d of check.defects || []) if (d.severity === 'minor' && !d.source) demoteDisputed(d);
   check.textLayer = { version: tl.version, checked: trusted, notes: tl.notes, defects: tl.defects.length, vetoedModelFixes: vetoed, disputedMinors: disputed, repairedPaths, unmapped: (tl.unmapped || []).length, file: rel(tlFile) };
+  // an "unprinted word" the refix model kept after re-reading the page (no mechanical fix existed) is a text-layer artefact more often than not
+  for (const d of tl.defects) if (d.kind === 'reworded' && !d.suggestedFix) demoteDisputed(d);
   if (tl.defects.length) {
     check.defects = [...(check.defects || []), ...tl.defects];
     if (check.verdict === 'pass') check.verdict = 'fail';
