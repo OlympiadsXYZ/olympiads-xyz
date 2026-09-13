@@ -161,12 +161,16 @@ function mergeTextLayer(candFile, checkOut) {
     if (d.kind === 'points' && /\/(points|totalPoints)$/.test(String(d.path))) { const cur = pointerGet(candidate, String(d.path)); const fix = d.suggestedFix == null ? NaN : Number(String(d.suggestedFix).replace(/[^\d.,-]/g, '').replace(',', '.')); if (typeof cur === 'number' && Number.isFinite(fix) && Math.abs(fix - cur) < 1e-9) { d.severity = 'info'; d.description = `[same number: a formatting remark] ${d.description}`; } }
     // "No point value is printed for Problem 1; candidate invents points: 10": a problem total that is the sum of its
     // parts' printed points is a note; one with nothing printed under it is dropped (ioaa-2014-theory-short-theoretical)
-    if (d.kind === 'points' && /^\/problems\/(\d+)\/points$/.test(String(d.path)) && /no point|not printed|nowhere|invent|does not print|no printed/i.test(String(d.description || '')) && d.suggestedFix == null) {
+    if (d.kind === 'points' && /^\/problems\/(\d+)\/points$/.test(String(d.path)) && /no point|not printed|nowhere|invent|does not print|no printed|prints no/i.test(String(d.description || '')) && d.suggestedFix == null) {
       const pr = candidate.problems?.[Number(/^\/problems\/(\d+)/.exec(String(d.path))[1])];
       const partPoints = (pr?.parts || []).map(x => x.points).filter(x => typeof x === 'number');
       const sum = partPoints.reduce((s, x) => s + x, 0);
       if (typeof pr?.points === 'number' && partPoints.length && Math.abs(sum - pr.points) < 1e-9) { d.severity = 'info'; d.description = `[the problem total is the sum of its parts' printed points (${partPoints.join(' + ')})] ${d.description}`; }
       else if (typeof pr?.points === 'number') { d.suggestedFix = 'none'; d.description = `[no points printed for the problem: the value is dropped] ${d.description}`; }
+    }
+    // the same for a part: "The problems document prints no points for part А; the candidate assigns 2" (nao-2024-ii-7-8)
+    if (d.kind === 'points' && /^\/problems\/\d+\/parts\/\d+\/points$/.test(String(d.path)) && /no point|not printed|nowhere|invent|does not print|no printed|prints no/i.test(String(d.description || '')) && d.suggestedFix == null && typeof pointerGet(candidate, String(d.path)) === 'number') {
+      d.suggestedFix = 'none'; d.description = `[no points printed for the part: the value is dropped] ${d.description}`;
     }
     let p = repairDefectPath(candidate, d.path);
     if (typeof d.suggestedFix === 'string' && !d.source) p = repointByContent(candidate, p, d.suggestedFix);
