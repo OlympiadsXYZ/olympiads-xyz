@@ -109,7 +109,7 @@ walkStrings(data, (p, s) => {
   const bare = /[{}]/.test(prose) ? `braces outside math (MDX treats {…} as an expression): ${/[^{}]{0,20}[{}][^{}]{0,20}/.exec(prose)?.[0]?.trim()} — put the LaTeX inside $…$`
     : /\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.test(prose) ? `LaTeX command outside math (${/\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.exec(prose)?.[0].trim()}); put it inside $…$ or write it as text` : null;
   if (bare && !/\/(latex|notes|caveat)$/.test(p) && !/\/answer\/(value|equivalentForms\/\d+)$/.test(p)) (rendered ? err : warn)(p, bare);
-  if (/<[\d-]/.test(prose)) warn(p, '"<" glued to a digit/minus outside math (mdText escapes it, but check it is prose)');
+  if (/<\S/.test(prose)) warn(p, `"<" glued to what follows outside math (${/.{0,12}<\S.{0,12}/.exec(prose)?.[0]?.trim()}) — the site escapes it; check it is prose, not a tag or a formula`);
   if (/\/parts\/\d+\/statement$/.test(p) && /\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]\s*$/u.test(s)) warn(p, 'printed points marker left at the end of the part text; the points field is canonical and the page would show it twice');
   // unbalanced single dollars: after removing the recognised spans nothing may contain a lone $
   const rest = splitMath(s).filter(x => !x.math).map(x => x.text).join('');

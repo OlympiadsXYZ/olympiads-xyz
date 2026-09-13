@@ -120,7 +120,9 @@ function mdText(s) {
   if (s == null) return s;
   return String(s)
     .split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/)
-    .map((seg, i) => (i % 2 ? seg : seg.replace(/<(?=[\d-])/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
+    // prose never carries HTML (validate.mjs refuses tags), so any "<" glued to what follows is text: '<', <=, <1
+    // (MDX would read <' or <a as the start of a JSX tag and the build would die)
+    .map((seg, i) => (i % 2 ? seg : seg.replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
     .join('');
 }
 
