@@ -55,8 +55,11 @@ function walk(dir) {
 }
 
 function figureMarkdown(fig) {
-  const alt = (fig.alt || fig.caption || '').replace(/"/g, "'");
-  const cap = fig.caption ? `\n<figcaption>${fig.caption}</figcaption>` : '';
+  // a caption or alt with a paragraph break inside (a page footer read into the caption: nao-2022-iii-7-8) would leave
+  // the <figcaption> JSX tag open across paragraphs; both are one line of text
+  const oneLine = t => String(t || '').replace(/\s*\n\s*/g, ' ').trim();
+  const alt = oneLine(fig.alt || fig.caption || '').replace(/"/g, "'");
+  const cap = fig.caption ? `\n<figcaption>${oneLine(fig.caption)}</figcaption>` : '';
   return `<figure>\n<img src="${fig.url}" alt="${alt}" />${cap}\n</figure>`;
 }
 
@@ -118,7 +121,14 @@ function yamlStr(s) {
 // them upstream so the pipeline puts such LaTeX into $…$ instead.
 function mdText(s) {
   if (s == null) return s;
-  return String(s)
+  // a "|" inside inline math on a table row splits the cell (eupho-2023-experiment-x: "$|\alpha| = 65^{\circ}$" left
+  // "{\circ}" for MDX to parse as an expression); KaTeX draws \vert the same way
+  // a "$$" frame around a table ("$$| 2a [mm] |…|$$", eupho-2026-experiment-x) opens an expression MDX never closes;
+  // the normaliser strips it from new candidates, the page does the same for the published ones
+  // (only a table row — a line that starts with "|" — counts: "\left|\delta\right|$$" closes an equation)
+  const framed = String(s).replace(/\$\$[ \t]*\n?[ \t]*(?=\|[^\n]*\|[ \t]*\n[ \t]*\|)/g, '').replace(/(\n[ \t]*\|[^\n]*\|)[ \t]*\n?[ \t]*\$\$(?=[ \t]*(?:\n|$))/g, '$1');
+  const tables = framed.split('\n').map(line => /^\s*\|/.test(line) ? line.replace(/\$[^$\n]*?\$/g, m => m.replace(/(?<!\\)\|/g, '\\vert ')) : line).join('\n');
+  return tables
     .split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/)
     // prose never carries HTML (validate.mjs refuses tags), so any "<" glued to what follows is text: '<', <=, <1
     // (MDX would read <' or <a as the start of a JSX tag and the build would die)

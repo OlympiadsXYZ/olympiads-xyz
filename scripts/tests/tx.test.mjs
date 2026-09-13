@@ -964,3 +964,30 @@ test('an omission fix that opens with the missing passage and continues with tex
   assert.equal(out, '**Solution:**\n\nExpressions lacking the approximation but otherwise correct will get a penalty of 2.0.\n\n**Use of approximation with proper justification at a later stage than at the first step will get full credit.**\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet. This takes a few lines of algebra and a table of values.');
   assert.equal(spliceFragment(out, fix, 'omission'), null, 'already present: nothing to insert');
 });
+
+test('a reader\'s aside about its own work in place of text moves to tx.notes', () => {
+  const c = candidate();
+  c.problems[0].solution.statement = '(T10) Gravitational Lensing Telescope — introductory text and formula $\theta_b = 2R/r$ with figure (restated from the problem; see figure p10-sol-fig1).\n\nThe deflection follows from the lens equation.\n\n(The first printed line of this box, worth **1.0**, appears on page 16 of the solutions document; the solution began on an earlier page.)\n\n$$\theta = 4GM/(c^2 b)$$';
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].solution.statement, 'The deflection follows from the lens equation.\n\n$$\theta = 4GM/(c^2 b)$$');
+  assert.match(c.tx.notes, /restated from the problem/);
+  assert.match(c.tx.notes, /page 16 of the solutions document/);
+  const d = candidate(); d.problems[0].statement = 'Find the mass of the box. The first line of the table gives the density.';
+  lib.normaliseCandidate(d);
+  assert.match(d.problems[0].statement, /mass of the box/, 'ordinary prose stays');
+});
+
+test('a $$ frame around a Markdown table is not math: the frame goes, the table stays', () => {
+  const c = candidate();
+  c.problems[0].solution.statement = 'Values are in Table 6.\n\n$$| 2a [mm] | 2b [mm] |\n|---|---|\n| 99 | 76 |\n| 87 | 69 |$$\n\nThe fit follows.\n\n$$E = mc^2$$';
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].solution.statement, 'Values are in Table 6.\n\n| 2a [mm] | 2b [mm] |\n|---|---|\n| 99 | 76 |\n| 87 | 69 |\n\nThe fit follows.\n\n$$E = mc^2$$');
+});
+
+test('an equation that ends in a bar keeps its closing $$ (the table-frame rule only strips frames around table rows)', () => {
+  const d = candidate();
+  d.problems[0].solution.statement = 'Hence\n\n$$h = 90^\circ - \varphi + \left|\delta\right|$$\n\nand\n\n$$l = l_0 + a|\cos(\beta)|$$\n\nas printed.';
+  const before = d.problems[0].solution.statement;
+  lib.normaliseCandidate(d);
+  assert.equal(d.problems[0].solution.statement, before);
+});

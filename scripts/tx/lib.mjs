@@ -850,10 +850,14 @@ export function normaliseCandidate(c, opts = {}) {
     // a paragraph that is a formula fragment closed by a lone "$$" ("58.80^{\circ}$$": the tail of the previous
     // equation typed again — ioaa-2016-theory-x-1, where balancing then swallowed the next sentence into math)
     // is dropped when an earlier display block of the field already ends with it, else becomes its own block
-    let out = s.replace(/(^|\n[ \t]*\n)([^\n$]{1,120}?)[ \t]*\$\$[ \t]*(?=\n|$)/g, (m, pre, frag, offset) => {
+    // a "$$" frame around a Markdown table ("$$| 2a [mm] | 2b [mm] |…|$$": eupho-2026-experiment-x — MDX then reads
+    // the table as an open expression and the page does not compile) is not math: the frame goes, the table stays
+    // (only a table row — a line that starts with "|" — counts: "\left|\delta\right|$$" closes an equation)
+    let out = s.replace(/\$\$[ \t]*\n?[ \t]*(?=\|[^\n]*\|[ \t]*\n[ \t]*\|)/g, '').replace(/(\n[ \t]*\|[^\n]*\|)[ \t]*\n?[ \t]*\$\$(?=[ \t]*(?:\n|$))/g, '$1');
+    out = out.replace(/(^|\n[ \t]*\n)([^\n$]{1,120}?)[ \t]*\$\$[ \t]*(?=\n|$)/g, (m, pre, frag, offset, whole) => {
       const f = frag.trim();
       if (!/[\\^_{}=]/.test(f)) return m; // prose, not a formula
-      const tails = [...s.slice(0, offset).matchAll(/\$\$([\s\S]*?)\$\$/g)].map(x => x[1].replace(/\s+/g, ''));
+      const tails = [...whole.slice(0, offset).matchAll(/\$\$([\s\S]*?)\$\$/g)].map(x => x[1].replace(/\s+/g, ''));
       return tails.some(t => t.endsWith(f.replace(/\s+/g, ''))) ? pre : `${pre}$$${f}$$`;
     });
     out = balanceDisplayMath(out);
@@ -866,11 +870,17 @@ export function normaliseCandidate(c, opts = {}) {
   });
   // A transcriber's remark typed into the text ("*Забележка към транскрипцията: в оригинала … текстът е предаден
   // дословно.*", "Transcriber's note: …") is never printed; it moves to tx.notes (nao-2021-iii-9-10).
+  // The same for a reader's aside about its own work in place of text ("(T10) … — introductory text and formula …
+  // (restated from the problem; see figure p10-sol-fig1).", "(The first printed line of this box, worth 1.0, appears on
+  // page 16 of the solutions document; …)" — ioaa-2016-theory-x-1): such phrases are never printed.
+  const ASIDE = /\b(?:restated from the (?:problem|statement)|see (?:the )?figures? p\d+|of the (?:solutions|problems) document|(?:first|last) printed line|this box|not transcribed|omitted here|reproduced here|as transcribed|in this transcription|в (?:документа|файла) (?:с решенията|със задачите)|виж фигура p\d+)\b/iu;
   walkStrings(c, (p, s) => {
-    if (!/\/(statement|caption|alt)$/.test(p) || /\/tx\b/.test(p) || !/транскрипци|transcri(?:ber|ption)/i.test(s)) return;
+    if (!/\/(statement|caption|alt)$/.test(p) || /\/tx\b/.test(p) || !(/транскрипци|transcri(?:ber|ption)/i.test(s) || ASIDE.test(s))) return;
     const NOTE = /(?:^|\n)[ \t]*[*_]{0,2}[ \t]*(?:(?:забележка|бележка)\s+(?:към|на|от|за)\s+транскрип\S*|transcri(?:ber'?s?|ption)\s+note|note\s+(?:on|about)\s+the\s+transcription)[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/giu;
     const notes = [];
-    const out = s.replace(NOTE, m => { notes.push(m.trim().replace(/^[*_]+|[*_]+$/g, '').trim()); return '\n'; }).replace(/\n{3,}/g, '\n\n').trim();
+    let out = s.replace(NOTE, m => { notes.push(m.trim().replace(/^[*_]+|[*_]+$/g, '').trim()); return '\n'; });
+    out = out.split(/\n[ \t]*\n/).filter(para => { const t = para.trim(); if (t.length < 400 && !/\$\$/.test(t) && ASIDE.test(t)) { notes.push(t); return false; } return true; }).join('\n\n');
+    out = out.replace(/\n{3,}/g, '\n\n').trim();
     if (!notes.length || out === s) return;
     pointerSet(c, p, out);
     c.tx = { ...(c.tx || {}), notes: [c.tx?.notes, ...notes.map(n => `[${p}] ${n}`)].filter(Boolean).join('\n') };
