@@ -88,6 +88,7 @@ export function duplicatesSiblings(candidate, path, value, current) {
 export function plausibleReplacement(current, fix, kind, path = '') {
   if (typeof fix !== 'string' || typeof current !== 'string') return true;
   if (looksLikeInstruction(fix)) return false;
+  if (/\(truncated\)\s*$/.test(fix) || /…\(truncated\)/.test(fix)) return false; // an echo of a clipped prompt value
   if (/\/label$/.test(path) && fix.trim().length <= 6) return true; // a label is a few characters; the current value may be a leaked instruction
   if (current.length < 40 || looksLikeInstruction(current)) return true; // anything printed beats a stub or an earlier bad paste
   // a fix that is the leading part of the current text trims pasted trailing content, but only when what it
