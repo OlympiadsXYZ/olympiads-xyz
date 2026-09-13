@@ -56,6 +56,8 @@ function unplacedGraphics(candidate, manifest, paperId) {
     const regs = regionsFor(paperId, manifest, doc);
     if (!regs?.pages) continue;
     let lastHeading = null; // carried across pages of the document
+    // page furniture: a region printed at the same place on three or more pages (a logo, a header box)
+    const furniture = g => regs.pages.filter(p => (p.regions || []).some(h => iou(h.bbox, g.bbox) >= 0.9)).length >= 3 && regs.pages.length >= 3;
     for (const pg of regs.pages) {
       const heads = (pg.headings || []).slice().sort((a, b) => a.y - b.y);
       for (const g of pg.regions || []) {
@@ -65,7 +67,9 @@ function unplacedGraphics(candidate, manifest, paperId) {
           // a symbol or a small equation image; on a scan (pixel regions) also handwritten marks, so the bar is higher there
           if (g.areaFrac < (g.raster ? 0.015 : 0.004)) continue;
           if (g.bbox[3] <= 100 || g.bbox[1] >= 930) continue; // header/footer band: logos, stamps, page numbers
-          if (figs.some(f => f.fig.tx?.document === doc && f.fig.tx?.page === pg.page && f.fig.tx?.bbox && coverFrac(g.core, f.fig.tx.bbox) >= 0.5)) continue;
+          if (furniture(g)) continue;
+          // covered when a box holds most of the graphic, or when a box sits inside the region (the region is a frame around a figure and its text)
+          if (figs.some(f => f.fig.tx?.document === doc && f.fig.tx?.page === pg.page && f.fig.tx?.bbox && (coverFrac(g.core, f.fig.tx.bbox) >= 0.5 || coverFrac(f.fig.tx.bbox, g.bbox) >= 0.8))) continue;
           if (notFigures.some(x => x.document === doc && x.page === pg.page && iou(x.bbox, g.bbox) >= 0.5)) continue;
           let idx = heading ? byNumber.get(key(heading.number)) : undefined;
           if (idx === undefined) { const spanning = problems.map((p, i) => (p.tx?.sourceSpans || []).some(s => s.document === doc && s.page === pg.page) ? i : -1).filter(i => i >= 0); if (spanning.length === 1) idx = spanning[0]; }

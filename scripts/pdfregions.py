@@ -25,7 +25,7 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 SCALE = 1000.0
-VERSION = 5
+VERSION = 6
 CAPTION = re.compile(r'^\s*(фиг\.?|фигура|figure|fig\.?|задача|табл\.?|таблица|схема|снимка)\b', re.I)
 HEADING = re.compile(r'^\s*(?:(?:задача|з\s*а\s*д\s*а\s*ч\s*а)\s*(?:№\s*)?(\d+|[ivx]+)\b|(\d+)\s*(?:-?\s*(?:ва|ра|та|а|и))?\s+задача\b)', re.I)
 ROMAN = {'i': 1, 'ii': 2, 'iii': 3, 'iv': 4, 'v': 5, 'vi': 6, 'vii': 7, 'viii': 8, 'ix': 9, 'x': 10}
@@ -118,21 +118,35 @@ def page_regions(page, min_area, max_area):
         if not r.is_empty:
             raw.append(r)
             image_rects.append(r)
+    # Vector paths one by one, leaving out page furniture that would glue a whole task box into one
+    # region: a background or frame rectangle wider than half the page, and hairline rules.
     try:
-        clusters = page.cluster_drawings(x_tolerance=4, y_tolerance=4)
+        drawings = page.get_drawings()
     except Exception:
-        clusters = []
-    for c in clusters:
-        r = displayed(fitz.Rect(c), page)
+        drawings = []
+    for p in drawings:
+        pr = fitz.Rect(p['rect'])
+        # a horizontal or vertical line has a zero extent on one axis (fitz calls that empty): give it one point
+        if pr.width <= 0 or pr.height <= 0:
+            pr = fitz.Rect(pr.x0, pr.y0, max(pr.x1, pr.x0 + 1), max(pr.y1, pr.y0 + 1))
+        if pr.is_empty:
+            continue
+        items = [it[0] for it in p.get('items', [])]
+        only_rect = items and all(k == 're' for k in items)
+        if only_rect and pr.width > 0.5 * page.rect.width:
+            continue  # a task-box background, a page frame
+        if pr.height < 1.5 and pr.width > 0.3 * page.rect.width:
+            continue  # a rule under a heading, a table's outer line on its own
+        r = displayed(pr, page)
         if not r.is_empty:
             raw.append(r)
-    keep = []
-    for r in raw:
+    # merge first (a drawing is many small paths), then judge the size of what came out
+    merged = []
+    for r in merge(raw, tol=6):
         frac = (r.width * r.height) / page_area
         if frac < min_area or frac > max_area or r.width < 12 or r.height < 12:
             continue
-        keep.append(r)
-    merged = merge(keep, tol=6)
+        merged.append(r)
     lines, body = text_lines(page)
     # vector paths per region: a table is rulings only (axis-aligned lines and rectangles); a curve or a slanted line is a drawing
     paths = []
@@ -181,7 +195,11 @@ def page_regions(page, min_area, max_area):
         touching = [p for p in paths if p['rect'].intersects(r)]
         has_image = any(ir.intersects(r) for ir in image_rects)
         ruled_only = bool(touching) and all(p['ruled'] for p in touching) and not has_image
-        kind = 'table' if len(inside) >= 4 and ruled_only else 'drawing'
+        # rulings only around text: a table (several lines) or a framed text box (an IPhO task box, a boxed note)
+        kind = 'table' if len(inside) >= 4 and ruled_only else ('frame' if ruled_only and inside else 'drawing')
+        if DEBUG:
+            unruled = [p for p in touching if not p['ruled']]
+            print(f'[pdfregions]   native region {to_permille(r, prect)} paths {len(touching)} unruled {len(unruled)} image {has_image} inside {len(inside)} -> {kind}', file=sys.stderr)
         # An equation: fraction bars and brackets are the only vector paths (rulings, no curve, no
         # slanted line, no image) around typed symbols, no taller than a few text lines — Word exports
         # draw them that way. A picture of an equation (an image no taller than a few lines, sitting in

@@ -13,8 +13,8 @@ import path from 'node:path';
 import { run, paperDir, readJson, writeJson, sha256File, ROOT } from './lib.mjs';
 
 const PDFREGIONS = path.join(ROOT, 'scripts', 'pdfregions.py');
-const REGIONS_VERSION = 5; // bump with pdfregions.py VERSION: cached regions are recomputed
-const SNAPPABLE = g => !g.kind || g.kind === 'drawing' || g.kind === 'table'; // never onto a formula or a rule
+const REGIONS_VERSION = 6; // bump with pdfregions.py VERSION: cached regions are recomputed
+const SNAPPABLE = g => !g.kind || g.kind === 'drawing' || g.kind === 'table'; // never onto a formula, a rule or a framed text box
 const PAD = 6;            // permille added around a snapped region
 const MIN_IOU = 0.2;      // overlap that ties a proposal to a region
 const MIN_CORE_IN = 0.5;  // or: this much of the region's drawing lies inside the proposal
