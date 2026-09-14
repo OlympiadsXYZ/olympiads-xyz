@@ -37,6 +37,7 @@ public static class Win32 {
   [DllImport("kernel32.dll")] public static extern uint GetCurrentThreadId();
   [DllImport("user32.dll")] public static extern bool IsIconic(IntPtr hWnd);
   [DllImport("user32.dll")] public static extern bool SetCursorPos(int X, int Y);
+  [DllImport("user32.dll")] public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
   [StructLayout(LayoutKind.Sequential)] public struct LASTINPUTINFO { public uint cbSize; public uint dwTime; }
   [DllImport("user32.dll")] public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
   public static double IdleSeconds() { var l = new LASTINPUTINFO(); l.cbSize = (uint)Marshal.SizeOf(l); GetLastInputInfo(ref l); return (Environment.TickCount - (int)l.dwTime) / 1000.0; }
@@ -139,6 +140,16 @@ function Invoke-El($el) {
   Click-El $el
 }
 function Count-Copy { (Find-All $win $CT::Button 'Copy').Count }
+# Key chords by virtual-key code (keybd_event): SendKeys maps characters through the active keyboard layout, and
+# with Margulan's Bulgarian layout active "^v" typed a literal v into the file dialog instead of pasting.
+$VK = @{ ctrl = 0x11; alt = 0x12; shift = 0x10; enter = 0x0D; esc = 0x1B; del = 0x2E; home = 0x24; end = 0x23; a = 0x41; n = 0x4E; o = 0x4F; v = 0x56 }
+function Send-Chord([string[]]$keys) {
+  $codes = @($keys | ForEach-Object { [byte]$VK[$_] })
+  foreach ($c in $codes) { [Win32]::keybd_event($c, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 20 }
+  [array]::Reverse($codes)
+  foreach ($c in $codes) { [Win32]::keybd_event($c, 0, 2, [UIntPtr]::Zero); Start-Sleep -Milliseconds 20 }
+  Start-Sleep -Milliseconds 60
+}
 # the app's file dialog is a '#32770' window under the app window in the UIA tree (another process hosts it)
 function Find-Dialog {
   foreach ($w in $win.FindAll($scope::Descendants, (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, $CT::Window)))) { if ($w.Current.ClassName -eq '#32770') { return $w } }
@@ -167,7 +178,7 @@ for ($k = 0; $k -lt 4; $k++) {
   if (-not $left) { break }
   Log ("closing a leftover dialog '{0}'" -f $left.Current.Name)
   $dh = [IntPtr]$left.Current.NativeWindowHandle; if ($dh -ne [IntPtr]::Zero) { [Win32]::SetForegroundWindow($dh) | Out-Null; Start-Sleep -Milliseconds 200 }
-  [System.Windows.Forms.SendKeys]::SendWait('{ESC}'); Start-Sleep -Milliseconds 800
+  Send-Chord @('esc'); Start-Sleep -Milliseconds 800
 }
 if ($DebugTree) { foreach ($e in $win.FindAll($scope::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) { $c = $e.Current; if ($c.Name) { Log ("  {0} '{1}'" -f ($c.ControlType.ProgrammaticName -replace '^ControlType\.', ''), $c.Name.Substring(0, [Math]::Min(70, $c.Name.Length))) } } }
 
@@ -196,7 +207,7 @@ if (-not $SameChat) {
 $leftover = Find-All $win $CT::Button '^Remove ' $false
 if ($leftover.Count) { Log ("removing {0} leftover attachment(s)" -f $leftover.Count); foreach ($b in $leftover) { try { Invoke-El $b; Start-Sleep -Milliseconds 200 } catch {} }; Start-Sleep -Milliseconds 500 }
 $composer0 = Wait-For 'composer' { $e = Find-All $win $CT::Edit 'Message ChatGPT'; if (-not $e.Count) { $e = @($win.FindAll($scope::Descendants, (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, $CT::Edit))) | Where-Object { $_.Current.ClassName -eq 'ProseMirror' }) }; if ($e.Count) { $e[0] } } 10
-if ($composer0) { $v0 = ''; try { $v0 = $composer0.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value } catch {}; if ($v0.Trim() -and $v0.Trim() -ne 'Message ChatGPT') { Show-App; $composer0.SetFocus(); Start-Sleep -Milliseconds 200; [System.Windows.Forms.SendKeys]::SendWait('^a{DEL}'); Start-Sleep -Milliseconds 300; Log 'cleared leftover text' } }
+if ($composer0) { $v0 = ''; try { $v0 = $composer0.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value } catch {}; if ($v0.Trim() -and $v0.Trim() -ne 'Message ChatGPT') { Show-App; $composer0.SetFocus(); Start-Sleep -Milliseconds 200; Send-Chord @('ctrl','a'); Send-Chord @('del'); Start-Sleep -Milliseconds 300; Log 'cleared leftover text' } }
 $copiesBefore = Count-Copy
 
 # ---- attachments, through the app's own Open dialog (files are copied into one folder: the dialog's
@@ -219,7 +230,7 @@ if ($Files.Count) {
   # a Radix menu item reacts to a pointer click only now and then; hovering it and pressing Enter is reliable
   $r = $item.Current.BoundingRectangle
   [Win32]::SetCursorPos([int]($r.X + $r.Width / 2), [int]($r.Y + $r.Height / 2)) | Out-Null; Start-Sleep -Milliseconds 250
-  [System.Windows.Forms.SendKeys]::SendWait('{ENTER}')
+  Send-Chord @('enter')
   $dlg = Wait-For 'open dialog' { Find-Dialog } 8
   if (-not $dlg) { Log 'no dialog after Enter; clicking the item'; Click-El $item; $dlg = Wait-For 'open dialog' { Find-Dialog } 12 }
   if (-not $dlg) { Fail 'the Open dialog did not appear' }
@@ -228,7 +239,7 @@ if ($Files.Count) {
   # every file of the folder it opened in)
   $dh = [IntPtr]$dlg.Current.NativeWindowHandle
   if ($dh -ne [IntPtr]::Zero) { [Win32]::SetForegroundWindow($dh) | Out-Null; Start-Sleep -Milliseconds 300 }
-  $typeInto = { param($t) [System.Windows.Forms.SendKeys]::SendWait('%n'); Start-Sleep -Milliseconds 250; [System.Windows.Forms.SendKeys]::SendWait('{HOME}+{END}'); Start-Sleep -Milliseconds 100; [System.Windows.Forms.Clipboard]::SetText($t); [System.Windows.Forms.SendKeys]::SendWait('^v'); Start-Sleep -Milliseconds 300; [System.Windows.Forms.SendKeys]::SendWait('{ENTER}') }
+  $typeInto = { param($t) Send-Chord @('alt','n'); Start-Sleep -Milliseconds 250; Send-Chord @('home'); Send-Chord @('shift','end'); Start-Sleep -Milliseconds 100; [System.Windows.Forms.Clipboard]::SetText($t); Send-Chord @('ctrl','v'); Start-Sleep -Milliseconds 300; Send-Chord @('enter') }
   & $typeInto $stage            # navigate to the staging folder (it holds exactly the files to attach)
   Start-Sleep -Milliseconds 1200
   if ($Files.Count -le 8) {
@@ -239,8 +250,8 @@ if ($Files.Count) {
     $item0 = Wait-For 'first file in the list' { $dlg2 = Find-Dialog; if ($dlg2) { $dlg = $dlg2 }; $li = Find-All $dlg $CT::ListItem $first; if (-not $li.Count) { $li = Find-All $dlg $CT::ListItem ('^' + [regex]::Escape($first)) $false }; if ($li.Count -and $li[0].Current.BoundingRectangle.Width -gt 0) { $li[0] } } 10
     if (-not $item0) { Fail "the file list does not show $first" }
     Click-El $item0; Start-Sleep -Milliseconds 300
-    [System.Windows.Forms.SendKeys]::SendWait('^a'); Start-Sleep -Milliseconds 300
-    [System.Windows.Forms.SendKeys]::SendWait('%o')
+    Send-Chord @('ctrl','a'); Start-Sleep -Milliseconds 300
+    Send-Chord @('alt','o')
   }
   $gone = Wait-For 'dialog closed' { if (-not (Find-Dialog)) { $true } } 20
   if (-not $gone) { Fail 'the Open dialog stayed open (file names refused?)' }
@@ -271,7 +282,7 @@ while ($pos -lt $normalised.Length) {
   if ($pos + $len -lt $normalised.Length) { $cut = $normalised.LastIndexOf("`n", $pos + $len - 1, $len); if ($cut -gt $pos + 1000) { $len = $cut - $pos + 1 } }
   $chunks += $normalised.Substring($pos, $len); $pos += $len
 }
-foreach ($chunk in $chunks) { [System.Windows.Forms.Clipboard]::SetText($chunk); [System.Windows.Forms.SendKeys]::SendWait('^v'); Start-Sleep -Milliseconds ([Math]::Max(500, [Math]::Min(2000, $chunk.Length / 8))) }
+foreach ($chunk in $chunks) { [System.Windows.Forms.Clipboard]::SetText($chunk); Send-Chord @('ctrl','v'); Start-Sleep -Milliseconds ([Math]::Max(500, [Math]::Min(2000, $chunk.Length / 8))) }
 Start-Sleep -Milliseconds 500
 $typed = Wait-For 'prompt in composer' { try { $v = $composer.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value; if ($v.Length -ge $normalised.Length * 0.9) { $true } } catch {} } 15
 if (-not $typed) { $vlen = -1; try { $vlen = $composer.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value.Length } catch {}; Fail ("the prompt did not land in the composer ({0} of {1} characters, {2} chunk(s))" -f $vlen, $normalised.Length, $chunks.Count) }
