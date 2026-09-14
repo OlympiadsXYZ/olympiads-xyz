@@ -795,6 +795,38 @@ test('text-layer check: omitted sentence, misread word (mechanical fix), unprint
   assert.doesNotMatch(rest[0].description, /напречното|напреч/); // a word broken over two lines is present
 });
 
+test('text-layer check: a contiguous PDF split word cannot shorten correct prose, while real omissions and typos remain', t => {
+  const s = sandbox(t);
+  fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
+  const prose = 'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напречното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата.';
+  const sentence = 'Тъй като ускорението е успоредно на наклонената равнина, определете необходимата сила.';
+  const c = candidate();
+  c.paper.title = ''; c.problems[0].title = ''; c.problems[0].parts = []; c.problems[0].figures = [];
+  const run = (sourceSentence, candidateSentence = sentence, candidateProse = prose) => {
+    fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), `Задача 1.\n${prose}\n${sourceSentence}\n`);
+    c.problems[0].statement = candidateProse + '\n' + candidateSentence;
+    const input = s.write('candidates/split-word.json', c), out = path.join(s.dir, 'split-word-check.json');
+    const result = s.run('textlayer.mjs', [PAPER, '--candidate', input, '--out', out]);
+    assert.ok([0, 3].includes(result.status), result.stderr + result.stdout);
+    const checked = s.read(out);
+    assert.equal(checked.documents.problems.trusted, true);
+    return checked;
+  };
+  const split = sentence.replace('успоредно', 'ус поредно');
+  assert.deepEqual(run(split).defects, [], 'exact joined word and its neighbours agree; correct успоредно must not become поредно');
+  assert.match(c.problems[0].statement, /успоредно/, 'checking does not mutate candidate prose');
+  // The rule is local and exact, not fuzzy joining across punctuation, columns or lines.
+  for (const ambiguous of ['ус, поредно', 'ус  поредно', 'ус\nпоредно']) {
+    assert.ok(run(sentence.replace('успоредно', ambiguous)).defects.some(d => /поредно/.test(d.description)), ambiguous);
+  }
+  assert.ok(run(split, sentence.replace('ускорението е', 'ускорението остава')).defects.some(d => /поредно/.test(d.description)), 'different neighbouring words do not establish a join');
+  const omitted = prose.replace(' Приемете, че съпротивлението на проводника не зависи от температурата.', '');
+  const realDefects = run(split, sentence, omitted.replace('милиампер', 'милиамер')).defects;
+  assert.ok(realDefects.some(d => /Приемете, че съпротивлението/.test(d.description)), 'a real omitted sentence is still reported');
+  assert.ok(realDefects.some(d => d.suggestedFix?.includes('милиампер')), 'an unambiguous ordinary typo still receives its existing correction');
+  assert.ok(realDefects.every(d => !/поредно/.test(d.description)), 'the PDF split does not add a false defect');
+});
+
 test('shared source note title and statement both count on their declared document', t => {
   const s = sandbox(t);
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });

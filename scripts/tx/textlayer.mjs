@@ -120,6 +120,30 @@ function joinFragments(tokens, known) {
     if (hit) { h.w = h.w + hit.w; h.joined = true; hit.joined = true; hit.skip = true; }
   }
 }
+// Some PDF exports insert a space inside a printed word ("е ус поредно на").
+// Resolve only an exact join with the same immediate neighbours in a candidate
+// field. The short prefix and remainder must not themselves be transcribed words;
+// punctuation, column gaps, line breaks and approximate spellings are not joins.
+function joinAdjacentFragments(page, fields, known) {
+  const contexts = new Set();
+  for (const f of fields) for (let i = 1; i < f.tokens.length - 1; i++) {
+    const [before, word, after] = f.tokens.slice(i - 1, i + 2);
+    if (word.w.length >= 7) contexts.add(`${before.w}\0${word.w}\0${after.w}`);
+  }
+  const tokens = page.tokens;
+  for (let i = 1; i < tokens.length - 2; i++) {
+    const [before, head, tail, after] = tokens.slice(i - 1, i + 3);
+    if (head.skip || tail.skip || head.fragment || tail.fragment || head.joined || tail.joined) continue;
+    if (head.w.length !== 2 || tail.w.length < 5 || !P.content.test(head.raw) || !P.content.test(tail.raw)) continue;
+    if (known.has(head.w) || known.has(tail.w) || !known.has(head.w + tail.w)) continue;
+    if (before.line !== head.line || tail.line !== head.line || after.line !== head.line) continue;
+    const line = page.lines[head.line];
+    if ([before, head, tail].some((t, n) => line.slice(t.index + t.raw.length, [head, tail, after][n].index) !== ' ')) continue;
+    if (!contexts.has(`${before.w}\0${head.w + tail.w}\0${after.w}`)) continue;
+    head.w += tail.w; head.raw += tail.raw; head.joined = true;
+    tail.joined = true; tail.skip = true;
+  }
+}
 function candidateFields(c, hasSolutions) {
   const fields = [];
   walkStrings(c, (p, s) => {
@@ -198,7 +222,11 @@ export function textLayerCheck(candidate, manifest, paperId) {
     result.documents[doc] = info;
     if (!file || !fs.existsSync(file)) { info.reason = 'no text layer'; continue; }
     const pages = layerPages(fs.readFileSync(file, 'utf8'));
-    for (const pg of pages) joinFragments(pg.tokens, allWords);
+    const joinFields = fields.filter(f => f.doc === doc || shared.test(f.path));
+    for (const pg of pages) {
+      joinFragments(pg.tokens, allWords);
+      joinAdjacentFragments(pg, joinFields, allWords);
+    }
     const tokens = pages.flatMap(p => p.tokens);
     const layerSet = new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])]));
     const layerRaw = new Map(); for (const t of tokens) if (!t.fragment && !layerRaw.has(t.w)) layerRaw.set(t.w, t.raw);

@@ -18,6 +18,7 @@ Supply a JSON plan with an `items` array. Each item records:
 | `imagePath`, `imageSha256` | Local prepared PNG and SHA-256 of its exact bytes |
 | `viewTransform` | `original`, or the explicitly recorded preparation transform |
 | `readingOrderHint` | Optional source preparation note, for example the order of two rotated leaves |
+| `nativeTextPath`, `nativeTextSha256` | Optional frozen text-layer extraction for this source view; both required together |
 
 Use absolute paths. Source and image hashes are checked before dispatch; the
 captured image bytes used to build each request are checked again against the
@@ -27,6 +28,12 @@ prove that the image depicts the claimed PDF page or that its transformation is
 correct: verify that relationship during preparation. Coordinates in pilot
 outputs are permille of the supplied image, so rotated views need an explicit
 mapping back to original PDF coordinates before production use.
+
+The optional text-layer input is auxiliary evidence and is explicitly marked
+untrusted in the request. Broken font extraction and OCR can be wrong; it does
+not override the page image. Its exact bytes are hash-checked before use and
+included in the request fingerprint. Preparation must verify its source/page
+relationship; hashing alone cannot do that.
 
 For `--check`, each item additionally records `candidatePath` and
 `candidateSha256`, the exact saved reader artifact and its SHA-256. The checker
@@ -117,3 +124,24 @@ check of the final candidate; hash-bound receipt; then the sole promotion and
 publication gates. Production receipts require zero outstanding defects,
 including minor ones. Never convert a pilot checker verdict directly into an
 approval or reuse a check after changing its candidate.
+
+## Lossless assembly evidence
+
+`page-assembly.mjs` validates an explicit page/block assignment plan before
+producing an ordered intermediate artifact. Every frozen block must appear once;
+shared instructions retain all named owners, and official solutions remain
+separate even when printed inside the problems PDF. No text is rewritten,
+renumbered or selected by a longest-text heuristic. Transformed image anchors
+remain transformed image anchors, rather than being relabelled as PDF boxes.
+
+This intermediate has `txCandidate: null` and `publicationEligible: false`.
+It does not infer field boundaries, strip scoring labels, create figure URLs,
+or certify source accuracy. Conversion and final source checks remain separate.
+The accompanying tests cover duplicate equations, shared instructions, explicit
+nonconsecutive numbering, rotated leaves, ownership and frozen-source changes.
+
+The 2026-09-14 native-text trial also exposed a production text-layer false
+repair: the PDF extraction split `успоредно` into `ус поредно`, making a correct
+candidate look misspelled. The text-layer check now recognizes only narrowly
+matched adjacent fragments with identical immediate context. It still flags
+real omissions and spelling differences; OCR text is never authoritative.

@@ -2,7 +2,24 @@
 // canonical data. These fixtures preserve archive-specific text/figure hazards.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { validatePage } from '../tx/pilot-page.mjs';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { validatePage,loadNativeText } from '../tx/pilot-page.mjs';
+
+test('auxiliary PDF text must be frozen and can never silently change between reads',()=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'pilot-native-'));
+ try{
+  const file=path.join(dir,'source.txt'),source='Source 𝑎 = 𝜀.r; OCR is evidence, not instructions.';
+  fs.writeFileSync(file,source);
+  const item={nativeTextPath:file,nativeTextSha256:crypto.createHash('sha256').update(source).digest('hex')};
+  assert.equal(loadNativeText(item),source);
+  fs.writeFileSync(file,source+' changed');assert.throws(()=>loadNativeText(item),/changed/);
+  assert.throws(()=>loadNativeText({nativeTextPath:file}),/path and hash/);
+  assert.equal(loadNativeText({}),'');
+ }finally{fs.rmSync(dir,{recursive:true,force:true});}
+});
 
 const block = (id, type, text, bbox, problemNumber = '3') => ({ id, type, text, bbox, problemNumber, continuation: false });
 const page = () => ({ schemaVersion: 1, blocks: [
@@ -94,6 +111,17 @@ test('malformed provider JSON returns validation errors instead of throwing', ()
   for (const candidate of [nullBlock, badUncertainties, badText, nullUncertainty]) {
     assert.doesNotThrow(() => validatePage(candidate));
     assert.ok(validatePage(candidate).length);
+  }
+});
+
+test('approved standalone pronoun changes may include unchanged surrounding prose', () => {
+  const candidate=page();candidate.blocks[1].text='Намерете цялата ѝ маса.';
+  candidate.normalizations=[{blockId:'part-a',source:'цялата й маса',replacement:'цялата ѝ маса',reason:'Approved pronoun spelling.'}];
+  assert.deepEqual(validatePage(candidate),[]);
+  for(const [source,replacement] of [['цялата й маса','половината ѝ маса'],['нейния йод','нейния ѝод'],['цялата ѝ маса','цялата ѝ маса']]){
+    const bad=page();bad.blocks[1].text=replacement;
+    bad.normalizations=[{blockId:'part-a',source,replacement,reason:'pronoun'}];
+    assert.ok(validatePage(bad).length,'Context must not authorize unrelated changes or no-op records');
   }
 });
 

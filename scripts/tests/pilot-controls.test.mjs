@@ -4,8 +4,15 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { createHash } from 'node:crypto';
-import { providerFailurePolicy, shouldPauseProvider, assertFrozenRequestImage } from '../tx/pilot-controls.mjs';
+import { providerFailurePolicy, shouldPauseProvider, assertFrozenRequestImage, assertPreparedSource } from '../tx/pilot-controls.mjs';
 import { buildRequestFromPaths } from '../tx/pilot-providers.mjs';
+
+test('source preparation blocks must be resolved explicitly before dispatch',()=>{
+  assert.throws(()=>assertPreparedSource({readyForDispatch:false}),{code:'PILOT_SOURCE_NOT_READY'});
+  assert.throws(()=>assertPreparedSource({readyForDispatch:true,rotationNeedsReview:true}),{code:'PILOT_SOURCE_NOT_READY'});
+  assert.doesNotThrow(()=>assertPreparedSource({readyForDispatch:true,rotationNeedsReview:false}));
+  assert.doesNotThrow(()=>assertPreparedSource({}));
+});
 
 test('quota, access and service errors stop further dispatch to that provider', () => {
   for (const status of [401, 403, 408, 429, 500, 502, 503, 504, 599]) assert.equal(shouldPauseProvider(status), true, String(status));

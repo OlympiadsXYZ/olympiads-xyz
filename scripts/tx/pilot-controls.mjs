@@ -28,6 +28,13 @@ export function providerFailurePolicy(httpStatus) {
 
 export const shouldPauseProvider = httpStatus => providerFailurePolicy(httpStatus).pauseProvider;
 
+export function assertPreparedSource(item) {
+  if(item?.readyForDispatch===false||item?.rotationNeedsReview===true){
+    const error=new Error('Source preparation review is incomplete.');
+    error.code='PILOT_SOURCE_NOT_READY';throw error;
+  }
+}
+
 /** Bind the bytes actually captured by the request builder to the frozen plan.
  * A plan-start filesystem check alone is insufficient: another process can
  * replace an image while earlier requests are running. Call after building the
