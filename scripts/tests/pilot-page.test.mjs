@@ -6,7 +6,18 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { validatePage,loadNativeText } from '../tx/pilot-page.mjs';
+import { validatePage,loadNativeText,loadPilotPrompt } from '../tx/pilot-page.mjs';
+
+test('prompt revisions are explicit and keep the original experiment reproducible',()=>{
+ for(const kind of ['read','check']){
+  const original=loadPilotPrompt(kind),next=loadPilotPrompt(kind,'2');
+  assert.equal(original.version,'1');assert.equal(next.version,'2');
+  assert.notEqual(original.sha256,next.sha256);
+  assert.equal(original.sha256,crypto.createHash('sha256').update(fs.readFileSync(new URL(`../tx/prompts/v1/page-${kind==='read'?'reader':'checker'}.md`,import.meta.url))).digest('hex'));
+ }
+ assert.throws(()=>loadPilotPrompt('read','../../anything'),/Unsupported/);
+ assert.throws(()=>loadPilotPrompt('publish','2'),/Unsupported/);
+});
 
 test('auxiliary PDF text must be frozen and can never silently change between reads',()=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'pilot-native-'));

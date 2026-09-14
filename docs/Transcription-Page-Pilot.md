@@ -117,6 +117,15 @@ mean complete transcription or correct figures. A checker verdict of
 inspection is model-reported coverage, not independent proof of source coverage.
 These source-bound experiment artifacts are **not publication receipts**.
 
+The default prompt version remains `1`, preserving the original experiments.
+Use `--prompt-version 2` explicitly for the revised trial. Version 2 readers
+clarify that unchanged text and LaTeX conversion are not normalization records.
+Version 2 checkers compare all displayed content and actual diagram crops while
+excluding prose-navigation box drift and mechanical audit-record errors from
+their scope. Those excluded checks still require their own validation. A v2
+verdict is not proof of source-location accuracy. Request artifacts record the
+prompt version and hash; changing the prompt creates a different request identity.
+
 After offline paper assembly and any repairs, reuse the existing production
 pipeline in [Transcription-Pipeline.md](Transcription-Pipeline.md): schema,
 source-span and math validation; verified source figure crops; a fresh independent

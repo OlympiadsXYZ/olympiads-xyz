@@ -17,6 +17,11 @@ export const PAGE_SCHEMA={type:'object',additionalProperties:false,required:['sc
  normalizations:{type:'array',items:{type:'object',additionalProperties:false,required:['blockId','source','replacement','reason'],properties:{blockId:{type:'string'},source:{type:'string'},replacement:{type:'string'},reason:{type:'string'}}}}
 }};
 const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+export function loadPilotPrompt(taskKind,version='1'){
+ if(!['read','check'].includes(taskKind)||!['1','2'].includes(String(version)))throw Error('Unsupported pilot prompt task/version');
+ const text=fs.readFileSync(new URL(`./prompts/v${version}/page-${taskKind==='check'?'checker':'reader'}.md`,import.meta.url),'utf8');
+ return {text,version:String(version),sha256:hash(text)};
+}
 const write=(file,data)=>{fs.mkdirSync(path.dirname(file),{recursive:true});const temp=file+'.'+crypto.randomUUID()+'.tmp';fs.writeFileSync(temp,JSON.stringify(data,null,2)+'\n');fs.renameSync(temp,file);};
 export function loadNativeText(item){
  if(!item.nativeTextPath&&!item.nativeTextSha256)return '';
@@ -76,7 +81,7 @@ async function main(){
  if(providers.some(p=>!['openai','openai-terra','zai-vision'].includes(p)))throw Error('Only bounded pilot providers are enabled');
  const workers=Number(args.workers||2),attempt=String(args.attempt||'1');
  if(!Number.isInteger(workers)||workers<1||workers>8||!/^[1-9][0-9]*$/.test(attempt))throw Error('Invalid workers/attempt');
- const prompt=fs.readFileSync(new URL(args.check?'./prompts/v1/page-checker.md':'./prompts/v1/page-reader.md',import.meta.url),'utf8');
+ const promptRecord=loadPilotPrompt(args.check?'check':'read',String(args['prompt-version']||'1')),prompt=promptRecord.text;
  const keyConfig=loadProviderKeys().keys;
  const ledger=args.execute?await openBudgetLedger({ledgerPath:path.resolve(args.ledger),capMicroUsd:10_000_000}):null;
  const jobs=[],models={openai:'gpt-5.6-luna','openai-terra':'gpt-5.6-terra','zai-vision':'glm-4.6v'},itemIds=new Set();
@@ -104,7 +109,7 @@ async function main(){
   const fingerprint=hash(JSON.stringify({url:request.url,body:request.body,sourcePdfSha256:item.sourcePdfSha256}));
   const requestId=provider+'-'+fingerprint.slice(0,24)+'-a'+attempt;
   const file=path.join(out,requestId+'.json');
-  const summary={itemId:item.id,taskKind:args.check?'check':'read',provider,model:models[provider],reasoningEffort,requestId,file};
+  const summary={itemId:item.id,taskKind:args.check?'check':'read',provider,model:models[provider],reasoningEffort,promptVersion:promptRecord.version,promptSha256:promptRecord.sha256,requestId,file};
   const maxCostMicroUsd=request.budget?.maxCostMicroUsd;
   if(!Number.isSafeInteger(maxCostMicroUsd)||maxCostMicroUsd<=0)throw Error('No documented conservative cost bound: '+provider);
   const key=process.env[request.credential.envVar]||keyConfig[request.credential.keyConfigName];
