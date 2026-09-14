@@ -55,7 +55,7 @@ git(['add', 'content', 'solutions']);
 const staged = git(['diff', '--cached', '--name-only']).stdout.trim().split('\n').filter(Boolean);
 if (!staged.length) { log('nothing staged after the gates'); process.exit(0); }
 const newPapers = staged.filter(f => /^content\/problems\/.*\.json$/.test(f)).length;
-const msg = `content: ship ${newPapers} promoted paper file(s) (${summary}; ledger ${Object.entries(kinds).map(([k, v]) => `${k} ${v}`).join(', ')})\n\nAutomated ship after the transcription loop (scripts/ship.mjs).\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>\n`;
+const msg = `content: ship ${newPapers} promoted paper file(s) (${summary}; ledger ${Object.entries(kinds).map(([k, v]) => `${k} ${v}`).join(', ')})\n\nAutomated publication of checked content (scripts/ship.mjs). Per-paper receipts record transcription and review provenance.\n`;
 const cr = run('git', ['commit', '-q', '-F', '-'], { input: msg });
 if (cr.status !== 0 && !/nothing to commit/.test(cr.stdout + cr.stderr)) { log(`commit failed: ${(cr.stderr || cr.stdout).slice(0, 300)}`); process.exit(1); }
 log(`committed ${git(['log', '--oneline', '-1']).stdout.trim()}`);
