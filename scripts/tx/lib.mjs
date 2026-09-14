@@ -255,7 +255,7 @@ export function compileSchema(mode = 'final') {
   if (mode === 'candidate') {
     schema.properties.tx = { type: 'object' };
     schema.$defs.problem.properties.tx = { type: 'object' };
-    schema.$defs.figure.properties.tx = { type: 'object' };
+    schema.$defs.figure.properties.tx = { type: 'object', properties: { rotation: { type: 'integer', enum: [0, 90, 180, 270] } } };
     schema.$defs.figure.required = ['id'];
     schema.$defs.problem.properties.sourceSpans ||= { type: 'array' };
   }
@@ -346,7 +346,7 @@ export function checkerView(candidate) {
     const t = s.fig.tx;
     if (!t) return;
     const keep = {};
-    for (const key of ['document', 'page', 'bbox', 'file', 'cropError']) if (t[key] !== undefined) keep[key] = t[key]; // cropError: the box produced no usable crop — a figure defect for the checker
+    for (const key of ['document', 'page', 'bbox', 'rotation', 'file', 'cropError']) if (t[key] !== undefined) keep[key] = t[key]; // cropError: the box produced no usable crop — a figure defect for the checker
     if (Object.keys(keep).length) dstFigs[k].fig.tx = keep;
   });
   return view;
@@ -364,6 +364,12 @@ export function figureEvidenceProblems(candidate) {
 }
 // Geometry helpers: permille boxes <-> preview pixels of a rendered page.
 export const pagePx = (size, dpi = RENDER_DPI) => ({ w: size.widthPt * dpi / 72, h: size.heightPt * dpi / 72 });
+// Clockwise rotation of the cropped bitmap; page coordinates never rotate.
+export function figureRotation(fig) {
+  const rotation = fig.tx?.rotation !== undefined ? fig.tx.rotation : fig.source?.rotation !== undefined ? fig.source.rotation : 0;
+  if (![0, 90, 180, 270].includes(rotation)) throw new Error(`${fig.id || 'figure'}: rotation must be 0, 90, 180 or 270 clockwise degrees`);
+  return rotation;
+}
 export function bboxToPreviewPx(bbox, size, dpi = RENDER_DPI) {
   const { w, h } = pagePx(size, dpi);
   return [bbox[0] * w / BBOX_SCALE, bbox[1] * h / BBOX_SCALE, bbox[2] * w / BBOX_SCALE, bbox[3] * h / BBOX_SCALE].map(v => +v.toFixed(1));
@@ -764,8 +770,9 @@ export function normaliseCandidate(c, opts = {}) {
           if (typeof fig.id === 'string' && /^p[a-z0-9]+-(?:sol-)?fig\d+$/.test(fig.id) && !seen.has(fig.id)) { seen.add(fig.id); continue; }
           let k = 1; while (seen.has(`${stem}${k}`)) k++;
           const from = fig.id; fig.id = `${stem}${k}`; seen.add(fig.id);
+          const rotation = fig.tx?.rotation !== undefined ? fig.tx.rotation : fig.source?.rotation;
           delete fig.url; delete fig.width; delete fig.height; delete fig.source;
-          if (fig.tx) fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
+          if (fig.tx) fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(rotation !== undefined ? { rotation } : {}), ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
           changes.push(`/problems/${i}: figure id ${from ?? '(none)'} renamed to ${fig.id} (duplicate or missing); crop evidence cleared`);
         }
       }

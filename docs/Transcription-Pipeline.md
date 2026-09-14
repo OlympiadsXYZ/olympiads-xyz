@@ -124,6 +124,25 @@ hash in the receipt is the hash of the file on disk, and `publication.mjs
 approve` accepts it. `publicationState` additionally requires the receipt to
 have no blockers and an independent (or explicitly allowed same-model) check.
 
+### Figure rotation
+
+Figure proposals may set `tx.rotation` to **clockwise degrees** `0`, `90`, `180`,
+or `270` (omitted means zero). Keep `tx.bbox` in the original rendered page's
+permille coordinates. `pdfcrop.py` crops that rectangle first, then rotates the
+actual bitmap by a lossless pixel transpose; it does not redraw, mask, resize,
+or rotate the source page. The PNG is upright before inspection, hashing, upload
+and checker review. Uploaded nonzero rotations persist as `figure.source.rotation`;
+`source.page` and `source.pdfRect` still identify the original source rectangle.
+Output width/height swap for 90 and 270 degrees. Existing zero-rotation PNG bytes
+are unchanged. `crops.mjs --force` reproduces the same orientation, using
+`tx.rotation` when supplied and otherwise `source.rotation`; it never rewrites
+hash-bound candidate JSON. Repairs retain rotation while clearing stale crop
+evidence. A correction to `/.../figures/N/tx/rotation` also invalidates that evidence.
+`pdfcrop.py --box` accepts the matching `rotation=90` option per box. Unsupported
+angles and nonnumeric candidate values are rejected. Regression checks:
+`node --test scripts/tests/figure-rotation.test.mjs scripts/tests/tx.test.mjs`
+(requires Python 3 with PyMuPDF and Pillow; no network or uploads).
+
 ### Paper ids
 
 `<comp>-<printed year>-<round token>-<grade token>`: `psf-2026-proletno-12`,

@@ -67,7 +67,7 @@ export const typeDefs = `
       isStarred: Boolean!
       difficulty: String
       assessmentLabel: String
-      fields: [String!]
+      classificationFields: [String!]
       conceptIds: [String!]
       classificationTerms: [String!]
       tags: [String!]!

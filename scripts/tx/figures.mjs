@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, paperDir, allFigures, run, which, md5, headStatuses,
-  PDFCROP, RENDER_DPI, FIGURE_DPI, R2_REMOTE, figureUrl, nowIso, bboxToPreviewPx, sha256File,
+  PDFCROP, RENDER_DPI, FIGURE_DPI, R2_REMOTE, figureUrl, nowIso, bboxToPreviewPx, sha256File, figureRotation,
 } from './lib.mjs';
 import { snapCandidate, regionsFor, coverFrac, iou } from './snap.mjs';
 
@@ -32,6 +32,7 @@ if (!which('python3')) fail('python3 not found');
 if (!dry && !which('rclone')) fail('rclone not found');
 
 const proposals = allFigures(data).filter(f => f.fig.tx?.bbox);
+for (const p of proposals) figureRotation(p.fig); // reject unsupported angles before any crop/upload
 // Snap the proposals onto graphics the PDF itself contains (born-digital pages
 // only; scans are left alone). Recorded per figure as tx.bboxProposed/tx.snapped;
 // --no-snap keeps the reader's boxes (benchmarking raw reader quality).
@@ -107,7 +108,7 @@ for (const [doc, list] of byDoc) {
     const size = manifest.documents[doc].pageSizes[p.fig.tx.page - 1];
     if (!size) return [];
     const px = bboxToPreviewPx(p.fig.tx.bbox, size, dpi);
-    return ['--box', `page=${p.fig.tx.page},x0=${px[0]},y0=${px[1]},x1=${px[2]},y1=${px[3]},id=${p.fig.id}`];
+    return ['--box', `page=${p.fig.tx.page},x0=${px[0]},y0=${px[1]},x1=${px[2]},y1=${px[3]},id=${p.fig.id},rotation=${figureRotation(p.fig)}`];
   });
   if (!boxes.length) continue;
   const outDir = path.join(figDir, doc);
@@ -143,7 +144,7 @@ function remoteListing() {
 const results = [];
 for (const p of proposals) {
   const fig = p.fig, info = cropInfo.get(fig.id);
-  const entry = { id: fig.id, path: p.path, document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox };
+  const entry = { id: fig.id, path: p.path, document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, rotation: figureRotation(fig) };
   if (!info) { entry.error = 'crop did not run'; report.errors.push({ id: fig.id, message: entry.error }); results.push(entry); continue; }
   const st = inspect(info.file);
   entry.file = info.file; entry.px = info.px; entry.bytes = info.bytes; entry.pdfRect = info.pdfRect;
@@ -191,13 +192,13 @@ if (!dry) {
 const SOFT = /^(crop too small|crop nearly empty|crop looks blank|crop did not run|could not inspect PNG)/;
 for (const r of results) {
   if (r.error) {
-    if (SOFT.test(r.error)) { const f = allFigures(data).find(x => x.path === r.path).fig; delete f.url; delete f.width; delete f.height; delete f.source; f.tx = { document: f.tx.document, page: f.tx.page, bbox: f.tx.bbox, ...(f.tx.bboxProposed ? { bboxProposed: f.tx.bboxProposed, snapped: f.tx.snapped } : {}), cropError: r.error }; }
+    if (SOFT.test(r.error)) { const f = allFigures(data).find(x => x.path === r.path).fig; delete f.url; delete f.width; delete f.height; delete f.source; f.tx = { document: f.tx.document, page: f.tx.page, bbox: f.tx.bbox, ...(r.rotation || f.tx.rotation !== undefined ? { rotation: r.rotation } : {}), ...(f.tx.bboxProposed ? { bboxProposed: f.tx.bboxProposed, snapped: f.tx.snapped } : {}), cropError: r.error }; }
     continue;
   }
   const f = allFigures(data).find(x => x.path === r.path).fig;
   if (dry) { f.tx = { ...f.tx, file: r.relFile, cropped: true, dryRun: true, upload: r.upload, px: r.px, pdfRect: r.pdfRect }; continue; }
   f.url = r.url; f.width = r.px[0]; f.height = r.px[1];
-  f.source = { page: r.page, pdfRect: r.pdfRect, dpi: FIGURE_DPI, ...(r.document === 'solutions' ? { document: 'solutions' } : {}) };
+  f.source = { page: r.page, pdfRect: r.pdfRect, dpi: FIGURE_DPI, ...(r.rotation ? { rotation: r.rotation } : {}), ...(r.document === 'solutions' ? { document: 'solutions' } : {}) };
   f.tx = { ...f.tx, file: r.relFile, remoteKey: r.remoteKey, upload: r.upload, cropped: true, dryRun: false, public200: r.public200 === true, md5: r.md5, sha256: r.sha256 };
 }
 report.figures = results;

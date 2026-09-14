@@ -54,6 +54,17 @@ for (const d of receipt.defects || []) {
     skipped.push({ ...entry, reason: 'no points value to drop' }); continue;
   }
   if (d.suggestedFix == null || d.suggestedFix === '') { skipped.push({ ...entry, reason: 'no suggestedFix' }); continue; }
+  const rotationMatch = /^(.*\/figures\/\d+)\/tx\/rotation$/.exec(p);
+  if (rotationMatch) {
+    const rotation = typeof d.suggestedFix === 'number' ? d.suggestedFix : typeof d.suggestedFix === 'string' && d.suggestedFix.trim() ? Number(d.suggestedFix) : NaN;
+    const fig = pointerGet(candidate, rotationMatch[1]);
+    if (![0, 90, 180, 270].includes(rotation) || !fig?.tx) { skipped.push({ ...entry, reason: 'rotation must be 0, 90, 180 or 270 and figure tx must exist' }); continue; }
+    const from = fig.tx.rotation ?? fig.source?.rotation ?? 0;
+    fig.tx.rotation = rotation;
+    touchedFigures.add(rotationMatch[1]);
+    applied.push({ ...entry, from, to: rotation });
+    continue;
+  }
   // figure boxes: /…/figures/N/tx/bbox, /…/figures/N/tx, /…/figures/N
   const figMatch = /^(.*\/figures\/\d+)(?:\/tx(?:\/bbox)?)?$/.exec(p);
   if (figMatch && (d.kind === 'figure' || /bbox$/.test(p))) {
@@ -95,8 +106,9 @@ for (const d of receipt.defects || []) {
 // a changed box invalidates the crop, upload and public-URL evidence of that figure
 for (const { fig, path: p } of allFigures(candidate)) {
   if (!touchedFigures.has(p)) continue;
+  const rotation = fig.tx?.rotation !== undefined ? fig.tx.rotation : fig.source?.rotation;
   delete fig.url; delete fig.width; delete fig.height; delete fig.source;
-  fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
+  fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(rotation !== undefined ? { rotation } : {}), ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
 }
 candidate.tx = { ...(candidate.tx || {}), repairs: [...(candidate.tx?.repairs || []), ...applied.map(a => ({ round, at: nowIso(), by, receipt: path.relative(process.cwd(), path.resolve(args.receipt)), ...a }))] };
 const out = path.resolve(args.out);

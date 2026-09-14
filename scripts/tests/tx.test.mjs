@@ -102,6 +102,74 @@ test('bbox permille <-> preview pixel conversion round-trips', () => {
   assert.deepEqual(lib.previewPxToBbox(px, size), [365, 275, 625, 430]);
 });
 
+test('quarter-turn figure rotation validates and remains visible to the checker and final schema', () => {
+  const candidateSchema = lib.compileSchema('candidate').validate;
+  const finalSchema = lib.compileSchema('final').validate;
+  assert.equal(lib.figureRotation({}), 0);
+  for (const rotation of [0, 90, 180, 270]) {
+    const c = candidate();
+    const fig = c.problems[0].figures[0];
+    fig.tx.rotation = rotation;
+    fig.source.rotation = rotation;
+    assert.equal(candidateSchema(c), true, JSON.stringify(candidateSchema.errors));
+    assert.equal(finalSchema(lib.stripTx(c)), true, JSON.stringify(finalSchema.errors));
+    assert.equal(lib.checkerView(c).problems[0].figures[0].tx.rotation, rotation);
+    assert.equal(lib.figureRotation(fig), rotation);
+    delete fig.tx.rotation;
+    assert.equal(lib.figureRotation(fig), rotation);
+    fig.tx.rotation = 0;
+    assert.equal(lib.figureRotation(fig), 0); // an explicit correction overrides old provenance
+  }
+  for (const rotation of [null, '90', 45, -90, 360, 90.5, true]) {
+    const c = candidate();
+    c.problems[0].figures[0].tx.rotation = rotation;
+    assert.equal(candidateSchema(c), false, `candidate rotation ${rotation}`);
+    assert.throws(() => lib.figureRotation(c.problems[0].figures[0]), /rotation must be/);
+    delete c.problems[0].figures[0].tx.rotation;
+    c.problems[0].figures[0].source.rotation = rotation;
+    assert.equal(finalSchema(lib.stripTx(c)), false, `source rotation ${rotation}`);
+  }
+});
+
+test('repair and refix preserve rotation when invalidating crop evidence', async t => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const s = sandbox(t);
+  for (const fromSource of [false, true]) {
+    const c = candidate();
+    const fig = c.problems[0].figures[0];
+    (fromSource ? fig.source : fig.tx).rotation = 90;
+    const defect = { path: '/problems/0/figures/0/tx/bbox', kind: 'figure', severity: 'major', suggestedFix: '[360,270,630,445]' };
+    const file = s.write(`candidates/rotation-${fromSource}.json`, c);
+    const receipt = s.write(`rotation-${fromSource}.receipt.json`, { paperId: PAPER, candidateSha256: lib.sha256File(file), defects: [defect] });
+    const out = path.join(s.dir, `rotation-${fromSource}.repaired.json`);
+    const r = s.run('repair.mjs', [PAPER, '--candidate', file, '--receipt', receipt, '--out', out]);
+    assert.equal(r.status, 0, r.stdout + r.stderr);
+    const repaired = s.read(out).problems[0].figures[0];
+    assert.equal(repaired.tx.rotation, 90);
+    assert.equal(repaired.tx.file, undefined);
+    assert.equal(repaired.url, undefined);
+    assert.equal(repaired.source, undefined);
+    applyFixes(c, [{ path: defect.path, value: [360, 270, 630, 445] }], { defects: [defect] });
+    assert.equal(fig.tx.rotation, 90);
+    assert.equal(fig.tx.public200, undefined);
+    assert.equal(fig.source, undefined);
+  }
+  const c = candidate();
+  const rotationPath = '/problems/0/figures/0/tx/rotation';
+  const defects = [{ path: rotationPath, kind: 'figure', severity: 'major' }];
+  const r = applyFixes(c, [{ path: rotationPath, value: 270 }], { defects });
+  assert.equal(r.applied.length, 1);
+  assert.equal(c.problems[0].figures[0].tx.rotation, 270);
+  assert.equal(c.problems[0].figures[0].url, undefined);
+  assert.deepEqual(r.figuresToRedo, ['/problems/0/figures/0']);
+  const invalid = applyFixes(c, [{ path: rotationPath, value: 45 }], { defects });
+  assert.equal(invalid.applied.length, 0);
+  assert.equal(c.problems[0].figures[0].tx.rotation, 270);
+  c.problems[0].figures[0].id = 'invalid id';
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].figures[0].tx.rotation, 270);
+});
+
 test('normaliseLatex ignores spacing/decimal spelling but keeps subscripts and signs', () => {
   assert.equal(lib.normaliseLatex('0{,}06\\ \\mathrm{C}'), lib.normaliseLatex('0,06 C'));
   assert.notEqual(lib.normaliseLatex('v_0/2'), lib.normaliseLatex('v_0'));

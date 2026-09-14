@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   parseArgs, fail, readJson, readManifest, paperDir, allFigures, run, which,
-  PDFCROP, RENDER_DPI, FIGURE_DPI, TX_DIR, bboxToPreviewPx,
+  PDFCROP, RENDER_DPI, FIGURE_DPI, TX_DIR, bboxToPreviewPx, figureRotation,
 } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['force'] });
@@ -32,6 +32,7 @@ for (const paperId of ids) {
     for (const { fig } of allFigures(cand)) {
       const t = fig.tx;
       if (!t?.file || !t.document || !t.page || !Array.isArray(t.bbox)) continue;
+      const rotation = figureRotation(fig);
       const file = path.isAbsolute(t.file) ? t.file : path.join(paperDir(paperId), t.file);
       if (seen.has(file)) continue;
       seen.add(file);
@@ -43,7 +44,7 @@ for (const paperId of ids) {
       const key = `${t.document}\n${outDir}`;
       if (!groups.has(key)) groups.set(key, { doc: t.document, outDir, boxes: [] });
       const px = bboxToPreviewPx(t.bbox, size, dpi);
-      groups.get(key).boxes.push('--box', `page=${t.page},x0=${px[0]},y0=${px[1]},x1=${px[2]},y1=${px[3]},id=${path.basename(file, '.png')}`);
+      groups.get(key).boxes.push('--box', `page=${t.page},x0=${px[0]},y0=${px[1]},x1=${px[2]},y1=${px[3]},id=${path.basename(file, '.png')},rotation=${rotation}`);
     }
     for (const { doc, outDir, boxes } of groups.values()) {
       const pdf = path.join(paperDir(paperId), manifest.documents[doc].file);

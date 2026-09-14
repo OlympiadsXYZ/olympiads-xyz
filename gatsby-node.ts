@@ -69,13 +69,21 @@ exports.onCreateNode = async api => {
     createParentChildLink({ parent: node, child: xdmNode });
   }
   function transformObject(obj, id) {
+    // Gatsby reserves node.fields for an object populated by createNodeField.
+    // Classification metadata uses an array of subject fields, so give that
+    // array a separate node property and alias it back in the search query.
+    const { fields, ...info } = obj;
+    const data = {
+      ...info,
+      ...(fields === undefined ? {} : { classificationFields: fields }),
+    };
     const problemInfoNode = {
-      ...obj,
+      ...data,
       id,
       children: [],
       parent: node.id,
       internal: {
-        contentDigest: createContentDigest(obj),
+        contentDigest: createContentDigest(data),
         type: 'ProblemInfo',
       },
     };
@@ -278,7 +286,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             }
             difficulty
             assessmentLabel
-            fields
+            fields: classificationFields
             conceptIds
             classificationTerms
             module {

@@ -252,6 +252,17 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
     if (f.value == null) { skipped.push({ ...entry, reason: `model could not settle it: ${String(f.note || '').slice(0, 200)}` }); continue; }
     let p = String(d.path);
     if (!p.startsWith('/')) { skipped.push({ ...entry, reason: 'path is not a JSON pointer' }); continue; }
+    const rotationMatch = /^(.*\/figures\/\d+)\/tx\/rotation$/.exec(p);
+    if (rotationMatch) {
+      const rotation = typeof f.value === 'number' ? f.value : typeof f.value === 'string' && f.value.trim() ? Number(f.value) : NaN;
+      const fig = pointerGet(candidate, rotationMatch[1]);
+      if (![0, 90, 180, 270].includes(rotation) || !fig?.tx) { skipped.push({ ...entry, reason: 'rotation must be 0, 90, 180 or 270 and figure tx must exist' }); continue; }
+      const from = fig.tx.rotation ?? fig.source?.rotation ?? 0;
+      fig.tx.rotation = rotation;
+      touched.add(rotationMatch[1]);
+      applied.push({ ...entry, from, to: rotation, note: f.note || null });
+      continue;
+    }
     const figMatch = /^(.*\/figures\/\d+)(?:\/tx(?:\/bbox)?)?$/.exec(p);
     if (figMatch && (d.kind === 'figure' || /bbox$/.test(p) || parseBox(f.value) || f.value?.remove === true)) {
       const fig = pointerGet(candidate, figMatch[1]);
@@ -271,7 +282,8 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       // an object fix may also move the figure to another document/page and correct its caption/alt
       const o = f.value && typeof f.value === 'object' && !Array.isArray(f.value) ? f.value : null;
       const tx = o?.tx && typeof o.tx === 'object' ? o.tx : o || {};
-      fig.tx = { ...(fig.tx || {}), ...(['problems', 'solutions'].includes(tx.document) ? { document: tx.document } : {}), ...(Number.isInteger(tx.page) && tx.page > 0 ? { page: tx.page } : {}), bbox: box, boxFrom: 'refix' }; // a judged box: snap.mjs leaves it alone
+      if (tx.rotation !== undefined && ![0, 90, 180, 270].includes(tx.rotation)) { skipped.push({ ...entry, reason: 'rotation must be 0, 90, 180 or 270' }); continue; }
+      fig.tx = { ...(fig.tx || {}), ...(['problems', 'solutions'].includes(tx.document) ? { document: tx.document } : {}), ...(Number.isInteger(tx.page) && tx.page > 0 ? { page: tx.page } : {}), ...(tx.rotation !== undefined ? { rotation: tx.rotation } : {}), bbox: box, boxFrom: 'refix' }; // a judged box: snap.mjs leaves it alone
       if (o) for (const k of ['caption', 'alt']) if (typeof o[k] === 'string' && o[k]) fig[k] = o[k];
       touched.add(figMatch[1]);
       applied.push({ ...entry, from, to: box, ...(o?.tx ? { moved: `${fig.tx.document} p.${fig.tx.page}` } : {}), note: f.note || null });
@@ -430,8 +442,9 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
   // a changed box invalidates the crop, upload and public-URL evidence of that figure
   for (const { fig, path: p } of allFigures(candidate)) {
     if (!touched.has(p)) continue;
+    const rotation = fig.tx?.rotation !== undefined ? fig.tx.rotation : fig.source?.rotation;
     delete fig.url; delete fig.width; delete fig.height; delete fig.source;
-    fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
+    fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(rotation !== undefined ? { rotation } : {}), ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
   }
   candidate.tx = { ...(candidate.tx || {}), repairs: [...(candidate.tx?.repairs || []), ...applied.map(a => ({ round, at: nowIso(), by, requestId, ...a }))] };
   return { applied, skipped, figuresToRedo: [...touched] };

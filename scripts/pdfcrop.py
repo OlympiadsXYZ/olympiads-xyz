@@ -17,16 +17,20 @@ because that is the image the agent actually looked at.
 drawings, whether the text layer looks trustworthy) so the agent can decide how
 to treat this particular file instead of assuming.
 """
-import argparse, json, os
+import argparse, json, os, sys
 import fitz
 
 
 def parse_box(s):
     d = dict(kv.split('=', 1) for kv in s.split(','))
+    rotation = int(d.get('rotation', '0'))
+    if rotation not in (0, 90, 180, 270):
+        raise ValueError('rotation must be 0, 90, 180 or 270 clockwise degrees')
     return {
         'id': d.get('id', 'fig'),
         'page': int(d['page']),
         'rect': [float(d['x0']), float(d['y0']), float(d['x1']), float(d['y1'])],
+        'rotation': rotation,
     }
 
 
@@ -88,14 +92,26 @@ def main():
             continue
         pix = page.get_pixmap(clip=r, dpi=int(a.dpi), alpha=False)
         path = os.path.join(a.out_dir, f"{b['id']}.png")
-        pix.save(path)
+        width, height = pix.width, pix.height
+        if b['rotation']:
+            # Crop in the original page coordinates first, then permute pixels.
+            # Quarter turns do not interpolate, clip, repaint or mask the source.
+            from PIL import Image
+            turns = {90: Image.Transpose.ROTATE_270, 180: Image.Transpose.ROTATE_180,
+                     270: Image.Transpose.ROTATE_90}
+            upright = Image.frombytes('RGB', (width, height), pix.samples).transpose(turns[b['rotation']])
+            width, height = upright.size
+            upright.save(path, dpi=(pix.xres, pix.yres))
+        else:
+            pix.save(path)  # preserve the existing zero-rotation bytes exactly
         manifest.append({'id': b['id'], 'page': b['page'], 'file': path,
                          'pdfRect': [round(v, 2) for v in (r.x0, r.y0, r.x1, r.y1)],
-                         'px': [pix.width, pix.height],
+                         'px': [width, height], 'rotation': b['rotation'],
                          'bytes': os.path.getsize(path)})
-        print(f"{b['id']}: {pix.width}x{pix.height}px  {os.path.getsize(path)}B  {path}")
+        print(f"{b['id']}: {width}x{height}px  {os.path.getsize(path)}B  {path}")
     if manifest:
         json.dump(manifest, open(os.path.join(a.out_dir, 'figures.json'), 'w'), indent=1)
 
 
-main()
+if __name__ == '__main__':
+    main()
