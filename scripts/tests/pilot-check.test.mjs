@@ -24,6 +24,16 @@ test('checks bind to the exact source page and prepared image',()=>{
  for(const key of Object.keys(item))assert.throws(()=>bindCheckCandidate({...item,[key]:'changed'},{item,page:candidate}),/mismatch/);
 });
 
+test('structured rotation and resize transforms bind by exact data after JSON reload',()=>{
+ const item={id:'source-page',paperId:'paper',documentRole:'solutions',sourcePdfSha256:'pdf',imageSha256:'png',pdfPage:2,viewTransform:{rotateCW:90,fullPage:true,resizeFrom:[1872,1323],resizeTo:[1872,1323]}};
+ const saved=JSON.parse(JSON.stringify({item,page:candidate}));
+ assert.equal(bindCheckCandidate(item,saved),saved.page);
+ for(const change of [t=>t.rotateCW=0,t=>t.fullPage=false,t=>t.resizeTo[0]--,t=>delete t.resizeFrom]){
+  const altered=structuredClone(item);change(altered.viewTransform);
+  assert.throws(()=>bindCheckCandidate(altered,saved),/viewTransform/);
+ }
+});
+
 test('duplicate or malformed candidate IDs cannot collapse into a clean inspection claim',()=>{
  const report=good();report.inspectedBlockIds=['a'];
  for(const blocks of [[{id:'a'},{id:'a'}],[null],[{id:''}],{id:'a'},[]]){

@@ -1,4 +1,5 @@
 // A discrepancy report is experimental evidence, never a publication receipt.
+import {isDeepStrictEqual} from 'node:util';
 const object = properties => ({type:'object',additionalProperties:false,required:Object.keys(properties),properties});
 const text = {type:'string'};
 export const CHECK_SCHEMA = object({
@@ -50,6 +51,6 @@ export function bindCheckCandidate(item,candidate) {
  if(!Number.isSafeInteger(item.pdfPage)||item.pdfPage<1||item.pdfPage!==candidate.item.pdfPage)throw Error('Candidate/source mismatch: pdfPage');
  // Old original-view plans may omit the transform, but an explicitly rotated
  // view must never silently bind to original-page coordinates.
- if((item.viewTransform??'original')!==(candidate.item.viewTransform??'original'))throw Error('Candidate/source mismatch: viewTransform');
+ if(!isDeepStrictEqual(item.viewTransform??'original',candidate.item.viewTransform??'original'))throw Error('Candidate/source mismatch: viewTransform');
  return candidate.page;
 }
