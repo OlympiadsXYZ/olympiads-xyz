@@ -78,7 +78,10 @@ function expandSelectors(assembly, mapping) {
     if (object(spec) && Array.isArray(spec.spans)) spec.spans = spec.spans.map((s, i) => span(s, `${where}/${i}`));
   };
   const figures = (spec, where) => {
-    if (Array.isArray(spec)) for (const [i, f] of spec.entries()) if (object(f)) text(f.caption, `${where}/${i}/caption`);
+    if (Array.isArray(spec)) for (const [i, f] of spec.entries()) if (object(f)) {
+      text(f.caption, `${where}/${i}/caption`);
+      text(f.embeddedCaption, `${where}/${i}/embeddedCaption`);
+    }
   };
   const points = (spec, where) => {
     if (!object(spec)) return;
@@ -163,11 +166,18 @@ export function resolvePageCandidateSelectors(recordsInput, assignmentsInput, ma
  * Text notes cannot span source pages. Source pages/hashes/anchors are derived.
  * V1 rejects all figure blocks. V2 additionally accepts optional figures arrays
  * on each problem, part and supplied solution. Each ref is
- * {pageId, blockId, id, caption?:Text}; only a frozen figure-type block is valid.
+ * {pageId, blockId, id, caption?:Text, embeddedCaption?:Text}; only a frozen
+ * figure-type block is valid. caption and embeddedCaption are mutually exclusive.
  * The existing renderer places these arrays after statement, part.statement,
  * and solution.statement respectively. Source order is checked at those exact
  * boundaries; arbitrary interior figures are rejected, never moved to the end.
  * Optional captions consume exact, separate, non-overlapping caption blocks.
+ * embeddedCaption consumes one complete same-owner/same-page caption block
+ * whose entire box is inside the figure box. Its exact text and source anchor
+ * remain in figureCoverage only; the crop already displays it, so no textual
+ * caption is emitted. It does not advance the text-order stream: a caption
+ * inside a drawing may be listed after adjacent column text in the page record.
+ * This is explicit audited image coverage, not permission to discard text.
  * V2 only accepts reviewed upright full pages or proportional full-page resizes.
  * Optional v2 excludedFigures:[{pageId,blockId,reason,sourceReviewed:true}]
  * accounts for explicitly source-reviewed decoration. Only null-numbered,
@@ -258,7 +268,8 @@ export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
     if (!withFigures || !Array.isArray(spec)) reject(`invalid figures array at ${where}`);
     return spec.map((f, i) => {
       const field = `${where}/${i}`;
-      shape(f, ['pageId', 'blockId', 'id', 'caption'], `${field} figure reference`);
+      shape(f, ['pageId', 'blockId', 'id', 'caption', 'embeddedCaption'], `${field} figure reference`);
+      if (own(f, 'caption') && own(f, 'embeddedCaption')) reject(`caption and embeddedCaption are mutually exclusive at ${field}`);
       const e = entries.get(key(f.pageId, f.blockId)), t = e?.assignment.target;
       if (!e || e.block.type !== 'figure') reject(`unknown/non-figure block at ${field}`);
       if (t.kind !== 'problem' || t.problemId !== context.id || t.section !== context.section) reject(`figure ownership/section conflict at ${field}`);
@@ -287,6 +298,22 @@ export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
         }
         fig.caption = readText(f.caption, `${field}/caption`, context, stream);
         if (!nonempty(fig.caption) || fig.caption.trim() !== fig.caption || /[\r\n]/.test(fig.caption)) reject(`caption must be exact single-line unpadded text at ${field}`);
+      }
+      if (own(f, 'embeddedCaption')) {
+        const where = `${field}/embeddedCaption`, spec = f.embeddedCaption;
+        shape(spec, ['spans', 'join'], `${where} mapping`);
+        if (!Array.isArray(spec.spans) || spec.spans.length !== 1) reject(`embeddedCaption requires one whole caption block at ${field}`);
+        const span = spec.spans[0], c = anchor(span, where), a = e.block.bbox, b = c.block.bbox;
+        if (c.block.type !== 'caption' || c.sourceAnchor.pageId !== e.sourceAnchor.pageId
+          || span.start !== 0 || span.end !== c.block.text.length) reject(`embeddedCaption must be one whole same-page caption block at ${field}`);
+        if (b[0] < a[0] || b[1] < a[1] || b[2] > a[2] || b[3] > a[3]) reject(`embeddedCaption box is not wholly inside figure crop at ${field}`);
+        // Ownership, exact characters and duplicate use are checked by readText.
+        // The text is visible in the image, not in another renderer text slot.
+        const text = readText(spec, where, context);
+        if (!nonempty(text)) reject(`empty embeddedCaption at ${field}`);
+        figureCoverage.get(e.key).embeddedCaption = { disposition: 'visible-in-source-image',
+          text, blockKey: c.key, sourceAnchor: structuredClone(c.sourceAnchor),
+          span: structuredClone(span), emittedTextualCaption: false };
       }
       return fig;
     });

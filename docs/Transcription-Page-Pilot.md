@@ -170,8 +170,54 @@ Figure output has no fabricated URL. Reverify the source files and use the
 existing `figures.mjs --no-snap --dry-run` review, then separate upload and final
 validation. The converter's geometry declarations do not perform those checks.
 
+### Whole-block draft fallback
+
+`page-fallback.mjs` avoids model-generated substring mappings when ownership is
+already supplied. `toFallbackCandidate(records, assignments, paper, options)`
+returns an existing tx draft; `buildFallbackMapping` returns its validated,
+resolved field mapping. Inputs are frozen page records, an explicit
+`page-assembly` assignment plan and the restricted paper metadata accepted by
+`page-candidate`. This utility does not infer ownership, correct reader text,
+extract point values, or grant publication authority. Printed titles, subpart
+labels, point awards and repeated equations remain in whole source blocks;
+`parts` stays empty. Normalization proposals and uncertainties remain unapplied
+in the audit.
+
+Statements support one consecutive group of figures between opening and trailing
+text, using the existing `statementAfterParts` boundary. Official-solution
+figures must follow all solution text. A directly adjacent same-page caption is
+rendered separately only when its box is outside the image; a wholly enclosed
+caption uses the converter's embedded-caption audit and remains in the image.
+Partial overlaps, multiple interleaved figure groups, unsupported transforms,
+interior notes and shared instructions for only selected problems are rejected.
+Explicit reviewed decorative exclusions can be supplied as `options.excludedFigures`;
+they are never inferred from the page or silently discarded. Standalone blocks
+typed as captions in figure-free streams remain inline, including official
+point columns. Every source character and figure still passes the existing
+converter's coverage, ownership and ordering checks.
+
+The CLI writes a new draft file only (its parent directory must already exist):
+
+```sh
+node scripts/tx/page-fallback.mjs --records pages.json --assignments assignments.json --paper metadata.json --out new-draft.json
+```
+
+Add `--excluded-figures reviewed-exclusions.json` when needed. Existing files and
+the repository's canonical `content`/generated `solutions` directories cannot
+be overwritten by this command. Source-file verification, crop inspection and
+the normal final review/receipt workflow remain separate.
+
 The 2026-09-14 native-text trial also exposed a production text-layer false
 repair: the PDF extraction split `успоредно` into `ус поредно`, making a correct
 candidate look misspelled. The text-layer check now recognizes only narrowly
 matched adjacent fragments with identical immediate context. It still flags
 real omissions and spelling differences; OCR text is never authoritative.
+
+### Captions inside figure images
+
+Version 2 figure references may use `embeddedCaption` instead of `caption` when
+the complete caption is already inside the source image crop. It must reference
+one whole, same-owner caption block whose box is fully enclosed by the figure.
+Its exact text and source anchor are retained in `figureCoverage`; no duplicate
+textual caption is emitted. Partial overlap, different ownership, duplicate use
+and specifying both caption modes are rejected.

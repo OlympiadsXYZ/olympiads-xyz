@@ -189,6 +189,66 @@ test('captions must be separate exact caption blocks on the same page outside th
   });
 });
 
+function embeddedCaptionFixture() {
+  const f = fixture(), image = f.mapping.problems[0].figures[0];
+  image.embeddedCaption = image.caption; delete image.caption;
+  f.records[0].page.blocks.find(b => b.id === 'opening-figure').bbox = [100, 160, 400, 340];
+  // A column-adjacent caption may be listed after ordinary text even though its
+  // pixels are inside the earlier drawing. It must not reorder that text.
+  f.records[0].page.blocks.push(...f.records[0].page.blocks.splice(2, 1));
+  return freeze(f);
+}
+
+test('embedded captions retain exact source identity without emitting duplicate visible text', () => {
+  const f = embeddedCaptionFixture(), before = JSON.stringify(f), out = convert(f);
+  assert.equal(Object.hasOwn(out.problems[0].figures[0], 'caption'), false);
+  assert.equal(out.problems[0].parts[0].statement, 'First question $E=mc^2$.');
+  const audit = out.tx.pageCandidate.figureCoverage.find(f => f.id === 'p1-fig1').embeddedCaption;
+  assert.equal(audit.text, 'Фиг. 1'); assert.equal(audit.emittedTextualCaption, false);
+  assert.equal(audit.disposition, 'visible-in-source-image');
+  assert.equal(audit.blockKey, JSON.stringify(['conditions', 'opening-caption']));
+  assert.deepEqual(audit.sourceAnchor.bbox, [100, 310, 400, 340]);
+  assert.equal(audit.sourceAnchor.imageSha256, f.records[0].item.imageSha256);
+  assert.equal(audit.span.start, 0); assert.equal(audit.span.end, 'Фиг. 1'.length);
+  audit.sourceAnchor.bbox[0] = 999; audit.span.text = 'Changed';
+  assert.equal(JSON.stringify(f), before, 'Embedded audit must not alias frozen input');
+});
+
+test('embedded caption must be fully contained, whole, same-page and caption-typed', () => {
+  const changes = [
+    f => f.records[0].page.blocks.find(b => b.id === 'opening-caption').bbox = [99, 310, 400, 340],
+    f => f.records[0].page.blocks.find(b => b.id === 'opening-caption').bbox = [100, 159, 400, 340],
+    f => f.records[0].page.blocks.find(b => b.id === 'opening-caption').bbox = [100, 310, 401, 340],
+    f => f.records[0].page.blocks.find(b => b.id === 'opening-caption').bbox = [100, 310, 400, 341],
+    f => f.records[0].page.blocks.find(b => b.id === 'opening-caption').type = 'paragraph',
+    f => f.mapping.problems[0].figures[0].embeddedCaption.spans[0].exactText = 'Фиг.',
+    f => f.mapping.problems[0].figures[0].embeddedCaption.spans = [],
+    f => f.mapping.problems[0].figures[0].embeddedCaption.spans.push(ref('opening-caption')),
+    f => {
+      f.records[1].page.blocks.push(block('other-caption', 'Фиг. 1', 'caption', [100, 310, 400, 340]));
+      f.mapping.problems[0].figures[0].embeddedCaption = text(ref('other-caption', 'solutions'));
+    },
+  ];
+  for (const change of changes) { const f = embeddedCaptionFixture(); change(f); freeze(f); assert.throws(() => convert(f), /caption/i); }
+});
+
+test('embedded captions reject wrong ownership, rendered caption reuse and duplicate text consumption', () => {
+  for (const target of [
+    { kind: 'problem', problemId: 'figure-paper-p1', section: 'official-solution' },
+    { kind: 'shared', problemIds: ['figure-paper-p1'], section: 'statement' },
+    { kind: 'document', role: 'other', reason: 'Cannot discard problem caption as furniture.' },
+  ]) {
+    const f = embeddedCaptionFixture(), a = f.assignments.assignments.find(a => a.blockId === 'opening-caption');
+    a.target = target; a.numberOverrideReason = 'Testing explicit ownership rejection.';
+    assert.throws(() => convert(f), /ownership|section/i);
+  }
+  const f = embeddedCaptionFixture(); f.mapping.problems[0].figures[0].caption = text(ref('opening-caption'));
+  assert.throws(() => convert(f), /mutually exclusive/i);
+  const duplicate = embeddedCaptionFixture();
+  duplicate.mapping.problems[0].statementAfterParts.spans.push(ref('opening-caption'));
+  assert.throws(() => convert(duplicate), /consumed more than once/i);
+});
+
 test('a solution figure never licenses a missing-solution claim or an invented answer', () => {
   rejects(f => { f.mapping.problems[0].solution = { missing: true, reason: 'Not supplied', figures: f.mapping.problems[0].solution.figures }; });
   rejects(f => { f.mapping.problems[0].answer = { kind: 'numeric', value: 42 }; });
@@ -294,7 +354,7 @@ test('geometry rejects unproven rotations, crops, anisotropic resize and contrad
   }
 });
 
-test('converted boundary figures render once in source order with the actual site generator', t => {
+for (const embedded of [false, true]) test(`converted boundary figures render once with the actual site generator (embedded caption: ${embedded})`, t => {
   // All files and simulated publication evidence live in this disposable fixture.
   // No upload, real ledger, canonical paper, or source file is changed.
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'page-figure-render-test-'));
@@ -303,7 +363,7 @@ test('converted boundary figures render once in source order with the actual sit
     assert.ok(path.basename(root).startsWith('page-figure-render-test-'));
     fs.rmSync(root, { recursive: true, force: true });
   });
-  const out = stripTx(convert(fixture()));
+  const out = stripTx(convert(embedded ? embeddedCaptionFixture() : fixture()));
   for (const { fig } of allFigures(out)) fig.url = `https://example.invalid/${fig.id}.png`;
   const write = (name, value) => {
     const target = path.join(root, name); fs.mkdirSync(path.dirname(target), { recursive: true });
@@ -317,13 +377,14 @@ test('converted boundary figures render once in source order with the actual sit
   const run = spawnSync(process.execPath, [path.join(repo, 'scripts/problems-to-site.mjs'), '--root', root], { encoding: 'utf8' });
   assert.equal(run.status, 0, run.stderr || run.stdout);
   const mdx = fs.readFileSync(path.join(root, 'solutions/physics/figure-paper/figure-paper-p1.mdx'), 'utf8');
-  const positions = ['Opening $E=mc^2$.', 'https://example.invalid/p1-fig1.png', 'Фиг. 1',
+  const positions = ['Opening $E=mc^2$.', 'https://example.invalid/p1-fig1.png', ...(!embedded ? ['Фиг. 1'] : []),
     'First question $E=mc^2$.', 'https://example.invalid/p1-fig2.png', 'Shared paragraph between the two questions.',
     'Second question $E=mc^2$.', 'Common text after all parts.', '## Решение', 'Задача 1.', 'https://example.invalid/p1-sol-fig1.png'];
   let prior = -1;
   for (const marker of positions) { const at = mdx.indexOf(marker); assert.ok(at > prior, `Out of source order or absent: ${marker}`); prior = at; }
   for (const { fig } of allFigures(out)) assert.equal(mdx.split(fig.url).length - 1, 1, `Figure ${fig.id} must render exactly once`);
-  assert.equal(mdx.split('<figcaption>Фиг. 1</figcaption>').length - 1, 1, 'Source caption visibly rendered once; alt may repeat it for accessibility');
+  assert.equal(mdx.split('<figcaption>Фиг. 1</figcaption>').length - 1, embedded ? 0 : 1, 'An embedded image caption must not become duplicate visible text');
+  if (embedded) assert.equal(mdx.includes('Фиг. 1'), false, 'Embedded source text is audit-only; actual image retains its pixels');
   assert.equal(mdx.split('$E=mc^2$').length - 1, 5, 'Repeated source equations must not be deduplicated');
   assert.equal(mdx.includes('## Отговори'), false, 'No invented answers');
 });
