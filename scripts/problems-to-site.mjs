@@ -182,16 +182,18 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push('');
   lines.push(sourceText(problem.statement, problem));
   lines.push('');
-  const partTexts = (problem.parts ?? []).map(p => p.statement);
-  for (const fig of figuresNotInline(problem.figures, problem.statement, ...partTexts)) lines.push(figureMarkdown(fig), '');
+  const partTexts = (problem.parts ?? []).flatMap(p => [p.statement, p.statementAfter]);
+  for (const fig of figuresNotInline(problem.figures, problem.statement, problem.statementAfterParts, ...partTexts)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
     for (const part of problem.parts) {
-      const pts = part.points != null ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
+      const printedPoints = /\*{1,2}(\d+(?:[.,]\d+)?)\s*(?:т\.|точк[аи]\.?)[;:]?\*{1,2}\s*$/u.exec(String(part.statement));
+      const alreadyPrinted = printedPoints && Number(printedPoints[1].replace(',', '.')) === part.points;
+      const pts = part.points != null && !alreadyPrinted ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
       // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
       const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
       lines.push(`${part.label && part.label !== '*' ? `**${part.label}** ` : ''}${sourceText(text, problem)}${pts}`); // an unlabelled printed part has an empty label
       lines.push('');
-      for (const fig of figuresNotInline(part.figures, part.statement)) lines.push(figureMarkdown(fig), '');
+      for (const fig of figuresNotInline(part.figures, part.statement, part.statementAfter)) lines.push(figureMarkdown(fig), '');
       if (part.statementAfter) lines.push(sourceText(part.statementAfter, problem), '');
     }
   }

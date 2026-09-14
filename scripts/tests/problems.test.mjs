@@ -61,6 +61,44 @@ test('two printed awards under one part survive normalization and publication wi
   assert.doesNotMatch(mdx, /\[(?:1[,.]5|0,5) т\.\]/);
 });
 
+test('figures in common text appear once in their source position between or after parts', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  const figures = ['experiment', 'part-context', 'final-circuit'].map(id => ({ id, url: `https://example.org/${id}.png`, alt: id }));
+  p.figures = [figures[0], figures[2]];
+  p.parts = [
+    { label: 'a)', statement: 'First question', figures: [figures[1]], statementAfter: `Experiment B\n\n![experiment](${figures[0].url})\n\n![part-context](${figures[1].url})` },
+    { label: 'b)', statement: 'Second question' },
+  ];
+  p.statementAfterParts = `Shared final circuit\n\n![final-circuit](${figures[2].url})`;
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  for (const figure of figures) assert.equal(mdx.split(figure.url).length - 1, 1);
+  assert.ok(mdx.indexOf('First question') < mdx.indexOf('Experiment B'));
+  assert.ok(mdx.indexOf('Experiment B') < mdx.indexOf(figures[0].url));
+  assert.ok(mdx.indexOf(figures[1].url) < mdx.indexOf('Second question'));
+  assert.ok(mdx.indexOf('Second question') < mdx.indexOf(figures[2].url));
+  assert.equal(f.run('--check').status, 0);
+});
+
+test('unbracketed italic source awards do not gain a second generated award', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  p.parts = [
+    { label: 'а)', statement: 'Намерете височината...*3 т.*', points: 3 },
+    { label: 'б)', statement: 'Намерете далечината. *2 точки*', points: 2 },
+    { label: 'в)', statement: 'Друг въпрос. **1,5 точки.**', points: 1.5 },
+    { label: 'г)', statement: 'Идеални волтметри...*2 точки;*', points: 2 },
+    { label: 'д)', statement: 'Тяло с маса 3 т.', points: 3 },
+  ];
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  for (const part of p.parts.slice(0, 4)) assert.ok(mdx.includes(`**${part.label}** ${part.statement}\n`));
+  assert.equal((mdx.match(/\[3 т\.\]/g) || []).length, 1);
+  assert.doesNotMatch(mdx, /\[(?:2|1,5) т\.\]/);
+  assert.ok(mdx.includes('Тяло с маса 3 т. **[3 т.]**'));
+});
+
 test('source removal retracts only owned artifacts and index entries', t => {
   const f = fixture(t); f.approve(); assert.equal(f.run().status, 0);
   fs.unlinkSync(path.join(f.root, f.file));
