@@ -1,12 +1,19 @@
-// Deterministic, no-figure v1 conversion. Reads the committed schema; no writes,
+// Deterministic v1 text / v2 boundary-figure conversion. No writes,
 // model calls, source-file verification, receipts, or publication authority.
 import { createRequire } from 'node:module';
 import { assemblePageBlocks } from './page-assembly.mjs';
+import { originalPageFigureGeometry } from './page-figure.mjs';
 
 const require = createRequire(import.meta.url);
 const schema = structuredClone(require('../../content/problems/schema.json'));
 delete schema.$schema;
 const validateSchema = new (require('ajv'))({ allErrors: true, jsonPointers: true }).compile(schema);
+// Same temporary figure allowances as lib.mjs compileSchema('candidate'). No
+// fabricated URLs: figures.mjs must crop, upload and verify them separately.
+const figureCandidateSchema = structuredClone(schema);
+figureCandidateSchema.$defs.figure.required = ['id'];
+figureCandidateSchema.$defs.figure.properties.tx = { type: 'object' };
+const validateFigureCandidate = new (require('ajv'))({ allErrors: true, jsonPointers: true }).compile(figureCandidateSchema);
 const own = (x, k) => Object.hasOwn(x, k);
 const object = x => x !== null && typeof x === 'object' && !Array.isArray(x);
 const nonempty = x => typeof x === 'string' && x.trim().length > 0;
@@ -70,6 +77,9 @@ function expandSelectors(assembly, mapping) {
   const text = (spec, where) => {
     if (object(spec) && Array.isArray(spec.spans)) spec.spans = spec.spans.map((s, i) => span(s, `${where}/${i}`));
   };
+  const figures = (spec, where) => {
+    if (Array.isArray(spec)) for (const [i, f] of spec.entries()) if (object(f)) text(f.caption, `${where}/${i}/caption`);
+  };
   const points = (spec, where) => {
     if (!object(spec)) return;
     spec.span = span(spec.span, where);
@@ -85,11 +95,16 @@ function expandSelectors(assembly, mapping) {
   if (Array.isArray(m.problems)) for (const [i, p] of m.problems.entries()) if (object(p)) {
     if (own(p, 'heading')) p.heading = span(p.heading, `problem ${i} heading`);
     text(p.statement, `problem ${i} statement`); text(p.statementAfterParts, `problem ${i} after parts`);
+    figures(p.figures, `problem ${i} figures`);
     points(p.points, `problem ${i} points`);
-    if (object(p.solution)) text(p.solution.statement, `problem ${i} solution`);
+    if (object(p.solution)) {
+      text(p.solution.statement, `problem ${i} solution`);
+      figures(p.solution.figures, `problem ${i} solution figures`);
+    }
     if (Array.isArray(p.parts)) for (const [j, pt] of p.parts.entries()) if (object(pt)) {
       pt.label = span(pt.label, `problem ${i} part ${j} label`);
       text(pt.statement, `problem ${i} part ${j} statement`); text(pt.statementAfter, `problem ${i} part ${j} after`);
+      figures(pt.figures, `problem ${i} part ${j} figures`);
       points(pt.points, `problem ${i} part ${j} points`);
     }
   }
@@ -146,25 +161,42 @@ export function resolvePageCandidateSelectors(recordsInput, assignmentsInput, ma
  * and equations; a missing solution is allowed only with no owned solution
  * blocks. Shared ownership goes to one document note, never duplicated prose.
  * Text notes cannot span source pages. Source pages/hashes/anchors are derived.
- * All figure blocks (including decorative ones), other metadata/content fields,
- * answers, unrepresented bytes and unsupported numbering fail closed in v1.
+ * V1 rejects all figure blocks. V2 additionally accepts optional figures arrays
+ * on each problem, part and supplied solution. Each ref is
+ * {pageId, blockId, id, caption?:Text}; only a frozen figure-type block is valid.
+ * The existing renderer places these arrays after statement, part.statement,
+ * and solution.statement respectively. Source order is checked at those exact
+ * boundaries; arbitrary interior figures are rejected, never moved to the end.
+ * Optional captions consume exact, separate, non-overlapping caption blocks.
+ * V2 only accepts reviewed upright full pages or proportional full-page resizes.
+ * Optional v2 excludedFigures:[{pageId,blockId,reason,sourceReviewed:true}]
+ * accounts for explicitly source-reviewed decoration. Only null-numbered,
+ * document/other-owned figures with an assignment reason may be excluded;
+ * their full anchors remain audited in tx, and they never become crop entries.
+ * Crops/rotations, shared figure disposition, alt prose, URLs, and
+ * box overrides require other explicit reviewed workflows. Use figures.mjs
+ * --no-snap for these boxes, and --dry-run for crop review before any upload.
+ * Every figure is accounted exactly once, even though its text is empty.
  * A fresh source check and normal candidate validation are still required.
  */
 export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
   const { records, assignments, mapping } = jsonCopy({ records: recordsInput, assignments: assignmentsInput, mapping: mappingInput });
   const assembly = assemblePageBlocks(records, assignments);
   const m = expandSelectors(assembly, mapping);
-  shape(m, ['schemaVersion', 'paper', 'title', 'problems', 'documentNotes', 'furniture', 'whitespace'], 'mapping');
-  if (m.schemaVersion !== 1 || !Array.isArray(m.problems) || !Array.isArray(m.documentNotes)
-    || !Array.isArray(m.furniture) || !Array.isArray(m.whitespace)) reject('mapping requires version 1 and explicit arrays');
+  shape(m, ['schemaVersion', 'paper', 'title', 'problems', 'documentNotes', 'furniture', 'whitespace',
+    ...(m?.schemaVersion === 2 ? ['excludedFigures'] : [])], 'mapping');
+  if (![1, 2].includes(m.schemaVersion) || !Array.isArray(m.problems) || !Array.isArray(m.documentNotes)
+    || !Array.isArray(m.furniture) || !Array.isArray(m.whitespace)) reject('mapping requires version 1 or 2 and explicit arrays');
+  const withFigures = m.schemaVersion === 2;
   const entries = new Map(assembly.blocks.map((entry, index) => [entry.key, { ...entry, index }]));
-  for (const e of entries.values()) if (e.block.type === 'figure') reject(`figure block ${e.key} is unsupported in v1`,
+  for (const e of entries.values()) if (e.block.type === 'figure' && !withFigures) reject(`figure block ${e.key} is unsupported in v1`,
     { code: 'UNSUPPORTED_PAGE_CANDIDATE_SHAPE', sourceAnchor: structuredClone(e.sourceAnchor),
       sourcePage: structuredClone(assembly.pages.find(p => p.item.id === e.sourceAnchor.pageId).item) });
   if (assembly.owners.some((p, i) => p.number !== i + 1)) reject('v1 requires explicit contiguous integer numbering; numbers are never inferred or changed');
   if (m.problems.length !== assembly.owners.length || m.problems.some((p, i) => p?.id !== assembly.owners[i].id)) reject('problem IDs/order differ from the assignment plan');
 
   const coverage = new Map([...entries.keys()].map(k => [k, []]));
+  const figureCoverage = new Map(), figureIds = new Set(), figureRegions = new Set();
   const tape = new Map();
   function anchor(span, where) {
     shape(span, ['pageId', 'blockId', 'start', 'end', 'text'], `${where} span`);
@@ -221,6 +253,44 @@ export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
     consume(spec.span, where, context);
     return spec.value;
   }
+  function readFigures(spec, where, context, stream) {
+    if (spec === undefined) return [];
+    if (!withFigures || !Array.isArray(spec)) reject(`invalid figures array at ${where}`);
+    return spec.map((f, i) => {
+      const field = `${where}/${i}`;
+      shape(f, ['pageId', 'blockId', 'id', 'caption'], `${field} figure reference`);
+      const e = entries.get(key(f.pageId, f.blockId)), t = e?.assignment.target;
+      if (!e || e.block.type !== 'figure') reject(`unknown/non-figure block at ${field}`);
+      if (t.kind !== 'problem' || t.problemId !== context.id || t.section !== context.section) reject(`figure ownership/section conflict at ${field}`);
+      if (figureCoverage.has(e.key)) reject(`figure consumed more than once at ${field}`);
+      if (typeof f.id !== 'string' || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(f.id) || figureIds.has(f.id)) reject(`invalid/duplicate figure id at ${field}`);
+      const rank = [e.index, 0], prior = tape.get(stream);
+      if (prior && !before(prior, rank)) reject(`source order changed in ${stream} at ${field}; figure is not at a supported renderer boundary`);
+      tape.set(stream, rank);
+      const item = assembly.pages.find(p => p.item.id === f.pageId).item;
+      const geometry = originalPageFigureGeometry(item, e.block.bbox);
+      const region = JSON.stringify([geometry.document, geometry.page, geometry.bbox]);
+      if (figureRegions.has(region)) reject(`duplicate original source figure box at ${field}`);
+      figureRegions.add(region);
+      const fig = { id: f.id, tx: { document: geometry.document, page: geometry.page, bbox: geometry.bbox,
+        rotation: 0, sourceAnchor: structuredClone(e.sourceAnchor), geometry,
+        placement: field, requiresNoSnap: true } };
+      figureIds.add(f.id);
+      figureCoverage.set(e.key, { blockKey: e.key, field, id: f.id, disposition: 'rendered-at-existing-boundary', sourceAnchor: structuredClone(e.sourceAnchor) });
+      if (own(f, 'caption')) {
+        shape(f.caption, ['spans', 'join'], `${field} caption`);
+        if (!Array.isArray(f.caption.spans) || !f.caption.spans.length) reject(`empty caption at ${field}`);
+        for (const span of f.caption.spans) {
+          const c = anchor(span, `${field}/caption`), a = e.block.bbox, b = c.block.bbox;
+          if (c.block.type !== 'caption' || c.sourceAnchor.pageId !== e.sourceAnchor.pageId) reject(`caption is not a separate same-page caption block at ${field}`);
+          if (a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1]) reject(`caption overlaps figure crop at ${field}; would render printed caption twice`);
+        }
+        fig.caption = readText(f.caption, `${field}/caption`, context, stream);
+        if (!nonempty(fig.caption) || fig.caption.trim() !== fig.caption || /[\r\n]/.test(fig.caption)) reject(`caption must be exact single-line unpadded text at ${field}`);
+      }
+      return fig;
+    });
+  }
 
   shape(m.paper, ['subject', 'competition', 'year', 'round', 'roundType', 'grade', 'lang', 'held', 'organiser', 'timeLimitMin', 'source', 'solutionSource'], 'paper metadata');
   const paper = { ...m.paper, id: assembly.paperId, status: 'draft' };
@@ -240,7 +310,7 @@ export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
     if (!nonempty(paper.title)) reject('empty mapped paper title');
   }
   const problems = m.problems.map((spec, i) => {
-    shape(spec, ['id', 'problemType', 'heading', 'points', 'statement', 'parts', 'statementAfterParts', 'solution'], `problem ${i}`);
+    shape(spec, ['id', 'problemType', 'heading', 'points', 'statement', 'parts', 'statementAfterParts', 'solution', ...(withFigures ? ['figures'] : [])], `problem ${i}`);
     const owner = assembly.owners[i], root = `/problems/${i}`;
     const context = { kind: 'problem', id: owner.id, section: 'statement' };
     if (!owner.id.startsWith(`${assembly.paperId}-`) || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(owner.id)) reject(`invalid production problem id ${owner.id}`);
@@ -252,15 +322,17 @@ export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
     const pr = { id: owner.id, number: owner.number, points: readPoints(spec.points, `${root}/points`, context),
       statement: readText(spec.statement, `${root}/statement`, context, stream), figures: [], parts: [] };
     if (own(spec, 'problemType')) pr.problemType = spec.problemType;
+    pr.figures = readFigures(spec.figures, `${root}/figures`, context, stream);
     const labels = new Set();
     for (const [j, pt] of spec.parts.entries()) {
       const field = `${root}/parts/${j}`;
-      shape(pt, ['label', 'statement', 'points', 'statementAfter'], `part ${field}`);
+      shape(pt, ['label', 'statement', 'points', 'statementAfter', ...(withFigures ? ['figures'] : [])], `part ${field}`);
       const label = consume(pt.label, `${field}/label`, context, stream);
       if (!nonempty(label) || label.trim() !== label || labels.has(label)) reject(`empty, padded or duplicate part label at ${field}`);
       labels.add(label);
       const part = { label, statement: readText(pt.statement, `${field}/statement`, context, stream), points: readPoints(pt.points, `${field}/points`, context) };
       if (!nonempty(part.statement)) reject(`empty mapped part at ${field}`);
+      if (own(pt, 'figures')) part.figures = readFigures(pt.figures, `${field}/figures`, context, stream);
       if (own(pt, 'statementAfter')) part.statementAfter = readText(pt.statementAfter, `${field}/statementAfter`, context, stream);
       pr.parts.push(part);
     }
@@ -273,18 +345,23 @@ export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
       const rank = s => [anchor(s, `${root}/parts/${j}/points`).index, s.start];
       const next = pt.statementAfter?.spans[0] || spec.parts[j + 1]?.label || spec.statementAfterParts?.spans[0];
       if (!before(rank(label), rank(marker)) || (next && !before(rank(marker), rank(next)))) reject(`points marker outside its part at ${root}/parts/${j}`);
+      // The renderer puts the score beside part.statement, before its figures.
+      // A source score below the drawing cannot be moved above it silently.
+      const firstFigure = pt.figures?.[0];
+      if (firstFigure && !before(rank(marker), [entries.get(key(firstFigure.pageId, firstFigure.blockId)).index, 0])) reject(`points marker follows its rendered figure at ${root}/parts/${j}`);
     }
     if (!nonempty(pr.statement) && !pr.parts.length) reject(`missing statement at ${root}; never synthesize one`);
-    shape(spec.solution, ['missing', 'reason', 'statement'], `${root} solution mapping`);
+    shape(spec.solution, ['missing', 'reason', 'statement', ...(withFigures ? ['figures'] : [])], `${root} solution mapping`);
     if (spec.solution.missing === true) {
-      if (own(spec.solution, 'statement') || !nonempty(spec.solution.reason) || owner.officialSolution.length) reject(`missing-solution claim conflicts with supplied blocks at ${root}`);
+      if (own(spec.solution, 'statement') || own(spec.solution, 'figures') || !nonempty(spec.solution.reason) || owner.officialSolution.length) reject(`missing-solution claim conflicts with supplied blocks at ${root}`);
       pr.solution = { statement: '', figures: [], incomplete: true, incompleteReason: spec.solution.reason };
     } else {
       if (own(spec.solution, 'missing') || own(spec.solution, 'reason') || !owner.officialSolution.length) reject(`invalid supplied-solution mapping at ${root}`);
       const statement = readText(spec.solution.statement, `${root}/solution/statement`,
         { kind: 'problem', id: owner.id, section: 'official-solution' }, `${owner.id} solution order`);
       if (!nonempty(statement)) reject(`empty supplied solution at ${root}`);
-      pr.solution = { statement, figures: [], incomplete: false };
+      pr.solution = { statement, figures: readFigures(spec.solution.figures, `${root}/solution/figures`,
+        { kind: 'problem', id: owner.id, section: 'official-solution' }, `${owner.id} solution order`), incomplete: false };
     }
     const spans = assembly.blocks.filter(e => e.owner === owner.id).map(e => ({ document: e.sourceAnchor.document, page: e.sourceAnchor.page }));
     pr.sourceSpans = [...new Map(spans.map(s => [JSON.stringify(s), s])).values()];
@@ -309,7 +386,23 @@ export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
     if (!/^\s+$/.test(span.text)) reject(`non-whitespace cannot be discarded at ${i}`);
     consume(span, `/whitespace/${i}`, { kind: 'whitespace' });
   });
+  if (own(m, 'excludedFigures')) {
+    if (!withFigures || !Array.isArray(m.excludedFigures)) reject('invalid excludedFigures array');
+    m.excludedFigures.forEach((f, i) => {
+      const field = `/excludedFigures/${i}`;
+      shape(f, ['pageId', 'blockId', 'reason', 'sourceReviewed'], `${field} decorative exclusion`);
+      const e = entries.get(key(f.pageId, f.blockId)), t = e?.assignment.target;
+      if (!e || e.block.type !== 'figure' || e.block.problemNumber !== null
+        || t.kind !== 'document' || t.role !== 'other' || !nonempty(t.reason)
+        || f.sourceReviewed !== true || !nonempty(f.reason)) reject(`decorative exclusion must be source-reviewed, null-numbered and document-owned at ${field}`);
+      if (figureCoverage.has(e.key)) reject(`figure consumed more than once at ${field}`);
+      figureCoverage.set(e.key, { blockKey: e.key, field, disposition: 'excluded-decoration', reason: f.reason,
+        sourceReviewed: true, sourceAnchor: structuredClone(e.sourceAnchor),
+        sourcePage: structuredClone(assembly.pages.find(p => p.item.id === f.pageId).item) });
+    });
+  }
   for (const [k, ranges] of coverage) {
+    if (entries.get(k).block.type === 'figure' && !figureCoverage.has(k)) reject(`unmapped figure block ${k}`);
     ranges.sort((a, b) => a.start - b.start);
     let end = 0;
     for (const r of ranges) {
@@ -319,8 +412,10 @@ export function toPageCandidate(recordsInput, assignmentsInput, mappingInput) {
     if (end !== entries.get(k).block.text.length) reject(`unmapped source characters in ${k} at ${end}`);
   }
   const candidate = { paper, problems };
-  if (!validateSchema(candidate)) reject(`candidate schema: ${validateSchema.errors.map(e => `${e.dataPath} ${e.message}`).join('; ')}`);
-  candidate.tx = { pageCandidate: { schemaVersion: 1, publicationEligible: false, sourceFilesVerifiedByThisModule: false,
-    fieldMapping: m, assignments, assembly, coverage: [...coverage].map(([blockKey, ranges]) => ({ blockKey, ranges })) } };
+  const validate = withFigures ? validateFigureCandidate : validateSchema;
+  if (!validate(candidate)) reject(`candidate schema: ${validate.errors.map(e => `${e.dataPath} ${e.message}`).join('; ')}`);
+  candidate.tx = { pageCandidate: { schemaVersion: m.schemaVersion, publicationEligible: false, sourceFilesVerifiedByThisModule: false,
+    fieldMapping: m, assignments, assembly, coverage: [...coverage].map(([blockKey, ranges]) => ({ blockKey, ranges })),
+    ...(withFigures ? { figureCoverage: [...figureCoverage.values()], requiredFigureWorkflow: 'figures.mjs --no-snap; inspect --dry-run crops; separately upload/verify before final validation' } : {}) } };
   return candidate;
 }

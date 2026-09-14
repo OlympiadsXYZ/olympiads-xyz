@@ -160,6 +160,16 @@ outside this first converter. Supplied ownership and metadata still need source
 review, and a successful conversion does not authorize publication. The mapping
 contract and source evidence are retained in the draft's `tx.pageCandidate`.
 
+Mapping version 2 additionally accepts explicit figure references at the existing
+problem, subpart and solution rendering boundaries. `page-figure.mjs` preserves
+source boxes only for verified upright full pages or proportional full-page
+resizes. Every figure is accounted once; interior interleaving, unsupported view
+transforms and invented captions are rejected. A reviewed document-logo exclusion
+retains its full source evidence without adding it to the problem diagrams.
+Figure output has no fabricated URL. Reverify the source files and use the
+existing `figures.mjs --no-snap --dry-run` review, then separate upload and final
+validation. The converter's geometry declarations do not perform those checks.
+
 The 2026-09-14 native-text trial also exposed a production text-layer false
 repair: the PDF extraction split `успоредно` into `ус поредно`, making a correct
 candidate look misspelled. The text-layer check now recognizes only narrowly
