@@ -17,6 +17,7 @@ param(
   [int]$TimeoutSec = 1200,
   [switch]$SameChat,
   [string]$ExpectChat = '',
+  [int]$RequireIdleSec = 45,
   [switch]$DebugTree
 )
 $ErrorActionPreference = 'Stop'
@@ -36,6 +37,9 @@ public static class Win32 {
   [DllImport("kernel32.dll")] public static extern uint GetCurrentThreadId();
   [DllImport("user32.dll")] public static extern bool IsIconic(IntPtr hWnd);
   [DllImport("user32.dll")] public static extern bool SetCursorPos(int X, int Y);
+  [StructLayout(LayoutKind.Sequential)] public struct LASTINPUTINFO { public uint cbSize; public uint dwTime; }
+  [DllImport("user32.dll")] public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+  public static double IdleSeconds() { var l = new LASTINPUTINFO(); l.cbSize = (uint)Marshal.SizeOf(l); GetLastInputInfo(ref l); return (Environment.TickCount - (int)l.dwTime) / 1000.0; }
   [DllImport("user32.dll")] public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);
 }
 "@
@@ -142,6 +146,11 @@ function Find-Dialog {
   return $null
 }
 
+# Margulan may be at the keyboard: wait until the mouse and keyboard have been idle for a while before taking over
+if ($RequireIdleSec -gt 0) {
+  $waited = 0
+  while ([Win32]::IdleSeconds() -lt $RequireIdleSec) { if ($waited -eq 0) { Log ("waiting for {0} s of keyboard/mouse idle" -f $RequireIdleSec) }; Start-Sleep -Seconds 5; $waited += 5; if ($waited -gt 3600) { Fail 'the PC was in use for an hour; giving up this call' } }
+}
 Show-App
 Wake-Tree
 for ($k = 0; $k -lt 4; $k++) {
@@ -177,7 +186,7 @@ if (-not $SameChat) {
 # the composer keeps its draft across "New chat": drop leftover attachments and text (a failed attempt's, or the user's)
 $leftover = Find-All $win $CT::Button '^Remove ' $false
 if ($leftover.Count) { Log ("removing {0} leftover attachment(s)" -f $leftover.Count); foreach ($b in $leftover) { try { Invoke-El $b; Start-Sleep -Milliseconds 200 } catch {} }; Start-Sleep -Milliseconds 500 }
-$composer0 = Wait-For 'composer' { $e = Find-All $win $CT::Edit 'Message ChatGPT'; if ($e.Count) { $e[0] } } 10
+$composer0 = Wait-For 'composer' { $e = Find-All $win $CT::Edit 'Message ChatGPT'; if (-not $e.Count) { $e = @($win.FindAll($scope::Descendants, (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, $CT::Edit))) | Where-Object { $_.Current.ClassName -eq 'ProseMirror' }) }; if ($e.Count) { $e[0] } } 10
 if ($composer0) { $v0 = ''; try { $v0 = $composer0.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern).Current.Value } catch {}; if ($v0.Trim() -and $v0.Trim() -ne 'Message ChatGPT') { Show-App; $composer0.SetFocus(); Start-Sleep -Milliseconds 200; [System.Windows.Forms.SendKeys]::SendWait('^a{DEL}'); Start-Sleep -Milliseconds 300; Log 'cleared leftover text' } }
 $copiesBefore = Count-Copy
 
@@ -240,7 +249,7 @@ if ($Files.Count) {
 
 # ---- the prompt: pasted (the composer is a ProseMirror editor; a UIA SetValue does not reach it)
 $promptText = [System.IO.File]::ReadAllText($PromptFile)
-$composer = Wait-For 'composer' { $e = Find-All $win $CT::Edit 'Message ChatGPT'; if (-not $e.Count) { $e = Find-All $win $CT::Edit '' $false }; if ($e.Count) { $e[0] } } 10
+$composer = Wait-For 'composer' { $e = Find-All $win $CT::Edit 'Message ChatGPT'; if (-not $e.Count) { $e = @($win.FindAll($scope::Descendants, (New-Object System.Windows.Automation.PropertyCondition($AE::ControlTypeProperty, $CT::Edit))) | Where-Object { $_.Current.ClassName -eq 'ProseMirror' }) }; if ($e.Count) { $e[0] } } 10
 if (-not $composer) { Fail 'no composer' }
 Show-App
 $composer.SetFocus(); Start-Sleep -Milliseconds 300
