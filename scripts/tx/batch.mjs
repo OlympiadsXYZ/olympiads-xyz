@@ -14,7 +14,7 @@ import { parseArgs, fail, readJson, writeJson, JOBS_FILE, ROOT, nowIso, paperDir
 const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh'] });
 if (!args.ids && !args.backlog && !args.catalogue) fail('usage: batch.mjs --ids a,b | --backlog | --catalogue [--subjects s,s] [--langs l,l] [--competitions c,c] [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote] [--redo]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
-const workers = Number(args.workers || 2);
+let workers = Number(args.workers || 2);
 const logFile = path.resolve(args.log || path.join(ROOT, 'tmp', 'tx', 'batch.log'));
 fs.mkdirSync(path.dirname(logFile), { recursive: true });
 const log = entry => fs.appendFileSync(logFile, JSON.stringify({ at: nowIso(), ...entry }) + '\n');
@@ -61,6 +61,8 @@ for (const id of ids) {
   if (job?.stage === 'promoted' || job?.stage === 'done') { log({ paperId: id, outcome: 'skipped', reason: `job already ${job.stage}` }); continue; }
   plan.push({ id, resume: !!job });
 }
+// the ChatGPT app has one composer and "the current chat" is whichever the last call left open: one worker only
+if (/^chatgpt:/.test(String(args.reader || '')) || /^chatgpt:/.test(String(args.checker || ''))) { if (workers > 1) console.error('[batch] the chatgpt provider runs one worker (the app holds one conversation at a time)'); workers = 1; }
 console.log(`${plan.length} paper(s) to run with ${workers} worker(s); log: ${path.relative(ROOT, logFile)}`);
 
 function runOne({ id, resume, fresh }) {

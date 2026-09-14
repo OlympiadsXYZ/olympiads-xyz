@@ -113,11 +113,15 @@ function buildText(window, images) {
   const parts = [prompt.text.trim(), contextBlock(manifest)];
   const wb = windowBlock(manifest, window);
   if (wb) parts.push(wb);
-  parts.push(`PAGE IMAGES, in order: ${images.filter(i => i.kind === 'page').map((i, k) => `#${k + 1} ${i.document} p.${i.page}`).join('; ')}.`);
+  if (provider === 'chatgpt') {
+    // the app gets the source PDFs (one attachment each, uploaded once per chat) instead of page images
+    const docs = Object.entries(manifest.documents || {}).map(([doc, d]) => `${doc}.pdf = the ${doc} document (${d.pages} page${d.pages === 1 ? '' : 's'})`);
+    parts.push(`ATTACHED DOCUMENTS (PDF; "problems p.N" / "solutions p.N" in this prompt are the pages of these files): ${docs.join('; ')}.${chatState.sameChat ? ' They were attached earlier in this conversation; use them.' : ''} Read the pages as printed (text and drawings), not only the extracted text.`);
+  } else parts.push(`PAGE IMAGES, in order: ${images.filter(i => i.kind === 'page').map((i, k) => `#${k + 1} ${i.document} p.${i.page}`).join('; ')}.`);
   if (stage === 'checker') {
     parts.push(`Candidate bytes SHA-256 (copy as candidateSha256): ${candidateHash}`);
     const cropImgs = images.filter(i => i.kind === 'crop');
-    if (cropImgs.length) parts.push(`FIGURE CROPS produced from the candidate's boxes, in order after the pages: ${cropImgs.map((i, k) => `crop #${k + 1} = figure "${i.id}" (${i.document} p.${i.page}, box ${JSON.stringify(i.bbox)})`).join('; ')}. Judge each crop itself: whole figure, nothing clipped, no swallowed body text.`);
+    if (cropImgs.length) parts.push(`FIGURE CROPS produced from the candidate's boxes${provider === 'chatgpt' ? ', on the attached sheet crops.png (one labelled tile each; the label is the crop number and the figure id)' : ', in order after the pages'}: ${cropImgs.map((i, k) => `crop #${k + 1} = figure "${i.id}" (${i.document} p.${i.page}, box ${JSON.stringify(i.bbox)})`).join('; ')}. Judge each crop itself: whole figure, nothing clipped, no swallowed body text.`);
     else parts.push('The candidate proposes no figures; verify that the pages indeed contain no figure a student needs.');
     parts.push('CANDIDATE TRANSCRIPTION (JSON, sanitised — the reader\'s notes and identity are withheld on purpose):\n' + JSON.stringify(view));
   }
@@ -142,11 +146,39 @@ function compressImage(i) {
   return { ...i, file: out, mime: 'image/jpeg', bytes: fs.statSync(out).size, original: i.file };
 }
 
+// The ChatGPT app: files uploaded to a conversation stay available to its later messages, and every upload counts
+// against the app's attachment cap (hit after ~65 files on 2026-09-13). So the PDFs go up once per chat and the
+// paper's calls continue in that chat: one chat for the reader windows, another for the checker/refix rounds (the
+// checker does not see the reader's conversation). State: tmp/tx/<id>/chatgpt-app/chat.json. Only one worker at a
+// time may use the app (the "current chat" is whichever the last call left open).
+const chatStateFile = path.join(paperDir(paperId), 'chatgpt-app', 'chat.json');
+const chatGroup = stage === 'reader' ? 'reader' : 'check';
+const chatState = { sameChat: false };
+if (provider === 'chatgpt') { const st = readJson(chatStateFile, null); chatState.sameChat = !!(st && st.group === chatGroup && st.uploaded && st.paperId === paperId); }
+function cropSheet(crops, stamp) {
+  if (!crops.length) return null;
+  const dir = path.join(paperDir(paperId), 'chatgpt-app'); fs.mkdirSync(dir, { recursive: true });
+  const out = path.join(dir, `${stamp}.crops.png`);
+  const argv = [path.join(ROOT, 'scripts', 'tx', 'chatgpt-app', 'montage.py'), out];
+  crops.forEach((c, k) => { argv.push(`#${k + 1} ${c.id} (${c.document} p.${c.page})`, c.file); });
+  const r = spawnSync('python3', argv, { encoding: 'utf8' });
+  if (r.status !== 0) fail(`crop sheet failed: ${r.stderr.slice(0, 300)}`);
+  return out;
+}
+function appFiles(images) {
+  const files = [];
+  if (!chatState.sameChat) for (const [doc, d] of Object.entries(manifest.documents || {})) { const f = path.join(paperDir(paperId), d.file); if (fs.existsSync(f) && /\.pdf$/i.test(f)) { const named = path.join(paperDir(paperId), 'chatgpt-app', `${doc}.pdf`); fs.mkdirSync(path.dirname(named), { recursive: true }); fs.copyFileSync(f, named); files.push(named); } }
+  const crops = images.filter(i => i.kind === 'crop');
+  const sheet = cropSheet(crops, `${stage}-${Date.now()}`);
+  if (sheet) files.push(sheet);
+  return files;
+}
+
 function buildRequest(images, userText) {
   const imgs = images.map(i => ({ file: i.file, mime: i.mime || 'image/png' }));
   if (provider === 'chatgpt') return { // the ChatGPT desktop app, driven by scripts/tx/chatgpt-app/driver.ps1: files attached, prompt pasted, reply copied
     url: 'chatgpt-app://' + model, headers: () => ({}),
-    body: { files: imgs.map(i => i.file), text: 'You transcribe and verify competition papers. Reply with exactly one JSON object inside a ```json code block and nothing else.' + String.fromCharCode(10,10) + userText },
+    body: { files: appFiles(images), sameChat: chatState.sameChat, text: 'You transcribe and verify competition papers. Reply with exactly one JSON object inside a ```json code block and nothing else.' + String.fromCharCode(10,10) + userText },
     parse: (json) => ({ text: json.text, inputTokens: null, outputTokens: null, reasoningTokens: null, requestId: json.chat ? `chat:${json.chat}` : null, stopReason: json.ok ? 'stop' : 'error' }),
   };
   if (provider === 'anthropic') return {
@@ -236,14 +268,21 @@ async function sendViaApp(req, label) {
   return withAppLock(async () => {
     for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
       const started = Date.now();
-      const r = spawnSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(ROOT, 'scripts', 'tx', 'chatgpt-app', 'driver.ps1'), '-PromptFile', promptFile, '-FileList', listFile, '-OutFile', outFile, '-TimeoutSec', String(Math.round(timeoutMs / 1000))], { cwd: ROOT, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+      const argv = ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(ROOT, 'scripts', 'tx', 'chatgpt-app', 'driver.ps1'), '-PromptFile', promptFile, '-FileList', listFile, '-OutFile', outFile, '-TimeoutSec', String(Math.round(timeoutMs / 1000))];
+      if (req.body.sameChat) { argv.push('-SameChat'); const st = readJson(chatStateFile, null); if (st?.chat) argv.push('-ExpectChat', st.chat); }
+      const r = spawnSync('powershell', argv, { cwd: ROOT, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
       const seconds = +((Date.now() - started) / 1000).toFixed(1);
       let summary = null; try { summary = JSON.parse((r.stdout || '').trim().split(String.fromCharCode(10)).filter(Boolean).pop() || 'null'); } catch {}
       if (r.status === 0 && summary?.ok && fs.existsSync(outFile)) {
+        writeJson(chatStateFile, { paperId, group: chatGroup, uploaded: true, chat: summary.chat || null, at: nowIso() });
+        chatState.sameChat = true; // the next window of this run continues in the chat that now holds the PDFs
         const text = fs.readFileSync(outFile, 'utf8');
         return { ...req.parse({ ok: true, text, chat: summary.chat }), seconds, attempts: attempt, status: 200, replySeconds: summary.replySeconds };
       }
       const reason = summary?.error || (r.stderr || '').trim().split(String.fromCharCode(10)).slice(-2).join(' | ').slice(0, 300) || `driver exit ${r.status}`;
+      // whatever went wrong, the next attempt starts a fresh chat with the PDFs again
+      if (req.body.sameChat) { try { fs.unlinkSync(chatStateFile); } catch {} chatState.sameChat = false; req.body.sameChat = false; req.body.files = appFiles(images); fs.writeFileSync(listFile, req.body.files.join(String.fromCharCode(10))); }
+      if (/limit for file attachments/i.test(reason)) fail(`ChatGPT app: ${reason} (the app's attachment cap; wait for the reset it names)`);
       appendRun({ paperId, stage, provider, model, window: label, ok: false, attempt, error: reason, seconds, at: nowIso() });
       const again = attempt < MAX_ATTEMPTS;
       console.error(`[transcribe] ${label} attempt ${attempt}/${MAX_ATTEMPTS} through the ChatGPT app failed after ${seconds}s — ${reason}${again ? '; retrying' : ''}`);
@@ -308,7 +347,7 @@ for (const window of windows) {
   if (missing.length) fail(`${missing.length} rendered page(s) missing; re-run prepare.mjs`);
   // A long paper with many figures can exceed the provider's image cap (izho-2023-theory-multi: 106): the pages
   // come first, crops fill what is left; when the pages alone exceed it, only the pages the candidate spans go.
-  let pageList = pages, cropList = crops, imagesLeftOut = 0;
+  let pageList = provider === 'chatgpt' ? [] : pages, cropList = crops, imagesLeftOut = 0; // the app reads the PDFs themselves
   if (pageList.length + cropList.length > limits.images) {
     const src = view || refix?.candidate; // the checker's sanitised view keeps each problem's source pages
     if (pageList.length > limits.images && src) {

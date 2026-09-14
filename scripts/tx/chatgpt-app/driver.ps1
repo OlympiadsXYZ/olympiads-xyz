@@ -16,6 +16,7 @@ param(
   [Parameter(Mandatory = $true)][string]$OutFile,
   [int]$TimeoutSec = 1200,
   [switch]$SameChat,
+  [string]$ExpectChat = '',
   [switch]$DebugTree
 )
 $ErrorActionPreference = 'Stop'
@@ -152,7 +153,19 @@ for ($k = 0; $k -lt 4; $k++) {
 }
 if ($DebugTree) { foreach ($e in $win.FindAll($scope::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) { $c = $e.Current; if ($c.Name) { Log ("  {0} '{1}'" -f ($c.ControlType.ProgrammaticName -replace '^ControlType\.', ''), $c.Name.Substring(0, [Math]::Min(70, $c.Name.Length))) } } }
 
-# ---- new chat
+# ---- the chat: a new one, or the one the previous call left open (-SameChat), checked by title when known
+function Current-Title { try { $d = Find-All $win $CT::Document '' $false; if ($d.Count) { return $d[0].Current.Name } } catch {}; return '' }
+if ($SameChat -and $ExpectChat) {
+  $t = Current-Title
+  if ($t -ne $ExpectChat) {
+    Log ("the open chat is '{0}', expected '{1}'; opening it from the sidebar" -f $t, $ExpectChat)
+    $btn = Find-All $win $CT::Button $ExpectChat
+    if (-not $btn.Count) { Fail "chat '$ExpectChat' is not in the sidebar" }
+    Invoke-El $btn[0]
+    $ok = Wait-For 'expected chat' { if ((Current-Title) -eq $ExpectChat) { $true } } 15
+    if (-not $ok) { Fail "could not open chat '$ExpectChat'" }
+  }
+}
 if (-not $SameChat) {
   $nc = (Find-All $win $CT::Button 'New chat')
   if (-not $nc.Count) { Fail 'no "New chat" button' }
