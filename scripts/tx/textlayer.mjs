@@ -25,7 +25,7 @@ import { parseArgs, fail, readJson, writeJson, readManifest, paperDir, walkStrin
 export const TEXTLAYER_VERSION = 1;
 const MIN_TRUST = 0.8, MIN_LAYER_WORDS = 40;
 // fields whose words are the reader's own (alt text, notes) or not prose
-const SKIP_PATH = /\/(tx|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
+const SKIP_PATH = /\/(tx|classification|sourceLayout|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
 const ALT_PATH = /\/alt$/; // the reader's own words: never "unprinted", but a misread printed term in it is still worth fixing
 const NO_EXTRAS = /\/answer(\/|$)|^\/paper\//; // answers are summarised by the reader; masthead fields come from letterheads that are often images
 // structural words the transcription encodes as fields, not prose
@@ -124,7 +124,9 @@ function candidateFields(c, hasSolutions) {
   const fields = [];
   walkStrings(c, (p, s) => {
     if (SKIP_PATH.test(p) || !/\p{L}/u.test(s)) return;
-    const doc = hasSolutions && /\/(solution|answer)(\/|$)/.test(p) ? 'solutions' : 'problems';
+    const sharedNote = /^\/paper\/documentNotes\/(\d+)\/(.+)$/.exec(p);
+    if (sharedNote && !['title', 'statement'].includes(sharedNote[2])) return;
+    const doc = sharedNote ? c.paper.documentNotes[Number(sharedNote[1])].document : hasSolutions && /\/(solution|answer)(\/|$)/.test(p) ? 'solutions' : 'problems';
     // A legacy transcription carries its figures inline: "![alt](url)" plus an italic caption line under the image.
     // The alt text is a description by design and the caption line is the figure's caption, not the field's prose
     // (nao-2018-ii-7-8, nao-2020-i-5-6, nao-2021-iv-ml-prak: „Гравюра“, „Снимка“, „Изображение“ printed nowhere).

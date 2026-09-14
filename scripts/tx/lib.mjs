@@ -9,6 +9,7 @@ import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { problemMetadataErrors } from '../lib/problem-classification.mjs';
 
 const require = createRequire(import.meta.url);
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -332,6 +333,10 @@ export function stripTx(value) {
 // verdict or catalogue disagreement flag.
 export function checkerView(candidate) {
   const view = stripTx(candidate);
+  for (const problem of view.problems || []) if (problem.classification?.provenance) {
+    delete problem.classification.provenance.rater;
+    delete problem.classification.provenance.evidence;
+  }
   (candidate.problems || []).forEach((src, i) => {
     const spans = src.tx?.sourceSpans;
     if (spans) view.problems[i].tx = { sourceSpans: spans.map(s => ({ document: s.document, page: s.page })) };
@@ -463,6 +468,8 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
   paper.grade = canonGrade(paper.grade);
   paper.round = canonRound(paper.round);
   canonProblemIds(data);
+  const metadataErrors = problemMetadataErrors(data);
+  if (metadataErrors.length) throw new Error(`Invalid problem metadata: ${metadataErrors.map(e => `${e.path}: ${e.message}`).join('; ')}`);
   const bytes = Buffer.from(serialisePaper(data), 'utf8');
   return { data, bytes, contentHash: sha256(bytes), droppedTranscriptionFields: dropped };
 }

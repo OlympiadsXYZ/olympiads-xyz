@@ -31,6 +31,10 @@ export type ProblemsIndexEntry = {
   url: string;
   source: string;
   difficulty: string;
+  assessmentLabel?: string | null;
+  fields?: string[] | null;
+  conceptIds?: string[] | null;
+  classificationTerms?: string[] | null;
   isStarred: boolean;
   tags: string[];
   problemModules: ProblemsIndexModule[];
@@ -46,6 +50,10 @@ type ProblemNode = {
   url: string;
   source: string;
   difficulty: string;
+  assessmentLabel?: string | null;
+  fields?: string[] | null;
+  conceptIds?: string[] | null;
+  classificationTerms?: string[] | null;
   isStarred?: boolean | null;
   tags?: string[] | null;
   solution?: ProblemsIndexSolution;
@@ -71,6 +79,12 @@ export function buildProblemsIndex(nodes: ProblemNode[]): ProblemsIndexEntry[] {
     const existing = byId.get(node.uniqueId);
     if (existing) {
       existing.tags = [...new Set([...existing.tags, ...(node.tags ?? [])])];
+      if (node.assessmentLabel) {
+        existing.assessmentLabel = node.assessmentLabel;
+        existing.fields = node.fields;
+        existing.conceptIds = node.conceptIds;
+        existing.classificationTerms = node.classificationTerms;
+      }
       existing.isStarred = existing.isStarred || !!node.isStarred;
       if (
         moduleInfo &&
@@ -86,6 +100,7 @@ export function buildProblemsIndex(nodes: ProblemNode[]): ProblemsIndexEntry[] {
       url: node.url,
       source: node.source,
       difficulty: node.difficulty,
+      ...(node.assessmentLabel ? { assessmentLabel: node.assessmentLabel, fields: node.fields, conceptIds: node.conceptIds, classificationTerms: node.classificationTerms } : {}),
       isStarred: !!node.isStarred,
       tags: [...new Set(node.tags ?? [])],
       problemModules: moduleInfo ? [moduleInfo] : [],

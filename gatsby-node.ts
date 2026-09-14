@@ -277,6 +277,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
               hasHints
             }
             difficulty
+            assessmentLabel
+            fields
+            conceptIds
+            classificationTerms
             module {
               frontmatter {
                 id

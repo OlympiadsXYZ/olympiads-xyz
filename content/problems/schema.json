@@ -301,6 +301,46 @@
             "null"
           ],
           "description": "Кратка бележка към читателя, показвана на всяка страница от темата — напр. непълен архивен източник. Не дублира transcription.notes."
+        },
+        "documentNotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "title",
+              "statement",
+              "document",
+              "page",
+              "position"
+            ],
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1
+              },
+              "document": {
+                "enum": [
+                  "problems",
+                  "solutions"
+                ]
+              },
+              "page": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "position": {
+                "enum": [
+                  "before-problem",
+                  "after-problem"
+                ]
+              }
+            }
+          }
         }
       }
     },
@@ -528,6 +568,10 @@
               },
               "answer": {
                 "$ref": "#/$defs/answer"
+              },
+              "statementAfter": {
+                "type": "string",
+                "description": "Unlabelled common source paragraph after this part and before the next part."
               }
             }
           }
@@ -604,6 +648,28 @@
           "items": {
             "$ref": "#/$defs/sourceSpan"
           }
+        },
+        "classification": {
+          "$ref": "#/$defs/classification"
+        },
+        "statementAfterParts": {
+          "type": "string",
+          "description": "Source text printed after the numbered parts; not duplicated in statement."
+        },
+        "sourceLayout": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "underlines": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": "Exact underlined passages in this problem or its solution."
+            }
+          }
         }
       }
     },
@@ -634,6 +700,858 @@
           "maxItems": 4
         }
       }
+    },
+    "classificationIdList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "classificationDifficulty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "status",
+        "rationale",
+        "confidence"
+      ],
+      "properties": {
+        "level": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 5
+        },
+        "status": {
+          "enum": [
+            "unrated",
+            "estimated",
+            "calibrated"
+          ]
+        },
+        "rationale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            null
+          ]
+        },
+        "anchorIds": {
+          "items": false,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unrated"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "level": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "level": {
+                "type": "integer"
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "calibrated"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "anchorIds"
+            ],
+            "properties": {
+              "anchorIds": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "classification": {
+      "title": "Problem search classification v1",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "taxonomyVersion",
+        "problemId",
+        "sourceRef",
+        "conceptIds",
+        "methodIds",
+        "mathIds",
+        "representationIds",
+        "prerequisiteLevels",
+        "difficulty",
+        "provenance"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "1.0.0"
+        },
+        "taxonomyVersion": {
+          "const": "1.0.0"
+        },
+        "problemId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRef": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "sha256"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "canonical-paper",
+                "source-pdf",
+                "index-record"
+              ]
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "conceptIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "physics/mechanics/kinematics",
+              "physics/mechanics/relative-motion",
+              "physics/mechanics/projectile-motion",
+              "physics/mechanics/circular-motion",
+              "physics/mechanics/newtons-laws",
+              "physics/mechanics/friction",
+              "physics/mechanics/constraints",
+              "physics/mechanics/work-energy",
+              "physics/mechanics/power-efficiency",
+              "physics/mechanics/momentum-collisions",
+              "physics/mechanics/centre-of-mass",
+              "physics/mechanics/statics",
+              "physics/mechanics/torque-levers",
+              "physics/mechanics/rotation",
+              "physics/mechanics/angular-momentum",
+              "physics/mechanics/elasticity",
+              "physics/mechanics/pressure-density",
+              "physics/mechanics/gravitation",
+              "physics/mechanics/orbital-motion",
+              "physics/mechanics/noninertial-frames",
+              "physics/mechanics/variable-mass",
+              "physics/mechanics/oscillations",
+              "physics/mechanics/pendulums",
+              "physics/mechanics/resonance-damping",
+              "physics/fluids/hydrostatics",
+              "physics/fluids/buoyancy",
+              "physics/fluids/continuity-bernoulli",
+              "physics/fluids/viscosity-drag",
+              "physics/fluids/surface-tension",
+              "physics/thermal/calorimetry",
+              "physics/thermal/phase-changes",
+              "physics/thermal/thermal-expansion",
+              "physics/thermal/ideal-gases",
+              "physics/thermal/kinetic-theory",
+              "physics/thermal/first-law",
+              "physics/thermal/entropy-second-law",
+              "physics/thermal/heat-engines",
+              "physics/thermal/heat-conduction",
+              "physics/thermal/heat-transfer",
+              "physics/thermal/thermal-radiation",
+              "physics/electricity/electrostatics",
+              "physics/electricity/electric-field",
+              "physics/electricity/potential",
+              "physics/electricity/gauss-law",
+              "physics/electricity/capacitors",
+              "physics/electricity/current-resistance",
+              "physics/electricity/ohms-law",
+              "physics/electricity/dc-circuits",
+              "physics/electricity/kirchhoff-laws",
+              "physics/electricity/sources-internal-resistance",
+              "physics/electricity/electric-power",
+              "physics/electricity/rc-transients",
+              "physics/electricity/ac-circuits",
+              "physics/electricity/electrical-measurements",
+              "physics/magnetism/magnetic-field",
+              "physics/magnetism/magnetic-forces",
+              "physics/magnetism/charged-particle-motion",
+              "physics/magnetism/ampere-biot-savart",
+              "physics/magnetism/induction",
+              "physics/magnetism/inductance",
+              "physics/magnetism/motors-generators",
+              "physics/magnetism/electromagnetic-waves",
+              "physics/waves/wave-propagation",
+              "physics/waves/superposition-interference",
+              "physics/waves/standing-waves",
+              "physics/waves/sound",
+              "physics/waves/doppler-effect",
+              "physics/optics/reflection",
+              "physics/optics/refraction",
+              "physics/optics/lenses-imaging",
+              "physics/optics/optical-instruments",
+              "physics/optics/optical-interference",
+              "physics/optics/diffraction",
+              "physics/optics/polarization",
+              "physics/optics/photometry",
+              "physics/modern/special-relativity",
+              "physics/modern/photons-photoelectric",
+              "physics/modern/quantum-models",
+              "physics/modern/atomic-spectra",
+              "physics/modern/radioactivity",
+              "physics/modern/nuclear-reactions",
+              "physics/modern/semiconductors",
+              "physics/modern/particle-physics",
+              "astronomy/sky/celestial-sphere",
+              "astronomy/sky/coordinates",
+              "astronomy/sky/diurnal-motion",
+              "astronomy/sky/seasons",
+              "astronomy/sky/star-charts",
+              "astronomy/sky/precession",
+              "astronomy/sky/atmospheric-effects",
+              "astronomy/sky/navigation",
+              "astronomy/time/solar-sidereal-time",
+              "astronomy/time/time-zones-longitude",
+              "astronomy/time/calendars",
+              "astronomy/time/equation-of-time",
+              "astronomy/time/periods-cycles",
+              "astronomy/solar-system/planetary-properties",
+              "astronomy/solar-system/configurations",
+              "astronomy/solar-system/moon-phases",
+              "astronomy/solar-system/eclipses",
+              "astronomy/solar-system/small-bodies",
+              "astronomy/solar-system/sun",
+              "astronomy/solar-system/tides",
+              "astronomy/orbits/kepler-laws",
+              "astronomy/orbits/orbital-elements",
+              "astronomy/orbits/orbital-energy",
+              "astronomy/orbits/orbital-motion",
+              "astronomy/orbits/synodic-periods",
+              "astronomy/orbits/transfers",
+              "astronomy/orbits/gravitational-systems",
+              "astronomy/radiation/magnitudes",
+              "astronomy/radiation/flux-luminosity",
+              "astronomy/radiation/blackbody",
+              "astronomy/radiation/spectra",
+              "astronomy/radiation/doppler-redshift",
+              "astronomy/radiation/distance-measurement",
+              "astronomy/radiation/angular-size",
+              "astronomy/radiation/extinction",
+              "astronomy/stars/stellar-properties",
+              "astronomy/stars/hr-diagram",
+              "astronomy/stars/stellar-structure",
+              "astronomy/stars/stellar-evolution",
+              "astronomy/stars/binary-stars",
+              "astronomy/stars/variable-stars",
+              "astronomy/stars/compact-objects",
+              "astronomy/stars/supernovae",
+              "astronomy/galaxies/milky-way",
+              "astronomy/galaxies/galaxies",
+              "astronomy/galaxies/clusters-dark-matter",
+              "astronomy/galaxies/expansion",
+              "astronomy/galaxies/cosmology",
+              "astronomy/galaxies/active-galaxies",
+              "astronomy/exoplanets/exoplanet-detection",
+              "astronomy/exoplanets/planetary-environments",
+              "astronomy/exoplanets/interstellar-medium",
+              "astronomy/instruments/telescopes",
+              "astronomy/instruments/resolution",
+              "astronomy/instruments/detectors",
+              "astronomy/instruments/radio-interferometry",
+              "astronomy/instruments/observation-planning",
+              "astronomy/instruments/history",
+              "chemistry/foundations/stoichiometry",
+              "chemistry/foundations/atomic-structure",
+              "chemistry/foundations/periodicity",
+              "chemistry/foundations/chemical-bonding",
+              "chemistry/foundations/molecular-geometry",
+              "chemistry/foundations/gases-solutions",
+              "chemistry/physical/thermochemistry",
+              "chemistry/physical/thermodynamics",
+              "chemistry/physical/equilibrium",
+              "chemistry/physical/acid-base",
+              "chemistry/physical/solubility",
+              "chemistry/physical/kinetics",
+              "chemistry/physical/electrochemistry",
+              "chemistry/physical/redox",
+              "chemistry/physical/phase-equilibria",
+              "chemistry/inorganic/main-group",
+              "chemistry/inorganic/transition-metals",
+              "chemistry/inorganic/coordination",
+              "chemistry/inorganic/solid-state",
+              "chemistry/inorganic/qualitative-inorganic",
+              "chemistry/organic/structure-nomenclature",
+              "chemistry/organic/stereochemistry",
+              "chemistry/organic/hydrocarbons",
+              "chemistry/organic/aromaticity",
+              "chemistry/organic/substitution-elimination",
+              "chemistry/organic/carbonyl-chemistry",
+              "chemistry/organic/nitrogen-compounds",
+              "chemistry/organic/reaction-mechanisms",
+              "chemistry/organic/organic-synthesis",
+              "chemistry/organic/polymers",
+              "chemistry/analytical/titration",
+              "chemistry/analytical/gravimetry",
+              "chemistry/analytical/separation",
+              "chemistry/analytical/spectroscopy",
+              "chemistry/analytical/mass-spectrometry",
+              "chemistry/analytical/structure-elucidation",
+              "chemistry/biochemistry/biomolecules",
+              "chemistry/biochemistry/enzymes",
+              "chemistry/biochemistry/environmental-chemistry",
+              "chemistry/biochemistry/industrial-chemistry",
+              "geography/earth/tectonics",
+              "geography/earth/rocks-minerals",
+              "geography/earth/weathering-erosion",
+              "geography/earth/landforms",
+              "geography/earth/soils",
+              "geography/earth/natural-hazards",
+              "geography/climate/weather",
+              "geography/climate/atmospheric-circulation",
+              "geography/climate/climate-regions",
+              "geography/climate/climate-change",
+              "geography/climate/microclimates",
+              "geography/water/water-cycle",
+              "geography/water/rivers-catchments",
+              "geography/water/groundwater",
+              "geography/water/oceans-coasts",
+              "geography/water/ice-glaciers",
+              "geography/water/water-resources",
+              "geography/environment/biomes",
+              "geography/environment/biodiversity",
+              "geography/environment/environmental-management",
+              "geography/environment/resources-energy",
+              "geography/population/population",
+              "geography/population/migration",
+              "geography/population/urbanization",
+              "geography/population/urban-land-use",
+              "geography/population/culture-identity",
+              "geography/economy/agriculture",
+              "geography/economy/industry",
+              "geography/economy/services-tourism",
+              "geography/economy/trade-globalization",
+              "geography/economy/development-inequality",
+              "geography/economy/transport",
+              "geography/economy/political-geography",
+              "geography/geospatial/maps-scale",
+              "geography/geospatial/coordinates-projections",
+              "geography/geospatial/relief-profiles",
+              "geography/geospatial/gis",
+              "geography/geospatial/remote-sensing",
+              "geography/geospatial/fieldwork",
+              "geography/geospatial/regional-analysis"
+            ]
+          }
+        },
+        "methodIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "direct-calculation",
+              "multi-step-reasoning",
+              "conservation-laws",
+              "equilibrium-balance",
+              "symmetry",
+              "dimensional-analysis",
+              "scaling-estimation",
+              "limiting-cases",
+              "model-building",
+              "proof-derivation",
+              "graph-interpretation",
+              "data-fitting",
+              "uncertainty-analysis",
+              "experimental-design",
+              "observation",
+              "identification",
+              "spatial-reasoning",
+              "evidence-evaluation",
+              "optimization",
+              "numerical-computation"
+            ]
+          }
+        },
+        "mathIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "arithmetic",
+              "algebra",
+              "simultaneous-equations",
+              "geometry",
+              "solid-geometry",
+              "trigonometry",
+              "vectors",
+              "logarithms",
+              "differential-calculus",
+              "integral-calculus",
+              "differential-equations",
+              "statistics",
+              "probability",
+              "spherical-geometry",
+              "complex-numbers"
+            ]
+          }
+        },
+        "representationIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "text",
+              "formula",
+              "graph",
+              "table",
+              "diagram",
+              "circuit",
+              "map",
+              "sky-chart",
+              "spectrum",
+              "photograph",
+              "chemical-structure"
+            ]
+          }
+        },
+        "prerequisiteLevels": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "introductory",
+              "lower-secondary",
+              "upper-secondary",
+              "olympiad-extension",
+              "early-university"
+            ]
+          }
+        },
+        "difficulty": {
+          "$ref": "#/$defs/classificationDifficulty"
+        },
+        "partAssessments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "conceptIds"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "conceptIds": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "physics/mechanics/kinematics",
+                    "physics/mechanics/relative-motion",
+                    "physics/mechanics/projectile-motion",
+                    "physics/mechanics/circular-motion",
+                    "physics/mechanics/newtons-laws",
+                    "physics/mechanics/friction",
+                    "physics/mechanics/constraints",
+                    "physics/mechanics/work-energy",
+                    "physics/mechanics/power-efficiency",
+                    "physics/mechanics/momentum-collisions",
+                    "physics/mechanics/centre-of-mass",
+                    "physics/mechanics/statics",
+                    "physics/mechanics/torque-levers",
+                    "physics/mechanics/rotation",
+                    "physics/mechanics/angular-momentum",
+                    "physics/mechanics/elasticity",
+                    "physics/mechanics/pressure-density",
+                    "physics/mechanics/gravitation",
+                    "physics/mechanics/orbital-motion",
+                    "physics/mechanics/noninertial-frames",
+                    "physics/mechanics/variable-mass",
+                    "physics/mechanics/oscillations",
+                    "physics/mechanics/pendulums",
+                    "physics/mechanics/resonance-damping",
+                    "physics/fluids/hydrostatics",
+                    "physics/fluids/buoyancy",
+                    "physics/fluids/continuity-bernoulli",
+                    "physics/fluids/viscosity-drag",
+                    "physics/fluids/surface-tension",
+                    "physics/thermal/calorimetry",
+                    "physics/thermal/phase-changes",
+                    "physics/thermal/thermal-expansion",
+                    "physics/thermal/ideal-gases",
+                    "physics/thermal/kinetic-theory",
+                    "physics/thermal/first-law",
+                    "physics/thermal/entropy-second-law",
+                    "physics/thermal/heat-engines",
+                    "physics/thermal/heat-conduction",
+                    "physics/thermal/heat-transfer",
+                    "physics/thermal/thermal-radiation",
+                    "physics/electricity/electrostatics",
+                    "physics/electricity/electric-field",
+                    "physics/electricity/potential",
+                    "physics/electricity/gauss-law",
+                    "physics/electricity/capacitors",
+                    "physics/electricity/current-resistance",
+                    "physics/electricity/ohms-law",
+                    "physics/electricity/dc-circuits",
+                    "physics/electricity/kirchhoff-laws",
+                    "physics/electricity/sources-internal-resistance",
+                    "physics/electricity/electric-power",
+                    "physics/electricity/rc-transients",
+                    "physics/electricity/ac-circuits",
+                    "physics/electricity/electrical-measurements",
+                    "physics/magnetism/magnetic-field",
+                    "physics/magnetism/magnetic-forces",
+                    "physics/magnetism/charged-particle-motion",
+                    "physics/magnetism/ampere-biot-savart",
+                    "physics/magnetism/induction",
+                    "physics/magnetism/inductance",
+                    "physics/magnetism/motors-generators",
+                    "physics/magnetism/electromagnetic-waves",
+                    "physics/waves/wave-propagation",
+                    "physics/waves/superposition-interference",
+                    "physics/waves/standing-waves",
+                    "physics/waves/sound",
+                    "physics/waves/doppler-effect",
+                    "physics/optics/reflection",
+                    "physics/optics/refraction",
+                    "physics/optics/lenses-imaging",
+                    "physics/optics/optical-instruments",
+                    "physics/optics/optical-interference",
+                    "physics/optics/diffraction",
+                    "physics/optics/polarization",
+                    "physics/optics/photometry",
+                    "physics/modern/special-relativity",
+                    "physics/modern/photons-photoelectric",
+                    "physics/modern/quantum-models",
+                    "physics/modern/atomic-spectra",
+                    "physics/modern/radioactivity",
+                    "physics/modern/nuclear-reactions",
+                    "physics/modern/semiconductors",
+                    "physics/modern/particle-physics",
+                    "astronomy/sky/celestial-sphere",
+                    "astronomy/sky/coordinates",
+                    "astronomy/sky/diurnal-motion",
+                    "astronomy/sky/seasons",
+                    "astronomy/sky/star-charts",
+                    "astronomy/sky/precession",
+                    "astronomy/sky/atmospheric-effects",
+                    "astronomy/sky/navigation",
+                    "astronomy/time/solar-sidereal-time",
+                    "astronomy/time/time-zones-longitude",
+                    "astronomy/time/calendars",
+                    "astronomy/time/equation-of-time",
+                    "astronomy/time/periods-cycles",
+                    "astronomy/solar-system/planetary-properties",
+                    "astronomy/solar-system/configurations",
+                    "astronomy/solar-system/moon-phases",
+                    "astronomy/solar-system/eclipses",
+                    "astronomy/solar-system/small-bodies",
+                    "astronomy/solar-system/sun",
+                    "astronomy/solar-system/tides",
+                    "astronomy/orbits/kepler-laws",
+                    "astronomy/orbits/orbital-elements",
+                    "astronomy/orbits/orbital-energy",
+                    "astronomy/orbits/orbital-motion",
+                    "astronomy/orbits/synodic-periods",
+                    "astronomy/orbits/transfers",
+                    "astronomy/orbits/gravitational-systems",
+                    "astronomy/radiation/magnitudes",
+                    "astronomy/radiation/flux-luminosity",
+                    "astronomy/radiation/blackbody",
+                    "astronomy/radiation/spectra",
+                    "astronomy/radiation/doppler-redshift",
+                    "astronomy/radiation/distance-measurement",
+                    "astronomy/radiation/angular-size",
+                    "astronomy/radiation/extinction",
+                    "astronomy/stars/stellar-properties",
+                    "astronomy/stars/hr-diagram",
+                    "astronomy/stars/stellar-structure",
+                    "astronomy/stars/stellar-evolution",
+                    "astronomy/stars/binary-stars",
+                    "astronomy/stars/variable-stars",
+                    "astronomy/stars/compact-objects",
+                    "astronomy/stars/supernovae",
+                    "astronomy/galaxies/milky-way",
+                    "astronomy/galaxies/galaxies",
+                    "astronomy/galaxies/clusters-dark-matter",
+                    "astronomy/galaxies/expansion",
+                    "astronomy/galaxies/cosmology",
+                    "astronomy/galaxies/active-galaxies",
+                    "astronomy/exoplanets/exoplanet-detection",
+                    "astronomy/exoplanets/planetary-environments",
+                    "astronomy/exoplanets/interstellar-medium",
+                    "astronomy/instruments/telescopes",
+                    "astronomy/instruments/resolution",
+                    "astronomy/instruments/detectors",
+                    "astronomy/instruments/radio-interferometry",
+                    "astronomy/instruments/observation-planning",
+                    "astronomy/instruments/history",
+                    "chemistry/foundations/stoichiometry",
+                    "chemistry/foundations/atomic-structure",
+                    "chemistry/foundations/periodicity",
+                    "chemistry/foundations/chemical-bonding",
+                    "chemistry/foundations/molecular-geometry",
+                    "chemistry/foundations/gases-solutions",
+                    "chemistry/physical/thermochemistry",
+                    "chemistry/physical/thermodynamics",
+                    "chemistry/physical/equilibrium",
+                    "chemistry/physical/acid-base",
+                    "chemistry/physical/solubility",
+                    "chemistry/physical/kinetics",
+                    "chemistry/physical/electrochemistry",
+                    "chemistry/physical/redox",
+                    "chemistry/physical/phase-equilibria",
+                    "chemistry/inorganic/main-group",
+                    "chemistry/inorganic/transition-metals",
+                    "chemistry/inorganic/coordination",
+                    "chemistry/inorganic/solid-state",
+                    "chemistry/inorganic/qualitative-inorganic",
+                    "chemistry/organic/structure-nomenclature",
+                    "chemistry/organic/stereochemistry",
+                    "chemistry/organic/hydrocarbons",
+                    "chemistry/organic/aromaticity",
+                    "chemistry/organic/substitution-elimination",
+                    "chemistry/organic/carbonyl-chemistry",
+                    "chemistry/organic/nitrogen-compounds",
+                    "chemistry/organic/reaction-mechanisms",
+                    "chemistry/organic/organic-synthesis",
+                    "chemistry/organic/polymers",
+                    "chemistry/analytical/titration",
+                    "chemistry/analytical/gravimetry",
+                    "chemistry/analytical/separation",
+                    "chemistry/analytical/spectroscopy",
+                    "chemistry/analytical/mass-spectrometry",
+                    "chemistry/analytical/structure-elucidation",
+                    "chemistry/biochemistry/biomolecules",
+                    "chemistry/biochemistry/enzymes",
+                    "chemistry/biochemistry/environmental-chemistry",
+                    "chemistry/biochemistry/industrial-chemistry",
+                    "geography/earth/tectonics",
+                    "geography/earth/rocks-minerals",
+                    "geography/earth/weathering-erosion",
+                    "geography/earth/landforms",
+                    "geography/earth/soils",
+                    "geography/earth/natural-hazards",
+                    "geography/climate/weather",
+                    "geography/climate/atmospheric-circulation",
+                    "geography/climate/climate-regions",
+                    "geography/climate/climate-change",
+                    "geography/climate/microclimates",
+                    "geography/water/water-cycle",
+                    "geography/water/rivers-catchments",
+                    "geography/water/groundwater",
+                    "geography/water/oceans-coasts",
+                    "geography/water/ice-glaciers",
+                    "geography/water/water-resources",
+                    "geography/environment/biomes",
+                    "geography/environment/biodiversity",
+                    "geography/environment/environmental-management",
+                    "geography/environment/resources-energy",
+                    "geography/population/population",
+                    "geography/population/migration",
+                    "geography/population/urbanization",
+                    "geography/population/urban-land-use",
+                    "geography/population/culture-identity",
+                    "geography/economy/agriculture",
+                    "geography/economy/industry",
+                    "geography/economy/services-tourism",
+                    "geography/economy/trade-globalization",
+                    "geography/economy/development-inequality",
+                    "geography/economy/transport",
+                    "geography/economy/political-geography",
+                    "geography/geospatial/maps-scale",
+                    "geography/geospatial/coordinates-projections",
+                    "geography/geospatial/relief-profiles",
+                    "geography/geospatial/gis",
+                    "geography/geospatial/remote-sensing",
+                    "geography/geospatial/fieldwork",
+                    "geography/geospatial/regional-analysis"
+                  ]
+                }
+              },
+              "difficulty": {
+                "$ref": "#/$defs/classificationDifficulty"
+              }
+            }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "method",
+            "assessedAt",
+            "basis",
+            "reviewStatus"
+          ],
+          "properties": {
+            "method": {
+              "enum": [
+                "existing-label-mapping",
+                "model-assessment",
+                "human-assessment"
+              ]
+            },
+            "assessedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "basis": {
+              "enum": [
+                "existing-labels",
+                "statement",
+                "statement-and-solution"
+              ]
+            },
+            "reviewStatus": {
+              "enum": [
+                "unreviewed",
+                "machine-reviewed",
+                "human-reviewed"
+              ]
+            },
+            "rater": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "difficulty": {
+                    "type": "object",
+                    "required": [
+                      "status"
+                    ],
+                    "properties": {
+                      "status": {
+                        "enum": [
+                          "estimated",
+                          "calibrated"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "required": [
+                  "partAssessments"
+                ],
+                "properties": {
+                  "partAssessments": {
+                    "contains": {
+                      "required": [
+                        "difficulty"
+                      ],
+                      "properties": {
+                        "difficulty": {
+                          "type": "object",
+                          "required": [
+                            "status"
+                          ],
+                          "properties": {
+                            "status": {
+                              "enum": [
+                                "estimated",
+                                "calibrated"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "sourceRef": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "canonical-paper",
+                      "source-pdf"
+                    ]
+                  }
+                }
+              },
+              "provenance": {
+                "properties": {
+                  "basis": {
+                    "enum": [
+                      "statement",
+                      "statement-and-solution"
+                    ]
+                  }
+                }
+              },
+              "prerequisiteLevels": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

@@ -20,6 +20,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'node:url';
 import { readPapers, readJson, publicationState, atomicWrite, jsonText, sha256, controlledTopics, walkJson } from './lib/problem-data.mjs';
+import { classificationSearch, problemMetadataErrors } from './lib/problem-classification.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -69,6 +70,22 @@ function figureMarkdown(fig) {
 function figuresNotInline(figs, ...texts) {
   const joined = texts.filter(Boolean).join('\n');
   return (figs ?? []).filter(f => !(f.url && joined.includes(f.url)));
+}
+
+function sourceText(text, problem) {
+  let rendered = mdText(text);
+  // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
+  for (const passage of [...(problem.sourceLayout?.underlines || [])].sort((a, b) => b.length - a.length)) {
+    const needle = mdText(passage);
+    if (needle) rendered = rendered.split(needle).join(`<u>${needle}</u>`);
+  }
+  return rendered;
+}
+
+function documentNoteLines(paper, position) {
+  return (paper.documentNotes || []).filter(n => n.position === position).flatMap(note => [
+    `<details>`, `<summary>${mdText(note.title)}</summary>`, '', mdText(note.statement), '', `</details>`, '',
+  ]);
 }
 
 // Short Bulgarian names, same as the archive's COMPETITION_META (src/archive/labels.ts).
@@ -160,9 +177,10 @@ function problemMdx(paper, problem, state, sourceFile) {
   ].filter(Boolean);
   if (lead.length) lines.push(`*${lead.join(' · ')}*`, '');
   if (paper.caveat) lines.push('<Warning title="Бележка към темата">', mdText(paper.caveat), '</Warning>', '');
+  lines.push(...documentNoteLines(paper, 'before-problem'));
   lines.push(`## Условие`);
   lines.push('');
-  lines.push(mdText(problem.statement));
+  lines.push(sourceText(problem.statement, problem));
   lines.push('');
   const partTexts = (problem.parts ?? []).map(p => p.statement);
   for (const fig of figuresNotInline(problem.figures, problem.statement, ...partTexts)) lines.push(figureMarkdown(fig), '');
@@ -171,11 +189,13 @@ function problemMdx(paper, problem, state, sourceFile) {
       const pts = part.points != null ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
       // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
       const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
-      lines.push(`${part.label && part.label !== '*' ? `**${part.label}** ` : ''}${mdText(text)}${pts}`); // an unlabelled printed part has an empty label
+      lines.push(`${part.label && part.label !== '*' ? `**${part.label}** ` : ''}${sourceText(text, problem)}${pts}`); // an unlabelled printed part has an empty label
       lines.push('');
       for (const fig of figuresNotInline(part.figures, part.statement)) lines.push(figureMarkdown(fig), '');
+      if (part.statementAfter) lines.push(sourceText(part.statementAfter, problem), '');
     }
   }
+  if (problem.statementAfterParts) lines.push(sourceText(problem.statementAfterParts, problem), '');
   const answers = [
     ...(problem.answer ? [{ label: '', answer: problem.answer }] : []),
     ...(problem.parts ?? []).filter(p => p.answer),
@@ -194,9 +214,17 @@ function problemMdx(paper, problem, state, sourceFile) {
     if (sol.incomplete) {
       lines.push('<Warning title="Непълно решение">', mdText(sol.incompleteReason) || 'Решението предстои да бъде довършено.', '</Warning>', '');
     }
-    if (sol.statement) lines.push('<Spoiler title="Покажи официалното решение">', '', mdText(sol.statement), '');
+    if (sol.statement) lines.push('<Spoiler title="Покажи официалното решение">', '', sourceText(sol.statement, problem), '');
     for (const fig of figuresNotInline(sol.figures, sol.statement)) lines.push(figureMarkdown(fig), '');
     if (sol.statement) lines.push('', '</Spoiler>', '');
+  }
+  lines.push(...documentNoteLines(paper, 'after-problem'));
+  const classification = classificationSearch(problem.classification);
+  if (classification) {
+    lines.push('<details>', '<summary>Теми и трудност</summary>', '',
+      `${classification.assessmentLabel}.`, '',
+      classification.tags.map(tag => mdText(tag)).join(' · '), '',
+      `Предпоставки: ${classification.prerequisiteLabels.map(x => mdText(x)).join(', ')}`, '', '</details>', '');
   }
   const src = paper.source?.archiveKey;
   if (src) {
@@ -228,6 +256,7 @@ function problemName(problem) {
 
 function problemInfo(paper, problem) {
   const grade = gradeLabel(paper.grade, paper.subject);
+  const classification = classificationSearch(problem.classification);
   return {
     uniqueId: problem.id,
     // Kept short on purpose: getProblemURL() slugifies source + name, so a
@@ -240,9 +269,10 @@ function problemInfo(paper, problem) {
       ? { solutionUrl: withPage(archiveUrl(paper.subject, paper.solutionSource.archiveKey), problem.sourceSpans?.find(s => s.document === 'solutions')?.page) }
       : {}),
     source: `${paper.competition} ${paper.year}${paper.round ? ' ' + shortRound(paper.round) : ''}${paper.grade ? ' ' + paper.grade : ''}`,
-    difficulty: problem.difficulty ?? 'Normal',
+    difficulty: problem.difficulty ?? (classification ? 'N/A' : 'Normal'),
     isStarred: (problem.importance ?? 0) >= 3,
-    tags: [...controlledTopics(problem.topics, taxonomy).map(id => taxonomy.topics.find(t => t.id === id).label), ...(grade ? [grade] : []), paper.roundType].filter(Boolean),
+    tags: [...new Set([...controlledTopics(problem.topics, taxonomy).map(id => taxonomy.topics.find(t => t.id === id).label), ...(classification?.tags || []), ...(grade ? [grade] : []), paper.roundType].filter(Boolean))],
+    ...(classification ? { assessmentLabel: classification.assessmentLabel, fields: classification.fields, conceptIds: classification.conceptIds, classificationTerms: classification.classificationTerms } : {}),
     solutionMetadata: { kind: 'internal' },
   };
 }
@@ -298,6 +328,8 @@ const moduleFiles = walkJson(path.join(ROOT, 'content')).filter(f => f.endsWith(
 const modules = moduleFiles.map(file => ({ file, data: readJson(file) }));
 for (const { data } of modules) for (const [key, entries] of Object.entries(data)) if (key !== 'MODULE_ID' && Array.isArray(entries)) for (const p of entries) oldMetadata.set(p.uniqueId, p);
 for (const record of records) {
+  const metadataErrors = problemMetadataErrors(record.data);
+  if (metadataErrors.length) throw new Error(`${record.relativePath}: ${metadataErrors.map(e => `${e.path}: ${e.message}`).join('; ')}`);
   const state = publicationState(record, ledger);
   if (!state.eligible) { excluded.push(`${record.data.paper.id}: ${state.reason}`); continue; }
   const { paper, problems } = record.data;

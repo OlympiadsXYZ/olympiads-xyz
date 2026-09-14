@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { sha256, jsonText, publicationState } from '../lib/problem-data.mjs';
+import { classificationFixture } from './classification-fixture.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 fs.mkdirSync(path.join(repo, 'tmp'), { recursive: true });
@@ -93,4 +94,33 @@ test('a model label alone cannot authorize publication; withdrawal always wins',
   assert.equal(publicationState(record, { papers: { x: { kind: 'reviewed', contentHash: record.contentHash, verifiedBy: 'opus' } } }).eligible, false);
   record.data.paper.status = 'withdrawn';
   assert.equal(publicationState(record, { papers: { x: { kind: 'legacy', contentHash: record.contentHash, sourceCommit: 'a'.repeat(40), recordedAt: 'today' } } }).eligible, false);
+});
+
+test('new classification is searchable and source notes and common paragraphs retain their positions', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  p.classification = classificationFixture(p.id);
+  p.difficulty = 'Easy';
+  p.parts = [{ label: 'a)', statement: 'First part', points: 2, statementAfter: 'Common paragraph between parts' }, { label: 'b)', statement: 'Second part' }];
+  p.statementAfterParts = 'Final common paragraph';
+  p.solution = { statement: 'Underlined solution variant\n\nFull solution.' };
+  p.sourceLayout = { underlines: ['Underlined solution variant'] };
+  f.paper.paper.documentNotes = [
+    { title: 'Instructions for the whole paper', statement: 'Choose three tasks.', document: 'problems', page: 1, position: 'before-problem' },
+    { title: 'Grading for the whole paper', statement: 'Shared grading rules.', document: 'solutions', page: 1, position: 'after-problem' },
+  ];
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  const ordered = ['Instructions for the whole paper', '## Условие', 'Original statement', 'First part', 'Common paragraph between parts', 'Second part', 'Final common paragraph', '## Решение', 'Full solution.', 'Grading for the whole paper'];
+  for (let i = 1; i < ordered.length; i++) assert.ok(mdx.indexOf(ordered[i]) > mdx.indexOf(ordered[i - 1]), `${ordered[i - 1]} before ${ordered[i]}`);
+  assert.match(mdx, /<u>Underlined solution variant<\/u>/);
+  assert.match(mdx, /Оценена трудност: 3\/5/);
+  const row = JSON.parse(f.read('content/extraProblems.json')).EXTRA_PROBLEMS.find(x => x.uniqueId === p.id);
+  assert.equal(row.difficulty, 'Easy');
+  assert.equal(row.assessmentLabel, 'Оценена трудност: 3/5');
+  assert.deepEqual(row.fields, ['Флуиди']);
+  assert.ok(row.tags.includes('Флуиди'));
+  assert.ok(row.classificationTerms.includes('physics/fluids/hydrostatics'));
+  const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), path.join(f.root, f.output)], { encoding: 'utf8' });
+  assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
 });

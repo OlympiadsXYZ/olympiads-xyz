@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { problemMetadataErrors } from '../lib/problem-classification.mjs';
 import {
   parseArgs, fail, readJson, compileSchema, mathSpans, splitMath, proseOnly, walkStrings, allFigures, RENDER_DPI, R2_PUBLIC,
   BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx, stripTx } from './lib.mjs';
@@ -32,6 +33,7 @@ const { validate, schema } = compileSchema(mode);
 // so the schema check runs on the same stripped shape promote will write.
 const schemaInput = mode === 'candidate' ? stripTx(data) : data;
 if (!validate(schemaInput)) for (const e of validate.errors) err(e.dataPath || '', `${e.message}${e.params?.additionalProperty ? ` (${e.params.additionalProperty})` : ''}${e.params?.allowedValues ? ` [${e.params.allowedValues.join('|')}]` : ''}`);
+for (const issue of problemMetadataErrors(data, manifest)) err(issue.path, issue.message);
 
 const paper = data.paper || {};
 const paperId = args['paper-id'] || paper.id;
@@ -100,14 +102,14 @@ function checkAnswer(a, p) {
 const HTML = /<\/?[a-zA-Z][a-zA-Z0-9-]*(\s[^<>]*)?\/?>/;
 let mathCount = 0;
 walkStrings(data, (p, s) => {
-  if (/\/tx\b/.test(p) || /\/(url|archiveKey|id|from|to)$/.test(p)) return;
+  if (/\/(tx|classification|sourceLayout)\b/.test(p) || /\/(url|archiveKey|id|from|to)$/.test(p)) return;
   const prose = proseOnly(s);
   if (HTML.test(prose)) err(p, `raw HTML tag in prose: ${HTML.exec(prose)[0].slice(0, 40)}`);
   if (/<<|>>/.test(prose)) err(p, 'bare << or >> outside math (MDX parses it as JSX); use $\\ll$ / $\\gg$');
   // bare LaTeX in prose: "(23^{h}56^{m})" — MDX reads {h} as a JavaScript expression and the site build dies.
   // answer.latex fields are raw LaTeX by design and notes are never rendered as MDX.
   // Only fields the generator renders as MDX prose can break the build; answer fields, notes and caveats get a warning.
-  const rendered = /\/(statement|caption|alt|title|label)$/.test(p) && !/\/answer\//.test(p);
+  const rendered = /\/(statement|statementAfterParts|statementAfter|caption|alt|title|label)$/.test(p) && !/\/answer\//.test(p);
   const bare = /[{}]/.test(prose) ? `braces outside math (MDX treats {…} as an expression): ${/[^{}]{0,20}[{}][^{}]{0,20}/.exec(prose)?.[0]?.trim()} — put the LaTeX inside $…$`
     : /\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.test(prose) ? `LaTeX command outside math (${/\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.exec(prose)?.[0].trim()}); put it inside $…$ or write it as text` : null;
   if (bare && !/\/(latex|notes|caveat)$/.test(p) && !/\/answer\/(value|equivalentForms\/\d+)$/.test(p)) (rendered ? err : warn)(p, bare);

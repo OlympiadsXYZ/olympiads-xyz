@@ -53,3 +53,9 @@ ChatGPT subscription (sanctioned; 250–2,000 messages per 5 h on Plus), $0, ~2 
 D-P14 reversed. The memo's verdict on the ChatGPT-app driver: stop it as a bulk route (≤ 45 papers/day, an
 unlockable PC, a Terms violation on the account), keep it as a hand aid. The mechanical-first reorder pays on every
 route and is being implemented regardless. Margulan chooses the route.
+
+## D-P16 (2026-09-14) — Codex overnight source reading and publication
+
+Margulan approved the Codex subagent pilot, including the old Bulgarian scan, and explicitly requested an overnight run using the remaining Codex allowance with concurrent subagents and progress pushed to the live website. This authorizes the Codex route and supersedes the pending route hold above. The current run uses three workers plus a coordinator, with no additional paid API calls or automatic reset-credit redemption. Separate agents of the same underlying model are recorded honestly as same-model reader/checker; existing source, figure, receipt and deployment gates remain required. Batch pushes wait for earlier deployments to finish.
+
+New papers carry controlled classification and prerequisite-relative estimated difficulty, alongside source-order text and shared document notes, in durable schema fields described in `Problem-Classification.md`. Source gaps require evidence; inferred missing slots are leads, never invented problems. The approved editorial exceptions are unambiguous prose spacing cleanup and clear standalone Bulgarian pronoun й corrected to ѝ with the original phrase/page recorded. Other source spelling and scientific errors remain verbatim.

@@ -138,6 +138,20 @@ export default function ProblemsPage() {
         items: toOptions(uniqueSorted(all.map(p => p.tags ?? []).flat())),
       },
       {
+        attribute: 'fields',
+        placeholder: t('classification-fields', { defaultValue: 'Област' }),
+        searchable: true,
+        isMulti: true,
+        items: toOptions(uniqueSorted(all.flatMap(p => p.fields ?? []))),
+      },
+      {
+        attribute: 'assessmentLabel',
+        placeholder: t('classification-difficulty', { defaultValue: 'Оценена трудност' }),
+        searchable: false,
+        isMulti: true,
+        items: toOptions(uniqueSorted(all.map(p => p.assessmentLabel ?? ''))),
+      },
+      {
         attribute: 'isStarred',
         placeholder: t('starred'),
         searchable: false,
@@ -193,13 +207,15 @@ export default function ProblemsPage() {
     });
     return all.filter(problem => {
       if (tokens.length) {
-        const haystack = `${problem.name} ${problem.source}`.toLowerCase();
+        const haystack = `${problem.name} ${problem.source} ${(problem.tags ?? []).join(' ')} ${(problem.classificationTerms ?? []).join(' ')}`.toLowerCase();
         if (!tokens.every(token => haystack.includes(token))) return false;
       }
       if (sets['difficulty'] && !sets['difficulty'].has(problem.difficulty)) {
         return false;
       }
       if (sets['source'] && !sets['source'].has(problem.source)) return false;
+      if (sets['assessmentLabel'] && !sets['assessmentLabel'].has(problem.assessmentLabel ?? '')) return false;
+      if (sets['fields'] && !(problem.fields ?? []).some(field => sets['fields'].has(field))) return false;
       if (
         sets['tags'] &&
         !(problem.tags ?? []).some(tag => sets['tags'].has(tag))

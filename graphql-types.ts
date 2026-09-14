@@ -66,6 +66,10 @@ export const typeDefs = `
       sourceDescription: String
       isStarred: Boolean!
       difficulty: String
+      assessmentLabel: String
+      fields: [String!]
+      conceptIds: [String!]
+      classificationTerms: [String!]
       tags: [String!]!
       solution: ProblemSolutionInfo
       inModule: Boolean!

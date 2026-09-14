@@ -201,6 +201,11 @@ export type ProblemInfo = {
   source: string;
   sourceDescription?: string;
   difficulty: ProblemDifficulty;
+  /** Source-based estimate kept separate from the legacy difficulty label. */
+  assessmentLabel?: string;
+  fields?: string[];
+  conceptIds?: string[];
+  classificationTerms?: string[];
   /**
    * In the context of a module, true if the problem is starred. False otherwise.
    */

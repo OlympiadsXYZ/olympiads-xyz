@@ -50,6 +50,9 @@ for (const e of docs) {
     bump(k, 'transcribed');
   } else if (ix?.index) {
     row.status = 'indexed'; row.grade = ix.index.grade ?? null; row.printedMeta = ix.index.printedMeta ?? null; row.language = ix.index.language ?? null; row.pages = ix.pageCount; row.notes = ix.index.notes || null;
+    row.coverage = { status: ix.truncated === true ? 'partial' : ix.truncated === false ? 'complete' : 'unknown', pagesRead: ix.pagesShown ?? null, totalPages: ix.pageCount ?? null };
+    if (ix.sourceSha256) row.sourceSha256 = ix.sourceSha256;
+    if (ix.recovery) { const { localSource, ...portableRecovery } = ix.recovery; row.indexProvenance = portableRecovery; }
     row.problems = (ix.index.problems || []).map(pr => ({ number: pr.number, title: pr.title ?? null, points: pr.points ?? null, problemType: pr.problemType ?? null, topics: pr.topics ?? [], parts: pr.parts ?? null, figures: pr.figures ?? null, summary: pr.summary ?? null }));
     bump(k, 'indexed');
   } else bump(k, 'pending');
@@ -60,7 +63,7 @@ rows.sort((a, b) => a.subject.localeCompare(b.subject) || a.competition.localeCo
 const totals = Object.values(stats).reduce((a, s) => { for (const k of Object.keys(s)) a[k] = (a[k] || 0) + s[k]; return a; }, {});
 writeJson(outFile, { generatedAt: nowIso(), documents: rows.length, totals, rows });
 
-const md = [`# Archive problem inventory — ${nowIso()}`, '', `${rows.length} problems documents in the catalogue (all competitions, years, groups, languages): ${totals.transcribed} transcribed on the site, ${totals.indexed} indexed by GLM, ${totals.pending} not indexed yet; ${totals.problems} problems listed.`, '', '| subject/competition | documents | transcribed | indexed | pending | problems |', '|---|---:|---:|---:|---:|---:|'];
+const md = [`# Archive problem inventory — ${nowIso()}`, '', `${rows.length} problems documents in the catalogue (all competitions, years, groups, languages): ${totals.transcribed} transcribed on the site, ${totals.indexed} machine-indexed, ${totals.pending} not indexed yet; ${totals.problems} source problem occurrences listed.`, '', '| subject/competition | documents | transcribed | indexed | pending | problems |', '|---|---:|---:|---:|---:|---:|'];
 for (const [k, s] of Object.entries(stats).sort((a, b) => b[1].documents - a[1].documents)) md.push(`| ${k} | ${s.documents} | ${s.transcribed} | ${s.indexed} | ${s.pending} | ${s.problems} |`);
 const topics = {};
 for (const r of rows) for (const p of r.problems) for (const t of p.topics || []) topics[t] = (topics[t] || 0) + 1;

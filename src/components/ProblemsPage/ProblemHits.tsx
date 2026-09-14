@@ -150,6 +150,7 @@ export function ProblemHit({
 
       <div className="pt-4">
         {!hideDifficulty && (
+          problem.assessmentLabel ? <span className="mr-2 text-sm text-gray-600 dark:text-dark-med-emphasis">{problem.assessmentLabel}</span> :
           <DifficultyBox difficulty={problem.difficulty as ProblemDifficulty} />
         )}
         {showTags &&

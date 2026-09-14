@@ -9,6 +9,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import { classificationFixture } from './classification-fixture.mjs';
+import { problemMetadataErrors, problemTaxonomy } from '../lib/problem-classification.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const txScript = name => path.join(repo, 'scripts', 'tx', name);
@@ -155,6 +157,59 @@ test('buildFinalPaper writes real provenance fields, no [tx] blob, deterministic
   const { validate } = lib.compileSchema('final');
   assert.equal(validate(a.data), true, JSON.stringify(validate.errors));
   assert.equal(lib.provenanceFor(candidate(), { reviewer: { provider: 'zai', model: 'glm-5.3-flash' }, promptVersion: 'v1', checkedAt: '2026-09-06', sourceHashes: {}, independent: false }).verifiedBy.includes('same-model checker'), true);
+});
+
+test('classification and source order survive promotion bytes without changing legacy difficulty', () => {
+  const c = candidate(), p = c.problems[0];
+  p.classification = classificationFixture(p.id);
+  p.classification.provenance.evidence = 'Private assessor notes';
+  p.statementAfterParts = 'Общо заключение.';
+  p.parts[0].statementAfter = 'Условие за следващата част.';
+  p.sourceLayout = { underlines: ['Общо заключение.'] };
+  c.paper.documentNotes = [{ title: 'Обща инструкция', statement: 'Изберете три задачи.', document: 'problems', page: 1, position: 'before-problem' }];
+  const prov = lib.provenanceFor(c, { reviewer: { provider: 'agent', model: 'gpt-6-astra' }, checkedAt: '2026-09-14', promptVersion: 'v1', sourceHashes: { problems: 'a'.repeat(64) }, independent: false });
+  const final = lib.buildFinalPaper(c, prov);
+  assert.deepEqual(final.data.problems[0].classification, p.classification);
+  assert.equal(lib.checkerView(c).problems[0].classification.provenance.rater, undefined);
+  assert.equal(lib.checkerView(c).problems[0].classification.provenance.evidence, undefined);
+  assert.equal(final.data.problems[0].difficulty, 'Easy');
+  assert.equal(final.data.problems[0].statementAfterParts, p.statementAfterParts);
+  assert.equal(final.data.problems[0].parts[0].statementAfter, p.parts[0].statementAfter);
+  assert.deepEqual(final.data.paper.documentNotes, c.paper.documentNotes);
+  assert.deepEqual(lib.checkerView(c).paper.documentNotes, c.paper.documentNotes);
+  assert.deepEqual(final.data.problems[0].sourceLayout, p.sourceLayout);
+  const { validate } = lib.compileSchema('final');
+  assert.equal(validate(final.data), true, JSON.stringify(validate.errors));
+  assert.deepEqual(problemMetadataErrors(final.data, manifest), []);
+  const changed = structuredClone(c); changed.problems[0].classification.difficulty.level = 4;
+  assert.notEqual(lib.buildFinalPaper(changed, prov).contentHash, final.contentHash);
+});
+
+test('classification rejects unknown IDs, index-derived ratings, missing prerequisites and fictitious calibration', () => {
+  const { validate } = lib.compileSchema('candidate');
+  const base = lib.stripTx(candidate()); base.problems[0].classification = classificationFixture(base.problems[0].id);
+  assert.equal(validate(base), true, JSON.stringify(validate.errors));
+  const crossSubject = structuredClone(base);
+  crossSubject.problems[0].classification.conceptIds.push(problemTaxonomy.topics.find(t => t.id.startsWith('astronomy/')).id);
+  assert.equal(validate(crossSubject), true, JSON.stringify(validate.errors));
+  assert.deepEqual(problemMetadataErrors(crossSubject, manifest), []);
+  for (const mutate of [
+    c => c.conceptIds.push('physics/invented/concept'),
+    c => { c.sourceRef.kind = 'index-record'; },
+    c => { c.provenance.basis = 'existing-labels'; },
+    c => { c.prerequisiteLevels = []; },
+    c => { c.difficulty.level = 6; },
+    c => { c.difficulty.status = 'unrated'; },
+    c => { c.difficulty.status = 'calibrated'; c.difficulty.anchorIds = ['invented-human-anchor']; c.provenance.reviewStatus = 'human-reviewed'; },
+    c => { c.difficulty = { level: null, status: 'unrated', rationale: null, confidence: null }; c.sourceRef.kind = 'index-record'; c.partAssessments = [{ label: 'а)', conceptIds: c.conceptIds, difficulty: { level: 2, status: 'estimated', rationale: 'Part', confidence: 'low' } }]; },
+  ]) {
+    const c = structuredClone(base); mutate(c.problems[0].classification);
+    assert.equal(validate(c), false, JSON.stringify(c.problems[0].classification));
+  }
+  const wrongId = structuredClone(base); wrongId.problems[0].classification.problemId = 'another-problem';
+  assert.match(problemMetadataErrors(wrongId, manifest).map(e => e.message).join(), /owning problem/);
+  const wrongHash = structuredClone(base); wrongHash.problems[0].classification.sourceRef.sha256 = 'f'.repeat(64);
+  assert.match(problemMetadataErrors(wrongHash, manifest).map(e => e.message).join(), /source hash/);
 });
 
 test('assembleWindows merges parts by number and replaces placeholders', () => {
@@ -654,6 +709,29 @@ test('text-layer check: omitted sentence, misread word (mechanical fix), unprint
   assert.match(rest[0].description, /Приемете, че съпротивлението/);
   assert.match(rest[0].description, /закръглете/);
   assert.doesNotMatch(rest[0].description, /напречното|напреч/); // a word broken over two lines is present
+});
+
+test('shared source note title and statement both count on their declared document', t => {
+  const s = sandbox(t);
+  fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
+  const prose = 'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напречното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата.';
+  const title = 'Внимание! (важи за решенията на всички задачи) Проверявайте самостоятелността оригиналността яснотата последователността аргументацията.';
+  const note = 'Приемат се всички правилни начини за решаване с подробно обяснение.';
+  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), `Задача 1.\n${prose}\n`);
+  fs.writeFileSync(path.join(s.dir, 'text', 'solutions.txt'), `Задача 1.\n${prose}\n${title}\n${note}\n`);
+  const c = candidate(); c.paper.title = ''; c.problems[0].statement = prose;
+  c.problems[0].parts = []; c.problems[0].figures = [];
+  c.problems[0].solution = { statement: prose };
+  c.paper.documentNotes = [{ title, statement: note, document: 'solutions', page: 1, position: 'after-problem' }];
+  const input = s.write('candidates/shared-notes.json', c), out = path.join(s.dir, 'shared-notes-check.json');
+  const result = s.run('textlayer.mjs', [PAPER, '--candidate', input, '--out', out]);
+  assert.equal(result.status, 0, result.stderr + result.stdout);
+  assert.equal(s.read(out).documents.solutions.trusted, true);
+  assert.deepEqual(s.read(out).defects, []);
+  c.paper.documentNotes[0].title = 'Общи бележки';
+  s.write('candidates/shared-notes.json', c);
+  s.run('textlayer.mjs', [PAPER, '--candidate', input, '--out', out]);
+  assert.ok(s.read(out).defects.some(d => /самостоятелността/.test(d.description)), JSON.stringify(s.read(out).defects));
 });
 
 test('refix drops an unprinted caption, adds a figures array, and remembers a region that is not a figure', async () => {
