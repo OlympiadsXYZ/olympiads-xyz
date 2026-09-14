@@ -138,7 +138,7 @@ async function main(){
   const billingKnown=Number.isSafeInteger(actualCostMicroUsd)&&actualCostMicroUsd>=0;
   if(billingKnown){const settlement=await ledger.settle({requestId,actualCostMicroUsd,providerRequestId,usage:parsed.usage});if(settlement.totals?.halted)halted=true;}
   else await ledger.markUnknown({requestId,reason:'provider-did-not-return-complete-billing-usage',providerRequestId});
-  const validationErrors=parsed.ok&&parsed.complete?(args.check?validateCheck(parsed.json,candidatePage):validatePage(parsed.json)):['provider did not return a complete successful response'];
+  const validationErrors=parsed.ok&&parsed.complete?(args.check?validateCheck(parsed.json,candidatePage):validatePage(parsed.json,item)):['provider did not return a complete successful response'];
   const status=!response.ok?'provider-error':!parsed.complete?'incomplete':!parsed.ok||validationErrors.length?'invalid':'draft';
   write(file,{...summary,item,sourceFingerprint:fingerprint,status,billingStatus:billingKnown?'settled-at-conservative-cost':'unknown',costKind:'published-rate upper estimate from observed usage, not an invoice; missing cache breakdown is charged conservatively',requiresBillingReconciliation:!billingKnown,httpStatus:response.status,providerRequestId,elapsedMs:Date.now()-started,maxCostMicroUsd,actualCostMicroUsd,usage:parsed.usage,validationErrors,finishReason:parsed.finishReason,providerError:!parsed.ok,page:parsed.json||null,rawText:parsed.text||null,reviewStatus:'unreviewed; never eligible for canonical publication'});
   return{...summary,status,billingStatus:billingKnown?'settled':'unknown',actualCostMicroUsd,blocks:parsed.json?.blocks?.length||0,validationErrors};
