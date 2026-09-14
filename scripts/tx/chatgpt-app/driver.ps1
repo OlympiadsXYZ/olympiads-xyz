@@ -288,7 +288,8 @@ $done = Wait-For 'reply' {
   # the app sometimes offers to hand the task to its "Work" mode instead of answering: stay in chat
   $stay = Find-All $win $CT::Button 'Stay in Chat'
   if ($stay.Count) { Log 'the app offered Work mode; staying in chat'; try { Invoke-El $stay[0] } catch {}; Start-Sleep -Seconds 2; return $null }
-  $regen = Find-All $win $CT::Button 'Regenerate response'
+  # the action row under a finished reply: "Regenerate response" in the wide layout, "Try again" in the narrow one
+  $regen = Find-All $win $CT::Button '^(Regenerate response|Try again|Regenerate|Good response)$' $false
   if ($regen.Count -and (Count-Copy) -gt $copiesBefore) { return $true }
   $err = Find-All $win $CT::Text '(Something went wrong|error generating|Too many requests|reached your|limit)' $false
   if ($err.Count) { return 'error:' + $err[0].Current.Name }
