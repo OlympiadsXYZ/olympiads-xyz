@@ -151,7 +151,7 @@ function Find-Dialog {
 $lockedSince = $null
 while (Get-Process LogonUI -ErrorAction SilentlyContinue) {
   if (-not $lockedSince) { $lockedSince = Get-Date; Log 'the PC is locked; waiting for the unlock' }
-  if (((Get-Date) - $lockedSince).TotalSeconds -gt $TimeoutSec) { Write-Output (@{ ok = $false; error = 'the PC stayed locked'; seconds = [int]((Get-Date) - $started).TotalSeconds } | ConvertTo-Json -Compress); exit 1 }
+  if (((Get-Date) - $lockedSince).TotalHours -gt 12) { Write-Output (@{ ok = $false; error = 'the PC stayed locked for 12 hours'; seconds = [int]((Get-Date) - $started).TotalSeconds } | ConvertTo-Json -Compress); exit 1 }
   Start-Sleep -Seconds 30
 }
 if ($lockedSince) { Start-Sleep -Seconds 10 }
