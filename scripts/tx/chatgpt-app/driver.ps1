@@ -146,6 +146,15 @@ function Find-Dialog {
   return $null
 }
 
+# A locked PC (the lock screen, LogonUI.exe) hides the desktop from UI Automation: every step fails. Wait for the
+# unlock instead of burning the attempts (up to the call's timeout).
+$lockedSince = $null
+while (Get-Process LogonUI -ErrorAction SilentlyContinue) {
+  if (-not $lockedSince) { $lockedSince = Get-Date; Log 'the PC is locked; waiting for the unlock' }
+  if (((Get-Date) - $lockedSince).TotalSeconds -gt $TimeoutSec) { Write-Output (@{ ok = $false; error = 'the PC stayed locked'; seconds = [int]((Get-Date) - $started).TotalSeconds } | ConvertTo-Json -Compress); exit 1 }
+  Start-Sleep -Seconds 30
+}
+if ($lockedSince) { Start-Sleep -Seconds 10 }
 # Margulan may be at the keyboard: wait until the mouse and keyboard have been idle for a while before taking over
 if ($RequireIdleSec -gt 0) {
   $waited = 0

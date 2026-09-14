@@ -283,6 +283,7 @@ async function sendViaApp(req, label) {
       // whatever went wrong, the next attempt starts a fresh chat with the PDFs again
       if (req.body.sameChat) { try { fs.unlinkSync(chatStateFile); } catch {} chatState.sameChat = false; req.body.sameChat = false; req.body.files = appFiles(images); fs.writeFileSync(listFile, req.body.files.join(String.fromCharCode(10))); }
       if (/limit for file attachments/i.test(reason)) fail(`ChatGPT app: ${reason} (the app's attachment cap; wait for the reset it names)`);
+      if (/stayed locked/i.test(reason)) fail(`ChatGPT app: ${reason} (unlock the PC and resume the job)`);
       appendRun({ paperId, stage, provider, model, window: label, ok: false, attempt, error: reason, seconds, at: nowIso() });
       const again = attempt < MAX_ATTEMPTS;
       console.error(`[transcribe] ${label} attempt ${attempt}/${MAX_ATTEMPTS} through the ChatGPT app failed after ${seconds}s — ${reason}${again ? '; retrying' : ''}`);
