@@ -140,6 +140,17 @@ or certify source accuracy. Conversion and final source checks remain separate.
 The accompanying tests cover duplicate equations, shared instructions, explicit
 nonconsecutive numbering, rotated leaves, ownership and frozen-source changes.
 
+`page-candidate.mjs` converts this intermediate to a draft for no-figure papers
+using an explicit field mapping. Models can select whole blocks or exact source
+substrings; code resolves selectors and accounts for every character, including
+headings, point markers and whitespace. Shared instructions, middle and trailing
+common text, and repeated solution equations retain their source order. An
+ambiguous selector, omitted character, repeated span, reordered part or invented
+answer is rejected. Figure-bearing and unsupported numbering layouts remain
+outside this first converter. Supplied ownership and metadata still need source
+review, and a successful conversion does not authorize publication. The mapping
+contract and source evidence are retained in the draft's `tx.pageCandidate`.
+
 The 2026-09-14 native-text trial also exposed a production text-layer false
 repair: the PDF extraction split `успоредно` into `ус поредно`, making a correct
 candidate look misspelled. The text-layer check now recognizes only narrowly
