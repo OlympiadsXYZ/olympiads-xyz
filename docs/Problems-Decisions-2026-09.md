@@ -41,3 +41,15 @@ his ChatGPT subscription's desktop app instead ("small hobby project", the chat 
 unlimited; the Codex CLI has usage limits like Claude Code). Automating the consumer app is against OpenAI's terms;
 he was told and reaffirmed. Implementation: `scripts/tx/chatgpt-app/driver.ps1` + provider `chatgpt` in
 `transcribe.mjs` (handoff §12f). Z.ai remains available for a paid burst (`--reader zai:glm-5.3-flash`).
+
+## D-P15 (2026-09-14, pending Margulan) — route after the research memo
+
+docs/Research-Transcription-Routes-2026-09-14.md (a research agent's memo, sources dated 2026-09-14): the spend
+sits in the loop, not the model — the LLM checker (66 % of spend) runs every round before the free mechanical
+checks, which raised ~60 % of the defects that made those rounds fail. GLM-5.3-Flash is as cheap and as accurate as
+anything comparable. Options: (A) GLM paid with a mechanical-first loop, ≈ $100, ~3 days; (B) Gemini 3.1 Flash-Lite
+on Google's free tier (500 requests/day), $0, ~5 weeks, quality to prove on the 24 fixtures; (C) Codex CLI with the
+ChatGPT subscription (sanctioned; 250–2,000 messages per 5 h on Plus), $0, ~2 weeks, needs the Codex ruling of
+D-P14 reversed. The memo's verdict on the ChatGPT-app driver: stop it as a bulk route (≤ 45 papers/day, an
+unlockable PC, a Terms violation on the account), keep it as a hand aid. The mechanical-first reorder pays on every
+route and is being implemented regardless. Margulan chooses the route.
