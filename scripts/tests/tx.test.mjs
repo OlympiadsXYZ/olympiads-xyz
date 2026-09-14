@@ -60,6 +60,22 @@ test('benchmark does not call an arbitrary reference gold or charge competing ch
   assert.equal(s.read(path.join(out, 'report.json')).papers[0].candidates[0].totalCostUsd, null);
 });
 
+test('benchmark catches lost shared instructions between and after subparts', t => {
+  const s = sandbox(t);
+  const reference = candidate();
+  reference.problems[0].parts[0].statementAfter = 'За втория опит напрежението е $U = 17$ V.';
+  reference.problems[0].statementAfterParts = 'Приемете плътност $\\rho = 987$ kg/m3.';
+  const refFile = s.write('reference.json', reference);
+  const candFile = s.write('candidates/zai__glm-5.3-flash.json', candidate());
+  const fixtures = s.write('fixtures.json', [{ paperId: PAPER, reference: refFile }]);
+  const out = path.join(s.dir, 'report');
+  const run = s.run('bench.mjs', ['--fixtures', fixtures, '--candidates', candFile, '--out-dir', out]);
+  assert.equal(run.status, 0, run.stderr);
+  const comparison = s.read(path.join(out, 'report.json')).papers[0].candidates[0];
+  assert.ok(JSON.stringify(comparison).includes('987'), 'missing shared density must be visible in the comparison');
+  assert.ok(JSON.stringify(comparison).includes('17'), 'missing intervening voltage must be visible in the comparison');
+});
+
 const PAPER = 'zz-2099-test-7';
 const size = { page: 1, widthPt: 595.276, heightPt: 841.89 };
 const manifest = {

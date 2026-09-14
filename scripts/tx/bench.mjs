@@ -73,7 +73,10 @@ function multisetDiff(a, b) {
   return { missing, extra };
 }
 const tableCells = text => String(text || '').split('\n').filter(l => /^\s*\|.*\|\s*$/.test(l) && !/^\s*\|[\s:|-]+\|\s*$/.test(l)).flatMap(l => l.trim().slice(1, -1).split('|').map(c => norm(c)));
-function problemText(pr) { return [pr.statement, ...(pr.parts || []).map(p => `${p.label} ${p.statement}`)].join('\n'); }
+function problemText(pr) {
+  return [pr.statement, ...(pr.parts || []).flatMap(p => [`${p.label} ${p.statement}`, p.statementAfter]), pr.statementAfterParts]
+    .filter(value => value != null && value !== '').join('\n');
+}
 function answers(pr) {
   const out = [];
   const one = (a, where) => { if (!a) return; out.push({ where, kind: a.kind, value: a.value ?? a.latex ?? a.correct ?? null, unit: a.unit ?? null }); };
