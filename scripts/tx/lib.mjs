@@ -822,7 +822,10 @@ export function normaliseCandidate(c, opts = {}) {
       if (re.test(part.statement)) { part.statement = part.statement.replace(re, ''); changes.push(`${p}: leading part label removed`); }
     }
     const m = MARKER.exec(part.statement);
-    if (m) {
+    // Separate requests under one printed label can carry separate awards.
+    // The final award is not a total; retain every inline marker in that case.
+    const awards = part.statement.match(/\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]/gu) || [];
+    if (m && awards.length === 1) {
       const n = Number(m[1].replace(',', '.'));
       if (part.points == null) { part.points = n; part.statement = part.statement.replace(MARKER, ''); changes.push(`${p}: points ${n} taken from the printed marker`); }
       else if (Math.abs(part.points - n) < 1e-9) { part.statement = part.statement.replace(MARKER, ''); changes.push(`${p}: printed points marker stripped`); }

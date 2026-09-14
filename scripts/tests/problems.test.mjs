@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { sha256, jsonText, publicationState } from '../lib/problem-data.mjs';
 import { classificationFixture } from './classification-fixture.mjs';
+import { normaliseCandidate } from '../tx/lib.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 fs.mkdirSync(path.join(repo, 'tmp'), { recursive: true });
@@ -41,6 +42,23 @@ test('unapproved draft never creates a page; explicit legacy migration preserves
   assert.equal(f.run('--check').status, 1);
   assert.equal(f.run().status, 0);
   assert.equal(fs.existsSync(path.join(f.root, f.output)), false);
+});
+
+test('two printed awards under one part survive normalization and publication without an inferred total', t => {
+  const f = fixture(t);
+  const statement = 'Намерете израза. **[1 т.]** За какъв интервал е приложим? **[0.5 т.]**';
+  f.paper.problems[0].parts = [{ label: 'е)', statement, points: null }];
+  normaliseCandidate(f.paper);
+  normaliseCandidate(f.paper);
+  assert.equal(f.paper.problems[0].parts[0].points, null);
+  assert.equal(f.paper.problems[0].parts[0].statement, statement);
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  assert.ok(mdx.includes(`**е)** ${statement}`));
+  assert.equal((mdx.match(/\[1 т\.\]/g) || []).length, 1);
+  assert.equal((mdx.match(/\[0\.5 т\.\]/g) || []).length, 1);
+  assert.doesNotMatch(mdx, /\[(?:1[,.]5|0,5) т\.\]/);
 });
 
 test('source removal retracts only owned artifacts and index entries', t => {
