@@ -151,7 +151,8 @@ function mdText(s) {
     // (MDX would read <' or <a as the start of a JSX tag and the build would die)
     // inside math: KaTeX in the site pipeline has no \nicefrac and rejects \tag outside a display environment
     // (IPhO 2023 Q1 rendered its numbered equations raw); the printed equation number becomes "\qquad (n)"
-    .map((seg, i) => (i % 2 ? seg.replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
+    // A lone trailing prose space is invisible; preserve Markdown's two-space breaks and all math.
+    .map((seg, i) => (i % 2 ? seg.replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/(?<![\\ \t]) (?=\n)/g, '').replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
     .join('');
 }
 
