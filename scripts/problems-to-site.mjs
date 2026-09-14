@@ -180,7 +180,7 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push(...documentNoteLines(paper, 'before-problem'));
   lines.push(`## Условие`);
   lines.push('');
-  lines.push(sourceText(problem.statement, problem));
+  lines.push(sourceText(problem.statement, problem).trimEnd());
   lines.push('');
   const partTexts = (problem.parts ?? []).flatMap(p => [p.statement, p.statementAfter]);
   for (const fig of figuresNotInline(problem.figures, problem.statement, problem.statementAfterParts, ...partTexts)) lines.push(figureMarkdown(fig), '');
@@ -225,8 +225,10 @@ function problemMdx(paper, problem, state, sourceFile) {
   if (classification) {
     lines.push('<details>', '<summary>Теми и трудност</summary>', '',
       `${classification.assessmentLabel}.`, '',
-      classification.tags.map(tag => mdText(tag)).join(' · '), '',
-      `Предпоставки: ${classification.prerequisiteLabels.map(x => mdText(x)).join(', ')}`, '', '</details>', '');
+      classification.tags.map(tag => mdText(tag)).join(' · '), '');
+    if (classification.prerequisiteLabels.length) lines.push(
+      `Предпоставки: ${classification.prerequisiteLabels.map(x => mdText(x)).join(', ')}`, '');
+    lines.push('</details>', '');
   }
   const src = paper.source?.archiveKey;
   if (src) {
