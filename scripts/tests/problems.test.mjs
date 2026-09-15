@@ -152,6 +152,33 @@ test('a model label alone cannot authorize publication; withdrawal always wins',
   assert.equal(publicationState(record, { papers: { x: { kind: 'legacy', contentHash: record.contentHash, sourceCommit: 'a'.repeat(40), recordedAt: 'today' } } }).eligible, false);
 });
 
+test('missing or unassessed difficulty exports as N/A while explicit ratings are preserved', t => {
+  const f = fixture(t);
+  const cases = [
+    { expected: 'N/A' },
+    { expected: 'N/A', unassessed: true },
+    { expected: 'Normal', difficulty: 'Normal' },
+    { expected: 'Hard', difficulty: 'Hard' },
+  ];
+  f.paper.problems = cases.map((c, index) => {
+    const problem = { id: `${f.paper.paper.id}-p${index + 1}`, number: index + 1, statement: 'Original statement' };
+    if (c.difficulty) problem.difficulty = c.difficulty;
+    if (c.unassessed) {
+      problem.classification = classificationFixture(problem.id);
+      problem.classification.difficulty = { level: null, status: 'unrated', rationale: 'Not assessed.', confidence: null };
+    }
+    return problem;
+  });
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const rows = JSON.parse(f.read('content/extraProblems.json')).EXTRA_PROBLEMS;
+  for (const [index, c] of cases.entries()) {
+    const row = rows.find(p => p.uniqueId === f.paper.problems[index].id);
+    assert.equal(row.difficulty, c.expected);
+    if (c.unassessed) assert.equal(row.assessmentLabel, 'Трудност: неоценена');
+  }
+});
+
 test('new classification is searchable and source notes and common paragraphs retain their positions', t => {
   const f = fixture(t), p = f.paper.problems[0];
   p.classification = classificationFixture(p.id);
