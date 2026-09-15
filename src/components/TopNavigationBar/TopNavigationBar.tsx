@@ -16,13 +16,13 @@ import {
   TerminalIcon,
   UserGroupIcon,
 } from '@heroicons/react/solid';
-import { FaReact } from "react-icons/fa";
-import { HiVariable } from "react-icons/hi2";
-import { PiCodeFill } from "react-icons/pi";
-import { GiChemicalDrop } from "react-icons/gi";
-import { PiPlantFill } from "react-icons/pi";
-import { IoTelescope } from "react-icons/io5";
-import { IoEarth } from "react-icons/io5";
+import { FaReact } from 'react-icons/fa';
+import { HiVariable } from 'react-icons/hi2';
+import { PiCodeFill } from 'react-icons/pi';
+import { GiChemicalDrop } from 'react-icons/gi';
+import { PiPlantFill } from 'react-icons/pi';
+import { IoTelescope } from 'react-icons/io5';
+import { IoEarth } from 'react-icons/io5';
 import classNames from 'classnames';
 import { Link } from 'gatsby';
 import * as React from 'react';
@@ -60,7 +60,7 @@ export default function TopNavigationBar({
   currentSection = null,
   hidePromoBar = true,
   redirectToDashboard = false,
-  hideLanguageSwitcher = false
+  hideLanguageSwitcher = false,
 }) {
   const firebaseUser = useFirebaseUser();
   const signOut = useSignOutAction();
@@ -100,7 +100,7 @@ export default function TopNavigationBar({
     {
       name: t('top-nav_math'),
       description: t('top-nav_math_description'),
-      href: '/archive/math',
+      href: '/archive/mathematics',
       icon: HiVariable,
       backgroundColor: '',
       iconBackgroundColor: 'rgb(15, 118, 110)',
@@ -234,9 +234,17 @@ export default function TopNavigationBar({
                                     target="_blank"
                                     rel="noreferrer"
                                     className="-m-3 p-3 flex items-start rounded-lg transition ease-in-out duration-150"
-                                    style={{ backgroundColor: item.backgroundColor }}
+                                    style={{
+                                      backgroundColor: item.backgroundColor,
+                                    }}
                                   >
-                                    <div className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md text-white sm:h-12 sm:w-12" style={{ backgroundColor: item.iconBackgroundColor }}>
+                                    <div
+                                      className="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md text-white sm:h-12 sm:w-12"
+                                      style={{
+                                        backgroundColor:
+                                          item.iconBackgroundColor,
+                                      }}
+                                    >
                                       <item.icon
                                         className="h-6 w-6"
                                         aria-hidden="true"
@@ -268,7 +276,7 @@ export default function TopNavigationBar({
                 {/* Level Switcher (класова група) — site-wide, like the language switcher */}
                 <LevelSwitcher />
                 {/* Language Switcher ei tova mi izqde dushata*/}
-                {!hideLanguageSwitcher && (<LanguageSwitcher/>)}
+                {!hideLanguageSwitcher && <LanguageSwitcher />}
               </div>
             </div>
             <div
@@ -513,13 +521,13 @@ export default function TopNavigationBar({
                   </a>
                 )}
                 <div className="group -m-3 p-3 cursor-pointer flex items-center rounded-md">
-                <MdLanguage className="h-6 w-6 text-gray-600 float-left dark:group-hover:text-gray-400 transition ease-in-out duration-150" />
-                <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                      {t('language')}: 
-                </span>
-                <div className="ml-3 text-gray-600 -m-3 p-3 cursor-pointer flex items-center rounded-md float-right hover:bg-gray-100 dark:hover:bg-gray-700">
-                  <LanguageSwitcher/>
-                </div>
+                  <MdLanguage className="h-6 w-6 text-gray-600 float-left dark:group-hover:text-gray-400 transition ease-in-out duration-150" />
+                  <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
+                    {t('language')}:
+                  </span>
+                  <div className="ml-3 text-gray-600 -m-3 p-3 cursor-pointer flex items-center rounded-md float-right hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <LanguageSwitcher />
+                  </div>
                 </div>
               </nav>
             </div>

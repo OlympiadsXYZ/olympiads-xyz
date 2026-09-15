@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { archiveHref } from '../../archive/links';
 import { useDarkMode } from '../../context/DarkModeContext';
 import CodeBlock from './CodeBlock/CodeBlock';
 
@@ -59,6 +60,7 @@ const a = ({ children, ...props }) => (
   <a
     target={!props.href || props.href.startsWith('#') ? undefined : '_blank'}
     {...props}
+    href={archiveHref(props.href)}
   >
     {children}
   </a>

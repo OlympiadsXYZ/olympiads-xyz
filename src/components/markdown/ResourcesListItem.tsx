@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { Instance } from 'tippy.js';
 import tw from 'twin.macro';
+import { archiveHref } from '../../archive/links';
 import { useDarkMode } from '../../context/DarkModeContext';
 import { useUserLangSetting } from '../../context/UserDataContext/properties/simpleProperties';
 import { ResourceInfo } from '../../models/resource';
@@ -101,7 +102,7 @@ export default function ResourcesListItem({
           </Tooltip>
         )}
         <a
-          href={resource.url}
+          href={archiveHref(resource.url)}
           className={resource.starred ? 'pl-1 sm:pl-2' : 'sm:pl-6'}
           target="_blank"
           rel="nofollow noopener noreferrer"
@@ -113,7 +114,7 @@ export default function ResourcesListItem({
   );
   const childrenCol = (
     <td className="pl-6 sm:pl-8 pt-4 pb-1 sm:pb-4 min-w-[200px] w-[60%] text-sm leading-5 text-gray-500 dark:text-dark-med-emphasis">
-      <>{resource.children}</> 
+      <>{resource.children}</>
       {/* This somehow fixes the centering on the mobile view, although it's still the same for desktop */}
     </td>
   );

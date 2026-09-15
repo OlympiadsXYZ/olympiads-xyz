@@ -26,6 +26,8 @@ jobs:
           key: node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn
+      - name: Check archive file links
+        run: node --test scripts/tests/archive-links.test.mjs
       - run: npx gatsby build
         env:
           GATSBY_ARCHIVE_ENABLED: "true"
