@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const SITE_URL = (process.env.SITE_URL || 'https://olympiads-xyz.vercel.app')
+const SITE_URL = (process.env.SITE_URL || 'https://www.olympiads.xyz')
   .replace(/\/$/, '');
 
 const flags = {
