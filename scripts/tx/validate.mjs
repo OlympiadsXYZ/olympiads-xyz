@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import { problemMetadataErrors } from '../lib/problem-classification.mjs';
+import { expectedProblemNumbers } from './source-numbering.mjs';
 import {
   parseArgs, fail, readJson, compileSchema, mathSpans, splitMath, proseOnly, walkStrings, allFigures, RENDER_DPI, R2_PUBLIC,
   BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx, stripTx } from './lib.mjs';
@@ -49,13 +50,14 @@ if (manifest && manifest.meta) {
 
 // 2. ids, numbering, points
 const problems = Array.isArray(data.problems) ? data.problems : [];
+const expectedNumbers = expectedProblemNumbers(manifest, problems.length);
 const ids = new Set();
 problems.forEach((pr, i) => {
   const p = `/problems/${i}`;
   if (typeof pr.id !== 'string' || !pr.id.startsWith(`${paperId}-`)) err(`${p}/id`, `must start with "${paperId}-"`);
   else if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(pr.id)) err(`${p}/id`, 'unsafe id characters');
   if (ids.has(pr.id)) err(`${p}/id`, `duplicate id ${pr.id}`); ids.add(pr.id);
-  if (Number.isInteger(pr.number)) { if (pr.number !== i + 1) err(`${p}/number`, `expected ${i + 1}, got ${pr.number} (numbering must be contiguous 1..N)`); }
+  if (Number.isInteger(pr.number)) { if (pr.number !== expectedNumbers[i]) err(`${p}/number`, `expected ${expectedNumbers[i]}, got ${pr.number} (use complete catalogue labels, or contiguous 1..N when labels are unavailable)`); }
   else warn(`${p}/number`, `non-integer number "${pr.number}"`);
   if (!pr.statement || !String(pr.statement).trim()) { if ((pr.parts || []).length) warn(`${p}/statement`, 'empty statement (the printed problem is only its parts)'); else err(`${p}/statement`, 'empty statement'); }
   else if (String(pr.statement).includes(WINDOW_PLACEHOLDER)) err(`${p}/statement`, `window placeholder "${WINDOW_PLACEHOLDER}" left unresolved (assemble.mjs did not find the statement in any window)`);
