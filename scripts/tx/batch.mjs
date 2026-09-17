@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // batch.mjs --ids a,b,c | --backlog [--limit N] --reader p:m --checker p:m [--workers 2]
-//   [--allow-same-model] [--no-promote] [--log tmp/tx/batch.log] [--max-rounds 2]
+//   [--allow-same-model] [--no-promote] [--log tmp/tx/batch.log] [--max-rounds 2] [--max-spend-usd N] [--spend-since ISO]
 // Walks a list of papers through run.mjs, a few at a time, and keeps going when
 // one fails: every outcome (exit code, final stage, receipt verdict, cost) is
 // appended to the log as one JSON line. A paper with an unfinished job in
@@ -119,11 +119,36 @@ function runOne({ id, resume, fresh }) {
   });
 }
 
+// --max-spend-usd N [--spend-since ISO]: no new paper starts once the provider spend recorded in tmp/tx/runs.jsonl
+// (every successful call's costUsd, both providers named in --reader/--checker) since --spend-since (default: this
+// batch's start) reaches N. Papers already running finish their loop. The Anthropic grant is a fixed pot.
+const spendCap = args['max-spend-usd'] ? Number(args['max-spend-usd']) : null;
+const spendSince = args['spend-since'] ? new Date(args['spend-since']).toISOString() : new Date().toISOString();
+const spendProviders = new Set([args.reader, args.checker].filter(Boolean).map(s => String(s).split(':')[0]));
+function spentUsd() {
+  const f = path.join(ROOT, 'tmp', 'tx', 'runs.jsonl');
+  if (!fs.existsSync(f)) return 0;
+  let usd = 0;
+  for (const line of fs.readFileSync(f, 'utf8').split(/\r?\n/)) {
+    if (!line) continue;
+    let r; try { r = JSON.parse(line); } catch { continue; }
+    if (r.ok && spendProviders.has(r.provider) && r.at >= spendSince && typeof r.costUsd === 'number') usd += r.costUsd;
+  }
+  return usd;
+}
+let capHit = false;
 const results = [];
 let next = 0;
 await Promise.all(Array.from({ length: Math.min(workers, plan.length) }, async () => {
-  while (next < plan.length) { const item = plan[next++]; results.push(await runOne(item)); }
+  while (next < plan.length) {
+    if (spendCap != null) {
+      const usd = spentUsd();
+      if (usd >= spendCap) { if (!capHit) { capHit = true; log({ outcome: 'spend-cap', spentUsd: +usd.toFixed(2), capUsd: spendCap, remaining: plan.length - next }); console.log(`[batch] spend cap reached: $${usd.toFixed(2)} >= $${spendCap} since ${spendSince}; ${plan.length - next} paper(s) not started`); } return; }
+    }
+    const item = plan[next++]; results.push(await runOne(item));
+  }
 }));
+if (spendCap != null) console.log(`[batch] spend since ${spendSince}: $${spentUsd().toFixed(2)} (cap $${spendCap})`);
 const counts = {};
 for (const r of results) counts[r.outcome] = (counts[r.outcome] || 0) + 1;
 console.log('done:', JSON.stringify(counts));

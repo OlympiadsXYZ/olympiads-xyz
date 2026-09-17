@@ -362,6 +362,14 @@ for (;;) {
     job.stage = 'reader'; save('prepared');
   } else if (job.stage === 'reader') {
     if (fs.existsSync(readerOut) && job.waitingFor?.stage === 'reader') { job.waitingFor = null; job.artefacts.candidate = rel(readerOut); job.stage = 'validate'; save('agent candidate received'); continue; }
+    // A compilation (icho-21st-40th: 733 pages, ioaa-until-2013-by-topic: 254) is not a paper: it would cost tens of
+    // dollars of reading and checking and come out as one unusable record. Parked before any model call unless
+    // --max-pages raises the cap (default 60 pages over both documents).
+    {
+      const cap = Number(args['max-pages'] || job.options.maxPages || 60);
+      const pages = Object.values(readJson(manifestPath, { documents: {} }).documents).reduce((a, d) => a + (d.pages || 0), 0);
+      if (pages > cap && !job.artefacts.candidate) escalate(`too long for the bulk run: ${pages} pages over both documents (cap ${cap}; pass --max-pages to override) — a compilation to split, not a paper`);
+    }
     if (job.reader.provider === 'agent') waitForAgent('reader', readerOut);
     const r = node('transcribe.mjs', [paperId, '--provider', job.reader.provider, '--model', job.reader.model, '--stage', 'reader', ...transcribeOpts, ...(job.options.windowPages ? ['--window-pages', String(job.options.windowPages)] : []), ...(job.dryRun ? ['--dry-run'] : [])]);
     if (r.status !== 0 && r.status !== 3) { save(`reader failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }

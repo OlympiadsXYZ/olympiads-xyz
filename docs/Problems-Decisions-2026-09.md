@@ -71,3 +71,28 @@ The next operational canary tests one complete-paper read for documents of up to
 After checking the new reader on known fixtures, the coordinator may release explicitly named fresh canary candidates that pass an independent complete-source Terra check and all existing source, schema, rendering, receipt and publication gates. Additional Astra review targets flagged cases and a source spot-audit; it is not a blanket second full review for every clean API-checked paper. This is a measured operational pilot, not an archive-wide automatic publication policy or a claimed accuracy certification. Work-only experimental reports require an explicit release decision before normal receipts can be issued. Batch pushes continue to wait for the preceding deployment.
 
 The first direct-reader trials exposed unsupported math delimiters, malformed edit logs and invented document-note filler. Raw outputs and verdicts remain retained. Two revised known-fixture drafts passed the API checker despite independently observed note defects; those passes are not clean accuracy results, and the drafts do not replace the accepted papers. Subsequent reads use the site's dollar math delimiters and literal edit logs. Document-note bodies must contain actual source text. When a source note lacks a separate heading, the wrapper may supply the visibly bracketed interface title `[Source note]` or `[Бележка от източника]`, with its origin recorded in working provenance. These fixed interface labels are not transcribed source headings; arbitrary invented note text remains a defect. The checker explicitly reviews published document notes, and the next canary receives a targeted note audit.
+
+## D-P18 (2026-09-17) — the whole catalogue on the Anthropic grant, through scripts/tx
+
+Margulan: "I really don't mind spending the entire budget … just make it as parallel as possible, I want all 7000+
+things transcribed, verified, checked." The $500 Anthropic API grant (YC startup credits; key in
+`~/.config/olympiads-xyz/anthropic-archive.env`, copied into `providers.env`; **expires 2026-10-23**; $46.15 spent by
+Codex's pilot, $453.85 left) is the bulk budget. Route: the existing `scripts/tx` loop (prepare → reader → validate →
+figures → mechanical pre-check → checker → receipt → repair/refix → promote → ship), provider `anthropic`,
+**claude-sonnet-5 as reader and checker** (same family, recorded on the receipt as before), `--window-pages 8`,
+`--max-rounds 3`, six workers, `batch.mjs --catalogue --max-spend-usd` per tranche. Measured on the first papers:
+$0.26–0.30 for a 2-page Bulgarian paper (reader 7 ¢, checker 10 ¢, refixes 9 ¢); international 30–50-page papers
+will cost $1–2 each, so a Message-Batches transport (50 % price) is being built to carry the bulk. Codex's own
+Anthropic pipeline (`Documents/Codex/2026-09-14/this-x20/work/research`, Sonnet reads / Opus checks; 122 batch reads
+for $9.75, then 117 of 122 held for review, 3 passed) stays parked: its gate published almost nothing per dollar and
+its publisher is blocked on CI. Rules added with this decision: (1) the free checks (text layer, printed regions,
+box tightening) run BEFORE the paid checker and are repaired first — at most two such rounds per job, not counted
+against `--max-rounds`; (2) a document set over 60 pages (compilations: icho-21st-40th 733 pp., icho-1st-20th 408,
+ioaa-until-2013-by-topic 254) is parked before any model call (`--max-pages` overrides); (3) a checker's typed
+`"null"` is no fix; (4) the validator flags only real HTML tag names, so a printed `<Idea 1>` is prose (the site
+escapes it). Opus 5 / Fable 5.1 are being trialled as checker on a few papers under a $6 cap; they are not the
+bulk models unless the trial shows fewer rounds per dollar. The 88 unfinished GLM/agent jobs were switched to the
+Anthropic models and resume from their candidates (a different family checks them: a genuinely independent check).
+| Why: the grant expires in five weeks and buys ~1,500 papers synchronously or ~2,600 through Batches — the backlog is
+1,890 papers plus 446 legacy re-checks; Sonnet reads near-verbatim with far fewer repair rounds than GLM, and every
+mechanical gate stays in force.
