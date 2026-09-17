@@ -262,6 +262,18 @@ export function compileSchema(mode = 'final') {
   const ajv = new Ajv({ allErrors: true, jsonPointers: true, schemaId: 'auto' });
   return { validate: ajv.compile(schema), schema };
 }
+// problem.classification (D-P16, Codex's problem-search block) validated on its own: a reader that writes it in
+// the wrong shape (a string taxonomyVersion, a bare difficulty) must not park the paper — the block is optional
+let classificationValidator = null;
+export function classificationValid(obj) {
+  if (!classificationValidator) {
+    const Ajv = require('ajv');
+    const schema = loadSchema();
+    const ajv = new Ajv({ allErrors: false, jsonPointers: true, schemaId: 'auto' });
+    classificationValidator = ajv.compile({ $ref: '#/$defs/classification', $defs: schema.$defs });
+  }
+  return !!classificationValidator(obj);
+}
 export function schemaSupports(schema, pointer) {
   return pointer.split('/').filter(Boolean).reduce((o, k) => (o && typeof o === 'object' ? o[k] : undefined), schema) !== undefined;
 }
@@ -744,6 +756,12 @@ export function normaliseCandidate(c, opts = {}) {
     for (const { fig, path: p } of allFigures(c)) if (fig.tx?.document && fig.tx.document !== only) { fig.tx.documentAsWritten = fig.tx.document; fig.tx.document = only; changes.push(`${p}: document ${fig.tx.documentAsWritten} → ${only} (the paper's only document)`); }
     (c.problems || []).forEach((pr, i) => { for (const s of pr.tx?.sourceSpans || []) if (s.document && s.document !== only) { s.document = only; changes.push(`/problems/${i}/tx/sourceSpans: document → ${only}`); } });
   }
+  // an invalid classification block is dropped rather than parking the paper (nof-2024-iv-exp1: taxonomyVersion,
+  // sourceRef.sha256 and difficulty in the wrong shape on every problem)
+  (c.problems || []).forEach((pr, i) => {
+    if (!pr || typeof pr !== 'object' || pr.classification === undefined) return;
+    if (!pr.classification || typeof pr.classification !== 'object' || !classificationValid(pr.classification)) { delete pr.classification; changes.push(`/problems/${i}/classification: not in the schema's shape, dropped`); }
+  });
   // a figures array that is not an array, or an entry that is not an object (null, a string id), is dropped
   // (ipho-2026-theory-t2, apho-2024-theory-th: Sonnet wrote `figures: [null]` and Object.keys threw)
   (c.problems || []).forEach((pr, i) => {
