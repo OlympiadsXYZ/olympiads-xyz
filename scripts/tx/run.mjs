@@ -542,6 +542,19 @@ for (;;) {
       // (a malformed date, a part without its label, an unbalanced $) through the
       // refix stage; every validator error becomes a defect at its path.
       let report = null; try { report = JSON.parse(full.stdout); } catch {}
+      // A statement left as a window placeholder in every window (a 25-problem F=ma exam, a multi-grade Russian
+      // regional paper): no refix can restore what no window transcribed — the paper is read again once with
+      // windows twice as wide (the whole document when it fits), before any schema refix is paid for
+      if (job.reader.provider !== 'agent' && !job.options.windowsWidened && (report?.errors || []).some(e => /window placeholder/.test(e.message))) {
+        const pages = Object.values(readJson(manifestPath, { documents: {} }).documents).reduce((a, d) => a + (d.pages || 0), 0);
+        const current = job.options.windowPages || pages;
+        const wider = Math.min(pages, current * 2);
+        if (wider > current) {
+          job.options.windowsWidened = true; job.options.windowPages = wider >= pages ? null : wider;
+          delete job.artefacts.candidate; delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256; job.waitingFor = null;
+          job.stage = 'reader'; save(`window placeholders left unresolved: reading again in ${job.options.windowPages ? `windows of ${wider} page(s)` : 'one window (the whole document)'}`); continue;
+        }
+      }
       // two attempts per distinct set of validator errors (a new slip after repairs gets its own budget)
       const sig = require_sig(report);
       job.schemaAttempts ||= {};
