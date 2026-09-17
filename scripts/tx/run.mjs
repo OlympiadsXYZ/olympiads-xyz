@@ -150,6 +150,9 @@ function mergeTextLayer(candFile, checkOut) {
   // a mangled checker path ("/problems/2/problems/2/…", "/p2/statement") is repaired when the repair resolves in the candidate
   let repairedPaths = 0;
   for (const d of check.defects || []) {
+    // a checker that types the word instead of the JSON value ("null", "undefined") gave no fix (nof-2024-i-9: three
+    // invented points totals with the string "null" slipped past the points rule below and cost a refix round)
+    if (typeof d.suggestedFix === 'string' && /^\s*(null|undefined|n\/a)\s*$/i.test(d.suggestedFix)) { d.suggestedFixAsWritten = d.suggestedFix; d.suggestedFix = null; }
     // a JSON "fix" (a spans list, a figure object) on a prose path is bookkeeping echoed back, not text:
     // it must not reach the mechanical merge; a defect about tx bookkeeping (sourceSpans) is a note
     if (typeof d.suggestedFix === 'string' && /^\s*[\[{]\s*["{\[]/.test(d.suggestedFix) && /\/(statement|caption|alt|title|label)$/.test(String(d.path))) { d.suggestedFixAsWritten = d.suggestedFix; delete d.suggestedFix; }
@@ -310,6 +313,22 @@ function mergeTextLayer(candFile, checkOut) {
   tl.regionDefects = unplaced.length;
   return tl;
 }
+// The free checks alone, shaped like a checker output so mergeTextLayer/repair.mjs read it unchanged: an empty
+// verdict-pass check that the text layer and the region check then fill. Returns the open (non-info) defects.
+function mechanicalPrecheck(candFile) {
+  const candidate = readJson(candFile, null);
+  if (!candidate) return null;
+  const file = checkerOutFor(job.round).replace(/\.json$/, '.mech.json');
+  writeJson(file, {
+    verdict: 'pass', defects: [], summary: 'mechanical pre-check (text layer, printed regions); no model was asked',
+    coverage: { pagesRead: [], problemsChecked: (candidate.problems || []).length, figuresChecked: allFigures(candidate).length },
+    checker: { provider: 'mechanical', model: 'textlayer+regions', requestId: `mech-r${job.round}`, promptVersion: 'n/a', candidateSha256: sha256File(candFile) },
+  });
+  mergeTextLayer(candFile, file);
+  const check = readJson(file, null);
+  const open = (check?.defects || []).filter(d => d.severity && d.severity !== 'info');
+  return { file, open, withFix: open.filter(d => d.suggestedFix != null && d.suggestedFix !== '').length, summary: check?.summary || '' };
+}
 // an operator- or adjudicator-supplied candidate re-enters at validate
 if (args.continue && args.repaired) {
   let f = path.resolve(args.repaired);
@@ -420,6 +439,21 @@ for (;;) {
     if (needsRevalidate()) { job.stage = 'validate'; save('candidate bytes changed since validation; re-validating'); continue; }
     const cand = currentCandidate();
     const checkerOut = checkerOutFor(job.round);
+    // Mechanical pre-check (memo 2026-09-14: the paid checker was two thirds of the spend, and most first-round
+    // failures were things the PDF itself decides). The free checks — text layer, printed graphics no box covers,
+    // boxes to tighten — run first; what they find is repaired (and refixed) BEFORE a model is asked, so the
+    // checker sees a candidate the document already agrees with. At most two such rounds per job; they do not
+    // count against --max-rounds. The receipt written for such a round is marked mechanical and never promotes.
+    if (job.checker.provider !== 'agent' && !job.waitingFor && (job.options.mechRounds || 0) < 2) {
+      const mech = mechanicalPrecheck(cand);
+      if (mech?.open.length) {
+        job.options.mechRounds = (job.options.mechRounds || 0) + 1; job.options.maxRounds += 1; job.options.mechPending = true;
+        writeJson(receiptOut, { paperId, verdict: 'fail', mechanical: true, candidateSha256: sha256File(cand), checkedAt: nowIso(), summary: mech.summary, defects: mech.open, blockers: [] });
+        fs.copyFileSync(receiptOut, path.join(dir, `receipt.r${job.round}.mech.json`));
+        job.artefacts.receipt = rel(receiptOut); job.artefacts.checker = rel(mech.file);
+        job.stage = 'repair'; save(`mechanical pre-check: ${mech.open.length} defect(s) from the text layer / printed regions (${mech.withFix} with a fix); repairing before the checker`); continue;
+      }
+    }
     if (fs.existsSync(checkerOut) && job.waitingFor?.stage === 'checker') { job.waitingFor = null; const tl = mergeTextLayer(cand, checkerOut); job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`agent checker output received; text-layer check: ${tl ? tl.defects.length : '?'} defect(s)`); continue; }
     if (job.checker.provider === 'agent') waitForAgent('checker', checkerOut, ['--candidate', cand]);
     const r = node('transcribe.mjs', [paperId, '--provider', job.checker.provider, '--model', job.checker.model, '--stage', 'checker', '--candidate', cand, '--out', checkerOut, ...transcribeOpts]);
@@ -464,6 +498,7 @@ for (;;) {
     job.stage = 'repair'; save(`receipt: fail (${receipt.defects?.length} defects); repairing`);
   } else if (job.stage === 'repair') {
     job.round += 1;
+    const mechRound = !!job.options.mechPending; job.options.mechPending = false;
     const repaired = abs(job.artefacts.candidate).replace(/\.json$/, `.r${job.round}.json`);
     const r = node('repair.mjs', [paperId, '--candidate', currentCandidate(), '--receipt', receiptOut, '--out', repaired, '--round', String(job.round)]);
     process.stdout.write(r.stdout);
@@ -495,6 +530,9 @@ for (;;) {
       const leftovers = xr.unapplied || [];
       const allDisputedMinor = leftovers.length > 0 && leftovers.every(u => /disputed/.test(String(u.reason)) && u.severity === 'minor');
       if (allDisputedMinor && !job.options.disputeRound) { job.options.disputeRound = true; job.options.maxRounds = Math.max(job.options.maxRounds, job.round + 1); save(`every leftover is a minor defect the refix disputed: one more check to record them as notes`); }
+      // a mechanical round that settled nothing is not a dead end: the paid checker has not spoken yet — it runs next
+      // (and no further pre-check is attempted on this job)
+      else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0 && mechRound) { job.options.mechRounds = 2; save(`mechanical pre-check leftovers could not be settled from the pages (${xr.skipped}); the checker decides`); }
       else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0) escalate(`nothing could be applied this round: repair skipped ${rep.skipped}, refix could not settle ${xr.skipped} defect(s) from the pages`);
       save(`refix applied ${xr.applied} defect(s) the checker could not phrase${x.status === 3 ? `, ${xr.skipped} left for the next round` : ''}, round ${job.round}`);
     }

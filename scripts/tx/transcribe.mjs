@@ -184,8 +184,12 @@ function buildRequest(images, userText) {
   if (provider === 'anthropic') return {
     url: 'https://api.anthropic.com/v1/messages',
     headers: key => ({ 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' }),
+    // Claude 5-generation models reject sampling parameters (temperature → 400) and think
+    // adaptively by default; --reasoning maps to output_config.effort (transcription is
+    // perception, so the reader runs at low effort; thinking tokens bill as output).
     body: {
-      model, max_tokens: maxTokens, temperature: 0,
+      model, max_tokens: maxTokens,
+      thinking: { type: 'adaptive' }, output_config: { effort: reasoning },
       system: 'You transcribe and verify competition papers. Output exactly one JSON object and nothing else.',
       messages: [{ role: 'user', content: [
         ...imgs.map(i => ({ type: 'image', source: { type: 'base64', media_type: i.mime, data: b64(i.file) } })),
@@ -392,7 +396,7 @@ for (const window of windows) {
     const summary = {
       dryRun: true, paperId, stage, provider, model, window: label, endpoint: req.url, keysFile: cfg.file, keysFileExists: cfg.exists, keyPresent: hasKey, keyName,
       images: images.map(i => ({ kind: i.kind, id: i.id, document: i.document, page: i.page, bytes: i.bytes })), promptVersion: prompt.version, promptSha256: prompt.sha256,
-      payloadBytes, requestCapBytes: limits.requestBytes, approxInputTokens, tokensPerPageAssumed: TOKENS_PER_PAGE[provider], maxTokens, reasoning: provider === 'zai' ? reasoning : null, timeoutMin: timeoutMs / 60000,
+      payloadBytes, requestCapBytes: limits.requestBytes, approxInputTokens, tokensPerPageAssumed: TOKENS_PER_PAGE[provider], maxTokens, reasoning: provider === 'zai' || provider === 'anthropic' ? reasoning : null, timeoutMin: timeoutMs / 60000,
       wouldWrite: target, estimatedCostUsd: estimateCost(model, approxInputTokens, Math.round(Math.min(maxTokens, 12000) / 2)),
       note: 'estimate uses unverified list prices, a measured 3,230 tokens/page for zai (guessed 1,600 for others) and a guessed output length; no request was sent',
     };
@@ -408,11 +412,11 @@ for (const window of windows) {
   for (let ask = 1; ask <= 2 && !obj; ask++) {
     parsed = await send(req, label);
     costUsd = estimateCost(model, parsed.inputTokens, parsed.outputTokens);
-    appendRun({ paperId, stage, provider, model, window: label, ok: true, imagesCompressed, attempts: parsed.attempts, ask, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' ? reasoning : null, at: nowIso() });
+    appendRun({ paperId, stage, provider, model, window: label, ok: true, imagesCompressed, attempts: parsed.attempts, ask, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' || provider === 'anthropic' ? reasoning : null, at: nowIso() });
     obj = extractJson(parsed.text, target.replace(/\.json$/, '.raw.txt'), parsed.stopReason, ask < 2);
     if (!obj) console.error(`[transcribe] ${label}: no usable JSON in the reply (raw text saved); asking once more`);
   }
-  const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' ? { reasoning } : {}) };
+  const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' || provider === 'anthropic' ? { reasoning } : {}) };
   if (stage === 'refix') {
     const responseFile = target.replace(/\.json$/, '') + '.response.json';
     writeJson(responseFile, { ...ident, fixes: obj.fixes ?? null });

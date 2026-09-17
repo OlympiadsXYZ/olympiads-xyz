@@ -25,6 +25,27 @@ const MagicScriptTag = () => {
   // eslint-disable-next-line react/no-danger
   return <script dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />;
 };
-export const onRenderBody = ({ setPreBodyComponents }) => {
+// Vercel Web Analytics, script-tag variant (no npm dependency): the queue shim lets
+// pages call window.va() before the deferred script loads. Vercel serves the script
+// from the site's own origin, so nothing loads outside www.olympiads.xyz.
+// https://vercel.com/docs/analytics/quickstart (framework "Other")
+const VercelAnalytics = () => (
+  <>
+    <script
+      key="va-shim"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{
+        __html:
+          'window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };',
+      }}
+    />
+    <script key="va-script" defer src="/_vercel/insights/script.js" />
+  </>
+);
+export const onRenderBody = ({
+  setPreBodyComponents,
+  setPostBodyComponents,
+}) => {
   setPreBodyComponents(<MagicScriptTag key="magic-script-tag" />);
+  setPostBodyComponents(<VercelAnalytics key="vercel-analytics" />);
 };

@@ -56,15 +56,19 @@ const li = ({ children, ...props }): JSX.Element => (
 const inlineCode = (props): JSX.Element => (
   <code {...props} className="inline-code" />
 );
-const a = ({ children, ...props }) => (
-  <a
-    target={!props.href || props.href.startsWith('#') ? undefined : '_blank'}
-    {...props}
-    href={archiveHref(props.href)}
-  >
-    {children}
-  </a>
-);
+const a = ({ children, ...props }) => {
+  const external = !!props.href && !props.href.startsWith('#');
+  return (
+    <a
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      {...props}
+      href={archiveHref(props.href)}
+    >
+      {children}
+    </a>
+  );
+};
 const pre = ({ children, copyButton = true, ...props }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const isDarkMode = useDarkMode();
