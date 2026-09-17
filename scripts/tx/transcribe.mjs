@@ -656,13 +656,16 @@ if (batchResultIds) {
     lines.push(queuedLine(customId, label, target, { attempt, ask, reused: true }));
   }
   if (requeued) { for (const l of lines) console.log(JSON.stringify(l)); process.exit(2); }
+  // the candidate/part file is written BEFORE the sidecar is marked collected: a crash inside this loop then leaves
+  // an uncollected result that the next --batch-result reads again (idempotent) instead of a collected mark with no
+  // file, which would make the next --batch-async pay for the same window again (verifier finding 2026-09-17)
   for (const r of ready) {
     if (stage === 'checker' || stage === 'cropcheck') selectImages(r.window); // the checker's crop list as the request carried it (no image is read)
     const costUsd = costOf(r.parsed.inputTokens, r.parsed.outputTokens);
-    appendRun(runRecord(r.parsed, r.label, costUsd, r.ask, r.parsed.imagesCompressed));
-    updateBatchMeta(r.parsed.customId, { collectedAt: nowIso(), collectedTo: r.target }); // a collected request is never reused by a later --batch-async
     jsonRepaired = r.jsonRepaired;
     finishWindow(r.window, r.label, r.target, r.parsed, r.obj, costUsd);
+    appendRun(runRecord(r.parsed, r.label, costUsd, r.ask, r.parsed.imagesCompressed));
+    updateBatchMeta(r.parsed.customId, { collectedAt: nowIso(), collectedTo: r.target }); // a collected request is never reused by a later --batch-async
   }
 } else {
   const lines = [];

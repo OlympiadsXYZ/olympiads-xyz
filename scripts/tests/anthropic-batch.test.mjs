@@ -576,7 +576,7 @@ test('--batch-async queues the request and exits 2 with one JSON line; --batch-r
   preparePaper();
   const api = await fakeApi(t, { idPrefix: 'msgbatch_async', results: () => ({ type: 'succeeded', message: message(JSON.stringify(reply()), { input_tokens: 10000, output_tokens: 2000 }) }) });
   const runsBefore = runsFor().length;
-  const q = transcribeSync(api.base, ['--batch-async']);
+  const q = transcribeSync(api.base, ['--batch-async', '--no-broker-check']);
   assert.equal(q.status, 2, q.stderr);
   const lines = queuedLines(q);
   assert.equal(lines.length, 1);
@@ -591,7 +591,7 @@ test('--batch-async queues the request and exits 2 with one JSON line; --batch-r
   const prov = provisionalFor().filter(r => r.customId === line.customId);
   assert.equal(prov.length, 1, 'one provisional booking for the enqueue');
   assert.equal(prov[0].ok, false); assert.equal(prov[0].provider, 'anthropic'); assert.equal(prov[0].model, 'claude-opus-5'); assert.equal(prov[0].stage, 'reader'); assert.equal(prov[0].transport, 'batch');
-  const dryEst = JSON.parse(transcribeSync(api.base, ['--dry-run', '--batch-async']).stdout).estimatedCostUsd;
+  const dryEst = JSON.parse(transcribeSync(api.base, ['--dry-run', '--batch-async', '--no-broker-check']).stdout).estimatedCostUsd;
   assert.ok(dryEst > 0 && prov[0].costUsd === dryEst, `the provisional cost is the dry-run estimate at the batch price (${prov[0].costUsd} vs ${dryEst})`);
   assert.match(q.stderr, /queued .* as tx-.* \(detached\); collect it with --batch-result/);
 
@@ -622,9 +622,9 @@ test('--batch-async queues the request and exits 2 with one JSON line; --batch-r
   assert.equal(last.ok, true); assert.equal(last.transport, 'batch'); assert.equal(last.costUsd, 0.05); assert.equal(last.customId, line.customId); assert.equal(last.batchId, 'msgbatch_async1'); assert.equal(last.ask, 1);
   // collecting twice is refused nowhere but books nothing new either: the caller (run.mjs) collects once
   // a wrong provider or the sync transport cannot take the flags
-  const bad = spawnSync(process.execPath, [txScript('transcribe.mjs'), PAPER, '--provider', 'gemini', '--model', 'x', '--stage', 'reader', '--batch-async'], { encoding: 'utf8', env: envFor(api.base) });
+  const bad = spawnSync(process.execPath, [txScript('transcribe.mjs'), PAPER, '--provider', 'gemini', '--model', 'x', '--stage', 'reader', '--batch-async', '--no-broker-check'], { encoding: 'utf8', env: envFor(api.base) });
   assert.equal(bad.status, 1); assert.match(bad.stderr, /apply to the anthropic provider only/);
-  const bad2 = transcribeSync(api.base, ['--batch-async', '--transport', 'sync']);
+  const bad2 = transcribeSync(api.base, ['--batch-async', '--no-broker-check', '--transport', 'sync']);
   assert.equal(bad2.status, 1); assert.match(bad2.stderr, /need the batch transport/);
 });
 
@@ -638,7 +638,7 @@ test('a windowed reader: --batch-async queues every window at once; --batch-resu
     else { delete r.paper.solutionSource; delete r.problems[0].solution; r.problems[0].tx.sourceSpans = [{ document: 'problems', page: 1 }]; }
     return { type: 'succeeded', message: message(JSON.stringify(r), { input_tokens: 5000, output_tokens: 1000 }) };
   } });
-  const q = transcribeSync(api.base, ['--batch-async', '--window-pages', '2']);
+  const q = transcribeSync(api.base, ['--batch-async', '--no-broker-check', '--window-pages', '2']);
   assert.equal(q.status, 2, q.stderr);
   const lines = queuedLines(q);
   assert.deepEqual(lines.map(l => l.window), ['problems-01-02', 'solutions-01-01'], 'one line per window, in window order');
@@ -679,7 +679,7 @@ test('--batch-result: a retryable error re-queues that window (exit 2, new id, o
   const good = () => ({ type: 'succeeded', message: message(JSON.stringify(reply()), { input_tokens: 100, output_tokens: 50 }) });
   const api = await fakeApi(t, { idPrefix: 'msgbatch_rq', results: id => kinds.get(id)?.() || good() });
   // (a) overloaded on attempt 1 → re-queued; attempt 2 succeeds
-  let q = transcribeSync(api.base, ['--batch-async']);
+  let q = transcribeSync(api.base, ['--batch-async', '--no-broker-check']);
   assert.equal(q.status, 2, q.stderr);
   const id1 = queuedLines(q)[0].customId;
   kinds.set(id1, () => ({ type: 'errored', error: { type: 'error', error: { type: 'overloaded_error', message: 'Overloaded' } } }));
@@ -699,7 +699,7 @@ test('--batch-result: a retryable error re-queues that window (exit 2, new id, o
   assert.equal(JSON.parse(ok.stdout).attempts, 2);
   assert.equal(JSON.parse(fs.readFileSync(l2[0].out, 'utf8')).tx.reader.attempts, 2);
   // (b) a non-retryable error: exit 1 with the API's text, nothing queued
-  q = transcribeSync(api.base, ['--batch-async']);
+  q = transcribeSync(api.base, ['--batch-async', '--no-broker-check']);
   const id3 = queuedLines(q)[0].customId;
   kinds.set(id3, () => ({ type: 'errored', error: { type: 'error', error: { type: 'invalid_request_error', message: 'messages.0.content.0.image.source.data: image is too small' } } }));
   assert.equal((await runBroker(api.base)).status, 0);
@@ -708,7 +708,7 @@ test('--batch-result: a retryable error re-queues that window (exit 2, new id, o
   assert.match(bad.stderr, /error: anthropic batch request failed \(all\): batch msgbatch_rq\d+ errored: .*image is too small/);
   assert.equal(broker.listQueued().length, 0);
   // (c) prose instead of JSON: the paid reply is booked (unusableJson) and the window is asked once more (ask 2); a second prose reply fails
-  q = transcribeSync(api.base, ['--batch-async']);
+  q = transcribeSync(api.base, ['--batch-async', '--no-broker-check']);
   const id4 = queuedLines(q)[0].customId;
   kinds.set(id4, () => ({ type: 'succeeded', message: message('Sorry, I cannot read these pages.', { input_tokens: 100, output_tokens: 10 }) }));
   assert.equal((await runBroker(api.base)).status, 0);
@@ -725,7 +725,7 @@ test('--batch-result: a retryable error re-queues that window (exit 2, new id, o
   const prose2 = transcribeSync(api.base, ['--batch-result', id5]);
   assert.equal(prose2.status, 1); assert.match(prose2.stderr, /no usable JSON in the reply for all after 2 asks/);
   // (d) a windowed re-queue keeps the good window's id (reused) and books nothing for it until the collect
-  const win = transcribeSync(api.base, ['--batch-async', '--window-pages', '2']);
+  const win = transcribeSync(api.base, ['--batch-async', '--no-broker-check', '--window-pages', '2']);
   const wl = queuedLines(win); const [wa, wb] = wl.map(l => l.customId);
   kinds.set(wb, () => ({ type: 'expired' }));
   assert.equal((await runBroker(api.base)).status, 0);
@@ -847,7 +847,7 @@ test('batch.mjs --batch-async schedules two papers through the broker, survives 
   for (const id of ids) { preparePaperId(id); plantJob(id); } // no batchAsync on the job: batch.mjs passes --batch-async on --continue
   const logFile = path.join(root, 'batch.log');
   const readBatchLog = () => fs.existsSync(logFile) ? fs.readFileSync(logFile, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l)) : [];
-  const argv = ['--ids', ids.join(','), '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--poll-sec', '1', '--workers', '2', '--in-flight', '10', '--log', logFile];
+  const argv = ['--ids', ids.join(','), '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--no-broker-check', '--poll-sec', '1', '--workers', '2', '--in-flight', '10', '--log', logFile];
   // first scheduler: both readers park; the process is then killed with the jobs parked (no broker has run)
   const first = spawn(process.execPath, [txScript('batch.mjs'), ...argv], { env, cwd: repo });
   t.after(() => { try { first.kill(); } catch {} }); // a failed assertion must not leave the scheduler polling forever
@@ -895,12 +895,12 @@ test('batch.mjs --batch-async schedules two papers through the broker, survives 
 test('--batch-async reuses a detached request already queued or submitted for the same work, and stops reusing it once it is collected', async t => {
   preparePaper();
   const api = await fakeApi(t, { idPrefix: 'msgbatch_reuse', results: () => ({ type: 'succeeded', message: message(JSON.stringify(reply()), { input_tokens: 1000, output_tokens: 200 }) }) });
-  const q1 = transcribeSync(api.base, ['--batch-async']);
+  const q1 = transcribeSync(api.base, ['--batch-async', '--no-broker-check']);
   assert.equal(q1.status, 2, q1.stderr);
   const id = queuedLines(q1)[0].customId;
   const provBefore = provisionalFor().length;
   // the same enqueue again while the request is still queued: the same id, no second queue entry, no second provisional line
-  const q2 = transcribeSync(api.base, ['--batch-async']);
+  const q2 = transcribeSync(api.base, ['--batch-async', '--no-broker-check']);
   assert.equal(q2.status, 2, q2.stderr);
   const l2 = queuedLines(q2)[0];
   assert.equal(l2.customId, id, 'the queued request is reused'); assert.equal(l2.adopted, true);
@@ -911,7 +911,7 @@ test('--batch-async reuses a detached request already queued or submitted for th
   assert.equal((await runBroker(api.base)).status, 0);
   assert.equal(api.state.posts.length, 1);
   assert.equal(lib.batchRequestState(id), 'done');
-  const q3 = transcribeSync(api.base, ['--batch-async']);
+  const q3 = transcribeSync(api.base, ['--batch-async', '--no-broker-check']);
   assert.equal(q3.status, 2, q3.stderr);
   assert.equal(queuedLines(q3)[0].customId, id, 'a submitted, uncollected request is reused'); assert.match(q3.stderr, /already done as/);
   assert.equal(broker.listQueued().length, 0, 'nothing new queued');
@@ -927,7 +927,7 @@ test('--batch-async reuses a detached request already queued or submitted for th
   assert.equal(c.status, 0, c.stderr);
   assert.ok(lib.readBatchMeta(id).collectedAt, 'the collect marks the sidecar');
   assert.equal(lib.findDetachedBatchRequest(prefix, { paperId: PAPER, stage: 'reader', window: 'all' }), null);
-  const q4 = transcribeSync(api.base, ['--batch-async']);
+  const q4 = transcribeSync(api.base, ['--batch-async', '--no-broker-check']);
   assert.equal(q4.status, 2, q4.stderr);
   const id4 = queuedLines(q4)[0].customId;
   assert.notEqual(id4, id); assert.equal(id4.slice(0, -7), prefix, 'the same work, a fresh custom id'); assert.equal(queuedLines(q4)[0].adopted, undefined);
@@ -1022,7 +1022,7 @@ test('one scheduler per machine (batch-async.lock) and one loop per job (running
   assert.equal(jobOf(id).waitingFor.stage, 'reader');
   assert.equal(jobOf(id).runningPid, undefined, 'cleared at exit'); assert.equal(jobOf(id).runningSince, undefined);
   // (b) a second scheduler exits at once while the holder is alive; the lock is untouched
-  const argv = ['--ids', id, '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--poll-sec', '1', '--log', path.join(root, 'batch-lock.log')];
+  const argv = ['--ids', id, '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--no-broker-check', '--poll-sec', '1', '--log', path.join(root, 'batch-lock.log')];
   fs.writeFileSync(lockFile, JSON.stringify({ pid: process.pid, at: lib.nowIso() }));
   const second = await runAsync('batch.mjs', argv, env);
   assert.equal(second.status, 1);
@@ -1045,7 +1045,7 @@ test('one scheduler per machine (batch-async.lock) and one loop per job (running
   const ids = ['zz-2099-batch-12', 'zz-2099-batch-13'];
   for (const p of ids) { preparePaperId(p); plantJob(p); }
   const logFile = path.join(root, 'batch-inflight.log');
-  const child = spawn(process.execPath, [txScript('batch.mjs'), '--ids', ids.join(','), '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--poll-sec', '1', '--workers', '2', '--in-flight', '1', '--log', logFile], { env, cwd: repo });
+  const child = spawn(process.execPath, [txScript('batch.mjs'), '--ids', ids.join(','), '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--no-broker-check', '--poll-sec', '1', '--workers', '2', '--in-flight', '1', '--log', logFile], { env, cwd: repo });
   t.after(() => { try { child.kill(); } catch {} });
   let out = ''; child.stdout.on('data', d => { out += d; }); child.stderr.on('data', d => { out += d; });
   const closed = new Promise(res => child.on('close', res));
@@ -1065,7 +1065,7 @@ test('the spend cap counts money committed to the broker: three enqueues over th
   const ids = ['zz-2099-batch-14', 'zz-2099-batch-15', 'zz-2099-batch-16', 'zz-2099-batch-17'];
   for (const p of ids) { preparePaperId(p); plantJob(p); }
   // the estimate one reader enqueue books: transcribe.mjs's own dry-run figure at the batch price
-  const dry = spawnSync(process.execPath, [txScript('transcribe.mjs'), ids[0], '--provider', 'anthropic', '--model', 'claude-opus-5', '--stage', 'reader', '--dry-run', '--batch-async'], { encoding: 'utf8', env });
+  const dry = spawnSync(process.execPath, [txScript('transcribe.mjs'), ids[0], '--provider', 'anthropic', '--model', 'claude-opus-5', '--stage', 'reader', '--dry-run', '--batch-async', '--no-broker-check'], { encoding: 'utf8', env });
   assert.equal(dry.status, 0, dry.stderr);
   const est = JSON.parse(dry.stdout).estimatedCostUsd;
   assert.ok(est > 0.01 && est < 1, `estimate ${est}`);
@@ -1073,7 +1073,7 @@ test('the spend cap counts money committed to the broker: three enqueues over th
   const logFile = path.join(root, 'batch-spend.log');
   const readBatchLog = () => fs.existsSync(logFile) ? fs.readFileSync(logFile, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l)) : [];
   const since = new Date(Date.now() - 1000).toISOString();
-  const argv = ['--ids', ids.join(','), '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--poll-sec', '1', '--workers', '1', '--in-flight', '10', '--max-spend-usd', String(cap), '--spend-since', since, '--log', logFile];
+  const argv = ['--ids', ids.join(','), '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--no-broker-check', '--poll-sec', '1', '--workers', '1', '--in-flight', '10', '--max-spend-usd', String(cap), '--spend-since', since, '--log', logFile];
   const child = spawn(process.execPath, [txScript('batch.mjs'), ...argv], { env, cwd: repo });
   t.after(() => { try { child.kill(); } catch {} });
   let out = '', err = ''; child.stdout.on('data', d => { out += d; }); child.stderr.on('data', d => { err += d; });
@@ -1144,7 +1144,7 @@ test('one corrupt JSON file is logged and skipped: broker records and sidecars, 
   const saved = fs.readFileSync(jobsFile, 'utf8');
   try {
     fs.writeFileSync(jobsFile, '{"version": 2, "jobs": {');
-    const r = await runAsync('batch.mjs', ['--ids', PAPER, '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--poll-sec', '1', '--log', path.join(root, 'batch-corrupt.log')], envFor(api.base));
+    const r = await runAsync('batch.mjs', ['--ids', PAPER, '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--no-broker-check', '--poll-sec', '1', '--log', path.join(root, 'batch-corrupt.log')], envFor(api.base));
     assert.equal(r.status, 0, r.stderr);
     assert.match(r.stderr, /jobs\.json is not valid JSON/);
     assert.doesNotMatch(r.stderr, /SyntaxError/);

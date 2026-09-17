@@ -33,9 +33,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, readJsonSafe, updateJobs, JOBS_FILE, RUNS_FILE, ROOT, nowIso, paperDir, findContentFile, BATCH_DIRS, BATCH_ASYNC_LOCK, sleep, pidAlive } from './lib.mjs';
+import { parseArgs, fail, readJson, readJsonSafe, updateJobs, JOBS_FILE, RUNS_FILE, ROOT, nowIso, paperDir, findContentFile, BATCH_DIRS, BATCH_ASYNC_LOCK, sleep, pidAlive, brokerAlive } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh', 'batch-async'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh', 'batch-async', 'no-broker-check'] });
 if (!args.ids && !args.backlog && !args.catalogue) fail('usage: batch.mjs --ids a,b | --backlog | --catalogue [--subjects s,s] [--langs l,l] [--competitions c,c] [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote] [--redo]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
 const batchAsync = !!args['batch-async'];
@@ -213,6 +213,9 @@ if (!batchAsync) {
   // one scheduler per machine: two would start and resume the same papers (run.mjs refuses the second on a live
   // runningPid, but every refusal is a wasted spawn and a logged error)
   for (let tries = 0; ; tries++) {
+    // the broker and this scheduler share tmp/tx (TX_DIR is checkout-relative): with no broker alive every paper
+    // would park and nothing would ever be submitted (verifier finding 2026-09-17)
+    if (!brokerAlive() && !args['no-broker-check']) fail(`no batch broker is running for ${path.relative(ROOT, BATCH_DIRS.lock)} — start 'node scripts/tx/anthropic-batch-broker.mjs' from this checkout first (or pass --no-broker-check)`);
     try { fs.mkdirSync(path.dirname(BATCH_ASYNC_LOCK), { recursive: true }); fs.writeFileSync(BATCH_ASYNC_LOCK, JSON.stringify({ pid: process.pid, at: nowIso(), argv: process.argv.slice(2) }), { flag: 'wx' }); break; }
     catch (e) {
       if (e.code !== 'EEXIST') throw e;

@@ -544,7 +544,8 @@ export function withFileLock(lockFile, fn, { waitMs = 15000, staleMs = 60000 } =
     try { fs.writeFileSync(lockFile, JSON.stringify({ pid: process.pid, at: nowIso() }), { flag: 'wx' }); held = true; break; }
     catch (e) {
       if (e.code !== 'EEXIST') throw e;
-      const cur = readJson(lockFile, null);
+      let cur; try { cur = JSON.parse(fs.readFileSync(lockFile, 'utf8')); } catch { cur = undefined; } // a lock being written this microsecond is held, not stale
+      if (cur === undefined) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20); if (Date.now() - started > waitMs) break; continue; }
       const stale = !cur?.pid || (cur.pid !== process.pid && !pidAlive(cur.pid)) || Date.now() - Date.parse(cur.at || 0) > staleMs;
       if (stale) { try { fs.unlinkSync(lockFile); } catch {} continue; }
       if (Date.now() - started > waitMs) { console.error(`[lib] ${path.basename(lockFile)} held by pid ${cur.pid} since ${cur.at} for over ${waitMs} ms; proceeding without it`); break; }

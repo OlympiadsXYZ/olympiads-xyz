@@ -161,12 +161,16 @@ async function submitGroup(items) {
     return;
   }
   const why = failureText(r);
-  if (r.status === null) {
-    // No answer at all (socket error or timeout after the body went out): the API may well have created the batch.
-    // The pending record stays; reconcilePending() adopts the batch from the API on the next pass, or drops the
-    // record when nothing matches — never a second POST from here (reviewer finding 2026-09-17).
-    log({ action: 'submit-unknown', pending: token, requests: good.length, why: redact(why) });
-    console.error(`[broker] submit of ${good.length} request(s) got no answer (${redact(why)}); pending ${token} kept for reconciliation`);
+  // Unknown outcome: no answer at all (socket error/timeout after the body went out), any 5xx, or an answer without an
+  // Anthropic error body (a gateway's HTML page) — the origin may well have created the batch (a 502 after a 200 MB
+  // POST it finished). The pending record stays; reconcilePending() adopts or drops it on later passes — never a
+  // second POST from here (reviewer findings 2026-09-17, both hops). Only a definite API refusal (4xx with an error
+  // body, 429/529 overloaded) unlinks the record.
+  const errType = r.json?.type === 'error' ? r.json?.error?.type : null;
+  const definiteRefusal = r.status !== null && !!errType && (r.status < 500 || (r.status === 529 && /overloaded|rate_limit/.test(errType)));
+  if (r.status === null || !definiteRefusal) {
+    log({ action: 'submit-unknown', pending: token, requests: good.length, status: r.status, why: redact(why) });
+    console.error(`[broker] submit of ${good.length} request(s) has no definite answer (${r.status ?? 'no status'}: ${redact(why)}); pending ${token} kept for reconciliation`);
     setBackoff(r.retryAfterMs, `submit unanswered: ${why}`);
     return;
   }
