@@ -35,7 +35,7 @@ import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, readJsonSafe, updateJobs, JOBS_FILE, RUNS_FILE, ROOT, nowIso, paperDir, findContentFile, BATCH_DIRS, BATCH_ASYNC_LOCK, sleep, pidAlive, brokerAlive } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh', 'batch-async', 'no-broker-check', 'native-only'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh', 'batch-async', 'no-broker-check', 'native-only', 'skip-escalated'] });
 if (!args.ids && !args.backlog && !args.catalogue) fail('usage: batch.mjs --ids a,b | --backlog | --catalogue [--subjects s,s] [--langs l,l] [--competitions c,c] [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote] [--redo]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
 const batchAsync = !!args['batch-async'];
@@ -93,6 +93,9 @@ for (const id of ids) {
   if (args.redo && job) { plan.push({ id, resume: true }); continue; } // whatever stage the job is in (a redo interrupted mid-way resumes)
   if (findContentFile(id)) { log({ paperId: id, outcome: 'skipped', reason: 'already in content/problems' }); continue; }
   if (job?.stage === 'promoted' || job?.stage === 'done') { log({ paperId: id, outcome: 'skipped', reason: `job already ${job.stage}` }); continue; }
+  // --skip-escalated: parked papers (the expensive hard cases) are left for a deliberate --retry run, not resumed
+  // alongside fresh work (2026-09-17: a scheduler resumed ioaa-2014 at round 15 next to new papers)
+  if (args['skip-escalated'] && job?.stage === 'escalated') { log({ paperId: id, outcome: 'skipped', reason: 'escalated job left parked (--skip-escalated)' }); continue; }
   plan.push({ id, resume: !!job });
 }
 // the ChatGPT app has one composer and "the current chat" is whichever the last call left open: one worker only
