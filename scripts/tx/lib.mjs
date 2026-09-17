@@ -22,7 +22,8 @@ export const RUNS_FILE = path.join(TX_DIR, 'runs.jsonl');
 export const JOBS_FILE = path.join(TX_DIR, 'jobs.json');
 export const PRICES_FILE = path.join(ROOT, 'scripts', 'tx', 'prices.json');
 export const PROMPTS_DIR = path.join(ROOT, 'scripts', 'tx', 'prompts');
-export const KEYS_FILE = path.join(os.homedir(), '.config', 'olympiads-xyz', 'providers.env');
+// OLYMPIADS_KEYS_FILE lets the tests point at a throw-away providers.env (the real one is never read by a test).
+export const KEYS_FILE = process.env.OLYMPIADS_KEYS_FILE ? path.resolve(process.env.OLYMPIADS_KEYS_FILE) : path.join(os.homedir(), '.config', 'olympiads-xyz', 'providers.env');
 export const R2_REMOTE = 'r2:olympiads-archive';
 export const R2_PUBLIC = 'https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev';
 export const RENDER_DPI = 160;
@@ -44,6 +45,12 @@ export const sha256 = value => crypto.createHash('sha256').update(value).digest(
 export const md5 = value => crypto.createHash('md5').update(value).digest('hex');
 export const sha256File = file => sha256(fs.readFileSync(file));
 export const readJson = (file, fallback) => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
+// The same for a file that may be half-written or corrupt (a batch meta, a broker record, jobs.json read by a
+// scheduler): one bad file is logged and skipped instead of stopping the whole pass (reviewer finding 2026-09-17).
+export function readJsonSafe(file, fallback) {
+  try { return readJson(file, fallback); }
+  catch (e) { console.error(`[lib] ${path.relative(ROOT, file)} is not valid JSON (${e.message}); skipped`); return fallback; }
+}
 export function writeJson(file, value, indent = 2) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const tmp = `${file}.${process.pid}.partial`;
@@ -514,14 +521,43 @@ export const PROVIDER_LIMITS = {
   chatgpt: { imageBytes: 20 * 1024 * 1024, images: 20, requestBytes: 200 * 1024 * 1024 },
 };
 export const readPrices = () => readJson(PRICES_FILE, { models: {} });
-export function estimateCost(model, inputTokens, outputTokens, prices = readPrices()) {
+// { batch: true }: the Anthropic Message Batches API bills 50% of the list price (prices.json note, verified 2026-09-17).
+export const BATCH_PRICE_FACTOR = 0.5;
+export function estimateCost(model, inputTokens, outputTokens, prices = readPrices(), { batch = false } = {}) {
   const p = prices.models?.[model];
   if (!p) return null;
-  return +(((inputTokens || 0) * p.inputPerMTok + (outputTokens || 0) * p.outputPerMTok) / 1e6).toFixed(6);
+  return +(((inputTokens || 0) * p.inputPerMTok + (outputTokens || 0) * p.outputPerMTok) / 1e6 * (batch ? BATCH_PRICE_FACTOR : 1)).toFixed(6);
 }
 export function appendRun(record) {
   fs.mkdirSync(TX_DIR, { recursive: true });
   fs.appendFileSync(RUNS_FILE, JSON.stringify(record) + '\n');
+}
+// A synchronous lock file ({pid, at}, created with 'wx') held around a read-modify-write of a shared file. A lock
+// whose holder is dead, or older than staleMs, is taken over; after waitMs the caller proceeds without it (and says
+// so) rather than hang. Used for jobs.json: two run.mjs processes parking in the same millisecond lost one's update
+// (re-read-then-write is atomic per file but not per entry; seen in the batch.mjs --batch-async test, 2026-09-17).
+export function withFileLock(lockFile, fn, { waitMs = 15000, staleMs = 60000 } = {}) {
+  fs.mkdirSync(path.dirname(lockFile), { recursive: true });
+  const started = Date.now();
+  let held = false;
+  for (;;) {
+    try { fs.writeFileSync(lockFile, JSON.stringify({ pid: process.pid, at: nowIso() }), { flag: 'wx' }); held = true; break; }
+    catch (e) {
+      if (e.code !== 'EEXIST') throw e;
+      let cur; try { cur = JSON.parse(fs.readFileSync(lockFile, 'utf8')); } catch { cur = undefined; } // a lock being written this microsecond is held, not stale
+      if (cur === undefined) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20); if (Date.now() - started > waitMs) break; continue; }
+      const stale = !cur?.pid || (cur.pid !== process.pid && !pidAlive(cur.pid)) || Date.now() - Date.parse(cur.at || 0) > staleMs;
+      if (stale) { try { fs.unlinkSync(lockFile); } catch {} continue; }
+      if (Date.now() - started > waitMs) { console.error(`[lib] ${path.basename(lockFile)} held by pid ${cur.pid} since ${cur.at} for over ${waitMs} ms; proceeding without it`); break; }
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20);
+    }
+  }
+  try { return fn(); }
+  finally { if (held) { try { if (readJson(lockFile, null)?.pid === process.pid) fs.unlinkSync(lockFile); } catch {} } }
+}
+// jobs.json read-modify-write under its lock: mutate(state) edits the freshly read state, which is then written.
+export function updateJobs(mutate) {
+  return withFileLock(`${JOBS_FILE}.lock`, () => { const state = readJson(JOBS_FILE, { version: 2, jobs: {} }); mutate(state); writeJson(JOBS_FILE, state); return state; });
 }
 export const readRuns = () => fs.existsSync(RUNS_FILE) ? fs.readFileSync(RUNS_FILE, 'utf8').split('\n').filter(Boolean).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean) : [];
 export const safeLabel = s => String(s).replace(/[^a-zA-Z0-9._-]+/g, '-');
@@ -1073,4 +1109,186 @@ export function repairJsonEscapes(s) {
     i = j;
   }
   return out;
+}
+
+// ---------------------------------------------------------------- Anthropic Message Batches (transcribe.mjs --transport batch)
+// The batch transport is a file handshake between transcribe.mjs and anthropic-batch-broker.mjs
+// under tmp/tx/anthropic-batch/ (TX_DIR-relative, so the tests can sandbox it):
+//   queue/<customId>.json       the exact Messages request body transcribe.mjs would have POSTed
+//   queue/<customId>.meta.json  {paperId, stage, window, model, createdAt, ...} for the operator and the log
+//   submitted/<batchId>/        the two files above, moved there the moment the broker has submitted them
+//   batches/<batchId>.json      the broker's record of one batch (custom ids, counts, status, results url)
+//   results/<customId>.json     the Message JSON as /v1/messages would return it, plus a `batch` block;
+//                               {error: {type, message}, batch} for errored / expired / canceled requests
+//   failed/                     queued files the broker refused (over the cap, not JSON, rejected by the API)
+// transcribe.mjs writes the meta first and the body last (atomically), because the broker keys on the body
+// file; the broker writes results atomically too, so a waiter never reads a half file. The Batch API bills
+// 50% of the list price; estimateCost(..., {batch: true}) applies that.
+export const ANTHROPIC_BASE_URL = String(process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com').replace(/\/+$/, '');
+export const BATCH_DIR = path.join(TX_DIR, 'anthropic-batch');
+export const BATCH_DIRS = {
+  queue: path.join(BATCH_DIR, 'queue'), submitted: path.join(BATCH_DIR, 'submitted'), results: path.join(BATCH_DIR, 'results'),
+  batches: path.join(BATCH_DIR, 'batches'), failed: path.join(BATCH_DIR, 'failed'),
+  log: path.join(BATCH_DIR, 'broker.log'), lock: path.join(BATCH_DIR, 'broker.lock'),
+};
+// One batch.mjs --batch-async scheduler per machine (two would drive the same papers): {pid, at}, taken with 'wx',
+// a dead holder's lock is taken over (reviewer finding 2026-09-17).
+export const BATCH_ASYNC_LOCK = path.join(TX_DIR, 'batch-async.lock');
+// tx-<40 hex of sha256(paperId|stage|window|sha256(body))>-<6 random hex>: 50 chars, inside the API's ^[a-zA-Z0-9_-]{1,64}$,
+// deterministic enough to recognise a request in the log and random enough that a retry never collides.
+export const BATCH_CUSTOM_ID = /^tx-[0-9a-f]{40}-[0-9a-f]{6}$/;
+export const batchCustomId = (paperId, stage, windowLabel, body) => `tx-${sha256(`${paperId}|${stage}|${windowLabel}|${sha256(body)}`).slice(0, 40)}-${crypto.randomBytes(3).toString('hex')}`;
+export const batchFiles = customId => ({
+  body: path.join(BATCH_DIRS.queue, `${customId}.json`), meta: path.join(BATCH_DIRS.queue, `${customId}.meta.json`),
+  result: path.join(BATCH_DIRS.results, `${customId}.json`),
+});
+export const pidAlive = pid => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+// Windows refuses renames while another process holds the target: retry briefly, like writeJson.
+export function renameWithRetry(from, to) {
+  for (let attempt = 1; ; attempt++) {
+    try { fs.renameSync(from, to); return; }
+    catch (e) {
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) throw e;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt);
+    }
+  }
+}
+export function writeFileAtomic(file, data) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  const tmp = `${file}.${process.pid}.partial`;
+  fs.writeFileSync(tmp, data);
+  try { renameWithRetry(tmp, file); } catch (e) { try { fs.unlinkSync(tmp); } catch {} throw e; }
+}
+export function enqueueBatchRequest(customId, body, meta) {
+  if (!BATCH_CUSTOM_ID.test(customId)) throw new Error(`bad batch custom id ${customId}`);
+  const f = batchFiles(customId);
+  writeJson(f.meta, { customId, ...meta, bytes: Buffer.byteLength(body) });
+  writeFileAtomic(f.body, body);
+  return f;
+}
+export function readBatchResult(customId) {
+  const f = batchFiles(customId).result;
+  if (!fs.existsSync(f)) return null;
+  try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return null; }
+}
+// 'queued' | 'submitted:<batchId>' | 'failed' | 'done' | 'unknown'
+export function batchRequestState(customId) {
+  const f = batchFiles(customId);
+  if (fs.existsSync(f.result)) return 'done';
+  if (fs.existsSync(f.body)) return 'queued';
+  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) if (fs.existsSync(path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`))) return `submitted:${d}`; } catch {}
+  if (fs.existsSync(path.join(BATCH_DIRS.failed, `${customId}.meta.json`))) return 'failed';
+  return 'unknown';
+}
+export function brokerAlive() { const held = readJsonSafe(BATCH_DIRS.lock, null); return !!(held?.pid && pidAlive(held.pid)); }
+// The queue entry's sidecar wherever the broker moved it (queue/, submitted/<batchId>/, failed/); null when gone.
+export function batchMetaFile(customId) {
+  const f = batchFiles(customId);
+  if (fs.existsSync(f.meta)) return f.meta;
+  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) { const m = path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`); if (fs.existsSync(m)) return m; } } catch {}
+  const failed = path.join(BATCH_DIRS.failed, `${customId}.meta.json`);
+  return fs.existsSync(failed) ? failed : null;
+}
+export function readBatchMeta(customId) { const f = batchMetaFile(customId); return f ? readJsonSafe(f, null) : null; }
+// A note on the sidecar wherever it lives (transcribe.mjs --batch-result marks a collected result: collectedAt).
+export function updateBatchMeta(customId, patch) { const f = batchMetaFile(customId); if (!f) return null; const m = readJsonSafe(f, null); if (!m) return null; const next = { ...m, ...patch }; writeJson(f, next); return next; }
+// A detached request already queued or submitted for the same work: customId prefix (sha256 of paperId|stage|
+// window|body: the same pages, candidate and prompt), the same attempt and ask, not yet collected. transcribe.mjs
+// --batch-async reuses it instead of queueing (and paying for) the same request twice when an earlier park was
+// lost (run.mjs crashed after the enqueue, a job re-created) — reviewer finding 2026-09-17. Returns
+// { customId, meta, state } or null. Entries in failed/ are never reused (their result is an error).
+export function findDetachedBatchRequest(prefix, { paperId, stage, window, attempt = 1, ask = 1, promptSha256 = null } = {}) {
+  const dirs = [BATCH_DIRS.queue];
+  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) dirs.push(path.join(BATCH_DIRS.submitted, d)); } catch {}
+  for (const dir of dirs) {
+    let files; try { files = fs.readdirSync(dir).filter(f => f.startsWith(prefix) && f.endsWith('.meta.json')); } catch { continue; }
+    for (const f of files.sort()) {
+      const customId = f.slice(0, -'.meta.json'.length);
+      if (!BATCH_CUSTOM_ID.test(customId)) continue;
+      const meta = readJsonSafe(path.join(dir, f), null);
+      if (!meta?.detached || meta.collectedAt) continue;
+      if (meta.paperId !== paperId || meta.stage !== stage || meta.window !== window) continue;
+      if ((Number(meta.attempt) || 1) !== attempt || (Number(meta.ask) || 1) !== ask) continue;
+      if (promptSha256 && meta.promptSha256 && meta.promptSha256 !== promptSha256) continue;
+      const state = batchRequestState(customId);
+      if (state === 'queued' || state.startsWith('submitted:') || state === 'done') return { customId, meta, state };
+    }
+  }
+  return null;
+}
+// Withdraw a queued (unsubmitted, unpaid) detached request: body first (the broker's queue keys on it), then the
+// sidecar. Returns 'withdrawn' when the files were in queue/, else the request's state (a submitted one is paid for
+// and stays; its result will simply go unclaimed).
+export function withdrawQueuedBatchRequest(customId) {
+  const state = batchRequestState(customId);
+  if (state !== 'queued') return state;
+  const f = batchFiles(customId);
+  for (const file of [f.body, f.meta]) { try { fs.unlinkSync(file); } catch {} }
+  return 'withdrawn';
+}
+export const readBatchRecord = batchId => readJsonSafe(path.join(BATCH_DIRS.batches, `${batchId}.json`), null);
+// How long a waiter waits (transcribe.mjs sync batch mode). A request still queued (unpaid: no broker, or a broker
+// backing off) is given up after BATCH_QUEUED_TIMEOUT_MS; once the broker has submitted it, the batch record's
+// createdAt + the API's 24 h processing window + a grace period is the deadline (reviewer finding 2026-09-17: the
+// old flat 2 h cap abandoned paid requests). The TX_BATCH_* variables shorten the constants for the tests only.
+const envMs = (name, fallback) => { const v = Number(process.env[name]); return Number.isFinite(v) && v > 0 ? v : fallback; };
+export const BATCH_WAIT = {
+  queuedTimeoutMs: envMs('TX_BATCH_QUEUED_TIMEOUT_MS', 2 * 3600 * 1000),
+  ttlMs: envMs('TX_BATCH_TTL_MS', 24 * 3600 * 1000),
+  graceMs: envMs('TX_BATCH_GRACE_MS', 30 * 60 * 1000),
+};
+// The moment after which a waiter gives up on customId, given its state, or null while it still has time.
+// Returns { state, deadline, batchId }.
+export function batchWaitDeadline(customId, startedMs, { queuedTimeoutMs = BATCH_WAIT.queuedTimeoutMs, ttlMs = BATCH_WAIT.ttlMs, graceMs = BATCH_WAIT.graceMs } = {}) {
+  const state = batchRequestState(customId);
+  if (state.startsWith('submitted:')) {
+    const batchId = state.slice('submitted:'.length);
+    const rec = readBatchRecord(batchId);
+    // the record is written a moment after the files move; until then the submission time stands in for createdAt
+    const created = Date.parse(rec?.createdAt || rec?.submittedAt || '') || Date.now();
+    return { state, batchId, deadline: created + ttlMs + graceMs };
+  }
+  return { state, batchId: null, deadline: startedMs + queuedTimeoutMs };
+}
+// Resolves with the result JSON, or null when the deadline passed without one (the state at that moment is on
+// waitForBatchResult.lastState). onWait(elapsedMs, state) runs every poll. timeoutMs (legacy) caps the queued wait.
+export async function waitForBatchResult(customId, { pollMs = 5000, timeoutMs, onWait, ...limits } = {}) {
+  const started = Date.now();
+  if (timeoutMs) limits.queuedTimeoutMs = timeoutMs;
+  for (;;) {
+    const result = readBatchResult(customId);
+    if (result) return result;
+    const { state, deadline } = batchWaitDeadline(customId, started, limits);
+    waitForBatchResult.lastState = state;
+    const now = Date.now();
+    if (now >= deadline) return null;
+    if (onWait) onWait(now - started, state);
+    await sleep(Math.max(1, Math.min(pollMs, deadline - now)));
+  }
+}
+// null for a succeeded result; else {type, message, retryable}. Retryable = the request never reached the model
+// or the API was the problem (rate limit, overloaded, 5xx, batch expiry); a canceled batch is an operator's decision.
+export function batchResultError(result) {
+  if (!result || typeof result !== 'object') return { type: 'unreadable', message: 'result file is not a JSON object', retryable: false };
+  if (!result.error) return null;
+  const e = typeof result.error === 'object' ? result.error : { message: String(result.error) };
+  const type = String(e.type || result.batch?.resultType || 'error');
+  const message = String(e.message || '');
+  const retryable = ['rate_limit_error', 'overloaded_error', 'api_error', 'timeout_error', 'expired', 'missing_result'].includes(type) || /overloaded|rate limit|internal server error|try again/i.test(message);
+  return { type, message, retryable };
+}
+// Greedy grouping in the given order: a group closes when the next entry would take it over either cap.
+// Task limits are 200 requests / 200 MB (the API allows more; base64 pages make requests large).
+export const BATCH_LIMITS = { maxRequests: 200, maxBytes: 200 * 1024 * 1024 };
+export function groupBatchRequests(entries, { maxRequests = BATCH_LIMITS.maxRequests, maxBytes = BATCH_LIMITS.maxBytes } = {}) {
+  const groups = [], rejected = [];
+  let current = [], bytes = 0;
+  for (const e of entries) {
+    const size = Number(e.bytes) || 0;
+    if (size > maxBytes) { rejected.push(e); continue; }
+    if (current.length && (current.length + 1 > maxRequests || bytes + size > maxBytes)) { groups.push(current); current = []; bytes = 0; }
+    current.push(e); bytes += size;
+  }
+  if (current.length) groups.push(current);
+  return { groups, rejected };
 }
