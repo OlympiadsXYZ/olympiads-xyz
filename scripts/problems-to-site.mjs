@@ -59,8 +59,11 @@ function figureMarkdown(fig) {
   // a caption or alt with a paragraph break inside (a page footer read into the caption: nao-2022-iii-7-8) would leave
   // the <figcaption> JSX tag open across paragraphs; both are one line of text
   const oneLine = t => String(t || '').replace(/\s*\n\s*/g, ' ').trim();
-  const alt = oneLine(fig.alt || fig.caption || '').replace(/"/g, "'");
-  const cap = fig.caption ? `\n<figcaption>${oneLine(fig.caption)}</figcaption>` : '';
+  // inside the JSX <figure>: a bare "<" in a caption ("0°<ℓ<90°", nao-2026-iv-26-pr) is read as a tag and kills the
+  // build — the caption goes through mdText (math kept, "<" escaped as in every other prose field); the alt attribute
+  // is plain text, so a "<" that would start a tag (a letter follows) becomes the full-width "＜"
+  const alt = oneLine(fig.alt || fig.caption || '').replace(/"/g, "'").replace(/<(?=[\p{L}$_])/gu, '＜');
+  const cap = fig.caption ? `\n<figcaption>${mdText(oneLine(fig.caption))}</figcaption>` : '';
   return `<figure>\n<img src="${fig.url}" alt="${alt}" />${cap}\n</figure>`;
 }
 
@@ -136,8 +139,13 @@ function yamlStr(s) {
 // fine and then crashed the static build with "h is not defined". They are
 // escaped as \{ \} so the page shows the text as written; validate.mjs rejects
 // them upstream so the pipeline puts such LaTeX into $…$ instead.
+// named HTML entities crash the Gatsby build ("document is not defined"); already-published papers may carry them
+// ("&nbsp;&nbsp;&nbsp;", nof-2024-iii-11-12-exp2) — the page shows the character, the source bytes stay as approved
+const HTML_ENTITIES = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", deg: '°', times: '×', minus: '−', middot: '·', ndash: '–', mdash: '—', laquo: '«', raquo: '»', hellip: '…', plusmn: '±', micro: 'µ', ohm: 'Ω', Omega: 'Ω', alpha: 'α', beta: 'β', gamma: 'γ', lambda: 'λ', pi: 'π', rho: 'ρ', theta: 'θ', omega: 'ω', bull: '•', frac12: '½', sup2: '²', sup3: '³', le: '≤', ge: '≥', ne: '≠', asymp: '≈', infin: '∞', rarr: '→', larr: '←', prime: '′' };
+const decodeEntities = t => String(t).replace(/&(#(\d+)|#x([0-9a-f]+)|([a-z][a-z0-9]{1,7}));/gi, (m, _a, dec, hex, name) => dec ? String.fromCodePoint(Number(dec)) : hex ? String.fromCodePoint(parseInt(hex, 16)) : (HTML_ENTITIES[name] ?? m));
 function mdText(s) {
   if (s == null) return s;
+  if (/&(#\d+|#x[0-9a-f]+|[a-z][a-z0-9]{1,7});/i.test(s)) s = decodeEntities(s);
   // a "|" inside inline math on a table row splits the cell (eupho-2023-experiment-x: "$|\alpha| = 65^{\circ}$" left
   // "{\circ}" for MDX to parse as an expression); KaTeX draws \vert the same way
   // a "$$" frame around a table ("$$| 2a [mm] |…|$$", eupho-2026-experiment-x) opens an expression MDX never closes;

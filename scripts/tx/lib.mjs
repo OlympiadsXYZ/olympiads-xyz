@@ -935,6 +935,16 @@ export function normaliseCandidate(c, opts = {}) {
     if (!h.from && !h.to && !h.place) { delete c.paper.held; changes.push('/paper/held: empty, dropped'); }
   } else if (h != null) { delete c.paper.held; changes.push('/paper/held: not an object, dropped'); }
   walkStrings(c, (p, s) => { if (/\\[,;: ][\^_]/.test(s)) { pointerSet(c, p, s.replace(/(\\[,;: ])([\^_])/g, '$1{}$2')); changes.push(`${p}: KaTeX spacing before ^/_`); } });
+  // HTML entities typed by a reader ("&nbsp;&nbsp;&nbsp;" between two answers, "&deg;") become the characters they
+  // name: a named entity in MDX crashes the Gatsby build ("document is not defined") (nof-2024-iii-11-12-exp2)
+  {
+    const ENT = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", deg: '°', times: '×', minus: '−', middot: '·', ndash: '–', mdash: '—', laquo: '«', raquo: '»', hellip: '…', plusmn: '±', micro: 'µ', ohm: 'Ω', Omega: 'Ω', alpha: 'α', beta: 'β', gamma: 'γ', lambda: 'λ', pi: 'π', rho: 'ρ', theta: 'θ', omega: 'ω', bull: '•', frac12: '½', sup2: '²', sup3: '³', le: '≤', ge: '≥', ne: '≠', asymp: '≈', infin: '∞', rarr: '→', larr: '←', prime: '′' };
+    walkStrings(c, (p, s) => {
+      if (!/&(#\d+|#x[0-9a-f]+|[a-z][a-z0-9]{1,7});/i.test(s) || !/\/(statement|statementAfter|statementAfterParts|caption|alt|title|label|text)$/.test(p)) return;
+      const out = s.replace(/&(#(\d+)|#x([0-9a-f]+)|([a-z][a-z0-9]{1,7}));/gi, (m, _a, dec, hex, name) => dec ? String.fromCodePoint(Number(dec)) : hex ? String.fromCodePoint(parseInt(hex, 16)) : (ENT[name] ?? m));
+      if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: HTML entities decoded`); }
+    });
+  }
   // Display math that lost a closing $$ flips every later block: the prose after it is "inside" math and the next
   // equation's opener closes it (izho-2022-theory-eng-docx: 121 delimiters, everything after block 31 inverted).
   // When a $$-block reads like prose (a paragraph break followed by a sentence, or inline $…$ inside it), the
