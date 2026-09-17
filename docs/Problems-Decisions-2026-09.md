@@ -110,3 +110,15 @@ then Russian, then the international papers once the Batch transport halves thei
 fable or smth for the papers since we can afford it".
 | Why: a wrong pass is worse than a parked paper — the verbatim rule and the receipt's meaning depend on the checker
 actually seeing the crop; Opus costs 2.5× Sonnet per check but the checker is one call per round on small papers.
+
+## D-P20 (2026-09-17, 06:36Z) — overnight: Fable 5.1 reads, Sonnet 5 checks, Fable escalates
+
+Margulan: "use fable on like 2000 papers and just one shot the whole thing as much as you can … I want as much overnight
+progress as possible". Supersedes D-P19's reader/checker pair for the bulk run: **reader claude-fable-5-1** (one read,
+zero mechanical defects in the trial), **checker claude-sonnet-5** (cheap; the Fable candidate passed it clean),
+**escalation model claude-fable-5-1** (one refix before a paper parks), `--max-rounds 2`, mechanical pre-check first,
+two batch parents (`--langs bg` and `--langs ru`, 6 workers each), one shared `--max-spend-usd 380` since 06:36Z on
+the $427 left. Order: Bulgarian, then Russian (short papers, ≈$0.4 each); the international papers (≈$1.5 each at
+Fable prices) wait for the Message-Batches transport (built, tested, not yet merged) that halves them.
+| Why: at $427 the grant buys ~1,000 Fable-read papers synchronously; a strong one-shot read beats a cheap read plus
+repair rounds when the goal is finished, checked papers per dollar overnight.
