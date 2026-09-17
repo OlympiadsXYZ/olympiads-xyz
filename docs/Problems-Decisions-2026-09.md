@@ -136,3 +136,21 @@ Verified on pu-2006-ii-2kryg: read in one shot ($1.02), clean mechanical check, 
 ≈ $0.35–0.5 (the read alone); the $380 cap now buys roughly 900 papers.
 | Why: Fable's trial candidate carried no mechanical defects at all, so a second model call was paying for a pass;
 the mechanical checks are the deterministic part of verification and stay on.
+
+## D-P22 (2026-09-17, 07:45Z) — the cheap verified route: Sonnet reads, mechanics check, Opus audits the crops
+
+Supersedes D-P20/D-P21 after the accounting (§12j): Fable one-shot cost $3.02 per finished paper ($94 → 31 papers);
+every paid per-round checker across GLM/Sonnet/Opus/Fable produced rounds of structural nits and parked papers after
+$3–7. Route now: **reader claude-sonnet-5** (`--window-pages 8`), **mechanical checks as the gate**, **`--checker
+anthropic:claude-opus-5 --checker-mode auto`** — the model audits only the figure crops (expand/shrink edges turned
+into boxes mechanically; ≈2–5 ¢), and reads the pages only for a scanned document whose text layer is untrusted —
+**`--escalation-model anthropic:claude-opus-5`**, `--max-rounds 2`, and the **residual policy**: after the round
+budget, leftovers are recorded as notes on the page unless critical, or a major omission / wrong value / wrong unit /
+figure / table / pairing / rewording, which still block. Receipts carry `checkerMode: crops`; provenance and the page
+label say "text checked mechanically, figures audited by an independent model". Mechanical rules added on the way:
+figure defects repointed to the figure they name; a box written as a string is never repointed by content; the
+tightening rule yields to a checker's larger box; a box on no drawing moves to the nearest uncovered drawing.
+Budget: $252 left at 07:45Z; the Bulgarian set runs synchronously under an $80 cap tonight; Russian and international
+papers wait for the Message-Batches transport (50 %).
+| Why: the read is the cheap part; verification must stay deterministic where it can be and model-based only for
+what pixels alone cannot judge (crops, scans).

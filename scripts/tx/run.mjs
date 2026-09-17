@@ -51,7 +51,7 @@ if (!args.continue) {
   if (!indep.differentProvider) console.error(`[run] note: reader and checker share the provider family (${reader.provider}); a different family is preferable`);
   job = {
     paperId, reader, checker, stage: 'prepare', promote: !args['no-promote'], dryRun: !!args['dry-run'], allowSameModel: !!args['allow-same-model'],
-    options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2), ...(args['escalation-model'] ? { escalation: parseWho(args['escalation-model']) } : {}) },
+    options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2), ...(args['escalation-model'] ? { escalation: parseWho(args['escalation-model']) } : {}), ...(args['checker-mode'] ? { checkerMode: args['checker-mode'] } : {}) },
     ...(args.problems ? { keys: { problems: args.problems, solutions: args.solutions || null } } : {}), // a paper outside the Bulgarian shards names its archive keys
     round: 0, createdAt: nowIso(), history: [], artefacts: {},
   };
@@ -63,6 +63,8 @@ job.options ||= { maxRounds: 2 };
 // pipeline learned a new trick, so escalations need not wait for an adjudicator.
 if (args.continue && args['max-rounds']) job.options.maxRounds = Number(args['max-rounds']);
 if (args.continue && args['escalation-model']) job.options.escalation = parseWho(args['escalation-model']);
+if (args.continue && args['checker-mode']) job.options.checkerMode = args['checker-mode'];
+if (job.options.checkerMode && !['full', 'crops', 'auto'].includes(job.options.checkerMode)) fail('--checker-mode must be full, crops or auto');
 if (args.continue && args.retry && !job.waitingFor) { // from any stage: an escalation can also be parked at validate (schema budget) or figures
   // the budget is N more rounds from here, not N in total (earlier rounds already count);
   // a done job re-enters the same way when the pipeline learned a new check (re-promotion replaces the paper)
@@ -177,8 +179,18 @@ function mergeTextLayer(candFile, checkOut) {
     if (d.kind === 'points' && /^\/problems\/\d+\/parts\/\d+\/points$/.test(String(d.path)) && /no point|not printed|nowhere|invent|does not print|no printed|prints no/i.test(String(d.description || '')) && d.suggestedFix == null && typeof pointerGet(candidate, String(d.path)) === 'number') {
       d.suggestedFix = 'none'; d.description = `[no points printed for the part: the value is dropped] ${d.description}`;
     }
+    // a figure defect addressed to the wrong field ("Crop for p1-fig2 is blank…" on /problems/1/statement) goes to the
+    // figure it names, so a box fix can be applied (nof-2022-iv-experiment: two exact boxes skipped for four rounds)
+    if (d.kind === 'figure' && !/\/figures\/\d+/.test(String(d.path || ''))) {
+      const m = /(p\d+(?:-sol)?-fig\d+)/.exec(String(d.description || ''));
+      const hit = m && allFigures(candidate).find(({ fig }) => fig?.id === m[1]);
+      if (hit) { d.pathAsWritten = d.path; d.path = Array.isArray(d.suggestedFix) || typeof d.suggestedFix === 'string' && /^\s*\[?\s*-?\d/.test(d.suggestedFix) ? `${hit.path}/tx/bbox` : hit.path; repairedPaths++; }
+    }
     let p = repairDefectPath(candidate, d.path);
-    if (typeof d.suggestedFix === 'string' && !d.source) p = repointByContent(candidate, p, d.suggestedFix);
+    // a box written as a string ("[250, 335, 780, 590]") is not prose: never repointed by content (nof-2022-iv-experiment:
+    // the digits "matched" a statement and two exact boxes landed on /problems/1/statement for eight rounds)
+    const boxLike = typeof d.suggestedFix === 'string' && /^\s*\[?\s*-?\d+(?:\.\d+)?\s*[,\s]\s*-?\d+(?:\.\d+)?\s*[,\s]\s*-?\d+(?:\.\d+)?\s*[,\s]\s*-?\d+(?:\.\d+)?\s*\]?\s*$/.test(d.suggestedFix);
+    if (typeof d.suggestedFix === 'string' && !d.source && d.kind !== 'figure' && !boxLike) p = repointByContent(candidate, p, d.suggestedFix);
     // a textual defect addressed to a whole problem or part object belongs to its statement
     if (['omission', 'reworded', 'wrong-value', 'wrong-unit', 'other', 'latex'].includes(d.kind)) { const o = pointerGet(candidate, p); if (o && typeof o === 'object' && !Array.isArray(o) && typeof o.statement === 'string') p = `${p}/statement`; }
     // a missing-figure defect addressed to a problem or its solution (an object) belongs to that object's figures array
@@ -249,6 +261,13 @@ function mergeTextLayer(candFile, checkOut) {
     const m = /^(.*\/figures\/\d+)(?:\/tx(?:\/bbox)?)?$/.exec(String(d.path)); if (!m) continue;
     if (!/text|paragraph|caption|body|sentence|line|includes|swallow|extend|too (large|big|wide|tall)|below|above/i.test(String(d.description || ''))) continue;
     const fig = pointerGet(candidate, m[1]); const t = fig?.tx; if (!t?.bbox || !t.document || !t.page) continue;
+    // the checker's own fix is a LARGER box (the crop shows a fragment; on a scan the region detector saw only part of
+    // the drawing): tightening would shrink it to that fragment again — the checker's box stands (nof-2022-iv-experiment)
+    {
+      const fx = Array.isArray(d.suggestedFix) ? d.suggestedFix : typeof d.suggestedFix === 'string' ? (d.suggestedFix.match(/-?\d+(?:\.\d+)?/g) || []).map(Number) : null;
+      const area = b => Math.max(0, b[2] - b[0]) * Math.max(0, b[3] - b[1]);
+      if (fx && fx.length === 4 && area(fx) > area(t.bbox)) continue;
+    }
     const regs = regionsFor(paperId, manifest, t.document)?.pages?.find(pg => pg.page === t.page)?.regions || [];
     const graphic = g => !g.kind || g.kind === 'drawing' || g.kind === 'table';
     const inside = regs.filter(g => graphic(g) && coverFrac(g.core || g.bbox, t.bbox) >= 0.9);
@@ -267,8 +286,14 @@ function mergeTextLayer(candFile, checkOut) {
       // the box in the lower middle)
       const boxes = allFigureBoxes(candidate).filter(b => b.document === t.document && b.page === t.page).map(b => b.bbox);
       const free = regs.filter(g => graphic(g) && (g.areaFrac || 0) >= 0.01 && !boxes.some(b => coverFrac(g.core || g.bbox, b) >= 0.3));
-      if (free.length !== 1) continue;
-      u = free[0].bbox; verb = 'moved to';
+      if (!free.length) continue;
+      // several uncovered drawings on the page (a scan with two figures): the one nearest the box's centre is meant
+      // (nof-2022-iv-experiment: a blank crop under the cone drawing, four rounds of refix could not move it)
+      const centre = b => [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2];
+      const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+      const c0 = centre(t.bbox);
+      free.sort((a, b) => dist(centre(a.bbox), c0) - dist(centre(b.bbox), c0));
+      u = free[0].bbox; verb = free.length > 1 ? 'moved to the nearest uncovered drawing' : 'moved to';
     }
     d.suggestedFix = [clamp(u[0] - PAD), clamp(u[1] - PAD), clamp(u[2] + PAD), clamp(u[3] + PAD)];
     d.description = `[box ${verb} the printed drawing at ${JSON.stringify(u.map(Math.round))}] ${d.description}`;
@@ -490,6 +515,50 @@ for (;;) {
       }
     }
     if (fs.existsSync(checkerOut) && job.waitingFor?.stage === 'checker') { job.waitingFor = null; const tl = mergeTextLayer(cand, checkerOut); job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`agent checker output received; text-layer check: ${tl ? tl.defects.length : '?'} defect(s)`); continue; }
+    // --checker-mode crops|auto (D-P22): the text was verified mechanically against the PDF; the model only audits the
+    // figure crops (a fraction of a full check). 'auto' falls back to the full check when a document's text layer is
+    // not trusted (a scan: nothing else verifies its text). No figures → the mechanical check is the check.
+    if (job.checker.provider !== 'agent' && ['crops', 'auto'].includes(job.options.checkerMode || 'full')) {
+      const mech = mechanicalPrecheck(cand); // re-run: its file is the check's skeleton (text layer + regions, full coverage)
+      const man = readJson(manifestPath, { documents: {} });
+      const trusted = new Set(readJson(mech.file, null)?.textLayer?.checked || []);
+      const untrusted = Object.keys(man.documents).filter(d => !trusted.has(d));
+      if (job.options.checkerMode === 'crops' || !untrusted.length) {
+        const candidate = readJson(cand, null);
+        const nFig = allFigures(candidate).length;
+        let audit = null;
+        if (nFig) {
+          const auditOut = checkerOut.replace(/\.json$/, '.crops.json');
+          const r = node('transcribe.mjs', [paperId, '--provider', job.checker.provider, '--model', job.checker.model, '--stage', 'cropcheck', '--candidate', cand, '--out', auditOut, ...transcribeOpts]);
+          if (r.status !== 0) { save(`crop audit failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
+          audit = readJson(auditOut, null);
+          // expand/shrink edges → a concrete box the mechanical repair can apply (30‰ of the page per named side)
+          for (const d of audit?.defects || []) {
+            const fix = d.suggestedFix; if (!fix || typeof fix !== 'object' || Array.isArray(fix)) continue;
+            const m = /^(.*\/figures\/\d+)\/tx\/bbox$/.exec(String(d.path)); const fig = m && pointerGet(candidate, m[1]); const b = fig?.tx?.bbox;
+            if (!Array.isArray(b) || b.length !== 4) { d.suggestedFix = null; continue; }
+            const step = 30, edges = fix.expand || fix.shrink, sign = fix.expand ? 1 : -1;
+            const n = [b[0] - (edges.includes('left') ? sign * step : 0), b[1] - (edges.includes('top') ? sign * step : 0), b[2] + (edges.includes('right') ? sign * step : 0), b[3] + (edges.includes('bottom') ? sign * step : 0)].map(v => Math.round(Math.min(1000, Math.max(0, v))));
+            if (n[2] - n[0] < 20 || n[3] - n[1] < 20) { d.suggestedFix = null; continue; }
+            d.suggestedFixAsWritten = fix; d.suggestedFix = n;
+          }
+        }
+        const check = readJson(mech.file, null);
+        check.coverage.pagesRead = Object.entries(man.documents).flatMap(([document, d]) => Array.from({ length: d.pages || 0 }, (_, i) => ({ document, page: i + 1 })));
+        check.candidateSha256 = sha256File(cand);
+        check.defects = [...(check.defects || []), ...(audit?.defects || [])];
+        const open = check.defects.some(d => d.severity && d.severity !== 'info');
+        check.verdict = open ? 'fail' : 'pass';
+        check.summary = `${audit ? audit.summary : 'No figures: the mechanical check is the check.'} ${check.summary || ''}`.trim();
+        check.mode = 'crops';
+        check.checker = audit ? { ...audit.checker, mode: 'crops', candidateSha256: check.candidateSha256 } : { provider: 'mechanical', model: 'textlayer+regions', requestId: `mech-r${job.round}`, promptVersion: 'mech-v1', candidateSha256: check.candidateSha256 };
+        if (!audit) { job.checker = { provider: 'mechanical', model: 'textlayer+regions' }; } // the receipt names what actually checked
+        writeJson(checkerOut, check);
+        job.options.mechPending = false;
+        job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`${audit ? `crop audit by ${job.checker.provider}:${job.checker.model} (${nFig} crop(s)): ${(audit.defects || []).length} defect(s)` : 'no figures; mechanical check'}; open defects ${check.defects.filter(d => d.severity !== 'info').length}; to the receipt`); continue;
+      }
+      save(`text layer not trusted for ${untrusted.join(', ')} (a scan): the full checker reads the pages`);
+    }
     if (job.checker.provider === 'agent') waitForAgent('checker', checkerOut, ['--candidate', cand]);
     const r = node('transcribe.mjs', [paperId, '--provider', job.checker.provider, '--model', job.checker.model, '--stage', 'checker', '--candidate', cand, '--out', checkerOut, ...transcribeOpts]);
     if (r.status !== 0) { save(`checker failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
@@ -534,7 +603,20 @@ for (;;) {
       // --escalation-model (D-P19: Fable 5.1): before a paper parks on leftover defects, the strongest model gets one
       // refix on them — once per job, with one more round for the fresh check
       if (job.options.escalation && !job.options.escalationUsed) { job.options.escalationUsed = true; job.options.escalateNextRefix = true; job.options.maxRounds = job.round + 1; job.stage = 'repair'; save(`round budget spent with ${receipt.defects?.length} defect(s) left: one refix by the escalation model ${job.options.escalation.provider}:${job.options.escalation.model}, then a fresh check`); continue; }
-      escalate(`still ${receipt.defects?.length} defect(s) after ${job.round} repair round(s)`);
+      // Residual policy (D-P22): what is left after the round budget is recorded on the page, not looped on — unless
+      // it would mislead a student: a critical defect, or a major omission / wrong value / wrong unit / figure / table /
+      // pairing / rewording still blocks. Minor anything and major latex/points/metadata/other/source-error become notes.
+      const blocking = (receipt.defects || []).filter(d => d.severity === 'critical' || (d.severity === 'major' && ['omission', 'wrong-value', 'wrong-unit', 'figure', 'table', 'pairing', 'reworded'].includes(d.kind)));
+      if (!blocking.length && !job.options.residualRecorded) {
+        const check = readJson(abs(job.artefacts.checker), null);
+        let recorded = 0;
+        for (const d of check?.defects || []) if (d.severity && d.severity !== 'info') { d.severityAsWritten = d.severity; d.severity = 'info'; d.description = `[recorded, not repaired: unresolved after ${job.round} round(s)] ${d.description}`; recorded++; }
+        if (check && check.verdict === 'fail') { check.verdict = 'pass'; check.verdictAdjusted = 'residual minor defects recorded as notes'; }
+        writeJson(abs(job.artefacts.checker), check);
+        job.options.residualRecorded = true;
+        save(`round budget spent: ${recorded} residual defect(s) (none critical, none a major omission/value/unit/figure/table/pairing/rewording) recorded as notes on the page; receipt again`); continue;
+      }
+      escalate(`still ${receipt.defects?.length} defect(s) after ${job.round} repair round(s)${blocking.length ? ` (${blocking.length} blocking: ${blocking.map(d => `${d.severity} ${d.kind} ${d.path}`).join('; ').slice(0, 300)})` : ''}`);
     }
     job.stage = 'repair'; save(`receipt: fail (${receipt.defects?.length} defects); repairing`);
   } else if (job.stage === 'repair') {
@@ -571,11 +653,17 @@ for (;;) {
       // (izho-2021-experiment-exp-eng parked at max rounds on two disputed minors).
       const leftovers = xr.unapplied || [];
       const allDisputedMinor = leftovers.length > 0 && leftovers.every(u => /disputed/.test(String(u.reason)) && u.severity === 'minor');
+      // leftovers that would not mislead a student (D-P22 residual policy) are recorded at the next receipt instead of
+      // looping: the round budget closes here so the receipt stage records them
+      const isBlocking = u => u.severity === 'critical' || (u.severity === 'major' && ['omission', 'wrong-value', 'wrong-unit', 'figure', 'table', 'pairing', 'reworded'].includes(u.kind));
+      const residualOnly = leftovers.length > 0 && rep.applied + (xr.applied || 0) === 0 && !leftovers.some(isBlocking) && !job.options.residualRecorded;
+      if (residualOnly && !mechRound) { job.options.maxRounds = Math.min(job.options.maxRounds, job.round); save(`nothing applied and every leftover is a non-blocking defect: the next receipt records them as notes`); }
       if (allDisputedMinor && !job.options.disputeRound) { job.options.disputeRound = true; job.options.maxRounds = Math.max(job.options.maxRounds, job.round + 1); save(`every leftover is a minor defect the refix disputed: one more check to record them as notes`); }
       // a mechanical round that settled nothing is not a dead end: the paid checker has not spoken yet — it runs next
       // (and no further pre-check is attempted on this job)
       else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0 && mechRound) { job.options.mechRounds = 2; save(`mechanical pre-check leftovers could not be settled from the pages (${xr.skipped}); the checker decides`); }
       // the reader model could settle nothing: the escalation model reads the same pages once before the paper parks
+      else if (residualOnly && !mechRound) { /* handled above */ }
       else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0 && job.options.escalation && !job.options.escalationUsed && !escalateNow) {
         job.options.escalationUsed = true;
         const esc = job.options.escalation, refixed2 = repaired.replace(/\.json$/, '.esc.json');
