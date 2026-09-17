@@ -67,6 +67,7 @@ if (args.continue && args.retry && !job.waitingFor) { // from any stage: an esca
   // the budget is N more rounds from here, not N in total (earlier rounds already count);
   // a done job re-enters the same way when the pipeline learned a new check (re-promotion replaces the paper)
   job.options.maxRounds = (job.round || 0) + Number(args['max-rounds'] || 2);
+  job.options.mechPending = false; // a mechanical round interrupted mid-repair must not tag the next paid round as mechanical
   const was = job.stage;
   job.stage = 'validate'; delete job.artefacts.validatedSha256;
   job.history.push({ at: nowIso(), stage: job.stage, note: `retry after ${was === 'done' ? 'promotion' : 'escalation'}: re-validate the current candidate, fresh check; up to ${job.options.maxRounds} rounds` });
@@ -346,7 +347,7 @@ if (args.continue && args.repaired) {
       f = merged;
     }
   }
-  job.round = (job.round || 0) + 1;
+  job.round = (job.round || 0) + 1; job.options.mechPending = false;
   job.artefacts.candidate = rel(f); delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256; job.waitingFor = null;
   job.stage = 'validate'; save(`repaired candidate supplied (${rel(f)}), round ${job.round}`);
 }
@@ -493,6 +494,7 @@ for (;;) {
     const r = node('transcribe.mjs', [paperId, '--provider', job.checker.provider, '--model', job.checker.model, '--stage', 'checker', '--candidate', cand, '--out', checkerOut, ...transcribeOpts]);
     if (r.status !== 0) { save(`checker failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
     const tl = mergeTextLayer(cand, checkerOut);
+    job.options.mechPending = false; // the receipt on disk will be the paid checker's
     job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`checker done; text-layer check (${tl ? tl.summary.checked.join(', ') || 'no trusted layer' : 'skipped'}): ${tl ? tl.defects.length : '?'} defect(s)`);
   } else if (job.stage === 'receipt') {
     const check = readJson(abs(job.artefacts.checker));
