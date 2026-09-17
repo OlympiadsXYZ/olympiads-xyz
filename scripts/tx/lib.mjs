@@ -744,7 +744,19 @@ export function normaliseCandidate(c, opts = {}) {
     for (const { fig, path: p } of allFigures(c)) if (fig.tx?.document && fig.tx.document !== only) { fig.tx.documentAsWritten = fig.tx.document; fig.tx.document = only; changes.push(`${p}: document ${fig.tx.documentAsWritten} → ${only} (the paper's only document)`); }
     (c.problems || []).forEach((pr, i) => { for (const s of pr.tx?.sourceSpans || []) if (s.document && s.document !== only) { s.document = only; changes.push(`/problems/${i}/tx/sourceSpans: document → ${only}`); } });
   }
+  // a figures array that is not an array, or an entry that is not an object (null, a string id), is dropped
+  // (ipho-2026-theory-t2, apho-2024-theory-th: Sonnet wrote `figures: [null]` and Object.keys threw)
+  (c.problems || []).forEach((pr, i) => {
+    const holders = [[pr, `/problems/${i}`], ...(pr.parts || []).map((pt, k) => [pt, `/problems/${i}/parts/${k}`]), ...(pr.solution && typeof pr.solution === 'object' ? [[pr.solution, `/problems/${i}/solution`]] : [])];
+    for (const [h, hp] of holders) {
+      if (!h || typeof h !== 'object' || h.figures === undefined) continue;
+      if (!Array.isArray(h.figures)) { delete h.figures; changes.push(`${hp}/figures: not an array, dropped`); continue; }
+      const kept = h.figures.filter(f => f && typeof f === 'object' && !Array.isArray(f));
+      if (kept.length !== h.figures.length) { changes.push(`${hp}/figures: ${h.figures.length - kept.length} non-object entr${h.figures.length - kept.length === 1 ? 'y' : 'ies'} dropped`); h.figures = kept; }
+    }
+  });
   for (const { fig, path: p } of allFigures(c)) {
+    if (!fig || typeof fig !== 'object') continue;
     // document/page/bbox belong under tx (the schema forbids them on the figure); a refix that copies
     // a figure back sometimes flattens the rest of its tx block onto the figure as well
     for (const k of ['document', 'page', 'bbox']) if (fig[k] !== undefined) { if (fig.tx?.[k] === undefined) fig.tx = { ...(fig.tx || {}), [k]: fig[k] }; delete fig[k]; changes.push(`${p}: ${k} moved under tx`); }
