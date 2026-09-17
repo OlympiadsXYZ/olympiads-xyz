@@ -85,7 +85,13 @@ export function collect(o = opts) {
   const errors = { http429: 0, http5xx: 0, timeouts: 0, http4xxOther: 0, other: 0 };
   let total = stageRow('total'), firstAt = null, lastAt = null;
   const uncosted = { calls: 0, byModel: {} }; // successful calls whose model has no price: they count as $0 below
+  // provisional (booked at enqueue by the batch transport) and withdrawn lines are bookkeeping, not calls; the
+  // committed money they represent is reported separately
+  let provisionalUsd = 0, provisionalCount = 0;
+  const settled = new Set(runs.filter(r => r.ok && r.customId).map(r => r.customId));
   for (const r of runs) {
+    if (r.provisional) { if (!settled.has(r.customId)) { provisionalUsd += r.costUsd || 0; provisionalCount++; } continue; }
+    if (r.withdrawn) continue;
     const rows = [byStage.get(r.stage) || byStage.set(r.stage, stageRow(r.stage)).get(r.stage), byModel.get(r.model) || byModel.set(r.model, stageRow(r.model)).get(r.model), total];
     for (const s of rows) {
       s.calls++;
@@ -211,7 +217,7 @@ export function collect(o = opts) {
     rate: { lastHourUsd: lastHourSpend, lastHourCalls, lastHourWindowHours: lastHourWindow, lastHourUsdPerHour: lastHourRate, periodUsdPerHour: spanHours > 0 ? spent / spanHours : null, promotedPerHour: spanHours > 0 ? promotedIds.length / spanHours : null },
     papersTouched: perPaper.size, costPerTouchedPaper: perPaper.size ? spent / perPaper.size : null,
     outcomes, outcomesBackInFlight, promoted: promotedIds, promotedCount: promotedIds.length, allInPerPromotedUsd: allInPerPromoted, directPerPromotedUsd: directPerPromoted, promotedDirectCostUsd: promotedDirectCost,
-    errors, spendCapEvents, uncosted,
+    errors, spendCapEvents, uncosted, provisional: { usd: provisionalUsd, count: provisionalCount },
     inflight, ledger, remaining, projection, topPapers, warnings,
   };
 }
@@ -239,6 +245,7 @@ export function render(d) {
   L.push(`papers: ${d.papersTouched} touched (${usd(d.costPerTouchedPaper)} each) | last outcome in period: ${oc}${d.outcomesBackInFlight ? ` (${d.outcomesBackInFlight} of these back in flight)` : ''}`);
   L.push(`per promoted paper: ${usd(d.allInPerPromotedUsd)} all-in (spend / ${d.promotedCount} promoted) | ${usd(d.directPerPromotedUsd)} direct (calls on the promoted papers only)${d.promoted.length ? ` | promoted: ${d.promoted.slice(0, 12).join(', ')}${d.promoted.length > 12 ? ` +${d.promoted.length - 12} more` : ''}` : ''}`);
   L.push(`errors: 429 x${d.errors.http429} | 5xx x${d.errors.http5xx} | timeouts x${d.errors.timeouts} | other 4xx x${d.errors.http4xxOther} | network/other x${d.errors.other}${d.spendCapEvents.length ? ` | SPEND CAP HIT ${d.spendCapEvents.length}x (last: $${d.spendCapEvents.at(-1).spentUsd} >= $${d.spendCapEvents.at(-1).capUsd})` : ''}`);
+  if (d.provisional?.count) L.push(`committed to batches, not yet settled: $${d.provisional.usd.toFixed(2)} for ${d.provisional.count} request(s) (provisional estimates; the real cost lands when each result is collected)`);
   const win = d.rate.lastHourWindowHours > 0 && d.rate.lastHourWindowHours < 1 ? `last ${Math.max(1, Math.round(d.rate.lastHourWindowHours * 60))} min` : 'last hour';
   L.push(`rate: ${win} ${usd(d.rate.lastHourUsd)} = ${d.rate.lastHourUsdPerHour == null ? 'n/a' : usd(d.rate.lastHourUsdPerHour) + '/h'} (${d.rate.lastHourCalls} calls) | period ${d.rate.periodUsdPerHour == null ? 'n/a' : usd(d.rate.periodUsdPerHour) + '/h'} over ${d.spanHours.toFixed(2)} h (first call ${hhmm(d.firstCallAt)}, last ${hhmm(d.lastCallAt)})${d.rate.promotedPerHour != null ? ` | ${d.rate.promotedPerHour.toFixed(1)} promoted/h` : ''}`);
   L.push('');
