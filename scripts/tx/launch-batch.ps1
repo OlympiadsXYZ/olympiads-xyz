@@ -1,8 +1,8 @@
-# scripts/tx/launch-batch.ps1 <logName> <batch.mjs args...>
+# scripts/tx/launch-batch.ps1 <tag> <batch.mjs args...>
 # Starts one detached, hidden node run of scripts/tx/batch.mjs with the PATH the pipeline needs (rclone, conda
-# python3, MiKTeX poppler, Git tools) and PYTHONUTF8=1; stdout/err go to tmp/tx/<logName>.out/.err.
+# python3, MiKTeX poppler, Git tools) and PYTHONUTF8=1; stdout/err go to tmp/tx/<tag>.out/.err.
 # Example: powershell -NoProfile -File scripts/tx/launch-batch.ps1 batch-anthropic-a --catalogue --reader anthropic:claude-sonnet-5 ...
-param([Parameter(Mandatory = $true)][string]$LogName, [Parameter(ValueFromRemainingArguments = $true)][string[]]$BatchArgs)
+param([Parameter(Mandatory = $true)][string]$Tag, [Parameter(ValueFromRemainingArguments = $true)][string[]]$BatchArgs)
 $root = 'D:\Projects\olympiads-xyz'
 $prefix = @(
   'C:\Users\Marik\AppData\Local\Microsoft\WinGet\Packages\Rclone.Rclone_Microsoft.Winget.Source_8wekyb3d8bbwe\rclone-v1.75.1-windows-amd64',
@@ -14,5 +14,5 @@ $env:PATH = "$prefix;$env:PATH"
 $env:PYTHONUTF8 = '1'
 $args2 = @("$root\scripts\tx\batch.mjs") + $BatchArgs
 $p = Start-Process -FilePath node -ArgumentList $args2 -WorkingDirectory $root -WindowStyle Hidden -PassThru `
-  -RedirectStandardOutput "$root\tmp\tx\$LogName.out" -RedirectStandardError "$root\tmp\tx\$LogName.err"
+  -RedirectStandardOutput "$root\tmp\tx\$Tag.out" -RedirectStandardError "$root\tmp\tx\$Tag.err"
 Write-Output ("launched pid " + $p.Id + ": node batch.mjs " + ($BatchArgs -join ' '))
