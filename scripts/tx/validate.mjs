@@ -152,7 +152,8 @@ for (const { fig, path: p } of allFigures(data)) {
       else if ((b[2] - b[0]) * (b[3] - b[1]) > 0.85 * BBOX_SCALE * BBOX_SCALE) warn(`${p}/tx/bbox`, 'box covers >85% of the page — is this really a figure?');
       const doc = manifest?.documents?.[t.document];
       if (doc) {
-        if (t.page > doc.pages) err(`${p}/tx/page`, `page ${t.page} outside ${t.document} (1..${doc.pages})`);
+        if (!Number.isInteger(t.page) || t.page < 1 || t.page > doc.pages) err(`${p}/tx/page`, `page ${t.page} outside ${t.document} (1..${doc.pages})`);
+        else if (!doc.pageSizes?.[t.page - 1]) err(`${p}/tx/page`, `no page geometry for ${t.document} p.${t.page} in the manifest`);
         else {
           const { w, h } = pagePx(doc.pageSizes[t.page - 1], manifest.renderDpi || RENDER_DPI);
           const pw = (b[2] - b[0]) * w / BBOX_SCALE, ph = (b[3] - b[1]) * h / BBOX_SCALE;

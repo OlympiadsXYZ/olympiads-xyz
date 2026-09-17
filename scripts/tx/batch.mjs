@@ -2,6 +2,7 @@
 // batch.mjs --ids a,b,c | --backlog [--limit N] --reader p:m --checker p:m [--workers 2]
 //   [--allow-same-model] [--no-promote] [--log tmp/tx/batch.log] [--max-rounds 2] [--max-spend-usd N] [--spend-since ISO] [--escalation-model p:m]
 //   [--batch-async [--in-flight 300] [--poll-sec 30] [--workers 4]]
+//   [--allow-same-model] [--no-promote] [--log tmp/tx/batch.log] [--max-rounds 2] [--max-spend-usd N] [--spend-since ISO] [--escalation-model p:m] [--checker-mode full|crops|auto]
 // Walks a list of papers through run.mjs, a few at a time, and keeps going when
 // one fails: every outcome (exit code, final stage, receipt verdict, cost) is
 // appended to the log as one JSON line. A paper with an unfinished job in
@@ -104,6 +105,7 @@ function runOne({ id, resume, fresh }) {
       if (['escalated', 'repair'].includes(stage) || (args.redo && stage === 'done')) argv.push('--retry', '--max-rounds', String(args['max-rounds'] || 3));
       if (args['escalation-model']) argv.push('--escalation-model', args['escalation-model']);
       if (batchAsync) argv.push('--batch-async'); // a job created before this flag learns it on resume
+      if (args['checker-mode']) argv.push('--checker-mode', args['checker-mode']);
     } else {
       argv.push('--reader', args.reader, '--checker', args.checker);
       const keys = keysById.get(id);
@@ -115,6 +117,7 @@ function runOne({ id, resume, fresh }) {
       if (args['window-pages']) argv.push('--window-pages', String(args['window-pages']));
       if (args['escalation-model']) argv.push('--escalation-model', args['escalation-model']);
       if (batchAsync) argv.push('--batch-async');
+      if (args['checker-mode']) argv.push('--checker-mode', args['checker-mode']);
     }
     const started = Date.now();
     const child = spawn(process.execPath, argv, { cwd: ROOT, env: process.env });

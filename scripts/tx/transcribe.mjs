@@ -62,7 +62,7 @@ import { createRequire } from 'node:module';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, loadPrompt, pageImages, pageWindows, windowBlock, windowLabel, contextBlock, sanitizeCandidate, repairJsonEscapes,
   candidateFile, checkFile, loadProviderKeys, PROVIDER_KEY_NAME, PROVIDER_LIMITS, TOKENS_PER_PAGE, estimateCost, appendRun, nowIso,
-  checkerView, candidateCrops, sha256File, sha256, sleep, ROOT, pointerGet, normaliseCandidate, paperDir,
+  checkerView, candidateCrops, sha256File, sha256, sleep, ROOT, pointerGet, normaliseCandidate, paperDir, allFigures,
   ANTHROPIC_BASE_URL, BATCH_DIRS, BATCH_WAIT, batchCustomId, batchFiles, enqueueBatchRequest, waitForBatchResult, batchResultError, batchRequestState, brokerAlive, readBatchResult, readBatchMeta,
 } from './lib.mjs';
 import { assembleWindows } from './assemble.mjs';
@@ -75,7 +75,7 @@ const { fetch: ufetch, Agent } = require('undici');
 const args = parseArgs(process.argv.slice(2), { flags: ['dry-run', 'batch-async'] });
 const paperId = args._[0];
 const { provider, model, stage } = args;
-if (!paperId || !['anthropic', 'gemini', 'zai', 'chatgpt'].includes(provider) || !model || !['reader', 'checker', 'refix'].includes(stage)) {
+if (!paperId || !['anthropic', 'gemini', 'zai', 'chatgpt'].includes(provider) || !model || !['reader', 'checker', 'refix', 'cropcheck'].includes(stage)) {
   fail('usage: transcribe.mjs <paperId> --provider anthropic|gemini|zai --model <m> --stage reader|checker|refix [--candidate f] [--defects repair-report.json] [--dry-run] [--reasoning low|high|max] [--timeout-min 20] [--window-pages N] [--max-tokens N] [--out f]');
 }
 const dry = !!args['dry-run'];
@@ -105,7 +105,9 @@ const costOf = (inputTokens, outputTokens) => estimateCost(model, inputTokens, o
 
 // ---- checker input: the sanitised view + crops (never the raw candidate)
 let candidatePath = null, candidateHash = null, view = null, crops = [];
-if (stage === 'checker') {
+// cropcheck: the crop images alone (no pages) — a model audit of the figures after the text was verified
+// mechanically; the reply is turned into a checker-shaped output (defects on …/tx/bbox with expand/shrink edges)
+if (stage === 'checker' || stage === 'cropcheck') {
   if (!args.candidate) fail('--candidate is required for the checker stage');
   candidatePath = path.resolve(args.candidate);
   const candidateBytes = fs.readFileSync(candidatePath);
@@ -169,6 +171,15 @@ function buildText(window, images) {
     if (cropImgs.length) parts.push(`FIGURE CROPS produced from the candidate's boxes${provider === 'chatgpt' ? ', on the attached sheet crops.png (one labelled tile each; the label is the crop number and the figure id)' : ', in order after the pages'}: ${cropImgs.map((i, k) => `crop #${k + 1} = figure "${i.id}" (${i.document} p.${i.page}, box ${JSON.stringify(i.bbox)})`).join('; ')}. Judge each crop itself: whole figure, nothing clipped, no swallowed body text.`);
     else parts.push('The candidate proposes no figures; verify that the pages indeed contain no figure a student needs.');
     parts.push('CANDIDATE TRANSCRIPTION (JSON, sanitised — the reader\'s notes and identity are withheld on purpose):\n' + JSON.stringify(view));
+  }
+  if (stage === 'cropcheck') {
+    const cropImgs = images.filter(i => i.kind === 'crop');
+    const figs = new Map(crops.map(c => [c.id, c]));
+    const cand = readJson(candidatePath, null);
+    const meta = id => { for (const { fig } of allFigures(cand || {})) if (fig?.id === id) return fig; return null; };
+    parts.push(`candidateSha256: ${candidateHash}`);
+    parts.push(`CROPS (${cropImgs.length}, in order): ` + cropImgs.map((i, k) => { const f = meta(i.id); return `crop #${k + 1} = figure "${i.id}" (${i.document} p.${i.page}, box ${JSON.stringify(i.bbox)})${f?.caption ? `, caption „${String(f.caption).slice(0, 120)}“` : ''}${f?.alt ? `, alt „${String(f.alt).slice(0, 120)}“` : ''}`; }).join('; '));
+    void figs;
   }
   if (stage === 'refix') {
     // the current value goes whole: a clipped value comes back clipped (the model echoes the marker) and cuts the field
@@ -479,7 +490,7 @@ function selectImages(window) {
   if (missing.length) fail(`${missing.length} rendered page(s) missing; re-run prepare.mjs`);
   // A long paper with many figures can exceed the provider's image cap (izho-2023-theory-multi: 106): the pages
   // come first, crops fill what is left; when the pages alone exceed it, only the pages the candidate spans go.
-  let pageList = provider === 'chatgpt' ? [] : pages, cropList = crops, imagesLeftOut = 0; // the app reads the PDFs themselves
+  let pageList = provider === 'chatgpt' || stage === 'cropcheck' ? [] : pages, cropList = crops, imagesLeftOut = 0; // the app reads the PDFs themselves
   if (pageList.length + cropList.length > limits.images) {
     const src = view || refix?.candidate; // the checker's sanitised view keeps each problem's source pages
     if (pageList.length > limits.images && src) {
@@ -553,6 +564,23 @@ function finishWindow(window, label, target, parsed, obj, costUsd) {
     console.log(JSON.stringify({ paperId, stage, provider, model, out: target, responseFile, applied: result.applied.length, skipped: result.skipped.length, changes: result.applied, unapplied: result.skipped, figuresToRedo: result.figuresToRedo, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, costUsd, requestId: parsed.requestId, ...(batch ? { transport, batchId: parsed.batchId, customId: parsed.customId } : {}) }, null, 2));
     process.exit(result.skipped.length ? 3 : 0);
   }
+  if (stage === 'cropcheck') {
+    // checker-shaped output: one figure defect per crop that is not ok; the box change is a direction
+    // (run.mjs turns expand/shrink edges into a concrete box; repair.mjs applies it; figures.mjs re-crops)
+    const byId = new Map(crops.map(c => [c.id, c]));
+    const defects = [];
+    for (const r of Array.isArray(obj.crops) ? obj.crops : []) {
+      const c = byId.get(r?.id) || crops[(Number(r?.crop) || 0) - 1];
+      if (!c || r?.ok === true) continue;
+      const edges = (Array.isArray(r.edges) ? r.edges : []).map(e => String(e).toLowerCase()).filter(e => ['left', 'right', 'top', 'bottom'].includes(e));
+      const issue = String(r.issue || 'clipped');
+      defects.push({ path: `${c.path}/tx/bbox`, document: c.document, page: c.page, severity: issue === 'wrong-thing' ? 'critical' : 'major', kind: 'figure', source: 'cropcheck', confidence: 0.85,
+        description: `[crop audit: ${issue}${edges.length ? ` at ${edges.join('/')}` : ''}] ${String(r.description || '').slice(0, 300)}`,
+        suggestedFix: issue === 'wrong-thing' ? null : { [issue === 'swallowed-text' ? 'shrink' : 'expand']: edges.length ? edges : ['left', 'right', 'top', 'bottom'] } });
+    }
+    obj = { candidateSha256: candidateHash, verdict: defects.length ? 'fail' : 'pass', summary: `Crop audit (${crops.length} crop(s)): ${String(obj.summary || '')}`.trim(), mode: 'crops',
+      coverage: { pagesRead: [], problemsChecked: (readJson(candidatePath, null)?.problems || []).length, figuresChecked: crops.length }, defects, cropsAudited: crops.map(c => c.id) };
+  }
   if (stage === 'reader') obj.tx = { ...(obj.tx || {}), ...(window ? { window } : {}), reader: ident };
   else Object.assign(obj, bindCheckerResult(obj, { ...ident, candidate: candidatePath, candidateSha256: candidateHash, viewSha256: sha256(JSON.stringify(view)), crops: crops.map(c => c.id) }));
   if (jsonRepaired && obj?.tx?.reader) obj.tx.reader.jsonRepaired = jsonRepaired;
@@ -608,7 +636,7 @@ if (batchResultIds) {
   }
   if (requeued) { for (const l of lines) console.log(JSON.stringify(l)); process.exit(2); }
   for (const r of ready) {
-    if (stage === 'checker') selectImages(r.window); // the checker's crop list as the request carried it (no image is read)
+    if (stage === 'checker' || stage === 'cropcheck') selectImages(r.window); // the checker's crop list as the request carried it (no image is read)
     const costUsd = costOf(r.parsed.inputTokens, r.parsed.outputTokens);
     appendRun(runRecord(r.parsed, r.label, costUsd, r.ask, r.parsed.imagesCompressed));
     jsonRepaired = r.jsonRepaired;

@@ -37,7 +37,7 @@ for (const doc of ['problems', 'solutions']) {
 
 const prov = provenanceFor(candidate, {
   reviewer: receipt.reviewer, promptVersion: receipt.promptVersion, checkedAt: receipt.checkedAt, sourceHashes: receipt.sourceHashes,
-  independent: receipt.independence ? receipt.independence.independent : true, adjudicator: receipt.adjudicator || null,
+  independent: receipt.independence ? receipt.independence.independent : true, adjudicator: receipt.adjudicator || null, mode: receipt.checkerMode || null,
 });
 const final = buildFinalPaper(candidate, prov);
 if (final.contentHash !== receipt.contentHash) fail(`content hash mismatch: receipt ${receipt.contentHash.slice(0, 12)}… vs rebuilt ${final.contentHash.slice(0, 12)}… (schema or candidate changed since the receipt)`);

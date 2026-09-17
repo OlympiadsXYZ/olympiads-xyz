@@ -55,7 +55,8 @@ if (!indep.independent && !allowSame) blockers.push(`reader ${reader.provider}:$
 
 const checkedAt = nowIso();
 const sourceHashes = { problems: manifest.documents.problems.sha256, ...(manifest.documents.solutions ? { solutions: manifest.documents.solutions.sha256 } : {}) };
-const prov = provenanceFor(candidate, { reviewer, promptVersion, checkedAt, sourceHashes, independent: indep.independent, adjudicator });
+const checkerMode = checker.mode || checker.checker?.mode || null; // 'crops': the model audited the figure crops; the text was verified mechanically
+const prov = provenanceFor(candidate, { reviewer, promptVersion, checkedAt, sourceHashes, independent: indep.independent, adjudicator, mode: checkerMode });
 const final = buildFinalPaper(candidate, prov);
 const { validate } = compileSchema('final');
 if (!validate(final.data)) for (const e of validate.errors.slice(0, 10)) blockers.push(`final bytes fail schema at ${e.dataPath || '/'}: ${e.message}${e.params?.additionalProperty ? ` (${e.params.additionalProperty})` : ''}`);
@@ -69,7 +70,7 @@ const receipt = {
   paperId, verdict,
   contentHash: final.contentHash,
   sourceHashes,
-  reviewer, checkedAt, promptVersion,
+  reviewer, checkedAt, promptVersion, ...(checkerMode ? { checkerMode } : {}),
   reader: { provider: prov.provider, model: prov.model, promptVersion: prov.promptVersion, promptSha256: prov.promptSha256 ?? null, requestId: prov.requestId, at: prov.at },
   independence: { ...indep, allowSameModel: allowSame },
   adjudicator,

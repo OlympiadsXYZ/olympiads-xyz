@@ -136,6 +136,8 @@ export default function ModuleHeaders({
                 ? t(
                     verification.verifier === 'mechanical'
                       ? 'problem-verification-reviewed-mechanical'
+                      : verification.verifier === 'crop-audit'
+                      ? 'problem-verification-reviewed-crop-audit'
                       : verification.verifier === 'same-model'
                       ? 'problem-verification-reviewed-same-model'
                       : 'problem-verification-reviewed',
