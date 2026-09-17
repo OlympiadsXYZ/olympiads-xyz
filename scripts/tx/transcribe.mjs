@@ -608,7 +608,7 @@ if (batchResultIds) {
   }
   if (requeued) { for (const l of lines) console.log(JSON.stringify(l)); process.exit(2); }
   for (const r of ready) {
-    selectImages(r.window); // the checker's crop list as the request carried it (no image is read)
+    if (stage === 'checker') selectImages(r.window); // the checker's crop list as the request carried it (no image is read)
     const costUsd = costOf(r.parsed.inputTokens, r.parsed.outputTokens);
     appendRun(runRecord(r.parsed, r.label, costUsd, r.ask, r.parsed.imagesCompressed));
     jsonRepaired = r.jsonRepaired;

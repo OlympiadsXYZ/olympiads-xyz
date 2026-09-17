@@ -1,20 +1,35 @@
 #!/usr/bin/env node
 // batch.mjs --ids a,b,c | --backlog [--limit N] --reader p:m --checker p:m [--workers 2]
 //   [--allow-same-model] [--no-promote] [--log tmp/tx/batch.log] [--max-rounds 2] [--max-spend-usd N] [--spend-since ISO] [--escalation-model p:m]
+//   [--batch-async [--in-flight 300] [--poll-sec 30] [--workers 4]]
 // Walks a list of papers through run.mjs, a few at a time, and keeps going when
 // one fails: every outcome (exit code, final stage, receipt verdict, cost) is
 // appended to the log as one JSON line. A paper with an unfinished job in
 // tmp/tx/jobs.json is resumed with --continue; a paper already promoted (job
 // state promoted, or present in content/problems) is skipped. Safe to re-run.
+//
+// --batch-async (the archive run over the Anthropic Message Batches API, with
+// scripts/tx/anthropic-batch-broker.mjs running alongside): the worker pool is
+// replaced by a scheduler. Every run.mjs gets --batch-async, so an anthropic reader
+// or checker queues its request and parks the job (exit 2, job.waitingFor.transport
+// 'batch') instead of sleeping for the batch. The scheduler keeps up to --in-flight
+// jobs open (running + parked; default 300), at most --workers run.mjs processes at a
+// time (default 4: a resume runs validate/figures/crops, not only the collect), and
+// every --poll-sec (30) resumes `run.mjs <id> --continue` for parked jobs whose
+// result files all exist. Outcomes are logged as in the pool; the spend cap reads the
+// same runs.jsonl (--batch-result appends the cost there). It exits when the plan is
+// exhausted and nothing is running or parked. Resumable after a crash: the state is
+// tmp/tx/jobs.json (waitingFor) plus tmp/tx/anthropic-batch/results/.
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, writeJson, JOBS_FILE, ROOT, nowIso, paperDir, findContentFile } from './lib.mjs';
+import { parseArgs, fail, readJson, updateJobs, JOBS_FILE, RUNS_FILE, ROOT, nowIso, paperDir, findContentFile, BATCH_DIRS, sleep } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh', 'batch-async'] });
 if (!args.ids && !args.backlog && !args.catalogue) fail('usage: batch.mjs --ids a,b | --backlog | --catalogue [--subjects s,s] [--langs l,l] [--competitions c,c] [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote] [--redo]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
-let workers = Number(args.workers || 2);
+const batchAsync = !!args['batch-async'];
+let workers = Number(args.workers || (batchAsync ? 4 : 2));
 const logFile = path.resolve(args.log || path.join(ROOT, 'tmp', 'tx', 'batch.log'));
 fs.mkdirSync(path.dirname(logFile), { recursive: true });
 const log = entry => fs.appendFileSync(logFile, JSON.stringify({ at: nowIso(), ...entry }) + '\n');
@@ -63,7 +78,8 @@ for (const id of ids) {
 }
 // the ChatGPT app has one composer and "the current chat" is whichever the last call left open: one worker only
 if (/^chatgpt:/.test(String(args.reader || '')) || /^chatgpt:/.test(String(args.checker || ''))) { if (workers > 1) console.error('[batch] the chatgpt provider runs one worker (the app holds one conversation at a time)'); workers = 1; }
-console.log(`${plan.length} paper(s) to run with ${workers} worker(s); log: ${path.relative(ROOT, logFile)}`);
+if (batchAsync) console.log(`${plan.length} paper(s) to schedule: up to ${Number(args['in-flight'] || 300)} in flight, ${workers} run.mjs process(es) at a time, poll every ${Math.max(1, Number(args['poll-sec'] || 30))} s; log: ${path.relative(ROOT, logFile)}`);
+else console.log(`${plan.length} paper(s) to run with ${workers} worker(s); log: ${path.relative(ROOT, logFile)}`);
 
 function runOne({ id, resume, fresh }) {
   return new Promise(resolve => {
@@ -71,8 +87,7 @@ function runOne({ id, resume, fresh }) {
       // the old working directory is kept aside (its candidates and receipts are evidence) and the job entry goes
       const dir = paperDir(id);
       if (fs.existsSync(dir)) fs.renameSync(dir, `${dir}.superseded-${new Date().toISOString().replace(/[:.]/g, '-')}`);
-      const state = readJson(JOBS_FILE, { version: 2, jobs: {} });
-      if (state.jobs[id]) { delete state.jobs[id]; writeJson(JOBS_FILE, state); }
+      updateJobs(state => { delete state.jobs[id]; });
     }
     if (!fresh) {
       // the plan was drawn at start; a job that appeared since (another batch parent, an orphan worker, a hand
@@ -88,6 +103,7 @@ function runOne({ id, resume, fresh }) {
       const stage = jobs()[id]?.stage;
       if (['escalated', 'repair'].includes(stage) || (args.redo && stage === 'done')) argv.push('--retry', '--max-rounds', String(args['max-rounds'] || 3));
       if (args['escalation-model']) argv.push('--escalation-model', args['escalation-model']);
+      if (batchAsync) argv.push('--batch-async'); // a job created before this flag learns it on resume
     } else {
       argv.push('--reader', args.reader, '--checker', args.checker);
       const keys = keysById.get(id);
@@ -98,6 +114,7 @@ function runOne({ id, resume, fresh }) {
       if (args['max-rounds']) argv.push('--max-rounds', String(args['max-rounds']));
       if (args['window-pages']) argv.push('--window-pages', String(args['window-pages']));
       if (args['escalation-model']) argv.push('--escalation-model', args['escalation-model']);
+      if (batchAsync) argv.push('--batch-async');
     }
     const started = Date.now();
     const child = spawn(process.execPath, argv, { cwd: ROOT, env: process.env });
@@ -109,7 +126,7 @@ function runOne({ id, resume, fresh }) {
       const receipt = readJson(path.join(paperDir(id), 'receipt.json'), null);
       const promoted = job?.stage === 'done' && job.history?.some(h => h.note === 'promoted');
       const entry = {
-        paperId: id, outcome: code === 0 ? (promoted ? 'promoted' : 'finished') : code === 2 ? 'waiting-for-agent' : code === 3 ? 'escalated' : 'error',
+        paperId: id, outcome: code === 0 ? (promoted ? 'promoted' : 'finished') : code === 2 ? (job?.waitingFor?.transport === 'batch' ? 'waiting-for-batch' : 'waiting-for-agent') : code === 3 ? 'escalated' : 'error',
         exit: code, stage: job?.stage || null, round: job?.round ?? null, receipt: receipt?.verdict || null,
         blockers: receipt?.blockers?.slice(0, 3) || [], seconds: Math.round((Date.now() - started) / 1000),
         tail: (err || out).trim().split('\n').slice(-3).join(' | ').slice(0, 400),
@@ -128,7 +145,7 @@ const spendCap = args['max-spend-usd'] ? Number(args['max-spend-usd']) : null;
 const spendSince = args['spend-since'] ? new Date(args['spend-since']).toISOString() : new Date().toISOString();
 const spendProviders = new Set([args.reader, args.checker].filter(Boolean).map(s => String(s).split(':')[0]));
 function spentUsd() {
-  const f = path.join(ROOT, 'tmp', 'tx', 'runs.jsonl');
+  const f = RUNS_FILE; // tmp/tx/runs.jsonl (OLYMPIADS_TX_DIR-relative, like every other path of the pipeline)
   if (!fs.existsSync(f)) return 0;
   let usd = 0, unpriced = 0;
   for (const line of fs.readFileSync(f, 'utf8').split(/\r?\n/)) {
@@ -143,16 +160,54 @@ function spentUsd() {
 }
 let capHit = false;
 const results = [];
-let next = 0;
-await Promise.all(Array.from({ length: Math.min(workers, plan.length) }, async () => {
-  while (next < plan.length) {
-    if (spendCap != null) {
-      const usd = spentUsd();
-      if (usd >= spendCap) { if (!capHit) { capHit = true; log({ outcome: 'spend-cap', spentUsd: +usd.toFixed(2), capUsd: spendCap, remaining: plan.length - next }); console.log(`[batch] spend cap reached: $${usd.toFixed(2)} >= $${spendCap} since ${spendSince}; ${plan.length - next} paper(s) not started`); } return; }
+// true once the cap is reached (logged once); papers already running or parked finish their loops
+function overCap(remaining) {
+  if (spendCap == null) return false;
+  const usd = spentUsd();
+  if (usd < spendCap) return false;
+  if (!capHit) { capHit = true; log({ outcome: 'spend-cap', spentUsd: +usd.toFixed(2), capUsd: spendCap, remaining }); console.log(`[batch] spend cap reached: $${usd.toFixed(2)} >= $${spendCap} since ${spendSince}; ${remaining} paper(s) not started`); }
+  return true;
+}
+if (!batchAsync) {
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.min(workers, plan.length) }, async () => {
+    while (next < plan.length) {
+      if (overCap(plan.length - next)) return;
+      const item = plan[next++]; results.push(await runOne(item));
     }
-    const item = plan[next++]; results.push(await runOne(item));
+  }));
+} else {
+  // ---- the scheduler (--batch-async): pending → running → parked (waiting for the broker) → running … → done
+  const inFlightCap = Math.max(1, Number(args['in-flight'] || 300));
+  const pollSec = Math.max(1, Number(args['poll-sec'] || 30));
+  const parkedOn = id => { const w = jobs()[id]?.waitingFor; return w?.transport === 'batch' && Array.isArray(w.customIds) ? w : null; };
+  const resultsIn = id => { const w = parkedOn(id); return !!w && w.customIds.every(cid => fs.existsSync(path.join(BATCH_DIRS.results, `${cid}.json`))); };
+  const waiting = new Map(), running = new Map();
+  // after a crash or a stop, the plan's resumable jobs that are parked on a batch go straight to the waiting set
+  const pending = [];
+  for (const item of plan) { if (item.resume && parkedOn(item.id)) waiting.set(item.id, { id: item.id, resume: true }); else pending.push(item); }
+  if (waiting.size) console.log(`[batch] ${waiting.size} job(s) already parked on a batch from an earlier run`);
+  let wake = null;
+  const kick = () => { if (wake) { const w = wake; wake = null; w(); } };
+  const start = item => {
+    running.set(item.id, runOne(item).then(entry => {
+      running.delete(item.id);
+      if (entry.exit === 2 && parkedOn(item.id)) waiting.set(item.id, { id: item.id, resume: true });
+      else results.push(entry);
+      kick();
+    }));
+  };
+  let lastStatus = '';
+  for (;;) {
+    for (const [id, item] of waiting) { if (running.size >= workers) break; if (resultsIn(id)) { waiting.delete(id); start(item); } }
+    while (pending.length && running.size < workers && running.size + waiting.size < inFlightCap && !overCap(pending.length)) start(pending.shift());
+    const open = running.size + waiting.size;
+    if (!open && (!pending.length || capHit)) break;
+    const status = `[batch ${new Date().toISOString().slice(11, 19)}] running ${running.size} | parked ${waiting.size} | pending ${pending.length} | done ${results.length}${spendCap != null ? ` | spent $${spentUsd().toFixed(2)} of $${spendCap}` : ''}`;
+    if (status.replace(/^\[batch [^\]]+\]/, '') !== lastStatus.replace(/^\[batch [^\]]+\]/, '')) { console.log(status); lastStatus = status; }
+    await Promise.race([sleep(pollSec * 1000), new Promise(r => { wake = r; })]);
   }
-}));
+}
 if (spendCap != null) console.log(`[batch] spend since ${spendSince}: $${spentUsd().toFixed(2)} (cap $${spendCap})`);
 const counts = {};
 for (const r of results) counts[r.outcome] = (counts[r.outcome] || 0) + 1;

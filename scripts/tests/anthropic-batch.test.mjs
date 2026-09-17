@@ -26,7 +26,7 @@ delete process.env.ANTHROPIC_BASE_URL;
 const lib = await import(txModule('lib.mjs'));
 const broker = await import(txModule('anthropic-batch-broker.mjs'));
 const { BATCH_DIRS } = lib;
-process.on('exit', () => { try { fs.rmSync(root, { recursive: true, force: true }); } catch {} });
+process.on('exit', () => { if (process.env.TX_TEST_KEEP) { console.error(`sandbox kept: ${root}`); return; } try { fs.rmSync(root, { recursive: true, force: true }); } catch {} });
 
 const envFor = (base, extra = {}) => ({ ...process.env, OLYMPIADS_TX_DIR: root, OLYMPIADS_KEYS_FILE: keysFile, ANTHROPIC_BASE_URL: base, ...extra });
 // async, never spawnSync: the fake API lives in this process and must keep serving while the broker runs
@@ -517,7 +517,8 @@ function transcribeSync(base, extra = [], env = {}) {
   return spawnSync(process.execPath, [txScript('transcribe.mjs'), PAPER, '--provider', 'anthropic', '--model', 'claude-opus-5', '--stage', 'reader', ...extra], { encoding: 'utf8', env: envFor(base, { ...asyncEnv, ...env }) });
 }
 const queuedLines = r => r.stdout.split(/\r?\n/).filter(l => l.startsWith('{')).map(l => JSON.parse(l));
-const runsFor = () => fs.readFileSync(path.join(root, 'runs.jsonl'), 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l)).filter(r => r.paperId === PAPER);
+const runsAll = () => fs.readFileSync(path.join(root, 'runs.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map(l => JSON.parse(l));
+const runsFor = () => runsAll().filter(r => r.paperId === PAPER);
 
 test('--batch-async queues the request and exits 2 with one JSON line; --batch-result runs the sync post-processing and writes the candidate', async t => {
   preparePaper();
@@ -683,4 +684,151 @@ test('--batch-result: a retryable error re-queues that window (exit 2, new id, o
   assert.equal(done.status, 0, done.stderr);
   assert.equal(runsFor().length, runsBefore + 3, 'both windows booked exactly once');
   assert.ok(fs.existsSync(wl[0].out) && fs.existsSync(wl[1].out) && fs.existsSync(lib.candidateFile(PAPER, 'anthropic', 'claude-opus-5')));
+});
+
+// ---- run.mjs --batch-async and the batch.mjs scheduler on sandboxed papers (a hand-written job at the reader stage:
+// prepare.mjs needs rclone and poppler; figures.mjs still asks `which python3` / `which rclone` before it does
+// nothing for a candidate without figures, so these two tests skip where those are not on PATH)
+const toolsOnPath = ['python3', 'rclone'].every(t => lib.which(t));
+const replyFor = id => { const r = reply(); r.paper.id = id; r.problems[0].id = `${id}-p1`; return r; };
+const checkerReplyFor = text => ({ verdict: 'pass', candidateSha256: /Candidate bytes SHA-256 \(copy as candidateSha256\): ([0-9a-f]{64})/.exec(text)?.[1] || null, summary: 'fine', defects: [], coverage: { pagesRead: [{ document: 'problems', page: 1 }, { document: 'problems', page: 2 }, { document: 'solutions', page: 1 }], problemsChecked: 1, figuresChecked: 0 } });
+// the fake API answers a reader request with the paper's transcription and a checker request with a pass
+const pipelineResults = (id, params) => {
+  const text = params.messages[0].content.at(-1).text;
+  const body = /CANDIDATE TRANSCRIPTION/.test(text) ? checkerReplyFor(text) : replyFor(/zz-2099-batch-\d+/.exec(text)?.[0] || PAPER);
+  return { type: 'succeeded', message: message(JSON.stringify(body), { input_tokens: 1000, output_tokens: 200 }) };
+};
+function preparePaperId(id) {
+  const dir = path.join(root, id);
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.mkdirSync(path.join(dir, 'pages'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify({ ...manifest, paperId: id }));
+  for (const f of ['problems-01.png', 'problems-02.png', 'solutions-01.png']) fs.writeFileSync(path.join(dir, 'pages', f), PNG);
+  return dir;
+}
+const jobsFile = path.join(root, 'jobs.json');
+const readJobs = () => (fs.existsSync(jobsFile) ? JSON.parse(fs.readFileSync(jobsFile, 'utf8')) : { version: 2, jobs: {} });
+function plantJob(id, extra = {}) {
+  const all = readJobs();
+  all.jobs[id] = { paperId: id, reader: { provider: 'anthropic', model: 'claude-opus-5' }, checker: { provider: 'anthropic', model: 'claude-opus-5' }, stage: 'reader', promote: false, dryRun: false, allowSameModel: true, options: { maxRounds: 2, ...extra }, round: 0, createdAt: lib.nowIso(), history: [], artefacts: { manifest: path.relative(repo, path.join(root, id, 'manifest.json')) } };
+  fs.writeFileSync(jobsFile, JSON.stringify(all));
+}
+const jobOf = id => readJobs().jobs[id];
+function runAsync(script, argv, env) {
+  return new Promise(resolve => {
+    const child = spawn(process.execPath, [txScript(script), ...argv], { env, cwd: repo });
+    let stdout = '', stderr = '';
+    child.stdout.on('data', d => { stdout += d; }); child.stderr.on('data', d => { stderr += d; });
+    child.on('close', status => resolve({ status, stdout, stderr }));
+  });
+}
+
+test('run.mjs --batch-async parks the reader and the checker with waitingFor and resumes each on --continue once the result files exist', { skip: toolsOnPath ? false : 'python3 and rclone are not on PATH (figures.mjs asks for them)' }, async t => {
+  const api = await fakeApi(t, { idPrefix: 'msgbatch_run', results: pipelineResults });
+  const env = envFor(api.base, { TX_BATCH_POLL_MS: '100' });
+  preparePaperId(PAPER);
+  plantJob(PAPER, { batchAsync: true });
+  const postsBefore = api.state.posts.length;
+  // 1. the reader is queued, the job parks
+  const r1 = await runAsync('run.mjs', [PAPER, '--continue'], env);
+  assert.equal(r1.status, 2, r1.stderr);
+  let job = jobOf(PAPER);
+  assert.equal(job.stage, 'reader');
+  assert.equal(job.waitingFor.transport, 'batch'); assert.equal(job.waitingFor.stage, 'reader'); assert.equal(job.waitingFor.customIds.length, 1); assert.equal(job.waitingFor.out, lib.candidateFile(PAPER, 'anthropic', 'claude-opus-5')); assert.ok(job.waitingFor.since);
+  assert.match(r1.stdout, /reader queued for the Anthropic batch broker \(1 request\(s\): tx-/);
+  const readerId = job.waitingFor.customIds[0];
+  assert.equal(lib.batchRequestState(readerId), 'queued');
+  assert.ok(job.history.at(-1).note.startsWith('queued 1 batch request(s) for the reader'));
+  // 2. --continue before the result: exit 2 again, nothing queued, nothing spent
+  const r2 = await runAsync('run.mjs', [PAPER, '--continue'], env);
+  assert.equal(r2.status, 2, r2.stderr);
+  assert.match(r2.stdout, /reader still waiting for 1 of 1 batch result\(s\)/);
+  assert.deepEqual(jobOf(PAPER).waitingFor.customIds, [readerId], 'the same request, not a second one');
+  assert.equal(broker.listQueued().length, 1);
+  assert.equal(api.state.posts.length, postsBefore);
+  // 3. the broker runs; --continue collects the reader, validates, crops (nothing to crop), queues the checker, parks again
+  assert.equal((await runBroker(api.base)).status, 0);
+  assert.ok(fs.existsSync(lib.batchFiles(readerId).result));
+  const r3 = await runAsync('run.mjs', [PAPER, '--continue'], env);
+  assert.equal(r3.status, 2, `${r3.stderr}\n${r3.stdout}`);
+  job = jobOf(PAPER);
+  assert.equal(job.stage, 'checker');
+  assert.equal(job.waitingFor.stage, 'checker'); assert.equal(job.waitingFor.transport, 'batch'); assert.equal(job.waitingFor.customIds.length, 1);
+  const checkerId = job.waitingFor.customIds[0];
+  assert.notEqual(checkerId, readerId);
+  assert.ok(job.artefacts.candidate && job.artefacts.candidateWithFigures && job.artefacts.validatedSha256, JSON.stringify(job.artefacts));
+  const notes = job.history.map(h => h.note);
+  assert.ok(notes.includes('reader done'), notes.join(' | ')); assert.ok(notes.includes('validated')); assert.ok(notes.some(n => /^figures done/.test(n)));
+  assert.ok(notes.some(n => n.startsWith('queued 1 batch request(s) for the checker')));
+  const candidate = JSON.parse(fs.readFileSync(path.resolve(repo, job.artefacts.candidate), 'utf8'));
+  assert.equal(candidate.tx.reader.transport, 'batch'); assert.equal(candidate.tx.reader.customId, readerId);
+  const checkerMeta = JSON.parse(fs.readFileSync(lib.batchFiles(checkerId).meta, 'utf8'));
+  assert.equal(checkerMeta.stage, 'checker'); assert.equal(checkerMeta.detached, true);
+  // 4. the checker's result lands; --continue collects it and the loop finishes (no promotion asked)
+  assert.equal((await runBroker(api.base)).status, 0);
+  const r4 = await runAsync('run.mjs', [PAPER, '--continue'], env);
+  assert.equal(r4.status, 0, `${r4.stderr}\n${r4.stdout}`);
+  job = jobOf(PAPER);
+  assert.equal(job.stage, 'done'); assert.equal(job.waitingFor, null);
+  assert.equal(job.history.at(-1).note, 'receipt: pass');
+  const check = JSON.parse(fs.readFileSync(path.resolve(repo, job.artefacts.checker), 'utf8'));
+  assert.equal(check.verdict, 'pass'); assert.equal(check.checker.transport, 'batch'); assert.equal(check.checker.customId, checkerId);
+  const receipt = JSON.parse(fs.readFileSync(path.join(root, PAPER, 'receipt.json'), 'utf8'));
+  assert.equal(receipt.verdict, 'pass');
+  const runs = runsFor().slice(-2);
+  assert.deepEqual(runs.map(r => [r.stage, r.transport, r.customId]), [['reader', 'batch', readerId], ['checker', 'batch', checkerId]]);
+  assert.ok(runs.every(r => r.costUsd > 0));
+  // a --continue on the finished job is the usual no-op
+  const r5 = await runAsync('run.mjs', [PAPER, '--continue'], env);
+  assert.equal(r5.status, 0); assert.match(r5.stdout, /done \(receipt: pass\)/);
+});
+
+test('batch.mjs --batch-async schedules two papers through the broker, survives a kill while they are parked, and exits when nothing is left', { skip: toolsOnPath ? false : 'python3 and rclone are not on PATH (figures.mjs asks for them)' }, async t => {
+  const api = await fakeApi(t, { idPrefix: 'msgbatch_sched', results: pipelineResults });
+  const env = envFor(api.base, { TX_BATCH_POLL_MS: '100' });
+  const ids = ['zz-2099-batch-8', 'zz-2099-batch-9'];
+  for (const id of ids) { preparePaperId(id); plantJob(id); } // no batchAsync on the job: batch.mjs passes --batch-async on --continue
+  const logFile = path.join(root, 'batch.log');
+  const readBatchLog = () => fs.existsSync(logFile) ? fs.readFileSync(logFile, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l)) : [];
+  const argv = ['--ids', ids.join(','), '--reader', 'anthropic:claude-opus-5', '--checker', 'anthropic:claude-opus-5', '--allow-same-model', '--no-promote', '--batch-async', '--poll-sec', '1', '--workers', '2', '--in-flight', '10', '--log', logFile];
+  // first scheduler: both readers park; the process is then killed with the jobs parked (no broker has run)
+  const first = spawn(process.execPath, [txScript('batch.mjs'), ...argv], { env, cwd: repo });
+  t.after(() => { try { first.kill(); } catch {} }); // a failed assertion must not leave the scheduler polling forever
+  let out1 = '';
+  first.stdout.on('data', d => { out1 += d; }); first.stderr.on('data', d => { out1 += d; });
+  const firstDone = new Promise(r => first.on('close', r));
+  await until(() => ids.every(id => jobOf(id)?.waitingFor?.transport === 'batch'), { timeoutMs: 30000, what: 'both jobs parked' });
+  await until(() => readBatchLog().filter(l => l.outcome === 'waiting-for-batch').length >= 2, { timeoutMs: 10000, what: 'two waiting-for-batch log lines' });
+  first.kill();
+  await firstDone;
+  assert.match(out1, /2 paper\(s\) to schedule: up to 10 in flight, 2 run.mjs process\(es\) at a time, poll every 1 s/);
+  assert.match(out1, /running 0 \| parked 2 \| pending 0 \| done 0/);
+  assert.equal(api.state.posts.length, 0, 'the scheduler itself never talks to the API');
+  assert.equal(broker.listQueued().length, 2);
+  // the broker runs while nothing schedules: the results land on disk
+  assert.equal((await runBroker(api.base)).status, 0);
+  assert.equal(api.state.posts.length, 1); assert.equal(api.state.posts[0].body.requests.length, 2, 'both readers in one batch');
+  // second scheduler: resumes the parked jobs from jobs.json + results/, drives them to done; the test runs the broker
+  // whenever something is queued (the checkers)
+  const second = runAsync('batch.mjs', argv, env);
+  let brokerRuns = 0;
+  const pump = (async () => { for (;;) { const done = await Promise.race([second.then(() => true), wait(300).then(() => false)]); if (done) return; if (broker.listQueued().length) { assert.equal((await runBroker(api.base)).status, 0); brokerRuns++; } } })();
+  const r = await Promise.race([second, wait(90000).then(() => null)]);
+  assert.ok(r, 'batch.mjs --batch-async did not exit');
+  await pump;
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /2 job\(s\) already parked on a batch from an earlier run/);
+  assert.match(r.stdout, /done: \{"finished":2\}/);
+  for (const id of ids) { const j = jobOf(id); assert.equal(j.stage, 'done', JSON.stringify(j.history.map(h => h.note))); assert.equal(j.waitingFor, null); assert.equal(j.options.batchAsync, true); }
+  const log = readBatchLog();
+  const by = o => log.filter(l => l.outcome === o).map(l => l.paperId).sort();
+  assert.deepEqual(by('finished'), ids, JSON.stringify(log));
+  assert.ok(by('waiting-for-batch').length >= 4, `each paper parks at least twice (reader, checker): ${JSON.stringify(by('waiting-for-batch'))}`);
+  assert.equal(by('error').length, 0); assert.equal(by('escalated').length, 0);
+  assert.ok(brokerRuns >= 1, 'the checkers went through the broker');
+  assert.equal(api.state.posts.length, 1 + brokerRuns, 'every broker pass sent exactly one batch');
+  assert.equal(broker.listQueued().length, 0);
+  // the spend cap reads the same runs.jsonl the collects append to: four priced calls at the batch rate
+  const spent = runsAll().filter(x => ids.includes(x.paperId) && x.ok);
+  assert.equal(spent.length, 4); assert.ok(spent.every(x => x.transport === 'batch' && x.costUsd > 0));
 });

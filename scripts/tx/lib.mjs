@@ -526,6 +526,32 @@ export function appendRun(record) {
   fs.mkdirSync(TX_DIR, { recursive: true });
   fs.appendFileSync(RUNS_FILE, JSON.stringify(record) + '\n');
 }
+// A synchronous lock file ({pid, at}, created with 'wx') held around a read-modify-write of a shared file. A lock
+// whose holder is dead, or older than staleMs, is taken over; after waitMs the caller proceeds without it (and says
+// so) rather than hang. Used for jobs.json: two run.mjs processes parking in the same millisecond lost one's update
+// (re-read-then-write is atomic per file but not per entry; seen in the batch.mjs --batch-async test, 2026-09-17).
+export function withFileLock(lockFile, fn, { waitMs = 15000, staleMs = 60000 } = {}) {
+  fs.mkdirSync(path.dirname(lockFile), { recursive: true });
+  const started = Date.now();
+  let held = false;
+  for (;;) {
+    try { fs.writeFileSync(lockFile, JSON.stringify({ pid: process.pid, at: nowIso() }), { flag: 'wx' }); held = true; break; }
+    catch (e) {
+      if (e.code !== 'EEXIST') throw e;
+      const cur = readJson(lockFile, null);
+      const stale = !cur?.pid || (cur.pid !== process.pid && !pidAlive(cur.pid)) || Date.now() - Date.parse(cur.at || 0) > staleMs;
+      if (stale) { try { fs.unlinkSync(lockFile); } catch {} continue; }
+      if (Date.now() - started > waitMs) { console.error(`[lib] ${path.basename(lockFile)} held by pid ${cur.pid} since ${cur.at} for over ${waitMs} ms; proceeding without it`); break; }
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20);
+    }
+  }
+  try { return fn(); }
+  finally { if (held) { try { if (readJson(lockFile, null)?.pid === process.pid) fs.unlinkSync(lockFile); } catch {} } }
+}
+// jobs.json read-modify-write under its lock: mutate(state) edits the freshly read state, which is then written.
+export function updateJobs(mutate) {
+  return withFileLock(`${JOBS_FILE}.lock`, () => { const state = readJson(JOBS_FILE, { version: 2, jobs: {} }); mutate(state); writeJson(JOBS_FILE, state); return state; });
+}
 export const readRuns = () => fs.existsSync(RUNS_FILE) ? fs.readFileSync(RUNS_FILE, 'utf8').split('\n').filter(Boolean).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean) : [];
 export const safeLabel = s => String(s).replace(/[^a-zA-Z0-9._-]+/g, '-');
 export const candidateFile = (paperId, provider, model) => path.join(paperDir(paperId), 'candidates', `${safeLabel(provider)}__${safeLabel(model)}.json`);

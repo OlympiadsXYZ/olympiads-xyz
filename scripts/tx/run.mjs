@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // run.mjs <paperId> --reader <provider:model | agent:label> --checker <same>
 //   [--continue] [--repaired <file>] [--no-promote] [--dry-run] [--allow-same-model]
-//   [--reasoning low|high|max] [--window-pages N] [--timeout-min 20] [--max-rounds 2] [--escalation-model p:m]
+//   [--reasoning low|high|max] [--window-pages N] [--timeout-min 20] [--max-rounds 2] [--escalation-model p:m] [--batch-async]
 // Orchestrates prepare → reader → validate → figures → checker → receipt → promote
 // with resumable state in tmp/tx/jobs.json. API providers run end to end. For an
 // agent:<label> stage the run prepares, prints the harness task and exits 2; the
@@ -15,19 +15,27 @@
 // task. `--continue --repaired <file>` re-enters at validate with an operator- or
 // adjudicator-supplied candidate. Any stage that finds the candidate bytes differ
 // from the last validated bytes goes back to validate first.
-// Exit codes: 0 promoted (or finished without promotion), 2 waiting for an agent,
+// --batch-async (stored as job.options.batchAsync): an anthropic reader or checker is queued for the Message
+// Batches broker with transcribe.mjs --batch-async instead of waited for; the job parks with
+// job.waitingFor = {stage, transport: 'batch', customIds, out, since} and exits 2 like the agent route. On
+// --continue the stage looks for tmp/tx/anthropic-batch/results/<customId>.json for every id: all present →
+// transcribe.mjs --batch-result <ids> (same arguments) and the loop goes on; otherwise exit 2 again, nothing
+// spent. The refix calls (schema refix at validate, the repair-stage refix and the escalation refix) stay
+// synchronous: they are small and mid-stage, and go over the sync API (--transport sync) so a worker never
+// sleeps for a batch inside a stage.
+// Exit codes: 0 promoted (or finished without promotion), 2 waiting for an agent or a batch result,
 // 3 escalated/failed verification, 1 error.
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, writeJson, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet, mergeProblemsIntoOne } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, updateJobs, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet, mergeProblemsIntoOne } from './lib.mjs';
 import { textLayerCheck, profileFor } from './textlayer.mjs';
 import { spliceFragment, repairDefectPath, repointByContent } from './fixes.mjs';
 import { regionsFor, coverFrac } from './snap.mjs';
-import { allFigures } from './lib.mjs';
+import { allFigures, BATCH_DIRS } from './lib.mjs';
 const allFigureBoxes = c => allFigures(c).map(({ fig }) => fig?.tx || {}).filter(t => Array.isArray(t.bbox) && t.bbox.length === 4 && t.page);
 
-const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['continue', 'no-promote', 'dry-run', 'allow-same-model', 'retry', 'batch-async'] });
 const paperId = args._[0];
 if (!paperId) fail('usage: run.mjs <paperId> --reader <provider:model|agent:label> --checker <provider:model|agent:label> [--continue] [--repaired f] [--no-promote] [--allow-same-model]');
 const jobs = readJson(JOBS_FILE, { version: 2, jobs: {} });
@@ -51,7 +59,7 @@ if (!args.continue) {
   if (!indep.differentProvider) console.error(`[run] note: reader and checker share the provider family (${reader.provider}); a different family is preferable`);
   job = {
     paperId, reader, checker, stage: 'prepare', promote: !args['no-promote'], dryRun: !!args['dry-run'], allowSameModel: !!args['allow-same-model'],
-    options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2), ...(args['escalation-model'] ? { escalation: parseWho(args['escalation-model']) } : {}) },
+    options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2), ...(args['escalation-model'] ? { escalation: parseWho(args['escalation-model']) } : {}), ...(args['batch-async'] ? { batchAsync: true } : {}) },
     ...(args.problems ? { keys: { problems: args.problems, solutions: args.solutions || null } } : {}), // a paper outside the Bulgarian shards names its archive keys
     round: 0, createdAt: nowIso(), history: [], artefacts: {},
   };
@@ -63,6 +71,7 @@ job.options ||= { maxRounds: 2 };
 // pipeline learned a new trick, so escalations need not wait for an adjudicator.
 if (args.continue && args['max-rounds']) job.options.maxRounds = Number(args['max-rounds']);
 if (args.continue && args['escalation-model']) job.options.escalation = parseWho(args['escalation-model']);
+if (args.continue && args['batch-async']) job.options.batchAsync = true;
 if (args.continue && args.retry && !job.waitingFor) { // from any stage: an escalation can also be parked at validate (schema budget) or figures
   // the budget is N more rounds from here, not N in total (earlier rounds already count);
   // a done job re-enters the same way when the pipeline learned a new check (re-promotion replaces the paper)
@@ -72,8 +81,9 @@ if (args.continue && args.retry && !job.waitingFor) { // from any stage: an esca
   job.stage = 'validate'; delete job.artefacts.validatedSha256;
   job.history.push({ at: nowIso(), stage: job.stage, note: `retry after ${was === 'done' ? 'promotion' : 'escalation'}: re-validate the current candidate, fresh check; up to ${job.options.maxRounds} rounds` });
 }
-// Re-read before writing: several run.mjs processes share jobs.json and must not clobber each other's entries.
-const save = (note) => { job.updatedAt = nowIso(); if (note) job.history.push({ at: job.updatedAt, stage: job.stage, note }); const current = readJson(JOBS_FILE, { version: 2, jobs: {} }); current.jobs[paperId] = job; jobs.jobs = current.jobs; writeJson(JOBS_FILE, current); };
+// Several run.mjs processes share jobs.json: the entry is replaced under the file's lock (lib.mjs updateJobs), so a
+// re-read-then-write by one process cannot drop another's update (two parks in the same millisecond did, 2026-09-17).
+const save = (note) => { job.updatedAt = nowIso(); if (note) job.history.push({ at: job.updatedAt, stage: job.stage, note }); jobs.jobs = updateJobs(state => { state.jobs[paperId] = job; }).jobs; };
 const node = (script, argv, opts = {}) => spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', script), ...argv], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
 const rel = f => path.relative(ROOT, f);
 const abs = f => path.isAbsolute(f) ? f : path.join(ROOT, f);
@@ -96,7 +106,48 @@ const readerOut = candidateFile(paperId, job.reader.provider, job.reader.model);
 const checkerOutFor = round => checkFile(paperId, job.checker.provider, job.checker.model).replace(/\.json$/, round ? `.r${round}.json` : '.json');
 const receiptOut = path.join(dir, 'receipt.json');
 const transcribeOpts = [...(job.options.reasoning ? ['--reasoning', job.options.reasoning] : []), ...(job.options.timeoutMin ? ['--timeout-min', String(job.options.timeoutMin)] : [])];
+// the refix calls are synchronous by design (see the header): over the sync API, never queued for the broker
+const refixOpts = [...transcribeOpts, ...(job.options.batchAsync ? ['--transport', 'sync'] : [])];
 
+const batchResultFile = id => path.join(BATCH_DIRS.results, `${id}.json`);
+// transcribe.mjs for a reader or checker stage. Synchronous unless job.options.batchAsync and the stage's
+// provider is anthropic: then the request is queued (--batch-async, exit 2, one JSON line per window) and the
+// job parks with waitingFor; on --continue with every result file present the reply is collected with
+// --batch-result (same arguments) and the stage goes on. Returns the spawnSync result of the call that produced
+// the output (never the enqueue), or exits 2.
+function transcribeStage(stage, who, argv, out) {
+  const script = 'transcribe.mjs';
+  if (!(job.options.batchAsync && who.provider === 'anthropic')) {
+    if (job.waitingFor?.transport === 'batch' && job.waitingFor.stage === stage) { job.waitingFor = null; save(`batch park for the ${stage} dropped (the job no longer runs async); the stage runs synchronously`); }
+    return node(script, argv);
+  }
+  const parked = job.waitingFor?.stage === stage && job.waitingFor.transport === 'batch' ? job.waitingFor : null;
+  if (parked) {
+    const missing = (parked.customIds || []).filter(id => !fs.existsSync(batchResultFile(id)));
+    if (missing.length) {
+      save(`still waiting for ${missing.length} of ${parked.customIds.length} batch result(s) (${stage})`);
+      console.log(`[run] ${paperId}: ${stage} still waiting for ${missing.length} of ${parked.customIds.length} batch result(s) since ${parked.since} (${missing.slice(0, 3).join(', ')}${missing.length > 3 ? ', …' : ''}); nothing spent. Resume later with:\n  node scripts/tx/run.mjs ${paperId} --continue`);
+      process.exit(2);
+    }
+    const r = node(script, [...argv, '--batch-result', parked.customIds.join(',')]);
+    if (r.status === 2) return parkBatch(stage, out, r, 're-queued');
+    job.waitingFor = null;
+    return r;
+  }
+  const r = node(script, [...argv, '--batch-async']);
+  if (r.status === 2) return parkBatch(stage, out, r, 'queued');
+  return r; // a failure before the enqueue: the caller reports it as it would a sync failure
+}
+function parkBatch(stage, out, r, what) {
+  const lines = r.stdout.split(/\r?\n/).filter(l => l.startsWith('{')).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(l => l?.queued && l.customId);
+  if (!lines.length) fail(`transcribe.mjs --batch-async exited 2 without a queued line:\n${r.stderr}`);
+  const customIds = lines.map(l => l.customId);
+  const since = job.waitingFor?.transport === 'batch' && job.waitingFor.stage === stage ? job.waitingFor.since : nowIso();
+  job.waitingFor = { stage, transport: 'batch', customIds, out, since, windows: lines.map(l => l.window), requeues: (job.waitingFor?.requeues || 0) + (what === 're-queued' ? 1 : 0) };
+  save(`${what} ${customIds.length} batch request(s) for the ${stage} (${lines.map(l => l.window).join(', ')}); waiting for the broker`);
+  console.log(`[run] ${paperId}: ${stage} ${what} for the Anthropic batch broker (${customIds.length} request(s): ${customIds.join(', ')}). When tmp/tx/anthropic-batch/results/<id>.json exists for each, resume with:\n  node scripts/tx/run.mjs ${paperId} --continue`);
+  process.exit(2);
+}
 function waitForAgent(stage, out, extra = []) {
   const r = node('task.mjs', [paperId, '--stage', stage, '--out', out, '--model', job[stage]?.model || 'opus', ...extra]);
   if (r.status !== 0) fail(`task.mjs failed: ${r.stderr}`);
@@ -363,7 +414,7 @@ for (;;) {
     job.artefacts.manifest = rel(manifestPath);
     job.stage = 'reader'; save('prepared');
   } else if (job.stage === 'reader') {
-    if (fs.existsSync(readerOut) && job.waitingFor?.stage === 'reader') { job.waitingFor = null; job.artefacts.candidate = rel(readerOut); job.stage = 'validate'; save('agent candidate received'); continue; }
+    if (fs.existsSync(readerOut) && job.waitingFor?.stage === 'reader' && job.waitingFor.transport !== 'batch') { job.waitingFor = null; job.artefacts.candidate = rel(readerOut); job.stage = 'validate'; save('agent candidate received'); continue; }
     // A compilation (icho-21st-40th: 733 pages, ioaa-until-2013-by-topic: 254) is not a paper: it would cost tens of
     // dollars of reading and checking and come out as one unusable record. Parked before any model call unless
     // --max-pages raises the cap (default 120 pages over both documents; IZhO theory + solutions runs to 68).
@@ -373,7 +424,7 @@ for (;;) {
       if (pages > cap && !job.artefacts.candidate) escalate(`too long for the bulk run: ${pages} pages over both documents (cap ${cap}; pass --max-pages to override) — a compilation to split, not a paper`);
     }
     if (job.reader.provider === 'agent') waitForAgent('reader', readerOut);
-    const r = node('transcribe.mjs', [paperId, '--provider', job.reader.provider, '--model', job.reader.model, '--stage', 'reader', ...transcribeOpts, ...(job.options.windowPages ? ['--window-pages', String(job.options.windowPages)] : []), ...(job.dryRun ? ['--dry-run'] : [])]);
+    const r = transcribeStage('reader', job.reader, [paperId, '--provider', job.reader.provider, '--model', job.reader.model, '--stage', 'reader', ...transcribeOpts, ...(job.options.windowPages ? ['--window-pages', String(job.options.windowPages)] : []), ...(job.dryRun ? ['--dry-run'] : [])], readerOut);
     if (r.status !== 0 && r.status !== 3) { save(`reader failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
     if (job.dryRun) { save('dry-run: reader payload built, stopping'); console.log(r.stdout); process.exit(0); }
     // The model ran out of output tokens (stop reason "length"): the JSON was truncated and repaired, which
@@ -429,7 +480,7 @@ for (;;) {
         const defectsFile = cand.replace(/\.json$/, `.s${tries + 1}.defects.json`);
         writeJson(defectsFile, { unapplied: report.errors.map(e => ({ path: e.path || '/paper', kind: 'schema', severity: 'major', description: `validator: ${e.message}` })) });
         const fixed = cand.replace(/\.json$/, `.s${tries + 1}.json`);
-        const who = job.reader.provider === 'agent' ? job.checker : job.reader; const x = node('transcribe.mjs', [paperId, '--provider', who.provider, '--model', who.model, '--stage', 'refix', '--candidate', cand, '--defects', defectsFile, '--out', fixed, '--round', String(job.round), ...transcribeOpts]);
+        const who = job.reader.provider === 'agent' ? job.checker : job.reader; const x = node('transcribe.mjs', [paperId, '--provider', who.provider, '--model', who.model, '--stage', 'refix', '--candidate', cand, '--defects', defectsFile, '--out', fixed, '--round', String(job.round), ...refixOpts]);
         process.stdout.write(x.stdout);
         job.schemaAttempts[sig] = tries + 1; job.schemaTries = (job.schemaTries || 0) + 1;
         if ((x.status === 0 || x.status === 3) && fs.existsSync(fixed)) { job.artefacts.candidate = rel(fixed); save(`schema refix ${tries + 1}: ${(x.stdout.match(/"applied": (\d+)/) || [])[1] || '?'} fix(es) applied; re-validating`); continue; }
@@ -449,7 +500,7 @@ for (;;) {
     const rep = JSON.parse(r.stdout);
     job.artefacts.candidateWithFigures = rel(rep.out); job.stage = 'checker'; save(`figures done (${rep.figures.length})`);
   } else if (job.stage === 'checker') {
-    if (needsRevalidate()) { job.stage = 'validate'; save('candidate bytes changed since validation; re-validating'); continue; }
+    if (needsRevalidate()) { if (job.waitingFor?.transport === 'batch') { job.waitingFor = null; save('candidate bytes changed while a batch check was queued; that result will be ignored'); } job.stage = 'validate'; save('candidate bytes changed since validation; re-validating'); continue; }
     const cand = currentCandidate();
     const checkerOut = checkerOutFor(job.round);
     // Mechanical pre-check (memo 2026-09-14: the paid checker was two thirds of the spend, and most first-round
@@ -489,9 +540,9 @@ for (;;) {
         job.stage = 'repair'; save(`mechanical pre-check: ${mech.open.length} defect(s) from the text layer / printed regions (${mech.withFix} with a fix); repairing before the checker`); continue;
       }
     }
-    if (fs.existsSync(checkerOut) && job.waitingFor?.stage === 'checker') { job.waitingFor = null; const tl = mergeTextLayer(cand, checkerOut); job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`agent checker output received; text-layer check: ${tl ? tl.defects.length : '?'} defect(s)`); continue; }
+    if (fs.existsSync(checkerOut) && job.waitingFor?.stage === 'checker' && job.waitingFor.transport !== 'batch') { job.waitingFor = null; const tl = mergeTextLayer(cand, checkerOut); job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`agent checker output received; text-layer check: ${tl ? tl.defects.length : '?'} defect(s)`); continue; }
     if (job.checker.provider === 'agent') waitForAgent('checker', checkerOut, ['--candidate', cand]);
-    const r = node('transcribe.mjs', [paperId, '--provider', job.checker.provider, '--model', job.checker.model, '--stage', 'checker', '--candidate', cand, '--out', checkerOut, ...transcribeOpts]);
+    const r = transcribeStage('checker', job.checker, [paperId, '--provider', job.checker.provider, '--model', job.checker.model, '--stage', 'checker', '--candidate', cand, '--out', checkerOut, ...transcribeOpts], checkerOut);
     if (r.status !== 0) { save(`checker failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
     const tl = mergeTextLayer(cand, checkerOut);
     job.options.mechPending = false; // the receipt on disk will be the paid checker's
@@ -557,7 +608,7 @@ for (;;) {
       const reportFile = repaired.replace(/\.json$/, '.repair.json');
       writeJson(reportFile, rep);
       const refixed = repaired.replace(/\.json$/, '.x.json');
-      const x = node('transcribe.mjs', [paperId, '--provider', refixWho.provider, '--model', refixWho.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed, '--round', String(job.round), ...transcribeOpts]);
+      const x = node('transcribe.mjs', [paperId, '--provider', refixWho.provider, '--model', refixWho.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed, '--round', String(job.round), ...refixOpts]);
       process.stdout.write(x.stdout);
       if ((x.status !== 0 && x.status !== 3) || !fs.existsSync(refixed)) { save(`refix failed: ${(x.stderr || '').slice(0, 300)}`); escalate(`repair.mjs could not apply ${rep.skipped} defect(s) and refix failed: ${(x.stderr || '').slice(0, 200)}`); }
       const xr = JSON.parse(x.stdout || '{}');
@@ -579,7 +630,7 @@ for (;;) {
       else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0 && job.options.escalation && !job.options.escalationUsed && !escalateNow) {
         job.options.escalationUsed = true;
         const esc = job.options.escalation, refixed2 = repaired.replace(/\.json$/, '.esc.json');
-        const y = node('transcribe.mjs', [paperId, '--provider', esc.provider, '--model', esc.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed2, '--round', String(job.round), ...transcribeOpts]);
+        const y = node('transcribe.mjs', [paperId, '--provider', esc.provider, '--model', esc.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed2, '--round', String(job.round), ...refixOpts]);
         process.stdout.write(y.stdout);
         const yr = (y.status === 0 || y.status === 3) && fs.existsSync(refixed2) ? JSON.parse(y.stdout || '{}') : null;
         if (yr) writeJson(refixed2.replace(/\.json$/, '.report.json'), yr);
