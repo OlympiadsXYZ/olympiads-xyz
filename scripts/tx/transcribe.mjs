@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // transcribe.mjs <paperId> --provider anthropic|gemini|zai --model <m> --stage reader|checker
 //   [--candidate f] [--dry-run] [--prompt-version v1] [--max-tokens N] [--reasoning low|high|max]
-//   [--timeout-min 20] [--window-pages N] [--out f]
+//   [--timeout-min 20] [--window-pages N] [--out f] [--transport sync|batch]
 // Sends the rendered pages + prompt to a vision model over raw HTTPS and writes
 // the JSON candidate (or checker output). Keys come from
 // ~/.config/olympiads-xyz/providers.env — a file Margulan creates himself:
@@ -24,6 +24,19 @@
 // 3 attempts on 429/5xx/timeouts/network errors with 20 s·attempt backoff; every
 // attempt is appended to tmp/tx/runs.jsonl.
 // No SDKs: the repo forbids new npm dependencies; undici is already present.
+//
+// Batch transport (anthropic only; other providers ignore it): --transport batch, or
+// TX_ANTHROPIC_TRANSPORT=batch in the environment so run.mjs/batch.mjs need no plumbing.
+// send() then does not POST /v1/messages itself: it writes the exact request body to
+// tmp/tx/anthropic-batch/queue/<customId>.json (+ a .meta.json sidecar) and polls every
+// 5 s for tmp/tx/anthropic-batch/results/<customId>.json, which
+// scripts/tx/anthropic-batch-broker.mjs (a separate long-running process) writes once
+// the Message Batch has ended. The result file is the Message JSON as the sync API
+// would return it, so parse() is unchanged; the Batch API bills 50%, and costUsd,
+// runs.jsonl and the ident block record transport:'batch' with the batch id. Waits up to
+// 6 × --timeout-min, at least 2 h; a rate-limit/overloaded/5xx/expired result is
+// re-queued (new custom id) up to MAX_ATTEMPTS. ANTHROPIC_BASE_URL overrides the API
+// host (tests run a fake server); TX_BATCH_POLL_MS shortens the poll (tests only).
 import fs from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
@@ -32,6 +45,7 @@ import {
   parseArgs, fail, readJson, writeJson, readManifest, loadPrompt, pageImages, pageWindows, windowBlock, windowLabel, contextBlock, sanitizeCandidate, repairJsonEscapes,
   candidateFile, checkFile, loadProviderKeys, PROVIDER_KEY_NAME, PROVIDER_LIMITS, TOKENS_PER_PAGE, estimateCost, appendRun, nowIso,
   checkerView, candidateCrops, sha256File, sha256, sleep, ROOT, pointerGet, normaliseCandidate, paperDir,
+  ANTHROPIC_BASE_URL, BATCH_DIRS, batchCustomId, batchFiles, enqueueBatchRequest, waitForBatchResult, batchResultError, batchRequestState, brokerAlive,
 } from './lib.mjs';
 import { assembleWindows } from './assemble.mjs';
 import { bindCheckerResult } from './evidence.mjs';
@@ -57,6 +71,13 @@ const timeoutMs = Math.max(1, Number(args['timeout-min'] || 20)) * 60 * 1000;
 const maxTokens = Number(args['max-tokens'] || (provider === 'zai' ? 65536 : 32000));
 const limits = PROVIDER_LIMITS[provider];
 const MAX_ATTEMPTS = 3;
+// --transport batch (or TX_ANTHROPIC_TRANSPORT=batch): the Anthropic Message Batches handshake (header comment).
+const transportAsked = String(args.transport || process.env.TX_ANTHROPIC_TRANSPORT || 'sync').toLowerCase();
+if (!['sync', 'batch'].includes(transportAsked)) fail('--transport must be sync or batch');
+const transport = provider === 'anthropic' ? transportAsked : 'sync';
+if (args.transport === 'batch' && provider !== 'anthropic') console.error(`note: --transport batch applies to the anthropic provider only; ${provider} runs synchronously`);
+const batch = transport === 'batch';
+const costOf = (inputTokens, outputTokens) => estimateCost(model, inputTokens, outputTokens, undefined, { batch });
 
 // ---- checker input: the sanitised view + crops (never the raw candidate)
 let candidatePath = null, candidateHash = null, view = null, crops = [];
@@ -182,7 +203,7 @@ function buildRequest(images, userText) {
     parse: (json) => ({ text: json.text, inputTokens: null, outputTokens: null, reasoningTokens: null, requestId: json.chat ? `chat:${json.chat}` : null, stopReason: json.ok ? 'stop' : 'error' }),
   };
   if (provider === 'anthropic') return {
-    url: 'https://api.anthropic.com/v1/messages',
+    url: `${ANTHROPIC_BASE_URL}/v1/messages`,
     headers: key => ({ 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' }),
     // Claude 5-generation models reject sampling parameters (temperature → 400) and think
     // adaptively by default; --reasoning maps to output_config.effort (transcription is
@@ -297,8 +318,59 @@ async function sendViaApp(req, label) {
   });
 }
 
+// Batch transport: queue the body for anthropic-batch-broker.mjs and wait for its result file. A request still
+// in queue/ when this process gives up or dies is withdrawn (nothing paid); one already submitted stays in its
+// batch and its result lands in results/ unclaimed (the retry has a fresh custom id).
+const queuedHere = new Set();
+const withdrawQueued = () => { for (const id of queuedHere) { const f = batchFiles(id); for (const file of [f.body, f.meta]) { try { fs.unlinkSync(file); } catch {} } } queuedHere.clear(); };
+if (batch && !dry) {
+  process.on('exit', withdrawQueued);
+  for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { withdrawQueued(); process.exit(130); });
+}
+async function sendViaBatch(req, label) {
+  const body = JSON.stringify(req.body);
+  const pollMs = Math.max(200, Number(process.env.TX_BATCH_POLL_MS) || 5000);
+  const waitMs = Math.max(2 * 3600 * 1000, timeoutMs * 6);
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const customId = batchCustomId(paperId, stage, label, body);
+    const started = Date.now();
+    enqueueBatchRequest(customId, body, { paperId, stage, window: label, model, createdAt: nowIso(), attempt, pid: process.pid });
+    queuedHere.add(customId);
+    console.error(`[transcribe] ${label}: queued ${(Buffer.byteLength(body) / 1048576).toFixed(1)} MB for the Anthropic batch broker as ${customId}; waiting up to ${(waitMs / 3600000).toFixed(1)} h for ${path.relative(ROOT, batchFiles(customId).result)}`);
+    let lastNote = 0;
+    const result = await waitForBatchResult(customId, { pollMs, timeoutMs: waitMs, onWait: elapsed => {
+      if (elapsed - lastNote < 10 * 60 * 1000) return;
+      lastNote = elapsed;
+      console.error(`[transcribe] ${label}: still waiting after ${Math.round(elapsed / 60000)} min (${batchRequestState(customId)}${brokerAlive() ? '' : '; NO BROKER RUNNING — start node scripts/tx/anthropic-batch-broker.mjs'})`);
+    } });
+    const seconds = +((Date.now() - started) / 1000).toFixed(1);
+    if (!result) {
+      const state = batchRequestState(customId);
+      const reason = `no batch result after ${(seconds / 3600).toFixed(2)} h (${state}${brokerAlive() ? '' : '; no broker running'})`;
+      withdrawQueued(); // only removes it when it is still queued
+      appendRun({ paperId, stage, provider, model, transport, window: label, ok: false, attempt, customId, error: reason, seconds, at: nowIso() });
+      fail(`${provider} batch request timed out (${label}): ${reason}${state === 'queued' ? '; the queued request was withdrawn' : state.startsWith('submitted') ? '; the request stays in its batch and its result will be ignored' : ''}`);
+    }
+    queuedHere.delete(customId);
+    const err = batchResultError(result);
+    const batchId = result.batch?.id || null;
+    if (!err) {
+      const parsed = req.parse(result, { headers: { get: () => null } }); // no HTTP headers here: requestId falls back to the message id
+      parsed.seconds = seconds; parsed.attempts = attempt; parsed.status = 200; parsed.batchId = batchId; parsed.customId = customId;
+      return parsed;
+    }
+    const reason = `batch ${batchId || '?'} ${result.batch?.resultType || 'errored'}: ${redact(JSON.stringify(result.error))}`;
+    appendRun({ paperId, stage, provider, model, transport, window: label, ok: false, attempt, customId, batchId, error: reason, seconds, at: nowIso() });
+    const again = attempt < MAX_ATTEMPTS && err.retryable;
+    console.error(`[transcribe] ${label} attempt ${attempt}/${MAX_ATTEMPTS} failed after ${seconds}s — ${reason}${again ? '; re-queueing' : ''}`);
+    if (!again) fail(`${provider} batch request failed (${label}): ${reason}`);
+    await sleep(5_000);
+  }
+}
+
 async function send(req, label) {
   if (provider === 'chatgpt') return sendViaApp(req, label);
+  if (batch) return sendViaBatch(req, label);
   const body = JSON.stringify(req.body);
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     const started = Date.now();
@@ -394,11 +466,11 @@ for (const window of windows) {
   const approxInputTokens = Math.round(userText.length / 3.5) + images.length * (TOKENS_PER_PAGE[provider] || 1600);
   if (dry) {
     const summary = {
-      dryRun: true, paperId, stage, provider, model, window: label, endpoint: req.url, keysFile: cfg.file, keysFileExists: cfg.exists, keyPresent: hasKey, keyName,
+      dryRun: true, paperId, stage, provider, model, window: label, endpoint: req.url, ...(batch ? { transport, batchQueue: path.relative(ROOT, BATCH_DIRS.queue) } : {}), keysFile: cfg.file, keysFileExists: cfg.exists, keyPresent: hasKey, keyName,
       images: images.map(i => ({ kind: i.kind, id: i.id, document: i.document, page: i.page, bytes: i.bytes })), promptVersion: prompt.version, promptSha256: prompt.sha256,
       payloadBytes, requestCapBytes: limits.requestBytes, approxInputTokens, tokensPerPageAssumed: TOKENS_PER_PAGE[provider], maxTokens, reasoning: provider === 'zai' || provider === 'anthropic' ? reasoning : null, timeoutMin: timeoutMs / 60000,
-      wouldWrite: target, estimatedCostUsd: estimateCost(model, approxInputTokens, Math.round(Math.min(maxTokens, 12000) / 2)),
-      note: 'estimate uses unverified list prices, a measured 3,230 tokens/page for zai (guessed 1,600 for others) and a guessed output length; no request was sent',
+      wouldWrite: target, estimatedCostUsd: costOf(approxInputTokens, Math.round(Math.min(maxTokens, 12000) / 2)),
+      note: `estimate uses unverified list prices${batch ? ' at the Batch API\'s 50%' : ''}, a measured 3,230 tokens/page for zai (guessed 1,600 for others) and a guessed output length; no request was sent`,
     };
     summaries.push(summary);
     continue;
@@ -411,12 +483,12 @@ for (const window of windows) {
   let parsed = null, obj = null, costUsd = 0;
   for (let ask = 1; ask <= 2 && !obj; ask++) {
     parsed = await send(req, label);
-    costUsd = estimateCost(model, parsed.inputTokens, parsed.outputTokens);
-    appendRun({ paperId, stage, provider, model, window: label, ok: true, imagesCompressed, attempts: parsed.attempts, ask, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' || provider === 'anthropic' ? reasoning : null, at: nowIso() });
+    costUsd = costOf(parsed.inputTokens, parsed.outputTokens);
+    appendRun({ paperId, stage, provider, model, ...(batch ? { transport, batchId: parsed.batchId, customId: parsed.customId } : {}), window: label, ok: true, imagesCompressed, attempts: parsed.attempts, ask, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' || provider === 'anthropic' ? reasoning : null, at: nowIso() });
     obj = extractJson(parsed.text, target.replace(/\.json$/, '.raw.txt'), parsed.stopReason, ask < 2);
     if (!obj) console.error(`[transcribe] ${label}: no usable JSON in the reply (raw text saved); asking once more`);
   }
-  const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' || provider === 'anthropic' ? { reasoning } : {}) };
+  const ident = { provider, model, promptVersion: prompt.version, promptSha256: prompt.sha256, requestId: parsed.requestId, at: nowIso(), inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, ...(provider === 'zai' || provider === 'anthropic' ? { reasoning } : {}), ...(batch ? { transport, batchId: parsed.batchId, customId: parsed.customId } : {}) };
   if (stage === 'refix') {
     const responseFile = target.replace(/\.json$/, '') + '.response.json';
     writeJson(responseFile, { ...ident, fixes: obj.fixes ?? null });
@@ -431,7 +503,7 @@ for (const window of windows) {
   if (jsonRepaired && obj?.tx?.reader) obj.tx.reader.jsonRepaired = jsonRepaired;
   writeJson(target, stage === 'reader' ? sanitizeCandidate(normaliseCandidate(obj, { solutionsDocument: !!manifest.documents?.solutions, documents: Object.keys(manifest.documents || {}) })) : obj);
   parts.push({ window, file: target, data: obj });
-  summaries.push({ paperId, stage, provider, model, window: label, out: target, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, requestId: parsed.requestId, stopReason: parsed.stopReason });
+  summaries.push({ paperId, stage, provider, model, ...(batch ? { transport, batchId: parsed.batchId, customId: parsed.customId } : {}), window: label, out: target, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, attempts: parsed.attempts, requestId: parsed.requestId, stopReason: parsed.stopReason });
 }
 
 if (dry) {

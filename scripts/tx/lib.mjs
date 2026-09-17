@@ -22,7 +22,8 @@ export const RUNS_FILE = path.join(TX_DIR, 'runs.jsonl');
 export const JOBS_FILE = path.join(TX_DIR, 'jobs.json');
 export const PRICES_FILE = path.join(ROOT, 'scripts', 'tx', 'prices.json');
 export const PROMPTS_DIR = path.join(ROOT, 'scripts', 'tx', 'prompts');
-export const KEYS_FILE = path.join(os.homedir(), '.config', 'olympiads-xyz', 'providers.env');
+// OLYMPIADS_KEYS_FILE lets the tests point at a throw-away providers.env (the real one is never read by a test).
+export const KEYS_FILE = process.env.OLYMPIADS_KEYS_FILE ? path.resolve(process.env.OLYMPIADS_KEYS_FILE) : path.join(os.homedir(), '.config', 'olympiads-xyz', 'providers.env');
 export const R2_REMOTE = 'r2:olympiads-archive';
 export const R2_PUBLIC = 'https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev';
 export const RENDER_DPI = 160;
@@ -502,10 +503,12 @@ export const PROVIDER_LIMITS = {
   chatgpt: { imageBytes: 20 * 1024 * 1024, images: 20, requestBytes: 200 * 1024 * 1024 },
 };
 export const readPrices = () => readJson(PRICES_FILE, { models: {} });
-export function estimateCost(model, inputTokens, outputTokens, prices = readPrices()) {
+// { batch: true }: the Anthropic Message Batches API bills 50% of the list price (prices.json note, verified 2026-09-17).
+export const BATCH_PRICE_FACTOR = 0.5;
+export function estimateCost(model, inputTokens, outputTokens, prices = readPrices(), { batch = false } = {}) {
   const p = prices.models?.[model];
   if (!p) return null;
-  return +(((inputTokens || 0) * p.inputPerMTok + (outputTokens || 0) * p.outputPerMTok) / 1e6).toFixed(6);
+  return +(((inputTokens || 0) * p.inputPerMTok + (outputTokens || 0) * p.outputPerMTok) / 1e6 * (batch ? BATCH_PRICE_FACTOR : 1)).toFixed(6);
 }
 export function appendRun(record) {
   fs.mkdirSync(TX_DIR, { recursive: true });
@@ -1016,4 +1019,110 @@ export function repairJsonEscapes(s) {
     i = j;
   }
   return out;
+}
+
+// ---------------------------------------------------------------- Anthropic Message Batches (transcribe.mjs --transport batch)
+// The batch transport is a file handshake between transcribe.mjs and anthropic-batch-broker.mjs
+// under tmp/tx/anthropic-batch/ (TX_DIR-relative, so the tests can sandbox it):
+//   queue/<customId>.json       the exact Messages request body transcribe.mjs would have POSTed
+//   queue/<customId>.meta.json  {paperId, stage, window, model, createdAt, ...} for the operator and the log
+//   submitted/<batchId>/        the two files above, moved there the moment the broker has submitted them
+//   batches/<batchId>.json      the broker's record of one batch (custom ids, counts, status, results url)
+//   results/<customId>.json     the Message JSON as /v1/messages would return it, plus a `batch` block;
+//                               {error: {type, message}, batch} for errored / expired / canceled requests
+//   failed/                     queued files the broker refused (over the cap, not JSON, rejected by the API)
+// transcribe.mjs writes the meta first and the body last (atomically), because the broker keys on the body
+// file; the broker writes results atomically too, so a waiter never reads a half file. The Batch API bills
+// 50% of the list price; estimateCost(..., {batch: true}) applies that.
+export const ANTHROPIC_BASE_URL = String(process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com').replace(/\/+$/, '');
+export const BATCH_DIR = path.join(TX_DIR, 'anthropic-batch');
+export const BATCH_DIRS = {
+  queue: path.join(BATCH_DIR, 'queue'), submitted: path.join(BATCH_DIR, 'submitted'), results: path.join(BATCH_DIR, 'results'),
+  batches: path.join(BATCH_DIR, 'batches'), failed: path.join(BATCH_DIR, 'failed'),
+  log: path.join(BATCH_DIR, 'broker.log'), lock: path.join(BATCH_DIR, 'broker.lock'),
+};
+// tx-<40 hex of sha256(paperId|stage|window|sha256(body))>-<6 random hex>: 50 chars, inside the API's ^[a-zA-Z0-9_-]{1,64}$,
+// deterministic enough to recognise a request in the log and random enough that a retry never collides.
+export const BATCH_CUSTOM_ID = /^tx-[0-9a-f]{40}-[0-9a-f]{6}$/;
+export const batchCustomId = (paperId, stage, windowLabel, body) => `tx-${sha256(`${paperId}|${stage}|${windowLabel}|${sha256(body)}`).slice(0, 40)}-${crypto.randomBytes(3).toString('hex')}`;
+export const batchFiles = customId => ({
+  body: path.join(BATCH_DIRS.queue, `${customId}.json`), meta: path.join(BATCH_DIRS.queue, `${customId}.meta.json`),
+  result: path.join(BATCH_DIRS.results, `${customId}.json`),
+});
+export const pidAlive = pid => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+// Windows refuses renames while another process holds the target: retry briefly, like writeJson.
+export function renameWithRetry(from, to) {
+  for (let attempt = 1; ; attempt++) {
+    try { fs.renameSync(from, to); return; }
+    catch (e) {
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) throw e;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt);
+    }
+  }
+}
+export function writeFileAtomic(file, data) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  const tmp = `${file}.${process.pid}.partial`;
+  fs.writeFileSync(tmp, data);
+  try { renameWithRetry(tmp, file); } catch (e) { try { fs.unlinkSync(tmp); } catch {} throw e; }
+}
+export function enqueueBatchRequest(customId, body, meta) {
+  if (!BATCH_CUSTOM_ID.test(customId)) throw new Error(`bad batch custom id ${customId}`);
+  const f = batchFiles(customId);
+  writeJson(f.meta, { customId, ...meta, bytes: Buffer.byteLength(body) });
+  writeFileAtomic(f.body, body);
+  return f;
+}
+export function readBatchResult(customId) {
+  const f = batchFiles(customId).result;
+  if (!fs.existsSync(f)) return null;
+  try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return null; }
+}
+// 'queued' | 'submitted:<batchId>' | 'failed' | 'done' | 'unknown'
+export function batchRequestState(customId) {
+  const f = batchFiles(customId);
+  if (fs.existsSync(f.result)) return 'done';
+  if (fs.existsSync(f.body)) return 'queued';
+  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) if (fs.existsSync(path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`))) return `submitted:${d}`; } catch {}
+  if (fs.existsSync(path.join(BATCH_DIRS.failed, `${customId}.meta.json`))) return 'failed';
+  return 'unknown';
+}
+export function brokerAlive() { const held = readJson(BATCH_DIRS.lock, null); return !!(held?.pid && pidAlive(held.pid)); }
+// Resolves with the result JSON, or null when timeoutMs passed without one. onWait(elapsedMs) runs every poll.
+export async function waitForBatchResult(customId, { pollMs = 5000, timeoutMs = 2 * 3600 * 1000, onWait } = {}) {
+  const started = Date.now();
+  for (;;) {
+    const result = readBatchResult(customId);
+    if (result) return result;
+    const elapsed = Date.now() - started;
+    if (elapsed >= timeoutMs) return null;
+    if (onWait) onWait(elapsed);
+    await sleep(Math.min(pollMs, timeoutMs - elapsed));
+  }
+}
+// null for a succeeded result; else {type, message, retryable}. Retryable = the request never reached the model
+// or the API was the problem (rate limit, overloaded, 5xx, batch expiry); a canceled batch is an operator's decision.
+export function batchResultError(result) {
+  if (!result || typeof result !== 'object') return { type: 'unreadable', message: 'result file is not a JSON object', retryable: false };
+  if (!result.error) return null;
+  const e = typeof result.error === 'object' ? result.error : { message: String(result.error) };
+  const type = String(e.type || result.batch?.resultType || 'error');
+  const message = String(e.message || '');
+  const retryable = ['rate_limit_error', 'overloaded_error', 'api_error', 'timeout_error', 'expired', 'missing_result'].includes(type) || /overloaded|rate limit|internal server error|try again/i.test(message);
+  return { type, message, retryable };
+}
+// Greedy grouping in the given order: a group closes when the next entry would take it over either cap.
+// Task limits are 200 requests / 200 MB (the API allows more; base64 pages make requests large).
+export const BATCH_LIMITS = { maxRequests: 200, maxBytes: 200 * 1024 * 1024 };
+export function groupBatchRequests(entries, { maxRequests = BATCH_LIMITS.maxRequests, maxBytes = BATCH_LIMITS.maxBytes } = {}) {
+  const groups = [], rejected = [];
+  let current = [], bytes = 0;
+  for (const e of entries) {
+    const size = Number(e.bytes) || 0;
+    if (size > maxBytes) { rejected.push(e); continue; }
+    if (current.length && (current.length + 1 > maxRequests || bytes + size > maxBytes)) { groups.push(current); current = []; bytes = 0; }
+    current.push(e); bytes += size;
+  }
+  if (current.length) groups.push(current);
+  return { groups, rejected };
 }
