@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // run.mjs <paperId> --reader <provider:model | agent:label> --checker <same>
 //   [--continue] [--repaired <file>] [--no-promote] [--dry-run] [--allow-same-model]
-//   [--reasoning low|high|max] [--window-pages N] [--timeout-min 20] [--max-rounds 2]
+//   [--reasoning low|high|max] [--window-pages N] [--timeout-min 20] [--max-rounds 2] [--escalation-model p:m]
 // Orchestrates prepare → reader → validate → figures → checker → receipt → promote
 // with resumable state in tmp/tx/jobs.json. API providers run end to end. For an
 // agent:<label> stage the run prepares, prints the harness task and exits 2; the
@@ -51,7 +51,7 @@ if (!args.continue) {
   if (!indep.differentProvider) console.error(`[run] note: reader and checker share the provider family (${reader.provider}); a different family is preferable`);
   job = {
     paperId, reader, checker, stage: 'prepare', promote: !args['no-promote'], dryRun: !!args['dry-run'], allowSameModel: !!args['allow-same-model'],
-    options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2) },
+    options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2), ...(args['escalation-model'] ? { escalation: parseWho(args['escalation-model']) } : {}) },
     ...(args.problems ? { keys: { problems: args.problems, solutions: args.solutions || null } } : {}), // a paper outside the Bulgarian shards names its archive keys
     round: 0, createdAt: nowIso(), history: [], artefacts: {},
   };
@@ -62,6 +62,7 @@ job.options ||= { maxRounds: 2 };
 // at the repair stage (its last receipt is still on disk) — used after the
 // pipeline learned a new trick, so escalations need not wait for an adjudicator.
 if (args.continue && args['max-rounds']) job.options.maxRounds = Number(args['max-rounds']);
+if (args.continue && args['escalation-model']) job.options.escalation = parseWho(args['escalation-model']);
 if (args.continue && args.retry && !job.waitingFor) { // from any stage: an escalation can also be parked at validate (schema budget) or figures
   // the budget is N more rounds from here, not N in total (earlier rounds already count);
   // a done job re-enters the same way when the pipeline learned a new check (re-promotion replaces the paper)
@@ -505,7 +506,12 @@ for (;;) {
       }
       escalate(`receipt blocked without repairable defects: ${receipt.blockers.join('; ')}`);
     }
-    if (job.round >= job.options.maxRounds) escalate(`still ${receipt.defects?.length} defect(s) after ${job.round} repair round(s)`);
+    if (job.round >= job.options.maxRounds) {
+      // --escalation-model (D-P19: Fable 5.1): before a paper parks on leftover defects, the strongest model gets one
+      // refix on them — once per job, with one more round for the fresh check
+      if (job.options.escalation && !job.options.escalationUsed) { job.options.escalationUsed = true; job.options.escalateNextRefix = true; job.options.maxRounds = job.round + 1; job.stage = 'repair'; save(`round budget spent with ${receipt.defects?.length} defect(s) left: one refix by the escalation model ${job.options.escalation.provider}:${job.options.escalation.model}, then a fresh check`); continue; }
+      escalate(`still ${receipt.defects?.length} defect(s) after ${job.round} repair round(s)`);
+    }
     job.stage = 'repair'; save(`receipt: fail (${receipt.defects?.length} defects); repairing`);
   } else if (job.stage === 'repair') {
     job.round += 1;
@@ -521,7 +527,8 @@ for (;;) {
       // model together with the relevant pages (transcribe.mjs --stage refix); an
       // agent reader has no API, so its leftovers go straight to adjudication.
       // the re-read is done by the reader model, or by the checker model when the reader was a harness agent (from-final route)
-      const refixWho = job.reader.provider === 'agent' ? job.checker : job.reader;
+      const escalateNow = !!job.options.escalateNextRefix; job.options.escalateNextRefix = false;
+      const refixWho = escalateNow ? job.options.escalation : (job.reader.provider === 'agent' ? job.checker : job.reader);
       if (refixWho.provider === 'agent') escalate(`repair.mjs could not apply ${rep.skipped} defect(s) (no usable suggestedFix); applied ${rep.applied}`);
       const reportFile = repaired.replace(/\.json$/, '.repair.json');
       writeJson(reportFile, rep);
@@ -544,6 +551,17 @@ for (;;) {
       // a mechanical round that settled nothing is not a dead end: the paid checker has not spoken yet — it runs next
       // (and no further pre-check is attempted on this job)
       else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0 && mechRound) { job.options.mechRounds = 2; save(`mechanical pre-check leftovers could not be settled from the pages (${xr.skipped}); the checker decides`); }
+      // the reader model could settle nothing: the escalation model reads the same pages once before the paper parks
+      else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0 && job.options.escalation && !job.options.escalationUsed && !escalateNow) {
+        job.options.escalationUsed = true;
+        const esc = job.options.escalation, refixed2 = repaired.replace(/\.json$/, '.esc.json');
+        const y = node('transcribe.mjs', [paperId, '--provider', esc.provider, '--model', esc.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed2, '--round', String(job.round), ...transcribeOpts]);
+        process.stdout.write(y.stdout);
+        const yr = (y.status === 0 || y.status === 3) && fs.existsSync(refixed2) ? JSON.parse(y.stdout || '{}') : null;
+        if (yr) writeJson(refixed2.replace(/\.json$/, '.report.json'), yr);
+        if (yr && (yr.applied || 0) > 0) { job.artefacts.candidate = rel(refixed2); save(`escalation refix by ${esc.provider}:${esc.model} applied ${yr.applied} defect(s) the reader could not${y.status === 3 ? `, ${yr.skipped} left` : ''}, round ${job.round}`); }
+        else escalate(`nothing could be applied this round: repair skipped ${rep.skipped}, refix could not settle ${xr.skipped} defect(s) from the pages; the escalation model ${esc.provider}:${esc.model} ${yr ? `disputed them too (${yr.skipped} left)` : `failed: ${(y.stderr || '').slice(0, 160)}`}`);
+      }
       else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0) escalate(`nothing could be applied this round: repair skipped ${rep.skipped}, refix could not settle ${xr.skipped} defect(s) from the pages`);
       save(`refix applied ${xr.applied} defect(s) the checker could not phrase${x.status === 3 ? `, ${xr.skipped} left for the next round` : ''}, round ${job.round}`);
     }
