@@ -1,0 +1,240 @@
+---
+id: apho-2026-theory-t3-p1
+source: 'APhO 2026'
+title: 'Задача 3. Magnetic Resonance and External Fluctuation'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2026/apho-2026-theory-t3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-17T06:02:37.448Z'
+verifier: 'same-model'
+---
+
+*Q3 — Magnetic Resonance and External Fluctuation*
+
+## Условие
+
+Theoretical Exam English (Official)
+
+The origin of a material's magnetic property is the magnetic moment from the angular momentum of its microscopic constituent such as electrons and the nuclei. For some material the tiny magnetic moments are aligned along a particular direction to produce a net magnetic field. In other words, the material has non-zero magnetization. For different kinds of material the tiny magnetic moments are randomly oriented, but when the material is put in an external magnetic field, the tiny magnetic moments rotate around the direction of the external magnetic field and in average the material develops a nonzero magnetization. If we turn off the external magnetic field the magnetization of the material may gradually decrease until it returns to its original value. It is due to the interaction between the magnetic moments, or their interaction with other microscopic degrees of freedom such as lattice vibration. This process is called the relaxation, which will be considered below using classical mechanics models.
+
+**Part A. Forced harmonic oscillator (3.6 pts)**
+
+We consider the problem of nuclear spin relaxation due to random fluctuation of other physical degrees of freedom such as lattice vibration or electron's magnetic dipole moments. In order to familiarize ourselves with a randomness in the solutions of a classical mechanics system, let us start with a forced harmonic oscillator of mass $m$ and angular frequency $\omega_0$. The energy of the oscillator changes because of the effect of a time-dependent external force.
+
+$$m\frac{\mathrm{d}^2 q(t)}{\mathrm{d}t^2} + m\omega_0^2 q(t) = F(t) \qquad (1)$$
+
+where the external force is given by the following step-wise function.
+
+$$F(t) = \begin{cases} 0, & t < 0 \\ +mf_0, & 0 \le t < T_0/2 \\ -mf_0, & T_0/2 \le t < T_0 \\ 0, & t \ge T_0 \end{cases}$$
+
+Here $\omega_0 = 2\pi/T_0$ is the angular frequency of the oscillator $q(t)$. Suppose that the initial condition is given as $q(0) = A\sin\delta$, $\dot q(0) = A\omega_0\cos\delta$.
+
+Before turning on the external force, energy is conserved and its value is $E_0 = \frac{m}{2}\omega_0^2 A^2$. Without losing generality we assume $-\pi \le \delta < \pi$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-theory-t3/p2-fig1.png" alt="A cone diagram showing the angular momentum vector S precessing around a vertical axis (Larmor precession), with dashed circle indicating the precession path above a shaded plane." />
+</figure>
+
+**A.1** Find the position $q$ and the velocity $\dot q = \frac{\mathrm{d}q}{\mathrm{d}t}$ at $t = T_0$. Express them in terms of $A, \delta, f_0, \omega_0$. **[1,2 т.]**
+
+**A.2** Consider the total mechanical energy $E(t) = \frac{m(\dot q^2 + \omega_0^2 q^2)}{2}$. Calculate the difference of $E(t)$ between $t = T_0$ and $t = 0$, due to the effect of the external force $F(t)$. In other words, calculate $\Delta E \equiv E(t \ge T_0) - E(t \le 0)$ and express it in terms of $A, \delta, f_0, \omega_0$. **[1,2 т.]**
+
+**A.3** Suppose that $\delta$ is a random variable with a uniform distribution in the range of $-\pi \le \delta < \pi$. In other words, we have a large number of identical forced harmonic oscillators which all follow the same equation (1). Their initial conditions are given so that $A$ is the same, but $\delta$ is chosen randomly from $-\pi \le \delta < \pi$. Calculate the statistical average of the absorbed energy $\langle \Delta E \rangle$, and also the 2nd moment $\langle (\Delta E)^2 \rangle$. **[1,2 т.]**
+
+**B.1** Part B: Precession of magnetic dipole moment and the use of rotating frame variables (6.4 pts)
+
+The energy of a magnetic dipole moment under magnetic field $\vec B$ is given as
+
+$$E = -\vec\mu \cdot \vec B = -\gamma \vec S \cdot \vec B$$
+
+When we consider an infinitesimal rotation of the angular momentum $\vec S$ and equate the energy difference with the product of torque ($\vec\tau$) and angular displacement, we obtain the equation for $\vec S$.
+
+$$\vec\tau = \frac{\mathrm{d}\vec S}{\mathrm{d}t} = \gamma \vec S \times \vec B$$
+
+According to this equation, when $\vec B$ is constant the angular momentum $\vec S$ precesses around the direction of the magnetic field $\vec B$. This phenomenon is known as Larmor precession, and the frequency of the precession is given by $\gamma|\vec B|$ and in particular it is independent of the angle between $\vec S$ and $\vec B$.
+
+**Irradiation of circularly polarized light**
+
+Let us now consider turning on an oscillating magnetic field in xy-plane, in addition to a constant part along z-direction. The magnetic energy is then
+
+$$E = -\omega_0 S_z - \omega_1 \cos(\omega_2 t) S_x - \omega_1 \sin(\omega_2 t) S_y \qquad (2)$$
+
+where $\omega_0, \omega_1$ are given by the relevant components of the magnetic field and $\gamma$, while $\omega_2$ is the frequency of the oscillating magnetic field. We assume $\omega_0, \omega_1, \omega_2$ are all positive. The equations for $\vec S$ are
+
+$$\dot S_x = +\omega_0 S_y - \omega_1 \sin(\omega_2 t) S_z$$
+$$\dot S_y = -\omega_0 S_x + \omega_1 \cos(\omega_2 t) S_z$$
+$$\dot S_z = -\omega_1 \cos(\omega_2 t) S_y + \omega_1 \sin(\omega_2 t) S_x$$
+
+It is convenient to write these equations in terms of $S_\pm \equiv S_x \pm iS_y$. We have
+
+$$\dot S_+ = -i\omega_0 S_+ + i\omega_1 e^{+i\omega_2 t} S_z$$
+$$\dot S_- = +i\omega_0 S_- - i\omega_1 e^{-i\omega_2 t} S_z$$
+$$\dot S_z = \frac{i\omega_1}{2}\left(e^{-i\omega_2 t}S_+ - e^{+i\omega_2 t}S_-\right)$$
+
+For the next step, let us introduce spin in *rotating frame* using $S_\pm \equiv e^{\pm i\omega_2 t}\Sigma_\pm$, $S_z \equiv \Sigma_z$. One can show that the equations for $\Sigma_x \equiv \frac{1}{2}(\Sigma_+ + \Sigma_-)$, $\Sigma_y \equiv \frac{i}{2}(\Sigma_- - \Sigma_+)$, and $\Sigma_z$ can be written as
+
+$$\frac{\mathrm{d}}{\mathrm{d}t}\vec\Sigma = \vec M \times \vec\Sigma$$
+
+where $\vec\Sigma = (\Sigma_x, \Sigma_y, \Sigma_z)$ and $\vec M = (M_x, M_y, M_z)$.
+
+Find the expressions for $M_x, M_y, M_z$ in terms of $\omega_0, \omega_1, \omega_2$. **[1,5 т.]**
+
+**B.2** The equations are simplified even further, if we consider a static rotation in xz-plane and define new variables $\Sigma_X, \Sigma_Y, \Sigma_Z$ as follows.
+
+$$\Sigma_X = \cos\Theta\,\Sigma_x - \sin\Theta\,\Sigma_z$$
+$$\Sigma_Y = \Sigma_y$$
+$$\Sigma_Z = \sin\Theta\,\Sigma_x + \cos\Theta\,\Sigma_z$$
+
+Derive the equations of motion for $\Sigma_X, \Sigma_Y, \Sigma_Z$ and express them using $M_x, M_y, M_z$ and $\Theta$. **[0,9 т.]**
+
+Then in terms of the new variables in doubly-rotating frame, the equations can be reduced to the following form,
+
+$$\dot\Sigma_X = +\Omega\Sigma_Y$$
+$$\dot\Sigma_Y = -\Omega\Sigma_X$$
+$$\dot\Sigma_Z = 0$$
+
+if $\Omega$ and $\tan\Theta$ are chosen appropriately.
+
+**B.3** By combining the answers of B.1 and B.2, find the expressions for $\Omega$ and $\tan\Theta$ in terms of $\omega_0, \omega_1, \omega_2$. **[1 т.]**
+
+Let us now consider a large number of spins with a statistical distribution of initial configurations: at $t = 0$, the average values satisfy $\langle S_x(0)\rangle = \langle S_y(0)\rangle = 0$ and $\langle S_z(0)\rangle > 0$. The spins all satisfy the same equation derived from Eq.(2).
+
+**B.4** Calculate $\langle S_z(t)\rangle$. **[1,5 т.]**
+
+**B.5** If $\langle S_z(t)\rangle = 0$ at odd multiples of $T_1$ (i.e. $t = T_1, 3T_1, 5T_1, \cdots$) and $\langle S_z(t)\rangle > 0$ otherwise, what is the value of $\omega_1 T_1$? **[1,5 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution to A.1**
+
+The equation is easily solved if we define $\tilde q = q - f_0/\omega_0^2$ for $0<t<T_0/2$. The equation becomes
+$$\ddot{\tilde q} + \omega_0^2\tilde q = 0$$
+For $T_0/2 < t < T_0$, we may define $\bar q = q + f_0/\omega_0^2$ to obtain
+$$\ddot{\bar q} + \omega_0^2\bar q = 0$$
+Before turning on the external force $f(t)$, the motion was given as
+$$q_{t<0}(t) = A\sin(\omega_0 t + \delta)$$
+$A$ is related to the initial energy, $E=\frac12 m\omega_0^2A^2$ and the other initial condition (i.e. the value $q(0)$) is given by $\delta$. For $0<t<T_0/2$, the general solution is
+$$q_{0<t<T_0/2}(t) = \tilde A\sin(\omega_0 t+\tilde\delta) + f_0/\omega_0^2$$
+Equating the configuration at $t=0$, we have
+$$A\sin\delta = \tilde A\sin\tilde\delta + f_0/\omega_0^2$$
+$$A\cos\delta = \tilde A\cos\tilde\delta$$
+Now we turn to the motion during $T_0/2<t<T_0$. Then the general solution is
+$$q_{T_0/2<t<T_0} = \bar A\sin(\omega_0 t+\bar\delta) - f_0/\omega_0^2$$
+And equating the configuration at $t=T_0/2$, using $\omega_0 T_0 = 2\pi$ we have
+$$-\tilde A\sin\tilde\delta + f_0/\omega_0^2 = -\bar A\sin\bar\delta - f_0/\omega_0^2$$
+$$\tilde A\cos\tilde\delta = \bar A\cos\bar\delta$$
+Now at $t=T_0$, the position and velocity is
+$$q(T_0) = \bar A\sin\bar\delta - f_0/\omega_0^2 = \tilde A\sin\tilde\delta - 3f_0/\omega_0^2 = A\sin\delta - 4f_0/\omega_0^2$$
+$$\dot q(T_0) = \bar A\omega_0\cos\bar\delta = \tilde A\omega_0\cos\tilde\delta = A\omega_0\cos\delta$$
+
+| Question part | Total marks | Partial marks | Explanation for partial marks and special cases |
+|---|---|---|---|
+| A.1 | 1.2 | 0.6 | $q(T_0)=A\sin\delta-4f_0/\omega_0^2$ correct |
+| | | 0.6 | $\dot q(T_0)=A\omega_0\cos\delta$ correct |
+
+**Solution to A.2**
+
+The total mechanical energy is
+$$m^{-1}E_{t\ge T_0} = \frac12\bar A^2\omega_0^2\cos^2\bar\delta + \frac12\omega_0^2(\bar A\sin\bar\delta - f_0/\omega_0^2)^2$$
+$$= \frac12\tilde A^2\omega_0^2\cos^2\tilde\delta + \frac12\omega_0^2(\bar A\sin\bar\delta + f_0/\omega_0^2)^2 - 2\bar Af_0\sin\bar\delta$$
+$$= \frac12A^2\omega_0^2\cos^2\delta + \frac12\omega_0^2(\tilde A\sin\tilde\delta - f_0/\omega_0^2)^2 - 2\bar Af_0\sin\bar\delta$$
+$$= \frac12A^2\omega_0^2\cos^2\delta + \frac12\omega_0^2(\tilde A\sin\tilde\delta + f_0/\omega_0^2)^2 - 2\tilde Af_0\sin\tilde\delta - 2\bar Af_0\sin\bar\delta$$
+$$= m^{-1}E_{t\le 0} - 2f_0(2\tilde A\sin\tilde\delta - 2f_0/\omega_0^2)$$
+$$= m^{-1}E_{t\le 0} - 4f_0(A\sin\delta - 2f_0/\omega_0^2)$$
+We thus have $\Delta E = -4mf_0(A\sin\delta - 2f_0/\omega_0^2) = 4mf_0(2f_0/\omega_0^2 - A\sin\delta)$.
+
+| Question part | Total marks | Partial marks | Explanation for partial marks and special cases |
+|---|---|---|---|
+| A.2 | 1.2 | 1.2 | $\Delta E=4mf_0(2f_0/\omega_0^2-A\sin\delta)$ correct |
+
+**Solution to A.3**
+
+Since $\langle\sin\delta\rangle = \frac{1}{2\pi}\int_{-\pi}^{\pi}\sin\theta\,d\theta = 0$ and $\langle\sin^2\delta\rangle = \frac{1}{2\pi}\int_{-\pi}^{\pi}\sin^2\theta\,d\theta = \frac12$,
+$$\langle\Delta E\rangle = \frac{8mf_0^2}{\omega_0^2}$$
+$$\langle(\Delta E)^2\rangle = 8m^2f_0^2A^2 + 64m^2f_0^4/\omega_0^4$$
+
+| Question part | Total marks | Partial marks | Explanation for partial marks and special cases |
+|---|---|---|---|
+| A.3 | 1.2 | 0.6 | $\langle\Delta E\rangle = 8f_0^2m/\omega_0^2$ correct |
+| | | 0.6 | $\langle(\Delta E)^2\rangle = 8f_0^2m^2(A^2+8f_0^2/\omega_0^4)$ correct |
+
+**Solution to B.1**
+
+Since $\dot S_\pm = \pm i\omega_2 e^{\pm i\omega_2 t}\Sigma_\pm + e^{\pm i\omega_2 t}\dot\Sigma_\pm$ and $\dot S_z = \dot\Sigma_z$, the equations for $\Sigma_\pm, \Sigma_z$ are
+$$\dot\Sigma_+ = -i(\omega_0+\omega_2)\Sigma_+ + i\omega_1\Sigma_z$$
+$$\dot\Sigma_- = +i(\omega_0+\omega_2)\Sigma_- - i\omega_1\Sigma_z$$
+$$\dot\Sigma_z = \frac{i\omega_1}{2}(\Sigma_+ - \Sigma_-)$$
+Then there is no explicit time-dependent function any more. Using the definition $\Sigma_\pm = \Sigma_x \pm i\Sigma_y$, the above equations become
+$$\dot\Sigma_x = (\omega_0+\omega_2)\Sigma_y$$
+$$\dot\Sigma_y = -(\omega_0+\omega_2)\Sigma_x + \omega_1\Sigma_z$$
+$$\dot\Sigma_z = -\omega_1\Sigma_y$$
+In other words, $M_x = -\omega_1, M_y = 0, M_z = -\omega_0-\omega_2$.
+
+| Question part | Total marks | Partial marks | Explanation for partial marks and special cases |
+|---|---|---|---|
+| B.1 | 1.5 | 0.5 | $M_x=-\omega_1$ correct |
+| | | 0.5 | $M_y=0$ correct |
+| | | 0.5 | $M_z=-\omega_0-\omega_2$ correct |
+
+**Solution to B.2**
+
+As we perform rotation of the axes, the vector in the original frame has components $(v_x,v_y,v_z)$ and after the rotation the same vector has coordinates $(v_X,v_Y,v_Z)$. When the general relation is $v_x = v_X\cos\Theta + v_Z\sin\Theta, v_y = v_Y, v_z = -v_X\sin\Theta+v_Z\cos\Theta$ and as we apply it to $\vec\Sigma$, we obtain
+$$\dot\Sigma_X = M_y\Sigma_Z - [M_z\cos\Theta + M_x\sin\Theta]\Sigma_Y$$
+$$\dot\Sigma_Y = [M_z\cos\Theta+M_x\sin\Theta]\Sigma_X + [M_z\sin\Theta - M_x\cos\Theta]\Sigma_Z$$
+$$\dot\Sigma_Z = -M_y\Sigma_X + [-M_z\sin\Theta+M_x\cos\Theta]\Sigma_Y$$
+If we further substitute the answer to B.1 and express the equations using $\omega_0,\omega_1,\omega_2$ instead of $M_x,M_y,M_z$,
+$$\dot\Sigma_X = [(\omega_0+\omega_2)\cos\Theta+\omega_1\sin\Theta]\Sigma_Y$$
+$$\dot\Sigma_Y = -[(\omega_0+\omega_2)\cos\Theta+\omega_1\sin\Theta]\Sigma_X + [-(\omega_0+\omega_2)\sin\Theta+\omega_1\cos\Theta]\Sigma_Z$$
+$$\dot\Sigma_Z = [(\omega_0+\omega_2)\sin\Theta-\omega_1\cos\Theta]\Sigma_Y$$
+
+| Question part | Total marks | Partial marks | Explanation for partial marks and special cases |
+|---|---|---|---|
+| B.2 | 0.9 | 0.3 | The equation for $\dot\Sigma_X$ correct; 0.2pt if B.1 already substituted |
+| | | 0.3 | The equation for $\dot\Sigma_Y$ correct; 0.2pt if B.1 already substituted |
+| | | 0.3 | The equation for $\dot\Sigma_Z$ correct; 0.2pt if B.1 already substituted |
+
+**Solution to B.3**
+
+Now we choose $\tan\Theta = \omega_1/(\omega_0+\omega_2)$. Then the above equation is simplified to give
+$$\dot\Sigma_X = +\Omega\Sigma_Y$$
+$$\dot\Sigma_Y = -\Omega\Sigma_X$$
+$$\dot\Sigma_Z = 0$$
+where $\Omega = \sqrt{(\omega_0+\omega_2)^2+\omega_1^2}$.
+
+| Question part | Total marks | Partial marks | Explanation for partial marks and special cases |
+|---|---|---|---|
+| B.3 | 1.0 | 0.5 | $\tan\Theta=\omega_1/(\omega_0+\omega_2)$ correct |
+| | | 0.5 | $\Omega=\sqrt{(\omega_0+\omega_2)^2+\omega_1^2}$ correct |
+
+**Solution to B.4 and B.5**
+
+Since the equations for different spins (with distinct initial conditions) are all independent of each other, we can simply solve the equations for a single spin with initial condition $S_x(0)=S_y(0)=0$ and $S_z(0)=\mu\ne 0$.
+
+1. Relationship for $S_z$
+
+By definition, $S_z$ is equal to $\Sigma_z$, which can be expressed as:
+$$S_z(t) = -\Sigma_X(t)\sin\Theta + \Sigma_Z(t)\cos\Theta$$
+
+2. Substituting $\Sigma_X(t)$ and $\Sigma_Z(t)$
+
+Applying the initial conditions $S_z(0)=\mu$ and $S_x(0)=S_y(0)=0$, the solutions to the differential equations are:
+$$\dot\Sigma_Z = 0 \implies \Sigma_Z(t) = \mu\cos\Theta$$
+$$\ddot\Sigma_X = -\Omega^2\Sigma_X \implies \Sigma_X(t) = -\mu\sin\Theta\cos(\Omega t)$$
+Substituting these two solutions into the equation from step 1 and by recalling the linearity of the equation:
+$$\langle S_z(t)\rangle = \langle S_z(0)\rangle\left(\sin^2\Theta\cos(\Omega t)+\cos^2\Theta\right)$$
+The given condition is satisfied only if $\Theta = \pi/4$ and $\Omega T_1 = \pi$. Since $\tan\Theta = \omega_1/(\omega_0+\omega_2) = 1$, $\Omega = \sqrt{\omega_1^2+(\omega_0+\omega_2)^2} = \sqrt{2}\omega_1$. We thus have $\omega_1 T_1 = \dfrac{\sqrt{2}\pi}{2}$.
+
+| Question part | Total marks | Partial marks | Explanation for partial marks and special cases |
+|---|---|---|---|
+| B.4 | 1.5 | 1.5 | The solution for $\langle S_z(t)\rangle$ correct. Or mathematically equivalent form via the answer of B.3, e.g. $\frac{\langle S_z(0)\rangle}{\omega_1^2+(\omega_0+\omega_2)^2}\left[\omega_1^2\cos\left(t\sqrt{(\omega_0+\omega_2)^2+\omega_1^2}\right)+(\omega_0+\omega_2)^2\right]$ |
+| B.5 | 1.5 | 1.5 | $\omega_1T_1=\pi/\sqrt{2}=\sqrt{2}\pi/2$ correct |
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [T3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2026/Theory/T3.pdf)
+· официални решения: [T3_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2026/Theory/T3_sol.pdf)
