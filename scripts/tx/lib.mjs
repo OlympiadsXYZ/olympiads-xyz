@@ -1143,16 +1143,51 @@ export function batchRequestState(customId) {
   return 'unknown';
 }
 export function brokerAlive() { const held = readJson(BATCH_DIRS.lock, null); return !!(held?.pid && pidAlive(held.pid)); }
-// Resolves with the result JSON, or null when timeoutMs passed without one. onWait(elapsedMs) runs every poll.
-export async function waitForBatchResult(customId, { pollMs = 5000, timeoutMs = 2 * 3600 * 1000, onWait } = {}) {
+// The queue entry's sidecar wherever the broker moved it (queue/, submitted/<batchId>/, failed/); null when gone.
+export function readBatchMeta(customId) {
+  const f = batchFiles(customId);
+  const m = readJson(f.meta, null); if (m) return m;
+  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) { const r = readJson(path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`), null); if (r) return r; } } catch {}
+  return readJson(path.join(BATCH_DIRS.failed, `${customId}.meta.json`), null);
+}
+export const readBatchRecord = batchId => readJson(path.join(BATCH_DIRS.batches, `${batchId}.json`), null);
+// How long a waiter waits (transcribe.mjs sync batch mode). A request still queued (unpaid: no broker, or a broker
+// backing off) is given up after BATCH_QUEUED_TIMEOUT_MS; once the broker has submitted it, the batch record's
+// createdAt + the API's 24 h processing window + a grace period is the deadline (reviewer finding 2026-09-17: the
+// old flat 2 h cap abandoned paid requests). The TX_BATCH_* variables shorten the constants for the tests only.
+const envMs = (name, fallback) => { const v = Number(process.env[name]); return Number.isFinite(v) && v > 0 ? v : fallback; };
+export const BATCH_WAIT = {
+  queuedTimeoutMs: envMs('TX_BATCH_QUEUED_TIMEOUT_MS', 2 * 3600 * 1000),
+  ttlMs: envMs('TX_BATCH_TTL_MS', 24 * 3600 * 1000),
+  graceMs: envMs('TX_BATCH_GRACE_MS', 30 * 60 * 1000),
+};
+// The moment after which a waiter gives up on customId, given its state, or null while it still has time.
+// Returns { state, deadline, batchId }.
+export function batchWaitDeadline(customId, startedMs, { queuedTimeoutMs = BATCH_WAIT.queuedTimeoutMs, ttlMs = BATCH_WAIT.ttlMs, graceMs = BATCH_WAIT.graceMs } = {}) {
+  const state = batchRequestState(customId);
+  if (state.startsWith('submitted:')) {
+    const batchId = state.slice('submitted:'.length);
+    const rec = readBatchRecord(batchId);
+    // the record is written a moment after the files move; until then the submission time stands in for createdAt
+    const created = Date.parse(rec?.createdAt || rec?.submittedAt || '') || Date.now();
+    return { state, batchId, deadline: created + ttlMs + graceMs };
+  }
+  return { state, batchId: null, deadline: startedMs + queuedTimeoutMs };
+}
+// Resolves with the result JSON, or null when the deadline passed without one (the state at that moment is on
+// waitForBatchResult.lastState). onWait(elapsedMs, state) runs every poll. timeoutMs (legacy) caps the queued wait.
+export async function waitForBatchResult(customId, { pollMs = 5000, timeoutMs, onWait, ...limits } = {}) {
   const started = Date.now();
+  if (timeoutMs) limits.queuedTimeoutMs = timeoutMs;
   for (;;) {
     const result = readBatchResult(customId);
     if (result) return result;
-    const elapsed = Date.now() - started;
-    if (elapsed >= timeoutMs) return null;
-    if (onWait) onWait(elapsed);
-    await sleep(Math.min(pollMs, timeoutMs - elapsed));
+    const { state, deadline } = batchWaitDeadline(customId, started, limits);
+    waitForBatchResult.lastState = state;
+    const now = Date.now();
+    if (now >= deadline) return null;
+    if (onWait) onWait(now - started, state);
+    await sleep(Math.max(1, Math.min(pollMs, deadline - now)));
   }
 }
 // null for a succeeded result; else {type, message, retryable}. Retryable = the request never reached the model

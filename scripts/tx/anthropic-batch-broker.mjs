@@ -29,7 +29,10 @@
 //   a 400 (requests.N...), get {error} results and move to failed/. A 400/413 that names no
 //   index is bisected (halves resubmitted) down to the culprit. 401/403 back off 10 min and
 //   shout. 429 / 5xx / network errors back off (retry-after or --backoff-sec doubling, cap
-//   15 min) and leave the queue alone.
+//   15 min) and leave the queue alone. A POST that gets no answer at all (socket error / timeout) keeps
+//   its pending record: the next pass reconciles it against the API (adopt or drop), never re-POSTs blind.
+//   A queued request whose waiting process (meta pid) has died is failed as waiter_gone, unsubmitted;
+//   a detached enqueue (transcribe.mjs --batch-async) carries no pid and is always submitted.
 // One broker at a time (broker.lock with pid); every action is one JSON line in broker.log;
 // a one-line status (queued, in flight, batches open, results written) is printed every
 // poll. --once runs one submit + one poll pass and exits; --status prints the state and
@@ -150,8 +153,17 @@ async function submitGroup(items) {
     console.error(`[broker] submitted ${b.id}: ${good.length} request(s), ${mb(bytes)} MB`);
     return;
   }
-  try { fs.unlinkSync(pendingFile); } catch {}
   const why = failureText(r);
+  if (r.status === null) {
+    // No answer at all (socket error or timeout after the body went out): the API may well have created the batch.
+    // The pending record stays; reconcilePending() adopts the batch from the API on the next pass, or drops the
+    // record when nothing matches — never a second POST from here (reviewer finding 2026-09-17).
+    log({ action: 'submit-unknown', pending: token, requests: good.length, why: redact(why) });
+    console.error(`[broker] submit of ${good.length} request(s) got no answer (${redact(why)}); pending ${token} kept for reconciliation`);
+    setBackoff(r.retryAfterMs, `submit unanswered: ${why}`);
+    return;
+  }
+  try { fs.unlinkSync(pendingFile); } catch {} // a definite non-2xx answer: nothing was created
   if (r.status === 400 || r.status === 413) {
     const m = /requests\.(\d+)\b/.exec(r.json?.error?.message || r.text || '');
     const idx = m ? Number(m[1]) : -1;
@@ -168,9 +180,24 @@ async function submitGroup(items) {
   if (retryableStatus(r)) { setBackoff(r.retryAfterMs, `submit failed: ${why}`); return; }
   setBackoff(null, `submit failed unexpectedly: ${why}`);
 }
+// A queued request whose waiter (the transcribe.mjs that wrote it, meta.pid) is gone would be paid for and read by
+// nobody: it fails as waiter_gone before any submission. A detached enqueue (transcribe.mjs --batch-async, meta
+// {detached: true}, no pid) has no waiting process by design and is never dropped.
+export function dropGoneWaiters(queued) {
+  const kept = [];
+  for (const q of queued) {
+    const meta = readJson(q.meta, null);
+    if (meta && !meta.detached && Number.isInteger(meta.pid) && meta.pid > 0 && !pidAlive(meta.pid)) {
+      rejectRequest(q, { type: 'waiter_gone', message: `the process that queued this request (pid ${meta.pid}) is no longer running; not submitted` }, { pid: meta.pid });
+      continue;
+    }
+    kept.push(q);
+  }
+  return kept;
+}
 export async function submitPass() {
   const skip = inFlightIds();
-  const queued = listQueued().filter(q => !skip.has(q.customId));
+  const queued = dropGoneWaiters(listQueued().filter(q => !skip.has(q.customId)));
   if (!queued.length) return { queued: 0 };
   if (backingOff()) return { queued: queued.length, skipped: 'backoff' };
   const { groups, rejected } = groupBatchRequests(queued, limits);

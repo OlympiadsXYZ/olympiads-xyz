@@ -46,8 +46,8 @@ async function until(pred, { timeoutMs = 20000, every = 100, what = 'condition' 
 
 // A stand-in for api.anthropic.com: POST /v1/messages/batches, GET .../{id} (ended after `endAfterPolls`
 // polls), GET .../{id}/results (JSONL built by `results(customId, params)`), GET /v1/messages/batches (list).
-async function fakeApi(t, { endAfterPolls = 1, results = (id) => ({ type: 'succeeded', message: message(`reply to ${id}`) }), failPosts = 0, badIndexOnce = null, idPrefix = 'msgbatch_test' } = {}) {
-  const state = { batches: new Map(), posts: [], n: 0, failPosts, badIndexOnce, badAuth: 0 };
+async function fakeApi(t, { endAfterPolls = 1, results = (id) => ({ type: 'succeeded', message: message(`reply to ${id}`) }), failPosts = 0, badIndexOnce = null, idPrefix = 'msgbatch_test', destroyAfterPost = 0 } = {}) {
+  const state = { batches: new Map(), posts: [], n: 0, failPosts, badIndexOnce, badAuth: 0, destroyAfterPost };
   let base = '';
   const batchObj = b => {
     const ended = b.polls >= endAfterPolls;
@@ -66,6 +66,7 @@ async function fakeApi(t, { endAfterPolls = 1, results = (id) => ({ type: 'succe
         if (state.badIndexOnce !== null) { const i = state.badIndexOnce; state.badIndexOnce = null; return send(400, { type: 'error', error: { type: 'invalid_request_error', message: `requests.${i}.params.messages.0.content.0.text: must not be empty` } }); }
         const b = { id: `${idPrefix}${++state.n}`, requests: body.requests, polls: 0, createdAt: new Date().toISOString() };
         state.batches.set(b.id, b);
+        if (state.destroyAfterPost > 0) { state.destroyAfterPost--; return req.socket.destroy(); } // the batch exists, the client never hears
         return send(200, batchObj(b));
       }
       if (req.method === 'GET' && url.pathname === '/v1/messages/batches') return send(200, { data: [...state.batches.values()].map(batchObj), has_more: false });
@@ -288,12 +289,13 @@ const reply = () => ({
 function preparePaper() {
   const dir = path.join(root, PAPER);
   fs.mkdirSync(path.join(dir, 'pages'), { recursive: true });
+  fs.rmSync(path.join(dir, 'candidates'), { recursive: true, force: true }); // an earlier test's candidate must not pass for this one's
   fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify(manifest));
   for (const f of ['problems-01.png', 'problems-02.png', 'solutions-01.png']) fs.writeFileSync(path.join(dir, 'pages', f), PNG);
   return dir;
 }
-function startTranscribe(base, extra = []) {
-  const child = spawn(process.execPath, [txScript('transcribe.mjs'), PAPER, '--provider', 'anthropic', '--model', 'claude-opus-5', '--stage', 'reader', ...extra], { encoding: 'utf8', env: envFor(base, { TX_ANTHROPIC_TRANSPORT: 'batch', TX_BATCH_POLL_MS: '200' }) });
+function startTranscribe(base, extra = [], env = {}) {
+  const child = spawn(process.execPath, [txScript('transcribe.mjs'), PAPER, '--provider', 'anthropic', '--model', 'claude-opus-5', '--stage', 'reader', ...extra], { encoding: 'utf8', env: envFor(base, { TX_ANTHROPIC_TRANSPORT: 'batch', TX_BATCH_POLL_MS: '200', ...env }) });
   const out = { stdout: '', stderr: '', code: null };
   child.stdout.on('data', d => { out.stdout += d; }); child.stderr.on('data', d => { out.stderr += d; });
   out.done = new Promise(r => child.on('close', code => { out.code = code; r(code); }));
@@ -403,4 +405,282 @@ test('a sync run is untouched: no transport field, full price, no queue', async 
   const candidate = JSON.parse(fs.readFileSync(summary.out, 'utf8'));
   assert.equal(candidate.tx.reader.transport, undefined);
   assert.equal(broker.listQueued().length, 0);
+});
+
+// ---- reviewer findings (2026-09-17): unknown-outcome POST, dead waiters, the submitted wait
+
+test('a POST the API accepted but never answered keeps its pending record; the next pass adopts the batch without a second POST', async t => {
+  const api = await fakeApi(t, { idPrefix: 'msgbatch_cut', destroyAfterPost: 1 });
+  const body = requestBody('socket cut after the body went out');
+  const id = lib.batchCustomId('cut', 'reader', 'all', body);
+  lib.enqueueBatchRequest(id, body, { paperId: 'cut', stage: 'reader', window: 'all', model: 'claude-opus-5', createdAt: lib.nowIso() });
+  const first = await runBroker(api.base);
+  assert.equal(first.status, 0, first.stderr);
+  assert.equal(api.state.posts.length, 1, 'the API saw the POST');
+  assert.equal(api.state.batches.size, 1, 'and created the batch');
+  const pending = fs.readdirSync(BATCH_DIRS.batches).filter(f => f.startsWith('pending-'));
+  assert.equal(pending.length, 1, 'the pending record is kept on an unknown outcome');
+  assert.equal(lib.batchRequestState(id), 'queued', 'the body stays in the queue until the batch is known');
+  assert.ok(readLog().some(l => l.action === 'submit-unknown' && l.requests === 1), `submit-unknown logged: ${readLog().map(l => l.action)}`);
+  assert.ok(!fs.existsSync(path.join(BATCH_DIRS.batches, 'msgbatch_cut1.json')), 'no record yet');
+  const second = await runBroker(api.base);
+  assert.equal(second.status, 0, second.stderr);
+  assert.equal(api.state.posts.length, 1, 'never POSTed again');
+  const rec = JSON.parse(fs.readFileSync(path.join(BATCH_DIRS.batches, 'msgbatch_cut1.json'), 'utf8'));
+  assert.deepEqual(rec.customIds, [id]); assert.ok(rec.adoptedFrom, 'adopted from the pending record');
+  assert.equal(fs.readdirSync(BATCH_DIRS.batches).filter(f => f.startsWith('pending-')).length, 0);
+  assert.equal((await lib.waitForBatchResult(id, { pollMs: 20, timeoutMs: 2000 })).content[0].text, `reply to ${id}`);
+});
+
+test('a queued request whose waiting process is gone fails as waiter_gone before submission; live and detached waiters are submitted', async t => {
+  const api = await fakeApi(t, { idPrefix: 'msgbatch_gone', endAfterPolls: 5 });
+  // a pid that certainly belonged to a process which has exited
+  const gone = spawnSync(process.execPath, ['-e', 'console.log(process.pid)'], { encoding: 'utf8' });
+  const deadPid = Number(gone.stdout.trim());
+  assert.ok(deadPid > 0 && !lib.pidAlive(deadPid), `pid ${deadPid} should be dead`);
+  const mk = (name, extra) => { const body = requestBody(`waiter ${name}`); const id = lib.batchCustomId('w', 'reader', name, body); lib.enqueueBatchRequest(id, body, { paperId: 'w', stage: 'reader', window: name, model: 'claude-opus-5', createdAt: lib.nowIso(), ...extra }); return id; };
+  const dead = mk('dead', { pid: deadPid });
+  const live = mk('live', { pid: process.pid });
+  const detached = mk('detached', { detached: true });
+  const legacy = mk('legacy', {}); // no pid at all (an older sidecar): submitted
+  const run = await runBroker(api.base);
+  assert.equal(run.status, 0, run.stderr);
+  assert.equal(api.state.posts.length, 1);
+  const submitted = api.state.posts[0].body.requests.map(r => r.custom_id).sort();
+  assert.deepEqual(submitted, [live, detached, legacy].sort(), 'the dead waiter\'s request never reaches the API');
+  const rejected = lib.readBatchResult(dead);
+  assert.equal(rejected.error.type, 'waiter_gone'); assert.match(rejected.error.message, new RegExp(`pid ${deadPid}`));
+  assert.equal(lib.batchResultError(rejected).retryable, false);
+  assert.ok(fs.existsSync(path.join(BATCH_DIRS.failed, `${dead}.json`)) && fs.existsSync(path.join(BATCH_DIRS.failed, `${dead}.meta.json`)));
+  assert.ok(readLog().some(l => l.action === 'rejected' && l.customId === dead && l.pid === deadPid));
+  for (const id of [live, detached, legacy]) assert.equal(lib.batchRequestState(id), 'submitted:msgbatch_gone1');
+});
+
+test('the waiter gives up a queued (unpaid) request at the queued cap, but waits for a submitted one until its batch window + grace', async t => {
+  // short constants through the environment: queued cap 1.5 s (a broker pass takes ~0.5 s to spawn and submit), batch window 4 s + 1 s grace, poll 100 ms
+  const waitEnv = { TX_BATCH_QUEUED_TIMEOUT_MS: '1500', TX_BATCH_TTL_MS: '4000', TX_BATCH_GRACE_MS: '1000', TX_BATCH_POLL_MS: '100' };
+  const started = Date.now();
+  const d1 = lib.batchWaitDeadline(`tx-${'1'.repeat(40)}-000001`, started, { queuedTimeoutMs: 1500, ttlMs: 4000, graceMs: 1000 });
+  assert.equal(d1.state, 'unknown'); assert.equal(d1.deadline, started + 1500, 'an unknown/queued request: the queued cap from the start');
+  preparePaper();
+  // (a) no broker at all: the queued request is withdrawn after the queued cap
+  {
+    const api = await fakeApi(t);
+    const proc = startTranscribe(api.base, [], waitEnv);
+    await proc.done;
+    assert.equal(proc.code, 1, proc.stderr);
+    assert.match(proc.stderr, /timed out \(all\): no batch result after .* \(queued; no broker running\); the queued request was withdrawn/);
+    assert.equal(broker.listQueued().length, 0, 'withdrawn');
+    assert.equal(api.state.posts.length, 0);
+  }
+  // (b) submitted, the batch takes longer than the queued cap: the waiter stays until the batch ends
+  {
+    const api = await fakeApi(t, { idPrefix: 'msgbatch_slow', endAfterPolls: 2, results: () => ({ type: 'succeeded', message: message(JSON.stringify(reply())) }) });
+    const proc = startTranscribe(api.base, [], waitEnv);
+    await until(() => broker.listQueued().length > 0, { what: 'the queued request' });
+    const r1 = await runBroker(api.base);
+    assert.equal(r1.status, 0, r1.stderr);
+    const id = api.state.posts[0].body.requests[0].custom_id;
+    assert.equal(lib.batchRequestState(id), 'submitted:msgbatch_slow1');
+    const rec = JSON.parse(fs.readFileSync(path.join(BATCH_DIRS.batches, 'msgbatch_slow1.json'), 'utf8'));
+    const d2 = lib.batchWaitDeadline(id, started, { queuedTimeoutMs: 1500, ttlMs: 4000, graceMs: 1000 });
+    assert.equal(d2.state, 'submitted:msgbatch_slow1'); assert.equal(d2.batchId, 'msgbatch_slow1');
+    assert.equal(d2.deadline, Date.parse(rec.createdAt) + 5000, 'submitted: the batch record\'s createdAt + window + grace');
+    await wait(2200); // well past the 1.5 s queued cap, inside the batch window
+    assert.equal(proc.code, null, `the waiter must not give up on a submitted request at the queued cap\n${proc.stderr}`);
+    const r2 = await runBroker(api.base); // poll 2: the batch ends, the result is written
+    assert.equal(r2.status, 0, r2.stderr);
+    await Promise.race([proc.done, wait(5000)]);
+    assert.equal(proc.code, 0, proc.stderr);
+    assert.equal(JSON.parse(proc.stdout).batchId, 'msgbatch_slow1');
+  }
+  // (c) submitted but the batch never ends: the waiter gives up at the window + grace, and says the request stays in its batch
+  {
+    const api = await fakeApi(t, { idPrefix: 'msgbatch_stuck', endAfterPolls: 99 });
+    const proc = startTranscribe(api.base, [], waitEnv);
+    await until(() => broker.listQueued().length > 0, { what: 'the queued request' });
+    const r1 = await runBroker(api.base);
+    assert.equal(r1.status, 0, r1.stderr);
+    const t0 = Date.now();
+    await Promise.race([proc.done, wait(12000)]);
+    assert.equal(proc.code, 1, proc.stderr);
+    const took = Date.now() - t0;
+    assert.ok(took >= 3000 && took < 9000, `gave up after the window + grace (${took} ms)`);
+    assert.match(proc.stderr, /timed out \(all\): .*submitted:msgbatch_stuck1.*the request stays in its batch and its result will be ignored/);
+  }
+});
+
+// ---- park-and-resume: --batch-async / --batch-result
+
+const asyncEnv = { TX_BATCH_POLL_MS: '100' };
+function transcribeSync(base, extra = [], env = {}) {
+  return spawnSync(process.execPath, [txScript('transcribe.mjs'), PAPER, '--provider', 'anthropic', '--model', 'claude-opus-5', '--stage', 'reader', ...extra], { encoding: 'utf8', env: envFor(base, { ...asyncEnv, ...env }) });
+}
+const queuedLines = r => r.stdout.split(/\r?\n/).filter(l => l.startsWith('{')).map(l => JSON.parse(l));
+const runsFor = () => fs.readFileSync(path.join(root, 'runs.jsonl'), 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l)).filter(r => r.paperId === PAPER);
+
+test('--batch-async queues the request and exits 2 with one JSON line; --batch-result runs the sync post-processing and writes the candidate', async t => {
+  preparePaper();
+  const api = await fakeApi(t, { idPrefix: 'msgbatch_async', results: () => ({ type: 'succeeded', message: message(JSON.stringify(reply()), { input_tokens: 10000, output_tokens: 2000 }) }) });
+  const runsBefore = runsFor().length;
+  const q = transcribeSync(api.base, ['--batch-async']);
+  assert.equal(q.status, 2, q.stderr);
+  const lines = queuedLines(q);
+  assert.equal(lines.length, 1);
+  const line = lines[0];
+  assert.equal(line.queued, true); assert.match(line.customId, lib.BATCH_CUSTOM_ID); assert.equal(line.stage, 'reader'); assert.equal(line.window, 'all'); assert.equal(line.paperId, PAPER);
+  assert.equal(line.out, lib.candidateFile(PAPER, 'anthropic', 'claude-opus-5')); assert.equal(line.assembled, undefined, 'one window: no assembly');
+  assert.ok(!fs.existsSync(line.out), 'nothing written at enqueue time');
+  assert.equal(lib.batchRequestState(line.customId), 'queued', 'the queued request survives the exit (not withdrawn)');
+  const meta = JSON.parse(fs.readFileSync(lib.batchFiles(line.customId).meta, 'utf8'));
+  assert.equal(meta.detached, true); assert.equal(meta.pid, undefined, 'no waiting pid: the broker must not drop it as waiter_gone'); assert.equal(meta.out, line.out); assert.equal(meta.attempt, 1); assert.equal(meta.ask, 1);
+  assert.equal(runsFor().length, runsBefore, 'nothing booked at enqueue time');
+  assert.match(q.stderr, /queued .* as tx-.* \(detached\); collect it with --batch-result/);
+
+  // the result is not there yet: --batch-result fails at once, spends nothing
+  const early = transcribeSync(api.base, ['--batch-result', line.customId]);
+  assert.equal(early.status, 1); assert.match(early.stderr, /no result for tx-.* \(all\): queued/);
+  assert.ok(!fs.existsSync(line.out));
+
+  const r = await runBroker(api.base);
+  assert.equal(r.status, 0, r.stderr);
+  assert.equal(api.state.posts.length, 1);
+  assert.equal(api.state.posts[0].body.requests[0].custom_id, line.customId);
+  assert.equal(api.state.posts[0].body.requests[0].params.messages[0].content.filter(b => b.type === 'image').length, 3, 'the exact request: three page images');
+  assert.ok(fs.existsSync(lib.batchFiles(line.customId).result));
+
+  const c = transcribeSync(api.base, ['--batch-result', line.customId]);
+  assert.equal(c.status, 0, c.stderr);
+  const summary = JSON.parse(c.stdout);
+  assert.equal(summary.transport, 'batch'); assert.equal(summary.batchId, 'msgbatch_async1'); assert.equal(summary.customId, line.customId); assert.equal(summary.out, line.out);
+  assert.equal(summary.costUsd, 0.05, 'half price'); assert.equal(summary.inputTokens, 10000); assert.equal(summary.attempts, 1);
+  const candidate = JSON.parse(fs.readFileSync(line.out, 'utf8'));
+  assert.equal(candidate.tx.reader.transport, 'batch'); assert.equal(candidate.tx.reader.batchId, 'msgbatch_async1'); assert.equal(candidate.tx.reader.customId, line.customId); assert.equal(candidate.tx.reader.costUsd, 0.05);
+  assert.equal(candidate.tx.reader.requestId, `msg_${lib.sha256(JSON.stringify(reply())).slice(0, 12)}`);
+  assert.equal(candidate.problems[0].number, 1); assert.equal(candidate.problems[0].parts[0].answer.value, 0.06, 'the same normalise/sanitise as the sync path');
+  const runs = runsFor();
+  assert.equal(runs.length, runsBefore + 1, 'one run record: the collected reply');
+  const last = runs.at(-1);
+  assert.equal(last.ok, true); assert.equal(last.transport, 'batch'); assert.equal(last.costUsd, 0.05); assert.equal(last.customId, line.customId); assert.equal(last.batchId, 'msgbatch_async1'); assert.equal(last.ask, 1);
+  // collecting twice is refused nowhere but books nothing new either: the caller (run.mjs) collects once
+  // a wrong provider or the sync transport cannot take the flags
+  const bad = spawnSync(process.execPath, [txScript('transcribe.mjs'), PAPER, '--provider', 'gemini', '--model', 'x', '--stage', 'reader', '--batch-async'], { encoding: 'utf8', env: envFor(api.base) });
+  assert.equal(bad.status, 1); assert.match(bad.stderr, /apply to the anthropic provider only/);
+  const bad2 = transcribeSync(api.base, ['--batch-async', '--transport', 'sync']);
+  assert.equal(bad2.status, 1); assert.match(bad2.stderr, /need the batch transport/);
+});
+
+test('a windowed reader: --batch-async queues every window at once; --batch-result assembles once both results exist', async t => {
+  preparePaper();
+  const api = await fakeApi(t, { idPrefix: 'msgbatch_win', results: (id, params) => {
+    const text = params.messages[0].content.at(-1).text;
+    // the solutions window carries the solution; the problems window the statement — like a real windowed read
+    const r = reply();
+    if (/PAGE IMAGES, in order: #1 solutions/.test(text)) { r.paper.source.pages = []; r.problems[0].statement = lib.WINDOW_PLACEHOLDER; r.problems[0].parts = []; r.problems[0].tx.sourceSpans = [{ document: 'solutions', page: 1 }]; }
+    else { delete r.paper.solutionSource; delete r.problems[0].solution; r.problems[0].tx.sourceSpans = [{ document: 'problems', page: 1 }]; }
+    return { type: 'succeeded', message: message(JSON.stringify(r), { input_tokens: 5000, output_tokens: 1000 }) };
+  } });
+  const q = transcribeSync(api.base, ['--batch-async', '--window-pages', '2']);
+  assert.equal(q.status, 2, q.stderr);
+  const lines = queuedLines(q);
+  assert.deepEqual(lines.map(l => l.window), ['problems-01-02', 'solutions-01-01'], 'one line per window, in window order');
+  const outFile = lib.candidateFile(PAPER, 'anthropic', 'claude-opus-5');
+  for (const l of lines) { assert.equal(l.assembled, outFile); assert.equal(l.out, outFile.replace(/\.json$/, `.window-${l.window}.json`)); assert.equal(lib.batchRequestState(l.customId), 'queued'); }
+  const ids = lines.map(l => l.customId);
+  assert.deepEqual(broker.listQueued().map(q => q.customId).sort(), [...ids].sort(), JSON.stringify(broker.listQueued().map(q => JSON.parse(fs.readFileSync(q.meta, 'utf8')))));
+  // one id for two windows is refused before anything is read
+  const wrongCount = transcribeSync(api.base, ['--batch-result', ids[0], '--window-pages', '2']);
+  assert.equal(wrongCount.status, 1); assert.match(wrongCount.stderr, /needs 2 custom id\(s\) for 2 window\(s\)/);
+  // one result in, one not: nothing is written, nothing booked
+  fs.writeFileSync(lib.batchFiles(ids[0]).result, JSON.stringify({ ...message('{}'), batch: { id: 'fake', customId: ids[0], resultType: 'succeeded', writtenAt: lib.nowIso() } }));
+  const half = transcribeSync(api.base, ['--batch-result', ids.join(','), '--window-pages', '2']);
+  assert.equal(half.status, 1); assert.match(half.stderr, /no result for tx-.* \(solutions-01-01\): queued/);
+  assert.ok(!fs.existsSync(outFile));
+  fs.unlinkSync(lib.batchFiles(ids[0]).result);
+  const r1 = await runBroker(api.base);
+  assert.equal(r1.status, 0, r1.stderr);
+  assert.equal(api.state.posts.length, 1, 'both windows in one batch');
+  assert.ok(ids.every(id => fs.existsSync(lib.batchFiles(id).result)));
+  const c = transcribeSync(api.base, ['--batch-result', ids.join(','), '--window-pages', '2']);
+  assert.equal(c.status, 0, `${c.stderr}\n${c.stdout}`);
+  const summary = JSON.parse(c.stdout);
+  assert.equal(summary.out, outFile); assert.equal(summary.windows.length, 2);
+  assert.deepEqual(summary.windows.map(w => w.customId), ids); assert.ok(summary.windows.every(w => w.transport === 'batch' && w.costUsd > 0));
+  assert.equal(summary.assembly.ok, true, JSON.stringify(summary.assembly));
+  const assembled = JSON.parse(fs.readFileSync(outFile, 'utf8'));
+  assert.equal(assembled.problems.length, 1); assert.match(assembled.problems[0].statement, /Токът/); assert.match(assembled.problems[0].solution.statement, /Решение/);
+  assert.equal(assembled.tx.reader.windows, 2);
+  for (const l of lines) { const part = JSON.parse(fs.readFileSync(l.out, 'utf8')); assert.equal(part.tx.reader.customId, l.customId); assert.equal(part.tx.reader.transport, 'batch'); }
+  const runs = runsFor().slice(-2);
+  assert.deepEqual(runs.map(r => r.customId), ids); assert.ok(runs.every(r => r.ok && r.transport === 'batch'));
+});
+
+test('--batch-result: a retryable error re-queues that window (exit 2, new id, others reused); a non-retryable one exits 1 with the API text; unusable JSON is asked once more', async t => {
+  preparePaper();
+  const kinds = new Map(); // customId → result kind
+  const good = () => ({ type: 'succeeded', message: message(JSON.stringify(reply()), { input_tokens: 100, output_tokens: 50 }) });
+  const api = await fakeApi(t, { idPrefix: 'msgbatch_rq', results: id => kinds.get(id)?.() || good() });
+  // (a) overloaded on attempt 1 → re-queued; attempt 2 succeeds
+  let q = transcribeSync(api.base, ['--batch-async']);
+  assert.equal(q.status, 2, q.stderr);
+  const id1 = queuedLines(q)[0].customId;
+  kinds.set(id1, () => ({ type: 'errored', error: { type: 'error', error: { type: 'overloaded_error', message: 'Overloaded' } } }));
+  assert.equal((await runBroker(api.base)).status, 0);
+  const rq = transcribeSync(api.base, ['--batch-result', id1]);
+  assert.equal(rq.status, 2, rq.stderr);
+  assert.match(rq.stderr, /attempt 1\/3 failed .*overloaded_error.*re-queueing/);
+  const l2 = queuedLines(rq);
+  assert.equal(l2.length, 1); assert.notEqual(l2[0].customId, id1); assert.equal(l2[0].replaces, id1); assert.equal(l2[0].attempt, 2); assert.equal(l2[0].reused, undefined);
+  const id2 = l2[0].customId;
+  assert.equal(JSON.parse(fs.readFileSync(lib.batchFiles(id2).meta, 'utf8')).attempt, 2);
+  assert.ok(!fs.existsSync(l2[0].out));
+  assert.equal(runsFor().at(-1).ok, false); assert.equal(runsFor().at(-1).customId, id1);
+  assert.equal((await runBroker(api.base)).status, 0);
+  const ok = transcribeSync(api.base, ['--batch-result', id2]);
+  assert.equal(ok.status, 0, ok.stderr);
+  assert.equal(JSON.parse(ok.stdout).attempts, 2);
+  assert.equal(JSON.parse(fs.readFileSync(l2[0].out, 'utf8')).tx.reader.attempts, 2);
+  // (b) a non-retryable error: exit 1 with the API's text, nothing queued
+  q = transcribeSync(api.base, ['--batch-async']);
+  const id3 = queuedLines(q)[0].customId;
+  kinds.set(id3, () => ({ type: 'errored', error: { type: 'error', error: { type: 'invalid_request_error', message: 'messages.0.content.0.image.source.data: image is too small' } } }));
+  assert.equal((await runBroker(api.base)).status, 0);
+  const bad = transcribeSync(api.base, ['--batch-result', id3]);
+  assert.equal(bad.status, 1);
+  assert.match(bad.stderr, /error: anthropic batch request failed \(all\): batch msgbatch_rq\d+ errored: .*image is too small/);
+  assert.equal(broker.listQueued().length, 0);
+  // (c) prose instead of JSON: the paid reply is booked (unusableJson) and the window is asked once more (ask 2); a second prose reply fails
+  q = transcribeSync(api.base, ['--batch-async']);
+  const id4 = queuedLines(q)[0].customId;
+  kinds.set(id4, () => ({ type: 'succeeded', message: message('Sorry, I cannot read these pages.', { input_tokens: 100, output_tokens: 10 }) }));
+  assert.equal((await runBroker(api.base)).status, 0);
+  const prose = transcribeSync(api.base, ['--batch-result', id4]);
+  assert.equal(prose.status, 2, prose.stderr);
+  assert.match(prose.stderr, /no usable JSON in the reply .*asking once more/);
+  const l5 = queuedLines(prose);
+  assert.equal(l5[0].ask, 2); assert.equal(l5[0].attempt, 1); assert.equal(l5[0].replaces, id4);
+  const booked = runsFor().at(-1);
+  assert.equal(booked.customId, id4); assert.equal(booked.ok, true); assert.equal(booked.unusableJson, true); assert.ok(booked.costUsd > 0, 'the tokens were billed');
+  const id5 = l5[0].customId;
+  kinds.set(id5, () => ({ type: 'succeeded', message: message('still prose', { input_tokens: 100, output_tokens: 10 }) }));
+  assert.equal((await runBroker(api.base)).status, 0);
+  const prose2 = transcribeSync(api.base, ['--batch-result', id5]);
+  assert.equal(prose2.status, 1); assert.match(prose2.stderr, /no usable JSON in the reply for all after 2 asks/);
+  // (d) a windowed re-queue keeps the good window's id (reused) and books nothing for it until the collect
+  const win = transcribeSync(api.base, ['--batch-async', '--window-pages', '2']);
+  const wl = queuedLines(win); const [wa, wb] = wl.map(l => l.customId);
+  kinds.set(wb, () => ({ type: 'expired' }));
+  assert.equal((await runBroker(api.base)).status, 0);
+  const runsBefore = runsFor().length;
+  const mixed = transcribeSync(api.base, ['--batch-result', `${wa},${wb}`, '--window-pages', '2']);
+  assert.equal(mixed.status, 2, mixed.stderr);
+  const ml = queuedLines(mixed);
+  assert.equal(ml.length, 2); assert.equal(ml[0].customId, wa); assert.equal(ml[0].reused, true); assert.notEqual(ml[1].customId, wb); assert.equal(ml[1].replaces, wb); assert.equal(ml[1].window, 'solutions-01-01');
+  assert.equal(runsFor().length, runsBefore + 1, 'only the failed attempt is booked; the good window waits for the full collect');
+  assert.ok(!fs.existsSync(wl[0].out), 'the good window is not written until every window is in');
+  assert.equal((await runBroker(api.base)).status, 0);
+  const done = transcribeSync(api.base, ['--batch-result', ml.map(l => l.customId).join(','), '--window-pages', '2']);
+  assert.equal(done.status, 0, done.stderr);
+  assert.equal(runsFor().length, runsBefore + 3, 'both windows booked exactly once');
+  assert.ok(fs.existsSync(wl[0].out) && fs.existsSync(wl[1].out) && fs.existsSync(lib.candidateFile(PAPER, 'anthropic', 'claude-opus-5')));
 });
