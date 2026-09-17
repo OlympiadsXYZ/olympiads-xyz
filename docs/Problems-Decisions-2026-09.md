@@ -115,7 +115,7 @@ actually seeing the crop; Opus costs 2.5× Sonnet per check but the checker is o
 
 Margulan: "use fable on like 2000 papers and just one shot the whole thing as much as you can … I want as much overnight
 progress as possible". Supersedes D-P19's reader/checker pair for the bulk run: **reader claude-fable-5-1** (one read,
-zero mechanical defects in the trial), **checker claude-sonnet-5** (cheap; the Fable candidate passed it clean),
+zero mechanical defects in the trial), **checker claude-fable-5-1** (Margulan: the judge must not be weaker than the reader; same-model check recorded on the receipt, the mechanical checks stay independent),
 **escalation model claude-fable-5-1** (one refix before a paper parks), `--max-rounds 2`, mechanical pre-check first,
 two batch parents (`--langs bg` and `--langs ru`, 6 workers each), one shared `--max-spend-usd 380` since 06:36Z on
 the $427 left. Order: Bulgarian, then Russian (short papers, ≈$0.4 each); the international papers (≈$1.5 each at
