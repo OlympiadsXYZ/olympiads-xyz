@@ -130,12 +130,15 @@ const spendProviders = new Set([args.reader, args.checker].filter(Boolean).map(s
 function spentUsd() {
   const f = path.join(ROOT, 'tmp', 'tx', 'runs.jsonl');
   if (!fs.existsSync(f)) return 0;
-  let usd = 0;
+  let usd = 0, unpriced = 0;
   for (const line of fs.readFileSync(f, 'utf8').split(/\r?\n/)) {
     if (!line) continue;
     let r; try { r = JSON.parse(line); } catch { continue; }
-    if (r.ok && spendProviders.has(r.provider) && r.at >= spendSince && typeof r.costUsd === 'number') usd += r.costUsd;
+    if (!(r.ok && spendProviders.has(r.provider) && r.at >= spendSince)) continue;
+    if (typeof r.costUsd === 'number') usd += r.costUsd; else unpriced++;
   }
+  // a model missing from prices.json records costUsd null: money the cap cannot see (reviewer finding 2026-09-17)
+  if (unpriced && !spentUsd.warned) { spentUsd.warned = true; console.error(`[batch] WARNING: ${unpriced} successful call(s) carry no costUsd (model not in prices.json); the spend cap under-counts them`); }
   return usd;
 }
 let capHit = false;
