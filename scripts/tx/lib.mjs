@@ -542,7 +542,7 @@ export function provenanceFor(candidate, ctx) {
   const reader = candidate.tx?.reader || {};
   const sha = v => (typeof v === 'string' && /^[a-f0-9]{64}$/.test(v) ? v : undefined);
   const who = `${ctx.reviewer.provider}:${ctx.reviewer.model}`;
-  const how = ctx.independent ? 'independent checker' : 'same-model checker';
+  const how = ctx.reviewer.provider === 'mechanical' ? 'mechanical check only: schema, text layer, printed figures; no second model' : ctx.independent ? 'independent checker' : 'same-model checker';
   const adj = ctx.adjudicator ? `; adjudicated by ${ctx.adjudicator.provider}:${ctx.adjudicator.model}` : '';
   return {
     provider: reader.provider || 'unknown', model: reader.model || 'unknown',

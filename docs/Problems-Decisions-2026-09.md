@@ -122,3 +122,17 @@ the $427 left. Order: Bulgarian, then Russian (short papers, ≈$0.4 each); the 
 Fable prices) wait for the Message-Batches transport (built, tested, not yet merged) that halves them.
 | Why: at $427 the grant buys ~1,000 Fable-read papers synchronously; a strong one-shot read beats a cheap read plus
 repair rounds when the goal is finished, checked papers per dollar overnight.
+
+## D-P21 (2026-09-17, 06:50Z) — Fable one-shot, mechanical check only
+
+Margulan: "I just don't believe we really need a check on Fable, it's smart enough to one-shot things." The bulk run
+drops the second model: `--checker mechanical:textlayer+regions`. What still stands between a read and the site is
+every free gate — schema validation, the normaliser, figure crops snapped to and covering the printed graphics, the
+text-layer comparison (omissions, misreadings, unprinted words), the receipt's coverage rules — plus repair/refix
+rounds on what they find and one Fable escalation refix before a paper parks. The receipt and the ledger record the
+reviewer as `mechanical:textlayer+regions`, provenance reads "mechanical check only … no second model", and the
+page label says "checked mechanically against the original — no second model" (never "independent model").
+Verified on pu-2006-ii-2kryg: read in one shot ($1.02), clean mechanical check, promoted. Cost per short paper
+≈ $0.35–0.5 (the read alone); the $380 cap now buys roughly 900 papers.
+| Why: Fable's trial candidate carried no mechanical defects at all, so a second model call was paying for a pass;
+the mechanical checks are the deterministic part of verification and stay on.

@@ -40,7 +40,7 @@ function parseWho(s) {
   const [provider, ...rest] = String(s).split(':');
   const model = rest.join(':');
   if (!provider || !model) fail(`bad stage spec "${s}" (provider:model or agent:label)`);
-  if (!['anthropic', 'gemini', 'zai', 'chatgpt', 'agent'].includes(provider)) fail(`unknown provider "${provider}"`);
+  if (!['anthropic', 'gemini', 'zai', 'chatgpt', 'agent', 'mechanical'].includes(provider)) fail(`unknown provider "${provider}"`);
   return { provider, model };
 }
 if (!args.continue) {
@@ -456,6 +456,28 @@ for (;;) {
     // boxes to tighten — run first; what they find is repaired (and refixed) BEFORE a model is asked, so the
     // checker sees a candidate the document already agrees with. At most two such rounds per job; they do not
     // count against --max-rounds. The receipt written for such a round is marked mechanical and never promotes.
+    // --checker mechanical:<label> (D-P21): no second model at all — the free checks are the check. Open defects go
+    // through repair/refix (and the escalation model) like any checker's; a clean run is a pass whose coverage is
+    // every page of every document (the text layer and the region check read them all).
+    if (job.checker.provider === 'mechanical') {
+      const mech = mechanicalPrecheck(cand);
+      if (!mech) fail('mechanical check could not read the candidate');
+      if (mech.open.length && (job.options.mechRounds || 0) < 2) {
+        job.options.mechRounds = (job.options.mechRounds || 0) + 1; job.options.mechPending = true;
+        writeJson(receiptOut, { paperId, verdict: 'fail', mechanical: true, candidateSha256: sha256File(cand), checkedAt: nowIso(), summary: mech.summary, defects: mech.open, blockers: [] });
+        fs.copyFileSync(receiptOut, path.join(dir, `receipt.r${job.round}.mech.json`));
+        job.artefacts.receipt = rel(receiptOut); job.artefacts.checker = rel(mech.file);
+        job.stage = 'repair'; save(`mechanical check: ${mech.open.length} defect(s) (${mech.withFix} with a fix); repairing`); continue;
+      }
+      const man = readJson(manifestPath, { documents: {} });
+      const check = readJson(mech.file, null);
+      check.coverage.pagesRead = Object.entries(man.documents).flatMap(([document, d]) => Array.from({ length: d.pages || 0 }, (_, i) => ({ document, page: i + 1 })));
+      check.candidateSha256 = sha256File(cand);
+      check.checker = { ...(check.checker || {}), provider: 'mechanical', model: job.checker.model, promptVersion: 'mech-v1', candidateSha256: check.candidateSha256 };
+      check.summary = `Mechanical check only (no second model): ${check.summary || ''}`.trim();
+      writeJson(checkerOut, check);
+      job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`mechanical check ${mech.open.length ? `still ${mech.open.length} open defect(s) after ${job.options.mechRounds} repair round(s)` : 'clean'}; to the receipt`); continue;
+    }
     if (job.checker.provider !== 'agent' && !job.waitingFor && (job.options.mechRounds || 0) < 2) {
       const mech = mechanicalPrecheck(cand);
       if (mech?.open.length) {

@@ -167,7 +167,8 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push(`verification: ${yamlStr(state.quality)}`);
   if (state.quality === 'reviewed' && state.verifiedAt) lines.push(`verifiedAt: ${yamlStr(state.verifiedAt)}`);
   // the page must not claim an independent model when the receipt records a same-model check (D-P7, D-P10)
-  if (state.quality === 'reviewed') lines.push(`verifier: ${yamlStr(state.independent === false ? 'same-model' : 'independent')}`);
+  // a mechanical-only receipt (D-P21: no second model) is named as such, never as an independent model
+  if (state.quality === 'reviewed') lines.push(`verifier: ${yamlStr(state.mechanical ? 'mechanical' : state.independent === false ? 'same-model' : 'independent')}`);
   lines.push('---');
   lines.push('');
   // Lead line: the paper's printed masthead (ground truth), the date and the points.
