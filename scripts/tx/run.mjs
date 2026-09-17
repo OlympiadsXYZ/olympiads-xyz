@@ -646,7 +646,9 @@ for (;;) {
             const fix = d.suggestedFix; if (!fix || typeof fix !== 'object' || Array.isArray(fix)) continue;
             const m = /^(.*\/figures\/\d+)\/tx\/bbox$/.exec(String(d.path)); const fig = m && pointerGet(candidate, m[1]); const b = fig?.tx?.bbox;
             if (!Array.isArray(b) || b.length !== 4) { d.suggestedFix = null; continue; }
-            const step = 30, edges = fix.expand || fix.shrink, sign = fix.expand ? 1 : -1;
+            // 30‰ was too timid: NAO papers parked after four rounds of "still clipped" (2026-09-17); a clipped edge moves
+            // by 50‰ of the page, a swallowed-text edge by 30‰
+            const step = fix.expand ? 50 : 30, edges = fix.expand || fix.shrink, sign = fix.expand ? 1 : -1;
             const n = [b[0] - (edges.includes('left') ? sign * step : 0), b[1] - (edges.includes('top') ? sign * step : 0), b[2] + (edges.includes('right') ? sign * step : 0), b[3] + (edges.includes('bottom') ? sign * step : 0)].map(v => Math.round(Math.min(1000, Math.max(0, v))));
             if (n[2] - n[0] < 20 || n[3] - n[1] < 20) { d.suggestedFix = null; continue; }
             d.suggestedFixAsWritten = fix; d.suggestedFix = n;
