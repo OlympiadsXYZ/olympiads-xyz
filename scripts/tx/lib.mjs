@@ -905,8 +905,32 @@ export function normaliseCandidate(c, opts = {}) {
     out = out.replace(/\$\$[ \t]*\$\$/g, '');
     out = /\/(statement)$/.test(p) ? wrapBareFormulaParagraphs(out) : out;
     out = out.replace(/\\nicefrac\b/g, '\\frac');
-    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac`); }
+    // KaTeX has no \mathbf/\mathrm/\mathit in text mode: inside a \text{…}/\tag{…} argument they become the
+    // \textbf/\textrm/\textit the print shows anyway (ioaa-2019-data-analysis-da-final: "\textit{ApJ} \mathbf{452}")
+    out = out.replace(/\\(text|tag\*?|textbf|textit|textrm|mbox)\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}/g, (m, cmd, body) => `\\${cmd}{${body.replace(/\\math(bf|rm|it|sf|tt)\{/g, '\\text$1{')}}`);
+    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac / text-mode fonts`); }
   });
+  // paper.documentNotes (D-P16 shared instructions): a note written as {text} or without its position/page is
+  // coerced to the schema's shape; one with no text at all is dropped (izho-2024-experiment-exp-eng parked on it)
+  if (c.paper && c.paper.documentNotes !== undefined) {
+    const notes = Array.isArray(c.paper.documentNotes) ? c.paper.documentNotes : [];
+    const kept = [];
+    notes.forEach((n, i) => {
+      if (!n || typeof n !== 'object') { changes.push(`/paper/documentNotes/${i}: not an object, dropped`); return; }
+      const statement = typeof n.statement === 'string' && n.statement.trim() ? n.statement : typeof n.text === 'string' && n.text.trim() ? n.text : typeof n.note === 'string' && n.note.trim() ? n.note : null;
+      if (!statement) { changes.push(`/paper/documentNotes/${i}: no text, dropped`); return; }
+      const out = {
+        title: typeof n.title === 'string' && n.title.trim() ? n.title : (typeof n.heading === 'string' && n.heading.trim() ? n.heading : 'Note'),
+        statement,
+        document: n.document === 'solutions' ? 'solutions' : 'problems',
+        page: Number.isInteger(n.page) && n.page >= 1 ? n.page : (Number.isInteger(Number(n.page)) && Number(n.page) >= 1 ? Number(n.page) : 1),
+        position: n.position === 'after-problem' ? 'after-problem' : 'before-problem',
+      };
+      if (JSON.stringify(out) !== JSON.stringify(n)) changes.push(`/paper/documentNotes/${i}: coerced to {title, statement, document, page, position}`);
+      kept.push(out);
+    });
+    if (kept.length) c.paper.documentNotes = kept; else { delete c.paper.documentNotes; changes.push('/paper/documentNotes: empty, dropped'); }
+  }
   // A transcriber's remark typed into the text ("*Забележка към транскрипцията: в оригинала … текстът е предаден
   // дословно.*", "Transcriber's note: …") is never printed; it moves to tx.notes (nao-2021-iii-9-10).
   // The same for a reader's aside about its own work in place of text ("(T10) … — introductory text and formula …
