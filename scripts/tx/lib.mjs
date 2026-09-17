@@ -913,7 +913,8 @@ export function normaliseCandidate(c, opts = {}) {
   // paper.documentNotes (D-P16 shared instructions): a note written as {text} or without its position/page is
   // coerced to the schema's shape; one with no text at all is dropped (izho-2024-experiment-exp-eng parked on it)
   if (c.paper && c.paper.documentNotes !== undefined) {
-    const notes = Array.isArray(c.paper.documentNotes) ? c.paper.documentNotes : [];
+    // a note written as one string becomes one note; anything else non-array is dropped below
+    const notes = Array.isArray(c.paper.documentNotes) ? c.paper.documentNotes : typeof c.paper.documentNotes === 'string' && c.paper.documentNotes.trim() ? [{ text: c.paper.documentNotes }] : [];
     const kept = [];
     notes.forEach((n, i) => {
       if (!n || typeof n !== 'object') { changes.push(`/paper/documentNotes/${i}: not an object, dropped`); return; }

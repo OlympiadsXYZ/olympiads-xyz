@@ -42,7 +42,10 @@ export function problemMetadataErrors(data, manifest = null) {
     const text = [problem.statement, problem.statementAfterParts, ...(problem.parts || []).flatMap(p => [p.statement, p.statementAfter]), problem.solution?.statement].filter(Boolean).join('\n');
     for (const value of problem.sourceLayout?.underlines || []) if (!text.includes(value)) error(`${root}/sourceLayout/underlines`, `underlined passage not present in problem text: ${value}`);
   }
-  for (const [i, note] of (data.paper?.documentNotes || []).entries()) {
+  const notes = data.paper?.documentNotes;
+  if (notes !== undefined && !Array.isArray(notes)) error('/paper/documentNotes', 'documentNotes must be an array of notes');
+  for (const [i, note] of (Array.isArray(notes) ? notes : []).entries()) {
+    if (!note || typeof note !== 'object') { error(`/paper/documentNotes/${i}`, 'note must be an object'); continue; }
     if (manifest && (!manifest.documents?.[note.document] || note.page > manifest.documents[note.document].pages)) error(`/paper/documentNotes/${i}`, 'note references a missing source page');
   }
   return errors;
