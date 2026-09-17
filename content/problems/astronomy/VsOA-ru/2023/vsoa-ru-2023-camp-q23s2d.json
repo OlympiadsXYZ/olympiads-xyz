@@ -1,0 +1,203 @@
+{
+ "paper": {
+  "id": "vsoa-ru-2023-camp-q23s2d",
+  "subject": "astronomy",
+  "competition": "VsOA-ru",
+  "year": 2023,
+  "round": null,
+  "roundType": "mixed",
+  "grade": null,
+  "lang": "ru",
+  "title": "Q23S2D",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Астрономия/Състезания/Всерусийска/2023/camp 2/Q23S2D.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "anthropic",
+   "model": "claude-sonnet-5",
+   "promptVersion": "v1",
+   "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
+   "requestId": "req_011Cf9ASLnXLHuJ8PYL6w1ss",
+   "at": "2026-09-17",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "4c66cb13807db577c5e9c9ee0286d2b0bb73edbeeb8dc1376a989a2797a551bb"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-17",
+   "notes": "Файл содержит только текст задач (без решений); ответы не транскрибированы. В задаче D1 таблица классов и формула масса-светимость перенесены в statement, так как относятся к обеим частям a) и b). В задаче D2 и D4 части печатных подпунктов a)/b) выделены как parts. Готические буквы (𝔐) в формуле масса-светимость сохранены как в оригинале."
+  }
+ },
+ "problems": [
+  {
+   "id": "vsoa-ru-2023-camp-q23s2d-p1",
+   "number": 1,
+   "title": "Все бегут, а он им светит",
+   "points": null,
+   "problemType": "data-analysis",
+   "statement": "В файле V_BV.tsv приведены наблюдаемые видимые звёздные величины $V$ и показатели цвета $(B-V)$ звёзд рассеянного скопления. По оценкам, расстояние до скопления равно 4.3 кпк, а средний избыток цвета $E(B-V) = 0.12$.\n\n**Справка**\n\n— В модели F. J. Ballesteros (2012) температура абсолютно чёрного тела определяется по показателю цвета как\n\n$$T = 4600\\ \\mathrm{K} \\cdot \\left\\{ \\left[0.92\\cdot(B-V) + 1.7\\right]^{-1} + \\left[0.92\\cdot(B-V) + 0.62\\right]^{-1} \\right\\}.$$\n\nЭто далеко не лучшая зависимость: например, не учитывается металличность и ускорение свободного падения в фотосфере. Однако из фотометрических данных указанные параметры не определяются.\n\n— Для болометрических поправок существуют подробные таблицы. Для упрощения задачи воспользуемся формульным видом зависимости $BC_V$ от эффективной температуры $T_{\\mathrm{eff}}$ из работы Flower (1996) в версии Torres (2010). В этой работе болометрическая поправка представлена отрезком ряда по степеням логарифма температуры:\n\n$$BC_V = k_0 + k_1 \\lg T_{\\mathrm{eff}} + k_2 \\lg^2 T_{\\mathrm{eff}} + k_3 \\lg^3 T_{\\mathrm{eff}} + k_4 \\lg^4 T_{\\mathrm{eff}} + k_5 \\lg^5 T_{\\mathrm{eff}} + \\cdots$$\n\nЗвёзды разделены на три «температурных» класса (таблица 1). Коэффициенты $k_{\\mathrm{order}}$ для каждого класса приводятся в таблице Teff2BCv.csv.\n\nВ реальности болометрическая поправка зависит ещё по крайней мере от класса светимости объекта. Светимость исследуемой группы объектов не превышает $10L_{\\odot}$, что частично снимает эту проблему.\n\n| Метка класса | Диапазон |\n|---|---|\n| class1 | $\\lg T_{\\mathrm{eff}} < 3.70$ |\n| class2 | $3.70 < \\lg T_{\\mathrm{eff}} < 3.90$ |\n| class3 | $\\lg T_{\\mathrm{eff}} > 3.90$ |\n\n— Для перехода от светимостей к массам воспользуйтесь зависимостью «масса – светимость» в форме\n\n$$\\frac{L}{L_{\\odot}} = \\begin{cases} 2.3\\cdot 10^{-1}\\left(\\dfrac{\\mathfrak{M}}{\\mathfrak{M}_{\\odot}}\\right)^{2.3}, & \\dfrac{\\mathfrak{M}}{\\mathfrak{M}_{\\odot}} < 0.43; \\\\ 1.0\\cdot 10^{0}\\left(\\dfrac{\\mathfrak{M}}{\\mathfrak{M}_{\\odot}}\\right)^{4.0}, & 0.43 < \\dfrac{\\mathfrak{M}}{\\mathfrak{M}_{\\odot}} < 2; \\\\ 1.4\\cdot 10^{0}\\left(\\dfrac{\\mathfrak{M}}{\\mathfrak{M}_{\\odot}}\\right)^{3.5}, & 2 < \\dfrac{\\mathfrak{M}}{\\mathfrak{M}_{\\odot}} < 20; \\\\ 3.2\\cdot 10^{3}\\left(\\dfrac{\\mathfrak{M}}{\\mathfrak{M}_{\\odot}}\\right)^{1.0}, & \\dfrac{\\mathfrak{M}}{\\mathfrak{M}_{\\odot}} > 20. \\end{cases}$$",
+   "figures": [],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Постройте диаграмму Герцшпрунга — Рассела для этого скопления в осях «температура (K) — светимость в полосе V ($L_{\\odot}$)».",
+     "points": null
+    },
+    {
+     "label": "b)",
+     "statement": "Постройте гистограмму распределения масс объектов скопления со светимостью не выше $10L_{\\odot}$.",
+     "points": null
+    }
+   ],
+   "topics": [
+    "astronomy/stellar-photometry",
+    "astronomy/hr-diagram"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "В архиве отсутствует файл с решениями."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "id": "vsoa-ru-2023-camp-q23s2d-p2",
+   "number": 2,
+   "title": "Останусь светом вдалеке",
+   "points": null,
+   "problemType": "observation",
+   "statement": "Файл trails.jpg представляет собой снимок звёздного неба с длинной выдержкой, полученный где-то на поверхности Земли. Известно, что экспозицию запустили 5 февраля в 20:20 UT. Считайте, что верхняя и нижняя границы кадра строго горизонтальны.\n\nОпределите координаты места наблюдения и время выдержки.\n\n**Справка.** Используйте атлас звёздного неба atlas.pdf.",
+   "figures": [],
+   "parts": [],
+   "topics": [
+    "astronomy/spherical-astronomy",
+    "astronomy/star-trails"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "В архиве отсутствует файл с решениями."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "id": "vsoa-ru-2023-camp-q23s2d-p3",
+   "number": 3,
+   "title": "Там увидишь в окнах свет",
+   "points": null,
+   "problemType": "data-analysis",
+   "statement": "В вашем распоряжении:\n\n— две фотографии photo$\\{1,2\\}$.jpg, сделанные в один момент;\n\n— увеличенный фрагмент первой фотографии photo1_scaled.jpg, на котором видны три здания с «горящими» из-за отражения солнечного света окнами;\n\n— фрагмент аэрофотосъёмки aero.jpg участка поверхности с этими зданиями.\n\nКоординаты некоторых пунктов приведены в таблице 2.\n\nОпределите с наибольшей разумной точностью:\n\nПогрешности оценивать не требуется.\n\nСчитайте, что строители умеют пользоваться уровнем: окна установлены строго вертикально, то есть ошибка выражается в азимутальном отклонении от плоскости фасада здания и подчиняется нормальному закону распределения.\n\n*Подсказка.* Функция плотности вероятности нормального распределения имеет вид $f(x) = \\dfrac{1}{\\sqrt{2\\pi}\\sigma} \\exp\\left[-\\dfrac{1}{2}\\left(\\dfrac{x-x_0}{\\sigma}\\right)^2\\right]$.\n\n**Таблица 2: К задаче D3**\n\n| Пункт | Широта, ° | Долгота, ° | Высота, м |\n|---|---|---|---|\n| Место съёмки | 55.929588 | 37.523612 | 40 |\n| ТЭЦ | 55.940414 | 37.565294 | |\n| Аэрофотосъёмка верхняя левая точка | 55.910917 | 37.403556 | |\n| Аэрофотосъёмка нижняя правая точка | 55.908073 | 37.406904 | |",
+   "figures": [],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "высоту труб ТЭЦ (здание с тремя трубами на второй фотографии);",
+     "points": null
+    },
+    {
+     "label": "b)",
+     "statement": "фазовый угол Луны;",
+     "points": null
+    },
+    {
+     "label": "c)",
+     "statement": "долю «горящих» окон (по трём зданиям в совокупности);",
+     "points": null
+    },
+    {
+     "label": "d)",
+     "statement": "среднеквадратичную угловую ошибку установки окон в зданиях.",
+     "points": null
+    }
+   ],
+   "topics": [
+    "astronomy/photogrammetry",
+    "astronomy/moon-phase"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "В архиве отсутствует файл с решениями."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 3
+    }
+   ]
+  },
+  {
+   "id": "vsoa-ru-2023-camp-q23s2d-p4",
+   "number": 4,
+   "title": "What spring is like on Mars",
+   "points": null,
+   "problemType": "data-analysis",
+   "statement": "В файле ephemeris.dat приводятся эфемериды Марса с мая 2023 г. до середины 2028 г. Описание формата файла см. в таблице 3.\n\nОрбиту Земли считайте круговой. В 2023 году равноденствие наступило 20 марта в 21:25 UT.\n\n**Таблица 3: К задаче D4**\n\n| № | Столбец | Значение | Формат |\n|---|---|---|---|\n| 1 | Date | Дата, $0^{h}$ UT | YYYY-MMM-DD |\n| 2 | RA | Прямое восхождение | hh:mm:ss |\n| 3 | Dec | Склонение | +dd:mm:ss |\n| 4 | Mag | Видимая звёздная величина | +x.x |\n| 5 | d | Расстояние до Земли, а. е. | x.xxxx |\n| 6 | r | Расстояние до Солнца, а. е. | x.xxxx |\n\nРазделитель столбцов — символ табуляции \\t",
+   "figures": [],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Определите кеплеровы элементы орбиты Марса на 1 сентября 2023 г.",
+     "points": null
+    },
+    {
+     "label": "b)",
+     "statement": "Верно ли, что при прочих равных создаваемая Марсом освещённость прямо пропорциональна его фазе?",
+     "points": null
+    }
+   ],
+   "topics": [
+    "astronomy/orbital-mechanics",
+    "astronomy/ephemeris"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "В архиве отсутствует файл с решениями."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 4
+    }
+   ]
+  }
+ ]
+}

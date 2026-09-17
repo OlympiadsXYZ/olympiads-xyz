@@ -1,0 +1,71 @@
+---
+id: o3a2-2020-theory-x-p1
+source: 'O3A2 2020'
+title: 'Задача 1. Без тени сомнений'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/O3A2/2020/o3a2-2020-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-17T07:51:36.954Z'
+verifier: 'crop-audit'
+---
+
+*Открытая онлайн-олимпиада по астрономии и астрофизике '20 — Теоретический тур*
+
+<Warning title="Бележка към темата">
+Оценки bbox для фигуры к задаче 4 приблизительны и не проверены попиксельно.
+</Warning>
+
+## Условие
+
+В году есть периоды, когда Международная космическая станция в течение значительного промежутка времени (более суток) непрерывно освещена Солнцем. Какова максимально возможная продолжительность такого промежутка? В какие дни года такая ситуация возможна?
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 5.2 сут.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Будем рассматривать угол $\beta$ между плоскостью орбиты МКС и направлением на Солнце. Нетрудно найти (если не руками, то в интернете), что
+
+$$\sin\beta = \cos\delta_{\odot}\sin i \sin(\Omega - \alpha_{\odot}) + \sin\delta_{\odot}\cos i,$$
+**1 балл**
+
+где $\alpha_{\odot}$ и $\delta_{\odot}$ — соответственно прямое восхождение и склонение Солнца, $\Omega$ — прямое восхождение восходящего узла орбиты спутника, $i$ — наклонение орбиты спутника. При $|\sin\beta| \geqslant \sin\beta_0$ Солнце будет освещать спутник постоянно, причём $\beta_0$, очевидно, есть видимый угловой радиус Земли:
+
+$$\beta_0 = \arcsin\frac{R_{\oplus}}{R_{\oplus}+h}.$$
+**2 балла**
+
+Очевидно, наибольшая продолжительность промежутка достигается при достижении максимально возможного $|\beta_{\max}| = \varepsilon + i$ — вблизи солнцестояния при совпадающем «подъёме» орбиты:
+
+$$\cos\varepsilon\sin i\sin(\Omega-\alpha_{\odot}) + \sin\varepsilon\cos i = \frac{R_{\oplus}}{R_{\oplus}+h}.$$
+
+Период прецессии узлов орбиты МКС составляет 2 месяца, поэтому для оценки будем считать, что $\Omega=6\tau$, $\alpha_{\odot}=6^{h}$:
+
+$$\cos\varepsilon\sin i\cos 6\tau + \sin\varepsilon\cos i = \frac{R_{\oplus}}{R_{\oplus}+h}.$$
+
+Последнее уравнение имеет корни $\tau=\pm 2.54^{\circ}$, откуда искомая максимальная продолжительность промежутка $2\tau/360^{\circ}\times 365.25\ \text{сут.} = \boxed{5.2\ \text{сут.}}$
+**3 балла**
+
+Заметим, что
+
+$$\cos\delta_{\odot}\sin i\sin(\Omega-\alpha_{\odot}) + \sin\delta_{\odot}\cos i \leqslant \cos\delta_{\odot}\sin i + \sin\delta_{\odot}\cos i = \sin(\delta_{\odot}+i),$$
+
+то есть минимальный модуль склонения Солнца $|\delta_{\odot}|_{\min} = \arcsin\frac{R_{\oplus}}{R_{\oplus}+h} - i \simeq 18.6^{\circ}$.
+**2 балла**
+
+Это соответствует $365.25/360^{\circ}\times\arccos 18.6/\varepsilon \simeq \boxed{38\ \text{дням от солнцестояния.}}$
+**2 балла**
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/O3A2/2020/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theory.pdf)
+· официални решения: [theory-sol.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/O3A2/2020/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theory-sol.pdf)
