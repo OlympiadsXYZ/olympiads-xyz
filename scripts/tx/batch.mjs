@@ -62,11 +62,13 @@ if (args.backlog || args.catalogue) {
   pick('subjects', 'subject'); pick('langs', 'lang'); pick('competitions', 'competition');
   // --native-only: papers whose problems document carries a real text layer per tmp/tx/classify.json (classify.mjs);
   // scans and unclassified papers are left out (the mechanical text check is the cheap half of verification)
-  if (args['native-only']) {
+  if (args['native-only'] || args['max-pages']) {
     const cls = readJson(path.join(ROOT, 'tmp', 'tx', 'classify.json'), { papers: {} }).papers || {};
     const before = entries.length;
-    entries = entries.filter(e => cls[e.paperId]?.native === true);
-    console.log(`[batch] --native-only: ${entries.length} of ${before} papers have a native text layer (${Object.keys(cls).length} classified)`);
+    if (args['native-only']) entries = entries.filter(e => cls[e.paperId]?.native === true);
+    // --max-pages N (catalogue mode): only papers whose prepared documents total at most N pages (classify.json)
+    if (args['max-pages']) entries = entries.filter(e => Number.isFinite(cls[e.paperId]?.pages) && cls[e.paperId].pages <= Number(args['max-pages']));
+    console.log(`[batch] ${args['native-only'] ? '--native-only ' : ''}${args['max-pages'] ? `--max-pages ${args['max-pages']} ` : ''}: ${entries.length} of ${before} papers selected (${Object.keys(cls).length} classified)`);
   }
   for (const e of entries) if (fxIds.has(e.paperId) || fxKeys.has(e.problemsKey)) log({ paperId: e.paperId, outcome: 'skipped', reason: 'benchmark fixture' });
   entries = entries.filter(e => !fxIds.has(e.paperId) && !fxKeys.has(e.problemsKey));
