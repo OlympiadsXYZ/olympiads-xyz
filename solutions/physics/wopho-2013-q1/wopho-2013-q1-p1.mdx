@@ -1,0 +1,144 @@
+---
+id: wopho-2013-q1-p1
+source: 'WoPhO 2013'
+title: 'Задача 1. Induction Motor'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/WoPhO/2013/wopho-2013-q1.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-17T16:51:05.527Z'
+verifier: 'crop-audit'
+---
+
+*Problem Induction Motor — Deadline April, 1 2013*
+
+## Условие
+
+Induction (or asynchronous) motors are the simplest and most reliable electric motors. They are powered by alternating current, and they do not contain commutators, slip rings or brushes. They consist of a stator and a rotor (see fig. 1). The stator is a fixed set of coils, which produces a rotating magnetic field in the plane perpendicular to the axis of the motor. The rotor is just a cage, i.e., a set of closed metallic loops attached to the axis of the motor. The rotating magnetic field produced by the stator induces electric current in the loops of the cage, which behave as magnetic dipoles, and interact with the external field of the stator. As a result, a torque is exerted on the rotor, and it starts rotating.
+
+In a simplified model (see fig. 2) we assume that the magnetic induction vector $\mathbf{B}$ produced by the stator is rotating in the $x-y$ plane at a constant angular velocity $\Omega$, and it has a constant magnitude $B$. The axis of the rotor is in the $z$ direction. The rotor is assumed to be a flat coil of area $A$, winding number $N$, Ohmic resistance $R$ and self inductance $L$. The vector $\mathbf{n}$ perpendicular to this coil is rotating also in the $x-y$ plane.
+
+# Stationary operation
+
+First we study the stationary operation of the motor, when its angular velocity $\omega$ and torque $T$ are constant. As we shall see, when the motor is loaded, its angular velocity $\omega$ gets smaller than $\Omega$. It is convenient to characterize this shift by the slip
+
+$$s = \frac{\Omega - \omega}{\Omega},$$
+
+which is a dimensionless number between 0 and 1.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-fig1.png" alt="Exploded diagram of an induction motor showing end bell, wiring cover, motor frame, stator, rotor, fan blades, bearing and second end bell." />
+<figcaption>Figure 1: The structure of an induction motor</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-fig2.png" alt="Diagram in the x-y plane showing angular velocity $\Omega$ of the rotating magnetic field $\mathbf{B}$, the normal vector $\mathbf{n}$ of the flat coil rotating at angular velocity $\omega$, the x and y axes, and a flat coil seen from its edge (drawn as a set of parallel lines)." />
+<figcaption>Figure 2: The simplified model, seen from the $z$ axis</figcaption>
+</figure>
+
+**a)** Assume that the load is small, so the slip $s \ll 1$. Determine the time average of the torque $T$ exerted by the motor as a function of the slip $s$. (Use reasonable neglections.)
+
+**b)** Determine the average torque $T$ as a function of an arbitrary slip value $s$ between 0 and 1.
+
+**c)** Assume that $\dfrac{L\Omega}{R} = 10$. Sketch the graph of the function $T(s)$.
+
+**d)** Find the maximal stationary torque $T_{\max}$ and the corresponding slip $s_0$.
+
+**e)** Determine the efficiency $\eta$ of the motor as a function of the slip $s$. (Assume that there is no energy loss due to friction, radiation.)
+
+**f)** Assume that the motor is connected to an equipment (load) which has a linear $T_l(\omega)$ characteristics, so for a stationary angular velocity $\omega$ a torque $T_l(\omega) = K\omega$ is needed, where $K$ is a positive constant. Determine graphically the stable and unstable operation points on the $T(s)$ graph obtained in question c) for different $K$ -s.
+
+**g)** Do the negative slip values have any physical meaning? If yes, what? If no, why?
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** $T_{(a)} = \dfrac{B^2 A^2 N^2 \Omega s}{2R}$
+- **b)** $T = \dfrac{B^2A^2N^2R\Omega s}{2(R^2+\Omega^2L^2s^2)}$
+- **c)** Introducing $\beta = L\Omega/R$, $T = \dfrac{B^2A^2N^2\Omega}{2R}\dfrac{s}{1+\beta^2s^2}$. For $\beta=10$, the graph of $s/(1+\beta^2s^2)$ on $0\le s\le1$ rises sharply from 0, peaks near $s=1/\beta=0.1$, then decreases smoothly to 0 at $s=1$ (see solution figure).
+- **d)** $s_0 = \dfrac{1}{\beta} = \dfrac{R}{L\Omega}, \qquad T_{\max} = \dfrac{B^2A^2N^2}{4L}$
+- **e)** $\eta = 1 - s$
+- **f)** The operating slip $s_0$ solves $T(s_0)=K\Omega(1-s_0)$. A point is stable when $\partial T/\partial s|_{s_0} + K\Omega > 0$. For $\beta=10$, the cubic condition $s_0(1+\beta^2s_0^2)=(1-s_0)(\beta^2s_0^2-1)$ gives boundary slips $s_1=0.1138$ and $s_2=0.4781$: operating points with $s<s_1$ or $s>s_2$ are stable, those with $s_1<s<s_2$ are unstable. For $K<K_2$ (corresponding to $s_0=s_1$) there is one stable point with $s<s_1$; for $K>K_1$ (corresponding to $s_0=s_2$) there is one stable point with $s>s_2$; for $K_2<K<K_1$ there are three operating points, two stable and one unstable.
+- **g)** Yes: for negative slip the motor is being driven above $\Omega$ and acts as a brake, but the efficiency exceeds 1, meaning mechanical energy input is converted into electrical output — this is the principle of induction (asynchronous) generators.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+(a), (b) Let the time $t=0$ be chosen such that then $\mathbf{n}$ is perpendicular to $\mathbf{B}$. Using this notation, the flux of the coil is $\Phi = -BAN\sin(\Omega-\omega)t$. According to Faraday's law, the induced voltage is $U = -\partial\Phi/\partial t = BAN(\Omega-\omega)\cos(\Omega-\omega)t$. To simplify the calculations, we change now to the exponential description of alternating current, that is, $\mathcal{U} = BAN(\Omega-\omega)\exp(i(\Omega-\omega)t)$. The impedance of the coil is (the angular frequency of the voltage is $\Omega-\omega$) $\mathcal{Z} = R + i(\Omega-\omega)L$, thus the current is
+
+$$\mathcal{I} = \frac{\mathcal{U}}{\mathcal{Z}} = \frac{BAN(\Omega-\omega)}{\sqrt{R^2+(\Omega-\omega)^2L^2}}\exp(i(\Omega-\omega)t - i\delta) \to I = \frac{BAN(\Omega-\omega)}{Z}\cos((\Omega-\omega)t-\delta),$$
+
+where $Z = \sqrt{R^2+(\Omega-\omega)^2L^2}$ is the magnitude and $\delta = \arctan\dfrac{(\Omega-\omega)L}{R}$ is the argument of $\mathcal{Z}$ (in the end we have reverted back to the trigonometric form). The magnetic moment of the coil is $\mathbf{m} = IAN\mathbf{n}$, thus the torque exerted on it is
+
+$$\tau = (\mathbf{m}\times\mathbf{B})_z = mB\cos(\Omega-\omega)t = NAB\cdot\frac{BAN(\Omega-\omega)}{Z}\cos((\Omega-\omega)t-\delta)\cos(\Omega-\omega)t =$$
+$$= \frac{B^2A^2N^2(\Omega-\omega)}{Z}\left(\cos^2\alpha\cos\delta - \sin\alpha\cos\alpha\sin\delta\right),$$
+
+where $\alpha(t) = (\Omega-\omega)t$. We should note that
+
+$$\lim_{t\to\infty}\left(\frac{1}{t}\int_0^t \cos^2(x\cdot t^*)dt^*\right) = \frac{1}{2} \text{ and } \lim_{t\to\infty}\left(\frac{1}{t}\int_0^t \sin(x\cdot t^*)\cos(x\cdot t^*)dt^*\right) = 0$$
+
+are the time averages of the above functions, thus the requested time average is
+
+$$T = \frac{B^2A^2N^2(\Omega-\omega)}{Z}\frac{\cos\delta}{2} = \frac{B^2A^2N^2(\Omega-\omega)}{Z}\frac{R}{2Z} = \frac{B^2A^2N^2(\Omega-\omega)R}{2(R^2+(\Omega-\omega)^2L^2)} = \frac{B^2A^2N^2R\Omega s}{2(R^2+\Omega^2L^2s^2)};$$
+
+in the last form we have introduced the expression of the slip. For the case of the small slip, we may obtain a simpler formula by calculating with $s$ to the first order:
+
+$$T_{(a)} = \frac{B^2A^2N^2R\Omega s}{2R^2} = \frac{B^2A^2N^2\Omega s}{2R}.$$
+
+(c) By introducing $\beta = L\Omega/R$, we may simplify the expression for $T$:
+
+$$T = \frac{B^2A^2N^2R\Omega s}{2(R^2+R^2\beta^2s^2)} = \frac{B^2A^2N^2\Omega}{2R}\frac{s}{1+\beta^2s^2}.$$
+
+Taking the numerical prefactor describing the motor equal to 1, we have to sketch the function $s/(1+\beta^2s^2)$ for $\beta=10$. The plot for the reasonable interval is in Fig. 1.
+
+(d) The maximum of $T$ occurs where its derivative with respect to $s$ (or equivalently, that of $s/(1+\beta^2s^2)$) is 0. This derivative is $\dfrac{1-\beta^2s^2}{(1+\beta^2s^2)^2}$, the root of which is
+
+$$s_0 = \frac{1}{\beta} = \frac{R}{L\Omega}.$$
+
+In this case, the average torque is
+
+$$T_{\max} = \frac{B^2A^2N^2\Omega}{2R}\frac{1/\beta}{2} = \frac{B^2A^2N^2\Omega}{4R}\frac{R}{L\Omega} = \frac{B^2A^2N^2}{4L}.$$
+
+Note. If $\beta<1$, i.e. the ohmic resistance is too large, $s_0$ would be greater than 1, which is nonsense. In this case, the $T(s)$ function is growing monotonously all over the reasonable $0\le s\le1$ range, thus the maximal torque belongs to $s_0=1$ and it is $T_{\max} = \dfrac{B^2A^2N^2\Omega}{2R(1+L^2\Omega^2/R^2)}$.
+
+(e) The energy loss in the system is the Joule heat dissipating in the coil. In average this is given by
+
+$$\overline{P_{\text{loss}}} = I_{\text{eff}}^2 R = \frac{1}{2}I_{\text{peak}}^2 R = \frac{R}{2}\left(\frac{BAN(\Omega-\omega)}{Z}\right)^2.$$
+
+The useful power is the mechanical power of the motor, which is given for rotations by $P_{\text{mech}} = \tau\omega$, or in average,
+
+$$\overline{P_{\text{mech}}} = T\omega = \frac{B^2A^2N^2(\Omega-\omega)\omega R}{2Z^2}.$$
+
+The efficiency of the motor is thus
+
+$$\eta = \frac{P_{\text{mech}}}{P_{\text{mech}}+P_{\text{loss}}} = \frac{\omega}{\Omega} = 1-s.$$
+
+(f) Let $s_0$ be the root of the equation $T(s) = K\omega = K\Omega(1-s)$: at this slip, the motor is working without accelerating or decelerating the load. Imagine that the slip gets perturbated, so it value becomes $s_0+\delta s$. The system is stable when the total torque acting on it acts in order to reduce $\delta s$, that is, if $\delta s>0$, thus $\delta\omega<0$, the torque accelerates the system, thus $\Sigma T>0$. This total torque is given by
+
+$$\Sigma T = T(s_0+\delta_s) - K\Omega(1-s_0-\delta s) = \left(\frac{\partial T}{\partial s}\Big|_{s=s_0} + K\Omega\right)\delta s \to \frac{\Sigma T}{\delta s} = \frac{\partial T}{\partial s}\Big|_{s=s_0} + K\Omega,$$
+
+which must be greater than 0 to have the system stable. On the monotonously growing section of $T(s)$, the expression is clearly greater than 0, thus this section is stable, but the first stable section exceeds slightly this part of the graph: the critical state is the one where $\Sigma T/\delta s$ is exactly 0. The related equations are
+
+$$\frac{B^2A^2N^2\Omega}{2R}\frac{s_0}{1+\beta^2s_0^2} = K\Omega(1-s_0); \qquad \frac{B^2A^2N^2\Omega}{2R}\frac{1-\beta^2s_0^2}{(1+\beta^2s_0^2)^2}+K\Omega=0.$$
+
+Combining the equations give the irreducible cubic equation $s_0(1+\beta^2s_0^2)=(1-s_0)(\beta^2s_0^2-1)$. The positive numerical solutions for $\beta=10$ are $s_1=0.1138$ and $s_2=0.4781$. We have already found that for $s<s_1$ the system is stable, consequently, for $s_1<s<s_2$ the system is unstable and for $s_2<s$ it is again stable, as at the roots of the above equation the continuous function $\Sigma T/\delta s$ changes sign.
+
+Lines for some interesting $K$ are plotted in Fig. 1. as well. Let $K_2<K_1$ be the two values of $K$ which constitute $s_0=s_1$ and $s_0=s_2$, respectively (green and red lines). We can find that for $K<K_2$ there is a single stable operating point with $s<s_1$ and for $K>K_1$ there is a single stable operating point with $s>s_2$. When $K_2<K<K_1$, we can find three operating points: for one of them, $s<s_1$, for one $s>s_2$ and for one $s_1<s<s_2$: the first two are thus stable, the last is unstable. If the system gets perturbated at the latter, the slip will begin to oscillate about and converge to one of the stable operating points.
+
+(g) In the case of a negative slip, the motor is braking, but the efficiency rises over 1: this means, that rotating the rotor over an angular velocity of $\Omega$ takes mechanical energy, but it is gained back as electrical power. In practice, this is the principle of induction (or asynchronous) generators.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-sol-fig1.png" alt="Plot of T versus s for beta=10 showing a peaked curve rising sharply then decreasing to 0 at s=1, together with several straight lines (in different colors) representing linear load characteristics $K\Omega(1-s)$ for different K values, illustrating intersections at stable and unstable operating points." />
+<figcaption>Figure 1. $T$ (in the units of $B^2A^2N^2\Omega/2R$) as a function of $s$ and some load characteristics.</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [WoPhO_2013_Q1.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/WoPhO/2013/p1/WoPhO_2013_Q1.pdf)
+· официални решения: [WoPhO_2013_S1.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/WoPhO/2013/p1/WoPhO_2013_S1.pdf)
