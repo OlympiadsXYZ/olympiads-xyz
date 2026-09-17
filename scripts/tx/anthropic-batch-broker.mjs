@@ -17,7 +17,10 @@
 //     ids, counts, createdAt and status. A batches/pending-*.json is written before the POST
 //     and removed after it, so a crash between the two is recognised on restart: the broker
 //     lists the API's recent batches and adopts one that matches the pending record (same
-//     request count, created after it) instead of submitting the requests twice.
+//     request count, created after it) instead of submitting the requests twice. While a
+//     pending record exists its requests are in flight (never re-POSTed); it is dropped only
+//     after 3 successful listings with no match, or once it is 30 min old — a listing that
+//     fails or does not yet show the batch keeps it (pending-unresolved) and backs off.
 //   poll: every batch record not yet finished is GET /v1/messages/batches/{id}; when
 //     processing_status is "ended" the results_url (JSONL; lines {custom_id, result}) is
 //     fetched and one results/<custom_id>.json is written per line: for "succeeded" the
@@ -44,7 +47,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import {
-  parseArgs, fail, readJson, writeJson, writeFileAtomic, renameWithRetry, loadProviderKeys, nowIso, sleep, ROOT, pidAlive,
+  parseArgs, fail, readJson, readJsonSafe, writeJson, writeFileAtomic, renameWithRetry, loadProviderKeys, nowIso, sleep, ROOT, pidAlive,
   ANTHROPIC_BASE_URL, BATCH_DIR, BATCH_DIRS, BATCH_CUSTOM_ID, BATCH_LIMITS, groupBatchRequests,
 } from './lib.mjs';
 
@@ -67,17 +70,21 @@ export function listQueued() {
     .sort((a, b) => a.mtimeMs - b.mtimeMs || a.customId.localeCompare(b.customId));
 }
 export const batchRecordFile = id => path.join(BATCH_DIRS.batches, `${id}.json`);
+// one corrupt record (a half-written file, a stray edit) is logged and skipped, never the end of the pass
+function readRecord(file) { try { return readJson(file, null); } catch (e) { log({ action: 'bad-json', file: path.relative(ROOT, file), why: redact(e.message) }); return null; } }
 export function listBatchRecords() {
   ensureDirs();
-  return fs.readdirSync(BATCH_DIRS.batches).filter(f => /\.json$/.test(f) && !f.startsWith('pending-')).map(f => readJson(path.join(BATCH_DIRS.batches, f), null)).filter(r => r?.id);
+  return fs.readdirSync(BATCH_DIRS.batches).filter(f => /\.json$/.test(f) && !f.startsWith('pending-')).map(f => readRecord(path.join(BATCH_DIRS.batches, f))).filter(r => r?.id);
 }
-export const listPending = () => fs.readdirSync(BATCH_DIRS.batches).filter(f => /^pending-.*\.json$/.test(f)).map(f => ({ file: path.join(BATCH_DIRS.batches, f), ...readJson(path.join(BATCH_DIRS.batches, f), {}) }));
+export const listPending = () => fs.readdirSync(BATCH_DIRS.batches).filter(f => /^pending-.*\.json$/.test(f)).map(f => { const file = path.join(BATCH_DIRS.batches, f); const p = readRecord(file); return p ? { file, ...p } : null; }).filter(Boolean);
 export const inFlightIds = () => new Set([...listBatchRecords().flatMap(r => r.customIds || []), ...listPending().flatMap(p => p.customIds || [])]);
 const resultCount = () => { try { return fs.readdirSync(BATCH_DIRS.results).filter(f => /\.json$/.test(f)).length; } catch { return 0; } };
 
-function moveQueued(q, dir) {
+// the sidecar moves first: lib.mjs batchRequestState keys 'submitted:<id>' on the meta, 'queued' on the body, so a
+// waiter reading between the two renames sees queued → submitted, never a moment of 'unknown'
+export function moveQueued(q, dir) {
   fs.mkdirSync(dir, { recursive: true });
-  for (const [from, name] of [[q.file, `${q.customId}.json`], [q.meta, `${q.customId}.meta.json`]]) if (fs.existsSync(from)) renameWithRetry(from, path.join(dir, name));
+  for (const [from, name] of [[q.meta, `${q.customId}.meta.json`], [q.file, `${q.customId}.json`]]) if (fs.existsSync(from)) renameWithRetry(from, path.join(dir, name));
 }
 export function writeResult(rec, row) {
   const customId = String(row?.custom_id || '');
@@ -149,7 +156,7 @@ async function submitGroup(items) {
     writeJson(batchRecordFile(b.id), rec);
     try { fs.unlinkSync(pendingFile); } catch {}
     clearBackoff();
-    log({ action: 'submitted', batchId: b.id, requests: good.length, bytes, seconds: r.seconds, papers: [...new Set(good.map(q => readJson(path.join(BATCH_DIRS.submitted, b.id, `${q.customId}.meta.json`), {}).paperId).filter(Boolean))] });
+    log({ action: 'submitted', batchId: b.id, requests: good.length, bytes, seconds: r.seconds, papers: [...new Set(good.map(q => readJsonSafe(path.join(BATCH_DIRS.submitted, b.id, `${q.customId}.meta.json`), {})?.paperId).filter(Boolean))] });
     console.error(`[broker] submitted ${b.id}: ${good.length} request(s), ${mb(bytes)} MB`);
     return;
   }
@@ -186,7 +193,7 @@ async function submitGroup(items) {
 export function dropGoneWaiters(queued) {
   const kept = [];
   for (const q of queued) {
-    const meta = readJson(q.meta, null);
+    const meta = readJsonSafe(q.meta, null);
     if (meta && !meta.detached && Number.isInteger(meta.pid) && meta.pid > 0 && !pidAlive(meta.pid)) {
       rejectRequest(q, { type: 'waiter_gone', message: `the process that queued this request (pid ${meta.pid}) is no longer running; not submitted` }, { pid: meta.pid });
       continue;
@@ -206,13 +213,24 @@ export async function submitPass() {
   return { queued: queued.length, groups: groups.length };
 }
 
-// ---- pending records left by a crash between POST and the record write
+// ---- pending records left by a crash between POST and the record write (or a POST that got no answer)
+// A pending record keeps its requests out of the submit pass (inFlightIds), so keeping it is always safe; dropping it
+// re-POSTs them on the next pass, so it is dropped only when the API has been asked PENDING_DROP_AFTER times and
+// listed nothing matching, or when the record is PENDING_MAX_AGE_MS old (a batch created that long ago would have
+// been listed by now). A failed listing (recent === null) counts for nothing: the record stays and the pass backs off.
+export const PENDING_DROP_AFTER = 3;
+export const PENDING_MAX_AGE_MS = 30 * 60 * 1000;
 export async function reconcilePending() {
   const pending = listPending();
   if (!pending.length) return;
   const known = new Set(listBatchRecords().map(r => r.id));
   const r = await api('GET', '/v1/messages/batches?limit=20');
   const recent = Array.isArray(r.json?.data) ? r.json.data : null;
+  if (recent === null) {
+    for (const p of pending) { log({ action: 'pending-unresolved', pending: p.token, requests: p.count, listings: p.unmatchedListings || 0, why: `could not list batches: ${redact(failureText(r))}` }); console.error(`[broker] interrupted submission ${p.token}: could not list batches (${redact(failureText(r))}); kept for the next pass`); }
+    setBackoff(r.retryAfterMs, `list batches: ${failureText(r)}`);
+    return;
+  }
   for (const p of pending) {
     const since = Date.parse(p.createdAt || 0) - 2 * 60 * 1000;
     const match = recent?.find(b => b?.id && !known.has(b.id) && Date.parse(b.created_at || 0) >= since && Object.values(b.request_counts || {}).reduce((a, n) => a + (Number(n) || 0), 0) === p.count);
@@ -223,8 +241,16 @@ export async function reconcilePending() {
       log({ action: 'adopted', batchId: match.id, requests: p.count, pending: p.token });
       console.error(`[broker] adopted ${match.id} for the interrupted submission ${p.token} (${p.count} request(s))`);
     } else {
-      log({ action: 'pending-dropped', pending: p.token, requests: p.count, listed: recent ? recent.length : null, why: recent ? 'no matching batch at the API; the requests are still queued and will be submitted' : `could not list batches: ${redact(failureText(r))}` });
-      console.error(`[broker] interrupted submission ${p.token}: ${recent ? 'no matching batch at the API, resubmitting from the queue' : 'could not list batches; resubmitting from the queue (a duplicate is possible — check the Console)'}`);
+      const listings = (p.unmatchedListings || 0) + 1;
+      const ageMs = Date.now() - (Date.parse(p.createdAt || 0) || Date.now());
+      if (listings < PENDING_DROP_AFTER && ageMs < PENDING_MAX_AGE_MS) {
+        writeJson(p.file, { ...p, file: undefined, unmatchedListings: listings, lastListedAt: nowIso() });
+        log({ action: 'pending-unresolved', pending: p.token, requests: p.count, listed: recent.length, listings, why: `no matching batch listed yet (${listings} of ${PENDING_DROP_AFTER} listings)` });
+        console.error(`[broker] interrupted submission ${p.token}: no matching batch listed yet (${listings} of ${PENDING_DROP_AFTER}); kept for the next pass`);
+        continue;
+      }
+      log({ action: 'pending-dropped', pending: p.token, requests: p.count, listed: recent.length, listings, ageMin: +(ageMs / 60000).toFixed(1), why: ageMs >= PENDING_MAX_AGE_MS ? `record older than ${PENDING_MAX_AGE_MS / 60000} minutes with no matching batch; the requests are still queued and will be submitted` : `no matching batch after ${listings} listings; the requests are still queued and will be submitted` });
+      console.error(`[broker] interrupted submission ${p.token}: no matching batch at the API after ${listings} listing(s) (${(ageMs / 60000).toFixed(1)} min old), resubmitting from the queue`);
     }
     try { fs.unlinkSync(p.file); } catch {}
   }
@@ -279,7 +305,7 @@ export function state() {
   const queued = listQueued();
   const records = listBatchRecords();
   const open = records.filter(r => !r.resultsWrittenAt);
-  const held = readJson(BATCH_DIRS.lock, null);
+  const held = readJsonSafe(BATCH_DIRS.lock, null);
   return {
     dir: path.relative(ROOT, BATCH_DIR), broker: held?.pid ? { pid: held.pid, since: held.at, alive: pidAlive(held.pid) } : null,
     queued: queued.length, queuedBytes: queued.reduce((a, q) => a + q.bytes, 0), inFlight: open.reduce((a, r) => a + (r.count || 0), 0), batchesOpen: open.length, batchesTotal: records.length,
@@ -309,13 +335,13 @@ async function main() {
     try { fs.writeFileSync(BATCH_DIRS.lock, JSON.stringify({ pid: process.pid, at: nowIso() }), { flag: 'wx' }); break; }
     catch (e) {
       if (e.code !== 'EEXIST') throw e;
-      const held = readJson(BATCH_DIRS.lock, null);
+      const held = readJsonSafe(BATCH_DIRS.lock, null);
       if (held?.pid && held.pid !== process.pid && pidAlive(held.pid)) fail(`another broker (pid ${held.pid}, since ${held.at}) holds ${path.relative(ROOT, BATCH_DIRS.lock)}`);
       if (tries >= 3) fail(`could not take ${path.relative(ROOT, BATCH_DIRS.lock)}`);
       try { fs.unlinkSync(BATCH_DIRS.lock); } catch {}
     }
   }
-  const release = () => { try { if (readJson(BATCH_DIRS.lock, null)?.pid === process.pid) fs.unlinkSync(BATCH_DIRS.lock); } catch {} };
+  const release = () => { try { if (readJsonSafe(BATCH_DIRS.lock, null)?.pid === process.pid) fs.unlinkSync(BATCH_DIRS.lock); } catch {} };
   process.on('exit', release);
   for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { log({ action: 'stop', signal: sig }); release(); process.exit(130); });
   log({ action: 'start', pid: process.pid, once: !!args.once, pollSec, limits, baseUrl: ANTHROPIC_BASE_URL, keepBodies });

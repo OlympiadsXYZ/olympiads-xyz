@@ -43,6 +43,12 @@
 // Park-and-resume (run.mjs --batch-async, batch.mjs --batch-async): no process sleeps for
 // a batch's turnaround.
 //   --batch-async     build and queue every window's request (meta {detached: true}, no
+//                     pid; a detached request for the same work already in queue/ or
+//                     submitted/ — same custom-id prefix, attempt and ask, not collected —
+//                     is reused, not queued twice; the enqueue books a provisional
+//                     runs.jsonl line {ok:false, provisional:true, customId, costUsd:
+//                     <the dry-run estimate at the batch price>} that batch.mjs's spend
+//                     cap counts until the collect books the real cost), print
 //                     waiting pid), print one JSON line per window on stdout
 //                     {queued: true, customId, stage, window, paperId, out, [assembled]}
 //                     and exit 2. Nothing else is written.
@@ -64,6 +70,7 @@ import {
   candidateFile, checkFile, loadProviderKeys, PROVIDER_KEY_NAME, PROVIDER_LIMITS, TOKENS_PER_PAGE, estimateCost, appendRun, nowIso,
   checkerView, candidateCrops, sha256File, sha256, sleep, ROOT, pointerGet, normaliseCandidate, paperDir, allFigures,
   ANTHROPIC_BASE_URL, BATCH_DIRS, BATCH_WAIT, batchCustomId, batchFiles, enqueueBatchRequest, waitForBatchResult, batchResultError, batchRequestState, brokerAlive, readBatchResult, readBatchMeta,
+  findDetachedBatchRequest, updateBatchMeta,
 } from './lib.mjs';
 import { assembleWindows } from './assemble.mjs';
 import { bindCheckerResult } from './evidence.mjs';
@@ -393,7 +400,7 @@ if (batch && !dry && !batchAsync && !batchResultIds) {
   for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { withdrawQueued(); process.exit(130); });
 }
 const pollMs = Math.max(200, Number(process.env.TX_BATCH_POLL_MS) || 5000);
-const batchMeta = (label, extra) => ({ paperId, stage, window: label, model, promptVersion: prompt.version, createdAt: nowIso(), ...extra });
+const batchMeta = (label, extra) => ({ paperId, stage, window: label, model, promptVersion: prompt.version, promptSha256: prompt.sha256, createdAt: nowIso(), ...extra });
 // what parse() makes of a broker result file: the sync parse plus the batch bookkeeping
 function parseBatchResult(req, result, customId, { attempt = 1, seconds = 0 } = {}) {
   const parsed = req.parse(result, { headers: { get: () => null } }); // no HTTP headers here: requestId falls back to the message id
@@ -538,13 +545,25 @@ function buildWindow(window) {
   if (payloadBytes > limits.requestBytes) fail(`payload ${(payloadBytes / 1048576).toFixed(1)} MB exceeds ${provider}'s ${(limits.requestBytes / 1048576).toFixed(0)} MB request cap; use --window-pages (reader) or lower the render dpi`);
   return { images, userText, req, payloadBytes, imagesCompressed };
 }
-// ---- --batch-async: queue one window's request for the broker with no waiting process behind it
+// ---- --batch-async: queue one window's request for the broker with no waiting process behind it.
+// The same work already queued or submitted and not yet collected (a park run.mjs lost: a crash after the enqueue,
+// a job re-created) is reused rather than paid for twice. A fresh enqueue books a provisional runs.jsonl line with
+// the dry-run estimate at the batch price, so batch.mjs's spend cap sees the money when it is committed, not when
+// the result lands a day later; the collect's real record (same customId) replaces it (reviewer findings 2026-09-17).
+const estimateFor = built => costOf(Math.round(built.userText.length / 3.5) + built.images.length * (TOKENS_PER_PAGE[provider] || 1600), Math.round(Math.min(maxTokens, 12000) / 2));
 function enqueueDetached(built, label, target, { attempt = 1, ask = 1 } = {}) {
   const body = JSON.stringify(built.req.body);
   const customId = batchCustomId(paperId, stage, label, body);
+  const prefix = customId.slice(0, -7); // tx-<40 hex>: the same paper, stage, window and body
+  const existing = findDetachedBatchRequest(prefix, { paperId, stage, window: label, attempt, ask, promptSha256: prompt.sha256 });
+  if (existing) {
+    console.error(`[transcribe] ${label}: the same request is already ${existing.state} as ${existing.customId} (queued ${existing.meta.createdAt}); reusing it instead of queueing it again; collect it with --batch-result`);
+    return { customId: existing.customId, reused: true };
+  }
   enqueueBatchRequest(customId, body, batchMeta(label, { attempt, ask, detached: true, out: target, imagesCompressed: built.imagesCompressed }));
+  appendRun({ paperId, stage, provider, model, transport, window: label, ok: false, provisional: true, attempt, ask, customId, costUsd: estimateFor(built), at: nowIso() });
   console.error(`[transcribe] ${label}: queued ${(Buffer.byteLength(body) / 1048576).toFixed(1)} MB for the Anthropic batch broker as ${customId} (detached${attempt > 1 ? `, attempt ${attempt}` : ''}${ask > 1 ? `, ask ${ask}` : ''}); collect it with --batch-result`);
-  return customId;
+  return { customId, reused: false };
 }
 const queuedLine = (customId, label, target, extra = {}) => ({ queued: true, customId, stage, window: label, paperId, out: target, ...(windows.length > 1 ? { assembled: outFile } : {}), ...extra });
 const runRecord = (parsed, label, costUsd, ask, imagesCompressed, extra = {}) => ({ paperId, stage, provider, model, ...(batch ? { transport, batchId: parsed.batchId, customId: parsed.customId } : {}), window: label, ok: true, imagesCompressed, attempts: parsed.attempts, ask, inputTokens: parsed.inputTokens, outputTokens: parsed.outputTokens, reasoningTokens: parsed.reasoningTokens, costUsd, seconds: parsed.seconds, requestId: parsed.requestId, stopReason: parsed.stopReason, promptVersion: prompt.version, reasoning: provider === 'zai' || provider === 'anthropic' ? reasoning : null, ...extra, at: nowIso() });
@@ -610,11 +629,12 @@ if (batchResultIds) {
     if (err) {
       const reason = `batch ${batchId || '?'} ${result.batch?.resultType || 'errored'}: ${redact(JSON.stringify(result.error))}`;
       appendRun({ paperId, stage, provider, model, transport, window: label, ok: false, attempt, customId, batchId, error: reason, seconds, at: nowIso() });
+      updateBatchMeta(customId, { collectedAt: nowIso(), collectedAs: 'error' });
       const again = attempt < MAX_ATTEMPTS && err.retryable;
       console.error(`[transcribe] ${label} attempt ${attempt}/${MAX_ATTEMPTS} failed — ${reason}${again ? '; re-queueing' : ''}`);
       if (!again) fail(`${provider} batch request failed (${label}): ${reason}`);
-      const id2 = enqueueDetached(buildWindow(window), label, target, { attempt: attempt + 1, ask });
-      lines.push(queuedLine(id2, label, target, { attempt: attempt + 1, ask, replaces: customId })); requeued++;
+      const q2 = enqueueDetached(buildWindow(window), label, target, { attempt: attempt + 1, ask });
+      lines.push(queuedLine(q2.customId, label, target, { attempt: attempt + 1, ask, replaces: customId, ...(q2.reused ? { adopted: true } : {}) })); requeued++;
       continue;
     }
     const parsed = parseBatchResult(parseOnly, result, customId, { attempt, seconds });
@@ -625,10 +645,11 @@ if (batchResultIds) {
       // the paid reply is booked (its tokens were billed) and, like the sync path's second ask, the model is asked once more
       const costUsd = costOf(parsed.inputTokens, parsed.outputTokens);
       appendRun(runRecord(parsed, label, costUsd, ask, parsed.imagesCompressed, { unusableJson: true }));
+      updateBatchMeta(customId, { collectedAt: nowIso(), collectedAs: 'unusable-json' });
       if (ask >= 2) fail(`no usable JSON in the reply for ${label} after ${ask} asks (raw text saved to ${path.relative(ROOT, rawFileFor(target))}); stop reason ${parsed.stopReason}`);
       console.error(`[transcribe] ${label}: no usable JSON in the reply (raw text saved); asking once more`);
-      const id2 = enqueueDetached(buildWindow(window), label, target, { attempt: 1, ask: ask + 1 });
-      lines.push(queuedLine(id2, label, target, { attempt: 1, ask: ask + 1, replaces: customId })); requeued++;
+      const q2 = enqueueDetached(buildWindow(window), label, target, { attempt: 1, ask: ask + 1 });
+      lines.push(queuedLine(q2.customId, label, target, { attempt: 1, ask: ask + 1, replaces: customId, ...(q2.reused ? { adopted: true } : {}) })); requeued++;
       continue;
     }
     ready.push({ window, label, target, parsed, obj, jsonRepaired, ask });
@@ -639,6 +660,7 @@ if (batchResultIds) {
     if (stage === 'checker' || stage === 'cropcheck') selectImages(r.window); // the checker's crop list as the request carried it (no image is read)
     const costUsd = costOf(r.parsed.inputTokens, r.parsed.outputTokens);
     appendRun(runRecord(r.parsed, r.label, costUsd, r.ask, r.parsed.imagesCompressed));
+    updateBatchMeta(r.parsed.customId, { collectedAt: nowIso(), collectedTo: r.target }); // a collected request is never reused by a later --batch-async
     jsonRepaired = r.jsonRepaired;
     finishWindow(r.window, r.label, r.target, r.parsed, r.obj, costUsd);
   }
@@ -655,7 +677,7 @@ if (batchResultIds) {
         dryRun: true, paperId, stage, provider, model, window: label, endpoint: req.url, ...(batch ? { transport, batchQueue: path.relative(ROOT, BATCH_DIRS.queue), ...(batchAsync ? { batchAsync: true } : {}) } : {}), keysFile: cfg.file, keysFileExists: cfg.exists, keyPresent: hasKey, keyName,
         images: images.map(i => ({ kind: i.kind, id: i.id, document: i.document, page: i.page, bytes: i.bytes })), promptVersion: prompt.version, promptSha256: prompt.sha256,
         payloadBytes, requestCapBytes: limits.requestBytes, approxInputTokens, tokensPerPageAssumed: TOKENS_PER_PAGE[provider], maxTokens, reasoning: provider === 'zai' || provider === 'anthropic' ? reasoning : null, timeoutMin: timeoutMs / 60000,
-        wouldWrite: target, estimatedCostUsd: costOf(approxInputTokens, Math.round(Math.min(maxTokens, 12000) / 2)),
+        wouldWrite: target, estimatedCostUsd: estimateFor(built),
         note: `estimate uses unverified list prices${batch ? ' at the Batch API\'s 50%' : ''}, a measured 3,230 tokens/page for zai (guessed 1,600 for others) and a guessed output length; no request was sent`,
       };
       summaries.push(summary);
@@ -665,7 +687,7 @@ if (batchResultIds) {
       if (!cfg.exists) fail(`${cfg.file} does not exist; create it with ${keyName}=<key> (never commit it)`);
       if (!hasKey) fail(`${keyName} is not set in ${cfg.file}`);
     }
-    if (batchAsync) { const id = enqueueDetached(built, label, target); lines.push(queuedLine(id, label, target, { attempt: 1, ask: 1 })); continue; }
+    if (batchAsync) { const q = enqueueDetached(built, label, target); lines.push(queuedLine(q.customId, label, target, { attempt: 1, ask: 1, ...(q.reused ? { adopted: true } : {}) })); continue; }
     // A model occasionally answers with prose or truncated JSON; one more ask is far cheaper than a lost paper.
     let parsed = null, obj = null, costUsd = 0;
     jsonRepaired = null;

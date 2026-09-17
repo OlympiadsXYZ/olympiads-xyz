@@ -20,15 +20,21 @@
 // job.waitingFor = {stage, transport: 'batch', customIds, out, since} and exits 2 like the agent route. On
 // --continue the stage looks for tmp/tx/anthropic-batch/results/<customId>.json for every id: all present →
 // transcribe.mjs --batch-result <ids> (same arguments) and the loop goes on; otherwise exit 2 again, nothing
-// spent. The refix calls (schema refix at validate, the repair-stage refix and the escalation refix) stay
-// synchronous: they are small and mid-stage, and go over the sync API (--transport sync) so a worker never
-// sleeps for a batch inside a stage.
+// spent. A park the loop abandons (the candidate changed under a queued check, --continue --repaired or --retry
+// re-entering, the job no longer async) withdraws its requests while they are still in queue/ (unpaid); a
+// submitted one stays in its batch and its result goes unclaimed (logged, and a withdrawn line in runs.jsonl
+// releases the provisional spend). The refix calls (schema refix at validate, the repair-stage refix and the
+// escalation refix) stay synchronous: they are small and mid-stage, and go over the sync API (--transport sync)
+// so a worker never sleeps for a batch inside a stage.
+// One loop per paper: the job entry carries runningPid while a run.mjs works on it (set under the jobs.json lock at
+// start, cleared at exit); a second run.mjs on a job whose runningPid is alive refuses to start, whichever
+// scheduler launched it.
 // Exit codes: 0 promoted (or finished without promotion), 2 waiting for an agent or a batch result,
 // 3 escalated/failed verification, 1 error.
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, writeJson, updateJobs, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet, mergeProblemsIntoOne } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, updateJobs, JOBS_FILE, paperDir, candidateFile, checkFile, ROOT, nowIso, sha256File, independence, findContentFile, normaliseCandidate, sha256, splitMath, fixHomoglyphs, pointerGet, mergeProblemsIntoOne, pidAlive, withdrawQueuedBatchRequest, appendRun } from './lib.mjs';
 import { textLayerCheck, profileFor } from './textlayer.mjs';
 import { spliceFragment, repairDefectPath, repointByContent } from './fixes.mjs';
 import { regionsFor, coverFrac } from './snap.mjs';
@@ -74,7 +80,12 @@ if (args.continue && args['escalation-model']) job.options.escalation = parseWho
 if (args.continue && args['batch-async']) job.options.batchAsync = true;
 if (args.continue && args['checker-mode']) job.options.checkerMode = args['checker-mode'];
 if (job.options.checkerMode && !['full', 'crops', 'auto'].includes(job.options.checkerMode)) fail('--checker-mode must be full, crops or auto');
-if (args.continue && args.retry && !job.waitingFor) { // from any stage: an escalation can also be parked at validate (schema budget) or figures
+// a --retry on a job parked for a batch check abandons the park (the operator asked for a fresh re-entry): a still
+// queued request is withdrawn unpaid, a submitted one stays in its batch unclaimed — see abandonPark below. A job
+// parked for its reader has nothing to re-validate yet: --retry is ignored and the wait goes on.
+const retryAbandonsPark = args.continue && args.retry && job.waitingFor?.transport === 'batch' && !!job.artefacts?.candidate;
+if (args.continue && args.retry && job.waitingFor?.transport === 'batch' && !retryAbandonsPark) console.error(`[run] ${paperId}: --retry ignored, the ${job.waitingFor.stage} is still parked for its batch result and there is no candidate to re-validate`);
+if (args.continue && args.retry && (!job.waitingFor || retryAbandonsPark)) { // from any stage: an escalation can also be parked at validate (schema budget) or figures
   // the budget is N more rounds from here, not N in total (earlier rounds already count);
   // a done job re-enters the same way when the pipeline learned a new check (re-promotion replaces the paper)
   job.options.maxRounds = (job.round || 0) + Number(args['max-rounds'] || 2);
@@ -86,6 +97,25 @@ if (args.continue && args.retry && !job.waitingFor) { // from any stage: an esca
 // Several run.mjs processes share jobs.json: the entry is replaced under the file's lock (lib.mjs updateJobs), so a
 // re-read-then-write by one process cannot drop another's update (two parks in the same millisecond did, 2026-09-17).
 const save = (note) => { job.updatedAt = nowIso(); if (note) job.history.push({ at: job.updatedAt, stage: job.stage, note }); jobs.jobs = updateJobs(state => { state.jobs[paperId] = job; }).jobs; };
+// The queued requests of a park the loop gives up: withdrawn while still in queue/ (nothing paid), left alone once
+// submitted (paid; the result goes unclaimed). Every id gets a withdrawn line in runs.jsonl so batch.mjs's spend cap
+// releases the provisional booking of an unpaid one; a submitted one keeps its provisional until its result is read
+// by nobody — that money is spent. Call before clearing job.waitingFor.
+function abandonPark(why) {
+  const w = job.waitingFor;
+  if (!(w?.transport === 'batch' && Array.isArray(w.customIds))) return;
+  const who = job[w.stage === 'cropcheck' ? 'checker' : w.stage] || job.checker;
+  for (const id of w.customIds) {
+    const state = withdrawQueuedBatchRequest(id);
+    const fate = state === 'withdrawn' ? ['withdrawn from the queue (not submitted, nothing paid)', 'withdrawn unpaid']
+      : state === 'failed' ? ['was refused by the broker (failed/), nothing paid', 'refused by the broker']
+      : state === 'unknown' ? ['is no longer in the queue (withdrawn or cleaned up earlier)', 'already gone']
+      : [`is ${state}: it stays in its batch and its result will go unclaimed`, `left ${state}, result unclaimed`];
+    if (state === 'withdrawn') appendRun({ paperId, stage: w.stage, provider: who.provider, model: who.model, transport: 'batch', ok: false, withdrawn: true, customId: id, error: `withdrawn from the queue before submission: ${why}`, at: nowIso() });
+    console.error(`[run] ${paperId}: batch request ${id} for the ${w.stage} ${fate[0]} — ${why}`);
+    job.history.push({ at: nowIso(), stage: job.stage, note: `batch request ${id} (${w.stage}) ${fate[1]}: ${why}` });
+  }
+}
 const node = (script, argv, opts = {}) => spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'tx', script), ...argv], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, ...opts });
 const rel = f => path.relative(ROOT, f);
 const abs = f => path.isAbsolute(f) ? f : path.join(ROOT, f);
@@ -98,11 +128,25 @@ const dir = paperDir(paperId);
   const held = readJson(lockFile, null);
   const alive = pid => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
   if (held?.pid && held.pid !== process.pid && alive(held.pid)) fail(`another run.mjs (pid ${held.pid}, since ${held.at}) is working on ${paperId}; not starting a second loop`);
+  // the same guard on the job entry itself, visible to every scheduler that reads jobs.json (two batch.mjs --batch-async
+  // schedulers, a hand run next to one): runningPid is set under the jobs.json lock and cleared at exit
+  const running = updateJobs(state => {
+    const cur = state.jobs[paperId];
+    if (cur?.runningPid && cur.runningPid !== process.pid && pidAlive(cur.runningPid)) return; // refused below, nothing written
+    if (cur) { cur.runningPid = process.pid; cur.runningSince = nowIso(); }
+    else if (job) { job.runningPid = process.pid; job.runningSince = nowIso(); state.jobs[paperId] = job; }
+  }).jobs[paperId];
+  if (running?.runningPid && running.runningPid !== process.pid && pidAlive(running.runningPid)) fail(`another run.mjs (pid ${running.runningPid}, since ${running.runningSince || '?'}) is driving ${paperId} (jobs.json runningPid); not starting a second loop`);
+  job.runningPid = process.pid; job.runningSince = running?.runningSince || nowIso();
   writeJson(lockFile, { pid: process.pid, at: nowIso() });
-  const release = () => { try { const cur = readJson(lockFile, null); if (cur?.pid === process.pid) fs.unlinkSync(lockFile); } catch {} };
+  const release = () => {
+    try { const cur = readJson(lockFile, null); if (cur?.pid === process.pid) fs.unlinkSync(lockFile); } catch {}
+    try { updateJobs(state => { const cur = state.jobs[paperId]; if (cur?.runningPid === process.pid) { delete cur.runningPid; delete cur.runningSince; } }); } catch {}
+  };
   process.on('exit', release);
   for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { release(); process.exit(130); });
 }
+if (retryAbandonsPark) { abandonPark('--retry re-enters the job'); job.waitingFor = null; }
 const manifestPath = path.join(dir, 'manifest.json');
 const readerOut = candidateFile(paperId, job.reader.provider, job.reader.model);
 const checkerOutFor = round => checkFile(paperId, job.checker.provider, job.checker.model).replace(/\.json$/, round ? `.r${round}.json` : '.json');
@@ -120,7 +164,7 @@ const batchResultFile = id => path.join(BATCH_DIRS.results, `${id}.json`);
 function transcribeStage(stage, who, argv, out) {
   const script = 'transcribe.mjs';
   if (!(job.options.batchAsync && who.provider === 'anthropic')) {
-    if (job.waitingFor?.transport === 'batch' && job.waitingFor.stage === stage) { job.waitingFor = null; save(`batch park for the ${stage} dropped (the job no longer runs async); the stage runs synchronously`); }
+    if (job.waitingFor?.transport === 'batch' && job.waitingFor.stage === stage) { abandonPark('the job no longer runs async; the stage runs synchronously'); job.waitingFor = null; save(`batch park for the ${stage} dropped (the job no longer runs async); the stage runs synchronously`); }
     return node(script, argv);
   }
   const parked = job.waitingFor?.stage === stage && job.waitingFor.transport === 'batch' ? job.waitingFor : null;
@@ -424,6 +468,7 @@ if (args.continue && args.repaired) {
     }
   }
   job.round = (job.round || 0) + 1; job.options.mechPending = false;
+  abandonPark('a repaired candidate was supplied (--continue --repaired)');
   job.artefacts.candidate = rel(f); delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256; job.waitingFor = null;
   job.stage = 'validate'; save(`repaired candidate supplied (${rel(f)}), round ${job.round}`);
 }
@@ -525,7 +570,7 @@ for (;;) {
     const rep = JSON.parse(r.stdout);
     job.artefacts.candidateWithFigures = rel(rep.out); job.stage = 'checker'; save(`figures done (${rep.figures.length})`);
   } else if (job.stage === 'checker') {
-    if (needsRevalidate()) { if (job.waitingFor?.transport === 'batch') { job.waitingFor = null; save('candidate bytes changed while a batch check was queued; that result will be ignored'); } job.stage = 'validate'; save('candidate bytes changed since validation; re-validating'); continue; }
+    if (needsRevalidate()) { if (job.waitingFor?.transport === 'batch') { abandonPark('candidate bytes changed while the check was queued'); job.waitingFor = null; save('candidate bytes changed while a batch check was queued; that result will be ignored'); } job.stage = 'validate'; save('candidate bytes changed since validation; re-validating'); continue; }
     const cand = currentCandidate();
     const checkerOut = checkerOutFor(job.round);
     // Mechanical pre-check (memo 2026-09-14: the paid checker was two thirds of the spend, and most first-round

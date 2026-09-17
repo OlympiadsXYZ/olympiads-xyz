@@ -45,6 +45,12 @@ export const sha256 = value => crypto.createHash('sha256').update(value).digest(
 export const md5 = value => crypto.createHash('md5').update(value).digest('hex');
 export const sha256File = file => sha256(fs.readFileSync(file));
 export const readJson = (file, fallback) => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
+// The same for a file that may be half-written or corrupt (a batch meta, a broker record, jobs.json read by a
+// scheduler): one bad file is logged and skipped instead of stopping the whole pass (reviewer finding 2026-09-17).
+export function readJsonSafe(file, fallback) {
+  try { return readJson(file, fallback); }
+  catch (e) { console.error(`[lib] ${path.relative(ROOT, file)} is not valid JSON (${e.message}); skipped`); return fallback; }
+}
 export function writeJson(file, value, indent = 2) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const tmp = `${file}.${process.pid}.partial`;
@@ -1124,6 +1130,9 @@ export const BATCH_DIRS = {
   batches: path.join(BATCH_DIR, 'batches'), failed: path.join(BATCH_DIR, 'failed'),
   log: path.join(BATCH_DIR, 'broker.log'), lock: path.join(BATCH_DIR, 'broker.lock'),
 };
+// One batch.mjs --batch-async scheduler per machine (two would drive the same papers): {pid, at}, taken with 'wx',
+// a dead holder's lock is taken over (reviewer finding 2026-09-17).
+export const BATCH_ASYNC_LOCK = path.join(TX_DIR, 'batch-async.lock');
 // tx-<40 hex of sha256(paperId|stage|window|sha256(body))>-<6 random hex>: 50 chars, inside the API's ^[a-zA-Z0-9_-]{1,64}$,
 // deterministic enough to recognise a request in the log and random enough that a retry never collides.
 export const BATCH_CUSTOM_ID = /^tx-[0-9a-f]{40}-[0-9a-f]{6}$/;
@@ -1170,15 +1179,53 @@ export function batchRequestState(customId) {
   if (fs.existsSync(path.join(BATCH_DIRS.failed, `${customId}.meta.json`))) return 'failed';
   return 'unknown';
 }
-export function brokerAlive() { const held = readJson(BATCH_DIRS.lock, null); return !!(held?.pid && pidAlive(held.pid)); }
+export function brokerAlive() { const held = readJsonSafe(BATCH_DIRS.lock, null); return !!(held?.pid && pidAlive(held.pid)); }
 // The queue entry's sidecar wherever the broker moved it (queue/, submitted/<batchId>/, failed/); null when gone.
-export function readBatchMeta(customId) {
+export function batchMetaFile(customId) {
   const f = batchFiles(customId);
-  const m = readJson(f.meta, null); if (m) return m;
-  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) { const r = readJson(path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`), null); if (r) return r; } } catch {}
-  return readJson(path.join(BATCH_DIRS.failed, `${customId}.meta.json`), null);
+  if (fs.existsSync(f.meta)) return f.meta;
+  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) { const m = path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`); if (fs.existsSync(m)) return m; } } catch {}
+  const failed = path.join(BATCH_DIRS.failed, `${customId}.meta.json`);
+  return fs.existsSync(failed) ? failed : null;
 }
-export const readBatchRecord = batchId => readJson(path.join(BATCH_DIRS.batches, `${batchId}.json`), null);
+export function readBatchMeta(customId) { const f = batchMetaFile(customId); return f ? readJsonSafe(f, null) : null; }
+// A note on the sidecar wherever it lives (transcribe.mjs --batch-result marks a collected result: collectedAt).
+export function updateBatchMeta(customId, patch) { const f = batchMetaFile(customId); if (!f) return null; const m = readJsonSafe(f, null); if (!m) return null; const next = { ...m, ...patch }; writeJson(f, next); return next; }
+// A detached request already queued or submitted for the same work: customId prefix (sha256 of paperId|stage|
+// window|body: the same pages, candidate and prompt), the same attempt and ask, not yet collected. transcribe.mjs
+// --batch-async reuses it instead of queueing (and paying for) the same request twice when an earlier park was
+// lost (run.mjs crashed after the enqueue, a job re-created) — reviewer finding 2026-09-17. Returns
+// { customId, meta, state } or null. Entries in failed/ are never reused (their result is an error).
+export function findDetachedBatchRequest(prefix, { paperId, stage, window, attempt = 1, ask = 1, promptSha256 = null } = {}) {
+  const dirs = [BATCH_DIRS.queue];
+  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) dirs.push(path.join(BATCH_DIRS.submitted, d)); } catch {}
+  for (const dir of dirs) {
+    let files; try { files = fs.readdirSync(dir).filter(f => f.startsWith(prefix) && f.endsWith('.meta.json')); } catch { continue; }
+    for (const f of files.sort()) {
+      const customId = f.slice(0, -'.meta.json'.length);
+      if (!BATCH_CUSTOM_ID.test(customId)) continue;
+      const meta = readJsonSafe(path.join(dir, f), null);
+      if (!meta?.detached || meta.collectedAt) continue;
+      if (meta.paperId !== paperId || meta.stage !== stage || meta.window !== window) continue;
+      if ((Number(meta.attempt) || 1) !== attempt || (Number(meta.ask) || 1) !== ask) continue;
+      if (promptSha256 && meta.promptSha256 && meta.promptSha256 !== promptSha256) continue;
+      const state = batchRequestState(customId);
+      if (state === 'queued' || state.startsWith('submitted:') || state === 'done') return { customId, meta, state };
+    }
+  }
+  return null;
+}
+// Withdraw a queued (unsubmitted, unpaid) detached request: body first (the broker's queue keys on it), then the
+// sidecar. Returns 'withdrawn' when the files were in queue/, else the request's state (a submitted one is paid for
+// and stays; its result will simply go unclaimed).
+export function withdrawQueuedBatchRequest(customId) {
+  const state = batchRequestState(customId);
+  if (state !== 'queued') return state;
+  const f = batchFiles(customId);
+  for (const file of [f.body, f.meta]) { try { fs.unlinkSync(file); } catch {} }
+  return 'withdrawn';
+}
+export const readBatchRecord = batchId => readJsonSafe(path.join(BATCH_DIRS.batches, `${batchId}.json`), null);
 // How long a waiter waits (transcribe.mjs sync batch mode). A request still queued (unpaid: no broker, or a broker
 // backing off) is given up after BATCH_QUEUED_TIMEOUT_MS; once the broker has submitted it, the batch record's
 // createdAt + the API's 24 h processing window + a grace period is the deadline (reviewer finding 2026-09-17: the

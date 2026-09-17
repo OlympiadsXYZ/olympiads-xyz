@@ -21,10 +21,19 @@
 // same runs.jsonl (--batch-result appends the cost there). It exits when the plan is
 // exhausted and nothing is running or parked. Resumable after a crash: the state is
 // tmp/tx/jobs.json (waitingFor) plus tmp/tx/anthropic-batch/results/.
+// One scheduler per machine: tmp/tx/batch-async.lock ({pid, at}); a second one exits at
+// once while the holder is alive, a dead holder's lock is taken over. --in-flight is an
+// absolute bound on open jobs (running + parked, the parked ones adopted from an earlier
+// run included): no paper starts while that many are open. The spend cap counts the
+// money committed to the broker as well as the money spent: every enqueue books a
+// provisional runs.jsonl line (transcribe.mjs --batch-async, the dry-run estimate at the
+// batch price) that the collect's real record replaces, so a run cannot commit 24 h of
+// requests before the first bill lands. The cap gates new starts only — a parked job is
+// always resumed, since its result is paid for.
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
-import { parseArgs, fail, readJson, updateJobs, JOBS_FILE, RUNS_FILE, ROOT, nowIso, paperDir, findContentFile, BATCH_DIRS, sleep } from './lib.mjs';
+import { parseArgs, fail, readJson, readJsonSafe, updateJobs, JOBS_FILE, RUNS_FILE, ROOT, nowIso, paperDir, findContentFile, BATCH_DIRS, BATCH_ASYNC_LOCK, sleep, pidAlive } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh', 'batch-async'] });
 if (!args.ids && !args.backlog && !args.catalogue) fail('usage: batch.mjs --ids a,b | --backlog | --catalogue [--subjects s,s] [--langs l,l] [--competitions c,c] [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote] [--redo]');
@@ -65,7 +74,8 @@ if (args.fresh) { if (!args.ids) fail('--fresh needs --ids a,b (the papers to re
 ids = [...new Set(ids)];
 if (!ids.length) fail('nothing to do');
 
-const jobs = () => readJson(JOBS_FILE, { version: 2, jobs: {} }).jobs;
+// a half-written or corrupt jobs.json is logged and read as empty for this look (writeJson is atomic, so the next look sees the file)
+const jobs = () => readJsonSafe(JOBS_FILE, { version: 2, jobs: {} })?.jobs || {};
 const plan = [];
 for (const id of ids) {
   const job = jobs()[id];
@@ -144,31 +154,50 @@ function runOne({ id, resume, fresh }) {
 // --max-spend-usd N [--spend-since ISO]: no new paper starts once the provider spend recorded in tmp/tx/runs.jsonl
 // (every successful call's costUsd, both providers named in --reader/--checker) since --spend-since (default: this
 // batch's start) reaches N. Papers already running finish their loop. The Anthropic grant is a fixed pot.
+// Money committed but not yet billed counts too: a provisional line ({provisional: true, customId, costUsd: the
+// estimate}) written at every --batch-async enqueue stands in for a request until a later line with the same
+// customId supersedes it — the collect's real record (ok: true, its costUsd counts instead), an error record (the
+// request was not billed) or run.mjs's withdrawn line (never submitted). A provisional is counted once per customId.
 const spendCap = args['max-spend-usd'] ? Number(args['max-spend-usd']) : null;
 const spendSince = args['spend-since'] ? new Date(args['spend-since']).toISOString() : new Date().toISOString();
 const spendProviders = new Set([args.reader, args.checker].filter(Boolean).map(s => String(s).split(':')[0]));
-function spentUsd() {
+function spendTotals() {
   const f = RUNS_FILE; // tmp/tx/runs.jsonl (OLYMPIADS_TX_DIR-relative, like every other path of the pipeline)
-  if (!fs.existsSync(f)) return 0;
-  let usd = 0, unpriced = 0;
+  const totals = { spent: 0, provisional: 0, total: 0, provisionalRequests: 0 };
+  if (!fs.existsSync(f)) return totals;
+  let unpriced = 0;
+  const provisional = new Map(); // customId → estimate, until superseded
+  const settled = new Set();
   for (const line of fs.readFileSync(f, 'utf8').split(/\r?\n/)) {
     if (!line) continue;
     let r; try { r = JSON.parse(line); } catch { continue; }
-    if (!(r.ok && spendProviders.has(r.provider) && r.at >= spendSince)) continue;
-    if (typeof r.costUsd === 'number') usd += r.costUsd; else unpriced++;
+    if (!(spendProviders.has(r.provider) && r.at >= spendSince)) continue;
+    if (r.provisional) { if (r.customId && !settled.has(r.customId) && !provisional.has(r.customId)) provisional.set(r.customId, Number(r.costUsd) || 0); continue; }
+    if (r.customId) { settled.add(r.customId); provisional.delete(r.customId); }
+    if (!r.ok) continue;
+    if (typeof r.costUsd === 'number') totals.spent += r.costUsd; else unpriced++;
   }
+  for (const usd of provisional.values()) totals.provisional += usd;
+  totals.provisionalRequests = provisional.size;
+  totals.total = totals.spent + totals.provisional;
   // a model missing from prices.json records costUsd null: money the cap cannot see (reviewer finding 2026-09-17)
-  if (unpriced && !spentUsd.warned) { spentUsd.warned = true; console.error(`[batch] WARNING: ${unpriced} successful call(s) carry no costUsd (model not in prices.json); the spend cap under-counts them`); }
-  return usd;
+  if (unpriced && !spendTotals.warned) { spendTotals.warned = true; console.error(`[batch] WARNING: ${unpriced} successful call(s) carry no costUsd (model not in prices.json); the spend cap under-counts them`); }
+  return totals;
 }
+const spendLine = () => { const s = spendTotals(); return `spent $${s.spent.toFixed(2)}${s.provisionalRequests ? ` + committed (provisional) $${s.provisional.toFixed(2)} for ${s.provisionalRequests} request(s)` : ''} = $${s.total.toFixed(2)} of $${spendCap}`; };
 let capHit = false;
 const results = [];
-// true once the cap is reached (logged once); papers already running or parked finish their loops
+// true while the cap is reached (logged once); papers already running or parked finish their loops. New starts only:
+// a resume collects a paid result and is never gated.
 function overCap(remaining) {
   if (spendCap == null) return false;
-  const usd = spentUsd();
-  if (usd < spendCap) return false;
-  if (!capHit) { capHit = true; log({ outcome: 'spend-cap', spentUsd: +usd.toFixed(2), capUsd: spendCap, remaining }); console.log(`[batch] spend cap reached: $${usd.toFixed(2)} >= $${spendCap} since ${spendSince}; ${remaining} paper(s) not started`); }
+  const s = spendTotals();
+  if (s.total < spendCap) {
+    // collected results replaced their (larger) provisional bookings: the total fell back under the cap, starts resume
+    if (capHit) { capHit = false; log({ outcome: 'spend-cap-cleared', spentUsd: +s.spent.toFixed(4), provisionalUsd: +s.provisional.toFixed(4), totalUsd: +s.total.toFixed(4), capUsd: spendCap, remaining }); console.log(`[batch] spend back under the cap: ${spendLine()}; ${remaining} paper(s) may start`); }
+    return false;
+  }
+  if (!capHit) { capHit = true; log({ outcome: 'spend-cap', spentUsd: +s.spent.toFixed(4), provisionalUsd: +s.provisional.toFixed(4), provisionalRequests: s.provisionalRequests, totalUsd: +s.total.toFixed(4), capUsd: spendCap, remaining }); console.log(`[batch] spend cap reached: ${spendLine()} since ${spendSince}; ${remaining} paper(s) not started`); }
   return true;
 }
 if (!batchAsync) {
@@ -181,6 +210,22 @@ if (!batchAsync) {
   }));
 } else {
   // ---- the scheduler (--batch-async): pending → running → parked (waiting for the broker) → running … → done
+  // one scheduler per machine: two would start and resume the same papers (run.mjs refuses the second on a live
+  // runningPid, but every refusal is a wasted spawn and a logged error)
+  for (let tries = 0; ; tries++) {
+    try { fs.mkdirSync(path.dirname(BATCH_ASYNC_LOCK), { recursive: true }); fs.writeFileSync(BATCH_ASYNC_LOCK, JSON.stringify({ pid: process.pid, at: nowIso(), argv: process.argv.slice(2) }), { flag: 'wx' }); break; }
+    catch (e) {
+      if (e.code !== 'EEXIST') throw e;
+      const held = readJsonSafe(BATCH_ASYNC_LOCK, null);
+      if (held?.pid && held.pid !== process.pid && pidAlive(held.pid)) fail(`another batch.mjs --batch-async (pid ${held.pid}, since ${held.at}) holds ${path.relative(ROOT, BATCH_ASYNC_LOCK)}; one scheduler per machine — stop it first, or wait for it`);
+      if (tries >= 3) fail(`could not take ${path.relative(ROOT, BATCH_ASYNC_LOCK)}`);
+      if (held?.pid) console.error(`[batch] taking over ${path.relative(ROOT, BATCH_ASYNC_LOCK)} from pid ${held.pid} (since ${held.at}), which is no longer running`);
+      try { fs.unlinkSync(BATCH_ASYNC_LOCK); } catch {}
+    }
+  }
+  const releaseLock = () => { try { if (readJsonSafe(BATCH_ASYNC_LOCK, null)?.pid === process.pid) fs.unlinkSync(BATCH_ASYNC_LOCK); } catch {} };
+  process.on('exit', releaseLock);
+  for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { releaseLock(); process.exit(130); });
   const inFlightCap = Math.max(1, Number(args['in-flight'] || 300));
   const pollSec = Math.max(1, Number(args['poll-sec'] || 30));
   const parkedOn = id => { const w = jobs()[id]?.waitingFor; return w?.transport === 'batch' && Array.isArray(w.customIds) ? w : null; };
@@ -189,7 +234,7 @@ if (!batchAsync) {
   // after a crash or a stop, the plan's resumable jobs that are parked on a batch go straight to the waiting set
   const pending = [];
   for (const item of plan) { if (item.resume && parkedOn(item.id)) waiting.set(item.id, { id: item.id, resume: true }); else pending.push(item); }
-  if (waiting.size) console.log(`[batch] ${waiting.size} job(s) already parked on a batch from an earlier run`);
+  if (waiting.size) console.log(`[batch] ${waiting.size} job(s) already parked on a batch from an earlier run${waiting.size >= inFlightCap ? ` — at or over --in-flight ${inFlightCap}; no new paper starts until some finish` : ''}`);
   let wake = null;
   const kick = () => { if (wake) { const w = wake; wake = null; w(); } };
   const start = item => {
@@ -201,17 +246,18 @@ if (!batchAsync) {
     }));
   };
   let lastStatus = '';
+  const open = () => running.size + waiting.size; // every open job counts against --in-flight, whichever run started it
   for (;;) {
+    // resumes first: a parked job whose results are in collects paid work and is gated by neither the spend cap nor --in-flight
     for (const [id, item] of waiting) { if (running.size >= workers) break; if (resultsIn(id)) { waiting.delete(id); start(item); } }
-    while (pending.length && running.size < workers && running.size + waiting.size < inFlightCap && !overCap(pending.length)) start(pending.shift());
-    const open = running.size + waiting.size;
-    if (!open && (!pending.length || capHit)) break;
-    const status = `[batch ${new Date().toISOString().slice(11, 19)}] running ${running.size} | parked ${waiting.size} | pending ${pending.length} | done ${results.length}${spendCap != null ? ` | spent $${spentUsd().toFixed(2)} of $${spendCap}` : ''}`;
+    while (pending.length && running.size < workers && open() < inFlightCap && !overCap(pending.length)) start(pending.shift());
+    if (!open() && (!pending.length || overCap(pending.length))) break;
+    const status = `[batch ${new Date().toISOString().slice(11, 19)}] running ${running.size} | parked ${waiting.size} | pending ${pending.length} | done ${results.length}${open() >= inFlightCap ? ` | in-flight cap ${inFlightCap} reached` : ''}${spendCap != null ? ` | ${spendLine()}` : ''}`;
     if (status.replace(/^\[batch [^\]]+\]/, '') !== lastStatus.replace(/^\[batch [^\]]+\]/, '')) { console.log(status); lastStatus = status; }
     await Promise.race([sleep(pollSec * 1000), new Promise(r => { wake = r; })]);
   }
 }
-if (spendCap != null) console.log(`[batch] spend since ${spendSince}: $${spentUsd().toFixed(2)} (cap $${spendCap})`);
+if (spendCap != null) console.log(`[batch] spend since ${spendSince}: ${spendLine()}`);
 const counts = {};
 for (const r of results) counts[r.outcome] = (counts[r.outcome] || 0) + 1;
 console.log('done:', JSON.stringify(counts));
