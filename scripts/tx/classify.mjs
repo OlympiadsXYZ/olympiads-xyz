@@ -2,7 +2,7 @@
 // classify.mjs [--workers 6] [--langs a,b] [--limit N]
 // Free pass over the catalogue backlog: prepare.mjs (download, render, text layer — no model call) for every
 // paper not yet prepared, then classify each by its text layer: `native` when the problems document carries
-// real text (≥ 200 characters per page on average), `scan` otherwise. Writes tmp/tx/classify.json
+// real words of its language (≥ 40 per page on average; a garbled encoding has none), `scan` otherwise. Writes tmp/tx/classify.json
 // {at, papers: {<id>: {pages, chars, charsPerPage, native, lang, subject, competition, solutions}}}
 // and prints a summary. Re-runnable: prepared papers are only re-read from their manifest.
 // Why: the mechanical text-layer check (the free half of verification) only works on native PDFs; scans need a
@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { parseArgs, readJson, writeJson, ROOT, paperDir, nowIso } from './lib.mjs';
+import { profileFor } from './textlayer.mjs';
 
 const args = parseArgs(process.argv.slice(2));
 const workers = Number(args.workers || 6);
@@ -28,11 +29,14 @@ function classify(e) {
   const man = readJson(path.join(paperDir(e.paperId), 'manifest.json'), null);
   if (!man?.documents?.problems) return null;
   const docs = man.documents;
-  const chars = d => { try { return fs.readFileSync(path.join(paperDir(e.paperId), d.text), 'utf8').replace(/\s+/g, '').length; } catch { return 0; } };
-  const pChars = docs.problems.text ? chars(docs.problems) : 0;
+  // words of the paper's own script (the pipeline's text-layer test): a garbled font encoding yields thousands of
+  // characters and zero words, and the pipeline then treats the document as a scan
+  const content = profileFor(e.lang).content;
+  const words = d => { try { const t = fs.readFileSync(path.join(paperDir(e.paperId), d.text), 'utf8'); let n = 0; for (const m of t.matchAll(/\p{L}+/gu)) { const w = m[0].toLowerCase(); if (w.length >= 3 && content.test(w)) n++; } return n; } catch { return 0; } };
+  const pWords = docs.problems.text ? words(docs.problems) : 0;
   const pages = (docs.problems.pages || 0) + (docs.solutions?.pages || 0);
-  const cpp = docs.problems.pages ? pChars / docs.problems.pages : 0;
-  return { pages, problemPages: docs.problems.pages || 0, chars: pChars, charsPerPage: Math.round(cpp), native: cpp >= 200, solutions: !!docs.solutions, lang: e.lang, subject: e.subject, competition: e.competition };
+  const wpp = docs.problems.pages ? pWords / docs.problems.pages : 0;
+  return { pages, problemPages: docs.problems.pages || 0, words: pWords, wordsPerPage: Math.round(wpp), native: wpp >= 40, solutions: !!docs.solutions, lang: e.lang, subject: e.subject, competition: e.competition };
 }
 
 const todo = entries.filter(e => !classify(e));
