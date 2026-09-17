@@ -40,7 +40,8 @@ jobs:
       - run: dart pub global activate linkcheck
 
       - name: Check Links
-        run: $HOME/.pub-cache/bin/linkcheck --no-nice :5000
+        # /_vercel/insights/script.js (Web Analytics) exists only on Vercel's edge, not under `serve public`
+        run: $HOME/.pub-cache/bin/linkcheck --no-nice --skip-file .linkcheck-skip :5000
 
       - name: Bundle Watch
         run: yarn bundlewatch ./public/*.js
