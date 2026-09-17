@@ -263,6 +263,18 @@ export function compileSchema(mode = 'final') {
   const ajv = new Ajv({ allErrors: true, jsonPointers: true, schemaId: 'auto' });
   return { validate: ajv.compile(schema), schema };
 }
+// problem.classification (D-P16, Codex's problem-search block) validated on its own: a reader that writes it in
+// the wrong shape (a string taxonomyVersion, a bare difficulty) must not park the paper — the block is optional
+let classificationValidator = null;
+export function classificationValid(obj) {
+  if (!classificationValidator) {
+    const Ajv = require('ajv');
+    const schema = loadSchema();
+    const ajv = new Ajv({ allErrors: false, jsonPointers: true, schemaId: 'auto' });
+    classificationValidator = ajv.compile({ $ref: '#/$defs/classification', $defs: schema.$defs });
+  }
+  return !!classificationValidator(obj);
+}
 export function schemaSupports(schema, pointer) {
   return pointer.split('/').filter(Boolean).reduce((o, k) => (o && typeof o === 'object' ? o[k] : undefined), schema) !== undefined;
 }
@@ -545,7 +557,7 @@ export function provenanceFor(candidate, ctx) {
   const reader = candidate.tx?.reader || {};
   const sha = v => (typeof v === 'string' && /^[a-f0-9]{64}$/.test(v) ? v : undefined);
   const who = `${ctx.reviewer.provider}:${ctx.reviewer.model}`;
-  const how = ctx.independent ? 'independent checker' : 'same-model checker';
+  const how = ctx.reviewer.provider === 'mechanical' ? 'mechanical check only: schema, text layer, printed figures; no second model' : ctx.independent ? 'independent checker' : 'same-model checker';
   const adj = ctx.adjudicator ? `; adjudicated by ${ctx.adjudicator.provider}:${ctx.adjudicator.model}` : '';
   return {
     provider: reader.provider || 'unknown', model: reader.model || 'unknown',
@@ -747,7 +759,25 @@ export function normaliseCandidate(c, opts = {}) {
     for (const { fig, path: p } of allFigures(c)) if (fig.tx?.document && fig.tx.document !== only) { fig.tx.documentAsWritten = fig.tx.document; fig.tx.document = only; changes.push(`${p}: document ${fig.tx.documentAsWritten} → ${only} (the paper's only document)`); }
     (c.problems || []).forEach((pr, i) => { for (const s of pr.tx?.sourceSpans || []) if (s.document && s.document !== only) { s.document = only; changes.push(`/problems/${i}/tx/sourceSpans: document → ${only}`); } });
   }
+  // an invalid classification block is dropped rather than parking the paper (nof-2024-iv-exp1: taxonomyVersion,
+  // sourceRef.sha256 and difficulty in the wrong shape on every problem)
+  (c.problems || []).forEach((pr, i) => {
+    if (!pr || typeof pr !== 'object' || pr.classification === undefined) return;
+    if (!pr.classification || typeof pr.classification !== 'object' || !classificationValid(pr.classification)) { delete pr.classification; changes.push(`/problems/${i}/classification: not in the schema's shape, dropped`); }
+  });
+  // a figures array that is not an array, or an entry that is not an object (null, a string id), is dropped
+  // (ipho-2026-theory-t2, apho-2024-theory-th: Sonnet wrote `figures: [null]` and Object.keys threw)
+  (c.problems || []).forEach((pr, i) => {
+    const holders = [[pr, `/problems/${i}`], ...(pr.parts || []).map((pt, k) => [pt, `/problems/${i}/parts/${k}`]), ...(pr.solution && typeof pr.solution === 'object' ? [[pr.solution, `/problems/${i}/solution`]] : [])];
+    for (const [h, hp] of holders) {
+      if (!h || typeof h !== 'object' || h.figures === undefined) continue;
+      if (!Array.isArray(h.figures)) { delete h.figures; changes.push(`${hp}/figures: not an array, dropped`); continue; }
+      const kept = h.figures.filter(f => f && typeof f === 'object' && !Array.isArray(f));
+      if (kept.length !== h.figures.length) { changes.push(`${hp}/figures: ${h.figures.length - kept.length} non-object entr${h.figures.length - kept.length === 1 ? 'y' : 'ies'} dropped`); h.figures = kept; }
+    }
+  });
   for (const { fig, path: p } of allFigures(c)) {
+    if (!fig || typeof fig !== 'object') continue;
     // document/page/bbox belong under tx (the schema forbids them on the figure); a refix that copies
     // a figure back sometimes flattens the rest of its tx block onto the figure as well
     for (const k of ['document', 'page', 'bbox']) if (fig[k] !== undefined) { if (fig.tx?.[k] === undefined) fig.tx = { ...(fig.tx || {}), [k]: fig[k] }; delete fig[k]; changes.push(`${p}: ${k} moved under tx`); }
@@ -896,8 +926,33 @@ export function normaliseCandidate(c, opts = {}) {
     out = out.replace(/\$\$[ \t]*\$\$/g, '');
     out = /\/(statement)$/.test(p) ? wrapBareFormulaParagraphs(out) : out;
     out = out.replace(/\\nicefrac\b/g, '\\frac');
-    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac`); }
+    // KaTeX has no \mathbf/\mathrm/\mathit in text mode: inside a \text{…}/\tag{…} argument they become the
+    // \textbf/\textrm/\textit the print shows anyway (ioaa-2019-data-analysis-da-final: "\textit{ApJ} \mathbf{452}")
+    out = out.replace(/\\(text|tag\*?|textbf|textit|textrm|mbox)\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}/g, (m, cmd, body) => `\\${cmd}{${body.replace(/\\math(bf|rm|it|sf|tt)\{/g, '\\text$1{')}}`);
+    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac / text-mode fonts`); }
   });
+  // paper.documentNotes (D-P16 shared instructions): a note written as {text} or without its position/page is
+  // coerced to the schema's shape; one with no text at all is dropped (izho-2024-experiment-exp-eng parked on it)
+  if (c.paper && c.paper.documentNotes !== undefined) {
+    // a note written as one string becomes one note; anything else non-array is dropped below
+    const notes = Array.isArray(c.paper.documentNotes) ? c.paper.documentNotes : typeof c.paper.documentNotes === 'string' && c.paper.documentNotes.trim() ? [{ text: c.paper.documentNotes }] : [];
+    const kept = [];
+    notes.forEach((n, i) => {
+      if (!n || typeof n !== 'object') { changes.push(`/paper/documentNotes/${i}: not an object, dropped`); return; }
+      const statement = typeof n.statement === 'string' && n.statement.trim() ? n.statement : typeof n.text === 'string' && n.text.trim() ? n.text : typeof n.note === 'string' && n.note.trim() ? n.note : null;
+      if (!statement) { changes.push(`/paper/documentNotes/${i}: no text, dropped`); return; }
+      const out = {
+        title: typeof n.title === 'string' && n.title.trim() ? n.title : (typeof n.heading === 'string' && n.heading.trim() ? n.heading : 'Note'),
+        statement,
+        document: n.document === 'solutions' ? 'solutions' : 'problems',
+        page: Number.isInteger(n.page) && n.page >= 1 ? n.page : (Number.isInteger(Number(n.page)) && Number(n.page) >= 1 ? Number(n.page) : 1),
+        position: n.position === 'after-problem' ? 'after-problem' : 'before-problem',
+      };
+      if (JSON.stringify(out) !== JSON.stringify(n)) changes.push(`/paper/documentNotes/${i}: coerced to {title, statement, document, page, position}`);
+      kept.push(out);
+    });
+    if (kept.length) c.paper.documentNotes = kept; else { delete c.paper.documentNotes; changes.push('/paper/documentNotes: empty, dropped'); }
+  }
   // A transcriber's remark typed into the text ("*Забележка към транскрипцията: в оригинала … текстът е предаден
   // дословно.*", "Transcriber's note: …") is never printed; it moves to tx.notes (nao-2021-iii-9-10).
   // The same for a reader's aside about its own work in place of text ("(T10) … — introductory text and formula …

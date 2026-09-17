@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // batch.mjs --ids a,b,c | --backlog [--limit N] --reader p:m --checker p:m [--workers 2]
-//   [--allow-same-model] [--no-promote] [--log tmp/tx/batch.log] [--max-rounds 2]
+//   [--allow-same-model] [--no-promote] [--log tmp/tx/batch.log] [--max-rounds 2] [--max-spend-usd N] [--spend-since ISO] [--escalation-model p:m]
 // Walks a list of papers through run.mjs, a few at a time, and keeps going when
 // one fails: every outcome (exit code, final stage, receipt verdict, cost) is
 // appended to the log as one JSON line. A paper with an unfinished job in
@@ -87,6 +87,7 @@ function runOne({ id, resume, fresh }) {
       // an escalated or failed-repair job re-enters at validate with a fresh round budget
       const stage = jobs()[id]?.stage;
       if (['escalated', 'repair'].includes(stage) || (args.redo && stage === 'done')) argv.push('--retry', '--max-rounds', String(args['max-rounds'] || 3));
+      if (args['escalation-model']) argv.push('--escalation-model', args['escalation-model']);
     } else {
       argv.push('--reader', args.reader, '--checker', args.checker);
       const keys = keysById.get(id);
@@ -96,6 +97,7 @@ function runOne({ id, resume, fresh }) {
       if (args['dry-run']) argv.push('--dry-run');
       if (args['max-rounds']) argv.push('--max-rounds', String(args['max-rounds']));
       if (args['window-pages']) argv.push('--window-pages', String(args['window-pages']));
+      if (args['escalation-model']) argv.push('--escalation-model', args['escalation-model']);
     }
     const started = Date.now();
     const child = spawn(process.execPath, argv, { cwd: ROOT, env: process.env });
@@ -119,11 +121,39 @@ function runOne({ id, resume, fresh }) {
   });
 }
 
+// --max-spend-usd N [--spend-since ISO]: no new paper starts once the provider spend recorded in tmp/tx/runs.jsonl
+// (every successful call's costUsd, both providers named in --reader/--checker) since --spend-since (default: this
+// batch's start) reaches N. Papers already running finish their loop. The Anthropic grant is a fixed pot.
+const spendCap = args['max-spend-usd'] ? Number(args['max-spend-usd']) : null;
+const spendSince = args['spend-since'] ? new Date(args['spend-since']).toISOString() : new Date().toISOString();
+const spendProviders = new Set([args.reader, args.checker].filter(Boolean).map(s => String(s).split(':')[0]));
+function spentUsd() {
+  const f = path.join(ROOT, 'tmp', 'tx', 'runs.jsonl');
+  if (!fs.existsSync(f)) return 0;
+  let usd = 0, unpriced = 0;
+  for (const line of fs.readFileSync(f, 'utf8').split(/\r?\n/)) {
+    if (!line) continue;
+    let r; try { r = JSON.parse(line); } catch { continue; }
+    if (!(r.ok && spendProviders.has(r.provider) && r.at >= spendSince)) continue;
+    if (typeof r.costUsd === 'number') usd += r.costUsd; else unpriced++;
+  }
+  // a model missing from prices.json records costUsd null: money the cap cannot see (reviewer finding 2026-09-17)
+  if (unpriced && !spentUsd.warned) { spentUsd.warned = true; console.error(`[batch] WARNING: ${unpriced} successful call(s) carry no costUsd (model not in prices.json); the spend cap under-counts them`); }
+  return usd;
+}
+let capHit = false;
 const results = [];
 let next = 0;
 await Promise.all(Array.from({ length: Math.min(workers, plan.length) }, async () => {
-  while (next < plan.length) { const item = plan[next++]; results.push(await runOne(item)); }
+  while (next < plan.length) {
+    if (spendCap != null) {
+      const usd = spentUsd();
+      if (usd >= spendCap) { if (!capHit) { capHit = true; log({ outcome: 'spend-cap', spentUsd: +usd.toFixed(2), capUsd: spendCap, remaining: plan.length - next }); console.log(`[batch] spend cap reached: $${usd.toFixed(2)} >= $${spendCap} since ${spendSince}; ${plan.length - next} paper(s) not started`); } return; }
+    }
+    const item = plan[next++]; results.push(await runOne(item));
+  }
 }));
+if (spendCap != null) console.log(`[batch] spend since ${spendSince}: $${spentUsd().toFixed(2)} (cap $${spendCap})`);
 const counts = {};
 for (const r of results) counts[r.outcome] = (counts[r.outcome] || 0) + 1;
 console.log('done:', JSON.stringify(counts));

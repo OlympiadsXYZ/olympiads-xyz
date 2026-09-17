@@ -71,3 +71,68 @@ The next operational canary tests one complete-paper read for documents of up to
 After checking the new reader on known fixtures, the coordinator may release explicitly named fresh canary candidates that pass an independent complete-source Terra check and all existing source, schema, rendering, receipt and publication gates. Additional Astra review targets flagged cases and a source spot-audit; it is not a blanket second full review for every clean API-checked paper. This is a measured operational pilot, not an archive-wide automatic publication policy or a claimed accuracy certification. Work-only experimental reports require an explicit release decision before normal receipts can be issued. Batch pushes continue to wait for the preceding deployment.
 
 The first direct-reader trials exposed unsupported math delimiters, malformed edit logs and invented document-note filler. Raw outputs and verdicts remain retained. Two revised known-fixture drafts passed the API checker despite independently observed note defects; those passes are not clean accuracy results, and the drafts do not replace the accepted papers. Subsequent reads use the site's dollar math delimiters and literal edit logs. Document-note bodies must contain actual source text. When a source note lacks a separate heading, the wrapper may supply the visibly bracketed interface title `[Source note]` or `[Бележка от източника]`, with its origin recorded in working provenance. These fixed interface labels are not transcribed source headings; arbitrary invented note text remains a defect. The checker explicitly reviews published document notes, and the next canary receives a targeted note audit.
+
+## D-P18 (2026-09-17) — the whole catalogue on the Anthropic grant, through scripts/tx
+
+Margulan: "I really don't mind spending the entire budget … just make it as parallel as possible, I want all 7000+
+things transcribed, verified, checked." The $500 Anthropic API grant (YC startup credits; key in
+`~/.config/olympiads-xyz/anthropic-archive.env`, copied into `providers.env`; **expires 2026-10-23**; $46.15 spent by
+Codex's pilot, $453.85 left) is the bulk budget. Route: the existing `scripts/tx` loop (prepare → reader → validate →
+figures → mechanical pre-check → checker → receipt → repair/refix → promote → ship), provider `anthropic`,
+**claude-sonnet-5 as reader and checker** (same family, recorded on the receipt as before), `--window-pages 8`,
+`--max-rounds 3`, six workers, `batch.mjs --catalogue --max-spend-usd` per tranche. Measured on the first papers:
+$0.26–0.30 for a 2-page Bulgarian paper (reader 7 ¢, checker 10 ¢, refixes 9 ¢); international 30–50-page papers
+will cost $1–2 each, so a Message-Batches transport (50 % price) is being built to carry the bulk. Codex's own
+Anthropic pipeline (`Documents/Codex/2026-09-14/this-x20/work/research`, Sonnet reads / Opus checks; 122 batch reads
+for $9.75, then 117 of 122 held for review, 3 passed) stays parked: its gate published almost nothing per dollar and
+its publisher is blocked on CI. Rules added with this decision: (1) the free checks (text layer, printed regions,
+box tightening) run BEFORE the paid checker and are repaired first — at most two such rounds per job, not counted
+against `--max-rounds`; (2) a document set over 60 pages (compilations: icho-21st-40th 733 pp., icho-1st-20th 408,
+ioaa-until-2013-by-topic 254) is parked before any model call (`--max-pages` overrides); (3) a checker's typed
+`"null"` is no fix; (4) the validator flags only real HTML tag names, so a printed `<Idea 1>` is prose (the site
+escapes it). Opus 5 / Fable 5.1 are being trialled as checker on a few papers under a $6 cap; they are not the
+bulk models unless the trial shows fewer rounds per dollar. The 88 unfinished GLM/agent jobs were switched to the
+Anthropic models and resume from their candidates (a different family checks them: a genuinely independent check).
+| Why: the grant expires in five weeks and buys ~1,500 papers synchronously or ~2,600 through Batches — the backlog is
+1,890 papers plus 446 legacy re-checks; Sonnet reads near-verbatim with far fewer repair rounds than GLM, and every
+mechanical gate stays in force.
+
+## D-P19 (2026-09-17) — Opus 5 is the checker; Sonnet 5 reads
+
+A bounded trial (three 3-page Bulgarian papers, $1.38; report in the workflow journal, summary in §12h of the handoff)
+showed the Sonnet 5 checker at low effort **passing a clipped figure crop** (the chain figure of nof-2019-iv-k5 without its
+"m"/"a" labels — a receipt that would have promoted it), while Opus 5 and Fable 5.1 both caught crop defects with exact
+boxes (2 of 2), and a Fable 5.1 reader produced a zero-defect candidate at $0.33. Per paper: Sonnet/Sonnet $0.12,
+Sonnet/Opus $0.28, Fable/Sonnet $0.36, Sonnet/Fable $0.61. Decision: **reader claude-sonnet-5, checker claude-opus-5**
+(effort low) for the bulk run — a different model checks, so the receipts are independent again; Fable stays a trial
+model (reader for hard scans if the budget allows). Order of work: Bulgarian papers first (cheap, the site's core),
+then Russian, then the international papers once the Batch transport halves their price. Margulan: "feel free to use
+fable or smth for the papers since we can afford it".
+| Why: a wrong pass is worse than a parked paper — the verbatim rule and the receipt's meaning depend on the checker
+actually seeing the crop; Opus costs 2.5× Sonnet per check but the checker is one call per round on small papers.
+
+## D-P20 (2026-09-17, 06:36Z) — overnight: Fable 5.1 reads, Sonnet 5 checks, Fable escalates
+
+Margulan: "use fable on like 2000 papers and just one shot the whole thing as much as you can … I want as much overnight
+progress as possible". Supersedes D-P19's reader/checker pair for the bulk run: **reader claude-fable-5-1** (one read,
+zero mechanical defects in the trial), **checker claude-fable-5-1** (Margulan: the judge must not be weaker than the reader; same-model check recorded on the receipt, the mechanical checks stay independent),
+**escalation model claude-fable-5-1** (one refix before a paper parks), `--max-rounds 2`, mechanical pre-check first,
+two batch parents (`--langs bg` and `--langs ru`, 6 workers each), one shared `--max-spend-usd 380` since 06:36Z on
+the $427 left. Order: Bulgarian, then Russian (short papers, ≈$0.4 each); the international papers (≈$1.5 each at
+Fable prices) wait for the Message-Batches transport (built, tested, not yet merged) that halves them.
+| Why: at $427 the grant buys ~1,000 Fable-read papers synchronously; a strong one-shot read beats a cheap read plus
+repair rounds when the goal is finished, checked papers per dollar overnight.
+
+## D-P21 (2026-09-17, 06:50Z) — Fable one-shot, mechanical check only
+
+Margulan: "I just don't believe we really need a check on Fable, it's smart enough to one-shot things." The bulk run
+drops the second model: `--checker mechanical:textlayer+regions`. What still stands between a read and the site is
+every free gate — schema validation, the normaliser, figure crops snapped to and covering the printed graphics, the
+text-layer comparison (omissions, misreadings, unprinted words), the receipt's coverage rules — plus repair/refix
+rounds on what they find and one Fable escalation refix before a paper parks. The receipt and the ledger record the
+reviewer as `mechanical:textlayer+regions`, provenance reads "mechanical check only … no second model", and the
+page label says "checked mechanically against the original — no second model" (never "independent model").
+Verified on pu-2006-ii-2kryg: read in one shot ($1.02), clean mechanical check, promoted. Cost per short paper
+≈ $0.35–0.5 (the read alone); the $380 cap now buys roughly 900 papers.
+| Why: Fable's trial candidate carried no mechanical defects at all, so a second model call was paying for a pass;
+the mechanical checks are the deterministic part of verification and stay on.

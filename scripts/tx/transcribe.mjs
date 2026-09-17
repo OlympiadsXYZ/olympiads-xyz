@@ -167,6 +167,35 @@ function compressImage(i) {
   return { ...i, file: out, mime: 'image/jpeg', bytes: fs.statSync(out).size, original: i.file };
 }
 
+// Pixel size of a PNG (IHDR) or JPEG (first SOF marker) without decoding it; null when unreadable.
+function imageSize(file) {
+  const b = fs.readFileSync(file);
+  if (b[0] === 0x89 && b[1] === 0x50) return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+  if (b[0] === 0xFF && b[1] === 0xD8) {
+    let o = 2;
+    while (o + 9 < b.length) {
+      if (b[o] !== 0xFF) { o++; continue; }
+      const m = b[o + 1];
+      if (m === 0xD8 || m === 0x01 || (m >= 0xD0 && m <= 0xD7) || m === 0xFF) { o += m === 0xFF ? 1 : 2; continue; }
+      const len = b.readUInt16BE(o + 2);
+      if ((m >= 0xC0 && m <= 0xC3) || (m >= 0xC5 && m <= 0xC7) || (m >= 0xC9 && m <= 0xCB) || (m >= 0xCD && m <= 0xCF)) return { h: b.readUInt16BE(o + 5), w: b.readUInt16BE(o + 7) };
+      o += 2 + len;
+    }
+  }
+  return null;
+}
+// Anthropic refuses a request of more than 20 images when any image exceeds 2000 px on a side (8000 px otherwise):
+// a 160-dpi render of an oversized scanned page is 2,200 px tall. Downscaled to fit, cached as <name>.max<N>.jpg.
+function fitImage(i, maxSide) {
+  const out = i.file.replace(/\.(png|jpe?g)$/i, '') + `.max${maxSide}.jpg`;
+  if (!fs.existsSync(out)) {
+    const py = "import sys; from PIL import Image\nim=Image.open(sys.argv[1]).convert('RGB')\nim.thumbnail((int(sys.argv[3]), int(sys.argv[3])), Image.LANCZOS)\nim.save(sys.argv[2],'JPEG',quality=85,optimize=True)";
+    const r = spawnSync('python3', ['-c', py, i.file, out, String(maxSide)], { encoding: 'utf8' });
+    if (r.status !== 0) fail(`could not downscale ${path.basename(i.file)}: ${r.stderr.slice(0, 200)}`);
+  }
+  return { ...i, file: out, mime: 'image/jpeg', bytes: fs.statSync(out).size, original: i.original || i.file };
+}
+
 // The ChatGPT app: files uploaded to a conversation stay available to its later messages, and every upload counts
 // against the app's attachment cap (hit after ~65 files on 2026-09-13). So the PDFs go up once per chat and the
 // paper's calls continue in that chat: one chat for the reader windows, another for the checker/refix rounds (the
@@ -447,6 +476,10 @@ for (const window of windows) {
   const tooBig = images.filter(i => i.bytes > limits.imageBytes);
   if (tooBig.length) fail(`image(s) over ${provider}'s ${(limits.imageBytes / 1048576).toFixed(0)} MB limit even as JPEG: ${tooBig.map(i => path.basename(i.file)).join(', ')}`);
   if (images.length > limits.images) fail(`${images.length} images exceed ${provider}'s limit of ${limits.images} per request; use --window-pages`);
+  if (provider === 'anthropic') {
+    const maxSide = images.length > 20 ? 2000 : 8000;
+    for (let k = 0; k < images.length; k++) { const s = imageSize(images[k].file); if (s && (s.w > maxSide || s.h > maxSide)) images[k] = fitImage(images[k], maxSide); }
+  }
   const userText = buildText(window, images);
   let req = buildRequest(images, userText);
   let payloadBytes = Buffer.byteLength(JSON.stringify(req.body));

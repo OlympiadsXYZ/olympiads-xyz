@@ -124,15 +124,19 @@ export default function ModuleHeaders({
           {markdownData.author && (
             <p className={`text-gray-500 dark:text-dark-med-emphasis mt-1`}>
               {t('author')}
-              {markdownData.author.indexOf(',') !== -1 ? t('author-multiple-suffix') : ''}:{' '}
-              {markdownData.author}
+              {markdownData.author.indexOf(',') !== -1
+                ? t('author-multiple-suffix')
+                : ''}
+              : {markdownData.author}
             </p>
           )}
           {verification && (
             <p className="text-gray-500 dark:text-dark-med-emphasis text-xs mt-1">
               {verification.kind === 'reviewed'
                 ? t(
-                    verification.verifier === 'same-model'
+                    verification.verifier === 'mechanical'
+                      ? 'problem-verification-reviewed-mechanical'
+                      : verification.verifier === 'same-model'
                       ? 'problem-verification-reviewed-same-model'
                       : 'problem-verification-reviewed',
                     {
@@ -147,8 +151,10 @@ export default function ModuleHeaders({
           {markdownData instanceof ModuleInfo && markdownData.contributors && (
             <p className={`text-gray-500 dark:text-dark-med-emphasis text-xs`}>
               {t('contributor')}
-              {markdownData.contributors.indexOf(',') !== -1 ? t('contributors-multiple-suffix') : ''}:{' '}
-              {markdownData.contributors}
+              {markdownData.contributors.indexOf(',') !== -1
+                ? t('contributors-multiple-suffix')
+                : ''}
+              : {markdownData.contributors}
             </p>
           )}
         </div>

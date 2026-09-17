@@ -101,7 +101,10 @@ function checkAnswer(a, p) {
 }
 
 // 3. text fields: raw HTML, << >>, math
-const HTML = /<\/?[a-zA-Z][a-zA-Z0-9-]*(\s[^<>]*)?\/?>/;
+// only tags HTML actually has: a printed "<Idea 1>" or "<T>" in prose is text the site escapes (problems-to-site
+// mdText writes \<), not markup (apho-2026-experiment-e1 parked on "<Idea 1>" in the solution)
+const HTML_TAGS = 'a|abbr|b|big|blockquote|br|center|code|dd|del|div|dl|dt|em|font|h[1-6]|hr|i|img|ins|kbd|li|math|mi|mn|mo|mrow|msub|msup|msubsup|mfrac|ol|p|pre|s|small|span|strike|strong|sub|sup|table|tbody|td|th|thead|tr|tt|u|ul|var';
+const HTML = new RegExp(`</?(?:${HTML_TAGS})(?:\\s[^<>]*)?/?>`, 'i');
 let mathCount = 0;
 walkStrings(data, (p, s) => {
   if (/\/(tx|classification|sourceLayout)\b/.test(p) || /\/(url|archiveKey|id|from|to)$/.test(p)) return;

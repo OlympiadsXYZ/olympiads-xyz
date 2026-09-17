@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // run.mjs <paperId> --reader <provider:model | agent:label> --checker <same>
 //   [--continue] [--repaired <file>] [--no-promote] [--dry-run] [--allow-same-model]
-//   [--reasoning low|high|max] [--window-pages N] [--timeout-min 20] [--max-rounds 2]
+//   [--reasoning low|high|max] [--window-pages N] [--timeout-min 20] [--max-rounds 2] [--escalation-model p:m]
 // Orchestrates prepare → reader → validate → figures → checker → receipt → promote
 // with resumable state in tmp/tx/jobs.json. API providers run end to end. For an
 // agent:<label> stage the run prepares, prints the harness task and exits 2; the
@@ -40,7 +40,7 @@ function parseWho(s) {
   const [provider, ...rest] = String(s).split(':');
   const model = rest.join(':');
   if (!provider || !model) fail(`bad stage spec "${s}" (provider:model or agent:label)`);
-  if (!['anthropic', 'gemini', 'zai', 'chatgpt', 'agent'].includes(provider)) fail(`unknown provider "${provider}"`);
+  if (!['anthropic', 'gemini', 'zai', 'chatgpt', 'agent', 'mechanical'].includes(provider)) fail(`unknown provider "${provider}"`);
   return { provider, model };
 }
 if (!args.continue) {
@@ -51,7 +51,7 @@ if (!args.continue) {
   if (!indep.differentProvider) console.error(`[run] note: reader and checker share the provider family (${reader.provider}); a different family is preferable`);
   job = {
     paperId, reader, checker, stage: 'prepare', promote: !args['no-promote'], dryRun: !!args['dry-run'], allowSameModel: !!args['allow-same-model'],
-    options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2) },
+    options: { reasoning: args.reasoning || null, windowPages: args['window-pages'] || null, timeoutMin: args['timeout-min'] || null, maxRounds: Number(args['max-rounds'] || 2), ...(args['escalation-model'] ? { escalation: parseWho(args['escalation-model']) } : {}) },
     ...(args.problems ? { keys: { problems: args.problems, solutions: args.solutions || null } } : {}), // a paper outside the Bulgarian shards names its archive keys
     round: 0, createdAt: nowIso(), history: [], artefacts: {},
   };
@@ -62,10 +62,12 @@ job.options ||= { maxRounds: 2 };
 // at the repair stage (its last receipt is still on disk) — used after the
 // pipeline learned a new trick, so escalations need not wait for an adjudicator.
 if (args.continue && args['max-rounds']) job.options.maxRounds = Number(args['max-rounds']);
+if (args.continue && args['escalation-model']) job.options.escalation = parseWho(args['escalation-model']);
 if (args.continue && args.retry && !job.waitingFor) { // from any stage: an escalation can also be parked at validate (schema budget) or figures
   // the budget is N more rounds from here, not N in total (earlier rounds already count);
   // a done job re-enters the same way when the pipeline learned a new check (re-promotion replaces the paper)
   job.options.maxRounds = (job.round || 0) + Number(args['max-rounds'] || 2);
+  job.options.mechPending = false; // a mechanical round interrupted mid-repair must not tag the next paid round as mechanical
   const was = job.stage;
   job.stage = 'validate'; delete job.artefacts.validatedSha256;
   job.history.push({ at: nowIso(), stage: job.stage, note: `retry after ${was === 'done' ? 'promotion' : 'escalation'}: re-validate the current candidate, fresh check; up to ${job.options.maxRounds} rounds` });
@@ -345,7 +347,7 @@ if (args.continue && args.repaired) {
       f = merged;
     }
   }
-  job.round = (job.round || 0) + 1;
+  job.round = (job.round || 0) + 1; job.options.mechPending = false;
   job.artefacts.candidate = rel(f); delete job.artefacts.candidateWithFigures; delete job.artefacts.validatedSha256; job.waitingFor = null;
   job.stage = 'validate'; save(`repaired candidate supplied (${rel(f)}), round ${job.round}`);
 }
@@ -362,6 +364,14 @@ for (;;) {
     job.stage = 'reader'; save('prepared');
   } else if (job.stage === 'reader') {
     if (fs.existsSync(readerOut) && job.waitingFor?.stage === 'reader') { job.waitingFor = null; job.artefacts.candidate = rel(readerOut); job.stage = 'validate'; save('agent candidate received'); continue; }
+    // A compilation (icho-21st-40th: 733 pages, ioaa-until-2013-by-topic: 254) is not a paper: it would cost tens of
+    // dollars of reading and checking and come out as one unusable record. Parked before any model call unless
+    // --max-pages raises the cap (default 120 pages over both documents; IZhO theory + solutions runs to 68).
+    {
+      const cap = Number(args['max-pages'] || job.options.maxPages || 120);
+      const pages = Object.values(readJson(manifestPath, { documents: {} }).documents).reduce((a, d) => a + (d.pages || 0), 0);
+      if (pages > cap && !job.artefacts.candidate) escalate(`too long for the bulk run: ${pages} pages over both documents (cap ${cap}; pass --max-pages to override) — a compilation to split, not a paper`);
+    }
     if (job.reader.provider === 'agent') waitForAgent('reader', readerOut);
     const r = node('transcribe.mjs', [paperId, '--provider', job.reader.provider, '--model', job.reader.model, '--stage', 'reader', ...transcribeOpts, ...(job.options.windowPages ? ['--window-pages', String(job.options.windowPages)] : []), ...(job.dryRun ? ['--dry-run'] : [])]);
     if (r.status !== 0 && r.status !== 3) { save(`reader failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
@@ -389,6 +399,9 @@ for (;;) {
           data.paper.source = { ...(data.paper.source || {}), archiveKey: man.documents.problems.key };
           if (man.documents.solutions) data.paper.solutionSource = { ...(data.paper.solutionSource || {}), archiveKey: man.documents.solutions.key };
           else if (data.paper.solutionSource) delete data.paper.solutionSource;
+          // the competition code and subject are the catalogue's (the printed name lives in tx.printedMeta): a reader
+          // that writes "НОФ" for NOF (nof-2024-i-12) parks the paper at validate for nothing
+          for (const k of ['competition', 'subject']) if (man.meta?.[k] && data.paper[k] !== man.meta[k]) { (data.tx ||= {}).normalised = [...(data.tx.normalised || []), `/paper/${k}: "${data.paper[k]}" → catalogue "${man.meta[k]}"`]; data.paper[k] = man.meta[k]; }
         }
         if (JSON.stringify(data) !== before) {
           const out = /\.norm\.json$/.test(src) ? src : src.replace(/\.json$/, '.norm.json'); // a later rule may still apply to an already-normalised file
@@ -444,6 +457,28 @@ for (;;) {
     // boxes to tighten — run first; what they find is repaired (and refixed) BEFORE a model is asked, so the
     // checker sees a candidate the document already agrees with. At most two such rounds per job; they do not
     // count against --max-rounds. The receipt written for such a round is marked mechanical and never promotes.
+    // --checker mechanical:<label> (D-P21): no second model at all — the free checks are the check. Open defects go
+    // through repair/refix (and the escalation model) like any checker's; a clean run is a pass whose coverage is
+    // every page of every document (the text layer and the region check read them all).
+    if (job.checker.provider === 'mechanical') {
+      const mech = mechanicalPrecheck(cand);
+      if (!mech) fail('mechanical check could not read the candidate');
+      if (mech.open.length && (job.options.mechRounds || 0) < 2) {
+        job.options.mechRounds = (job.options.mechRounds || 0) + 1; job.options.mechPending = true;
+        writeJson(receiptOut, { paperId, verdict: 'fail', mechanical: true, candidateSha256: sha256File(cand), checkedAt: nowIso(), summary: mech.summary, defects: mech.open, blockers: [] });
+        fs.copyFileSync(receiptOut, path.join(dir, `receipt.r${job.round}.mech.json`));
+        job.artefacts.receipt = rel(receiptOut); job.artefacts.checker = rel(mech.file);
+        job.stage = 'repair'; save(`mechanical check: ${mech.open.length} defect(s) (${mech.withFix} with a fix); repairing`); continue;
+      }
+      const man = readJson(manifestPath, { documents: {} });
+      const check = readJson(mech.file, null);
+      check.coverage.pagesRead = Object.entries(man.documents).flatMap(([document, d]) => Array.from({ length: d.pages || 0 }, (_, i) => ({ document, page: i + 1 })));
+      check.candidateSha256 = sha256File(cand);
+      check.checker = { ...(check.checker || {}), provider: 'mechanical', model: job.checker.model, promptVersion: 'mech-v1', candidateSha256: check.candidateSha256 };
+      check.summary = `Mechanical check only (no second model): ${check.summary || ''}`.trim();
+      writeJson(checkerOut, check);
+      job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`mechanical check ${mech.open.length ? `still ${mech.open.length} open defect(s) after ${job.options.mechRounds} repair round(s)` : 'clean'}; to the receipt`); continue;
+    }
     if (job.checker.provider !== 'agent' && !job.waitingFor && (job.options.mechRounds || 0) < 2) {
       const mech = mechanicalPrecheck(cand);
       if (mech?.open.length) {
@@ -459,6 +494,7 @@ for (;;) {
     const r = node('transcribe.mjs', [paperId, '--provider', job.checker.provider, '--model', job.checker.model, '--stage', 'checker', '--candidate', cand, '--out', checkerOut, ...transcribeOpts]);
     if (r.status !== 0) { save(`checker failed: ${r.stderr.slice(0, 300)}`); fail(r.stderr); }
     const tl = mergeTextLayer(cand, checkerOut);
+    job.options.mechPending = false; // the receipt on disk will be the paid checker's
     job.artefacts.checker = rel(checkerOut); job.stage = 'receipt'; save(`checker done; text-layer check (${tl ? tl.summary.checked.join(', ') || 'no trusted layer' : 'skipped'}): ${tl ? tl.defects.length : '?'} defect(s)`);
   } else if (job.stage === 'receipt') {
     const check = readJson(abs(job.artefacts.checker));
@@ -494,7 +530,12 @@ for (;;) {
       }
       escalate(`receipt blocked without repairable defects: ${receipt.blockers.join('; ')}`);
     }
-    if (job.round >= job.options.maxRounds) escalate(`still ${receipt.defects?.length} defect(s) after ${job.round} repair round(s)`);
+    if (job.round >= job.options.maxRounds) {
+      // --escalation-model (D-P19: Fable 5.1): before a paper parks on leftover defects, the strongest model gets one
+      // refix on them — once per job, with one more round for the fresh check
+      if (job.options.escalation && !job.options.escalationUsed) { job.options.escalationUsed = true; job.options.escalateNextRefix = true; job.options.maxRounds = job.round + 1; job.stage = 'repair'; save(`round budget spent with ${receipt.defects?.length} defect(s) left: one refix by the escalation model ${job.options.escalation.provider}:${job.options.escalation.model}, then a fresh check`); continue; }
+      escalate(`still ${receipt.defects?.length} defect(s) after ${job.round} repair round(s)`);
+    }
     job.stage = 'repair'; save(`receipt: fail (${receipt.defects?.length} defects); repairing`);
   } else if (job.stage === 'repair') {
     job.round += 1;
@@ -510,7 +551,8 @@ for (;;) {
       // model together with the relevant pages (transcribe.mjs --stage refix); an
       // agent reader has no API, so its leftovers go straight to adjudication.
       // the re-read is done by the reader model, or by the checker model when the reader was a harness agent (from-final route)
-      const refixWho = job.reader.provider === 'agent' ? job.checker : job.reader;
+      const escalateNow = !!job.options.escalateNextRefix; job.options.escalateNextRefix = false;
+      const refixWho = escalateNow ? job.options.escalation : (job.reader.provider === 'agent' ? job.checker : job.reader);
       if (refixWho.provider === 'agent') escalate(`repair.mjs could not apply ${rep.skipped} defect(s) (no usable suggestedFix); applied ${rep.applied}`);
       const reportFile = repaired.replace(/\.json$/, '.repair.json');
       writeJson(reportFile, rep);
@@ -533,6 +575,17 @@ for (;;) {
       // a mechanical round that settled nothing is not a dead end: the paid checker has not spoken yet — it runs next
       // (and no further pre-check is attempted on this job)
       else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0 && mechRound) { job.options.mechRounds = 2; save(`mechanical pre-check leftovers could not be settled from the pages (${xr.skipped}); the checker decides`); }
+      // the reader model could settle nothing: the escalation model reads the same pages once before the paper parks
+      else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0 && job.options.escalation && !job.options.escalationUsed && !escalateNow) {
+        job.options.escalationUsed = true;
+        const esc = job.options.escalation, refixed2 = repaired.replace(/\.json$/, '.esc.json');
+        const y = node('transcribe.mjs', [paperId, '--provider', esc.provider, '--model', esc.model, '--stage', 'refix', '--candidate', repaired, '--defects', reportFile, '--out', refixed2, '--round', String(job.round), ...transcribeOpts]);
+        process.stdout.write(y.stdout);
+        const yr = (y.status === 0 || y.status === 3) && fs.existsSync(refixed2) ? JSON.parse(y.stdout || '{}') : null;
+        if (yr) writeJson(refixed2.replace(/\.json$/, '.report.json'), yr);
+        if (yr && (yr.applied || 0) > 0) { job.artefacts.candidate = rel(refixed2); save(`escalation refix by ${esc.provider}:${esc.model} applied ${yr.applied} defect(s) the reader could not${y.status === 3 ? `, ${yr.skipped} left` : ''}, round ${job.round}`); }
+        else escalate(`nothing could be applied this round: repair skipped ${rep.skipped}, refix could not settle ${xr.skipped} defect(s) from the pages; the escalation model ${esc.provider}:${esc.model} ${yr ? `disputed them too (${yr.skipped} left)` : `failed: ${(y.stderr || '').slice(0, 160)}`}`);
+      }
       else if (x.status === 3 && rep.applied + (xr.applied || 0) === 0) escalate(`nothing could be applied this round: repair skipped ${rep.skipped}, refix could not settle ${xr.skipped} defect(s) from the pages`);
       save(`refix applied ${xr.applied} defect(s) the checker could not phrase${x.status === 3 ? `, ${xr.skipped} left for the next round` : ''}, round ${job.round}`);
     }
