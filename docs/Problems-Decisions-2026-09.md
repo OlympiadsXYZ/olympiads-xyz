@@ -96,3 +96,17 @@ Anthropic models and resume from their candidates (a different family checks the
 | Why: the grant expires in five weeks and buys ~1,500 papers synchronously or ~2,600 through Batches — the backlog is
 1,890 papers plus 446 legacy re-checks; Sonnet reads near-verbatim with far fewer repair rounds than GLM, and every
 mechanical gate stays in force.
+
+## D-P19 (2026-09-17) — Opus 5 is the checker; Sonnet 5 reads
+
+A bounded trial (three 3-page Bulgarian papers, $1.38; report in the workflow journal, summary in §12h of the handoff)
+showed the Sonnet 5 checker at low effort **passing a clipped figure crop** (the chain figure of nof-2019-iv-k5 without its
+"m"/"a" labels — a receipt that would have promoted it), while Opus 5 and Fable 5.1 both caught crop defects with exact
+boxes (2 of 2), and a Fable 5.1 reader produced a zero-defect candidate at $0.33. Per paper: Sonnet/Sonnet $0.12,
+Sonnet/Opus $0.28, Fable/Sonnet $0.36, Sonnet/Fable $0.61. Decision: **reader claude-sonnet-5, checker claude-opus-5**
+(effort low) for the bulk run — a different model checks, so the receipts are independent again; Fable stays a trial
+model (reader for hard scans if the budget allows). Order of work: Bulgarian papers first (cheap, the site's core),
+then Russian, then the international papers once the Batch transport halves their price. Margulan: "feel free to use
+fable or smth for the papers since we can afford it".
+| Why: a wrong pass is worse than a parked paper — the verbatim rule and the receipt's meaning depend on the checker
+actually seeing the crop; Opus costs 2.5× Sonnet per check but the checker is one call per round on small papers.
