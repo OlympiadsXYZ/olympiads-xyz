@@ -397,6 +397,9 @@ for (;;) {
           data.paper.source = { ...(data.paper.source || {}), archiveKey: man.documents.problems.key };
           if (man.documents.solutions) data.paper.solutionSource = { ...(data.paper.solutionSource || {}), archiveKey: man.documents.solutions.key };
           else if (data.paper.solutionSource) delete data.paper.solutionSource;
+          // the competition code and subject are the catalogue's (the printed name lives in tx.printedMeta): a reader
+          // that writes "НОФ" for NOF (nof-2024-i-12) parks the paper at validate for nothing
+          for (const k of ['competition', 'subject']) if (man.meta?.[k] && data.paper[k] !== man.meta[k]) { (data.tx ||= {}).normalised = [...(data.tx.normalised || []), `/paper/${k}: "${data.paper[k]}" → catalogue "${man.meta[k]}"`]; data.paper[k] = man.meta[k]; }
         }
         if (JSON.stringify(data) !== before) {
           const out = /\.norm\.json$/.test(src) ? src : src.replace(/\.json$/, '.norm.json'); // a later rule may still apply to an already-normalised file
