@@ -35,7 +35,7 @@ import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { parseArgs, fail, readJson, readJsonSafe, updateJobs, JOBS_FILE, RUNS_FILE, ROOT, nowIso, paperDir, findContentFile, BATCH_DIRS, BATCH_ASYNC_LOCK, sleep, pidAlive, brokerAlive } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh', 'batch-async', 'no-broker-check'] });
+const args = parseArgs(process.argv.slice(2), { flags: ['backlog', 'catalogue', 'allow-same-model', 'no-promote', 'dry-run', 'redo', 'fresh', 'batch-async', 'no-broker-check', 'native-only'] });
 if (!args.ids && !args.backlog && !args.catalogue) fail('usage: batch.mjs --ids a,b | --backlog | --catalogue [--subjects s,s] [--langs l,l] [--competitions c,c] [--limit N] --reader p:m --checker p:m [--workers 2] [--allow-same-model] [--no-promote] [--redo]');
 if (!args.reader || !args.checker) fail('--reader and --checker are required');
 const batchAsync = !!args['batch-async'];
@@ -60,6 +60,14 @@ if (args.backlog || args.catalogue) {
   // --subjects physics,astronomy / --langs en,ru / --competitions IPhO,IAO narrow a catalogue run
   const pick = (opt, field) => { if (!args[opt]) return; const want = new Set(String(args[opt]).split(',').map(s => s.trim().toLowerCase())); entries = entries.filter(e => want.has(String(e[field] ?? '').toLowerCase())); };
   pick('subjects', 'subject'); pick('langs', 'lang'); pick('competitions', 'competition');
+  // --native-only: papers whose problems document carries a real text layer per tmp/tx/classify.json (classify.mjs);
+  // scans and unclassified papers are left out (the mechanical text check is the cheap half of verification)
+  if (args['native-only']) {
+    const cls = readJson(path.join(ROOT, 'tmp', 'tx', 'classify.json'), { papers: {} }).papers || {};
+    const before = entries.length;
+    entries = entries.filter(e => cls[e.paperId]?.native === true);
+    console.log(`[batch] --native-only: ${entries.length} of ${before} papers have a native text layer (${Object.keys(cls).length} classified)`);
+  }
   for (const e of entries) if (fxIds.has(e.paperId) || fxKeys.has(e.problemsKey)) log({ paperId: e.paperId, outcome: 'skipped', reason: 'benchmark fixture' });
   entries = entries.filter(e => !fxIds.has(e.paperId) && !fxKeys.has(e.problemsKey));
   // two catalogue rows may derive the same id (a paper split over files): the first wins, the rest are logged
