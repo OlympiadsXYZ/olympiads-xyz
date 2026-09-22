@@ -154,3 +154,24 @@ Budget: $252 left at 07:45Z; the Bulgarian set runs synchronously under an $80 c
 papers wait for the Message-Batches transport (50 %).
 | Why: the read is the cheap part; verification must stay deterministic where it can be and model-based only for
 what pixels alone cannot judge (crops, scans).
+
+## D-P23 (2026-09-22) — fix what is obviously wrong, keep everything that is acceptable as printed
+
+Margulan, after the Opus 5.5 one-shot pilot (22 papers, 104 problems): obvious errors in the printed source are fixed
+in the transcription; acceptable printed wording is never replaced. Supersedes the narrow exceptions of D-P16 (spacing
+and й→ѝ only) and reader rule 1's "preserve errors printed in the source exactly".
+
+- **Fix:** misspellings that are not real words („обратопропорционална“ → „обратнопропорционална“) and grammatical
+  agreement errors („найденной значение“ → „найденного значения“, „максимального давление“ → „максимального давления“).
+- **Keep:** any form that is acceptable as printed, even when a more common or more standard variant exists. Swapping
+  an acceptable form for a preferred one is a transcription error, not a fix.
+- **Never** under this rule: numbers, units, symbols, names, mathematics, scientific content.
+- **Record** every fix (printed form, fixed form, document and page) so it stays visible and reversible.
+
+Why: the pilot showed a strong reader rarely misreads letters but does drift — it fixed one real typo against its
+instructions and, separately, miscopied a correct verb („начинает сказываться“ → „начинается сказываться“) and then
+reported it as a printed error. Students need the obviously wrong fixed and nothing else touched.
+Not yet implemented: reader prompt rule 1, checker prompt rules 2 and 10, and `scripts/tx/textlayer.mjs` (which tells
+the reader to "keep the printed spelling, typos included") still enforce the old rule. Implementation should let the
+text-layer check accept a recorded fix whose printed form is a non-word or an agreement error, and keep flagging a
+real-word substitution.
