@@ -1,0 +1,421 @@
+{
+ "paper": {
+  "id": "eupho-2022-theory-x",
+  "subject": "physics",
+  "competition": "EuPhO",
+  "year": 2022,
+  "round": null,
+  "roundType": "theory",
+  "grade": null,
+  "lang": "en",
+  "title": "EuPhO-2022 Theoretical Problems. Language: English",
+  "totalPoints": 30,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/EuPhO/2022/Theory.pdf",
+   "pages": [
+    1
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/EuPhO/2022/Theory Solutions.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "status": "review",
+  "documentNotes": [
+   {
+    "title": "General guidelines for marking",
+    "statement": "- Granularity for marks is 0.1 p.\n- A simple numerical error resulting from a typo is punished by 0.2 p unless the grading scheme explicitly says otherwise.\n- Errors which cause dimensionally wrong results are punished by at least 50 % of the marks unless the grading scheme explicitly says otherwise.\n- Propagating errors are not punished repeatedly unless they either lead to considerable simplifications or wrong results whose validity can easily be checked later.",
+    "document": "solutions",
+    "page": 1,
+    "position": "before-problem"
+   }
+  ],
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "27d731e334ec5866835122bf8d5279c171705aa69616ea60e9b9e8fe87fab26d",
+    "solutions": "ce39ed379dbd7421c8c751640bd73de9d58964e4a175d561619c57e2e90c846f"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "Three problems T1–T3 as in the catalogue; totals 10 + 10 + 10 = 30 pts. T1 has no labelled sub-tasks, so the catalogue count of about 7 sub-tasks corresponds to T2 (a)–(c) and T3 (a)–(d). The general marking guidelines on solutions page 1 are kept as a paper document note. Printed forms kept verbatim: 'The relation ... are given by the continuity law' (T1), 'it is enough it these are clear from a sketch' (T2 b2), 'those who got ... gets full marks' (T2 a4), 'thus, not rotating. and as we found' (T3 d), mixed quotes „few centimeters” and ”equivalent pendulum”. The T3 marking scheme prints R_c = qbD/(2m|ω₀|) and x_c = qbD/(2mω₀) (letters swapped relative to qBd in the solution); kept verbatim as mathematics. Point entries such as '0.3+ 0.3+ 0.3+ 0.1' in T2 b2 and '0.5+ 0.5' in c1, c2 are printed on stacked lines and joined in one cell. Solution I of T1 uses both ϱ and ρ for the liquid density, as printed.",
+   "edits": [
+    {
+     "path": "/problems/2/solution/statement",
+     "printed": "transfered",
+     "fixed": "transferred",
+     "document": "solutions",
+     "page": 6,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "eupho-2022-theory-x-p1",
+   "number": 1,
+   "title": "Floating cylinder",
+   "points": 10,
+   "problemType": "theory",
+   "statement": "A solid, uniform cylinder of height $h = 10\\ \\mathrm{cm}$ and base area $s = 100\\ \\mathrm{cm}^2$ floats in a cylindrical beaker of height $H = 20\\ \\mathrm{cm}$ and inner bottom area $S = 102\\ \\mathrm{cm}^2$ filled with a liquid. The ratio between the density of the cylinder and that of the liquid is $\\gamma = 0.70$. The bottom of the cylinder is above the bottom of the beaker by a few centimeters. The cylinder is oscillating vertically, so that its axis always coincides with that of the beaker. The amplitude of the liquid level oscillations is $A = 1\\ \\mathrm{mm}$.\n\nFind the period of the motion $T$. Neglect the viscosity of the liquid.",
+   "figures": [],
+   "parts": [],
+   "answer": {
+    "kind": "numeric",
+    "value": 0.53,
+    "unit": "s",
+    "tolerance": 0.01,
+    "latex": "T = 2\\pi\\sqrt{\\frac{\\gamma h}{g}} = 0.53\\ \\mathrm{s}"
+   },
+   "topics": [
+    "mechanics/oscillations",
+    "fluids/hydrostatics"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**Solution I: energetic approach**\n\nDenote the density of the liquid by $\\varrho$, so the density of the cylinder is $\\gamma\\varrho$. In equilibrium (i.e. when the net force acting on the cylinder is zero) the immersed part of the cylinder has height $\\gamma h$.\n\nConsider the system in a moment when the cylinder is displaced by distance $x_1$ downward and moves down with velocity $v_1$. As a result of the motion of cylinder the liquid level rises by some height $x_2$, and the liquid flows in the gap between the cylinder and beaker with some velocity $v_2$ upwards (see *Fig. 1*).\n\nThe relation between the aforementioned displacements and velocities are given by the continuity law:\n\n$$x_1 s = x_2(S - s), \\qquad v_1 s = v_2(S - s)\\,.$$\n\nIn the following we express the potential and kinetic energy of the system. Compared to the equilibrium position the cylinder of mass $\\gamma\\varrho sh$ sunk by $x_1$, while the potential energy change caused by the redistribution of liquid can be imagined as the center of mass of liquid with mass $\\varrho s x_1$ rises by distance $\\gamma h + x_1/2 + x_2/2$. Taken the potential energy in the equilibrium state to be zero, the potential energy in the state indicated in the right figure can be written as\n\n$$E_{\\mathrm{pot}} = -\\gamma\\varrho shgx_1 + \\varrho sx_1g\\left(\\gamma h + \\frac{x_1 + x_2}{2}\\right)\\,.$$\n\nAfter opening the bracket the first two terms cancel each other:\n\n$$E_{\\mathrm{pot}} = \\frac{1}{2}\\varrho sgx_1(x_1 + x_2)\\,.$$\n\nAfter expressing $x_2$ from continuity law and some simplification we get a quadratic expression for the potential energy:\n\n$$E_{\\mathrm{pot}} = \\frac{1}{2}\\varrho sgx_1\\left(x_1 + \\frac{s}{S - s}x_1\\right) = \\frac{1}{2}\\varrho\\frac{sS}{S - s}gx_1^2\\,.$$\n\nNow let us calculate the kinetic energy of the system. The contribution from the cylinder is straightforward, $\\gamma\\varrho shv_1^2/2$, but the motion of the liquid is more complicated.\n\n*Note.* We may notice that since $s/(S - s) = 50$, the speed $v_2$ of the liquid in the narrow gap is 50 times larger than the typical speed of the liquid below the cylinder (which can be estimated to be in the range of $v_1$). And while the mass of the liquid below the cylinder is much larger than the mass of liquid inside the gap (the ratio is ca. 25 if the „few centimeters” in the problem text is taken to be 3.5 cm), the kinetic energy is proportional to the square of the velocity, so the kinetic energy of the liquid inside the gap is roughly 100 times larger than the kinetic energy of the liquid below the cylinder.\n\nSince the kinetic energy of the liquid below the cylinder is negligible, we can write the total kinetic energy of the system as:\n\n$$E_{\\mathrm{kin}} = \\underbrace{\\frac{1}{2}\\gamma\\varrho shv_1^2}_{\\text{cylinder}} + \\underbrace{\\frac{1}{2}\\varrho(S - s)\\,(\\gamma h + x_1 + x_2)\\,v_2^2}_{\\text{liquid}}\\,.$$\n\nHere $x_1, x_2 \\ll \\gamma h$, so we shall keep only the term containing $\\gamma h$ in the second bracket:\n\n$$E_{\\mathrm{kin}} = \\frac{1}{2}\\gamma\\varrho shv_1^2 + \\frac{1}{2}\\varrho(S - s)\\gamma hv_2^2$$\n\nExpressing $v_2$ from continuity law gives the following:\n\n$$E_{\\mathrm{kin}} = \\frac{1}{2}\\gamma\\varrho shv_1^2 + \\frac{1}{2}\\varrho\\gamma h\\frac{s^2}{S - s}v_1^2 = \\frac{1}{2}\\varrho\\gamma h\\frac{sS}{S - s}v_1^2\\,.$$\n\nThe potential and kinetic energies can be written in the form\n\n$$E_{\\mathrm{pot}} = \\frac{1}{2}k_{\\mathrm{eff}}\\,x_1^2\\,, \\qquad E_{\\mathrm{kin}} = \\frac{1}{2}m_{\\mathrm{eff}}\\,v_1^2\\,,$$\n\nwhere the effective spring constant and effective mass are given by\n\n$$k_{\\mathrm{eff}} = \\varrho\\frac{sS}{S - s}g\\,, \\qquad m_{\\mathrm{eff}} = \\varrho\\gamma h\\frac{sS}{S - s}\\,.$$\n\nSo the oscillation is indeed harmonic, thus the angular frequency and the period are:\n\n$$\\omega = \\sqrt{\\frac{k_{\\mathrm{eff}}}{m_{\\mathrm{eff}}}} = \\sqrt{\\frac{g}{\\gamma h}}, \\qquad T = 2\\pi\\sqrt{\\frac{\\gamma h}{g}} = 0.53\\ \\mathrm{s}\\,.$$\n\n*Note.* The static restoring force, acting on the cylinder is due to the change (relative to the equilibrium position) of the hydrostatic pressure at its lower base:\n\n$$F = -s\\rho g(x_1 + x_2) = -\\frac{sS}{S - s}\\rho gx_1.$$\n\nThis immediately gives effective stiffness of the system $k_{\\mathrm{eff}} = \\frac{sS}{S-s}\\rho g$.\n\nAlternatively, one may wish to integrate $\\int F\\,\\mathrm{d}x_1$ to get the potential energy\n\n$$E_{\\mathrm{pot}} = \\frac{sS}{S - s}\\frac{\\rho g}{2}x_1^2.$$\n\n**Solution II: dynamical approach**\n\nWhen the cylinder is displaced from its equilibrium position downwards by distance $x_1$, the net restoring force (pointing up) can be calculated as the sum of the weight of the cylinder and the force from the difference of pressures at the top ($p_0$) and bottom ($p$) of the cylinder. As a result of the net force, the cylinder accelerates upwards with $a_1$, and at the same time, the liquid located in the gap between the cylinder and the wall of the beaker accelerates down with $a_2$. The relation between the magnitudes of $a_1$ and $a_2$ is given by the continuity law:\n\n$$sa_1 = (S - s)a_2\\,.$$\n\nIf the liquid in the gap was not accelerating, the pressure difference $p - p_0$ would be equal to the hydrostatic pressure of the liquid column in the gap. Due to the acceleration of the liquid, $p - p_0$ can be expressed from Newton’s 2nd law applied for the liquid column of unit area located in the gap:\n\n$$p_0 - p + \\varrho g(\\gamma h + x_1 + x_2) = \\varrho(\\gamma h + x_1 + x_2)a_2\\,,$$\n\nwhere we used the notations of *Solution I*, and the downward direction was taken as positive.\n\nNewton’s 2nd law for the cylinder reads as\n\n$$(p - p_0)s - \\gamma\\varrho shg = \\gamma\\varrho sha_1\\,.$$\n\nAfter expressing $p - p_0$ from the previous equation, and then substituting it here we get:\n\n$$\\varrho g(\\gamma h + x_1 + x_2)s - \\varrho(\\gamma h + x_1 + x_2)a_2s - \\gamma\\varrho shg = \\gamma\\varrho sha_1\\,.$$\n\nSince the amplitude of the liquid level is small, the terms containing $a_2x_1$ and $a_2x_2$ can be neglected. After rearranging we get:\n\n$$\\varrho gs(x_1 + x_2) = \\gamma\\varrho sh(a_1 + a_2)\\,.$$\n\nUsing the relations between the displacements and accelerations we finally get:\n\n$$a_1 = \\frac{g}{\\gamma h}x_1\\,.$$\n\nTaking into account the opposite directions of $x_1$ and $a_1$, this is the dynamical condition of a simple harmonic motion with angular frequency and period\n\n$$\\omega = \\sqrt{\\frac{g}{\\gamma h}}\\,, \\qquad T = 2\\pi\\sqrt{\\frac{\\gamma h}{g}} = 0.53\\ \\mathrm{s}\\,.$$\n\n*Note.* In this solution we assumed that the pressure $p$ is constant throughout the bottom surface of the cylinder. This assumption is equivalent with saying that the horizontal acceleration of the liquid below the cylinder at every point is much smaller than $a_2$, which is reasonable.\n\n**Marking scheme**\n\nAll solutions should be graded according to only one marking scheme (either energetical or dynamical). If the student used both ideas, that marking scheme should be used which results in a higher score.\n\n| | Solution I: energetic solution | pts |\n|---|---|---|\n| i | Height of submerged part of cylinder in equilibrium is $\\gamma h$. | 0.5 |\n| ii | Realizing that the kinetic energy of water is important | 1.0 |\n| iii | Realizing that the kinetic energy of liquid below the cylinder is negligible | 1.5 |\n| iv | Expressing the kinetic energy of liquid inside the gap as a function of velocity of cylinder. | 2.5 |\n| v | Potential energy change of liquid as a function of the small displacement of cylinder | 1.0 |\n| vi | Potential energy change (0.5 p) and kinetic energy change of cylinder (0.5 p) | 1.0 |\n| vii | Continuity law either for displacements or velocities (only 0.5 p if the factor is $S/(S - s)$) | 1.0 |\n| viii | Expressing $\\omega$ from the formulas for $E_{\\mathrm{pot}}$ and $E_{\\mathrm{kin}}$ ($\\omega = \\sqrt{k_{\\mathrm{eff}}/m_{\\mathrm{eff}}}$ or equivalent). | 1.0 |\n| ix | $T = 2\\pi/\\omega$ | 0.3 |\n| x | Correct substitution of values, final result | 0.2 |\n| | **Total number of points** | **10.0** |\n\n| | Solution II: dynamical solution | pts |\n|---|---|---|\n| I | Height of submerged part of cylinder in equilibrium is $\\gamma h$ | 0.5 |\n| II | Realizing that the pressure difference between top and bottom of the cylinder is *not* $\\varrho g \\times$ height diff. | 1.0 |\n| III | Neglecting the motion of water below the cylinder but not on the sides | 1.5 |\n| IV | Newton’s 2nd law for liquid in the gap with nonzero acceleration. (0 p for $p - p_0 = \\varrho g \\times$ height diff.) | 2.5 |\n| V | Newton’s 2nd law for cylinder (still full mark if II was not realized but $p - p_0$ was used properly) | 1.0 |\n| VI | Using the change in water level in Newton’s 2nd law | 1.0 |\n| VII | Continuity law either for displacements or accelerations (only 0.5 p if the factor is $S/(S - s)$) | 1.0 |\n| VIII | Concluding a linear relation between acceleration and displacement of cylinder | 0.5 |\n| IX | Expressing $\\omega$ from the dynamical equations (expressing $\\omega = \\sqrt{k_{\\mathrm{eff}}/m_{\\mathrm{eff}}}$ correctly or equivalent). | 0.5 |\n| X | $T = 2\\pi/\\omega$ | 0.3 |\n| XI | Correct substitution of values, final result | 0.2 |\n| | **Total number of points** | **10.0** |",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "caption": "Fig. 1",
+      "alt": "Two sketches of the cylinder (density γϱ) floating in a beaker of liquid ϱ with bottom area S and cylinder cross-section s. Left: equilibrium, immersed depth γh. Right: cylinder displaced down by x₁ moving with velocity v₁, liquid level raised by x₂, liquid flowing up in the gap with velocity v₂; dashed lines mark x₁, x₂ and γh.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p1-sol-fig1.png",
+      "width": 867,
+      "height": 524,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        56.56,
+        402.43,
+        264.29,
+        527.85
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "caption": "Fig. 2",
+      "alt": "Same pair of sketches for the dynamical approach: left cylinder γϱ in liquid ϱ at equilibrium depth γh; right cylinder displaced by x₁ with the level raised by x₂, pressure p₀ at the top and p at the bottom, the cylinder accelerating up with a₁ and the liquid in the gap accelerating down with a₂; beaker area S.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p1-sol-fig2.png",
+      "width": 869,
+      "height": 523,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        56.56,
+        234.04,
+        264.92,
+        359.51
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "id": "eupho-2022-theory-x-p2",
+   "number": 2,
+   "title": "Thermal oscillations",
+   "points": 10,
+   "problemType": "theory",
+   "statement": "A resistor is made of a material which undergoes a phase transition so that its resistance takes one of the two values, $R_1$ if its temperature is smaller than $T_c$, and $R_2 > R_1$ if the temperature is larger than $T_c$.\n\nThis resistor is connected to a voltage source through an inductor of inductance $L$. It appears that if the applied voltage $V$ is between two critical values, $V_1 < V < V_2$, the temperature of the resistor starts oscillating. Assume that (i) the heat flux $P$ from the resistor to the ambient medium is given by $P = \\alpha(T - T_0)$, where $\\alpha$ is a constant, $T$ denotes the temperature of the resistor, and $T_0$ is the ambient temperature; (ii) the geometrical size of the resistor is so small that it will reach a thermal equilibrium much faster than the characteristic time $L/R_2$.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "alt": "Circuit: a resistor R in series with an inductor L (coil) and a battery V, forming a single loop.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-fig1.png",
+     "width": 325,
+     "height": 331,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       121.46,
+       361.17,
+       199.44,
+       440.33
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "Express $V_1$ and $V_2$ in terms of the other parameters defined above.",
+     "points": 2,
+     "answer": {
+      "kind": "expression",
+      "latex": "V_1 = \\sqrt{R_1\\alpha(T_c - T_0)}, \\quad V_2 = \\sqrt{R_2\\alpha(T_c - T_0)}"
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "Assuming that $V_1 < V < V_2$, sketch qualitatively how the temperature of the resistor $T$ depends on time $t$, and find the ratio $(T_{\\mathrm{max}} - T_0)/(T_{\\mathrm{min}} - T_0)$, where $T_{\\mathrm{max}}$ and $T_{\\mathrm{min}}$ denote the maximal and minimal values of $T$, respectively.",
+     "points": 6,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\frac{T_{\\mathrm{max}} - T_0}{T_{\\mathrm{min}} - T_0} = \\frac{R_2^2}{R_1^2}"
+     }
+    },
+    {
+     "label": "(c)",
+     "statement": "Find the period of oscillations if $V = \\sqrt{V_1V_2}$ and $R_2 = 16R_1$.",
+     "points": 2,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\frac{L}{R_1}\\left(\\ln\\left(\\frac{7}{4}\\right) + \\frac{1}{16}\\ln(7)\\right) \\approx 0.68\\frac{L}{R_1}"
+     }
+    }
+   ],
+   "topics": [
+    "electricity/circuits",
+    "thermodynamics/heat-transfer"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**Part (a): Critical voltages**\n\nThe power heating the resistor is $P_{\\mathrm{el}} = V^2/R_j$. The thermal equilibrium is reached when $P_{\\mathrm{el}} = P = \\alpha(T_{\\mathrm{eq}} - T_0)$. To avoid oscillations, the equilibrium temperature $T_{\\mathrm{eq}}$ must satisfy $T_{\\mathrm{eq}} < T_c$ if $R = R_1$ and $T_{\\mathrm{eq}} > T_c$ if $R = R_2$. Solving for $V$, we have\n\n$$V = \\sqrt{R_j\\alpha(T_{\\mathrm{eq}} - T_0)}. \\tag{1}$$\n\nThe critical values therefore are\n\n$$V_1 = \\sqrt{R_1\\alpha(T_c - T_0)} \\quad \\text{and} \\quad V_2 = \\sqrt{R_2\\alpha(T_c - T_0)}. \\tag{2}$$\n\n**Part (b): Temperature behaviour**\n\nIn the oscillating regime, we have a time-dependent current $I(t)$. The power dissipated over the resistor is $P_{\\mathrm{el}}(t) = R(t)I(t)^2$. By assumption (ii), we may assume that the thermal equilibrium is reached very fast, i.e. $P_{\\mathrm{el}}(t) = P(t)$. The temperature $T(t)$ is therefore determined by the current via\n\n$$T(t) = T_0 + \\frac{R(t)I(t)^2}{\\alpha}. \\tag{3}$$\n\nIf the resistance has value $R_1$, the current will increase, trying to reach $J_1 = V/R_1$. The difference $I(t) - V/R_1$ will decay exponentially, with characteristic time $L/R_1$. The phase transition occurs once the critical current\n\n$$I_1 = \\sqrt{\\frac{\\alpha(T_c - T_0)}{R_1}}$$\n\nis reached. After the phase transition, the current will decrease, approaching the new equilibrium value $J_2 = V/R_2$. Again, $I(t) - V/R_2$ will decay exponentially with characteristic time $L/R_2$, until the critical current\n\n$$I_2 = \\sqrt{\\frac{\\alpha(T_c - T_0)}{R_2}}$$\n\nis reached. This behaviour is shown in Fig. 1.\n\nTogether with (3), we see that the temperature behaves like in Figure 2.\n\nThe maximum and minimum temperatures will be attained just after the phase transitions occur. We obtain that\n\n$$\\frac{T_{\\mathrm{max}} - T_0}{T_{\\mathrm{min}} - T_0} = \\frac{R_2I_1^2}{R_1I_2^2} = \\frac{R_2^2}{R_1^2}. \\tag{4}$$\n\n**Part (c): Period of oscillations**\n\nIf the phase transition occurs at $t = 0$, with the resistance changing from $R_{j'}$ to $R_j$, the current is given by\n\n$$I(t) = \\frac{V}{R_j} + \\left(I_{j'} - \\frac{V}{R_j}\\right)\\mathrm{e}^{-R_jt/L} \\tag{5}$$\n\nuntil the next phase transition occurs when $I(t_j) = I_j$. Hence, the period is\n\n$$t_1 + t_2 = \\frac{L}{R_1}\\ln\\left(\\frac{I_2 - V/R_1}{I_1 - V/R_1}\\right) + \\frac{L}{R_2}\\ln\\left(\\frac{I_1 - V/R_2}{I_2 - V/R_2}\\right) \\tag{6}$$\n\nInserting the relations $R_2 = \\eta R_1$ and $V = \\sqrt{V_1V_2} = \\eta^{1/4}\\sqrt{R_1\\alpha(T_c - T_0)}$, we obtain the period\n\n$$\\frac{L}{R_1}\\ln\\left(\\frac{7}{4}\\right) + \\frac{L}{R_2}\\ln(7) = \\frac{L}{R_1}\\left(\\ln\\left(\\frac{7}{4}\\right) + \\frac{1}{16}\\ln(7)\\right) \\approx 0.68\\frac{L}{R_1}. \\tag{7}$$\n\n**Marking scheme**\n\n| | Task (a): Critical voltages | pts |\n|---|---|---|\n| a1 | Formula for the power dissipation $P_{\\mathrm{el}} = V^2/R_j$. | 0.5 |\n| a2 | Relating the power dissipation to the temperature of the resistor in oscillations-free stationary regime, $P_{\\mathrm{el}} = P = \\alpha(T_{\\mathrm{eq}} - T_0)$ | 0.5 |\n| a3 | Expressing the voltage in terms of the temperature if the thermal equilibrium were to be reached, $V = \\sqrt{R_j\\alpha(T_{\\mathrm{eq}} - T_0)}$. Subtract 0.1 pts if $V$ is not expressed explicitly. | 0.5 |\n| a4 | Realising that oscillations will not happen if $V > \\sqrt{R_2\\alpha(T_{\\mathrm{eq}} - T_0)}$ or $V < \\sqrt{R_1\\alpha(T_{\\mathrm{eq}} - T_0)}$. No marks if only one inequality is obtained (but no subtractions because of that in a3 - in most cases those who got correct expression for one of the voltages but has a wrong or missing expression for the other gets full marks for a1-a3, and 0 pts for a4). | 0.5 |\n| | **Total number of points for Task (a)** | **2.0** |\n\n| | Task (b): Temperature behavior | pts |\n|---|---|---|\n| b1 | Realising that the $I - t$ curve is made of segments of exponents, joined without discontinuities. Partial credit of 0.5 pts if it is made of curved segments for which it is not clear that these are exponents, or if these are growing exponents, but which are connected continuously with a discontinuous derivative $\\frac{\\mathrm{d}I}{\\mathrm{d}t}$. No points if $I(t)$ is discontinuous, or if only one segment of an exponent is shown. Full marks can be given if there is no $I - t$ graph, but the $T - t$ graph is made of the segments of vanishing exponents, connected with temperature jumps in a correct direction, and a partial credit of 0.5 pts if the segments of the $T - t$ are either growing exponents or curves of unclear shape, still connected so that it would correspond to a continuous $I(t)$-curve with a discontinuous derivative. Partial credit of 0.5 pts is given if there is no $I - t$-curve shown, but $V - t$ curve is shown to be made of decaying exponential segments, connected with jumps | 1.0 |\n| b2 | Realising that (i) one of these exponents is in a form $a_1 - b_1\\mathrm{e}^{-t/\\tau_1}$ and (ii) the other one — in a form $a_2 + b_2\\mathrm{e}^{-t/\\tau_2}$ where (iii) the $a_1 > a_2$ and (iv) $\\tau_1 > \\tau_2$. It is not necessary to write down these inequalities mathematically — it is enough it these are clear from a sketch. Inequality $\\tau_1 > \\tau_2$ does not need to be written if expressions for $\\tau_1$ and $\\tau_2$ are given. Full marks can be given if $I - t$ graph is missing, but $T - t$ graph is correct and has *all the features* as described in b6. Full marks can be also given if the correct exponential forms are documented not here, but in part c. | 0.3+ 0.3+ 0.3+ 0.1 |\n| b3 | Realising that this exponential behaviour breaks down once the critical temperature is reached. This does not need to be written specifically if the *jumps* in $T - t$ graph happen at $T = T_c$. No marks are given if there is no clear discontinuity of $T$ at $T_c$ and/or if there are discontinuities of $T(t)$ or $\\frac{\\mathrm{d}T}{\\mathrm{d}t}$ at some other values of $T$. | 1.0 |\n| b4 | Relating the critical temperature to the corresponding critical current $I_j$ | 0.5 |\n| b5 | Realising that the temperature curve $T(t)$ is related to $I(t)$-curve, $T(t) = T_0 + \\frac{R(t)I(t)^2}{\\alpha}$ | 0.5 |\n| b6 | Drawing a correct final sketch which has the following features: exponential segments showing an exponential relaxation of $T(t)$ in a right direction both when $R = R_1$ and when $R = R_2$; jumps in a right direction each time when $T$ reaches $T_c$ (subtract 0.2 for each missing label on the axes and also if the temperature jumps do not occur at the same value of $T$). No points are given if *any* of the listed features is missing. | 1.0 |\n| b7 | Using the feature from the graph that the maximal and minimal temperatures are taken immediately after a phase transition when $I = I_1$ and $I = I_2$ | 0.5 |\n| b8 | Correct answer for the ratio of the maximal and minimal temperatures. Only 0.3 pts if the answer is not simplified. | 0.5 |\n| | **Total number of points for Task (b)** | **6.0** |\n\n| | Task (c): Period of oscillations | pts |\n|---|---|---|\n| c1 | Expressing the duration of each of the exponential segments as $t_j = \\frac{L}{R_j}\\ln\\frac{\\Delta I_{j,i}}{\\Delta I_{j,f}}$ where $\\Delta I_{j,i}$ and $\\Delta I_{j,f}$ denote the corresponding initial and final departures of the current from the equilibrium value (full marks to be given if the final answer is correct). Subtract 0.2 for each incorrect $\\Delta I_{j,i}$ and $\\Delta I_{j,f}$, $i = 1, 2$ (this means that if none of them is correct, only 0.2 pts are given for c1). 60% of points if $t_j$ is related to $\\Delta I_{j,i}$ and $\\Delta I_{j,f}$ correctly, but not expressed explicitly. | 0.5+ 0.5 |\n| c2 | Correct first and second terms in the final answer (40% of it if the answer is not simplified) | 0.5+ 0.5 |\n| | **Total number of points for Task (c)** | **2.0** |",
+    "figures": [
+     {
+      "id": "p2-sol-fig1",
+      "caption": "Fig. 1",
+      "alt": "Graph versus time t with axes labelled I and R (R in red). Red square wave switching between levels R₂ and R₁; black current curve made of exponential segments rising from I₂ towards J₁ and falling from I₁ towards J₂ (dashed continuations), with horizontal dotted levels R₂, J₁, I₁, I₂, R₁, J₂; durations t₁ and t₂ marked.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-sol-fig1.png",
+      "width": 1102,
+      "height": 699,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        30.38,
+        600.26,
+        294.66,
+        767.79
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig2",
+      "caption": "Fig. 2",
+      "alt": "Graph versus time t with axes labelled T and R (R in red). Red square wave between R₂ and R₁; black temperature curve: exponential relaxation segments meeting the dotted level T_c, jumping up above R₂ level and down below R₁ level at each phase transition.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-sol-fig2.png",
+      "width": 1177,
+      "height": 702,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        304.79,
+        50.53,
+        586.93,
+        218.88
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    }
+   ]
+  },
+  {
+   "id": "eupho-2022-theory-x-p3",
+   "number": 3,
+   "title": "Dipole in a magnetic field",
+   "points": 10,
+   "problemType": "theory",
+   "statement": "Two small balls of mass $m$ each with charges $+q$ and $-q$ respectively, connected by a rigid massless rod of length $d$, form a dipole. The dipole is parallel to plane $XY$ and is placed in a uniform magnetic field $\\vec B$ perpendicular to $XY$.\n\nInitially, the dipole is aligned with the direction $X$ and has initial angular velocity $\\omega_0$ in plane $XY$, as shown. Its center of mass is initially located at origin and given initial velocity $\\vec v_0$ parallel to $XY$, as well.\n\nConsider three distinct scenarios (a, b, c-d):",
+   "figures": [
+    {
+     "id": "p3-fig1",
+     "alt": "Dipole along the X axis: blue ball −q, m on the left and red ball +q, m on the right, separated by d, with its centre at the origin of the X–Y axes; curved arrow ω₀ showing counter-clockwise rotation, arrow v⃗₀ pointing up and to the right, and B⃗ drawn as a dot in a circle (out of the page).",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p3-fig1.png",
+     "width": 603,
+     "height": 482,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       361.93,
+       165.01,
+       506.57,
+       280.35
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "Find $\\omega_0$ and the direction of $\\vec v_0$, so that the center of mass will move with the constant velocity $\\vec v = \\vec v_0$?",
+     "points": 2,
+     "answer": {
+      "kind": "text",
+      "value": "ω₀ = 0 and v⃗₀ ∥ Y (perpendicular to the dipole)."
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "Given $\\omega_0$, find such $\\vec v_0$ (direction and magnitude), so that the center of mass will travel in a circle. Find the circle radius $R_c$ and the coordinates $x_c$, $y_c$ of its center. You don’t need to prove the uniqueness of the solution.",
+     "points": 3,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\vec v_0 = -\\frac{qdB}{2m}\\hat\\jmath, \\quad R_c = \\frac{qBd}{2m|\\omega_0|}, \\quad (x_c, y_c) = (\\pm R_c, 0)",
+      "note": "The “+” sign corresponds to ω₀ > 0 (counter-clockwise rotation), the “−” sign to clockwise rotation."
+     }
+    },
+    {
+     "label": "(c)",
+     "statement": "Given $\\vec v_0 = 0$, find the minimal $\\omega_0 = \\omega_{\\mathrm{min}}$ necessary for the dipole to reverse its orientation during the motion.",
+     "points": 4,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\omega_{\\mathrm{min}} = \\frac{2qB}{m}"
+     }
+    },
+    {
+     "label": "(d)",
+     "statement": "If the dipole starts with $\\vec v_0 = 0$ and $\\omega_0 = \\omega_{\\mathrm{min}}$ found in part (c), the trajectory of its center of mass has an asymptote. Find the distance $D$ from the origin to the asymptote.",
+     "points": 1,
+     "answer": {
+      "kind": "expression",
+      "latex": "D = d"
+     }
+    }
+   ],
+   "statementAfterParts": "*Useful vector identity:*\n\n$$\\vec a\\times(\\vec b\\times\\vec c) = \\vec b\\,(\\vec a\\cdot\\vec c) - \\vec c\\,(\\vec a\\cdot\\vec b),$$\n\nwhere “$\\times$” and “$\\cdot$” denote vector product and scalar product respectively.",
+   "topics": [
+    "electromagnetism/magnetic-force",
+    "mechanics/rigid-body"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**Part (a): Uniform linear motion**\n\nLorentz forces acting on the charges:\n\n$$\\begin{aligned} \\vec F_+ &= q\\vec v_+\\times\\vec B = q(\\vec v + \\vec\\omega\\times\\vec r)\\times\\vec B, \\\\ \\vec F_- &= (-q)\\vec v_-\\times\\vec B = (-q)(\\vec v - \\vec\\omega\\times\\vec r)\\times\\vec B, \\end{aligned}$$\n\nwhere $\\vec r$ is a vector from the center of mass to the position of the positive charge.\n\nAccording to Newton’s first law, the center-of-mass $C$ of the dipole will move with constant velocity provided that the net force:\n\n$$\\vec F = \\vec F_+ + \\vec F_- = q(\\vec v_+ - \\vec v_-)\\times\\vec B, \\tag{8}$$\n\nacting on the dipole, is zero. Since $\\vec v_+$,$\\vec v_-$ and $\\vec B$ are perpendicular, we require $\\vec v_+ = \\vec v_-$. It means that dipole does not rotate: $\\omega = \\omega_0 = 0$.\n\nThe pure translation, however, is possible if the pair of forces $\\vec F_+, \\vec F_-$, has zero torque about $C$:\n\n$$\\vec\\tau = \\vec r\\times\\vec F_+ - \\vec r\\times\\vec F_- = 2q\\vec r\\times(\\vec v\\times\\vec B) = 2q\\left(\\vec v(\\vec r\\cdot\\vec B) - \\vec B(\\vec r\\cdot\\vec v)\\right) = -2q\\vec B(\\vec r\\cdot\\vec v). \\tag{9}$$\n\nWe conclude that scalar product is zero only when $\\vec v\\perp\\vec r$, i.e. the initial velocity should be parallel to $Y$ direction.\n\nIn summary, the dipole will move uniformly along $Y$ if, and only if, $\\vec v_0\\parallel Y$ and $\\omega_0 = 0$.\n\n**Part (b): Circular motion**\n\nThe net force can be calculated as:\n\n$$\\vec F = \\vec F_+ + \\vec F_- = 2q(\\vec\\omega\\times\\vec r)\\times\\vec B = -2q\\left(\\vec\\omega(\\vec B\\cdot\\vec r) - \\vec r(\\vec B\\cdot\\vec\\omega)\\right) = 2qB\\omega\\vec r = B\\omega\\vec p, \\tag{10}$$\n\nwhere $\\vec p$ is a dipole moment ($|\\vec p| = qd = 2qr$ and the direction aligns with $\\vec r$).\n\nWhen $C$ orbits a circle, $\\vec F$ acts as a centripetal force, i.e. it points to the center of the circle. Since $\\vec F\\parallel\\vec p$, the dipole is always in line with the center of the orbit. Therefore, the orbital angular velocity of $C$ is equal to the angular velocity of rotation of the dipole about $C$.\n\nThe magnitude of the orbital velocity is:\n\n$$v_0 = |\\omega_0|R_c$$\n\nFrom Newton’s second law, and accounting that the total mass of the dipole is $2m$:\n\n$$\\frac{2mv_0^2}{R_c} = \\frac{pBv_0}{R_c},$$\n\ni.e. the magnitude of velocity is:\n\n$$v_0 = \\frac{pB}{2m} = \\frac{qBd}{2m}$$\n\nand the radius of the orbit is:\n\n$$R_c = \\frac{v_0}{|\\omega_0|} = \\frac{qBd}{2m|\\omega_0|}$$\n\nThe coordinates of the center of the circle are:\n\n$$(x_c, y_c) = (\\pm R_c, 0)$$\n\nwhere the “$+$” sign corresponds to $\\omega_0 > 0$, i.e. counter-clockwise rotation, and the “$-$” sign —to clockwise rotation. In either case, the initial velocity should point to the negative $Y$ direction:\n\n$$\\vec v_0 = -\\frac{qdB}{2m}\\hat\\jmath.$$\n\n**Part (c): Reversal of the dipole**\n\nIn (10) we have shown that the net force:\n\n$$\\vec F = 2q(\\vec\\omega\\times\\vec r)\\times\\vec B = (\\vec\\omega\\times\\vec p)\\times\\vec B.$$\n\nSince the dipole moment $\\vec p$ rotates with angular velocity $\\vec\\omega$, its time derivative:\n\n$$\\frac{d\\vec p}{dt} = \\vec\\omega\\times\\vec p.$$\n\nFrom Newton’s second law:\n\n$$2m\\frac{d\\vec v}{dt} = \\vec F = \\frac{d\\vec p}{dt}\\times\\vec B.$$\n\nBy integrating the equation, we arrive at an additional conservation law in the system (conservation of the so called “generalized momentum”):\n\n$$2m\\vec v - \\vec p\\times\\vec B = \\mathrm{const}$$\n\nThus, if $\\vec p$ has reversed its direction from $\\vec p_0$ to $\\vec p_1 = -\\vec p_0$, then the velocity:\n\n$$\\vec v_1 = \\vec v_0 + \\frac{(\\vec p_1 - \\vec p_0)\\times\\vec B}{2m} = -\\frac{\\vec p_0\\times\\vec B}{m}. \\tag{11}$$\n\nSince the magnetic field does not perform work on moving electric charges, the kinetic energy of the dipole is conserved:\n\n$$\\frac{I}{2}\\omega_0^2 = \\frac{I}{2}\\omega_1^2 + \\frac{2m}{2}v_1^2,$$\n\nHere, $I = 2\\times m(d/2)^2 = md^2/2$ is the moment of inertia of the dipole with respect to its center-of-mass. Since $v_1$ doesn’t depend on angular velocities, $\\omega_0$ is minimal when $\\omega_1 = 0$. Finally,\n\n$$\\omega_{\\mathrm{min}} = v_1\\sqrt{\\frac{2m}{I}} = \\frac{p_0B}{m}\\sqrt{\\frac{4}{d^2}} = \\frac{2qB}{m}$$\n\n**Alternatively,** we can introduce $\\theta$ to be the angle between the dipole moment and the axis $X$ ($\\theta_0 = 0$) and rewrite the equations of translational motion in coordinates using $\\omega = \\dot\\theta$:\n\n$$\\dot v_x = \\dot\\theta\\frac{qBd}{2m}\\cos\\theta, \\qquad \\dot v_y = \\dot\\theta\\frac{qBd}{2m}\\sin\\theta.$$\n\nBy integrating these equations, given zero initial velocity, we find how velocity depends on $\\theta$:\n\n$$v_x = \\frac{qBd}{2m}\\sin\\theta, \\qquad v_y = \\frac{qBd}{2m}(1 - \\cos\\theta).$$\n\nUsing the expression (9) for the torque, we can write the equation of rotational motion as:\n\n$$I\\ddot\\theta = \\tau = -2qB(r_xv_x + r_yv_y) = -\\frac{q^2B^2d^2}{2m}\\sin\\theta,$$\n\n$$\\ddot\\theta + \\frac{q^2B^2}{m^2}\\sin\\theta = 0, \\tag{12}$$\n\nThis is the equation of a mathematical pendulum of length $L$ in gravitational field $g = L(qB/m)^2$. And the equivalent question becomes what is the minimal push $\\dot\\theta_0$ required in the bottom position for the pendulum to reach the top position. Kinetic energy of the pendulum $K = \\frac{1}{2}mL^2\\dot\\theta_0^2$ will be transferred to the potential energy $U = 2mgL$, from which we find:\n\n$$\\omega_{\\mathrm{min}} = \\dot\\theta_0 = \\sqrt{4\\frac{g}{L}} = 2\\frac{qB}{m}.$$\n\n*Note.* Due to symmetry, both clockwise and counter-clockwise initial rotation with absolute value of $|\\omega_0|$ will work.\n\n**Part (d): Trajectory asymptote**\n\nIf dipole’s trajectory has an asymptote, then its movement along the asymptote is uniform. Indeed, if there is a linear motion with acceleration, the dipole $\\vec p$ should be always aligned with the direction of motion, thus, not rotating. and as we found in part (a), the absence of rotation can only be maintained if $\\vec v = \\mathrm{const}$ and $\\vec v\\perp\\vec p$.\n\nThe uniform linear motion requires $\\omega = 0$, and this happens in the limit when the orientation is reversed $\\vec p_1 = -\\vec p_0$. According to (11), in the limit, the dipole is travelling with the speed $\\vec v_1 = p_0B\\hat\\jmath/m$. Thus the asymptote is parallel to Y axis: $x = D$ (for counter-clockwise initial rotation).\n\nIf $\\vec R_+$ and $\\vec R_-$ are absolute positions of the charges, we can write equation for the angular momentum around the origin $L_O$:\n\n$$\\frac{d\\vec L_O}{dt} = \\vec R_+\\times(q\\dot{\\vec R}_+\\times\\vec B) + \\vec R_-\\times(-q\\dot{\\vec R}_-\\times\\vec B) = -q\\vec B\\left(\\vec R_+\\cdot\\dot{\\vec R}_+ - \\vec R_-\\cdot\\dot{\\vec R}_-\\right) = -\\frac{q\\vec B}{2}\\frac{d}{dt}\\left(R_+^2 - R_-^2\\right).$$\n\nAfter integration, we find one more conservation law (conservation of the “generalized angular momentum”):\n\n$$\\vec L_O + \\frac{q\\vec B}{2}\\left(R_+^2 - R_-^2\\right) = \\vec L_O + \\frac{q\\vec B}{2}\\left((\\vec R_+ + \\vec R_-)\\cdot(\\vec R_+ - \\vec R_-)\\right) = \\vec L_O + \\vec B(\\vec R\\cdot\\vec p) = \\mathrm{const},$$\n\nwhere $\\vec R = \\frac{1}{2}(\\vec R_+ + \\vec R_-)$ is the position of center of mass. We also used the fact that $q(\\vec R_+ - \\vec R_-) = 2q\\vec r = \\vec p$.\n\nInitially, centre of mass coincides with origin ($\\vec R_0 = 0$):\n\n$$L_O(0) = I\\omega_0 = 2m\\frac{d^2}{4}\\,2\\frac{qB}{m} = qBd^2. \\tag{13}$$\n\nAt asymptote, the dipole has reversed direction $\\vec p_1 = -\\vec p_0$ and charges are travelling along parallel lines $x = D\\pm r$ with the velocity $\\vec v_1$:\n\n$$L_O(\\infty) + B(\\vec R_1\\cdot\\vec p_1) = m(D - r)v_1 + m(D + r)v_1 - BDp_0 = 2mD\\frac{p_0B}{m} - BDp_0 = BDp_0 = BDqd. \\tag{14}$$\n\nSince (13) equals (14), we conclude that $D = d$.\n\nWe can arrive to the same conclusion differently. Notice that we are interested in the $x$ coordinate of $C$ at infinity:\n\n$$D = x_\\infty = \\int_0^\\infty v_x\\,dt = \\frac{qBd}{2m}\\int_0^\\infty\\sin\\theta\\,dt.$$\n\nFrom (12), we can express $\\sin\\theta$:\n\n$$\\int_0^\\infty\\sin\\theta\\,dt = -\\frac{m^2}{q^2B^2}\\int_0^\\infty\\ddot\\theta\\,dt = -\\frac{m^2}{q^2B^2}(\\dot\\theta_1 - \\dot\\theta_0) = \\frac{m^2}{q^2B^2}\\omega_{\\mathrm{min}} = \\frac{2m}{qB}.$$\n\nFinally,\n\n$$D = \\frac{qBd}{2m}\\,\\frac{2m}{qB} = d.$$\n\n*Note.* If initial rotation is clockwise ($\\omega_0 < 0$), the asymptote has an equation $x = -D$, but the distance to the origin remains the same.\n\n**Marking scheme**\n\n| | Part (a): Uniform linear motion | pts |\n|---|---|---|\n| a1 | Rationalizes that the net force on the dipole is zero if the two poles move with equal velocities; Just argument $v = \\mathrm{const} \\Rightarrow \\sum\\vec F = 0$ is 0 pts. | 0.7 |\n| a2 | Concludes that $\\omega_0 = 0$. | 0.3 |\n| a3 | Using the argument of zero torque, concludes that the velocity should be perpendicular to the dipole; Just argument $\\omega = \\mathrm{const} = 0 \\Rightarrow \\vec\\tau = 0$ : 0.4 pts | 0.7 |\n| a4 | States explicitly that $\\vec v_0\\parallel Y$ (or $\\perp X$). | 0.3 |\n| | **Total number of points for part (a)** | **2.0** |\n\n| | Part (b): Circular motion | pts |\n|---|---|---|\n| b1 | Derives expression for the magnitude of the net force on the dipole in terms of $\\omega$ AND states explicitly that it is parallel to the dipole axis OR derives one single vector expression. | 0.9 |\n| b2 | Realizes (drawing or explicit statement) that $\\vec F$ and the dipole axis point to the center of the orbit, and concludes that $\\omega_0$ is equal to the orbital angular velocity. | 0.5 |\n| b3 | Writes down Newton’s second law for the circular motion. | 0.5 |\n| b4 | Makes use of the relation $v_0 = \\lvert\\omega\\rvert R_c$. | 0.2 |\n| b5 | Derives expression for $v_0$ and specifies its direction (drawing or statement) OR derives one single vector expression for $\\vec v_0$; if direction is wrong or missing $0.2$ pts | 0.3 |\n| b6 | Derives explicitly $R_c = qbD/(2m\\lvert\\omega_0\\rvert)$. If $\\lvert\\cdot\\rvert$ is omitted, still full points. | 0.3 |\n| b7 | Writes down the coordinates of the center of the orbit; 0.2 for correct $x_c$ (including sign), 0.1 for correct $y_c$; $x_c = qbD/(2m\\omega_0)$ is a correct answer | 0.3 |\n| | **Total number of points for part (b)** | **3.0** |\n\nOnly one of the grading tables should be used for part (c), the one which results in a higher score.\n\n| | Part (c): Reversal of the dipole | pts |\n|---|---|---|\n| c1 | By integrating the equation(s) of motion derives a “generalized momentum” conservation law – a relationship between the linear momentum $2m\\vec v$ and the dipole moment $\\vec p$ – in vector form OR for the Cartesian components. | 1.5 |\n| c2 | States explicitly that the kinetic energy of the dipole conserves. | 0.3 |\n| c3 | Writes down explicit expression for the kinetic energy in terms of angular velocity and linear velocity of the center of mass. | 0.5 |\n| c4 | Realizes that $\\omega_0$ is minimal when $\\omega_1 = 0$ in the reversed position. | 0.2 |\n| c5 | By using the “generalized momentum” conservation, derives explicit expression for the linear velocity $v_1$. | 0.5 |\n| c6 | Applies the conservation of energy to find relationship between $v_1$ and $\\omega_{\\mathrm{min}}$ | 0.8 |\n| c7 | Derives the final expression for $\\omega_{\\mathrm{min}}$ | 0.2 |\n| | **Total number of points for part (c)** | **4.0** |\n\n**Alternative approach: pendulum analogy**\n\n| | Part (c): Reversal of the dipole | pts |\n|---|---|---|\n| c1 | Derives the expression $\\tau = -B(\\vec p\\cdot\\vec v)$ for the torque. Even if the derivation has been made in parts (a) or (b), the points **should** be assigned to Task (c); If term $(\\vec B\\cdot\\vec p)$ is not cancelled, still full points | 0.5 |\n| c2 | By integrating the equations of motion, expresses $v_x$ and $v_y$ in terms of $\\theta$. | 1.5 |\n| c3 | Writes down the equation of rotational motion in terms of $\\sin\\theta$. | 0.5 |\n| c4 | States that the angular dynamics of the dipole is equivalent to a large-amplitude oscillation of a mathematical pendulum. | 0.3 |\n| c5 | Realizes that $\\omega_0$ is minimal when $\\omega_1 = 0$ in the reversed position. | 0.2 |\n| c6 | Applies the conservation of energy to the ”equivalent pendulum”. | 0.8 |\n| c7 | Derives the final expression for $\\omega_{\\mathrm{min}}$ | 0.2 |\n| | **Total number of points for part (c)** | **4.0** |\n\n| | Part (d): Trajectory asymptote | pts |\n|---|---|---|\n| d1 | Rationalizes that the asymptote is parallel to $Y$, i.e. $x = \\pm D$. | 0.1 |\n| d2 | Rationalizes that asymptotically the motion is linear uniform | 0.2 |\n| d3 | Either finds conservation law $\\vec L_O + \\vec B(\\vec R\\cdot\\vec p)$ OR writes $x_\\infty$ as integral of $v_x$ (with explicit expression for $v_x$) as a method to find $D$. | 0.3 |\n| d4 | Correctly computes generalized angular momentum at 0 and $\\infty$ OR uses $\\sin\\theta\\propto\\ddot\\theta$ in integral. | 0.2 |\n| d5 | Concludes that $D = d$. | 0.2 |\n| | **Total number of points for part (d)** | **1.0** |",
+    "figures": [
+     {
+      "id": "p3-sol-fig1",
+      "alt": "Rotating dipole: blue −q ball and red +q ball joined by a thick rod, vector r⃗ from the centre to the positive charge, curved arrow ω, centre-of-mass velocity v⃗ pointing up; at the charges the velocities v⃗₊ = v⃗ + ω⃗ × r⃗ (red) and v⃗₋ = v⃗ − ω⃗ × r⃗ (blue) are drawn.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p3-sol-fig1.png",
+      "width": 832,
+      "height": 387,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        62.51,
+        215.51,
+        261.95,
+        308.11
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig2",
+      "alt": "Dipole (blue − and red + balls) on a dashed circular arc, velocity v⃗ tangent to the arc, force F⃗ along the dipole axis pointing along a dashed line towards the centre of the circle (x_c, y_c).",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p3-sol-fig2.png",
+      "width": 787,
+      "height": 422,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        338.71,
+        52.2,
+        527.4,
+        153.23
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig3",
+      "alt": "Trajectories in the X–Y plane for ω₀ = ω_min: red curve of the + charge, blue curve of the − charge (dipping below the X axis) and black curve of the centre of mass, all bending upward and becoming vertical; at the top the reversed dipole moves up with velocity v₁ at both charges; a dashed vertical asymptote at distance D from the Y axis.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p3-sol-fig3.png",
+      "width": 579,
+      "height": 1394,
+      "source": {
+       "page": 6,
+       "pdfRect": [
+        367.29,
+        50.53,
+        505.98,
+        384.75
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    }
+   ]
+  }
+ ]
+}

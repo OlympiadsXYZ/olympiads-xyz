@@ -1,0 +1,185 @@
+---
+id: eupho-2022-theory-x-p1
+source: 'EuPhO 2022'
+title: 'Задача 1. Floating cylinder'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2022/eupho-2022-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:22:56.762Z'
+verifier: 'mechanical'
+---
+
+*EuPhO-2022 Theoretical Problems. Language: English · 10 т.*
+
+<details>
+<summary>General guidelines for marking</summary>
+
+- Granularity for marks is 0.1 p.
+- A simple numerical error resulting from a typo is punished by 0.2 p unless the grading scheme explicitly says otherwise.
+- Errors which cause dimensionally wrong results are punished by at least 50 % of the marks unless the grading scheme explicitly says otherwise.
+- Propagating errors are not punished repeatedly unless they either lead to considerable simplifications or wrong results whose validity can easily be checked later.
+
+</details>
+
+## Условие
+
+A solid, uniform cylinder of height $h = 10\ \mathrm{cm}$ and base area $s = 100\ \mathrm{cm}^2$ floats in a cylindrical beaker of height $H = 20\ \mathrm{cm}$ and inner bottom area $S = 102\ \mathrm{cm}^2$ filled with a liquid. The ratio between the density of the cylinder and that of the liquid is $\gamma = 0.70$. The bottom of the cylinder is above the bottom of the beaker by a few centimeters. The cylinder is oscillating vertically, so that its axis always coincides with that of the beaker. The amplitude of the liquid level oscillations is $A = 1\ \mathrm{mm}$.
+
+Find the period of the motion $T$. Neglect the viscosity of the liquid.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $T = 2\pi\sqrt{\frac{\gamma h}{g}} = 0.53\ \mathrm{s}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution I: energetic approach**
+
+Denote the density of the liquid by $\varrho$, so the density of the cylinder is $\gamma\varrho$. In equilibrium (i.e. when the net force acting on the cylinder is zero) the immersed part of the cylinder has height $\gamma h$.
+
+Consider the system in a moment when the cylinder is displaced by distance $x_1$ downward and moves down with velocity $v_1$. As a result of the motion of cylinder the liquid level rises by some height $x_2$, and the liquid flows in the gap between the cylinder and beaker with some velocity $v_2$ upwards (see *Fig. 1*).
+
+The relation between the aforementioned displacements and velocities are given by the continuity law:
+
+$$x_1 s = x_2(S - s), \qquad v_1 s = v_2(S - s)\,.$$
+
+In the following we express the potential and kinetic energy of the system. Compared to the equilibrium position the cylinder of mass $\gamma\varrho sh$ sunk by $x_1$, while the potential energy change caused by the redistribution of liquid can be imagined as the center of mass of liquid with mass $\varrho s x_1$ rises by distance $\gamma h + x_1/2 + x_2/2$. Taken the potential energy in the equilibrium state to be zero, the potential energy in the state indicated in the right figure can be written as
+
+$$E_{\mathrm{pot}} = -\gamma\varrho shgx_1 + \varrho sx_1g\left(\gamma h + \frac{x_1 + x_2}{2}\right)\,.$$
+
+After opening the bracket the first two terms cancel each other:
+
+$$E_{\mathrm{pot}} = \frac{1}{2}\varrho sgx_1(x_1 + x_2)\,.$$
+
+After expressing $x_2$ from continuity law and some simplification we get a quadratic expression for the potential energy:
+
+$$E_{\mathrm{pot}} = \frac{1}{2}\varrho sgx_1\left(x_1 + \frac{s}{S - s}x_1\right) = \frac{1}{2}\varrho\frac{sS}{S - s}gx_1^2\,.$$
+
+Now let us calculate the kinetic energy of the system. The contribution from the cylinder is straightforward, $\gamma\varrho shv_1^2/2$, but the motion of the liquid is more complicated.
+
+*Note.* We may notice that since $s/(S - s) = 50$, the speed $v_2$ of the liquid in the narrow gap is 50 times larger than the typical speed of the liquid below the cylinder (which can be estimated to be in the range of $v_1$). And while the mass of the liquid below the cylinder is much larger than the mass of liquid inside the gap (the ratio is ca. 25 if the „few centimeters” in the problem text is taken to be 3.5 cm), the kinetic energy is proportional to the square of the velocity, so the kinetic energy of the liquid inside the gap is roughly 100 times larger than the kinetic energy of the liquid below the cylinder.
+
+Since the kinetic energy of the liquid below the cylinder is negligible, we can write the total kinetic energy of the system as:
+
+$$E_{\mathrm{kin}} = \underbrace{\frac{1}{2}\gamma\varrho shv_1^2}_{\text{cylinder}} + \underbrace{\frac{1}{2}\varrho(S - s)\,(\gamma h + x_1 + x_2)\,v_2^2}_{\text{liquid}}\,.$$
+
+Here $x_1, x_2 \ll \gamma h$, so we shall keep only the term containing $\gamma h$ in the second bracket:
+
+$$E_{\mathrm{kin}} = \frac{1}{2}\gamma\varrho shv_1^2 + \frac{1}{2}\varrho(S - s)\gamma hv_2^2$$
+
+Expressing $v_2$ from continuity law gives the following:
+
+$$E_{\mathrm{kin}} = \frac{1}{2}\gamma\varrho shv_1^2 + \frac{1}{2}\varrho\gamma h\frac{s^2}{S - s}v_1^2 = \frac{1}{2}\varrho\gamma h\frac{sS}{S - s}v_1^2\,.$$
+
+The potential and kinetic energies can be written in the form
+
+$$E_{\mathrm{pot}} = \frac{1}{2}k_{\mathrm{eff}}\,x_1^2\,, \qquad E_{\mathrm{kin}} = \frac{1}{2}m_{\mathrm{eff}}\,v_1^2\,,$$
+
+where the effective spring constant and effective mass are given by
+
+$$k_{\mathrm{eff}} = \varrho\frac{sS}{S - s}g\,, \qquad m_{\mathrm{eff}} = \varrho\gamma h\frac{sS}{S - s}\,.$$
+
+So the oscillation is indeed harmonic, thus the angular frequency and the period are:
+
+$$\omega = \sqrt{\frac{k_{\mathrm{eff}}}{m_{\mathrm{eff}}}} = \sqrt{\frac{g}{\gamma h}}, \qquad T = 2\pi\sqrt{\frac{\gamma h}{g}} = 0.53\ \mathrm{s}\,.$$
+
+*Note.* The static restoring force, acting on the cylinder is due to the change (relative to the equilibrium position) of the hydrostatic pressure at its lower base:
+
+$$F = -s\rho g(x_1 + x_2) = -\frac{sS}{S - s}\rho gx_1.$$
+
+This immediately gives effective stiffness of the system $k_{\mathrm{eff}} = \frac{sS}{S-s}\rho g$.
+
+Alternatively, one may wish to integrate $\int F\,\mathrm{d}x_1$ to get the potential energy
+
+$$E_{\mathrm{pot}} = \frac{sS}{S - s}\frac{\rho g}{2}x_1^2.$$
+
+**Solution II: dynamical approach**
+
+When the cylinder is displaced from its equilibrium position downwards by distance $x_1$, the net restoring force (pointing up) can be calculated as the sum of the weight of the cylinder and the force from the difference of pressures at the top ($p_0$) and bottom ($p$) of the cylinder. As a result of the net force, the cylinder accelerates upwards with $a_1$, and at the same time, the liquid located in the gap between the cylinder and the wall of the beaker accelerates down with $a_2$. The relation between the magnitudes of $a_1$ and $a_2$ is given by the continuity law:
+
+$$sa_1 = (S - s)a_2\,.$$
+
+If the liquid in the gap was not accelerating, the pressure difference $p - p_0$ would be equal to the hydrostatic pressure of the liquid column in the gap. Due to the acceleration of the liquid, $p - p_0$ can be expressed from Newton’s 2nd law applied for the liquid column of unit area located in the gap:
+
+$$p_0 - p + \varrho g(\gamma h + x_1 + x_2) = \varrho(\gamma h + x_1 + x_2)a_2\,,$$
+
+where we used the notations of *Solution I*, and the downward direction was taken as positive.
+
+Newton’s 2nd law for the cylinder reads as
+
+$$(p - p_0)s - \gamma\varrho shg = \gamma\varrho sha_1\,.$$
+
+After expressing $p - p_0$ from the previous equation, and then substituting it here we get:
+
+$$\varrho g(\gamma h + x_1 + x_2)s - \varrho(\gamma h + x_1 + x_2)a_2s - \gamma\varrho shg = \gamma\varrho sha_1\,.$$
+
+Since the amplitude of the liquid level is small, the terms containing $a_2x_1$ and $a_2x_2$ can be neglected. After rearranging we get:
+
+$$\varrho gs(x_1 + x_2) = \gamma\varrho sh(a_1 + a_2)\,.$$
+
+Using the relations between the displacements and accelerations we finally get:
+
+$$a_1 = \frac{g}{\gamma h}x_1\,.$$
+
+Taking into account the opposite directions of $x_1$ and $a_1$, this is the dynamical condition of a simple harmonic motion with angular frequency and period
+
+$$\omega = \sqrt{\frac{g}{\gamma h}}\,, \qquad T = 2\pi\sqrt{\frac{\gamma h}{g}} = 0.53\ \mathrm{s}\,.$$
+
+*Note.* In this solution we assumed that the pressure $p$ is constant throughout the bottom surface of the cylinder. This assumption is equivalent with saying that the horizontal acceleration of the liquid below the cylinder at every point is much smaller than $a_2$, which is reasonable.
+
+**Marking scheme**
+
+All solutions should be graded according to only one marking scheme (either energetical or dynamical). If the student used both ideas, that marking scheme should be used which results in a higher score.
+
+| | Solution I: energetic solution | pts |
+|---|---|---|
+| i | Height of submerged part of cylinder in equilibrium is $\gamma h$. | 0.5 |
+| ii | Realizing that the kinetic energy of water is important | 1.0 |
+| iii | Realizing that the kinetic energy of liquid below the cylinder is negligible | 1.5 |
+| iv | Expressing the kinetic energy of liquid inside the gap as a function of velocity of cylinder. | 2.5 |
+| v | Potential energy change of liquid as a function of the small displacement of cylinder | 1.0 |
+| vi | Potential energy change (0.5 p) and kinetic energy change of cylinder (0.5 p) | 1.0 |
+| vii | Continuity law either for displacements or velocities (only 0.5 p if the factor is $S/(S - s)$) | 1.0 |
+| viii | Expressing $\omega$ from the formulas for $E_{\mathrm{pot}}$ and $E_{\mathrm{kin}}$ ($\omega = \sqrt{k_{\mathrm{eff}}/m_{\mathrm{eff}}}$ or equivalent). | 1.0 |
+| ix | $T = 2\pi/\omega$ | 0.3 |
+| x | Correct substitution of values, final result | 0.2 |
+| | **Total number of points** | **10.0** |
+
+| | Solution II: dynamical solution | pts |
+|---|---|---|
+| I | Height of submerged part of cylinder in equilibrium is $\gamma h$ | 0.5 |
+| II | Realizing that the pressure difference between top and bottom of the cylinder is *not* $\varrho g \times$ height diff. | 1.0 |
+| III | Neglecting the motion of water below the cylinder but not on the sides | 1.5 |
+| IV | Newton’s 2nd law for liquid in the gap with nonzero acceleration. (0 p for $p - p_0 = \varrho g \times$ height diff.) | 2.5 |
+| V | Newton’s 2nd law for cylinder (still full mark if II was not realized but $p - p_0$ was used properly) | 1.0 |
+| VI | Using the change in water level in Newton’s 2nd law | 1.0 |
+| VII | Continuity law either for displacements or accelerations (only 0.5 p if the factor is $S/(S - s)$) | 1.0 |
+| VIII | Concluding a linear relation between acceleration and displacement of cylinder | 0.5 |
+| IX | Expressing $\omega$ from the dynamical equations (expressing $\omega = \sqrt{k_{\mathrm{eff}}/m_{\mathrm{eff}}}$ correctly or equivalent). | 0.5 |
+| X | $T = 2\pi/\omega$ | 0.3 |
+| XI | Correct substitution of values, final result | 0.2 |
+| | **Total number of points** | **10.0** |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p1-sol-fig1.png" alt="Two sketches of the cylinder (density γϱ) floating in a beaker of liquid ϱ with bottom area S and cylinder cross-section s. Left: equilibrium, immersed depth γh. Right: cylinder displaced down by x₁ moving with velocity v₁, liquid level raised by x₂, liquid flowing up in the gap with velocity v₂; dashed lines mark x₁, x₂ and γh." />
+<figcaption>Fig. 1</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p1-sol-fig2.png" alt="Same pair of sketches for the dynamical approach: left cylinder γϱ in liquid ϱ at equilibrium depth γh; right cylinder displaced by x₁ with the level raised by x₂, pressure p₀ at the top and p at the bottom, the cylinder accelerating up with a₁ and the liquid in the gap accelerating down with a₂; beaker area S." />
+<figcaption>Fig. 2</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Theory.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2022/Theory.pdf)
+· официални решения: [Theory Solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2022/Theory%20Solutions.pdf)

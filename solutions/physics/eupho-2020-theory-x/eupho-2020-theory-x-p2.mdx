@@ -1,0 +1,193 @@
+---
+id: eupho-2020-theory-x-p2
+source: 'EuPhO 2020, theory'
+title: 'Задача 2. Mechanical accelerator'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2020/eupho-2020-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:25:44.342Z'
+verifier: 'mechanical'
+---
+
+*EuPhO-2020 Online — Theoretical Problems*
+
+## Условие
+
+A massless thread makes $N$ turns around statically fixed cylinder, as shown in the figure. Initially, the free (unwound) ends of the thread are parallel to the axis $X$. Then, a heavy point-like object $P$ is attached to one end of the thread while the other end is pulled with a constant velocity $u$ along $X$. Find the maximum velocity attained by the heavy object.
+
+The thread is inextendable and flexible. Suppose that the turns of the thread are wound tightly to one another and are placed practically in the same plane, perpendicular to the cylinder axis. Neglect any friction in the system. Do not consider the force of gravity.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p2-fig1.png" alt="A flat cylinder with N turns of thread wound around it (bracket labelled N); one free end runs to the right along the X-axis with an arrow u, the other end is attached to the point-like object P lying on the X-axis at the left." />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $v_{\mathrm{max}} = u(2\pi N + 1)$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution I.** *Part 1: Thread in contact with the cylinder.* The velocity of the mass $P$ can be decomposed into longitudinal component $v_l$ along the thread, and a transverse component $v_\perp$ perpendicular to the thread:
+
+$$\vec{v} = v_l\vec{e}_1 + v_\perp\vec{e}_2$$
+
+where the unit vectors $\vec{e}_1$ and $\vec{e}_2$ are parallel and perpendicular to the thread, respectively (see Fig. 2). Since the thread is inextensible, the longitudinal component is constant: $v_l = -u$, i.e.
+
+$$\vec{v} = -u\vec{e}_1 + v_\perp\vec{e}_2$$
+
+The acceleration of $P$ is, respectively:
+
+$$\vec{a} = \frac{d\vec{v}}{dt} = -u\frac{d\vec{e}_1}{dt} + v_\perp\frac{d\vec{e}_2}{dt} + \frac{dv_\perp}{dt}\vec{e}_2$$
+
+Vectors $\vec{e}_1$ and $\vec{e}_2$ form a coordinate system, which rotates as a rigid object with an angular velocity:
+
+$$\vec{\omega} = \frac{d\phi}{dt}\vec{e}_3$$
+
+where $\vec{e}_3 = \vec{e}_1 \times \vec{e}_2$ is a unit vector perpendicular to the plane of motion, i.e. along the cylinder axis, and $\phi$ is the angle between the thread and the X-axis. Therefore, the time derivatives of the basis vectors are:
+
+$$\frac{d\vec{e}_1}{dt} = \vec{\omega} \times \vec{e}_1 = \frac{d\phi}{dt}\vec{e}_2$$
+
+and
+
+$$\frac{d\vec{e}_2}{dt} = \vec{\omega} \times \vec{e}_2 = -\frac{d\phi}{dt}\vec{e}_1$$
+
+In this way, the acceleration of $P$ can be represented in terms of the angular velocity:
+
+$$\vec{a} = -v_\perp\frac{d\phi}{dt}\vec{e}_1 + \left(-u\frac{d\phi}{dt} + \frac{dv_\perp}{dt}\right)\vec{e}_2$$
+
+The only force, acting on $P$, is the tension of the thread. Therefore, the component of the acceleration perpendicular to the tread, i.e. along $\vec{e}_2$, is null:
+
+$$-u\frac{d\phi}{dt} + \frac{dv_\perp}{dt} = 0$$
+
+After integration over time, we obtain a relationship between the transverse velocity, acquired by $P$, and the angle of rotation of the thread:
+
+$$v_\perp = u\phi$$
+
+The end of the tread turns at a total angle of $2\pi N$ until the tread detaches from the cylinder completely. Therefore, the transverse component of the velocity of $P$ at the moment of detachment is:
+
+$$v_\perp = 2\pi Nu$$
+
+and the magnitude of velocity:
+
+$$v = \sqrt{v_l^2 + v_\perp^2} = u\sqrt{(2\pi N)^2 + 1}$$
+
+*Part 2: Thread detached from the cylinder.* This expression, however, still does not represent the maximum velocity attained by $P$. In the frame of reference of the free end of the thread, the mass continues to rotate about the end of the thread. The velocity of $P$, relative to Earth, reaches maximum in the moment when the thread reaches right angle with X-axis, i.e. the transverse component of velocity of $P$ aligns with $\vec{u}$:
+
+$$v_{\mathrm{max}} = u(2\pi N + 1)$$
+
+**Solution II.** *Part 1: Thread in contact with the cylinder.* Consider a point $Q$ on the end of the thread being pulled that coincided with $P$ at the moment when it touched the cylinder. Consider motion of the thread in a system of reference (SR), which rotates at angular speed $\omega = u/R$ around the center of the cylinder. In that SR the part of the thread in contact with the cylinder is at rest and the point $Q$ rotates around the cylinder with the angular velocity $\omega_Q = -\omega$ (see the figure).
+
+Since the middle part of the thread is at rest, energy of the mass $P$ is conserved. For the same reason, the velocity $v_P$ of $P$ is perpendicular to the thread. Therefore the kinetic energy acquired by the mass in the rotating frame is equal to the decrease of its centrifugal potential energy:
+
+$$\frac{1}{2}mv_P^2 = -\frac{1}{2}m\omega^2R^2 + \frac{1}{2}m\omega^2r^2 = \frac{1}{2}m\omega^2l_P^2$$
+
+where $l_P$ is the length of the unwound part of the thread on the side of the mass $P$ (see the figure). Therefore, the mass $P$ rotates around the fixture point of the thread with a velocity:
+
+$$v_P = \frac{u}{R}l_P$$
+
+and a constant angular velocity:
+
+$$\omega_P = \frac{u}{R} = \omega.$$
+
+Since $\omega_P = -\omega_Q$, in the rotating SR the two ends of the thread will unwind symmetrically and the lengths of the two straight parts of the string will be equal at any moment of time. Therefore, at the moment of detachment:
+
+$$l_P = \frac{1}{2}(2\pi RN) = \pi NR$$
+
+and the detachment velocity of $P$ is, respectively:
+
+$$v_P = \pi Nu$$
+
+When transforming the velocity of $P$ to the Earth’s SR, the velocity $\vec{v}_P$ should be added to the rotational velocity $\vec{\omega} \times \vec{r}$. It is easy to establish that the result for the transverse component of $P$ is:
+
+$$v_\perp = 2v_P = 2\pi Nu$$
+
+*Part 2: Thread detached from the cylinder.* In that part we proceed exactly as in Part 2 of the first solution.
+
+**Solution III.** *Part 1: The thread in contact with the cylinder*
+
+Like in Solution I we decompose the velocity into longitudinal and transverse components, and come to the conclusion that the longitudinal component is $v_l = -u$. Afterwards, the acceleration of $P$ is expressed. In this case, however, we consider the longitudinal (centripetal) component of the acceleration:
+
+$$a_l = -v_\perp^2/l \equiv -v_\perp\frac{d\phi}{dt}$$
+
+From the second Newton’s law we obtain the tension $F$ of the thread:
+
+$$F = -mv_\perp\frac{d\phi}{dt}$$
+
+The rate of change of the kinetic energy of the mass is equal to the power of the tension force:
+
+$$\frac{dE_k}{dt} = Fv_l = +mv_\perp\frac{d\phi}{dt}u$$
+
+Taking into account that:
+
+$$E_k = \frac{1}{2}m(u^2 + v_\perp^2)$$
+
+and taking the first derivative from that expression, we obtain: $mv_\perp dv_\perp/dt = mv_\perp d\phi/dtu$, or:
+
+$$\frac{dv_\perp}{dt} = u\frac{d\phi}{dt}$$
+
+From that point on we proceed exactly as in the first solution.
+
+| **Grading scheme: T2 part 1, Solution I** | |
+|---|---|
+| $\vec{v}$ is decomposed into $v_l$ and $v_\perp$ | 1.0 p |
+| By condition of inextensibility $v_l = -u$ | 1.0 p |
+| Components of acceleration in terms of $d\phi/dt$ | 2.0 p |
+| The tension force is along the thread and $a_\perp = 0$ | 1.0 p |
+| Finding $dv_\perp/dt = u\cdot d\phi/dt$ | 1.0 p |
+| At the moment of detachment $v_\perp = 2\pi Nu$ | 1.0 p |
+| Final $v = u\sqrt{1 + (2\pi N)^2}$ | 1.0 p |
+| **Total for part 1:** | **8.0 p** |
+
+| **Grading scheme: T2 part 1, Solution II** | |
+|---|---|
+| Introduction of rotational SR with angular velocity $\omega = u/R$ | 0.5 p |
+| States that the wound string is at rest | 0.5 p |
+| Showing that the energy of $P$ is conserved | 1.0 p |
+| Showing that the centrifugal force has potential energy $E_P = -m\omega^2r^2/2$ | 1.0 p |
+| Conservation of energy equation | 1.0 p |
+| Proving that $l_P = l_Q$ | 0.5 p |
+| Finding length $l_P = \pi NR$ at the moment of release | 0.5 p |
+| Finding $v_P = \pi Nu$ at the moment of release | 1.0 p |
+| Rotational velocity of the non-inertial SR in point P $\vec{v_{rot}} = \vec{\omega} \times \vec{r}$ | 0.5 p |
+| Finding $v_{rot\perp} = \pi Nu$ | 0.5 p |
+| Final velocity relative to Earth $v_\perp = 2\pi Nu$ | 1 p |
+| **Total for part 1:** | **8.0 p** |
+
+| **Grading scheme: T2 part 1, Solution III** | |
+|---|---|
+| $\vec{v}$ is decomposed into $v_l$ and $v_\perp$ | 1.0 p |
+| By condition of inextensibility $v_l = -u$ | 1.0 p |
+| Deriving $v_\perp = ld\phi/dt$ | 0.5 p |
+| Finding longitudinal acceleration $a_l = v_\perp^2/l$ | 0.5 p |
+| Using Newton’s second law $F = ma_l$ | 0.5 p |
+| Writing the kinetic energy $E_k = m(u^2 + v_\perp^2)/2$ | 0.5 p |
+| Using the work-energy theorem $dE_k/dt = Fu$ | 1.0 p |
+| Deriving $dv_\perp/dt = ud\phi/dt$ | 1.0 p |
+| At the moment of detachment $v_\perp = 2\pi Nu$ | 1.0 p |
+| Final $v = u\sqrt{1 + (2\pi N)^2}$ | 1.0 p |
+| **Total for part 1:** | **8.0 p** |
+
+| **Grading scheme: T2 part 2, both solutions** | |
+|---|---|
+| Position in which maximum speed is achieved | 1.0 p |
+| Value of $v_{\mathrm{max}}$ | 1.0 p |
+| **Total for part 2** | **2.0 p** |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p2-sol-fig1.png" alt="Two sketches. Left, 'Relative to Earth': a grey cylinder, the thread leaving it towards the pulled end with velocity u, and the mass with velocity v decomposed into v_l along the thread and v_⊥ across it, with unit vectors e₁ and e₂. Right, 'Rotating system of reference': the cylinder of radius R, the mass P at distance r from the centre on an unwound segment of length l_P with velocity v_P, and the other thread end Q." />
+<figcaption>Figure 2: Mechanical accelerator</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [EuPhO_2020_Theory.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2020/EuPhO_2020_Theory.pdf)
+· официални решения: [EuPhO20_Theory_Solutions-7.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2020/EuPhO20_Theory_Solutions-7.pdf)

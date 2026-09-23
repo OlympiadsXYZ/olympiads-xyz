@@ -1,0 +1,291 @@
+{
+ "paper": {
+  "id": "eupho-2017-experiment-exp-pr",
+  "subject": "physics",
+  "competition": "EuPhO",
+  "year": 2017,
+  "round": null,
+  "roundType": "experiment",
+  "grade": null,
+  "lang": "en",
+  "title": "1 Light-emitting diode",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/EuPhO/2017/exp_pr.pdf",
+   "pages": [
+    1
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/EuPhO/2017/exp_sol.pdf",
+   "pages": [
+    1,
+    2,
+    3
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "f130f8b548f862f5086988f45eb54901a5edb072324e2dfa802ca6b86aae6aef",
+    "solutions": "3ff07535869922c9d31ed580d6818e357514fa574906bff3605bf449ca302701"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "The page prints one problem with three numbered tasks (1., 2., 3.), not two as the inventory suggests; they are parts 1.–3. No points are printed in the problem text; the official solution ends with a coarse-grained grading scheme (task 1: 9 points, task 2: 5, task 3: 6 in sum) printed as a raster image with no text layer; it is kept as the solution figure p1-sol-fig7 (contents in its alt text), and part points are left null. Printed inconsistencies kept verbatim: the bandgap voltage is written v_G0 (lowercase) in the solution; Task 2 result is printed as “k_D = 1 − 41.0 mm/W/79.8 mm/W ≈ 0.48” although the graph fit reads 79.1x and the quantity is η; the text says index “L” for the diode while the table uses D; I_p = −15 µV is printed with a voltage unit; the column header “I = I_d − I_p (A)” holds values in µA; the model estimate P_max ≈ 0.026 mW differs from the measured 17 µW; “which can partly explained” (missing „be“), “to ignore the any additional”, “with a am-meter”, “dependance” are kept as printed; the grading scheme row label “Nmax” is kept. The multimeter diode-mode symbol is written as $\\blacktriangleright\\!\\!|$. Line-break hyphens (res-istor, elec-trical, photodi-ode, temperat-ure, respect-ively, …) are rejoined.",
+   "edits": [
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "substract",
+     "fixed": "subtract",
+     "document": "solutions",
+     "page": 2,
+     "kind": "misspelling"
+    },
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "conlcude",
+     "fixed": "conclude",
+     "document": "solutions",
+     "page": 2,
+     "kind": "misspelling"
+    },
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "aproximately",
+     "fixed": "approximately",
+     "document": "solutions",
+     "page": 2,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "eupho-2017-experiment-exp-pr-p1",
+   "number": 1,
+   "title": "Light-emitting diode",
+   "points": null,
+   "problemType": "experiment",
+   "statement": "Light Emitting Diodes (LEDs) are the most efficient light sources. During recent years, the cheap, powerful and reliable LED light bulbs appeared on the market. This is making a true revolution worldwide, as other electrical lighting tools (e.g. incandescent, halogen and fluorescent) in homes and offices are being replaced with LED lighting.\n\nIn this experiment, we will analyse thermal and electrical properties of the light emitting diodes.\n\nYou do not need to estimate any uncertainties, but the accuracy of your methods and results is important and will be graded. Always draw the measurement setup you use! When appropriate, use graphs for determining required quantities.\n\n*Equipment: 2 identical circuit boards with a LED, resistor and a temperature sensor on them; 2 transparent bottles, 2 airtight caps, 2 tubes, water, syringe, 3 multimeters (the multimeter labelled as “voltage-only” is to be used only for voltage measurements), 2 potentiometers, power supply, cables, stand, stripes of graph paper with millimeter scale.*\n\nThe schematic and connections of the circuit board (left) and the potentiometer (right) are in the figure. The resistor $R_1$ may be used for heating the board near the LED. The temperature sensor (thermistor) $R_T$ is another resistor whose resistance depends strongly on the absolute temperature $T$:\n\n$$T = 2.254\\,\\mathrm{K}\\left(\\ln\\frac{R_T}{1\\,\\mathrm{k\\Omega}}\\right)^2 - 32.46\\,\\mathrm{K}\\ln\\frac{R_T}{1\\,\\mathrm{k\\Omega}} + 361.09\\,\\mathrm{K}.$$\n\n**Warning! Apply voltage to the LED only with the polarity shown!** The red lead of the power supply is “+” (and should be connected to the red connector of the LED) and the black lead is “−”.\n\nThe multimeter has a mode marked “$\\blacktriangleright\\!\\!|$” that acts as a source of an approximately constant small current, when a diode is connected between the “mAVΩ” (supplies “+”) and “COM” (“−”) terminals. In this mode the multimeter shows the voltage across the diode in volts, while supplying about $0.33\\,\\mathrm{mA}$ (you may assume the current stays fixed).\n\nIn a simplified theory, the diode current $I_d$, voltage drop $V$ at the junction inside the LED where light is emitted, and absolute temperature $T$ of the junction obey\n\n$$I_d = Ae^{-V_{G0}/(nV_T)}\\left(e^{V/(nV_T)} - 1\\right) \\text{ with } V_T = \\frac{k}{q}T,$$\n\nBoltzmann constant $k = 1.381\\times 10^{-23}\\,\\mathrm{J/K}$ and elementary charge $q = 1.602\\times 10^{-19}\\,\\mathrm{C}$. The variable $V_T$ is called the thermal voltage. The parameters $V_{G0}$ and $n$ depend on the materials of the LED; the parameter $A$ depends also on the construction of the LED. The parameter $n$ is called the ideality factor and usually $1 < n < 2$. The parameter $V_{G0}$ is called the nominal bandgap voltage of the semiconductor material.\n\nThe voltage across a physical diode $V' = V + I_dR_s$ has also contribution from a parasitic series resistance $R_s$ which is of the order of $1\\,\\Omega$. **Hint:** estimate the magnitudes in the expression above and simplify your calculations accordingly!",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "Left: schematic of the circuit board with six numbered connectors — red 1, black 2, yellow 3, grey 4, grey 5, yellow 6. The LED (with “+” at connector 1 and “−” at connector 2, arrows showing emitted light) is between connectors 1 and 2; the thermistor R_T is between the two grey connectors 4 and 5; the resistor R_1 is between the yellow connectors 3 and 6. Right: the potentiometer drawn as a circle with three leads, containing a resistor with a sliding contact (arrow).",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-experiment-exp-pr/p1-fig1.png",
+     "width": 1023,
+     "height": 370,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       48.83,
+       301.41,
+       294.08,
+       389.79
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "1.",
+     "statement": "Measure and plot the voltage–temperature graph of the LED at a constant current (your current should be small enough so that the voltage drop on $R_s$ can be neglected).\n\nFind $V_{G0}$.\n\nFind the parameters $n$ and $A$ by making additional measurements and a suitable plot.\n\nAt larger currents, the series resistance $R_s$ becomes noticeable. Measure this $R_s$.",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "V_G0 ≈ 2.085 V; n ≈ 1.55; A ≈ 119 A; R_s ≈ 0.75 Ω",
+      "note": "From the official solution. The solution prints the bandgap voltage as “v_G0 ≈ 2.085 V” (lowercase v)."
+     }
+    },
+    {
+     "label": "2.",
+     "statement": "Define the efficiency of the LED as the ratio between the power radiated as light and the consumed electrical power. Measure a value of the efficiency $\\eta$ of the LED without using the temperature sensor.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.48,
+      "tolerance": 0.01,
+      "note": "The official solution prints the result as “k_D = 1 − 41.0 mm/W/79.8 mm/W ≈ 0.48” (the quantity is the efficiency η; the fitted slope on the graph is 79.1x). With the temperature sensor it gives η ≈ 0.46 ± 0.04."
+     }
+    },
+    {
+     "label": "3.",
+     "statement": "The LED also behaves as a solar cell (or a photodiode). The photocurrent $I_p$ generated by light does not depend on the voltage and is proportional to the light intensity; it is subtracted from the diode current ($I = I_d - I_p$). The photocurrent from the ambient light was low enough not to affect previous measurements.\n\nPlace two LEDs directly opposite to each other at $d = 3.0\\,\\mathrm{cm}$ distance, and supply one of them with $I_1 = 0.50\\,\\mathrm{A}$. Determine the maximum electrical power $P_{\\max}$ that can be harvested from the LED in this lighting setup at room temperature.\n\nDetermine the corresponding photoefficiency $\\eta_p$ — electrical power output divided by the power of the light absorbed by the active area of the LED. This area is $S = 1.56\\,\\mathrm{mm}^2$. Assume that the LED radiates uniformly into $\\alpha = 33\\%$ of the sphere.",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "P_max ≈ 17 μW (measured); η_p ≈ 0.04",
+      "note": "From the official solution. The model-based estimate in the same solution is printed as P_max ≈ 0.026 mW with I_p ≈ 0.020 mA; the measurement gives I_p = −15 “µV” (printed unit; a current in µA is meant)."
+     }
+    }
+   ],
+   "topics": [
+    "electricity/semiconductors",
+    "thermodynamics/heat-transfer",
+    "optics/photometry"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Task 1. The easiest way to obtain $V(T)$-graph is to use the diode function of the multimeter for measuring diode voltage $V$. The board is heated by driving through the resistor $R_1$ a current which is adjusted using the potentiometer.\n\n| $V$ (V) | $R_T$ (kΩ) | $T$ (K) | $V$ (V) | $R_T$ (kΩ) | $T$ (K) |\n|---|---|---|---|---|---|\n| 1.560 | 9.25 | 300.0 | 1.560 | 9.25 | 300.0 |\n| 1.555 | 8.18 | 302.8 | 1.555 | 8.08 | 303.1 |\n| 1.550 | 7.2 | 305.8 | 1.550 | 7.13 | 306.0 |\n| 1.545 | 6.33 | 308.9 | 1.545 | 6.33 | 308.9 |\n| 1.540 | 5.6 | 311.9 | 1.540 | 5.56 | 312.0 |\n| 1.535 | 5.02 | 314.6 | 1.535 | 4.94 | 315.0 |\n| 1.530 | 4.44 | 317.7 | 1.530 | 4.4 | 317.9 |\n| 1.525 | 3.97 | 320.6 | 1.525 | 3.93 | 320.9 |\n| 1.520 | 3.55 | 323.6 | 1.520 | 3.52 | 323.8 |\n| 1.515 | 3.18 | 326.6 | 1.515 | 3.13 | 327.0 |\n| 1.510 | 2.8 | 330.1 | 1.510 | 2.82 | 329.9 |\n| 1.505 | 2.55 | 332.7 | 1.505 | 2.55 | 332.7 |\n| 1.500 | 2.32 | 335.4 | 1.500 | 2.27 | 336.0 |\n| 1.495 | 2.09 | 338.4 | 1.495 | 2.07 | 338.7 |\n| 1.490 | 1.88 | 341.5 | 1.490 | 1.888 | 341.4 |\n| 1.485 | 1.72 | 344.1 | 1.485 | 1.7 | 344.5 |\n| 1.480 | 1.56 | 347.1 | 1.480 | 1.546 | 347.4 |\n| 1.475 | 1.42 | 350.0 | 1.475 | 1.407 | 350.3 |\n| 1.470 | 1.29 | 353.0 | 1.470 | 1.285 | 353.1 |\n| 1.465 | 1.19 | 355.5 | 1.465 | 1.175 | 355.9 |\n| 1.460 | 1.085 | 358.5 | 1.460 | 1.083 | 358.5 |\n| 1.455 | 0.992 | 361.4 | 1.455 | 0.987 | 361.5 |\n| 1.450 | 0.911 | 364.1 | 1.450 | 0.909 | 364.2 |\n\nOnce we estimate the magnitude of the terms in the expression for $I_d$, we’ll find that $V_T \\approx 25\\,\\mathrm{mV}$ for $T \\approx 300\\,\\mathrm{K}$; all the voltages are much larger than that, so the unity can be neglected. Then, with constant $I_d$, we have $\\frac{V-V_{G0}}{nV_T} = \\mathrm{const}$ (the constant appears to be negative), hence $V = V_{G0} - BnV_T = BnkT/q$, where $B$ is a constant. So, we need to plot $V$ versus $T$, and $V_{G0}$ is found as the intersection point of the linear regression line with the vertical axis.\n\nFrom the linear regression we obtain $v_{G0} \\approx 2.085\\,\\mathrm{V}$.\n\nNext we can make a series of measurements with small currents so that the diode will have essentially the room temperature. Then we can take logarithm from the expression of $I_d$ (while neglecting the unity) to obtain\n\n$$\\frac{V - V_{G0}}{V_T} = n\\ln A - n\\ln I_d.$$\n\nThus, if we plot $\\ln I_d$ versus $V - V_{G0}$, $n$ and $A$ can be obtained as the linear regression parameters.\n\nAlternatively, we can make a series of measurements with a fixed voltage applied to the diode, and measure current for different temperatures. Based on the same expression as given above, we need to plot $\\frac{V-V_{G0}}{V_T} = \\frac{(V-V_{G0})q}{kT}$ versus $\\ln I_d$. Such data are given in the table below.\n\n| $I$ (mA) | $R_T$ (kΩ) | $T$ (K) | $\\ln(I/1\\,\\mathrm{A})$ | $\\frac{(V-V_{G0})q}{kT}$ |\n|---|---|---|---|---|\n| 33.3 | 9.76 | 298.8 | -10.310 | -22.25 |\n| 44.8 | 5.51 | 312.3 | -10.013 | -21.29 |\n| 96.6 | 7.12 | 306.1 | -9.245 | -21.72 |\n| 150.0 | 4.72 | 316.1 | -8.805 | -21.03 |\n| 194.1 | 3.6 | 323.2 | -8.547 | -20.57 |\n| 297.0 | 2.53 | 332.9 | -8.122 | -19.97 |\n| 417.0 | 1.84 | 342.1 | -7.782 | -19.43 |\n| 551.0 | 1.36 | 351.3 | -7.504 | -18.92 |\n| 840.0 | 1.002 | 361.0 | -7.082 | -18.41 |\n| 860.0 | 0.95 | 362.8 | -7.059 | -18.33 |\n\nIf we plot these data we’ll see that most of the data points lie on a straight line, but first two and the very last one will deviate. Data points corresponding to very small currents deviate because of large relative uncertainties, last data point deviates because the parasitic resistance can no longer be neglected. So we discard these from our analysis.\n\nWith this graph, the tangent of the slope of the regression line gives us directly $n \\approx 1.55$. The intercept $-7.39$ gives us $-n\\ln A$, so that $A \\approx e^{7.39/1.55}\\mathrm{A} \\approx 119\\mathrm{A}$.\n\nBy very large currents, a certain change in current $\\Delta I_d$ will give rise to just a tiny change in the voltage drop $\\Delta V$ at the diode junction, if we can keep the temperature constant by compensating with the resistor. [according to the exponential dependence of $I_d = I_d(V)$], which is much smaller than the change in the voltage drop on the parasitic resistor $R_s\\Delta I_d$. So, we can determine $R_s$ from the experimentally measured dependance of the diode current $I_d$ on the total voltage $V' = V + I_dR_s$ at the limit of large currents.\n\n| $R_T$ (kΩ) | $I_d$ (A) | $V'$ (V) |\n|---|---|---|\n| 0.986 | 0.85 | 2.41 |\n| 1.435 | 0.7 | 2.3 |\n| 1.360 | 0.75 | 2.33 |\n| 6.55 | 0.189 | 1.916 |\n\nThe regression line slope gives directly $R_s \\approx 0.75\\,\\Omega$.\n\nOther option is to measure the voltage, temperature and current (at high current values) and subtract the diode voltage calculated from the model to get the voltage drop on series resistance.\n\nIn both cases, it is important that the voltage is measured directly from the LED wires, to ignore the any additional voltage drops on high current carrying part of circuit.\n\nTask 2. The idea is to compare the thermal expansion of air inside the bottle when the heat is being released by the diode, and when this is done by the resistor. In the latter case, all the consumed electrical power is released as heat; in the former case, part of the heat escapes the bottle as light radiation energy. The pressure inside a bottle is a function of its temperature, and the temperature which will establish inside the bottle is defined by the balance between the thermal dissipation power, and the rate by which heat is escaping the bottle. The latter is a function of the temperature inside the bottle, and hence, the temperature inside the bottle is a function of the heat dissipation power. Therefore, the pressure inside the bottle is also a function of the heat dissipation power.\n\nFirst we need to build a manometer which allows us to measure pressure difference — either between the pressure inside the bottle and the atmospheric pressure, or between the pressure inside the two bottles. To that end, we fill a tube with water and folding it into a U-tube; pressure difference can be determined via the water column height difference between two halves of the tube.\n\nOne possible approach to this problem is to compare heat dissipation on the diode with a heat dissipation on the resistor: one may adjust (using the potentiometer) the heating power of the resistor to reach such a state that the pressures inside the bottles are equal. If this state is reached when the electrical consumption power of the diode is $P_D$ and the power of the resistor is $P_R$ then we can conclude that thermal dissipation power of the diode is also $P_R$, and hence, $P_D - P_R$ escapes the bottle as the light radiation so that $\\eta = 1 - P_R/P_D$.\n\nThermal equilibrium inside the bottles is reached relatively slowly, one must wait approximately for 5-10 minutes. Therefore, finding the state when the heat dissipation powers on the diode and on the resistor are equal may be a relatively slow process. An alternative approach is to assume that the heat exchange rate with the surrounding to be linear in temperature (this assumption is well-founded as the diode never becomes very hot). Then we can make two series of measurements for the pressure inside the bottle as a function of electrical consumption power: first, when the current is driven through the diode, and second, when it is driven through the resistor, $\\Delta p = \\Delta p(P)$. Fitting the data to a linear law, $\\Delta p = kP$, we obtain the values of the proportionality coefficient $k$ both for the diode ($k_D$) and for the resistor ($k_R$); then, $\\eta = 1 - k_R/k_D$. Note that since the pressure is proportional to the column height difference, we can express the pressure in terms of the height of water column: the proportionality factor cancels out from the ratio.\n\nMeasurement data are given in the table below; $I$, $V$, $P$, and $d$ refer to the measured current, voltage, power, and water column height difference, respectively; index “L” refers to the measurements with a diode, and “R” — to the measurements with a resistor.\n\n| $I_D$ | $V_D$ | $P_D$ | $d_D$ | $I_R$ | $U_R$ | $P_R$ | $d_R$ |\n|---|---|---|---|---|---|---|---|\n| 101.5 | 1.85 | 0.1878 | 8 | 101.9 | 0.585 | 0.0596 | 5 |\n| 198.2 | 1.95 | 0.3865 | 15 | 190.1 | 1.09 | 0.2072 | 16 |\n| 300 | 2.04 | 0.6120 | 23 | 300 | 1.76 | 0.5280 | 41 |\n| 390 | 2.11 | 0.8229 | 33 | 390 | 2.35 | 0.9165 | 71 |\n| 480 | 2.18 | 1.0464 | 45 | 470 | 2.73 | 1.2831 | 103 |\n\nBased on these slopes $k_D = 1 - 41.0\\,\\mathrm{mm/W}/79.8\\,\\mathrm{mm/W} \\approx 0.48$\n\nNote that it is also possible to measure the efficiency using the temperature sensor: it works in the same way as the method using air expansion described above. We compare temperature of the circuit board as function of electrical power supplied to the diode [$T_D(P)$], and also the temperature when power is supplied to the resistor [$T_R(P)$]. Assuming that dominating part of the heat is dissipated into surroundings via the circuit board and only a negligible part of it leaves as a heat radiation at the diode and resistor, respectively (this is an assumption which is valid with a really good accuracy), we can find $\\eta = 1 - T_D(P)/T_R(P)$, or even better, $\\eta = 1 - \\kappa_D(P)/\\kappa_R(P)$, where $\\kappa_D$ and $\\kappa_R$ denote the slopes of the respective graphs. The result is the same as shown above, $\\eta \\approx 0.46 \\pm 0.04$. It is also possible to calculate the internal efficiency of the junction by subtracting the power dissipation on the parasitic resistance; the result is $\\eta_{\\mathrm{internal}} \\approx 0.53$.\n\nTask 3. According to our model, the photocurrent does not depend on the voltage, but because the diode current does, the total current through the diode depends on the voltage. For the maximum harvestable electrical power $P_{max}$ we must find a voltage where $P = VI_p - VI_d$ is the greatest.\n\nWe can do it in multiple ways. One way is to measure the $I_p \\approx 0.020\\,\\mathrm{mA}$ by shorting the diode with a am-meter, and then finding the maximum analytically or numerically from our model. Using the diode parameters from above we get $P_{\\max} \\approx 0.026\\,\\mathrm{mW}$. Other way is to change the voltage on the diode with potentiometer, measure the current and the voltage and find the maximum by scanning the range where current and voltage are positive, see the circuit below.\n\nThe data of measurements are given in the table below; the graph shows both the experimental data points and theoretical dependence $I_d(V) - I_p$, where $I_p = -15\\,\\mu\\mathrm{V}$, determined using the measurement at $V = 0\\,\\mathrm{V}$. As we can see, the two curves are fairly close; there is a small mismatch which can partly explained by a leakage current due to a certain large effective resistance being connected in parallel to the diode’s junction.\n\n| $V$ (V) | $I = I_d - I_p$ (A) | $P = VI$ ($\\mu$W) |\n|---|---|---|\n| 0 | -15 | 0 |\n| 0.18 | -14.8 | 2.664 |\n| 0.4 | -14.7 | 5.88 |\n| 0.6 | -14.6 | 8.76 |\n| 0.8 | -14.5 | 11.6 |\n| 0.99 | -14.5 | 14.355 |\n| 1.2 | -14.2 | 17.04 |\n| 1.3 | -12.8 | 16.64 |\n| 1.35 | -11.3 | 15.255 |\n| 1.4 | -6 | 8.4 |\n| 1.43 | -0.5 | 0.715 |\n| 1.46 | 8.6 | -12.556 |\n\nThe graph includes also the curve for the electrical power produced by the diode, $P = VI$. The maximum $P_{\\max} \\approx 17\\,\\mu\\mathrm{W}$ can be determined as the maximum of this curve. The efficiency is found as\n\n$$\\eta_p = \\frac{P_{\\max}}{P_i} = \\frac{P_{\\max}}{\\eta I_1 V(I_1)\\frac{S}{\\alpha 4\\pi d^2}},$$\n\nwhere $\\frac{S}{\\alpha 4\\pi d^2}$ is fraction of the light reaching the active area of the LED; $V_1$ and $I_1$ denote the voltage and current of the other diode, respectively. Numerically we obtain $\\eta_p \\approx 0.04$.",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "alt": "Graph of V (V) versus T: vertical axis V(V) from 1.440 to 1.580, horizontal axis T from 290 to 370. Square data points from (300, 1.560) down to (364, 1.450) lie on a red straight regression line labelled y = -0.0017x + 2.0729.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-experiment-exp-pr/p1-sol-fig1.png",
+      "width": 1132,
+      "height": 745,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        27.41,
+        479.88,
+        298.85,
+        658.35
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "alt": "Graph with horizontal axis ln(I/1A) from −9.0 to −7.0 (labels on top) and vertical axis (V−V_G0)/V_T from −21.50 to −18.50 (labels on the right). Seven data points on a straight line with the regression label y = 1.5474x-7.389.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-experiment-exp-pr/p1-sol-fig2.png",
+      "width": 1117,
+      "height": 587,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        302.4,
+        296.33,
+        570.28,
+        436.95
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig3",
+      "alt": "Graph of V' (V) from 1.9 to 2.5 versus I (A) from 0.1 to 0.9: four data points on a thick straight line, labelled y = 0.7454x + 1.7752, R² = 0.9998.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-experiment-exp-pr/p1-sol-fig3.png",
+      "width": 1100,
+      "height": 611,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        308.97,
+        649.08,
+        572.67,
+        795.6
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig4",
+      "alt": "Graph of d (mm) from 0 to 120 versus P (W) from 0.0 to 1.4. Dark green line through square points (resistor) labelled y = 79.1x, R² = 0.9992; yellow line through triangle points (diode) labelled y = 41.0x, R² = 0.9882.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-experiment-exp-pr/p1-sol-fig4.png",
+      "width": 1129,
+      "height": 703,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        300.02,
+        97.65,
+        570.87,
+        266.04
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig5",
+      "alt": "Circuit diagram: the power supply terminals + (top) and − (bottom) feed a potentiometer whose slider goes through an ammeter A to the emitting diode; opposite it, with arrows showing light between them, the receiving diode is connected to a millivoltmeter mV and, through a microammeter µA, to the slider of a second potentiometer.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-experiment-exp-pr/p1-sol-fig5.png",
+      "width": 901,
+      "height": 372,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        301.23,
+        644.9,
+        517.32,
+        734.13
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig6",
+      "alt": "Graph versus V (V) from 0 to 1.5: vertical axis labelled I (µA) and P=IV (µW), from −15 to above 10. Green triangles: experimental P vs V curve rising to a maximum near 1.2 V and then falling sharply; red squares: theoretical I-V curve; blue diamonds: experimental I-V curve, both near −15 until about 1.2 V, then rising steeply.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-experiment-exp-pr/p1-sol-fig6.png",
+      "width": 908,
+      "height": 682,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        26.19,
+        218.07,
+        244.08,
+        381.38
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig7",
+      "alt": "Coarse-grained grading scheme (table printed as an image). 1 Voltage-temperature graph — Plot: Method 0.5, Measurements 1.0, Plot 0.5; VG0: Method 1.0, Value 0.5; n,A: Method 1.0, Measurements and plot 1.5, Value for n 0.5, Value for A 0.5; Rs: Method 1.0, Measurements 0.5, Value 0.5. 2 Efficiency — η: Method 2.0, Measurements 2.0, Value 1.0. 3 LED as photodiode — Nmax: Method 2.0, Measurements 2.0, Value 0.5; ηp: Formula 1.0, Value 0.5.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-experiment-exp-pr/p1-sol-fig7.png",
+      "width": 629,
+      "height": 1029,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        301.82,
+        153.23,
+        452.43,
+        399.92
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,106 @@
+---
+id: eupho-2019-theory-th-pr-p2
+source: 'EuPhO 2019'
+title: 'Задача 2. Motion of a charged ball'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2019/eupho-2019-theory-th-pr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:38:29.690Z'
+verifier: 'mechanical'
+---
+
+*EuPhO Riga | LATVIA 2019 — Theoretical Problems Text for Student: COM-A1*
+
+## Условие
+
+A solid, homogeneous spherical ball of mass $m$ and radius $R$ is made of insulating material and has charge $Q$ distributed uniformly throughout its volume. The ball is placed on a large horizontal surface, and set in rolling motion without slipping in such a way that its center starts to move with initial horizontal velocity $v_0$. There is a uniform magnetic field (flux density) of magnitude $B$ perpendicular to the surface. The coefficient of static friction is large enough to prevent the ball from slipping on the surface. The moment of inertia of the ball about an axis through its center is $2mR^2/5$.
+
+Describe the motion of the center of the ball and the shape of its trajectory.
+
+Hint: Depending on your approach you may use the following identity:
+
+$$\vec{a} \times (\vec{b} \times \vec{c}) = \vec{b}\,(\vec{a} \cdot \vec{c}) - \vec{c}\,(\vec{a} \cdot \vec{b})$$
+
+valid for any three vectors $\vec{a}$, $\vec{b}$ and $\vec{c}$.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $r = \frac{7}{6}\,\frac{mv_0}{QB}, \qquad \Omega = \frac{6}{7}\,\frac{QB}{m}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+The forces acting on the ball are the static frictional force $\vec{F}$, the gravitational force, the normal force, and the Lorentz force $\vec{F}_L$ caused by the magnetic field. None of these forces perform mechanical work on the ball, so the total kinetic energy of the ball is conserved. Due to the condition of pure rolling, the speed of the center of the ball $v$ is proportional to the angular speed $\omega$ of the rolling motion, i.e. the total kinetic energy can be expressed in terms of $v^2$. As a result, the speed of the center of the ball remains constant, but the direction of velocity may change.
+
+The net Lorentz force acting on the ball can be expressed with the help of the velocity of the center of the ball $\vec{v}$:
+
+$$\vec{F}_L = Q\vec{v} \times \vec{B}, \qquad (1)$$
+
+which can be proven by summing up the magnetic forces acting on the small pieces of the ball.
+
+**Proof 1.** Let us denote the charge of the $i$th small piece by $\Delta Q_i$, the position vector directed from the center of the ball to the small piece by $\vec{x}_i$. The velocity of this small piece is given by
+
+$$\vec{v}_i = \vec{v} + \vec{\omega} \times \vec{x}_i,$$
+
+so the net Lorentz force can be written as
+
+$$\vec{F}_L = \sum_i \Delta Q_i \vec{v}_i \times \vec{B} = \sum_i \Delta Q_i \vec{v} \times \vec{B} + \sum_i \Delta Q_i\,(\vec{\omega} \times \vec{x}_i) \times \vec{B}.$$
+
+The second sum gives zero, because terms containing $\vec{x}_i$ and $-\vec{x}_i$ cancel each other pairwise. From the first sum $\vec{v} \times \vec{B}$ can be taken out, so at the end the net force is the same as the Lorentz force acting on a point charge moving with the velocity of center of mass
+
+The speed of the center of the ball does not change, i.e. the net force (which is horizontal) should be perpendicular to the velocity $\vec{v}$ of the center. Since the Lorentz force is always perpendicular to $\vec{v}$, so should be the static frictional force $\vec{F}$, as well. The magnitude of $\vec{F}$ cannot depend on the position, only on the speed of the ball, so $|\vec{F}|$ must remain constant during the motion. As a result, the net force (i.e. the acceleration of the center of the ball) is constant in magnitude, so the ball’s center will perform a uniform circular motion with speed $|\vec{v}| = v_0$ (see the Figure).
+
+Now we can write down the equation of motion of the ball. The acceleration of the center of mass is horizontal, which is caused by the static frictional force and the net Lorentz force, so with the help of equation (1) Newton’s 2nd law in the radial direction can be written as
+
+$$QvB - F = mr\Omega^2, \qquad (2)$$
+
+where $r$ is the radius of the circular trajectory of the center of mass and $\Omega$ is the angular speed of the circular motion. We can obtain a relationship between the two angular speeds from the condition of pure rolling:
+
+$$v_0 = R\omega = r\Omega\,. \qquad (3)$$
+
+The magnetic field also exerts a net torque on the charged ball. The torque is given by
+
+$$\vec{\tau}_L = \frac{Q}{2m}\vec{L} \times \vec{B},$$
+
+where $\vec{L}$ is the angular momentum of the ball with respect to the center.
+
+**Proof 2.** As the ball rolls on the surface, moving charges form loop currents which represent a net magnetic moment. A small piece of charge $\Delta Q_i$ corresponds to current
+
+$$I_i = \frac{|\vec{\omega}|}{2\pi}\Delta Q_i,$$
+
+so the contribution of this piece to the net magnetic moment $\vec{\mu}$ has magnitude $I_i\,\pi x_{i,\perp}^2$, where $x_{i,\perp}$ is the distance of the small piece from the rotation axis of the ball. The direction of the net magnetic moment is parallel with the vector $\vec{\omega}$, and its magnitude can be written as the sum
+
+$$\vec{\mu} = \frac{1}{2}\vec{\omega}\sum_i \Delta Q_i\,x_{i,\perp}^2\,.$$
+
+Here we don’t need to evaluate the sum (integral), if we use the analogy with the moment of inertia:
+
+$$\sum_i \Delta m_i\,x_{i,\perp}^2 = \frac{2}{5}mR^2 \quad\longrightarrow\quad \sum_i \Delta Q_i\,x_{i,\perp}^2 = \frac{2}{5}QR^2\,.$$
+
+So the net magnetic torque acting on the ball (in the form of couples) is given by
+
+$$\vec{\tau}_L = \vec{\mu} \times \vec{B} = \frac{1}{5}QR^2\vec{\omega} \times \vec{B} = \frac{Q}{2m}\vec{L} \times \vec{B}\,.$$
+
+The angular acceleration of the ball is caused by the frictional torque and the magnetic torque. As it can be seen from the Figure, both torques have the same direction, which is perpendicular to the ball’s angular velocity. As a result, the axis of rotation of the ball precesses in the horizontal plane. To satisfy the condition of pure rolling, the angular speed of the precession must be $\Omega$. During precession the rate of change of the angular momentum is given by $|\vec{L}|\Omega$, so the equation of rotational motion for the center of the ball is
+
+$$\underbrace{\frac{1}{5}QR^2\omega B}_{|\vec{\tau}_L|} + RF = \underbrace{\frac{2}{5}mR^2\omega}_{|\vec{L}|}\,\Omega. \qquad (4)$$
+
+From equations (2), (3) and (4) the radius and the angular velocity of the circular motion can be expressed:
+
+$$r = \frac{7}{6}\,\frac{mv_0}{QB} \qquad \text{and} \qquad \Omega = \frac{6}{7}\,\frac{QB}{m}.$$
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2019-theory-th-pr/p2-sol-fig1.png" alt="Perspective drawing of a horizontal plate with a shaded ball of mass m rolling on it. A vertical arrow B points up from the centre O of a dashed circle of radius r; the arrow Ω along the circle shows the sense of circulation. At the ball: velocity arrow v, Lorentz force F_L pointing toward O, friction force F, and angular velocity ω." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th_pr.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2019/th_pr.pdf)
+· официални решения: [th_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2019/th_sol.pdf)

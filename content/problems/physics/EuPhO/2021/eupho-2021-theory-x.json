@@ -1,0 +1,414 @@
+{
+ "paper": {
+  "id": "eupho-2021-theory-x",
+  "subject": "physics",
+  "competition": "EuPhO",
+  "year": 2021,
+  "round": "theory",
+  "roundType": "theory",
+  "grade": null,
+  "lang": "en",
+  "title": "EuPhO-2021 Theoretical Problems. Language: English",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/EuPhO/2021/EuPhO_2021-theory.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/EuPhO/2021/EuPhO_2021_Solutions-2.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "9cf0ba4d2ddc620a9af6e64e76f1649ab188cf54a6b339f6508a30c3030cb748",
+    "solutions": "076112eaa51bd285d3ea43aba3b903ab077947fda53435e25029bd2183b2a9eb"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "Three problems T1–T3 as in the catalogue; T1 and T3 have printed parts a.–c., T2 has none. No points are printed in the problem statements; the solutions' grading schemes give 10 points for T1 and 10.0 p for T2. Problem page 2 is the larger version of the first T3 photo, included as figure p3-fig3. In the T3 solution the parenthesis opened before 'when looking from the distant point A' is not closed in the print; kept verbatim. The T3 grading scheme bullet '0.5 pts' for Q'0 and other printed wording kept. The 'General guidelines for marking' printed after the T2 grading table are attached to the T2 solution. Printed 'lay in the plane POA' kept as printed. The T1 grading-scheme sentence 'Arithmetic or typo errors gives half of point ... and is not considered' is kept verbatim (the singular verbs are consistent within the printed sentence).",
+   "edits": [
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "adiabaic",
+     "fixed": "adiabatic",
+     "document": "solutions",
+     "page": 1,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "eupho-2021-theory-x-p1",
+   "number": 1,
+   "title": "A leak",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A hollow insulated cylinder of height $2H$ and volume $2V$ is closed from below by an insulating piston. The cylinder is divided into two initially identical chambers by an insulating diaphragm of mass $m$. The diaphragm rests on a circular ledge and a gasket between them provides tight contact. Both chambers are filled with gaseous helium at pressure $p$ and temperature $T$. A force is applied to the piston, so that it moves upwards slowly.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "Vertical insulated cylinder of height 2H divided by a diaphragm of mass m into two chambers, each labelled p, V, T; a piston with a rod closes the cylinder from below; an arrow shows gravity g pointing down.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p1-fig1.png",
+     "width": 472,
+     "height": 815,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       176.22,
+       87.57,
+       289.3,
+       282.87
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a.",
+     "statement": "Find the volume of the lower chamber $V_0$ when the gas starts to leak between the chambers.",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "V_0 = V(1+x)^{-3/5},\\quad x = \\frac{mgH}{pV}"
+     }
+    },
+    {
+     "label": "b.",
+     "statement": "Find the temperature $T_1$ in the upper chamber when the piston touches the diaphragm.",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "T_1' = \\frac{T}{2}\\left(\\left(1+(1+x)^{3/5}\\right)^{5/3} - x\\right),\\quad x = \\frac{mgH}{pV}"
+     }
+    },
+    {
+     "label": "c.",
+     "statement": "Find the temperature $T_2$ in the lower chamber immediately before the piston touches the diaphragm.",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "T_2' = T\\left(1+(1+x)^{3/5}\\right)^{2/3},\\quad x = \\frac{mgH}{pV}"
+     }
+    }
+   ],
+   "topics": [
+    "thermodynamics/adiabatic-processes",
+    "thermodynamics/ideal-gas"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Let $p_1$, $V_1$, $T_1$ denote the (time dependent) pressure, volume, and temperature in the upper chamber, and $p_2$, $V_2$, $T_2$ — those in the lower one. Note that $V_1 \\equiv V$ does not change.\n\nConsider a parcel of volume $v$ below the diaphragm containing $n$ moles of helium. It is convenient to imagine it bounded by two fictitious free thin massless pistons. During slow perturbations the parcel undergoes an adiabatic process. The pressure and the temperature for the parcel are actually the pressure and the temperature for entire lower chamber $p_2$ and $T_2$. The energy conservation for the parcel is\n\n$$0 = p_2\\mathrm{d}v + \\mathrm{d}\\left(\\frac{3}{2}n_vRT_2\\right) = \\frac{5}{2}p_2\\mathrm{d}v + \\frac{3}{2}v\\mathrm{d}p_2.$$\n\nThis gives\n\n$$v^5p_2^3 = \\mathrm{const}, \\tag{1}$$\n\n$$T_2^5p_2^{-2} = \\mathrm{const}\\,. \\tag{2}$$\n\nThe leak begins when the pressure below the diaphragm exceeds that in the upper chamber by $\\Delta p \\equiv p_0 - p = mgH/V = px$, where\n\n$$x = \\frac{mgH}{pV}. \\tag{\\textbf{a., b., c.}}$$\n\na. We may let $v = V_2$ before that.\n\n$$V^5p^3 = V_0^5(p+\\Delta p)^3 = V_0^5p^3(1+x)^3$$\n\n$$V_0 = V(1+x)^{-3/5} \\tag{\\textbf{a.}}$$\n\nb. The energy conservation for the whole system:\n\n$$0 = p_1\\mathrm{d}V_1 + \\mathrm{d}\\left(\\frac{3}{2}n_1RT_1\\right) + p_2\\mathrm{d}V_2 + \\mathrm{d}\\left(\\frac{3}{2}n_2RT_2\\right) =$$\n\n$$\\frac{5}{2}\\left(p_1\\mathrm{d}V_1 + p_2\\mathrm{d}V_2\\right) + \\frac{3}{2}\\left(V_1\\mathrm{d}p_1 + V_2\\mathrm{d}p_2\\right) =$$\n\n$$\\frac{5}{2}p_2\\mathrm{d}(V+V_2) + \\frac{3}{2}(V+V_2)\\mathrm{d}p_2,$$\n\nsince the pressure above the diaphragm remains lower than that below by the same margin $\\Delta p$ during the later process and $\\mathrm{d}V_2 = \\mathrm{d}(V+V_2)$. Similarly to (1), we get\n\n$$(V+V_2)^5p_2^3 = \\mathrm{const}\\,.$$\n\nThe pressure $p_2'$ in the lower chamber when the piston touches the diaphragm is found from the equation\n\n$$V^5p_2^{\\prime 3} = (V+V_0)^5p_0^3 = V^5\\left(1+\\frac{1}{(1+x)^{3/5}}\\right)^5p^3(1+x)^3,$$\n\n$$p_2' = p\\left(1+(1+x)^{3/5}\\right)^{5/3}. \\tag{3}$$\n\nThe pressure in the upper chamber at this moment is\n\n$$p_1' = p_2' - \\Delta p = p\\left(\\left(1+(1+x)^{3/5}\\right)^{5/3} - x\\right).$$\n\nThe temperature in the upper chamber is found from the equations of state $pV = nRT$ and $p'V = (2n)RT'$\n\n$$T_1' = \\frac{T}{2}\\left(\\left(1+(1+x)^{3/5}\\right)^{5/3} - x\\right). \\tag{\\textbf{b.}}$$\n\nThe temperature and the pressure in the lower chamber are related by (2). Substituting (3) we get\n\n$$T_2' = T\\left(\\frac{p_2'}{p}\\right)^{2/5} = T\\left(1+(1+x)^{3/5}\\right)^{2/3}. \\tag{\\textbf{c.}}$$\n\n**Preliminary grading scheme**\n\n| | | |\n|---|---|---|\n| a1 | It’s stated (or written as a formula) that the process is adiabatic | 0.5 |\n| a2 | Relation between $V$ and $p$ is found in adiabatic process | 1.0 |\n| a3 | Condition on when the diaphragm leaks | 0.5 |\n| a4 | Answer for $V_0$ | 1.0 |\n| b1 | Energy conservation for the whole system in differential form. If conservation law is written only for one half but heat transfer is taken into account: 0.5 pts. | 1.0 |\n| b2 | Internal energy for a mono-atomic gas | 0.5 |\n| b3 | Usage of $V_1 = \\mathrm{const}$ | 0.2 |\n| b3 | Usage of $p_2 - p_1 = \\mathrm{const}$ | 0.3 |\n| b4 | Relation between $V_2$ and $p_2$ | 1.0 |\n| b5 | Equation to find $p_2'$ (or $T_2'$) before the end | 1.0 |\n| b6 | Usage of $n' = 2n$ | 0.5 |\n| b7 | Answer for $T_1'$ | 0.5 |\n| c1 | Relation between $T_1'$ and $T_2'$ | 1.0 |\n| c2 | Answer for $T_2'$ | 1.0 |\n\nArithmetic or typo errors gives half of point (rounded up to 0.1) for the item and is not considered as a mistake afterwards.",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    }
+   ]
+  },
+  {
+   "id": "eupho-2021-theory-x-p2",
+   "number": 2,
+   "title": "Thread around a cylinder",
+   "points": null,
+   "problemType": "theory",
+   "statement": "One end of a thread is tied into a loop of length $L > 2\\pi R$, and a cylinder of radius $R$ is put through the loop. The coefficient of friction between the thread and the cylinder is $\\mu$. The free end of the thread is being pulled parallel to the axis of the cylinder (as shown by arrow in the photo) while keeping the cylinder at rest. If the length of the loop is longer than a critical value, $L > L_0$, the loop can slide along the cylinder without changing its shape, otherwise the friction “locks” it into a place and increasing the pulling force would eventually just break the thread. Find this critical value $L_0$. The weight of the thread is to be neglected; the thread will not twist when being pulled.\n\nIt might be useful to know that\n\n$$2\\int\\sqrt{1+x^2}\\,\\mathrm{d}x = x\\sqrt{1+x^2} + \\operatorname{arcsinh}x\\,,$$\n\nwhere $\\operatorname{arcsinh}x \\equiv \\ln\\left(x+\\sqrt{1+x^2}\\right)$.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "alt": "Photo of a red cylinder with a dark thread loop wrapped around it; the loop's free end hangs down and a white arrow points downward along the cylinder axis.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p2-fig1.png",
+     "width": 549,
+     "height": 544,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       163.71,
+       426.02,
+       295.24,
+       556.47
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "answer": {
+    "kind": "expression",
+    "latex": "L_0 = \\pi R\\sqrt{1+(\\pi\\mu)^2} + \\frac{R}{\\mu}\\operatorname{arcsinh}(\\pi\\mu)"
+   },
+   "topics": [
+    "mechanics/friction",
+    "mechanics/statics"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "*Fig. 1* shows the cylinder and the loop from three different angles; $P$ denotes the pulled point of the loop, while $O$ is the top point of the thread.\n\nImagine that the side of the cylinder is cut along the generatrix $AB$ passing through point $P$, and then the side (including the loop) is unfolded as shown in *Fig. 2*. In this figure points $A$ and $A'$, $B$ and $B'$, $P$ and $P'$ are equivalent, respectively. Let us introduce a Cartesian coordinate system on this unfolded plane so that point $O$ is the origin, axis $z$ is parallel with the axis of cylinder and directed downwards, axis $x$ is perpendicular to $z$ (i.e. horizontal).\n\nConsider the forces acting on a small piece of the thread (with horizontal projection $\\Delta x$) indicated with red line in both figures. These are the tensions at both ends of the small piece exerted by neighbouring parts of the thread, the normal force $\\Delta N$ and the friction force $\\Delta f$ exerted by the cylinder. On the verge of slipping, the direction of $\\Delta f$ is parallel to the $z$-axis. Since the small piece of thread is in equilibrium, the $x$-component of the tension is the same everywhere:\n\n$$T_x = \\mathrm{const}.$$\n\nThe normal force $\\Delta N$ can be determined by looking at the top view of the loop in *Fig. 1*. The polar angle corresponding to small piece of thread is $\\Delta\\varphi = \\Delta x/R$, so the force balance in the radial direction can be written as\n\n$$2T_x\\underbrace{\\sin\\frac{\\Delta\\varphi}{2}}_{\\approx\\Delta\\varphi/2} - \\Delta N = 0 \\quad\\longrightarrow\\quad \\Delta N = T_x\\frac{\\Delta x}{R}\\,. \\tag{4}$$\n\nThe frictional force on the verge of slipping is given by\n\n$$\\Delta f = \\mu\\Delta N\\,. \\tag{5}$$\n\nThus, the force balance on the small piece of thread in the $z$ direction (see *Fig. 2*):\n\n$$T_x\\left.\\frac{\\mathrm{d}z}{\\mathrm{d}x}\\right|_{x+\\Delta x} - T_x\\left.\\frac{\\mathrm{d}z}{\\mathrm{d}x}\\right|_{x} - \\Delta f = 0\\,, \\tag{6}$$\n\nwhere we expressed the $z$-component of the tension forces with $T_x$ and the tangent $\\mathrm{d}z/\\mathrm{d}x$. Using the three equations above and taking the limit $\\Delta x \\to 0$, we get the differential equation\n\n$$\\frac{\\mathrm{d}^2z}{\\mathrm{d}x^2} = \\frac{\\mu}{R}\\,,$$\n\nwhere we used the fact that $T_x \\neq 0$. By direct integration and taking into account the boundary conditions $z(0) = 0$ and $z'(0) = 0$ we get\n\n$$z(x) = \\frac{\\mu}{2R}x^2\\,,$$\n\nso the shape of the thread on the unfolded side surface (*Fig. 2*) can be described by a parabola.\n\nThe thread needs to span over the entire cylinder, so its length can be calculated as\n\n$$L_0 = \\int_{-\\pi R}^{\\pi R}\\sqrt{\\mathrm{d}x^2 + \\mathrm{d}z^2} = 2\\int_0^{\\pi R}\\sqrt{1+\\left(\\frac{\\mathrm{d}z}{\\mathrm{d}x}\\right)^2}\\,\\mathrm{d}x\\,.$$\n\nSubstituting the $z(x)$ function we get:\n\n$$L_0 = 2\\int_0^{\\pi R}\\sqrt{1+\\left(\\frac{\\mu x}{R}\\right)^2}\\,\\mathrm{d}x = \\left(\\frac{R}{\\mu}\\right)2\\int_0^{\\pi\\mu}\\sqrt{1+\\xi^2}\\,\\mathrm{d}\\xi\\,,$$\n\nwhere we introduced the notation $\\xi = \\mu x/R$. Using the integral given in the text of the problem:\n\n$$L_0 = \\pi R\\sqrt{1+(\\pi\\mu)^2} + \\frac{R}{\\mu}\\operatorname{arcsinh}(\\pi\\mu)\\,.$$\n\nIf the length of the thread is shorter than the length calculated here, then there is no solution satisfying the thread length constraint, i.e. the thread cannot slip.\n\n*Note.* In the limit $\\mu \\to 0$ the loop slips even if $L = 2\\pi R$, which should be reproduced by our final formula. Using the relation for the inverse hyperbolic function given in the problem text, then expanding the logarithm in Taylor series in linear order around $0$ we get:\n\n$$\\operatorname{arcsinh}x \\equiv \\ln\\left(x+\\sqrt{1+x^2}\\right) \\approx \\ln(x+1) \\approx x\\,,$$\n\nso for small values of $\\mu$ we get\n\n$$L_0 \\approx \\pi R + \\frac{R}{\\mu}(\\pi\\mu) = 2\\pi R\\,.$$\n\n| **Grading scheme: T2** | |\n|---|---|\n| 2-i. A figure or figures reflecting the correct geometry such as: the loop is a non-planar curve in all figures (0.5 p), existence of exactly one cusp (0.5 p, if the „back” is hidden, 0 p). | 0.5 p + 0.5 p |\n| 2-ii. Realizing that on the verge of slipping the frictional force is parallel with the axis of the cylinder for every small piece of the thread and $\\Delta f = \\mu\\Delta N$. (If any of the two is missing, then 0.2 p) | 0.5 p |\n| 2-iii. Correct equation for the force balance in $z$ direction involving frictional force or the load (which is pulling down the loop) and the $z$ components of the tension. | 0.5 p |\n| 2-iv. $T_x = \\mathrm{const.}$ + correct explanation based on the balance in $x$ direction. If the physics is incompatible with the geometrical assumptions (e.g. planar curve for the loop and the existence of a frictional force acting on small pieces), no points are given | 0.5 p + 1.5 p |\n| 2-v. Expressing the normal force $\\Delta N$ acting on a small segment with $T_x$ and $\\mathrm{d}x$ (or $\\mathrm{d}\\phi$). If the relation $x = R\\varphi$ or $\\mathrm{d}x = R\\mathrm{d}\\varphi$ is not used here or anywhere else, 1.5 p is given. If the expression is wrong but $\\Delta N$ is proportional to the curvature ($1/R$), 1.0 p is given. | 2.0 p |\n| 2-vi. Deriving the correct differential equation for $z(x)$ (if the diff. equation is wrong due to any reason, 0 p) | 1.5 p |\n| 2-vii. Solving the diff. equation for $z(x)$ correctly (including boundary conditions). If only one integral is evaluated correctly, 0.3 p are given. For stating only the boundary conditions (both $z(0)$ and $z'(0)$) 0.2 p. | 1.0 p |\n| 2-viii. Writing down the length of the thread in terms of an integral of $z(x)$, i.e. writing down the length constraint | 0.5 p |\n| 2-ix. Evaluating the integral correctly (factor mistake in calculation 0.5 p, wrong units 0.2 p) | 1.0 p |\n| **Total T2:** | **10.0 p** |\n\n**General guidelines for marking:**\n\n- Granularity for marks is 0.1 p.\n- A simple numerical error resulting from a typo is punished by 0.2 p unless the grading scheme explicitly says otherwise.\n- Errors which cause dimensionally wrong results are punished by at least 50 % of the marks unless the grading scheme explicitly says otherwise.\n- Propagating errors are not punished repeatedly unless they either lead to considerable simplifications or wrong results whose validity can easily be checked later.",
+    "figures": [
+     {
+      "id": "p2-sol-fig1",
+      "caption": "Fig. 1",
+      "alt": "Three views of the loop on the cylinder: a top view (circle with points O and P, angle Δφ, tensions T_x and normal force ΔN), a side view of the unrolled strip with points A, B, P, O and the curved thread, and a 3D view of the cylinder with the loop, cusp angles θ at P, tensions T_x, friction Δf and normal force ΔN, and the pulled end going down to B.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p2-sol-fig1.png",
+      "width": 780,
+      "height": 920,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        340.52,
+        519.43,
+        527.4,
+        740.03
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig2",
+      "caption": "Fig. 2",
+      "alt": "Unfolded side surface of the cylinder of width 2πR with corners A, A′, B, B′; the thread is a parabola with vertex O at the top and ends at P and P′ with angles θ; axes x (right) and z (down) from O; a small red piece of thread of horizontal projection Δx with tensions T_x and friction Δf.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p2-sol-fig2.png",
+      "width": 887,
+      "height": 548,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        55.35,
+        130.5,
+        267.89,
+        261.81
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    }
+   ]
+  },
+  {
+   "id": "eupho-2021-theory-x-p3",
+   "number": 3,
+   "title": "Glass ball",
+   "points": null,
+   "problemType": "theory",
+   "statement": "The first photo here is taken with a digital camera and shows a glass ball, backlit with diffuse dichromatic light which has only two narrow spectral lines (red 630 nm and violet 400 nm). This diffuse light comes from the white floor (marked with ‘1’ in the figure) and the white walls (marked with ‘2’), both illuminated with violet and red LED lamps. The sensor of the camera has only red, blue and green sensors so that violet light appears in the photo as blue. The photo is taken from a distance much greater than the radius of the ball. On the back side of the ball, a very narrow opaque thread is glued to the glass surface, forming an arc of a great circle on the ball. In the photo, the thread is obstructed by the ball and cannot be seen directly. However, hugely deformed images of a very short segment of the thread are seen as blue (marked with ‘b’) and red (‘r’) ellipses. The letter ‘p’ indicates purple-coloured areas in the photo.\n\nIn the first photo, the centre of the ball is marked with a cross, and the perimeter of the ball is traced with a dashed line. You can find a larger version of the first photo on a separate sheet. You may take distance measurements there. In the larger photo, the boundary between the red and purple regions is also traced with a dashed line.\n\nThe second photo is taken while illuminating with a white LED with the ball turned so that the thread can be seen directly.",
+   "figures": [
+    {
+     "id": "p3-fig1",
+     "alt": "First photo: glass ball in false colours (magenta and blue) with its perimeter traced by a dashed line and its centre marked with a cross; the floor is marked 1 on both sides and the walls 2; a red ellipse r inside a blue ellipse b in the upper right part of the ball, with purple areas marked p.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p3-fig1.png",
+     "width": 666,
+     "height": 661,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       410.13,
+       89.24,
+       569.7,
+       247.5
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p3-fig2",
+     "alt": "Second photo: the glass ball under white light, with a thin dark thread glued along a great-circle arc across its surface.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p3-fig2.png",
+     "width": 569,
+     "height": 576,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       433.98,
+       497.57,
+       570.28,
+       635.62
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p3-fig3",
+     "alt": "Larger version of the first photo: the ball in magenta and blue with the perimeter traced by a dashed line, the centre marked with a cross, and a red region inside a blue elliptical ring in the upper right, whose red–purple boundary is traced with a dashed line.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p3-fig3.png",
+     "width": 2437,
+     "height": 2438,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       5.94,
+       104.4,
+       590.53,
+       689.49
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a.",
+     "statement": "Explain qualitatively using a ray diagram why a segment of the thread is seen as a closed loop in the first photo.",
+     "points": null
+    },
+    {
+     "label": "b.",
+     "statement": "Determine the coefficient of refraction $n_R$ for the red light.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 1.5,
+      "tolerance": 0.03,
+      "note": "Solution 1 gives n ≈ 1.498 ≈ 1.50; Solution 2 gives n_R ≈ 1.51; the grading scheme accepts answers within ±0.03."
+     }
+    },
+    {
+     "label": "c.",
+     "statement": "Determine the difference of the coefficients of refraction $\\Delta n \\equiv n_V - n_R$ for the red and violet light (with $n_V$ denoting the coefficient of refraction for the violet light).",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.013,
+      "tolerance": 0.003,
+      "note": "Solution 1 gives Δn ≈ 0.0132 ≈ 0.013; Solution 2 gives n_V − n_R ≈ 0.0145; the grading scheme accepts answers within ±0.003."
+     }
+    }
+   ],
+   "topics": [
+    "optics/refraction",
+    "optics/geometrical-optics"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "To begin with, let us notice that if a ray coming from a point $P$ on the stripe is refracted at point $Q$ at the surface of the ball towards a very distant point $A$ (which denotes the aperture of the camera lens), the ray will remain in the plane $PQO$ where $O$ is the centre of the sphere. This means that those rays which arrive from $P$ to $A$ must lay in the plane $POA$, and the rays can be conveniently depicted in the $POA$-plane.\n\nThe angle $\\gamma = \\gamma(\\alpha)$ between vectors $PO$ and $QA$ is given by\n\n$$\\gamma \\equiv 2\\alpha - \\beta \\tag{7}$$\n\n$$n\\sin\\alpha = \\sin\\beta \\tag{8}$$\n\nand is a non-monotonous function of $\\alpha$ which achieves its maximum $\\gamma_0$ by a certain $\\alpha_0$. This means that for a fixed $P$ and $A$, if $\\angle OPA < \\gamma_0$, there are two such angles $\\alpha$ and, hence, two such positions $Q_1$ and $Q_2$ for the point $Q$ that the ray $PQA$ will reach the point $A$ (here we have assumed that the point $A$ is at a very big distance). So, when viewed from the point $A$, the image of the point $P$ is split into two points $Q_1$ and $Q_2$. On the other hand, if $\\angle OPA > \\gamma_0$, rays from $P$ cannot reach $A$, and such points on the stripe cannot be seen in the photo. If $\\angle OPA = \\gamma_0$, the two images $Q_1$ and $Q_2$ merge into a single point bridging the two images of a piece of stripe into a closed loop.\n\nNow it becomes clear that the place where images $Q_1$ and $Q_2$ merge into a single image $Q_0$ is the key to finding the coefficient of refraction. Indeed, the point $Q_0$ can be found in the photo as the point where the blue ellipse (the images of a segment of the stripe in red light as the blue shadow is where the red light is missing) is touching a radius of the ball, see the figure below (we need to find tangent point with the radius because we need to consider plane $QOA$ which projects into a line through the ball’s centre). There is no difference between taking the tangent to the outer edge of the elliptical stripe and taking the tangent to the inner edge of it (point $Q_0'$ in the photo below). Then, $\\sin\\beta_0 = n\\sin\\alpha_0$ can be determined from the photo as the ratio of the lengths $h$ and $R$, $h/R \\approx 0.765$, where $h$ denotes the distance of the ball’s centre $O$ from the line $Q_0A$, measurable in the photo as the length $OQ_0$ (when looking from the distant point $A$, we can see only the perpendicular-to-$OA$ component of the segment $OQ_0$, and $R$ is the ball’s radius.\n\nSince we look for an extremum of $\\gamma$, upon taking differentials from Eqns. (7,8), we obtain\n\n$$2\\mathrm{d}\\alpha = \\mathrm{d}\\beta$$\n\n$$n\\cos\\alpha\\mathrm{d}\\alpha = \\cos\\beta\\mathrm{d}\\beta$$\n\nfrom where\n\n$$n\\cos\\alpha = 2\\cos\\beta. \\tag{9}$$\n\n$$n = \\sqrt{\\sin^2\\beta + 4\\cos^2\\beta} = \\sqrt{4 - 3\\sin^2\\beta} \\approx 1.498 \\approx 1.50.$$\n\nIn order to find $\\Delta n$, we could find in a similar way $n_V$ ($|OQ_0''| \\approx 0.755R$, $n \\approx 1.513 \\approx 1.51$), but the result would have a huge relative uncertainty as $|OQ_0|$ and $|OQ_0''|$ have very similar lengths. A much more precise result will be obtained if we base our calculations on the segment length $|ST|$, see the figure below. $Q_0''$ is where the blue rays have an extremum for $\\gamma$ while $Q_0'$ and $Q_0''$ are two red rays originating from the same point on the stripe. From the photo we can measure $|ST| \\approx 0.20R$, hence we can use the small parameter $SQ_0''/R \\approx 0.10$.\n\nRays from $S$, $T$, and $Q_0''$ arrive to the lens aperture, so all these rays (which originate from the same point $P$ on the stripe) have the same value of $\\gamma$. So, we have a set of equations\n\n$$\\gamma \\equiv 2\\alpha_R - \\beta_R = 2\\alpha_V - \\beta_V \\tag{10}$$\n\n$$n_V\\sin\\alpha_V = \\sin\\beta_V \\tag{11}$$\n\n$$(n_V - \\Delta n)\\sin\\alpha_R = \\sin\\beta_R \\tag{12}$$\n\n$$n_V\\cos\\alpha_V = 2\\cos\\beta_V\\,, \\tag{13}$$\n\nand we would like to get an expression relating $\\Delta n$ to $\\sin\\beta_{V1} - \\sin\\beta_{V2}$, where the indices 1 and 2 relate to the two different solutions. Expressing $\\alpha_R = \\alpha_V + \\delta$ we obtain from Eq. (10) that $\\beta_R = \\beta_V + 2\\delta$. Now, if we expand Eq. (12) into Taylor series, neglect the smallest term with $\\Delta n\\delta$, and keep in mind Eq. (11), we obtain\n\n$$n_V\\delta\\cos\\alpha_V - n_V\\delta^2\\frac{\\sin\\alpha_V}{2} - \\Delta n\\sin\\alpha_V = 2\\delta\\cos\\beta_V - 2\\delta^2\\sin\\beta_V.$$\n\nHere the two linear-in-$\\delta$ terms cancel out due to Eq. (13) so that with $\\sin\\beta_V = n_V\\sin\\alpha_V$ we obtain\n\n$$\\Delta n = 3n_V\\delta^2/2. \\tag{14}$$\n\nOn the other hand, $|ST|/R = \\sin\\beta_{R1} - \\sin\\beta_{R2} \\approx \\sin(\\beta_V + 2\\delta) - \\sin(\\beta_V - 2\\delta) = 4\\delta\\cos\\beta_V$, hence\n\n$$\\Delta n = \\frac{3n_V}{2}\\left(\\frac{|ST|}{4R\\cos\\beta_V}\\right)^2 = \\frac{3n_V}{32}\\frac{|ST|^2}{R^2 - h^2} \\approx 0.0132 \\approx 0.013. \\tag{15}$$\n\n**Grading scheme**\n\nA-i\n\n- Proving that we can see a loop because for a range of points on the thread, a single point of thread creates two images: 0.7 pts\n- The endpoints of that thread create one image forming thereby a closed loop: 0.3 pts\n\nElse if only the fact that rays coming to A must be in the PQO plane is stated: 0.3 pts\n\nA-ii Drawing a ray diagram where we can see that two rays originating from a single point arrive both to the lens while crossing the ball’s surface at different points and following the Snell’s law: 1.0 pt\nElse if such idea is demonstrated by words or by a rough sketch (which does not obey Snell’s law): 0.5 pts\n\nB-i Relating angle $\\beta$ to the measurable distance $h$ in the photo (any point on the blue or red ellipse will earn the mark): 1pt\n\nB-ii Measuring ratio of $h$ to $R$: 0.5 pts\n\nB-iii The idea of using point $Q_0$: 1 pt (using $Q_0'$ will earn only 0.5 pts as this corresponds to the violet light)\n\nB-iv Obtaining a correct expression of $\\gamma$ as a function of $\\alpha$ (or equivalent calculations in different parametrisation): 1 pt\n\nB-v Finding extremum and hence, the final expression of $n$ as a function of $\\beta$ or $h$: 1pt. If an incorrect expression is obtained from reasonable physics because of mistakes in algebraic manipulation: 0.5 pts\n\nB-vi If the numerical answer is correct within $\\pm 0.03$ and is found using reasonable physics: 0.5 pts. Else if the numerical answer is correct within $\\pm 0.1$ and is found using reasonable physics: 0.3 pts. No point if the answer is guessed or is found using completely wrong or irrelevant physics.\n\nC-i The idea of using the width or length of the blue ellipse: 1 pt (red ellipse cannot be used as we don’t know if the center of the red ellipse corresponds to the edge of the thread, or to a point at its middle)\n\nC-ii Obtaining Eq (14) or something equivalent based on considering neighbouring red and violet rays: 1 pt. If an incorrect expression is obtained from reasonable physics because of mistakes in algebraic manipulation: 0.5 pts\n\nC-iii Expressing $\\Delta n$ correctly in terms of measurable quantities: 0.5 pts\n\nC-iv Finding numerical answer correct within $\\pm 0.003$: 0.5 pts. (0 pts if this answer is obtained without considering the width or height of the blue ellipse.)\n\n**Solution 2**\n\nOne may alternatively prefer to consider a plane, perpendicular to the thread and containing the ball centre $O$ and the camera $A$. This is the plane of symmetry for the system and corresponds to the maximum width of the ovals. The same arguments as in the first Solution lead to\n\n$$\\gamma = \\beta - 2\\arcsin\\frac{\\sin\\beta}{n} = \\arcsin\\frac{h}{R} - 2\\arcsin\\frac{h}{nR}.$$\n\nFor $n < 2$ this function is not monotonous and may give the same result for two different values of $h$ (that is why the mapping of an arc is a closed oval).\n\nTo get the refraction index for red we solve the equation\n\n$$\\arcsin\\frac{h_1}{R} - 2\\arcsin\\frac{h_1}{n_RR} = \\arcsin\\frac{h_4}{R} - 2\\arcsin\\frac{h_4}{n_RR},$$\n\nwhich gives $n_R \\approx 1.51$.\n\nOne could repeat the previous argument to find $n_V$. One could also compare the images of the same thread elements in different colours. This gives 4 equations\n\n$$\\arcsin\\frac{h_{1,4}}{R} - 2\\arcsin\\frac{h_{1,4}}{n_RR} = \\arcsin\\frac{h_{2,3}}{R} - 2\\arcsin\\frac{h_{2,3}}{n_VR},$$\n\nwhere $h_{1,4}$ means we can replace it with the value of $h_1$ or $h_4$. Similar rule applies for $h_{2,3}$. From each equation, we can solve for one value of $n_V$ and then take their average. This results in $n_V - n_R \\approx 0.0145$.\n\n**Grading scheme**\n\nA-i\n\n- Proving that we can see a loop because for a range of points on the thread, a single point of thread creates two images: 0.7 pts\n- The endpoints of that thread create one image forming thereby a closed loop: 0.3 pts\n\nElse if only the fact that rays coming to A must be in the PQO plane is stated: 0.3 pts\n\nA-ii Drawing a ray diagram where we can see that two rays originating from a single point arrive both to the lens while crossing the ball’s surface at different points and following the Snell’s law: 1.0 pt\nElse if such idea is demonstrated by words or by a rough sketch (which does not obey Snell’s law): 0.5 pts\n\nB-i Relating angle $\\beta$ to the measurable distance $h$ in the photo (any point on the blue or red ellipse will earn the mark): 1pt\n\nB-ii Measuring ratio of $h$ to $R$: 0.5 pts\n\nB-iii The idea of using points on the blue ellipse lying on the same radius of the sphere: 1 pt\n\nB-iv Obtaining the correct equation to solve for $n_R$ numerically: 2 pts. If an incorrect equation is obtained from reasonable physics because of mistakes in algebraic manipulation: 1 pt\n\nB-v If the numerical answer is correct within $\\pm 0.03$ and is found using reasonable physics: 0.5 pts. Else if the numerical answer is correct within $\\pm 0.1$ and is found using reasonable physics: 0.3 pts. No point if the answer is guessed or is found using completely wrong or irrelevant physics.\n\nC-i The idea of using points on the red (or both) ellipse(s) lying on the same radius of the sphere: 1 pt\n\nC-ii Obtaining at least one correct equation to solve for $n_V$ numerically: 1.5 pts. If an incorrect equation is obtained from reasonable physics because of mistakes in algebraic manipulation: 1 pt\n\nC-iii Finding numerical answer correct within $\\pm 0.003$: 0.5 pts.",
+    "figures": [
+     {
+      "id": "p3-sol-fig1",
+      "alt": "Ray diagram in the POA plane: circle with centre O, point P on the circle, a blue ray from P refracted at Q towards the right and a black ray from P refracted at Q on the lower surface towards the distant point A; angles α at P and at Q, angle 2α at O, angle β at Q and angle γ between the directions.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p3-sol-fig1.png",
+      "width": 1122,
+      "height": 492,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        300.6,
+        59.76,
+        569.7,
+        177.66
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig2",
+      "alt": "Enlarged part of the first photo with white lines drawn from the centre O: a radius R, and lines to the points Q0, Q′0, T, Q″0 and S on the blue and red ellipses; h marks the distance from O.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p3-sol-fig2.png",
+      "width": 1112,
+      "height": 587,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        26.77,
+        307.3,
+        293.49,
+        447.89
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig3",
+      "alt": "Enlarged photo of the blue and red ellipses with a pixel ruler from 1000 to 2250 along the top; a horizontal dashed line through the ball centre with vertical dashed lines marking 0, h1, h2, h3, h4 and R.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-theory-x/p3-sol-fig3.png",
+      "width": 1092,
+      "height": 758,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        303.61,
+        586.8,
+        565.52,
+        768.65
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,146 @@
+---
+id: eupho-2018-experiment-exp-pr-p1
+source: 'EuPhO 2018, experiment'
+title: 'Задача 1. Diffusion'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2018/eupho-2018-experiment-exp-pr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:32:36.487Z'
+verifier: 'mechanical'
+---
+
+*Porous membrane · 5 т.*
+
+<details>
+<summary>General remarks</summary>
+
+Provide detailed sketches of all the setups you use. Estimate errors only in part A. Depending on your method, you might be able to complete the tasks without using all the given equipment.
+
+</details>
+
+<details>
+<summary>Porous membrane</summary>
+
+You are going to study a membrane of anodic aluminum oxide. The membrane is transparent; it has thickness $h$ and cylindrical channels of diameter $d$ as shown in figure. Your goal is to determine parameters $h$, $d$ and porosity $p$ (the volume fraction of channels in the membrane). Assume the membrane to be optically homogeneous and please **do not touch** the surface of the membrane!
+
+</details>
+
+## Условие
+
+**Equipment** *Airproof vessel with a membrane window and 2 connecting tubes with clamps (window diameter is $d_w = 13\ \mathrm{mm}$), equipped with carbon dioxide (CO$_2$, molar mass $44\ \mathrm{g/mol}$) concentration sensor with upper working limit of 0.5 %; powerbank; 2 fans with battery block (insert the last battery to operate); glue pads.* ***Do not disassemble electrical connections of the setup.***
+
+If $c$ denotes the concentration (number of molecules per volume) of CO$_2$ at one end of a channel and $c_0$ at the other end, the density of CO$_2$ flux in the channel is given by $j = D(c - c_0)/h$; $D$ is the diffusion coefficient. Since channels are narrower than mean free path length, the diffusion rate is determined by the diameter of channels: $D \approx vd/3$; $v$ is the root-mean-square speed of CO$_2$ molecules. The room temperature $T = (295 \pm 5)\ \mathrm{K}$.
+
+**Task** Suggest a functional dependence of how $c - c_0$ changes in time, study it experimentally, determine the parameters of the dependence and estimate the errors.
+
+**Instruction to the CO$_2$ sensor** The sensor effectively measures the ratio of the number of CO$_2$ molecules to the total number of air molecules. Turn the sensor on by connecting it to the powerbank with a USB. Starting up takes a few minutes. If you turn the sensor off, **all data will be lost**.
+
+Pressing button SELECT for a second switches the sensor between recording (R) and record-browsing (D) modes. In recording mode, a record is added every 20 s. Memory holds only the last 200 records. Switching to record-browsing mode stops adding new records but timer keeps going. In this mode, buttons UP and DOWN navigate through records. Switching back to recording mode resumes recording of new data.
+
+Reset button RST **deletes** all the records and resets the timer. Buttons LEFT and RIGHT are not used.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2018-experiment-exp-pr/p1-fig1.png" alt="Perspective drawing of a rectangular block of the porous membrane pierced by a regular array of parallel cylindrical channels; the channel diameter is marked d at the top and the block thickness is marked h by a vertical double arrow on the right." />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 1204 s
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Turn the CO$_2$ sensor on. It takes 2-3 minutes for the sensor self-calibration, after that the measurement starts.
+
+Before the main experiment concentration of $CO_2$ in the vessel is equal to the concentration $c_0$ of $CO_2$ in the atmosphere, let us determine it
+
+$$c_0 = (0.050 \pm 0{,}005)\%.$$
+
+Now let us consider the diffusion process theoretically and express typical diffusion time $\tau$ via the membrane geometrical parameters.
+
+The change of $CO_2$ molecules number inside the vessel per unit time is equal
+
+$$\frac{d}{dt}(cV) = -jpS_0$$
+
+where $pS_0$ is the net area of channels. The flow through the channels is
+
+$$j = D\frac{c - c_0}{h}$$
+
+and we get differential equation for concentration $c(t)$
+
+$$\frac{dc}{dt} = -\frac{DpS_0}{Vh}(c - c_0)$$
+
+The solution is
+
+$$c(t) = c_0 + C\exp\left(-\frac{t}{\tau}\right)$$
+
+where
+
+$$\tau = \frac{Vh}{pS_0 D}$$
+
+According to the problem text the Knudsen flow takes place in the membrane channels. In this case the diffusion coefficient D is determined by the collisions of molecules with the walls of the channel
+
+$$D = \tfrac{1}{3}vd.$$
+
+Knowing the molar mass of carbon dioxide $\mu = 44\,\frac{g}{mol}$, we calculate the thermal velocity of CO$_2$ molecules for room temperature $T = 295\ \text{К}$:
+
+$$v = \sqrt{\frac{8RT}{\pi\mu}} = 376\ m/s$$
+
+Finally we have
+
+$$\tau = \frac{3Vh}{pS_0 vd}$$
+
+Calculate the full membrane area $S_0 = \frac{\pi}{4}d_w^2 = 1.33\ sm^2$. We measure the length and the inner diameter of the vessel:
+
+$$L = 5.0\ sm$$
+
+$$D_{in} = 7.4\ sm$$
+
+and calculate its inner volume $V = 215\ sm^3$. The volume of fan, sensor and tubes way be neglected.
+
+Now let's proceed with the experiment. We will use our own lungs as a source of carbon dioxide. Let's take a breath and exhale the air into the cylinder through the tube, then close both tubes with clips. A second tube is needed in order for the air to better circulate in the vessel during the exhalation.
+
+To ensure that the concentration of CO$_2$ in the vessel is the same at each moment, turn on the internal fan, it mixes the air in the vessel. To ensure that the concentration of CO$_2$ outside the membrane is equal to $c_0$, turn on the second fan to blow on the membrane outside.
+
+Measure the dependence $c(t)$ ,where the concentration is measured in %, and the time in seconds. The results are shown on the plot.
+
+Let's plot a linearized graph in the coordinates $t, Ln\,(c - c_0)$.
+
+From its slope we calculate the required time
+
+$$\tau = 1204 \pm 10\ sec$$
+
+Slope and its uncertainty were calculated with OLS.
+
+Notes.
+
+1. The CO$_2$ concentration in the exhaled air is 4% and the sensor's working limit is 0.5%. Therefore, if you blow into the installation strongly, the sensor is off scale. Participants can wait until the CO$_2$ concentration in the vessel drops below 0.5% and then start the measurements. There are also two other ways to reduce the CO$_2$ concentration in the vessel. You can unscrew the cover of the installation (with tubes, not with the sample!) and utilizing the fan blow the installation with atmospheric air. Another way is to open both tubes and suck the air out through one of them. The atmospheric air comes inside the vessel through the second tube. This method is the fastest and easiest.
+
+2. The equipment setups for parts B,C are independent on equipment for part A, so the optical measurements can be performed simultaneously with the diffusional. Moreover, the sensor stores the data.
+
+3. If the participant does not use the second (external) fan, the measured value $\tau$ will be about 2 times larger, which will give incorrect answer for the pore diameter.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2018-experiment-exp-pr/p1-sol-fig1.png" alt="Black-and-white photograph of a small black fan mounted on a metal base inside the transparent vessel, with wires attached." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2018-experiment-exp-pr/p1-sol-fig2.png" alt="Plot of the measured concentration c(t) (from 0.15 to 0.50) against t (0 to 2000): black data points on a decaying exponential blue fit curve falling from about 0.48 to about 0.15." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2018-experiment-exp-pr/p1-sol-fig3.png" alt="Linearized plot of Ln (c−c0) (from −1.0 to −2.5) against t (0 to 2000): black data points lying on a straight descending blue line." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [exp_pr.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2018/exp_pr.pdf)
+· официални решения: [exp_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2018/exp_sol.pdf)

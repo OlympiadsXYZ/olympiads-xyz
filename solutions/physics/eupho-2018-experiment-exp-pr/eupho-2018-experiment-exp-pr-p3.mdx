@@ -1,0 +1,160 @@
+---
+id: eupho-2018-experiment-exp-pr-p3
+source: 'EuPhO 2018, experiment'
+title: 'Задача 3. Birefringence'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2018/eupho-2018-experiment-exp-pr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:32:36.487Z'
+verifier: 'mechanical'
+---
+
+*Porous membrane · 7 т.*
+
+<details>
+<summary>General remarks</summary>
+
+Provide detailed sketches of all the setups you use. Estimate errors only in part A. Depending on your method, you might be able to complete the tasks without using all the given equipment.
+
+</details>
+
+<details>
+<summary>Porous membrane</summary>
+
+You are going to study a membrane of anodic aluminum oxide. The membrane is transparent; it has thickness $h$ and cylindrical channels of diameter $d$ as shown in figure. Your goal is to determine parameters $h$, $d$ and porosity $p$ (the volume fraction of channels in the membrane). Assume the membrane to be optically homogeneous and please **do not touch** the surface of the membrane!
+
+</details>
+
+## Условие
+
+**Equipment** *the same as in part B.*
+
+The refractive index of the membrane depends on polarization and propagation direction of light. The membrane can be described with two refractive indices: $n_o$ and $n_e$; $|n_e - n_o| \ll n_o$. When laser beam enters membrane, it splits into two beams with different polarizations and velocities. Beam 1 is polarized normally to the plane of incidence; its refractive index $n_1 = n_o$ and doesn't depend on $\beta_1$. Beam 2 is polarized parallel to the plane of incidence; its refractive index $n_2$ depends on $\beta_2$:
+
+$$\frac{1}{n_2^2} = \frac{\cos^2\beta_2}{n_o^2} + \frac{\sin^2\beta_2}{n_e^2}.$$
+
+One can show that the optical path difference between the beams $\delta = h(n_1\cos\beta_1 - n_2\cos\beta_2)$.
+
+**Task** Determine the difference $\Delta n = |n_e - n_o|$ of the membrane. Find the porosity $p$ using the given plot of $\Delta n(p)$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2018-experiment-exp-pr/p3-fig1.png" alt="Tilted membrane slab (grey) with a red incident beam splitting inside into beam n1 at angle β1 (polarization E drawn as a blue circle, normal to the plane) and beam n2 at angle β2 (polarization E drawn as a blue arrow in the plane); both leave the slab as parallel beams labelled 1 and 2, crossed by a dashed vertical line." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2018-experiment-exp-pr/p3-fig2.png" alt="Graph on a fine grid of Δn (0 to 0.10) against porosity p (0 to 0.50): a concave curve rising from the origin through about 0.029 at p = 0.10 and 0.053 at p = 0.20 to about 0.092 at p = 0.50." />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- Δn = 0.0378 ± 0.0015; p = 13.5 ± 0.5%
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+In calculations me denote $\Delta n^* \equiv n_2 - n_1$, $\Delta\beta \equiv \beta_1 - \beta_2$.
+
+From Snell's law
+
+$$n_1\sin\beta_1 = n_2\sin\beta_2$$
+
+Optical path between beams is $\delta = h(n_1\cos\beta_1 - n_2\cos\beta_2)$. Taking condition $n_2 - n_1 \ll n_1$ into account, we should derive $\delta$ in terms of $n$ and $\Delta n^*$.
+
+$$\delta = h(n_1\cos\beta_1 - n_2\cos\beta_2) = h\left(n_1\cos\beta_1 - n_1\frac{\sin\beta_1}{\sin\beta_2}\cos\beta_2\right) = n_1 h\sin\beta_1\left(\frac{\cos\beta_1}{\sin\beta_1} - \frac{\cos\beta_2}{\sin\beta_2}\right)$$
+
+$$= nh\sin\beta\,(\cot\beta_1 - \cot\beta_2)$$
+
+$$\frac{\cos\beta_1 - \cos\beta_2}{\beta_1 - \beta_2} \simeq (\cot\beta)' = -\frac{1}{\sin^2\beta}$$
+
+$$\delta = -\frac{nh}{\sin\beta}\Delta\beta$$
+
+(C1)
+
+Now we will derive $\Delta\beta$ in terms of $\Delta n^*$.
+
+$$\frac{n_1}{n_2} = \frac{\sin\beta_1}{\sin\beta_2}$$
+
+$$\frac{n_2 - \Delta n^*}{n_2} = \frac{\sin(\beta_2 + \Delta\beta)}{\sin\beta_2} \simeq \frac{\sin\beta_2 + \cos\beta_2\,\Delta\beta}{\sin\beta_2}$$
+
+$$\Delta\beta = -\frac{\Delta n^*}{n}\frac{\sin\beta}{\cos\beta}$$
+
+(C2)
+
+Combining (C1) and (C2), we obtain the equation:
+
+$$\delta = \frac{h}{\cos\beta}\Delta n^*$$
+
+(C3)
+
+Relation between $\Delta n$ and $\Delta n^*$ may be found from formulae given in the task:
+
+$$\frac{1}{n_2^2} = \frac{\cos^2\beta_2}{n_0^2} + \frac{\sin^2\beta_2}{n_e^2}$$
+
+(C4)
+
+$$\frac{1}{n_1^2} = \frac{1}{n_0^2}$$
+
+(C5)
+
+(C4)-(C5):
+
+$$\frac{1}{n_2^2} - \frac{1}{n_1^2} = \frac{\cos^2\beta_2}{n_0^2} - \frac{1}{n_0^2} + \frac{\sin^2\beta_2}{n_e^2}$$
+
+$$\frac{n_1^2 - n_2^2}{n_1^2 n_2^2} = \sin^2\beta_2\frac{n_0^2 - n_e^2}{n_0^2 n_e^2}$$
+
+$$\frac{n_1 + n_2}{n_1^2 n_2^2}\Delta n^* = \frac{n_0 + n_e}{n_0^2 n_e^2}\sin^2\beta_2\,\Delta n$$
+
+$$\Delta n^* = \sin^2\beta\,\Delta n$$
+
+(C6)
+
+Taking account of (C3), it yields:
+
+$$\delta = \frac{h}{\cos\beta}\sin^2\beta\,\Delta n$$
+
+(C7)
+
+Polarized waves may interfere in projections. We should use 2 polarizers with polarization axes pointed at $45^{\circ}$ with membrane rotation axis.
+
+First polarizer let beams 1 and 2 have equal intensity. Second polarizer projects waves on its polarization axis, so they can interfere. Polarization axes of polarizers may be perpendicular or parallel. Using the described setup, one can observe minimums with zero intensity and bright maximums.
+
+Over setups me be used to observe the main effect. One can arrange the setup without second polarizer (laser beam is polarized itself), or place polarizers at angles differs from $45^{\circ}$.
+
+In any case, when we rotate the membrane, we can find three transmittance extrema. If we use the setup described above, optical paths in these points will be: $\delta_1 = \lambda/2$, $\delta_2 = \lambda$, $\delta_3 = 3/2\lambda$.
+
+Transmittance depending on the angle of incidence is shown on the graph. To obtain this perfect data, we also measured transmittance without the second polarizer to take account of reflectance rising at big angles.
+
+Students were not supposed to take a lot of measurements or plot the graph, this isn't necessary to complete the task. To calculate $\Delta n$ with best possible accuracy, we just need to determine angles of three transmittance extrema by any way.
+
+$\Delta n$ values are calculated according to the equation (C7).
+
+| $\delta$ | $\alpha,^{\circ}$ | $\beta,^{\circ}$ | $\Delta n$ |
+|---|---|---|---|
+| $1/2\ \lambda$ | 32.5 | 20.1 | 0.0352 |
+| $\lambda$ | 48 | 27.2 | 0.0375 |
+| $3/2\ \lambda$ | 62 | 31.8 | 0.0405 |
+
+$$\varepsilon_{\Delta n} = \frac{1}{\Delta n}\sqrt{\sum_{i}^{N}\frac{(\Delta n_{\mathrm{i}} - \Delta n)^2}{N(N-1)}}$$
+
+$$\Delta n = 0.0378 \pm 0.0015$$
+
+Using the plot $\Delta n(p)$, we determine the porosity of the sample.
+
+$$p = 13.5 \pm 0.5\%$$
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2018-experiment-exp-pr/p3-sol-fig1.png" alt="Plot of transmitted intensity I/I0 (0.0 to 1.0) against α, deg (0 to 75) for sample 1-1: the red 'perpendicular' curve and the black 'parallel' curve oscillate in antiphase; the black curve falls from 1.0 to a minimum near 32°, rises to 1.0 near 48° and falls again to a minimum near 62°, while the red curve has maxima near 33° and 62° and a minimum near 48°." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [exp_pr.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2018/exp_pr.pdf)
+· официални решения: [exp_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2018/exp_sol.pdf)

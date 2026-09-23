@@ -1,0 +1,474 @@
+---
+id: eupho-2020-experiment-20-1-p2
+source: 'EuPhO 2020, experiment'
+title: 'Задача 2. Black box'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2020/eupho-2020-experiment-20-1.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:33:50.663Z'
+verifier: 'mechanical'
+---
+
+*EuPhO-2020 Online. Experimental Problems. Language: English*
+
+## Условие
+
+
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-experiment-20-1/p2-fig1.png" alt="Black box: a grey square container of mass m₁ with a thick outline; inside, mass m₂ hangs from the ceiling on spring k₁, and mass m₃ hangs from m₂ on spring k₂; an upward arrow F is applied at the top of the box; vertical double arrows (up and down) at the left indicate motion of the box; an arrow g points down on the right." />
+</figure>
+
+**2.1** **Introduction**
+
+You have a rigid mechanical black box consisting of a container of mass $m_1$. Inside the container there is a load of mass $m_2$ that hangs on an effectively massless spring of stiffness $k_1$ from the ceiling of the box. Another mass $m_3$ is hanged to the mass $m_2$ via another massless spring of stiffness $k_2$. There is a small viscous drag which depends on the velocity of the objects. The gravity of Earth is $g = 9.81\ \mathrm{m/s^2}$ and is parallel to the sides of the box.
+
+The box can be moved up or down with a piece-wise constant acceleration. The acceleration pattern can be programmed through input by giving the duration (in seconds) and acceleration (in $\mathrm{m/s^2}$) for each step. The simulation shows in ”real time” the force $F$ exerted to the box that is needed to maintain the given acceleration at the current moment of time, together with the reading of time. The simulation will also output the readings to a text file in the same folder as the program. All simulations will always start with the same initial configuration for the masses.
+
+*Note*: Every measurement of force $F$ has a small random error. The springs are linear for reasonably small deformations, but nonlinear for larger deformations. The values $k_1$ and $k_2$ are defined to be the stiffness of each spring for small deformations near equilibrium when the box is at rest. Force $F$ and acceleration are considered to be positive if they are directed upwards. The side length of the box is $0.6$ m and the box is initially in the middle of a room with height $3$ m. An experiment ends automatically if the box hits the ceiling or the floor, or if any of the masses collide with the box or with the other mass. The figure is not drawn to scale.
+
+**2.2** **Task**
+
+The task is to determine all the parameters: $m_1$, $m_2$, $m_3$, $k_1$, $k_2$. You do not need to provide an error analysis for these results.
+
+As with all experiments, you must provide clearly labelled tables of data, clearly labelled graphs, and sufficient formulae derivations to make it clear what you have measured, and how you are deriving your results.
+
+**2.3** **Program Interface**
+
+Initially, the program asks for a sequence of input actions. You have the following possibilities.
+
+- Enter two numbers and press **return** to add a step to the acceleration pattern, for example: `1.5 -0.4`
+  The first number should be the **duration** of the step in seconds (must be a multiple of $0.01$ s) and the second number should be the **acceleration** in $\mathrm{m/s^2}$ (must be between $-30$ and $30$).
+- Enter `repeat` and an integer and press **return** to repeat actions, for example: `repeat 10`
+  The integer should be the **number of times** you want to repeat actions. Every repeat action should end with an `endrepeat` action (see below).
+- Enter `endrepeat` to end repeating actions. If you start the experiment, all actions between `repeat` and `endrepeat` will be repeated a given number of times. You cannot repeat actions inside another repeat.
+- Enter `sample` and a number and press **return** to change the sampling time, for example: `sample 0.4`
+  The number should be the new **sampling time** which is the time after which every new reading is output to the text file. The sampling time must be a multiple of $0.01$ s, which is also the default sampling time.
+- Enter `begin` to finish the sequence and start the experiment.
+
+You can also write multiple actions on the same line and then press **return**. For example, you can enter
+
+`sample 0.4 repeat 10 1.5 0.4 1.5 -0.4 endrepeat begin`
+
+to start an experiment where you change the sampling time to $0.4$ s and accelerate the box respectively with $a = 0.4\ \mathrm{m/s^2}$ and $a = -0.4\ \mathrm{m/s^2}$ ten times.
+
+If you enter an invalid input, you will get one of the following error messages and you can try to enter an action again.
+
+- If acceleration is out of range:
+  `Acceleration is out of range.`
+- If duration of acceleration is out of range:
+  `Duration is out of range.`
+- If sampling time is out of range:
+  `Sampling time is out of range.`
+- If the number of repeat times is out of range:
+  `Number of repeat times is out of range.`
+- If you try to repeat actions inside another repeat action:
+  `Cannot repeat actions inside another repeat.`
+- If you try to end repeat without a repeat action to end:
+  `Cannot end repeat outside repeat.`
+- In all other cases:
+  `Invalid entry.`
+
+After you enter `begin`, the program will ask you for a name for the output file with the prompt
+
+`Enter name for output file (e.g. "results"). You should use Latin letters and numbers because some special characters are not allowed.`
+
+Enter a name and press **return**. You are advised to use only Latin letters and numbers for the name. Other characters may or may not be allowed in the filename and in case of an invalid filename the readings will not be saved. The readings will be saved in a `.txt` file with the given name in the same folder as the program.
+
+After this, the program will display
+
+`Begin experiment.`
+
+and start the experiment. The program will then display the current time since the beginning of the experiment (`Time (s)`), measured value of force $F$ (`Force (N)`) and acceleration of the box (`Accel (m/s^2)`). The readings will be similarly displayed in the text file.
+
+The program will then display one of the following messages.
+
+- If the experiment ended successfully:
+  `Experiment ended successfully.`
+- If the box hit the ceiling:
+  `The box hit the ceiling. Experiment ended.`
+- If the box hit the floor:
+  `The box hit the floor. Experiment ended.`
+- If the masses inside the box collided or one of the masses inside the box collided with the box:
+  `Masses and/or the box collided. Experiment ended.`
+
+After the experiment ends, you can start another experiment.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- m1 = 0.857 kg, m2 = 0.236 kg, m3 = 0.413 kg, k1 = 39.2 N/m, k2 = 22.6 N/m
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Let the tension forces in the two springs be $F_1$ and $F_2$, respectively. Let the height of the ceiling of the box be $y_1$ and let the heights of the masses be $y_2$ and $y_3$ (we will assume for simplicity that the masses have zero height). Let $a_1$, $a_2$, $a_3$ be the respective accelerations. We get the following equations of motion (ignoring all drag forces):
+
+$$m_1a_1 = F - F_1 - m_1g$$
+
+$$m_2a_2 = F_1 - F_2 - m_2g$$
+
+$$m_3a_3 = F_2 - m_3g$$
+
+Since the springs are nonlinear, $F_1 \neq k_1(y_1 - y_2)$ and $F_2 \neq k_2(y_2 - y_3)$ in general, but we know that for small displacements near equilibrium $k_1 = \frac{\Delta F_1}{\Delta(y_1 - y_2)}$ and $k_2 = \frac{\Delta F_2}{\Delta(y_2 - y_3)}$.
+
+**2.1 Finding $m_1 + m_2 + m_3$**
+
+When the system is at rest and at equilibrium, then the force needed to hold the box is the total gravitational force $F_0 = (m_1 + m_2 + m_3)g$ (we can get the same result if we plug in $a_1 = a_2 = a_3 = 0$ to the equations of motion).
+
+To measure $F_0$, we find the value of $F$ when the box is at rest ($a_1 = 0$). We notice that the force is constant which means that the system is initially already in equilibrium.
+
+After averaging 10 first values we get $F_0 \approx 14.774\ \mathrm{N}$ and
+
+$$m_1 + m_2 + m_3 = \frac{F_0}{g} = \frac{14.774\ \mathrm{N}}{9.81\ \mathrm{N/kg}} \approx 1.506\ \mathrm{kg}.$$
+
+Exact answer: $1.506$ kg.
+
+| | **Finding $m_1 + m_2 + m_3$** | |
+|---|---|---|
+| 1a | Notice that $F = g\sum m_i$ when $a_1 = 0$ | 0.5 |
+| 1b | Measurement for $F_0$ ($14.77 \pm 0.10$ N) 0 points for only having a measurement without an idea how to use it | 0.3 |
+| 1c | $\sum m_i$ in range $1.51 \pm 0.01$ kg | 0.2 |
+| | **Total:** | **1.0** |
+
+*Note:* Measurement for $F_0$ is needed for full points, even if $\sum m_i$ is correct. Solutions with raw data missing get 0.7 points. Solutions using $\frac{F_0}{g}$ implicitly as the sum of masses get 0.2 points from 1c.
+
+**2.2 Finding $m_1$**
+
+We get from the first equation of motion that $F = m_1a_1 + m_1g + F_1$. The spring force $F_1$ depends only on the positions (and is the same at the beginning of every experiment), so the force $F$ at the beginning of the experiment depends only on the acceleration.
+
+Therefore, we can measure how much the initial force changes with acceleration to get $m_1$. We will use maximum acceleration ($30\ \mathrm{m/s^2}$) for highest accuracy. The average of three values is $F_{30} \approx 40.487\ \mathrm{N}$, so
+
+$$m_1 = \frac{F_{30} - F_0}{a} = \frac{(40.487 - 14.774)\ \mathrm{N}}{30\ \mathrm{m/s^2}} \approx 0.857\ \mathrm{kg}.$$
+
+We also conclude that $m_2 + m_3 = 0.649\ \mathrm{kg}$.
+
+(To even increase accuracy, one could compare $F_{30}$ and $F_{-30}$ and find their difference.)
+
+Exact answer: $0.857$ kg.
+
+| | **Finding $m_1$** | |
+|---|---|---|
+| 2a | $F = m_1a_1 + m_1g + F_1$ or any equivalent equation of motion (max points even if $F_1$ has been incorrectly substituted with $k_1(y_1 - y_2)$) | 0.5 |
+| 2b | Idea that $m_1 = \frac{\Delta F}{\Delta a_1}$ | 0.5 |
+| 2c | Using $\Delta a_1 \geq 10\ \mathrm{m/s^2}$ | 0.2 |
+| 2d | $m_1$ in range $0.857 \pm 0.002$ kg | 0.8 |
+| | $m_1$ in range $0.857 \pm 0.010$ kg | 0.6 |
+| | $m_1$ in range $0.857 \pm 0.050$ kg | 0.3 |
+| | **Total:** | **2.0** |
+
+*Note:* Using free-fall ($a_1 = -g$) without repeated measurements gets 0 points from 2c. Full points are given if $\Delta a_1 < 10\ \mathrm{m/s^2}$ but several measurements are used that give at least as good accuracy overall.
+
+**2.3 Finding $k_1$**
+
+**2.3.1 Method 1: Change of force after a fast movement of the box**
+
+We will quickly accelerate and then decelerate the box (to avoid drag forces). When we change the height of the box quickly and the time is short enough, we can assume that the second mass stays approximately at rest.
+
+(Formally, if $\Delta y_1 = \frac{a_1}{2}t^2$, then $m_2a_2 = k_1\Delta y_1 - k_1\Delta y_2 - \Delta F_2 \leq k_1\Delta y_1$, therefore $a_2 \leq \frac{k_1}{2m_2}t^2 \cdot a_1$. The assumption holds if $\frac{k_1}{2m_2}t^2 \ll 1$.)
+
+Therefore, if we accelerate the box with acceleration $a_1$ for time $t$ and then with $-a_1$ for time $t$, then $\Delta F \approx k_1\Delta y_1 = k_1a_1t^2$.
+
+To have the best accuracy we will do two experiments with $a_1 = 30\ \mathrm{m/s^2}$ and $a_1 = -30\ \mathrm{m/s^2}$, respectively. We will use $t = 0.01\ \mathrm{s}$ (smallest time possible). We will also repeat each experiment 5 times. After averaging the results, we get the forces at $2t = 0.02\ \mathrm{s}$ to be $F_\mathrm{u} \approx 14.890\ \mathrm{N}$ and $F_\mathrm{d} \approx 14.652\ \mathrm{N}$. Therefore
+
+$$k_1 \approx \frac{F_\mathrm{u} - F_\mathrm{d}}{2a_1t^2} = \frac{(14.890 - 14.652)\ \mathrm{N}}{2 \cdot 30\ \mathrm{m/s^2} \cdot (0.01\ \mathrm{s})^2} \approx 39.7\ \mathrm{N/m}$$
+
+Exact answer: $39.2$ N/m.
+
+| | **Finding $k_1$, Method 1** | |
+|---|---|---|
+| 3.1a | Idea to use method | 0.5 |
+| 3.1b | Notice that if $t$ is small, then $\Delta y_1 \gg \Delta y_2$ | 0.5 |
+| 3.1c | Correct formula for $k_1$ | 0.5 |
+| 3.1d | At least 3 measurements | 0.1 |
+| 3.1e | $\Delta a_1 \geq 30\ \mathrm{m/s^2}$ | 0.2 |
+| 3.1f | $2t \leq 0.08\ \mathrm{s}$ | 0.2 |
+| 3.1g | $k_1$ in range $39.2 \pm 1.0$ N/m | 1.0 |
+| | $k_1$ in range $39 \pm 4$ N/m | 0.7 |
+| | $k_1$ in range $39 \pm 8$ N/m | 0.4 |
+| | $k_1$ in range $39 \pm 15$ N/m | 0.2 |
+| | **Total:** | **3.0** |
+
+**2.3.2 Method 2: Change of force while accelerating the box**
+
+We will accelerate the box with constant acceleration $a_1$ and similarly as in the previous method conclude that $\Delta F \approx \frac{k_1a_1}{2}t^2$ when $t$ is small. This method is, however, less accurate than the previous method because drag force is nonnegligible for large values of $a_1$ but the resolution of $\Delta F$ is small for small values of $a_1$.
+
+Choosing, for example, $a_1 = 30\ \mathrm{m/s^2}$, $t = 0.02\ \mathrm{s}$ and averaging 5 values gives $F_{t=0} \approx 40.482\ \mathrm{N}$ and $F_{t=0.02} \approx 40.792\ \mathrm{N}$ and
+
+$$k_1 \approx \frac{2\Delta F}{a_1t^2} = \frac{2 \cdot (40.792 - 40.482)\ \mathrm{N}}{30\ \mathrm{m/s^2} \cdot (0.02\ \mathrm{s})^2} \approx 51.7\ \mathrm{N/m}$$
+
+The answer is $\sim 30\%$ larger than the correct answer because the drag force of the box at $t = 0.02\ \mathrm{s}$ is approximately $0.08\ \mathrm{N}$.
+
+A better choice would be $a_1 = 5\ \mathrm{m/s^2}$ and $t = 0.02\ \mathrm{s}$. Averaging 5 values gives $F_{t=0} \approx 19.058\ \mathrm{N}$ and $F_{t=0.02} \approx 19.100\ \mathrm{N}$ and
+
+$$k_1 \approx \frac{2\Delta F}{a_1t^2} = \frac{2 \cdot (19.100 - 19.058)\ \mathrm{N}}{5\ \mathrm{m/s^2} \cdot (0.02\ \mathrm{s})^2} \approx 42.0\ \mathrm{N/m}$$
+
+The drag force has a much smaller effect (approximately $0.002\ \mathrm{N}$).
+
+| | **Finding $k_1$, Method 2** | |
+|---|---|---|
+| 3.2a | Idea to use method | 0.5 |
+| 3.2b | Notice that if $t$ is small, then $\Delta y_1 \gg \Delta y_2$ | 0.5 |
+| 3.2c | Correct formula for $k_1$ | 0.5 |
+| 3.2d | At least 3 measurements | 0.1 |
+| 3.2e | $2\ \mathrm{m/s^2} \leq a_1 \leq 10\ \mathrm{m/s^2}$ | 0.2 |
+| 3.2f | $t \leq 0.08\ \mathrm{s}$ | 0.2 |
+| 3.1g | $k_1$ in range $39.2 \pm 1.0$ N/m | 1.0 |
+| | $k_1$ in range $39 \pm 4$ N/m | 0.7 |
+| | $k_1$ in range $39 \pm 8$ N/m | 0.4 |
+| | $k_1$ in range $39 \pm 15$ N/m | 0.2 |
+| | **Total:** | **3.0** |
+
+*Note:* A correct answer without any justification or obtained with a physically nonsensible method gives 0 points.
+
+**2.3.3 Method 3: Estimating $y_1 - y_2$ at equilibrium and using $F_1 \approx k_1(y_1 - y_2)$**
+
+Although the springs are nonlinear, we can estimate $k_1$ by $k_1 \approx \frac{F_1}{y_1 - y_2}$ which would be true if the springs were perfectly linear.
+
+At equilibrium
+
+$$F_1 = F_0 - m_1g \approx 14.774\ \mathrm{N} - 0.857 \cdot 9.81\ \mathrm{N} \approx 6.367\ \mathrm{N}$$
+
+If we accelerate the box quickly downwards, then by measuring the time $t$ for the box to collide with mass 2, we can estimate the initial value of $y_1 - y_2$ by $\Delta y_1 = \frac{a_1}{2}t^2$.
+
+Using binary search we can find that $t \leq 0.13\ \mathrm{s}$ if $|a_1| \geq 26.7\ \mathrm{m/s^2}$ and $t \geq 0.13\ \mathrm{s}$ if $|a_2| \leq 26.6\ \mathrm{m/s^2}$.
+
+Therefore
+
+$$y_1 - y_2 \approx \frac{26.7\ \mathrm{m/s^2}}{2} \cdot (0.13\ \mathrm{s})^2 \approx 0.226\ \mathrm{m}$$
+
+and
+
+$$k_1 \approx \frac{F_1}{y_1 - y_2} = \frac{6.367\ \mathrm{N}}{0.226\ \mathrm{m}} \approx 28.2\ \mathrm{N/m}$$
+
+This method underestimates the value both due to nonlinearity of springs and because it overestimates $y_1 - y_2$ (the actual value is $0.179\ \mathrm{m}$).
+
+| | **Finding $k_1$, Method 3** | |
+|---|---|---|
+| 3.3a | Idea to use method | 0.5 |
+| 3.3b | Correctly estimate $y_1 - y_2$ | 0.5 |
+| 3.3c | Correct formula for $k_1$ | 0.5 |
+| | **Total:** | **1.5** |
+
+*Note:* This method is worth 1.5 points since it is very inaccurate. Estimating the distance $y_1 - y_2$ without an idea how to use it gives 0 points.
+
+**Method for eye-balling $k_1$** from slow normal mode frequency assuming a rigid connection between $m_2$ and $m_3$ was rewarded with 0.5+0.5 points for idea and formula if significant progress was made (a reasonable value for the normal mode period and $k_1$ or $\frac{k_1}{m_2 + m_3}$ was found). Simply stating $T = 2\pi\sqrt{\frac{m_2 + m_3}{k_1}}$ gave 0 points.
+
+**2.4 Finding $m_2$, $m_3$ and $k_2$**
+
+**2.4.1 Method 1: Finding natural frequencies**
+
+This method is very accurate, but needs a lot algebraic manipulation to solve for two parameters. This method could also be used to find one parameter if the other has been already found using alternative methods.
+
+At first we will find the natural frequencies of the system when the box is at rest. Let $x_2 = \Delta y_2$ and $x_3 = \Delta y_3$ be small displacements near equilibrium. Then
+
+$$m_2\ddot{x}_2 = -k_1x_2 - k_2(x_2 - x_3)$$
+
+$$m_3\ddot{x}_3 = k_2(x_2 - x_3)$$
+
+The equations can be solved by taking $x_2 = A\cos(\omega t)$ and $x_3 = B\cos(\omega t)$, where $A$ and $B$ are constants.
+
+(Alternatively, one can use complex numbers: $\tilde{x}_2 = Ae^{i\omega t}$ and $\tilde{x}_3 = Be^{i\omega t}$.)
+
+We see that $\ddot{x}_2 = -\omega^2A\cos(\omega t)$ and $\ddot{x}_3 = -\omega^2B\cos(\omega t)$, hence
+
+$$-m_2\omega^2A\cos(\omega t) = -k_1A\cos(\omega t) - k_2(A - B)\cos(\omega t)$$
+
+$$-m_3\omega^2B\cos(\omega t) = k_2(A - B)\cos(\omega t)$$
+
+We see that the time dependence cancels out
+
+$$-m_2\omega^2A = -k_1A - k_2A + k_2B$$
+
+$$-m_3\omega^2B = k_2A - k_2B$$
+
+We get from the second equation that $B = \frac{k_2A}{k_2 - m_3\omega^2}$, so after substituting to the first equation we get
+
+$$-m_2\omega^2A = -k_1A - k_2A + \frac{k_2^2}{k_2 - m_3\omega^2}A$$
+
+As expected, $A$ cancels out (because natural frequency does not depend on the amplitude of the oscillations) and we get
+
+$$-m_2\omega^2(k_2 - m_3\omega^2) + (k_1 + k_2)(k_2 - m_3\omega^2) - k_2^2 = 0$$
+
+$$m_2m_3\omega^4 - k_2m_2\omega^2 - (k_1 + k_2)m_3\omega^2 + k_1k_2 = 0$$
+
+$$\omega^4 - \left(\frac{k_2}{m_3} + \frac{k_1 + k_2}{m_2}\right)\omega^2 + \frac{k_1k_2}{m_2m_3} = 0$$
+
+The solutions to this biquadratic equation are the natural angular frequencies. If we know the solutions $\omega_1$ and $\omega_2$, we know from the Vieta’s formulas that
+
+$$\frac{k_2}{m_3} + \frac{k_1 + k_2}{m_2} = c_1$$
+
+$$\frac{k_1k_2}{m_2m_3} = c_2,$$
+
+where $c_1 = \omega_1^2 + \omega_2^2$ and $c_2 = \omega_1^2\omega_2^2$.
+
+We find that
+
+$$\frac{m_2}{k_1} + \frac{m_3}{k_2} + \frac{m_3}{k_1} = \frac{c_1}{c_2}$$
+
+$$\frac{m_3}{k_2} = \frac{c_1}{c_2} - \frac{m_2 + m_3}{k_1}$$
+
+$$\frac{k_1}{m_2c_2} = \frac{c_1}{c_2} - \frac{m_2 + m_3}{k_1}$$
+
+$$m_2 = \frac{k_1^2}{c_1k_1 - c_2(m_2 + m_3)}$$
+
+This equation allows us to find $m_2$. After this, it is easy to also find $m_3$ and $k_2$.
+
+To find the natural frequencies, one can oscillate the box with different frequencies, stop oscillating and look at how force changes in time. Using trial and error we can get two estimates $T_1 \approx 1\ \mathrm{s}$ and $T_2 \approx 0.4\ \mathrm{s}$.
+
+To find the smaller frequency, we can, for example, give the box a pulse with 1 s duration.
+
+We want to be sure that the amplitude of the oscillations is small enough when we measure the period (to avoid nonlinearity of springs). We find
+
+$$T_1 = \frac{(34.70 - 20.27)\ \mathrm{s}}{13} \approx 1.11\ \mathrm{s}.$$
+
+Similarly, we can amplify the larger natural frequency by oscillating the box or giving a shorter pulse.
+
+We find
+
+$$T_2 = \frac{(20.00 - 9.94)\ \mathrm{s}}{27} \approx 0.373\ \mathrm{s}.$$
+
+Therefore
+
+$$\omega_1^2 = \left(\frac{2\pi}{T_1}\right)^2 \approx 32.04\ \mathrm{Hz^2}$$
+
+$$\omega_2^2 = \left(\frac{2\pi}{T_1}\right)^2 \approx 283.8\ \mathrm{Hz^2}$$
+
+We can then find $m_2$ by calculating $c_1$ and $c_2$:
+
+$$c_1 = \omega_1^2 + \omega_2^2 \approx 315.8\ \mathrm{Hz^2}$$
+
+$$c_2 = \omega_1^2\omega_2^2 \approx 9093\ \mathrm{Hz^4}$$
+
+$$m_2 = \frac{k_1^2}{c_1k_1 - c_2(m_2 + m_3)} \approx 0.238\ \mathrm{kg}$$
+
+$$m_3 = 0.649\ \mathrm{kg} - 0.238\ \mathrm{kg} = 0.411\ \mathrm{kg}$$
+
+$$k_2 = \frac{c_2m_2m_3}{k_1} \approx 22.4\ \mathrm{N/m}$$
+
+Exact answers: $m_2 = 0.236$ kg, $m_3 = 0.413$ kg, $k_2 = 22.6$ N/m.
+
+**2.4.2 Method 2: Fast pulse**
+
+Similarly as in method 1 for finding $k_1$, we quickly accelerate the box with acceleration $a_1$ for time $t$ and then decelerate with acceleration $-a_1$ for time $t$. If $t$ is small, then $y_2$ does not change much while moving the box, so $\Delta F_1 = \Delta F \approx k_1\Delta y_1$.
+
+We also know that after the pulse when mass 2 starts to move, for a short time $y_3$ does not change much.
+
+Therefore, $m_2a_2 = \Delta F_1 - \Delta F_2 \approx \Delta F_1$ before mass 2 starts to significantly move, and $m_2a_2 \approx k_1\Delta y_1 - k_1\Delta y_2 - k_2\Delta y_2 = k_1\Delta y_1 - (k_1 + k_2)\Delta y_2$ before mass 3 starts to significantly move.
+
+Therefore, if $t$ is small, then right after time $t$:
+
+$$F - F_0 = \Delta F_1 \approx m_2a_2 = m_2\frac{d^2y_2}{dt^2} = -\frac{m_2}{k_1}\frac{d^2F_1}{dt^2} = -\frac{m_2}{k_1}\frac{d^2F}{dt^2}.$$
+
+This method is less accurate than the previous method, it does many approximations, ignores drag forces and resolution of $F$ is small. It might be possible to make this method more accurate by taking the initial estimate for $m_2$ and then estimating $\Delta y_2$ while the box is accelerated to get a better estimate.
+
+Theoretically it is also possible to find $k_2$, although it is even less accurate. When $\frac{d^2F}{dt^2} = 0$, then $a_2 = 0$, which means that $k_1\Delta y_1 \approx (k_1 + k_2)\Delta y_2$.
+
+We will use $a_1 = 30\ \mathrm{m/s^2}$ for highest accuracy. A good trade-off between resolution of $F$ and small $t$ seems to be $t = 0.05\ \mathrm{s}$. Since we need to find the second derivative and need a lot of accuracy, we will average the values of 10 measurements. The results are shown in the table.
+
+| Time $(s)$ | $F$ $(N)$ | $\frac{dF}{dt}$ (N/s) |
+|---|---|---|
+| 0.10 | 12.572 | |
+| 0.11 | 12.781 | 20.9 |
+| 0.12 | 13.013 | 23.2 |
+| 0.13 | 13.268 | 25.5 |
+| 0.14 | 13.533 | 26.5 |
+| 0.15 | 13.811 | 27.8 |
+| 0.16 | 14.078 | 26.7 |
+| 0.17 | 14.351 | 27.3 |
+| 0.18 | 14.599 | 24.8 |
+
+We estimate that $\frac{d^2F}{dt^2} \approx 230\ \mathrm{N/s^2}$ at $t = 0.11\ \mathrm{s}$. Therefore
+
+$$m_2 \approx -\frac{(F - F_0)k_1}{\frac{d^2F}{dt^2}} = -\frac{(12.781 - 14.774)\ \mathrm{N} \cdot 39.7\ \mathrm{N/m}}{230\ \mathrm{N/s^2}}.$$
+
+$$m_2 \approx 0.344\ \mathrm{kg}.$$
+
+We also estimate that $\frac{d^2F}{dt^2} = 0$ at $t \approx 0.15\ \mathrm{s}$ when $F = 13.811\ \mathrm{N}$. We know that $\Delta y_1 = a_1t^2 = -30\ \mathrm{m/s^2} \cdot (0.05\ \mathrm{s})^2 = -0.075\ \mathrm{m}$.
+
+At $F = 13.811\ \mathrm{N}$,
+
+$$\Delta(y_1 - y_2) \approx \frac{(13.811 - 14.774)\ \mathrm{N}}{39.7\ \mathrm{N/m}} \approx -0.024\ \mathrm{m},$$
+
+where we get $\Delta y_2 \approx 0.051\ \mathrm{m}$.
+
+Since $k_1\Delta y_1 \approx (k_1 + k_2)\Delta y_2$,
+
+$$k_2 \approx k_1\left(\frac{\Delta y_1}{\Delta y_2} - 1\right) \approx 18.4\ \mathrm{N/m}$$
+
+| | **Finding $m_2$, $m_3$, $k_2$, Any method** | |
+|---|---|---|
+| 4a | Correct method | 0.5 |
+| 4b | Correct equations allowing to solve for the values $m_2$, $m_3$, $k_2$ | 0.5 |
+| | Correct equations allowing to solve only for $m_2$ and $m_3$ | 0.3 |
+| 4c | Necessary measurements | 1.0 |
+| | If only natural frequencies (periods) are found without a plan on how to use them: | |
+| | $T_1$ in range $1.11 \pm 0.02$ s | 0.3 |
+| | $T_1$ in range $1.11 \pm 0.10$ s | 0.1 |
+| | $T_2$ in range $0.373 \pm 0.005$ s | 0.3 |
+| | $T_2$ in range $0.373 \pm 0.050$ s | 0.1 |
+| 4d | $k_2$ in range $22.6 \pm 0.5$ N/m | 1.0 |
+| | $k_2$ in range $22.6 \pm 1.0$ N/m | 0.8 |
+| | $k_2$ in range $23 \pm 3$ N/m | 0.6 |
+| | $k_2$ in range $23 \pm 6$ N/m | 0.4 |
+| 4e | $m_2$ in range $0.236 \pm 0.010$ kg or $m_3$ in range $0.413 \pm 0.010$ kg | 0.9 |
+| | $m_2$ in range $0.236 \pm 0.020$ kg or $m_3$ in range $0.413 \pm 0.020$ kg | 0.6 |
+| | $m_2$ in range $0.236 \pm 0.050$ kg or $m_3$ in range $0.413 \pm 0.050$ kg | 0.3 |
+| 4f | Correctly calculate $m_3$ using $m_2$ or vice versa given any points received in 4e | 0.1 |
+| | **Total:** | **4.0** |
+
+*Note:* Equations of motion for mass 2 and 3 give 0 points. Getting a correct biquadratic equation for $\omega^2$ gives 0.5 points from 4a, points are given for 4b only if $k_2$, $m_2$, or $m_3$ is correctly expressed from the biquadratic equation taking $k_1$, $m_2 + m_3$, $\omega_1$ and $\omega_2$ as the only known parameters. Partial points can be given for getting an equation for $\omega^2$ (0.4 p for slightly wrong result, 0.2 p for setting up the determinant). Finding $T_1$ and $T_2$ give 0.3/0.1 points even with a plan to use them to solve a system of equations but without an idea how. Having a biquadratic equation for $\omega^2$ counts as “a plan” and in this case, finding $T_1$ and $T_2$ will each give 0.5/0.2 points with the same error tolerances. A correct answer without any justification or obtained with a physically nonsensible method gives 0 points.
+
+**2.4.3 Method 3: Estimating $\frac{k_2}{m_3}$ by estimating $y_2 - y_3$ at equilibrium and using $F_2 \approx k_2(y_2 - y_3)$**
+
+After finding $y_1 - y_2$ using method $3$ to find $k_1$, we can similarly estimate $y_3 - (y_1 - a)$, where $a = 0.6\ \mathrm{m}$, by quickly accelerating the box upwards. This method assumes that the masses have negligible height (which is true).
+
+Again, using binary search, we find that the time for collision is $t = 0.13\ \mathrm{s}$ at $a_1 = 25.6\ \mathrm{m/s^2}$. Thus
+
+$$y_3 - (y_1 - a) \approx \frac{a_1}{2}t^2 \approx 0.216\ \mathrm{m}$$
+
+$$y_2 - y_3 = a - (y_1 - y_2) - (y_3 - y_1 + a)$$
+
+$$y_2 - y_3 \approx 0.6\ \mathrm{m} - 0.226\ \mathrm{m} - 0.216\ \mathrm{m} \approx 0.158\ \mathrm{m}$$
+
+$$\frac{k_2}{m_3} \approx \frac{g}{y_2 - y_3} \approx 62.1\ \mathrm{N/(kg\,m)}$$
+
+The actual values are $y_2 - y_3 = 0.208\ \mathrm{m}$ and $\frac{k_2}{m_3} = 54.7\ \mathrm{N/(kg\,m)}$.
+
+| | **Estimating $k_2/m_3$** | |
+|---|---|---|
+| 4.1a | Idea to use method | 0.5 |
+| 4.1b | Correctly estimate $y_3 - y_1 + a$ | 0.5 |
+| 4.1c | Correct formula for $k_2/m_3$ | 0.2 |
+| 4.1d | $k_2/m_3$ in range $55 \pm 10\ \mathrm{N/(kg\,m)}$ | 0.3 |
+| | **Total:** | **1.5** |
+
+*Note:* Estimating the distance $y_3 - y_1 + a$ without an idea how to use it gives 0 points.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-experiment-20-1/p2-sol-fig1.png" alt="Plot of y (m) versus t (s) from 0 to 40 s: black lines at 1.8 and 1.2 m (box ceiling and floor, with a small bump near t = 1 s), a blue curve for m₂ oscillating around 1.62 m and an orange curve for m₃ oscillating around 1.41 m, both decaying (slow mode after a 1 s pulse); legend m₂, m₃." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-experiment-20-1/p2-sol-fig2.png" alt="Plot of Force (N) versus t (s) from 0 to 40 s: a blue curve oscillating between about 12.5 and 17 N after the pulse, decaying towards about 14.8 N." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-experiment-20-1/p2-sol-fig3.png" alt="Plot of y (m) versus t (s) from 0 to 25 s: black lines at 1.8 and 1.2 m with rapid oscillations during the first 4 s (box driven back and forth), a blue curve for m₂ oscillating around 1.62 m with large fast oscillations that decay, and an orange curve for m₃ around 1.41 m with small oscillations; legend m₂, m₃." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-experiment-20-1/p2-sol-fig4.png" alt="Plot of Force (N) versus t (s) from 0 to 25 s: a blue curve with large oscillations between about 9 and 21 N during the first 4 s, then decaying fast oscillations around 14.8 N." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [EuPhO20_experiment-1.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2020/EuPhO20_experiment-1.pdf)
+· официални решения: [EuPhO20_experiment_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2020/EuPhO20_experiment_Solutions.pdf)

@@ -1,0 +1,75 @@
+---
+id: eupho-2019-theory-th-pr-p3
+source: 'EuPhO 2019'
+title: 'Задача 3. Water hose'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2019/eupho-2019-theory-th-pr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:38:29.690Z'
+verifier: 'mechanical'
+---
+
+*EuPhO Riga | LATVIA 2019 — Theoretical Problems Text for Student: COM-A1*
+
+## Условие
+
+A stream of water exits from the nozzle of a hose with a constant unknown speed $v$. A child plays with the hose by rotating it randomly in a fixed vertical $x$-$y$ plane. The nozzle is kept at $x = y = 0\ \mathrm{m}$, and the angle between the nozzle’s axis and the horizon is never less than $45^{\circ}$. At each moment in time, the stream in the air has an irregular shape. The shape at one instant is shown in the figure below.
+
+Using this figure, determine the exit speed $v$ if the free fall acceleration is $g = 9.8\ \mathrm{m/s^2}$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2019-theory-th-pr/p3-fig1.png" alt="Dashed square grid with axes x (m) from 0 to 11 and y (m) from 0 to 5. A blue curve starts at the origin, rises steeply to a top near y ≈ 4.9 m at x ≈ 3.5 m, runs right and down to a loop turning back at x ≈ 11.3 m, y ≈ 2.5 m, returns left above itself near y ≈ 4.7 m, turns down around x ≈ 1.3 m, y ≈ 2.7 m, and descends to cross the x-axis near x ≈ 4 m, ending below it. An arrow labelled g points down at the right." />
+<figcaption>Figure 2: Shape of the water stream at a certain moment in time (larger version provided on separate sheet).</figcaption>
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 12 m/s
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+To begin with, let us notice that the envelope of the trajectories of balls thrown from the origin with the same launching speed $v$ at different launching angles is a parabola **(1 pt)**, and the focus of the parabola is the launching point **(1 pt)**.
+
+This fact can be proved as follows (the proof is not required from the contestants). The trajectory of the ball can be expressed parametrically as $x = v\cos\alpha t$, $y = v\sin\alpha t - \frac{1}{2}gt^2$. Upon eliminating $t$ we obtain
+
+$$y = x\tan\alpha - \frac{g}{2v^2}x^2(1 + \tan^2\alpha).$$
+
+We can consider this as an equation for finding the angle $\alpha$ to reach the point $(x, y)$:
+
+$$gx^2\tan^2\alpha - 2v^2x\tan\alpha + 2v^2y + gx^2 = 0.$$
+
+The points at the envelope separate the points for which the solution to this equation does exist from the points for which the solution does not exist, hence for the envelope points the discriminant of the equation must be zero,
+
+$$v^4x^2 = gx^2(2v^2y + gx^2) \quad\Rightarrow\quad y = \frac{v^2}{2g} - \frac{gx^2}{2v^2}.$$
+
+What we got is a parabola, and the position of the focus can be deduced from this formula. Alternatively, the position of the focus can be deduced from the fact that light rays parallel to the axis of a parabola converge after reflection from the parabolic shape into its focus. Indeed, the touching point of the envelope with a trajectory of a ball launched at $\alpha = 45^{\circ}$ must lie at $y = 0$ as this launching angle is known to provide the longest flight distance. Hence, the envelope and the $x$-axis meet at $45^{\circ}$, so that a vertical beam hitting the envelope at $y = 0$ is reflected by the envelope into a horizontal line. The focus must lie on that reflected beam, i.e. at $y = 0$.
+
+The parabolic trajectory of each water parcel must touch the envelope **(1 pts)**. Using the knowledge that the launching angles of the water parcels were never less than $45^{\circ}$, we conclude that the touching point must lie at $y \geq 0$ **(1 pt)**. This can be seen from the fact that a parcel launched at $45^{\circ}$ will meet the envelope at $y = 0$, and increasing the launching angle will raise the touching point.
+
+There are many ways of proving it more rigorously. For instance, one can use the fact (proved below) that the launching velocity and the tangent to the envelope at the point $A$ where the trajectory and the envelope meet are perpendicular to each other: with $\alpha + \beta = 90^{\circ}$ ($\beta$ denotes the angle between the tangent and the horizon) we conclude that increasing $\alpha$ means decreasing $\beta$, hence raising $A$. To prove that $\alpha + \beta = 90^{\circ}$, let a vertically up-directed beam be reflected from the trajectory at $A$: it will go through the focus of the trajectory which means that if we continue it through the focus and let it be reflected a second time from the same trajectory, it will propagate vertically down. The trajectory and the envelope are tangent at $A$, so the first reflection was also a reflection from the envelope and the reflected beam must go through the focus of the envelope, i.e. the launching point $O$. Point $O$ lies on the trajectory, so the second reflection point must be $O$. As a result of the two reflections, the beam was diverted by $180^{\circ}$ which means that the double sum of the incidence angles must have been $180^{\circ}$, and hence $2\alpha + 2\beta = 180^{\circ}$.
+
+The water parcels close to the origin are clearly yet to reach the envelope, and those parcels below the ground level have clearly passed the point where they touched the envelope. Since the parcels form a continuous curve, there must be at least one point $P$ which is exactly at the envelope **1 pts**).
+
+There are two ways of finding the position of the point $P$. The first approach is as follows. Notice that at $P$, the water curve is tangent to the envelope **(1 pt)**. Hence, vertical line drawn through $P$ will be reflected by the water curve so that it will go through the focus $O$ **(1 pt)**. So, we need to find by trial and error such a point $P$ on the upper segment of the water curve that the line $OP$ and a vertical line drawn through $P$ will form equal angles with the water curve at $P$ (finding the position of $P$ with a reasonable accuracy: **1 pt**), see the figure below.
+
+Alternatively, we can use the fact that for any point on a parabola, its distance from the focus plus its distance from a horizontal line is constant. So, for an arbitrary point $Q = (x, y)$ on the envelope, $y + \sqrt{x^2 + y^2} = 2H$, where $H$ is a constant, and for any point beneath it, $y + \sqrt{x^2 + y^2} < 2H$. Hence, among all the points at the water curve, the point $P$ has the largest value of $y + \sqrt{x^2 + y^2}$ **(2 pts)**. We can evaluate $y + \sqrt{x^2 + y^2}$ for a series of points at the water curve and find the one with the largest value (finding the position of $P$ with a reasonable accuracy: **1 pt**).
+
+Once we have found the point $P$, we can easily find the height of the topmost point of the envelope due to the equality $y + \sqrt{x^2 + y^2} = 2H_P$: for the topmost point, $x = 0$ so that its $y$-coordinate $2y = 2H_P$, hence $y = H_P$; The topmost point of the envelope would be reached by a water parcel launched vertically, so $v^2 = 2gH_P$, and $v = \sqrt{2gH_P}$ **(1 pt)**. From the figure we can find $2H_P = (3.3 + \sqrt{10.8^2 + 3.3^2})\mathrm{m} \approx 14.6\ \mathrm{m}$ so that $v \approx 12\ \mathrm{m/s}$ **(1 pt)**.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2019-theory-th-pr/p3-sol-fig1.png" alt="The water-stream graph of Figure 2 (x (m) 0–11, y (m) 0–5, arrow g) with added red construction: a straight line from the origin O to the point P on the upper branch of the curve near x ≈ 10.8 m, y ≈ 3.3 m, and a vertical red line from P down to the x-axis; P is labelled." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th_pr.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2019/th_pr.pdf)
+· официални решения: [th_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2019/th_sol.pdf)

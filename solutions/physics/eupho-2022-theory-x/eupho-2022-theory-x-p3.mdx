@@ -1,0 +1,285 @@
+---
+id: eupho-2022-theory-x-p3
+source: 'EuPhO 2022'
+title: 'Задача 3. Dipole in a magnetic field'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2022/eupho-2022-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:22:56.762Z'
+verifier: 'mechanical'
+---
+
+*EuPhO-2022 Theoretical Problems. Language: English · 10 т.*
+
+<details>
+<summary>General guidelines for marking</summary>
+
+- Granularity for marks is 0.1 p.
+- A simple numerical error resulting from a typo is punished by 0.2 p unless the grading scheme explicitly says otherwise.
+- Errors which cause dimensionally wrong results are punished by at least 50 % of the marks unless the grading scheme explicitly says otherwise.
+- Propagating errors are not punished repeatedly unless they either lead to considerable simplifications or wrong results whose validity can easily be checked later.
+
+</details>
+
+## Условие
+
+Two small balls of mass $m$ each with charges $+q$ and $-q$ respectively, connected by a rigid massless rod of length $d$, form a dipole. The dipole is parallel to plane $XY$ and is placed in a uniform magnetic field $\vec B$ perpendicular to $XY$.
+
+Initially, the dipole is aligned with the direction $X$ and has initial angular velocity $\omega_0$ in plane $XY$, as shown. Its center of mass is initially located at origin and given initial velocity $\vec v_0$ parallel to $XY$, as well.
+
+Consider three distinct scenarios (a, b, c-d):
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p3-fig1.png" alt="Dipole along the X axis: blue ball −q, m on the left and red ball +q, m on the right, separated by d, with its centre at the origin of the X–Y axes; curved arrow ω₀ showing counter-clockwise rotation, arrow v⃗₀ pointing up and to the right, and B⃗ drawn as a dot in a circle (out of the page)." />
+</figure>
+
+**(a)** Find $\omega_0$ and the direction of $\vec v_0$, so that the center of mass will move with the constant velocity $\vec v = \vec v_0$? **[2 т.]**
+
+**(b)** Given $\omega_0$, find such $\vec v_0$ (direction and magnitude), so that the center of mass will travel in a circle. Find the circle radius $R_c$ and the coordinates $x_c$, $y_c$ of its center. You don’t need to prove the uniqueness of the solution. **[3 т.]**
+
+**(c)** Given $\vec v_0 = 0$, find the minimal $\omega_0 = \omega_{\mathrm{min}}$ necessary for the dipole to reverse its orientation during the motion. **[4 т.]**
+
+**(d)** If the dipole starts with $\vec v_0 = 0$ and $\omega_0 = \omega_{\mathrm{min}}$ found in part (c), the trajectory of its center of mass has an asymptote. Find the distance $D$ from the origin to the asymptote. **[1 т.]**
+
+*Useful vector identity:*
+
+$$\vec a\times(\vec b\times\vec c) = \vec b\,(\vec a\cdot\vec c) - \vec c\,(\vec a\cdot\vec b),$$
+
+where “$\times$” and “$\cdot$” denote vector product and scalar product respectively.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** ω₀ = 0 and v⃗₀ ∥ Y (perpendicular to the dipole).
+- **(b)** $\vec v_0 = -\frac{qdB}{2m}\hat\jmath, \quad R_c = \frac{qBd}{2m|\omega_0|}, \quad (x_c, y_c) = (\pm R_c, 0)$
+- **(c)** $\omega_{\mathrm{min}} = \frac{2qB}{m}$
+- **(d)** $D = d$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part (a): Uniform linear motion**
+
+Lorentz forces acting on the charges:
+
+$$\begin{aligned} \vec F_+ &= q\vec v_+\times\vec B = q(\vec v + \vec\omega\times\vec r)\times\vec B, \\ \vec F_- &= (-q)\vec v_-\times\vec B = (-q)(\vec v - \vec\omega\times\vec r)\times\vec B, \end{aligned}$$
+
+where $\vec r$ is a vector from the center of mass to the position of the positive charge.
+
+According to Newton’s first law, the center-of-mass $C$ of the dipole will move with constant velocity provided that the net force:
+
+$$\vec F = \vec F_+ + \vec F_- = q(\vec v_+ - \vec v_-)\times\vec B, \qquad (8)$$
+
+acting on the dipole, is zero. Since $\vec v_+$,$\vec v_-$ and $\vec B$ are perpendicular, we require $\vec v_+ = \vec v_-$. It means that dipole does not rotate: $\omega = \omega_0 = 0$.
+
+The pure translation, however, is possible if the pair of forces $\vec F_+, \vec F_-$, has zero torque about $C$:
+
+$$\vec\tau = \vec r\times\vec F_+ - \vec r\times\vec F_- = 2q\vec r\times(\vec v\times\vec B) = 2q\left(\vec v(\vec r\cdot\vec B) - \vec B(\vec r\cdot\vec v)\right) = -2q\vec B(\vec r\cdot\vec v). \qquad (9)$$
+
+We conclude that scalar product is zero only when $\vec v\perp\vec r$, i.e. the initial velocity should be parallel to $Y$ direction.
+
+In summary, the dipole will move uniformly along $Y$ if, and only if, $\vec v_0\parallel Y$ and $\omega_0 = 0$.
+
+**Part (b): Circular motion**
+
+The net force can be calculated as:
+
+$$\vec F = \vec F_+ + \vec F_- = 2q(\vec\omega\times\vec r)\times\vec B = -2q\left(\vec\omega(\vec B\cdot\vec r) - \vec r(\vec B\cdot\vec\omega)\right) = 2qB\omega\vec r = B\omega\vec p, \qquad (10)$$
+
+where $\vec p$ is a dipole moment ($|\vec p| = qd = 2qr$ and the direction aligns with $\vec r$).
+
+When $C$ orbits a circle, $\vec F$ acts as a centripetal force, i.e. it points to the center of the circle. Since $\vec F\parallel\vec p$, the dipole is always in line with the center of the orbit. Therefore, the orbital angular velocity of $C$ is equal to the angular velocity of rotation of the dipole about $C$.
+
+The magnitude of the orbital velocity is:
+
+$$v_0 = |\omega_0|R_c$$
+
+From Newton’s second law, and accounting that the total mass of the dipole is $2m$:
+
+$$\frac{2mv_0^2}{R_c} = \frac{pBv_0}{R_c},$$
+
+i.e. the magnitude of velocity is:
+
+$$v_0 = \frac{pB}{2m} = \frac{qBd}{2m}$$
+
+and the radius of the orbit is:
+
+$$R_c = \frac{v_0}{|\omega_0|} = \frac{qBd}{2m|\omega_0|}$$
+
+The coordinates of the center of the circle are:
+
+$$(x_c, y_c) = (\pm R_c, 0)$$
+
+where the “$+$” sign corresponds to $\omega_0 > 0$, i.e. counter-clockwise rotation, and the “$-$” sign —to clockwise rotation. In either case, the initial velocity should point to the negative $Y$ direction:
+
+$$\vec v_0 = -\frac{qdB}{2m}\hat\jmath.$$
+
+**Part (c): Reversal of the dipole**
+
+In (10) we have shown that the net force:
+
+$$\vec F = 2q(\vec\omega\times\vec r)\times\vec B = (\vec\omega\times\vec p)\times\vec B.$$
+
+Since the dipole moment $\vec p$ rotates with angular velocity $\vec\omega$, its time derivative:
+
+$$\frac{d\vec p}{dt} = \vec\omega\times\vec p.$$
+
+From Newton’s second law:
+
+$$2m\frac{d\vec v}{dt} = \vec F = \frac{d\vec p}{dt}\times\vec B.$$
+
+By integrating the equation, we arrive at an additional conservation law in the system (conservation of the so called “generalized momentum”):
+
+$$2m\vec v - \vec p\times\vec B = \mathrm{const}$$
+
+Thus, if $\vec p$ has reversed its direction from $\vec p_0$ to $\vec p_1 = -\vec p_0$, then the velocity:
+
+$$\vec v_1 = \vec v_0 + \frac{(\vec p_1 - \vec p_0)\times\vec B}{2m} = -\frac{\vec p_0\times\vec B}{m}. \qquad (11)$$
+
+Since the magnetic field does not perform work on moving electric charges, the kinetic energy of the dipole is conserved:
+
+$$\frac{I}{2}\omega_0^2 = \frac{I}{2}\omega_1^2 + \frac{2m}{2}v_1^2,$$
+
+Here, $I = 2\times m(d/2)^2 = md^2/2$ is the moment of inertia of the dipole with respect to its center-of-mass. Since $v_1$ doesn’t depend on angular velocities, $\omega_0$ is minimal when $\omega_1 = 0$. Finally,
+
+$$\omega_{\mathrm{min}} = v_1\sqrt{\frac{2m}{I}} = \frac{p_0B}{m}\sqrt{\frac{4}{d^2}} = \frac{2qB}{m}$$
+
+**Alternatively,** we can introduce $\theta$ to be the angle between the dipole moment and the axis $X$ ($\theta_0 = 0$) and rewrite the equations of translational motion in coordinates using $\omega = \dot\theta$:
+
+$$\dot v_x = \dot\theta\frac{qBd}{2m}\cos\theta, \qquad \dot v_y = \dot\theta\frac{qBd}{2m}\sin\theta.$$
+
+By integrating these equations, given zero initial velocity, we find how velocity depends on $\theta$:
+
+$$v_x = \frac{qBd}{2m}\sin\theta, \qquad v_y = \frac{qBd}{2m}(1 - \cos\theta).$$
+
+Using the expression (9) for the torque, we can write the equation of rotational motion as:
+
+$$I\ddot\theta = \tau = -2qB(r_xv_x + r_yv_y) = -\frac{q^2B^2d^2}{2m}\sin\theta,$$
+
+$$\ddot\theta + \frac{q^2B^2}{m^2}\sin\theta = 0, \qquad (12)$$
+
+This is the equation of a mathematical pendulum of length $L$ in gravitational field $g = L(qB/m)^2$. And the equivalent question becomes what is the minimal push $\dot\theta_0$ required in the bottom position for the pendulum to reach the top position. Kinetic energy of the pendulum $K = \frac{1}{2}mL^2\dot\theta_0^2$ will be transferred to the potential energy $U = 2mgL$, from which we find:
+
+$$\omega_{\mathrm{min}} = \dot\theta_0 = \sqrt{4\frac{g}{L}} = 2\frac{qB}{m}.$$
+
+*Note.* Due to symmetry, both clockwise and counter-clockwise initial rotation with absolute value of $|\omega_0|$ will work.
+
+**Part (d): Trajectory asymptote**
+
+If dipole’s trajectory has an asymptote, then its movement along the asymptote is uniform. Indeed, if there is a linear motion with acceleration, the dipole $\vec p$ should be always aligned with the direction of motion, thus, not rotating. and as we found in part (a), the absence of rotation can only be maintained if $\vec v = \mathrm{const}$ and $\vec v\perp\vec p$.
+
+The uniform linear motion requires $\omega = 0$, and this happens in the limit when the orientation is reversed $\vec p_1 = -\vec p_0$. According to (11), in the limit, the dipole is travelling with the speed $\vec v_1 = p_0B\hat\jmath/m$. Thus the asymptote is parallel to Y axis: $x = D$ (for counter-clockwise initial rotation).
+
+If $\vec R_+$ and $\vec R_-$ are absolute positions of the charges, we can write equation for the angular momentum around the origin $L_O$:
+
+$$\frac{d\vec L_O}{dt} = \vec R_+\times(q\dot{\vec R}_+\times\vec B) + \vec R_-\times(-q\dot{\vec R}_-\times\vec B) = -q\vec B\left(\vec R_+\cdot\dot{\vec R}_+ - \vec R_-\cdot\dot{\vec R}_-\right) = -\frac{q\vec B}{2}\frac{d}{dt}\left(R_+^2 - R_-^2\right).$$
+
+After integration, we find one more conservation law (conservation of the “generalized angular momentum”):
+
+$$\vec L_O + \frac{q\vec B}{2}\left(R_+^2 - R_-^2\right) = \vec L_O + \frac{q\vec B}{2}\left((\vec R_+ + \vec R_-)\cdot(\vec R_+ - \vec R_-)\right) = \vec L_O + \vec B(\vec R\cdot\vec p) = \mathrm{const},$$
+
+where $\vec R = \frac{1}{2}(\vec R_+ + \vec R_-)$ is the position of center of mass. We also used the fact that $q(\vec R_+ - \vec R_-) = 2q\vec r = \vec p$.
+
+Initially, centre of mass coincides with origin ($\vec R_0 = 0$):
+
+$$L_O(0) = I\omega_0 = 2m\frac{d^2}{4}\,2\frac{qB}{m} = qBd^2. \qquad (13)$$
+
+At asymptote, the dipole has reversed direction $\vec p_1 = -\vec p_0$ and charges are travelling along parallel lines $x = D\pm r$ with the velocity $\vec v_1$:
+
+$$L_O(\infty) + B(\vec R_1\cdot\vec p_1) = m(D - r)v_1 + m(D + r)v_1 - BDp_0 = 2mD\frac{p_0B}{m} - BDp_0 = BDp_0 = BDqd. \qquad (14)$$
+
+Since (13) equals (14), we conclude that $D = d$.
+
+We can arrive to the same conclusion differently. Notice that we are interested in the $x$ coordinate of $C$ at infinity:
+
+$$D = x_\infty = \int_0^\infty v_x\,dt = \frac{qBd}{2m}\int_0^\infty\sin\theta\,dt.$$
+
+From (12), we can express $\sin\theta$:
+
+$$\int_0^\infty\sin\theta\,dt = -\frac{m^2}{q^2B^2}\int_0^\infty\ddot\theta\,dt = -\frac{m^2}{q^2B^2}(\dot\theta_1 - \dot\theta_0) = \frac{m^2}{q^2B^2}\omega_{\mathrm{min}} = \frac{2m}{qB}.$$
+
+Finally,
+
+$$D = \frac{qBd}{2m}\,\frac{2m}{qB} = d.$$
+
+*Note.* If initial rotation is clockwise ($\omega_0 < 0$), the asymptote has an equation $x = -D$, but the distance to the origin remains the same.
+
+**Marking scheme**
+
+| | Part (a): Uniform linear motion | pts |
+|---|---|---|
+| a1 | Rationalizes that the net force on the dipole is zero if the two poles move with equal velocities; Just argument $v = \mathrm{const} \Rightarrow \sum\vec F = 0$ is 0 pts. | 0.7 |
+| a2 | Concludes that $\omega_0 = 0$. | 0.3 |
+| a3 | Using the argument of zero torque, concludes that the velocity should be perpendicular to the dipole; Just argument $\omega = \mathrm{const} = 0 \Rightarrow \vec\tau = 0$ : 0.4 pts | 0.7 |
+| a4 | States explicitly that $\vec v_0\parallel Y$ (or $\perp X$). | 0.3 |
+| | **Total number of points for part (a)** | **2.0** |
+
+| | Part (b): Circular motion | pts |
+|---|---|---|
+| b1 | Derives expression for the magnitude of the net force on the dipole in terms of $\omega$ AND states explicitly that it is parallel to the dipole axis OR derives one single vector expression. | 0.9 |
+| b2 | Realizes (drawing or explicit statement) that $\vec F$ and the dipole axis point to the center of the orbit, and concludes that $\omega_0$ is equal to the orbital angular velocity. | 0.5 |
+| b3 | Writes down Newton’s second law for the circular motion. | 0.5 |
+| b4 | Makes use of the relation $v_0 = \lvert\omega\rvert R_c$. | 0.2 |
+| b5 | Derives expression for $v_0$ and specifies its direction (drawing or statement) OR derives one single vector expression for $\vec v_0$; if direction is wrong or missing $0.2$ pts | 0.3 |
+| b6 | Derives explicitly $R_c = qbD/(2m\lvert\omega_0\rvert)$. If $\lvert\cdot\rvert$ is omitted, still full points. | 0.3 |
+| b7 | Writes down the coordinates of the center of the orbit; 0.2 for correct $x_c$ (including sign), 0.1 for correct $y_c$; $x_c = qbD/(2m\omega_0)$ is a correct answer | 0.3 |
+| | **Total number of points for part (b)** | **3.0** |
+
+Only one of the grading tables should be used for part (c), the one which results in a higher score.
+
+| | Part (c): Reversal of the dipole | pts |
+|---|---|---|
+| c1 | By integrating the equation(s) of motion derives a “generalized momentum” conservation law – a relationship between the linear momentum $2m\vec v$ and the dipole moment $\vec p$ – in vector form OR for the Cartesian components. | 1.5 |
+| c2 | States explicitly that the kinetic energy of the dipole conserves. | 0.3 |
+| c3 | Writes down explicit expression for the kinetic energy in terms of angular velocity and linear velocity of the center of mass. | 0.5 |
+| c4 | Realizes that $\omega_0$ is minimal when $\omega_1 = 0$ in the reversed position. | 0.2 |
+| c5 | By using the “generalized momentum” conservation, derives explicit expression for the linear velocity $v_1$. | 0.5 |
+| c6 | Applies the conservation of energy to find relationship between $v_1$ and $\omega_{\mathrm{min}}$ | 0.8 |
+| c7 | Derives the final expression for $\omega_{\mathrm{min}}$ | 0.2 |
+| | **Total number of points for part (c)** | **4.0** |
+
+**Alternative approach: pendulum analogy**
+
+| | Part (c): Reversal of the dipole | pts |
+|---|---|---|
+| c1 | Derives the expression $\tau = -B(\vec p\cdot\vec v)$ for the torque. Even if the derivation has been made in parts (a) or (b), the points **should** be assigned to Task (c); If term $(\vec B\cdot\vec p)$ is not cancelled, still full points | 0.5 |
+| c2 | By integrating the equations of motion, expresses $v_x$ and $v_y$ in terms of $\theta$. | 1.5 |
+| c3 | Writes down the equation of rotational motion in terms of $\sin\theta$. | 0.5 |
+| c4 | States that the angular dynamics of the dipole is equivalent to a large-amplitude oscillation of a mathematical pendulum. | 0.3 |
+| c5 | Realizes that $\omega_0$ is minimal when $\omega_1 = 0$ in the reversed position. | 0.2 |
+| c6 | Applies the conservation of energy to the ”equivalent pendulum”. | 0.8 |
+| c7 | Derives the final expression for $\omega_{\mathrm{min}}$ | 0.2 |
+| | **Total number of points for part (c)** | **4.0** |
+
+| | Part (d): Trajectory asymptote | pts |
+|---|---|---|
+| d1 | Rationalizes that the asymptote is parallel to $Y$, i.e. $x = \pm D$. | 0.1 |
+| d2 | Rationalizes that asymptotically the motion is linear uniform | 0.2 |
+| d3 | Either finds conservation law $\vec L_O + \vec B(\vec R\cdot\vec p)$ OR writes $x_\infty$ as integral of $v_x$ (with explicit expression for $v_x$) as a method to find $D$. | 0.3 |
+| d4 | Correctly computes generalized angular momentum at 0 and $\infty$ OR uses $\sin\theta\propto\ddot\theta$ in integral. | 0.2 |
+| d5 | Concludes that $D = d$. | 0.2 |
+| | **Total number of points for part (d)** | **1.0** |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p3-sol-fig1.png" alt="Rotating dipole: blue −q ball and red +q ball joined by a thick rod, vector r⃗ from the centre to the positive charge, curved arrow ω, centre-of-mass velocity v⃗ pointing up; at the charges the velocities v⃗₊ = v⃗ + ω⃗ × r⃗ (red) and v⃗₋ = v⃗ − ω⃗ × r⃗ (blue) are drawn." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p3-sol-fig2.png" alt="Dipole (blue − and red + balls) on a dashed circular arc, velocity v⃗ tangent to the arc, force F⃗ along the dipole axis pointing along a dashed line towards the centre of the circle (x_c, y_c)." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p3-sol-fig3.png" alt="Trajectories in the X–Y plane for ω₀ = ω_min: red curve of the + charge, blue curve of the − charge (dipping below the X axis) and black curve of the centre of mass, all bending upward and becoming vertical; at the top the reversed dipole moves up with velocity v₁ at both charges; a dashed vertical asymptote at distance D from the Y axis." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Theory.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2022/Theory.pdf)
+· официални решения: [Theory Solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2022/Theory%20Solutions.pdf)

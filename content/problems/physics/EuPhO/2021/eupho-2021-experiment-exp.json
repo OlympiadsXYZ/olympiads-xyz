@@ -1,0 +1,294 @@
+{
+ "paper": {
+  "id": "eupho-2021-experiment-exp",
+  "subject": "physics",
+  "competition": "EuPhO",
+  "year": 2021,
+  "round": "experiment",
+  "roundType": "experiment",
+  "grade": null,
+  "lang": "en",
+  "title": "EuPhO-2021 Experimental problems. Language: English",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/EuPhO/2021/EuPhO_2021-exp.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/EuPhO/2021/EuPhO_2021_exp_solutions-2.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "4ce95ca661bc348d8353b326b93c199bc26c4d863a6910a23c203d8fa0bc7f35",
+    "solutions": "8f80070a0163dbdc11b3c5fa69b2f30d65d6e6ea37e2429bca9a8088be59ef2b"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "Clean LaTeX-typeset PDFs; the text layer matches the pages. No points are printed in the problems document; problem totals are not printed anywhere, so problem points are null. Part points for E1 a. (3.0) and b. (6.0) are the printed 'Total on Task A/B' of the marking scheme; the marking scheme also has 'Total on Theory 1.0'. E2 has no printed sub-tasks; its marking scheme sections are 2.5+2.0+2.5+0.5+2.5 pt. Kept as printed: the duplicated item numbers '2.2' and '6.5' in the E2 marking scheme, 'an another opportunity', 'to go the next prompt', 'the taking the temperature measurements', temperatures written as '26.9 C', '599 C', 'T < 45 C'; 'alpha = 2.93' printed without a unit and 'k = 397 W/mK'; the E2 solution mentions 'the cross sectional area of the wire' (meaning the rod). A stray single letter 'e' printed at the top of the right column of solutions page 4 (above 'E2: Hot Cylinder') is a typesetting artefact and is omitted. The merged two-level header of Table 2 is flattened into a first header row plus a second row of column titles. The Uniform Cooling chart's small-print note is placed in the figure caption."
+  }
+ },
+ "problems": [
+  {
+   "id": "eupho-2021-experiment-exp-p1",
+   "number": 1,
+   "title": "E1: Hidden wire",
+   "points": null,
+   "problemType": "experiment",
+   "statement": "**Experimental setup and tasks**\n\nA very long copper wire runs horizontally at unknown depth $h$ under a horizontal square surface of side length $L = 100.0\\ \\mathrm{mm}$. The sides of the square are oriented West-East (the $x$-axis) and South-North (the $y$-axis), as shown in the figure. The origin of the coordinate system coincides with the South-West corner of the square.\n\nThe wire is connected to an adjustable DC source (not shown in the figure), which can provide a current $I$ in the range from $-5\\ \\mathrm{A}$ to $5\\ \\mathrm{A}$. The reversal of the sign of the current corresponds to a reversal of the polarity of the source. A small compass can be placed on the square surface, (including its circumference) to sense the magnetic field of the wire through the deflection angle $\\varphi$ between the magnetic needle and the North ($y$) direction. Positive $\\varphi$ values correspond to an Eastward deflection, as shown in the figure, while negative $\\varphi$ correspond to a Westward deflection. You can assume that:\n\n- The magnetic needle is a point-like magnetic dipole, which can rotate freely around the vertical axis, i.e. the compass is sensitive to the horizontal component of the magnetic field only.\n- The height of the needle above the surface is negligible compared to the depth of the wire beneath the surface, i.e. the needle is situated in the $xy$-plane.\n\nDesign your experiment and make the necessary simulations to perform the following tasks:",
+   "statementAfterParts": "The magnetic permeability of free space is\n\n$$\\mu_0 = 4\\pi \\times 10^{-7}\\ \\mathrm{T\\,m/A}.$$\n\n**Description of the simulation software**\n\nThe command line program simulates the measurement of the deflection angle $\\varphi$ after providing the current $I$ and placing the compass at the coordinates $x$ and $y$ on the surface.\n\nA typical output of a single simulation cycle of the program looks like:\n\n```\nEnter I (A) between -5.0 and 5.0: 3.4\nEnter X (mm) between 0 and 100: 55\nEnter Y (mm) between 0 and 100: 31\nPHI = -33 degrees\n-------------------------------\nEnter I (A) between -5.0 and 5.0: _\n```\n\nFirst, you enter the current $I$ in $A$ (the number between $-5.0$ and $5.0$), then coordinates $x$ and $y$ in $mm$ (the numbers between $0$ and $100$). Each input is confirmed with the **Enter** key. The program will output the value of $\\varphi$ (`PHI`) in degrees (rounded to $1^{\\circ}$) and return to the initial prompt.\n\nThe current input $I$ will be rounded to $0.1\\ \\mathrm{A}$, the coordinate inputs $x$, $y$ will be rounded to $1\\ \\mathrm{mm}$ before being used in simulation. (There is no point in trying to input more precise numbers).\n\nEvery time you change the position of a compass, its real position used in simulation differs from the input coordinates with an error about $0.5\\ \\mathrm{mm}$. (It is a simulation of a limited precision when you place an object).\n\nAny time you need to quit the program, press **Ctrl+C**.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "Grey square surface in the xy-plane with axes North (up) and East (right), corners marked 0 and L on both axes; the wire with current I enters under the bottom edge and leaves at the top edge; a compass at point (x, y) with dashed guide lines, its needle deflected by angle φ from the North direction.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-fig1.png",
+     "width": 616,
+     "height": 587,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       86.89,
+       180.99,
+       234.54,
+       321.61
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a.",
+     "statement": "Determine the orientation of the wire with respect to the coordinate system by specifying its equation in the form: $y = ax + b$, and estimate the uncertainties of the parameters $a$ and $b$. Draw the wire position on a graph and indicate the direction corresponding to a positive current $I$.",
+     "points": 3,
+     "answer": {
+      "kind": "expression",
+      "latex": "y = -0.58x + 75.3\\ \\mathrm{mm},\\quad \\delta a \\approx 0.01,\\quad \\delta b \\approx 0.4\\ \\mathrm{mm}",
+      "note": "Typical values from the official solution (Table 1 fit); the positive I direction is from the West to the East border."
+     }
+    },
+    {
+     "label": "b.",
+     "statement": "Determine the depth $h$ of the wire below the surface and the horizontal component $B_{\\mathrm{E}}$ of the Earth's magnetic field. In this task you are not required to calculate the experimental uncertainties explicitly, however, your final results must be represented with an appropriate number of significant digits.",
+     "points": 6,
+     "answer": {
+      "kind": "text",
+      "value": "B_E = 4.0 × 10^-5 T, h = 5.0 mm",
+      "note": "Method I of the official solution; Method II gives B_E = 3.9 × 10^-5 T and h = 5.3 mm."
+     }
+    }
+   ],
+   "topics": [
+    "magnetism/magnetic-field-of-current",
+    "experiment/data-analysis"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**Theoretical background**\n\nAs shown in Fig. 1, the horizontal projection $\\vec{B}_{\\mathrm{h}}$ of the magnetic induction $\\vec{B}_{\\mathrm{w}}$ of the wire has the same direction and is perpendicular to the wire in all points of the $xy$ plane. It is clear that $\\vec{B}_{\\mathrm{h}}$ makes with North ($y$) direction an angle $\\psi = 180^{\\circ} - \\theta$, where $\\theta$ is the angle between the direction of the current and the positive $x$-direction. The magnetic needle points along the vector $\\vec{B} = \\vec{B}_{\\mathrm{h}} + \\vec{B}_{\\mathrm{E}}$ of the total magnetic induction. As evident from the vector triangle on Fig. 1(a), the deflection angle $\\varphi$ can be obtained through the sine-theorem:\n\n$$\\frac{B_{\\mathrm{h}}}{B_{\\mathrm{E}}} = \\frac{\\sin\\varphi}{\\sin(\\psi - \\varphi)} = \\frac{\\sin\\varphi}{\\sin(\\theta + \\varphi)} \\qquad (1)$$\n\nConsider a point on the surface at a distance $d$ from the wire projection onto $xy$ plane, and at a distance $r = \\sqrt{d^2 + h^2}$ from the wire, as shown in Fig. 1(b). It follows from the Ampère's law that the magnitude of magnetic induction of the wire at that point is\n\n$$B_{\\mathrm{w}} = \\frac{\\mu_0 I}{2\\pi r} \\qquad (2)$$\n\nand the magnitude of its horizontal projection is\n\n$$B_{\\mathrm{h}} = B_{\\mathrm{w}} \\cos\\alpha = \\frac{\\mu_0 I h}{2\\pi(d^2 + h^2)}. \\qquad (3)$$\n\nEquations (1) and (3) are sufficient to complete all tasks of the problem.\n\n**Task (a): Determination of the horizontal position of the wire**\n\nAs evident from the vector triangle (Fig. 1), the maximum absolute value of the deflection angle at a given current is met at $d = 0$ where $B_{\\mathrm{h}}$ is maximal, i.e. vertically above the wire. Therefore, the wire can be tracked by finding two or more points on the surface where $|\\varphi|$ reaches a maximum. First, a coarse scan of the border with a step of, say, 10 mm, can be performed in order to locate intervals, where $|\\varphi|$ goes through a maximum. In this way we establish that the wire projection crosses the West side ($x = 0$ mm) at $y \\in [60\\ \\mathrm{mm}, 90\\ \\mathrm{mm}]$ and the East side ($x = 100$ mm) at $y \\in [10\\ \\mathrm{mm}, 30\\ \\mathrm{mm}]$. A finer scan of these intervals with a step of 1 mm allows to determine the approximate coordinates of the two crosspoints as $P_1 = (0.0{\\pm}0.5, 75{\\pm}1)$ mm and $P_2 = (100.0{\\pm}0.5, 17{\\pm}1)$ mm. The uncertainty of the $y$ coordinate is 1 mm since near the maximum $|\\varphi|$ changes slowly and takes the same rounded value at three consecutive points. Additional scans along vertical (horizontal) lines of intermediate $x$ ($y$) values could be done in order to find more points along the wire projection, and to determine the equation of the wire more precisely by means of a least-squares fit. A typical set of values is given in Table 1. The fitted equation of the wire is, respectively\n\n$$y = ax + b = -0.58x + 75.3\\ \\mathrm{mm} \\qquad (4)$$\n\nwith estimated parameter uncertainties of $\\delta a \\approx 0.01$ and $\\delta b \\approx 0.4$ mm. The parameter uncertainties scale as $1/\\sqrt{N}$, where $N$ is the number of experimental points. A graph of the wire projection in the $xy$-plane is shown in Fig. 2. Since $\\varphi < 0$ at $I > 0$, the positive $I$ direction is from the West to the East border, as shown in the graph.\n\nTable 1: Points, where $|\\varphi|$ reaches a maximum of $143^{\\circ}$ at a current $I = +5$ A.\n\n| $x$ (mm) | $y$ (mm) |\n|---|---|\n| 0 | 75 |\n| 20 | 64 |\n| 40 | 52 |\n| 60 | 41 |\n| 80 | 29 |\n| 100 | 17 |\n\n**Task (b): Determination of $h$ and $B_{\\mathrm{E}}$**\n\nAs follows from equations (1) and (3), the deflection angle $\\varphi$ at a distance $d$ from the horizontal projection of the wire satisfies the equation\n\n$$\\frac{\\sin\\varphi}{\\sin(\\theta + \\varphi)} = \\frac{\\mu_0 I h}{2\\pi B_{\\mathrm{E}}(d^2 + h^2)}. \\qquad (5)$$\n\nwhere the angle $\\theta$ can be calculated from the slope coefficient $a$ of the wire:\n\n$$\\theta = \\arctan(a) = -30.1^{\\circ} \\pm 0.4^{\\circ} \\qquad (6)$$\n\nThe distance $d$ between a point with coordinates $(x, y)$ and the wire projection can either be measured directly on the graph in Fig. 2, or calculated as:\n\n$$d = |(ax + b - y)\\cos\\theta| \\approx 0.865|ax + b - y| \\qquad (7)$$\n\nIt follows from equations (5)–(7) that the unknown $h$ and $B_{\\mathrm{E}}$ could be determined if the deflection angle $\\varphi$ is measured in at least two points situated at different distances from the wire. However, due to the random error, associated with compass positioning and the rounding error of the angle reading, such a minimalist approach is quite inaccurate. Therefore, systematic measurements at several distances $d$ and/or different currents $I$, are necessary to obtain sufficiently precise estimate for $h$ and $B_{\\mathrm{E}}$. Two generic approaches could be followed, as well as a combination between them.\n\n**Method I. Varying the current at fixed distances.** By defining a new dimensionless variable $U = \\sin\\varphi/\\sin(\\varphi - 30.1^{\\circ})$, equation (5) is linearized as:\n\n$$I = kU \\qquad (8)$$\n\nwhere the slope coefficient is:\n\n$$k = \\frac{2\\pi B_{\\mathrm{E}}(d^2 + h^2)}{\\mu_0 h} \\qquad (9)$$\n\nTherefore, the unknown $B_{\\mathrm{E}}$ and $h$ can be estimated after obtaining $k$ for at least two different distances $d$ from the wire. Table 2 summarizes the results of measurements at $d_1 = 0$ mm (vertically above the wire) and at $d_2 = 10$ mm in a point with coordinates $x = 20$ mm and $y = 75$ mm. Figure 3 shows the corresponding U-I graphs, and the estimated values of the slope coefficients are also listed in the table 2.\n\nTable 2: Experimental data for the deflection angle $\\varphi$ vs. current $I$ at two different distances $d$.\n\n| (0 mm,75 mm); $d_1 = 0$ mm | | | (20 mm,75 mm); $d_2 = 10$ mm | | |\n|---|---|---|---|---|---|\n| $I$ (A) | $\\varphi$ (deg) | $U$ | $I$ (A) | $\\varphi$ (deg) | $U$ |\n| -5.0 | 25 | -4.85 | -5.0 | 15 | -1.00 |\n| -4.0 | 24 | -3.89 | -4.0 | 13 | -0.77 |\n| -3.0 | 23 | -3.21 | -3.0 | 11 | -0.59 |\n| -2.0 | 20 | -1.97 | -2.0 | 8 | -0.37 |\n| -1.0 | 15 | -1.00 | -1.0 | 5 | -0.21 |\n| 1.0 | -75 | 1.00 | 1.0 | -7 | 0.20 |\n| 2.0 | -126 | 1.99 | 2.0 | -17 | 0.40 |\n| 3.0 | -137 | 3.03 | 3.0 | -32 | 0.60 |\n| 4.0 | -141 | 4.02 | 4.0 | -52 | 0.80 |\n| 5.0 | -143 | 4.94 | 5.0 | -75 | 1.00 |\n| $k_1 = 1.01 \\pm 0.01$ A | | | $k_2 = 5.04 \\pm 0.03$ A | | |\n\nIt follows from equation (8) that:\n\n$$\\frac{B_{\\mathrm{E}}}{h} = \\frac{\\mu_0(k_2 - k_1)}{2\\pi(d_2^2 - d_1^2)} = 8.06 \\times 10^{-6}\\ \\mathrm{T/mm} \\qquad (10)$$\n\nand\n\n$$B_{\\mathrm{E}} h = \\frac{\\mu_0(d_2^2 k_1 - d_1^2 k_2)}{2\\pi(d_2^2 - d_1^2)} = 1.98 \\times 10^{-4}\\ \\mathrm{T \\cdot mm} \\qquad (11)$$\n\nAlternatively, one can also use\n\n$$h = \\sqrt{\\frac{d_2^2 k_1 - d_1^2 k_2}{k_2 - k_1}} = 5.0\\ \\mathrm{mm}. \\qquad (12)$$\n\nFinally, we obtain for the horizontal component of the Earth's magnetic induction:\n\n$$B_{\\mathrm{E}} = 4.0 \\times 10^{-5}\\ \\mathrm{T} \\qquad (13)$$\n\nand for the depth of the wire:\n\n$$h = 5.0\\ \\mathrm{mm} \\qquad (14)$$\n\nThese estimates of $h$ and $B_{\\mathrm{E}}$ coincide with accuracy of two significant digits with the values preset in the simulation program.\n\n**Method II. Fixed current, varying the distance.** Equation (5) can be rewritten in the form:\n\n$$\\frac{\\sin(\\theta + \\varphi)}{\\sin\\varphi} = \\frac{2\\pi B_{\\mathrm{E}}}{\\mu_0 I h} d^2 + \\frac{2\\pi B_{\\mathrm{E}} h}{\\mu_0 I} \\qquad (15)$$\n\nwhich can be linearized by setting new auxiliary variables: $U = d^2$ and $V = \\sin(\\varphi - 30.1^{\\circ})/\\sin\\varphi$. A typical data set for this method is given in table 3, while the linearized U-V plot is shown in Fig. 4.\n\nTable 3: Experimental data for the deflection angle $\\varphi$ vs. distance $d$ at a fixed current $I = 5.0$ A.\n\n| $x$ (mm) | $y$ (mm) | $d$ (mm) | $\\varphi$ (deg) | $U$ (mm$^2$) | $V$ |\n|---|---|---|---|---|---|\n| 0 | 75 | 0 | -143 | 0 | 0.203 |\n| 2 | 75 | 1 | -142 | 1 | 0.226 |\n| 4 | 75 | 2 | -142 | 4 | 0.226 |\n| 6 | 75 | 3 | -139 | 9 | 0.291 |\n| 8 | 75 | 4 | -138 | 16 | 0.311 |\n| 10 | 75 | 5 | -132 | 25 | 0.416 |\n| 12 | 75 | 6 | -128 | 36 | 0.475 |\n| 14 | 75 | 7 | -123 | 49 | 0.541 |\n| 16 | 75 | 8 | -111 | 64 | 0.674 |\n| 18 | 75 | 9 | -98 | 81 | 0.796 |\n| 20 | 75 | 10 | -79 | 100 | 0.963 |\n\nFrom the fitting line we obtain:\n\n$$V = 7.37 \\times 10^{-3}\\mathrm{mm}^{-2} U + 0.208 \\qquad (16)$$\n\nwhich means $2\\pi B_{\\mathrm{E}} h/(\\mu_0 I) = 0.208$ and $2\\pi B_{\\mathrm{E}}/(\\mu_0 I h) = 7.37 \\times 10^{-3}\\mathrm{mm}^{-2}$. Thus, we obtain:\n\n$$B_{\\mathrm{E}} = 3.9 \\times 10^{-5}\\ \\mathrm{T} \\qquad (17)$$\n\nfor the horizontal component of Earth's magnetic induction, and\n\n$$h = 5.3\\ \\mathrm{mm} \\qquad (18)$$\n\nfor the depth of the wire. These estimates are close to, but less accurate than the values obtained by Method I. The reason is that at small $d$, there is a large relative error associated with wire positioning, i.e. with variable $U$. At large $d$, however, the deflection angle is small, and there is significant relative error, associated with the compass reading, i.e. with $V$ parameter.\n\n**Marking scheme**\n\nThe basic equations could be stated in a separate section of the solution, or spread over different parts of the solution.\n\n| | Theoretical background | Points |\n|---|---|---|\n| T1 | States explicitly or shows on a clear graph that the magnetic needle points along the total magnetic induction. | 0.1 |\n| T2 | Derives eq. (1) or equivalent. | 0.3 |\n| T3 | Writes down the Ampere's law (2). | 0.2 |\n| T4 | Derives eq. (3) or equivalent. | 0.4 |\n| **Total on Theory** | | **1.0** |\n\nIn tasks A and B points for obtaining final results are given on an additive basis. If a given quantity, say $a$-parameter of the line, falls into the widest interval, a minimum number of points is given. If the value, however, belongs to the subsequent narrower interval, annotated points are added to the points for the previous interval, and so on, down to the narrowest interval.\n\n| | Task A: Horizontal position of the wire | Points |\n|---|---|---|\n| A1 | State or use that the wire is located where $\\lvert\\varphi\\rvert$ is maximal. | 0.2 |\n| | (state alternative method which allows to find only $a$); | (0.1) |\n| A2 | Find points on the wire at most 2mm away from both cross points with the border. | 0.2 |\n| A3 | Find $n$ points along the wire projection: | |\n| | $n = 3$ or 4; | 0.3 |\n| | $n \\geq 5$. | 0.5 |\n| A4 | Draw wire projection on the graph: | |\n| | plot all measured points or at least 5; | 0.2 |\n| | if a point drawn incorrectly; | -0.1 |\n| | line through the points; | 0.2 |\n| | axes labels and units; | 0.1 |\n| | axes tick marks with values; | 0.1 |\n| | correctly indicated positive $I$ direction. | 0.3 |\n| A5 | Equation of the line: | |\n| | $a$ within [-0.61;-0.55]; | 0.1 |\n| | $a$ within [-0.60;-0.56]; | +0.1 |\n| | $a$ within [-0.59;-0.57]; | +0.3 |\n| | $b$ within [73.6;77.0] mm; | 0.1 |\n| | $b$ within [74.6;76.0] mm; | +0.1 |\n| | $b$ within [74.9;75.7] mm . | +0.3 |\n| | Correctly estimated uncertainties of $a$ and $b$. | 0.2 |\n| **Total on Task A** | | **3.0** |\n\nSince there are several approaches to the solution of Task B, the subsequent marking scheme is unified in order to fit all methods of solution. The **data point** is defined as a single measurement of $\\varphi$ at given $I$, $x$, and $y$. The data point **weight** $W$ is defined as a mark related to the way, in which the measured data are presented and treated numerically:\n\n| | |\n|---|---|\n| $I$, $x$, $y$, and the corresponding $\\varphi$ are documented in a table with appropriate number of digits. | 0.1 |\n| The value of the distance $d$ to the wire, and the values of the auxiliary linearizing variables (if required by the solution) are calculated correctly and documented in the table. | 0.1 |\n| Maximum $W$ | 0.2 |\n\nThe total mark for data recording and treatment (B2, see the table below) scales linearly with the number of data points $N$ for up to $N = 8$. All data points after 8-th do not contribute to the total mark on B2. Data points measured in part A only count towards the mark of B2 if it is stated in part B that they can be used for this part as well, or if they are used implicitly.\n\n| | Task B: Finding $B_{\\mathrm{E}}$ and $h$ | Points |\n|---|---|---|\n| B1 | Makes appropriate choice of auxiliary variables, which linearize eq. (3) OR derives explicit expressions for $B_{\\mathrm{E}}$ and $h$ in terms of two measured angles $\\varphi$ at two different distances $d$ (minimalist approach). | 0.6 |\n| B2 | Data recording and treatment: | |\n| | $\\min(N, 8) \\times W$ | 1.6 |\n| B3 | Organization of data in table(s): | |\n| | Column titles | 0.2 |\n| | Units | 0.2 |\n| B4 | Extracting parameters | |\n| | Graphical method: | |\n| | For plotting $n$ points $m = \\min(n, 8)$ | 0.1$m$ |\n| | Coverage of at least 75% of the graph window | 0.2 |\n| | Titles on axes | 0.2 |\n| | Units on axes | 0.2 |\n| | Tick marks with annotated values | 0.2 |\n| | Fitting line(s) is (are) drawn on the graph(s) | 0.5 |\n| | Fitting line parameters are extracted and explicitly stated | 0.5 |\n| | Linear regression without graph: | |\n| | using $n$ points $m = \\min(n, 8)$ | 0.1$m$ |\n| | correct fit | 1.8 |\n| | Averaging over $n$ two-point measurements: $m = \\min(n, 13)$ | 0.2$m$ |\n| B5 | Final values of $B_{\\mathrm{E}}$ and $h$ are calculated from the line parameters or calculated from the results of a two-point measurement (minimalist approach): | |\n| | $B_{\\mathrm{E}} \\in [3.7; 4.3] \\times 10^{-5}$ T | 0.1 |\n| | $B_{\\mathrm{E}} \\in [3.8; 4.2] \\times 10^{-5}$ T | +0.1 |\n| | $B_{\\mathrm{E}} \\in [3.9; 4.1] \\times 10^{-5}$ T | +0.2 |\n| | $h \\in [4.5; 5.5]$ mm | 0.1 |\n| | $h \\in [4.7; 5.3]$ mm | +0.1 |\n| | $h \\in [4.9; 5.1]$ mm | +0.2 |\n| **Total on Task B** | | **6.0** |",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "caption": "Figure 1: Notations used in the derivation of the basic equations.",
+      "alt": "(a) Vector triangle in the xy axes: the wire with current I at angle θ to the x-axis; at a point, B_E points North (y), B_h points perpendicular to the wire, their sum B makes angle φ with North; angle ψ between B_h and North. (b) Cross-section: wire (current I into the page) at depth h, two surface points at distance d on either side at distance r from the wire, angle α at the wire; vectors B_w and B_h drawn at each point.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig1.png",
+      "width": 887,
+      "height": 517,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        56.56,
+        500.08,
+        269.05,
+        623.84
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "caption": "Figure 2: $xy$-projection of the wire with indicated positive $I$ direction.",
+      "alt": "Graph of Y (mm) versus X (mm), both 0 to 100, with measured points with error bars and a red straight line falling from about y = 75 at x = 0 to about y = 17 at x = 100; an arrow on the line labelled I > 0 points towards increasing x.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig2.png",
+      "width": 864,
+      "height": 664,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        336.33,
+        491.67,
+        543.51,
+        650.79
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig3",
+      "caption": "Figure 3: U-I graphs for two different distances $d$ from the wire, and the corresponding linear fits.",
+      "alt": "Graph of I (A) from -5 to 5 versus U from -5 to 5 with two straight fit lines through the origin: a red line of slope about 1 labelled d1 = 0 mm and a steep blue line of slope about 5 labelled d2 = 10 mm, with the data points on each.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig3.png",
+      "width": 862,
+      "height": 678,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        337.55,
+        104.4,
+        544.09,
+        266.89
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig4",
+      "caption": "Figure 4: U-V graph obtained at a fixed current $I = 5.0$ A.",
+      "alt": "Graph of V from 0.0 to 1.0 versus U (mm²) from 0 to 100 with eleven data points and a red rising straight fit line from about 0.21 at U = 0 to about 0.95 at U = 100.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig4.png",
+      "width": 860,
+      "height": 675,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        63.09,
+        90.94,
+        269.05,
+        252.59
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    }
+   ]
+  },
+  {
+   "id": "eupho-2021-experiment-exp-p2",
+   "number": 2,
+   "title": "E2: Hot Cylinder",
+   "points": null,
+   "problemType": "experiment",
+   "statement": "**Introduction**\n\nA uniform metal rod of length $L = 30\\ \\mathrm{cm}$ and radius $r = 1\\ \\mathrm{cm}$ is made of an unknown metal and is kept at room temperature $T_0 = 26.9\\ \\mathrm{C} = 300\\ \\mathrm{K}$. The metal rod is weighed to be $m = 460\\ \\mathrm{g}$. Your task is to determine the thermal properties of the unknown metal. The metal rod can be heated at one of its ends, and temperature measurements can be performed on customizable locations along the rod. The heater is located between $x = 0$ and $x = L_h = 3\\ \\mathrm{cm}$ (see fig). The heater can be programmed by specifying a fixed power (in watts) and the duration (in seconds) for which the heater is turned on for. Temperature measurements are made by specifying up to five locations for the sensors along the rod, alongside with the frequency, starting time and the ending time of the measurements. The simulation will show the temperature readings in accelerated ”real time” (running around 10 times faster than in the real world).\n\nYou may assume that all of the heating power goes into the rod, and that the rod loses heat to its surroundings via heat transfer with air and black body radiation. Heat transfer with air is linear in temperature of the rod, and can be described by a coefficient $\\alpha$ such that the heat transfer per unit area per unit time is $\\alpha(T - T_0)$. The air is well-ventilated such that $\\alpha$ can be assumed to be constant throughout the surface of the rod and independent of the temperature of the surface. Heat loss via black body radiation can be described using the Stefan-Boltzmann law modified with emissivity $\\beta$ such that the heat loss to radiation per unit area per unit time is $\\beta\\sigma(T^4 - T_0^4)$ where $\\sigma = 5.67 \\times 10^{-8}\\ \\mathrm{W/(m^2\\,K^4)}$. Similar to $\\alpha$, the emissivity can be assumed to be constant throughout the rod, and independent of temperature. The rod is further characterised by the thermal conductivity $k$ (such that the heat flux density along $x$ is $-k\\mathrm{d}T/\\mathrm{d}x$) and the specific heat capacity $c$.\n\n**Task**\n\nThe task is to determine the specific heat of the unknown metal, $c$ (units $\\mathrm{J/(K\\,kg)}$), the thermal conductivity $k$ (units $\\mathrm{W/(m\\,K)}$), and the heat loss coefficients $\\alpha$ (units $\\mathrm{W/(m^2\\,K)}$), and $\\beta$ (dimensionless). You should aim to find the values within 10 % of the true value. This is because there are various sources of errors, such as Gaussian fluctuations in both defining the locations of the sensors, and the taking the temperature measurements. The sizes of the errors can be found by observing the fluctuations in the output.\n\nAs with all experiments, you must provide clearly labelled tables of data, clearly labelled graphs, and sufficient formulae derivations to make it clear what you have measured, and how you are deriving your results.\n\n**Program interface**\n\nRunning the simulation program, named **rod**, allows performing multiple experiments on the rod. The program will ask a sequence of prompts regarding the setup of the experiment. For each prompt, the corresponding value(s) should be entered, followed by pressing **return** to go the next prompt. The prompts are as follows:\n\n1. The heating power of the heater:  \n`Enter P (W), between 0 and 300:`\n2. The duration after the start of the experiment for which the heater is turned on for (after this time, the heater will be turned off):  \n`Enter heating duration (s), between 0 and 3600s:`\n3. The starting and finishing times (after the start of the experiment) for the temperature measurements made on the rod:  \n`Enter the starting and finishing time for the measurements (s), separated by a space. Must be between 0 and 3600s:`\n4. The time interval between two consecutive measurements that are made with the temperature sensors:  \n`Enter dt (s), between 5 and 3600s and a multiple of 5s:`\n5. The locations of the temperature sensors along the rod. The coordinates are specified with respect to the end with the heater:  \n`Enter up to 5 locations for the sensors (in cm), between L=0 and L=30cm, separated by spaces:`  \nNote that not entering any numbers simply means not taking any measurements.\n6. The output file name for the temperature readings. Note that all of the saved readings will also be displayed on the screen:  \n`Enter the output file name:`  \nYou are advised to only use Latin letters and numbers for the name. Other characters may or may not be allowed in the filename and in case of an invalid filename, the readings will not be saved. The readings will be saved in a `.txt` file with the given name in the same folder as the program.\n\nIf you enter an invalid input, a clarifying error message will be sent, and an another opportunity for entering the input will be given.\n\nThe program will then prompt to press **return** to start the experiment, or typing `restart` and pressing **return** to re-enter all the experimental parameters. After continuing with the simulation, the program will display a summary of the experimental setup, and then start printing out the time elapsed since the heater was turned on (`t(s)`), and all the sensor readings in the same order they were entered in the prompt (`Ti(C)`, where i corresponds to the i-th sensor).\n\nAfter the simulation ends, a new experiment can be started by typing `restart` and pressing **return**.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "alt": "Horizontal rod of length L with the heater section of length L_h at the left end (hatched, labelled P); three temperature sensor points T1, T2, T3 along the rod; an arrow labelled x pointing to the right from the heated end.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p2-fig1.png",
+     "width": 688,
+     "height": 363,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       78.57,
+       319.9,
+       243.45,
+       406.62
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "answer": {
+    "kind": "text",
+    "value": "c = 114 ± 1 J/(kg K), β = 0.304 ± 0.004, α = 2.93 W/(m² K), k = 397 W/(m K)",
+    "note": "Values from the official solution; the solution prints α = 2.93 without a unit and k = 397 W/mK."
+   },
+   "topics": [
+    "thermodynamics/heat-conduction",
+    "thermodynamics/radiation",
+    "experiment/data-analysis"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Start the experiment with the heater on full for 300 Watts and the thermostats located evenly across the length of the rod and display the results every 100 seconds. Then plan out the remainder of the experiment while waiting, or do the other experiment. The rod reaches steady state at about 600 seconds. Find the average temperature at the five thermostats by considering the last five measurements; you will use this later.\n\nThe most accessible approach is then to study the steady state behavior, the uniform temperature behavior, the low temperature behavior, and the high temperature behavior. Separating the low and high temperature behaviors is useful because blackbody radiation dominates at higher temperatures while convective loss is most significant at near room temperature.\n\nFinding the heat capacity is done by heating the rod at a low enough rate for a short enough time so that heat loss is as small as possible.\n\nOne possibility is to give a total of 1500 J of heat, but at various power settings and various times, while keeping the temperature as low as possible.\n\nThe average temperature of the rod is computed from the five equally spaced points by applying Simpson's rule,\n\n$$T_{avg} = \\frac{T_1 + 4T_2 + 2T_3 + 4T_4 + T_5}{12}$$\n\nComputing instead a direct average yields a $+5$% error.\n\nIt is found that the average temperature for heating times less than 50 seconds is $55.4{\\pm}0.5$ °C, yielding specific heat capacity of $c = 114 \\pm 1$ J/kg K.\n\nHeat the rod full power for 600 seconds, and then allow to cool.\n\nThe rod temperature becomes uniform at about 700 seconds. Average the five points to obtain an average rod temperature.\n\nLinear cooling predicts a straight line graph for $\\ln(T - T_0)$ versus $t$\n\nThe convective heat loss rate is then given by $A\\alpha(T - T_0)$, where $A$ is the surface area of the rod. Do not forget the end caps!\n\nThe radiative heat loss rate is $\\beta\\sigma(T^4 - T_0^4)$ where $\\sigma = 5.67 \\times 10^{-8}\\ \\mathrm{W/(m^2\\,K^4)}$. The radiative heat loss rate is then given by $A\\beta\\sigma(T^4 - T_0^4)$.\n\nNote that at temperatures close to $T_0$ the radiative expression can be written as\n\n$$A\\beta\\sigma(T^4 - T_0^4) \\approx A\\beta\\sigma 4(T - T_0)T_0^3$$\n\nThis means that the linear heat loss rate at temperatures close to $T_0$ is\n\n$$A\\left(\\alpha + \\beta\\sigma 4T_0^3\\right)(T - T_0)$$\n\nFor the uniform, low temperature cooling rod,\n\n$$mc\\frac{\\mathrm{d}T}{\\mathrm{d}t} = -A\\left(\\alpha + \\beta\\sigma 4T_0^3\\right)(T - T_0)$$\n\nThe solution is of the form\n\n$$T - T_0 = Ce^{-Bt}$$\n\nwhere\n\n$$B = A\\frac{\\alpha + \\beta\\sigma 4T_0^3}{mc}$$\n\nOn a log plot of $\\ln(T - T_0)$ as a function of time $t$, the plot should be linear, with a slope given by\n\n$$-A\\frac{\\alpha + \\beta\\sigma 4T_0^3}{mc}$$\n\nIt is also possible to plot $\\mathrm{d}T/\\mathrm{d}t$ as a function of $T - T_0$, and the plot will be linear, with a slope also given by\n\n$$-A\\frac{\\alpha + \\beta\\sigma 4T_0^3}{mc}$$\n\nThe slope in either case is found to be $-1.78 \\times 10^{-3}$ /s.\n\nTo find the blackbody behavior we want to heat the rod as much as possible such that the blackbody heating becomes the dominant form of heat loss. Since the hot rod is in steady state, the heat radiated must be equal to 300 W. Use the results from the beginning.\n\nThe average temperature of the rod is computed from the five equally spaced points by\n\n$$T_{avg} = \\frac{T_1 + 4T_2 + 2T_3 + 4T_4 + T_5}{12} = 662\\ \\mathrm{°C}.$$\n\nComputing a direct average yields a $+1.5$% error.\n\nThe average of $T^4$ is found from\n\n$$T^4_{\\mathrm{avg}} = \\frac{{T_1}^4 + 4{T_2}^4 + 2{T_3}^4 + 4{T_4}^4 + {T_5}^4}{12} = 7.95 \\times 10^{11}\\ \\mathrm{K}^4$$\n\nComputing a direct average yields a $+6.3$% error.\n\nThe rate of linear temperature heat loss is found from above to be\n\n$$(-1.78 \\times 10^{-3}\\ /\\mathrm{s})mc\\Delta T = 59\\ \\mathrm{W}$$\n\nThe blackbody remainder term is then\n\n$$300 - 59 = 241\\ \\mathrm{W},$$\n\nand necessarily equals\n\n$$A\\beta\\sigma(T^4 - T_0^4) - A\\beta\\sigma 4T_0^3(T - T_0),$$\n\nwhere the second term reflects the fact that we had considered part of the blackbody behavior as being linear.\n\nSolving, $\\beta = 0.304 \\pm 0.004$.\n\nFailing to subtract the second term would yield $\\beta = 0.28$.\n\nWe are now in a position to find $\\alpha$, from\n\n$$-A\\frac{\\alpha + \\beta\\sigma 4T_0^3}{mc} = -1.78 \\times 10^{-3}\\ /\\mathrm{s}$$\n\nwhich yields $\\alpha = 2.93$\n\nAlternatively, for the uniform, high temperature cooling rod,\n\n$$mc\\frac{\\mathrm{d}T}{\\mathrm{d}t} \\approx -A\\beta\\sigma\\left(T^4 - T_0^4\\right)$$\n\nas the radiative cooling effect will dominate.\n\nOn a plot of $\\mathrm{d}T/\\mathrm{d}t$ as a function of $T^4 - T_0^4$, the plot should be linear, with a slope given by\n\n$$-\\frac{A\\beta\\sigma}{mc}$$\n\nThe slope is found to be $-7.8 \\times 10^{-12}\\ \\mathrm{K^3/s}$\n\nThis means $\\beta/c = 3.25 \\times 10^{-3}$ kg K/J; this gives $\\beta = 0.36$, which is too high; ignoring the linear loss effects was significant; as was previously seen, almost 20% of the heat loss is from convection in this temperature range.\n\nWe can use the high temperature behavior to find the heat flux through the center of the rod. The average of $T$ and $T^4$ on the non-heated half of the rod is $599$ C and $5.8 \\times 10^4$ K$^4$, yielding a heat loss at $112$ W. That heat necessarily came from the other side of the rod.\n\nThe temperature gradient is $-898$ K/m, so $k = 397$ W/mK. Don't forget that the formula provided gave the rate of heat flux, which means that we needed to consider the cross sectional area of the wire.\n\n**Marking scheme**\n\n**Finding $c$, 2.5 pt total**\n\n| | Task | Pts |\n|---|---|---|\n| 2.1 | Idea of heating the rod by a fixed $Q$. | 0.6 |\n| 2.2 | Obtaining an equation relating the inserted heat with the temperature change and $c$. | 0.4 |\n| 2.2 | Heating the rod for a short duration for mitigating the effects of heat loss: | |\n| | heating for less than 60 seconds. | 0.2 |\n| 2.3 | Averaging the temperature of the rod: | |\n| | averaging over one to three points; | 0.1 |\n| | Use Simpson rule (or equivalent) | 0.3 |\n| | averaging over four or more points; | 0.2 |\n| 2.4 | Checking more than one time value | 0.2 |\n| 2.5 | Numerical value of $c$: | |\n| | $c$ within [103;123] J/(K kg); | 0.3 |\n| | $c$ within [108;118] J/(K kg). | 0.2 |\n\n**Finding the linear heat loss, 2.0 pt total**\n\n| | Task | Pts |\n|---|---|---|\n| 3.1 | Idea of looking at how the rod cools down at the low temperature limit (with no heating). | 0.2 |\n| 3.2 | Obtaining an equation for $T$ as a function of $t$ in terms of $\\alpha$, $\\beta$, and $c$: | |\n| | linearize radiative loss around $T_0$; | 0.3 |\n| | obtaining a differential equation for $T(t)$; | 0.1 |\n| | solving the differential equation to get $T(t)$. | 0.2 |\n| 3.3 | Finding the average temperature at $t$: | |\n| | averaging over one to three points; | 0.1 |\n| | Use Simpson rule (or equivalent) | 0.3 |\n| | averaging over four or more points; | 0.1 |\n| 3.4 | Graphically finding the slope (which is a function of $\\alpha$, $\\beta$, and $c$): | |\n| | Plot 2 to 4 points in range $T < 50$C; | 0.1 |\n| | Plotting 5 or more points in range $T < 50$C; | 0.1 |\n| | axes labels and units; | 0.1 |\n| | axes tickmarks with values. | 0.1 |\n| 3.5 | Numerical value of the slope: | |\n| | slope within $[-1.58 \\times 10^{-3}, -1.98 \\times 10^{-3}]$; | 0.2 |\n| | slope within $[-1.68 \\times 10^{-3}, -1.88 \\times 10^{-3}]$; | 0.1 |\n\n**Finding $\\beta$, 2.5 pt total**\n\n| | Task | Pts |\n|---|---|---|\n| 4.1 | Idea of looking at the steady state at the high temperature limit. | 0.2 |\n| 4.2 | Writing down the heat balance: | |\n| | accounting for the area of the end caps; | 0.1 |\n| | accounting for the linear contribution to the heat loss by removing the $\\alpha$ dependence from the previously found slope; | 0.2 |\n| | final expression for $\\beta$ in terms of mean value of $T$ and $T^4$ of the steady state. Making a mistake in the previous parts shouldn't be penalised here. | 0.2 |\n| 4.3 | Measurements: | |\n| | Heating power sufficiently big such that the steady state temperature is bigger than 500 °C; | 0.1 |\n| | Waiting for at least 300s to reach the steady state | 0.1 |\n| | Waiting for at least 600s to reach the steady state | 0.1 |\n| 4.4 | Finding the average temperature: | |\n| | averaging over one to three points; | 0.1 |\n| | Use Simpson rule (or equivalent) | 0.3 |\n| | averaging over four or more points; | 0.1 |\n| 4.5 | Finding the average $T^4$ (for calculating average radiative loss): | |\n| | averaging over one to three points; | 0.1 |\n| | Use Simpson rule (or equivalent) | 0.3 |\n| | averaging over four or more points; | 0.1 |\n| 4.6 | Numerical value of $\\beta$: | |\n| | $\\beta$ within [0.25;0.35]; | 0.3 |\n| | $\\beta$ within [0.28;0.32]. | 0.2 |\n\n**Finding $\\alpha$, 0.5 pt total**\n\n| | Task | Pts |\n|---|---|---|\n| 5.1 | Obtaining an expression for $\\alpha$ in terms of the slope $\\gamma$. | 0.1 |\n| 5.2 | Numerical value of $\\alpha$: | |\n| | $\\alpha$ within [2.33;3.23]W/(m$^2$ K); | 0.2 |\n| | $\\alpha$ within [2.53;3.03]W/(m$^2$ K). | 0.2 |\n\n**Finding $k$, 2.5 pt total**\n\n| | Task | Pts |\n|---|---|---|\n| 6.1 | Idea of looking at the flux from part of the rod to the other | 0.4 |\n| 6.2 | Theory: | |\n| | Expressing heat flux in terms of $k$ and the temperature gradient; | 0.2 |\n| | Expressing heat flux in terms of the average $T$, $T^4$, and the heating power of one of the halves of the rod; | 0.4 |\n| | accounting for the area of the end caps. | 0.1 |\n| 6.3 | Finding the average temperature of one of the halves: | |\n| | averaging over one to three points; | 0.1 |\n| | averaging over four or more points. No marks if points not equally spaced and average doesn't account for the unevenness; | 0.1 |\n| 6.4 | Finding the average $T^4$ (for calculating average radiative loss): | |\n| | averaging over one to three points; | 0.1 |\n| | averaging over four or more points; | 0.1 |\n| 6.5 | Finding the temperature gradient: | |\n| | Using at least two points for the gradient calculation; | 0.1 |\n| | Using $(f(x + h) - f(x - h))/2h$ for numerical derivative; | 0.2 |\n| | Having the range of points used for gradient calculations not farther apart than 5 cm; | 0.1 |\n| | Having the range of points used for gradient calculations not closer than 1 cm; | 0.1 |\n| 6.5 | Numerical value of $k$: | |\n| | $k$ within [328;488]W/(m K); | 0.3 |\n| | $k$ within [378;438]W/(m K). | 0.2 |\n\n**Some grading notes:**\n\n- Failure to record and report the location of the sensors will result in a penalty of **-1.0 pt** *for each occurrence!*. It is acceptable to clearly state the location of the sensors in one part of the report, and then mentioning that they are not moved during the experiment.\n- When computing spatial averages, if the spacing between thermometers is not uniform, the averaging techniques must use appropriate weighting, or there is a penalty of **-0.1 pt** *for each occurrence!*\n- When computing spatial averages, if the rod is not mostly uniform in temperature, a Simpson's Rule technique or equivalent must be used to obtain the 0.3 pts. If instead all of the temperatures are within two error limits, then Simpson is not required to obtain the 0.3 pt.\n- Any numerical derivatives must use the symmetric form\n\n$$f'(x) \\approx (f(x + h) - f(x - h))/2h$$\n\nor some equivalent, or better, method.",
+    "figures": [
+     {
+      "id": "p2-sol-fig1",
+      "caption": "Uniform Cooling. Note that only the last points (in red) were used to determine the linear cooling line. It is clearly a good fit from $t = 2000$ s on, which corresponds to rod temperatures of $T < 45$ C.",
+      "alt": "Chart titled Uniform Cooling: Natural Log of (T-T_background) from 0 to 6 versus time (second) from about 800 to 3600; blue points (Log Delta T) fall along a curve, red points (Log Delta T) at later times lie on a pink fitted line labelled -1.78E-03*x + 6.51.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p2-sol-fig1.png",
+      "width": 1021,
+      "height": 1103,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        38.12,
+        289.62,
+        282.78,
+        553.95
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  }
+ ]
+}

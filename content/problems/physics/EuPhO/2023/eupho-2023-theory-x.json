@@ -1,0 +1,727 @@
+{
+ "paper": {
+  "id": "eupho-2023-theory-x",
+  "subject": "physics",
+  "competition": "EuPhO",
+  "year": 2023,
+  "round": null,
+  "roundType": "theory",
+  "grade": null,
+  "lang": "en",
+  "title": "7. EuPhO 23 Hannover Germany. Theoretical Problems. Language: English",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/EuPhO/2023/eupho2023_theory_problems.pdf",
+   "pages": [
+    1
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/EuPhO/2023/eupho2023_theory_solutions.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "7727f0faed48a05881a5c4158ac8459fa1ab33288cc1dbd1ce854330134edbb0",
+    "solutions": "154b3f9dd569dcd0faa1d1e68ef47da25d0b68307f5687a026c8e7b0540a13b9"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "Three problems T1–T3 with parts a)–c), a)–b), a)–c) as printed (8 parts); no total is printed (each problem 10 pts). Printed quirks kept verbatim: T1 solution tables print „if he boundary condition“ and „matching the two solutions at r = a“ (the text says r = σ); eq. (15)/(19) use P for P_L; eq. (26) text „n'(r) = γT'(r) = 2mr“ lacks γ; the alternative derivation prints „√(r0 − r)“ without subscript. T2 solution heading is printed „T2: A brick between planes - Solution“; „an an algebra expression“ (duplicated word) and „does not need to be“ kept. T3 solution: „Faradey’s law“ (a name, kept), „Eq. (42, equal to“ with unmatched bracket, „v^2)“ with stray bracket in the j²_outside formula, „{j} = ρ^{-1}σ/ε_0 = ρ^{-1}σP cos φ“ kept as printed; ρ and ϱ are both used for resistivity as printed. Figure captions without body text are only in the solutions (Figure 1–3 for T2; fig. 1–3 twice for T3). Scheme E3 (solutions p. 8) prints „Explicity stating“; kept verbatim."
+  }
+ },
+ "problems": [
+  {
+   "id": "eupho-2023-theory-x-p1",
+   "number": 1,
+   "title": "T1: Thermal lens",
+   "points": 10,
+   "problemType": "theory",
+   "statement": "When an intense laser beam falls onto a semitransparent plate, the transmitted light can self-focus to a point behind the plate due to the inhomogeneous heating of the material. This effect, known as thermal lensing, is observed in materials whose index of refraction increases with temperature, characterized by a positive thermo-optic coefficient $\\gamma = \\frac{\\mathrm{d}n}{\\mathrm{d}T}$.\n\nA semitransparent disk with radius $a = 15.0\\ \\mathrm{mm}$, thickness $b = 0.2\\ \\mathrm{mm}$ and optical absorption coefficient $A = 0.1$ is composed of a material having thermal conductivity $k = 0.3\\ \\mathrm{W\\,m^{-1}\\,K^{-1}}$ and thermo-optic coefficient $\\gamma = 2.5 \\cdot 10^{-4}\\ \\mathrm{K^{-1}}$. The outer rim of the disk is thermally connected to a circular metallic holder (not shown in the figure) maintained at a constant temperature $T_\\mathrm{h} = 20^{\\circ}\\mathrm{C}$. A parallel laser beam of radius $\\sigma = 0.5\\ \\mathrm{mm}$ and power $P_\\mathrm{L} = 20\\ \\mathrm{mW}$ is incident normally onto the center of the disk. The intensity distribution is homogeneous across the cross-section of the beam.",
+   "statementAfterParts": "Do not consider the thermal expansion of the disk. Neglect the thermal radiation and the heat exchange between the disk and the surrounding air. Assume that the index of refraction of air is $n_\\mathrm{air} = 1$.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "A laser beam of radius σ (yellow cylinder) falls normally onto a grey disk of radius a and thickness b; behind the disk the transmitted light converges to a point on the axis (yellow cone). Labels: a, σ, b.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p1-fig1-v2.png",
+     "width": 1015,
+     "height": 492,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       25.02,
+       318.24,
+       268.47,
+       436.1
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Sketch a qualitative graph of the temperature profile $T(r)$, where $r$ denotes the distance from the axis of the beam. Indicate clearly on the graph the illuminated region $0 \\le r \\le \\sigma$ and the outer region $\\sigma \\le r \\le a$.",
+     "points": 2
+    },
+    {
+     "label": "b)",
+     "statement": "In the vicinity of the center of the disk, the temperature profile can be represented by a quadratic function $T(r) = T_\\mathrm{c} + mr^2$. Calculate the parameters $T_\\mathrm{c}$ and $m$.",
+     "points": 4,
+     "answer": {
+      "kind": "expression",
+      "latex": "T_\\mathrm{c} = T_\\mathrm{h} + \\frac{AP_\\mathrm{L}}{4\\pi kb}\\left[1 + 2\\ln\\left(\\frac{a}{\\sigma}\\right)\\right] = 41^{\\circ}\\mathrm{C},\\quad m = -\\frac{AP_\\mathrm{L}}{4\\pi kb\\sigma^2} = -1.1 \\cdot 10^{7}\\ \\mathrm{K\\,m^{-2}}"
+     }
+    },
+    {
+     "label": "c)",
+     "statement": "Show that the beam is focused in one point and find the distance $f$ from this point to the disk. If you failed to obtain $T_c$ and $m$ in part b), you may use them as parameters in your final answer.",
+     "points": 4,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.94,
+      "unit": "m",
+      "tolerance": 0.005,
+      "latex": "f = \\frac{1}{2\\gamma b|m|} = \\frac{2\\pi k\\sigma^2}{\\gamma AP} \\approx 0.94\\ \\mathrm{m}"
+     }
+    }
+   ],
+   "topics": [
+    "thermodynamics/heat-conduction",
+    "optics/refraction"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**(a) Drawing a $T(r)$ graph**\n\nThe graph should present or clearly infer for the four elements shown in the figure.\n\n| Element of the graph | Pts. |\n|---|---|\n| Horizontal tangent at $r = 0$ | 0.5 |\n| Graph is concave and decreasing in $0 \\le r \\le \\sigma$ | 0.5 |\n| Graph is convex and decreasing in $\\sigma \\le r \\le a$ | 0.5 |\n| Nonzero negative slope at $r = a$ | 0.5 |\n| **Totally on (a)** | **2.0** |\n\n**(b) Finding $T_\\mathrm{c}$**\n\n**Approach with a direct solution of the heat-transport equation.**\n\nConsider a cylindrical cut of the disk with radius $r$. Let $P_\\mathrm{abs}(r)$ be the portion of laser power absorbed within the cylinder. The absorbed power is being transferred as heat towards the outer holder through the circumvent surface $2\\pi br$ of the cylinder. The heat-transport equation reads:\n\n$$-k(2\\pi rb)\\frac{\\mathrm{d}T(r)}{\\mathrm{d}r} = P_\\mathrm{abs}(r) \\tag{1}$$\n\nDepending on $r$, the absorbed power is given by two different expressions. Within the illuminated area $0 \\le r \\le \\sigma$, the incident light intensity $I = P_\\mathrm{L}/(\\pi\\sigma^2)$ is constant, so the absorbed power is:\n\n$$P_\\mathrm{abs}(r) = I\\pi r^2 = AP_\\mathrm{L}\\frac{r^2}{\\sigma^2} \\tag{2}$$\n\nand the solution for $T(r)$ is quadratic in $r$:\n\n$$T(r) = T_\\mathrm{c} - \\frac{AP_\\mathrm{L}r^2}{4\\pi kb\\sigma^2} \\tag{3}$$\n\nwhere $T_\\mathrm{c} = T(0)$ is the temperature at the center. It is clear from that expression that the parameter $m$ is:\n\n$$m = -\\frac{AP_\\mathrm{L}}{4\\pi kb\\sigma^2} = -1.1 \\cdot 10^7\\ \\mathrm{Km^{-2}} \\tag{4}$$\n\nOutside the illuminated area, i.e. for $\\sigma \\le r \\le a$, $P_\\mathrm{abs}(r) = AP_\\mathrm{L}$, which does not depend on $r$. The solution for $T(r)$ is logarithmic in $r$:\n\n$$T(r) = T_\\mathrm{h} + \\frac{AP_\\mathrm{L}}{2\\pi kb}\\ln\\left(\\frac{a}{r}\\right) \\tag{5}$$\n\nwhere $T_\\mathrm{h} = T(a)$ is the temperature of the holder, which is equal to the temperature along the outer rim of the disk. After matching the two solutions at $r = \\sigma$ we obtain:\n\n$$T_\\mathrm{c} = T_\\mathrm{h} + \\frac{AP_\\mathrm{L}}{4\\pi kb}\\left[1 + 2\\ln\\left(\\frac{a}{\\sigma}\\right)\\right] = 41^{\\circ}\\mathrm{C} \\tag{6}$$\n\n| Task | Pts. |\n|---|---|\n| Writes down the heat-transport equation in radial coordinates | 0.7 |\n| Derives an expression for $P_\\mathrm{abs}$ at $0 \\le r \\le \\sigma$ | 0.5 |\n| Finds a quadratic solution for $T(r)$ in the region $0 \\le r \\le \\sigma$ (Subtract 0.2 pts. if he boundary condition $T(0) = T_\\mathrm{c}$ has not been accounted for) | 0.5 |\n| Identifies the expression for $m$ (Subtract 0.1 pts. if the minus sign is missing) | 0.2 |\n| Calculates $m$ numerically (Subtract 0.1 pts. if the minus sign is missing) | 0.2 |\n| Derives an expression for $P_\\mathrm{abs}$ at $\\sigma \\le r \\le a$ | 0.3 |\n| Finds a logarithmic solution for $T(r)$ in the region $\\sigma \\le r < a$ (Subtract 0.2 pts. if he boundary condition $T(a) = T_\\mathrm{h}$ has not been accounted for) | 0.5 |\n| Sets up an equation by matching the two solutions at $r = a$ | 0.6 |\n| Writes down the final expression for $T_\\mathrm{c}$ | 0.2 |\n| Calculates $T_\\mathrm{c}$ numerically | 0.3 |\n| **Totally on (b)** | **4.0** |\n\n**Alternative approach – direct piece-wise integration of the heat-transport equation.**\n\nAfter realizing that $P_\\mathrm{abs}(r)$ is given by a piece-wise function:\n\n$$P_\\mathrm{abs} = \\begin{cases} AP_\\mathrm{L}r^2/\\sigma^2 & \\text{if } 0 \\le r \\le \\sigma \\\\ AP_\\mathrm{L} = \\mathrm{const} & \\text{if } \\sigma \\le r \\le a \\end{cases} \\tag{7}$$\n\nthe student may substitute the given solution $T(r) = T_\\mathrm{c} + mr^2$ into heat-transport equation (1) for $0 \\le r \\le \\sigma$. This gives directly the expression (4) for the parameter $m$. The parameter $T_\\mathrm{c}$ could be easily identified with the temperature $T(0)$ at the center of the disk. On the other hand, $T_\\mathrm{h} = T(a)$ due to the thermal contact between the rim of the disk and the holder. It follows from the heat-transport equation that:\n\n$$-\\frac{\\mathrm{d}T(r)}{\\mathrm{d}r} = \\frac{P_\\mathrm{abs}(r)}{2\\pi kbr} \\tag{8}$$\n\nThe piece-wise integration of the two sides of the equation in the interval $0 \\le r \\le a$ gives:\n\n$$T(0) - T(a) = T_\\mathrm{c} - T_\\mathrm{h} = \\int_0^a \\frac{P_\\mathrm{abs}(r)}{2\\pi kbr}\\mathrm{d}r$$\n\n$$= \\int_0^\\sigma \\frac{P_\\mathrm{abs}(r)}{2\\pi kbr}\\mathrm{d}r + \\int_\\sigma^a \\frac{P_\\mathrm{abs}(r)}{2\\pi kbr}\\mathrm{d}r \\tag{9}$$\n\n$$= \\frac{AP_\\mathrm{L}}{4\\pi kb}\\left[1 + 2\\ln\\left(\\frac{a}{\\sigma}\\right)\\right]$$\n\nwhich is equivalent to the expression (6) for $T_\\mathrm{c}$.\n\n| Task | Pts. |\n|---|---|\n| Writes down the heat-transport equation in radial coordinates | 0.7 |\n| Derives an expression for $P_\\mathrm{abs}$ at $0 \\le r \\le \\sigma$ | 0.5 |\n| Derives an expression for $P_\\mathrm{abs}$ at $\\sigma \\le r \\le a$ | 0.3 |\n| Substitutes the given form of $T(r)$ into heat-transport equation for the region $0 \\le r \\le \\sigma$ | 0.3 |\n| Obtains the expression for $m$ (Subtract 0.1 pts. if the minus sign is missing) | 0.2 |\n| Calculates $m$ numerically (Subtract 0.1 pts. if the minus sign is missing) | 0.2 |\n| States that $T_\\mathrm{c} = T(0)$ | 0.2 |\n| States that $T_\\mathrm{h} = T(a)$ | 0.2 |\n| Expresses $T_\\mathrm{c} - T_\\mathrm{h}$ through integral of $\\mathrm{d}T/\\mathrm{d}r$ in the $0 \\le r \\le a$ interval | 0.3 |\n| Calculates the integral in the $0 \\le r \\le \\sigma$ interval | 0.3 |\n| Calculates the integral in the $\\sigma \\le r \\le a$ interval | 0.3 |\n| Writes down the final expression for $T_\\mathrm{c}$ | 0.2 |\n| Calculates $T_\\mathrm{c}$ numerically | 0.3 |\n| **Totally on (b)** | **4.0** |\n\n**(c) Finding the focal length**\n\n**Approach based on the Fermat’s principle**\n\nWe consider only the illuminated area of the disk ($0 \\le r \\le \\sigma$). Due to the nonuniform temperature distribution, the index of refraction is also $r$-dependent, which leads to a bending of the light rays incident at nonzero radii $r$, as shown schematically in the figure. As a result, the light rays exiting the disk, converge toward the optical axis, and, eventually, cross it in a certain point at a distance $f$ from the disk.\n\nSince the ray bending is relatively small, one may assume that: (i) all the rays travel approximately the same distance $b$ inside the disk; (ii) any given ray enters and exits the disk at approximately the same height $r$; (iii) $f \\gg r$. Thus, the optical pathway $s(r)$ of a ray, incident at a height $r$ above the optical axis, is:\n\n$$s(r) \\approx n(r)b + \\sqrt{f^2 + r^2} \\approx n(r)b + f + \\frac{r^2}{2f} \\tag{10}$$\n\nAccording to Fermat’s principle, in order that all the rays focus at the same point, it is necessary that $s(r)$ is constant within $0 \\le r < \\sigma$. In particular, $s(r) \\equiv s(0)$ for any $r$, which leads to the condition:\n\n$$b(n(0) - n(r)) \\equiv \\frac{r^2}{2f} \\tag{11}$$\n\nSince:\n\n$$n(0) - n(r) = \\gamma(T(0) - T(r)) = -\\gamma mr^2 = \\gamma|m|r^2 \\tag{12}$$\n\ncondition (11) is satisfied if\n\n$$\\gamma b|m|r^2 \\equiv \\frac{r^2}{2f} \\tag{13}$$\n\nThe beam hence focuses at\n\n$$f = \\frac{1}{2\\gamma b|m|} \\tag{14}$$\n\nTaking into account the expression for $m$ derived in part (b), we represent the answer in terms of the known parameters and calculate its numerical value:\n\n$$f = \\frac{2\\pi k\\sigma^2}{\\gamma AP} \\approx 0.94\\ \\mathrm{m} \\tag{15}$$\n\nAlternatively, the student may state that the optical pathway $s(r)$ does not depend on $r$ and use the condition $\\mathrm{d}s/\\mathrm{d}r \\equiv 0$, which gives:\n\n$$\\frac{\\mathrm{d}n(r)}{\\mathrm{d}r}b + \\frac{r}{f} \\equiv 0 \\tag{16}$$\n\nSince:\n\n$$\\frac{\\mathrm{d}n(r)}{\\mathrm{d}r} = \\frac{\\mathrm{d}n}{\\mathrm{d}T}\\frac{\\mathrm{d}T}{\\mathrm{d}r} = \\gamma 2mr \\tag{17}$$\n\nwe obtain:\n\n$$\\frac{r}{f} + 2b\\gamma mr \\equiv 0 \\tag{18}$$\n\nThe beam thus focuses at:\n\n$$f = \\frac{1}{2\\gamma b|m|} = \\frac{2\\pi k\\sigma^2}{\\gamma AP} \\approx 0.94\\ \\mathrm{m} \\tag{19}$$\n\n| Task | Pts. |\n|---|---|\n| Formulates assumptions (i) and (ii) or equivalent statements | 0.2 |\n| Derives a general expression for the optical pathway $s$ as a function of $r$ | 0.8 |\n| Uses that $f \\gg r$ and derives approximate quadratic expression for $s(r)$ | 0.5 |\n| States that focusing takes place when $s(r)$ is the same for all rays converging in the focus | 0.5 |\n| Writes explicitly equation in the form $s(r) \\equiv s(0)$ OR $\\mathrm{d}s/\\mathrm{d}r \\equiv 0$ | 0.5 |\n| Uses the $T(r)$ dependence to derive the $n(r)$ dependence OR to find $\\mathrm{d}n/\\mathrm{d}r$ | 0.5 |\n| Derives an expression for the focal length $f$ in terms of $m$ or of the parameters given in the problem statement | 0.8 |\n| Calculates $f$ numerically | 0.2 |\n| **Totally on (c)** | **4.0** |\n\n**Approach based on a direct ray/wavefront tracing**\n\nAs a next approximation, the light ray inside the disk can be modeled as a circular arc of a radius $R$ ($R \\gg b$, see the figure). As a result, the ray exits the disk at a smaller height $r - h$ above the optical axis ($h \\ll r$). The angle of bending $\\varphi$ of the ray inside the material is related to $h$ by:\n\n$$\\cos\\varphi = 1 - \\frac{h}{R} \\tag{20}$$\n\nFrom the Snell’s law it follows that:\n\n$$n(r)\\sin(\\pi/2) = n(r - h)\\sin(\\pi/2 - \\varphi) = n(r - h)\\cos\\varphi \\tag{21}$$\n\nUp to terms, linear in $h$, one may write that:\n\n$$\\cos\\varphi = \\frac{n(r)}{n(r - h)} \\approx 1 + \\frac{n'(r)}{n(r)}h \\tag{22}$$\n\nThus, the radius of the ray inside the material, is:\n\n$$R = -\\frac{n(r)}{n'(r)} \\tag{23}$$\n\nand the bending angle is approximately:\n\n$$\\varphi = \\frac{b}{R} = -\\frac{n'(r)b}{n(r)} \\tag{24}$$\n\nAlternatively, the students may trace a small part of the wavefront, associated with two rays, incident at close distances $r$ and $r + \\mathrm{d}r$ from the optical axis. By noticing that the wavefront is perpendicular to the rays, the angle $\\varphi$ of deviation of the rays is equal to the angle of rotation of the wavefront. Let $v(r) = c/n(r)$ be the speed of light in the material at a distance $r$ from the axis. The time-rate $\\dot{\\varphi}$, i.e. the angular speed of the wavefront is:\n\n$$\\dot{\\varphi} = \\mathrm{d}v(r)/\\mathrm{d}r = -cn'(r)/n(r)^2 \\tag{25}$$\n\nThe rays reach the opposite surface of the disk in approximately the same time $t = bn(r)/c$, so the total deflection angle of the wavefront, and of the rays, thereof, is $\\varphi = \\dot{\\varphi}t = -n'(r)b/n(r)$\n\nUpon exiting the disk, the ray undergoes additional refraction, and inclines at a new angle $\\theta$ relative to the optical axis. The Snell’s law in the small-angle approximation ($\\sin\\theta \\approx \\theta$, $\\sin\\varphi \\approx \\varphi$) states that:\n\n$$\\theta = n(r - h)\\varphi \\approx n(r)\\varphi = -n'(r)b \\tag{26}$$\n\nSince $n'(r) = \\gamma T'(r) = 2mr$, one obtains the following expression for the angle of inclination:\n\n$$\\theta = 2\\gamma|m|r \\tag{27}$$\n\nIt is clear from the figure that:\n\n$$f = \\frac{r - h}{\\tan\\theta} \\approx \\frac{r}{\\theta} = \\frac{1}{2\\gamma|m|b} \\tag{28}$$\n\nwhich reproduces the result obtained by the Fermat’s principle.\n\n| Task | Pts. |\n|---|---|\n| States or shows on a graph that the light ray inside the material can be approximated by an arc OR illustrates on a graph that the wavefront is perpendicular to the light rays | 0.2 |\n| Derives the relation $\\cos\\varphi = 1 - h/R$ or equivalent OR expresses the time of travel of the ray across the disk | 0.5 |\n| Applies the Snell’s law to the ray path inside the material OR derives a formula for the time-rate $\\dot{\\varphi}$ by considering the wavefront passing through two closely separated rays | 0.8 |\n| Finds expression for the bending angle $\\varphi$ inside the material | 0.5 |\n| Applies the Snell’s law for the refraction of rays exiting the disk | 0.5 |\n| Uses the $T(r)$ dependence to find $n'(r)$ | 0.5 |\n| Derives an expression for the focal length $f$ in terms of $m$ or of the parameters given in the problem statement | 0.8 |\n| Calculates $f$ numerically | 0.2 |\n| **Totally on (c)** | **4.0** |\n\n*Alternatively:*\n\nConsider a ray incident at a specific height $r_0$. Let $x \\in [0, b]$ be the horizontal coordinate of the ray inside the material. Our goal is to find approximately the profile $r(x)$ of the light ray inside the material. From Snell’s law:\n\n$$n(r)\\cos\\varphi = n(r_0)$$\n\nSince:\n\n$$\\tan\\varphi = -\\frac{\\mathrm{d}r(x)}{\\mathrm{d}x} = -\\frac{\\sqrt{(1 - \\cos^2\\varphi)}}{\\cos\\varphi}$$\n\nwe obtain:\n\n$$-\\frac{\\mathrm{d}r(x)}{\\mathrm{d}x} = \\frac{\\sqrt{(n(r) - n(r_0))(n(r) + n(r_0))}}{n(r)}$$\n\nSince $n(r) \\approx n(r_0) + n'(r_0)(r - r_0) = n(r_0) + 2\\gamma|m|r_0(r_0 - r)$, the differential equation approximates to:\n\n$$-\\frac{\\mathrm{d}r(x)}{\\mathrm{d}x} = \\sqrt{\\frac{4\\gamma|m|r_0}{n(r_0)}}\\sqrt{r0 - r}$$\n\nwhich is solvable by separation of variables and gives an approximate parabolic path:\n\n$$r(x) = r_0 - \\frac{\\gamma|m|r_0}{n(r_0)}x^2$$\n\nFinally, for the angle, just before exiting the disk, we obtain:\n\n$$\\varphi \\approx \\tan\\varphi = -r'(x = b) = \\frac{2\\gamma|m|r_0b}{n(r_0)}$$\n\n| Task | Pts. |\n|---|---|\n| Applies the Snell’s law to express the angle $\\varphi$ dependence on $r$ for one ray | 0.8 |\n| Expresses $\\tan\\varphi = dr/dx$ | 0.2 |\n| Applies approximation to derive a separable differential equation for $r(x)$ | 0.8 |\n| Integrates to obtain parabolic path | 0.5 |\n| Finds expression for the angle $\\varphi$, before exiting the disk | 0.2 |\n| Applies the Snell’s law for the refraction of rays exiting the disk | 0.5 |\n| Derives an expression for the focal length $f$ in terms of $m$ or of the parameters given in the problem statement | 0.8 |\n| Calculates $f$ numerically | 0.2 |\n| **Totally on (c)** | **4.0** |",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "alt": "Graph of T(r) against r: the curve starts at T_c with a horizontal tangent, is concave down to r = σ, then convex and decreasing to T_h at r = a with a nonzero slope (dashed tangent). Labels: T(r), T_c, T_h, 0, σ, a, r, “horizontal tangent”, “concave part”, “convex part”, “nonzero slope”.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p1-sol-fig1-v3.png",
+      "width": 1132,
+      "height": 583,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        25.02,
+        131.35,
+        296.46,
+        271.08
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "alt": "Ray diagram: a ray at height r enters the disk of thickness b, bends along an arc of radius R, exits lower by h and crosses the optical axis at distance f under angle θ. Marked angles π/2−φ, π/2, φ and θ; labels b, h, r, R, f.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p1-sol-fig2-v2.png",
+      "width": 621,
+      "height": 513,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        34.51,
+        463.86,
+        183.33,
+        586.8
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig3",
+      "alt": "Wavefront sketch: two red rays starting at heights r and r+dr with speeds v(r) and v(r)+dv (black arrows to the left); the blue wavefront segment rotates. Labels: v(r)+dv, v(r), r+dr, r, ray, wavefront.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p1-sol-fig3-v2.png",
+      "width": 572,
+      "height": 359,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        41.67,
+        433.58,
+        178.6,
+        519.43
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    }
+   ]
+  },
+  {
+   "id": "eupho-2023-theory-x-p2",
+   "number": 2,
+   "title": "T2: Brick between two planes",
+   "points": 10,
+   "problemType": "theory",
+   "statement": "A small brick is squeezed between two parallel planes in zero gravity. The planes are perpendicular to the $z$-axis. The lower plane is moving with constant velocity $u_1$ along the $x$-axis, whilst the upper one is moving with constant velocity $u_2$ along the $y$-axis.\n\nInitially, the brick is at rest. The coefficient of kinetic friction between the brick and each plane is identical.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "alt": "Perspective view of two parallel planes: the lower grey plane moves with velocity u_1 (arrow along x), the upper transparent plane with velocity u_2 (arrow along y); a dashed brick lies between them. Axes x and y are drawn at the top.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-fig1.png",
+     "width": 735,
+     "height": 425,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       346.45,
+       54.72,
+       522.67,
+       156.6
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Find the speed of the brick $v_\\infty$ after a long time for $u_1 = u_2$.",
+     "points": 4,
+     "answer": {
+      "kind": "expression",
+      "latex": "v = u_1/\\sqrt{2}"
+     }
+    },
+    {
+     "label": "b)",
+     "statement": "Find the speed of the brick $v_\\infty$ after a long time for $u_1 \\neq u_2$.",
+     "points": 6,
+     "answer": {
+      "kind": "expression",
+      "latex": "v = \\frac{1}{\\sqrt{2}}\\sqrt{u_1u_2 - (u_1 - u_2)^2\\left(\\frac{u_1 + u_2}{\\sqrt{u_1^2 + u_2^2}} - 1\\right)}"
+     }
+    }
+   ],
+   "topics": [
+    "mechanics/friction",
+    "mechanics/relative-motion"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**(a)**\n\nThe brick is squeezed between the plates and constrained between the plates, so the normal force on the top and bottom surfaces of the brick must be equal.\n\nSince the brick is moving relative to each plate, the kinetic friction vector on each surface must also be equal in magnitude, but in a direction given by the relative velocity of each plate with respect to the brick. Note that this statement is true whether the plates are moving at the same speed, or different speeds.\n\nA simple vector diagram can illustrate the velocity vectors, the frictional force vectors, and the net force vector.\n\nThen $\\vec{a} = \\vec{F}/m$, and after a time $\\Delta t$ the new relative velocity vectors will be given by\n\nBy symmetry, this continues so that the acceleration of the brick is always at 45 degrees, until eventually,\n\nAs such, $v = u_1/\\sqrt{2}$.\n\n| (a) | Pts |\n|---|---|\n| Use symmetry to find $u_1' = u_2'$. Must be stated! | 1.0 |\n| $\\vec{u}_1' = -\\vec{u}_2'$ at steady state. Must be stated! | 1.0 |\n| Vector diagram or algebraic equivalent Fig 1 | 1.0 |\n| Correctly find $v$ | 1.0 |\n| **Total on (a)** | **4.0** |\n\nThe two “must be stated” points above need some sort of clear justification, but does not need to be written out in sentences. Just using it in the vector diagram is not sufficient to earn the points.\n\n**Special case for students who solve part (b) first**\n\nA student who solves part (b) correctly, at least as far as required to solve part (a), and then uses it to write the answer for part (a) correctly will get full marks for part (a). A single trivial mistake in the application of a fully correct part (b) to part (a) will result in half marks for part (a). Trivial mistakes are a clearly identifiable sign error in an an algebra expression, or dropped coefficient between lines. Mistakes that make the answer dimensionally incorrect or physically improbable are not trivial, and would result in 0 marks for part (a).\n\nA student who does not have full marks for part (b), but who used the results of part (b) that has incorrect physics to answer part (a), will get no marks for part (a), even if the answer to part (a) is correct.\n\n**(b)**\n\nThough the initial vector diagram for velocities looks different, the force components are still equal in magnitude, directed along the relative velocity vectors.\n\nThen $\\vec{a} = \\vec{F}/m$, and after a time $\\Delta t$ the new relative velocity vectors will be given by\n\nThe process is repeated, where the direction of the net force is the angle bisector of the relative velocity vectors $\\vec{u}_1'$ and $\\vec{u}_2'$\n\nAs the quantity $a\\Delta t$ is a small quantity compared to the magnitude of the velocity vectors, we can conclude that an equal amount is removed from each of the velocity vectors, so that magnitude comparison\n\n$$u_1 - u_2 = u_1' - u_2' \\tag{29}$$\n\nis a conserved quantity.\n\nFor the next step, the net force vector is still the angle bisector for $u_1$ and $u_2$. The above arguments will hold true for the conserved quantity, and then the final velocity can be found by\n\nThen\n\n$$(u_1' + u_2')^2 = u_1^2 + u_2^2 = D^2 \\tag{30}$$\n\nand\n\n$$u_1' - u_2' = u_1 - u_2 = \\delta \\tag{31}$$\n\ncan be solved for $u_1'$ and $u_2'$, with\n\n$$u_2' = \\frac{1}{2}(D - \\delta)$$\n\nand\n\n$$u_1' = \\frac{1}{2}(D + \\delta)$$\n\nThis gives the components of $v$ as\n\n$$v_x = \\frac{u_2'}{D}u_1 = \\frac{u_1}{2}\\left(1 - \\frac{\\delta}{D}\\right) \\tag{32}$$\n\nand\n\n$$v_y = \\frac{u_1'}{D}u_2 = \\frac{u_2}{2}\\left(1 + \\frac{\\delta}{D}\\right) \\tag{33}$$\n\nand the magnitude is\n\n$$v = \\frac{1}{2}\\sqrt{D^2 + \\delta^2 - 2\\frac{\\delta}{D}\\left(u_1^2 - u_2^2\\right)} \\tag{34}$$\n\nWriting this in terms of $u_1$ and $u_2$ is left as an exercise for the reader.\n\n$$v = \\sqrt{\\frac{1}{2}\\left(u_1^2 + u_2^2 - u_1u_2 - \\frac{(u_1 - u_2)^2(u_1 + u_2)}{\\sqrt{u_1^2 + u_2^2}}\\right)}$$\n\n$$= \\frac{1}{\\sqrt{2}}\\sqrt{u_1u_2 - (u_1 - u_2)^2\\left(\\frac{u_1 + u_2}{\\sqrt{u_1^2 + u_2^2}} - 1\\right)}$$\n\n| (b) Scheme G1 | Pts |\n|---|---|\n| Show/explain that $\\vec{a}$ is always angle bisector | 1.0 |\n| Show that $\\delta$ (Eq 29) is a constant of the motion | 1.0 |\n| $\\vec{u}_1'$ and $\\vec{u}_2'$ are in opposite directions at steady state | 1.0 |\n| Vector diagram for relative velocities Fig 3 | 1.0 |\n| Apply $D$ (Eq 30) or equivalent | 0.2 |\n| Apply $\\delta$ (Eq 31) or equivalent | 0.2 |\n| Correctly find $v_x$ or $v_y$ | 0.4 |\n| Correctly find other one | 0.2 |\n| Correctly find $v$ | 1.0 |\n| **Total on (b)** | **6.0** |\n\nA student who correctly finds $v$ without explicitly writing $v_x$ and $v_y$ will be assumed to have found $v_x$ and $v_y$ by applying $D$ and $\\delta$ and should get those points.\n\nAn incorrect value for $v_x$ or $v_y$ or $v$ that is dimensionally correct and wrong only because of a math error will get half marks, but the math error must be clear.\n\nWriting $v$ in an equivalent form of Eq. 34 but not in the final form in terms of $u_1$ and $u_2$ only receives only 0.6/1.0 points for last part.\n\n**Possible Error Scenarios**\n\nStudents who attempt graphical approach who have an error below should follow the grading scheme below.\n\n1. **Assuming that the direction of the frictional force is given by the vector sum of the relative velocities.**\n\nAn example of the improper vector construction is shown in the following figure.\n\nThe immediate consequence is that Eq. 29 is no longer true. With quick inspection, the student should conclude that the final state must have $\\vec{u}_1 = -\\vec{u}_2$, and then the graphical velocity picture would be, at steady state,\n\n| (b) Scheme E1 | Pts |\n|---|---|\n| Vector diagram showing (incorrect!) force direction, or equivalent statement | 0.5 |\n| A clear statement that the (incorrect) force direction depends on the vector sum of the relative velocities (see note below!) | 0.5 |\n| Explicitly stating (incorrect!) $\\vec{u}_1' = -\\vec{u}_2'$ at steady state. | 0.5 |\n| Vector diagram for steady state, or equivalent statement | 0.8 |\n| Stating $v = \\frac{1}{2}\\sqrt{u_1^2 + u_2^2}$ | 0.7 |\n| **Total on (b)** | **3.0** |\n\nThere is no other partial credit possible for this approach.\n\nNote: the student must demonstrate knowledge that the force is proportional to the relative velocity; if they only look at the force at the start of the problem, and never address what happens as the problem evolves, they don’t get this 0.5 points.\n\n2. **Assuming that the direction of the final velocity is orthogonal to the vector difference of the velocities of the plates.**\n\nThis scheme only applies when a student explicitly states that $v$ is perpendicular. Do not use this grading scheme if it is simply a vaguely drawn vector diagram.\n\nIt is true that the acceleration vector approaches the steady state orthogonal to the hypotenuse of the triangle, but not the final velocity. As such, the following vector diagram is wrong:\n\nIt is possible that the student started with some correct physics according to the original approach, and then makes the above assumption to finish the problem; it is also possible that they started with the perpendicular assumption.\n\n**If the only mistake is a bad final vector diagram with a perpendicular marking, but then did the algebra based on $D$ and $\\delta$ then use the following:**\n\n| (b) Scheme E2A | Pts |\n|---|---|\n| Show/explain that $\\vec{a}$ is always angle bisector | 1.0 |\n| Show that $\\delta$ (Eq 29) is a constant of the motion | 1.0 |\n| $\\vec{u}_1'$ and $\\vec{u}_2'$ are in opposite directions at steady state | 1.0 |\n| Vector diagram above (incorrect!) for relative velocities at steady state, or any statement that final $v$ is orthogonal. | 0.5 |\n| Apply $D$ (Eq 30) or equivalent | 0.2 |\n| Apply $\\delta$ (Eq 31) or equivalent | 0.2 |\n| Correctly find $v_x$ | 0.3 |\n| Correctly find $v_y$ | 0.3 |\n| Correctly find $v$ | 1.0 |\n| **Total on (b)** | **5.5** |\n\nA student who correctly finds $v$ without explicitly writing $v_x$ and $v_y$ will be assumed to have found $v_x$ and $v_y$ by applying $D$ and $\\delta$ and should get those points.\n\nAn incorrect value for $v_x$ or $v_y$ or $v$ that is dimensionally correct and wrong only because of a math error will get half marks, but the math error must be clear.\n\nWriting $v$ in an equivalent form of Eq. 34 but not in the final form in terms of $u_1$ and $u_2$ only receives only 0.6/1.0 points for last part.\n\n**If the mistake is that they used the perpendicular vector diagram to solve the problem, then their answers would be different, so use the following:**\n\n| (b) Scheme E2B | Pts |\n|---|---|\n| Show/explain that $\\vec{a}$ is always angle bisector | 1.0 |\n| Show that $\\delta$ (Eq 29) is a constant of the motion | 1.0 |\n| $\\vec{u}_1'$ and $\\vec{u}_2'$ are in opposite directions at steady state | 1.0 |\n| Vector diagram above (incorrect!) for relative velocities at steady state, or any statement that final $v$ is orthogonal. | 0.5 |\n| Find (incorrect!) $v = u_1u_2/\\sqrt{u_1^2 + u_2^2}$ | 1.0 |\n| **Total on (b)** | **4.5** |\n\nA dimensionally correct formula for $v$ that differs from above because of a single math error in a clear derivation based on the figure will get 0.5 out of 1.0 for the $v$.\n\n3. **Assuming that the final velocity is the average of the vector velocities of the plates.**\n\nNote that this approach yields the same result as a previous approach, but it is not worth as many points, as the fundamental physics starts from a higher level incorrect assumption. Here, the student is just assuming that the final speed is an average, in the previous approach the student had an error in the direction of the forces. If they use forces, a previous grading scheme applies.\n\n| (b) Scheme E3 | Pts |\n|---|---|\n| Explicity stating $\\vec{u}_1'$ and $\\vec{u}_2'$ are in opposite directions at steady state. | 1.0 |\n| Vector diagram above | 0.5 |\n| Stating $v = \\frac{1}{2}\\sqrt{u_1^2 + u_2^2}$ | 0.5 |\n| **Total on (b)** | **2.0** |\n\nThere is no other partial credit possible for this approach.\n\n4. **Assuming that the final velocity is the vector sum of the velocities of the plates.**\n\nThough very tempting, it violates so many requirements for a steady state solution that this is not worth very many points at all.\n\n| (b) Scheme E4 | Pts |\n|---|---|\n| Vector diagram above | 0.5 |\n| **Total on (b)** | **0.5** |\n\nThere are no points for finding an expression for $v$, as the method is just wrong.\n\n**Alternative Approaches**\n\n**Non-Cartesian Differential Equations** Effectively a graphical approach without graphics, one can focus on the relative velocity vectors as coordinate axis. Then the important equations of motion are\n\n$$\\frac{du_{1r}}{dt} = -\\frac{F}{m} \\text{ and } \\frac{du_{2r}}{dt} = -\\frac{F}{m} \\tag{35}$$\n\nwhere the force magnitude $F$ is a function of the relative directions of the coordinate axes $\\vec{u}_{1r}$ and $\\vec{u}_{2r}$.\n\nThe student can quickly realize that the difference of these two expressions is zero, so that $\\delta$ is a constant of the motion.\n\nAt steady state, $F = 0$, and this happens when $\\vec{u}_{1r}$ and $\\vec{u}_{2r}$ point in opposite directions.\n\n| (b) Scheme A1 | Pts |\n|---|---|\n| A set of differential equations Eq35 | 1.0 |\n| Show that $\\delta$ (Eq 29) is a constant of the motion | 1.0 |\n| $\\vec{u}_1'$ and $\\vec{u}_2'$ are in opposite directions at steady state | 1.0 |\n| Equivalent math statement or diagram for steady state relative velocities Fig 3 | 1.0 |\n| Apply $D$ (Eq 30) or equivalent | 0.2 |\n| Apply $\\delta$ (Eq 31) or equivalent | 0.2 |\n| Correctly find $v_x$ or $v_y$ | 0.4 |\n| Correctly find other one | 0.2 |\n| Correctly find $v$ | 1.0 |\n| **Total on (b)** | **6.0** |\n\nA student who correctly finds $v$ without explicitly writing $v_x$ and $v_y$ will be assumed to have found $v_x$ and $v_y$ by applying $D$ and $\\delta$ and should get those points.\n\nAn incorrect value for $v_x$ or $v_y$ or $v$ that is dimensionally correct and wrong only because of a math error will get half marks, but the math error must be clear.\n\nWriting $v$ in an equivalent form of Eq. 34 but not in the final form in terms of $u_1$ and $u_2$ only receives only 0.6/1.0 points for last part.\n\nFollow on errors are not allowed for first parts, as the math expressions are almost trivial. They are also not allowed for the algebraic part at the end; see possible mistakes above for possible scenarios where points could be awarded by writing an equivalent algebraic expression for the graphical approach.\n\n**Cartesian Differential Equations** Attempting to set up equations of motions in a Cartesian system requires finding the direction of relative velocity of each surface. Assuming that $u_1$ is in the $x$ direction and $u_2$ is in the $y$ direction, and if the velocity components of the block are $v_x$ and $v_y$, the relative velocities of the planes are\n\n$$u_{1rx} = u_1 - v_x \\text{ and } u_{1ry} = -v_y$$\n\nand\n\n$$u_{2rx} = -v_x \\text{ and } u_{2ry} = u_2 - v_y$$\n\nThe forces of friction from each plane are equal in magnitude and directed along the relative velocity vectors, so a steady state solution is when these two relative vectors are in opposite directions.\n\nThe force vectors then have components\n\n$$F_{1x} = F\\frac{u_{1rx}}{u_{1r}} \\text{ and } F_{1y} = F\\frac{u_{1ry}}{u_{1r}}$$\n\nand\n\n$$F_{2x} = F\\frac{u_{2rx}}{u_{2r}} \\text{ and } F_{2y} = F\\frac{u_{2ry}}{u_{2r}}$$\n\nThis gives the following equation of motion for the block:\n\n$$\\frac{dv_x}{dt} = a_x = \\frac{F}{m}\\left(\\frac{u_{1rx}}{u_{1r}} + \\frac{u_{2rx}}{u_{2r}}\\right)$$\n\nand\n\n$$\\frac{dv_y}{dt} = a_y = \\frac{F}{m}\\left(\\frac{u_{1ry}}{u_{1r}} + \\frac{u_{2ry}}{u_{2r}}\\right)$$\n\nA student might have noticed that this is a nasty set of coupled differential equations.\n\nBoth of these have vanishing accelerations according to the same condition:\n\n$$u_{1rx}^2u_{2ry}^2 = u_{2rx}^2u_{1ry}^2$$\n\nwhich is merely the statement that at steady state the two relative velocity vectors are in opposite directions. As this is still only one equation, it is not possible to find the steady state $v_x$ and $v_y$ from this alone. A simpler expression can be found, however,\n\n$$u_1u_2 = u_1v_y + u_2v_x. \\tag{36}$$\n\nThis, however, is merely the statement of the graphical vector diagram\n\nStill, it is not possible to know where the vector $\\vec{v}$ touches the line described by $\\vec{u}_1 - \\vec{u}_2$.\n\nThis isn’t the end, however. Consider\n\n$$u_{1r}^2 = u_{1rx}^2 + u_{1ry}^2$$\n\nTaking the time derivative, one gets\n\n$$u_{1r}\\dot{u}_{1r} = u_{1rx}\\dot{u}_{1rx} + u_{1ry}\\dot{u}_{1ry}$$\n\nCombine with the above, and\n\n$$u_{1r}\\dot{u}_{1r} = -\\frac{F}{m}\\left(\\frac{u_{1rx}^2}{u_{1r}} + \\frac{u_{1rx}u_{2rx}}{u_{2r}} + \\frac{u_{1ry}^2}{u_{1r}} + \\frac{u_{1ry}u_{2ry}}{u_{2r}}\\right)$$\n\nwhich means\n\n$$\\dot{u}_{1r} = -1 - \\frac{u_{1rx}u_{2rx}}{u_{1r}u_{2r}} - \\frac{u_{1ry}u_{2ry}}{u_{1r}u_{2r}}$$\n\nOut of symmetry, an identical expression will be found for $\\dot{u}_{2r}$, which means that\n\n$$\\delta = u_{1r} - u_{2r} \\tag{37}$$\n\nis a constant of the motion.\n\nAt this point, a student can apply the results of Eq 36 with this constant difference formula and solve for $v_x$ and $v_y$ as done in the first solution.\n\nIn the scheme below, finding the expression assumes found correctly and completely, and a student would get 0.2 points for (most) expressions. There are no partial points if the equation is wrong.\n\nHowever, for the first four categories only (marked with an *, follow on errors are not penalized for work based on a previous mistake, assuming that it does not trivialize the result.\n\n| (b) Scheme A2 | Pts |\n|---|---|\n| Expressions for relative velocity components (4 @ 0.2 each, *) | 0.8 |\n| Expressions for force components (4 @ 0.2 each, *) | 0.8 |\n| Expressions for acceleration components (2 @ 0.2 each, *) | 0.4 |\n| State a condition for steady state | 0.5 |\n| Find equation for steady state or equivalent to Eq 36 (must not have relative velocity, or is incomplete, *) | 0.5 |\n| Show that $\\delta$ (Eq 37) is a constant of the motion (must be correct, regardless of follow on error) | 1.0 |\n| Apply $D$ (Eq 30) or equivalent | 0.2 |\n| Apply $\\delta$ (Eq 31) or equivalent | 0.2 |\n| Correctly find $v_x$ or $v_y$ | 0.4 |\n| Correctly find other one | 0.2 |\n| Correctly find $v$ | 1.0 |\n| **Total on (b)** | **6.0** |\n\nA student who correctly finds $v$ without explicitly writing $v_x$ and $v_y$ will be assumed to have found $v_x$ and $v_y$ by applying $D$ and $\\delta$ and should get those points.\n\nAn incorrect value for $v_x$ or $v_y$ or $v$ that is dimensionally correct and wrong only because of a math error will get half marks, but the math error must be clear.\n\nWriting $v$ in an equivalent form of Eq. 34 but not in the final form in terms of $u_1$ and $u_2$ only receives only 0.6/1.0 points for last part.",
+    "figures": [
+     {
+      "id": "p2-sol-fig1",
+      "alt": "Velocity axes u_1 (horizontal) and u_2 (vertical) with equal blue force components F_1 along u_1 and F_2 along u_2 and their resultant F at 45 degrees.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig1-v3.png",
+      "width": 512,
+      "height": 457,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        25.02,
+        271.93,
+        147.65,
+        381.38
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig2",
+      "alt": "Axes u_1 and u_2; blue vector aΔt from the origin at 45 degrees; red relative velocity vectors u'_1 and u'_2 drawn from the tip of aΔt to the ends of u_1 and u_2.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig2-v2.png",
+      "width": 458,
+      "height": 419,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        38.12,
+        407.48,
+        147.65,
+        507.64
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig3",
+      "caption": "Figure 1: Vector diagram for solution of part (a)",
+      "alt": "Steady state for u_1 = u_2: blue velocity v from the origin to the midpoint of the red line joining the ends of u_1 and u_2; red segments u'_1 and u'_2 point in opposite directions.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig3.png",
+      "width": 457,
+      "height": 432,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        27.99,
+        548.91,
+        137.52,
+        652.46
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig4",
+      "alt": "Axes u_1 (long, horizontal) and u_2 (shorter, vertical) with equal blue force components F_1 and F_2 and their resultant F at 45 degrees.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig4-v2.png",
+      "width": 951,
+      "height": 443,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        310.73,
+        390.64,
+        538.74,
+        496.71
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig5",
+      "alt": "Axes u_1 and u_2 of different lengths; blue vector aΔt at 45 degrees; red relative velocity vectors u'_1 and u'_2 from its tip to the ends of u_1 and u_2.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig5-v2.png",
+      "width": 939,
+      "height": 412,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        310.73,
+        528.71,
+        535.77,
+        627.21
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig6",
+      "caption": "Figure 2: The correct construction to find direction of net force",
+      "alt": "Red relative velocity vectors u'_1 and u'_2 from a common point; equal blue force components F_1 and F_2 along them and the resultant F along their angle bisector; axes u_1 and u_2.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig6-v2.png",
+      "width": 929,
+      "height": 435,
+      "source": {
+       "page": 6,
+       "pdfRect": [
+        27.99,
+        54.72,
+        250.6,
+        159.12
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig7",
+      "caption": "Figure 3: Vector diagram for solution of part (b)",
+      "alt": "Steady state for u_1 ≠ u_2: blue velocity v from the origin to a point on the red line joining the ends of u_1 and u_2, dividing it into u'_2 (upper part) and u'_1 (lower part).",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig7-v2.png",
+      "width": 941,
+      "height": 436,
+      "source": {
+       "page": 6,
+       "pdfRect": [
+        25.02,
+        196.15,
+        250.6,
+        300.55
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig8",
+      "alt": "Improper construction: red relative velocities u'_1 and u'_2 from a common point, blue components F_1 and F_2 of different lengths along them and the resultant F not along the bisector; axes u_1 and u_2.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig8-v2.png",
+      "width": 931,
+      "height": 432,
+      "source": {
+       "page": 6,
+       "pdfRect": [
+        322.07,
+        532.08,
+        545.27,
+        635.62
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig9",
+      "alt": "Steady state for the improper construction: blue velocity v from the origin to the midpoint of the red line joining the ends of u_1 and u_2, with segments u'_2 and u'_1.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig9-v2.png",
+      "width": 931,
+      "height": 433,
+      "source": {
+       "page": 6,
+       "pdfRect": [
+        322.07,
+        703.8,
+        545.27,
+        807.39
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig10",
+      "alt": "Wrong diagram: blue velocity v drawn perpendicular (right-angle mark) to the red line joining the ends of u_1 and u_2, which is split into u'_2 and u'_1.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig10-v2.png",
+      "width": 928,
+      "height": 447,
+      "source": {
+       "page": 7,
+       "pdfRect": [
+        48.24,
+        563.22,
+        270.86,
+        670.14
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig11",
+      "alt": "Diagram for the average assumption: blue velocity v from the origin to the midpoint of the red line joining the ends of u_1 and u_2, segments u'_2 and u'_1.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig11-v2.png",
+      "width": 928,
+      "height": 429,
+      "source": {
+       "page": 8,
+       "pdfRect": [
+        48.24,
+        87.57,
+        270.86,
+        190.26
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig12",
+      "alt": "Diagram for the vector-sum assumption: blue velocity v from the origin to the corner point (u_1, u_2); axes u_1 and u_2.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig12-v2.png",
+      "width": 928,
+      "height": 429,
+      "source": {
+       "page": 8,
+       "pdfRect": [
+        48.24,
+        402.43,
+        270.86,
+        505.12
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig13",
+      "alt": "Graphical vector diagram: blue velocity v from the origin touching the red line joining the ends of u_1 and u_2, split into u'_2 and u'_1.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p2-sol-fig13-v2.png",
+      "width": 983,
+      "height": 418,
+      "source": {
+       "page": 9,
+       "pdfRect": [
+        25.02,
+        266.04,
+        260.73,
+        366.21
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    }
+   ]
+  },
+  {
+   "id": "eupho-2023-theory-x-p3",
+   "number": 3,
+   "title": "T3: Plate between magnets",
+   "points": 10,
+   "problemType": "theory",
+   "statement": "Two identical long, cylindrical rod magnets of radius $R$ are close to each other and share the same vertical symmetry axis. The polarity of the two magnets is the same. As a result, the magnetic field in the air gap between the magnets is directed towards the $+z$ direction (see *figure*) and uniform with flux density $B$. The magnetic field outside the gap is zero. A horizontal large non-magnetic metal plate is placed in the air gap and moved with constant horizontal velocity $v$ in $+y$-direction. The thickness of the plate is $\\delta$, the resistivity of the metal is $\\varrho$.",
+   "figures": [
+    {
+     "id": "p3-fig1",
+     "alt": "Two coaxial vertical cylindrical magnets of diameter 2R with a thin horizontal metal plate of thickness δ in the gap between them; the plate moves with velocity v; axes x, y, z drawn at the upper left.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-fig1.png",
+     "width": 884,
+     "height": 636,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       328.59,
+       456.3,
+       540.49,
+       608.67
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Sketch the shape of current streamlines in the metal plate at a given time. Indicate the axes on your sketch.",
+     "points": 3
+    },
+    {
+     "label": "b)",
+     "statement": "Find and plot the current density inside the plate along a line parallel to the $y$ axis intersecting the symmetry axis of the magnets.",
+     "points": 5,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\vec{j}_\\mathrm{inside} = \\frac{1}{2}\\frac{\\vec{v}\\times\\vec{B}}{\\varrho},\\quad \\vec{j}_\\mathrm{outside} = -\\frac{1}{2}\\frac{\\vec{v}\\times\\vec{B}}{\\varrho}\\left(\\frac{R}{r}\\right)^2"
+     }
+    },
+    {
+     "label": "c)",
+     "statement": "Find the horizontal force required to move the plate.",
+     "points": 2,
+     "answer": {
+      "kind": "expression",
+      "latex": "F = \\frac{\\pi R^2\\delta}{2\\varrho}B^2v"
+     }
+    }
+   ],
+   "topics": [
+    "electromagnetism/electromagnetic-induction",
+    "electricity/current-density"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "General remarks:\n\nCalculational numerical errors - 0.2 p Dimensionally wrong answers - 0 p\n\n**Part a) (∼3 pts)**\n\nLet us analyze how the current in the metal starts to build up when we start moving the plate in the rest frame of the magnets. The free electrons in the metal try to move together with the plate in the $+y$ direction, but a Lorentz force pointing in the $-x$ direction makes them deviate.\n\nAfter some time the charge accumulation stops and the charge and current distributions do not depend on time anymore. According to Ohm’s law,\n\n$$\\vec{j} = \\vec{j}_P + \\frac{1}{\\varrho}\\vec{v}\\times\\vec{B},$$\n\nwhere $\\vec{j}$ is the total current density, $\\vec{v}\\times\\vec{B}$ is the result of the Lorentz force, and $\\vec{j}_P$ is the current density caused by the electric field (and is therefore a potential field).\n\nInside the circular region ($r < R$) the Lorentz term is constant, but outside it is zero. Nevertheless, the $E$-field of the accumulated charges is present there, which gives rise to a current. In the steady state considered here, the charge distribution is constant in time, and hence the total current density $\\vec{j}$ is source-free everywhere. However, this does not hold for $\\vec{j}_P$ which is driven by the ”sources” and ”sinks” along the rim of the circular region of radius $R$. Those sources and sinks compensate exactly the sources of the Lorentz term mentioned above. Only a source-free jump of the total current density is allowed on the rim, resulting in the kinks on the streamlines along the boundary.\n\nBased on these considerations, we can draw a qualitative pattern of the current flow: inside the circular disc, there is a flow in the direction of the Lorentz force and the streamlines of the created flow of current close onto themselves outside of that region as shown in the figure below.\n\n| Grading scheme part a) | Pts |\n|---|---|\n| Streamlines are continuous **and** arrows are consistent along each streamline **and** streamlines don’t meet or intersect. If the streamlines are qualitatively (physically) wrong, 0 p should be given. | 1.0 |\n| Twofold symmetry$^*$ with respect to $x$-axis (if axis is not indicated in any way, only 0.1 p) | 0.2 |\n| Twofold symmetry with respect to $y$-axis (if axis is not indicated in any way, only 0.1 p) | 0.2 |\n| Indicating the boundary of the circular region | 0.1 |\n| Breaking points on the boundary (only rewarded if both inside and outside streamlines are shown) | 0.8 |\n| Along the $y$-axis the direction of current density is $+x$ inside and $-x$ outside (if axis is not indicated in any way, 0.0 p; if the direction is correct in only one region, 0.3 p; if there is a sign mistake only, 0.3 p) | 0.7 |\n| Stating that current density is homogeneous inside is not required in part a) | 0.0 |\n| **Total on part a)** | **3.0** |\n\n**Part b (∼5 pts)**\n\nFrom here on, we make use of the uniqueness of the solution to the correctly posed boundary conditions for the Maxwell equations inside the plate. We need to satisfy the condition that current density is sourceless everywhere, i.e.\n\n$$\\oint \\vec{j}\\times d\\vec{l} = 0, \\tag{38}$$\n\nwhere $\\vec{j}$ denotes the current density and integral is taken over an arbitrary closed loop inside the plate. The current density must satisfy the Ohm’s law in differential form,\n\n$$\\vec{j} = \\rho^{-1}(\\vec{E} + \\vec{v}\\times\\vec{B}), \\tag{39}$$\n\nwhere $\\vec{v}$ denotes the velocity of the plate; the electric field caused by the accumulated charges $\\vec{E}$ must satisfy the circulation theorem,\n\n$$\\oint \\vec{E}\\cdot d\\vec{l} = 0, \\tag{40}$$\n\nwhere integration loop can be arbitrary. To close the system of equations we need to satisfy, we integrate Eq. 39 either over a closed loop entirely inside or entirely outside the circular region then we obtain zero, because for such loops $\\oint \\vec{v}\\times\\vec{B}\\cdot d\\vec{l} = 0$. From this we conclude that for such integration loops,\n\n$$\\oint \\vec{j}\\cdot d\\vec{l} = 0. \\tag{41}$$\n\nNote that the electric field $\\vec{E}_\\mathrm{pol}$ of a polarised cylinder satisfies Eq. 40, but we must also satisfy Eqns. (38,39). We will look for such a solution in the form of a superposition\n\n$$\\vec{j} = \\rho^{-1}(\\vec{E}_\\mathrm{pol} + \\vec{v}\\times\\vec{B}). \\tag{42}$$\n\nFirst we need to find an expression for the field $\\vec{E}_\\mathrm{pol}$. To that end, we can consider the electric field produced by an infinite homogeneously charged cylinder of radius $R$ and volume charge density $q$. From Gauss’s law, we can conclude that inside and outside the cylinder the electric field is\n\n$$\\vec{E}_+(\\vec{r}) = \\begin{cases} \\dfrac{1}{2\\varepsilon_0}q\\vec{r} & \\text{if } r \\le R, \\\\ \\dfrac{1}{2\\varepsilon_0}q\\dfrac{R^2}{r^2}\\vec{r} & \\text{if } r > R. \\end{cases}$$\n\nNow we can take another similar cylinder of charge density $-q$, displaced from the first cylinder by a small displacement vector $\\vec{s}$. With the origin still at the centre of the positively charged cylinder, the electric field of this negatively charged cylinder is written as $-\\vec{E}_+(\\vec{r} - \\vec{s})$ (which works for both inside and outside). Note that in the overlapping area of the two cylinders, the charge density is zero.\n\nWe consider the limit $|\\vec{s}| \\to 0$ while keeping the product $q\\vec{s} = -\\vec{P}$ constant, which represents the volume density of the dipole moments (i.e. the polarisation), constant. In this case, the field inside can be calculated as\n\n$$\\vec{E}_\\mathrm{inside} = \\vec{E}_+(\\vec{r}) + \\vec{E}_-(\\vec{r}) = \\vec{E}_+(\\vec{r}) - \\vec{E}_+(\\vec{r} - \\vec{s}) = -\\frac{1}{2\\varepsilon_0}\\vec{P}, \\tag{43}$$\n\nwhich is homogeneous.\n\nOutside, the field is given by\n\n$$\\vec{E}_\\mathrm{outside} = \\vec{E}_+(\\vec{r}) - \\vec{E}_+(\\vec{r} - \\vec{s}) = \\frac{1}{2\\varepsilon_0}qR^2\\left(\\frac{\\vec{r}}{r^2} - \\frac{\\vec{r} - \\vec{s}}{|\\vec{r} - \\vec{s}|^2}\\right).$$\n\nExpanding the second term in the bracket up to first order ($|\\vec{s}| \\ll |\\vec{r}|$):\n\n$$\\frac{\\vec{r} - \\vec{s}}{|\\vec{r} - \\vec{s}|^2} \\approx \\frac{\\vec{r} - \\vec{s}}{r^2 - 2\\vec{r}\\vec{s}} \\approx \\frac{\\vec{r} - \\vec{s}}{r^2}\\left(1 + 2\\frac{\\vec{r}\\vec{s}}{r^2}\\right).$$\n\nSubstituting this into the formula of $\\vec{E}_\\mathrm{outside}$ and simplifying:\n\n$$\\vec{E}_\\mathrm{outside} = \\frac{1}{2\\varepsilon_0}R^2\\frac{2\\vec{r}(\\vec{r}\\vec{P}) - r^2\\vec{P}}{r^4}.$$\n\nThis is the field of an ideal two-dimensional electric dipole. From this general formula we can obtain an expression for the field along the $y$ axis:\n\n$$\\vec{E}_\\mathrm{outside} = -\\frac{1}{2\\varepsilon_0}\\vec{P}\\left(\\frac{R}{r}\\right)^2. \\tag{44}$$\n\nThe normal component of this field exhibits discontinuity $\\sigma/\\varepsilon$ at the boundary of the cylinder given by the surface charge density $\\sigma$, which can be found again from the superposition of the two cylinders: the non-overlapping region has the shape of a crescent moon of width $s$ in the $x$ direction; this means that the width in the radial direction is $t = s\\cos\\varphi$, where $\\varphi$ denotes the angle between the radius vector and the $x-axis$. Hence, we can find the surface charge density as $\\sigma = qt = P\\cos\\varphi$. Due to Gauss’ law, the radial electric field jumps by an amount given by the surface charge density, $\\{E_r\\} = \\sigma/\\varepsilon_0$. This corresponds to a jump in the magnitude of the current density\n\n$$\\{j\\} = \\rho^{-1}\\sigma/\\varepsilon_0 = \\rho^{-1}\\sigma P\\cos\\varphi \\tag{45}$$\n\nwhich must eliminate the discontinuity due to the jump in the radial component of the Lorentz force term in Eq. (42, equal to\n\n$$\\{\\rho^{-1}(v\\times B)_r\\} = -vB\\cos\\varphi. \\tag{46}$$\n\nThe cancellation occurs when $\\vec{P} = -\\vec{e}_x vB\\varepsilon_0$. Putting all the results together, we can conclude that inside the cylinder, the current density in the plate is homogeneous and equal to\n\n$$\\vec{j} = \\frac{1}{2}\\frac{\\vec{v}\\times\\vec{B}}{\\varrho}. \\tag{47}$$\n\nOutside the cylinder, along the $y$ axis, $\\vec{B} = 0$ so that\n\n$$\\vec{j} = \\frac{\\vec{E}_\\mathrm{outside}}{\\varrho} = -\\frac{1}{2\\varepsilon_0}\\vec{P}\\left(\\frac{R}{r}\\right)^2 = -\\frac{1}{2}\\frac{\\vec{v}\\times\\vec{B}}{\\varrho}\\left(\\frac{R}{r}\\right)^2. \\tag{48}$$\n\nNow we can plot the graph:\n\n| Grading scheme part b) | Pts |\n|---|---|\n| Realizing that $\\vec{j}$ is driven by the sum of the term $(\\vec{v}\\times\\vec{B})/\\varrho$ **and** the electric field (if only one term is considered, 0 p) | 0.5 |\n| Writing the boundary condition for $\\vec{j}_P$ and for $\\vec{j}$ (or equivalent) | 0.5 |\n| Guessing the solution of the 2D boundary value problem (either with analogy of a polarized dielectric cylinder or with the superposition of a 2D dipole field outside and a uniform field inside) | 1.0 |\n| Calculating the electric field of a 2D dipole along the symmetry axis | 1.0 |\n| Finding the appropriate weight of the dipole field (i.e. dipole moment) by matching boundary conditions | 0.5 |\n| Expressing $\\vec{j}$ inside and outside correctly | 0.5 |\n| Plotting the graph (axis are labelled correctly, 0.1+0.1; sign changes at the rim and function jumps, 0.3, function is constant in region $[-R, R]$ 0.2, if the area below the curve could add up to zero 0.3) | 1.0 |\n| **Total on part b)** | **5.0** |\n\n**Part c(∼2 pts)**\n\n**Method 1: integrating the force density.** Only the current inside the magnetic field contributes to the force. The force acting on an infinitesimal volume element $\\mathrm{d}V$ of the metal slab is given by\n\n$$\\mathrm{d}\\vec{F} = \\vec{j}_\\mathrm{inside}\\times\\vec{B}\\mathrm{d}V.$$\n\nSince $\\vec{j}_\\mathrm{inside}$ and $\\vec{B}$ are uniform in the region of non zero $B$, and perpendicular, the integral simplifies to\n\n$$\\vec{F} = \\vec{j}_\\mathrm{inside}\\vec{B}\\int\\mathrm{d}V = \\vec{j}_\\mathrm{inside}\\times\\vec{B}\\,V = \\vec{j}_\\mathrm{inside}\\times\\vec{B}\\,\\pi R^2\\delta.$$\n\nUsing our previous result for the current density we get\n\n$$\\vec{F} = \\frac{\\pi R^2\\delta}{2\\varrho}(\\vec{v}\\times\\vec{B})\\times\\vec{B} = -\\frac{\\pi R^2\\delta}{2\\varrho}B^2\\vec{v}.$$\n\nThe direction of the force is opposite to the velocity of the plate, in agreement with physical intuition.\n\n| Grading of part c) - Method 1 | Pts |\n|---|---|\n| Expressing the force acting on a current element | 0.5 |\n| integrating over the circular region | 1.0 |\n| final result (it can be given only if prefactor is correct) | 0.5 |\n| **Total on part c)** | **2.0** |\n\n**Method 2: integrating the dissipated power.**\n\nDue to energy conservation, the mechanical power provided by the external force is dissipated in the plate in the form of Joule heat:\n\n$$Fv = P_\\mathrm{dissipated}.$$\n\nThe volume density of the dissipated power is $\\varrho j^2$, so the total power of dissipation can be written as an integral over the volume:\n\n$$P_\\mathrm{dissipated} = \\int_\\mathrm{in}\\varrho j_\\mathrm{inside}^2\\,\\mathrm{d}V + \\int_\\mathrm{out}\\varrho j_\\mathrm{outside}^2\\,\\mathrm{d}V.$$\n\nThe first integral simplifies due to the constant current density inside the circular region of radius $R$:\n\n$$\\int_\\mathrm{in}\\varrho j_\\mathrm{inside}^2\\,\\mathrm{d}V = \\varrho j_\\mathrm{inside}^2V = \\frac{1}{4\\varrho}v^2B^2\\cdot\\pi R^2\\delta.$$\n\nIn order to evaluate the second integral, let us calculate $j_\\mathrm{outside}^2$ first:\n\n$$j_\\mathrm{outside}^2 = \\frac{1}{4\\varrho^2}R^4\\frac{|r^2\\vec{v} - 2\\vec{r}(\\vec{r}\\vec{v})|^2}{r^8}B^2,$$\n\nwhere the absolute value squared can be simplified as\n\n$$|r^2\\vec{v} - 2\\vec{r}(\\vec{r}\\vec{v})|^2 = r^4v^2 - 4r^2(\\vec{r}\\vec{v})(\\vec{r}\\vec{v}) + 4r^2(\\vec{r}\\vec{v})(\\vec{r}\\vec{v}) = r^4v^2$$\n\nso the quantity $j_\\mathrm{outside}^2$ depends on the distance $r$ only (and not on the polar angle):\n\n$$j_\\mathrm{outside}^2 = \\frac{1}{4\\varrho^2}R^4\\frac{v^2)}{r^4}B^2.$$\n\nNow the power dissipated outside the circular region ($r > R$) can be written as:\n\n$$\\int_\\mathrm{out}\\varrho j_\\mathrm{outside}^2\\,\\mathrm{d}V = \\int_R^\\infty\\frac{1}{4\\varrho^2}R^4\\frac{v^2}{r^4}B^2\\cdot 2\\delta\\pi r\\,\\mathrm{d}r$$\n\nLet us evaluate the integral:\n\n$$\\int_\\mathrm{out}\\varrho j_\\mathrm{outside}^2\\,\\mathrm{d}V = \\frac{v^2B^2\\pi R^4\\delta}{2\\varrho}\\int_R^\\infty\\frac{\\mathrm{d}r}{r^3} = \\frac{v^2B^2\\pi R^4\\delta}{2\\varrho}\\frac{1}{2R^2}.$$\n\nIt is an interesting coincidence that the power dissipated inside and outside is the same. Now the total power of dissipation is known and the force can be calculated:\n\n$$F = \\frac{P_\\mathrm{dissipated}}{v} = \\frac{\\pi R^2\\delta}{2\\varrho}B^2v.$$\n\n| Grading of part c) - Method 2 | Pts |\n|---|---|\n| Expressing the force in terms of the dissipated power | 0.5 |\n| integrating over the circular region | 0.3 |\n| integrating over the outer region | 0.7 |\n| final result (it can be given only if prefactor is correct) | 0.5 |\n| **Total on part c)** | **2.0** |\n\n**An incorrect method of obtaining the correct answer.** The correct solution described above can be carried out with minor modifications when using the reference frame of the plate, where the circular region of the magnetic field moves with velocity $-\\vec{v}$. The only difference is that the Lorentz force $e\\vec{v}\\times\\vec{B}$ acting on the charge carriers in the cylinder frame is now replaced by the Coulomb force $e\\vec{E}_B$, where $\\vec{E}_B = \\vec{v}\\times\\vec{B}$ is the electric field resulting now from the Lorentz transformation.\n\nWhat we need to notice is that there is no electric field outside of the cylinder ($r > R$) at large distances in the $z$ direction from the plate. Indeed, there are clearly no fields there (neither $\\vec{B}$ nor $\\vec{E}$) in the cylinder’s frame. Using the Lorentz transformation it is clear that no fields can emerge in our new frame. Meanwhile, outside the cylinder and inside the plate, there is definitely an electric field driving the current flow as derived above. The tangential-to-the-plate electric field cannot be discontinuous at the surface because the electrostatic field (in the cylinder’s frame) is potential. Hence, outside the cylinder and outside the plate, there is also an electric field in the neighbourhood of the plate, It is caused by the charge density formed on and in the plate, the generation of which is described in the solution of Part a). From large distances, however, these charges are seen as an electric dipole, whose field vanishes inversely proportional to the cubed distance.\n\nA tempting but incorrect approach is trying to describe the motion of the cylinder in the plate’s frame as a discontinuous stepping motion of the cylinders: at the current position of the cylinder, the magnetic flux disappears and at the same time reappears at a small distance away from its previous position. According to the Faradey’s law, the disappearing flux will produce circular clockwise fieldlines of $\\vec{E}$, and the reappearing flux will produce slightly displaced counterclockwise fieldlines. The corresponding fields and their superposition $\\vec{E}_s(\\vec{r})$ can be easily calculated, see below. The result turns out to be exactly the same as the field $\\vec{E}_o(\\vec{r})$ obtained above for the field inside the plate. However, the equivalence of these fields is just a coincidence (there is a good reason for this coincidence: in both cases, the field is obtained as a superposition of the fields produced by two overlapping cylinders). Furthermore, there is a fundamental difference: in reality, the field $\\vec{E}_o(\\vec{r})$ is only observed in the plate (at $z \\approx 0$) and disappears at $z \\gg R$; meanwhile, in the stepping cylinder model, the field $\\vec{E}_s(\\vec{r})$ remains the same regardless of the value of $z$.\n\nThe reason why the stepping cylinder model gives an incorrect result — producing an electric field in those places where there clearly is none — lies in the theory of relativity. A continuously moving (not stepping) cylinder obtains a surface charge, because the current density and the charge density together form a 4-vector. There is a bound surface current on the surface of the cylinder (creating the magnetic field inside), and as the cylinder moves, the Lorentz transformation tells us that there will now also be a surface charge creating an electric field both inside and outside the cylinder. So, with a moving cylinder, the changing flux creates an electric field outside which is cancelled out by the surface charges on the cylinder. Inside the cylinder, these two fields add up constructively.\n\nIn what follows, we analyse mathematically the model of stepping cylinders. By considering two almost overlapping circles with a short time interval $\\tau$ between, it is clear that any flux change occurs on rim (see fig. 1). This changing flux gives rise to an induced electric field which makes the charge carriers move inside the plate resulting electrical currents.\n\nConsidering the red region in the figure as the initial non-zero $B$ field, and the green region as the non-zero $B$ field after time $\\tau$, the yellow overlapping region corresponds to a non changing magnetic flux, while red on the right is decreasing, and green on the left is increasing. The average rate of change of $B$-field in the two regions is $\\pm B/\\tau$, respectively.\n\nThe induced electric field can be found as a superposition of the electric fields generated by the flux change in the two overlapping circular regions. For one circular region with increasing $B$-field in the $+z$ direction, the magnitude of the electric field can be found from Faraday’s law applied for a circular $E$-field line:\n\n$$E_+(r)\\cdot 2\\pi r = \\frac{\\mathrm{d}\\Phi}{\\mathrm{d}t},$$\n\nwhere the rate of enclosed flux change is given by\n\n$$\\frac{\\mathrm{d}\\Phi}{\\mathrm{d}t} = \\begin{cases} \\pi r^2\\dfrac{B}{\\tau}, & \\text{if } r \\le R, \\\\ \\pi R^2\\dfrac{B}{\\tau}, & \\text{if } r > R. \\end{cases}$$\n\nFrom here the modulus of the induced electric field can be expressed. It is convenient to write the result in the vectorial form with the help of position vector $\\vec{r}$, unit vector $\\vec{e}_z$ and Lenz’s law:\n\n$$\\vec{E}_+(\\vec{r}) = \\begin{cases} \\dfrac{1}{2}\\dfrac{B}{\\tau}\\vec{r}\\times\\vec{e}_z, & \\text{if } r \\le R, \\\\ \\dfrac{1}{2}\\dfrac{B}{\\tau}\\dfrac{R^2}{r^2}\\vec{r}\\times\\vec{e}_z, & \\text{if } r > R. \\end{cases}$$\n\nA similar formula gives the $E$-field generated by the region of decreasing magnetic flux, we only need to change the sign and replace $\\vec{r}$ with $\\vec{r} - \\vec{v}\\tau$.\n\nNow take the superposition of the induced electric fields produced by the two overlapping circular regions. Between the two magnets ($r \\le R$) we get\n\n$$\\vec{E}_\\mathrm{inside} = \\vec{E}_+ + \\vec{E}_- = \\frac{1}{2}\\frac{B}{\\tau}\\vec{r}\\times\\vec{e}_z - \\frac{1}{2}\\frac{B}{\\tau}(\\vec{r} - \\vec{v}\\tau)\\times\\vec{e}_z = \\frac{1}{2}\\vec{v}\\times\\vec{e}_zB.$$\n\nUsing the differential form of Ohm’s law $\\vec{j} = \\vec{E}/\\varrho$, we can conclude that the current density in the metal plate in the region $r \\le R$ is uniform,\n\n$$\\vec{j}_\\mathrm{inside} = \\frac{1}{2\\varrho}\\vec{v}\\times\\vec{B},$$\n\nwhere we used that $\\vec{B} = B\\vec{e}_z$.\n\nSimilarly, in the region $r > R$ we get:\n\n$$\\vec{E}_\\mathrm{outside} = \\vec{E}_+ + \\vec{E}_- = \\frac{1}{2}\\frac{B}{\\tau}R^2\\left[\\frac{\\vec{r}}{r^2} - \\frac{\\vec{r} - \\vec{v}\\tau}{|\\vec{r} - \\vec{v}\\tau|^2}\\right]\\times\\vec{e}_z.$$\n\nExpanding the second term in the bracket up to first order ($|\\vec{v}\\tau| \\ll |\\vec{r}|$):\n\n$$\\frac{\\vec{r} - \\vec{v}\\tau}{|\\vec{r} - \\vec{v}\\tau|^2} \\approx \\frac{\\vec{r} - \\vec{v}\\tau}{r^2 - 2\\vec{r}\\vec{v}\\tau} \\approx \\frac{\\vec{r} - \\vec{v}\\tau}{r^2}\\left(1 + 2\\frac{\\vec{r}\\vec{v}\\tau}{r^2}\\right).$$\n\nSubstituting this into the formula of $\\vec{E}_\\mathrm{outside}$ and simplifying:\n\n$$\\vec{E}_\\mathrm{outside} = \\frac{1}{2}BR^2\\frac{r^2\\vec{v} - 2\\vec{r}(\\vec{r}\\vec{v})}{r^4}\\times\\vec{e}_z.$$\n\nFinally, the current density in the region $r > R$ is the following\n\n$$\\vec{j}_\\mathrm{outside} = \\frac{1}{2\\varrho}R^2\\frac{r^2\\vec{v} - 2\\vec{r}(\\vec{r}\\vec{v})}{r^4}\\times\\vec{B}$$\n\n| Grading of incorrect approach | Pts |\n|---|---|\n| part a) - same as the original marking scheme | 3.0 |\n| If everything is done correctly - 2.0 p | 2.0 |\n| part c) - same as the original marking scheme | 2.0 |\n| **Total for incorrect approach** | **7.0** |\n\n*Note no. 1.* Although it was not asked in the problem, it is fascinating that the streamlines in the region $r > R$ are circles. To prove this statement, take a circle of radius $a$ with center located at vector $\\vec{a}$ such that $\\vec{a}\\vec{p} = 0$ (see fig. 3). The position vectors of the points located on this circle satisfy the equation\n\n$$|\\vec{r} - \\vec{a}|^2 = a^2,$$\n\nWhich can be rearranged in the form\n\n$$2\\vec{a}\\vec{r} - r^2 = 0$$\n\nWe will show that $\\vec{j}_\\mathrm{outside}$ is tangent to such a circle, regardless of the radius $a$.\n\nConsider the scalar product\n\n$$\\vec{j}_\\mathrm{outside}(\\vec{r} - \\vec{a}) \\sim \\left[r^2\\vec{p} - 2\\vec{r}(\\vec{r}\\vec{p})\\right](\\vec{r} - \\vec{a})$$\n\nOpening the brackets and using the equality $\\vec{a}\\vec{p} = 0$ we get:\n\n$$\\vec{j}_\\mathrm{outside}(\\vec{r} - \\vec{a}) \\sim (2\\vec{a}\\vec{r} - r^2)(\\vec{r}\\vec{p})$$\n\nwhich equals zero.\n\n*Note no. 2: The skin effect.* Finally we need to discuss the applicability limits of the solution obtained above. We have assumed that at each point on the plate, the current density is constant across the entire $z$-directional intersection of the plate. This requires the skin depth to be much greater than the thickness of the plate. The skin effect emerges due to the fact that for resistive media, the evolution of the magnetic field can be described by a diffusion equation\n\n$$\\frac{\\partial\\vec{B}}{\\partial t} = D\\frac{\\mathrm{d}^2\\vec{B}}{\\mathrm{d}z^2},$$\n\nwhere the diffusivity $D = \\rho/\\mu_0$. This means that for a very fast moving magnet, there is no time for the magnetic field to penetrate into the plate. Since any current is surrounded by a magnetic field according to Ampère’s circuital law, if there is no magnetic field, there can be no current, either. Consequently, the current will flow only in a narrow boundary layer of the plate. For a diffusive process, during a characteristic time $\\tau$, the penetration depth is estimated as $\\sqrt{D\\tau}$. With $\\tau$ estimated as $R/v$, we get the condition\n\n$$\\rho R \\gg \\mu_0 v\\delta^2$$\n\nwhich is well satisfied for any metallic plates with reasonable orders of magnitude (e.g. $\\delta \\sim 1\\ \\mathrm{mm}$, $R \\sim 1\\ \\mathrm{cm}$, $v \\sim 1\\ \\mathrm{m/s}$).",
+    "figures": [
+     {
+      "id": "p3-sol-fig1",
+      "caption": "fig. 1",
+      "alt": "Current streamlines in the plate: inside the yellow circle of radius R parallel lines with arrows pointing in the +x direction (downwards); outside, the lines close on themselves in circular arcs on both sides with kinks on the boundary; axes x (down) and y (right).",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig1-v4.png",
+      "width": 1011,
+      "height": 559,
+      "source": {
+       "page": 10,
+       "pdfRect": [
+        39.28,
+        659.21,
+        281.57,
+        793.08
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig2",
+      "caption": "fig. 2",
+      "alt": "Left: two overlapping charged cylinders −q (top) and +q (bottom) displaced by vector s, with vectors r, E_+ and E_− at a point. Right: field E_pol(r) of the polarised cylinder with polarisation P pointing down, uniform field lines inside, dipole field lines outside, − charges on the upper and + charges on the lower rim; axes x and y.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig2-v2.png",
+      "width": 1023,
+      "height": 576,
+      "source": {
+       "page": 11,
+       "pdfRect": [
+        38.12,
+        360.32,
+        283.36,
+        498.42
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig3",
+      "caption": "fig. 3",
+      "alt": "Graph of j_x along the y axis: constant value vB/(2ϱ) for −R < y < R, jumps to −vB/(2ϱ) at y = ±R and then rises back towards zero as (R/r)² outside. Labels: j_x, y, −R, R, vB/2ϱ, −vB/2ϱ.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig3-v3.png",
+      "width": 936,
+      "height": 407,
+      "source": {
+       "page": 11,
+       "pdfRect": [
+        324.45,
+        694.58,
+        548.86,
+        792.22
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig4",
+      "caption": "fig. 1",
+      "alt": "Stepping-cylinder model: left, the yellow circle with field B (out of the page) and the dashed circle displaced by −vτ; right, the overlap in yellow, the region left behind in red on the right and the newly covered region in green on the left; axes x and y; labels B, −vτ.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig4-v2.png",
+      "width": 1065,
+      "height": 383,
+      "source": {
+       "page": 13,
+       "pdfRect": [
+        307.17,
+        173.43,
+        562.54,
+        265.18
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig5",
+      "caption": "fig. 2",
+      "alt": "Left: green circular region with increasing field Ḃ and concentric circular field lines of the induced E, with position vector r and E marked; unit vector e_z out of the page. Right: overlapping green (Ḃ) and red (−Ḃ) circles with vectors r, r−vτ and −vτ.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig5.png",
+      "width": 1065,
+      "height": 468,
+      "source": {
+       "page": 13,
+       "pdfRect": [
+        307.17,
+        679.41,
+        562.54,
+        791.37
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig6",
+      "caption": "fig. 3",
+      "alt": "Circular streamlines outside the region: a circle of radius a centred at the tip of vector a, a point on it with position vector r, vector r − a and the tangent current density j_outside; further dashed circles through the origin with arrows.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig6.png",
+      "width": 681,
+      "height": 513,
+      "source": {
+       "page": 14,
+       "pdfRect": [
+        79.15,
+        664.24,
+        242.28,
+        787.18
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 11
+    },
+    {
+     "document": "solutions",
+     "page": 12
+    },
+    {
+     "document": "solutions",
+     "page": 13
+    },
+    {
+     "document": "solutions",
+     "page": 14
+    }
+   ]
+  }
+ ]
+}

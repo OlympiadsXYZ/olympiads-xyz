@@ -1,0 +1,104 @@
+---
+id: eupho-2017-theory-th-pr-p2
+source: 'EuPhO 2017'
+title: 'Задача 2. Disk in gas'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2017/eupho-2017-theory-th-pr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:23:34.520Z'
+verifier: 'mechanical'
+---
+
+*10 т.*
+
+## Условие
+
+Consider a thin flat disk of mass $M$ and face area $S$ at temperature $T_1$ resting initially in weightlessness in a gas of mass density $\rho$ at temperature $T_0$ $(T_1 = 1000T_0)$. One of the faces of the disk is covered with a thermally insulating layer, the other face has a very good thermal contact with the surrounding gas: gas molecules of mass $m$ obtain the temperature of the disk during a single collision with the surface.
+
+Estimate the initial acceleration $a_0$ and maximal speed $v_{\max}$ of the disk during its subsequent motion.
+
+Assume the heat capacity of the disk to be on the of order $Nk_B$, where $N$ is the number of atoms in it, and $k_B$ is the Boltzmann constant, and molar masses of the gas and the disk’s material to be of the same order. The mean free path length of molecules is much larger than the size of the disk. Neglect any edge effects occurring at the edge of the disk.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $a_0 \approx \frac{S\rho k_B}{mM}\sqrt{T_0T_1},\qquad v_{\max} \approx v_0 = \sqrt{\frac{k_BT_0}{m}}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+The initial pressure on the thermal insulating layer is $P_0 = nk_BT_0$, where $n$ is number density of the gas. It originates from multiplying the flux $j_0 \propto v_{x0}$ and momentum that one molecule transfers $p_0 = 2mv_{x0}$ (elastic collision), where $v_{x0}$ is the normal component of molecule’s velocity, and taking the average $(\overline{2v_{x0}^2} \propto T_0)$. When applying the same idea to the surface with good thermal contact, we find out that the flux remains the same, although the momentum increases:
+
+$$p_1 = m(v_{x0} + v_{x1}) \approx mv_{x1},$$
+
+where $v_{x1}$ is the normal velocity component of the molecule flying away from the disk. Thus for pressure $P_1$:
+
+$$\frac{P_1}{P_0} = \frac{\overline{v_{x0}v_{x1}}}{\overline{2v_{x0}^2}} \approx \frac{\sqrt{T_1T_0}}{T_0},$$
+
+which is correct to some numerical coefficient of the order of one.
+
+The net force acting on the disk:
+
+$$F = (P_1 - P_0)S \approx Snk_B\sqrt{T_0T_1},$$
+
+and then the initial acceleration:
+
+$$a_0 \approx \frac{Snk_B}{M}\sqrt{T_0T_1} = \frac{S\rho k_B}{mM}\sqrt{T_0T_1}.$$
+
+Since $P_1 \gg P_0$, the disk will accelerate until its speed becomes of the order of average gas molecules speed. After the velocity $v$ of the disc becomes on the order of $v_0 = \sqrt{kT_0/m}$, the flux of molecules reaching the backside $j(v)$ decays faster than exponentially due to the nature of the molecular velocity distribution in the ideal gas (for example, $j(2v_0) \approx 10^{-3}j_0$ and $j(3v_0) \approx 10^{-6}j_0$). That leads to a proportional decrease in a propelling pressure $P_1$. In order to compensate for an initial bias $\sqrt{T_1/T_0} \approx 30$, it will take around a factor of one on the velocity of the disk. Therefore the maximum velocity of the disk:
+
+$$v_{\max} \approx v_0 = \sqrt{\frac{k_BT_0}{m}}.$$
+
+Here we assumed that the disk will not cool close to $T_0$ before it reaches the maximum velocity. Let us show it. The acceleration time is approximately:
+
+$$t_a \approx \frac{v_{\max}}{a_0} \approx \frac{M\sqrt{mk_BT_0}}{S\rho k_B\sqrt{T_0T_1}} = \frac{M}{\rho S} \bigg/ \sqrt{\frac{k_BT_1}{m}}$$
+
+Since the power of heat removal $P_{\mathrm{th}}$ is maximal at the beginning (at zero velocity), we can upper-bound estimate the time for the disk to cool as $t_c = Q/P_{\mathrm{th}}$, where $Q$ is the total heat of the disk. The initial thermal power of heat removal can be estimated as:
+
+$$P_{\mathrm{th}} \approx Sj_0 \times k_BT_1 \approx Snk_B\sqrt{T_0T_1}\sqrt{\frac{k_BT_1}{m}}$$
+
+and the total heat $Q \approx Nk_BT_1$. Given $M \approx Nm$, we obtain:
+
+$$t_c \approx \frac{(M/m)k_BT_1}{Snk_BT_1\sqrt{k_BT_0/m}} = \frac{M}{\rho S} \bigg/ \sqrt{\frac{k_BT_0}{m}}$$
+
+Finally, $t_a/t_c \approx \sqrt{T_0/T_1} \ll 1$, and indeed disk will not cool significantly before it reaches the velocity about $v_0$.
+
+---
+
+*Grading scheme. Indented lines show partial points for partially correct solutions*
+
+**Initial acceleration (5 pts)**
+
+- $P_0 = nkT = j_0 \times \Delta p_0$, $\Delta p_0 = 2mv_{x0}$ … **2 pts**
+  - $P \propto kT$ … 1 pts
+- $\Delta p_1 = mv_{x1}$, $P_1 \approx nk\sqrt{T_0T_1}$ … **2 pts**
+  - $P_1 = nkT_1$, no points for $a_0$ further … 1 pts
+  - only $\Delta p_1 = mv_{x1}$ … 1 pts
+- Answer for $a_0$ … **1 pts**
+  - if some slight mistake … 0.5 pts
+- Special rule
+  - if $\langle v_{x0}\rangle = \sqrt{3k_BT/m}$ (student doesn’t understand the difference between velocity of the molecule and the component of the velocity) … −0.5 pts
+
+**Maximal velocity (4 pts)**
+
+- $P_1$ and $P_0$ depend on the velocity of the disk, $P_1$ drops significantly if $v \approx v_0$, thus $v_{\max} \approx v_0$ … **4 pts**
+  - $P_0' \approx \rho v^2$, but $P_1$ stays the same, thus $v_{\max} \approx v_0\sqrt{T_1/T_0}$ … 2 pts
+  - Student understands that at least some pressure depends on the velocity of the disk … 1 pts
+  - The velocity is maximal when disk cools to $T_0$ 0 pts
+
+**Justification of slow cooling (1 pts)**
+
+- Estimation of times $t_a$ and $t_c$ given … **1 pts**
+  - Student explicitly writes that $T_1' \approx T_1$ but doesn’t prove it … 0.5 pts
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th_pr.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2017/th_pr.pdf)
+· официални решения: [th_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2017/th_sol.pdf)

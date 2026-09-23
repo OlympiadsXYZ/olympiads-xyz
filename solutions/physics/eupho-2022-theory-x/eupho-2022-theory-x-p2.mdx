@@ -1,0 +1,144 @@
+---
+id: eupho-2022-theory-x-p2
+source: 'EuPhO 2022'
+title: 'Задача 2. Thermal oscillations'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2022/eupho-2022-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:22:56.762Z'
+verifier: 'mechanical'
+---
+
+*EuPhO-2022 Theoretical Problems. Language: English · 10 т.*
+
+<details>
+<summary>General guidelines for marking</summary>
+
+- Granularity for marks is 0.1 p.
+- A simple numerical error resulting from a typo is punished by 0.2 p unless the grading scheme explicitly says otherwise.
+- Errors which cause dimensionally wrong results are punished by at least 50 % of the marks unless the grading scheme explicitly says otherwise.
+- Propagating errors are not punished repeatedly unless they either lead to considerable simplifications or wrong results whose validity can easily be checked later.
+
+</details>
+
+## Условие
+
+A resistor is made of a material which undergoes a phase transition so that its resistance takes one of the two values, $R_1$ if its temperature is smaller than $T_c$, and $R_2 > R_1$ if the temperature is larger than $T_c$.
+
+This resistor is connected to a voltage source through an inductor of inductance $L$. It appears that if the applied voltage $V$ is between two critical values, $V_1 < V < V_2$, the temperature of the resistor starts oscillating. Assume that (i) the heat flux $P$ from the resistor to the ambient medium is given by $P = \alpha(T - T_0)$, where $\alpha$ is a constant, $T$ denotes the temperature of the resistor, and $T_0$ is the ambient temperature; (ii) the geometrical size of the resistor is so small that it will reach a thermal equilibrium much faster than the characteristic time $L/R_2$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-fig1.png" alt="Circuit: a resistor R in series with an inductor L (coil) and a battery V, forming a single loop." />
+</figure>
+
+**(a)** Express $V_1$ and $V_2$ in terms of the other parameters defined above. **[2 т.]**
+
+**(b)** Assuming that $V_1 < V < V_2$, sketch qualitatively how the temperature of the resistor $T$ depends on time $t$, and find the ratio $(T_{\mathrm{max}} - T_0)/(T_{\mathrm{min}} - T_0)$, where $T_{\mathrm{max}}$ and $T_{\mathrm{min}}$ denote the maximal and minimal values of $T$, respectively. **[6 т.]**
+
+**(c)** Find the period of oscillations if $V = \sqrt{V_1V_2}$ and $R_2 = 16R_1$. **[2 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** $V_1 = \sqrt{R_1\alpha(T_c - T_0)}, \quad V_2 = \sqrt{R_2\alpha(T_c - T_0)}$
+- **(b)** $\frac{T_{\mathrm{max}} - T_0}{T_{\mathrm{min}} - T_0} = \frac{R_2^2}{R_1^2}$
+- **(c)** $\frac{L}{R_1}\left(\ln\left(\frac{7}{4}\right) + \frac{1}{16}\ln(7)\right) \approx 0.68\frac{L}{R_1}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part (a): Critical voltages**
+
+The power heating the resistor is $P_{\mathrm{el}} = V^2/R_j$. The thermal equilibrium is reached when $P_{\mathrm{el}} = P = \alpha(T_{\mathrm{eq}} - T_0)$. To avoid oscillations, the equilibrium temperature $T_{\mathrm{eq}}$ must satisfy $T_{\mathrm{eq}} < T_c$ if $R = R_1$ and $T_{\mathrm{eq}} > T_c$ if $R = R_2$. Solving for $V$, we have
+
+$$V = \sqrt{R_j\alpha(T_{\mathrm{eq}} - T_0)}. \qquad (1)$$
+
+The critical values therefore are
+
+$$V_1 = \sqrt{R_1\alpha(T_c - T_0)} \quad \text{and} \quad V_2 = \sqrt{R_2\alpha(T_c - T_0)}. \qquad (2)$$
+
+**Part (b): Temperature behaviour**
+
+In the oscillating regime, we have a time-dependent current $I(t)$. The power dissipated over the resistor is $P_{\mathrm{el}}(t) = R(t)I(t)^2$. By assumption (ii), we may assume that the thermal equilibrium is reached very fast, i.e. $P_{\mathrm{el}}(t) = P(t)$. The temperature $T(t)$ is therefore determined by the current via
+
+$$T(t) = T_0 + \frac{R(t)I(t)^2}{\alpha}. \qquad (3)$$
+
+If the resistance has value $R_1$, the current will increase, trying to reach $J_1 = V/R_1$. The difference $I(t) - V/R_1$ will decay exponentially, with characteristic time $L/R_1$. The phase transition occurs once the critical current
+
+$$I_1 = \sqrt{\frac{\alpha(T_c - T_0)}{R_1}}$$
+
+is reached. After the phase transition, the current will decrease, approaching the new equilibrium value $J_2 = V/R_2$. Again, $I(t) - V/R_2$ will decay exponentially with characteristic time $L/R_2$, until the critical current
+
+$$I_2 = \sqrt{\frac{\alpha(T_c - T_0)}{R_2}}$$
+
+is reached. This behaviour is shown in Fig. 1.
+
+Together with (3), we see that the temperature behaves like in Figure 2.
+
+The maximum and minimum temperatures will be attained just after the phase transitions occur. We obtain that
+
+$$\frac{T_{\mathrm{max}} - T_0}{T_{\mathrm{min}} - T_0} = \frac{R_2I_1^2}{R_1I_2^2} = \frac{R_2^2}{R_1^2}. \qquad (4)$$
+
+**Part (c): Period of oscillations**
+
+If the phase transition occurs at $t = 0$, with the resistance changing from $R_{j'}$ to $R_j$, the current is given by
+
+$$I(t) = \frac{V}{R_j} + \left(I_{j'} - \frac{V}{R_j}\right)\mathrm{e}^{-R_jt/L} \qquad (5)$$
+
+until the next phase transition occurs when $I(t_j) = I_j$. Hence, the period is
+
+$$t_1 + t_2 = \frac{L}{R_1}\ln\left(\frac{I_2 - V/R_1}{I_1 - V/R_1}\right) + \frac{L}{R_2}\ln\left(\frac{I_1 - V/R_2}{I_2 - V/R_2}\right) \qquad (6)$$
+
+Inserting the relations $R_2 = \eta R_1$ and $V = \sqrt{V_1V_2} = \eta^{1/4}\sqrt{R_1\alpha(T_c - T_0)}$, we obtain the period
+
+$$\frac{L}{R_1}\ln\left(\frac{7}{4}\right) + \frac{L}{R_2}\ln(7) = \frac{L}{R_1}\left(\ln\left(\frac{7}{4}\right) + \frac{1}{16}\ln(7)\right) \approx 0.68\frac{L}{R_1}. \qquad (7)$$
+
+**Marking scheme**
+
+| | Task (a): Critical voltages | pts |
+|---|---|---|
+| a1 | Formula for the power dissipation $P_{\mathrm{el}} = V^2/R_j$. | 0.5 |
+| a2 | Relating the power dissipation to the temperature of the resistor in oscillations-free stationary regime, $P_{\mathrm{el}} = P = \alpha(T_{\mathrm{eq}} - T_0)$ | 0.5 |
+| a3 | Expressing the voltage in terms of the temperature if the thermal equilibrium were to be reached, $V = \sqrt{R_j\alpha(T_{\mathrm{eq}} - T_0)}$. Subtract 0.1 pts if $V$ is not expressed explicitly. | 0.5 |
+| a4 | Realising that oscillations will not happen if $V > \sqrt{R_2\alpha(T_{\mathrm{eq}} - T_0)}$ or $V < \sqrt{R_1\alpha(T_{\mathrm{eq}} - T_0)}$. No marks if only one inequality is obtained (but no subtractions because of that in a3 - in most cases those who got correct expression for one of the voltages but has a wrong or missing expression for the other gets full marks for a1-a3, and 0 pts for a4). | 0.5 |
+| | **Total number of points for Task (a)** | **2.0** |
+
+| | Task (b): Temperature behavior | pts |
+|---|---|---|
+| b1 | Realising that the $I - t$ curve is made of segments of exponents, joined without discontinuities. Partial credit of 0.5 pts if it is made of curved segments for which it is not clear that these are exponents, or if these are growing exponents, but which are connected continuously with a discontinuous derivative $\frac{\mathrm{d}I}{\mathrm{d}t}$. No points if $I(t)$ is discontinuous, or if only one segment of an exponent is shown. Full marks can be given if there is no $I - t$ graph, but the $T - t$ graph is made of the segments of vanishing exponents, connected with temperature jumps in a correct direction, and a partial credit of 0.5 pts if the segments of the $T - t$ are either growing exponents or curves of unclear shape, still connected so that it would correspond to a continuous $I(t)$-curve with a discontinuous derivative. Partial credit of 0.5 pts is given if there is no $I - t$-curve shown, but $V - t$ curve is shown to be made of decaying exponential segments, connected with jumps | 1.0 |
+| b2 | Realising that (i) one of these exponents is in a form $a_1 - b_1\mathrm{e}^{-t/\tau_1}$ and (ii) the other one — in a form $a_2 + b_2\mathrm{e}^{-t/\tau_2}$ where (iii) the $a_1 > a_2$ and (iv) $\tau_1 > \tau_2$. It is not necessary to write down these inequalities mathematically — it is enough it these are clear from a sketch. Inequality $\tau_1 > \tau_2$ does not need to be written if expressions for $\tau_1$ and $\tau_2$ are given. Full marks can be given if $I - t$ graph is missing, but $T - t$ graph is correct and has *all the features* as described in b6. Full marks can be also given if the correct exponential forms are documented not here, but in part c. | 0.3+ 0.3+ 0.3+ 0.1 |
+| b3 | Realising that this exponential behaviour breaks down once the critical temperature is reached. This does not need to be written specifically if the *jumps* in $T - t$ graph happen at $T = T_c$. No marks are given if there is no clear discontinuity of $T$ at $T_c$ and/or if there are discontinuities of $T(t)$ or $\frac{\mathrm{d}T}{\mathrm{d}t}$ at some other values of $T$. | 1.0 |
+| b4 | Relating the critical temperature to the corresponding critical current $I_j$ | 0.5 |
+| b5 | Realising that the temperature curve $T(t)$ is related to $I(t)$-curve, $T(t) = T_0 + \frac{R(t)I(t)^2}{\alpha}$ | 0.5 |
+| b6 | Drawing a correct final sketch which has the following features: exponential segments showing an exponential relaxation of $T(t)$ in a right direction both when $R = R_1$ and when $R = R_2$; jumps in a right direction each time when $T$ reaches $T_c$ (subtract 0.2 for each missing label on the axes and also if the temperature jumps do not occur at the same value of $T$). No points are given if *any* of the listed features is missing. | 1.0 |
+| b7 | Using the feature from the graph that the maximal and minimal temperatures are taken immediately after a phase transition when $I = I_1$ and $I = I_2$ | 0.5 |
+| b8 | Correct answer for the ratio of the maximal and minimal temperatures. Only 0.3 pts if the answer is not simplified. | 0.5 |
+| | **Total number of points for Task (b)** | **6.0** |
+
+| | Task (c): Period of oscillations | pts |
+|---|---|---|
+| c1 | Expressing the duration of each of the exponential segments as $t_j = \frac{L}{R_j}\ln\frac{\Delta I_{j,i}}{\Delta I_{j,f}}$ where $\Delta I_{j,i}$ and $\Delta I_{j,f}$ denote the corresponding initial and final departures of the current from the equilibrium value (full marks to be given if the final answer is correct). Subtract 0.2 for each incorrect $\Delta I_{j,i}$ and $\Delta I_{j,f}$, $i = 1, 2$ (this means that if none of them is correct, only 0.2 pts are given for c1). 60% of points if $t_j$ is related to $\Delta I_{j,i}$ and $\Delta I_{j,f}$ correctly, but not expressed explicitly. | 0.5+ 0.5 |
+| c2 | Correct first and second terms in the final answer (40% of it if the answer is not simplified) | 0.5+ 0.5 |
+| | **Total number of points for Task (c)** | **2.0** |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-sol-fig1.png" alt="Graph versus time t with axes labelled I and R (R in red). Red square wave switching between levels R₂ and R₁; black current curve made of exponential segments rising from I₂ towards J₁ and falling from I₁ towards J₂ (dashed continuations), with horizontal dotted levels R₂, J₁, I₁, I₂, R₁, J₂; durations t₁ and t₂ marked." />
+<figcaption>Fig. 1</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-sol-fig2.png" alt="Graph versus time t with axes labelled T and R (R in red). Red square wave between R₂ and R₁; black temperature curve: exponential relaxation segments meeting the dotted level T_c, jumping up above R₂ level and down below R₁ level at each phase transition." />
+<figcaption>Fig. 2</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Theory.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2022/Theory.pdf)
+· официални решения: [Theory Solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2022/Theory%20Solutions.pdf)

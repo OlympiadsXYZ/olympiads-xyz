@@ -1,0 +1,104 @@
+---
+id: eupho-2017-theory-th-pr-p1
+source: 'EuPhO 2017'
+title: 'Задача 1. Oscillating rope'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2017/eupho-2017-theory-th-pr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:23:34.520Z'
+verifier: 'mechanical'
+---
+
+*10 т.*
+
+## Условие
+
+A heavy uniform rope of length $L$ is suspended vertically from the ceiling. The rope may oscillate around its equilibrium position with different natural frequencies, which will be denoted by $f_i$ $(i = 1, 2, \ldots)$ in an ascending order. The figure below presents the shape of the rope in the first three natural vibrations, as obtained by a computer simulation. Note that the horizontal and vertical scales in the figures are not equal. You may assume that the actual lateral displacement of the rope is much smaller than its length (small-amplitude approximation).
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-theory-th-pr/p1-fig1.png" alt="Three side-by-side grid panels sharing a vertical axis 'Distance to the ceiling (m)' from 0 at the top to 1 at the bottom in steps of 0.1, and a horizontal axis 'Displacement (arbitrary units)' with 0 marked under each panel. Left panel: an almost straight curve going from zero displacement at the top to maximal displacement at the bottom. Middle panel: a curve that bulges to the left, crosses zero near 0.8 m and swings to the right at the bottom. Right panel: a curve bulging right near 0.35 m, crossing zero near 0.6 m, bulging left near 0.8 m, crossing zero again near 0.9 m and swinging right at the bottom." />
+<figcaption>Figure: Shapes of the oscillating rope for the first three natural vibrations ($i = 1, 2, 3$ from left to right)</figcaption>
+</figure>
+
+**A)** Develop a simplified model, which will allow you to estimate the frequency $f_1$ of the first (fundamental) vibration of the rope. Hence, calculate approximately $f_1$ for a rope of length $L = 1.0$ m. Assume that $g = 9.8\,\mathrm{m/s^2}$. **[4 т.]**
+
+**B)** Take necessary readings from the figure to estimate the frequency ratio $f_1 : f_2 : f_3$. **[6 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A)** 0.61 Hz
+- **B)** $f_1 : f_2 : f_3 \approx 1 : 2.2 : 3.5$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+A) It is evident from the figure that the curvature of the rope in the fundamental vibration is very small. It infers for a possibility to model the fundamental vibration as a swinging of a rigid uniform rod of length $L$ about a pivot point at its end. The moment of inertia of the rod is:
+
+$$I = mL^2/3$$
+
+and the distance from the center-of-mass to the pivot point is:
+
+$$b = L/2$$
+
+Therefore, the frequency of the fundamental vibration is approximated as:
+
+$$f_1 = \frac{1}{2\pi}\sqrt{mgb/I} = \frac{1}{2\pi}\sqrt{3g/2L} \approx 0.61\ \mathrm{Hz}$$
+
+Correspondingly, the period of the fundamental vibration is:
+
+$$T_1 = 2\pi\sqrt{I/mgb} = 2\pi\sqrt{2L/3g} \approx 1.6\ \mathrm{s}$$
+
+B) Whatever model for estimating of $f_1$ is being used, one may deduce on the basis of dimensionality arguments that the k-th natural frequency of the rope is:
+
+$$f_k = c_k\sqrt{g/L}$$
+
+where $c_k$ is a dimensionless numeric coefficient depending on the consecutive mode number $k$ only. Let $A$ and $B$ be the suspension point and the free end of the rope respectively, and $N$ be the node on the rope for the second natural vibration (see the figure).
+
+Since the node point is at rest (in the small-amplitude approximation), the vibration of the part $NB$ could be considered as a fundamental vibration of a rope of length $LNA$ about a suspension point $N$. Therefore:
+
+$$f_2(L) \equiv f_1(L - NA)$$
+
+Hence one may write:
+
+$$\frac{f_2(L)}{f_1(L)} = \frac{f_1(L - NA)}{f_1(L)} = \sqrt{\frac{L}{L - NA}}$$
+
+Since the absolute displacement is much smaller than the length of the rope, the distances could be measured in a vertical direction, to the ceiling, instead along the rope. Therefore, by taking $L = 1$ m, and $NA \approx 0.8$ m, we obtain:
+
+$$\frac{f_2}{f_1} \approx 2.2$$
+
+Similarly, the vibration of the part $N_1B$ in the third eigenmode is equivalent to the second natural vibration of a rope of length $L - N_1A \approx 0.4$ m. In analogy to the first case:
+
+$$f_3(L) \equiv f_2(L - N_1A)$$
+
+and
+
+$$\frac{f_2(L)}{f_1(L)} = \frac{f_2(L - N_1A)}{f_2(L)} = \sqrt{\frac{L}{L - N_1A}} \approx 1.6$$
+
+Therefore:
+
+$$f_3/f_1 = f_2/f_1 \times f_3/f_2 \approx 3.5$$
+
+Finally:
+
+$$f_1 : f_2 : f_3 \approx 1 : 2.2 : 3.5$$
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-theory-th-pr/p1-sol-fig1.png" alt="The same three mode-shape panels as in the problem (vertical axis 'Distance to the ceiling (m)' from 0 to 1, horizontal axis 'Displacement (arbitrary units)'), with the suspension point marked A at the top and the free end marked B at the bottom of each panel. In the middle panel an arrow labelled N points to the node near 0.83 m; in the right panel arrows labelled N1 and N2 point to the nodes near 0.6 m and 0.9 m." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2017-theory-th-pr/p1-sol-fig2.png" alt="Marking-scheme table with columns Part, Marking scheme, Points. Part A: states explicitly or realizes (proper drawing or notattions) the physical pendulum analogy 1.0; correct expression for the moment of inertia 1.0; determination of the position of the center of mass 0.5; correct formula for the period/frequency of a physical pendulum 1.0; calculates f1 = 0.61 Hz with two significant digits 0.5; subtotal on A 4.0. Part B: states or realizes (proper graph or formula) that the vibration of the rope below a node point is similar to a lower order vibration of a shorter rope 1.0; uses dimensionality arguments to argue that fk = ck(g/L)^1/2 1.0; applies similarity arguments to f1 and f2 and derives f2/f1 = (L/L-NA)^1/2 1.0; reads correctly NA from the graph 0.5; calculates f2/f1 = 2.2 to a precision of 2 significant digits 0.5; applies similarity arguments to f3 and f2 (or f1) and derives f3/f2 = (L/L-N1A)^1/2 or f3/f1 = (L/L-N2A)^1/2 1.0; reads correctly N1A (N2A) from the graph 0.5; calculates f3/f1 = 3.5 to a precision of 2 significant digits 0.5; subtotal on B 6.0." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th_pr.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2017/th_pr.pdf)
+· официални решения: [th_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2017/th_sol.pdf)

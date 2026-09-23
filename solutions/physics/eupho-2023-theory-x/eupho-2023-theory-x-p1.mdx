@@ -1,0 +1,304 @@
+---
+id: eupho-2023-theory-x-p1
+source: 'EuPhO 2023'
+title: 'Задача 1. T1: Thermal lens'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2023/eupho-2023-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:29:01.348Z'
+verifier: 'mechanical'
+---
+
+*7. EuPhO 23 Hannover Germany. Theoretical Problems. Language: English · 10 т.*
+
+## Условие
+
+When an intense laser beam falls onto a semitransparent plate, the transmitted light can self-focus to a point behind the plate due to the inhomogeneous heating of the material. This effect, known as thermal lensing, is observed in materials whose index of refraction increases with temperature, characterized by a positive thermo-optic coefficient $\gamma = \frac{\mathrm{d}n}{\mathrm{d}T}$.
+
+A semitransparent disk with radius $a = 15.0\ \mathrm{mm}$, thickness $b = 0.2\ \mathrm{mm}$ and optical absorption coefficient $A = 0.1$ is composed of a material having thermal conductivity $k = 0.3\ \mathrm{W\,m^{-1}\,K^{-1}}$ and thermo-optic coefficient $\gamma = 2.5 \cdot 10^{-4}\ \mathrm{K^{-1}}$. The outer rim of the disk is thermally connected to a circular metallic holder (not shown in the figure) maintained at a constant temperature $T_\mathrm{h} = 20^{\circ}\mathrm{C}$. A parallel laser beam of radius $\sigma = 0.5\ \mathrm{mm}$ and power $P_\mathrm{L} = 20\ \mathrm{mW}$ is incident normally onto the center of the disk. The intensity distribution is homogeneous across the cross-section of the beam.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p1-fig1-v2.png" alt="A laser beam of radius σ (yellow cylinder) falls normally onto a grey disk of radius a and thickness b; behind the disk the transmitted light converges to a point on the axis (yellow cone). Labels: a, σ, b." />
+</figure>
+
+**a)** Sketch a qualitative graph of the temperature profile $T(r)$, where $r$ denotes the distance from the axis of the beam. Indicate clearly on the graph the illuminated region $0 \le r \le \sigma$ and the outer region $\sigma \le r \le a$. **[2 т.]**
+
+**b)** In the vicinity of the center of the disk, the temperature profile can be represented by a quadratic function $T(r) = T_\mathrm{c} + mr^2$. Calculate the parameters $T_\mathrm{c}$ and $m$. **[4 т.]**
+
+**c)** Show that the beam is focused in one point and find the distance $f$ from this point to the disk. If you failed to obtain $T_c$ and $m$ in part b), you may use them as parameters in your final answer. **[4 т.]**
+
+Do not consider the thermal expansion of the disk. Neglect the thermal radiation and the heat exchange between the disk and the surrounding air. Assume that the index of refraction of air is $n_\mathrm{air} = 1$.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **b)** $T_\mathrm{c} = T_\mathrm{h} + \frac{AP_\mathrm{L}}{4\pi kb}\left[1 + 2\ln\left(\frac{a}{\sigma}\right)\right] = 41^{\circ}\mathrm{C},\quad m = -\frac{AP_\mathrm{L}}{4\pi kb\sigma^2} = -1.1 \cdot 10^{7}\ \mathrm{K\,m^{-2}}$
+- **c)** $f = \frac{1}{2\gamma b|m|} = \frac{2\pi k\sigma^2}{\gamma AP} \approx 0.94\ \mathrm{m}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**(a) Drawing a $T(r)$ graph**
+
+The graph should present or clearly infer for the four elements shown in the figure.
+
+| Element of the graph | Pts. |
+|---|---|
+| Horizontal tangent at $r = 0$ | 0.5 |
+| Graph is concave and decreasing in $0 \le r \le \sigma$ | 0.5 |
+| Graph is convex and decreasing in $\sigma \le r \le a$ | 0.5 |
+| Nonzero negative slope at $r = a$ | 0.5 |
+| **Totally on (a)** | **2.0** |
+
+**(b) Finding $T_\mathrm{c}$**
+
+**Approach with a direct solution of the heat-transport equation.**
+
+Consider a cylindrical cut of the disk with radius $r$. Let $P_\mathrm{abs}(r)$ be the portion of laser power absorbed within the cylinder. The absorbed power is being transferred as heat towards the outer holder through the circumvent surface $2\pi br$ of the cylinder. The heat-transport equation reads:
+
+$$-k(2\pi rb)\frac{\mathrm{d}T(r)}{\mathrm{d}r} = P_\mathrm{abs}(r) \qquad (1)$$
+
+Depending on $r$, the absorbed power is given by two different expressions. Within the illuminated area $0 \le r \le \sigma$, the incident light intensity $I = P_\mathrm{L}/(\pi\sigma^2)$ is constant, so the absorbed power is:
+
+$$P_\mathrm{abs}(r) = I\pi r^2 = AP_\mathrm{L}\frac{r^2}{\sigma^2} \qquad (2)$$
+
+and the solution for $T(r)$ is quadratic in $r$:
+
+$$T(r) = T_\mathrm{c} - \frac{AP_\mathrm{L}r^2}{4\pi kb\sigma^2} \qquad (3)$$
+
+where $T_\mathrm{c} = T(0)$ is the temperature at the center. It is clear from that expression that the parameter $m$ is:
+
+$$m = -\frac{AP_\mathrm{L}}{4\pi kb\sigma^2} = -1.1 \cdot 10^7\ \mathrm{Km^{-2}} \qquad (4)$$
+
+Outside the illuminated area, i.e. for $\sigma \le r \le a$, $P_\mathrm{abs}(r) = AP_\mathrm{L}$, which does not depend on $r$. The solution for $T(r)$ is logarithmic in $r$:
+
+$$T(r) = T_\mathrm{h} + \frac{AP_\mathrm{L}}{2\pi kb}\ln\left(\frac{a}{r}\right) \qquad (5)$$
+
+where $T_\mathrm{h} = T(a)$ is the temperature of the holder, which is equal to the temperature along the outer rim of the disk. After matching the two solutions at $r = \sigma$ we obtain:
+
+$$T_\mathrm{c} = T_\mathrm{h} + \frac{AP_\mathrm{L}}{4\pi kb}\left[1 + 2\ln\left(\frac{a}{\sigma}\right)\right] = 41^{\circ}\mathrm{C} \qquad (6)$$
+
+| Task | Pts. |
+|---|---|
+| Writes down the heat-transport equation in radial coordinates | 0.7 |
+| Derives an expression for $P_\mathrm{abs}$ at $0 \le r \le \sigma$ | 0.5 |
+| Finds a quadratic solution for $T(r)$ in the region $0 \le r \le \sigma$ (Subtract 0.2 pts. if he boundary condition $T(0) = T_\mathrm{c}$ has not been accounted for) | 0.5 |
+| Identifies the expression for $m$ (Subtract 0.1 pts. if the minus sign is missing) | 0.2 |
+| Calculates $m$ numerically (Subtract 0.1 pts. if the minus sign is missing) | 0.2 |
+| Derives an expression for $P_\mathrm{abs}$ at $\sigma \le r \le a$ | 0.3 |
+| Finds a logarithmic solution for $T(r)$ in the region $\sigma \le r < a$ (Subtract 0.2 pts. if he boundary condition $T(a) = T_\mathrm{h}$ has not been accounted for) | 0.5 |
+| Sets up an equation by matching the two solutions at $r = a$ | 0.6 |
+| Writes down the final expression for $T_\mathrm{c}$ | 0.2 |
+| Calculates $T_\mathrm{c}$ numerically | 0.3 |
+| **Totally on (b)** | **4.0** |
+
+**Alternative approach – direct piece-wise integration of the heat-transport equation.**
+
+After realizing that $P_\mathrm{abs}(r)$ is given by a piece-wise function:
+
+$$P_\mathrm{abs} = \begin{cases} AP_\mathrm{L}r^2/\sigma^2 & \text{if } 0 \le r \le \sigma \\ AP_\mathrm{L} = \mathrm{const} & \text{if } \sigma \le r \le a \end{cases} \qquad (7)$$
+
+the student may substitute the given solution $T(r) = T_\mathrm{c} + mr^2$ into heat-transport equation (1) for $0 \le r \le \sigma$. This gives directly the expression (4) for the parameter $m$. The parameter $T_\mathrm{c}$ could be easily identified with the temperature $T(0)$ at the center of the disk. On the other hand, $T_\mathrm{h} = T(a)$ due to the thermal contact between the rim of the disk and the holder. It follows from the heat-transport equation that:
+
+$$-\frac{\mathrm{d}T(r)}{\mathrm{d}r} = \frac{P_\mathrm{abs}(r)}{2\pi kbr} \qquad (8)$$
+
+The piece-wise integration of the two sides of the equation in the interval $0 \le r \le a$ gives:
+
+$$T(0) - T(a) = T_\mathrm{c} - T_\mathrm{h} = \int_0^a \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r$$
+
+$$= \int_0^\sigma \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r + \int_\sigma^a \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r \qquad (9)$$
+
+$$= \frac{AP_\mathrm{L}}{4\pi kb}\left[1 + 2\ln\left(\frac{a}{\sigma}\right)\right]$$
+
+which is equivalent to the expression (6) for $T_\mathrm{c}$.
+
+| Task | Pts. |
+|---|---|
+| Writes down the heat-transport equation in radial coordinates | 0.7 |
+| Derives an expression for $P_\mathrm{abs}$ at $0 \le r \le \sigma$ | 0.5 |
+| Derives an expression for $P_\mathrm{abs}$ at $\sigma \le r \le a$ | 0.3 |
+| Substitutes the given form of $T(r)$ into heat-transport equation for the region $0 \le r \le \sigma$ | 0.3 |
+| Obtains the expression for $m$ (Subtract 0.1 pts. if the minus sign is missing) | 0.2 |
+| Calculates $m$ numerically (Subtract 0.1 pts. if the minus sign is missing) | 0.2 |
+| States that $T_\mathrm{c} = T(0)$ | 0.2 |
+| States that $T_\mathrm{h} = T(a)$ | 0.2 |
+| Expresses $T_\mathrm{c} - T_\mathrm{h}$ through integral of $\mathrm{d}T/\mathrm{d}r$ in the $0 \le r \le a$ interval | 0.3 |
+| Calculates the integral in the $0 \le r \le \sigma$ interval | 0.3 |
+| Calculates the integral in the $\sigma \le r \le a$ interval | 0.3 |
+| Writes down the final expression for $T_\mathrm{c}$ | 0.2 |
+| Calculates $T_\mathrm{c}$ numerically | 0.3 |
+| **Totally on (b)** | **4.0** |
+
+**(c) Finding the focal length**
+
+**Approach based on the Fermat’s principle**
+
+We consider only the illuminated area of the disk ($0 \le r \le \sigma$). Due to the nonuniform temperature distribution, the index of refraction is also $r$-dependent, which leads to a bending of the light rays incident at nonzero radii $r$, as shown schematically in the figure. As a result, the light rays exiting the disk, converge toward the optical axis, and, eventually, cross it in a certain point at a distance $f$ from the disk.
+
+Since the ray bending is relatively small, one may assume that: (i) all the rays travel approximately the same distance $b$ inside the disk; (ii) any given ray enters and exits the disk at approximately the same height $r$; (iii) $f \gg r$. Thus, the optical pathway $s(r)$ of a ray, incident at a height $r$ above the optical axis, is:
+
+$$s(r) \approx n(r)b + \sqrt{f^2 + r^2} \approx n(r)b + f + \frac{r^2}{2f} \qquad (10)$$
+
+According to Fermat’s principle, in order that all the rays focus at the same point, it is necessary that $s(r)$ is constant within $0 \le r < \sigma$. In particular, $s(r) \equiv s(0)$ for any $r$, which leads to the condition:
+
+$$b(n(0) - n(r)) \equiv \frac{r^2}{2f} \qquad (11)$$
+
+Since:
+
+$$n(0) - n(r) = \gamma(T(0) - T(r)) = -\gamma mr^2 = \gamma|m|r^2 \qquad (12)$$
+
+condition (11) is satisfied if
+
+$$\gamma b|m|r^2 \equiv \frac{r^2}{2f} \qquad (13)$$
+
+The beam hence focuses at
+
+$$f = \frac{1}{2\gamma b|m|} \qquad (14)$$
+
+Taking into account the expression for $m$ derived in part (b), we represent the answer in terms of the known parameters and calculate its numerical value:
+
+$$f = \frac{2\pi k\sigma^2}{\gamma AP} \approx 0.94\ \mathrm{m} \qquad (15)$$
+
+Alternatively, the student may state that the optical pathway $s(r)$ does not depend on $r$ and use the condition $\mathrm{d}s/\mathrm{d}r \equiv 0$, which gives:
+
+$$\frac{\mathrm{d}n(r)}{\mathrm{d}r}b + \frac{r}{f} \equiv 0 \qquad (16)$$
+
+Since:
+
+$$\frac{\mathrm{d}n(r)}{\mathrm{d}r} = \frac{\mathrm{d}n}{\mathrm{d}T}\frac{\mathrm{d}T}{\mathrm{d}r} = \gamma 2mr \qquad (17)$$
+
+we obtain:
+
+$$\frac{r}{f} + 2b\gamma mr \equiv 0 \qquad (18)$$
+
+The beam thus focuses at:
+
+$$f = \frac{1}{2\gamma b|m|} = \frac{2\pi k\sigma^2}{\gamma AP} \approx 0.94\ \mathrm{m} \qquad (19)$$
+
+| Task | Pts. |
+|---|---|
+| Formulates assumptions (i) and (ii) or equivalent statements | 0.2 |
+| Derives a general expression for the optical pathway $s$ as a function of $r$ | 0.8 |
+| Uses that $f \gg r$ and derives approximate quadratic expression for $s(r)$ | 0.5 |
+| States that focusing takes place when $s(r)$ is the same for all rays converging in the focus | 0.5 |
+| Writes explicitly equation in the form $s(r) \equiv s(0)$ OR $\mathrm{d}s/\mathrm{d}r \equiv 0$ | 0.5 |
+| Uses the $T(r)$ dependence to derive the $n(r)$ dependence OR to find $\mathrm{d}n/\mathrm{d}r$ | 0.5 |
+| Derives an expression for the focal length $f$ in terms of $m$ or of the parameters given in the problem statement | 0.8 |
+| Calculates $f$ numerically | 0.2 |
+| **Totally on (c)** | **4.0** |
+
+**Approach based on a direct ray/wavefront tracing**
+
+As a next approximation, the light ray inside the disk can be modeled as a circular arc of a radius $R$ ($R \gg b$, see the figure). As a result, the ray exits the disk at a smaller height $r - h$ above the optical axis ($h \ll r$). The angle of bending $\varphi$ of the ray inside the material is related to $h$ by:
+
+$$\cos\varphi = 1 - \frac{h}{R} \qquad (20)$$
+
+From the Snell’s law it follows that:
+
+$$n(r)\sin(\pi/2) = n(r - h)\sin(\pi/2 - \varphi) = n(r - h)\cos\varphi \qquad (21)$$
+
+Up to terms, linear in $h$, one may write that:
+
+$$\cos\varphi = \frac{n(r)}{n(r - h)} \approx 1 + \frac{n'(r)}{n(r)}h \qquad (22)$$
+
+Thus, the radius of the ray inside the material, is:
+
+$$R = -\frac{n(r)}{n'(r)} \qquad (23)$$
+
+and the bending angle is approximately:
+
+$$\varphi = \frac{b}{R} = -\frac{n'(r)b}{n(r)} \qquad (24)$$
+
+Alternatively, the students may trace a small part of the wavefront, associated with two rays, incident at close distances $r$ and $r + \mathrm{d}r$ from the optical axis. By noticing that the wavefront is perpendicular to the rays, the angle $\varphi$ of deviation of the rays is equal to the angle of rotation of the wavefront. Let $v(r) = c/n(r)$ be the speed of light in the material at a distance $r$ from the axis. The time-rate $\dot{\varphi}$, i.e. the angular speed of the wavefront is:
+
+$$\dot{\varphi} = \mathrm{d}v(r)/\mathrm{d}r = -cn'(r)/n(r)^2 \qquad (25)$$
+
+The rays reach the opposite surface of the disk in approximately the same time $t = bn(r)/c$, so the total deflection angle of the wavefront, and of the rays, thereof, is $\varphi = \dot{\varphi}t = -n'(r)b/n(r)$
+
+Upon exiting the disk, the ray undergoes additional refraction, and inclines at a new angle $\theta$ relative to the optical axis. The Snell’s law in the small-angle approximation ($\sin\theta \approx \theta$, $\sin\varphi \approx \varphi$) states that:
+
+$$\theta = n(r - h)\varphi \approx n(r)\varphi = -n'(r)b \qquad (26)$$
+
+Since $n'(r) = \gamma T'(r) = 2mr$, one obtains the following expression for the angle of inclination:
+
+$$\theta = 2\gamma|m|r \qquad (27)$$
+
+It is clear from the figure that:
+
+$$f = \frac{r - h}{\tan\theta} \approx \frac{r}{\theta} = \frac{1}{2\gamma|m|b} \qquad (28)$$
+
+which reproduces the result obtained by the Fermat’s principle.
+
+| Task | Pts. |
+|---|---|
+| States or shows on a graph that the light ray inside the material can be approximated by an arc OR illustrates on a graph that the wavefront is perpendicular to the light rays | 0.2 |
+| Derives the relation $\cos\varphi = 1 - h/R$ or equivalent OR expresses the time of travel of the ray across the disk | 0.5 |
+| Applies the Snell’s law to the ray path inside the material OR derives a formula for the time-rate $\dot{\varphi}$ by considering the wavefront passing through two closely separated rays | 0.8 |
+| Finds expression for the bending angle $\varphi$ inside the material | 0.5 |
+| Applies the Snell’s law for the refraction of rays exiting the disk | 0.5 |
+| Uses the $T(r)$ dependence to find $n'(r)$ | 0.5 |
+| Derives an expression for the focal length $f$ in terms of $m$ or of the parameters given in the problem statement | 0.8 |
+| Calculates $f$ numerically | 0.2 |
+| **Totally on (c)** | **4.0** |
+
+*Alternatively:*
+
+Consider a ray incident at a specific height $r_0$. Let $x \in [0, b]$ be the horizontal coordinate of the ray inside the material. Our goal is to find approximately the profile $r(x)$ of the light ray inside the material. From Snell’s law:
+
+$$n(r)\cos\varphi = n(r_0)$$
+
+Since:
+
+$$\tan\varphi = -\frac{\mathrm{d}r(x)}{\mathrm{d}x} = -\frac{\sqrt{(1 - \cos^2\varphi)}}{\cos\varphi}$$
+
+we obtain:
+
+$$-\frac{\mathrm{d}r(x)}{\mathrm{d}x} = \frac{\sqrt{(n(r) - n(r_0))(n(r) + n(r_0))}}{n(r)}$$
+
+Since $n(r) \approx n(r_0) + n'(r_0)(r - r_0) = n(r_0) + 2\gamma|m|r_0(r_0 - r)$, the differential equation approximates to:
+
+$$-\frac{\mathrm{d}r(x)}{\mathrm{d}x} = \sqrt{\frac{4\gamma|m|r_0}{n(r_0)}}\sqrt{r0 - r}$$
+
+which is solvable by separation of variables and gives an approximate parabolic path:
+
+$$r(x) = r_0 - \frac{\gamma|m|r_0}{n(r_0)}x^2$$
+
+Finally, for the angle, just before exiting the disk, we obtain:
+
+$$\varphi \approx \tan\varphi = -r'(x = b) = \frac{2\gamma|m|r_0b}{n(r_0)}$$
+
+| Task | Pts. |
+|---|---|
+| Applies the Snell’s law to express the angle $\varphi$ dependence on $r$ for one ray | 0.8 |
+| Expresses $\tan\varphi = dr/dx$ | 0.2 |
+| Applies approximation to derive a separable differential equation for $r(x)$ | 0.8 |
+| Integrates to obtain parabolic path | 0.5 |
+| Finds expression for the angle $\varphi$, before exiting the disk | 0.2 |
+| Applies the Snell’s law for the refraction of rays exiting the disk | 0.5 |
+| Derives an expression for the focal length $f$ in terms of $m$ or of the parameters given in the problem statement | 0.8 |
+| Calculates $f$ numerically | 0.2 |
+| **Totally on (c)** | **4.0** |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p1-sol-fig1-v3.png" alt="Graph of T(r) against r: the curve starts at T_c with a horizontal tangent, is concave down to r = σ, then convex and decreasing to T_h at r = a with a nonzero slope (dashed tangent). Labels: T(r), T_c, T_h, 0, σ, a, r, “horizontal tangent”, “concave part”, “convex part”, “nonzero slope”." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p1-sol-fig2-v2.png" alt="Ray diagram: a ray at height r enters the disk of thickness b, bends along an arc of radius R, exits lower by h and crosses the optical axis at distance f under angle θ. Marked angles π/2−φ, π/2, φ and θ; labels b, h, r, R, f." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p1-sol-fig3-v2.png" alt="Wavefront sketch: two red rays starting at heights r and r+dr with speeds v(r) and v(r)+dv (black arrows to the left); the blue wavefront segment rotates. Labels: v(r)+dv, v(r), r+dr, r, ray, wavefront." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [eupho2023_theory_problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2023/eupho2023_theory_problems.pdf)
+· официални решения: [eupho2023_theory_solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2023/eupho2023_theory_solutions.pdf)

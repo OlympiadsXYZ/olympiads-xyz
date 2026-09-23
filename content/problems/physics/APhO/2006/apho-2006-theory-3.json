@@ -1,0 +1,333 @@
+{
+ "paper": {
+  "id": "apho-2006-theory-3",
+  "subject": "physics",
+  "competition": "APhO",
+  "year": 2006,
+  "round": null,
+  "roundType": "theory",
+  "grade": null,
+  "lang": "en",
+  "title": "7th Asian Physics Olympiad — Theoretical Question 3",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/APhO/2006/Theory/3.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/APhO/2006/Theory/3_sol.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "c7ff6c1629b56b4421955791cbf1cd41a15d52cc13db597d860d59c9c563160c",
+    "solutions": "90d006a9ccfdbafc5527c3bd6bff47b451b93f3f29af4ef59f3d9a2d60a4b218"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "The paper is one printed task, Theoretical Question 3, made of four unrelated parts A–D (2.5 points each). Following the archive inventory, each part is one problems[] entry (numbers 1–4) and its printed sub-questions (A1, A2, B1–B3, C1–C3, D1, D2) are parts[]. The opening sentence „This problem consists of four not related parts.“ is kept at the start of Part A. No points are printed per sub-question (points null); no total is printed. The mark distribution table on solutions page 6 is split by part and attached to each solution; for part A the Contents header spans the three sub-columns (method, points, item). The problem text layer uses Cyrillic look-alike letters in several places (К for the kelvin and the bulk modulus, т2, Т10, and the labels А1, В1, С1); the page shows Latin letters, which are written here. Printed forms kept verbatim: the unit Па (Cyrillic) in the solution of A2 (eq. 12); ρ_o with the letter o in eq. (10); the equation references „Differentiating (1)“, „Substituting (2) into (3)“ (part B) and „Substituting (5) into (6)“ (part C), which do not match the equation numbering of the solution; „inverts in once more“; „inversed“; the decimal commas 2,1·10^9, 28,7·10^5, 1,13·10^8 and 0,25."
+  }
+ },
+ "problems": [
+  {
+   "id": "apho-2006-theory-3-p1",
+   "number": 1,
+   "title": "Part A",
+   "points": 2.5,
+   "problemType": "theory",
+   "statement": "This problem consists of four not related parts.\n\n**A. [2.5 points]** The Mariana Abyss in the Pacific Ocean has a depth of $H = 10920\\ m$. Density of salted water at the surface of the ocean is $\\rho_0 = 1025\\ kg/m^3$, bulk modulus is $K = 2{,}1\\cdot 10^9\\ Pa$, acceleration of gravity is $g=9.81 m/s^2$. Neglect the change in the temperature and in the acceleration of gravity with the depth, and also neglect the atmospheric pressure.",
+   "statementAfterParts": "***Note*:** The fluids have very small compressibility. Compressibility coefficient is defined as\n\n$$\\kappa = -\\frac{1}{V}\\left(\\frac{dV}{dP}\\right)_{T=const}$$\n\nBulk modulus $K$ is the inverse of $\\kappa$: $K=1/\\kappa$.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "A1)",
+     "statement": "Find the relation between the density $\\rho(x)$ and pressure $P(x)$ at the depth of $x$.",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\rho(x) = \\rho_0\\left(1 + \\frac{P(x)}{K}\\right)"
+     }
+    },
+    {
+     "label": "A2)",
+     "statement": "Find the numerical value of the pressure $P(H)$ at the bottom of the Mariana Abyss. You may use iterative methods to solve this part.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 113000000,
+      "unit": "Pa",
+      "tolerance": 1000000,
+      "note": "The official solution prints P(H) = (1098·10^5 + 28,7·10^5) Па ≈ 1,13·10^8 Па, with the unit written in Cyrillic letters (Па)."
+     }
+    }
+   ],
+   "topics": [
+    "mechanics/hydrostatics",
+    "thermodynamics/compressibility"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**A**\n\nThe change of the pressure is related to the change in the density via\n\n$$\\Delta P = -K\\frac{\\Delta V}{V} = K\\frac{\\Delta\\rho}{\\rho_0}, \\tag{1}$$\n\nwhere $\\rho_0$ is the density of water at the surface.\n\n$$\\rho = \\rho_0 + \\Delta\\rho = \\rho_0\\left(1+\\frac{\\Delta\\rho}{\\rho_0}\\right) = \\rho_0\\left(1+\\frac{\\Delta P}{K}\\right), \\tag{2}$$\n\nwhere $\\Delta P \\approx P$ (we neglect the atmospheric pressure). Then\n\n(A1)\n$$\\rho(x) = \\rho_0\\left(1+\\frac{P(x)}{K}\\right). \\tag{3}$$\n\nThe change of the hydrostatic pressure with the depth equals\n\n$$dP = g\\cdot\\rho(x)dx, \\quad \\frac{dP}{dx} = g\\rho(x) = g\\rho_0 + g\\rho_0\\frac{P(x)}{K}, \\tag{4}$$\n\n$$\\frac{dP(x)}{dx} - \\frac{g\\rho_0}{K}P(x) = g\\rho_0. \\tag{5}$$\n\nThe solution of this differential equation with boundary condition $P(0) = 0$ is\n\n$$P(x) = K\\left(\\exp\\frac{g\\rho_0}{K}x - 1\\right). \\tag{6}$$\n\nSince $\\frac{g\\rho_0}{K}H \\ll 1$, we can use the expansion\n\n$$\\exp z \\approx 1 + z + \\frac{z^2}{2!} + \\ldots, \\tag{7}$$\n\nthus\n\n$$P(x) \\cong g\\rho_0 x + \\frac{1}{2K}\\left(g\\rho_0 x\\right)^2 \\tag{8}$$\n\nThe last formula can be simply derived using the method of successive iterations. First, the pressure can be estimated without compressibility taken into account:\n\n$$P_0(x) = g\\rho_0 x. \\tag{9}$$\n\nCorrection to the density in the first approximation can be obtained using $P_0(x)$:\n\n$$\\rho_1(x) = \\rho_o\\left(1 + \\frac{g\\rho_0 x}{K}\\right). \\tag{10}$$\n\nNow, correction to pressure can be obtained using $\\rho_1(x)$:\n\n$$P_1(H) = \\int_0^H \\rho_1(x)g\\,dx = g\\rho_0 x + \\frac{1}{2K}\\left(g\\rho_0 x\\right)^2, \\tag{11}$$\n\nas obtained earlier.\n\nPutting in the numerical values, we get\n\n(A2)\n$$P(H) = (1098\\cdot 10^5 + 28{,}7\\cdot 10^5)\\,\\text{Па} \\approx 1{,}13\\cdot 10^8\\ \\text{Па}. \\tag{12}$$\n\n**Mark Distribution**\n\n| No | Total Pt | Partial Pt | Contents | | |\n|---|---|---|---|---|---|\n| A | 2.5 | 0.5 | Equation | | |\n| | | 1.5 | Differential equation method | 1.0 | Equation (4) or (5) |\n| | | | | 0.5 | Equation (6) |\n| | | | Iterative method | 0.5 | $P_0(x)$ |\n| | | | | 0.5 | $\\rho_1(x)$ |\n| | | | | 0.5 | $P_1(H)$ |\n| | | 0.5 | Numerical value of $P(H)$ | | |",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "apho-2006-theory-3-p2",
+   "number": 2,
+   "title": "Part B",
+   "points": 2.5,
+   "problemType": "theory",
+   "statement": "**B. [2.5 points]** Light mobile piston separates the vessel into two parts. The vessel is isolated from the environment. One part of the vessel contains $m_1 = 3g$ of hydrogen at the temperature of $T_{10} = 300\\ \\mathrm{K}$, and the other part contains $m_2 = 16\\ g$ of oxygen at the temperature of $T_{20} = 400\\ \\mathrm{K}$. Molar masses of hydrogen and oxygen are $\\mu_1 = 2\\ g/mole$ and $\\mu_2 = 32\\ g/mole$ respectively, and $R = 8.31 J/(K\\cdot mole)$. The piston weakly conducts heat between oxygen and hydrogen, and eventually the temperature in the system equilibrates. All the processes are quasi stationary.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "B1)",
+     "statement": "What is the final temperature of the system $T$?",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 325,
+      "unit": "K",
+      "tolerance": 1
+     }
+    },
+    {
+     "label": "B2)",
+     "statement": "What is the ratio between final pressure $P_f$ and initial pressure $P_i$?",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 1,
+      "tolerance": 0.01
+     }
+    },
+    {
+     "label": "B3)",
+     "statement": "What is the total amount of heat $Q$, transferred from oxygen to hydrogen?",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 1091,
+      "unit": "J",
+      "tolerance": 1
+     }
+    }
+   ],
+   "topics": [
+    "thermodynamics/ideal-gas",
+    "thermodynamics/first-law"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**B**\n\nThe total work done by the gases is zero. Thus at any moment the total internal energy equals the original value:\n\n$$\\frac{m_1}{\\mu_1}C_V T_1 + \\frac{m_2}{\\mu_2}C_V T_2 = \\frac{m_1}{\\mu_1}C_V T_{10} + \\frac{m_2}{\\mu_2}C_V T_{20}, \\tag{13}$$\n\nwhere $\\mu_1 = 2\\ g/mole$ and $\\mu_2 = 32\\ g/mole$ are molar masses of hydrogen and oxygen, and $C_V=5R/2$ is the molar heat capacity of diatomic gas. The final temperature of the system is\n\n(B1)\n$$T = \\frac{\\frac{m_1}{\\mu_1}T_{10} + \\frac{m_2}{\\mu_2}T_{20}}{\\frac{m_1}{\\mu_1} + \\frac{m_2}{\\mu_2}} = 325\\ K. \\tag{14}$$\n\nThe temperature of oxygen decreases, and the amount of heat Q is transferred to hydrogen by heat conduction. The piston will move in the direction of the oxygen, thus the hydrogen does a positive work $A>0$, and the change of the internal energy of oxygen is $\\Delta U = A - Q$. On the other hand,\n\n$$\\Delta U = \\frac{m_2}{\\mu_2}\\frac{5}{2}R(T - T_{20}) = -779\\ J. \\tag{15}$$\n\nTo find $A$, let us prove that the pressure $P$ doesn’t change. Differentiating the equations of the state for each gas, we get\n\n$$\\Delta T_1 = \\frac{\\mu_1}{m_1 R}\\left(P\\Delta V + V_1\\Delta P\\right), \\quad \\Delta T_2 = \\frac{\\mu_2}{m_2 R}\\left(-P\\Delta V + V_2\\Delta P\\right). \\tag{16}$$\n\nwhere $V_i$ are the gas volumes, and $\\Delta V = \\Delta V_1 = -\\Delta V_2$ is the change of the volume of the hydrogen. Differentiating (1), we get\n\n$$\\frac{m_1}{\\mu_1}\\Delta T_1 + \\frac{m_2}{\\mu_2}\\Delta T_2 = 0. \\tag{17}$$\n\nSubstituting (2) into (3), we obtain $(V_1+V_2)\\cdot\\Delta P = 0$, thus\n\n(B2)\n$$P_f/P_i = 1. \\tag{18}$$\n\nThen the work done by the hydrogen is\n\n$$A = P\\cdot\\Delta V = -\\frac{m_2}{\\mu_2}R\\cdot\\Delta T_2 = \\frac{m_2}{\\mu_2}R(T_{20} - T) = 312\\ J. \\tag{19}$$\n\nThe total amount of heat transferred to hydrogen is\n\n(B3)\n$$Q = A - \\Delta U = 1091 J. \\tag{20}$$\n\n**Mark Distribution**\n\n| No | Total Pt | Partial Pt | Contents |\n|---|---|---|---|\n| B | 2.5 | 0.5 | Numerical value of T |\n| | | 1.0 | Constant pressure |\n| | | 0.3 | Numerical value of $\\Delta U$ |\n| | | 0.3 | Numerical value of $A$ |\n| | | 0.4 | Numerical value of $Q$ |",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "apho-2006-theory-3-p3",
+   "number": 3,
+   "title": "Part C",
+   "points": 2.5,
+   "problemType": "theory",
+   "statement": "**C. [2.5 points]** Two identical conducting plates $\\alpha$ and $\\beta$ with charges $-Q$ and $+q$ respectively ($Q > q > 0$) are located parallel to each other at a small distance. Another identical plate $\\gamma$ with mass $m$ and charge $+Q$ is situated parallel to the original plates at distance $d$ from the plate $\\beta$ (see fig 1). Surface area of the plates is $S$. The plate $\\gamma$ is released and can move freely, while the plates $\\alpha$ and $\\beta$ are kept fixed. Assume that the collision between the plates $\\beta$ and $\\gamma$ is elastic, and neglect the gravitational force and the boundary effects. Assume that the charge has enough time to redistribute between plates $\\beta$ and $\\gamma$ during the collision.",
+   "figures": [
+    {
+     "id": "p3-fig1",
+     "caption": "Fig. 1",
+     "alt": "Three thick vertical parallel plates labelled α, β and γ at the top; at the bottom their charges are marked -Q, +q and +Q. A double-headed arrow labelled d shows the distance between plates β and γ.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2006-theory-3/p3-fig1.png",
+     "width": 601,
+     "height": 538,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       213.03,
+       145.66,
+       356.98,
+       274.5
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "C1)",
+     "statement": "What is the electric field $E_1$ acting on the plate $\\gamma$ before the collision with the plate $\\beta$?",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "E_1 = \\frac{Q-q}{2\\varepsilon_0 S}"
+     }
+    },
+    {
+     "label": "C2)",
+     "statement": "What are the charges of the plates $Q_\\beta$ and $Q_\\gamma$ after the collision?",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "Q_\\beta = Q + q/2,\\quad Q_\\gamma = q/2"
+     }
+    },
+    {
+     "label": "C3)",
+     "statement": "What is the velocity $\\upsilon$ of the plate $\\gamma$ after the collision at the distance $d$ from the plate $\\beta$?",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\upsilon = \\left(Q - \\frac{q}{2}\\right)\\sqrt{\\frac{d}{m\\varepsilon_0 S}}"
+     }
+    }
+   ],
+   "topics": [
+    "electricity/electrostatics",
+    "electricity/capacitors"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**C**\n\nThe electric field acting on the plate $\\gamma$ before the collision is\n\n(C1)\n$$E_1 = \\frac{Q-q}{2\\varepsilon_0 S}. \\tag{21}$$\n\nThe force acting on the plate is\n\n$$F_1 = E_1 Q = \\frac{(Q-q)Q}{2\\varepsilon_0 S}. \\tag{22}$$\n\nThe work done by the electric field before the collision is\n\n$$A_1 = F_1 d = \\frac{(Q-q)Qd}{2\\varepsilon_0 S}. \\tag{23}$$\n\nThe charge will get redistributed between two touching conducting plates during the collision. The values of the charges can be obtained from the condition that the electric field between the touching plates vanishes. If one assumes that the plate $\\gamma$ is on the right side, the left surface of the combined plate will have the charge\n\n(C2a)\n$$Q_\\beta = Q + q/2, \\tag{24}$$\n\nand the right surface will have the charge\n\n(C2b)\n$$Q_\\gamma = q/2. \\tag{25}$$\n\nThese charges remain on the plates after the collision is over. Now the force acting on the plate $\\gamma$ equals $F_2 = E_2 q/2$, where $E_2 = (q/2)/(2\\varepsilon_0 S)$. The work done by field $E_2$ is\n\n$$A_2 = F_2 d = \\frac{q^2 d}{8\\varepsilon_0 S}. \\tag{26}$$\n\nThe total work done by the electric fields is\n\n$$A = A_1 + A_2 = \\frac{d}{2\\varepsilon_0 S}\\left(Q - \\frac{q}{2}\\right)^2. \\tag{27}$$\n\nVelocity at the distance $d$ can be calculated using the following relation:\n\n$$\\frac{m\\upsilon^2}{2} = A. \\tag{28}$$\n\nSubstituting (5) into (6), we finally get\n\n(C3)\n$$\\upsilon = \\left(Q - \\frac{q}{2}\\right)\\sqrt{\\frac{d}{m\\varepsilon_0 S}}. \\tag{29}$$\n\n**Mark Distribution**\n\n| No | Total Pt | Partial Pt | Contents |\n|---|---|---|---|\n| C | 2.5 | 0.5 | $E_1$ |\n| | | 0.5 | $Q_\\beta$ |\n| | | 0.5 | $Q_\\gamma$ |\n| | | 0.5 | Total work by electric fields |\n| | | 0.5 | Answer for final velocity |",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "apho-2006-theory-3-p4",
+   "number": 4,
+   "title": "Part D",
+   "points": 2.5,
+   "problemType": "theory",
+   "statement": "**D. [2.5 points]** Two thin lenses with lens powers $D_1$ and $D_2$ are located at distance $L = 25cm$ from each other, and their main optical axes coincide. This system creates a direct real image of the object, located at the main optical axis closer to lens $D_1$, with the magnification $\\Gamma' = 1$. If the positions of the two lenses are exchanged, the system again produces a direct real image, with the magnification $\\Gamma'' = 4$.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "D1)",
+     "statement": "What are the types of the lenses? On the answer sheet you should mark the gathering lens as «+», and the diverging lens as «-».",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "Both lenses are positive (gathering): «+», «+»."
+     }
+    },
+    {
+     "label": "D2)",
+     "statement": "What is the difference between the lens powers $\\Delta D = D_1 - D_2$?",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 3,
+      "unit": "diopters",
+      "tolerance": 0.1
+     }
+    }
+   ],
+   "topics": [
+    "optics/thin-lenses",
+    "optics/geometric-optics"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**D**\n\nFirst one has to determine the types of the lenses. If both lenses are negative, one always obtains a direct imaginary image. If one lens is positive and the other is negative, three variants are possible: an inversed real image, a direct imaginary image or an inversed imaginary image, all contradicting the conditions of the problem. Only the last variant is left – two positive lenses. The first lens creates an inversed real image, and the second one inverts in once more, creating the direct real image. Using the lens equations, the magnifications of the lenses can be written as\n\n$$\\Gamma_1 = \\frac{F_1}{d_1 - F_1}; \\qquad \\Gamma_2 = \\frac{F_2}{d_2 - F_2}, \\tag{30}$$\n\nwhere $d_1$ is the distance from the object to the first lens, $d_2 = L - f_1$ is the distance from the image of the first lens to the second lens, and $f_1$ is the distance from the first lens to the first image. The total magnification of the system is $\\Gamma' = \\Gamma_1\\cdot\\Gamma_2$. Using the expression for $d_2$, inverted magnification coefficient can be written as\n\n$$\\frac{1}{\\Gamma'} = \\frac{d_1\\left[L - (F_1 + F_2)\\right]}{F_1 F_2} - \\frac{L}{F_2} + 1. \\tag{31}$$\n\nOne notices from this expression that if two lenses are exchanged, the first term stays invariant, and only the second term changes. Thus the expression for the inverted magnification in the second case is:\n\n$$\\frac{1}{\\Gamma''} = \\frac{d_1\\left[L - (F_1 + F_2)\\right]}{F_1 F_2} - \\frac{L}{F_1} + 1. \\tag{32}$$\n\nSubtracting these two formulas, we get:\n\n$$\\frac{1}{\\Gamma'} - \\frac{1}{\\Gamma''} = L\\left(\\frac{1}{F_1} - \\frac{1}{F_2}\\right) = L(D_1 - D_2); \\tag{33}$$\n\n$$D_1 - D_2 = \\frac{1}{L}\\left(\\frac{1}{\\Gamma'} - \\frac{1}{\\Gamma''}\\right) = \\frac{1}{0{,}25}\\left(1 - \\frac{1}{4}\\right) = \\frac{1}{0{,}25}\\cdot\\frac{3}{4} = 3\\ \\text{diopters}. \\tag{34}$$\n\n**Mark Distribution**\n\n| No | Total Pt | Partial Pt | Contents |\n|---|---|---|---|\n| D | 2.5 | 1.0 | Signs of lenses |\n| | | 0.5 | Expression for the magnification coefficient |\n| | | 1.0 | Final answer for $D_1 - D_2$ |",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  }
+ ]
+}

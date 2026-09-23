@@ -1,0 +1,66 @@
+---
+id: eupho-2018-theory-th-pr-p2
+source: 'EuPhO 2018'
+title: 'Задача 2. Solenoid'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2018/eupho-2018-theory-th-pr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:18:59.389Z'
+verifier: 'mechanical'
+---
+
+*EuPhO 2018, Moscow — Theory*
+
+## Условие
+
+A solenoid of length $\ell = 20\,\mathrm{cm}$ is wound around a vertical, cylindrical test tube made of glass, filled with water. The solenoid is thermally insulated from the water. The height of the water level is approximately $20\,\mathrm{cm}$ above the upper end of the solenoid, the diameter of the test tube is 1 cm, the number of turns of the coil is $N = 6000$. The atmospheric pressure is $p_0 = 101\,\mathrm{kPa}$, the temperature of water is $293\,\mathrm{K}$. Magnetic susceptibility of water is $\chi \equiv \mu_r - 1 = -9.04 \times 10^{-6}$. Vacuum permeability $\mu_0 = 12.57 \times 10^{-7}\ \mathrm{H/m}$.
+
+The current in the solenoid is slowly increased until the water starts boiling inside the coil. At which current strength would this happen? Make reasonable approximations when needed. Note that the required current strength might be slightly too large for the present technology.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2018-theory-th-pr/p2-fig1.png" alt="Vertical glass test tube filled with water (shaded grey), with a coil wound around its lower part; the coil leads go to two terminals marked + and −; a horizontal arrow points to the water level near the top of the coil." />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $I = \frac{\ell}{N}\sqrt{\frac{2p_0}{-\chi\mu_0}}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Magnetic field gives rise to magnetization of water molecules, i.e. each of the molecules becomes a magnetic dipole. Inhomogeneous magnetic field exerts a force to a magnetic dipole. Water molecules being diamagnetic are pushed away from the region of stronger magnetic field. Water reaches a state with mechanical equilibrium where the magnetic force is balanced by a force due to pressure gradient. Hence, in mechanical equilibrium, regions with stronger magnetic field correspond to smaller pressures. When the current in the solenoid is increased, the pressure differences grow, and at a certain moment, a region will appear where the pressure is smaller than the saturation pressure of the water vapour. This is the moment when water starts boiling.
+
+To begin with, let us discuss possible reasonable approximations. First, we can neglect the water column pressure which is only 2 to 4 percents of the atmospheric pressure. Second, the saturation pressure of water vapour under normal conditions is also much smaller than the atmospheric one and therefore can be neglected. Thus we can say that boiling starts when the pressure drop due to magnetic field becomes equal to $p_0$.
+
+So, we need to relate the pressure difference caused by the magnetic field to the magnetic field strength. Notice that if a region with magnetic field $B$ is filled with water, the magnetic field energy density is $B^2/(2\mu_r\mu_0)$; meanwhile, if there is no water, the energy density is $B^2/(2\mu_0)$. So, we can ascribe the energy density difference
+
+$$\Delta w = (\mu_r^{-1} - 1)B^2/(2\mu_0)$$
+
+to the interaction of water and magnetic field. Next, consider the following thought experiment. We push away a small volume $V$ of water from the neighbourhood of a point $P$ in the water where the magnetic field strength is $B$; the displaced water fills in a narrow layer at the top of the water surface of equal volume. Assuming that the magnetic field is negligibly small at the top, by comparing the initial and final states, we conclude that the total interaction energy is reduced by $V(\mu_r^{-1} - 1)B^2/(2\mu_0)$. When pushing away water from $P$ we perform mechanical work $pV$, where $p$ is the pressure at point $P$. At the upper surface of the water, the moving interface performs mechanical work $p_0V$ so that the net mechanical work performed by water during this process is $V(p_0 - p)$. Due to energy conservation law, $V(\mu_r^{-1} - 1)B^2/(2\mu_0) = V(p_0 - p)$ so that
+
+$$p_0 = p + (\mu_r^{-1} - 1)B^2/(2\mu_0).$$
+
+Note that the way how we derived this relationship is completely analogous to how the Bernoulli law is derived, and in fact, the obtained equality can be interpreted as a modified Bernoulli law for zero speed where the volume density of potential energy in gravity field $\rho gh$ is replaced with $(\mu_r^{-1} - 1)B^2/(2\mu_0)$ — the energy density of magnetic interaction. This equality can be simplified by noting that $\mu_r^{-1} - 1 = -\chi/\mu_r \approx -\chi$ so that
+
+$$p_0 - p = -\chi B^2/(2\mu_0).$$
+
+As discussed above, the boiling condition is $p \approx 0$, hence
+
+$$B = \sqrt{-2\mu_0 p_0/\chi}.$$
+
+Finally, we apply the formula for magnetic field strength inside a long solenoid $B = \mu_0 IN/\ell$ to find
+
+$$I = \frac{\ell}{N}\sqrt{\frac{2p_0}{-\chi\mu_0}} = 4.4\,\mathrm{kA}.$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th_pr.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2018/th_pr.pdf)
+· официални решения: [th_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2018/th_sol.pdf)

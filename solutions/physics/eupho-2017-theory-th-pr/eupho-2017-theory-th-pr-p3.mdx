@@ -1,0 +1,127 @@
+---
+id: eupho-2017-theory-th-pr-p3
+source: 'EuPhO 2017'
+title: 'Задача 3. Superconducting mesh'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/EuPhO/2017/eupho-2017-theory-th-pr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:23:34.520Z'
+verifier: 'mechanical'
+---
+
+*10 т.*
+
+## Условие
+
+Consider a mesh made from a flat superconducting sheet by drilling a dense grid of small holes into it. Initially the sheet is in a non-superconducting state, and a magnetic dipole of dipole moment $m$ is at a distance $a$ from the mesh pointing perpendicularly towards the mesh. Now the mesh is cooled so that it becomes superconducting. Next, the dipole is displaced perpendicularly to the surface of the mesh so that its new distance from the mesh is $b$. Find the force between the mesh and the dipole. The pitch of the grid of holes is much smaller than both $a$ and $b$, and the linear size of the sheet is much larger than both $a$ and $b$.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $F = \frac{3\mu_0m^2}{2\pi}\left(\frac{1}{16b^4} - \frac{1}{(a+b)^4}\right)$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+The most important physics to consider is that the magnetic flux through the superconducting mesh is effectively locally locked in place. Consider this effect before anything else. Once the mesh is cooled to the superconducting state the magnetic field as a function of position on the mesh cannot be varied, regardless of the change in location of the dipole. Since the magnetic field is effectively specified along this superconducting plane, the problem reduces to a boundary value problem that is traditionally solved by the method of images.
+
+First, consider what happens if the physical dipole is moved far away from the mesh. An image dipole must be located that fixes the magnetic field to be unchanged. This can be done with an image dipole that is located a distance $a$ behind the mesh, and it must have the same orientation $m$. Now bring back the original dipole, placing it a distance $b$. It is necessary to cancel out the field from this original, but now displaced, dipole with an opposite dipole $-m$ placed behind the mesh at a distance $b$.
+
+Double check your work. If the original dipole is placed at the original location $a$, then there is no need for image charges, and they should cancel out. Indeed, the two image dipoles will, as they have opposite orientations.
+
+The force between the dipole and the image charges must be determined. Though it might be possible to write down these answers quickly, the derivation is shown below.
+
+Consider first that a magnetic dipole moment $m$ can be thought of as a pair of magnetic monopoles of strength $q_m$ and $-q_m$ separated by a distance $d$ such that $m = q_md$. Determine the magnetic field strength a distance $x \gg d$ away from the dipole:
+
+$$B = \frac{\mu_0}{4\pi}\frac{q_m}{x^2} + \frac{\mu_0}{4\pi}\frac{-q_m}{(x+d)^2}.$$
+
+It should be clear that $q_m$ is at the origin and $-q_m$ is a distance $d$ farther away from the reference point $x$ where the field $B$ is being determined. This expression is exact.
+
+The second term can be subjected to a binomial expansion and then
+
+$$B \approx \frac{\mu_0}{4\pi}\frac{q_m}{x^2} - \frac{\mu_0}{4\pi}\frac{q_m}{x^2}\left(1 - 2\frac{d}{x}\right) = \frac{\mu_0}{2\pi}\frac{q_md}{x^3} = \frac{\mu_0}{2\pi}\frac{m}{x^3}$$
+
+Now consider the magnetic force on a dipole at the location $x$ in a non-uniform field $B$, which is given by
+
+$$F = -q_mB(x) + q_mB(x+d)$$
+
+which can be approximated by a Taylor expansion of $B$,
+
+$$F \approx -q_mB(x) + q_m\left(B(x) + d\left.\frac{dB}{dx}\right|_x\right) = q_md\left(-\frac{3\mu_0}{2\pi}\frac{m}{x^4}\right) = -\frac{3\mu_0}{2\pi}\frac{m^2}{x^4}$$
+
+The negative sign means that two parallel identical dipoles separated by a distance $x$ will attract.
+
+Returning to the problem, the physical dipole at $b$ will be attracted to the image dipole at location $-a$ and repelled from the image dipole at $-b$, so
+
+$$F = -\frac{3\mu_0}{2\pi}\frac{m^2}{(b+a)^4} + \frac{3\mu_0}{2\pi}\frac{m^2}{(b+b)^4} = \frac{3\mu_0m^2}{2\pi}\left(\frac{1}{16b^4} - \frac{1}{(a+b)^4}\right),$$
+
+where a negative sign means that the physical dipole feels attraction toward the mesh.
+
+It is entertaining to consider what happens if $b$ is almost the same as $a$, say $b = a + \delta$. In this case,
+
+$$F = \frac{3\mu_0m^2}{2\pi}\left(\frac{1}{16(a+\delta)^4} - \frac{1}{(2a+\delta)^4}\right),$$
+
+or
+
+$$F \approx \frac{3\mu_0m^2}{2\pi}\frac{1}{16a^4}\left(\left(1 - 4\frac{\delta}{a}\right) - \left(1 - 4\frac{\delta/2}{a}\right)\right),$$
+
+which simplifies further into
+
+$$F \approx -\frac{3\mu_0m^2}{16\pi a^5}\delta.$$
+
+Now to interpret. A negative force here is a force of attraction toward the mesh. A positive $\delta$ is moving the physics dipole away from the mesh. As such, the force is a linear restoring force, and slight disturbances to the physical dipole will result in simple harmonic oscillations about the original position.
+
+**Grading scheme**
+
+**1.5** Recognition of nature of problem
+
+- Recognize flux trapping in superconductor (1.0 pt)
+- Recognize that flux trapping creates a boundary value problem (0.5 pt)
+
+**4.0** Recognize that the boundary value problem requires two image dipoles
+
+- First image dipole to create original $B$ field on mesh (0.5 pt)
+- Correct location of first image dipole (0.5 pt)
+- Correct magnitude of first image dipole (0.5 pt)
+- Correct orientation of first image dipole (0.5 pt)
+- Second image dipole to cancel new $B$ field on mesh (0.5 pt)
+- Correct location of second image dipole (0.5 pt)
+- Correct magnitude of first image dipole (0.5 pt)
+- Correct orientation of first image dipole (0.5 pt)
+
+**2.0** Determine the force between two dipoles
+
+- Determine $B$ field a distance from a dipole (1 pt)
+- Determine force on a dipole in a non-uniform $B$ field (1 pt)
+
+**2.5** Determine the force between the physical dipole and the mesh
+
+- Correct magnitude and direction of force from image dipole one (1 pt)
+- Correct magnitude and direction of force from image dipole two (1 pt)
+- Correct magnitude and direction of force (0.5 pt)
+
+Some notes:
+
+- Dimensionally correct expression with no shown work but have wrong prefactor get zero marks
+- Dimensionally correct expression that show work but have wrong prefactor caused from clear trivial math mistake get 1/2 marks.
+- Dimensionally correct expression that whow work but have wrong prefactor caused from serious math mistake or any physics mistake get zero marks.
+- Dimensionally incorrect expression with no shown work get zero marks
+- Dimensionally incorrect answers that show work get zero marks
+- Follow on errors that use dimensionally correct, but wrong, derived inputs are not penalized further.
+- Follow on errors that use dimensionally incorrect derived inputs are penalized half marks each time the input is used.
+- Writing a formula incorrectly without showing the derivation and using it as an input is not considered a follow on error, but is instead a non-trivial error with a result of zero marks for that part.
+- Ambiguous locations, magnitudes, or orientations receive zero marks.
+- Correctly identifying the locations, magnitudes, or orientations of both of the two image dipoles without clearly specifying why will receive full 1.5 points for recognizing the nature of the problem.
+- Correctly identifying the locations, magnitudes, or orientations of only one of the image dipoles without clearly specifying why will receive 0.5 points for recognizing the nature of the problem.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th_pr.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2017/th_pr.pdf)
+· официални решения: [th_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/EuPhO/2017/th_sol.pdf)
