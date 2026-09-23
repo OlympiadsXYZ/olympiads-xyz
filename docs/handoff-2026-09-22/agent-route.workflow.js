@@ -24,9 +24,8 @@ const R = {
   },
   required: ['paperId', 'status'],
 };
-const res = await pipeline(args.papers, p =>
-  agent(
-    `You are transcribing one competition paper for Olympiads XYZ (an olympiad-prep site that publishes every problem of an archive verbatim, with figures and official solutions). Repository: ${REPO}. Paper: ${
+const promptFor = p =>
+  `You are transcribing one competition paper for Olympiads XYZ (an olympiad-prep site that publishes every problem of an archive verbatim, with figures and official solutions). Repository: ${REPO}. Paper: ${
       p.id
     }.
 
@@ -65,16 +64,24 @@ On Windows, run commands with the Bash tool (Git Bash) and write every JSON file
 Rules: never run gatsby; never git add/commit/push (the orchestrator ships); do not edit other papers, scripts, or content files by hand (run.mjs/promote write content); do not open content/problems of other papers; no web search; never read ~/.config/olympiads-xyz or print any key. Keep every helper script and scratch file under ${REPO}/tmp/tx/${
       p.id
     }/work/ — never in a shared scratchpad or temp folder: other paper agents run in parallel and reuse the same file names (an agentfix.mjs written by one agent was run by another).
-Return JSON {paperId, status: promoted|escalated|error, problems, figures, boxesFixed, fixRounds, lastNote (run.mjs's last note), notes}.`,
-    { label: `paper:${p.id}`, phase: 'Papers', schema: R, effort: 'medium' }
-  )
+Return JSON {paperId, status: promoted|escalated|error, problems, figures, boxesFixed, fixRounds, lastNote (run.mjs's last note), notes}.`;
+const RB = { type: 'object', properties: { results: { type: 'array', items: R } }, required: ['results'] };
+// {ids: [...]}: one agent reads several papers in turn (batching experiment, 2026-09-23); {id}: one paper per agent
+const res = await pipeline(args.papers, p =>
+  p.ids
+    ? agent(
+        `You will transcribe ${p.ids.length} competition papers, one after another. Finish each paper completely (every step below, through promotion or the report) before you start the next, and keep each paper's work separate (its own ids, paths and files). Return {results: [one result object per paper, in the order given]}.\n\n` +
+          p.ids.map((id, k) => `=== PAPER ${k + 1} of ${p.ids.length}: ${id} ===\n` + promptFor({ id })).join('\n\n'),
+        { label: `batch:${p.ids.join('+')}`, phase: 'Papers', schema: RB, effort: 'medium' }
+      ).then(r => (r ? r.results : null))
+    : agent(promptFor(p), { label: `paper:${p.id}`, phase: 'Papers', schema: R, effort: 'medium' })
 );
-const out = res.filter(Boolean);
+const out = res.flat().filter(Boolean);
 log(
   `${out.filter(r => r.status === 'promoted').length} promoted, ${
     out.filter(r => r.status === 'escalated').length
   } parked, ${out.filter(r => r.status === 'error').length} errors of ${
-    args.papers.length
+    out.length
   }`
 );
 return out;

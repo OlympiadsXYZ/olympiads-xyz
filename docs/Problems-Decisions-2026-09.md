@@ -264,3 +264,17 @@ handled it both ways: some restored the print and were promoted, others kept the
 Why: verbatim print is never wrong, and it publishes papers that were otherwise complete. Every noted error stays in
 `tx.notes`, so a later model-check pass can apply the agreement fixes if Margulan wants D-P23 applied in full. This is
 reversible and awaits his confirmation.
+
+## D-P29 (2026-09-23, pending Margulan) — the IYPT 1988–1993 critical edition is held
+
+The archive's IYPT 1988–1993 papers come from Ilya Martchenko's critical edition. Page 1 prints „FINAL DRAFT. — Please do not
+re-publish. Suggestions and criticism welcome“, and the edition adds his own notes, sources and afterword. `iypt-1993-x`
+had gone live in the en/ru tranche 9: it was withdrawn (content, receipt and ledger entry; its routes stay reserved).
+`iypt-1990/1991/1992-x` were promoted but not shipped, and they were un-promoted. `iypt-1988/1989-x` are held in the en/ru plan.
+The official problem statements themselves are IYPT's. Whether to publish them without the edition's commentary, or to ask the
+author, is Margulan's call.
+
+Batching test (the same day): 15 papers with one agent each against 15 papers with three per agent, ~11 pages each.
+Weighted token cost per page was 42k against 40k (−5%, noise). Promotion was 15/15 against 13/15; neither failure came from
+batching (one size-guard stop, one Win2PDF-watermark false positive). The route stays at one paper per agent: batching buys
+nothing measurable and gives up isolation between papers.
