@@ -64,7 +64,9 @@ const problemKey = n => { const s = String(n ?? '').trim().toLowerCase(); return
 
 // NFKC folds Word's math-italic glyphs (𝑐𝑜𝑛𝑠𝑡 → const) and ligature glyphs (ﬁ → fi) into plain letters before comparing
 const norm = w => fixHomoglyphs(w.normalize('NFKC')).toLowerCase().replace(/ё/g, 'е').replace(/ѝ/g, 'и');
-const WORD = /\p{L}+/gu;
+// a word runs through combining marks: a decomposed й (и + U+0306) or ѝ (и + U+0300) is one letter, not a word break
+// (nao-2008-iv-st: „отчитайте“ came out as „отчитаи“ + „те“ and a repair wrote the fragment into the paper)
+const WORD = /\p{L}[\p{L}\p{M}]*/gu;
 // "tобщо" / "Vmax" / "Tобщо": a variable glued to a Cyrillic word, or a Latin
 // homoglyph inside one — both readings are kept (alt = the script-split parts)
 const splitScripts = w => w.split(/(?<=[a-z])(?=[а-я])|(?<=[а-я])(?=[a-z])/u);
@@ -95,7 +97,9 @@ const glued = (set, w) => {
 };
 const inSet = (set, t) => set.has(t.w) || (t.alt != null && t.alt.every(w => w.length < 3 || set.has(w))) || glued(set, t.w);
 export function layerPages(text) {
-  const clean = text.replace(/­/g, '').replace(/\r/g, '');
+  // NFC first: pdftotext writes some fonts' й as и + U+0306, and printed wording quoted from the layer is spliced into
+  // candidates, so it must reach them composed
+  const clean = text.normalize('NFC').replace(/­/g, '').replace(/\r/g, '');
   return clean.split('\f').map((pageText, pi) => {
     const lines = pageText.split('\n');
     const tokens = [];
