@@ -214,6 +214,13 @@
             },
             "notes": {
               "type": "string"
+            },
+            "edits": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/transcriptionEdit"
+              },
+              "description": "D-P23: всяка поправка на очевидна грешка в печатния източник (правописна, съгласуване, местоимение ѝ, интервали) — видима и обратима; копира се от tx.edits от scripts/tx/lib.mjs:buildFinalPaper"
             }
           },
           "description": "Машинна провенанс на транскрипцията; полетата provider/promptVersion/promptSha256/requestId/sourceSha256 се записват от scripts/tx/promote.mjs, никога ръчно в notes"
@@ -353,6 +360,54 @@
     }
   },
   "$defs": {
+    "transcriptionEdit": {
+      "type": "object",
+      "required": [
+        "path",
+        "printed",
+        "fixed",
+        "document",
+        "page",
+        "kind"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/",
+          "description": "JSON pointer на полето с поправката (/problems/1/solution/statement)"
+        },
+        "printed": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Точните отпечатани думи"
+        },
+        "fixed": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Думите, записани в транскрипцията"
+        },
+        "document": {
+          "enum": [
+            "problems",
+            "solutions"
+          ]
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "kind": {
+          "enum": [
+            "misspelling",
+            "agreement",
+            "pronoun",
+            "spacing"
+          ]
+        }
+      },
+      "description": "Една записана редакционна поправка (D-P23); никога за числа, единици, символи, имена, математика или научно съдържание"
+    },
     "pdfSource": {
       "type": "object",
       "required": [

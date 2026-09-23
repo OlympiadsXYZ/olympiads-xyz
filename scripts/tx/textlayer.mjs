@@ -14,15 +14,31 @@
 //     misreading; when the same field holds a similar unprinted word the fix is
 //     mechanical (suggestedFix = the field with that word replaced);
 //   - unprinted words of 5+ letters in a field are reported per field.
+// D-P23: the reader fixes what is obviously wrong in the print (a non-word
+// misspelling, an agreement error, the й→ѝ pronoun, spacing) and records each
+// fix in tx.edits = [{path, printed, fixed, document, page, kind}]. A record is
+// first checked for eligibility: printed and fixed pair word for word (spacing
+// aside) with at most one unchanged word of context; a misspelling changes few
+// letters of a word no published paper uses; an agreement fix changes only an
+// ending; a pronoun fix only й→ѝ; never a number, unit, symbol or name. An
+// eligible record whose printed words are one printed span on that page of the
+// layer is accepted (result.edits / result.info, not a defect) — an agreement
+// fix as 'needs-model', since only a model reading the page can tell it from a
+// real-word swap. Only the matched layer tokens and the paired fixed words are
+// exempt from the other checks. A record whose printed words the layer does not
+// have is a defect (an invented printed error); an ineligible or unrecorded
+// change stays a defect with the mechanical restore-the-print fix, and a record
+// whose field holds the printed wording again has lapsed ('stale': not a defect,
+// not published). Omission runs are unchanged.
 // A document is checked only when its text layer is trustworthy: at least 80 %
 // of the candidate's own words for that document are found in it (a scan, a
 // garbled encoding or a Word export that lost its letters fails this and is
 // skipped with a note). Exit 0 no defects / 3 defects / 1 error.
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseArgs, fail, readJson, writeJson, readManifest, paperDir, walkStrings, splitMath, fixHomoglyphs, nowIso } from './lib.mjs';
+import { parseArgs, fail, readJson, writeJson, readManifest, paperDir, walkStrings, splitMath, fixHomoglyphs, nowIso, pointerGet, EDIT_KINDS, editFieldState, ROOT } from './lib.mjs';
 
-export const TEXTLAYER_VERSION = 1;
+export const TEXTLAYER_VERSION = 3; // 2: D-P23 recorded fixes (tx.edits); 3: eligibility, span-exact acceptance, lapsed records
 const MIN_TRUST = 0.8, MIN_LAYER_WORDS = 40;
 // fields whose words are the reader's own (alt text, notes) or not prose
 const SKIP_PATH = /\/(tx|classification|sourceLayout|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
@@ -180,12 +196,166 @@ function replaceWord(text, from, to) {
   }).join('');
 }
 
+// D-P23 wording for a transcription that differs from the print: restore the print unless it is an obvious error
+const RESTORE = 'restore the printed wording, unless the print is obviously wrong (a misspelling that is not a word, or an agreement error — never a number, unit, symbol, name or formula): then keep the fix and record it in tx.edits';
+// Published prose as a lexicon: a word that occurs in 2+ other published papers is a word of the language, so a
+// "misspelling" record of it is a real-word swap (the pilot's „начинает“ is in 4 papers, „обратопропорционална“ in
+// none). Earlier papers kept printed typos verbatim (D-P16), hence two papers, not one. The papers are read once per
+// process, only when a misspelling record needs them; OLYMPIADS_LEXICON_DIR points elsewhere (tests).
+let LEXICON = null;
+function lexiconFiles() {
+  if (LEXICON) return LEXICON;
+  const dir = process.env.OLYMPIADS_LEXICON_DIR || path.join(ROOT, 'content', 'problems');
+  const walk = d => { let out = []; try { for (const e of fs.readdirSync(d, { withFileTypes: true })) out = out.concat(e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith('.json') && e.name !== 'schema.json' ? [path.join(d, e.name)] : []); } catch { /* no content: an empty lexicon */ } return out; };
+  LEXICON = walk(dir).map(f => { try { return { id: path.basename(f, '.json'), text: fs.readFileSync(f, 'utf8').normalize('NFC').toLowerCase().replace(/ё/g, 'е') }; } catch { return null; } }).filter(Boolean);
+  return LEXICON;
+}
+const knownCache = new Map();
+function knownElsewhere(w, paperId) {
+  const key = `${paperId}\0${w}`;
+  if (knownCache.has(key)) return knownCache.get(key);
+  const re = new RegExp(`(?<![\\p{L}\\p{M}])${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}\\p{M}])`, 'u');
+  let n = 0;
+  for (const f of lexiconFiles()) { if (f.id === paperId || !f.text.includes(w) || !re.test(f.text)) continue; if (++n >= 2) break; }
+  knownCache.set(key, n);
+  return n;
+}
+// unit names (with SI prefixes): a unit is never fixed under D-P23, whatever its spelling
+const UNIT_WORD = /^(?:мили|милли|санти|кило|мега|гига|микро|нано|деци|хекто|milli|centi|kilo|mega|giga|micro|nano|deci)?(?:метр|метър|метър|грам|ампер|волт|ват|джаул|джоул|нютон|ньютон|паскал|херц|герц|кулон|келвин|тесл|фарад|хенри|генри|вебер|литр|литър|секунд|минут|градус|парсек|калори|meter|metre|gram|ampere|volt|watt|joule|newton|pascal|hertz|coulomb|kelvin|tesla|farad|henry|weber|liter|litre|second|minute|degree|parsec|calorie)\p{L}{0,4}$|^(?:ом|ома|омa|ohms?|часа|часове|hours?|mol|mole|moles|мол|мола|молa)$/u;
+const lower = s => s.normalize('NFC').toLowerCase();
+const commonSuffixLen = (a, b) => { let i = 0; while (i < a.length && i < b.length && a[a.length - 1 - i] === b[b.length - 1 - i]) i++; return i; };
+// Is the change one D-P23 allows? printed and fixed pair word for word (spacing aside); only the paired words that
+// differ are the fix — they alone are exempt from the unprinted-word check, and at most one unchanged word of
+// context may ride along (padding a record with other words would hide a dropped or invented word).
+function eligibility(r, ctx) {
+  const problems = [];
+  const P1 = r.printed.normalize('NFC'), F1 = r.fixed.normalize('NFC');
+  const pt = [...P1.matchAll(WORD)].map(m => m[0]), ft = [...F1.matchAll(WORD)].map(m => m[0]);
+  let exempt = [];
+  if (!pt.length || !ft.length) return { problems: ['a D-P23 fix changes words: printed and fixed must both have letters'], exempt };
+  if (r.kind === 'spacing') {
+    if (P1.replace(/\s+/g, '') !== F1.replace(/\s+/g, '')) problems.push('a spacing fix changes only whitespace, never a letter or a punctuation mark');
+    const pw = new Set(pt.map(norm)); exempt = ft.map(norm).filter(w => !pw.has(w));
+    return { problems, exempt };
+  }
+  if (r.kind === 'pronoun') {
+    const a = [...P1], b = [...F1];
+    const ok = a.length === b.length && a.some((c, i) => c !== b[i]) && a.every((c, i) => c === b[i] || (/[йЙ]/.test(c) && b[i] === (c === 'й' ? 'ѝ' : 'Ѝ')));
+    // only the standalone pronoun: never й inside a word („който“)
+    if (!ok || pt.some((w, i) => w !== ft[i] && lower(w) !== 'й')) problems.push('a pronoun fix changes only a standalone й into ѝ');
+    return { problems, exempt };
+  }
+  if (pt.length !== ft.length) return { problems: [`printed and fixed must pair word for word (${pt.length} printed words, ${ft.length} fixed): record only the words that change, with at most one word of context`], exempt };
+  const pairs = pt.map((w, i) => [w, ft[i]]);
+  const diff = pairs.filter(([a, b]) => lower(a) !== lower(b)), same = pairs.length - diff.length;
+  if (!diff.length) return { problems: ['printed and fixed differ in no word (a change of case or punctuation is not a D-P23 fix)'], exempt };
+  if (same > 1) problems.push(`the record carries ${same} unchanged words: record the smallest span (the changed words and at most one word of context)`);
+  for (const [a, b] of diff) {
+    const la = lower(a), lb = lower(b), na = norm(a), nb = norm(b);
+    if (UNIT_WORD.test(la) || UNIT_WORD.test(lb)) { problems.push(`„${a}“ → „${b}“ changes a unit: a unit is never fixed under D-P23 — the printed unit stays verbatim and is noted in tx.notes`); continue; }
+    if ((/^\p{Lu}/u.test(a) || /^\p{Lu}/u.test(b)) && !ctx.sentenceStart) { problems.push(`„${a}“ is capitalised inside a sentence: a name is never fixed under D-P23`); continue; }
+    if (r.kind === 'misspelling') {
+      const d = lev(la, lb), allowed = Math.max(2, Math.floor(0.3 * Math.max(la.length, lb.length)));
+      if (d > allowed) { problems.push(`„${a}“ → „${b}“ is not a misspelling fix (${d} letters change; at most ${allowed}): a different word replaced the printed one`); continue; }
+      const n = knownElsewhere(na, ctx.paperId);
+      if (n >= 2) { problems.push(`„${a}“ is a word (published papers use it): an acceptable printed form is kept, never swapped for another word`); continue; }
+      if (ctx.transcribed.has(na)) { problems.push(`„${a}“ is transcribed verbatim elsewhere in this paper: the reader treats it as a word, so it is not an obvious misspelling (fix every occurrence or none)`); continue; }
+    } else if (r.kind === 'agreement') {
+      // an agreement fix changes an ending: a shared stem of 4+ letters (at least half the word), endings of up to 4 letters
+      const stem = commonPrefix(la, lb);
+      // adding or dropping a reflexive -ся/-сь changes the verb, not its agreement (the pilot's „начинает“ → „начинается“)
+      if (/^(?:ся|сь)$/.test(la.length > lb.length ? la.slice(lb.length) : lb.slice(la.length)) && (la.startsWith(lb) || lb.startsWith(la))) { problems.push(`„${a}“ → „${b}“ adds or drops a reflexive -ся: that changes the verb, not an agreement error`); continue; }
+      if (stem < 4 || stem < 0.5 * Math.min(la.length, lb.length) || la.length - stem > 4 || lb.length - stem > 4) { problems.push(`„${a}“ → „${b}“ is not an agreement fix (an agreement fix changes only the ending of the same word)`); continue; }
+    }
+    exempt.push(nb);
+  }
+  return { problems, exempt };
+}
+// A recorded fix, checked for shape and eligibility before the layer is consulted.
+function editRecord(e, index, candidate, manifest, ctx) {
+  const r = { index, path: e?.path, document: e?.document, page: e?.page, kind: e?.kind, printed: e?.printed, fixed: e?.fixed, status: 'pending', problems: [], exempt: [] };
+  const state = editFieldState(candidate, e);
+  // a repair restored the printed wording: the record has lapsed (lib.mjs transcriptionEdits never publishes it)
+  if (state === 'printed') { r.status = 'stale'; r.reason = 'the field holds the printed wording again: the record has lapsed and is not published'; r.printedWords = []; r.fixedWords = []; return r; }
+  if (state === 'no-field') r.problems.push(`path ${JSON.stringify(r.path)} is not a text field of the transcription`);
+  const strings = typeof r.printed === 'string' && r.printed.trim() && typeof r.fixed === 'string' && r.fixed.trim();
+  if (!strings) r.problems.push('printed and fixed must both be non-empty strings');
+  else if (r.printed === r.fixed) r.problems.push('printed and fixed are identical');
+  if (!EDIT_KINDS.includes(r.kind)) r.problems.push(`kind ${JSON.stringify(r.kind)} is not one of ${EDIT_KINDS.join(', ')}`);
+  const d = manifest.documents?.[r.document];
+  if (!d) r.problems.push(`document ${JSON.stringify(r.document)} is not a document of this paper`);
+  else if (!Number.isInteger(r.page) || r.page < 1 || (d.pages && r.page > d.pages)) r.problems.push(`page ${JSON.stringify(r.page)} is not a page of the ${r.document} document`);
+  // never under D-P23: numbers, units, symbols, mathematics — a recorded change there is a changed value
+  const pair = [r.printed, r.fixed].filter(x => typeof x === 'string').map(x => x.normalize('NFC')); // a decomposed ѝ (и + U+0300) is a letter, not a symbol
+  r.science = pair.some(x => /[0-9$\\=+^_<>%°±×·√∑∫]/.test(x)) || (pair.length === 2 && JSON.stringify((pair[0].match(/[^\p{L}\p{M}\s.,;:!?„“"'()\-–—]/gu) || []).sort()) !== JSON.stringify((pair[1].match(/[^\p{L}\p{M}\s.,;:!?„“"'()\-–—]/gu) || []).sort()));
+  if (r.science) r.problems.push('a D-P23 fix never touches numbers, units, symbols or mathematics — the printed value stays verbatim and is noted in tx.notes');
+  r.printedWords = typeof r.printed === 'string' ? [...new Set(tokenise(r.printed).map(t => t.w))] : [];
+  r.fixedWords = typeof r.fixed === 'string' ? [...new Set(tokenise(r.fixed).map(t => t.w))] : [];
+  if (state === 'neither' && strings) r.problems.push(`the recorded fixed wording „${r.fixed}“ is not in this field`);
+  // eligibility: only when the record is otherwise well formed (its problems then say why the change is not a D-P23 fix)
+  if (!r.problems.length) {
+    const value = String(pointerGet(candidate, r.path)).normalize('NFC');
+    const at = value.toLowerCase().indexOf(r.fixed.normalize('NFC').toLowerCase().trim());
+    const head = value.slice(0, Math.max(0, at));
+    const sentenceStart = at >= 0 && (/^[\s„"«(*_\-–—]*$/u.test(head) || /[.!?:;\n][\s„"«(*_\-–—]*$/u.test(head));
+    const el = eligibility(r, { ...ctx, sentenceStart });
+    r.exempt = el.exempt;
+    if (el.problems.length) { r.problems.push(...el.problems); r.ineligible = true; }
+  }
+  return r;
+}
+// Where a record's printed words stand on a page, as a run of layer tokens: consecutive words are adjacent tokens,
+// or (a two-column layout interleaves the columns) the line's last token and the first token of a line within the
+// next 8 lines. A printed word may also be two tokens (a word broken at a line end without a hyphen). The joined
+// tail of a hyphenated word is not a word of its own. Returns the matched tokens, or null.
+function findSpan(pg, words, used) {
+  const seq = pg.tokens.filter(t => !(t.joined && t.skip));
+  const lastOnLine = new Map(), firstOnLine = new Map();
+  seq.forEach((t, i) => { lastOnLine.set(t.line, i); if (!firstOnLine.has(t.line)) firstOnLine.set(t.line, i); });
+  const matchAt = (i, w) => { if (i >= seq.length) return 0; const t = seq[i]; if (t.w === w || t.alt?.join('') === w) return 1; if (i + 1 < seq.length && t.w + seq[i + 1].w === w && w.length >= 7) return 2; return 0; };
+  const go = (i, k) => {
+    const n = matchAt(i, words[k]); if (!n) return null;
+    const here = seq.slice(i, i + n);
+    if (k === words.length - 1) return here;
+    const next = i + n, cands = [next];
+    const endLine = seq[next - 1].line;
+    if (lastOnLine.get(endLine) === next - 1) for (let l = endLine + 1; l <= endLine + 8; l++) if (firstOnLine.has(l) && firstOnLine.get(l) !== next) cands.push(firstOnLine.get(l));
+    for (const c of cands) { const rest = go(c, k + 1); if (rest) return here.concat(rest); }
+    return null;
+  };
+  for (let i = 0; i < seq.length; i++) { const hit = go(i, 0); if (hit && !hit.some(t => used.has(t))) return hit; }
+  return null;
+}
+
 export function textLayerCheck(candidate, manifest, paperId) {
   P = profileFor(manifest?.meta?.lang || candidate?.paper?.lang || 'bg');
   const hasSolutions = !!manifest.documents.solutions;
   const fields = candidateFields(candidate, hasSolutions);
   const problemIndexByNumber = new Map((candidate.problems || []).map((pr, i) => [problemKey(pr.number), i]));
-  const result = { version: TEXTLAYER_VERSION, paperId, at: nowIso(), documents: {}, defects: [], notes: [] };
+  const result = { version: TEXTLAYER_VERSION, paperId, at: nowIso(), documents: {}, defects: [], notes: [], edits: [], info: [] };
+  // D-P23 recorded fixes: shape first; the layer decides below, per document
+  const allWords = new Set(fields.flatMap(f => [...f.set]));
+  const edits = (Array.isArray(candidate?.tx?.edits) ? candidate.tx.edits : []).map((e, i) => editRecord(e, i, candidate, manifest, { paperId, transcribed: allWords }));
+  for (const e of edits) {
+    if (e.status === 'stale') { result.notes.push(`tx.edits[${e.index}] (printed „${e.printed}“ → „${e.fixed}“): ${e.reason}`); continue; }
+    if (!e.problems.length) continue;
+    e.status = 'invalid';
+    const where = typeof e.path === 'string' && typeof pointerGet(candidate, e.path) === 'string' ? e.path : `/tx/edits/${e.index}`;
+    // a change D-P23 does not allow (a real-word swap, a unit, a name, a padded span) is an unrecorded change of the
+    // print: the layer checks below flag it with the restore-the-print fix, and once the print is back the record lapses
+    const bad = e.science ? { severity: 'major', kind: 'wrong-value' } : e.ineligible ? { severity: 'major', kind: 'reworded' } : { severity: 'minor', kind: 'other' };
+    result.defects.push({ path: where, ...(manifest.documents?.[e.document] && Number.isInteger(e.page) ? { document: e.document, page: e.page } : {}), ...bad, source: 'text-layer', confidence: 0.9,
+      description: `Text-layer check: tx.edits[${e.index}] (printed „${e.printed}“ → „${e.fixed}“) is not ${e.ineligible || e.science ? 'a D-P23 fix' : 'a valid D-P23 record'}: ${e.problems.join('; ')}.${e.science || e.ineligible ? ' Restore the printed wording in the field verbatim (the record then lapses; a wrong printed value is noted in tx.notes).' : ' Correct the record, or restore the printed wording in the field (the record then lapses).'}`, suggestedFix: null });
+  }
+  // accepted fixes: the layer tokens they explain (the matched span only, not the word anywhere on the page) and the
+  // fixed words they explain in a field (only the words paired with a changed printed word)
+  const acceptedTokens = new Set(), acceptedFixed = new Map();
+  const accept = (e, span) => {
+    for (const t of span) acceptedTokens.add(t);
+    if (!acceptedFixed.has(e.path)) acceptedFixed.set(e.path, new Set()); for (const w of e.exempt) acceptedFixed.get(e.path).add(w);
+  };
+  const fixedIn = p => acceptedFixed.get(p) || new Set();
+  const editPrinted = new Set(edits.filter(e => e.status === 'pending').flatMap(e => e.printedWords));
   // Alt text and captions are in the paper's language: a Cyrillic description on an English paper (or Latin
   // prose on a Bulgarian one) is the reader's own language slipping in (eupho-2026-theory-x solution figures).
   // Independent of the text layer; minor, no mechanical fix — the refix rewrites it.
@@ -202,7 +372,6 @@ export function textLayerCheck(candidate, manifest, paperId) {
   // the solutions document repeats the masthead and the problem headings: those words are the problems document's, but count as present on both
   const shared = /^\/paper\/|^\/problems\/\d+\/(title|number)$/;
   const wordsOf = doc => new Set(fields.filter(f => f.doc === doc || shared.test(f.path)).flatMap(f => [...f.set]));
-  const allWords = new Set(fields.flatMap(f => [...f.set]));
   // A LaTeX text layer whose fi/fl/ff/ffi/ffl glyphs carry no Unicode mapping prints „signi cant gures“, „e ective“,
   // „di erential“: a transcribed word is present when the pieces around its ligatures are, and such a piece is a
   // present printed word (ipho-2024-theory-q3: 11 defects from this alone).
@@ -223,8 +392,10 @@ export function textLayerCheck(candidate, manifest, paperId) {
     if (!file || !fs.existsSync(file)) { info.reason = 'no text layer'; continue; }
     const pages = layerPages(fs.readFileSync(file, 'utf8'));
     const joinFields = fields.filter(f => f.doc === doc || shared.test(f.path));
+    // a recorded misspelling broken at a line end ("обрато-" / "пропорционална") joins like a transcribed word
+    const joinKnown = editPrinted.size ? new Set([...allWords, ...editPrinted]) : allWords;
     for (const pg of pages) {
-      joinFragments(pg.tokens, allWords);
+      joinFragments(pg.tokens, joinKnown);
       joinAdjacentFragments(pg, joinFields, allWords);
     }
     const tokens = pages.flatMap(p => p.tokens);
@@ -248,6 +419,40 @@ export function textLayerCheck(candidate, manifest, paperId) {
     if (regs?.pages?.length && scannedPages >= 0.5 * regs.pages.length) { info.reason = `OCR text layer: ${scannedPages} of ${regs.pages.length} pages are scanned images`; continue; }
     if (/office lens|abbyy|finereader|tesseract|\bocr\b|camscanner|scansnap|paper capture|readiris|omnipage/i.test(d.producer || '')) { info.reason = `OCR text layer (producer ${d.producer})`; continue; }
     info.trusted = true;
+    // D-P23: a recorded fix is accepted when its printed words are on that page of this document's layer
+    const pageSets = new Map(pages.map(pg => [pg.page, new Set(pg.tokens.flatMap(t => [t.w, ...(t.alt || [])]))]));
+    const onPage = (set, w) => set.has(w) || brokenInLayer(set, w);
+    // a mechanically verified misspelling/pronoun/spacing fix is accepted; an agreement fix is on the page but only a
+    // model reading the page can tell it from a real-word swap (receipt.mjs keeps it from a crops/mechanical check)
+    const verdict = e => (e.kind === 'agreement' ? 'needs-model' : 'accepted');
+    for (const e of edits.filter(x => x.status === 'pending' && x.document === doc)) {
+      const printedSeq = tokenise(e.printed).map(t => t.w);
+      if (!e.printedWords.length) { e.status = 'unverified'; e.reason = 'the printed form has no letters to look up'; continue; }
+      const set = pageSets.get(e.page) || new Set();
+      const missing = e.printedWords.filter(w => !onPage(set, w));
+      const pgOf = pno => pages.find(pg => pg.page === pno);
+      if (!missing.length) {
+        const span = pgOf(e.page) ? findSpan(pgOf(e.page), printedSeq, acceptedTokens) : null;
+        e.contiguous = !!span;
+        if (span) { e.status = verdict(e); accept(e, span); continue; }
+        // the words are on the page, but not as one printed span: a record padded with words from elsewhere on the page
+        e.status = 'rejected'; e.reason = 'the printed words are on that page, but not as one printed span';
+        result.defects.push({ path: e.path, document: doc, page: e.page, severity: 'major', kind: 'reworded', source: 'text-layer', confidence: 0.85,
+          description: `Text-layer check: tx.edits[${e.index}] claims the ${doc} document prints „${e.printed}“ (p.${e.page}), but the page has these words only apart, not as one printed span — a record names the exact printed span it fixes. Re-read the passage, transcribe it verbatim, and record only the words that change.`, suggestedFix: null });
+        continue;
+      }
+      const elsewhere = [...pageSets].filter(([pno, s]) => pno !== e.page && e.printedWords.every(w => onPage(s, w))).map(([pno]) => ({ pno, span: findSpan(pgOf(pno), printedSeq, acceptedTokens) })).filter(x => x.span);
+      if (elsewhere.length) {
+        // the printed form exists, on another page: the fix stands, the record's page is wrong
+        e.status = 'misplaced'; e.contiguous = true; e.reason = `printed on p.${elsewhere.map(x => x.pno).join(', ')}`; accept(e, elsewhere[0].span);
+        result.defects.push({ path: e.path, document: doc, page: elsewhere[0].pno, severity: 'minor', kind: 'other', source: 'text-layer', confidence: 0.8,
+          description: `Text-layer check: tx.edits[${e.index}] records the printed „${e.printed}“ on ${doc} p.${e.page}, but the text layer has it on p.${elsewhere.map(x => x.pno).join(', ')} — correct the record's page.`, suggestedFix: null });
+        continue;
+      }
+      e.status = 'rejected'; e.reason = `not in the text layer: ${missing.join(', ')}`;
+      result.defects.push({ path: e.path, document: doc, page: e.page, severity: 'major', kind: 'reworded', source: 'text-layer', confidence: 0.85,
+        description: `Text-layer check: tx.edits[${e.index}] claims the ${doc} document prints „${e.printed}“ (p.${e.page}), fixed to „${e.fixed}“, but the claimed printed form is not found in the text layer (${missing.map(w => `„${w}“`).join(', ')} printed nowhere on that page) — probably a misreading, not a printed error. Re-read the page and transcribe the printed wording verbatim; the record must go (a record whose field holds the printed wording lapses on its own).`, suggestedFix: null });
+    }
     const ownLig = own === allWords ? ligPieces : new Set([...own].flatMap(ligPiecesOf));
     const present = t => inSet(allWords, t) || ligPieces.has(t.w);
     const presentInDoc = t => inSet(own, t) || ownLig.has(t.w);
@@ -296,6 +501,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
           if (content.length < 2 || content.filter(present).length < 0.5 * content.length) continue; // a formula line or lettering, not transcribed prose
           const f = fieldFor(lineCtx(t.line), problemIdx);
           if (!f) continue;
+          if (acceptedTokens.has(t)) continue; // the printed span of a recorded D-P23 fix (result.edits)
           info.misreadings++;
           const printedLine = (pg.lines[t.line] || '').replace(/\s+/g, ' ').trim();
           // Mechanical fix, two ways: the printed word's neighbours ("количките се ▮ след време") locate
@@ -317,16 +523,16 @@ export function textLayerCheck(candidate, manifest, paperId) {
             }
           }
           if (!fixed) {
-            const extra = f.tokens.map(x => x.w).filter(w => w.length >= 4 && P.content.test(w) && !layerSet.has(w) && similar(w, t.w));
+            const extra = f.tokens.map(x => x.w).filter(w => w.length >= 4 && P.content.test(w) && !layerSet.has(w) && !fixedIn(f.path).has(w) && similar(w, t.w));
             if (extra.length === 1) { wrong = extra[0]; consumed.add(`${f.path}|${extra[0]}`); const out = replaceWord(f.text, extra[0], t.raw.replace(/-$/, '') || t.w); if (out !== f.text) fixed = out; }
           }
           if (fixed) {
             result.defects.push({ path: f.path, document: doc, page: pg.page, severity: 'major', kind: 'reworded', source: 'text-layer', confidence: 0.85,
-              description: `Text-layer check: the page prints „${t.raw}“ (${doc} p.${pg.page}: „${printedLine.slice(0, 120)}“) where the transcription has „${wrong}“ — keep the printed spelling, typos included.`, suggestedFix: fixed });
+              description: `Text-layer check: the page prints „${t.raw}“ (${doc} p.${pg.page}: „${printedLine.slice(0, 120)}“) where the transcription has „${wrong}“ and no tx.edits record explains it — ${RESTORE}.`, suggestedFix: fixed });
           } else {
             // a single missing word is a misreading (kind reworded: the replacement may be shorter), not an omission
             result.defects.push({ path: f.path, document: doc, page: pg.page, severity: 'major', kind: 'reworded', source: 'text-layer', confidence: 0.7,
-              description: `Text-layer check: the printed word „${t.raw}“ (${doc} p.${pg.page}: „${printedLine.slice(0, 120)}“) does not appear in this field; re-read the passage and transcribe it verbatim.`, suggestedFix: null });
+              description: `Text-layer check: the printed word „${t.raw}“ (${doc} p.${pg.page}: „${printedLine.slice(0, 120)}“) does not appear in this field; re-read the passage and transcribe it verbatim (an obvious printed error may be fixed only with a tx.edits record).`, suggestedFix: null });
           }
         }
         run = [];
@@ -346,7 +552,8 @@ export function textLayerCheck(candidate, manifest, paperId) {
     for (const f of docFields) {
       if (NO_EXTRAS.test(f.path)) continue;
       const other = Object.values(layerSets).filter(s => s !== layerSet);
-      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !P.stop.test(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`) && !gluedInLayer(layerSet, x.w) && !brokenInLayer(layerSet, x.w)).map(x => x.raw))];
+      const fixedHere = fixedIn(f.path); // the words a recorded, accepted D-P23 fix wrote into this field
+      const extras = [...new Set(f.tokens.filter(x => x.w.length >= 5 && P.content.test(x.w) && !P.stop.test(x.w) && !fixedHere.has(x.w) && !layerSet.has(x.w) && !ligPresent(layerSet, x.w) && !other.some(s => s.has(x.w)) && !consumed.has(`${f.path}|${x.w}`) && !gluedInLayer(layerSet, x.w) && !brokenInLayer(layerSet, x.w)).map(x => x.raw))];
       if (!extras.length) continue;
       const minor = /\/(caption|title|label)$/.test(f.path);
       // an unprinted word with exactly one similar printed word ("закривя" / "закривява") is a misreading: fix it mechanically;
@@ -363,7 +570,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
         if (fixed !== f.text) {
           info.unprinted += misread.length;
           result.defects.push({ path: f.path, document: doc, page: pages[0]?.page || 1, severity: f.altText ? 'minor' : 'major', kind: 'reworded', source: 'text-layer', confidence: 0.8,
-            description: `Text-layer check: the transcription has ${misread.map(m => `„${m.raw}“`).join(', ')} where the ${doc} document prints ${misread.map(m => `„${m.printed}“`).join(', ')} — keep the printed spelling.`, suggestedFix: fixed });
+            description: `Text-layer check: the transcription has ${misread.map(m => `„${m.raw}“`).join(', ')} where the ${doc} document prints ${misread.map(m => `„${m.printed}“`).join(', ')}${f.altText ? ' — use the printed term' : ` and no tx.edits record explains it — ${RESTORE}`}.`, suggestedFix: fixed });
           rest = extras.filter(e => !misread.some(m => m.raw === e));
         }
       }
@@ -389,10 +596,16 @@ export function textLayerCheck(candidate, manifest, paperId) {
       const graphicOnPage = (regs?.pages?.find(pg => pg.page === page)?.regions || []).some(g => (g.areaFrac || 0) >= 0.08);
       const imageText = extrasLeft.length >= 8 && graphicOnPage;
       result.defects.push({ path: f.path, document: doc, page, severity: minor || imageText ? 'minor' : 'major', kind: 'reworded', source: 'text-layer', confidence: imageText ? 0.4 : 0.6,
-        description: `Text-layer check: ${extrasLeft.length === 1 ? 'the word' : 'the words'} ${extrasLeft.map(w => `„${w}“`).join(', ')} in this field ${extrasLeft.length === 1 ? 'is' : 'are'} printed nowhere in the ${doc} document (a typo or a rewording${imageText ? ' — or text set as an image: the page carries a large graphic, which the text layer cannot read' : ''}); re-read the passage on the page and transcribe it verbatim.`, suggestedFix: null, words: extrasLeft });
+        description: `Text-layer check: ${extrasLeft.length === 1 ? 'the word' : 'the words'} ${extrasLeft.map(w => `„${w}“`).join(', ')} in this field ${extrasLeft.length === 1 ? 'is' : 'are'} printed nowhere in the ${doc} document (a typo, a rewording or an unrecorded fix${imageText ? ' — or text set as an image: the page carries a large graphic, which the text layer cannot read' : ''}); re-read the passage on the page and transcribe it verbatim (an obvious printed error may be fixed only with a tx.edits record).`, suggestedFix: null, words: extrasLeft });
     }
   }
   for (const [doc, info] of Object.entries(result.documents)) if (!info.trusted) result.notes.push(`${doc}: not checked — ${info.reason}`);
+  for (const e of edits) {
+    if (e.status === 'pending') { e.status = 'unverified'; e.reason = `${e.document} document not checked — ${result.documents[e.document]?.reason || 'no text layer'}`; }
+    result.edits.push({ index: e.index, path: e.path, document: e.document, page: e.page, kind: e.kind, printed: e.printed, fixed: e.fixed, status: e.status, ...(e.contiguous !== undefined ? { contiguous: e.contiguous } : {}), ...(e.reason ? { reason: e.reason } : e.problems.length ? { reason: e.problems.join('; ') } : {}) });
+    if (['accepted', 'needs-model', 'unverified'].includes(e.status)) result.info.push({ path: e.path, document: e.document, page: e.page, severity: 'info', kind: 'source-error', source: 'text-layer',
+      description: `Recorded D-P23 fix (${e.kind}): printed „${e.printed}“ → „${e.fixed}“ (${e.document} p.${e.page}) — ${e.status === 'accepted' ? 'the printed form is on that page of the text layer' : e.status === 'needs-model' ? 'the printed form is on that page of the text layer; an agreement fix needs a model checker reading the page (not a crops/mechanical check)' : `not verifiable here (${e.reason})`}.` });
+  }
   // one defect per field for what the refix model has to re-read (mechanical fixes stay separate: repair.mjs applies them first)
   const merged = [], byPath = new Map();
   const rank = { critical: 3, major: 2, minor: 1, info: 0 };
@@ -411,7 +624,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
   }
   for (const d of merged) delete d.items;
   result.defects = merged;
-  result.summary = { defects: result.defects.length, critical: result.defects.filter(d => d.severity === 'critical').length, major: result.defects.filter(d => d.severity === 'major').length, minor: result.defects.filter(d => d.severity === 'minor').length, withFix: result.defects.filter(d => d.suggestedFix).length, checked: Object.entries(result.documents).filter(([, i]) => i.trusted).map(([d]) => d) };
+  result.summary = { defects: result.defects.length, critical: result.defects.filter(d => d.severity === 'critical').length, major: result.defects.filter(d => d.severity === 'major').length, minor: result.defects.filter(d => d.severity === 'minor').length, withFix: result.defects.filter(d => d.suggestedFix).length, edits: { recorded: edits.length, accepted: edits.filter(e => e.status === 'accepted').length, needsModel: edits.filter(e => e.status === 'needs-model').length, rejected: edits.filter(e => ['rejected', 'invalid', 'misplaced'].includes(e.status)).length, unverified: edits.filter(e => e.status === 'unverified').length, stale: edits.filter(e => e.status === 'stale').length }, checked: Object.entries(result.documents).filter(([, i]) => i.trusted).map(([d]) => d) };
   return result;
 }
 

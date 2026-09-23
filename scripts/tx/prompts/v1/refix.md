@@ -12,7 +12,7 @@ Exactly one JSON object and nothing else:
 
 One entry per defect, in the order given. `value` is:
 
-- for a text field (statement, solution, caption, alt, title, label…): the ENTIRE corrected string — the current text with the omission restored in its printed place, or the wrong words replaced — following the reader conventions: verbatim Bulgarian as printed (decimal comma, „ “ quotes, printed typos and source errors kept), inline math as `$…$`, display math as `$$…$$`, units in `\mathrm{}` inside math, tables as Markdown tables cell for cell, bold point markers as `**[2 т.]**`; no raw HTML, no `<<`/`>>`;
+- for a text field (statement, solution, caption, alt, title, label…): the ENTIRE corrected string — the current text with the omission restored in its printed place, or the wrong words replaced — following the reader conventions: verbatim as printed (decimal comma, „ “ quotes; printed typos and source errors kept — only the reader may fix an obvious error, and only with a `tx.edits` record, which you cannot add), inline math as `$…$`, display math as `$$…$$`, units in `\mathrm{}` inside math, tables as Markdown tables cell for cell, bold point markers as `**[2 т.]**`; no raw HTML, no `<<`/`>>`;
 - for `points` / `totalPoints`: the printed number (or `null` when nothing is printed);
 - for a figure box (`…/figures/N/tx/bbox`, `…/figures/N/tx`, `…/figures/N`): `[x0, y0, x1, y1]` in PERMILLE of the page (0–1000 across the width and across the height, origin top-left) enclosing the whole drawing with its labels and a small margin, excluding body text and the caption sentence;
 - for an `answer` object: the complete object (`kind`, `value`/`latex`, `unit`, `tolerance`, `note` as applicable);
@@ -24,14 +24,14 @@ One entry per defect, in the order given. `value` is:
 - when a defect is listed under a statement but is really about a figure of that problem (its caption or alt), answer it as an extra entry at the figure's own path (`…/figures/N/caption`, `…/figures/N/alt`) with the printed caption line or the corrected alt text;
 - `null` when the page does not let you settle it (unreadable, or the defect is not actually on the page) — say why in `note`. Never guess and never invent text the page does not print.
 
-Some defects come from a mechanical comparison with the PDF's own text layer ("Text-layer check: …"). The quoted printed words are authoritative for spelling and wording — including printed typos, which must be kept — but the text layer knows nothing about formulas, so read those from the image.
+Some defects come from a mechanical comparison with the PDF's own text layer ("Text-layer check: …"). The quoted printed words are authoritative for spelling and wording — restore them, printed typos included (a fix the reader recorded in `tx.edits` is not listed as a defect; you cannot record one) — but the text layer knows nothing about formulas, so read those from the image.
 
 ## Rules
 
 0. The paper's language is in the context (`lang`); every value is in that language exactly as printed, with its printed decimal separator, quotation marks and point markers. Never translate.
 1. The pages are the only truth. Re-read every number, sign, subscript and unit against the image before writing it.
 2. Keep everything in the current value that the page confirms; change only what the defect names, plus anything on the same field the page contradicts. Never drop a printed sentence from a field because it "belongs elsewhere": a paragraph printed after the last part (assumptions, data for all parts) stays where the transcription has it, or goes to the end of the problem's `statement` as its own paragraph — moving text is allowed only when you return BOTH fields: the listed one and the destination (add the destination as an extra entry with its complete corrected value even when it is not listed as a defect — a swapped header and first part, an introduction that sits in part a), are fixed as two entries in one answer).
-3. A printed source error stays as printed (the transcription reports it elsewhere).
+3. A printed source error stays as printed (the transcription reports it elsewhere). Never replace acceptable printed wording with a more common form.
 4. Do not touch paths that are not listed and do not add fields.
 
 The paper context, the page list, and the defects with their current values follow this prompt.

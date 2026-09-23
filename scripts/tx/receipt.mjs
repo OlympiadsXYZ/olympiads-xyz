@@ -13,14 +13,16 @@
 //     --dry-run leftovers, no bare boxes);
 //   - the final bytes pass the committed schema (promote-proof);
 //   - reader and checker are different models (or --allow-same-model was given,
-//     which is recorded and makes the page say "same-model checker").
+//     which is recorded and makes the page say "same-model checker");
+//   - a recorded D-P23 agreement fix (tx.edits kind agreement) was verified by a
+//     model checker that read the pages, not by a crops/mechanical check.
 // Otherwise verdict is fail (or escalate when the checker said so) and the
 // blockers are listed. Exit 0 pass / 3 escalate / 1 fail.
 import path from 'node:path';
 import { checkerEvidenceProblems } from './evidence.mjs';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, paperDir, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems,
-  independence, nowIso, sha256File,
+  independence, nowIso, sha256File, editsNeedingModel,
 } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['allow-same-model'] });
@@ -56,6 +58,9 @@ if (!indep.independent && !allowSame) blockers.push(`reader ${reader.provider}:$
 const checkedAt = nowIso();
 const sourceHashes = { problems: manifest.documents.problems.sha256, ...(manifest.documents.solutions ? { solutions: manifest.documents.solutions.sha256 } : {}) };
 const checkerMode = checker.mode || checker.checker?.mode || null; // 'crops': the model audited the figure crops; the text was verified mechanically
+// D-P23: an agreement fix has the shape of a real-word swap („начинает“ → „начинается“), so only a model reading the
+// page verifies it; the text-layer-only verification of a crops/mechanical check never publishes one
+if (checkerMode === 'crops' || reviewer.provider === 'mechanical') for (const e of editsNeedingModel(candidate)) blockers.push(`tx.edits[${e.index}] records an agreement fix („${e.printed}“ → „${e.fixed}“, ${e.document} p.${e.page}) that the text layer cannot verify: run the full model checker (--checker-mode full) on this paper`);
 const prov = provenanceFor(candidate, { reviewer, promptVersion, checkedAt, sourceHashes, independent: indep.independent, adjudicator, mode: checkerMode });
 const final = buildFinalPaper(candidate, prov);
 const { validate } = compileSchema('final');

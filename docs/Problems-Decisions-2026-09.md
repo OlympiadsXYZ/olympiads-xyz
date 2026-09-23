@@ -171,7 +171,4 @@ and й→ѝ only) and reader rule 1's "preserve errors printed in the source exa
 Why: the pilot showed a strong reader rarely misreads letters but does drift — it fixed one real typo against its
 instructions and, separately, miscopied a correct verb („начинает сказываться“ → „начинается сказываться“) and then
 reported it as a printed error. Students need the obviously wrong fixed and nothing else touched.
-Not yet implemented: reader prompt rule 1, checker prompt rules 2 and 10, and `scripts/tx/textlayer.mjs` (which tells
-the reader to "keep the printed spelling, typos included") still enforce the old rule. Implementation should let the
-text-layer check accept a recorded fix whose printed form is a non-word or an agreement error, and keep flagging a
-real-word substitution.
+Implemented 2026-09-22: reader rule 1 (fixes recorded in `tx.edits` {path, printed, fixed, document, page, kind}), checker rules 2/10, the refix and adjudicator prompts, `scripts/tx/textlayer.mjs` v3 (a recorded fix is accepted only when its printed words are on that page of the text layer and it passes an eligibility check — word-for-word pairing, small edit distance for misspellings, the printed word not a word the archive prints elsewhere — and a record whose printed form is not in the layer is a misreading), and `paper.transcription.edits` in the schema, so published pages carry every fix. The refix step cannot add records: it restores the print, so an unrecorded fix reverts to the printed wording (conservative).

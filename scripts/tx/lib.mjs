@@ -119,7 +119,7 @@ export function derivePaperId(entry) {
   if (comp === 'esf') roundTok = 'esenno';
   else if (comp === 'psf') roundTok = 'proletno';
   else if (entry.round) roundTok = String(entry.round).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  const base = path.basename(entry.problemsKey || '', '.pdf').toLowerCase();
+  const base = path.basename(entry.problemsKey || '', '.pdf').replace(/\.txt$/i, '').toLowerCase(); // a plain-text edition (IYPT <year>.txt) derives like its PDF years
   let gradeTok;
   if (entry.grade) {
     gradeTok = String(entry.grade).toLowerCase().replace(/\s*[–—-]\s*/g, '-').replace(/[^a-z0-9-]+/g, '');
@@ -260,7 +260,8 @@ export function compileSchema(mode = 'final') {
   const Ajv = require('ajv');
   const schema = loadSchema();
   if (mode === 'candidate') {
-    schema.properties.tx = { type: 'object' };
+    // tx.edits (D-P23) is published as paper.transcription.edits: its shape is checked from the first validate
+    schema.properties.tx = { type: 'object', properties: { edits: { type: 'array', items: { $ref: '#/$defs/transcriptionEdit' } } } };
     schema.$defs.problem.properties.tx = { type: 'object' };
     schema.$defs.figure.properties.tx = { type: 'object', properties: { rotation: { type: 'integer', enum: [0, 90, 180, 270] } } };
     schema.$defs.figure.required = ['id'];
@@ -360,6 +361,9 @@ export function checkerView(candidate) {
     const spans = src.tx?.sourceSpans;
     if (spans) view.problems[i].tx = { sourceSpans: spans.map(s => ({ document: s.document, page: s.page })) };
   });
+  // the reader's recorded D-P23 fixes are claims the checker must verify against the page, not notes
+  const edits = transcriptionEdits(candidate);
+  if (edits.length) view.tx = { edits };
   const srcFigs = allFigures(candidate), dstFigs = allFigures(view);
   srcFigs.forEach((s, k) => {
     const t = s.fig.tx;
@@ -442,6 +446,40 @@ export function independence(reader, checker) {
   return { independent: !!reader?.model && !!checker?.model && !sameModel, differentProvider: !!reader?.provider && !!checker?.provider && !same(reader.provider, checker.provider) };
 }
 
+// D-P23: the reader fixes what is obviously wrong in the print (a non-word misspelling, an agreement error, the
+// й→ѝ pronoun, spacing) and records every fix in tx.edits; the record is published as paper.transcription.edits
+// so each fix stays visible and reversible. Only the schema's keys are carried, in the schema's order.
+export const EDIT_KINDS = ['misspelling', 'agreement', 'pronoun', 'spacing'];
+const EDIT_KEYS = ['path', 'printed', 'fixed', 'document', 'page', 'kind'];
+// Where a record stands against its field: 'fixed' (the field holds the fixed wording as a whole-word span),
+// 'printed' (the field holds the printed wording again: the fix was reverted and the record has lapsed), 'neither',
+// or 'no-field' (the path is not a text field of the transcription). Case, whitespace and Unicode composition are
+// ignored, word boundaries are not ('ампер' is not in 'милиампер').
+const editNorm = s => String(s).normalize('NFC').replace(/\s+/g, ' ').trim().toLowerCase();
+const hasSpan = (hay, needle) => new RegExp(`(?<![\\p{L}\\p{M}])${needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}\\p{M}])`, 'u').test(hay);
+export function editFieldState(candidate, e) {
+  if (!e || typeof e.path !== 'string' || !e.path.startsWith('/') || /^\/tx(\/|$)|\/tx\//.test(e.path)) return 'no-field';
+  const value = pointerGet(candidate, e.path);
+  if (typeof value !== 'string') return 'no-field';
+  const field = editNorm(value);
+  if (typeof e.fixed === 'string' && editNorm(e.fixed) && hasSpan(field, editNorm(e.fixed))) return 'fixed';
+  if (typeof e.printed === 'string' && editNorm(e.printed) && hasSpan(field, editNorm(e.printed))) return 'printed';
+  return 'neither';
+}
+// A lapsed record (its field holds the printed wording again — a repair restored the print) describes nothing and
+// is neither shown to the checker nor published: no stage has to edit tx.edits to settle a reverted fix.
+export function transcriptionEdits(candidate) {
+  const list = candidate?.tx?.edits;
+  if (!Array.isArray(list)) return [];
+  return list.filter(e => e && typeof e === 'object' && editFieldState(candidate, e) !== 'printed').map(e => Object.fromEntries(EDIT_KEYS.filter(k => e[k] !== undefined).map(k => [k, e[k]])));
+}
+// An agreement fix cannot be verified mechanically (a real-word swap such as „начинает“ → „начинается“ has the
+// same shape as „давление“ → „давления“): a paper that carries one needs a model checker that reads the page, not
+// the text-layer-only verification of --checker-mode crops/auto (receipt.mjs blocks that combination).
+export const editsNeedingModel = candidate => (Array.isArray(candidate?.tx?.edits) ? candidate.tx.edits : [])
+  .map((e, index) => ({ e, index })).filter(({ e }) => e && typeof e === 'object' && e.kind === 'agreement' && editFieldState(candidate, e) !== 'printed')
+  .map(({ e, index }) => ({ ...e, index })); // index = position in tx.edits
+
 // Build the exact paper promote.mjs writes: strip the working block, hoist
 // what the committed schema holds, stamp provenance, canonicalise.
 // `prov` = { provider, model, promptVersion, promptSha256, requestId, at, verifiedBy, verifiedAt, sourceSha256 }.
@@ -479,6 +517,7 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
     verifiedBy: prov.verifiedBy ?? null,
     verifiedAt: prov.verifiedAt ?? null,
     notes,
+    edits: transcriptionEdits(candidate).length ? transcriptionEdits(candidate) : undefined, // absent, not [], so earlier papers keep their bytes
   };
   const transcription = {};
   const dropped = [];

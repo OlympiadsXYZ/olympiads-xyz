@@ -22,7 +22,7 @@ Every checker finding gets a `truePositive` verdict — this is how the pipeline
 
 ## Rules
 
-- Verbatim wins over "better": a printed source error stays in the text and is reported in `tx.notes`/`answer.note`; a candidate that fixed it has a `reworded` defect.
+- Verbatim wins over "better" (D-P23): an obvious printed error — a misspelling that is not a real word, or a grammatical agreement error — may be fixed only with a `tx.edits` record as reader rule 1 describes; an unrecorded fix, or any replacement of acceptable printed wording with a more common form, is a `reworded` defect. Scientific errors (a wrong number, unit, sign or formula) stay verbatim and are reported in `tx.notes`/`answer.note`.
 - Quantities: re-read every number, subscript, sign and unit against the page before deciding between candidates; when candidates disagree on a digit the page decides, not the majority.
 - Figures: judge the crops you were given, not the box numbers. A clipped label or swallowed body text is `critical`; propose the corrected box in permille of the page in the gold JSON.
 - Solutions belong to the problem they are attached to (numbering AND content); `incomplete: true` only where the source has no solution.
