@@ -731,6 +731,23 @@ test('normaliseCandidate settles structural slips without touching the transcrip
   assert.ok(c.tx.normalised.length >= 5);
 });
 
+test('a statement is cut where the next problem opens only when it carries that opening, not a shared first sentence', () => {
+  const shared = 'В данной задаче вам предстоит рассмотреть';
+  const c = candidate();
+  const first = { ...c.problems[0], parts: [], figures: [] };
+  first.statement = `**Задача 1. Трение** (10 баллов)\n\n${shared} движение бруска по наклонной плоскости с трением.\n\nКоэффициент трения равен $\\mu$.`;
+  const second = { ...first, number: 2, statement: `${shared} колебания маятника в вязкой среде при малых углах отклонения.` };
+  c.problems = [first, second];
+  lib.normaliseCandidate(c);
+  assert.ok(c.problems[0].statement.includes('Коэффициент трения'), 'problem 1 keeps its own paragraphs');
+  // a real paste of problem 2 at the end of problem 1 is still cut
+  const d = candidate();
+  const p1 = { ...d.problems[0], parts: [], figures: [], statement: `${shared} движение бруска по наклонной плоскости с трением.\n\n${second.statement}` };
+  d.problems = [p1, { ...second }];
+  lib.normaliseCandidate(d);
+  assert.equal(d.problems[0].statement, `${shared} движение бруска по наклонной плоскости с трением.`);
+});
+
 test('a quoted sentence from the checker is spliced over the passage it corrects, not over the whole field', async () => {
   const { spliceFragment } = await import(txModule('fixes.mjs'));
   const solution = 'Означаваме с Tк и Tз периодите на кометата и Земята. Ако не се включат двигателите в тчка А, по-нататъшното движение е по елипса. Следователно отговорът е 2 години.';

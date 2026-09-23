@@ -954,10 +954,13 @@ export function normaliseCandidate(c, opts = {}) {
   // every paragraph that opens like one of the parts; the closing paragraphs stay.
   const firstWords = (s, n = 6) => proseOnly(String(s || '')).toLowerCase().replace(/^\s*[а-яa-z0-9]{1,3}[).]\s*/u, '').split(/\s+/).filter(Boolean).slice(0, n).join(' ');
   // A statement that runs on into the next problem's text (a paste of the page) is cut where that problem opens.
+  // A paste carries the whole opening, so 12 words must match: problems of one paper often open with the same printed
+  // sentence ("В данной задаче вам предстоит рассмотреть …", belpho-2021-iii-11), and 6 words cut problem 1 at its own
+  // first paragraph.
   (c.problems || []).forEach((pr, i) => {
     if (typeof pr.statement !== 'string') return;
     for (const other of (c.problems || []).slice(i + 1)) {
-      const head = firstWords(other.statement);
+      const head = firstWords(other.statement, 12);
       if (head.split(' ').length < 5) continue;
       const flat = proseOnly(pr.statement).toLowerCase();
       const at = flat.indexOf(head);
