@@ -87,11 +87,16 @@ function tokenise(s) {
 // A text layer glues words across a column gap or a lost space ("замразенав" = "замразена" + "в"):
 // a missing token that splits into two transcribed words (the first ≥ 4 letters) counts as present.
 // (a single letter on either side is a variable glued to a word: „𝑉diagram“ = V + diagram, "kmwhere" = km + where)
-const glued = (set, w) => {
+// Up to three words: a hidden duplicate text layer glued „first in hypothesis“ into „firstinhypothesis“, and the
+// mechanical repair wrote that token into the paper as the printed wording (wopho-2012-q11).
+const glued = (set, w, depth = 2) => {
   if (w.length < 5) return false;
   for (let i = 1; i <= w.length - 1; i++) {
     const a = w.slice(0, i), b = w.slice(i);
-    if ((a.length === 1 || (a.length >= 2 && set.has(a))) && (b.length === 1 || set.has(b)) && Math.max(a.length, b.length) >= 4) return true;
+    const aOk = a.length === 1 || (a.length >= 2 && set.has(a));
+    if (!aOk) continue;
+    if ((b.length === 1 || set.has(b)) && Math.max(a.length, b.length) >= 4) return true;
+    if (depth > 1 && a.length >= 2 && glued(set, b, depth - 1)) return true;
   }
   return false;
 };
