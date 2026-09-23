@@ -231,3 +231,20 @@ the 32 published NAO round-I papers are filed. The printed date stays verbatim i
 
 Why: siblings of one sitting split across two years scatter a round in the site's year navigation. The season year is
 what the olympiad calls itself (the V NAO is 2001/2002).
+
+## D-P27 (2026-09-23) — a queue is deduplicated by shingle containment before its papers are read
+
+The English/Russian native queue (1,017 papers) had twins: the same IPhO question under two archive names, identical
+IEPhO texts for grades 8 and 9, and compilations of papers that are also in the queue on their own. Tranche 1 published
+IPhO 1995 Experimental Question 1 twice. `ipho-1995-experiment-al-question-1` was removed (content, receipt, ledger entry)
+and its key excluded as a duplicate of `ipho-1995-experiment-exp1`; the generator keeps its routes reserved.
+
+Rule, measured on the 5-word shingles of each prepared problems text against the rest of the queue and the published papers:
+- **Twin of a published paper** (≥ 90% of it is in the published text): hold the paper.
+- **Twins in the queue** (≥ 95% each way): read one (the one with a solutions file, else the shorter id); hold the other.
+- **Compilation** (a text ≥ 1.8× larger that contains ≥ 90% of a queued paper): read the single paper; hold the compilation.
+- Grade and age variants that differ by more than that (e.g. 80–95% overlap) are separate papers and are both read.
+
+Applied to the remaining 906: 879 kept, 27 held, listed with their reasons in
+`docs/handoff-2026-09-22/enru-dedupe-plan.json`. A held twin is added to `content/backlog-exclusions.json` once the paper it
+duplicates is live.
