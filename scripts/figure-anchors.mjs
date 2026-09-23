@@ -351,24 +351,43 @@ export function locate(A, marker, ts, P) {
   if (r.fail) delete r.pick;
   return r;
 }
-const bagOf = words => { const m = new Map(); for (const w of words) m.set(w, (m.get(w) || 0) + 1); return m; };
-// share of the words T[from, to) found in the bag (consumed from a copy); an empty span counts as found
-function inGap(T, from, to, bag) {
+// Numbers, single letters and points marks ("2 т.", "[3 p]", compound labels А, Б, В) repeat all over a marking
+// scheme: they tell nothing about which side of a figure a paragraph is printed on, so they are no evidence either way
+// (a gap full of "2 т" made every "А → Б: 2 т." paragraph look printed before the figure: noh-2019-ii-10-12 p4).
+const POINT_WORDS = new Set(['т', 'точка', 'точки', 'точк', 'p', 'pt', 'pts', 'points', 'point', 'б', 'бал', 'балл', 'балла', 'баллов']);
+export const noiseWord = w => /^\p{N}+$/u.test(w) || [...w].length === 1 || POINT_WORDS.has(w);
+const bagOf = words => { const m = new Map(); for (const w of words) if (!noiseWord(w)) m.set(w, (m.get(w) || 0) + 1); return m; };
+// share of the words T[from, to) found in the bag (consumed from a copy); an empty span counts as found, a span of
+// nothing but noise words as not found (it cannot be placed on either side)
+export function inGap(T, from, to, bag) {
   if (to <= from) return 1;
   const left = new Map(bag);
-  let hit = 0;
-  for (let t = from; t < to; t++) { const n = left.get(T[t]) || 0; if (n > 0) { hit++; left.set(T[t], n - 1); } }
-  return hit / (to - from);
+  let hit = 0, words = 0;
+  for (let t = from; t < to; t++) {
+    if (noiseWord(T[t])) continue;
+    words++;
+    const n = left.get(T[t]) || 0;
+    if (n > 0) { hit++; left.set(T[t], n - 1); }
+  }
+  return words ? hit / words : 0;
 }
 const IN_GAP = 0.6;
 const SHORT_TAIL = 12;
+// with aligned text on one side only, the figure must sit right against it: at most NEAR unaligned PDF words between
+// the figure and that text
+const NEAR = 5;
 function locateIn(A, marker, ts, P) {
   const { paras, tokens: T } = ts;
   let ib = marker - 1; while (ib >= 0 && A[ib] < 0) ib--;
   let ia = marker; while (ia < A.length && A[ia] < 0) ia++;
   let hasB = ib >= 0 && marker - 1 - ib <= GAP, hasA = ia < A.length && ia - marker <= GAP;
   const tb = hasB ? A[ib] : null, ta = hasA ? A[ia] : null, gb = marker - 1 - ib, ga = ia - marker;
+  // nothing of the field is printed above the figure and the first aligned word below it is the field's first word:
+  // the figure is printed before the whole field (a solution sheet that reprints the statement, then the solution)
+  if (ib < 0 && ia < A.length && A[ia] === 0) return { pick: [{ idx: -1 }], how: 'before-first' };
   if (!hasB && !hasA) return { fail: 'no-aligned-text' };
+  if (!hasB && ga > NEAR) return { fail: 'after-only-far' };
+  if (!hasA && gb > NEAR) return { fail: 'before-only-far' };
   if (hasB && hasA) {
     if (ta <= tb) {
       if (gb <= 1 && ga > 5) hasA = false; else if (ga <= 1 && gb > 5) hasB = false; else return { fail: 'order' };
@@ -505,7 +524,7 @@ export function anchorPaper(data, docs) {
         const A = streams[alignKey] || (streams[alignKey] = alignWords(stream.tokens, ts.tokens));
         const marker = markerOf(stream, rect);
         const res = marker ? locate(A, marker.token, ts, stream.tokens) : { fail: 'no-marker' };
-        const attempt = { doc, res, trace: marker ? traceOf(A, marker, stream, ts) : null, textLayer: true };
+        const attempt = { doc, res, trace: marker ? traceOf(A, marker, stream, ts) : null, textLayer: true, marker: marker?.token ?? null };
         if (res.pick || !found || !found.textLayer || found.res?.fail === 'no-aligned-text') found = attempt;
         if (res.pick) break;
       }

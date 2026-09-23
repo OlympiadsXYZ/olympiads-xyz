@@ -49,6 +49,23 @@ export const COMPETITION_META: { [code: string]: CompetitionMeta } = {
   IChO: { slug: 'icho', name: 'Международна олимпиада по химия', short: 'IChO' },
   IMChO: { slug: 'imcho', name: 'Международна Менделеевска олимпиада', short: 'IMChO' },
   iGeo: { slug: 'igeo', name: 'Международна олимпиада по география', short: 'iGeo' },
+  // Competitions of the transcribed problems (content/problems) that the archive had no entry for. Each slug is the
+  // one competitionSlug() derived from the code before, so no archive URL changes. scripts/check-navigation.mjs fails
+  // on a problems competition without an entry here (the sidebar would show the raw code).
+  BelPhO: { slug: 'belpho', name: 'Беларуска републиканска олимпиада по физика', short: 'BelPhO' },
+  Balkan: { slug: 'balkan', name: 'Балканска олимпиада по физика', short: 'BPhO' },
+  WoPhO: { slug: 'wopho', name: 'Световна олимпиада по физика', short: 'WoPhO' },
+  GPhO: { slug: 'gpho', name: 'Олимпиада по физика на Персийския залив', short: 'GPhO' },
+  InPhO: { slug: 'inpho', name: 'Национална олимпиада по физика на Индия', short: 'INPhO' },
+  OPhO: { slug: 'opho', name: 'Онлайн олимпиада по физика', short: 'OPhO' },
+  ISPhO: { slug: 'ispho', name: 'Международна олимпиада по физика „Пътят на коприната“', short: 'ISPhO' },
+  Samara: { slug: 'samara', name: 'Самарска олимпиада по астрономия', short: 'Самара' },
+  USAAAO: { slug: 'usaaao', name: 'Олимпиада по астрономия и астрофизика на САЩ', short: 'USAAAO' },
+  Struve: { slug: 'struve', name: 'Олимпиада по астрономия „В. Я. Струве“', short: 'Струве' },
+  OWAO: { slug: 'owao', name: 'Открита световна олимпиада по астрономия', short: 'ΩWAO' },
+  O3A2: { slug: 'o3a2', name: 'Открита онлайн олимпиада по астрономия и астрофизика', short: 'O3A2' },
+  'IOAA-Jr': { slug: 'ioaa-jr', name: 'Международна олимпиада по астрономия за юноши', short: 'IOAA Jr.' },
+  BAAO: { slug: 'baao', name: 'Британска олимпиада по астрономия и астрофизика', short: 'BAAO' },
 };
 
 // Стари/разцепени кодове, слети в каноничните (D11, vocabulary.decisions.md).
@@ -57,6 +74,8 @@ export const COMPETITION_ALIASES: { [legacy: string]: string } = {
   'Олимпиада на мегаполисите': 'IOM',
   'Online Physics Brawl': 'OPB',
   'Московска олимпиада по физика': 'Московска',
+  // one transcribed paper (vserusiyska-2011-iii-region11e) carries the transliterated code of the Всерусийска folder
+  VSERUSIYSKA: 'Всерусийска',
 };
 
 export function canonicalCompetition(code: string): string {

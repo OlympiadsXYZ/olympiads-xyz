@@ -21,7 +21,8 @@ import path from 'path';
 import { fileURLToPath } from 'node:url';
 import { readPapers, readJson, publicationState, atomicWrite, jsonText, sha256, controlledTopics, walkJson } from './lib/problem-data.mjs';
 import { classificationSearch, problemMetadataErrors } from './lib/problem-classification.mjs';
-import { loadNavigation, roundLabel, gradeLabel as navGradeLabel, paperSuffix, displayNumber } from './lib/navigation.mjs';
+import { loadNavigation, roundLabel, gradeLabel as navGradeLabel, paperSuffix } from './lib/navigation.mjs';
+import { loadTreeModule } from './lib/load-tree.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -106,9 +107,10 @@ function figureGroupLines(items) {
 // Some transcriptions place a figure inline in the text (![…](url)) AND list it
 // in figures[]; emitting both rendered the figure twice. Only emit the block
 // for figures the surrounding text does not already show.
-function figuresNotInline(figs, ...texts) {
+// `candidates`: the figures the texts' placeholders may name (resolveFigureTarget).
+function figuresNotInline(figs, texts, candidates = figs) {
   const joined = texts.filter(Boolean).join('\n');
-  return (figs ?? []).filter(f => !figureShownInline(f, joined));
+  return (figs ?? []).filter(f => !figureShownInline(f, joined, candidates ?? []));
 }
 
 // A figure re-cropped after transcription is stored as "<crop>-v2.png" while the text may still inline the first
@@ -117,12 +119,35 @@ function figuresNotInline(figs, ...texts) {
 const INLINE_IMAGE = /(!\[[^\]]*\]\(\s*<?)([^)\s>]+)/g;
 const cropKey = url => String(url ?? '').replace(/[?#].*$/, '').replace(/-v\d+(\.[A-Za-z0-9]+)$/, '$1');
 const cropVersion = url => Number(/-v(\d+)\.[A-Za-z0-9]+(?:[?#].*)?$/.exec(String(url ?? ''))?.[1] ?? 1);
-export function figureShownInline(fig, text) {
+const isUrl = target => /^(?:https?:)?\/\//i.test(String(target ?? ''));
+// The figure an inline image of the text stands for, among `figs`: a crop URL (any crop version of the figure), or a
+// placeholder the transcriber wrote where the figure is printed — the figure id ("p2-sol-fig1"), "#p1-sol-fig2", or
+// the id qualified by its problem or paper id ("ipho-2024-experiment-q4-p1-sol-fig1"). null when none matches ("#",
+// "figure:solutions-p4-…", an id the problem does not have).
+export function resolveFigureTarget(target, figs) {
+  target = String(target ?? '').trim();
+  const list = (figs || []).filter(f => f?.url);
+  if (!target) return null;
+  if (isUrl(target)) {
+    const key = cropKey(target);
+    const same = list.filter(f => cropKey(f.url) === key);
+    return same.sort((a, b) => cropVersion(b.url) - cropVersion(a.url))[0] ?? null;
+  }
+  const id = target.replace(/^#/, '');
+  if (!id) return null;
+  const exact = list.find(f => f.id === id);
+  if (exact) return exact;
+  // "<problem or paper id>-<figure id>": the qualifier has at least two words (a bare "p2-fig1" never matches "fig1")
+  return list.find(f => f.id && id.endsWith(`-${f.id}`) && id.slice(0, -f.id.length - 1).split('-').length >= 2) ?? null;
+}
+export function figureShownInline(fig, text, figs = [fig]) {
   if (!fig?.url) return false;
   text = String(text ?? '');
   if (text.includes(fig.url)) return true;
   const key = cropKey(fig.url);
-  for (const m of text.matchAll(INLINE_IMAGE)) if (cropKey(m[2]) === key) return true;
+  for (const m of text.matchAll(INLINE_IMAGE)) {
+    if (isUrl(m[2]) ? cropKey(m[2]) === key : resolveFigureTarget(m[2], figs) === fig) return true;
+  }
   return false;
 }
 export function newestInlineCrops(text, figs) {
@@ -137,6 +162,97 @@ export function newestInlineCrops(text, figs) {
     return n && cropVersion(n) > cropVersion(url) ? pre + n : m;
   });
 }
+
+// ---- figures the text itself places (inline images) ----
+// A transcription that puts a figure in its text as markdown (![alt](crop url), or a placeholder naming the figure)
+// marks the exact spot the figure is printed. A bare ![](url) renders at the crop's natural pixel width (a 300 dpi crop
+// is ~3x its printed size, capped at the column) and several of them on one line stack as full-width blocks. So:
+//   - a line that holds nothing but images, each of them one of the problem's figures, becomes that figure's sized
+//     <figure> block (figureMarkdown: printed width, reviewed alt, width/height, lazy loading) — several on one line
+//     sit side by side in a .problem-figure-row, as printed;
+//   - an image inside a line of text (or an indented one) becomes a sized inline <img> (.problem-inline-figure);
+//   - a placeholder that names no figure ("#", "figure:…", an id the problem does not have) is dropped: it would be a
+//     broken relative <img>;
+//   - an image in a table row, or one whose crop is not among the figures, stays markdown (with the newest crop).
+// The JSX goes in after mdText (which escapes braces) through private-use tokens.
+const IMAGE_MD = /!\[([^\]]*)\]\(\s*<?([^)\s>]*)>?(?:\s+"[^"]*")?\s*\)/g;
+const FIG_TOKEN = /(\d+)/g;
+const token = i => `${i}`;
+const plainWords = t => String(t ?? '').toLowerCase().replace(/[*_`$\\]/g, '').replace(/\s+/g, ' ').trim();
+function inlineFigureJsx(fig) {
+  const alt = String(fig.alt || fig.caption || '').replace(/\s*\n\s*/g, ' ').trim().replace(/"/g, "'").replace(/<(?=[\p{L}$_])/gu, '＜');
+  const size = figureSize(fig);
+  const style = size ? ` style={{'--fig-w': '${size.widthPct}%', '--fig-max': '${size.maxPx}px'}}` : '';
+  const dims = Number.isInteger(fig.width) && Number.isInteger(fig.height) && fig.width > 0 && fig.height > 0 ? ` width="${fig.width}" height="${fig.height}"` : '';
+  return `<img className="problem-inline-figure${size ? ' problem-inline-figure--sized' : ''}" src="${fig.url}" alt="${alt}"${dims} loading="lazy" decoding="async"${style} />`;
+}
+// text -> { text with tokens, jsx: [] }; `resolve(target)` -> figure or null
+export function placeInlineFigures(text, resolve) {
+  if (text == null) return { text, jsx: [] };
+  const jsx = [];
+  const lines = String(text).split('\n');
+  const out = [];
+  let fence = null, math = false, blankNext = false;
+  const whole = plainWords(text);
+  for (const line of lines) {
+    const inside = !!fence || math;
+    let emitted = line;
+    if (!inside && line.includes('![')) {
+      const images = [...line.matchAll(IMAGE_MD)];
+      const bare = images.length && !line.replace(IMAGE_MD, '').trim();
+      if (bare && !/^[ \t]/.test(line)) {
+        // a line of figures: blocks (a row when printed side by side), plus any image that is not a figure
+        const figs = [], keep = [];
+        for (const m of images) {
+          const fig = resolve(m[2]);
+          if (fig) figs.push(fig); else if (isUrl(m[2])) keep.push(m[0]);
+        }
+        const parts = [];
+        if (figs.length) {
+          // the text's own caption line ("*Фиг. 1*") already names the figure: no second caption under it
+          const blocks = figs.map(f => figureMarkdown(f.caption && whole.includes(plainWords(f.caption)) ? { ...f, caption: null } : f));
+          jsx.push(blocks.length > 1 ? `<div className="problem-figure-row">\n${blocks.join('\n')}\n</div>` : blocks[0]);
+          parts.push(token(jsx.length - 1));
+        }
+        if (keep.length) parts.push(keep.join(' '));
+        if (!parts.length) { emitted = null; }
+        else {
+          // a block always opens its own paragraph (also at the start: a part's label is prepended to the text)
+          if (!out.length || out[out.length - 1].trim()) out.push('');
+          parts.forEach((p, i) => { if (i) out.push(''); out.push(p); });
+          blankNext = true;
+          emitted = undefined;
+        }
+      } else if (!/^\s*\|/.test(line)) {
+        emitted = line.replace(IMAGE_MD, (m, alt, target) => {
+          const fig = resolve(target);
+          if (fig) { jsx.push(inlineFigureJsx(fig)); return token(jsx.length - 1); }
+          return isUrl(target) ? m : '';
+        });
+      } else {
+        // a table row: markdown stays (JSX in a cell is not safe); a placeholder becomes the figure's crop
+        emitted = line.replace(IMAGE_MD, (m, alt, target) => {
+          if (isUrl(target)) return m;
+          const fig = resolve(target);
+          return fig ? `![${alt}](${fig.url})` : '';
+        });
+      }
+    }
+    if (emitted !== undefined && emitted !== null) {
+      if (blankNext && emitted.trim()) out.push('');
+      if (emitted.trim()) blankNext = false;
+      out.push(emitted);
+    }
+    // fences and $$ blocks, as paragraphSpans reads them
+    const f = /^\s*(`{3,}|~{3,})/.exec(line);
+    if (fence) { if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null; }
+    else if (f) fence = f[1];
+    else if ((line.replace(/\\\$/g, '').match(/\$\$/g) || []).length % 2) math = !math;
+  }
+  return { text: out.join('\n'), jsx };
+}
+const restoreFigures = (rendered, jsx) => rendered == null ? rendered : String(rendered).replace(FIG_TOKEN, (m, i) => jsx[Number(i)] ?? '');
+
 const problemFigures = problem => [
   ...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...(problem.solution?.figures || []),
 ];
@@ -260,12 +376,12 @@ export function textLayerLines(tsv) {
   return { lines: out, heights };
 }
 // the moved figures the solution does not already show (same crop url, or the same box on the same page)
-function movedSolutionFigures(misplaced, solution) {
+function movedSolutionFigures(misplaced, solution, candidates) {
   const shown = [...(solution?.figures || [])];
   const text = solution?.statement || '';
   const out = [];
   for (const { fig } of misplaced) {
-    if (figureShownInline(fig, text)) continue;
+    if (figureShownInline(fig, text, candidates ?? [fig])) continue;
     if (shown.some(s => (fig.url && s.url === fig.url) || samePlace(figurePlace(s), figurePlace(fig)))) continue;
     shown.push(fig); out.push(fig);
   }
@@ -333,6 +449,19 @@ function afterEnd(text, after) {
   return k < 0 ? null : map[k + needle.length - 1] + 1;
 }
 
+// A paragraph break that falls inside a sentence: the paragraph before it ends in "," ";" or ":" and the one after it
+// goes on in lower case, with a sub-item ("а)", "- "), or with the formula the colon announces. A figure is never put
+// there (the photo between "at midday time:" and "in winter, in spring…"): it moves to the next break that ends a
+// sentence or an enumeration — the text a float figure is printed beside stays together.
+const OPEN_SENTENCE = /[,;:]$/;
+const GOES_ON = /^(?:\p{Ll}|\$|\**\s*[а-яa-z]\)|[-*+]\s|\d+[.)]\s)/u;
+export function splitsSentence(text, before, after) {
+  const end = String(text).slice(before.start, before.end).trimEnd().replace(/[*_\s]+$/, '');
+  const next = String(text).slice(after.start, after.end).trimStart();
+  return OPEN_SENTENCE.test(end) && GOES_ON.test(next);
+}
+const MAX_SENTENCE_MOVES = 8;
+
 // the paragraph slot a figure goes into: the number of paragraphs of the field printed before it
 export function anchorSlot(text, after) {
   const spans = paragraphSpans(text);
@@ -340,7 +469,9 @@ export function anchorSlot(text, after) {
   const end = afterEnd(String(text ?? ''), String(after));
   if (end == null) return null;
   const i = spans.findIndex(s => s.end >= end);
-  return i < 0 ? spans.length : i + 1;
+  let slot = i < 0 ? spans.length : i + 1;
+  for (let moved = 0; moved < MAX_SENTENCE_MOVES && slot > 0 && slot < spans.length && splitsSentence(text, spans[slot - 1], spans[slot]); moved++) slot++;
+  return slot;
 }
 
 // Decide where each rendered figure block goes. groups: [{ figs, solution }] in page order (statement figures,
@@ -398,14 +529,15 @@ function splitAtFigures(text, placed) {
   return out;
 }
 
-function sourceText(text, problem) {
-  let rendered = mdText(newestInlineCrops(text, problemFigures(problem)));
+function sourceText(text, problem, resolve = () => null) {
+  const placed = placeInlineFigures(newestInlineCrops(text, problemFigures(problem)), resolve);
+  let rendered = mdText(placed.text);
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
   for (const passage of [...(problem.sourceLayout?.underlines || [])].sort((a, b) => b.length - a.length)) {
     const needle = mdText(passage);
     if (needle) rendered = rendered.split(needle).join(`<u>${needle}</u>`);
   }
-  return rendered;
+  return restoreFigures(rendered, placed.jsx);
 }
 
 function documentNoteLines(paper, position) {
@@ -414,8 +546,10 @@ function documentNoteLines(paper, position) {
   ]);
 }
 
-// Short Bulgarian names, same as the archive's COMPETITION_META (src/archive/labels.ts).
-const COMPETITION_SHORT = { NOF: 'НОФ', NAO: 'НОА', ESF: 'НЕСФ', PSF: 'НПСФ' };
+// The sidebar's own code (src/problems/tree.ts, transpiled on first use): the page title and the source line use the
+// same functions as the sidebar row and the competition node, so the two cannot drift apart.
+let treeModule = null;
+const tree = () => treeModule || (treeModule = loadTreeModule());
 const MONTHS_BG = ['януари', 'февруари', 'март', 'април', 'май', 'юни', 'юли', 'август', 'септември', 'октомври', 'ноември', 'декември'];
 
 // Names on the page come from the navigation overlays, the same ones the sidebar uses (scripts/lib/navigation.mjs):
@@ -436,7 +570,7 @@ function dateBg(iso) {
 // "НОА 2026, II кръг (областен), 9–10 клас" — what the page heading leads with.
 function paperDescriptor(paper) {
   return [
-    `${COMPETITION_SHORT[paper.competition] ?? paper.competition} ${paper.year}`,
+    `${tree().competitionShortName(paper.competition)} ${paper.year}`,
     pageRound(paper) || null,
     gradeLabel(paper.grade, paper.subject, paper.competition),
     paperSuffix(paper, nav.labels),
@@ -525,9 +659,17 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   // the figure blocks the page shows (figures the text already shows inline are not repeated), and where the anchor
   // overlay puts them; an unanchored figure keeps its place: statement figures after the statement, a part's after
   // the part, solution figures (and the ones moved out of the statement) at the end of the solution spoiler
-  const statementFigs = figuresNotInline(problem.figures, problem.statement, problem.statementAfterParts, ...partTexts).filter(inStatement);
-  const partFigs = (problem.parts ?? []).map(part => figuresNotInline(part.figures, part.statement, part.statementAfter).filter(inStatement));
-  const solutionFigures = [...figuresNotInline(sol?.figures, sol?.statement), ...movedSolutionFigures(misplaced, sol)];
+  // the figures a text may show inline (placeInlineFigures): the statement side only its own figures (a solution
+  // figure named there stays out of the statement: the spoiler), the solution side its own, the moved ones and the
+  // statement's
+  const statementTexts = [problem.statement, problem.statementAfterParts, ...partTexts];
+  const statementCandidates = [...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || [])].filter(inStatement);
+  const solutionCandidates = [...(sol?.figures || []), ...misplaced.map(m => m.fig), ...statementCandidates];
+  const resolveStatement = target => resolveFigureTarget(target, statementCandidates);
+  const resolveSolution = target => resolveFigureTarget(target, solutionCandidates);
+  const statementFigs = figuresNotInline(problem.figures, statementTexts, statementCandidates).filter(inStatement);
+  const partFigs = (problem.parts ?? []).map(part => figuresNotInline(part.figures, statementTexts, statementCandidates).filter(inStatement));
+  const solutionFigures = [...figuresNotInline(sol?.figures, [sol?.statement], solutionCandidates), ...movedSolutionFigures(misplaced, sol, solutionCandidates)];
   // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
   const partText = part => part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
   const fields = { statement: problem.statement, statementAfterParts: problem.statementAfterParts ?? '', 'solution/statement': sol?.statement ?? '' };
@@ -540,7 +682,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   const fieldLines = (field, text, render, always = false) => plan.slots.has(field)
     ? splitAtFigures(text, plan.slots.get(field)).flatMap(piece => piece.figures ?? [render(piece.text), ''])
     : text || always ? [render(text), ''] : [];
-  lines.push(...fieldLines('statement', problem.statement, t => sourceText(t, problem).trimEnd(), true));
+  lines.push(...fieldLines('statement', problem.statement, t => sourceText(t, problem, resolveStatement).trimEnd(), true));
   for (const fig of unanchored(statementFigs)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
     problem.parts.forEach((part, k) => {
@@ -550,19 +692,19 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       const text = partText(part);
       const label = part.label && part.label !== '*' ? `**${part.label}** ` : ''; // an unlabelled printed part has an empty label
       const placed = plan.slots.get(`parts/${k}/statement`);
-      if (!placed) lines.push(`${label}${sourceText(text, problem)}${pts}`, '');
+      if (!placed) lines.push(`${label}${sourceText(text, problem, resolveStatement)}${pts}`, '');
       else {
         // the label leads the part's first paragraph and the points close its last, figures between them
         const pieces = splitAtFigures(text, placed);
         if (!pieces.some(p => p.text != null)) pieces.unshift({ text: '' });
         const first = pieces.findIndex(p => p.text != null), last = pieces.map(p => p.text != null).lastIndexOf(true);
-        pieces.forEach((piece, i) => lines.push(...(piece.figures ?? [`${i === first ? label : ''}${sourceText(piece.text, problem)}${i === last ? pts : ''}`, ''])));
+        pieces.forEach((piece, i) => lines.push(...(piece.figures ?? [`${i === first ? label : ''}${sourceText(piece.text, problem, resolveStatement)}${i === last ? pts : ''}`, ''])));
       }
       for (const fig of unanchored(partFigs[k])) lines.push(figureMarkdown(fig), '');
-      lines.push(...fieldLines(`parts/${k}/statementAfter`, part.statementAfter, t => sourceText(t, problem)));
+      lines.push(...fieldLines(`parts/${k}/statementAfter`, part.statementAfter, t => sourceText(t, problem, resolveStatement)));
     });
   }
-  lines.push(...fieldLines('statementAfterParts', problem.statementAfterParts, t => sourceText(t, problem)));
+  lines.push(...fieldLines('statementAfterParts', problem.statementAfterParts, t => sourceText(t, problem, resolveStatement)));
   const answers = [
     ...(problem.answer ? [{ label: '', answer: problem.answer }] : []),
     ...(problem.parts ?? []).filter(p => p.answer),
@@ -584,7 +726,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
     }
     if (sol?.statement) lines.push('<Spoiler title="Покажи официалното решение">', '');
     else if (solutionFigures.length) lines.push('<Spoiler title="Покажи фигурите от официалното решение">', '');
-    if (sol?.statement || solutionFigures.length) lines.push(...fieldLines('solution/statement', sol?.statement, t => sourceText(t, problem)));
+    if (sol?.statement || solutionFigures.length) lines.push(...fieldLines('solution/statement', sol?.statement, t => sourceText(t, problem, resolveSolution)));
     for (const fig of unanchored(solutionFigures)) lines.push(figureMarkdown(fig), '');
     if (sol?.statement || solutionFigures.length) lines.push('', '</Spoiler>', '');
   }
@@ -619,18 +761,11 @@ function shortRound(round) {
 }
 
 // "Задача 3. Title" with the display number (question-numbers.json: the printed Q2 of a one-question file stored as
-// 1, or "2A" for a question's part); a title that already starts with "Задача" is used as is, a title that repeats
-// the number ("2A. Optical properties") drops the repeat, and a non-numeric stored number ("Практически 1") is used
-// as the label itself.
+// 1, or "2A" for a question's part) — exactly the sidebar row (tree.ts problemDisplayName): the display number always
+// leads, a title that repeats it ("2A. Optical properties", "10-1 «Сифон»") drops the repeat, a title that prints
+// another number keeps it after the display number, and a non-numeric number ("Практически 1") is the label itself.
 export function problemName(problem, numbers = nav.numbers) {
-  // (a \b after Cyrillic never matches, so the word boundary is spelled out)
-  if (problem.title && /^Задача(?![\p{L}\p{N}])/u.test(problem.title)) return problem.title;
-  const number = displayNumber(problem, numbers);
-  const overlaid = number !== problem.number;
-  const label = Number.isInteger(number) || (overlaid && /^\d+(?:\.\d+)?[A-Za-z]?$/.test(String(number))) ? `Задача ${number}` : String(number);
-  const escaped = String(number).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const title = problem.title && overlaid ? problem.title.replace(new RegExp(`^${escaped}\\s*[.:)]\\s*`), '') : problem.title;
-  return `${label}${title ? '. ' + title : ''}`;
+  return tree().problemDisplayName(problem, numbers);
 }
 
 function problemInfo(paper, problem) {

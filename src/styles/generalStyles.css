@@ -505,6 +505,25 @@ html.transitioning-color-scheme * {
 .markdown .problem-figure-row > .problem-figure img {
   width: 100%;
 }
+/* a figure printed inside a line of text (scripts/problems-to-site.mjs placeInlineFigures): at its printed size, on
+   the line, never wider than the column */
+.markdown img.problem-inline-figure {
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 100%;
+  height: auto;
+  margin: 0.25rem 0.375rem;
+  mix-blend-mode: multiply;
+}
+.markdown img.problem-inline-figure--sized {
+  width: min(var(--fig-w, 100%), var(--fig-max, 100%));
+}
+.dark .markdown img.problem-inline-figure {
+  mix-blend-mode: normal;
+  background-color: #fff;
+  border-radius: 0.25rem;
+  filter: brightness(0.94);
+}
 @media (max-width: 639px) {
   /* a phone's column is narrower than a printed one: the figure may take the whole column, still never upscaled */
   .markdown .problem-figure {

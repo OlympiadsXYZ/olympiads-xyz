@@ -9,7 +9,11 @@
 //   content/question-numbers.json display number per problem where the stored one is not the printed one
 // scripts/lib/navigation.mjs applies the same lookups to the problem pages, and
 // scripts/check-navigation.mjs checks the two agree and gates the result.
-import { COMPETITION_META, SCIENCE_LABELS } from '../archive/labels';
+import {
+  COMPETITION_META,
+  SCIENCE_LABELS,
+  canonicalCompetition,
+} from '../archive/labels';
 
 export type TreeProblem = {
   id: string;
@@ -138,8 +142,27 @@ export function roundLabel(
 ): string | null {
   const own = labels?.papers?.[paper.id];
   if (typeof own === 'string') return own;
-  const label = labels?.rounds?.[paper.competition]?.[roundKey(paper)];
+  const key = roundKey(paper);
+  const label =
+    labels?.rounds?.[paper.competition]?.[key] ??
+    labels?.rounds?.[canonicalCompetition(paper.competition)]?.[key];
   return typeof label === 'string' ? label : null;
+}
+
+/** The competition a paper is listed under (a legacy code such as VSERUSIYSKA joins its canonical one). */
+export function paperCompetition(paper: PaperFile['paper']): string {
+  return canonicalCompetition(paper.competition);
+}
+
+/** Does the site have a name for this competition (COMPETITION_META, directly or through an alias)? */
+export function hasCompetitionName(code: string): boolean {
+  return !!COMPETITION_META[canonicalCompetition(code)];
+}
+
+/** The short name of a competition in the sidebar and in a page's source line ("НОФ", "ВсОШ"). */
+export function competitionShortName(code: string): string {
+  const canonical = canonicalCompetition(code);
+  return COMPETITION_META[canonical]?.short ?? canonical;
 }
 
 /**
@@ -174,34 +197,171 @@ export function displayNumber(
   return own != null ? own : problem.number;
 }
 
+// A grade-problem code printed at the head of a problem title, in the forms the
+// all-grade papers use: "10-1 «Сифон»" (BelPhO), "10 класс. Задача №1. …",
+// "8-9 класс, задача 3", "Ученици X-XII клас, Задача 1", "10.1. Title".
+// Returns the grade, the problem number and the length of the head.
+const GRADE_CODES: [RegExp, (m: RegExpExecArray) => [string, string]][] = [
+  [
+    /^\s*(\d{1,2}\s*[-–]\s*\d{1,2})\s*класс?[ыа]?\.?,?\s*задача\s*№?\s*(\d{1,2})(?!\d)\s*[.:]?\s*/iu,
+    m => [m[1], m[2]],
+  ],
+  [
+    /^\s*(\d{1,2})\s*класс?\.?,?\s*задача\s*№?\s*(\d{1,2})(?!\d)\s*[.:]?\s*/iu,
+    m => [m[1], m[2]],
+  ],
+  [
+    /^\s*Ученици\s+([IVX]+\s*[-–÷]\s*[IVX]+)\s*клас,?\s*Задача\s*(\d{1,2})(?!\d)\s*[.:]?\s*/u,
+    m => [m[1], m[2]],
+  ],
+  [/^\s*(\d{1,2})-(\d{1,2})(?![\d.–-]|\s*клас)\s*[.:]?\s*/u, m => [m[1], m[2]]],
+  [/^\s*(\d{1,2})\.(\d)\.?(?=\s)\s*/u, m => [m[1], m[2]]],
+];
+const dashes = (s: string) => s.replace(/\s*[-–÷]\s*/g, '–');
+
+/** { grade, n, head } of a title that opens with a grade-problem code, else null. */
+export function gradeCode(
+  title: string | null | undefined
+): { grade: string; n: string; head: number } | null {
+  for (const [re, parts] of GRADE_CODES) {
+    const m = re.exec(String(title ?? ''));
+    if (m) {
+      const [grade, n] = parts(m);
+      return { grade: dashes(grade), n, head: m[0].length };
+    }
+  }
+  return null;
+}
+
+/** Does a display number name this grade-problem code ("10-1", "10.1", "X–XII.1" for grade X-XII, problem 1)? */
+export function numberNamesCode(
+  number: number | string,
+  code: { grade: string; n: string }
+): boolean {
+  const s = dashes(String(number));
+  return [`${code.grade}.${code.n}`, `${code.grade}–${code.n}`].includes(s);
+}
+
 /**
- * A problem's title for the sidebar row. With an overlaid number, a title
- * that repeats it ("2A. Optical properties") drops the repeat, as the page
- * title does (scripts/problems-to-site.mjs problemName).
+ * A problem's title for the sidebar row and the page title. With an overlaid
+ * number, a title that repeats it drops the repeat: "2A. Optical properties",
+ * "10-1 «Сифон»" and "10 класс. Задача №1. Эффективная масса" shown as 10.1.
  */
-function rowTitle(
+export function rowTitle(
   title: string | null | undefined,
   number: number | string,
   stored: number | string
 ): string | null {
   if (!title) return null;
   if (number === stored) return title;
+  const code = gradeCode(title);
+  if (code && numberNamesCode(number, code))
+    return title.slice(code.head).trim() || null;
   const escaped = String(number).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return title.replace(new RegExp(`^${escaped}\\s*[.:)]\\s*`), '') || null;
+  return (
+    title
+      .replace(new RegExp(`^${escaped}(?:\\s*[.:)]\\s*|\\s+(?=\\S)|$)`), '')
+      .trim() || null
+  );
+}
+
+const ROMAN_VALUES: { [r: string]: number } = {
+  I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8, IX: 9, X: 10, XI: 11, XII: 12,
+};
+// "Задача 3. …", "Задача №2 …", "Задача II. …", "Задача 10.1 …", "Задача 8 (група α)", "Задача – оценка"
+const TITLE_HEAD =
+  /^Задача(?![\p{L}\p{N}])\s*(?:№\s*)?(?:(\d+(?:\.\d+)*[A-Za-zА-Яа-я]?|[IVX]+)(?![\p{L}\p{N}]|\.\d))?/u;
+
+/** The number a row shows: "Задача 3", "Задача 2A", or a non-numeric number as is ("Практически 1"). */
+export function numberLabel(number: number | string): string {
+  return typeof number === 'number' || /^\d/.test(String(number))
+    ? `Задача ${number}`
+    : String(number);
 }
 
 /**
- * "Задача 3. Title" — the same rule as the page title: a title that already
- * starts with "Задача" is used as is, a non-numeric number ("Практически 1")
- * is the label itself.
+ * "Задача 3. Title" — the sidebar row and the page title (the page generator
+ * loads this function, so both read the same). The row always leads with the
+ * display number. A title that starts with "Задача" is kept as is only when it
+ * prints that same number ("Задача 4. Звезди" for 4; "Задача 10.1 …" for
+ * problem 1 of a grade-10 sheet; "Задача 8 (група α)" for 8α). Otherwise the
+ * display number leads and the printed heading follows: "Задача 21. Задача 1.
+ * Химическа главоблъсканица" (the second part of a paper whose test holds
+ * 1–20), "Задача 2. Праволинейно движение" for a printed "Задача II.",
+ * "Задача 2 – оценка" for "Задача – оценка", "Задача 4" for a title that is
+ * only the points ("Задача 3 т.").
  */
-export function problemLabel(p: TreeProblem): string {
-  if (p.title && /^Задача(?![\p{L}\p{N}])/u.test(p.title)) return p.title;
-  const label =
-    typeof p.number === 'number' || /^\d/.test(String(p.number))
-      ? `Задача ${p.number}`
-      : String(p.number);
-  return `${label}${p.title ? '. ' + p.title : ''}`;
+export function problemLabel(p: { number: number | string; title?: string | null }): string {
+  const label = numberLabel(p.number);
+  const title = p.title ? p.title.trim() : '';
+  if (!title) return label;
+  const m = TITLE_HEAD.exec(title);
+  if (!m) return `${label}. ${title}`;
+  const printed = m[1];
+  const shown = String(p.number);
+  const rest = title.slice(m[0].length);
+  const numeric = label !== shown;
+  if (printed != null) {
+    if (printed === shown) return title;
+    // "Задача 10.1" on problem 1 of a grade-10 sheet; "Задача 8 (група α)" on 8α
+    const graded = /^(\d+)\.(\d+)$/.exec(printed);
+    if (graded && graded[2] === shown) return title;
+    if (/^\d+$/.test(printed) && new RegExp(`^${printed}\\p{L}+$`, 'u').test(shown)) return title;
+    // only the points: "Задача 3 т."
+    if (/^\s*(?:т|точк[аи])\.?\s*$/u.test(rest)) return label;
+    const value = ROMAN_VALUES[printed] ?? (/^\d+$/.test(printed) ? Number(printed) : null);
+    // "Задача II." on problem 2; "Задача 1." on "Наблюдателен 1" (a named tour numbers its own problems)
+    const own = numeric ? shown : /(\d+)$/.exec(shown)?.[1];
+    if (value != null && String(value) === own) {
+      const tail = rest.replace(/^\s*[.:)]?\s*/, '');
+      return tail ? `${label}. ${tail}` : label;
+    }
+    return `${label}. ${title}`;
+  }
+  // no printed number: "Задача", "Задача – оценка", "Задача „три в едно“", "Задача о максимумах"
+  if (!rest.trim()) return label;
+  if (!numeric) return `${label}. ${title}`;
+  if (/^\s*[.:]/.test(rest)) {
+    const tail = rest.replace(/^\s*[.:]\s*/, '');
+    return tail ? `${label}. ${tail}` : label;
+  }
+  return `${label} ${rest.trim()}`;
+}
+
+/** The problem's full name, as the page title and the sidebar row show it. */
+export function problemDisplayName(
+  problem: { id: string; number: number | string; title?: string | null },
+  numbers?: QuestionNumbers | null
+): string {
+  const number = displayNumber(problem, numbers);
+  return problemLabel({
+    number,
+    title: rowTitle(problem.title, number, problem.number),
+  });
+}
+
+/**
+ * Does a row label lead with its display number? The navigation gate checks
+ * every row with it: a label that does not is a row whose visible number
+ * contradicts the number the node is sorted and checked by.
+ */
+export function labelLeadsWithNumber(
+  label: string,
+  number: number | string
+): boolean {
+  const lead = numberLabel(number);
+  if (label.startsWith(lead) && !/^(?:[\p{L}\p{N}]|\.\d)/u.test(label.slice(lead.length)))
+    return true;
+  // a verbatim printed heading problemLabel accepts for this number
+  const m = TITLE_HEAD.exec(label);
+  if (!m || m[1] == null) return false;
+  const shown = String(number);
+  const graded = /^(\d+)\.(\d+)$/.exec(m[1]);
+  return (
+    m[1] === shown ||
+    (graded != null && graded[2] === shown) ||
+    (/^\d+$/.test(m[1]) && new RegExp(`^${m[1]}\\p{L}+$`, 'u').test(shown))
+  );
 }
 
 // Tour names used only to tell apart the papers of one node whose problem
@@ -215,7 +375,7 @@ const ROUND_TYPE_LABELS: { [code: string]: string } = {
   observation: 'наблюдения',
   'data-analysis': 'анализ на данни',
   team: 'отборен тур',
-  mixed: 'смесен тур',
+  mixed: 'теория и практика',
 };
 const ROUND_TYPE_ORDER = Object.keys(ROUND_TYPE_LABELS);
 
@@ -469,8 +629,9 @@ export function assembleProblemsTree(
 
     let comps = subjects.get(paper.subject);
     if (!comps) subjects.set(paper.subject, (comps = new Map()));
-    let years = comps.get(paper.competition);
-    if (!years) comps.set(paper.competition, (years = new Map()));
+    const competition = paperCompetition(paper);
+    let years = comps.get(competition);
+    if (!years) comps.set(competition, (years = new Map()));
     let list = years.get(paper.year);
     if (!list) years.set(paper.year, (list = []));
     list.push({ paper, problems });
@@ -493,7 +654,7 @@ export function assembleProblemsTree(
       const meta = COMPETITION_META[code];
       compNodes.push({
         code,
-        short: meta?.short ?? code,
+        short: competitionShortName(code),
         name: meta?.name ?? code,
         count: yearList.reduce((s, y) => s + y.count, 0),
         years: yearList,
