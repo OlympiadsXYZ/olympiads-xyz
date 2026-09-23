@@ -75,6 +75,137 @@ function figuresNotInline(figs, ...texts) {
   return (figs ?? []).filter(f => !(f.url && joined.includes(f.url)));
 }
 
+// Solution figures stored in the statement (problem.figures / parts[].figures) would be shown under «Условие», outside
+// the solution spoiler — a leaked answer (nao-2000-ii-7-9 p3, spba-2023-ii-11-pract p1, ioaa-2016-theory-qp p12 …).
+// Published JSON is hash-bound to its receipts, so the page moves them instead of the data. A statement figure belongs
+// to the official solution when
+//   'id'       its id (or its crop's file name) is a solution crop: "-sol-" / "sol-fig" (p3-sol-fig1),
+//   'document' it was cropped from the solutions document (source.document / tx.document === 'solutions'),
+//   'position' the paper is one combined problems+solutions PDF (the SPbA "решения" pattern: no separate solutions
+//              document) and the figure lies at or after the first figure of the problem's own solution (same page
+//              and a lower or equal top edge, or a later page) — the statement is printed before its solution.
+//   'listed'   SOLUTION_FIGURES below names it: a combined-PDF solution drawing whose solution has no figure of its own,
+//              so nothing anchors the 'position' rule.
+// Solution figures that repeat a statement figure's url are the statement figure reused (esf-2014, psf-2019) and
+// never mark where the solution starts.
+const SOLUTION_CROP = /-sol-|sol-fig/i;
+// problem id -> statement figure ids that are the official solution's drawing. Each one confirmed against the PDF
+// (2026-09-22): the crop lies below the printed «Решение:» heading of its own problem in the combined SPbA PDF.
+// Content JSON is hash-bound to its receipt, so the page moves them. validate.mjs --manifest finds new cases
+// mechanically (figuresBelowSolutionHeading) before they are published.
+export const SOLUTION_FIGURES = {
+  'spba-2025-ii-5-6-theo-p1': ['p1-fig1'],
+  'spba-2025-ii-5-6-theo-p3': ['p3-fig1'],
+  'spba-2025-ii-7-8-theo-p4': ['p4-fig1'],
+  'spba-2025-ii-10-theo-p3': ['p3-fig1'],
+  'spba-2026-ii-9-9theo-p4': ['p4-fig1'],
+  'spba-2026-ii-10-10theo-p5': ['p5-fig1'],
+};
+export function figureDocument(fig) { return fig?.source?.document || fig?.tx?.document || 'problems'; }
+function figurePlace(fig) {
+  if (Array.isArray(fig?.source?.pdfRect) && Number.isInteger(fig.source.page)) return { doc: figureDocument(fig), page: fig.source.page, scheme: 'pdf', rect: fig.source.pdfRect };
+  if (Array.isArray(fig?.tx?.bbox) && Number.isInteger(fig.tx.page)) return { doc: figureDocument(fig), page: fig.tx.page, scheme: 'bbox', rect: fig.tx.bbox };
+  return null;
+}
+const samePlace = (a, b) => !!a && !!b && a.doc === b.doc && a.page === b.page && a.scheme === b.scheme && a.rect.join() === b.rect.join();
+const notBefore = (a, b) => a.page > b.page || (a.page === b.page && a.rect[1] >= b.rect[1]);
+const BBOX_SCALE = 1000; // tx.bbox units per page side (scripts/tx/lib.mjs)
+const cropName = url => String(url || '').split('/').pop();
+function statementFigures(problem) {
+  return [
+    ...(problem.figures || []).map((fig, j) => ({ fig, where: 'statement', path: `figures/${j}` })),
+    ...(problem.parts || []).flatMap((part, k) => (part.figures || []).map((fig, j) => ({ fig, where: `part ${part.label ?? k}`, path: `parts/${k}/figures/${j}` }))),
+  ];
+}
+// the solutions are printed in their own document (the 'position' rule and figuresBelowSolutionHeading do not apply)
+export function hasSeparateSolutions(paper, problem) {
+  return !!((paper?.solutionSource?.archiveKey && paper.solutionSource.archiveKey !== paper?.source?.archiveKey)
+    || [...(problem.solution?.figures || []), ...statementFigures(problem).map(x => x.fig)].some(f => figureDocument(f) === 'solutions')
+    || (problem.sourceSpans || problem.tx?.sourceSpans || []).some(s => s.document === 'solutions'));
+}
+export function misplacedSolutionFigures(paper, problem) {
+  const inStatement = statementFigures(problem);
+  if (!inStatement.length) return [];
+  const solutionFigures = problem.solution?.figures || [];
+  const statementUrls = new Set(inStatement.map(x => x.fig.url).filter(Boolean));
+  const listed = new Set(SOLUTION_FIGURES[problem.id] || []);
+  const anchors = hasSeparateSolutions(paper, problem) ? [] : solutionFigures
+    .filter(f => !(f.url && statementUrls.has(f.url)))
+    .map(figurePlace).filter(p => p && p.doc === 'problems');
+  const out = [];
+  for (const item of inStatement) {
+    const { fig } = item, place = figurePlace(fig);
+    const reason = SOLUTION_CROP.test(fig.id || '') || SOLUTION_CROP.test(cropName(fig.url)) ? 'id'
+      : figureDocument(fig) === 'solutions' ? 'document'
+      : listed.has(fig.id) ? 'listed'
+      : place && anchors.some(a => a.scheme === place.scheme && a.doc === place.doc && notBefore(place, a)) ? 'position'
+      : null;
+    if (reason) out.push({ ...item, reason });
+  }
+  return out;
+}
+// A combined problems+solutions PDF prints each solution under a heading ("Решение:", "11.3. Возможное решение.",
+// "Solution"). A statement figure lying below its own problem's heading is most likely the solution's drawing — the
+// case the 'position' rule cannot see when the solution has no figure of its own (spba-2025-ii-7-8-theo p4). Given
+// data sheets are sometimes printed after the solution too (spba-2023-ii-7-8-pract p1), so this only feeds a
+// validate.mjs warning, never the page. `layer` is the problems PDF's text layer: { lines: [{ page, top, text }]
+// in page/top order, heights: { page: points } } (textLayerLines parses pdftotext -tsv into it).
+// a heading starts its line with a capital ("…в начало своего\nрешения." is a wrapped statement word, vserusiyska-2022-regional-7-e2)
+const SOLUTION_HEADING = /^\s*(?:\d+(?:\.\d+)*\.?\s*)?(?:(?:Возможное|Примерное|Авторское)\s+решени[ея]|Решени[ея]|РЕШЕНИ[ЕЯ]|Solution|SOLUTION)(?![\p{L}\p{N}])/u;
+const letters = t => String(t || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
+export function figuresBelowSolutionHeading(paper, problem, layer) {
+  if (!layer?.lines?.length || hasSeparateSolutions(paper, problem)) return [];
+  // where the problem starts: the first plain words of its statement (before any math, markup or printed number)
+  const plain = String(problem.statement || '').split('$')[0].replace(/^[\s*_#]*(?:\d+\s*[.)]|задача\s*№?\s*\d+[.:]?)?/iu, '');
+  const key = letters(plain).slice(0, 20);
+  if (key.length < 8) return [];
+  let joined = '', owner = [];
+  layer.lines.forEach((line, i) => { const t = letters(line.text); joined += t; owner.push(...Array(t.length).fill(i)); });
+  const at = joined.indexOf(key);
+  if (at < 0) return [];
+  const heading = layer.lines.findIndex((line, i) => i > owner[at] && SOLUTION_HEADING.test(line.text));
+  if (heading < 0) return [];
+  const { page, top } = layer.lines[heading];
+  const misplaced = new Set(misplacedSolutionFigures(paper, problem).map(m => m.fig));
+  const out = [];
+  for (const item of statementFigures(problem)) {
+    const place = figurePlace(item.fig);
+    if (!place || place.doc !== 'problems' || misplaced.has(item.fig)) continue;
+    const figTop = place.scheme === 'pdf' ? place.rect[1] : layer.heights?.[place.page] ? place.rect[1] / BBOX_SCALE * layer.heights[place.page] : null;
+    if (figTop == null) continue;
+    if (place.page > page || (place.page === page && figTop >= top)) out.push({ ...item, heading: { page, text: layer.lines[heading].text.trim().slice(0, 40) } });
+  }
+  return out;
+}
+// pdftotext -tsv output -> the layer figuresBelowSolutionHeading reads (-bbox-layout aborts on some PDFs' metadata:
+// poppler 26 throws out_of_range writing <title> for spba-2025-ii-7-8-theo)
+export function textLayerLines(tsv) {
+  const lines = [], heights = {};
+  let line = null;
+  for (const row of String(tsv).split('\n')) {
+    const c = row.split('\t');
+    if (c.length < 12 || !/^\d+$/.test(c[0])) continue;
+    const level = Number(c[0]), page = Number(c[1]), top = Number(c[7]);
+    if (level === 1) heights[page] = Number(c[9]) || null;
+    else if (level === 4) lines.push(line = { page, top, text: '' });
+    else if (level === 5 && line) line.text += (line.text ? ' ' : '') + c.slice(11).join('\t');
+  }
+  const out = lines.filter(l => l.text.trim()).sort((a, b) => a.page - b.page || a.top - b.top);
+  return { lines: out, heights };
+}
+// the moved figures the solution does not already show (same crop url, or the same box on the same page)
+function movedSolutionFigures(misplaced, solution) {
+  const shown = [...(solution?.figures || [])];
+  const text = solution?.statement || '';
+  const out = [];
+  for (const { fig } of misplaced) {
+    if (fig.url && text.includes(fig.url)) continue;
+    if (shown.some(s => (fig.url && s.url === fig.url) || samePlace(figurePlace(s), figurePlace(fig)))) continue;
+    shown.push(fig); out.push(fig);
+  }
+  return out;
+}
+
 function sourceText(text, problem) {
   let rendered = mdText(text);
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
@@ -193,7 +324,9 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push(sourceText(problem.statement, problem).trimEnd());
   lines.push('');
   const partTexts = (problem.parts ?? []).flatMap(p => [p.statement, p.statementAfter]);
-  for (const fig of figuresNotInline(problem.figures, problem.statement, problem.statementAfterParts, ...partTexts)) lines.push(figureMarkdown(fig), '');
+  const misplaced = misplacedSolutionFigures(paper, problem);
+  const inStatement = fig => !misplaced.some(m => m.fig === fig);
+  for (const fig of figuresNotInline(problem.figures, problem.statement, problem.statementAfterParts, ...partTexts).filter(inStatement)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
     for (const part of problem.parts) {
       const printedPoints = /\*{1,2}(\d+(?:[.,]\d+)?)\s*(?:т\.|точк[аи]\.?)[;:]?\*{1,2}\s*$/u.exec(String(part.statement));
@@ -203,7 +336,7 @@ function problemMdx(paper, problem, state, sourceFile) {
       const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
       lines.push(`${part.label && part.label !== '*' ? `**${part.label}** ` : ''}${sourceText(text, problem)}${pts}`); // an unlabelled printed part has an empty label
       lines.push('');
-      for (const fig of figuresNotInline(part.figures, part.statement, part.statementAfter)) lines.push(figureMarkdown(fig), '');
+      for (const fig of figuresNotInline(part.figures, part.statement, part.statementAfter).filter(inStatement)) lines.push(figureMarkdown(fig), '');
       if (part.statementAfter) lines.push(sourceText(part.statementAfter, problem), '');
     }
   }
@@ -221,14 +354,18 @@ function problemMdx(paper, problem, state, sourceFile) {
     lines.push('', '</Spoiler>', '');
   }
   const sol = problem.solution;
-  if (sol?.statement || sol?.incomplete) {
+  // solution figures found in the statement follow the solution's own figures, inside the same spoiler; without
+  // solution text (an incomplete solution, or none at all) the figures still stay behind a spoiler
+  const solutionFigures = [...figuresNotInline(sol?.figures, sol?.statement), ...movedSolutionFigures(misplaced, sol)];
+  if (sol?.statement || sol?.incomplete || solutionFigures.length) {
     lines.push('## Решение', '');
-    if (sol.incomplete) {
+    if (sol?.incomplete) {
       lines.push('<Warning title="Непълно решение">', mdText(sol.incompleteReason) || 'Решението предстои да бъде довършено.', '</Warning>', '');
     }
-    if (sol.statement) lines.push('<Spoiler title="Покажи официалното решение">', '', sourceText(sol.statement, problem), '');
-    for (const fig of figuresNotInline(sol.figures, sol.statement)) lines.push(figureMarkdown(fig), '');
-    if (sol.statement) lines.push('', '</Spoiler>', '');
+    if (sol?.statement) lines.push('<Spoiler title="Покажи официалното решение">', '', sourceText(sol.statement, problem), '');
+    else if (solutionFigures.length) lines.push('<Spoiler title="Покажи фигурите от официалното решение">', '');
+    for (const fig of solutionFigures) lines.push(figureMarkdown(fig), '');
+    if (sol?.statement || solutionFigures.length) lines.push('', '</Spoiler>', '');
   }
   lines.push(...documentNoteLines(paper, 'after-problem'));
   const classification = classificationSearch(problem.classification);
@@ -304,106 +441,112 @@ function renderAnswer(answer) {
   return answer.note ? mdText(answer.note) : '';
 }
 
-const records = readPapers(ROOT);
-const ledger = readJson(path.join(ROOT, 'content/problem-publication.json'), { papers: {} });
-const taxonomy = readJson(path.join(ROOT, 'content/problem-topics.json'), { topics: [] });
-const curation = readJson(path.join(ROOT, 'content/problem-curation.json'), { modules: {} });
-const manifestFile = path.join(ROOT, 'content/problem-generated.json');
-const prior = readJson(manifestFile, { version: 1, files: {}, problemIds: [], moduleTables: [] });
-const extra = readJson(EXTRA, { EXTRA_PROBLEMS: [] });
-const routesFile = path.join(ROOT, 'content/problem-routes.json');
-const routes = readJson(routesFile, {});
-const allIds = new Set(records.flatMap(r => r.data.problems.map(p => p.id)));
-const owned = new Set(prior.problemIds);
-const planned = new Map(), generated = new Map(), excluded = [];
+// Run as a script only: validate.mjs and the tests import misplacedSolutionFigures from this file.
+let taxonomy;
+function main() {
+  const records = readPapers(ROOT);
+  const ledger = readJson(path.join(ROOT, 'content/problem-publication.json'), { papers: {} });
+  taxonomy = readJson(path.join(ROOT, 'content/problem-topics.json'), { topics: [] });
+  const curation = readJson(path.join(ROOT, 'content/problem-curation.json'), { modules: {} });
+  const manifestFile = path.join(ROOT, 'content/problem-generated.json');
+  const prior = readJson(manifestFile, { version: 1, files: {}, problemIds: [], moduleTables: [] });
+  const extra = readJson(EXTRA, { EXTRA_PROBLEMS: [] });
+  const routesFile = path.join(ROOT, 'content/problem-routes.json');
+  const routes = readJson(routesFile, {});
+  const allIds = new Set(records.flatMap(r => r.data.problems.map(p => p.id)));
+  const owned = new Set(prior.problemIds);
+  const planned = new Map(), generated = new Map(), excluded = [];
 
-// Bootstrap ownership only from the exact generator signature. Never sweep
-// arbitrary authored solutions merely because they live under solutions/.
-if (!fs.existsSync(manifestFile)) {
-  const scan = dir => {
-    if (!fs.existsSync(dir)) return;
-    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-      const file = path.join(dir, e.name);
-      if (e.isDirectory()) scan(file);
-      else if (e.name.endsWith('.mdx')) {
-        const bytes = fs.readFileSync(file), text = bytes.toString('utf8');
-        const id = /^id: ([^\n]+)$/m.exec(text)?.[1];
-        if (id && text.includes("author: 'Olympiads XYZ · транскрипция на официалните материали'")) {
-          prior.files[path.relative(ROOT, file)] = sha256(bytes);
-          owned.add(id);
+  // Bootstrap ownership only from the exact generator signature. Never sweep
+  // arbitrary authored solutions merely because they live under solutions/.
+  if (!fs.existsSync(manifestFile)) {
+    const scan = dir => {
+      if (!fs.existsSync(dir)) return;
+      for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+        const file = path.join(dir, e.name);
+        if (e.isDirectory()) scan(file);
+        else if (e.name.endsWith('.mdx')) {
+          const bytes = fs.readFileSync(file), text = bytes.toString('utf8');
+          const id = /^id: ([^\n]+)$/m.exec(text)?.[1];
+          if (id && text.includes("author: 'Olympiads XYZ · транскрипция на официалните материали'")) {
+            prior.files[path.relative(ROOT, file)] = sha256(bytes);
+            owned.add(id);
+          }
         }
       }
+    };
+    scan(SOLUTIONS_DIR);
+  }
+  const oldMetadata = new Map(extra.EXTRA_PROBLEMS.map(p => [p.uniqueId, p]));
+  const moduleFiles = walkJson(path.join(ROOT, 'content')).filter(f => f.endsWith('.problems.json'));
+  const modules = moduleFiles.map(file => ({ file, data: readJson(file) }));
+  for (const { data } of modules) for (const [key, entries] of Object.entries(data)) if (key !== 'MODULE_ID' && Array.isArray(entries)) for (const p of entries) oldMetadata.set(p.uniqueId, p);
+  for (const record of records) {
+    const metadataErrors = problemMetadataErrors(record.data);
+    if (metadataErrors.length) throw new Error(`${record.relativePath}: ${metadataErrors.map(e => `${e.path}: ${e.message}`).join('; ')}`);
+    const state = publicationState(record, ledger);
+    if (!state.eligible) { excluded.push(`${record.data.paper.id}: ${state.reason}`); continue; }
+    const { paper, problems } = record.data;
+    for (const problem of problems) {
+      const relative = `solutions/${paper.subject}/${paper.id}/${problem.id}.mdx`;
+      planned.set(relative, problemMdx(paper, problem, state, record.relativePath));
+      generated.set(problem.id, problemInfo(paper, problem));
+      // D-P5: ids that were live before the route freeze keep their slug URL
+      // (content/problem-routes.json, bootstrapped from production); any id not
+      // in the frozen map is new and gets a stable id-based route.
+      if (!routes[problem.id]) routes[problem.id] = `/problems/${problem.id}`;
     }
-  };
-  scan(SOLUTIONS_DIR);
-}
-const oldMetadata = new Map(extra.EXTRA_PROBLEMS.map(p => [p.uniqueId, p]));
-const moduleFiles = walkJson(path.join(ROOT, 'content')).filter(f => f.endsWith('.problems.json'));
-const modules = moduleFiles.map(file => ({ file, data: readJson(file) }));
-for (const { data } of modules) for (const [key, entries] of Object.entries(data)) if (key !== 'MODULE_ID' && Array.isArray(entries)) for (const p of entries) oldMetadata.set(p.uniqueId, p);
-for (const record of records) {
-  const metadataErrors = problemMetadataErrors(record.data);
-  if (metadataErrors.length) throw new Error(`${record.relativePath}: ${metadataErrors.map(e => `${e.path}: ${e.message}`).join('; ')}`);
-  const state = publicationState(record, ledger);
-  if (!state.eligible) { excluded.push(`${record.data.paper.id}: ${state.reason}`); continue; }
-  const { paper, problems } = record.data;
-  for (const problem of problems) {
-    const relative = `solutions/${paper.subject}/${paper.id}/${problem.id}.mdx`;
-    planned.set(relative, problemMdx(paper, problem, state, record.relativePath));
-    generated.set(problem.id, problemInfo(paper, problem));
-    // D-P5: ids that were live before the route freeze keep their slug URL
-    // (content/problem-routes.json, bootstrapped from production); any id not
-    // in the frozen map is new and gets a stable id-based route.
-    if (!routes[problem.id]) routes[problem.id] = `/problems/${problem.id}`;
   }
-}
-// Keep routes reserved after withdrawal, so a title edit or later restoration
-// cannot change bookmarks or accidentally give an old route to another ID.
-const routeOwners = new Map();
-for (const [id, route] of Object.entries(routes)) {
-  if (!route.startsWith('/problems/') || route.includes('..')) throw new Error(`Invalid route for ${id}`);
-  if (routeOwners.has(route) && routeOwners.get(route) !== id) throw new Error(`Route collision: ${id}, ${routeOwners.get(route)}`);
-  routeOwners.set(route, id);
-}
-const inModules = new Set(), moduleTables = [];
-for (const { file, data } of modules) {
-  const selected = curation.modules[data.MODULE_ID];
-  if (selected || prior.moduleTables.includes(path.relative(ROOT, file))) {
-    data.archivePractice = (selected || []).filter(item => generated.has(item.problemId)).map(item => generated.get(item.problemId));
-    moduleTables.push(path.relative(ROOT, file));
-    planned.set(path.relative(ROOT, file), jsonText(data));
+  // Keep routes reserved after withdrawal, so a title edit or later restoration
+  // cannot change bookmarks or accidentally give an old route to another ID.
+  const routeOwners = new Map();
+  for (const [id, route] of Object.entries(routes)) {
+    if (!route.startsWith('/problems/') || route.includes('..')) throw new Error(`Invalid route for ${id}`);
+    if (routeOwners.has(route) && routeOwners.get(route) !== id) throw new Error(`Route collision: ${id}, ${routeOwners.get(route)}`);
+    routeOwners.set(route, id);
   }
-  for (const [key, entries] of Object.entries(data)) if (key !== 'MODULE_ID' && Array.isArray(entries)) for (const item of entries) {
-    if (allIds.has(item.uniqueId) && !generated.has(item.uniqueId)) throw new Error(`Ineligible paper referenced by authored module table: ${file}:${item.uniqueId}`);
-    inModules.add(item.uniqueId);
+  const inModules = new Set(), moduleTables = [];
+  for (const { file, data } of modules) {
+    const selected = curation.modules[data.MODULE_ID];
+    if (selected || prior.moduleTables.includes(path.relative(ROOT, file))) {
+      data.archivePractice = (selected || []).filter(item => generated.has(item.problemId)).map(item => generated.get(item.problemId));
+      moduleTables.push(path.relative(ROOT, file));
+      planned.set(path.relative(ROOT, file), jsonText(data));
+    }
+    for (const [key, entries] of Object.entries(data)) if (key !== 'MODULE_ID' && Array.isArray(entries)) for (const item of entries) {
+      if (allIds.has(item.uniqueId) && !generated.has(item.uniqueId)) throw new Error(`Ineligible paper referenced by authored module table: ${file}:${item.uniqueId}`);
+      inModules.add(item.uniqueId);
+    }
   }
-}
-const unmanaged = extra.EXTRA_PROBLEMS.filter(p => !owned.has(p.uniqueId) && !allIds.has(p.uniqueId));
-const metadata = [...unmanaged, ...[...generated.values()].filter(p => !inModules.has(p.uniqueId))].sort((a, b) => a.uniqueId.localeCompare(b.uniqueId));
-planned.set('content/extraProblems.json', jsonText({ ...extra, EXTRA_PROBLEMS: metadata }));
-planned.set('content/problem-routes.json', jsonText(Object.fromEntries(Object.entries(routes).sort(([a], [b]) => a.localeCompare(b)))));
-const manifest = { version: 1, files: Object.fromEntries([...planned].filter(([p]) => p.startsWith('solutions/')).map(([p, text]) => [p, sha256(text)])), problemIds: [...generated.keys()].sort(), moduleTables };
-planned.set('content/problem-generated.json', jsonText(manifest));
-let stale = 0;
-for (const [relative, digest] of Object.entries(prior.files)) {
-  if (planned.has(relative)) continue;
-  if (!relative.startsWith('solutions/') || relative.includes('..') || path.isAbsolute(relative)) throw new Error('Unsafe owned path: ' + relative);
-  const file = path.join(ROOT, relative);
-  if (!fs.existsSync(file)) continue;
-  stale++;
-  if (!check) {
-    if (sha256(fs.readFileSync(file)) !== digest) throw new Error(`Refusing to remove edited generated file: ${relative}; move the edit to canonical JSON first.`);
-    fs.unlinkSync(file);
+  const unmanaged = extra.EXTRA_PROBLEMS.filter(p => !owned.has(p.uniqueId) && !allIds.has(p.uniqueId));
+  const metadata = [...unmanaged, ...[...generated.values()].filter(p => !inModules.has(p.uniqueId))].sort((a, b) => a.uniqueId.localeCompare(b.uniqueId));
+  planned.set('content/extraProblems.json', jsonText({ ...extra, EXTRA_PROBLEMS: metadata }));
+  planned.set('content/problem-routes.json', jsonText(Object.fromEntries(Object.entries(routes).sort(([a], [b]) => a.localeCompare(b)))));
+  const manifest = { version: 1, files: Object.fromEntries([...planned].filter(([p]) => p.startsWith('solutions/')).map(([p, text]) => [p, sha256(text)])), problemIds: [...generated.keys()].sort(), moduleTables };
+  planned.set('content/problem-generated.json', jsonText(manifest));
+  let stale = 0;
+  for (const [relative, digest] of Object.entries(prior.files)) {
+    if (planned.has(relative)) continue;
+    if (!relative.startsWith('solutions/') || relative.includes('..') || path.isAbsolute(relative)) throw new Error('Unsafe owned path: ' + relative);
+    const file = path.join(ROOT, relative);
+    if (!fs.existsSync(file)) continue;
+    stale++;
+    if (!check) {
+      if (sha256(fs.readFileSync(file)) !== digest) throw new Error(`Refusing to remove edited generated file: ${relative}; move the edit to canonical JSON first.`);
+      fs.unlinkSync(file);
+    }
   }
-}
-let changed = 0;
-for (const [relative, text] of planned) {
-  const file = path.join(ROOT, relative);
-  if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== text) {
-    changed++;
-    if (!check) atomicWrite(file, text);
+  let changed = 0;
+  for (const [relative, text] of planned) {
+    const file = path.join(ROOT, relative);
+    if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== text) {
+      changed++;
+      if (!check) atomicWrite(file, text);
+    }
   }
+  console.log(`${records.length} papers; ${generated.size} eligible problems; ${excluded.length} excluded papers; ${changed} ${check ? 'stale' : 'updated'} artifacts; ${stale} obsolete pages${check ? '' : ' removed'}.`);
+  if (excluded.length) console.log(excluded.join('\n'));
+  if (check && (changed || stale)) process.exitCode = 1;
 }
-console.log(`${records.length} papers; ${generated.size} eligible problems; ${excluded.length} excluded papers; ${changed} ${check ? 'stale' : 'updated'} artifacts; ${stale} obsolete pages${check ? '' : ' removed'}.`);
-if (excluded.length) console.log(excluded.join('\n'));
-if (check && (changed || stale)) process.exitCode = 1;
+const invokedAsScript = (() => { try { return fs.realpathSync(process.argv[1] || '') === fs.realpathSync(fileURLToPath(import.meta.url)); } catch { return false; } })();
+if (invokedAsScript) main();

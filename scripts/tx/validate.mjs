@@ -7,6 +7,8 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { problemMetadataErrors } from '../lib/problem-classification.mjs';
 import { expectedProblemNumbers } from './source-numbering.mjs';
+import { spawnSync } from 'node:child_process';
+import { misplacedSolutionFigures, figuresBelowSolutionHeading, textLayerLines } from '../problems-to-site.mjs';
 import {
   parseArgs, fail, readJson, compileSchema, mathSpans, splitMath, proseOnly, walkStrings, allFigures, RENDER_DPI, R2_PUBLIC,
   BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx, stripTx } from './lib.mjs';
@@ -164,6 +166,24 @@ for (const { fig, path: p } of allFigures(data)) {
     if (t.dryRun) warn(`${p}/tx`, 'figure comes from figures.mjs --dry-run; receipt.mjs will refuse it');
   }
   if (!fig.alt) warn(`${p}/alt`, 'figure without alt text');
+}
+// a figure of the official solution kept in the statement or a part would be shown outside the solution spoiler;
+// the site moves it at render time (problems-to-site.mjs misplacedSolutionFigures), the candidate should not need that
+const WHY_SOLUTION = { id: 'its id names a solution crop', document: 'it is cropped from the solutions document', listed: 'problems-to-site.mjs SOLUTION_FIGURES lists it', position: 'it lies at or after the first figure of this problem\'s solution in the combined problems+solutions PDF' };
+problems.forEach((pr, i) => {
+  for (const m of misplacedSolutionFigures(paper, pr)) warn(`/problems/${i}/${m.path}`, `figure ${m.fig.id} belongs to the official solution (${WHY_SOLUTION[m.reason]}) but is listed under the ${m.where}; move it to solution.figures (the site shows it only inside the solution spoiler)`);
+});
+// A combined problems+solutions PDF whose solution has no figure of its own: the rules above cannot tell the solution's
+// drawing from the statement's (spba-2025-ii-7-8-theo p4). The PDF's text layer can: a statement figure below its own
+// problem's printed «Решение» heading is flagged for review (a given data sheet printed after the solution stays).
+const problemsPdf = manifest && !manifest.documents?.solutions && manifest.documents?.problems?.file
+  ? path.join(path.dirname(path.resolve(args.manifest)), manifest.documents.problems.file) : null;
+if (problemsPdf && fs.existsSync(problemsPdf)) {
+  const r = spawnSync('pdftotext', ['-tsv', problemsPdf, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
+  const layer = r.status === 0 ? textLayerLines(r.stdout) : null;
+  if (layer) problems.forEach((pr, i) => {
+    for (const m of figuresBelowSolutionHeading(paper, pr, layer)) warn(`/problems/${i}/${m.path}`, `figure ${m.fig.id} lies below this problem's printed solution heading ("${m.heading.text}", page ${m.heading.page}) in the combined problems+solutions PDF; if it is the solution's drawing, move it to solution.figures — a given data sheet printed after the solution stays in the ${m.where}`);
+  });
 }
 
 const report = {
