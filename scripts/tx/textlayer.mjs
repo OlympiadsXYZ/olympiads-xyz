@@ -407,7 +407,11 @@ export function textLayerCheck(candidate, manifest, paperId) {
     const info = { trusted: false, reason: null, layerWords: 0, candidateWords: 0, candidateCovered: null, layerCovered: null, omissions: 0, misreadings: 0, unprinted: 0 };
     result.documents[doc] = info;
     if (!file || !fs.existsSync(file)) { info.reason = 'no text layer'; continue; }
-    const pages = layerPages(fs.readFileSync(file, 'utf8'));
+    let pages = layerPages(fs.readFileSync(file, 'utf8'));
+    // a solutions document shared by several papers (one marking file for every fieldwork task, igeo-2015-experiment-
+    // fwe1task1): only the pages this paper declares it took its solutions from are its text; they are checked in full
+    const declared = doc === 'solutions' ? candidate?.paper?.solutionSource?.pages : null;
+    if (Array.isArray(declared) && declared.length && declared.every(Number.isInteger) && d.pages && declared.length < d.pages) pages = pages.filter(pg => declared.includes(pg.page));
     const joinFields = fields.filter(f => f.doc === doc || shared.test(f.path));
     // a recorded misspelling broken at a line end ("обрато-" / "пропорционална") joins like a transcribed word
     const joinKnown = editPrinted.size ? new Set([...allWords, ...editPrinted]) : allWords;
