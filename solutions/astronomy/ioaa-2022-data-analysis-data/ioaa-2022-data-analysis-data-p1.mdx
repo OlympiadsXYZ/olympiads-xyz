@@ -1,0 +1,198 @@
+---
+id: ioaa-2022-data-analysis-data-p1
+source: 'IOAA 2022, data-analysis'
+title: 'Задача 1. Gravitational wave astronomy'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2022/ioaa-2022-data-analysis-data.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T17:38:28.702Z'
+verifier: 'mechanical'
+---
+
+*International Olympiad on Astronomy and Astrophysics 2022 Georgia — Data Analysis · 18 август 2022 г. · 45 т.*
+
+## Условие
+
+In this problem, we will analyze frequency vs time representations of data containing the gravitational-wave event GW170817, which was the first observation by LIGO of a merger of a binary neutron star system.
+
+**1.1 Data from the graph**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2022-data-analysis-data/p1-fig1-v2.png" alt="Time–frequency spectrogram labelled LIGO-Livingston: Frequency (Hz) on a logarithmic axis with ticks 50, 100, 500 versus Time (seconds) from -30 to 0; a colour bar of Normalized amplitude from 0 to 6; a bright chirp track rises from about 40 Hz at -20 s to above 100 Hz near 0 s." />
+</figure>
+
+**(1.1.1)** You are given semi-logarithmic graph, from which you need to extract values of frequency and time. Let bottom left corner be origin (0,0), horizontal coordinate $x$ is measured in centimeters, find a linear expression to obtain actual time $t$ from $x$. **[2 т.]**
+
+**(1.1.2)** Similarly, find an expression for the frequency $f$ as a function of the vertical coordinate $y$ measured in centimeters. **[3 т.]**
+
+**(1.1.3)** Extract 14 values of time and corresponding frequency from the given graph into a table. At least one of the values should correspond to a frequency more than $100\,\mathrm{Hz}$. **[7 т.]**
+
+**1.2 Calculate system parameters**
+
+The most plausible explanation for this evolution of frequency is the in-spiralling of two orbiting masses, $m_1$ and $m_2$, due to gravitational-wave emission. At the lower frequencies, such evolution is characterized by the “chirp mass”
+
+$$M_{chirp} = \frac{(m_1 m_2)^{3/5}}{(m_1 + m_2)^{1/5}} = \frac{c^3}{G}\left[\frac{5}{96}\pi^{-8/3} f^{-11/3}\dot{f}\right]^{3/5}$$
+
+where $f$ and $\dot{f}$ are the observed frequency and its rate of change with respect to time and $G$ and $c$ are the gravitational constant and speed of light.
+
+**(1.2.1)** From the equation above, derive an expression for the frequency dependence on time.
+
+**Note:** If $x^n\dot{x} = k$, then $\frac{x^{n+1}}{(n+1)} = kt + C$, where $k$, $n$ and $C$ are constants. **[3 т.]**
+
+**(1.2.2)** By plotting the appropriate graph, find the chirp mass and estimate its error caused by uncertainty in slope calculation. **[22 т.]**
+
+We realise that what is measured by the ground-based GW detectors are actually the detector-frame masses, which are related to the source frame masses by
+
+$$m_{\mathrm{detector}} = (1+z)m$$
+
+where $z$ is the redshift of the binary.
+
+**(1.2.3)** If the host galaxy NGC 4993 has a redshift $z = 0.009783$, find the source frame chirp mass. **[2 т.]**
+
+**(1.2.4)** The mass ratio $q = m_1/m_2$, is much harder to measure. Advanced waveform analysis shows that $q$ for this system was in the range of 0.73 to 1.0. Calculate range of values for the masses $m_1$ (primary) and $m_2$ (secondary). **[6 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(1.1.1)** $t = \frac{x - 10.6}{0.35}\ \mathrm{s}$
+- **(1.1.2)** $f = 10^{\left(\frac{y+6.41}{4.34}\right)}\ \mathrm{Hz}$
+- **(1.2.2)** 1.2 M_⊙
+- **(1.2.3)** 1.19 M_⊙
+- **(1.2.4)** m2 from 1.37 to 1.60 M_⊙; m1 from 1.17 to 1.37 M_⊙
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**1.1 Data from the graph**
+
+(1.1.1)
+
+To make the scaling as accurate as possible, we take the time values far apart.
+
+When $x = 0.0\,\mathrm{cm}$ $t = -30\,\mathrm{s}$, using the ruler we can also measure that at $t = 0\,\mathrm{s}$ we have $x = 10.6\,\mathrm{cm}$.
+
+For range $\Delta x \geq 10cm$ 1 pt. For $6cm < \Delta x < 10cm$ 0.5 pt. For $3cm < \Delta x < 6cm$ 0.2 pt. For $\Delta x < 3cm$ 0pt.
+
+This leads to
+
+$$0.0\,\mathrm{cm} = (-30\,\mathrm{s})A + B$$
+
+$$10.6\,\mathrm{cm} = (0\,\mathrm{s})A + B = B$$
+
+$$A = \frac{10.6\,\mathrm{cm}}{30\,\mathrm{s}} = 0.35\,\mathrm{cm/s} \qquad \mathbf{0.5}$$
+
+$$\therefore t = \frac{x - 10.6}{0.35}\mathrm{s} \qquad \mathbf{0.5}$$
+
+(1.1.2)
+
+Analogues to the previous scaling:
+
+For range $\Delta y \geq 4.5cm$ 1 pt. For $3cm < \Delta y < 4.5cm$ 0.5 pt. For $1.5cm < \Delta y < 3cm$ 0.2 pt. For $y < 1.5cm0pt$..
+
+$$0.0\,\mathrm{cm} = C\log(30\,\mathrm{Hz}) + D$$
+
+$$5.3\,\mathrm{cm} = C\log(500\,\mathrm{Hz}) + D \qquad \mathbf{1.0}$$
+
+$$5.3\,\mathrm{cm} = C\log\left(\frac{500}{30}\right)$$
+
+$$C = 4.34\,\mathrm{cm} \qquad \mathbf{0.25}$$
+
+$$D = -6.41\,\mathrm{cm} \qquad \mathbf{0.25}$$
+
+$$\therefore f = 10^{\left(\frac{y+6.41}{4.34}\right)}\mathrm{Hz} \qquad \mathbf{0.5}$$
+
+(1.1.3)
+
+It is not necessary to use $X$-scaling as students can choose convenient points from the graph.
+
+If has at least one value more that 100Hz 1.4pt.
+
+| x(cm) | y(cm) | t(s) | f(Hz) | $f^{-8/3}(Hz^{-8/3})$ |
+|---|---|---|---|---|
+| - | 0.5 | -28.0 | 39.1 | 5.67E-05 |
+| - | 0.5 | -26.0 | 39.1 | 5.67E-05 |
+| - | 0.6 | -24.0 | 41.3 | 4.92E-05 |
+| - | 0.6 | -22.0 | 41.3 | 4.92E-05 |
+| - | 0.7 | -20.0 | 43.5 | 4.27E-05 |
+| - | 0.8 | -18.0 | 45.9 | 3.71E-05 |
+| - | 0.9 | -16.0 | 48.4 | 3.22E-05 |
+| - | 1.0 | -14.0 | 51.0 | 2.79E-05 |
+| - | 1.1 | -12.0 | 53.8 | 2.43E-05 |
+| - | 1.2 | -10.0 | 56.7 | 2.11E-05 |
+| - | 1.4 | -8.0 | 63.1 | 1.59E-05 |
+| - | 1.6 | -6.0 | 70.1 | 1.20E-05 |
+| - | 1.8 | -4.0 | 78.0 | 0.90E-05 |
+| - | 2.3 | -2.0 | 101.7 | 0.43E-05 |
+| - | 3.4 | 0.0 | 182.4 | 0.09E-05 |
+
+**0.4** points for each row (except last column). Maximum 7 points.
+
+**1.2 Calculate system parameters**
+
+(1.2.1)
+
+$$\frac{96}{5}\pi^{8/3}\left(\frac{GM_{chirp}}{c^3}\right)^{5/3} = f^{-11/3}\dot{f} \qquad \mathbf{1.0}$$
+
+$$\therefore \left[\frac{96}{5}\pi^{8/3}\left(\frac{GM_{chirp}}{c^3}\right)^{5/3}\right]t + \left[\frac{3}{8}\right]f^{-8/3} + C = 0 \qquad \mathbf{2.0}$$
+
+(1.2.2)
+
+Calculation of $f^{-8/3}$ for each value 3/14 values **3.0**
+
+Graph:
+
+Indicated $X$ axis, written few numbers on the axis and written proper units 1pt. Indicated $Y$ axis, written few numbers on the axis and written proper units 1pt. Used $70-100$ percent of the graphing paper 2pt, for $50-70$ percent 1.5pt, for $30-50$ percent 1pt, for $30-50$ percent 0.5pt. For each correct point (within 2mm distance from the correct positions) on the graph 0.35pt
+
+$$\mathrm{slope} = -2.10\times 10^{-6} \qquad \mathbf{1.1}$$
+
+$$\mathrm{slope} = \frac{8}{3}\left[\frac{96}{5}\pi^{8/3}\left(\frac{GM_{chirp}}{c^3}\right)^{5/3}\right]$$
+
+$$M_{chirp} = \left[\left(\frac{5}{256}\right)^{3/5}\frac{c^3}{G}\pi^{-8/5}\right](\mathrm{slope})^{3/5} \qquad \mathbf{2.0}$$
+
+$$\therefore M_{chirp} = 2.39\times 10^{30}\,\mathrm{kg} = 1.20M_{\odot} \qquad \mathbf{2.0}$$
+
+$$\Delta\mathrm{slope} = 9\times 10^{-8} \qquad \mathbf{2.0}$$
+
+$$\frac{\Delta M_{chirp}}{M_{chirp}} = \frac{3}{5}\frac{\Delta\mathrm{slope}}{\mathrm{slope}} = 0.023 \qquad \mathbf{2.0}$$
+
+$$\Delta M_{chirp} = 0.03M_{\odot} \qquad \mathbf{1.0}$$
+
+For uncertainty 70 percent points for the method and 30 percent for the result.
+
+(1.2.3)
+
+$$M_{chirp} = \frac{M_{chirp_{\mathrm{detactor}}}}{1+z} = \frac{1.20M_{\odot}}{1.009783} = 1.19M_{\odot} \qquad \mathbf{2.0}$$
+
+(1.2.4)
+
+$$M_{chirp} = \frac{(m_1 m_2)^{3/5}}{(m_1+m_2)^{1/5}}$$
+
+$$\therefore M_{chirp} = m_2\sqrt[5]{\frac{q^3}{1+q}} \qquad \mathbf{2.0}$$
+
+This is an increasing function of $q$
+
+$$\therefore m_{2,min} = M_{chirp}2^{1/5} = 1.37M_{\odot}$$
+
+$$m_{2,max} = 1.60M_{\odot} \qquad \mathbf{1.0}$$
+
+Also, $$M_{chirp} = \frac{m_1}{q}\sqrt[5]{\frac{q^3}{1+q}} = \frac{m_1}{\sqrt[5]{q^2(1+q)}} \qquad \mathbf{2.0}$$
+
+$$\therefore m_{1,max} = M_{chirp}2^{1/5} = 1.37M_{\odot}$$
+
+$$m_{2,min} = 1.17M_{\odot} \qquad \mathbf{1.0}$$
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2022-data-analysis-data/p1-sol-fig1-v2.png" alt="Graph of f^(-8/3) (0.00E+00 to 6.00E-05) versus time (s) from -30.0 to 0.0 with 15 square data points on a falling straight line; fit f(x) = − 2.10E-06 x − 8.35E-08, R² = 9.94E-01." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [IOAA-Data.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2022/IOAA-Data.pdf)
+· официални решения: [Data_Solution.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2022/Data_Solution.pdf)
