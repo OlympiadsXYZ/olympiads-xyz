@@ -1,0 +1,233 @@
+---
+id: balkan-2025-x-p1
+source: 'Balkan 2025'
+title: 'Задача 1. Ohrid Swimming Marathon'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Balkan/2025/balkan-2025-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T10:37:00.778Z'
+verifier: 'mechanical'
+---
+
+*BPO7 Problems 26-30 June 2025, Ohrid · 26 юни 2025 г. · 25 т.*
+
+## Условие
+
+The famous Ohrid Swimming Marathon is an international open water marathon taking place in the waters of Ohrid Lake every year, usually in August. Professional swimmers from all over the world take part in this marathon, swimming the 25 km course. The swimmers start from the place "St. Naum" and finish at the Ohrid port, near the city center. The swimmers' achieved times are measured at three control points, the first is 13 km from the start near the village of Peshtani, the second is 19 km near the hotel "Metropol" and the third one is at the finish line, i.e. 25 km from the start.
+
+**Ohrid Marathon 2024 - average swimming speed.** The table below shows the officially measured times at the three control points for five randomly selected swimmers in the men's competition at last year's Ohrid Marathon.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2025-x/p1-fig1.png" alt="Satellite map of the eastern shore of Lake Ohrid with the swimming route drawn as a red dashed line; labels: FINISH at the top, Flying Sprint 2 19 km (marker 2), Flying Sprint 1 13 km (marker 1)." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2025-x/p1-fig2.png" alt="Right triangle: the swimmer at the left end of a horizontal side of length l leading to the control point; from the control point a vertical side of length d leads down to the boat; the hypotenuse joins the swimmer and the boat. Labels: swimmer, l, control point, d, boat." />
+</figure>
+
+**a)** Determine the average speed for each swimmer over each section of the route. Express the results in m/s. **[3 т.]**
+
+**b)** At what average speed (in m/s) did each swimmer swim the entire route? **[2 т.]**
+
+| Swimmer Code | 13 km (h:min:s) | 19 km (h:min:s) | 25 km (h:min:s) |
+|---|---|---|---|
+| Swimmer 1 | 3:13:45 | 4:15:09 | 5:46:50 |
+| Swimmer 2 | 3:13:05 | 4:17:37 | 5:46:52 |
+| Swimmer 3 | 3:13:22 | 4:15:03 | 5:50:49 |
+| Swimmer 4 | 3:19:24 | 4:25:26 | 6:12:32 |
+| Swimmer 5 | 3:38:58 | 4:52:20 | 6:58:27 |
+
+**c)** Is the winner of last year's marathon among the five swimmers in the table, if it is known that he swam the distance to the first checkpoint at an average speed of 1.15 m/s? Explain your answer. **[1 т.]**
+
+At the Ohrid Swimming Marathon, each swimmer participating in the competition is joined by a team, which follows the swimmer by a boat.
+
+**d)** The boats move at a certain distance from the competitors to ensure the smooth running of the competition. At a given moment, one of the swimmers stops and signals (by raising his hand) to his team to give him some water to drink. At that moment, the swimmer is at a distance $l$ from the second control point. After giving the signal, he starts swimming again with an acceleration $a_1$ towards the control point. At the moment when the swimmer gives the signal, the boat is at a distance $d$ relative to the swimmer's direction of motion, i.e. at a distance $d$ from the control point, as shown in the figure. When the team in the boat sees the signal, the boat starts moving from rest with acceleration $a_2$. Determine the minimum time $t_{\mathrm{min}}$, for which the boat with the team will reach the swimmer before the swimmer reaches the control point. Assume that the lake water is still. **[15 т.]**
+
+**e)** Express the distances travelled by the boat and the swimmer to the meeting point in terms of the ratio of accelerations, $r = a_2/a_1$, $l$ and $d$. What is the remaining distance for the swimmer to reach the control point? **[2 т.]**
+
+**f)** Derive a condition under which it is impossible for the boat to meet the swimmer before the control point? **[2 т.]**
+
+**Note:** The solution of the quadratic equation of the form $ax^2+bx+c=0$ is given by $x_{1,2}=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}$
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **c)** No: 1.15 m/s (1.2 m/s) is not among the first-section speeds in Table 1, so the winner is not among the five swimmers.
+- **d)** $t_{\min}=\sqrt{\frac{2la_1-2\sqrt{l^2a_1^2-\left(a_1^2-a_2^2\right)\left(l^2+d^2\right)}}{a_1^2-a_2^2}}$
+- **e)** $l_1=\frac{l-\sqrt{l^2-\left(1-r^2\right)\left(l^2+d^2\right)}}{1-r^2},\quad l_2=\frac{lr-r\sqrt{l^2-\left(1-r^2\right)\left(l^2+d^2\right)}}{1-r^2},\quad l-l_1=\frac{\sqrt{l^2-\left(1-r^2\right)\left(l^2+d^2\right)}-lr^2}{1-r^2}$
+- **f)** $r \lt \sin\alpha,\quad \sin^2\alpha=\frac{d^2}{l^2+d^2}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:**
+
+According to the definition, the average speed can be calculated when we divide the distance travelled $\Delta s$ with the total time $\Delta t$ needed to pass the distance, i.e.
+
+$$v_{av}=\frac{\Delta s}{\Delta t}$$
+
+a) We will solve this part by using the tabulated data to find the time needed for each swimmer to pass the distance between the control points, 13 km, 6 km и 6 km, correspondingly. Let us first convert the time in second. The results are given in the table below:
+
+| Swimmer Code | 13 km – *t* (s) | 19 km – *t* (s) | 25 km– *t* (s) |
+|---|--:|--:|--:|
+| Swimmer 1 | 11625 | 15309 | 20810 |
+| Swimmer 2 | 11585 | 15457 | 20812 |
+| Swimmer 3 | 11602 | 15303 | 21049 |
+| Swimmer 4 | 11964 | 15926 | 22352 |
+| Swimmer 5 | 13138 | 17540 | 25107 |
+
+The times needed to pass the distance between the control points are given in the table below
+
+| Swimmer Code | $\Delta t_1$(s) - 13 000 m | $\Delta t_2$ (s) - 6 000 m | $\Delta t_3$(m/s) - 6 000 m |
+|---|--:|--:|--:|
+| Swimmer 1 | 11625 | 3684 | 5501 |
+| Swimmer 2 | 11585 | 3872 | 5355 |
+| Swimmer 3 | 11602 | 3701 | 5746 |
+| Swimmer 4 | 11964 | 3962 | 6426 |
+| Swimmer 5 | 13138 | 4402 | 7567 |
+
+The average speed calculation is straightforward and we will show the details only for the Swimmer 1.
+
+$$v_{av}=\frac{\Delta s}{\Delta t},\ v_{av}^{1}=\frac{13000\ \mathrm{m}}{11625\ \mathrm{s}}=1.12\ \mathrm{m/s},\ v_{av}^{2}=\frac{6000\ \mathrm{m}}{3684\ \mathrm{s}}=1.63\ \mathrm{m/s},\ v_{av}^{3}=\frac{6000\ \mathrm{m}}{3684\ \mathrm{s}}=1.09\ \mathrm{m/s}.$$
+
+The calculated average speeds for each swimmer along each section are given in Table 1.
+
+**Table 1.**
+
+| Swimmer Code | $v_{\mathrm{av}}$ (m/s) - 13 km | $v_{\mathrm{av}}$ (m/s) - 6 km | $v_{\mathrm{av}}$ (m/s) - 6 km |
+|---|--:|--:|--:|
+| Swimmer 1 | 1.1 (1.12) | 2 (1.63) | 1 (1.09) |
+| Swimmer 2 | 1.1 (1.12) | 2 (1.55) | 1 (1.12) |
+| Swimmer 3 | 1.1 (1.12) | 2 (1.62) | 1 (1.04) |
+| Swimmer 4 | 1.1 (1.09) | 2 (1.51) | 1 (0.93) |
+| Swimmer 5 | 1.0 (0.99) | 1 (1.36) | 1 (0.79) |
+
+The correct solution of part a) is graded with 3 points. For errors in the numerical calculation of the final value, 0.1 points are subtracted. If the student enters only the final results without showing the details, 1.5 points are awarded.
+
+b) The average speed in the total course can be calculated by dividing the length of the route 25 km by the time duration for each swimmer. For example, for the Swimmer 1, it will be
+
+$$v_{av}=\frac{\Delta s}{\Delta t},\ v_{av}=\frac{25000\ \mathrm{m}}{20810\ \mathrm{s}}=1.20\ \mathrm{m/s}.$$
+
+The calculated average speeds for each swimmer along the 25 km course are given in Table 2.
+
+**Table 2.**
+
+| Swimmer Code | $v_{\mathrm{av}}$(m/s) - 25 km |
+|---|--:|
+| Swimmer 1 | 1.2 (1.20) |
+| Swimmer 2 | 1.2 (1.20) |
+| Swimmer 3 | 1.2 (1.19) |
+| Swimmer 4 | 1.1 (1.12) |
+| Swimmer 5 | 1.0 (0.996) |
+
+The correct solution of part b) is graded with 2 points. For errors in the numerical calculation of the final value 0.1 points are subtracted. If the student enters only the final results without showing the details, 1.5 points are awarded.
+
+c) If we observe the obtained results for the five swimmers in the first column of the Table 1, we will conclude that the value 1.15 m/s (1.2 m/s) is not in the table, which means that the winner is **NOT** among the five swimmers in the provided Table.
+
+The correct answer supported by an explanation is graded by 1.0 point.
+
+***Note:*** *The results given in the tables are rounded to the appropriate number of significant digits. The calculated values rounded to two decimals are given in parentheses.*
+
+d) The boat will reach the swimmer before he/she gets to the control point in a least possible time if it moves along a straight line as it is shown in the following figure:
+
+Correct sketch of the situation (**2.0 points**)
+
+From the law of cosines, we have
+
+$$l_2^2=l_1^2+\left(l^2+d^2\right)-2l_1\sqrt{l^2+d^2}\cos\alpha$$
+
+**2.0 points** (1)
+
+Moreover,
+
+$$\cos\alpha=\frac{l}{\sqrt{l^2+d^2}}$$
+
+**2.0 points**
+
+and, thus, equation (1) becomes
+
+$$l_2^2=l_1^2+\left(l^2+d^2\right)-2l_1l$$
+
+**0.5 point** (2)
+
+Since
+
+$$l_1=\frac{a_1t^2}{2},\ \ l_2=\frac{a_2t^2}{2},$$
+
+**2.0 points** (3)
+
+for equation (2), we have
+
+$$\frac{a_2^2t^4}{4}=\frac{a_1^2t^4}{4}+\left(l^2+d^2\right)-la_1t^2,\quad \frac{\left(a_1^2-a_2^2\right)t^4}{4}+\left(l^2+d^2\right)-la_1t^2=0.$$
+
+**1.0 point** (4)
+
+By substitution $y=t^2$, this biquadratic equation transforms to the following quadratic equation
+
+$$\frac{\left(a_1^2-a_2^2\right)y^2}{4}-la_1y+\left(l^2+d^2\right)=0.$$
+
+**1.0 point** (5)
+
+which solutions are
+
+$$y_{1,2}=\frac{2la_1\pm2\sqrt{l^2a_1^2-\left(a_1^2-a_2^2\right)\left(l^2+d^2\right)}}{a_1^2-a_2^2}.$$
+
+**0.5 points** (6)
+
+From here, in order to have a real solution (the discriminant to be positive or equal to zero), it should be satisfied
+
+$$l^2a_1^2-\left(a_1^2-a_2^2\right)\left(l^2+d^2\right)\ge0,\ \ \text{i.e.,}\ \ a_1^2d^2\le a_2^2\left(l^2+d^2\right).$$
+
+**2.0 points** (7)
+
+Note that the Eq. (6) gives the solution for $t^2$, so the right hand side should be positive or equal to zero in order to get a real solution for the time. This will be satisfied for the solution with the minus sign in both cases, $a_1\le a_2,\ a_2\ge a_1$, So the required solution for the minimum time is $y_1$ (the one with the minus sign in (6)), i.e.
+
+$$t_{\min}=\sqrt{\frac{2la_1-2\sqrt{l^2a_1^2-\left(a_1^2-a_2^2\right)\left(l^2+d^2\right)}}{a_1^2-a_2^2}}.$$
+
+**2.0 points** (8)
+
+e) Express the distances travelled by the boat and the swimmer to the meeting point in terms of the ratio of accelerations $r=a_2/a_1$, $l$ and $d$. What is the remaining distance for the swimmer to reach the control point? (**2 points**)
+
+From (3) and (8) we find
+
+$$l_1=\frac{la_1^2-a_1\sqrt{l^2a_1^2-\left(a_1^2-a_2^2\right)\left(l^2+d^2\right)}}{a_1^2-a_2^2}=\frac{l-\sqrt{l^2-\left(1-r^2\right)\left(l^2+d^2\right)}}{1-r^2},$$
+
+**0.5 points**
+
+$$l_2=\frac{la_1a_2-a_2\sqrt{l^2a_1^2-\left(a_1^2-a_2^2\right)\left(l^2+d^2\right)}}{a_1^2-a_2^2}=\frac{lr-r\sqrt{l^2-\left(1-r^2\right)\left(l^2+d^2\right)}}{1-r^2},$$
+
+**0.5 points**
+
+$$l-l_1=\frac{a_1\sqrt{l^2a_1^2-\left(a_1^2-a_2^2\right)\left(l^2+d^2\right)}-la_2^2}{a_1^2-a_2^2}=\frac{\sqrt{l^2-\left(1-r^2\right)\left(l^2+d^2\right)}-lr^2}{1-r^2},$$
+
+**1.0 point**
+
+where $r=a_2/a_1$.
+
+f) Derive a condition under which it is impossible for the boat to meet the swimmer before the control point? (**2 points**)
+
+If we analyze the condition (7), under which real solutions for the time exist, we can conclude that if this condition is not satisfied, then the equation (6) will have only imaginary solutions. So the required condition is opposite to condition (7), i.e.
+
+$$a_1^2d^2 \gt a_2^2\left(l^2+d^2\right)\Rightarrow\frac{a_2^2}{a_1^2} \lt \frac{d^2}{l^2+d^2}=\sin^2\alpha,$$
+
+**1.0 point**
+
+$$r^2 \lt \sin^2\alpha\Rightarrow r \lt \sin\alpha\ \left(0 \lt \alpha \lt \pi/2\right).$$
+
+**1.0 point**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2025-x/p1-sol-fig1.png" alt="Triangle swimmer – control point – boat: the top side from the swimmer to the control point is split into l_1 and l − l_1; the vertical side from the control point to the boat is d; the angle α is at the swimmer; a line l_2 joins the meeting point on the top side to the boat." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/Balkan/2025/problems.pdf)
+· официални решения: [solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/Balkan/2025/solutions.pdf)

@@ -1,0 +1,326 @@
+---
+id: balkan-2025-x-p2
+source: 'Balkan 2025'
+title: 'Задача 2. Star wars'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Balkan/2025/balkan-2025-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T10:37:00.778Z'
+verifier: 'mechanical'
+---
+
+*BPO7 Problems 26-30 June 2025, Ohrid · 26 юни 2025 г. · 25 т.*
+
+## Условие
+
+An artificial satellite with mass $m \ll M$, where $M$ is the mass of the Earth, orbits the Earth on an elliptical trajectory, having the semi-major axis $a = \alpha R$, where $R$ is the mean Earth radius, $\alpha = 3$, and eccentricity $e = 1/2$. Also known is the numerical value of the first cosmic speed, $v_I = 7.91\ \mathrm{km/s}$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2025-x/p2-fig1.png" alt="Ellipse with centre O, foci F1 and F2 on the dashed major axis ending at B (left) and A (right), minor-axis ends C (top) and D (bottom); a point P on the ellipse joined to F1 and F2." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2025-x/p2-fig2.png" alt="Ellipse with foci F1 and F2 on the dashed major axis between B and A; the satellite m on the ellipse, radius vector r from F1 to m, velocity vector v tangent to the orbit, angle α between the extension of r and v." />
+</figure>
+
+**a)** Determine the speed of the satellite at apogee (point A) ($v_a$) and at the perigee (point B) ($v_p$). **[8 т.]**
+
+A projectile with the mass $m_0 = m/\beta$, where $\beta = 3$, launched from the Earth, moves radially and undergoes a plastic collision with the satellite, when the satellite is at its apogee. After the collision, the eccentricity of the new orbit of the satellite becomes $e' = 3/4$.
+
+**b)** Determine the tangential speed of the satellite immediately after the collision. **[2 т.]**
+
+**c)** Determine the ratio of the satellite energy immediately after the collision with the projectile to the satellite energy immediately before the collision. **[7 т.]**
+
+**d)** Determine the radial speed of the satellite immediately after the collision. **[3 т.]**
+
+**e)** Determine the launching speed of the projectile. **[5 т.]**
+
+***Notes:***
+
+1) *An ellipse is the plane curve represented in the figure, for which* $\mathrm{F_1P + F_2P = const.}$*, for any point* P*. The point* O *is the center of the ellipse and the fixed points* F$_{1,2}$ *are the ellipse’s focal points. If the Earth is in* F$_1$*, for example, then* A *is called the apogee and B – the perigee. Other important quantities for an ellipse are:* $a = \mathrm{OA} = \mathrm{OB}$ *– semi-major axis,* $b = \mathrm{OC} = \mathrm{OD}$ *– semi-minor axis,* $c = \mathrm{OF_1} = \mathrm{OF_2}$ *– the linear eccentricity, while the nondimensional parameter characterizing the ellipse is* $e = c/a$*, called the ellipse eccentricity.*
+
+2) *For a satellite – Earth system, there is a physical quantity called angular momentum* $L$ *with respect to the center of the Earth, which is conserved. Its conservation proves the second law of Kepler. Mathematically, the angular momentum has the magnitude (see the drawing below):*
+
+$$L = mvr\sin\alpha,$$
+
+*where* $m$ *is the satellite mass,* $v$ *– its speed, and* $r$ *– the distance from the center of the Earth (F$_1$) to the satellite.*
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** v_a = v_I/3 ≅ 2.64 km/s, v_p = v_I = 7.91 km/s
+- **b)** 1.98 km/s
+- **c)** 1.38
+- **d)** 5.06 km/s
+- **e)** 22.5 km/s
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) **(8 points)** Determine the speed of the satellite at apogee ($v_a$) and at the perigee ($v_p$).
+
+**Solution:**
+
+The first cosmic speed is the launching speed of a body from the Earth surface to make it orbit the Earth, at its surface:
+
+$$\frac{mv_I^2}{R}=\gamma\frac{mM}{R^2},$$
+
+(0.6 x 2)
+
+where $\gamma$ is the gravitational constant, so
+
+$$v_I=\sqrt{\frac{\gamma M}{R}}.$$
+
+(0.4)
+
+The energy of the satellite on its orbit is
+
+$$E=-\gamma\frac{mM}{2a}.$$
+
+(0.8)
+
+At the apogee
+
+$$E=\frac{mv_a^2}{2}-\gamma\frac{mM}{r_{max}},$$
+
+(0.7 x 2)
+
+where
+
+$$r_{max}=a+c=a(1+e),$$
+
+(0.4 x 2)
+
+so
+
+$$v_a=\sqrt{\frac{\gamma M}{a}\frac{1-e}{1+e}}.$$
+
+(0.5)
+
+or, using the first cosmic speed,
+
+$$\boxed{v_a=v_I\sqrt{\frac{1}{\alpha}\frac{1-e}{1+e}}}.$$
+
+(0.4)
+
+Numerically,
+
+$$\boxed{v_a=\frac{v_I}{3}=2.636\ \frac{\mathrm{km}}{\mathrm{s}}\cong 2.64\ \frac{\mathrm{km}}{\mathrm{s}}}.$$
+
+(0.3)
+
+At perigee, from angular momentum conservation (or from energy equation $\frac{mv_p^2}{2}-\gamma\frac{mM}{r_{min}}=-\gamma\frac{mM}{2a}$)
+
+$$v_p=\frac{r_{max}}{r_{min}}v_a,$$
+
+(1.0)
+
+where
+
+$$r_{min}=a-c=a(1-e).$$
+
+(0.4)
+
+Finally,
+
+$$\boxed{v_p=v_I\sqrt{\frac{1}{\alpha}\frac{1+e}{1-e}}}.$$
+
+(0.5)
+
+Numerically,
+
+$$\boxed{v_p=v_I=7.91\ \frac{\mathrm{km}}{\mathrm{s}}}.$$
+
+(0.3)
+
+b) **(2 points)** Determine the tangential speed of the satellite immediately after the collision.
+
+**Solution:**
+
+From momentum conservation on the tangential direction
+
+$$\boxed{v_t'=\frac{mv_a}{m+m_0}=\frac{\beta v_a}{1+\beta}},$$
+
+(1.4)
+
+Numerically,
+
+$$\boxed{v_t'=\frac{v_I}{4}=1.9775\ \frac{\mathrm{km}}{\mathrm{s}}\cong 1.98\ \frac{\mathrm{km}}{\mathrm{s}}}.$$
+
+(0.3 x 2)
+
+c) **(7 points)** Determine the ratio of the satellite energy immediately after the collision with the projectile to the satellite energy immediately before the collision.
+
+**Solution:**
+
+The satellite energy before the collision is
+
+$$E=-\gamma\frac{mM}{2a}.$$
+
+From energy and angular momentum conservation, it follows that
+
+$$e'=\sqrt{1+\frac{2E'L'^2}{\gamma^2M^2(m+m_0)^3}},$$
+
+(5.0)
+
+where
+
+$$L'=(m+m_0)a(1+e)v_t'=ma(1+e)v_a=m\sqrt{\gamma Ma(1-e^2)}.$$
+
+(0.5)
+
+[derivation:
+
+$$E'=\frac{(m+m_0)v^2}{2}-\gamma\frac{(m+m_0)M}{r}$$
+
+(1.0)
+
+and
+
+$$L'=(m+m_0)vr$$
+
+(0.5)
+
+at the apses. Eliminating $v$ between these equations, one gets
+
+$$E'=\frac{L'^2}{2(m+m_0)r^2}-\gamma\frac{(m+m_0)M}{r},$$
+
+or
+
+$$2E'(m+m_0)r^2+2\gamma M(m+m_0)^2\cdot r-L'^2=0.$$
+
+(0.5)
+
+The solutions of this quadratic equation are
+
+$$r_{min,max}=\frac{\gamma M(m+m_0)}{2E'}\left[-1\pm\sqrt{1+\frac{2E'L'^2}{\gamma^2M^2(m+m_0)^3}}\right].$$
+
+(0.5)
+
+Since
+
+$$r_{min}+r_{max}=2a'=-\frac{\gamma M(m+m_0)}{E'}$$
+
+(0.5 x 2)
+
+and
+
+$$r_{max}-r_{min}=2c'=-\frac{\gamma M(m+m_0)}{E'}\sqrt{1+\frac{2E'L'^2}{\gamma^2M^2(m+m_0)^3}},$$
+
+(0.5 x 2)
+
+then
+
+$$e'=\frac{c'}{a'}=\sqrt{1+\frac{2E'L'^2}{\gamma^2M^2(m+m_0)^3}}$$
+
+(0.5)
+
+end of derivation]
+
+So
+
+$$E'=E\,\frac{1-e'^2}{1-e^2}\left(1+\frac{1}{\beta}\right)^3.$$
+
+(0.7)
+
+Under these conditions
+
+$$\boxed{\frac{E'}{E}=\frac{1-e'^2}{1-e^2}\left(1+\frac{1}{\beta}\right)^3}.$$
+
+(0.5)
+
+Numerically,
+
+$$\boxed{\frac{E'}{E}=\frac{112}{81}=1{,}38}.$$
+
+(0.3)
+
+d) **(3 points)** Determine the radial speed of the satellite immediately after the collision.
+
+**Solution:**
+
+Since
+
+$$E'=\frac{(m+m_0)v'^2}{2}-\gamma\frac{(m+m_0)M}{a(1+e)},$$
+
+(0.5)
+
+then
+
+$$v'^2=\frac{v_I^2}{\alpha}\left[\frac{2}{1+e}-\frac{1-e'^2}{1-e^2}\left(1+\frac{1}{\beta}\right)^2\right].$$
+
+(1.0)
+
+Under these conditions,
+
+$$v_r'^2=v'^2-v_t'^2,$$
+
+(0.7)
+
+or
+
+$$v_r'^2=\frac{v_I^2}{\alpha(1-e^2)\beta^2(1+\beta)^2}\left[e'^2(1+\beta)^4-(1+2\beta+e\beta^2)^2\right],$$
+
+which gives
+
+$$v_r'=\frac{v_I}{\beta(1+\beta)}\sqrt{\frac{e'^2(1+\beta)^4-(1+2\beta+e\beta^2)}{\alpha(1-e^2)}}.$$
+
+(0.5)
+
+Numerically,
+
+$$v_r'=5.058\ \frac{\mathrm{km}}{\mathrm{s}}\cong 5.06\ \frac{\mathrm{km}}{\mathrm{s}}.$$
+
+(0.3)
+
+e) **(5 points)** Determine the launching speed of the projectile.
+
+**Solution:**
+
+From momentum conservation for the collision, on the radial direction, it follows that
+
+$$v_p=v_r'\frac{m+m_0}{m_0}=v_r'(1+\beta),$$
+
+(1.0 + 0.5)
+
+or
+
+$$v_p=\frac{v_I}{\beta}\sqrt{\frac{e'^2(1+\beta)^4-(1+2\beta+e\beta^2)}{\alpha(1-e^2)}}.$$
+
+(0.5)
+
+The energy conservation for the projectile before the collision is written
+
+$$\frac{m_0v_{p0}^2}{2}-\frac{\gamma m_0M}{R}=\frac{m_0v_p^2}{2}-\frac{\gamma m_0M}{a(1+e)},$$
+
+(1.5)
+
+so
+
+$$v_{p0}=\sqrt{v_p^2+2v_I^2\left(1-\frac{1}{\alpha(1+e)}\right)}.$$
+
+(0.7)
+
+Finally,
+
+$$v_{p0}=v_I\sqrt{\frac{e'^2(1+\beta)^4-(1+2\beta+e\beta^2)}{\alpha(1-e^2)\beta^2}+2\left(1-\frac{1}{\alpha(1+e)}\right)}.$$
+
+(0.5)
+
+Numerically,
+
+$$\boxed{v_{p0}=22.5\ \frac{\mathrm{km}}{\mathrm{s}}}.$$
+
+(0.3)
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/Balkan/2025/problems.pdf)
+· официални решения: [solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/Balkan/2025/solutions.pdf)

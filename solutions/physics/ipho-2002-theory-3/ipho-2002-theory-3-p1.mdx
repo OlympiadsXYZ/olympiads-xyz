@@ -1,0 +1,394 @@
+---
+id: ipho-2002-theory-3-p1
+source: 'IPhO 2002'
+title: 'Задача 1. A Heavy Vehicle Moving on An Inclined Road'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/2002/ipho-2002-theory-3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T10:47:57.381Z'
+verifier: 'mechanical'
+---
+
+*III. A Heavy Vehicle Moving on An Inclined Road*
+
+## Условие
+
+The above figure is a simplified model of a heavy vehicle (road roller) with one rear and one front cylinder as its wheels on an inclined road with inclination angle of $\theta$ as shown in Figure III-1. Each of the two cylinders has a total mass $M(m_2=m_3=M)$ and consists of a cylindrical shell of outer radius $R_o$ , inner radius $R_i = 0.8\ R_o$ and eight number of spokes with total mass 0.2 M. The mass of the undercarriage supporting the vehicle’s body is negligible. The cylinder can be modeled as shown in Figure III-2. The vehicle is moving down the road under the influence of gravitational and frictional forces. The front and rear cylinder are positioned symmetrically with respect to the vehicle.
+
+The static and kinetic friction coefficients between the cylinder *and* the road are $\mu_s$ and $\mu_k$ respectively. The body of the vehicle has a mass of 5M , length of $L$ and thickness of $t$ . The distance between the front and the rear cylinder is $2l$ while the distance from the center of cylinder to the base of the vehicle’s body is $h$. Assume that the rolling friction between the cylinder and its axis is negligible.
+
+**Questions:**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2002-theory-3/p1-fig1.png" alt="Inclined road at angle θ to the horizontal with a vehicle: a long rectangular body m1 of length L and thickness t resting on two cylinders, the rear cylinder m2 (upper) and the front cylinder m3 (lower); the distance between the cylinders is marked 2l and the distance from the cylinder centre to the body base is marked h." />
+<figcaption>Figure III-1: A simplified model of a heavy vehicle moving on an inclined road.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2002-theory-3/p1-fig2.png" alt="Cylinder model: an outer circle of radius Ro and an inner circle of radius Ri, with eight spokes from the centre to the inner circle; dashed arrows mark Ri and Ro." />
+<figcaption>Figure III-2: A simplified model of the cylinders.</figcaption>
+</figure>
+
+**1.** Calculate the moment of inertia of either cylinder **[*1.5 pts*]**. **[1,5 т.]**
+
+**2.** Draw all forces that act on the body, the front cylinder, and the rear one. Write down equations of motion for each part of them **[*2.5 pts*]**. **[2,5 т.]**
+
+**3.** The vehicle is assumed to move from rest, then freely move under gravitational influence. State all the possible types of motion of the system and derive their accelerations in terms of the given physical quantities **[*4.0 pts*]**. **[4 т.]**
+
+**4.** Assume that after the vehicle travels a distance $d$ by pure rolling from rest the vehicle enters a section of the road with all the friction coefficients drop to smaller constant values $\mu_s$’ and $\mu_k$’ such that the two cylinders start to slide. Calculate the linear and angular velocities of each cylinder after the vehicle has traveled a total distance of $s$ meters. Here we assume that d and s is much larger than the dimension of vehicle **[*2.0 pts*]** **[2 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1.** $I = 0.7MR^2$
+- **3.** Official solution: all cylinders in pure rolling a = 0.833 g sin θ; all cylinders sliding a = g sin θ − μk g cos θ; front rolling and rear sliding a = 0.9091 g sin θ − μk N2/(7.7M) with N2 from eq. (25), together with the rolling/sliding conditions on tan θ.
+- **4.** Official solution: v_t2 = √(1.666 d g sin θ) − v_t1 + √(v_t1² + 2a2(s − d)); ω_t2 = (1/R)√(1.666 d g sin θ) + (μk N R/I)·(−v_t1 + √(v_t1² + 2a2(s − d)))/a2.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**SOLUTION T3 : . A Heavy Vehicle Moving on An Inclined Road**
+
+To simplify the model we use the above figure with $h_1 = h+0.5\ t$
+
+$R_o = R$
+
+**1. Calculation of the moment inertia of the cylinder**
+
+$R_i=0.8\ R_o$
+
+Mass of cylinder part : $m_{cylinder} =0.8\ M$
+
+Mass of each rod : $m_{rod} = 0.025\ M$
+
+$$I = \oint\limits_{wholepart} r^2 dm = \oint\limits_{cyl.shell} r^2 dm + \oint\limits_{\mathrm{rod1}} r^2 dm + ... + \oint\limits_{rod\,n} r^2 dm$$
+
+0.4 pts
+
+$$\oint\limits_{cyl.shell} r^2 dm = 2\pi\sigma\int_{Ri}^{Ro} r^3 dr = 0.5\pi\sigma(R_o^4 - R_i^4) = 0.5m_{cylinder}(R_o^2 + R_i^2)$$
+
+$$= 0.5(0.8M)R^2(1 + 0.64) = 0.656MR^2$$
+
+0.5 pts
+
+$$\oint\limits_{\mathrm{rod}} r^2 dm = \lambda\int_0^{Rin} r^2 dr = \frac{1}{3}\lambda R_{in}^3 = \frac{1}{3}m_{rod}R_{in}^2 = \frac{1}{3}0.025M(0.64R^2) = 0.00533MR^2$$
+
+0.5 pts
+
+The moment inertia of each wheel becomes
+
+$$I = 0.656MR^2 + 8x0.00533MR^2 = 0.7MR^2$$
+
+0.1 pts
+
+**2. Force diagram and balance equations:**
+
+To simplify the analysis we divide the system into three parts: frame (part1) which mainly can be treated as flat homogeneous plate, rear cylinders (two cylinders are treated collectively as part 2 of the system), and front cylinders (two front cylinders are treated collectively as part 3 of the system).
+
+Part 1 : Frame
+
+0.4 pts
+
+The balance equation related to the forces work to this parts are:
+
+Required conditions:
+
+Balance of force in the horizontal axis
+
+$m_1 g\sin\theta - f_{12h} - f_{13h} = m_1 a$ (1) 0.2 pts
+
+Balance of force in the vertical axis
+
+$m_1 g\cos\theta = N_{12} + N_{13}$ (2) 0.2 pts
+
+Then torsion against O is zero, so that
+
+$N_{12}l - N_{13}l + f_{12h}h_1 + f_{13h}h_1 = 0$ (3) 0.2 pts
+
+Part two : Rear cylinder
+
+0.25 pts
+
+From balance condition in rear wheel :
+
+$f_{21h} - f_2 + Mg\sin\theta = Ma$ (4) 0.15 pts
+
+$N_2 - N_{21} - Mg\cos\theta = 0$ (5) 0.15 pts
+
+For pure rolling:
+
+$$f_2 R = I\alpha_2 = I\frac{a_2}{R}$$
+
+or $f_2 = \frac{I}{R^2}a$ (6)
+
+For rolling with sliding:
+
+$F_2 = u_k N_2$ (7)
+
+0.2 pts
+
+**Part Three : Front Cylinder:**
+
+0.25 pts
+
+From balance condition in the front wheel :
+
+$f_{31h} - f_3 + Mg\sin\theta = Ma$ (8) 0.15 pts
+
+$N_3 - N_{31} - Mg\cos\theta = 0$ (9) 0.15 pts
+
+For pure rolling:
+
+$$f_3 R = I\alpha_3 = I\frac{a_3}{R}$$
+
+or $f_3 = \frac{I}{R^2}a$ (10)
+
+For rolling with sliding:
+
+$F_3 = u_k N_3$ (11)
+
+0.2 pts
+
+**3. From equation (2), (5) and (9) we get**
+
+$m_1 g\cos\theta = N_2 - m_2 g\cos\theta + N_3 - m_3 g\cos\theta$
+
+$N_2 + N_3 = (m_1+m_2+m_3)g\cos\theta = 7Mg\cos\theta$ (12)
+
+And from equation (3), (5) and (8) we get
+
+$(N_3 - Mg\cos\theta)l - (N_2 - Mg\cos\theta)l = h_1(f_2 + Ma - Mg\sin\theta + f_3 + Ma - Mg\sin\theta)$
+
+$(N_3 - N_2) = h_1(f_2 + 2Ma - 2Mg\sin\theta + f_3)/l$
+
+Equations 12 and 13 are given **0.25 pts**
+
+**CASE ALL CYLINDER IN PURE ROLLING**
+
+From equation (4) and (6) we get
+
+$f_{21h} = (I/R^2)a + Ma - Mg\sin\theta$ (14) 0.2 pts
+
+From equation (8) and (10) we get
+
+$f_{31h} = (I/R^2)a + Ma - Mg\sin\theta$ (15) 0.2 pts
+
+Then from eq. (1) , (14) and (15) we get
+
+$5Mg\sin\theta - \{(I/R^2)a + Ma - Mg\sin\theta\} - \{(I/R^2)a + Ma - Mg\sin\theta\} = m_1 a$
+
+$7\ Mg\sin\theta = (2I/R^2 + 7M)a$
+
+$$a = \frac{7Mg\sin\theta}{7M + 2\frac{I}{R^2}} = \frac{7Mg\sin\theta}{7M + 2\frac{0.7MR^2}{R^2}} = 0.833g\sin\theta$$
+
+(16) 0.35 pts
+
+$$N_3 = \frac{7M}{2}g\cos\theta + \frac{h_1}{l}[(M + \frac{I}{R^2})\times 0.833g\sin\theta - Mg\sin\theta]$$
+
+$$= 3.5Mg\cos\theta + \frac{h_1}{l}[(M + 0.7M)\times 0.833g\sin\theta - Mg\sin\theta]$$
+
+$$= 3.5\ Mg\cos\theta + 0.41\frac{h_1}{l}Mg\sin\theta$$
+
+$$N_2 = \frac{7M}{2}g\cos\theta - \frac{h_1}{l}[(\frac{I}{R^2} + M)\times 0.833g\sin\theta - Mg\sin\theta]$$
+
+$$= 3.5g\cos\theta - \frac{h_1}{l}[(0.7M + M)\frac{7Mg\sin\theta}{0.7M + 7M} - 2Mg\sin\theta]$$
+
+$$= 3.5g\cos\theta - 0.41\frac{h_1}{l}Mg\sin\theta$$
+
+0.2 pts
+
+The Conditions for pure rolling:
+
+$$f_2 \le \mu_s N_2 \quad \mathrm{and} \quad f_3 \le \mu_s N_3$$
+
+$$\frac{I_2}{R_2^2}a \le \mu_s N_2 \quad \mathrm{and} \quad \frac{I_3}{R_3^2}a \le \mu_s N_3$$
+
+0.2 pts
+
+The left equation becomes
+
+$$0.7M\times 0.833g\sin\theta \le \mu_s(3.5Mg\cos\theta - 0.41\frac{h_1}{l}Mg\sin\theta)$$
+
+$$\tan\theta \le \frac{3.5\mu_s}{0.5831 + 0.41\mu_s\frac{h_1}{l}}$$
+
+While the right equation becomes
+
+$$0.7m\times 0.833g\sin\theta \le \mu_s(3.5mg\cos\theta + 0.41\frac{h_1}{l}mg\sin\theta)$$
+
+$$\tan\theta \le \frac{3.5\mu_s}{0.5831 - 0.41\mu_s\frac{h_1}{l}}$$
+
+(17) 0.1 pts
+
+**CASE ALL CYLINDER SLIDING**
+
+From eq. (4) $f_{21h} = Ma + u_kN_2 - Mg\sin\theta$ (18) 0.15 pts
+
+From eq. (8) $f_{31h} = Ma + u_kN_3 - Mg\sin\theta$ (19) 0.15 pts
+
+From eq. (18) and 19 :
+
+$5Mg\sin\theta - (Ma + u_kN_2 - Mg\sin\theta) - (Ma + u_kN_3 - Mg\sin\theta) = m_1 a$
+
+$$a = \frac{7Mg\sin\theta - \mu_k N_2 - \mu_k N_3}{7M} = g\sin\theta - \frac{\mu_k(N_2 + N_3)}{7M}$$
+
+(20) 0.2 pts
+
+$N_3 + N_2 = 7Mg\cos\theta$
+
+From the above two equations we get :
+
+$$a = g\sin\theta - \mu_k g\cos\theta$$
+
+0.25 pts
+
+The Conditions for complete sliding: are the opposite of that of pure rolling
+
+$$f_2 \rangle \mu_s N'_2 \quad \mathrm{and} \quad f_3 \rangle \mu_s N'_3$$
+
+$$\frac{I_2}{R_2^2}a \rangle \mu_s N'_2 \quad \mathrm{and} \quad \frac{I_3}{R_3^2}a \rangle \mu_s N'_3$$
+
+(21) 0.2 pts
+
+Where $N_2$’ and $N_3$’ is calculated in case all cylinder in pure rolling. 0.1 pts
+
+Finally we get
+
+$$\tan\theta \rangle \frac{3.5\mu_s}{0.5831 + 0.41\mu_s\frac{h_1}{l}} \quad \mathrm{and} \quad \tan\theta \rangle \frac{3.5\mu_s}{0.5831 - 0.41\mu_s\frac{h_1}{l}}$$
+
+0.2 pts
+
+The left inequality finally become decisive.
+
+**CASE ONE CYLINDER IN PURE ROLLING AND ANOTHER IN SLIDING CONDITION**
+
+$\{$ For example $R_3$ (front cylinders) pure rolling while $R_2$ (Rear cylinders) sliding $\}$
+
+From equation (4) we get
+
+$F_{21h} = m_2a + u_kN_2 - m_2g\sin\theta$ (22) 0.15 pts
+
+From equation (5) we get
+
+$f_{31h} = m_3a + (I/R^2)a - m_3g\sin\theta$ (23) 0.15 pts
+
+Then from eq. (1) , (22) and (23) we get
+
+$m_1g\sin\theta - \{m_2a + u_kN_2 - m_2g\sin\theta\} - \{m_3a + (I/R^2)a - m_3g\sin\theta\} = m_1a$
+
+$m_1 g\sin\theta + m_2g\sin\theta + m_3\sin\theta - u_kN_2 = (I/R^2 + m_3)a + m_2a + m_1a$
+
+$5Mg\sin\theta + Mg\sin\theta + Mg\sin\theta - u_kN_2 = (0.7M + M)a + Ma + 5Ma$
+
+$$a = \frac{7Mg\sin\theta - \mu_k N_2}{7.7M} = 0.9091g\sin\theta - \frac{\mu_k N_2}{7.7M}$$
+
+(24) 0.2 pts
+
+$$N_3 - N_2 = \frac{h_1}{l}(\mu_k N_2 + \frac{I}{R^2}a + 2Ma - 2Mg\sin\theta)$$
+
+$$N_3 - N_2 = \frac{h_1}{l}(\mu_k N_2 + 2.7M\times 0.9091g\sin\theta - 2.7\mu_k N_2/7.7 - 2Mg\sin\theta)$$
+
+$$N_3 - N_2(1 + 0.65\mu_k\frac{h_1}{l}) = 0.4546Mg\sin\theta$$
+
+$$N_3 + N_2 = 7Mg\cos\theta$$
+
+Therefore we get
+
+$$N_2 = \frac{7Mg\cos\theta - 0.4546Mg\sin\theta}{2 + 0.65\mu_k\frac{h_1}{l}}$$
+
+$$N_3 = 7Mg\cos\theta - \frac{7Mg\cos\theta - 0.4546Mg\sin\theta}{2 + 0.65\mu_k\frac{h_1}{l}}$$
+
+(25) 0.3 pts
+
+Then we can substitute the results above into equation (16) to get the following result
+
+$$a = 0.9091g\sin\theta - \frac{\mu_k N_2}{7.7M} = 0.9091g\sin\theta - \frac{\mu_k}{7.7}\frac{7g\cos\theta - 0.4546g\sin\theta}{2 + 0.65\mu_k\frac{h_1}{l}}$$
+
+(26) 0.2 pts
+
+The Conditions for this partial sliding is:
+
+$$f_2 \le \mu_s N'_2 \quad \mathrm{and} \quad f_3 \rangle \mu_s N'_3$$
+
+$$\frac{I}{R^2}a \le \mu_s N'_2 \quad \mathrm{and} \quad \frac{I}{R^2}a \rangle \mu_s N'_3$$
+
+(27) 0.25 pts
+
+where $N'_2$ and $N'_3$ are normal forces for pure rolling condition
+
+4. Assumed that after rolling d meter all cylinder start to sliding until reaching the end of incline road (total distant is s meter). Assumed that $\eta$meter is reached in $t_1$ second.
+
+$$v_{t1} = v_o + at_1 = 0 + a_1t_1 = a_1t_1$$
+
+$$d = v_ot_1 + \frac{1}{2}a_1t_1^2 = \frac{1}{2}a_1t_1^2$$
+
+$$t_1 = \sqrt{\frac{2d}{a_1}}$$
+
+0.5 pts
+
+$$v_{t1} = a_1\sqrt{\frac{2d}{a_1}} = \sqrt{2da_1} = \sqrt{2d0.833g\sin\theta} = \sqrt{1.666dg\sin\theta}$$
+
+(28)
+
+The angular velocity after rolling d meters is same for front and rear cylinders:
+
+$$\omega_{t1} = \frac{v_{t1}}{R} = \frac{1}{R}\sqrt{1.666dg\sin\theta}$$
+
+(29) 0.5 pts
+
+Then the vehicle sliding until the end of declining road. Assumed that the time needed by vehicle to move from d position to the end of the declining road is $t_2$ second.
+
+$$v_{t2} = v_{t1} + a_2t_2 = \sqrt{1.666dg\sin\theta} + a_2t_2$$
+
+$$s - d = v_{t1}t_2 + \frac{1}{2}a_2t_2^2$$
+
+$$t_2 = \frac{-v_{t1} + \sqrt{v_{t1}^2 + 2a_2(s - d)}}{a_2}$$
+
+$$v_{t2} = \sqrt{1.666dg\sin\theta} - v_{t1} + \sqrt{v_{t1}^2 + 2a_2(s - d)}$$
+
+(30) 0.4 pts
+
+Inserting $v_{t1}$ and $a_2$ from the previous results we get the final results.
+
+For the angular velocity, while sliding they receive torsion:
+
+$$\tau = \mu_k NR$$
+
+$$\alpha = \frac{\tau}{I} = \frac{\mu_k NR}{I}$$
+
+(31)
+
+$$\omega_{t2} = \omega_{t1} + \alpha t_2 = \frac{1}{R}\sqrt{1.666dg\sin\theta} + \frac{\mu_k NR}{I}\frac{-v_{t1} + \sqrt{v_{t1}^2 + 2a_2(s - d)}}{a_2}$$
+
+0.6 pts
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2002-theory-3/p1-sol-fig1.png" alt="Simplified model: inclined road at angle θ with two circles (cylinders) under a line representing the body; the distances from the middle to each cylinder are marked l and l, and the distance from the cylinder centre to the body line is marked h1." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2002-theory-3/p1-sol-fig2.png" alt="Wheel model: outer circle and inner circle with eight spokes; arrows from the centre mark the radii Ro and Ri." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2002-theory-3/p1-sol-fig3.png" alt="Free-body diagram of the frame (part 1): the body line with forces N12 and f12h at the rear support, N13 and f13h at the front support, weight m1g at the middle; half-lengths l and l marked, and h1 marked." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2002-theory-3/p1-sol-fig4.png" alt="Free-body diagram of the rear cylinder on the incline: normal force N2 from the road, friction f2 up the slope, force N21 from the body, f21h down the slope, and weight Mg." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2002-theory-3/p1-sol-fig5.png" alt="Free-body diagram of the front cylinder on the incline: normal force N3 from the road, friction f3 up the slope, force N31 from the body, f31h down the slope, and weight Mg." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2001_2010/2002/Theory/3.pdf)
+· официални решения: [3_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2001_2010/2002/Theory/3_sol.pdf)

@@ -1,0 +1,218 @@
+---
+id: apho-2011-theory-3-p3
+source: 'APhO 2011, theory'
+title: 'Задача 3. Birthday Balloon'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2011/apho-2011-theory-3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T10:30:59.914Z'
+verifier: 'mechanical'
+---
+
+*Theoretical Competition, 3 May 2011 — APhO Israel 2011 — Question Number 3 — Theoretical Question 3: Birthday Balloon*
+
+## Условие
+
+The picture shows a long rubber balloon, the kind that is popular at birthday parties. A partially inflated balloon usually splits into two domains of different radii. In this question, we consider a simplified model to help us understand this phenomenon.
+
+Consider a balloon with the shape of a long homogeneous cylinder (except for the ends), with a mouthpiece through which the balloon can be inflated. All processes will be considered isothermal at room temperature. At all times, the pressure $P$ inside the balloon exceeds the atmospheric pressure $P_0$ by a small fraction, so the air may be treated as an incompressible fluid. Gravity and the balloon's weight may also be neglected. The inflation is slow and quasistatic. In parts (a)-(d), the balloon is inflated uniformly throughout its length. We denote by $r_0$ and $L_0$ the radius and length of the balloon before it was inflated.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2011-theory-3/p3-fig1.png" alt="Photo of a long blue rubber balloon: the right part is inflated into a thick cylinder, while the left part remains a thin uninflated tube." />
+<figcaption>Figure 1: A partially inflated birthday balloon.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2011-theory-3/p3-fig2.png" alt="Graph of sigma_t (N/m), from 0 to 90, versus r (cm), from 0.0 to 3.0: the curve starts at zero at r = 0.5 cm, rises roughly linearly to about 29 N/m at r = 1.0 cm, stays on a nearly flat plateau rising slowly to about 31 N/m at r = 2.5 cm, then rises sharply to about 82 N/m near r = 2.85 cm." />
+<figcaption>Figure 2: $\sigma_t(r)$ for a realistic party balloon.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2011-theory-3/p3-fig3.png" alt="Qualitative graph of P−P_0 versus V (no numerical scale): a cubic curve rising from the bottom left to a local maximum, decreasing to a local minimum, then rising steeply at the right." />
+<figcaption>Figure 3: A plot of equation (2).</figcaption>
+</figure>
+
+**a.** The balloon is held by the mouthpiece, while its other parts hang freely. Find the ratio $\sigma_L/\sigma_t$ between the longitudinal surface tension $\sigma_L$ (in the direction parallel to the balloon’s axis) and the transverse surface tension $\sigma_t$ (in the direction tangent to the balloon’s circular cross-section).
+The surface tension of a rubber film is the force that adjacent parts exert on each other, per unit length of the boundary. **[1,8 т.]**
+
+Hooke's Law is a linear approximation of real-world elasticity for small tensions. Assume that the balloon’s length remains constant at $L_0$, while the surface tension $\sigma_t$ depends linearly on the inflation ratio $r/r_0$:
+
+$$\sigma_t = k\left(\frac{r}{r_0} - 1\right) \qquad (1)$$
+
+**b.** With these assumptions, obtain an expression for the dependence of the pressure $P$ inside the balloon on the balloon's volume $V$. Sketch a plot of $P - P_0$ as a function of $V$. What is the maximal inflation pressure $P_{max}$ resulting from Hooke's elasticity approximation? **[1 т.]**
+
+In reality, because the inflation ratio $r/r_0$ is large (in Figure 1, typical values of about 5 can be observed), one must consider non-linear behavior of the rubber and changes in the balloon’s length. These effects allow higher inflation pressures than predicted by part (b). In a typical balloon, the graph of $\sigma_t(r)$ is composed of three pieces:
+
+1. For small inflation ratios, $\sigma_t(r)$ grows in a Hooke-like manner.
+2. At $r - r_0 \sim r_0$, the balloon’s length $L$ begins to increase, and $\sigma_t(r)$ reaches a long plateau where it grows very slowly.
+3. At some large inflation ratio, the rubber starts strongly resisting any further stretch, which leads to a sharp rise in $\sigma_t(r)$.
+
+This behavior is depicted in Figure 2.
+
+**c.** Sketch a qualitative plot of the pressure difference $P - P_0$ as a function of $V$ for a uniformly inflated balloon that behaves according to Figure 2. Indicate any local extremum points on your plot. Indicate also the points corresponding to $r = 1\mathrm{cm}$ and $r = 2.5\mathrm{cm}$. Find the values of $P - P_0$ at these two points with 10% accuracy. **[1,3 т.]**
+
+To explore the consequences of the behavior you found in part (c), we approximate $P(V)$ for a uniformly inflated balloon with a cubic function:
+
+$$P - P_0 = a\left((V - u)^3 - b(V - u) + c\right) \qquad (2)$$
+
+where $a, b, c$ and $u$ are positive constants. Assume that the volume $u$ is larger than the balloon’s uninflated volume $V_0$, and $c$ is large enough so that the function (2) is positive in the entire physical range $V > V_0$. See Figure (3).
+
+The balloon is attached to a large air reservoir maintained at a controllable pressure $P$. It may happen that some values of $P$ are consistent with more than one value of the volume $V$. If the balloon suffers occasional perturbations (such as local stretching by external forces) while held at such inflation pressure, it may jump to a state of different volume. This will happen when it becomes energetically favorable for the entire system, consisting of the balloon, the atmosphere and the machinery maintaining the pressure $P$. If the pressure is slowly increased from $P_0$, and sufficient perturbations exist at every step, this explosive volume jump will happen at a certain pressure $P_c$ where the energy required to move between the two states is zero. Above this pressure, going from the smaller volume to the larger volume branch releases energy, and vice versa. This type of discontinuity is often found in nature, and is sometimes referred to as a “phase transition”.
+
+**d.** By considering equation (2), obtain the value of $P_c$, the volume $V_1$ of the balloon before the jump, and the volume $V_2$ after the jump. Express your answers using $a, b, c$ and $u$. **[2,3 т.]**
+
+A more realistic inflating agent, such as a birthday boy, is unable to supply enough air for the instantaneous volume change described above. Instead, air is pumped gradually into the balloon, effectively controlling the balloon’s volume rather than the pressure. In this case, a new type of behavior becomes possible. If it helps to minimize the total energy of the system, the balloon will split (given sufficient perturbations) into two cylindrical domains of different radii, whose lengths will gradually change. The splitting boundary itself requires energy, which you may neglect. We shall also neglect the length of the boundary layer (these assumptions are valid for a very long balloon.)
+
+**e.** Sketch a qualitative graph of the pressure difference $P - P_0$ as a function of $V$, taking the split into account. Indicate on your axes the pressure $P_c - P_0$ and the volumes $V_1$ and $V_2$. **[1 т.]**
+
+**f.** The balloon is in the volume range that supports two coexisting domains. Find the length $L_{thin}$ of the thinner domain as a function of the total air volume $V$. Express your answer in terms of $V_1$, $V_2$ and the radius $r_1$ of the thinner domain. **[1,4 т.]**
+
+**g.** The balloon is in the volume range that supports two coexisting domains. Find the latent work $\Delta W/\Delta L_{thin}$ that must be performed on the balloon to convert a unit length of the thin domain into the thick domain. Express your answer in terms of $P_c$, $V_1$, $V_2$ and the radius $r_1$ of the thinner domain. **[1,2 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a.** $\sigma_L/\sigma_t = 1/2$
+- **b.** $P(V) = P_0 + k\left(\frac{1}{r_0} - \sqrt{\frac{\pi L_0}{V}}\right),\quad P_{max} = P_0 + \frac{k}{r_0}$
+- **c.** P − P0 ≈ 3000 Pa at r = 1 cm; P − P0 ≈ 1200 Pa at r = 2.5 cm (both on the decreasing portion of the graph)
+- **d.** $P_c = P_0 + ac,\quad V_{1,2} = u \pm \sqrt{b}$
+- **f.** $L_{thin} = \frac{V_1(V_2 - V)}{\pi r_1^2 (V_2 - V_1)}$
+- **g.** $\frac{\Delta W}{\Delta L_{thin}} = \frac{\pi r_1^2 P_c (V_2 - V_1)}{V_1}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.** Solution using forces:
+
+Let the balloon’s radius be $r$, and let $P$ be the pressure of the inside air. Consider the balloon’s rear half, and write down the equilibrium of forces on it along the cylinder’s axis:
+
+$$\pi r^2 (P - P_0) = 2\pi r \sigma_L$$
+
+On the other hand, let us cut the balloon in half with a plane that runs along its axis, and consider a half-cylindrical section of length $x$. The equilibrium of forces in perpendicular to the cutting plane reads:
+
+$$2rx(P - P_0) = 2x\sigma_t$$
+
+from which we derive $\sigma_L/\sigma_t = 1/2$.
+
+Solution using energies:
+
+If we stretch the balloon longitudinally by length $dL$, the energy cost is:
+
+$$E_1 = 2\pi r \sigma_L \cdot dL$$
+
+If we inflate the balloon radially with an increment $dr$, the energy cost is:
+
+$$E_2 = L\sigma_t \cdot 2\pi dr$$
+
+The two deformations can be combined while keeping the volume fixed, if we take $\pi r^2 dL = -Ld(\pi r^2) = -2\pi L r dr$, i.e. $rdL = -2Ldr$. The equilibrium state is the one where the combined energy cost $E_1 + E_2$ of such a deformation is zero. This gives again the result $\sigma_L/\sigma_t = 1/2$.
+
+**b.** From part (a), we are reminded of the relation between surface tension and pressure:
+
+$$P = P_0 + \frac{\sigma_t}{r} = P_0 + \frac{k(r - r_0)}{r_0 r} = P_0 + k\left(\frac{1}{r_0} - \frac{1}{r}\right)$$
+
+The volume is related to the radius by:
+
+$$V = \pi r^2 L_0$$
+
+So we get:
+
+$$P(V) = P_0 + k\left(\frac{1}{r_0} - \sqrt{\frac{\pi L_0}{V}}\right)$$
+
+The graph of $P - P_0$ is a hyperbola-like function increasing from 0 at $V = \pi r_0^2 L_0$ to an asymptotic value of $k/r_0$ at $V \to \infty$.
+
+The maximal pressure is obtained at $V \to \infty$:
+
+$$P_{max} = P_0 + \frac{k}{r_0}$$
+
+**c.** The graph of $P - P_0$ as a function of $V$ has the same qualitative form as $P - P_0 = \sigma_t/r$ as a function of $r$, shown below. The graph rises from zero, then decreases, and then increases again. The points $r = 1\mathrm{cm}$ and $r = 2.5\mathrm{cm}$ lie in the decreasing portion (and not on the local extrema).
+
+The pressures at the two requested points are approximately given by:
+
+$$P - P_0(r = 1\mathrm{cm}) = \frac{\sigma}{r} = \frac{30}{0.01} = 3000\mathrm{Pa}; \qquad P - P_0(r = 2.5\mathrm{cm}) = \frac{30}{0.025} = 1200\mathrm{Pa}$$
+
+**d.** The work done on the pressure-controlling mechanism during continuous inflation from volume $V_i$ to volume $V_f$ is:
+
+$$W_{mech} = -P(V_f - V_i)$$
+
+The work done on the atmosphere is:
+
+$$W_{surr} = P_0(V_f - V_i)$$
+
+The condition for the jump is:
+
+$$W_{rubber} + W_{surr} + W_{mech} = 0$$
+
+This translates into Maxwell’s equal-areas condition:
+
+$$\int_{V_i}^{V_f} (P - P_0)dV = (P - P_0)(V_f - V_i)$$
+
+Or, equivalently:
+
+$$\int_{V_i}^{V_f} PdV = P(V_f - V_i)$$
+
+The cubic function $P(V)$ is symmetric around the point $V = u, P - P_0 = ac$.
+
+The equal-areas condition is therefore satisfied at:
+
+$$P_c = P_0 + ac$$
+
+The volumes $V_1$ and $V_2$ are given by the points where:
+
+$$(V - u)^3 - b(V - u) = 0$$
+
+This gives:
+
+$$V_{1,2} = u \pm \sqrt{b}$$
+
+**e.** The range of volumes where a phase separation will occur is $V_1 < V < V_2$. The pressure is constant throughout this range, and equals the transition pressure $P_c$. The graph of $P - P_0$ as a function of $V$ is monotonous, with a rising piece, a horizontal plateau at $V_1 < V < V_2, P = P_c$, followed by another rising piece. At the start and end of the plateau, the slope has a discontinuity, i.e. the graph has a kink.
+
+**f.** The radii of the two domains correspond to the volumes $V_1$ and $V_2$. As the total volume increases from $V_1$ to $V_2$, the volume of the thin domain changes linearly from $V_1$ to $0$. We get:
+
+$$V_{thin} = \frac{V_1}{V_2 - V_1}(V_2 - V)$$
+
+Converting this into length, we have:
+
+$$L_{thin} = \frac{V_{thin}}{\pi r_1^2} = \frac{V_1(V_2 - V)}{\pi r_1^2 (V_2 - V_1)}$$
+
+**g.** The increase in the balloon’s volume as a result of converting a length $L_{thin}$ into the thick phase is:
+
+$$\Delta V = \frac{V_2 - V_1}{V_1}\Delta V_{thin} = \frac{\pi r_1^2 (V_2 - V_1)}{V_1}\Delta L_{thin}$$
+
+The corresponding work is:
+
+$$\Delta W = P_c \Delta V = \frac{\pi r_1^2 P_c (V_2 - V_1)}{V_1}\Delta L_{thin}$$
+
+Therefore:
+
+$$\frac{\Delta W}{\Delta L_{thin}} = \frac{\pi r_1^2 P_c (V_2 - V_1)}{V_1}$$
+
+**Additional discussion (doesn’t appear as part of the question):**
+
+During a realistic inflation, perturbations are not strong enough to keep the system in global equilibrium at all times. The experimental graph increases up to $P_c$, continues to increase some way beyond it, reaches a local maximum, then decreases and settles on the plateau at $P_c$. This over-increase of the pressure is responsible for the fact that inflating a balloon is difficult during the first few puffs. After the plateau, the graph sharply increases as discussed above. The decrease towards the plateau “overshoots” slightly again, reaches a local minimum and rises again to settle on the plateau. This behavior is depicted in the graph below.
+
+The illustration is taken from:
+http://www.science-project.com/_members/science-projects/1989/12/1989-12-body.html
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2011-theory-3/p3-sol-fig1.png" alt="Two graphs joined by an arrow. Left: P−P_0 (kPa), from 0 to 6, versus r (cm), from 0.0 to 3.0; the curve starts at zero at r = 0.5 cm, peaks at about 3 kPa near r = 0.9 cm, decreases to about 1.2 kPa at r = 2.5 cm, then rises steeply to above 5 kPa at r = 3.0 cm. Right: the corresponding qualitative graph of P−P_0 versus V with a sharp early maximum, a long decreasing stretch, a minimum and a steep rise." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2011-theory-3/p3-sol-fig2.png" alt="Qualitative graph of P−P_0 versus V taking the split into account: a rising piece at the left, a long horizontal plateau with kinks at both ends, then a steeply rising piece at the right." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2011-theory-3/p3-sol-fig3.png" alt="Sketch of Pressure versus Volume for a real balloon: the curve rises (point A) to a maximum, falls (point B) to a shallow minimum below the plateau, settles on a long flat plateau and finally rises at large volume; two drawings of a partially inflated long balloon, with a thick and a thin domain, are placed above the plateau." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2011/Theory/3.pdf)
+· официални решения: [3_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2011/Theory/3_sol.pdf)
