@@ -43,7 +43,8 @@ export function regionsFor(paperId, manifest, doc) {
   if (cached && cached.sha256 === d.sha256 && cached.version === REGIONS_VERSION) return cached;
   const r = run('python3', [PDFREGIONS, pdf], { allowFail: true });
   if (r.status !== 0) return null;
-  const data = { sha256: d.sha256, at: new Date().toISOString(), ...JSON.parse(r.stdout) };
+  // the JSON starts at the first '{': a library message printed before it is not ours to parse
+  const data = { sha256: d.sha256, at: new Date().toISOString(), ...JSON.parse(r.stdout.slice(Math.max(0, r.stdout.indexOf('{')))) };
   writeJson(cacheFile, data);
   return data;
 }

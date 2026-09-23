@@ -21,6 +21,11 @@ a region can be attributed to a problem.
 import argparse, json, re, statistics, sys
 import fitz
 
+# MuPDF prints its own messages to stdout ("MuPDF error: format error: No default Layer config" on PDFs with
+# optional-content layers, noh-2011-ii-7), which breaks the JSON this script writes there
+fitz.TOOLS.mupdf_display_errors(False)
+fitz.TOOLS.mupdf_display_warnings(False)
+
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
