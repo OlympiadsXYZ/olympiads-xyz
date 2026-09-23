@@ -25,8 +25,10 @@ log(`${changed.length} changed path(s), ${papers} paper file(s); running the gat
 const gates = [
   ['node', ['scripts/normalise-papers.mjs']],
   ['node', ['scripts/problems-to-site.mjs']],
+  // every paper has a canonical round label, no sidebar node shows one number twice, no number contradicts the title
+  ['node', ['scripts/check-navigation.mjs']],
   ['node', ['scripts/check-mdx.mjs']],
-  ['node', ['--test', 'scripts/tests/problems.test.mjs', 'scripts/tests/tx.test.mjs']],
+  ['node', ['--test', 'scripts/tests/problems.test.mjs', 'scripts/tests/tx.test.mjs', 'scripts/tests/navigation.test.mjs']],
   ['python3', ['scripts/validate-papers.py']],
 ];
 for (const [cmd, args] of gates) {

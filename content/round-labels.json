@@ -1,0 +1,585 @@
+{
+  "_comment": [
+    "Canonical Bulgarian sidebar label of every round (presentation overlay; the paper JSON is hash-bound to its receipt and is never edited to fix a label).",
+    "rounds[competition]['<raw paper.round>|<paper.roundType>'] -> label ('' for a null round: '|theory'). papers[paperId] -> label, for the raw combinations that mix several events (checked paper by paper against its masthead). grades[competition][raw grade] -> grade label, where the generic rule (9 -> '9. клас', 9-10 -> '9–10 клас', physics ST/SP -> 'Специална тема', astronomy ML/ST -> 'Младша/Старша възраст') is wrong or uneven for that competition; '' drops a grade that is not one (IPhO '8-9' is the file date 2012-08-09, IOAA 2021 '9' is Q9). suffixes[paperId] -> text appended after the grade, for papers of one round and grade that are different sittings or copies: 'първи ден' / 'втори ден', 'тест', 'вариант 2', 'лист 1', 'друг препис' (the same exam transcribed from a second archive file).",
+    "A sidebar node is labelled '<round label> · <grade label> · <suffix>'; the raw paper.title is never a label. Resolved by scripts/lib/navigation.mjs (pages) and src/problems/tree.ts (sidebar); scripts/check-navigation.mjs fails on a paper this file does not label.",
+    "Rules. One event -> one label, whatever the raw spelling (theory / Theo / Practical Round / observational / Prac; II / II кръг (областен); regional / Региональный этап).",
+    "International olympiads whose papers are one file per question or per tour get the tour label: Теория, Експеримент, Наблюдения, Анализ на данни, Практически тур, Отборен тур, Тест; a whole olympiad in one file (IPhO 1968-1976) is 'Теория и експеримент'. A practical round made of data-analysis problems stays 'Практически тур' (IAO, OWAO).",
+    "Bulgarian national rounds keep their full form ('III кръг (национален)'); a bare numeral ('III') takes the full form its siblings in that competition use; a round printed otherwise keeps its printed qualifier ('I кръг (училищен)', 'III кръг (регионален)'). НЕСФ and НПСФ hold one round a year: their label is '' and the node is named by the grade alone.",
+    "Russian and Belarusian stages in Bulgarian: Районен етап, Областен етап, Регионален етап, Заключителен етап. Training camps: 'Летен/Есенен/Зимен сбор', 'Сбор N'. Tournaments (IYPT, IYNT): 'Задачи на турнира'.",
+    "Papers of one year that share a label and a language merge into one sidebar node when their display numbers (content/question-numbers.json) do not collide. An original and its translation are split by language ('· на английски', '· на български'); colliding papers are split by tour ('· теория', '· тест') unless the round label already names the tour; a suffix here settles what is left (check-navigation.mjs warns about a node told apart only by its paper id).",
+    "Nikola and the null-round VsOA-ru / ПУ / USAAAO papers have no combination entry on purpose: those raw combinations mix events, so a new paper there must get its own label before it ships."
+  ],
+  "rounds": {
+    "APAO": {
+      "observation|observation": "Наблюдения",
+      "observational|observation": "Наблюдения",
+      "|observation": "Наблюдения",
+      "|practical": "Практически тур",
+      "|theory": "Теория"
+    },
+    "APhO": {
+      "experiment|experiment": "Експеримент",
+      "|experiment": "Експеримент",
+      "theory|theory": "Теория",
+      "|theory": "Теория"
+    },
+    "BAAO": {
+      "|theory": "Теория"
+    },
+    "Balkan": {
+      "|theory": "Теория",
+      "|mixed": "Теория"
+    },
+    "BelPhO": {
+      "III|experiment": "Областен етап",
+      "III|theory": "Областен етап",
+      "IV кръг|experiment": "Заключителен етап",
+      "IV кръг|theory": "Заключителен етап"
+    },
+    "ESF": {
+      "III кръг (национален)|theory": "",
+      "Есенно състезание|theory": "",
+      "|theory": ""
+    },
+    "EuPhO": {
+      "experiment|experiment": "Експеримент",
+      "|experiment": "Експеримент",
+      "theory|theory": "Теория",
+      "|theory": "Теория"
+    },
+    "GPhO": {
+      "experiment|experiment": "Експеримент",
+      "|experiment": "Експеримент",
+      "theory|theory": "Теория",
+      "|theory": "Теория"
+    },
+    "GeCAA": {
+      "team|observation": "Отборен тур",
+      "team|theory": "Отборен тур"
+    },
+    "HOOS": {
+      "selection|mixed": "Подборен кръг",
+      "selection|test": "Подборен кръг",
+      "selection|theory": "Подборен кръг"
+    },
+    "IAO": {
+      "Prac|practical": "Практически тур",
+      "practical|practical": "Практически тур",
+      "practical|data-analysis": "Практически тур",
+      "|practical": "Практически тур",
+      "Theo|theory": "Теория",
+      "theory|theory": "Теория",
+      "|theory": "Теория",
+      "observation|observation": "Наблюдения",
+      "observational|observation": "Наблюдения",
+      "|observation": "Наблюдения"
+    },
+    "IChO": {
+      "selection|theory": "Подборен кръг"
+    },
+    "IEPhO": {
+      "experiment|experiment": "Експеримент",
+      "Первый тур|experiment": "Експеримент",
+      "Третий тур|experiment": "Експеримент",
+      "|experiment": "Експеримент"
+    },
+    "IOAA": {
+      "theory|theory": "Теория",
+      "|theory": "Теория",
+      "observational|observation": "Наблюдения",
+      "|observation": "Наблюдения",
+      "data-analysis|data-analysis": "Анализ на данни",
+      "|data-analysis": "Анализ на данни",
+      "team|data-analysis": "Отборен тур",
+      "team|practical": "Отборен тур",
+      "|mixed": "Отборен тур"
+    },
+    "IOAA-Jr": {
+      "theory|theory": "Теория",
+      "|theory": "Теория",
+      "|observation": "Наблюдения"
+    },
+    "IOM": {
+      "theory|theory": "Теория",
+      "|theory": "Теория",
+      "|test": "Блиц"
+    },
+    "IPhO": {
+      "experiment|experiment": "Експеримент",
+      "|experiment": "Експеримент",
+      "theory|theory": "Теория",
+      "|theory": "Теория",
+      "|mixed": "Теория и експеримент"
+    },
+    "ISPhO": {
+      "theory|theory": "Теория",
+      "|theory": "Теория"
+    },
+    "IYNT": {
+      "|experiment": "Задачи на турнира",
+      "|mixed": "Задачи на турнира"
+    },
+    "IYPT": {
+      "|experiment": "Задачи на турнира",
+      "|mixed": "Задачи на турнира"
+    },
+    "IZhO": {
+      "experiment|experiment": "Експеримент",
+      "|experiment": "Експеримент",
+      "theory|theory": "Теория",
+      "|theory": "Теория"
+    },
+    "IdPhO": {
+      "theory|theory": "Теория",
+      "|theory": "Теория"
+    },
+    "InPhO": {
+      "|theory": "Теория"
+    },
+    "MosA": {
+      "theory|theory": "Теория",
+      "|theory": "Теория",
+      "observational|observation": "Наблюдения",
+      "|observation": "Наблюдения"
+    },
+    "NAO": {
+      "I кръг (общински)|mixed": "I кръг (общински)",
+      "I кръг (общински)|theory": "I кръг (общински)",
+      "|theory": "I кръг (общински)",
+      "II кръг (областен)|theory": "II кръг (областен)",
+      "II|theory": "II кръг (областен)",
+      "III кръг (национален)|mixed": "III кръг (национален)",
+      "III кръг (национален)|observation": "III кръг (национален)",
+      "III кръг (национален)|practical": "III кръг (национален)",
+      "III кръг (национален)|test": "III кръг (национален)",
+      "III кръг (национален)|theory": "III кръг (национален)",
+      "III|test": "III кръг (национален)",
+      "III|theory": "III кръг (национален)",
+      "IV кръг|mixed": "IV кръг",
+      "IV кръг|observation": "IV кръг",
+      "IV кръг|practical": "IV кръг",
+      "IV кръг|theory": "IV кръг"
+    },
+    "NOF": {
+      "I кръг (общински)|theory": "I кръг (общински)",
+      "I|theory": "I кръг (общински)",
+      "I кръг (училищен)|theory": "I кръг (училищен)",
+      "училищен кръг|theory": "I кръг (училищен)",
+      "II кръг (областен)|mixed": "II кръг (областен)",
+      "II кръг (областен)|theory": "II кръг (областен)",
+      "III кръг (национален)|experiment": "III кръг (национален)",
+      "III кръг (национален)|theory": "III кръг (национален)",
+      "III|theory": "III кръг (национален)",
+      "III кръг (регионален)|theory": "III кръг (регионален)",
+      "IV кръг|experiment": "IV кръг",
+      "IV кръг|mixed": "IV кръг",
+      "IV кръг|theory": "IV кръг",
+      "|theory": "Национално състезание"
+    },
+    "NOH": {
+      "II кръг (областен)|mixed": "II кръг (областен)",
+      "II кръг (областен)|test": "II кръг (областен)",
+      "II кръг (областен)|theory": "II кръг (областен)",
+      "III кръг (национален)|experiment": "III кръг (национален)",
+      "III кръг (национален)|mixed": "III кръг (национален)",
+      "III кръг (национален)|theory": "III кръг (национален)",
+      "III|theory": "III кръг (национален)"
+    },
+    "O3A2": {
+      "|test": "Тест",
+      "|theory": "Теория"
+    },
+    "OPhO": {
+      "experiment|experiment": "Експеримент"
+    },
+    "OWAO": {
+      "theory|theory": "Теория",
+      "|theory": "Теория",
+      "Practical Round|data-analysis": "Практически тур",
+      "data-analysis|data-analysis": "Практически тур"
+    },
+    "PSF": {
+      "III кръг (национален)|theory": "",
+      "Пролетно състезание|theory": "",
+      "|theory": "",
+      "|mixed": ""
+    },
+    "RMPh": {
+      "experiment|experiment": "Експеримент",
+      "experiment|theory": "Експеримент",
+      "|experiment": "Експеримент",
+      "theory|theory": "Теория",
+      "|theory": "Теория"
+    },
+    "SPbA": {
+      "I|theory": "I кръг (задочен)",
+      "I кръг (задочен, подборен)|theory": "I кръг (задочен)",
+      "задочен (подборен) кръг|theory": "I кръг (задочен)",
+      "задочен (подборен) тур|theory": "I кръг (задочен)",
+      "II|observation": "II кръг (очен)",
+      "II|practical": "II кръг (очен)",
+      "II|theory": "II кръг (очен)",
+      "II кръг (областен)|practical": "II кръг (очен)",
+      "|observation": "II кръг (очен)",
+      "|practical": "II кръг (очен)",
+      "|theory": "II кръг (очен)"
+    },
+    "Samara": {
+      "I|theory": "I кръг (задочен)",
+      "заочный тур № 1|theory": "I кръг (задочен)",
+      "II|theory": "II кръг (задочен)",
+      "2-ой заочный тур|theory": "II кръг (задочен)",
+      "III|theory": "III кръг (очен)"
+    },
+    "Struve": {
+      "II кръг (областен)|theory": "Регионален етап",
+      "regional|theory": "Регионален етап",
+      "Региональный этап|theory": "Регионален етап",
+      "|theory": "Регионален етап",
+      "IV кръг|theory": "Заключителен етап"
+    },
+    "USAAAO": {
+      "II|mixed": "II кръг",
+      "II|theory": "II кръг"
+    },
+    "USAPhO": {
+      "I|theory": "Четвъртфинал",
+      "II|theory": "Полуфинал"
+    },
+    "VSERUSIYSKA": {
+      "|experiment": "Регионален етап"
+    },
+    "VsOA-SPb": {
+      "I кръг (общински)|mixed": "Районен етап",
+      "I кръг (общински)|theory": "Районен етап",
+      "I|theory": "Районен етап"
+    },
+    "VsOA-ru": {
+      "III кръг (национален)|practical": "Заключителен етап",
+      "III кръг (национален)|theory": "Заключителен етап",
+      "IV кръг|mixed": "Заключителен етап",
+      "IV кръг|observation": "Заключителен етап",
+      "IV кръг|practical": "Заключителен етап",
+      "IV кръг|theory": "Заключителен етап",
+      "theory|theory": "Заключителен етап",
+      "practical|practical": "Заключителен етап",
+      "practical|mixed": "Заключителен етап",
+      "creative|mixed": "Заключителен етап",
+      "regional|theory": "Регионален етап"
+    },
+    "WoPhO": {
+      "|theory": "Теория"
+    },
+    "iGeo": {
+      "theory|theory": "Писмен тест",
+      "experiment|practical": "Теренна работа",
+      "|practical": "Теренна работа",
+      "|test": "Мултимедиен тест"
+    },
+    "Балкански": {
+      "|theory": "Теория"
+    },
+    "Всерусийска": {
+      "II кръг (областен)|experiment": "Регионален етап",
+      "II кръг (областен)|mixed": "Регионален етап",
+      "II кръг (областен)|theory": "Регионален етап",
+      "III кръг (национален)|experiment": "Регионален етап",
+      "III кръг (национален)|theory": "Регионален етап",
+      "regional|experiment": "Регионален етап",
+      "regional|mixed": "Регионален етап",
+      "regional|theory": "Регионален етап",
+      "regional (Региональный этап)|experiment": "Регионален етап",
+      "Региональный этап|theory": "Регионален етап",
+      "|experiment": "Регионален етап",
+      "IV кръг|experiment": "Заключителен етап"
+    },
+    "ПУ": {
+      "I кръг (общински)|theory": "I кръг (задочен)",
+      "II кръг (задочен)|theory": "II кръг (задочен)",
+      "IV кръг|theory": "Финален кръг"
+    }
+  },
+  "papers": {
+    "nof-2001-i-9": "I кръг (училищен)",
+    "nof-2002-i-10": "I кръг (училищен)",
+    "nof-2002-i-7": "I кръг (училищен)",
+
+    "pu-2002-i-1kryg": "I кръг (задочен)",
+    "pu-2003-i-1kryg": "I кръг (задочен)",
+    "pu-2003-ii-2kryg": "II кръг (задочен)",
+    "pu-2006-ii-2kryg": "II кръг (задочен)",
+    "pu-2005-final": "Финален кръг",
+
+    "samara-2012-i-10-11": "I кръг (задочен)",
+    "samara-2012-i-8-9": "I кръг (задочен)",
+    "samara-2012-ii-8-9": "II кръг (задочен)",
+
+    "usaaao-2015-i-frst-round-exam": "I кръг",
+    "usaaao-2015-practice-round-exam": "Пробен кръг",
+    "usaaao-2016-i-frst-round-exam": "I кръг",
+    "usaaao-2016-ii-round-2-test": "II кръг",
+    "usaaao-2018-i-frst-round-exam": "I кръг",
+
+    "opho-2025-theory-x": "Финален кръг · част I",
+    "opho-2025-experiment-x": "Финален кръг · част II",
+
+    "sao-2020-gecaa-selection-test-mcq-paper": "Подбор за GeCAA · тест с избираем отговор",
+    "sao-2020-gecaa-selection-test-structured-question-paper": "Подбор за GeCAA · структурирани задачи",
+
+    "ioaa-2012-team-exam-doc": "Отборен тур",
+    "ioaa-2015-team-bg": "Отборен тур",
+    "ioaa-2015-team-competion-0731": "Отборен тур",
+    "ioaa-2016-team-bg": "Отборен тур",
+    "ioaa-2016-team-qp": "Отборен тур",
+    "ioaa-2017-team-competition": "Отборен тур",
+
+    "izho-2013-day-1-1day-mathem-doc": "Олимпиада по математика · първи ден",
+
+    "nao-2026-iv-urania": "Купа „Урания“",
+
+    "iynt-2021-invent-yourself-sf-3": "Invent Yourself · научен бой 3",
+    "iynt-2021-additional-sf-4": "Допълнителни задачи · научен бой 4",
+    "iynt-2021-captains-contest-sf-4-13-08": "Капитански конкурс · научен бой 4",
+
+    "vserusiyska-2022-iv-w22e": "Road to IPhO",
+    "vserusiyska-2023-iv-w23e": "Road to IPhO",
+    "vserusiyska-2024-iv-pe": "Road to IPhO",
+    "vserusiyska-2026-iv-w26e": "Road to IPhO",
+
+    "vsoa-ru-1994-creative-tvor": "Заключителен етап",
+    "vsoa-ru-1995-creative-tvor": "Заключителен етап",
+    "vsoa-ru-2000-practical-prac": "Заключителен етап",
+    "vsoa-ru-2004-practical-prac": "Заключителен етап",
+    "vsoa-ru-2016-selection-iao-theory-uslovia": "Летен сбор · теория (IAO)",
+    "vsoa-ru-2016-selection-ioaa-long-uslovia": "Летен сбор · теория (IOAA), дълги задачи",
+    "vsoa-ru-2016-selection-ioaa-short-uslovia": "Летен сбор · теория (IOAA), кратки задачи",
+    "vsoa-ru-2016-selection-practice-uslovie": "Летен сбор · практически тур",
+    "vsoa-ru-2016-selection-quiz": "Летен сбор · контролен тест",
+    "vsoa-ru-2016-theory": "Зимен сбор · теория",
+    "vsoa-ru-2017-q-theory": "Есенен сбор · теория",
+    "vsoa-ru-2017-q-prac1": "Есенен сбор · практически тур 1",
+    "vsoa-ru-2017-q-prac2": "Есенен сбор · практико-наблюдателен тур 2",
+    "vsoa-ru-2017-q-prac3": "Есенен сбор · наблюдателен тур 3",
+    "vsoa-ru-2017-selection-q-prac": "Летен сбор · практически тур (3 юли)",
+    "vsoa-ru-2017-selection-troll-theor": "Летен сбор · теория (5 юли)",
+    "vsoa-ru-2017-selection-q-theor": "Летен сбор · теория (6 юли)",
+    "vsoa-ru-2017-selection-nabl-observ-main": "Летен сбор · наблюдения I (11 юли)",
+    "vsoa-ru-2017-selection-nabl-observ-inter": "Летен сбор · наблюдения II (11 юли)",
+    "vsoa-ru-2017-selection-ctrl-cosmology": "Летен сбор · „Космологическа симфония“ (12 юли)",
+    "vsoa-ru-2018-camp-prac-task": "Сбор · практически тест",
+    "vsoa-ru-2021-camp-q21s1t": "Сбор 1 · теория",
+    "vsoa-ru-2021-camp-q21s1d": "Сбор 1 · анализ на данни",
+    "vsoa-ru-2021-camp-q21s2t": "Сбор 2 · теория",
+    "vsoa-ru-2021-camp-q21s2d": "Сбор 2 · анализ на данни",
+    "vsoa-ru-2021-camp-q21s3t": "Сбор 3 · теория",
+    "vsoa-ru-2022-camp-q22s1t": "Сбор 1 · теория",
+    "vsoa-ru-2022-camp-q22s1d": "Сбор 1 · анализ на данни",
+    "vsoa-ru-2022-camp-q22s2t": "Сбор 2 · теория",
+    "vsoa-ru-2022-camp-q22s2d": "Сбор 2 · анализ на данни",
+    "vsoa-ru-2022-camp-q22s3t": "Сбор 3 · теория",
+    "vsoa-ru-2023-camp-q23s1t": "Сбор 1 · теория",
+    "vsoa-ru-2023-camp-q23s1d": "Сбор 1 · анализ на данни",
+    "vsoa-ru-2023-camp-q23s2d": "Сбор 2 · анализ на данни",
+    "vsoa-ru-2023-camp-q23s3t": "Сбор 3 · теория",
+    "vsoa-ru-2023-camp-q23s3d": "Сбор 3 · анализ на данни",
+
+    "nikola-2017-109-team": "1 септември · отборна задача",
+    "nikola-2018-3108": "31 август",
+    "nikola-2018-109": "1 септември",
+    "nikola-2018-209": "2 септември",
+    "nikola-2018-409": "4 септември",
+    "nikola-2018-110": "1 октомври",
+    "nikola-2018-210": "2 октомври",
+    "nikola-2018-310": "3 октомври",
+    "nikola-2019-astro-304": "30 април",
+    "nikola-2019-astro-45": "4 май",
+    "nikola-2019-astro-55a": "5 май",
+    "nikola-2019-astro-65": "6 май",
+    "nikola-2019-astro-125": "12 май",
+    "nikola-2019-astro-306": "30 юни",
+    "nikola-2019-astro-306a": "30 юни · втори лист",
+    "nikola-2019-79": "7 септември · самостоятелна работа",
+    "nikola-2019-709": "7 септември",
+    "nikola-2019-2809": "28 септември",
+    "nikola-2019-2809a": "28 септември · лист a",
+    "nikola-2019-2809b": "28 септември · лист b"
+  },
+  "suffixes": {
+    "struve-2026-regional-7-day1": "първи ден",
+    "struve-2026-regional-7-day2": "втори ден",
+    "struve-2026-regional-8-day1": "първи ден",
+    "struve-2026-regional-8-day2": "втори ден",
+
+    "vserusiyska-2021-regional-10": "първи тур",
+    "vserusiyska-2021-regional-10-tur2": "втори тур",
+    "vserusiyska-2021-regional-11-tur1": "първи тур",
+    "vserusiyska-2021-regional-11-tur2": "втори тур",
+
+    "vsoa-ru-1994-creative-tvor": "творчески тур",
+    "vsoa-ru-1995-creative-tvor": "творчески тур",
+
+    "nof-2001-i-8-1": "друг препис",
+    "nof-2006-iii-th-var1": "вариант 1",
+    "nof-2006-iii-exp-var1": "вариант 1",
+    "nof-2006-iii-th-var2": "вариант 2",
+    "nof-2006-iii-exp-var2": "вариант 2",
+    "nof-2010-i-ob6t-doc": "друг препис",
+    "nof-2010-i-10": "друг препис",
+    "nof-2010-iii-10-12-d1": "първи ден",
+    "nof-2010-iii-10-12-nof3-2010": "втори ден",
+    "nof-2010-iii-10-12-12-d2": "втори ден · друг препис",
+    "nof-2011-iii-10-12-d1": "първи ден",
+    "nof-2011-iii-10-12-12-d1": "първи ден · друг препис",
+    "nof-2011-iii-10-12-nof3-2011": "втори ден",
+    "nof-2012-iii-10-12": "първи ден",
+    "nof-2012-iii-10-12-12problemsd2": "втори ден",
+    "nof-2013-iii-10-12-d1": "първи ден",
+    "nof-2013-iii-10-12-12problemsd2": "втори ден",
+    "nof-2014-iii-10-12-d1": "първи ден",
+    "nof-2014-iii-10-12-d2": "втори ден",
+    "nof-2015-i-9-1": "друг препис",
+    "nof-2015-iii-10-12-d1": "първи ден",
+    "nof-2015-iii-10-12-12problemsd2": "втори ден",
+    "nof-2015-iv-k30": "контролно 10 × 3 точки",
+    "nof-2015-iv-k5": "петточково контролно",
+    "nof-2016-iv-k30": "контролно 10 × 3 точки",
+    "nof-2016-iv-k5": "петточково контролно",
+    "nof-2017-iv-exp1": "експериментална задача 1",
+    "nof-2017-iv-exp2-docx": "експериментална задача 2",
+    "nof-2018-i-10-12": "РУО Бургас",
+    "nof-2018-i-10-12-1012": "РУО София-град",
+    "nof-2018-iii-10-12-12-exp1": "експеримент, лист 1",
+    "nof-2018-iii-10-12-12-exp2": "експеримент, лист 2",
+    "nof-2018-iv-k30": "контролно 10 × 3 точки",
+    "nof-2018-iv-k5": "петточково контролно",
+    "nof-2019-iv-k30": "контролно 10 × 3 точки",
+    "nof-2019-iv-k5": "петточково контролно",
+    "nof-2020-i-7": "вариант 1",
+    "nof-2020-i-7-var2": "вариант 2",
+    "nof-2022-iv-kontrolno-30": "контролно 10 × 3 точки",
+    "nof-2022-iv-kontrolno-5": "петточково контролно",
+    "nof-2023-iv-k30": "контролно 10 × 3 точки",
+    "nof-2023-iv-k5": "петточково контролно",
+    "nof-2024-iv-k30": "контролно 10 × 3 точки",
+    "nof-2024-iv-k5": "петточково контролно",
+    "nof-2024-iv-exp1": "експериментална задача 1",
+    "nof-2024-iv-exp2": "експериментална задача 2",
+    "nof-2026-iv-k30": "контролно 10 × 3 точки",
+    "nof-2026-iv-k5": "петточково контролно",
+    "nof-2026-iv-exp1": "експериментална задача 1",
+    "nof-2026-iv-exp2": "експериментална задача 2",
+
+    "psf-2003-proletno-spec": "друг препис",
+    "psf-2012-proletno-8-8-klas": "друг препис",
+    "esf-2003-esenno-11-12-2004": "друг препис",
+
+    "nao-2002-iii-9-10-02-iii": "друг препис",
+    "nao-2003-iv-st-st1": "лист 1",
+    "nao-2003-iv-st-st2": "лист 2",
+    "nao-2003-iv-st-st3": "лист с фигури",
+    "nao-2004-iv-ml-04-iv": "друг препис (с темата за старша възраст)",
+    "nao-2023-iii-7-8-test": "тест",
+    "nao-2023-iii-9-10-test": "тест",
+    "nao-2025-iii-9-10-test": "тест",
+
+    "ipho-2012-theory-8-9": "друг препис",
+    "rmph-2017-theory-pt2-question": "пролетна сесия",
+    "rmph-2017-theory-pt3-question": "пролетна сесия",
+    "rmph-2017-theory-theoretical2parta": "27 октомври",
+    "rmph-2017-theory-theoretical2partb": "27 октомври",
+    "rmph-2018-theory-t1": "27 октомври",
+    "rmph-2018-theory-t2": "27 октомври",
+    "rmph-2018-theory-t3": "27 октомври",
+
+    "ioaa-2011-theory-long-questions": "дълги задачи",
+    "ioaa-2011-theory-short-questions": "кратки задачи",
+    "ioaa-2011-observational-night-sky": "нощно небе",
+    "ioaa-2011-observational-planetarium": "планетариум",
+    "ioaa-2012-observational-nabl-observational-night1": "първа нощ",
+    "ioaa-2012-observational-nabl-observational-night2": "втора нощ",
+    "ioaa-2012-observational-nabl-observational-night3": "трета нощ",
+    "ioaa-2012-observational-nabl-observationalnight1": "първа нощ",
+    "ioaa-2012-observational-nabl-observationalnight2text": "втора нощ",
+    "ioaa-2012-observational-nabl-observationalnight3": "трета нощ",
+    "ioaa-2013-observational-7-telescope-docx": "телескопът на олимпиадата",
+    "ioaa-2013-observational-nabl-indoors": "в зала",
+    "ioaa-2013-observational-nabl-night": "нощен тур",
+    "ioaa-2014-observational-nabl-planetarium": "планетариум, част I",
+    "ioaa-2014-observational-nabl-skychart": "планетариум, част II (звездна карта)",
+    "ioaa-2014-observational-nabl-telescope": "на открито",
+    "ioaa-2015-theory-long-final-bg": "дълги задачи",
+    "ioaa-2015-theory-long-final-en": "дълги задачи",
+    "ioaa-2015-theory-short-final-bg": "кратки задачи",
+    "ioaa-2015-theory-short-final-en": "кратки задачи",
+    "ioaa-2015-observational-main-telescope-bg": "голям телескоп",
+    "ioaa-2015-observational-main-telescope-en-docx": "голям телескоп",
+    "ioaa-2015-observational-small-telescope-bg": "малък телескоп",
+    "ioaa-2015-observational-small-telescope-en-docx": "малък телескоп",
+    "ioaa-2015-observational-naked-eye-bg": "с невъоръжено око",
+    "ioaa-2015-observational-naked-eye-en-docx": "с невъоръжено око",
+    "ioaa-2015-observational-planetarium-bg": "планетариум",
+    "ioaa-2015-observational-planetarium-en-docx": "планетариум",
+    "ioaa-2016-observational-planetarium": "планетариум (OP)",
+    "ioaa-2016-observational-planetarium-bg": "планетариум (OP)",
+    "ioaa-2016-op-qpaper": "планетариум (OP) · друг препис",
+    "ioaa-2016-observational-skymap": "звездна карта (OM)",
+    "ioaa-2016-observational-skymap-bg": "звездна карта (OM)",
+    "ioaa-2016-om-qpaper": "звездна карта (OM) · друг препис",
+    "ioaa-2016-observational-telescope": "телескоп (OT)",
+    "ioaa-2016-observational-telescope-bg": "телескоп (OT)",
+    "ioaa-2019-no-final": "нощен тур",
+    "ioaa-2019-pl-final": "планетариум",
+    "ioaa-2021-observational-nabl-solar-physics": "слънчева физика",
+    "ioaa-2021-observational-ob-planetarium-q": "планетариум",
+    "ioaa-2025-observational-nabl-maps": "звездни карти (OM)",
+    "ioaa-2025-observational-nabl-telescope": "телескоп",
+    "ioaa-jr-2024-observational-paper-exam": "писмен изпит",
+    "ioaa-jr-2024-observational-telescope-exam": "телескоп",
+
+    "gecaa-2020-team-competition-moon": "„Разстоянието до Луната“",
+    "gecaa-2020-team-competition-pixie": "„Спектрални изкривявания на реликтовото лъчение“",
+
+    "igeo-2002-experiment-fwpart1": "част 1",
+    "igeo-2002-experiment-fwpart2": "част 2",
+    "igeo-2016-experiment-fw1test": "упражнение 1",
+    "igeo-2016-experiment-fw2test": "упражнение 2",
+    "igeo-2017-experiment-fieldwork-1-task-1a": "упражнение 1, задача 1A",
+    "igeo-2017-experiment-fieldwork-1-task-1b": "упражнение 1, задача 1B",
+    "igeo-2017-experiment-fieldwork-1-task-1": "упражнение 1, задача 1C"
+  },
+  "grades": {
+    "APAO": {
+      "α": "Група α",
+      "αβ": "Групи α и β"
+    },
+    "IAO": {
+      "alpha": "Група α",
+      "α": "Група α",
+      "beta": "Група β",
+      "β": "Група β",
+      "α β": "Групи α и β",
+      "α, β": "Групи α и β",
+      "αγ": "Групи α и γ",
+      "αβγ": "Групи α, β и γ",
+      "A,B": "Групи A и B",
+      "A": "Група A",
+      "B": "Група B"
+    },
+    "IOAA": {
+      "9": ""
+    },
+    "IPhO": {
+      "8-9": ""
+    },
+    "IZhO": {
+      "ML": "Младша група",
+      "ST": "Старша група",
+      "младшая группа": "Младша група"
+    },
+    "NAO": {
+      "Ученици младша възраст": "Младша възраст",
+      "Ученици старша възраст": "Старша възраст"
+    }
+  }
+}
