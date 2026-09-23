@@ -1,0 +1,153 @@
+---
+id: ipho-2026-theory-t1-p3
+source: 'IPhO 2026, theory'
+title: 'Задача 3. Photodissociation of ozone'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/2026/ipho-2026-theory-t1.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T12:31:03.473Z'
+verifier: 'mechanical'
+---
+
+*QUESTION T1 [10 pts]. Three problems · 3,5 т.*
+
+<details>
+<summary>QUESTION T1 [10 pts]. Three problems</summary>
+
+This question consists of three independent problems.
+
+</details>
+
+## Условие
+
+A photon with angular frequency $\omega$ strikes an ozone molecule O$_3$ at rest, dissociating it (breaking it apart) into an oxygen molecule O$_2$ and an oxygen atom O, as shown in figure 1c. The photon is absorbed in this process. Let $U_i$ and $U_f$ be the ground state energies of the ozone and oxygen molecules, respectively. Assume that this system remains isolated and that its dynamics is classical (potential energies do not contribute to mass and the motion of the Oxygen atoms are non-relativistic). Use the relation $p = E/c$ for the linear momentum of the photon, where $E$ is its energy.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2026-theory-t1/p3-fig1-v2.png" alt="A wavy arrow labelled γ (the photon) hits a cluster of three red spheres (the ozone molecule); after the collision a pair of spheres (O₂) moves along a dashed line at angle θ above the horizontal dashed incidence direction, and a single sphere (O) moves along a dashed line below it." />
+<figcaption>Fig. 1c.</figcaption>
+</figure>
+
+**T1-C1** If the angle that the momentum of the outgoing O$_2$ with respect to the incident photon is $\theta$, determine the minimum angular frequency $\omega_{\min}$ required for this dissociation to occur at this angle. Write your answer in terms of $\hbar$, $c$, $\theta$, $\Delta U = U_f - U_i$, and the mass $m$ of an oxygen atom. **[2,5 т.]**
+
+**T1-C2** If $\theta = \pi/6$, calculate the value of $\hbar\omega_{\min} - \Delta U$. Give your answer in electronvolts (eV). Take $\Delta U = 1.10$ eV and $m = 16.0$ amu. **[1 т.]**
+
+*Hint:*
+
+$$(1 + x)^r = 1 + rx + \frac{r(r-1)}{2!}x^2 + \frac{r(r-1)(r-2)}{3!}x^3 + \cdots$$
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **T1-C1** $\omega_{\min} = \frac{3mc^2 - \sqrt{3mc^2\left(3mc^2 + 2\Delta U(\cos(2\theta) - 2)\right)}}{\hbar(2 - \cos(2\theta))}$
+- **T1-C2** 2.03e-11 eV
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**T1-C [3.5 pts]. Photodissociation of ozone**
+**T1-C1 [2.5 pts].**
+
+**SOLUTION 1: pure algebra**
+
+The momentum conservation is
+
+$$\hbar\frac{\omega}{c}\hat{k} = \vec{p} + \vec{q},$$
+
+where $\vec{p}$ and $\vec{q}$ are the momentum of the O$_2$ and the O, respectively. Solving for $q^2$,
+
+$$q^2 = \left(\frac{\hbar\omega}{c} - p\cos(\theta)\right)^2 + p^2\sin^2(\theta).$$
+
+The energy conservation reads
+
+$$\hbar\omega = \Delta U + \frac{p^2}{4m} + \frac{q^2}{2m}$$
+
+where $\Delta U = U_f - U_i$.
+
+For a given $\theta$, $p$ can be written in terms of $\omega$. Replacing $q^2$ on energy balance and simplifying, we get
+
+$$p^2 - \frac{4\hbar\omega\cos(\theta)}{3c}p + \frac{2\hbar^2\omega^2}{3c^2} + \frac{4}{3}m(\Delta U - \hbar\omega) = 0.$$
+
+This gives a quadratic equation on $p$. For $p$ to be real, the discriminant must be positive.
+
+$$\frac{16\hbar^2\omega^2\cos^2(\theta)}{9c^2} - 4\left(\frac{2\hbar^2\omega^2}{3c^2} + \frac{4}{3}m(\Delta U - \hbar\omega)\right) \geq 0$$
+
+The previous bound determines $\omega_{\min}$ as the minimal root of the quadratic equation on $\omega$
+
+$$(\cos(2\theta) - 2)\hbar^2\omega^2 + 6mc^2\hbar\omega - 6\Delta U mc^2 = 0$$
+
+$$\omega_{\pm} = \frac{-6mc^2\hbar \pm \sqrt{D}}{2\left(\cos(2\theta) - 2\right)\hbar^2}$$
+
+$$D = 36\hbar^2m^2c^4 + 24\Delta U mc^2\hbar^2\left(\cos(2\theta) - 2\right)$$
+
+The smallest root $\omega_+$. Thus, simplifying, one gets
+
+$$\boxed{\omega_{\min} = \frac{3mc^2 - \sqrt{3mc^2\left(3mc^2 + 2\Delta U(\cos(2\theta) - 2)\right)}}{\hbar(2 - \cos(2\theta))}}$$
+
+**SOLUTION 2: Center of mass approach**
+*Part I: Conservation laws*
+First, find the velocity of the center of mass. We get
+
+$$(3mv_{CM}) = p_\gamma = \hbar\omega/c$$
+
+We will use $p_\gamma$ for calculations
+
+$$v_{CM} = p_\gamma/(3m)$$
+
+We want to relate the relative velocities in CM. We have by magnitude
+
+$$2mv_1 = mv_2$$
+
+And $v_2$ is the single oxygen atom (the one we don’t want). The energy conservation equation is
+
+$$\begin{aligned} E_\gamma = p_\gamma c &= \frac{1}{2}(3m)v_{CM}^2 + \Delta U + \frac{1}{2}mv_2^2 + \frac{1}{2}(2m)v_1^2 \\ &= \Delta U + \frac{p_\gamma^2}{6m} + \frac{1}{2} \times 6m(v_1)^2 \end{aligned}$$
+
+We can now find $v_1$ in terms of $p_\gamma$.
+*Part 2: geometry and critical condition*
+We see that the set of possible velocities $\vec{v}_1$ form a circle (they have constant $v_1$). We need to consider that $\theta$ is the angle between $\vec{v}_{CM}$ and $\vec{v}_{CM} + \vec{v}_1$ (this is the full velocity of particle 1).
+If the circle of radius $v_1$ is too small there is no solution (the straight line at the angle will not intersect the circle). If the radius $v_1$ is big enough, there will always be two solutions intersecting the circle. The critical case (crossover from no solution to two) is when the circle is tangent to the straight line. This is the case we need.
+In that case the triangle formed by $0, \vec{v}_{CM}, \vec{v}_{CM} + \vec{v}_1$ is a right triangle.
+**Warning: This can only happen if $\theta \leq 90^o$. The other case will be dealt with separately.**
+This way
+
+$$v_1 = v_{CM}\sin(\theta)$$
+
+Replace above to find that in conservation of energy
+
+$$p_\gamma c = \Delta U + \frac{p_\gamma^2}{6m} + \frac{1}{2} \times \frac{p_\gamma^2\sin^2(\theta)}{3m}$$
+
+now we can solve the quadratic equation for $p_\gamma$. We get (*we need to choose the correct solution of the quadratic equation*)
+
+$$p_\gamma = \frac{3cm - \sqrt{3}\sqrt{m}\sqrt{3c^2m + 2\Delta U\cos(2\theta) - 4\Delta U}}{2\sin^2(\theta) + 1}$$
+
+**Note:** Any of the following expressions are the same:
+
+$$2\sin^2(\theta) + 1 = 3 - 2\cos^2(\theta) = 2 - \cos(2\theta)$$
+
+Rewrite as the angular frequency
+
+$$\boxed{\omega_{min} = 3mc^2\left[\frac{1 - \sqrt{1 - \frac{\Delta U}{3mc^2}(2\sin^2(\theta) + 1)}}{(2\sin^2(\theta) + 1)\hbar}\right]}$$
+
+**Special case:** $\theta \geq 90^0$, *this is essentially impossible to see in a brute force algebraic solution, but it is an important feature of the problem. Needs a small amount of points in this solution*
+For angle greater than $90^0$, as soon as the circle reaches the answer for $90^0$ it becomes big enough to allow all angles. Formula is the same with $\theta = 90^0$.
+
+**T1-C2 [1.0 pts].**
+
+Up to second order in $\Delta U$
+
+$$\omega_{\min} = \frac{\Delta U}{\hbar} - \frac{(\cos(2\theta) - 2)\Delta U^2}{6\hbar mc^2}$$
+
+$$\hbar\omega_{\min} - \Delta U = \frac{(2 - \cos(2\theta))}{6mc^2}(\Delta U)^2$$
+
+$$\boxed{\hbar\omega_{\min} - \Delta U = 2.03 \times 10^{-11}\mathrm{eV}}$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [T1.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2026/Theory/T1.pdf)
+· официални решения: [theory_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2026/Theory/theory_sol.pdf)

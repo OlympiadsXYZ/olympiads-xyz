@@ -1,0 +1,156 @@
+---
+id: owao-2023-theory-theoretical-round-p1
+source: 'OWAO 2023, theory'
+title: 'Задача 1. Ceres'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2023/owao-2023-theory-theoretical-round.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T12:41:20.240Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2023 ◇ Theoretical Round ◇ Problems*
+
+## Условие
+
+A spacecraft is in a circular orbit with radius $r = 1.3$ au in the ecliptic plane. An additional speed of 5 km/s is instantly given to the spacecraft in the direction of movement, so its orbit intersects with the orbit of 1 Ceres. What will be the relative velocity of the spacecraft and Ceres when the spacecraft crosses its orbit for the first time? The distance between Ceres and the spacecraft at that time is $10^6$ km. Assume the orbit of Ceres to be circular with radius $r_C = 2.8$ au. The directions of orbital motion of the objects are the same.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 6500 m/s
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+First, we determine the parameters of the orbit along which the spacecraft will move after increasing its velocity. Let us write the law of conservation of energy per unit mass of the spacecraft:
+
+$$\frac{V^2}{2} - \frac{G\mathfrak{M}_{\odot}}{r} = -\frac{G\mathfrak{M}_{\odot}}{2a} \qquad (1)$$
+
+where $r$ is the current distance from the Sun and $a$ is the semi-major axis of the orbit.
+
+*Note.* The mass of the Sun is not indicated in the table. Although its value is well known, it can be easily estimated using the Earth’s orbital parameters. By Kepler’s third law,
+
+$$T_{\oplus} = 2\pi\sqrt{\frac{(1\ \mathrm{au})^3}{G\mathfrak{M}_{\odot}}} \quad\Rightarrow\quad \mathfrak{M}_{\odot} = \left(\frac{2\pi}{T_{\oplus}}\right)^2 \cdot \frac{(1\ \mathrm{au})^3}{G} = 2.0 \cdot 10^{30}\ \mathrm{kg}.$$
+
+We should estimate the velocity of the spacecraft. The velocity in the initial circular orbit
+
+$$V_0 = \sqrt{\frac{G\mathfrak{M}_{\odot}}{r}} = 2.6 \cdot 10^4\ \mathrm{m/s}.$$
+
+The total velocity after the correction is
+
+$$V_{\pi} = V_0 + 5.0 \cdot 10^3\ \mathrm{m/s} = 3.1 \cdot 10^4\ \mathrm{m/s}.$$
+
+Therefore, taking into account (1) the semi-major axis of the elliptic orbit is
+
+$$a = \frac{G\mathfrak{M}_{\odot} r}{2G\mathfrak{M}_{\odot} - V_{\pi}^2 r} = 3.4 \cdot 10^{11}\ \mathrm{m} = 2.24\ \mathrm{au}.$$
+
+At the initial moment of time, the velocity vector was perpendicular to the heliocentric radius vector. The final velocity is also perpendicular to the radius vector, that is, after increasing the velocity, the spacecraft starts moving from the perihelion of the orbit, $r_{\pi} := r$.
+
+Next, we estimate the eccentricity of the orbit:
+
+$$r_{\pi} = a(1-e) \quad\Rightarrow\quad e = 1 - \frac{r_{\pi}}{a} = 1 - \frac{1.3}{2.24} = 0.42.$$
+
+Let us determine the velocity $V_1$ of the spacecraft at the moment of crossing the orbit of Ceres. According to the vis-viva equation,
+
+$$V_1^2 = G\mathfrak{M}_{\odot}\left(\frac{2}{r_C} - \frac{1}{a}\right);$$
+
+$$V_1 = \sqrt{6.67 \cdot 10^{-11} \times 2.0 \cdot 10^{30} \times \left(\frac{2}{2.8 \cdot 1.496 \cdot 10^{11}} - \frac{1}{2.24 \cdot 1.496 \cdot 10^{11}}\right)} = 1.5 \cdot 10^4\ \mathrm{m/s}.$$
+
+Next, we determine the angle $\theta$ between the velocity vector and the radius vector:
+
+$$V_1 r_C \sin\theta = V_{\pi} r_{\pi} = \sqrt{G\mathfrak{M}_{\odot} a(1-e^2)} \quad\Rightarrow\quad \sin\theta = \frac{\sqrt{G\mathfrak{M}_{\odot} a(1-e^2)}}{V_1 r_C};$$
+
+$$\theta = \arcsin\frac{\sqrt{6.67 \cdot 10^{-11} \times 2.0 \cdot 10^{30} \times 2.24 \cdot 1.496 \cdot 10^{11} \times (1-0.42^2)}}{1.54 \cdot 10^4 \times 2.8 \cdot 1.496 \cdot 10^{11}} = \arcsin 0.939 = 70^{\circ}.$$
+
+On the scale of the orbit, the distance of $10^6$ km is very small, so we can assume that Ceres and the spacecraft are almost at the same point of the orbit. At the same time, this distance is large enough that we can ignore the attraction of Ceres. Indeed, the radius of the Earth’s sphere of influence is $\approx 10^6$ km. Ceres is only 3 *times* farther from the Sun than the Earth, but its mass is 4 *orders of magnitude* less than the Earth’s$^{1}$.
+
+The velocity of Ceres
+
+$$V_c = \sqrt{\frac{G\mathfrak{M}_{\odot}}{r_c}} = 1.8 \cdot 10^4\ \mathrm{m/s},$$
+
+is perpendicular to the radius vector. Then the angle between the velocity vectors of the spacecraft and Ceres at the approach is equal to $\alpha = 180^{\circ} - \theta - 90^{\circ} = 20^{\circ}$.
+
+Therefore, the relative velocity will be
+
+$$\begin{aligned} \Delta V &= \sqrt{V_c^2 + V_1^2 - 2V_cV_1\cos\alpha} = \\ &= \sqrt{(1.8 \cdot 10^4)^2 + (1.5 \cdot 10^4)^2 - 2 \times (1.8 \cdot 10^4) \times (1.5 \cdot 10^4) \times \cos 20^{\circ}} = 6.5 \cdot 10^3\ \mathrm{m/s}. \end{aligned}$$
+
+**Marking Scheme:**
+
+- Velocity of Ceres $V_c$ — **1 pt.**
+- Velocity of the spacecraft in the initial circular orbit $V_0$ — **1 pt.**
+- Velocity of the spacecraft after the correction $V_{\pi}$ — **1 pt.**
+- Semi-major axis of the elliptic orbit $a$ or proper use of energy conservation — **1 pt.**
+- Eccentricity $e$ or proper use of angular momentum conservation — **1 pt.**
+- Velocity of the spacecraft crossing the orbit of Ceres $V_1$ — **1 pt.**
+- Angle between the velocity and the radius vectors $\theta$ — **1 pt.**
+- Angle between the velocity vectors of the spacecraft and Ceres $\alpha$ — **1 pt.**
+- Expression for $\Delta V$ and evaluation — **1 pt + 1 pt.**
+
+$^{1}$ The conclusion is quite obvious, so there is no need to calculate the exact radius of the sphere of influence.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2023-theory-theoretical-round/p1-sol-fig1.png" alt="Three orbits around the Sun S: the small initial circular orbit, the large circular orbit of Ceres and the transfer ellipse touching the small circle at the perihelion π. A dashed segment r_π joins π and S; a line r_C runs from S to the crossing point with Ceres’ orbit, where vectors V_C and V_1 are drawn with the angle α between them and the angle θ between V_1 and the radius vector." />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| Universal | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Hubble constant | $H_0 = 70\ (\mathrm{km/s})/\mathrm{Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| Earth | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+
+| Moon | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| Sun | |
+|---|---|
+| Radius | $R_{\odot} = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+
+| Emission constants | |
+|---|---|
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ (\mathrm{W/m^2})/\mathrm{K^4}$ |
+| Wien’s displacement | $b = 2898\ \mu\mathrm{m} \cdot \mathrm{K}$ |
+
+| UBV system | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+| Hydrogen spectrum | |
+|---|---|
+| Lyman L$\alpha$ | $\lambda_{L\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{H\alpha} = 6562.8$ Å |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2023_Theoretical_Round_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Problems.pdf)
+· официални решения: [OWAO_2023_Theoretical_Round_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Solutions.pdf)

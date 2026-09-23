@@ -1,0 +1,277 @@
+{
+ "paper": {
+  "id": "ipho-2022-experiment-exam-q2-english",
+  "subject": "physics",
+  "competition": "IPhO",
+  "year": 2022,
+  "round": "experiment",
+  "roundType": "experiment",
+  "grade": null,
+  "lang": "en",
+  "title": "Experiment Q2 — Cylindrical Diode (8.0 pts)",
+  "totalPoints": 8,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/IPhO/2022/Experiment/exam-experiment-Q2-english.pdf",
+   "pages": [
+    1,
+    2,
+    3
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/IPhO/2022/Experiment/experiment_solutions (1).pdf",
+   "pages": [
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "65eafb197a655131c934f68673394250c61b0ac25336dc563b4284301de1cd19",
+    "solutions": "061a133df1f2e8d17c673fb92184f442dde921fd8fdc78d79883fecd55ba8171"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "The solutions file is the shared official solutions document for the whole IPhO 2022 experimental exam: pages 1–5 are E1 (Planet, the other experimental problem) and are not used here; E2: Cylindrical Diode - SOLUTION occupies pages 6–10. The terminal listings on problems page 2 (authorization key prompt, typical simulation cycle, the error message Value Out Of Bounds) are printed in typewriter type and are transcribed as code blocks; the row of = signs is reproduced at approximately its printed length. The printed task heading 'Part A' and its intro close the statement; the Part B and Part C headings with their intros follow A.3 and B.1 (statementAfter). The marking-scheme tables are printed without a header row; their first row is used as the Markdown header row. In the printed marking schemes some rows (the alternative 'points' counts, the plotting-mistake rows, and in B.1 the data-point counts, the C ranges and the δC rows) are on a grey background, meaning the option with maximal points is chosen; the shading cannot be reproduced in Markdown. Printed content kept as printed: problem text 'the maximum current through the diodes' (plural); problem text 'Equation (1) is the special case of Equation (2) when F = 1' and C.3 'Error analysis is not necessary' have no final period; the solution uses lower-case subscripts (R_c, R_e, L_e) for the problem's R_C, R_E, L_E and calls the coefficient G 'C'; in A.3 the best-fit slope is −0.9816 but the text states α = −0.9824, and the two uncertainty lines print the symbol β ('β = −0.98 ± 0.01', 'β = 0.97 ± 0.02') where α is meant; in B.1 the exponents used (1.495, 0.9854, 0.9781) differ from those found in A.1–A.3, the marking-scheme row reads '0.1 < δC ≤ 0.03' (an empty range as printed), and the data-point rows '8 or 9' and '7 or 8' overlap; the C.1 marking scheme labels two consecutive rows 'Data' and writes V_c for V; the C.3 marking scheme row '$R_c$' has no further text as printed."
+  }
+ },
+ "problems": [
+  {
+   "id": "ipho-2022-experiment-exam-q2-english-p1",
+   "number": 1,
+   "title": "Cylindrical Diode",
+   "points": 8,
+   "problemType": "experiment",
+   "statement": "**Experimental setup and tasks**\n\nA cylindrical vacuum diode consists of two coaxial cylinders. There is an emitter of radius $R_E$ and length $L_E$, which gives off electrons; these electrons travel through the vacuum to the collector, that has a radius $R_C$ and an effective infinite length. The collector is at a positive potential $V$, while the emitter is grounded, so electrons are drawn from the emitter to the collector.\n\nThe emitter is heated so that there are always excess electrons available to be accelerated through the potential difference toward the collector. The electrons fill the vacuum with a plasma. Because of the properties of a plasma there is a maximum current that can flow through the diode that depends on the potential of the collector and the geometry of the system.\n\n**Throughout this experiment you should restrict your measurements to $R_C \\ge 5R_E$.**\n\nWhen $L_E$ is sufficiently large compared to $R_C$ it is hypothesized that the maximum current through the diode is\n\n$$I_\\infty = G{R_C}^{\\alpha}{L_E}^{\\beta}V^{\\gamma} \\tag{1}$$\n\nwhere $G = G(R_C/R_E)$ is not a constant, but is instead a function of the dimensionless ratio $R_C/R_E$.\n\nWhen $L_E$ is comparable to $R_C$ it is necessary to issue a correction to the above expression, and the maximum current through the diodes is given by\n\n$$I_L = I_\\infty F(R_C, R_E, L_E, V) \\tag{2}$$\n\nwhere $F$ is a dimensionless function of some or all of $R_C$, $R_E$, $L_E$, and $V$. Equation (1) is the special case of Equation (2) when $F = 1$\n\nIn doing this experiment you have simulated access to any cylinder of radii 0.1 cm to a maximum of 20.0 cm, in steps of 0.1 cm; the cylinder lengths can be between 1.0 cm and 99.0 cm, also in steps of 0.1 cm. There is a simulated power supply that can provide a positive voltage to the collector between 0 and 2000 volts, and an ammeter that can measure the current through the diode.\n\nYou are encouraged to read all the tasks through quickly before beginning in order to plan your data collection more efficiently.\n\n**Description of the simulation software**\n\nThe simulation program, named **Exp2**, allows users to perform an unlimited number of measurements of the maximum current $I$ for different sets of input parameters: the collector radius $R_C$, the emitter radius and length $R_E$ and $L_E$, and the potential difference between the emitter and the collector $V$. All values of the input parameters are entered through the keyboard after corresponding prompts and validated by pressing the **Enter** key.\n\nIn order to get started, use the following authorization key when prompted:\n\n```\nEnter Valid Authorization Key: 12345678.888\n```\n\nEntering an incorrect value will put the program into test mode; you will need to restart the program.\n\nA typical interface of a single simulation cycle of the program looks like:\n\n$$```\n0.1 < R_C (cm) < 20.0 | R_C (cm): 18.5\n0.1 < R_E (cm) < 20.0 | R_E (cm): 13.2\n0.1 < L_E (cm) < 99.0 | L_E (cm): 35.3\n1.0 < V_C (V) < 2000.0 | V_C (V): 207$$\n\n$$I (A) = 1.04\n=======================================\n0.1 < R_C (cm) < 20.0 | R_C (cm):\n```$$\n\nFirst you enter the collector radius, then the emitter radius, then the emitter length, each in centimeters, and finally the potential difference, in volts. Each input is confirmed with the **Enter** key.\n\nThe program then loops back to the collector radius query.\n\nEntering a value that is out of range for the experiment will result in an error message,\n\n```\nValue Out Of Bounds\n```\n\nand then return you to the incorrectly answered prompt.\n\nAll lengths are only recorded to the nearest millimeter while all voltages are only recorded to the nearest volt; entering in a more precise number does not improve the measurement. However, there is an uncertainty of as much as 0.5 mm in any length, and 0.5 V in any voltage. As such, repeated measurements could give different results for the current.\n\nThe ammeter is auto-ranging, so that it shows only three significant figures, and switches between the amp or milliamp scale as appropriate. The uncertainty is $\\pm\\frac{1}{2}$ of the last displayed digit. Pay attention to whether it is reporting in mA or A.\n\nExceeding the 40 amp current rating on the ammeter will burn it out. The program will notify you of this, and then automatically fix the ammeter for the next measurement.\n\nAny time you need to quit the program in order to restart, press **Ctrl+C**.\n\n**Part A: Finding Exponents (4.5 pts)**\n\nFind the exponents in Eq (1), providing an analysis on error bounds on each result:",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "Two coaxial cylinders drawn in perspective on a dashed common axis: a large outer cylinder (collector) whose radius is marked R_C by a vertical arrow on the right, and a smaller inner cylinder (emitter) whose radius is marked R_E and whose length is marked L_E by a horizontal double arrow below it.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q2-english/p1-fig1.png",
+     "width": 1033,
+     "height": 425,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       173.84,
+       271.93,
+       421.47,
+       373.82
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "A.1",
+     "statement": "Collect a set of data that can be used to find the exponent $\\gamma$ on the variable $V$. Sketch an appropriate graph in the space provided; for your convenience both linear and log-log graph paper is provided, but you only need to draw one graph. State your value of $\\gamma$ and provide an analysis of the uncertainty in your result.",
+     "points": 1.5,
+     "answer": {
+      "kind": "numeric",
+      "value": 1.49,
+      "tolerance": 0.005,
+      "note": "Official solution: best fit log I = 1.490 log V − 0.8095, γ = 1.490 ± 0.005 (statistical) or γ = 1.485 ± 0.025 (extreme lines)."
+     }
+    },
+    {
+     "label": "A.2",
+     "statement": "Collect a set of data that can be used to find the exponent $\\beta$ on the variable $L_E$. Sketch an appropriate graph in the space provided; a single graph is sufficient. State your value of $\\beta$ and provide an analysis of the uncertainty in your result.",
+     "points": 1.5,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.98,
+      "tolerance": 0.02,
+      "note": "Official solution: best fit slope 0.9767; β = 0.98 ± 0.02 (statistical) or β = 0.97 ± 0.02 (graphical)."
+     }
+    },
+    {
+     "label": "A.3",
+     "statement": "Collect a set of data that can be used to find the exponent $\\alpha$ on the variable $R_C$. Sketch an appropriate graph in the space provided; a single graph is sufficient. State your value of $\\alpha$ and provide an analysis of the uncertainty in your result.",
+     "points": 1.5,
+     "statementAfter": "**Part B: Finding the Coefficient G (1.0 pts)**\n\nFind the value of the function $G$ when $R_C = 10R_E$:",
+     "answer": {
+      "kind": "numeric",
+      "value": -0.98,
+      "tolerance": 0.01,
+      "note": "Official solution: best fit slope −0.9816, stated as α = −0.9824; the uncertainty lines print the symbol β (\"β = −0.98 ± 0.01\", \"β = 0.97 ± 0.02\") where α is meant."
+     }
+    },
+    {
+     "label": "B.1",
+     "statement": "Either by collecting additional data or by reusing previous data, determine the value for $G$ when $R_C = 10R_E$ and provide an analysis of uncertainty in your result.",
+     "points": 1,
+     "statementAfter": "**Part C: Finding dimensionless function F (2.5 pts)**\n\nExperimentally determine which of $R_C$, $R_E$, $L_E$, and $V$ affect $F$ when $L_E$ is comparable to the size $R_C$ in Equation (2).",
+     "answer": {
+      "kind": "numeric",
+      "value": 0.0165,
+      "unit": "mA/V^(3/2)",
+      "tolerance": 0.0003,
+      "note": "Official solution: C = (0.0165 ± 0.0003) mA/V^(3/2) = 16.5 µA/V^(3/2) (the solution calls the coefficient C)."
+     }
+    },
+    {
+     "label": "C.1",
+     "statement": "In the list of the variables on the answer sheet, state the direction of the effect; for example, does $F$ increase, decrease, or stay the same if $R_C$ is increased?",
+     "points": 0.5,
+     "answer": {
+      "kind": "text",
+      "value": "If R_C increases, F increases; if L_E increases, F decreases; V and R_E have no significant effect on F."
+     }
+    },
+    {
+     "label": "C.2",
+     "statement": "It is observed that when $L_E \\approx R_C$ the function $F$ can be approximated as linear in a single variable $x$, where $x$ is a function of only two from $R_C$, $R_E$, $L_E$, and $V$. The answer sheet has several possible functional forms for $x$; select the one that captures the most significant behavior.",
+     "points": 0.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "x = R_C/L_E",
+      "note": "Any multiple of R_C/L_E is also acceptable."
+     }
+    },
+    {
+     "label": "C.3",
+     "statement": "Assume a linear function of the form $F(x) = A + Bx$ for values of $L_E \\approx R_C$, and experimentally determine the parameter $B$. Restrict to the range $R_C/2 \\le L_E \\le 2R_C$. Sketch an appropriate graph for $F$ in terms of your single appropriate quantity $x$ to approximate $F$ as a linear function. Error analysis is not necessary",
+     "points": 1.5,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.1762,
+      "tolerance": 0.005,
+      "note": "Official fit F(x) = 0.8579 + 0.1762x; the marking scheme accepts 0.17 < B < 0.18."
+     }
+    }
+   ],
+   "topics": [
+    "electricity/vacuum-diode",
+    "experimental/data-analysis",
+    "experimental/power-law-fitting"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "Take the logarithm of Equation 1,\n\n$$\\log I_\\infty = \\log C + \\alpha \\log R_c + \\beta \\log L_e + \\gamma \\log V$$\n\n**A.1:** Collect data by varying $V$. To minimize error, select maximum values for all fixed variables, this means $L_e = 99$ cm, $R_c = 10$ cm, and $R_e = 1.0$ cm. Distribute the voltages logarithmically between 10 and 2000\n\n| $V$ (V) | $I$ (mA) | $\\log V$ | $\\log I$ |\n|---|---|---|---|\n| 10 | 5 | 1.0 | 0.70 |\n| 20 | 13 | 1.3 | 1.11 |\n| 50 | 52 | 1.7 | 1.72 |\n| 100 | 147 | 2.0 | 2.17 |\n| 200 | 415 | 2.3 | 2.62 |\n| 500 | 1620 | 2.7 | 3.21 |\n| 1000 | 4630 | 3.0 | 3.67 |\n| 2000 | 12900 | 3.3 | 4.11 |\n\nPlot this on a graph; the best fit line is\n\n$$\\log I = 1.490 \\log V - 0.8095$$\n\nso $\\gamma = 1.49$.\n\nA statistical analysis of the uncertainty in the slope yields $\\gamma = 1.490 \\pm 0.005$.\n\nAssessing the slope by visually fitting lines through the error bars on the points requires considering that error bars on a log axis are given by\n\n$$\\delta(\\log y) = \\delta\\left(\\frac{\\ln y}{\\ln 10}\\right) = \\frac{1}{\\ln 10}\\frac{\\delta y}{y}$$\n\nSince the largest relative error is in the smallest valued quantity, the focus is on $\\delta V/V$ for $V = 10\\mathrm{V}$ and $\\delta I/I$ for $I = 5\\mathrm{mA}$. The error bars associated with the log-log plot at that point are then\n\n$$(1 \\pm 0.02, 0.70 \\pm 0.04)$$\n\nThe other error bars are smaller; focusing on that point alone we can fit two extreme lines and get\n\n$$\\gamma = 1.485 \\pm 0.025$$\n\nEither approach is acceptable.\n\nMarking scheme:\n\n| Data | vary only $V$ | 0.05 pts |\n|---|---|---|\n| | $R_e \\ge 1$cm | 0.05 pts |\n| | $R_c \\ge 10R_e$cm | 0.05 pts |\n| | $L_e \\ge 90$cm | 0.05 pts |\n| | table has units | 0.05 pts |\n| | $V$ distributed as log | 0.05 pts |\n| | $V_{\\mathrm{max}} \\ge 1000$V | 0.05 pts |\n| | $V_{\\mathrm{min}} \\ge 10$V | 0.05 pts |\n| | $V_{\\mathrm{min}} \\le 50$V | 0.05 pts |\n| | Correct calculations | 0.05 pts |\n| | 7 or more points | 0.30/0.30 |\n| | 6 points | 0.25/0.30 |\n| | 5 points | 0.20/0.30 |\n| | 4 or fewer points | 0.10/0.30 |\n| Plotting | covers $> 50$% of area | 0.10 pts |\n| | Axis labels | 0.05 pts |\n| | Axis units correct | 0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit | line drawn on graph | 0.10 pts |\n| | slope correctly computed with units | 0.10 pts |\n| | $1.45 < \\gamma < 1.55$ | 0.10 pts |\n| | uncertainty of slope computed | 0.10 pts |\n| | $\\delta\\gamma \\le 0.03$ | 0.10 pts |\n| | **sum** | **1.5 pts** |\n\nMeasured data should be entered into spreadsheet that will calculate results; if deviation is too large, data point should not count.\n\n**Evidence of reverse engineering should result in zero points for the entire section**\n\n**A.2:** Collect data by varying $L_e$. To minimize error, select maximum values for all fixed variables, this means $V = 2000$ V, $R_c = 10$ cm, and $R_e = 1$ cm.\n\n| $L_e$ (cm) | $I$ (mA) | $\\log L_e$ | $\\log I$ |\n|---|---|---|---|\n| 99 | 13000 | 1.996 | 4.144 |\n| 90 | 11800 | 1.954 | 4.072 |\n| 80 | 10700 | 1.903 | 4.029 |\n| 70 | 9170 | 1.845 | 3.962 |\n| 60 | 7960 | 1.778 | 3.901 |\n| 55 | 7310 | 1.740 | 3.864 |\n| 50 | 6700 | 1.699 | 3.826 |\n\nPlot this on a graph; the best fit line is\n\n$$\\log I = 0.9767 \\log L_e + 2.1649$$\n\nso $\\beta = 0.9767$.\n\nA statistical analysis of the uncertainty in the slope yields $\\beta = 0.98 \\pm 0.02$.\n\nGraphical fitting of the steepest and shallowest lines yields $\\beta = 0.97 \\pm 0.02$.\n\nMarking scheme:\n\n| Data | vary only $L_e$ | 0.05 pts |\n|---|---|---|\n| | $R_e \\ge 1$cm | 0.05 pts |\n| | $R_c \\ge 10R_e$cm | 0.05 pts |\n| | $V \\ge 100$V | 0.05 pts |\n| | table has units | 0.05 pts |\n| | $L_e$ distributed evenly | 0.05 pts |\n| | $L_{e,\\mathrm{max}} \\ge 90$cm | 0.05 pts |\n| | $L_{e,\\mathrm{min}} \\ge 3R_c$ | 0.05 pts |\n| | $L_{e,\\mathrm{min}} \\le 50$cm | 0.05 pts |\n| | Correct calculations of derived quantities | 0.05 pts |\n| | 7 or more points | 0.30/0.30 |\n| | 6 points | 0.25/0.30 |\n| | 5 points | 0.20/0.30 |\n| | 4 or fewer points | 0.10/0.30 |\n| Plotting | covers $> 50$% of area | 0.10 pts |\n| | Axis labels | 0.05 pts |\n| | Axis units correct | 0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit | line drawn on graph | 0.10 pts |\n| | slope correctly computed with units | 0.10 pts |\n| | $0.97 < \\beta < 1.03$ | 0.10 pts |\n| | uncertainty of slope computed | 0.10 pts |\n| | $\\delta\\beta \\le 0.03$ | 0.10 pts |\n| | **sum** | **1.5 pts** |\n\n**A.3:** Collect data by varying $R_c$. To minimize error, select maximum values for all fixed variables, this means $V = 2000$ V, $L_e = 99$ cm, and $R_e = R_c/10$ cm.\n\n| $R_c$ (cm) | $I$ (mA) | $\\log R_c$ | $\\log I$ |\n|---|---|---|---|\n| 20 | 6640 | 1.301 | 3.822 |\n| 19 | 6970 | 1.279 | 3.843 |\n| 18 | 7380 | 1.255 | 3.868 |\n| 16 | 8240 | 1.204 | 3.916 |\n| 14 | 9390 | 1.146 | 3.973 |\n| 12 | 11000 | 1.079 | 4.041 |\n| 10 | 13100 | 1.000 | 4.117 |\n\nPlot this on a graph; the best fit line is\n\n$$\\log I = -0.9816 \\log R_c + 5.1000$$\n\nso $\\alpha = -0.9824$.\n\nA statistical analysis of the uncertainty in the slope yields $\\beta = -0.98 \\pm 0.01$.\n\nGraphical fitting of the steepest and shallowest lines yields $\\beta = 0.97 \\pm 0.02$.\n\nMarking scheme:\n\n| Data | vary only $R_c$ | 0.05 pts |\n|---|---|---|\n| | $R_e \\ge 1$cm | 0.05 pts |\n| | $R_c \\ge 10R_e$cm | 0.05 pts |\n| | $V \\ge 100$V | 0.05 pts |\n| | table has units | 0.05 pts |\n| | $R_c$ distributed evenly | 0.05 pts |\n| | $R_{c,\\mathrm{max}} \\ge 15$cm | 0.05 pts |\n| | $R_{c,\\mathrm{min}} \\ge 10R_e$ | 0.05 pts |\n| | $R_{c,\\mathrm{min}} \\le 10$cm | 0.05 pts |\n| | Correct calculations of derived quantities | 0.05 pts |\n| | 7 or more points | 0.30/0.30 |\n| | 6 points | 0.25/0.30 |\n| | 5 points | 0.20/0.30 |\n| | 4 or fewer points | 0.10/0.30 |\n| Plotting | covers $> 50$% of area | 0.10 pts |\n| | Axis labels | 0.05 pts |\n| | Axis units correct | 0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit | line drawn on graph | 0.10 pts |\n| | slope correctly computed with units | 0.10 pts |\n| | $-1.03 < \\alpha < -0.97$ | 0.10 pts |\n| | uncertainty of slope computed | 0.10 pts |\n| | $\\delta\\alpha \\le 0.03$ | 0.10 pts |\n| | **sum** | **1.5 pts** |\n\n**B.1:** Use all three sets of data, and the exponents from all three, and then average the results\n\n$$\\log C = \\log I - 1.495 \\log V - 0.9854 \\log L_e + 0.9781 \\log R_c$$\n\nwhich gives\n\n$$C = (0.0165 \\pm 0.0003)\\mathrm{mA/V^{3/2}}$$\n\nThe theoretical value is approximately:\n\n$$\\frac{8\\pi\\epsilon_0}{9}\\sqrt{\\frac{2e}{m}} \\approx 1.47 \\times 10^{-5}\\mathrm{A/V^{3/2}}.$$\n\nNote that there is a nasty correction (the texts usually call it $\\beta$, which is not the same as our exponent), that we use in the code, but aren’t expecting students to find, because of this correction, we don’t expect the theoretical value to hold. Students who try to solve the theoretical problem will be vexed by this.\n\nFor space reasons, we write numerical $C$ below without explicit units, but using the units of $\\mu\\mathrm{A/V^{3/2}}$, that is\n\n$$C = 16.5\\mu\\mathrm{A/V^{3/2}}$$\n\nStudents *must* have clear units!\n\nMarking scheme:\n\n| Theory | clear statement | 0.20 pts |\n|---|---|---|\n| Fit | Used $R_c = 10R_e$ | 0.10 pts |\n| | $C$ computed | 0.10 pts |\n| | More than 9 data points | 0.20/0.20 pts |\n| | 8 or 9 data points | 0.15/0.20 pts |\n| | 7 or 8 data points | 0.10/0.20 pts |\n| | 5 or 6 data points | 0.05/0.20 pts |\n| | $C$ has correct units | 0.10 pts |\n| | $16.2 \\le C \\le 16.8$ | 0.10/0.10 pts |\n| | $15.9 \\le C \\le 17.1$ | 0.05/0.10 pts |\n| | uncertainty computed | 0.10 pts |\n| | $0.1 < \\delta C \\le 0.03$ | 0.10 pts |\n| | $0 < \\delta C \\le 0.05$ | 0.05/0.10 pts |\n| | **sum** | **1.0 pts** |\n\nClear statement of theory means that somewhere there is a justification for the data they are collecting and using. This can be in the form of the log formula; words are not necessary. Reusing data is okay.\n\n**C.1:** Start by assuming that $L_e$ matters, and look at values near $R_c$. Repeat for other variables. Remember that $C$ depends on the ratio between $R_c/R_e$, so change these together!\n\nUsing nearest half integers, we have for the first equation\n\n$$I_\\infty = C\\frac{L_e}{R_c}V^{3/2}$$\n\nso that\n\n$$F = \\frac{I_{measured}}{C\\frac{L_e}{R_c}V^{3/2}}$$\n\n| $R_c$ | $R_e$ | $L_e$ | $V$ | $I$ | $I_\\infty$ | $F$ |\n|---|---|---|---|---|---|---|\n| cm | cm | cm | V | mA | mA | |\n| 10 | 1 | 10 | 1000 | 535 | 500 | 1.071 |\n| 12 | 1.2 | 10 | 1000 | 470 | 416 | 1.129 |\n| 8 | 0.8 | 10 | 1000 | 647 | 624 | 1.036 |\n| 10 | 1 | 12 | 1000 | 630 | 599 | 1.051 |\n| 10 | 1 | 8 | 1000 | 451 | 400 | 1.129 |\n| 12 | 1.2 | 12 | 1000 | 537 | 500 | 1.075 |\n| 8 | 0.8 | 8 | 1000 | 537 | 500 | 1.075 |\n| 10 | 1 | 10 | 1100 | 617 | 576 | 1.071 |\n| 10 | 1 | 10 | 900 | 457 | 426 | 1.072 |\n\nFrom this we conclude that if $R_c \\uparrow$, $F \\uparrow$; if $L_e \\uparrow$, $F \\downarrow$; if $V \\uparrow$, $F$ doesn’t change.\n\nAlso, we notice that the ratio $R_c/L_e$ seems to be the important quantity.\n\nMarking scheme:\n\n| Data | clearly collected | 0.10 pts |\n|---|---|---|\n| Data | $R_c \\uparrow \\implies F \\uparrow$ | 0.10 pts |\n| | $L_e \\uparrow \\implies F \\downarrow$ | 0.10 pts |\n| | $V_c \\uparrow$: $F$ no significant change | 0.10 pts |\n| | $R_e \\uparrow$: $F$ no significant change | 0.10 pts |\n| | **sum** | **0.5 pts** |\n\n**C.2:** We propose\n\n$$F = A + B\\frac{R_c}{L_e}$$\n\nwith $x = R_c/L_e$.\n\nMarking scheme:\n\n| Theory | clear statement | 0.20 pts |\n|---|---|---|\n| Def | $x = R_c/L_e$ | 0.30/0.30 pts |\n| | $x = L_e/R_c$ | 0.15/0.30 pts |\n| | **sum** | **0.5 pts** |\n\nAny multiple of $R_c/L_e$ is also acceptable.\n\n**C.3:** It is important to collect data that varies $R_c$ and $L_e$ independently, so as to not bias our hypothesis. We will also keep the ratio with $R_c/R_e = 10$, in order to avoid other effects with the constant in part B.\n\n| $R_c$ (cm) | $L_e$ (cm) | $I$ (mA) | $I_\\infty$ | $x$ | $F$ |\n|---|---|---|---|---|---|\n| 20 | 10 | 898 | 740 | 2.000 | 1.213 |\n| 20 | 15 | 1210 | 1110 | 1.333 | 1.090 |\n| 20 | 20 | 1520 | 1480 | 1.000 | 1.027 |\n| 20 | 30 | 2160 | 2221 | 0.667 | 0.973 |\n| 20 | 40 | 2810 | 2961 | 0.500 | 0.949 |\n| 6 | 10 | 2420 | 2467 | 0.600 | 0.981 |\n| 8 | 10 | 1840 | 1850 | 0.800 | 0.994 |\n| 10 | 10 | 1520 | 1480 | 1.000 | 1.027 |\n| 15 | 10 | 1100 | 987 | 1.500 | 1.115 |\n| 20 | 10 | 902 | 740 | 2.000 | 1.219 |\n\nWe plot the results below; blue are the values of fixed $R_e$ while green are the values of fixed $L_e$.\n\nThe result is\n\n$$F(x) = 0.8579 + 0.1762x$$\n\nWhich is in error at $x = 1$ by about 3%.\n\nIf you are thinking that this looks like a quadratic fit might be better, you are correct, but there really isn’t time to do that for this experiment.\n\nMarking scheme:\n\n| Data | vary $L_e$ | 0.10 pts |\n|---|---|---|\n| | vary $R_c$ | 0.10 pts |\n| | $R_e \\ge 0.5$cm | 0.05 pts |\n| | $R_c = 10R_e$cm | 0.05 pts |\n| | $V \\ge 500$V | 0.05 pts |\n| | table has units | 0.05 pts |\n| | $L_e \\ge 10$cm | 0.05 pts |\n| | $L_{e,\\mathrm{max}} \\le 40$cm | 0.05 pts |\n| | $L_e$ well distributed | 0.05 pts |\n| | $R_c$ | 0.05 pts |\n| | Correct calculations of derived quantities | 0.10 pts |\n| | 10 or more points | 0.30/0.30 |\n| | 9 points | 0.25/0.30 |\n| | 8 points | 0.20/0.30 |\n| | 6 or 7 points | 0.10/0.30 |\n| | 5 or fewer points | 0.05/0.30 |\n| Plotting | covers $> 50$% of area | 0.10 pts |\n| | Axis labels | 0.05 pts |\n| | Axis units correct | 0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit | line drawn on graph | 0.10 pts |\n| | slope correctly computed with units | 0.10 pts |\n| | $0.17 < B < 0.18$ | 0.10 pts |\n| | **sum** | **1.5 pts** |",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "alt": "Plot of log I (vertical axis, 1 to 4) against log V (horizontal axis, 1 to 3.5): eight blue open circles lying on a red straight best-fit line rising from about (1, 0.7) to (3.3, 4.1), dashed grid.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q2-english/p1-sol-fig1.png",
+      "width": 976,
+      "height": 828,
+      "source": {
+       "page": 6,
+       "pdfRect": [
+        35.1,
+        338.45,
+        269.05,
+        537.12
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "alt": "Plot of log I (vertical axis, 3.8 to 4.1) against log L_e (horizontal axis, 1.7 to 2): seven blue open circles along a red straight best-fit line rising from about (1.70, 3.83) to (2.00, 4.14), dashed grid.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q2-english/p1-sol-fig2.png",
+      "width": 996,
+      "height": 836,
+      "source": {
+       "page": 7,
+       "pdfRect": [
+        34.51,
+        50.53,
+        273.24,
+        250.88
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig3",
+      "alt": "Plot of log I (vertical axis, 3.8 to 4.1) against log R_c (horizontal axis, 1 to 1.3): seven blue open circles along a red straight best-fit line falling from about (1.00, 4.12) to (1.30, 3.82), dashed grid.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q2-english/p1-sol-fig3.png",
+      "width": 996,
+      "height": 832,
+      "source": {
+       "page": 7,
+       "pdfRect": [
+        308.34,
+        207.95,
+        547.07,
+        407.48
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig4",
+      "alt": "Plot of F (vertical axis, about 0.95 to 1.2) against x (horizontal axis, 0.5 to 2): blue open circles (fixed R_e) and green open circles (fixed L_e) along a red straight fit line rising from about (0.5, 0.95) to (2, 1.21), dashed grid.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q2-english/p1-sol-fig4.png",
+      "width": 976,
+      "height": 801,
+      "source": {
+       "page": 10,
+       "pdfRect": [
+        309.55,
+        82.49,
+        543.51,
+        274.45
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,164 @@
+---
+id: owao-2023-theory-theoretical-round-p7
+source: 'OWAO 2023, theory'
+title: 'Задача 7. One Thousand and One Nights'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2023/owao-2023-theory-theoretical-round.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T12:41:20.240Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2023 ◇ Theoretical Round ◇ Problems*
+
+## Условие
+
+On a rocky planet in a circular orbit around a star, equatorial and ecliptic coordinates are arranged in the same way as on the Earth. The local ecliptic passes through points with equatorial coordinates ($\alpha_1 = 20.4^{\circ};\ \delta_1 = 22.5^{\circ}$) and ($\alpha_2 = 74.7^{\circ};\ \delta_2 = 49.0^{\circ}$). Calculate the fraction of the planet’s surface where polar nights can occur. Neglect the atmosphere.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 0.357
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+First, we determine the inclination $\varepsilon$ of the ecliptic to the equator as the inclination of a great circle passing through the points $(\alpha_1; \delta_1)$, $(\alpha_2; \delta_2)$.
+
+Both the right ascension and the ecliptic longitude are counted from the local point of the vernal equinox $(0; 0)$ — that is the point of intersection of the ecliptic and the celestial equator. Therefore, the inclination can be determined from a spherical triangle with vertices at the vernal equinox point ♈, a point on the ecliptic $M$ and the projection of this point on the celestial equator $M_{\perp}$.
+
+Using the five-part rule and the law of sines we obtain:
+
+$$\sin\lambda\cos\varepsilon = \sin\alpha\cos\delta - \cos\alpha\sin\delta\cos 90^{\circ} \quad\Rightarrow\quad \sin\lambda = \frac{\sin\alpha\cos\delta}{\cos\varepsilon},$$
+
+$$\frac{\sin\delta}{\sin\varepsilon} = \frac{\sin\lambda}{\sin 90^{\circ}}.$$
+
+Substitution of $\sin\lambda$ yields
+
+$$\frac{\sin\delta}{\sin\varepsilon} = \frac{\sin\alpha\cos\delta}{\cos\varepsilon} \quad\Rightarrow\quad \tan\delta = \sin\alpha\tan\varepsilon.$$
+
+Next, we can get an estimate of the inclination from the data on any of the two points,
+
+$$\varepsilon = \arctan\frac{\tan\delta_1}{\sin\alpha_1} = \arctan\frac{\tan 22.5^{\circ}}{\sin 20.4^{\circ}} = \arctan 1.19 = 50^{\circ}.$$
+
+*Another approach.* We introduce a Cartesian coordinate system centered at the place of observation. The $x$-axis is directed to the local point of the vernal equinox, the $z$-axis is directed to the north celestial pole, the $y$-axis complements the axes to a right-handed coordinate system. The vectors of two points are as follows:
+
+$$\vec{v}_1 = \begin{pmatrix} \cos\delta_1\cos\alpha_1 \\ \cos\delta_1\sin\alpha_1 \\ \sin\delta_1 \end{pmatrix}, \quad \vec{v}_2 = \begin{pmatrix} \cos\delta_2\cos\alpha_2 \\ \cos\delta_2\sin\alpha_2 \\ \sin\delta_2 \end{pmatrix}.$$
+
+Next, we determine the vector $\vec{w}$ of the pole of the great circle (namely, the north ecliptic pole) using the vector product
+
+$$\vec{w} = \frac{\vec{v}_1 \times \vec{v}_2}{|\vec{v}_1 \times \vec{v}_2|}$$
+
+where
+
+$$\vec{v}_1 \times \vec{v}_2 = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ \cos\delta_1\cos\alpha_1 & \cos\delta_1\sin\alpha_1 & \sin\delta_1 \\ \cos\delta_2\cos\alpha_2 & \cos\delta_2\sin\alpha_2 & \sin\delta_2 \end{vmatrix} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 0.866 & 0.322 & 0.383 \\ 0.173 & 0.633 & 0.755 \end{vmatrix},$$
+
+$$\vec{v}_1 \times \vec{v}_2 = \begin{pmatrix} 0.322 \times 0.755 - 0.633 \times 0.383 \\ 0.173 \times 0.383 - 0.866 \times 0.755 \\ 0.866 \times 0.633 - 0.173 \times 0.322 \end{pmatrix} = \begin{pmatrix} 0.000671 \\ -0.587571 \\ 0.492472 \end{pmatrix},$$
+
+$$|\vec{v}_1 \times \vec{v}_2| = \sqrt{0.000671^2 + (-0.587571)^2 + 0.492472^2} = 0.767,$$
+
+$$\vec{w} = \begin{pmatrix} 0.0009 \\ -0.7664 \\ 0.6424 \end{pmatrix} = \begin{pmatrix} \cos\theta\cos\alpha_0 \\ \cos\theta\sin\alpha_0 \\ \sin\theta \end{pmatrix}.$$
+
+$\vec{w}$ points to the north ecliptic pole. $\theta = 90^{\circ} - \varepsilon$ and $\alpha_0$ are the declination and the right ascension of the north ecliptic pole respectively,
+
+$$\theta = \arcsin w_z = 40^{\circ} \quad\Rightarrow\quad \varepsilon = \arccos w_z = 50^{\circ}.$$
+
+Polar nights are possible only at latitudes with a modulus greater than $\varphi_0 = 90^{\circ} - \varepsilon = \theta = 40^{\circ}$. The corresponding points form two spherical caps around the poles. Let us determine the fraction of the planet’s surface with latitudes modulus more than $40^{\circ}$:
+
+$$\eta = \frac{2S_{\mathrm{cap}}}{S_{\mathrm{sphere}}} = \frac{2 \cdot (2\pi Rh)}{4\pi R^2}$$
+
+where
+
+$$h = R[1 - \cos(90^{\circ} - \varphi_0)] = R(1 - \sin\theta)$$
+
+is the height of the spherical cap.
+
+Finally,
+
+$$\eta = \frac{2 \times 2\pi R^2(1 - \sin\theta)}{4\pi R^2} = 1 - \sin 40^{\circ} = 0.357 = 35.7\,\%.$$
+
+**Marking Scheme:**
+
+- Inclination of the ecliptic.
+
+  In case of using spherical trigonometry:
+  - Distance between two points on a sphere — **2 pt.**
+  - Choosing a valid spherical triangle — **2 pt.**
+  - Inclination $\varepsilon$ — **1 pt.**
+
+  It is acceptable to write the great circle equation for the ecliptic in polar coordinates without derivation.
+
+  In case of using Cartesian coordinates:
+  - Conversion from ecliptic coordinates to Cartesian coordinates: formula + evaluation — **1 pt + 1 pt.**
+  - Vector multiplication — **2 pt.**
+  - Inclination $\varepsilon$ — **1 pt.**
+- Fraction of the surface with polar nights:
+  - Limiting latitudes ($|\varphi| = 90^{\circ} - \varepsilon$) — **2 pt.**
+  - Area of spherical caps — **2 pt.**
+  - Fraction $\eta$ — **1 pt.**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2023-theory-theoretical-round/p7-sol-fig1.png" alt="Right spherical triangle with vertices ♈ (vernal equinox point, lower left), M (upper right) and M_⊥ (lower right, right angle). The side ♈–M is labelled λ, the side ♈–M_⊥ is labelled α, the side M–M_⊥ is labelled δ, and the angle at ♈ is ε." />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| Universal | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Hubble constant | $H_0 = 70\ (\mathrm{km/s})/\mathrm{Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| Earth | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+
+| Moon | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| Sun | |
+|---|---|
+| Radius | $R_{\odot} = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+
+| Emission constants | |
+|---|---|
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ (\mathrm{W/m^2})/\mathrm{K^4}$ |
+| Wien’s displacement | $b = 2898\ \mu\mathrm{m} \cdot \mathrm{K}$ |
+
+| UBV system | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+| Hydrogen spectrum | |
+|---|---|
+| Lyman L$\alpha$ | $\lambda_{L\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{H\alpha} = 6562.8$ Å |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2023_Theoretical_Round_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Problems.pdf)
+· официални решения: [OWAO_2023_Theoretical_Round_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Solutions.pdf)

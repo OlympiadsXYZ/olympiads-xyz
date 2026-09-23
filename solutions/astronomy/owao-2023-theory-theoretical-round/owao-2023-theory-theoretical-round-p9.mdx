@@ -1,0 +1,167 @@
+---
+id: owao-2023-theory-theoretical-round-p9
+source: 'OWAO 2023, theory'
+title: 'Задача 9. Get Into the Loop'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2023/owao-2023-theory-theoretical-round.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T12:41:20.240Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2023 ◇ Theoretical Round ◇ Problems*
+
+## Условие
+
+An artificial satellite moves in an orbit with eccentricity $e \gt 0$, semi-major axis $a$, and inclination $0 \lt i \lt 90^{\circ}$. The argument of perigee $\omega = 0^{\circ}$. Assume the Earth to be an ideal sphere rotating at a constant angular velocity $W$.
+
+**a)** What are the satellite’s geographic latitude $\varphi(\nu)$ and longitude $\lambda(\nu)$ depending on the true anomaly $\nu$?
+
+**b)** Consider a satellite in a geosynchronous orbit ($T = 23^{\mathrm{h}}\,56^{\mathrm{m}}\,04^{\mathrm{s}}$) with $e = 0.30$ and $i = 1.00$ rad. Calculate the ground track of the satellite (projection of the trajectory onto the surface of the rotating Earth) and draw it. For convenience, use the answer sheet with table and graph grid.
+
+*Hint:* $$\int\frac{dx}{(1 + a\cos x)^2} = \frac{2\arctan\left(\sqrt{\frac{1-a}{1+a}} \cdot \tan\frac{x}{2}\right)}{(1 - a^2)^{3/2}} - \frac{a\sin x}{(1 - a^2)(1 + a\cos x)} + \mathrm{const}.$$
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** $\varphi' = \arcsin(\sin i\sin\nu),\quad \lambda' = \arctan(\cos i\tan\nu) - W\sqrt{\frac{a^3}{GM_{\oplus}}}\left[2\arctan\left(\sqrt{\frac{1-e}{1+e}} \cdot \tan\frac{\nu}{2}\right) - \frac{e\sin\nu\sqrt{1-e^2}}{1+e\cos\nu}\right]$
+- **b)** The ground track is a closed figure-eight loop through the origin, symmetric under $(\lambda', \varphi') \to (-\lambda', -\varphi')$, with latitude reaching $\pm 1$ rad (plot in the official solution).
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) Let the origin point be the ascending node of the satellite’s orbit — in this problem it coincides with perigee ($\omega = 0^{\circ}$). For the respective spherical triangle:
+
+$$\frac{\sin\varphi}{\sin i} = \frac{\sin\nu}{\sin 90^{\circ}} \quad\Rightarrow\quad \sin\varphi = \sin i\sin\nu,$$
+
+$$\cos i = \frac{\tan\lambda}{\tan\nu} \quad\Rightarrow\quad \tan\lambda = \cos i\tan\nu.$$
+
+Taking into account the rotation of the Earth, we may put down the geographical coordinates of the satellite:
+
+$$\varphi' = \varphi = \arcsin(\sin i\sin\nu),$$
+
+$$\lambda' = \lambda - W\int_0^t dt. \qquad (3)$$
+
+Due to rotational symmetry, the longitude of the satellite is determined up to a shift by an arbitrary constant value.
+
+The angular momentum of the satellite is conserved,
+
+$$l = \frac{d\nu}{dt}r^2 = \sqrt{G\mathfrak{M}_{\oplus}\,a(1 - e^2)} = \mathrm{const}.$$
+
+At the same time, the geocentric distance of the satellite depends on its true anomaly:
+
+$$r = \frac{a(1 - e^2)}{1 + e\cos\nu}.$$
+
+Therefore,
+
+$$dt = \frac{r^2\,d\nu}{\sqrt{G\mathfrak{M}_{\oplus}\,a(1 - e^2)}} = \sqrt{\frac{a^3(1 - e^2)^3}{GM_{\oplus}}}\frac{d\nu}{(1 + e\cos\nu)^2}.$$
+
+Next, we can replace the integration variable in (3):
+
+$$\begin{aligned} \lambda' &= \lambda - W\sqrt{\frac{a^3(1 - e^2)^3}{GM_{\oplus}}}\int_0^{\nu}\frac{d\nu}{(1 + e\cos\nu)^2} = \\ &= \lambda - W\sqrt{\frac{a^3}{GM_{\oplus}}}(1 - e^2)^{3/2}\left[\frac{2\arctan\left(\sqrt{\frac{1-e}{1+e}} \cdot \tan\frac{\nu}{2}\right)}{(1 - e^2)^{3/2}} - \frac{e\sin\nu}{(1 - e^2)(1 + e\cos\nu)}\right] = \\ &= \arctan(\cos i\tan\nu) - W\sqrt{\frac{a^3}{GM_{\oplus}}}\left[2\arctan\left(\sqrt{\frac{1 - e}{1 + e}} \cdot \tan\frac{\nu}{2}\right) - \frac{e\sin\nu\sqrt{1 - e^2}}{1 + e\cos\nu}\right]. \end{aligned}$$
+
+b) For geosynchronous orbit
+
+$$\frac{2\pi}{T} = W = \sqrt{\frac{G\mathfrak{M}_{\oplus}}{a^3}},$$
+
+so we can simplify the expression above a bit:
+
+$$\lambda' = \arctan(\cos i\tan\nu) + \frac{e\sin\nu\sqrt{1 - e^2}}{1 + e\cos\nu} - 2\arctan\left(\sqrt{\frac{1 - e}{1 + e}} \cdot \tan\frac{\nu}{2}\right).$$
+
+*Thoughts on plotting.* It is pretty obvious that the relative motion of the satellite is periodical and the track is closed. To plot the graph, we have to calculate $\varphi'$ and $\lambda'$ values for $\nu$ in range from $-\pi$ to $\pi$. In fact, the work can be simplified by noting that
+
+$$\varphi'(-\nu) = -\varphi(\nu), \quad \lambda'(-\nu) = -\lambda'(\nu),$$
+
+so it is enough to probe the range of $\nu$ from 0 to $\pi$, and then mirror the results.
+
+Also, note that $\arctan(\#\tan\nu)$ is ambiguous. $\lambda'$ follows the motion of the satellite, therefore arctan should be re-defined to become a continuous function for $\nu \in [0;\ \pi)$:
+
+$$\arctan(\cos i\tan\nu) := \begin{cases} \underline{\arctan}(\cos i\tan\nu), & \nu \leqslant \pi/2, \\ \underline{\arctan}(\cos i\tan\nu) + \pi, & \nu \gt \pi/2. \end{cases}$$
+
+Here $\underline{\arctan}$ is “conventional” inverse trigonometric function ranged from $-\pi/2$ to $\pi/2$. Of course, $\underline{\arctan}(+\infty) := \pi/2$. Such a trick does not affect the parts of the expression that came along with that *remarkable* integral, since $\nu/2$ appears there as an argument.
+
+For calculations, it is convenient to substitute the values of $e$ and $i$ and regroup:
+
+$$\lambda'(\nu) \approx \begin{cases} \arctan(0.54\tan\nu) + \dfrac{0.286 \cdot \sin\nu}{1 + 0.3\cos\nu} - 2\arctan\left(0.734\tan\frac{\nu}{2}\right), & \nu \in [0;\ \pi/2), \\ \arctan(0.54\tan\nu) + 3.142 + \dfrac{0.286 \cdot \sin\nu}{1 + 0.3\cos\nu} - 2\arctan\left(0.734\tan\frac{\nu}{2}\right), & \nu \in (\pi/2;\ \pi), \\ -\lambda'(-\nu), & \nu \in (-\pi;\ 0) \setminus \{-\pi/2\}. \end{cases}$$
+
+Finally, here is the plot we need:
+
+**Marking Scheme:**
+
+- Expression for latitude $\varphi$ — **3 pt.**
+- Expression for longitude $\lambda$ — **3 pt.**
+- Angular momentum conservation — **3 pt.**
+- Accounting the rotation of the Earth, like (3) — **3 pt.**
+- Expression for longitude $\lambda'$ taking into account rotation — **3 pt.**
+- Angular velocity of a geosynchronous satellite — **2 pt.**
+- Plot of the ground track — **3 pt.**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2023-theory-theoretical-round/p9-sol-fig1.png" alt="Right spherical triangle with vertices ☊, π (ascending node coinciding with perigee, lower left), S (satellite, upper right) and S_⊥ (lower right, right angle). The side ☊–S is labelled ν, the side ☊–S_⊥ is labelled λ, the side S–S_⊥ is labelled φ, and the angle at the node is i." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2023-theory-theoretical-round/p9-sol-fig2.png" alt="Ground track plotted on a grid: horizontal axis λ, rad with ticks −1, 0, 1; vertical axis φ, rad with ticks −1 and 1. The green curve is a closed figure-eight loop through the origin, reaching φ = 1 at λ ≈ 0.6 and φ = −1 at λ ≈ −0.6, symmetric about the origin." />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| Universal | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Hubble constant | $H_0 = 70\ (\mathrm{km/s})/\mathrm{Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| Earth | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+
+| Moon | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| Sun | |
+|---|---|
+| Radius | $R_{\odot} = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+
+| Emission constants | |
+|---|---|
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ (\mathrm{W/m^2})/\mathrm{K^4}$ |
+| Wien’s displacement | $b = 2898\ \mu\mathrm{m} \cdot \mathrm{K}$ |
+
+| UBV system | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+| Hydrogen spectrum | |
+|---|---|
+| Lyman L$\alpha$ | $\lambda_{L\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{H\alpha} = 6562.8$ Å |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2023_Theoretical_Round_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Problems.pdf)
+· официални решения: [OWAO_2023_Theoretical_Round_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Solutions.pdf)

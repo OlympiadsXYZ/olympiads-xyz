@@ -1,0 +1,174 @@
+---
+id: owao-2023-theory-theoretical-round-p4
+source: 'OWAO 2023, theory'
+title: 'Задача 4. Hot Potato'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2023/owao-2023-theory-theoretical-round.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T12:41:20.240Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2023 ◇ Theoretical Round ◇ Problems*
+
+## Условие
+
+A main sequence star has radius $R = 3.9R_{\odot}$, effective temperature $T = 9520$ K, and parallax $\varpi = 0.011''$. An asteroid orbits the star with an orbital period of 1 year. The asteroid rotates quite rapidly. The asteroid’s surface reflects $A = 30\,\%$ of incident radiation.
+
+Estimate:
+
+**a)** the average density of the star,
+
+**b)** the orbital radius of the asteroid,
+
+**c)** the effective surface temperature of the asteroid.
+
+**d)** Is it possible to observe this star from the Earth with the naked eye?
+
+The bolometric correction at a given temperature is approximately $-0.15$.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** 80 kg/m^3
+- **b)** 1.5 au
+- **c)** 665 K
+- **d)** Yes: $m_V \approx 4.8^{\mathrm{m}}$, visible to the naked eye as a faint point source.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) First, we determine the luminosity of the star. According to the Stefan–Boltzmann law,
+
+$$L = 4\pi R^2\sigma T^4.$$
+
+We can compare the parameters of the star with the parameters of the Sun, and obtain the ratio
+
+$$\frac{L}{L_{\odot}} = \left(\frac{R}{R_{\odot}}\right)^2\left(\frac{T}{T_{\odot}}\right)^4 \quad\Rightarrow\quad L = 3.9^2 \cdot \left(\frac{9520}{5800}\right)^4 L_{\odot} = 1.1 \cdot 10^2 L_{\odot}.$$
+
+According to the mass–luminosity relation for main sequence stars, there is a power law relationship between mass $\mathfrak{M}$ and luminosity $L$. For the relevant mass range that is
+
+$$\frac{L}{L_{\odot}} = \begin{cases} (\mathfrak{M}/\mathfrak{M}_{\odot})^4, & 0.4 \lt \mathfrak{M}/\mathfrak{M}_{\odot} \lt 2; \\ 1.5\,(\mathfrak{M}/\mathfrak{M}_{\odot})^{3.5}, & 2 \lt \mathfrak{M}/\mathfrak{M}_{\odot} \lt 20. \end{cases}$$
+
+We do not know in advance which of the dependencies is valid for a given star, but in fact, this does not greatly affect the estimation:
+
+$$L \approx \begin{cases} 3.2\mathfrak{M}_{\odot}, & \text{for } L \propto \mathfrak{M}^4, \\ 3.4\mathfrak{M}_{\odot}, & \text{for } L \propto \mathfrak{M}^{3.5}. \end{cases}$$
+
+The value belongs to the scope of the second expression. One way or another, any such estimate is accepted.
+
+The average density of the star is
+
+$$\langle\rho\rangle = \frac{\mathfrak{M}}{V} = \frac{\mathfrak{M}}{\frac{4}{3}\pi R^3} = \frac{3.4 \cdot 2.0 \cdot 10^{30}\ \mathrm{kg}}{\frac{4}{3}\pi\,(3.9 \times 6.96 \cdot 10^{8}\ \mathrm{m})^3} = 8 \cdot 10^1\ \mathrm{kg/m^3}.$$
+
+b) According to Kepler’s third law,
+
+$$\frac{T^2}{a^3} = \frac{4\pi^2}{G\mathfrak{M}} \quad\Rightarrow\quad a = \sqrt[3]{\frac{G\mathfrak{M}T^2}{4\pi^2}}$$
+
+$$a = \sqrt[3]{\frac{6.67 \cdot 10^{-11} \times (3.4 \times 2.0 \cdot 10^{30}) \times (365.25 \cdot 24 \cdot 60 \cdot 60)^2}{4\pi^2}} = 2.3 \cdot 10^{11}\ \mathrm{m} = 1.5\ \mathrm{au}.$$
+
+c) Radiation flux of the star at the orbit of the asteroid is given by $E = \dfrac{L}{4\pi a^2}$.
+
+The absorption rate of the asteroid with radius $r$ depends on its cross section and albedo $A$:
+
+$$\mathcal{E} = E \cdot (1 - A) \cdot \pi r^2.$$
+
+At equilibrium, the absorption rate is equal to the emission rate of the asteroid blackbody radiation. Therefore,
+
+$$\frac{L}{4\pi a^2} \cdot (1 - A) \cdot \pi r^2 = 4\pi r^2\sigma T_a^4 \quad\Rightarrow\quad T_a = \sqrt[4]{\frac{L(1 - A)}{16\pi a^2\sigma}};$$
+
+$$T_a = \sqrt[4]{\frac{(1.1 \cdot 10^2) \times (3.828 \cdot 10^{26}) \times (1 - 0.30)}{16\pi \cdot (2.3 \cdot 10^{11})^2 \times 5.67 \cdot 10^{-8}}} = 665\ \mathrm{K}.$$
+
+d) First, we estimate the bolometric absolute magnitude of the star according to the Pogson formula:
+
+$$M_{\mathrm{bol}} = M_{\odot} - 2.5\lg\frac{L}{L_{\odot}} = 4.74^{\mathrm{m}} - 2.5\lg(1.1 \cdot 10^2) = -0.36^{\mathrm{m}},$$
+
+$$M_V = M_{\mathrm{bol}} - \mathrm{BC} = -0.36^{\mathrm{m}} + 0.15^{\mathrm{m}} = -0.21^{\mathrm{m}}.$$
+
+Next, we write the relation of absolute magnitude, apparent magnitude and distance. Worth noting, we should try to take the interstellar extinction into account, so we consider the term $A_V r$. The interstellar medium is irregularly distributed$^{4}$, however, we may assume the averaged value of absorption to be $A_V \sim 2^{\mathrm{m}}/\mathrm{kpc} = 0.002^{\mathrm{m}}/\mathrm{pc}$. Therefore,
+
+$$\begin{aligned} m_V &= M_V - 5 + 5\lg r + A_V r = M_V - 5 - 5\lg\varpi + 0.002 \cdot \frac{1}{\varpi} = \\ &= -0.21^{m} - 5 - 5\lg 0.011 + 0.002 \times \frac{1}{0.011} = 4.8^{\mathrm{m}}. \end{aligned}$$
+
+Such a star is visible to the naked eye as a faint point source.
+
+**Marking Scheme:**
+
+- Average density:
+  - Stefan–Boltzmann law — **1 pt.**
+  - Mass estimation — **1 pt.**
+  - Average density of the star $\langle\rho\rangle$ — **1 pt.**
+- Orbital radius:
+  - Kepler’s third law — **1 pt.**
+  - Orbital radius of the asteroid $a$ — **1 pt.**
+- Asteroid temperature:
+  - Thermal equilibrium equation for the asteroid — **1 pt.**
+  - Surface temperature of the asteroid $T_a$ — **1 pt.**
+- Naked eye observation:
+  - Pogson formula — **1 pt.**
+  - Taking BC into account — **1 pt.**
+  - Conclusion about the visibility of the star — **1 pt.**
+
+  There is no penalty for not taking into account interstellar absorption.
+
+$^{4}$ We may assume the star to be located in the galactic disk. The reason is that the star is quite massive and the lifetime on the main sequence is inversely proportional to $\mathfrak{M}^3$, so the star is quite young and it did not have time to decline much from the galactic plane where it was formed.
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| Universal | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Hubble constant | $H_0 = 70\ (\mathrm{km/s})/\mathrm{Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| Earth | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+
+| Moon | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| Sun | |
+|---|---|
+| Radius | $R_{\odot} = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+
+| Emission constants | |
+|---|---|
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ (\mathrm{W/m^2})/\mathrm{K^4}$ |
+| Wien’s displacement | $b = 2898\ \mu\mathrm{m} \cdot \mathrm{K}$ |
+
+| UBV system | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+| Hydrogen spectrum | |
+|---|---|
+| Lyman L$\alpha$ | $\lambda_{L\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{H\alpha} = 6562.8$ Å |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2023_Theoretical_Round_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Problems.pdf)
+· официални решения: [OWAO_2023_Theoretical_Round_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Solutions.pdf)

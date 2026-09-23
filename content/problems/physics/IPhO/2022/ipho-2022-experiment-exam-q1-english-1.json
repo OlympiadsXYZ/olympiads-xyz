@@ -1,0 +1,383 @@
+{
+ "paper": {
+  "id": "ipho-2022-experiment-exam-q1-english-1",
+  "subject": "physics",
+  "competition": "IPhO",
+  "year": 2022,
+  "round": "experiment",
+  "roundType": "experiment",
+  "grade": null,
+  "lang": "en",
+  "title": "Experiment Q1 — Planet (12 points)",
+  "totalPoints": 12,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/IPhO/2022/Experiment/exam-experiment-Q1-english (1).pdf",
+   "pages": [
+    1,
+    2,
+    3
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/IPhO/2022/Experiment/experiment_solutions (1).pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "7210388f1b8aa4d6de1d8d634d7dccca4556533b5f8b00736c8c65ba7258cff9",
+    "solutions": "061a133df1f2e8d17c673fb92184f442dde921fd8fdc78d79883fecd55ba8171"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "One top-level problem (Planet, 12 points) with 8 printed sub-tasks A.1–A.3, B.1–B.4, C.1, matching the catalogue. Section headings Part A/B/C (with their printed point totals) are kept in the statement and in statementAfter of A.3 and B.4. The authorization-key line, the sample console output and the message 'Value Out Of Bounds!' are printed as raster images (not in the text layer); they are given as figures p1-fig2, p1-fig3, p1-fig4 rather than as text. The solutions file covers the whole experimental exam: pages 1–5 are E1 (Planet, this paper); pages 6–10 are E2 (Cylindrical Diode) and are not used. Grey-background rows in the marking-scheme tables (alternatives of which the maximal one counts) cannot be shaded in Markdown; the printed explanatory sentence is kept. Printed items kept verbatim: A.3 'Tick the appropriate effect the answer sheet' (a word is missing); B.2 solution 'Δv_t0 = Δ(1/v_t0)/v_t0^2' as printed; B.3 solution 'the more the temperature and air density decreases' and B.3 'found in one of the earlier part' (agreement errors kept as printed, D-P28); B.3 'plotting ρ_a0^0.4 against h' and 'intercept b = ρ_a0^2.5 = 0.82 (kg/m³)^0.4' (exponent 2.5 as printed); B.3 marking scheme 'ΔH ≤ 2000 m/s' and 'ΔH ≤ 4000 m/s' (wrong unit m/s as printed); B.4 marking 'Δp ≤ 8000 Pa'; C.1 solution 'x = ∫ v_x dtΩgt³/3' (no equals sign printed) and 's = Ωt_f³/3' (g missing) as printed; C.1 marking scheme 'minimising r and ρ' although the text maximises them; C.1 '≈ 8h' as printed. The sentence 'Points are added additively ... (in absolute value)' has no final period in print."
+  }
+ },
+ "problems": [
+  {
+   "id": "ipho-2022-experiment-exam-q1-english-1-p1",
+   "number": 1,
+   "title": "Planet",
+   "points": 12,
+   "problemType": "experiment",
+   "statement": "You find yourself on an alien planet with no knowledge of how you got there. The first thing you try to do is to learn more about the planet you're on. You remember how Galileo experimented with falling balls and inspired by this, build a perfectly vertical tower of height $H = 2000\\ \\mathrm{m}$. Given the tower, you can now start dropping balls from any height $h$ on the tower (measured between the ground and the bottom of the ball immediately before it's released). Due to the limitations of the materials available to you, you can only drop balls of radius $5\\ \\mathrm{cm} \\le r \\le 50\\ \\mathrm{cm}$ and densities $0.1\\ \\mathrm{g/cm^3} \\le \\rho \\le 10\\ \\mathrm{g/cm^3}$.\n\nAny time you drop a ball, you let it go from rest, and are able to measure the duration $t$ over which it falls, and the horizontal distance $s$ between where the ball lands and the point below where the ball was dropped.\n\nBefore you start your experiments, you make the following observations about the planet:\n\n- Based on the movement of the Sun, you find that you're somewhere on the equator of the planet.\n- The planet has an atmosphere; the air density is small enough for neglecting the buoyancy force due to it.\n- The ground temperature is $T_0 = 20\\ {}^{\\circ}\\mathrm{C}$.\n- There seems to be a wind blowing along the equator that's uniform throughout the height of the tower; neglect the effect of the tower on the wind velocity.\n\n**Description of the simulation software**\n\nThe command line program simulates the measurements of the fall time $t$ and deflection from the base of the tower $s$, after providing the height $h$ at which the ball is dropped, its radius $r$, and density $\\rho$. All values of the input parameters are entered through the keyboard after the corresponding prompts and are validated by pressing the **Enter** key.\n\nIn order to get started, use the following authorization key when prompted:\n\nEntering an incorrect value will put the program into test mode; you will need to restart the program.\n\nA typical output of a single simulation cycle of the program looks like:\n\nFirst, you enter the height $h$ in m (the number between 0 and 2000), then the radius of the ball $r$ in cm (the number between 5 and 50) and finally the density of the ball $\\rho$ in g/cm$^3$ (the number between 0.1 and 10). Each input is confirmed with the **Enter** key. The program will then output $t$ in s and $s$ in m.\n\nThe program then loops back to the height of the tower query.\n\nEntering a value that is out of range for the experiment will result in an error message,\n\nand then return you to the incorrectly answered prompt.\n\nThe height input $h$ will be rounded to 1 m, $r$ to 1 cm and $\\rho$ to 0.01 g/cm$^3$. (There is no point in trying to input more precise numbers).\n\nThe results of the experiment will have random errors associated with them, as to simulate the limited precision one would have in real life. The sizes of the errors can be found by observing the fluctuations in the output.\n\nAny time you need to quit the program, press **Ctrl+C**.\n\n**List of constants and useful relations**\n\nThe gravitational constant $G = 6.67 \\times 10^{-11}\\ \\mathrm{m^3\\,kg^{-1}\\,s^{-2}}$.\n\nIdeal gas constant $R = 8.314\\ \\mathrm{J\\,mol^{-1}\\,K^{-1}}$,\n\n$0\\ {}^{\\circ}\\mathrm{C} = 273.15\\ \\mathrm{K}$.\n\nThe air drag of a ball of cross-sectional area $A$ and speed $v$ in air of density $\\rho_a$ is given by\n\n$$F_d = 0.24 A \\rho_a v^2.$$\n\nAn adiabatic atmosphere has a density profile given by\n\n$$\\rho_a(h) = \\rho_{a0}\\left(1 - \\frac{\\gamma - 1}{\\gamma}\\frac{\\mu g h}{R T_0}\\right)^{\\frac{1}{\\gamma - 1}} = \\rho_{a0}\\left(1 - \\frac{h}{H_0}\\right)^{\\frac{1}{\\gamma - 1}},$$\n\nvalid until the top of the atmosphere where $T = 0$ K. Here, $\\gamma$ is the adiabatic coefficient, $\\mu$ the molar mass of air (i.e. the gas in the atmosphere of the planet), $g$ the free-fall acceleration and $h$ the height from the ground.\n\n**Part A. Planetary properties (3.0 points)**",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "caption": "An artist's exaggerated rendition of the problem.",
+     "alt": "Drawing of a tall grey tower with three arched windows standing on a curved dark-red planet surface; a ball released from the top window follows a red dashed path, shown by black dots, that bends sideways and lands on the ground to the left of the tower base.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig1.png",
+     "width": 1196,
+     "height": 846,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       154.17,
+       421.79,
+       441.09,
+       624.69
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "alt": "Monospaced program prompt: Enter Valid Authorization Key: 12345678.888 (printed as an image).",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig2.png",
+     "width": 934,
+     "height": 102,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       185.71,
+       769.5,
+       409.55,
+       793.89
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig3",
+     "alt": "Monospaced console output of one simulation cycle: prompts 0 < h (m) < 2000 | h (m): 90; 5 < r (cm) < 50 | r (cm): 13; 0.1 < rho (g/cm^3) < 10.0 | rho (g/cm^3): 2; ...; t (s) = 3.5, s (m) = 0.1; a line of equals signs; then the prompt 0 < h (m) < 2000 | h (m):_ again (printed as an image).",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig3.png",
+     "width": 934,
+     "height": 380,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       185.71,
+       214.7,
+       409.55,
+       305.6
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig4",
+     "alt": "Monospaced error message: Value Out Of Bounds! (printed as an image).",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig4.png",
+     "width": 463,
+     "height": 78,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       242.87,
+       408.33,
+       353.61,
+       426.83
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "A.1",
+     "statement": "Determine the free-fall acceleration $g$ on the planet by making a suitable set of measurements and sketching an appropriate graph in the space provided. Provide an analysis of the uncertainty in your result.",
+     "points": 2,
+     "answer": {
+      "kind": "numeric",
+      "value": 15.7,
+      "unit": "m/s^2",
+      "tolerance": 0.5,
+      "note": "Official value g = 15.7 m/s² with Δg = 0.5 m/s²; the marking scheme gives full marks for 15.0–16.4 m/s²."
+     }
+    },
+    {
+     "label": "A.2",
+     "statement": "Walking away from the tower along the equator, you find that you can see the tower up to a distance of $L = 230$ km away (measured as the distance between you and the top of the tower). What is the radius $R$ of the planet? You may assume that your height is much smaller than the height of the tower.",
+     "points": 0.5,
+     "answer": {
+      "kind": "numeric",
+      "value": 13200,
+      "unit": "km",
+      "tolerance": 100,
+      "latex": "R = \\frac{L^2 - H^2}{2H}"
+     }
+    },
+    {
+     "label": "A.3",
+     "statement": "Estimate the mass $M$ of the planet. Provide an analysis of the uncertainty in your result.\nWhat physical effect contributes the most to the accuracy of your estimate for $M$ ? Tick the appropriate effect the answer sheet.",
+     "points": 0.5,
+     "statementAfter": "**Part B. Atmospheric properties (6.5 points)**",
+     "answer": {
+      "kind": "numeric",
+      "value": 4.2e+25,
+      "unit": "kg",
+      "tolerance": 2e+24,
+      "note": "Official: M = gR²/G = 4.2 × 10^25 kg with ΔM = 0.2 × 10^25 kg; the effect is the centrifugal force due to the planet's rotation, which reduces the measured acceleration and hence the estimate of M."
+     }
+    },
+    {
+     "label": "B.1",
+     "statement": "Determine the wind speed $u$ on the surface of the planet by making a suitable set of measurements and sketching an appropriate graph in the space provided. Provide an analysis of uncertainty in your result.",
+     "points": 2,
+     "answer": {
+      "kind": "numeric",
+      "value": 1.31,
+      "unit": "m/s",
+      "tolerance": 0.04,
+      "note": "Official value u = 1.31 m/s with Δu = 0.04 m/s."
+     }
+    },
+    {
+     "label": "B.2",
+     "statement": "Determine the air density $\\rho_{a0}$ on the surface of the planet either by collecting additional data or by reusing previous data, and sketching an appropriate graph in the space provided. Provide an analysis of the uncertainty in your result.",
+     "points": 1,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.6,
+      "unit": "kg/m^3",
+      "tolerance": 0.07,
+      "note": "Official value ρ_a0 = 0.60 kg/m³ with Δρ_a0 = 0.07 kg/m³."
+     }
+    },
+    {
+     "label": "B.3",
+     "statement": "Assuming the atmosphere to be adiabatic with an adiabatic coefficient $\\gamma = 1.4$, determine the thickness $H_0$ of the atmosphere by making a suitable set of measurements and sketching an appropriate graph in the space provided. Provide an analysis of the uncertainty in your result.",
+     "points": 3,
+     "answer": {
+      "kind": "numeric",
+      "value": 7500,
+      "unit": "m",
+      "tolerance": 2000,
+      "note": "Official value H_0 = 7500 m with ΔH_0 ≈ 2000 m."
+     }
+    },
+    {
+     "label": "B.4",
+     "statement": "Determine the molar mass $\\mu$ of the air and the air pressure $p_0$ at the base of the tower. Provide an analysis of the uncertainty in your result.",
+     "points": 0.5,
+     "statementAfter": "**Part C. Duration of a day (2.5 points)**",
+     "answer": {
+      "kind": "text",
+      "value": "μ = 72 g/mol ≈ 70 g/mol with Δμ = 20 g/mol; p_0 = 20 000 Pa with Δp_0 = 6000 Pa."
+     }
+    },
+    {
+     "label": "C.1",
+     "statement": "Determine the duration of a day, $T_p$, on the planet by making a suitable set of measurements and sketching an appropriate graph in the space provided. Provide an analysis of the uncertainty in your result.",
+     "points": 2.5,
+     "answer": {
+      "kind": "numeric",
+      "value": 28000,
+      "unit": "s",
+      "tolerance": 720,
+      "note": "Official value T = 28 000 s ≈ 8 h with ΔT = 0.2 h."
+     }
+    }
+   ],
+   "topics": [
+    "mechanics/gravitation",
+    "fluids/drag",
+    "mechanics/non-inertial-frames"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**E1: Planet - SOLUTION**\n\n**A.1:** The free-fall acceleration $g$ can be found by dropping the ball from low heights such that the air friction and effects from the curvature of the planet are minimized. We also choose the radius and density of the ball to be as big as possible to minimize the effect of air friction, i.e. setting $r = 50\\ \\mathrm{cm}$, $\\rho = 10\\ \\mathrm{g/cm^3}$. The drop height is then given by $h = gt^2/2$, and so we can find $g$ from the slope of $t^2$ vs $h$. From the graph, we measure the slope $2/g = 0.127\\ \\mathrm{s^2/m}$ and its error $\\Delta(2/g) = 0.004\\ \\mathrm{s^2/m}$ and so $g = 15.7\\ \\mathrm{m/s^2}$ with an error of $\\Delta g = 0.5\\ \\mathrm{m/s^2}$.\n\n$r = 50\\ \\mathrm{cm}$, $\\rho = 10\\ \\mathrm{g/cm^3}$\n\n| $h(\\mathrm{m})$ | $s(\\mathrm{m})$ | $t(\\mathrm{s})$ | $t^2(\\mathrm{s^2})$ |\n|---|---|---|---|\n| 0 | 0.0 | 0.0 | 0.0 |\n| 20 | 0.0 | 1.7 | 2.9 |\n| 40 | 0.0 | 2.2 | 4.8 |\n| 60 | 0.0 | 2.8 | 7.8 |\n| 80 | 0.1 | 3.2 | 10.2 |\n| 100 | 0.1 | 3.5 | 12.2 |\n| 120 | 0.2 | 3.9 | 15.2 |\n| 140 | 0.0 | 4.1 | 16.8 |\n| 160 | 0.1 | 4.6 | 21.2 |\n| 180 | 0.1 | 4.8 | 23.0 |\n| 200 | 0.1 | 5.1 | 26.0 |\n\nMarking scheme:\n\n| Theory | $h = gt^2/2$ | 0.20 pts |\n|---|---|---|\n| Data | varying only $h$ | 0.05 pts |\n| | maximising $r$ | 0.05 pts |\n| | maximising $\\rho$ | 0.05 pts |\n| | table has units | 0.05 pts |\n| | $h$ distributed roughly uniformly | 0.05 pts |\n| | $h_{\\mathrm{max}} < 300\\ \\mathrm{m}$ | 0.05 pts |\n| | $h_{\\mathrm{max}} - h_{\\mathrm{min}} > 100\\ \\mathrm{m}$ | 0.05 pts |\n| | correct calculations of derived quantities | 0.05 pts |\n| | 7 or more measurements | 0.30/0.30 |\n| | 6 measurements | 0.25/0.30 |\n| | 5 measurements | 0.20/0.30 |\n| | 4 or fewer measurements | 0.10/0.30 |\n| Plotting | overall plot | 0.30 pts |\n| | points don’t cover 60% of the area | -0.10 pts |\n| | missing axis labels | -0.05 pts |\n| | missing axis units | -0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit line | drawn on graph | 0.05 pts |\n| | line passes through origin | 0.05 pts |\n| | slope computed with units | 0.10 pts |\n| | uncertainty of slope computed | 0.10 pts |\n| Values | $15.0\\ \\mathrm{m/s^2} \\le g \\le 16.4\\ \\mathrm{m/s^2}$ | 0.20/0.20 |\n| | $14.3\\ \\mathrm{m/s^2} \\le g \\le 17.1\\ \\mathrm{m/s^2}$ | 0.10/0.20 |\n| | units for value | 0.05 pts |\n| | $\\Delta g \\le 0.7\\ \\mathrm{m/s^2}$ | 0.20/0.20 |\n| | $\\Delta g \\le 1.4\\ \\mathrm{m/s^2}$ | 0.10/0.20 |\n| | units for error | 0.05 pts |\n| | **sum** | **2.0 pts** |\n\nPoints are added additively (including negative points), except for blocks of grey background, where the option with maximal points should be chosen (in absolute value)\n\n**A.2:** How far one can see from on top of the tower can be related to the radius of the planet via the right triangle shown in the figure below. Applying the Pythagoras theorem on the triangle, one gets $(R+H)^2 = L^2 + R^2$ and so\n\n$$R = \\frac{L^2 - H^2}{2H} = 13\\,200\\ \\mathrm{km}.$$\n\nMarking scheme:\n\n| Theory | correct geometry (either a figure or implicitly assumed) | 0.20 pts |\n|---|---|---|\n| | correct formula | 0.20 pts |\n| Values | correct value | 0.10 pts |\n| | **sum** | **0.5 pts** |\n\n**A.3:** From Newton’s law of gravity, $g = GM/R^2$. Hence,\n\n$$M = \\frac{gR^2}{G} = 4.2 \\times 10^{25}\\ \\mathrm{kg}.$$\n\nBy adding the errors in quadrature, we find the error\n\n$$\\Delta M = \\frac{\\Delta g}{g} M = 0.2 \\times 10^{25}\\ \\mathrm{kg}.$$\n\nOur estimation of free-fall acceleration has a contribution from the centrifugal force caused by the rotation of the planet. This serves to reduce the acceleration on the surface and hence decrease our estimation of the planet’s mass.\n\nMarking scheme:\n\n| Theory | correct formula | 0.10 pts |\n|---|---|---|\n| | correct phenomena | 0.20 pts |\n| Values | $3.9 \\times 10^{25}\\ \\mathrm{kg} \\le M \\le 4.5 \\times 10^{25}\\ \\mathrm{kg}$ | 0.10/0.10 |\n| | $3.6 \\times 10^{25}\\ \\mathrm{kg} \\le M \\le 4.8 \\times 10^{25}\\ \\mathrm{kg}$ | 0.05/0.10 |\n| | missing units for value | -0.05 pts |\n| | $\\Delta M \\le 0.3 \\times 10^{25}\\ \\mathrm{kg}$ | 0.10/0.10 |\n| | $\\Delta M \\le 0.6 \\times 10^{25}\\ \\mathrm{kg}$ | 0.05/0.10 |\n| | missing units for error | -0.05 pts |\n| | **sum** | **0.5 pts** |\n\nThe student can’t get overall negative points for value nor error (for example when the value is completely out of range and the units are wrong).\n\n**B.1:** In general, if the variations in gravitational acceleration are small (as is the case here as $H \\ll R$), as a response to air drag, objects tend to terminal velocity where they experience no net acceleration. In the reference frame of air, this corresponds to the object falling straight down with some terminal speed $v_t$. In the lab frame, the object then has horizontal and vertical speeds of $u$ and $v_t$ respectively.\n\nIn order to find $u$, we can choose to drop an object that reaches terminal velocity as fast as possible and then observe how the displacement $s$ relates to the fall time $t$. When terminal velocity is reached, we expect $s = s_0 + ut$, where $s_0$ captures the displacement related to reaching terminal velocity. To maximize the effects of air drag, we minimize radius and density, i.e. setting $\\rho = 0.1\\ \\mathrm{g/cm^3}$, and $r = 5\\ \\mathrm{cm}$. Plotting $s$ vs $t$, we measure the slope to be $u = 1.31\\ \\mathrm{m/s}$ with an error of $\\Delta u = 0.04\\ \\mathrm{m/s}$.\n\n$r = 5\\ \\mathrm{cm}$, $\\rho = 0.1\\ \\mathrm{g/cm^3}$\n\n| $h(\\mathrm{m})$ | $s(\\mathrm{m})$ | $t(\\mathrm{s})$ |\n|---|---|---|\n| 0 | 0.0 | 0.0 |\n| 20 | 0.3 | 1.7 |\n| 40 | 0.8 | 2.6 |\n| 60 | 1.5 | 3.4 |\n| 80 | 2.4 | 4.2 |\n| 100 | 3.2 | 5.0 |\n| 120 | 4.1 | 5.7 |\n| 140 | 5.0 | 6.5 |\n| 160 | 5.8 | 7.3 |\n| 180 | 6.9 | 7.9 |\n| 200 | 7.4 | 8.5 |\n| 240 | 9.4 | 10.0 |\n| 280 | 11.7 | 11.6 |\n| 320 | 13.4 | 12.9 |\n| 360 | 15.4 | 14.4 |\n| 400 | 16.4 | 15.4 |\n\nMarking scheme:\n\n| Theory | idea of reaching terminal velocity as fast as possible | 0.15 pts |\n|---|---|---|\n| | $s = s_0 + ut$ | 0.10 pts |\n| Data | varying only $h$ | 0.05 pts |\n| | minimising $r$ | 0.05 pts |\n| | minimising $\\rho$ | 0.05 pts |\n| | table has units | 0.05 pts |\n| | $h$ distributed roughly uniformly | 0.05 pts |\n| | $h_{\\mathrm{max}} \\ge 300\\ \\mathrm{m}$ | 0.05 pts |\n| | $h_{\\mathrm{max}} - h_{\\mathrm{min}} \\ge 300\\ \\mathrm{m}$ | 0.05 pts |\n| | 7 or more measurements | 0.30/0.30 |\n| | 6 measurements | 0.25/0.30 |\n| | 5 measurements | 0.20/0.30 |\n| | 4 or fewer measurements | 0.10/0.30 |\n| Plotting | overall plot | 0.30 pts |\n| | points don’t cover 60% of the area | -0.10 pts |\n| | missing axis labels | -0.05 pts |\n| | missing axis units | -0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit line | drawn on graph | 0.10 pts |\n| | slope computed with units | 0.10 pts |\n| | uncertainty of slope computed | 0.10 pts |\n| Values | $1.25\\ \\mathrm{m/s} \\le u \\le 1.37\\ \\mathrm{m/s}$ | 0.20/0.20 |\n| | $1.19\\ \\mathrm{m/s} \\le u \\le 1.43\\ \\mathrm{m/s}$ | 0.10/0.20 |\n| | units for value | 0.05 pts |\n| | $\\Delta u \\le 0.06\\ \\mathrm{m/s}$ | 0.20/0.20 |\n| | $\\Delta u \\le 0.12\\ \\mathrm{m/s}$ | 0.10/0.20 |\n| | units for error | 0.05 pts |\n| | **sum** | **2.0 pts** |\n\n**B.2:** By keeping the measurements close to the surface, we can assume to a good approximation uniform air density. Then, using similar reasoning as before, we expect $h = h_0 + v_{t0}t$, where $h_0$ captures the part of reaching terminal velocity.\n\nAt terminal velocity, the drag force balances out gravitational acceleration:\n\n$$mg = 0.24 A \\rho_a v_t^2.$$\n\nUsing $m = 4\\pi\\rho r^3/3$ and $A = \\pi r^2$, we get\n\n$$v_t(\\rho_a) = \\sqrt{\\frac{4\\rho r g}{3 \\cdot 0.24\\rho_a}}.$$\n\nOn the surface, $v_{t0} = v_t(\\rho_a = \\rho_{a0})$. Using the measurements from the last subtask, we can plot $t$ vs $h$ and measure the slope to be $1/v_{t0} = 0.037\\ \\mathrm{s/m}$ with an error of $\\Delta(1/v_{t0}) = 0.002\\ \\mathrm{s/m}$. Hence, $v_{t0} = 27.0\\ \\mathrm{m/s}$, $\\Delta v_{t0} = \\Delta(1/v_{t0})/v_{t0}^2 = 2\\ \\mathrm{m/s}$. Now,\n\n$$\\rho_{a0} = \\frac{4\\rho r g}{3 \\cdot 0.24 v_{t0}^2} = 0.60\\ \\mathrm{kg/m^3}.$$\n\nand the error is\n\n$$\\Delta\\rho_{a0} = \\frac{2\\Delta v_{t0}}{v_{t0}}\\rho_{a0} = 0.07\\ \\mathrm{kg/m^3}.$$\n\nMarking scheme:\n\n| Theory | $h = h_0 + v_{t0}t$ | 0.05 pts |\n|---|---|---|\n| | formula for terminal velocity | 0.10 pts |\n| | final expression for $\\rho_{a0}$ | 0.05 pts |\n| Data | reusing the data from the last subpart | 0.05 pts |\n| | $h_{\\mathrm{max}} \\le 200\\ \\mathrm{m}$ | 0.05 pts |\n| | 6 or more measurements | 0.05 pts |\n| Plotting | overall plot | 0.25 pts |\n| | points don’t cover 60% of the area | -0.05 pts |\n| | missing axis labels | -0.05 pts |\n| | missing axis units | -0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit line | drawn on graph | 0.05 pts |\n| | slope computed with units | 0.05 pts |\n| | uncertainty of slope computed | 0.10 pts |\n| Values | $0.52\\ \\mathrm{kg/m^3} \\le \\rho_{a0} \\le 0.68\\ \\mathrm{kg/m^3}$ | 0.10/0.10 |\n| | $0.44\\ \\mathrm{kg/m^3} \\le \\rho_{a0} \\le 0.76\\ \\mathrm{kg/m^3}$ | 0.05/0.10 |\n| | $\\Delta\\rho_{a0} \\le 0.08\\ \\mathrm{kg/m^3}$ | 0.10/0.10 |\n| | $\\Delta\\rho_{a0} \\le 0.16\\ \\mathrm{kg/m^3}$ | 0.05/0.10 |\n| | units for both value and error | 0.05 pts |\n| | **sum** | **1.0 pts** |\n\n**B.3:** Due to the adiabatic profile of the atmosphere, the further up you go, the more the temperature and air density decreases, but the terminal velocity increases. We can estimate the terminal velocity of the ball at different heights by comparing the dropping time of a ball with the smallest possible terminal velocity (so minimal density and radius). This hence gives a direct probe for the air density and thus the height of the atmosphere.\n\nIf the ball reaches terminal velocity instantly, then the difference in falling time between dropping the ball at heights $h_1$ and $h_2 > h_1$ comes simply from $h_1 < h < h_2$. This is because in both cases the ball falls for the same amount of time at $h < h_1$ (because the terminal velocity only depends on height). Then, if $h_2 - h_1 \\ll h_1$, we can estimate\n\n$$v_t\\left(\\frac{h_1 + h_2}{2}\\right) \\approx \\frac{h_2 - h_1}{t(h_2) - t(h_1)}. \\tag{1}$$\n\nIn reality, the ball doesn’t reach the terminal velocity instantaneously. However, it turns out we can, to a good approximation, neglect this effect. As a rough order of magnitude estimation, on the ground level, the ball experiences a time difference of $v_{t0}/(2g) = 0.8\\ \\mathrm{s}$ compared to the instantaneous case. This difference will increase as the ball is dropped from further up, but as long as the atmosphere isn’t too much sparser in the upper parts of the tower (we can verify this later), the difference will be insignificant compared to the total falling time of the ball. Hence, we approximate the terminal velocity via equation (1).\n\nBecause the calculated velocities are very sensitive on the measured quantities, we do repeated measurements throughout the whole height of the tower.\n\n$r = 5\\ \\mathrm{cm}$, $\\rho = 0.1\\ \\mathrm{g/cm^3}$\n\n| $h(\\mathrm{m})$ | $s_1(\\mathrm{m})$ | $t_1(\\mathrm{s})$ | $s_2(\\mathrm{m})$ | $t_2(\\mathrm{s})$ | $s_3(\\mathrm{m})$ | $t_3(\\mathrm{s})$ |\n|---|---|---|---|---|---|---|\n| 200 | 7.6 | 8.4 | 7.8 | 8.6 | 7.8 | 8.6 |\n| 400 | 17.0 | 15.7 | 16.9 | 15.6 | 17.3 | 15.7 |\n| 600 | 26.1 | 22.6 | 25.4 | 22.2 | 26.2 | 22.7 |\n| 800 | 33.6 | 28.5 | 34.6 | 29.2 | 34.3 | 29.1 |\n| 1000 | 41.1 | 34.3 | 43.0 | 35.7 | 43.3 | 35.8 |\n| 1200 | 51.1 | 41.9 | 50.2 | 41.2 | 50.0 | 41.1 |\n| 1400 | 57.9 | 47.2 | 58.8 | 47.8 | 58.7 | 47.8 |\n| 1600 | 65.5 | 53.0 | 65.1 | 52.8 | 65.3 | 52.9 |\n| 1800 | 70.9 | 57.1 | 72.2 | 58.2 | 71.4 | 57.5 |\n| 2000 | 78.5 | 62.9 | 79.6 | 63.8 | 79.5 | 63.7 |\n\nUsing equation (1) we make a separate table with velocities, while also adding the ground level velocity found in one of the earlier part (we set it at $h = 100\\ \\mathrm{m}$ because that was the centre of the range of measurements). We find air density using\n\n$$\\rho_a = \\frac{4\\rho r g}{3 \\cdot 0.24 v_t^2}.$$\n\nFrom the density profile of an adiabatic atmosphere,\n\n$$\\rho_a^{\\gamma - 1} = \\rho_a^{0.4} = \\rho_{a0}^{0.4}\\left(1 - \\frac{h}{H_0}\\right).$$\n\nHence, we find $H_0$ by plotting $\\rho_{a0}^{0.4}$ against $h$ and fitting a straight line.\n\n$r = 5\\ \\mathrm{cm}$, $\\rho = 0.1\\ \\mathrm{g/cm^3}$\n\n| $h(\\mathrm{m})$ | $v(\\mathrm{m/s})$ | $\\rho_a(\\mathrm{kg/m^3})$ | $\\rho_a^{0.4}((\\mathrm{kg/m^3})^{0.4})$ |\n|---|---|---|---|\n| 100 | 27.0 | 0.599 | 0.814 |\n| 300 | 28.0 | 0.556 | 0.791 |\n| 500 | 29.3 | 0.510 | 0.764 |\n| 700 | 31.1 | 0.452 | 0.728 |\n| 900 | 31.6 | 0.438 | 0.719 |\n| 1100 | 32.6 | 0.411 | 0.701 |\n| 1300 | 32.3 | 0.420 | 0.707 |\n| 1500 | 37.7 | 0.307 | 0.624 |\n| 1700 | 42.6 | 0.241 | 0.566 |\n| 1900 | 34.1 | 0.376 | 0.676 |\n\nFrom the plot, we measure the slope $a = -\\rho_{a0}^{0.4}/H_0 = -1.1 \\times 10^{-4}\\ (\\mathrm{kg/m^3})^{0.4}/\\mathrm{m}$ and the intercept $b = \\rho_{a0}^{2.5} = 0.82\\ (\\mathrm{kg/m^3})^{0.4}$ so $H_0 = -b/a = 7500\\ \\mathrm{m}$. We calculate the error from two reasonably chosen lines that correspond to maximal and minimal estimates for $H_0$\n\n$$\\Delta H_0 \\approx \\frac{1}{2}\\left(-\\frac{0.80\\ (\\mathrm{kg/m^3})^{0.4}}{-8.4 \\times 10^{-5}\\ (\\mathrm{kg/m^3})^{0.4}/\\mathrm{m}} + \\frac{0.83\\ (\\mathrm{kg/m^3})^{0.4}}{-1.4 \\times 10^{-4}\\ (\\mathrm{kg/m^3})^{0.4}/\\mathrm{m}}\\right) \\approx 2000\\ \\mathrm{m}.$$\n\nWe can also confirm that our assumption about the density of the atmosphere not dropping significantly in the upper parts of the tower holds true.\n\nMarking scheme:\n\n| Theory | approximating $v_{t0}$ via finite difference | 0.30 pts |\n|---|---|---|\n| | reasoning why the ball reaches terminal velocity effectively instantaneously | 0.15 pts |\n| | linearising $v_{t0}$ vs $h$ | 0.25 pts |\n| | expressing $H_0$ in terms of the slope/intercept | 0.10 pts |\n| Data | varying only $h$ | 0.05 pts |\n| | minimising $r$ | 0.05 pts |\n| | minimising $\\rho$ | 0.05 pts |\n| | table has units | 0.05 pts |\n| | $h$ distributed roughly uniformly | 0.05 pts |\n| | $h_{\\mathrm{max}} - h_{\\mathrm{min}} \\ge 1800\\ \\mathrm{m}$ | 0.10 pts |\n| | calculating derived quantities | 0.20 pts |\n| | 15 or more measurements (can be repeat) | 0.45/0.45 |\n| | 10 - 14 measurements | 0.30/0.45 |\n| | 1 - 9 measurements | 0.15/0.45 |\n| Plotting | overall plot | 0.30 pts |\n| | points don’t cover 60% of the area | -0.10 pts |\n| | missing axis labels | -0.05 pts |\n| | missing axis units | -0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit line | drawn on graph | 0.10 pts |\n| | slope computed with units | 0.15 pts |\n| | uncertainty of slope computed | 0.15 pts |\n| Values | $5500\\ \\mathrm{m} \\le H \\le 9500\\ \\mathrm{m}$ | 0.20/0.20 |\n| | $3500\\ \\mathrm{m} \\le H \\le 11\\,500\\ \\mathrm{m}$ | 0.10/0.20 |\n| | units for value | 0.05 pts |\n| | $\\Delta H \\le 2000\\ \\mathrm{m/s}$ | 0.20/0.20 |\n| | $\\Delta H \\le 4000\\ \\mathrm{m/s}$ | 0.10/0.20 |\n| | units for error | 0.05 pts |\n| | **sum** | **3.0 pts** |\n\n**B.4:** From the expression for adiabatic atmosphere we have\n\n$$H_0 = \\frac{RT_0}{\\mu g}\\frac{\\gamma}{\\gamma - 1}$$\n\nso\n\n$$\\mu = \\frac{RT_0}{H_0 g}\\frac{\\gamma}{\\gamma - 1} = 72\\ \\mathrm{g\\,mol^{-1}} \\approx 70\\ \\mathrm{g\\,mol^{-1}}$$\n\nand\n\n$$\\Delta\\mu = \\sqrt{\\frac{\\Delta H_0^2}{H_0^2} + \\frac{\\Delta g^2}{g^2}}\\,\\mu = 20\\ \\mathrm{g\\,mol^{-1}}.$$\n\nFrom ideal gas law,\n\n$$p_0 = \\frac{\\rho_{a0} R T_0}{\\mu} = 20\\,000\\ \\mathrm{Pa}$$\n\nand\n\n$$\\Delta p_0 = \\sqrt{\\frac{\\Delta\\mu^2}{\\mu^2} + \\frac{\\Delta\\rho_{a0}^2}{\\rho_{a0}^2}}\\,p_0 = 6000\\ \\mathrm{Pa}.$$\n\nMarking scheme:\n\n| Theory | correct expression for $\\mu$ | 0.15 pts |\n|---|---|---|\n| | correct expression for $p_0$ | 0.15 pts |\n| Values | $45\\ \\mathrm{g\\,mol^{-1}} \\le \\mu \\le 95\\ \\mathrm{g\\,mol^{-1}}$ | 0.05 pts |\n| | $\\Delta\\mu \\le 25\\ \\mathrm{g\\,mol^{-1}}$ | 0.05 pts |\n| | $12\\,000\\ \\mathrm{Pa} \\le p_0 \\le 28\\,000\\ \\mathrm{Pa}$ | 0.05 pts |\n| | $\\Delta p \\le 8000\\ \\mathrm{Pa}$ | 0.05 pts |\n| | **sum** | **0.5 pts** |\n\n**C.1:** Our goal is to find the rotation speed $\\Omega$ of the planet. The rotation of the planet affects the ball’s trajectory via centrifugal and Coriolis force. The centrifugal force, however, due to $H \\ll R$ is impossible to disentangle from gravitational acceleration. Coriolis force affects the ball via acceleration $\\vec{a}_{\\mathrm{cor}} = -2\\vec{\\Omega} \\times \\vec{v}$. This is perpendicular to both the velocity of the ball and rotation axis of the planet. Hence, it’s directed along the equator, and increases linearly with the falling speed. Thus, the horizontal acceleration is given by $a_x = 2\\Omega v_y + a_{\\mathrm{drag}}$.\n\nThe procedure is then to minimize the effect of air drag (maximal radius and density) and hope that the Coriolis effect contributes enough to the horizontal displacement. If we neglect air drag, then $a_x = 2\\Omega v_y = 2\\Omega g t$ so $v_x = \\int a_x \\mathrm{d}t = \\Omega g t^2$ and $x = \\int v_x \\mathrm{d}t \\Omega g t^3/3$. The final displacement will then be $s = \\Omega t_f^3/3$, where the falling time satisfies $H = g t_f^2/2$. Putting them together, we get\n\n$$s = \\frac{2\\Omega}{3}\\sqrt{\\frac{2H^3}{g}}.$$\n\nBy varying the radius/density, we do indeed confirm that the effect of Coriolis force is significant, on the order of couple of meters. By doing a suitable number of measurements in the range $0$ to $2000\\ \\mathrm{m}$ and plotting $s$ vs $h^{1.5}$, we measure the slope\n\n$$a = \\frac{2\\Omega}{3}\\sqrt{\\frac{2}{g}} = 5.3 \\times 10^{-5}\\ \\mathrm{m^{-1/2}}$$\n\nand the error\n\n$$\\Delta a = 1.1 \\times 10^{-6}\\ \\mathrm{m^{-1/2}}$$\n\nsuch that\n\n$$T = \\frac{2\\pi}{\\Omega} = \\frac{4\\pi}{3a}\\sqrt{\\frac{2}{g}} = 28\\,000\\ \\mathrm{s} \\approx 8h$$\n\nand\n\n$$\\Delta T = \\sqrt{\\left(0.5\\frac{\\Delta g}{g}\\right)^2 + \\frac{\\Delta a^2}{a^2}}\\,T = 0.2\\ \\mathrm{h}.$$\n\n$r = 50\\ \\mathrm{cm}$, $\\rho = 10\\ \\mathrm{g/cm^3}$\n\n| $h(\\mathrm{m})$ | $s(\\mathrm{m})$ | $h^{1.5}(\\mathrm{m^{1.5}})$ |\n|---|---|---|\n| 0 | 0.0 | 0 |\n| 200 | 0.2 | 2800 |\n| 400 | 0.5 | 8000 |\n| 600 | 0.8 | 14700 |\n| 800 | 1.2 | 22600 |\n| 1000 | 1.8 | 31600 |\n| 1200 | 2.3 | 41600 |\n| 1400 | 2.8 | 52400 |\n| 1600 | 3.4 | 64000 |\n| 1800 | 4.0 | 76400 |\n| 2000 | 4.8 | 89400 |\n\n*Alternative solution.*\n\nAn alternative approach is to consider the system in the non-rotating frame (where we don’t have to deal with fictitious forces). In there, the ball starts off with speed $v_0 = \\Omega(R+H)$. Due to the conservation of angular momentum, as the ball drops towards the ground, the ball’s angular speed will start increasing and the ground will start lagging behind (the ground rotates with $\\Omega$). At height $h$, when the ball moves with angular speed $\\omega$, the conservation of angular momentum reads $\\omega(R+h)^2 = \\Omega(R+H)^2$ and so the angular lag between the ball and the ground is\n\n$$\\Delta\\omega = \\omega - \\Omega = \\Omega\\left(\\left(\\frac{R+H}{R+h}\\right)^2 - 1\\right) \\approx 2\\Omega\\frac{H-h}{R}.$$\n\nThe positional velocity shift along the ground is then $v_x = \\Delta\\omega R = 2\\Omega(H-h) = \\Omega g t^2$. We recover the same expression as for Coriolis force, and from there we proceed the same way as before.\n\nMarking scheme:\n\n| Theory | Deriving $s(h)$ | 0.80 pts |\n|---|---|---|\n| | linearising $s$ vs $h$ | 0.10 pts |\n| Data | varying only $h$ | 0.05 pts |\n| | minimising $r$ and $\\rho$ | 0.05 pts |\n| | table has units | 0.05 pts |\n| | $h$ distributed roughly uniformly | 0.05 pts |\n| | $h_{\\mathrm{max}} - h_{\\mathrm{min}} \\ge 1800\\ \\mathrm{m}$ | 0.05 pts |\n| | calculating derived quantities | 0.05 pts |\n| | 7 or more measurements | 0.30/0.30 |\n| | 6 measurements | 0.25/0.30 |\n| | 5 measurements | 0.20/0.30 |\n| | 4 or fewer measurements | 0.10/0.30 |\n| Plotting | overall plot | 0.30 pts |\n| | points don’t cover 60% of the area | -0.10 pts |\n| | missing axis labels | -0.05 pts |\n| | missing axis units | -0.05 pts |\n| | one plotting mistake | -0.05/-0.10 |\n| | two or more plotting mistakes | -0.10/-0.10 |\n| Fit line | drawn on graph | 0.10 pts |\n| | slope computed with units | 0.10 pts |\n| | uncertainty of slope computed | 0.10 pts |\n| Values | $27\\,000\\ \\mathrm{s} \\le T \\le 29\\,000\\ \\mathrm{s}$ | 0.20/0.20 |\n| | $26\\,000\\ \\mathrm{s} \\le T \\le 30\\,000\\ \\mathrm{s}$ | 0.10/0.20 |\n| | missing units for value | -0.05 pts |\n| | $\\Delta T \\le 1000\\ \\mathrm{s}$ | 0.20/0.20 |\n| | $\\Delta T \\le 2000\\ \\mathrm{s}$ | 0.10/0.20 |\n| | missing units for error | -0.05 pts |\n| | **sum** | **2.5 pts** |",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "alt": "Graph of t² (s²) versus h (m) for h from 0 to 200 m: eleven data points lying close to a straight fit line through the origin with a shaded uncertainty band; vertical axis t², s² from 0 to 25, horizontal axis h, m from 0 to 200.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig1.png",
+      "width": 1045,
+      "height": 738,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        35.1,
+        397.35,
+        285.75,
+        574.16
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "alt": "Geometry sketch: an arc of the planet's surface with a tower on top; a dashed line of length L from the tower top touches the surface tangentially, a dashed radius R goes from the centre to the tangent point with a right-angle mark, and a dashed vertical line R + H runs from the centre to the tower top.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig2.png",
+      "width": 750,
+      "height": 639,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        345.24,
+        441.14,
+        525.02,
+        594.36
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig3",
+      "alt": "Graph of s (m) versus t (s): points from the origin rising slowly up to t ≈ 5 s, then lying on a straight fit line with a shaded band up to t ≈ 15 s and s ≈ 16 m; axes labelled s, m and t, s.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig3.png",
+      "width": 1045,
+      "height": 737,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        309.55,
+        63.13,
+        560.16,
+        239.94
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig4",
+      "alt": "Graph of t (s) versus h (m) for h from 0 to 200 m: the first points curve up from the origin, the points from h = 80 m to 200 m lie on a straight fit line with a shaded band; axes labelled t, s and h, m.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig4.png",
+      "width": 1043,
+      "height": 738,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        35.73,
+        264.38,
+        285.75,
+        441.14
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig5",
+      "alt": "Graph of ρ_a^0.4 in (kg/m³)^0.4 versus h (m) from 0 to 2000 m: ten scattered points decreasing from about 0.81 to about 0.57 with a descending straight fit line and a widening shaded uncertainty band; axes labelled ρ_a^0.4, (kg/m³)^0.4 and h, m.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig5.png",
+      "width": 1048,
+      "height": 741,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        34.51,
+        387.27,
+        285.75,
+        564.93
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig6",
+      "alt": "Graph of s (m) versus h^1.5 (m^1.5) from 0 to about 90000: eleven points on a straight fit line through the origin with a shaded band, s reaching about 4.8 m; axes labelled s, m and h^1.5, m^1.5.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig6.png",
+      "width": 1043,
+      "height": 741,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        35.73,
+        630.59,
+        285.75,
+        808.2
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    }
+   ]
+  }
+ ]
+}

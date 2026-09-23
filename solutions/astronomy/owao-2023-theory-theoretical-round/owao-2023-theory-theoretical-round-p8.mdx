@@ -1,0 +1,139 @@
+---
+id: owao-2023-theory-theoretical-round-p8
+source: 'OWAO 2023, theory'
+title: 'Задача 8. Omega Sirius'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2023/owao-2023-theory-theoretical-round.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T12:41:20.240Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2023 ◇ Theoretical Round ◇ Problems*
+
+## Условие
+
+Estimate the distance between $\alpha$ and $\omega$ Canis Majoris in parsecs.
+
+| | $\alpha$ CMa | $\omega$ CMa |
+|---|---|---|
+| Right ascension | $06^{\mathrm{h}}\,45^{\mathrm{m}}\,08.917^{\mathrm{s}}$ | $07^{\mathrm{h}}\,14^{\mathrm{m}}\,48.653^{\mathrm{s}}$ |
+| Declination | $-16^{\circ}\,42'\,58.02''$ | $-26^{\circ}\,46'\,21.61''$ |
+| Apparent magnitude in V band | $-1.46$ | 3.82 |
+| Spectral type | A1Vm | B2.5Ve |
+| Bolometric correction | 0 | $-2.2$ |
+| Mass, $\mathfrak{M}_{\odot}$ | $2.063 \pm 0.023$ | $10.1 \pm 0.7$ |
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 166 pc
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Using spherical law of cosines we obtain the angular distance between the stars:
+
+$$\begin{aligned} &\cos\theta = \sin\delta_1\sin\delta_2 + \cos\delta_1\cos\delta_2\cos(\alpha_1 - \alpha_2), \\ &\cos\theta = \sin(-16.72^{\circ})\sin(-26.77^{\circ}) + \cos(-16.72^{\circ})\cos(-26.77^{\circ})\cos\left(29.66^{\mathrm{m}} \times \frac{1^{\circ}}{4^{\mathrm{m}}}\right) = 0.9775, \\ &\theta = \arccos 0.9775 = 12.2^{\circ}. \end{aligned}$$
+
+Both stars are main sequence stars — luminosity class V, so we can assume for such masses there is a power law relationship between mass $\mathfrak{M}$ and luminosity $L$:
+
+$$\frac{L}{L_{\odot}} = 1.5\left(\frac{\mathfrak{M}}{\mathfrak{M}_{\odot}}\right)^{3.5}.$$
+
+Comparing the stars with the Sun ($M_{\odot} = 4.74^{\mathrm{m}}$) we obtain absolute bolometric magnitudes of them:
+
+$$M = M_{\odot} - 2.5\log\frac{L}{L_{\odot}} = M_{\odot} - 2.5\log\left(1.5\left(\frac{\mathfrak{M}}{\mathfrak{M}_{\odot}}\right)^{3.5}\right);$$
+
+$$\begin{aligned} M_1 &= 4.74 - 2.5\log\left(1.5 \cdot 2.063^{3.5}\right) = 1.5^{\mathrm{m}}, \\ M_2 &= 4.74 - 2.5\left(1.5 \cdot 10.1^{3.5}\right) = -4.5^{\mathrm{m}}. \end{aligned}$$
+
+Absolute magnitudes in V band are
+
+$$\begin{aligned} M_{V,1} &= M_1 = 1.5^{\mathrm{m}}, \\ M_{V,2} &= M_2 - BC = -4.5 + 2.2 = -2.3^{\mathrm{m}}. \end{aligned}$$
+
+Now we can estimate distances to the stars from known absolute $M_V$ and apparent $m_V$ visual magnitudes:
+
+$$M_V = m_V + 5 - 5\log d \quad\Rightarrow\quad d = 10^{0.2(m_V - M_V + 5)};$$
+
+$$\begin{aligned} d_1 &= 10^{0.2 \times (-1.46 - 1.5 + 5)} = 2.6\ \mathrm{pc}, \\ d_2 &= 10^{0.2 \times (3.82 + 2.3 + 5)} = 168\ \mathrm{pc}. \end{aligned}$$
+
+The obtained values are not very accurate due to the approximations made.
+
+Finally, the distance between stars is
+
+$$d = \sqrt{d_1^2 + d_2^2 - 2d_1d_2\cos\theta} \approx 166\ \mathrm{pc}.$$
+
+Actually, since $d_2 \gg d_1$, we could conclude immediately that $d \approx d_2$.
+
+*Note.* In the solution above $\omega$ CMa turned out to be noticeably fainter than in reality. This is mainly due to the fact that the mass–luminosity relation for massive stars does not provide an accurate estimate of luminosity. Due to the significant scatter in the mass-luminosity diagram for massive stars, it is acceptable to use a proportionality $L \propto \mathfrak{M}^4$, which results in a final estimate of the distance between the stars of $\sim 240$ pc.
+
+**Marking Scheme:**
+
+- Angular distance between the stars — **3 pt.**
+- Absolute bolometric magnitudes estimation: $L \propto \mathfrak{M}^{\alpha}$
+  - $\alpha \in [3.5;\ 4.0]$ — **2 pt.**
+  - $\alpha \in [3.0;\ 3.5)$ — 1 pt.
+- Absolute visual magnitudes — **1 pt.**
+- Distance to each star — **2 pt.**
+- Distance between the stars — **2 pt.**
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| Universal | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Hubble constant | $H_0 = 70\ (\mathrm{km/s})/\mathrm{Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| Earth | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+
+| Moon | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| Sun | |
+|---|---|
+| Radius | $R_{\odot} = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+
+| Emission constants | |
+|---|---|
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ (\mathrm{W/m^2})/\mathrm{K^4}$ |
+| Wien’s displacement | $b = 2898\ \mu\mathrm{m} \cdot \mathrm{K}$ |
+
+| UBV system | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+| Hydrogen spectrum | |
+|---|---|
+| Lyman L$\alpha$ | $\lambda_{L\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{H\alpha} = 6562.8$ Å |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2023_Theoretical_Round_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Problems.pdf)
+· официални решения: [OWAO_2023_Theoretical_Round_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Theory/OWAO_2023_Theoretical_Round_Solutions.pdf)

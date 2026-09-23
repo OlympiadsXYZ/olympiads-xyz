@@ -1,0 +1,155 @@
+---
+id: usapho-2008-i-olympad-quarter-fnal-p4
+source: 'USAPhO 2008, I'
+title: 'Задача 4'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2008/usapho-2008-i-olympad-quarter-fnal.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T12:43:28.921Z'
+verifier: 'mechanical'
+---
+
+*2008 Quarter-Final Exam · 25 т.*
+
+<details>
+<summary>Instructions</summary>
+
+4 QUESTIONS - 60 MINUTES
+
+**DO NOT OPEN THIS TEST UNTIL YOU ARE TOLD TO BEGIN**
+
+- Show all your work. Partial credit will be given.
+- Start each question on a new sheet of paper. Put your name in the upper right-hand corner of each page, along with the question number and the page number/total pages for this problem. For example,
+
+  Doe, Jamie
+
+  Prob. 1 - P. 1/3
+
+- A hand-held calculator may be used. Its memory must be cleared of data and programs. You may use only the basic functions found on a simple scientific calculator. Calculators may not be shared.
+- Cell phones may not be used during the exam or while the exam papers are present. You may not use any tables, books, or collections of formulas.
+- Each of the four questions is worth 25 points. The questions are not necessarily of the same difficulty. Good luck!
+- **In order to maintain exam security, do not communicate any information about the questions (or their answers or solutions) on this contest until after March 10, 2008.**
+
+</details>
+
+## Условие
+
+Two beads, each of mass $m$, are free to slide on a rigid, vertical hoop of mass $m_h$. The beads are threaded on the hoop so that they cannot fall off of the hoop. They are released with negligible velocity at the top of the hoop and slide down to the bottom in opposite directions. The hoop remains vertical at all times. What is the maximum value of the ratio $m/m_h$ such that the hoop always remains in contact with the ground? Neglect friction.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2008-i-olympad-quarter-fnal/p4-fig1.png" alt="A vertical circular hoop standing on hatched ground labelled “Ground”, with two dark beads at its top. Labels: “beads released with negligible velocity, slide on hoop wire” pointing to the beads and “vertical circular hoop” pointing to the hoop." />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $\frac{m}{m_h} \le \frac{3}{2}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution 1:** Draw a free-body diagram for each bead; let $F_N$ be the (inward) normal force exerted by the hoop on the bead. Let $\theta$ be the angular position of the bead, measured from the top of the hoop, and let the hoop have radius $r$. We see that
+
+$$F_N + mg\cos\theta = m\frac{v^2}{r}$$
+
+$$F_N = m\frac{v^2}{r} - mg\cos\theta$$
+
+The (downward) vertical component $F_{Ny}$ is given by
+
+$$F_{Ny} = F_N\cos\theta$$
+
+From Newton's third law, the two beads together exert an upwards vertical force on the hoop given by
+
+$$F_u = 2F_{Ny}$$
+
+$$F_u = 2m\cos\theta\left(\frac{v^2}{r} - g\cos\theta\right)$$
+
+noting that the beads clearly reach the same position at the same time.
+
+Meanwhile, when each bead is at a position $\theta$ it has moved through a vertical distance $r\,(1 - \cos\theta)$. Thus from energy conservation,
+
+$$\frac{1}{2}mv^2 = mgr\,(1 - \cos\theta)$$
+
+$$\frac{v^2}{r} = 2g\,(1 - \cos\theta)$$
+
+Inserting this into the previous result,
+
+$$F_u = 2m\cos\theta\,(2g\,(1 - \cos\theta) - g\cos\theta)$$
+
+$$F_u = 2mg\left(2\cos\theta - 3\cos^2\theta\right)$$
+
+If the beads ever exert an upward force on the hoop greater than $m_h g$, the hoop will leave the ground; *i.e.*, the condition for the hoop to remain in contact with the ground is that for all $\theta$,
+
+$$F_u \le m_h g$$
+
+We can replace the left side by its maximum value. Letting $s = \cos\theta$,
+
+$$F_u = 2mg\left(2s - 3s^2\right)$$
+
+$$\frac{d}{ds}F_u = 2mg\,(2 - 6s)$$
+
+The derivative is zero at $s = \frac{1}{3}$, where
+
+$$F_{u(max)} = \frac{2}{3}mg$$
+
+So our condition is
+
+$$\frac{2}{3}mg \le m_h g$$
+
+$$\frac{m}{m_h} \le \frac{3}{2}$$
+
+**Solution 2:** As before, we apply energy conservation to find the speed of the beads:
+
+$$v = \sqrt{2gr\,(1 - \cos\theta)}$$
+
+The vertical (downward) component of the beads' velocity is thus
+
+$$v_y = v\sin\theta$$
+
+$$v_y = \sin\theta\sqrt{2gr\,(1 - \cos\theta)}$$
+
+While the hoop is in contact with the ground, the beads are the only part of the system in motion, so the momentum of the system is simply the beads' momentum:
+
+$$p_y = 2mv_y$$
+
+$$p_y = 2m\sin\theta\sqrt{2gr\,(1 - \cos\theta)}$$
+
+The net (downward) force on the system is
+
+$$F_{net} = \frac{dp_y}{dt} = \frac{dp_y}{d\theta}\frac{d\theta}{dt} = \frac{dp_y}{d\theta}\frac{v}{r}$$
+
+$$F_{net} = 2m\sqrt{2gr}\frac{d}{dt}\left(\sin\theta\sqrt{1 - \cos\theta}\right) \cdot \frac{1}{r}\sqrt{2gr\,(1 - \cos\theta)}$$
+
+$$F_{net} = 4mg\left(\cos\theta\sqrt{1 - \cos\theta} + \sin\theta\frac{1}{2\sqrt{1 - \cos\theta}}\sin\theta\right)\sqrt{1 - \cos\theta}$$
+
+$$F_{net} = 4mg\left(\cos\theta - \cos^2\theta + \frac{1}{2}\sin^2\theta\right)$$
+
+$$F_{net} = 2mg\left(2\cos\theta - 3\cos^2\theta + 1\right)$$
+
+This downward force is provided by gravity and the normal force upward on the hoop:
+
+$$F_{net} = 2mg + m_h g - F_N$$
+
+If the hoop is to remain in contact with the ground, the normal force can never be negative:
+
+$$F_N \ge 0$$
+
+$$2mg + m_h g - F_{net} \ge 0$$
+
+$$2mg + m_h g - 2mg\left(2\cos\theta - 3\cos^2\theta + 1\right) \ge 0$$
+
+$$2mg\left(2\cos\theta - 3\cos^2\theta\right) \le m_h g$$
+
+and we proceed as above.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [olympiad_2008_quarter-final.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2008/olympiad_2008_quarter-final.pdf)
+· официални решения: [olympiad_2008_quarter-final_soln.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2008/olympiad_2008_quarter-final_soln.pdf)
