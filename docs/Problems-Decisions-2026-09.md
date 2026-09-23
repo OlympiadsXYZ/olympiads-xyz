@@ -248,3 +248,19 @@ Rule, measured on the 5-word shingles of each prepared problems text against the
 Applied to the remaining 906: 879 kept, 27 held, listed with their reasons in
 `docs/handoff-2026-09-22/enru-dedupe-plan.json`. A held twin is added to `content/backlog-exclusions.json` once the paper it
 duplicates is live.
+
+## D-P28 (2026-09-23, interim) — on the mechanical route an agreement error stays as printed and is noted
+
+`receipt.mjs` refuses a recorded agreement fix unless a model checker has seen it (`--checker-mode full`), and the
+subscription agent route has only the mechanical checker. By 2026-09-23 16 papers were parked on this alone, and agents
+handled it both ways: some restored the print and were promoted, others kept the fix and parked.
+
+- On the mechanical route an agreement error stays **as printed**. It is recorded in `tx.notes` (printed form, reading,
+  document, page), not in `tx.edits`. Non-word misspellings are still fixed and recorded in `tx.edits` (D-P23), because
+  the text-layer check verifies those.
+- 12 parked papers were restored this way and promoted. 3 are left for a person because the fixed wording occurs more
+  than once in the field (`rmph-2023-theory-t2-eng`, `vserusiyska-2021-regional-9-tur1`, `vsoa-ru-2026-iv-9-3`).
+
+Why: verbatim print is never wrong, and it publishes papers that were otherwise complete. Every noted error stays in
+`tx.notes`, so a later model-check pass can apply the agreement fixes if Margulan wants D-P23 applied in full. This is
+reversible and awaits his confirmation.
