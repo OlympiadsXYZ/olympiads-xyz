@@ -1,0 +1,303 @@
+---
+id: ipho-2013-theory-3-p1
+source: 'IPhO 2013'
+title: 'Задача 1. The Greenlandic Ice Sheet'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/2013/ipho-2013-theory-3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:06:29.672Z'
+verifier: 'mechanical'
+---
+
+*The Greenlandic Ice Sheet — T3 · 7 юли 2013 г. · 9 т.*
+
+## Условие
+
+**Introduction**
+
+This problem deals with the physics of the Greenlandic ice sheet, the second largest glacier in the world, Fig. 3.1(a). As an idealization, Greenland is modeled as a rectangular island of width $2L$ and length $5L$ with the ground at sea level and completely covered by incompressible ice (constant density $\rho_\mathrm{ice}$), see Fig. 3.1(b). The height profile $H(x)$ of the ice sheet does not depend on the $y$-coordinate and it increases from zero at the coasts $x = \pm L$ to a maximum height $H_\mathrm{m}$ along the middle north-south axis (the $y$-axis), known as the ice divide, see Fig. 3.1(c).
+
+**Two useful formulas**
+
+In this problem you can make use of the integral:
+
+$$\int_0^1 \sqrt{1-x}\,\mathrm{d}x = \frac{2}{3}$$
+
+and the approximation $(1+x)^a \approx 1 + ax$, valid for $|ax| \ll 1$.
+
+**The height profile of the ice sheet**
+
+On short time scales the glacier is an incompressible hydrostatic system with fixed height profile $H(x)$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2013-theory-3/p1-fig1.png" alt="Three panels. (a) Map of Greenland: white ice sheet, green ice-free coastal regions, blue surrounding ocean. (b) Model: a green-outlined rectangle on blue background with x-axis marked −L, 0, L and y-axis from 0 to 5L. (c) Vertical cut: dome-shaped blue height profile over brown ground between blue ocean strips; z-axis at the centre with maximum height H_m, a red-dashed slab between x and x + Δx of height H(x), and the half-width L marked along the x-axis." />
+<figcaption>**Figure 3.1** **(a)** A map of Greenland showing the extent of the ice sheet (white), the ice-free, coastal regions (green), and the surrounding ocean (blue). **(b)** The crude model of the Greenlandic ice sheet as covering a rectangular area in the $xy$-plane with side lengths $2L$ and $5L$. The ice divide, the line of maximum ice sheet height $H_\mathrm{m}$ runs along the $y$-axis. **(c)** A vertical cut ($xz$-plane) through the ice sheet showing the height profile $H(x)$ (blue line). $H(x)$ is independent of the $y$-coordinate for $0 < y < 5L$, while it drops abruptly to zero at $y = 0$ and $y = 5L$. The $z$-axis marks the position of the ice divide. For clarity, the vertical dimensions are expanded compared to the horizontal dimensions. The density $\rho_\mathrm{ice}$ of ice is constant.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2013-theory-3/p1-fig2.png" alt="Two graphs. (a) Scatter plot of δ18O [‰] (vertical axis, −60 to 10) versus T [°C] (horizontal axis, −60 to 20), points lying roughly on a rising straight line; blue lines at δ18O = 0 and T = 0. (b) Noisy curve of δ18O [‰] (vertical axis, −48 to −30) versus H_m − z [m] (horizontal axis, 0 to 3000): about −35 down to roughly 1500 m, then an abrupt drop to values between about −46 and −38 down to about 3000 m, and a rise near the bottom; vertical blue lines at 1000, 2000 and about 3000 m." />
+<figcaption>**Figure 3.2** **(a)** Observed relationship between $\delta^{18}\mathrm{O}$ in snow versus the mean annual surface temperature $T$. **(b)** Measurements of $\delta^{18}\mathrm{O}$ versus depth $H_\mathrm{m} - z$ from the surface, taken from an ice core drilled from surface to bedrock at a specific place along the Greenlandic ice divide where $H_\mathrm{m} = 3060$ m.</figcaption>
+</figure>
+
+**3.1** Write down an expression for the pressure $p(x,z)$ inside the ice sheet as a function of vertical height z above the ground and distance $x$ from the ice divide. Neglect the atmospheric pressure. **[0,3 т.]**
+
+Consider a given vertical slab of the ice sheet in equilibrium, covering a small horizontal base area $\Delta x\Delta y$ between $x$ and $x + \Delta x$, see the red dashed lines in Fig. 3.1(c). The size of $\Delta y$ does not matter. The net horizontal force component $\Delta F$ on the two vertical sides of the slab, arising from the difference in height on the center-side versus the coastal-side of the slab, is balanced by a friction force $\Delta F = S_\mathrm{b}\,\Delta x\Delta y$ from the ground on the base area $\Delta x\Delta y$, where $S_\mathrm{b} = 100\ \mathrm{kPa}$.
+
+**3.2a** For a given value of $x$, show that in the limit $\Delta x \to 0$, $S_\mathrm{b} = kH\,\mathrm{d}H/\mathrm{d}x$, and determine k **[0,9 т.]**
+
+**3.2b** Determine an expression for the height profile $H(x)$ in terms of $\rho_\mathrm{ice}$, $g$, $L$, $S_\mathrm{b}$ and distance $x$ from the divide. The result will show, that the maximum glacier height $H_\mathrm{m}$ scales with the half-width $L$ as $H_\mathrm{m} \propto L^{1/2}$. **[0,8 т.]**
+
+**3.2c** Determine the exponent $\gamma$ with which the total volume $V_\mathrm{ice}$ of the ice sheet scales with the area $A$ of the rectangular island, $V_\mathrm{ice} \propto A^{\gamma}$. **[0,5 т.]**
+
+**A dynamical ice sheet**
+
+On longer time scale, the ice is a viscous incompressible fluid, which by gravity flows from the center part to the coast. In this model, the ice maintains its height profile $H(x)$ in a steady state, where accumulation of ice due to snow fall in the central region is balanced by melting at the coast. In addition to the ice sheet geometry of Fig. 3.1(b) and (c) make the following model assumptions:
+
+1) Ice flows in the $xz$-plane away from the ice divide (the $y$-axis).
+2) The accumulation rate $c$ (m/year) in the central region is a constant.
+3) Ice can only leave the glacier by melting near the coasts at $x = \pm L$.
+4) The horizontal ($x$-)component $v_x(x) = \mathrm{d}x/\mathrm{d}t$ of the ice-flow velocity is independent of $z$.
+5) The vertical ($z$-)component $v_z(z) = \mathrm{d}z/\mathrm{d}t$ of the ice-flow velocity is independent of $x$.
+
+Consider only the central region $|x| \ll L$ close to the middle of the ice sheet, where height variations of the ice sheet are very small and can be neglected altogether, i.e. $H(x) \approx H_\mathrm{m}$.
+
+**3.3** Use mass conservation to find an expression for the horizontal ice-flow velocity $v_x(x)$ in terms of $c$, $x$, and $H_\mathrm{m}$. **[0,6 т.]**
+
+From the assumption of incompressibility, i.e. the constant density $\rho_\mathrm{ice}$ of the ice, it follows that mass conservation implies the following restriction on the ice flow velocity components
+
+$$\frac{dv_x}{dx} + \frac{dv_z}{dz} = 0.$$
+
+**3.4** Write down an expression for the $z$ dependence of the vertical component $v_z(z)$ of the ice-flow velocity. **[0,6 т.]**
+
+A small ice particle with the initial surface position $(x_i, H_\mathrm{m})$ will, as time passes, flow as part of the ice sheet along a flow trajectory $z(x)$ in the vertical $xz$-plane.
+
+**3.5** Derive an expression for such a flow trajectory $z(x)$. **[0,9 т.]**
+
+**Age and climate indicators in the dynamical ice sheet**
+
+Based on the ice-flow velocity components $v_x(x)$ and $v_z(z)$, one can estimate the age $\tau(z)$ of the ice in a specific depth $H_\mathrm{m} - z$ from the surface of the ice sheet.
+
+**3.6** Find an expression for the age $\tau(z)$ of the ice as a function of height $z$ above ground, right at the ice divide $x = 0$. **[1 т.]**
+
+An ice core drilled in the interior of the Greenland ice sheet will penetrate through layers of snow from the past, and the ice core can be analyzed to reveal past climate changes. One of the best indicators is the so-called $\delta^{18}\mathrm{O}$, defined as
+
+$$\delta^{18}\mathrm{O} = \frac{R_\mathrm{ice} - R_\mathrm{ref}}{R_\mathrm{ref}}\,1000\ \text{‰},$$
+
+where $R = [{}^{18}\mathrm{O}]/[{}^{16}\mathrm{O}]$ denotes the relative abundance of the two stable isotopes ${}^{18}\mathrm{O}$ and ${}^{16}\mathrm{O}$ of oxygen. The reference $R_\mathrm{ref}$ is based on the isotopic composition of the oceans around Equator.
+
+Observations from the Greenland ice sheet show that $\delta^{18}\mathrm{O}$ in the snow varies approximately linearly with temperature, Fig. 3.2(a). Assuming that this has always been the case, $\delta^{18}\mathrm{O}$ retrieved from an ice core at depth $H_\mathrm{m} - z$ leads to an estimate of the temperature $T$ near Greenland at the age $\tau(z)$.
+
+Measurements of $\delta^{18}\mathrm{O}$ in a 3060 m long Greenlandic ice core show an abrupt change in $\delta^{18}\mathrm{O}$ at a depth of 1492 m, Fig. 3.2(b), marking the end of the last ice age. The ice age began 120,000 years ago, corresponding to a depth of 3040 m, and the current interglacial age began 11,700 years ago, corresponding to a depth of 1492 m. Assume that these two periods can be described by two different accumulation rates, $c_\mathrm{ia}$ (ice age) and $c_\mathrm{ig}$ (interglacial age), respectively. You can assume $H_\mathrm{m}$ to be constant throughout these 120,000 years.
+
+**3.7a** Determine the accumulation rates $c_\mathrm{ia}$ and $c_\mathrm{ig}$. **[0,8 т.]**
+
+**3.7b** Use the data in Fig. 3.2 to find the temperature change at the transition from the ice age to the interglacial age. **[0,2 т.]**
+
+**Sea level rise from melting of the Greenland ice sheet**
+
+A complete melting of the Greenlandic ice sheet will cause a sea level rise in the global ocean. As a crude estimate of this sea level rise, one may simply consider a uniform rise throughout a global ocean with constant area $A_\mathrm{O} = 3.61 \times 10^{14}\ \mathrm{m}^2$.
+
+**3.8** Calculate the average global sea level rise, which would result from a complete melting of the Greenlandic ice sheet, given its present area of $A_\mathrm{G} = 1.71 \times 10^{12}\,\mathrm{m}^2$ and $S_\mathrm{b} = 100\ \mathrm{kPa}$. **[0,6 т.]**
+
+The massive Greenland ice sheet exerts a gravitational pull on the surrounding ocean. If the ice sheet melts, this local high tide is lost and the sea level will drop close to Greenland, an effect which partially counteracts the sea level rise calculated above.
+
+To estimate the magnitude of this gravitational pull on the water, the Greenlandic ice sheet is now modeled as a point mass located at the ground level and having the total mass of the Greenlandic ice sheet. Copenhagen lies at a distance of 3500 km along the Earth surface from the center of the point mass. One may consider the Earth, without the point mass, to be spherically symmetric and having a global ocean spread out over the entire surface of the Earth of area $A_\mathrm{E} = 5.10 \times 10^{14}\,\mathrm{m}^2$. All effects of rotation of the Earth may be neglected.
+
+**3.9** Within this model, determine the difference $h_\mathrm{CPH} - h_\mathrm{OPP}$ between sea levels in Copenhagen ($h_\mathrm{CPH}$) and diametrically opposite to Greenland ($h_\mathrm{OPP}$). **[1,8 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **3.1** $p(x,z) = \rho_\mathrm{ice} g(H(x) - z)$
+- **3.2a** $S_\mathrm{b} = -\rho_\mathrm{ice}\, g\, H(x)\frac{\mathrm{d}H}{\mathrm{d}x},\quad k = -\rho_\mathrm{ice} g$
+- **3.2b** $H(x) = \sqrt{\frac{2S_\mathrm{b}L}{\rho_\mathrm{ice}\, g}}\sqrt{1 - x/L}$
+- **3.2c** $\gamma = 5/4$
+- **3.3** $v_x(x) = \frac{cx}{H_\mathrm{m}}$
+- **3.4** $v_z(z) = -\frac{cz}{H_\mathrm{m}}$
+- **3.5** $z = H_\mathrm{m}x_i/x$
+- **3.6** $\tau(z) = \frac{H_\mathrm{m}}{c}\ln\left(\frac{H_\mathrm{m}}{z}\right)$
+- **3.7a** c_ig = 0.1749 m/year, c_ia = 0.1232 m/year
+- **3.7b** 12 °C
+- **3.8** 8.79 m
+- **3.9** 4.56 m
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**3.1** [0.3]
+
+The pressure is given by the hydrostatic pressure $p(x,z) = \rho_\mathrm{ice} g(H(x) - z)$, which is zero at the surface.
+
+**3.2a** [0.9]
+
+The outward force on a vertical slice at a distance $x$ from the middle and of a given width $\Delta y$ is obtained by integrating up the pressure times the area:
+
+$$F(x) = \Delta y \int_0^{H(x)} \rho_\mathrm{ice}\, g\, (H(x) - z)\, \mathrm{d}z = \frac{1}{2}\,\Delta y\, \rho_\mathrm{ice}\, g\, H(x)^2$$
+
+which implies that $\Delta F = F(x) - F(x + \Delta x) = -\frac{\mathrm{d}F}{\mathrm{d}x}\Delta x = -\Delta y\, \rho_\mathrm{ice}\, g\, H(x)\frac{\mathrm{d}H}{\mathrm{d}x}\Delta x$. This finally shows that
+
+$$S_\mathrm{b} = \frac{\Delta F}{\Delta x\Delta y} = -\,\rho_\mathrm{ice}\, g\, H(x)\frac{\mathrm{d}H}{\mathrm{d}x}$$
+
+Notice the sign, which must be like this, since $S_b$ was defined as positive and $H(x)$ is a decreasing function of $x$.
+
+**3.2b** [0.8]
+
+To find the height profile, we solve the differential equation for $H(x)$:
+
+$$-\frac{S_\mathrm{b}}{\rho_\mathrm{ice}\, g} = H(x)\frac{\mathrm{d}H}{\mathrm{d}x} = \frac{1}{2}\frac{\mathrm{d}}{\mathrm{d}x}H(x)^2$$
+
+with the boundary condition that $H(L) = 0$. This gives the solution:
+
+$$H(x) = \sqrt{\frac{2S_bL}{\rho_\mathrm{ice}\, g}}\sqrt{1 - x/L}$$
+
+Which gives the maximum height $H_\mathrm{m} = \sqrt{\frac{2S_bL}{\rho_\mathrm{ice}\, g}}$.
+
+Alternatively, dimensional analysis could be used in the following manner. First notice that $\mathcal{L} = [H_\mathrm{m}] = \left[\rho_\mathrm{ice}^{\alpha}\, g^{\beta}\tau_\mathrm{b}^{\gamma}L^{\delta}\right]$. Using that $[\rho_{\rho_\mathrm{ice}}] = \mathcal{M}\mathcal{L}^{-3}$, $[g] = \mathcal{L}\,\mathcal{T}^{-2}$, $[\tau_b] = \mathcal{M}\mathcal{L}^{-1}\,\mathcal{T}^{-2}$, demands that $\mathcal{L} = [H_\mathrm{m}] = [\rho_i{}^{\alpha} g^{\beta}\tau_b{}^{\gamma}L^{\delta}] = \mathcal{M}^{\alpha+\gamma}\mathcal{L}^{-3\alpha+\beta-\gamma+\delta}\,\mathcal{T}^{-2\beta-2\gamma}$, which again implies $\alpha + \gamma = 0$, $-3\alpha + \beta - \gamma + \delta = 1$, $2\beta + 2\gamma = 0$. These three equations are solved to give $\alpha = \beta = -\gamma = \delta - 1$, which shows that
+
+$$H_\mathrm{m} \propto \left(\frac{S_\mathrm{b}}{\rho_{\rho_\mathrm{ice}} g}\right)^{\gamma} L^{1-\gamma}$$
+
+Since we were informed that $H_\mathrm{m} \propto \sqrt{L}$, it follows that $\gamma = 1/2$. With the boundary condition $H(L) = 0$, the solution then take the form
+
+$$H(x) \propto \left(\frac{S_\mathrm{b}}{\rho_\mathrm{ice}\ g}\right)^{1/2} \sqrt{L - x}$$
+
+The proportionality constant of $\sqrt{2}$ cannot be determined in this approach.
+
+**3.2c** [0.5]
+
+For the rectangular Greenland model, the area is equal to $A = 10L^2$ and the volume is found by integrating up the height profile found in problem 3.2b:
+
+$$\begin{aligned} V_\mathrm{G,ice} &= (5L)2\int_0^L H(x)\,\mathrm{d}x = 10L\int_0^L \left(\frac{\tau_\mathrm{b}\,L}{\rho_\mathrm{ice}\,g}\right)^{1/2}\sqrt{1 - x/L}\,\mathrm{d}x = 10H_\mathrm{m}L^2\int_0^1\sqrt{1 - \tilde{x}}\,\mathrm{d}\tilde{x} \\ &= 10H_\mathrm{m}L^2\left[-\frac{2}{3}(1 - \tilde{x})^{3/2}\right]_0^1 = \frac{20}{3}H_\mathrm{m}L^2 \propto L^{5/2}, \end{aligned}$$
+
+where the last line follows from the fact that $H_\mathrm{m} \propto \sqrt{L}$. Note that the integral need not be carried out to find the scaling with $L$. This implies that $V_\mathrm{G,ice} \propto {A_G}^{5/4}$ and the wanted exponent is $\gamma = 5/4$.
+
+**3.3** [0.6]
+
+According to the assumption of constant accumulation c the total mass accumulation rate from an area of width $\Delta y$ between the ice divide at $x = 0$ and some point at $x > 0$ must equal the total mass flux through the corresponding vertical cross section at $x$. That is: $\rho c x\Delta y = \rho\Delta y H_\mathrm{m} v_x(x)$, from which the velocity is isolated:
+
+$$v_x(x) = \frac{cx}{H_\mathrm{m}}$$
+
+**3.4** [0.6]
+
+From the given relation of incompressibility it follows that
+
+$$\frac{\mathrm{d}v_z}{\mathrm{d}z} = -\frac{\mathrm{d}v_x}{\mathrm{d}x} = -\frac{c}{H_\mathrm{m}}$$
+
+Solving this differential equation with the initial condition $v_z(0) = 0$, shows that:
+
+$$v_z(z) = -\frac{cz}{H_\mathrm{m}}$$
+
+**3.5** [0.9]
+
+Solving the two differential equations
+
+$$\frac{\mathrm{d}z}{\mathrm{d}t} = -\frac{cz}{H_\mathrm{m}} \quad\text{and}\quad \frac{\mathrm{d}x}{\mathrm{d}t} = \frac{cx}{H_\mathrm{m}}$$
+
+with the initial conditions that $z(0) = H_\mathrm{m}$, and $x(0) = x_i$ gives
+
+$$z(t) = H_\mathrm{m}\,\mathrm{e}^{-ct/H_\mathrm{m}} \quad\text{and}\quad x(t) = x_i\,\mathrm{e}^{ct/H_\mathrm{m}}$$
+
+This shows that $z = H_\mathrm{m}\,x_i/x$, meaning that flow lines are hyperbolas in the $xz$-plane. Rather than solving the differential equations, one can also use them to show that
+
+$$\frac{\mathrm{d}}{\mathrm{d}t}(xz) = \frac{\mathrm{d}x}{\mathrm{d}t}z + x\frac{\mathrm{d}z}{\mathrm{d}t} = \frac{cx}{H_\mathrm{m}}z - x\frac{cz}{H_\mathrm{m}} = 0$$
+
+which again implies that $xz = \mathrm{const}$. Fixing the constant by the initial conditions, again leads to the result that $z = H_\mathrm{m}x_i/x$.
+
+**3.6** [1.0]
+
+At the ice divide, $x = 0$, the flow will be completely vertical, and the $t$-dependence of $z$ found in 3.5 can be inverted to find $\tau(z)$. One finds that $\tau(z) = \frac{H_\mathrm{m}}{c}\ln\left(\frac{H_\mathrm{m}}{z}\right)$.
+
+**3.7a** [0.8]
+
+The present interglacial period extends to a depth of 1492 m, corresponding to 11,700 year. Using the formula for $\tau(z)$from problem 3.6, one finds the following accumulation rate for the interglacial:
+
+$$c_\mathrm{ig} = \frac{H_\mathrm{m}}{11{,}700\ \mathrm{years}}\ln\left(\frac{H_\mathrm{m}}{H_\mathrm{m} - 1492\ \mathrm{m}}\right) = 0.1749\ \mathrm{m/year}.$$
+
+The beginning of the ice age 120,000 years ago is identified as the drop in $\delta^{18}\mathrm{O}$ in figure 3.2b at a depth of 3040 m. Using the vertical flow velocity found in problem 3.4, on has $\frac{\mathrm{d}z}{z} = -\frac{c}{H_\mathrm{m}}\mathrm{d}t$, which can be integrated down to a depth of 3040 m, using a stepwise constant accumulation rate:
+
+$$\begin{aligned} H_\mathrm{m}\ln\left(\frac{H_\mathrm{m}}{H_\mathrm{m} - 3040\ \mathrm{m}}\right) &= -H_\mathrm{m}\int_{H_\mathrm{m}}^{H_\mathrm{m} - 3040\ \mathrm{m}}\frac{1}{z}\,\mathrm{d}z \\ &= \int_{11{,}700\ \mathrm{year}}^{120{,}000\ \mathrm{year}} c_\mathrm{ia}\,\mathrm{d}t + \int_0^{11{,}700\ \mathrm{year}} c_\mathrm{ig}\,\mathrm{d}t \\ &= c_\mathrm{ia}(120{,}000\ \mathrm{year}\text{-}11{,}700\ \mathrm{year}) + c_\mathrm{ig}\,11{,}700\ \mathrm{year} \end{aligned}$$
+
+Isolating form this equation leads to $c_\mathrm{ia} = 0.1232$, i.e. far less precipitation than now.
+
+**3.7b** [0.2]
+
+Reading off from figure 3.2b: $\delta^{18}\mathrm{O}$ changes from $-43{,}5$ ‰ to $-34{,}5$ ‰. Reading off from figure 3.2a, $T$ then changes from $-40$ ℃ to $-28$ ℃. This gives $\Delta T \approx 12$ ℃.
+
+**3.8** [0.6]
+
+From the area $A_\mathrm{G}$ one finds that $L = \sqrt{A_\mathrm{G}/10} = 4.14 \times 10^5\ \mathrm{m}$. Inserting numbers in the volume formula found in 3.2c, one finds that:
+
+$$V_\mathrm{G,ice} = \frac{20}{3}L^{5/2}\sqrt{\frac{2S_\mathrm{b}}{\rho_\mathrm{ice}g}} = 3.45 \times 10^{15}\ \mathrm{m}^3$$
+
+This ice volume must be converted to liquid water volume, by equating the total masses, i.e. $V_\mathrm{G,wa} = V_\mathrm{G,ice}\frac{\rho_\mathrm{ice}}{\rho_\mathrm{wa}} = 3.17 \times 10^{15}\ \mathrm{m}^3$, which is finally converted to a sea level rise, as $h_\mathrm{G,rise} = \frac{V_\mathrm{G,wa}}{A_\mathrm{o}} = 8.79\ \mathrm{m}$.
+
+**3.9** [1.6]
+
+The total mass of the ice is
+
+$$M_\mathrm{ice} = V_\mathrm{G,ice}\,\rho_\mathrm{ice} = 3.17 \times 10^{18}\ \mathrm{kg} = 5.31 \times 10^{-7}m_\mathrm{E}$$
+
+The total gravitational potential felt by a test mass $m$ at a certain height $h$ above the surface of the Earth, and at a polar angle $\theta$ (cf. figure 3.S1), with respect to a rotated polar axis going straight through the ice sphere is found by adding that from the Earth with that from the ice:
+
+$$U_\mathrm{tot} = -\frac{Gm_\mathrm{E}m}{R_\mathrm{E} + h} - \frac{GM_\mathrm{ice}m}{r} = -mgR_E\left(\frac{1}{1 + h/R_E} + \frac{M_{ice}/m_E}{r/R_E}\right)$$
+
+where $g = Gm_E/R_E^2$. Since $h/R_\mathrm{E} \ll 1$ one may use the approximation given in the problem, $(1 + \mathrm{x})^{-1} \approx 1 - x$, $|x| \ll 1$, to approximate this by
+
+$$U_\mathrm{tot} \approx -mgR_E\left(1 - \frac{h}{R_E} + \frac{M_{ice}/m_E}{r/R_E}\right).$$
+
+Isolating $h$ now shows that $h = h_0 + \frac{M_{ice}/m_E}{r/R_E}R_E$, where $h_0 = R_E + U_\mathrm{tot}/(mg)$. Using again that $h/R_\mathrm{E} \ll 1$, trigonometry shows that $r \approx 2R_\mathrm{E}|\sin(\theta/2)|$, and one has:
+
+$$h(\theta) - h_0 \approx \frac{M_\mathrm{ice}/m_\mathrm{E}}{2|\sin(\theta/2)|}R_E \approx \frac{1.69\ \mathrm{m}}{|\sin(\theta/2)|}.$$
+
+To find the magnitude of the effect in Copenhagen, the distance of 3500 km along the surface is used to find the angle $\theta_\mathrm{CPH} = (3.5 \times 10^6\ \mathrm{m})/R_E \approx 0.549$, corresponding to $h_\mathrm{CPH} - h_0 \approx 6.25$ m. Directly opposite to Greenland corresponds to $\theta = \pi$, which gives $h_\mathrm{OPP} - h_0 \approx 1.69$ m. The difference is then $h_\mathrm{CPH} - h_\mathrm{OPP} \approx 4.56$ m, where $h_0$ has dropped out.
+
+**Approach with forces:**
+
+This problem can also be solved using forces. The basic equations for mechanical equilibrium of the test particle is then a simple matter of balancing the two gravitational forces, $\vec{F}_E$ and $\vec{F}_G$, with the reaction force from the Earth, $\vec{F}_R$. Given the angles indicated in Figure 3.S2, the force balance along locally vertical and horizontal directions, respectively, read
+
+$$F_E + F_G\cos(\delta) = F_R\cos(\varphi)$$
+
+and
+
+$$F_G\sin(\delta) = F_R\sin(\varphi)$$
+
+which can be divided to obtain (using that $\delta = \pi/2 - \theta/2$):
+
+$$\begin{aligned} \tan(\varphi) &= \frac{F_G\sin(\delta)}{F_E + F_G\cos(\delta)} \\ &= \frac{F_G}{F_E}\cos(\theta/2)\frac{1}{1 + (F_G/F_E)\sin(\theta/2)} \\ &\approx \frac{F_G}{F_E}\cos(\theta/2) \\ &= \frac{M_{ice}/m_E}{(r/R_E)^2}\cos(\theta/2) \\ &= \frac{M_{ice}/m_E}{4\sin^2(\theta/2)}\cos(\theta/2) \end{aligned}$$
+
+where we have plugged in the gravitational forces and the relevant distances. We have also approximated the fraction, using that $M_{ice}/m_E = 5.31 \times 10^{-7} \ll 1$, which is only valid not too close to Greenland, i.e. for a certain size of $\theta$. Since the local sea surface will be perpendicular to the reaction force, it is seen from figure 3.S2 that
+
+$$\tan(\varphi) = \frac{\mathrm{d}h}{\mathrm{d}x} = \frac{\mathrm{d}h}{\mathrm{d}\theta}\frac{\mathrm{d}\theta}{\mathrm{d}x} = \frac{1}{R_E}\frac{\mathrm{d}h}{\mathrm{d}\theta}$$
+
+whereby
+
+$$\frac{\mathrm{d}h}{\mathrm{d}\theta} = R_E\frac{M_{ice}/m_E}{4\sin^2(\theta/2)}\cos(\theta/2)$$
+
+The difference in sea levels in Copenhagen and opposite to Greenland can now be obtained by integrating this expression. That is
+
+$$\begin{aligned} h_\mathrm{CPH} - h_\mathrm{OPP} &= R_E\frac{M_{ice}}{m_E}\int_{\pi}^{\theta_{CPH}}\frac{\cos(\theta/2)}{4\sin^2(\theta/2)}\,\mathrm{d}\theta \\ &= R_E\frac{M_{ice}}{2\,m_E}\int_1^{\sin(\theta_{CPH}/2)}\mathrm{q}^{-2}\,\mathrm{d}q \\ &= R_E\frac{M_{ice}}{2\,m_E}\left(\frac{1}{\sin(\theta_{CPH}/2)} - 1\right) \end{aligned}$$
+
+where we have made the substitution $q = \sin(\theta/2)$. Plugging in the numbers found above, we obtain again $h_\mathrm{CPH} - h_\mathrm{OPP} \approx 4.56$. Note that this solution strategy necessarily involves consideration of tangential force components alongside with the radial components.
+
+**Total** [9.0]
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2013-theory-3/p1-sol-fig1.png" alt="A brown disc (the Earth) with horizontal and vertical axes through its centre; a small white circle (the ice ball) at the top of the disc; red arrows from the centre and from the ice ball to a small gray test mass m on the right edge, with the angle θ between the vertical axis and the direction to m; dimension lines mark the distance r from the ice ball to m, the radius R_E and the height h of m above the surface." />
+<figcaption>**Figure 3.S1** Geometry of the ice ball (white circle) with a test mass $m$ (small gray circle).</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2013-theory-3/p1-sol-fig2.png" alt="The geometry of Figure 3.S1 (brown Earth disc, ice ball at the top, test mass m on the right edge, angle θ, distances r, R_E and h) with green force arrows at m; to the right an enlarged view of the test mass with the forces F_G, F_E and F_R, the angles δ and φ, local z and x axes in red, the displacements dx and dh, a blue dotted arc for the Earth surface and a blue dashed line for the local sea level." />
+<figcaption>**Figure 3.S2** Same figure as above, but with the relevant forces depicted and showed again outside figure for clarity. The blue dotted line indicates the Earth surface. The blue dashed line indicates the local sea level, growing towards Greenland and decreasing towards the south pole.</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2013/Theory/3.pdf)
+· официални решения: [3_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2013/Theory/3_sol.pdf)

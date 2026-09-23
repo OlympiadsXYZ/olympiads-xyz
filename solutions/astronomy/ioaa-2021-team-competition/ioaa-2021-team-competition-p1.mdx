@@ -1,0 +1,215 @@
+---
+id: ioaa-2021-team-competition-p1
+source: 'IOAA 2021, team'
+title: 'Задача 1. Group Radio Astronomy'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-team-competition.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:00:43.086Z'
+verifier: 'mechanical'
+---
+
+*Team Competition — Q1 — Group Radio Astronomy (115 points) · 115 т.*
+
+## Условие
+
+Please read the general instructions in the separate envelope before you start this problem.
+
+**Measuring the Perseus arm using 21 cm HI line data**
+
+**Context**
+
+Our goal here is to kinematically estimate the distance of (part of) the Perseus Arm of the Milky Way (Figure 1), from the center of the Milky Way, based on the line-of-sight velocity of neutral hydrogen gas via its 21 cm emission line.
+
+For this problem we will use a subset of the Canadian Galactic Plane Survey (CGPS, Figure 2), in which individual radio telescope pointings can each yield the 21 cm line spectrum emitted by all the galactic neutral hydrogen along the line of sight of the radio telescope.
+
+By translating the Doppler wavelength shift of the 21 cm emission to a line-of-sight velocity, it is then possible to identify individual emission components that correspond to distinct galactic arms. This identification allows for a reconstruction of the shape of each arm with respect to the Galactic Center.
+
+In the spectrum corresponding to a radio telescope pointing, the Perseus arm can be readily identified because it is often the brightest feature along each line of sight.
+
+The frame of reference of the radio telescope observations can be taken to be the Sun, located at a distance $R_0$ from the Galactic Center (GC). The telescope has a pointing along a Line of Sight (LOS) defined by a galactic longitude $l$ and a fixed galactic latitude $b = 0$. Along this LOS, the telescope picks up the emission of a parcel of neutral H gas from the Perseus arm that is located at a distance $r$ from the Sun. This same parcel of gas is located at a distance $R$ from the Galactic Center. Let us assume that both the Sun and the gas parcel are in exact circular orbits around the GC. Additionally, it can be assumed that both the Sun and the gas parcel are in the region where the rotation curve of the Milky Way is flat. The measured (Doppler) velocity is denoted as $\mathrm{v}_{\mathrm{LOS}}$, which equals to the velocity of the gas parcel along the line of sight.
+
+**Data set**
+
+For this problem we attach a .csv file (21cmsurvey_full.csv, Excel and other spreadsheet software-readable) which contain 21 cm HI line brightness temperature $(T_b)$ data vs. line-of-sight velocity $(V_{LOS})$ for a range of galactic longitudes (for galactic latitude $= 0$).
+
+Row **1**: Line-of-sight velocities $v_{LOS}$ (173 values, units: $kms^{-1}$).
+
+Column **1** (after row 1): Galactic Longitude $l$ (1024 values, units: $^{\circ}$).
+
+Rows **2-1025**: 21 cm HI Brightness Temperature $T_b$ (units: $K$). Each row yields the spectrum for the pointing defined by $l$ (row name - column 1). There are thus 1024 spectra. Each spectrum has 173 $T_b$ measurements, one for each $v_{LOS}$.
+
+**Part 1 (50 points).**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-fig1.png" alt="Artist's face-on map of the Milky Way on a black background with a polar grid centred on the Sun: galactic longitudes 0° (Sagittarius), 30° (Aquila), 60° (Vulpecula), 90° (Cygnus), 120° (Cassiopeia), 150° (Perseus), 180° (Auriga), 210° (Monoceros), 240° (Puppis), 270° (Vela), 300° (Crux), 330° (Norma); distance rings 25 000 ly / 7.7 kpc, 50 000 ly / 15.3 kpc, 75 000 ly / 23.0 kpc. Arms labelled 1. Perseus, 1a. Outer, 1a. New Outer, 2b. Orion-Cygnus, 2. Scutum-Centaurus, 2a. Carina-Sagittarius, 1a. Norma, 1. 3kpc; the Galactic Bar / Long Bar, the Solar System and the yellow Sun's orbit; a wedge marked 'observation shadow of galactic core'." />
+<figcaption>Figure 1: Distance-galactic longitude map of the Milky Way arms https://en.wikipedia.org/wiki/Perseus_Arm#/media/File:Milky_Way_Arms_ssc2008-10.svg</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-fig2.png" alt="Schematic face-on disc of the Galaxy (yellow centre, orange disc, purple spiral arms) with labelled Local arm, Sagittarius arm, Scutum-Crux arm, Norma arm, Outer arm, Perseus arm and 3-5kpc ring; two white arrows from the Sun point to a tilted sky image of the Milky Way with a yellow rectangle marked 'Canadian Galactic Plane Survey' between Cassiopeia and Cygnus." />
+<figcaption>Figure 2: Canadian galactic plane survey http://www.ras.ucalgary.ca/CGPS</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-fig3.png" alt="Screenshot of the first 14 rows and columns A–G of the spreadsheet: cell A1 reads 'longitude', row 1 holds line-of-sight velocities 17.499242, 16.674782, 15.850322, 15.025862, 14.201402, 13.376942; column A from row 2 holds longitudes 142.195, 142.2, 142.205, … 142.255; the remaining cells hold brightness temperatures (e.g. row 2: 7.6806355, -3.6773872, 10.236036, 12.072731, 2.6496887, -5.4096527)." />
+</figure>
+
+**1.1** Make a spectral plot of $v_{LOS}$ vs. $T_b$ for an adequate number of different values (at least 20 plots) of galactic longitudes covering the full range of observations. Identify the peak line of sight velocity of the Perseus gas parcel at each of the plotted longitudes. Make sure to evenly sample the data set.
+
+**Note:** Use the plot of the first or the last longitude as a guide to identify correct peaks in the plots at the intermediate longitudes. **[45 т.]**
+
+**1.2** Why does the emission near $v_{LOS} = 0$ (which we associate with our local arm) have a lower brightness temperature than the emission from the Perseus arm? **[5 т.]**
+
+**Part 2 (20 points).**
+
+**2.1** Derive an expression to calculate $R$ from $v_{LOS}$, $v_{\odot}$, and $l$. You can assume:
+
+- That both the Solar System and and the Perseus arm gas parcel along the line of sight have a purely tangential velocity, with a negligible radial component.
+- A flat galactic rotation curve, i.e.
+
+$$|\mathrm{v}| = |\mathrm{v}_{\odot}|$$
+
+where v is the velocity of the gas parcel. **[20 т.]**
+
+**Part 3 (20 points).**
+
+**3.1** Using the $v_{LOS}$ values you found earlier, make a plot of galactic longitude $l$ vs. $R$ (radius with respect to the Galactic Center, in kpc) for the Perseus arm. Find the average distance of the Perseus arm for the given longitude range. Also report the standard deviation in your result. Use the values:
+
+$$v_{\odot} \approx 225\ kms^{-1}$$
+
+$$R_0 \approx 8\ \mathrm{kpc}$$ **[20 т.]**
+
+**Part 4 (25 points).**
+
+**4.1** The data also shows 21cm emission from the Norma arm of the Milky Way, which is its outer arm. This emission is most clearly seen around the galactic longitude of $145^{o}$. Repeat the exercise for the Norma arm to find its distance from GC. Use at least 5 data points to determine the distance of the Norma arm from the Galactic Centre (at these galactic longitudes). **[25 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **2.1** $R = R_0 \frac{v_{\odot} \sin l}{v_{\mathrm{LOS}} + v_{\odot} \sin l}$
+- **3.1** 11.4 kpc
+- **4.1** 14.3 kpc
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution**
+
+1. (a) (Without the fitted orange lines) - also see spreadsheet in the folder
+
+**Marking Scheme:**
+
+- Check how many plots at different longitudes they include in their solution. Each plot should include the correct scale and axis labeling (see Fig. S1): **1 point per plot. Maximum 20 points.**
+- If they maintain equal longitude spacing between consecutive plots: **5 points**
+- Correct identification of the 21 cm $v_{\mathrm{LOS}}$ peak in each spectrum, within ±2 km/s for each of the plots: **1 point per plot**. **Maximum 20 points.**
+  Note: Use Table S1 to check $v_{\mathrm{LOS}}$ values (not *R*, they are checked later). Keep in mind that they will not necessarily use the same longitude values, so they may be slightly different (within ±2 km/s of the nearest *l* value).
+
+| *l* | $v_{\mathrm{LOS}}$ | *R* |
+|---|---|---|
+| 142.195 | -42.69 | 11.586 |
+| 142.51 | -41.04 | 11.423 |
+| 142.83 | -41.86 | 11.560 |
+| 143.15 | -37.33 | 11.059 |
+| 143.47 | -40.21 | 11.433 |
+| 143.79 | -42.69 | 11.785 |
+| 144.11 | -41.04 | 11.613 |
+| 144.43 | -41.86 | 11.762 |
+| 144.75 | -42.27 | 11.861 |
+| 145.07 | -39.39 | 11.523 |
+| 145.39 | -39.39 | 11.564 |
+| 145.71 | -38.15 | 11.445 |
+| 146.03 | -37.33 | 11.378 |
+| 146.35 | -36.09 | 11.259 |
+| 146.67 | -34.85 | 11.141 |
+| 146.99 | -32.79 | 10.922 |
+| 147.31 | -32.38 | 10.906 |
+
+Table S1. Possible values of $v_{\mathrm{LOS}}$, *R* for 17 equally spaced longitude values.
+
+(b) Assuming that the Sun is not located at the inner rim of our Local Arm, along any given line of sight we would not be able to pick up all the H emission, as some H belonging to our arm would be behind each line of sight and therefore would not show up in our observations.
+
+**Marking Scheme:**
+
+- The core of the solution is that they realize that each measurement does not include all the gas in our arm, but it does include all the gas in the Perseus and the Norma arm. Therefore, it is not straightforward to compare the amount of gas in our arm vs. the other arms from these measurements. **5 points for a correct answer, 0 points for all other answers.**
+
+2.
+
+**Marking scheme:**
+
+- If they include a clear figure similar to Fig. S2 accompanying their deduction: **5 points**.
+- Check that the deduction follows the same mathematical/geometrical principles as the following:
+
+Inspection of the velocity vector components along the LOS in Fig. S2 yields,
+
+$$\begin{aligned} \mathbf{v}_{\mathrm{LOS}} &= (\mathbf{v} - \mathbf{v}_{\odot}) \cdot \hat{\mathbf{v}}_{\mathrm{LOS}} \\ v_{\mathrm{LOS}} &= v \cos\left(\frac{\pi}{2} - \beta\right) - v_{\odot} \cos\left(l - \frac{\pi}{2}\right) \\ v_{\mathrm{LOS}} &= v \sin\beta - v_{\odot} \sin l = v_{\odot} \sin\beta - v_{\odot} \sin l \\ \therefore \sin\beta &= \frac{v_{\mathrm{LOS}} + v_{\odot} \sin l}{v_{\odot}} \qquad (1) \end{aligned}$$
+
+Correctly deducing this equation: **10 points**.
+
+By the law of sines,
+
+$$\frac{R}{\sin l} = \frac{R_0}{\sin\beta}$$
+
+Substituting (1) above,
+
+$$R = R_0 \frac{v_{\odot} \sin l}{v_{\mathrm{LOS}} + v_{\odot} \sin l}\ . \qquad (2)$$
+
+Correctly deducing this equation: **5 points**.
+
+3. Perseus arm radius: *R* = 11.4 ± 0.3 kpc. Mean value and stdev as reported by libreoffice calc.
+
+**Marking scheme:**
+
+- Finding *R* values within 0.2 kpc of data points in Figs. S3 or S4 for more than 5 longitudes: **10 points**.
+- Note: Use Fig. S4 to compare data points in case their longitude values selection does not match the longitudes in Table S1.
+- Check that they include a plot similar to Fig. S3 (properly labeled axes) from their data in part 1 of this problem. They should include at least 5 data points to make their conclusions meaningful and get full marks: **5 points.**
+- Get the final result with standard deviation (11.4 ± 0.3 kpc): **5 points**
+  Note: Their value should not differ by more than 0.2 kpc from this solution.
+
+4. Norma arm radius: *R* = 14.3 ± 0.3 kpc. Mean value and stdev as reported by libreoffice calc from 7 data points near the middle of the longitude range.
+
+**Marking scheme:**
+
+- Finding peak $v_{\mathrm{LOS}}$ for more than 5 longitudes near *l* = 145º: **8 points**.
+- Finding *R* values within 0.2 kpc of data points in Fig. S5 for more than 5 longitudes: **7 points**.
+- Check that they include a plot similar to Fig. S5 (properly labeled axes) from their data in part 1 of this problem. They should include at least 5 data points to make their conclusions meaningful and get full marks: **5 points.**
+  Note: Use Fig. S4 to compare *R* values.
+- Get the final result with standard deviation (14.3 ± 0.3 kpc): **5 points**
+  Note: Their value should not differ by more than 1 kpc from this solution.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig1.png" alt="Three spectra of brightness temperature T_b (K) against v (km/s) from -120 to 20 km/s, titled l = 142.2°, l = 144.75° and l = 147.3°; each blue spectrum has a fitted orange Gaussian with legends 𝒩(μ ≈ -43.0, σ ≈ 6), 𝒩(μ ≈ -42.0, σ ≈ 6) and 𝒩(μ ≈ -34.0, σ ≈ 6) respectively." />
+<figcaption>Figure S1. Sample spectra.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig2.png" alt="Geometry sketch: the Galactic Center at the bottom, the Sun at distance R0 above it on the inner circle with velocity arrow v⊙ pointing right; the Perseus arm gas parcel on the outer circle at distance r from the Sun along the LOS arrow and at distance R from the Galactic Center; the gas parcel's velocity v is tangent to the outer circle, the blue arrow vLOS points from the parcel towards the Sun; red arcs mark the longitude angle l at the Sun and the angle β at the gas parcel." />
+<figcaption>Figure S2. Geometric layout with additional angle β.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig3.png" alt="Scatter plot of R (kpc), 0 to 14, against Galactic Longitude, 141 to 148: square markers between about 10.9 and 11.9 kpc from l ≈ 142.2 to 147.3, with a horizontal line at the mean value of about 11.4 kpc." />
+<figcaption>Figure S3. Estimated radii of gas parcels in the Perseus arm for 20 pointings in the dataset according to the values in Table S1.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig4.png" alt="Line plot of R (kpc), about 10.2 to 12.8, against l (°) from 142 to 147.3, strongly fluctuating mostly between 10.5 and 12.5 kpc." />
+<figcaption>Figure S4. Estimated radii of gas parcels in the Perseus arm for all pointings in the dataset.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig5.png" alt="Scatter plot titled 'l vs R' with legend 'l vs. R': R (kpc) from 8 to 20 against 'longitud galáctica' from 142 to 147; points scattered around 10–13 kpc for l below 144, rising to about 14–16 kpc between 144 and 146.5 and to 18–20 kpc near 147." />
+<figcaption>Figure S5. Estimated radii of gas parcels of the Norma Arm for all pointings in the dataset.</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Team Competition.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Team%20Competition/Team%20Competition.pdf)
+· официални решения: [Team_Solution.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Solutions/Team%20Competition/Team_Solution.pdf)

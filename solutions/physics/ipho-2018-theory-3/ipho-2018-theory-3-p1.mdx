@@ -1,0 +1,310 @@
+---
+id: ipho-2018-theory-3-p1
+source: 'IPhO 2018'
+title: 'Задача 1. Physics of Live Systems'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/2018/ipho-2018-theory-3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:05:23.654Z'
+verifier: 'mechanical'
+---
+
+*IPhO 2018 Lisbon, Portugal — Theory Q3: Physics of Live Systems (10 points) · 10 т.*
+
+## Условие
+
+Data: Normal atmospheric pressure, $P_0 = 1.013 \times 10^5$ Pa $= 760$ mmHg
+
+**Part A. The physics of blood flow (4.5 points)**
+
+In this part you will analyse two simplified models of blood flow in vessels.
+
+Blood vessels are approximately cylindrical in shape, and it is known that for a steady, non turbulent flow of an incompressible fluid in a rigid cylinder, the difference in pressure of the fluid at the two ends of the cylinder is given by
+
+$$\Delta P = \frac{8\ell\eta}{\pi r^4} Q\,, \qquad (1)$$
+
+where $\ell$ and $r$ are the length and radius of the cylinder, $\eta$ is the fluid viscosity and $Q$ is the volumetric flow rate, i.e. the fluid volume that passes the cylinder cross section per unit time. This expression is often able to provide the correct order of magnitude for the pressure difference in a vessel, even without taking into account the pulsatile flow, the vessel's compressibility and irregular shape, and the fact that blood is not a simple fluid but a mixture of cells and plasma. Moreover, this expression has the same form as Ohm's law, with the volumetric flow rate being interpreted as a current, the difference in pressure as a voltage, and the factor $R = \frac{8\ell\eta}{\pi r^4}$ as a resistance.
+
+Consider for example the symmetrical network of arterioles (small arteries) depicted in Figure 1 that delivers blood to the capillary bed of a tissue. In this network, at each bifurcation a vessel is divided in two identical vessels. However, the vessels of higher levels are thinner and shorter: consider that the radii and lengths of vessels in two consecutive levels, $i$ and $i+1$, are related by $r_{i+1} = r_i/2^{1/3}$ and by $\ell_{i+1} = \ell_i/2^{1/3}$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-theory-3/p1-fig1.png" alt="Symmetric binary tree of vessels: a single vessel at pressure P_0 on the left branches at each of the dotted vertical lines into two; levels labelled 0, 1, 2, 3, …, N−1 along the bottom under the word Level; the smallest branches end at the right at the capillary bed marked P_cap." />
+<figcaption>Figure 1. Network of arterioles.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-theory-3/p1-fig2.png" alt="Series circuit: an AC source labelled P_in cos ωt, a resistor R and an inductor L in series, feeding a capacitor C; the voltage across the capacitor is marked with a dashed double arrow as P_out cos(ωt+φ)." />
+<figcaption>Figure 2. Equivalent electric circuit for a single vessel.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-theory-3/p1-fig3.png" alt="Large circle of radius R (normal tissue, labelled N) with a concentric smaller thick circle of radius R_T (tumour, labelled T); dashed radii mark R_T and R." />
+<figcaption>Figure 3. Simplified tumour.</figcaption>
+</figure>
+
+**A.1** Obtain an expression for the volumetric flow rate, $Q_i$, in a vessel at any level $i$, as a function of the total number of levels $N$, of the viscosity $\eta$, of the radius $r_0$ and length $\ell_0$ of the first vessel, and of the difference $\Delta P = P_0 - P_{\mathrm{cap}}$ between the pressure at the arteriole at level 0, $P_0$, and the pressure at the capillary bed, $P_{\mathrm{cap}}$. **[1,3 т.]**
+
+**A.2** Calculate the numerical value of the volumetric flow rate $Q_0$ of the arteriole at level 0, if its radius is $6.0 \times 10^{-5}$ m and its length is $2.0 \times 10^{-3}$ m. Consider that the pressure at the arteriole inlet is 55 mmHg and the vessel network has $N = 6$ levels linking this arteriole to the capillary bed at the pressure 30 mmHg. Consider that the blood viscosity is $\eta = 3.5 \times 10^{-3}$ kg m$^{-1}$ s$^{-1}$. Express your result in ml/h. **[0,5 т.]**
+
+**A blood vessel as an LCR circuit**
+
+The approximation of rigid cylindrical vessels falls short for several reasons. It is particularly important to include the time dependent flow and to take into account the change in vessel diameter that occurs when the pressure varies during a blood pumping cycle done by the heart. Moreover, it is observed that in the larger vessels the blood pressure varies significantly during a cycle, while in the smaller vessels the amplitude of the oscillations in pressure is much smaller, and the flow is almost time independent.
+
+When the pressure increases in a single elastic vessel, there will be an increase in its diameter, thus permitting to store more fluid in the vessel, and to deliver it when the pressure drops. For this reason, the elastic behaviour of the vessel can be simulated by adding a capacitor to our initial description. Moreover, when taking into account the time dependent blood flow rate, one has to consider the inertia of the fluid, proportional to its density $\rho = 1.05 \times 10^3$ kg m$^{-3}$. This inertia can be described by an inductance in our model. In Figure 2 we represent the equivalent circuit for a single vessel in this model. The equivalent capacitance and inductance are given by
+
+$$C = \frac{3\ell\pi r^3}{2Eh} \quad \text{and} \quad L = \frac{9\ell\rho}{4\pi r^2}\,, \qquad (2)$$
+
+respectively, where $h$ is the width of the vessel wall and $E$ is the artery Young's modulus, a coefficient that describes the alteration in size of the vessel tissue when a force is applied. The Young's modulus has units of pressure and is on the order of $E = 0.06$ MPa for arterioles.
+
+**A.3** Obtain, in the stationary regime, the pressure amplitude at the vessel outlet, $P_{\mathrm{out}}$, as a function of the pressure amplitude at the inlet, $P_{\mathrm{in}}$, the equivalent resistance, $R$, inductance, $L$ and capacitance, $C$, for a flow with angular frequency $\omega$. Establish the condition between $\eta$, $\rho$, $E$, $h$, $r$ and $\ell$ so that, for low frequencies, the pressure oscillation amplitude at the outlet is smaller than that of $P_{\mathrm{in}}$. **[2 т.]**
+
+**A.4** For the vessel network in **A.2** estimate the maximum arteriole wall thickness $h$ so that the condition established in **A.3** is satisfied (consider that $h$ is level independent). **[0,7 т.]**
+
+**Part B. Tumour growth (5.5 points)**
+
+Tumour growth is a very complex process where biological mechanisms such as cell proliferation and natural selection are intertwined with physics. In this problem we will consider a simplified model of tumour growth that addresses the increase in pressure commonly observed in solid tumors.
+
+Consider a group of normal cells forming a tissue surrounded by an inextensible basement membrane, which forces the tissue to maintain always the same form: a sphere of radius $R$ (Figure 3).
+
+Initially the tissue does not have residual stresses, i.e. the pressure at every point is equal to the atmospheric pressure.
+
+At time $t = 0$, a tumour starts growing at the centre of this sphere and, as it grows, the pressure inside the tissue increases. Consider that both tissues (normal, N, and tumour, T) are compressible such that their densities, $\rho_{\mathrm{N}}$ and $\rho_{\mathrm{T}}$, increase linearly with pressure:
+
+$$\rho_{\mathrm{N}} = \rho_0 \left(1 + \frac{p}{K_{\mathrm{N}}}\right), \quad \rho_{\mathrm{T}} = \rho_0 \left(1 + \frac{p}{K_{\mathrm{T}}}\right), \qquad (3)$$
+
+where $\rho_0$ is the rest tissue density, $p$ is the pressure difference to the atmospheric pressure and $K_{\mathrm{N}}$, $K_{\mathrm{T}}$ are the compressibility moduli (bulk moduli) of the normal and tumour tissues, respectively. In general, tumours are stiffer and so they have a higher bulk modulus.
+
+**B.1** The mass of normal cells is not altered while the tumour is growing. Obtain the ratio between the tumour volume and the total tissue volume, $v = V_{\mathrm{T}}/V$, as a function of the ratio between the tumour mass $(M_{\mathrm{T}})$ and the normal tissue mass $(M_{\mathrm{N}})$, $\mu = M_{\mathrm{T}}/M_{\mathrm{N}}$ and the ratio of the bulk moduli, $\kappa = K_{\mathrm{N}}/K_{\mathrm{T}}$. **[1 т.]**
+
+Hyperthermia is sometimes used together with chemotherapy and radiotherapy in the treatment of cancer. In hyperthermia the cancer cells are selectively heated from the normal human body temperature, 37 $^{\circ}$C, to temperatures above 43 $^{\circ}$C, inducing their death. Researchers are currently developing carbon nanotubes covered with special proteins capable of binding to tumour cells. When the tissue is irradiated with near-infrared radiation, the nanotubes absorb it in a much greater extent than the surrounding tissues and therefore can be selectively heated as well as the tumour cells to which they are attached.
+
+Consider that the tumour, the normal cells and the surrounding tissue have a constant thermal conductivity $k$, i.e. in the geometry of this problem, the energy that crosses a spherical surface of radius $r$ per unit time and per unit area is equal to $k$ times the derivative of the temperature with respect to $r$. The nanotubes are uniformly distributed in the tumour volume and are able to deliver a power $\mathcal{P}$ of thermal energy per unit volume. Assume that the temperature is equal to the normal human body temperature very far away from the tumour.
+
+**B.2** Obtain, for the stationary state, the temperature at the centre of the tumour as a function of $\mathcal{P}$, $k$, the human body temperature and the tumour radius, $R_{\mathrm{T}}$. **[1,7 т.]**
+
+**B.3** Obtain the minimum power per unit volume, $\mathcal{P}_{\mathrm{min}}$, needed to heat up all tumour cells in a tumour with $5.0$ cm radius to a temperature larger than 43.0 $^{\circ}$C. Take the thermal conductivity of the tissue to be equal to $k = 0.60$ W K$^{-1}$m$^{-1}$. **[0,5 т.]**
+
+Consider that the tumour is irrigated by a vessel network with a branched structure like in question **A.1**. As the tumour grows, when its pressure $p$ becomes larger than the pressure $P_{\mathrm{cap}}$ at the thinnest vessels, the radii of these vessels will decrease by a small amount $\delta r$. If this pressure reaches a critical value $p_{\mathrm{c}}$ (which would correspond to a radius decrease of $\delta r_{\mathrm{c}}$), the thinnest vessels would collapse, compromising seriously the irrigation to the tumour. The pressure and the radius change can be related by the following phenomenological relation:
+
+$$\frac{p}{P_{\mathrm{cap}}} - 1 = \left(\frac{p_{\mathrm{c}}}{P_{\mathrm{cap}}} - 1\right)\left(2 - \frac{\delta r}{\delta r_{\mathrm{c}}}\right)\frac{\delta r}{\delta r_{\mathrm{c}}}\,. \qquad (4)$$
+
+Consider that just the smallest vessels (of level $N-1$) have their radius altered when the tumour increases its pressure.
+
+**B.4** In the linear regime (i.e. consider that $p - P_{\mathrm{cap}}$ is very small), express the relative drop in the flow rate, $\frac{\delta Q_{N-1}}{Q_{N-1}}$, in these thinnest vessels, as a function of the tumour volume ratio $v = V_{\mathrm{T}}/V$ and $K_N$, $N$, $p_{\mathrm{c}}$, $\delta r_{\mathrm{c}}$, $r_{N-1}$, $P_{\mathrm{cap}}$. **[2,3 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A.1** $Q_i = \Delta P \frac{\pi r_0^4}{2^{i+3} N \ell_0 \eta}$
+- **A.2** 1.5 ml/h
+- **A.3** $P_{\mathrm{out}} = \frac{P_{\mathrm{in}}}{\sqrt{(1-\omega^2 LC)^2 + \omega^2 C^2 R^2}}, \qquad \frac{64\eta^2\ell^2}{3Ehr^3\rho} > 1$
+- **A.4** 0.00008 m
+- **B.1** $v = \frac{1 + \mu - \sqrt{(1+\mu)^2 - 4\mu(1-\kappa)}}{2(1-\kappa)}$
+- **B.2** $T_{\mathrm{centre}} = 310.15 + \frac{\mathcal{P} R_{\mathrm{T}}^2}{2k}\ \mathrm{K}$
+- **B.3** 4.3 kW/m^3
+- **B.4** $\frac{\delta Q_{N-1}}{Q_{N-1}} \simeq -\frac{2}{N}\,\frac{K_{\mathrm{N}} v - (1-v)P_{\mathrm{cap}}}{(1-v)(p_{\mathrm{c}} - P_{\mathrm{cap}})}\,\frac{\delta r_{\mathrm{c}}}{r_{N-1}}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part A. The physics of blood flow (4.5 points)**
+
+**A.1**
+
+Since the vessel network is symmetrical, the flow in a vessel of level $i+1$ is half the flow in a vessel of level $i$.
+
+In this way, we can sum the pressure differences in all levels:
+
+$$\Delta P = \sum_{i=0}^{N-1} Q_i R_i = Q_0 \sum_{i=0}^{N-1} \frac{R_i}{2^i}.$$
+
+Introducing the radii dependences yields
+
+$$\Delta P = Q_0 \sum_{i=0}^{N-1} \frac{8\ell_i\eta}{2^i \pi r_i^4} = Q_0 \frac{8\ell_0\eta}{\pi r_0^4} \sum_{i=0}^{N-1} \frac{2^{4i/3}}{2^i 2^{i/3}} = Q_0 N \frac{8\ell_0\eta}{\pi r_0^4}\,.$$
+
+Therefore
+
+$$Q_0 = \Delta P \frac{\pi r_0^4}{8N\ell_0\eta}\,.$$
+
+Hence, the flow rate for a vessel network in level $i$ is
+
+**A.1** (1.3pt)
+
+$$Q_i = \Delta P \frac{\pi r_0^4}{2^{i+3} N \ell_0 \eta}\,.$$
+
+**A.2**
+
+Replace values in the formula and change units appropriately
+
+$$\begin{aligned} Q_0 &= \frac{\Delta P \pi r_0^4}{8N\ell_0\eta} = \\ &= \frac{(55-30) \times 1.013 \times 10^5 \times 3.1415 \times (6.0 \times 10^{-5})^4}{760 \times 48 \times 2.0 \times 10^{-3} \times 3.5 \times 10^{-3}} = 4.0 \times 10^{-10}\ \mathrm{m^3/s} \end{aligned}$$
+
+to obtain the final value in the requested unites:
+
+**A.2** (0.5pt)
+
+$$Q_0 \simeq 1.5\ \mathrm{m\ell/h}\,.$$
+
+**A.3**
+
+The current is given by
+
+$$I = \frac{P_{\mathrm{in}} \mathrm{e}^{i\omega t}}{R + i\omega L + \frac{1}{i\omega C}}\,.$$
+
+The pressure difference in the capacitor is
+
+$$P_{\mathrm{out}} \mathrm{e}^{i(\omega t + \phi)} = \frac{P_{\mathrm{in}} \mathrm{e}^{i\omega t}}{R + i\omega L + \frac{1}{i\omega C}} \frac{1}{i\omega C} = \frac{P_{\mathrm{in}} \mathrm{e}^{i\omega t}}{i\omega CR - \omega^2 LC + 1}\,.$$
+
+The amplitude is
+
+$$P_{\mathrm{out}} = \frac{P_{\mathrm{in}}}{\sqrt{(1-\omega^2 LC)^2 + \omega^2 C^2 R^2}}\,.$$
+
+To be smaller than $P_{\mathrm{in}}$, for $\omega \to 0$:
+
+$$(1-\omega^2 LC)^2 + \omega^2 C^2 R^2 > 1 \iff -2CL + C^2 R^2 > 0\,.$$
+
+Replacing the expressions for $L$, $C$, and $R$ we get: $\frac{64\eta^2\ell^2}{3Ehr^3\rho} > 1$.
+
+**A.3** (2.0pt)
+
+$$P_{\mathrm{out}} = \frac{P_{\mathrm{in}}}{\sqrt{(1-\omega^2 LC)^2 + \omega^2 C^2 R^2}}\,.$$
+
+Condition:
+
+$$\frac{64\eta^2\ell^2}{3Ehr^3\rho} > 1\,.$$
+
+Alternative way to obtain $P_{\mathrm{out}}$:
+
+The amplitude of the current in the equivalent circuit is $I_0 = \frac{P_{\mathrm{in}}}{Z}$, where
+
+$$Z = \sqrt{R^2 + \left(\omega L - \frac{1}{\omega C}\right)^2}$$
+
+is the modulus of the impedance. Hence, the voltage amplitude in the capacitor is
+
+$$P_{\mathrm{out}} = \frac{1}{\omega C} \times I_0 = \frac{P_{\mathrm{in}}}{\sqrt{\omega^2 C^2 R^2 + (\omega^2 LC - 1)^2}}.$$
+
+**A.4**
+
+The previous condition can also be expressed as
+
+$$h < \frac{64\eta^2\ell^2}{3Er^3\rho}\,.$$
+
+For the network referred to in **A.2**
+
+$$h < \frac{64\eta^2\ell_0^2 \times 2^i}{3 \times 2^{2i/3} E r_0^3 \rho} = \frac{64 \times (3.5 \times 10^{-3})^2 \times (2.0 \times 10^{-3})^2}{3 \times 0.06 \times 10^6 \times (6.0 \times 10^{-5})^3 \times 1.05 \times 10^3} \times 2^{i/3} = 7.7 \times 10^{-5} \times 2^{i/3}\,.$$
+
+For $i = 0$, in the worse case scenario,
+
+$$h_{\mathrm{max}} = 7.7 \times 10^{-5} \times 2^0 = 7.7 \times 10^{-5}\ \ \mathrm{m}$$
+
+This value is certainly observed in these vessels since their radius range from 18 $\mu$m to 60 $\mu$m. A wall width smaller than 80 $\mu$m is certainly reasonable.
+
+**A.4** (0.7pt) Maximum $h = 8 \times 10^{-5}$ m
+
+**Part B. Tumor growth (5.5 points)**
+
+**B.1**
+
+The expressions for the masses of tumour and normal tissue are written as:
+
+$$\begin{cases} M_{\mathrm{T}} = V_{\mathrm{T}}\rho_{\mathrm{T}} = V_{\mathrm{T}}\rho_0 (1 + \frac{p}{K_{\mathrm{T}}}) \\[2ex] M_{\mathrm{N}} = V\rho_0 = (V - V_{\mathrm{T}})\rho_0 (1 + \frac{p}{K_{\mathrm{N}}}) \end{cases}$$
+
+The pressure, $p$, can be expressed as
+
+$$p = \frac{M_{\mathrm{T}}\, K_{\mathrm{T}}}{V_{\mathrm{T}}\, \rho_0} - K_{\mathrm{T}}$$
+
+and, then, used in the equation for $M_{\mathrm{N}}$:
+
+$$M_{\mathrm{N}} = (V - V_{\mathrm{T}})\, \frac{M_{\mathrm{N}}}{V} \left[\left(1 - \frac{K_{\mathrm{T}}}{K_{\mathrm{N}}}\right) + \frac{M_{\mathrm{T}}\, V K_{\mathrm{T}}}{V_{\mathrm{T}}\, M_{\mathrm{N}}\, K_{\mathrm{N}}}\right]$$
+
+Simplifying and rearranging the terms, the equation for $v$ becomes
+
+$$(1-\kappa)\ v^2 - (1+\mu)\ v + \mu = 0\,,$$
+
+for which the solution is (the other solution of the quadratic equation is not physically relevant since does not lead to $v = 0$ for $\mu = 0$)
+
+**B.1** (1.0pt)
+
+$$v = \frac{1 + \mu - \sqrt{(1+\mu)^2 - 4\mu\,(1-\kappa)}}{2(1-\kappa)}\,.$$
+
+**B.2**
+
+For $r < R_{\mathrm{T}}$, the conservation of energy implies that
+
+$$4\pi r^2 (-k) \frac{\mathrm{d}T}{\mathrm{d}r} = \mathcal{P} \frac{4}{3}\pi r^3\,.$$
+
+Therefore, the temperature difference to 37 $^{\circ}$C = 310.15 K, $\Delta T(r)$, is given by
+
+$$\Delta T(r) = -\frac{\mathcal{P} r^2}{6k} + C\,,$$
+
+where $C$ is a constant.
+
+For $r > R_{\mathrm{T}}$, the conservation of energy implies that
+
+$$4\pi r^2 (-k) \frac{\mathrm{d}T}{\mathrm{d}r} = \mathcal{P} \frac{4}{3}\pi R_{\mathrm{T}}^3\,.$$
+
+Therefore, the temperature difference to 37 $^{\circ}$C is
+
+$$\Delta T(r) = \frac{\mathcal{P} R_{\mathrm{T}}^3}{3kr}\,.$$
+
+In this case there is no constant, since very far away the increase in temperature is zero.
+
+Matching the two solutions at $r = R_{\mathrm{T}}$ gives
+
+$$C = \frac{\mathcal{P} R_{\mathrm{T}}^2}{2k}\,.$$
+
+Therefore the temperature at the centre of the tumour, in SI units, is
+
+**B.2** (1.7pt) Temperature: $310.15 + \frac{\mathcal{P} R_{\mathrm{T}}^2}{2k}$.
+
+**B.3**
+
+The increase in temperature at the tumour surface (the lower temperature in the tumour) is
+
+$$\Delta T(R_{\mathrm{T}}) = \frac{\mathcal{P} R_{\mathrm{T}}^2}{3k}\,.$$
+
+This increase should be equal to $6.0$ K. Therefore,
+
+$$\mathcal{P} = \frac{3\Delta T k}{R_{\mathrm{T}}^2} = \frac{3 \times 6 \times 0.6}{0.05^2} = 4.3\ \mathrm{kW/m^3}.$$
+
+**B.3** (0.5pt) $\mathcal{P}_{\mathrm{min}} = 4.3$ kW/m$^3$.
+
+**B.4**
+
+We can relate $\delta r$ with the pressure in the tumour, using the relation given in the text up to leading order in $p - P_{\mathrm{cap}}$: $\delta r = \frac{p - P_{\mathrm{cap}}}{2(p_{\mathrm{c}} - P_{\mathrm{cap}})}\, \delta r_{\mathrm{c}}$. Therefore, if $p - P_{\mathrm{cap}}$ is very small, also it is $\delta r$.
+
+The pressure can be related with the volume. We know that
+
+$$\frac{M_{\mathrm{N}}}{V_{\mathrm{N}}} = \frac{\rho_0 V}{V - V_{\mathrm{T}}} = \frac{\rho_0}{1 - v} = \rho_0 \left(1 + \frac{p}{K_{\mathrm{N}}}\right)\,.$$
+
+And so $p = \frac{K_{\mathrm{N}} v}{1 - v}$.
+
+When the thinner vessels are narrower, the flow rate in the main vessel is altered:
+
+$$\Delta P = (Q_0 + \delta Q_0) \sum_{i=0}^{N-1} \frac{8\ell_i\eta}{2^i \pi r_i^4} = (Q_0 + \delta Q_0) \frac{8\ell_0\eta}{\pi r_0^4} \left(\sum_{i=0}^{N-2} \frac{2^{4i/3}}{2^i 2^{i/3}} + \frac{2^{4(N-1)/3}}{2^{N-1} 2^{(N-1)/3} \left(1 - \frac{\delta r}{r_0/2^{(N-1)/3}}\right)^4}\right)$$
+
+$$\implies \Delta P \simeq (Q_0 + \delta Q_0) \frac{\Delta P}{N Q_0} \left(N - 1 + 1 + \frac{4\,\delta r}{r_{N-1}}\right)$$
+
+Noting that $\frac{\delta Q_{N-1}}{Q_{N-1}} = \frac{\delta Q_0}{Q_0}$, we obtain
+
+$$1 + \frac{\delta Q_{N-1}}{Q_{N-1}} = \frac{1}{1 + \frac{4\,\delta r}{N r_{N-1}}} \simeq 1 - \frac{4\,\delta r}{N r_{N-1}}\,.$$
+
+And so:
+
+$$\frac{\delta Q_{N-1}}{Q_{N-1}} \simeq -\frac{4}{N}\,\frac{\delta r}{r_{N-1}}\,.$$
+
+Putting all together
+
+**B.4** (2.3pt)
+
+$$\frac{\delta Q_{N-1}}{Q_{N-1}} \simeq -\frac{2}{N}\,\frac{K_{\mathrm{N}} v - (1-v)P_{\mathrm{cap}}}{(1-v)(p_{\mathrm{c}} - P_{\mathrm{cap}})}\,\frac{\delta r_{\mathrm{c}}}{r_{N-1}}\,.$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2018/Theory/3.pdf)
+· официални решения: [3_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2018/Theory/3_sol.pdf)

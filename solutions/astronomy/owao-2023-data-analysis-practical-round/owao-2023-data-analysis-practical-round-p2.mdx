@@ -1,0 +1,200 @@
+---
+id: owao-2023-data-analysis-practical-round-p2
+source: 'OWAO 2023, data-analysis'
+title: 'Задача 2. Metallica'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2023/owao-2023-data-analysis-practical-round.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:17:31.086Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2023 ◇ Practical Round ◇ Problems*
+
+## Условие
+
+The file `clusters.csv` contains the parameters of several dozen open clusters of the Milky Way (Viscasillas Vázquez et al., 2023, arXiv:2309.17153). The columns indicate:
+
+- the name of the cluster,
+- metallicity [M/H] (dex),
+- $\alpha$-element enhancement [$\alpha$/Fe] (dex),
+- age (in billion years),
+- galactocentric distance $R_{\mathrm{GC}}$ (in pc),
+- orbital eccentricity $e$,
+- maximum deviation from the Galactic plane $Z_{\max}$ (in kpc),
+- velocity components in cylindrical galactocentric coordinate system (radial $V_R$, azimuthal $V_{\phi}$, vertical $V_Z$, in km/s).
+
+| Cluster Name | [M/H] dex | [$\alpha$/Fe] dex | Age Gyr | $R_{GC}$ pc | $e$ | $Z_{\max}$ kpc | $V_R$ km/s | $V_{\phi}$ km/s | $V_Z$ km/s |
+|---|---|---|---|---|---|---|---|---|---|
+| `Alessi1` | $-0.052$ | $-0.029$ | 1.445 | 8637.1 | 0.063 | 0.23 | 17.29 | 230.996 | 12.241 |
+| `Berkeley89` | 0.047 | $-0.024$ | 2.089 | 8473.7 | 0.173 | 0.338 | 28.563 | 205.102 | 8.261 |
+| … | … | … | … | … | … | … | … | … | … |
+
+Here “dex” is a contraction of “decimal exponent”, a convenient unit indicating any number or ratio’s order-of-magnitude. For example, 100 could be described as 2 dex, or two numbers that differ by a factor of 1000 could be said to differ by 3 dex.
+
+In the cylindrical galactocentric coordinate system,
+
+- the radial velocity $V_R$ is measured along the galactic axial distance,
+- the azimuthal velocity $V_{\phi}$ is measured in the direction of rotation of the Galaxy,
+- the vertical velocity $V_Z$ is measured perpendicular to the galactic disk.
+
+**a)** What are $\alpha$-elements? Give three examples.
+
+**b)** How many times is the ratio of the concentration of metal atoms to the concentration of hydrogen atoms in the oldest cluster of the catalogue greater than in the Sun?
+
+**c)** Plot a graph of [M/H] versus the $\alpha$-element enhancement [$\alpha$/Fe]. Determine the coefficient of linear correlation between these values. Explain the presence or absence of correlation (or anticorrelation). How will the correlation coefficient change when the object with the smallest [$\alpha$/Fe] is excluded?
+
+The coefficient $r_{xy}$ of linear correlation between the values of $x$ and $y$ is determined by the formula
+
+$$r_{xy} = \frac{\sum\limits_{i=1}^{N}\big(x_i - \langle x\rangle\big)\big(y_i - \langle y\rangle\big)}{\sqrt{\sum\limits_{i=1}^{N}\big(x_i - \langle x\rangle\big)^2}\sqrt{\sum\limits_{i=1}^{N}\big(y_i - \langle y\rangle\big)^2}}\,; \quad \langle x\rangle = \frac{1}{N}\sum_{i=1}^{N} x_i\,, \quad \langle y\rangle = \frac{1}{N}\sum_{i=1}^{N} y_i\,.$$
+
+**d)** Plot a graph of $e$ versus the ratio $V_p/V$, where $\vec{V}_p$ is the velocity component perpendicular to $\vec{V}_{\phi}$ and $V$ is the total velocity. Determine the coefficient of linear correlation between $e$ and $V_p/V$. Explain the presence or absence of correlation (or anticorrelation).
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** Elements created by the alpha process (alpha capture); the stable alpha elements are C, O, Ne, Mg, Si and S.
+- **b)** 1.4
+- **c)** r = −0.358 (anticorrelation); without UPK 21 (smallest [α/Fe]) r = −0.487
+- **d)** 0.846
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:**
+
+a) Alpha-element or *the alpha process element* is any of the elements that can be created by the alpha process, the combination of a nucleus and an alpha particle (alpha capture), which are several elements with even atomic numbers. The most abundant isotopes are integer multiples of four — the mass of the helium nucleus. The stable alpha elements are C, O, Ne, Mg, Si and S.
+
+b) NGC 6791 is the oldest open cluster in the catalogue. Nevertheless, its metallicity is 0.136, so the cluster is one of the oldest and most metal-rich clusters in the Milky Way. By definition of metallicity, which is determined in relation to the Sun,
+
+$$[\mathrm{M/H}] = \log_{10}\left(\frac{n_{\mathrm{M}}}{n_{\mathrm{H}}}\right) - \log_{10}\left(\frac{n_{\mathrm{M}}}{n_{\mathrm{H}}}\right)_{\odot},$$
+
+$$0.136 = \log_{10}\left(\frac{\left(\dfrac{n_{\mathrm{M}}}{n_{\mathrm{H}}}\right)}{\left(\dfrac{n_{\mathrm{M}}}{n_{\mathrm{H}}}\right)_{\odot}}\right) \quad \Rightarrow \quad \frac{\left(\dfrac{n_{\mathrm{M}}}{n_{\mathrm{H}}}\right)}{\left(\dfrac{n_{\mathrm{M}}}{n_{\mathrm{H}}}\right)_{\odot}} = 1.4.$$
+
+c) The anticorrelation between the two values is noticeable on the graph, although the points are distributed quite widely.
+
+To estimate the correlation coefficient, we have to calculate several additional values:
+
+$$\langle[\mathrm{M/H}]\rangle = -0.017, \quad \langle[\alpha/\mathrm{Fe}]\rangle = -0.021,$$
+
+$$\sum_{i=1}^{N}([\mathrm{M/H}] - \langle[\mathrm{M/H}]\rangle)([\alpha/\mathrm{Fe}] - \langle[\alpha/\mathrm{Fe}]\rangle) = -0.110,$$
+
+$$\sum_{i=1}^{N}([\mathrm{M/H}] - \langle[\mathrm{M/H}]\rangle)^2 = 0.583, \qquad \sum_{i=1}^{N}([\alpha/\mathrm{Fe}] - \langle[\alpha/\mathrm{Fe}]\rangle)^2 = 0.162;$$
+
+$$r = -0.358.$$
+
+UPK 21 has the smallest value of [$\alpha$/Fe]. It might be an outlier or a very young object. When this object is excluded, the following values are obtained:
+
+$$\langle[\mathrm{M/H}]\rangle = -0.017, \qquad \langle[\alpha/\mathrm{Fe}]\rangle = -0.014,$$
+
+$$\sum_{i=1}^{N}([\mathrm{M/H}] - \langle[\mathrm{M/H}]\rangle)([\alpha/\mathrm{Fe}] - \langle[\alpha/\mathrm{Fe}]\rangle) = -0.109,$$
+
+$$\sum_{i=1}^{N}([\mathrm{M/H}] - \langle[\mathrm{M/H}]\rangle)^2 = 0.583, \qquad \sum_{i=1}^{N}([\alpha/\mathrm{Fe}] - \langle[\alpha/\mathrm{Fe}]\rangle)^2 = 0.086;$$
+
+$$r = -0.487.$$
+
+Theoretical galactic evolution models predict that early in the Universe there were more $\alpha$-elements relative to iron. At higher metallicities the $\alpha$-poor stars are interpreted as the thin disk. On the other hand, low metallicities and the high-$\alpha$ sequence is attributed to the halo and at high metallicities the high-$\alpha$ sequence is attributed to the thick disk although there is likely significant overlap between the two (see Hawkins et al., 2015, MNRAS, 458, 758H).
+
+d)
+
+$$\begin{cases} V_p = \sqrt{V_R^2 + V_z^2}\,, \\ V = \sqrt{V_R^2 + V_{\phi}^2 + V_z^2} \end{cases} \qquad \Rightarrow \qquad \frac{V_p}{V} = \sqrt{\frac{V_R^2 + V_z^2}{V_R^2 + V_{\phi}^2 + V_z^2}}\,.$$
+
+The relationship between the values on the graph is clearly visible, and the explanation is quite simple. The inclination of most orbits is small, since the declination from the galactic plane is small compared to the galactocentric distance. Consequently, an increase in the fraction of velocity perpendicular to the azimuthal component leads to increased fluctuations in the galactocentric distance and to an increase in eccentricity. Nevertheless, the scatter of points relative to the median line is quite noticeable.
+
+To estimate the correlation coefficient, we need to calculate several additional values:
+
+$$\left\langle\frac{V_p}{V}\right\rangle = 0.110, \qquad \langle e\rangle = 0.109,$$
+
+$$\sum_{i=1}^{N}\left(\frac{V_p}{V} - \left\langle\frac{V_p}{V}\right\rangle\right)(e - \langle e\rangle) = 0.123,$$
+
+$$\sum_{i=1}^{N}\left(\frac{V_p}{V} - \left\langle\frac{V_p}{V}\right\rangle\right)^2 = 0.169, \qquad \sum_{i=1}^{N}(e - \langle e\rangle)^2 = 0.125;$$
+
+$$r = 0.846.$$
+
+**Marking Scheme:**
+
+- $\alpha$-elements:
+  - Explanation of the concept / definition — **1 pt.**
+  - Examples — **1 pt.** $\times$ **3**
+- Metallicity ratio on a linear scale — **2 pt.**
+- [M/H] vs. [$\alpha$/Fe]:
+  - Plot — **2 pt.**
+  - $r$ — **3 pt.**
+  - Anticorrelation explanation — **1 pt.**
+  - Outlier correction — **2 pt.**
+- $e$ vs. $V_p/V$:
+  - Plot — **2 pt.**
+  - $r$ — **3 pt.**
+  - Correlation explanation — **1 pt.**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2023-data-analysis-practical-round/p2-sol-fig1.png" alt="Scatter plot of [M/H] (dex), from −0.3 to 0.5 on the vertical axis, versus [α/Fe] (dex), from −0.3 to 0.1 on the horizontal axis; about forty purple points cluster between −0.1 and 0.08 in [α/Fe] with a weak downward trend, plus an isolated point near [α/Fe] = −0.29, [M/H] ≈ −0.02." />
+<figcaption>Figure 5: Scatter plot for the metallicity and $\alpha$-element enhancement</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2023-data-analysis-practical-round/p2-sol-fig2.png" alt="Scatter plot of e (0 to 0.35) versus V_p / V (0 to 0.35) with purple points rising from about (0.03, 0.02) to (0.34, 0.30) and a green straight fit line through them." />
+<figcaption>Figure 6: Scatter plot for the velocity ratio and the eccentricity</figcaption>
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| Universal | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Hubble constant | $H_0 = 70\ (\mathrm{km/s})/\mathrm{Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| Earth | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+
+| Moon | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| Sun | |
+|---|---|
+| Radius | $R_{\odot} = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+
+| Emission constants | |
+|---|---|
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ (\mathrm{W/m^2})/\mathrm{K^4}$ |
+| Wien’s displacement | $b = 2898\ \mu\mathrm{m} \cdot \mathrm{K}$ |
+
+| UBV system | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+| Hydrogen spectrum | |
+|---|---|
+| Lyman L$\alpha$ | $\lambda_{L\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{H\alpha} = 6562.8$ Å |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2023_Practical_Round_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Data%20Analysis/OWAO_2023_Practical_Round_Problems.pdf)
+· официални решения: [OWAO_2023_Practical_Round_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Data%20Analysis/OWAO_2023_Practical_Round_Solutions.pdf)

@@ -1,0 +1,264 @@
+---
+id: ispho-2024-theory-t2-p1
+source: 'ISPhO 2024, theory'
+title: 'Задача 1. Memristors and NVRAM'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/ISPhO/2024/ispho-2024-theory-t2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:08:29.110Z'
+verifier: 'mechanical'
+---
+
+*ISPhO, July, 2024 — T2. Memristors and NVRAM*
+
+## Условие
+
+## Introduction. Non-volatile random access memory
+
+**NVRAM** (Non-Volatile Random Access Memory) is a type of random access memory capable of storing information in the absence of electrical power. The ability to independently access information in any memory cell at any time and to store data without constant power supply opened huge technological capabilities at the time of its invention, and we still use it today (Fig. 1).
+
+There are several types of NVRAM. The most popular of them are based on semiconductor elements, and therefore are difficult to consider. In this task, we will examine both a promising realization of NVRAM – ReRAM (Resistive Random Access Memory) based on memristors, and a realization that have already almost disappeared into the past – ferroelectric memory (FeRAM, Ferroelectric Random Access Memory) based on segnetoelectrics.
+
+## Part A. Memristor
+
+In 1971, Prof. Leon O. Chua published a theoretical justification for the possibility of a **memristor** – an electrical element in which the relationship between voltage and current depends on the total charge flowing through the element.
+
+Memristor-based computing systems are currently attracting serious attention of researchers in the field of artificial intelligence, as they work on principles similar to the neurons of the human brain and can potentially achieve the same results with much lower energy consumption and relative architecture simplicity.
+
+For a long time, the memristor existed only ”on paper”, until in 2008 Hewlett-Packard presented the first working prototype of a memristor. In this prototype, the change in resistance depending on the flowing charge was achieved due to electrochemical reactions occurring in the contact area of two different materials (Fig. 3).
+
+Since electrochemical reactions are reversible, the resistance of this prototype memristor tends towards its equilibrium value in the absence of current. For the simplest theoretical description of such a memristor, we can use the **Williams–Strukov equations**:
+
+$$\begin{cases} R(x) = R_{\mathrm{off}}(1-x) + R_{\mathrm{on}}x \\ \dfrac{\mathrm{d}x}{\mathrm{d}t} = \dfrac{1}{\beta}I - \alpha x \end{cases}$$
+
+Here $x$ is some parameter determined by the internal state of the system, $\alpha, \beta > 0$ are known quantities, $I$ is current through the memristor, $R_{\mathrm{off}}$ and $R_{\mathrm{on}} = rR_{\mathrm{off}}$ ($r \gg 1$) are the resistances of the memristor in the ”off” and ”on” states, respectively.
+
+Let’s first consider the evolution of the memristor state under a constant voltage $U > 0$. Initially, the memristor is ”off” (i.e. $x = 0$).
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig1-v2.png" alt="Photograph of a black USB flash drive with its cap removed, the metal USB connector visible." />
+<figcaption>Fig. 1. NVRAM in your pocket</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig2.png" alt="Square diagram with circles at the corners labelled voltage v, charge q, current i and flux Φ, divided by the diagonals into four coloured triangles: Capacitor dq = C dv (top, capacitor symbol), Resistor dv = R di (left, resistor symbol), Inductor dΦ = L di (bottom, coil symbol), Memristor dΦ = M dq (right, memristor symbol); the diagonals are labelled dq = i dt and dΦ = v dt." />
+<figcaption>Fig. 2. Schematic depiction of the relationship between different electromagnetic quantities in various electronic components. Usually, this scheme is cited as part of the theoretical justification of the possibility of the existence of a memristor</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig3.png" alt="Orange atomic force microscope image of many parallel nanowires crossed diagonally by a single wire, with bright junctions along the crossing." />
+<figcaption>Fig. 3. Atomic force microscope topographical scan of memristor prototype created by HP</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig4-v3.png" alt="Graph with axes U (horizontal) and I (vertical) showing several pinched hysteresis loops through the origin in different colours (magenta, red, green, blue, cyan) with arrows showing the direction of traversal; the widest loop is magenta, the narrowest are nearly straight lines." />
+<figcaption>Fig. 4. Memristor hysteresis loops on different frequencies</figcaption>
+</figure>
+
+**A1** Obtain a differential equation on $x(t)$. Express your answer in terms of $U$, $R_{\mathrm{off}}$, $r$, $\alpha$, and $\beta$.
+
+For convenience, let’s introduce $\xi \equiv \dfrac{r-1}{\beta R_{\mathrm{off}}}$. We will assume that the memristor is on if the value of its internal parameter $x$ differs from the equilibrium one by no more than 10%. For simplicity in all the remaining points of this part, **work in the limit of large voltages $U$**.
+
+**A2** Simplifying the equation from **A1** in this limit, find the minimum value of $x_0$ at which the memristor can be considered to be on. Express your answer in terms of $\xi$, $U$, $\alpha$, and $r$.
+
+**A3** Find the time $\tau$ required to switch the memristor from the initial off state to the on state. Express the answer in terms of $\alpha$.
+
+**A4** Find the minimal energy $Q$ requires to switch the memristor from the initial off state to the on state. Express your answer in terms of $U$, $\alpha$, $\xi$, and $R_{\mathrm{off}}$.
+
+## Part B. Memristor hysteresis
+
+If an an oscillating voltage is applied to the memristor, its resistance will also oscillate due to fluctuations in current and charge flowing through it. Because of this, at the same voltage, the current through the memristor will depend on whether the voltage increases or decreases. In $I - U$ coordinates, this behavior will look like hysteresis loops (Figure 4). It turns out that by measuring the characteristics of these loops it is possible to calculate some important parameters of the memristor, which we will do in this part.
+
+Suppose an oscillating voltage $U\cos\omega t$ is applied to the memristor, and $U > 0$.
+
+**B1** Find $x(t)$ in the first-order approximation by $\dfrac{U}{\beta R_{\mathrm{off}}\sqrt{\omega^2+\alpha^2}} \ll 1$. From here, find (also to a first-order approximation), $\Delta I(\varphi)$ – the absolute difference in currents on different branches of the hysteresis loop at the same voltage $U\cos\varphi$. Express your answers in terms of $U$, $R_{\mathrm{off}}$, $\alpha$, $\beta$, $r$, and $\omega$.
+
+Let’s introduce the **hysteresis loop width** as:
+
+$$s = \max_{\varphi}\frac{\Delta I(\varphi)}{2I_0},$$
+
+where $I_0$ is the amplitude of the current oscillations.
+
+**B2** Express $s$ in terms of $\omega$, $\alpha$, $U$, and $\xi$.
+
+Since the hysteresis curve width is easy to measure, it can be used to determine the parameters of the memristor. The table below shows the dependence of $s$ on the frequency $f$ of the voltage applied to the memristor at voltage $U = 1\ V$.
+
+| $f,\ \mathrm{Hz}$ | 100 | 250 | 500 |
+|---|---|---|---|
+| $s,\ 10^{-3}$ | 47.8 | 54.1 | 36.7 |
+
+Also, the resistance of the memristor $R_{\mathrm{off}} = 300\ \Omega$ was measured in the off state.
+
+**B3** From this data, **calculate** $\alpha$ and $\xi$ with three significant figures.
+
+## Part C. ReRAM energy efficiency
+
+The information is written to the prototype memristor element under a voltage of $U = 5\ V$.
+
+**C1** **Calculate** with two significant figures the time $\tau$ in which the write takes place.
+
+**C2** **Calculate** with two significant figures the minimum amount of energy $Q$ required to write one bit of information.
+
+As you can see, the researchers at HP are still pretty far from perfect...
+
+## Part D. Segnetoelectrics and FeRAM
+
+In most materials, polarization is identically equal to zero in the absence of an external field. However, there is a class of materials called **segnetoelectrics** that remain polarized even when no field is applied. The ability to store information in the direction of polarization and to read and rewrite it easily was the basis for the creation of ferroelectric memory (FeRAM). In this part of the task we will investigate these properties of segnetoelectrics in detail.
+
+The volume energy density $\mathcal{W}$ in a segnetoelectric depends on the polarization $P$ and the external electric field $E$ as:
+
+$$\mathcal{W}(P) = -aP^2 + bP^4 - PE,$$
+
+where $a, b > 0$ are material-specific quantities. The equilibrium values of polarization are determined by local minima of $\mathcal{W}(P)$. In the absence of an external field, there are two equilibrium states of a segnetoelectric with the same energy, transitions between which are impossible, which is used for information storage.
+
+Consider a segnetoelectric material that is initially in the state with negative $P$, and at some moment the external electric field is switched on and starts to increase. Then, when the field reaches some critical value $E_{\mathrm{cr}}$, the local minimum with smaller polarization disappears and the system jumps to the only remaining equilibrium state, dissipating at this moment the energy $\mathcal{Q} = -\Delta\mathcal{W}$ per unit volume in the form of heat. If the external field is then slowly turned off, the system will move to an equilibrium state with positive $P$ (that is, its state will change). This is used to record information.
+
+**D1** Find at what critical field $E_{\mathrm{cr}}$ one of the equilibrium states of the segnetoelectric in the above situation disappears. What is the polarization $P_{\mathrm{cr}}$ in this state just before the ”disappearance”? Express your answers in terms of $a$ and $b$.
+
+**Hint:** consider the second derivative of energy density at the moment of ”disappearance”.
+
+**D2** What polarization $P_{\mathrm{after}}$ will the segnetoelectric have right after the ”jump”? Express your answer in terms of $a$ and $b$.
+
+**D3** Find the dissipated energy $\mathcal{Q}$ per unit volume. Express your answer in terms of $a$ and $b$.
+
+The first commercial FeRAM samples used lead zirconate titanate, for which $a = 1.9\cdot 10^5\ \dfrac{\mathrm{J\cdot m}}{\mathrm{C^2}}$ and $b = 1.7\cdot 10^3\ \dfrac{\mathrm{J\cdot m^5}}{\mathrm{C^4}}$. The memory cells were fabricated on a $l = 350\ \mathrm{nm}$ process, which can be used to estimate the cell volume.
+
+**D4** What amount of energy $Q_{1\ \mathrm{TiB}}$ is required to write $1\ \mathrm{TiB} = 2^{43}$ bits of data to FeRAM? Express your answer in terms of $a$, $b$, and $l$. Calculate this quantity with two significant figures.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A1** $\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U}{\beta R_{\mathrm{off}}}\frac{1}{1+(r-1)x} - \alpha x$
+- **A2** $x_0 = \frac{9}{10(r-1)}\sqrt{\frac{U\xi}{\alpha}}$
+- **A3** $\tau = \frac{\ln(100/19)}{2\alpha} \approx 0.830\alpha^{-1}$
+- **A4** $Q = \frac{U^{3/2}\operatorname{arth}0.9}{R_{\mathrm{off}}\sqrt{\alpha\xi}} \approx 1.47\frac{U^{3/2}}{R_{\mathrm{off}}\sqrt{\alpha\xi}}$
+- **B1** $x(t) = \frac{U}{\beta R_{\mathrm{off}}(\omega^2+\alpha^2)}\left[\alpha\cos\omega t + \omega\sin\omega t\right], \quad \Delta I(\varphi) = \frac{(r-1)\omega U^2}{\beta R_{\mathrm{off}}^2(\omega^2+\alpha^2)}|\sin 2\varphi|$
+- **B2** $s = \frac{\omega U\xi}{2(\omega^2+\alpha^2)}$
+- **B3** $\alpha = 1.15\cdot 10^{3}\ \mathrm{s^{-1}}, \quad \xi = 2.62\cdot 10^{2}\ \mathrm{V^{-1}\cdot s^{-1}}$
+- **C1** 0.00072 s
+- **C2** 0.0001 J
+- **D1** $P_{\mathrm{cr}} = -\sqrt{\frac{a}{6b}}, \qquad E_{\mathrm{cr}} = \frac{2a}{3}\sqrt{\frac{2a}{3b}}$
+- **D2** $P_{\mathrm{after}} = \sqrt{\frac{2a}{3b}}$
+- **D3** $\mathcal{Q} = \frac{3a^2}{4b}$
+- **D4** $Q_{1\ \mathrm{TiB}} = \frac{3\cdot 2^{41} l^3 a^2}{b} = 6.0\ \mathrm{J}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**A1**. By plugging in $I = U/R(x)$ into the second Williams–Strukov equation, we obtain:
+
+$$\boxed{\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U}{\beta R_{\mathrm{off}}}\frac{1}{1+(r-1)x} - \alpha x}$$
+
+**A2**. The stationary value of $x$ can be found by solving the equation $\dfrac{\mathrm{d}x}{\mathrm{d}t} = 0 \implies$
+
+$$\frac{U}{\beta R_{\mathrm{off}}}\frac{1}{1+(r-1)|x|} = \alpha x.$$
+
+From this one can see that in the limit of large $U$ the stationary value of $x$ will also be large, so we can neglect 1 in the denominator. From this we get:
+
+$$x^2 = \frac{U}{\alpha\beta R_{\mathrm{off}}(r-1)} = \frac{U\xi}{\alpha(r-1)^2} \implies$$
+
+$$\boxed{x_0 = \frac{9}{10(r-1)}\sqrt{\frac{U\xi}{\alpha}}}$$
+
+**A3**. In the limits of large $U$ the equation from **A1** can be rewritten in the form:
+
+$$\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U}{\beta R_{\mathrm{off}}(r-1)}\frac{1}{x} - \alpha x \overset{y = \frac{\alpha\beta(r-1)R_{\mathrm{off}}}{U}x^2}{\implies} \frac{\mathrm{d}y}{1-y} = 2\alpha\,\mathrm{d}t \implies$$
+
+$$2\alpha\tau = \int\limits_0^{0.81}\frac{\mathrm{d}y}{1-y}$$
+
+$$\boxed{\tau = \frac{\ln(100/19)}{2\alpha} \approx 0.830\alpha^{-1}}$$
+
+**A4**. Minimal energy is equal to Joule heat dissipation during the off-to-on switch:
+
+$$Q = \int\limits_0^{\tau}\frac{U^2}{R(x(t))}\,\mathrm{d}t = U^2\int\limits_0^{x_0}\frac{\mathrm{d}x}{(r-1)R_{\mathrm{off}}x\left[\frac{U}{\beta(r-1)R_{\mathrm{off}}x} - \alpha x\right]} \overset{z = \sqrt{\frac{\alpha\beta(r-1)R_{\mathrm{off}}}{U}}x}{=} \frac{U^{3/2}}{R_{\mathrm{off}}\sqrt{\alpha\xi}}\int\limits_0^{0.9}\frac{\mathrm{d}z}{1-z^2} \implies$$
+
+$$\boxed{Q = \frac{U^{3/2}\operatorname{arth}0.9}{R_{\mathrm{off}}\sqrt{\alpha\xi}} \approx 1.47\frac{U^{3/2}}{R_{\mathrm{off}}\sqrt{\alpha\xi}}}$$
+
+**B1**. As the term with current in the second Williams–Strukov equation is already the next order by the aforementioned quantity, we can plug in the zeroth-order approximation for current which is simply $\dfrac{U\cos\omega t}{R_{\mathrm{off}}}$, so that:
+
+$$\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U\cos\omega t}{\beta R_{\mathrm{off}}} - \alpha x.$$
+
+Substituting $x(t) = A\cos\omega t + B\sin\omega t$, we obtain:
+
+$$\boxed{x(t) = \frac{U}{\beta R_{\mathrm{off}}(\omega^2+\alpha^2)}\Big[\alpha\cos\omega t + \omega\sin\omega t\Big]}$$
+
+The difference $\delta I(t)$ between actual current and zeroth-order value $U(t)/R_{\mathrm{off}}$ can be calculated as:
+
+$$\delta I(t) = \frac{U\cos\omega t}{R_{\mathrm{off}}}\left[1 - \frac{1}{1+(r-1)x}\right] = \frac{(r-1)U^2}{\beta R_{\mathrm{off}}^2(\omega^2+\alpha^2)}\Big[\alpha\cos\omega t + \omega\sin\omega t\Big]\cos\omega t$$
+
+Then:
+
+$$\Delta I(\varphi) = |\delta I(\varphi/\omega) - \delta I(-\varphi/\omega)| \implies$$
+
+$$\boxed{\Delta I(\varphi) = \frac{(r-1)\omega U^2}{\beta R_{\mathrm{off}}^2(\omega^2+\alpha^2)}|\sin 2\varphi|}$$
+
+**B2**. Because $\max\limits_{\varphi}|\sin 2\varphi| = 1$, and in the zeroth order $I_0 = U/R_{\mathrm{off}} \implies$
+
+$$\boxed{s = \frac{\omega U\xi}{2(\omega^2+\alpha^2)}}$$
+
+**B3**. The dependency of $\dfrac{\omega U}{2s}$ vs $\omega^2$ is linear with a slope of $1/\xi$ and intercept $\alpha^2/\xi$. We can find the answers using the least squares method:
+
+| $f,\ \mathrm{Hz}$ | $s,\ 10^{-3}$ | $\omega,\ \mathrm{rad/s}$ | $\omega^2,\ 10^6\ \mathrm{rad^2/s^2}$ | $\omega U/2s,\ 10^3\ \mathrm{rad\cdot V/s}$ |
+|---|---|---|---|---|
+| 100 | 47.8 | 628 | 0.395 | 6.57 |
+| 250 | 54.1 | 1571 | 2.467 | 14.52 |
+| 500 | 36.7 | 3142 | 9.870 | 42.80 |
+
+$$\frac{1}{\xi} = 3.82\cdot 10^{-3}\ \mathrm{s\cdot V^{-1}}, \quad \frac{\alpha^2}{\xi} = 5.07\cdot 10^{3}\ \mathrm{s^{-1}\cdot V^{-1}} \implies$$
+
+$$\boxed{\alpha = 1.15\cdot 10^{3}\ \mathrm{s^{-1}}, \quad \xi = 2.62\cdot 10^{2}\ \mathrm{V^{-1}\cdot s^{-1}}}$$
+
+**C1**. Using the result of **A3**, we obtain:
+
+$$\boxed{\tau = 7.2\cdot 10^{-4}\ \mathrm{s}}$$
+
+**C2**. Using the result of **A4**, we obtain:
+
+$$\boxed{Q = 1.0\cdot 10^{-4}\ \mathrm{J}}$$
+
+**D1**. Equilibrium states can be found by solving the equation:
+
+$$\frac{\partial\mathcal{W}}{\partial P} = 0, \qquad \frac{\partial^2\mathcal{W}}{\partial P^2} > 0.$$
+
+As we pass the critical field, one of equilibrium states disappears, which means that the derivative $\partial\mathcal{W}/\partial P$ no longer crosses zero at this point. This means that at the critical field this derivative only touches zero, so at this point:
+
+$$\frac{\partial^2\mathcal{W}}{\partial P^2} = 0.$$
+
+And we conclude that one of equilibrium states disappears at the point (don’t forget that we take $P < 0$):
+
+$$\begin{cases} \dfrac{\partial\mathcal{W}}{\partial P} = -2aP + 4bP^3 - E = 0 \\ \dfrac{\partial^2\mathcal{W}}{\partial P^2} = -2a + 12bP^2 = 0 \end{cases} \implies$$
+
+$$\boxed{P_{\mathrm{cr}} = -\sqrt{\frac{a}{6b}}, \qquad E_{\mathrm{cr}} = \frac{2a}{3}\sqrt{\frac{2a}{3b}}}$$
+
+**D2**. We basically need to find a root of a cubic equation
+
+$$-2aP + 4bP^3 - \frac{2a}{3}\sqrt{\frac{2a}{3b}} = 0,$$
+
+when we know its root $P_{\mathrm{cr}} = -\sqrt{a/6b}$ of multiplicity 2. Simlply dividing by $(P - P_{\mathrm{cr}})^2$, we get:
+
+$$\boxed{P_{\mathrm{after}} = \sqrt{\frac{2a}{3b}}}$$
+
+**D3**. Plugging in expressions obtained in the previous tasks:
+
+$$\begin{aligned} \mathcal{Q} &= \mathcal{W}(P_{\mathrm{cr}}) - \mathcal{W}(P_{\mathrm{after}}) = \\ &= -\frac{2a}{3}\sqrt{\frac{2a}{3b}}\left(\sqrt{\frac{2a}{3b}} + \sqrt{\frac{a}{6b}}\right) - a\left(\frac{2a}{3b} + \frac{a}{6b}\right) + b\left(\left[\frac{2a}{3b}\right]^2 + \left[\frac{a}{6b}\right]^2\right) \implies \end{aligned}$$
+
+$$\boxed{\mathcal{Q} = \frac{3a^2}{4b}}$$
+
+**D4**. To write one bit of data we generally need energy of the order:
+
+$$Q_{1\ \mathrm{bit}} = \mathcal{Q}l^3.$$
+
+Then, to write the whole 1 TiB, we would need:
+
+$$\boxed{Q_{1\ \mathrm{TiB}} = \frac{3\cdot 2^{41} l^3 a^2}{b} = 6.0\ \mathrm{J}}$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [T2.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/ISPhO/2024/Theory/T2.pdf)
+· официални решения: [T2_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/ISPhO/2024/Theory/T2_sol.pdf)

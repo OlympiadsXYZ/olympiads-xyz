@@ -1,0 +1,170 @@
+---
+id: owao-2024-theory-t-p4
+source: 'OWAO 2024'
+title: 'Задача 4. Let the Sky Fall'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2024/owao-2024-theory-t.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:23:17.101Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2024 ◇ Theoretical Round ◇ Problems · 20 т.*
+
+<details>
+<summary>Instructions</summary>
+
+1. The theoretical round is 5 hours long and accounts for 40 % of the total grade.
+2. The maximum score for each problem is 20 points. The round total is 180 points.
+3. There are Answer Sheets to write down detailed solutions.
+
+**On each Answer Sheet, please fill in**
+
+- Student code
+- Problem number
+- Page number and total number of pages in the submitted work
+
+4. **Start each problem on a separate Answer Sheet.**
+5. Please write only on the printed side of the sheet. Do not write on the reverse side.
+6. Your work will be scanned. Please use a pen so that the writing is clearly visible on the scan. Duplicate pencil lines with a pen.
+7. Please remember that the jury may not understand your language. It is expected that solutions are written in plain English. Use mathematical expressions, numbers and drawings.
+8. If you wrote something that you do not want to be marked, **just cross it out** like this.
+9. Draft papers will not be graded.
+10. Some problems are quite difficult. Remember that partial solutions are also scored.
+11. A list of constants is given on page 4.
+
+Good luck!
+
+</details>
+
+## Условие
+
+*When the sun rises in the west and sets in the east, when the seas go dry and mountains blow in the wind like leaves... (George R. R. Martin)*
+
+**a)** What should be the minimum eccentricity of the Earth’s orbit so that the Sun sometimes rises in the west? Consider the semi-major axis of the Earth’s orbit and the sidereal day to remain the same as today. Neglect the obliquity of the ecliptic.
+
+**b)** Estimate the maximum surface temperature of the Earth when the Sun rises in the west. Consider the spherical albedo of the Earth to be equal to 0.3.
+
+**c)** Can the Earth have an atmosphere under such conditions? Prove your answer with calculations.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** 0.975
+- **b)** 1600 K
+- **c)** Yes: the RMS velocity of an air molecule (≈ 1.2 km/s ≈ 0.1 v_II) stays below ~20 % of the escape velocity, so the Earth retains its atmosphere (but the rocks begin to melt).
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) The Sun will move in the opposite direction along the celestial sphere if the angular velocity of the planet’s orbital motion around the Sun is greater than the angular velocity of the planet’s rotation.
+
+The maximal angular orbital velocity is reached at the point of perihelion:
+
+$$\omega_{\mathrm{p}} = \frac{v_{\mathrm{p}}}{r_{\mathrm{p}}} = \sqrt{\frac{G\mathfrak{M}_\odot}{a_\oplus} \cdot \frac{1 + e}{1 - e}} \cdot \frac{1}{a_\oplus(1 - e)} = \sqrt{\frac{G\mathfrak{M}_\odot}{a_\oplus^3} \cdot \frac{1 + e}{(1 - e)^3}} = \omega_\oplus^{\mathrm{orb}}\sqrt{\frac{1 + e}{(1 - e)^3}}\,.$$
+
+Here $\omega_\oplus^{\mathrm{orb}} = 360^{\circ}/T_\oplus = 360^{\circ}/365.26^{\mathrm{d}} = 0.986^{\circ}/\mathrm{d}$.
+
+We equate the obtained value to the angular velocity of the Earth’s rotation around its axis $\omega_\oplus^{\mathrm{rot}} = 360^{\circ}/\tau_\oplus = 360^{\circ}/23^{\mathrm{h}}\,56^{\mathrm{m}}\,04^{\mathrm{s}} \approx 361^{\circ}/\mathrm{d}$:
+
+$$361^{\circ} = 0.986^{\circ} \cdot \sqrt{\frac{1 + e}{(1 - e)^3}} \quad\Longrightarrow\quad e = \left(\frac{361}{0.986}\right)^2 \cdot (1 - e)^3 - 1 \qquad (0 \leqslant e < 1).$$
+
+We see an increasing function on the left side of the equation and a decreasing one on the right side. So the equation has only one root. The root can be easily found by brute-force, or one could use the iterative method after rewriting the equation in the form
+
+$$e_{n+1} = 1 - \sqrt[3]{(1 + e_n) \cdot \left(\frac{0.986}{361}\right)^2},$$
+
+in which it converges to $e \approx 0.975$ really quickly from any initial seed value.
+
+b) At perihelion, the distance between the Earth and the Sun is equal to
+
+$$r_p = a_\oplus \cdot (1 - e) = 0.025\ \mathrm{au} = 3.74 \cdot 10^6\ \mathrm{km} \gg R_\odot.$$
+
+We can write the heat balance equation for the Earth at perihelion:
+
+$$\frac{L_\odot}{4\pi r_p^2} \cdot \pi R_\oplus^2 \cdot (1 - A) = 4\pi R_\oplus^2\sigma\Theta^4$$
+
+$$\Longrightarrow\quad \Theta = \sqrt[4]{\frac{L_\odot(1 - A)}{16\pi r_p^2\sigma}} = \sqrt[4]{\frac{3.828 \cdot 10^{26}\ \mathrm{W} \times (1 - 0.3)}{16\pi \times 3.74 \cdot 10^9\ \mathrm{m} \times 5.67 \cdot 10^{-8}\ \mathrm{W/(m^2 \cdot K^4)}}} \approx 1.6 \cdot 10^3\ \mathrm{K}.$$
+
+Here we consider that the Earth radiates as a black body (mainly in the infrared part of the spectrum), while in the optical spectral range it reflects $A = 0.3$ of the incoming energy flux.
+
+c) The root mean square (RMS) velocity of an “average” air molecule (its molar mass is $\mu = 0.029\ \mathrm{kg/mol}$) at this temperature is
+
+$$v = \sqrt{\frac{3\mathfrak{R}\Theta}{\mu}} = \sqrt{\frac{3 \times 8.314\ \mathrm{J/(mol \cdot K)} \times 1.6 \cdot 10^3\ \mathrm{K}}{0.029\ \mathrm{kg/mol}}} \approx 1.2\ \mathrm{km/s} \approx 0.1\,v_{\mathrm{II}}\,,$$
+
+where $v_{\mathrm{II}} = 11.2\ \mathrm{km/s}$ is the escape velocity for the Earth’s surface.
+
+The atmosphere is considered stable if the RMS velocity does not exceed $\sim 20$ % of the escape velocity. Thus, the Earth will retain its atmosphere, but the rocks will begin to melt.
+
+**Marking Scheme:**
+
+- Question (a)
+    1. Equality of orbital and rotational angular velocities — **2 pt.**
+    2. Equation for $e$ — **3 pt.**
+    3. Finding the root — **3 pt.**
+- Question (b)
+    4. Distance at perihelion — **1 pt.**
+    5. Heat balance equation — **2 pt.**
+    6. $\Theta$ — **3 pt.**
+- Question (c)
+    7. Characteristic velocity of an air molecule — **2 pt.**
+    8. Comparison with $v_{\mathrm{II}}$ — **2 pt.**
+    9. Proper conclusion — **2 pt.**
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| **Universal** | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Boltzmann constant | $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$ |
+| Gas constant | $\mathfrak{R} = 8.314\ \mathrm{J/(mol \cdot K)}$ |
+| Proton mass | $m_p = 1.673 \cdot 10^{-27}\ \mathrm{kg}$ |
+| **Astronomical** | |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+| Hubble constant | $H_0 = 70\ \mathrm{(km/s)/Mpc}$ |
+| **Earth** | |
+| Radius | $R_\oplus = 6371\ \mathrm{km}$ |
+| Mass | $\mathfrak{M}_\oplus = 5.97 \cdot 10^{24}\ \mathrm{kg}$ |
+| Obliquity of ecliptic | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_\oplus = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_\oplus = 0.0167$ |
+| **Hydrogen spectrum** | |
+| Lyman L$\alpha$ | $\lambda_{\mathrm{L}\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{\mathrm{H}\alpha} = 6562.8$ Å |
+| **Jupiter** | |
+| Radius | $R_J = 6.99 \cdot 10^4\ \mathrm{km}$ |
+| Mass | $\mathfrak{M}_J = 1.90 \cdot 10^{27}\ \mathrm{kg}$ |
+| Orbital radius | $a_J = 5.20\ \mathrm{au}$ |
+| Orbital period | $T_J = 11.86\ \mathrm{yr}$ |
+| **Sun** | |
+| Radius | $R_\odot = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Mass | $\mathfrak{M}_\odot = 1.99 \cdot 10^{30}\ \mathrm{kg}$ |
+| Absolute magnitude | $M_\odot = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_\odot = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_\odot = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+| **Emission constants** | |
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ \mathrm{(W/m^2)/K^4}$ |
+| Wien’s displacement | $b = 2898\ \mathrm{\mu m \cdot K}$ |
+| **UBV system** | Mean wavelengths |
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+Number of Siriuses in the Solar system $\geqslant 1$
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO-2024-prob-T.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2024/Theory/OWAO-2024-prob-T.pdf)
+· официални решения: [OWAO-2024-sol-T.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2024/Theory/OWAO-2024-sol-T.pdf)

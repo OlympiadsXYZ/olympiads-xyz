@@ -1,0 +1,143 @@
+---
+id: iom-2016-theory-teor-p2
+source: 'IOM 2016'
+title: 'Задача 2. «Instantaneous switching-on»'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IOM/2016/iom-2016-theory-teor.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:04:50.508Z'
+verifier: 'mechanical'
+---
+
+*The 1st International Olympiad of Metropolises. Physics. 7 September 2016 · 25 т.*
+
+## Условие
+
+A transformer consists of a toroidal ferromagnetic core (magnetic permeability $\mu \gg 1$) of a length $l < 1$ m and cross-sectional area $S$, a primary winding with the number of turns $N_1 = 20$, and a secondary winding with the number of turns $N_2 = 100$. The transformer is a part of the circuit shown in the Figure. The battery emf equals $\mathcal{E} = 24$ V, its internal resistance is $r = 4$ Ohm. The secondary winding is connected to a resistor of $R = 100$ Ohm. Initially there is no current in the windings and the switch K is open. Then the switch is rapidly closed. Its resistance falls to zero very quickly (although not instantly!) during a time much less than $\tau \equiv \dfrac{\mu_0\mu N_1^2 S}{lr} = 0{,}05$ sec. Electrical resistance of both windings is much less than 1 Ohm. Dissipation of magnetic flux within the core is negligible.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-fig1.png" alt="Circuit diagram: a battery in series with the switch K and the primary winding N1 of a transformer with an iron core; the secondary winding N2 is connected to a resistor R." />
+</figure>
+
+**1)** Derive an equation relating a magnetic flux $\Phi$ in the core and currents $I_1$ and $I_2$ in the primary and secondary windings. Consider a positive direction of current flow in both windings to be the same. **[1 т.]**
+
+**2)** Consider the circuit including the primary winding and the internal resistance of the battery. Suppose that during switch closing the voltage across the circuit varies as $U_1 = U(t)$. Write down a complete set of first-order differential equations for functions $I_1(t)$ and $I_2(t)$ which describe currents in the primary and secondary windings. **[2 т.]**
+
+**3)** Specify initial values $I_1(0)$ and $I_2(0)$ (i.e. initial conditions for the set of differential equations derived above). **[1 т.]**
+
+**4)** Determine a ratio of the current in secondary winding at $t_1 = 2\tau$ to the current at $t_2 = 4\tau$ after the voltage $U(t)$ has been switched on. Evaluate an approximate numerical value of the ratio $\dfrac{I_2(2\tau)}{I_2(4\tau)}$. **[3 т.]**
+
+**5)** Determine the maximum value of the current in secondary winding after the switch has been closed. Derive an equation for $I_2^{\max}$ in terms of the quantities specified in the problem and evaluate an approximate numerical value of $I_2^{\max}$. **[4 т.]**
+
+**6)** Determine a time dependence $I_2(t)$ at $t > \tau$ in terms of the quantities specified in the problem. **[3 т.]**
+
+**7)** Plot approximately the dependence $I_2(t)$ from the moment the switch starts being closed to $T = 0{,}5$ sec. **[3 т.]**
+
+**8)** What is the maximum current in the primary winding after the switch has been closed? Derive the equation for $I_1^{\max}$ in terms of the quantities specified in the problem and evaluate the numerical value. **[2 т.]**
+
+**9)** Derive a time dependence $I_1(t)$ for $t > \tau$ in terms of the quantities specified in the problem. **[3 т.]**
+
+**10)** Plot approximately the dependence $I_1(t)$ from the moment the switch starts being closed to $T = 0{,}5$ sec. **[3 т.]**
+
+TOTAL score for the problem is 25 points.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1)** $\Phi = \frac{\mu_0\mu S}{l}[N_1 I_1 + N_2 I_2]$
+- **2)** $\begin{cases} U(t) - N_1\frac{\mu_0\mu S}{l}\left[N_1\frac{dI_1}{dt} + N_2\frac{dI_2}{dt}\right] = I_1 r, \\ -N_2\frac{\mu_0\mu S}{l}\left[N_1\frac{dI_1}{dt} + N_2\frac{dI_2}{dt}\right] = I_2 R. \end{cases}$
+- **3)** $I_1(0) = I_2(0) = 0$
+- **4)** 2.72
+- **5)** $I_2^{\max} \approx \frac{k\mathcal{E}}{R + k^2 r}, \quad k \equiv \frac{N_2}{N_1} = 5$
+- **6)** $I_2(t) \approx -\frac{k\mathcal{E}}{R + k^2 r}\cdot\exp\left[-\frac{R}{(R + k^2 r)\tau}t\right]$
+- **7)** A jump from 0 to about 0,6 A at t ≈ 0, then an exponential decay to almost zero by t = 8τ (see the plot in the official solution).
+- **8)** $I_1^{\max} = \frac{\mathcal{E}}{r}$
+- **9)** $I_1(t) \approx \frac{\mathcal{E}}{r}\left[1 - \frac{R}{R + k^2 r}\exp\left(-\frac{R}{(R + k^2 r)\tau}t\right)\right]$
+- **10)** A rapid rise to about 3 A at t ≈ 0, then an exponential approach to 6 A (see the plot in the official solution).
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**TABLE OF ANSWERS:**
+
+| № | Answer | Maximum score |
+|---|---|---|
+| 1 | $\Phi = \dfrac{\mu_0\mu S}{l}[N_1 I_1 + N_2 I_2]$. | 1 |
+| 2 | $\begin{cases} U(t) - N_1\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\dfrac{dI_2}{dt}\right] = I_1 r, \\ -N_2\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\dfrac{dI_2}{dt}\right] = I_2 R. \end{cases}$ | 2 |
+| 3 | $I_1(0) = I_2(0) = 0$. | 1 |
+| 4 | $\dfrac{I_2(2\tau)}{I_2(4\tau)} \approx e \approx 2{,}72$. | 3 |
+| 5 | $I_2^{\max} \approx \dfrac{k\mathcal{E}}{R + k^2 r} \approx 0{,}6$ A. Here $k \equiv \dfrac{N_2}{N_1} = 5$. | 4 |
+| 6 | $I_2(t) \approx -\dfrac{k\mathcal{E}}{R + k^2 r}\cdot\exp\left[-\dfrac{R}{(R + k^2 r)\tau}t\right]$. | 3 |
+| 7 |  | 3 |
+| 8 | $I_1^{\max} = \dfrac{\mathcal{E}}{r} = 6$ A. | 2 |
+| 9 | $I_1(t) \approx \dfrac{\mathcal{E}}{r}\left[1 - \dfrac{R}{R + k^2 r}\exp\left(-\dfrac{R}{(R + k^2 r)\tau}t\right)\right]$. | 3 |
+| 10 |  | 3 |
+| **Total** | | **25** |
+
+**Proposed Solution:**
+
+1) Since the core length $l < 1$ m the system can be regarded as quasistationary, so a magnetic flux confined in the core and currents in the windings are related as $\Phi = \dfrac{\mu_0\mu S}{l}[N_1 I_1 + N_2 I_2]$ (positive direction in the windings is the same).
+
+2) If the voltage across the primary winding circuit varies during the switch closure as $U_1 = U(t)$, the Kirchhoff’s loop rule yields (a winding resistance is negligible):
+
+$$\begin{cases} U(t) - N_1\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\dfrac{dI_2}{dt}\right] = I_1 r, \\ -N_2\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\dfrac{dI_2}{dt}\right] = I_2 R. \end{cases}$$
+
+3) Since the current in the windings cannot change instantaneously, the initial condition at $t = 0$ (the moment the switch starts being closed) must read $I_1(0) = I_2(0) = 0$.
+
+4) By multiplying the first equation by $N_2$ and the second one by $N_1$ and then subtracting the equations one obtains $I_1 = \dfrac{U(t)}{r} + \dfrac{R}{kr}I_2$ at any time (here $k \equiv \dfrac{N_2}{N_1}$). Substituting this expression into the second equation one obtains the following equation for the current in secondary winding: $\dfrac{dI_2}{dt} + \dfrac{R}{R + k^2 r}\cdot\dfrac{I_2}{\tau} = -\dfrac{k}{R + k^2 r}\dfrac{dU}{dt}$. Therefore, as soon as the voltage across the primary winding circuit reaches the battery emf and remains approximately constant thereafter ($\dfrac{dU}{dt} \approx 0$), the dependence $I_2(t)$ will be approximately given by $I_2(t) \approx C\cdot\exp\left[-\dfrac{R}{(R + k^2 r)\tau}t\right] = C\cdot\exp\left[-\dfrac{t}{2\tau}\right]$. The last equation is evaluated by using numerical values of $R$, $r$, and $k$. One can see that $\dfrac{I_2(2\tau)}{I_2(4\tau)} \approx e \approx 2{,}72$.
+
+5, 6) However, the above expression does not allow one to determine the final answer for $I_2(t)$ right away since the constant $C \ne 0$ must be specified as the current at the end of the voltage «instantaneous switching-on». To do this one has to specify an appropriate function $U(t)$ such that $U(0) = 0$ and $U(\tau_0) = \mathcal{E}$, where $\tau_0 \ll \tau$ is a switching-on time of the battery (the time it takes the switch resistance to drop almost to zero). For example consider $U(t) \approx \mathcal{E}\dfrac{t}{\tau_0}$ during the time interval from zero to $\tau_0$. Then for $t \le \tau_0$ one obtains:
+
+$$\frac{dI_2}{dt} + \frac{R}{R + k^2 r}\cdot\frac{I_2}{\tau} \approx -\frac{k}{R + k^2 r}\cdot\frac{\mathcal{E}}{\tau_0} \Rightarrow \frac{dI_2}{dt} \approx -\frac{k}{R + k^2 r}\cdot\frac{\mathcal{E}}{\tau_0}$$
+
+(the term with $I_2$ can be neglected since $I_2 \le k\dfrac{\mathcal{E}}{R}$ and $\dfrac{\tau_0}{\tau} \ll 1$), where $I_2(0) = 0$. Thus in this time interval $I_2(t) \approx -\dfrac{k}{R + k^2 r}\cdot\dfrac{\mathcal{E}}{\tau_0}t$. This implies that at the end of «instantaneous switching-on» the current in secondary winding is opposite to the current in primary winding and it reaches its maximum equal to $I_2^{\max} \approx \dfrac{k\mathcal{E}}{R + k^2 r} \approx 0{,}6$ A. Subsequently the current decays as
+
+$$I_2(t) \approx -\frac{k\mathcal{E}}{R + k^2 r}\cdot\exp\left[-\frac{R}{(R + k^2 r)\tau}t\right].$$
+
+7) Since $\dfrac{RT}{(R + k^2 r)\tau} = 5$ the current in secondary winding at $T = 0{,}5$ sec is less than 0,7% of the maximum value. An approximate plot of $I_2(t)$ is shown in the figure.
+
+8, 9, 10) Using the expression obtained above one finds for the current in primary winding:
+
+$$I_1(t) \approx \begin{cases} \dfrac{k^2}{R + k^2 r}\dfrac{\mathcal{E}}{\tau_0}t, & t \le \tau_0; \\ \dfrac{\mathcal{E}}{r}\left[1 - \dfrac{R}{R + k^2 r}\exp\left(-\dfrac{R}{(R + k^2 r)\tau}t\right)\right], & t > \tau_0. \end{cases}$$
+
+Thus after the switching-on starts the current in primary winding rapidly (for $\tau_0 \ll \tau$) increases to $\dfrac{k^2\mathcal{E}}{R + k^2 r} \approx 3$ A and then exponentially approaches the «stationary» value $\dfrac{\mathcal{E}}{r} = 6$ A by almost reaching it at the time $T$. An approximate plot of $I_1(t)$ is shown in the figure.
+
+Notice that the maximum current in primary winding after the switch has been closed (the answer to 8)) can be found simply by analysing the «stationary» mode when the currents are constant and emf in both windings is zero.
+
+**Remark**: Of course, the linear dependence used to model $U(t)$ of the «instantaneous switching-on» is not a must: any reasonable model gives the same result providing $\tau_0 \ll \tau$. The linear model is just the simplest. For example one can define $U(t) \approx \mathcal{E}\dfrac{t}{\tau_0}\left(2 - \dfrac{t}{\tau_0}\right)$ for $t \le \tau_0$ (a smooth crossover to $U(t) \approx \mathcal{E}$ for $t > \tau_0$). Quite effective solution follows if one chooses $U(t) = \mathcal{E}\cdot[1 - \exp(-t/\tau_0)]$ (this expression can be used for any $t$, so the system evolution has not to be split in two stages). In this case a bit more complicated differential equation yields the solution:
+
+$$I_2(t) = \frac{k\mathcal{E}}{R + k^2 r}\cdot\left[\exp\left(-\frac{t}{\tau_0}\right) - \exp\left(-\frac{Rt}{(R + k^2 r)\tau}\right)\right], \qquad (*)$$
+
+$$I_1(t) \approx \frac{\mathcal{E}}{r}\cdot\left[1 - \frac{k^2 r}{R + k^2 r}\exp\left(-\frac{t}{\tau_0}\right) - \frac{R}{R + k^2 r}\exp\left(-\frac{Rt}{(R + k^2 r)\tau}\right)\right]. \qquad (**)$$
+
+One can see that qualitatively time dependence of the currents at $\tau_0 \ll \tau$ is the same (e.g. the value of $I_2^{\max}$) as in the «linear» model.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig1.png" alt="Answer-table graph of I2, A (vertical axis 0 to 0,6) versus t/τ (horizontal axis 0 to 8): the current jumps from 0 to about 0,58 A at t = 0 and then decays exponentially to almost zero at t/τ = 8." />
+<figcaption>Answer 7</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig2.png" alt="Answer-table graph of I1, A (vertical axis 0 to 7) versus t/τ (horizontal axis 0 to 8): the current rises almost vertically from 0 to about 3 A at t = 0 and then approaches 6 A exponentially." />
+<figcaption>Answer 10</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig3.png" alt="Graph of I2, A (vertical axis 0 to 0,6) versus t/τ (horizontal axis 0 to 8): a jump to about 0,58 A at t = 0 followed by an exponential decay to almost zero at t/τ = 8." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig4.png" alt="Graph of I1, A (vertical axis 0 to 7) versus t/τ (horizontal axis 0 to 8): a steep rise to about 3 A at t = 0 followed by a slow exponential approach to 6 A." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [teor.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOM%20%D0%9E%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0%20%D0%BC%D0%B5%D0%B3%D0%B0%D0%BF%D0%BE%D0%BB%D0%B8%D1%81%D0%BE%D0%B2/2016/teor.pdf)
+· официални решения: [phys-teor-sol-en.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOM%20%D0%9E%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0%20%D0%BC%D0%B5%D0%B3%D0%B0%D0%BF%D0%BE%D0%BB%D0%B8%D1%81%D0%BE%D0%B2/2016/phys-teor-sol-en.pdf)

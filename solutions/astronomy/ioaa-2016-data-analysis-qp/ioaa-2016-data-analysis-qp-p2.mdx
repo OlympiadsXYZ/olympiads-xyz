@@ -1,0 +1,400 @@
+---
+id: ioaa-2016-data-analysis-qp-p2
+source: 'IOAA 2016'
+title: 'Задача 2. Distance to the Moon'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2016/ioaa-2016-data-analysis-qp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:05:38.971Z'
+verifier: 'mechanical'
+---
+
+*Data Analysis Examination · 50 т.*
+
+## Условие
+
+Geocentric ephemerides of the Moon for September 2015 are given in the form of a table. Each reading was taken at 00:00 UT.
+
+| Date | R.A. (α) h | m | s | Dec. (δ) ° | ' | '' | Angular Size (θ) '' | Phase (ϕ) | Elongation Of Moon |
+|---|---|---|---|---|---|---|---|---|---|
+| Sep 01 | 0 | 36 | 46.02 | 3 | 6 | 16.8 | 1991.2 | 0.927 | 148.6° W |
+| Sep 02 | 1 | 33 | 51.34 | 7 | 32 | 26.1 | 1974.0 | 0.852 | 134.7° W |
+| Sep 03 | 2 | 30 | 45.03 | 11 | 25 | 31.1 | 1950.7 | 0.759 | 121.1° W |
+| Sep 04 | 3 | 27 | 28.48 | 14 | 32 | 4.3 | 1923.9 | 0.655 | 107.9° W |
+| Sep 05 | 4 | 23 | 52.28 | 16 | 43 | 18.2 | 1896.3 | 0.546 | 95.2° W |
+| Sep 06 | 5 | 19 | 37.25 | 17 | 55 | 4.4 | 1869.8 | 0.438 | 82.8° W |
+| Sep 07 | 6 | 14 | 19.23 | 18 | 7 | 26.6 | 1845.5 | 0.336 | 70.7° W |
+| Sep 08 | 7 | 7 | 35.58 | 17 | 23 | 55.6 | 1824.3 | 0.243 | 59.0° W |
+| Sep 09 | 7 | 59 | 11.04 | 15 | 50 | 33.0 | 1806.5 | 0.163 | 47.5° W |
+| Sep 10 | 8 | 49 | 0.93 | 13 | 34 | 55.6 | 1792.0 | 0.097 | 36.2° W |
+| Sep 11 | 9 | 37 | 11.42 | 10 | 45 | 27.7 | 1780.6 | 0.047 | 25.1° W |
+| Sep 12 | 10 | 23 | 57.77 | 7 | 30 | 47.7 | 1772.2 | 0.015 | 14.1° W |
+| Sep 13 | 11 | 9 | 41.86 | 3 | 59 | 28.8 | 1766.5 | 0.001 | 3.3° W |
+| Sep 14 | 11 | 54 | 49.80 | 0 | 19 | 50.2 | 1763.7 | 0.005 | 7.8° E |
+| Sep 15 | 12 | 39 | 50.01 | -3 | 20 | 3.7 | 1763.8 | 0.026 | 18.6° E |
+| Sep 16 | 13 | 25 | 11.64 | -6 | 52 | 18.8 | 1767.0 | 0.065 | 29.5° E |
+| Sep 17 | 14 | 11 | 23.13 | -10 | 9 | 4.4 | 1773.8 | 0.120 | 40.4° E |
+| Sep 18 | 14 | 58 | 50.47 | -13 | 2 | 24.7 | 1784.6 | 0.189 | 51.4° E |
+| Sep 19 | 15 | 47 | 54.94 | -15 | 24 | 14.6 | 1799.6 | 0.270 | 62.5° E |
+| Sep 20 | 16 | 38 | 50.31 | -17 | 6 | 22.8 | 1819.1 | 0.363 | 73.9° E |
+| Sep 21 | 17 | 31 | 40.04 | -18 | 0 | 52.3 | 1843.0 | 0.463 | 85.6° E |
+| Sep 22 | 18 | 26 | 15.63 | -18 | 0 | 41.7 | 1870.6 | 0.567 | 97.6° E |
+| Sep 23 | 19 | 22 | 17.51 | -17 | 0 | 50.6 | 1900.9 | 0.672 | 110.0° E |
+| Sep 24 | 20 | 19 | 19.45 | -14 | 59 | 38.0 | 1931.9 | 0.772 | 122.8° E |
+| Sep 25 | 21 | 16 | 55.43 | -11 | 59 | 59.6 | 1961.1 | 0.861 | 136.2° E |
+| Sep 26 | 22 | 14 | 46.33 | -8 | 10 | 18.3 | 1985.5 | 0.933 | 150.0° E |
+| Sep 27 | 23 | 12 | 43.63 | -3 | 44 | 28.7 | 2002.0 | 0.981 | 164.0° E |
+| Sep 28 | 0 | 10 | 48.32 | 0 | 58 | 58.2 | 2008.3 | 1.000 | 178.3° E |
+| Sep 29 | 1 | 9 | 5.89 | 5 | 38 | 54.3 | 2003.6 | 0.988 | 167.4° W |
+| Sep 30 | 2 | 7 | 39.02 | 9 | 54 | 16.1 | 1988.4 | 0.947 | 153.2° W |
+
+The composite graphic¹ below shows multiple snapshots of the Moon taken at different times during the total lunar eclipse, which occurred in this month. For each shot, the centre of frame was coinciding with the central north-south line of umbra.
+
+For this problem, assume that the observer is at the centre of the Earth and angular size refers to angular diameter of the object / shadow.
+
+¹ Credit: NASA’s Scientific Visualization Studio
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-fig1-v2.png" alt="Composite photograph of the Moon at seven times during the total lunar eclipse, arranged right to left and labelled 00:45, 01:40, 02:15, 02:47, 03:23, 04:00 and 04:50; the Earth’s shadow covers part of the disk in the 01:40 and 04:00 frames." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-fig2-v2.png" alt="Diagram (not to scale) of the Earth with two rays S1R1 and S2R2 from opposite edges of the Sun crossing at the top of the Earth at angle θSun; a small circle labelled Moon on the left." />
+</figure>
+
+**(D2.1)** In September 2015, apogee of the lunar orbit is closest to
+New Moon / First Quarter / Full Moon / Third Quarter.
+Tick the correct answer in the Summary Answersheet. No justification for your answer is necessary. **[3 т.]**
+
+**(D2.2)** In September 2015, the ascending node of lunar orbit with respect to the ecliptic is closest to
+New Moon / First Quarter / Full Moon / Third Quarter.
+Tick the correct answer in the Summary Answersheet. No justification for your answer is necessary. **[4 т.]**
+
+**(D2.3)** Estimate the eccentricity, $e$, of the lunar orbit from the given data. **[4 т.]**
+
+**(D2.4)** Estimate the angular size of the umbra, $\theta_{\mathrm{umbra}}$, in terms of the angular size of the Moon, $\theta_{\mathrm{Moon}}$. Show your working on the image given on the backside of the Summary Answersheet. **[8 т.]**
+
+**(D2.5)** The angle subtended by the Sun at Earth on the day of the lunar eclipse is known to be $\theta_{\mathrm{Sun}} = 1915.0''$. In the figure below, $S_1R_1$ and $S_2R_2$ are rays coming from diametrically opposite ends of the solar disk. The figure is not to scale.
+
+Calculate the angular size of the penumbra, $\theta_{\mathrm{penumbra}}$, in terms of $\theta_{\mathrm{Moon}}$. Assume the observer to be at the centre of the Earth. **[9 т.]**
+
+**(D2.6)** Let $\theta_{\mathrm{Earth}}$ be angular size of the Earth as seen from the centre of the Moon. Calculate the angular size of the Moon, $\theta_{\mathrm{Moon}}$, as would be seen from the centre of the Earth on the eclipse day in terms of $\theta_{\mathrm{Earth}}$. **[5 т.]**
+
+**(D2.7)** Estimate the radius of the Moon, $R_{\mathrm{Moon}}$, in km from the results above. **[3 т.]**
+
+**(D2.8)** Estimate the shortest distance, $r_{\mathrm{perigee}}$, and the farthest distance, $r_{\mathrm{apogee}}$, to the Moon. **[4 т.]**
+
+**(D2.9)** Use appropriate data from September 10 to estimate the distance, $d_{\mathrm{Sun}}$, to the Sun from the Earth. **[10 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(D2.1)** New Moon
+- **(D2.2)** New Moon
+- **(D2.3)** 0.065
+- **(D2.4)** $\theta_{\mathrm{umbra}} \simeq 2.76\,\theta_{\mathrm{Moon}}$
+- **(D2.5)** $\theta_{\mathrm{penumbra}} = 4.67\,\theta_{\mathrm{Moon}}$
+- **(D2.6)** $\theta_{\mathrm{Moon}} = 0.269\,\theta_{\mathrm{Earth}} = \frac{\theta_{\mathrm{Earth}}}{3.72}$
+- **(D2.7)** 1713 km
+- **(D2.8)** r_perigee = 3.52 × 10^5 km; r_apogee = 4.01 × 10^5 km
+- **(D2.9)** 148000000000 m
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**(D2.1)**
+
+From the table we see that the angular size of Moon is smallest close to the New Moon day. Thus, the answer is $\boxed{\text{New Moon}}$. **[3.0]**
+
+**Justification is NOT necessary for full credit.**
+
+**(D2.2)**
+
+As there is an eclipse happening in this month, the lunar nodes are close to Full Moon day and New Moon day. Next we notice that lowest declination of Moon is just 18°. This means that after the New Moon day, the orbit of Moon is above the ecliptic. In other words, the ascending node is near the $\boxed{\text{New Moon}}$. **[4.0]**
+
+**Justification is NOT necessary for full credit.**
+
+**(D2.3)**
+
+The largest angular size of the Moon in the ephemerides is $2008.3''$ and the smallest angular size is $1763.7''$. The distance is inversely proportional to the angular size. Hence ratio of distance at perigee to the distance at apogee is:
+
+$$\text{Ratio} = \frac{r_{\mathrm{perigee}}}{r_{\mathrm{apogee}}} = \frac{\cancel{a}}{1+e} \times \frac{1-e}{\cancel{a}}$$
+
+**[2.0]**
+
+$$\therefore \frac{1-e}{1+e} = \frac{1763.7}{2008.3} = 0.87821$$
+
+$$\therefore e = \frac{1 - 0.87821}{1 + 0.87821} = 0.064846$$
+
+$$\boxed{e \simeq 0.065}$$
+
+**[2.0]**
+
+**Rounding off is done to account for the fact that our data are not continuous, hence exact angular sizes at perigee and apogee are not known.**
+
+**A non-rounded answer will also receive full credit.**
+
+**(D2.4)**
+
+The following construction is shown. **[5.0]**
+
+Only two chords are necessary to determine the centre.
+
+**The credit is divided in two parts for the drawing:**
+
+- **Realisation that centre of umbra circle needs to be determined to find $\theta_{\mathrm{umbra}}$: 1.5**
+- **Accurate determination of centre of umbra circle by geometric construction: 2.5**
+  **Determination of centre of hand-drawn circle: maximum 1.5**
+- **Measuring diameters of umbra and Moon: 0.5 each**
+
+By estimating approximate centre of the shadow in the image, we find out,
+
+$$\frac{\theta_{\mathrm{umbra}}}{\theta_{\mathrm{Moon}}} = \frac{d_{\mathrm{umbra}}}{d_{\mathrm{Moon}}} = \frac{9.1}{3.3} = 2.76$$
+
+**[2.0]**
+
+$$\therefore \boxed{\theta_{\mathrm{umbra}} \simeq 2.76\theta_{\mathrm{Moon}}}$$
+
+**[1.0]**
+
+**Acceptable range: $\pm 0.10$.**
+
+**(D2.5)**
+
+The following diagram needs to be drawn.
+
+Angular size of umbra is $\theta_{\mathrm{umbra}} = 2\measuredangle BOQ$
+
+Angular size of penumbra is $\theta_{\mathrm{penumbra}} = 2\measuredangle AOQ$
+
+We have
+
+$$\begin{aligned} QA &= QP + PA \\ &= OE + PE\tan\theta_1 \\ &\approx R_{\oplus} + d_{\mathrm{Moon}}\theta_1 && \text{since } PA \ll PE \\ &\approx R_{\oplus} + d_{\mathrm{Moon}}\frac{\theta_{\mathrm{Sun}}}{2} && \text{since } \theta_1 \approx \theta_2 \approx \theta_{\mathrm{Sun}}/2 \end{aligned}$$
+
+**[2.0]**
+
+and
+
+$$\begin{aligned} QB &= QP - PB \\ &= OE - PE\tan\theta_2 \\ &\approx R_{\oplus} - d_{\mathrm{Moon}}\theta_2 \\ &\approx R_{\oplus} - d_{\mathrm{Moon}}\frac{\theta_{\mathrm{Sun}}}{2} \end{aligned}$$
+
+**[2.0]**
+
+$$\therefore \theta_{\mathrm{penumbra}} = 2\measuredangle AOQ = 2\tan^{-1}\left(\frac{QA}{OQ}\right) \approx 2\frac{QA}{OQ} \qquad \text{since } QA \ll OQ$$
+
+$$= 2\frac{R_{\oplus} + d_{\mathrm{Moon}}\frac{\theta_{\mathrm{Sun}}}{2}}{d_{\mathrm{Moon}}} = \frac{2R_{\oplus}}{d_{\mathrm{Moon}}} + \theta_{\mathrm{Sun}}$$
+
+**[1.0]**
+
+and
+
+$$\theta_{\mathrm{umbra}} = 2\measuredangle BOQ = 2\tan^{-1}\left(\frac{QB}{OQ}\right) \approx 2\frac{QB}{OQ}$$
+
+$$= 2\frac{R_{\oplus} - d_{\mathrm{Moon}}\frac{\theta_{\mathrm{Sun}}}{2}}{d_{\mathrm{Moon}}} = \frac{2R_{\oplus}}{d_{\mathrm{Moon}}} - \theta_{\mathrm{Sun}}$$
+
+**[1.0]**
+
+Subtracting,
+
+$$\theta_{\mathrm{penumbra}} - \theta_{\mathrm{umbra}} = 2\theta_{\mathrm{Sun}} \Rightarrow \theta_{\mathrm{penumbra}} = \theta_{\mathrm{umbra}} + 2\theta_{\mathrm{Sun}}$$
+
+**[1.0]**
+
+We have,
+
+$$\theta_{\mathrm{umbra}} = 2.76\theta_{\mathrm{Moon}} \qquad \text{and } \theta_{\mathrm{Sun}} = 1915.0''$$
+
+From the given data, $\theta_{\mathrm{Moon}} = 2008.3''$. **[1.0]**
+
+Therefore,
+
+$$\theta_{\mathrm{penumbra}} = 2.76\theta_{\mathrm{Moon}} + 2\frac{1915.0}{2008.3}\theta_{\mathrm{Moon}}$$
+
+$$\boxed{\theta_{\mathrm{penumbra}} = 4.67\theta_{\mathrm{Moon}}}$$
+
+**[1.0]**
+
+**Acceptable range: $4.57\theta_{\mathrm{Moon}}$ to $4.77\theta_{\mathrm{Moon}}$.**
+
+Alternative solution:
+
+In the figure below, rays $HEA$ and $IFC$ are coming from one edge of solar disk and rays $HFD$ and $GEB$ are coming from the opposite edge. The observer ($O$) is assumed to be at the centre of the Earth. The Moon travels along the path $ABCD$ during the course of eclipse.
+
+From figure,
+
+$$\measuredangle AEB = \measuredangle GEH = \measuredangle HFI = \measuredangle DFC = \measuredangle EJF = \theta_{\mathrm{Sun}}$$
+
+**[3.0]**
+
+$$\theta_{\mathrm{umbra}} = \measuredangle BOC = 2.76\theta_{\mathrm{Moon}}$$
+
+**[1.0]**
+
+$$\theta_{\mathrm{penumbra}} = \measuredangle AOD$$
+
+**[1.0]**
+
+$$\measuredangle AOD = \measuredangle AOB + \measuredangle BOC + \measuredangle COD$$
+
+$$\measuredangle AOB = \measuredangle AEB$$
+
+**[1.0]**
+
+$$\measuredangle COD = \measuredangle CFD$$
+
+**[1.0]**
+
+$$\theta_{\mathrm{penumbra}} \simeq \measuredangle AEB + \theta_{\mathrm{umbra}} + \measuredangle CFD = 2\theta_{\mathrm{Sun}} + 2.76\theta_{\mathrm{Moon}} = 2 \times 1915.0'' + 2.76 \times 2008.3''$$
+
+$$\boxed{\theta_{\mathrm{penumbra}} = 9372.9'' = 4.67\theta_{\mathrm{Moon}}}$$
+
+**[2.0]**
+
+**(D2.6)**
+
+From the Moon,
+
+$$\theta_{\mathrm{Earth}} = \frac{2R_{\oplus}}{d_{\mathrm{Moon}}}$$
+
+**[1.0]**
+
+From part (D2.5),
+
+$$\theta_{\mathrm{umbra}} + \theta_{\mathrm{penumbra}} = 2\theta_{\mathrm{Earth}}$$
+
+**[2.0]**
+
+$$\therefore \theta_{\mathrm{Earth}} = \frac{\theta_{\mathrm{umbra}} + \theta_{\mathrm{penumbra}}}{2} = \frac{2.76 + 4.67}{2}\theta_{\mathrm{Moon}} = 3.72\theta_{\mathrm{Moon}}$$
+
+$$\boxed{\theta_{\mathrm{Moon}} = = 0.269\theta_{\mathrm{Earth}}}$$
+
+**[2.0]**
+
+Alternative solution:
+
+Let us say that the Moon is at position of $B$. Thus, angular size of Earth as seen from this position will be, (see figure in the previous part)
+
+$$\theta_{\mathrm{Earth}} = \measuredangle EBF = \measuredangle BFD$$
+
+**[2.0]**
+
+$$= \measuredangle BFC + \measuredangle CFD \simeq \theta_{\mathrm{umbra}} + \theta_{\mathrm{Sun}}$$
+
+**[1.0]**
+
+The angular size of the Full Moon on 28 September as seen in the table is $2008.3''$.
+
+$$\theta_{\mathrm{Earth}} = 2.76 \times 2008.3'' + 1915.0'' = 7453.0''$$
+
+$$\boxed{\theta_{\mathrm{Moon}} = 0.269\theta_{\mathrm{Earth}} = \frac{\theta_{\mathrm{Earth}}}{3.72}}$$
+
+**[2.0]**
+
+**(D2.7)**
+
+Thus, the radius of Moon will be,
+
+$$R_{\mathrm{Moon}} = \frac{R_{\oplus}}{3.72}$$
+
+$$R_{\mathrm{Moon}} = \frac{6371}{3.72}$$
+
+**[1.0]**
+
+$$\boxed{R_{\mathrm{Moon}} \simeq 1713\ \mathrm{km}}$$
+
+**[2.0]**
+
+**Acceptable range: $\pm 20\ \mathrm{km}$.**
+
+**(D2.8)**
+
+The shortest and longest distances will be,
+
+$$r_{\mathrm{perigee}} = \frac{2 \times 1713 \times 206265}{2008.3}$$
+
+$$\boxed{r_{\mathrm{perigee}} = 3.52 \times 10^5\ \mathrm{km}}$$
+
+**[2.0]**
+
+$$r_{\mathrm{apogee}} = \frac{2 \times 1713 \times 206265}{1763.7}$$
+
+$$\boxed{r_{\mathrm{apogee}} = 4.01 \times 10^5\ \mathrm{km}}$$
+
+**[2.0]**
+
+**(D2.9)**
+
+On September 10, phase of Moon is 0.097 and elongation of Moon is 36.2°. Angular size of the Moon on this day is $1792.0''$. Therefore, distance to Moon (from Earth) on September 10 is
+
+$$d_{\mathrm{Moon,10}} = \frac{2 \times 1713 \times 206265}{1792.0} = 3.94 \times 10^5\ \mathrm{km}$$
+
+**[2.0]**
+
+$$\text{Let } \measuredangle EMS = \phi_M, \quad \measuredangle ESM = \phi_S, \quad \measuredangle SEM = \phi_E$$
+
+$$\therefore \phi_E = 36.2^{\circ}$$
+
+**[1.0]**
+
+$$\text{phase} = \frac{1 + \cos\phi_M}{2}$$
+
+**[2.0]**
+
+$$\therefore \phi_M = \cos^{-1}(2 \times \text{ phase } - 1) = \cos^{-1}(2 \times 0.097 - 1) = \cos^{-1}(-0.806) = 143.71^{\circ}$$
+
+**[2.0]**
+
+$$\phi_S = 180^{\circ} - \phi_E - \phi_M = 180^{\circ} - 36.2^{\circ} - 143.71^{\circ} = 0.09^{\circ}$$
+
+**[1.0]**
+
+Now using sine rule,
+
+$$\frac{d_{\mathrm{Sun}}}{d_{\mathrm{Moon,10}}} = \frac{\sin\phi_M}{\sin\phi_S}$$
+
+**[2.0]**
+
+$$\therefore d_{\mathrm{Sun}} = \frac{3.94 \times 10^8 \times \sin 143.71^{\circ}}{\sin 0.09^{\circ}}$$
+
+$$\boxed{d_{\mathrm{Sun}} = 1.48 \times 10^{11}\ \mathrm{m}}$$
+
+**[1.0]**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-sol-fig1-v2.png" alt="The same composite photograph of the Moon during the total lunar eclipse as in the problem, labelled right to left 12:45, 1:40, 2:15, 2:47, 3:23, 4:00 and 4:50." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-sol-fig2-v2.png" alt="Construction on the eclipse image: the umbra edge through points A, B, C, D on the eclipsed Moon images, perpendicular bisectors of chords meeting at the centre O, the umbra circle drawn; notes D_moon = 3.3 cm and D_umbra = 9.1 cm." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-sol-fig3-v3.png" alt="The (D2.5) diagram repeated: rays S1R1 and S2R2 from opposite edges of the Sun crossing at the top of the Earth at angle θSun; a small circle labelled Moon on the left." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-sol-fig4.png" alt="Diagram of Earth (centre O, radius R⊕) with rays S1 and S2 from opposite edges of the Sun touching the Earth at E; points A, P, B, Q on the dashed vertical line labelled Moon’s path; angles θ1, θ2 and θSun; J the apex of the umbra cone on the axis JQO." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-sol-fig5.png" alt="Diagram of Earth (centre O) touched at E and F by rays from points G, H, I of the solar disk; rays cross the dashed Moon’s path at A, B, C, D; angles θSun at E, F and at the umbra apex J." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-sol-fig6.png" alt="Enlarged diagram: Earth centred at O with tangent points E and F, the dashed Moon’s path with points A, B, C, D, apex J with angle θSun, and dashed lines from A, B, C, D to O." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-data-analysis-qp/p2-sol-fig7.png" alt="Triangle Sun S – Moon M – Earth E with angles φS at S, φM at M and φE at E; the dotted circle around the Earth is labelled Moon’s orbit." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Data-analysis-qp.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2016/Data-analysis-qp.pdf)
+· официални решения: [data_analysis_sol.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2016/Data%20Analysis/data_analysis_sol.pdf)

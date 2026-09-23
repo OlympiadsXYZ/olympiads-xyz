@@ -1,0 +1,142 @@
+---
+id: izho-2023-experiment-physexp-eng-p1
+source: 'IZhO 2023'
+title: 'Задача 1. Theoretical part'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IZhO/2023/izho-2023-experiment-physexp-eng.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:12:26.287Z'
+verifier: 'mechanical'
+---
+
+*XIX International Zhautykov Olimpiad/Experimental Competition · 3 февруари 2023 г. · 1 т.*
+
+<Warning title="Бележка към темата">
+Figures 1–3 and Tables 1–3 with the registered signals were printed on the separate Writing sheets, which are not in the archive.
+</Warning>
+
+<details>
+<summary>Please read this first:</summary>
+
+February 3, 2023
+
+1. The duration of the experimental competition is 4 hours. There is one problem.
+2. You can use your own calculator for numerical calculations.
+3. You are provided with white sheets of paper for drafts of your solutions, but these sheets will not be graded. Your final solutions must only be written on the ***Writing sheets***. You can write very short explanations using equations, numbers, letters.
+4. Use only the front side of ***Writing sheets*.** Write only inside the boxed areas.
+5. Graphs must be drawn on ***Writing sheets*** within the graph paper area. All drawings must be done with a pen, not a pencil! If you need additional ***Writing sheets*** with the graph paper, you can find them at the end of your worksheet.
+6. Fill in the boxes at the top of each ***Writing sheet*** with your country (**Country),** your student code (**Student Code**), problem number (**Question Number)**, the progressive number of each ***Writing sheet*** **(Page Number**), and the total number of ***Writing sheets*** used (**Total Number of Pages**). If you use some blank ***Writing sheets*** that you do not wish to be graded, put a large X across the entire sheet and do not include it in your numbering.
+
+</details>
+
+## Условие
+
+## Fourier spectrometer $^{1}$
+
+### Introduction
+
+The main element of the Fourier spectrometer is the Michelson interferometer.
+
+Assume that we have a coherent light source with a certain wavelength. When the difference in the path of the two beams that come to a receiver is a multiple of half the wavelength, that is, the beams come in antiphase, the intensity of the detected intensity is close to zero. When one of the mirrors of the interferometer is moved, the difference in the path of the light rays changes, so the light intensity recorded by the receiver also varies. It is known that the intensity is to be maximum when the path difference is a multiple of the wavelength.
+
+If one of the mirrors of the interferometer moves at a constant speed, then a sinusoidal signal is to be observed at the output of the receiver. The amplitude of the sinusoid is proportional to the light intensity, and its period depends on the wavelength.
+
+The figure shows a setup of the Michelson interferometer. The light flux from source 1 is formed by lenses into a parallel beam of rays and directed to beam splitter 2. Part of the light (half in intensity) passes through the plate to hit the fixed mirror 3 and is completely reflected from it, and then hits the plate 2 again to be reflected from it and hit the screen with the photodetector 5. The second half of the light flux from the source is reflected from the beam-splitting plate 2 to hit the movable mirror 4, it is then reflected to pass through the plate 2 and hit the screen with the photodetector 5. Thus, two coherent waves reflected from the mirrors 3 and 4 fall on the screen. These waves interfere with each other, and the receiver registers the resulting light intensity on the screen as a function of time. This function is written to the computer's memory for further processing.
+
+For illustration, we present a photograph of the registered signal from the specified article.
+
+Let us now imagine that the mirror 4 moves non-uniformly and/or the light source is not monochromatic, i.e. it contains several wavelengths. Thus. at the output a more complex than a sinusoidal signal is to be detected. With appropriate mathematical signal processing, it is possible to obtain the motion law of the mirror 4 or the light spectrum of the source, that is, the light intensity at different wavelengths.
+
+When solving problems, use the following simplifying assumptions and notation:
+
+1) the voltage recorded by the photodetector is proportional to the light intensity, the sensitivity of the photodetector does not depend on the light wavelength; using an electronic circuit, the constant component of the signal is cut off, so only the variable component is reflected on the graphs;
+
+2) the movable mirror oscillates according to a harmonic law $x(t)$ with a frequency of 20 Hz and a constant amplitude; it is assumed that at $x = 0$ , the path difference of the interfering waves is equal to zero;
+
+3) the intensities of the interfering waves at the receiver are equal;
+
+4) the beginning of the signal registration is coordinated with the motion of the movable mirror and always starts at the same position of the mirror;
+
+5) signal registration is carried out at equidistant moments of time and recorded in memory cells, which are further numbered with integer values $t$ . In fact, the registration time $t$ is recorded in relative units.
+
+6) all the figures in the problem show graphs of the dependences of the recorded voltage on the number of the memory cell. To simplify the solution, each graph is accompanied by a table, which indicates the positions of the extrema (maxima and minima) of the registered signal $t_m$ , the extrema themselves are numbered with the letter $m$ .
+
+**Attention!** On separate ***Writing sheets***, the registered signals are given in the form of the dependence of the photodetector voltage on the time, which you are assumed to process. Note that only a part of all signals are given. When solving this problem, you do not need to use all the given numerical data. Use only those that you consider necessary to calculate the required values. When plotting, use a reasonable amount of data (10-15 points), but remember that the accuracy of the calculations increases when the number of data used grows. Be sure to indicate in the solution, which data you use, and be sure to include the formulas used for calculations. For calculations, **you must use** the prepared tables in the ***Writing sheets***. To draw graphs, use the forms given in the same ***Writing sheets***. **Please note that only *Writing sheets* are to be graded**. For draft notes, you can use white sheets of paper, but they will not be graded!
+
+$^{1}$ This problem is developed on the basis of the article « **Homemade Fourier spectrometer»** (https://habr.com/ru/post/253947/).
+
+## Problems
+
+### 1. Theoretical part
+
+The interferometer is illuminated by the monochromatic radiation with the wavelength $\lambda$ .
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2023-experiment-physexp-eng/p1-fig1.png" alt="Scheme of the Michelson interferometer: point source 1 on the left with a lens forming a parallel beam; a diagonal beam-splitting plate 2 in the centre; fixed mirror 3 on the right; movable mirror 4 at the top with the arrow x(t) showing its motion and a downward x axis; photodetector 5 at the bottom with the output signal U(t)." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2023-experiment-physexp-eng/p1-fig2.png" alt="Screenshot of the spectrometer program (tab RAW signals, frequency 20 Hz selected, sensor Si): the upper plot shows the reference signal from -3000 to 2000 over cells 0–8000 with red and orange envelopes; the lower plot shows the measured signal from -300 to 300 with bursts of oscillations and an orange sinusoid; the ANALYSE panel lists REF MAX: 1873 PERIOD: 81, REF MIN: -2311 PERIOD: 11, REF PERIODS: 68, NON SYMMETRIC, REF IS GOOD: OK, Signal MAX: 237, FFT length: 0, MAX of spectrum:, MAX lambda:." />
+</figure>
+
+**1.** Let us denote $I_0$ as the intensity of each of the interfering waves, and the phase shift between the waves as $\Delta\varphi$ . Write down the formula for the intensity $I$ of the resulting wave.
+
+**1.2** Write down the formula for the intensity $I(x)$ of the wave at the receiver as a function of the position of the movable mirror $x$ .
+
+**1.3** Write down formulas indicating at what values $x_m$ of the mirror position the light intensity on the screen is to be maximum or, correspondingly, minimum.
+
+**1.4** Write down the general formula that determines the mirror coordinate $x_m$ , at which the light intensity on the screen is extreme.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1.4** $x_m = m\frac{\lambda}{4}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**1.1** With the interference of two waves of the same intensity, the resulting intensity is determined by the formula
+
+$$I = 2I_0\left(1 + \cos\Delta\varphi\right) = 4I_0\cos^2\frac{\Delta\varphi}{2}. \qquad (1)$$
+
+**1.2** When the mirror is displaced from the initial position by a value $x$ , the path difference changes by $2x$ . In this case, a phase difference arisen between the two waves is equal to
+
+$$\Delta\varphi = \frac{4\pi}{\lambda}x, \qquad (2)$$
+
+therefore, the dependence of the intensity on the coordinate has the form
+
+$$I = 2I_0\cos^2\frac{2\pi}{\lambda}x. \qquad (3)$$
+
+**1.3** The intensity maximum is observed if the path difference is equal to an integer number of wavelengths, i.e.
+
+$$2x_m = m\lambda \quad\Rightarrow\quad x_m = m\frac{\lambda}{2}, \qquad (4)$$
+
+and intensity minima arise under the following condition
+
+$$2x_m = \left(m + \frac{1}{2}\right)\lambda \quad\Rightarrow\quad x_m = \left(m + \frac{1}{2}\right)\frac{\lambda}{2}. \qquad (5)$$
+
+**1.4** The intensity changes from maximum to minimum (and vice versa) when the mirror is shifted by a quarter wavelength. Therefore, the sought coordinates of the mirror are described by the formula
+
+$$x_m = m\frac{\lambda}{4}. \qquad (6)$$
+
+| № | Content | For the part | points |
+|---|---|---|---|
+|  | **1. Theoretical part** (incorrect coefficients - the formula is not graded) | **1,0** |  |
+| 1.1 | formula (1) $I = 2I_0\left(1 + \cos\Delta\varphi\right) = 4I_0\cos^2\frac{\Delta\varphi}{2}$ |  | 0,2 |
+| 1.2 | formula for the phase shift (2) $\Delta\varphi = \frac{4\pi}{\lambda}x$ |  | 0,2 |
+|  | formula for the intensity (3) $I = 4I_0\cos^2\frac{2\pi}{\lambda}x$ |  | 0,2 |
+| 1.3 | formula (4) $x_m = m\frac{\lambda}{2}$ |  | 0,1 |
+|  | formula (5) $x_m = \left(m + \frac{1}{2}\right)\frac{\lambda}{2}$ |  | 0,1 |
+| 1.4 | formula (6) $x_m = m\frac{\lambda}{4}$ |  | 0,2 |
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [IZhO 2023 PhysExp_eng.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2023/Experiment/IZhO%202023%20PhysExp_eng.pdf)
+· официални решения: [IZhO-2023-Exp_multi_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2023/Experiment/IZhO-2023-Exp_multi_sol.pdf)

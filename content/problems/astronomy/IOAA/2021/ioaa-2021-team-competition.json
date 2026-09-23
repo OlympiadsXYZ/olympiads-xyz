@@ -1,0 +1,310 @@
+{
+ "paper": {
+  "id": "ioaa-2021-team-competition",
+  "subject": "astronomy",
+  "competition": "IOAA",
+  "year": 2021,
+  "round": "team",
+  "roundType": "data-analysis",
+  "grade": null,
+  "lang": "en",
+  "title": "Team Competition — Q1 — Group Radio Astronomy (115 points)",
+  "totalPoints": 115,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Астрономия/Състезания/IOAA/2021/Team Competition/Team Competition.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/IOAA/2021/Solutions/Team Competition/Team_Solution.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "9c7ca1f5386f935da1a46d91f4a02c7aa5dbe8614627d1bc1512d30163a7b13c",
+    "solutions": "2f8a9d818a6cc14c7f305f0cf20be4271f4e6a9f585e357762036b29de148724"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "One printed task (Q1, Group Radio Astronomy, 115 points) with printed sub-tasks 1.1 (45.0pt), 1.2 (5.0pt), 2.1 (20.0pt), 3.1 (20.0pt), 4.1 (25.0pt); the printed section headings 'Part 1 (50 points).' … 'Part 4 (25 points).' are kept in the statement / statementAfter at their printed positions. The spreadsheet excerpt on problems page 3 is printed as a screenshot image (no text layer) and is cropped as figure p1-fig3. Kept as printed: 'which contain 21 cm HI line brightness temperature' (agreement error: the subject is 'a .csv file'); the doubled word 'and and' in 2.1; 'which equals to'; the unit written as $kms^{-1}$ and the degree sign $145^{o}$ as printed. Solution 4.1 calls the Norma arm the outer arm and Figure S5's axis label is in Spanish ('longitud galáctica'), both as printed. The official solution's equations (1) and (2) are printed as images and are transcribed here as LaTeX. Figure S4's caption is printed at the top of solutions page 5, the figure itself at the bottom of page 4."
+  }
+ },
+ "problems": [
+  {
+   "id": "ioaa-2021-team-competition-p1",
+   "number": 1,
+   "title": "Group Radio Astronomy",
+   "points": 115,
+   "problemType": "data-analysis",
+   "statement": "Please read the general instructions in the separate envelope before you start this problem.\n\n**Measuring the Perseus arm using 21 cm HI line data**\n\n**Context**\n\nOur goal here is to kinematically estimate the distance of (part of) the Perseus Arm of the Milky Way (Figure 1), from the center of the Milky Way, based on the line-of-sight velocity of neutral hydrogen gas via its 21 cm emission line.\n\nFor this problem we will use a subset of the Canadian Galactic Plane Survey (CGPS, Figure 2), in which individual radio telescope pointings can each yield the 21 cm line spectrum emitted by all the galactic neutral hydrogen along the line of sight of the radio telescope.\n\nBy translating the Doppler wavelength shift of the 21 cm emission to a line-of-sight velocity, it is then possible to identify individual emission components that correspond to distinct galactic arms. This identification allows for a reconstruction of the shape of each arm with respect to the Galactic Center.\n\nIn the spectrum corresponding to a radio telescope pointing, the Perseus arm can be readily identified because it is often the brightest feature along each line of sight.\n\nThe frame of reference of the radio telescope observations can be taken to be the Sun, located at a distance $R_0$ from the Galactic Center (GC). The telescope has a pointing along a Line of Sight (LOS) defined by a galactic longitude $l$ and a fixed galactic latitude $b = 0$. Along this LOS, the telescope picks up the emission of a parcel of neutral H gas from the Perseus arm that is located at a distance $r$ from the Sun. This same parcel of gas is located at a distance $R$ from the Galactic Center. Let us assume that both the Sun and the gas parcel are in exact circular orbits around the GC. Additionally, it can be assumed that both the Sun and the gas parcel are in the region where the rotation curve of the Milky Way is flat. The measured (Doppler) velocity is denoted as $\\mathrm{v}_{\\mathrm{LOS}}$, which equals to the velocity of the gas parcel along the line of sight.\n\n**Data set**\n\nFor this problem we attach a .csv file (21cmsurvey_full.csv, Excel and other spreadsheet software-readable) which contain 21 cm HI line brightness temperature $(T_b)$ data vs. line-of-sight velocity $(V_{LOS})$ for a range of galactic longitudes (for galactic latitude $= 0$).\n\nRow **1**: Line-of-sight velocities $v_{LOS}$ (173 values, units: $kms^{-1}$).\n\nColumn **1** (after row 1): Galactic Longitude $l$ (1024 values, units: $^{\\circ}$).\n\nRows **2-1025**: 21 cm HI Brightness Temperature $T_b$ (units: $K$). Each row yields the spectrum for the pointing defined by $l$ (row name - column 1). There are thus 1024 spectra. Each spectrum has 173 $T_b$ measurements, one for each $v_{LOS}$.\n\n**Part 1 (50 points).**",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "caption": "Figure 1: Distance-galactic longitude map of the Milky Way arms https://en.wikipedia.org/wiki/Perseus_Arm#/media/File:Milky_Way_Arms_ssc2008-10.svg",
+     "alt": "Artist's face-on map of the Milky Way on a black background with a polar grid centred on the Sun: galactic longitudes 0° (Sagittarius), 30° (Aquila), 60° (Vulpecula), 90° (Cygnus), 120° (Cassiopeia), 150° (Perseus), 180° (Auriga), 210° (Monoceros), 240° (Puppis), 270° (Vela), 300° (Crux), 330° (Norma); distance rings 25 000 ly / 7.7 kpc, 50 000 ly / 15.3 kpc, 75 000 ly / 23.0 kpc. Arms labelled 1. Perseus, 1a. Outer, 1a. New Outer, 2b. Orion-Cygnus, 2. Scutum-Centaurus, 2a. Carina-Sagittarius, 1a. Norma, 1. 3kpc; the Galactic Bar / Long Bar, the Solar System and the yellow Sun's orbit; a wedge marked 'observation shadow of galactic core'.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-fig1.png",
+     "width": 1836,
+     "height": 1657,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       77.4,
+       292.99,
+       517.91,
+       690.34
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "caption": "Figure 2: Canadian galactic plane survey http://www.ras.ucalgary.ca/CGPS",
+     "alt": "Schematic face-on disc of the Galaxy (yellow centre, orange disc, purple spiral arms) with labelled Local arm, Sagittarius arm, Scutum-Crux arm, Norma arm, Outer arm, Perseus arm and 3-5kpc ring; two white arrows from the Sun point to a tilted sky image of the Milky Way with a yellow rectangle marked 'Canadian Galactic Plane Survey' between Cassiopeia and Cygnus.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-fig2.png",
+     "width": 1246,
+     "height": 958,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       147.65,
+       220.59,
+       446.45,
+       450.4
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig3",
+     "alt": "Screenshot of the first 14 rows and columns A–G of the spreadsheet: cell A1 reads 'longitude', row 1 holds line-of-sight velocities 17.499242, 16.674782, 15.850322, 15.025862, 14.201402, 13.376942; column A from row 2 holds longitudes 142.195, 142.2, 142.205, … 142.255; the remaining cells hold brightness temperatures (e.g. row 2: 7.6806355, -3.6773872, 10.236036, 12.072731, 2.6496887, -5.4096527).",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-fig3.png",
+     "width": 1831,
+     "height": 949,
+     "source": {
+      "page": 3,
+      "pdfRect": [
+       77.4,
+       319.9,
+       516.69,
+       547.24
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "1.1",
+     "statement": "Make a spectral plot of $v_{LOS}$ vs. $T_b$ for an adequate number of different values (at least 20 plots) of galactic longitudes covering the full range of observations. Identify the peak line of sight velocity of the Perseus gas parcel at each of the plotted longitudes. Make sure to evenly sample the data set.\n\n**Note:** Use the plot of the first or the last longitude as a guide to identify correct peaks in the plots at the intermediate longitudes.",
+     "points": 45
+    },
+    {
+     "label": "1.2",
+     "statement": "Why does the emission near $v_{LOS} = 0$ (which we associate with our local arm) have a lower brightness temperature than the emission from the Perseus arm?",
+     "points": 5,
+     "statementAfter": "**Part 2 (20 points).**"
+    },
+    {
+     "label": "2.1",
+     "statement": "Derive an expression to calculate $R$ from $v_{LOS}$, $v_{\\odot}$, and $l$. You can assume:\n\n- That both the Solar System and and the Perseus arm gas parcel along the line of sight have a purely tangential velocity, with a negligible radial component.\n- A flat galactic rotation curve, i.e.\n\n$$|\\mathrm{v}| = |\\mathrm{v}_{\\odot}|$$\n\nwhere v is the velocity of the gas parcel.",
+     "points": 20,
+     "answer": {
+      "kind": "expression",
+      "latex": "R = R_0 \\frac{v_{\\odot} \\sin l}{v_{\\mathrm{LOS}} + v_{\\odot} \\sin l}"
+     },
+     "statementAfter": "**Part 3 (20 points).**"
+    },
+    {
+     "label": "3.1",
+     "statement": "Using the $v_{LOS}$ values you found earlier, make a plot of galactic longitude $l$ vs. $R$ (radius with respect to the Galactic Center, in kpc) for the Perseus arm. Find the average distance of the Perseus arm for the given longitude range. Also report the standard deviation in your result. Use the values:\n\n$$v_{\\odot} \\approx 225\\ kms^{-1}$$\n\n$$R_0 \\approx 8\\ \\mathrm{kpc}$$",
+     "points": 20,
+     "answer": {
+      "kind": "numeric",
+      "value": 11.4,
+      "unit": "kpc",
+      "tolerance": 0.2,
+      "note": "Official solution: R = 11.4 ± 0.3 kpc (mean and standard deviation); the marking scheme accepts values within 0.2 kpc of this."
+     },
+     "statementAfter": "**Part 4 (25 points).**"
+    },
+    {
+     "label": "4.1",
+     "statement": "The data also shows 21cm emission from the Norma arm of the Milky Way, which is its outer arm. This emission is most clearly seen around the galactic longitude of $145^{o}$. Repeat the exercise for the Norma arm to find its distance from GC. Use at least 5 data points to determine the distance of the Norma arm from the Galactic Centre (at these galactic longitudes).",
+     "points": 25,
+     "answer": {
+      "kind": "numeric",
+      "value": 14.3,
+      "unit": "kpc",
+      "tolerance": 1,
+      "note": "Official solution: R = 14.3 ± 0.3 kpc (mean and standard deviation of 7 data points); the marking scheme accepts values within 1 kpc of this."
+     }
+    }
+   ],
+   "topics": [
+    "astronomy/radio-astronomy",
+    "astronomy/galactic-structure",
+    "astronomy/data-analysis"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**Solution**\n\n1. (a) (Without the fitted orange lines) - also see spreadsheet in the folder\n\n**Marking Scheme:**\n\n- Check how many plots at different longitudes they include in their solution. Each plot should include the correct scale and axis labeling (see Fig. S1): **1 point per plot. Maximum 20 points.**\n- If they maintain equal longitude spacing between consecutive plots: **5 points**\n- Correct identification of the 21 cm $v_{\\mathrm{LOS}}$ peak in each spectrum, within ±2 km/s for each of the plots: **1 point per plot**. **Maximum 20 points.**\n  Note: Use Table S1 to check $v_{\\mathrm{LOS}}$ values (not *R*, they are checked later). Keep in mind that they will not necessarily use the same longitude values, so they may be slightly different (within ±2 km/s of the nearest *l* value).\n\n| *l* | $v_{\\mathrm{LOS}}$ | *R* |\n|---|---|---|\n| 142.195 | -42.69 | 11.586 |\n| 142.51 | -41.04 | 11.423 |\n| 142.83 | -41.86 | 11.560 |\n| 143.15 | -37.33 | 11.059 |\n| 143.47 | -40.21 | 11.433 |\n| 143.79 | -42.69 | 11.785 |\n| 144.11 | -41.04 | 11.613 |\n| 144.43 | -41.86 | 11.762 |\n| 144.75 | -42.27 | 11.861 |\n| 145.07 | -39.39 | 11.523 |\n| 145.39 | -39.39 | 11.564 |\n| 145.71 | -38.15 | 11.445 |\n| 146.03 | -37.33 | 11.378 |\n| 146.35 | -36.09 | 11.259 |\n| 146.67 | -34.85 | 11.141 |\n| 146.99 | -32.79 | 10.922 |\n| 147.31 | -32.38 | 10.906 |\n\nTable S1. Possible values of $v_{\\mathrm{LOS}}$, *R* for 17 equally spaced longitude values.\n\n(b) Assuming that the Sun is not located at the inner rim of our Local Arm, along any given line of sight we would not be able to pick up all the H emission, as some H belonging to our arm would be behind each line of sight and therefore would not show up in our observations.\n\n**Marking Scheme:**\n\n- The core of the solution is that they realize that each measurement does not include all the gas in our arm, but it does include all the gas in the Perseus and the Norma arm. Therefore, it is not straightforward to compare the amount of gas in our arm vs. the other arms from these measurements. **5 points for a correct answer, 0 points for all other answers.**\n\n2.\n\n**Marking scheme:**\n\n- If they include a clear figure similar to Fig. S2 accompanying their deduction: **5 points**.\n- Check that the deduction follows the same mathematical/geometrical principles as the following:\n\nInspection of the velocity vector components along the LOS in Fig. S2 yields,\n\n$$\\begin{aligned} \\mathbf{v}_{\\mathrm{LOS}} &= (\\mathbf{v} - \\mathbf{v}_{\\odot}) \\cdot \\hat{\\mathbf{v}}_{\\mathrm{LOS}} \\\\ v_{\\mathrm{LOS}} &= v \\cos\\left(\\frac{\\pi}{2} - \\beta\\right) - v_{\\odot} \\cos\\left(l - \\frac{\\pi}{2}\\right) \\\\ v_{\\mathrm{LOS}} &= v \\sin\\beta - v_{\\odot} \\sin l = v_{\\odot} \\sin\\beta - v_{\\odot} \\sin l \\\\ \\therefore \\sin\\beta &= \\frac{v_{\\mathrm{LOS}} + v_{\\odot} \\sin l}{v_{\\odot}} \\qquad (1) \\end{aligned}$$\n\nCorrectly deducing this equation: **10 points**.\n\nBy the law of sines,\n\n$$\\frac{R}{\\sin l} = \\frac{R_0}{\\sin\\beta}$$\n\nSubstituting (1) above,\n\n$$R = R_0 \\frac{v_{\\odot} \\sin l}{v_{\\mathrm{LOS}} + v_{\\odot} \\sin l}\\ . \\qquad (2)$$\n\nCorrectly deducing this equation: **5 points**.\n\n3. Perseus arm radius: *R* = 11.4 ± 0.3 kpc. Mean value and stdev as reported by libreoffice calc.\n\n**Marking scheme:**\n\n- Finding *R* values within 0.2 kpc of data points in Figs. S3 or S4 for more than 5 longitudes: **10 points**.\n- Note: Use Fig. S4 to compare data points in case their longitude values selection does not match the longitudes in Table S1.\n- Check that they include a plot similar to Fig. S3 (properly labeled axes) from their data in part 1 of this problem. They should include at least 5 data points to make their conclusions meaningful and get full marks: **5 points.**\n- Get the final result with standard deviation (11.4 ± 0.3 kpc): **5 points**\n  Note: Their value should not differ by more than 0.2 kpc from this solution.\n\n4. Norma arm radius: *R* = 14.3 ± 0.3 kpc. Mean value and stdev as reported by libreoffice calc from 7 data points near the middle of the longitude range.\n\n**Marking scheme:**\n\n- Finding peak $v_{\\mathrm{LOS}}$ for more than 5 longitudes near *l* = 145º: **8 points**.\n- Finding *R* values within 0.2 kpc of data points in Fig. S5 for more than 5 longitudes: **7 points**.\n- Check that they include a plot similar to Fig. S5 (properly labeled axes) from their data in part 1 of this problem. They should include at least 5 data points to make their conclusions meaningful and get full marks: **5 points.**\n  Note: Use Fig. S4 to compare *R* values.\n- Get the final result with standard deviation (14.3 ± 0.3 kpc): **5 points**\n  Note: Their value should not differ by more than 1 kpc from this solution.",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "caption": "Figure S1. Sample spectra.",
+      "alt": "Three spectra of brightness temperature T_b (K) against v (km/s) from -120 to 20 km/s, titled l = 142.2°, l = 144.75° and l = 147.3°; each blue spectrum has a fitted orange Gaussian with legends 𝒩(μ ≈ -43.0, σ ≈ 6), 𝒩(μ ≈ -42.0, σ ≈ 6) and 𝒩(μ ≈ -34.0, σ ≈ 6) respectively.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig1.png",
+      "width": 1980,
+      "height": 704,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        68.54,
+        138.6,
+        543.47,
+        307.3
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "caption": "Figure S2. Geometric layout with additional angle β.",
+      "alt": "Geometry sketch: the Galactic Center at the bottom, the Sun at distance R0 above it on the inner circle with velocity arrow v⊙ pointing right; the Perseus arm gas parcel on the outer circle at distance r from the Sun along the LOS arrow and at distance R from the Galactic Center; the gas parcel's velocity v is tangent to the outer circle, the blue arrow vLOS points from the parcel towards the Sun; red arcs mark the longitude angle l at the Sun and the angle β at the gas parcel.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig2.png",
+      "width": 1324,
+      "height": 872,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        165.24,
+        67.32,
+        482.85,
+        276.39
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig3",
+      "caption": "Figure S3. Estimated radii of gas parcels in the Perseus arm for 20 pointings in the dataset according to the values in Table S1.",
+      "alt": "Scatter plot of R (kpc), 0 to 14, against Galactic Longitude, 141 to 148: square markers between about 10.9 and 11.9 kpc from l ≈ 142.2 to 147.3, with a horizontal line at the mean value of about 11.4 kpc.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig3.png",
+      "width": 1921,
+      "height": 1014,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        104.67,
+        212.26,
+        565.47,
+        455.4
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig4",
+      "caption": "Figure S4. Estimated radii of gas parcels in the Perseus arm for all pointings in the dataset.",
+      "alt": "Line plot of R (kpc), about 10.2 to 12.8, against l (°) from 142 to 147.3, strongly fluctuating mostly between 10.5 and 12.5 kpc.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig4.png",
+      "width": 1375,
+      "height": 909,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        159.12,
+        492.61,
+        488.97,
+        710.41
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig5",
+      "caption": "Figure S5. Estimated radii of gas parcels of the Norma Arm for all pointings in the dataset.",
+      "alt": "Scatter plot titled 'l vs R' with legend 'l vs. R': R (kpc) from 8 to 20 against 'longitud galáctica' from 142 to 147; points scattered around 10–13 kpc for l below 144, rising to about 14–16 kpc between 144 and 146.5 and to 18–20 kpc near 147.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition/p1-sol-fig5.png",
+      "width": 1131,
+      "height": 687,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        188.51,
+        309.69,
+        459.63,
+        474.39
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    }
+   ]
+  }
+ ]
+}

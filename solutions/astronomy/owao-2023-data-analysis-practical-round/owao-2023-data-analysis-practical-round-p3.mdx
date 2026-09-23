@@ -1,0 +1,148 @@
+---
+id: owao-2023-data-analysis-practical-round-p3
+source: 'OWAO 2023, data-analysis'
+title: 'Задача 3. Eclipse in Siberia'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2023/owao-2023-data-analysis-practical-round.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:17:31.086Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2023 ◇ Practical Round ◇ Problems*
+
+## Условие
+
+There are two videos:
+
+- `eclipse1.mp4` or `https://youtu.be/nsWVPedsQNk`
+- `eclipse2.mp4` or `https://youtu.be/Lw7GGm0U94g`
+
+showing conditions for the annular solar eclipse on July 25, 2120. The greatest eclipse will be observed in Siberia, geographical region in Russia. Estimate the altitude of the Sun at the point where the maximum magnitude of the eclipse will be observed (if the weather is good).
+
+*Hint:* the center of lunar antumbra reaching the Earth’s surface is marked by green cross.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2023-data-analysis-practical-round/p3-fig1.png" alt="Schematic of a solar eclipse: the Sun on the left, a small globe in the middle casting a dark umbra cone and grey penumbra/antumbra regions to the right, bounded by red and blue tangent lines; three inset sky views labelled Penumbra (partially covered Sun), Umbra (fully covered Sun) and Antumbra (annular ring) are connected by red lines to the corresponding regions." />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 4 °
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:**
+
+One of the videos shows Earth and lunar shadow as it seen from some point of view located in the direction to the Sun. The center of antumbra goes from point $A$ to point $B$. Maximal magnitude of eclipse is observed at point $M$, the closest to the Moon.
+
+For observer in point $C$ (also in $A$ and $B$) the Sun is located on the horizon. The altitude of the Sun at point $M$ is equal$^{1}$ to the angular measure of arc $MC$.
+
+The duration of the eclipse is short, so we can assume that the shadow’s velocity is equal to the orbital velocity of the Moon moving parallel to the picture plane:
+
+$$v = \sqrt{\frac{G\mathfrak{M}_{\oplus}}{a_{\text{☾}}}} = \sqrt{\frac{(6.67 \cdot 10^{-11}) \times (5.97 \cdot 10^{24})}{3.84 \cdot 10^8}} \approx 1.0 \cdot 10^3\ \mathrm{m/s} = 1\ \mathrm{km/s}.$$
+
+From the video, we can find that the center of the lunar shadow reaches the surface of the Earth at about 14:31 UT and leaves it at 14:47 UT. Thus, this path takes 16 minutes and the line segment
+
+$$|AB| = vt = 1 \times (16 \cdot 60) = 960\ \mathrm{km}.$$
+
+Now we can determine the arcs:
+
+$$|AB|^2 = 2R^2 - 2R^2\cos\angle AOB,$$
+
+$$\angle AOB = \arccos\left(1 - \frac{|AB|^2}{2R^2}\right) = \arccos\left(1 - \frac{960^2}{2 \cdot 6371^2}\right) = 8.6^{\circ}.$$
+
+It is obvious that the arcs $AC$, $BC$ and $MC$ are equal due to symmetry, so
+
+$$h_{\odot} = \frac{\angle AOB}{2} \approx 4^{\circ}.$$
+
+$^{1}$ The horizontal parallax of the Sun is negligible.
+
+**Marking Scheme:**
+
+- Using the author’s method:
+  - Duration of shadow passage — **5 pt.**
+  - Arc length in degrees — **5 pt.**
+  - Geometry of the problem — **5 pt.**
+  - Altitude of the Sun: evaluation + final result — **2 pt.** + **3 pt.**
+- OR using the coordinates of the Sun:
+  - Accounting for local time correction — **4 pt.**
+  - Rotation is negligible during the annular phase — **2 pt.**
+  - Coordinates of the shadow center at the beginning/middle of the eclipse — **4 pt.**
+  - Declination of the Sun — **2 pt.**
+  - Time to sunset/culmination — **3 pt.**
+  - Altitude of the Sun: evaluation + final result — **2 pt.** + **3 pt.**
+- OR using the position of the terminator *(max. 15 points):*
+  - Distance to the terminator in km and degrees — **5 pt.**
+  - Accounting for latitude distortions on the rectangular map — **5 pt.**
+  - Altitude of the Sun: evaluation + final result — **2 pt.** + **3 pt.**
+
+  This method is rough. The rectangular map projection is unknown.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2023-data-analysis-practical-round/p3-sol-fig1.png" alt="Sphere (the Earth) with centre O; dashed radii R to points A (top) and B (right) on the limb; a shaded lens-shaped region between A and B bounded by the chord AB (dashed), an inner curve through point M and the outer arc through point C." />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| Universal | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Hubble constant | $H_0 = 70\ (\mathrm{km/s})/\mathrm{Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| Earth | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+
+| Moon | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| Sun | |
+|---|---|
+| Radius | $R_{\odot} = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+
+| Emission constants | |
+|---|---|
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ (\mathrm{W/m^2})/\mathrm{K^4}$ |
+| Wien’s displacement | $b = 2898\ \mu\mathrm{m} \cdot \mathrm{K}$ |
+
+| UBV system | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+| Hydrogen spectrum | |
+|---|---|
+| Lyman L$\alpha$ | $\lambda_{L\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{H\alpha} = 6562.8$ Å |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2023_Practical_Round_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Data%20Analysis/OWAO_2023_Practical_Round_Problems.pdf)
+· официални решения: [OWAO_2023_Practical_Round_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2023/Data%20Analysis/OWAO_2023_Practical_Round_Solutions.pdf)

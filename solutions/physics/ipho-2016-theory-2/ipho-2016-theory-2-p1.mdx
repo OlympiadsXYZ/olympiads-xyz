@@ -1,0 +1,339 @@
+---
+id: ipho-2016-theory-2-p1
+source: 'IPhO 2016, theory'
+title: 'Задача 1. Nonlinear Dynamics in Electric Circuits'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/2016/ipho-2016-theory-2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:05:24.329Z'
+verifier: 'mechanical'
+---
+
+*Theory · English (Official) · Q2 — Nonlinear Dynamics in Electric Circuits (10 points) · 10 т.*
+
+## Условие
+
+Please read the general instructions in the separate envelope before you start this problem.
+
+**Introduction**
+
+Bistable non-linear semiconducting elements (e.g. thyristors) are widely used in electronics as switches and generators of electromagnetic oscillations. The primary field of applications of thyristors is controlling alternating currents in power electronics, for instance rectification of AC current to DC at the megawatt scale. Bistable elements may also serve as model systems for self-organization phenomena in physics (this topic is covered in part B of the problem), biology (see part C) and other fields of modern nonlinear science.
+
+**Goals**
+
+To study instabilities and nontrivial dynamics of circuits including elements with non-linear $I-V$ characteristics. To discover possible applications of such circuits in engineering and in modeling of biological systems.
+
+### Part A. Stationary states and instabilities (3 points)
+
+Fig. 1 shows the so-called **S-shaped** $I-V$ characteristics of a non-linear element $X$. In the voltage range between $U_{\mathrm{h}} = 4.00\ \mathrm{V}$ (the holding voltage) and $U_{\mathrm{th}} = 10.0\ \mathrm{V}$ (the threshold voltage) this $I-V$ characteristics is multivalued. For simplicity, the graph on Fig. 1 is chosen to be piece-wise linear (each branch is a segment of a straight line). In particular, the line in the upper branch touches the origin if it is extended. This approximation gives a good description of real thyristors.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2016-theory-2/p1-fig1.png" alt="Piece-wise linear I–V graph on a grid, I [A] from 0 to 10 on the vertical axis and U [V] from 0 to 10 on the horizontal axis. Lower branch from the origin to (10 V, 1 A), marked U_th with a red dashed line at U = 10; middle branch from (10 V, 1 A) up to (4 V, 4 A), marked U_h with a dashed line at U = 4; upper branch from (4 V, 4 A) rising to about (10.5 V, 10.5 A)." />
+<figcaption>Figure 1: $I-V$ characteristics of the non-linear element $X$.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2016-theory-2/p1-fig2.png" alt="Series circuit: the element X (circle with a cross), a resistor R, an inductor L and a battery ℰ connected in one loop." />
+<figcaption>Figure 2: Circuit with element $X$, resistor $R$, inductor $L$ and voltage source $\mathcal{E}$.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2016-theory-2/p1-fig3.png" alt="Circuit: the element X (circle with a cross) connected in parallel with a capacitor C; this block is in series with a resistor R and a battery ℰ." />
+<figcaption>Figure 3: Circuit with element $X$, capacitor $C$, resistor $R$ and voltage source $\mathcal{E}$.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2016-theory-2/p1-fig4.png" alt="Graph of ℰ [V] (vertical axis, 11 to 16) against time t: ℰ = 12 V until t0, jumps (dashed vertical line) to 15 V, stays at 15 V until t0 + τ, then drops back to 12 V." />
+<figcaption>Figure 4: Voltage of the voltage source as a function of time.</figcaption>
+</figure>
+
+**A.1** Using the graph, determine the resistance $R_{\mathrm{on}}$ of the element $X$ on the upper branch of the $I-V$ characteristics, and $R_{\mathrm{off}}$ on the lower branch, respectively. The middle branch is described by the equation
+
+$$I = I_0 - \frac{U}{R_{\mathrm{int}}}. \qquad (1)$$
+
+Find the values of the parameters $I_0$ and $R_{\mathrm{int}}$. **[0,4 т.]**
+
+The element $X$ is connected in series (see Fig.2) with a resistor $R$, an inductor $L$ and an ideal voltage source $\mathcal{E}$. One says that the circuit is in a stationary state if the current is constant in time, $I(t) = \mathrm{const}$.
+
+**A.2** What are the possible numbers of stationary states that the circuit of Fig. 2 may have for a fixed value of $\mathcal{E}$ and for $R = 3.00\ \Omega$? How does the answer change for $R = 1.00\ \Omega$? **[1 т.]**
+
+**A.3** Let $R = 3.00\ \Omega, L = 1.00\ \mu\mathrm{H}$ and $\mathcal{E} = 15.0\ \mathrm{V}$ in the circuit shown in Fig. 2. Determine the values of the current $I_{\mathrm{stationary}}$ and the voltage $V_{\mathrm{stationary}}$ on the non-linear element $X$ in the stationary state. **[0,6 т.]**
+
+The circuit in Fig. 2 is in the stationary state with $I(t) = I_{\mathrm{stationary}}$. This stationary state is said to be stable if after a small displacement (increase or decrease in the current), the current returns towards the stationary state. And if the system keeps moving away from the stationary state, it is said to be unstable.
+
+**A.4** Use numerical values of the question **A.3** and study the stability of the stationary state with $I(t) = I_{\mathrm{stationary}}$. Is it stable or unstable? **[1 т.]**
+
+### Part B. Bistable non-linear elements in physics: radio transmitter (5 points)
+
+We now investigate a new circuit configuration (see Fig. 3). This time, the non-linear element $X$ is connected in parallel to a capacitor of capacitance $C = 1.00\ \mu\mathrm{F}$. This block is then connected in series to a resistor of resistance $R = 3.00\ \Omega$ and an ideal constant voltage source of voltage $\mathcal{E} = 15.0\ \mathrm{V}$. It turns out that this circuit undergoes oscillations with the non-linear element $X$ jumping from one branch of the $I-V$ characteristics to another over the course of one cycle.
+
+**B.1** Draw the oscillation cycle on the $I-V$ graph, including its direction (clockwise or anticlockwise). Justify your answer with equations and sketches. **[1,8 т.]**
+
+**B.2** Find expressions for the times $t_1$ and $t_2$ that the system spends on each branch of the $I-V$ graph during the oscillation cycle. Determine their numerical values. Find the numerical value of the oscillation period $T$ assuming that the time needed for jumps between the branches of the $I-V$ graph is negligible. **[1,9 т.]**
+
+**B.3** Estimate the average power $P$ dissipated by the non-linear element over the course of one oscillation. An order of magnitude is sufficient. **[0,7 т.]**
+
+The circuit in Fig. 3 is used to build a radio transmitter. For this purpose, the element $X$ is attached to one end of a linear antenna (a long straight wire) of length $s$. The other end of the wire is free. In the antenna, an electromagnetic standing wave is formed. The speed of electromagnetic waves along the antenna is the same as in vacuum. The transmitter is using the main harmonic of the system, which has period $T$ of question **B.2**.
+
+**B.4** What is the optimal value of $s$ assuming that it cannot exceed $1\ \mathrm{km}$? **[0,6 т.]**
+
+### Part C. Bistable non-linear elements in biology: neuristor (2 points)
+
+In this part of the problem, we consider an application of bistable non-linear elements to modeling of biological processes. A neuron in a human brain has the following property: when excited by an external signal, it makes one single oscillation and then returns to its initial state. This feature is called excitability. Due to this property, pulses can propagate in the network of coupled neurons constituting the nerve systems. A semiconductor chip designed to mimic excitability and pulse propagation is called a *neuristor* (from neuron and transistor).
+
+We attempt to model a simple neuristor using a circuit that includes the non-linear element $X$ that we investigated previously. To this end, the voltage $\mathcal{E}$ in the circuit of Fig. 3 is decreased to the value $\mathcal{E}' = 12.0\ \mathrm{V}$. The oscillations stop, and the system reaches its stationary state. Then, the voltage is rapidly increased back to the value $\mathcal{E} = 15.0\ \mathrm{V}$, and after a period of time $\tau$ (with $\tau < T$) is set again to the value $\mathcal{E}'$ (see Fig. 4). It turns out that there is a certain critical value $\tau_{\mathrm{crit.}}$, and the system shows qualitatively different behavior for $\tau < \tau_{\mathrm{crit}}$ and for $\tau > \tau_{\mathrm{crit}}$.
+
+**C.1** Sketch the graphs of the time dependence of the current $I_X(t)$ on the non-linear element $X$ for $\tau < \tau_{\mathrm{crit}}$ and for $\tau > \tau_{\mathrm{crit}}$. **[1,2 т.]**
+
+**C.2** Find the expression and the numerical value of the critical time $\tau_{\mathrm{crit}}$ for which the scenario switches. **[0,6 т.]**
+
+**C.3** Is the circuit with $\tau = 1.00 \times 10^{-6}\ \mathrm{s}$ a neuristor? **[0,2 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A.2** For R = 3.00 Ω, one always gets exactly one intersection. For R = 1.00 Ω, one gets 1, 2 or 3 intersections depending on the value of ℰ.
+- **A.3** I_stationary = 3.00 A, U_stationary = 6.00 V
+- **A.4** stable
+- **B.2** t_on = 2.41·10^-6 s, t_off = 3.71·10^-6 s, T = 6.12·10^-6 s
+- **B.3** 19.3 W
+- **B.4** 459 m
+- **C.2** 9.36e-7 s
+- **C.3** Yes
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+## Problem 2 : Solution/marking scheme – Nonlinear Dynamics in Electric Circuits *(10 points)*
+
+### Part A. Stationary states and instabilities (3 points)
+
+**Solution A1:** **[0.4]**
+
+By looking at the $I-V$ graph, we obtain
+
+$$R_{\mathrm{off}} = 10.0\,\Omega, \qquad \mathbf{0.1}$$
+
+$$R_{\mathrm{on}} = 1.00\,\Omega, \qquad \mathbf{0.1}$$
+
+$$R_{\mathrm{int}} = 2.00\,\Omega, \qquad \mathbf{0.1}$$
+
+$$I_0 = 6.00\,A. \qquad \mathbf{0.1}$$
+
+*Note: No penalty for the number of digits in this question*
+
+**Solution A2:** **[1]**
+
+Kirchoff law for the circuit ($U$ is the voltage of the bistable element):
+
+$$\mathcal{E} = IR + U \qquad \mathbf{0.1}$$
+
+This yields
+
+$$I = \frac{\mathcal{E} - U}{R} \qquad \mathbf{0.1}$$
+
+Hence, stationary states of the circuit are intersections of the line defined by this equation and the $I-V$ graph of $X$. **0.2**
+
+For $R = 3.00\,\Omega$, one always gets exactly one intersection. **0.2**
+
+For $R = 1.00\,\Omega$, one gets 1, 2 or 3 intersections depending on the value of $\mathcal{E}$. **0.4**
+
+The following table summarizes the number of points granted for possible answers to the last subquestion with $R = 1.00\,\Omega$:
+
+| Possible answer | 1 | 2 | 3 | 1,3 | 1,2 | 2,3 | 1,2,3 |
+|---|---|---|---|---|---|---|---|
+| Points | 0 | 0 | 0.2 | 0.3 | 0 | 0.2 | 0.4 |
+
+**Solution A3:** **[0.6]**
+
+The stationary state is on the intermediate branch, one can thus use the corresponding equation: **0.2**
+
+$$I_{\mathrm{stationary}} = \frac{\mathcal{E} - R_{\mathrm{int}} I_0}{R - R_{\mathrm{int}}} \qquad \mathbf{0.1}$$
+
+$$= 3.00\,A \qquad \mathbf{0.1}$$
+
+$$U_{\mathrm{stationary}} = R_{\mathrm{int}}(I_0 - I) \qquad \mathbf{0.1}$$
+
+$$= 6.00\,V \qquad \mathbf{0.1}$$
+
+*Extra (non-physical) stationary states on the switched on and/or switched off branches lead to a penalty of 0.2 point.*
+
+**Solution A4:** **[1]**
+
+Any correct modeling such as the following: **0.5**
+
+The Kirchoff law for the circuit reads
+
+$$\mathcal{E} = IR + U_X + L\frac{dI}{dt} = IR + (I_0 - I)R_{\mathrm{int}} + L\frac{dI}{dt}$$
+
+This implies
+
+$$L\frac{dI}{dt} = \mathcal{E} - I_0 R_{\mathrm{int}} - (R - R_{\mathrm{int}})I$$
+
+The separation between two cases is of importance, especially because of the relative sign of $dI/dt$:
+
+If $I > I_{\mathrm{stationary}}$, we have $dI/dt < 0$ and $I$ decreases. **0.2**
+
+If $I < I_{\mathrm{stationary}}$, we have $dI/dt > 0$ and $I$ increases. **0.2**
+
+*Note: Formulas with time derivatives are not essential, any other correct justification is accepted.*
+
+We conclude that the stationary state is stable. **0.1**
+
+*Note: The checkbox gives 0.1 points if “stable” is checked, regardless of the previous reasoning (also if there is nothing). A wrong reasoning leading to check the “unstable” option doesn’t however give any point for the checkbox.*
+
+### Part B. Bistable non-linear elements in physics and engineering: radio transmitter (5 points)
+
+**Solution B1:** **[1.8]**
+
+A correctly drawn cycle gives 1.2 points, distributed as follows:
+
+- Switched on branch is part of the cycle **0.2**
+- Switched off branch is part of the cycle **0.2**
+- Jumps are vertical (constant $U$) **0.2**
+- Jumps are positioned at $U_{\mathrm{h}}$ and $U_{\mathrm{th}}$ **0.2**
+- The system moves to the left on the switched on branch **0.2**
+- The system moves to the right on the switched off branch **0.2**
+
+Each of the following observations individually gives up to 0.2 points, but their total cannot exceed 0.6:
+
+- $U$ constant during jumps because the charge on the capacitor cannot change instantaneously **0.2**
+- The intermediate branch cannot be part of the cycle because there is a stationary state on it **0.2**
+- Jumps occur at corners of the IV graph because at those points the system has nowhere else to go **0.2**
+- The system moves moves to the left on the switched on branch because it approaches the stable stationary state (which is located outside the IV graph), or argument with the Kirchoff law **0.2**
+- The system moves moves to the right on the switched off branch because it approaches the stable stationary state (which is located outside the IV graph), or argument with the Kirchoff law **0.2**
+
+**Solution B2:** **[1.9]**
+
+Since the non-linear element is oscillating between the switched on and switched off branches we can put $U_X = R_{\mathrm{on/off}} I_X$. On either of the branches, the circuit behaves as a standard RC-circuit with conductance $C$ and resistance $R_{\mathrm{on/off}}R/(R_{\mathrm{on/off}} + R)$ (the resistor and the element $X$ being connected in parallel). Another way to express it is to write the Kirchhoff law for the switched on and switched off branches **0.5**
+
+$$R_{\mathrm{on/off}} RC\,\frac{dI_X}{dt} = \mathcal{E} - (R_{\mathrm{on/off}} + R)I_X$$
+
+The time constant of the circuit is
+
+$$\frac{R_{\mathrm{on/off}} R}{R_{\mathrm{on/off}} + R}\,C.$$
+
+If the branch in question (switched on or switched off) extended indefinitely, after a long time the system would have landed in a stationary state with the voltage
+
+$$U_{\mathrm{on/off}} = \frac{R_{\mathrm{on/off}}}{R_{\mathrm{on/off}} + R}\,\mathcal{E}.$$
+
+Then, the time dependence of the voltage drop on the non-linear element is a sum of the constant term $U_{\mathrm{on/off}}$ and of the exponentially decaying term:
+
+$$U_X(t) = \frac{R_{\mathrm{on/off}}}{R_{\mathrm{on/off}} + R}\,\mathcal{E} + \left(U_{\mathrm{on/off}} - \frac{R_{\mathrm{on/off}}}{R_{\mathrm{on/off}} + R}\,\mathcal{E}\right)\, e^{-\frac{R_{\mathrm{on/off}} + R}{R_{\mathrm{on/off}} RC}\,t}$$
+
+There are 0.5 points distributed as follow for $U_X(t)$:
+
+- Correct exponential **0.2**
+- Correct constant term ($t \to \infty$) **0.1**
+- Correct coefficient in front of the exponential **0.1**
+- Correct equation for $U_X(t)$ **0.1**
+
+Time spent by the system on the switched on branch during one cycle:
+
+$$t_{\mathrm{on}} = \frac{R_{\mathrm{on}} R}{R_{\mathrm{on}} + R}\,C\,\log\left(\frac{U_{\mathrm{th}} - U_{\mathrm{on}}}{U_{\mathrm{h}} - U_{\mathrm{on}}}\right) = 2.41 \cdot 10^{-6}\,s, \qquad \mathbf{0.4}$$
+
+Time spent by the system on the switched off branch during one cycle:
+
+$$t_{\mathrm{off}} = \frac{R_{\mathrm{off}} R}{R_{\mathrm{off}} + R}\,C\,\log\left(\frac{U_{\mathrm{off}} - U_{\mathrm{h}}}{U_{\mathrm{off}} - U_{\mathrm{th}}}\right) = 3.71 \cdot 10^{-6}\,s. \qquad \mathbf{0.4}$$
+
+The total period of oscillations:
+
+$$T = t_{\mathrm{on}} + t_{\mathrm{off}} = 6.12 \cdot 10^{-6}\,s \qquad \mathbf{0.1}$$
+
+*Note: Correct final answers give full points. One may earn points for intermediate steps (see above) for partial answers.*
+
+**Solution B3:** **[0.7]**
+
+Neglect the energy consumed on the switched off branch. The energy consumed on the switched on branch during the cycle is estimated by
+
+$$E = \frac{1}{R_{\mathrm{on}}}\left(\frac{U_h + U_{th}}{2}\right)^2 t_{\mathrm{on}} = 1.18 \cdot 10^{-4}\,\mathrm{J}. \qquad \mathbf{0.4}$$
+
+For the power, this gives an estimate of
+
+$$P \sim \frac{E}{T} = 19.3\,\mathrm{W}. \qquad \mathbf{0.3}$$
+
+*Note:*
+
+- *Formula + answer inside $5\,\mathrm{W} \le P \le 50\,\mathrm{W}$ give full points*
+- *Formula + answer outside the range above but inside $1\,\mathrm{W} \le P \le 100\,\mathrm{W}$ give 0.5 points*
+- *answer outside range but good formula gives 0.4 points*
+
+*Also, the proposed formula is only an example, any other reasonable approximation of the integral of the upper branch should be accepted.*
+
+**Solution B4:** **[0.6]**
+
+The wave length of the radio signal is given by $\lambda = cT = 1.82 \cdot 10^3\,\mathrm{m}$. **0.2**
+
+The optimal length of the antenna is $\lambda/4$ (or $3\lambda/4, 5\lambda/4$ *etc.*) **0.3**
+
+The only choice which is below $1\,\mathrm{km}$ is $s = \lambda/4 = 459\,\mathrm{m}$. **0.1**
+
+*Note: The correct answer $s = \lambda/4 = 459\,\mathrm{m}$ gives full points, and the mistake $s = \lambda/2 = 918\,\mathrm{m}$ only 0.4 pts.*
+
+### Part C. Bistable non-linear elements in biology: neuristor (2 points)
+
+**Solution C1:** **[1.2]**
+
+For $\tilde{\mathcal{E}} = 12.0\,\mathrm{V}$, the steady state of the system is located on the switched off branch:
+
+$$\tilde{U} = \frac{R_{\mathrm{off}}}{R + R_{\mathrm{off}}}\,\tilde{\mathcal{E}} = 9.23\,\mathrm{V}.$$
+
+When the voltage is increased to $\mathcal{E} = 15.0\,\mathrm{V}$, the system starts moving to the right along the switched off branch (in the same way it did in task **B**).
+
+If the voltage drops again before the system reaches the threshold voltage, it will simply return to the stationary state.
+
+If system reaches the threshold voltage, it will jump to the switched on branch, and it will make one oscillations (since $\tau < T$) before the voltage drops again and it returns to the stationary state.
+
+1. Approach to the new stationary state **0.2**
+2. Return to the old stationary state **0.2**
+
+3. Approach to the new stationary state **0.1**
+4. Jump to the upper branch before $t_0 + \tau$ **0.2**
+5. Evolution on the upper branch **0.2**
+6. Jump to the lower branch below the old stationary state **0.1**
+7. Return to the old stationary state (from below) **0.2**
+
+**Solution C2:** **[0.6]**
+
+The time needed to reach the threshold voltage is given by
+
+$$\tau_{\mathrm{crit}} = \frac{R_{\mathrm{off}} R}{R_{\mathrm{off}} + R}\,C\,\log\left(\frac{U_{\mathrm{off}} - \tilde{U}}{U_{\mathrm{off}} - U_{\mathrm{th}}}\right) = 9.36 \cdot 10^{-7}\,s.$$
+
+Note: This is the same formula as for $t_{\mathrm{off}}$ in task **B2**, with $U_h$ replaced by $\tilde{U}$.
+
+- Correct time constant **0.2**
+- Correct choice of voltages **0.2**
+- Correct final formula **0.1**
+- Correct numerical value **0.1**
+
+*Note: Correct final answers give full points. One may earn points for intermediate steps (see above) for partial answers.*
+
+**Solution C3:** **[0.2]**
+
+Since $\tau > \tau_{\mathrm{crit}}$, the system will make one oscillation. We conclude that the system is a neuristor. **0.2**
+
+*Note: 0.2 are given only if “Yes” is checked, regardless of the development of the other tasks.*
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2016-theory-2/p1-sol-fig1.png" alt="Hand-drawn I–V graph on squared paper, axes I (A) and U (V). The oscillation cycle is drawn in red: along the upper branch down-left from about (10 V, 10 A) to (4 V, 4 A), a vertical jump down at U_h to the lower branch, along the lower branch to the right to (10 V, 1 A), and a vertical jump up at U_th back to the upper branch; arrows show the anticlockwise direction. A green load line crosses the middle (blue) branch at the point labelled “stationary state”; the red loop is labelled “oscillation cycle”." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2016-theory-2/p1-sol-fig2.png" alt="Hand-drawn sketch of I_X against t for τ < τ_crit: the current is constant until t0, then rises towards a red dashed level (① approach to the new stationary state), and after t0 + τ decays back to the blue dashed initial level (② return to the original stationary state)." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2016-theory-2/p1-sol-fig3.png" alt="Hand-drawn sketch of I_X against t for τ > τ_crit: after t0 the current rises (③ approach new state), jumps up before t0 + τ (④ jump to upper branch), decays on the upper branch (⑤ evolution on upper branch), jumps down below the initial level (⑥ jump to lower branch) and then rises back to the initial dashed level (⑦ return to stationary state)." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2016/Theory/2.pdf)
+· официални решения: [2_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2016/Theory/2_sol.pdf)

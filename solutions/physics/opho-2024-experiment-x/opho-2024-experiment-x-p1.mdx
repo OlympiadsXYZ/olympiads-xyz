@@ -1,0 +1,173 @@
+---
+id: opho-2024-experiment-x-p1
+source: 'OPhO 2024, experiment'
+title: 'Задача 1. Phase Transition'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2024/opho-2024-experiment-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:14:38.984Z'
+verifier: 'mechanical'
+---
+
+*2024 OPhO Experimental Exam: Ising Model of Ferromagnetism · 30 август 2024 г. · 25 т.*
+
+## Условие
+
+**Introduction**
+
+Paramagnetic materials have atoms with permanent magnetic dipoles, but point in random directions unless aligned by an external magnetic field. On the other hand, magnetic dipoles in ferromagnetic materials align with neighboring dipoles and can have a significant magnetization even without an external field.
+
+Iron is one common example of a material that is ferromagnetic at room temperature. Other materials undergo a phase transition, where they are paramagnetic at higher temperatures, but become ferromagnetic below a certain temperature (the Curie temperature, $T_c$).
+
+In this experiment, we will use the Ising Model and a Monte Carlo simulation to compute and examine the properties of this phase transition.
+
+The Ising Model is a simple approximation for ferromagnetism. We take a 2D lattice of atoms and assume that each dipole points either up ($s_i = 1$) or down ($s_i = -1$) along the same axis. Then we run the Monte Carlo simulation, which uses the following algorithm:
+
+1. Start with a 2D grid of size $L \times L$, where each site represents a spin that can be either $+1$ or $-1$. The initial configuration is randomly assigned.
+2. Energy Calculation: For each spin at position $(i, j)$, calculate the change in energy ($\Delta E$) if the spin is flipped. This is done by considering the interaction of the spin with its nearest neighbors. The energy change $\Delta E$ (in the absence of an external field) is given by:
+$$\Delta E = 2J \times \mathrm{spin} \times \left( \sum_{\mathrm{neighbors}} \mathrm{spin} \right)$$
+where $J$ is the interaction strength.
+3. For each Monte Carlo step:
+    - Randomly select a spin in the grid.
+    - Calculate the energy change $\Delta E$ if this spin were to be flipped.
+    - If $\Delta E < 0$, flip the spin.
+    - If $\Delta E \geq 0$, flip the spin with probability $e^{-\Delta E / k_B T}$, where $T$ is the temperature and $k_B$ is the Boltzmann constant.
+4. Repeat the spin-flipping process for a set number of steps, allowing the system to reach equilibrium.
+5. The final configuration of the grid after the simulation, representing the state of the system at temperature $T$.
+
+**Accessing the Program**
+
+To access the Python notebook, follow this link and make a copy to your own Google Drive. You will be able to perform all the code online without needing to download anything.
+
+**Overview of Code**
+
+There are three cells to run experiments:
+
+1. Varying the temperature via `T_list` which contains all of the simulated temperatures.
+2. Varying the external magnetic field via `B_list` which contains all of the simulated external fields.
+3. Varying both.
+
+**Instructions for Using the Simulation**
+
+- The simulation uses a 50x50 grid to represent the 2D lattice of atoms. This grid is periodic, meaning that it wraps around at the edges, allowing for continuous boundary conditions.
+- You can simulate the system at different temperatures by adjusting the `T_list` or `B_list` variable (based on desired experiment) in the code. The default temperatures provided are 1.0, 2.5, and 5.0.
+- The number of Monte Carlo steps can be modified by changing the `n_steps` variable. The default is set to 100,000 steps, but you may increase or decrease this based on your needs.
+- The interaction strength (`J`) and Boltzmann constant (`k_B`) are set to 1.0 by default. It is recommended not to change these values as they are critical to maintaining the accuracy of the model.
+- Once you’ve adjusted the parameters, run the cells in the notebook to simulate the Ising Model at the chosen temperatures. The results will be visualized, showing the spin configuration of the grid for each temperature.
+
+Below is an image of what the initial simulation should look like for the first cell:
+
+For the second cell:
+
+For the third cell:
+
+**Phase Transition**
+
+For the following questions, include the figure with uncertainty if applicable, your reasoning, and any graphs if used.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-fig1.png" alt="Three square spin-lattice snapshots (red and blue cells) titled T = 1.0, T = 2.5 and T = 5.0: large red and blue domains at T = 1.0, smaller clusters at T = 2.5, a fine random mixture at T = 5.0." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-fig2.png" alt="Three square spin-lattice snapshots titled B = 0, B = 0.01 and B = 0.1: mixed red and blue domains at B = 0 and B = 0.01, almost entirely red with two small blue islands at B = 0.1." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-fig3.png" alt="A 3 by 3 grid of spin-lattice snapshots titled B = 0, T = 1.0; B = 0, T = 5.0; B = 0, T = 10.0; B = 0.01, T = 1.0; B = 0.01, T = 5.0; B = 0.01, T = 10.0; B = 0.1, T = 1.0; B = 0.1, T = 5.0; B = 0.1, T = 10.0. At T = 1.0 large domains appear (almost all red for B = 0.1); at T = 5.0 and T = 10.0 the lattices are finely mixed." />
+</figure>
+
+**a)** Find the value of $T_c$ and explain what criteria you used. **[6 т.]**
+
+**b)** Keeping the external magnetic field constant, plot the energy $E$ of the system as a function of temperature. **[4 т.]**
+
+**c)** Plot the heat capacity $C$ of the system as a function of temperature. What are its maximum and minimum values?
+
+A phase transition is first order in temperature if the energy is discontinuous, second order if the energy is continuous but its first derivative is discontinuous, etc. What is the order of the phase transition here? **[5 т.]**
+
+Consider the net magnetization $M = \mu \sum_{i=1}^{N} s_i$ of the system.
+
+**d)** At temperatures slightly below $T_c$, $M$ can be approximated as $M = \alpha |T_c - T|^{\beta}$. Find values for $\alpha$ and $\beta$. **[6 т.]**
+
+**e)** Set $T = T_c$. Plot how the net magnetization reacts as $B$ is varied. Qualitatively, what do you observe? What happens if $T < T_c$? **[4 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** 2.269
+- **c)** 2nd Order Phase transition
+- **d)** 0.125
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Phase Transition [25pts]**
+
+For the following questions, include the figure with uncertainty if applicable, your reasoning, and any graphs if used.
+
+**a)** Find the value of $T_c$ and explain what criteria you used. **[6pts]**
+
+**Solution Needs:**
+
+1. **[2pts]** Set $B = 0$, vary $T$ and plot measures.
+2. **[3pts]** Measures of switching from ferromagnetism to paramagnetism:
+    - (a) Transition of average magnetization oscillates between -1, 1 to tapering at 0.
+    - (b) Inflection point of absolute value of magnetization.
+    - (c) Transition between $\sim 0$ energy to increasing energy.
+3. **[1pts]** Final Answer: $T_c \in [2.269 \pm 0.5]$ **AND** one of the above is scored.
+
+**b)** Keeping the external magnetic field constant, plot the energy $E$ of the system as a function of temperature. **[4pts]**
+
+**Solution Needs:**
+
+1. **[1pts]** Correct energy Hamiltonian.
+2. **[2pts]** Write code/use method to calculate $E$.
+3. **[1pts]** Plot $T$ vs. $E$. Look smth like this:
+
+**c)** Plot the heat capacity $C$ of the system as a function of temperature. What are its maximum and minimum values?
+
+A phase transition is first order in temperature if the energy is discontinuous, second order if the energy is continuous but its first derivative is discontinuous, etc. What is the order of the phase transition here? **[5pts]**
+
+**Solution Needs:**
+
+1. **[1pts]** Note $C = \frac{\mathrm{d}E}{\mathrm{d}t}$.
+2. **[3pts]** Write code/use method to calculate $C$ and plot $C$ vs. $T$. Look smth like this:
+
+3. **[1pts]** Conclude 2nd Order Phase transition.
+
+Consider the net magnetization $M = \mu \sum_{i=1}^{N} s_i$ of the system.
+
+**d)** At temperatures slightly below $T_c$, $M$ can be approximated as $M = \alpha |T_c - T|^{\beta}$. Find values for $\alpha$ and $\beta$. **[6pts]**
+
+**Solution Needs:**
+
+1. **[3pts]** Plot $\ln(M)$ vs. $\ln(|T_c - T|)$ or equivalent.
+2. **[2pts]** Fit linear line either via code or fitting.
+3. **[1pts]** Conclude $\beta \in (\frac{1}{8} \pm 0.05)$ **AND** equivalent steps to above were followed.
+
+**e)** Set $T = T_c$. Plot how the net magnetization reacts as $B$ is varied. Qualitatively, what do you observe? What happens if $T < T_c$? **[4pts]**
+
+**Solution Needs:**
+
+1. **[2pts]** Plot $M$ vs. $B$ and make observation.
+2. **[2pts]** Plot $M$ vs. $B$ varying both $T, B$. Observations may vary.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-sol-fig1-v4.png" alt="Line plot titled “Temperature vs Energy”: Energy (vertical axis, −9000 to −2000) against Temperature (T) (horizontal axis, 1.0 to 5.0). Points rise from about −8900 at T = 1.0 through a steep increase between T ≈ 2.0 and 3.1 to about −2100 at T = 5.0." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-sol-fig2.png" alt="Line plot titled “Temperature vs Heat Capacity”: Heat Capacity (vertical axis, 0 to 4000) against Temperature (T) (horizontal axis, 1.0 to 5.0). The curve starts near −300 at T = 1.0, peaks at about 4250 near T = 2.27, falls to about 1000 by T = 3.3, with a smaller bump near T = 3.95 and values between about 400 and 1000 up to T = 5.0." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [experiment.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/experiment.pdf)
+· официални решения: [experiment_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/experiment_sol.pdf)

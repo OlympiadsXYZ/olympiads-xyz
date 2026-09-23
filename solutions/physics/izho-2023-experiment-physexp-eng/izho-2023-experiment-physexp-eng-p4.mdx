@@ -1,0 +1,147 @@
+---
+id: izho-2023-experiment-physexp-eng-p4
+source: 'IZhO 2023'
+title: 'Задача 4. Two monochromatic waves'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IZhO/2023/izho-2023-experiment-physexp-eng.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:12:26.287Z'
+verifier: 'mechanical'
+---
+
+*XIX International Zhautykov Olimpiad/Experimental Competition · 3 февруари 2023 г. · 6 т.*
+
+<Warning title="Бележка към темата">
+Figures 1–3 and Tables 1–3 with the registered signals were printed on the separate Writing sheets, which are not in the archive.
+</Warning>
+
+<details>
+<summary>Please read this first:</summary>
+
+February 3, 2023
+
+1. The duration of the experimental competition is 4 hours. There is one problem.
+2. You can use your own calculator for numerical calculations.
+3. You are provided with white sheets of paper for drafts of your solutions, but these sheets will not be graded. Your final solutions must only be written on the ***Writing sheets***. You can write very short explanations using equations, numbers, letters.
+4. Use only the front side of ***Writing sheets*.** Write only inside the boxed areas.
+5. Graphs must be drawn on ***Writing sheets*** within the graph paper area. All drawings must be done with a pen, not a pencil! If you need additional ***Writing sheets*** with the graph paper, you can find them at the end of your worksheet.
+6. Fill in the boxes at the top of each ***Writing sheet*** with your country (**Country),** your student code (**Student Code**), problem number (**Question Number)**, the progressive number of each ***Writing sheet*** **(Page Number**), and the total number of ***Writing sheets*** used (**Total Number of Pages**). If you use some blank ***Writing sheets*** that you do not wish to be graded, put a large X across the entire sheet and do not include it in your numbering.
+
+</details>
+
+## Условие
+
+The interferometer is illuminated by radiation containing two monochromatic waves. The wavelength of one of them is $\lambda_1 = 0.640\ \mu\mathrm{m}$ , and the wavelength $\lambda_2$ of the second is unknown.
+
+Figure 3 shows the dependence of the light intensity on the screen as a function of the time. Table 3 shows the values of the extrema for this particular case.
+
+**4.1** Using the given data, determine with maximum accuracy the wavelength $\lambda_2$ of the second spectral component. Estimate the error $\Delta\lambda_2$ of the found value of the wavelength.
+
+**4.2** Determine the ratio of the intensities of the second and first waves $I_2 / I_1$ .
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **4.1** λ21 = 0,722 μm or λ22 = 0,575 μm (error 0,001 μm)
+- **4.2** I21/I1 ≈ 0,62 or I22/I1 ≈ 1,62
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**4.1** Waves with different wavelengths do not interfere, in this case the recorded signal is the sum of the intensities of these waves. Using formula (3), we write an explicit expression for the dependence of the total intensity on the mirror coordinate and transform it (using the trigonometric formula for the sum of cosines):
+
+$$\begin{aligned} U(x) &= 2I_1\cos\frac{4\pi}{\lambda_1}x + 2I_2\cos\frac{4\pi}{\lambda_2}x = \\ &= 2I_0\left(\cos\frac{4\pi}{\lambda_1}x + \cos\frac{4\pi}{\lambda_2}x\right) + 2\left(I_2 - I_1\right)\cos\frac{4\pi}{\lambda_2}x = \\ &= 4I_1\cos\left(2\pi\left(\frac{1}{\lambda_1} - \frac{1}{\lambda_2}\right)x\right)\cos\left(2\pi\left(\frac{1}{\lambda_1} + \frac{1}{\lambda_2}\right)x\right) + 2\left(I_2 - I_1\right)\cos\frac{4\pi}{\lambda_2}x \end{aligned} \qquad (17)$$
+
+The resulting function describes the modulated signal obtained experimentally. The formula is too complicated to get explicit expressions for the extrema of this function. Therefore, the only way to obtain the required characteristics is to analyze the envelope of the fast-changing signal. Up to a constant term, this envelope is described by the function
+
+$$\bar{U}(x) = U_1\cos\left(2\pi\left(\frac{1}{\lambda_1} - \frac{1}{\lambda_2}\right)x\right) = U_1\cos\left(\frac{2\pi}{\Lambda}x\right), \qquad (18)$$
+
+where we denote
+
+$$\left|\frac{1}{\lambda_1} - \frac{1}{\lambda_2}\right| = \frac{1}{\Lambda}. \qquad (19)$$
+
+Here $\Lambda$ – spatial period of signal modulation (see figure below).
+
+The envelope function (18) is extremal under the condition
+
+$$\frac{2\pi}{\Lambda}x_M = \frac{\pi}{2}M, \qquad (20)$$
+
+where $M = 0, \pm 1, \pm 2\ldots$ – extremum number of the envelope.
+
+In the above signal, 5 such extrema can be distinguished, they are also shown in the figure. It follows from formula (20) that the corresponding coordinate of the mirror is determined by the formula
+
+$$x_M = \frac{\Delta}{4}\left(M - M_0\right). \qquad (21)$$
+
+Here $M_0$ is the “initial” number, which is insignificant for further analysis and determines the start of counting the numbers.
+
+Using the table of extrema, we determine the times $t_M$ at which extrema are observed, then, using formula (14), we calculate the values of the mirror coordinates $x_M$ and plot the dependence $x_M(M)$. These values are shown in Table 3 and on the graph.
+
+Table 3.
+
+| $M$ | $t_M$ | $x_M$, мкм |
+|---:|---:|---:|
+| 1 | 292 | -2,823 |
+| 2 | 397 | -1,392 |
+| 3 | 486 | 0,000 |
+| 4 | 577 | 1,422 |
+| 5 | 679 | 2,811 |
+
+The slope coefficient of this graph, calculated by the least squares, is equal to
+
+$$a = \left(1{,}41 \pm 0{,}01\right)\ \mu\mathrm{m},$$
+
+and as follows from formula (21), the spatial period is equal to
+
+$$\Lambda = \left(5{,}64 \pm 0{,}04\right)\ \mu\mathrm{m}. \qquad (22)$$
+
+Finally, from formula (19) we calculate two possible values of the wavelength : $\lambda_2$ :
+
+$$\begin{aligned} \lambda_{21} &= \left(\frac{1}{\lambda_1} - \frac{1}{\Lambda}\right)^{-1} = 0{,}722\ \mu\mathrm{m} \\ \Delta\lambda_{21} &= \left(\frac{1}{\lambda_1} - \frac{1}{\Lambda}\right)^{-2}\frac{\Delta\Lambda}{\Lambda^2} = \left(\frac{\lambda_1}{\Lambda}\right)^2\Delta\Lambda = 0{,}001\ \mu\mathrm{m} \end{aligned} \qquad (23)$$
+
+$$\begin{aligned} \lambda_{22} &= \left(\frac{1}{\lambda_1} + \frac{1}{\Lambda}\right)^{-1} = 0{,}575\ \mu\mathrm{m} \\ \Delta\lambda_{22} &= \left(\frac{\lambda_2}{\Lambda}\right)^2\Delta\Lambda = 0{,}001\ \mu\mathrm{m} \end{aligned} \qquad (24)$$
+
+**4.2** To estimate the ration of intensities of the two waves, you can use the maximum and minimum values of the modulating function. From formula (17) it follows that
+
+$$\begin{aligned} U_{\max} &\approx 2\left(I_0 + I_1\right) \\ U_{\max} &\approx 2\left|I_0 - I_1\right| \end{aligned} \qquad (25)$$
+
+The values $U_{\max}, U_{\min}$ can be taken approximately from the graph (or from the table) $U_{\max} \approx 170$ , $U_{\min} \approx 40$ . Their ratio is $\gamma = \frac{U_{\max}}{U_{\min}} \approx 4{,}25$ . On the other hand, formulas (25) one gets
+
+$$\gamma = \frac{I_1 + I_2}{\left|I_1 - I_2\right|} \quad\Rightarrow\quad \frac{I_1}{I_0} = \frac{1 - \gamma}{1 + \gamma} \approx 0{,}62. \qquad (26)$$
+
+That is $I_{21} / I_1 \approx 0{,}62$ .
+
+The second option is also possible.: $\frac{I_{22}}{I_1} \approx 1{,}62$ .
+
+| № | Content | For the part | points |
+|---|---|---|---|
+|  | **4. Two monochromatic waves** | **6,0** |  |
+| 4.1 | Formula for the resulting intensity (17) |  | 0,5 |
+|  | Envelope analysis (calculations based on the position of extrema are not graded); |  | 0,5 |
+|  | choice of extremum points of the envelope: - 0,2 for each extremum; |  | 1,0 |
+|  | wavelength calculation formula $\left\lvert\frac{1}{\lambda_0} - \frac{1}{\lambda_1}\right\rvert = \frac{1}{\Lambda}$ |  | 0,3 |
+|  | two solutions for the wavelength: LSM used (averaging over all points) – 0,4 (by using 2 points – 0,2); Numerical values in the ranges 0,70 – 0,74 μm; 0,56 -0,59 μm – 2x0,6; In the ranges (0, 67-0,77 μm; 0,53 – 0,62 μm – 2x0,3;) Out of range – 0; |  | 1,6 |
+|  | error estimation: formula for error of indirect measurements $\Delta\lambda_1 = \left(\frac{\lambda_1}{\Lambda}\right)^2\Delta\Lambda$ - 0,3; Numerical values – 2x0,1; |  | 0,5 |
+| 4.2 | Formula for calculating ratio of intensities: $\frac{I_2}{I_1} = \frac{1 - \gamma}{1 + \gamma}$ |  | 0,3 |
+|  | two solutions for intensities ration (reference to two values); |  | 0,3 |
+|  | calculating ratio of intensities, numerical values: in the ranges 0,5 – 0,7; 1,5-1,7 – 2x0,5; (in the ranges 0,4 – 0,8; 1,4 – 1,8 - 2x0,2) out of ranges - 0 |  | 1,0 |
+|  | TOTAL | **20,0** |  |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2023-experiment-physexp-eng/p4-sol-fig1.png" alt="Recorded signal for two monochromatic waves: voltage from -250 to 250 against the memory cell number from 0 to 1000; a fast oscillation with a slowly varying envelope; dashed horizontal lines mark U_max (about 160) and U_min (about 55); vertical dashed lines mark the envelope extrema M = 1, 2, 3, 4, 5 near cells 292, 397, 486, 577, 679; an arrow between two solid vertical lines marks the spatial period Λ." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2023-experiment-physexp-eng/p4-sol-fig2.png" alt="Graph of the mirror coordinate Xm (vertical axis, from -4,0 to 4,0) against the envelope extremum number M (horizontal axis, from 0 to 6): five points from Table 3 on a straight line from (1; -2,8) through (3; 0) to (5; 2,8)." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [IZhO 2023 PhysExp_eng.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2023/Experiment/IZhO%202023%20PhysExp_eng.pdf)
+· официални решения: [IZhO-2023-Exp_multi_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2023/Experiment/IZhO-2023-Exp_multi_sol.pdf)

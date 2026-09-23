@@ -1,0 +1,254 @@
+{
+ "paper": {
+  "id": "opho-2024-experiment-x",
+  "subject": "physics",
+  "competition": "OPhO",
+  "year": 2024,
+  "round": "experiment",
+  "roundType": "experiment",
+  "grade": null,
+  "lang": "en",
+  "title": "2024 OPhO Experimental Exam: Ising Model of Ferromagnetism",
+  "held": {
+   "from": "2024-08-30",
+   "to": "2024-09-01"
+  },
+  "totalPoints": 25,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/OPhO/2024/experiment.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/OPhO/2024/experiment_sol.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "93511fbf9363be01319ee807e01201b4c7883d747499b8a5245b1062ae12360d",
+    "solutions": "359c4e974cdae204913e7d0f6a04b31df6d98ef193a564df4f9dbf163a5f62f3"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "One top-level task (\"Phase Transition\") with printed parts a)–e), as in the catalogue. The problems document prints no points; the points (25 total; a) 6, b) 4, c) 5, d) 6, e) 4) are taken from the official marking scheme in the solutions document, where they sum to 25. Solutions page 1 repeats the Introduction of the problems document verbatim and is not duplicated in the solution. The printed word \"link\" is a hyperlink to the Python notebook; the URL is not printed. The code identifiers T_list, B_list, n_steps, J and k_B are set in typewriter font and transcribed as code. In the marking scheme for c) the heat capacity is printed as C = dE/dt with a lower-case t (kept verbatim). The heat-capacity plot shows a negative value at T = 1.0 as printed. The marking scheme for d) gives only β; no value of α is printed. The first sentence of the Introduction (\"…have atoms with permanent magnetic dipoles, but point in random directions…\") is kept as printed."
+  }
+ },
+ "problems": [
+  {
+   "id": "opho-2024-experiment-x-p1",
+   "number": 1,
+   "title": "Phase Transition",
+   "points": 25,
+   "problemType": "experiment",
+   "statement": "**Introduction**\n\nParamagnetic materials have atoms with permanent magnetic dipoles, but point in random directions unless aligned by an external magnetic field. On the other hand, magnetic dipoles in ferromagnetic materials align with neighboring dipoles and can have a significant magnetization even without an external field.\n\nIron is one common example of a material that is ferromagnetic at room temperature. Other materials undergo a phase transition, where they are paramagnetic at higher temperatures, but become ferromagnetic below a certain temperature (the Curie temperature, $T_c$).\n\nIn this experiment, we will use the Ising Model and a Monte Carlo simulation to compute and examine the properties of this phase transition.\n\nThe Ising Model is a simple approximation for ferromagnetism. We take a 2D lattice of atoms and assume that each dipole points either up ($s_i = 1$) or down ($s_i = -1$) along the same axis. Then we run the Monte Carlo simulation, which uses the following algorithm:\n\n1. Start with a 2D grid of size $L \\times L$, where each site represents a spin that can be either $+1$ or $-1$. The initial configuration is randomly assigned.\n2. Energy Calculation: For each spin at position $(i, j)$, calculate the change in energy ($\\Delta E$) if the spin is flipped. This is done by considering the interaction of the spin with its nearest neighbors. The energy change $\\Delta E$ (in the absence of an external field) is given by:\n$$\\Delta E = 2J \\times \\mathrm{spin} \\times \\left( \\sum_{\\mathrm{neighbors}} \\mathrm{spin} \\right)$$\nwhere $J$ is the interaction strength.\n3. For each Monte Carlo step:\n    - Randomly select a spin in the grid.\n    - Calculate the energy change $\\Delta E$ if this spin were to be flipped.\n    - If $\\Delta E < 0$, flip the spin.\n    - If $\\Delta E \\geq 0$, flip the spin with probability $e^{-\\Delta E / k_B T}$, where $T$ is the temperature and $k_B$ is the Boltzmann constant.\n4. Repeat the spin-flipping process for a set number of steps, allowing the system to reach equilibrium.\n5. The final configuration of the grid after the simulation, representing the state of the system at temperature $T$.\n\n**Accessing the Program**\n\nTo access the Python notebook, follow this link and make a copy to your own Google Drive. You will be able to perform all the code online without needing to download anything.\n\n**Overview of Code**\n\nThere are three cells to run experiments:\n\n1. Varying the temperature via `T_list` which contains all of the simulated temperatures.\n2. Varying the external magnetic field via `B_list` which contains all of the simulated external fields.\n3. Varying both.\n\n**Instructions for Using the Simulation**\n\n- The simulation uses a 50x50 grid to represent the 2D lattice of atoms. This grid is periodic, meaning that it wraps around at the edges, allowing for continuous boundary conditions.\n- You can simulate the system at different temperatures by adjusting the `T_list` or `B_list` variable (based on desired experiment) in the code. The default temperatures provided are 1.0, 2.5, and 5.0.\n- The number of Monte Carlo steps can be modified by changing the `n_steps` variable. The default is set to 100,000 steps, but you may increase or decrease this based on your needs.\n- The interaction strength (`J`) and Boltzmann constant (`k_B`) are set to 1.0 by default. It is recommended not to change these values as they are critical to maintaining the accuracy of the model.\n- Once you’ve adjusted the parameters, run the cells in the notebook to simulate the Ising Model at the chosen temperatures. The results will be visualized, showing the spin configuration of the grid for each temperature.\n\nBelow is an image of what the initial simulation should look like for the first cell:\n\nFor the second cell:\n\nFor the third cell:\n\n**Phase Transition**\n\nFor the following questions, include the figure with uncertainty if applicable, your reasoning, and any graphs if used.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "Three square spin-lattice snapshots (red and blue cells) titled T = 1.0, T = 2.5 and T = 5.0: large red and blue domains at T = 1.0, smaller clusters at T = 2.5, a fine random mixture at T = 5.0.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-fig1.png",
+     "width": 1730,
+     "height": 585,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       98.55,
+       397.58,
+       513.45,
+       537.75
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "alt": "Three square spin-lattice snapshots titled B = 0, B = 0.01 and B = 0.1: mixed red and blue domains at B = 0 and B = 0.01, almost entirely red with two small blue islands at B = 0.1.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-fig2.png",
+     "width": 1730,
+     "height": 585,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       98.55,
+       556.78,
+       513.45,
+       696.96
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig3",
+     "alt": "A 3 by 3 grid of spin-lattice snapshots titled B = 0, T = 1.0; B = 0, T = 5.0; B = 0, T = 10.0; B = 0.01, T = 1.0; B = 0.01, T = 5.0; B = 0.01, T = 10.0; B = 0.1, T = 1.0; B = 0.1, T = 5.0; B = 0.1, T = 10.0. At T = 1.0 large domains appear (almost all red for B = 0.1); at T = 5.0 and T = 10.0 the lattices are finely mixed.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-fig3.png",
+     "width": 1730,
+     "height": 1773,
+     "source": {
+      "page": 3,
+      "pdfRect": [
+       98.55,
+       48.33,
+       513.45,
+       473.62
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Find the value of $T_c$ and explain what criteria you used.",
+     "points": 6,
+     "answer": {
+      "kind": "numeric",
+      "value": 2.269,
+      "tolerance": 0.5,
+      "note": "Official marking scheme: Final Answer: $T_c \\in [2.269 \\pm 0.5]$."
+     }
+    },
+    {
+     "label": "b)",
+     "statement": "Keeping the external magnetic field constant, plot the energy $E$ of the system as a function of temperature.",
+     "points": 4
+    },
+    {
+     "label": "c)",
+     "statement": "Plot the heat capacity $C$ of the system as a function of temperature. What are its maximum and minimum values?\n\nA phase transition is first order in temperature if the energy is discontinuous, second order if the energy is continuous but its first derivative is discontinuous, etc. What is the order of the phase transition here?",
+     "points": 5,
+     "answer": {
+      "kind": "text",
+      "value": "2nd Order Phase transition"
+     },
+     "statementAfter": "Consider the net magnetization $M = \\mu \\sum_{i=1}^{N} s_i$ of the system."
+    },
+    {
+     "label": "d)",
+     "statement": "At temperatures slightly below $T_c$, $M$ can be approximated as $M = \\alpha |T_c - T|^{\\beta}$. Find values for $\\alpha$ and $\\beta$.",
+     "points": 6,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.125,
+      "tolerance": 0.05,
+      "note": "Value of β only: the official marking scheme gives $\\beta \\in (\\frac{1}{8} \\pm 0.05)$; no value for α is printed."
+     }
+    },
+    {
+     "label": "e)",
+     "statement": "Set $T = T_c$. Plot how the net magnetization reacts as $B$ is varied. Qualitatively, what do you observe? What happens if $T < T_c$?",
+     "points": 4
+    }
+   ],
+   "topics": [
+    "thermodynamics/phase-transitions",
+    "magnetism/ferromagnetism",
+    "computational/monte-carlo"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**Phase Transition [25pts]**\n\nFor the following questions, include the figure with uncertainty if applicable, your reasoning, and any graphs if used.\n\n**a)** Find the value of $T_c$ and explain what criteria you used. **[6pts]**\n\n**Solution Needs:**\n\n1. **[2pts]** Set $B = 0$, vary $T$ and plot measures.\n2. **[3pts]** Measures of switching from ferromagnetism to paramagnetism:\n    - (a) Transition of average magnetization oscillates between -1, 1 to tapering at 0.\n    - (b) Inflection point of absolute value of magnetization.\n    - (c) Transition between $\\sim 0$ energy to increasing energy.\n3. **[1pts]** Final Answer: $T_c \\in [2.269 \\pm 0.5]$ **AND** one of the above is scored.\n\n**b)** Keeping the external magnetic field constant, plot the energy $E$ of the system as a function of temperature. **[4pts]**\n\n**Solution Needs:**\n\n1. **[1pts]** Correct energy Hamiltonian.\n2. **[2pts]** Write code/use method to calculate $E$.\n3. **[1pts]** Plot $T$ vs. $E$. Look smth like this:\n\n**c)** Plot the heat capacity $C$ of the system as a function of temperature. What are its maximum and minimum values?\n\nA phase transition is first order in temperature if the energy is discontinuous, second order if the energy is continuous but its first derivative is discontinuous, etc. What is the order of the phase transition here? **[5pts]**\n\n**Solution Needs:**\n\n1. **[1pts]** Note $C = \\frac{\\mathrm{d}E}{\\mathrm{d}t}$.\n2. **[3pts]** Write code/use method to calculate $C$ and plot $C$ vs. $T$. Look smth like this:\n\n3. **[1pts]** Conclude 2nd Order Phase transition.\n\nConsider the net magnetization $M = \\mu \\sum_{i=1}^{N} s_i$ of the system.\n\n**d)** At temperatures slightly below $T_c$, $M$ can be approximated as $M = \\alpha |T_c - T|^{\\beta}$. Find values for $\\alpha$ and $\\beta$. **[6pts]**\n\n**Solution Needs:**\n\n1. **[3pts]** Plot $\\ln(M)$ vs. $\\ln(|T_c - T|)$ or equivalent.\n2. **[2pts]** Fit linear line either via code or fitting.\n3. **[1pts]** Conclude $\\beta \\in (\\frac{1}{8} \\pm 0.05)$ **AND** equivalent steps to above were followed.\n\n**e)** Set $T = T_c$. Plot how the net magnetization reacts as $B$ is varied. Qualitatively, what do you observe? What happens if $T < T_c$? **[4pts]**\n\n**Solution Needs:**\n\n1. **[2pts]** Plot $M$ vs. $B$ and make observation.\n2. **[2pts]** Plot $M$ vs. $B$ varying both $T, B$. Observations may vary.",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "alt": "Line plot titled “Temperature vs Energy”: Energy (vertical axis, −9000 to −2000) against Temperature (T) (horizontal axis, 1.0 to 5.0). Points rise from about −8900 at T = 1.0 through a steep increase between T ≈ 2.0 and 3.1 to about −2100 at T = 5.0.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-sol-fig1-v4.png",
+      "width": 2227,
+      "height": 1413,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        39.15,
+        156.01,
+        573.43,
+        495
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "alt": "Line plot titled “Temperature vs Heat Capacity”: Heat Capacity (vertical axis, 0 to 4000) against Temperature (T) (horizontal axis, 1.0 to 5.0). The curve starts near −300 at T = 1.0, peaks at about 4250 near T = 2.27, falls to about 1000 by T = 3.3, with a smaller bump near T = 3.95 and values between about 400 and 1000 up to T = 5.0.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-experiment-x/p1-sol-fig2.png",
+      "width": 2227,
+      "height": 1433,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        39.15,
+        167.9,
+        573.43,
+        511.65
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  }
+ ]
+}

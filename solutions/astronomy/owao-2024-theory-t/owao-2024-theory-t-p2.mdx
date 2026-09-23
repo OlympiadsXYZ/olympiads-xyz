@@ -1,0 +1,194 @@
+---
+id: owao-2024-theory-t-p2
+source: 'OWAO 2024'
+title: 'Задача 2. Satellite Tracking'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2024/owao-2024-theory-t.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:23:17.101Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2024 ◇ Theoretical Round ◇ Problems · 20 т.*
+
+<details>
+<summary>Instructions</summary>
+
+1. The theoretical round is 5 hours long and accounts for 40 % of the total grade.
+2. The maximum score for each problem is 20 points. The round total is 180 points.
+3. There are Answer Sheets to write down detailed solutions.
+
+**On each Answer Sheet, please fill in**
+
+- Student code
+- Problem number
+- Page number and total number of pages in the submitted work
+
+4. **Start each problem on a separate Answer Sheet.**
+5. Please write only on the printed side of the sheet. Do not write on the reverse side.
+6. Your work will be scanned. Please use a pen so that the writing is clearly visible on the scan. Duplicate pencil lines with a pen.
+7. Please remember that the jury may not understand your language. It is expected that solutions are written in plain English. Use mathematical expressions, numbers and drawings.
+8. If you wrote something that you do not want to be marked, **just cross it out** like this.
+9. Draft papers will not be graded.
+10. Some problems are quite difficult. Remember that partial solutions are also scored.
+11. A list of constants is given on page 4.
+
+Good luck!
+
+</details>
+
+## Условие
+
+A satellite is moving in a circular orbit around the Earth with an inclination of $20^{\circ}$ and an orbital radius of 30 000 km. At noon, the satellite passes through the zenith at a point $P_1$ with coordinates $(0^{\circ}\,\mathrm{N},\ 10^{\circ}\,\mathrm{E})$.
+
+**a)** At which point $P_2$ of the Earth will the satellite pass through the zenith after 3 hours?
+
+**b)** At what astronomical altitude will it be for the observer at $P_1$ while passing over $P_2$?
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** (19° N, 39° E) or (19° S, 39° E)
+- **b)** 47 °
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) Since the inclination is positive and does not exceed $90^{\circ}$, the orbital motion of the satellite occurs in the same direction as the rotation of the Earth around its axis. We should consider two cases, since it is not known whether the satellite rises above the plane of the equator or falls below the equator.
+
+Let us consider the case when the satellite rises above the equator. First, we will determine by Kepler’s third law how many degrees of its orbit ($r = 3.0 \cdot 10^4$ km) the satellite will fly during the time $t = 3$ h:
+
+$$\frac{T^2}{r^3} = \frac{4\pi^2}{G\mathfrak{M}_\oplus} \quad\Longrightarrow\quad T = 2\pi\sqrt{\frac{r^3}{G\mathfrak{M}_\oplus}} = 2\pi\sqrt{\frac{r^3}{g_\oplus R_\oplus^2}} =$$
+
+$$= 2 \times 3.14 \times \sqrt{\frac{(3.0 \cdot 10^7\ \mathrm{m})^3}{9.81\ \mathrm{m/s^2} \times (6.371 \cdot 10^6)^2}} = 5.17 \cdot 10^4\ \mathrm{s} = 14.4^{\mathrm{h}};$$
+
+$$S_1S_2 = \frac{t}{T} \cdot 360^{\circ} = \frac{3^{\mathrm{h}}}{14.4^{\mathrm{h}}} \times 360^{\circ} = 75^{\circ}.$$
+
+The satellite has completed less than a quarter of its orbit.
+
+Now we assume that the Earth does not rotate — we will take this effect into account when obtaining the final longitude of the second point.
+
+Let $\tilde P_1$ and $\tilde P_2$ be the projections of positions of the satellites $S_1$ and $S_2$ on the non-rotating Earth (see Figure 2). The goal is to find the coordinates $(\varphi_2;\ \tilde\lambda_2)$ of the point $\tilde P_2$.
+
+We draw a perpendicular from the point $\tilde P_2$ to the equator. Using spherical laws for $\triangle\tilde P_1\tilde P_2\tilde P_\perp$ one can write
+
+$$\begin{aligned} &\cos\tilde P_1\tilde P_2 = \cos\tilde P_1\tilde P_\perp\cos\tilde P_2\tilde P_\perp + \sin\tilde P_1\tilde P_\perp\sin\tilde P_2\tilde P_\perp\cos\tilde P_\perp\\ &\Longrightarrow\quad \cos\tilde P_1\tilde P_2 = \cos(\tilde\lambda_2 - \tilde\lambda_1)\cos\varphi_2; \end{aligned}$$
+
+$$\frac{\sin\tilde P_1\tilde P_2}{\sin\tilde P_\perp} = \frac{\sin\tilde P_2\tilde P_\perp}{\sin\tilde P_1} \quad\Longrightarrow\quad \sin\tilde P_1\tilde P_2 \cdot \sin i = \sin\varphi_2;$$
+
+$$\begin{aligned} &\sin\tilde P_2\tilde P_\perp\cos\tilde P_\perp = \sin\tilde P_1\tilde P_\perp\cos\tilde P_1\tilde P_2 - \cos\tilde P_1\tilde P_\perp\sin\tilde P_1\tilde P_2\cos\tilde P_1\\ &\Longrightarrow\quad \tan(\tilde\lambda_2 - \tilde\lambda_1) = \tan\tilde P_1\tilde P_2 \cdot \cos i. \end{aligned}$$
+
+The longitude $\tilde\lambda_2$ is determined unambiguously
+
+$$\tilde\lambda_2 = \tilde\lambda_1 + \arctan(\tan\tilde P_1\tilde P_2 \cdot \cos i) = 10^{\circ} + \arctan(\tan 75^{\circ} \cdot \cos 20^{\circ}) = 84^{\circ}.$$
+
+In 3 hours, the Earth will turn in the same direction as the satellite, at an angle
+
+$$\Delta\lambda = \frac{3^{\mathrm{h}}}{24^{\mathrm{h}}} \times 360^{\circ} = 45^{\circ}.$$
+
+Then the actual longitude of the point $P_2$ is $\lambda_2 = \tilde\lambda_2 - \Delta\lambda = 84^{\circ} - 45^{\circ} = 39^{\circ}\,\mathrm{E}$.
+
+The latitude of $P_2$ is $\sin\varphi_2 = \arcsin(\sin\tilde P_1\tilde P_2 \cdot \sin i) = \arcsin(\sin 75^{\circ}\sin 20^{\circ}) = 19.3^{\circ}$.
+
+Recalling that there are two cases of satellite motion (the starting point could be an ascending or descending node of the orbit), we write down the possible coordinates of point $P_2$:
+
+$$\begin{aligned} &(19^{\circ}\,\mathrm{N},\ 39^{\circ}\,\mathrm{E}),\\ \text{or}\quad &(19^{\circ}\,\mathrm{S},\ 39^{\circ}\,\mathrm{E}). \end{aligned}$$
+
+b) First, we determine the angular distance between the observation points:
+
+$$\begin{aligned} \cos P_1P_2 &= \sin\varphi_1\sin\varphi_2 + \cos\varphi_1\cos\varphi_2\cos(\lambda_2 - \lambda_1) =\\ &= \sin 0^{\circ}\sin 19^{\circ} + \cos 0^{\circ}\cos 19^{\circ}\cos(39^{\circ} - 10^{\circ}) = 0.827 \end{aligned}$$
+
+$$P_1P_2 = \arccos 0.827 = 34^{\circ}.$$
+
+Next, we determine the distance from point $P_1$ to the satellite (point $S_2$) by the law of cosines (see Figure 3):
+
+$$\begin{aligned} P_1S &= \sqrt{P_1O^2 + SO^2 - 2P_1O \cdot SO \cdot \cos P_1OS} =\\ &= \sqrt{6\,371^2 + 30\,000^2 - 2 \times 6\,371 \cdot 30\,000 \times \cos 34^{\circ}}\ [\mathrm{km}] = 2.5 \cdot 10^4\ \mathrm{km}. \end{aligned}$$
+
+Finally, we determine the angle $OP_1S$:
+
+$$\begin{aligned} OP_1S &= \arccos\frac{OP_1^2 + P_1S^2 - OS^2}{2OP_1 \cdot P_1S} =\\ &= \arccos\frac{6\,371^2 + 2.5 \cdot 10^4 - 30\,000^2}{2 \times 6\,371 \times 2.5 \cdot 10^4} = \arccos(-0.736) \approx 137^{\circ}. \end{aligned}$$
+
+We conclude that from the point $P_1$, the satellite is observed at the altitude of $137^{\circ} - 90^{\circ} = 47^{\circ}$.
+
+**Marking Scheme:**
+
+- Question (a)
+    1. Arc $S_1S_2$ that the satellite passes in 3 hours — **2 pt.**
+    2. Geometric model, mentioning two cases — **2 pt. + 1 pt.**
+    3. Expressions for $(\varphi_2;\ \tilde\lambda_2)$ — **4 pt.**
+    4. Taking into account the rotation of the Earth — **3 pt.**
+    5. Coordinates of $P_2$ — **2 pt.**
+- Question (b)
+    6. Geometric model — **2 pt.**
+    7. Angular distance between $P_1$ and $P_2$ — **1 pt.**
+    8. Distance $P_1S_2$ — **1 pt.**
+    9. Altitude of $S_2$ at $P_1$ — **2 pt.**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-theory-t/p2-sol-fig1.png" alt="Sphere of the Earth with poles P_N (top) and P_S (bottom), the equator and the inclined orbit crossing it at P̃_1 with angle i; the orbit rises to P̃_2, from which a meridian arc drops to the equator at P̃_⊥ with a right-angle mark; the arc P̃_2P̃_⊥ is marked φ_2." />
+<figcaption>Figure 2: The satellite’s motion around the Earth. Ascending node case</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-theory-t/p2-sol-fig2.png" alt="Circle of the Earth with centre O; point P_2 on the circle on the line from O to the satellite S_2 far to the right; point P_1 lower on the circle, joined to O and to S_2." />
+<figcaption>Figure 3: The satellite passes over P₂</figcaption>
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| **Universal** | |
+|---|---|
+| Speed of light | $c = 3.00 \cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s}$ |
+| Boltzmann constant | $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$ |
+| Gas constant | $\mathfrak{R} = 8.314\ \mathrm{J/(mol \cdot K)}$ |
+| Proton mass | $m_p = 1.673 \cdot 10^{-27}\ \mathrm{kg}$ |
+| **Astronomical** | |
+| Astronomical unit | $1\ \mathrm{au} = 149.6 \cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+| Hubble constant | $H_0 = 70\ \mathrm{(km/s)/Mpc}$ |
+| **Earth** | |
+| Radius | $R_\oplus = 6371\ \mathrm{km}$ |
+| Mass | $\mathfrak{M}_\oplus = 5.97 \cdot 10^{24}\ \mathrm{kg}$ |
+| Obliquity of ecliptic | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_\oplus = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_\oplus = 0.0167$ |
+| **Hydrogen spectrum** | |
+| Lyman L$\alpha$ | $\lambda_{\mathrm{L}\alpha} = 1215.7$ Å |
+| Balmer H$\alpha$ | $\lambda_{\mathrm{H}\alpha} = 6562.8$ Å |
+| **Jupiter** | |
+| Radius | $R_J = 6.99 \cdot 10^4\ \mathrm{km}$ |
+| Mass | $\mathfrak{M}_J = 1.90 \cdot 10^{27}\ \mathrm{kg}$ |
+| Orbital radius | $a_J = 5.20\ \mathrm{au}$ |
+| Orbital period | $T_J = 11.86\ \mathrm{yr}$ |
+| **Sun** | |
+| Radius | $R_\odot = 6.96 \cdot 10^5\ \mathrm{km}$ |
+| Mass | $\mathfrak{M}_\odot = 1.99 \cdot 10^{30}\ \mathrm{kg}$ |
+| Absolute magnitude | $M_\odot = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_\odot = 5.8 \cdot 10^3\ \mathrm{K}$ |
+| Luminosity | $L_\odot = 3.828 \cdot 10^{26}\ \mathrm{W}$ |
+| **Emission constants** | |
+| Stefan–Boltzmann | $\sigma = 5.67 \cdot 10^{-8}\ \mathrm{(W/m^2)/K^4}$ |
+| Wien’s displacement | $b = 2898\ \mathrm{\mu m \cdot K}$ |
+| **UBV system** | Mean wavelengths |
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+Number of Siriuses in the Solar system $\geqslant 1$
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO-2024-prob-T.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2024/Theory/OWAO-2024-prob-T.pdf)
+· официални решения: [OWAO-2024-sol-T.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2024/Theory/OWAO-2024-sol-T.pdf)
