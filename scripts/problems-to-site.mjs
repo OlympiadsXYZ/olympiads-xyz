@@ -284,15 +284,26 @@ function mdText(s) {
   // (only a table row — a line that starts with "|" — counts: "\left|\delta\right|$$" closes an equation)
   const framed = String(s).replace(/\$\$[ \t]*\n?[ \t]*(?=\|[^\n]*\|[ \t]*\n[ \t]*\|)/g, '').replace(/(\n[ \t]*\|[^\n]*\|)[ \t]*\n?[ \t]*\$\$(?=[ \t]*(?:\n|$))/g, '$1');
   const tables = framed.split('\n').map(line => /^\s*\|/.test(line) ? line.replace(/\$[^$\n]*?\$/g, m => m.replace(/(?<!\\)\|/g, '\\vert ')) : line).join('\n');
-  return tables
-    .split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/)
+  const parts = tables.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/);
+  return parts
     // prose never carries HTML (validate.mjs refuses tags), so any "<" glued to what follows is text: '<', <=, <1
     // (MDX would read <' or <a as the start of a JSX tag and the build would die)
     // inside math: KaTeX in the site pipeline has no \nicefrac and rejects \tag outside a display environment
     // (IPhO 2023 Q1 rendered its numbered equations raw); the printed equation number becomes "\qquad (n)"
     // A lone trailing prose space is invisible; preserve Markdown's two-space breaks and all math.
-    .map((seg, i) => (i % 2 ? seg.replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/(?<![\\ \t]) (?=\n)/g, '').replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
+    .map((seg, i) => (i % 2 ? displayFences(seg, parts[i - 1]).replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/(?<![\\ \t]) (?=\n)/g, '').replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
     .join('');
+}
+// A display block written with its fences glued to the content ("$$\begin{aligned}" … "\end{aligned}$$") is not a
+// math block to remark-math: the closing line is not a lone "$$", so the block runs on to the end of its container and
+// swallows the rest of the page — inside a <details> note it swallows </details> and the page no longer compiles
+// (samara-2021-iii-7-9; esf-2001-esenno-8 and ipho-2022-experiment-exam-q2-english rendered their tail as math).
+// A block that starts a line gets its fences on lines of their own.
+function displayFences(seg, before) {
+  if (!seg.startsWith('$$') || !seg.includes('\n') || !/(^|\n)[ \t]*$/.test(before ?? '')) return seg;
+  const inner = seg.slice(2, -2);
+  if (/^[ \t]*\n/.test(inner) && /\n[ \t]*$/.test(inner)) return seg;
+  return `$$\n${inner.replace(/^[ \t]*\n/, '').replace(/\n[ \t]*$/, '')}\n$$`;
 }
 
 function problemMdx(paper, problem, state, sourceFile) {
