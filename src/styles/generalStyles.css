@@ -443,3 +443,87 @@ html.transitioning-color-scheme * {
 .markdown img {
   @apply dark:bg-gray-300;
 }
+
+/* Figures on the transcribed problem pages (scripts/problems-to-site.mjs figureMarkdown). The generator sets
+   --fig-w (the printed width as a share of the content column) and --fig-max (the crop's natural width in CSS px,
+   never upscaled past it); the figure sits in the text where it is printed, centred, with its caption under it. */
+.markdown .problem-figure {
+  margin: 1.75rem auto;
+  text-align: center;
+}
+.markdown .problem-figure img {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  /* the crops are white scans: on a tinted surface (a spoiler) the white blends into it instead of showing a box */
+  mix-blend-mode: multiply;
+}
+.markdown .problem-figure--sized img {
+  width: min(var(--fig-w, 100%), var(--fig-max, 100%));
+}
+.markdown .problem-figure figcaption {
+  max-width: 40rem;
+  margin: 0.625rem auto 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: theme('colors.gray.500');
+  text-wrap: pretty;
+}
+.dark .markdown .problem-figure figcaption {
+  color: theme('colors.dark-med-emphasis');
+}
+/* dark theme: the white scan sits on a paper card instead of glaring as a bare rectangle */
+.dark .markdown .problem-figure img {
+  mix-blend-mode: normal;
+  background-color: #fff;
+  /* the card's padding goes around the printed size, not into it (a small diagram keeps its size) */
+  box-sizing: content-box;
+  max-width: calc(100% - 1.5rem);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  filter: brightness(0.94);
+}
+/* figures printed side by side */
+.markdown .problem-figure-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin: 1.75rem 0;
+}
+.markdown .problem-figure-row > .problem-figure {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
+}
+.markdown .problem-figure-row > .problem-figure--sized {
+  width: min(var(--fig-w, 50%), var(--fig-max, 100%));
+}
+.markdown .problem-figure-row > .problem-figure img {
+  width: 100%;
+}
+@media (max-width: 639px) {
+  /* a phone's column is narrower than a printed one: the figure may take the whole column, still never upscaled */
+  .markdown .problem-figure {
+    margin: 1.25rem auto;
+  }
+  .markdown .problem-figure--sized img {
+    width: min(100%, var(--fig-max, 100%));
+  }
+  .dark .markdown .problem-figure img {
+    max-width: calc(100% - 1rem);
+    padding: 0.5rem;
+  }
+  .markdown .problem-figure-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 1.25rem 0;
+  }
+  .markdown .problem-figure-row > .problem-figure--sized {
+    width: min(100%, var(--fig-max, 100%));
+  }
+}

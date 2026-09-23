@@ -146,7 +146,7 @@ test('a problem without misplaced figures renders exactly as before', t => {
   const f = fixture(t, { paper: basePaper(id), problems: [{ id: `${id}-p1`, number: 1, statement: 'Условие.', figures: [statementFig], solution: { statement: 'Решение.', figures: [own] } }] });
   assert.equal(f.run().status, 0);
   const mdx = f.page(`${id}-p1`);
-  const block = x => `<figure>\n<img src="${x.url}" alt="${x.alt}" />\n</figure>`;
+  const block = x => `<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '10.2%', '--fig-max': '32px'}}>\n<img src="${x.url}" alt="${x.alt}" width="100" height="100" loading="lazy" decoding="async" />\n</figure>`;
   assert.ok(mdx.includes(`## Условие\n\nУсловие.\n\n${block(statementFig)}\n\n## Решение\n\n<Spoiler title="Покажи официалното решение">\n\nРешение.\n\n${block(own)}\n\n\n</Spoiler>\n`));
 });
 
