@@ -21,6 +21,7 @@ import path from 'path';
 import { fileURLToPath } from 'node:url';
 import { readPapers, readJson, publicationState, atomicWrite, jsonText, sha256, controlledTopics, walkJson } from './lib/problem-data.mjs';
 import { classificationSearch, problemMetadataErrors } from './lib/problem-classification.mjs';
+import { loadNavigation, roundLabel, gradeLabel as navGradeLabel, paperSuffix, displayNumber } from './lib/navigation.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -226,21 +227,14 @@ function documentNoteLines(paper, position) {
 const COMPETITION_SHORT = { NOF: 'НОФ', NAO: 'НОА', ESF: 'НЕСФ', PSF: 'НПСФ' };
 const MONTHS_BG = ['януари', 'февруари', 'март', 'април', 'май', 'юни', 'юли', 'август', 'септември', 'октомври', 'ноември', 'декември'];
 
-// "9" -> "9. клас", "9-10 клас" -> "9–10 клас"; group codes get their names
-// (physics ST/SP = the special-theme group; astronomy ML/ST = age groups);
-// anything else is left as printed.
-const GROUP_NAMES = {
-  physics: { ST: 'Специална тема', SP: 'Специална тема' },
-  astronomy: { ML: 'Младша възраст', ST: 'Старша възраст' },
-};
-function gradeLabel(grade, subject) {
-  if (!grade) return null;
-  const g = String(grade).replace(/\s*клас\.?$/u, '').trim().replace(/\s*-\s*/g, '–');
-  if (/^\d+$/.test(g)) return `${g}. клас`;
-  if (/^\d+–\d+$/.test(g)) return `${g} клас`;
-  const named = GROUP_NAMES[subject]?.[g.toUpperCase()];
-  return named ?? String(grade);
-}
+// Names on the page come from the navigation overlays, the same ones the sidebar uses (scripts/lib/navigation.mjs):
+// content/round-labels.json (canonical round label, grade names) and content/question-numbers.json (the printed
+// question number where the stored one differs). Loaded in main(); empty overlays mean raw round and stored number.
+let nav = { labels: {}, numbers: {} };
+// "9" -> "9. клас", "9-10 клас" -> "9–10 клас"; group codes get their names (a competition's own ones first)
+const gradeLabel = (grade, subject, competition) => navGradeLabel(grade, subject, competition, nav.labels);
+// the canonical round label; the raw round only for a paper the overlay does not label (check-navigation.mjs fails)
+const pageRound = paper => roundLabel(paper, nav.labels) ?? paper.round ?? null;
 
 function dateBg(iso) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
@@ -252,8 +246,9 @@ function dateBg(iso) {
 function paperDescriptor(paper) {
   return [
     `${COMPETITION_SHORT[paper.competition] ?? paper.competition} ${paper.year}`,
-    paper.round || null,
-    gradeLabel(paper.grade, paper.subject),
+    pageRound(paper) || null,
+    gradeLabel(paper.grade, paper.subject, paper.competition),
+    paperSuffix(paper, nav.labels),
   ].filter(Boolean).join(', ');
 }
 
@@ -397,16 +392,23 @@ function shortRound(round) {
   return m ? m[1] : String(round).split(' ')[0];
 }
 
-// "Задача 3. Title"; a title that already starts with "Задача" is used as is,
-// and a non-numeric number ("Практически 1") is used as the label itself.
-function problemName(problem) {
-  if (problem.title && /^Задача\b/u.test(problem.title)) return problem.title;
-  const label = Number.isInteger(problem.number) ? `Задача ${problem.number}` : String(problem.number);
-  return `${label}${problem.title ? '. ' + problem.title : ''}`;
+// "Задача 3. Title" with the display number (question-numbers.json: the printed Q2 of a one-question file stored as
+// 1, or "2A" for a question's part); a title that already starts with "Задача" is used as is, a title that repeats
+// the number ("2A. Optical properties") drops the repeat, and a non-numeric stored number ("Практически 1") is used
+// as the label itself.
+export function problemName(problem, numbers = nav.numbers) {
+  // (a \b after Cyrillic never matches, so the word boundary is spelled out)
+  if (problem.title && /^Задача(?![\p{L}\p{N}])/u.test(problem.title)) return problem.title;
+  const number = displayNumber(problem, numbers);
+  const overlaid = number !== problem.number;
+  const label = Number.isInteger(number) || (overlaid && /^\d+(?:\.\d+)?[A-Za-z]?$/.test(String(number))) ? `Задача ${number}` : String(number);
+  const escaped = String(number).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const title = problem.title && overlaid ? problem.title.replace(new RegExp(`^${escaped}\\s*[.:)]\\s*`), '') : problem.title;
+  return `${label}${title ? '. ' + title : ''}`;
 }
 
 function problemInfo(paper, problem) {
-  const grade = gradeLabel(paper.grade, paper.subject);
+  const grade = gradeLabel(paper.grade, paper.subject, paper.competition);
   const classification = classificationSearch(problem.classification);
   return {
     uniqueId: problem.id,
@@ -419,7 +421,7 @@ function problemInfo(paper, problem) {
     ...(paper.solutionSource?.archiveKey
       ? { solutionUrl: withPage(archiveUrl(paper.subject, paper.solutionSource.archiveKey), problem.sourceSpans?.find(s => s.document === 'solutions')?.page) }
       : {}),
-    source: `${paper.competition} ${paper.year}${paper.round ? ' ' + shortRound(paper.round) : ''}${paper.grade ? ' ' + paper.grade : ''}`,
+    source: `${paper.competition} ${paper.year}${pageRound(paper) ? ' ' + shortRound(pageRound(paper)) : ''}${paper.grade ? ' ' + paper.grade : ''}`,
     difficulty: problem.difficulty ?? 'N/A',
     isStarred: (problem.importance ?? 0) >= 3,
     tags: [...new Set([...controlledTopics(problem.topics, taxonomy).map(id => taxonomy.topics.find(t => t.id === id).label), ...(classification?.tags || []), ...(grade ? [grade] : []), paper.roundType].filter(Boolean))],
@@ -447,6 +449,7 @@ function main() {
   const records = readPapers(ROOT);
   const ledger = readJson(path.join(ROOT, 'content/problem-publication.json'), { papers: {} });
   taxonomy = readJson(path.join(ROOT, 'content/problem-topics.json'), { topics: [] });
+  nav = loadNavigation(ROOT);
   const curation = readJson(path.join(ROOT, 'content/problem-curation.json'), { modules: {} });
   const manifestFile = path.join(ROOT, 'content/problem-generated.json');
   const prior = readJson(manifestFile, { version: 1, files: {}, problemIds: [], moduleTables: [] });
