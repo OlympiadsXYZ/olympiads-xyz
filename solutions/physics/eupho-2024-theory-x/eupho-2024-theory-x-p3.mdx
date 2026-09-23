@@ -1,6 +1,6 @@
 ---
 id: eupho-2024-theory-x-p3
-source: 'EuPhO 2024'
+source: 'EuPhO 2024, Теория'
 title: 'Задача 3. T3: Fabry–Pérot interferometer (10 pts)'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2024/eupho-2024-theory-x.json'
@@ -19,8 +19,8 @@ Solution transcribed from a mid-document window; its beginning (Solution 1 parts
 
 A Fabry–Pérot interferometer consists of two identical parallel planar mirrors separated by a distance $L$. The space between and outside the mirrors is filled with air. The mirrors are partially reflective; when light is aimed towards one of these mirrors along the normal direction, the reflected beam has intensity $R < 1$ times the intensity of the incident beam. Assume that the mirrors are symmetric, meaning they interact the same way with light incident from either side, and lossless. Assume also that they are highly reflective, meaning $1 - R \ll 1$. A monochromatic laser beam of power $P$ is aimed towards the interferometer perpendicular to the mirrors. The distance $L$ is chosen so that the back-reflected beam vanishes, i.e. all the optical power is transmitted through the interferometer.
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-fig1.png" alt="A laser emitting a beam of power P towards two parallel mirrors separated by distance L; the beam is transmitted through the interferometer with power P on the right." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.7%', '--fig-max': '356px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-fig1.png" alt="A laser emitting a beam of power P towards two parallel mirrors separated by distance L; the beam is transmitted through the interferometer with power P on the right." width="1114" height="535" loading="lazy" decoding="async" />
 </figure>
 
 **a)** Show that the laser beam must acquire a nonzero phase shift $\phi$ when it passes through either of the mirrors. **[3 т.]**
@@ -146,6 +146,10 @@ and so on. After time $n\Delta t$, the amplitude is $-rAr^{2n}\mathrm{e}^{2nikL}
 The energy in the backwards-propagating pulse is the sum of the energies during the first, second, third, etc $\Delta t$ interval. This is
 $$P\Delta t(|r|^2 + |r|^6 + |r|^8 + \ldots) = \frac{|r|^2}{1 - |r|^4}\frac{2LP}{c} \approx \frac{1}{1-R}\frac{LP}{c}\ .$$
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31%', '--fig-max': '199px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig1.png" alt="Complex-plane diagram: a circle through the origin with diameter along the real axis ending at 1; chords labelled $-r$ and $t$ from the origin meeting at a right angle on the circle." width="621" height="586" loading="lazy" decoding="async" />
+</figure>
+
 **Part d** Since the amplitude decays like
 $$R^n = \mathrm{e}^{-n\log 1/R} = \mathrm{e}^{-\log(1/R)t/\Delta t}\ ,$$
 the energy decays like $\mathrm{e}^{-2\log(1/R)t/\Delta t}$. The time constant of this roughly-exponential decay in energy is
@@ -176,6 +180,10 @@ Now imagine a different scenario, in which there is a wave incident on the mirro
 
 Now we consider the superposition of these two scenarios. On the left side, the waves travelling to the left cancel out, since they have the same amplitude but have phases differing by $\pi$. This destructive interference leaves a wave travelling to the right with amplitude $A$. This is exactly what is happening at the first mirror of the interferometer. On the right side, there is a leftwards-propagating wave and two rightwards-propagating waves, as shown below.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.3%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig4.png" alt="Diagram of the superposition at the first mirror: incident wave from the left (amplitude A, phase 0); leftwards wave (amplitude A√R/√(1−R), phase π+θ−ψ); rightwards waves (amplitude AR/√(1−R), phase π+2θ−ψ and amplitude A√(1−R), phase ψ)." width="1067" height="598" loading="lazy" decoding="async" />
+</figure>
+
 [Diagram: incident wave from the left, amplitude $A$, phase 0; leftwards wave, amplitude $A\sqrt{R}/\sqrt{1-R}$, phase $\pi + \theta - \psi$; rightwards waves, amplitude $AR/\sqrt{1-R}$, phase $\pi + 2\theta - \psi$ and amplitude $A\sqrt{1-R}$, phase $\psi$.]
 
 Now we use the fact that the mirror is lossless, so the light energy in the incoming waves in the figure above must equal the light energy in the outgoing waves. Since energy is proportional to the square of the electric field, the incoming energy flux is propor­tional to
@@ -183,6 +191,10 @@ $$I_{\mathrm{in}} = A^2 + A^2\left(\frac{R}{1-R}\right)\ .$$
 The outgoing energy flux is a little trickier to work out, since there are two superimposed waves travelling out with different phases. It is
 $$I_{\mathrm{out}} = A^2(1-R) + A^2\left(\frac{R^2}{1-R}\right) - 2A^2R\cos(\pi + 2(\theta - \psi))\ .$$
 $I_{\mathrm{in}} = I_{\mathrm{out}}$ can be rearranged to give $\cos(\pi + 2(\theta - \psi)) = 0$, so $2(\theta - \psi)$ is a multiple of $\pi$ and $\theta - \psi$ is $\pm\pi/2$. The reflected and transmitted waves must be out of phase by $90^{\circ}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.3%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig2.png" alt="Diagram of a vertical mirror slab: incident wave from the left (amplitude A, phase 0), reflected wave to the left (amplitude A√R, phase θ), transmitted wave to the right (amplitude A√(1−R), phase ψ)." width="1067" height="580" loading="lazy" decoding="async" />
+</figure>
 
 ## Grading
 
@@ -229,6 +241,10 @@ $I_{\mathrm{in}} = I_{\mathrm{out}}$ can be rearranged to give $\cos(\pi + 2(\th
 | stating that this is a consequence of conservation of energy | 0.2 |
 | understanding that the solutions $r$ and $t$ should be complex | 0.2 |
 | **Total on T3.a)** | **3.0** |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.3%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig3.png" alt="Diagram of the second scenario: wave incident from the right (amplitude A√R/√(1−R), phase π+θ−ψ), wave to the left (amplitude A√R, phase π+θ), wave to the right (amplitude AR/√(1−R), phase π+2θ−ψ)." width="1067" height="580" loading="lazy" decoding="async" />
+</figure>
 
 ### Part b
 
@@ -284,22 +300,6 @@ Notes on T3.a) and T3.b): different conventions for $r$ and $t$ (eg using $-r$ i
 | **Total on T3.d** | **1.0** |
 
 Notes on T3.d): no marks for dimensional analysis to obtain the combination $L/c$. The numerical prefactor is irrelevant provided it is order unity (e.g. ln2 for half-life). Any equivalent form, assuming $1 - R \ll 1$, is acceptable.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig1.png" alt="Complex-plane diagram: a circle through the origin with diameter along the real axis ending at 1; chords labelled $-r$ and $t$ from the origin meeting at a right angle on the circle." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig2.png" alt="Diagram of a vertical mirror slab: incident wave from the left (amplitude A, phase 0), reflected wave to the left (amplitude A√R, phase θ), transmitted wave to the right (amplitude A√(1−R), phase ψ)." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig3.png" alt="Diagram of the second scenario: wave incident from the right (amplitude A√R/√(1−R), phase π+θ−ψ), wave to the left (amplitude A√R, phase π+θ), wave to the right (amplitude AR/√(1−R), phase π+2θ−ψ)." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig4.png" alt="Diagram of the superposition at the first mirror: incident wave from the left (amplitude A, phase 0); leftwards wave (amplitude A√R/√(1−R), phase π+θ−ψ); rightwards waves (amplitude AR/√(1−R), phase π+2θ−ψ and amplitude A√(1−R), phase ψ)." />
-</figure>
 
 
 </Spoiler>

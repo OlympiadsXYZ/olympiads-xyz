@@ -1,6 +1,6 @@
 ---
 id: wopho-2013-q1-p1
-source: 'WoPhO 2013'
+source: 'WoPhO 2013, Теория'
 title: 'Задача 1. Induction Motor'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/WoPhO/2013/wopho-2013-q1.json'
@@ -15,7 +15,17 @@ verifier: 'crop-audit'
 
 Induction (or asynchronous) motors are the simplest and most reliable electric motors. They are powered by alternating current, and they do not contain commutators, slip rings or brushes. They consist of a stator and a rotor (see fig. 1). The stator is a fixed set of coils, which produces a rotating magnetic field in the plane perpendicular to the axis of the motor. The rotor is just a cage, i.e., a set of closed metallic loops attached to the axis of the motor. The rotating magnetic field produced by the stator induces electric current in the loops of the cage, which behave as magnetic dipoles, and interact with the external field of the stator. As a result, a torque is exerted on the rotor, and it starts rotating.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51%', '--fig-max': '326px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-fig1.png" alt="Exploded diagram of an induction motor showing end bell, wiring cover, motor frame, stator, rotor, fan blades, bearing and second end bell." width="1020" height="571" loading="lazy" decoding="async" />
+<figcaption>Figure 1: The structure of an induction motor</figcaption>
+</figure>
+
 In a simplified model (see fig. 2) we assume that the magnetic induction vector $\mathbf{B}$ produced by the stator is rotating in the $x-y$ plane at a constant angular velocity $\Omega$, and it has a constant magnitude $B$. The axis of the rotor is in the $z$ direction. The rotor is assumed to be a flat coil of area $A$, winding number $N$, Ohmic resistance $R$ and self inductance $L$. The vector $\mathbf{n}$ perpendicular to this coil is rotating also in the $x-y$ plane.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.4%', '--fig-max': '239px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-fig2.png" alt="Diagram in the x-y plane showing angular velocity $\Omega$ of the rotating magnetic field $\mathbf{B}$, the normal vector $\mathbf{n}$ of the flat coil rotating at angular velocity $\omega$, the x and y axes, and a flat coil seen from its edge (drawn as a set of parallel lines)." width="748" height="605" loading="lazy" decoding="async" />
+<figcaption>Figure 2: The simplified model, seen from the $z$ axis</figcaption>
+</figure>
 
 # Stationary operation
 
@@ -24,16 +34,6 @@ First we study the stationary operation of the motor, when its angular velocity 
 $$s = \frac{\Omega - \omega}{\Omega},$$
 
 which is a dimensionless number between 0 and 1.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-fig1.png" alt="Exploded diagram of an induction motor showing end bell, wiring cover, motor frame, stator, rotor, fan blades, bearing and second end bell." />
-<figcaption>Figure 1: The structure of an induction motor</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-fig2.png" alt="Diagram in the x-y plane showing angular velocity $\Omega$ of the rotating magnetic field $\mathbf{B}$, the normal vector $\mathbf{n}$ of the flat coil rotating at angular velocity $\omega$, the x and y axes, and a flat coil seen from its edge (drawn as a set of parallel lines)." />
-<figcaption>Figure 2: The simplified model, seen from the $z$ axis</figcaption>
-</figure>
 
 **a)** Assume that the load is small, so the slip $s \ll 1$. Determine the time average of the torque $T$ exerted by the motor as a function of the slip $s$. (Use reasonable neglections.)
 
@@ -94,6 +94,11 @@ $$T = \frac{B^2A^2N^2R\Omega s}{2(R^2+R^2\beta^2s^2)} = \frac{B^2A^2N^2\Omega}{2
 
 Taking the numerical prefactor describing the motor equal to 1, we have to sketch the function $s/(1+\beta^2s^2)$ for $\beta=10$. The plot for the reasonable interval is in Fig. 1.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '89.8%', '--fig-max': '575px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-sol-fig1.png" alt="Plot of T versus s for beta=10 showing a peaked curve rising sharply then decreasing to 0 at s=1, together with several straight lines (in different colors) representing linear load characteristics $K\Omega(1-s)$ for different K values, illustrating intersections at stable and unstable operating points." width="1797" height="952" loading="lazy" decoding="async" />
+<figcaption>Figure 1. $T$ (in the units of $B^2A^2N^2\Omega/2R$) as a function of $s$ and some load characteristics.</figcaption>
+</figure>
+
 (d) The maximum of $T$ occurs where its derivative with respect to $s$ (or equivalently, that of $s/(1+\beta^2s^2)$) is 0. This derivative is $\dfrac{1-\beta^2s^2}{(1+\beta^2s^2)^2}$, the root of which is
 
 $$s_0 = \frac{1}{\beta} = \frac{R}{L\Omega}.$$
@@ -129,11 +134,6 @@ Combining the equations give the irreducible cubic equation $s_0(1+\beta^2s_0^2)
 Lines for some interesting $K$ are plotted in Fig. 1. as well. Let $K_2<K_1$ be the two values of $K$ which constitute $s_0=s_1$ and $s_0=s_2$, respectively (green and red lines). We can find that for $K<K_2$ there is a single stable operating point with $s<s_1$ and for $K>K_1$ there is a single stable operating point with $s>s_2$. When $K_2<K<K_1$, we can find three operating points: for one of them, $s<s_1$, for one $s>s_2$ and for one $s_1<s<s_2$: the first two are thus stable, the last is unstable. If the system gets perturbated at the latter, the slip will begin to oscillate about and converge to one of the stable operating points.
 
 (g) In the case of a negative slip, the motor is braking, but the efficiency rises over 1: this means, that rotating the rotor over an angular velocity of $\Omega$ takes mechanical energy, but it is gained back as electrical power. In practice, this is the principle of induction (or asynchronous) generators.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-sol-fig1.png" alt="Plot of T versus s for beta=10 showing a peaked curve rising sharply then decreasing to 0 at s=1, together with several straight lines (in different colors) representing linear load characteristics $K\Omega(1-s)$ for different K values, illustrating intersections at stable and unstable operating points." />
-<figcaption>Figure 1. $T$ (in the units of $B^2A^2N^2\Omega/2R$) as a function of $s$ and some load characteristics.</figcaption>
-</figure>
 
 
 </Spoiler>

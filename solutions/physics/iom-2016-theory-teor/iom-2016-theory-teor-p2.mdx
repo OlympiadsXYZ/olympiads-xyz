@@ -1,6 +1,6 @@
 ---
 id: iom-2016-theory-teor-p2
-source: 'IOM 2016'
+source: 'IOM 2016, Теория'
 title: 'Задача 2. «Instantaneous switching-on»'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/IOM/2016/iom-2016-theory-teor.json'
@@ -15,8 +15,8 @@ verifier: 'mechanical'
 
 A transformer consists of a toroidal ferromagnetic core (magnetic permeability $\mu \gg 1$) of a length $l < 1$ m and cross-sectional area $S$, a primary winding with the number of turns $N_1 = 20$, and a secondary winding with the number of turns $N_2 = 100$. The transformer is a part of the circuit shown in the Figure. The battery emf equals $\mathcal{E} = 24$ V, its internal resistance is $r = 4$ Ohm. The secondary winding is connected to a resistor of $R = 100$ Ohm. Initially there is no current in the windings and the switch K is open. Then the switch is rapidly closed. Its resistance falls to zero very quickly (although not instantly!) during a time much less than $\tau \equiv \dfrac{\mu_0\mu N_1^2 S}{lr} = 0{,}05$ sec. Electrical resistance of both windings is much less than 1 Ohm. Dissipation of magnetic flux within the core is negligible.
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-fig1.png" alt="Circuit diagram: a battery in series with the switch K and the primary winding N1 of a transformer with an iron core; the secondary winding N2 is connected to a resistor R." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '34.2%', '--fig-max': '219px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-fig1.png" alt="Circuit diagram: a battery in series with the switch K and the primary winding N1 of a transformer with an iron core; the secondary winding N2 is connected to a resistor R." width="685" height="482" loading="lazy" decoding="async" />
 </figure>
 
 **1)** Derive an equation relating a magnetic flux $\Phi$ in the core and currents $I_1$ and $I_2$ in the primary and secondary windings. Consider a positive direction of current flow in both windings to be the same. **[1 т.]**
@@ -78,6 +78,16 @@ TOTAL score for the problem is 25 points.
 | 10 |  | 3 |
 | **Total** | | **25** |
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '66%', '--fig-max': '422px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig1.png" alt="Answer-table graph of I2, A (vertical axis 0 to 0,6) versus t/τ (horizontal axis 0 to 8): the current jumps from 0 to about 0,58 A at t = 0 and then decays exponentially to almost zero at t/τ = 8." width="1320" height="643" loading="lazy" decoding="async" />
+<figcaption>Answer 7</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.8%', '--fig-max': '441px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig2.png" alt="Answer-table graph of I1, A (vertical axis 0 to 7) versus t/τ (horizontal axis 0 to 8): the current rises almost vertically from 0 to about 3 A at t = 0 and then approaches 6 A exponentially." width="1378" height="709" loading="lazy" decoding="async" />
+<figcaption>Answer 10</figcaption>
+</figure>
+
 **Proposed Solution:**
 
 1) Since the core length $l < 1$ m the system can be regarded as quasistationary, so a magnetic flux confined in the core and currents in the windings are related as $\Phi = \dfrac{\mu_0\mu S}{l}[N_1 I_1 + N_2 I_2]$ (positive direction in the windings is the same).
@@ -100,11 +110,19 @@ $$I_2(t) \approx -\frac{k\mathcal{E}}{R + k^2 r}\cdot\exp\left[-\frac{R}{(R + k^
 
 7) Since $\dfrac{RT}{(R + k^2 r)\tau} = 5$ the current in secondary winding at $T = 0{,}5$ sec is less than 0,7% of the maximum value. An approximate plot of $I_2(t)$ is shown in the figure.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '78.1%', '--fig-max': '500px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig3.png" alt="Graph of I2, A (vertical axis 0 to 0,6) versus t/τ (horizontal axis 0 to 8): a jump to about 0,58 A at t = 0 followed by an exponential decay to almost zero at t/τ = 8." width="1564" height="748" loading="lazy" decoding="async" />
+</figure>
+
 8, 9, 10) Using the expression obtained above one finds for the current in primary winding:
 
 $$I_1(t) \approx \begin{cases} \dfrac{k^2}{R + k^2 r}\dfrac{\mathcal{E}}{\tau_0}t, & t \le \tau_0; \\ \dfrac{\mathcal{E}}{r}\left[1 - \dfrac{R}{R + k^2 r}\exp\left(-\dfrac{R}{(R + k^2 r)\tau}t\right)\right], & t > \tau_0. \end{cases}$$
 
 Thus after the switching-on starts the current in primary winding rapidly (for $\tau_0 \ll \tau$) increases to $\dfrac{k^2\mathcal{E}}{R + k^2 r} \approx 3$ A and then exponentially approaches the «stationary» value $\dfrac{\mathcal{E}}{r} = 6$ A by almost reaching it at the time $T$. An approximate plot of $I_1(t)$ is shown in the figure.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '78.8%', '--fig-max': '504px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig4.png" alt="Graph of I1, A (vertical axis 0 to 7) versus t/τ (horizontal axis 0 to 8): a steep rise to about 3 A at t = 0 followed by a slow exponential approach to 6 A." width="1576" height="829" loading="lazy" decoding="async" />
+</figure>
 
 Notice that the maximum current in primary winding after the switch has been closed (the answer to 8)) can be found simply by analysing the «stationary» mode when the currents are constant and emf in both windings is zero.
 
@@ -115,24 +133,6 @@ $$I_2(t) = \frac{k\mathcal{E}}{R + k^2 r}\cdot\left[\exp\left(-\frac{t}{\tau_0}\
 $$I_1(t) \approx \frac{\mathcal{E}}{r}\cdot\left[1 - \frac{k^2 r}{R + k^2 r}\exp\left(-\frac{t}{\tau_0}\right) - \frac{R}{R + k^2 r}\exp\left(-\frac{Rt}{(R + k^2 r)\tau}\right)\right]. \qquad (**)$$
 
 One can see that qualitatively time dependence of the currents at $\tau_0 \ll \tau$ is the same (e.g. the value of $I_2^{\max}$) as in the «linear» model.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig1.png" alt="Answer-table graph of I2, A (vertical axis 0 to 0,6) versus t/τ (horizontal axis 0 to 8): the current jumps from 0 to about 0,58 A at t = 0 and then decays exponentially to almost zero at t/τ = 8." />
-<figcaption>Answer 7</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig2.png" alt="Answer-table graph of I1, A (vertical axis 0 to 7) versus t/τ (horizontal axis 0 to 8): the current rises almost vertically from 0 to about 3 A at t = 0 and then approaches 6 A exponentially." />
-<figcaption>Answer 10</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig3.png" alt="Graph of I2, A (vertical axis 0 to 0,6) versus t/τ (horizontal axis 0 to 8): a jump to about 0,58 A at t = 0 followed by an exponential decay to almost zero at t/τ = 8." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2016-theory-teor/p2-sol-fig4.png" alt="Graph of I1, A (vertical axis 0 to 7) versus t/τ (horizontal axis 0 to 8): a steep rise to about 3 A at t = 0 followed by a slow exponential approach to 6 A." />
-</figure>
 
 
 </Spoiler>

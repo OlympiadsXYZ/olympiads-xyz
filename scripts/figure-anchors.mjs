@@ -40,7 +40,7 @@ import crypto from 'node:crypto';
 import { execFile } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { readPapers } from './lib/problem-data.mjs';
-import { misplacedSolutionFigures, figureDocument } from './problems-to-site.mjs';
+import { misplacedSolutionFigures, figureDocument, paragraphSpans, figureShownInline } from './problems-to-site.mjs';
 import { pdftotextBin, R2_PUBLIC } from './tx/lib.mjs';
 
 // ------------------------------------------------------------------ text -> words
@@ -84,25 +84,18 @@ export function wordsOf(text) {
 export const textWords = md => wordsOf(plainText(md));
 
 // ------------------------------------------------------------------ paragraphs (the renderer's rule)
-// A paragraph boundary is a blank line outside $$…$$ display math and ``` fences. Returns [{ start, end }] character
-// ranges of the non-blank paragraphs (end = end of the paragraph's last non-blank line).
+// The page's own paragraphs (paragraphSpans in problems-to-site.mjs: a blank line outside $$…$$ display math and
+// ``` / ~~~ fences, a list item's indented continuation kept), so an anchor names exactly the boundary the page cuts
+// at. Returns [{ start, end }] character ranges of the non-blank paragraphs, trimmed to their first and last
+// non-blank characters.
 export function splitParagraphs(text) {
   const s = String(text || '');
   const out = [];
-  let inFence = false, inMath = false, cur = null, pos = 0;
-  for (const line of s.split('\n')) {
-    const lineStart = pos, lineEnd = pos + line.length;
-    pos = lineEnd + 1;
-    const blank = !line.trim();
-    if (blank && !inFence && !inMath) { if (cur) { out.push(cur); cur = null; } continue; }
-    if (!blank) {
-      if (!cur) cur = { start: lineStart + (line.length - line.trimStart().length), end: lineEnd };
-      cur.end = lineStart + line.trimEnd().length;
-    }
-    if (/^\s*```/.test(line)) inFence = !inFence;
-    else if (!inFence) { const n = (line.match(/\$\$/g) || []).length; if (n % 2) inMath = !inMath; }
+  for (const span of paragraphSpans(s)) {
+    const body = s.slice(span.start, span.end);
+    const start = span.start + (body.length - body.trimStart().length), end = span.start + body.trimEnd().length;
+    if (end > start) out.push({ start, end });
   }
-  if (cur) out.push(cur);
   return out;
 }
 
@@ -489,7 +482,7 @@ export function anchorPaper(data, docs) {
       const candidatesDocs = documentsFor(paper, fig, side);
       const base = { problemId: problem.id, figId: fig.id, lang: paper.lang, document: candidatesDocs[0], side };
       const done = (reason, extra = {}) => report.push({ ...base, reason, ...extra });
-      if (fig.url && texts.includes(fig.url)) { done('inline'); continue; }
+      if (figureShownInline(fig, texts)) { done('inline'); continue; }
       // the statement figure repeated in the solution under the same id (esf-2014, psf-2019): an entry could not say which
       if (allFiguresOf(problem).filter(x => x.fig.id === fig.id).length > 1) { done('duplicate-id'); continue; }
       if (misplaced.has(fig)) { done('moved-to-solution'); continue; }
@@ -572,7 +565,7 @@ export function entryError(problem, figId, entry) {
   if (!['position', 'reference'].includes(entry.method)) return `method ${entry.method}`;
   if (entry.row != null && typeof entry.row !== 'string') return 'row is not a string';
   const texts = [...STATEMENT_FIELDS(problem), ...SOLUTION_FIELDS(problem)].map(x => x[1]).filter(Boolean).join('\n');
-  if (found.fig.url && texts.includes(found.fig.url)) return 'figure is inline in the text';
+  if (figureShownInline(found.fig, texts)) return 'figure is inline in the text';
   if (entry.after === null) return null;
   if (typeof entry.after !== 'string' || !entry.after) return 'after is neither null nor text';
   const at = text.indexOf(entry.after);

@@ -1,6 +1,6 @@
 ---
 id: gpho-2019-theory-th-p3
-source: 'GPhO 2019'
+source: 'GPhO 2019, Теория'
 title: 'Задача 3. Rayleigh-Taylor instability'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/GPhO/2019/gpho-2019-theory-th.json'
@@ -29,29 +29,21 @@ verifier: 'mechanical'
 
 Lord Rayleigh showed in 1883 that a layer of dense liquid on top of a layer of less dense liquid is unstable: even if the interface between the two liquids is initially perfectly flat and horizontal, small perturbations in the interface shape grow exponentially in time: at some places, heavy liquid starts to flow down displacing light liquid beneath, and in other places, light liquid starts flowing up — this phenomenon is nowadays known as the Rayleigh-Taylor instability. It plays an important role in many fields of physics. For instance, following a supernova explosion, shock waves of dense plasma decelerate due to “eating up” the regions with less dense plasma. This means that in the frame of reference of the decelerating shock wave, the force of inertia is pointing in the direction of the shock wave propagation. The direction of the force of inertia defines the “down” direction, so that the more dense plasma of the shock wave appears to be “atop” the less dense plasma of the interstellar space. Late (nonlinear) stages of the instability are characterized by fascinating filamentary structures, see the image of the Crab nebula below. In technology, Rayleigh-Taylor instability can be undesirable and for instance, makes it very difficult to accomplish the inertial confinement fusion project: when initially an almost perfectly round sphere is being compressed, it becomes irregularly distorted — like an empty can of Coke when you try to compress it. In what follows, we construct mathematically simple models to shed insight into the physics of the Rayleigh–Taylor instability. Assume everywhere below that there is a downwards gravity field of strength $g$ ($= 9.81\ \mathrm{m/s^2}$).
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.8%', '--fig-max': '364px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig2.png" alt="Two sketches of a circular O-tube of radius R and tube diameter a (arrows labelled R and a), upper half filled with a darker (denser) liquid and lower half with a lighter one. Left: both interfaces on the horizontal dashed line. Right: the interface on the left side lowered by x and on the right side raised correspondingly, with the displacement x marked by arrows between dashed lines." width="1137" height="474" loading="lazy" decoding="async" />
+</figure>
+
 **Part A. Instability growth rate (4 points)**
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig1.png" alt="Colour photograph of the Crab nebula: a cloud of orange-red filaments surrounding a bluish-white glowing core, on a black starry background." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig2.png" alt="Two sketches of a circular O-tube of radius R and tube diameter a (arrows labelled R and a), upper half filled with a darker (denser) liquid and lower half with a lighter one. Left: both interfaces on the horizontal dashed line. Right: the interface on the left side lowered by x and on the right side raised correspondingly, with the displacement x marked by arrows between dashed lines." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig3.png" alt="(a) Top view: a membrane (dark grey) with a long horizontal slit of length l and width d; axes x (up) and z (right). (b) Vertical cross-section of the vessel in the x–y plane: darker liquid in the upper compartment, lighter liquid below, the membrane with a gap of width d between dashed lines; axes y (up) and x (right)." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig4.png" alt="Aerial (Google Earth) photo of a boat moving to the right on the water surface, leaving a dark wake line and a pattern of parallel waves; a white scale bar at the top is marked 200 m, 1000 m, 2000 m, 3000 m." />
-</figure>
 
 **A.i.** Consider a circular O-tube the lower half of which is filled with a liquid of density $\rho_1$, and upper half — with a liquid of density $\rho_2 > \rho_1$, see the figure. Let the radius of the circle $R$ be much larger than the diameter of the tube $a$ (neglect the wall thickness). When the interfaces at the both sides of the O-tube are exactly at the same level (the left sketch), the system is at equilibrium. By how much will the potential energy of the system change when the interface in the left part of the tube is lowered by $x$ (as shown in the sketch on right)? Express the answer in terms of the quantities introduced above. Here and in what follows, assume that $x \ll R$ and use the resulting approximations. **[1 т.]**
 
 **A.ii.** Suppose now that the system will evolve by itself starting from the position shown in the right sketch, let us denote the speed with which the interface in the tube moves with $v = \frac{\mathrm{d}x}{\mathrm{d}t}$. Express the kinetic energy of the system in terms of $v$ and the other quantities defined above. **[1 т.]**
 
 **A.iii.** Show that the acceleration of the interface is proportional to its displacement $x$ by taking a time derivative of the energy conservation law, and that the displacement can grow exponentially in time so that $x$ is proportional to $\mathrm{e}^{\gamma t}$; find $\gamma$. **[1 т.]**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.6%', '--fig-max': '362px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig1.png" alt="Colour photograph of the Crab nebula: a cloud of orange-red filaments surrounding a bluish-white glowing core, on a black starry background." width="1132" height="1131" loading="lazy" decoding="async" />
+</figure>
 
 **A.iv.** Let us now substitute the O-tube with a spherical shell of radius $R$ filled with these two liquids, each of which occupies a hemispherical region inside the shell. In order to keep the interface between the liquids flat, a massless thin rigid circular membrane of radius $R$ is placed in between the liquids; the membrane can rotate frictionlessly inside the sphere, but cannot be bent. Find the instability growth rate $\gamma$ (defined above) if the heavier liquid occupies the upper half of the sphere.
 
@@ -64,6 +56,10 @@ Small angle approximations following $\sin\alpha \approx \tan\alpha \approx \alp
 **Part B. Stabilization due to surface tension (3 points)**
 
 According to the results obtained above, the Rayleigh-Taylor instability growth rate $\gamma$ is a decreasing function of the size $R$ of the region where the liquid starts moving. This means that small-scale perturbations of the interface shape grow faster and dominate at the initial stage of the instability. However, at very small scales, surface tension may stabilize the instability.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.7%', '--fig-max': '363px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig3.png" alt="(a) Top view: a membrane (dark grey) with a long horizontal slit of length l and width d; axes x (up) and z (right). (b) Vertical cross-section of the vessel in the x–y plane: darker liquid in the upper compartment, lighter liquid below, the membrane with a gap of width d between dashed lines; axes y (up) and x (right)." width="1135" height="342" loading="lazy" decoding="async" />
+</figure>
 
 **B.i.** Assume that a big rectangular vessel is divided into two compartments with a thin flat membrane, the top view is shown in the figure (a) above, and a vertical cross-section with the vessel being filled with liquids — in the figure (b). The membrane has a long and narrow slit: its length $l$ is much larger than its width $d$ ($l \gg d$). The upper compartment is filled with a liquid of density $\rho_2$, and the lower compartment — with a liquid of density $\rho_1 < \rho_2$. Initially, the slit is so narrow that the surface tension $\sigma$ which characterizes the interface between the two liquids stabilizes the Rayleigh-Taylor instability: the interface remains completely flat and horizontal. A cross-section in $x - y$-plane of this configuration is depicted in the figure (b) above, where $y$-axis is vertical, and $z$-axis is parallel to the longer edge of the slit. The width of the slit $d$ is increased slowly up to a certain value $d = d_0$, where instabilities start developing, but the instability growth rate $\gamma$ remains extremely small. A special design guarantees that the deformations of the interface between the two liquids remains strictly 2-dimensional — there is no dependence on the $z$-coordinate (this design can include, for instance, thin long rods placed onto the interface between the liquids, parallel to the slit). Sketch the new shape of the interface in $x - y$-intersection when $d = d_0$ and when it has become noticeably deformed due to the Rayleigh-Taylor instability. **[1 т.]**
 
@@ -78,6 +74,10 @@ According to the results obtained above, the Rayleigh-Taylor instability growth 
 $$v = \sqrt{g\lambda/2\pi}.$$
 
 Therefore, all wave speeds are possible, including those which travel in “resonance” with the boat: the boat will always remain at the same trough or at the same crest of the wave, and will propel water *resonantly*, i.e. always at the same value of the phase of the wave. If there are waves which can move in a resonance with a moving object, the moving object will generate these waves — this phenomenon is known as Cherenkov radiation. Generated waves carry away energy and this results in a *wave drag* acting on the object. The wave drag grows rapidly with speed (proportional to the cube of the speed) and is the main limiting factor for the speed of boats. Determine the speed of the boat shown in the aerophoto below (you may take measurements from the map). **[2 т.]**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.8%', '--fig-max': '364px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig4.png" alt="Aerial (Google Earth) photo of a boat moving to the right on the water surface, leaving a dark wake line and a pattern of parallel waves; a white scale bar at the top is marked 200 m, 1000 m, 2000 m, 3000 m." width="1137" height="682" loading="lazy" decoding="async" />
+</figure>
 
 ## Отговори
 
@@ -252,9 +252,22 @@ Distance $l/4$ corresponds to the peaks of the sinusoid-like shape, but with opp
 
 The sketches are given below. Notably, they can be interchanged because the shape in the $z$-direction can be flipped along the $z$-axis, swapping the cross-sections.
 
+<div className="problem-figure-row">
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '57.2%', '--fig-max': '366px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig1.png" alt="Cross-section of the slit at d = d₀: darker upper liquid, lighter lower liquid, membrane ends as thick black bars; between the dashed lines marking the slit width d₀ the interface forms two bulges, the lower liquid pushing up on the left and the upper liquid pushing down on the right." width="1144" height="864" loading="lazy" decoding="async" />
+</figure>
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '54.6%', '--fig-max': '350px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig2.png" alt="Two cross-sections of the slit of width d₁ (dashed lines, double arrows labelled d₁): in the left one the darker upper liquid bulges down through the slit, in the right one the lighter lower liquid bulges up." width="1093" height="454" loading="lazy" decoding="async" />
+</figure>
+</div>
+
 **(0.4 pts)**
 
 **iii. (1 pt)** First, let us take the origin of the $x$-axis to be at the axis of symmetry (see figure) and the height of the interface from the horizontal symmetry axis be $y(x)$. The boundary conditions are $y(\pm d_1/2) = 0$. **(0.1 pts)**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.8%', '--fig-max': '332px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig3.png" alt="Cross-section of the single bulge of the lighter liquid rising into the darker liquid between the membrane ends; dotted horizontal and vertical symmetry axes, with arrows labelled x (horizontal) and y(x) (vertical) marking a point of the interface." width="1037" height="759" loading="lazy" decoding="async" />
+</figure>
 
 The interface will be slowly expanding due to the instability, but since the expansion is slow, we can treat it as being almost at an equilibrium. This means that the difference of pressures between the bottom and top side is compensated by the surface tension. **(0.1 pts)**
 
@@ -271,6 +284,10 @@ $$(\rho_2 - \rho_1)gy(x) = \frac{\sigma}{r}. \qquad (4)$$
 **(0.1 pts)**
 
 Now we need to express $r$ in terms of $x$ and $y(x)$. For this, let us consider the situation given below:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44.1%', '--fig-max': '283px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig4.png" alt="Geometry of the curved interface: two points a horizontal distance dx apart (dotted verticals), their tangents and normals meeting at the centre of curvature at distance r, the angle between the normals and between the tangents labelled dα, right-angle marks at the interface." width="884" height="962" loading="lazy" decoding="async" />
+</figure>
 
 By considering two points separated horizontally by a distance $\mathrm{d}x$, we see that these points span an angle $\mathrm{d}\alpha$ as viewed from the centre of curvature of the interface, where $\mathrm{d}\alpha$ is the difference in the slopes (in radians) of the two points. Using small angle approximations, the slopes can be expressed as $\frac{\mathrm{d}y}{\mathrm{d}x}$. From the figure and under the assumption that perturbations are very small, we see that $\mathrm{d}x = r\mathrm{d}\alpha$. $\mathrm{d}\alpha$ can be found via the difference of slopes:
 
@@ -320,24 +337,8 @@ $$v = \sqrt{\frac{g\lambda}{2\pi}} = \sqrt{\frac{9.81\ \mathrm{m/s^2}\cdot113\ \
 
 **(0.8 pts)**
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig1.png" alt="Cross-section of the slit at d = d₀: darker upper liquid, lighter lower liquid, membrane ends as thick black bars; between the dashed lines marking the slit width d₀ the interface forms two bulges, the lower liquid pushing up on the left and the upper liquid pushing down on the right." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig2.png" alt="Two cross-sections of the slit of width d₁ (dashed lines, double arrows labelled d₁): in the left one the darker upper liquid bulges down through the slit, in the right one the lighter lower liquid bulges up." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig3.png" alt="Cross-section of the single bulge of the lighter liquid rising into the darker liquid between the membrane ends; dotted horizontal and vertical symmetry axes, with arrows labelled x (horizontal) and y(x) (vertical) marking a point of the interface." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig4.png" alt="Geometry of the curved interface: two points a horizontal distance dx apart (dotted verticals), their tangents and normals meeting at the centre of curvature at distance r, the angle between the normals and between the tangents labelled dα, right-angle marks at the interface." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig5.png" alt="The aerial photo of the boat and its waves with the scale bar 200 m, 1000 m, 2000 m, 3000 m; a red line drawn along the wake behind the boat is labelled “2710m”." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '57.4%', '--fig-max': '368px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig5.png" alt="The aerial photo of the boat and its waves with the scale bar 200 m, 1000 m, 2000 m, 3000 m; a red line drawn along the wake behind the boat is labelled “2710m”." width="1149" height="702" loading="lazy" decoding="async" />
 </figure>
 
 

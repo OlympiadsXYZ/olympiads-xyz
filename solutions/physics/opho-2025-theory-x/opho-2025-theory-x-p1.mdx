@@ -1,6 +1,6 @@
 ---
 id: opho-2025-theory-x-p1
-source: 'OPhO 2025'
+source: 'OPhO 2025, Финален кръг · част I'
 title: 'Задача 1. Theory Question 1'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/OPhO/2025/opho-2025-theory-x.json'
@@ -73,13 +73,13 @@ This problem consists of two independent parts.
 
 Iron is a *soft ferromagnetic* material, meaning that it has relative permeability $\mu_r \gg 1$ and zero intrinsic magnetisation.
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2025-theory-x/p1-fig1.png" alt="Side view: an iron hemisphere of radius R (grey, dimension bar labelled R) sits face down on a large grey iron plane. Above it a current loop is drawn as a dashed line with the current out of the page (⊙, labelled I) on the left and into the page (⊗) on the right; a bar labelled αR marks the loop radius from the axis, and a vertical bar labelled βR marks the height of the loop above the plane." />
-</figure>
-
 **(A.1)** Show that the magnetic field at the surface of an iron body is approximately perpendicular to the surface. **[0,5 т.]**
 
 An iron hemisphere of radius $R$ sits face down on a very large iron plane. Assume that there is a small air gap between the plane and the bottom of the hemisphere (with relative permeability 1). A thin conducting loop of radius $\alpha R$ is centered a distance $\beta R$ above the hemisphere and has current $I$ flowing through it.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '73.8%', '--fig-max': '472px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2025-theory-x/p1-fig1.png" alt="Side view: an iron hemisphere of radius R (grey, dimension bar labelled R) sits face down on a large grey iron plane. Above it a current loop is drawn as a dashed line with the current out of the page (⊙, labelled I) on the left and into the page (⊗) on the right; a bar labelled αR marks the loop radius from the axis, and a vertical bar labelled βR marks the height of the loop above the plane." width="1476" height="878" loading="lazy" decoding="async" />
+</figure>
 
 **(A.2)** Find the net magnetic force on the hemisphere. *Give your answer in terms of the integral*
 
@@ -139,6 +139,10 @@ To show that the image of the current loop in the sphere is another current loop
 
 Thus, we can consider the following set of three image loops. Because the loops can be divided into image pairs either in the sphere or in the plane, the resulting field is perpendicular to both of these surfaces and thus satisfies the boundary conditions.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.7%', '--fig-max': '452px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2025-theory-x/p1-sol-fig1.png" alt="Image-loop construction: the hemisphere on the grey plane with four coaxial current loops drawn as dashed lines between ⊙ and ⊗ symbols: loop (i) of current I above the hemisphere (radius bar αR, height bar βR); loop (ii) inside the hemisphere with current Iρ; image loop (ii′) just below the plane at depth (β/ρ²)R with radius bar (α/ρ²)R; and image loop (i′) deep below the plane. Labels (i), (ii), (ii′), (i′) on the right." width="1414" height="1053" loading="lazy" decoding="async" />
+</figure>
+
 Next, we note that the force on the hemisphere is equal to the force on loop (ii) from the other three. This is because we could replace the hemisphere with loop (ii) without changing the external field, so the forces on loop (i) and on the plane would not change. Here, it is necessary to have an air gap between the hemisphere and the plane.
 
 Thus, we need to find the force between coaxial current loops. Consider the general case of two loops with radii $R, aR$ and currents $I_1, I_2$ whose centers are at $z = 0, bR$. First, we'll find the magnetic vector potential of the first loop, working in cylindrical coordinates:
@@ -156,6 +160,10 @@ $$F_{\text{(ii)}} = F_z\left(\frac{1}{\rho^2}, \frac{\beta}{\alpha}\left(\frac{1
 $$= \boxed{\frac{\mu_0 I^2 \beta}{4\sqrt{2}\alpha}\left((\rho^2 - 1)J\left(\frac{\rho^4 - 2\beta^2 + 1}{2\alpha^2}\right) - (\rho^2 + 1)J\left(\frac{\rho^4 + 2\beta^2 + 1}{2\alpha^2}\right) - 2\rho^2 J\left(1 + \frac{2\beta^2}{\alpha^2}\right)\right)}$$
 
 (c) Plotting the region where $F_{\text{(ii)}} > 0$ in the $(\alpha, \beta)$ plane:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '86.8%', '--fig-max': '556px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2025-theory-x/p1-sol-fig2.png" alt="Plot in the plane with horizontal axis β (ticks 0, 0.5, 1, 1.5, 2) and vertical axis α (ticks 0.5, 1) on a grid: the shaded blue region where F_(ii) > 0, bounded above by a curve starting near (β≈0.1, α=1), rising to a maximum α≈1.1 near β≈0.95 and falling to α=0 at β≈2.08, and bounded below/left by a concave curve from (0.1, 1) down to (1, 0)." width="1737" height="1071" loading="lazy" decoding="async" />
+</figure>
 
 We see that the maximum value of $\alpha$ is $\boxed{\alpha \approx 1.097}$; here, $\beta \approx 0.948$.
 
@@ -178,6 +186,10 @@ For the case of a ferromagnetic sphere, the net flux out of the sphere must be 0
 $$\frac{\mathrm{d}^2 r}{\mathrm{d}\tau^2} = -\frac{dV_{\text{eff}}}{dr}, \quad V_{\text{eff}} = -\frac{GM}{r} + \frac{\ell^2}{2r^2} - \frac{GM\ell^2}{c^2 r^3} = c^2\left(-\frac{1}{\alpha} + \frac{\beta^2}{2\alpha^2} - \frac{\beta^2}{\alpha^3}\right)$$
 
 Thus, $r$ evolves under the “effective potential” $V_{\text{eff}}$. For $r \to \infty$, we have $V_{\text{eff}} \to 0$, so a faraway particle can overcome the angular momentum barrier and fall into the black hole if its “effective energy” $E = \frac{1}{2}\left(\frac{\mathrm{d}r}{\mathrm{d}\tau}\right)^2$ satisfies $E > \max(V_{\text{eff}})$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '69.4%', '--fig-max': '445px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2025-theory-x/p1-sol-fig3.png" alt="Sketch of the effective potential V_eff versus r (blue curve): it rises steeply from negative values to a sharp maximum near small r, crosses 0 and dips to a shallow negative minimum before approaching 0 from below. A horizontal arrow labelled 'E > max(V_eff)' passes over the peak toward small r; a double arrow labelled 'E < max(V_eff)' is reflected at the barrier." width="1390" height="632" loading="lazy" decoding="async" />
+</figure>
 
 Consider a particle with impact parameter (original distance to the axis of motion) $b$. Then, we have $\ell \approx bv$ and $E \approx v^2/2$. Let $b_m$ be the maximum impact parameter which falls into the black hole. We claim that $b_m \approx b_0$ where $b_0$ gives $\max(V_{\text{eff}}) = 0$. To see this, let $\beta_m, \beta_0$ be the corresponding values of $\beta$. Then, we can linearly approximate $\max(V_{\text{eff}}) \sim c^2(\beta_m - \beta_0)$, so $\max(V_{\text{eff}}) = E$ gives $\beta_m = \beta_0 + O(v^2/c^2) \approx \beta_0$.
 
@@ -214,18 +226,6 @@ $$F = \frac{2\pi\rho G^2 M^2}{v^2}\ln(u_m) \approx \boxed{\frac{4\pi\rho G^2 M^2
 Note that a multiplicative uncertainty in $b_m$ turns into an additive uncertainty in the logarithm, allowing us to obtain an asymptotic estimate.
 
 **Marking Scheme**: 1.0 for realizing that a cutoff scale is needed due to assumptions about the noninteracting medium becoming invalid. Different cutoff scales (i.e. the dimensional scale presented here, or a different scale based on the Jeans' length of the black hole) may lead to different numeric prefactors; we accepted any which give the correct logarithmic term for 0.5 points.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2025-theory-x/p1-sol-fig1.png" alt="Image-loop construction: the hemisphere on the grey plane with four coaxial current loops drawn as dashed lines between ⊙ and ⊗ symbols: loop (i) of current I above the hemisphere (radius bar αR, height bar βR); loop (ii) inside the hemisphere with current Iρ; image loop (ii′) just below the plane at depth (β/ρ²)R with radius bar (α/ρ²)R; and image loop (i′) deep below the plane. Labels (i), (ii), (ii′), (i′) on the right." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2025-theory-x/p1-sol-fig2.png" alt="Plot in the plane with horizontal axis β (ticks 0, 0.5, 1, 1.5, 2) and vertical axis α (ticks 0.5, 1) on a grid: the shaded blue region where F_(ii) > 0, bounded above by a curve starting near (β≈0.1, α=1), rising to a maximum α≈1.1 near β≈0.95 and falling to α=0 at β≈2.08, and bounded below/left by a concave curve from (0.1, 1) down to (1, 0)." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2025-theory-x/p1-sol-fig3.png" alt="Sketch of the effective potential V_eff versus r (blue curve): it rises steeply from negative values to a sharp maximum near small r, crosses 0 and dips to a shallow negative minimum before approaching 0 from below. A horizontal arrow labelled 'E > max(V_eff)' passes over the peak toward small r; a double arrow labelled 'E < max(V_eff)' is reflected at the barrier." />
-</figure>
 
 
 </Spoiler>

@@ -108,8 +108,38 @@ function figureGroupLines(items) {
 // for figures the surrounding text does not already show.
 function figuresNotInline(figs, ...texts) {
   const joined = texts.filter(Boolean).join('\n');
-  return (figs ?? []).filter(f => !(f.url && joined.includes(f.url)));
+  return (figs ?? []).filter(f => !figureShownInline(f, joined));
 }
+
+// A figure re-cropped after transcription is stored as "<crop>-v2.png" while the text may still inline the first
+// crop "<crop>.png" (the legacy НОА papers: 428 figures in 208 problems). It is the same picture: the page shows it
+// once, inline where the text puts it (figureShownInline), with the newest crop (newestInlineCrops).
+const INLINE_IMAGE = /(!\[[^\]]*\]\(\s*<?)([^)\s>]+)/g;
+const cropKey = url => String(url ?? '').replace(/[?#].*$/, '').replace(/-v\d+(\.[A-Za-z0-9]+)$/, '$1');
+const cropVersion = url => Number(/-v(\d+)\.[A-Za-z0-9]+(?:[?#].*)?$/.exec(String(url ?? ''))?.[1] ?? 1);
+export function figureShownInline(fig, text) {
+  if (!fig?.url) return false;
+  text = String(text ?? '');
+  if (text.includes(fig.url)) return true;
+  const key = cropKey(fig.url);
+  for (const m of text.matchAll(INLINE_IMAGE)) if (cropKey(m[2]) === key) return true;
+  return false;
+}
+export function newestInlineCrops(text, figs) {
+  const newest = new Map();
+  for (const f of figs) if (f?.url) {
+    const k = cropKey(f.url), cur = newest.get(k);
+    if (!cur || cropVersion(f.url) > cropVersion(cur)) newest.set(k, f.url);
+  }
+  if (!newest.size || text == null) return text;
+  return String(text).replace(INLINE_IMAGE, (m, pre, url) => {
+    const n = newest.get(cropKey(url));
+    return n && cropVersion(n) > cropVersion(url) ? pre + n : m;
+  });
+}
+const problemFigures = problem => [
+  ...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...(problem.solution?.figures || []),
+];
 
 // Solution figures stored in the statement (problem.figures / parts[].figures) would be shown under «Условие», outside
 // the solution spoiler — a leaked answer (nao-2000-ii-7-9 p3, spba-2023-ii-11-pract p1, ioaa-2016-theory-qp p12 …).
@@ -235,7 +265,7 @@ function movedSolutionFigures(misplaced, solution) {
   const text = solution?.statement || '';
   const out = [];
   for (const { fig } of misplaced) {
-    if (fig.url && text.includes(fig.url)) continue;
+    if (figureShownInline(fig, text)) continue;
     if (shown.some(s => (fig.url && s.url === fig.url) || samePlace(figurePlace(s), figurePlace(fig)))) continue;
     shown.push(fig); out.push(fig);
   }
@@ -263,20 +293,22 @@ export function readFigureAnchors(root) {
 }
 export function newFigureStats() { return { anchored: 0, placed: 0, notFound: [], refused: [], unused: [] }; }
 
-// Paragraphs of a text field: blank lines split them, except inside $$…$$ display math and ``` / ~~~ fences; an
-// indented line after a blank line continues the paragraph (a list item's second paragraph, indented code).
-// Returns [{ start, end }] offsets into the text (end exclusive, the paragraph's last line included).
+// Paragraphs of a text field: blank lines split them, except inside $$…$$ display math and ``` / ~~~ fences; in a
+// list, an indented line after a blank line continues the item (its second paragraph). Returns [{ start, end }]
+// offsets into the text (end exclusive, the paragraph's last line included). scripts/figure-anchors.mjs computes its
+// anchors with this same function, so both sides agree on every boundary.
 export function paragraphSpans(text) {
   const spans = [];
-  let open = null, gap = false, fence = null, math = false, pos = 0;
+  let open = null, gap = false, fence = null, math = false, list = false, pos = 0;
   for (const line of String(text ?? '').split('\n')) {
     const start = pos;
     pos += line.length + 1;
     const inside = !!fence || math;
     if (!inside && /^\s*$/.test(line)) { if (open) gap = true; continue; }
-    if (open && gap && /^[ \t]/.test(line)) gap = false;
-    if (!open || gap) { open = { start, end: start + line.length }; spans.push(open); gap = false; }
+    if (open && gap && list && /^[ \t]/.test(line)) gap = false;
+    if (!open || gap) { open = { start, end: start + line.length }; spans.push(open); gap = false; list = false; }
     else open.end = start + line.length;
+    if (!inside && /^\s*(?:[-*+]|\d+[.)])\s/.test(line)) list = true;
     const f = /^\s*(`{3,}|~{3,})/.exec(line);
     if (fence) { if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null; }
     else if (f) fence = f[1];
@@ -367,7 +399,7 @@ function splitAtFigures(text, placed) {
 }
 
 function sourceText(text, problem) {
-  let rendered = mdText(text);
+  let rendered = mdText(newestInlineCrops(text, problemFigures(problem)));
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
   for (const passage of [...(problem.sourceLayout?.underlines || [])].sort((a, b) => b.length - a.length)) {
     const needle = mdText(passage);

@@ -1,6 +1,6 @@
 ---
 id: owao-2024-theory-t-p5
-source: 'OWAO 2024'
+source: 'OWAO 2024, Теория'
 title: 'Задача 5. Almost Circumpolar'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/OWAO/2024/owao-2024-theory-t.json'
@@ -64,6 +64,11 @@ A star does not cross the horizon in two cases: either it is circumpolar or it i
 
 $$\begin{array}{llcr} \text{Case 1:} & \varphi \leqslant -45^{\circ} & \Longrightarrow & -(90^{\circ} + \varphi) \leqslant \delta \leqslant 90^{\circ} + \varphi;\\ \text{Case 2:} & -45^{\circ} \leqslant \varphi \leqslant 0^{\circ} & \Longrightarrow & \varphi \leqslant \delta \leqslant 90^{\circ} + \varphi;\\ \text{Case 3:} & 0^{\circ} \leqslant \varphi \leqslant 45^{\circ} & \Longrightarrow & \varphi \leqslant \delta \leqslant 90^{\circ} - \varphi;\\ \text{Case 4:} & \varphi \geqslant 45^{\circ} & \Longrightarrow & \delta \in \varnothing. \end{array}$$
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '54.2%', '--fig-max': '347px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-theory-t/p5-sol-fig1.png" alt="Diagram in the (φ; δ) plane from −90° to +90° on both axes: the line φ = δ, dashed diagonals, shaded triangles labelled 'non-rising stars' and 'circumpolar stars' (two each), a hatched region below the line φ = δ, and the admissible white regions numbered 1, 2 and 3." width="1085" height="1081" loading="lazy" decoding="async" />
+<figcaption>Figure 4: Selecting areas that meet the conditions of the problem</figcaption>
+</figure>
+
 The fraction of the area of a sphere enclosed between small circles with declinations from $\delta_{\min}$ to $\delta_{\max}$ can be calculated using the spherical segment area formula $S_{\delta \geqslant \delta_0} = 2\pi R^2(1 - \sin\delta_0)$:
 
 $$\eta = \frac{2\pi R^2(1 - \sin\delta_{\min}) - 2\pi R^2(1 - \sin\delta_{\max})}{4\pi R^2} = \frac{\sin\delta_{\max} - \sin\delta_{\min}}{2}\,.$$
@@ -73,6 +78,10 @@ Next, we obtain the fractions for the each case stated above:
 $$\begin{array}{ll} \text{Case 1:} & \eta_1 = \dfrac{\sin(90^{\circ} + \varphi) - \sin(-90^{\circ} - \varphi)}{2} = \cos\varphi;\\[2ex] \text{Case 2:} & \eta_2 = \dfrac{\sin(90^{\circ} + \varphi) - \sin\varphi}{2} = \dfrac{\cos\varphi - \sin\varphi}{2} = \dfrac{\sin(45^{\circ} - \varphi)}{\sqrt{2}}\,;\\[2ex] \text{Case 3:} & \eta_3 = \dfrac{\sin(90^{\circ} - \varphi) - \sin\varphi}{2} = \dfrac{\cos\varphi - \sin\varphi}{2} = \dfrac{\sin(45^{\circ} - \varphi)}{\sqrt{2}}\,. \end{array}$$
 
 Finally,
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.1%', '--fig-max': '340px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-theory-t/p5-sol-fig2.png" alt="Graph of the fraction of stars η (vertical axis, 0 to 0.8) against latitude φ in degrees (horizontal axis, −90 to 90): the curve rises linearly-looking from 0 at −90° to about 0.71 at −45° (marked by a vertical dashed line), then falls to 0 at 45° and stays 0 up to 90°." width="1062" height="716" loading="lazy" decoding="async" />
+</figure>
 
 $$\eta(\varphi) = \begin{cases} \cos\varphi, & \varphi \leqslant -45^{\circ};\\ \frac{1}{\sqrt{2}}\sin(45^{\circ} - \varphi), & -45^{\circ} \leqslant \varphi \leqslant 45^{\circ};\\ 0, & \varphi \geqslant 45^{\circ}. \end{cases}$$
 
@@ -91,15 +100,6 @@ $$\cos(-45^{\circ}) = \frac{\sin(45^{\circ} - (-45^{\circ}))}{\sqrt{2}} = \frac{
 - Question (b)
     6. Discussion of the maximum value — **2 pt.** ($[-45^{\circ};\ 45^{\circ}]$) + **1 pt.** ($[-90^{\circ};\ -45^{\circ}]$)
     7. Correct final answer — **1 pt.**
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-theory-t/p5-sol-fig1.png" alt="Diagram in the (φ; δ) plane from −90° to +90° on both axes: the line φ = δ, dashed diagonals, shaded triangles labelled 'non-rising stars' and 'circumpolar stars' (two each), a hatched region below the line φ = δ, and the admissible white regions numbered 1, 2 and 3." />
-<figcaption>Figure 4: Selecting areas that meet the conditions of the problem</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-theory-t/p5-sol-fig2.png" alt="Graph of the fraction of stars η (vertical axis, 0 to 0.8) against latitude φ in degrees (horizontal axis, −90 to 90): the curve rises linearly-looking from 0 at −90° to about 0.71 at −45° (marked by a vertical dashed line), then falls to 0 at 45° and stays 0 up to 90°." />
-</figure>
 
 
 </Spoiler>

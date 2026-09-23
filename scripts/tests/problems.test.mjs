@@ -305,6 +305,23 @@ test('figure display width follows the printed width and never upscales the crop
   assert.equal(figureSize({ width: 933, height: 573 }), null); // nothing says how large it was printed
 });
 
+// nao-2013-iii-9-10 p1: the text inlines the first crop p1-fig1.png, figures[] holds the re-crop p1-fig1-v2.png — one
+// picture, shown once, inline, with the newest crop (a figure block next to it would repeat it)
+test('a figure whose other crop version the text inlines is shown once, inline, with the newest crop', async () => {
+  const { figureShownInline, newestInlineCrops } = await import('../problems-to-site.mjs');
+  const base = 'https://r2.example/problems/nao-2013-iii-9-10';
+  const text = `Графиките:\n\n![Площ на петната](${base}/p1-fig1.png)\n\n*Фиг. 1.*`;
+  const fig = { id: 'p1-fig1', url: `${base}/p1-fig1-v2.png` };
+  assert.equal(figureShownInline(fig, text), true);
+  assert.equal(figureShownInline({ id: 'p1-fig2', url: `${base}/p1-fig2-v2.png` }, text), false);
+  assert.equal(figureShownInline({ id: 'p1-fig10', url: `${base}/p1-fig10.png` }, text), false);
+  assert.equal(newestInlineCrops(text, [fig]), text.replace('p1-fig1.png', 'p1-fig1-v2.png'));
+  // an older version in figures[] never replaces the newer crop the text shows
+  const newer = text.replace('p1-fig1.png', 'p1-fig1-v3.png');
+  assert.equal(newestInlineCrops(newer, [fig]), newer);
+  assert.equal(newestInlineCrops(null, [fig]), null);
+});
+
 // Every figure block appears on its page exactly as often as before anchoring, and on the same side of the
 // «Решение» heading (a statement figure never enters the solution, a solution figure never leaves it) — over every
 // paper in the repository, with the committed overlay (when there is one) and with an adversarial overlay that
