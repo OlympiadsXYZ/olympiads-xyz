@@ -1,0 +1,138 @@
+---
+id: owao-2022-data-analysis-practical-p4
+source: 'OWAO 2022, Practical Round'
+title: 'Задача 4. Nearby Cluster'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2022/owao-2022-data-analysis-practical.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:58:40.509Z'
+verifier: 'mechanical'
+---
+
+*2022 ◇ Practical Round ◇ Problems*
+
+## Условие
+
+The data describe one of the nearby galaxy clusters (Eftekhari et al., 2022):
+
+- $(\alpha, \delta)$ are the equatorial coordinates of the galaxy,
+- $R_e$ is the effective radius of the galaxy,
+- $M_{r,e}$ is the absolute magnitude in $r$ band inside the effective radius,
+- $\mu_{r,e}$ is the average surface brightness in $r$ band inside the effective radius measured in magnitudes per square arcsecond,
+- $q$ is the axis ratio of the projection of galaxy on the plane of the sky.
+
+Determine the following parameters of the galaxy cluster:
+
+**a)** the coordinates of the center of the cluster,
+
+**b)** the constellation where the center of the cluster is located,
+
+**c)** the distance to the cluster,
+
+**d)** the linear dimensions of the cluster in the plane of the sky in $\alpha$ and $\delta$ directions.
+
+| ID | $\alpha$, $^{\circ}$ | $\delta$, $^{\circ}$ | $R_e$, $''$ | $M_{r,e}$ | $\mu_{r,e}$ | $q$ |
+|---|---|---|---|---|---|---|
+| 22_D244 | 51.6043 | $-37.1278$ | 8.5 | $-15.32$ | 21.60 | 0.64 |
+| 16_D417 | 52.9485 | $-35.0514$ | 19.8 | $-16.14$ | 22.79 | 0.76 |
+| ... | ... | ... | ... | ... | ... | ... |
+
+The full data table can be found in nearby_cluster.csv file.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** α_me = 54.22°, δ_me = −35.11° (median values)
+- **b)** Fornax
+- **c)** 20 Mpc
+- **d)** D_α = 1.7 Mpc, D_δ = 1.2 Mpc
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) To determine the center of the cluster, we will plot the distribution of galaxies at first:
+
+The graph shows that the galaxy with the lowest right ascension is located at a considerable distance from other objects, so its coordinates will significantly shift the estimation of the coordinates of the cluster center by calculating the arithmetic mean
+
+$$\alpha_{\mathrm{av}} = 54.33^{\circ},\quad \delta_{\mathrm{av}} = -35.22^{\circ}.$$
+
+It would be more correct to calculate the median values of the coordinates, rather than the mean values. After having the arrays ordered, we calculate the half-sum of the central elements (the number of galaxies is even):
+
+$$\alpha_{\mathrm{me}} = 54.22^{\circ},\quad \delta_{\mathrm{me}} = -35.11^{\circ}.$$
+
+b) The coordinates of the center belong to Fornax. The table provided data on the galaxies of the Fornax Cluster, the second closest galaxy cluster.
+
+c) As surface brightness, effective radius and axis ratio are given, we can determine the apparent magnitude of each galaxy. The area of elliptic projection of the galaxy on the plane of the sky is $\pi R_e^2 q$. The apparent magnitude of the galaxy inside the effective radius is
+
+$$m_{r,e} = \mu_{r,e} - 2.5\lg(\pi R_e^2 q).$$
+
+Next, let us obtain the distance to the galaxies from the apparent and absolute magnitudes. The cluster is far from the galactic plane, so we will ignore the interstellar extinction:
+
+$$m_{r,e} = M_{r,e} - 5 + 5\lg r[\mathrm{pc}],$$
+
+$$r\,[\mathrm{pc}] = 10^{0.2(m_{r,e} - M_{r,e} + 5)}.$$
+
+As an estimate of the distance to the cluster, we take the average value: $r = 20.0\ \mathrm{Mpc}$.
+
+*Note.* The current estimate of the distance to the Fornax Cluster is 19.7 Mpc.
+
+d) Since the galaxy with the lowest right ascension still belongs to the cluster, it should be taken into account when estimating the size of the cluster. We should note that the angular dimension of the cluster in $\alpha$ direction also depends on the declination of the cluster:
+
+$$d_\alpha = (\alpha_{\max} - \alpha_{\min})\cos\delta_{\mathrm{me}} = (56.4931^{\circ} - 51.6043^{\circ})\cdot\cos(-35.11^{\circ}) = 4.0^{\circ}.$$
+
+The angular dimension in $\delta$ direction is
+
+$$d_\delta = \delta_{\max} - \delta_{\min} = -34.2387^{\circ} + 37.1278^{\circ} = 2.9^{\circ}.$$
+
+The linear dimensions are
+
+$$D_\alpha = r\cdot 2\tan\tfrac{d_\alpha}{2} = 1.7\ \mathrm{Mpc},$$
+
+$$D_\delta = r\cdot 2\tan\tfrac{d_\delta}{2} = 1.2\ \mathrm{Mpc}.$$
+
+**Marking Scheme:**
+
+- Coordinates of the center of the cluster — **5 pt:**
+  - only the answer is given — 1 pt;
+  - OR arithmetic mean of the maximum and minimum values of the coordinates, the outlier is NOT mentioned — 2 pt;
+  - OR arithmetic mean of the maximum and minimum values of the coordinates, the outlier IS mentioned — 3 pt,
+  - OR arithmetic mean of the coordinates of the whole sample — 4 pt,
+  - OR median value of the coordinates of the whole sample — full points.
+
+  *Penalties:*
+  - Excessive accuracy of the answer — $-2$ pt.
+  - Computational error — $-2$ pt.
+- Constellation — **3 pt:**
+  - Fornax — full points,
+  - OR Eridanus — 2 pt.
+- Distance estimation — **7 pt:**
+  - $20.0 \pm 0.1$ Mpc — full points,
+  - OR $20 \pm 5$ Mpc — 5 pt.
+
+  *Penalties:*
+  - Distance is estimated based on the two outermost galaxies — $-2$ pt.
+  - Axis ratio is neglected — $-2$ pt.
+  - Excessive accuracy of the answer — $-2$ pt.
+- Linear dimensions of the cluster.
+  - Angular dimensions estimation — **2 pt.**
+  - Declination is taken into account — **1 pt.**
+  - Linear dimensions — **2 pt.**
+
+  *Penalties:*
+  - Excessive accuracy of the answer — $-2$ pt.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p4-sol-fig1.png" alt="Scatter plot of the galaxies: δ (deg) from −38 to −33 against α (deg) from 51.5 to 56.5; purple dots for galaxies, one isolated at α ≈ 51.6°, δ ≈ −37.1°; a green cross marks (α_av, δ_av) and a red triangle marks (α_me, δ_me) near α ≈ 54.2°, δ ≈ −35.1°; legend at the top right." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [OWAO_2022_Practical_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Data%20Analysis/OWAO_2022_Practical_Problems.pdf)
+· официални решения: [OWAO_2022_Practical_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Data%20Analysis/OWAO_2022_Practical_Solutions.pdf)

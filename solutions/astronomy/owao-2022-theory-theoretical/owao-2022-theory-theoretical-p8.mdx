@@ -1,0 +1,141 @@
+---
+id: owao-2022-theory-theoretical-p8
+source: 'OWAO 2022, theory'
+title: 'Задача 8. Perfect Nebula'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2022/owao-2022-theory-theoretical.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T10:00:47.140Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2022 ◇ Theoretical Round ◇ Problems*
+
+## Условие
+
+A planet with synchronous rotation orbits a star in a circular orbit. The planet has no atmosphere, but the system is surrounded by a large homogeneous spherical gaseous nebula. This nebula does not absorb light, but only scatters it isotropically and with the same scattering properties for all wavelengths.
+
+The surface temperature of the planet at the point facing the star is twice that of the opposite point. The Sun’s apparent magnitude on the planet’s surface is $20^{\mathrm{m}}$. Find the distance to the system. Ignore interstellar extinction.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- Only an upper limit: with τ > 1/8, lg r < 4.03, i.e. r ≲ 11 kpc.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Let us assume that the radius of nebula $l$ is much more than radius of planet’s orbit $R$. The star luminosity is $B$, optical depth of nebula is $\tau$. The planet is inside the nebula, so the energy flux from the star near the planet is
+
+$$J_S = \frac{B}{4\pi R^2}.$$
+
+The energy scattered by the nebula is
+
+$$B_N = B\left(1 - e^{-\tau}\right).$$
+
+Angular element $d\Omega$ of the nebula scatters
+
+$$dB_N = \frac{d\Omega}{4\pi}B_N,$$
+
+and that results in illuminance near the planet
+
+$$dJ_N = \frac{dB_N}{4\pi l^2}.$$
+
+Energy flux on the planet surface from an angular element is
+
+$$dJ_N\cdot\cos\theta = B\left(1 - e^{-\tau}\right)\cdot\cos\theta\cdot\pi^2l^2\cdot d\Omega.$$
+
+Thus, total amount from sky hemisphere is
+
+$$J_N = \int\limits_{\mathrm{Hemisph.}} dJ_N\cdot\cos\theta = \frac{1 - e^{-\tau}}{32\pi^2l^2}B.$$
+
+Here the fact that average $\langle\cos\theta\rangle = \frac{1}{2}$ over the hemisphere is used.
+
+The subsolar point of the planet receives $J_S + J_N$, while the opposite point receives $J_N$. Recalling Stefan–Boltzmann’s law, we conclude that
+
+$$J_S + J_N = 2^4\cdot J_N \quad\Rightarrow\quad J_S = 15J_N.$$
+
+Therefore,
+
+$$1 - e^{-\tau} = \frac{8\pi l^2}{15R^2}.$$
+
+The latter equation has no solutions for $\tau$, unless we consider the “close model” $l \gtrsim R$ with rough approximation. In this case the nebula fragment near the planet can be considered as a flat layer with optical depth $\tau < 1$, illuminated with the energy flux $J_S$. It scatters $\tau$-part of the incident flux to the outer and inner side of the nebula:
+
+$$J_{N0} = \frac{\tau}{2}J_S.$$
+
+To meet the temperature relation,
+
+$$J_S = 16J_{N0},$$
+
+this gives the lower limit value of $\tau_{\min} = \dfrac{1}{8}$. Generally speaking, we have to write the final condition on the optical depth:
+
+$$\tau > \frac{1}{8}.$$
+
+The Sun has the absolute magnitude $M_\odot = +4.7^{\mathrm{m}}$ and apparent magnitude $m = +20^{\mathrm{m}}$. Taking the logarithm of Beer’s law (1), we obtain the equation for the distance $r$:
+
+$$m = M - 5 + 5\lg r + 2.5\lg e\cdot\tau.$$
+
+Finally,
+
+$$\lg r < 4.03 \quad\Rightarrow\quad r \lesssim 11\ \mathrm{kpc}.$$
+
+**Marking Scheme:**
+
+- Distance determination, without the absorption — **2 pt.**
+- Estimation of the ratio of energy flows — **2 pt.**
+- Understanding that the condition can be fulfilled at different thicknesses, there is only a lower limit — **2 pt.**
+- Adequate energy transfer model (not necessarily the same as above) — **2 pt.**
+- Distance determination, taking absorption into account:
+  - Inequality — **2 pt,**
+  - Equality only — 1 pt. *in particular.*
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| **Universal** | |
+|---|---|
+| Speed of light | $c = 3.00\cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63\cdot 10^{-34}\ \mathrm{J\cdot s}$ |
+| Hubble constant | $H_0 = 70\ \mathrm{(km/s)/Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6\cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| **Earth** | |
+|---|---|
+| Radius | $R_\oplus = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_\oplus = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_\oplus = 0.0167$ |
+
+| **Moon** | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| **Sun** | |
+|---|---|
+| Radius | $R_\odot = 6.96\cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_\odot = 4.74^{\mathrm{m}}$ |
+| Effective temperature | $T_\odot = 5.8\cdot 10^3\ \mathrm{K}$ |
+
+| **UBV system** | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2022_Theoretical_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Theory/OWAO_2022_Theoretical_Problems.pdf)
+· официални решения: [OWAO_2022_Theoretical_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Theory/OWAO_2022_Theoretical_Solutions.pdf)

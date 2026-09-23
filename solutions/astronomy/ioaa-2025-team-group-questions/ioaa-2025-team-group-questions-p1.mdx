@@ -1,0 +1,346 @@
+---
+id: ioaa-2025-team-group-questions-p1
+source: 'IOAA 2025, team'
+title: 'Задача 1. Uncovering Galactic dark matter using a radio telescope'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2025/ioaa-2025-team-group-questions.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:50:18.039Z'
+verifier: 'mechanical'
+---
+
+*G: Solution and Marking Scheme · 150 т.*
+
+## Условие
+
+(G01) **Uncovering Galactic dark matter using a radio telescope** **[150 marks]**
+
+**(G01.1)** We estimate the resolution of our radio telescope and compare it with the angular accuracy of its pointing devices.
+
+**(G01.1a)** Measure the aperture dimensions of the radio telescope (longer length $a$, shorter length $b$) and express in metres. From this, estimate the resolution corresponding to each of the dimensions separately ($\theta^{\mathrm{a}}_{\mathrm{res}}$ and $\theta^{\mathrm{b}}_{\mathrm{res}}$, respectively) in degrees. Tick (✓) the dimension which gives you the higher resolution. **[7 т.]**
+
+**(G01.1b)** In order to compare with the above resolution, write down the least count (smallest measurable unit) of the protractor ($\theta^{\mathrm{az}}_{\mathrm{min}}$) and the digital inclinometer ($\theta^{\mathrm{alt}}_{\mathrm{min}}$). **[2 т.]**
+
+**(G01.2)** Open the telescope operating software and verify using Tab 1 that the system is working. For each longitude,
+
+- Use Tab 2 to enter a Galactic coordinate (longitude $\ell$, latitude $b = 0$) and note the time, corresponding altitude, azimuth and $v_{corr}$ in the Table in Summary Answersheet.
+- Point to this altitude and azimuth and use Tab 3 to record the data ‘ℓ.csv‘ (e.g. a file named ‘30.csv‘ could contain data corresponding to longitude $30^{\circ}$).
+
+Repeat this procedure for all the different longitudes from the table. **[25 т.]**
+
+**(G01.3)** Use Tab 3 to record the calibration data ‘sky.csv’ and ‘ground.csv’ by pointing the telescope towards a region of the sky away from the Galactic plane, and then towards the ground, respectively. Add the altitude and azimuth you pointed to and the time when you carried out each of these measurements in the Summary Answersheet. **[14 т.]**
+
+**(G01.4)** Perform the gain and temperature calibration using the procedure corresponding to Tab 4. **[7 т.]**
+
+**(G01.5)** Now for each observation ‘ℓ.csv‘, use Tab 5 to obtain the temperature spectrum at the 5 different longitudes $\ell$.
+
+**(G01.5a)** Determine the most redshifted frequency $f_{\mathrm{obs}}$ of the HI line (which has a temperature of $5\ \mathrm{K}$ above the baseline) corresponding to a given Galactic longitude ($\ell$), and tabulate in the Summary Answersheet. **[19 т.]**
+
+**(G01.5b)** Calculate $v^{\mathrm{obs}}_{\mathrm{Earth}}(\ell)$ and $v^{\mathrm{max}}_{\mathrm{LSR}}(\ell)$ and tabulate in the Summary Answersheet. **[10 т.]**
+
+**(G01.5c)** Using values of $v^{\mathrm{max}}_{\mathrm{LSR}}$ at each of the observed Galactic longitudes, calculate the rotation velocity $v_{\mathrm{rot}}(R)$ and the Galactic radius for the maximum redshifted emission for each of the 5 Galactic longitudes. Tabulate all these values in the Summary answersheet. **[10 т.]**
+
+**(G01.6)** Plot the rotation velocity versus Galacto-centric radius on the graph-sheet provided as a part of Summary Answersheet and draw a smooth curve going through these points. **[6 т.]**
+
+**(G01.6a)** Assuming a spherically symmetric mass distribution, estimate the enclosed mass within the corresponding radius of your observations using the formula:
+
+$$M_{\mathrm{encl}}(R) = \frac{v^2_{\mathrm{rot}} R}{G},$$
+
+where $R$ is galacto-centric radius, $v_{\mathrm{rot}}$ is the rotation velocity, and $G$ is the gravitational constant. Express your answer in units of solar mass. **[10 т.]**
+
+**(G01.6b)** The mass in ordinary baryonic matter enclosed at different Galacto-centric radii, $R$, of the Milky Way is shown with $\odot$ symbols in the graph given in the answersheet. Plot $M_{\mathrm{encl}}(R)$ from your measurements in the same graph-sheet, and draw two smooth physically correct curves, one for each set of measurements. **[12 т.]**
+
+**(G01.6c)** Calculate the value of enclosed dark matter mass, $M_{\mathrm{dm}}(R)$, and record it in the Table in the Summary answersheet. **[10 т.]**
+
+**(G01.7)** Estimate the sensitivity of your observation per spectral bin in units of temperature in K given that the spectrum has a total of 512 bins spanning a total frequency range of $2.048\ \mathrm{MHz}$. **[9 т.]**
+
+**(G01.8)** Which of the following parameter(s) will improve if observations were made with a horn antenna of larger aperture dimensions. Tick against the correct option(s) in the Summary answersheet.
+
+A. Sensitivity $\sigma_T$ for $T_{\mathrm{ant}} = 5\ \mathrm{K}$
+
+B. Angular resolution
+
+C. Estimation of $v_{\mathrm{rot}}$
+
+D. Resolution in frequency **[9 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(G01.1a)** a = 0.565 m, b = 0.415 m; θ_a ≈ 21.4°, θ_b ≈ 29.2°; the longer dimension a gives the higher resolution (smaller angle).
+- **(G01.1b)** θ_min^alt = 0.01°, θ_min^az = 1°
+- **(G01.7)** 0.235 K
+- **(G01.8)** B, C
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**(G01.1a)**
+
+**Solution:**
+
+**1. Given Parameters**
+
+- **Frequency ($f$)**: 1420.40575 MHz or $1.42040575 \times 10^9$ Hz
+- **Horn Dimensions**:
+  - ($a$): 56.5 cm or 0.565 m
+  - ($b$): 41.5 cm or 0.415 m
+- **Speed of light ($c$)**: $299,792,458$ m/s
+
+**2. Calculate the Wavelength ($\lambda$)**
+
+$$\lambda = \frac{c}{f}$$
+
+$$\lambda = \frac{299,792,458\ \mathrm{m/s}}{1,420,405,750\ \mathrm{Hz}} \approx \mathbf{0.2111}\ \mathrm{meters}$$
+
+**3. Calculate the Angular Resolution (HPBW)**
+
+**Resolution along Larger Dimension ($\theta_a$)**
+
+This resolution is associated with the larger dimension, $a$.
+
+$$\theta_a \approx \frac{180}{\pi}\left(\frac{\lambda}{a}\right)$$
+
+$$\theta_a \approx \frac{180}{\pi}\left(\frac{0.2111\ \mathrm{m}}{0.565\ \mathrm{m}}\right) \approx \mathbf{21.4^{\circ}}$$
+
+**Resolution along Smaller dimension ($\theta_b$)**
+
+This resolution is associated with the smaller dimension, $b$.
+
+$$\theta_b \approx \frac{180}{\pi}\left(\frac{\lambda}{b}\right)$$
+
+$$\theta_b \approx \frac{180}{3.14} \times \left(\frac{0.2111\ \mathrm{m}}{0.415\ \mathrm{m}}\right) \approx \mathbf{29.2^{\circ}}$$
+
+| Measurement in two directions (1+1) | 2.0 |
+|---|---|
+| Estimating wavelength | 1.0 |
+| Writing the formula for resolution | 1.0 |
+| Computing the correct value in both directions (1 + 1) | 2.0 |
+| Choosing the dimension which gives the smaller of the two angles | 1.0 |
+
+**(G01.1b)**
+
+**Solution:**
+
+$\theta^{\mathrm{alt}}_{\mathrm{min}} = 0.01^{\circ}$ and $\theta^{\mathrm{az}}_{\mathrm{min}} = 1^{\circ}$
+
+**(G01.2)**
+
+**Solution:**
+
+Date: $24^{th}$ July 2025
+
+| Galactic Longitude | Azimuth (°) | Altitude (°) | $V_{corr}$ kms$^{-1}$ | Time |
+|---|---|---|---|---|
+| 30° | 119.7° | 50.5° | -7.484 | 21:01:11 |
+| 40° | 104.2 ° | 51.3 ° | -11.802 | 21:03:31 |
+| 50° | 88.9° | 50.0° | -15.761 | 21:05:33 |
+| 60° | 75.0° | 46.9° | -19.240 | 21:08:16 |
+| 70° | 61.8° | 50.1° | -22.078 | 21:47:57 |
+
+| Azimuth for 5 longitudes | 5.0 |
+|---|---|
+| Altitude for 5 longitudes | 5.0 |
+| $v_{corr}$ for 5 longitudes | 5.0 |
+| if sign of $v_{corr}$ is not maintained (-0.5 for each longitude) | -2.5 |
+| Time for 5 longitudes | 5.0 |
+| Correct source profile with central HI line feature above two side peaks (1.0 $\times$ each longitude) | 5.0 |
+
+**(G01.3)**
+
+**Solution:**
+
+| Altitude for sky away from galactic plane | 2.0 |
+|---|---|
+| Azimuth for sky away from galactic plane | 2.0 |
+| Time for sky | 1.0 |
+| Time for ground | 1.0 |
+| Quality of ground data | 3.0 |
+| Quality of sky data | 3.0 |
+| Difference between ground and sky data is $>$ 3dB | 2.0 |
+
+**(G01.4)**
+
+**Solution:**
+
+| Region chosen for masking the contaminating line | 3.0 |
+|---|---|
+| Value of $T_{sys}$ | 2.0 |
+| Correct gain | 2.0 |
+
+**(G01.5a)**
+
+**Solution:**
+
+| Galactic Longitude | $f_{\mathrm{obs}}$ [MHz] |
+|---|---|
+| 30° | 1420.0207 |
+| 40° | 1420.0288 |
+| 50° | 1420.1096 |
+| 60° | 1420.1503 |
+| 70° | 1420.2479 |
+
+| Value of $f_{obs}$ at 5K for 5 longitudes | 10.0 |
+|---|---|
+| Bonus for completing all 5 measurements | 4.0 |
+| Baseline coinciding with 0 in the line temperature curve for 5 longitudes | 5.0 |
+
+**(G01.5b)**
+
+**Solution:**
+
+| Galactic Longitude | $v^{\mathrm{obs}}_{\mathrm{Earth}}(\ell)$ [kms$^{-1}$] | $v^{\mathrm{max}}_{\mathrm{LSR}}(\ell)$ [kms$^{-1}$] |
+|---|---|---|
+| 30° | 81.325 | 73.841 |
+| 40° | 79.615 | 67.813 |
+| 50° | 62.549 | 46.788 |
+| 60° | 53.953 | 34.713 |
+| 70° | 33.339 | 11.261 |
+
+| Value of $v^{\mathrm{obs}}_{\mathrm{Earth}}(\ell)$ for 5 longitudes | 5.0 |
+|---|---|
+| Value of $v^{\mathrm{max}}_{\mathrm{LSR}}(\ell)$ for 5 longitudes | 5.0 |
+
+**(G01.5c)**
+
+**Solution:**
+
+| Galactic Longitude | $v_{\mathrm{rot}}(R)$ /$10^3$ms$^{-1}$ | Galacto-centric Radius, $R$ kpc |
+|---|---|---|
+| 30° | 183.791 | 4.25 |
+| 40° | 209.166 | 5.46 |
+| 50° | 215.255 | 6.51 |
+| 60° | 225.180 | 7.36 |
+| 70° | 217.947 | 7.99 |
+
+| Value of $v_{\mathrm{rot}}$ for 5 longitudes | 5.0 |
+|---|---|
+| Value of $R$ for 5 longitudes | 5.0 |
+
+**(G01.6)**
+
+**Solution:**
+
+| Plotting of points | 4.0 |
+|---|---|
+| all 5 points correctly plotted | 4.0 |
+| 4 points correctly plotted | 3.0 |
+| 3 points correctly plotted | 2.0 |
+| 2 points correctly plotted | 1.0 |
+| less than 2 points plotted | 0.0 |
+| Best fit/Smooth Curve | 2.0 |
+
+**(G01.6a)**
+
+**Solution:**
+
+| Galactic longitude | Galacto-centric radius [kpc] | $M_{\mathrm{encl}}$ [$10^{10} M_{\odot}$ |
+|---|---|---|
+| 30° | 4.25 | 3.34 |
+| 40° | 5.46 | 5.55 |
+| 50° | 6.51 | 7.01 |
+| 60° | 7.36 | 8.67 |
+| 70° | 7.98 | 8.82 |
+
+| For 5 longitudes | 10.0 |
+|---|---|
+
+**(G01.6b)**
+
+**Solution:**
+
+| all 5 points of $M_{\mathrm{encl}}$ correctly plotted | 5.0 |
+|---|---|
+| Physically correct smooth curves (monotonic 2 $\times$ 1.5, non-intersecting 2.0) | 5.0 |
+| Interpolating $M^{\mathrm{bary}}$ at the location of the measurements. | 2.0 |
+
+**(G01.6c)**
+
+**Solution:**
+
+| $R$ /kpc | $M_{\mathrm{encl}}$ / $10^{10}M_{\odot}$ | $M_{bary}$ /$10^{10}M_{\odot}$ | $M_{dm}$ /$10^{10}M_{\odot}$ |
+|---|---|---|---|
+| 4.0 | 2.8 | 2.6 | 0.2 |
+| 5.0 | 4.7 | 3.2 | 1.5 |
+| 6.0 | 6.6 | 3.7 | 2.9 |
+| 7.0 | 8.1 | 4.1 | 4.0 |
+| 8.0 | 8.6 | 4.4 | 4.2 |
+
+| Reading $M_{\mathrm{encl}}$ from the graph for given five $R$ | 5.0 |
+|---|---|
+| Calculating $M_{dm}$ for the given five $R$ | 5.0 |
+
+**(G01.7)**
+
+**Solution:**
+
+**1. Calculate Channel Bandwidth ($\Delta f$)**
+
+Determine the frequency range, or bandwidth, covered by a single ”bin” or channel in the antenna.
+
+- **Formula**: $\Delta f = \frac{\text{Total Frequency Range}}{\text{Number of Bins}}$
+- **Given Data**:
+  - Total Frequency Range $=$ 2.048 MHz or $2,048,000$ Hz
+  - Number of Bins $= 512$
+- **Calculation**:
+
+$$\Delta f = \frac{2,048,000\ \mathrm{Hz}}{512} = \mathbf{4,000\ Hz}\ (\text{or } 4\ \mathrm{kHz})$$
+
+**2. Calculate Sensitivity ($\sigma_T$)**
+
+Next, we use the radiometer equation with the channel bandwidth, integration time and the system temperature.
+
+- **Formula**:
+
+$$\sigma_T = \frac{T_{sys}}{\sqrt{\Delta f \cdot t_{int}}}$$
+
+- **Given Data**:
+  - $T_{sys} = 115$ K (Measured $T_{\mathrm{recv}}$ + assumed $T_{\mathrm{ant}}$ of 5 K)
+  - $\Delta f = 4,000$ Hz
+  - Integration Time ($\tau$) $= 60$ s
+- **Calculation**:
+
+Sensitivity
+
+$$= \sigma_T = \frac{115\ \mathrm{K}}{\sqrt{4000\ \mathrm{Hz} \times 60\ \mathrm{s}}} = \frac{115\ \mathrm{K}}{\sqrt{240,000}} \approx \mathbf{0.235\ K}$$
+
+| Determination of $T_{sys}$ from calibration tab, using $T_{\mathrm{recv}}$ | 4.0 |
+|---|---|
+| Calculation of $\Delta f$ | 2.0 |
+| Using correct $t_{int}$ | 1.0 |
+| Calculation of RMS noise accurate to two significant digits (i.e., sensitivity) with unit | 2.0 |
+
+**(G01.8)**
+
+**Solution:**
+
+Correct Options:
+
+B. Angular resolution
+
+C. Estimation of $v_{\mathrm{rot}}$
+
+| Each correct option chosen | 3.0 |
+|---|---|
+| Each incorrect option chosen | -2.0 |
+| Bonus marks if only correct options are ticked | 3.0 |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2025-team-group-questions/p1-sol-fig1-v2.png" alt="Hand-drawn plot on orange graph paper: rotation velocity v_rot / km s^-1 (0 to 250) against R (kpc) from 4 to 9. Five circled points near 184, 209, 215, 225 and 218 km/s at R ≈ 4.25, 5.46, 6.51, 7.36 and 7.99 kpc, with a smooth, slowly rising curve drawn through them." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2025-team-group-questions/p1-sol-fig2.png" alt="Hand-drawn plot on orange graph paper: M / 10^10 M_⊙ (from below 3 to 9) against R (kpc) from 4 to 9. Upper steep curve through the circled measured M_encl points at R ≈ 4.25, 5.46, 6.51, 7.36 and 7.98 kpc; lower flatter curve through the baryonic-mass ⊙ points at R = 4, 5, 6, 7, 8 kpc (about 2.6, 3.2, 3.7, 4.1, 4.4). Dashed vertical lines drop from the measured points to the R axis." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Group-Questions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2025/Team%20Competition/Group-Questions.pdf)
+· официални решения: [Group-Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2025/Team%20Competition/Group-Solutions.pdf)

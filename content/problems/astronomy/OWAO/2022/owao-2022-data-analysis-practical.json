@@ -1,0 +1,438 @@
+{
+ "paper": {
+  "id": "owao-2022-data-analysis-practical",
+  "subject": "astronomy",
+  "competition": "OWAO",
+  "year": 2022,
+  "round": "Practical Round",
+  "roundType": "data-analysis",
+  "grade": null,
+  "lang": "en",
+  "title": "2022 ◇ Practical Round ◇ Problems",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Астрономия/Състезания/OWAO/2022/Data Analysis/OWAO_2022_Practical_Problems.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/OWAO/2022/Data Analysis/OWAO_2022_Practical_Solutions.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "3a3ff4dc5e9023bc0dfbb090ef5f0c6f74aa70035d0b4c9639efa74ecda6b4e1",
+    "solutions": "86de7d575d03fc9a751ba0e46be8a010780ac38d992a9cfed3d1ad5e23a4d5c3"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "Four problems as listed in the catalogue; the paper prints no points in the problems document, so all problem and part points are null. The official marking schemes (solutions) give 20 pt per problem (P1: 2+4+8+2+4; P2: 6+6+2+6; P3: 5+1+1+5+3+3+2; P4: 5+3+7+2+1+2). The masthead reads 'Practical Round'; the archive folder calls it 'Data Analysis' — the same round (data tables supplied as CSV files), so roundType is data-analysis. Data tables are printed truncated with '...' rows; the full CSV files (calakmul.jpg, M4_0.csv, statistical_parallax.csv, nearby_cluster.csv) are referenced but not part of the PDF. Printed inconsistencies kept verbatim: P2 solution uses mean parallax 0.542 mas in the table but 0.561 mas in the distance formula; P3 solution prints the reference Hyades parallax as 'about 21″' (should be 21 mas); P1 marking scheme calls the tower height 'h' although the solution uses H; the P2 marking scheme prints '2 iteration with parallax' (kept as printed). Solutions repeat each problem statement; it is transcribed once in the statement.",
+   "edits": [
+    {
+     "path": "/problems/2/solution/statement",
+     "printed": "lenghten",
+     "fixed": "lengthen",
+     "document": "solutions",
+     "page": 7,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "owao-2022-data-analysis-practical-p1",
+   "number": 1,
+   "title": "Stone Ecliptic",
+   "points": null,
+   "problemType": "data-analysis",
+   "statement": "You are given the map of Calakmul, a Maya archaeological site in the Mexican state of Campeche. On the main square (Gran Plaza) there are several buildings; in particular, building VI (Estructura VI) and building IV (Estructura IV). The latter is the complex of three temple towers.\n\nIt is known that if one looks from building VI to building IV, on the days of equinoxes and solstices, the rising Sun touches the tops of the respective towers (marked). The latitude of Calakmul is $18^{\\circ}$ North.\n\nEstimate the height of the towers relative to the observation point. Consider the Sun as a point source.\n\nPlease find calakmul.jpg to zoom in.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "Map of the Calakmul archaeological site (INAH, Calakmul) on a green background with a north arrow at the top right; labelled structures include Gran Acrópolis, Estructura VI, Estructura IV, Gran Plaza, Estructura II, Estructura I, Pequeña Acrópolis and others; dots mark the observation point on building VI and the towers of building IV; a human-scale figure (Escala humana en la Estela 43) at the bottom left and a scale bar at the bottom right.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p1-fig1.png",
+     "width": 1015,
+     "height": 745,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       298.85,
+       191.97,
+       542.29,
+       370.44
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "answer": {
+    "kind": "numeric",
+    "value": 59,
+    "unit": "m",
+    "tolerance": 1,
+    "note": "Official solution: H = L tan h = 80 m · tan 36.5° = 59 m; the towers can be considered the same height. The flat approximation gives 75 m."
+   },
+   "topics": [
+    "astronomy/spherical-astronomy",
+    "astronomy/sun"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "The middle tower corresponds to the position of the Sun on the equinoxes. However, it can be seen that it is not located exactly east of the observation point, but approximately $14^{\\circ}$ south. This is because the Sun is observed not at the moment of crossing the horizon, but at a certain height corresponding to the height of the tower.\n\nLet us find the height of the Sun at the moment of “rise” above the tower. From the parallactic triangle (taking into account $\\delta = 0^{\\circ}$):\n\n$$\\sin\\delta = \\sin\\varphi\\sin h - \\cos\\varphi\\cos h\\cos A,$$\n\n$$\\tan h = \\frac{\\cos A}{\\tan\\varphi} \\quad\\Rightarrow\\quad h = 36.5^{\\circ}.$$\n\nThe distance from the observation point to the tower is $L = 80\\ \\mathrm{m}$. The height of the tower\n\n$$H = L\\tan h = 80\\ \\mathrm{m}\\cdot\\tan 36.5^{\\circ} = 59\\ \\mathrm{m}.$$\n\nThe difference in azimuths between the middle and side towers is approximately $23^{\\circ}$ – $24^{\\circ}$, which corresponds to the difference in the azimuths of sunrise at the equinoxes and solstices at the latitude of Calakmul. We can consider the towers to be the same height.\n\n*Note.* “Flat” approximation gives\n\n$$h = 14^{\\circ}\\cdot\\tan(90^{\\circ} - \\varphi) = 43^{\\circ},$$\n\n$$H = L\\tan h = 75\\ \\mathrm{m}.$$\n\nThe answer seems to be somewhat exaggerated: the height of building I, the main building in Calakmul, is estimated at 55 m. However, the calculation results are quite sensitive to the determination of the observation point and azimuth.\n\n**Marking Scheme:**\n\n- Distance $L$ between buildings — **2 pt.**\n- Azimuth $\\Delta A$ of the tower — **4 pt.**\n- Altitude $h$ of the Sun — **8 pt.**\n  *In particular,* a flat approximation — 4 pt.\n- Height $h$ of the tower — **2 pt.**\n- Heights of other towers (explanation or calculation) — **4 pt.**",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "alt": "The same map of Calakmul as in the statement, reprinted in the solutions: structures of the Gran Plaza with Estructura VI and Estructura IV, marked points, north arrow and scale bar.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p1-sol-fig1.png",
+      "width": 1015,
+      "height": 749,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        298.85,
+        197.01,
+        542.29,
+        376.33
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "id": "owao-2022-data-analysis-practical-p2",
+   "number": 2,
+   "title": "RR Lyrae",
+   "points": null,
+   "problemType": "data-analysis",
+   "statement": "In the field of the globular star cluster M4, observed by the GAIA space telescope, a number of RR Lyrae variables were found. The equatorial coordinates of the center of M4 are $\\alpha_0 = 16^{\\mathrm{h}}\\,23^{\\mathrm{m}}\\,35.22^{\\mathrm{s}},\\ \\delta_0 = -26^{\\circ}\\,31'\\,32.7''$. You are given data on the RR Lyrae variables:\n\n- the equatorial coordinates $(\\alpha, \\delta)$ of objects,\n- the parallax $\\varpi$ in milliarcseconds,\n- the components $(\\mu_\\alpha\\cos\\delta, \\mu_\\delta)$ of their proper motion,\n- the period of pulsation,\n- the average magnitudes in $G$, $G_{BP}$ and $G_{RP}$ bands,\n- the average radial velocity $\\langle V_r\\rangle$,\n- the amplitude $X_G$ of pulsation in $G$ band and its error $\\Delta X_G$,\n- the absorption $A_G$ in $G$ band.",
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Determine which stars do not belong to the cluster.",
+     "points": null
+    },
+    {
+     "label": "b)",
+     "statement": "Find the period-luminosity relation for RR Lyrae variables of the M4 cluster.",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "M_G = -1.657\\lg P\\,[\\mathrm{d}] + 0.289"
+     }
+    },
+    {
+     "label": "c)",
+     "statement": "Estimate the distance to the cluster.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 1.8,
+      "unit": "kpc",
+      "tolerance": 0.1
+     }
+    },
+    {
+     "label": "d)",
+     "statement": "Estimate the mass of the cluster.",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "M ~ 10^5 solar masses"
+     }
+    }
+   ],
+   "statementAfterParts": "| Source ID | $\\alpha$, $^{\\circ}$ | $\\delta$, $^{\\circ}$ | $\\varpi$ | $\\mu_\\alpha\\cos\\delta$ | $\\mu_\\delta$ | $P$ | $\\langle G\\rangle$ | $\\langle G_{BP}\\rangle$ | $\\langle G_{RP}\\rangle$ | $\\langle V_r\\rangle$ | $X_G$ | $\\Delta X_G$ | $A_G$ |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n| Name | | | mas | mas/yr | mas/yr | days | mag | mag | mag | km/s | mag | mag | mag |\n| 60...496 | 245.7225 | $-27.4102$ | 0.303 | $-6.089$ | $-2.476$ | 0.767 | 14.27 | 14.81 | 13.55 | | 0.57 | 0.02 | 1.21 |\n| 60...168 | 245.8310 | $-26.6659$ | 0.570 | $-12.015$ | $-19.382$ | 0.507 | 13.00 | 13.45 | 12.43 | 72.38 | 0.89 | 0.07 | 0.84 |\n| ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |\n\nThe full data table can be found in M4_0.csv file.",
+   "topics": [
+    "astronomy/variable-stars",
+    "astronomy/star-clusters",
+    "astronomy/data-analysis"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "a) Let us calculate mean values and standard deviations of the kinematic parameters:\n\n| Parameter | Mean | St. dev. |\n|---|---|---|\n| $\\varpi$, mas | 0.542 | 0.116 |\n| $\\mu_\\alpha\\cos\\delta$, mas/yr | $-11.155$ | 4.596 |\n| $\\mu_\\delta$, mas/yr | $-17.715$ | 4.000 |\n| $\\langle V_r\\rangle$, km/s | 69.35 | 8.62 |\n\nWe should discard the stars most deviating from the mean by 3 or all 4 parameters:\n\n| ID | $\\Delta\\varpi/\\sigma_{\\varpi}$ | $\\Delta(\\mu_\\alpha\\cos\\delta)/\\sigma_{\\mu_\\alpha}$ | $\\Delta\\mu_\\delta/\\sigma_{\\mu_\\delta}$ | $\\Delta V_r/\\sigma_{V_r}$ |\n|---|---|---|---|---|\n| 6045280135437770496 | 2.06 | 1.10 | 3.81 | — |\n| 6045651495491644928 | 2.20 | 4.32 | 0.45 | 0.90 |\n| 6045438018442520576 | 3.57 | 1.03 | 2.43 | 3.24 |\n\nThen we calculate absolute magnitudes taking extinction in the G band into account:\n\n$$M_G = m_G + 5 + 5\\log\\varpi - A_G.$$\n\nNow we can continue the selection process. Since the stars in a globular cluster have approximately the same age, the period of pulsation and the absolute magnitude should also be quite similar:\n\n| ID | $\\Delta\\varpi/\\sigma_{\\varpi}$ | $\\Delta(\\mu_\\alpha\\cos\\delta)/\\sigma_{\\mu_\\alpha}$ | $\\Delta\\mu_\\delta/\\sigma_{\\mu_\\delta}$ | $\\Delta V_r/\\sigma_{V_r}$ | $\\Delta M_G/\\sigma_{M_G}$ | $\\Delta P/\\sigma_P$ |\n|---|---|---|---|---|---|---|\n| 6045502305516138368 | 1.83 | 0.50 | 0.83 | 1.32 | 2.59 | 1.09 |\n| 6045488767778755456 | 2.48 | 0.46 | 1.51 | 0.19 | 0.42 | 0.40 |\n| 6045466055990618496 | 0.84 | 3.28 | 0.92 | - | 1.46 | 3.53 |\n\nAfter the second round of selection, there is no parameter with a deviation greater than $3\\sigma$.\n\nb) The parameters of the period-luminosity relation $\\lg P$ – $M_G$ are obtained using least squares:\n\n$$M_G = -1.657\\lg P\\,[\\mathrm{d}] + 0.289.$$\n\nc) The distance to the cluster is estimated from the mean parallax:\n\n$$R = \\frac{1\\ \\mathrm{pc}}{\\varpi\\,['']} = \\frac{1\\ \\mathrm{kpc}\\cdot\\mathrm{mas}}{0.561\\ \\mathrm{mas}} = 1.78\\ \\mathrm{kpc} \\approx 1.8\\ \\mathrm{kpc}.$$\n\nd) To estimate the mass of a cluster, it is necessary to determine the velocities of the stars relative to the center of the cluster. As a first approximation,\n\n$$\\vec{v}_i = \\vec{V}_i - \\vec{V}_{\\mathrm{GC}},$$\n\nwhere\n\n$$\\vec{V}_i \\simeq V_{r,i}\\cdot\\vec{e}_r + \\mu_{\\alpha,i}\\cos\\delta_i\\cdot R\\cdot\\vec{e}_\\alpha + \\mu_{\\delta,i}\\cdot R\\cdot\\vec{e}_\\delta,$$\n\n$$\\vec{V}_{\\mathrm{GC}} \\simeq \\left\\langle \\vec{V}_i \\right\\rangle.$$\n\nAccording to the virial theorem,\n\n$$\\left\\langle v_i^2 \\right\\rangle \\sim \\frac{GM_{M4}}{r_{\\mathrm{GC}}}.$$\n\nThe radius of the cluster may be estimated as\n\n$$r_{\\mathrm{GC}} \\simeq R\\cdot\\max_i\\left\\{\\sqrt{(\\alpha_i - \\alpha_0)^2\\cos\\delta_0 + (\\delta_i - \\delta_0)^2}\\right\\}.$$\n\nFinally, the mass of the cluster\n\n$$M_{M4} \\sim \\frac{\\langle v_i^2\\rangle\\cdot r_{\\mathrm{GC}}}{G} \\sim \\frac{(2.4\\ \\mathrm{km/s})^2\\times 90\\ \\mathrm{pc}}{G} \\sim 10^5 M_{\\odot}.$$\n\n**Marking Scheme:**\n\n- Star selection — **6 pt:**\n  - using 4 parameters with 2 iterations — full points.\n  - only parallax is used — **2 pt.**\n  - 2 iteration with parallax or parallax and some parameters — **4 pt.**\n- Coefficient — **6 pt.**\n  *In particular,* correct coefficient with incorrect sampling — 3 pt.\n- Distance to the cluster — **2 pt.**\n- Mass of the cluster (any appropriate method) — **6 pt.**\n  *In particular,*\n  - Speed of stars relative to the center of the cluster is ignored — 3 pt.\n  - Inadequate final answer — $\\leqslant 1$ pt.",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    }
+   ]
+  },
+  {
+   "id": "owao-2022-data-analysis-practical-p3",
+   "number": 3,
+   "title": "Statistical Parallax",
+   "points": null,
+   "problemType": "data-analysis",
+   "statement": "You are given data on some stars of an open cluster associated with a stellar stream:\n\n- the equatorial coordinates $(\\alpha, \\delta)$ of objects,\n- the components $(\\mu_\\alpha\\cos\\delta, \\mu_\\delta)$ of their proper motion,\n- the radial velocity $V_r$.\n\nConsider this cluster to consist only of the specified stars.",
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Estimate the coordinates of the apex/radiant for the cluster objects.",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "α = 101°, δ = 8°"
+     }
+    },
+    {
+     "label": "b)",
+     "statement": "Evaluate the parallaxes of individual objects, plot the distribution of parallaxes.",
+     "points": null
+    },
+    {
+     "label": "c)",
+     "statement": "Determine the statistical parallax of the cluster.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.019,
+      "unit": "arcsec",
+      "tolerance": 0.001,
+      "note": "Corresponds to a distance of about 52 pc (Hyades). The official solution prints the reference value as “about 21″”, which should read 21 mas."
+     }
+    }
+   ],
+   "statementAfterParts": "| Name | $\\alpha$ | $\\delta$ | $\\mu_\\alpha\\cos\\delta$, mas/yr | $\\mu_\\delta$, mas/yr | $V_r$, km/s |\n|---|---|---|---|---|---|\n| HD 27990 | $4^{\\mathrm{h}}25^{\\mathrm{m}}48^{s}$ | $+18^{\\circ}01'02''$ | 75 | $-14$ | 40.5 |\n| HD 27835 | $4^{\\mathrm{h}}24^{\\mathrm{m}}13^{s}$ | $+16^{\\circ}22'44''$ | 90 | $-22$ | 39.5 |\n| ... | ... | ... | ... | ... | ... |\n\nThe full data table can be found in statistical_parallax.csv file.",
+   "topics": [
+    "astronomy/stellar-kinematics",
+    "astronomy/star-clusters",
+    "astronomy/distances"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "a) To determine the apex we should plot the vectors of the proper motion of all the objects. For simplicity, we plot the diagram on $(\\alpha, \\delta)$ plane not taking into account the sphericity of this part of the celestial sphere, so that $\\mu = \\sqrt{\\mu_\\delta^2 + \\mu_\\alpha^2}$.\n\nThe picture below shows the distribution of proper motions of the stars. The scale of the green vectors indicating the proper motions is arbitrary.\n\nTo determine the apex we lengthen the proper motion vectors and determine the coordinates of their intersection. High proper motion and the extent of the cluster show that it is quite close to us. We can approximately locate the apex at a point with coordinates $(\\alpha = 101^{\\circ},\\ \\delta = 8^{\\circ})$.\n\nb) Assuming that all stars move at the same velocities, we are able to determine the parallax $\\varpi$ of each star. Let $\\theta$ be the angle between the direction to the star and to the apex $A$ of the cluster.\n\nFor the $i$-th star\n\n$$V_{\\tau,i} = 4.74\\mu_i\\cdot\\frac{1}{\\varpi_i},$$\n\nwhere $\\mu_i = \\sqrt{\\mu_{\\delta,i}^2 + (\\mu_{\\alpha,i}\\cos\\delta_i)^2}$. Therefore, the parallax $\\varpi_i$ can be estimated by the formula\n\n$$\\varpi_i = \\frac{4.74\\mu_i}{V_{\\tau,i}} = \\frac{4.74\\mu_i}{V_{r,i}\\tan\\theta_i}.$$\n\nThe distribution of parallaxes is shown on the histogram below:\n\nc) The distribution of parallaxes is quite symmetric, so we may propose the mean parallax to be the estimation of the cluster parallax:\n\n$$\\langle\\varpi\\rangle = \\frac{1}{N}\\sum_{i=1}^{N}\\varpi_i = 0.019''.$$\n\nThis value corresponds to a distance $\\approx 52\\,\\mathrm{pc}$.\n\nThe table provided data for the sample of the stars of the Hyades cluster and stream. The current parallax estimate for this cluster is about $21''$. Thus, our results are rather realistic.\n\n**Marking Scheme:**\n\n- Statistical approach: drawing of the cluster, lines of proper motion, looking for their intersection or least squares, analysis, etc. — **5 pt.**\n- Coordinates of the apex — **1 pt + 1 pt.**\n- Formula for the distance or parallax within the statistical parallax method — **5 pt.**\n- Table or column of individual parallaxes — **3 pt.**\n- Plot (histogram) of the parallax distribution with readable binning — **3 pt.**\n- Parallax of the cluster — **2 pt.**",
+    "figures": [
+     {
+      "id": "p3-sol-fig1",
+      "alt": "Plot of δ (deg) from 0 to 25 against α (deg) from 110 to 50 (decreasing to the right): blue dots mark the stars, green arrows show their proper motions, and thin orange lines extend the proper-motion directions, converging near α ≈ 100°, δ ≈ 8°.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p3-sol-fig1.png",
+      "width": 2007,
+      "height": 969,
+      "source": {
+       "page": 6,
+       "pdfRect": [
+        58.32,
+        535.46,
+        539.91,
+        767.79
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig2",
+      "alt": "Velocity diagram: observer O with a horizontal line to the apex A; a line from O to the star S making angle θ with OA; at S the space velocity V (parallel to OA) is decomposed into the radial component V_r along OS and the tangential component V_τ; angle θ is marked between V and V_r at S.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p3-sol-fig2.png",
+      "width": 1038,
+      "height": 492,
+      "source": {
+       "page": 7,
+       "pdfRect": [
+        171.45,
+        199.53,
+        420.26,
+        317.39
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig3",
+      "alt": "Histogram of parallaxes: N (0 to about 18) against ϖ (arcsec) from 0.01 to 0.025, green bars with a peak of 18 near 0.019–0.02 arcsec.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p3-sol-fig3.png",
+      "width": 1145,
+      "height": 1120,
+      "source": {
+       "page": 7,
+       "pdfRect": [
+        153.59,
+        494.19,
+        427.99,
+        762.75
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    }
+   ]
+  },
+  {
+   "id": "owao-2022-data-analysis-practical-p4",
+   "number": 4,
+   "title": "Nearby Cluster",
+   "points": null,
+   "problemType": "data-analysis",
+   "statement": "The data describe one of the nearby galaxy clusters (Eftekhari et al., 2022):\n\n- $(\\alpha, \\delta)$ are the equatorial coordinates of the galaxy,\n- $R_e$ is the effective radius of the galaxy,\n- $M_{r,e}$ is the absolute magnitude in $r$ band inside the effective radius,\n- $\\mu_{r,e}$ is the average surface brightness in $r$ band inside the effective radius measured in magnitudes per square arcsecond,\n- $q$ is the axis ratio of the projection of galaxy on the plane of the sky.\n\nDetermine the following parameters of the galaxy cluster:",
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "the coordinates of the center of the cluster,",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "α_me = 54.22°, δ_me = −35.11° (median values)"
+     }
+    },
+    {
+     "label": "b)",
+     "statement": "the constellation where the center of the cluster is located,",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "Fornax"
+     }
+    },
+    {
+     "label": "c)",
+     "statement": "the distance to the cluster,",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 20,
+      "unit": "Mpc",
+      "tolerance": 0.1
+     }
+    },
+    {
+     "label": "d)",
+     "statement": "the linear dimensions of the cluster in the plane of the sky in $\\alpha$ and $\\delta$ directions.",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "D_α = 1.7 Mpc, D_δ = 1.2 Mpc"
+     }
+    }
+   ],
+   "statementAfterParts": "| ID | $\\alpha$, $^{\\circ}$ | $\\delta$, $^{\\circ}$ | $R_e$, $''$ | $M_{r,e}$ | $\\mu_{r,e}$ | $q$ |\n|---|---|---|---|---|---|---|\n| 22_D244 | 51.6043 | $-37.1278$ | 8.5 | $-15.32$ | 21.60 | 0.64 |\n| 16_D417 | 52.9485 | $-35.0514$ | 19.8 | $-16.14$ | 22.79 | 0.76 |\n| ... | ... | ... | ... | ... | ... | ... |\n\nThe full data table can be found in nearby_cluster.csv file.",
+   "topics": [
+    "astronomy/galaxies",
+    "astronomy/distances",
+    "astronomy/data-analysis"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "a) To determine the center of the cluster, we will plot the distribution of galaxies at first:\n\nThe graph shows that the galaxy with the lowest right ascension is located at a considerable distance from other objects, so its coordinates will significantly shift the estimation of the coordinates of the cluster center by calculating the arithmetic mean\n\n$$\\alpha_{\\mathrm{av}} = 54.33^{\\circ},\\quad \\delta_{\\mathrm{av}} = -35.22^{\\circ}.$$\n\nIt would be more correct to calculate the median values of the coordinates, rather than the mean values. After having the arrays ordered, we calculate the half-sum of the central elements (the number of galaxies is even):\n\n$$\\alpha_{\\mathrm{me}} = 54.22^{\\circ},\\quad \\delta_{\\mathrm{me}} = -35.11^{\\circ}.$$\n\nb) The coordinates of the center belong to Fornax. The table provided data on the galaxies of the Fornax Cluster, the second closest galaxy cluster.\n\nc) As surface brightness, effective radius and axis ratio are given, we can determine the apparent magnitude of each galaxy. The area of elliptic projection of the galaxy on the plane of the sky is $\\pi R_e^2 q$. The apparent magnitude of the galaxy inside the effective radius is\n\n$$m_{r,e} = \\mu_{r,e} - 2.5\\lg(\\pi R_e^2 q).$$\n\nNext, let us obtain the distance to the galaxies from the apparent and absolute magnitudes. The cluster is far from the galactic plane, so we will ignore the interstellar extinction:\n\n$$m_{r,e} = M_{r,e} - 5 + 5\\lg r[\\mathrm{pc}],$$\n\n$$r\\,[\\mathrm{pc}] = 10^{0.2(m_{r,e} - M_{r,e} + 5)}.$$\n\nAs an estimate of the distance to the cluster, we take the average value: $r = 20.0\\ \\mathrm{Mpc}$.\n\n*Note.* The current estimate of the distance to the Fornax Cluster is 19.7 Mpc.\n\nd) Since the galaxy with the lowest right ascension still belongs to the cluster, it should be taken into account when estimating the size of the cluster. We should note that the angular dimension of the cluster in $\\alpha$ direction also depends on the declination of the cluster:\n\n$$d_\\alpha = (\\alpha_{\\max} - \\alpha_{\\min})\\cos\\delta_{\\mathrm{me}} = (56.4931^{\\circ} - 51.6043^{\\circ})\\cdot\\cos(-35.11^{\\circ}) = 4.0^{\\circ}.$$\n\nThe angular dimension in $\\delta$ direction is\n\n$$d_\\delta = \\delta_{\\max} - \\delta_{\\min} = -34.2387^{\\circ} + 37.1278^{\\circ} = 2.9^{\\circ}.$$\n\nThe linear dimensions are\n\n$$D_\\alpha = r\\cdot 2\\tan\\tfrac{d_\\alpha}{2} = 1.7\\ \\mathrm{Mpc},$$\n\n$$D_\\delta = r\\cdot 2\\tan\\tfrac{d_\\delta}{2} = 1.2\\ \\mathrm{Mpc}.$$\n\n**Marking Scheme:**\n\n- Coordinates of the center of the cluster — **5 pt:**\n  - only the answer is given — 1 pt;\n  - OR arithmetic mean of the maximum and minimum values of the coordinates, the outlier is NOT mentioned — 2 pt;\n  - OR arithmetic mean of the maximum and minimum values of the coordinates, the outlier IS mentioned — 3 pt,\n  - OR arithmetic mean of the coordinates of the whole sample — 4 pt,\n  - OR median value of the coordinates of the whole sample — full points.\n\n  *Penalties:*\n  - Excessive accuracy of the answer — $-2$ pt.\n  - Computational error — $-2$ pt.\n- Constellation — **3 pt:**\n  - Fornax — full points,\n  - OR Eridanus — 2 pt.\n- Distance estimation — **7 pt:**\n  - $20.0 \\pm 0.1$ Mpc — full points,\n  - OR $20 \\pm 5$ Mpc — 5 pt.\n\n  *Penalties:*\n  - Distance is estimated based on the two outermost galaxies — $-2$ pt.\n  - Axis ratio is neglected — $-2$ pt.\n  - Excessive accuracy of the answer — $-2$ pt.\n- Linear dimensions of the cluster.\n  - Angular dimensions estimation — **2 pt.**\n  - Declination is taken into account — **1 pt.**\n  - Linear dimensions — **2 pt.**\n\n  *Penalties:*\n  - Excessive accuracy of the answer — $-2$ pt.",
+    "figures": [
+     {
+      "id": "p4-sol-fig1",
+      "alt": "Scatter plot of the galaxies: δ (deg) from −38 to −33 against α (deg) from 51.5 to 56.5; purple dots for galaxies, one isolated at α ≈ 51.6°, δ ≈ −37.1°; a green cross marks (α_av, δ_av) and a red triangle marks (α_me, δ_me) near α ≈ 54.2°, δ ≈ −35.1°; legend at the top right.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p4-sol-fig1.png",
+      "width": 1125,
+      "height": 1071,
+      "source": {
+       "page": 9,
+       "pdfRect": [
+        161.91,
+        527.85,
+        431.6,
+        784.62
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 11
+    }
+   ]
+  }
+ ]
+}

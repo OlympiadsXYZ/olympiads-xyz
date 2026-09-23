@@ -1,0 +1,104 @@
+---
+id: owao-2022-data-analysis-practical-p3
+source: 'OWAO 2022, Practical Round'
+title: 'Задача 3. Statistical Parallax'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2022/owao-2022-data-analysis-practical.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:58:40.509Z'
+verifier: 'mechanical'
+---
+
+*2022 ◇ Practical Round ◇ Problems*
+
+## Условие
+
+You are given data on some stars of an open cluster associated with a stellar stream:
+
+- the equatorial coordinates $(\alpha, \delta)$ of objects,
+- the components $(\mu_\alpha\cos\delta, \mu_\delta)$ of their proper motion,
+- the radial velocity $V_r$.
+
+Consider this cluster to consist only of the specified stars.
+
+**a)** Estimate the coordinates of the apex/radiant for the cluster objects.
+
+**b)** Evaluate the parallaxes of individual objects, plot the distribution of parallaxes.
+
+**c)** Determine the statistical parallax of the cluster.
+
+| Name | $\alpha$ | $\delta$ | $\mu_\alpha\cos\delta$, mas/yr | $\mu_\delta$, mas/yr | $V_r$, km/s |
+|---|---|---|---|---|---|
+| HD 27990 | $4^{\mathrm{h}}25^{\mathrm{m}}48^{s}$ | $+18^{\circ}01'02''$ | 75 | $-14$ | 40.5 |
+| HD 27835 | $4^{\mathrm{h}}24^{\mathrm{m}}13^{s}$ | $+16^{\circ}22'44''$ | 90 | $-22$ | 39.5 |
+| ... | ... | ... | ... | ... | ... |
+
+The full data table can be found in statistical_parallax.csv file.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** α = 101°, δ = 8°
+- **c)** 0.019 arcsec
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) To determine the apex we should plot the vectors of the proper motion of all the objects. For simplicity, we plot the diagram on $(\alpha, \delta)$ plane not taking into account the sphericity of this part of the celestial sphere, so that $\mu = \sqrt{\mu_\delta^2 + \mu_\alpha^2}$.
+
+The picture below shows the distribution of proper motions of the stars. The scale of the green vectors indicating the proper motions is arbitrary.
+
+To determine the apex we lengthen the proper motion vectors and determine the coordinates of their intersection. High proper motion and the extent of the cluster show that it is quite close to us. We can approximately locate the apex at a point with coordinates $(\alpha = 101^{\circ},\ \delta = 8^{\circ})$.
+
+b) Assuming that all stars move at the same velocities, we are able to determine the parallax $\varpi$ of each star. Let $\theta$ be the angle between the direction to the star and to the apex $A$ of the cluster.
+
+For the $i$-th star
+
+$$V_{\tau,i} = 4.74\mu_i\cdot\frac{1}{\varpi_i},$$
+
+where $\mu_i = \sqrt{\mu_{\delta,i}^2 + (\mu_{\alpha,i}\cos\delta_i)^2}$. Therefore, the parallax $\varpi_i$ can be estimated by the formula
+
+$$\varpi_i = \frac{4.74\mu_i}{V_{\tau,i}} = \frac{4.74\mu_i}{V_{r,i}\tan\theta_i}.$$
+
+The distribution of parallaxes is shown on the histogram below:
+
+c) The distribution of parallaxes is quite symmetric, so we may propose the mean parallax to be the estimation of the cluster parallax:
+
+$$\langle\varpi\rangle = \frac{1}{N}\sum_{i=1}^{N}\varpi_i = 0.019''.$$
+
+This value corresponds to a distance $\approx 52\,\mathrm{pc}$.
+
+The table provided data for the sample of the stars of the Hyades cluster and stream. The current parallax estimate for this cluster is about $21''$. Thus, our results are rather realistic.
+
+**Marking Scheme:**
+
+- Statistical approach: drawing of the cluster, lines of proper motion, looking for their intersection or least squares, analysis, etc. — **5 pt.**
+- Coordinates of the apex — **1 pt + 1 pt.**
+- Formula for the distance or parallax within the statistical parallax method — **5 pt.**
+- Table or column of individual parallaxes — **3 pt.**
+- Plot (histogram) of the parallax distribution with readable binning — **3 pt.**
+- Parallax of the cluster — **2 pt.**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p3-sol-fig1.png" alt="Plot of δ (deg) from 0 to 25 against α (deg) from 110 to 50 (decreasing to the right): blue dots mark the stars, green arrows show their proper motions, and thin orange lines extend the proper-motion directions, converging near α ≈ 100°, δ ≈ 8°." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p3-sol-fig2.png" alt="Velocity diagram: observer O with a horizontal line to the apex A; a line from O to the star S making angle θ with OA; at S the space velocity V (parallel to OA) is decomposed into the radial component V_r along OS and the tangential component V_τ; angle θ is marked between V and V_r at S." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-data-analysis-practical/p3-sol-fig3.png" alt="Histogram of parallaxes: N (0 to about 18) against ϖ (arcsec) from 0.01 to 0.025, green bars with a peak of 18 near 0.019–0.02 arcsec." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [OWAO_2022_Practical_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Data%20Analysis/OWAO_2022_Practical_Problems.pdf)
+· официални решения: [OWAO_2022_Practical_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Data%20Analysis/OWAO_2022_Practical_Solutions.pdf)

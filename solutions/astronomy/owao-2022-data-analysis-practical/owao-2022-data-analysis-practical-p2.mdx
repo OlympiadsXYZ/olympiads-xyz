@@ -1,0 +1,139 @@
+---
+id: owao-2022-data-analysis-practical-p2
+source: 'OWAO 2022, Practical Round'
+title: 'Задача 2. RR Lyrae'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2022/owao-2022-data-analysis-practical.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:58:40.509Z'
+verifier: 'mechanical'
+---
+
+*2022 ◇ Practical Round ◇ Problems*
+
+## Условие
+
+In the field of the globular star cluster M4, observed by the GAIA space telescope, a number of RR Lyrae variables were found. The equatorial coordinates of the center of M4 are $\alpha_0 = 16^{\mathrm{h}}\,23^{\mathrm{m}}\,35.22^{\mathrm{s}},\ \delta_0 = -26^{\circ}\,31'\,32.7''$. You are given data on the RR Lyrae variables:
+
+- the equatorial coordinates $(\alpha, \delta)$ of objects,
+- the parallax $\varpi$ in milliarcseconds,
+- the components $(\mu_\alpha\cos\delta, \mu_\delta)$ of their proper motion,
+- the period of pulsation,
+- the average magnitudes in $G$, $G_{BP}$ and $G_{RP}$ bands,
+- the average radial velocity $\langle V_r\rangle$,
+- the amplitude $X_G$ of pulsation in $G$ band and its error $\Delta X_G$,
+- the absorption $A_G$ in $G$ band.
+
+**a)** Determine which stars do not belong to the cluster.
+
+**b)** Find the period-luminosity relation for RR Lyrae variables of the M4 cluster.
+
+**c)** Estimate the distance to the cluster.
+
+**d)** Estimate the mass of the cluster.
+
+| Source ID | $\alpha$, $^{\circ}$ | $\delta$, $^{\circ}$ | $\varpi$ | $\mu_\alpha\cos\delta$ | $\mu_\delta$ | $P$ | $\langle G\rangle$ | $\langle G_{BP}\rangle$ | $\langle G_{RP}\rangle$ | $\langle V_r\rangle$ | $X_G$ | $\Delta X_G$ | $A_G$ |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Name | | | mas | mas/yr | mas/yr | days | mag | mag | mag | km/s | mag | mag | mag |
+| 60...496 | 245.7225 | $-27.4102$ | 0.303 | $-6.089$ | $-2.476$ | 0.767 | 14.27 | 14.81 | 13.55 | | 0.57 | 0.02 | 1.21 |
+| 60...168 | 245.8310 | $-26.6659$ | 0.570 | $-12.015$ | $-19.382$ | 0.507 | 13.00 | 13.45 | 12.43 | 72.38 | 0.89 | 0.07 | 0.84 |
+| ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
+
+The full data table can be found in M4_0.csv file.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **b)** $M_G = -1.657\lg P\,[\mathrm{d}] + 0.289$
+- **c)** 1.8 kpc
+- **d)** M ~ 10^5 solar masses
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) Let us calculate mean values and standard deviations of the kinematic parameters:
+
+| Parameter | Mean | St. dev. |
+|---|---|---|
+| $\varpi$, mas | 0.542 | 0.116 |
+| $\mu_\alpha\cos\delta$, mas/yr | $-11.155$ | 4.596 |
+| $\mu_\delta$, mas/yr | $-17.715$ | 4.000 |
+| $\langle V_r\rangle$, km/s | 69.35 | 8.62 |
+
+We should discard the stars most deviating from the mean by 3 or all 4 parameters:
+
+| ID | $\Delta\varpi/\sigma_{\varpi}$ | $\Delta(\mu_\alpha\cos\delta)/\sigma_{\mu_\alpha}$ | $\Delta\mu_\delta/\sigma_{\mu_\delta}$ | $\Delta V_r/\sigma_{V_r}$ |
+|---|---|---|---|---|
+| 6045280135437770496 | 2.06 | 1.10 | 3.81 | — |
+| 6045651495491644928 | 2.20 | 4.32 | 0.45 | 0.90 |
+| 6045438018442520576 | 3.57 | 1.03 | 2.43 | 3.24 |
+
+Then we calculate absolute magnitudes taking extinction in the G band into account:
+
+$$M_G = m_G + 5 + 5\log\varpi - A_G.$$
+
+Now we can continue the selection process. Since the stars in a globular cluster have approximately the same age, the period of pulsation and the absolute magnitude should also be quite similar:
+
+| ID | $\Delta\varpi/\sigma_{\varpi}$ | $\Delta(\mu_\alpha\cos\delta)/\sigma_{\mu_\alpha}$ | $\Delta\mu_\delta/\sigma_{\mu_\delta}$ | $\Delta V_r/\sigma_{V_r}$ | $\Delta M_G/\sigma_{M_G}$ | $\Delta P/\sigma_P$ |
+|---|---|---|---|---|---|---|
+| 6045502305516138368 | 1.83 | 0.50 | 0.83 | 1.32 | 2.59 | 1.09 |
+| 6045488767778755456 | 2.48 | 0.46 | 1.51 | 0.19 | 0.42 | 0.40 |
+| 6045466055990618496 | 0.84 | 3.28 | 0.92 | - | 1.46 | 3.53 |
+
+After the second round of selection, there is no parameter with a deviation greater than $3\sigma$.
+
+b) The parameters of the period-luminosity relation $\lg P$ – $M_G$ are obtained using least squares:
+
+$$M_G = -1.657\lg P\,[\mathrm{d}] + 0.289.$$
+
+c) The distance to the cluster is estimated from the mean parallax:
+
+$$R = \frac{1\ \mathrm{pc}}{\varpi\,['']} = \frac{1\ \mathrm{kpc}\cdot\mathrm{mas}}{0.561\ \mathrm{mas}} = 1.78\ \mathrm{kpc} \approx 1.8\ \mathrm{kpc}.$$
+
+d) To estimate the mass of a cluster, it is necessary to determine the velocities of the stars relative to the center of the cluster. As a first approximation,
+
+$$\vec{v}_i = \vec{V}_i - \vec{V}_{\mathrm{GC}},$$
+
+where
+
+$$\vec{V}_i \simeq V_{r,i}\cdot\vec{e}_r + \mu_{\alpha,i}\cos\delta_i\cdot R\cdot\vec{e}_\alpha + \mu_{\delta,i}\cdot R\cdot\vec{e}_\delta,$$
+
+$$\vec{V}_{\mathrm{GC}} \simeq \left\langle \vec{V}_i \right\rangle.$$
+
+According to the virial theorem,
+
+$$\left\langle v_i^2 \right\rangle \sim \frac{GM_{M4}}{r_{\mathrm{GC}}}.$$
+
+The radius of the cluster may be estimated as
+
+$$r_{\mathrm{GC}} \simeq R\cdot\max_i\left\{\sqrt{(\alpha_i - \alpha_0)^2\cos\delta_0 + (\delta_i - \delta_0)^2}\right\}.$$
+
+Finally, the mass of the cluster
+
+$$M_{M4} \sim \frac{\langle v_i^2\rangle\cdot r_{\mathrm{GC}}}{G} \sim \frac{(2.4\ \mathrm{km/s})^2\times 90\ \mathrm{pc}}{G} \sim 10^5 M_{\odot}.$$
+
+**Marking Scheme:**
+
+- Star selection — **6 pt:**
+  - using 4 parameters with 2 iterations — full points.
+  - only parallax is used — **2 pt.**
+  - 2 iteration with parallax or parallax and some parameters — **4 pt.**
+- Coefficient — **6 pt.**
+  *In particular,* correct coefficient with incorrect sampling — 3 pt.
+- Distance to the cluster — **2 pt.**
+- Mass of the cluster (any appropriate method) — **6 pt.**
+  *In particular,*
+  - Speed of stars relative to the center of the cluster is ignored — 3 pt.
+  - Inadequate final answer — $\leqslant 1$ pt.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [OWAO_2022_Practical_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Data%20Analysis/OWAO_2022_Practical_Problems.pdf)
+· официални решения: [OWAO_2022_Practical_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Data%20Analysis/OWAO_2022_Practical_Solutions.pdf)

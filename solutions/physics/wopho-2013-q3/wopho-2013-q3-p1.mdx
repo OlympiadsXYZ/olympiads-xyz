@@ -1,0 +1,81 @@
+---
+id: wopho-2013-q3-p1
+source: 'WoPhO 2013'
+title: 'Задача 1. Path around field lines'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/WoPhO/2013/wopho-2013-q3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T10:24:29.890Z'
+verifier: 'mechanical'
+---
+
+*Particles in the magnetosphere. Deadline: April 3rd, 2013*
+
+## Условие
+
+Earth is a very interesting magnetic system. Earth is frequently approximated as a huge magnetic dipole and therefore its magnetic field is not uniform. Due to this non-uniformity there are some zones in the magnetosphere in which charged particles get trapped. These zones are known as Van Allen belts and particles inside them have three main movements: gyration around each magnetic field line (Gyro motion), movement along the field line (Bounce motion), and rotation of lines around the magnetic axis of the Earth (ignored in this question).
+
+Due to the first two movements, particles travel along a helical path around the field lines. A key parameter to define such movement is the pitch angle $\alpha$, which is the ratio of the perpendicular and the parallel velocity components to the field line :
+
+$$\tan\alpha = \frac{v_\perp}{v_\parallel} \qquad (1)$$
+
+The modulus of Earths magnetic dipole moment is $M_E = 8.05 \times 10^{22}\ \mathrm{A\ m^2}$. Earths magnetic field can be expressed in spherical coordinates as a function of the latitude $\lambda$ and the distance $r$ to the center of the planet:
+
+$$\vec{B} = \frac{\mu_0}{4\pi}\frac{M_E}{r^3}\left(-2\sin\lambda\,\vec{u}_r + \cos\lambda\,\vec{u}_\lambda\right) \qquad (2)$$
+
+where $u_r$ and $u_\lambda$ are unitary vectors pointing radial and polar directions respectively, with azimuthal symmetry. However, for our purposes it will be useful to express the field modulus value along one of the field lines. These lines follow the equation $r = r_{Eq}\cos^2\lambda$ where $r_{Eq}$ is the distance from the line to the center of the Earth at Equator. Moreover, the distance $r_{Eq}$ can also be expressed as a function of the parameter $L = \frac{r_{Eq}}{R_E}$. With this notation, we can identify a field line with the parameter $L$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q3/p1-fig1-v5.png" alt="Three sketches of the motions of a trapped particle: 'Gyro Motion' — a helix wound around a curved field line with arrow B and gyration velocity v_g; 'Bounce Motion' — a helix bouncing between field lines converging at both ends, with arrow B and double arrow v_b; 'Drift Motion' — a sphere with a helical path on its surface and drift velocity arrow v_d." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q3/p1-fig2.png" alt="A helical particle path winding around a bundle of parallel horizontal field lines pointing to the right." />
+</figure>
+
+**(a)** Determine the modulus of the magnetic field $B$ along a field line as a function of the variables $\lambda$ and $L$. The magnetic field in the surface of the Earth at the Equator is $B_E$. **[1,5 т.]**
+
+**(b)** Calculate the gyrofrequency $\omega_g$ and the gyroradius $r_g$ of the path of the protons around a field line as a function of $\alpha$, $\lambda$, $L$, and its kinetic energy $W$. **[2 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** $B(L,\lambda) = B_E\frac{\sqrt{1+3\sin^2\lambda}}{L^3\cos^6\lambda}$
+- **(b)** $\omega_g = \frac{eB_E}{m_p}\frac{\sqrt{1+3\sin^2\lambda}}{L^3\cos^6\lambda},\quad r_g = \frac{\sqrt{2Wm_p}\sin\alpha}{eB_E}\frac{L^3\cos^6\lambda}{\sqrt{1+3\sin^2\lambda}}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**WoPhO Selection Round Problem 3**
+**Particles in the magnetosphere**
+**Attila Szabó, Grade 12**
+**Leőwey Klára High School**
+**Pécs, Hungary**
+
+**Part 1. Path around field lines**
+
+*(a)* The unit magnetic field is $B_E = \frac{\mu_0 M_E}{4\pi R_E^3}\sqrt{(2\cdot\sin 0)^2 + \cos^2 0} = \frac{\mu_0 M_E}{4\pi R_E^3}$. Using this unit, the modulus of the magnetic field is (noting that $\mathbf{u}_r \perp \mathbf{u}_\lambda$ thus we can use the Pythagorean theorem for adding the components:
+
+$$B(L,\lambda) = \frac{\mu_0 M_E}{4\pi r^3}\sqrt{(2\sin\lambda)^2 + \cos^2\lambda} = \frac{\mu_0 M_E}{4\pi R_{\mathrm{Eq}}^3\cos^6\lambda}\sqrt{(2\sin\lambda)^2 + \cos^2\lambda} = \frac{\mu_0 M_E}{4\pi R_E^3}\frac{\sqrt{1+3\sin^2\lambda}}{L^3\cos^6\lambda}$$
+
+$$B(L,\lambda) = B_E\frac{\sqrt{1+3\sin^2\lambda}}{L^3\cos^6\lambda}.$$
+
+*(b)* The Lorentz force acting on the particle is $qv_\perp B$: this force should hold the particle on the circular orbit by maintaining the centripetal acceleration $v_\perp\omega_g$. Newton’s equation in this case: $qv_\perp B = mv_\perp\omega_g$, from this,
+
+$$\omega_g = \frac{qB}{m} = \frac{eB_E}{m_p}\frac{\sqrt{1+3\sin^2\lambda}}{L^3\cos^6\lambda}.$$
+
+As $\tan\alpha = v_\perp/v_\parallel$, $v/v_\parallel = \sqrt{v_\parallel^2 + v_\perp^2}/v_\parallel = \sqrt{1+\tan^2\alpha} = 1/\cos\alpha$, thus $v_\parallel = v\cos\alpha$ and $v_\perp = v_\parallel\tan\alpha = v\sin\alpha$. By the definition of kinetic energy and angular velocity, $v = \sqrt{2W/m_p}$ and $v_\perp = r_g\omega_g$, thus
+
+$$r_g = \frac{v_\perp}{\omega_g} = \frac{v\sin\alpha}{\omega_g} = \frac{\sqrt{2W/m_p}\sin\alpha}{eB_E/m_p}\frac{L^3\cos^6\lambda}{\sqrt{1+3\sin^2\lambda}} = \frac{\sqrt{2Wm_p}\sin\alpha}{eB_E}\frac{L^3\cos^6\lambda}{\sqrt{1+3\sin^2\lambda}}.$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [WoPhO_2013_Q3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/WoPhO/2013/p3/WoPhO_2013_Q3.pdf)
+· официални решения: [WoPhO_2013_S3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/WoPhO/2013/p3/WoPhO_2013_S3.pdf)

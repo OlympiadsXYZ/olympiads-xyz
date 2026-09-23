@@ -1,0 +1,148 @@
+---
+id: owao-2022-theory-theoretical-p7
+source: 'OWAO 2022, theory'
+title: 'Задача 7. Polar Wi-Fi'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2022/owao-2022-theory-theoretical.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T10:00:47.140Z'
+verifier: 'mechanical'
+---
+
+*ΩWAO 2022 ◇ Theoretical Round ◇ Problems*
+
+## Условие
+
+A satellite is moving in a polar geocentric orbit with semi-major axis $a = 15\,400$ km, eccentricity $e = 0.55$, and argument of pericenter $\omega = 270^{\circ}$. Imagine that an observer is at the North Pole of the Earth. The satellite emits a signal with a frequency of 2.4 GHz. At some point in time, the satellite is observed on the horizon.
+
+Estimate
+
+**a)** the distance from the observer to the satellite,
+
+**b)** the total velocity of the satellite at that moment,
+
+**c)** the shift in the observed signal frequency.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** 12742 km
+- **b)** 5.48 km/s
+- **c)** Δf ≈ ±5 kHz (radial velocity ±0.62 km/s; the sign depends on whether the satellite rises or sets).
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) The observer is at point $P$. We should determine the geocentric distance $r \equiv MC$.
+
+$$\begin{cases} R_\oplus = r\cos\tilde{\nu} = -r\cos\nu, \\ r = \dfrac{a(1-e^2)}{1+e\cos\nu} \end{cases} \quad\Rightarrow\quad r = \frac{a(1-e^2)r}{r - eR_\oplus} \quad\Rightarrow\quad r = a(1-e^2) + eR_\oplus;$$
+
+$$r = 15\,400\ \mathrm{km}\cdot(1 - 0.55^2) + 6\,371\ \mathrm{km}\cdot 0.55 = 14\,246\ \mathrm{km}.$$
+
+Therefore, the distance from the observer to the satellite is
+
+$$MP = \sqrt{r^2 - R_\oplus^2} = \sqrt{(14\,246\ \mathrm{km})^2 - (6\,371\ \mathrm{km})^2} = 12\,742\ \mathrm{km}.$$
+
+b) Let us write the vis-viva equation. Here $V$ is the total velocity of the satellite:
+
+$$V^2 = GM_\oplus\cdot\left(\frac{2}{r} - \frac{1}{a}\right) = gR_\oplus^2\cdot\left(\frac{2}{r} - \frac{1}{a}\right); \qquad (2)$$
+
+$$V = \sqrt{9.81\ \mathrm{m/s}\cdot 6\,371\ \mathrm{km}\cdot\left(\frac{2}{1.4246\cdot 10^7\ \mathrm{m}} - \frac{1}{1.5400\cdot 10^7\ \mathrm{m}}\right)} = 5.48\ \mathrm{km/s}.$$
+
+c) First, we should determine the line-of-sight velocity of the satellite. Let us find the angle between the direction of the velocity vector of the satellite and the observer’s line of sight.
+
+Let $\theta$ be the angle between the velocity vector and the radius vector. In the figure, the symbol $\tilde{\theta} \equiv 180^{\circ} - \theta$. We may write the conservation of angular momentum law for the current point and the pericenter:
+
+$$V^2r^2\sin^2\theta = V_\pi^2r_\pi^2;$$
+
+$$V^2r^2\sin^2\theta = \frac{GM_\oplus}{a}\cdot\frac{1+e}{1-e}\cdot a^2(1-e)^2 = GM_\oplus a(1-e^2). \qquad (3)$$
+
+Next, we substitute the expression for the velocity (2) into the formula (3) above:
+
+$$gR_\oplus^2\cdot\left(\frac{2}{r} - \frac{1}{a}\right)\cdot r^2\sin^2\theta = gR_\oplus^2\cdot a(1-e^2) \quad\Rightarrow\quad \sin^2\theta = \frac{a(1-e^2)}{r^2\left(\frac{2}{r} - \frac{1}{a}\right)}.$$
+
+In our case
+
+$$\sin^2\theta = \frac{1.5400\cdot 10^7\ \mathrm{m}\cdot(1 - 0.55^2)}{(1.4246\cdot 10^7\ \mathrm{m})^2\cdot\left(\frac{2}{1.4246\cdot 10^7\ \mathrm{m}} - \frac{1}{1.5400\cdot 10^7\ \mathrm{m}}\right)} = 0.701 \quad\Rightarrow\quad \theta = 123.1^{\circ}.$$
+
+Next, we estimate the angle $\tau$ between the radius vector of the satellite and the line of sight.
+
+$$\begin{cases} \tau = 90^{\circ} - \tilde{\nu}, \\ \tilde{\nu} = \arccos\dfrac{R_\oplus}{r} = \arccos\dfrac{6\,371\ \mathrm{km}}{14\,246\ \mathrm{km}} = 63.4^{\circ} \end{cases} \quad\Rightarrow\quad \tau = 90^{\circ} - 63.4^{\circ} = 26.6^{\circ}.$$
+
+The angle between the direction of the velocity vector of the satellite and the observer’s line of sight $\psi$ is $\theta + \tau = (180^{\circ} - 123.1^{\circ}) + 26.6^{\circ} = 83.5^{\circ}$, or $180^{\circ} - 83.5^{\circ} = 96.5^{\circ}$ in the symmetrical case. Finally, the radial velocity of the satellite
+
+$$V_r = V\cos\psi = 5.48\ \mathrm{km/s}\cdot\pm\cos 83.5^{\circ} = \pm 0.62\ \mathrm{km/s}.$$
+
+The shift in the observed frequency due to radial motion of the satellite is
+
+$$\Delta f = \frac{V_r}{c}f = 2.4\cdot 10^9\ \mathrm{Hz}\cdot\frac{\pm 0.62\ \mathrm{km/s}}{3\cdot 10^5\ \mathrm{km/s}} \approx \pm 5\ \mathrm{kHz}.$$
+
+**Marking Scheme:**
+
+- Correct orbital diagram is given (aphelion at zenith) — **2 pt.**
+- Distance:
+  - True anomaly — **1 pt,**
+  - Geocentric distance — **1 pt,**
+  - Distance from the observer to the satellite — **1 pt.**
+- Total velocity:
+  - Correct formulae (vis-viva equation or similar) — **1 pt,**
+  - Correct answer — **1 pt.**
+- Shift in observed frequency:
+  - Correct formula and value of radial velocity — **1 pt,**
+  - Doppler shift — **1 pt,**
+  - Two possible cases of observation (rise/set) — **1 pt.**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2022-theory-theoretical/p7-sol-fig1.png" alt="Elliptical orbit with apocentre α at the top and pericentre π at the bottom; the Earth (circle with centre C, radius R⊕) sits near the lower focus with the observer P at its top. The horizontal line through P meets the orbit at M and N. From M the radius r goes to C; angles τ and θ̃ are marked at M, the velocity vector V points down along the orbit; angles ν̃ and ν are marked at C." />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Constants</summary>
+
+| **Universal** | |
+|---|---|
+| Speed of light | $c = 3.00\cdot 10^8\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63\cdot 10^{-34}\ \mathrm{J\cdot s}$ |
+| Hubble constant | $H_0 = 70\ \mathrm{(km/s)/Mpc}$ |
+| Astronomical unit | $1\ \mathrm{au} = 149.6\cdot 10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+
+| **Earth** | |
+|---|---|
+| Radius | $R_\oplus = 6371\ \mathrm{km}$ |
+| Obliquity | $\varepsilon = 23.4^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_\oplus = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_\oplus = 0.0167$ |
+
+| **Moon** | |
+|---|---|
+| Radius | $R_{\text{☾}} = 1737\ \mathrm{km}$ |
+| Orbital period | $T_{\text{☾}} = 27.32^{\mathrm{d}}$ |
+| Orbital inclination | $i_{\text{☾}} = 5.1^{\circ}$ |
+
+| **Sun** | |
+|---|---|
+| Radius | $R_\odot = 6.96\cdot 10^5\ \mathrm{km}$ |
+| Absolute magnitude | $M_\odot = 4.74^{\mathrm{m}}$ |
+| Effective temperature | $T_\odot = 5.8\cdot 10^3\ \mathrm{K}$ |
+
+| **UBV system** | Mean wavelengths |
+|---|---|
+| U band | $\lambda_U = 364\ \mathrm{nm}$ |
+| B band | $\lambda_B = 442\ \mathrm{nm}$ |
+| V band | $\lambda_V = 540\ \mathrm{nm}$ |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2022_Theoretical_Problems.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Theory/OWAO_2022_Theoretical_Problems.pdf)
+· официални решения: [OWAO_2022_Theoretical_Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2022/Theory/OWAO_2022_Theoretical_Solutions.pdf)

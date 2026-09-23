@@ -1,0 +1,171 @@
+{
+ "paper": {
+  "id": "opho-2022-experiment-x",
+  "subject": "physics",
+  "competition": "OPhO",
+  "year": 2022,
+  "round": "experiment",
+  "roundType": "experiment",
+  "grade": null,
+  "lang": "en",
+  "title": "OPhO Invitational: Fluid Dynamics",
+  "totalPoints": 40,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/OPhO/2022/experiment.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "status": "review",
+  "documentNotes": [
+   {
+    "title": "1 Introduction",
+    "statement": "Fluid dynamics is an important area in physics and engineering, and being able to simulate fluids properly is a challenging task that is applicable for rocketry, airplanes, cars, and even in designing pipes for air conditioning! The most popular technique is **computational fluid dynamics** (CFD), which numerically solves the Navier-Stokes equation. However, it is very difficult to set up and is very slow.\n\nIn this experiment, we will use a very simple simulation software that simulates fluids in two dimensions through the Lattice-Boltzmann algorithm (and is thus, *not* CFD), which you can find here.\n\nPlease take time to read the description on the page. **Make sure to keep all settings as default.** By dragging your cursor around, you can create different types of barriers, and clicking start will run the simulation. The first dropdown menu tells us the number of pixels. While a higher resolution will lead to more accurate results, it will be more strenuous for the computer and harder to create boundaries. We recommend you to draw the barriers on a lower resolution but run the simulation on a higher resolution.\n\nOn the last row, we recommend checking **Flowlines** and **Sensor**. Enabling sensor will result in a cursor to appear on the screen that you can drag around, where the density $\\rho$, horizontal speed $u_x$, and vertical speed $u_y$ will all be shown. If for some reason the simulation is unstable, you may also check the **Data** button, which will record the data on the cursor as a function of time.",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   }
+  ],
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "eede85b6a7737df5a7ed43062980a88d6edc83dc5d262b24cc505261995dfff5"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "Printed section numbers are 1 Introduction, 2 Mass Flow Conservation (15 pts), 3 Law of the Wall (25 pts); the introduction is kept as a paper document note and the two tasks keep their printed numbers 2 and 3. Total 40 pts is the sum of the printed section points (no total is printed). The word 'here' in the introduction is a hyperlink to the simulation software; its URL is not printed on the page. Printed 'u_T = \\sqrt{\\tau_W/\\rho}' uses a capital subscript W while the note uses \\tau_w; both kept as printed. No official solutions in the archive.",
+   "edits": [
+    {
+     "path": "/paper/documentNotes/0/statement",
+     "printed": "more strenous",
+     "fixed": "more strenuous",
+     "document": "problems",
+     "page": 1,
+     "kind": "misspelling"
+    },
+    {
+     "path": "/problems/1/statement",
+     "printed": "an emperical",
+     "fixed": "an empirical",
+     "document": "problems",
+     "page": 2,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "opho-2022-experiment-x-p2",
+   "number": 2,
+   "title": "Mass Flow Conservation",
+   "points": 15,
+   "problemType": "experiment",
+   "statement": "We will first investigate if this implementation of the Lattice-Boltzmann algorithm correctly simulates the conservation of mass.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "alt": "Diagram of a tube with an abrupt step: a wide section on the left joined to a narrower section on the right. A vertical dashed line across the wide section is labelled x_1, and a vertical dashed line across the narrow section is labelled x_2.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2022-experiment-x/p2-fig1.png",
+     "width": 756,
+     "height": 532,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       215.41,
+       455.4,
+       396.58,
+       582.93
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "1.",
+     "statement": "Create a tube that either opens up or closes down very abruptly such as in the diagram above. Pick two locations $x_1$ and $x_2$ such that one is in the wider section and the other is in the more narrow section. Compute the flow $\\dfrac{dm}{dt}$ past both these points. (10 pts)",
+     "points": 10
+    },
+    {
+     "label": "2.",
+     "statement": "Do the two mass flow rates agree with each other? If not, suggest a possible reason why. (5 pts)",
+     "points": 5
+    }
+   ],
+   "statementAfterParts": "Note:\n\n- You are free to pick the shape and dimensions of the tube and it does not need to be perfect.\n- Please report your figures with uncertainties and make clear how you estimated and/or obtained them! You do not need to show your computations.\n- Provide a screenshot of the boundaries and the parameters.",
+   "topics": [
+    "fluids/fluid-dynamics",
+    "fluids/continuity"
+   ],
+   "difficulty": "Normal",
+   "importance": 1,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "The archive has no official solutions file for this paper."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    }
+   ]
+  },
+  {
+   "id": "opho-2022-experiment-x-p3",
+   "number": 3,
+   "title": "Law of the Wall",
+   "points": 25,
+   "problemType": "experiment",
+   "statement": "The Law of the Wall provides an empirical relationship between the average velocity of a turbulent flow at some point and the distance to a wall (or fluid boundary). Namely,\n\n$$u_x = \\frac{u_T}{\\kappa} \\ln\\left(\\frac{\\rho u_T}{\\mu} y\\right) + C,$$\n\nwhere\n\n- $u_x$ is the component of velocity parallel to the wall\n- $u_T$ is the shear velocity defined by $u_T = \\sqrt{\\tau_W/\\rho}$,\n- $\\rho$ is the density\n- $\\mu$ is the viscosity (specifically, the dynamic viscosity)\n- $\\kappa, C$ are constants.\n\nNote that $\\tau_w = \\mu \\dfrac{\\partial u_x}{\\partial y}\\Big|_{y=0}$ is the wall shear stress.\n\nStudies have shown that $\\kappa$ ranges from $0.35$ to $0.42$. Using a straight line to model a wall, answer the following questions:",
+   "figures": [],
+   "parts": [
+    {
+     "label": "1.",
+     "statement": "Is the relationship between $u_x$ and $y$ logarithmic? (10 pts)",
+     "points": 10
+    },
+    {
+     "label": "2.",
+     "statement": "What are the values of $\\kappa$ and $C$? (10 pts)",
+     "points": 10
+    },
+    {
+     "label": "3.",
+     "statement": "Does the value of $\\kappa$ agree with experiment? If it does not, suggest a possible reason why. (5 pts)",
+     "points": 5
+    }
+   ],
+   "statementAfterParts": "You are encouraged to add graphs.\n\nNote:\n\n- You are free to pick the length and direction of the boundary.\n- Please report your figures with uncertainties and make clear how you estimated and/or obtained them! You do not need to show your computations.\n- Provide a screenshot of the boundaries and the parameters.",
+   "topics": [
+    "fluids/turbulence",
+    "fluids/boundary-layer"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "The archive has no official solutions file for this paper."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    }
+   ]
+  }
+ ]
+}

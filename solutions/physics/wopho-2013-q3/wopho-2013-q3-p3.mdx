@@ -1,0 +1,86 @@
+---
+id: wopho-2013-q3-p3
+source: 'WoPhO 2013'
+title: 'Задача 3. Particle collision'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/WoPhO/2013/wopho-2013-q3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T10:24:29.890Z'
+verifier: 'mechanical'
+---
+
+*Particles in the magnetosphere. Deadline: April 3rd, 2013*
+
+## Условие
+
+If the mirror point lies not far from the surface of the Earth the proton collides with the particles of the atmosphere. This distance is small compared with Earth radius ($R_E = 6400\ \mathrm{km}$), so we will assume that the particles will collide when the mirror point is in the surface of the Earth.
+
+**(a)** Determine the minimum equatorial pitch angle $\alpha_l$, below which a proton would collide with the surface of the Earth as a function of $L$. **[1,2 т.]**
+
+**(b)** Determine the time that it takes for a proton to complete a whole cycle of the bouncing movement between the mirror points, with $\alpha_{Eq} = 30^{\circ}$, $W = 10.0\ \mathrm{MeV}$ and $L = 5.0$. **[1,2 т.]**
+
+**(c)** Compute the length of the helical path of the proton in a whole cycle, taking into account the two movements we have considered in this problem. **[0,8 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** $\alpha_{\mathrm{Eq}} \le \arcsin\left(\frac{1}{L^{3/2}\sqrt[4]{4-3/L}}\right)$
+- **(b)** 2.924 s
+- **(c)** 128000000 m
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part 3. Particle collision**
+
+*(a)* The collision takes place if $r_{\min} \le R_E$; however, $r_{\min} = r_{\mathrm{Eq}}\cos^2\lambda_m = LR_E\cos^2\lambda_m$, thus the condition is $\cos^2\lambda_m \le 1/L$. From Part 2b we have
+
+$$\sin^2\alpha_{\mathrm{Eq}} = \frac{\cos^6\lambda_m}{\sqrt{4-3\cos^2\lambda_m}} \le \frac{(1/L)^3}{\sqrt{4-3/L}}$$
+
+$$\alpha_{\mathrm{Eq}} \le \arcsin\left(\frac{1}{L^{3/2}\sqrt[4]{4-3/L}}\right).$$
+
+This is the *maximal* equatorial pitch angle needed for the collision to take place.
+
+(There cannot be any minimal such angle. If this were the case, a proton with a pitch angle of $90^{\circ}$ would collide with Earth as well: this is impossible, since the proton wouldn’t have any field-directed velocity to move towards the Earth. In general, the pitch angle grows with the magnetic field getting stronger.)
+
+*(b)* We’re going to express the time required to change $\lambda$ by $\mathrm{d}\lambda$ in order to integrate it. The velocity component of the proton parallel with the field line is $v\cos\alpha = \sqrt{2W/m_p}\,\cos\alpha$. Therefore we need to express $\alpha$ from the conservation of $\mu$: by simplifying with the common terms $WL^3/B_E$ it gives
+
+$$\sin^2\alpha_{\mathrm{Eq}} = \sin^2\alpha\frac{\cos^6\lambda}{\sqrt{1+3\sin^2\lambda}} \to \sin^2\alpha = \sin^2\alpha_{\mathrm{Eq}}\frac{\sqrt{1+3\sin^2\lambda}}{\cos^6\lambda} \to \cos\alpha = \sqrt{1-\sin^2\alpha_{\mathrm{Eq}}\frac{\sqrt{1+3\sin^2\lambda}}{\cos^6\lambda}}.$$
+
+The distance to be travelled along the field line is the line element in the polar coordinates specified by the problem:
+
+$$\mathrm{d}s = \sqrt{(\mathrm{d}r)^2 + r^2(\mathrm{d}\lambda)^2} = \sqrt{r^2 + \left(\frac{\mathrm{d}r}{\mathrm{d}\lambda^2}\right)}\mathrm{d}\lambda = \sqrt{r_{\mathrm{Eq}}^2\cos\lambda^4 + 4r_{\mathrm{Eq}}^2\sin^2\lambda\cos^2\lambda}\,\mathrm{d}\lambda$$
+
+$$\mathrm{d}s = LR_E\cos\lambda\sqrt{1+3\sin^2\lambda}\,\mathrm{d}\lambda.$$
+
+The time element to cover this distance is consequently
+
+$$\mathrm{d}t = \frac{\mathrm{d}s}{v} = \frac{LR_E}{\sqrt{2W/m_p}}\frac{\cos\lambda\sqrt{1+3\sin^2\lambda}}{\sqrt{1-\sin^2\alpha_{\mathrm{Eq}}\frac{\sqrt{1+3\sin^2\lambda}}{\cos^6\lambda}}}\mathrm{d}\lambda.$$
+
+We need to integrate this time element along the cycle: due to symmetry it splits into four identical sections, one being between from $\lambda = 0$ to $\lambda = \lambda_m$ ($LR_E\cos^2\lambda_m > R_E$ in our case, knowing the value of $\lambda_m$ from Part 2b, thus the proton turns back at the mirror point rather than at the surface of the Earth). Using this, the period is
+
+$$T = \frac{4LR_E}{\sqrt{2W/m_p}}\int_{\lambda=0}^{\lambda_m}\frac{\cos\lambda\sqrt{1+3\sin^2\lambda}}{\sqrt{1-\sin^2\alpha_{\mathrm{Eq}}\frac{\sqrt{1+3\sin^2\lambda}}{\cos^6\lambda}}}\mathrm{d}\lambda.$$
+
+The integral can only be evaluated numerically; its value according to GNU Octave (scripts for quadrature attached) is 0.999729 rounded to 6 decimal places. Substituting this and the numeric values of variables into the expression of $T$ gives $T = 2.924\ \mathrm{s}$.
+
+*(c)* As the kinetic energy is constant all along the path (magnetic field does no work on the proton), the velocity is constant as well. The total distance covered by the proton, i.e. the length of the path is simply this velocity times the period:
+
+$$\ell = T\sqrt{\frac{2W}{m_p}} = 4LR_E\int_{\lambda=0}^{\lambda_m}\frac{\cos\lambda\sqrt{1+3\sin^2\lambda}}{\sqrt{1-\sin^2\alpha_{\mathrm{Eq}}\frac{\sqrt{1+3\sin^2\lambda}}{\cos^6\lambda}}}\mathrm{d}\lambda;$$
+
+its numeric value is $\ell = 1.28\cdot 10^8\ \mathrm{m}$.
+
+**Attached files**
+
+`integrand.m`, `integrator.m`: the GNU Octave scripts that describe the integrand and do the integration; setting the working directory of Octave into their directory and calling `integrator` gives the value of the requested integral.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [WoPhO_2013_Q3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/WoPhO/2013/p3/WoPhO_2013_Q3.pdf)
+· официални решения: [WoPhO_2013_S3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/WoPhO/2013/p3/WoPhO_2013_S3.pdf)
