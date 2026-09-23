@@ -88,7 +88,9 @@ test('classified extra problems pass Gatsby node validation without occupying re
   assert.equal(node.difficulty, metadata.difficulty);
   assert.equal(node.id, 'problem-file practice fixture-p1 >>> ProblemInfo');
   assert.equal(node.parent, 'problem-file');
-  assert.ok(links.some(link => link.child === node));
+  // not linked as the file's child: one link per problem re-wrote the parent with its whole children list, a sourcing
+  // cost that grew with the square of the problem count (see gatsby-node.ts)
+  assert.ok(!links.some(link => link.child === node));
   assert.deepEqual(metadata.fields, ['Mechanics'], 'input metadata is not mutated');
 });
 
