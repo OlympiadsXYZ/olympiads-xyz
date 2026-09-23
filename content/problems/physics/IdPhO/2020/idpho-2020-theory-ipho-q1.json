@@ -1,0 +1,275 @@
+{
+ "paper": {
+  "id": "idpho-2020-theory-ipho-q1",
+  "subject": "physics",
+  "competition": "IdPhO",
+  "year": 2020,
+  "round": null,
+  "roundType": "theory",
+  "grade": null,
+  "lang": "en",
+  "title": "Theory — IdPhO 2020 — Q1 — Problem mix (10 points)",
+  "totalPoints": 10,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/IPhO/2020/Theory/IPhO_2020_Q1.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/IPhO/2020/Theory/IPhO_2020_S1.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "24b8620c41f5ec6fa0e62bd038a289f874d615ea92cd9e1d8ec2d4d02937bc9d",
+    "solutions": "5873b7b5d3cda575715be3e2efc52b932f99135e858522d1dc0af1903cc968ca"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "The problems document prints one question, \"Problem mix (10 points)\", made of three independent parts A (2.5 points), B (3 points) and C (4.5 points), each with a single sub-task A.1, B.1, C.1; following the archive inventory each part is one problems[] entry and its sub-task is its only part. The solutions file is a printout of the pho.rs web pages (dated 10/07/2021) that repeat each statement before the solution; the repeated statements are not transcribed again. The solution of B.1 spans solutions pages 2–3, that of C.1 pages 4–5. The printed line-break hyphenation \"mag-netic\" in B.1 is joined. Printed wording kept verbatim: \"The equations of motion ... is\", \"tension(from\", \"let look at\", \"Multiplying to dt\", \"Lorenz force\" (a name, not changed). The A.1 period is printed as $2\\pi\\sqrt{3m\\varepsilon_0/(q(-\\rho))}$ (the charges are opposite, so $q(-\\rho)>0$).",
+   "edits": [
+    {
+     "path": "/problems/2/solution/statement",
+     "printed": "coordinat of",
+     "fixed": "coordinate of",
+     "document": "solutions",
+     "page": 4,
+     "kind": "misspelling"
+    },
+    {
+     "path": "/problems/2/solution/statement",
+     "printed": "coinsides with",
+     "fixed": "coincides with",
+     "document": "solutions",
+     "page": 5,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "idpho-2020-theory-ipho-q1-p1",
+   "number": 1,
+   "title": "Part A. Cubic oscillations",
+   "points": 2.5,
+   "problemType": "theory",
+   "statement": "Part A. Cubic oscillations (2.5 points)",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "A wire-frame cube with the edge labelled a; a straight channel passes through the cube centre, where a particle (black dot) sits, and the segment from the centre to the face is labelled L.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/idpho-2020-theory-ipho-q1/p1-fig1.png",
+     "width": 735,
+     "height": 678,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       210.74,
+       311.49,
+       386.91,
+       473.98
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "A.1",
+     "statement": "A narrow straight channel passes through the center of a fixed cube with a side $a$. The cube is uniformly charged, the charge density is $\\rho$. The distance from the cube center to the point of intersection of the channel and a face is $L$. In the channel there is a particle of a mass $m$ and a charge $q$. Find the period of small oscillations of the particle near the center. The gravitational interaction of the particle and the cube can be neglected. The cube and the particle are oppositely charged.",
+     "points": 2.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "T = 2\\pi\\sqrt{\\frac{3m\\varepsilon_0}{q(-\\rho)}}"
+     }
+    }
+   ],
+   "topics": [
+    "electricity/electrostatics",
+    "mechanics/oscillations"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "We will use a coordinate system with axes parallel to the cube’s edges, with the origin set at the cube’s center. Assuming the particle is at coordinates $(x, y, z)$ $x \\ll a$, $y \\ll a$, $z \\ll a$, we will find the force $\\vec{F}$ acting on the particle, by splitting the cube $a \\times a \\times a$ into a rectangular cuboid $(a - 2x) \\times (a - 2y) \\times (a - 2z)$ and three square plates of thickness $2x$, $2y$ and $2z$.\n\nThe particle is in the center of the cuboid, so there is no force from the cuboid.\nLet us find the force between a particle with a charge $q$ and a uniformly charged square plate of small thickness $h$ and edge length $a$. The plate’s charge density is $\\rho$, the particle is placed above the center of the plate at distance $a/2$.\n\nDue to symmetry and Gauss’s law, the flux of the particle’s electric field through the plate is\n\n$$\\Phi = \\frac{q}{6\\varepsilon_0}.$$\n\nHence, the force\n\n$$F = \\sigma\\Phi = \\frac{q\\rho h}{6\\varepsilon_0},$$\n\nwhere $\\sigma = \\rho h$ is plate’s surface charge density.\nThree square plates act on the particle with forces $\\vec{F}_1 = \\frac{q\\rho x}{3\\varepsilon_0}\\hat{x}$, $\\vec{F}_2 = \\frac{q\\rho y}{3\\varepsilon_0}\\hat{y}$, and $\\vec{F}_3 = \\frac{q\\rho z}{3\\varepsilon_0}\\hat{z}$. Net force $\\vec{F} = \\vec{F}_1 + \\vec{F}_2 + \\vec{F}_3 = \\frac{q\\rho}{3\\varepsilon_0}\\vec{r}$, where $\\vec{r}$ is the position vector of the particle.\n\nThe particle’s equation of motion\n\n$$m\\ddot{\\vec{r}} = \\frac{q\\rho}{3\\varepsilon_0}\\vec{r}$$\n\nis an equation of simple harmonic motion with period\n\n$$T = 2\\pi\\sqrt{\\frac{3m\\varepsilon_0}{q(-\\rho)}}.$$",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "alt": "Hand-drawn cube with coordinate axes through the centre O; the particle at (x; y; z) with the force vector F; dashed lines cut off three plates of thicknesses 2x, 2y, 2z from the faces; half-edges marked a/2.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/idpho-2020-theory-ipho-q1/p1-sol-fig1.png",
+      "width": 1560,
+      "height": 1366,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        234.32,
+        214.56,
+        608.58,
+        542.39
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "alt": "Hand-drawn square plate of thickness h, edge a and charge density ρ, with a charge q located at distance a/2 above the centre of the plate.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/idpho-2020-theory-ipho-q1/p1-sol-fig2.png",
+      "width": 686,
+      "height": 398,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        339.66,
+        607.95,
+        504.05,
+        703.3
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    }
+   ]
+  },
+  {
+   "id": "idpho-2020-theory-ipho-q1-p2",
+   "number": 2,
+   "title": "Part B. Suspension in magnetic field",
+   "points": 3,
+   "problemType": "theory",
+   "statement": "Part B. Suspension in magnetic field (3 points)",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "alt": "A closed wire loop hanging from a hatched ceiling, carrying current I (arrows on the loop), one side labelled L; a grey weight hangs from the lowest point; the vertical distance H from the ceiling to the lowest point is marked; arrows show B upward and g downward.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/idpho-2020-theory-ipho-q1/p2-fig1.png",
+     "width": 795,
+     "height": 632,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       202.41,
+       261,
+       392.89,
+       412.52
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "B.1",
+     "statement": "A current $I$ flows through a loop made of a weightless flexible wire. The loop upper point is attached to the ceiling and a weight is suspended to its lowest point. The half length of the loop is $L$. The loop is placed in a vertical magnetic field $B$. The system has reached a stable equilibrium in which the point of suspension at the ceiling and the point of weight suspension are not on the same vertical. Find the wire tension $T$ and the weight $P$ if the distance from the ceiling to the lowest point of the loop is $H$.",
+     "points": 3,
+     "answer": {
+      "kind": "expression",
+      "latex": "T = \\frac{IBL}{\\pi},\\quad P = \\frac{2IBH}{\\pi}"
+     }
+    }
+   ],
+   "topics": [
+    "magnetism/ampere-force",
+    "mechanics/statics"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**First approach**\n\nThe Ampere's force acting on a short piece of wire of length $\\mathrm{d}\\vec{l}$ is\n\n$$\\vec{F}_{amp} = I\\mathrm{d}\\vec{l} \\times \\vec{B}.$$\n\nThe net force acting on this piece is\n\n$$\\vec{F} = \\vec{T}_1 + \\vec{T}_2 + I\\mathrm{d}\\vec{l} \\times \\vec{B} = 0. \\qquad (1)$$\n\nHere $\\vec{T}_1$ and $\\vec{T}_2$ are tension force of the wire acting on the two end points of the piece.\n\nProjected on the $\\mathrm{d}\\vec{l}$, this equation reads:\n\n$$T_1 = T_2.$$\n\nTherefore, the tension is constant along the wire.\n\nLet $\\vec{n}(l)$ be the tangent vector of the wire at the distance $l$ from the point of suspension. The equation (1) reads\n\n$$\\vec{T}_1 + \\vec{T}_2 + I\\mathrm{d}\\vec{l} \\times \\vec{B} = \\mathrm{d}l\\left(T\\frac{\\mathrm{d}\\vec{n}(l)}{\\mathrm{d}l} + I\\vec{n}(l) \\times \\vec{B}\\right) = 0,$$\n\n$$\\frac{\\mathrm{d}\\vec{n}(l)}{\\mathrm{d}l} = -\\frac{I}{T}\\vec{n}(l) \\times \\vec{B}.$$\n\nThis equation implies that\n\n$$\\vec{B} \\cdot \\frac{\\mathrm{d}\\vec{n}(l)}{\\mathrm{d}l} = 0 \\implies \\vec{B} \\cdot n(l) = \\mathrm{const}.$$\n\nThe tangent vector of the wire $\\vec{n}$ is at constant angle to the magnetic field. In the horizontal plane the tangent vector is rotating at a constant speed. Thus, each side of the loop has the cylindrical helix shape, i. e. it is winding around some cylinder and making the constant angle $\\alpha$ to the magnetic field. To find the radius of this cylinder, let's write the equation in the projection on the horizontal plane:\n\n$$\\frac{\\mathrm{d}\\vec{n}_{xy}}{\\mathrm{d}l_{xy}}\\sin(\\alpha) = -\\frac{I}{T}\\vec{n}_{xy} \\times \\vec{B}.$$\n\n$$R = \\frac{T}{IB}\\sin(\\alpha). \\qquad (2)$$\n\nAt the point of the weight suspension we have the balance between three forces: two forces of tension(from each side of the loop) and the gravitational force of the weight, which is vertical. These three forces should be in the same vertical plane. Therefore, both sides of the loop are winding around the same cylinder. Each half of the loop should make a half-turn around this cylinder.\n\nThus, the length of the half of the loop is\n\n$$L = \\sqrt{H^2 + (\\pi R)^2}.$$\n\nTherefore,\n\n$$R = \\frac{1}{\\pi}\\sqrt{L^2 - H^2} = \\frac{1}{\\pi}L\\sin(\\alpha). \\qquad (3)$$\n\nThe tension force of the wire can be found from equations (2) and (3)\n\n$$T = \\frac{IBR}{\\sin(\\alpha)} = \\frac{IBL}{\\pi}.$$\n\nThe suspended weight is\n\n$$P = 2T\\cos(\\alpha) = 2T\\frac{H}{L}.$$\n\n$$P = \\frac{2IBH}{\\pi}.$$\n\n**Second approach**\n\nStable equilibrium corresponds to a minimum of potential energy. The potential energy is a sum of the gravitational energy of the weight and of the energy of the loop in the magnetic field. Let $S$ be an area of the loop projected on the horizontal plane.\n\n$$E_{\\mathrm{p}} = -PH - ISB.$$\n\n$E_{\\mathrm{p}}$ depends on two variable parameters: $H$ and $S$. Note that we can change the form of the projection (not changing its length) of the loop onto horizontal plane without changing $H$. Thus, the minimum of the potential energy corresponds to the maximum area of the projection with fixed length — a circle.\n\nNow, if the projection is fixed, the height $H$ is maximal if the wire makes a constant angle with the vertical axis. Thus, the wire has a shape of cylindrical helix — each side is winding a cylinder, while making constant angle $\\alpha$ with vertical axis.\n\nLet $R$ be the radius of the cylinder.\nThen\n\n$$S = \\pi R^2 = \\frac{1}{\\pi}(L^2 - H^2).$$\n\n$$E_{\\mathrm{p}} = -PH - IB\\frac{1}{\\pi}(L^2 - H^2).$$\n\nThe condition for the minimum of the potential energy is\n\n$$\\frac{\\partial E}{\\partial H} = 0.$$\n\n$$P = \\frac{2IBH}{\\pi}.$$\n\nThe force balance equation at the point of weight suspension:\n\n$$2\\frac{H}{L}T = P.$$\n\n$$T = \\frac{LIB}{\\pi}.$$",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    }
+   ]
+  },
+  {
+   "id": "idpho-2020-theory-ipho-q1-p3",
+   "number": 3,
+   "title": "Part C. Rod in magnetic field",
+   "points": 4.5,
+   "problemType": "theory",
+   "statement": "Part C. Rod in magnetic field (4.5 points)",
+   "figures": [],
+   "parts": [
+    {
+     "label": "C.1",
+     "statement": "A weightless rod of a length $2R$ is placed perpendicular to a uniform magnetic field $\\vec{B}$. Two identical small balls of mass $m$ and charge $q$ each are attached at the rod ends. Let us direct $z$-axis along the magnetic field and place the origin at the rod center. The balls are given the same initial velocity $v$ but in opposite directions so that one of the velocities is precisely in the $z$-direction. What are the maximum coordinates $z_{\\mathrm{max}}$ of the balls? Express your answer in terms of $q, B, m, v$, and $R$. Find the magnitude of the ball accelerations at this moment and express your answer in terms of $q, B, m, v, R$, and $z_{\\mathrm{max}}$.",
+     "points": 4.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "z_{\\max} = \\frac{\\sqrt{2}mv}{qB}\\sqrt{\\sqrt{1 + \\left(\\frac{qBR}{mv}\\right)^2} - 1},\\quad a = \\sqrt{\\left(\\frac{v^2}{R}\\right)^2 + \\left(\\frac{qvBz_{\\max}}{mR}\\right)^2}"
+     }
+    }
+   ],
+   "topics": [
+    "magnetism/lorentz-force",
+    "mechanics/angular-momentum"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "The equations of motion of the centre of mass of balls is:\n\n$$2m\\dot{\\vec{v}}_C = q\\left[(\\vec{v}_1 + \\vec{v}_2) \\times \\vec{B}\\right] = q\\left[\\vec{v}_C \\times \\vec{B}\\right],$$\n\nwhere $\\vec{v}_C$ is the velocity of the centre of mass, $\\vec{v}_1$ and $\\vec{v}_2$ are velocities of balls. Notice that $v_C = 0$ at the start of motion then $v_C$ remains equal to $0$ always.\n\nThe equation for the rotation of the ball about the centre of mass is:\n\n$$\\frac{d\\vec{L}}{dt} = q\\left[\\vec{R} \\times \\left[\\vec{v} \\times \\vec{B}\\right]\\right].$$\n\nNow let's use the formula of a triple vector product:\n\n$$\\left[\\vec{R} \\times \\left[\\vec{v} \\times \\vec{B}\\right]\\right] = \\vec{v}\\left(\\vec{R} \\cdot \\vec{B}\\right) - \\vec{B}\\left(\\vec{R} \\cdot \\vec{v}\\right).$$\n\nSo balls move around the sphere with the center in the middle of rod. It means that $\\vec{R} \\perp \\vec{v}$ then $\\vec{R} \\cdot \\vec{v} = 0$. Hence\n\n$$\\frac{d\\vec{L}}{dt} = q\\vec{v}\\left(\\vec{R} \\cdot \\vec{B}\\right)$$\n\nFirstly, $\\vec{B}$ directs along $z$-axis, then $\\left(\\vec{R} \\cdot \\vec{B}\\right) = Bz$, where $z$ is a coordinate of the ball. Secondly, let look at projection of vector equation onto $z$-axis:\n\n$$\\frac{dL_z}{dt} = qv_zBz = qBz\\frac{dz}{dt}.$$\n\nMultiplying to $dt$ and integrating gives us this equation:\n\n$$L_z = \\frac{qBz^2}{2} + C,$$\n\nwhere $C = 0$ because $L_z = 0$ at the start of the motion when $z = 0$.\n\nWhen $z$ is maximum $v_z = \\dot{z} = 0$. It means, that $L = L_z = mur$, where $r$ is a distance between the ball and $z$-axis, $u$ is the velocity of the ball at this moment. Recall that the ball is moving around the sphere then $r^2 + z^2 = R^2$.\n\nThe Lorenz force and the contact ball-rod force don't do the work. It means the kinetic energy of the system is constant. Together with $\\vec{v}_C = 0$, it gives that velocities of the balls don't change i.e. $u = v$.\n\nTo summarize, $L_z = mv\\sqrt{R^2 - z_{\\max}^2}$.\n\nLet's combine the results of the two last blocks as a biquadratic equation for $z_{\\max}$:\n\n$$\\left(\\frac{qB}{2mv}\\right)^2 z_{\\max}^4 + z_{\\max}^2 - R^2 = 0.$$\n\nSolution is:\n\n$$z_{\\max} = \\frac{\\sqrt{2}mv}{qB}\\sqrt{\\sqrt{1 + \\left(\\frac{qBR}{mv}\\right)^2} - 1}$$\n\nThis result can be obtained in a faster way by those who are familiar with the generalized momentum of a charged particle in a magnetic field,\n\n$$\\vec{\\mathcal{P}} = m\\vec{v} + q\\vec{A},$$\n\nwhere $\\vec{A}$ is the vector potential which is defined by the condition $\\mathrm{curl}\\vec{A} = \\vec{B}$. We can choose $\\vec{A} = \\frac{1}{2}\\hat{\\tau}Br$, where $r$ denotes the distance from the $z$-axis, and $\\hat{\\tau}$ stands for the unit vector perpendicular both to the radius vector and to the $z$-axis. This is a vector field obeying cylindrical symmetry around the $z$-axis and because of that, the corresponding generalized momentum is conserved,\n\n$$\\mathcal{L}_z = \\vec{R} \\times \\vec{\\mathcal{P}} \\cdot \\hat{z} = mrv_\\perp + \\frac{1}{2}qBr^2 \\equiv \\frac{1}{2}qBR^2;$$\n\nhere $v_\\perp$ denotes the velocity component perpendicular to the $z$-axis. Noting that at the topmost position of the ball's trajectory, $v_\\perp = v$ due to the fact that the speed is constant and horizontal (i.e. in $x-y$-plane), we obtain a quadratic equation for $\\rho = \\frac{r}{R}$:\n\n$$\\rho^2 + 2\\kappa\\rho - 1 = 0, \\quad \\kappa \\equiv \\frac{mv}{qBR}.$$\n\nWe select the positive root $\\rho = \\sqrt{\\kappa^2 + 1} - \\kappa$. Now we can write the final answer as\n\n$$z_{\\max} = R\\sqrt{1 - \\rho^2} = R\\kappa\\sqrt{2}\\sqrt{\\sqrt{\\kappa^{-2} + 1} - 1}$$\n\nwhich coincides with the previous result.\n\nConsider three orthogonal unit vectors: 1-st is along with the velocity, 2-nd along with direction from ball to the middle of the rod, and 3-rd is perpendicular to the other two.\n\nAs we found earlier that $v = \\mathrm{const}$, so $a_1 = 0$. Further, $a_2$ coincides with $v^2/R$ because ball is moving around sphere. Finally, the projection of 2-nd Newton law onto the 3-rd axis is: $ma_3 = qvB\\frac{z_{\\max}}{R}$. Hence\n\n$$a = \\sqrt{\\left(\\frac{v^2}{R}\\right)^2 + \\left(\\frac{qvBz_{\\max}}{mR}\\right)^2}$$",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    }
+   ]
+  }
+ ]
+}

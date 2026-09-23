@@ -1,0 +1,104 @@
+---
+id: idpho-2020-theory-ipho-q1-p3
+source: 'IdPhO 2020'
+title: 'Задача 3. Part C. Rod in magnetic field'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IdPhO/2020/idpho-2020-theory-ipho-q1.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T09:46:34.545Z'
+verifier: 'mechanical'
+---
+
+*Theory — IdPhO 2020 — Q1 — Problem mix (10 points) · 4,5 т.*
+
+## Условие
+
+Part C. Rod in magnetic field (4.5 points)
+
+**C.1** A weightless rod of a length $2R$ is placed perpendicular to a uniform magnetic field $\vec{B}$. Two identical small balls of mass $m$ and charge $q$ each are attached at the rod ends. Let us direct $z$-axis along the magnetic field and place the origin at the rod center. The balls are given the same initial velocity $v$ but in opposite directions so that one of the velocities is precisely in the $z$-direction. What are the maximum coordinates $z_{\mathrm{max}}$ of the balls? Express your answer in terms of $q, B, m, v$, and $R$. Find the magnitude of the ball accelerations at this moment and express your answer in terms of $q, B, m, v, R$, and $z_{\mathrm{max}}$. **[4,5 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **C.1** $z_{\max} = \frac{\sqrt{2}mv}{qB}\sqrt{\sqrt{1 + \left(\frac{qBR}{mv}\right)^2} - 1},\quad a = \sqrt{\left(\frac{v^2}{R}\right)^2 + \left(\frac{qvBz_{\max}}{mR}\right)^2}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+The equations of motion of the centre of mass of balls is:
+
+$$2m\dot{\vec{v}}_C = q\left[(\vec{v}_1 + \vec{v}_2) \times \vec{B}\right] = q\left[\vec{v}_C \times \vec{B}\right],$$
+
+where $\vec{v}_C$ is the velocity of the centre of mass, $\vec{v}_1$ and $\vec{v}_2$ are velocities of balls. Notice that $v_C = 0$ at the start of motion then $v_C$ remains equal to $0$ always.
+
+The equation for the rotation of the ball about the centre of mass is:
+
+$$\frac{d\vec{L}}{dt} = q\left[\vec{R} \times \left[\vec{v} \times \vec{B}\right]\right].$$
+
+Now let's use the formula of a triple vector product:
+
+$$\left[\vec{R} \times \left[\vec{v} \times \vec{B}\right]\right] = \vec{v}\left(\vec{R} \cdot \vec{B}\right) - \vec{B}\left(\vec{R} \cdot \vec{v}\right).$$
+
+So balls move around the sphere with the center in the middle of rod. It means that $\vec{R} \perp \vec{v}$ then $\vec{R} \cdot \vec{v} = 0$. Hence
+
+$$\frac{d\vec{L}}{dt} = q\vec{v}\left(\vec{R} \cdot \vec{B}\right)$$
+
+Firstly, $\vec{B}$ directs along $z$-axis, then $\left(\vec{R} \cdot \vec{B}\right) = Bz$, where $z$ is a coordinate of the ball. Secondly, let look at projection of vector equation onto $z$-axis:
+
+$$\frac{dL_z}{dt} = qv_zBz = qBz\frac{dz}{dt}.$$
+
+Multiplying to $dt$ and integrating gives us this equation:
+
+$$L_z = \frac{qBz^2}{2} + C,$$
+
+where $C = 0$ because $L_z = 0$ at the start of the motion when $z = 0$.
+
+When $z$ is maximum $v_z = \dot{z} = 0$. It means, that $L = L_z = mur$, where $r$ is a distance between the ball and $z$-axis, $u$ is the velocity of the ball at this moment. Recall that the ball is moving around the sphere then $r^2 + z^2 = R^2$.
+
+The Lorenz force and the contact ball-rod force don't do the work. It means the kinetic energy of the system is constant. Together with $\vec{v}_C = 0$, it gives that velocities of the balls don't change i.e. $u = v$.
+
+To summarize, $L_z = mv\sqrt{R^2 - z_{\max}^2}$.
+
+Let's combine the results of the two last blocks as a biquadratic equation for $z_{\max}$:
+
+$$\left(\frac{qB}{2mv}\right)^2 z_{\max}^4 + z_{\max}^2 - R^2 = 0.$$
+
+Solution is:
+
+$$z_{\max} = \frac{\sqrt{2}mv}{qB}\sqrt{\sqrt{1 + \left(\frac{qBR}{mv}\right)^2} - 1}$$
+
+This result can be obtained in a faster way by those who are familiar with the generalized momentum of a charged particle in a magnetic field,
+
+$$\vec{\mathcal{P}} = m\vec{v} + q\vec{A},$$
+
+where $\vec{A}$ is the vector potential which is defined by the condition $\mathrm{curl}\vec{A} = \vec{B}$. We can choose $\vec{A} = \frac{1}{2}\hat{\tau}Br$, where $r$ denotes the distance from the $z$-axis, and $\hat{\tau}$ stands for the unit vector perpendicular both to the radius vector and to the $z$-axis. This is a vector field obeying cylindrical symmetry around the $z$-axis and because of that, the corresponding generalized momentum is conserved,
+
+$$\mathcal{L}_z = \vec{R} \times \vec{\mathcal{P}} \cdot \hat{z} = mrv_\perp + \frac{1}{2}qBr^2 \equiv \frac{1}{2}qBR^2;$$
+
+here $v_\perp$ denotes the velocity component perpendicular to the $z$-axis. Noting that at the topmost position of the ball's trajectory, $v_\perp = v$ due to the fact that the speed is constant and horizontal (i.e. in $x-y$-plane), we obtain a quadratic equation for $\rho = \frac{r}{R}$:
+
+$$\rho^2 + 2\kappa\rho - 1 = 0, \quad \kappa \equiv \frac{mv}{qBR}.$$
+
+We select the positive root $\rho = \sqrt{\kappa^2 + 1} - \kappa$. Now we can write the final answer as
+
+$$z_{\max} = R\sqrt{1 - \rho^2} = R\kappa\sqrt{2}\sqrt{\sqrt{\kappa^{-2} + 1} - 1}$$
+
+which coincides with the previous result.
+
+Consider three orthogonal unit vectors: 1-st is along with the velocity, 2-nd along with direction from ball to the middle of the rod, and 3-rd is perpendicular to the other two.
+
+As we found earlier that $v = \mathrm{const}$, so $a_1 = 0$. Further, $a_2$ coincides with $v^2/R$ because ball is moving around sphere. Finally, the projection of 2-nd Newton law onto the 3-rd axis is: $ma_3 = qvB\frac{z_{\max}}{R}$. Hence
+
+$$a = \sqrt{\left(\frac{v^2}{R}\right)^2 + \left(\frac{qvBz_{\max}}{mR}\right)^2}$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [IPhO_2020_Q1.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2020/Theory/IPhO_2020_Q1.pdf)
+· официални решения: [IPhO_2020_S1.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2020/Theory/IPhO_2020_S1.pdf)
