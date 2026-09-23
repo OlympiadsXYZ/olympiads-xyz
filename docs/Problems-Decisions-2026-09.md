@@ -216,3 +216,18 @@ found in the other document.
 
 Why: the backlog had within-catalogue twins (a Word source next to its PDF), and publishing both doubles problems on
 the site. A shingle scan costs nothing; an agent read costs a paper's worth of meter.
+
+## D-P26 (2026-09-23) — a round that sits in the autumn before its season takes the season's year
+
+Reader rule 9 (the printed calendar year wins over the catalogue) was written for standalone autumn events that the
+archive files by academic year (ESF). A round of a season olympiad that sits in the preceding autumn (NAO round I in
+November, the Samara correspondence round) is filed under the season's year with its sibling papers. That is how 31 of
+the 32 published NAO round-I papers are filed. The printed date stays verbatim in `paper.title` and `tx.printedMeta`.
+
+- Re-filed on 2026-09-23 from the Word tranche: `nao-2002-i-11-12` 2001 → 2002 (with `-7-8` and `-9-10`, all printed
+  „ноември 2001 г.“), and `samara-2013-i-10-11` 2012 → 2013 (with `-8-9`, both printed „Самара, 2012“, of the „-2013“ school).
+- `promote.mjs --replace` now removes the paper's earlier file when the new one lands in another folder. Before this,
+  the tree held the id twice and approval failed with „Duplicate paper id“.
+
+Why: siblings of one sitting split across two years scatter a round in the site's year navigation. The season year is
+what the olympiad calls itself (the V NAO is 2001/2002).

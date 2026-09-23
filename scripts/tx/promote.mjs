@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  parseArgs, fail, readJson, readManifest, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems, sha256File, contentPathFor, run, ROOT, nowIso, writeJson,
+  parseArgs, fail, readJson, readManifest, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems, sha256File, contentPathFor, run, ROOT, nowIso, writeJson, listContentFiles,
 } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['replace', 'no-approve'] });
@@ -46,6 +46,9 @@ if (!validate(final.data)) fail(`final paper fails schema before writing: ${JSON
 
 const target = contentPathFor(paperId, { subject: final.data.paper.subject, competition: final.data.paper.competition, year: final.data.paper.year });
 if (fs.existsSync(target) && !args.replace) fail(`${path.relative(ROOT, target)} already exists; pass --replace to overwrite (the publication ledger will then need a new approval)`);
+// a replacement whose year (or subject/competition) changed lands in another folder: the earlier file goes once the
+// new one is verified, or the tree holds the paper id twice (nao-2002-i-11-12 re-filed from 2001 to 2002)
+const previous = args.replace ? listContentFiles().filter(f => path.basename(f) === `${paperId}.json` && path.resolve(f) !== path.resolve(target)) : [];
 fs.mkdirSync(path.dirname(target), { recursive: true });
 { // atomic, with the same rename retry writeJson has (the ship and other workers read this tree)
   const tmp = `${target}.${process.pid}.partial`;
@@ -60,6 +63,7 @@ if (onDisk !== receipt.contentHash) {
   fs.rmSync(target);
   fail('normalise-papers.mjs changed the promoted bytes; receipt no longer matches — fix canonicalisation in scripts/tx/lib.mjs and re-run receipt.mjs');
 }
+for (const f of previous) fs.rmSync(f);
 
 const receiptDir = path.join(ROOT, 'content', 'problem-receipts');
 const storedReceipt = path.join(receiptDir, `${paperId}.json`);
