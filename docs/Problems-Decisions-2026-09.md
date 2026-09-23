@@ -192,3 +192,27 @@ Also fixed the same night (a bug, not a decision): `textlayer.mjs` split every w
 pdftotext writes some fonts). The check then reported fragments („отчитаи“, „ности“) as the printed wording, and repair
 spliced them into the candidate. The layer is now NFC-normalised, and a word runs through combining marks
 (commit 4962600712). The nao-2008-iv-st agent found this and refused to promote the corrupted repair.
+
+## D-P25 (2026-09-23) — the Word queue is deduplicated before any agent reads it
+
+All 77 Word papers (`docs/handoff-2026-09-22/queue-word.json`) were converted on the desktop, one at a time
+(75 converted; `nao-1999-i-99-doc` and `nao-2002-ii-11-12-02-ii` fail in Word with a COM exception). Each converted text
+was then compared with every published paper and every prepared text in tmp/tx: the share of its 5-word shingles
+found in the other document.
+
+- **Excluded** (twins of published papers, now in `content/backlog-exclusions.json`): `nao-1998-1999-booklet-docx`
+  (74% of it is the published PDF booklet) and `ioaa-2012-observational-nabl-observationalnight2` (catalogued en, but
+  it is the Bulgarian night-2 exam, 77% the published one).
+- **Held** (a twin or draft of a paper still in the backlog; read the other file, then exclude this one once that is
+  live): `ioaa-2012-theory-theoretical-student-bg-doc` (100% `ioaa-2012-theory-theoretical-bg`), `mosa-doc` (100%
+  `mosa-x`), `nof-2010-i-10-12-2010-12klas` (97% `nof-2010-i-10`, which is read), `ioaa-2022-observational-nabl-day-time`
+  (87% `…-daytime-obs`), `ipho-2006-theory-1/2/3-doc` (83–95% `ipho-2006-theory-theo-question-1/2/3`),
+  `izho-2024-experiment-exp-eng-docx` (100% `izho-2024-experiment-exp-eng`), the IOAA 2012 authors' drafts
+  `…observationalnight1text` and `…observationalnight3text` (the exam papers `…observationalnight1/3` are read), and
+  `ioaa-2012-data-analysis-data-preliminary-doc` (the draft of `…-final-doc`).
+- **Kept** despite overlap: grade and age-group variants that share problems (`nao-2002-i-9-10` / `-11-12`,
+  `iao-2011-practical-alpha` / `-beta`), `ioaa-2013-observational-nabl-indoors` / `-night` (different tasks under one
+  header), and `…observationalnight2text` (the only English night 2).
+
+Why: the backlog had within-catalogue twins (a Word source next to its PDF), and publishing both doubles problems on
+the site. A shingle scan costs nothing; an agent read costs a paper's worth of meter.
