@@ -32,7 +32,7 @@ jobs:
       # so NODE_OPTIONS does not cap it) and the 16 GB runner is killed. Swap absorbs the spike.
       - name: Add swap
         run: |
-          sudo fallocate -l 16G /mnt/extra.swap && sudo chmod 600 /mnt/extra.swap
+          df -h /mnt && sudo fallocate -l 32G /mnt/extra.swap && sudo chmod 600 /mnt/extra.swap
           sudo mkswap /mnt/extra.swap && sudo swapon /mnt/extra.swap && free -m
       - run: npx gatsby build
         env:
