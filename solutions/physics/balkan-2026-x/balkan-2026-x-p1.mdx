@@ -1,0 +1,225 @@
+---
+id: balkan-2026-x-p1
+source: 'Balkan 2026'
+title: 'Задача 1. Hydrodynamic drag'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Balkan/2026/balkan-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T22:02:57.784Z'
+verifier: 'mechanical'
+---
+
+*EIGHTH BALKAN PHYSICS OLYMPIAD (BPO-8) · 29 юни 2026 г. · 25 т.*
+
+## Условие
+
+Any object immersed in a fluid experiences a buoyancy (Archimedes) force $\vec{F}_\mathrm{b}$. If the object, however, moves in the fluid, additional drag (resistance) force $\vec{F}_\mathrm{d}$ acts on it, having the direction opposite to the direction of its velocity $\vec{v}$. For the conditions of the present problem, the magnitude of the drag force could be represented as:
+
+$$F_\mathrm{d} = \frac{1}{2} C_\mathrm{d} \rho v^2 A$$
+
+where $\rho$ is the density of the fluid, $A$ is the area of the widest cross section of the object, oriented perpendicular to the velocity (Fig. 1.1), and $C_\mathrm{d}$ is a dimensionless parameter, called *drag coefficient*. The drag coefficient is a characteristic of any particular shape of the object. The ultimate goal of this problem is to estimate the drag coefficient for a spherical object on the basis of experimental data regarding the motion of a metal ball in water.
+
+The experimental setup is shown schematically in Fig. 1.2. A metal ball (1) of unknown radius $R$ and mass $m = 0{,}5\ \mathrm{kg}$ is held under water in a swimming pool by means of electronically controlled clips (2). The clips open by an electric signal from a control block (3), which activates a digital camera (4), making a series of photos of the ball falling through water, with a repetition rate of $f = 5$ frames per second. There is an unknown time delay between dropping the ball and the camera activation. Based on the analysis of images, a series of ball positions $z_i$ has been estimated and recorded in **Table 1** on the **Answer sheet**. The coordinate axis $Z$ points vertically downwards with an origin $z = 0$ corresponding to the first recorded position of the ball.
+
+You are given also a two sheets of **Graph paper** for data plots. **The used graph paper and the answer sheet with Table 1 must be supplied together with your solutions.**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2026-x/p1-fig1.png" alt="A streamlined body with its widest cross section A marked by an ellipse; an arrow to the right labelled v (velocity) and an arrow to the left labelled F_d (drag force)." />
+<figcaption>Figure 1.1</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2026-x/p1-fig2.png" alt="Schematic of the setup: a pool of water (shaded); a ball (1) held by clips (2) hanging from a control block (3) above the water; a camera (4) under water at the left side connected to the control block; the level z = 0 at the ball and the Z axis pointing vertically downwards." />
+<figcaption>Figure 1.2</figcaption>
+</figure>
+
+**A)** Make a sketch of all forces acting on the ball during its fall in water. Derive a theoretical formula, relating the instantaneous acceleration $a$ of the ball to its instantaneous velocity $v$ in terms of parameters and constants defined previously. **[2 т.]**
+
+**B)** Suppose that $z_{i-1}$, $z_i$, and $z_{i+1}$ are the ball positions recorded at three equidistant moments of time, $t_{i-1} = t_i - \Delta t$, $t_i$ and $t_{i+1} = t_i + \Delta t$, respectively. If the time interval $\Delta t$ between the frames is small enough, the ball motion from $t_{i-1}$ to $t_{i+1}$ can be considered approximately as uniformly accelerated. Derive formulas, giving approximate values for the ball velocity $v_i$ and acceleration $a_i$ at the middle moment $t_i$. Append Table 1 with columns containing calculated approximate values of the velocity and the acceleration at the corresponding moments of time. **[8,5 т.]**
+
+**C)** Propose suitable auxiliary variables $y$ and $x$, which linearize the acceleration–velocity relationship: $y = px + q$. Represent the available experimental data in these variables on a graph. By using a graphical approach estimate the parameters $p$ and $q$ of the suggested linear dependence. **[3 т.]**
+
+**D)** Estimate the density $\rho_\mathrm{M}$ of the metal ball and the drag coefficient $C_\mathrm{d}$ for an object of spherical form. **[11,5 т.]**
+
+Some useful constants:
+
+- Acceleration due to gravity, $g = 9{,}81\ \mathrm{m/s^2}$;
+- Density of water, $\rho_\mathrm{w} = 1000\ \mathrm{kg/m^3}$.
+
+**Answer sheet**
+
+**Table 1.** Fill-in calculation data in the empty cell, where appropriate. **Supply this sheet together with your solution.**
+
+| Frame # | $z_i$ (m) | | | |
+|---:|---:|---|---|---|
+| 1 | 0,00 | | | |
+| 2 | 0,16 | | | |
+| 3 | 0,43 | | | |
+| 4 | 0,77 | | | |
+| 5 | 1,13 | | | |
+| 6 | 1,50 | | | |
+| 7 | 1,86 | | | |
+| 8 | 2,23 | | | |
+| 9 | 2,59 | | | |
+| 10 | 2,96 | | | |
+| 11 | 3,33 | | | |
+| 12 | 3,69 | | | |
+
+**Supply this paper together with your solution**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **D)** 0.29
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+A) There are three forces acting on the ball:
+
+1) The gravity in +Z direction: $G = mg$;
+2) The buoyancy force in –Z direction: $F_\mathrm{b} = \rho_\mathrm{w}(4/3\,\pi R^3)g$;
+3) The drag force in –Z direction, $F_\mathrm{d} = 1/2\, C_\mathrm{d}\rho_\mathrm{w}(\pi R^2)v^2$.
+
+The Newton’s II law for the Z-components states:
+
+(1) $$ma = G - F_\mathrm{b} - F_d$$
+
+which gives the following expression for the acceleration:
+
+(2) $$a = g\left(1 - \frac{4\pi R^3\rho_\mathrm{w}}{3m}\right) - \frac{C_\mathrm{d}(\pi R^2)\rho_\mathrm{w}v^2}{2m}$$
+
+B) We will consider $v_i$ as initial velocity and will apply the equation of uniformly accelerated motion backward in time for the point $z_{i-1}$ and forward for the point $z_{i+1}$:
+
+(3) $$z_{i-1} = z_i - v_i\Delta t + 1/2\, a_i\Delta t^2$$
+
+(4) $$z_{i+1} = z_i + v_i\Delta t + 1/2\, a_i\Delta t^2$$
+
+Resolving the two equations with respect to $v_i$ and $a_i$ we get the final approximate expressions:
+
+(5) $$v_i = \frac{z_{i+1} - z_{i-1}}{2\Delta t}$$
+
+(6) $$a_i = \frac{z_{i-1} - 2z_i + z_{i+1}}{\Delta t^2}$$
+
+The time interval between consecutive frames in our experiment is:
+
+(7) $$\Delta t = 1/f = 0{,}20\ \mathrm{s}$$
+
+By using equations (5) and (6) we can estimate the velocity and acceleration for frames #2 to #11, as given in the table below:
+
+| Frame # | $z_i$ (m) | $v_i$ (m/s) | $a_i$ (m/s²) | $v_i^2$ (m²/s²) |
+|---:|---:|---:|---:|---:|
+| 1 | 0 | | | |
+| 2 | 0,16 | 1,08 | 2,75 | 1,16 |
+| 3 | 0,43 | 1,53 | 1,75 | 2,33 |
+| 4 | 0,77 | 1,75 | 0,50 | 3,06 |
+| 5 | 1,13 | 1,83 | 0,25 | 3,33 |
+| 6 | 1,5 | 1,83 | -0,25 | 3,33 |
+| 7 | 1,86 | 1,83 | 0,25 | 3,33 |
+| 8 | 2,23 | 1,83 | -0,25 | 3,33 |
+| 9 | 2,59 | 1,83 | 0,25 | 3,33 |
+| 10 | 2,96 | 1,85 | 0,00 | 3,42 |
+| 11 | 3,33 | 1,83 | -0,25 | 3,33 |
+| 12 | 3,69 | | | |
+
+Velocity and acceleration for the first and the last frame cannot be calculated on the basis of our approximation since there are no coordinate measurements in earlier/later moments of time, as suggested in equations (5) and (6).
+
+C) It follows from Eq. (2) that if we set a new independent variable $x = v^2$ and use $y = a$ as a dependent variable:
+
+(8) $$y = px + q$$
+
+with:
+
+(9) $$p = -\frac{C_\mathrm{d}(\pi R^2)\rho_\mathrm{w}}{2m}$$
+
+and
+
+(10) $$q = g\left(1 - \frac{4\pi R^3\rho_w}{3m}\right)$$
+
+Since $y = a$ is already present in the table, we add only one new column in the table with values of the variable $x = v^2$. The corresponding *y*-*x* plot and the fitting line are given below:
+
+Parameter $q$ corresponds to the crossing point of the fitting line with the vertical axis:
+
+(11) $$q \approx 4{,}2\ \mathrm{m/s^2}$$
+
+and physically corresponds to the acceleration of the ball at zero velocity, i.e. just after it has been released from the clips. The crossing point with the horizontal axis corresponds to the square of the terminal velocity:
+
+(12) $$v_t^2 \approx 3{,}6\ \mathrm{m^2/s^2};\ v_t \approx 1{,}9\ \mathrm{m/s}$$
+
+Therefore the slope of the graph is:
+
+(13) $$p = -\,q/v_t^2 \approx -1{,}2\ \mathrm{m^{-1}}$$
+
+D) Since:
+
+(14) $$\rho_\mathrm{M} = \frac{m}{4/3\,\pi R^3}$$
+
+It follows from Eq. 10 that:
+
+(15) $$q = g\left(1 - \frac{\rho_\mathrm{w}}{\rho_\mathrm{M}}\right)$$
+
+and
+
+(16) $$\rho_\mathrm{M} = \frac{\rho_\mathrm{W}g}{g - q} \approx 1{,}8\ 10^3\ \mathrm{kg/m^3}$$
+
+After having calculated the density of the metal (most probably aluminum), we can estimate the radius of the ball through equation (14):
+
+(17) $$R = \sqrt[3]{\frac{3m}{4\pi\rho_\mathrm{M}}} \approx 0{,}04\ \mathrm{m}$$
+
+Now, the drag coefficient can be calculated from equation (9) for the slope $p$:
+
+(18) $$C_\mathrm{d} = \frac{2m|p|}{\pi R^2\rho_\mathrm{w}} \approx 0{,}29$$
+
+**Marking scheme**
+
+| Task | Element of the solution | Max. points |
+|---|---|---:|
+| A | Diagram with all forces in correct directions | 0,5 |
+| | Correct expressions for magnitudes of G, F$_\mathrm{b}$ and F$_\mathrm{d}$ | 0,5 |
+| | Correctly written Newton's second law | 0,5 |
+| | Final expression for acceleration | 0,5 |
+| B | Equation (3) for uniformly accelerated motion backward in time | 0,5 |
+| | Equation (4) for uniformly accelerated motion forward in time | 0,5 |
+| | Gets equation (5) for velocity | 1 |
+| | Gets equation (6) for acceleration | 1 |
+| | Calculates time interval dt between two frames as 1/f | 1 |
+| | Calculates to a precision 1 digits velocity for frames #2 to #11 (10 frames x 0,2 pt) | 2 |
+| | Calculates to a precision 1 digits acceleration for frames #2 to #11 (10 frames x 0,2 pt) | 2 |
+| | Anotates the "v" and "a" columns with titles and units | 0,5 |
+| C | Proposes x = v$^2$ as auxiliary variable | 1 |
+| | Expresses the slope p in terms of given parameters | 1 |
+| | Expresses the constant q in terms of given parameters | 1 |
+| D | Fills up a table column with calculated values of v$^2$ (10 frames x 0,1 pt) | 1 |
+| | Anotates the v$^2$ column with title and unit | 0,5 |
+| | Plots the (v$^2$,a) data points on a graph Points #2 to #4 since the terminal velocity (a=0) is reached | 0,9 |
+| | Anotates plot axes with titles and units | 0,6 |
+| | Draws axes tick marks with numeric labels | 0,5 |
+| | Draws a fitting line | 1 |
+| | Identifies constant q as a crossing point with the vertical axis and gets q = 4,2 m/s$^2$ | 1 |
+| | Determines the slope p = –1,2 m$^{-1}$ | 1 |
+| | Gets expression for ρ$_\mathrm{M}$ in terms of q | 1 |
+| | Calculates ρ$_\mathrm{M}$ to a precision of 1,8.10$^3$ kg/m$^3$ | 1 |
+| | Expresses the ball radius by means of equation (17) | 1 |
+| | Expresses the drag coefficient - equation (18) | 1 |
+| | Calculates numerical value Cd = 0,29 | 1 |
+| | **Total** | **25** |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2026-x/p1-sol-fig1.png" alt="Force diagram: a ball with the gravity force G pointing down and the buoyancy force F_b and drag force F_d pointing up; the Z axis points downwards." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2026-x/p1-sol-fig2.png" alt="Graph of y = a versus x = v²: vertical axis from 0,00 to 4,50 in steps of 0,10, horizontal axis from 0 to 4 in steps of 0,1; three data points near (1,16; 2,75), (2,33; 1,75) and (3,06; 0,50) and a dotted fitting line from about 4,2 on the vertical axis to about 3,6 on the horizontal axis." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/Balkan/2026/problems.pdf)
+· официални решения: [solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/Balkan/2026/solutions.pdf)

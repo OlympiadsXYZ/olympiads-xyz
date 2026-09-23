@@ -1,0 +1,78 @@
+---
+id: wopho-2012-q12-p2
+source: 'WoPhO 2012'
+title: 'Задача 2. Vertical Well'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/WoPhO/2012/wopho-2012-q12.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T21:57:54.390Z'
+verifier: 'mechanical'
+---
+
+*Theoretical 2: Physics of the Oil and Gas Production*
+
+## Условие
+
+Often the reservoir can be modeled as a cylinder (see Figure 7). For this problem all properties were averaged out as in the previous part, so the reservoir is assumed homogeneous with uniform permeability $k$. Oil can be viewed as an incompressible fluid with viscosity $\mu$. Because the rocks above and below the reservoir are impermeable and the height of the cylinder is much less than its radius ($h \ll R$), one can conclude that the fluid flows only in the radial direction.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q12/p2-fig1.png" alt="A flat cylindrical reservoir of radius R=1000 m and height h=10 m with a vertical well of radius r_w=0.1 m drilled in the center; pressure P_b at the outer boundary and P_w at the bottom of the well." />
+<figcaption>Figure 7: Cylindrical reservoir with a vertical well drilled in the center</figcaption>
+</figure>
+
+**(a)** Find the velocity of the oil $v_w$ inside the well with radius $r_w = 0.1$ m, if the flow rate is 30 $\frac{m^3}{day}$. Estimate the fluid velocity in the reservoir near the well $v_r$. **[0,4 т.]**
+
+**(b)** The calculated fluid velocity in the reservoir is rather small therefore the reservoir pressure can be treated as a constant for several months or even years, especially if the reservoir is connected with an underground source of water. Let $P_b$ be the pressure at the outer boundary of the reservoir and $P_w$ be the pressure at the bottom of the well. In this part assume that both $P_b$ and $P_w$ are constants (time-independent values), as well as the radial pressure distribution.
+
+Calculate pressure drop $P_b - P_w$ , which is required to produce oil with flow rate $q$. **[1 т.]**
+
+**(c)** Make a sketch of pressure distribution in the reservoir $P(r)$ as a function of the distance from the well. **[0,4 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** $v_w = 1.1\cdot 10^{-2}\ \mathrm{m/s},\quad v_{res} = 5.5\cdot 10^{-5}\ \mathrm{m/s}$
+- **(b)** $P_b - P_w = \frac{q\mu}{2\pi kh}\ln\left(\frac{R}{r_w}\right)$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**2.1**
+
+$$v_w = \frac{q}{\pi r_w^2} = \frac{30/86400}{3.14\cdot 0.1^2} = 1.1\cdot 10^{-2}\ \frac{m}{sec}$$
+
+$$v_{res} = \frac{q}{2\pi r_w h} = \frac{30/86400}{2\cdot 3.14\cdot 0.1\cdot 10} = 5.5\cdot 10^{-5}\ \frac{m}{sec}$$
+
+Velocity at the reservoir is very small, however it depends on the definition of the fluid velocity in the reservoir. Actually fluid particles moves a few orders of magnitude faster than Darcy’s velocity $\approx \frac{v_{res}}{\varphi}$.
+
+**2.2** For incompressible fluid
+
+$$q = \frac{k}{\mu}2\pi rh\frac{dP}{dr} = const\qquad (2.2.1)$$
+
+Rearranging variables
+
+$$\int_{P_w}^{P} dP = \frac{q\mu}{2\pi kh}\int_{r_w}^{r}\frac{dr}{r}$$
+
+$$P - P_w = \frac{q\mu}{2\pi kh}ln\left(\frac{r}{r_w}\right)\qquad (2.2.2)$$
+
+Finally
+
+$$\boxed{P_b - P_w = \frac{q\mu}{2\pi kh}ln\left(\frac{R}{r_w}\right)}\qquad (2.2.3)$$
+
+**2.3**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q12/p2-sol-fig1-v3.png" alt="Sketch of pressure versus radius across the reservoir cross-section of height h: the pressure curve is lowest (P_w) at the well r_w in the middle and rises logarithmically towards P_b at the boundaries R on both sides; a dashed line marks the average pressure p̄; an arrow labelled q = constant points up the well; axes labelled Pressure and r." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [WoPhO_2012_Q12.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/WoPhO/2012/WoPhO_2012_Q12.pdf)
+· официални решения: [WoPhO_2012_S12.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/WoPhO/2012/WoPhO_2012_S12.pdf)

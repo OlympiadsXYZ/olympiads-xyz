@@ -1,0 +1,616 @@
+---
+id: apho-2023-theory-t3-p3
+source: 'APhO 2023, theory'
+title: 'Задача 3. Theoretical Problem 3: Cavitation'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2023/apho-2023-theory-t3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T22:02:50.790Z'
+verifier: 'mechanical'
+---
+
+*XXIII APhO Mongolia 2023 — Theory Q3 — Theoretical Problem 3: Cavitation [10.0 points] · 10 т.*
+
+## Условие
+
+**Introduction**
+
+Cavitation is the phenomenon of vapour bubbles or ``cavities'' occurring in a liquid medium due to *drop in pressure*. This is in contrast to boiling, where vapour bubbles are created due to *rise in temperature*. Since the vapour bubbles collapse and generate shock waves as well as supersonic jets when the dropped pressure is restored, cavitation is a constant source of damage and even of catastrophe in hydraulic machines, ships, and more generally in any device involving liquid flow. On the other hand, it has found many positive applications, for example in chemical industry, cleaning, and in treatment of kidney stones.
+
+It is understood that cavitation generally grow out of microscopic bubbles, called *nuclei*, that preexisted in the liquid. These micro-bubbles are a few microns in size and contain both vapour and non-condensable gas (the latter is just air when ordinary water is under consideration). If the pressure in the liquid becomes sufficiently low, the nuclei grow into a macroscopic size, initiating cavitation. Liquid purified of such nuclei can even withstand negative pressure without cavitating. One usually compares this with solid under tension, which does not rupture easily if there are no preexisting pockets or cracks in it.
+
+In this problem, we will be concerned with various idealized scenarios related to cavitation. As is often the case, we can glean some nontrivial information from simple dimensional analysis. However, we will need differential equations embodying fundamental laws such as Newton's second law of motion and Fick's law of diffusion, if we want to conduct a more precise study.
+
+One of the first things we want to know is the so called *critical (or threshold) pressure*, that is the minimum value of the water pressure so that the nuclei remain microscopic without growing into macroscopic bubbles. The critical pressure is roughly equal to the vapour pressure at the given temperature, but the exact value is slightly lower due to surface tension and the air content of the nucleus.
+
+If the external pressure suddenly drops below the critical pressure of a nucleus, then the nucleus starts expanding and the expansion rate quickly reaches a stable value. In practice, after the bubble becomes macroscopic in size, the pressure is typically restored to its original value, and the bubble starts collapsing. We will model this situation by considering a macroscopic bubble in equilibrium, whose external pressure is then suddenly risen. The collapsing bubble will rebound after reaching a minimum size if the bubble had air in it. On the other hand, a pure vapour bubble would completely dissolve, with the shrinkage rate growing unboundedly as the radius of the bubble reaches zero. In reality, towards the end of the collapse, the bubble would lose its spherical shape, and the compressibility of water would become important. However, unless a particular question explicitly asserts otherwise, we will neglect those effects here.
+
+Another interesting question is what happens when sound wave is transmitted through water containing bubbles. It turns out that not only the bubbles pulsate following the pressure oscillations, but also the sound wave induces translational motions of the bubbles. These effects can be used to manipulate bubbles with the help of acoustic waves. For example, in acoustic cavitation, high intensity ultrasound is employed to generate cavitation or cause collapse of bubbles.
+
+Finally, there is a sort of paradox regarding the existence of nuclei in the first place. The theory predicts that unless water is saturated with dissolved air, diffusion of air from any nucleus into water through the gas-water interface must induce a complete dissolution of the nucleus in a matter of seconds. However, in reality, micron sized nuclei exist in water and it is in fact extremely difficult to get rid of them. We will consider one of a few potential resolutions of this paradox, namely the suggestion that small crevices in solid walls or in solid particles carried by water are responsible for acting as micro-pockets of air and vapour.
+
+**Potentially useful information**
+
+**Vapour pressure**
+
+Let us say we have a closed jar containing water and air. If the air is too dry, then its humidity will increase due to evaporation of water. If the air is too wet, then its humidity will decrease due to condensation. It turns out that in equilibrium, the partial pressure $p_v = p_v(T)$ of vapour in air is a function of temperature.
+
+Now if a bubble changes its volume in an instant, then the humidity inside the bubble will lose its equilibrium with the surrounding water, and a new equilibrium must be reached either by condensation or evaporation. In reality this process is so rapid that we can justifiably assume that equilibrium is maintained at all times. Moreover, the heat lost or gained by the surrounding water during this process is negligible, so that the temperature remains constant. To conclude, we assume that the partial pressure of vapour contained in a bubble remains equal to $p_v$ at all times.
+
+**Henry’s law**
+
+While the concept of vapour pressure gives us a good handle on the vapour content of a bubble, Henry law offers at least a partial handle on the air content. Thinking of a closed jar containing water and air, it says that in equilibrium, the concentration of dissolved air in water is proportional to the partial pressure of air above the water:
+
+$u = Hq$
+
+where, $u$ is the concentration of air in water, $H$ is the so called Henry's constant, and $q$ is the partial pressure of air adjacent to water. As before, we will assume that equilibrium of air content in the sense of Henry's law is maintained at least in the immediate vicinity of the bubble at all times, and that this maintenance does not cause any temperature change.
+
+**Fick’s law**
+
+To complement Henry's law, we need to know how dissolved air in water moves from places with high concentration to places with low concentration. This is where Fick's law enters, which states that the diffusion flux across an area element $S$ is proportional to how fast the concentration changes along the direction perpendicular to $S$, see Figure 3:
+
+$J = \kappa \frac{\partial u}{\partial x}$
+
+Here $J$ is the diffusion flux, that is the amount of air moving across the surface per unit area per unit time, $\kappa$ is the diffusivity coefficient, and we have assumed that the $x$ coordinate axis is perpendicular to $S$. When $u$ is a function of $x$ and possibly other variables, the notation $\frac{\partial u}{\partial x}$ means that we have taken the derivative of $u$ with respect to the variable $x$, while holding all other variables constant.
+
+**Diffusion equation**
+
+If you need to find a function $w = w(x, t)$ in the first quadrant $Q = \{(x, t) : x > 0, t > 0\}$ satisfying $\frac{\partial w}{\partial t} = \frac{\partial^2 w}{\partial x^2}$ in $Q$, and $\begin{cases} w(x, 0) = f(x) & \text{for } x > 0, \\ w(0, t) = 0 & \text{for } t > 0, \end{cases}$ then the solution is given by $w(x, t) = \frac{1}{\sqrt{4\pi t}} \int_0^\infty \left(e^{-(x-y)^2/(4t)} - e^{-(x+y)^2/(4t)}\right) f(y) dy$.
+
+**Gaussian type integrals**
+
+The following integrals may come in handy. $\int_0^\infty e^{-bx^2} dx = \frac{\sqrt{\pi}}{2\sqrt{b}}$, $\qquad \int_0^\infty x^2 e^{-bx^2} dx = \frac{\sqrt{\pi}}{4b\sqrt{b}} \qquad (b > 0)$.
+
+**Notations and typical values of parameters.**
+
+In Table 1, we list the notations used in the statement of the problem, and the typical values of some important constants.
+
+| symbol | assigned meaning | typical value |
+|---|---|---|
+| $\rho$ | water density | $997$ kg/m$^3$ |
+| $p_\infty$ | water pressure far from a bubble | $101$ kPa |
+| $p_v$ | vapour pressure | $2340$ Pa |
+| $\sigma$ | surface tension | $72.8 \cdot 10^{-3}$N/m |
+| $R$ | bubble radius | |
+| $R_0$ | initial radius of a bubble | $10^{-5}$ m |
+| $\delta$ | density of air | $1.29$ kg/m$^3$ |
+| $q$ | partial pressure of air in a bubble | |
+| $q_0$ | initial value of $q$ | |
+| $\gamma$ | adiabatic exponent of air | $1.4$ |
+| $u$ | concentration of dissolved air in water | |
+| $\kappa$ | diffusivity coefficient for air in water | $2 \cdot 10^{-9}$ m$^2$/s |
+| $H$ | Henry's constant for air in water | $0.24 \cdot 10^{-6}$ s$^2$/m$^2$ |
+| $t$ | time | |
+| $f_0$ | natural/resonant frequency | |
+
+**Assumptions**
+
+*Unless otherwise specified*, throughout this problem we assume the following.
+
+- Water is incompressible, inviscid, and homogeneous.
+- Water fills the entire space.
+- Pressure variation due to gravity is negligible.
+- No spatial or temporal variation in temperature.
+- There is a single bubble.
+- The bubble remains spherical and without translatory motion.
+- No migration of air between the bubble cavity and the surrounding water.
+- Air is an ideal gas.
+
+**Part A: Preliminary analysis [1.5 points]**
+
+These are warm-up questions to get the initial feel of the phenomenon.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig1.png" alt="Two photographs side by side: (a) a black-and-white photo of a ship propeller in water with white helical cavitation trails streaming from the blade tips; (b) a colour photo of a metal propeller whose blade edge is pitted and eroded by cavitation damage." />
+<figcaption>Figure 1. (a) Cavitating propeller (b) Cavitation damage (Source: Wikimedia Commons)</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig2.png" alt="(a) Phase diagram with axes p (vertical) and T (horizontal): blue phase-boundary curves meeting at a triple point, a curve ending at a critical point; from an open circle a green arrow points down (cavitation) and a red arrow points right (boiling). (b) Grey square labelled p∞ containing a light circle (bubble) with a radius arrow labelled R and the interior pressure labelled p_v+q." />
+<figcaption>Figure 2. (a) Cavitation (down arrow) and boiling (right arrow) on a phase diagram (b) Typical bubble (see Table 1 for notations)</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig3.png" alt="(a) A closed jar with a light upper region labelled p_v+q (air and vapour) above a darker water region labelled u = Hq. (b) A parallelogram surface element labelled S pierced perpendicularly by an x axis with an arrow." />
+<figcaption>Figure 3. (a) Closed jar containing air and water in equilibrium (b) Diffusion flux through the surface S is proportional to the concentration gradient across S</figcaption>
+</figure>
+
+**A.1** By performing a simple dimensional analysis, estimate the collapse time $T$ of a pure vapour bubble, in terms of bubble's initial radius $R_0$, water density $\rho$, water pressure $p_\infty$, and the vapour pressure $p_v$. Evaluate the formula with the numerical constant implicit in the formula equal to 1, when $R_0 = 1$ mm and the quantities $\rho, p_\infty$, and $p_v$ take their typical values from previous Notation Table . Assume no surface tension: $\sigma = 0$. **[0,5 т.]**
+
+**A.2** Suppose that a nucleus consisting of air and vapour, with radius $R_0 = 10^{-5}$ m, is in equilibrium when the external pressure $p_\infty = 101$ kPa. Find the partial pressure $q_0$ of air in the bubble. Now suppose that the external pressure $p_\infty$ was gradually decreased, and that the air inside the bubble follows an isothermal process. Find the critical pressure $p_c$, defined by the condition that if $p_\infty < p_c$ the bubble size grows without bound. The quantities $p_v$ and $\sigma$ take their typical values from the above Notation Table. **[1 т.]**
+
+**Part B: Main dynamics [6.0 points]**
+
+Now we will study the detailed dynamics of a spherical bubble consisting of a mixture of air and vapour. Please assume that there is no air migration through the bubble wall, and hence that the whole dynamics is governed by pressure only. Note however that as we have mentioned, there will be evaporation and condensation of water vapour at the bubble wall, that maintains the vapour pressure $p_v$ within the bubble.
+
+**B.1** Suppose that a single spherical bubble resides within water that fills space uniformly, and that the bubble may evolve in size without distorting its spherical shape, due to changes, e.g., in the external pressure $p_\infty$ . Derive an equation that relates the bubble radius $R(t)$ and its time derivatives $R'(t)$ and $R''(t)$ , surface tension $\sigma$ , water density $\rho$ , the pressure far from the bubble $p_\infty$ , and the pressure inside the bubble $p$. Then split the pressure $p$ into two terms, by assuming that the bubble has both vapour (with partial pressure $p_v$) and air in it, and that the air follows an adiabatic process with exponent $\gamma$. To give a reference point, the partial air pressure must be $q_0$ when the bubble size equals $R_0$. Assume that evaporation, condensation, or transfer of air between the bubble cavity and the surrounding water has no effect on the water volume. **[1,5 т.]**
+
+**B.2** A water tank under the external pressure $p_\infty^- = 101$ kPa, containing a nucleus of radius $R_0 = 10^{-5}$ m initially in equilibrium, was exposed to vacuum, so that the system suddenly has $p_\infty = 0$ . Estimate the terminal (asymptotic) value of the growth speed $R'$ , as well as the time it reaches this terminal value. **[1 т.]**
+
+**B.3** A water tank under the external pressure $p_\infty^- = 1.600$ kPa, containing a gas bubble of radius $R_0 = 10^{-5}$ m initially in equilibrium, was suddenly exposed to the atmospheric pressure $p_\infty = 101$ kPa . Estimate the minimum radius of the bubble before it rebounds. **[1 т.]**
+
+**B.4** If there is no gas other than water vapour present in a bubble, the bubble completely collapses in finite time. Determine the characteristic exponent $\alpha$ in
+
+$R(t) \sim (T - t)^\alpha$,
+
+where $T$ is the collapse time. **[0,5 т.]**
+
+**B.5** Based on the equation derived in B3, find the natural frequency of the spherical oscillation of a bubble of radius $R_0 = 0.1$ mm. **[1 т.]**
+
+**B.6** Suppose that the bubble described in the previous part is subjected to a standing sound wave along the $x$-axis, whose pressure field is given by
+
+$p(x, t) = p_0 + A \sin\left(\frac{2\pi f}{c}(x + a)\right) \sin(2\pi f t)$,
+
+where $f$ is the frequency, and $c$ is the speed of sound. The parameters $p_0, A$ and $a$ are constants, whose meanings may readily be deduced from the equation. Find the average force exerted upon the bubble. The bubble is situated at the origin of the $xyz$ coordinate system, and its size is much smaller than the wavelength of the sound. **[1 т.]**
+
+**Part C: Dissolution of nuclei through diffusion [2.5 points]**
+
+In this final section, complementary to Part B, we focus on the effect of diffusion across the bubble wall.
+
+**C.1** Suppose that a nucleus consisting of air and vapour, with radius $R_0 = 10^{-5}$ m , is placed in water-air solution, in which the dissolved air is in equilibrium with the atmospheric pressure above the water. The partial pressure of air in the bubble is $q = 1.70 \cdot 10^5$ Pa, and the vapour pressure can be neglected. Estimate the time required for the bubble to be completely resorbed into water.
+
+The quantities $p_\infty, \kappa, \delta$ and $\sigma$ take their typical values from Table 1. Assume that the region surrounding the bubble in which air diffusion takes place immediately gets much larger than the bubble itself. **[2 т.]**
+
+**C.2** Consider a conical crevice in the wall of a water container, with an aperture angle $\alpha$, see the following Figure. A small amount of air and vapour reside within the cone. Write down the condition of mechanical and diffusive equilibrium. Determine when the pocket of air stays in the crevice without disappearing. The contact angle of water on the surface is $\theta$. **[0,5 т.]**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig4.png" alt="A conical crevice drawn in cross-section: two thick dark walls meeting at a vertex on the left with the aperture angle α marked; the light region near the vertex holds trapped air, and the darker water region on the right meets it along a curved meniscus; the contact angle θ is marked at the lower wall where the meniscus meets it." />
+<figcaption>Conical Crevice</figcaption>
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A.1** $\tau \sim R_0 \sqrt{\frac{\rho}{p_\infty - p_v}} \approx 0.1\,\mathrm{ms}$
+- **A.2** $q_0 = p_\infty - p_v + \frac{2\sigma}{R_0} \approx 113\,\mathrm{kPa}, \quad p_c = p_v - 2q_0\left(\frac{R_0}{R_c}\right)^3 \approx 322\,\mathrm{Pa}$
+- **B.1** $\rho R R'' + \frac{3}{2}\rho (R')^2 + \frac{2\sigma}{R} - \frac{q_0 R_0^{3\gamma}}{R^{3\gamma}} = p_v - p_\infty$
+- **B.2** $R'(\infty) = \sqrt{\frac{2p_v}{3\rho}} \approx 1.26\,\mathrm{m/s}, \quad t = \frac{R'(\infty)}{R''(0)} \approx 0.1\,\mu\mathrm{s}$
+- **B.3** 1.6 µm
+- **B.4** $\alpha = \frac{2}{5}$
+- **B.5** 33 kHz
+- **B.6** $F = -\frac{f A^2 R_0}{2\rho c (f_0^2 - f^2)} \sin\left(\frac{4\pi f a}{c}\right)$
+- **C.1** 9 s
+- **C.2** $\pi + \alpha < 2\theta$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**CAVITATION: A SOLUTION**
+
+TSOGTGEREL GANTUMUR
+
+*Note*: This document was originally created for internal use only. The chosen units and the wording might be different from the official version of the problem statement. For instance, we might write $1\,\mu\mathrm{m}$ for $10^{-6}\,\mathrm{m}$. “Table 1” refers to the “notation table” from the statement. You are advised to double check at least the numerical computations, and not to blindly accept this solution. Feedbacks and different solutions are welcome.
+
+**A1.** By performing a simple dimensional analysis, estimate the collapse time $\tau$ of a pure vapour bubble, in terms of bubble’s initial radius $R_0$, water density $\rho$, water pressure $p_\infty$, and the vapour pressure $p_v$. Evaluate the formula when $R_0 = 1\,\mathrm{mm}$ and the quantities $\rho$, $p_\infty$ and $p_v$ take their typical values from Table 1. Assume no surface tension: $\sigma = 0$.
+
+**Note**: The data in the statement overrides the data in the table. However, we do not reduce mark if the student (carelessly) used the value ($10^{-5}\,\mathrm{m}$) of $R_0$ from the table.
+
+**Solution.** It is reasonable to expect that the bubble would not collapse if $p_\infty \le p_v$. Hence we take $p_\infty > p_v$, and presume that the difference $p_\infty - p_v$ will feature in the final formula. The dimensions of the quantities are
+
+$$[R_0] = \mathrm{m}, \qquad [\rho] = \mathrm{kg/m^3}, \qquad [p_\infty - p_v] = \mathrm{N/m^2} = \mathrm{kg/(m \cdot s^2)}. \qquad (1)$$
+
+The only combination of these that has the dimension of time is
+
+$$\tau \sim R_0 \sqrt{\frac{\rho}{p_\infty - p_v}} \approx 0.1\,\mathrm{ms}. \qquad (2)$$
+
+**A2.** Suppose that a micro-bubble consisting of air and vapour, with radius $R_0 = 10\,\mu\mathrm{m}$, is in equilibrium when the external pressure $p_\infty = 100\,\mathrm{kPa}$. Find the partial pressure $q_0$ of air in the bubble. Now suppose that the external pressure $p_\infty$ was gradually decreased, and that the air inside the bubble follows an isothermal process. Find the critical pressure $p_c$, defined by the condition that if $p_\infty < p_c$ the bubble size grows without bound. The quantities $p_v$ and $\sigma$ take their typical values from Table 1.
+
+**Solution.** The pressure equilibrium condition is
+
+$$p_v + q = p_\infty + \frac{2\sigma}{R}, \qquad (3)$$
+
+which, under $R = R_0$ and $q = q_0$, yields
+
+$$q_0 = p_\infty - p_v + \frac{2\sigma}{R_0} \approx 113\,\mathrm{kPa}. \qquad (4)$$
+
+On the other hand, taking into account the isothermal law
+
+$$q_0 R_0^3 = q R^3, \qquad (5)$$
+
+we get
+
+$$p_\infty = p_v + \frac{q_0 R_0^3}{R^3} - \frac{2\sigma}{R}. \qquad (6)$$
+
+The critical pressure corresponds to the minimum of $p_\infty$ as a function of $R$. The radius at the minimum is easily found to be
+
+$$R_c = R_0 \sqrt{\frac{3q_0 R_0}{2\sigma}} \approx 48\,\mu\mathrm{m}, \qquad (7)$$
+
+and the corresponding pressure is
+
+$$p_c = p_v - 2q_0 \left(\frac{R_0}{R_c}\right)^3 \approx 322\,\mathrm{Pa}. \qquad (8)$$
+
+**B1.** Suppose that a single spherical bubble resides within water that fills space uniformly, and that the bubble may evolve in size without distorting its spherical shape, due to changes, e.g., in the external pressure $p_\infty$. Derive an equation that relates the bubble radius $R(t)$ and its time derivatives $R'(t)$ and $R''(t)$, surface tension $\sigma$, water density $\rho$, the pressure far from the bubble $p_\infty$, and the pressure inside the bubble $p$. Then split the pressure $p$ into two terms, by assuming that the bubble has both vapour and air in it, and that the air follows an adiabatic process with exponent $\gamma$. To give a reference point, the partial air pressure must be $q_0$ when the bubble size equals $R_0$. Assume that evaporation, condensation, or transfer of air between the bubble cavity and the surrounding water has no effect on the water volume.
+
+**Solution.** Let $v(r, t)$ denote the radial velocity of the fluid element at the distance $r$ from the bubble center and at the time moment $t$. Let also $u(t) = v(R, t)$, that is,
+
+$$u(t) = R'(t). \qquad (9)$$
+
+Then the incompressibility condition yields
+
+$$v(r, t) = \frac{R^2 u(t)}{r^2}, \qquad (10)$$
+
+and hence
+
+$$\frac{\partial v}{\partial t} = \frac{\partial}{\partial t} \frac{R^2 u}{r^2} = \frac{2R}{r^2} u^2 + \frac{R^2}{r^2} u'. \qquad (11)$$
+
+The radial acceleration can now be computed as
+
+$$a = \frac{\partial v}{\partial t} + \frac{\partial v}{\partial r} v = \frac{R^2}{r^2} u' + \frac{2R}{r^2} u^2 - \frac{2R^4}{r^5} u^2. \qquad (12)$$
+
+With $p = p(r)$ denoting the pressure field (where possible time dependence is suppressed in the notation), Newton’s law reads
+
+$$\rho a = -p', \qquad (13)$$
+
+or
+
+$$\frac{R^2}{r^2} u' + \left(\frac{2R}{r^2} - \frac{2R^4}{r^5}\right) u^2 = -\frac{p'}{\rho}. \qquad (14)$$
+
+We integrate it from $r = R$ to $r = \infty$, to get
+
+$$R u' + \frac{3}{2} u^2 = \frac{p(R) - p_\infty}{\rho}. \qquad (15)$$
+
+Since the pressure inside the bubble satisfies
+
+$$p = p(R) + \frac{2\sigma}{R}, \qquad (16)$$
+
+we conclude that
+
+$$R R'' + \frac{3}{2} (R')^2 + \frac{2\sigma}{\rho R} = \frac{p - p_\infty}{\rho}. \qquad (17)$$
+
+Finally, taking into account the fact that the bubble pressure $p$ consists of the vapour pressure $p_v$ and the partial air pressure $q$, as
+
+$$p = p_v + q = p_v + q_0 \left(\frac{R_0}{R}\right)^{3\gamma}, \qquad (18)$$
+
+we have
+
+$$\rho R R'' + \frac{3}{2} \rho (R')^2 + \frac{2\sigma}{R} - \frac{q_0 R_0^{3\gamma}}{R^{3\gamma}} = p_v - p_\infty. \qquad (19)$$
+
+**B2.** A water tank under the external pressure $p_\infty^- = 101\,\mathrm{kPa}$, containing a nucleus of radius $R_0 = 10\,\mu\mathrm{m}$ initially in equilibrium, was exposed to vacuum, so that the system suddenly has $p_\infty = 0$. Estimate the terminal (asymptotic) value of the growth speed $R'$, as well as the time it reaches this terminal value.
+
+**Solution.** Putting $R'' = 0$ and $R \to \infty$ in (19) yields
+
+$$R'(\infty) = \sqrt{\frac{2(p_v - p_\infty)}{3\rho}} = \sqrt{\frac{2p_v}{3\rho}} \approx 1.26\,\mathrm{m/s}. \qquad (20)$$
+
+The initial acceleration can also be found from (19) as
+
+$$R''(0) = \frac{q_0 + p_v - 2\sigma/R_0}{\rho R_0} = \frac{p_\infty^-}{\rho R_0} \approx 10^7\,\mathrm{m/s^2}, \qquad (21)$$
+
+and hence the time for the speed to be stabilized can be estimated as
+
+$$t = \frac{R'(\infty)}{R''(0)} \approx 0.1\,\mu\mathrm{s}. \qquad (22)$$
+
+**B3.** A water tank under the external pressure $p_\infty^- = 1600\,\mathrm{Pa}$, containing a gas bubble of radius $R_0 = 10\,\mu\mathrm{m}$ initially in equilibrium, was suddenly exposed to the atmospheric pressure $p_\infty = 101\,\mathrm{kPa}$. Estimate the minimum radius of the bubble before it rebounds.
+
+**Solution.** Multiply (19) by $2R^2 R'$ to get
+
+$$\rho[R^3 (R')^2]' + 4\sigma R R' - 2q_0 R_0^{3\gamma} R^{2-3\gamma} R' = 2(p_v - p_\infty) R^2 R', \qquad (23)$$
+
+or
+
+$$\rho[R^3 (R')^2]' + 2\sigma (R^2)' + \frac{2q_0 R_0^{3\gamma} (R^{3-3\gamma})'}{3(\gamma - 1)} = \frac{2}{3} (p_v - p_\infty) (R^3)'. \qquad (24)$$
+
+This can easily be integrated, from $R(0) = R_0$ and $R'(0) = 0$ to $R(t) = R$ and $R'(t) = R'$, which yields
+
+$$\rho R^3 (R')^2 + 2\sigma (R^2 - R_0^2) + \frac{2q_0 R_0^{3\gamma} (R^{3-3\gamma} - R_0^{3-3\gamma})}{3(\gamma - 1)} = \frac{2}{3} (p_v - p_\infty) (R^3 - R_0^3), \qquad (25)$$
+
+or
+
+$$\rho (R')^2 = \frac{2(p_v - p_\infty)}{3} - \frac{2\sigma}{R} + \frac{2R_0^3}{R^3} \left(\frac{\sigma}{R_0} + \frac{p_\infty - p_v}{3} + \frac{q_0}{3(\gamma - 1)} - \frac{q_0 R_0^{3\gamma - 3}}{3(\gamma - 1) R^{3\gamma - 3}}\right). \qquad (26)$$
+
+When $R \ll R_0$, it shows first that
+
+$$R' \sim -R^{-3/2}, \qquad (27)$$
+
+and moreover that the rebound radius satisfies
+
+$$\left(\frac{R_0}{R}\right)^{3(\gamma - 1)} = \frac{(\gamma - 1)(p_\infty - p_v + 3\sigma/R_0)}{q_0} + 1. \qquad (28)$$
+
+Taking into account that
+
+$$q_0 = p_\infty^- - p_v + 2\sigma/R_0 \approx 13.8\,\mathrm{kPa}, \qquad (29)$$
+
+we conclude that the rebound radius is
+
+$$R \approx 1.6\,\mu\mathrm{m}. \qquad (30)$$
+
+**B4.** If there is no gas other than water vapour present in a bubble, the bubble completely collapses in finite time. Determine the characteristic exponent $\alpha$ in
+
+$$R(t) \sim (T - t)^\alpha, \qquad (31)$$
+
+where $T$ is the collapse time.
+
+**Solution.** We have found in the previous part that
+
+$$R' \sim -R^{-3/2}. \qquad (32)$$
+
+Putting $R(t) \sim (T - t)^\alpha$ into it we get
+
+$$(T - t)^{\alpha - 1} \sim -(T - t)^{-3\alpha/2}, \qquad (33)$$
+
+or
+
+$$\alpha = \frac{2}{5}. \qquad (34)$$
+
+**B5.** Based on the equation derived in Part 3, find the natural frequency of the spherical oscillation of a bubble of radius $R_0 = 0.1\,\mathrm{mm}$.
+
+**Solution.** Introducing the new variable $x$ by $R = R_0 x$, we write (19) as
+
+$$\rho R_0^2 x x'' + \frac{3}{2} \rho R_0^2 (x')^2 + \frac{2\sigma}{R_0 x} - q_0 x^{-3\gamma} = p_v - p_\infty. \qquad (35)$$
+
+Now put $x = 1 + y$ and retain the terms up to linear in $y$, to have
+
+$$\rho R_0^2 y'' + \frac{2\sigma}{R_0} (1 - y) - q_0 (1 - 3\gamma y) = p_v - p_\infty. \qquad (36)$$
+
+Taking into account the equilibrium condition
+
+$$\frac{2\sigma}{R_0} - q_0 = p_v - p_\infty, \qquad (37)$$
+
+we infer
+
+$$y'' + \frac{3\gamma q_0 - 2\sigma/R_0}{\rho R_0^2} y = 0. \qquad (38)$$
+
+Thus the bubble is unstable if
+
+$$3\gamma q_0 \le 2\sigma/R_0 = q_0 + p_v - p_\infty, \qquad (39)$$
+
+or equivalently, if
+
+$$p_\infty \le p_v - (3\gamma - 1) q_0. \qquad (40)$$
+
+On the other hand, if $p_\infty > p_v - (3\gamma - 1) q_0$ then the bubble oscillates with the natural frequency
+
+$$f_0 = \frac{1}{2\pi R_0} \sqrt{\frac{(3\gamma - 1) q_0 + p_\infty - p_v}{\rho}} \approx 33\,\mathrm{kHz}. \qquad (41)$$
+
+**B6.** Suppose that the bubble described in the previous part is subjected to a standing sound wave along the $x$-axis, whose pressure field is given by
+
+$$p(x, t) = p_0 + A \sin\left(\frac{2\pi f}{c} (x + a)\right) \sin(2\pi f t), \qquad (42)$$
+
+where $f$ is the frequency, and $c$ is the speed of sound. The parameters $p_0$, $A$, and $a$ are constants, whose meanings may readily be deduced from the equation. Find the average force exerted upon the bubble. The bubble is situated at the origin of the $xyz$ coordinate system, and its size is much smaller than the wavelength of the sound.
+
+**Solution.** Small oscillation of the bubble is described by
+
+$$\rho R_0^2 (y'' + 4\pi^2 f_0^2 y) = A \sin\left(\frac{2\pi f}{c} a\right) \sin(2\pi f t). \qquad (43)$$
+
+Looking for the solution in the form
+
+$$y(t) = B \sin(2\pi f t), \qquad (44)$$
+
+we find
+
+$$B = \frac{A \sin(2\pi f a/c)}{4\pi^2 \rho R_0^2 (f_0^2 - f^2)}. \qquad (45)$$
+
+Since
+
+$$R(t) = R_0 + R_0 y(t), \qquad (46)$$
+
+the volume of the bubble is
+
+$$V(t) = \frac{4\pi}{3} R(t)^3 \approx \frac{4\pi}{3} R_0^3 [1 + 3y(t)]. \qquad (47)$$
+
+Now recalling that the average force is
+
+$$F = -\left\langle V \frac{\partial p}{\partial x} \right\rangle, \qquad (48)$$
+
+where the average is taken over time, and that the pressure gradient is
+
+$$\frac{\partial p}{\partial x} = \frac{2\pi f A}{c} \cos\left(\frac{2\pi f}{c} a\right) \sin(2\pi f t), \qquad (49)$$
+
+we conclude
+
+$$F = -\frac{f A^2 R_0}{2\rho c (f_0^2 - f^2)} \sin\left(\frac{4\pi f a}{c}\right). \qquad (50)$$
+
+**C1.** Suppose that a nucleus consisting of air and vapour, with radius $R_0 = 10\,\mu\mathrm{m}$, is placed in water-air solution, in which the dissolved air is in equilibrium with the atmospheric pressure above the water. The partial pressure of air in the bubble is $q = 170\,\mathrm{kPa}$, and the vapour pressure can be neglected. Estimate the time required for the bubble to be completely resorbed into water. The quantities $p_\infty$, $\kappa$, $\delta$ and $\sigma$ take their typical values from Table 1. Assume that the region surrounding the bubble in which air diffusion takes place immediately gets much larger than the bubble itself.
+
+**Solution.** From Henry’s law, the initial concentration of dissolved air in the body of water is
+
+$$u_i = H p_\infty \approx 0.024\,\mathrm{kg/m^3}, \qquad (51)$$
+
+and the initial concentration of dissolved air in the immediate vicinity of the bubble is
+
+$$u = Hq \approx 0.041\,\mathrm{kg/m^3}. \qquad (52)$$
+
+Since $u > u_i$, there will be diffusive flux directed away from the bubble, and the bubble will start losing air. As a result, the bubble shrinks and the surface tension term $2\sigma/R$ increases. Since the external pressure $p_\infty$ is constant, the partial air pressure $q$ increases, which leads to more diffusive flux. In the end, the bubble will get completely resorbed into water.
+
+To quantify the diffusion of air, let us consider the region enclosed by concentric spheres of radii $r$ and $r + \Delta r$ with $\Delta r$ small. The rate of change of air mass in this region is
+
+$$\frac{dm}{dt} = 4\pi r^2 \Delta r \frac{\partial u}{\partial t}, \qquad (53)$$
+
+where $4\pi r^2 \Delta r$ is the volume of the region and the air concentration $u = u(r, t)$ is a function of $r$ and $t$. On the other hand, the same quantity can be computed as the difference between the diffusive fluxes through the concentric spheres:
+
+$$\begin{aligned} \frac{dm}{dt} &= 4\pi (r + \Delta r)^2 J(r + \Delta r) - 4\pi r^2 J(r) \\ &= 4\pi (r + \Delta r)^2 \kappa \frac{\partial u}{\partial r}(r + \Delta r) - 4\pi r^2 \kappa \frac{\partial u}{\partial r}(r) \\ &\approx 4\pi r^2 \kappa \Delta r \frac{\partial^2 u}{\partial r^2}(r) + 8\pi r \kappa \Delta r \frac{\partial u}{\partial r}(r), \end{aligned} \qquad (54)$$
+
+where we have taken into account the directions of the fluxes, and the fact that
+
+$$\frac{\partial u}{\partial r}(r + \Delta r) \approx \frac{\partial u}{\partial r}(r) + \Delta r \frac{\partial^2 u}{\partial r^2}(r). \qquad (55)$$
+
+Comparing the two equations, we infer
+
+$$\frac{\partial u}{\partial t} = \kappa \frac{\partial^2 u}{\partial r^2} + \frac{2\kappa}{r} \frac{\partial u}{\partial r}. \qquad (56)$$
+
+The dissolved air concentration in water at the initial time moment $t = 0$ is uniformly $u_i$, and assuming that the radius $R$ of the bubble remains *constant*, the air concentration in the immediate vicinity of the bubble should be equal to $Hq$:
+
+$$\begin{cases} u(r, 0) = u_i & \text{for } r > R, \\ u(R, t) = Hq & \text{for } t > 0. \end{cases} \qquad (57)$$
+
+Introducing a new variable $v = r(u - qH)$, and a new time parameter $\tau = \kappa t$, the diffusion equation (56) becomes
+
+$$\frac{\partial v}{\partial \tau} = \frac{\partial^2 v}{\partial r^2}, \qquad (58)$$
+
+with
+
+$$\begin{cases} v(r, 0) = r(u_i - qH) & \text{for } r > R, \\ v(R, \tau) = 0 & \text{for } \tau > 0. \end{cases} \qquad (59)$$
+
+We can go further by introducing
+
+$$\xi = r - R \qquad \text{and} \qquad w(\xi, \tau) = v(R + \xi, \tau), \qquad (60)$$
+
+to write (56) as
+
+$$\frac{\partial w}{\partial \tau} = \frac{\partial^2 w}{\partial \xi^2}, \qquad (61)$$
+
+with
+
+$$\begin{cases} w(\xi, 0) = (R + \xi)(u_i - qH) & \text{for } \xi > 0, \\ w(0, \tau) = 0 & \text{for } \tau > 0. \end{cases} \qquad (62)$$
+
+The solution to this problem is
+
+$$w(\xi, \tau) = \frac{u_i - qH}{\sqrt{4\pi\tau}} \int_0^\infty \left(e^{-(\xi - \eta)^2/(4\tau)} - e^{-(\xi + \eta)^2/(4\tau)}\right) (\eta + R) d\eta. \qquad (63)$$
+
+Since
+
+$$u(r, t) = qH + \frac{v(r, \kappa t)}{r} = qH + \frac{w(r - R, \kappa t)}{r}, \qquad (64)$$
+
+we have
+
+$$\frac{\partial u}{\partial r} = \frac{1}{r} \frac{\partial w}{\partial \xi} - \frac{w}{r^2}, \qquad (65)$$
+
+and hence
+
+$$\frac{\partial u}{\partial r}\Big|_{r=R} = \frac{1}{R} \frac{\partial w}{\partial \xi}\Big|_{\xi=0} = (u_i - qH)\left(\frac{1}{R} + \frac{1}{\sqrt{\pi\kappa t}}\right). \qquad (66)$$
+
+The second term corresponds to the width of the diffusion layer surrounding the bubble, which we assume to be much larger than the bubble itself. Hence the rate of change of the mass of the bubble can be estimated as
+
+$$\frac{dm}{dt} = 4\pi R^2 \kappa \frac{\partial u}{\partial r}\Big|_{r=R} \approx 4\pi\kappa R(u_i - qH). \qquad (67)$$
+
+On the other hand, the mass of the bubble is related to the air density, which in turn is proportional to the pressure:
+
+$$m = \frac{4\pi}{3} R^3 \delta = \frac{4\pi}{3} R^3 \cdot \frac{\delta_0 q}{p_\infty}, \qquad (68)$$
+
+where $\delta_0 = 1.2\,\mathrm{kg/m^3}$ is the air density at the atmospheric pressure $p_\infty = 10^5\,\mathrm{Pa}$. Furthermore, neglecting vapour pressure, we have the mechanical equilibrium condition
+
+$$q = p_\infty + \frac{2\sigma}{R}, \qquad (69)$$
+
+leading to
+
+$$m = \frac{4\pi}{3} R^3 \cdot \left(\delta_0 + \frac{\varepsilon}{R}\right), \qquad (70)$$
+
+with
+
+$$\varepsilon = \frac{2\sigma\delta_0}{p_\infty} \approx 1.73 \cdot 10^{-6}\,\mathrm{kg/m^2}. \qquad (71)$$
+
+After taking the derivative of (70) with respect to $t$, we equate it to (67), and get
+
+$$4\pi\kappa R\left(u_i - p_\infty H - \frac{2\sigma H}{R}\right) = 4\pi\delta_0 R^2 \frac{dR}{dt} + \frac{8\pi}{3} \varepsilon R \frac{dR}{dt}. \qquad (72)$$
+
+Since $u_i - p_\infty H = 0$, we have
+
+$$-2\sigma\kappa H dt = \delta_0 R^2 dR + \frac{2}{3} \varepsilon R dR, \qquad (73)$$
+
+and a direct integration yields
+
+$$2\sigma\kappa H t = \frac{\delta_0 R_0^3}{3} + \frac{4\varepsilon R_0^2}{3}, \qquad (74)$$
+
+finally giving
+
+$$t = \frac{(\delta_0 R_0 + 4\varepsilon) R_0^2}{6\sigma\kappa H} \approx 9\,\mathrm{s}. \qquad (75)$$
+
+Thus the nucleus collapses in a matter of seconds.
+
+**C2.** Consider a conical crevice in the wall of a water container, with an aperture angle $\alpha$. A small amount of air and vapour is trapped within the cone. Write down the condition of mechanical and diffusive equilibrium. Determine when the pocket of air stays in the crevice without disappearing.
+
+**Solution.** The equilibrium conditions are
+
+$$p_v + q = p_\infty \pm \frac{2\sigma}{R} \qquad \text{and} \qquad u = Hq. \qquad (76)$$
+
+The plus sign corresponds to the situation where the water surface is concave, and the surface tension tends to squeeze the air out of the crevice through diffusion. When the water surface is convex, we have the opposing sign. Supposing that initially the partial air pressure $q$ is large, $q$ will decrease as the region of trapped air shrinks due to diffusion. At some point, a diffusive equilibrium will be found. Thus the pocket of air does not disappear when the water surface is convex, meaning that
+
+$$\pi + \alpha < 2\theta. \qquad (77)$$
+
+**Theoretical Problem 3: Cavitation**
+
+**Q3 - Marking Scheme**
+
+| Question part | Total marks | Partial marks | Explanation |
+|---|---|---|---|
+| A1 | 0.5 | 0.4 | Derivation of the formula |
+| | | 0.1 | Numerical answer |
+| A2 | 1 | 0.3 | Pressure equilibrium condition |
+| | | 0.1 | Numerical answer for partial air pressure |
+| | | 0.1 | Equilibrium condition with isothermal law |
+| | | 0.4 | Formula for critical pressure |
+| | | 0.1 | Numerical answer for critical pressure |
+| B1 | 1.5 | 0.3 | Incompressibility condition |
+| | | 0.5 | Computation of radial acceleration |
+| | | 0.3 | Taking into account Newton’s second law |
+| | | 0.2 | Final equation with p, where surface tension enters |
+| | | 0.2 | Final equation with p split and adiabatic law taken into account |
+| B2 | 1 | 0.4 | Formula for terminal speed |
+| | | 0.1 | Numerical answer for terminal speed |
+| | | 0.4 | Formula for time or for initial acceleration |
+| | | 0.1 | Numerical answer for time |
+| B3 | 1 | 0.5 | Formula for speed R’ |
+| | | 0.4 | Formula for rebound radius |
+| | | 0.1 | Numerical answer for rebound radius |
+| B4 | 0.5 | 0.2 | Writing down the asymptotic equation for R’ |
+| | | 0.2 | Substitution of the form into the equation |
+| | | 0.1 | Numerical answer for alpha |
+| B5 | 1 | 0.4 | Writing down the linear second order equation |
+| | | 0.2 | Recognition of the stability condition |
+| | | 0.3 | Formula for the natural frequency |
+| | | 0.1 | Numerical answer for the natural frequency |
+| B6 | 1 | 0.2 | Writing down the forced oscillator equation |
+| | | 0.3 | Solution of the equation |
+| | | 0.1 | Computation of volume |
+| | | 0.1 | Computation of pressure gradient |
+| | | 0.3 | Final answer |
+| C1 | 2 | 0.1 | Initial concentration of air in water |
+| | | 0.1 | Initial concentration of air near bubble |
+| | | 0.1 | Mass change rate in a shell in terms of concentration change rate |
+| | | 0.1 | Mass change rate in a shell in terms of flux |
+| | | 0.1 | Use of Fick’s law |
+| | | 0.2 | Diffusion equation in terms of r and t |
+| | | 0.2 | Initial and boundary conditions |
+| | | 0.2 | Reformulation and solution |
+| | | 0.2 | Computing the air flux at the bubble wall |
+| | | 0.1 | Simplification due to smallness of the bubble |
+| | | 0.2 | Mass of the bubble in terms of pressure with ideal gas law taken into account |
+| | | 0.1 | Mass balance |
+| | | 0.2 | Final formula for resorption time |
+| | | 0.1 | Numerical answer for resorption time |
+| C2 | 0.5 | 0.2 | Condition of equilibrium |
+| | | 0.3 | Final condition on angles |
+
+**ON THEORY QUESTION 3 B4**
+
+TSOGTGEREL GANTUMUR
+
+There has been a claim that if one uses (19) directly instead of (27), then one would have $\alpha = \frac{2}{3}$ instead of $\alpha = \frac{2}{5}$ (equation numbers refer to the solution uploaded to OlyExams). On the surface, it may look puzzling, and the leader of a team has even suggested that it means that the form $R(t) \sim (T - t)^\alpha$ is impossible. The following note is submitted by prof. Cheol-Hwang Park.
+
+However, a closer inspection will reveal at once that $\alpha = \frac{2}{5}$ is correct. The main thing to note is that the terms $RR''$ and $\frac{3}{2}(R')^2$ in (19) may separately have large magnitudes, but there is no guarantee that when combined they won’t cancel each other. Thus the above argument to force $\alpha = \frac{2}{3}$ is invalid.
+
+To go into a bit more detail, if $R(t) = (T - t)^{2/3}$ then
+
+$$R R'' + \frac{3}{2}(R')^2 + \frac{2\sigma}{\rho R} = \frac{4}{9}(T - t)^{-2/3} + \frac{2\sigma}{\rho}(T - t)^{-2/3} \overset{??}{=} \frac{p_v - p_\infty}{\rho},$$
+
+and we do not get the desired cancellation. Note on the other hand that (26) or (27) with $\alpha = \frac{2}{5}$ as in the solution uploaded has no such issue.
+
+To proceed with (19) therefore we must require the leading order growth terms in $RR'' + \frac{3}{2}(R')^2$ must cancel, which is exactly the condition $\alpha = \frac{2}{5}$. Thus we have
+
+$$R(t) = (T - t)^{2/5}\big(c_0 + f(T - t)\big),$$
+
+with $f(0) = 0$, and then of course $f$ must be responsible for eliminating the term $\frac{2\sigma}{\rho R}$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig1.png" alt="(a) Grey square labelled p∞ and u_i with a light circle (bubble) labelled p_v+q inside and u=Hq just below it. (b) Grey square with a light inner circle whose radius arrow is labelled r, surrounded by a thin dark concentric spherical shell of thickness Δr marked by two opposing arrows." />
+<figcaption>Figure 1. (a) Initial configuration of the system (b) The geometry used in the solution</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig2.png" alt="A conical crevice in cross-section: two thick dark walls meeting at a vertex on the left with the aperture angle α; trapped air (light) near the vertex and water (darker) to the right separated by a curved meniscus; the contact angle θ is marked where the meniscus meets the lower wall." />
+<figcaption>Figure 2. Conical crevice</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig3.png" alt="Handwritten note by prof. Cheol-Hwang Park (image): starting from Eq. (19), RR'' + (3/2)R'^2 + 2σ/(ρR) = p_v − p_∞, it labels the first two terms ∝ (T−t) to the power 2α−2, the surface-tension term ∝ (T−t) to the power −α and the right-hand side ∝ (T−t) to the power 0, drops the last as negligible, equates 2α−2 = −α to get α = 2/3, and concludes that R(t) is not of the form (T−t)^α at R ≪ R0." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [T3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2023/Theory/T3.pdf)
+· официални решения: [T3_sol_corrected.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2023/Theory/T3_sol_corrected.pdf)
