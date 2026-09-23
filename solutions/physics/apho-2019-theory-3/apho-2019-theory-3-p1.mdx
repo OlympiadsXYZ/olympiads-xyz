@@ -1,0 +1,280 @@
+---
+id: apho-2019-theory-3-p1
+source: 'APhO 2019, theory'
+title: 'Задача 1. Tippe top'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2019/apho-2019-theory-3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T13:05:09.999Z'
+verifier: 'mechanical'
+---
+
+*Asian Physics Olympiad Adelaide 2019 — Theory Q3: Tippe top · 10 т.*
+
+## Условие
+
+**Part A (10.0 points)**
+
+A Tippe top is a special kind of top that can spontaneously invert once it has been set spinning. One can model a Tippe top as a sphere of radius $R$ that is truncated, with a stem added. It has rotational symmetry about an axis through the stem, which is at angle $\theta$ from the vertical. As shown in Figure 1(a), its centre of mass $C$ is offset from its geometric centre $O$ by $\alpha R$ along its symmetry axis. The Tippe top makes contact with the surface it rests on at point $A$; we assume this surface is planar, and refer to it as the floor. Given certain geometrical constraints and if spun fast enough initially, the Tippe top will tip so that the stem points increasingly downwards, until it starts to spin on in its stem, and eventually comes to a stop.
+
+Let $xyz$ be the rotating reference frame defined such that $\hat{\mathbf{z}}$ is stationary and upwards, and the top's symmetry axis is within the $xz$-plane. Two views of the Tippe top are shown in Figure 1: from the side, and from above. As shown in Figure 1(b), the top's symmetry axis is aligned with the $x$-axis when viewed from above.
+
+Figure 2 shows the top's motion at several phases after it is started spinning:
+
+(a) **phase I:** immediately after it is initially set spinning, with $\theta \sim 0$
+
+(b) **phase II:** soon after, having tipped to angle $0 < \theta < \frac{\pi}{2}$
+
+(c) **phase III:** when the stem first touches the floor, with $\theta > \frac{\pi}{2}$
+
+(d) **phase IV:** after inversion, when the top is spinning on its stem, with $\theta \sim \pi$
+
+(e) **phase V:** in its final state, at rest on its stem $\theta = \pi$.
+
+Let $XYZ$ be the inertial frame, where the surface the top is on is wholly in the $XY$-plane. The frame $xyz$ is defined as above, and reached from $XYZ$ via rotation around the $Z$ axis by $\phi$ . The transformation from the $XYZ$ frame to frame $xyz$ is shown in Figure 3(a). In particular, $\hat{\mathbf{z}} = \hat{\mathbf{Z}}$.
+
+Any rotational motion in 3-dimensional space can be described by the three Euler angles $(\theta, \phi, \psi)$. The transformations between the inertial frame $XYZ$, the intermediate frame $xyz$, and the top's frame $123$ can be understood in terms of these Euler angles.
+
+In our description of the Tippe top's motion, the angles $\theta$ and $\phi$ are the standard zenith and azimuthal angles respectively, in spherical polar coordinates. In the $XYZ$ frame they are defined as follows: $\theta$ is the angle of the top's symmetry axis from the vertical $Z$-axis, representing how far from vertical its stem is, while $\phi$ represents the top's angular position about the $Z$-axis, and is defined as the angle between the $XZ$-plane and the plane through points $O,\ A,\ C$ (i.e. the vertical projection of the top's symmetry axis).
+
+The third Euler angle $\psi$ describes the rotation of the top about its own symmetry axis, i.e. its 'spin', which has angular velocity $\dot{\psi}$.
+
+The reference frame of the spinning top is defined as a new rotating frame $123$, which is reached by rotating $xyz$ by $\theta$ around $\hat{\mathbf{y}}$: 'tilting' the $\hat{\mathbf{z}}$-axis down by $\theta$ to meet the top's symmetry axis $\hat{\mathbf{3}}$. The transformation from the $xyz$ frame to the $123$ frame is shown in Figure 3(b). In particular, $\hat{\mathbf{2}} = \hat{\mathbf{y}}$.
+
+**NOTE:** For a reference frame $\widetilde{\mathbf{K}}$ rotating in inertial frame $\mathbf{K}$ with angular velocity $\boldsymbol{\omega}$ , the time derivatives of a vector $\mathbf{A}$ within both frames $\mathbf{K}$ and $\widetilde{\mathbf{K}}$ are related via:
+
+$$\left(\frac{\partial \mathbf{A}}{\partial t}\right)_{\mathbf{K}} = \left(\frac{\partial \mathbf{A}}{\partial t}\right)_{\widetilde{\mathbf{K}}} + \boldsymbol{\omega} \times \mathbf{A} \qquad (1)$$
+
+The motion that a Tippe top undergoes is complex, involving the time evolution of the three Euler angles, as well the translational velocities (or positions) and the motion of the top's symmetry axis. All of these parameters are coupled. To solve for the motion of a Tippe top, one would use standard tools including Newton's laws to prepare the system of equations, then program a computer to solve them numerically via simulation.
+
+In this question, you will perform the first part of this process, investigating the physics of the Tippe top to set up the system of equations.
+
+Friction between the Tippe top and the surface it is moving on drives the motion of the Tippe top. Assume that the top remains in contact with the floor at point $A$, until such time as the stem contacts the floor. It is in motion at point $A$ with velocity $\mathbf{v}_A$ relative to the floor. The frictional coefficient $\mu_k$ between the top and floor is kinetic, with $|\mathbf{F}_\mathbf{f}| = \mu_k N$, where $\mathbf{F}_f = F_{f,x}\hat{\mathbf{x}} + F_{f,y}\hat{\mathbf{y}}$ is the frictional force, and $N$ is the magnitude of the normal force. Assume that the top is initially set spinning only, i.e. there is no translational impulse given to the top.
+
+Let the mass of the Tippe top be $m$. Its moments of inertia are: $I_3$ about the axis of symmetry is, and $I_1 = I_2$ about the mutually perpendicular principal axes. Let $\mathbf{s}$ be the position vector of the centre of mass, and $\mathbf{a} = \overrightarrow{CA}$ be the vector from the centre of mass to the point of contact.
+
+Unless otherwise specified, give your answers in the $xyz$ reference frame for full marks. All torques and angular momentum are considered about the centre of mass $C$, unless otherwise specified. You may give your answers in terms of $N$. Except for part **A.8**, you need only consider the top where $\theta < \frac{\pi}{2}$, and the stem is not in contact with the floor.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-3/p1-fig1.png" alt="(a) Side view: a truncated sphere of radius R (dashed arrow labelled R) with a stem tilted up to the right; points O (geometric centre) and C (centre of mass) separated by αR, contact point A at the bottom; z–x axes. (b) Top view: the truncated sphere with a horizontal stem to the right; points C and O, A marked; y–x axes." />
+<figcaption>Figure 1. Views of the Tippe top (a) from the side and (b) from above</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-3/p1-fig2.png" alt="Five sketches (a)–(e) of the Tippe top in the xz-plane: (a) stem up, nearly vertical; (b) stem tilted up to the right; (c) stem pointing down-right; (d) inverted, spinning on its stem; (e) upside down at rest on its stem. Small z–x axes in (a)." />
+<figcaption>Figure 2. Phases I to V of the Tippe top's motion, shown in the xz-plane</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-3/p1-fig3.png" alt="(a) Axes X and Y (solid) with dashed axes x and y rotated by angle φ; Z, z out of the page. (b) Axes z and x (solid) with dashed axes 3 and 1 rotated by angle θ from z; y,2 into the page." />
+<figcaption>Figure 3. Transformations between reference frames: (a) to xyz from XYZ , and (b) to 123 from xyz</figcaption>
+</figure>
+
+**A.1** Find the total external force $\mathbf{F}_{\mathrm{ext}}$ on the Tippe top. Draw a free body diagram of the top, projected onto each of the $xz$- and $xy$-planes. Indicate the direction of $\mathbf{v}_A$ in the space provided, on your diagram in the $xy$-plane. **[1 т.]**
+
+**A.2** Find the total external torque $\boldsymbol{\tau}_{\mathrm{ext}}$ on the Tippe top about the centre of mass. **[0,8 т.]**
+
+**A.3** Given the contact condition, i.e. $(\mathbf{s} + \mathbf{a}) \cdot \hat{z} = 0$, show that the velocity at $A$ has no component in the $z$-direction, i.e. we can write $\mathbf{v}_A = v_x\hat{\mathbf{x}} + v_y\hat{\mathbf{y}}$. **[0,4 т.]**
+
+**A.4** Find the total angular velocity $\omega$ of the rotating top about its centre of mass $C$ in terms of the time derivatives of the Euler angles: $\dot{\theta} = \frac{d\theta}{dt}$, $\dot{\phi} = \frac{d\phi}{dt}$, and $\dot{\psi} = \frac{d\psi}{dt}$. Use Figure 3 if this is helpful. Give your answer in the $xyz$ frame, and in the $123$ frame. **[0,8 т.]**
+
+**A.5** Find the total energy of a spinning Tippe top, in terms of time derivatives of the Euler angles, $v_x$, and $v_y$. For partial marks, you may leave your answer in terms of $\dot{\mathbf{s}} = \frac{d\mathbf{s}}{dt}$. **[1 т.]**
+
+**A.6** Find the rate of change of the angular momentum about the $z$-axis. **[0,4 т.]**
+
+**A.7** Which force(s) do work against gravity? Find an expression for the instantaneous rate of change of the top's energy - you may leave your answer in terms of $\mathbf{v}_A$. Identify and identify the components of the force and the torque that cause the change(s) in energy terms in **A.5**. **[1,4 т.]**
+
+**A.8** Qualitatively sketch the following energy terms in the answer sheet as a function of time, over the top's motion through the five phases **I** to **V** shown in Figure 2: the total energy $E_T$, gravitational potential energy $U_G$, translational kinetic energy $K_T$, and rotational kinetic energy $K_R$. The energy axes of your sketches are not required to be to scale. **[2 т.]**
+
+**A.9** Show that the components of the angular momentum $\mathbf{L}$ and angular velocity $\omega$ that are perpendicular to the $\hat{\mathbf{3}}$ direction are proportional, i.e.
+
+$$\mathbf{L} \times \hat{\mathbf{3}} = k(\boldsymbol{\omega} \times \hat{\mathbf{3}}), \qquad (2)$$
+
+and find the proportionality constant $k$. **[0,5 т.]**
+
+Combining your answers to **A.1** and **A.2** with subsequent results will give you the magnitude $N$ of the normal force, as well as a system of equations, relating the Euler angles, the components $v_x$ and $v_y$ of the velocity at $A$, the unit vector for the axis of symmetry $\hat{\mathbf{3}}$, and their time derivatives. This system is not integrable, but instead could be solved numerically.
+
+Integrals of motion are quantities which remain constant, and can reduce the dimensionality of the system (i.e. number of simultaneous equations to solve, whether analytically or numerically). Typically quantities such as energy, momentum, and angular momentum are conserved in closed systems, and significantly simplify the problem.
+
+**A.10** As you have seen, neither the energy nor the angular momentum are conserved for a Tippe top, due to a dissipative force and external torque. However, there is a related quantity known as Jellett's integral $\lambda$, which represents a component of the angular momentum that is conserved, i.e. some vector $\mathbf{v}$. such that $\lambda = \mathbf{L} \cdot \mathbf{v}$ is constant in time.
+
+Use your understanding of the Tippe top and results found to far, to give an expression for such a vector $\mathbf{v}$. Show that the time derivative of $\lambda$ is zero. **[1,7 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- Derivation-type question; see the official solution for each part.
+- **A.9** $k = I_1$
+- **A.10** $\mathbf{v} = \mathbf{a}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Reference sheet for markers**
+
+Note: some results below were used for the previous version of part **A.10**, and are no longer needed.
+
+Coordinate systems for convenience (note: use of matrices not needed) $xyz$ from $XYZ$
+
+$$\begin{bmatrix} \hat{\mathbf{x}} \\ \hat{\mathbf{y}} \\ \hat{\mathbf{z}} \end{bmatrix} = \begin{bmatrix} \cos\phi & \sin\phi & 0 \\ -\sin\phi & \cos\phi & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} \hat{\mathbf{X}} \\ \hat{\mathbf{Y}} \\ \hat{\mathbf{Z}} \end{bmatrix}$$
+
+$123$ from $xyz$
+
+$$\begin{bmatrix} \hat{\mathbf{1}} \\ \hat{\mathbf{2}} \\ \hat{\mathbf{3}} \end{bmatrix} = \begin{bmatrix} \cos\theta & 0 & -\sin\theta \\ 0 & 1 & 0 \\ \sin\theta & 0 & \cos\theta \end{bmatrix} \begin{bmatrix} \hat{\mathbf{x}} \\ \hat{\mathbf{y}} \\ \hat{\mathbf{z}} \end{bmatrix}$$
+
+Position of point $A$ from centre of mass, in $xyz$ and $123$ frames:
+
+$$\begin{aligned} \mathbf{a} &= \alpha R\hat{\mathbf{3}} - R\hat{\mathbf{z}} && (1) \\ &= \alpha R\sin\theta\hat{\mathbf{x}} + R(\alpha\cos\theta - 1)\hat{\mathbf{z}} \\ &= R\sin\theta\hat{\mathbf{1}} + R(\alpha - \cos\theta)\hat{\mathbf{3}} \end{aligned}$$
+
+Useful products:
+
+$$\hat{\mathbf{z}} \times \hat{\mathbf{3}} = \sin\theta\hat{\mathbf{y}} \qquad (2)$$
+
+$$(3)$$
+
+Note (given in question):
+
+$$\left(\frac{\partial \mathbf{A}}{\partial t}\right)_{\mathbf{K}} = \left(\frac{\partial \mathbf{A}}{\partial t}\right)_{\widetilde{\mathbf{K}}} + \boldsymbol{\omega} \times \mathbf{A} \qquad (4)$$
+
+Time derivatives:
+
+$$\begin{aligned} \dot{\hat{\mathbf{3}}} &= \boldsymbol{\omega} \times \hat{\mathbf{3}} && (5) \\ \dot{\hat{\mathbf{x}}} &= \dot{\phi}\hat{\mathbf{y}} && (6) \\ \dot{\hat{\mathbf{y}}} &= -\dot{\phi}\hat{\mathbf{x}} && (7) \end{aligned}$$
+
+**Solutions: Tippe Top**
+
+1. (**1.0 marks**)
+
+Free body diagrams:
+
+Note: the direction of $\mathbf{F}_f$ must be opposite to the direction of $\mathbf{v}_A$, but is otherwise unimportant. Sum of forces:
+
+$$\begin{aligned} \mathbf{F}_{\mathrm{ext}} &= (N - mg)\hat{z} + \mathbf{F}_f \quad \text{(sufficient for full marks)} && (8) \\ &= (N - mg)\hat{z} - \frac{\mu_k N}{|v_A|}\mathbf{v}_\mathbf{A} \end{aligned}$$
+
+Sketched $\mathbf{v}_\mathbf{A}$ must be in opposite direction to $\mathbf{F}_f$ on $xy$ diagram.
+
+2. (**0.8 marks**)
+
+Sum of torques:
+
+$$\begin{aligned} \boldsymbol{\tau}_{\mathrm{ext}} &= \mathbf{a} \times (N\hat{\mathbf{z}} + \mathbf{F}_f) && (9) \\ &= (\alpha R\hat{\mathbf{3}} - R\hat{\mathbf{z}}) \times (N\hat{\mathbf{z}} + F_{f,x}\hat{\mathbf{x}} + F_{f,y}\hat{\mathbf{y}}) \\ &= \alpha RN\hat{\mathbf{3}} \times \hat{\mathbf{z}} + \alpha R(\sin\theta\hat{\mathbf{x}} + \cos\theta\hat{\mathbf{z}}) \times (F_{f,x}\hat{\mathbf{x}} + F_{f,y}\hat{\mathbf{y}}) - R\hat{\mathbf{z}} \times (F_{f,x}\hat{\mathbf{x}} + F_{f,y}\hat{\mathbf{y}}) \\ &= -\alpha RN\sin\theta\hat{\mathbf{y}} + \alpha R\sin\theta F_{f,y}\hat{\mathbf{z}} + \alpha R\cos\theta F_{f,x}\hat{\mathbf{y}} - \alpha R\cos\theta F_{f,y}\hat{\mathbf{x}} - RF_{f,x}\hat{\mathbf{y}} + RF_{f,x}\hat{\mathbf{x}} \\ &= RF_{f,y}(1 - \alpha\cos\theta)\hat{\mathbf{x}} + \left[RF_{f,x}(\alpha\cos\theta - 1) - \alpha RN\sin\theta\right]\hat{\mathbf{y}} + \alpha R\sin\theta F_{f,y}\hat{\mathbf{z}} && (10) \end{aligned}$$
+
+3. (**0.4 marks**)
+
+Motion at $A$ satisfies
+
+$$\mathbf{v}_\mathbf{A} = \dot{\mathbf{s}} + \boldsymbol{\omega} \times \mathbf{a} \qquad (11)$$
+
+where $\boldsymbol{\omega}$ is the total angular velocity of the top in the centre of mass frame (this is determined in the next part). Want to show that $\mathbf{v}_\mathbf{A} \cdot \hat{\mathbf{z}} = 0$.
+
+To show this, take time derivative of contact condition in $XYZ$ or $xyz$ frame (note: either is suitable, as we only need the $\hat{\mathbf{z}}$ component, and $\hat{\mathbf{z}} = \hat{\mathbf{Z}}$).
+
+Contact condition:
+
+$$\begin{aligned} (\mathbf{s} + \mathbf{a}) \cdot \hat{\mathbf{z}} &= 0 \quad \text{at all times} && (12) \\ \Rightarrow \frac{d}{dt}(\mathbf{s} + \mathbf{a}) \cdot \hat{\mathbf{z}} &= 0 \quad \text{at all times} \end{aligned}$$
+
+Note we only care about the $z$-component, and $(\boldsymbol{\omega} \times \hat{\mathbf{z}}) \cdot \hat{\mathbf{z}} = 0$. Then, using 11, 1, and 5,
+
+$$\begin{aligned} \mathbf{v}_\mathbf{A} \cdot \hat{\mathbf{z}} &= (\dot{\mathbf{s}} + \boldsymbol{\omega} \times \mathbf{a}) \cdot \hat{\mathbf{z}} \\ &= \left(\dot{\mathbf{s}} + \alpha R\boldsymbol{\omega} \times \hat{\mathbf{3}}\right) \cdot \hat{\mathbf{z}} \\ &= \left(\dot{\mathbf{s}} + \alpha R\frac{d\hat{\mathbf{3}}}{dt}\right) \cdot \hat{\mathbf{z}} \\ &= (\dot{\mathbf{s}} + \dot{\mathbf{a}}) \cdot \hat{\mathbf{z}} = 0 && (13) \end{aligned}$$
+
+4. (**0.8 marks**)
+
+Total angular velocity $\boldsymbol{\omega}$ of top is the sum of three distinct rotations:
+
+$$\boldsymbol{\omega} = \dot{\theta}\hat{\mathbf{2}} + \dot{\phi}\hat{\mathbf{z}} + \dot{\psi}\hat{\mathbf{3}}$$
+
+Use transformations shown in figure 3 or otherwise to transform into $xyz$ or $123$ frame:
+
+$$\begin{aligned} \boldsymbol{\omega} &= \dot{\psi}\sin\theta\hat{\mathbf{x}} + \dot{\theta}\hat{\mathbf{y}} + (\dot{\psi}\cos\theta + \dot{\phi})\hat{\mathbf{z}} && (14) \\ \boldsymbol{\omega} &= -\dot{\phi}\sin\theta\hat{\mathbf{1}} + \dot{\theta}\hat{\mathbf{2}} + (\dot{\psi} + \dot{\phi}\cos\theta)\hat{\mathbf{3}} && (15) \end{aligned}$$
+
+5. (**1.0 marks**)
+
+Where $\mathbf{I}$ is the inertia tensor
+
+$$\begin{bmatrix} I_1 & 0 & 0 \\ 0 & I_1 & 0 \\ 0 & 0 & I_3, \end{bmatrix}$$
+
+we have
+
+$$\begin{aligned} E_T &= K_T + K_R + U_G \\ &= \frac{1}{2}\boldsymbol{\omega} \cdot \mathbf{I}\boldsymbol{\omega} + \frac{1}{2}m\dot{\mathbf{s}}^2 + mgR(1 - \alpha\cos\theta) \end{aligned}$$
+
+From 11,
+
+$$\begin{aligned} \dot{\mathbf{s}} &= \mathbf{v}_\mathbf{A} - \boldsymbol{\omega} \times \mathbf{a} \\ &= \mathbf{v}_\mathbf{A} - (\dot{\theta}\hat{\mathbf{2}} + \dot{\phi}\hat{\mathbf{z}} + \dot{\psi}\hat{\mathbf{3}}) \times (\alpha R\hat{\mathbf{3}} - R\hat{\mathbf{z}}) \\ &= v_x\hat{\mathbf{x}} + v_y\hat{\mathbf{y}} - \left(\dot{\theta}\alpha R\hat{\mathbf{1}} - \dot{\theta}R\hat{\mathbf{z}} + \dot{\phi}\alpha R\hat{\mathbf{z}} \times \hat{\mathbf{3}} - \dot{\psi}R\hat{\mathbf{3}} \times \hat{\mathbf{z}}\right) \\ &= \left(v_x + \dot{\theta}R(1 - \alpha\cos\theta)\right)\hat{\mathbf{x}} + \left(v_y - R\sin\theta(\alpha\dot{\phi} + \dot{\psi})\right)\hat{\mathbf{y}} + \dot{\theta}\alpha R\sin\theta\hat{\mathbf{z}} \end{aligned}$$
+
+using 2. Thus
+
+$$\begin{aligned} E_T = {} & \frac{1}{2}\left[I_1(\dot{\phi}^2\sin^2\theta + \dot{\theta}^2) + I_3(\dot{\psi} + \dot{\phi}\cos\theta)^2\right] \\ & + \frac{m}{2}\left[\left(v_x + \dot{\theta}R(1 - \alpha\cos\theta)\right)^2 + \left(v_y - R\sin\theta(\alpha\dot{\phi} + \dot{\psi})\right)^2 + \dot{\theta}^2\alpha^2R^2\sin^2\theta\right] + mgR(1 - \alpha\cos\theta) \end{aligned}$$
+
+6. (**0.4 marks**)
+
+From 10,
+
+$$\frac{d\mathbf{L}}{dt} \cdot \hat{\mathbf{z}} = \sum \boldsymbol{\tau} \cdot \hat{\mathbf{z}} = \alpha R\sin\theta F_{f,y} \qquad (16)$$
+
+7. (**1.4 marks**)
+
+Changes in energy: $h = \mathbf{s} \cdot \hat{\mathbf{z}}$ increases, so $\dot{U_G} > 0$.
+
+At start and end (phases **I** and **V**) there is little translation so $K_T \sim 0$ at **I** and **V**. Thus, energy transfer is from $K_R$ to $U_G$.
+
+Normal force does no work. Frictional force does work at point $A$. Direction is $-\mathbf{v}_\mathbf{A}$:
+
+$$\begin{aligned} W &= \int \mathbf{F}_f \cdot \mathbf{v}_\mathbf{A}\ dt < 0 \\ \Rightarrow \frac{d}{dt}E_T &= -\mu_k N|\mathbf{v}_\mathbf{A}| \end{aligned}$$
+
+Thus $\mathbf{F}_f$ decreases the total energy monotonically.
+
+16 implies only the $\mathbf{F}_f.\hat{\mathbf{y}}$ acts to decrease $\mathbf{L} \cdot \hat{\mathbf{z}}$. Energy transfer from $K_R$ to $U_G$, caused by component of frictional force in $\hat{\mathbf{y}}$ direction, so component of resultant torque is in the $\mathbf{a} \times \hat{\mathbf{y}}$ direction.
+
+8. (**2.0 marks**)
+
+Expectation (see figure):
+
+- $E_T$: monotonically decreasing
+- $K_R$: monotonically decreasing; zero at V
+- $K_T$: zero at I and V; higher between; close to zero at IV
+- $U_G$: flat at start and finish; higher at end; increases from I to IV then flat; increase roughly at same time that $K_{\mathrm{rot}}$ decreases
+
+9. (**0.5 marks**)
+
+From 15,
+
+$$\mathbf{L} = \mathbf{I}\boldsymbol{\omega} = I_1\left(-\dot{\phi}\sin\theta\hat{\mathbf{1}} + \dot{\theta}\hat{\mathbf{2}}\right) + I_3(\dot{\psi} + \dot{\phi}\cos\theta)\hat{\mathbf{3}} \qquad (17)$$
+
+Taking cross product with $\hat{\mathbf{3}}$:
+
+$$\begin{aligned} \mathbf{L} \times \hat{\mathbf{3}} &= I_1\left(\dot{\phi}\sin\theta\hat{\mathbf{2}} + \dot{\theta}\hat{\mathbf{1}}\right) \\ &= I_1(\boldsymbol{\omega} \times \hat{\mathbf{3}}) && (18) \end{aligned}$$
+
+10. (**1.7 marks**)
+
+About any axis through the centre of mass,
+
+$$\frac{d\mathbf{L}}{dt} \neq 0 \Leftrightarrow \tau_{\mathrm{ext}} \neq 0$$
+
+External torque given by 9,
+
+$$\begin{aligned} \boldsymbol{\tau}_{\mathrm{ext}} &= \mathbf{a} \times (N\hat{\mathbf{z}} + \mathbf{F}_f) \\ &\Rightarrow \tau_{\mathrm{ext}} \cdot \mathbf{a} = 0 \\ \frac{d\mathbf{L}}{dt} \cdot \mathbf{a} &= 0 \end{aligned}$$
+
+Thus, angular momentum in the direction of $\mathbf{a}$ must be constant, so $\mathbf{v} = \mathbf{a}$.
+
+To demonstrate this mathematically, 5, 10, 18 allow
+
+$$\begin{aligned} -\dot{\lambda} &= \frac{d\mathbf{L}}{dt} \cdot \mathbf{a} + \alpha R\mathbf{L} \cdot \frac{d\hat{3}}{dt} \\ &= (\mathbf{a} \times (N\hat{\mathbf{z}} + \mathbf{F}_\mathbf{f})) \cdot \mathbf{a} + \frac{\alpha R}{I_1}\mathbf{L} \cdot (\boldsymbol{\omega} \times \mathbf{L}) \\ &= 0 \end{aligned}$$
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-3/p1-sol-fig1.png" alt="Free body diagrams. Left, xz-plane (axes z, x): the tilted Tippe top with weight mg pointing down from the centre of mass, normal force N pointing up at the contact point, and friction F_fr along the floor at the contact point. Right, xy-plane (axes y, x): top view with mg marked by a cross, N marked by a dot-in-circle, friction F_fr arrow, and a separate arrow v_A pointing down-right." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-3/p1-sol-fig2.png" alt="Four sketches against time t with ticks (I)–(V): E_T monotonically decreasing, then constant, =U_G; U_G non-zero at start, rising, then flat 'on stem'; K_T starting near zero ('spinning upright, so K_T is small'), rising to a hump near (II), back near zero at (IV)–(V) ('at rest'); K_R decreasing ('spinning slows') to zero at (V) ('at rest')." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [3.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2019/Theory/3.pdf)
+· официални решения: [3_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2019/Theory/3_sol.pdf)
