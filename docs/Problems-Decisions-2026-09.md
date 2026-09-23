@@ -172,3 +172,23 @@ Why: the pilot showed a strong reader rarely misreads letters but does drift —
 instructions and, separately, miscopied a correct verb („начинает сказываться“ → „начинается сказываться“) and then
 reported it as a printed error. Students need the obviously wrong fixed and nothing else touched.
 Implemented 2026-09-22: reader rule 1 (fixes recorded in `tx.edits` {path, printed, fixed, document, page, kind}), checker rules 2/10, the refix and adjudicator prompts, `scripts/tx/textlayer.mjs` v3 (a recorded fix is accepted only when its printed words are on that page of the text layer and it passes an eligibility check — word-for-word pairing, small edit distance for misspellings, the printed word not a word the archive prints elsewhere — and a record whose printed form is not in the layer is a misreading), and `paper.transcription.edits` in the schema, so published pages carry every fix. The refix step cannot add records: it restores the print, so an unrecorded fix reverts to the printed wording (conservative).
+
+## D-P24 (2026-09-23) — the agent route takes papers of at most 30 page images; bigger ones are split
+
+The 17-paper retry on the desktop (workflow wf_3b8aa745-c4b): 15 promoted within 8 minutes, and nao-2008-iv-st was promoted
+by hand after the text-layer fix below. The 17th, nao-2012-i-12 (a whole municipal round: 24 problems, 19 problem pages and
+40 solution pages), never wrote a candidate. For an hour its agent re-read all 59 page images about 32 times: it could not
+keep them in view long enough to write one JSON, and it was stopped. That one agent made about 1,900 model calls on a
+~500k-token context: far more than the other 16 papers together.
+
+- **Rule:** an agent whose reader task lists more than 30 page images stops after `queue-start` and reports
+  `too-large`. The paper waits for a split read (per grade group, or problems and solutions separately).
+- **Parked:** nao-2012-i-12 (59 pages). In queue-bg-native-next, mosa-2003-2005 (95) and mosa-x (31) meet the same rule.
+
+Why: one agent loop costs more than a whole tranche and gives nothing. The backlog's `pages` field counts only the
+problems PDF (19 for nao-2012-i-12), so the guard sits in the agent prompt, where the task's full page list is known.
+
+Also fixed the same night (a bug, not a decision): `textlayer.mjs` split every word with a decomposed й (и + U+0306, as
+pdftotext writes some fonts). The check then reported fragments („отчитаи“, „ности“) as the printed wording, and repair
+spliced them into the candidate. The layer is now NFC-normalised, and a word runs through combining marks
+(commit 4962600712). The nao-2008-iv-st agent found this and refused to promote the corrupted repair.

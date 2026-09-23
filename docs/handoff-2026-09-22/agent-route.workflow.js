@@ -30,10 +30,13 @@ const res = await pipeline(args.papers, p =>
       p.id
     }.
 
+On Windows, run commands with the Bash tool (Git Bash) and write every JSON file with the Write tool, never with a shell heredoc, echo or node -e string: Git Bash mangles backslashes in those, which corrupts LaTeX.
+
 1. cd ${REPO} && node scripts/tx/queue-start.mjs ${args.queue} ${p.id}
    It prepares the paper and prints a reader task, then exits with code 2. (If it says the job already exists, run: node scripts/tx/run.mjs ${
      p.id
-   } --continue.)
+   } --continue.) Older candidates from other readers (anthropic__*.json) may sit in the paper's candidates folder; ignore them.
+   Size guard (D-P24): if the task lists more than 30 page images in total, stop here without reading any page and return status "error" with notes "too-large: N pages". Such papers are split and read separately.
 2. ${
       p.alreadyRead
         ? `The read is already done: the candidate at ${REPO}/tmp/tx/${p.id}/candidates/agent__${LABEL}.json was written by an earlier one-shot agent following the same task. Do not re-read the paper. Only run the validate command the task printed and fix format errors if any.`
@@ -59,7 +62,7 @@ const res = await pipeline(args.papers, p =>
 6. When the paper is promoted, run: node scripts/tx/prepare.mjs ${
       p.id
     } --gc (frees disk; keeps the manifest and candidates).
-Rules: never run gatsby; never git add/commit/push (the orchestrator ships); do not edit other papers, scripts, or content files by hand (run.mjs/promote write content); do not open content/problems of other papers; no web search.
+Rules: never run gatsby; never git add/commit/push (the orchestrator ships); do not edit other papers, scripts, or content files by hand (run.mjs/promote write content); do not open content/problems of other papers; no web search; never read ~/.config/olympiads-xyz or print any key.
 Return JSON {paperId, status: promoted|escalated|error, problems, figures, boxesFixed, fixRounds, lastNote (run.mjs's last note), notes}.`,
     { label: `paper:${p.id}`, phase: 'Papers', schema: R, effort: 'medium' }
   )
