@@ -136,7 +136,11 @@ function joinFragments(tokens, known) {
   const heads = tokens.filter(t => t.fragment === 'head');
   for (const h of heads) {
     const tails = tokens.filter(t => t.fragment === 'tail' && t.line > h.line && t.line <= h.line + 8 && !t.joined);
-    const hit = tails.find(t => known.has(h.w + t.w));
+    const hit = tails.find(t => known.has(h.w + t.w))
+      // a two-column page whose gap pdftotext collapsed to one space leaves the tail mid-line and unmarked („…b x. cel
+      // each other“ after „can-“, eupho-2019-theory-th-pr): a nearby lowercase token that is no word by itself but
+      // completes a transcribed one (its line may be flagged lettering: the other column there holds a formula)
+      || tokens.find(t => !t.fragment && !t.joined && t.line > h.line && t.line <= h.line + 2 && /^\p{Ll}/u.test(t.raw) && !known.has(t.w) && known.has(h.w + t.w));
     if (hit) { h.w = h.w + hit.w; h.joined = true; hit.joined = true; hit.skip = true; }
   }
 }
