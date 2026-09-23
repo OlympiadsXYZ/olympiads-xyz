@@ -88,7 +88,14 @@ exports.onCreateNode = async api => {
       },
     };
     createNode(problemInfoNode);
-    createParentChildLink({ parent: node, child: problemInfoNode });
+    // No createParentChildLink here: every link re-writes the parent node with
+    // its whole children list, and extraProblems.json is the parent of every
+    // generated problem (~7,700), so the writes grew with the square of the
+    // problem count. That was the sourcing spike that killed every Gatsby job
+    // at 1,906 papers even with 32 GB of swap (2026-09-23; 20 GB locally, ~8 GB
+    // without the links). Nothing queries File.childrenProblemInfo. In
+    // `gatsby develop` a problem removed from extraProblems.json now stays until
+    // a restart.
   }
   const isExtraProblems =
     node.internal.mediaType === 'application/json' &&
