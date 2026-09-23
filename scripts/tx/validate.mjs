@@ -11,7 +11,7 @@ import { spawnSync } from 'node:child_process';
 import { misplacedSolutionFigures, figuresBelowSolutionHeading, textLayerLines } from '../problems-to-site.mjs';
 import {
   parseArgs, fail, readJson, compileSchema, mathSpans, splitMath, proseOnly, walkStrings, allFigures, RENDER_DPI, R2_PUBLIC,
-  BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx, stripTx } from './lib.mjs';
+  BBOX_SCALE, WINDOW_PLACEHOLDER, pagePx, stripTx, pdftotextBin } from './lib.mjs';
 
 const require = createRequire(import.meta.url);
 const katex = require('katex');
@@ -179,7 +179,7 @@ problems.forEach((pr, i) => {
 const problemsPdf = manifest && !manifest.documents?.solutions && manifest.documents?.problems?.file
   ? path.join(path.dirname(path.resolve(args.manifest)), manifest.documents.problems.file) : null;
 if (problemsPdf && fs.existsSync(problemsPdf)) {
-  const r = spawnSync('pdftotext', ['-tsv', problemsPdf, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
+  const r = spawnSync(pdftotextBin(), ['-enc', 'UTF-8', '-tsv', problemsPdf, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
   const layer = r.status === 0 ? textLayerLines(r.stdout) : null;
   if (layer) problems.forEach((pr, i) => {
     for (const m of figuresBelowSolutionHeading(paper, pr, layer)) warn(`/problems/${i}/${m.path}`, `figure ${m.fig.id} lies below this problem's printed solution heading ("${m.heading.text}", page ${m.heading.page}) in the combined problems+solutions PDF; if it is the solution's drawing, move it to solution.figures — a given data sheet printed after the solution stays in the ${m.where}`);

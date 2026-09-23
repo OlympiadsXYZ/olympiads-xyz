@@ -407,11 +407,12 @@ export function textLayerCheck(candidate, manifest, paperId) {
     const info = { trusted: false, reason: null, layerWords: 0, candidateWords: 0, candidateCovered: null, layerCovered: null, omissions: 0, misreadings: 0, unprinted: 0 };
     result.documents[doc] = info;
     if (!file || !fs.existsSync(file)) { info.reason = 'no text layer'; continue; }
-    let pages = layerPages(fs.readFileSync(file, 'utf8'));
+    const pages = layerPages(fs.readFileSync(file, 'utf8'));
     // a solutions document shared by several papers (one marking file for every fieldwork task, igeo-2015-experiment-
-    // fwe1task1): only the pages this paper declares it took its solutions from are its text; they are checked in full
+    // fwe1task1): a passage the paper must carry comes only from the pages it declares it took its solutions from; every
+    // page still counts as print for the words it does carry (wopho-2013-q2 transcribes a header from an earlier page)
     const declared = doc === 'solutions' ? candidate?.paper?.solutionSource?.pages : null;
-    if (Array.isArray(declared) && declared.length && declared.every(Number.isInteger) && d.pages && declared.length < d.pages) pages = pages.filter(pg => declared.includes(pg.page));
+    const omissionPages = Array.isArray(declared) && declared.length && declared.every(Number.isInteger) && d.pages && declared.length < d.pages ? new Set(declared) : null;
     const joinFields = fields.filter(f => f.doc === doc || shared.test(f.path));
     // a recorded misspelling broken at a line end ("обрато-" / "пропорционална") joins like a transcribed word
     const joinKnown = editPrinted.size ? new Set([...allWords, ...editPrinted]) : allWords;
@@ -495,6 +496,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     };
     const consumed = new Set(); // "path|word" extras explained by a misreading
     for (const pg of pages) {
+      if (omissionPages && !omissionPages.has(pg.page)) continue;
       let problemIdx = null;
       const byLine = new Map();
       for (const t of pg.tokens) { if (!byLine.has(t.line)) byLine.set(t.line, []); byLine.get(t.line).push(t); }
@@ -590,8 +592,11 @@ export function textLayerCheck(candidate, manifest, paperId) {
         let fixed = f.text; for (const m of misread) fixed = replaceWord(fixed, m.raw, m.printed);
         if (fixed !== f.text) {
           info.unprinted += misread.length;
-          result.defects.push({ path: f.path, document: doc, page: pages[0]?.page || 1, severity: f.altText ? 'minor' : 'major', kind: 'reworded', source: 'text-layer', confidence: 0.8,
-            description: `Text-layer check: the transcription has ${misread.map(m => `„${m.raw}“`).join(', ')} where the ${doc} document prints ${misread.map(m => `„${m.printed}“`).join(', ')}${f.altText ? ' — use the printed term' : ` and no tx.edits record explains it — ${RESTORE}`}.`, suggestedFix: fixed });
+          result.defects.push({ path: f.path, document: doc, page: pages[0]?.page || 1, severity: f.altText ? 'info' : 'major', kind: 'reworded', source: 'text-layer', confidence: 0.8,
+            description: `Text-layer check: the transcription has ${misread.map(m => `„${m.raw}“`).join(', ')} where the ${doc} document prints ${misread.map(m => `„${m.printed}“`).join(', ')}${f.altText ? ' — use the printed term if the description names it' : ` and no tx.edits record explains it — ${RESTORE}`}.`,
+            // alt text is the reader's own description: a near-match between two real words is no misreading
+            // („grey construction lines“ became „conservation lines“, wopho-2013-q2), so it is never rewritten mechanically
+            suggestedFix: f.altText ? null : fixed });
           rest = extras.filter(e => !misread.some(m => m.raw === e));
         }
       }

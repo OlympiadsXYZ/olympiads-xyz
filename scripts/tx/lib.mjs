@@ -96,6 +96,18 @@ export function run(cmd, args, { input, maxBuffer = 64 * 1024 * 1024, allowFail 
 }
 // `which` lives in Git's usr/bin; a node started from PowerShell may not have it, so fall back to where.exe
 export const which = cmd => spawnSync('which', [cmd], { encoding: 'utf8' }).status === 0 || (process.platform === 'win32' && spawnSync('where.exe', [cmd], { encoding: 'utf8' }).status === 0);
+// The text layer is poppler's: Git for Windows ships xpdf's pdftotext 4.00 ahead of MiKTeX's poppler on the Bash PATH,
+// and xpdf writes Latin-1 and lays text out differently (2026-09-23: every layer extracted from the Bash tool that day
+// lost its Cyrillic, so the verbatim check called it untrustworthy and skipped). Prefer a pdftotext that says Poppler.
+let popplerPdftotext = null;
+export function pdftotextBin() {
+  if (popplerPdftotext) return popplerPdftotext;
+  const isPoppler = bin => /poppler/i.test(`${spawnSync(bin, ['-v'], { encoding: 'utf8' }).stderr || ''}`);
+  const found = (process.platform === 'win32' ? spawnSync('where.exe', ['pdftotext'], { encoding: 'utf8' }).stdout : spawnSync('which', ['-a', 'pdftotext'], { encoding: 'utf8' }).stdout) || '';
+  const candidates = ['pdftotext', ...found.split(/\r?\n/).map(s => s.trim()).filter(Boolean)];
+  popplerPdftotext = candidates.find(isPoppler) || 'pdftotext';
+  return popplerPdftotext;
+}
 
 // ---------------------------------------------------------------- paper ids
 // Approximates the id vocabulary the previous agent workflows settled on:

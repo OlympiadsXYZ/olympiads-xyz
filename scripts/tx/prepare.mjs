@@ -15,7 +15,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   parseArgs, fail, run, resolvePaper, paperDir, manifestFile, readManifest, writeJson,
-  sha256File, nowIso, RENDER_DPI, R2_REMOTE, which, ROOT,
+  sha256File, nowIso, RENDER_DPI, R2_REMOTE, which, ROOT, pdftotextBin,
 } from './lib.mjs';
 
 // Plain text to PDF (python3 + PyMuPDF). Decodes UTF-8/UTF-16 (BOM) or a Cyrillic/Latin code page, keeps the printed
@@ -224,7 +224,7 @@ for (const doc of ['problems', 'solutions']) {
   }
   const textFile = path.join(dir, 'text', `${doc}.txt`);
   // The text layer belongs to these exact bytes: regenerate after any download or hash change.
-  if (!fs.existsSync(textFile) || downloaded || prev?.sha256 !== sha256) { fs.rmSync(textFile, { force: true }); run('pdftotext', ['-layout', file, textFile], { allowFail: true }); }
+  if (!fs.existsSync(textFile) || downloaded || prev?.sha256 !== sha256) { fs.rmSync(textFile, { force: true }); run(pdftotextBin(), ['-enc', 'UTF-8', '-layout', file, textFile], { allowFail: true }); }
   const text = fs.existsSync(textFile) ? fs.readFileSync(textFile, 'utf8') : '';
   // a converted source keeps its record while the cached PDF is the one it produced
   const conv = converted[doc] || (prev?.converted && prev.key === key && prev.sha256 === sha256 ? prev.converted : null);
