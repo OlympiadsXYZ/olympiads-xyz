@@ -1,0 +1,272 @@
+---
+id: ioaa-2021-data-analysis-da-1-q-p1
+source: 'IOAA 2021, data-analysis'
+title: 'Задача 1. Data Analysis 1: Scaling Relations'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-data-analysis-da-1-q.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:55:02.915Z'
+verifier: 'mechanical'
+---
+
+*Data Analysis 1: Scaling Relations (75 points) · 75 т.*
+
+## Условие
+
+Please read the general instructions in the separate envelope before you start this problem.
+
+Spiral galaxies are disk-like rotating structures, whose dynamical state is fairly grasped by the so-called rotation curves, quantifying the mean rotational velocity of the disk at different distances from the center (see Figure 1, curve B). An interesting feature is the flat region of the curve, which is attributed to the presence of dark matter. Without it, rotation velocities would drop steadily at large radii from the center, as depicted in curve A.
+
+In disk galaxies a strong correlation has been observed between the intrinsic luminosity of the whole galaxy and the asymptotic rotational velocity (as given by the rotation curve for the outer edge of the galaxy i.e. $R_{\mathrm{max}}$), a result that is known as the Tully-Fisher relation. This relation also holds if you use the luminosity in a specific band. This is shown on Figure 2 for a number of galaxies in a galaxy cluster. Every dot is a galaxy, and the solid line is the best-fit linear relation between absolute magnitude in $K$ band and $log_{10}(V_{\mathrm{max}})$ for the whole sample.
+
+Another interesting trend is shown in Figure 3: disks with larger stellar masses ($M_*$) tend to have smaller gas fractions ($M_{gas}/M_*$).
+
+In the following questions you will be asked to extract physical information about the galaxies using the scaling relations just introduced. Consider the following guidelines:
+
+- Assume that $V_{\mathrm{max}}$ was measured at the same radius for all galaxies ($R_{\mathrm{max}}$), in the flat part of the rotation curves and well beyond the end of the stellar disk.
+- Use $M_{dm}$ for the dark matter mass up to $R_{max}$ and $M_{tot}$ for the sum of all components.(gas, stars and dark matter)
+- Assume that all galaxies have identical stellar populations$^1$, and assume that the gaseous component does not interact with the stellar light. .
+- The galaxy cluster is far away. Its distance is much larger than the cluster size.
+- In spherically-symmetric mass distributions, to infer the gravitational effect on a particle at distance $r$ from the center, it suffices to consider the total mass enclosed up to that radius $M(\leq r)$ as if it were placed at the very center of the distribution.
+
+$^1$The term stellar population refers to the type of stars that are present in a galaxy, and the relative amount of each type with respect to the total number of stars.
+
+**Part 1 (20 points).**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-data-analysis-da-1-q/p1-fig1.png" alt="Two rotation curves on unlabelled axes: a solid curve B that rises steeply and then stays flat at large radius, and a dashed curve A that rises to the same peak and then declines steadily with radius." />
+<figcaption>Figure 1: Rotation curves. Circular velocity (Y-axis) vs Radius (X-axis)</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-data-analysis-da-1-q/p1-fig2-v2.png" alt="Scatter plot with a grid and no tick values; x-axis labelled log10(Vmax[km s^-1]), y-axis labelled Absolute K magnitude. Grey dots are galaxies, five larger black dots are the selected galaxies, and a solid best-fit straight line runs from lower left to upper right." />
+<figcaption>Figure 2: Absolute magnitude in $K$ band vs $\log_{10}(V_{\mathrm{max}}[km\,s^{-1}])$. Tully-Fisher relation for several galaxies. Every dot represents a galaxy. The dark points are five selected galaxies, for which we will provide some numbers in part 1.2.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-data-analysis-da-1-q/p1-fig3.png" alt="Scatter plot on a fine grid of log10(Mgas/M*) (y-axis, from -2 to 2) against log10(M* [M_sun]) (x-axis, from 7 to 12). The dots follow a declining trend and a solid straight line runs from (7, 2) down to about (12, -1.8)." />
+<figcaption>Figure 3: Gas fraction vs stellar mass.</figcaption>
+</figure>
+
+**1.1** From an analysis of Figure 3, find the appropriate constants in the following relation: $M_{gas} = a \times M_*^b$
+
+$$a = ?$$
+
+$$b = ?$$ **[5 т.]**
+
+**1.2** In the plot of the Tully-Fisher relation there are 5 highlighted points. Data for these 5 galaxies is given in the following table. Use this dataset to find the appropriate constants for TF relation presented below the table, by means of a linear fit using the method of least squares.
+
+**Note:** Treat $log_{10}(V_{\mathrm{max}})$ as the $x$ variable and $K$ as the $y$ variable in the linear fit.
+
+| $V_{\mathrm{max}}[km/s]$ | $K[mag]$ |
+|---|---|
+| $79.4$ | $-16.8$ |
+| $100.1$ | $-19.2$ |
+| $158.5$ | $-21.3$ |
+| $251.2$ | $-21.4$ |
+| $316.2$ | $-24.0$ |
+
+$$K = c \times log_{10}(V_{max}) + d$$
+
+$$c = ?$$
+
+$$d = ?$$ **[15 т.]**
+
+**Part 2 (16 points).**
+
+For two galaxies, G1 and G2, in the cluster, the recorded $apparent$ magnitudes are:
+
+$$k_1 = 19.2 \qquad ; \qquad k_2 = 25.2$$
+
+Using this information and the relations calibrated in Part 1 find the correct exponents in the following equations:
+
+**2.1** $$\frac{M_{*1}}{M_{*2}} = 10^e \qquad ; \qquad e = ?$$ **[6 т.]**
+
+**2.2** $$\frac{M_{gas1}}{M_{gas2}} = 10^f \qquad ; \qquad f = ?$$ **[4 т.]**
+
+**2.3** $$\frac{M_{tot1}}{M_{tot2}} = 10^g \qquad ; \qquad g = ?$$ **[6 т.]**
+
+**Part 3 (15 points).**
+
+**3.1** | Galaxy | Apparent magnitude $k$ | $M_{gas}[M_{\odot}]$ | $M_*\ [M_{\odot}]$ | $M_{dm}[M_{\odot}]$ | $M_{tot}\ [M_{\odot}]$ |
+|---|---|---|---|---|---|
+| $G_1$ | $19.2$ |  |  |  | $4.39\times10^{11}$ |
+
+Fill in the missing values in the table using the fact that for galaxy $G_1$, the dark-to-baryonic mass ratio up to $R_{\mathrm{max}}$ is $6.82$. **[15 т.]**
+
+**Part 4 (24 points).**
+
+**4.1** Consider a systematic uncertainty of $\sigma_{sys} = \pm 0.2$ in each apparent magnitude due to CCD calibration errors. Then $k_1$ must be read as $k_1 = 19.2 \pm 0.2$, i.e., the only thing we know is that $k_1$ most likely lies in the interval $[19.0, 19.4]$. The same goes for $k_2$.
+Recalculate the exponent in the scaling relation $\frac{M_{*1}}{M_{*2}} = 10^e$ (found in 2.1), expressing $e$ as an interval estimated by considering the extreme possible variations in $k_1$and $k_2$ .
+
+$$e \in [?, ?]$$ **[4 т.]**
+
+**4.2** Now we consider that there is always a natural spread of the data around any relation. For instance, for a given value of the $K$ magnitude the TF relation gives a single value of $log_{10}(V_{\mathrm{max}})$, but it would be more realistic to report an interval of plausible values, derived from the natural spread of the data around the mean TF relation. We call this the statistical uncertainty, $\sigma_{stat}$.
+Estimate the statistical uncertainty if $log_{10}(V_{\mathrm{max}})$ is inferred from $K$ using the TF relation from question 1.2. For this, consider for each point the difference between the value of $log_{10}(V_{\mathrm{max}})$ estimated from $K$ using your linear fit and the actual measurement of $log_{10}(V_{\mathrm{max}})$, and take $\sigma_{stat}$ as two times the root mean square (RMS) of these differences$^{\dagger}$.
+
+$$\sigma_{stat} = ?$$
+
+$^{\dagger}$The RMS of a set of values is the square root of the arithmetic mean of the squares of those values. **[10 т.]**
+
+**4.3** Recalculate the exponent in the scaling relation $\frac{M_{tot1}}{M_{tot2}} = 10^g$, expressing $g$ as an interval estimated by considering the extreme possible variations arising from both the systematic and statistical uncertainties:
+
+$$g \in [?, ?]$$ **[10 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1.1** a = 10^7.32 = 2.09 E7 ; b = 0.24
+- **1.2** c = -10 ; d = 1.47
+- **2.1** 2.4
+- **2.2** 0.576
+- **2.3** 1.2
+- **3.1** M_gas = 7.67×10^9 M_sun; M_* = 4.85×10^10 M_sun; M_dm = 3.83×10^11 M_sun
+- **4.1** e ∈ [2.24, 2.56]
+- **4.2** 0.157
+- **4.3** g ∈ [0.49, 1.91]
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part 1.**
+
+**1.1)** From the plot on the right we can get the equation of the straight line as
+
+$$y = -0.76\cdot x + 7.32 \qquad \text{[3 points]}$$
+
+which taking to the power of 10 is equivalent to: $f_g = 10^{7.32} M_*^{-0.76}$, being $f_g$ the gas fraction. Multiplying by the stellar mass we finally get:
+
+$$M_{gas} = 10^{7.32} \times M_*^{0.24}$$
+
+a = 10^7.32 = 2.09 E7 [1 point] ; b = 0.24 [1 point]
+
+No tolerance allowed for these values
+
+**1.2)** [15 points]
+
+| V | LogV | K | Zx | Zy | ZxZy |
+|---|---|---|---|---|---|
+| 79.4 | 1.8998 | -16.8 | -1.1778 | 1.3873 | -1.6339 |
+| 100.1 | 2.0004 | -19.2 | -0.7831 | 0.4970 | -0.3892 |
+| 158.5 | 2.2000 | -21.3 | -0.0001 | -0.2819 | 0.0000 |
+| 251.2 | 2.4000 | -21.4 | 0.7845 | -0.3190 | -0.2502 |
+| 316.2 | 2.5000 | -24 | 1.1765 | -1.2834 | -1.5100 |
+|  |  |  |  |  |  |
+| Ave | 2.2001 | -20.54 |  | sum ZxZy | -3.7833 |
+| St. Dev | 0.2549 | 2.696 |  | r | -0.9458 |
+
+The best-fit straight line is $K = -10\cdot log_{10}(V_{max}) + 1.47$.
+
+A correct answer does not need to show step-by-step calculations.
+Tolerance: +/- 0.01.
+Partial score if the full answer is not correct: Slope: [3 points] ; Intercept: [2 points] ; calculations: if every single number is right except the final answer [10 points] ; if at least half the numbers are correct [5 points]. Tolerance in each number: +/- 0.01
+
+**Part 2.**
+
+**2.1)** [10 points]
+
+Galaxies are at the same distance, therefore the difference in apparent magnitudes is the same as in absolute magnitudes, and this relates to a luminosity ratio:
+
+$$(k_1 - k_2) = (K_1 - K_2) = -2.5\times log_{10}\left(\frac{L_1}{L_2}\right) \qquad \text{[2 points]}$$
+
+For having the same stellar populations, and ignoring interstellar extinction, the luminosity of each galaxy is proportional to its stellar mass with the same mass-to-light ratio for both galaxies, such that:
+
+$$(k_1 - k_2) = -2.5\times log_{10}\left(\frac{M_{*1}}{M_{*2}}\right) \qquad \text{[2 points]}$$
+
+The difference in magnitudes being 6, we obtain:
+
+$$\left(\frac{M_{*1}}{M_{*2}}\right) = 10^{2.4} \qquad \text{[2 points]}$$
+
+No tolerance allowed in the exponent value.
+
+**2.2)** [4 points]
+
+Using the last result in combination to that of 1A:
+
+$$\frac{M_{gas1}}{M_{gas2}} = \left(\frac{M_{*1}}{M_{*2}}\right)^{0.24} \qquad \text{[2 points]}$$
+
+$$\frac{M_{gas1}}{M_{gas2}} = 10^{0.576} \qquad \text{[2 points]}$$
+
+Exponent approximated to 2 digits is OK.
+
+**2.3)** [6 points]
+
+We found the slope of the TF relation in 1B: $\frac{\Delta K}{\Delta \log(V_{max})} = 10$, with $\Delta K = 6$ for our galaxies: $\frac{V_{max1}}{V_{max2}} = 10^{0.6}$ [2 points]. Now consider the mass distribution as approximately spherically-symmetric, giving:
+
+$$V_{max} = \sqrt{\frac{G\cdot M_{tot}(<R_{max})}{R_{max}}}, \qquad \text{[2 points]}$$
+
+which combined with the ratio just found two lines above leads to:
+
+$$\frac{M_{tot1}}{M_{tot2}} = 10^{1.2} \qquad \text{[2 points]}$$
+
+No tolerance allowed in the exponent value.
+
+**Part 3.** [15 points]
+
+Baryonic mass is $M_{Baryonic} = \frac{4.39\times10^{11}}{7.82}\ [M_{\odot}]$ and Dark matter mass is given by $M_{dm} = 6.82\times\frac{4.39\times10^{11}}{7.82}\ [M_{\odot}]$. The baryonic contribution needs to be decomposed into stellar and gaseous masses, which is not doable analytically but must be faced numerically, by tuning the numbers, knowing their sum and knowing the relation between them from 1.1. The final table looks like this:
+
+| Galaxy | Apparent magnitude $k$ | $M_{gas}\ [M_{\odot}]$ | $M_*\ [M_{\odot}]$ | $M_{dm}\ [M_{\odot}]$ | $M_{tot}\ [M_{\odot}]$ |
+|---|---|---|---|---|---|
+| $G_1$ | $19.2$ | $7.67\times10^{9}$ | $4.85\times10^{10}$ | $3.83\times10^{11}$ | $4.39\times10^{11}$ |
+
+Equation to be solved: $1 - k = 0.1415\, k^{0.24}$ This gives k = 0.8634
+
+5 points for each value, with a tolerance of 5%
+
+If does not score for Mg, M*, but has a correct equation , 5 points
+
+**Part 4**
+
+**4.1)** [4 points]
+
+We basically found in 2.1 that $\left(\frac{M_{*1}}{M_{*2}}\right) = 10^{\frac{\Delta K}{-2.5}}$, being $\Delta K = -6$. In this new case, we have the extreme values of $\Delta K$ to be $-6.4$ and $-5.6$, therefore the extreme values for the exponent are these values divided by $-2.5$, then $e \in [2.24, 2.56]$
+
+No tolerance allowed in limits of the interval.
+
+**4.2)** [10 points]
+
+We have to invert the equation from 1.2 to get: $log_{10}(V_{max}) = -\frac{K}{10} + 0.1467$. Now we can get the difference between the measured values and linear-fit predictions, approximating numbers to the second digit:
+
+| $K[mag]$ | $V_{max}\ [km/s]$ | $log_{10}(V_{max})$ measured | $log_{10}(V_{max})$ from linear fit | $\lvert\Delta\, log_{10}(V_{max})\rvert$ |
+|---|---|---|---|---|
+| $-16.8$ | $79.4$ | 1.9 | 1.83 | 0.07 |
+| $-19.2$ | $100.1$ | 2.0 | 2.07 | 0.07 |
+| $-21.3$ | $158.5$ | 2.2 | 2.28 | 0.08 |
+| $-21.4$ | $251.2$ | 2.4 | 2.29 | 0.11 |
+| $-24.0$ | $316.2$ | 2.5 | 2.55 | 0.05 |
+
+Taking two times the RMS of the residuals: $\sigma_{stat} = 0.157$
+
+A correct answer does not need to show step-by-step calculations.
+If the final value is not correct, up to [5 points] for partial calculations: [1 point] for each value of $log_{10}(V_{max})$ correctly calculated.
+Tolerance in each number: +/- 0.01
+
+**4.3)** With the uncertainties, the expression $log_{10}(V_{max}) = -\frac{K}{10} + 0.1467$ becomes:
+
+$$log_{10}(V_{max}) = -\frac{K}{10} + 0.1467 \pm \frac{0.2}{10} \pm 0.157 \qquad \text{[2 points]}$$
+
+Values approximated to the second digit are accepted.
+
+Writing the same expression down for galaxy 1 and 2, subtracting, and using $\Delta K = -6$ we get:
+
+$$log_{10}\left(\frac{V_{max1}}{V_{max2}}\right) = 0.6 \pm 0.02 \pm 0.157 \pm 0.02 \pm 0.157 \qquad \text{[4 points]}$$
+
+Which leads to the extreme values: $0.954$ and $0.246$. [2 points]
+
+Finally remembering that circular velocities scale as the square root of the total mass, we have to multiply this exponent by 2, getting the final answer:
+
+$$g \in [0.49, 1.91] \qquad \text{[2 points]}$$
+
+A tolerance of +/- 0.02 is acceptable.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [DA-1-Q.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/DA-1-Q.pdf)
+· официални решения: [Data Analysis Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Data%20Analysis/Data%20Analysis%20Solutions.pdf)

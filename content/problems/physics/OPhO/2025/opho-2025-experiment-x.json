@@ -1,0 +1,206 @@
+{
+ "paper": {
+  "id": "opho-2025-experiment-x",
+  "subject": "physics",
+  "competition": "OPhO",
+  "year": 2025,
+  "round": null,
+  "roundType": "mixed",
+  "grade": null,
+  "lang": "en",
+  "title": "2025 Online Physics Olympiad: Invitational Contest — Part II",
+  "held": {
+   "from": "2025-08-23",
+   "to": "2025-08-24"
+  },
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/OPhO/2025/experiment.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "status": "review",
+  "documentNotes": [
+   {
+    "title": "Sponsors",
+    "statement": "This competition could not be possible without the help of our sponsors, who are all doing great things in physics, math, and education.",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   }
+  ],
+  "caveat": "No official solutions are in the archive for this paper.",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "5f6b793d2b7bfcb995b1b56ec1ff210974bbc06c445cb220170fcace0ba318d0"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "Page 1 is a cover (title, OPhO logo, sponsors paragraph and sponsor logos); the printed sponsors paragraph is kept verbatim in paper.documentNotes; the logos are not figures. The paper prints two top-level tasks: the Experimental Question „Ball Knowledge“ [15 marks] (pages 2–3) and „Theory Question 4“ „Paradoxes“ [5 marks, 0.5 marks each] (pages 4–5), even though the file is the experiment part. The six quantities to find in Ball Knowledge are printed as unlabelled bullets; each part label is the quantity name as printed. The ten paradoxes are labelled by their printed headings. The printed words „this Google Drive folder“ and „this Jupyter notebook“ are hyperlinks in the PDF; the URLs are not visible on the page and are not transcribed. Quotes are kept as printed, including the closing-quote form ”…” used as opening quotes around „Show Package Contents“, „Allow anyways“ and „Open anyways“. „rela-tive“ on page 4 is a line-break hyphenation and is written „relative“. No figures. No official solutions in the archive."
+  }
+ },
+ "problems": [
+  {
+   "id": "opho-2025-experiment-x-p1",
+   "number": 1,
+   "title": "Ball Knowledge",
+   "points": 15,
+   "problemType": "experiment",
+   "statement": "**Experimental Question [15 marks]**\n\nLionel finds himself on an unknown planet, with only a very precarious camera of fixed frame rate and a spherical football with him. He feels that the air is weird and that gravity is too, so he decides to put his skills to use and starts kicking his ball and recording the trajectory it makes with his camera. The football has a radius of $r = 11$ centimeters and a mass of $m = 430$ grams. Let the drag coefficient be $C_d = 0.47$. Despite his high skill, Lionel is still human; therefore, there will be some uncertainty in the speed, angle and angular speed he imparts on the ball.\n\nThe following equations determine the forces experienced by a ball traveling in the air:\n\n$$\\vec{F}_{\\mathrm{drag}} = -\\frac{1}{2}\\rho C_d A v^2\\,\\hat{v}$$\n\n$$\\vec{F}_{\\mathrm{Magnus}} = K r\\vec{\\omega}\\times\\vec{v}$$\n\nwhere $\\rho$ is the air density, $A$ is the cross sectional area of the ball, $\\vec{v}$ is the ball’s velocity, $\\vec{\\omega}$ is the ball’s angular velocity, and $K$ is the Magnus force coefficient. The angular deceleration felt by the ball is given by\n\n$$\\dot{\\omega} = -B\\omega v.$$\n\n**Explanation of the simulation program.** The executable files are found in this Google Drive folder. Please select the folder that corresponds to the operating system of your computer. For Linux and Windows, simply download the executable file (“magnus.bin” or “magnus.exe”, respectively) inside. For MacOS, download the file “magnus.zip”, then double-click it to create the file “magnus_sim.dist”. Right-click on “magnus_sim.dist” and select ”Show Package Contents” to reveal the folder’s contents; inside, locate the executable file “magnus”. Do not delete any of the other files in the package!\n\nDouble-click the executable to run. You may have to temporarily disable your local malware-blocking software. On MacOS, if your computer blocks the opening of the executable, navigate to System Settings and go to Privacy & Security. Below Security, there should be a notification that “magnus” is trying to be opened; click ”Allow anyways” or ”Open anyways”.\n\nPlease note that the executable may take a few moments to load. It will prompt you for the following quantities:\n\n- Initial speed $v_0$ in m/s, restricted to the range [5 m/s, 40 m/s]; the uncertainty in $v_0$ is of order 0.5 m/s.\n- Initial angle of launch $\\theta_0$ in degrees, restricted to positive $\\theta_0$ only; the uncertainty in $\\theta_0$ is of order $0.5^{\\circ}$.\n- Initial angular velocity $\\omega_0$ in rad/s, restricted to the range [-400 rad/s, 400 rad/s]; the uncertainty in $\\omega_0$ is of order 1 rad/s. Only angular velocities perpendicular to the trajectory are allowed in the simulation. The initial angular velocity $\\omega$ is positive when the ball is given underspin and is negative when the ball is given topspin.\n- The desired name of the output text file, such as “output.txt”.\n\nThe executable will then provide you with the location that the output file has been saved at. If you have trouble finding the output file, paste the location of the file’s folder into the URL bar of your file explorer (in Mac Finder, use Cmd+Shift+G).\n\nThe output text file will contain the data points (x,y) of the ball’s trajectory that the camera captures, in chronological order. The executable will then ask you if you would like to run the simulation again.\n\nIf you wish, you may also use this Jupyter notebook to plot the trajectory. Make a copy of the notebook, and copy the output file’s text into the indicated portion of the notebook’s code.\n\nYour task is to find the following quantities, with uncertainties, to the highest accuracy that you are able to. Provide all data, tables, graphs, and/or intermediate quantities you use.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "wind speed",
+     "statement": "$v_w$ [2 pts]",
+     "points": 2
+    },
+    {
+     "label": "air density",
+     "statement": "$\\rho$ [2.6 pts]",
+     "points": 2.6
+    },
+    {
+     "label": "gravitational acceleration",
+     "statement": "$g$ [2.6 pts]",
+     "points": 2.6
+    },
+    {
+     "label": "camera frame rate",
+     "statement": "$r_c$ in Hz [0.8 pt]",
+     "points": 0.8
+    },
+    {
+     "label": "Magnus force coefficient",
+     "statement": "$K$ [3 pts]",
+     "points": 3
+    },
+    {
+     "label": "inertial coefficient",
+     "statement": "$B$ [4 pts]",
+     "points": 4
+    }
+   ],
+   "topics": [
+    "mechanics/projectile-motion",
+    "mechanics/drag",
+    "experiment/data-analysis"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "No official solutions are in the archive for this paper."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    }
+   ]
+  },
+  {
+   "id": "opho-2025-experiment-x-p2",
+   "number": 2,
+   "title": "Paradoxes",
+   "points": 5,
+   "problemType": "theory",
+   "statement": "**Theory Question 4 [5 marks]**\n\n**Paradoxes [5 marks, 0.5 marks each]**\n\nPhysics is sometimes highly counterintuitive. Below, you will be provided with a number of scenarios which seem to imply some contradiction in the laws of physics. Please submit, in your solution, your resolution to these apparent paradoxes.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "Energy and a Wedge",
+     "statement": "Consider a fixed wedge facing right of height $h$. Neglect friction, air resistance, and rotational effects. A block is placed on the top of the wedge and slides down it. At the bottom of the wedge, there is a bevel which enables the block to preserve its speed as it reaches the ground and moves horizontally to the right. The final velocity of the block is $v$.\n\nNow consider the situation in a different frame, one which is moving to the right with velocity $v$ relative to the lab frame. Initially, the block is moving to the left with velocity $v$ and has a positive gravitational potential energy. In the final state, the block is stationary and it has zero gravitational potential energy (relative to the ground). Where has the energy gone?",
+     "points": 0.5
+    },
+    {
+     "label": "Sheets and magnets",
+     "statement": "Consider a finite sheet of conducting metal moving in the x-direction and with its normal pointing in the z-direction, parallel to a uniform magnetic field. An EMF will form in the y-direction on the sheet. Now consider the frame moving along with the sheet; everything is static and no EMFs are formed. Why?",
+     "points": 0.5
+    },
+    {
+     "label": "Mistakes in the elevator",
+     "statement": "The classical example of the equivalence principle in the textbook states that in the Earth’s gravitational field of strength $g$ and in an elevator in free space accelerating upwards at $g$, a photon travelling horizontally across a distance $l$ will both drop a vertical distance of $\\frac{gl^2}{2c^2}$. In fact, this is incorrect; the photon will drop three times as much of a distance on Earth. Why? How can this be reconciled with the equivalence principle?",
+     "points": 0.5
+    },
+    {
+     "label": "Divisive Gas",
+     "statement": "Consider a diatomic gas consisting of molecules of two identical atoms, each of mass $m$, at a temperature $T$. Suppose an amount of energy just higher than the binding energy of the gas were injected into the system so that the bond gently breaks apart without imparting any additional kinetic energy to the atoms. Before the bond breakage each molecule was travelling at an rms speed of $\\sqrt{\\frac{3kT}{2m}}$. After the bond breakage the atoms travel at approximately the same speed so the rms speed is the same but the mass of the species has halved, so therefore the temperature has also halved. What is the flaw in this argument?",
+     "points": 0.5
+    },
+    {
+     "label": "Capacity Capacitor",
+     "statement": "Consider a rectangular block of conductor in a strong uniform electric field perpendicular to one of the faces of the conductor. Let the thickness of the conductor be $d$; the two faces end up with surface charge densities $\\epsilon_0 E d$ of opposing charges, where $E$ is the electric field strength. The attractive force from the opposite charges on the other side of the conductor cancels out with the force on the charges by the E-field and hence the block experiences no tensile stress. Alternatively, observe that electric field is absent inside the conductor and conduct a virtual work analysis; it seems, instead, that there is a tensile force on the block! What is the actual force on the block, and how can these approaches be reconciled?",
+     "points": 0.5
+    },
+    {
+     "label": "Sunspot",
+     "statement": "It is well known that one can use a magnifying glass or other lens to focus sunlight onto a small point in order to heat it up. By focusing sufficient sunlight onto a sufficiently well insulated point it seems that we can heat the material above the temperature of the surface of the Sun; this would violate the second law of thermodynamics by transferring energy from a lower temperature region to a higher temperature region. Why can’t we do this? (Hint: there is a common answer that you might think you know. In fact, it is not the complete story.)",
+     "points": 0.5
+    },
+    {
+     "label": "Spinny Spin",
+     "statement": "Consider a top that is spinning and almost upright. We know that the top will precess around the vertical axis and, in the absence of friction, will not fall down. Now consider the rotating frame where the angular velocity is equal to that of the top. The top looks almost stationary in this frame but doesn’t fall over. How can this be explained in the rotating frame?",
+     "points": 0.5
+    },
+    {
+     "label": "Spinny Spinny Spin",
+     "statement": "Demonstrate quantitatively why the majority of structures in the universe take the form of disks.",
+     "points": 0.5
+    },
+    {
+     "label": "Circular Twin Paradox",
+     "statement": "Suppose the universe had a closed geometry, i.e. it is the surface of a 3-sphere. Alice remains on Earth while Bob heads off in a spaceship in a random direction. After a sufficiently long time, Bob will show up approaching Earth from the other side assuming he travelled in a straight line. Bob did not accelerate during the entire trip and Alice and Bob experience the same curvature in spacetime as the universe is isotropic. Which twin is older when they meet up again? Explain.",
+     "points": 0.5
+    },
+    {
+     "label": "Occlusivity",
+     "statement": "Consider two identical, always stationary, spheres A and B. Sphere A is much farther away than sphere B, and yet the angular size of sphere A is larger than the angular size of sphere B. Demonstrate quantitatively how this can be the case.",
+     "points": 0.5
+    }
+   ],
+   "topics": [
+    "relativity/special",
+    "thermodynamics/kinetic-theory",
+    "electromagnetism/induction"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "No official solutions are in the archive for this paper."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    }
+   ]
+  }
+ ]
+}
