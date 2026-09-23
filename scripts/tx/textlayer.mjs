@@ -100,7 +100,14 @@ export function layerPages(text) {
   // NFC first: pdftotext writes some fonts' й as и + U+0306, and printed wording quoted from the layer is spliced into
   // candidates, so it must reach them composed
   const clean = text.normalize('NFC').replace(/­/g, '').replace(/\r/g, '');
-  return clean.split('\f').map((pageText, pi) => {
+  // a running header or footer (the same line on 3+ pages once digits are masked: „Theoretical Task 3 (T-3) : Solutions
+  // 5 of 9“, ipho-2015-theory-3) is page furniture, not content the transcription must carry
+  const rawPages = clean.split('\f');
+  const lineKey = l => l.trim().replace(/\s+/g, ' ').replace(/\d+/g, '#');
+  const onPages = new Map();
+  rawPages.forEach((pt, pi) => { for (const k of new Set(pt.split('\n').map(lineKey).filter(k => /\p{L}{3}/u.test(k)))) onPages.set(k, (onPages.get(k) || 0) + 1); });
+  const running = new Set([...onPages].filter(([, n]) => n >= 3).map(([k]) => k));
+  return rawPages.map((pageText, pi) => {
     const lines = pageText.split('\n');
     const tokens = [];
     lines.forEach((line, li) => {
@@ -118,7 +125,7 @@ export function layerPages(text) {
       const words = line.match(/\p{L}+/gu) || [], singles = words.filter(w => w.length === 1).length; // variables: "m mS S W t Q p"
       // equation editors leave their source in the text layer (LaTeXiT: latexit sha1_base64="…" followed by base64): never printed
       const junk = /latexit|sha1_base64|[A-Za-z0-9+/]{40,}={0,2}(?:\s|$)/.test(line);
-      const lettering = junk || (letters > 0 && (symbols > 0.25 * letters || (letters >= 12 && caps > 0.7 * letters) || (words.length >= 6 && singles >= 0.25 * words.length)));
+      const lettering = junk || running.has(lineKey(line)) || (letters > 0 && (symbols > 0.25 * letters || (letters >= 12 && caps > 0.7 * letters) || (words.length >= 6 && singles >= 0.25 * words.length)));
       for (const t of tokenise(line)) {
         const tok = { ...t, line: li, page: pi + 1 };
         if (lettering || /^\p{L}\p{Ll}*\p{Lu}/u.test(t.raw)) tok.skip = true; // formula/lettering line, or a variable like rPS, mMS
@@ -179,7 +186,9 @@ function candidateFields(c, hasSolutions) {
     // The alt text is a description by design and the caption line is the figure's caption, not the field's prose
     // (nao-2018-ii-7-8, nao-2020-i-5-6, nao-2021-iv-ml-prak: „Гравюра“, „Снимка“, „Изображение“ printed nowhere).
     const noImages = s.replace(/(?:!\[[^\]\n]*\]\([^)\n]*\)[ \t|]*)+\n+[ \t]*(\*{1,2}|_{1,2})[^\n*_]{1,200}\1[ \t]*(?=\n|$)/g, ' ').replace(/!\[[^\]\n]*\]\([^)\n]*\)/g, ' ');
-    const prose = splitMath(noImages).map(seg => seg.math ? seg.text.replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
+    // an environment name is markup, never a printed word (\begin{cases}, \begin{aligned}, \begin{array}{cc}: agents
+    // rewrote correct LaTeX to get past „cases“/„aligned“ flagged as unprinted, idpho-2020-theory-ipho-q2, ipho-2015-theory-1)
+    const prose = splitMath(noImages).map(seg => seg.math ? seg.text.replace(/\\(?:begin|end)\{[a-zA-Z*]+\}(?:\{[^}]*\})?/g, ' ').replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
     const tokens = tokenise(prose);
     fields.push({ path: p, doc, text: s, tokens, set: new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])])), altText: ALT_PATH.test(p) });
   });
