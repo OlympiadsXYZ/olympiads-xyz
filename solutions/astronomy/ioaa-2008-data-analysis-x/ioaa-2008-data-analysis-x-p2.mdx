@@ -1,0 +1,327 @@
+---
+id: ioaa-2008-data-analysis-x-p2
+source: 'IOAA 2008, data-analysis'
+title: 'Задача 2. Determination of stellar masses in a visual binary system'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2008/ioaa-2008-data-analysis-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T07:39:40.688Z'
+verifier: 'mechanical'
+---
+
+*The 2nd International Olympiad on Astronomy and Astrophysics — Practical Competition: Data Analysis · 21 август 2008 г. · 100 т.*
+
+<details>
+<summary>Please read this carefully:</summary>
+
+1. Every student receives problem sheets in English and/or in his/her native language, answer sheets, millimeter block papers, and scratch sheets.
+2. The time available is five hours for the data analysis and observation competitions. There are three data analysis problems, and two observation problems.
+3. Use only the materials provided.
+4. Fill in the boxes at the top of each sheet of paper with your country code and your student code.
+5. Use only the front side of **answer sheets**. Write only inside the boxed area.
+6. Begin answering each question on a separate sheet.
+7. Numerical results should be written with as many digits as are appropriate.
+8. Write on **the answer sheets and the millimeter block papers** whatever you consider is required for the solution of each question. Please express your answer primarily in term of equations, numbers, figures, and plots. If necessary provide your answers with concise text. Full credit will be given to correct answer with detailed steps for each question. Underline your final result.
+9. At the end of the exam place the answer sheets and the millimeter block papers inside the envelope and leave everything on your desk.
+
+</details>
+
+<details>
+<summary>Astronomical and Physical Constants</summary>
+
+| Quantity | Value |
+|---|---|
+| Astronomical unit (AU) | 149,597,870.691 km |
+| Light year (ly) | $9.4605 \times 10^{17}$ cm = 63,240 AU |
+| Parsec (pc) | $3.0860 \times 10^{18}$ cm = 206,265 AU |
+| Sidereal year | 365.2564 days |
+| Tropical year | 365.2422 days |
+| Gregorian year | 365.2425 days |
+| Sidereal month | 27.3217 days |
+| Synodic month | 29.5306 days |
+| Mean sidereal day | $23^{\mathrm{h}}56^{\mathrm{m}}4^{\mathrm{s}}.091$ of mean solar time |
+| Mean solar day | $24^{\mathrm{h}}3^{\mathrm{m}}56^{\mathrm{s}}.555$ of sidereal time |
+| Mean distance, Earth to Moon | 384,399 km |
+| Earth mass ($\mathfrak{M}_{\oplus}$) | $5.9736 \times 10^{27}$ g |
+| Earth's mean radius | 6,371.0 km |
+| Earth's mean velocity in orbit | 29.783 km/s |
+| Moon’s mass (𝔐☽) | $7.3490 \times 10^{25}$ g |
+| Moon’s mean radius | 1,738 km |
+| Sun mass ($\mathfrak{M}_{\odot}$) | $1.9891 \times 10^{33}$ g |
+| Mean Earth radius | $6.3710 \times 10^{6}$ cm |
+| Sun radius ($R_{\odot}$) | $6.96 \times 10^{10}$ cm |
+| Sun luminosity ($L_{\odot}$) | $3.96 \times 10^{33}$ erg s$^{-1}$ |
+| Sun effective temperature ($T_{eff\odot}$) | 5 800 °K |
+| Sun apparent magnitude ($m_{\odot}$) | -26.8 |
+| Sun bolometric magnitude ($m_{bol\odot}$) | -26.79 |
+| Sun absolute magnitude ($M_{\odot}$) | 4.82 |
+| Sun absolute bolometric magnitude ($M_{bol\odot}$) | 4.72 |
+| Speed of light ($c$) | $2.9979 \times 10^{10}$ cm/s |
+| Gravitational constant ($G$) | $6.6726 \times 10^{-8}$ dyne cm$^{2}$ g$^{-2}$ |
+| Boltzmann constant ($k$) | $1.3807 \times 10^{-16}$ erg. K$^{-1}$ |
+| Stefan-Boltzmann constant ($\sigma$) | $5.6705 \times 10^{-5}$ erg cm$^{-2}$ K$^{-4}$ s$^{-1}$ |
+| Planck constant ($h$) | $6.6261 \times 10^{-27}$ erg s |
+| Electron charge ($e$) | $1.602 \times 10^{-19}$ C = $4.803 \times 10^{-10}$ esu |
+| Electron mass ($m_e$) | $5.48579903 \times 10^{-4}$ amu |
+| Proton mass ($m_p$) | 1.007276470 amu |
+| Neutron mass ($m_n$) | 1.008664904 amu |
+| Deuterium nucleus mass ($m_d$) | 2.013553214 amu |
+| Hydrogen mass | 1.00794 amu |
+| Helium mass | 4.002603 amu |
+| Carbon mass | 12.01070 amu |
+
+**Conversion table**
+
+| | |
+|---|---|
+| 1 Å | 0.1 nm |
+| 1 barn | $10^{-28}$ m$^{2}$ |
+| 1 G | $10^{-4}$ T |
+| 1 erg | $10^{-7}$ J = 1 dyne cm |
+| 1 esu | $3.3356 \times 10^{-10}$ C |
+| 1 amu (atomic mass unit) | $1.6606 \times 10^{-24}$ g |
+| 1 atm (atmosphere) | 101,325 Pa = 1.01325 bar |
+| 1 dyne | $10^{-5}$ N |
+
+</details>
+
+<details>
+<summary>Points</summary>
+
+**300 points for 3 problems, 100 points for each problem**
+
+</details>
+
+## Условие
+
+The star α-Centauri (Rigel Kentaurus) is a triple star which consists of two main-sequence stars α-Centauri A and α-Centauri B representing visual binary system, and the third star, called Proxima Centauri, which is smaller and fainter than the other two stars. The angular distance between α-Centauri A and α-Centauri B is 17.59”. The binary system has an orbital period of 79.24 years. The visual magnitudes of α-Centauri A and α-Centauri B are -0.01 and 1.34 respectively. Their color indices are 0.65 and 0.85 respectively. Use the data below to answer the following questions.
+
+Data for main-sequence stars
+
+| $(B-V)_0$ | $T_{\mathrm{eff}}$ | $BC$ |
+|---|---|---|
+| -0.25 | 24500 | 2.30 |
+| -0.23 | 21000 | 2.15 |
+| -0.20 | 17700 | 1.80 |
+| -0.15 | 14000 | 1.20 |
+| -0.10 | 11800 | 0.61 |
+| -0.05 | 10500 | 0.33 |
+| 0.00 | 9480 | 0.15 |
+| 0.10 | 8530 | 0.04 |
+| 0.20 | 7910 | 0 |
+| 0.30 | 7450 | 0 |
+| 0.40 | 6800 | 0 |
+| 0.50 | 6310 | 0.03 |
+| 0.60 | 5910 | 0.07 |
+| 0.70 | 5540 | 0.12 |
+| 0.80 | 5330 | 0.19 |
+| 0.90 | 5090 | 0.28 |
+| 1.00 | 4840 | 0.40 |
+| 1.20 | 4350 | 0.75 |
+
+$BC$=Bolometric Correction, $(B-V)_0$=Intrinsic Color
+
+Questions:
+
+**1.** Plot the curve $BC$ versus $(B-V)_0$.
+
+**2.** Determine the apparent bolometric magnitudes of α-Centauri A and α-Centauri B using the corresponding curve.
+
+**3.** Calculate the mass of each star.
+
+*Notes*:
+
+1. **Bolometric correction** (BC) is a correction that must be made to the apparent magnitude of an object in order to convert an object's visible magnitude to its bolometric magnitude:
+
+$$BC = m_v - m_{bol} \quad \text{or} \quad BC = M_v - M_{bol}$$
+
+2. **Luminosity mass relation** : $M_{bol} = -10.2\log\left(\frac{\mathrm{M}}{\mathrm{M}_{\odot}}\right) + 4.9$
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1.** A plot; see the official solution.
+- **2.** m_bol(α Cen A) = -0.11, m_bol(α Cen B) = 1.09 (BC = 0.10 and 0.25 read from the curve)
+- **3.** M_A = 1.1518 M_sun, M_B = 0.8785 M_sun
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+1
+
+**(20%)**
+
+2.
+
+⊙ For α Cen. A. , its colour index is given by $B - V = 0.65$. Then, by taking the line that intersecting the above curve we find $BC = 0.10$. **(10%)**
+
+⊙ For α Cen. B. , its colour index is given by $B - V = 0.85$. Then, by taking the line that intersecting the above curve we find $BC = 0.25$. **(10%)**
+
+From the relation $m_{\mathrm{v}} - m_{\mathrm{bol}} = BC$ it is then obtained,
+
+⊙ For α Cen. A, $m_{\mathrm{v}} = -0.01$, we get $m_{\mathrm{bol}} = -0.01 - 0.10 = -0.11$ **(10%)**
+
+⊙ For α Cen. B, $m_{\mathrm{v}} = 1.34$, we get $m_{\mathrm{bol}} = 1.34 - 0.25 = 1.09$ **(10%)**
+
+3. Periodic orbit of α Centauri star is $P = 79.24$ years and its angle of semi major axis is $\alpha = 17.59''$. From the result 2a we find that the apparent bolometric magnitude of α Centauri A is $m_{\mathrm{bolA}} = -0.11$, while the apparent bolometric magnitude of α Centauri B is $m_{\mathrm{bolB}} = 1.09$. (two decimal places)
+
+*1st iteration :*
+
+Step 1 : Let $\mathcal{M}_{\mathrm{A}}$ and $\mathcal{M}_{\mathrm{B}}$ be the mass of Centauri A and Centauri B stars, respectively. Then, we firstly take $\mathcal{M}_{\mathrm{A}} + \mathcal{M}_{\mathrm{B}} = 2$
+
+Step 2 : Inserting the values of $\mathcal{M}_{\mathrm{A}} + \mathcal{M}_{\mathrm{B}}$, $P$, and $\alpha$ to the third Kepler equation namely,
+
+$$\left(\frac{\alpha}{p}\right)^3 = \left(\mathcal{M}_A + \mathcal{M}_B\right)P^2$$
+
+One gets $p$, that is
+
+$$p = \left[\frac{\alpha^3}{\left(\mathcal{M}_A + \mathcal{M}_B\right)P^2}\right]^{1/3} = \left[\frac{(17.59)^3}{2(79.24)^2}\right]^{1/3} = \left[0.4334\right]^{1/3} = 0.7568''$$
+
+Step 3 : We determine the magnitude of absolute bolometric using Pogson equation,
+
+$$m_{bol} - M_{bol} = -5 - 5\log p \Longrightarrow M_{bol} = m_{bol} + 5 + 5\log p$$
+
+For α Centauri A:
+
+$$M_{bolA} = m_{bolA} + 5 + 5\log p = -0.11 + 5 + 5\log(0.7568) = -0.11 + 5 - 0.6051 = 4.2849$$
+
+For α Centauri B :
+
+$$M_{bolB} = m_{bolB} + 5 + 5\log p = 1.09 + 5 + 5\log(0.7568) = 1.09 + 5 - 0.6051 = 5.4849$$
+
+Step 4 : We determine the mass of both stars using luminosity mass relation,
+
+$$M_{bol} = -10.2\log\left(\frac{\mathcal{M}}{\mathcal{M}_{\odot}}\right) + 4.9 \Longrightarrow \mathcal{M} = 10^{\left(\frac{4.9 - M_{bol}}{10.2}\right)}\mathcal{M}_{\odot}$$
+
+For α Centauri A:
+
+$$\mathcal{M}_{\mathrm{A}} = 10^{\left(\frac{4.9 - M_{bolA}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 4.2849}{10.2}\right)}\mathcal{M}_{\odot} = 1.1490\mathcal{M}_{\odot}$$
+
+For α Centauri B:
+
+$$\mathcal{M}_{\mathrm{B}} = 10^{\left(\frac{4.9 - M_{bolB}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 5.4949}{10.2}\right)}\mathcal{M}_{\odot} = 0.8763\mathcal{M}_{\odot}$$
+
+**(30%)**
+
+*2nd iteration* Repeating the step 1 until 4 and using the previous resulting mass in the first iteration:
+
+Step 1 : $\mathcal{M}_{\mathrm{A}} + \mathcal{M}_{\mathrm{B}} = 1.1490 + 0.8763 = 2.0253$
+
+Step 2 : $$p = \left[\frac{\alpha^3}{\left(\mathcal{M}_A + \mathcal{M}_B\right)P^2}\right]^{1/3} = \left[\frac{(17.59)^3}{(2.0253)(79.24)^2}\right]^{1/3} = 0.7536$$
+
+Step 3 : For α Centauri A:
+
+$$M_{bolA} = m_{bolA} + 5 + 5\log p = -0.11 + 5 + 5\log(0.7536) = 4.2757$$
+
+For α Centauri B :
+
+$$M_{bolB} = m_{bolB} + 5 + 5\log p = 1.09 + 5 + 5\log(0.7536) = 5.4757$$
+
+Step 4 : For α Centauri A:
+
+$$\mathcal{M}_{\mathrm{A}} = 10^{\left(\frac{4.9 - M_{bolA}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 4.2757}{10.2}\right)}\mathcal{M}_{\odot} = 1.1513\mathcal{M}_{\odot}$$
+
+For α Centauri B:
+
+$$\mathcal{M}_{\mathrm{B}} = 10^{\left(\frac{4.9 - M_{bolB}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 5.4757}{10.2}\right)}\mathcal{M}_{\odot} = 0.8781\mathcal{M}_{\odot}$$
+
+**(10%)**
+
+*3 rd Iteration* Repeating the step 1 until 4 and using the previous resulting mass in the second iteration:
+
+Step 1 : $\mathcal{M}_{\mathrm{A}} + \mathcal{M}_{\mathrm{B}} = 1.1513 + 0.8781 = 2.0294$
+
+Step 2 : $$p = \left[\frac{\alpha^3}{\left(\mathcal{M}_A + \mathcal{M}_B\right)P^2}\right]^{1/3} = \left[\frac{(17.59)^3}{(2.0294)(79.24)^2}\right]^{1/3} = 0.75314$$
+
+Step 3 : For α Centauri A:
+
+$$M_{bolA} = m_{bolA} + 5 + 5\log p = -0.11 + 5 + 5\log(0.7531) = 4.2751$$
+
+For α Centauri B :
+
+$$M_{bolB} = m_{bolB} + 5 + 5\log p = 1.09 + 5 + 5\log(0.7531) = 5.4751$$
+
+Step 4 : For α Centauri A:
+
+$$\mathcal{M}_{\mathrm{A}} = 10^{\left(\frac{4.9 - M_{bolA}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 4.2751}{10.2}\right)}\mathcal{M}_{\odot} = 1.1515\mathcal{M}_{\odot}$$
+
+For α Centauri B:
+
+$$\mathcal{M}_{\mathrm{B}} = 10^{\left(\frac{4.9 - M_{bolB}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 5.4751}{10.2}\right)}\mathcal{M}_{\odot} = 0.8782\mathcal{M}_{\odot}$$
+
+**(0%)**
+
+*4 th Iteration* Repeating the step 1 until 4 and using the previous resulting mass in the third iteration:
+
+Step 1 : $\mathcal{M}_{\mathrm{A}} + \mathcal{M}_{\mathrm{B}} = 1.1515 + 0.8782 = 2.0297$
+
+Step 2 : $$p = \left[\frac{\alpha^3}{\left(\mathcal{M}_A + \mathcal{M}_B\right)P^2}\right]^{1/3} = \left[\frac{(17.59)^3}{(2.0297)(79.24)^2}\right]^{1/3} = 0.7531$$
+
+Step 3 : For α Centauri A:
+
+$$M_{bolA} = m_{bolA} + 5 + 5\log p = -0.11 + 5 + 5\log(0.7531) = 4.2753$$
+
+For α Centauri B :
+
+$$M_{bolB} = m_{bolB} + 5 + 5\log p = 1.09 + 5 + 5\log(0.7531) = 5.4743$$
+
+Step 4 : For α Centauri A:
+
+$$\mathcal{M}_{\mathrm{A}} = 10^{\left(\frac{4.9 - M_{bolA}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 4.2753}{10.2}\right)}\mathcal{M}_{\odot} = 1.1517\mathcal{M}_{\odot}$$
+
+For α Centauri B:
+
+$$\mathcal{M}_{\mathrm{B}} = 10^{\left(\frac{4.9 - M_{bolB}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 5.4743}{10.2}\right)}\mathcal{M}_{\odot} = 0.8784\mathcal{M}_{\odot}$$
+
+**(0%)**
+
+*5 th Iteration* Repeating the step 1 until 4 and using the previous resulting mass in the fourth iteration:
+
+Step 1 : $\mathcal{M}_{\mathrm{A}} + \mathcal{M}_{\mathrm{B}} = 1.1517 + 0.8784 = 2.0301$
+
+Step 2 : $$p = \left[\frac{\alpha^3}{\left(\mathcal{M}_A + \mathcal{M}_B\right)P^2}\right]^{1/3} = \left[\frac{(17.59)^3}{(2.0301)(79.24)^2}\right]^{1/3} = 0.7530''$$
+
+Step 3 : For α Centauri A:
+
+$$M_{bolA} = m_{bolA} + 5 + 5\log p = -0.11 + 5 + 5\log(0.7530) = 4.2740$$
+
+For α Centauri B :
+
+$$M_{bolB} = m_{bolB} + 5 + 5\log p = 1.10 + 5 + 5\log(0.7530) = 5.4740$$
+
+Step 4 : For α Centauri A:
+
+$$\mathcal{M}_{\mathrm{A}} = 10^{\left(\frac{4.9 - M_{bolA}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 4.2740}{10.2}\right)}\mathcal{M}_{\odot} = 1.1518\mathcal{M}_{\odot}$$
+
+For α Centauri B:
+
+$$\mathcal{M}_{\mathrm{B}} = 10^{\left(\frac{4.9 - M_{bolB}}{10.2}\right)}\mathcal{M}_{\odot} = 10^{\left(\frac{4.9 - 5.4740}{10.2}\right)}\mathcal{M}_{\odot} = 0.8785\mathcal{M}_{\odot}$$
+
+**(0%)**
+
+The results of the fifth iteration equal the results of the fourth iteration, so
+
+The mass of α Centauri A : $\mathcal{M}_{\mathrm{A}} = 1.1518\ \mathcal{M}_{\odot}$
+
+The mass of α Centauri B : $\mathcal{M}_{\mathrm{B}} = 0.8785\ \mathcal{M}_{\odot}$
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-data-analysis-x/p2-sol-fig1.png" alt="Scatter plot of BC (vertical axis, 0 to 2.5) against B - V (horizontal axis, -0.40 to 1.40) on a fine grid, with diamond markers for the tabulated main-sequence data points." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-data-analysis-x/p2-sol-fig2.png" alt="Smooth curve of BC against B-V through the tabulated points (crosses), axes from -0.40 to 1.40 and -0.5 to 2.5; dashed horizontal lines labelled α-Cent A and α-Cent B meet the curve above arrows at B-V = 0.65 and 0.85." />
+<figcaption>Main Sequence Stars</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2008_Data_Analysis.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2008/Data%20Analysis/2008_Data_Analysis.pdf)
+· официални решения: [dataan_sol.doc](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2008/Data%20Analysis/dataan_sol.doc)

@@ -1,0 +1,370 @@
+---
+id: ioaa-2008-data-analysis-x-p3
+source: 'IOAA 2008, data-analysis'
+title: 'Задача 3. The Age of Meteorite'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2008/ioaa-2008-data-analysis-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T07:39:40.688Z'
+verifier: 'mechanical'
+---
+
+*The 2nd International Olympiad on Astronomy and Astrophysics — Practical Competition: Data Analysis · 21 август 2008 г. · 100 т.*
+
+<details>
+<summary>Please read this carefully:</summary>
+
+1. Every student receives problem sheets in English and/or in his/her native language, answer sheets, millimeter block papers, and scratch sheets.
+2. The time available is five hours for the data analysis and observation competitions. There are three data analysis problems, and two observation problems.
+3. Use only the materials provided.
+4. Fill in the boxes at the top of each sheet of paper with your country code and your student code.
+5. Use only the front side of **answer sheets**. Write only inside the boxed area.
+6. Begin answering each question on a separate sheet.
+7. Numerical results should be written with as many digits as are appropriate.
+8. Write on **the answer sheets and the millimeter block papers** whatever you consider is required for the solution of each question. Please express your answer primarily in term of equations, numbers, figures, and plots. If necessary provide your answers with concise text. Full credit will be given to correct answer with detailed steps for each question. Underline your final result.
+9. At the end of the exam place the answer sheets and the millimeter block papers inside the envelope and leave everything on your desk.
+
+</details>
+
+<details>
+<summary>Astronomical and Physical Constants</summary>
+
+| Quantity | Value |
+|---|---|
+| Astronomical unit (AU) | 149,597,870.691 km |
+| Light year (ly) | $9.4605 \times 10^{17}$ cm = 63,240 AU |
+| Parsec (pc) | $3.0860 \times 10^{18}$ cm = 206,265 AU |
+| Sidereal year | 365.2564 days |
+| Tropical year | 365.2422 days |
+| Gregorian year | 365.2425 days |
+| Sidereal month | 27.3217 days |
+| Synodic month | 29.5306 days |
+| Mean sidereal day | $23^{\mathrm{h}}56^{\mathrm{m}}4^{\mathrm{s}}.091$ of mean solar time |
+| Mean solar day | $24^{\mathrm{h}}3^{\mathrm{m}}56^{\mathrm{s}}.555$ of sidereal time |
+| Mean distance, Earth to Moon | 384,399 km |
+| Earth mass ($\mathfrak{M}_{\oplus}$) | $5.9736 \times 10^{27}$ g |
+| Earth's mean radius | 6,371.0 km |
+| Earth's mean velocity in orbit | 29.783 km/s |
+| Moon’s mass (𝔐☽) | $7.3490 \times 10^{25}$ g |
+| Moon’s mean radius | 1,738 km |
+| Sun mass ($\mathfrak{M}_{\odot}$) | $1.9891 \times 10^{33}$ g |
+| Mean Earth radius | $6.3710 \times 10^{6}$ cm |
+| Sun radius ($R_{\odot}$) | $6.96 \times 10^{10}$ cm |
+| Sun luminosity ($L_{\odot}$) | $3.96 \times 10^{33}$ erg s$^{-1}$ |
+| Sun effective temperature ($T_{eff\odot}$) | 5 800 °K |
+| Sun apparent magnitude ($m_{\odot}$) | -26.8 |
+| Sun bolometric magnitude ($m_{bol\odot}$) | -26.79 |
+| Sun absolute magnitude ($M_{\odot}$) | 4.82 |
+| Sun absolute bolometric magnitude ($M_{bol\odot}$) | 4.72 |
+| Speed of light ($c$) | $2.9979 \times 10^{10}$ cm/s |
+| Gravitational constant ($G$) | $6.6726 \times 10^{-8}$ dyne cm$^{2}$ g$^{-2}$ |
+| Boltzmann constant ($k$) | $1.3807 \times 10^{-16}$ erg. K$^{-1}$ |
+| Stefan-Boltzmann constant ($\sigma$) | $5.6705 \times 10^{-5}$ erg cm$^{-2}$ K$^{-4}$ s$^{-1}$ |
+| Planck constant ($h$) | $6.6261 \times 10^{-27}$ erg s |
+| Electron charge ($e$) | $1.602 \times 10^{-19}$ C = $4.803 \times 10^{-10}$ esu |
+| Electron mass ($m_e$) | $5.48579903 \times 10^{-4}$ amu |
+| Proton mass ($m_p$) | 1.007276470 amu |
+| Neutron mass ($m_n$) | 1.008664904 amu |
+| Deuterium nucleus mass ($m_d$) | 2.013553214 amu |
+| Hydrogen mass | 1.00794 amu |
+| Helium mass | 4.002603 amu |
+| Carbon mass | 12.01070 amu |
+
+**Conversion table**
+
+| | |
+|---|---|
+| 1 Å | 0.1 nm |
+| 1 barn | $10^{-28}$ m$^{2}$ |
+| 1 G | $10^{-4}$ T |
+| 1 erg | $10^{-7}$ J = 1 dyne cm |
+| 1 esu | $3.3356 \times 10^{-10}$ C |
+| 1 amu (atomic mass unit) | $1.6606 \times 10^{-24}$ g |
+| 1 atm (atmosphere) | 101,325 Pa = 1.01325 bar |
+| 1 dyne | $10^{-5}$ N |
+
+</details>
+
+<details>
+<summary>Points</summary>
+
+**300 points for 3 problems, 100 points for each problem**
+
+</details>
+
+## Условие
+
+The basic equation of radioactive decay can be expressed as:
+
+$$N(t) = N_0 \exp(-\lambda t)$$
+
+where $N(t)$ and $N_0$ are the number of remaining atoms of the radioactive isotope (or parent isotope) at time $t$ and its initial number at $t = 0$, respectively, while $\lambda$ is the decay constant. The decay of the parent produces daughter nuclides $D(t)$, or radiogenics, which is defined as
+
+$$D(t) = N_0 - N(t)\ .$$
+
+Based on those ideas, a group of astronomers investigates a number of meteorite samples to determine their ages. They have two kinds of samples: allende chondrite (A) and basaltic achondrite (B). From the samples, they measure the abundance of $^{87}\mathrm{Rb}$ and $^{87}\mathrm{Sr}$, where it is assumed that $^{87}\mathrm{Sr}$ is entirely produced by the decay of $^{87}\mathrm{Rb}$. The value of $\lambda$ is $1.42 \times 10^{-11}$ per year for this isotopic decay. In addition, non-radiogenic element $^{86}\mathrm{Sr}$ is also measured. Results of measurement are given in the table below, expressed in ppm (part per million).
+
+| Sample No | Meteorite type | $^{86}\mathrm{Sr}$ (ppm) | $^{87}\mathrm{Rb}$ (ppm) | $^{87}\mathrm{Sr}$ (ppm) |
+|---|---|---|---|---|
+| 1 | A | 29.6 | 0.3 | 20.7 |
+| 2 | B | 58.7 | 68.5 | 44.7 |
+| 3 | B | 74.2 | 14.4 | 52.9 |
+| 4 | A | 40.2 | 7.0 | 28.6 |
+| 5 | A | 19.7 | 0.4 | 13.8 |
+| 6 | B | 37.9 | 31.6 | 28.4 |
+| 7 | A | 33.4 | 4.0 | 23.6 |
+| 8 | B | 29.8 | 105.0 | 26.4 |
+| 9 | A | 9.8 | 0.8 | 6.9 |
+| 10 | B | 18.5 | 44.0 | 15.4 |
+
+**Questions:**
+
+**1.** Express the time $t$ in term of $\dfrac{D(t)}{N(t)}$
+
+**2.** Determine the half-life $t_{1/2}$, i.e., the time needed to obtain a half number of parents after decay.
+
+**3.** Knowledge on the ratio between two isotopes is more valuable than just the absolute abundance of each isotope. It is quite likely that there was some initial strontium present. By taking $\left(\frac{^{87}\mathrm{Rb}}{^{86}\mathrm{Sr}}\right)$ as independent variable and $\left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)$ as dependent variable, estimate the simple linear regression model to represent the data.
+
+**4.** Plot $\left(\frac{^{87}\mathrm{Rb}}{^{86}\mathrm{Sr}}\right)$ versus $\left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)$ and also the regression line (isochrone) for each type of the meteorites. (Please use minimum 7 decimal digits for intermediate calculations)
+
+**5.** Subsequently, help this astronomer to determine the age of each type of the meteorites and its error. Which type is older?
+
+**6.** Determine the initial value of $\left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)_0$ for each type of the meteorites and its error.
+
+*Glossary*:
+
+A simple linear regression line $y=a+bx$ can be fitted to a set of data $(X_{\mathrm{i}},Y_{\mathrm{i}})$, $i=1,\ldots,n$, in which
+
+$$b = \frac{SS_{xy}}{SS_{xx}}$$
+
+$$a = \bar{y} - b\bar{x}$$
+
+where
+
+$SS_{xx}$ : sum of square for $X = \sum_{i=1}^{n} X_i^2 - \frac{1}{n}\left(\sum_{i=1}^{n} X_i\right)^2$
+
+$SS_{yy}$ : sum of square for $Y = \sum_{i=1}^{n} Y_i^2 - \frac{1}{n}\left(\sum_{i=1}^{n} Y_i\right)^2$
+
+$SS_{xy}$ : sum of square for both $X$ and $Y = \sum_{i=1}^{n} X_i Y_i - \frac{1}{n}\sum_{i=1}^{n} X_i \sum_{i=1}^{n} Y_i$
+
+Standard deviation of each parameter, $a$ and $b$ can be calculated by
+
+$$S_a = \sqrt{\frac{SS_{YY} - \frac{(SS_{XY})^2}{SS_{XX}}}{(n-2)SS_{XX}} \times \sum_{i=1}^{n} X_i^2}$$
+
+$$S_b = \sqrt{\frac{SS_{YY} - \frac{(SS_{XY})^2}{SS_{XX}}}{(n-2)SS_{XX}}}$$
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1.** $t = \frac{1}{\lambda}\ln\left(\frac{D(t)}{N(t)} + 1\right)$
+- **2.** $t_{1/2} = \ln 2/\lambda$
+- **3.** $\left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right) = \left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)_0 + \left(e^{\lambda t} - 1\right)\left(\frac{^{87}\mathrm{Rb}}{^{86}\mathrm{Sr}}\right)$
+- **4.** Type A: y = 0.0707786x + 0.6986419; Type B: y = 0.0523729x + 0.7036141
+- **5.** Type A: (4.816 ± 0.282) × 10^9 year; Type B: (3.595 ± 0.095) × 10^9 year; type A is older.
+- **6.** Type A: 0.6986419 ± 0.0009133; Type B: 0.7036141 ± 0.0060532
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+1. From $N(t) = N_0 \exp(-\lambda t)$ and $D(t) = N_0 - N(t)$, then we have
+
+$$D(t) = N(t)e^{\lambda t} - N(t) = N(t)(e^{\lambda t} - 1)$$
+
+$$\frac{D(t)}{N(t)} = (e^{\lambda t} - 1) \quad \text{or} \quad e^{\lambda t} = \frac{D(t)}{N(t)} + 1\ , \text{ so}$$
+
+$$\lambda t = \ln\left(\frac{D(t)}{N(t)} + 1\right) \quad \text{and}$$
+
+$$t = \frac{1}{\lambda}\ln\left(\frac{D(t)}{N(t)} + 1\right)$$
+
+**(10%)**
+
+2. Setting $N(t) = \frac{1}{2}N_0$, we get:
+
+$$t_{1/2} = \ln 2/\lambda = 48.8 \times 10^9\ \mathrm{year} = 48.8\ \mathrm{Gyr}$$
+
+**(5%)**
+
+3. We know that $^{87}\mathrm{Rb} \to {}^{87}\mathrm{Sr}$, and taking the ratios $\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}$ as $y$ (dependent variable) and $\frac{^{87}\mathrm{Rb}}{^{86}\mathrm{Sr}}$ as $x$ (independent variable), we can use a simple linear regression equation:
+
+$$y = a + bx$$
+
+Taking into account the initial strontium, the corresponding equation is
+
+$$\left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right) = \left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)_0 + \left(e^{\lambda t} - 1\right)\left(\frac{^{87}\mathrm{Rb}}{^{86}\mathrm{Sr}}\right)$$
+
+where **the intercept** $a = \left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)_0$ ;
+
+and **the slope** $b = \left(e^{\lambda t} - 1\right)$ **(20%)**
+
+4. First, take the ratios:
+
+| Sample No | Meteorite type | $^{86}\mathrm{Sr}$ (ppm) | $^{87}\mathrm{Rb}$ (ppm) | $^{87}\mathrm{Sr}$ (ppm) | $^{87}\mathrm{Rb}/^{86}\mathrm{Sr}$ | $^{87}\mathrm{Sr}/^{86}\mathrm{Sr}$ |
+|---|---|---|---|---|---|---|
+| 1 | A | 29.6 | 0.3 | 20.7 | 0.0101351 | 0.6993243 |
+| 2 | B | 58.7 | 68.5 | 44.7 | 1.1669506 | 0.7614991 |
+| 3 | B | 74.2 | 14.4 | 52.9 | 0.1940701 | 0.712938 |
+| 4 | A | 40.2 | 7.0 | 28.6 | 0.1741294 | 0.7114428 |
+| 5 | A | 19.7 | 0.4 | 13.8 | 0.0203046 | 0.7005076 |
+| 6 | B | 37.9 | 31.6 | 28.4 | 0.8337731 | 0.7493404 |
+| 7 | A | 33.4 | 4.0 | 23.6 | 0.1197605 | 0.7065868 |
+| 8 | B | 29.8 | 105.0 | 26.4 | 3.5234899 | 0.885906 |
+| 9 | A | 9.8 | 0.8 | 6.9 | 0.0816327 | 0.7040816 |
+| 10 | B | 18.5 | 44.0 | 15.4 | 2.3783784 | 0.8324324 |
+
+And we compile the data into Type A and B:
+
+**Type A**
+
+| Sample No | $^{87}\mathrm{Rb}/^{86}\mathrm{Sr}$ ($X$) | $^{87}\mathrm{Sr}/^{86}\mathrm{Sr}$ ($Y$) | $XY$ | $X^2$ | $Y^2$ |
+|---|---|---|---|---|---|
+| 1 | 0.0101351 | 0.6993243 | 0.0070877 | 0.0001027 | 0.4890545 |
+| 4 | 0.1741294 | 0.7114428 | 0.1238831 | 0.030321 | 0.5061509 |
+| 5 | 0.0203046 | 0.7005076 | 0.0142235 | 0.0004123 | 0.4907109 |
+| 7 | 0.1197605 | 0.7065868 | 0.0846212 | 0.0143426 | 0.4992649 |
+| 9 | 0.0816327 | 0.7040816 | 0.0574761 | 0.0066639 | 0.4957309 |
+| Sum: | **0.4059623** | **3.5219431** | **0.2872916** | **0.0518425** | **2.4809121** |
+
+| | |
+|---|---|
+| Λ | 1.42E-11 |
+| $\bar{X}$ | 0.0811925 |
+| $\bar{Y}$ | 0.7043886 |
+| $SS_{\mathrm{xx}}$ | 0.0188814 |
+| $SS_{yy}$ | 9.54601E-05 |
+| $SS_{xy}$ | 0.0013364 |
+| $b_A$ | 0.0707786 |
+| $a_A$ | 0.6986419 |
+
+where,
+
+$SS_{xx}$ : sum of square for $X = \sum_{i=1}^{n} X_i^2 - \frac{1}{n}\left(\sum_{i=1}^{n} X_i\right)^2$
+
+$SS_{yy}$ : sum of square for $Y = \sum_{i=1}^{n} Y_i^2 - \frac{1}{n}\left(\sum_{i=1}^{n} Y_i\right)^2$
+
+$SS_{xy}$ : sum of square for both $X$ and $Y = \sum_{i=1}^{n} X_i Y_i - \frac{1}{n}\sum_{i=1}^{n} X_i \sum_{i=1}^{n} Y_i$
+
+and **the slope**
+
+$$b_A = \left(e^{\lambda t} - 1\right) = \frac{SS_{XY}}{SS_{XX}} = \frac{\sum_{i=1}^{5} X_i Y_i - \frac{1}{5}\sum_{i=1}^{5} X_i \sum_{i=1}^{5} Y_i}{\sum_{i=1}^{5} X_i^2 - \frac{1}{5}\left(\sum_{i=1}^{5} X_i\right)^2} = \frac{0.2872916 - 0.2859552}{0.0518425 - 0.0329611} = 0.0707786 \qquad (*)$$
+
+and **the intercept**
+
+$$a_A = \left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)_0 = \bar{Y} - b\bar{X} = \overline{\left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)} - b\overline{\left(\frac{^{87}\mathrm{Rb}}{^{86}\mathrm{Sr}}\right)} = 0.7043886 - 0.0707786 \times 0.0811925 = 0.6986419$$
+
+The scatter plot and linear regression line for Type A is:
+
+**(20%)**
+
+**Type B**
+
+| Sampel No | $^{87}\mathrm{Rb}/^{86}\mathrm{Sr}$ ($X$) | $^{87}\mathrm{Sr}/^{86}\mathrm{Sr}$ ($Y$) | $XY$ | $X^2$ | $Y^2$ |
+|---|---|---|---|---|---|
+| 2 | 1.1669506 | 0.7614991 | 0.8886318 | 1.3617737 | 0.5798809 |
+| 3 | 0.1940701 | 0.7129380 | 0.1383599 | 0.0376632 | 0.5082806 |
+| 6 | 0.8337731 | 0.7493404 | 0.6247799 | 0.6951776 | 0.561511 |
+| 8 | 3.5234899 | 0.8859060 | 3.1214808 | 12.4149811 | 0.7848294 |
+| 10 | 2.3783784 | 0.8324324 | 1.9798392 | 5.6566838 | 0.6929437 |
+| Sum: | **8.0966621** | **3.9421159** | **6.7530916** | **20.1662794** | **3.1274456** |
+
+| | |
+|---|---|
+| $\lambda$ | 1.42E-11 |
+| $\bar{X}$ | 1.6193324 |
+| $\bar{Y}$ | 0.7884232 |
+| $SS_{\mathrm{xx}}$ | 7.0550920 |
+| $SS_{yy}$ | 0.019390046 |
+| $SS_{xy}$ | 0.3694955 |
+| $b_B$ | 0.0523729 |
+| $a_B$ | 0.7036141 |
+
+and **the slope** $b_B = \left(e^{\lambda t} - 1\right)$
+
+$$= \frac{SS_{XY}}{SS_{XX}} = \frac{\sum_{i=1}^{5} X_i Y_i - \frac{1}{5}\sum_{i=1}^{5} X_i \sum_{i=1}^{5} Y_i}{\sum_{i=1}^{5} X_i^2 - \frac{1}{5}\left(\sum_{i=1}^{5} X_i\right)^2} = \frac{6.7530916 - 6.3835961}{20.1662794 - 13.1111874} = 0.0523729$$
+
+and **the intercept**
+
+$$a_B = \left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)_0 = \bar{Y} - b_B\bar{X} = \overline{\left(\frac{^{87}\mathrm{Sr}}{^{86}\mathrm{Sr}}\right)} - b_B\overline{\left(\frac{^{87}\mathrm{Rb}}{^{86}\mathrm{Sr}}\right)} = 0.7884232 - 0.0523729 \times 1.6193324 = 0.7036141$$
+
+The scatter plot and linear regression line for Type B is:
+
+**(20%)**
+
+5. Since we have 2 types of meteorites, then we have to calculate their ages separately, and $\lambda = 1.42 \times 10^{-11}$. As $b = \left(e^{\lambda t} - 1\right)$, then $e^{\lambda t} = b+1$.
+
+After we get $a$ and $b$ then
+
+$$t = \frac{1}{\lambda}\ln\left(b+1\right)$$
+
+which is $4.81592 \times 10^9$ year
+
+From (*), we obtain
+
+| | |
+|---|---|
+| $s_{\mathrm{b}}$ | 0.0040112 |
+| $s_a$ | 0.0009133 |
+| $e_t$ | $2.819138 \times 10^8$ |
+
+sigma-b :
+
+$$s_b = \sqrt{\frac{SS_{YY} - \frac{\left(SS_{XY}\right)^2}{SS_{XX}}}{\left(n-2\right)SS_{XX}}} = \sqrt{\frac{0.0000955 - \frac{\left(0.0013364\right)^2}{0.0188814}}{3 \times 0.0188814}} = 0.0040112$$
+
+error on t : $e_t = \frac{1}{\lambda}\ln\left(s_b + 1\right) = \frac{\ln\left(0.0040112 + 1\right)}{1.42 \times 10^{-11}} = 2.819138 \times 10^8$
+
+sigma-a (error on initial) :
+
+$$s_a = \sqrt{\frac{SS_{YY} - \frac{\left(SS_{XY}\right)^2}{SS_{XX}}}{\left(n-2\right)SS_{XX}} \times \sum_{i=1}^{n} X_i^2} = \sqrt{\frac{0.0000955 - \frac{\left(0.0013364\right)^2}{0.0188814}}{3 \times 0.0188814} \times 0.0518425} = 0.0009133$$
+
+**Type B**
+
+Similar as in Type A, we obtain for Type B, in which $t = 3.595 \times 10^9$ year.
+
+| | |
+|---|---|
+| $\mathrm{s_b}$ | 0.0013487 |
+| $\mathrm{s_a}$ | 0.0060566 |
+| $\mathrm{e_t}$ | 94915372.7530205 |
+
+sigma-b :
+
+$$s_b = \sqrt{\frac{SS_{YY} - \frac{\left(SS_{XY}\right)^2}{SS_{XX}}}{\left(n-2\right)SS_{XX}}} = \sqrt{\frac{0.0193900 - \frac{0.3694955^2}{7.0550920}}{3 \times 7.0550920}} = 0.0013479$$
+
+error on t : $e_t = \frac{1}{\lambda}\ln\left(s_b + 1\right) = \frac{\ln\left(0.0013479 + 1\right)}{1.42 \times 10^{-11}} = 9.48586 \times 10^7$
+
+sigma-a (error on initial) :
+
+$$s_a = \sqrt{\frac{SS_{YY} - \frac{\left(SS_{XY}\right)^2}{SS_{XX}}}{\left(n-2\right)SS_{XX}} \times \sum_{i=1}^{n} X_i^2} = \sqrt{\frac{0.0193900 - \frac{0.3694955^2}{7.0550920}}{3 \times 7.0550920} \times 20.1662794} = 0.0060532$$
+
+The Age of type A = $(4.816 \pm 0.282) \times 10^9$ year = $4.816 \pm 0.282$ Gyr
+
+The Age of type B = $(3.595 \pm 0.095) \times 10^9$ year = $3.595 \pm 0.435$ Gyr
+
+Hence, the type A is much older than the type B.
+
+**(20%)**
+
+6. The initial value of type A $(^{87}\mathrm{Sr}/^{86}\mathrm{Sr})_0 = 0.6986419 \pm 0.0009133$
+
+The initial value of type B $(^{87}\mathrm{Sr}/^{86}\mathrm{Sr})_0 = 0.7036141 \pm 0.0060532$ **(5%)**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-data-analysis-x/p3-sol-fig1.png" alt="Scatter plot titled Type A: Y from 0.698 to 0.714 against X from 0 to 0.2, five data points with the fitted line labelled y = 0.0707786x + 0.6986419." />
+<figcaption>Type A</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-data-analysis-x/p3-sol-fig2.png" alt="Scatter plot titled Type B: Y from 0.00 to 1.00 against X from 0.00 to 4.00, five data points with the fitted line labelled y = 0.0523729x + 0.7036141." />
+<figcaption>Type B</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2008_Data_Analysis.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2008/Data%20Analysis/2008_Data_Analysis.pdf)
+· официални решения: [dataan_sol.doc](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2008/Data%20Analysis/dataan_sol.doc)
