@@ -62,7 +62,9 @@ On Windows, run commands with the Bash tool (Git Bash) and write every JSON file
 6. When the paper is promoted, run: node scripts/tx/prepare.mjs ${
       p.id
     } --gc (frees disk; keeps the manifest and candidates).
-Rules: never run gatsby; never git add/commit/push (the orchestrator ships); do not edit other papers, scripts, or content files by hand (run.mjs/promote write content); do not open content/problems of other papers; no web search; never read ~/.config/olympiads-xyz or print any key.
+Rules: never run gatsby; never git add/commit/push (the orchestrator ships); do not edit other papers, scripts, or content files by hand (run.mjs/promote write content); do not open content/problems of other papers; no web search; never read ~/.config/olympiads-xyz or print any key. Keep every helper script and scratch file under ${REPO}/tmp/tx/${
+      p.id
+    }/work/ — never in a shared scratchpad or temp folder: other paper agents run in parallel and reuse the same file names (an agentfix.mjs written by one agent was run by another).
 Return JSON {paperId, status: promoted|escalated|error, problems, figures, boxesFixed, fixRounds, lastNote (run.mjs's last note), notes}.`,
     { label: `paper:${p.id}`, phase: 'Papers', schema: R, effort: 'medium' }
   )
