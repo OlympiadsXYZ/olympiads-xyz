@@ -1,0 +1,413 @@
+---
+id: apho-2021-theory-q2-english-p1
+source: 'APhO 2021, theory'
+title: 'Задача 1. Ray tracing and generation of entangled light'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2021/apho-2021-theory-q2-english.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:41:16.206Z'
+verifier: 'mechanical'
+---
+
+*Theory Q2: Ray tracing and generation of entangled light · 10 т.*
+
+## Условие
+
+**Useful formula:**
+
+$$\vec{A}\times\left(\vec{B}\times\vec{C}\right)=\vec{B}\left(\vec{A}\cdot\vec{C}\right)-\vec{C}\left(\vec{A}\cdot\vec{B}\right)$$
+
+**Introduction**
+
+Let $\vec{E}$ represent the electric field, $\vec{H}$ the magnetic field, $\vec{D}$ the electric displacement, and $\vec{B}$ the magnetic induction. We have $\vec{D}=\epsilon_0\vec{E}+\vec{P}$, with $\vec{P}$ being the polarization of the medium and $\epsilon_0$ being the permittivity of free space. Only nonmagnetic dielectric media are considered in this problem, hence $\vec{B}=\mu_0\vec{H}$, with $\mu_0$ being the permeability of free space. The energy density and energy flow density associated with the electromagnetic field are given by $u_{em}=\frac{1}{2}(\vec{E}\cdot\vec{D}+\vec{H}\cdot\vec{B})$ and Poynting's vector $\vec{S}=\vec{E}\times\vec{H}$, respectively.
+
+In homogeneous dielectric media, a monochromatic plane wave of light can be described by its angular frequency $\omega$, wave vector $\vec{k}$, $\vec{D}$, and $\vec{B}$. According to Maxwell’s equations, we have $\vec{k}\times\vec{E}=\omega\vec{B}$ and $\vec{k}\times\vec{H}=-\omega\vec{D}$. For such a wave, variations of $\vec{D}$ and $\vec{B}$ with position $\vec{r}$ and time $t$ are given by sinusoidal functions of the phase $(\vec{k}\cdot\vec{r}-\omega t)$.
+
+**Part A. Light propagation in isotropic dielectric media (1.0 points)**
+
+If the medium is isotropic, we have $\vec{P}=\chi\epsilon_0\vec{E}$ and $\vec{D}=\epsilon\vec{E}$, with $\chi$ and $\epsilon=\epsilon_0(1+\chi)$ being the electric susceptibility and permittivity, respectively, of the medium. For a light wave of angular frequency $\omega$ in such a medium, a given phase will propagate in the direction $\vec{k}$ with a velocity (called *phase velocity*) $v_p=c/n$. Here $c$ is the speed of light in vacuum and $n$ is the refractive index of the medium. One can also use rays to represent a train of light waves. The propagation of a light ray is characterized by the direction and speed $v_r$ of the electromagnetic energy flow.
+
+Consider a plane wave of light with angular frequency $\omega$ and wave vector $\vec{k}$ in a homogeneous isotropic dielectric medium.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2021-theory-q2-english/p1-fig1.png" alt="Interface diagram: a horizontal z axis and a vertical x axis pointing down, with the y axis (circled cross) into the page. Medium 1 is above the interface, medium 2 below. A ray comes from A at angle θ1 to the vertical and continues to B at angle θ2 to the x axis. Dashed axes z2 and x2 of medium 2 are rotated by the angle ϕ from z." />
+<figcaption>Fig. 1: Propagation of light from A to B through an interface between an isotropic medium 1 and an anisotropic medium 2.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2021-theory-q2-english/p1-fig2.png" alt="Two panels. (a) Axes x', y', z' with the optic axis OA at angle θ from z'; vector k_α at angle ψ_α from z' and θ_α from OA; its projection k_α⊥ in the x'y' plane at angle ϕ_α. (b) Axes x', y', z' with OA at angle θ; the incoming k along z' splits into k1 and k2 lying on two cones (dashed lines), whose circles intersect at points a and b." />
+<figcaption>Fig. 2: (a) Vector $\vec{k}_\alpha$ has angular coordinates $(\psi_\alpha,\phi_\alpha)$ in the $x'y'z'$ coordinate system with $\vec{k}_{\alpha\perp}$ being its projection in the $x'y'$ plane. Note that $\vec{k}_\alpha$ makes an angle $\theta_\alpha$ with OA. (b) Non-collinear splitting of an **e** ray into **e + o** rays that form two cones. Line $\overline{ab}$ is parallel to the $y'$ axis.</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2021-theory-q2-english/p1-fig3.png" alt="Two sets of axes x' (up) and y' (right). Left: Polarizer 1 at point a, transmission axis at angle α from x'. Right: Polarizer 2 at point b, transmission axis at angle β from x'." />
+<figcaption>Fig. 3: Two linear polarizers 1 and 2 for coincidence measurement of photons that pass $a$ and $b$.</figcaption>
+</figure>
+
+**A.1** Express its phase velocity $v_p$ in terms of $\epsilon$ and $\mu_0$. **[0,4 т.]**
+
+**A.2** What is the refractive index $n$ of the dielectric medium for the wave? **[0,2 т.]**
+
+**A.3** What are the direction $\hat{S}\equiv\vec{S}/S$ and speed $v_r$ of its electromagnetic energy flow? **[0,4 т.]**
+
+**Part B. Light propagation in uniaxial dielectric media (4.8 points)**
+
+We now assume the dielectric medium to be uniaxial, i.e, it is electrically anisotropic along a special direction fixed in the medium, called the *optic axis*, which we presently call it the $z$ direction. In such a case, the displacement $\vec{D}$ and the electric field $\vec{E}$ are related by $D_x=\epsilon E_x$, $D_y=\epsilon E_y$, and $D_z=\epsilon' E_z$, where $x$, $y$, and $z$ axes are mutually orthogonal. Consequently, the phase velocity of a light wave is anisotropic and depends additionally on the directions of $\vec{k}$ and $\vec{D}$. Let $n_o=c\sqrt{\mu_0\epsilon}$ and $n_e=c\sqrt{\mu_0\epsilon'}$, answer the followings questions: **B.1**, **B.2**, and **B.3**.
+
+**B.1** Suppose the wave vector $\vec{k}$ of a monochromatic plane light wave is in the $xz$ plane so that $\vec{k}=k(\sin\theta,0,\cos\theta)$. At each angle $\theta$, what directions of $\vec{D}$ and $\vec{B}$ are permissible for the light wave? Find all possible refractive indices and express the refractive indices in terms of $\theta$, $n_o$, and $n_e$. Find the angle $\theta$ for which only one value is permitted for the refractive index. **[1,5 т.]**
+
+**B.2** The polarization of a light wave, i.e., the direction of its electric field $\vec{E}$, can be either perpendicular (called an *ordinary wave or ray* ) or parallel (called an *extraordinary wave or ray*) to the $xz$ plane. For each of the light waves you found in **B.1**, specify its polarization as a unit vector and indicate whether it is an ordinary or extraordinary wave. Also compute $\tan\alpha$, where $\alpha$ is the angle between $\vec{E}$ and $\vec{D}$ ($\alpha$ is positive when going from $\vec{E}$ to $\vec{D}$ is clockwise). **[0,8 т.]**
+
+**B.3** Extend the results in **B.1** and **B.2** to the general case when the angle between $\vec{k}$ and the positive $z$ direction is still $\theta$, but $\vec{k}$ is not in the $xz$ plane. Find all possible values of the refractive indices and the corresponding polarizations. **[0,6 т.]**
+
+In a uniaxial medium, the direction of $\vec{k}$ of a light wave may differ from the direction of the light ray. The phase velocity of the wave is still given by $c/n$ with $n$ being the refractive index along $\vec{k}$, while the ray velocity is defined jointly by the direction and the rate of energy flow.
+
+**B.4** Following problems **B.1-3**, consider a light wave with $\vec{k}=k(\sin\theta,0,\cos\theta)$. Let the angle between $\hat{k}\equiv\vec{k}/k$ and the direction of the ray, $\hat{S}$, be $\alpha_r$ ($\alpha_r$ is positive when going from $\hat{S}$ to $\hat{k}$ is clockwise). Find all possible values of $\tan\alpha_r$, speed $v_r$ of the ray and $\hat{S}$. Using these results, express the ray index $n_s=c/v_r$ in terms of $\hat{S}$, $\hat{x}$, $\hat{z}$, $n_o$, and $n_e$. **[0,8 т.]**
+
+Consider the propagation of a light ray from A to B through an interface between an isotropic medium, labelled 1, and an anisotropic medium, labelled 2, as shown in Fig. 1. The interface coincides with the $yz$ plane, while the plane of incidence is the $xz$ plane. Let the angle of incidence be $\theta_1$. The refractive index of medium 1 is $n$, while the refractive indices of medium 2 for axes $z_2$, $y_2$, $x_2$ are $n_e$, $n_o$, and $n_o$, respectively. Here $y_2$ axis coincides with $y$ axis. Fermat’s principle states that the propagation time for the path that the light ray goes from A to B is a minimum. For light with polarization parallel to $xz$ plane and incident at the angle $\theta_1$, Fermat’s principle leads to the following equation:
+
+$$\bar{A}(\tan\theta_2)^2+\bar{B}\tan\theta_2+\bar{C}=0\qquad(1)$$
+
+**B.5** Find $\bar{A}$, $\bar{B}$, and $\bar{C}$ in terms of $P_1$, $P_2$, $P_3$, and $n\sin\theta_1$, where $P_1=n_o^2\cos^2\phi+n_e^2\sin^2\phi$, $P_2=n_o^2\sin^2\phi+n_e^2\cos^2\phi$, and $P_3=(n_o^2-n_e^2)\sin\phi\cos\phi$. From Eq. (1), find corresponding $\tan\theta_2$ to two special orientations: $\phi=0$ and $\phi=\pi/2$. **[1,1 т.]**
+
+**Part C. Entanglement of light (4.2 points)**
+
+In a nonlinear medium, the electric field $\vec{E}$ is related to the polarization $\vec{P}$ by $P_i=(\epsilon-\epsilon_0)E_i+\sum_j\sum_k\chi_{ijk}^{(2)}E_jE_k$. Here $i$, $j$, $k$ each can be any one of the three components $x$, $y$, $z$, and $\chi_{ijk}^{(2)}$ are constants representing the second-order nonlinear susceptibility of the medium. Non-vanishing of $\chi_{ijk}^{(2)}$ implies that as a light wave travels through a nonlinear medium, it can split into two light waves.
+
+Suppose that because $\chi_{ijk}^{(2)}$ are not all zero, the electric field in the medium is made up of a superposition of three plane waves of angular frequencies $\omega$, $\omega_1$, and $\omega_2$, propagating with wave vectors $\vec{k}$, $\vec{k}_1$, and $\vec{k}_2$, respectively. Assume $\omega\geq\omega_2$ and $\omega_1\geq\omega_2$.
+
+**C.1** Find all possible relations (known as the *phase matching conditions*) between these angular frequencies and wave vectors. Viewing light as composed of photons, what kinds of conservation laws do these conditions imply for the three photons involved? Write down equations expressing these conservation laws for the case that a photon with angular frequency $\omega$ and wave vector $\vec{k}$ being split into two photons of angular frequencies $\omega_1$and $\omega_2$, propagating with wave vectors $\vec{k}_1$and $\vec{k}_2$, respectively. **[0,8 т.]**
+
+**C.2** Consider a light wave in a uniaxial medium. Denote an ordinary ray as **o** and an extraordinary ray as **e**. There are 8 possible ways of splitting for the light wave: **o → o + o**, **o → e + o**, **o → o + e**, **o → e + e**, **e → o + o**, **e → e + o**, **e → o + e**, and **e → e + e**. Assume that the refractive indices $n_o$ and $n_e$ are both increasing functions of $\omega$. Using the same notations for wave vectors as in problem **C.1** and considering the case that $\vec{k}$, $\vec{k}_1$, and $\vec{k}_2$ are collinear, indicate which of the 8 ways of splitting are not possible. **[0,8 т.]**
+
+Consider an incoming **e** ray traveling along $z'$ direction with wave vector $\vec{k}$ and $\omega=\Omega_p$ in an uniaxial medium with refractive index $n_e<n_o$. Suppose that, in a collinear splitting **e → e + o**, the phase-matching conditions are realized with $k_1=K_e$, $\omega_1=\Omega_e$, $k_2=K_o$, and $\omega_2=\Omega_o$. Here subscripts 1 and 2 refer to **e** ray and **o** ray. $\vec{k}_1$, $\vec{k}_2$ and $\vec{k}$ all point in the $z'$direction. As shown in Fig. 2(a), the optic axis (OA) of the medium lies in the $x'z'$ plane and makes an angle $\theta<\pi/2$ with the $z'$ axis. Therefore, $n_e$ is a function of $\omega$ and $\theta$, i.e., $n_e=n_e(\omega,\theta)$. For the same incoming **e** ray with wave vector $\vec{k}$ and $\omega=\Omega_p$, suppose its non-collinear splitting into **e + o** rays causes the latter two rays to separate but remain on two cones with $\omega_1=\omega_2=\Omega$, $k_1=k_2$, as shown in Fig. 2(b). Note that in the collinear splitting, $\Omega_e$ is already close to $\Omega_o$, and here $\Omega$ is only slightly less than $\Omega_e$. In a plane perpendicular to $\vec{k}$, two circles on the cones for $\vec{k}_1$ and $\vec{k}_2$ intersect at points $a$ and $b$ with the line $\overline{ab}$ parallel to $y'$axis. As shown in Fig. 2(a), $\vec{k}_\alpha(\alpha=1,2\ )$ makes an angle $\theta_\alpha$ with the optic axis and has angular coordinates $(\psi_\alpha,\phi_\alpha)$ with $\vec{k}_{\alpha\perp}$ being its projection in the $x'y'$ plane. Each vector $\vec{k}_\alpha$ deviates from $z'$ axis only slightly so that $|(\Omega-\Omega_e)/\Omega_e|\ll1$, $|\vec{k}_{\alpha\perp}|/k_\alpha\ll1$ and $|\theta_\alpha-\theta|\ll1$. Using approximations which agree with the $z'$ component of $\vec{k}_\alpha$ to terms of the order $k_{\alpha\perp}^2$ and the angle $\theta_\alpha$ to $(\theta_\alpha-\theta)^2$, one finds that $\vec{k}_{2\perp}=(q_{x'},q_{y'})$ must satisfy $M(q_{x'}+N)^2+Mq_{y'}^2=L$.
+
+**C.3** Let $M>0$. Evaluate $M$, $N$, and $L$ in terms of $\Omega$, $\Omega_e$, $\Omega_o$, $K_e$, $K_o$ and $N_e(\omega,\theta)=\frac{1}{n_e(\omega,\theta)}\frac{dn_e(\omega,\theta)}{d\theta}$ and the group velocities $u_o=\frac{dw_2}{dk_2}$ and $u_e=\frac{d\omega_1}{dk_1}$ for the **o** and **e** rays. Estimate the angle between the axis of the cone and $z'$, and also the angle of the cone in terms of $L$, $M$, $N$ and $K_o$. **[1,3 т.]**
+
+Problem **C.3** shows that a photon may split into two photons which when passing through points a and b are polarized in perpendicular directions. These two photons are called *entangled photon pair* because if one photon that passes $a$ (called $a$-photon) is polarized in a direction $\hat{x}'$, the other that passes $b$ (called $b$-photon) will be polarized in the direction $\hat{y}'\perp\hat{x}'$, and if the $a$-photon is polarized in $\hat{y}'$, then the $b$-photon will be polarized in $\hat{x}'$. The entangled photon-pair state can be prepared experimentally. It is a superposition of the above two alternative states and can be expressed as $\frac{1}{\sqrt{2}}(|\hat{x}'_a\rangle|\hat{y}'_b\rangle+|\hat{y}'_a\rangle|\hat{x}'_b\rangle)$. Here $|\hat{x}'_a\rangle|\hat{y}'_b\rangle$represents the state when $a$-photon is polarized in $\hat{x}'$ direction and $b$-photon is polarized in $\hat{y}'$ direction; similar meaning applies to $|\hat{y}'_a\rangle|\hat{x}'_b\rangle$. The coefficient $1/\sqrt{2}$ can be viewed as the product of electric field amplitudes (expressed in suitable units) of $a$- and $b$-photons. As illustrated in Fig. 3, two linear polarizers 1 and 2 have transmission axes at angles $\alpha$ and $\beta$ respectively with respect to $\hat{x}'$. We may use them to perform coincidence measurement on the two photons that pass $a$ and $b$. Let the probability of simultaneously finding two photons passing through polarizers 1 and 2 be $P(\alpha,\beta)$. Alternatively, $P(\alpha,\beta)$ can also be regarded as being proportional to the product of intensities (after appropriate superpositions) of light passing through the two polarizers. Denote $\alpha+\pi/2$ and $\beta+\pi/2$ by $\alpha_\perp$ and $\beta_\perp$ respectively.
+
+**C.4** Consider the total electric field projected by linear polarizers. Find the probabilities $P(\alpha,\beta)$, $P(\alpha,\beta_\perp)$, $P(\alpha_\perp,\beta)$, and $P(\alpha_\perp,\beta_\perp)$. **[0,8 т.]**
+
+**C.5** Assign $\sigma_a=1$ when polarizer 1 with angle $\alpha$ finds an $a$-photon and $\sigma_a=-1$ when polarizer 1 with angle $\alpha_\perp$ finds an $a$-photon. Similarly, $\sigma_\beta=1$ or $-1$ is assigned when polarizer 2 with angle $\beta$ or $\beta_\perp$ finds a $b$-photon. If $E(\alpha,\beta)$ denotes the average of $\sigma_a\sigma_b$, the quantity $S=|E(\alpha,\beta)-E(\alpha,\beta')|+|E(\alpha',\beta)+E(\alpha',\beta')|$ has important meaning. For classical theories of light, $S\leq2$. This is a variant form of Bell’s inequality (the Clauser-Horne-Shimony-Holt inequality). Find the expression of $S$ and evaluate $S$ for the case $\alpha=\frac{\pi}{4}$,$\alpha'=0$ , $\beta=-\frac{\pi}{8}$, $\beta'=\frac{\pi}{8}$. Indicate if $S$ is consistent with the classical theories. **[0,5 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A.1** $v_p=\frac{1}{\sqrt{\mu_0\epsilon}}$
+- **A.2** $n=c\sqrt{\mu_0\epsilon}$
+- **A.3** $\hat{S}=\hat{k},\ v_r=v_p=\frac{1}{\sqrt{\mu_0\epsilon}}$
+- **B.1** n = n_o with D̂ = ±ŷ, B̂ = ±(−cos θ, 0, sin θ); or n = n_o n_e / √(n_o² sin²θ + n_e² cos²θ) with B̂ = ±ŷ, D̂ = ±(cos θ, 0, −sin θ). Only one refractive index for θ = 0.
+- **B.2** n = n_o: Ê = ±ŷ, ordinary ray, tan α = 0. n = n_o n_e / √(n_o² sin²θ + n_e² cos²θ): Ê = ±(−n_e² cos θ, 0, n_o² sin θ)/√(n_e⁴ cos²θ + n_o⁴ sin²θ), extraordinary ray, tan α = (n_o² − n_e²) tan θ / (n_e² + n_o² tan²θ).
+- **B.3** n = n_o, Ê = ±k̂ × ẑ / sin θ (ordinary ray); n = n_o n_e / √(n_o² sin²θ + n_e² cos²θ), Ê = ±[−n_e² cos θ k̂ + (n_o² sin²θ − n_e² cos²θ) ẑ] / (sin θ √(n_e⁴ cos²θ + n_o⁴ sin²θ)) (extraordinary ray).
+- **B.4** $n_s=\sqrt{(\hat{S}\cdot\hat{x})^2n_e^2+(\hat{S}\cdot\hat{z})^2n_o^2}$
+- **B.5** Ā = P1(n² sin²θ1 − P1), B̄ = −2P3(n² sin²θ1 − P1), C̄ = P2 n² sin²θ1 − P3². ϕ = 0: tan θ2 = n n_e sin θ1 / (n_o √(n_o² − n² sin²θ1)); ϕ = π/2: tan θ2 = n n_o sin θ1 / (n_e √(n_e² − n² sin²θ1)).
+- **C.1** ω = ω1 ± ω2, k⃗ = k⃗1 ± k⃗2 (energy and momentum conservation of photons, ħω = ħω1 ± ħω2, ħk⃗ = ħk⃗1 ± ħk⃗2). Splitting of a photon: ω = ω1 + ω2, k⃗ = k⃗1 + k⃗2.
+- **C.2** o → o + o and e → e + e are not possible.
+- **C.3** Official answer as printed: M = \{K_o[1 − N_e(Ω_e, θ) cot θ] + K_e\}/(2K_eK_o), E = −N_e/2M and F = −(Ω − Ω_e)(1/u_o − 1/u_e) + N_e²/(4M); the angle between the axis of the cone and z′ is N/K_o = −2K_eN_e/\{K_o[1 − N_e(Ω_e, θ) cot θ] + K_e\}; the angle of the cone is about √(L/M)/K_o.
+- **C.4** $P(\alpha,\beta)=P(\alpha_\perp,\beta_\perp)=\frac{1}{2}\sin^2(\alpha+\beta),\quad P(\alpha,\beta_\perp)=P(\alpha_\perp,\beta)=\frac{1}{2}\cos^2(\alpha+\beta)$
+- **C.5** $S=|\cos2(\alpha-\beta)-\cos2(\alpha-\beta')|+|\cos2(\alpha'-\beta)+\cos2(\alpha'-\beta')|=2\sqrt{2}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Theoretical Question 2: Ray tracing and generation of entangled light**
+
+**Part A. Light propagation in isotropic dielectric media**
+
+**A.1 0.4 pt**
+
+**Ans:** $\frac{1}{\sqrt{\mu_0\epsilon}}$
+
+**Solution:**
+
+From $\vec{k}\times\vec{E}=\omega\vec{B}=\omega\mu_0\vec{H}$ and $\vec{k}\times\vec{H}=-\omega\vec{D}$, one obtains $\vec{k}\times(\vec{k}\times\vec{E})=-\omega^2\mu_0\vec{D}$. By using the given identity $\vec{A}\times(\vec{B}\times\vec{C})=\vec{B}(\vec{A}\cdot\vec{C})-\vec{C}(\vec{A}\cdot\vec{B})$, one finds $\vec{k}\times(\vec{k}\times\vec{E})=\vec{k}(\vec{k}\cdot\vec{E})-k^2\vec{E}$. Since $\vec{D}\cdot\vec{k}=0$ and $\vec{D}=\epsilon\vec{E}$, we find $\vec{k}\times(\vec{k}\times\vec{E})=-k^2\vec{E}$ and the relation $\vec{k}\times(\vec{k}\times\vec{E})=-\omega^2\mu_0\vec{D}$ reduces to $-k^2\vec{E}=-\omega^2\mu_0\epsilon\vec{E}$.
+
+Now the phase velocity is determined by $\frac{d(\vec{k}\cdot\vec{r}-\omega t)}{dt}=0$, we find that the phase velocity $\vec{v}_p=\frac{d\vec{r}}{dt}=\frac{\omega}{k}\hat{k}$. Clearly, we have $\frac{\omega}{k}=\frac{1}{\sqrt{\mu_0\epsilon}}$. Hence $v_p=\frac{1}{\sqrt{\mu_0\epsilon}}$.
+
+**A.2 0.2 pt**
+
+**Ans:** $c\sqrt{\mu_0\epsilon}$
+
+**Solution:**
+
+From $v_p=\frac{1}{\sqrt{\mu_0\epsilon}}=\frac{c}{n}$, we find $n=c\sqrt{\mu_0\epsilon}$
+
+**A.3 0.4 pt**
+
+**Ans:** $\hat{k}$, $v_r=v_p=\frac{1}{\sqrt{\mu_0\epsilon}}$
+
+**Solution:**
+
+To find the speed of the ray, we first note that the direction of the energy flow, given by the Poynting vector $\vec{S}=\vec{E}\times\vec{H}$, is in the same direction of $\vec{k}$. The electromagnetic energy density $u=u_e+u_m$ with $u_e=\frac{1}{2}\vec{E}\cdot\vec{D}$ and $u_m=\frac{1}{2}\vec{B}\cdot\vec{H}$.
+
+Now, from $\vec{k}\times\vec{H}=-\omega\vec{D}$, one has $\vec{D}=-\frac{1}{v_p}\hat{k}\times\vec{H}$. Hence $u_e=-\frac{1}{2v_p}\vec{E}\cdot\hat{k}\times\vec{H}=\frac{1}{2v_p}\hat{k}\cdot\vec{E}\times\vec{H}$.
+
+Similarly, from $\vec{k}\times\vec{E}=\omega\vec{B}$, we find $u_m=\frac{1}{2v_p}\vec{B}\cdot\hat{k}\times\vec{E}=\frac{1}{2v_p}\hat{k}\cdot\vec{E}\times\vec{H}$. Hence $u=\frac{1}{v_p}\hat{k}\cdot\vec{E}\times\vec{B}$.
+
+We find $v_r=S/u=v_p=\frac{1}{\sqrt{\mu_0\epsilon}}$.
+
+**Part B. Light propagation in in uniaxial dielectric media**
+
+**B.1 1.5pt**
+
+**Ans:** $n=n_o$, $\hat{B}=\pm\hat{k}\times\hat{y}=\pm(-\cos\theta,0,\sin\theta)$, $\hat{D}=\pm\hat{y}$ or $n=\frac{n_on_e}{\sqrt{n_o^2\sin^2\theta+n_e^2\cos^2\theta}}$, $\hat{B}=\pm\hat{y}$, $\hat{D}=\pm\hat{y}\times\hat{k}=\pm(\cos\theta,0,-\sin\theta)$. For $\theta=0$, there is only one permitted value for the refractive index
+
+**Solution:**
+
+From $\vec{k}\times\vec{E}=\omega\mu_0\vec{H}$ and $\vec{k}\times\vec{H}=-\omega\vec{D}$, one obtains $\vec{k}\times(\vec{k}\times\vec{E})=-\omega^2\mu_0\vec{D}$. Writing out components and using $\omega=\frac{c}{n}k$, we find
+
+$$\begin{aligned}-\cos^2\theta E_x+\cos\theta\sin\theta E_z&=-\frac{n_o^2}{n^2}E_x,\\ -\cos^2\theta E_y-\sin^2\theta E_y&=-\frac{n_o^2}{n^2}E_y,\\ -\sin^2\theta E_z+\cos\theta\sin\theta E_x&=-\frac{n_e^2}{n^2}E_z.\end{aligned}$$
+
+After a bit rearrangement, we obtain
+
+$$\begin{aligned}\left(1-\frac{n_o^2}{n^2}\right)E_y&=0\\ \left(\frac{n_o^2}{n^2}-\cos^2\theta\right)E_x+\cos\theta\sin\theta E_z&=0\\ \cos\theta\sin\theta E_x+\left(\frac{n_o^2}{n^2}-\sin^2\theta\right)E_z&=0.\end{aligned}$$
+
+The vanishing of the determinant yields
+
+$$\left(1-\frac{n_o^2}{n^2}\right)\left[(\frac{n_o^2}{n^2}-\cos^2\theta)(\frac{n_e^2}{n^2}-\sin^2\theta)-\sin^2\theta\cos^2\theta\right]=0.\qquad(1)$$
+
+Clearly, for a general $\theta$, we have two solutions for $n$:
+
+(1) $n=n_o$
+
+In this case, $E_x=E_z=0$. $\vec{E}$ is parallel to the $y$ axis. From $\vec{k}\times\vec{E}=\omega\vec{B}$ and $\vec{k}\times(\mu_0\vec{B})=-\omega\vec{D}$, we obtain the directions of $\vec{B}$ and $\vec{D}$ as $\hat{B}=\pm\hat{k}\times\hat{y}=\pm(-\cos\theta,0,\sin\theta)$ and $\hat{D}=-\hat{k}\times\hat{B}=\pm(0,1,0)=\pm\hat{y}$.
+
+(2) $(\frac{n_o^2}{n^2}-\cos^2\theta)(\frac{n_e^2}{n^2}-\sin^2\theta)-\sin^2\theta\cos^2\theta=0$.
+
+After rearrangement, we find $n=\frac{n_on_e}{\sqrt{n_o^2\sin^2\theta+n_e^2\cos^2\theta}}$. Clearly, at $\theta=0$, $n=n_o$, there is only one refractive index. This is the direction of the optic axis.
+
+In this case, $E_y=0$. Hence $\vec{E}$ lies in the $xz$ plane. Hence the relation $\vec{k}\times\vec{E}=\omega\vec{B}$ implies $\hat{B}=\pm\hat{y}$. The relation $\vec{k}\times(\mu_0\vec{B})=-\omega\vec{D}$ implies $\hat{D}=\pm\hat{y}\times\hat{k}$.
+
+**B.2 0.8 pt**
+
+**Ans:** (1) when $n=n_o$, $\hat{E}=\pm\hat{y}$ and this is an ordinary ray. $\tan\alpha=0$.
+
+(2) when $n=\frac{n_on_e}{\sqrt{n_o^2\sin^2\theta+n_e^2\cos^2\theta}}$, $\hat{E}=\pm\frac{1}{\sqrt{n_e^4\cos^2\theta+n_o^4\sin^2\theta}}(-n_e^2\cos\theta,0,n_o^2\sin\theta)$ and this is an extraordinary ray. $\tan\alpha=\frac{(n_o^2-n_e^2)\tan\theta}{n_e^2+n_o^2\tan^2\theta}$.
+
+**Solution:**
+
+(1) For $n=n_o$, both $\vec{E}$ and $\vec{D}$ are parallel to the $y$ axis. This is an ordinary ray with $\tan\alpha=0$.
+
+(2) For $n=\frac{n_on_e}{\sqrt{n_o^2\sin^2\theta+n_e^2\cos^2\theta}}$, $n\neq n_o$, $E_y=0$. By substituting $n$ back into the equations of $E_x$ and $E_z$, we find that $\frac{n_o^2}{n_e^2}\sin\theta E_x+\cos\theta E_z=0$. Hence the electric field lies in $xz$ plane with $\hat{E}=\pm\frac{1}{\sqrt{n_e^4\cos^2\theta+n_o^4\sin^2\theta}}(-n_e^2\cos\theta,0,n_o^2\sin\theta)$ ( $\vec{B}$ points in $\mp y$ direction.). Therefore, $\vec{E}$ is not perpendicular to $\vec{k}$ and lies in the $xz$ plan in together with $\vec{D}$ and $\vec{k}$. This is the extraordinary ray.
+
+Since $\vec{k}\times\vec{H}=-\omega\vec{D}$, $\vec{D}$ is perpendicular to $\hat{k}$. Hence $\hat{D}=\pm(-\cos\theta,0,\sin\theta)$. Let $\vec{B}=\hat{y}$, the relative orientation of $\vec{E}$ and $\vec{D}$ for a given $\theta$ are shown in the following figure for the case when $n_e<n_o$.
+
+Let the angle relative to $x$ axis be $\theta_1$ and $\theta_2$ for $\vec{E}$ and $\vec{D}$. We have $\tan\theta_2=-\tan\theta$ and $\tan\theta_1=-\frac{n_o^2}{n_e^2}\tan\theta$. Hence $\tan\alpha=\tan(\theta_2-\theta_1)=\frac{\tan\theta_2-\tan\theta_1}{1+\tan\theta_1\tan\theta_2}=\frac{(n_o^2-n_e^2)\tan\theta}{n_e^2+n_o^2\tan^2\theta}$. The same result remains when $n_e>n_o$ except that $\tan\alpha<0$, indicating that the relative orientation of $\vec{E}$ and $\vec{D}$ is reversed.
+
+**B.3 0.6 pt**
+
+**Ans:** $n=n_o$, $\vec{E}=\pm\hat{k}\times\hat{z}/\sin\theta$ and this is an ordinary ray.
+
+when $n=\frac{n_on_e}{\sqrt{n_o^2\sin^2\theta+n_e^2\cos^2\theta}}$, $\hat{E}=\pm\frac{1}{\sqrt{n_e^4\cos^2\theta+n_o^4\sin^2\theta}}\frac{-n_e^2\cos\theta\hat{k}+(n_o^2\sin^2\theta-n_e^2\cos^2\theta)\hat{z}}{\sin\theta}$ and this is an extraordinary ray.
+
+**Solution:** The problem has an axial symmetry so that in the plane formed by the $z$ axis and $\hat{k}$, one can write $\vec{k}=k_z\hat{z}+k_\perp\hat{k}_\perp$ and $\vec{E}=E_z\hat{z}+E_\perp\hat{k}_\perp$, where $\hat{k}_\perp$ is perpendicular to $\hat{z}$. Clearly, we $k_z=k\cos\theta$, $k_\perp=k\sin\theta$, $E_z=E\cos\theta$, and $E_\perp=E\sin\theta$. Writing out the components for the equation: $\vec{k}\times(\vec{k}\times\vec{E})=-\omega^2\mu_0\vec{D}$, we get exactly the same equations except that $E_x$ is replaced by $E_\perp$. Hence all of the solutions are the same except $\hat{x}$ is replaced by $\hat{k}_\perp$. Since $\hat{k}_\perp\sin\theta=\hat{k}-\cos\theta\hat{z}$, we obtain that when $n=\frac{n_on_e}{\sqrt{n_o^2\sin^2\theta+n_e^2\cos^2\theta}}$, $\hat{E}=\pm\frac{1}{\sqrt{n_e^4\cos^2\theta+n_o^4\sin^2\theta}}[-n_e^2\cos\theta\frac{(\hat{k}-\cos\theta\hat{z})}{\sin\theta}+n_o^2\sin\theta\hat{z}]=\pm\frac{1}{\sqrt{n_e^4\cos^2\theta+n_o^4\sin^2\theta}}\frac{-n_e^2\cos\theta\hat{k}+(n_o^2\sin^2\theta-n_e^2\cos^2\theta)\hat{z}}{\sin\theta}$.
+
+**B.4 0.8 pt**
+
+**Ans**: (1) $n=n_o$, $\tan\alpha_r=0$, $v_r=\frac{c}{n_o}$, $\hat{S}=(\sin\theta,0,\cos\theta)$
+
+(2) $n=\frac{n_on_e}{\sqrt{n_o^2\sin^2\theta+n_e^2\cos^2\theta}}$, $\tan\alpha_r=\frac{(n_o^2-n_e^2)\tan\theta}{n_e^2+n_o^2\tan^2\theta}$, $v_r=\frac{c}{n_on_e}\sqrt{\frac{n_e^4\cos^2\theta+n_o^4\sin^2\theta}{n_e^2\cos^2\theta+n_o^2\sin^2\theta}}$.
+
+$\hat{S}=\frac{1}{\sqrt{n_e^4\cos^2\theta+n_o^4\sin^2\theta}}(n_o^2\sin\theta,0,n_e^2\cos\theta)$
+
+(3) $n_s=\sqrt{(\hat{S}\cdot\hat{x})^2n_e^2+(\hat{S}\cdot\hat{z})^2n_o^2}$
+
+**Solution:**
+
+The direction of the energy flow is given by the Poynting vector, $\vec{S}=\vec{E}\times\vec{H}$. Let the energy density of EM wave be $u$ and the ray velocity be $v_r$. Then $v_r=\frac{S}{u}$. Here $u=u_e+u_m$ with $u_e=\frac{1}{2}\vec{E}\cdot\vec{D}$ and $u_m=\frac{1}{2}\vec{B}\cdot\vec{H}$. There are two cases:
+
+(i)$n=n_o$, $\vec{E}=(0,E,0)$, $\vec{D}=\epsilon\vec{E}$, $\vec{k}\times\vec{E}=\omega\mu_0\vec{H}$, $\vec{k}\times\vec{H}=-\omega\vec{D}$.
+
+$\hat{k}$, $\vec{E}$ and $\vec{H}$ are mutually perpendicular to each other. Hence $\vec{S}$ is parallel to $\hat{k}$, i.e., $\hat{S}=(\sin\theta,0,\cos\theta)$ and $\tan\alpha_r=0$.
+
+Now from $\vec{k}\times\vec{H}=-\omega\vec{D}$, one has $\vec{D}=-\frac{1}{v_p}\hat{k}\times\vec{H}$. Hence $u_e=-\frac{1}{2v_p}\vec{E}\cdot\hat{k}\times\vec{H}=\frac{1}{2v_p}\hat{k}\cdot\vec{E}\times\vec{H}$.
+
+Similarly, we find $u_m=\frac{1}{2v_p}\vec{H}\cdot\hat{k}\times\vec{E}=\frac{1}{2v_p}\hat{k}\cdot\vec{E}\times\vec{H}$. Hence $u=\frac{1}{v_p}\hat{k}\cdot\vec{E}\times\vec{H}$. Since $\hat{S}=\hat{k}$, we find $u=\frac{S}{v_p}$. Hence $v_r=\frac{S}{u}=v_p=\frac{\omega}{k}=\frac{c}{n_o}$.
+
+(ii) $n=\frac{n_on_e}{\sqrt{n_o^2\sin^2\theta+n_e^2\cos^2\theta}}$. In this case, we can take $\vec{B}=(0,B,0)$ (negative $y$ direction works as well). $\vec{D}$, $\vec{E}$ and $\hat{k}$ are in the $xz$ plane and $\vec{D}$ is perpendicular to $\hat{k}$. Therefore, the angle between $\vec{S}=\frac{1}{\mu_0}\vec{E}\times\vec{B}$ and $\hat{k}$ is equal to the angle between $\vec{D}$ and $\vec{E}$, i.e., $\alpha_r=\alpha$. This is shown in the following figure when $n_e<n_o$ (for $n_e>n_o$, both $\alpha$ and $\alpha_r$ are negative, the relative orientation of $\vec{E}$ and $\vec{D}$ is reversed and ordering of $\hat{S}$ and $\hat{k}$ are switched).
+
+Therefore, from problem (d) (ii), we get $\tan\alpha_r=\tan\alpha=\frac{(n_o^2-n_e^2)\tan\theta}{n_e^2+n_o^2\tan^2\theta}$. Now, because $u=\frac{1}{v_p}\hat{k}\cdot\vec{E}\times\vec{H}=\frac{1}{v_p}|\vec{E}\times\vec{H}|\cos\alpha$, we obtain $v_r=\frac{S}{u}=\frac{v_p}{\cos\alpha}$. Hence the phase speed $v_p$ and the ray speed are related by $v_p=v_r\cos\alpha$. From $\tan\alpha$, one finds $\cos\alpha=\frac{n_e^2\cos^2\theta+n_o^2\sin^2\theta}{\sqrt{n_e^4\cos^2\theta+n_o^4\sin^2\theta}}$.
+
+Hence $v_r=\frac{c}{n\cos\alpha}=\frac{c}{n_on_e}\sqrt{\frac{n_e^4\cos^2\theta+n_o^4\sin^2\theta}{n_e^2\cos^2\theta+n_o^2\sin^2\theta}}$.
+
+Clearly, $\hat{S}=(\sin(\theta+\alpha),\cos(\theta+\alpha))$. Since $\sin\alpha=\frac{(n_o^2-n_e^2)\sin\theta\cos\theta}{\sqrt{n_e^4\cos^2\theta+n_o^4\sin^2\theta}}$ and $\cos\alpha=\frac{n_e^2c\cos^2\theta+n_o^2\sin^2\theta}{\sqrt{n_e^4c\cos^2\theta+n_o^4\sin^2\theta}}$, we find $\hat{S}=\frac{1}{\sqrt{n_e^4c\cos^2\theta+n_o^4\sin^2\theta}}(n_o^2\sin\theta,0,n_e^2\cos\theta)$.
+
+From $n_s^2=\left(\frac{c}{v_r}\right)^2=n_o^2n_e^2\frac{n_e^2\cos^2\theta+n_o^2\sin^2\theta}{n_e^4\cos^2\theta+n_o^4\sin^2\theta}=\frac{(n_o^2\sin\theta)^2n_e^2+(n_e^2\cos\theta)n_o^2}{n_e^4\cos^2\theta+n_o^4\sin^2\theta}$, we find $n_s=(\hat{S}\cdot\hat{x})^2n_e^2+(\hat{S}\cdot\hat{z})^2n_o^2$ .
+
+**B.5 1.1 pt**
+
+**Ans**: $\bar{A}=P_1(n^2\sin^2\theta_1-P_1)$, $\bar{B}=-2P_3(n^2\sin^2\theta_1-P_1)$, $\bar{C}=P_2n^2\sin^2\theta_1-P_3^2$.
+
+$\phi=0$, $\tan\theta_2=\frac{nn_e\sin\theta_1}{n_o\sqrt{n_o^2-n^2\sin^2\theta_1}}$.
+
+$\phi=\pi/2$, $\tan\theta_2=\frac{nn_o\sin\theta_1}{n_e\sqrt{n_e^2-n^2\sin^2\theta_1}}$.
+
+**Solution:**
+
+Let the distance along $z$ axis between $A$ and $B$ be $d$ and the point of the interface that the ray passes be the origin $O$. The coordinates of B and A points can be expressed as $(h_2,0,z)$ and $(h_1,0,d-z)$. The distances are then given by $\overline{AO}\equiv d_1=\sqrt{h_1^2+(d-z)^2}$ and $\overline{OB}\equiv d_2=\sqrt{h_2^2+z^2}$. The propagation time from A to B is determined by the ray speed $v_r$ as $(d_1n_{s1}+d_2n_{s2})/c$, where $n_{si}$ are ray indices for medium $i$. According to the Fermat’s principle, we need to minimize the optical path length defined by $\Delta\equiv d_1n_{s1}+d_2n_{s2}$. According to problem (e), we have $n_{s2}^2=(\frac{\overrightarrow{OB}}{\overline{OB}}\cdot\hat{x}_2)^2n_e^2+(\frac{\overrightarrow{OB}}{\overline{OB}}\cdot\hat{z}_2)^2n_o^2$. For an isotropic medium, the ray index is simply the refractive index, i.e., $n_{s1}=n$. Using the following relations
+
+$$\begin{aligned}\frac{\overrightarrow{OB}}{\overline{OB}}\cdot\hat{x}_2&=\cos(\phi-\theta_2)=\frac{h_2}{d_2}\cos\phi+\frac{z}{d_2}\sin\phi,\\ \frac{\overrightarrow{OB}}{\overline{OB}}\cdot\hat{z}_2&=\cos(\frac{\pi}{2}+\phi-\theta_2)=\sin(\theta_2-\phi)=\frac{z}{d_2}\cos\phi-\frac{h_2}{d_2}\sin\phi,\end{aligned}$$
+
+we find
+
+$$\Delta=n\sqrt{h_1^2+(d-z)^2}+\sqrt{(h_2\cos\phi+z\sin\phi)^2n_e^2+(-h_2\sin\phi+z\cos\phi)^2n_o^2}.$$
+
+The minimum occurs when $\frac{d\Delta}{dz}=0$. We obtain
+
+$$n\frac{z-d}{\sqrt{h_1^2+(d-z)^2}}+\frac{(h_2\sin\phi\cos\phi(n_e^2-n_o^2)+z(n_e^2\sin^2\phi+n_o^2\cos^2\phi)}{\sqrt{(h_2\cos\phi+z\sin\phi)^2n_e^2+(-h_2\sin\phi+z\cos\phi)^2n_o^2}}=0.$$
+
+Recognizing $\frac{d-z}{\sqrt{h_1^2+(d-z)^2}}=\sin\theta_1$, moving the second term to the left and taking square of the equation, we obtain
+
+$$n^2\sin^2\theta_1=\frac{(P_3-P_1\tan\theta_2)^2}{P_1\tan^2\theta_2-2P_3\tan\theta_2+P_2},$$
+
+where $P_1=n_o^2\cos^2\phi+n_e^2\sin^2\phi$, $P_2=n_o^2\sin^2\phi+n_e^2\cos^2\phi$, and $P_3=(n_o^2-n_e^2)\sin\phi\cos\phi$. By expanding the above equation out, we find
+
+$$P_1(n^2\sin^2\theta_1-P_1)\tan^2\theta_2-2P_3(n^2\sin^2\theta_1-P_1)\tan\theta_1+P_2n^2\sin^2\theta_1-P_3^2=0.$$
+
+Hence $\bar{A}=P_1(n^2\sin^2\theta_1-P_1)$, $\bar{B}=-2P_3(n^2\sin^2\theta_1-P_1)$, and $\bar{C}=P_2n^2\sin^2\theta_1-P_3^2$.
+
+For $\phi=0$, we have $P_3=0$, $P_1=n_o^2$, and $P_2=n_e^2$. We find $n_o^2(n^2\sin^2\theta_1-n_o^2)\tan^2\theta_2+n_e^2n^2\sin^2\theta_1=0$. Hence $\tan\theta_2=\frac{nn_e\sin\theta_1}{n_o\sqrt{n_o^2-n^2\sin^2\theta_1}}$.
+
+For $\phi=\pi/2$, we have $P_3=0$, $P_1=n_e^2$, and $P_2=n_o^2$. We find $n_e^2(n^2\sin^2\theta_1-n_e^2)\tan^2\theta_2+n_o^2n^2\sin^2\theta_1=0$. Hence $\tan\theta_2=\frac{nn_o\sin\theta_1}{n_e\sqrt{n_e^2-n^2\sin^2\theta_1}}$.
+
+**Part C. Entanglement of light**
+
+**C.1 0.8 pt**
+
+**Ans**:(1) $\omega=\omega_1\pm\omega_2$, $\vec{k}=\vec{k}_1\pm\vec{k}_2$
+
+(2) $\hbar\omega=\hbar\omega_1\pm\hbar\omega_2$, $\hbar\vec{k}=\hbar\vec{k}_1\pm\hbar\vec{k}_2$ represents the energy conservation and momentum conservation of photons.
+
+(3) Splitting of photon: Energy conservation $\omega=\omega_1+\omega_2$, momentum conservation: $\vec{k}=\vec{k}_1+\vec{k}_2$.
+
+**Solution**:
+
+For a light wave with frequency $\omega$ and $\vec{k}$, the corresponding polarization density and the electric field are in the form of $\vec{A}\cos(\omega t-\vec{k}\cdot\vec{r})$, which can be rewritten as $\frac{\vec{A}}{2}(e^{i(\omega t-\vec{k}\cdot\vec{r})}+e^{-i(\omega t-\vec{k}\cdot\vec{r})})$. By substituting the above form into the equation $P_i^{NL}=\sum_j\sum_k\chi_{ijk}^{(2)}E_jE_k$ and equating the relevant exponents, we find all possible relations are
+
+$$\begin{gathered}\omega=\omega_1+\omega_2,\vec{k}=\vec{k}_1+\vec{k}_2.\\ \mathrm{or}\ \ \omega=\omega_1-\omega_2,\vec{k}=\vec{k}_1-\vec{k}_2,\end{gathered}$$
+
+where we have made use of the fact that the frequency is positive. The meaning for the these relations is clear if one recall that the energy and momentum of a photon is given by $\hbar\omega$ and $\hbar\vec{k}$. The relation of $\hbar\omega=\hbar\omega_1+\hbar\omega_2,\hbar\vec{k}=\hbar\vec{k}_1+\hbar\vec{k}_2$ represents the energy and momentum conservations when a photon with ($\omega$, $\vec{k}$) is annihilated and split into two photons with ($\omega_1$, $\vec{k}_1$) and ($\omega_2$, $\vec{k}_2$), while the relation of $\hbar\omega=\hbar\omega_1-\hbar\omega_2,\hbar\vec{k}=\hbar\vec{k}_1-\hbar\vec{k}_2$ represents the energy and momentum conservations when a photon with ($\omega_1$, $\vec{k}_1$) is annihilated and split into two photons with ($\omega$, $\vec{k}$) and ($\omega_2$, $\vec{k}_2$).
+
+**C.2 0.8 pt**
+
+**Ans**: $\mathbf{o}\rightarrow\mathbf{o}+\mathbf{o}$, $\mathbf{e}\rightarrow\mathbf{e}+\mathbf{e}$
+
+**Solution**:
+
+For the collinear case, the phase matching conditions become $\omega=\omega_1+\omega_2$, $\frac{n_i(\omega)\omega}{c}=\frac{n_j(\omega_1)\omega_1}{c}+\frac{n_k(\omega_2)\omega_2}{c}$, where $i$, $j$, and $k$ are indices of either **o** or **e**. Assuming that $\omega_1\geq\omega_2$, one can solve $\omega_1$ as $\omega_1=\omega-\omega_2$. We obtain
+
+$$n_i(\omega)-n_j(\omega_1)=\frac{\omega_2}{\omega}\left[n_k(\omega_2)-n_j(\omega_1)\right].\qquad(2)$$
+
+Clearly, because $\omega>\omega_1\geq\omega_2$, if $i=j=k$, $n_i(\omega)-n_j(\omega_1)>0$ and $n_k(\omega_2)-n_j(\omega_1)\leq0$, the above equation cannot be satisfied. For other cases, because there is no relation between $n_o$ and $n_e$, the phase matching conditions can be satisfied. Hence only $\mathbf{o}\rightarrow\mathbf{o}+\mathbf{o}$ and $\mathbf{e}\rightarrow\mathbf{e}+\mathbf{e}$ are not possible.
+
+**C.3 1.5 pt**
+
+**Ans**: (1) $M=\frac{K_o[1-N_e(\Omega_e,\theta)\cot\theta]+K_e}{2K_eK_o}$, $E=-N_e/2M$ and $F=-(\Omega-\Omega_e)(\frac{1}{u_o}-\frac{1}{u_e})+\frac{N_e^2}{4M}$
+
+(2) the angle between the axis of the cone and $z'$ is $N/K_o=-\frac{2K_eN_e}{K_o[1-N_e(\Omega_e,\theta)\cot\theta]+K_e}$
+
+(3) the angle of cone is about $\frac{\sqrt{L/M}}{K_o}=-\frac{(\Omega-\Omega_e)}{MK_o}(\frac{1}{u_o}-\frac{1}{u_e})+\frac{N_e^2}{4M^2K_o}$.
+
+**Solution**:
+
+To satisfy the phase matching condition, we expand the angular frequencies $\omega_1$ and $\omega_2$ into $\omega_1=\Omega_e+\nu$ and $\omega_2=\Omega_o+\nu'$. Clearly, because $\Omega_e+\Omega_o=\Omega_p$, to satisfy $\omega_1+\omega_2=\omega$, $\nu'=-\nu$. Similarly, the conditions for the wavevectors, $\vec{k}=\vec{k}_1+\vec{k}_2$, can be written as $k_z=k=K_p=k_{1z}+k_{2z}$ and $\vec{k}_{2\perp}=-\vec{k}_{1\perp}\equiv\vec{q}_\perp$. For the **o** light ray, we have $k_{2\perp}^2+k_{2z}^2=k_2^2$ with $k_2=\frac{n_o(\omega_2)\omega_2}{c}$. One finds that $k_{2z}=\sqrt{k_2^2-k_{2\perp}^2}=k_2-\frac{k_{2\perp}^2}{2k_2}$. Expanding the dependence of $\omega_2$ in $k_2$ to $\nu$, we obtain
+
+$$k_2=\frac{n_o(\omega_2)\omega_2}{c}=\frac{n_o(\Omega_o)\Omega_o}{c}+\frac{dk_2}{d\omega_2}(\omega_2-\Omega_o)=K_o-\frac{\nu}{u_o},$$
+
+where $u_o$ is the group velocity for the ordinary ray. Hence to the second order of corrections, we get
+
+$$k_{2z}=K_o-\frac{\nu}{u_o}-\frac{q_\perp^2}{2K_o}.$$
+
+Similarly, for the **e** light ray, we have $k_{1\perp}^2+k_{1z}^2=k_1^2$ with $k_1=\frac{n_e(\omega_1,\theta_p)\omega_1}{c}$. One finds that $k_{1z}=\sqrt{k_1^2-k_{1\perp}^2}=k_1-\frac{k_{1\perp}^2}{2k_1}$. The expansion of $k_1$ is different from that for $k_2$ due to its angle dependence. Let the spherical angles for $\vec{k}_1$ be $\theta_1$ and $\phi_1$. We have
+
+$$k_1=\frac{n_e(\omega_1,\theta_1)\omega_1}{c}=\frac{n_e(\Omega_e,\theta)\Omega_e}{c}+\frac{dk_1(\Omega_e,\theta)}{d\Omega_e}(\omega_1-\Omega_e)+\frac{\Omega_e}{c}\frac{dn_e(\Omega_e,\theta)}{d\theta}(\theta_1-\theta)+\cdots$$
+
+Here $\frac{n_e(\Omega_e,\theta)\Omega_e}{c}=K_e$, $\frac{dk_1(\Omega_e,\theta)}{d\Omega_e}$ is $1/u_e$ with $u_e$ being the group velocity for the extraordinary ray and is given by
+
+$$\frac{dk_1(\Omega_e,\theta)}{d\Omega_e}=\frac{n_e(\Omega_e,\theta)}{c}+\frac{\Omega_e}{c}\frac{dn_e(\Omega_e,\theta)}{d\Omega_e}.$$
+
+Because $\frac{dn_e(\Omega_e,\theta)}{d\theta}=\frac{n_on_e(n_e^2-n_o^2)\sin\theta\cos\theta}{(n_o^2\sin^2\theta+n_e^2\cos^2\theta)^{3/2}}=n_e(\Omega_e,\theta)N_e(\Omega_e,\theta)$, we find $N_e(\Omega_e,\theta)=\frac{(n_e^2-n_o^2)\sin\theta\cos\theta}{n_o^2\sin^2\theta+n_e^2\cos^2\theta}$. Note that for $n_e<n_o$, $N_e(\Omega_e,\theta)<0$. To find $\delta\theta=\theta_1-\theta$, we note that for any $\vec{k}_\alpha$, one has (cf. Fig. 2(a))
+
+$$\hat{k}_\alpha\cdot\widehat{OA}=\cos\theta_\alpha=\cos\theta\cos\psi_\alpha+\sin\theta\sin\psi_\alpha\cos\phi_\alpha.$$
+
+Since $\sin\psi_1=|\vec{k}_{\perp,1}|/|\vec{k}_1|=q_\perp/k_1\ll1$ and $\cos\psi_1=\sqrt{1-\sin^2\psi_1}=1-1/2\sin^2\psi_1+\cdots$, to the second order, we can replace $k_1$ by $K_e$ and obtain
+
+$$\hat{k}_1\cdot\widehat{OA}=\cos\theta_1=\cos\theta\left[1-\frac{1}{2}\frac{q_\perp^2}{K_e^2}+\cdots\right]+\sin\theta\left[\frac{q_\perp}{K_e}+\cdots\right]\cos\phi_1.$$
+
+On the other hand, $\cos\theta_1=\cos\theta+\frac{d\cos\theta}{d\theta}(\theta_1-\theta)+\cdots=\cos\theta-\sin\theta(\theta_1-\theta)+\cdots$. Comparing this equation to the equation for $\hat{k}_1\cdot\widehat{OA}$, we obtain
+
+$$\theta_1-\theta=\frac{1}{2}\frac{q_\perp^2}{K_e^2}\cot\theta-\frac{q_\perp}{K_e}\cos\phi_1\cdots=\frac{1}{2}\frac{q_\perp^2}{K_e^2}\cot\theta+\frac{q_{x'}}{K_e}+\cdots$$
+
+Putting all together, we find
+
+$$k_{1z}=K_e+\frac{1}{u_e}(\Omega-\Omega_e)+N_e(\Omega_e,\theta)q_{x'}+\frac{q_\perp^2}{2K_e}\left[N_e(\Omega_e,\theta)\cot\theta-1\right]+\cdots.$$
+
+The above equation when combined with the equation of $k_{1z}$ and the relation $K_p=k_{1z}+k_{2z}$, we find
+
+$$(\Omega-\Omega_e)(\frac{1}{u_e}-\frac{1}{u_o})+N_e(\Omega_e,\theta)q_{x'}+q_\perp^2\left\{\frac{K_o\left[N_e(\Omega_e,\theta)\cot\theta-1\right]-K_e}{2K_eK_o}\right\}=0.$$
+
+Because $n_e<n_o$, $N_e(\Omega_e,\theta)<0$. The above equation can be rewritten in the form
+
+$$M\left[q_{x'}-\frac{N_e}{2D}\right]^2+Mq_{y'}^2=-(\Omega-\Omega_e)(\frac{1}{u_o}-\frac{1}{u_e})+\frac{N_e^2}{4M}.$$
+
+Here $D=\frac{K_o[1-N_e(\Omega_e,\theta)\cot\theta]+K_e}{2K_eK_o}>0$. Hence $E=-N_e/2M>0$ ($N_e<0$) and $L=-(\Omega-\Omega_e)(\frac{1}{u_o}-\frac{1}{u_e})+\frac{N_e^2}{4M}$. Clearly, the cone axis formed by $\vec{k}_2$ is characterized by $\vec{q}_\perp$. We find that the angle between the axis of the cone and $z'$ is $\tan^{-1}(N/k_{1z})$, which is about $N/k_{1z}\approx N/K_o=-\frac{2K_eN_e}{K_o[1-N_e(\Omega_e,\theta)\cot\theta]+K_e}$. The angle of the cone is given by $\sin^{-1}\frac{\sqrt{L/M}}{k_2}\approx\frac{\sqrt{L/M}}{K_o}=-\frac{(\Omega-\Omega_e)}{MK_o}(\frac{1}{u_o}-\frac{1}{u_e})+\frac{N_e^2}{4M^2K_o}$.
+
+**C.4 0.8pt**
+
+**Ans**: $P(\alpha,\beta)=\frac{1}{2}\sin^2(\alpha+\beta)$, $P(\alpha,\beta_\perp)=\frac{1}{2}\cos^2(\alpha+\beta)$, $P(\alpha_\perp,\beta)=\frac{1}{2}\cos^2(\alpha+\beta)$, $P(\alpha_\perp,\beta_\perp)=\frac{1}{2}\sin^2(\alpha+\beta)$
+
+**Solution**:
+
+For $a$-photon, let the electric field along the polarizer and perpendicular to the polarization represented by $|\alpha_x\rangle$ and $|\alpha_y\rangle$. Here $\alpha_x$ and $\alpha_x$ are essentially the electric field amplitudes in appropriate units. The electric fields (the states) along $\hat{x}'$ and $\hat{y}'$ can be written as
+
+$$\begin{aligned}|\hat{x}'_a\rangle&=\cos\alpha|\alpha_x\rangle-\sin\alpha|\alpha_y\rangle,\\ |\hat{y}'_a\rangle&=\sin\alpha|\alpha_x\rangle+\cos\alpha|\alpha_y\rangle.\end{aligned}$$
+
+Similarly, for $b$-photon, we have
+
+$$\begin{aligned}|\hat{x}'_b\rangle&=\cos\beta|\beta_x\rangle-\sin\beta|\beta_y\rangle,\\ |\hat{y}'_b\rangle&=\sin\beta|\beta_x\rangle+\cos\beta|\beta_y\rangle.\end{aligned}$$
+
+Hence we obtain
+
+$$\begin{aligned}|\hat{x}'_a\rangle|\hat{y}'_b\rangle&=(\cos\alpha|\alpha_x\rangle-\sin\alpha|\alpha_y\rangle)(\sin\beta|\beta_x\rangle+\cos\beta|\beta_y\rangle),\\ |\hat{y}'_a\rangle|\hat{x}'_b\rangle&=(\sin\alpha|\alpha_x\rangle+\cos\alpha|\alpha_y\rangle)(\cos\beta|\beta_x\rangle-\sin\beta|\beta_y\rangle).\end{aligned}$$
+
+The state of the entangled photon pair can be written as
+
+$$\begin{aligned}&\frac{1}{\sqrt{2}}(|\hat{x}'_a\rangle|\hat{y}'_b\rangle+|\hat{y}'_a\rangle|\hat{x}'_b\rangle)\\ =&\ \frac{1}{\sqrt{2}}[(\cos\alpha\sin\beta+\sin\alpha\cos\beta)(|\alpha_x\rangle|\beta_x\rangle-|\alpha_y\rangle|\beta_y\rangle)\\ +&\ (\cos\alpha\cos\beta-\sin\alpha\sin\beta)(|\alpha_x\rangle|\beta_y\rangle-|\alpha_y\rangle|\beta_x\rangle)]\\ =&\ \frac{1}{\sqrt{2}}[\sin(\alpha+\beta)(|\alpha_x\rangle|\beta_x\rangle-|\alpha_y\rangle|\beta_y\rangle)+\cos(\alpha+\beta)(|\alpha_x\rangle|\beta_y\rangle-|\alpha_y\rangle|\beta_x\rangle)]\end{aligned}$$
+
+From the above equation, we obtain
+
+$$\begin{aligned}P(\alpha,\beta)&=\frac{1}{2}\sin^2(\alpha+\beta),\\ P(\alpha_\perp,\beta_\perp)&=\frac{1}{2}\sin^2(\alpha+\beta),\\ P(\alpha,\beta_\perp)&=\frac{1}{2}\cos^2(\alpha+\beta),\\ P(\alpha_\perp,\beta)&=\frac{1}{2}\cos^2(\alpha+\beta).\end{aligned}$$
+
+**C.5 0.5pt**
+
+**Ans**: $S=|\cos2(\alpha-\beta)-\cos2(\alpha-\beta')|+|\cos2(\alpha'-\beta)+\cos2(\alpha'-\beta')|$
+
+$S=2\sqrt{2}$. $S>2$ indicates that it is not consistent with classical theories.
+
+**Solution**:
+
+One first realizes that $E(\alpha,\beta)=\frac{P(\alpha,\beta)+P(\alpha_\perp,\beta_\perp)-P(\alpha,\beta_\perp)-P(\alpha_\perp,\beta)}{P(\alpha,\beta)+P(\alpha_\perp,\beta_\perp)+P(\alpha,\beta_\perp)+P(\alpha_\perp,\beta)}$. Using expressions for $P$, we find
+
+$$\begin{aligned}E(\alpha,\beta)&=\sin^2(\alpha+\beta)-\cos^2(\alpha+\beta)\\ &=(\sin\alpha\cos\beta+\cos\alpha\sin\beta)^2-(\cos\alpha\cos\beta-\sin\alpha\sin\beta)^2\\ &=-(\cos^2\alpha-\sin^2\alpha)(\cos^2\beta-\sin^2\beta)+4\sin\alpha\sin\beta\cos\alpha\cos\beta\\ &=\sin(2\alpha)\sin(2\beta)-\cos(2\alpha)\cos(2\beta)=-\cos2(\alpha-\beta).\end{aligned}$$
+
+Hence $S=|\cos2(\alpha-\beta)-\cos2(\alpha-\beta')|+|\cos2(\alpha'-\beta)+\cos2(\alpha'-\beta')|$. For $\alpha=\frac{\pi}{4}$, $\alpha'=0$, $\beta=-\frac{\pi}{8}$, $\beta'=\frac{\pi}{8}$, we find $S=|-\frac{1}{\sqrt{2}}-\frac{1}{\sqrt{2}}|+|\frac{1}{\sqrt{2}}+\frac{1}{\sqrt{2}}|=2\sqrt{2}>2$. Hence classical theories do not apply.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2021-theory-q2-english/p1-sol-fig1.png" alt="Axes z (up) and x (right) with B pointing out of the page at the origin (circled). The unit vector k̂ makes angle θ with z; below the x axis the vectors E and D point down-right with the angle α between them. Label beside the drawing: D ⊥ k̂." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2021-theory-q2-english/p1-sol-fig2.png" alt="Axes z (up) and x (right) with B at the origin (circled). The unit vectors k̂ and Ŝ point up-right, k̂ at angle θ from z and Ŝ at angle α_r from k̂; below the x axis E and D point down-right with the angle α between them. Labels beside the drawing: E ⊥ Ŝ, D ⊥ k̂." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Theory Q2 english.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2021/Theory/Theory%20Q2%20english.pdf)
+· официални решения: [Theory Q2 solution.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2021/Theory/Theory%20Q2%20solution.pdf)

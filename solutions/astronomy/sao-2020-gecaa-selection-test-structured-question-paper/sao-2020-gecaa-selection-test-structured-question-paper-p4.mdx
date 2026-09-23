@@ -1,0 +1,101 @@
+---
+id: sao-2020-gecaa-selection-test-structured-question-paper-p4
+source: 'SAO 2020'
+title: 'Задача 4. Long Fast'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/SAO/2020/sao-2020-gecaa-selection-test-structured-question-paper.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:28:24.798Z'
+verifier: 'mechanical'
+---
+
+*GeCAA Selection Test Structured Question Paper · 9 т.*
+
+## Условие
+
+The tallest building in the world is the Burj Khalifa at 828 m tall. During the holy month of Ramadan, observing Muslims will fast from the time between Sunrise and Sunset. Due to the height of the Burj Khalifa, people at the top will fast for a longer period than people at the bottom.
+
+For simplicity, suppose it is March 21 2025.
+
+**a** Calculate the time that a person at the top of Burj Khalifa will fast for on this day. **[6 т.]**
+
+**b** What is the extra amount of time (to the nearest second) that a person at the top of Burj Khalifa will fast for, as compared to a person on the ground? **[3 т.]**
+
+*Burj Khalifa Coordinates: 25.1972° N, 55.2744° E.*
+*You are to account for atmospheric refraction with a value of 32’.*
+*Hint: The Sun is **not** a point source.*
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a** 12h 15m 14s
+- **b** 8m 10s
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**4a**
+
+We start by finding the angular radius of the Sun:
+
+$$a_{sun} = \tan^{-1}\left(\frac{R_{sun}}{D}\right) \approx \frac{R_{sun}}{D} = 0.266^{\circ}$$
+
+**M0.5**
+
+Where $R_{sun}$ is the radius of the Sun and $D$ is the distance to the Sun.
+
+Next, we find the additional angle of depression the people at the top of the Burj Khalifa will have to see the new apparent horizon.
+
+$$\psi = \cos^{-1}\left(\frac{R}{R + h}\right) = 0.924^{\circ}$$
+
+**M0.5**
+
+Where $R$ is the radius of the Earth and $h$ is the height of the Burj Khalifa.
+
+There is also a horizon depression due to atmospheric refraction: $\alpha = 32'$
+
+Finally, we draw our spherical triangles. It is much simpler because this is the **Vernal Equinox**, so the Sun’s path coincides with the Celestial Equator.
+
+Using the labels in the diagram, we get the following:
+
+$$\sin x = \frac{\sin(\psi + \alpha + a_{sun})}{\sin(\bar{\phi})}$$
+
+$$\sin \Delta x = \frac{\sin(\alpha + a_{sun})}{\sin(\bar{\phi})}$$
+
+**M2**
+
+The distance the sun has travelled across above the depressed horizon is $2x + 180^{\circ}$. Hence:
+
+**M1**
+
+$$T = \left(\frac{1^h}{15^{\circ}}\right)(2x + 180^{\circ}) = 12^h 15^m 14^s$$
+
+**M1 A1**
+
+**4b**
+
+The difference in sunset timing is due to the extra distance the Sun has to travel. In other words, $x - \Delta x$. Since this is symmetric for both sunrise **and** sunset, the extra fasting time is due to the sun travelling **double** that distance.
+
+$$\Delta T = 2^h\left(\frac{x - \Delta x}{15^{\circ}}\right)$$
+
+$$= \left(\frac{2^h}{15^{\circ}}\right)\left[\sin^{-1}\left(\frac{sin\ (\psi + \alpha + a_{sun})}{\cos \phi}\right) - \sin^{-1}\left(\frac{sin\ (\alpha + a_{sun})}{cos\ \phi}\right)\right]$$
+
+Plugging in the values, we get:
+
+$$\Delta T = 8^m 10^s$$
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2020-gecaa-selection-test-structured-question-paper/p4-sol-fig1.png" alt="Spherical triangle diagram: a curved arc labelled Horizon along the top, with a right-angle mark at its left end; the Celestial Equator runs diagonally from the lower left up to meet the horizon at the right at angle φ̄. The left side arc from the horizon down to the celestial equator is marked ψ + α + a_sun; a short arc near the right vertex is marked α + a_sun. Arrows along the celestial equator mark the arc x and the shorter arc Δx." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [GeCAA Selection Test Structured Question Paper.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%94%D1%80%D1%83%D0%B3%D0%B8/%D0%A1%D0%B8%D0%BD%D0%B3%D0%B0%D0%BF%D1%83%D1%80%D1%81%D0%BA%D0%B0/2020/GeCAA%20Selection%20Test%20Structured%20Question%20Paper.pdf)
+· официални решения: [GeCAA Selection Test Structured Question Solutions.pdf](https://olympiads-xyz.vercel.app/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%94%D1%80%D1%83%D0%B3%D0%B8/%D0%A1%D0%B8%D0%BD%D0%B3%D0%B0%D0%BF%D1%83%D1%80%D1%81%D0%BA%D0%B0/2020/GeCAA%20Selection%20Test%20Structured%20Question%20Solutions.pdf)

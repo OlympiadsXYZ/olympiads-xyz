@@ -1,0 +1,132 @@
+---
+id: usapho-2009-i-qtrfnal-p2
+source: 'USAPhO 2009, I'
+title: 'Задача 2'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2009/usapho-2009-i-qtrfnal.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T14:31:23.439Z'
+verifier: 'mechanical'
+---
+
+*2009 Quarter-Final Exam · 25 т.*
+
+<details>
+<summary>Important Instructions for the Exam Supervisor</summary>
+
+**Quarterfinal Exam**
+
+DO NOT DISTRIBUTE THIS PAGE
+
+**Important Instructions for the Exam Supervisor**
+
+- This examination consists of one part.
+- The first page that follows is a cover sheet. Examinees may keep the cover sheet during the exam.
+- Allow 60 minutes to complete the exam. Examinees may read the cover sheet before beginning the exam, but may not look at the examination questions until the 60 minute time period begins.
+- The supervisor *must* collect all examination questions, including the cover sheet, at the end of the exam, as well as any scratch paper used by the examinees. Examinees may *not* take the exam questions. The examination questions may be returned to the students after March 8, 2009.
+- Examinees are allowed calculators, but they may not use symbolic math, programming, or graphic features of these calculators. Calculators may not be shared and their memory must be cleared of data and programs. Cell phones, PDA’s or cameras may not be used during the exam or while the exam papers are present. Examinees may not use any tables, books, or collections of formulas.
+- **The examinees will need to use a ruler for one of the questions on this exam.** They may *not* share rulers with other examinees.
+- AAPT *must* receive the students answer papers no later than Thursday, March 5, 2009. Marking of papers will occur that weekend, and the semifinalists will be selected by March 8, 2009. It will not be possible to mark late papers.
+
+</details>
+
+<details>
+<summary>Instructions</summary>
+
+4 QUESTIONS - 60 MINUTES
+
+**DO NOT OPEN THIS TEST UNTIL YOU ARE TOLD TO BEGIN**
+
+- Show all your work. Partial credit will be given.
+- Start each question on a new sheet of paper. Put your name in the upper right-hand corner of each page, along with the question number and the page number/total pages for this problem. For example,
+
+  Doe, Jamie
+
+  Prob. 1 - P. 1/3
+
+- A ruler will be required on this exam.
+- A hand-held calculator may be used. Its memory must be cleared of data and programs. You may use only the basic functions found on a simple scientific calculator. Calculators may not be shared.
+- Cell phones may not be used during the exam or while the exam papers are present. You may not use any tables, books, or collections of formulas.
+- Each of the four questions is worth 25 points. The questions are not necessarily of the same difficulty. Good luck!
+- **In order to maintain exam security, do not communicate any information about the questions (or their answers or solutions) on this contest until after March 10, 2009.**
+
+</details>
+
+## Условие
+
+A ball of mass $m$ is thrown vertically upward with a speed of $v_0$. The ball is subject to an air resistance force that is proportional to the velocity, $F = -kv$. The ball rises up to height of $h$ and then returns to the starting point after some total time $t_f$. The acceleration of free fall is $g$.
+
+Determine the following:
+
+**(a)** An expression for the velocity as a function of time in terms of any or all of the constants.
+
+**(b)** Sketch the graph of velocity vs time. On the sketch indicate the time to rise to the highest point, $t_r$, and the total time of flight, $t_f$. You do not need to find either $t_r$ or $t_f$ at this point, but your graph should reflect relative positions of both.
+
+**(c)** Find the time to rise, $t_r$, to the highest point, $h$, in terms of any or all of the constants.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** $v = (mg/k + v_0)e^{-\frac{k}{m}t} - mg/k$
+- **(c)** $t_r = \frac{v_t}{g}\ln\left(1 + \frac{v_0}{v_t}\right),\quad v_t = mg/k$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution**
+
+Two forces act on the ball: gravity, and air friction. They are not necessarily equal, so the net force, and hence an expression for the acceleration, would be given by
+
+$$ma = -mg - kv$$
+
+where *up* is positive. We can’t simply rearrange this to solve for $v$, since $a$ is a variable. We can, however, rearrange to prepare for integration, since $a = dv/dt$:
+
+$$\frac{dv}{dt} = -\left(g + \frac{k}{m}v\right)$$
+
+or
+
+$$\frac{dv}{(g + \frac{k}{m}v)} = -dt.$$
+
+Integrating both sides
+
+$$\frac{m}{k}\ln\left(\frac{mg/k + v}{mg/k + v_0}\right) = -(t - t_0).$$
+
+Assume $t_0$ is zero. Then
+
+$$v = (mg/k + v_0)e^{-\frac{k}{m}t} - mg/k$$
+
+Note that as $t \to \infty$ the ball will approach a constant speed of $v_t = mg/k$. Of course, it will probably hit the ground first, but if it were thrown up in the air over the edge of an infinitely deep cliff....
+
+The ball will rise until the velocity is zero, or when
+
+$$-\frac{v_t}{g}\ln\left(\frac{v_t}{v_t + v_0}\right) = t_r.$$
+
+or, if you prefer,
+
+$$t_r = \frac{v_t}{g}\ln\left(1 + \frac{v_0}{v_t}\right)$$
+
+To find the height we need to integrate one more time. Since $v = dx/dt$ we can write
+
+$$dx = \left((v_t + v_0)e^{-\frac{g}{v_t}t} - v_t\right)dt$$
+
+which integrates quickly to
+
+$$h = (v_t + v_0)\left(-\frac{v_t}{g}\right)\left(e^{-\frac{g}{v_t}t_r} - 1\right) - (v_t t_r)$$
+
+Gluing together with the expression for $t_r$,
+
+$$h = \frac{v_t v_0}{g} - \frac{{v_t}^2}{g}\ln\left(1 + \frac{v_0}{v_t}\right).$$
+
+Showing that it reduces to $h = v_0^2/2g$ in the limit as $k \to 0$ is left as an exercise for the reader.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2009_QtrFinal.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2009/2009_QtrFinal.pdf)
+· официални решения: [2009_QtrFinalSolutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2009/2009_QtrFinalSolutions.pdf)

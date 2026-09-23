@@ -1,0 +1,509 @@
+{
+ "paper": {
+  "id": "wopho-2012-q13",
+  "subject": "physics",
+  "competition": "WoPhO",
+  "year": 2012,
+  "round": null,
+  "roundType": "theory",
+  "grade": null,
+  "lang": "en",
+  "title": "Theoretical 3: Tornado",
+  "organiser": "Problem Creator: Oki Gunawan",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/WoPhO/2012/WoPhO_2012_Q13.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/WoPhO/2012/WoPhO_2012_S13.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "status": "review",
+  "caveat": "The official solutions (Ver. 1.1, June 2012) label their sub-parts differently from the problem sheet: under [Q.2], (a) answers question 2(c), (b) answers 2(b), (c) answers 2(d) and (d) answers 2(e); under [Q.3], (a) answers question 2(a), and (b)–(e) answer 3(a)–3(d). The solutions are reproduced with their printed labels.",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "3fece89d0fa4a8fc3e2a0b54c72a4a243dc00f8db74e7464618b88b1d4a143d3",
+    "solutions": "9d567a91d93cd7ffcf3a9a56cf7c09b49dd6d29263ae21c79d54eb2aa9c435bc"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "The problem sheet prints no year; the solutions masthead says World Physics Olympiad 2012, matching the catalogue. Points are printed only per sub-question (sum 10.0: 2.0 + 3.9 + 3.1 + 1.0), so problem points and totalPoints are null. The shared constants table, introduction, Figure 1 and Figure 2 (page 1–2) are placed in problem 1; Figure 2 is also referenced by problems 2 and 3. The solutions masthead (TORNADO, Theoretical problem for World Physics Olympiad 2012, Oki Gunawan, Ph.D., IBM T J Watson Research Center, Yorktown Height, NY 10598 USA, Ver. 1.1, June 2012, SOLUTIONS :) and the section headings [Q.1]–[Q.4] are not repeated in the solution texts. Solution sub-part labels differ from the problem sheet: [Q.2] (a)→2(c), (b)→2(b), (c)→2(d), (d)→2(e); [Q.3] (a)→2(a), (b)→3(a), (c)→3(b), (d)→3(c), (e)→3(d); kept as printed and flagged in paper.caveat. Printed issues kept verbatim: Eq. (4) prints $P(z) = P_0^{-\\alpha z}$ (the factor $e$ is missing); Eq. (6) and (7) print a negative exponent $-gM_A/(bR)$ although 8.87×10^4 Pa corresponds to a positive exponent; the solution uses b = 6.5e-3 K/m without deriving b from the constant-density assumption of 1(b), so no official answer is recorded for 1(b); Eq. (19) lacks $dr$ in the first integral and Eq. (20) prints the evaluation limits $r_C$ and $\\infty$; [Q.4] (a) prints $d = 2\\ r_{\\mathrm{C}}$ while the problem says $d = 2r_G$ and the integral uses $2r_G$; question 3(b) lacks the closing parenthesis after “point G”; “(velocity and radius at the core boundary)at” has no space as printed. Grammatical agreement errors kept as printed (D-P28): “some is more uniform” (2(e)); “let the pressure in the house equilibrates” (4); “this equation describe” (solution Q.2); “moisture that get sucked” (solution Q.3); “most roof are mounted” and “the house get smashed” (solution Q.4); “Region I and II have different velocity distribution profile” (introduction). The hyphenated line break “(tan-gential)” in 3(a) is joined as “(tangential)”. The footnote marker on cumulonimbus is written as $^{1}$."
+  }
+ },
+ "problems": [
+  {
+   "id": "wopho-2012-q13-p1",
+   "number": 1,
+   "title": "The calm weather",
+   "points": null,
+   "problemType": "theory",
+   "statement": "| CONSTANTS AND DATA: | | |\n|---|---|---|\n| Gravitational acceleration | : | $g = 9.8\\ \\mathrm{m/s^2}$ |\n| Air density | : | $\\rho_{\\mathrm{Air}} = 1.2\\ \\mathrm{kg/m^3}$ |\n| Molar mass of dry air | : | $M_{\\mathrm{Air}} = 0.029\\ \\mathrm{kg/mol}$ |\n| Universal gas constant | : | $R = 8.314\\ \\mathrm{J/(mol.K)}$ |\n| Sea level pressure | : | $P_0 = 10^5\\ \\mathrm{Pa}$ |\n| Standard sea level temperature | : | $T_0 = 15\\ {}^{\\circ}\\mathrm{C}$ |\n| Heat capacity ratio of air | : | $\\gamma = C_p/C_v = 1.4$ |\n\n**Introduction**\n\nTornado is one of the deadliest atmospheric phenomena known to man. It is a violent vortex (rotating column) of air connecting the base of *cumulonimbus*$^{1}$ cloud and the ground. A distinct feature of the tornado is its funnel-like *core* or *condensation funnel* (Region II) which is made of small water droplets that condense as they are sucked into the core as shown in Fig. 1(b). This region is defined by the core radius $r_C(z)$ which generally increases with altitude forming the signature funnel-shape of the tornado.\n\nRegion I is the region outside tornado core. Region I and II have different velocity distribution profile as we will explore later.\n\nLet us explore the interesting physics of tornado. Using a simple model as shown in Fig. 1(b) and few basic principles, you will try to estimate the rotating speed of tornado, calculate the pressure and temperature inside the tornado and *most interestingly derive the equation for the shape of a tornado* $r_C(z)$.\n\n$^{1}$Cumulonimbus cloud is a towering vertical cloud that is very tall, dense, and involved in thunderstorms and other rainy weather.\n\n**Questions**\n\nWe will investigate the atmospheric pressure of the *troposphere* (the lowest part of the atmosphere) where most of the weather phenomena including tornado occurs. Let us start from a calm weather location at point **A** far away from the tornado. At point **A** the pressure is $P_0$ and temperature $T_0$ (see Constants and Data).",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "caption": "Figure 1: (a) A tornado wreaking havoc in Texas, US. (b) A cross section diagram of a tornado and its coordinate system.",
+     "alt": "(a) Photograph of a tornado funnel reaching down from dark clouds to the ground. (b) Cross-section diagram: a band labelled CUMULONIMBUS CLOUD at the top with a dashed line at its base, two blue curves of the funnel widening upward, REGION II between them and REGION I outside on both sides, a vertical z axis and a horizontal r axis from the origin on the GROUND, and an arrow marking the core radius r_C(z).",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q13/p1-fig1.png",
+     "width": 1802,
+     "height": 760,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       89.96,
+       393.61,
+       522.04,
+       575.78
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "caption": "Figure 2: A Tornado landscape",
+     "alt": "Landscape sketch: a CUMULONIMBUS CLOUD whose flat base is marked by a dashed line; on the left a house, a tree, a cow and point A on the ground with a vertical arrow of height h up to point B at the cloud base; a red curve labelled isobar boundary layer runs along the cloud base and bends down to point G on the ground; to the right a dashed vertical axis through point C and the TORNADO funnel with small arrows, labelled Core/Condensation funnel.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q13/p1-fig2.png",
+     "width": 1566,
+     "height": 753,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       118.12,
+       159.21,
+       493.88,
+       339.75
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "Assuming ideal gas law, constant gravity acceleration and a constant temperature $T_0$. Show that the atmospheric pressure as a function of altitude $z$ is:\n\n$$P(z) = P_0 e^{-\\alpha z}$$\n\nExpress $\\alpha$ in terms of the constants listed in “Constants and Data”.",
+     "points": 0.8,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\alpha = \\frac{g M_A}{R T_0}"
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "Now we consider a situation where the air density, $\\rho_{\\mathrm{Air}}$, is constant. Derive the pressure as a function of altitude: $P(z)$! The temperature $T$ drops with altitude $z$ at a linear rate of $b$. Find $b$!",
+     "points": 1
+    },
+    {
+     "label": "(c)",
+     "statement": "Using your result in (b) calculate the pressure at point **B** on the base of the cumulonimbus! (use $h = 1\\ \\mathrm{km}$)",
+     "points": 0.2,
+     "answer": {
+      "kind": "numeric",
+      "value": 88700,
+      "unit": "Pa",
+      "tolerance": 50,
+      "note": "Official value $P_B = 8.87\\times 10^4$ Pa, computed in the solution with $b = 6.5\\times 10^{-3}$ K/m; the printed exponent carries a minus sign although the number corresponds to a positive exponent."
+     }
+    }
+   ],
+   "topics": [
+    "thermodynamics/ideal-gas",
+    "fluids/hydrostatics"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**(a)** Since it is a calm weather (no wind) we assume the atmosphere is in hydrostatic condition. Consider a column of air as shown below. The atmospheric pressure is higher at lower altitude since it needs to support more column of air above.\n\nAt equilibrium:\n\n$$dP = -dF/A = -\\frac{dm\\, g}{A} = -\\rho\\, g\\, dz \\tag{1}$$\n\nUsing ideal gas law:\n\n$$PV = nRT \\quad \\text{and} \\quad P = \\rho\\frac{RT}{M_A} \\quad \\text{or} \\quad \\rho = P\\frac{M_A}{RT} \\tag{2}$$\n\nwhere $M_A = 0.0290$ kg/mol, is the molar mass of the air. Now we have:\n\n$$\\frac{dP}{P} = -\\frac{g M_A}{RT}dz \\tag{3}$$\n\nAssuming constant temperature $T_0$, solving this yields:\n\n$$P(z) = P_0^{-\\alpha z}, \\text{ with } \\quad \\alpha = \\frac{g M_A}{R T_0} \\tag{4}$$\n\n**(b)** Now the temperature varies with altitude: $T = T_0 - b z$. Eq. (3) becomes :\n\n$$\\int_{P_0}^{P}\\frac{dP}{P} = -\\frac{g M_A}{R}\\int_0^z\\frac{dz}{T_0 - b z}, \\text{ which gives: } \\quad \\ln\\frac{P}{P_0} = -\\frac{g M_A}{b R}\\ln\\left(\\frac{T_0 - b z}{T_0}\\right) \\tag{5}$$\n\nFinally:\n\n$$P(z) = P_0\\left(1 - \\frac{b z}{T_0}\\right)^{-\\frac{g M_A}{b R}} \\tag{6}$$\n\n**(c)** At point B we have:\n\n$$P_B = 1e5\\left(1 - \\frac{(6.5e-3)(1e3)}{288}\\right)^{-\\frac{(9.8)(0.029)}{(6.5E-3)(8.314)}} = 8.87\\times 10^4\\ \\mathrm{Pa} \\tag{7}$$\n\nThus the pressure is lower by 11.3% at the base of the cumulonimbus cloud compared to the ground.",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "caption": "Figure 1. Diagram of an air column for pressure versus altitude calculation",
+      "alt": "A dotted vertical column of air standing on the ground between a house with a tree and a cow; the bottom of the column is marked 0; a thin yellow slab at height z inside the column with a downward arrow W, pressure P(z)+dP on its upper face and P(z) on its lower face.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q13/p1-sol-fig1.png",
+      "width": 702,
+      "height": 753,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        235.62,
+        357.98,
+        403.92,
+        538.56
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "id": "wopho-2012-q13-p2",
+   "number": 2,
+   "title": "The shape of tornado",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Inside the tornado’s core the water vapor condenses into liquid droplets as the air spirals into the core forming *condensation funnel*. The water vapor condenses when the temperature drops below certain point called *dew point*. This temperature drop is caused by pressure drop. Thus the region where the water vapor starts to condense marks a boundary of *equal pressure* called isobar boundary layer that stretches from the base of the cumulonimbus cloud down to the base of tornado (shown as red boundary in Figure 2). This is the boundary between region I and II.\n\nNow only consider region I. Consider a reference point G (Fig. 2) very close to the ground ($z \\approx 0$) located at radius $r_G$. The speed $v_G$ can be treated as the ground rotation speed of the tornado.\n\nWe further assume: (i) The tornado is stationary (only has rotation and no translation); (ii) The wind radial velocity is negligible. Velocity $v$ is only tangential (along the circle), not radial. (iii) The wind velocity $v$ is independent of altitude $z$, it only depends on the radial position $r$. (iv) We ignore turbulence very close to the ground. (v) We assume air mass density ($\\rho_{\\mathrm{air}}$) is constant.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "Show that in both region I and II along $r$ :\n\n$$\\frac{\\partial P}{\\partial r} = \\rho_{\\mathrm{air}}\\frac{v^2}{r}$$",
+     "points": 0.4,
+     "answer": {
+      "kind": "derivation",
+      "note": "Derived in the official solutions under [Q.3] (a), Eq. (16)–(17)."
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "In region I calculate the tangential wind velocity $v$ as a function of $r$ and in terms of $v_C$ and $r_C$ (velocity and radius at the core boundary)at any given altitude ($z$)!",
+     "points": 0.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "v(r) = \\frac{v_C r_C}{r} = \\frac{v_G r_G}{r}"
+     }
+    },
+    {
+     "label": "(c)",
+     "statement": "Estimate the air speed $v_G$ at the base of tornado at point **G**!",
+     "points": 0.5,
+     "answer": {
+      "kind": "numeric",
+      "value": 137,
+      "unit": "m/s",
+      "tolerance": 1,
+      "note": "Official solution [Q.2] (a), Eq. (9)."
+     }
+    },
+    {
+     "label": "(d)",
+     "statement": "Derive the shape of the condensation funnel or the tornado core i.e. the function $r_C(z)$, express them in terms of $r_G$ and $v_G$ and altitude $z$! Plot or sketch this tornado shape in dimensionless quantities $z/h$ vs. $r/r_G$, where $h$ is the height defined in Fig. 2!",
+     "points": 2,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\frac{r}{r_G} = \\frac{1}{\\sqrt{1 - \\frac{2 g z}{v_G^2}}}",
+      "note": "Official solution [Q.2] (c), Eq. (15)."
+     }
+    },
+    {
+     "label": "(e)",
+     "statement": "Most tornadoes look like funnel (the radius is larger at higher altitude) while some is more uniform in diameter like a pipe. Given everything the same, which one do you think has the higher ground rotation speed $v_G$?",
+     "points": 0.5,
+     "answer": {
+      "kind": "text",
+      "value": "The more uniform, pipe-like tornado has the higher ground rotation speed.",
+      "note": "Official solution [Q.2] (d)."
+     }
+    }
+   ],
+   "topics": [
+    "fluids/bernoulli",
+    "mechanics/angular-momentum"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**(a)** Because point G is in the isobar boundary layer we have: $P_G = P_B$. Using Bernoulli’s equation at point A and G, and assuming constant air mass density :\n\n$$P_A + \\cancel{\\tfrac{1}{2}\\rho v_A^2} + \\cancel{\\rho g z_A} = P_G + \\tfrac{1}{2}\\rho v_G^2 + \\cancel{\\rho g z_G} \\tag{8}$$\n\n$$v_G = \\sqrt{\\frac{2(P_A - P_B)}{\\rho}} = \\sqrt{\\frac{2(1e5 - 0.887e5)}{1.2}} = 137\\ \\mathrm{m/s} \\tag{9}$$\n\nwhich is within the range of speed for a deadly tornado ($v \\sim 100$ m/s).\n\n**(b)** Due to conservation of angular momentum we have (using point G as a reference or any point P at altitude $z$) :\n\n$$m v_C r_C = m v_G r_G = m v r \\tag{10}$$\n\nThus:\n\n$$v(r) = \\frac{v_G r_G}{r} \\tag{11}$$\n\n**(c)** Consider point P along the boundary between region I and II as shown above. This boundary layer is also an isobar boundary layer thus $P_P = P_G$. We have:\n\n$$\\cancel{P_G} + \\tfrac{1}{2}\\rho v_G^2 + \\cancel{\\rho g z_G} = \\cancel{P_P} + \\tfrac{1}{2}\\rho v_P^2 + \\rho g z \\tag{12}$$\n\n$$v_G^2 = v_P^2 + 2 g z \\tag{13}$$\n\nFrom part (b) we have: $v(r) = v_G r_G / r$. Note that $v$ is only a function of $r$ not altitude $z$ as stated in the problem. Thus we have:\n\n$$z = \\frac{v_G^2}{2g}\\left[1 - \\left(\\frac{r_G}{r}\\right)^2\\right] \\tag{14}$$\n\nAlternatively we can express the tornado shape as a function of radius versus altitude below and plot it in Figure 3 below.\n\n$$\\frac{r}{r_G} = \\frac{1}{\\sqrt{1 - \\frac{2 g z}{v_G^2}}} \\tag{15}$$\n\nAs we can see, in comparison with a real life tornado picture, this equation describe the general feature of tornado shape remarkably well despite a very simple model.\n\n**(d)** Higher speed will make the term $2 g z / v_G^2$ in Eq. (15) smaller, thus $r$ becomes a weaker function of $z$, in other words the tornado shape becomes more uniform or pipe-like. This is also illustrated in Figure 3(a).",
+    "figures": [
+     {
+      "id": "p2-sol-fig1",
+      "caption": "Figure 2. Tornado cross section diagram",
+      "alt": "Cross-section diagram: CUMULONIMBUS CLOUD band at the top with a dashed base line, two blue funnel curves, REGION II between them and REGION I outside, a vertical z axis and horizontal r axis from the origin on the GROUND, point G near the ground on the right funnel curve and point P higher on the same curve, with a horizontal segment r_C(z) from the axis to P.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q13/p2-sol-fig1.png",
+      "width": 1021,
+      "height": 779,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        197.05,
+        213.84,
+        441.86,
+        400.77
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig2",
+      "caption": "Figure 3. (a) The tornado shape function for two speeds with h = 1 km. The higher the speed the more pipe-like it looks like. (b) A real life tornado for comparison (Valparaiso, Nebraska, US, 2001).",
+      "alt": "(a) Plot titled Tornado shape function: horizontal axis Radius (r/r_G) from 8 through 0 to 8, right vertical axis Altitude (z/h) from 0.0 to 1.0; a red solid pair of curves labelled v_G = 137 m/s flaring out near the top, a black dashed narrower pair labelled v_G = 160 m/s, shaded region between, label h = 1km. (b) Black-and-white photograph of a wide tornado touching the ground.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q13/p2-sol-fig2.png",
+      "width": 2092,
+      "height": 704,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        68.54,
+        188.51,
+        570.38,
+        357.21
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    }
+   ]
+  },
+  {
+   "id": "wopho-2012-q13-p3",
+   "number": 3,
+   "title": "The core of tornado",
+   "points": null,
+   "problemType": "theory",
+   "statement": "We will try to calculate the pressure at the center of tornado. Now we will consider both region I and II.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "In region II ($r < r_C$) the tornado core behaves as rigid body, derive expression for the (tangential) speed $v(r)$ in this region. Plot the velocity profile from $r = 0$ to $\\infty$!",
+     "points": 1.1,
+     "answer": {
+      "kind": "expression",
+      "latex": "v = \\omega r = \\frac{v_C r}{r_C}",
+      "note": "Official solution [Q.3] (b), Eq. (18)."
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "Calculate the pressure at the center of the tornado (point **C**, at the same altitude as point **G**! Use $v_G$ from part 2(c)!",
+     "points": 1.2,
+     "answer": {
+      "kind": "numeric",
+      "value": 77477,
+      "unit": "Pa",
+      "tolerance": 1,
+      "note": "Official solution [Q.3] (c): $P_T = P_0 - \\rho v_G^2 = 77{,}477$ Pa."
+     }
+    },
+    {
+     "label": "(c)",
+     "statement": "Estimate the temperature at the center of the tornado (point **C**)!",
+     "points": 0.5,
+     "answer": {
+      "kind": "numeric",
+      "value": 268,
+      "unit": "K",
+      "tolerance": 1,
+      "note": "Official solution [Q.3] (d): 268 K = -5 °C."
+     }
+    },
+    {
+     "label": "(d)",
+     "statement": "Based on your finding in (c) suggest in only few words what could be a possible source of tornado’s tremendous energy!",
+     "points": 0.3,
+     "answer": {
+      "kind": "text",
+      "value": "Latent heat released by condensation of moisture sucked into the cold core.",
+      "note": "Official solution [Q.3] (e)."
+     }
+    }
+   ],
+   "topics": [
+    "fluids/rotating-flow",
+    "thermodynamics/adiabatic-processes"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**(a)** Consider a parcel of air rotating around the tornado as shown below:\n\nThe differential pressure exerts the centrifugal force to the air parcel:\n\n$$\\Sigma F = m v^2 / r, \\qquad \\text{or:} \\qquad dP\\, A = \\rho\\, A\\, dr\\, v^2 / r \\tag{16}$$\n\nThus we have:\n\n$$\\frac{\\partial P}{\\partial r} = \\frac{\\rho v^2}{r} \\tag{17}$$\n\n**(b)** Because the core is approximated as a rigid body, the angular velocity is constant everywhere inside the core, given as: $\\omega = v_C / r_C$. Thus the velocity at any point inside the tornado:\n\n$$v = \\omega r = \\frac{v_C r}{r_C} \\tag{18}$$\n\nSo unlike in region I, in the core (region II) the velocity is proportional to the radius. The overall tangential velocity profile is given below:\n\nNote that this model is in reasonably good qualitative agreement with an actual tornado measurement as shown below:\n\n**(c)** The pressure inside the tornado can be calculated with respect to a far away reference point on the ground where $P = P_0$ and using point G as a reference:\n\n$$P_0 - P_T = \\int_0^{\\infty}\\rho v^2 / r = \\rho\\int_0^{r_G}\\frac{v_G^2 r}{r_G^2}dr + \\rho\\int_{r_G}^{\\infty}\\frac{v_G^2 r_G^2}{r^3}dr \\tag{19}$$\n\n$$P_0 - P_T = \\tfrac{1}{2}\\rho v_G^2 + \\tfrac{1}{2}\\rho v_G^2 r_G^2 \\left.\\frac{1}{r^2}\\right|_{\\infty}^{r_C} = \\rho v_G^2 \\tag{20}$$\n\nThe pressure inside tornado is given as:\n\n$$P_T = P_0 - \\rho v_G^2 \\tag{21}$$\n\nWith the given data:\n\n$$P_T = 1e5 - 1.2\\times 137^2 = 77{,}477\\ \\mathrm{Pa} \\tag{22}$$\n\n**(d)** Using ideal gas law and adiabatic assumption we have:\n\n$$P V^{\\gamma} = C_1, \\text{ and } P V = n R T \\tag{23}$$\n\n$$P^{1-\\gamma} T^{\\gamma} = C_2 \\tag{24}$$\n\nwhere $\\gamma$ is the heat capacity ratio which is for air : $\\gamma = 1.4$.\n\nAssuming a far away point with pressure $P_0$ and temperature $T_0$, the temperature at the core of tornado $T_T$ is:\n\n$$T_T = T_0\\left(\\frac{P_T}{P_0}\\right)^{\\frac{\\gamma - 1}{\\gamma}} = 288\\times\\left(\\frac{77{,}477}{1e5}\\right)^{\\frac{0.4}{1.4}} = 268\\ \\mathrm{K} = -5\\ {}^{\\circ}\\mathrm{C} \\tag{25}$$\n\nIndeed it is very cold inside the tornado.\n\n**(e)** Such a low temperature will cause condensation of moisture that get sucked into the tornado core, and the condensation will release ***latent heat***. Multiplied by massive influx of air mass to the tornado –this latent heat could provide the tremendous energy for the tornado.",
+    "figures": [
+     {
+      "id": "p3-sol-fig1",
+      "caption": "Figure 4. Parcel of air that rotates around the tornado",
+      "alt": "Hand sketch of a small box-shaped air parcel at the end of a long wedge from the tornado axis O, with velocity arrow v, area A on top, pressure P on the inner face and P+dP on the outer face, radius r and thickness dr.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q13/p3-sol-fig1.png",
+      "width": 557,
+      "height": 430,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        252.76,
+        544.91,
+        386.19,
+        647.86
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig2",
+      "caption": "Figure 5. The tangential velocity profile of the tornado showing clear difference between region I and II.",
+      "alt": "Plot titled Tornado tangential speed profile: v/v_C (0.0 to 1.2) against r/r_C (0 to 6); a blue line rises linearly from 0 to 1.0 at r/r_C = 1 (Region II, left of a dashed vertical line) and then decays as 1/r (Region I).",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q13/p3-sol-fig2.png",
+      "width": 1008,
+      "height": 651,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        208.71,
+        294.61,
+        450.45,
+        450.63
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig3",
+      "caption": "Figure 6. An actual tangential velocity profile of a tornado (Dallas, TX, 2 April 1957) [1].",
+      "alt": "Measured tangential wind speed in MPH (up to 150) against distance in FEET (0 to about 1400) at the 1000 Ft. Level, profile C: speed rises to about 150 MPH near 200 ft and then decays; annotated vorticity values ζ = 1.593, ζ = 2.750, ζ = −0.1827, ζ = 0.0303 and the curve VR=C.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2012-q13/p3-sol-fig3.png",
+      "width": 1633,
+      "height": 516,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        134.01,
+        519.57,
+        525.69,
+        643.09
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "wopho-2012-q13-p4",
+   "number": 4,
+   "title": "Shall you open or close the windows?",
+   "points": null,
+   "problemType": "theory",
+   "statement": "The differential pressure near a tornado is thought to cause poorly ventilated houses to “explode” even though the tornado is only passing at a distance. Therefore some people suggest that the windows have to be opened to vent or let the pressure in the house equilibrates with outside quickly. However, opening the windows will risk more damage due to debris and projectiles getting into the house.\n\nConsider a house with all windows and openings closed with a flat roof of dimension (width x length x thickness) 15 m x 15 m x 0.1 m and mass density $\\rho_{\\mathrm{Roof}} = 800\\ \\mathrm{kg/m^3}$. The tornado is coming fast and passing at a distance $d = 2r_G$ away from the house.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "What is the ratio of the lift force on the roof compared to its weight?",
+     "points": 0.8,
+     "answer": {
+      "kind": "numeric",
+      "value": 3.6,
+      "tolerance": 0.05,
+      "note": "Official solution [Q.4] (a), Eq. (27): $F/W = 3.6$."
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "Shall you open or close the windows?",
+     "points": 0.2,
+     "answer": {
+      "kind": "text",
+      "value": "Close all the windows.",
+      "note": "Official solution [Q.4] (b)."
+     }
+    }
+   ],
+   "topics": [
+    "fluids/pressure",
+    "fluids/rotating-flow"
+   ],
+   "difficulty": "Easy",
+   "importance": 2,
+   "solution": {
+    "statement": "**(a)** We assume that the house is tightly enclosed maintaining the initial pressure at $P_0$. When the tornado approaches at a distance $d = 2\\ r_{\\mathrm{C}}$ from the house, the differential pressure will be (Eq. 19):\n\n$$\\Delta P = P_0 - P_X = \\rho\\int_{2 r_G}^{\\infty}\\frac{v_G^2 r_G^2}{r^3}dr = \\tfrac{1}{8}\\rho v_G^2 = \\tfrac{1}{8}\\times 1.2\\times 137^2 = 2{,}815\\ \\mathrm{Pa} \\tag{26}$$\n\nThe lift force on the roof (relative to weight)\n\n$$\\frac{F}{W} = \\frac{\\Delta P\\, A}{A t \\rho_{Roof}\\, g} = \\frac{\\Delta P}{\\rho_{Roof}\\, g t} = \\frac{2815}{800\\times 9.8\\times 0.1} = 3.6 \\tag{27}$$\n\n**(b)** The lift force is not much larger than the weight of the roof – and certainly most roof are mounted firmly to withstand forces multiple of its weight. So chances are the tornado pressure differential would not cause the house to explode so soon (unless the roof is very poorly mounted, or you are inside the tornado in which case this question becomes irrelevant).\n\nFurthermore some residual opening in the house like ventilation and chimney will alleviate the pressure differential. However at a very close distance of $2\\ r_G$. it is more likely the house get smashed with flying debris. Thus you would just close all the windows.\n\n**REFERENCES**\n\n[1] W.H. Hoecker, “Wind speed and air flow patterns in the Dallas tornado of April 2, 1957”, Mon. Wea. Rev. 88, 167-180.",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    }
+   ]
+  }
+ ]
+}
