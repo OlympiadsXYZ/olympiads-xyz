@@ -1,0 +1,349 @@
+---
+id: gpho-2019-theory-th-p3
+source: 'GPhO 2019'
+title: 'Задача 3. Rayleigh-Taylor instability'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/GPhO/2019/gpho-2019-theory-th.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T16:33:06.739Z'
+verifier: 'mechanical'
+---
+
+*The 3nd Gulf Physics Olympiad — Theoretical Competition · 7 октомври 2019 г. · 9 т.*
+
+<details>
+<summary>Instructions</summary>
+
+- The examination lasts for 5 hours. There are 3 problems worth in total 30 points. **Please note that the point values of the three theoretical problems are not equal.**
+- **You must not open the envelope with the problems before the signal of the beginning of competition.**
+- **You are not allowed to leave your working place without permission.** If you need any assistance (broken calculator, need to visit a restroom, etc), please raise your hand until an organizer arrives.
+- Use only the front side of the sheets of paper.
+- For each problem, there are **dedicated Solution Sheets** (see header for the number and pictogram). Write your solutions onto the appropriate Solution Sheets. For each Problem, the Solution Sheets are numbered; use the sheets according to the enumeration. **Always mark which Problem Part and Question you are dealing with.** Copy the final answers into the appropriate boxes of the **Answer Sheets**. There are also **Draft** papers; use these for writing things which you don’t want to be graded. If you have written something that you don’t want to be graded onto the Solution Sheets (such as initial and incorrect solutions), cross these out.
+- If you need more paper for a certain problem, please raise your hand and tell an organizer the problem number; you are given two Solution sheets (you can do this more than once).
+- **You should use as little text as possible:** try to explain your solution mainly with equations, numbers, symbols and diagrams. Though in some places textual explanation may be unavoidable.
+- **After the signal signifying the end of examination you must stop writing immediately.** Put all the papers into the envelope at your desk. **You are not allowed to take any sheet of paper out of the room.** If you have finished solving before the final sound signal, please raise your hand.
+
+</details>
+
+## Условие
+
+Lord Rayleigh showed in 1883 that a layer of dense liquid on top of a layer of less dense liquid is unstable: even if the interface between the two liquids is initially perfectly flat and horizontal, small perturbations in the interface shape grow exponentially in time: at some places, heavy liquid starts to flow down displacing light liquid beneath, and in other places, light liquid starts flowing up — this phenomenon is nowadays known as the Rayleigh-Taylor instability. It plays an important role in many fields of physics. For instance, following a supernova explosion, shock waves of dense plasma decelerate due to “eating up” the regions with less dense plasma. This means that in the frame of reference of the decelerating shock wave, the force of inertia is pointing in the direction of the shock wave propagation. The direction of the force of inertia defines the “down” direction, so that the more dense plasma of the shock wave appears to be “atop” the less dense plasma of the interstellar space. Late (nonlinear) stages of the instability are characterized by fascinating filamentary structures, see the image of the Crab nebula below. In technology, Rayleigh-Taylor instability can be undesirable and for instance, makes it very difficult to accomplish the inertial confinement fusion project: when initially an almost perfectly round sphere is being compressed, it becomes irregularly distorted — like an empty can of Coke when you try to compress it. In what follows, we construct mathematically simple models to shed insight into the physics of the Rayleigh–Taylor instability. Assume everywhere below that there is a downwards gravity field of strength $g$ ($= 9.81\ \mathrm{m/s^2}$).
+
+**Part A. Instability growth rate (4 points)**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig1.png" alt="Colour photograph of the Crab nebula: a cloud of orange-red filaments surrounding a bluish-white glowing core, on a black starry background." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig2.png" alt="Two sketches of a circular O-tube of radius R and tube diameter a (arrows labelled R and a), upper half filled with a darker (denser) liquid and lower half with a lighter one. Left: both interfaces on the horizontal dashed line. Right: the interface on the left side lowered by x and on the right side raised correspondingly, with the displacement x marked by arrows between dashed lines." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig3.png" alt="(a) Top view: a membrane (dark grey) with a long horizontal slit of length l and width d; axes x (up) and z (right). (b) Vertical cross-section of the vessel in the x–y plane: darker liquid in the upper compartment, lighter liquid below, the membrane with a gap of width d between dashed lines; axes y (up) and x (right)." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-fig4.png" alt="Aerial (Google Earth) photo of a boat moving to the right on the water surface, leaving a dark wake line and a pattern of parallel waves; a white scale bar at the top is marked 200 m, 1000 m, 2000 m, 3000 m." />
+</figure>
+
+**A.i.** Consider a circular O-tube the lower half of which is filled with a liquid of density $\rho_1$, and upper half — with a liquid of density $\rho_2 > \rho_1$, see the figure. Let the radius of the circle $R$ be much larger than the diameter of the tube $a$ (neglect the wall thickness). When the interfaces at the both sides of the O-tube are exactly at the same level (the left sketch), the system is at equilibrium. By how much will the potential energy of the system change when the interface in the left part of the tube is lowered by $x$ (as shown in the sketch on right)? Express the answer in terms of the quantities introduced above. Here and in what follows, assume that $x \ll R$ and use the resulting approximations. **[1 т.]**
+
+**A.ii.** Suppose now that the system will evolve by itself starting from the position shown in the right sketch, let us denote the speed with which the interface in the tube moves with $v = \frac{\mathrm{d}x}{\mathrm{d}t}$. Express the kinetic energy of the system in terms of $v$ and the other quantities defined above. **[1 т.]**
+
+**A.iii.** Show that the acceleration of the interface is proportional to its displacement $x$ by taking a time derivative of the energy conservation law, and that the displacement can grow exponentially in time so that $x$ is proportional to $\mathrm{e}^{\gamma t}$; find $\gamma$. **[1 т.]**
+
+**A.iv.** Let us now substitute the O-tube with a spherical shell of radius $R$ filled with these two liquids, each of which occupies a hemispherical region inside the shell. In order to keep the interface between the liquids flat, a massless thin rigid circular membrane of radius $R$ is placed in between the liquids; the membrane can rotate frictionlessly inside the sphere, but cannot be bent. Find the instability growth rate $\gamma$ (defined above) if the heavier liquid occupies the upper half of the sphere.
+
+*Hint:* the center of mass of a solid homogeneous hemisphere of radius $R$ is at the distance $\frac{3}{8}R$ from the sphere’s centre.
+
+The moment of inertia of a solid sphere of mass is given by $I = \frac{2}{5}MR^2$.
+
+Small angle approximations following $\sin\alpha \approx \tan\alpha \approx \alpha$, $\cos\alpha \approx 1 - \alpha^2/2$ can be used. **[1 т.]**
+
+**Part B. Stabilization due to surface tension (3 points)**
+
+According to the results obtained above, the Rayleigh-Taylor instability growth rate $\gamma$ is a decreasing function of the size $R$ of the region where the liquid starts moving. This means that small-scale perturbations of the interface shape grow faster and dominate at the initial stage of the instability. However, at very small scales, surface tension may stabilize the instability.
+
+**B.i.** Assume that a big rectangular vessel is divided into two compartments with a thin flat membrane, the top view is shown in the figure (a) above, and a vertical cross-section with the vessel being filled with liquids — in the figure (b). The membrane has a long and narrow slit: its length $l$ is much larger than its width $d$ ($l \gg d$). The upper compartment is filled with a liquid of density $\rho_2$, and the lower compartment — with a liquid of density $\rho_1 < \rho_2$. Initially, the slit is so narrow that the surface tension $\sigma$ which characterizes the interface between the two liquids stabilizes the Rayleigh-Taylor instability: the interface remains completely flat and horizontal. A cross-section in $x - y$-plane of this configuration is depicted in the figure (b) above, where $y$-axis is vertical, and $z$-axis is parallel to the longer edge of the slit. The width of the slit $d$ is increased slowly up to a certain value $d = d_0$, where instabilities start developing, but the instability growth rate $\gamma$ remains extremely small. A special design guarantees that the deformations of the interface between the two liquids remains strictly 2-dimensional — there is no dependence on the $z$-coordinate (this design can include, for instance, thin long rods placed onto the interface between the liquids, parallel to the slit). Sketch the new shape of the interface in $x - y$-intersection when $d = d_0$ and when it has become noticeably deformed due to the Rayleigh-Taylor instability. **[1 т.]**
+
+**B.ii.** Consider the same setup as before, but now there are no restrictions on how the interface can be deformed, i.e. the deformation can include dependence on the $z$-coordinate. Now, the interface becomes unstable at somewhat smaller slit width $d = d_1$. Sketch the shape of the interface when $d = d_1$ and it has become noticeably deformed due to the Rayleigh-Taylor instability, in two intersections with planes parallel to the $x - y$ plane: one at the distance $l/4$ from one end of the slit, and the other — at the distance $l/4$ from the other end of the slit. **[1 т.]**
+
+**B.iii.** Express $d_1$ in terms of $\rho_1$, $\rho_2$, $\sigma$, and $g$. **[1 т.]**
+
+**Part C. Water waves (2 points)**
+
+**C** While a heavy liquid atop of a light one is unstable, the reverse situation of a light liquid atop of a heavy one is stable, and surface shape perturbations will travel along the surface as waves. A particular case of such waves are represented by waves on the free surface of water when the light liquid (air) has a negligibly small density. If the water is deep (much deeper than the wavelength $\lambda$ of the waves), the speed of sinusoidal waves depends on the wavelength,
+
+$$v = \sqrt{g\lambda/2\pi}.$$
+
+Therefore, all wave speeds are possible, including those which travel in “resonance” with the boat: the boat will always remain at the same trough or at the same crest of the wave, and will propel water *resonantly*, i.e. always at the same value of the phase of the wave. If there are waves which can move in a resonance with a moving object, the moving object will generate these waves — this phenomenon is known as Cherenkov radiation. Generated waves carry away energy and this results in a *wave drag* acting on the object. The wave drag grows rapidly with speed (proportional to the cube of the speed) and is the main limiting factor for the speed of boats. Determine the speed of the boat shown in the aerophoto below (you may take measurements from the map). **[2 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A.i.** $\Delta\Pi = -\frac{\pi a^2}{4}(\rho_2 - \rho_1)gx^2$
+- **A.ii.** $K = \frac{\pi^2a^2R}{8}(\rho_1 + \rho_2)v^2$
+- **A.iii.** $\gamma = \sqrt{\frac{2}{\pi}\frac{\rho_2 - \rho_1}{\rho_2 + \rho_1}\frac{g}{R}}$
+- **A.iv.** $\gamma = \sqrt{\frac{15}{16}\frac{\rho_2 - \rho_1}{\rho_2 + \rho_1}\frac{g}{R}}$
+- **B.iii.** $d_1 = \frac{1}{2}\sqrt{\frac{\sigma}{(\rho_2 - \rho_1)g}}$
+- **C** 13 m/s
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part A. Instability growth rate (4 points)**
+
+**i. (1 pt)** As can be seen from the figures, what effectively happens is that a small volume of the upper liquid (a cylinder of diameter $a$ and height $x$) is swapped with a same volume of the lower liquid. **(0.3 pts)**
+
+Since we want to find the change in potential energy, we’re interested in how much the vertical coordinate of the small volume changes. That change is equal to $x$ since both volumes are touching the horizontal symmetry line, albeit from different sides. **(0.2 pts)**
+
+We can then write the change in potential energy of the upper liquid as
+
+$$\Delta\Pi_2 = -\Delta m_2gx = -\Delta V\rho_2gx = -\frac{\pi a^2x}{4}\rho_2gx = -\frac{\pi a^2}{4}\rho_2gx^2.$$
+
+**(0.2 pts)**
+
+Similarly, the lower half experiences a change in potential energy of
+
+$$\Delta\Pi_1 = \Delta m_1gx = \Delta V\rho_1gx = \frac{\pi a^2x}{4}\rho_1gx = \frac{\pi a^2}{4}\rho_1gx^2.$$
+
+**(0.2 pts)**
+
+The total change is then
+
+$$\Delta\Pi = \Delta\Pi_1 + \Delta\Pi_2 = -\frac{\pi a^2}{4}(\rho_2 - \rho_1)gx^2.$$
+
+**(0.1 pts)**
+
+**ii. (1 pt)** Since the liquid is incompressible, all of the liquid will start moving with the same speed along the O-tube. **(0.4 pts)**
+
+The total mass of the liquid is
+
+$$M = M_{\mathrm{top}} + M_{\mathrm{bottom}} = \frac{\pi a^2}{4}\pi R\rho_2 + \frac{\pi a^2}{4}\pi R\rho_1 = \frac{\pi^2a^2R}{4}(\rho_1 + \rho_2).$$
+
+**(0.3 pts)**
+
+The total kinetic energy is then simply
+
+$$K = \frac{Mv^2}{2} = \frac{\pi^2a^2R}{8}(\rho_1 + \rho_2)v^2.$$
+
+**(0.3 pts)**
+
+**iii. (1 pt)** According to the conservation of energy, $K + \Delta\Pi = \mathrm{const}$. In other words,
+
+$$\frac{\pi^2a^2R}{8}(\rho_1 + \rho_2)v^2 - \frac{\pi a^2}{4}(\rho_2 - \rho_1)gx^2 = \mathrm{const}.$$
+
+**(0.2 pts)**
+
+The time derivative of $x^2$ is $2x\dot{x} = 2xv$ (chain rule) and the derivative of $v^2$ is $2v\dot{v} = 2va$, where we have used that acceleration is the derivative of velocity. Therefore, the time derivative of the conservation of energy yields
+
+$$\frac{\pi^2a^2R}{8}(\rho_1 + \rho_2)2va - \frac{\pi a^2}{4}(\rho_2 - \rho_1)g2xv = 0.$$
+
+**(0.3 pts)**
+
+The speed cancels out and we can express the acceleration as
+
+$$a = \frac{\rho_2 - \rho_1}{\rho_2 + \rho_1}\frac{2g}{\pi R}x. \qquad (3)$$
+
+**(0.1 pts)**
+
+The acceleration is indeed proportional to the displacement, $x$. Note that this corresponds to an exponential increase in displacement following $x(t) = x_0\mathrm{e}^{\gamma t}$. This can be verified by taking a time derivative of said displacement two times:
+
+$$v(t) = \frac{\mathrm{d}x(t)}{\mathrm{d}t} = \gamma x_0\mathrm{e}^{\gamma t},$$
+
+$$a(t) = \frac{\mathrm{d}a(t)}{\mathrm{d}t} = \gamma^2x_0\mathrm{e}^{\gamma t} = \gamma^2x(t).$$
+
+**(0.2 pts)**
+
+This follows exactly the same form as found in (3). Therefore,
+
+$$\gamma = \sqrt{\frac{2}{\pi}\frac{\rho_2 - \rho_1}{\rho_2 + \rho_1}\frac{g}{R}}$$
+
+**(0.2 pts)**
+
+and the interface will start growing exponentially, demonstrating the Rayleigh Taylor instability.
+
+**iv. (1 pt)** In this case, it is more convenient consider angular displacements and angular accelerations. All the subsequent reasoning stays effectively the same with the main difference being that the displacements and accelerations are replaced with the angular equivalents.
+
+Suppose that the upper hemisphere is displaced by a small angle $\alpha \ll 1$. This causes the centre of mass of the upper and lower hemisphere to shift slightly. Let us consider how the potential energy of the upper hemisphere changes. Note that the centre of mass is at height $\frac{3}{8}R$ from the sphere’s centre. The center of mass will move along a circle of the same radius and is displaced by a small angle $\alpha$. **(0.1 pts)**
+
+The change in the vertical coordinate is then given by $\Delta h = (1 - \cos\alpha)\frac{3}{8}R$. We can use small angle approximations $\cos\alpha \simeq 1 - \frac{\alpha^2}{2}$ to get $\Delta h = \frac{3}{16}R\alpha^2$. The change in the potential energy is then
+
+$$\Delta\Pi_2 = -M_2g\Delta h = -\frac{3}{16}RM_2g\alpha^2,$$
+
+**(0.1 pts)**
+
+where $M_2 = \frac{2}{3}\pi R^3\rho_2$ is the mass of the upper hemisphere. Similarly,
+
+$$\Delta\Pi_1 = M_1g\Delta h = \frac{3}{16}RM_1g\alpha^2,$$
+
+**(0.1 pts)**
+
+and so the total change in the potential energy is
+
+$$\Delta\Pi = \Delta\Pi_1 + \Delta\Pi_2 = -\frac{3}{16}R(M_2 - M_1)g\alpha^2.$$
+
+**(0.1 pts)**
+
+The kinetic energy can be found by noting that the sphere will start rotating with an angular velocity $\omega = \frac{\mathrm{d}\alpha}{\mathrm{d}t}$, and if the moment of inertia of the system is $I$, then the kinetic energy is given by
+
+$$K = \frac{I\omega^2}{2}.$$
+
+**(0.1 pts)**
+
+The moment of inertia of a sphere is $\frac{2}{5}MR^2$. The same holds for a hemisphere because the mass distribution from the axis holds the same shape. The total moment of inertia is therefore $I = \frac{2}{5}(M_1 + M_2)R^2$ and so
+
+$$K = \frac{1}{5}(M_1 + M_2)R^2\omega^2.$$
+
+**(0.2 pts)**
+
+The total energy is then given by
+
+$$K + \Delta\Pi = \frac{1}{5}(M_1 + M_2)R^2\omega^2 - \frac{3}{16}R(M_2 - M_1)g\alpha^2 = \mathrm{const}.$$
+
+**(0.1 pts)**
+
+The time derivative of $\omega^2$ is $2\omega\dot{\omega} = 2\omega\epsilon$, similarly $\frac{\mathrm{d}\alpha^2}{\mathrm{d}t} = 2\alpha\omega$. Taking a time derivative of the conservation of energy thus yields
+
+$$\frac{1}{5}(M_1 + M_2)R^22\omega\epsilon - \frac{3}{16}R(M_2 - M_1)g2\alpha\omega = 0.$$
+
+**(0.1 pts)**
+
+Therefore,
+
+$$\epsilon = \frac{15}{16}\frac{M_2 - M_1}{M_2 + M_1}\frac{g}{R}\alpha = \frac{15}{16}\frac{\rho_2 - \rho_1}{\rho_2 + \rho_1}\frac{g}{R}\alpha,$$
+
+and
+
+$$\gamma = \sqrt{\frac{15}{16}\frac{\rho_2 - \rho_1}{\rho_2 + \rho_1}\frac{g}{R}}.$$
+
+**(0.1 pts)**
+
+Notably, this differs from the answer of the previous part only by a numerical factor.
+
+**Part B. Stabilization due to surface tension (3 points)**
+
+**i. (1 pt)** In the limit case $d = d_0$, when any small perturbations occur, surface tension is not enough to hold them back and they start growing exponentially (slowly at the beginning but faster later on). First note that the total volume of the liquid remains fixed. **(0.3 pts)**
+
+This means that any amount of top liquid that gets pushed through the interface causes exactly the same amount of bottom liquid to pass to the upper region. **(0.1 pts)**
+
+This is enough to figure out the simplest (and indeed, the most stable) way the system can evolve, in the form of two bulges, one corresponding to the upper liquid trying to push down and the other one to the lower liquid trying to push up. **(0.1 pts)**
+
+The sketch is shown below. Finding the exact shape of the interface is more difficult and involves writing down the force balance for a small piece of the interface.
+
+**(0.5 pts)**
+
+**ii. (1 pt)** Deformations can now happen along the $z$-axis. Since the length of slit is longer along that direction, the radius of curvature of the surface is smaller and so the surface tensions resists the weight of the upper liquid less. This means that the instabilities along $z$-axis start occurring much earlier than along the $x$-axis. The overall shape of the interface in the $y - z$-intersection stays the same as in the previous part, an approximately sinusoidal shape with a wavelength equalling to $l$. **(0.2 pts)**
+
+There must also be a bulge in the $x - y$-direction because otherwise there could not be any displaced liquid along the interface. This time there will only be one bulge, corresponding to either the upper or lower liquid pushing through to the other side.
+
+**(0.2 pts)**
+
+Notably the limiting factor for this type of instability still comes from the $x - y$-intersection, because the radius of curvature is greatest along that direction. Because the number of bulges is smaller than in the previous part, the radius of curvature is bigger and the force holding the liquid back must be smaller as well. This is consistent with the fact that this type of instability start occurring before the one described in the previous part.
+
+Distance $l/4$ corresponds to the peaks of the sinusoid-like shape, but with opposite amplitudes. This means that both cross-sections have a singular bulge, but in opposite directions.
+
+**(0.2 pts)**
+
+The sketches are given below. Notably, they can be interchanged because the shape in the $z$-direction can be flipped along the $z$-axis, swapping the cross-sections.
+
+**(0.4 pts)**
+
+**iii. (1 pt)** First, let us take the origin of the $x$-axis to be at the axis of symmetry (see figure) and the height of the interface from the horizontal symmetry axis be $y(x)$. The boundary conditions are $y(\pm d_1/2) = 0$. **(0.1 pts)**
+
+The interface will be slowly expanding due to the instability, but since the expansion is slow, we can treat it as being almost at an equilibrium. This means that the difference of pressures between the bottom and top side is compensated by the surface tension. **(0.1 pts)**
+
+The pressure of the top and bottom liquid are the same at $y = 0$, let that be $p_0$. The pressure of the upper liquid at $y(x)$ is then $p_2(x) = p_0 - \rho_2gy(x)$ and of the lower liquid $p_1(x) = p_0 - \rho_1gy(x)$. Thus, the difference in pressure at the interface is given by
+
+$$\Delta p = p_1(x) - p_2(x) = (\rho_2 - \rho_1)gy(x).$$
+
+**(0.1 pts)**
+
+This is balanced by the surface tension. It is well-known that the difference in pressure from surface tension is given by $\Delta p = \sigma/r$. Note that there is no factor of 2 because the curving is only along one axis (the other is negligible due to $l \gg d_1$). The balance gives
+
+$$(\rho_2 - \rho_1)gy(x) = \frac{\sigma}{r}. \qquad (4)$$
+
+**(0.1 pts)**
+
+Now we need to express $r$ in terms of $x$ and $y(x)$. For this, let us consider the situation given below:
+
+By considering two points separated horizontally by a distance $\mathrm{d}x$, we see that these points span an angle $\mathrm{d}\alpha$ as viewed from the centre of curvature of the interface, where $\mathrm{d}\alpha$ is the difference in the slopes (in radians) of the two points. Using small angle approximations, the slopes can be expressed as $\frac{\mathrm{d}y}{\mathrm{d}x}$. From the figure and under the assumption that perturbations are very small, we see that $\mathrm{d}x = r\mathrm{d}\alpha$. $\mathrm{d}\alpha$ can be found via the difference of slopes:
+
+$$\mathrm{d}\alpha = \left.\frac{\mathrm{d}y}{\mathrm{d}x}\right|_x - \left.\frac{\mathrm{d}y}{\mathrm{d}x}\right|_{x+\mathrm{d}x} = -\frac{\mathrm{d}^2y}{\mathrm{d}x} = \frac{\mathrm{d}x}{r}.$$
+
+From here we get
+
+$$\frac{1}{r} = -\frac{\mathrm{d}^2y}{\mathrm{d}x^2},$$
+
+**(0.2 pts)**
+
+and we can substitute this to (4) to get
+
+$$(\rho_2 - \rho_1)gy = -\sigma\frac{\mathrm{d}^2y}{\mathrm{d}x^2}.$$
+
+**(0.1 pts)**
+
+This is a simple harmonic equation with a solution of the form
+
+$$y(x) = A\sin(kx) + B\cos(kx),$$
+
+with $k = \sqrt{(\rho_2 - \rho_1)g/\sigma}$. **(0.1 pts)**
+
+The bulge has only one peak, is symmetric with respect to $x = 0$, and spans half a wavelength through the length of the cross-section. Therefore,
+
+$$\lambda = 2d_1 = \frac{2\pi}{k} = \sqrt{\frac{\sigma}{(\rho_2 - \rho_1)g}},$$
+
+**(0.1 pts)**
+
+and we see that this uniquely identifies $d_1$, the smallest width at which the instabilities start expanding:
+
+$$d_1 = \frac{1}{2}\sqrt{\frac{\sigma}{(\rho_2 - \rho_1)g}}.$$
+
+**(0.1 pts)**
+
+**Part C. Gravity surface waves (2 points)**
+
+We can measure the wavelength of the waves from the aerophoto. To get the best accuracy, we should count as many peaks as possible. **(0.4 pts)**
+
+We should also keep in mind that the peaks have to be counted along the line of motion of the boat since then the generated waves are not going at an angle with respected to the measured line. **(0.4 pts)**
+
+From the figure, we measure 24 peaks along the path spanning a distance of $2710\ \mathrm{m}$. **(0.4 pts)**
+
+This gives $\lambda = 2710\ \mathrm{m}/24 = 113\ \mathrm{m}$ and the speed of the boat can be expressed as
+
+$$v = \sqrt{\frac{g\lambda}{2\pi}} = \sqrt{\frac{9.81\ \mathrm{m/s^2}\cdot113\ \mathrm{m}}{2\pi}} \approx 13\ \mathrm{m/s} \approx 48\ \mathrm{km/h}.$$
+
+**(0.8 pts)**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig1.png" alt="Cross-section of the slit at d = d₀: darker upper liquid, lighter lower liquid, membrane ends as thick black bars; between the dashed lines marking the slit width d₀ the interface forms two bulges, the lower liquid pushing up on the left and the upper liquid pushing down on the right." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig2.png" alt="Two cross-sections of the slit of width d₁ (dashed lines, double arrows labelled d₁): in the left one the darker upper liquid bulges down through the slit, in the right one the lighter lower liquid bulges up." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig3.png" alt="Cross-section of the single bulge of the lighter liquid rising into the darker liquid between the membrane ends; dotted horizontal and vertical symmetry axes, with arrows labelled x (horizontal) and y(x) (vertical) marking a point of the interface." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig4.png" alt="Geometry of the curved interface: two points a horizontal distance dx apart (dotted verticals), their tangents and normals meeting at the centre of curvature at distance r, the angle between the normals and between the tangents labelled dα, right-angle marks at the interface." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/gpho-2019-theory-th/p3-sol-fig5.png" alt="The aerial photo of the boat and its waves with the scale bar 200 m, 1000 m, 2000 m, 3000 m; a red line drawn along the wake behind the boat is labelled “2710m”." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/GPhO/2019/Theory/th.pdf)
+· официални решения: [th_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/GPhO/2019/Theory/th_sol.pdf)

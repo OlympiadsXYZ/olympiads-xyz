@@ -1,0 +1,113 @@
+---
+id: balkan-2022-x-p2
+source: 'Balkan 2022'
+title: 'Задача 2. The descent of a skier'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Balkan/2022/balkan-2022-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T16:17:41.778Z'
+verifier: 'mechanical'
+---
+
+*Problem 1: Resistor circuit · Problem 2: The descent of a skier · Problem 3: “The bead on the spring” · Problem 4: Galileo Galilei – “The minimum descent time” · 25 т.*
+
+## Условие
+
+A skier descent a steep hill. The angle between the inclined surface of the hill and a horizontal plane is $\alpha = 30{,}0^{\circ}$. The acceleration of gravity is $g = 9{,}81\ \mathrm{m/s^2}$. The mass of the skier is $m = 80{,}0\ \mathrm{kg}$. The coefficient of friction $\mu$ of the skies in the snow is unknown. The drag force $F_D$ with which the air acts on the skier, is $F_D = \frac{1}{2}C\rho A v^2$, where $C$ is an unknown number, the so called drag coefficient, depending on the shape of the skier, $\rho = 1{,}28\ \mathrm{kg/m^3}$ is the density of the air, $A = 0{,}600\ \mathrm{m^2}$ is the projected frontal area (cross section) of the skier perpendicular to his velocity, and $v$ is his speed relative to the air. The air does not move (there is no wind). The skier's descent is recorded. Analyzing the video, some of his positions $x_i$ (measured on the slope from the starting point of descent) in different moments $t_i$ after the start of his descent are measured. The data are shown on the table below.
+
+| $i$ | $t_i/\mathrm{s}$ | $x_i/\mathrm{m}$ | | | | | |
+|---|---|---|---|---|---|---|---|
+| 1 | 2,00 | 7,21 | | | | | |
+| 2 | 2,50 | 11,22 | | | | | |
+| 3 | 3,00 | 16,08 | | | | | |
+| 4 | 3,50 | 21,76 | | | | | |
+| 5 | 4,00 | 28,24 | | | | | |
+| 6 | 4,50 | 35,49 | | | | | |
+| 7 | 5,00 | 43,47 | | | | | |
+| 8 | 5,50 | 52,14 | | | | | |
+| 9 | 6,00 | 61,49 | | | | | |
+| 10 | 6,50 | 71,46 | | | | | |
+
+Using the above data, one can calculate the values of the coefficient of friction $\mu$, the coefficient of the drag force C, the maximum attainable speed $\upsilon_{max}$, of the skier (assuming that he starts his descent from a sufficient high altitude).
+
+**A.** Using suitable new variables, present the dependence of the skier motion on the experimental results in a way that can be studied graphically and the information on the parameters describing the motion to be extracted from the graph, such as the drag coefficient *C*, the coefficient of the frictional force $\mu$ and the maximum attainable speed, $\upsilon_{max}$. Give the expressions for the new variables and for the parameters of the used functional dependence as functions of the given parameters $\alpha, g, m, \rho, A$. **[7 т.]**
+
+**B.** Calculate the values of the new variables for each measurement based on the given data and fill the empty columns of the table. **[4 т.]**
+
+**C.** Draw the dependence in the graph paper provided. **[4 т.]**
+
+**D.** Using the graph, calculate the values of the coefficient of friction $\mu$, the drag coefficient $C$ and the maximal attainable speed of the skier $v_{max}$ (if the hill is sufficiently high). **[10 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A.** $a_i = b - d\upsilon_i^2,\quad b = g(\sin\alpha - k\cos\alpha),\quad d = \frac{C\rho A}{2m}$
+- **D.** μ ≈ 0,15; C ≈ 0,62; υmax ≈ 34,9 m/s ≈ 126 km/h
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**A.** (**7 points**)
+
+The friction force $F_{fr}$, acting on the skier when he slides on the snow, is $F_{fr} = \mu N$ , where $N$ is the force of the reaction. As $N = mg\cos\alpha$, then $F_{fr} = \mu mg\cos\alpha$. **(0,5 p)**
+
+The projection of the gravity force on the hill surface is $mg\sin\alpha$. As the drag force is $F_D = \frac{1}{2}C\rho A\upsilon^2$, the equation of motion is $mg\sin\alpha - \mu mg\cos\alpha - \frac{1}{2}C\rho A\upsilon^2 = ma$, **(0,5 p)** where $\upsilon$ and $a$ are the velocity and acceleration of the skier, respectively.
+
+Therefore, $a = g(\sin\alpha - k\cos\alpha) - \frac{C\rho A}{2m}\upsilon^2$, i.e. $a$ depends on $\upsilon^2$ linearly, $a = b - d\upsilon^2$, where the coefficients of the linear dependence are $b = g(\sin\alpha - k\cos\alpha)$ and $d = \frac{C\rho A}{2m}$. **(1 p)**
+
+As from the experimental data only average velocity $\upsilon_{i,i-1} = \frac{x_i - x_{i-1}}{t_i - t_{i-1}}$ can be calculated, the instantaneous velocity $\upsilon(t_i) \equiv \upsilon_i$ can be evaluated as $\upsilon_i = \frac{\upsilon_{i,i-1} + \upsilon_{i+1,i}}{2}$. **(1 p)**
+
+Therefore, as from the experimental data only average acceleration $a_{i,i-1} = \frac{\upsilon_i - \upsilon_{i-1}}{t_i - t_{i-1}}$ can be calculated, the instantaneous acceleration $a(t_i) \equiv a_i$ can be evaluated as $a_i = \frac{a_{i,i-1} + a_{i+1,i}}{2}$. **(1 p)**
+
+So, the graph $a_i = f(\upsilon_i{}^2)$ is straight line $a_i = b - d\upsilon_i{}^2$. The coefficients $b$ and $d$ defined above can be calculated from the graph. After that the unknown values can be calculated: the friction coefficient is $\mu = \frac{\sin\alpha - \frac{b}{g}}{\cos\alpha}$, **(1 p)**
+
+the drag coefficient is $C = \frac{2md}{\rho A}$, **(1 p)**
+
+and maximal attainable speed of the skier is $\upsilon_{max} = \sqrt{\frac{b}{d}}$. **(1 p)**
+
+**B. (4 points)**
+
+The empty columns in the table can be filled with the calculated values of averaged velocity $\upsilon_{i,i-1}$, **(0,8 p)** instantaneous velocity $\upsilon_i$, **(0,8 p)** average acceleration $a_{i,i-1}$, **(0,8 p)** instantaneous acceleration $a_i$, **(0,8 p)** and the square of instantaneous velocity $\upsilon_i{}^2$, **(0,8 p)** respectively (see the table below).
+
+| $i$ | $t_i/\mathrm{s}$ | $x_i/\mathrm{m}$ | $\upsilon_{i,i-1}$m/s | $\upsilon_i/$m/s | $a_{i,i-1}$m/s² | $a_i/$m/s² | $\upsilon_i{}^2/$(m/s)² |
+|---|---|---|---|---|---|---|---|
+| 1 | 2,00 | 7,21 | | | | | |
+| 2 | 2,50 | 11,22 | 8,02 | 8,87 | | | |
+| 3 | 3,00 | 16,08 | 9,72 | 10,54 | 3,34 | 3,29 | 111.09 |
+| 4 | 3,50 | 21,76 | 11,36 | 12,16 | 3,24 | 3,19 | 147,87 |
+| 5 | 4,00 | 28,24 | 12,96 | 13,73 | 3,14 | 3,07 | 188,51 |
+| 6 | 4,50 | 35,49 | 14,50 | 15,23 | 3,00 | 2,92 | 231,95 |
+| 7 | 5,00 | 43,47 | 15,96 | 16,65 | 2,84 | 2,79 | 277,22 |
+| 8 | 5,50 | 52,14 | 17,34 | 18,02 | 2,74 | 2,67 | 324,72 |
+| 9 | 6,00 | 61,49 | 18,70 | 19,32 | 2,60 | | |
+| 10 | 6,50 | 71,46 | 19,94 | | | | |
+
+**C. (4 points)**
+
+The dependence is drawn on the graph below.
+
+**D. (10 points)**
+
+Using the obtained graph, the calculated values are:
+
+the friction coefficient is $\mu = \frac{\sin\alpha - \frac{b}{g}}{\cos\alpha} \approx 0{,}15$; **(3,5p)**
+
+the drag coefficient is $C = \frac{2md}{\rho A} \approx 0{,}62$; **(3,5 p)**
+
+maximum attainable speed of the skier is $\upsilon_{max} = \sqrt{\frac{b}{d}} \approx 34{,}9\ \mathrm{m/s} \approx 126\ \mathrm{km/h}$. **(3 p)**
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkan-2022-x/p2-sol-fig1.png" alt="Graph of a_i/(m/s²) (vertical axis, 2.6 to 3.7) against υ_i²/(m/s)² (horizontal axis, 0 to 350): six data points on a falling straight line that meets the vertical axis near 3.62 (marked with an arrow); inset text a_i = b − dυ_i², b = 3,62 m/s², d = 2,97×10⁻³ m⁻¹." />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/Balkan/2022/problems.pdf)
+· официални решения: [solutions.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/Balkan/2022/solutions.pdf)

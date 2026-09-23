@@ -1,0 +1,463 @@
+{
+ "paper": {
+  "id": "apho-2019-theory-1",
+  "subject": "physics",
+  "competition": "APhO",
+  "year": 2019,
+  "round": "theory",
+  "roundType": "theory",
+  "grade": null,
+  "lang": "en",
+  "title": "Asian Physics Olympiad Adelaide 2019 — Theory Q1: RF reflectometry for spin readout for silicon quantum computing",
+  "held": {
+   "place": "Adelaide"
+  },
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/APhO/2019/Theory/1.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/APhO/2019/Theory/1_sol.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-23",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "aa38cd9596f44656d9ed4b7973778ae5ec284d29b7c7ca21df9fe77917de2601",
+    "solutions": "dcb877086e63cad93dde2b3abca90f3bff8811e5f23c14b2465af950623df0a5"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-23",
+   "notes": "One printed top-level question (Q1) with 16 printed boxed sub-tasks A.1–A.5, B.1, C.1, C.2, D.1–D.4, E.1, E.2, F.1, F.2 as parts (the catalogue estimate of about 14 is low). Part headings and the shared text between boxed tasks are kept in statementAfter of the preceding part; figure captions are kept in the text where printed and also as figure captions. No paper total is printed; the printed part points sum to 10.0 (A 2.0, B 1.0, C 1.2, D 3.3, E 1.0, F 1.5). Kept as printed: in the Part B figure caption permeability and permittivity are swapped relative to the symbols ($\\varepsilon_{\\mathrm{r}}$ called permeability, $\\mu_{\\mathrm{r}}$ called permittivity); the problem text uses „capacitatively“ / „capacitative“; missing spaces before „can“, „amplitudes“ and „reaches“ after $Z_0$ / $I_0$ are kept as printed. Agreement errors kept as printed (D-P28): „the number of wires ... need to be minimized“ (Part F), „i.e. determined the reflectance“ (Part E), „a SLQD has an OFF in which“ (missing word, Part F). Solutions kept as printed: „the the core“ (A.2), „equal inductance times the current“ (A.4), „The implies“ (D.1), „the capacitor the dork the work done“ (D.1 ii, garbled but real words), „reflectance i“ (E.2), „an dissipationless“, „switch between ... to ...“, „then the impedance of the $\\omega_0=\\omega_{\\mathrm{rf}}$“, „is the OFF state“ (F.1), „is series with rest“ (F.2); in B.1–B.2 the solution writes $\\mu\\mu_0$ where the answer uses $\\mu_{\\mathrm{r}}\\mu_0$; in F.1 the solution writes $Z_{\\mathrm{SET}}$ for the SLQD. The A.5 solution refers to „the following circuit“ but no circuit is printed in the solutions. Equation numbers are written as \\text{(A.1)} etc. at the end of display formulas.",
+   "edits": [
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "paralel",
+     "fixed": "parallel",
+     "document": "solutions",
+     "page": 1,
+     "kind": "misspelling"
+    },
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "characterstic",
+     "fixed": "characteristic",
+     "document": "solutions",
+     "page": 2,
+     "kind": "misspelling"
+    },
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "disspationless",
+     "fixed": "dissipationless",
+     "document": "solutions",
+     "page": 4,
+     "kind": "misspelling"
+    },
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "imedance",
+     "fixed": "impedance",
+     "document": "solutions",
+     "page": 4,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "apho-2019-theory-1-p1",
+   "number": 1,
+   "title": "RF reflectometry for spin readout for silicon quantum computing",
+   "points": null,
+   "problemType": "theory",
+   "statement": "**Introduction**\n\nDeveloping the idea of quantum computing into a practical technology is one of the largest outstanding challenges in science and technology. A promising path is to manipulate individual electrons in silicon transistors by time-dependent electromagnetic fields.\n\nIn this question, we investigate the use of radio frequency (RF) reflectometry and single-electron transistors to read out the state of quantum bits in silicon-based quantum computer prototypes.\n\nPart A and Part B discuss radio wave transmission through cables and transmission lines, part C is devoted to conditions for wave reflection, part D introduces the single-electron transistor, and parts E and F introduce and ask you to optimise the method of reflectometry.\n\n**Part A: Lumped element model of a co-axial transmission line (2.0 points)**\n\nWhen modelling DC or low frequency signals, one often assumes that a voltage pulse travels instantaneously throughout the circuit. This assumption is valid when the wavelength of such signals is much longer than the size of the circuit, however when working with radio frequency signals, the dynamics are more complex, and we need to account for the intrinsic capacitance and inductance of our cables in our model. We model a co-axial transmission line which acts as a waveguide as described below, ignoring the small resistance of the copper and the small conductance through the dielectric. Throughout the problem, we consider the large-wavelength limit of electromagnetic waves in the co-axial cable such that electric and magnetic fields are perpendicular to the axis of the cable everywhere (the so-called transverse electromagnetic mode).\n\nConsider a co-axial cable consisting of a copper inner core of negligible resistance, negligible magnetic permeability and radius $a$, covered by an outer co-axial copper shield with inner radius $b$. A dielectric of dimensionless relative permittivity $\\varepsilon_{\\mathrm{r}}$ and dimensionless relative permeability $\\mu_{\\mathrm{r}}$ separates the layers. When electromagnetic signals propagate through the co-axial cable, they are confined between the inner core and outer shielding.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "caption": "Diagram of a coaxial cable showing C - the centre core, I - the dielectric insulator, S - the metallic shield and J - the plastic jacket.",
+     "alt": "Left: cut-away photo-style drawing of a coaxial cable with labels plastic jacket J, dielectric insulator I, metallic shield S, centre core C. Right: cross-section with a red inner disc C of radius a, a grey insulator region I and an outer red ring S of inner radius b.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-1/p1-fig1.png",
+     "width": 1033,
+     "height": 440,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       173.84,
+       484.92,
+       421.47,
+       590.17
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "caption": "Circuit diagram of lumped element model of coaxial cable.",
+     "alt": "Ladder circuit: four series inductors each labelled δL along the top wire, with a shunt capacitor δC to the bottom wire after each inductor; the chain continues to the right with dotted lines.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-1/p1-fig2.png",
+     "width": 1048,
+     "height": 348,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       172.62,
+       294.66,
+       423.86,
+       378
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig3",
+     "caption": "Diagram of a hypothetical transmission line showing C - the conductor of radius $a$, at a distance $d \\gg a$ from P - the grounded conducting plane. The conductor is embedded in a material with dimensionless relative permeability $\\varepsilon_{\\mathrm{r}}$ and dimensionless relative permittivity $\\mu_{\\mathrm{r}}$.",
+     "alt": "Light-blue region labelled εr, μr above a grey plane labelled P; a small red conductor C of diameter 2a sits at height d above the plane, with arrows marking d and 2a.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-1/p1-fig3.png",
+     "width": 1033,
+     "height": 355,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       173.84,
+       560.7,
+       421.47,
+       645.75
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig4",
+     "caption": "Circuit diagram of a transmission line of impedance $Z_0$ connected to a transmission line of impedance $Z_1$. The physical size of the interface is much smaller than the wavelength.",
+     "alt": "Two coaxial-cable symbols in series, the left labelled Z0 and the right labelled Z1, with their inner conductors joined by a wire and their shields joined by a lower wire.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-1/p1-fig4.png",
+     "width": 944,
+     "height": 225,
+     "source": {
+      "page": 3,
+      "pdfRect": [
+       184.54,
+       239.09,
+       410.76,
+       292.99
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig5",
+     "caption": "Circuit diagram representation of an SET. QD is the quantum dot, S is the source, D is the drain and G is the gate.",
+     "alt": "Circuit: a quantum dot QD (ellipse) connected through tunnel junctions (crosses) labelled Ct to the source S on the left and the drain D on the right; below the QD a gate capacitor Cg and a voltage source Vg, labelled G, connect to the bottom wire, which is grounded; S and D are joined through the outer loop.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-1/p1-fig5.png",
+     "width": 1033,
+     "height": 710,
+     "source": {
+      "page": 3,
+      "pdfRect": [
+       173.84,
+       596.07,
+       421.47,
+       766.12
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig6",
+     "caption": "Circuit diagram of transmission cable of impedance $Z_0$ connected to an SET.",
+     "alt": "A coaxial cable symbol labelled Z0 whose inner conductor and shield are connected across a resistor-like box labelled Z_SET.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-1/p1-fig6.png",
+     "width": 1001,
+     "height": 555,
+     "source": {
+      "page": 5,
+      "pdfRect": [
+       181.57,
+       242.46,
+       421.47,
+       375.48
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig7",
+     "caption": "Modified SET circuit.",
+     "alt": "A coaxial cable Z0 feeding a series inductor L0, followed by a capacitor C0 and a box Z_SET connected in parallel to the return wire.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-1/p1-fig7.png",
+     "width": 974,
+     "height": 432,
+     "source": {
+      "page": 5,
+      "pdfRect": [
+       183.33,
+       526.18,
+       416.7,
+       629.73
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig8",
+     "caption": "Circuit diagram of the SLQD readout circuit connected to the transmission line.",
+     "alt": "A coaxial cable Z0 connected across three parallel elements: an inductor L0, a capacitor C0 and a box Z_SLQD.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2019-theory-1/p1-fig8.png",
+     "width": 979,
+     "height": 429,
+     "source": {
+      "page": 6,
+      "pdfRect": [
+       184.54,
+       286.24,
+       419.08,
+       388.93
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "A.1",
+     "statement": "At what speed do electromagnetic waves propagate in the co-axial cable?",
+     "points": 0.2,
+     "answer": {
+      "kind": "expression",
+      "latex": "v=\\frac{c_0}{\\sqrt{\\varepsilon_{\\mathrm{r}}\\,\\mu_{\\mathrm{r}}}}"
+     }
+    },
+    {
+     "label": "A.2",
+     "statement": "If there is a charge $\\Delta q$ on a length $\\Delta x$ of the inner core of the co-axial cable, and the outer shield is grounded, find the electric field in the region between the inner core and the shield.",
+     "points": 0.2,
+     "answer": {
+      "kind": "expression",
+      "latex": "E(r)=\\frac{\\Delta q}{\\Delta x}\\frac{1}{2\\pi\\varepsilon_{\\mathrm{r}}\\varepsilon_0 r}"
+     }
+    },
+    {
+     "label": "A.3",
+     "statement": "Find the capacitance per unit length, $C_x$, of the co-axial cable. You may wish to consider a length $\\Delta x$ of the cable.",
+     "points": 0.3,
+     "answer": {
+      "kind": "expression",
+      "latex": "C_x=\\frac{2\\pi\\varepsilon_{\\mathrm{r}}\\varepsilon_0}{\\ln\\frac{b}{a}}"
+     }
+    },
+    {
+     "label": "A.4",
+     "statement": "Find the inductance per unit length, $L_x$, of the cable.",
+     "points": 0.3,
+     "answer": {
+      "kind": "expression",
+      "latex": "L_x=\\frac{\\mu_{\\mathrm{r}}\\mu_0}{2\\pi}\\ln\\frac{b}{a}"
+     },
+     "statementAfter": "A *lumped element* model of the cable is constructed by considering the inductance and capacitance of short sections of the cable. The inductance is assumed to be a property of the inner core, and the capacitance links the core with the shielding. A diagram of the lumped element model is shown below."
+    },
+    {
+     "label": "A.5",
+     "statement": "i. Show that the impedance $Z_0$ of a semi-infinite length of cable is $Z_0=\\sqrt{L_x/C_x}$.\n\nii. Find $b/a$ if the cable has impedance $Z_0=50\\ \\Omega$ and is made using a dielectric material with $\\varepsilon_{\\mathrm{r}}=4.0$ and $\\mu_{\\mathrm{r}}=1.0$.",
+     "points": 1,
+     "answer": {
+      "kind": "numeric",
+      "value": 5.3,
+      "tolerance": 0.01,
+      "latex": "b=5.30\\,a",
+      "note": "Official: $b = 5.30\\,a$."
+     },
+     "statementAfter": "**Part B: Hypothetical transmission line with return along a grounded plane (1.0 points)**\n\nAn alternative hypothetical transmission line is shown in the diagram below. The input signal is sent through a very thin conductor of radius $a$, which is a distance $d \\gg a$ from a highly conductive grounded plane. The material surrounding the conductor has dimensionless relative permittivity $\\varepsilon_{\\mathrm{r}}$ and dimensionless relative permeability $\\mu_{\\mathrm{r}}$. The return current flows along the grounded plane."
+    },
+    {
+     "label": "B.1",
+     "statement": "Find an expression for the characteristic impedance of this hypothetical transmission line.",
+     "points": 1,
+     "answer": {
+      "kind": "expression",
+      "latex": "Z_0=\\frac{\\ln(2d/a)}{2\\pi}\\sqrt{\\frac{\\mu_{\\mathrm{r}}\\mu_0}{\\varepsilon_{\\mathrm{r}}\\varepsilon_0}}"
+     },
+     "statementAfter": "**Part C: Basics of RF reflectometry (1.2 points)**\n\nAn electromagnetic wave can propagate in a transmission line in two opposite directions. For each direction of propagation, the characteristic impedance $Z_0$can be used to relate the voltage $V_0$ and current $I_0$amplitudes as in the Ohm's law, $Z_0=V_0/I_0$.\n\nConsider an interface between two transmission lines, with characteristic impedances $Z_0$ and $Z_1$. A schematic diagram of the circuit is shown below.\n\nWhen a signal $V_{\\mathrm{i}}$ sent into the transmission line with impedance $Z_0$reaches the interface it is partially transmitted into the second transmission line, resulting in a signal $V_{\\mathrm{t}}$ in that line which propagates forward. Some of the signal may also be reflected, resulting in a backward propagating signal in the initial transmission line $V_{\\mathrm{r}}$."
+    },
+    {
+     "label": "C.1",
+     "statement": "Find the reflectance of the interface $\\Gamma=V_{\\mathrm{r}}/V_{\\mathrm{i}}$.",
+     "points": 1,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\Gamma=\\frac{Z_1-Z_0}{Z_1+Z_0}"
+     }
+    },
+    {
+     "label": "C.2",
+     "statement": "State the condition(s) for the signal $V_{\\mathrm{i}}$ to have gained a $\\pi$ phase change on reflection.",
+     "points": 0.2,
+     "answer": {
+      "kind": "expression",
+      "latex": "Z_1<Z_0"
+     },
+     "statementAfter": "**Part D: The single electron transistor (3.3 points)**\n\nA single electron transistor (SET) consists of a quantum dot, which is a small isolated conductor where electrons can be localised, and of several electrodes in its vicinity. The gate electrode couples capacitatively to the quantum dot, while the two other electrodes --- the source and the drain --- are connected via tunnel junctions, through which electrons can tunnel due to quantum mechanics. A simplified circuit diagram for an SET is shown in the figure.\n\nThe capacitance of the gate is $C_g$ and the capacitance of the tunnel junctions is $C_t \\ll C_g$. Consider $C_g$ to be the total capacitance of the quantum dot. In this part of the problem, the source and the drain are held at zero potential, and the voltage on the gate electrode is fixed at $V_g$."
+    },
+    {
+     "label": "D.1",
+     "statement": "Consider a state of the SET in which the quantum dot contains $n$ electrons.\n\ni. Find the electrical potential $\\varphi_n$ on the QD.\n\nii. Find the amount of energy $\\Delta E_n$ that is necessary to bring an additional electron from the source or the drain onto the QD.",
+     "points": 1.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\varphi_n=V_g+\\frac{-ne}{C_{\\mathrm{g}}},\\quad \\Delta E_n=\\frac{e^2}{C_g}\\left(n+\\frac{1}{2}\\right)-eV_g"
+     },
+     "statementAfter": "If $\\Delta E_n<0$ then electrons will spontaneously tunnel into the quantum dot until such a number $\\mathcal{N}>n$ is reached that $\\Delta E_{\\mathcal{N}}\\geq 0$. The equilibrium number of electrons $\\mathcal{N}$ and the corresponding addition energy $\\Delta E_{\\mathcal{N}}$ can be controlled by choosing the appropriate voltage $V_g$."
+    },
+    {
+     "label": "D.2",
+     "statement": "Find an expression for the maximal possible value $E_c=\\max\\Delta E_{\\mathcal{N}}(V_g)$ of the equilibrium addition energy that can be achieved by tuning the gate voltage of the SET.",
+     "points": 0.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "E_c=\\frac{e^2}{C_g}"
+     },
+     "statementAfter": "If $\\Delta E_{\\mathcal{N}}=0$ then tunnelling of electrons does not require extra energy and SET is in a highly conductive ON state. If $\\Delta E_{\\mathcal{N}}>0$, then the conductance of the SET is reduced (high-resistance OFF).\n\nFor the number of electrons on the quantum dot to remain well-defined, certain conditions need to be satisfied. Firstly, if electrons in the source or drain have thermal energies sufficient to move spontaneously onto the quantum dot, the contrast between the ON and OFF states will disappear."
+    },
+    {
+     "label": "D.3",
+     "statement": "Find a condition on the temperature of the electrons so that electrons cannot move onto the quantum dot by thermal excitation.",
+     "points": 0.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "k_{\\mathrm{B}}T<E_c"
+     },
+     "statementAfter": "Secondly, tunnelling of electrons onto or off the dot limits the lifetime of their energy states. This tunnelling can be modelled using an effective resistance of the tunnel junction with the characteristic tunnelling time equal to the characteristic time for charging or discharging the quantum dot through the junction."
+    },
+    {
+     "label": "D.4",
+     "statement": "i. Estimate the tunnelling time for a quantum dot in terms of capacitance $C_t$ and effective resistance $R_t$ of the tunnel junction.\n\nii. Find a condition on the effective resistance $R_t$ so that the electrons in the quantum dot retain sufficiently well-defined energy for the ON and OFF states to remain distinct.",
+     "points": 0.8,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\tau=R_t\\,C_t,\\quad R_t>\\frac{h}{e^2}\\frac{C_g}{C_t}"
+     },
+     "statementAfter": "**Part E: RF reflectometry to read out SET state (1.0 points)**\n\nThe state of the SET is sensitive to electrical potentials created by nearby elements of the quantum circuit (such as quantum bits), and distinguishing between ON and OFF states provides a way to read out the information produced by the quantum computer. The SET in the ON state can be modelled by a resistance $R_{\\mathrm{ON}}=100\\,\\mathrm{k\\Omega}$ while in the OFF state we can assume the SET to be a complete insulator (neglecting any capacitative connection between the source and the drain via the SET). While it is possible to determine the state of the SET by measuring the response to an input signal through the source, it is faster to do so using RF reflectometry to measure both the amplitude and phase of the reflected signal, i.e. determined the reflectance $\\Gamma$.\n\nThe change in reflectance due to switching of an SET between ON and OFF states is\n\n$$\\Delta\\Gamma=|\\Gamma_{\\mathrm{ON}}-\\Gamma_{\\mathrm{OFF}}|\\ , \\qquad (1)$$\n\nwhere $\\Gamma_{\\mathrm{ON}}$ and $\\Gamma_{\\mathrm{OFF}}$ are the reflectances in two different states."
+    },
+    {
+     "label": "E.1",
+     "statement": "Find the change in reflectance $\\Delta\\Gamma$ between the conductive and insulating states for a typical SET connected to a co-axial cable with impedance of $50\\ \\Omega$.",
+     "points": 0.2,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.001,
+      "tolerance": 0.00005,
+      "latex": "\\Delta\\Gamma\\approx 1.0\\cdot 10^{-3}"
+     },
+     "statementAfter": "In order to increase the change in reflectance, and hence the sensitivity of the RF reflectometry, the circuit is modified by inclusion of an inductor. The intrinsic capacitance due to the device geometry $C_0\\approx 0.4\\ \\mathrm{pF}$ is also taken into account. The RF reflectometry is conducted using a signal of angular frequency $\\omega_{\\mathrm{rf}}$."
+    },
+    {
+     "label": "E.2",
+     "statement": "Estimate the value of the inductance $L_0$ that can result in the change in reflection on the order of one. Calculate your estimate for $L_0$ numerically for $\\omega_{\\mathrm{rf}}/(2\\pi)=100\\ \\mathrm{MHz}$ and compute the corresponding $\\Delta\\Gamma$.",
+     "points": 0.8,
+     "answer": {
+      "kind": "text",
+      "value": "L0 = 1/(ω_rf² C0) = 6.33 μH; ΔΓ = 1.52",
+      "latex": "L_0=\\frac{1}{\\omega_{\\mathrm{rf}}^2C_0}=6.33\\,\\mu\\mathrm{H},\\quad \\Delta\\Gamma=1.52"
+     },
+     "statementAfter": "**Part F: Charge sensing with a single lead quantum dot (1.5 points)**\n\nFor a scalable quantum computing architecture, the number of wires reaching each individual quantum bit need to be minimized. A promising alternative to an SET for charge sensing in silicon quantum computing is a Single Lead Quantum Dot (SLQD). In many ways it is similar to an SET, but does not have the source and drain leads. The gate is the only electrode, through which the electron energy states of the quantum dot are controlled and also through which RF reflectometry is conducted.\n\nLike an SET, a SLQD has an OFF in which the SLQD behaves as a total insulator. In contrast to an SET, the ON state of the SLQD is capacitive, with capacitance $C_{\\mathrm{q}}$. In order to maximize the difference in reflectance $\\Delta\\Gamma$ of the SLQD, the following circuit is constructed. The parasitic capacitance $C_0\\approx 0.4\\ \\mathrm{pF}$ is fixed by circuit geometry, but the value of $L_0$ and the operating frequency can be changed to optimize the performance. The characteristic impedance of the transmission line is $Z_0=50\\,\\Omega$."
+    },
+    {
+     "label": "F.1",
+     "statement": "Suggest $\\omega_{\\mathrm{rf}}$ and $Z_{\\mathrm{C}}=\\sqrt{L_0/C_0}$ that allow $\\Delta\\Gamma\\sim 1$ for given $C_0$ and $C_q$.",
+     "points": 1,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\omega_{\\mathrm{rf}}=1/\\sqrt{L_0C_0},\\quad Z_C\\sim\\frac{C_q}{C_0}Z_0"
+     },
+     "statementAfter": "Optimal values of $L_0$ are relatively large and not always technically feasible. Hence, other types of circuit elements may be needed to improve sensitivity of the reflectometry readout circuit."
+    },
+    {
+     "label": "F.2",
+     "statement": "Assume that $L_0$ (and hence $Z_C$) is fixed. Draw a circuit diagram showing where to place an additional element in the SLQD readout circuit and specify the parameter(s) of this element such that $\\Delta\\Gamma\\sim 1$ can still be achieved without requiring a large inductance.",
+     "points": 0.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "C_m=\\frac{C_qZ_C}{Z_0C_q/C_0-Z_C}\\approx\\frac{1}{Z_0\\,\\omega_{\\mathrm{rf}}}",
+      "note": "Official: an additional capacitance $C_m$ in series with the rest of the circuit, operated at $\\omega_{\\mathrm{rf}}=1/\\sqrt{L_0C_0}$."
+     }
+    }
+   ],
+   "topics": [
+    "electricity/ac-circuits",
+    "electromagnetism/transmission-lines",
+    "quantum/single-electron-transistor"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**Theory Q1: Solutions**\n\n**RF Reflectometry**\n\nVersion 1.32.\n\n**A. LUMPED ELEMENT MODEL OF A CO-AXIAL TRANSMISSION LINE**\n\nA.1 The speed of wave propagation in free space ($c_0 = 299\\,792\\,458\\,\\mathrm{m/s}$) is $c_0 = 1/\\sqrt{\\varepsilon_0\\,\\mu_0}$. The speed in the dielectric & diamagnetic medium is\n\n$$\\boxed{v=\\frac{c_0}{\\sqrt{\\varepsilon_{\\mathrm{r}}\\,\\mu_{\\mathrm{r}}}}} \\qquad \\text{(A.1)}$$\n\nA.2 Gauss law for the flux through a cylindrical surface with radius $r$ co-axial with the the core, $a<r<b$:\n\n$$\\Delta x\\,2\\pi r\\,E(r)=\\frac{\\Delta q}{\\varepsilon_{\\mathrm{r}}\\varepsilon_0}\\Rightarrow E(r)=\\frac{\\Delta q}{\\Delta x}\\frac{1}{2\\pi\\varepsilon_{\\mathrm{r}}\\varepsilon_0 r} \\qquad \\text{(A.2)}$$\n\nA.3 The capacitance\n\n$$C_x\\,\\Delta x=\\frac{\\Delta q}{\\varphi} \\qquad \\text{(A.3)}$$\n\nwhere the potential $\\varphi$ of the core with respect to the shield is\n\n$$0-\\varphi=-\\int_a^b E(r)\\,dr\\Rightarrow\\varphi=\\frac{\\Delta q}{\\Delta x}\\frac{1}{2\\pi\\varepsilon_{\\mathrm{r}}\\varepsilon_0}\\ln\\frac{b}{a} \\qquad \\text{(A.4)}$$\n\n$$\\boxed{C_x=\\frac{2\\pi\\varepsilon_{\\mathrm{r}}\\varepsilon_0}{\\ln\\frac{b}{a}}} \\qquad \\text{(A.5)}$$\n\nA.4 The magnetic flux through a rectangular contour parallel to the axis equal inductance times the current:\n\n$$\\Delta x\\int_a^b B(r)\\,dr=L_x\\,\\Delta x\\,I \\qquad \\text{(A.6)}$$\n\nBiot-Savart law $B(r)=\\frac{\\mu_{\\mathrm{r}}\\mu_0}{2\\pi}\\frac{I}{r}$ gives\n\n$$\\boxed{L_x=\\frac{\\mu_{\\mathrm{r}}\\mu_0}{2\\pi}\\ln\\frac{b}{a}} \\qquad \\text{(A.7)}$$\n\nA.5 i. Adding $\\delta x$ length of the cable should not change its impedance. Hence the impedance $Z$ of the following circuit must be equal to $Z_0$:\n\n$$\\frac{1}{Z}=\\frac{1}{Z_0+j\\omega\\delta L}+\\frac{1}{\\frac{1}{j\\omega\\delta C}}=\\frac{1}{Z_0} \\qquad \\text{(A.8)}$$\n\n$$Z_0^2+j\\,\\omega\\,\\delta L\\,Z_0-\\delta L/\\delta C=0 \\qquad \\text{(A.9)}$$\n\n(here engineering notation for $j^2=-1$ is used.) $\\delta L/\\delta C=L_x/C_x$ and $\\delta L\\to 0$ for $\\delta x\\to 0$, hence\n\n$$\\boxed{Z_0=\\sqrt{L_x/C_x}} \\qquad \\text{(A.10)}$$\n\nii.\n\n$$Z_0=\\sqrt{L_x/C_x}=\\frac{\\ln(b/a)}{2\\pi}\\sqrt{\\frac{\\mu_{\\mathrm{r}}\\mu_0}{\\varepsilon_{\\mathrm{r}}\\varepsilon_0}}=\\ln(b/a)\\sqrt{\\frac{\\mu_{\\mathrm{r}}}{\\varepsilon_{\\mathrm{r}}}}\\times 59.96\\,\\Omega \\qquad \\text{(A.11)}$$\n\nFor $Z_0=50\\,\\Omega$, $\\varepsilon_{\\mathrm{r}}=4.0$ and $\\mu_{\\mathrm{r}}=1.0$ this gives $\\boxed{b=5.30\\,a}$.\n\n**B. HYPOTHETICAL TRANSMISSION LINE WITH RETURN ALONG A GROUNDED PLANE**\n\nB.1 The high-conductance ground plate can be replaced by an image of the wire with opposite direction of the current at distance $2d$ from the real wire. The magnetic fields from the real and the imaginary wires add up and need to be integrated to get the magnetic flux between the wire and the plate:\n\n$$L_x\\,\\Delta x\\,I=\\frac{\\mu\\mu_0}{2\\pi}I\\int_a^d\\left(\\frac{1}{r}+\\frac{1}{2d-r}\\right)dr\\,\\Delta x \\qquad \\text{(B.1)}$$\n\n$$L_x=\\frac{\\mu\\mu_0}{2\\pi}\\ln\\left(\\frac{2d}{a}-1\\right)\\approx\\frac{\\mu\\mu_0}{2\\pi}\\ln\\frac{2d}{a} \\qquad \\text{(B.2)}$$\n\nThe potential difference between the wire and the plate can be obtained similarly by integrating the combined field for the wire and its image:\n\n$$\\varphi=\\frac{\\Delta q}{\\Delta x}\\frac{1}{2\\pi\\varepsilon_{\\mathrm{r}}\\varepsilon_0}\\int_a^d\\left(\\frac{1}{r}+\\frac{1}{2d-r}\\right)dr=\\frac{\\Delta q}{\\Delta x}\\frac{\\ln(2d/a)}{2\\pi\\varepsilon_{\\mathrm{r}}\\varepsilon_0} \\qquad \\text{(B.3)}$$\n\n$$C_x=\\frac{\\Delta q}{\\Delta x}\\frac{1}{\\varphi}\\approx\\frac{2\\pi\\varepsilon_{\\mathrm{r}}\\varepsilon_0}{\\ln(2d/a)} \\qquad \\text{(B.4)}$$\n\nHence the characteristic impedance $Z_0=\\sqrt{L_x/C_x}$ of the wire-plate system is\n\n$$\\boxed{Z_0=\\frac{\\ln(2d/a)}{2\\pi}\\sqrt{\\frac{\\mu_{\\mathrm{r}}\\mu_0}{\\varepsilon_{\\mathrm{r}}\\varepsilon_0}}} \\qquad \\text{(B.5)}$$\n\n**C. BASICS OF RF REFLECTOMETRY**\n\nC.1 At the interface, values of the voltage on both transmission lines have to coincide:\n\n$$V_{\\mathrm{i}}+V_{\\mathrm{r}}=V_{\\mathrm{t}} \\qquad \\text{(C.1)}$$\n\nThe current has to be conserved at the interface, however, the incident and the reflected waves carry the current in opposite directions:\n\n$$\\frac{V_{\\mathrm{i}}}{Z_0}-\\frac{V_{\\mathrm{r}}}{Z_0}=\\frac{V_{\\mathrm{t}}}{Z_1} \\qquad \\text{(C.2)}$$\n\nIt is clear from the equation above that $V_{\\mathrm{t}}\\neq 0$ if $Z_0\\neq Z_1$ – impedance mismatch has to cause reflection. Solving the voltage and the current equations for $\\Gamma=V_{\\mathrm{r}}/V_{\\mathrm{i}}$ gives\n\n$$\\boxed{\\Gamma=\\frac{Z_1-Z_0}{Z_1+Z_0}} \\qquad \\text{(C.3)}$$\n\nC.2 A $\\pi$-shift implies opposite signs of $V_{\\mathrm{i}}$ and $V_{\\mathrm{r}}$ and hence requires $\\Gamma<0$. This implies $\\boxed{Z_1<Z_0}$.\n\n**D. THE SINGLE ELECTRON TRANSISTOR**\n\nD.1 i. Since any capacitance beyond $C_g$ is neglected in our model, the quantum dot can be thought as a capacitor plate with the gate being the other plate of the same capacitor with capacitance $C_g$. The fixed number $n$ of electrons trapped on the quantum dot sets a fixed-charge ($q=-ne$) boundary condition for the capacitor $C_g$ on the QD, while the gate side is kept at a constant potential $V_g$. (We denote the elementary charge by $e>0$). The implies that an excess charge of opposite sign, $-q=ne$ will accumulate on the gate, to keep electric field confined between the QD and the gate. The potential jump across the capacitor from the gate to the QD will be equal to the capacitor $q/C_g=-ne/C_g$. Hence the potential on the QD is\n\n$$\\boxed{\\varphi_n=V_g+\\frac{-ne}{C_{\\mathrm{g}}}} \\qquad \\text{(D.1)}$$\n\nii. Bringing an infinitesimal charge $\\delta q$ from potential 0 to potential $\\varphi(q)$ requires energy $\\delta E=\\varphi(q)\\delta q$, and the dependence of potential $\\varphi(q)$ on the accumulated charge $q$ is linear. For the single-electron transfer, the additional charge of the electron, $-e$, changes the potential from $\\varphi_n$ to $\\varphi_{n+1}=\\varphi_n-e/C_g$. Hence the work necessary to accumulate an extra $e$ on the QD is the integral of $\\delta E$\n\n$$\\Delta E_n=-e\\frac{\\varphi_n+\\varphi_{n+1}}{2} \\qquad \\text{(D.2)}$$\n\n$$\\boxed{\\Delta E_n=\\frac{e^2}{C_g}\\left(n+\\frac{1}{2}\\right)-eV_g} \\qquad \\text{(D.3)}$$\n\nAlternatively, $\\Delta E_n$ can be obtained from energy conservation, by computing the change of the energy of the capacitor the dork the work done against the electromotive force of the battery (=−“work done by the battery’) for a charge $+e$ to be brought from the ground potential via the battery to the gate-side plate of the capacitor:\n\n$$\\Delta E_n=\\frac{e^2(n+1)^2}{2C_g}-\\frac{e^2n^2}{2C_g}-eV_g \\qquad \\text{(D.4)}$$\n\nNote that without $C_t\\ll C_g$ approximation, the answer is $\\Delta E_n=\\frac{e^2}{C_g+2\\,C_t}\\left(n+\\frac{1}{2}\\right)-eV_gC_g/(2\\,C_t+C_g)$ (not required to receive full marks).\n\nD.2 $\\mathcal{N}$ is a minimal integer $n$ for which $\\Delta E_n\\geq 0$. Consider the marginal case of $\\Delta E_{\\mathcal{N}}=0$ which is achieved at some $V_g=V_0$,\n\n$$\\Delta E_{\\mathcal{N}}(V_0)=0=\\frac{e^2}{C_g}\\left(\\mathcal{N}+\\frac{1}{2}\\right)-eV_0 \\qquad \\text{(D.5)}$$\n\nIf $V_g$ would go slightly larger than $V_0$, then $\\Delta E_n$ would go negative and then minimal $n$ that makes a positive $\\Delta E_n$ would jump from $\\mathcal{N}$ to $\\mathcal{N}+1$. Hence $E_c=\\Delta E_{\\mathcal{N}+1}(V_0)$. This gives\n\n$$\\Delta E_{\\mathcal{N}+1}(V_0)=E_c=\\frac{e^2}{C_g}\\left(\\mathcal{N}+1+\\frac{1}{2}\\right)-eV_0=\\boxed{\\frac{e^2}{C_g}} \\qquad \\text{(D.6)}$$\n\nD.3 In a metal, only electrons in an energy range $\\pm\\approx k_BT$ around the Fermi level take part in the thermal motion. (Here $k_{\\mathrm{B}}$ is the Boltzmann constant.) Typical energy of these electrons is $k_{\\mathrm{B}}T$ per particle and it may not exceed characteristic single-electron addition energy $E_c$, $\\boxed{k_{\\mathrm{B}}T<E_c}$.\n\nD.4 i. $\\boxed{\\tau=R_t\\,C_t}$\n\nii. Quantum uncertainty of energy (life-time broadening) $h/\\tau$ must be less than the energy difference between the states with $n$ and $n+1$ electrons,\n\n$$h/\\tau<E_c\\Rightarrow\\frac{h}{R_tC_t}<\\frac{e^2}{C_g} \\qquad \\text{(D.7)}$$\n\n$$\\boxed{R_t>\\frac{h}{e^2}\\frac{C_g}{C_t}}>\\frac{h}{e^2} \\qquad \\text{(D.8)}$$\n\n**E. RF REFLECTOMETRY TO READ OUT SET STATE**\n\nE.1\n\n$$\\Gamma=\\frac{Z_{\\mathrm{SET}}-Z_0}{Z_{\\mathrm{SET}}+Z_0} \\qquad \\text{(E.1)}$$\n\n$$\\Gamma_{\\mathrm{ON}}=\\frac{10^5-50}{10^5+50}\\approx 1-2\\frac{50}{10^5} \\qquad \\text{(E.2)}$$\n\n$$\\Gamma_{\\mathrm{OFF}}=\\lim_{Z_1\\to\\infty}\\frac{Z_1-Z_0}{Z_1+Z_0}=1 \\qquad \\text{(E.3)}$$\n\n$$\\Delta\\Gamma=|\\Gamma_{\\mathrm{ON}}-\\Gamma_{\\mathrm{OFF}}|\\boxed{\\approx 1.0\\cdot 10^{-3}} \\qquad \\text{(E.4)}$$\n\nE.2 Large change in reflectance requires the impedance $Z_1$ of the circuit to switch between $Z_1<Z_0$ to $Z_1>Z_0$ as the SET between ON ($Z_{\\mathrm{SET}}=100\\mathrm{k\\Omega}$) and OFF ($Z_{\\mathrm{SET}}=\\infty$).\n\nIn the OFF state of the SET, the circuit is an dissipationless LC contour with resonance frequency $\\omega_0=1/\\sqrt{L_0C_0}$ and its impedance is 0. If we choose\n\n$$\\boxed{L_0=\\frac{1}{\\omega_{\\mathrm{rf}}^2C_0}} \\qquad \\text{(E.5)}$$\n\nthen the impedance of the $\\omega_0=\\omega_{\\mathrm{rf}}$.\n\nSince $Z_{\\mathrm{tot}}$ (the total impedance of the circuit) in the OFF state of the SET equals to 0, the reflectance i $\\Gamma_{\\mathrm{OFF}}=-1$. As we switch to the ON state with $Z_{\\mathrm{SET}}=R_{\\mathrm{SET}}=10^5\\Omega$, the change in reflectance will be large if $|Z_{\\mathrm{tot}}|$ in this ON state is on the order of $Z_0$ or larger, which is indeed the case.\n\nFor the ON state and $\\omega_0=\\omega_{\\mathrm{rf}}$\n\n$$Z_{\\mathrm{tot}}=\\left(\\frac{1}{\\frac{1}{j\\,\\omega\\,C_0}}+\\frac{1}{R_{\\mathrm{SET}}}\\right)^{-1}+j\\,\\omega L_0=\\frac{R_{\\mathrm{SET}}}{1+j\\,\\omega C_0\\,R_{\\mathrm{SET}}}+j\\,\\omega\\,L_0=\\frac{R_{\\mathrm{SET}}+j\\,\\sqrt{L_0/C_0}}{1+R_{\\mathrm{SET}}^2C_0/L_0} \\qquad \\text{(E.6)}$$\n\nFor $C_0=0.4\\cdot 10^{-12}\\,\\mathrm{F}$, $Z_0=50\\,\\Omega$ and $\\omega_{\\mathrm{rf}}=2\\pi\\cdot 10^8\\,\\mathrm{Hz}$, we have $\\boxed{L_0=6.33\\,\\mu\\mathrm{H}}$, $Z_{\\mathrm{tot}}=(158+6.3\\,j)\\Omega$, $\\Gamma_{\\mathrm{ON}}=0.5198+0.0145\\,j$, and $\\boxed{\\Delta\\Gamma=1.52}$.\n\n**F. CHARGE SENSING WITH A SINGLE LEAD QUANTUM DOT**\n\nF.1 The SLQD readout circuit contains only reactive elements, so $|\\Gamma|=1$ will always be one. The OFF state of the SLQD corresponds to an inductor $L_0$ and a capacitor $C_0$ connected in parallel. We again choose\n\n$$\\boxed{\\omega_{\\mathrm{rf}}=1/\\sqrt{L_0C_0}} \\qquad \\text{(F.1)}$$\n\nso that $Z_{\\mathrm{tot}}$ is the OFF state is infinite and $\\Gamma_{\\mathrm{OFF}}=1$.\n\nThe ON state corresponds to $Z_{\\mathrm{SET}}=-j\\frac{1}{\\omega_{\\mathrm{rf}}C_q}$ and $Z_{\\mathrm{tot}}$ at $\\omega_{\\mathrm{rf}}=\\omega_0$ is just the impedance of the SLQD\n\n$$Z_{\\mathrm{tot}}=\\frac{1}{(j\\omega_{\\mathrm{rf}}L_0)^{-1}+j\\omega_{\\mathrm{rf}}(C_0+C_q)}=-j\\frac{1}{\\omega_0C_q}=-j\\frac{C_0}{C_q}Z_C \\qquad \\text{(F.2)}$$\n\nFor the complex phase of $\\Gamma_{\\mathrm{ON}}=(Z_{\\mathrm{tot}}-Z_0)/(Z_{\\mathrm{tot}}+Z_0)$ to be significantly different from zero, we need $|Z_{\\mathrm{tot}}|\\sim Z_0$ since $Z_{\\mathrm{tot}}$ is purely imaginary. Hence\n\n$$\\boxed{Z_C\\sim\\frac{C_q}{C_0}Z_0} \\qquad \\text{(F.3)}$$\n\nF.2 If $L_0$ is fixed, we can still operate the circuit at the frequency\n\n$$\\boxed{\\omega_{\\mathrm{rf}}=1/\\sqrt{L_0C_0}} \\qquad \\text{(F.4)}$$\n\nthat gives $\\Gamma_{\\mathrm{OFF}}=1$. However, we need to deduce a way to increase $|Z_{\\mathrm{tot}}|$ even if $Z_C\\ll C_qZ_0/C_0$ is not sufficient. One of the ways to do that is to add an additional capacitance $C_m$ is series with rest of the circuit. This will give (at $\\omega_{\\mathrm{rf}}=\\omega_0$)\n\n$$Z_{\\mathrm{tot}}=-j\\left(\\frac{C_0}{C_q}Z_C+\\frac{1}{\\omega_0C_m}\\right)=-j\\omega_0^{-1}\\left(C_q^{-1}+C_m^{-1}\\right) \\qquad \\text{(F.5)}$$\n\nWe can satisfy the condition $|Z_{\\mathrm{tot}}|=Z_0$ (and hence $\\Gamma_{\\mathrm{ON}}=j$ and $\\Delta\\Gamma=\\sqrt{2}\\sim 1$) with\n\n$$C_m=\\frac{C_q}{Z_0C_q\\omega_{\\mathrm{rf}}-1}=\\frac{C_q\\sqrt{L_0C_0}}{Z_0C_q-\\sqrt{L_0C_0}} \\qquad \\text{(F.6)}$$\n\n$$\\boxed{C_m=\\frac{C_qZ_C}{Z_0C_q/C_0-Z_C}}\\overset{Z_C\\ll Z_0C_q/C_0}{\\approx}\\frac{1}{Z_0\\,\\omega_{\\mathrm{rf}}} \\qquad \\text{(F.7)}$$",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    }
+   ]
+  }
+ ]
+}

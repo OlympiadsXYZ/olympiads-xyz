@@ -1,0 +1,497 @@
+---
+id: apho-2026-experiment-e2-p1
+source: 'APhO 2026, experiment'
+title: 'Задача 1. Estimation of Unknown Resistance Using the Micro:bit''s Analog-to-Digital Converter (ADC)'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2026/apho-2026-experiment-e2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T16:12:55.386Z'
+verifier: 'mechanical'
+---
+
+*Experimental Exam Q2 — Estimation of Unknown Resistance Using the Micro:bit's Analog-to-Digital Converter (ADC) — Asian Physics Olympiad 2026, Busan, Korea · 10 т.*
+
+## Условие
+
+In physics, indirect derivation from observable variables is a standard approach for quantities that are difficult to measure directly. In this task, we will find out how to measure an unknown resistance using the micro:bit's built-in ADC (Analog-to-Digital Converter) to read voltage, even though its precision is somewhat limited. Rather than employing high-performance external hardware, the focus is on intellectually overcoming the device's systematic bias through strategic experimental design. As part of this approach to mitigate device-to-device ADC variations and ensure grading fairness, three separate micro:bit units are provided, allowing students to systematically reduce potential disadvantages. Ultimately, this inquiry emphasizes the process of overcoming measurement limitations to achieve reliable results within a constrained environment.
+
+Note: Significant figures are not reflected in the grading criteria for this problem.
+
+**Apparatus and Guidelines**
+
+1. Breadboard: A board used to build and connect your experimental circuits. A breadboard consists of power lines along both outer edges where holes are connected entirely in vertical columns to supply power (+) and ground (-), while the middle component area features internal connections in horizontal rows of exactly five holes each (A–E and F–J). These left and right five-hole groups are completely isolated from each other by the central divider running down the middle.
+
+2. Precision Resistor Sets (A, B, C, and D): High-precision components with a 0.1% tolerance, where the known resistors serve as reference "true values" to verify system accuracy, while the unknown resistors are shielded with colored tubing for experimental determination—meaning any attempt to remove or damage these covers to uncover the hidden values will be strictly penalized as exam misconduct.
+
+- A set of resistors A: ten $3.3\ \mathrm{k\Omega}$ resistors
+- A set of resistors B: a $6.8\ \mathrm{k\Omega}$ resistor , a $560\ \Omega$ resistor, and a resistor of unknown value (covered by a green tube. Not used in this experiment).
+- A set of resistors C : a $12\ \mathrm{k\Omega}$ resistor and two resistors of unknown value (one covered by a blue tube and the other by a red tube).
+- A set of resistors D: a $510\ \mathrm{k\Omega}$ resistor and a resistor of unknown value (covered by a black tube).
+
+Participants with color blindness, please raise your flag. A staff member will assist you.
+
+3. Micro:bit Kit: A complete microcontroller setup consisting of a Micro:bit, an expansion board(3a), three pre-connected jumper wires(3b,3c,3d), and a battery holder(3e) equipped with AAA alkaline batteries.
+
+**Measuring Electric Potential and Instrumentation with provided Micro:bit kit**
+
+1. Wiring Guide (Refer to Fig. 1)
+
+Connect the three jumper wires from the expansion board according to their vertical positions:
+
+- 3b: Top Jumper Wire ( top pin of expansion shield in Fig.1). Touch this to the specific node where you want to measure the voltage.
+- 3c: Middle Jumper Wire (middle pin of expansion shield in Fig. 1). Connect to the circuit's power input (Vc,+) node.
+- 3d: Bottom Jumper Wire (bottom pin of expansion shield in Fig. 1). Connect to the circuit's ground (GND, -) reference node.
+
+2. Measurement Procedure
+
+    1. Power Setup: Connect the Bottom (GND) and Middle (Vc) wires first, then switch the battery pack ON.
+    2. Pin Contact: While the power is on, touch the Top jumper wire to the target node.
+    3. Data Entry: Press Button A or B on the front of the Micro:bit and record the scrolling digital value (N).
+
+3. Important Notice
+
+- Switch off the battery pack when not in use to conserve power.
+- System Check: Connect the circuit as in Fig. 1. When you touch the Top wire to a point near the GND node, the reading should be near 0. When you touch the Top wire to the Middle wire’s connection point (Vc), the reading should be near 1023. Verifying both points ensures that the measurement system's zero reference and full scale are correctly calibrated. If the measured values differ significantly from theoretical predictions, it is likely a wiring error or poor contact rather than a hardware limitation.
+- Prevent Shorts: Ensure the Middle (Vc) and Bottom (GND) wires do not touch each other directly without a load, as this can cause equipment failure. If a failure occurs, measurements will become unavailable and an error will be indicated on the display; in such cases, a replacement device will be provided only once per participant.
+- No Simultaneous Use: Connecting more than one Micro:bit to a single circuit may cause system failure and is strictly prohibited in this examination hall
+- Linear Mapping: Excluding the discrete step effects arising from the quantization process, a linear proportional relationship exists between the node voltage and the integer measurement outcome N in an ideal ADC model. That is, potentials ranging from 0 V to Vc are linearly mapped to digital values between 0 and 1023 in an ideal ADC model.
+
+**Part A. Exploring the Meaning of ADC Measurement Values (1.2 pts)**
+
+The objective is to investigate the correlation between the Micro:bit's digital output ($N$) and the node potential ($V$). By constructing a network using **eight identical resistors** from 'Resistor Set A', you will examine whether the built-in ADC truly conforms to an ideal linear model based on the collected data. For the measurement process, the Micro:bit's pin is assumed to be an ideal probe that does not disturb the circuit's potential distribution. Assuming all resistors have identical values, this part aims to logically infer whether a proportional relationship between voltage and ADC readings actually holds, by cross-referencing the data with the circuit's structural characteristics without the use of external measuring devices.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-fig1.png" alt="Photograph of the apparatus: a breadboard (1) with a resistor and yellow, red and black jumper wires; the Micro:bit (3) plugged into its expansion board (3a) with the top, middle and bottom jumper wires (3b, 3c, 3d); the AAA battery holder (3e); and below, four bags of resistors labelled A, B, C and D (2)." />
+<figcaption>Fig.1</figcaption>
+</figure>
+
+**A.1** Experimental Design and Circuit Schematics
+
+Design a resistor network that achieves the stated experimental objectives and provide a corresponding circuit schematic. When drawing the schematic, adhere to the following guidelines:
+
+Mark all nodes where potential measurements will be taken and assign a unique identifier to each (e.g., $a, b, \ldots$).
+
+Clearly label the connection points between the Micro:bit expansion board's power jumpers ($V_c, GND$) and the resistor network as $V_c$ and $GND$, respectively. **[0,6 т.]**
+
+**A.2** Data Collection and Analysis
+
+Conduct the experiment on the designed circuit using a single Micro:bit to obtain measurements for all nodes. Calculate the differences in ADC measurements between adjacent nodes to check linearity, and determine linearity based on a maximum deviation of 2% ( single largest difference between any individual data point and the average value of the dataset). **[0,6 т.]**
+
+[Instructions for Subsequent Experiments]
+
+Upon completion of Part A, retain only two of the resistors used in the experiment and return all others to their original container (Resistor Pack A). This is to ensure they are not mixed with other components in the following experimental procedures.
+
+**Part B. Simple Estimation and Error Analysis of Unknown Resistance Using a Known Reference (3.5 pts)**
+
+The objective of this part is to estimate the value of an unknown resistance $r$ using a known reference resistor $R$ and the Micro:bit's ADC output. The following assumptions are made for the analysis:
+
+- ADC Linearity: The internal ADC is assumed to maintain a linear relationship between potential and the digital output $N$.
+- Notation for Calibration Constants: $N_L$ and $N_H$ represent the readings at the $GND$ and $V_c$ nodes, respectively. (Ideally, $N_L = 0$ and $N_H = 1023$).
+- Setup: Select any two resistors from Part A to serve as the reference ($R$) and the unknown ($r$).
+
+**B.1** Circuit Design and Schematics
+
+Design a measurement circuit to measure an unknown resistor ($r$), using a reference resistor ($R$) . Provide a corresponding circuit schematic.
+
+Note: The reference resistor $R$ must be directly connected to the GND node. Label all measurement nodes with letters and specify all related variables in the circuit schematic. Clearly label the connection points between the Micro:bit expansion board's power jumpers ($V_c, GND$) and the resistor network as $V_c$ and $GND$, respectively. **[0,5 т.]**
+
+**B.2** Derivation of Estimation Formulas
+
+Using the voltage divider rule, derive an expression for the unknown resistance. Start by establishing the relationship between node potentials and derive the final formula using ADC output values in terms of $N_L$, $N_H$, and so on. Then rewrite the formula in the case of $N_L = 0$ and $N_H = 1023$. **[0,5 т.]**
+
+**B.3** Experiment and Data Analysis
+
+Perform measurements using three Micro:bits, taking one reading per node for each device, and record the data. Assuming the true values of both the known and unknown resistance are $3.3\ \mathrm{k\Omega}$, calculate the mean relative error ($\bar{\epsilon}$) averaged over 3 ADCs and the relative standard deviation (RSD) of the estimated resistance values. Mean relative error is the average magnitude of the deviation between measured and true values, normalized by the true value. RSD is the ratio of the standard deviation to the mean. **[1 т.]**
+
+**B.4** Analyze how the ADC measurement error ($e$) affects the accuracy of the estimated resistance. For simplicity, assume $N_L = 0$ and $N_H = 1023$. Derive a relationship for the resulting resistance error $\Delta r$ in terms of $N, e$ and $R$. Assume that $e$ is sufficiently small compared to $N$. **[0,6 т.]**
+
+**B.5** Resistance Range for a Given Error Tolerance
+
+Assuming an ADC error of $e = 1$, calculate the required range of $r/R$ for which the relative error of the resistance ($\frac{\Delta r}{r}$) remains within 1%. **[0,9 т.]**
+
+[Instructions for Subsequent Experiments]
+
+Upon completion of Part B, return all to their original container (Resistor Pack A). This is to ensure they are not mixed with other components in the following experimental procedures.
+
+**Part C. Improving Resistance Estimation (1) :Overcoming The Problem of Quantization Error (1.9 pts)**
+
+This experiment aims to achieve more accurate resistance estimation under conditions where the basic method from Part B is insufficient due to quantization error. Quantization error is the difference between the continuous analog input signal and its discrete, digitized representation resulting from the finite resolution of an Analog-to-Digital Converter (ADC). When the resistance ratio ($r/R$) deviates significantly from 1, the quantization error (a single-step difference in ADC reading) is disproportionately amplified, leading to substantial errors in the estimated resistance. Resistor Set C is used in this part.
+
+**C.1** Initial Resistance Estimation and Statistical Analysis
+
+Using the reference resistor ($12\ \mathrm{k\Omega}$) from Resistor Pack C, estimate the values of unknown resistors $r_1$ (blue tube) and $r_2$ (red tube) respectively, based on your Part B method. Calculate the estimated resistance for one of the three Micro:bits. **[0,6 т.]**
+
+**C.2** Experimental Design for Precision Enhancement
+
+Based on the results from C.1, the precision or reliability of the estimated values obtained for the unknown resistor $r_2$(red tube) may not be entirely satisfactory. This is due to the physical characteristic where estimation error follows a U-shaped curve depending on the resistance ratio ($r/R$). To address this issue and achieve a more accurate estimation of $r_2$, design an experimental scheme and provide the necessary circuit schematics with $R, r_1, r_2$.
+
+Note: All schematics must clearly label the measurement nodes and associated variables. Clearly label the connection points between the Micro:bit expansion board's power jumpers ($V_c, GND$) and the resistor network as $V_c$ and $GND$, respectively. **[0,6 т.]**
+
+**C.3** Experiment and Data Analysis
+
+Re-estimate the value of $r_2$ based on the new experimental design proposed in C.2. Calculate the resistance for each of the three Micro:bits and calculate the difference between the maximum and minimum values of the estimated resistance. **[0,7 т.]**
+
+[Instructions for Subsequent Experiments]
+
+Upon completion of Part C, return all to their original container (Resistor Pack C). This is to ensure they are not mixed with other components in the following experimental procedures.
+
+**Part D. Improving Resistance Estimation (2) (3.4 pts)**
+
+Resistor Pack D contains a known resistor $R_1 (= 510\ \mathrm{k\Omega})$ and an unknown resistor $r$. Applying the simple estimation method from Part B may lead to significant measurement errors. The discrepancies observed in this task arise from a distinct physical factor—one that is fundamentally different from both the ADC nonlinearity and the amplification of quantization errors (Part C). Your challenge is to identify this underlying factor and develop a measurement strategy to achieve an accurate estimation of $r$.
+
+**D.1** Circuit Design and Schematics
+
+Devise a method to improve accuracy of estimating unknown resistor $r$, and provide a corresponding circuit schematic.
+
+Note: Label all measurement nodes and associated variables on the schematic. Clearly label the connection points between the Micro:bit expansion board's power jumpers ($V_c, GND$) and the resistor network as $V_c$ and $GND$, respectively. **[0,8 т.]**
+
+**D.2** Derivation of Estimation Formulas
+
+Based on your circuit design, derive the mathematical expressions to calculate the unknown resistance $r$. Start by establishing the relationship between node potentials and $r$, then derive the final formula using ADC output values ( $N_H, N_L, , , ,$). **[1,8 т.]**
+
+**D.3** Experiment and Data Analysis
+
+Implement your design and estimate the value of $r$. Calculate the estimated resistance for each of the three Micro:bits and derive the mean ($\bar{r}$) and calculate the difference between the maximum and minimum values of the estimated resistances. **[0,8 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **B.2** $r = \frac{N_H - N}{N - N_L} R,\quad r = \frac{1023 - N}{N} R$
+- **B.4** $\Delta r \approx \frac{dr}{dN} e = -\frac{1023}{N^2} R e$
+- **B.5** $0.12 \le r/R \le 8.1$
+- **D.2** $r = \frac{N_b - N_L}{N_a - N_L} R$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+※ The reference value used to determine the accuracy of resistance estimation in this question is defined as twice the variance of the estimates obtained from 20 Micro:bit devices.
+
+※ No marks will be awarded for the execution of the experiment if the experimental design fails to provide a valid solution to the problem.
+
+※ No marks will be awarded if the student fails to present the requested numerical value in a form that the examiner can readily verify.
+
+**Part A**
+
+**A.1)**
+
+| Criteria | Points |
+|---|---|
+| If the circuit diagram connection (resistor ladder) is correctly expressed. | 0.4 |
+| If all the measurement nodes are specified and correctly named | 0.1 |
+| If $V_c$ and $GND$ nodes are correctly labeled | 0.1 |
+
+**A.2)**
+
+Raw Data Table
+
+| | $N_L$ | $N_g$ | $N_f$ | $N_e$ | $N_d$ | $N_c$ | $N_b$ | $N_a$ | $N_H$ |
+|---|---|---|---|---|---|---|---|---|---|
+| ADC1 | 0 | 128 | 257 | 385 | 513 | 639 | 769 | 897 | 1023 |
+
+Derived Data Table
+
+| | $\Delta N$ (g/GND) | $\Delta N$ (f/g) | $\Delta N$ (e/f) | $\Delta N$ (d/e) | $\Delta N$ (c/d) | $\Delta N$ (b/c) | $\Delta N$ (a/b) | $\Delta N$ 1 2 6 ($V_c$/a) | $\overline{\Delta N}$ |
+|---|---|---|---|---|---|---|---|---|---|
+| ADC1 | 128 | 129 | 128 | 128 | 126 | 130 | 128 | 126 | 127.88 |
+
+$Max(\Delta N_i - \overline{\Delta N}) = 2.125$
+
+maximum deviation =2.125/127.85*100=1.66%
+
+□ Linearity Verification (Within 2% Maximum Deviation)
+
+[ √ ] Pass: The differences in ADC measurements between all adjacent nodes fall within the 2% threshold.
+
+[ ] Fail: The deviation exceeds 2% at one or more nodes.
+
+(Note: Depending on the specific Micro:bit unit used, a conclusion regarding linearity may or may not be drawn. The final conclusion itself is not critical; full credit will be awarded provided that the reasoning leading to the conclusion is rigorously justified.)
+
+| Criteria | Points |
+|---|---|
+| The raw data table includes columns for recording 9 measured node values. | 0.1 |
+| The derived data table includes columns for the 8 differences between adjacent nodes | 0.1 |
+| If the student's calculated value of average difference ($\overline{\Delta N}$), based on the data, is within a ±1% relative tolerance of the examiner's re-calculated value. | 0.2 |
+| Points are awarded if the student's calculated maximum deviation directly matches the examiner's re-calculated value (derived from the student's raw data) within a ±10% relative tolerance. | 0.1 |
+| If the student's conclusion regarding linearity matches the grader's recalculated data analysis | 0.1 |
+
+**B-1)**
+
+| Criteria | Points |
+|---|---|
+| If the circuit diagram connection (resistor ladder) is correctly expressed. | 0.3 |
+| If all the measurement nodes are specified and correctly named | 0.1 |
+| If $V_c$ and $GND$ nodes are correctly labeled | 0.1 |
+
+**B-2)**
+
+To estimate the unknown resistance $r$, a known reference resistor $R$ is connected in series with $r$. The voltage $V$ at the junction, measured by the ADC, is determined by the voltage divider principle:
+
+$$V = \frac{r}{R + r} V_c \qquad (1)$$
+
+Assuming a linear relationship between the input voltage $V$ and the ADC output $N$, we define calibration constants $N_L$ at GND and $N_H$ at $V_c$
+
+Due to linearity, voltage $V$ can be expressed in terms of the digital reading $N$ as:
+
+$$V = \frac{N - N_L}{N_H - N_L} V_c \qquad (2)$$
+
+From (1), (2), unknown resister $r$ satisfies:
+
+$$r = \frac{N_H - N}{N - N_L} R \qquad (3)$$
+
+If $N_H = 1023$ and $N_L = 0$, then:
+
+$$r = \frac{1023 - N}{N} R \qquad (4)$$
+
+| Criteria | Points |
+|---|---|
+| If Equation (3) is correctly obtained (correctly expresses the unknown resistance as a function of $R, N, N_L, N_H$) | 0.4 |
+| If Equation (1) is correctly obtained | 0.2 |
+| If Equation (2) is correctly obtained | 0.2 |
+| Correct result for Equation (4) when $N_L = 0, N_H = 1023$ | 0.1 |
+
+**B-3)**
+
+$r_{true} = 3.3K\Omega$
+
+| | $N_L$ | $N$ | $N_H$ | $r_{est}\left(= \frac{N_H - N}{N - N_L} R\right)$ | $\epsilon = \left\lvert \frac{r_{true} - t_{est}}{r_{true}} \right\rvert$ |
+|---|---|---|---|---|---|
+| ADC1 | 0 | 512 | 1023 | 3294 | ,,, |
+| ADC2 | 1 | ,,, | 1022 | ,,, | ,,, |
+| ADC3 | 0 | ,,, | ,,, | ,,, | ,,, |
+
+$\bar{\epsilon} =$
+
+RSD=
+
+※ Credit will be awarded only if the design in B.1 is correct.
+
+| Criteria | Points |
+|---|---|
+| If $N, N_L, N_H$ for each device are all measured and recorded. | 0.2 |
+| Points are awarded if the student's calculated value of unknown resistance directly matches the examiner's re-calculated value (derived from the student's raw data) within a ±1% relative tolerance. (Evaluate only the device for which the student's estimate is most accurate among the three Micro:bit experiments.) | 0.2 |
+| If at least one of the unknown resistance values estimated by each Micro:bit falls within a 1% error range | 0.2 |
+| Points are awarded if the student's calculated value of mean relative error directly matches the examiner's re-calculated value (derived from the student's raw data) within a ±1% relative tolerance. (The evaluation focuses solely on the accuracy of the process for calculating the relative error from the estimated resistance values, rather than the raw data.) | 0.2 |
+| Points are awarded if the student's calculated value of RSD (Relative Standard Deviation) directly matches the examiner's re-calculated value (derived from the student's raw data) within a ±1% relative tolerance. (The evaluation focuses solely on the accuracy of the process for calculating the relative error from the estimated resistance values, rather than the raw data.) | 0.2 |
+
+**B-4)**
+
+$$r = \frac{1023 - N}{N} R$$
+
+$$\frac{dr}{dN} = -\frac{1023}{N^2} R \qquad (1)$$
+
+$$e = \Delta N$$
+
+$$\Delta r \approx \frac{dr}{dN} e = -\frac{1023}{N^2} R e \qquad (2)$$
+
+| Criteria | Points |
+|---|---|
+| If Equation (1) (dr/dN) is correctly obtained | 0.2 |
+| If Equation (2) ($\Delta r \approx \frac{dr}{dN} e$) is correctly obtained | 0.2 |
+| If Equation (2) for $\Delta r$ is correctly obtained | 0.6 |
+
+**B-5)**
+
+$$r = \frac{1023 - N}{N} R$$
+
+$$\Delta r = -\frac{1023}{N^2} R e$$
+
+ADC error $e = 1$,
+
+$$\left\lvert \frac{\Delta r}{r} \right\rvert = \frac{1023}{N(1023 - N)} \le 0.01 \qquad (1)$$
+
+$$N^2 - 1023N + 102300 \le 0 \qquad (1*)$$
+
+$$N \ge N_{\min} \approx 112.33 \ \text{and}\ N \le N_{\max} \approx 910.67 \qquad (2)$$
+
+$r = \frac{1023 - N}{N} R$에서
+
+$$r_{\max} = \frac{1023 - 112.33}{112.33} R \approx 8.11R,\quad r_{\min} = \frac{1023 - 910.67}{910.67} R \approx 0.123R \qquad (3*)$$
+
+thus.
+
+$$0.123 \le r/R \le 8.11 \qquad (3)$$
+
+$$0.12 \le r/R \le 8.1 \qquad (3**)$$
+
+| Criteria | Points |
+|---|---|
+| If Equation (1) or (1*) is correctly obtained | 0.4 |
+| If Equation (2) is correctly obtained | 0.2 |
+| If Equation (3), (3*), or (3**) is correctly obtained . Full marks if the student's calculated range, when rounded, matches the inequality (3**) | 0.9 |
+
+**Part C**
+
+※ Full credit will be awarded to any student-designed experiment that successfully solves the given problem while meeting the required conditions.
+
+※ Maintaining the reference resistance as $R$ fails to resolve the quantization error; therefore, it is not recognized as a valid design, and no marks will be awarded.
+
+※ The resistors used in this experiment are Class B resistors with a 0.1% tolerance; $R$ is specified as $12k\Omega$, $r_1$ as $1600\Omega$, and $r_2$ as $240\Omega$.
+
+**C.1)**
+
+$R = 12k\Omega$
+
+$r_1$ case:
+
+| | $N_L$ | $N$ | $N_H$ | $r_{est}\left(= \frac{N_H - N}{N - N_L} R\right)$ |
+|---|---|---|---|---|
+| ADC1 | 0 | 904 | 1023 | 1580 |
+
+$r_2$ case:
+
+| | $N_L$ | $N$ | $N_H$ | $r_{est}\left(= \frac{N_H - N}{N - N_L} R\right)$ |
+|---|---|---|---|---|
+| ADC1 | 0 | 1005 | 1023 | 215 |
+
+| Criteria | Points |
+|---|---|
+| $N, N_H, N_L$ are recorded for each unknown resistor and device. | 0.2 (0.1 per resistor) |
+| Points are awarded if the student's calculated value of unknown resistance directly matches the examiner's re-calculated value (derived from the student's raw data) within a ±1% relative tolerance. | 0.4 (0.2 per resistor) |
+
+**C-2)**
+
+Note: Alternative approaches are also acceptable, such as estimating unknown resistor 1 using the reference resistor, and then using the parallel combination of the reference resistor and unknown resistor 1 as a new reference to estimate unknown resistor 2.
+
+The method of estimating $r_1$ and $r_1 + r_2$ using $R$ and then subtracting them to find $r_2$ still suffers from quantization error issues, Thus is invalid design.
+
+| Criteria | Points |
+|---|---|
+| Circuit diagram is appropriate (demonstrates intent to use $r_1$ or an equivalent combined resistance of a similar size as a new reference resistance) | 0.4 |
+| Measurement nodes are specified and correctly named. | 0.1 |
+| $V_c$ and $GND$ nodes are appropriately labeled. | 0.1 |
+
+**C.3)**
+
+$$r_1 = \frac{N_H - N}{N - N_L} R$$
+
+$$r_2 = \frac{N_H - N}{N - N_L} r_1$$
+
+| | $N_L$ | $N$ | $N_H$ | $r_1$ | $N_L$ | $N$ | $N_H$ | $r_2$ |
+|---|---|---|---|---|---|---|---|---|
+| ADC1 | 0 | 904 | 1023 | 1580 | 0 | 891 | 1023 | 234 |
+| ADC2 | 0 | 904 | 1023 | 1580 | 0 | 891 | 1023 | 228 |
+| ADC3 | 0 | 906 | 1023 | 1550 | 0 | 892 | 1023 | 227 |
+
+$\overline{r_2} =$
+
+maximum-minimum ($\Delta r_2$) =
+
+※ Credit will be awarded only if the design in C.2 is correct.
+
+| Criteria | Points |
+|---|---|
+| If the values of $r_1$ estimated in C1 are utilized for the estimation, and the measurements of $N, N_H, N_L$ are recorded using the designated resistors as the reference resistor. | 0.2 |
+| Points are awarded if the student's calculated value of unknown resistance $r_2$ directly matches the examiner's re-calculated value (derived from the student's raw data) within a ±1% relative tolerance. (Evaluate only the data from device for which the student's estimate is most accurate among the three Micro:bit experiments.) | 0.2 |
+| If the calculated unknown resistance is accurately estimated within an range of $235 \pm 12\Omega$ using at least one device. | 0.2 |
+| If the calculated $\Delta r_2$ (difference between maximum and minimum) from the student’s data of resisters is correct | 0.1 |
+
+**Part D.**
+
+※ Full credit will be awarded to any student-designed experiment that successfully solves the given problem while meeting the required conditions.
+
+※ "Zero marks will be awarded if multiple Micro:bits are used simultaneously within a single circuit, as this violation directly conflicts with the explicit prohibition stated in the question: “No Simultaneous Use: Connecting more than one Micro:bit to a single circuit may cause system failure and is strictly prohibited in this examination hall.
+
+※ No marks will be awarded unless the **internal resistance issue** is explicitly resolved in a well-designed experiment and the resistance estimation formula derived from the experimental data is correct.
+
+※ The resistors used in this experiment are Class B resistors with a 0.1% tolerance; $R$ is specified as $510k\Omega$, $r$ as $680k\Omega$.
+
+**D.1)**
+
+| Criteria | Points |
+|---|---|
+| Circuit diagram includes a solution to estimate unknown resistance while considering internal resistance. | 0.6 |
+| Measurement nodes are specified and correctly named. | 0.1 |
+| $V_c$ and $GND$ nodes are appropriately labeled. | 0.1 |
+
+**D.2)**
+
+Case 1: Unknown resistor ($r$) at the top, reference resistor ($R$) at the bottom. The voltage $V_a$ is divided while $R$ and the instrument's internal resistance $R_i$ are in parallel.
+
+Equivalent resistance at the bottom: $R_{eq1} = \frac{RR_i}{R + R_i}$
+
+Voltage divider rule: $V_a = \frac{R_{eq1}}{R_{eq1} + r} V_c$
+
+By combining the two: $\frac{V_a}{V_c} = \frac{RR_i}{rR + rR_i + RR_i} \qquad (1)$
+
+Using the linear relationship between the ADC and voltage:
+
+$$\frac{N_a - N_L}{N_H - N_L} = \frac{V_a}{V_c} \qquad (2)$$
+
+Case 2: Reference resistor ($R$) at the top, unknown resistor ($r$) at the bottom. Now $r$ and $R_i$ are in parallel.
+
+Equivalent resistance at the bottom: $R_{eq1} = \frac{rR_i}{r + R_i}$
+
+Voltage divider rule: $V_b = \frac{R_{eq2}}{R_{eq2} + R} V_c$
+
+By combining the two:
+
+$$\frac{V_b}{V_c} = \frac{rR_i}{rR + rR_i + RR_i} \qquad (3)$$
+
+Using the linear relationship between the ADC and voltage:
+
+$$\frac{N_b - N_L}{N_H - N_L} = \frac{V_b}{V_c} \qquad (4)$$
+
+From (1)~(4) the following is derived:
+
+$$r = \frac{N_b - N_L}{N_a - N_L} R \qquad (5)$$
+
+| Criteria | Points |
+|---|---|
+| If Eq. (5) is correctly obtained. (Full marks if the resistance estimation formula based on experimental values is correct, provided the experiment is well-designed and explicitly addresses the internal resistance issue.) | 1.8 |
+| If Eq. (1) or (3) is correctly obtained (Points will be awarded if the voltage relationship formula taking internal resistance into account is derived) | 0.5 |
+| If Eq. (2) or (4) is correctly obtained | 0.3 |
+
+**D.3)**
+
+| | $N_L$ | $N_a$ | $N_b$ | $N_H$ | $r$ ($k\Omega$) |
+|---|---|---|---|---|---|
+| ADC1 | 0 | 450 | 589 | 1023 | 668 |
+| ADC2 | 0 | 450 | 591 | 1023 | 670 |
+| ADC3 | 0 | 449 | 589 | 1023 | 669 |
+
+$\bar{r} =$
+
+maximum-minimum ($\Delta r$) =
+
+※No credit will be given if the experiment is conducted using the basic method of PART B.
+
+※ Credit will be awarded only if the design in D.1 is valid to overcome the issue of internal resistance.
+
+| Criteria | Points |
+|---|---|
+| If all measurements required to estimate the resistance for each device are recorded. | 0.2 |
+| Points are awarded if the student's calculated unknown resistance is within a ±1% tolerance of the examiner's re-calculated value. (Only the data from the single Micro:bit experiment that yielded the highest accuracy among the three will be evaluated.)" | 0.2 |
+| If at least one of the unknown resistance values estimated by each Micro:bit falls within the reference range, $668K\Omega \pm 5K\Omega$ | 0.3 |
+| Points are awarded if $\Delta r$ values (difference between the maximum and minimum) is correctly calculated and verifiable from the student's data. | 0.1 |
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig1-v2.png" alt="Resistor ladder: eight equal resistors r (r1 … r8) in series from Vc (+) to GND, with the nodes between them labelled a, b, c, d, e, f, g." />
+<figcaption>A.1)</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig2-v2.png" alt="Voltage divider: Vc (reading N_H) at the top, resistor r, node a (reading N), resistor R, and GND (reading N_L) at the bottom." />
+<figcaption>B-1)</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig3-v2.png" alt="Two voltage dividers: left, Vc (N_H) – r1 – node a (N) – R – GND (N_L); right, Vc (N_H) – r2 – node a (N) – r1 – GND (N_L)." />
+<figcaption>C-2)</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig4-v2.png" alt="Two voltage dividers with the resistors swapped: left, Vc (N_H) – r – node a (N) – R – GND (N_L); right, Vc (N_H) – R – node b (N_b) – r – GND (N_L)." />
+<figcaption>D.1)</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [E2.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2026/Experiment/E2.pdf)
+· официални решения: [E2_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2026/Experiment/E2_sol.pdf)

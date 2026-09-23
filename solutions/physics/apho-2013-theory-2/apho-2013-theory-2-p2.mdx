@@ -1,0 +1,405 @@
+---
+id: apho-2013-theory-2-p2
+source: 'APhO 2013'
+title: 'Задача 2. Relativistic Correction on GPS Satellite'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2013/apho-2013-theory-2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-23T16:11:33.193Z'
+verifier: 'mechanical'
+---
+
+*14th Asian Physics Olympiad 2013, Bogor, Indonesia — Theory Question 2: Relativistic Correction on GPS Satellite · 13 т.*
+
+## Условие
+
+Global Positioning System (GPS) is a navigation technology which uses signal from satellites to determine the position of an object (for example an airplane). However, due to the satellites high speed movement in orbit, there should be a special relativistic correction, and due to their high altitude, there should be a general relativistic correction. Both corrections seem to be small but are very important for precise measurement of position. We will explore both corrections in this problem.
+
+First we will investigate the special relativistic effect on an accelerated particle. We consider two types of frame, the first one is the **rest frame** (called $S$ or Earth’s frame), where the particle is at rest initially. The other is the **proper frame** (called $S'$), a frame that instantaneously moves together with the accelerated particle. Note that this is not an accelerated frame, it is a constant velocity frame that at a particular moment has the same velocity with the accelerated particle. At that short moment, the time rate experienced by the particle is the **same** as the proper frame’s time rate. Of course this proper frame is only good for an infinitesimally short time, and then we need to define a new proper frame afterward. At the beginning we synchronize the particle’s clock with the clock in the rest frame by setting them to zero, $t = \tau = 0$ ($t$ is the time in the rest frame, and $\tau$ is the time shown by particle’s clock).
+
+By applying **equivalence principle**, we can obtain general relativistic effects from special relativistic results which does not involve complicated metric tensor calculations. By combining the special and general relativistic effects, we can calculate the corrections needed for a GPS (global positioning system) satellite to provide accurate positioning.
+
+Some mathematics formulas that might be useful
+
+- $\sinh x = \frac{e^{x} - e^{-x}}{2}$
+- $\cosh x = \frac{e^{x} + e^{-x}}{2}$
+- $\tanh x = \frac{\sinh x}{\cosh x}$
+- $1 + \sinh^2 x = \cosh^2 x$
+- $\sinh(x - y) = \sinh x \cosh y - \cosh x \sinh y$
+- $\int \frac{dx}{(1-x^2)^{\frac{3}{2}}} = \frac{x}{\sqrt{1-x^2}} + C$
+- $\int \frac{dx}{1-x^2} = \ln \sqrt{\frac{1+x}{1-x}} + C$
+
+**Part A. Single Accelerated Particle (2.8 points)**
+
+Consider a particle with a rest mass $m$ under a constant and uniform force field $F$ (defined in the rest frame) pointing in the positive $x$ direction. Initially ($t = \tau = 0$) the particle is at rest at the origin ($x = 0$).
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-2/p2-fig1.png" alt="Minkowski diagram: orthogonal axes x (horizontal) and ct (vertical); tilted axes ct′ and x′ drawn from the origin, each making angle θ with ct and x respectively; a point on the x′ axis marked with dotted lines to γ on the x axis and γβ on the ct axis." />
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-2/p2-fig2.png" alt="Minkowski diagram for the stick example: axes x and ct from origin A, tilted axes ct′ and x′ at angle θ; point C on the x′ axis; a dotted line through C parallel to ct′ meets the x axis at B, a vertical dotted line from C meets the x axis at D; angle θ marked at C." />
+</figure>
+
+**A.1** **(0.5 pts)** When the velocity of the particle is $v$, calculate the acceleration of the particle, $a$ (with respect to the rest frame). **[0,5 т.]**
+
+**A.2** **(0.5 pts)** Calculate the velocity of the particle $\beta(t) = \frac{v(t)}{c}$ at time $t$ (in rest frame), in terms of $F$, $m$, $t$ and $c$. **[0,5 т.]**
+
+**A.3** **(0.3 pts)** Calculate the position of the particle $x(t)$ at time $t$, in term of $F$, $m$, $t$ and $c$. **[0,3 т.]**
+
+**A.4** **(0.7 pts)** Show that the proper acceleration of the particle, $a' \equiv g = F/m$, is a constant. The proper acceleration is the acceleration of the particle measured in the instantaneous proper frame. **[0,7 т.]**
+
+**A.5** **(0.4 pts)** Calculate the velocity of the particle $\beta(\tau)$, when the time as experienced by the particle is $\tau$. Express the answer in $g$, $\tau$, and $c$. **[0,4 т.]**
+
+**A.6** **(0.4 pts)** Also calculate the time $t$ in the rest frame in terms of $g$, $\tau$, and $c$. **[0,4 т.]**
+
+**Part B. Flight Time (2.0 points)**
+
+The first part has **not** taken into account the flight time of the information to arrive to the observer. This part is the only part in the whole problem where the flight time is considered. The particle moves as in part A.
+
+**B.1** **(1.2 pts)** At a certain moment, the time experienced by the particle is $\tau$. What reading $t_0$ on a stationary clock located at $x = 0$ will be observed by the particle? After a long period of time, does the observed reading $t_0$ approach a certain value? If so, what is the value? **[1,2 т.]**
+
+**B.2** **(0.8 pts)** Now consider the opposite point of view. If an observer at the initial point ($x = 0$) is observing the particle’s clock when the observer’s time is $t$, what is the reading of the particle’s clock $\tau_0$? After a long period of time, will this reading approach a certain value? If so, what is the value? **[0,8 т.]**
+
+**Part C. Minkowski Diagram (1.0 points)**
+
+In many occasion, it is very useful to illustrate relativistic events using a diagram, called as Minkowski Diagram. To make the diagram, we just need to use Lorentz transformation between the rest frame S and the moving frame S’ that move with velocity $v = \beta c$ with respect to the rest frame.
+
+$$x = \gamma(x' + \beta ct'),$$
+$$ct = \gamma(ct' + \beta x'),$$
+$$x' = \gamma(x - \beta ct),$$
+$$ct' = \gamma(ct - \beta x).$$
+$$\gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}$$
+
+Let’s choose $x$ and $ct$ as the orthogonal axes. A point ($x’$, $ct’$) = (1,0) in the moving frame S’ has a coordinate ($x$, $ct$) = $(\gamma, \gamma\beta)$ in the rest frame S. The line connecting this point and the origin defines the $x’$ axis. Another point ($x’$, $ct’$) = (0,1) in the moving frame S’ has a coordinate ($x$, $ct$) = $(\gamma\beta, \gamma)$ in the rest frame S. The line connecting this point and the origin defines the $ct’$ axis. The angle between the $x$ and x’ axis is $\theta$, where $\tan\theta = \beta$. A unit length in the moving frame S’ is equal to $\gamma\sqrt{1+\beta^2} = \sqrt{\frac{1+\beta^2}{1-\beta^2}}$ in the rest frame S.
+
+To get a better understanding of Minkowski diagram, let us take a look at this example. Consider a stick of proper length $L$ in a moving frame S’. We would like to find the length of the stick in the rest frame S. Consider the figure below.
+
+The stick is represented by the segment AC. The length AC is equal to $\sqrt{\frac{1+\beta^2}{1-\beta^2}}L$ in the S frame. The stick length in the S frame is represented by the line AB.
+
+$$\begin{aligned} \mathrm{AB} &= \mathrm{AD} - \mathrm{BD} \\ &= AC\cos\theta - AC\sin\theta\tan\theta \\ &= L\sqrt{1-\beta^2} \end{aligned}$$
+
+**C.1** **(0.5 pts)** Using a Minkowski diagram, calculate the length of a stick with proper length $L$ in the rest frame, as measured in the moving frame. **[0,5 т.]**
+
+**C.2** **(0.5 pts)** Now consider the case in part A. Plot the time $ct$ versus the position $x$ of the particle. Draw the $x’$ axis and $ct’$ axis when $\frac{gt}{c} = 1$ in the same graph using length scale $x(c^2/g)$ and $ct(c^2/g)$ . **[0,5 т.]**
+
+**Part D. Two Accelerated Particles (2.3 points)**
+
+For this part, we will consider two accelerated particles, both of them have the same proper acceleration $g$ in the positive $x$ direction, but the first particle starts from $x$ = 0, while the second particle starts from $x$ = $L$. Remember, **DO NOT** consider the flight time in this part.
+
+**D.1** **(0.3 pts)** After a while, an observer in the rest frame make an observation. The first particle’s clock shows time at $\tau_A$. What is the reading of the second clock $\tau_B$, according to the observer in the rest frame. **[0,3 т.]**
+
+**D.2** **(1.0 pts)** Now consider the observation from the first particle’s frame. At a certain moment, an observer that move together with the first particle observed that the reading of his own clock is $\tau_1$. At the same time, he observed the second particle’s clock, and the reading is $\tau_2$. Show that
+
+$$\sinh \frac{g}{c}(\tau_2 - \tau_1) = C_1 \sinh \frac{g\tau_1}{c},$$
+
+where $C_1$ is a constant. Determine $C_1$. **[1 т.]**
+
+**D.3** **(1.0 pts)** The first particle will see the second particle move away from him. Show that the rate of change of the distance between the two particles according to the first particle is
+
+$$\frac{dL'}{d\tau_1} = C_2 \frac{\sinh \frac{g\tau_2}{c}}{\cosh \frac{g}{c}(\tau_2 - \tau_1)},$$
+
+where $C_2$ is a constant. Determine $C_2$. **[1 т.]**
+
+**Part E. Uniformly Accelerated Frame (2.7 points)**
+
+In this part we will arrange the proper acceleration of the particles, so that the distance between both particles are constant according to each particle. Initially both particles are at rest, the first particle is at $x$ = 0, while the second particle is at $x$ = $L$.
+
+**E.1** **(0.8 pts)** The first particle has a proper acceleration $g_1$ in the positive $x$ direction. When it is being accelerated, there exists a fixed point in the rest frame at $x = x_\mathrm{p}$ that has a constant distance from the first particle, according to the first particle throughout the motion. Determine $x_\mathrm{p}$. **[0,8 т.]**
+
+**E.2** **(1.3 pts)** Given the proper acceleration of the first particle is $g_1$, determine the proper acceleration of the second particle $g_2$, so that the distance between the two particles are constant according to the first particle. **[1,3 т.]**
+
+**E.3** **(0.6 pts)** What is the ratio of time rate of the second particle to the first particle $\frac{d\tau_2}{d\tau_1}$, according to the first particle. **[0,6 т.]**
+
+**Part F. Correction for GPS (2.2 points)**
+
+Part E indicates that the time rate of clocks at different altitude will not be the same, even though there is no relative movement between those clocks. According to the **equivalence principle** in general relativity, an observer in a small closed room could not tell the difference between a gravity pull $g$ and the fictitious force from accelerated frame with acceleration $g$. So we can conclude that two clocks at different gravitational potential will have different rate.
+
+Now let consider a GPS satellite that orbiting the Earth with a period of 12 hours.
+
+**F.1** **(0.6 pts)** If the gravitational acceleration on the Earth’s surface is 9.78 m.s$^{-2}$, and the Earth’s radius is 6380 km, what is the radius of the GPS satellite orbit? What is the velocity of the satellite? Calculate the numerical values of the radius and the velocity. **[0,6 т.]**
+
+**F.2** **(1.2 pts)** After one day, the clock reading on the Earth surface and the satellite will differ due to both special and general relativistic effects. Calculate the difference due to each effect for one day. Calculate the total difference for one day. Which clock is faster, a clock on the Earth’s surface or the satellite’s clock? **[1,2 т.]**
+
+**F.3** **(0.4 pts)** After one day, estimate the error in position due to this effect? **[0,4 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A.1** $a = \frac{F}{\gamma^3 m}$
+- **A.2** $\beta = \frac{\frac{Ft}{mc}}{\sqrt{1+\left(\frac{Ft}{mc}\right)^2}}$
+- **A.3** $x = \frac{mc^2}{F}\left(\sqrt{1+\left(\frac{Ft}{mc}\right)^2} - 1\right)$
+- **A.5** $\beta = \tanh \frac{g\tau}{c}$
+- **A.6** $t = \frac{c}{g}\sinh \frac{g\tau}{c}$
+- **B.1** $t_0 = \frac{c}{g}\left(1 - e^{-\frac{g\tau}{c}}\right) \to \frac{c}{g}$
+- **B.2** $\tau_0 = \frac{c}{g}\ln\left(\frac{gt}{c} + 1\right)$
+- **C.1** $\mathrm{AC} = \sqrt{1-\beta^2}\,L$
+- **C.2** The answer is a graph (Figure 2 of the official solution).
+- **D.1** $\tau_B = \tau_A$
+- **D.2** $C_1 = \frac{gL}{c^2}$
+- **D.3** $C_2 = \frac{gL}{c}$
+- **E.1** $x_p = -\frac{c^2}{g_1}$
+- **E.2** $g_2 = \frac{g_1}{1 + \frac{g_1 L}{c^2}}$
+- **E.3** $\frac{d\tau_2}{d\tau_1} = \frac{g_1}{g_2} = 1 + \frac{g_1 L}{c^2}$
+- **F.1** r = 2.66 × 10^7 m; v = 3.87 × 10^3 m/s
+- **F.2** General relativity: Δτ_g = 4.55 × 10^-5 s; special relativity: Δτ_s = −7.18 × 10^-6 s; total Δτ = 3.83 × 10^-5 s; the satellite’s clock is faster.
+- **F.3** 11500 m
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part A. Single accelerated particle**
+
+1. The equation of motion is given by
+
+$$\begin{aligned} F &= \frac{d}{dt}(\gamma m v) && (1) \\ &= \frac{mc\dot{\beta}}{(1-\beta^2)^{\frac{3}{2}}} \\ F &= \gamma^3 m a, && (2) \end{aligned}$$
+
+where $\gamma = \frac{1}{\sqrt{1-\beta^2}}$ and $\beta = \frac{v}{c}$. So the acceleration is given by
+
+$$a = \frac{F}{\gamma^3 m}. \qquad (3)$$
+
+2. Eq.(3) can be rewritten as
+
+$$\begin{aligned} c\frac{d\beta}{dt} &= \frac{F}{\gamma^3 m} \\ \int_0^{\beta} \frac{d\beta}{(1-\beta^2)^{\frac{3}{2}}} &= \frac{F}{mc}\int_0^t dt \\ \frac{\beta}{\sqrt{1-\beta^2}} &= \frac{Ft}{mc} && (4) \\ \beta &= \frac{\frac{Ft}{mc}}{\sqrt{1+\left(\frac{Ft}{mc}\right)^2}}. && (5) \end{aligned}$$
+
+3. Using Eq.(5), we get
+
+$$\begin{aligned} \int_0^x dx &= \int_0^t \frac{F t\, dt}{m\sqrt{1+\left(\frac{Ft}{mc}\right)^2}} \\ x &= \frac{mc^2}{F}\left(\sqrt{1+\left(\frac{Ft}{mc}\right)^2} - 1\right). && (6) \end{aligned}$$
+
+4. Consider the following systems, a frame S’ is moving with respect to another frame S, with velocity $u$ in the $x$ direction. If a particle is moving in the S’ frame with velocity $v'$ also in $x$ direction, then the particle velocity in the S frame is given by
+
+$$v = \frac{u + v'}{1 + \frac{uv'}{c^2}}. \qquad (7)$$
+
+If the particles velocity changes with respect to the S’ frame, then the velocity in the S frame is also change according to
+
+$$\begin{aligned} dv &= \frac{dv'}{1+\frac{uv'}{c^2}} - \frac{u+v'}{\left(1+\frac{uv'}{c^2}\right)^2}\frac{u\,dv'}{c^2} \\ dv &= \frac{1}{\gamma^2}\frac{dv'}{\left(1+\frac{uv'}{c^2}\right)^2}. && (8) \end{aligned}$$
+
+The time in the S’ frame is $t'$, so the time in the S frame is given by
+
+$$t = \gamma\left(t' + \frac{ux'}{c^2}\right), \qquad (9)$$
+
+so the time change in the S’ frame will give a time change in the S frame as follow
+
+$$dt = \gamma dt'\left(1 + \frac{uv'}{c^2}\right). \qquad (10)$$
+
+The acceleration in the S frame is given by
+
+$$a = \frac{dv}{dt} = \frac{a'}{\gamma^3}\frac{1}{\left(1+\frac{uv'}{c^2}\right)^3}. \qquad (11)$$
+
+If the S’ frame is the proper frame, then by definition the velocity $v' = 0$. Substitute this to the last equation, we get
+
+$$a = \frac{a'}{\gamma^3}. \qquad (12)$$
+
+Combining Eq.(3) and Eq.(12), we get
+
+$$a' = \frac{F}{m} \equiv g. \qquad (13)$$
+
+5. Eq.(3) can also be rewritten as
+
+$$\begin{aligned} c\frac{d\beta}{\gamma d\tau} &= \frac{g}{\gamma^3} && (14) \\ \int_0^{\beta}\frac{d\beta}{1-\beta^2} &= \frac{g}{c}\int_0^{\tau} d\tau \\ \ln\left(\frac{1}{\sqrt{1-\beta^2}} + \frac{\beta}{\sqrt{1-\beta^2}}\right) &= \frac{g\tau}{c} && (15) \\ \sqrt{\frac{1+\beta}{1-\beta}} &= e^{\frac{g\tau}{c}} \\ \beta\left(e^{\frac{g\tau}{c}} + e^{-\frac{g\tau}{c}}\right) &= e^{\frac{g\tau}{c}} - e^{-\frac{g\tau}{c}} \\ \beta &= \tanh\frac{g\tau}{c}. && (16) \end{aligned}$$
+
+6. The time dilation relation is
+
+$$dt = \gamma d\tau. \qquad (17)$$
+
+From eq.(16), we have
+
+$$\gamma = \frac{1}{\sqrt{1-\beta^2}} = \cosh\frac{g\tau}{c}. \qquad (18)$$
+
+Combining this equations, we get
+
+$$\begin{aligned} \int_0^t dt &= \int_0^{\tau} d\tau \cosh\frac{g\tau}{c} \\ t &= \frac{c}{g}\sinh\frac{g\tau}{c}. && (19) \end{aligned}$$
+
+**Part B. Flight Time**
+
+1. When the clock in the origin time is equal to $t_0$, it emits a signal that contain the information of its time. This signal will arrive at the particle at time $t$, while the particle position is at $x(t)$. We have
+
+$$\begin{aligned} c(t - t_0) &= x(t) && (20) \\ t - t_0 &= \frac{c}{g}\left(\sqrt{1+\left(\frac{gt}{c}\right)^2} - 1\right) \\ t &= \frac{t_0}{2}\frac{2 - \frac{gt_0}{c}}{1 - \frac{gt_0}{c}}. && (21) \end{aligned}$$
+
+When the information arrive at the particle, the particle’s clock has a reading according to eq.(19). So we get
+
+$$\begin{aligned} \frac{c}{g}\sinh\frac{g\tau}{c} &= \frac{t_0}{2}\frac{2 - \frac{gt_0}{c}}{1 - \frac{gt_0}{c}} \\ 0 &= \frac{1}{2}\left(\frac{gt_0}{c}\right)^2 - \frac{gt_0}{c}\left(1 + \sinh\frac{g\tau}{c}\right) + \sinh\frac{g\tau}{c} \\ \frac{gt_0}{c} &= 1 + \sinh\frac{g\tau}{c} \pm \cosh\frac{g\tau}{c}. && (22) \end{aligned}$$
+
+Using initial condition $t = 0$ when $\tau = 0$, we choose the negative sign
+
+$$\begin{aligned} \frac{gt_0}{c} &= 1 + \sinh\frac{g\tau}{c} - \cosh\frac{g\tau}{c} \\ t_0 &= \frac{c}{g}\left(1 - e^{-\frac{g\tau}{c}}\right). && (23) \end{aligned}$$
+
+As $\tau \to \infty$, $t_0 = \frac{c}{g}$. So the clock reading will freeze at this value.
+
+2. When the particles clock has a reading $\tau_0$, its position is given by eq.(6), and the time $t_0$ is given by eq.(19). Combining this two equation, we get
+
+$$x = \frac{c^2}{g}\left(\sqrt{1 + \sinh^2\frac{g\tau_0}{c}} - 1\right). \qquad (24)$$
+
+The particle’s clock reading is then sent to the observer at the origin. The total time needed for the information to arrive is given by
+
+$$\begin{aligned} t &= \frac{c}{g}\sinh\frac{g\tau_0}{c} + \frac{x}{c} && (25) \\ &= \frac{c}{g}\left(\sinh\frac{g\tau_0}{c} + \cosh\frac{g\tau_0}{c} - 1\right) \\ t &= \frac{c}{g}\left(e^{\frac{g\tau_0}{c}} - 1\right) && (26) \\ \tau_0 &= \frac{c}{g}\ln\left(\frac{gt}{c} + 1\right). && (27) \end{aligned}$$
+
+The time will not freeze.
+
+**Part C. Minkowski Diagram**
+
+1. The figure below show the setting of the problem.
+
+The line AB represents the stick with proper length equal $L$ in the S frame.
+
+The length AB is equal to $\sqrt{\frac{1-\beta^2}{1+\beta^2}}L$ in the S’ frame.
+
+The stick length in the S’ frame is represented by the line AC
+
+$$\mathrm{AC} = \frac{\mathrm{AB}}{\cos\theta} = \sqrt{1-\beta^2}L. \qquad (28)$$
+
+2. The position of the particle is given by eq.(6).
+
+**Part D. Two Accelerated Particles**
+
+1. $\tau_B = \tau_A$.
+
+2. From the diagram, we have
+
+$$\tan\theta = \beta = \frac{ct_2 - ct_1}{x_2 - x_1}. \qquad (29)$$
+
+Using eq.(6), and eq.(19) along with the initial condition, we get
+
+$$x_1 = \frac{c^2}{g}\left(\cosh\frac{g\tau_1}{c} - 1\right), \qquad (30)$$
+
+$$x_2 = \frac{c^2}{g}\left(\cosh\frac{g\tau_2}{c} - 1\right) + L. \qquad (31)$$
+
+Using eq.(16), eq.(19), eq.(30) and eq.(31), we obtain
+
+$$\begin{aligned} \tanh\frac{g\tau_1}{c} &= \frac{c\left(\frac{c}{g}\sinh\frac{g\tau_2}{c} - \frac{c}{g}\sinh\frac{g\tau_1}{c}\right)}{L + \frac{c^2}{g}\left(\cosh\frac{g\tau_2}{c} - 1\right) - \frac{c^2}{g}\left(\cosh\frac{g\tau_1}{c} - 1\right)} \\ &= \frac{\sinh\frac{g\tau_2}{c} - \sinh\frac{g\tau_1}{c}}{\frac{gL}{c^2} + \cosh\frac{g\tau_2}{c} - \cosh\frac{g\tau_1}{c}} \\ \frac{gL}{c^2}\sinh\frac{g\tau_1}{c} &= \sinh\frac{g\tau_2}{c}\cosh\frac{g\tau_1}{c} - \cosh\frac{g\tau_2}{c}\sinh\frac{g\tau_1}{c} \\ \frac{gL}{c^2}\sinh\frac{g\tau_1}{c} &= \sinh\frac{g}{c}(\tau_2 - \tau_1). && (32) \end{aligned}$$
+
+So $C_1 = \frac{gL}{c^2}$.
+
+3. From the length contraction, we have
+
+$$\begin{aligned} L' &= \frac{x_2 - x_1}{\gamma_1} && (33) \\ \frac{dL'}{d\tau_1} &= \left(\frac{dx_2}{d\tau_2}\frac{d\tau_2}{d\tau_1} - \frac{dx_1}{d\tau_1}\right)\frac{1}{\gamma_1} - \frac{x_2 - x_1}{\gamma_1^2}\frac{d\gamma_1}{d\tau_1}. && (34) \end{aligned}$$
+
+Take derivative of eq.(30), eq.(31) and eq.(32), we get
+
+$$\frac{dx_1}{d\tau_1} = c\sinh\frac{g\tau_1}{c}, \qquad (35)$$
+
+$$\frac{dx_2}{d\tau_2} = c\sinh\frac{g\tau_2}{c}, \qquad (36)$$
+
+$$\frac{gL}{c^2}\cosh\frac{g\tau_1}{c} = \cosh\frac{g}{c}(\tau_2 - \tau_1)\left(\frac{d\tau_2}{d\tau_1} - 1\right). \qquad (37)$$
+
+The last equation can be rearrange to get
+
+$$\frac{d\tau_2}{d\tau_1} = \frac{\frac{gL}{c^2}\cosh\frac{g\tau_1}{c}}{\cosh\frac{g}{c}(\tau_2 - \tau_1)} + 1. \qquad (38)$$
+
+From eq.(29), we have
+
+$$x_2 - x_1 = \frac{c(t_2 - t_1)}{\beta_1} = \frac{c}{\tanh\frac{g\tau_1}{c}}\left(\frac{c}{g}\sinh\frac{g\tau_2}{c} - \frac{c}{g}\sinh\frac{g\tau_1}{c}\right). \qquad (39)$$
+
+Combining all these equations, we get
+
+$$\begin{aligned} \frac{dL_1}{d\tau_1} &= \left(c\sinh\frac{g\tau_2}{c}\frac{\frac{gL}{c^2}\cosh\frac{g\tau_1}{c}}{\cosh\frac{g}{c}(\tau_2 - \tau_1)} + c\sinh\frac{g\tau_2}{c} - c\sinh\frac{g\tau_1}{c}\right)\frac{1}{\cosh\frac{g\tau_1}{c}} \\ &\quad - \frac{c^2}{g}\left(\sinh\frac{g\tau_2}{c} - \sinh\frac{g\tau_1}{c}\right)\frac{1}{\tanh\frac{g\tau_1}{c}}\frac{1}{\cosh^2\frac{g\tau_1}{c}}\frac{g}{c}\sinh\frac{g\tau_1}{c} \\ \frac{dL_1}{d\tau_1} &= \frac{gL}{c}\frac{\sinh\frac{g\tau_2}{c}}{\cosh\frac{g}{c}(\tau_2 - \tau_1)}. && (40) \end{aligned}$$
+
+So $C_2 = \frac{gL}{c}$.
+
+**Part E. Uniformly Accelerated Frame**
+
+1. Distance from a certain point $x_p$ according to the particle’s frame is
+
+$$\begin{aligned} L' &= \frac{x - x_p}{\gamma} && (41) \\ L' &= \frac{\frac{c^2}{g_1}\left(\cosh\frac{g_1\tau}{c} - 1\right) - x_p}{\cosh\frac{g_1\tau}{c}} \\ L' &= \frac{c^2}{g_1} - \frac{\frac{c^2}{g_1} + x_p}{\cosh\frac{g_1\tau}{c}}. && (42) \end{aligned}$$
+
+For $L'$ equal constant, we need $x_p = -\frac{c^2}{g_1}$.
+
+2. **First method:** If the distance in the S’ frame is constant $= L$, then in the S frame the length is
+
+$$L_s = L\sqrt{\frac{1+\beta^2}{1-\beta^2}}. \qquad (43)$$
+
+So the position of the second particle is
+
+$$\begin{aligned} x_2 &= x_1 + L_s\cos\theta && (44) \\ &= \frac{c^2}{g_1}\left(\sqrt{1+\left(\frac{g_1 t_1}{c}\right)^2} - 1\right) + L\sqrt{1+\left(\frac{g_1 t_1}{c}\right)} \\ x_2 &= \left(\frac{c^2}{g_1} + L\right)\sqrt{1+\left(\frac{g_1 t_1}{c}\right)^2} - \frac{c^2}{g_1}. && (45) \end{aligned}$$
+
+The time of the second particle is
+
+$$\begin{aligned} ct_2 &= ct_1 + L_s\sin\theta && (46) \\ &= ct_1 + L\sqrt{\frac{1+\beta^2}{1-\beta^2}}\frac{\beta}{\sqrt{1+\beta^2}} \\ ct_2 &= t_1\left(c + \frac{g_1 L}{c}\right). && (47) \end{aligned}$$
+
+Substitute eq.(47) to eq.(45) to get
+
+$$\begin{aligned} x_2 &= \left(\frac{c^2}{g_1} + L\right)\sqrt{1+\left(\frac{g_1}{c}\frac{t_2}{1+\frac{g_1 L}{c^2}}\right)^2} - \frac{c^2}{g_1} \\ x_2 &= \left(\frac{c^2}{g_1} + L\right)\sqrt{1+\left(\frac{g_1}{1+\frac{g_1 L}{c^2}}\frac{t_2}{c}\right)^2} - \frac{c^2}{g_1}. && (48) \end{aligned}$$
+
+From the last equation, we can identify
+
+$$g_2 \equiv \frac{g_1}{1 + \frac{g_1 L}{c^2}}. \qquad (49)$$
+
+As for confirmation, we can substitute this relation to the second particle position to get
+
+$$x_2 = \frac{c^2}{g_2}\sqrt{1+\left(\frac{g_2 t_2}{c}\right)^2} - \frac{c^2}{g_1}. \qquad (50)$$
+
+**Second method:** In this method, we will choose $g_2$ such that the special point like the one describe in the question 1 is exactly the same as the similar point for the proper acceleration $g_1$.
+
+For first particle, we have $x_{p1}g_1 = c^2$
+
+For second particle, we have $(L + x_{p1})g_2 = c^2$
+
+Combining this two equations, we get
+
+$$\begin{aligned} g_2 &= \frac{c^2}{L + \frac{c^2}{g_1}} \\ g_2 &= \frac{g_1}{1 + \frac{g_1 L}{c^2}}. && (51) \end{aligned}$$
+
+3. The relation between the time in the two particles is given by eq.(47)
+
+$$\begin{aligned} t_2 &= t_1\left(1 + \frac{g_1 L}{c^2}\right) \\ \frac{c^2}{g_2}\sinh\frac{g_2\tau_2}{c} &= \frac{c^2}{g_1}\sinh\frac{g_1\tau_1}{c}\left(1 + \frac{g_1 L}{c^2}\right) \\ \sinh\frac{g_2\tau_2}{c} &= \sinh\frac{g_1\tau_1}{c} \\ g_2\tau_2 &= g_1\tau_1 && (52) \\ \frac{d\tau_2}{d\tau_1} &= \frac{g_1}{g_2} = 1 + \frac{g_1 L}{c^2}. && (53) \end{aligned}$$
+
+**Part F. Correction for GPS**
+
+1. From Newtons Law
+
+$$\begin{aligned} \frac{GMm}{r^2} &= m\omega^2 r && (54) \\ r &= \left(\frac{gR^2T^2}{4\pi^2}\right)^{\frac{1}{3}} && (55) \\ r &= 2.66 \times 10^7\mathrm{m}. \end{aligned}$$
+
+The velocity is given by
+
+$$\begin{aligned} v = \omega r &= \left(\frac{2\pi g R^2}{T}\right)^{\frac{1}{3}} && (56) \\ &= 3.87 \times 10^3\mathrm{m/s}. \end{aligned}$$
+
+2. The general relativity effect is
+
+$$\begin{aligned} \frac{d\tau_g}{dt} &= 1 + \frac{\Delta U}{mc^2} && (57) \\ \frac{d\tau_g}{dt} &= 1 + \frac{gR^2}{c^2}\frac{R - r}{Rr}. && (58) \end{aligned}$$
+
+After one day, the difference is
+
+$$\begin{aligned} \Delta\tau_g &= \frac{gR^2}{c^2}\frac{R - r}{Rr}\Delta T && (59) \\ &= 4.55 \times 10^{-5}\mathrm{s}. \end{aligned}$$
+
+The special relativity effect is
+
+$$\begin{aligned} \frac{d\tau_s}{dt} &= \sqrt{1 - \frac{v^2}{c^2}} && (60) \\ &= \sqrt{1 - \left(\left(\frac{2\pi g R^2}{T}\right)^{\frac{2}{3}}\right)\frac{1}{c^2}} \\ &\approx 1 - \frac{1}{2}\left(\left(\frac{2\pi g R^2}{T}\right)^{\frac{2}{3}}\right)\frac{1}{c^2}. && (61) \end{aligned}$$
+
+After one day, the difference is
+
+$$\begin{aligned} \Delta\tau_s &= -\frac{1}{2}\left(\left(\frac{2\pi g R^2}{T}\right)^{\frac{2}{3}}\right)\frac{1}{c^2}\Delta T && (62) \\ &= -7.18 \times 10^{-6}\mathrm{s}. \end{aligned}$$
+
+The satellite’s clock is faster with total $\Delta\tau = \Delta\tau_g + \Delta\tau_s = 3.83 \times 10^{-5}\mathrm{s}$.
+
+3. $\Delta L = c\Delta\tau = 1.15 \times 10^4\mathrm{m} = 11.5\mathrm{km}$.
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-2/p2-sol-fig1.png" alt="Minkowski diagram: axes x and ct from origin A, tilted axes ct′ and x′ each at angle θ; a vertical dotted line from B on the x axis meets the x′ axis at C." />
+<figcaption>Figure 1: Minkowski Diagram</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-2/p2-sol-fig2.png" alt="Plot of ct (in units c²/g) against x (in units c²/g), both from 0 to 2: the hyperbolic worldline of the particle from the origin, with the tangent ct′ axis and the x′ axis drawn at the point x ≈ 0.41, ct = 1 marked by dotted lines." />
+<figcaption>Figure 2: Minkowski Diagram</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-2/p2-sol-fig3.png" alt="Plot of ct (c²/g) against x (c²/g): two hyperbolic worldlines starting at x = 0 and x = 1; at the first particle's event (x₁, t₁) its ct′ axis, a light line and its x′ axis at angle θ are drawn; the x′ axis meets the second worldline at (x₂, t₂); dotted lines mark t₁, t₂, x₁, x₂." />
+<figcaption>Figure 3: Minkowski Diagram for two particles</figcaption>
+</figure>
+
+<figure>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-2/p2-sol-fig4.png" alt="Plot of ct (c²/g) against x (c²/g): worldline of the first particle from the origin; at (x₁, t₁) a ct′ axis, a light line and the x′ axis at angle θ with a segment of length L reaching (x₂, t₂); dotted lines mark t₁, t₂, x₁, x₂." />
+<figcaption>Figure 4: Minkowski Diagram for two particles</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2013/Theory/2.pdf)
+· официални решения: [2_sol.pdf](https://olympiads-xyz.vercel.app/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2013/Theory/2_sol.pdf)
