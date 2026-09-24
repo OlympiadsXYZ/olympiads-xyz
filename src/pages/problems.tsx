@@ -334,6 +334,7 @@ export default function ProblemsPage({ location }: PageProps) {
 
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
+        <main>
 
         <div className="py-16 bg-blue-600 dark:bg-blue-900 px-5">
           <div className="max-w-3xl mx-auto mb-6">
@@ -376,6 +377,7 @@ export default function ProblemsPage({ location }: PageProps) {
                 <div className="pr-4 flex flex-wrap items-center">
                   <button
                     type="button"
+                    aria-label="Предишна страница"
                     className={pageButtonClass(false)}
                     disabled={currentPage === 0}
                     onClick={() => setPage(currentPage - 1)}
@@ -394,6 +396,7 @@ export default function ProblemsPage({ location }: PageProps) {
                   ))}
                   <button
                     type="button"
+                    aria-label="Следваща страница"
                     className={pageButtonClass(false)}
                     disabled={currentPage >= pageCount - 1}
                     onClick={() => setPage(currentPage + 1)}
@@ -402,6 +405,7 @@ export default function ProblemsPage({ location }: PageProps) {
                   </button>
                 </div>
                 <select
+                  aria-label="Задачи на страница"
                   className="mt-1 lg:mt-0 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-700 dark:text-dark-high-emphasis text-sm px-2 py-1"
                   value={hitsPerPage}
                   onChange={e => setHitsPerPage(parseInt(e.target.value, 10))}
@@ -416,6 +420,7 @@ export default function ProblemsPage({ location }: PageProps) {
             )}
           </div>
         </div>
+        </main>
       </div>
     </Layout>
   );

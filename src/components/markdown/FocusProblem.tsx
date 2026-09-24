@@ -84,7 +84,7 @@ export default function FocusProblem({
           </div>
         </div>
         <div className="border-t border-gray-100 dark:border-gray-700 sm:flex sm:justify-between">
-          <p className="text-xs italic text-gray-400 font-normal pt-3 px-4 sm:px-6 !mb-0 sm:pb-3">
+          <p className="text-xs italic text-gray-500 font-normal pt-3 px-4 sm:px-6 !mb-0 sm:pb-3">
             {t('focus-problem')}
           </p>
           {problem.solution?.kind === 'internal' && (

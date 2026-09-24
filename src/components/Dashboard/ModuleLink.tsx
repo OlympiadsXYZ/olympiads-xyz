@@ -252,7 +252,7 @@ function time_ago(time: unknown): string {
             </p>
           )}
           {/* https://stackoverflow.com/questions/9229213/convert-iso-date-to-milliseconds-in-javascript */}
-          <p className="block text-sm text-gray-400 group-hover:text-blue-700 dark:group-hover:text-dark-high-emphasis transition leading-5">
+          <p className="block text-sm text-gray-500 group-hover:text-blue-700 dark:group-hover:text-dark-high-emphasis transition leading-5">
             {link.description}
 
             <i>

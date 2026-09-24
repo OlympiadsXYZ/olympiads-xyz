@@ -87,6 +87,7 @@ export default function IndexPage(): JSX.Element {
       <div className="bg-black">
         <TopNavigationBar hideLanguageSwitcher={false} hidePromoBar={false} />
       </div>
+      <main>
 
       {/* Begin Hero */}
       <div className="-mt-16 bg-gray-100 dark:bg-black">
@@ -97,9 +98,9 @@ export default function IndexPage(): JSX.Element {
             <div className="h-24"></div>
 
             <div className="flex md:justify-center dark:hidden">
-              <div className={classNames(usacoTitleClasses, 'text-black mt-4')}>
+              <h1 className={classNames(usacoTitleClasses, 'text-black mt-4')}>
                 Olympiads XYZ
-              </div>
+              </h1>
             </div>
             <div className="flex md:justify-center invisible h-0 dark:visible dark:h-auto">
               <GlowingText
@@ -613,9 +614,9 @@ export default function IndexPage(): JSX.Element {
             {t('index_faq')}
           </h2>
           <div className="pt-10 md:pt-16">
-            <dl className="md:grid md:grid-cols-2 md:gap-8">
+            <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <div>
+                <dl>
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_what-is-olympiads-xyz')}
                   </dt>
@@ -624,8 +625,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_what-is-olympiads-xyz')} {t('index_inspired-by')} <a href="https://usaco.guide" target="_blank" rel="noreferrer" className="text-blue-600 dark:text-blue-400 underline">{t('index_usaco_guide')}</a>.
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_who-is-this-website-for')}
                   </dt>
@@ -634,8 +635,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_who-is-this-website-for')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_multiple-languages')}
                   </dt>
@@ -644,8 +645,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_multiple-languages')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_topics')}
                   </dt>
@@ -654,8 +655,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_topics')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_how-do-i-use-modules')}
                   </dt>
@@ -664,8 +665,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_how-do-i-use-modules')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_practice-problem-selection')}
                   </dt>
@@ -674,10 +675,10 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_practice-problem-selection')}
                     </p>
                   </dd>
-                </div>
+                </dl>
               </div>
               <div className="mt-12 md:mt-0">
-                <div>
+                <dl>
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_how-can-i-track-my-progress')}
                   </dt>
@@ -686,8 +687,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_how-can-i-track-my-progress')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_official-syllabus')}
                   </dt>
@@ -696,8 +697,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_official-syllabus')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_contribute')}
                   </dt>
@@ -706,8 +707,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_contribute')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_free')}
                   </dt>
@@ -716,8 +717,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_free')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_is-there-a-catch')}
                   </dt>
@@ -726,8 +727,8 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_is-there-a-catch')}
                     </p>
                   </dd>
-                </div>
-                <div className="mt-12">
+                </dl>
+                <dl className="mt-12">
                   <dt className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
                     {t('index_q_stuck-on-problem')}
                   </dt>
@@ -736,18 +737,19 @@ export default function IndexPage(): JSX.Element {
                       {t('index_a_stuck-on-problem')}
                     </p>
                   </dd>
-                </div>
+                </dl>
               </div>
-            </dl>
+            </div>
           </div>
         </div>
       </div>
       {/*End FAQ*/}
 
 
+      </main>
       <div className="bg-gray-100 dark:bg-gray-900">
         <div className="max-w-screen-xl mx-auto py-12 px-4">
-          <p className="text-center text-base leading-6 text-gray-400 dark:text-dark-med-emphasis">
+          <p className="text-center text-base leading-6 text-gray-500 dark:text-dark-med-emphasis">
             &copy; {new Date().getFullYear()} Olympiads XYZ. {t("index_powered-by")}
             <br />
             {t('index_copyright')}{' '}

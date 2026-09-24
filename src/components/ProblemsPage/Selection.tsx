@@ -92,6 +92,7 @@ export default function Selection({
       value={value}
       isClearable
       placeholder={placeholder}
+      aria-label={placeholder}
       isMulti={isMulti}
       isSearchable={searchable}
       options={options}

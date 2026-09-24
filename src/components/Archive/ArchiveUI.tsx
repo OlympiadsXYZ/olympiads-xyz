@@ -29,7 +29,7 @@ export function Crumbs({
   parts: { name: string; href?: string }[];
 }): JSX.Element {
   return (
-    <nav className="text-sm text-gray-500 dark:text-gray-400 mb-4 flex flex-wrap gap-1 items-center">
+    <nav className="text-sm text-gray-600 dark:text-gray-400 mb-4 flex flex-wrap gap-1 items-center">
       {parts.map((p, i) => (
         <React.Fragment key={i}>
           {i > 0 && <span className="mx-1">›</span>}
@@ -128,7 +128,7 @@ export function EntryRow({
   const url = entryUrl(entry.key);
   const inner = (
     <>
-      <span className="flex-none w-11 text-[10px] font-bold text-gray-400 dark:text-gray-500 tracking-wide">
+      <span className="flex-none w-11 text-[10px] font-bold text-gray-500 dark:text-gray-500 tracking-wide">
         {EXT_ICONS[entry.ext] ?? 'FILE'}
       </span>
       <span className="flex-1 min-w-0 break-words">

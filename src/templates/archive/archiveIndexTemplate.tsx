@@ -18,6 +18,7 @@ export default function ArchiveIndexTemplate({ pageContext }: Props): JSX.Elemen
       <SEO title="Архив" pathname="/archive/" />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
+        <main>
         <div className="bg-blue-700 dark:bg-blue-900 py-12 px-5">
           <div className="max-w-5xl mx-auto">
             <h1 className="text-4xl sm:text-5xl font-black text-white">Архив</h1>
@@ -46,6 +47,7 @@ export default function ArchiveIndexTemplate({ pageContext }: Props): JSX.Elemen
             ))}
           </div>
         </div>
+        </main>
       </div>
     </Layout>
   );

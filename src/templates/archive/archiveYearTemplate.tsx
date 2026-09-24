@@ -37,6 +37,7 @@ export default function ArchiveYearTemplate({ pageContext }: Props): JSX.Element
       />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
+        <main>
         <div className={`${colors.bg} py-10 px-5`}>
           <div className="max-w-5xl mx-auto flex items-end justify-between flex-wrap gap-3">
             <h1 className="text-3xl sm:text-4xl font-black text-white">
@@ -75,6 +76,7 @@ export default function ArchiveYearTemplate({ pageContext }: Props): JSX.Element
             <EntryList entries={entries} groupByRound />
           </div>
         </div>
+        </main>
       </div>
     </Layout>
   );

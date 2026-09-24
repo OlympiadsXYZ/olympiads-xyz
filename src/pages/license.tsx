@@ -7,7 +7,7 @@ import '../i18n';
 import { useTranslation } from 'react-i18next';
 
 const linkClasses =
-  'text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline';
+  'text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline';
 
 export default function LicensePage(props: PageProps) {
   const { t } = useTranslation();
@@ -16,6 +16,7 @@ export default function LicensePage(props: PageProps) {
       <SEO title={t('license_title')} />
 
       <TopNavigationBar />
+      <main>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="mt-8 text-4xl font-extrabold">{t('license_title')}</h1>
@@ -99,12 +100,13 @@ export default function LicensePage(props: PageProps) {
           </p>
           <Link
             to="/"
-            className="block mb-4 underline text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+            className="block mb-4 underline text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
           >
             &larr; {t('license_back-to-home')}
           </Link>
         </div>
       </div>
+      </main>
     </Layout>
   );
 }

@@ -325,13 +325,13 @@ export default function Template(props) {
                   <div className="leading-6 py-3 text-gray-500 dark:text-dark-med-emphasis group-hover:text-gray-800 dark:group-hover:text-dark-high-emphasis transition">
                     {progressBar}
                   </div>
-                  <p className="md:max-w-sm md:ml-auto text-gray-400 dark:text-gray-500 dark:group-hover:text-dark-med-emphasis group-hover:text-gray-600 transition">
+                  <p className="md:max-w-sm md:ml-auto text-gray-500 dark:text-gray-500 dark:group-hover:text-dark-med-emphasis group-hover:text-gray-600 transition">
                     {category.description}
                   </p>
                 </div>
                 <div className="flex-1 pl-12">
                   {category.items.length === 0 && (
-                    <p className="py-3 text-sm italic text-gray-400 dark:text-gray-500">
+                    <p className="py-3 text-sm italic text-gray-500 dark:text-gray-500">
                       Модулите в тази глава предстоят.
                     </p>
                   )}

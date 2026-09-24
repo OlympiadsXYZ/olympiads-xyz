@@ -131,7 +131,7 @@ function Count({
 }) {
   return (
     <span
-      className={`ml-2 flex-shrink-0 text-xs tabular-nums text-gray-400 dark:text-gray-500 ${className}`}
+      className={`ml-2 flex-shrink-0 text-xs tabular-nums text-gray-500 dark:text-gray-500 ${className}`}
     >
       {value}
     </span>

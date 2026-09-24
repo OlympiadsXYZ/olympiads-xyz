@@ -10,6 +10,7 @@ export default function ArchiveMaintenancePage(): JSX.Element {
       <SEO title="Архив" pathname="/archive/" />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
+        <main>
         <div className="max-w-3xl mx-auto px-5 pt-28 pb-20">
           <div className="bg-white dark:bg-gray-900 rounded-xl shadow-black/5 dark:shadow-white/5 shadow p-8 sm:p-10">
             <h1 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white">
@@ -35,6 +36,7 @@ export default function ArchiveMaintenancePage(): JSX.Element {
             </div>
           </div>
         </div>
+        </main>
       </div>
     </Layout>
   );

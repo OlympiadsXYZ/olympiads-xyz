@@ -50,6 +50,7 @@ export default function ArchiveScienceTemplate({ pageContext }: Props): JSX.Elem
       <SEO title={`Архив · ${name}`} pathname={`/archive/${science}/`} />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
+        <main>
         <div className={`${colors.bg} py-10 px-5`}>
           <div className="max-w-5xl mx-auto">
             <h1 className="text-4xl font-black text-white">{name}</h1>
@@ -126,6 +127,7 @@ export default function ArchiveScienceTemplate({ pageContext }: Props): JSX.Elem
             </>
           )}
         </div>
+        </main>
       </div>
     </Layout>
   );
