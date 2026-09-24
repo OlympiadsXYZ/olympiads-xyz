@@ -53,6 +53,11 @@ export default function Template(props) {
     <Layout>
       <SEO
         title={`${xdm.frontmatter.title} · ${xdm.frontmatter.source}`}
+        description={`${xdm.frontmatter.source}: ${xdm.frontmatter.title} — ${
+          problem.solutionUrl
+            ? 'условие и официално решение'
+            : 'условие на задачата'
+        }.`}
       />
 
       <ConfettiProvider>
