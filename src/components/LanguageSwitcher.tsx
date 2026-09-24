@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
-import moment from 'moment';
 
 const LANGUAGES = ['bg', 'en'];
+// read back after hydration by gatsby-browser.tsx (onInitialClientRender)
+export const LANGUAGE_STORAGE_KEY = 'olympiads:lang';
 const LANGUAGE_LABELS = {
   bg: 'Български',
   en: 'English',
@@ -18,11 +19,19 @@ export default function LanguageDropdown({
   noDarkMode = false,
 }): JSX.Element {
   const { i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState(currentLanguage);
+  // the label follows i18next (useTranslation re-renders on a change), so every mounted switcher agrees after
+  // a navigation; local state reset to Bulgarian while the interface stayed English
+  const selectedLanguage = LANGUAGES.includes(i18n.language)
+    ? i18n.language
+    : currentLanguage;
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    setSelectedLanguage(lng);
+    try {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
+    } catch (e) {
+      // the choice just won't persist
+    }
   };
 
   return (

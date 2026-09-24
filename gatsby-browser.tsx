@@ -3,8 +3,9 @@
 import { wrapRootElement as wrap } from './root-wrapper';
 import 'katex/dist/katex.min.css';
 import './src/styles/main.css';
-import { inject } from '@vercel/analytics';
 import { injectSpeedInsights } from '@vercel/speed-insights';
+import i18n from './src/i18n';
+import { LANGUAGE_STORAGE_KEY } from './src/components/LanguageSwitcher';
 // import './build.css';
 
 export const wrapRootElement = wrap;
@@ -53,7 +54,20 @@ export const onClientEntry = () => {
     event.preventDefault();
   });
 
-  // vercel analytics
-  inject();
+  // Vercel Web Analytics is loaded by the script tag gatsby-ssr.tsx puts in every page; inject() loaded it a
+  // second time (two requests for /_vercel/insights/script.js on each page view)
   injectSpeedInsights();
+};
+
+// The interface language picked in the switcher. Applied after hydration, so the first client render matches the
+// Bulgarian HTML of the static build.
+export const onInitialClientRender = () => {
+  try {
+    const lang = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (lang && lang !== i18n.language && ['bg', 'en'].includes(lang)) {
+      i18n.changeLanguage(lang);
+    }
+  } catch (e) {
+    // storage unavailable
+  }
 };
