@@ -2,6 +2,7 @@ import { Link } from 'gatsby';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { moduleIDToSectionMap } from '../../../content/ordering';
+import { competitionName } from '../../archive/labels';
 import { ConfettiProvider } from '../../context/ConfettiContext';
 import {
   useHideDifficultySetting,
@@ -13,6 +14,7 @@ import type { ProblemsIndexEntry } from '../../problems/index-node';
 import DifficultyBox from '../DifficultyBox';
 import Info from '../markdown/Info';
 import ProblemStatusCheckbox from '../markdown/ProblemsList/ProblemStatusCheckbox';
+import { problemSourceLabel, tagLabel } from './problemSearch';
 
 /**
  * Renders `text`, with every case-insensitive occurrence of `query` marked.
@@ -65,8 +67,15 @@ export function ProblemHit({
     <div className="bg-white dark:bg-gray-900 shadow p-4 sm:p-6 rounded-lg ">
       <div className="flex flex-row justify-between w-full">
         <span>
-          <span className="text-blue-700 dark:text-blue-400 font-medium text-sm">
-            {problem.source}
+          <span
+            className="text-blue-700 dark:text-blue-400 font-medium text-sm"
+            title={
+              problem.competition
+                ? competitionName(problem.competition)
+                : undefined
+            }
+          >
+            {problemSourceLabel(problem)}
           </span>
           <p className="text-xl leading-6 mt-1 mb-2">
             {internalURL ? (
@@ -159,7 +168,7 @@ export function ProblemHit({
               className="mr-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-dark-high-emphasis"
               key={tag}
             >
-              {tag}
+              {tagLabel(tag)}
             </span>
           ))}
       </div>

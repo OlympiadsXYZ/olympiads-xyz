@@ -8,6 +8,7 @@
 // (see src/archive/catalog-node.ts).
 import fs from 'fs';
 import path from 'path';
+import { COMPETITION_META, SCIENCE_LABELS } from '../archive/labels';
 import { getProblemURL, recentUsaco } from '../models/problem';
 import { assembleProblemsTree, PaperFile, ProblemsTreeData } from './tree';
 
@@ -41,7 +42,21 @@ export type ProblemsIndexEntry = {
   solution: ProblemsIndexSolution;
   /** The problem's page on this site, from getProblemURL(). */
   problemURL: string;
+  /** Science of the problem ("physics", "astronomy", …; see SCIENCE_LABELS). */
+  subject?: string | null;
+  /** Competition code ("NOF", "NAO", …; see COMPETITION_META). */
+  competition?: string | null;
 };
+
+/** Where a problem was set: the subject and competition of its paper. */
+export type ProblemPaperInfo = { subject: string; competition: string };
+
+/**
+ * Modules whose problems are made-up illustrations rather than real problems:
+ * the "Using modules" guide shows what a problem list looks like. A problem
+ * that appears only in these modules is left out of the index.
+ */
+const EXAMPLE_MODULE_IDS = new Set(['using-modules']);
 
 /** Shape of one `allProblemInfo` node as queried in gatsby-node's createPages. */
 type ProblemNode = {
@@ -61,11 +76,40 @@ type ProblemNode = {
 };
 
 /**
+ * Adds the subject and competition of the problem's paper. A problem without
+ * a paper file (listed only in modules) gets its subject from an
+ * /archive/<subject>/ link and its competition from the first word of the
+ * source when that is a known competition code.
+ */
+function withPaperInfo(
+  entry: ProblemsIndexEntry,
+  paperInfo: Map<string, ProblemPaperInfo>,
+  subjectByCompetition: Map<string, string>
+): ProblemsIndexEntry {
+  const paper = paperInfo.get(entry.uniqueId);
+  const code = (entry.source ?? '').split(' ')[0];
+  const competition =
+    paper?.competition ??
+    (COMPETITION_META[code] || subjectByCompetition.has(code) ? code : null);
+  const fromURL = /\/archive\/([a-z]+)\//.exec(entry.url ?? '')?.[1];
+  const subject =
+    paper?.subject ??
+    (fromURL && SCIENCE_LABELS[fromURL] ? fromURL : null) ??
+    (competition ? subjectByCompetition.get(competition) ?? null : null);
+  return { ...entry, subject, competition };
+}
+
+/**
  * Collapses the `allProblemInfo` nodes into one row per unique problem: a
  * problem that appears in several modules has one node per module, so tags and
  * modules get unioned together (same merge the Algolia transformer did).
+ * `paperInfo` (problem id → its paper's subject and competition, see
+ * readProblemPapers) fills in `subject` and `competition`.
  */
-export function buildProblemsIndex(nodes: ProblemNode[]): ProblemsIndexEntry[] {
+export function buildProblemsIndex(
+  nodes: ProblemNode[],
+  paperInfo: Map<string, ProblemPaperInfo> = new Map()
+): ProblemsIndexEntry[] {
   const byId = new Map<string, ProblemsIndexEntry>();
   for (const node of nodes) {
     if (!node || !node.uniqueId) continue;
@@ -109,7 +153,21 @@ export function buildProblemsIndex(nodes: ProblemNode[]): ProblemsIndexEntry[] {
     });
   }
 
-  const entries = [...byId.values()];
+  const subjectByCompetition = new Map<string, string>();
+  for (const { subject, competition } of paperInfo.values()) {
+    if (!subjectByCompetition.has(competition)) {
+      subjectByCompetition.set(competition, subject);
+    }
+  }
+  const entries = [...byId.values()]
+    .filter(
+      entry =>
+        !(
+          entry.problemModules.length > 0 &&
+          entry.problemModules.every(m => EXAMPLE_MODULE_IDS.has(m.id))
+        )
+    )
+    .map(entry => withPaperInfo(entry, paperInfo, subjectByCompetition));
   for (const entry of entries) {
     // Same fallback the old Algolia hit renderer applied at display time.
     if (
@@ -134,7 +192,7 @@ export function writeProblemsIndex(
   repoRoot: string,
   nodes: ProblemNode[]
 ): number {
-  const entries = buildProblemsIndex(nodes);
+  const entries = buildProblemsIndex(nodes, readProblemPapers(repoRoot));
   const dir = path.join(repoRoot, 'static', 'problems-data');
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(entries));
@@ -144,8 +202,11 @@ export function writeProblemsIndex(
 // ---------------------------------------------------------------------------
 // Problems tree (sidebar of problem pages) — see src/problems/tree.ts.
 
-/** Reads content/problems/**\/*.json (skipping schema.json), sorted by path. */
-export function readPaperFiles(repoRoot: string): PaperFile[] {
+/** Calls `onPaper` for each content/problems/**\/*.json (skipping schema.json), sorted by path. */
+function forEachPaperFile(
+  repoRoot: string,
+  onPaper: (paper: PaperFile) => void
+): void {
   const root = path.join(repoRoot, 'content', 'problems');
   const files: string[] = [];
   const walk = (dir: string) => {
@@ -159,18 +220,44 @@ export function readPaperFiles(repoRoot: string): PaperFile[] {
     }
   };
   walk(root);
-  const papers: PaperFile[] = [];
   for (const file of files) {
+    let data;
     try {
-      const data = JSON.parse(fs.readFileSync(file, 'utf8'));
-      if (data && data.paper && Array.isArray(data.problems)) {
-        papers.push(data as PaperFile);
-      }
+      data = JSON.parse(fs.readFileSync(file, 'utf8'));
     } catch (e) {
       console.warn(`[problems] skipping unreadable ${file}: ${e}`);
+      continue;
+    }
+    if (data && data.paper && Array.isArray(data.problems)) {
+      onPaper(data as PaperFile);
     }
   }
+}
+
+/** Reads content/problems/**\/*.json (skipping schema.json), sorted by path. */
+export function readPaperFiles(repoRoot: string): PaperFile[] {
+  const papers: PaperFile[] = [];
+  forEachPaperFile(repoRoot, paper => papers.push(paper));
   return papers;
+}
+
+/**
+ * Problem id → subject and competition of its paper. Keeps only those two
+ * fields, so the (large) paper files are not all held in memory at once.
+ */
+export function readProblemPapers(
+  repoRoot: string
+): Map<string, ProblemPaperInfo> {
+  const info = new Map<string, ProblemPaperInfo>();
+  forEachPaperFile(repoRoot, ({ paper, problems }) => {
+    const value = { subject: paper.subject, competition: paper.competition };
+    for (const problem of problems) {
+      if (problem && problem.id && !info.has(problem.id)) {
+        info.set(problem.id, value);
+      }
+    }
+  });
+  return info;
 }
 
 /**
