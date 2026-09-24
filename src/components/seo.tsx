@@ -1,16 +1,20 @@
+import { useLocation } from '@gatsbyjs/reach-router';
 import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
+const OG_LOCALES = { bg: 'bg_BG', en: 'en_US' };
+
 function SEO({
   description,
-  lang = 'en',
+  lang = 'bg',
   meta,
   image: metaImage,
   title,
   pathname,
 }) {
+  const location = useLocation();
   const { site, image: defaultImage } = useStaticQuery(graphql`
     query {
       site {
@@ -38,17 +42,22 @@ function SEO({
   }
 
   const siteUrl = site.siteMetadata.siteUrl.replace(/\/$/, '');
-  const normalizedPathname = pathname
-    ? pathname.startsWith('/')
-      ? pathname
-      : `/${pathname}`
-    : null;
+  // Without an explicit `pathname` the page's own URL is canonical. During SSR
+  // this is the path the page was created with, i.e. the URL the sitemap
+  // lists, so each page keeps its own trailing-slash convention.
+  const path = pathname || location.pathname || '/';
+  let normalizedPathname = path.startsWith('/') ? path : `/${path}`;
+  // SSR sees the raw path (Cyrillic problem ids) and the browser the
+  // percent-encoded one: emit the encoded form in both cases.
+  try {
+    normalizedPathname = encodeURI(decodeURI(normalizedPathname));
+  } catch {
+    // malformed escape sequence: keep the path as it is
+  }
   const metaDescription = description || site.siteMetadata.description;
   const image =
     metaImage && metaImage.src ? `${siteUrl}${metaImage.src}` : null;
-  const canonical =
-    normalizedPathname != null ? `${siteUrl}${normalizedPathname}` : null;
-  const ogUrl = canonical || siteUrl;
+  const canonical = `${siteUrl}${normalizedPathname}`;
   return (
     <Helmet
       htmlAttributes={{
@@ -57,16 +66,12 @@ function SEO({
       title={title}
       titleTemplate={`%s · ${site.siteMetadata.title}`}
       defaultTitle={site.siteMetadata.title}
-      link={
-        canonical
-          ? [
-              {
-                rel: 'canonical',
-                href: canonical,
-              },
-            ]
-          : []
-      }
+      link={[
+        {
+          rel: 'canonical',
+          href: canonical,
+        },
+      ]}
       meta={[
         {
           name: `description`,
@@ -90,11 +95,15 @@ function SEO({
         },
         {
           property: `og:url`,
-          content: ogUrl,
+          content: canonical,
         },
         {
           property: `og:type`,
           content: `website`,
+        },
+        {
+          property: `og:locale`,
+          content: OG_LOCALES[lang] || lang,
         },
         {
           name: `twitter:creator`,
@@ -145,7 +154,7 @@ function SEO({
   );
 }
 SEO.defaultProps = {
-  lang: `en`,
+  lang: `bg`,
   meta: [],
   description: ``,
 };
