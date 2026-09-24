@@ -77,15 +77,73 @@ const TYPE_COLORS: { [t: string]: string } = {
   results: 'amber',
 };
 
-export function EntryRow({ entry }: { entry: ClientEntry }): JSX.Element {
+// Keeps both ends of a long file name: the distinguishing part is often the
+// tail („…-0001.jpg“, „…_corrected.pdf“).
+function shortName(name: string): string {
+  return name.length > 40 ? `${name.slice(0, 16)}…${name.slice(-22)}` : name;
+}
+
+// Rows in one list with the same title and badges get their file name as a
+// distinguishing detail — e.g. three „Теоретични задачи – решения“ become
+// T1_sol.pdf / T2_sol.pdf / T3_sol_corrected.pdf. The file icon is not enough
+// (a lone XLS among PDFs still says nothing about its content). Parent
+// folders are added while the names still clash.
+export function rowDetails(
+  entries: ClientEntry[],
+  withRound = false
+): { [id: string]: string } {
+  const byLook: { [k: string]: ClientEntry[] } = {};
+  entries.forEach(e => {
+    const k = [e.title, e.type, e.group, e.lang, withRound ? e.round : '']
+      .map(v => v ?? '')
+      .join('\u0000');
+    if (!byLook[k]) byLook[k] = [];
+    byLook[k].push(e);
+  });
+  const out: { [id: string]: string } = {};
+  Object.values(byLook).forEach(same => {
+    if (same.length < 2) return;
+    const name = (e: ClientEntry, depth: number) => e.key.split('/').slice(-depth).join('/');
+    let depth = 1;
+    while (depth < 4 && new Set(same.map(e => name(e, depth))).size < same.length) depth++;
+    const full = same.map(e => name(e, depth));
+    const short = full.map(shortName);
+    const shown = new Set(short).size === new Set(full).size ? short : full;
+    same.forEach((e, i) => {
+      out[e.id] = shown[i];
+    });
+  });
+  return out;
+}
+
+export function EntryRow({
+  entry,
+  detail,
+  showRound = false,
+}: {
+  entry: ClientEntry;
+  detail?: string;
+  showRound?: boolean;
+}): JSX.Element {
   const url = entryUrl(entry.key);
   const inner = (
     <>
       <span className="flex-none w-11 text-[10px] font-bold text-gray-400 dark:text-gray-500 tracking-wide">
         {EXT_ICONS[entry.ext] ?? 'FILE'}
       </span>
-      <span className="flex-1 min-w-0 break-words">{entry.title}</span>
+      <span className="flex-1 min-w-0 break-words">
+        {entry.title}
+        {detail && (
+          <span
+            className="ml-2 font-mono text-xs text-gray-500 dark:text-gray-400 break-all"
+            title={entry.key.split('/').pop()}
+          >
+            {detail}
+          </span>
+        )}
+      </span>
       <span className="flex-none flex items-center gap-1.5">
+        {showRound && entry.round && <Badge>{label(ROUND_LABELS, entry.round)}</Badge>}
         <Badge color={TYPE_COLORS[entry.type]}>
           {label(TYPE_LABELS, entry.type)}
         </Badge>
@@ -140,6 +198,28 @@ export function sortEntries(entries: ClientEntry[]): ClientEntry[] {
   );
 }
 
+// Rows of one visible list, already sorted; rows that would look identical
+// get their file name (rowDetails).
+function EntryRows({
+  entries,
+  showRound = false,
+}: {
+  entries: ClientEntry[];
+  showRound?: boolean;
+}): JSX.Element {
+  const details = rowDetails(entries, showRound);
+  return (
+    <>
+      {entries.map(e => (
+        <EntryRow key={e.id} entry={e} detail={details[e.id]} showRound={showRound} />
+      ))}
+    </>
+  );
+}
+
+const NO_ROUND = '__none';
+const RESULTS = '__results';
+
 export function EntryList({
   entries,
   groupByRound = false,
@@ -151,34 +231,34 @@ export function EntryList({
   if (!groupByRound) {
     return (
       <div className="divide-y divide-gray-100 dark:divide-gray-800">
-        {sorted.map(e => (
-          <EntryRow key={e.id} entry={e} />
-        ))}
+        <EntryRows entries={sorted} />
       </div>
     );
   }
+  // Протоколите и класиранията са в отделна секция „Резултати“ накрая (с
+  // кръга като значка на реда); всичко останало е по кръгове.
   const byRound: { [r: string]: ClientEntry[] } = {};
   sorted.forEach(e => {
-    const r = e.round ?? '__none';
+    const r = e.type === 'results' ? RESULTS : e.round ?? NO_ROUND;
     if (!byRound[r]) byRound[r] = [];
     byRound[r].push(e);
   });
-  const roundKeys = Object.keys(byRound).sort(
-    (a, b) =>
-      roundSortKey(a === '__none' ? null : a) -
-      roundSortKey(b === '__none' ? null : b)
-  );
+  const sectionKey = (r: string) =>
+    r === RESULTS ? ROUND_ORDER.length + 2 : roundSortKey(r === NO_ROUND ? null : r);
+  const roundKeys = Object.keys(byRound).sort((a, b) => sectionKey(a) - sectionKey(b));
   return (
     <div className="space-y-6">
       {roundKeys.map(r => (
         <div key={r}>
           <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1 px-3">
-            {r === '__none' ? 'Общи материали' : label(ROUND_LABELS, r)}
+            {r === RESULTS
+              ? 'Резултати'
+              : r === NO_ROUND
+              ? 'Общи материали'
+              : label(ROUND_LABELS, r)}
           </h3>
           <div className="divide-y divide-gray-100 dark:divide-gray-800">
-            {byRound[r].map(e => (
-              <EntryRow key={e.id} entry={e} />
-            ))}
+            <EntryRows entries={byRound[r]} showRound={r === RESULTS} />
           </div>
         </div>
       ))}
@@ -359,9 +439,7 @@ export function LibraryTree({
             </span>
           </summary>
           <div className="px-2 pb-2 divide-y divide-gray-100 dark:divide-gray-800">
-            {sortEntries(byFolder[f]).map(e => (
-              <EntryRow key={e.id} entry={e} />
-            ))}
+            <EntryRows entries={sortEntries(byFolder[f])} />
           </div>
         </details>
       ))}
