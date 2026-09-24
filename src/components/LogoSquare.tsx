@@ -9,7 +9,6 @@ export default function LogoSquare({
   return (
     <svg
       className={classNames('inline-block', className)}
-      id="Layer_1"
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 152.16 152.16"

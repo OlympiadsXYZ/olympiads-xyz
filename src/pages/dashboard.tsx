@@ -262,9 +262,9 @@ export default function DashboardPage(props: PageProps) {
               <div className="space-y-8">
                 <Card>
                   <div className="px-4 py-5 sm:p-6">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
+                    <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
                       {t('dashboard_module-progress')} - {SECTION_LABELS[lastViewedSection]}
-                    </h3>
+                    </h2>
                     <div className="mt-6">
                       <DashboardProgress
                         {...allModulesProgressInfo}
@@ -277,9 +277,9 @@ export default function DashboardPage(props: PageProps) {
               <div className="space-y-8">
                 <Card>
                   <div className="px-4 py-5 sm:p-6">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
+                    <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
                       {t('dashboard_problems-progress')} - {SECTION_LABELS[lastViewedSection]}
-                    </h3>
+                    </h2>
                     <div className="mt-6">
                       <DashboardProgress
                         {...allProblemsProgressInfo}
@@ -290,9 +290,9 @@ export default function DashboardPage(props: PageProps) {
                 </Card>
                 {/*<div className="bg-white shadow sm:rounded-lg">*/}
                 {/*  <div className="px-4 py-5 sm:p-6">*/}
-                {/*    <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">*/}
+                {/*    <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">*/}
                 {/*      Section Breakdown*/}
-                {/*    </h3>*/}
+                {/*    </h2>*/}
                 {/*    <div className="mt-2 max-w-xl text-sm leading-5 text-gray-500">*/}
                 {/*      <p>Below is your progress on modules for each section.</p>*/}
                 {/*    </div>*/}
