@@ -83,7 +83,10 @@ An iron hemisphere of radius $R$ sits face down on a very large iron plane. Assu
 
 **(A.2)** Find the net magnetic force on the hemisphere. *Give your answer in terms of the integral*
 
-$$J(k) = \int_0^{2\pi} \frac{\cos(\phi)}{(k - \cos(\phi))^{3/2}}\ d\phi.$$ **[3 т.]**
+$$
+J(k) = \int_0^{2\pi} \frac{\cos(\phi)}{(k - \cos(\phi))^{3/2}}\ d\phi.
+$$
+**[3 т.]**
 
 **(A.3)** Find numerically the maximum value of $\alpha$ such that the hemisphere can be lifted, assuming that $\beta$ and $I$ can be chosen freely. **[0,5 т.]**
 
@@ -93,7 +96,9 @@ $$J(k) = \int_0^{2\pi} \frac{\cos(\phi)}{(k - \cos(\phi))^{3/2}}\ d\phi.$$ **[3 
 
 According to general relativity, a particle's distance $r$ from a black hole of mass $M$ obeys:
 
-$$\frac{\mathrm{d}^2 r}{\mathrm{d}\tau^2} = -\frac{GM}{r^2} + \frac{\ell^2}{r^3} - \frac{3GM\ell^2}{c^2 r^4}$$
+$$
+\frac{\mathrm{d}^2 r}{\mathrm{d}\tau^2} = -\frac{GM}{r^2} + \frac{\ell^2}{r^3} - \frac{3GM\ell^2}{c^2 r^4}
+$$
 
 Here, $\tau$ is the particle's proper time and $\ell$ is its conserved angular momentum per unit mass around the black hole.
 
@@ -127,7 +132,9 @@ A black hole of mass $M$ travels at speed $v$ through a medium with density $\rh
 
 (a) Consider the fields $\vec{B}_0, \vec{H}_0$ and $\vec{B}_1, \vec{H}_1$ outside and inside the iron respectively. Gauss's Law, $\nabla \cdot \vec{B} = 0$, shows that $B_{0,\perp} = B_{1,\perp}$ while Ampere's Law, $\nabla \times \vec{H} = \vec{J}_f = \vec{0}$, shows that $\vec{H}_{0,\parallel} = \vec{H}_{1,\parallel}$. These are the boundary conditions for magnetic materials. Using $\vec{H} = \vec{B}/\mu$, we have $\vec{B}_{1,\parallel} = \mu_r \vec{B}_{0,\parallel}$. Thus, if $\theta_0$ and $\theta_1$ are the angles to the normal, we have:
 
-$$\tan(\theta_0) = \frac{B_{0,\perp}}{|\vec{B}_{0,\parallel}|},\ \tan(\theta_1) = \frac{B_{1,\perp}}{|\vec{B}_{1,\parallel}|} \Longrightarrow \frac{\tan(\theta_1)}{\tan(\theta_0)} = \mu_r$$
+$$
+\tan(\theta_0) = \frac{B_{0,\perp}}{|\vec{B}_{0,\parallel}|},\ \tan(\theta_1) = \frac{B_{1,\perp}}{|\vec{B}_{1,\parallel}|} \Longrightarrow \frac{\tan(\theta_1)}{\tan(\theta_0)} = \mu_r
+$$
 
 Assuming that $B_{1,\parallel}$ cannot become arbitrarily large, this implies that $\theta_0 \to 0$ as $\mu_r \to \infty$.
 
@@ -143,17 +150,25 @@ Next, we note that the force on the hemisphere is equal to the force on loop (ii
 
 Thus, we need to find the force between coaxial current loops. Consider the general case of two loops with radii $R, aR$ and currents $I_1, I_2$ whose centers are at $z = 0, bR$. First, we'll find the magnetic vector potential of the first loop, working in cylindrical coordinates:
 
-$$\begin{aligned} \vec{A} &= \frac{\mu_0 I_1}{4\pi} \int \frac{d\vec{\ell}}{r} \\ &= \frac{\mu_0 I_1}{4\pi} \int_0^{2\pi} \frac{R(-\sin(\phi)\hat{r} + \cos(\phi)\hat{\phi})}{\sqrt{R^2 + (aR)^2 + (bR)^2 - 2R(aR)\cos(\phi)}}\ d\phi \\ &= \frac{\mu_0 I_1}{4\pi} \int_0^{2\pi} \frac{\cos(\phi)}{\sqrt{1 + a^2 + b^2 - 2a\cos(\phi)}}\ d\phi\ \hat{\phi} \end{aligned}$$
+$$
+\begin{aligned} \vec{A} &= \frac{\mu_0 I_1}{4\pi} \int \frac{d\vec{\ell}}{r} \\ &= \frac{\mu_0 I_1}{4\pi} \int_0^{2\pi} \frac{R(-\sin(\phi)\hat{r} + \cos(\phi)\hat{\phi})}{\sqrt{R^2 + (aR)^2 + (bR)^2 - 2R(aR)\cos(\phi)}}\ d\phi \\ &= \frac{\mu_0 I_1}{4\pi} \int_0^{2\pi} \frac{\cos(\phi)}{\sqrt{1 + a^2 + b^2 - 2a\cos(\phi)}}\ d\phi\ \hat{\phi} \end{aligned}
+$$
 
 Here, the $\hat{r}$ component integrates to 0. Thus, the force on the second loop is:
 
-$$\begin{aligned} F_z(a, b, I_1, I_2) &= -2\pi(aR)I_2 B_r \\ &= -2\pi a I_2 R \left(-\frac{\partial A_\phi}{\partial z}\right) \\ &= 2\pi a I_2 R \cdot \frac{\mu_0 I_1}{4\pi} \int_0^{2\pi} \frac{1}{R}\frac{d}{db}\left(\frac{\cos(\phi)}{\sqrt{1 + a^2 + b^2 - 2a\cos(\phi)}}\right)\ d\phi \\ &= -\frac{\mu_0 I_1 I_2 b}{4\sqrt{2a}} J\left(\frac{1 + a^2 + b^2}{2a}\right) \end{aligned}$$
+$$
+\begin{aligned} F_z(a, b, I_1, I_2) &= -2\pi(aR)I_2 B_r \\ &= -2\pi a I_2 R \left(-\frac{\partial A_\phi}{\partial z}\right) \\ &= 2\pi a I_2 R \cdot \frac{\mu_0 I_1}{4\pi} \int_0^{2\pi} \frac{1}{R}\frac{d}{db}\left(\frac{\cos(\phi)}{\sqrt{1 + a^2 + b^2 - 2a\cos(\phi)}}\right)\ d\phi \\ &= -\frac{\mu_0 I_1 I_2 b}{4\sqrt{2a}} J\left(\frac{1 + a^2 + b^2}{2a}\right) \end{aligned}
+$$
 
 Note that this is independent of $R$. Finally, we can write the total force on loop (ii) as:
 
-$$F_{\text{(ii)}} = F_z\left(\frac{1}{\rho^2}, \frac{\beta}{\alpha}\left(\frac{1}{\rho^2} - 1\right), I, I\rho\right) + F_z\left(\frac{1}{\rho^2}, \frac{\beta}{\alpha}\left(\frac{1}{\rho^2} + 1\right), I, I\rho\right) + F_z\left(1, \frac{2\beta}{\alpha}, I\rho, I\rho\right)$$
+$$
+F_{\text{(ii)}} = F_z\left(\frac{1}{\rho^2}, \frac{\beta}{\alpha}\left(\frac{1}{\rho^2} - 1\right), I, I\rho\right) + F_z\left(\frac{1}{\rho^2}, \frac{\beta}{\alpha}\left(\frac{1}{\rho^2} + 1\right), I, I\rho\right) + F_z\left(1, \frac{2\beta}{\alpha}, I\rho, I\rho\right)
+$$
 
-$$= \boxed{\frac{\mu_0 I^2 \beta}{4\sqrt{2}\alpha}\left((\rho^2 - 1)J\left(\frac{\rho^4 - 2\beta^2 + 1}{2\alpha^2}\right) - (\rho^2 + 1)J\left(\frac{\rho^4 + 2\beta^2 + 1}{2\alpha^2}\right) - 2\rho^2 J\left(1 + \frac{2\beta^2}{\alpha^2}\right)\right)}$$
+$$
+= \boxed{\frac{\mu_0 I^2 \beta}{4\sqrt{2}\alpha}\left((\rho^2 - 1)J\left(\frac{\rho^4 - 2\beta^2 + 1}{2\alpha^2}\right) - (\rho^2 + 1)J\left(\frac{\rho^4 + 2\beta^2 + 1}{2\alpha^2}\right) - 2\rho^2 J\left(1 + \frac{2\beta^2}{\alpha^2}\right)\right)}
+$$
 
 (c) Plotting the region where $F_{\text{(ii)}} > 0$ in the $(\alpha, \beta)$ plane:
 
@@ -161,9 +176,13 @@ We see that the maximum value of $\alpha$ is $\boxed{\alpha \approx 1.097}$; her
 
 (d) According to the plot, the maximum value of $\beta$ has $R = 0$, so we can treat the current rings as point dipoles. The field of a dipole $m$ along its axis is $B_z = \frac{\mu_0 m}{2\pi z^3}$, so the force on a dipole $m'$ located at $z = z_0$ is $F_z = m'\frac{dB_z}{dz} = -\frac{3\mu_0 m m'}{2\pi z_0^4}$. Letting ring (i) have moment $m$, ring (i$'$) has moment $m$ while rings (ii) and (ii$'$) have moments $\frac{m}{\beta^3}$. Thus, at the threshold we have:
 
-$$F_{\text{(ii)}} = \frac{3\mu_0 m^2}{2\pi R^4}\left(\frac{1/\beta^3}{(\beta - 1/\beta)^4} - \frac{1/\beta^3}{(\beta + 1/\beta)^4} - \frac{(1/\beta^3)^2}{(2/\beta)^4}\right) = 0$$
+$$
+F_{\text{(ii)}} = \frac{3\mu_0 m^2}{2\pi R^4}\left(\frac{1/\beta^3}{(\beta - 1/\beta)^4} - \frac{1/\beta^3}{(\beta + 1/\beta)^4} - \frac{(1/\beta^3)^2}{(2/\beta)^4}\right) = 0
+$$
 
-$$\Rightarrow \boxed{\frac{1}{(\beta^2 - 1)^4} - \frac{1}{(\beta^2 + 1)^4} - \frac{1}{16\beta^3} = 0},\ \beta \approx 2.079$$
+$$
+\Rightarrow \boxed{\frac{1}{(\beta^2 - 1)^4} - \frac{1}{(\beta^2 + 1)^4} - \frac{1}{16\beta^3} = 0},\ \beta \approx 2.079
+$$
 
 This agrees with the plot.
 
@@ -175,7 +194,9 @@ For the case of a ferromagnetic sphere, the net flux out of the sphere must be 0
 
 (a) Defining $\alpha = \frac{rc^2}{GM}, \beta = \frac{\ell c}{GM}$, we have the following:
 
-$$\frac{\mathrm{d}^2 r}{\mathrm{d}\tau^2} = -\frac{dV_{\text{eff}}}{dr}, \quad V_{\text{eff}} = -\frac{GM}{r} + \frac{\ell^2}{2r^2} - \frac{GM\ell^2}{c^2 r^3} = c^2\left(-\frac{1}{\alpha} + \frac{\beta^2}{2\alpha^2} - \frac{\beta^2}{\alpha^3}\right)$$
+$$
+\frac{\mathrm{d}^2 r}{\mathrm{d}\tau^2} = -\frac{dV_{\text{eff}}}{dr}, \quad V_{\text{eff}} = -\frac{GM}{r} + \frac{\ell^2}{2r^2} - \frac{GM\ell^2}{c^2 r^3} = c^2\left(-\frac{1}{\alpha} + \frac{\beta^2}{2\alpha^2} - \frac{\beta^2}{\alpha^3}\right)
+$$
 
 Thus, $r$ evolves under the “effective potential” $V_{\text{eff}}$. For $r \to \infty$, we have $V_{\text{eff}} \to 0$, so a faraway particle can overcome the angular momentum barrier and fall into the black hole if its “effective energy” $E = \frac{1}{2}\left(\frac{\mathrm{d}r}{\mathrm{d}\tau}\right)^2$ satisfies $E > \max(V_{\text{eff}})$.
 
@@ -183,7 +204,9 @@ Consider a particle with impact parameter (original distance to the axis of moti
 
 Note that when $\max(V_{\text{eff}}) = 0$, the equation $V_{\text{eff}}(\alpha) = 0$ will have a double root. We have:
 
-$$V_{\text{eff}}(\alpha) = c^2\left(-\frac{1}{\alpha} + \frac{\beta_0^2}{2\alpha^2} - \frac{\beta_0^2}{\alpha^3}\right) = 0 \Rightarrow \alpha^2 - \frac{\beta_0^2}{2}\alpha + \beta_0^2 = 0$$
+$$
+V_{\text{eff}}(\alpha) = c^2\left(-\frac{1}{\alpha} + \frac{\beta_0^2}{2\alpha^2} - \frac{\beta_0^2}{\alpha^3}\right) = 0 \Rightarrow \alpha^2 - \frac{\beta_0^2}{2}\alpha + \beta_0^2 = 0
+$$
 
 This has a double root when $\beta_0 = 4$, so $b_m \approx b_0 = \frac{4GM}{cv}$. Finally, the rate of mass increase is equal to the rate of mass swept out by the circle of infalling impact parameters, which is $\pi\rho v b_m^2 \approx \boxed{\frac{16\pi\rho G^2 M^2}{c^2 v}}$.
 
@@ -193,15 +216,21 @@ This has a double root when $\beta_0 = 4$, so $b_m \approx b_0 = \frac{4GM}{cv}$
 
 Note that all particles leave with speed $v$ in the black hole's frame, so we need to find the deflection angle $\phi(b)$. Using the properties of a hyperbola, we find $\phi = -2\arctan(a/b)$ where $a < 0$ is the semimajor axis. We have $E = -\frac{GMm}{2a}$, so $a = -\frac{GM}{v^2}$. Then, the change in the particle's axial momentum is:
 
-$$dp_\parallel = mv(1 - \cos(\phi)) = 2mv\sin^2\left(\arctan\left(\frac{a}{b}\right)\right) = \frac{2mv}{1 + (bv^2/GM)^2}$$
+$$
+dp_\parallel = mv(1 - \cos(\phi)) = 2mv\sin^2\left(\arctan\left(\frac{a}{b}\right)\right) = \frac{2mv}{1 + (bv^2/GM)^2}
+$$
 
 Integrating over all particles:
 
-$$F = \frac{dp_\parallel}{dt} = \int \frac{2v}{1 + (bv^2/GM)^2}\ \frac{dm}{dt} = \int_0^\infty \frac{2v}{1 + (bv^2/GM)^2} \cdot 2\pi b\rho v\ db$$
+$$
+F = \frac{dp_\parallel}{dt} = \int \frac{2v}{1 + (bv^2/GM)^2}\ \frac{dm}{dt} = \int_0^\infty \frac{2v}{1 + (bv^2/GM)^2} \cdot 2\pi b\rho v\ db
+$$
 
 Letting $u = 1 + (bv^2/GM)^2$:
 
-$$F = \frac{2\pi\rho G^2 M^2}{v^2}\int_1^\infty \frac{1}{u}\ du$$
+$$
+F = \frac{2\pi\rho G^2 M^2}{v^2}\int_1^\infty \frac{1}{u}\ du
+$$
 
 This $\boxed{\text{diverges}}$! Clearly, the assumption that particles arbitrarily far away are affected only by the black hole is not valid.
 
@@ -209,7 +238,9 @@ This $\boxed{\text{diverges}}$! Clearly, the assumption that particles arbitrari
 
 (c) We must apply a cutoff scale $b < b_m$ to the integral. This is the distance where the gravitational influence of the black hole no longer overwhelms that of the medium; dimensionally, we have $b_m \sim (M/\rho)^{1/3}$. Then, $u_m \approx \left(b_m v^2/GM\right)^2 \sim \left(\frac{v^6}{\rho G^3 M^2}\right)^{2/3}$; because $(\rho G^3 M^2)^{1/6} \ll v$, we have $u_m \gg 1$. This gives:
 
-$$F = \frac{2\pi\rho G^2 M^2}{v^2}\ln(u_m) \approx \boxed{\frac{4\pi\rho G^2 M^2}{3v^2}\ln\left(\frac{v^6}{\rho G^3 M^2}\right)}$$
+$$
+F = \frac{2\pi\rho G^2 M^2}{v^2}\ln(u_m) \approx \boxed{\frac{4\pi\rho G^2 M^2}{3v^2}\ln\left(\frac{v^6}{\rho G^3 M^2}\right)}
+$$
 
 Note that a multiplicative uncertainty in $b_m$ turns into an additive uncertainty in the logarithm, allowing us to obtain an asymptotic estimate.
 

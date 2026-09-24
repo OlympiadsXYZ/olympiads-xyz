@@ -37,61 +37,89 @@ verifier: 'mechanical'
 
 **Возможное решение (А. Уймин).** Для малого промежутка времени $dt$ количество тепла $dQ$, выделяющегося на резисторе с сопротивлением $R$
 
-$$dQ = U_RI_Rdt = U_Rdq. \qquad (1)$$
+$$
+dQ = U_RI_Rdt = U_Rdq. \qquad (1)
+$$
 
 Здесь $U_R$ и $I_R$ – напряжение на резисторе и сила тока, протекающего через него, $dq$ – заряд, прошедший через резистор.
 
 Установим связь $U_R(q)$ в нашем случае. Будем использовать известное соотношение для параллельно соединенных резистора $R$ и индуктивности $L$:
 
-$$RI_R = L\frac{dI_L}{dt};\quad RI_Rdt = Rdq = LdI_L;\quad \frac{R}{L}q = I_L. \qquad (2)$$
+$$
+RI_R = L\frac{dI_L}{dt};\quad RI_Rdt = Rdq = LdI_L;\quad \frac{R}{L}q = I_L. \qquad (2)
+$$
 
 Сразу после замыкания ключа, нелинейный элемент ведет себя как резистор сопротивлением $R$ (режим «постоянного сопротивления»). Затем он переходит в режим «постоянного тока». Такой переход реализуется, так как в установившемся режиме напряжение на индуктивности и сила тока через резистор будут равны нулю, а напряжение, при котором нелинейный элемент переходит в режим «постоянного тока», меньше ЭДС источника ($I_0R = 15\ \text{В} < \mathrm{E} = 20\ \text{В}$). Определим связь $U_R(q)$ для этих режимов.
 
 а) Режим «постоянного сопротивления». Для силы тока $I$ через нелинейный элемент
 
-$$I = I_L + I_R.$$
+$$
+I = I_L + I_R.
+$$
 
 По второму правилу Кирхгофа
 
-$$\mathrm{E} = IR + I_RR = 2I_RR + I_LR.$$
+$$
+\mathrm{E} = IR + I_RR = 2I_RR + I_LR.
+$$
 
 Подставляя $I_L$ из (2), получим
 
-$$\mathrm{E} = 2U_R + \frac{R^2}{L}q.$$
+$$
+\mathrm{E} = 2U_R + \frac{R^2}{L}q.
+$$
 
 Отсюда для режима «постоянного сопротивления»
 
-$$U_R = \frac{1}{2}\left(\mathrm{E} - \frac{R^2}{L}q\right). \qquad (3)$$
+$$
+U_R = \frac{1}{2}\left(\mathrm{E} - \frac{R^2}{L}q\right). \qquad (3)
+$$
 
 Нелинейный элемент остается в этом режиме до тех пор, пока выполняется условие
 
-$$U_R \ge \mathrm{E} - I_0R,$$
+$$
+U_R \ge \mathrm{E} - I_0R,
+$$
 
 или, с учетом (3), пока величина прошедшего через резистор заряда
 
-$$q < q_1 = \frac{L}{R}\left(2I_0 - \frac{\mathrm{E}}{R}\right).$$
+$$
+q < q_1 = \frac{L}{R}\left(2I_0 - \frac{\mathrm{E}}{R}\right).
+$$
 
 Согласно выражению (1) количество теплоты будет пропорционально площади под графиком $U_R(q)$ на участке $0 < q < q_1$. Поскольку зависимость (3) является линейной, получаем для количества теплоты $Q_1$ в этом режиме
 
-$$Q_1 = \frac{\mathrm{E}/2 + \mathrm{E} - I_0R}{2}q_1 = \left(\frac{3\mathrm{E}}{2R} - I_0\right)\frac{L}{2}\left(2I_0 - \frac{\mathrm{E}}{R}\right) = 0{,}06\ \text{Дж}.$$
+$$
+Q_1 = \frac{\mathrm{E}/2 + \mathrm{E} - I_0R}{2}q_1 = \left(\frac{3\mathrm{E}}{2R} - I_0\right)\frac{L}{2}\left(2I_0 - \frac{\mathrm{E}}{R}\right) = 0{,}06\ \text{Дж}.
+$$
 
 б) Режим «постоянного тока».
 
-$$I_R = I_0 - I_L = I_0 - \frac{R}{L}q;$$
+$$
+I_R = I_0 - I_L = I_0 - \frac{R}{L}q;
+$$
 
-$$U_R = RI_R = RI_0 - \frac{R^2}{L}q.$$
+$$
+U_R = RI_R = RI_0 - \frac{R^2}{L}q.
+$$
 
 Этот режим реализуется до момента, пока $U_R$ не станет равным нулю, т. е. пока $q$ не станет равным $q_2 = \frac{LI_0}{R}$. Заряд, прошедший через резистор в этом режиме
 
-$$q_2 - q_1 = \frac{I_0L}{R} - \frac{L}{R}\left(2I_0 - \frac{\mathrm{E}}{R}\right) = \frac{L}{R}\left(\frac{\mathrm{E}}{R} - I_0\right).$$
+$$
+q_2 - q_1 = \frac{I_0L}{R} - \frac{L}{R}\left(2I_0 - \frac{\mathrm{E}}{R}\right) = \frac{L}{R}\left(\frac{\mathrm{E}}{R} - I_0\right).
+$$
 
 Количество теплоты $Q_2$, выделившееся в этом режиме, с учетом того, что $U_R(q)$ изменяется линейно от $U_R = \mathrm{E} - RI_0$ до нуля
 
-$$Q_2 = \frac{(q_2 - q_1)(\mathrm{E} - I_0R)}{2} = \frac{\frac{L}{R}\left(\frac{\mathrm{E}}{R} - I_0\right)(\mathrm{E} - I_0R)}{2} = \frac{L\left(\frac{\mathrm{E}}{R} - I_0\right)^2}{2} = 0{,}01\ \text{Дж}.$$
+$$
+Q_2 = \frac{(q_2 - q_1)(\mathrm{E} - I_0R)}{2} = \frac{\frac{L}{R}\left(\frac{\mathrm{E}}{R} - I_0\right)(\mathrm{E} - I_0R)}{2} = \frac{L\left(\frac{\mathrm{E}}{R} - I_0\right)^2}{2} = 0{,}01\ \text{Дж}.
+$$
 
 Общее количество теплоты, выделившееся на резисторе,
 
-$$Q = Q_1 + Q_2 = \frac{L\mathrm{E}I_0}{R} - \frac{LI_0^2}{2} - \frac{L\mathrm{E}^2}{4R^2} = 0{,}07\ \text{Дж}.$$
+$$
+Q = Q_1 + Q_2 = \frac{L\mathrm{E}I_0}{R} - \frac{LI_0^2}{2} - \frac{L\mathrm{E}^2}{4R^2} = 0{,}07\ \text{Дж}.
+$$
 
 | № | Задача 2.11.2. Критерий (12 баллов) | Баллы |
 |---|---|---|
@@ -113,59 +141,85 @@ $$Q = Q_1 + Q_2 = \frac{L\mathrm{E}I_0}{R} - \frac{LI_0^2}{2} - \frac{L\mathrm{E
 
 Пока сила тока, протекающего через нелинейный элемент, не достигла $I_0$, токи в цепи удовлетворяют уравнениям
 
-$$\mathrm{E} = (I_R + I_L)R + I_RR;\quad I_RR = L\frac{dI_L}{dt}.$$
+$$
+\mathrm{E} = (I_R + I_L)R + I_RR;\quad I_RR = L\frac{dI_L}{dt}.
+$$
 
 Исключим $I_R$:
 
-$$\mathrm{E} = 2L\frac{dI_L}{dt} + RI_L.$$
+$$
+\mathrm{E} = 2L\frac{dI_L}{dt} + RI_L.
+$$
 
 Применим подстановку $I_L = \frac{\mathrm{E}}{R} - x$: $\quad \frac{dx}{dt} = -\frac{R}{2L}x.$
 
 Отсюда с учетом того, что $x(0) = \frac{\mathrm{E}}{R}$ получаем $x = \frac{\mathrm{E}}{R}\left(e^{-\frac{Rt}{2L}}\right)$;
 
-$$I_L = \frac{\mathrm{E}}{R}\left(1 - e^{-\frac{Rt}{2L}}\right);\quad I_R = \frac{\mathrm{E}}{2R}e^{-\frac{Rt}{2L}}.$$
+$$
+I_L = \frac{\mathrm{E}}{R}\left(1 - e^{-\frac{Rt}{2L}}\right);\quad I_R = \frac{\mathrm{E}}{2R}e^{-\frac{Rt}{2L}}.
+$$
 
 Этот режим прекратится к моменту времени $t_1$, когда
 
-$$I_R + I_L = I_0;\qquad e^{-\frac{Rt_1}{2L}} = 2\left(1 - \frac{RI_0}{\mathrm{E}}\right).$$
+$$
+I_R + I_L = I_0;\qquad e^{-\frac{Rt_1}{2L}} = 2\left(1 - \frac{RI_0}{\mathrm{E}}\right).
+$$
 
 К этому моменту времени сила ток, протекающего через катушку будет
 
-$$I_{L1} = 2I_0 - \frac{\mathrm{E}}{R}.$$
+$$
+I_{L1} = 2I_0 - \frac{\mathrm{E}}{R}.
+$$
 
 Мощность, выделяющаяся на резисторе,
 
-$$P_R = \frac{\mathrm{E}^2}{4R}e^{-\frac{Rt}{L}}.$$
+$$
+P_R = \frac{\mathrm{E}^2}{4R}e^{-\frac{Rt}{L}}.
+$$
 
 К моменту $t_1$ выделившаяся теплота составит
 
-$$Q_1 = \int_0^{t_1} P_Rdt = \frac{L\mathrm{E}^2}{4R^2}\left(1 - e^{-\frac{Rt_1}{L}}\right) = \frac{L\mathrm{E}^2}{4R^2} - L\left(\frac{\mathrm{E}}{R} - I_0\right)^2.$$
+$$
+Q_1 = \int_0^{t_1} P_Rdt = \frac{L\mathrm{E}^2}{4R^2}\left(1 - e^{-\frac{Rt_1}{L}}\right) = \frac{L\mathrm{E}^2}{4R^2} - L\left(\frac{\mathrm{E}}{R} - I_0\right)^2.
+$$
 
 После того, как сила тока, протекающего через нелинейный элемент, установится на значении $I_0$, токи в цепи можно описать уравнениями
 
-$$I_R + I_L = I_0;\quad RI_R = L\frac{dI_L}{dt}.$$
+$$
+I_R + I_L = I_0;\quad RI_R = L\frac{dI_L}{dt}.
+$$
 
 Исключим $I_R$:
 
-$$L\frac{dI_L}{dt} + RI_L = RI_0.$$
+$$
+L\frac{dI_L}{dt} + RI_L = RI_0.
+$$
 
 Применим подстановку $I_L = I_0 - y$:
 
-$$\frac{dy}{dt} = -\frac{R}{L}y.$$
+$$
+\frac{dy}{dt} = -\frac{R}{L}y.
+$$
 
 Отсюда с учетом $y(t_1) = I_0 - I_{L1} = \frac{\mathrm{E}}{R} - I_0,$ получим: $y = \left(\frac{\mathrm{E}}{R} - I_0\right)e^{-\frac{R(t - t_1)}{L}}$;
 
-$$I_R = \left(\frac{\mathrm{E}}{R} - I_0\right)e^{-\frac{R(t - t_1)}{L}}.$$
+$$
+I_R = \left(\frac{\mathrm{E}}{R} - I_0\right)e^{-\frac{R(t - t_1)}{L}}.
+$$
 
 Мощность, выделяющаяся на резисторе, $P_R = R\left(\frac{\mathrm{E}}{R} - I_0\right)^2 e^{-\frac{2R(t - t_1)}{L}}$.
 
 Количество теплоты, выделившееся после истечения времени $t_1$:
 
-$$Q_2 = \int_{t_1}^{\infty} P_Rdt = \frac{L\left(\frac{\mathrm{E}}{R} - I_0\right)^2}{2} = 0{,}01\ \text{Дж}.$$
+$$
+Q_2 = \int_{t_1}^{\infty} P_Rdt = \frac{L\left(\frac{\mathrm{E}}{R} - I_0\right)^2}{2} = 0{,}01\ \text{Дж}.
+$$
 
 Общее количество теплоты
 
-$$Q = \frac{L\mathrm{E}^2}{4R^2} - \frac{L}{2}\left(\frac{\mathrm{E}}{R} - I_0\right)^2 - = 0{,}07\ \text{Дж}.$$
+$$
+Q = \frac{L\mathrm{E}^2}{4R^2} - \frac{L}{2}\left(\frac{\mathrm{E}}{R} - I_0\right)^2 - = 0{,}07\ \text{Дж}.
+$$
 
 | № | Задача 2.11.2. Критерий (12 баллов) | Баллы |
 |---|---|---|

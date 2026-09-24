@@ -35,48 +35,74 @@ a) **Solution considering remagnetization time**
 
 The current $I(t)$ in the circuit and the voltages $U_L(t), U_C(t)$ across the solenoid and the capacitor are connected through equations
 
-$$I(t) = C\frac{\mathrm{d}U_C}{\mathrm{d}t} = -C\frac{\mathrm{d}U_L}{\mathrm{d}t} \qquad (3)$$
-$$U_L(t) = NA\frac{\mathrm{d}B}{\mathrm{d}t} = -U_C(t)$$
+$$
+I(t) = C\frac{\mathrm{d}U_C}{\mathrm{d}t} = -C\frac{\mathrm{d}U_L}{\mathrm{d}t} \qquad (3)
+$$
+$$
+U_L(t) = NA\frac{\mathrm{d}B}{\mathrm{d}t} = -U_C(t)
+$$
 
 where $A = \pi R^2$. The magnetic field strength in the solenoid is
 
-$$H = \frac{NI}{\ell}. \qquad (4)$$
+$$
+H = \frac{NI}{\ell}. \qquad (4)
+$$
 
 At the start there is a large current $I_1$ in the circuit such that $H(I_1) \gg H_0$. Initially, the current charges the capacitor, while the current $I(t)$ and the field $H(t)$ decrease. The point, representing the momentary combination of $H(t)$ and $M(t)$ moves along the top horizontal line in the hysteresis curve (to the left). The magnetization $M$ does not change during this phase even when $I$ crosses 0 and becomes negative. In this phase $\frac{\mathrm{d}B}{\mathrm{d}t} = \mu_0\frac{\mathrm{d}H}{\mathrm{d}t}$. As in an ideal $LC$-circuit, energy is conserved.
 
 When the current reaches the critical magnitude in the opposite direction, i.e.
 
-$$I = -I_0 = -\frac{H_0\ell}{N}\,, \qquad (5)$$
+$$
+I = -I_0 = -\frac{H_0\ell}{N}\,, \qquad (5)
+$$
 
 the magnetization $M$ starts to reverse. The vertical hysteresis curve at $H_0$ means that during the magnetization reversal (which takes some time) $H$ stays constant and equal to $H_0$. Therefore, also the current stays constant and equal to $-I_0$, while $M$ changes. For the critical current we obtain
 
-$$-I_0 = C\frac{\mathrm{d}U_C}{\mathrm{d}t} \qquad (6)$$
-$$U_C(t) = -NA\mu_0\frac{\mathrm{d}M}{\mathrm{d}t} \qquad (7)$$
+$$
+-I_0 = C\frac{\mathrm{d}U_C}{\mathrm{d}t} \qquad (6)
+$$
+$$
+U_C(t) = -NA\mu_0\frac{\mathrm{d}M}{\mathrm{d}t} \qquad (7)
+$$
 
 Solving these equations with $t = 0$ corresponding to the moment $I$ reaches $-I_0$ (when the orientation of magnetization in the core starts to change) and using $U_1 = U_C(0)$ gives
 
-$$U_C(t) = U_1 - \frac{I_0}{C}t \qquad (8)$$
-$$M(t) = M_0 - \frac{1}{NA\mu_0}\left(U_1 t - \frac{I_0}{2C}t^2\right) \qquad (9)$$
+$$
+U_C(t) = U_1 - \frac{I_0}{C}t \qquad (8)
+$$
+$$
+M(t) = M_0 - \frac{1}{NA\mu_0}\left(U_1 t - \frac{I_0}{2C}t^2\right) \qquad (9)
+$$
 
 After the time interval $\Delta t$ the core is completely remagnetized with $M(\Delta t) = -M_0$. We get
 
-$$\Delta t = \frac{C}{I_0}\left(U_1 - \sqrt{U_1^2 - \frac{4NA\mu_0I_0M_0}{C}}\right) \qquad (10)$$
+$$
+\Delta t = \frac{C}{I_0}\left(U_1 - \sqrt{U_1^2 - \frac{4NA\mu_0I_0M_0}{C}}\right) \qquad (10)
+$$
 
 The corresponding voltage is
 
-$$U_2 = U_C(\Delta t) = \sqrt{U_1^2 - \frac{4NA\mu_0I_0M_0}{C}}. \qquad (11)$$
+$$
+U_2 = U_C(\Delta t) = \sqrt{U_1^2 - \frac{4NA\mu_0I_0M_0}{C}}. \qquad (11)
+$$
 
 The energy needed to change the orientation of magnetization of the core thus is
 
-$$\frac{1}{2}C(U_1^2 - U_2^2) = 2NA\mu_0I_0M_0 = 2A\ell\mu_0H_0M_0 \qquad (12)$$
+$$
+\frac{1}{2}C(U_1^2 - U_2^2) = 2NA\mu_0I_0M_0 = 2A\ell\mu_0H_0M_0 \qquad (12)
+$$
 
 After complete remagnetization the circuit behaves again like an $LC$-circuit, but with lower energy. From $\Delta t$ on the current changes harmonically until it reaches the critical value $I_0$, and the story repeats. Since the energy needed for the magnetization reversal process is independent of the starting voltage (as long as it is fully completed), during one full cycle the energy loss is twice the value computed above, i.e. $\Delta E = 4A\ell\mu_0H_0M_0$. The maximum current $I_2$ after one cycle is reduced from $I_1$ due to the lower energy with $\Delta E = \frac{1}{2}L(I_1^2 - I_2^2)$, where $L$ is the inductance $L = \mu_0N^2A/\ell$ of the solenoid. It follows
 
-$$I_2 = \sqrt{I_1^2 - 8\frac{A}{L}\ell\mu_0H_0M_0} = I_1\sqrt{1 - \frac{8\ell^2H_0M_0}{N^2I_1^2}} \qquad (13)$$
+$$
+I_2 = \sqrt{I_1^2 - 8\frac{A}{L}\ell\mu_0H_0M_0} = I_1\sqrt{1 - \frac{8\ell^2H_0M_0}{N^2I_1^2}} \qquad (13)
+$$
 
 Note that $NI_1/\ell = H(I_1)$. Since $H(I_1) \gg H_0$ we can approximate the change $\Delta I$ in the maximum current to
 
-$$\Delta I = I_2 - I_1 = I_1\sqrt{1 - \frac{8\ell^2H_0M_0}{N^2I_1^2}} - I_1 \approx -\frac{4\ell^2H_0M_0}{N^2I_1} = -4I_1\frac{H_0M_0}{H(I_1)^2} \qquad (14)$$
+$$
+\Delta I = I_2 - I_1 = I_1\sqrt{1 - \frac{8\ell^2H_0M_0}{N^2I_1^2}} - I_1 \approx -\frac{4\ell^2H_0M_0}{N^2I_1} = -4I_1\frac{H_0M_0}{H(I_1)^2} \qquad (14)
+$$
 
 **Solution using energy considerations**
 
@@ -84,21 +110,29 @@ Originally the energy used to remagnetize the core is stored in the inductor, so
 
 We thus get
 
-$$I_2 = I_1\sqrt{1 - \frac{8\ell^2H_0M_0}{N^2I_1^2}} \qquad (15)$$
+$$
+I_2 = I_1\sqrt{1 - \frac{8\ell^2H_0M_0}{N^2I_1^2}} \qquad (15)
+$$
 
 from which the result (14) follows as above.
 
 To understand the relation between the energy loss during magnetization and the area of the square in the hysteresis curve, we consider the instantaneous electrical power in the solenoid and integrate it over over one cycle. Using equations (3) and (4) we have
 
-$$P = U_LI = ANI\frac{\mathrm{d}B}{\mathrm{d}t} = AH\ell\frac{\mathrm{d}B}{\mathrm{d}t} = \mu_0AH\ell\left(\frac{\mathrm{d}H}{\mathrm{d}t} + \frac{\mathrm{d}M}{\mathrm{d}t}\right) \qquad (16)$$
+$$
+P = U_LI = ANI\frac{\mathrm{d}B}{\mathrm{d}t} = AH\ell\frac{\mathrm{d}B}{\mathrm{d}t} = \mu_0AH\ell\left(\frac{\mathrm{d}H}{\mathrm{d}t} + \frac{\mathrm{d}M}{\mathrm{d}t}\right) \qquad (16)
+$$
 
 Since the circuit is isolated and the capacitor uncharged at the beginning of an oscillation cycle the total electrical work over one cycle, starting at $t_\mathrm{i}$ and ending at $t_\mathrm{e}$ should equal zero. Integrating the power over the cycle gives
 
-$$0 = \int_{t_\mathrm{i}}^{t_\mathrm{e}} P(t)\,\mathrm{d}t = \mu_0A\ell\left[\int_{t_\mathrm{i}}^{t_\mathrm{e}} H(t)\frac{\mathrm{d}H}{\mathrm{d}t}\,\mathrm{d}t + \int_{t_\mathrm{i}}^{t_\mathrm{e}} H(t)\frac{\mathrm{d}M}{\mathrm{d}t}\,\mathrm{d}t\right] \qquad (17)$$
+$$
+0 = \int_{t_\mathrm{i}}^{t_\mathrm{e}} P(t)\,\mathrm{d}t = \mu_0A\ell\left[\int_{t_\mathrm{i}}^{t_\mathrm{e}} H(t)\frac{\mathrm{d}H}{\mathrm{d}t}\,\mathrm{d}t + \int_{t_\mathrm{i}}^{t_\mathrm{e}} H(t)\frac{\mathrm{d}M}{\mathrm{d}t}\,\mathrm{d}t\right] \qquad (17)
+$$
 
 The first integral gives $\frac{1}{2}H(t_\mathrm{e})^2 - \frac{1}{2}H(t_\mathrm{i})^2$. The second integral gives $4H_0M_0$, from which we get
 
-$$\Delta E = \frac{1}{2}L\left(I(t_\mathrm{i})^2 - I(t_\mathrm{e})^2\right) = 4A\ell\mu_0H_0M_0 \qquad (18)$$
+$$
+\Delta E = \frac{1}{2}L\left(I(t_\mathrm{i})^2 - I(t_\mathrm{e})^2\right) = 4A\ell\mu_0H_0M_0 \qquad (18)
+$$
 
 *Note:* The quantity $\mathrm{d}u = H\,\mathrm{d}B$ is the change per unit volume of the magnetic energy of the solenoid.
 
@@ -106,27 +140,39 @@ b) As long as the current amplitude exceeds the critical current required to cha
 
 From now on, the circuit behaves like an LC circuit with current amplitude of $I_0 = \frac{H_0\ell}{N}$. In the $H-M$ graph this corresponds to moving back and forth on a horizontal line within the square. Therefore, the maximum current after many oscillations is the amplitude of the current oscillations in the $LC$-circuit
 
-$$I_{\max} = I_0 = H_0\frac{\ell}{N}. \qquad (19)$$
+$$
+I_{\max} = I_0 = H_0\frac{\ell}{N}. \qquad (19)
+$$
 
 c) The two distinct phases are the $LC$-circuit harmonic behaviour (phase A) and the remagnetization process (phase B). To find the maximum duration for the latter let us first consider the duration of the magnetization processes for the case where full magnetization occurs. The duration was computed in (10) and equals
 
-$$\Delta t = \frac{C}{I_0}\left(U_1 - \sqrt{U_1^2 - \frac{4NA\mu_0I_0M_0}{C}}\right) \qquad (20)$$
+$$
+\Delta t = \frac{C}{I_0}\left(U_1 - \sqrt{U_1^2 - \frac{4NA\mu_0I_0M_0}{C}}\right) \qquad (20)
+$$
 
 Since $I_0$ is the same and constant for each magnetization process, we have to find the minimal value of $\Delta t$ over all possible $U_1$. We can compute a derivative of $\Delta t$ with respect to $U_1$,
 
-$$\frac{\mathrm{d}\Delta t}{\mathrm{d}U_1} = \frac{C}{I_0}\left(1 - \frac{U_1}{\sqrt{U_1^2 - 4NA\mu_0I_0M_0/C}}\right) < 0. \qquad (21)$$
+$$
+\frac{\mathrm{d}\Delta t}{\mathrm{d}U_1} = \frac{C}{I_0}\left(1 - \frac{U_1}{\sqrt{U_1^2 - 4NA\mu_0I_0M_0/C}}\right) < 0. \qquad (21)
+$$
 
 The derivative is negative for all values of $U_1$, which means that $\Delta t$ is monotonically decreasing with increasing $U_1$. Thus the voltage has to be as small as possible. On the other hand, when the voltage at the start of the cycle is too small, it drops to zero before the core is fully remagnetized. It follows from equation (6) that this happens after time
 
-$$\Delta t = \frac{U_1C}{I_0} \qquad (22)$$
+$$
+\Delta t = \frac{U_1C}{I_0} \qquad (22)
+$$
 
 Hence for maximal duration $\Delta t$ the voltage $U_1$ should be as large as possible. Together, the optimal initial voltage is the one where the voltage drops to zero precisely in the moment when the core is fully magnetized. The corresponding $U_1$ can be found for instance using (10) as the smallest $U_1$ for which a real-valued $\Delta t$ exists, which is
 
-$$U_1 = 2\sqrt{\frac{NA\mu_0I_0M_0}{C}} \qquad (23)$$
+$$
+U_1 = 2\sqrt{\frac{NA\mu_0I_0M_0}{C}} \qquad (23)
+$$
 
 This gives the maximum duration as
 
-$$\Delta t_{\max} = 2\sqrt{\frac{NA\mu_0CM_0}{I_0}} = 2\sqrt{\frac{N^2A\mu_0CM_0}{\ell H_0}} = 2\sqrt{LC\,\frac{M_0}{H_0}} \qquad (24)$$
+$$
+\Delta t_{\max} = 2\sqrt{\frac{NA\mu_0CM_0}{I_0}} = 2\sqrt{\frac{N^2A\mu_0CM_0}{\ell H_0}} = 2\sqrt{LC\,\frac{M_0}{H_0}} \qquad (24)
+$$
 
 ## Marking scheme T2
 

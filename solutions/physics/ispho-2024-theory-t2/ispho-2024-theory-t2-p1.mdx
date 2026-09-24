@@ -29,7 +29,9 @@ For a long time, the memristor existed only ”on paper”, until in 2008 Hewlet
 
 Since electrochemical reactions are reversible, the resistance of this prototype memristor tends towards its equilibrium value in the absence of current. For the simplest theoretical description of such a memristor, we can use the **Williams–Strukov equations**:
 
-$$\begin{cases} R(x) = R_{\mathrm{off}}(1-x) + R_{\mathrm{on}}x \\ \dfrac{\mathrm{d}x}{\mathrm{d}t} = \dfrac{1}{\beta}I - \alpha x \end{cases}$$
+$$
+\begin{cases} R(x) = R_{\mathrm{off}}(1-x) + R_{\mathrm{on}}x \\ \dfrac{\mathrm{d}x}{\mathrm{d}t} = \dfrac{1}{\beta}I - \alpha x \end{cases}
+$$
 
 Here $x$ is some parameter determined by the internal state of the system, $\alpha, \beta > 0$ are known quantities, $I$ is current through the memristor, $R_{\mathrm{off}}$ and $R_{\mathrm{on}} = rR_{\mathrm{off}}$ ($r \gg 1$) are the resistances of the memristor in the ”off” and ”on” states, respectively.
 
@@ -75,7 +77,9 @@ Suppose an oscillating voltage $U\cos\omega t$ is applied to the memristor, and 
 
 Let’s introduce the **hysteresis loop width** as:
 
-$$s = \max_{\varphi}\frac{\Delta I(\varphi)}{2I_0},$$
+$$
+s = \max_{\varphi}\frac{\Delta I(\varphi)}{2I_0},
+$$
 
 where $I_0$ is the amplitude of the current oscillations.
 
@@ -107,7 +111,9 @@ In most materials, polarization is identically equal to zero in the absence of a
 
 The volume energy density $\mathcal{W}$ in a segnetoelectric depends on the polarization $P$ and the external electric field $E$ as:
 
-$$\mathcal{W}(P) = -aP^2 + bP^4 - PE,$$
+$$
+\mathcal{W}(P) = -aP^2 + bP^4 - PE,
+$$
 
 where $a, b > 0$ are material-specific quantities. The equilibrium values of polarization are determined by local minima of $\mathcal{W}(P)$. In the absence of an external field, there are two equilibrium states of a segnetoelectric with the same energy, transitions between which are impossible, which is used for information storage.
 
@@ -151,53 +157,83 @@ The first commercial FeRAM samples used lead zirconate titanate, for which $a = 
 
 **A1**. By plugging in $I = U/R(x)$ into the second Williams–Strukov equation, we obtain:
 
-$$\boxed{\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U}{\beta R_{\mathrm{off}}}\frac{1}{1+(r-1)x} - \alpha x}$$
+$$
+\boxed{\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U}{\beta R_{\mathrm{off}}}\frac{1}{1+(r-1)x} - \alpha x}
+$$
 
 **A2**. The stationary value of $x$ can be found by solving the equation $\dfrac{\mathrm{d}x}{\mathrm{d}t} = 0 \implies$
 
-$$\frac{U}{\beta R_{\mathrm{off}}}\frac{1}{1+(r-1)|x|} = \alpha x.$$
+$$
+\frac{U}{\beta R_{\mathrm{off}}}\frac{1}{1+(r-1)|x|} = \alpha x.
+$$
 
 From this one can see that in the limit of large $U$ the stationary value of $x$ will also be large, so we can neglect 1 in the denominator. From this we get:
 
-$$x^2 = \frac{U}{\alpha\beta R_{\mathrm{off}}(r-1)} = \frac{U\xi}{\alpha(r-1)^2} \implies$$
+$$
+x^2 = \frac{U}{\alpha\beta R_{\mathrm{off}}(r-1)} = \frac{U\xi}{\alpha(r-1)^2} \implies
+$$
 
-$$\boxed{x_0 = \frac{9}{10(r-1)}\sqrt{\frac{U\xi}{\alpha}}}$$
+$$
+\boxed{x_0 = \frac{9}{10(r-1)}\sqrt{\frac{U\xi}{\alpha}}}
+$$
 
 **A3**. In the limits of large $U$ the equation from **A1** can be rewritten in the form:
 
-$$\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U}{\beta R_{\mathrm{off}}(r-1)}\frac{1}{x} - \alpha x \overset{y = \frac{\alpha\beta(r-1)R_{\mathrm{off}}}{U}x^2}{\implies} \frac{\mathrm{d}y}{1-y} = 2\alpha\,\mathrm{d}t \implies$$
+$$
+\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U}{\beta R_{\mathrm{off}}(r-1)}\frac{1}{x} - \alpha x \overset{y = \frac{\alpha\beta(r-1)R_{\mathrm{off}}}{U}x^2}{\implies} \frac{\mathrm{d}y}{1-y} = 2\alpha\,\mathrm{d}t \implies
+$$
 
-$$2\alpha\tau = \int\limits_0^{0.81}\frac{\mathrm{d}y}{1-y}$$
+$$
+2\alpha\tau = \int\limits_0^{0.81}\frac{\mathrm{d}y}{1-y}
+$$
 
-$$\boxed{\tau = \frac{\ln(100/19)}{2\alpha} \approx 0.830\alpha^{-1}}$$
+$$
+\boxed{\tau = \frac{\ln(100/19)}{2\alpha} \approx 0.830\alpha^{-1}}
+$$
 
 **A4**. Minimal energy is equal to Joule heat dissipation during the off-to-on switch:
 
-$$Q = \int\limits_0^{\tau}\frac{U^2}{R(x(t))}\,\mathrm{d}t = U^2\int\limits_0^{x_0}\frac{\mathrm{d}x}{(r-1)R_{\mathrm{off}}x\left[\frac{U}{\beta(r-1)R_{\mathrm{off}}x} - \alpha x\right]} \overset{z = \sqrt{\frac{\alpha\beta(r-1)R_{\mathrm{off}}}{U}}x}{=} \frac{U^{3/2}}{R_{\mathrm{off}}\sqrt{\alpha\xi}}\int\limits_0^{0.9}\frac{\mathrm{d}z}{1-z^2} \implies$$
+$$
+Q = \int\limits_0^{\tau}\frac{U^2}{R(x(t))}\,\mathrm{d}t = U^2\int\limits_0^{x_0}\frac{\mathrm{d}x}{(r-1)R_{\mathrm{off}}x\left[\frac{U}{\beta(r-1)R_{\mathrm{off}}x} - \alpha x\right]} \overset{z = \sqrt{\frac{\alpha\beta(r-1)R_{\mathrm{off}}}{U}}x}{=} \frac{U^{3/2}}{R_{\mathrm{off}}\sqrt{\alpha\xi}}\int\limits_0^{0.9}\frac{\mathrm{d}z}{1-z^2} \implies
+$$
 
-$$\boxed{Q = \frac{U^{3/2}\operatorname{arth}0.9}{R_{\mathrm{off}}\sqrt{\alpha\xi}} \approx 1.47\frac{U^{3/2}}{R_{\mathrm{off}}\sqrt{\alpha\xi}}}$$
+$$
+\boxed{Q = \frac{U^{3/2}\operatorname{arth}0.9}{R_{\mathrm{off}}\sqrt{\alpha\xi}} \approx 1.47\frac{U^{3/2}}{R_{\mathrm{off}}\sqrt{\alpha\xi}}}
+$$
 
 **B1**. As the term with current in the second Williams–Strukov equation is already the next order by the aforementioned quantity, we can plug in the zeroth-order approximation for current which is simply $\dfrac{U\cos\omega t}{R_{\mathrm{off}}}$, so that:
 
-$$\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U\cos\omega t}{\beta R_{\mathrm{off}}} - \alpha x.$$
+$$
+\frac{\mathrm{d}x}{\mathrm{d}t} = \frac{U\cos\omega t}{\beta R_{\mathrm{off}}} - \alpha x.
+$$
 
 Substituting $x(t) = A\cos\omega t + B\sin\omega t$, we obtain:
 
-$$\boxed{x(t) = \frac{U}{\beta R_{\mathrm{off}}(\omega^2+\alpha^2)}\Big[\alpha\cos\omega t + \omega\sin\omega t\Big]}$$
+$$
+\boxed{x(t) = \frac{U}{\beta R_{\mathrm{off}}(\omega^2+\alpha^2)}\Big[\alpha\cos\omega t + \omega\sin\omega t\Big]}
+$$
 
 The difference $\delta I(t)$ between actual current and zeroth-order value $U(t)/R_{\mathrm{off}}$ can be calculated as:
 
-$$\delta I(t) = \frac{U\cos\omega t}{R_{\mathrm{off}}}\left[1 - \frac{1}{1+(r-1)x}\right] = \frac{(r-1)U^2}{\beta R_{\mathrm{off}}^2(\omega^2+\alpha^2)}\Big[\alpha\cos\omega t + \omega\sin\omega t\Big]\cos\omega t$$
+$$
+\delta I(t) = \frac{U\cos\omega t}{R_{\mathrm{off}}}\left[1 - \frac{1}{1+(r-1)x}\right] = \frac{(r-1)U^2}{\beta R_{\mathrm{off}}^2(\omega^2+\alpha^2)}\Big[\alpha\cos\omega t + \omega\sin\omega t\Big]\cos\omega t
+$$
 
 Then:
 
-$$\Delta I(\varphi) = |\delta I(\varphi/\omega) - \delta I(-\varphi/\omega)| \implies$$
+$$
+\Delta I(\varphi) = |\delta I(\varphi/\omega) - \delta I(-\varphi/\omega)| \implies
+$$
 
-$$\boxed{\Delta I(\varphi) = \frac{(r-1)\omega U^2}{\beta R_{\mathrm{off}}^2(\omega^2+\alpha^2)}|\sin 2\varphi|}$$
+$$
+\boxed{\Delta I(\varphi) = \frac{(r-1)\omega U^2}{\beta R_{\mathrm{off}}^2(\omega^2+\alpha^2)}|\sin 2\varphi|}
+$$
 
 **B2**. Because $\max\limits_{\varphi}|\sin 2\varphi| = 1$, and in the zeroth order $I_0 = U/R_{\mathrm{off}} \implies$
 
-$$\boxed{s = \frac{\omega U\xi}{2(\omega^2+\alpha^2)}}$$
+$$
+\boxed{s = \frac{\omega U\xi}{2(\omega^2+\alpha^2)}}
+$$
 
 **B3**. The dependency of $\dfrac{\omega U}{2s}$ vs $\omega^2$ is linear with a slope of $1/\xi$ and intercept $\alpha^2/\xi$. We can find the answers using the least squares method:
 
@@ -207,53 +243,81 @@ $$\boxed{s = \frac{\omega U\xi}{2(\omega^2+\alpha^2)}}$$
 | 250 | 54.1 | 1571 | 2.467 | 14.52 |
 | 500 | 36.7 | 3142 | 9.870 | 42.80 |
 
-$$\frac{1}{\xi} = 3.82\cdot 10^{-3}\ \mathrm{s\cdot V^{-1}}, \quad \frac{\alpha^2}{\xi} = 5.07\cdot 10^{3}\ \mathrm{s^{-1}\cdot V^{-1}} \implies$$
+$$
+\frac{1}{\xi} = 3.82\cdot 10^{-3}\ \mathrm{s\cdot V^{-1}}, \quad \frac{\alpha^2}{\xi} = 5.07\cdot 10^{3}\ \mathrm{s^{-1}\cdot V^{-1}} \implies
+$$
 
-$$\boxed{\alpha = 1.15\cdot 10^{3}\ \mathrm{s^{-1}}, \quad \xi = 2.62\cdot 10^{2}\ \mathrm{V^{-1}\cdot s^{-1}}}$$
+$$
+\boxed{\alpha = 1.15\cdot 10^{3}\ \mathrm{s^{-1}}, \quad \xi = 2.62\cdot 10^{2}\ \mathrm{V^{-1}\cdot s^{-1}}}
+$$
 
 **C1**. Using the result of **A3**, we obtain:
 
-$$\boxed{\tau = 7.2\cdot 10^{-4}\ \mathrm{s}}$$
+$$
+\boxed{\tau = 7.2\cdot 10^{-4}\ \mathrm{s}}
+$$
 
 **C2**. Using the result of **A4**, we obtain:
 
-$$\boxed{Q = 1.0\cdot 10^{-4}\ \mathrm{J}}$$
+$$
+\boxed{Q = 1.0\cdot 10^{-4}\ \mathrm{J}}
+$$
 
 **D1**. Equilibrium states can be found by solving the equation:
 
-$$\frac{\partial\mathcal{W}}{\partial P} = 0, \qquad \frac{\partial^2\mathcal{W}}{\partial P^2} > 0.$$
+$$
+\frac{\partial\mathcal{W}}{\partial P} = 0, \qquad \frac{\partial^2\mathcal{W}}{\partial P^2} > 0.
+$$
 
 As we pass the critical field, one of equilibrium states disappears, which means that the derivative $\partial\mathcal{W}/\partial P$ no longer crosses zero at this point. This means that at the critical field this derivative only touches zero, so at this point:
 
-$$\frac{\partial^2\mathcal{W}}{\partial P^2} = 0.$$
+$$
+\frac{\partial^2\mathcal{W}}{\partial P^2} = 0.
+$$
 
 And we conclude that one of equilibrium states disappears at the point (don’t forget that we take $P < 0$):
 
-$$\begin{cases} \dfrac{\partial\mathcal{W}}{\partial P} = -2aP + 4bP^3 - E = 0 \\ \dfrac{\partial^2\mathcal{W}}{\partial P^2} = -2a + 12bP^2 = 0 \end{cases} \implies$$
+$$
+\begin{cases} \dfrac{\partial\mathcal{W}}{\partial P} = -2aP + 4bP^3 - E = 0 \\ \dfrac{\partial^2\mathcal{W}}{\partial P^2} = -2a + 12bP^2 = 0 \end{cases} \implies
+$$
 
-$$\boxed{P_{\mathrm{cr}} = -\sqrt{\frac{a}{6b}}, \qquad E_{\mathrm{cr}} = \frac{2a}{3}\sqrt{\frac{2a}{3b}}}$$
+$$
+\boxed{P_{\mathrm{cr}} = -\sqrt{\frac{a}{6b}}, \qquad E_{\mathrm{cr}} = \frac{2a}{3}\sqrt{\frac{2a}{3b}}}
+$$
 
 **D2**. We basically need to find a root of a cubic equation
 
-$$-2aP + 4bP^3 - \frac{2a}{3}\sqrt{\frac{2a}{3b}} = 0,$$
+$$
+-2aP + 4bP^3 - \frac{2a}{3}\sqrt{\frac{2a}{3b}} = 0,
+$$
 
 when we know its root $P_{\mathrm{cr}} = -\sqrt{a/6b}$ of multiplicity 2. Simlply dividing by $(P - P_{\mathrm{cr}})^2$, we get:
 
-$$\boxed{P_{\mathrm{after}} = \sqrt{\frac{2a}{3b}}}$$
+$$
+\boxed{P_{\mathrm{after}} = \sqrt{\frac{2a}{3b}}}
+$$
 
 **D3**. Plugging in expressions obtained in the previous tasks:
 
-$$\begin{aligned} \mathcal{Q} &= \mathcal{W}(P_{\mathrm{cr}}) - \mathcal{W}(P_{\mathrm{after}}) = \\ &= -\frac{2a}{3}\sqrt{\frac{2a}{3b}}\left(\sqrt{\frac{2a}{3b}} + \sqrt{\frac{a}{6b}}\right) - a\left(\frac{2a}{3b} + \frac{a}{6b}\right) + b\left(\left[\frac{2a}{3b}\right]^2 + \left[\frac{a}{6b}\right]^2\right) \implies \end{aligned}$$
+$$
+\begin{aligned} \mathcal{Q} &= \mathcal{W}(P_{\mathrm{cr}}) - \mathcal{W}(P_{\mathrm{after}}) = \\ &= -\frac{2a}{3}\sqrt{\frac{2a}{3b}}\left(\sqrt{\frac{2a}{3b}} + \sqrt{\frac{a}{6b}}\right) - a\left(\frac{2a}{3b} + \frac{a}{6b}\right) + b\left(\left[\frac{2a}{3b}\right]^2 + \left[\frac{a}{6b}\right]^2\right) \implies \end{aligned}
+$$
 
-$$\boxed{\mathcal{Q} = \frac{3a^2}{4b}}$$
+$$
+\boxed{\mathcal{Q} = \frac{3a^2}{4b}}
+$$
 
 **D4**. To write one bit of data we generally need energy of the order:
 
-$$Q_{1\ \mathrm{bit}} = \mathcal{Q}l^3.$$
+$$
+Q_{1\ \mathrm{bit}} = \mathcal{Q}l^3.
+$$
 
 Then, to write the whole 1 TiB, we would need:
 
-$$\boxed{Q_{1\ \mathrm{TiB}} = \frac{3\cdot 2^{41} l^3 a^2}{b} = 6.0\ \mathrm{J}}$$
+$$
+\boxed{Q_{1\ \mathrm{TiB}} = \frac{3\cdot 2^{41} l^3 a^2}{b} = 6.0\ \mathrm{J}}
+$$
 
 
 </Spoiler>

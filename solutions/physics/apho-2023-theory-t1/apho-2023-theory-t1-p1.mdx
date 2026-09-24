@@ -211,7 +211,9 @@ The ISS orbital decay is caused by one or more mechanisms which absorb energy fr
 
 The pressure of atmospheric air, composed mainly of neutral $O_2$ and $N_2$ molecules, can be found by using the Clapeyron-Mendeleev law:
 
-$$pV = \frac{M}{\mu}RT. \qquad (1)$$
+$$
+pV = \frac{M}{\mu}RT. \qquad (1)
+$$
 
 where $p, V, T, M$ and $\mu$ are the pressure, volume, temperature, mass and molar mass of a portion of air, $R$ is the ideal gas universal constant.
 There are two equations for computing air pressure as a function of height. The first equation is applicable to the standard model of the **troposphere** ($h < 100\ \mathrm{km}$) in which the temperature is assumed to vary with altitude at a lapse rate.
@@ -224,48 +226,68 @@ Figure 5: The Earth's thermosphere.
 We may assume that all pressure is hydrostatic (i.e., it acts with equal magnitude in all directions).
 Then, a perturbation of the air pressure $dp_h$ on a variation of attitude $dh$ may be written:
 
-$$dp_h \doteq p_{h+dh} - p_h = -g_h\,(M/V)\,dh \qquad (2)$$
+$$
+dp_h \doteq p_{h+dh} - p_h = -g_h\,(M/V)\,dh \qquad (2)
+$$
 
 and dividing the $dp_h$ by the $p_h$ expressed from the Clapeyron-Mendeleev law we obtain
 
-$$\frac{dp_h}{p_h} = -\frac{g_h\mu}{RT_h}dh\,. \qquad (3)$$
+$$
+\frac{dp_h}{p_h} = -\frac{g_h\mu}{RT_h}dh\,. \qquad (3)
+$$
 
 Integrating this expression from the surface $h = 0$ to the altitude $h$ we get the air pressure as follows:
 
-$$p_h = p_0\exp\left(-\frac{\mu}{R}\int_0^h dh\,\frac{g_h}{T_h}\right), \qquad (4)$$
+$$
+p_h = p_0\exp\left(-\frac{\mu}{R}\int_0^h dh\,\frac{g_h}{T_h}\right), \qquad (4)
+$$
 
 where $p_0$ is the air pressure at altitude $h = 0$.
 *Remark 1.* The temperature of Earth's thermosphere at altitude 300 - 600 km does not change considerably (see Fig.3) and reaches averagely about 800 - 900 K at solar side [*NASA data*]. Therefore, one may put $T_h = T = const$ by investigating the ISS orbital flight. Particulary, since the spacecraft spends almost half of its flight time in the shadow side of the Earth, where the temperature drops sharply, we may take the value of **T = 425 K** as the average temperature at these altitudes. This temperature is also in agreement with the air density value $\rho_h \sim 10^{-12}\,\mathrm{m}^{-3}$ [MSISE-90 Model of Earth's Upper Atmosphere] at $h = 400\ \mathrm{km}$.
 Further, by accepting an approximation $g_h = g_0$ one obtains the **standard barometric formula** as follows:
 
-$$p_h^{sta} = p_0\exp\left(-\frac{h}{h_0}\right), \qquad h_0 \doteq \frac{RT}{\mu g_0}. \qquad (5)$$
+$$
+p_h^{sta} = p_0\exp\left(-\frac{h}{h_0}\right), \qquad h_0 \doteq \frac{RT}{\mu g_0}. \qquad (5)
+$$
 
 We fix the parameter $h_0$ as follows:
 
-$$h_0 \doteq \frac{RT}{\mu g_0} = \frac{8.31\ \mathrm{J\ K}^{-1}\cdot\mathrm{mol}^{-1}\,425\mathrm{K}}{0.029\ \mathrm{kg}\cdot\mathrm{mol}^{-1}\,9.81\ \mathrm{m}\cdot\mathrm{s}^{-2}} \approx 12400\ \mathrm{m}\,. \qquad (6)$$
+$$
+h_0 \doteq \frac{RT}{\mu g_0} = \frac{8.31\ \mathrm{J\ K}^{-1}\cdot\mathrm{mol}^{-1}\,425\mathrm{K}}{0.029\ \mathrm{kg}\cdot\mathrm{mol}^{-1}\,9.81\ \mathrm{m}\cdot\mathrm{s}^{-2}} \approx 12400\ \mathrm{m}\,. \qquad (6)
+$$
 
 *Remark 2.* The integral in Eq.(4) may be calculated by taking into account the dependence of $g_h$ on $h$ in the leading-order correction, with accuracy $O(z_h^2)$.
 In the leading-order approximation one gets:
 
-$$g_h \simeq g_0\,(1 - 2z_h)\,, \qquad \int_0^h dh\,g_h \simeq g_0\,h\,(1 - z_h)\,. \qquad (7)$$
+$$
+g_h \simeq g_0\,(1 - 2z_h)\,, \qquad \int_0^h dh\,g_h \simeq g_0\,h\,(1 - z_h)\,. \qquad (7)
+$$
 
 Then, we obtain a **improved barometric formula**
 
-$$p_h^{imp} = p_0\exp\left(-\frac{h\,(1-z_h)}{h_0}\right). \qquad (8)$$
+$$
+p_h^{imp} = p_0\exp\left(-\frac{h\,(1-z_h)}{h_0}\right). \qquad (8)
+$$
 
 Let us estimate the ratio of the 'standard' and 'improved' versions of the barometric formula:
 
-$$\frac{p_h^{imp}}{p_h^{sta}} = \frac{\exp\left(-\frac{h\,(1-z_h)}{h_0}\right)}{\exp\left(-\frac{h}{h_0}\right)} = e^{\frac{h^2}{h_0 R_E}} \approx 7.54 \quad \mathrm{for} \quad h = 4.0\times 10^5\ \mathrm{m}\,. \qquad (9)$$
+$$
+\frac{p_h^{imp}}{p_h^{sta}} = \frac{\exp\left(-\frac{h\,(1-z_h)}{h_0}\right)}{\exp\left(-\frac{h}{h_0}\right)} = e^{\frac{h^2}{h_0 R_E}} \approx 7.54 \quad \mathrm{for} \quad h = 4.0\times 10^5\ \mathrm{m}\,. \qquad (9)
+$$
 
 The gas density rises by almost **eight times** when the weakening of gravity at ISS altitude is taken into account in the leading order.
 Therefore, to avoid significant error in calculation for the ISS, when the air pressure or air density is involved, one should use the improved barometric formula in Eq.(8) instead of Eq.(5).
 According to Eq.(8), the air density at height $h$ may be expressed by the formula
 
-$$\rho_h \doteq \frac{M}{V} = \rho_0\exp(-h\,(1-z_h)/h_0)\,. \qquad (10)$$
+$$
+\rho_h \doteq \frac{M}{V} = \rho_0\exp(-h\,(1-z_h)/h_0)\,. \qquad (10)
+$$
 
 The concentration of neutral air molecules at altitude is expressed through a similar law
 
-$$n_h = N_A\frac{\rho_0}{\mu}\exp(-h\,(1-z_h)/h_0)\,. \qquad (11)$$
+$$
+n_h = N_A\frac{\rho_0}{\mu}\exp(-h\,(1-z_h)/h_0)\,. \qquad (11)
+$$
 
 **B. Orbital deceleration and station descent rate**
 
@@ -273,59 +295,85 @@ Let us consider the problem of determining the rate of orbital decay of a satell
 
 The satellite's velocity may be found from its equation of motion in orbit (Newton's second law) where the Earth's gravitational force is balanced by the centrifugal force:
 
-$$g_h = \frac{v_h^2}{R_E(1+z_h)}, \qquad g_h \doteq \frac{g_0}{(1+z_h)^2}\,. \qquad (12)$$
+$$
+g_h = \frac{v_h^2}{R_E(1+z_h)}, \qquad g_h \doteq \frac{g_0}{(1+z_h)^2}\,. \qquad (12)
+$$
 
 The solutions read
 
-$$v_h = \sqrt{\frac{g_0 R_E}{1+z_h}}, \qquad \tau_h \doteq 2\pi\frac{R_E+h}{v_h} = 2\pi\sqrt{\frac{R_E}{g_0}}\,(1+z_h)^{3/2}. \qquad (13)$$
+$$
+v_h = \sqrt{\frac{g_0 R_E}{1+z_h}}, \qquad \tau_h \doteq 2\pi\frac{R_E+h}{v_h} = 2\pi\sqrt{\frac{R_E}{g_0}}\,(1+z_h)^{3/2}. \qquad (13)
+$$
 
 By the conservation of mechanical energy, the total energy of a satellite moving along an almost circular orbit with radius $R_E+h$ is the sum of kinetic and gravitational potential energies, in an unperturbed two-body orbit:
 
-$$E_S = \frac{M_S\cdot v_h^2}{2} - M_S\,g_h R_E\,(1+z_h) = -\frac{M_S\,g_0\,R_E}{2(1+z_h)}\,. \qquad (14)$$
+$$
+E_S = \frac{M_S\cdot v_h^2}{2} - M_S\,g_h R_E\,(1+z_h) = -\frac{M_S\,g_0\,R_E}{2(1+z_h)}\,. \qquad (14)
+$$
 
 The total decelerating force exerted on a satellite of constant mass is given by some external braking force $\vec{F}_{drag}$. The rate of loss of orbital energy $dE_S$ is simply the rate at the external force does negative work $dA_{drag}$ on the satellite as the satellite traverses an infinitesimal circular arc-length $dL = vdt$ :
 
-$$dA_{drag} = -F_{drag}\cdot v_h\cdot dt\,. \qquad (15)$$
+$$
+dA_{drag} = -F_{drag}\cdot v_h\cdot dt\,. \qquad (15)
+$$
 
 The perturbation $dE_S$ of the orbital energy at a change of the radius $dh$ reads:
 
-$$dE_S = +\frac{M_S\,g_0}{2(1+z_h)^2}dh\,. \qquad (16)$$
+$$
+dE_S = +\frac{M_S\,g_0}{2(1+z_h)^2}dh\,. \qquad (16)
+$$
 
 The total energy conservation $dE_S + dA_{drag} = 0$ leads to the equation
 
-$$\frac{M_S\,g_0}{2(1+z_h)^2}dh = F_{drag}\cdot v_h\cdot dt\,. \qquad (17)$$
+$$
+\frac{M_S\,g_0}{2(1+z_h)^2}dh = F_{drag}\cdot v_h\cdot dt\,. \qquad (17)
+$$
 
 Then, we can find the rate of descent speed of the satellite as follows:
 
-$$u_h \doteq \frac{dh}{dt} = \frac{2F_{drag}}{M_S g_0}\,v_h\,(1+z_h)^2 = \frac{2F_{drag}}{M_S}\sqrt{\frac{R_E}{g_0}}\,(1+z_h)^{3/2}. \qquad (18)$$
+$$
+u_h \doteq \frac{dh}{dt} = \frac{2F_{drag}}{M_S g_0}\,v_h\,(1+z_h)^2 = \frac{2F_{drag}}{M_S}\sqrt{\frac{R_E}{g_0}}\,(1+z_h)^{3/2}. \qquad (18)
+$$
 
 The de-orbiting speed depends on the friction force, and on the altitude of the satellite, and on the mass of the satellite.
 The friction force $\vec{F}_{drag}$ itself, in turn, depends on the flight altitude, on the effective cross section of the satellite $S$, and on the composition of the space environment at the satellite's flight altitude $h$.
 The descent rate $H_h$ for a revolution around the Earth reads:
 
-$$H_h \doteq u_h\,\tau_h = \frac{4\pi\,R_E}{M_S\,g_0}F_{drag}(h)\cdot(1+z_h)^3. \qquad (19)$$
+$$
+H_h \doteq u_h\,\tau_h = \frac{4\pi\,R_E}{M_S\,g_0}F_{drag}(h)\cdot(1+z_h)^3. \qquad (19)
+$$
 
 The differential equation in Eq.(18) may be integrated out. Then, the total time $T_h$ for which the satellite will fall from the attitude $h$ to the earth's surface due to the friction may be found from the relation:
 
-$$T_h \doteq \int_0^{T_h} dt = \frac{M_S}{2}\sqrt{\frac{g_0}{R_E}}\int_0^h dh\,\frac{1}{F_{drag}(h)\cdot(1+z_h)^{3/2}}. \qquad (20)$$
+$$
+T_h \doteq \int_0^{T_h} dt = \frac{M_S}{2}\sqrt{\frac{g_0}{R_E}}\int_0^h dh\,\frac{1}{F_{drag}(h)\cdot(1+z_h)^{3/2}}. \qquad (20)
+$$
 
 **C. Atmospheric drag**
 
 The speed of the satellite $v$ is many times greater than the average velocities (hundreds m/s) of the thermal motion of atmospheric molecules at a height $h \approx 300-400\ \mathrm{km}$, so we can assume that the molecules were at rest before the collision with the ISS. To roughly estimate the drag force, we assume that after the collision the molecules acquire the same speed as the satellite. In this case, the air drag force can be estimated as follows:
 
-$$F_{air} = n_h m_{air}\cdot v_h^2\cdot S = \frac{N_{air}m_{air}}{V}\cdot v_h^2\cdot S = \rho_h\cdot v_h^2\cdot S\,. \qquad (21)$$
+$$
+F_{air} = n_h m_{air}\cdot v_h^2\cdot S = \frac{N_{air}m_{air}}{V}\cdot v_h^2\cdot S = \rho_h\cdot v_h^2\cdot S\,. \qquad (21)
+$$
 
 By substituting this expression into the formula in Eq.(18), we obtain
 
-$$u_h^{air} = \frac{2\rho_0 S\sqrt{g_0 R_E^3}}{M_S}(1+z_h)^{1/2}\cdot\exp(-h\,(1-z_h)/h_0)\,. \qquad (22)$$
+$$
+u_h^{air} = \frac{2\rho_0 S\sqrt{g_0 R_E^3}}{M_S}(1+z_h)^{1/2}\cdot\exp(-h\,(1-z_h)/h_0)\,. \qquad (22)
+$$
 
 The descent rate $H_h^{air}$ for a revolution around the Earth reads:
 
-$$H_h^{air} \doteq u_h^{air}\,\tau_h = \frac{4\pi S\,R_E^2}{M_S}\rho_0\cdot(1+z_h)^2\cdot\exp(-h\,(1-z_h)/h_0)\,. \qquad (23)$$
+$$
+H_h^{air} \doteq u_h^{air}\,\tau_h = \frac{4\pi S\,R_E^2}{M_S}\rho_0\cdot(1+z_h)^2\cdot\exp(-h\,(1-z_h)/h_0)\,. \qquad (23)
+$$
 
 To find the total time $T_h^{air}$ for which the satellite will fall to the earth's surface, we use Eq.(20). We obtain:
 
-$$T_h^{air} \simeq \frac{M_S}{2\rho_0\,S\sqrt{g_0\,R_E^3}}\int_0^h dh\left(1-\frac{h}{2R_E}\right)e^{+h/h_0} \approx \frac{M_S h_0}{2\rho_0 S\sqrt{g_0\,R_E^3}}(1-\frac{h}{2R_E})\cdot e^{+h/h_0}, \qquad (24)$$
+$$
+T_h^{air} \simeq \frac{M_S}{2\rho_0\,S\sqrt{g_0\,R_E^3}}\int_0^h dh\left(1-\frac{h}{2R_E}\right)e^{+h/h_0} \approx \frac{M_S h_0}{2\rho_0 S\sqrt{g_0\,R_E^3}}(1-\frac{h}{2R_E})\cdot e^{+h/h_0}, \qquad (24)
+$$
 
 where we took into account relations $h_0 \ll h \ll R_E$.
 
@@ -335,19 +383,27 @@ In the thermosphere, under the influence of ultraviolet and X-ray solar radiatio
 
 The decelerating force associated with the mechanical collisions of these particles on the satellite can be calculated using the formula in Eq.(21) but taking into account the strong decrease in ionization at night. Let the average value of the ion concentration be half the maximum value. Then we have
 
-$$F_{ion} = \frac{1}{2} \rho_{ion} \cdot S \cdot v_h^2\,, \qquad (25)$$
+$$
+F_{ion} = \frac{1}{2} \rho_{ion} \cdot S \cdot v_h^2\,, \qquad (25)
+$$
 
 where
 
-$$\rho_{ion} = \frac{\mu_{ion}}{N_A} \cdot n_{ion}\,. \qquad (26)$$
+$$
+\rho_{ion} = \frac{\mu_{ion}}{N_A} \cdot n_{ion}\,. \qquad (26)
+$$
 
 Therefore, the speed of fall of the satellite due to deceleration by ions of atomic oxygen may be roughly estimated as follows:
 
-$$u_h^{ion} = \rho_{ion} \cdot \frac{S \sqrt{g_0\,R_E^3}}{M_S} (1+z_h)^{1/2}\,. \qquad (27)$$
+$$
+u_h^{ion} = \rho_{ion} \cdot \frac{S \sqrt{g_0\,R_E^3}}{M_S} (1+z_h)^{1/2}\,. \qquad (27)
+$$
 
 The descent rate $H_h^{ion}$ for a revolution around the Earth reads:
 
-$$H_h^{ion} \doteq u_h^{ion}\,\tau_h = \rho_{ion}\, \frac{2\pi S\,R_E^2}{M_S} \cdot (1+z_h)^2\,. \qquad (28)$$
+$$
+H_h^{ion} \doteq u_h^{ion}\,\tau_h = \rho_{ion}\, \frac{2\pi S\,R_E^2}{M_S} \cdot (1+z_h)^2\,. \qquad (28)
+$$
 
 **E. Drag by the Earth's magnetic field**
 
@@ -357,11 +413,15 @@ When a satellite moves at high speed in a magnetic field, an induced electric cu
 
 The number of electrons hitting the structure of the ISS body during the short time interval $dt$ is
 
-$$dN = n_{ion} \cdot v_h \cdot S \cdot dt\,. \qquad (29)$$
+$$
+dN = n_{ion} \cdot v_h \cdot S \cdot dt\,. \qquad (29)
+$$
 
 Therefore, the magnitude of the current is of the order
 
-$$I_{ind} \approx e\,\frac{dN}{dt} = e \cdot S \cdot n_{ion} \cdot \sqrt{\frac{g_0\,R_E}{1+z_h}}\,. \qquad (30)$$
+$$
+I_{ind} \approx e\,\frac{dN}{dt} = e \cdot S \cdot n_{ion} \cdot \sqrt{\frac{g_0\,R_E}{1+z_h}}\,. \qquad (30)
+$$
 
 The orbital 'braking' Ampere's force is proportional to $[\vec{v}_h \times \vec{B}] = v_h B|\sin(\phi)|$, where $\phi$ is the angle between the Earth's magnetic field $\vec{B}$ and the velocity of the ISS $\vec{v}_h$. Hereby, $\theta = 51.6^0$ (degrees) is the inclination angle of the ISS orbit to Earth's equator.
 
@@ -369,27 +429,37 @@ Let us consider a revolution starting from the 'north' sample point in the ISS o
 
 The averaging of the value $|\sin(\phi)|$ during a revolution period may be performed as follows:
 
-$$\langle |\sin(\phi)| \rangle = \frac{1}{2\theta} \int_{\pi/2-\theta}^{\pi/2+\theta} d\phi\, |\sin(\phi)| = 0.93 \approx 1\,. \qquad (31)$$
+$$
+\langle |\sin(\phi)| \rangle = \frac{1}{2\theta} \int_{\pi/2-\theta}^{\pi/2+\theta} d\phi\, |\sin(\phi)| = 0.93 \approx 1\,. \qquad (31)
+$$
 
 An approximate result may be obtained by using four equidistant sample positions in the ISS orbit as follows:
 
-$$\langle |\sin(\phi)| \rangle = \{\sin(\pi/2-\theta) + \sin(\pi/2) + \sin(\pi/2+\theta) + \sin(\pi/2)\}\,/4 = 0.89 \approx 1\,. \qquad (32)$$
+$$
+\langle |\sin(\phi)| \rangle = \{\sin(\pi/2-\theta) + \sin(\pi/2) + \sin(\pi/2+\theta) + \sin(\pi/2)\}\,/4 = 0.89 \approx 1\,. \qquad (32)
+$$
 
 Further, we will use an approximation $\langle |\sin(\phi)| \rangle \approx 1$.
 
 When the induced current flows through the conductive parts of the satellite, they are affected by the 'braking' Ampere force directed opposite to the direction of the satellite's speed:
 
-$$F_{ind} = B \cdot I_{ind} \cdot \langle |\sin(\phi)| \rangle \cdot L \approx B \cdot I_{ind} \cdot \sqrt{S} = e \cdot B \cdot S^{3/2} \cdot n_{ion} \cdot \sqrt{\frac{g_0\,R_E}{1+z_h}}\,, \qquad (33)$$
+$$
+F_{ind} = B \cdot I_{ind} \cdot \langle |\sin(\phi)| \rangle \cdot L \approx B \cdot I_{ind} \cdot \sqrt{S} = e \cdot B \cdot S^{3/2} \cdot n_{ion} \cdot \sqrt{\frac{g_0\,R_E}{1+z_h}}\,, \qquad (33)
+$$
 
 where for the external linear size of the station, we can use the approximation $L \sim S^{1/2}$.
 
 Then for the rate of descent of the satellite we obtain
 
-$$u_h^{ind} \approx 2 n_{ion}\, \frac{eBS^{3/2} R_E}{M_S} \cdot (1+z_h)\,. \qquad (34)$$
+$$
+u_h^{ind} \approx 2 n_{ion}\, \frac{eBS^{3/2} R_E}{M_S} \cdot (1+z_h)\,. \qquad (34)
+$$
 
 The descent rate $H_h^{ind}$ for a revolution around the Earth reads:
 
-$$H_h^{ind} \doteq u_h^{ind}\,\tau_h = \frac{4\pi\, e\, B\ (S\,R_E)^{3/2}}{M_S \sqrt{g_0}} \cdot (1+z_h)^{5/2}\,. \qquad (35)$$
+$$
+H_h^{ind} \doteq u_h^{ind}\,\tau_h = \frac{4\pi\, e\, B\ (S\,R_E)^{3/2}}{M_S \sqrt{g_0}} \cdot (1+z_h)^{5/2}\,. \qquad (35)
+$$
 
 **F. Numerical results and conclusion**
 

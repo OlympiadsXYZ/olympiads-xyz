@@ -24,7 +24,9 @@ verifier: 'mechanical'
 
 Именно тогда Эрик Холмберг, шведский астроном, создал первую подобную модель. Чтобы сократить количество вычислений, он использовал известное сходство между двумя физическими законами:
 
-$$F = \frac{G\mathfrak{M}m}{r^2} \quad \text{и} \quad J = \frac{L}{4\pi r^2}.$$
+$$
+F = \frac{G\mathfrak{M}m}{r^2} \quad \text{и} \quad J = \frac{L}{4\pi r^2}.
+$$
 
 В его модели каждая галактика состояла из 37 лампочек с фотоэлементами; он определял в каждый момент времени, сколько света приходит с какой стороны, а после этого рассчитывал силу, пользуясь тем, что показатели степени при $r$ одинаковы. После этого он передвигал лампочки, применяя один из численных методов интегрирования дифференциальных уравнений.
 
@@ -32,33 +34,47 @@ $$F = \frac{G\mathfrak{M}m}{r^2} \quad \text{и} \quad J = \frac{L}{4\pi r^2}.$$
 
 Для наглядности Ашот выбрал систему единиц, в которой основными единицами расстояния и времени являются астрономическая единица и земной год соответственно. Если размерность величины не указана — значит, величина представлена в этой системе единиц, например, гелиоцентрическая (кеплерова) постоянная
 
-$$\varkappa = G\mathfrak{M}_{\odot} = 39.475.$$
+$$
+\varkappa = G\mathfrak{M}_{\odot} = 39.475.
+$$
 
 Начальные координаты и компоненты скорости корабля (в плоской прямоугольной системе координат с центром в Солнце) были такими:
 
-$$\begin{cases} x^{(0)} = -\dfrac{\sqrt{3}}{2}, & y^{(0)} = -\dfrac{1}{2}; \\ v_x^{(0)} = 0, & v_y^{(0)} = 6.283. \end{cases}$$
+$$
+\begin{cases} x^{(0)} = -\dfrac{\sqrt{3}}{2}, & y^{(0)} = -\dfrac{1}{2}; \\ v_x^{(0)} = 0, & v_y^{(0)} = 6.283. \end{cases}
+$$
 
 В качестве Солнца Ашот использовал лампу с мощностью $P = 100$ Вт. Фотодатчик (КПД преобразования сеть – лампа – датчик $\eta = 2\%$), измеряющий освещённость в месте своего расположения, размещался на таком же расстоянии от лампы *в метрах*, на каком корабль находился от Солнца *в астрономических единицах.* Это позволило использовать формулу
 
-$$\frac{1}{r^2} = \frac{4\pi J}{L},$$
+$$
+\frac{1}{r^2} = \frac{4\pi J}{L},
+$$
 
 не пересчитывая блеск и светимость ни в какую другую систему и получать $r$ сразу в астрономических единицах.
 
 Таким образом, для ускорения корабля верно следующее выражение (здесь векторы обозначаются жирным шрифтом; $\mathbf{r}$ — радиус-вектор корабля, $\mathbf{a}$ — его ускорение):
 
-$$\mathbf{a} = -\frac{G\mathfrak{M}_{\odot}}{r^3}\mathbf{r} = \frac{4\pi G\mathfrak{M}_{\odot}}{L} \cdot J \cdot \frac{\mathbf{r}}{r}, \qquad (1)$$
+$$
+\mathbf{a} = -\frac{G\mathfrak{M}_{\odot}}{r^3}\mathbf{r} = \frac{4\pi G\mathfrak{M}_{\odot}}{L} \cdot J \cdot \frac{\mathbf{r}}{r}, \qquad (1)
+$$
 
 куда все величины можно подставлять без изменения системы единиц.
 
 Чтобы вычислить положение и скорость корабля в последующие моменты времени, Ашот использовал так называемый метод «чехарды»:
 
-$$\mathbf{r}^{(i+1)} = \mathbf{r}^{(i)} + \mathbf{v}^{(i)}\Delta t + \frac{\mathbf{a}^{(i)}}{2}\Delta t^2, \qquad (2)$$
+$$
+\mathbf{r}^{(i+1)} = \mathbf{r}^{(i)} + \mathbf{v}^{(i)}\Delta t + \frac{\mathbf{a}^{(i)}}{2}\Delta t^2, \qquad (2)
+$$
 
-$$\mathbf{v}^{(i+1)} = \mathbf{v}^{(i)} + \frac{\mathbf{a}^{(i)} + \mathbf{a}^{(i+1)}}{2}\Delta t, \qquad (3)$$
+$$
+\mathbf{v}^{(i+1)} = \mathbf{v}^{(i)} + \frac{\mathbf{a}^{(i)} + \mathbf{a}^{(i+1)}}{2}\Delta t, \qquad (3)
+$$
 
 где
 
-$$\begin{aligned} \mathbf{r}^{(0)} &\equiv \mathbf{r}(0) = \bigl(x^{(0)},\, y^{(0)}\bigr), \\ \mathbf{v}^{(0)} &\equiv \mathbf{v}(0) = \bigl(v_x^{(0)},\, v_y^{(0)}\bigr), \\ \mathbf{a}^{(i)} &\equiv \mathbf{a}\bigl(\mathbf{r}^{(i)}\bigr), \\ \Delta t &= 0.03. \end{aligned}$$
+$$
+\begin{aligned} \mathbf{r}^{(0)} &\equiv \mathbf{r}(0) = \bigl(x^{(0)},\, y^{(0)}\bigr), \\ \mathbf{v}^{(0)} &\equiv \mathbf{v}(0) = \bigl(v_x^{(0)},\, v_y^{(0)}\bigr), \\ \mathbf{a}^{(i)} &\equiv \mathbf{a}\bigl(\mathbf{r}^{(i)}\bigr), \\ \Delta t &= 0.03. \end{aligned}
+$$
 
 Ашот вычислил значения для первых 10 точек (см. измерения фотоэлемента в таблице справа).
 
@@ -92,9 +108,13 @@ $$\begin{aligned} \mathbf{r}^{(0)} &\equiv \mathbf{r}(0) = \bigl(x^{(0)},\, y^{(
 
 *Подсказка.* Вам могут пригодиться соотношения между истинной, эксцентрической и средней аномалиями:
 
-$$M = E - \varepsilon \sin E, \qquad (4)$$
+$$
+M = E - \varepsilon \sin E, \qquad (4)
+$$
 
-$$\tan\frac{\theta}{2} = \sqrt{\frac{1+\varepsilon}{1-\varepsilon}}\tan\frac{E}{2}. \qquad (5)$$
+$$
+\tan\frac{\theta}{2} = \sqrt{\frac{1+\varepsilon}{1-\varepsilon}}\tan\frac{E}{2}. \qquad (5)
+$$
 
 ## Отговори
 
@@ -114,45 +134,65 @@ $$\tan\frac{\theta}{2} = \sqrt{\frac{1+\varepsilon}{1-\varepsilon}}\tan\frac{E}{
 
 В этой ситуации большая полуось $a$ выражается как
 
-$$a = \sqrt{x_0^2 + y_0^2} = 1.$$
+$$
+a = \sqrt{x_0^2 + y_0^2} = 1.
+$$
 
 При этом скорость будет равна
 
-$$\sqrt{\frac{\varkappa}{a}} \approx 6.283,$$
+$$
+\sqrt{\frac{\varkappa}{a}} \approx 6.283,
+$$
 
 что говорит о том, что именно этот случай и реализуется.
 
 Нам пригодится эксцентриситет эллипса:
 
-$$\varepsilon = \frac{f}{a} = \frac{|y_0|}{a} = 0.5.$$
+$$
+\varepsilon = \frac{f}{a} = \frac{|y_0|}{a} = 0.5.
+$$
 
 **2.** Пусть $\dfrac{4\pi\varkappa}{L} = K$. Из формулы (25) для ускорения можно записать
 
-$$\mathbf{a}^{(i)} = -\frac{KJ^{(i)}\mathbf{r}^{(i)}}{r^{(i)}},$$
+$$
+\mathbf{a}^{(i)} = -\frac{KJ^{(i)}\mathbf{r}^{(i)}}{r^{(i)}},
+$$
 
 или, что то же самое,
 
-$$\begin{cases} a_x^{(i)} = -\dfrac{KJ^{(i)}x^{(i)}}{\sqrt{\bigl(x^{(i)}\bigr)^2 + \bigl(y^{(i)}\bigr)^2}}, \\[2ex] a_y^{(i)} = -\dfrac{KJ^{(i)}y^{(i)}}{\sqrt{\bigl(x^{(i)}\bigr)^2 + \bigl(y^{(i)}\bigr)^2}}. \end{cases}$$
+$$
+\begin{cases} a_x^{(i)} = -\dfrac{KJ^{(i)}x^{(i)}}{\sqrt{\bigl(x^{(i)}\bigr)^2 + \bigl(y^{(i)}\bigr)^2}}, \\[2ex] a_y^{(i)} = -\dfrac{KJ^{(i)}y^{(i)}}{\sqrt{\bigl(x^{(i)}\bigr)^2 + \bigl(y^{(i)}\bigr)^2}}. \end{cases}
+$$
 
 Найдём константу:
 
-$$K = \frac{4\pi\varkappa}{L} \approx 248.029.$$
+$$
+K = \frac{4\pi\varkappa}{L} \approx 248.029.
+$$
 
 Проведём для примера первый этап вычислений. $x^{(0)}$ и $y^{(0)}$ мы знаем, поэтому можем найти вектор ускорения
 
-$$\mathbf{a}^{(0)} = \begin{pmatrix} 32.220 \\ 18.602 \end{pmatrix}.$$
+$$
+\mathbf{a}^{(0)} = \begin{pmatrix} 32.220 \\ 18.602 \end{pmatrix}.
+$$
 
 Теперь находим $\mathbf{r}^{(1)}$ по формуле (26):
 
-$$\mathbf{r}^{(1)} = \begin{pmatrix} -0.852 \\ -0.303 \end{pmatrix}.$$
+$$
+\mathbf{r}^{(1)} = \begin{pmatrix} -0.852 \\ -0.303 \end{pmatrix}.
+$$
 
 Зная $\mathbf{r}^{(1)}$, можно найти $\mathbf{a}^{(1)}$ :
 
-$$\mathbf{a}^{(1)} = \begin{pmatrix} 47.434 \\ 16.886 \end{pmatrix}.$$
+$$
+\mathbf{a}^{(1)} = \begin{pmatrix} 47.434 \\ 16.886 \end{pmatrix}.
+$$
 
 Остаётся найти $\mathbf{v}^{(1)}$ по формуле (27):
 
-$$\mathbf{v}^{(1)} = \begin{pmatrix} 1.195 \\ 6.815 \end{pmatrix}.$$
+$$
+\mathbf{v}^{(1)} = \begin{pmatrix} 1.195 \\ 6.815 \end{pmatrix}.
+$$
 
 Продолжая такую «деятельность», построим таблицу:
 
@@ -173,7 +213,9 @@ $$\mathbf{v}^{(1)} = \begin{pmatrix} 1.195 \\ 6.815 \end{pmatrix}.$$
 
 **3.** Зная точки, в которых Ашот измерял освещённость, можно найти её точное значение в них, используя мощность лампочки. Для этого нам потребуется формула
 
-$$J^{(i)}_{true} = \frac{L}{4\pi\bigl(r^{(i)}\bigr)^2} = \frac{P\eta}{4\pi\left(\bigl(x^{(i)}\bigr)^2 + \bigl(y^{(i)}\bigr)^2\right)},$$
+$$
+J^{(i)}_{true} = \frac{L}{4\pi\bigl(r^{(i)}\bigr)^2} = \frac{P\eta}{4\pi\left(\bigl(x^{(i)}\bigr)^2 + \bigl(y^{(i)}\bigr)^2\right)},
+$$
 
 где $\eta$ — КПД.
 
@@ -194,39 +236,55 @@ $$J^{(i)}_{true} = \frac{L}{4\pi\bigl(r^{(i)}\bigr)^2} = \frac{P\eta}{4\pi\left(
 
 Чтобы оценить искомое отношение, найдём стандартное отклонение:
 
-$$\frac{S}{J^{(0)}_{true}} = \frac{1}{J^{(0)}_{true}}\sqrt{\frac{\sum\limits_{i=0}^{9}\bigl(J^{(i)}_{true} - J^{(i)}\bigr)^2}{9}} \approx 0.12.$$
+$$
+\frac{S}{J^{(0)}_{true}} = \frac{1}{J^{(0)}_{true}}\sqrt{\frac{\sum\limits_{i=0}^{9}\bigl(J^{(i)}_{true} - J^{(i)}\bigr)^2}{9}} \approx 0.12.
+$$
 
 **4.** Это самая трудная часть задачи. Сначала найдём среднюю аномалию в начальный момент времени.
 
 Из картинки ясно, что истинная аномалия
 
-$$\theta_0 = \pi - \arccos(\varepsilon) = \frac{2\pi}{3}.$$
+$$
+\theta_0 = \pi - \arccos(\varepsilon) = \frac{2\pi}{3}.
+$$
 
 По формуле (4) находим эксцентрическую:
 
-$$E_0 = 2\arctan\frac{\tan\frac{\pi}{3}}{\sqrt{3}} = \frac{\pi}{2}.$$
+$$
+E_0 = 2\arctan\frac{\tan\frac{\pi}{3}}{\sqrt{3}} = \frac{\pi}{2}.
+$$
 
 И по формуле (5) находим среднюю:
 
-$$M_0 = \frac{\pi}{2} - \frac{1}{2} = \frac{\pi - 1}{2}.$$
+$$
+M_0 = \frac{\pi}{2} - \frac{1}{2} = \frac{\pi - 1}{2}.
+$$
 
 Нам также известно, что средняя аномалия зависит от времени как
 
-$$M(t) = M_0 - \omega t,$$
+$$
+M(t) = M_0 - \omega t,
+$$
 
 где
 
-$$\omega = \sqrt{\frac{\varkappa}{a^3}}.$$
+$$
+\omega = \sqrt{\frac{\varkappa}{a^3}}.
+$$
 
 Зная $E^{(i)}$ в каждой точке, можно выразить по формуле (5) $\theta^{(i)}$ в каждой точке; $E^{(i)}$ же можно искать, решая уравнение Кеплера методом простой итерации или методом Ньютона по известному $M^{(i)}$.
 
 Теперь запишем уравнение эллипса в полярных координатах:
 
-$$r(\theta) = \frac{a(1 - \varepsilon^2)}{1 + \varepsilon\cos\theta}.$$
+$$
+r(\theta) = \frac{a(1 - \varepsilon^2)}{1 + \varepsilon\cos\theta}.
+$$
 
 Значит, для каждого момента времени мы знаем истинную аномалию и расстояние от фокуса. Нетрудно теперь записать, как будут выглядеть координаты точки:
 
-$$\begin{cases} x = -r(\theta)\sin\theta, \\ y = r(\theta)\cos\theta. \end{cases}$$
+$$
+\begin{cases} x = -r(\theta)\sin\theta, \\ y = r(\theta)\cos\theta. \end{cases}
+$$
 
 В таблице приведены результаты вычислений:
 

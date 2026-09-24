@@ -40,13 +40,19 @@ verifier: 'mechanical'
 
 В самом деле, проекция траектории метеороида (отрезка прямой) на небесную сферу является дугой большого круга. Рассчитаем расстояния между всеми парами заданных точек, используя сферическую теорему косинусов:
 
-$$\cos\rho_{ij} = \sin h_i\sin h_j + \cos h_i\cos h_j\cos(A_i - A_j); \qquad (37)$$
+$$
+\cos\rho_{ij} = \sin h_i\sin h_j + \cos h_i\cos h_j\cos(A_i - A_j); \qquad (37)
+$$
 
-$$\begin{cases}\rho_{12} = 26.82^{\circ},\\ \rho_{23} = 17.03^{\circ}\end{cases} \quad\Longrightarrow\quad \rho_{12} + \rho_{23} = 43.85^{\circ}; \qquad \rho_{13} = 42.89^{\circ}. \qquad (38)$$
+$$
+\begin{cases}\rho_{12} = 26.82^{\circ},\\ \rho_{23} = 17.03^{\circ}\end{cases} \quad\Longrightarrow\quad \rho_{12} + \rho_{23} = 43.85^{\circ}; \qquad \rho_{13} = 42.89^{\circ}. \qquad (38)
+$$
 
 Как видно, $\rho_{12} + \rho_{23} - \rho_{13} \simeq 1.0^{\circ}$, что *значимо* отлично от нуля. Значимость можно продемонстрировать, например, используя метод Корнфельда. Рассчитаем соответствующие расстояния, уменьшая или увеличивая координаты на величину их погрешности:
 
-$$\begin{cases}\rho_{12}^{\min} = 26.69^{\circ},\\ \rho_{23}^{\min} = 16.94^{\circ}\end{cases} \quad\Longrightarrow\quad (\rho_{12} + \rho_{23})^{\min} = 43.63^{\circ}; \qquad \rho_{13}^{\max} = 42.99^{\circ}. \qquad (39)$$
+$$
+\begin{cases}\rho_{12}^{\min} = 26.69^{\circ},\\ \rho_{23}^{\min} = 16.94^{\circ}\end{cases} \quad\Longrightarrow\quad (\rho_{12} + \rho_{23})^{\min} = 43.63^{\circ}; \qquad \rho_{13}^{\max} = 42.99^{\circ}. \qquad (39)
+$$
 
 Видим, что $(\rho_{12} + \rho_{23})^{\min} - \rho_{13}^{\max} \simeq 0.6^{\circ} \gg 0.1^{\circ} > 0$. Следовательно, эти три точки образуют сферический треугольник и не могут в совокупности принадлежать проекции. $\square$
 

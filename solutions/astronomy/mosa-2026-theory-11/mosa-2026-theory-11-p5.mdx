@@ -38,25 +38,35 @@ verifier: 'mechanical'
 
 Сначала найдём объём одной полости $V_{hole}$:
 
-$$V_{hole} = \frac{4}{3}\pi \left(\frac{R}{4}\right)^3 = \frac{\pi}{48} R^3.$$
+$$
+V_{hole} = \frac{4}{3}\pi \left(\frac{R}{4}\right)^3 = \frac{\pi}{48} R^3.
+$$
 
 Теперь запишем объём сферического слоя, заключённого между внутренним и внешним слоями. Внешний радиус обозначим $R'$. Тогда из условия равенства объёмов полостей и «наращенного» шарового слоя:
 
-$$\frac{4}{3}\pi \left(R'^3 - R^3\right) = 2 \frac{\pi}{48} R^3.$$
+$$
+\frac{4}{3}\pi \left(R'^3 - R^3\right) = 2 \frac{\pi}{48} R^3.
+$$
 
 Отсюда
 
-$$\frac{4}{3}\pi R^3 \left(\frac{R'^3}{R^3} - 1\right) = 2 \frac{\pi}{48} R^3 \quad \Rightarrow \quad \frac{R'^3}{R^3} - 1 = \frac{1}{32} \quad \Rightarrow \quad \frac{R'}{R} = \sqrt[3]{\frac{33}{32}}.$$
+$$
+\frac{4}{3}\pi R^3 \left(\frac{R'^3}{R^3} - 1\right) = 2 \frac{\pi}{48} R^3 \quad \Rightarrow \quad \frac{R'^3}{R^3} - 1 = \frac{1}{32} \quad \Rightarrow \quad \frac{R'}{R} = \sqrt[3]{\frac{33}{32}}.
+$$
 
 Тогда площадь поверхности выросла в $\eta = \frac{R'^2}{R^2} \approx 1.021$ раз.
 
 Обратим внимание, что, в силу малости объёма полости по сравнению с объёмом планеты, «наращенный» объём мог быть найден из более простого выражения:
 
-$$4\pi R^2 \cdot (R' - R) \approx 2 \frac{\pi}{48} R^3 \quad \Rightarrow \quad \frac{R'}{R} = \frac{97}{96} \quad \Rightarrow \quad \eta = \frac{R'^2}{R^2} \approx 1.021.$$
+$$
+4\pi R^2 \cdot (R' - R) \approx 2 \frac{\pi}{48} R^3 \quad \Rightarrow \quad \frac{R'}{R} = \frac{97}{96} \quad \Rightarrow \quad \eta = \frac{R'^2}{R^2} \approx 1.021.
+$$
 
 Гравитационное поле получившейся планеты неоднородно. Тем не менее его (по аналогии с классическими задачами электростатики) можно представить в виде суммы трёх полей: поля однородного шара радиусом $R'$ и полей двух однородных шаров отрицательной массы на местах полостей. В таком случае в произвольной точке (см. рис.) гравитационный потенциал можно записать в виде:
 
-$$\varphi = -\frac{GM_{R'}}{R'} + \frac{GM_{R/4}}{r_1'} + \frac{GM_{R/4}}{r_2'}.$$
+$$
+\varphi = -\frac{GM_{R'}}{R'} + \frac{GM_{R/4}}{r_1'} + \frac{GM_{R/4}}{r_2'}.
+$$
 
 Здесь $M_{R'}$ — масса шара радиуса $R'$ со средней плотностью Земли, как если бы полостей не существовало, $M_{R/4}$ — масса шаров той же плотности в объёме полостей, а $r_1'$ и $r_2'$ - расстояния до центров соответствующих полостей.
 
@@ -64,43 +74,63 @@ $$\varphi = -\frac{GM_{R'}}{R'} + \frac{GM_{R/4}}{r_1'} + \frac{GM_{R/4}}{r_2'}.
 
 Для анализа поведения суммы указанных дробей будет гораздо удобнее, если вместо двух неизвестных $r_1'$ и $r_2'$ мы сможем ввести одну. Заметим, что оба радиуса зависят от угла $\gamma$:
 
-$$r_1' = \sqrt{(R')^2 + \left(\frac{3}{4}R'\right)^2 - 2\frac{3}{4}(R')^2 \cos\gamma} = \sqrt{\frac{25}{16}(R')^2 - \frac{3}{2}(R')^2 \cos\gamma} = \sqrt{\frac{3}{2}(R')^2}\sqrt{\frac{25}{24} - \cos\gamma},$$
+$$
+r_1' = \sqrt{(R')^2 + \left(\frac{3}{4}R'\right)^2 - 2\frac{3}{4}(R')^2 \cos\gamma} = \sqrt{\frac{25}{16}(R')^2 - \frac{3}{2}(R')^2 \cos\gamma} = \sqrt{\frac{3}{2}(R')^2}\sqrt{\frac{25}{24} - \cos\gamma},
+$$
 
-$$r_2' = \sqrt{(R')^2 + \left(\frac{3}{4}R'\right)^2 + 2\frac{3}{4}(R')^2 \cos\gamma} = \sqrt{\frac{25}{16}(R')^2 + \frac{3}{2}(R')^2 \cos\gamma} = \sqrt{\frac{3}{2}(R')^2}\sqrt{\frac{25}{24} + \cos\gamma},$$
+$$
+r_2' = \sqrt{(R')^2 + \left(\frac{3}{4}R'\right)^2 + 2\frac{3}{4}(R')^2 \cos\gamma} = \sqrt{\frac{25}{16}(R')^2 + \frac{3}{2}(R')^2 \cos\gamma} = \sqrt{\frac{3}{2}(R')^2}\sqrt{\frac{25}{24} + \cos\gamma},
+$$
 
 Введем обозначения $A = \sqrt{\frac{3}{2}(R')^2}$ и $a = \frac{25}{24}$, после чего вычислим производную:
 
-$$\left(\frac{1}{r_1'} + \frac{1}{r_2'}\right)' = \frac{1}{A}\left(\frac{1}{\sqrt{a - \cos\gamma}} + \frac{1}{\sqrt{a + \cos\gamma}}\right)' = \frac{\sin\gamma}{2A}\left[(a + \cos\gamma)^{-3/2} - (a - \cos\gamma)^{-3/2}\right].$$
+$$
+\left(\frac{1}{r_1'} + \frac{1}{r_2'}\right)' = \frac{1}{A}\left(\frac{1}{\sqrt{a - \cos\gamma}} + \frac{1}{\sqrt{a + \cos\gamma}}\right)' = \frac{\sin\gamma}{2A}\left[(a + \cos\gamma)^{-3/2} - (a - \cos\gamma)^{-3/2}\right].
+$$
 
 Производная обращается в ноль или при $\sin\gamma = 0$, то есть $\gamma = 0$ или $\gamma = \pi$, или когда нулю равно выражение в скобках. Последнее выполняется при $\cos\gamma = 0$, то есть $\gamma = \pi/2$. Нетрудно убедиться, что при $\gamma = 0$ или $\gamma = \pi$ достигается максимум функции, а при $\gamma = \pi/2$ — минимум.
 
 Теперь докажем то же самое с помощью более физического подхода. Рассмотрим произвольную точку на поверхности сферы. Пусть потенциал в ней равен $\varphi_A$. Переместимся в указанном на рисунке направлении вдоль сферы на расстояние $dl$. Тогда удельная работа, совершенная верхней полостью при таком перемещении, будет отрицательна и равна:
 
-$$dA_2 = \frac{GM_{R/4}}{r_2'^2} \cdot dl \cdot \cos(90^{\circ} - \alpha) = \frac{GM_{R/4}}{r_2'^2} dl \cdot \sin\alpha.$$
+$$
+dA_2 = \frac{GM_{R/4}}{r_2'^2} \cdot dl \cdot \cos(90^{\circ} - \alpha) = \frac{GM_{R/4}}{r_2'^2} dl \cdot \sin\alpha.
+$$
 
 Аналогично работа, совершенная нижней полостью положительна и равна
 
-$$dA_1 = \frac{GM_{R/4}}{r_1'^2} \cdot dl \cdot \cos(90^{\circ} - \beta) = \frac{GM_{R/4}}{r_1'^2} dl \cdot \sin\beta.$$
+$$
+dA_1 = \frac{GM_{R/4}}{r_1'^2} \cdot dl \cdot \cos(90^{\circ} - \beta) = \frac{GM_{R/4}}{r_1'^2} dl \cdot \sin\beta.
+$$
 
 На выбранном промежутке $r_2' < r_1'$. Тогда, если мы покажем $\sin\alpha > \sin\beta$, то утверждение доказано. Для этого можно воспользоваться обычной теоремой синусов:
 
-$$\frac{r_2'}{\sin\gamma} = \frac{\frac{3R}{4}}{\sin\alpha} \Rightarrow \sin\alpha = \sin\gamma \frac{3R}{4r_2'}.$$
+$$
+\frac{r_2'}{\sin\gamma} = \frac{\frac{3R}{4}}{\sin\alpha} \Rightarrow \sin\alpha = \sin\gamma \frac{3R}{4r_2'}.
+$$
 
 Аналогично
 
-$$\frac{r_1'}{\sin\gamma} = \frac{\frac{3R}{4}}{\sin\beta} \Rightarrow \sin\beta = \sin\gamma \frac{3R}{4r_1'}.$$
+$$
+\frac{r_1'}{\sin\gamma} = \frac{\frac{3R}{4}}{\sin\beta} \Rightarrow \sin\beta = \sin\gamma \frac{3R}{4r_1'}.
+$$
 
 Иными словами:
 
-$$\frac{\sin\alpha}{\sin\beta} = \frac{r_1'}{r_2'} \Rightarrow \sin\alpha > \sin\beta.$$
+$$
+\frac{\sin\alpha}{\sin\beta} = \frac{r_1'}{r_2'} \Rightarrow \sin\alpha > \sin\beta.
+$$
 
 Что и требовалось доказать.
 
 Для того чтобы скорость стартующего с поверхности была минимальна (и он смог улететь на бесконечность), стартовать надо именно из найденных двух точек. При этом само значение скорости может быть найдено из равенства нулю полной механической энергии системы. Учтём, что $M_{R/4} = \frac{M}{4^3} = \frac{M}{64}$, а $M_{R'} = M + \frac{2M}{64} = \frac{33}{32}M$:
 
-$$\frac{v^2}{2} - \frac{GM}{R'} \cdot \frac{33}{32} + \frac{GM}{64\left(\frac{3R}{4} + R'\right)} + \frac{GM}{64\left(R' - R + \frac{R}{4}\right)} = 0,$$
+$$
+\frac{v^2}{2} - \frac{GM}{R'} \cdot \frac{33}{32} + \frac{GM}{64\left(\frac{3R}{4} + R'\right)} + \frac{GM}{64\left(R' - R + \frac{R}{4}\right)} = 0,
+$$
 
-$$v \approx \sqrt{2 \cdot 0.95 \frac{GM}{R}} \approx 10.9\ \text{км/с}.$$
+$$
+v \approx \sqrt{2 \cdot 0.95 \frac{GM}{R}} \approx 10.9\ \text{км/с}.
+$$
 
 **Критерии проверки**
 
@@ -161,9 +191,13 @@ $$v \approx \sqrt{2 \cdot 0.95 \frac{GM}{R}} \approx 10.9\ \text{км/с}.$$
 
 **Формулы приближённого вычисления** (при $x \ll 1$)
 
-$$\sin(x) \approx x \qquad \cos x \approx 1 - \frac{x^2}{2} \qquad \mathrm{tg}\, x \approx x$$
+$$
+\sin(x) \approx x \qquad \cos x \approx 1 - \frac{x^2}{2} \qquad \mathrm{tg}\, x \approx x
+$$
 
-$$\ln(1 + x) \approx x \qquad e^{x} \approx 1 + x \qquad (1 + x)^{\alpha} \approx 1 + \alpha x$$
+$$
+\ln(1 + x) \approx x \qquad e^{x} \approx 1 + x \qquad (1 + x)^{\alpha} \approx 1 + \alpha x
+$$
 
 **Характеристики Солнца, планет и некоторых спутников**
 

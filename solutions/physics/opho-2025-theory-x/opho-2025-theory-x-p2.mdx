@@ -121,45 +121,67 @@ This can be proven by construction via a greedy algorithm. For any pair of sets 
 
 We consider the gas cloud of density $\rho(\mathbf{x})$ and velocity field $\mathbf{v}(\mathbf{x})$. The total energy of this cloud is
 
-$$E[\rho, \mathbf{v}] = \iiint_{\mathbb{R}^3} d^3\mathbf{x}\,\rho(-\frac{K}{r} + \mathbf{v}^2) \qquad (1)$$
+$$
+E[\rho, \mathbf{v}] = \iiint_{\mathbb{R}^3} d^3\mathbf{x}\,\rho(-\frac{K}{r} + \mathbf{v}^2) \qquad (1)
+$$
 
 where we have neglected the constant factor, $r = |\mathbf{x}|$, and $K$ is a constant relating to the mass of the central object. As viscous forces are always dissipative, we expect to minimise this functional. There are, however, several physics constraints, including the continuity equation:
 
-$$\partial_t\rho + \nabla \cdot (\rho\mathbf{v}) = 0 \qquad (2)$$
+$$
+\partial_t\rho + \nabla \cdot (\rho\mathbf{v}) = 0 \qquad (2)
+$$
 
 as well as conservation of angular momentum, where we choose the units such that the magnitude is 1 and choose the z-axis to be along its direction (this is possible as all forces are internal):
 
-$$\iiint_{\mathbb{R}^3} \rho\mathbf{x} \times \mathbf{v}\, d^3\mathbf{x} = \hat{\mathbf{z}} \qquad (3)$$
+$$
+\iiint_{\mathbb{R}^3} \rho\mathbf{x} \times \mathbf{v}\, d^3\mathbf{x} = \hat{\mathbf{z}} \qquad (3)
+$$
 
 We also note that the functional $E$ is time-varying. We want to study the steady state, so we consider the time-average over an infinite horizon, which, as the limit tends to infinity, will be dominated by the steady state:
 
-$$I[\rho, \mathbf{v}] = \lim_{T \to \infty}\frac{1}{T}\int_0^T E[\rho, \mathbf{v}]dt \qquad (4)$$
+$$
+I[\rho, \mathbf{v}] = \lim_{T \to \infty}\frac{1}{T}\int_0^T E[\rho, \mathbf{v}]dt \qquad (4)
+$$
 
 We minimise this functional. With the two constraints, we introduce the Lagrange multipliers $\lambda(\mathbf{x}, t)$ and $\mu(t)$ for the continuity equation (which applies at every x and t) and the angular momentum conservation (which applies at every t). The full functional is therefore
 
-$$I[\rho, \mathbf{v}] = \lim_{T \to \infty}\frac{1}{T}\int_0^T dt \iiint_{\mathbb{R}^3} d^3\mathbf{x}\,(\rho(-\frac{K}{r} + \mathbf{v}^2) - \mu(t) \cdot \rho\mathbf{x} \times \mathbf{v} - \lambda(\mathbf{x}, t)(\partial_t\rho + \nabla \cdot (\rho\mathbf{v}))) \qquad (5)$$
+$$
+I[\rho, \mathbf{v}] = \lim_{T \to \infty}\frac{1}{T}\int_0^T dt \iiint_{\mathbb{R}^3} d^3\mathbf{x}\,(\rho(-\frac{K}{r} + \mathbf{v}^2) - \mu(t) \cdot \rho\mathbf{x} \times \mathbf{v} - \lambda(\mathbf{x}, t)(\partial_t\rho + \nabla \cdot (\rho\mathbf{v}))) \qquad (5)
+$$
 
 Now, we vary this with respect to $\rho, \mathbf{v}, \lambda$ and $\mu$, taking fixed $T$ and taking the limit later. We also assume the boundary conditions that all quantities have finite support in $\mathbf{x}$ so boundary terms vanish (which is a physical assumption). The latter two return the constraints. Varying with respect to $\mathbf{v}$ gives
 
-$$2\rho\mathbf{v} - \rho\nabla\lambda - \rho\mu \times \mathbf{x} = 0 \qquad (6)$$
+$$
+2\rho\mathbf{v} - \rho\nabla\lambda - \rho\mu \times \mathbf{x} = 0 \qquad (6)
+$$
 
 while varying over $\rho$ gives
 
-$$-\frac{K}{r} + \mathbf{v}^2 - \mu \cdot \mathbf{x} \times \mathbf{v} - \partial_t\lambda - \mathbf{v} \cdot \nabla\lambda = 0 \qquad (7)$$
+$$
+-\frac{K}{r} + \mathbf{v}^2 - \mu \cdot \mathbf{x} \times \mathbf{v} - \partial_t\lambda - \mathbf{v} \cdot \nabla\lambda = 0 \qquad (7)
+$$
 
 where in both cases we have implicitly taken the limit $\lambda \to 0$ as $t \to \infty$ as the steady state is unconstrained. Simplifying produces
 
-$$2\mathbf{v} = \nabla\lambda + \mu \times \mathbf{x} \qquad (8)$$
+$$
+2\mathbf{v} = \nabla\lambda + \mu \times \mathbf{x} \qquad (8)
+$$
 
-$$-\frac{K}{r} + \mathbf{v}^2 - \mu \cdot \mathbf{x} \times \mathbf{v} - \partial_t\lambda - \mathbf{v} \cdot \nabla\lambda = 0 \qquad (9)$$
+$$
+-\frac{K}{r} + \mathbf{v}^2 - \mu \cdot \mathbf{x} \times \mathbf{v} - \partial_t\lambda - \mathbf{v} \cdot \nabla\lambda = 0 \qquad (9)
+$$
 
 We take the dot product of both sides of (8) with $\mathbf{v}$ which gives
 
-$$2\mathbf{v}^2 = \mathbf{v} \cdot \nabla\lambda + \mu \cdot \mathbf{x} \times \mathbf{v} \qquad (10)$$
+$$
+2\mathbf{v}^2 = \mathbf{v} \cdot \nabla\lambda + \mu \cdot \mathbf{x} \times \mathbf{v} \qquad (10)
+$$
 
 Substituting into (9) we get
 
-$$\mathbf{v}^2 = -\frac{K}{r} - \partial_t\lambda \qquad (11)$$
+$$
+\mathbf{v}^2 = -\frac{K}{r} - \partial_t\lambda \qquad (11)
+$$
 
 which is impossible as $K > 0$, and $\partial_t\lambda$ must be sometimes positive for any periodic solution. Hence, by contradiction, there does not exist a steady state.
 
@@ -167,29 +189,41 @@ which is impossible as $K > 0$, and $\partial_t\lambda$ must be sometimes positi
 
 For the viscous fluid the viscous dissipation function is defined as $\Phi = \tau_{ij}\partial_i u_j$, where Einstein notation is used and $\tau_{ij}$ is the stress tensor
 
-$$\tau_{ij} = \mu(\partial_i u_j + \partial_j u_i) + \lambda(\nabla \cdot \mathbf{u})\delta_{ij} \qquad (12)$$
+$$
+\tau_{ij} = \mu(\partial_i u_j + \partial_j u_i) + \lambda(\nabla \cdot \mathbf{u})\delta_{ij} \qquad (12)
+$$
 
 At any sort of energy minimum we must have $\Phi$ zero everywhere, which implies rigid body motion. Moreover, for a given fixed density distribution with fixed total angular momentum, the minimum energy configuration is rigid body. This can be proved by considering the KE:
 
-$$T = \iiint_V \frac{1}{2}\rho\mathbf{u}^2 dV = \iiint_V \frac{1}{2}\mathbf{u}^2 dm \qquad (13)$$
+$$
+T = \iiint_V \frac{1}{2}\rho\mathbf{u}^2 dV = \iiint_V \frac{1}{2}\mathbf{u}^2 dm \qquad (13)
+$$
 
 while the angular momentum is
 
-$$L = \iiint_V r u_\phi dm \qquad (14)$$
+$$
+L = \iiint_V r u_\phi dm \qquad (14)
+$$
 
 where we have defined $\mathbf{L}$ to be along the z-axis. Then we have
 
-$$\iiint_V I u_\phi^2 dm = \iiint_V u_\phi dm \iiint_V r^2 dm \geq (\iiint_V r u_\phi dm)^2 = L^2 \qquad (15)$$
+$$
+\iiint_V I u_\phi^2 dm = \iiint_V u_\phi dm \iiint_V r^2 dm \geq (\iiint_V r u_\phi dm)^2 = L^2 \qquad (15)
+$$
 
 by Cauchy-Schwarz inequality, and therefore
 
-$$T \geq \iiint_V \frac{1}{2}u_\phi^2 dm \geq \frac{1}{2}\frac{L^2}{I} \qquad (16)$$
+$$
+T \geq \iiint_V \frac{1}{2}u_\phi^2 dm \geq \frac{1}{2}\frac{L^2}{I} \qquad (16)
+$$
 
 completing the proof. This therefore implies that if there existed an energy minimum which is not rigid body, one could keep the density distribution the same and instead rotate the body rigidly. (This also eliminates any time-varying solutions.)
 
 Now, for the rigid body solutions, we can show that they cannot be an energy minimum by considering the fact that, for any given particle orbiting around a central mass of mass $M$ at a distance $r$ and with angular momentum $l$, it has energy
 
-$$\epsilon = \frac{l^2}{2r} - \frac{GM}{r} \qquad (17)$$
+$$
+\epsilon = \frac{l^2}{2r} - \frac{GM}{r} \qquad (17)
+$$
 
 This is negative by the boundedness of the mass, and therefore if the mass is moved inwards (decreasing $r$) while conserving angular momentum, the energy will decrease. We can therefore imagine a situation where, if there were a given rigidly rotating density distribution which is a local energy minimum, one can move a parcel of mass inwards while conserving the angular momentum to further decrease the energy. We can then redistribute the angular momentum so that the motion is again rigid body - as there is a slight decrease in moment of inertia, $\omega$ will increase slightly and the angular momentum is transferred outwards - and so on and so forth, until all the mass is concentrated at the central mass and an infinitesimal mass is orbiting infinitely far away and/or at infinite angular velocity. This is clearly unphysical and therefore there does not exist any configuration which is an energy minimum and stable.
 

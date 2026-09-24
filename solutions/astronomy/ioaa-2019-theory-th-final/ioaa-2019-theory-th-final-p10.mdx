@@ -33,37 +33,53 @@ Next, we measure the angles in radians.
 
 The central angle of the arc $\widehat{NA}$ on the meridian fitting to the point $A$ ($O$ is the centre of the sphere):
 
-$$NOA\sphericalangle=\frac{\pi}{2}-\varphi,\quad \text{where } \varphi=\varphi_A=\varphi_B$$
+$$
+NOA\sphericalangle=\frac{\pi}{2}-\varphi,\quad \text{where } \varphi=\varphi_A=\varphi_B
+$$
 
 Thus the length $s$ of the arc $\widehat{NA}$:
 
-$$s=R\left(\frac{\pi}{2}-\varphi\right),\quad \text{where } s<R\pi$$
+$$
+s=R\left(\frac{\pi}{2}-\varphi\right),\quad \text{where } s<R\pi
+$$
 
 The radius of the latitude circle fitting to the points $A$ and $B$:
 
-$$r_{AB}=R\sin\left(\frac{\pi}{2}-\varphi\right)=R\cos\varphi$$
+$$
+r_{AB}=R\sin\left(\frac{\pi}{2}-\varphi\right)=R\cos\varphi
+$$
 
 The central angle of the arc $\widehat{AB}$ is $\lambda_B-\lambda_A$, thus the length of the arc $\widehat{AB}$:
 
-$$s=r_{AB}\,(\lambda_B-\lambda_A)=R\cos\varphi\,(\lambda_B-\lambda_A)$$
+$$
+s=r_{AB}\,(\lambda_B-\lambda_A)=R\cos\varphi\,(\lambda_B-\lambda_A)
+$$
 
 From the Eq. (10.2) and Eq. (10.4):
 
-$$\varphi=\frac{\pi}{2}-\frac{s}{R}\quad \text{and}\quad \lambda_B-\lambda_A=\frac{s}{R\cos\varphi}$$
+$$
+\varphi=\frac{\pi}{2}-\frac{s}{R}\quad \text{and}\quad \lambda_B-\lambda_A=\frac{s}{R\cos\varphi}
+$$
 
 Substitute the expression of $\varphi$ from the first equation into the second equation:
 
-$$\lambda_B-\lambda_A=\frac{s}{R\cos\varphi}=\frac{\dfrac{s}{R}}{\cos\left(\dfrac{\pi}{2}-\dfrac{s}{R}\right)}=\frac{\dfrac{s}{R}}{\sin\dfrac{s}{R}}$$
+$$
+\lambda_B-\lambda_A=\frac{s}{R\cos\varphi}=\frac{\dfrac{s}{R}}{\cos\left(\dfrac{\pi}{2}-\dfrac{s}{R}\right)}=\frac{\dfrac{s}{R}}{\sin\dfrac{s}{R}}
+$$
 
 For a given arc length of $s$ ($s<R\pi$) the latitude $\varphi$ of the points $A$ and $B$, and the difference between their longitudes we can calculate from the following equations:
 
-$$\varphi=\frac{\pi}{2}-\frac{s}{R}\quad \text{and}\quad \lambda_B-\lambda_A=\frac{\dfrac{s}{R}}{\sin\dfrac{s}{R}}$$
+$$
+\varphi=\frac{\pi}{2}-\frac{s}{R}\quad \text{and}\quad \lambda_B-\lambda_A=\frac{\dfrac{s}{R}}{\sin\dfrac{s}{R}}
+$$
 
 ***** Supplement. It is just for the sake of completeness, not necessary for the full marks.
 
 It is well known, that
 
-$$\lim_{x\to 0}\frac{\sin x}{x}=\lim_{x\to 0}\frac{x}{\sin x}=1,$$
+$$
+\lim_{x\to 0}\frac{\sin x}{x}=\lim_{x\to 0}\frac{x}{\sin x}=1,
+$$
 
 thus $\lambda_B-\lambda_A=1$ in case of $s\to 0$.
 
@@ -71,29 +87,41 @@ Therefore the difference in longitude has a lower limit (1), but it has no upper
 
 The arc length $s_{\mathrm{lim}}$ corresponding to the "limit case" of $\lambda_B-\lambda_A=2\pi$ we can derive from the numerical solution of the following transcendent equation:
 
-$$\frac{s^{\mathrm{lim}}}{R}-2\pi\sin\frac{s^{\mathrm{lim}}}{R}=0$$
+$$
+\frac{s^{\mathrm{lim}}}{R}-2\pi\sin\frac{s^{\mathrm{lim}}}{R}=0
+$$
 
 Thus find the root of the function
 
-$$f(s)=\frac{s}{R}-2\pi\sin\frac{s}{R},$$
+$$
+f(s)=\frac{s}{R}-2\pi\sin\frac{s}{R},
+$$
 
 i.e. the value $s_{\mathrm{lim}}$, where $f(s_{\mathrm{lim}})=0$. We can solve it by iteration using e.g. the Newton–Raphson method:
 
-$$s_{k+1}=s_k-\frac{f(s_k)}{f'(s_k)},\quad k=0,1,2,\ldots$$
+$$
+s_{k+1}=s_k-\frac{f(s_k)}{f'(s_k)},\quad k=0,1,2,\ldots
+$$
 
 The first derivative of the function $f(s)$:
 
-$$f'(s)=\frac{1}{R}-\frac{2\pi}{R}\cos\frac{s}{R}$$
+$$
+f'(s)=\frac{1}{R}-\frac{2\pi}{R}\cos\frac{s}{R}
+$$
 
 We know that the parallel in question runs south from the Equator, thus a good initial value for the iteration could be $s_0=R\pi/2+\Delta s$, where $\Delta s=1000$ km.
 
 The result of the iteration and the corresponding latitude with three decimal places:
 
-$$s_{\mathrm{lim}}=17\,206.566\ \mathrm{km},\quad \varphi_{\mathrm{lim}}=-64.573^{\circ}$$
+$$
+s_{\mathrm{lim}}=17\,206.566\ \mathrm{km},\quad \varphi_{\mathrm{lim}}=-64.573^{\circ}
+$$
 
 $\lambda_B-\lambda_A$ is strictly increasing function of $s$ and
 
-$$\lim_{s/R\to 0}\lambda_B-\lambda_A=1,\quad \lim_{s/R\to\pi}\lambda_B-\lambda_A=\infty,$$
+$$
+\lim_{s/R\to 0}\lambda_B-\lambda_A=1,\quad \lim_{s/R\to\pi}\lambda_B-\lambda_A=\infty,
+$$
 
 thus for any values of $0<s<R\pi$ can be found an appropriate angle $\lambda_B-\lambda_A$ (see the figure below).
 
@@ -103,7 +131,10 @@ In conclusion, the solution in this case is the North Pole ($N$). **[2 p]**
 
 For the value of $s=6378$ km the solution is an ($a$)-type curve. The coordinates of the turning points are:
 
-$$\lambda_A=0^{\circ},\quad \lambda_B=68.09^{\circ},\quad \varphi_A=\varphi_B=32.704^{\circ}$$ **[3 p]**
+$$
+\lambda_A=0^{\circ},\quad \lambda_B=68.09^{\circ},\quad \varphi_A=\varphi_B=32.704^{\circ}
+$$
+**[3 p]**
 
 2. The non-trivial solutions are similar to the ($e$)-type ("lasso") solution of the previous part, only the starting point is not the North Pole, but its location depends on the given value of arc length $s$. The circle of the lasso will run south from the ($e$)-type "limit circle", because the circumference of parallels running north from it are greater than the north-south arc.
 
@@ -113,23 +144,36 @@ Knowing $s$, we have to find the parallel around the South Pole ($S$), whose cir
 
 If the corresponding latitude is $\varphi_D$, then:
 
-$$(10.10)\quad 2k\pi R\cos\varphi_D=s,\quad k=1,2,3,\ldots$$ **[5 p]**
+$$
+(10.10)\quad 2k\pi R\cos\varphi_D=s,\quad k=1,2,3,\ldots
+$$
+**[5 p]**
 
 If the latitude of the sought starting point $C$ is $\varphi_C$, then the length $s$ of the arc to be taken along the meridian:
 
-$$(10.11)\quad s=R\,(\varphi_C-\varphi_D)$$
+$$
+(10.11)\quad s=R\,(\varphi_C-\varphi_D)
+$$
 
 From the Eqs. (10.10) and (10.11):
 
-$$(10.12)\quad \varphi_C=\varphi_D+2k\pi\cos\varphi_D,\quad k=1,2,3,\ldots$$
+$$
+(10.12)\quad \varphi_C=\varphi_D+2k\pi\cos\varphi_D,\quad k=1,2,3,\ldots
+$$
 
 Thus:
 
-$$(10.13)\quad \varphi_D=-\arccos\frac{s}{2k\pi R},\quad k=1,2,3,\ldots$$ **[2 p]**
+$$
+(10.13)\quad \varphi_D=-\arccos\frac{s}{2k\pi R},\quad k=1,2,3,\ldots
+$$
+**[2 p]**
 
 and
 
-$$(10.14)\quad \varphi_C=-\arccos\frac{s}{2k\pi R}+\frac{s}{R},\quad k=1,2,3,\ldots$$ **[2 p]**
+$$
+(10.14)\quad \varphi_C=-\arccos\frac{s}{2k\pi R}+\frac{s}{R},\quad k=1,2,3,\ldots
+$$
+**[2 p]**
 
 The negative sign denotes that the parallel is in the southern hemisphere.
 
@@ -137,11 +181,17 @@ So if the starting point is not the North Pole ($N$), there are infinitely many 
 
 For the value of $s=6378$ km the first 5 ($k=1,\ldots,5$) value for $\varphi_D$ in degrees with 3 decimal places:
 
-$$\varphi_{D1}=-80.842^{\circ},\ \varphi_{D2}=-85.436^{\circ},\ \varphi_{D3}=-86.959^{\circ},\ \varphi_{D4}=-87.72^{\circ},\ \varphi_{D5}=-88.176^{\circ}$$ **[2 p]**
+$$
+\varphi_{D1}=-80.842^{\circ},\ \varphi_{D2}=-85.436^{\circ},\ \varphi_{D3}=-86.959^{\circ},\ \varphi_{D4}=-87.72^{\circ},\ \varphi_{D5}=-88.176^{\circ}
+$$
+**[2 p]**
 
 The first 5 ($k=1,\ldots,5$) value for $\varphi_C$ in degrees with 3 decimal places:
 
-$$\varphi_{C1}=-23.546^{\circ},\ \varphi_{C2}=-28.14^{\circ},\ \varphi_{C3}=-29.663^{\circ},\ \varphi_{C4}=-30.424^{\circ},\ \varphi_{C5}=-30.88^{\circ}$$ **[2 p]**
+$$
+\varphi_{C1}=-23.546^{\circ},\ \varphi_{C2}=-28.14^{\circ},\ \varphi_{C3}=-29.663^{\circ},\ \varphi_{C4}=-30.424^{\circ},\ \varphi_{C5}=-30.88^{\circ}
+$$
+**[2 p]**
 
 In conclusion, starting to the South from a point of the parallel marked with a dashed red line ($C$), we get to a point on a parallel marked with a continuous red line ($D$). On this parallel we travel a full circle to the East, then we get back to the point $D$, then turn to North and travel back to starting point $C$.
 

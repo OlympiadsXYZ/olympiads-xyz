@@ -81,45 +81,65 @@ Determine the following:
 
 Two forces act on the ball: gravity, and air friction. They are not necessarily equal, so the net force, and hence an expression for the acceleration, would be given by
 
-$$ma = -mg - kv$$
+$$
+ma = -mg - kv
+$$
 
 where *up* is positive. We can’t simply rearrange this to solve for $v$, since $a$ is a variable. We can, however, rearrange to prepare for integration, since $a = dv/dt$:
 
-$$\frac{dv}{dt} = -\left(g + \frac{k}{m}v\right)$$
+$$
+\frac{dv}{dt} = -\left(g + \frac{k}{m}v\right)
+$$
 
 or
 
-$$\frac{dv}{(g + \frac{k}{m}v)} = -dt.$$
+$$
+\frac{dv}{(g + \frac{k}{m}v)} = -dt.
+$$
 
 Integrating both sides
 
-$$\frac{m}{k}\ln\left(\frac{mg/k + v}{mg/k + v_0}\right) = -(t - t_0).$$
+$$
+\frac{m}{k}\ln\left(\frac{mg/k + v}{mg/k + v_0}\right) = -(t - t_0).
+$$
 
 Assume $t_0$ is zero. Then
 
-$$v = (mg/k + v_0)e^{-\frac{k}{m}t} - mg/k$$
+$$
+v = (mg/k + v_0)e^{-\frac{k}{m}t} - mg/k
+$$
 
 Note that as $t \to \infty$ the ball will approach a constant speed of $v_t = mg/k$. Of course, it will probably hit the ground first, but if it were thrown up in the air over the edge of an infinitely deep cliff....
 
 The ball will rise until the velocity is zero, or when
 
-$$-\frac{v_t}{g}\ln\left(\frac{v_t}{v_t + v_0}\right) = t_r.$$
+$$
+-\frac{v_t}{g}\ln\left(\frac{v_t}{v_t + v_0}\right) = t_r.
+$$
 
 or, if you prefer,
 
-$$t_r = \frac{v_t}{g}\ln\left(1 + \frac{v_0}{v_t}\right)$$
+$$
+t_r = \frac{v_t}{g}\ln\left(1 + \frac{v_0}{v_t}\right)
+$$
 
 To find the height we need to integrate one more time. Since $v = dx/dt$ we can write
 
-$$dx = \left((v_t + v_0)e^{-\frac{g}{v_t}t} - v_t\right)dt$$
+$$
+dx = \left((v_t + v_0)e^{-\frac{g}{v_t}t} - v_t\right)dt
+$$
 
 which integrates quickly to
 
-$$h = (v_t + v_0)\left(-\frac{v_t}{g}\right)\left(e^{-\frac{g}{v_t}t_r} - 1\right) - (v_t t_r)$$
+$$
+h = (v_t + v_0)\left(-\frac{v_t}{g}\right)\left(e^{-\frac{g}{v_t}t_r} - 1\right) - (v_t t_r)
+$$
 
 Gluing together with the expression for $t_r$,
 
-$$h = \frac{v_t v_0}{g} - \frac{{v_t}^2}{g}\ln\left(1 + \frac{v_0}{v_t}\right).$$
+$$
+h = \frac{v_t v_0}{g} - \frac{{v_t}^2}{g}\ln\left(1 + \frac{v_0}{v_t}\right).
+$$
 
 Showing that it reduces to $h = v_0^2/2g$ in the limit as $k \to 0$ is left as an exercise for the reader.
 

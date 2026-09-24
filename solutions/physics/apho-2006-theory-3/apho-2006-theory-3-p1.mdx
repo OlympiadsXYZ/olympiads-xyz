@@ -23,7 +23,9 @@ This problem consists of four not related parts.
 
 ***Note*:** The fluids have very small compressibility. Compressibility coefficient is defined as
 
-$$\kappa = -\frac{1}{V}\left(\frac{dV}{dP}\right)_{T=const}$$
+$$
+\kappa = -\frac{1}{V}\left(\frac{dV}{dP}\right)_{T=const}
+$$
 
 Bulk modulus $K$ is the inverse of $\kappa$: $K=1/\kappa$.
 
@@ -44,53 +46,77 @@ Bulk modulus $K$ is the inverse of $\kappa$: $K=1/\kappa$.
 
 The change of the pressure is related to the change in the density via
 
-$$\Delta P = -K\frac{\Delta V}{V} = K\frac{\Delta\rho}{\rho_0}, \qquad (1)$$
+$$
+\Delta P = -K\frac{\Delta V}{V} = K\frac{\Delta\rho}{\rho_0}, \qquad (1)
+$$
 
 where $\rho_0$ is the density of water at the surface.
 
-$$\rho = \rho_0 + \Delta\rho = \rho_0\left(1+\frac{\Delta\rho}{\rho_0}\right) = \rho_0\left(1+\frac{\Delta P}{K}\right), \qquad (2)$$
+$$
+\rho = \rho_0 + \Delta\rho = \rho_0\left(1+\frac{\Delta\rho}{\rho_0}\right) = \rho_0\left(1+\frac{\Delta P}{K}\right), \qquad (2)
+$$
 
 where $\Delta P \approx P$ (we neglect the atmospheric pressure). Then
 
 (A1)
-$$\rho(x) = \rho_0\left(1+\frac{P(x)}{K}\right). \qquad (3)$$
+$$
+\rho(x) = \rho_0\left(1+\frac{P(x)}{K}\right). \qquad (3)
+$$
 
 The change of the hydrostatic pressure with the depth equals
 
-$$dP = g\cdot\rho(x)dx, \quad \frac{dP}{dx} = g\rho(x) = g\rho_0 + g\rho_0\frac{P(x)}{K}, \qquad (4)$$
+$$
+dP = g\cdot\rho(x)dx, \quad \frac{dP}{dx} = g\rho(x) = g\rho_0 + g\rho_0\frac{P(x)}{K}, \qquad (4)
+$$
 
-$$\frac{dP(x)}{dx} - \frac{g\rho_0}{K}P(x) = g\rho_0. \qquad (5)$$
+$$
+\frac{dP(x)}{dx} - \frac{g\rho_0}{K}P(x) = g\rho_0. \qquad (5)
+$$
 
 The solution of this differential equation with boundary condition $P(0) = 0$ is
 
-$$P(x) = K\left(\exp\frac{g\rho_0}{K}x - 1\right). \qquad (6)$$
+$$
+P(x) = K\left(\exp\frac{g\rho_0}{K}x - 1\right). \qquad (6)
+$$
 
 Since $\frac{g\rho_0}{K}H \ll 1$, we can use the expansion
 
-$$\exp z \approx 1 + z + \frac{z^2}{2!} + \ldots, \qquad (7)$$
+$$
+\exp z \approx 1 + z + \frac{z^2}{2!} + \ldots, \qquad (7)
+$$
 
 thus
 
-$$P(x) \cong g\rho_0 x + \frac{1}{2K}\left(g\rho_0 x\right)^2 \qquad (8)$$
+$$
+P(x) \cong g\rho_0 x + \frac{1}{2K}\left(g\rho_0 x\right)^2 \qquad (8)
+$$
 
 The last formula can be simply derived using the method of successive iterations. First, the pressure can be estimated without compressibility taken into account:
 
-$$P_0(x) = g\rho_0 x. \qquad (9)$$
+$$
+P_0(x) = g\rho_0 x. \qquad (9)
+$$
 
 Correction to the density in the first approximation can be obtained using $P_0(x)$:
 
-$$\rho_1(x) = \rho_o\left(1 + \frac{g\rho_0 x}{K}\right). \qquad (10)$$
+$$
+\rho_1(x) = \rho_o\left(1 + \frac{g\rho_0 x}{K}\right). \qquad (10)
+$$
 
 Now, correction to pressure can be obtained using $\rho_1(x)$:
 
-$$P_1(H) = \int_0^H \rho_1(x)g\,dx = g\rho_0 x + \frac{1}{2K}\left(g\rho_0 x\right)^2, \qquad (11)$$
+$$
+P_1(H) = \int_0^H \rho_1(x)g\,dx = g\rho_0 x + \frac{1}{2K}\left(g\rho_0 x\right)^2, \qquad (11)
+$$
 
 as obtained earlier.
 
 Putting in the numerical values, we get
 
 (A2)
-$$P(H) = (1098\cdot 10^5 + 28{,}7\cdot 10^5)\,\text{Па} \approx 1{,}13\cdot 10^8\ \text{Па}. \qquad (12)$$
+$$
+P(H) = (1098\cdot 10^5 + 28{,}7\cdot 10^5)\,\text{Па} \approx 1{,}13\cdot 10^8\ \text{Па}. \qquad (12)
+$$
 
 **Mark Distribution**
 

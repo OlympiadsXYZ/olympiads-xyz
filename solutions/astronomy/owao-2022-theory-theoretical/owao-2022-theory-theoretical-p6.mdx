@@ -31,17 +31,23 @@ The JWST wavelength coverage is 0.6 – 28.5 µm (orange to mid-infrared). Assum
 
 First, let us estimate the distance to the star. For simplicity, we will assume here and below that $z \ll 1$ still:
 
-$$d = \frac{cz}{H_0} = \frac{3\cdot 10^5\ \mathrm{km/s}\cdot 0.2}{70\ \mathrm{(km/s)/Mpc}} = 0.86\ \mathrm{Gpc}.$$
+$$
+d = \frac{cz}{H_0} = \frac{3\cdot 10^5\ \mathrm{km/s}\cdot 0.2}{70\ \mathrm{(km/s)/Mpc}} = 0.86\ \mathrm{Gpc}.
+$$
 
 We consider the star to be a black body. Average energy of a black-body photon is $\bar{\varepsilon} = 2.70k_BT$. The estimated photon flux density (number of photons per square meter per second) from the star in the Solar system is
 
-$$F = \frac{L_\odot}{4\pi d^2}\cdot\frac{1}{\bar{\varepsilon}} = \frac{4\pi R_\odot^2\sigma T_\odot^4}{4\pi d^2\cdot 2.70k_BT_\odot} = \frac{R_\odot^2\sigma T_\odot^3}{2.70d^2k_B} = 2.0\cdot 10^{-7}\ \mathrm{m^{-2}\cdot s^{-1}}.$$
+$$
+F = \frac{L_\odot}{4\pi d^2}\cdot\frac{1}{\bar{\varepsilon}} = \frac{4\pi R_\odot^2\sigma T_\odot^4}{4\pi d^2\cdot 2.70k_BT_\odot} = \frac{R_\odot^2\sigma T_\odot^3}{2.70d^2k_B} = 2.0\cdot 10^{-7}\ \mathrm{m^{-2}\cdot s^{-1}}.
+$$
 
 Not all of these photons fall within the telescope’s wavelength coverage. The observed $\lambda$ range of 0.6 – 28.5 µm corresponds to initial $\lambda' = \frac{\lambda}{1+z}$ range of 0.5 – 23.75 µm.
 
 Recalling Planck’s law and expression $\varepsilon = h\nu = \dfrac{hc}{\lambda}$ for energy of a photon, we introduce substitution $x \equiv \frac{hc}{\lambda k_BT_\odot}$:
 
-$$x_1 = 0.105, \quad x_2 = 4.97.$$
+$$
+x_1 = 0.105, \quad x_2 = 4.97.
+$$
 
 Such a range covers both the mean value over the energy distribution ($x_{\mathrm{mean}} = 2.70$, mentioned before) and the rather sharp peak of the distribution itself ($x_{\max} = 2.82$). So, we can expect that in fact almost all photons fall within the JWST wavelength coverage (in fact, 90 % of the photons from the star meet that condition).
 
@@ -49,39 +55,57 @@ By the way, the frequency for maximal spectral radiance of a black body with tem
 
 *Note.* Constants $k_B$ and $\sigma$ are not given in the table. They can be estimated using well-known energetic properties of the Sun. For example, the solar luminosity
 
-$$L_\odot = 4\pi R_\odot^2\sigma T_\odot^4 \approx 3.8\cdot 10^{26}\ \mathrm{W},$$
+$$
+L_\odot = 4\pi R_\odot^2\sigma T_\odot^4 \approx 3.8\cdot 10^{26}\ \mathrm{W},
+$$
 
 or the solar constant
 
-$$A_\odot \approx 1.4\ \mathrm{kW/m^2} = \frac{R_\odot^2\sigma T_\odot^4}{a_\oplus^2}.$$
+$$
+A_\odot \approx 1.4\ \mathrm{kW/m^2} = \frac{R_\odot^2\sigma T_\odot^4}{a_\oplus^2}.
+$$
 
 So, the Stefan–Boltzmann constant
 
-$$\sigma = \frac{L_\odot}{4\pi R_\odot^2T_\odot^4} = \frac{A_\odot a_\oplus^2}{R_\odot^2T_\odot^4} \approx 5.7\cdot 10^{-8}\ \mathrm{W/(m^2\cdot K^4)}.$$
+$$
+\sigma = \frac{L_\odot}{4\pi R_\odot^2T_\odot^4} = \frac{A_\odot a_\oplus^2}{R_\odot^2T_\odot^4} \approx 5.7\cdot 10^{-8}\ \mathrm{W/(m^2\cdot K^4)}.
+$$
 
 One could also recall Wien’s displacement law:
 
-$$\frac{hc}{\lambda_{\max}} \simeq 5.0k_BT_\odot,$$
+$$
+\frac{hc}{\lambda_{\max}} \simeq 5.0k_BT_\odot,
+$$
 
 where $\lambda_{\max} = 0.5$ µm for the solar spectrum. Of course, $\lambda_{\max} \neq \lambda'_{\max}$: it is well-known that parameterization by frequency implies a different maximal wavelength than parameterization by wavelength.
 
 Then $x_i = \dfrac{\lambda_{\max}}{\lambda_i}\cdot 5.0$, and
 
-$$k_B = \frac{hc}{5\lambda_{\max}T_\odot} \approx 1.4\cdot 10^{-23}\ \mathrm{J/K}.$$
+$$
+k_B = \frac{hc}{5\lambda_{\max}T_\odot} \approx 1.4\cdot 10^{-23}\ \mathrm{J/K}.
+$$
 
 Actually, the exact expression for $F$ in this model is
 
-$$F = \frac{R_\odot^2\sigma T_\odot^4}{d^2}\cdot\left(\frac{\int\limits_0^\infty\frac{x^3\,dx}{e^x-1}}{\int\limits_0^\infty\frac{x^2\,dx}{e^x-1}}k_BT_\odot\right)^{-1}\frac{\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1}}{\int\limits_0^\infty\frac{x^2\,dx}{e^x-1}} = \frac{R_\odot^2T_\odot^3}{d^2k_B}\cdot\frac{2\pi k_B^4}{h^3c^2}\cdot 3!\cdot\zeta(4)\cdot\frac{2!\cdot\zeta(3)}{3!\cdot\zeta(4)}\cdot\frac{\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1}}{2!\cdot\zeta(3)} =$$
+$$
+F = \frac{R_\odot^2\sigma T_\odot^4}{d^2}\cdot\left(\frac{\int\limits_0^\infty\frac{x^3\,dx}{e^x-1}}{\int\limits_0^\infty\frac{x^2\,dx}{e^x-1}}k_BT_\odot\right)^{-1}\frac{\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1}}{\int\limits_0^\infty\frac{x^2\,dx}{e^x-1}} = \frac{R_\odot^2T_\odot^3}{d^2k_B}\cdot\frac{2\pi k_B^4}{h^3c^2}\cdot 3!\cdot\zeta(4)\cdot\frac{2!\cdot\zeta(3)}{3!\cdot\zeta(4)}\cdot\frac{\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1}}{2!\cdot\zeta(3)} =
+$$
 
-$$= \frac{2\pi R_\odot^2c}{d^2}\cdot\left(\frac{k_BT_\odot}{hc}\right)^3\cdot\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1} = \frac{2\pi R_\odot^2c}{125d^2\lambda_{\max}^3}\cdot\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1} \simeq 0.83\cdot 10^{-7}\ \mathrm{m^{-2}\cdot s^{-1}}\times\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1}.$$
+$$
+= \frac{2\pi R_\odot^2c}{d^2}\cdot\left(\frac{k_BT_\odot}{hc}\right)^3\cdot\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1} = \frac{2\pi R_\odot^2c}{125d^2\lambda_{\max}^3}\cdot\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1} \simeq 0.83\cdot 10^{-7}\ \mathrm{m^{-2}\cdot s^{-1}}\times\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1}.
+$$
 
 The last integral can be calculated numerically, although this was not required for the presented solution. One could also estimate that integral as
 
-$$\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1} \approx \int\limits_0^\infty\frac{x^2\,dx}{e^x-1} \approx \int\limits_0^\infty x^2e^{-x}\,dx = 2! = 2 \sim 1.$$
+$$
+\int\limits_{x_1}^{x_2}\frac{x^2\,dx}{e^x-1} \approx \int\limits_0^\infty\frac{x^2\,dx}{e^x-1} \approx \int\limits_0^\infty x^2e^{-x}\,dx = 2! = 2 \sim 1.
+$$
 
 How long does it take for the telescope ($A = 25\ \mathrm{m^2}$) to accumulate 10 photons from the star?
 
-$$\tau = \frac{10}{FA} = 2.0\cdot 10^6\ \mathrm{s} \approx 23\ \mathrm{d}.$$
+$$
+\tau = \frac{10}{FA} = 2.0\cdot 10^6\ \mathrm{s} \approx 23\ \mathrm{d}.
+$$
 
 **Marking Scheme:**
 

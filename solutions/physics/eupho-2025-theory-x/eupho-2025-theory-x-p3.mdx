@@ -60,21 +60,31 @@ The component of $\vec{B}_Y$ directed along the wire is $B_\parallel = |\vec{B}_
 **Part c)** Let the point of closest approach be Q. We need to calculate the length of the spiraling field line between points P and Q. Due to the tight winding of the field lines, this length is much larger than $r$ or $a$. Therefore, the precise position of point Q around the loop closest to $x = 0$ (for example, whether it is on the side closer to wire $Y$ or on the side further from wire $Y$) is unimportant. To leading order, $L$ equals the length along the field line from P to the point on the field line with $x = 0$.
 
 Consider two points on the field line whose $x$-coordinates differ by a small amount $\mathrm{d}x$. The length $\mathrm{d}L$ of the short segment of field line joining these points is given by $\mathrm{d}x \approx (B_\parallel/B_\perp)\,\mathrm{d}L$. Here, we have decomposed the magnetic field vector into a component $B_\parallel$ along wire $X$ and a component $B_\perp$ perpendicular to wire $X$. In the previous part, we found $B_\parallel = (\mu_0 I/2\pi)(a/(a^2+x^2))$. The field of wire $X$ gives the dominant contribution to $B_\perp$, so $B_\perp = \mu_0 I/2\pi\rho$. These expressions are approximate and ignore corrections of order $r/a$. Since $r/a \approx 1/100$, ignoring these corrections is acceptable for the required accuracy of 20%. The total length is obtained by integration:
-$$L = \int_Q^P \mathrm{d}L = \int_0^{3a} \frac{a^2+x^2}{a\rho}\,\mathrm{d}x\,.$$
+$$
+L = \int_Q^P \mathrm{d}L = \int_0^{3a} \frac{a^2+x^2}{a\rho}\,\mathrm{d}x\,.
+$$
 
 Now, we use the equation for $\rho(x)$ derived in part b: $\rho(x)^2/(a^2+x^2) = r^2/(10a^2)$. The result is
-$$L = \int_0^{3a} \frac{\sqrt{10}}{r}\sqrt{a^2+x^2}\,\mathrm{d}x = \frac{\sqrt{10}a^2}{r}\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u\,.$$
+$$
+L = \int_0^{3a} \frac{\sqrt{10}}{r}\sqrt{a^2+x^2}\,\mathrm{d}x = \frac{\sqrt{10}a^2}{r}\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u\,.
+$$
 
 This expression must be numerically evaluated to within 20% relative error. To obtain a numerical value for the integral, we could use the trapezium rule or we could draw the curve $y = \sqrt{1+x^2}$ between $x = 0$ and $x = 3$ on graph paper and count the number of squares beneath the curve. In fact, a crude estimate using a single trapezium is sufficient for the required accuracy: $\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u \approx \int_0^3 [1 + (\sqrt{10}-1)(u/3)]\,\mathrm{d}u = 3 + (3/2)(\sqrt{10}-1) \approx 6.24$, resulting in a length of $L \approx 19.7a^2/r \approx 197$ m. The exact result is $L \approx 17.9a^2/r \approx 179$ m.
 
 Although not necessary for full credit, it is possible to evaluate the integral exactly. Substituting $u = \sinh(\beta)$ with $\mathrm{d}u = \cosh(\beta)\,\mathrm{d}\beta$ and using $\cosh^2(\beta) - \sinh^2(\beta) = 1$ gives
-$$\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \int_0^{\sinh^{-1}(3)} \cosh^2(\beta)\,\mathrm{d}\beta\,.$$
+$$
+\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \int_0^{\sinh^{-1}(3)} \cosh^2(\beta)\,\mathrm{d}\beta\,.
+$$
 
 Now, we use $\cosh^2(\beta) = (e^{2\beta}+2+e^{-2\beta})/4 = (\cosh(2\beta)+1)/2$ to obtain
-$$\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \frac{1}{2}\int_0^{\sinh^{-1}(3)} [\cosh(2\beta)+1]\,\mathrm{d}\beta = \frac{1}{4}\left[\sinh(2\beta)+2\beta\right]_0^{\sinh^{-1}(3)}\,.$$
+$$
+\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \frac{1}{2}\int_0^{\sinh^{-1}(3)} [\cosh(2\beta)+1]\,\mathrm{d}\beta = \frac{1}{4}\left[\sinh(2\beta)+2\beta\right]_0^{\sinh^{-1}(3)}\,.
+$$
 
 Finally, we use $\sinh(2\beta) = (e^{2\beta} - e^{-2\beta})/2 = 2\sinh(\beta)\cosh(\beta)$ and $\cosh(\sinh^{-1}(3)) = \sqrt{1+\sinh(\sinh^{-1}(3))^2} = \sqrt{10}$ to find
-$$\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \frac{1}{2}\left[3\sqrt{10} + \sinh^{-1}(3)\right] = \frac{1}{2}\left[3\sqrt{10} + \ln(3+\sqrt{10})\right] \approx 5.65\,.$$
+$$
+\int_0^3 \sqrt{1+u^2}\,\mathrm{d}u = \frac{1}{2}\left[3\sqrt{10} + \sinh^{-1}(3)\right] = \frac{1}{2}\left[3\sqrt{10} + \ln(3+\sqrt{10})\right] \approx 5.65\,.
+$$
 
 This gives $L \approx 17.9a^2/r \approx 179$ m, as stated above.
 

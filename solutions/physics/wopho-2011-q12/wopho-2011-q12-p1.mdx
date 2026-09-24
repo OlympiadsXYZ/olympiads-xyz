@@ -19,9 +19,13 @@ There are three types of Maglev systems – EMS (Electromagnetic Suspension), ED
 
 Shown in Figure 1 is a schematic side view of an Inductrack train-car. When at rest or moving at a low speed, the car lies with its wheels on the rails like any ordinary train. The car, however, detaches from the rails at a specific takeoff velocity $v_t$ due to the system described below: two long parallel arrays of permanent cubic-shape magnets of size $a = 5\ \mathrm{cm}$, each is located at the bottom of the car. The magnetic dipole moments of the neighboring magnets are tilted at an angle of $45^{\circ}$ relative to each other (the so called *Halbach* array). As a result a static magnetic field is produced below each array with components of the magnetic field given by the equations:
 
-$$B_x = B_0\exp(-ky)\sin(kx) \qquad (1)$$
+$$
+B_x = B_0\exp(-ky)\sin(kx) \qquad (1)
+$$
 
-$$B_y = B_0\exp(-ky)\cos(kx) \qquad (2)$$
+$$
+B_y = B_0\exp(-ky)\cos(kx) \qquad (2)
+$$
 
 where the $x$-coordinate is measured from the rear end of the car in the direction of motion and $y$-coordinate from the bottom of the car in a downward direction. The parameter $k$ is the wavenumber of the magnetic field. The amplitude of the magnetic field is $B_0 = 1.4\ \mathrm{T}$.
 
@@ -31,9 +35,13 @@ Note: In the real Inductrack trains, the frames of the inductive array are elect
 
 Helpful mathematics formulas:
 
-$$\sin(x) - \sin(y) = 2\sin\left(\frac{x-y}{2}\right)\cos\left(\frac{x+y}{2}\right) \qquad (3)$$
+$$
+\sin(x) - \sin(y) = 2\sin\left(\frac{x-y}{2}\right)\cos\left(\frac{x+y}{2}\right) \qquad (3)
+$$
 
-$$\cos(x) - \cos(y) = 2\sin\left(\frac{y-x}{2}\right)\sin\left(\frac{x+y}{2}\right) \qquad (4)$$
+$$
+\cos(x) - \cos(y) = 2\sin\left(\frac{y-x}{2}\right)\sin\left(\frac{x+y}{2}\right) \qquad (4)
+$$
 
 In parts 1-2 assume that the train car is infinitely long (*i.e.* equations 1 and 2 hold for all values of the $x$-coordinate)
 
@@ -59,7 +67,9 @@ In parts 1-2 assume that the train car is infinitely long (*i.e.* equations 1 an
 
 Each frame in the inductive array is characterized by a self-inductance $L$ and a resistance $R$. The mutual inductance between different frames is negligible compared to $L$. The current $I$ induced in the frame varies with time according to the equation:
 
-$$I(t) = I_0\sin(\omega t - kx_c + \psi) \qquad (5)$$
+$$
+I(t) = I_0\sin(\omega t - kx_c + \psi) \qquad (5)
+$$
 
 **2(a)** Obtain expressions for the amplitude $I_0$ and the phase-shift $\psi$ of the alternating current induced in the frame.
 
@@ -103,15 +113,21 @@ Consider a train-car of length $l = 10\ \mathrm{m}$ and mass $m = 10000\ \mathrm
 
 **Task 1.** The wavelength $\lambda$ of the magnetic wave corresponds to the spatial period of the Halbach array:
 
-$$\lambda = 8a$$
+$$
+\lambda = 8a
+$$
 
 Therefore, the wavevector of the wave is:
 
-$$\boxed{k = \frac{2\pi}{\lambda} = \frac{\pi}{4a}}$$
+$$
+\boxed{k = \frac{2\pi}{\lambda} = \frac{\pi}{4a}}
+$$
 
 or numerically:
 
-$$\boxed{k \approx 15.7\ \mathrm{m^{-1}}}$$
+$$
+\boxed{k \approx 15.7\ \mathrm{m^{-1}}}
+$$
 
 **Task 2.** There are two approaches for obtaining the EMF depending on the choice of the system of reference.
 
@@ -119,113 +135,167 @@ I. A reference system fixed to the Earth
 
 A point, having at time $t$ a coordinate $x$ relative to the Earth, has a “shifted” coordinate $x - vt$ relative to the train. Therefore the components of the magnetic induction relative to the Earth depend on the spatial coordinates and the time according to the equations:
 
-$$B_x(x,t) = B_0\exp(-ky)\sin(k(x - vt))$$
+$$
+B_x(x,t) = B_0\exp(-ky)\sin(k(x - vt))
+$$
 
-$$B_y(x,t) = B_0\exp(-ky)\cos(k(x - vt)).$$
+$$
+B_y(x,t) = B_0\exp(-ky)\cos(k(x - vt)).
+$$
 
 Since relative to the Earth the $x$-coordinate of the given inductive frame spans a fixed interval $x \in [x_c - b/2; x_c + b/2]$, the magnetic flux through the frame is:
 
-$$\Phi(t) = a\int_{x_c - b/2}^{x_c + b/2} B_y(x,t)\,dx = \frac{2B_0 a}{k}\exp(-ky)\sin\left(\frac{kb}{2}\right)\cos(k(x_c - vt))$$
+$$
+\Phi(t) = a\int_{x_c - b/2}^{x_c + b/2} B_y(x,t)\,dx = \frac{2B_0 a}{k}\exp(-ky)\sin\left(\frac{kb}{2}\right)\cos(k(x_c - vt))
+$$
 
 According to the Faraday’s law of magnetic induction, the induced EMF is:
 
-$$E = -\frac{d\Phi(t)}{dt} = -2B_0 av\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(k(x_c - vt))$$
+$$
+E = -\frac{d\Phi(t)}{dt} = -2B_0 av\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(k(x_c - vt))
+$$
 
 or
 
-$$\boxed{E = 2B_0 av\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(\omega t - kx_c)}$$
+$$
+\boxed{E = 2B_0 av\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(\omega t - kx_c)}
+$$
 
 where the circular frequency of the induced EMF is:
 
-$$\boxed{\omega = kv = \frac{\pi v}{4a}}$$
+$$
+\boxed{\omega = kv = \frac{\pi v}{4a}}
+$$
 
 II. A reference system connected to the car
 
 In this system the magnetic wave is static but the inductive frame moves with velocity $-v$ relative to the field. Therefore, the $x$-coordinate of the center of the frame relative to the train is $x = x_c - v\,t$. In that case an EMF is induced along any small element $d\vec{r}$ of the frame:
 
-$$dE = \left[(-\vec{v})\times\vec{B}\right].d\vec{r}$$
+$$
+dE = \left[(-\vec{v})\times\vec{B}\right].d\vec{r}
+$$
 
 The EMF is induced only along the two sides of the frame, which are perpendicular to the $X$-axis (see Figure S1). Taking into account that the $x$-coordinate of these two sides are $x = x_c - v\,t \pm b/2$, the total EMF in the frame is:
 
-$$E = vB_y(x_c - vt + b/2)a - vB_y(x_c - vt - b/2)a$$
+$$
+E = vB_y(x_c - vt + b/2)a - vB_y(x_c - vt - b/2)a
+$$
 
 After simplification we obtain the same result as above:
 
-$$\boxed{E = 2B_0 av\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(\omega t - kx_c)}$$
+$$
+\boxed{E = 2B_0 av\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(\omega t - kx_c)}
+$$
 
 **Task 3.** The parameters of the induced current could be obtained in two equivalent ways.
 
 I. We set up the Kirchhoff’s equation for the conductive frame:
 
-$$E_0\sin(\omega t - k_c x) - L\frac{dI}{dt} = IR$$
+$$
+E_0\sin(\omega t - k_c x) - L\frac{dI}{dt} = IR
+$$
 
 where $E_0 = 2B_0 av\exp(-ky)\sin\left(\frac{kb}{2}\right)$ is the amplitude of the induced EMF. We substitute into that equation the time dependence of the current:
 
-$$E_0\sin(\omega t - k_c x) - \omega LI_0\cos(\omega t - k_c x + \varphi) = I_0\sin(\omega t - k_c x + \varphi)R$$
+$$
+E_0\sin(\omega t - k_c x) - \omega LI_0\cos(\omega t - k_c x + \varphi) = I_0\sin(\omega t - k_c x + \varphi)R
+$$
 
 Consider two moments of time when the phase $\omega t - k_c x$ of the induced EMF is 0 and $\pi/2$ respectively. Thus, we obtain a set of two equations:
 
-$$-\omega LI_0\cos(\varphi) = I_0 R\sin(\varphi)$$
+$$
+-\omega LI_0\cos(\varphi) = I_0 R\sin(\varphi)
+$$
 
 and
 
-$$E_0 + \omega LI_0\sin(\varphi) = I_0 R\cos(\varphi).$$
+$$
+E_0 + \omega LI_0\sin(\varphi) = I_0 R\cos(\varphi).
+$$
 
 Finally we get:
 
-$$\boxed{\tan(\varphi) = -\frac{\omega L}{R} = -\frac{kvL}{R}}$$
+$$
+\boxed{\tan(\varphi) = -\frac{\omega L}{R} = -\frac{kvL}{R}}
+$$
 
 and
 
-$$\boxed{I_0 = \frac{E_0}{\sqrt{R^2 + (\omega L)^2}} = \frac{2B_0 av\exp(-ky)}{\sqrt{R^2 + (kvL)^2}}\sin\left(\frac{kb}{2}\right)}.$$
+$$
+\boxed{I_0 = \frac{E_0}{\sqrt{R^2 + (\omega L)^2}} = \frac{2B_0 av\exp(-ky)}{\sqrt{R^2 + (kvL)^2}}\sin\left(\frac{kb}{2}\right)}.
+$$
 
 II. The inductive frame is equivalent to a circuit of series-connected inductance $L$ and an Ohmic resistance $R$ as shown in Figure S2. We consider the rotating-vector diagram for the current $I$ and voltage drops $U_L$ and $U_R$ across the inductance and the resistance respectively (see Figure S2). The amplitudes of the voltage drops are connected to the amplitude $I_0$ of the current through:
 
-$$U_L = \omega LI_0$$
+$$
+U_L = \omega LI_0
+$$
 
 and
 
-$$U_R = RI_0.$$
+$$
+U_R = RI_0.
+$$
 
 It follows from the diagram that the amplitude $E_0$ of the EMF is given by:
 
-$$E_0 = \sqrt{U_R^2 + U_L^2} = \sqrt{R^2 + (\omega L)^2}\,I_0$$
+$$
+E_0 = \sqrt{U_R^2 + U_L^2} = \sqrt{R^2 + (\omega L)^2}\,I_0
+$$
 
 Therefore, the amplitude of the current is:
 
-$$\boxed{I_0 = \frac{E_0}{\sqrt{R^2 + (\omega L)^2}} = \frac{2B_0 av\exp(-ky)}{\sqrt{R^2 + (kvL)^2}}\sin\left(\frac{kb}{2}\right)}.$$
+$$
+\boxed{I_0 = \frac{E_0}{\sqrt{R^2 + (\omega L)^2}} = \frac{2B_0 av\exp(-ky)}{\sqrt{R^2 + (kvL)^2}}\sin\left(\frac{kb}{2}\right)}.
+$$
 
 It is evident from Figure S2 that:
 
-$$\boxed{\tan(\varphi) = -\frac{\omega L}{R} = -\frac{kvL}{R}}$$
+$$
+\boxed{\tan(\varphi) = -\frac{\omega L}{R} = -\frac{kvL}{R}}
+$$
 
 The “–“ sign means that the current is in retard relative to the induced EMF.
 
 **Task 4.** As it follows from Figure S1 the vertical component of the force acting on the inductive frame is:
 
-$$F_y(t) = I(t)a\{B_x(x_c - b/2) - B_x(x_c + b/2)\} = -2I_0\sin(\omega t - kx_c + \varphi)aB_0\sin\left(\frac{kb}{2}\right)\cos(\omega t - kx_c) =$$
+$$
+F_y(t) = I(t)a\{B_x(x_c - b/2) - B_x(x_c + b/2)\} = -2I_0\sin(\omega t - kx_c + \varphi)aB_0\sin\left(\frac{kb}{2}\right)\cos(\omega t - kx_c) =
+$$
 
-$$= 2I_0 B_0 a\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(\omega t - kx_c + \varphi)\sin(\omega t - kx_c - \pi/2)$$
+$$
+= 2I_0 B_0 a\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(\omega t - kx_c + \varphi)\sin(\omega t - kx_c - \pi/2)
+$$
 
 The time-average of that function is:
 
-$$\overline{F}_y = I_0 B_0 a\exp(-ky)\sin\left(\frac{kb}{2}\right)\cos(\varphi + \pi/2) = -I_0 B_0 a\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(\varphi)$$
+$$
+\overline{F}_y = I_0 B_0 a\exp(-ky)\sin\left(\frac{kb}{2}\right)\cos(\varphi + \pi/2) = -I_0 B_0 a\exp(-ky)\sin\left(\frac{kb}{2}\right)\sin(\varphi)
+$$
 
 By taking into account the expressions for $I_0$, and $\varphi$, and the relation $\sin\varphi = \frac{\tan\varphi}{\sqrt{1 + \tan^2\varphi}}$ we finally obtain:
 
-$$\boxed{\overline{F}_y = I_0 = \frac{E_0}{\sqrt{R^2 + (\omega L)^2}} = \frac{2B_0^2 a^2 v^2 kL\exp(-2ky)}{R^2 + (kvL)^2}\sin^2\left(\frac{kb}{2}\right)}$$
+$$
+\boxed{\overline{F}_y = I_0 = \frac{E_0}{\sqrt{R^2 + (\omega L)^2}} = \frac{2B_0^2 a^2 v^2 kL\exp(-2ky)}{R^2 + (kvL)^2}\sin^2\left(\frac{kb}{2}\right)}
+$$
 
 Concerning the horizontal component of the force, we may take an advantage by using the relation
 
-$$\overline{F}_x = \frac{\overline{P}}{v}$$
+$$
+\overline{F}_x = \frac{\overline{P}}{v}
+$$
 
 where
 
-$$\overline{P} = \frac{1}{2}I_0^2 R$$
+$$
+\overline{P} = \frac{1}{2}I_0^2 R
+$$
 
 is the average power dissipated by the current in the frame. By using the expression for $I_0$ we obtain:
 
-$$\boxed{\overline{F}_x = \frac{2B_0^2 a^2 vR\exp(-2ky)}{R^2 + (kvL)^2}\sin^2\left(\frac{kb}{2}\right)}$$
+$$
+\boxed{\overline{F}_x = \frac{2B_0^2 a^2 vR\exp(-2ky)}{R^2 + (kvL)^2}\sin^2\left(\frac{kb}{2}\right)}
+$$
 
 Qualitative graphs of the two functions are shown in Figure S3.
 
@@ -236,23 +306,33 @@ Points should be awarded for the following details:
 
 **Task 5.** According to the Newton’s third law any single inductive frame exercises on the train a vertical force $(-\overline{F}_y) < 0$, i.e. a force directed upward, against the gravity. Similarly, any frame acts on the car with a horizontal force $(-\overline{F}_x) < 0$ in the direction opposite to the direction of motion. Since there are:
 
-$$N = 2\times l/(2b) = l/b$$
+$$
+N = 2\times l/(2b) = l/b
+$$
 
 frames below the car area, the magnitudes of the lift and the drag forces are respectively:
 
-$$\boxed{F_L = \frac{2B_0^2 a^2 v^2 kLl\exp(-2ky)}{(R^2 + (kvL)^2)b}\sin^2\left(\frac{kb}{2}\right)} \quad \text{and} \quad \boxed{F_D = \frac{2B_0^2 a^2 vRl\exp(-2ky)}{(R^2 + (kvL)^2)b}\sin^2\left(\frac{kb}{2}\right)}$$
+$$
+\boxed{F_L = \frac{2B_0^2 a^2 v^2 kLl\exp(-2ky)}{(R^2 + (kvL)^2)b}\sin^2\left(\frac{kb}{2}\right)} \quad \text{and} \quad \boxed{F_D = \frac{2B_0^2 a^2 vRl\exp(-2ky)}{(R^2 + (kvL)^2)b}\sin^2\left(\frac{kb}{2}\right)}
+$$
 
 By introducing the aspect ratio $x = b/a$ and noticing that $k = \pi/(4a)$ the problem of maximization of the lift force is equivalent to finding a maximum of the function:
 
-$$f(x) = \frac{\sin^2(\pi x/8)}{x}$$
+$$
+f(x) = \frac{\sin^2(\pi x/8)}{x}
+$$
 
 After taking a first derivative of $f(x)$ the condition for a maximum reduces to solving the equation:
 
-$$\tan(\pi x/8) = \pi x/4$$
+$$
+\tan(\pi x/8) = \pi x/4
+$$
 
 Since in the point of intercept of the two sides of the equation, the tangent function has bigger slope than the linear function, it is convenient to rewrite the equation in a form that allows an iterative solution:
 
-$$x_{n+1} = 2.5465\arctan(0.7854x_n)$$
+$$
+x_{n+1} = 2.5465\arctan(0.7854x_n)
+$$
 
 By starting with a trial value, e.g. $x_0 = 1$, we obtain the following convergent series of approximations:
 
@@ -267,27 +347,39 @@ By starting with a trial value, e.g. $x_0 = 1$, we obtain the following converge
 
 Therefore, up to a precision of 4 significant digits, the optimal aspect ratio is:
 
-$$\boxed{b/a = 2.968}$$
+$$
+\boxed{b/a = 2.968}
+$$
 
 **Task 6.** For the optimal aspect ratio and by taking into account that $ak = \pi/4$ the expression for the lift force simplifies:
 
-$$F_L = 0.447\frac{B_0^2 v^2 Ll\exp(-2ky)}{R^2 + (kvL)^2}$$
+$$
+F_L = 0.447\frac{B_0^2 v^2 Ll\exp(-2ky)}{R^2 + (kvL)^2}
+$$
 
 For $y = 0$ the train detaches at a velocity such that $F_L = mg$, i.e.
 
-$$\boxed{v_t = R\sqrt{\frac{mg}{0.447B_0^2 Ll - mg(kL)^2}}}$$
+$$
+\boxed{v_t = R\sqrt{\frac{mg}{0.447B_0^2 Ll - mg(kL)^2}}}
+$$
 
 For the parameters specified:
 
-$$\boxed{v_t = 3.93\ \mathrm{m/s} \approx 14\ \mathrm{km/h}}$$
+$$
+\boxed{v_t = 3.93\ \mathrm{m/s} \approx 14\ \mathrm{km/h}}
+$$
 
 For greater velocities the train levitates at a distance $y$ above the rails such that the equilibrium condition is satisfied:
 
-$$0.447\frac{B_0^2 v^2 Ll\exp(-2ky)}{R^2 + (kvL)^2} = mg$$
+$$
+0.447\frac{B_0^2 v^2 Ll\exp(-2ky)}{R^2 + (kvL)^2} = mg
+$$
 
 Therefore, the gap between the wheels and the rails at a velocity of 360 km/h (100 m/s) is:
 
-$$\boxed{y = \frac{1}{2k}\ln\left(\frac{0.447B_0^2 v^2 Ll}{mg\left(R^2 + (kvL)^2\right)}\right) = 21\ \mathrm{cm}}$$
+$$
+\boxed{y = \frac{1}{2k}\ln\left(\frac{0.447B_0^2 v^2 Ll}{mg\left(R^2 + (kvL)^2\right)}\right) = 21\ \mathrm{cm}}
+$$
 
 <figure>
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2011-q12/p1-sol-fig1.png" alt="A rectangular inductive frame in perspective with arrows along its sides showing the positive direction of EMF and current circulation (labelled “Positive direction of EMF and current circulation”); a sinusoidal curve of the field with vertical arrows B; an arrow −v pointing left; axes X to the right and Y downward." />

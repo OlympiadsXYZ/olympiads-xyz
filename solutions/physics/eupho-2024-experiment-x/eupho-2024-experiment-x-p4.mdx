@@ -19,7 +19,9 @@ Solutions-only window; statements to be assembled from the problems-document win
 
 In this part you will be dropping the more elastic rubber ball on the piezo element. During the collision between the ball and the piezo, the ball experiences deformations. You can assume that the force $F$ acting on the ball depends on the ball's elastic deformation $x$ as a power law:
 
-$$F = kx^{\alpha}\,.$$
+$$
+F = kx^{\alpha}\,.
+$$
 
 Find the exponent $\alpha$ and the material constant $k$.
 
@@ -41,35 +43,49 @@ When the ball is dropped onto the piezo element, the kinetic energy just before 
 
 If we drop the ball onto the piezo element from different heights, we will provide different kinetic energies before the impact. Each time, we read the maximum voltage from the capacitor and convert it into piezo voltage by multiplying with $C/C_p$. Multiplying again with the linear slope $\beta$ found in task E.2c, we get the maximum force during the impact $F_m$. With that, we can, for each initial kinetic energy, compute the maximum deformation $x_m$.
 
-$$F = k x_m^{\alpha} \Rightarrow x_m = \left(\frac{F}{k}\right)^{1/\alpha} \qquad (14)$$
+$$
+F = k x_m^{\alpha} \Rightarrow x_m = \left(\frac{F}{k}\right)^{1/\alpha} \qquad (14)
+$$
 
 We integrate the force and find the maximum elastic energy the ball reaches during the collision.
 
-$$E_{elastic} = \int_0^{x_m} F(x)\,\mathrm{d}x = \frac{1}{\alpha+1} k x_m^{\alpha+1} = \frac{k^{-1/\alpha}}{\alpha+1} F_m^{1+1/\alpha} \qquad (15)$$
+$$
+E_{elastic} = \int_0^{x_m} F(x)\,\mathrm{d}x = \frac{1}{\alpha+1} k x_m^{\alpha+1} = \frac{k^{-1/\alpha}}{\alpha+1} F_m^{1+1/\alpha} \qquad (15)
+$$
 
 From task E.1, we can express the elastic energy of the ball, when dropped from height $h$:
 
-$$E_{elastic} = \eta m g h \qquad (16)$$
+$$
+E_{elastic} = \eta m g h \qquad (16)
+$$
 
 where $m = (8 \pm 0.5)\,\mathrm{g}$ can be measured using the scales. Using that, we can plot the elastic energy as a function of the maximum force. However, this linear plot (Fig. 10) was not required from the students, we only show it here for illustration.
 
 Taking the logarithm of both $F_m$ and $E_{elastic}$, we arrive at a linear function, which we can plot (Fig. 11).
 
-$$\ln E_{elastic} = \ln \frac{k^{-1/\alpha}}{\alpha+1} + \left(1 + \frac{1}{\alpha}\right) \ln F_m\,. \qquad (17)$$
+$$
+\ln E_{elastic} = \ln \frac{k^{-1/\alpha}}{\alpha+1} + \left(1 + \frac{1}{\alpha}\right) \ln F_m\,. \qquad (17)
+$$
 
 Extracting the slope $\gamma$, we arrive at a value of $\alpha$ of:
 
-$$\gamma = \left(1 + \frac{1}{\alpha}\right) \Rightarrow \alpha = \frac{1}{\gamma - 1} \approx 0.75 \pm 0.06\,, \qquad (18)$$
+$$
+\gamma = \left(1 + \frac{1}{\alpha}\right) \Rightarrow \alpha = \frac{1}{\gamma - 1} \approx 0.75 \pm 0.06\,, \qquad (18)
+$$
 
 A more correct way is to take into account only the nicely linear region in the center of the range. The reason for dropping the leftmost datapoint is that the relative uncertainty of the underlying height measurement is very low. The reason for dropping the rightmost datapoints lies in the force-voltage curve: we are already starting to approach the saturation region.
 
-$$\gamma_2 = 1.06 \pm 0.05\,.$$
+$$
+\gamma_2 = 1.06 \pm 0.05\,.
+$$
 
 *Note: This result is actually surprising, since, according to the Hertz theory, we would have expected an exponent of 3/2. This is again something related to the piezo element being glued to the plates: while the crystal tries to take a bowl-like shape, plate moves slightly towards the ball, hence the deformation of the ball does no longer strictly correspond to its displacement during the impact.*
 
 With Eq. 17, we can compute $k$ from the interception of the fit ($y_0 = -15.7$), so:
 
-$$k = ((\exp y_0)(\alpha+1))^{-\alpha} \approx (84000 \pm 7000)\,\mathrm{N/m^{\alpha}} \qquad (20)$$
+$$
+k = ((\exp y_0)(\alpha+1))^{-\alpha} \approx (84000 \pm 7000)\,\mathrm{N/m^{\alpha}} \qquad (20)
+$$
 
 **E.4 - Deformation of the ball**
 

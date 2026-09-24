@@ -17,17 +17,23 @@ When passing through matter, charged particles interact with the atoms and molec
 
 In shower physics, the concept of **radiation path length** is introduced. It depends not only on the distance traveled, but also on the density of the medium in which the motion takes place. In fact, the radiation path length indicates the number of "layers" of matter passed through by the particle. The radiation path length of a particle in matter can be calculated using the formula
 
-$$x = \int_{z_1}^{z_2} \rho(z)\,dz, \qquad (1)$$
+$$
+x = \int_{z_1}^{z_2} \rho(z)\,dz, \qquad (1)
+$$
 
 where $z_1$ and $z_2$ are the geometric coordinates of the beginning and end of the particle's motion (in meters), and $\rho(z)$ is the density of the medium.
 
 An ultrarelativistic electron $e^-$ (or positron $e^+$) moving in air can spontaneously emit a photon $\gamma$, which carries away part of its energy. This process is probabilistic and follows an exponential distribution in length. This means that if an electron starts moving along the $x$-axis from the point $x_0 = 0$, then the probability density that a photon will be emitted at the point with coordinate $x$ is
 
-$$f(x) = \frac{1}{X_0} e^{-x/X_0}, \qquad (2)$$
+$$
+f(x) = \frac{1}{X_0} e^{-x/X_0}, \qquad (2)
+$$
 
 where $X_0$ is the radiation length of the material. It is a constant and does not depend on the parameters of the particle's motion or on the density of the medium. In shower physics, the distance $x$ is measured not in the usual units for us (meters), but in radiation lengths:
 
-$$[x] = [X_0] = [\mathrm{g/cm^2}]. \qquad (3)$$
+$$
+[x] = [X_0] = [\mathrm{g/cm^2}]. \qquad (3)
+$$
 
 For air, the value is $X_0 = 36.2\ \mathrm{g/cm^2}$.
 
@@ -37,7 +43,9 @@ High-energy photons passing through matter also interact with it. The interactio
 
 In this problem, we will work within the simplified Heitler model. In this model, bremsstrahlung is not a probabilistic process but a deterministic one. An electron moving through matter emits one photon every time it travels a certain radiation path length $d_e$, which we will call the **splitting length**. During this emission, the total energy of the electron is divided equally between the electron and the emitted photon. The electron continues its motion and emits one photon every splitting length $d_e$ until its energy falls below the critical energy $E_e^{\mathrm{crit}}$, below which ionization losses in air begin to dominate and the development of the electromagnetic shower ceases. For an electron in air, $E_e^{\mathrm{crit}} = 88\ \mathrm{MeV} = 88 \cdot 10^6\ \mathrm{eV}$. Accurate calculations show that the splitting length $d_e$ is related to the radiation length $X_0$ of the material by
 
-$$d_e = X_0 \ln 2. \qquad (4)$$
+$$
+d_e = X_0 \ln 2. \qquad (4)
+$$
 
 The interaction of photons with matter is also simplified in this model. After traversing one splitting length $d_e$ (the same as for electrons), a photon (whose energy must exceed $E_e^{\mathrm{crit}}$) converts into an electron-positron pair, with the total photon energy divided equally between the two particles.
 
@@ -45,7 +53,9 @@ The development of an electromagnetic shower initiated by a single high-energy p
 
 When charged hadrons (protons $p$ or pions $\pi^{\pm}$) pass through matter, the situation becomes somewhat more complicated. In addition to electromagnetic interactions, hadrons also undergo inelastic interactions with the nuclei of the medium via the **strong interaction**. An inelastic interaction means that new particles are produced in the interaction, carrying away part of the energy. For example, the interaction of a proton $p$ with a nucleus $N$ can be represented schematically as
 
-$$p + N \rightarrow N + \mathrm{hadrons}. \qquad (5)$$
+$$
+p + N \rightarrow N + \mathrm{hadrons}. \qquad (5)
+$$
 
 In this problem, we will use a simplified model of inelastic interactions. Let us assume that, in an inelastic interaction with matter, the initial charged hadron (a proton or a pion $\pi^{\pm}$) transforms into 9 charged pions $\pi^{\pm}$ and 6 neutral pions $\pi^0$, with the energy distributed equally among them in the direction of motion of the initial hadron. Analogously to the electromagnetic shower, such a splitting occurs every **hadronic splitting length** $d_h$. In air, the hadronic splitting length is $d_h = 57\ \mathrm{g/cm^2}$.
 
@@ -53,35 +63,47 @@ After the splitting, the neutral pions $\pi^0$ immediately decay into two photon
 
 Once the critical energy is reached, the shower development ceases, and the charged pions decay into muons $\mu^{\pm}$ and neutrinos $\nu_\mu$, which carry away energy without interacting with the medium:
 
-$$\pi^{\pm} \rightarrow \mu^{\pm} \nu_\mu. \qquad (6)$$
+$$
+\pi^{\pm} \rightarrow \mu^{\pm} \nu_\mu. \qquad (6)
+$$
 
 Thus, when charged hadrons pass through air, a hadronic shower develops. It consists of an electromagnetic component (neutral pions decay into photons and initiate electromagnetic shower) and a hadronic component (charged pions generate further hadronic showers). The development of a hadronic shower initiated by a single high-energy proton in matter is shown schematically in Fig. 1b. A proton enters the medium and, after it travels one hadronic splitting length $d_h$, transforms into five $\pi^+$, four $\pi^-$, and six $\pi^0$ mesons. Each neutral pion then decays into two photons $\gamma$, which initiate electromagnetic showers, while the charged pions continue propagating until, after traveling another hadronic splitting length $d_h$, they generate the next generation of the hadronic shower. In this process, a $\pi^+$ produces five $\pi^+$, four $\pi^-$, and six $\pi^0$ mesons (just like the proton), whereas a $\pi^-$ produces four $\pi^+$, five $\pi^-$, and six $\pi^0$ mesons. This process continues as long as the particles have sufficient energy, that is, until their energies fall below the corresponding critical values.
 
-$$\rho(h) = \rho_0 e^{-h/H}, \qquad (7)$$
+$$
+\rho(h) = \rho_0 e^{-h/H}, \qquad (7)
+$$
 
 where $h$ is the altitude (in meters) above the Earth's surface, $\rho_0 = 1.3\ \mathrm{kg/m^3}$ is the air density at sea level, and $H = 8\ \mathrm{km}$ is the atmospheric scale height.
 
 After the shower development ceases, its radius can be estimated as
 
-$$R_{\mathrm{stop}} = \frac{X_0}{\rho} \cdot \frac{E_s}{E_e^{\mathrm{crit}}}, \qquad (8)$$
+$$
+R_{\mathrm{stop}} = \frac{X_0}{\rho} \cdot \frac{E_s}{E_e^{\mathrm{crit}}}, \qquad (8)
+$$
 
 where $E_s = 21\ \mathrm{MeV}$.
 
 **Note**: The shower radius is defined as the mean value of $R$ over the shower particles:
 
-$$R = \frac{\sum_i \sqrt{x_i^2 + y_i^2}}{N},$$
+$$
+R = \frac{\sum_i \sqrt{x_i^2 + y_i^2}}{N},
+$$
 
 where $x_i$ and $y_i$ are the geometric Cartesian coordinates of the shower particles relative to its center.
 
 Assume that the shower radius $R$ decreases inversely proportional to the air density as it propagates downward without energy losses:
 
-$$R \propto \frac{1}{\rho}. \qquad (9)$$
+$$
+R \propto \frac{1}{\rho}. \qquad (9)
+$$
 
 Assume that the particles propagate at the speed of light $c = 3 \cdot 10^8\ \mathrm{m/s}$, and that the thickness of the shower front is determined by the difference in path lengths of particles diverging at an angle $\theta \approx R_{\mathrm{stop}}/h_{\mathrm{stop}}$.
 
 To detect particles in high-energy physics, various types of detectors are used. In this problem, we consider a scintillation detector as an example. When a particle passes through such a detector, it produces optical photons (i.e., visible light), which are then detected by photomultiplier tubes (PMTs). In this system, a particle generates a digital signal in the detector that is proportional to its energy. One can introduce a proportionality coefficient $\kappa$. Neglecting detector noise, a particle with energy $E$ striking the scintillation detector is registered with an amplitude $A$:
 
-$$A = \kappa E.$$
+$$
+A = \kappa E.
+$$
 
 A photon $\gamma$ with initial energy $E_0$ enters the Earth's atmosphere vertically downward, toward the center of the Earth, and initiates an electromagnetic shower. A highly granular scintillation detector is installed on the ground. This means that the detector consists of many cells, each of which is a system composed of a scintillator and a PMT. The arrival coordinate of a particle is determined by which detector cell was triggered, while the signal amplitude is obtained from the PMT.
 
@@ -95,7 +117,9 @@ $y_{\mathrm{cm}}$ — coordinate of the triggered detector along the $y$-axis (i
 
 Assume the atmosphere to be isothermal, with an exponential density profile as a function of altitude:
 
-$$\rho(h) = \rho_{\mathrm{atm}} e^{-h/H}, \qquad (10)$$
+$$
+\rho(h) = \rho_{\mathrm{atm}} e^{-h/H}, \qquad (10)
+$$
 
 where $\rho_{\mathrm{atm}}$ is the air density at the Earth's surface and $H$ is the atmospheric scale height.
 

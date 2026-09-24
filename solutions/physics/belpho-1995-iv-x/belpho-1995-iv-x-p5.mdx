@@ -29,43 +29,63 @@ verifier: 'mechanical'
 
 Задача решается с помощью уравнения теплового баланса. Горячая вода отдает
 
-$$Q_{\text{отд.}} = m_1 c_1\left(t_1 - \theta\right) \qquad (1)$$
+$$
+Q_{\text{отд.}} = m_1 c_1\left(t_1 - \theta\right) \qquad (1)
+$$
 
 теплоты, где $\theta$ – окончательная температура в калориметре. Это количество теплоты передается бруску, специфическое свойство которого – зависимость теплоемкости от температуры $C(t)$, усложняет процедуру расчета. Площадь под графиком зависимости $C(t)$ равна
 
-$$S_{O\theta C_1 C_0} = \sum_i C\left(t_i\right)\Delta t_i,$$
+$$
+S_{O\theta C_1 C_0} = \sum_i C\left(t_i\right)\Delta t_i,
+$$
 
 где $i$ – определяет номер участка разбиения. С другой стороны, полученное количество теплоты
 
-$$Q_{\text{пол.}} = \sum_i C\left(t_i\right)\Delta t_i m_0 = m_0\sum_i C\left(t_i\right)\Delta t_i.$$
+$$
+Q_{\text{пол.}} = \sum_i C\left(t_i\right)\Delta t_i m_0 = m_0\sum_i C\left(t_i\right)\Delta t_i.
+$$
 
 Таким образом,
 
-$$Q_{\text{пол.}} = m_0 S_{O\theta C_1 C_0}.$$
+$$
+Q_{\text{пол.}} = m_0 S_{O\theta C_1 C_0}.
+$$
 
 Площадь $S_{O\theta C_1 C_2}$ найдем как площадь трапеции
 
-$$S_{O\theta C_1 C_2} = \frac{C_0 + C_1}{2}\cdot\theta = \frac{C_0 + C_0\left(1 + \alpha\theta\right)}{2}\theta = C_0\theta + \frac{\alpha C_0\theta^2}{2}$$
+$$
+S_{O\theta C_1 C_2} = \frac{C_0 + C_1}{2}\cdot\theta = \frac{C_0 + C_0\left(1 + \alpha\theta\right)}{2}\theta = C_0\theta + \frac{\alpha C_0\theta^2}{2}
+$$
 
 и, следовательно,
 
-$$Q_{\text{пол.}} = m_0 C_0\left(\theta + \frac{\alpha\theta^2}{2}\right). \qquad (2)$$
+$$
+Q_{\text{пол.}} = m_0 C_0\left(\theta + \frac{\alpha\theta^2}{2}\right). \qquad (2)
+$$
 
 Приравнивая (1) и (2), получаем квадратное уравнение относительно $\theta$.
 
-$$m_0 C_0\frac{\alpha}{2}\theta^2 + m_0 C_0\theta = m_1 C_1 t_1 - m_1 C_1\theta.$$
+$$
+m_0 C_0\frac{\alpha}{2}\theta^2 + m_0 C_0\theta = m_1 C_1 t_1 - m_1 C_1\theta.
+$$
 
 В приведенном виде
 
-$$\theta^2 + \frac{2\left(m_0 C_0 + m_1 C_1\right)}{\alpha m_0 C_0} - \frac{2 m_1 C_1 t_1}{\alpha m_0 C_0} = 0.$$
+$$
+\theta^2 + \frac{2\left(m_0 C_0 + m_1 C_1\right)}{\alpha m_0 C_0} - \frac{2 m_1 C_1 t_1}{\alpha m_0 C_0} = 0.
+$$
 
 Это уравнение в числах
 
-$$\theta^2 + 436\,\theta - 12115 = 0$$
+$$
+\theta^2 + 436\,\theta - 12115 = 0
+$$
 
 имеет один из корней
 
-$$\theta \approx 26\ {}^{o}C.$$
+$$
+\theta \approx 26\ {}^{o}C.
+$$
 
 Второй корень физического смысла не имеет, он появился как следствие неоправданного использования формулы (2) в области $\theta < 0$.
 

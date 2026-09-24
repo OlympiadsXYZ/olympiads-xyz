@@ -34,7 +34,9 @@ Design your experiment and make the necessary simulations to perform the followi
 
 The magnetic permeability of free space is
 
-$$\mu_0 = 4\pi \times 10^{-7}\ \mathrm{T\,m/A}.$$
+$$
+\mu_0 = 4\pi \times 10^{-7}\ \mathrm{T\,m/A}.
+$$
 
 **Description of the simulation software**
 
@@ -76,15 +78,21 @@ Any time you need to quit the program, press **Ctrl+C**.
 
 As shown in Fig. 1, the horizontal projection $\vec{B}_{\mathrm{h}}$ of the magnetic induction $\vec{B}_{\mathrm{w}}$ of the wire has the same direction and is perpendicular to the wire in all points of the $xy$ plane. It is clear that $\vec{B}_{\mathrm{h}}$ makes with North ($y$) direction an angle $\psi = 180^{\circ} - \theta$, where $\theta$ is the angle between the direction of the current and the positive $x$-direction. The magnetic needle points along the vector $\vec{B} = \vec{B}_{\mathrm{h}} + \vec{B}_{\mathrm{E}}$ of the total magnetic induction. As evident from the vector triangle on Fig. 1(a), the deflection angle $\varphi$ can be obtained through the sine-theorem:
 
-$$\frac{B_{\mathrm{h}}}{B_{\mathrm{E}}} = \frac{\sin\varphi}{\sin(\psi - \varphi)} = \frac{\sin\varphi}{\sin(\theta + \varphi)} \qquad (1)$$
+$$
+\frac{B_{\mathrm{h}}}{B_{\mathrm{E}}} = \frac{\sin\varphi}{\sin(\psi - \varphi)} = \frac{\sin\varphi}{\sin(\theta + \varphi)} \qquad (1)
+$$
 
 Consider a point on the surface at a distance $d$ from the wire projection onto $xy$ plane, and at a distance $r = \sqrt{d^2 + h^2}$ from the wire, as shown in Fig. 1(b). It follows from the Ampère's law that the magnitude of magnetic induction of the wire at that point is
 
-$$B_{\mathrm{w}} = \frac{\mu_0 I}{2\pi r} \qquad (2)$$
+$$
+B_{\mathrm{w}} = \frac{\mu_0 I}{2\pi r} \qquad (2)
+$$
 
 and the magnitude of its horizontal projection is
 
-$$B_{\mathrm{h}} = B_{\mathrm{w}} \cos\alpha = \frac{\mu_0 I h}{2\pi(d^2 + h^2)}. \qquad (3)$$
+$$
+B_{\mathrm{h}} = B_{\mathrm{w}} \cos\alpha = \frac{\mu_0 I h}{2\pi(d^2 + h^2)}. \qquad (3)
+$$
 
 Equations (1) and (3) are sufficient to complete all tasks of the problem.
 
@@ -92,7 +100,9 @@ Equations (1) and (3) are sufficient to complete all tasks of the problem.
 
 As evident from the vector triangle (Fig. 1), the maximum absolute value of the deflection angle at a given current is met at $d = 0$ where $B_{\mathrm{h}}$ is maximal, i.e. vertically above the wire. Therefore, the wire can be tracked by finding two or more points on the surface where $|\varphi|$ reaches a maximum. First, a coarse scan of the border with a step of, say, 10 mm, can be performed in order to locate intervals, where $|\varphi|$ goes through a maximum. In this way we establish that the wire projection crosses the West side ($x = 0$ mm) at $y \in [60\ \mathrm{mm}, 90\ \mathrm{mm}]$ and the East side ($x = 100$ mm) at $y \in [10\ \mathrm{mm}, 30\ \mathrm{mm}]$. A finer scan of these intervals with a step of 1 mm allows to determine the approximate coordinates of the two crosspoints as $P_1 = (0.0{\pm}0.5, 75{\pm}1)$ mm and $P_2 = (100.0{\pm}0.5, 17{\pm}1)$ mm. The uncertainty of the $y$ coordinate is 1 mm since near the maximum $|\varphi|$ changes slowly and takes the same rounded value at three consecutive points. Additional scans along vertical (horizontal) lines of intermediate $x$ ($y$) values could be done in order to find more points along the wire projection, and to determine the equation of the wire more precisely by means of a least-squares fit. A typical set of values is given in Table 1. The fitted equation of the wire is, respectively
 
-$$y = ax + b = -0.58x + 75.3\ \mathrm{mm} \qquad (4)$$
+$$
+y = ax + b = -0.58x + 75.3\ \mathrm{mm} \qquad (4)
+$$
 
 with estimated parameter uncertainties of $\delta a \approx 0.01$ and $\delta b \approx 0.4$ mm. The parameter uncertainties scale as $1/\sqrt{N}$, where $N$ is the number of experimental points. A graph of the wire projection in the $xy$-plane is shown in Fig. 2. Since $\varphi < 0$ at $I > 0$, the positive $I$ direction is from the West to the East border, as shown in the graph.
 
@@ -111,25 +121,35 @@ Table 1: Points, where $|\varphi|$ reaches a maximum of $143^{\circ}$ at a curre
 
 As follows from equations (1) and (3), the deflection angle $\varphi$ at a distance $d$ from the horizontal projection of the wire satisfies the equation
 
-$$\frac{\sin\varphi}{\sin(\theta + \varphi)} = \frac{\mu_0 I h}{2\pi B_{\mathrm{E}}(d^2 + h^2)}. \qquad (5)$$
+$$
+\frac{\sin\varphi}{\sin(\theta + \varphi)} = \frac{\mu_0 I h}{2\pi B_{\mathrm{E}}(d^2 + h^2)}. \qquad (5)
+$$
 
 where the angle $\theta$ can be calculated from the slope coefficient $a$ of the wire:
 
-$$\theta = \arctan(a) = -30.1^{\circ} \pm 0.4^{\circ} \qquad (6)$$
+$$
+\theta = \arctan(a) = -30.1^{\circ} \pm 0.4^{\circ} \qquad (6)
+$$
 
 The distance $d$ between a point with coordinates $(x, y)$ and the wire projection can either be measured directly on the graph in Fig. 2, or calculated as:
 
-$$d = |(ax + b - y)\cos\theta| \approx 0.865|ax + b - y| \qquad (7)$$
+$$
+d = |(ax + b - y)\cos\theta| \approx 0.865|ax + b - y| \qquad (7)
+$$
 
 It follows from equations (5)–(7) that the unknown $h$ and $B_{\mathrm{E}}$ could be determined if the deflection angle $\varphi$ is measured in at least two points situated at different distances from the wire. However, due to the random error, associated with compass positioning and the rounding error of the angle reading, such a minimalist approach is quite inaccurate. Therefore, systematic measurements at several distances $d$ and/or different currents $I$, are necessary to obtain sufficiently precise estimate for $h$ and $B_{\mathrm{E}}$. Two generic approaches could be followed, as well as a combination between them.
 
 **Method I. Varying the current at fixed distances.** By defining a new dimensionless variable $U = \sin\varphi/\sin(\varphi - 30.1^{\circ})$, equation (5) is linearized as:
 
-$$I = kU \qquad (8)$$
+$$
+I = kU \qquad (8)
+$$
 
 where the slope coefficient is:
 
-$$k = \frac{2\pi B_{\mathrm{E}}(d^2 + h^2)}{\mu_0 h} \qquad (9)$$
+$$
+k = \frac{2\pi B_{\mathrm{E}}(d^2 + h^2)}{\mu_0 h} \qquad (9)
+$$
 
 Therefore, the unknown $B_{\mathrm{E}}$ and $h$ can be estimated after obtaining $k$ for at least two different distances $d$ from the wire. Table 2 summarizes the results of measurements at $d_1 = 0$ mm (vertically above the wire) and at $d_2 = 10$ mm in a point with coordinates $x = 20$ mm and $y = 75$ mm. Figure 3 shows the corresponding U-I graphs, and the estimated values of the slope coefficients are also listed in the table 2.
 
@@ -152,29 +172,41 @@ Table 2: Experimental data for the deflection angle $\varphi$ vs. current $I$ at
 
 It follows from equation (8) that:
 
-$$\frac{B_{\mathrm{E}}}{h} = \frac{\mu_0(k_2 - k_1)}{2\pi(d_2^2 - d_1^2)} = 8.06 \times 10^{-6}\ \mathrm{T/mm} \qquad (10)$$
+$$
+\frac{B_{\mathrm{E}}}{h} = \frac{\mu_0(k_2 - k_1)}{2\pi(d_2^2 - d_1^2)} = 8.06 \times 10^{-6}\ \mathrm{T/mm} \qquad (10)
+$$
 
 and
 
-$$B_{\mathrm{E}} h = \frac{\mu_0(d_2^2 k_1 - d_1^2 k_2)}{2\pi(d_2^2 - d_1^2)} = 1.98 \times 10^{-4}\ \mathrm{T \cdot mm} \qquad (11)$$
+$$
+B_{\mathrm{E}} h = \frac{\mu_0(d_2^2 k_1 - d_1^2 k_2)}{2\pi(d_2^2 - d_1^2)} = 1.98 \times 10^{-4}\ \mathrm{T \cdot mm} \qquad (11)
+$$
 
 Alternatively, one can also use
 
-$$h = \sqrt{\frac{d_2^2 k_1 - d_1^2 k_2}{k_2 - k_1}} = 5.0\ \mathrm{mm}. \qquad (12)$$
+$$
+h = \sqrt{\frac{d_2^2 k_1 - d_1^2 k_2}{k_2 - k_1}} = 5.0\ \mathrm{mm}. \qquad (12)
+$$
 
 Finally, we obtain for the horizontal component of the Earth's magnetic induction:
 
-$$B_{\mathrm{E}} = 4.0 \times 10^{-5}\ \mathrm{T} \qquad (13)$$
+$$
+B_{\mathrm{E}} = 4.0 \times 10^{-5}\ \mathrm{T} \qquad (13)
+$$
 
 and for the depth of the wire:
 
-$$h = 5.0\ \mathrm{mm} \qquad (14)$$
+$$
+h = 5.0\ \mathrm{mm} \qquad (14)
+$$
 
 These estimates of $h$ and $B_{\mathrm{E}}$ coincide with accuracy of two significant digits with the values preset in the simulation program.
 
 **Method II. Fixed current, varying the distance.** Equation (5) can be rewritten in the form:
 
-$$\frac{\sin(\theta + \varphi)}{\sin\varphi} = \frac{2\pi B_{\mathrm{E}}}{\mu_0 I h} d^2 + \frac{2\pi B_{\mathrm{E}} h}{\mu_0 I} \qquad (15)$$
+$$
+\frac{\sin(\theta + \varphi)}{\sin\varphi} = \frac{2\pi B_{\mathrm{E}}}{\mu_0 I h} d^2 + \frac{2\pi B_{\mathrm{E}} h}{\mu_0 I} \qquad (15)
+$$
 
 which can be linearized by setting new auxiliary variables: $U = d^2$ and $V = \sin(\varphi - 30.1^{\circ})/\sin\varphi$. A typical data set for this method is given in table 3, while the linearized U-V plot is shown in Fig. 4.
 
@@ -196,15 +228,21 @@ Table 3: Experimental data for the deflection angle $\varphi$ vs. distance $d$ a
 
 From the fitting line we obtain:
 
-$$V = 7.37 \times 10^{-3}\mathrm{mm}^{-2} U + 0.208 \qquad (16)$$
+$$
+V = 7.37 \times 10^{-3}\mathrm{mm}^{-2} U + 0.208 \qquad (16)
+$$
 
 which means $2\pi B_{\mathrm{E}} h/(\mu_0 I) = 0.208$ and $2\pi B_{\mathrm{E}}/(\mu_0 I h) = 7.37 \times 10^{-3}\mathrm{mm}^{-2}$. Thus, we obtain:
 
-$$B_{\mathrm{E}} = 3.9 \times 10^{-5}\ \mathrm{T} \qquad (17)$$
+$$
+B_{\mathrm{E}} = 3.9 \times 10^{-5}\ \mathrm{T} \qquad (17)
+$$
 
 for the horizontal component of Earth's magnetic induction, and
 
-$$h = 5.3\ \mathrm{mm} \qquad (18)$$
+$$
+h = 5.3\ \mathrm{mm} \qquad (18)
+$$
 
 for the depth of the wire. These estimates are close to, but less accurate than the values obtained by Method I. The reason is that at small $d$, there is a large relative error associated with wire positioning, i.e. with variable $U$. At large $d$, however, the deflection angle is small, and there is significant relative error, associated with the compass reading, i.e. with $V$ parameter.
 

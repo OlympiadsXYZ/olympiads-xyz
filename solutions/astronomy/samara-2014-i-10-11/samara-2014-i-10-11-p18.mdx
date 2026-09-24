@@ -58,51 +58,81 @@ verifier: 'mechanical'
 
 Прежде всего определим законы изменения блеска новой на первом и втором временном интервале. Согласно кривой блеска (см. рис. 5), данные зависимости являются линейными и могут быть записаны в виде:
 
-$$m^{(1)}(t) = m_0 - v_m^{(1)}t,\ \ \text{где}\ \ v_m^{(1)} = \frac{m_0 - m_1}{1\,\mathrm{сут}} = 10.3^m/\mathrm{сут}, \qquad (47)$$
+$$
+m^{(1)}(t) = m_0 - v_m^{(1)}t,\ \ \text{где}\ \ v_m^{(1)} = \frac{m_0 - m_1}{1\,\mathrm{сут}} = 10.3^m/\mathrm{сут}, \qquad (47)
+$$
 
-$$m^{(2)}(t) = m_1 - v_m^{(2)}t,\ \ \text{где}\ \ v_m^{(2)} = \frac{m_1 - m_2}{1.5\,\mathrm{сут}} = 1.667^m/\mathrm{сут}. \qquad (48)$$
+$$
+m^{(2)}(t) = m_1 - v_m^{(2)}t,\ \ \text{где}\ \ v_m^{(2)} = \frac{m_1 - m_2}{1.5\,\mathrm{сут}} = 1.667^m/\mathrm{сут}. \qquad (48)
+$$
 
 Далее воспользуемся формулой Погсона для двух моментов времени:
 
-$$\frac{L^{(1)}(t)}{L_{\min}} = \exp\left(-0.4(m^{(1)}(t) - m_0)\right),\ \Rightarrow\ \ L^{(1)}(t) = L_{\min}\exp\left(0.4\,v_m^{(1)}\,t\right), \qquad (49)$$
+$$
+\frac{L^{(1)}(t)}{L_{\min}} = \exp\left(-0.4(m^{(1)}(t) - m_0)\right),\ \Rightarrow\ \ L^{(1)}(t) = L_{\min}\exp\left(0.4\,v_m^{(1)}\,t\right), \qquad (49)
+$$
 
-$$\frac{L^{(2)}(t)}{L_{\max}} = \exp\left(-0.4(m^{(2)}(t) - m_2)\right),\ \Rightarrow\ \ L^{(2)}(t) = L_{\max}\exp\left(0.4v_m^{(2)}t + 0.4(m_2 - m_1)\right), \qquad (50)$$
+$$
+\frac{L^{(2)}(t)}{L_{\max}} = \exp\left(-0.4(m^{(2)}(t) - m_2)\right),\ \Rightarrow\ \ L^{(2)}(t) = L_{\max}\exp\left(0.4v_m^{(2)}t + 0.4(m_2 - m_1)\right), \qquad (50)
+$$
 
-$$\frac{L^{(3)}(t)}{L_{\max}} = \exp\left(-0.4(m(t) - m_2)\right),\ \Rightarrow\ \ L^{(3)}(t) = L_{\max}\exp\left(-0.4\,v_m\,t\right), \qquad (51)$$
+$$
+\frac{L^{(3)}(t)}{L_{\max}} = \exp\left(-0.4(m(t) - m_2)\right),\ \Rightarrow\ \ L^{(3)}(t) = L_{\max}\exp\left(-0.4\,v_m\,t\right), \qquad (51)
+$$
 
 здесь $m(t)$ определяется выражением (12). Согласно определению светимости
 
-$$L = \frac{dE}{dt},\ \Rightarrow\ \ dE = L \cdot dt.$$
+$$
+L = \frac{dE}{dt},\ \Rightarrow\ \ dE = L \cdot dt.
+$$
 
 Проинтегрируем последнее уравнение
 
-$$\int_{E_1}^{E_2} dE = \int_{t_1}^{t_2} L(t)dt,\ \Rightarrow\ \ \Delta E = \int_{t_1}^{t_2} L(t)dt. \qquad (52)$$
+$$
+\int_{E_1}^{E_2} dE = \int_{t_1}^{t_2} L(t)dt,\ \Rightarrow\ \ \Delta E = \int_{t_1}^{t_2} L(t)dt. \qquad (52)
+$$
 
 здесь $\Delta E$ – количество энергии, излученное звездой на интервале $(t_1, t_2)$. Следовательно, полную энергию, излученную звездой можно представить в виде:
 
-$$E_{\mathrm{tot}} = \int_{t_0}^{t_1} L^{(1)}(t)dt + \int_{t_1}^{t_2} L^{(2)}(t)dt + \int_{t_2}^{t_f} L^{(3)}(t)dt. \qquad (53)$$
+$$
+E_{\mathrm{tot}} = \int_{t_0}^{t_1} L^{(1)}(t)dt + \int_{t_1}^{t_2} L^{(2)}(t)dt + \int_{t_2}^{t_f} L^{(3)}(t)dt. \qquad (53)
+$$
 
 Вычислим каждый интеграл отдельно:
 
-$$\int_{t_0}^{t_1} L^{(1)}(t)dt = L_{\min}\int_0^1 \exp\left(0.4\,v_m^{(1)}\,t\right)dt = \frac{L_{\min}}{0.4\,v_m^{(1)}}\left(\exp\left(0.4\,v_m^{(1)}\right) - 1\right) = 1.270 \cdot 10^6(c) \cdot L_{\min},$$
+$$
+\int_{t_0}^{t_1} L^{(1)}(t)dt = L_{\min}\int_0^1 \exp\left(0.4\,v_m^{(1)}\,t\right)dt = \frac{L_{\min}}{0.4\,v_m^{(1)}}\left(\exp\left(0.4\,v_m^{(1)}\right) - 1\right) = 1.270 \cdot 10^6(c) \cdot L_{\min},
+$$
 
-$$\int_{t_0}^{t_1} L^{(2)}(t)dt = L_{\max}\exp\left(0.4(m_2 - m_1)\right)\int_0^{1.5} \exp\left(0.4\,v_m^{(2)}\,t\right)dt = \frac{L_{\max}}{0.4\,v_m^{(2)}}\exp\left(0.4(m_2 - m_1)\right) \times$$
+$$
+\int_{t_0}^{t_1} L^{(2)}(t)dt = L_{\max}\exp\left(0.4(m_2 - m_1)\right)\int_0^{1.5} \exp\left(0.4\,v_m^{(2)}\,t\right)dt = \frac{L_{\max}}{0.4\,v_m^{(2)}}\exp\left(0.4(m_2 - m_1)\right) \times
+$$
 
-$$\times\left(\exp\left(0.6\,v_m^{(2)}\right) - 1\right) = 8.193 \cdot 10^4(c) \cdot L_{\max}.$$
+$$
+\times\left(\exp\left(0.6\,v_m^{(2)}\right) - 1\right) = 8.193 \cdot 10^4(c) \cdot L_{\max}.
+$$
 
-$$\int_{t_2}^{t_f} L^{(3)}(t)dt = L_{\max}\int_0^{75.3} \exp\left(-0.4\,v_m\,t\right)dt = \frac{L_{\max}}{0.4\,v_m}\left(1 - \exp\left(-30.12\,v_m\right)\right) = 1.263 \cdot 10^6(c) \cdot L_{\max},$$
+$$
+\int_{t_2}^{t_f} L^{(3)}(t)dt = L_{\max}\int_0^{75.3} \exp\left(-0.4\,v_m\,t\right)dt = \frac{L_{\max}}{0.4\,v_m}\left(1 - \exp\left(-30.12\,v_m\right)\right) = 1.263 \cdot 10^6(c) \cdot L_{\max},
+$$
 
 Т.о. полная энергия представляется в виде:
 
-$$E_{\mathrm{tot}} = 1.270 \cdot 10^6(c) \cdot L_{\min} + 8.193 \cdot 10^4(c) \cdot L_{\max} + 1.263 \cdot 10^6(c) \cdot L_{\max} = \{9.67 \cdot 10^{37}, 2.43 \cdot 10^{38}\}\,\mathrm{Дж}.$$
+$$
+E_{\mathrm{tot}} = 1.270 \cdot 10^6(c) \cdot L_{\min} + 8.193 \cdot 10^4(c) \cdot L_{\max} + 1.263 \cdot 10^6(c) \cdot L_{\max} = \{9.67 \cdot 10^{37}, 2.43 \cdot 10^{38}\}\,\mathrm{Дж}.
+$$
 
 Два значения полной энергии отвечают двум возможным расстояниям до звезды, представленным в задаче 8. Соответствующие значения массы определяются формулой Эйнштейна:
 
-$$\mathfrak{M}_* = \frac{E_{\mathrm{tot}}}{c^2} = \{1.07 \cdot 10^{21}, 2.70 \cdot 10^{21}\}\,\mathrm{кг}. \qquad (54)$$
+$$
+\mathfrak{M}_* = \frac{E_{\mathrm{tot}}}{c^2} = \{1.07 \cdot 10^{21}, 2.70 \cdot 10^{21}\}\,\mathrm{кг}. \qquad (54)
+$$
 
 Полученные значения массы сопоставимы с массами крупных спутников планет Солнечной системы. Время, которое потребовалось бы Солнцу, чтобы излучить энергию $E_{tot}$ есть
 
-$$t_{\odot} = \frac{E_{tot}}{L_{\odot}} = \{7966, 20019\}\,\mathrm{лет}. \qquad (55)$$
+$$
+t_{\odot} = \frac{E_{tot}}{L_{\odot}} = \{7966, 20019\}\,\mathrm{лет}. \qquad (55)
+$$
 
 **Ответ:** $L^{(1)}(t) = L_{\min}\exp\left(0.4\,v_m^{(1)}\,t\right)$, $L^{(2)}(t) = L_{\max}\exp\left(0.4v_m^{(2)}t + 0.4(m_2 - m_1)\right)$, $L^{(3)}(t) = L_{\max}\exp\left(-0.4\,v_m\,t\right)$, $E_{\mathrm{tot}} = \{9.67 \cdot 10^{37}, 2.43 \cdot 10^{38}\}\,\mathrm{Дж}$, $\mathfrak{M}_* = \{1.07 \cdot 10^{21}, 2.70 \cdot 10^{21}\}\,\mathrm{кг}$, $t_{\odot} = \{7966, 20019\}\,\mathrm{лет}$. ($\text{\textdollar}_{\max} = 15$ баллов).
 

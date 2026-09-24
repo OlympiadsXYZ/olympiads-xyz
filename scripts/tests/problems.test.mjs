@@ -207,3 +207,45 @@ test('new classification is searchable and source notes and common paragraphs re
   const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), path.join(f.root, f.output)], { encoding: 'utf8' });
   assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
 });
+
+test('a line that starts with a one-line $$…$$ becomes a display block; inline, table and fenced math stay as written', async t => {
+  const { displayMathLines } = await import('../problems-to-site.mjs');
+  const mdx = [
+    '---', 'title: \'$$x$$\'', '---', '',
+    'Общият ток се разделя:', '$$I = I_1 + I_2$$', 'Тогава',
+    '$$T_0 \\approx 0.007\\ \\mathrm{s}$$ **[2.0]**',
+    '  $$a = b$$',
+    'Chain rule $$f(g(x))$$',
+    '$$m = 0.52$$.',
+    '$$x$$ - 1 точка',
+    '| $$a$$ | b |',
+    '$$', 'E = mgx.\\ $$ still in the block', '$$',
+    '$$E = mgx\\sin\\alpha.\\ $$',
+    'Тогава $$a +', 'b$$ и', '$$c$$',
+  ].join('\n');
+  assert.equal(displayMathLines(mdx), [
+    '---', 'title: \'$$x$$\'', '---', '',
+    'Общият ток се разделя:', '$$', 'I = I_1 + I_2', '$$', 'Тогава',
+    '$$', 'T_0 \\approx 0.007\\ \\mathrm{s}', '$$', '**[2.0]**',
+    '  $$', '  a = b', '  $$',
+    'Chain rule $$f(g(x))$$',
+    '$$m = 0.52$$.',
+    '$$x$$ - 1 точка',
+    '| $$a$$ | b |',
+    '$$', 'E = mgx.\\ $$ still in the block', '$$',
+    '$$', 'E = mgx\\sin\\alpha.', '$$',
+    'Тогава $$a +', 'b$$ и', '$$', 'c', '$$',
+  ].join('\n'));
+  const f = fixture(t), p = f.paper.problems[0];
+  p.statement = 'Съпротивленията са свързани успоредно:\n$$I_1 R_1 = I_2 R_2$$\nОбщият ток е $I$.';
+  p.solution = { statement: '$$t_1 = \\frac{P_1 t}{I^2 R_1}$$ **[1 т.]**\n$$t_2 = \\frac{P_2 t}{I^2 R_2}$$ **[1 т.]**' };
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const page = f.read(f.output);
+  assert.ok(page.includes('успоредно:\n$$\nI_1 R_1 = I_2 R_2\n$$\nОбщият ток е $I$.'));
+  assert.ok(page.includes('$$\nt_1 = \\frac{P_1 t}{I^2 R_1}\n$$\n**[1 т.]**\n$$\nt_2 = \\frac{P_2 t}{I^2 R_2}\n$$\n**[1 т.]**'));
+  assert.equal(f.run('--check').status, 0);
+  const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), '--warn', path.join(f.root, f.output)], { encoding: 'utf8' });
+  assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
+  assert.doesNotMatch(compiled.stdout + compiled.stderr, /KaTeX parse error/);
+});

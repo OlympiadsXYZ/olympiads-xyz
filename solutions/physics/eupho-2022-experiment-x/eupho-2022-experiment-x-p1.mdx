@@ -185,11 +185,15 @@ For the measurement of the power dependence of the temperature, we will read out
 
 Each colour index is then converted to a temperature by reading out from the calibration graph. We can also estimate the relationship by employing the Stefan-Boltzman law if we neglect other losses and the contribution of the ambient temperature:
 
-$$T \propto \sqrt[4]{P}. \qquad (1)$$
+$$
+T \propto \sqrt[4]{P}. \qquad (1)
+$$
 
 According to measurements with multiple light bulbs in different environments, the fit is
 
-$$T = (1220\,\mathrm{KW^{-1/4}} \pm 20\,\mathrm{KW^{-1/4}})\sqrt[4]{P}, \qquad (2)$$
+$$
+T = (1220\,\mathrm{KW^{-1/4}} \pm 20\,\mathrm{KW^{-1/4}})\sqrt[4]{P}, \qquad (2)
+$$
 
 which is used as a baseline for determining the RMS of students’ measurements.
 
@@ -268,41 +272,57 @@ To determine the RMS at B3, we compare it to Eq. 2 and take the root of the mean
 
 Light sources do not radiate in all directions equally. The angular distribution of luminous flux $\Phi$ (luminous intensity) must be integrated over the solid angle. A light meter at distance $r$ to the light source, oriented so that the light falls on it perpendicularly, measures the illuminance $E$ of a certain part of the imagined integration sphere surrounding the light source:
 
-$$\Phi = \oint E(\Omega) r^2 \mathrm{d}\Omega. \qquad (3)$$
+$$
+\Phi = \oint E(\Omega) r^2 \mathrm{d}\Omega. \qquad (3)
+$$
 
 The LED only shines the light into a hemisphere, and has cylindrical symmetry around the direction straight ahead, so we can simplify the expression,
 
-$$\Phi_{LED} = 2\pi \int_0^{\pi/2} E(\theta) r^2 \sin\theta \,\mathrm{d}\theta, \qquad (4)$$
+$$
+\Phi_{LED} = 2\pi \int_0^{\pi/2} E(\theta) r^2 \sin\theta \,\mathrm{d}\theta, \qquad (4)
+$$
 
 and for the incandescent bulb, the symmetry axis is perpendicular to the direction straight ahead, and shines into full solid angle:
 
-$$\Phi_W = 4\pi \int_0^{\pi/2} E(\theta) r^2 \cos\theta \,\mathrm{d}\theta. \qquad (5)$$
+$$
+\Phi_W = 4\pi \int_0^{\pi/2} E(\theta) r^2 \cos\theta \,\mathrm{d}\theta. \qquad (5)
+$$
 
 The integrals will have to be evaluated numerically – it can be done by using the trapezoidal or the Simpson method, or by using the formula for a spherical segment area given in the hint:
 
-$$\Phi = 2\pi r^2 \sum_i E(\theta_{i+1/2})(\cos\theta_i - \cos\theta_{i+1}) \qquad (6)$$
+$$
+\Phi = 2\pi r^2 \sum_i E(\theta_{i+1/2})(\cos\theta_i - \cos\theta_{i+1}) \qquad (6)
+$$
 
 and equivalent (but with sin $\iff$ cos) for the incandescent bulb. Here, choosing evaluation points in the middles of intervals is better than choosing one of the edge points. However, the exception are the “edge” measurements, where the measurement point is actually in the middle of the interval – the point straight ahead for the LED is in the middle of the spherical cap. The same goes for the “poles” of the incandescent light bulb.
 
 The ratio between the head-on measured illuminance and the luminous flux, can be expressed as
 
-$$\Phi = C r^2 E(0), \qquad (7)$$
+$$
+\Phi = C r^2 E(0), \qquad (7)
+$$
 
 or, more intuitively, as a correction factor to the isotropic source:
 
-$$\Phi = \{4\pi, 2\pi\} \tilde{C} r^2 E(0). \qquad (8)$$
+$$
+\Phi = \{4\pi, 2\pi\} \tilde{C} r^2 E(0). \qquad (8)
+$$
 
 **Analytical estimates**
 
 One possible pathway is to estimate these factors without measurements, using reasonable assumptions about the light distribution. The LED can be assumed a planar emitter, with a cosine distribution of luminous flux:
 
-$$\tilde{C}_{LED} = \frac{\int_0^{\pi/2} \cos\theta \sin\theta \,\mathrm{d}\theta}{\int_0^{\pi/2} \sin\theta \,\mathrm{d}\theta} = \frac{1}{2} \qquad (9)$$
+$$
+\tilde{C}_{LED} = \frac{\int_0^{\pi/2} \cos\theta \sin\theta \,\mathrm{d}\theta}{\int_0^{\pi/2} \sin\theta \,\mathrm{d}\theta} = \frac{1}{2} \qquad (9)
+$$
 
 which turns out to match the experiment well.
 
 For the incandescent bulb, a similar assumption can be made based on a thin filament model. The different orientation of the symmetry axis leads to a different result:
 
-$$\tilde{C}_W = \frac{\int_0^{\pi/2} \cos^2\theta \,\mathrm{d}\theta}{\int_0^{\pi/2} \cos\theta \,\mathrm{d}\theta} = \frac{\pi}{4} \approx 0.79. \qquad (10)$$
+$$
+\tilde{C}_W = \frac{\int_0^{\pi/2} \cos^2\theta \,\mathrm{d}\theta}{\int_0^{\pi/2} \cos\theta \,\mathrm{d}\theta} = \frac{\pi}{4} \approx 0.79. \qquad (10)
+$$
 
 These approximations can be used to a good effect but are not required in the experimental task.
 
@@ -422,13 +442,17 @@ If a comparison of analytical and experimental estimate are done, or if an analy
 
 **RMS comparison:** To make the comparison of the graphed solutions to the reference less subjective, we do a root mean square comparison: average square deviation from an empirical model curve based on a larger number of measurements in a controlled environment (Fig. 5). For the light bulb efficacy, we use
 
-$$\eta(P) = \ln(1 + \exp(1.189P - 4.632)) \qquad (11)$$
+$$
+\eta(P) = \ln(1 + \exp(1.189P - 4.632)) \qquad (11)
+$$
 
 which is just a linear function smoothly flattened at the bottom.
 
 For the LED, we use
 
-$$\eta(P) = 2.56/P - 23.78P + 259.56 \qquad (12)$$
+$$
+\eta(P) = 2.56/P - 23.78P + 259.56 \qquad (12)
+$$
 
 where possible intensity variations can be compensated by allowing $C$ variation in C2/C4. Variations in the $1/P$ part (due to different offsets in power supply readout) can be compensated by excluding the low-power measurements from the RMS calculations in a reasonable way.
 
@@ -454,27 +478,41 @@ If angular dependence is ignored use this table as a shortcut for grading
 
 The plate receives a radiant flux density $j$, determined by the power $P$ of the light source, and the distance $r$ between the target and the light source. The light source does not shine equal amounts of light in all directions, therefore we must use the correction factor $C$, derived in Task 2, to convert from the total radiant flux to forward radiant flux density.
 
-$$P = Cr^2 j \to j = \frac{P}{Cr^2}. \qquad (13)$$
+$$
+P = Cr^2 j \to j = \frac{P}{Cr^2}. \qquad (13)
+$$
 
 Not necessary, but also correct, is to (numerically) integrate/average across the entire plate, $j(\pi r^2) = P\int Cr^{-2}\cos\theta \,\mathrm{d}A$ to take into account spatial variation of $C$, $r$ and $\theta$ (angle of incidence).
 
 The incident flux density is dissipated to the environment directly, as well as by heat conduction through the plate. Mark by $T_F$ the front temperature and $T_B$ the back temperature. Conservation of energy gives us the system of equations
 
-$$j = h(T_F - T_0) + \frac{\lambda}{d}(T_F - T_B) \qquad (14)$$
+$$
+j = h(T_F - T_0) + \frac{\lambda}{d}(T_F - T_B) \qquad (14)
+$$
 
-$$0 = h(T_B - T_0) + \frac{\lambda}{d}(T_B - T_F). \qquad (15)$$
+$$
+0 = h(T_B - T_0) + \frac{\lambda}{d}(T_B - T_F). \qquad (15)
+$$
 
 This system of equations leads to the following relations:
 
-$$j = h(T_F + T_B - 2T_0) \qquad (16)$$
+$$
+j = h(T_F + T_B - 2T_0) \qquad (16)
+$$
 
-$$j = (h + 2\frac{\lambda}{d})(T_F - T_B). \qquad (17)$$
+$$
+j = (h + 2\frac{\lambda}{d})(T_F - T_B). \qquad (17)
+$$
 
 Any linear combination of equations (14,15) also allows determination of both $h$ and $\lambda$. A particular linear combination that may be used is the isolation of individual temperatures:
 
-$$T_F - T_0 = \frac{1}{2}\left(\frac{1}{h} + \frac{1}{h + 2\frac{\lambda}{d}}\right) j \qquad (18)$$
+$$
+T_F - T_0 = \frac{1}{2}\left(\frac{1}{h} + \frac{1}{h + 2\frac{\lambda}{d}}\right) j \qquad (18)
+$$
 
-$$T_B - T_0 = \frac{1}{2}\left(\frac{1}{h} - \frac{1}{h + 2\frac{\lambda}{d}}\right) j. \qquad (19)$$
+$$
+T_B - T_0 = \frac{1}{2}\left(\frac{1}{h} - \frac{1}{h + 2\frac{\lambda}{d}}\right) j. \qquad (19)
+$$
 
 In our system, $2\frac{\lambda}{d} > h$, but still in the same order of magnitude. Treating the slope of $T_F$ as $1/(2h)$ or the slope of $T_F - T_B$ as $(2\lambda/d)^{-1}$ is a reasonable approximation, but still not theoretically correct.
 
@@ -482,9 +520,13 @@ In our system, $2\frac{\lambda}{d} > h$, but still in the same order of magnitud
 
 Errors should be propagated from the slope. For example, if they obtain slopes $k_1 = 1/h$ and $k_2 = 1/(h + 2\lambda/d)$, they should propagate the errors. We should allow both straight addition of error contributions of different terms, or adding squared errors (independent errors), e.g.
 
-$$h = \frac{1}{k_1} \pm \frac{\sigma_1}{k_1^2} \qquad (20)$$
+$$
+h = \frac{1}{k_1} \pm \frac{\sigma_1}{k_1^2} \qquad (20)
+$$
 
-$$\lambda = \tfrac{d}{2}\left(\frac{1}{k_2} - \frac{1}{k_1}\right) \pm \tfrac{d}{2}\left(\frac{\sigma_1}{k_1^2} + \frac{\sigma_2}{k_2^2}\right) \qquad (21)$$
+$$
+\lambda = \tfrac{d}{2}\left(\frac{1}{k_2} - \frac{1}{k_1}\right) \pm \tfrac{d}{2}\left(\frac{\sigma_1}{k_1^2} + \frac{\sigma_2}{k_2^2}\right) \qquad (21)
+$$
 
 and analogously for other slope definitions.
 
@@ -492,7 +534,9 @@ and analogously for other slope definitions.
 
 For the white plate, only a part of the incident flux is absorbed, so we replace $j$ by $j(1 - a)$ if $a$ is the albedo:
 
-$$j = (1 - a)\frac{P}{Cr^2}. \qquad (22)$$
+$$
+j = (1 - a)\frac{P}{Cr^2}. \qquad (22)
+$$
 
 As a consequence, any slope measured for both plates will be in the ratio $(1 - a)$ to each other. This can be expressed as a fraction of trend slopes, ratio of temperature differences, or similar.
 

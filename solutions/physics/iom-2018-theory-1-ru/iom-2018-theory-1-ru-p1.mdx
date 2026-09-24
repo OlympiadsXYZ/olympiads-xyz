@@ -82,7 +82,9 @@ verifier: 'mechanical'
 
 4) Ясно, что $x + l\cos(\alpha) = l \cdot \ln\left[\mathrm{ctg}\left(\dfrac{\alpha}{2}\right)\right] = V_0 t$, так как это в точности координата хозяина в момент времени $t$. Отсюда легко найти, что
 
-$$\mathrm{ctg}\left(\frac{\alpha}{2}\right) = \exp\left(\frac{V_0 t}{l}\right) \Rightarrow \cos\alpha = \mathrm{th}\left(\frac{V_0 t}{l}\right) \equiv \frac{e^{V_0 t/l} - e^{-V_0 t/l}}{e^{V_0 t/l} + e^{-V_0 t/l}}.$$
+$$
+\mathrm{ctg}\left(\frac{\alpha}{2}\right) = \exp\left(\frac{V_0 t}{l}\right) \Rightarrow \cos\alpha = \mathrm{th}\left(\frac{V_0 t}{l}\right) \equiv \frac{e^{V_0 t/l} - e^{-V_0 t/l}}{e^{V_0 t/l} + e^{-V_0 t/l}}.
+$$
 
 Таким образом, $x(t) = V_0 t - l \cdot \mathrm{th}\left(\dfrac{V_0 t}{l}\right)$. С учетом того, что $\sin\alpha = \sqrt{1 - \mathrm{th}^2\left(\dfrac{V_0 t}{l}\right)} = \mathrm{ch}^{-1}\left(\dfrac{V_0 t}{l}\right)$, находим также $y(t) = l \cdot \mathrm{ch}^{-1}\left(\dfrac{V_0 t}{l}\right)$. Запись через гиперболические функции короче, но можно все записывать и через экспоненты. Дифференцируя эти выражения, находим, что $V_x(t) = V_0 \cdot \mathrm{th}^2\left(\dfrac{V_0 t}{l}\right)$, $V_y(t) = V_0 \cdot \mathrm{th}\left(\dfrac{V_0 t}{l}\right) \cdot \mathrm{ch}^{-1}\left(\dfrac{V_0 t}{l}\right)$, и поэтому $V^{\text{соб}}(t) = \sqrt{V_x^2 + V_y^2} = V_0 \cdot \mathrm{th}\left(\dfrac{V_0 t}{l}\right)$.
 
@@ -94,13 +96,17 @@ $$\mathrm{ctg}\left(\frac{\alpha}{2}\right) = \exp\left(\frac{V_0 t}{l}\right) \
 
 7) Пренебрегая «очень малым» временем разгона мухи, находим, что разность модулей скоростей мухи и собаки $V_0 - V(t) = V_0 \cdot \left[1 - \mathrm{th}\left(\dfrac{V_0 t}{l}\right)\right]$. Таким образом, муха за очень большое время приблизится к собаке вдоль траектории на расстояние
 
-$$s = \int\limits_{t_0}^{\infty} [V_0 - V(t)]dt = l \cdot \int\limits_{z_0}^{\infty} [1 - \mathrm{th}(z)]dz = 2l \cdot \int\limits_{z_0}^{\infty} \frac{e^{-z}}{e^z + e^{-z}}dz = l \cdot \int\limits_{0}^{\exp(-2z_0)} \frac{dy}{1 + y} = l \cdot \ln\left(1 + e^{-2z_0}\right)$$
+$$
+s = \int\limits_{t_0}^{\infty} [V_0 - V(t)]dt = l \cdot \int\limits_{z_0}^{\infty} [1 - \mathrm{th}(z)]dz = 2l \cdot \int\limits_{z_0}^{\infty} \frac{e^{-z}}{e^z + e^{-z}}dz = l \cdot \int\limits_{0}^{\exp(-2z_0)} \frac{dy}{1 + y} = l \cdot \ln\left(1 + e^{-2z_0}\right)
+$$
 
 (здесь $t_0$ – время начала движения мухи, $z_0 = V_0 t_0 / l$, и при вычислении интеграла сделана замена переменной $y = e^{-2z}$). Согласно условию, $l = \displaystyle\int\limits_0^{t_0} V(t)dt$, то есть $1 = \displaystyle\int\limits_0^{z_0} \mathrm{th}\,z\,dz = \ln(\mathrm{ch}\,z_0)$. Значит, $z_0 = \mathrm{arcch}\,e$. После преобразования гиперболических функций получим: $e^{-2z_0} = \left(e - \sqrt{e^2 - 1}\right)^2$, то есть $s = l \cdot \ln\left(1 + \left(e - \sqrt{e^2 - 1}\right)^2\right)$.
 
 Поэтому минимальное расстояние между мухой и собакой через очень большое время (когда хозяин, собака и муха движутся друг за другом по оси $x$) равно
 
-$$r_{\min} = l - s = l\left[1 - \ln\left(1 + \left(e - \sqrt{e^2 - 1}\right)^2\right)\right] \approx 0{,}964l.$$
+$$
+r_{\min} = l - s = l\left[1 - \ln\left(1 + \left(e - \sqrt{e^2 - 1}\right)^2\right)\right] \approx 0{,}964l.
+$$
 
 8) Из пункта 2 нам известны модуль скорости собаки в точке $A$: $V = \dfrac{V_0}{\sqrt{2}}$ и центростремительная компонента ее ускорения в этой точке $|\vec{a}_n| = \dfrac{V_0^2}{2l}$. Значит, радиус кривизны траектории собаки в точке $A$ равен $R_A == \dfrac{V^2}{|\vec{a}_n|} = l$, и поэтому модуль ускорения мухи в точке $A$ равен $a_A^{\text{мух}} = \dfrac{V_0^2}{l}$.
 

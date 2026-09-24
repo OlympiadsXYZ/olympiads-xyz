@@ -54,7 +54,9 @@ O Pencil, pen and pencil sharpener.
 - Only those measurements and evaluation methods that promise the highest precision and accuracy are awarded full marks. Choose your approaches accordingly while keeping in mind the precision of your tools. However, no marks are awarded for error estimation.
 - When measuring DC voltages with the multimeter in a range with the smallest digit resolution being $\delta U$, the uncertainty $\Delta U$ of the measured value $U$ can be estimated via:
 
-$$\Delta U = 0.7\,\% \cdot U + 3 \cdot \delta U\,. \qquad (3)$$
+$$
+\Delta U = 0.7\,\% \cdot U + 3 \cdot \delta U\,. \qquad (3)
+$$
 
 - The internal resistance of your multimeter in the DC voltmeter setting depends on the measurement range and model number. In Fig. 5, you can see where to find the model number of your voltmeter. The following table provides the internal resistances for two measurement ranges and all models.
 
@@ -104,11 +106,15 @@ $$\Delta U = 0.7\,\% \cdot U + 3 \cdot \delta U\,. \qquad (3)$$
 
 The capacitor now discharges via the inner resistance ($R_V = 11.1\,\mathrm{M\Omega}$) of the voltmeter. Every 5 seconds, we write down the voltage reading, see Tab. 2. The discharge of the capacitor can be described as:
 
-$$\ln\frac{U(t)}{U_0} = -\frac{t}{R_V C} \qquad (2)$$
+$$
+\ln\frac{U(t)}{U_0} = -\frac{t}{R_V C} \qquad (2)
+$$
 
 We plot the data, fit it to a linear function and compute $C$ from the slope (Fig. 3). We finally obtain a capacitance of:
 
-$$C = (2.24 \pm 0.08)\,\mathrm{\mu F} \qquad (3)$$
+$$
+C = (2.24 \pm 0.08)\,\mathrm{\mu F} \qquad (3)
+$$
 
 **E.2a - Capacitance**
 
@@ -137,43 +143,61 @@ After a number of cycles (above 10), the voltmeter can be connected via a switch
 
 Let us work out the charge transferred to the capacitor during the $N^{\mathrm{th}}$ charging cycle. Suppose it initially has voltage $U_{N-1}$ across it, meaning it has stored charge $Q_{N-1} = C U_{N-1}$. Now connect the fully charged piezo, which has stored charge $Q_p = C_p U_0$. After connecting them together, the combined system acts as a single capacitor with stored charge $Q_{N-1} + Q_p$ and capacitance $C + C_p$, so the new voltage across the capacitor and the piezo is
 
-$$U_N = \frac{Q_{N-1} + Q_p}{C + C_p} = \frac{C}{C+C_p}\,U_{N-1} + \frac{C_p}{C+C_p}\,U_0\,. \qquad (4)$$
+$$
+U_N = \frac{Q_{N-1} + Q_p}{C + C_p} = \frac{C}{C+C_p}\,U_{N-1} + \frac{C_p}{C+C_p}\,U_0\,. \qquad (4)
+$$
 
 When the voltage saturates, the change in one charging cycle is negligible so $U_N = U_{N-1}$. In this case, (4) gives $U_N = U_{N-1} = U_0$; the voltage saturates at the voltage used to charge the piezo.
 
 Suppose we are far from saturation, meaning $U_N \ll U_0$. Rewrite (4) as follows:
 
-$$\frac{C}{C+C_p}(U_N - U_{N-1}) + \frac{C_p}{C+C_p}\,U_N = \frac{C_p}{C+C_p}\,U_0\,. \qquad (5)$$
+$$
+\frac{C}{C+C_p}(U_N - U_{N-1}) + \frac{C_p}{C+C_p}\,U_N = \frac{C_p}{C+C_p}\,U_0\,. \qquad (5)
+$$
 
 The condition $U_N \ll U_0$ means we can approximate this as
 
-$$\frac{C}{C+C_p}(U_N - U_{N-1}) = \frac{C_p}{C+C_p}\,U_0\,,$$
+$$
+\frac{C}{C+C_p}(U_N - U_{N-1}) = \frac{C_p}{C+C_p}\,U_0\,,
+$$
 
 which has a simple linear solution
 
-$$U_N = N\,\frac{C_p U_0}{C}\,. \qquad (6)$$
+$$
+U_N = N\,\frac{C_p U_0}{C}\,. \qquad (6)
+$$
 
 This linear solution is a good approximation when $N C_p \ll C$. We measure $U_0 \approx 1.405\,\mathrm{mV}$. Fitting this linear relation can be used to measure $C_p$. Here, the fit from Fig. 5 evaluates to
 
-$$C_p = (23.5 \pm 2.4)\,\mathrm{nF} \qquad (7)$$
+$$
+C_p = (23.5 \pm 2.4)\,\mathrm{nF} \qquad (7)
+$$
 
 *Note: the following precise calculations are not necessary for being awarded with full marks. The general solution of recursive equation (4) can be found as follows. Let* $X_N = U_0 - U_N$, *which is the distance of* $U_N$ *from its saturation value. With this, (5) can be written as*
 
-$$X_N = \frac{C}{C+C_p}\,X_{N-1}\,.$$
+$$
+X_N = \frac{C}{C+C_p}\,X_{N-1}\,.
+$$
 
 *The initial condition is* $U_0 = 0$, *which means* $X_0 = U_0$. *Then*
 
-$$X_N = \left(\frac{C}{C+C_p}\right)^N U_0\,.$$
+$$
+X_N = \left(\frac{C}{C+C_p}\right)^N U_0\,.
+$$
 
 *Returning to the original variables, we arrive at*
 
-$$U_N = U_0 - \left(\frac{C}{C+C_p}\right)^N U_0\,. \qquad (8)$$
+$$
+U_N = U_0 - \left(\frac{C}{C+C_p}\right)^N U_0\,. \qquad (8)
+$$
 
 *Indeed, in the limit* $N \to \infty$, *this result gives the same saturation value that we found above.*
 
 *Students are expected to fit the linear model* $U_N \propto N$. *However, if they use* (8) *and fitting to*
 
-$$\log\left(\frac{U_0 - U_N}{U_0}\right) = N \log\left(\frac{C}{C+C_p}\right), \qquad (9)$$
+$$
+\log\left(\frac{U_0 - U_N}{U_0}\right) = N \log\left(\frac{C}{C+C_p}\right), \qquad (9)
+$$
 
 *they will also get full marks.*
 
@@ -205,7 +229,9 @@ Note that we need the capacitor, because if we were to connect the voltmeter dir
 
 For large values of $F$, the voltages become noisy and seem to saturate (see next sub-task). However, the dependence is fairly linear up to *ca* 10 N. We can fit that range and obtain a piezo voltage coefficient
 
-$$\beta = (3.37 \pm 0.1)\,\mathrm{V/N} \qquad (10)$$
+$$
+\beta = (3.37 \pm 0.1)\,\mathrm{V/N} \qquad (10)
+$$
 
 **E.2c - Response function**
 
@@ -233,15 +259,21 @@ $$\beta = (3.37 \pm 0.1)\,\mathrm{V/N} \qquad (10)$$
 
 **d) Saturation** If we already measured large enough weight values in the previous task, we can just use the data from there, otherwise, we record more data over a larger range now. Due to the noise in the saturated region, it is important to use multiple measurements per point and take the average. The saturation point can be found by computing the intersection of the fitting functions of the linear region for low forces and the saturated region, just as visible in Fig. 7. We can read out the relevant values, having measured the area of the piezo as $A_p = \pi r_p^2 \approx 4.15\,10^{-4}\,\mathrm{m^2}$:
 
-$$U_{sat} = (86 \pm 16)\,\mathrm{V} \qquad (11)$$
+$$
+U_{sat} = (86 \pm 16)\,\mathrm{V} \qquad (11)
+$$
 
 and
 
-$$p_{sat} = F_{sat}/A_p = (55000 \pm 7000)\,\mathrm{Pa} \qquad (12)$$
+$$
+p_{sat} = F_{sat}/A_p = (55000 \pm 7000)\,\mathrm{Pa} \qquad (12)
+$$
 
 and therefore,
 
-$$\sigma_{max} = \frac{C_p U_{sat}}{A} = (4.9 \pm 0.9)\,\mathrm{mC/m^2} \qquad (13)$$
+$$
+\sigma_{max} = \frac{C_p U_{sat}}{A} = (4.9 \pm 0.9)\,\mathrm{mC/m^2} \qquad (13)
+$$
 
 **E.2d - Saturation**
 

@@ -49,13 +49,17 @@ Table 1: PIXIE Sensitivity (Jy refers to the unit Jansky)
 
 **y distortion** PIXIE can shed light on the history of star formation by looking at the spectral distortions produced during the epoch of reionization. The CMB photons undergo inverse Compton scattering off the gas that has been ionized by early stars. These distortions are parametrized by $y$ which expresses the mean number of scatterings times the average energy change that a photon suffers in a scattering. The respective intensity contribution is given by:
 
-$$\Delta I_{\nu,y} = I_0 \frac{x^4 e^x}{(e^x - 1)^2}\left[x \coth\left(\frac{x}{2}\right) - 4\right] y, \qquad (1)$$
+$$
+\Delta I_{\nu,y} = I_0 \frac{x^4 e^x}{(e^x - 1)^2}\left[x \coth\left(\frac{x}{2}\right) - 4\right] y, \qquad (1)
+$$
 
 where $I_0 = \frac{2h}{c^2}(\frac{kT_0}{h})^3 = 270\,\mathrm{MJy/sr}$ for $T_0 = 2.726\,\mathrm{K}$, and $x = \frac{h\nu}{kT_0}$. We take $y = 1.7 \times 10^{-6}$ for our fiducial value (assumed value for comparison).
 
 **$\mu$ distortion** The amplitude of density fluctuations during inflation translates into energy injection in the CMB for redshifts $10^5 < z < 10^6$ which leads to $\mu$ distortions characterized by the chemical potential, with intensity given by
 
-$$\Delta I_{\nu,\mu} = I_0 \frac{x^4 e^x}{(e^x - 1)^2}\left[\frac{1}{\beta} - \frac{1}{x}\right] \mu, \qquad (2)$$
+$$
+\Delta I_{\nu,\mu} = I_0 \frac{x^4 e^x}{(e^x - 1)^2}\left[\frac{1}{\beta} - \frac{1}{x}\right] \mu, \qquad (2)
+$$
 
 where $I_0 = \frac{2h}{c^2}(\frac{kT_0}{h})^3 = 270\,\mathrm{MJy/sr}$ for $T_0 = 2.726\,\mathrm{K}$, $x = \frac{h\nu}{kT_0}$ and $\beta = 2.1923$.
 
@@ -65,7 +69,9 @@ A suitable fiducial value for $\mu$ is $\mu = 2 \times 10^{-8}$ (Abitbol et al.,
 
 In order to calculate that, you can use the matrix$^{5}$:
 
-$$F_{ij} = \sum_{a,b} \left(\frac{\partial(\Delta I_\nu)}{\partial p_i}\right)_a C^{-1}_{ab} \left(\frac{\partial(\Delta I_\nu)}{\partial p_j}\right)_b \qquad (3)$$
+$$
+F_{ij} = \sum_{a,b} \left(\frac{\partial(\Delta I_\nu)}{\partial p_i}\right)_a C^{-1}_{ab} \left(\frac{\partial(\Delta I_\nu)}{\partial p_j}\right)_b \qquad (3)
+$$
 
 called the Fisher Information Matrix (see for example Verde, 2010). $a, b$ are indexing frequency, and $p_i, p_j$ are parameters of the model (in our case, the two free parameters for the spectral distortions, $y$ and $\mu$, all other parameters assumed fixed). $C^{-1}_{ab}$ is the inverse of the covariance matrix of the experiment. Inverting the $F_{ij}$ matrix and taking the square root of the diagonal gives us the standard deviations expected for each parameter.
 
@@ -188,11 +194,17 @@ correct units on the axis of both plots, (=0.5\*4) **2**
 
 $\mu$ distortion partial derivative
 
-$$\frac{\partial \Delta I_{\nu,\mu}}{\partial \mu} = I_0 \frac{x^4 e^x}{(e^x - 1)^2}\left[\frac{1}{\beta} - \frac{1}{x}\right]$$ **3**
+$$
+\frac{\partial \Delta I_{\nu,\mu}}{\partial \mu} = I_0 \frac{x^4 e^x}{(e^x - 1)^2}\left[\frac{1}{\beta} - \frac{1}{x}\right]
+$$
+**3**
 
 y distortion partial derivative
 
-$$\frac{\partial \Delta I_{\nu,y}}{\partial y} = I_0 \frac{x^4 e^x}{(e^x - 1)^2}\left[x \coth\left(\frac{x}{2}\right) - 4\right]$$ **3**
+$$
+\frac{\partial \Delta I_{\nu,y}}{\partial y} = I_0 \frac{x^4 e^x}{(e^x - 1)^2}\left[x \coth\left(\frac{x}{2}\right) - 4\right]
+$$
+**3**
 
 The numerical values are given in the table below
 
@@ -207,7 +219,9 @@ The numerical values are given in the table below
 
 **Solution**
 
-$$C_{ab} = \begin{pmatrix} 1.2985e-11 & 0 & 0 & 0 \\ 0 & 1.4213e-11 & 0 & 0 \\ 0 & 0 & 1.8369e-11 & 0 \\ 0 & 0 & 0 & 2.6624e-11 \end{pmatrix} \mathrm{MJy^2/sr^2}$$
+$$
+C_{ab} = \begin{pmatrix} 1.2985e-11 & 0 & 0 & 0 \\ 0 & 1.4213e-11 & 0 & 0 \\ 0 & 0 & 1.8369e-11 & 0 \\ 0 & 0 & 0 & 2.6624e-11 \end{pmatrix} \mathrm{MJy^2/sr^2}
+$$
 
 Note: watch out for the units. Table 1 was given to the students in Jy/sr. Here we used $\mathrm{MJy^2/sr^2}$. Students might have chosen to use $\mathrm{Jy^2/sr^2}$, in which case all the numbers would be multiplied by $10^{12}$. Pay attention to these units for the following parts as well.
 
@@ -221,7 +235,9 @@ Grading Scheme
 
 Analytical formula for diagonal matrix inversion: 1/x for each diagonal element of the original matrix.
 
-$$C^{-1}_{ab} = \begin{pmatrix} 7.7011e+10 & 0 & 0 & 0 \\ 0 & 7.0359e+10 & 0 & 0 \\ 0 & 0 & 5.4440e+10 & 0 \\ 0 & 0 & 0 & 3.7561e+10 \end{pmatrix} \frac{1}{\mathrm{MJy^2/sr^2}}$$
+$$
+C^{-1}_{ab} = \begin{pmatrix} 7.7011e+10 & 0 & 0 & 0 \\ 0 & 7.0359e+10 & 0 & 0 \\ 0 & 0 & 5.4440e+10 & 0 \\ 0 & 0 & 0 & 3.7561e+10 \end{pmatrix} \frac{1}{\mathrm{MJy^2/sr^2}}
+$$
 
 0.5 point for each of the correct numerical value on the diagonal of the matrix. **4**
 
@@ -231,7 +247,10 @@ red Note: If analytical expression is missing, but the values of the matrix are 
 
 **Solution**
 
-$$F_{y\mu} = \begin{pmatrix} 2.3747e+17 & 2.7714e+16 \\ 2.7714e+16 & 3.4860e+15 \end{pmatrix}$$ **6**
+$$
+F_{y\mu} = \begin{pmatrix} 2.3747e+17 & 2.7714e+16 \\ 2.7714e+16 & 3.4860e+15 \end{pmatrix}
+$$
+**6**
 
 (1.5 per matrix value)
 
@@ -245,7 +264,10 @@ The analytical formula for the 2x2 matrix inversion is: if $A = \begin{pmatrix} 
 
 Using this, we obtain:
 
-$$F^{-1}_{y\mu} = \begin{pmatrix} 5.8343e-17 & -4.6383e-16 \\ -4.6383e-16 & 3.9743e-15 \end{pmatrix} \qquad (4)$$ **4**
+$$
+F^{-1}_{y\mu} = \begin{pmatrix} 5.8343e-17 & -4.6383e-16 \\ -4.6383e-16 & 3.9743e-15 \end{pmatrix} \qquad (4)
+$$
+**4**
 
 1 per matrix value.
 
@@ -267,17 +289,25 @@ Note - this is not required to be able to solve the problem.
 
 If we are to assume Gaussian posteriors, we can use the Fisher matrix formalism to calculate the parameter uncertainties. Our likelihood takes the form
 
-$$L = \frac{1}{(2\pi)^{n/2}|\det\{C\}|^{1/2}} \exp\Big[-\frac{1}{2}\sum_{ij}(\theta_i - \theta_{i,0}) C^{-1}_{ij} (\theta_j - \theta_{j,0})\Big] \qquad (5)$$
+$$
+L = \frac{1}{(2\pi)^{n/2}|\det\{C\}|^{1/2}} \exp\Big[-\frac{1}{2}\sum_{ij}(\theta_i - \theta_{i,0}) C^{-1}_{ij} (\theta_j - \theta_{j,0})\Big] \qquad (5)
+$$
 
 If we can assume we are situated in a location in the parameter space sufficiently close to the peak of the likelihood, we can make a Taylor series expansion:
 
-$$\log L = \log L(\theta_0) + \frac{1}{2}\sum_{ij}(\theta_i - \theta_{i,0}) \frac{\partial^2 \log L}{\partial\theta_i \partial\theta_j}\bigg|_{\theta_0} (\theta_j - \theta_{j,0}) + \ldots \qquad (6)$$
+$$
+\log L = \log L(\theta_0) + \frac{1}{2}\sum_{ij}(\theta_i - \theta_{i,0}) \frac{\partial^2 \log L}{\partial\theta_i \partial\theta_j}\bigg|_{\theta_0} (\theta_j - \theta_{j,0}) + \ldots \qquad (6)
+$$
 
-$$F_{ij} = -\Big\langle \frac{\partial^2 \log L}{\partial\theta_i \partial\theta_j} \Big\rangle = -\int \frac{\partial \log L}{\partial\theta_i \partial\theta_j} P(\theta) d\theta \qquad (7)$$
+$$
+F_{ij} = -\Big\langle \frac{\partial^2 \log L}{\partial\theta_i \partial\theta_j} \Big\rangle = -\int \frac{\partial \log L}{\partial\theta_i \partial\theta_j} P(\theta) d\theta \qquad (7)
+$$
 
 If we can make the assumption of being in a Gaussian regime, the second factor can be defined as
 
-$$F_{ij} = \sum_{a,b} \frac{\partial(\Delta I_\nu)_a}{\partial p_i} C^{-1}_{ab} \frac{\partial \Delta(I_\nu)_b}{\partial p_j} \qquad (8)$$
+$$
+F_{ij} = \sum_{a,b} \frac{\partial(\Delta I_\nu)_a}{\partial p_i} C^{-1}_{ab} \frac{\partial \Delta(I_\nu)_b}{\partial p_j} \qquad (8)
+$$
 
 which is called the Fisher Information Matrix (see for example Verde, 2010). $a, b$ are indexing over frequency, and $p_i, p_j$ over the different parameters of the model, which in our case are the free parameters for the spectral distortions and the foregrounds. Inverting the $F_{ij}$ matrix and taking the square root of the diagonal gives us the standard deviations expected for each parameter.
 

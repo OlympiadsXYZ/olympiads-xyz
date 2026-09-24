@@ -37,7 +37,9 @@ To the right of the control panel, a smaller 12.0 cm copper rod is installed; it
 
 We can use the following formula to calculate the uncertainty of the slope b :
 
-$$\Delta b = b\sqrt{\frac{1}{(n-2)}\left(\frac{1}{\mathrm{reg}^2} - 1\right)}$$
+$$
+\Delta b = b\sqrt{\frac{1}{(n-2)}\left(\frac{1}{\mathrm{reg}^2} - 1\right)}
+$$
 
 in which $n$ is the number of data points.
 
@@ -45,13 +47,17 @@ in which $n$ is the number of data points.
 
 1. Generally, Electrical resistors have different behaviors in response to a change in temperature. One of the widely used resistors is PT100 which has a linear behavior over a considerable range of temperatures, i.e.
 
-$$R = R_0(1 + \alpha\theta) \quad (1)$$
+$$
+R = R_0(1 + \alpha\theta) \quad (1)
+$$
 
 in which $R_0$ is the value of the resistance at the $0^{\circ}\,\mathrm{C}$, $\alpha$ is a constant coefficient (within the range of temperatures for this problem), and $\theta$ is the temperature in degrees Celsius. The value of $\alpha$ for the resistor used in this problem is $0.0039083\ {}^{\circ}\mathrm{C}^{-1}$. For PT100, $R_0 = 100.00\ \Omega$.
 
 2. The thermistors 1 through 9 have a nonlinear behavior in response to changes in temperature, and are usually used for measuring small changes in temperature. The resistance of these thermistors changes with temperature as follows:
 
-$$R' = R'_0\,\mathrm{e}^{\frac{E_{\mathrm{g}}}{2k_{\mathrm{B}}T}} \quad (2)$$
+$$
+R' = R'_0\,\mathrm{e}^{\frac{E_{\mathrm{g}}}{2k_{\mathrm{B}}T}} \quad (2)
+$$
 
 Where $R_0'$ is a constant, $k_{\mathrm{B}} = 8.61733 \times 10^{-5}\ \mathrm{eV/K}$ is the Boltzmann constant, $T$ is the temperature in kelvins and $E_{\mathrm{g}}$ is the energy gap for the thermistor's semiconductor material. Remember that $T = (\theta + 273.15)\ \mathrm{K}$
 
@@ -69,13 +75,17 @@ In this problem, heat is transferred inside the rod through conduction, and tran
 
 **(a) Heat conduction:** for a heat conductor in the shape of a rod with no heat loss from its lateral surface, the rate of heat transfer, ${}^{dQ}/_{dt}$, through a differential element (Figure 7) at the steady state is as follows
 
-$$\frac{dQ}{dt} = -kA\,\frac{d\theta}{dx} \quad (3)$$
+$$
+\frac{dQ}{dt} = -kA\,\frac{d\theta}{dx} \quad (3)
+$$
 
 where $d\theta$ is the temperature difference between the two edges of the differential element, $A$ is the cross-sectional area, $dx$ is the length of the differential element, and k is the heat transfer coefficient (heat conductivity) which depends on the type of material the rod is made of.
 
 **(b) Convection:** For any object exchanging heat with the air through its lateral surface, the following relationship holds:
 
-$$\frac{dQ}{dt} = -hS\Delta\theta \quad (4)$$
+$$
+\frac{dQ}{dt} = -hS\Delta\theta \quad (4)
+$$
 
 in which $S$ is the area of the lateral surface, $\Delta\theta$ is the temperature difference between the object and the surrounding air, and $h$ is the convective heat transfer coefficient which is a function of the shape of the object and the nature of the heat flow through the sides of the object.
 
@@ -99,7 +109,9 @@ Let us denote the total heat capacity of the rod and the heater and the sensors 
 
 Wait until the value of $R$ reaches $120\ \Omega$ and then turn off Heater 1. The temperature of the rod and the resistance $R$ will start to decrease slowly after a few seconds. When PT100 is cooling down, the resistance is given by:
 
-$$R - R_{\mathrm{env}} = Ae^{-\gamma t} \quad (5)$$
+$$
+R - R_{\mathrm{env}} = Ae^{-\gamma t} \quad (5)
+$$
 
 in which $A$ and $\gamma$ are constants.
 
@@ -125,7 +137,9 @@ In order to save time, take a look at Part C and then continue Part B.
 
 It can be shown that as a function of the distance from Heater 2 along the length of the line, the temperature obeys the following relation:
 
-$$\theta_x = \theta_{\mathrm{b}} + Ae^{-\lambda x} + Be^{\lambda x} \quad (6)$$
+$$
+\theta_x = \theta_{\mathrm{b}} + Ae^{-\lambda x} + Be^{\lambda x} \quad (6)
+$$
 
 in which $\theta_{\mathrm{b}}$ the ambient temperature of the box, $A$ and $B$ are constants, and $\lambda = \sqrt{\frac{2h}{kr}}$ where $r$ is the radius of the rod. As a first step, we can ignore the data corresponding to large values of $x$ and take $B$ to be zero. In this case we can find $\lambda$ and $A$ to a first approximation, let us call them $\lambda^{(0)}$ and $A^{(0)}$:
 
@@ -137,7 +151,9 @@ The temperature at the end of the rod farthest from the heater does not change w
 
 Now we can use the value obtained for $B$ to correct the previous calculation. To do so, assume:
 
-$$\theta'_x = \theta_x - B^{(1)}e^{\lambda^{(0)}x}$$
+$$
+\theta'_x = \theta_x - B^{(1)}e^{\lambda^{(0)}x}
+$$
 
 **B-5 (0.4 pt)** Find $\theta_1'$ through $\theta_7'$ and complete the columns added to table B-1.
 
@@ -155,11 +171,15 @@ While the fans are on, turn on Heaters 2 and 3, and wait until the temperature r
 
 It can be shown that, in this case, the temperature in terms of $x$ varies as follows
 
-$$\theta_x - \theta_{\mathrm{b}} = A'\cosh(\lambda(x - x_0))$$
+$$
+\theta_x - \theta_{\mathrm{b}} = A'\cosh(\lambda(x - x_0))
+$$
 
 in which $A'$ is a constant and $\cos h(u)$ is the hyperbolic cosine function of u defined as:
 
-$$\cos h\left(u\right) = \frac{e^u + e^{-u}}{2}$$
+$$
+\cos h\left(u\right) = \frac{e^u + e^{-u}}{2}
+$$
 
 **C-2 (0.6 pt)** Draw the diagram of temperature versus distance and find $x_0$.
 
@@ -317,15 +337,23 @@ $\lambda^{(1)} = 0.059 \pm 0.002\left(\dfrac{1}{cm}\right)$
 
 **B.7 (0.9 pt)**
 
-$$P_2 = \int_{-0.5cm}^{42.5cm} 2\pi r h(\theta_x - \theta_\mathrm{b})\,dx \quad \text{or} \quad \int_0^d 2\pi r h(\theta_x - \theta_\mathrm{b})\,dx = \frac{2\pi r h A}{\lambda}\left(1 - e^{-2\lambda d}\right)$$
+$$
+P_2 = \int_{-0.5cm}^{42.5cm} 2\pi r h(\theta_x - \theta_\mathrm{b})\,dx \quad \text{or} \quad \int_0^d 2\pi r h(\theta_x - \theta_\mathrm{b})\,dx = \frac{2\pi r h A}{\lambda}\left(1 - e^{-2\lambda d}\right)
+$$
 
-$$h = \frac{P_2\lambda}{2\pi r A\left(1 - e^{-2\lambda d}\right)}\ ,\quad k = \frac{2h}{\lambda^2 r}\ ,\quad P_2 = 4.5\ W$$
+$$
+h = \frac{P_2\lambda}{2\pi r A\left(1 - e^{-2\lambda d}\right)}\ ,\quad k = \frac{2h}{\lambda^2 r}\ ,\quad P_2 = 4.5\ W
+$$
 
-$$\lambda = 0.053 \pm\ 0.008\left(\frac{1}{cm}\right),\quad h = 0.0037 \pm\ 0.0003\ \frac{W}{k\ cm^2}\ ,\quad k = 3.9\ \pm\ 0.3\ \ \frac{W}{k\ cm}$$
+$$
+\lambda = 0.053 \pm\ 0.008\left(\frac{1}{cm}\right),\quad h = 0.0037 \pm\ 0.0003\ \frac{W}{k\ cm^2}\ ,\quad k = 3.9\ \pm\ 0.3\ \ \frac{W}{k\ cm}
+$$
 
 **C.1 (0.4 pt)**
 
-$$\theta_b = 27.38^\circ\mathrm{C}$$
+$$
+\theta_b = 27.38^\circ\mathrm{C}
+$$
 
 | $n$ | $x\,(cm)$ | $\theta_x\,(^\circ\mathrm{C})$ | $(\theta_x - \theta_b)\,(^\circ\mathrm{C})$ | B-1 | C-B | Reversed order |
 |-----|-----------|--------------------------------|---------------------------------------------|-----|-----|----------------|
@@ -355,7 +383,9 @@ $$\theta_b = 27.38^\circ\mathrm{C}$$
 
 ![Linear plot of C-B versus B-1 with the fit y = 0.6015x - 0.5922 and R² = 0.9998, points lying on a straight line from about (3, 1.4) to (17.2, 9.7).](ipho-2024-experiment-q4-p1-sol-fig7)
 
-$$P_3 = 0.60\, P_2\ \pm\ 0.01\, P_2$$
+$$
+P_3 = 0.60\, P_2\ \pm\ 0.01\, P_2
+$$
 
 <figure>
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2024-experiment-q4/p1-sol-fig1-v2.png" alt="Scatter plot of R (ohm) versus t (s) from 0 to 160 s, points rising from 110.1 to 111.73; linear fit line through points after t≈40 s with equation y = 0.0147x + 109.65, R² = 0.9991." />

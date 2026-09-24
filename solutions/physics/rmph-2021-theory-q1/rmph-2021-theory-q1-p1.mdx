@@ -25,7 +25,9 @@ Mr. Steiner is trying to get into the highway building business. The projects th
 
 i) Consider two points on the plane, A and O. Show that if the point O is translated by some infinitesimal vector $\vec{\delta}$ (the norm of $\vec{\delta}$ is much smaller than the distance between A and O), then the distance between the points A and O changes by
 
-$$\delta d = \vec{e}\cdot\vec{\delta}$$
+$$
+\delta d = \vec{e}\cdot\vec{\delta}
+$$
 
 where $\vec{e}$ (i.e. $\vec{e}\cdot\vec{e} = 1$) is the unit vector pointing in the direction from A to O.
 
@@ -51,15 +53,21 @@ iii) Find the minimal highway network connecting three points that are the verti
 
 *Hint:* Given two points (1 and 2) on the sphere, whose normal vectors to the surface of the sphere are given by $\overrightarrow{n_1}$ and $\overrightarrow{n_2}$ then the distance between the two points is given by
 
-$$d = R\theta$$
+$$
+d = R\theta
+$$
 
 where $\theta$ is the angle between $\overrightarrow{n_1}$ and $\overrightarrow{n_2}$, given by
 
-$$\cos\theta = \overrightarrow{n_1}\cdot\overrightarrow{n_2}$$
+$$
+\cos\theta = \overrightarrow{n_1}\cdot\overrightarrow{n_2}
+$$
 
 Use this to show that the unit vector tangent to the sphere at point 1, pointing from 1 to 2, can be expressed as
 
-$$\overrightarrow{e_{12}} = -\frac{\overrightarrow{n_1}\cdot\overrightarrow{n_2}}{\sqrt{1-(\overrightarrow{n_1}\cdot\overrightarrow{n_2})^2}}\,\overrightarrow{n_1} + \frac{1}{\sqrt{1-(\overrightarrow{n_1}\cdot\overrightarrow{n_2})^2}}\,\overrightarrow{n_2}$$
+$$
+\overrightarrow{e_{12}} = -\frac{\overrightarrow{n_1}\cdot\overrightarrow{n_2}}{\sqrt{1-(\overrightarrow{n_1}\cdot\overrightarrow{n_2})^2}}\,\overrightarrow{n_1} + \frac{1}{\sqrt{1-(\overrightarrow{n_1}\cdot\overrightarrow{n_2})^2}}\,\overrightarrow{n_2}
+$$
 
 as long as the vectors $\overrightarrow{n_1}$ and $\overrightarrow{n_2}$ are not opposite to each other (i.e. the points are exactly on opposite sides of the sphere).
 
@@ -88,31 +96,43 @@ a) *(1 point)* The symmetric configurations are those that are invariant under 1
 
 b) i) *(1 points)* To prove the identity let’s consider the vector connecting $A$ to $O$ to be $\vec{d}$ and $A$ to $O'$ to be $\vec{d}'$, with $\vec{d}' = \vec{d} + \vec{\delta}$ and $d = \sqrt{\vec{d}\cdot\vec{d}}$. Then the norm of the vector $\vec{d}'$ is given by
 
-$$d' = d + \delta d = \sqrt{\vec{d}'\cdot\vec{d}'} = \sqrt{d^2 + 2\vec{\delta}\cdot\vec{d} + \delta^2} = d + \frac{\vec{\delta}\cdot\vec{d}}{d} + O(\delta^2)\,. \qquad (1.1)$$
+$$
+d' = d + \delta d = \sqrt{\vec{d}'\cdot\vec{d}'} = \sqrt{d^2 + 2\vec{\delta}\cdot\vec{d} + \delta^2} = d + \frac{\vec{\delta}\cdot\vec{d}}{d} + O(\delta^2)\,. \qquad (1.1)
+$$
 
 Then, for $d \neq 0$,
 
-$$\delta d = \vec{\delta}\cdot\vec{e} + O(\delta^2)\,, \qquad (1.2)$$
+$$
+\delta d = \vec{\delta}\cdot\vec{e} + O(\delta^2)\,, \qquad (1.2)
+$$
 
 with $\vec{e} = \vec{d}/d$ is the unit vector pointing from $A$ to $O$. Importantly, for b) iii), the formula above applies as long $d \neq 0$.
 
 b) ii) *(1.2 points)* To minimize the minimum length path we wish to find an intersection point such that the derivative of the length with respect to the infinitesimal translation vector $\vec{\delta}$ is zero. Using (1.2), we find that if the intersection point is translated by $\delta$, then the total length of the network changes as
 
-$$\delta D = \delta\cdot(\vec{e}_{OA} + \vec{e}_{OB} + \vec{e}_{OC}) + O(\delta^2)\,, \qquad (1.3)$$
+$$
+\delta D = \delta\cdot(\vec{e}_{OA} + \vec{e}_{OB} + \vec{e}_{OC}) + O(\delta^2)\,, \qquad (1.3)
+$$
 
 where $\vec{e}_{OA}$, $\vec{e}_{OB}$, $\vec{e}_{OC}$ are the normal vectors pointing from the intersection point $O$ to $A$, $B$ or $C$ respectively. Since we want $\delta D$ to be zero to leading order in $\delta$, for any direction of the vector $\vec{\delta}$, then $\vec{e}_{OA} + \vec{e}_{OB} + \vec{e}_{OC} = 0$. This, in turn, implies
 
-$$\left(\vec{e}_{OA} + \vec{e}_{OB}\right)^2 = 2 + 2\vec{e}_{OA}\cdot\vec{e}_{OB} = 1 \qquad (1.4)$$
+$$
+\left(\vec{e}_{OA} + \vec{e}_{OB}\right)^2 = 2 + 2\vec{e}_{OA}\cdot\vec{e}_{OB} = 1 \qquad (1.4)
+$$
 
 which implies that $\vec{e}_{OA}\cdot\vec{e}_{OB} = -1/2$ and, consequently the angle between $OA$ and $OB$ is 120 degrees. Similarly, starting from the same relation we can prove that the angle between $OB$ and $OC$, and $OC$ and $OA$ are all 120 degrees.
 
 There is one corner case that we should also be concerned with. The formula (1.2) is valid as long as $d \neq 0$, i.e. if the point $O$ is not the same as $A$, $B$, or $C$. We need to make sure that if $O$ is the same as $A$, $B$, or $C$, then it is not the network of minimal length. Let’s assume without loss of generality that $O = A$. Then, translating $O$ by an infinitesimal vector $\delta$ yield a length change
 
-$$\delta D = \delta + \vec{\delta}\cdot(\vec{e}_{AB} + \vec{e}_{AC}) \qquad (1.5)$$
+$$
+\delta D = \delta + \vec{\delta}\cdot(\vec{e}_{AB} + \vec{e}_{AC}) \qquad (1.5)
+$$
 
 We can note that the minimum of $\vec{\delta}\cdot(\vec{e}_{AB} + \vec{e}_{AC})$ is given by $\vec{\delta}$ pointing in the opposite direction as $(\vec{e}_{AB} + \vec{e}_{AC})$ For such a vector $\vec{\delta}$, the length change becomes
 
-$$\delta D = \delta(1 - |\vec{e}_{AB} + \vec{e}_{AC}|)\,. \qquad (1.6)$$
+$$
+\delta D = \delta(1 - |\vec{e}_{AB} + \vec{e}_{AC}|)\,. \qquad (1.6)
+$$
 
 When the angle between $AB$ and $AC$ is less than 120 degrees, then $|\vec{e}_{AB} + \vec{e}_{AC}| = \sqrt{2 + 2\vec{e}_{AB}\cdot\vec{e}_{AC}} > 1$, and the total length of the network can be decreased by going along a vector $\vec{\delta}$ opposite to $(\vec{e}_{AB} + \vec{e}_{AC})$.
 
@@ -126,7 +146,9 @@ c) *(0.7 points)* The symmetric configuration is the network that is invariant w
 
 Let’s prove that this configuration has a minimal length among the network with a single intersection point. Using (1.2), the variation if we translated $O$ by $\vec{\delta}$ is given by
 
-$$\delta D = \vec{\delta}(\vec{e}_{OA} + \vec{e}_{OB} + \vec{e}_{OC} + \vec{e}_{OD}) + O(\delta^2) = O(\delta^2)\,, \qquad (1.7)$$
+$$
+\delta D = \vec{\delta}(\vec{e}_{OA} + \vec{e}_{OB} + \vec{e}_{OC} + \vec{e}_{OD}) + O(\delta^2) = O(\delta^2)\,, \qquad (1.7)
+$$
 
 since at the center $\vec{e}_{OA} + \vec{e}_{OB} + \vec{e}_{OC} + \vec{e}_{OD} = 0$. Therefore, this implies that the configuration with $O$ in the center of the square is indeed a minimal length configuration amongst networks with one intersection point.
 
@@ -134,7 +156,9 @@ d) *(1.5 points)* Let’s consider other possible configurations. Once again, si
 
 The length of this configuration is:
 
-$$D = 4\left(\frac{2}{\sqrt{3}}\frac{L}{2}\right) + \left(L - 2\frac{L}{2}\frac{1}{\sqrt{3}}\right) = L(1 + \sqrt{3}) = L\cdot 2.732\ldots \qquad (1.8)$$
+$$
+D = 4\left(\frac{2}{\sqrt{3}}\frac{L}{2}\right) + \left(L - 2\frac{L}{2}\frac{1}{\sqrt{3}}\right) = L(1 + \sqrt{3}) = L\cdot 2.732\ldots \qquad (1.8)
+$$
 
 where the term in the first parenthesis gives the length of the the edges connecting $O_{1,2}$ to the closest vertex of the square and the term in the second parenthesis is the length of the edge connecting $O_1$ to $O_2$.
 
@@ -144,7 +168,9 @@ Therefore, the configurations in figure 1 are those of shortest overall length. 
 
 e) *(0.8 points)* As we get the intersection points $O_1$ and $O_2$ closer or further away from each other (we will denote the distance from $O_1$ to $O_2$ as $2x$), the total length is given by,$^1$
 
-$$D(x) = 4\sqrt{\frac{L^2}{4} + \left(\frac{L}{2} - |x|\right)^2} + 2|x|\,. \qquad (1.9)$$
+$$
+D(x) = 4\sqrt{\frac{L^2}{4} + \left(\frac{L}{2} - |x|\right)^2} + 2|x|\,. \qquad (1.9)
+$$
 
 The sketch of $D(x)$ is:
 
@@ -160,27 +186,39 @@ g) *(2.0 points)* We will present a computational and a more abstract solution t
 
 *Solution I:* We will denote the normal unit vectors at the vertex points by $\vec{n}_A$ (which we choose to be at the north pole), $\vec{n}_B$ and $\vec{n}_C$, and the normal unit vector at $O$ by $\vec{n}_O$. Let’s translate the point $O$ by an infinitesimal vector $\vec{\delta}$ to the point $O'$. The normal vector at $O'$ is $\vec{n}_{O'} = \vec{n}_O + \vec{\delta}$.$^2$ the change in distance between $O$ and one of the vertices (let’s say $A$) is
 
-$$\delta d_{OA} = R\left[\arccos(\vec{n}_A\cdot\vec{n}_O + \vec{n}_A\cdot\vec{\delta}) - \arccos(\vec{n}_A\cdot\vec{n}_O)\right] = -R\frac{\vec{n}_A\cdot\vec{\delta}}{\sqrt{1 - (\vec{n}_A\cdot\vec{n}_O)^2}}\,. \qquad (1.10)$$
+$$
+\delta d_{OA} = R\left[\arccos(\vec{n}_A\cdot\vec{n}_O + \vec{n}_A\cdot\vec{\delta}) - \arccos(\vec{n}_A\cdot\vec{n}_O)\right] = -R\frac{\vec{n}_A\cdot\vec{\delta}}{\sqrt{1 - (\vec{n}_A\cdot\vec{n}_O)^2}}\,. \qquad (1.10)
+$$
 
 Therefore, the variation of the overall distance of the network under an infinitesimal translation of $O$ is
 
-$$\delta D = \delta d_{OA} + \delta d_{OB} + \delta d_{OC} = -R\,\vec{\delta}\cdot\left(\frac{\vec{n}_A}{\sqrt{1 - (\vec{n}_A\cdot\vec{n}_O)^2}} + \frac{\vec{n}_A}{\sqrt{1 - (\vec{n}_C\cdot\vec{n}_O)^2}} + \frac{\vec{n}_C}{\sqrt{1 - (\vec{n}_C\cdot\vec{n}_O)^2}}\right)\,. \qquad (1.11)$$
+$$
+\delta D = \delta d_{OA} + \delta d_{OB} + \delta d_{OC} = -R\,\vec{\delta}\cdot\left(\frac{\vec{n}_A}{\sqrt{1 - (\vec{n}_A\cdot\vec{n}_O)^2}} + \frac{\vec{n}_A}{\sqrt{1 - (\vec{n}_C\cdot\vec{n}_O)^2}} + \frac{\vec{n}_C}{\sqrt{1 - (\vec{n}_C\cdot\vec{n}_O)^2}}\right)\,. \qquad (1.11)
+$$
 
 This does not determine the angles between the edges just yet. To do that, we can express the inner product above in terms of the tangent vectors $\vec{e}_{OA}$, $\vec{e}_{OB}$, and $\vec{e}_{OC}$ pointing from $O$ to each vertex of the triangle, $A$, $B$ or $C$ respectively. To find $\vec{e}_{OA}$, we first observe that this vector is coplanar with $\vec{n}_O$ and $\vec{n}_A$. Therefore, as long as $O$ and $A$ are not at opposite poles of the sphere or are identical to each other, than $\vec{e}_{OA}$ can be expressed as a liner combination of $\vec{n}_O$ and $\vec{n}_A$. Therefore, we need to find $\alpha$ and $\beta$ such that
 
-$$\vec{e}_{OA} = \alpha\vec{n}_O + \beta\vec{n}_A\,, \qquad \vec{e}_{OA}\cdot\vec{n}_O = 0\,, \qquad \vec{e}_{OA}\cdot\vec{e}_{OA} = 1\,, \qquad (1.12)$$
+$$
+\vec{e}_{OA} = \alpha\vec{n}_O + \beta\vec{n}_A\,, \qquad \vec{e}_{OA}\cdot\vec{n}_O = 0\,, \qquad \vec{e}_{OA}\cdot\vec{e}_{OA} = 1\,, \qquad (1.12)
+$$
 
 which implies
 
-$$\alpha + \beta\vec{n}_A\cdot\vec{n}_O = 0\,, \qquad \alpha^2 + \beta^2 + 2\alpha\beta\vec{n}_O\cdot\vec{n}_A = 1\,. \qquad (1.13)$$
+$$
+\alpha + \beta\vec{n}_A\cdot\vec{n}_O = 0\,, \qquad \alpha^2 + \beta^2 + 2\alpha\beta\vec{n}_O\cdot\vec{n}_A = 1\,. \qquad (1.13)
+$$
 
 The solutions to this system of equation yields
 
-$$\vec{e}_{OA} = \pm\left(\frac{\vec{n}_O\cdot\vec{n}_A}{\sqrt{1 - (\vec{n}_O\cdot\vec{n}_A)^2}}\vec{n}_O - \frac{1}{\sqrt{1 - (\vec{n}_O\cdot\vec{n}_A)^2}}\vec{n}_A\right)\,. \qquad (1.14)$$
+$$
+\vec{e}_{OA} = \pm\left(\frac{\vec{n}_O\cdot\vec{n}_A}{\sqrt{1 - (\vec{n}_O\cdot\vec{n}_A)^2}}\vec{n}_O - \frac{1}{\sqrt{1 - (\vec{n}_O\cdot\vec{n}_A)^2}}\vec{n}_A\right)\,. \qquad (1.14)
+$$
 
 We obtained two solutions only one of which points from $O$ to $A$ along the shortest path. With a bit of thought one can check that this corresponds to the $-$ solution in (1.14). Using (1.14) we find that (1.11) can be expressed as
 
-$$\delta D = R\vec{\delta}\,(\vec{e}_{OA} + \vec{e}_{OB} + \vec{e}_{OC}) \qquad (1.15)$$
+$$
+\delta D = R\vec{\delta}\,(\vec{e}_{OA} + \vec{e}_{OB} + \vec{e}_{OC}) \qquad (1.15)
+$$
 
 This is precisely the same formula as the one found on the plane! We will see why this is the case in an intuitive way as part of solution II. Using the same reasoning as in Part 1 we can conclude that the angle between all the edges is again precisely 120 degrees. Finally, as before, we need to check the corner cases in which $O$ coincides with one of the point $A$, $B$ and $C$. The angle at $A$ is 60 degrees, the angle at $B$ is 90 degrees and the angle at $C$ is also 90 degrees (note that for a triangle on a sphere the sum of the angles is not 180 degrees). Because all these angles are smaller than 120 degrees we conclude, using the same reasoning as in Part 1, that any of these configurations cannot be a minimum.
 

@@ -65,35 +65,49 @@ a) The Sun will move in the opposite direction along the celestial sphere if the
 
 The maximal angular orbital velocity is reached at the point of perihelion:
 
-$$\omega_{\mathrm{p}} = \frac{v_{\mathrm{p}}}{r_{\mathrm{p}}} = \sqrt{\frac{G\mathfrak{M}_\odot}{a_\oplus} \cdot \frac{1 + e}{1 - e}} \cdot \frac{1}{a_\oplus(1 - e)} = \sqrt{\frac{G\mathfrak{M}_\odot}{a_\oplus^3} \cdot \frac{1 + e}{(1 - e)^3}} = \omega_\oplus^{\mathrm{orb}}\sqrt{\frac{1 + e}{(1 - e)^3}}\,.$$
+$$
+\omega_{\mathrm{p}} = \frac{v_{\mathrm{p}}}{r_{\mathrm{p}}} = \sqrt{\frac{G\mathfrak{M}_\odot}{a_\oplus} \cdot \frac{1 + e}{1 - e}} \cdot \frac{1}{a_\oplus(1 - e)} = \sqrt{\frac{G\mathfrak{M}_\odot}{a_\oplus^3} \cdot \frac{1 + e}{(1 - e)^3}} = \omega_\oplus^{\mathrm{orb}}\sqrt{\frac{1 + e}{(1 - e)^3}}\,.
+$$
 
 Here $\omega_\oplus^{\mathrm{orb}} = 360^{\circ}/T_\oplus = 360^{\circ}/365.26^{\mathrm{d}} = 0.986^{\circ}/\mathrm{d}$.
 
 We equate the obtained value to the angular velocity of the Earth’s rotation around its axis $\omega_\oplus^{\mathrm{rot}} = 360^{\circ}/\tau_\oplus = 360^{\circ}/23^{\mathrm{h}}\,56^{\mathrm{m}}\,04^{\mathrm{s}} \approx 361^{\circ}/\mathrm{d}$:
 
-$$361^{\circ} = 0.986^{\circ} \cdot \sqrt{\frac{1 + e}{(1 - e)^3}} \quad\Longrightarrow\quad e = \left(\frac{361}{0.986}\right)^2 \cdot (1 - e)^3 - 1 \qquad (0 \leqslant e < 1).$$
+$$
+361^{\circ} = 0.986^{\circ} \cdot \sqrt{\frac{1 + e}{(1 - e)^3}} \quad\Longrightarrow\quad e = \left(\frac{361}{0.986}\right)^2 \cdot (1 - e)^3 - 1 \qquad (0 \leqslant e < 1).
+$$
 
 We see an increasing function on the left side of the equation and a decreasing one on the right side. So the equation has only one root. The root can be easily found by brute-force, or one could use the iterative method after rewriting the equation in the form
 
-$$e_{n+1} = 1 - \sqrt[3]{(1 + e_n) \cdot \left(\frac{0.986}{361}\right)^2},$$
+$$
+e_{n+1} = 1 - \sqrt[3]{(1 + e_n) \cdot \left(\frac{0.986}{361}\right)^2},
+$$
 
 in which it converges to $e \approx 0.975$ really quickly from any initial seed value.
 
 b) At perihelion, the distance between the Earth and the Sun is equal to
 
-$$r_p = a_\oplus \cdot (1 - e) = 0.025\ \mathrm{au} = 3.74 \cdot 10^6\ \mathrm{km} \gg R_\odot.$$
+$$
+r_p = a_\oplus \cdot (1 - e) = 0.025\ \mathrm{au} = 3.74 \cdot 10^6\ \mathrm{km} \gg R_\odot.
+$$
 
 We can write the heat balance equation for the Earth at perihelion:
 
-$$\frac{L_\odot}{4\pi r_p^2} \cdot \pi R_\oplus^2 \cdot (1 - A) = 4\pi R_\oplus^2\sigma\Theta^4$$
+$$
+\frac{L_\odot}{4\pi r_p^2} \cdot \pi R_\oplus^2 \cdot (1 - A) = 4\pi R_\oplus^2\sigma\Theta^4
+$$
 
-$$\Longrightarrow\quad \Theta = \sqrt[4]{\frac{L_\odot(1 - A)}{16\pi r_p^2\sigma}} = \sqrt[4]{\frac{3.828 \cdot 10^{26}\ \mathrm{W} \times (1 - 0.3)}{16\pi \times 3.74 \cdot 10^9\ \mathrm{m} \times 5.67 \cdot 10^{-8}\ \mathrm{W/(m^2 \cdot K^4)}}} \approx 1.6 \cdot 10^3\ \mathrm{K}.$$
+$$
+\Longrightarrow\quad \Theta = \sqrt[4]{\frac{L_\odot(1 - A)}{16\pi r_p^2\sigma}} = \sqrt[4]{\frac{3.828 \cdot 10^{26}\ \mathrm{W} \times (1 - 0.3)}{16\pi \times 3.74 \cdot 10^9\ \mathrm{m} \times 5.67 \cdot 10^{-8}\ \mathrm{W/(m^2 \cdot K^4)}}} \approx 1.6 \cdot 10^3\ \mathrm{K}.
+$$
 
 Here we consider that the Earth radiates as a black body (mainly in the infrared part of the spectrum), while in the optical spectral range it reflects $A = 0.3$ of the incoming energy flux.
 
 c) The root mean square (RMS) velocity of an “average” air molecule (its molar mass is $\mu = 0.029\ \mathrm{kg/mol}$) at this temperature is
 
-$$v = \sqrt{\frac{3\mathfrak{R}\Theta}{\mu}} = \sqrt{\frac{3 \times 8.314\ \mathrm{J/(mol \cdot K)} \times 1.6 \cdot 10^3\ \mathrm{K}}{0.029\ \mathrm{kg/mol}}} \approx 1.2\ \mathrm{km/s} \approx 0.1\,v_{\mathrm{II}}\,,$$
+$$
+v = \sqrt{\frac{3\mathfrak{R}\Theta}{\mu}} = \sqrt{\frac{3 \times 8.314\ \mathrm{J/(mol \cdot K)} \times 1.6 \cdot 10^3\ \mathrm{K}}{0.029\ \mathrm{kg/mol}}} \approx 1.2\ \mathrm{km/s} \approx 0.1\,v_{\mathrm{II}}\,,
+$$
 
 where $v_{\mathrm{II}} = 11.2\ \mathrm{km/s}$ is the escape velocity for the Earth’s surface.
 

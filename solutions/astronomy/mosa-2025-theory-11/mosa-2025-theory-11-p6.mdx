@@ -36,65 +36,95 @@ verifier: 'mechanical'
 
 **Решение.** Геосинхронный спутник совершает один оборот вокруг Земли за одни звёздные сутки. Частным случаем геосинхронной является геостационарная орбита. Раз спутник движется по круговой орбите, её радиус равен радиусу геостационарной орбиты:
 
-$$r = \sqrt[3]{\frac{GM_{\oplus}T_{\oplus}^2}{4\pi^2}} \approx 42\,000\ \text{км}.$$
+$$
+r = \sqrt[3]{\frac{GM_{\oplus}T_{\oplus}^2}{4\pi^2}} \approx 42\,000\ \text{км}.
+$$
 
 Здесь $G$ — гравитационная постоянная, $M_{\oplus}$ — масса Земли, $T_{\oplus}$ — звёздные сутки. Треугольник спутник — центр Земли — наблюдатель прямоугольный. Найдём угол спутник — центр Земли — наблюдатель из определения косинуса:
 
-$$\cos\varphi = \frac{R_{\oplus}}{r} \quad \Rightarrow \quad \varphi = \arccos\frac{R_{\oplus}}{r} \approx 81^{\circ}.$$
+$$
+\cos\varphi = \frac{R_{\oplus}}{r} \quad \Rightarrow \quad \varphi = \arccos\frac{R_{\oplus}}{r} \approx 81^{\circ}.
+$$
 
 Здесь $R_{\oplus}$ — радиус Земли.
 
 Введём систему координат с центром в центре Земли так, что в момент, описанный в задаче, ось $Ox$ совпадает с направлением на спутник, ось $Oy$ направлена на полюс Земли, ось $Oz$ дополняет до правой тройки. Таким образом, плоскость орбиты лежит в плоскости $xy$. Запишем зависимости координат спутника от времени, обозначив за $\omega$ угловую скорость вращения Земли.
 
-$$\begin{aligned} x_{\text{с}} &= r\cos\omega t \\ y_{\text{с}} &= r\sin\omega t \\ z_{\text{с}} &= 0 \end{aligned}$$
+$$
+\begin{aligned} x_{\text{с}} &= r\cos\omega t \\ y_{\text{с}} &= r\sin\omega t \\ z_{\text{с}} &= 0 \end{aligned}
+$$
 
 Координаты наблюдателя в этой же системе координат
 
-$$\begin{aligned} x_{\text{н}} &= R_{\oplus}\cos(\omega t + \varphi) \\ y_{\text{н}} &= 0 \\ z_{\text{н}} &= R_{\oplus}\sin(\omega t + \varphi) \end{aligned}$$
+$$
+\begin{aligned} x_{\text{н}} &= R_{\oplus}\cos(\omega t + \varphi) \\ y_{\text{н}} &= 0 \\ z_{\text{н}} &= R_{\oplus}\sin(\omega t + \varphi) \end{aligned}
+$$
 
 Нас интересует момент времени, когда высота спутника максимальна. Он соответствует моменту времени, когда расстояние до спутника минимально. Запишем квадрат расстояния и посмотрим, чему равен его минимум.
 
-$$\begin{gathered} d^2 = (x_{\text{с}} - x_{\text{н}})^2 + (y_{\text{с}} - y_{\text{н}})^2 + (z_{\text{с}} - z_{\text{н}})^2 = \\ = (r\cos\omega t)^2 + (R_{\oplus}\cos(\omega t + \varphi))^2 - 2(r\cos\omega t)(R_{\oplus}\cos(\omega t + \varphi)) + (r\sin\omega t)^2 + (R_{\oplus}\sin(\omega t + \varphi))^2. \end{gathered}$$
+$$
+\begin{gathered} d^2 = (x_{\text{с}} - x_{\text{н}})^2 + (y_{\text{с}} - y_{\text{н}})^2 + (z_{\text{с}} - z_{\text{н}})^2 = \\ = (r\cos\omega t)^2 + (R_{\oplus}\cos(\omega t + \varphi))^2 - 2(r\cos\omega t)(R_{\oplus}\cos(\omega t + \varphi)) + (r\sin\omega t)^2 + (R_{\oplus}\sin(\omega t + \varphi))^2. \end{gathered}
+$$
 
 Преобразуем, используя основное тригонометрическое тождество
 
-$$d^2 = r^2 + R_{\oplus}^2 - 2(r\cos\omega t)(R_{\oplus}\cos(\omega t + \varphi)) = \mathrm{const} - 2rR_{\oplus} \cdot (\cos\omega t\cos(\omega t + \varphi)).$$
+$$
+d^2 = r^2 + R_{\oplus}^2 - 2(r\cos\omega t)(R_{\oplus}\cos(\omega t + \varphi)) = \mathrm{const} - 2rR_{\oplus} \cdot (\cos\omega t\cos(\omega t + \varphi)).
+$$
 
 Значит, необходимо определить максимальное значение произведения косинусов. Для его анализа, воспользуемся, например формулой косинуса суммы:
 
-$$\cos(\omega t)\cos(\omega t + \varphi) = \cos(\omega t)\bigl(\cos(\omega t)\cos(\varphi) - \sin(\omega t)\sin(\varphi)\bigr).$$
+$$
+\cos(\omega t)\cos(\omega t + \varphi) = \cos(\omega t)\bigl(\cos(\omega t)\cos(\varphi) - \sin(\omega t)\sin(\varphi)\bigr).
+$$
 
 Теперь используем формулы для двойных углов
 
-$$\begin{gathered} \cos(\omega t)\cos(\omega t + \varphi) = \frac{1 + \cos(2\omega t)}{2}\cos(\varphi) - \frac{\sin(2\omega t)}{2}\sin(\varphi) = \\ = \frac{1}{2}\left[\cos\varphi + \cos(2\omega t + \varphi)\right]. \end{gathered}$$
+$$
+\begin{gathered} \cos(\omega t)\cos(\omega t + \varphi) = \frac{1 + \cos(2\omega t)}{2}\cos(\varphi) - \frac{\sin(2\omega t)}{2}\sin(\varphi) = \\ = \frac{1}{2}\left[\cos\varphi + \cos(2\omega t + \varphi)\right]. \end{gathered}
+$$
 
 К этой формуле можно было прийти сразу, если использовать формулу для произведения косинусов
 
-$$\cos(\omega t)\cos(\omega t + \varphi) = \frac{1}{2}\bigl(\cos(\omega t + \varphi - \omega t) + \cos(\omega t + \varphi + \omega t)\bigr) = \frac{1}{2}\cos\varphi + \frac{1}{2}\cos(2\omega t + \varphi).$$
+$$
+\cos(\omega t)\cos(\omega t + \varphi) = \frac{1}{2}\bigl(\cos(\omega t + \varphi - \omega t) + \cos(\omega t + \varphi + \omega t)\bigr) = \frac{1}{2}\cos\varphi + \frac{1}{2}\cos(2\omega t + \varphi).
+$$
 
 Мы можем выбрать такое время $t$, чтобы косинус во втором слагаемом был равен единице. Тогда максимальное значение этого выражения равно
 
-$$\frac{1}{2}(\cos\varphi + 1) = \cos^2\frac{\varphi}{2}.$$
+$$
+\frac{1}{2}(\cos\varphi + 1) = \cos^2\frac{\varphi}{2}.
+$$
 
 Подставим это значение в выражение для минимального расстояния до спутника
 
-$$d_{\min}^2 = r^2 + R_{\oplus}^2 - 2(rR_{\oplus})\frac{1}{2}(\cos\varphi + 1) = r^2 + R_{\oplus}^2 - rR_{\oplus} - rR_{\oplus}\cos\varphi.$$
+$$
+d_{\min}^2 = r^2 + R_{\oplus}^2 - 2(rR_{\oplus})\frac{1}{2}(\cos\varphi + 1) = r^2 + R_{\oplus}^2 - rR_{\oplus} - rR_{\oplus}\cos\varphi.
+$$
 
 Вспомним, чему равен $\cos\varphi$:
 
-$$d_{\min}^2 = r^2 + R_{\oplus}^2 - rR_{\oplus} - rR_{\oplus}\frac{R_{\oplus}}{r} = r^2 - rR_{\oplus}.$$
+$$
+d_{\min}^2 = r^2 + R_{\oplus}^2 - rR_{\oplus} - rR_{\oplus}\frac{R_{\oplus}}{r} = r^2 - rR_{\oplus}.
+$$
 
 Как бы ни был расположен спутник в момент минимального сближения, стороны треугольника спутник — центр Земли — наблюдатель равны $R_{\oplus}$, $r$ и $d_{\min}$. Угол при наблюдателе в нём равен $180^{\circ} - z$, где $z$ — зенитное расстояние спутника. Запишем теорему косинусов для этого треугольника:
 
-$$r^2 = R_{\oplus}^2 + d_{\min}^2 - 2R_{\oplus}d_{\min}\cos(180^{\circ} - z)$$
+$$
+r^2 = R_{\oplus}^2 + d_{\min}^2 - 2R_{\oplus}d_{\min}\cos(180^{\circ} - z)
+$$
 
 Учитывая, что высота $h = 90^{\circ} - z$, получаем
 
-$$\sin h = \cos z = \frac{r^2 - R_{\oplus}^2 - d^2}{2R_{\oplus}d} = \frac{rR_{\oplus} - R_{\oplus}^2}{2R_{\oplus}\sqrt{r^2 - rR_{\oplus}}} = \frac{1}{2}\sqrt{\frac{r - R_{\oplus}}{r}}$$
+$$
+\sin h = \cos z = \frac{r^2 - R_{\oplus}^2 - d^2}{2R_{\oplus}d} = \frac{rR_{\oplus} - R_{\oplus}^2}{2R_{\oplus}\sqrt{r^2 - rR_{\oplus}}} = \frac{1}{2}\sqrt{\frac{r - R_{\oplus}}{r}}
+$$
 
 Подставим числа
 
-$$\sin h = \frac{1}{2}\sqrt{1 - \frac{R_{\oplus}}{r}} = 0.46 \quad \Rightarrow \quad h \approx 27^{\circ}.$$
+$$
+\sin h = \frac{1}{2}\sqrt{1 - \frac{R_{\oplus}}{r}} = 0.46 \quad \Rightarrow \quad h \approx 27^{\circ}.
+$$
 
 **Критерии проверки**
 
@@ -154,9 +184,13 @@ $$\sin h = \frac{1}{2}\sqrt{1 - \frac{R_{\oplus}}{r}} = 0.46 \quad \Rightarrow \
 
 **Формулы приближённого вычисления** (при $x \ll 1$)
 
-$$\sin(x) \approx x \qquad \cos x \approx 1 - \frac{x^2}{2} \qquad \operatorname{tg} x \approx x$$
+$$
+\sin(x) \approx x \qquad \cos x \approx 1 - \frac{x^2}{2} \qquad \operatorname{tg} x \approx x
+$$
 
-$$\ln(1 + x) \approx x \qquad e^x \approx 1 + x \qquad (1 + x)^{\alpha} \approx 1 + \alpha x$$
+$$
+\ln(1 + x) \approx x \qquad e^x \approx 1 + x \qquad (1 + x)^{\alpha} \approx 1 + \alpha x
+$$
 
 **Характеристики Солнца, планет и некоторых спутников**
 

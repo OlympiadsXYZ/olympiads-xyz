@@ -53,7 +53,9 @@ verifier: 'mechanical'
 
 По этим датам можно провести границы ночи и тем самым определить момент полуночи: он приходится примерно на $0^h30^m$ – $0^h35^m$ (в зависимости от погрешности измерений). Если бы полночь приходилась ровно на $0^h00^m$, то при учете часового пояса можно было бы утверждать, что долгота пункта наблюдения соответствует $15^{\circ}$ восточной долготы. Однако раз астрономическая полночь наступает позже, то от указанной величины нужно отнять
 
-$$\frac{[30^m; 35^m]}{60^m} \times 15^{\circ}/h = [7^{\circ}.5; 8^{\circ}.75],$$
+$$
+\frac{[30^m; 35^m]}{60^m} \times 15^{\circ}/h = [7^{\circ}.5; 8^{\circ}.75],
+$$
 
 и долгота расположения камеры лежит в диапазоне $[6^{\circ}15'; 7^{\circ}30']$ восточной долготы.
 
@@ -61,23 +63,35 @@ $$\frac{[30^m; 35^m]}{60^m} \times 15^{\circ}/h = [7^{\circ}.5; 8^{\circ}.75],$$
 
 Напишем теорему косинусов для параллактического треугольника $PZ\odot$ в общем виде:
 
-$$\cos(Z\odot) = \cos(PZ)\cos(P\odot) + \sin(PZ)\sin(P\odot)\cos(\angle ZP\odot)$$
+$$
+\cos(Z\odot) = \cos(PZ)\cos(P\odot) + \sin(PZ)\sin(P\odot)\cos(\angle ZP\odot)
+$$
 
-$$\cos(90^{\circ} - h) = \cos(90^{\circ} - \varphi)\cos(90^{\circ} - \delta) + \sin(90^{\circ} - \varphi)\sin(90^{\circ} - \delta)\cos t$$
+$$
+\cos(90^{\circ} - h) = \cos(90^{\circ} - \varphi)\cos(90^{\circ} - \delta) + \sin(90^{\circ} - \varphi)\sin(90^{\circ} - \delta)\cos t
+$$
 
-$$\sin h = \sin\varphi\sin\delta + \cos\varphi\cos\delta\cos t$$
+$$
+\sin h = \sin\varphi\sin\delta + \cos\varphi\cos\delta\cos t
+$$
 
 Сразу видно, что решать такое уравнение в общем виде относительно $\varphi$ при отсутствии калькулятора — плохая затея, поскольку получающееся квадратное уравнение надо решить как можно точнее. Подумаем, как можно упростить нахождение широты.
 
 Вариант 1, неправильный: рассмотреть случай, когда высота Солнца равна нулю. Самое простое предположение — считать, что граница темной и светлой областей на кеограмме соответствует моментам захода или восхода Солнца ($h = 0^{\circ}$). Тогда проще всего взять даты летнего и зимнего солнцестояний. В этом случае широта определяется через тангенс:
 
-$$\operatorname{tg}\varphi = -\frac{\cos t}{\operatorname{tg}\delta}$$
+$$
+\operatorname{tg}\varphi = -\frac{\cos t}{\operatorname{tg}\delta}
+$$
 
 Измерения показывают, что половина «светлого времени суток» в день летнего солнцестояния длится $10^h25^m$ (склонение Солнца $\delta = 23^{\circ}.4$), а в день зимнего — $5^h00^m$ ($\delta = -23^{\circ}.4$). Измерения можно проводить как для непосредственно для светлой области, так и для темной области (а потом из $24^h$ вычитать длительность темной области и делить пополам). Все измерения приведены на изображении.
 
-$$\operatorname{tg}\varphi = -\frac{\cos 75^{\circ}}{\operatorname{tg}(-23^{\circ}.4)} \approx 0.6 \qquad \Rightarrow \qquad \varphi = 31^{\circ} \text{ зимнее солнцестояние}$$
+$$
+\operatorname{tg}\varphi = -\frac{\cos 75^{\circ}}{\operatorname{tg}(-23^{\circ}.4)} \approx 0.6 \qquad \Rightarrow \qquad \varphi = 31^{\circ} \text{ зимнее солнцестояние}
+$$
 
-$$\operatorname{tg}\varphi = -\frac{\cos 156^{\circ}.25}{\operatorname{tg} 23^{\circ}.4} \approx 2.1 \qquad \Rightarrow \qquad \varphi = 63^{\circ}.4 \text{ летнее солнцестояние}$$
+$$
+\operatorname{tg}\varphi = -\frac{\cos 156^{\circ}.25}{\operatorname{tg} 23^{\circ}.4} \approx 2.1 \qquad \Rightarrow \qquad \varphi = 63^{\circ}.4 \text{ летнее солнцестояние}
+$$
 
 Итак, если интерпретировать границу раздела темной и светлой областей как момент захода Солнца, то результаты не согласуются друг с другом.
 
@@ -89,7 +103,9 @@ $$\operatorname{tg}\varphi = -\frac{\cos 156^{\circ}.25}{\operatorname{tg} 23^{\
 
 В день осеннего равноденствия в момент окончания сумерек часовой угол Солнца составляет $7^h15^m = 108^{\circ}.75$. Вычисляем:
 
-$$\sin(-11^{\circ}) = \cos\varphi \cdot 1 \ \cdot \cos 108^{\circ}.75 \qquad \Rightarrow \qquad \cos\varphi = \frac{\sin 11^{\circ}}{\sin 18^{\circ}.75} \approx 0.59 \qquad \Rightarrow \qquad \varphi \approx 54^{\circ}$$
+$$
+\sin(-11^{\circ}) = \cos\varphi \cdot 1 \ \cdot \cos 108^{\circ}.75 \qquad \Rightarrow \qquad \cos\varphi = \frac{\sin 11^{\circ}}{\sin 18^{\circ}.75} \approx 0.59 \qquad \Rightarrow \qquad \varphi \approx 54^{\circ}
+$$
 
 Вариант 3: длительность сумерек. Заметим, что в день весеннего равноденствия сумерки для камеры длятся $1^h15^m$. За это время Солнце проходит по небу (находясь строго на небесном экваторе) $\approx 19^{\circ}$, хотя стартует от высоты $-11^{\circ}$. Таким образом, траектория Солнца составляет угол $\cos\varphi = 11^{\circ}/19^{\circ} \Rightarrow \varphi \approx 54^{\circ}$. Обратим внимание, что эти вычисления практически идентичны тем, что были реализованы в варианте 2.
 

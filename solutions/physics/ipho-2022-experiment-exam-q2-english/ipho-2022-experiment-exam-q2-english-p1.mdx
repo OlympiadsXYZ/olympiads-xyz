@@ -23,13 +23,17 @@ The emitter is heated so that there are always excess electrons available to be 
 
 When $L_E$ is sufficiently large compared to $R_C$ it is hypothesized that the maximum current through the diode is
 
-$$I_\infty = G{R_C}^{\alpha}{L_E}^{\beta}V^{\gamma} \qquad (1)$$
+$$
+I_\infty = G{R_C}^{\alpha}{L_E}^{\beta}V^{\gamma} \qquad (1)
+$$
 
 where $G = G(R_C/R_E)$ is not a constant, but is instead a function of the dimensionless ratio $R_C/R_E$.
 
 When $L_E$ is comparable to $R_C$ it is necessary to issue a correction to the above expression, and the maximum current through the diodes is given by
 
-$$I_L = I_\infty F(R_C, R_E, L_E, V) \qquad (2)$$
+$$
+I_L = I_\infty F(R_C, R_E, L_E, V) \qquad (2)
+$$
 
 where $F$ is a dimensionless function of some or all of $R_C$, $R_E$, $L_E$, and $V$. Equation (1) is the special case of Equation (2) when $F = 1$
 
@@ -136,7 +140,9 @@ Experimentally determine which of $R_C$, $R_E$, $L_E$, and $V$ affect $F$ when $
 
 Take the logarithm of Equation 1,
 
-$$\log I_\infty = \log C + \alpha \log R_c + \beta \log L_e + \gamma \log V$$
+$$
+\log I_\infty = \log C + \alpha \log R_c + \beta \log L_e + \gamma \log V
+$$
 
 **A.1:** Collect data by varying $V$. To minimize error, select maximum values for all fixed variables, this means $L_e = 99$ cm, $R_c = 10$ cm, and $R_e = 1.0$ cm. Distribute the voltages logarithmically between 10 and 2000
 
@@ -153,7 +159,9 @@ $$\log I_\infty = \log C + \alpha \log R_c + \beta \log L_e + \gamma \log V$$
 
 Plot this on a graph; the best fit line is
 
-$$\log I = 1.490 \log V - 0.8095$$
+$$
+\log I = 1.490 \log V - 0.8095
+$$
 
 so $\gamma = 1.49$.
 
@@ -161,15 +169,21 @@ A statistical analysis of the uncertainty in the slope yields $\gamma = 1.490 \p
 
 Assessing the slope by visually fitting lines through the error bars on the points requires considering that error bars on a log axis are given by
 
-$$\delta(\log y) = \delta\left(\frac{\ln y}{\ln 10}\right) = \frac{1}{\ln 10}\frac{\delta y}{y}$$
+$$
+\delta(\log y) = \delta\left(\frac{\ln y}{\ln 10}\right) = \frac{1}{\ln 10}\frac{\delta y}{y}
+$$
 
 Since the largest relative error is in the smallest valued quantity, the focus is on $\delta V/V$ for $V = 10\mathrm{V}$ and $\delta I/I$ for $I = 5\mathrm{mA}$. The error bars associated with the log-log plot at that point are then
 
-$$(1 \pm 0.02, 0.70 \pm 0.04)$$
+$$
+(1 \pm 0.02, 0.70 \pm 0.04)
+$$
 
 The other error bars are smaller; focusing on that point alone we can fit two extreme lines and get
 
-$$\gamma = 1.485 \pm 0.025$$
+$$
+\gamma = 1.485 \pm 0.025
+$$
 
 Either approach is acceptable.
 
@@ -220,7 +234,9 @@ Measured data should be entered into spreadsheet that will calculate results; if
 
 Plot this on a graph; the best fit line is
 
-$$\log I = 0.9767 \log L_e + 2.1649$$
+$$
+\log I = 0.9767 \log L_e + 2.1649
+$$
 
 so $\beta = 0.9767$.
 
@@ -271,7 +287,9 @@ Marking scheme:
 
 Plot this on a graph; the best fit line is
 
-$$\log I = -0.9816 \log R_c + 5.1000$$
+$$
+\log I = -0.9816 \log R_c + 5.1000
+$$
 
 so $\alpha = -0.9824$.
 
@@ -310,21 +328,29 @@ Marking scheme:
 
 **B.1:** Use all three sets of data, and the exponents from all three, and then average the results
 
-$$\log C = \log I - 1.495 \log V - 0.9854 \log L_e + 0.9781 \log R_c$$
+$$
+\log C = \log I - 1.495 \log V - 0.9854 \log L_e + 0.9781 \log R_c
+$$
 
 which gives
 
-$$C = (0.0165 \pm 0.0003)\mathrm{mA/V^{3/2}}$$
+$$
+C = (0.0165 \pm 0.0003)\mathrm{mA/V^{3/2}}
+$$
 
 The theoretical value is approximately:
 
-$$\frac{8\pi\epsilon_0}{9}\sqrt{\frac{2e}{m}} \approx 1.47 \times 10^{-5}\mathrm{A/V^{3/2}}.$$
+$$
+\frac{8\pi\epsilon_0}{9}\sqrt{\frac{2e}{m}} \approx 1.47 \times 10^{-5}\mathrm{A/V^{3/2}}.
+$$
 
 Note that there is a nasty correction (the texts usually call it $\beta$, which is not the same as our exponent), that we use in the code, but aren’t expecting students to find, because of this correction, we don’t expect the theoretical value to hold. Students who try to solve the theoretical problem will be vexed by this.
 
 For space reasons, we write numerical $C$ below without explicit units, but using the units of $\mu\mathrm{A/V^{3/2}}$, that is
 
-$$C = 16.5\mu\mathrm{A/V^{3/2}}$$
+$$
+C = 16.5\mu\mathrm{A/V^{3/2}}
+$$
 
 Students *must* have clear units!
 
@@ -352,11 +378,15 @@ Clear statement of theory means that somewhere there is a justification for the 
 
 Using nearest half integers, we have for the first equation
 
-$$I_\infty = C\frac{L_e}{R_c}V^{3/2}$$
+$$
+I_\infty = C\frac{L_e}{R_c}V^{3/2}
+$$
 
 so that
 
-$$F = \frac{I_{measured}}{C\frac{L_e}{R_c}V^{3/2}}$$
+$$
+F = \frac{I_{measured}}{C\frac{L_e}{R_c}V^{3/2}}
+$$
 
 | $R_c$ | $R_e$ | $L_e$ | $V$ | $I$ | $I_\infty$ | $F$ |
 |---|---|---|---|---|---|---|
@@ -387,7 +417,9 @@ Marking scheme:
 
 **C.2:** We propose
 
-$$F = A + B\frac{R_c}{L_e}$$
+$$
+F = A + B\frac{R_c}{L_e}
+$$
 
 with $x = R_c/L_e$.
 
@@ -420,7 +452,9 @@ We plot the results below; blue are the values of fixed $R_e$ while green are th
 
 The result is
 
-$$F(x) = 0.8579 + 0.1762x$$
+$$
+F(x) = 0.8579 + 0.1762x
+$$
 
 Which is in error at $x = 1$ by about 3%.
 

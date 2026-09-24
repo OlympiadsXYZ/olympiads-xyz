@@ -33,53 +33,81 @@ Both the right ascension and the ecliptic longitude are counted from the local p
 
 Using the five-part rule and the law of sines we obtain:
 
-$$\sin\lambda\cos\varepsilon = \sin\alpha\cos\delta - \cos\alpha\sin\delta\cos 90^{\circ} \quad\Rightarrow\quad \sin\lambda = \frac{\sin\alpha\cos\delta}{\cos\varepsilon},$$
+$$
+\sin\lambda\cos\varepsilon = \sin\alpha\cos\delta - \cos\alpha\sin\delta\cos 90^{\circ} \quad\Rightarrow\quad \sin\lambda = \frac{\sin\alpha\cos\delta}{\cos\varepsilon},
+$$
 
-$$\frac{\sin\delta}{\sin\varepsilon} = \frac{\sin\lambda}{\sin 90^{\circ}}.$$
+$$
+\frac{\sin\delta}{\sin\varepsilon} = \frac{\sin\lambda}{\sin 90^{\circ}}.
+$$
 
 Substitution of $\sin\lambda$ yields
 
-$$\frac{\sin\delta}{\sin\varepsilon} = \frac{\sin\alpha\cos\delta}{\cos\varepsilon} \quad\Rightarrow\quad \tan\delta = \sin\alpha\tan\varepsilon.$$
+$$
+\frac{\sin\delta}{\sin\varepsilon} = \frac{\sin\alpha\cos\delta}{\cos\varepsilon} \quad\Rightarrow\quad \tan\delta = \sin\alpha\tan\varepsilon.
+$$
 
 Next, we can get an estimate of the inclination from the data on any of the two points,
 
-$$\varepsilon = \arctan\frac{\tan\delta_1}{\sin\alpha_1} = \arctan\frac{\tan 22.5^{\circ}}{\sin 20.4^{\circ}} = \arctan 1.19 = 50^{\circ}.$$
+$$
+\varepsilon = \arctan\frac{\tan\delta_1}{\sin\alpha_1} = \arctan\frac{\tan 22.5^{\circ}}{\sin 20.4^{\circ}} = \arctan 1.19 = 50^{\circ}.
+$$
 
 *Another approach.* We introduce a Cartesian coordinate system centered at the place of observation. The $x$-axis is directed to the local point of the vernal equinox, the $z$-axis is directed to the north celestial pole, the $y$-axis complements the axes to a right-handed coordinate system. The vectors of two points are as follows:
 
-$$\vec{v}_1 = \begin{pmatrix} \cos\delta_1\cos\alpha_1 \\ \cos\delta_1\sin\alpha_1 \\ \sin\delta_1 \end{pmatrix}, \quad \vec{v}_2 = \begin{pmatrix} \cos\delta_2\cos\alpha_2 \\ \cos\delta_2\sin\alpha_2 \\ \sin\delta_2 \end{pmatrix}.$$
+$$
+\vec{v}_1 = \begin{pmatrix} \cos\delta_1\cos\alpha_1 \\ \cos\delta_1\sin\alpha_1 \\ \sin\delta_1 \end{pmatrix}, \quad \vec{v}_2 = \begin{pmatrix} \cos\delta_2\cos\alpha_2 \\ \cos\delta_2\sin\alpha_2 \\ \sin\delta_2 \end{pmatrix}.
+$$
 
 Next, we determine the vector $\vec{w}$ of the pole of the great circle (namely, the north ecliptic pole) using the vector product
 
-$$\vec{w} = \frac{\vec{v}_1 \times \vec{v}_2}{|\vec{v}_1 \times \vec{v}_2|}$$
+$$
+\vec{w} = \frac{\vec{v}_1 \times \vec{v}_2}{|\vec{v}_1 \times \vec{v}_2|}
+$$
 
 where
 
-$$\vec{v}_1 \times \vec{v}_2 = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ \cos\delta_1\cos\alpha_1 & \cos\delta_1\sin\alpha_1 & \sin\delta_1 \\ \cos\delta_2\cos\alpha_2 & \cos\delta_2\sin\alpha_2 & \sin\delta_2 \end{vmatrix} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 0.866 & 0.322 & 0.383 \\ 0.173 & 0.633 & 0.755 \end{vmatrix},$$
+$$
+\vec{v}_1 \times \vec{v}_2 = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ \cos\delta_1\cos\alpha_1 & \cos\delta_1\sin\alpha_1 & \sin\delta_1 \\ \cos\delta_2\cos\alpha_2 & \cos\delta_2\sin\alpha_2 & \sin\delta_2 \end{vmatrix} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 0.866 & 0.322 & 0.383 \\ 0.173 & 0.633 & 0.755 \end{vmatrix},
+$$
 
-$$\vec{v}_1 \times \vec{v}_2 = \begin{pmatrix} 0.322 \times 0.755 - 0.633 \times 0.383 \\ 0.173 \times 0.383 - 0.866 \times 0.755 \\ 0.866 \times 0.633 - 0.173 \times 0.322 \end{pmatrix} = \begin{pmatrix} 0.000671 \\ -0.587571 \\ 0.492472 \end{pmatrix},$$
+$$
+\vec{v}_1 \times \vec{v}_2 = \begin{pmatrix} 0.322 \times 0.755 - 0.633 \times 0.383 \\ 0.173 \times 0.383 - 0.866 \times 0.755 \\ 0.866 \times 0.633 - 0.173 \times 0.322 \end{pmatrix} = \begin{pmatrix} 0.000671 \\ -0.587571 \\ 0.492472 \end{pmatrix},
+$$
 
-$$|\vec{v}_1 \times \vec{v}_2| = \sqrt{0.000671^2 + (-0.587571)^2 + 0.492472^2} = 0.767,$$
+$$
+|\vec{v}_1 \times \vec{v}_2| = \sqrt{0.000671^2 + (-0.587571)^2 + 0.492472^2} = 0.767,
+$$
 
-$$\vec{w} = \begin{pmatrix} 0.0009 \\ -0.7664 \\ 0.6424 \end{pmatrix} = \begin{pmatrix} \cos\theta\cos\alpha_0 \\ \cos\theta\sin\alpha_0 \\ \sin\theta \end{pmatrix}.$$
+$$
+\vec{w} = \begin{pmatrix} 0.0009 \\ -0.7664 \\ 0.6424 \end{pmatrix} = \begin{pmatrix} \cos\theta\cos\alpha_0 \\ \cos\theta\sin\alpha_0 \\ \sin\theta \end{pmatrix}.
+$$
 
 $\vec{w}$ points to the north ecliptic pole. $\theta = 90^{\circ} - \varepsilon$ and $\alpha_0$ are the declination and the right ascension of the north ecliptic pole respectively,
 
-$$\theta = \arcsin w_z = 40^{\circ} \quad\Rightarrow\quad \varepsilon = \arccos w_z = 50^{\circ}.$$
+$$
+\theta = \arcsin w_z = 40^{\circ} \quad\Rightarrow\quad \varepsilon = \arccos w_z = 50^{\circ}.
+$$
 
 Polar nights are possible only at latitudes with a modulus greater than $\varphi_0 = 90^{\circ} - \varepsilon = \theta = 40^{\circ}$. The corresponding points form two spherical caps around the poles. Let us determine the fraction of the planet’s surface with latitudes modulus more than $40^{\circ}$:
 
-$$\eta = \frac{2S_{\mathrm{cap}}}{S_{\mathrm{sphere}}} = \frac{2 \cdot (2\pi Rh)}{4\pi R^2}$$
+$$
+\eta = \frac{2S_{\mathrm{cap}}}{S_{\mathrm{sphere}}} = \frac{2 \cdot (2\pi Rh)}{4\pi R^2}
+$$
 
 where
 
-$$h = R[1 - \cos(90^{\circ} - \varphi_0)] = R(1 - \sin\theta)$$
+$$
+h = R[1 - \cos(90^{\circ} - \varphi_0)] = R(1 - \sin\theta)
+$$
 
 is the height of the spherical cap.
 
 Finally,
 
-$$\eta = \frac{2 \times 2\pi R^2(1 - \sin\theta)}{4\pi R^2} = 1 - \sin 40^{\circ} = 0.357 = 35.7\,\%.$$
+$$
+\eta = \frac{2 \times 2\pi R^2(1 - \sin\theta)}{4\pi R^2} = 1 - \sin 40^{\circ} = 0.357 = 35.7\,\%.
+$$
 
 **Marking Scheme:**
 

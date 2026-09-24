@@ -23,7 +23,9 @@ You do not need to estimate any uncertainties, but the accuracy of your methods 
 
 The schematic and connections of the circuit board (left) and the potentiometer (right) are in the figure. The resistor $R_1$ may be used for heating the board near the LED. The temperature sensor (thermistor) $R_T$ is another resistor whose resistance depends strongly on the absolute temperature $T$:
 
-$$T = 2.254\,\mathrm{K}\left(\ln\frac{R_T}{1\,\mathrm{k\Omega}}\right)^2 - 32.46\,\mathrm{K}\ln\frac{R_T}{1\,\mathrm{k\Omega}} + 361.09\,\mathrm{K}.$$
+$$
+T = 2.254\,\mathrm{K}\left(\ln\frac{R_T}{1\,\mathrm{k\Omega}}\right)^2 - 32.46\,\mathrm{K}\ln\frac{R_T}{1\,\mathrm{k\Omega}} + 361.09\,\mathrm{K}.
+$$
 
 **Warning! Apply voltage to the LED only with the polarity shown!** The red lead of the power supply is “+” (and should be connected to the red connector of the LED) and the black lead is “−”.
 
@@ -31,7 +33,9 @@ The multimeter has a mode marked “$\blacktriangleright\!\!|$” that acts as a
 
 In a simplified theory, the diode current $I_d$, voltage drop $V$ at the junction inside the LED where light is emitted, and absolute temperature $T$ of the junction obey
 
-$$I_d = Ae^{-V_{G0}/(nV_T)}\left(e^{V/(nV_T)} - 1\right) \text{ with } V_T = \frac{k}{q}T,$$
+$$
+I_d = Ae^{-V_{G0}/(nV_T)}\left(e^{V/(nV_T)} - 1\right) \text{ with } V_T = \frac{k}{q}T,
+$$
 
 Boltzmann constant $k = 1.381\times 10^{-23}\,\mathrm{J/K}$ and elementary charge $q = 1.602\times 10^{-19}\,\mathrm{C}$. The variable $V_T$ is called the thermal voltage. The parameters $V_{G0}$ and $n$ depend on the materials of the LED; the parameter $A$ depends also on the construction of the LED. The parameter $n$ is called the ideality factor and usually $1 < n < 2$. The parameter $V_{G0}$ is called the nominal bandgap voltage of the semiconductor material.
 
@@ -105,7 +109,9 @@ From the linear regression we obtain $v_{G0} \approx 2.085\,\mathrm{V}$.
 
 Next we can make a series of measurements with small currents so that the diode will have essentially the room temperature. Then we can take logarithm from the expression of $I_d$ (while neglecting the unity) to obtain
 
-$$\frac{V - V_{G0}}{V_T} = n\ln A - n\ln I_d.$$
+$$
+\frac{V - V_{G0}}{V_T} = n\ln A - n\ln I_d.
+$$
 
 Thus, if we plot $\ln I_d$ versus $V - V_{G0}$, $n$ and $A$ can be obtained as the linear regression parameters.
 
@@ -188,7 +194,9 @@ The data of measurements are given in the table below; the graph shows both the 
 
 The graph includes also the curve for the electrical power produced by the diode, $P = VI$. The maximum $P_{\max} \approx 17\,\mu\mathrm{W}$ can be determined as the maximum of this curve. The efficiency is found as
 
-$$\eta_p = \frac{P_{\max}}{P_i} = \frac{P_{\max}}{\eta I_1 V(I_1)\frac{S}{\alpha 4\pi d^2}},$$
+$$
+\eta_p = \frac{P_{\max}}{P_i} = \frac{P_{\max}}{\eta I_1 V(I_1)\frac{S}{\alpha 4\pi d^2}},
+$$
 
 where $\frac{S}{\alpha 4\pi d^2}$ is fraction of the light reaching the active area of the LED; $V_1$ and $I_1$ denote the voltage and current of the other diode, respectively. Numerically we obtain $\eta_p \approx 0.04$.
 

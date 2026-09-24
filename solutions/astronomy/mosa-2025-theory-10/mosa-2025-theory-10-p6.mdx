@@ -36,43 +36,61 @@ verifier: 'mechanical'
 
 **Решение.** Время прихода ответного сигнала определяется скоростью света: он должен за десятую секунды пройти два отрезка, равных высоте спутника, откуда
 
-$$h = \frac{1}{2}ct = 15\,000\ \text{км}.$$
+$$
+h = \frac{1}{2}ct = 15\,000\ \text{км}.
+$$
 
 Следовательно, расстояние от спутника до центра Земли
 
-$$r = R_{\oplus} + h = 21\,400\ \text{км}.$$
+$$
+r = R_{\oplus} + h = 21\,400\ \text{км}.
+$$
 
 Заметим, что эта величина примерно в два раза меньше радиуса геостационарной орбиты.
 
 Траекторией спутника будет окружность с радиусом $r\cos\varphi$, центр которой не лежит в плоскости экватора, но лежит на продолжении оси вращения Земли. Мы знаем радиус окружности и период, с которым двигается спутник — звёздные сутки ($T$). Следовательно, ускорение спутника должно быть направлено к центру окружности (параллельно экватору), а по величине должно быть равно
 
-$$a = \omega^2 r\cos\varphi = \frac{4\pi^2}{T^2}r\cos\varphi.$$
+$$
+a = \omega^2 r\cos\varphi = \frac{4\pi^2}{T^2}r\cos\varphi.
+$$
 
 На спутник, кроме двигателей, действует только одна сила — сила притяжения, направленная в сторону центра Земли. Следовательно, $a$ является векторной суммой гравитационного $a_{\mathrm{g}}$ и реактивного $a_{\mathrm{r}}$ ускорений. Двигатели должны полностью уравновесить силу притяжения вдоль оси вращения Земли:
 
-$$a_{\mathrm{r}\parallel} = a_{\mathrm{g}}\sin\varphi = \frac{GM}{r^2}\sin\varphi.$$
+$$
+a_{\mathrm{r}\parallel} = a_{\mathrm{g}}\sin\varphi = \frac{GM}{r^2}\sin\varphi.
+$$
 
 Ускорение, которое будут создавать двигатели параллельно плоскости экватора (по направлению от оси Земли)
 
-$$a_{\mathrm{r}\perp} = a_{\mathrm{g}}\cos\varphi - a = \frac{GM}{r^2}\cos\varphi - \frac{4\pi^2}{T^2}r\cos\varphi.$$
+$$
+a_{\mathrm{r}\perp} = a_{\mathrm{g}}\cos\varphi - a = \frac{GM}{r^2}\cos\varphi - \frac{4\pi^2}{T^2}r\cos\varphi.
+$$
 
 Здесь может возникнуть соблазн воспользоваться 3-м законом Кеплера и прийти к выводу, что коэффициенты перед косинусами в правой части уравнения равны. Но надо учесть, что период обращения спутника $T$ соответствует периоду обращения на геостационарной орбите $r_0 \approx 42\,000$ км.
 
 Тангенс угла, под которым (относительно оси вращения Земли) будет направлено суммарное ускорение
 
-$$\operatorname{tg}\vartheta = \frac{a_{\mathrm{r}\perp}}{a_{\mathrm{r}\parallel}} = \frac{\frac{GM}{r^2}\cos\varphi - \frac{4\pi^2}{T^2}r\cos\varphi}{\frac{GM}{r^2}\sin\varphi} = \frac{1}{\operatorname{tg}\varphi}\left(1 - \frac{4\pi^2}{G}\frac{r^3}{MT^2}\right) = \frac{1}{\operatorname{tg}48^{\circ}50'}\left(1 - 0.13\right) = 0.76.$$
+$$
+\operatorname{tg}\vartheta = \frac{a_{\mathrm{r}\perp}}{a_{\mathrm{r}\parallel}} = \frac{\frac{GM}{r^2}\cos\varphi - \frac{4\pi^2}{T^2}r\cos\varphi}{\frac{GM}{r^2}\sin\varphi} = \frac{1}{\operatorname{tg}\varphi}\left(1 - \frac{4\pi^2}{G}\frac{r^3}{MT^2}\right) = \frac{1}{\operatorname{tg}48^{\circ}50'}\left(1 - 0.13\right) = 0.76.
+$$
 
 В итоге получаем $\vartheta = \operatorname{arctg}0.76 \approx 37.2^{\circ}$. Двигатели направлены против ускорения. Тогда угол относительно направления на Париж
 
-$$\gamma = 90^{\circ} - \vartheta - \varphi \approx 4^{\circ}.$$
+$$
+\gamma = 90^{\circ} - \vartheta - \varphi \approx 4^{\circ}.
+$$
 
 Модуль вектора $\vec{a}_{\mathrm{r}}$ равен
 
-$$\begin{aligned} a_{\mathrm{r}} &= \sqrt{a_{\mathrm{r}\parallel}^2 + a_{\mathrm{r}\perp}^2} = \sqrt{\left(\frac{GM}{R_{\oplus}^2}\cdot\frac{R_{\oplus}^2}{r^2}\sin\varphi\right)^2 + \left(\frac{GM}{R_{\oplus}^2}\cdot\frac{R_{\oplus}^2}{r^2}\cos\varphi - \frac{GM}{R_{\oplus}^2}\cdot\frac{R_{\oplus}^2 r}{r_0^3}\cos\varphi\right)^2} = \\ &= g\sqrt{\frac{R_{\oplus}^4}{r^4}\sin^2\varphi + \frac{R_{\oplus}^4}{r^4}\cos^2\varphi + \frac{R_{\oplus}^4 r^2}{r_0^6}\cos^2\varphi - \frac{2R_{\oplus}^4}{rr_0^3}\cos^2\varphi} = \frac{R_{\oplus}^2}{r^2}g\sqrt{1 + \left(\frac{r^6}{r_0^6} - \frac{2r^3}{r_0^3}\right)\cos^2\varphi}\end{aligned}$$
+$$
+\begin{aligned} a_{\mathrm{r}} &= \sqrt{a_{\mathrm{r}\parallel}^2 + a_{\mathrm{r}\perp}^2} = \sqrt{\left(\frac{GM}{R_{\oplus}^2}\cdot\frac{R_{\oplus}^2}{r^2}\sin\varphi\right)^2 + \left(\frac{GM}{R_{\oplus}^2}\cdot\frac{R_{\oplus}^2}{r^2}\cos\varphi - \frac{GM}{R_{\oplus}^2}\cdot\frac{R_{\oplus}^2 r}{r_0^3}\cos\varphi\right)^2} = \\ &= g\sqrt{\frac{R_{\oplus}^4}{r^4}\sin^2\varphi + \frac{R_{\oplus}^4}{r^4}\cos^2\varphi + \frac{R_{\oplus}^4 r^2}{r_0^6}\cos^2\varphi - \frac{2R_{\oplus}^4}{rr_0^3}\cos^2\varphi} = \frac{R_{\oplus}^2}{r^2}g\sqrt{1 + \left(\frac{r^6}{r_0^6} - \frac{2r^3}{r_0^3}\right)\cos^2\varphi}\end{aligned}
+$$
 
 Здесь $R_{\oplus}$ — радиус Земли. Мы учли, что $g = GM/R_{\oplus}^2$. Подставим числа.
 
-$$a_{\mathrm{r}} \approx \frac{1}{3.36^2}\sqrt{1 + (0.51^6 - 2\cdot 0.51^3)\cos^2 48^{\circ}50'}g \approx 0.08g.$$
+$$
+a_{\mathrm{r}} \approx \frac{1}{3.36^2}\sqrt{1 + (0.51^6 - 2\cdot 0.51^3)\cos^2 48^{\circ}50'}g \approx 0.08g.
+$$
 
 **Критерии проверки**
 
@@ -131,9 +149,13 @@ $$a_{\mathrm{r}} \approx \frac{1}{3.36^2}\sqrt{1 + (0.51^6 - 2\cdot 0.51^3)\cos^
 
 **Формулы приближённого вычисления** (при $x \ll 1$)
 
-$$\sin(x) \approx x \qquad \cos x \approx 1 - \frac{x^2}{2} \qquad \operatorname{tg} x \approx x$$
+$$
+\sin(x) \approx x \qquad \cos x \approx 1 - \frac{x^2}{2} \qquad \operatorname{tg} x \approx x
+$$
 
-$$\ln(1+x) \approx x \qquad e^x \approx 1 + x \qquad (1+x)^{\alpha} \approx 1 + \alpha x$$
+$$
+\ln(1+x) \approx x \qquad e^x \approx 1 + x \qquad (1+x)^{\alpha} \approx 1 + \alpha x
+$$
 
 **Характеристики Солнца, планет и некоторых спутников**
 

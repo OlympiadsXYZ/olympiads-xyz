@@ -25,7 +25,9 @@ $^{*}$Энергетический диапазон LAXPC распределён
 
 Пусть спутник наблюдает точечный рентгеновский источник, энергетический спектр которого имеет степенной характер: спектральная плотность потока фотонов с энергией $E$
 
-$$F(E) = KE^{-2/3}.$$
+$$
+F(E) = KE^{-2/3}.
+$$
 
 Из наблюдений известно, что $F(1\ \text{кэВ}) = 10\ \text{фотонов}/(\text{кэВ}\cdot\text{м}^2\cdot\text{с})$.
 
@@ -68,7 +70,9 @@ $$F(E) = KE^{-2/3}.$$
 
 $\boxed{1}$ Проведём вычисления для детектора с площадью $A$ и квантовой эффективностью $\alpha$. Число отсчётов *в единичном интервале энергий* за время $t$ есть
 
-$$C_{\alpha,A}(E) = F(E)\cdot\alpha A\cdot t = Kt\cdot\alpha A\cdot E^{-2/3}, \qquad (51)$$
+$$
+C_{\alpha,A}(E) = F(E)\cdot\alpha A\cdot t = Kt\cdot\alpha A\cdot E^{-2/3}, \qquad (51)
+$$
 
 где по условию коэффициент $K = 10\ \text{отсчётов}/(\text{кэВ}\cdot\text{м}^2\cdot\text{с})$. Результаты расчётов занесём в таблицу:
 
@@ -81,13 +85,19 @@ $$C_{\alpha,A}(E) = F(E)\cdot\alpha A\cdot t = Kt\cdot\alpha A\cdot E^{-2/3}, \q
 
 $\boxed{2}$ Плотность потока фотонов с энергиями $E \in [E_1; E_2]$
 
-$$G(E_1, E_2) = \int\limits_{E_1}^{E_2} F(E)\,dE = 3K\left(E_2^{1/3} - E_1^{1/3}\right), \qquad (52)$$
+$$
+G(E_1, E_2) = \int\limits_{E_1}^{E_2} F(E)\,dE = 3K\left(E_2^{1/3} - E_1^{1/3}\right), \qquad (52)
+$$
 
 поэтому число отсчётов, фиксируемых SXT за секунду
 
-$$C_0 = \alpha A\,G\left(E_{\min}^{\mathrm{SXT}}, E_{\max}^{\mathrm{SXT}}\right) = 1.605\ \text{отсчётов/с}, \qquad (53)$$
+$$
+C_0 = \alpha A\,G\left(E_{\min}^{\mathrm{SXT}}, E_{\max}^{\mathrm{SXT}}\right) = 1.605\ \text{отсчётов/с}, \qquad (53)
+$$
 
-$$t_S = \frac{C_{\max}^{\mathrm{SXT}}}{C_0} = \frac{15000}{1.605} \simeq 9350\ \text{с}. \qquad (54)$$
+$$
+t_S = \frac{C_{\max}^{\mathrm{SXT}}}{C_0} = \frac{15000}{1.605} \simeq 9350\ \text{с}. \qquad (54)
+$$
 
 $\boxed{3}$ Полоса каждого из восьми счётчиков LAXPC имеет ширину 9.625 кэВ. Расчёт производим аналогично п. 2. Быстрее всего наступит насыщение счётчика 1:
 
@@ -99,13 +109,21 @@ $\boxed{3}$ Полоса каждого из восьми счётчиков LAX
 
 $\boxed{4}$ Рассчитаем число отсчётов от источника и шум на CZTI, а затем наложим условие на их отношение ($\mathsf{SNR} \geqslant 3$), помня о том, что матожидание сигнала $s$ линейно зависит от времени накопления, а среднеквадратическое отклонение пропорционально $\sqrt{t}$:
 
-$$\mathsf{E}\{s\}_0 = 3K\left(E_{\max}^{1/3} - E_{\min}^{1/3}\right)\alpha A \simeq 4.26\ \text{отсчётов/с}, \qquad (55)$$
+$$
+\mathsf{E}\{s\}_0 = 3K\left(E_{\max}^{1/3} - E_{\min}^{1/3}\right)\alpha A \simeq 4.26\ \text{отсчётов/с}, \qquad (55)
+$$
 
-$$\sigma\{s\}_0 = 0.00014\cdot(E_{\max} - E_{\min})\cdot(4\times 4096) \simeq 321\ \text{отсчёт/с}; \qquad (56)$$
+$$
+\sigma\{s\}_0 = 0.00014\cdot(E_{\max} - E_{\min})\cdot(4\times 4096) \simeq 321\ \text{отсчёт/с}; \qquad (56)
+$$
 
-$$\mathsf{SNR}(t) = \frac{\mathsf{E}\{s\}}{\sigma\{s\}} = \frac{\mathsf{E}\{s\}_0\cdot t/t_0}{\sigma\{s\}_0\sqrt{t/t_0}} = \frac{\mathsf{E}\{s\}_0}{\sigma\{s\}_0}\sqrt{\frac{t}{t_0}}, \qquad (57)$$
+$$
+\mathsf{SNR}(t) = \frac{\mathsf{E}\{s\}}{\sigma\{s\}} = \frac{\mathsf{E}\{s\}_0\cdot t/t_0}{\sigma\{s\}_0\sqrt{t/t_0}} = \frac{\mathsf{E}\{s\}_0}{\sigma\{s\}_0}\sqrt{\frac{t}{t_0}}, \qquad (57)
+$$
 
-$$\mathsf{SNR}(t_c) = 3 \quad\Longrightarrow\quad t_c \approx 51\cdot 10^3\ \text{с}. \qquad (58)$$
+$$
+\mathsf{SNR}(t_c) = 3 \quad\Longrightarrow\quad t_c \approx 51\cdot 10^3\ \text{с}. \qquad (58)
+$$
 
 *Замечание.* Соотношение $\mathsf{SNR} \propto \sqrt{t}$ можно использовать без доказательства.
 
@@ -119,13 +137,19 @@ $\boxed{5}$ Расчёты выполняются аналогично п.п. 2�
 
 $\boxed{6}$ Линии $\lambda = 18.25$ пм соответствует энергия
 
-$$E_{\text{лаб}} = \frac{hc}{\lambda e} = 67.95\ \text{кэВ}. \qquad (59)$$
+$$
+E_{\text{лаб}} = \frac{hc}{\lambda e} = 67.95\ \text{кэВ}. \qquad (59)
+$$
 
 Фотоны с такой энергией регистрируются счётчиком 7. Чтобы попасть в полосу счётчика 6, энергия фотонов должна стать меньше 60.75 кэВ, для счётчика 8 — больше 70.375 кэВ. Очевидно, для минимальности модуля лучевой скорости должен реализовываться второй вариант (источник приближается):
 
-$$\lambda' = \frac{hc}{E'e} = 17.62\ \text{пм}, \qquad (60)$$
+$$
+\lambda' = \frac{hc}{E'e} = 17.62\ \text{пм}, \qquad (60)
+$$
 
-$$v = \left(1 - \frac{\lambda'}{\lambda}\right)c \simeq 10.4\cdot 10^3\ \text{км/с}. \qquad (61)$$
+$$
+v = \left(1 - \frac{\lambda'}{\lambda}\right)c \simeq 10.4\cdot 10^3\ \text{км/с}. \qquad (61)
+$$
 
 
 </Spoiler>

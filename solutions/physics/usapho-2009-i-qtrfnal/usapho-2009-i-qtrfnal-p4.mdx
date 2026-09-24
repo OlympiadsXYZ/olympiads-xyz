@@ -83,63 +83,91 @@ The battery is connected to $N$ identical lightbulbs in parallel. The bulbs each
 
 The effective resistance of $N$ identical resistors in parallel is
 
-$$R_e = R/N$$
+$$
+R_e = R/N
+$$
 
 The total resistance of the circuit is the $r + R/N$.
 
 The current drawn is then
 
-$$I = \frac{V_0}{r + R/N}.$$
+$$
+I = \frac{V_0}{r + R/N}.
+$$
 
 The power dissipated by the parallel resistance is given by
 
-$$P = I^2 R_e,$$
+$$
+P = I^2 R_e,
+$$
 
 so
 
-$$P = \frac{{V_0}^2}{(r + R/N)^2}\frac{R}{N} = NR\frac{{V_0}^2}{(Nr + R)^2}$$
+$$
+P = \frac{{V_0}^2}{(r + R/N)^2}\frac{R}{N} = NR\frac{{V_0}^2}{(Nr + R)^2}
+$$
 
 One can simply start with the fact that the maximum power is dissipated when the external resistance is equal to the internal resistance. Or, take the derivative of $P$ with respect to $R$ and set it equal to zero. In either case, you will get
 
-$$r = R_e = \frac{R}{N}$$
+$$
+r = R_e = \frac{R}{N}
+$$
 
 Don’t assume, however, that the answer is then $r = R/5$. Since we can’t have half a bulb, we don’t actually know that the power is a maximum for the circuit, only that it is the maximum configuration. It could be that a larger power output could occur with a resistance between $R/4$ and $R/5$, or maybe between $R/5$ and $R/6$.
 
 A rough guess would be to assume
 
-$$\frac{R}{5.5} \le r \le \frac{R}{4.5}$$
+$$
+\frac{R}{5.5} \le r \le \frac{R}{4.5}
+$$
 
 A better estimate would be to assume a quadratic function of $1/N$ with respect to $P$ in the vicinity of $P_{\max}$ (think Taylor expansion of $P$), and then the important point is the halfway point between $1/N$ and $1/(N \pm 1)$, or
 
-$$\frac{1/N + 1/(N \pm 1)}{2} = \frac{1}{2N} + \frac{1}{2(N \pm 1)} = \frac{N \pm 1/2}{N(N \pm 1)}$$
+$$
+\frac{1/N + 1/(N \pm 1)}{2} = \frac{1}{2N} + \frac{1}{2(N \pm 1)} = \frac{N \pm 1/2}{N(N \pm 1)}
+$$
 
 So the bounds are
 
-$$\frac{5.5R}{30} \le r \le \frac{4.5R}{20}$$
+$$
+\frac{5.5R}{30} \le r \le \frac{4.5R}{20}
+$$
 
 The correct approach is to assume the power outputs at $N$ and $N \pm 1$ are equal, and solve for the necessary value of $r$. Then
 
-$$\frac{N}{(Nr + R)^2} = \frac{N \pm 1}{(Nr \pm r + R)2}$$
+$$
+\frac{N}{(Nr + R)^2} = \frac{N \pm 1}{(Nr \pm r + R)2}
+$$
 
 or
 
-$$N^3r^2 + 2N^2(R \pm r)r + N(R \pm r)^2 = N^3r^2 + 2N^2Rr + NR^2 \pm N^2r^2 \pm 2NRr \pm R^2$$
+$$
+N^3r^2 + 2N^2(R \pm r)r + N(R \pm r)^2 = N^3r^2 + 2N^2Rr + NR^2 \pm N^2r^2 \pm 2NRr \pm R^2
+$$
 
 Thankfully, we loose the cubic term
 
-$$\pm 2N^2r^2 \pm 2NRr + Nr^2 = \pm N^2r^2 \pm 2NRr \pm R^2.$$
+$$
+\pm 2N^2r^2 \pm 2NRr + Nr^2 = \pm N^2r^2 \pm 2NRr \pm R^2.
+$$
 
 To save space, flip the $\pm$ to the one term that doesn’t have it.
 
-$$N^2r^2 \pm Nr^2 = R^2$$
+$$
+N^2r^2 \pm Nr^2 = R^2
+$$
 
 Only positive answers have meaning, so
 
-$$r = \frac{1}{\sqrt{N(N \pm 1)}}R$$
+$$
+r = \frac{1}{\sqrt{N(N \pm 1)}}R
+$$
 
 which give the correct bounds as
 
-$$\frac{R}{\sqrt{30}} \le r \le \frac{R}{\sqrt{20}}$$
+$$
+\frac{R}{\sqrt{30}} \le r \le \frac{R}{\sqrt{20}}
+$$
 
 If you knew about geometric means, you might have been able to just write this down.
 

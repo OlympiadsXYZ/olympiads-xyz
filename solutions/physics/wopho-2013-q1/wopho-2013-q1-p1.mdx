@@ -21,7 +21,9 @@ In a simplified model (see fig. 2) we assume that the magnetic induction vector 
 
 First we study the stationary operation of the motor, when its angular velocity $\omega$ and torque $T$ are constant. As we shall see, when the motor is loaded, its angular velocity $\omega$ gets smaller than $\Omega$. It is convenient to characterize this shift by the slip
 
-$$s = \frac{\Omega - \omega}{\Omega},$$
+$$
+s = \frac{\Omega - \omega}{\Omega},
+$$
 
 which is a dimensionless number between 0 and 1.
 
@@ -69,60 +71,88 @@ which is a dimensionless number between 0 and 1.
 
 (a), (b) Let the time $t=0$ be chosen such that then $\mathbf{n}$ is perpendicular to $\mathbf{B}$. Using this notation, the flux of the coil is $\Phi = -BAN\sin(\Omega-\omega)t$. According to Faraday's law, the induced voltage is $U = -\partial\Phi/\partial t = BAN(\Omega-\omega)\cos(\Omega-\omega)t$. To simplify the calculations, we change now to the exponential description of alternating current, that is, $\mathcal{U} = BAN(\Omega-\omega)\exp(i(\Omega-\omega)t)$. The impedance of the coil is (the angular frequency of the voltage is $\Omega-\omega$) $\mathcal{Z} = R + i(\Omega-\omega)L$, thus the current is
 
-$$\mathcal{I} = \frac{\mathcal{U}}{\mathcal{Z}} = \frac{BAN(\Omega-\omega)}{\sqrt{R^2+(\Omega-\omega)^2L^2}}\exp(i(\Omega-\omega)t - i\delta) \to I = \frac{BAN(\Omega-\omega)}{Z}\cos((\Omega-\omega)t-\delta),$$
+$$
+\mathcal{I} = \frac{\mathcal{U}}{\mathcal{Z}} = \frac{BAN(\Omega-\omega)}{\sqrt{R^2+(\Omega-\omega)^2L^2}}\exp(i(\Omega-\omega)t - i\delta) \to I = \frac{BAN(\Omega-\omega)}{Z}\cos((\Omega-\omega)t-\delta),
+$$
 
 where $Z = \sqrt{R^2+(\Omega-\omega)^2L^2}$ is the magnitude and $\delta = \arctan\dfrac{(\Omega-\omega)L}{R}$ is the argument of $\mathcal{Z}$ (in the end we have reverted back to the trigonometric form). The magnetic moment of the coil is $\mathbf{m} = IAN\mathbf{n}$, thus the torque exerted on it is
 
-$$\tau = (\mathbf{m}\times\mathbf{B})_z = mB\cos(\Omega-\omega)t = NAB\cdot\frac{BAN(\Omega-\omega)}{Z}\cos((\Omega-\omega)t-\delta)\cos(\Omega-\omega)t =$$
-$$= \frac{B^2A^2N^2(\Omega-\omega)}{Z}\left(\cos^2\alpha\cos\delta - \sin\alpha\cos\alpha\sin\delta\right),$$
+$$
+\tau = (\mathbf{m}\times\mathbf{B})_z = mB\cos(\Omega-\omega)t = NAB\cdot\frac{BAN(\Omega-\omega)}{Z}\cos((\Omega-\omega)t-\delta)\cos(\Omega-\omega)t =
+$$
+$$
+= \frac{B^2A^2N^2(\Omega-\omega)}{Z}\left(\cos^2\alpha\cos\delta - \sin\alpha\cos\alpha\sin\delta\right),
+$$
 
 where $\alpha(t) = (\Omega-\omega)t$. We should note that
 
-$$\lim_{t\to\infty}\left(\frac{1}{t}\int_0^t \cos^2(x\cdot t^*)dt^*\right) = \frac{1}{2} \text{ and } \lim_{t\to\infty}\left(\frac{1}{t}\int_0^t \sin(x\cdot t^*)\cos(x\cdot t^*)dt^*\right) = 0$$
+$$
+\lim_{t\to\infty}\left(\frac{1}{t}\int_0^t \cos^2(x\cdot t^*)dt^*\right) = \frac{1}{2} \text{ and } \lim_{t\to\infty}\left(\frac{1}{t}\int_0^t \sin(x\cdot t^*)\cos(x\cdot t^*)dt^*\right) = 0
+$$
 
 are the time averages of the above functions, thus the requested time average is
 
-$$T = \frac{B^2A^2N^2(\Omega-\omega)}{Z}\frac{\cos\delta}{2} = \frac{B^2A^2N^2(\Omega-\omega)}{Z}\frac{R}{2Z} = \frac{B^2A^2N^2(\Omega-\omega)R}{2(R^2+(\Omega-\omega)^2L^2)} = \frac{B^2A^2N^2R\Omega s}{2(R^2+\Omega^2L^2s^2)};$$
+$$
+T = \frac{B^2A^2N^2(\Omega-\omega)}{Z}\frac{\cos\delta}{2} = \frac{B^2A^2N^2(\Omega-\omega)}{Z}\frac{R}{2Z} = \frac{B^2A^2N^2(\Omega-\omega)R}{2(R^2+(\Omega-\omega)^2L^2)} = \frac{B^2A^2N^2R\Omega s}{2(R^2+\Omega^2L^2s^2)};
+$$
 
 in the last form we have introduced the expression of the slip. For the case of the small slip, we may obtain a simpler formula by calculating with $s$ to the first order:
 
-$$T_{(a)} = \frac{B^2A^2N^2R\Omega s}{2R^2} = \frac{B^2A^2N^2\Omega s}{2R}.$$
+$$
+T_{(a)} = \frac{B^2A^2N^2R\Omega s}{2R^2} = \frac{B^2A^2N^2\Omega s}{2R}.
+$$
 
 (c) By introducing $\beta = L\Omega/R$, we may simplify the expression for $T$:
 
-$$T = \frac{B^2A^2N^2R\Omega s}{2(R^2+R^2\beta^2s^2)} = \frac{B^2A^2N^2\Omega}{2R}\frac{s}{1+\beta^2s^2}.$$
+$$
+T = \frac{B^2A^2N^2R\Omega s}{2(R^2+R^2\beta^2s^2)} = \frac{B^2A^2N^2\Omega}{2R}\frac{s}{1+\beta^2s^2}.
+$$
 
 Taking the numerical prefactor describing the motor equal to 1, we have to sketch the function $s/(1+\beta^2s^2)$ for $\beta=10$. The plot for the reasonable interval is in Fig. 1.
 
 (d) The maximum of $T$ occurs where its derivative with respect to $s$ (or equivalently, that of $s/(1+\beta^2s^2)$) is 0. This derivative is $\dfrac{1-\beta^2s^2}{(1+\beta^2s^2)^2}$, the root of which is
 
-$$s_0 = \frac{1}{\beta} = \frac{R}{L\Omega}.$$
+$$
+s_0 = \frac{1}{\beta} = \frac{R}{L\Omega}.
+$$
 
 In this case, the average torque is
 
-$$T_{\max} = \frac{B^2A^2N^2\Omega}{2R}\frac{1/\beta}{2} = \frac{B^2A^2N^2\Omega}{4R}\frac{R}{L\Omega} = \frac{B^2A^2N^2}{4L}.$$
+$$
+T_{\max} = \frac{B^2A^2N^2\Omega}{2R}\frac{1/\beta}{2} = \frac{B^2A^2N^2\Omega}{4R}\frac{R}{L\Omega} = \frac{B^2A^2N^2}{4L}.
+$$
 
 Note. If $\beta<1$, i.e. the ohmic resistance is too large, $s_0$ would be greater than 1, which is nonsense. In this case, the $T(s)$ function is growing monotonously all over the reasonable $0\le s\le1$ range, thus the maximal torque belongs to $s_0=1$ and it is $T_{\max} = \dfrac{B^2A^2N^2\Omega}{2R(1+L^2\Omega^2/R^2)}$.
 
 (e) The energy loss in the system is the Joule heat dissipating in the coil. In average this is given by
 
-$$\overline{P_{\text{loss}}} = I_{\text{eff}}^2 R = \frac{1}{2}I_{\text{peak}}^2 R = \frac{R}{2}\left(\frac{BAN(\Omega-\omega)}{Z}\right)^2.$$
+$$
+\overline{P_{\text{loss}}} = I_{\text{eff}}^2 R = \frac{1}{2}I_{\text{peak}}^2 R = \frac{R}{2}\left(\frac{BAN(\Omega-\omega)}{Z}\right)^2.
+$$
 
 The useful power is the mechanical power of the motor, which is given for rotations by $P_{\text{mech}} = \tau\omega$, or in average,
 
-$$\overline{P_{\text{mech}}} = T\omega = \frac{B^2A^2N^2(\Omega-\omega)\omega R}{2Z^2}.$$
+$$
+\overline{P_{\text{mech}}} = T\omega = \frac{B^2A^2N^2(\Omega-\omega)\omega R}{2Z^2}.
+$$
 
 The efficiency of the motor is thus
 
-$$\eta = \frac{P_{\text{mech}}}{P_{\text{mech}}+P_{\text{loss}}} = \frac{\omega}{\Omega} = 1-s.$$
+$$
+\eta = \frac{P_{\text{mech}}}{P_{\text{mech}}+P_{\text{loss}}} = \frac{\omega}{\Omega} = 1-s.
+$$
 
 (f) Let $s_0$ be the root of the equation $T(s) = K\omega = K\Omega(1-s)$: at this slip, the motor is working without accelerating or decelerating the load. Imagine that the slip gets perturbated, so it value becomes $s_0+\delta s$. The system is stable when the total torque acting on it acts in order to reduce $\delta s$, that is, if $\delta s>0$, thus $\delta\omega<0$, the torque accelerates the system, thus $\Sigma T>0$. This total torque is given by
 
-$$\Sigma T = T(s_0+\delta_s) - K\Omega(1-s_0-\delta s) = \left(\frac{\partial T}{\partial s}\Big|_{s=s_0} + K\Omega\right)\delta s \to \frac{\Sigma T}{\delta s} = \frac{\partial T}{\partial s}\Big|_{s=s_0} + K\Omega,$$
+$$
+\Sigma T = T(s_0+\delta_s) - K\Omega(1-s_0-\delta s) = \left(\frac{\partial T}{\partial s}\Big|_{s=s_0} + K\Omega\right)\delta s \to \frac{\Sigma T}{\delta s} = \frac{\partial T}{\partial s}\Big|_{s=s_0} + K\Omega,
+$$
 
 which must be greater than 0 to have the system stable. On the monotonously growing section of $T(s)$, the expression is clearly greater than 0, thus this section is stable, but the first stable section exceeds slightly this part of the graph: the critical state is the one where $\Sigma T/\delta s$ is exactly 0. The related equations are
 
-$$\frac{B^2A^2N^2\Omega}{2R}\frac{s_0}{1+\beta^2s_0^2} = K\Omega(1-s_0); \qquad \frac{B^2A^2N^2\Omega}{2R}\frac{1-\beta^2s_0^2}{(1+\beta^2s_0^2)^2}+K\Omega=0.$$
+$$
+\frac{B^2A^2N^2\Omega}{2R}\frac{s_0}{1+\beta^2s_0^2} = K\Omega(1-s_0); \qquad \frac{B^2A^2N^2\Omega}{2R}\frac{1-\beta^2s_0^2}{(1+\beta^2s_0^2)^2}+K\Omega=0.
+$$
 
 Combining the equations give the irreducible cubic equation $s_0(1+\beta^2s_0^2)=(1-s_0)(\beta^2s_0^2-1)$. The positive numerical solutions for $\beta=10$ are $s_1=0.1138$ and $s_2=0.4781$. We have already found that for $s<s_1$ the system is stable, consequently, for $s_1<s<s_2$ the system is unstable and for $s_2<s$ it is again stable, as at the roots of the above equation the continuous function $\Sigma T/\delta s$ changes sign.
 

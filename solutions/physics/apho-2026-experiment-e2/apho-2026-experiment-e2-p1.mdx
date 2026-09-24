@@ -230,21 +230,29 @@ maximum deviation =2.125/127.85*100=1.66%
 
 To estimate the unknown resistance $r$, a known reference resistor $R$ is connected in series with $r$. The voltage $V$ at the junction, measured by the ADC, is determined by the voltage divider principle:
 
-$$V = \frac{r}{R + r} V_c \qquad (1)$$
+$$
+V = \frac{r}{R + r} V_c \qquad (1)
+$$
 
 Assuming a linear relationship between the input voltage $V$ and the ADC output $N$, we define calibration constants $N_L$ at GND and $N_H$ at $V_c$
 
 Due to linearity, voltage $V$ can be expressed in terms of the digital reading $N$ as:
 
-$$V = \frac{N - N_L}{N_H - N_L} V_c \qquad (2)$$
+$$
+V = \frac{N - N_L}{N_H - N_L} V_c \qquad (2)
+$$
 
 From (1), (2), unknown resister $r$ satisfies:
 
-$$r = \frac{N_H - N}{N - N_L} R \qquad (3)$$
+$$
+r = \frac{N_H - N}{N - N_L} R \qquad (3)
+$$
 
 If $N_H = 1023$ and $N_L = 0$, then:
 
-$$r = \frac{1023 - N}{N} R \qquad (4)$$
+$$
+r = \frac{1023 - N}{N} R \qquad (4)
+$$
 
 | Criteria | Points |
 |---|---|
@@ -279,13 +287,21 @@ RSD=
 
 **B-4)**
 
-$$r = \frac{1023 - N}{N} R$$
+$$
+r = \frac{1023 - N}{N} R
+$$
 
-$$\frac{dr}{dN} = -\frac{1023}{N^2} R \qquad (1)$$
+$$
+\frac{dr}{dN} = -\frac{1023}{N^2} R \qquad (1)
+$$
 
-$$e = \Delta N$$
+$$
+e = \Delta N
+$$
 
-$$\Delta r \approx \frac{dr}{dN} e = -\frac{1023}{N^2} R e \qquad (2)$$
+$$
+\Delta r \approx \frac{dr}{dN} e = -\frac{1023}{N^2} R e \qquad (2)
+$$
 
 | Criteria | Points |
 |---|---|
@@ -295,27 +311,43 @@ $$\Delta r \approx \frac{dr}{dN} e = -\frac{1023}{N^2} R e \qquad (2)$$
 
 **B-5)**
 
-$$r = \frac{1023 - N}{N} R$$
+$$
+r = \frac{1023 - N}{N} R
+$$
 
-$$\Delta r = -\frac{1023}{N^2} R e$$
+$$
+\Delta r = -\frac{1023}{N^2} R e
+$$
 
 ADC error $e = 1$,
 
-$$\left\lvert \frac{\Delta r}{r} \right\rvert = \frac{1023}{N(1023 - N)} \le 0.01 \qquad (1)$$
+$$
+\left\lvert \frac{\Delta r}{r} \right\rvert = \frac{1023}{N(1023 - N)} \le 0.01 \qquad (1)
+$$
 
-$$N^2 - 1023N + 102300 \le 0 \qquad (1*)$$
+$$
+N^2 - 1023N + 102300 \le 0 \qquad (1*)
+$$
 
-$$N \ge N_{\min} \approx 112.33 \ \text{and}\ N \le N_{\max} \approx 910.67 \qquad (2)$$
+$$
+N \ge N_{\min} \approx 112.33 \ \text{and}\ N \le N_{\max} \approx 910.67 \qquad (2)
+$$
 
 $r = \frac{1023 - N}{N} R$에서
 
-$$r_{\max} = \frac{1023 - 112.33}{112.33} R \approx 8.11R,\quad r_{\min} = \frac{1023 - 910.67}{910.67} R \approx 0.123R \qquad (3*)$$
+$$
+r_{\max} = \frac{1023 - 112.33}{112.33} R \approx 8.11R,\quad r_{\min} = \frac{1023 - 910.67}{910.67} R \approx 0.123R \qquad (3*)
+$$
 
 thus.
 
-$$0.123 \le r/R \le 8.11 \qquad (3)$$
+$$
+0.123 \le r/R \le 8.11 \qquad (3)
+$$
 
-$$0.12 \le r/R \le 8.1 \qquad (3**)$$
+$$
+0.12 \le r/R \le 8.1 \qquad (3**)
+$$
 
 | Criteria | Points |
 |---|---|
@@ -366,9 +398,13 @@ The method of estimating $r_1$ and $r_1 + r_2$ using $R$ and then subtracting th
 
 **C.3)**
 
-$$r_1 = \frac{N_H - N}{N - N_L} R$$
+$$
+r_1 = \frac{N_H - N}{N - N_L} R
+$$
 
-$$r_2 = \frac{N_H - N}{N - N_L} r_1$$
+$$
+r_2 = \frac{N_H - N}{N - N_L} r_1
+$$
 
 | | $N_L$ | $N$ | $N_H$ | $r_1$ | $N_L$ | $N$ | $N_H$ | $r_2$ |
 |---|---|---|---|---|---|---|---|---|
@@ -419,7 +455,9 @@ By combining the two: $\frac{V_a}{V_c} = \frac{RR_i}{rR + rR_i + RR_i} \qquad (1
 
 Using the linear relationship between the ADC and voltage:
 
-$$\frac{N_a - N_L}{N_H - N_L} = \frac{V_a}{V_c} \qquad (2)$$
+$$
+\frac{N_a - N_L}{N_H - N_L} = \frac{V_a}{V_c} \qquad (2)
+$$
 
 Case 2: Reference resistor ($R$) at the top, unknown resistor ($r$) at the bottom. Now $r$ and $R_i$ are in parallel.
 
@@ -429,15 +467,21 @@ Voltage divider rule: $V_b = \frac{R_{eq2}}{R_{eq2} + R} V_c$
 
 By combining the two:
 
-$$\frac{V_b}{V_c} = \frac{rR_i}{rR + rR_i + RR_i} \qquad (3)$$
+$$
+\frac{V_b}{V_c} = \frac{rR_i}{rR + rR_i + RR_i} \qquad (3)
+$$
 
 Using the linear relationship between the ADC and voltage:
 
-$$\frac{N_b - N_L}{N_H - N_L} = \frac{V_b}{V_c} \qquad (4)$$
+$$
+\frac{N_b - N_L}{N_H - N_L} = \frac{V_b}{V_c} \qquad (4)
+$$
 
 From (1)~(4) the following is derived:
 
-$$r = \frac{N_b - N_L}{N_a - N_L} R \qquad (5)$$
+$$
+r = \frac{N_b - N_L}{N_a - N_L} R \qquad (5)
+$$
 
 | Criteria | Points |
 |---|---|

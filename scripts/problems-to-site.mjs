@@ -305,6 +305,42 @@ function displayFences(seg, before) {
   if (/^[ \t]*\n/.test(inner) && /\n[ \t]*$/.test(inner)) return seg;
   return `$$\n${inner.replace(/^[ \t]*\n/, '').replace(/\n[ \t]*$/, '')}\n$$`;
 }
+// A one-line "$$…$$" is display math by the reader conventions, but remark-math reads it as text math: the site set
+// 30,291 equations on 3,423 pages as small inline formulas, run into the neighbouring lines when no blank line
+// separates them (esf-2001-esenno-8). Only a "$$" fence on a line of its own opens a display block, so a line that
+// starts with a one-line "$$…$$" gets its fences on lines of their own, at the line's indentation (a list item keeps
+// it). Text printed after the formula on the same line (the points it scores, "**[2 т.]**") follows on the next line.
+// Left as they are: a formula after text on its line, a table row, a line whose rest is only punctuation or would
+// open a block of its own (a list item, heading, quote, fence, tag or another "$$", whose first line a fence would
+// drop as its meta), and every line inside a display block, a code fence or the frontmatter.
+const ONE_LINE_DISPLAY = /^([ \t]{0,3})\$\$((?:(?!\$\$)[^\n])+?)\$\$[ \t]*(.*)$/;
+const OPENS_BLOCK = /^(?:[-+*](?:[ \t]|$)|\d{1,9}[.)](?:[ \t]|$)|#{1,6}(?:[ \t]|$)|[>|<{]|=+[ \t]*$|`{3}|~{3}|\$\$)/;
+export function displayMathLines(mdx) {
+  const lines = String(mdx).split('\n'), out = [];
+  // block: inside a "$$" fence, which only a "$$" line of its own closes; span: text math that runs on to a later line
+  let frontmatter = lines[0] === '---', code = false, block = false, span = false;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (frontmatter) { out.push(line); if (i > 0 && line === '---') frontmatter = false; continue; }
+    if (block) { if (/^[ \t]*\$\$[ \t]*$/.test(line)) block = false; out.push(line); continue; }
+    if (!span && /^[ \t]{0,3}(?:`{3,}|~{3,})/.test(line)) { code = !code; out.push(line); continue; }
+    if (code) { out.push(line); continue; }
+    const m = span ? null : ONE_LINE_DISPLAY.exec(line);
+    const rest = m?.[3] ?? '';
+    if (m && m[2].trim() && (rest === '' || (!/^[\p{P}\s]*$/u.test(rest) && !OPENS_BLOCK.test(rest)))) {
+      // a block drops its lines' trailing space, so a closing control space ("…\sin\alpha.\ ", psf-2002-proletno-sp)
+      // would leave a lone "\" that KaTeX refuses; at the end of a display it shows nothing and goes
+      const body = m[2].trim().replace(/(?<!\\)((?:\\\\)*)\\$/, '$1');
+      out.push(`${m[1]}$$`, `${m[1]}${body}`, `${m[1]}$$`);
+      if (rest) lines.splice(i + 1, 0, m[1] + rest); // the rest is a line of its own, read like any other
+      continue;
+    }
+    if (!span && /^[ \t]{0,3}\$\$[^$]*$/.test(line)) block = true;
+    else if ((line.match(/(?<!\\)\$\$/g) || []).length % 2) span = !span;
+    out.push(line);
+  }
+  return out.join('\n');
+}
 
 function problemMdx(paper, problem, state, sourceFile) {
   const lines = [];
@@ -398,7 +434,7 @@ function problemMdx(paper, problem, state, sourceFile) {
     }
     lines.push('');
   }
-  return lines.join('\n');
+  return displayMathLines(lines.join('\n'));
 }
 
 // "III Национален кръг" -> "III"; keeps the slug short while staying unique

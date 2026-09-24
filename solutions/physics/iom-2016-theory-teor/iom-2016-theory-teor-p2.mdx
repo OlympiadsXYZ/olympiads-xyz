@@ -84,7 +84,9 @@ TOTAL score for the problem is 25 points.
 
 2) If the voltage across the primary winding circuit varies during the switch closure as $U_1 = U(t)$, the Kirchhoff’s loop rule yields (a winding resistance is negligible):
 
-$$\begin{cases} U(t) - N_1\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\dfrac{dI_2}{dt}\right] = I_1 r, \\ -N_2\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\dfrac{dI_2}{dt}\right] = I_2 R. \end{cases}$$
+$$
+\begin{cases} U(t) - N_1\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\dfrac{dI_2}{dt}\right] = I_1 r, \\ -N_2\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\dfrac{dI_2}{dt}\right] = I_2 R. \end{cases}
+$$
 
 3) Since the current in the windings cannot change instantaneously, the initial condition at $t = 0$ (the moment the switch starts being closed) must read $I_1(0) = I_2(0) = 0$.
 
@@ -92,17 +94,23 @@ $$\begin{cases} U(t) - N_1\dfrac{\mu_0\mu S}{l}\left[N_1\dfrac{dI_1}{dt} + N_2\d
 
 5, 6) However, the above expression does not allow one to determine the final answer for $I_2(t)$ right away since the constant $C \ne 0$ must be specified as the current at the end of the voltage «instantaneous switching-on». To do this one has to specify an appropriate function $U(t)$ such that $U(0) = 0$ and $U(\tau_0) = \mathcal{E}$, where $\tau_0 \ll \tau$ is a switching-on time of the battery (the time it takes the switch resistance to drop almost to zero). For example consider $U(t) \approx \mathcal{E}\dfrac{t}{\tau_0}$ during the time interval from zero to $\tau_0$. Then for $t \le \tau_0$ one obtains:
 
-$$\frac{dI_2}{dt} + \frac{R}{R + k^2 r}\cdot\frac{I_2}{\tau} \approx -\frac{k}{R + k^2 r}\cdot\frac{\mathcal{E}}{\tau_0} \Rightarrow \frac{dI_2}{dt} \approx -\frac{k}{R + k^2 r}\cdot\frac{\mathcal{E}}{\tau_0}$$
+$$
+\frac{dI_2}{dt} + \frac{R}{R + k^2 r}\cdot\frac{I_2}{\tau} \approx -\frac{k}{R + k^2 r}\cdot\frac{\mathcal{E}}{\tau_0} \Rightarrow \frac{dI_2}{dt} \approx -\frac{k}{R + k^2 r}\cdot\frac{\mathcal{E}}{\tau_0}
+$$
 
 (the term with $I_2$ can be neglected since $I_2 \le k\dfrac{\mathcal{E}}{R}$ and $\dfrac{\tau_0}{\tau} \ll 1$), where $I_2(0) = 0$. Thus in this time interval $I_2(t) \approx -\dfrac{k}{R + k^2 r}\cdot\dfrac{\mathcal{E}}{\tau_0}t$. This implies that at the end of «instantaneous switching-on» the current in secondary winding is opposite to the current in primary winding and it reaches its maximum equal to $I_2^{\max} \approx \dfrac{k\mathcal{E}}{R + k^2 r} \approx 0{,}6$ A. Subsequently the current decays as
 
-$$I_2(t) \approx -\frac{k\mathcal{E}}{R + k^2 r}\cdot\exp\left[-\frac{R}{(R + k^2 r)\tau}t\right].$$
+$$
+I_2(t) \approx -\frac{k\mathcal{E}}{R + k^2 r}\cdot\exp\left[-\frac{R}{(R + k^2 r)\tau}t\right].
+$$
 
 7) Since $\dfrac{RT}{(R + k^2 r)\tau} = 5$ the current in secondary winding at $T = 0{,}5$ sec is less than 0,7% of the maximum value. An approximate plot of $I_2(t)$ is shown in the figure.
 
 8, 9, 10) Using the expression obtained above one finds for the current in primary winding:
 
-$$I_1(t) \approx \begin{cases} \dfrac{k^2}{R + k^2 r}\dfrac{\mathcal{E}}{\tau_0}t, & t \le \tau_0; \\ \dfrac{\mathcal{E}}{r}\left[1 - \dfrac{R}{R + k^2 r}\exp\left(-\dfrac{R}{(R + k^2 r)\tau}t\right)\right], & t > \tau_0. \end{cases}$$
+$$
+I_1(t) \approx \begin{cases} \dfrac{k^2}{R + k^2 r}\dfrac{\mathcal{E}}{\tau_0}t, & t \le \tau_0; \\ \dfrac{\mathcal{E}}{r}\left[1 - \dfrac{R}{R + k^2 r}\exp\left(-\dfrac{R}{(R + k^2 r)\tau}t\right)\right], & t > \tau_0. \end{cases}
+$$
 
 Thus after the switching-on starts the current in primary winding rapidly (for $\tau_0 \ll \tau$) increases to $\dfrac{k^2\mathcal{E}}{R + k^2 r} \approx 3$ A and then exponentially approaches the «stationary» value $\dfrac{\mathcal{E}}{r} = 6$ A by almost reaching it at the time $T$. An approximate plot of $I_1(t)$ is shown in the figure.
 
@@ -110,9 +118,13 @@ Notice that the maximum current in primary winding after the switch has been clo
 
 **Remark**: Of course, the linear dependence used to model $U(t)$ of the «instantaneous switching-on» is not a must: any reasonable model gives the same result providing $\tau_0 \ll \tau$. The linear model is just the simplest. For example one can define $U(t) \approx \mathcal{E}\dfrac{t}{\tau_0}\left(2 - \dfrac{t}{\tau_0}\right)$ for $t \le \tau_0$ (a smooth crossover to $U(t) \approx \mathcal{E}$ for $t > \tau_0$). Quite effective solution follows if one chooses $U(t) = \mathcal{E}\cdot[1 - \exp(-t/\tau_0)]$ (this expression can be used for any $t$, so the system evolution has not to be split in two stages). In this case a bit more complicated differential equation yields the solution:
 
-$$I_2(t) = \frac{k\mathcal{E}}{R + k^2 r}\cdot\left[\exp\left(-\frac{t}{\tau_0}\right) - \exp\left(-\frac{Rt}{(R + k^2 r)\tau}\right)\right], \qquad (*)$$
+$$
+I_2(t) = \frac{k\mathcal{E}}{R + k^2 r}\cdot\left[\exp\left(-\frac{t}{\tau_0}\right) - \exp\left(-\frac{Rt}{(R + k^2 r)\tau}\right)\right], \qquad (*)
+$$
 
-$$I_1(t) \approx \frac{\mathcal{E}}{r}\cdot\left[1 - \frac{k^2 r}{R + k^2 r}\exp\left(-\frac{t}{\tau_0}\right) - \frac{R}{R + k^2 r}\exp\left(-\frac{Rt}{(R + k^2 r)\tau}\right)\right]. \qquad (**)$$
+$$
+I_1(t) \approx \frac{\mathcal{E}}{r}\cdot\left[1 - \frac{k^2 r}{R + k^2 r}\exp\left(-\frac{t}{\tau_0}\right) - \frac{R}{R + k^2 r}\exp\left(-\frac{Rt}{(R + k^2 r)\tau}\right)\right]. \qquad (**)
+$$
 
 One can see that qualitatively time dependence of the currents at $\tau_0 \ll \tau$ is the same (e.g. the value of $I_2^{\max}$) as in the «linear» model.
 

@@ -41,7 +41,9 @@ Good luck!
 
 The radial surface-brightness profile of disc galaxies is overall well described by an exponential function:
 
-$$I(R) = I_0 \exp\left(-\frac{R}{h}\right),$$
+$$
+I(R) = I_0 \exp\left(-\frac{R}{h}\right),
+$$
 
 where $R$ is the distance from the center of the galaxy, $h$ is the radial scale length and $I_0$ is the central surface brightness measured in $L_\odot/\mathrm{pc}^2$.
 
@@ -69,21 +71,33 @@ In the spectrum of the observed face-on disc galaxy (the axis of the galaxy coin
 
 a) First, we derive the formula for the total luminosity of the galaxy. It is necessary to integrate the surface brightness on the radius throughout the visible disk of the galaxy. When transforming the area integration to radius integration, a multiplier of $2\pi R$ appears: due to circular symmetry, the apparent disk of the galaxy can be divided into rings with a width of $dR$ and an area of $2\pi R\,dR$ with constant surface brightness, and the luminosities from such rings can be summed:
 
-$$L = \int\limits_S I(R)\,dR = \int\limits_0^{+\infty} I(R) \cdot 2\pi R\,dR = 2\pi I_0 \int\limits_0^{+\infty} Re^{-\frac{R}{h}}\,dR\,;$$
+$$
+L = \int\limits_S I(R)\,dR = \int\limits_0^{+\infty} I(R) \cdot 2\pi R\,dR = 2\pi I_0 \int\limits_0^{+\infty} Re^{-\frac{R}{h}}\,dR\,;
+$$
 
-$$\int Re^{-\frac{R}{h}}\,dR \overset{\tau \equiv \frac{R}{h}}{=\!=\!=} h^2 \int \tau e^{-\tau}\,d\tau = h^2\left(-\tau e^{-\tau} + \int e^{-\tau}\,d\tau\right) = -h^2(\tau + 1)e^{-\tau} + \mathrm{const}$$
+$$
+\int Re^{-\frac{R}{h}}\,dR \overset{\tau \equiv \frac{R}{h}}{=\!=\!=} h^2 \int \tau e^{-\tau}\,d\tau = h^2\left(-\tau e^{-\tau} + \int e^{-\tau}\,d\tau\right) = -h^2(\tau + 1)e^{-\tau} + \mathrm{const}
+$$
 
-$$\Longrightarrow\quad L = \left.-2\pi I_0 \cdot h^2\left(\frac{R}{h} + 1\right)e^{-\frac{R}{h}}\right|_{h=0}^{+\infty} = 2\pi I_0 h^2.$$
+$$
+\Longrightarrow\quad L = \left.-2\pi I_0 \cdot h^2\left(\frac{R}{h} + 1\right)e^{-\frac{R}{h}}\right|_{h=0}^{+\infty} = 2\pi I_0 h^2.
+$$
 
 Next, we should find the value of the radius $R_e$ within which the half of the total luminosity, or $\pi I_0 h^2$, is emitted:
 
-$$\pi I_0 h^2 = \int\limits_0^{R_e} I(R) \cdot 2\pi R\,dR = \left.-2\pi I_0 h^2\left(\frac{R}{h} + 1\right)e^{-\frac{R}{h}}\right|_{h=0}^{R_e}$$
+$$
+\pi I_0 h^2 = \int\limits_0^{R_e} I(R) \cdot 2\pi R\,dR = \left.-2\pi I_0 h^2\left(\frac{R}{h} + 1\right)e^{-\frac{R}{h}}\right|_{h=0}^{R_e}
+$$
 
-$$\Longrightarrow\quad \left(\frac{R_e}{h} + 1\right)e^{-\frac{R_e}{h}} \equiv (\tau_e + 1)\,e^{-\tau_e} = \frac{1}{2}.$$
+$$
+\Longrightarrow\quad \left(\frac{R_e}{h} + 1\right)e^{-\frac{R_e}{h}} \equiv (\tau_e + 1)\,e^{-\tau_e} = \frac{1}{2}.
+$$
 
 For physical reasons (due to non-decreasing luminosity with increasing radius), the equation
 
-$$f(\tau) = \frac{1}{2} - (\tau + 1)\,e^{-\tau} = 0$$
+$$
+f(\tau) = \frac{1}{2} - (\tau + 1)\,e^{-\tau} = 0
+$$
 
 should have only one root $\tau = \tau_e$. Beyond a few radial scale lengths, the surface brightness becomes extremely low, so we can choose a smaller interval for searching the root.
 
@@ -97,15 +111,23 @@ Therefore, $R_e \approx 1.7h \approx 5$ kpc.
 
 b) Let us determine the luminosity of the galaxy. To do this, we should estimate the distance $D$ to the galaxy. Knowing the value of the displacement of the center of the spectral line, we can estimate the galaxy redshift and apply Hubble’s law:
 
-$$\begin{aligned} z &= \frac{v}{c} = \frac{\lambda_{\mathrm{obs}} - \lambda_0}{\lambda_0} = \frac{6670\ \text{Å} - 6563\ \text{Å}}{6563\ \text{Å}} = 0.016;\\ V &= cz = 3.0 \cdot 10^5\ \mathrm{km/s} \times 0.016 = 4.9 \cdot 10^3\ \mathrm{km/s};\\ D &= \frac{V}{H_0} = \frac{4.9 \cdot 10^3\ \mathrm{km/s}}{70\ \mathrm{(km/s)/Mpc}} = 70\ \mathrm{Mpc}. \end{aligned}$$
+$$
+\begin{aligned} z &= \frac{v}{c} = \frac{\lambda_{\mathrm{obs}} - \lambda_0}{\lambda_0} = \frac{6670\ \text{Å} - 6563\ \text{Å}}{6563\ \text{Å}} = 0.016;\\ V &= cz = 3.0 \cdot 10^5\ \mathrm{km/s} \times 0.016 = 4.9 \cdot 10^3\ \mathrm{km/s};\\ D &= \frac{V}{H_0} = \frac{4.9 \cdot 10^3\ \mathrm{km/s}}{70\ \mathrm{(km/s)/Mpc}} = 70\ \mathrm{Mpc}. \end{aligned}
+$$
 
 The redshift is quite small, and its effect on luminosity is negligible. So we can calculate the absolute magnitude of the galaxy to retrieve its luminosity and central surface brightness:
 
-$$M = m + 5 - 5\lg r = 14 + 5 - 5\lg(7 \cdot 10^7) = -20.2^{\mathrm{m}};$$
+$$
+M = m + 5 - 5\lg r = 14 + 5 - 5\lg(7 \cdot 10^7) = -20.2^{\mathrm{m}};
+$$
 
-$$L = 10^{-0.4(M - M_\odot)}L_\odot = 9.6 \cdot 10^9\,L_\odot$$
+$$
+L = 10^{-0.4(M - M_\odot)}L_\odot = 9.6 \cdot 10^9\,L_\odot
+$$
 
-$$\Longrightarrow\quad I_0 = \frac{L}{2\pi h^2} = \frac{9.6 \cdot 10^9 L_\odot}{2\pi \times (3 \cdot 10^3\ \mathrm{pc})^2} = 1.7 \cdot 10^2\,L_\odot/\mathrm{pc}^2.$$
+$$
+\Longrightarrow\quad I_0 = \frac{L}{2\pi h^2} = \frac{9.6 \cdot 10^9 L_\odot}{2\pi \times (3 \cdot 10^3\ \mathrm{pc})^2} = 1.7 \cdot 10^2\,L_\odot/\mathrm{pc}^2.
+$$
 
 c) It is necessary to estimate the baryonic mass from the known galaxy luminosity. The galaxy is spiral and fainter than the Milky Way ($M_{\mathrm{MW}} \approx -21.3^{\mathrm{m}}$). We don’t know much about this galaxy, but we can assume that the parameters of the galaxy are proportional to the parameters of the Milky Way.
 

@@ -21,7 +21,9 @@ This problem deals with the physics of the Greenlandic ice sheet, the second lar
 
 In this problem you can make use of the integral:
 
-$$\int_0^1 \sqrt{1-x}\,\mathrm{d}x = \frac{2}{3}$$
+$$
+\int_0^1 \sqrt{1-x}\,\mathrm{d}x = \frac{2}{3}
+$$
 
 and the approximation $(1+x)^a \approx 1 + ax$, valid for $|ax| \ll 1$.
 
@@ -65,7 +67,9 @@ Consider only the central region $|x| \ll L$ close to the middle of the ice shee
 
 From the assumption of incompressibility, i.e. the constant density $\rho_\mathrm{ice}$ of the ice, it follows that mass conservation implies the following restriction on the ice flow velocity components
 
-$$\frac{dv_x}{dx} + \frac{dv_z}{dz} = 0.$$
+$$
+\frac{dv_x}{dx} + \frac{dv_z}{dz} = 0.
+$$
 
 **3.4** Write down an expression for the $z$ dependence of the vertical component $v_z(z)$ of the ice-flow velocity. **[0,6 т.]**
 
@@ -81,7 +85,9 @@ Based on the ice-flow velocity components $v_x(x)$ and $v_z(z)$, one can estimat
 
 An ice core drilled in the interior of the Greenland ice sheet will penetrate through layers of snow from the past, and the ice core can be analyzed to reveal past climate changes. One of the best indicators is the so-called $\delta^{18}\mathrm{O}$, defined as
 
-$$\delta^{18}\mathrm{O} = \frac{R_\mathrm{ice} - R_\mathrm{ref}}{R_\mathrm{ref}}\,1000\ \text{‰},$$
+$$
+\delta^{18}\mathrm{O} = \frac{R_\mathrm{ice} - R_\mathrm{ref}}{R_\mathrm{ref}}\,1000\ \text{‰},
+$$
 
 where $R = [{}^{18}\mathrm{O}]/[{}^{16}\mathrm{O}]$ denotes the relative abundance of the two stable isotopes ${}^{18}\mathrm{O}$ and ${}^{16}\mathrm{O}$ of oxygen. The reference $R_\mathrm{ref}$ is based on the isotopic composition of the oceans around Equator.
 
@@ -136,11 +142,15 @@ The pressure is given by the hydrostatic pressure $p(x,z) = \rho_\mathrm{ice} g(
 
 The outward force on a vertical slice at a distance $x$ from the middle and of a given width $\Delta y$ is obtained by integrating up the pressure times the area:
 
-$$F(x) = \Delta y \int_0^{H(x)} \rho_\mathrm{ice}\, g\, (H(x) - z)\, \mathrm{d}z = \frac{1}{2}\,\Delta y\, \rho_\mathrm{ice}\, g\, H(x)^2$$
+$$
+F(x) = \Delta y \int_0^{H(x)} \rho_\mathrm{ice}\, g\, (H(x) - z)\, \mathrm{d}z = \frac{1}{2}\,\Delta y\, \rho_\mathrm{ice}\, g\, H(x)^2
+$$
 
 which implies that $\Delta F = F(x) - F(x + \Delta x) = -\frac{\mathrm{d}F}{\mathrm{d}x}\Delta x = -\Delta y\, \rho_\mathrm{ice}\, g\, H(x)\frac{\mathrm{d}H}{\mathrm{d}x}\Delta x$. This finally shows that
 
-$$S_\mathrm{b} = \frac{\Delta F}{\Delta x\Delta y} = -\,\rho_\mathrm{ice}\, g\, H(x)\frac{\mathrm{d}H}{\mathrm{d}x}$$
+$$
+S_\mathrm{b} = \frac{\Delta F}{\Delta x\Delta y} = -\,\rho_\mathrm{ice}\, g\, H(x)\frac{\mathrm{d}H}{\mathrm{d}x}
+$$
 
 Notice the sign, which must be like this, since $S_b$ was defined as positive and $H(x)$ is a decreasing function of $x$.
 
@@ -148,21 +158,29 @@ Notice the sign, which must be like this, since $S_b$ was defined as positive an
 
 To find the height profile, we solve the differential equation for $H(x)$:
 
-$$-\frac{S_\mathrm{b}}{\rho_\mathrm{ice}\, g} = H(x)\frac{\mathrm{d}H}{\mathrm{d}x} = \frac{1}{2}\frac{\mathrm{d}}{\mathrm{d}x}H(x)^2$$
+$$
+-\frac{S_\mathrm{b}}{\rho_\mathrm{ice}\, g} = H(x)\frac{\mathrm{d}H}{\mathrm{d}x} = \frac{1}{2}\frac{\mathrm{d}}{\mathrm{d}x}H(x)^2
+$$
 
 with the boundary condition that $H(L) = 0$. This gives the solution:
 
-$$H(x) = \sqrt{\frac{2S_bL}{\rho_\mathrm{ice}\, g}}\sqrt{1 - x/L}$$
+$$
+H(x) = \sqrt{\frac{2S_bL}{\rho_\mathrm{ice}\, g}}\sqrt{1 - x/L}
+$$
 
 Which gives the maximum height $H_\mathrm{m} = \sqrt{\frac{2S_bL}{\rho_\mathrm{ice}\, g}}$.
 
 Alternatively, dimensional analysis could be used in the following manner. First notice that $\mathcal{L} = [H_\mathrm{m}] = \left[\rho_\mathrm{ice}^{\alpha}\, g^{\beta}\tau_\mathrm{b}^{\gamma}L^{\delta}\right]$. Using that $[\rho_{\rho_\mathrm{ice}}] = \mathcal{M}\mathcal{L}^{-3}$, $[g] = \mathcal{L}\,\mathcal{T}^{-2}$, $[\tau_b] = \mathcal{M}\mathcal{L}^{-1}\,\mathcal{T}^{-2}$, demands that $\mathcal{L} = [H_\mathrm{m}] = [\rho_i{}^{\alpha} g^{\beta}\tau_b{}^{\gamma}L^{\delta}] = \mathcal{M}^{\alpha+\gamma}\mathcal{L}^{-3\alpha+\beta-\gamma+\delta}\,\mathcal{T}^{-2\beta-2\gamma}$, which again implies $\alpha + \gamma = 0$, $-3\alpha + \beta - \gamma + \delta = 1$, $2\beta + 2\gamma = 0$. These three equations are solved to give $\alpha = \beta = -\gamma = \delta - 1$, which shows that
 
-$$H_\mathrm{m} \propto \left(\frac{S_\mathrm{b}}{\rho_{\rho_\mathrm{ice}} g}\right)^{\gamma} L^{1-\gamma}$$
+$$
+H_\mathrm{m} \propto \left(\frac{S_\mathrm{b}}{\rho_{\rho_\mathrm{ice}} g}\right)^{\gamma} L^{1-\gamma}
+$$
 
 Since we were informed that $H_\mathrm{m} \propto \sqrt{L}$, it follows that $\gamma = 1/2$. With the boundary condition $H(L) = 0$, the solution then take the form
 
-$$H(x) \propto \left(\frac{S_\mathrm{b}}{\rho_\mathrm{ice}\ g}\right)^{1/2} \sqrt{L - x}$$
+$$
+H(x) \propto \left(\frac{S_\mathrm{b}}{\rho_\mathrm{ice}\ g}\right)^{1/2} \sqrt{L - x}
+$$
 
 The proportionality constant of $\sqrt{2}$ cannot be determined in this approach.
 
@@ -170,7 +188,9 @@ The proportionality constant of $\sqrt{2}$ cannot be determined in this approach
 
 For the rectangular Greenland model, the area is equal to $A = 10L^2$ and the volume is found by integrating up the height profile found in problem 3.2b:
 
-$$\begin{aligned} V_\mathrm{G,ice} &= (5L)2\int_0^L H(x)\,\mathrm{d}x = 10L\int_0^L \left(\frac{\tau_\mathrm{b}\,L}{\rho_\mathrm{ice}\,g}\right)^{1/2}\sqrt{1 - x/L}\,\mathrm{d}x = 10H_\mathrm{m}L^2\int_0^1\sqrt{1 - \tilde{x}}\,\mathrm{d}\tilde{x} \\ &= 10H_\mathrm{m}L^2\left[-\frac{2}{3}(1 - \tilde{x})^{3/2}\right]_0^1 = \frac{20}{3}H_\mathrm{m}L^2 \propto L^{5/2}, \end{aligned}$$
+$$
+\begin{aligned} V_\mathrm{G,ice} &= (5L)2\int_0^L H(x)\,\mathrm{d}x = 10L\int_0^L \left(\frac{\tau_\mathrm{b}\,L}{\rho_\mathrm{ice}\,g}\right)^{1/2}\sqrt{1 - x/L}\,\mathrm{d}x = 10H_\mathrm{m}L^2\int_0^1\sqrt{1 - \tilde{x}}\,\mathrm{d}\tilde{x} \\ &= 10H_\mathrm{m}L^2\left[-\frac{2}{3}(1 - \tilde{x})^{3/2}\right]_0^1 = \frac{20}{3}H_\mathrm{m}L^2 \propto L^{5/2}, \end{aligned}
+$$
 
 where the last line follows from the fact that $H_\mathrm{m} \propto \sqrt{L}$. Note that the integral need not be carried out to find the scaling with $L$. This implies that $V_\mathrm{G,ice} \propto {A_G}^{5/4}$ and the wanted exponent is $\gamma = 5/4$.
 
@@ -178,31 +198,43 @@ where the last line follows from the fact that $H_\mathrm{m} \propto \sqrt{L}$. 
 
 According to the assumption of constant accumulation c the total mass accumulation rate from an area of width $\Delta y$ between the ice divide at $x = 0$ and some point at $x > 0$ must equal the total mass flux through the corresponding vertical cross section at $x$. That is: $\rho c x\Delta y = \rho\Delta y H_\mathrm{m} v_x(x)$, from which the velocity is isolated:
 
-$$v_x(x) = \frac{cx}{H_\mathrm{m}}$$
+$$
+v_x(x) = \frac{cx}{H_\mathrm{m}}
+$$
 
 **3.4** [0.6]
 
 From the given relation of incompressibility it follows that
 
-$$\frac{\mathrm{d}v_z}{\mathrm{d}z} = -\frac{\mathrm{d}v_x}{\mathrm{d}x} = -\frac{c}{H_\mathrm{m}}$$
+$$
+\frac{\mathrm{d}v_z}{\mathrm{d}z} = -\frac{\mathrm{d}v_x}{\mathrm{d}x} = -\frac{c}{H_\mathrm{m}}
+$$
 
 Solving this differential equation with the initial condition $v_z(0) = 0$, shows that:
 
-$$v_z(z) = -\frac{cz}{H_\mathrm{m}}$$
+$$
+v_z(z) = -\frac{cz}{H_\mathrm{m}}
+$$
 
 **3.5** [0.9]
 
 Solving the two differential equations
 
-$$\frac{\mathrm{d}z}{\mathrm{d}t} = -\frac{cz}{H_\mathrm{m}} \quad\text{and}\quad \frac{\mathrm{d}x}{\mathrm{d}t} = \frac{cx}{H_\mathrm{m}}$$
+$$
+\frac{\mathrm{d}z}{\mathrm{d}t} = -\frac{cz}{H_\mathrm{m}} \quad\text{and}\quad \frac{\mathrm{d}x}{\mathrm{d}t} = \frac{cx}{H_\mathrm{m}}
+$$
 
 with the initial conditions that $z(0) = H_\mathrm{m}$, and $x(0) = x_i$ gives
 
-$$z(t) = H_\mathrm{m}\,\mathrm{e}^{-ct/H_\mathrm{m}} \quad\text{and}\quad x(t) = x_i\,\mathrm{e}^{ct/H_\mathrm{m}}$$
+$$
+z(t) = H_\mathrm{m}\,\mathrm{e}^{-ct/H_\mathrm{m}} \quad\text{and}\quad x(t) = x_i\,\mathrm{e}^{ct/H_\mathrm{m}}
+$$
 
 This shows that $z = H_\mathrm{m}\,x_i/x$, meaning that flow lines are hyperbolas in the $xz$-plane. Rather than solving the differential equations, one can also use them to show that
 
-$$\frac{\mathrm{d}}{\mathrm{d}t}(xz) = \frac{\mathrm{d}x}{\mathrm{d}t}z + x\frac{\mathrm{d}z}{\mathrm{d}t} = \frac{cx}{H_\mathrm{m}}z - x\frac{cz}{H_\mathrm{m}} = 0$$
+$$
+\frac{\mathrm{d}}{\mathrm{d}t}(xz) = \frac{\mathrm{d}x}{\mathrm{d}t}z + x\frac{\mathrm{d}z}{\mathrm{d}t} = \frac{cx}{H_\mathrm{m}}z - x\frac{cz}{H_\mathrm{m}} = 0
+$$
 
 which again implies that $xz = \mathrm{const}$. Fixing the constant by the initial conditions, again leads to the result that $z = H_\mathrm{m}x_i/x$.
 
@@ -214,11 +246,15 @@ At the ice divide, $x = 0$, the flow will be completely vertical, and the $t$-de
 
 The present interglacial period extends to a depth of 1492 m, corresponding to 11,700 year. Using the formula for $\tau(z)$from problem 3.6, one finds the following accumulation rate for the interglacial:
 
-$$c_\mathrm{ig} = \frac{H_\mathrm{m}}{11{,}700\ \mathrm{years}}\ln\left(\frac{H_\mathrm{m}}{H_\mathrm{m} - 1492\ \mathrm{m}}\right) = 0.1749\ \mathrm{m/year}.$$
+$$
+c_\mathrm{ig} = \frac{H_\mathrm{m}}{11{,}700\ \mathrm{years}}\ln\left(\frac{H_\mathrm{m}}{H_\mathrm{m} - 1492\ \mathrm{m}}\right) = 0.1749\ \mathrm{m/year}.
+$$
 
 The beginning of the ice age 120,000 years ago is identified as the drop in $\delta^{18}\mathrm{O}$ in figure 3.2b at a depth of 3040 m. Using the vertical flow velocity found in problem 3.4, on has $\frac{\mathrm{d}z}{z} = -\frac{c}{H_\mathrm{m}}\mathrm{d}t$, which can be integrated down to a depth of 3040 m, using a stepwise constant accumulation rate:
 
-$$\begin{aligned} H_\mathrm{m}\ln\left(\frac{H_\mathrm{m}}{H_\mathrm{m} - 3040\ \mathrm{m}}\right) &= -H_\mathrm{m}\int_{H_\mathrm{m}}^{H_\mathrm{m} - 3040\ \mathrm{m}}\frac{1}{z}\,\mathrm{d}z \\ &= \int_{11{,}700\ \mathrm{year}}^{120{,}000\ \mathrm{year}} c_\mathrm{ia}\,\mathrm{d}t + \int_0^{11{,}700\ \mathrm{year}} c_\mathrm{ig}\,\mathrm{d}t \\ &= c_\mathrm{ia}(120{,}000\ \mathrm{year}\text{-}11{,}700\ \mathrm{year}) + c_\mathrm{ig}\,11{,}700\ \mathrm{year} \end{aligned}$$
+$$
+\begin{aligned} H_\mathrm{m}\ln\left(\frac{H_\mathrm{m}}{H_\mathrm{m} - 3040\ \mathrm{m}}\right) &= -H_\mathrm{m}\int_{H_\mathrm{m}}^{H_\mathrm{m} - 3040\ \mathrm{m}}\frac{1}{z}\,\mathrm{d}z \\ &= \int_{11{,}700\ \mathrm{year}}^{120{,}000\ \mathrm{year}} c_\mathrm{ia}\,\mathrm{d}t + \int_0^{11{,}700\ \mathrm{year}} c_\mathrm{ig}\,\mathrm{d}t \\ &= c_\mathrm{ia}(120{,}000\ \mathrm{year}\text{-}11{,}700\ \mathrm{year}) + c_\mathrm{ig}\,11{,}700\ \mathrm{year} \end{aligned}
+$$
 
 Isolating form this equation leads to $c_\mathrm{ia} = 0.1232$, i.e. far less precipitation than now.
 
@@ -230,7 +266,9 @@ Reading off from figure 3.2b: $\delta^{18}\mathrm{O}$ changes from $-43{,}5$ ‰
 
 From the area $A_\mathrm{G}$ one finds that $L = \sqrt{A_\mathrm{G}/10} = 4.14 \times 10^5\ \mathrm{m}$. Inserting numbers in the volume formula found in 3.2c, one finds that:
 
-$$V_\mathrm{G,ice} = \frac{20}{3}L^{5/2}\sqrt{\frac{2S_\mathrm{b}}{\rho_\mathrm{ice}g}} = 3.45 \times 10^{15}\ \mathrm{m}^3$$
+$$
+V_\mathrm{G,ice} = \frac{20}{3}L^{5/2}\sqrt{\frac{2S_\mathrm{b}}{\rho_\mathrm{ice}g}} = 3.45 \times 10^{15}\ \mathrm{m}^3
+$$
 
 This ice volume must be converted to liquid water volume, by equating the total masses, i.e. $V_\mathrm{G,wa} = V_\mathrm{G,ice}\frac{\rho_\mathrm{ice}}{\rho_\mathrm{wa}} = 3.17 \times 10^{15}\ \mathrm{m}^3$, which is finally converted to a sea level rise, as $h_\mathrm{G,rise} = \frac{V_\mathrm{G,wa}}{A_\mathrm{o}} = 8.79\ \mathrm{m}$.
 
@@ -238,19 +276,27 @@ This ice volume must be converted to liquid water volume, by equating the total 
 
 The total mass of the ice is
 
-$$M_\mathrm{ice} = V_\mathrm{G,ice}\,\rho_\mathrm{ice} = 3.17 \times 10^{18}\ \mathrm{kg} = 5.31 \times 10^{-7}m_\mathrm{E}$$
+$$
+M_\mathrm{ice} = V_\mathrm{G,ice}\,\rho_\mathrm{ice} = 3.17 \times 10^{18}\ \mathrm{kg} = 5.31 \times 10^{-7}m_\mathrm{E}
+$$
 
 The total gravitational potential felt by a test mass $m$ at a certain height $h$ above the surface of the Earth, and at a polar angle $\theta$ (cf. figure 3.S1), with respect to a rotated polar axis going straight through the ice sphere is found by adding that from the Earth with that from the ice:
 
-$$U_\mathrm{tot} = -\frac{Gm_\mathrm{E}m}{R_\mathrm{E} + h} - \frac{GM_\mathrm{ice}m}{r} = -mgR_E\left(\frac{1}{1 + h/R_E} + \frac{M_{ice}/m_E}{r/R_E}\right)$$
+$$
+U_\mathrm{tot} = -\frac{Gm_\mathrm{E}m}{R_\mathrm{E} + h} - \frac{GM_\mathrm{ice}m}{r} = -mgR_E\left(\frac{1}{1 + h/R_E} + \frac{M_{ice}/m_E}{r/R_E}\right)
+$$
 
 where $g = Gm_E/R_E^2$. Since $h/R_\mathrm{E} \ll 1$ one may use the approximation given in the problem, $(1 + \mathrm{x})^{-1} \approx 1 - x$, $|x| \ll 1$, to approximate this by
 
-$$U_\mathrm{tot} \approx -mgR_E\left(1 - \frac{h}{R_E} + \frac{M_{ice}/m_E}{r/R_E}\right).$$
+$$
+U_\mathrm{tot} \approx -mgR_E\left(1 - \frac{h}{R_E} + \frac{M_{ice}/m_E}{r/R_E}\right).
+$$
 
 Isolating $h$ now shows that $h = h_0 + \frac{M_{ice}/m_E}{r/R_E}R_E$, where $h_0 = R_E + U_\mathrm{tot}/(mg)$. Using again that $h/R_\mathrm{E} \ll 1$, trigonometry shows that $r \approx 2R_\mathrm{E}|\sin(\theta/2)|$, and one has:
 
-$$h(\theta) - h_0 \approx \frac{M_\mathrm{ice}/m_\mathrm{E}}{2|\sin(\theta/2)|}R_E \approx \frac{1.69\ \mathrm{m}}{|\sin(\theta/2)|}.$$
+$$
+h(\theta) - h_0 \approx \frac{M_\mathrm{ice}/m_\mathrm{E}}{2|\sin(\theta/2)|}R_E \approx \frac{1.69\ \mathrm{m}}{|\sin(\theta/2)|}.
+$$
 
 To find the magnitude of the effect in Copenhagen, the distance of 3500 km along the surface is used to find the angle $\theta_\mathrm{CPH} = (3.5 \times 10^6\ \mathrm{m})/R_E \approx 0.549$, corresponding to $h_\mathrm{CPH} - h_0 \approx 6.25$ m. Directly opposite to Greenland corresponds to $\theta = \pi$, which gives $h_\mathrm{OPP} - h_0 \approx 1.69$ m. The difference is then $h_\mathrm{CPH} - h_\mathrm{OPP} \approx 4.56$ m, where $h_0$ has dropped out.
 
@@ -258,27 +304,39 @@ To find the magnitude of the effect in Copenhagen, the distance of 3500 km along
 
 This problem can also be solved using forces. The basic equations for mechanical equilibrium of the test particle is then a simple matter of balancing the two gravitational forces, $\vec{F}_E$ and $\vec{F}_G$, with the reaction force from the Earth, $\vec{F}_R$. Given the angles indicated in Figure 3.S2, the force balance along locally vertical and horizontal directions, respectively, read
 
-$$F_E + F_G\cos(\delta) = F_R\cos(\varphi)$$
+$$
+F_E + F_G\cos(\delta) = F_R\cos(\varphi)
+$$
 
 and
 
-$$F_G\sin(\delta) = F_R\sin(\varphi)$$
+$$
+F_G\sin(\delta) = F_R\sin(\varphi)
+$$
 
 which can be divided to obtain (using that $\delta = \pi/2 - \theta/2$):
 
-$$\begin{aligned} \tan(\varphi) &= \frac{F_G\sin(\delta)}{F_E + F_G\cos(\delta)} \\ &= \frac{F_G}{F_E}\cos(\theta/2)\frac{1}{1 + (F_G/F_E)\sin(\theta/2)} \\ &\approx \frac{F_G}{F_E}\cos(\theta/2) \\ &= \frac{M_{ice}/m_E}{(r/R_E)^2}\cos(\theta/2) \\ &= \frac{M_{ice}/m_E}{4\sin^2(\theta/2)}\cos(\theta/2) \end{aligned}$$
+$$
+\begin{aligned} \tan(\varphi) &= \frac{F_G\sin(\delta)}{F_E + F_G\cos(\delta)} \\ &= \frac{F_G}{F_E}\cos(\theta/2)\frac{1}{1 + (F_G/F_E)\sin(\theta/2)} \\ &\approx \frac{F_G}{F_E}\cos(\theta/2) \\ &= \frac{M_{ice}/m_E}{(r/R_E)^2}\cos(\theta/2) \\ &= \frac{M_{ice}/m_E}{4\sin^2(\theta/2)}\cos(\theta/2) \end{aligned}
+$$
 
 where we have plugged in the gravitational forces and the relevant distances. We have also approximated the fraction, using that $M_{ice}/m_E = 5.31 \times 10^{-7} \ll 1$, which is only valid not too close to Greenland, i.e. for a certain size of $\theta$. Since the local sea surface will be perpendicular to the reaction force, it is seen from figure 3.S2 that
 
-$$\tan(\varphi) = \frac{\mathrm{d}h}{\mathrm{d}x} = \frac{\mathrm{d}h}{\mathrm{d}\theta}\frac{\mathrm{d}\theta}{\mathrm{d}x} = \frac{1}{R_E}\frac{\mathrm{d}h}{\mathrm{d}\theta}$$
+$$
+\tan(\varphi) = \frac{\mathrm{d}h}{\mathrm{d}x} = \frac{\mathrm{d}h}{\mathrm{d}\theta}\frac{\mathrm{d}\theta}{\mathrm{d}x} = \frac{1}{R_E}\frac{\mathrm{d}h}{\mathrm{d}\theta}
+$$
 
 whereby
 
-$$\frac{\mathrm{d}h}{\mathrm{d}\theta} = R_E\frac{M_{ice}/m_E}{4\sin^2(\theta/2)}\cos(\theta/2)$$
+$$
+\frac{\mathrm{d}h}{\mathrm{d}\theta} = R_E\frac{M_{ice}/m_E}{4\sin^2(\theta/2)}\cos(\theta/2)
+$$
 
 The difference in sea levels in Copenhagen and opposite to Greenland can now be obtained by integrating this expression. That is
 
-$$\begin{aligned} h_\mathrm{CPH} - h_\mathrm{OPP} &= R_E\frac{M_{ice}}{m_E}\int_{\pi}^{\theta_{CPH}}\frac{\cos(\theta/2)}{4\sin^2(\theta/2)}\,\mathrm{d}\theta \\ &= R_E\frac{M_{ice}}{2\,m_E}\int_1^{\sin(\theta_{CPH}/2)}\mathrm{q}^{-2}\,\mathrm{d}q \\ &= R_E\frac{M_{ice}}{2\,m_E}\left(\frac{1}{\sin(\theta_{CPH}/2)} - 1\right) \end{aligned}$$
+$$
+\begin{aligned} h_\mathrm{CPH} - h_\mathrm{OPP} &= R_E\frac{M_{ice}}{m_E}\int_{\pi}^{\theta_{CPH}}\frac{\cos(\theta/2)}{4\sin^2(\theta/2)}\,\mathrm{d}\theta \\ &= R_E\frac{M_{ice}}{2\,m_E}\int_1^{\sin(\theta_{CPH}/2)}\mathrm{q}^{-2}\,\mathrm{d}q \\ &= R_E\frac{M_{ice}}{2\,m_E}\left(\frac{1}{\sin(\theta_{CPH}/2)} - 1\right) \end{aligned}
+$$
 
 where we have made the substitution $q = \sin(\theta/2)$. Plugging in the numbers found above, we obtain again $h_\mathrm{CPH} - h_\mathrm{OPP} \approx 4.56$. Note that this solution strategy necessarily involves consideration of tangential force components alongside with the radial components.
 

@@ -17,7 +17,9 @@ Thermal atmospheric escape is a process in which small gas molecules reach speed
 
 In this problem we will quantify the scattering (collisions between gas particles) and rate of loss of hydrogen in Earths atmosphere. The modulus and direction velocity distribution of the molecules of a gas of mass $m$ and at a temperature $T$ is given by the Maxwellian distribution:
 
-$$f(v)d^3v = \left(\frac{m}{2\pi kT}\right)^{\frac{3}{2}} \exp\left(-\frac{mv^2}{2kT}\right)\ v^2\ \sin(\theta)\ dvd\theta d\varphi \qquad (1)$$
+$$
+f(v)d^3v = \left(\frac{m}{2\pi kT}\right)^{\frac{3}{2}} \exp\left(-\frac{mv^2}{2kT}\right)\ v^2\ \sin(\theta)\ dvd\theta d\varphi \qquad (1)
+$$
 
 where $d^3v$ is the velocity differential. In spherical coordinates it is expressed as $d^3v = v^2\ \sin(\theta)\ dvd\theta d\varphi$.
 
@@ -27,11 +29,15 @@ Thus at any temperature there can always be some molecules whose velocity is gre
 
 Exobase is defined as the height above which a radially outward moving particle will suffer less than one backscattering collision on average. This means that the mean free path has to be equal to the scale height, which is defined as the height where the atmospheres density is $\frac{1}{e}$ lower than on Earths surface ($R_E = 6.37 \times 10^6 m$). The mean free path $\lambda$ is the average distance covered by a moving particle in a gas (that we consider to be ideal) between two consecutive collisions and this can be expressed by the following equality:
 
-$$\lambda(h) = \frac{1}{\sigma n_V(h)}\ , \qquad (2)$$
+$$
+\lambda(h) = \frac{1}{\sigma n_V(h)}\ , \qquad (2)
+$$
 
 where $\sigma$ is the effective cross sectional area for the collision hydrogen atom-atmosphere $\sigma = 2 \times 10^{-19} m^2$ and $n_V$ is the number of molecules per unit volume. Atmospheres density decreases with exponentially from altitude $250\ km$:
 
-$$P(h) = P_{Ref} exp\left(-\frac{(h - h_{Ref})}{H}\right)\ , \qquad (3)$$
+$$
+P(h) = P_{Ref} exp\left(-\frac{(h - h_{Ref})}{H}\right)\ , \qquad (3)
+$$
 
 where we know that at an altitude of $250\ km$, the pressure is $21\ \mu$ Pa. $H$ is the scale height, and its value is $H = 60\ km$.
 
@@ -103,11 +109,15 @@ Jeans escape is not the only atmospheric escape process and there are also other
 
 *(a)* By integration with respect to $\varphi$ between $-\pi$ and $\pi$ and with respect to $\theta$ between $0$ and $\pi$ (these are the domains of the respective angular variables) we get the following distribution for the modulus of the velocity:
 
-$$w(v)\mathrm{d}v = \left(\frac{m}{2\pi kT}\right)^{3/2} \exp\left(-\frac{mv^2}{2kT}\right) v^2\mathrm{d}v \cdot 2\pi \cdot 2 = \sqrt{\frac{2m^3}{\pi k^3 T^3}} \exp\left(-\frac{mv^2}{2kT}\right) v^2\mathrm{d}v.$$
+$$
+w(v)\mathrm{d}v = \left(\frac{m}{2\pi kT}\right)^{3/2} \exp\left(-\frac{mv^2}{2kT}\right) v^2\mathrm{d}v \cdot 2\pi \cdot 2 = \sqrt{\frac{2m^3}{\pi k^3 T^3}} \exp\left(-\frac{mv^2}{2kT}\right) v^2\mathrm{d}v.
+$$
 
 The probability of the velocity being more than a given value $V$ is the integral $\int_{v=V}^{\infty} w(v)\mathrm{d}v$. Consequently, the requested probability is
 
-$$P = \sqrt{\frac{2m^3}{\pi k^3 T^3}} \int_{v=v_{\mathrm{esc}}}^{\infty} \exp\left(-\frac{mv^2}{2kT}\right) v^2\mathrm{d}v = 2.589 \cdot 10^{-3},$$
+$$
+P = \sqrt{\frac{2m^3}{\pi k^3 T^3}} \int_{v=v_{\mathrm{esc}}}^{\infty} \exp\left(-\frac{mv^2}{2kT}\right) v^2\mathrm{d}v = 2.589 \cdot 10^{-3},
+$$
 
 using the numeric values of $v_{\mathrm{esc}} = \sqrt{2GM_{\mathrm{Earth}}/(R_{\mathrm{Earth}} + h_{\mathrm{EB}})} = 1.084 \cdot 10^4\ \mathrm{m/s}$, $m = 1.008\ \mathrm{u}$, $k = 1.381 \cdot 10^{-23}\ \mathrm{J/K}$ and $T = 1000\ \mathrm{K}$.
 
@@ -117,19 +127,27 @@ Now we calculate the volume out of which a particle with velocity $\mathbf{v}$ c
 
 The number of hydrogen atoms in this volume is $\mathrm{d}^2N = n_{\mathrm{H}} v\cos\theta \cdot \mathrm{d}A\mathrm{d}t$ and according to the Maxwellian distribution, the number of atoms having a velocity vector $\mathbf{v}$ among them is:
 
-$$\begin{aligned} \mathrm{d}^5N_{\mathbf{v}} &= \mathrm{d}^2N \cdot f(\mathbf{v})\mathrm{d}^3\mathbf{v} = \left(\frac{m}{2\pi kT}\right)^{3/2} \exp\left(-\frac{mv^2}{2kT}\right) v^2 \sin\theta\mathrm{d}v\mathrm{d}\theta\mathrm{d}\varphi \cdot n_{\mathrm{H}} v\cos\theta\mathrm{d}A\mathrm{d}t = \\ &= n_{\mathrm{H}} \left(\frac{m}{2\pi kT}\right)^{3/2} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v \cdot \sin\theta\cos\theta\mathrm{d}\theta \cdot \mathrm{d}\varphi \cdot \mathrm{d}A\mathrm{d}t. \end{aligned}$$
+$$
+\begin{aligned} \mathrm{d}^5N_{\mathbf{v}} &= \mathrm{d}^2N \cdot f(\mathbf{v})\mathrm{d}^3\mathbf{v} = \left(\frac{m}{2\pi kT}\right)^{3/2} \exp\left(-\frac{mv^2}{2kT}\right) v^2 \sin\theta\mathrm{d}v\mathrm{d}\theta\mathrm{d}\varphi \cdot n_{\mathrm{H}} v\cos\theta\mathrm{d}A\mathrm{d}t = \\ &= n_{\mathrm{H}} \left(\frac{m}{2\pi kT}\right)^{3/2} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v \cdot \sin\theta\cos\theta\mathrm{d}\theta \cdot \mathrm{d}\varphi \cdot \mathrm{d}A\mathrm{d}t. \end{aligned}
+$$
 
 Integration with respect to $\theta$ between $0$ and $\pi/2$ (since only the upward moving particles are interesting now) and with respect to $\varphi$ between $-\pi$ and $\pi$ gives the following number-of-atoms differential:
 
-$$\mathrm{d}^3N_v = n_{\mathrm{H}} \left(\frac{m}{2\pi kT}\right)^{3/2} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v \cdot \frac{1}{2} \cdot 2\pi \cdot \mathrm{d}A\mathrm{d}t = n_{\mathrm{H}} \sqrt{\frac{m^3}{8\pi k^3 T^3}} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v\mathrm{d}A\mathrm{d}t.$$
+$$
+\mathrm{d}^3N_v = n_{\mathrm{H}} \left(\frac{m}{2\pi kT}\right)^{3/2} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v \cdot \frac{1}{2} \cdot 2\pi \cdot \mathrm{d}A\mathrm{d}t = n_{\mathrm{H}} \sqrt{\frac{m^3}{8\pi k^3 T^3}} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v\mathrm{d}A\mathrm{d}t.
+$$
 
 So many atoms of velocity between $v$ and $v + \mathrm{d}v$ will leave through the area $\mathrm{d}A$ in time $\mathrm{d}t$. Therefore, the differential of the flux, which is the number of atoms going through unit surface in unit time is
 
-$$\mathrm{d}\Phi = \frac{\mathrm{d}^3N_v}{\mathrm{d}A\mathrm{d}t} = n_{\mathrm{H}} \sqrt{\frac{m^3}{8\pi k^3 T^3}} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v.$$
+$$
+\mathrm{d}\Phi = \frac{\mathrm{d}^3N_v}{\mathrm{d}A\mathrm{d}t} = n_{\mathrm{H}} \sqrt{\frac{m^3}{8\pi k^3 T^3}} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v.
+$$
 
 The flux of escaping atoms is the integral of this flux differential between $v_{\mathrm{esc}}$ and $\infty$:
 
-$$\Phi = n_{\mathrm{H}} \sqrt{\frac{m^3}{8\pi k^3 T^3}} \int_{v=v_{\mathrm{esc}}}^{\infty} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v = 7.504 \cdot 10^{11}\ \frac{1}{\mathrm{m}^2\mathrm{s}}$$
+$$
+\Phi = n_{\mathrm{H}} \sqrt{\frac{m^3}{8\pi k^3 T^3}} \int_{v=v_{\mathrm{esc}}}^{\infty} \exp\left(-\frac{mv^2}{2kT}\right) v^3\mathrm{d}v = 7.504 \cdot 10^{11}\ \frac{1}{\mathrm{m}^2\mathrm{s}}
+$$
 
 with the same numeric values as above.
 
@@ -137,25 +155,37 @@ with the same numeric values as above.
 
 *(a)* The force acting on the surface of the Earth by the atmosphere is $F = P_0 \cdot A = P_0 \cdot 4\pi R_{\mathrm{Earth}}^2$ which obviously comes from the gravity acting on the atmosphere: $F = mg$, so $m = 4\pi R_{\mathrm{Earth}}^2 P_0/g$. The number of molecules in the atmosphere is therefore $N = N_{\mathrm{A}} \cdot m/M_{\mathrm{air}} = 1.115 \cdot 10^{44}$, so the number of hydrogen molecules is $N_{\mathrm{H2}} = \chi_{\mathrm{H}} N$, thus the number of hydrogen atoms is
 
-$$N_{\mathrm{H}} = 2\chi_{\mathrm{H}} \cdot N = 1.226 \cdot 10^{38}.$$
+$$
+N_{\mathrm{H}} = 2\chi_{\mathrm{H}} \cdot N = 1.226 \cdot 10^{38}.
+$$
 
 *(b)* As the concentration of hydrogen atoms won’t change at the exobase, the flux of escaping atoms is constant as well; for the total surface of Earth, the number of escaping atoms in unit time is $I_{\mathrm{H}} = \Phi \cdot 4\pi(R_{\mathrm{Earth}} + h_{\mathrm{EB}})^2 = 4.35 \cdot 10^{26}\ 1/\mathrm{s}$, so the time required for the evaporation of half of the hydrogen atmosphere is
 
-$$\tau_{\mathrm{H}} = \frac{N_{\mathrm{H}}/2}{I_{\mathrm{H}}} = 1.41 \cdot 10^{11}\ \mathrm{s} = 4465\ \text{years}.$$
+$$
+\tau_{\mathrm{H}} = \frac{N_{\mathrm{H}}/2}{I_{\mathrm{H}}} = 1.41 \cdot 10^{11}\ \mathrm{s} = 4465\ \text{years}.
+$$
 
 *(c)* Doing the integral as in Part 2b, but with the data $n_{\mathrm{He}} = 2.5 \cdot 10^{12}\ \mathrm{m}^{-3}$ and $m_{\mathrm{He}} = 4.0026\ \mathrm{u}$ we find $\Phi_{\mathrm{He}} = 2.190 \cdot 10^4\ \frac{1}{\mathrm{m}^2\mathrm{s}}$, thus $I_{\mathrm{He}} = \Phi_{\mathrm{He}} \cdot 4\pi(R_{\mathrm{Earth}} + h_{\mathrm{EB}})^2 = 1.27 \cdot 10^{19}\ 1/\mathrm{s}$. The number of helium atoms is $N_{\mathrm{He}} = N\chi_{\mathrm{He}} = 5.574 \cdot 10^{38}$. The atmospheric half-life of helium is thus
 
-$$\tau_{\mathrm{He}} = \frac{N_{\mathrm{He}}/2}{I_{\mathrm{He}}} = 2.19 \cdot 10^{19}\ \mathrm{s} = 6.95 \cdot 10^{11}\ \text{years}.$$
+$$
+\tau_{\mathrm{He}} = \frac{N_{\mathrm{He}}/2}{I_{\mathrm{He}}} = 2.19 \cdot 10^{19}\ \mathrm{s} = 6.95 \cdot 10^{11}\ \text{years}.
+$$
 
 *Remark.* The assumption that the concentration of atoms remains constant over the disappearing of a large part of those atoms is really weird. It’s more realistic to assume that the hydrogen concentration is proportional to the total number of hydrogen atoms. In this case, if the number of atoms at a moment is $N$, the intensity of evaporation is $I = N\frac{I_{\mathrm{H}}}{N_{\mathrm{H}}}$: it is easy to see, that this intensity is the negative time derivative of $N$, so we get the following differential equation:
 
-$$\dot{N} = -N\frac{I_{\mathrm{H}}}{N_{\mathrm{H}}} \to N(t) = N(0)\exp\left(-\frac{I_{\mathrm{H}}}{N_{\mathrm{H}}}t\right),$$
+$$
+\dot{N} = -N\frac{I_{\mathrm{H}}}{N_{\mathrm{H}}} \to N(t) = N(0)\exp\left(-\frac{I_{\mathrm{H}}}{N_{\mathrm{H}}}t\right),
+$$
 
 thus the half-life is
 
-$$\tau_{\mathrm{H}} = \ln 2\frac{N_{\mathrm{H}}}{I_{\mathrm{H}}} = 1.95 \cdot 10^{10}\ \mathrm{s} = 6190\ \text{years for hydrogen and}$$
+$$
+\tau_{\mathrm{H}} = \ln 2\frac{N_{\mathrm{H}}}{I_{\mathrm{H}}} = 1.95 \cdot 10^{10}\ \mathrm{s} = 6190\ \text{years for hydrogen and}
+$$
 
-$$\tau_{\mathrm{He}} = \ln 2\frac{N_{\mathrm{He}}}{I_{\mathrm{He}}} = 3.04 \cdot 10^{19}\ \mathrm{s} = 9.63 \cdot 10^{11}\ \text{years for helium.}$$
+$$
+\tau_{\mathrm{He}} = \ln 2\frac{N_{\mathrm{He}}}{I_{\mathrm{He}}} = 3.04 \cdot 10^{19}\ \mathrm{s} = 9.63 \cdot 10^{11}\ \text{years for helium.}
+$$
 
 We can see that the half-life in this case differs by a factor of $2\ln 2 = 1.38$, which is totally acceptable since with the roughly given input data we can only give an order-of-magnitude estimate and the sought effect is of 9 orders of magnitude, way larger than this factor.
 

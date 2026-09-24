@@ -17,11 +17,15 @@ This experiment is designed to investigate the electrical and thermal properties
 
 The LEDs typically are driven by the constant current in contrast to constant voltage used for incandescent lamps. The measured voltage of the LEDs depends on set current and temperature of the semiconductor die. The mathematical expression of volt-ampere characteristics is complicated and depends on physical and technological parameters, which are usually not known. Therefore, in this experiment the two-dimensional dependence of the voltage vs LED current and LED die temperature $T_{\mathrm{J}}$ will have to be investigated:
 
-$$U_{\mathrm{LED}} = \mathrm{function}(I_{\mathrm{LED}},\ T_{\mathrm{J}}).$$
+$$
+U_{\mathrm{LED}} = \mathrm{function}(I_{\mathrm{LED}},\ T_{\mathrm{J}}).
+$$
 
 The thermal resistance between the LED semiconductor die and the PCB is related to electrical power $P$ as follows (at several values of the current ($I_{\mathrm{LED}}$)):
 
-$$\frac{\Delta T}{P} = \frac{(T_{\mathrm{J}} - T_{\mathrm{PCB}})}{P}.$$
+$$
+\frac{\Delta T}{P} = \frac{(T_{\mathrm{J}} - T_{\mathrm{PCB}})}{P}.
+$$
 
 **Caution**: LED can be driven at continuous current or short current pulses. In the latter case it is assumed that the duration of the pulse is short enough to avoid the LED self-heating (for example 1 ms pulse duration with measurements spaced at least 100 ms apart), and to assume that $T_{\mathrm{J}} = T_{\mathrm{PCB}}$ at such driving regime. During the continuous operation $T_{\mathrm{J}} > T_{\mathrm{PCB}}$ and thermal resistance $\frac{\Delta T}{P}$ can be calculated.
 
@@ -29,7 +33,9 @@ $$\frac{\Delta T}{P} = \frac{(T_{\mathrm{J}} - T_{\mathrm{PCB}})}{P}.$$
 
 The physical mechanisms of the heating in both Experiment 1 and 2 are the same. Hence, you can use the result you obtained earlier in Experiment 1 to relate thermistor voltage with its temperature. Alternatively, you can use this explicit approximate relation:
 
-$$T(U) = \frac{3500}{9.9 - \ln(\frac{1}{U} - 0.3)},$$
+$$
+T(U) = \frac{3500}{9.9 - \ln(\frac{1}{U} - 0.3)},
+$$
 
 where $T$ is temperature of the thermistor, expressed in kelvins, and $U$ is voltage on the thermistor, expressed in volts.
 
@@ -156,7 +162,9 @@ The graph should have a clear linear trend and approximated graphically. Thermal
 
 The $I_{\mathrm{LED}}$ under constant $U_{\mathrm{LED}} = U_{\mathrm{20mA}}$ is calculated (estimated):
 
-$$I_{\mathrm{LED}}(U_{\mathrm{20mA}}, T) = 20\ \mathrm{mA} - (T - T_{\mathrm{PCB}}) \times \left(\frac{\Delta U(20\ \mathrm{mA}, T)}{\Delta T}\right) \times \frac{\mathrm{d}I(20\ \mathrm{mA}, U)}{\mathrm{d}U}.$$
+$$
+I_{\mathrm{LED}}(U_{\mathrm{20mA}}, T) = 20\ \mathrm{mA} - (T - T_{\mathrm{PCB}}) \times \left(\frac{\Delta U(20\ \mathrm{mA}, T)}{\Delta T}\right) \times \frac{\mathrm{d}I(20\ \mathrm{mA}, U)}{\mathrm{d}U}.
+$$
 
 To be accurate, we have to understand, that $\frac{\mathrm{d}I(20\ \mathrm{mA},U)}{\mathrm{d}U}$ from B.1 involves the temperature increase of the PCB with rising current, but there is no technical capabilities to perform the measurements at constant PCB temperature. Furthermore, since the current is decreasing significantly, application of the derivatives at 20 mA is not very accurate.
 

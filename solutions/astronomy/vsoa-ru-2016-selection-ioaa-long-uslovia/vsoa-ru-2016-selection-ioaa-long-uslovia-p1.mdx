@@ -56,55 +56,81 @@ verifier: 'mechanical'
 
 a) В этом пункте надо просто перевести параллаксы в расстояния и решить треугольник. В формуле для расстояния в числителе вместо 1 будет 0.5, т.к. большая полуось планеты в 2 раза меньше земной:
 
-$$\begin{aligned} d_{12} &= \frac{0.5}{\pi_2} = \frac{0.5}{0.05''} = 10\ \text{пк}\\ d_{31} &= \frac{0.5}{\pi_3} = \frac{0.5}{0.04''} = 12.5\ \text{пк}. \end{aligned}$$
+$$
+\begin{aligned} d_{12} &= \frac{0.5}{\pi_2} = \frac{0.5}{0.05''} = 10\ \text{пк}\\ d_{31} &= \frac{0.5}{\pi_3} = \frac{0.5}{0.04''} = 12.5\ \text{пк}. \end{aligned}
+$$
 
 Используя сферическую теорему косинусов, можно найти угол между звёздами 2 и 3 на небе первой:
 
-$$\varphi_1 = \arccos(\sin\delta_2\sin\delta_3 + \cos\delta_2\cos\delta_3\cos(\alpha_1 - \alpha_2)) \approx 73^{\circ}54'.$$
+$$
+\varphi_1 = \arccos(\sin\delta_2\sin\delta_3 + \cos\delta_2\cos\delta_3\cos(\alpha_1 - \alpha_2)) \approx 73^{\circ}54'.
+$$
 
 Теперь с помощью обычной теоремы косинусов найдём $d_{23}$:
 
-$$d_{23} = \sqrt{d_{12}^2 + d_{31}^2 - 2d_{12}d_{31}\cos\varphi_1} \approx 13.7\ \text{пк}.$$
+$$
+d_{23} = \sqrt{d_{12}^2 + d_{31}^2 - 2d_{12}d_{31}\cos\varphi_1} \approx 13.7\ \text{пк}.
+$$
 
 Оставшиеся два угла найдём с помощью теоремы синусов:
 
-$$\begin{aligned} \frac{d_{31}}{\sin\varphi_2} &= \frac{d_{23}}{\sin\varphi_1} \quad\Rightarrow\quad \varphi_2 = \arcsin\left(d_{31}\frac{\sin\varphi_1}{d_{23}}\right) \approx 61^{\circ}14'.\\ \frac{d_{12}}{\sin\varphi_3} &= \frac{d_{23}}{\sin\varphi_1} \quad\Rightarrow\quad \varphi_3 = \arcsin\left(d_{12}\frac{\sin\varphi_1}{d_{23}}\right) \approx 44^{\circ}32'. \end{aligned}$$
+$$
+\begin{aligned} \frac{d_{31}}{\sin\varphi_2} &= \frac{d_{23}}{\sin\varphi_1} \quad\Rightarrow\quad \varphi_2 = \arcsin\left(d_{31}\frac{\sin\varphi_1}{d_{23}}\right) \approx 61^{\circ}14'.\\ \frac{d_{12}}{\sin\varphi_3} &= \frac{d_{23}}{\sin\varphi_1} \quad\Rightarrow\quad \varphi_3 = \arcsin\left(d_{12}\frac{\sin\varphi_1}{d_{23}}\right) \approx 44^{\circ}32'. \end{aligned}
+$$
 
 b) На расстояниях порядка расстояний между звёздами для оценки можно считать, что гравитационный потенциал мал, и звездолёт движется равномерно и прямолинейно примерно с той же скоростью, что и на бесконечности. Вблизи звёзд его скорость резко возрастает, и он находится там не очень долго, поэтому для оценки продолжительности полёта с порядковой точностью этими моментами вполне допустимо пренебречь.
 
-$$t \approx \frac{d_{12} + d_{23} + d_{31}}{v_\infty} \approx 5\cdot 10^5\ \text{лет}.$$
+$$
+t \approx \frac{d_{12} + d_{23} + d_{31}}{v_\infty} \approx 5\cdot 10^5\ \text{лет}.
+$$
 
 c) По тем же причинам, что и в предыдущем пункте, можно считать, что вблизи каждой из звёзд звездолёт движется по гиперболе. Необходимо связать массу звезды, скорость на бесконечности и прицельное расстояние между собой. Заметим, что прямоугольные треугольники $OAP$ и $O\mathfrak{M}H$ равны по гипотенузе и углу. Это значит, что $b = q$. Значит,
 
-$$\operatorname{tg}\frac{\varphi}{2} = \frac{b}{a} = \frac{q}{a}.$$
+$$
+\operatorname{tg}\frac{\varphi}{2} = \frac{b}{a} = \frac{q}{a}.
+$$
 
 Выразим теперь большую полуось гиперболы через скорость. Запишем интеграл энергии:
 
-$$v = \sqrt{G\mathfrak{M}\left(\frac{2}{r} + \frac{1}{a}\right)}.$$
+$$
+v = \sqrt{G\mathfrak{M}\left(\frac{2}{r} + \frac{1}{a}\right)}.
+$$
 
 При $r \to \infty$ скорость стремится к $v_\infty = \sqrt{\dfrac{G\mathfrak{M}}{a}} \quad\Rightarrow\quad a = \dfrac{G\mathfrak{M}}{v_\infty^2} \quad\Rightarrow\quad \operatorname{tg}\dfrac{\varphi}{2} = \dfrac{qv_\infty^2}{G\mathfrak{M}}$, а значит,
 
-$$\mathfrak{M} = \frac{qv_\infty^2}{G}\operatorname{ctg}\frac{\varphi}{2}.$$
+$$
+\mathfrak{M} = \frac{qv_\infty^2}{G}\operatorname{ctg}\frac{\varphi}{2}.
+$$
 
 Используя эту формулу, находим
 
-$$\begin{aligned} \mathfrak{M}_1 &\approx 0.7\mathfrak{M}_\odot,\\ \mathfrak{M}_2 &\approx 0.9\mathfrak{M}_\odot,\\ \mathfrak{M}_3 &\approx 1.3\mathfrak{M}_\odot. \end{aligned}$$
+$$
+\begin{aligned} \mathfrak{M}_1 &\approx 0.7\mathfrak{M}_\odot,\\ \mathfrak{M}_2 &\approx 0.9\mathfrak{M}_\odot,\\ \mathfrak{M}_3 &\approx 1.3\mathfrak{M}_\odot. \end{aligned}
+$$
 
 d) Мы уже обладаем почти всеми данными, которые нам нужны. Найдём эксцентриситет гиперболы $\varepsilon$. Заметим, что
 
-$$\varepsilon = \frac{c}{a} = \frac{OA}{OP} = \frac{1}{\cos\frac{\varphi}{2}}.$$
+$$
+\varepsilon = \frac{c}{a} = \frac{OA}{OP} = \frac{1}{\cos\frac{\varphi}{2}}.
+$$
 
 При этом перигелийное расстояние
 
-$$\begin{aligned} p &= a(\varepsilon - 1) = q\operatorname{ctg}\frac{\varphi}{2}\left(\frac{1}{\cos\frac{\varphi}{2}} - 1\right) = q\cdot\frac{1 - \cos\frac{\varphi}{2}}{\sin\frac{\varphi}{2}} = \\ &= q\cdot\frac{1 - \dfrac{1 - \operatorname{tg}^2\frac{\varphi}{4}}{1 + \operatorname{tg}^2\frac{\varphi}{4}}}{\dfrac{\operatorname{tg}\frac{\varphi}{4}}{1 + \operatorname{tg}^2\frac{\varphi}{4}}} = q\operatorname{tg}\frac{\varphi}{4}. \end{aligned}$$
+$$
+\begin{aligned} p &= a(\varepsilon - 1) = q\operatorname{ctg}\frac{\varphi}{2}\left(\frac{1}{\cos\frac{\varphi}{2}} - 1\right) = q\cdot\frac{1 - \cos\frac{\varphi}{2}}{\sin\frac{\varphi}{2}} = \\ &= q\cdot\frac{1 - \dfrac{1 - \operatorname{tg}^2\frac{\varphi}{4}}{1 + \operatorname{tg}^2\frac{\varphi}{4}}}{\dfrac{\operatorname{tg}\frac{\varphi}{4}}{1 + \operatorname{tg}^2\frac{\varphi}{4}}} = q\operatorname{tg}\frac{\varphi}{4}. \end{aligned}
+$$
 
 Значит, оно будет минимальным у третьей звезды, т.к. $\varphi_3$ минимален. Теперь несложно его посчитать:
 
-$$p_3 = 0.1\cdot\operatorname{tg}\frac{44^{\circ}32'}{4} \approx 4.2R_\odot.$$
+$$
+p_3 = 0.1\cdot\operatorname{tg}\frac{44^{\circ}32'}{4} \approx 4.2R_\odot.
+$$
 
 Учитывая, что третья звезда несколько тяжелее Солнца, звездолёт и правда пролетит очень близко к поверхности звезды! Её радиус можно оценить следующим образом:
 
-$$R_3 \approx R_\odot\cdot\left(\frac{\mathfrak{M}}{\mathfrak{M}_\odot}\right)^{\frac{3.9}{5.2}} \approx 1.2R_\odot.$$
+$$
+R_3 \approx R_\odot\cdot\left(\frac{\mathfrak{M}}{\mathfrak{M}_\odot}\right)^{\frac{3.9}{5.2}} \approx 1.2R_\odot.
+$$
 
 Значит, он вряд ли зацепит поверхность. Тем не менее, инопланетным инженерам явно пришлось хорошо постараться ☺.
 

@@ -18,7 +18,9 @@ Task 6 solution continues beyond this window; Tab. 5, Figures 8 and 9 and the fi
 ## Условие
 
 Modern ANNs (artificial neural networks) are made of billions of neurons. Each neuron transforms its input(s) $x_1, x_2, \ldots, x_n$ to an output $y$. First,
-$$z = w_1x_1 + w_2x_2 + \cdots + w_nx_n + b$$
+$$
+z = w_1x_1 + w_2x_2 + \cdots + w_nx_n + b
+$$
 is calculated, with real numbered *weights* $w_i$ and real numbered *bias* $b$. Then an *activation function* is applied to $z$ to produce the final output $y(x_1, x_2, \ldots)$. In the present problem you will investigate a physical model of a neuron with the electric voltages $x_1$ and $x_2$ as inputs, with the activation function being $A\sigma(z)$, graphed below, where $\sigma(z) = 1/(1+\exp\,(-z))$ is called sigmoid function.
 
 **Equipment**
@@ -91,7 +93,9 @@ The multimeter is connected in an ohmmeter mode to the three possible pairs of o
 
 If the load resistor was connected to either A1 or A2, then the $R_{\min}$ for A1-A3 and A2-A3 pairs would close to zero, in contrast to measurements. Therefore the load resistor is connected between A3 and the potentiometer slider. In this case, for either of A1-A3 and A2-A3 pairs we have: $R_{\min} = R_L$ and $R_{\max} = R_P + R_L$ and
 
-$$R_L = 222\,\Omega \quad R_P = 1000\,\Omega$$
+$$
+R_L = 222\,\Omega \quad R_P = 1000\,\Omega
+$$
 
 | | Task 1 | Pts |
 |---|---|---|
@@ -118,15 +122,21 @@ The necessary connections are shown in Fig. 1.
 
 By turning the potentiometers’ knobs one can establish that the input voltages change independently between $0\,\mathrm{V}$ and $\approx 3.25\,\mathrm{V}$ (Note that due to the protection circuit inside the box, this voltage decreases slightly with connected circuitry). Therefore, any combination of input voltages could be mapped to a point inside the shaded square area in the $x_1-x_2$ plane, as shown in Fig 2. Points corresponding to a constant output voltage $y$ satisfy the equation:
 
-$$w_1 x_1 + w_2 x_2 + b = const,$$
+$$
+w_1 x_1 + w_2 x_2 + b = const,
+$$
 
 which defines a family of parallel straight lines, perpendicular to the vector $\vec{w} = (w_1, w_2)$ (see the dashed lines in Fig. 2). It is clear that for any set of weights, the maximum voltage $y_{\max}$ and the minimum voltage $y_{\min}$ are always met at the vertices of the rectangle. Therefore, only three corners need to be measured in order to determine the maximum voltage $y_{\max}$. First, two corners are measured, which are next to each other. Therefore, the maximum along the connecting edge can be found. Using the corner with the higher voltage, the other edge from that corner is followed to a third corner. Consequently, the highest voltage can be determined, as the fourth corner needs to be lower than the third measured corner. Table 1 summarizes the measurements of the output voltage at the four vertices. The maximum of the output voltage is:
 
-$$y_{\max} = 2.73\,\mathrm{V}$$
+$$
+y_{\max} = 2.73\,\mathrm{V}
+$$
 
 corresponding to the input voltages:
 
-$$x_1 = 0.00\,\mathrm{V}; \quad x_2 = 3.15\,\mathrm{V}.$$
+$$
+x_1 = 0.00\,\mathrm{V}; \quad x_2 = 3.15\,\mathrm{V}.
+$$
 
 Table 1: Output voltage at the vertices
 
@@ -156,19 +166,27 @@ Table 1: Output voltage at the vertices
 
 The three parameters could be determined in two series of measurements of the output voltage by setting each of the input voltages constant and changing the other input voltage. The dependence of the output voltage on $x_1$ and $x_2$ can be linearized by transforming $y$ to the auxiliary variable:
 
-$$z = \ln\frac{y}{A-y} \approx \ln\frac{y}{y_{\max}-y} \qquad (1)$$
+$$
+z = \ln\frac{y}{A-y} \approx \ln\frac{y}{y_{\max}-y} \qquad (1)
+$$
 
 since:
 
-$$z = w_1 x_1 + w_2 x_2 + b \qquad (2)$$
+$$
+z = w_1 x_1 + w_2 x_2 + b \qquad (2)
+$$
 
 Measurements close to the maximum output voltage should be avoided because of the large systematic error in calculated values of $z$ when approximating in equation (1) the unknown A with ymax. Therefore, the suitable set of measurements is along the path $(0,0)-(3,0)-(3,3)\,\mathrm{V}$ in the $x_1, x_2$-plane. Tables 2 and 3 summarize the results of measurements along the lines $(0,0)-(3,0)\,\mathrm{V}$ and $(3,0)-(3,3)\,\mathrm{V}$ respectively. The values of the variable $z$ calculated by means of (1) are shown in the last column of the tables. Figure 3 shows the data in Table 2 in variables $z$ and $x_1$ with the corresponding linear fit. The weight $w_1$ corresponds to the slope of the fitting line:
 
-$$w_1 = \frac{\Delta z}{\Delta x_1} = -0.62\,\mathrm{V}^{-1} \qquad (3)$$
+$$
+w_1 = \frac{\Delta z}{\Delta x_1} = -0.62\,\mathrm{V}^{-1} \qquad (3)
+$$
 
 Since $x_2 = 0.00\,\mathrm{V}$, the bias $b$ could be estimated by crossing point of the fitting line with the $z$-axis:
 
-$$b = 1.67 \qquad (4)$$
+$$
+b = 1.67 \qquad (4)
+$$
 
 Table 2: Measurements for $x_2 = 0.00\,\mathrm{V}$
 
@@ -206,15 +224,21 @@ Table 3: Measurements for $x_1 = 3.02\,\mathrm{V}$
 
 The data for $z$ and $x_2$ in Table 3, and the corresponding linear fit are shown in Figure 4. The slope of the fitting line gives the weight $w_2$:
 
-$$w_2 = \frac{\Delta z}{\Delta x_2} = 0.96\,\mathrm{V}^{-1} \qquad (5)$$
+$$
+w_2 = \frac{\Delta z}{\Delta x_2} = 0.96\,\mathrm{V}^{-1} \qquad (5)
+$$
 
 According to equation (2) the crossing point, -0,22, of the fitting line with $z$ axis at $x_1 = 3.02\,\mathrm{V}$ satisfies the equation
 
-$$-0.22 = w_1 x_1 + b = -1.87 + b \qquad (6)$$
+$$
+-0.22 = w_1 x_1 + b = -1.87 + b \qquad (6)
+$$
 
 Therefore, we obtain a second estimate for the bias $b = 1.65$. As a most likely estimate of $b$, the mean of the $b$-values obtained from the two graphs should be taken:
 
-$$b = 1.66 \pm 0.01 \qquad (7)$$
+$$
+b = 1.66 \pm 0.01 \qquad (7)
+$$
 
 | | Task 4 | Pts |
 |---|---|---|
@@ -252,15 +276,21 @@ Since X1 is connected to +V, the input voltage $x$ must somehow be supplied thro
 
 For this circuit, the input voltage $x$ is converted to $x_2$ via the following relation:
 
-$$x_2 = \frac{1}{2}x$$
+$$
+x_2 = \frac{1}{2}x
+$$
 
 Therefore, the intermediate function $z$ becomes
 
-$$z = w_1 U_{+V} + \frac{w_2}{2} x + b.$$
+$$
+z = w_1 U_{+V} + \frac{w_2}{2} x + b.
+$$
 
 This means that our new bias $b_5$ is the constant part, so
 
-$$b_5 = w_1 U_{+V} + b \approx -0.35.$$
+$$
+b_5 = w_1 U_{+V} + b \approx -0.35.
+$$
 
 Note that it is also possible and fully correct to connect the other end of the potentiometer to +V instead of the ground, which leads to the same effective weight but a different $b_5$ of approximately 1.2.
 
@@ -287,7 +317,9 @@ However, in this solution we only consider the case shown in Fig. 5. When the ci
 
 By linearization via the inverse activation function
 
-$$z = -\left(\ln\frac{A}{y} - 1\right)$$
+$$
+z = -\left(\ln\frac{A}{y} - 1\right)
+$$
 
 we can plot $z$ vs $x$ and determine the effective weight from the slope and the bias $b_5$ from the intercept, see Fig. 6.
 
@@ -317,33 +349,47 @@ a To determine the internal series output resistance $R_{out}$, we have (at leas
 
 Alternatively, we can set the neuron to a known open-circuit voltage $U_{\mathrm{open}}$ by connecting +V to X2, connect Y to ground via the potentiometer resistance $R_P$ and measure the voltage drop $U_{\mathrm{P}}$ over it. This is the safer version, in case we do not know how small $R_{\mathrm{out}}$ is and we prevent dangerous currents. We measure:
 
-$$U_{\mathrm{open}} \approx 2.71\,\mathrm{V}, \qquad U_{\mathrm{P}} \approx 2.11\,\mathrm{V}$$
+$$
+U_{\mathrm{open}} \approx 2.71\,\mathrm{V}, \qquad U_{\mathrm{P}} \approx 2.11\,\mathrm{V}
+$$
 
 This results in:
 
-$$R_{\mathrm{out}} = \left(\frac{U_{\mathrm{open}}}{U_{\mathrm{P}}} - 1\right) R_{\mathrm{P}} \approx 284\,\Omega$$
+$$
+R_{\mathrm{out}} = \left(\frac{U_{\mathrm{open}}}{U_{\mathrm{P}}} - 1\right) R_{\mathrm{P}} \approx 284\,\Omega
+$$
 
 b We want our circuit to approximate the function
 
-$$y_6(x) = A_6 \cdot \sigma(w_2 x + b) + B_6$$
+$$
+y_6(x) = A_6 \cdot \sigma(w_2 x + b) + B_6
+$$
 
 with $B_6 = 1.48\,\mathrm{V}$. First, it is obvious that $w_1$ does not influence $y_6$, and therefore terminal X1 needs to be connected to ground. To increase the voltage of terminal Y, we need to add a voltage divider in the form of a potentiometer between terminal Y and the supply voltage, as shown in Fig. 7.
 
 The output voltage can be expressed by
 
-$$y = (1-\eta)A\sigma(w_2 x + b) + \eta U_{+V},$$
+$$
+y = (1-\eta)A\sigma(w_2 x + b) + \eta U_{+V},
+$$
 
 where $\eta$ is the voltage division ratio of the $R_P$ and $R_{out}$ combined:
 
-$$\eta = \frac{R_{out} + R_a}{R_{out} + R_P}$$
+$$
+\eta = \frac{R_{out} + R_a}{R_{out} + R_P}
+$$
 
 with $R_a$ being the fraction of $R_P$ that lies in between B1 and B3. With this, we can use the given value of $B_6$ to get $\eta$:
 
-$$\eta = \frac{B_6}{U_{+V}} \approx 0.458 \Rightarrow \frac{R_a}{R_P} = \frac{1}{R_P}\left(\frac{R_{out} + R_P}{2} - R_{out}\right) \approx 0.389$$
+$$
+\eta = \frac{B_6}{U_{+V}} \approx 0.458 \Rightarrow \frac{R_a}{R_P} = \frac{1}{R_P}\left(\frac{R_{out} + R_P}{2} - R_{out}\right) \approx 0.389
+$$
 
 And thus we gain a theoretical value for $A_6$:
 
-$$A_6 = A(1-\eta) = A\left(1 - \frac{B_6}{U_{+V}}\right) \approx 1.5\,\mathrm{V}. \qquad (8)$$
+$$
+A_6 = A(1-\eta) = A\left(1 - \frac{B_6}{U_{+V}}\right) \approx 1.5\,\mathrm{V}. \qquad (8)
+$$
 
 To experimentally verify that our neuron behaves as expected, once again, the remaining potentiometer can be used to apply different input voltages $x$ and the output $y$ is recorded. The multimeter can be used to set the *internal* B-potentiometer to the right ratio - do not forget to measure in the ohmmeter mode only if there are no currents running through the potentiometer. To linearize the data, we rescale the $x$-values by applying the sigmoid function $\sigma(z(x))$ to it. The resulting numerical values can be seen in Tab. 5.
 

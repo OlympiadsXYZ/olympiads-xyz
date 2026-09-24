@@ -15,7 +15,9 @@ verifier: 'same-model'
 
 Two uniform rods, each of mass $m$ and length $\ell$, are connected at one end by a hinge equipped with a torsional spring. The spring exerts equal and opposite restoring torques $\tau$ on the rods about the hinge,
 
-$$\tau = 2k\theta,$$
+$$
+\tau = 2k\theta,
+$$
 
 where $2\theta$ is the angle between the rods (in radians), and $k$ ($k \gg mg\ell$) is the torsional spring constant.
 
@@ -41,73 +43,107 @@ As the jumper is symmetric about the vertical plane through the hinge, we shall 
 
 **Kinetic energy calculation 1.** At the hinge, the end of the rod moves vertically with speed $2v_\uparrow^* = 2\dot y$, while the other end moves horizontally with speed $2v_\rightarrow^* = 2\dot x$. Alternatively, the rod's center of mass, located at the midpoint of the rod, moves vertically with speed $v_\uparrow^*$ and horizontally with speed $v_\rightarrow^*$, while the rod rotates about it with angular velocity $\omega = \dot\theta$. The kinetic energy of one rod is
 
-$$W_{k,1} = \frac{1}{2}m(v_\uparrow^{*2} + v_\rightarrow^{*2}) + \frac{1}{2}J^*\omega^2$$
+$$
+W_{k,1} = \frac{1}{2}m(v_\uparrow^{*2} + v_\rightarrow^{*2}) + \frac{1}{2}J^*\omega^2
+$$
 
 where $J^* = m\ell^2/12$ is the moment of inertia of the rod about the axis through its center of mass. Using $v_\uparrow^* = \dot y^* = \ell\sin(\theta)\cdot\dot\theta/2$ and $v_\rightarrow^* = \dot x^* = \ell\cos(\theta)\cdot\dot\theta/2$ kinetic energy of one rod becomes $W_{k,1} = m\ell^2\dot\theta^2/6$ and the kinetic energy of the jumper is
 
-$$W_k = m\ell^2\dot\theta^2/3.$$
+$$
+W_k = m\ell^2\dot\theta^2/3.
+$$
 
 **Kinetic energy calculation 2.** The motion of one rod can also be described as two simultaneous rotations: the rod's center of mass moves along the circular trajectory (dashed red line in figure) of radius $\ell/2$ with the center at the red point with instantaneous speed $v^* = \ell\dot\theta/2$ and the rod also rotates about its center of mass with angular velocity $\omega = \dot\theta$. Instantaneous kinetic energy of one rod in these combined motions is
 
-$$W_{k,1} = \frac{1}{2}m(\ell\dot\theta/2)^2 + \frac{1}{2}\cdot\frac{1}{12}m\ell^2\dot\theta^2 = m\ell^2\dot\theta^2/6$$
+$$
+W_{k,1} = \frac{1}{2}m(\ell\dot\theta/2)^2 + \frac{1}{2}\cdot\frac{1}{12}m\ell^2\dot\theta^2 = m\ell^2\dot\theta^2/6
+$$
 
 and for the two rods we get the same result for the kinetic energy of the jumper, $W_k = m\ell^2\dot\theta^2/3$. (To see, that instantaneous angular velocities of both rotations is $\dot\theta$, check how much the rod is rotated about its center of mass and what is the angle of center of mass rotation about the red point while $\theta$ changes from $\pi/2$ to 0.)
 
 **Energy conservation.** With the assumption given in the problem that $k \gg mgl$ we may neglect the change in the gravitational potential energy of the jumper during the push-off phase: during the push-off, all the released elastic energy of the spring is transformed into kinetic energy. At any moment during the push-off phase, $\theta$ and $\dot\theta$ are related by the equation
 
-$$2k\left(\pi^2/4 - \theta^2\right) = m\ell^2\dot\theta^2/3$$
+$$
+2k\left(\pi^2/4 - \theta^2\right) = m\ell^2\dot\theta^2/3
+$$
 
 or
 
-$$\dot\theta^2 = \frac{6k}{m\ell^2}(\pi^2/4 - \theta^2). \qquad (1)$$
+$$
+\dot\theta^2 = \frac{6k}{m\ell^2}(\pi^2/4 - \theta^2). \qquad (1)
+$$
 
 During the push-off, the vertical component of the jumper's center of mass, $v_\uparrow^*$, increases until the push-off phase ends at a certain $\theta_0$, when the jumper loses contact with the ground. (Again, we can neglect the contribution of the gravitational force to the resultant force acting on the jumper during the push-off, as it is negligible compared to the normal force from the ground.) At $\theta_0$, both $v_\uparrow^*$ and $v_\uparrow^{*2} = \ell^2\sin^2(\theta)\cdot\dot\theta^2/4$ are maximal, so
 
-$$\left.\frac{d(\dot\theta^2\sin^2\theta)}{d\theta}\right|_{\theta_0} = 0$$
+$$
+\left.\frac{d(\dot\theta^2\sin^2\theta)}{d\theta}\right|_{\theta_0} = 0
+$$
 
 from which we obtain a transcendental equation:
 
-$$\theta_0\cdot\tan(\theta_0) = \pi^2/4 - \theta_0^2.$$
+$$
+\theta_0\cdot\tan(\theta_0) = \pi^2/4 - \theta_0^2.
+$$
 
 The solution to this equation can be found using various iterative methods, described in the next section in the context of the dynamical approach:
 
-$$\theta_0 = 0.987 = 56.6^{\circ}.$$
+$$
+\theta_0 = 0.987 = 56.6^{\circ}.
+$$
 
 At the moment when the push-off phase ends, the vertical speed of the jumper's center of mass is $v_\uparrow^* = \frac{1}{2}\ell\sin(\theta_0)\dot\theta\big|_{\theta_0}$. During the upward flight phase, only the portion of kinetic energy corresponding to the upward translational motion of the jumper is converted into potential energy (which can no longer be neglected, since the gravitational force is the only force acting on the jumper during its flight phase). When the push-off phase ends, the translational part of the jumper's kinetic energy is
 
-$$W_{k,t} = \frac{1}{2}2mv_\uparrow^{*2}\big|_{\theta_0} = \frac{3}{2}k\sin^2(\theta_0)\left(\pi^2/4 - \theta_0^2\right)$$
+$$
+W_{k,t} = \frac{1}{2}2mv_\uparrow^{*2}\big|_{\theta_0} = \frac{3}{2}k\sin^2(\theta_0)\left(\pi^2/4 - \theta_0^2\right)
+$$
 
 and at the maximum height of the jump $h$, it is completely transformed into the jumper's potential energy $W_{p,h} = 2mgh$, so the height of the jump is
 
-$$h = \frac{3k}{4mg}\sin^2(\theta_0)\left(\pi^2/4 - \theta_0^2\right) = 1.040\cdot\frac{3k}{4mg} = 0.780\cdot\frac{k}{mg}$$
+$$
+h = \frac{3k}{4mg}\sin^2(\theta_0)\left(\pi^2/4 - \theta_0^2\right) = 1.040\cdot\frac{3k}{4mg} = 0.780\cdot\frac{k}{mg}
+$$
 
 **DYNAMICS APPROACH.** Like in the energy approach, we consider the motion of only one of the rods. Direction of the velocity $\vec v_1$ of the upper end and $\vec v_2$ of the lower end of the rod are shown in the figure. It is evident that the instantaneous motion of any point of the rod could be represented as a pure rotation with angular velocity $\dot\theta$ about a horizontal axis passing through point $O$ situated at a distance $\ell/2$ from the center $C$ of the rod. The equation of rotational motion about $O$ reads:
 
-$$I_O\ddot\theta = \tau_O,$$
+$$
+I_O\ddot\theta = \tau_O,
+$$
 
 where $\tau_O$ is the net total torque of all forces applied to the rod, and
 
-$$I_0 = m\ell^2/12 + m(\ell/2)^2 = m\ell^2/3$$
+$$
+I_0 = m\ell^2/12 + m(\ell/2)^2 = m\ell^2/3
+$$
 
 is the moment of inertia of the rod about $O$. From the symmetry of the system it follows that the reaction force at the hinge $\vec R_1$ on the right rod and its counteraction $-\vec R_1$ on the other rod are horizontal at any moment; therefore, $\vec R_1$ has no torque about $O$. The reaction $\vec R_2$ from the floor acts vertically toward $O$ and has no torque, as well. Therefore, the only nonzero torque on the rod is due to the torsional spring $\tau_O = -2k\theta$ where the minus sign accounts for the restoring character of the torque. The torque, due to gravity could be neglected, as far as $k \gg mgl$. Finally, we get the equation of motion:
 
-$$\ddot\theta = -\frac{6k}{m\ell^2}\theta,$$
+$$
+\ddot\theta = -\frac{6k}{m\ell^2}\theta,
+$$
 
 which is the equation of a simple harmonic motion with angular frequency $\omega = 1/\ell\sqrt{6k/m}$ and initial conditions $\theta_0 = \pi/2$ and $\dot\theta_0 = 0$. The time dependence of the angle is, therefore:
 
-$$\theta(t) = \frac{\pi}{2}\cos\omega t.$$
+$$
+\theta(t) = \frac{\pi}{2}\cos\omega t.
+$$
 
 The velocity of the upper end of the rod is $v_1 = \ell\sin(\theta)\dot\theta$ and that of the center of mass of the system:
 
-$$v^* = v_1/2 = \ell\sin(\theta)\dot\theta/2.$$
+$$
+v^* = v_1/2 = \ell\sin(\theta)\dot\theta/2.
+$$
 
 The equation of motion of the center of mass is $2m\dot v^* = 2R_2$ since we neglect the gravity. Therefore, at the moment of detachment from the floor, when $R_2 = 0$:
 
-$$\dot v^* = \ell\left(\cos(\theta)\dot\theta^2 + \sin(\theta)\ddot\theta\right)/2 = 0. \qquad (2)$$
+$$
+\dot v^* = \ell\left(\cos(\theta)\dot\theta^2 + \sin(\theta)\ddot\theta\right)/2 = 0. \qquad (2)
+$$
 
 For the harmonic motion two identities hold at any moment: $\ddot\theta = -\omega^2\theta$ and $\theta^2/\omega^2 + \dot\theta^2 = \theta_0^2 = \pi^2/4$. Finally, the condition for detachment takes the form:
 
-$$\mathrm{f}(\theta) = (\pi^2/4 - \theta^2)\cos\theta - \theta\sin\theta = 0$$
+$$
+\mathrm{f}(\theta) = (\pi^2/4 - \theta^2)\cos\theta - \theta\sin\theta = 0
+$$
 
 which is equivalent to the equation $\theta\tan\theta = \pi^2/4 - \theta^2$ obtained energetically. One of the simplest numerical approaches to that equation is the method of bisection. First, an interval $[\theta_L;\theta_R]$ has to be found where $\mathrm{f}(\theta)$ changes its sign. It is easy to establish that $\mathrm{f}(0) > 0$ and $\mathrm{f}(\pi/2) < 0$, i.e. $\theta_L = 0$ and $\theta_R = \pi/2$. Then, the interval is divided in two halves by $\bar\theta = (\theta_L + \theta_R)/2$. If $\mathrm{f}(\bar\theta) > 0$, a new $\theta_L \leftarrow \bar\theta$ is taken, else, $\theta_R \leftarrow \bar\theta$ is set. The procedure is iterated until the length of the $[\theta_L;\theta_R]$ interval becomes smaller than the acceptable uncertainty, and the final approximation is taken as the last updated $\bar\theta$. The procedure is ilustrated in the table below:
 
@@ -130,7 +166,9 @@ which is equivalent to the equation $\theta\tan\theta = \pi^2/4 - \theta^2$ obta
 
 The iterations obviously converge toward $\theta \approx 0.987$. Thus, at the moment of detachment, we have $\sin\theta = 0.8344$, $\dot\theta = \omega\sqrt{\pi^2/4 - \theta^2} = 1.2220\,\omega$, so we obtain $v^* = 1.2487\sqrt{k/m}$. Subsequently, only the kinetic energy associated with the center of mass motion is transformed into gravitational potential energy: $2\times mv^{*2}/2 = 2\times mgh$, i.e. the center of mass moves like a point-mass object projected vertically with velocity $v^*$. Therefore, the height of the jump is:
 
-$$h = \frac{v^{*2}}{2g} = 0.780\,\frac{k}{mg}.$$
+$$
+h = \frac{v^{*2}}{2g} = 0.780\,\frac{k}{mg}.
+$$
 
 We have neglected the elevation $(\ell/2)\cos\theta \approx 0.276\ell$ of the center of mass at the moment of detachment, which is much smaller than $h$.
 

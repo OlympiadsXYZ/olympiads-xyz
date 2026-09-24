@@ -36,57 +36,83 @@ An artificial satellite moves in an orbit with eccentricity $e \gt 0$, semi-majo
 
 a) Let the origin point be the ascending node of the satellite’s orbit — in this problem it coincides with perigee ($\omega = 0^{\circ}$). For the respective spherical triangle:
 
-$$\frac{\sin\varphi}{\sin i} = \frac{\sin\nu}{\sin 90^{\circ}} \quad\Rightarrow\quad \sin\varphi = \sin i\sin\nu,$$
+$$
+\frac{\sin\varphi}{\sin i} = \frac{\sin\nu}{\sin 90^{\circ}} \quad\Rightarrow\quad \sin\varphi = \sin i\sin\nu,
+$$
 
-$$\cos i = \frac{\tan\lambda}{\tan\nu} \quad\Rightarrow\quad \tan\lambda = \cos i\tan\nu.$$
+$$
+\cos i = \frac{\tan\lambda}{\tan\nu} \quad\Rightarrow\quad \tan\lambda = \cos i\tan\nu.
+$$
 
 Taking into account the rotation of the Earth, we may put down the geographical coordinates of the satellite:
 
-$$\varphi' = \varphi = \arcsin(\sin i\sin\nu),$$
+$$
+\varphi' = \varphi = \arcsin(\sin i\sin\nu),
+$$
 
-$$\lambda' = \lambda - W\int_0^t dt. \qquad (3)$$
+$$
+\lambda' = \lambda - W\int_0^t dt. \qquad (3)
+$$
 
 Due to rotational symmetry, the longitude of the satellite is determined up to a shift by an arbitrary constant value.
 
 The angular momentum of the satellite is conserved,
 
-$$l = \frac{d\nu}{dt}r^2 = \sqrt{G\mathfrak{M}_{\oplus}\,a(1 - e^2)} = \mathrm{const}.$$
+$$
+l = \frac{d\nu}{dt}r^2 = \sqrt{G\mathfrak{M}_{\oplus}\,a(1 - e^2)} = \mathrm{const}.
+$$
 
 At the same time, the geocentric distance of the satellite depends on its true anomaly:
 
-$$r = \frac{a(1 - e^2)}{1 + e\cos\nu}.$$
+$$
+r = \frac{a(1 - e^2)}{1 + e\cos\nu}.
+$$
 
 Therefore,
 
-$$dt = \frac{r^2\,d\nu}{\sqrt{G\mathfrak{M}_{\oplus}\,a(1 - e^2)}} = \sqrt{\frac{a^3(1 - e^2)^3}{GM_{\oplus}}}\frac{d\nu}{(1 + e\cos\nu)^2}.$$
+$$
+dt = \frac{r^2\,d\nu}{\sqrt{G\mathfrak{M}_{\oplus}\,a(1 - e^2)}} = \sqrt{\frac{a^3(1 - e^2)^3}{GM_{\oplus}}}\frac{d\nu}{(1 + e\cos\nu)^2}.
+$$
 
 Next, we can replace the integration variable in (3):
 
-$$\begin{aligned} \lambda' &= \lambda - W\sqrt{\frac{a^3(1 - e^2)^3}{GM_{\oplus}}}\int_0^{\nu}\frac{d\nu}{(1 + e\cos\nu)^2} = \\ &= \lambda - W\sqrt{\frac{a^3}{GM_{\oplus}}}(1 - e^2)^{3/2}\left[\frac{2\arctan\left(\sqrt{\frac{1-e}{1+e}} \cdot \tan\frac{\nu}{2}\right)}{(1 - e^2)^{3/2}} - \frac{e\sin\nu}{(1 - e^2)(1 + e\cos\nu)}\right] = \\ &= \arctan(\cos i\tan\nu) - W\sqrt{\frac{a^3}{GM_{\oplus}}}\left[2\arctan\left(\sqrt{\frac{1 - e}{1 + e}} \cdot \tan\frac{\nu}{2}\right) - \frac{e\sin\nu\sqrt{1 - e^2}}{1 + e\cos\nu}\right]. \end{aligned}$$
+$$
+\begin{aligned} \lambda' &= \lambda - W\sqrt{\frac{a^3(1 - e^2)^3}{GM_{\oplus}}}\int_0^{\nu}\frac{d\nu}{(1 + e\cos\nu)^2} = \\ &= \lambda - W\sqrt{\frac{a^3}{GM_{\oplus}}}(1 - e^2)^{3/2}\left[\frac{2\arctan\left(\sqrt{\frac{1-e}{1+e}} \cdot \tan\frac{\nu}{2}\right)}{(1 - e^2)^{3/2}} - \frac{e\sin\nu}{(1 - e^2)(1 + e\cos\nu)}\right] = \\ &= \arctan(\cos i\tan\nu) - W\sqrt{\frac{a^3}{GM_{\oplus}}}\left[2\arctan\left(\sqrt{\frac{1 - e}{1 + e}} \cdot \tan\frac{\nu}{2}\right) - \frac{e\sin\nu\sqrt{1 - e^2}}{1 + e\cos\nu}\right]. \end{aligned}
+$$
 
 b) For geosynchronous orbit
 
-$$\frac{2\pi}{T} = W = \sqrt{\frac{G\mathfrak{M}_{\oplus}}{a^3}},$$
+$$
+\frac{2\pi}{T} = W = \sqrt{\frac{G\mathfrak{M}_{\oplus}}{a^3}},
+$$
 
 so we can simplify the expression above a bit:
 
-$$\lambda' = \arctan(\cos i\tan\nu) + \frac{e\sin\nu\sqrt{1 - e^2}}{1 + e\cos\nu} - 2\arctan\left(\sqrt{\frac{1 - e}{1 + e}} \cdot \tan\frac{\nu}{2}\right).$$
+$$
+\lambda' = \arctan(\cos i\tan\nu) + \frac{e\sin\nu\sqrt{1 - e^2}}{1 + e\cos\nu} - 2\arctan\left(\sqrt{\frac{1 - e}{1 + e}} \cdot \tan\frac{\nu}{2}\right).
+$$
 
 *Thoughts on plotting.* It is pretty obvious that the relative motion of the satellite is periodical and the track is closed. To plot the graph, we have to calculate $\varphi'$ and $\lambda'$ values for $\nu$ in range from $-\pi$ to $\pi$. In fact, the work can be simplified by noting that
 
-$$\varphi'(-\nu) = -\varphi(\nu), \quad \lambda'(-\nu) = -\lambda'(\nu),$$
+$$
+\varphi'(-\nu) = -\varphi(\nu), \quad \lambda'(-\nu) = -\lambda'(\nu),
+$$
 
 so it is enough to probe the range of $\nu$ from 0 to $\pi$, and then mirror the results.
 
 Also, note that $\arctan(\#\tan\nu)$ is ambiguous. $\lambda'$ follows the motion of the satellite, therefore arctan should be re-defined to become a continuous function for $\nu \in [0;\ \pi)$:
 
-$$\arctan(\cos i\tan\nu) := \begin{cases} \underline{\arctan}(\cos i\tan\nu), & \nu \leqslant \pi/2, \\ \underline{\arctan}(\cos i\tan\nu) + \pi, & \nu \gt \pi/2. \end{cases}$$
+$$
+\arctan(\cos i\tan\nu) := \begin{cases} \underline{\arctan}(\cos i\tan\nu), & \nu \leqslant \pi/2, \\ \underline{\arctan}(\cos i\tan\nu) + \pi, & \nu \gt \pi/2. \end{cases}
+$$
 
 Here $\underline{\arctan}$ is “conventional” inverse trigonometric function ranged from $-\pi/2$ to $\pi/2$. Of course, $\underline{\arctan}(+\infty) := \pi/2$. Such a trick does not affect the parts of the expression that came along with that *remarkable* integral, since $\nu/2$ appears there as an argument.
 
 For calculations, it is convenient to substitute the values of $e$ and $i$ and regroup:
 
-$$\lambda'(\nu) \approx \begin{cases} \arctan(0.54\tan\nu) + \dfrac{0.286 \cdot \sin\nu}{1 + 0.3\cos\nu} - 2\arctan\left(0.734\tan\frac{\nu}{2}\right), & \nu \in [0;\ \pi/2), \\ \arctan(0.54\tan\nu) + 3.142 + \dfrac{0.286 \cdot \sin\nu}{1 + 0.3\cos\nu} - 2\arctan\left(0.734\tan\frac{\nu}{2}\right), & \nu \in (\pi/2;\ \pi), \\ -\lambda'(-\nu), & \nu \in (-\pi;\ 0) \setminus \{-\pi/2\}. \end{cases}$$
+$$
+\lambda'(\nu) \approx \begin{cases} \arctan(0.54\tan\nu) + \dfrac{0.286 \cdot \sin\nu}{1 + 0.3\cos\nu} - 2\arctan\left(0.734\tan\frac{\nu}{2}\right), & \nu \in [0;\ \pi/2), \\ \arctan(0.54\tan\nu) + 3.142 + \dfrac{0.286 \cdot \sin\nu}{1 + 0.3\cos\nu} - 2\arctan\left(0.734\tan\frac{\nu}{2}\right), & \nu \in (\pi/2;\ \pi), \\ -\lambda'(-\nu), & \nu \in (-\pi;\ 0) \setminus \{-\pi/2\}. \end{cases}
+$$
 
 Finally, here is the plot we need:
 

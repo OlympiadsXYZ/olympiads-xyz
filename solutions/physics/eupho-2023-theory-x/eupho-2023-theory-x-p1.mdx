@@ -60,27 +60,39 @@ The graph should present or clearly infer for the four elements shown in the fig
 
 Consider a cylindrical cut of the disk with radius $r$. Let $P_\mathrm{abs}(r)$ be the portion of laser power absorbed within the cylinder. The absorbed power is being transferred as heat towards the outer holder through the circumvent surface $2\pi br$ of the cylinder. The heat-transport equation reads:
 
-$$-k(2\pi rb)\frac{\mathrm{d}T(r)}{\mathrm{d}r} = P_\mathrm{abs}(r) \qquad (1)$$
+$$
+-k(2\pi rb)\frac{\mathrm{d}T(r)}{\mathrm{d}r} = P_\mathrm{abs}(r) \qquad (1)
+$$
 
 Depending on $r$, the absorbed power is given by two different expressions. Within the illuminated area $0 \le r \le \sigma$, the incident light intensity $I = P_\mathrm{L}/(\pi\sigma^2)$ is constant, so the absorbed power is:
 
-$$P_\mathrm{abs}(r) = I\pi r^2 = AP_\mathrm{L}\frac{r^2}{\sigma^2} \qquad (2)$$
+$$
+P_\mathrm{abs}(r) = I\pi r^2 = AP_\mathrm{L}\frac{r^2}{\sigma^2} \qquad (2)
+$$
 
 and the solution for $T(r)$ is quadratic in $r$:
 
-$$T(r) = T_\mathrm{c} - \frac{AP_\mathrm{L}r^2}{4\pi kb\sigma^2} \qquad (3)$$
+$$
+T(r) = T_\mathrm{c} - \frac{AP_\mathrm{L}r^2}{4\pi kb\sigma^2} \qquad (3)
+$$
 
 where $T_\mathrm{c} = T(0)$ is the temperature at the center. It is clear from that expression that the parameter $m$ is:
 
-$$m = -\frac{AP_\mathrm{L}}{4\pi kb\sigma^2} = -1.1 \cdot 10^7\ \mathrm{Km^{-2}} \qquad (4)$$
+$$
+m = -\frac{AP_\mathrm{L}}{4\pi kb\sigma^2} = -1.1 \cdot 10^7\ \mathrm{Km^{-2}} \qquad (4)
+$$
 
 Outside the illuminated area, i.e. for $\sigma \le r \le a$, $P_\mathrm{abs}(r) = AP_\mathrm{L}$, which does not depend on $r$. The solution for $T(r)$ is logarithmic in $r$:
 
-$$T(r) = T_\mathrm{h} + \frac{AP_\mathrm{L}}{2\pi kb}\ln\left(\frac{a}{r}\right) \qquad (5)$$
+$$
+T(r) = T_\mathrm{h} + \frac{AP_\mathrm{L}}{2\pi kb}\ln\left(\frac{a}{r}\right) \qquad (5)
+$$
 
 where $T_\mathrm{h} = T(a)$ is the temperature of the holder, which is equal to the temperature along the outer rim of the disk. After matching the two solutions at $r = \sigma$ we obtain:
 
-$$T_\mathrm{c} = T_\mathrm{h} + \frac{AP_\mathrm{L}}{4\pi kb}\left[1 + 2\ln\left(\frac{a}{\sigma}\right)\right] = 41^{\circ}\mathrm{C} \qquad (6)$$
+$$
+T_\mathrm{c} = T_\mathrm{h} + \frac{AP_\mathrm{L}}{4\pi kb}\left[1 + 2\ln\left(\frac{a}{\sigma}\right)\right] = 41^{\circ}\mathrm{C} \qquad (6)
+$$
 
 | Task | Pts. |
 |---|---|
@@ -100,19 +112,29 @@ $$T_\mathrm{c} = T_\mathrm{h} + \frac{AP_\mathrm{L}}{4\pi kb}\left[1 + 2\ln\left
 
 After realizing that $P_\mathrm{abs}(r)$ is given by a piece-wise function:
 
-$$P_\mathrm{abs} = \begin{cases} AP_\mathrm{L}r^2/\sigma^2 & \text{if } 0 \le r \le \sigma \\ AP_\mathrm{L} = \mathrm{const} & \text{if } \sigma \le r \le a \end{cases} \qquad (7)$$
+$$
+P_\mathrm{abs} = \begin{cases} AP_\mathrm{L}r^2/\sigma^2 & \text{if } 0 \le r \le \sigma \\ AP_\mathrm{L} = \mathrm{const} & \text{if } \sigma \le r \le a \end{cases} \qquad (7)
+$$
 
 the student may substitute the given solution $T(r) = T_\mathrm{c} + mr^2$ into heat-transport equation (1) for $0 \le r \le \sigma$. This gives directly the expression (4) for the parameter $m$. The parameter $T_\mathrm{c}$ could be easily identified with the temperature $T(0)$ at the center of the disk. On the other hand, $T_\mathrm{h} = T(a)$ due to the thermal contact between the rim of the disk and the holder. It follows from the heat-transport equation that:
 
-$$-\frac{\mathrm{d}T(r)}{\mathrm{d}r} = \frac{P_\mathrm{abs}(r)}{2\pi kbr} \qquad (8)$$
+$$
+-\frac{\mathrm{d}T(r)}{\mathrm{d}r} = \frac{P_\mathrm{abs}(r)}{2\pi kbr} \qquad (8)
+$$
 
 The piece-wise integration of the two sides of the equation in the interval $0 \le r \le a$ gives:
 
-$$T(0) - T(a) = T_\mathrm{c} - T_\mathrm{h} = \int_0^a \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r$$
+$$
+T(0) - T(a) = T_\mathrm{c} - T_\mathrm{h} = \int_0^a \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r
+$$
 
-$$= \int_0^\sigma \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r + \int_\sigma^a \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r \qquad (9)$$
+$$
+= \int_0^\sigma \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r + \int_\sigma^a \frac{P_\mathrm{abs}(r)}{2\pi kbr}\mathrm{d}r \qquad (9)
+$$
 
-$$= \frac{AP_\mathrm{L}}{4\pi kb}\left[1 + 2\ln\left(\frac{a}{\sigma}\right)\right]$$
+$$
+= \frac{AP_\mathrm{L}}{4\pi kb}\left[1 + 2\ln\left(\frac{a}{\sigma}\right)\right]
+$$
 
 which is equivalent to the expression (6) for $T_\mathrm{c}$.
 
@@ -141,43 +163,63 @@ We consider only the illuminated area of the disk ($0 \le r \le \sigma$). Due to
 
 Since the ray bending is relatively small, one may assume that: (i) all the rays travel approximately the same distance $b$ inside the disk; (ii) any given ray enters and exits the disk at approximately the same height $r$; (iii) $f \gg r$. Thus, the optical pathway $s(r)$ of a ray, incident at a height $r$ above the optical axis, is:
 
-$$s(r) \approx n(r)b + \sqrt{f^2 + r^2} \approx n(r)b + f + \frac{r^2}{2f} \qquad (10)$$
+$$
+s(r) \approx n(r)b + \sqrt{f^2 + r^2} \approx n(r)b + f + \frac{r^2}{2f} \qquad (10)
+$$
 
 According to Fermat’s principle, in order that all the rays focus at the same point, it is necessary that $s(r)$ is constant within $0 \le r < \sigma$. In particular, $s(r) \equiv s(0)$ for any $r$, which leads to the condition:
 
-$$b(n(0) - n(r)) \equiv \frac{r^2}{2f} \qquad (11)$$
+$$
+b(n(0) - n(r)) \equiv \frac{r^2}{2f} \qquad (11)
+$$
 
 Since:
 
-$$n(0) - n(r) = \gamma(T(0) - T(r)) = -\gamma mr^2 = \gamma|m|r^2 \qquad (12)$$
+$$
+n(0) - n(r) = \gamma(T(0) - T(r)) = -\gamma mr^2 = \gamma|m|r^2 \qquad (12)
+$$
 
 condition (11) is satisfied if
 
-$$\gamma b|m|r^2 \equiv \frac{r^2}{2f} \qquad (13)$$
+$$
+\gamma b|m|r^2 \equiv \frac{r^2}{2f} \qquad (13)
+$$
 
 The beam hence focuses at
 
-$$f = \frac{1}{2\gamma b|m|} \qquad (14)$$
+$$
+f = \frac{1}{2\gamma b|m|} \qquad (14)
+$$
 
 Taking into account the expression for $m$ derived in part (b), we represent the answer in terms of the known parameters and calculate its numerical value:
 
-$$f = \frac{2\pi k\sigma^2}{\gamma AP} \approx 0.94\ \mathrm{m} \qquad (15)$$
+$$
+f = \frac{2\pi k\sigma^2}{\gamma AP} \approx 0.94\ \mathrm{m} \qquad (15)
+$$
 
 Alternatively, the student may state that the optical pathway $s(r)$ does not depend on $r$ and use the condition $\mathrm{d}s/\mathrm{d}r \equiv 0$, which gives:
 
-$$\frac{\mathrm{d}n(r)}{\mathrm{d}r}b + \frac{r}{f} \equiv 0 \qquad (16)$$
+$$
+\frac{\mathrm{d}n(r)}{\mathrm{d}r}b + \frac{r}{f} \equiv 0 \qquad (16)
+$$
 
 Since:
 
-$$\frac{\mathrm{d}n(r)}{\mathrm{d}r} = \frac{\mathrm{d}n}{\mathrm{d}T}\frac{\mathrm{d}T}{\mathrm{d}r} = \gamma 2mr \qquad (17)$$
+$$
+\frac{\mathrm{d}n(r)}{\mathrm{d}r} = \frac{\mathrm{d}n}{\mathrm{d}T}\frac{\mathrm{d}T}{\mathrm{d}r} = \gamma 2mr \qquad (17)
+$$
 
 we obtain:
 
-$$\frac{r}{f} + 2b\gamma mr \equiv 0 \qquad (18)$$
+$$
+\frac{r}{f} + 2b\gamma mr \equiv 0 \qquad (18)
+$$
 
 The beam thus focuses at:
 
-$$f = \frac{1}{2\gamma b|m|} = \frac{2\pi k\sigma^2}{\gamma AP} \approx 0.94\ \mathrm{m} \qquad (19)$$
+$$
+f = \frac{1}{2\gamma b|m|} = \frac{2\pi k\sigma^2}{\gamma AP} \approx 0.94\ \mathrm{m} \qquad (19)
+$$
 
 | Task | Pts. |
 |---|---|
@@ -195,41 +237,59 @@ $$f = \frac{1}{2\gamma b|m|} = \frac{2\pi k\sigma^2}{\gamma AP} \approx 0.94\ \m
 
 As a next approximation, the light ray inside the disk can be modeled as a circular arc of a radius $R$ ($R \gg b$, see the figure). As a result, the ray exits the disk at a smaller height $r - h$ above the optical axis ($h \ll r$). The angle of bending $\varphi$ of the ray inside the material is related to $h$ by:
 
-$$\cos\varphi = 1 - \frac{h}{R} \qquad (20)$$
+$$
+\cos\varphi = 1 - \frac{h}{R} \qquad (20)
+$$
 
 From the Snell’s law it follows that:
 
-$$n(r)\sin(\pi/2) = n(r - h)\sin(\pi/2 - \varphi) = n(r - h)\cos\varphi \qquad (21)$$
+$$
+n(r)\sin(\pi/2) = n(r - h)\sin(\pi/2 - \varphi) = n(r - h)\cos\varphi \qquad (21)
+$$
 
 Up to terms, linear in $h$, one may write that:
 
-$$\cos\varphi = \frac{n(r)}{n(r - h)} \approx 1 + \frac{n'(r)}{n(r)}h \qquad (22)$$
+$$
+\cos\varphi = \frac{n(r)}{n(r - h)} \approx 1 + \frac{n'(r)}{n(r)}h \qquad (22)
+$$
 
 Thus, the radius of the ray inside the material, is:
 
-$$R = -\frac{n(r)}{n'(r)} \qquad (23)$$
+$$
+R = -\frac{n(r)}{n'(r)} \qquad (23)
+$$
 
 and the bending angle is approximately:
 
-$$\varphi = \frac{b}{R} = -\frac{n'(r)b}{n(r)} \qquad (24)$$
+$$
+\varphi = \frac{b}{R} = -\frac{n'(r)b}{n(r)} \qquad (24)
+$$
 
 Alternatively, the students may trace a small part of the wavefront, associated with two rays, incident at close distances $r$ and $r + \mathrm{d}r$ from the optical axis. By noticing that the wavefront is perpendicular to the rays, the angle $\varphi$ of deviation of the rays is equal to the angle of rotation of the wavefront. Let $v(r) = c/n(r)$ be the speed of light in the material at a distance $r$ from the axis. The time-rate $\dot{\varphi}$, i.e. the angular speed of the wavefront is:
 
-$$\dot{\varphi} = \mathrm{d}v(r)/\mathrm{d}r = -cn'(r)/n(r)^2 \qquad (25)$$
+$$
+\dot{\varphi} = \mathrm{d}v(r)/\mathrm{d}r = -cn'(r)/n(r)^2 \qquad (25)
+$$
 
 The rays reach the opposite surface of the disk in approximately the same time $t = bn(r)/c$, so the total deflection angle of the wavefront, and of the rays, thereof, is $\varphi = \dot{\varphi}t = -n'(r)b/n(r)$
 
 Upon exiting the disk, the ray undergoes additional refraction, and inclines at a new angle $\theta$ relative to the optical axis. The Snell’s law in the small-angle approximation ($\sin\theta \approx \theta$, $\sin\varphi \approx \varphi$) states that:
 
-$$\theta = n(r - h)\varphi \approx n(r)\varphi = -n'(r)b \qquad (26)$$
+$$
+\theta = n(r - h)\varphi \approx n(r)\varphi = -n'(r)b \qquad (26)
+$$
 
 Since $n'(r) = \gamma T'(r) = 2mr$, one obtains the following expression for the angle of inclination:
 
-$$\theta = 2\gamma|m|r \qquad (27)$$
+$$
+\theta = 2\gamma|m|r \qquad (27)
+$$
 
 It is clear from the figure that:
 
-$$f = \frac{r - h}{\tan\theta} \approx \frac{r}{\theta} = \frac{1}{2\gamma|m|b} \qquad (28)$$
+$$
+f = \frac{r - h}{\tan\theta} \approx \frac{r}{\theta} = \frac{1}{2\gamma|m|b} \qquad (28)
+$$
 
 which reproduces the result obtained by the Fermat’s principle.
 
@@ -249,27 +309,39 @@ which reproduces the result obtained by the Fermat’s principle.
 
 Consider a ray incident at a specific height $r_0$. Let $x \in [0, b]$ be the horizontal coordinate of the ray inside the material. Our goal is to find approximately the profile $r(x)$ of the light ray inside the material. From Snell’s law:
 
-$$n(r)\cos\varphi = n(r_0)$$
+$$
+n(r)\cos\varphi = n(r_0)
+$$
 
 Since:
 
-$$\tan\varphi = -\frac{\mathrm{d}r(x)}{\mathrm{d}x} = -\frac{\sqrt{(1 - \cos^2\varphi)}}{\cos\varphi}$$
+$$
+\tan\varphi = -\frac{\mathrm{d}r(x)}{\mathrm{d}x} = -\frac{\sqrt{(1 - \cos^2\varphi)}}{\cos\varphi}
+$$
 
 we obtain:
 
-$$-\frac{\mathrm{d}r(x)}{\mathrm{d}x} = \frac{\sqrt{(n(r) - n(r_0))(n(r) + n(r_0))}}{n(r)}$$
+$$
+-\frac{\mathrm{d}r(x)}{\mathrm{d}x} = \frac{\sqrt{(n(r) - n(r_0))(n(r) + n(r_0))}}{n(r)}
+$$
 
 Since $n(r) \approx n(r_0) + n'(r_0)(r - r_0) = n(r_0) + 2\gamma|m|r_0(r_0 - r)$, the differential equation approximates to:
 
-$$-\frac{\mathrm{d}r(x)}{\mathrm{d}x} = \sqrt{\frac{4\gamma|m|r_0}{n(r_0)}}\sqrt{r0 - r}$$
+$$
+-\frac{\mathrm{d}r(x)}{\mathrm{d}x} = \sqrt{\frac{4\gamma|m|r_0}{n(r_0)}}\sqrt{r0 - r}
+$$
 
 which is solvable by separation of variables and gives an approximate parabolic path:
 
-$$r(x) = r_0 - \frac{\gamma|m|r_0}{n(r_0)}x^2$$
+$$
+r(x) = r_0 - \frac{\gamma|m|r_0}{n(r_0)}x^2
+$$
 
 Finally, for the angle, just before exiting the disk, we obtain:
 
-$$\varphi \approx \tan\varphi = -r'(x = b) = \frac{2\gamma|m|r_0b}{n(r_0)}$$
+$$
+\varphi \approx \tan\varphi = -r'(x = b) = \frac{2\gamma|m|r_0b}{n(r_0)}
+$$
 
 | Task | Pts. |
 |---|---|

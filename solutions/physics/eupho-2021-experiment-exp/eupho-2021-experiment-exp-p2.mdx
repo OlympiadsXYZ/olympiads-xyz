@@ -76,7 +76,9 @@ One possibility is to give a total of 1500 J of heat, but at various power setti
 
 The average temperature of the rod is computed from the five equally spaced points by applying Simpson's rule,
 
-$$T_{avg} = \frac{T_1 + 4T_2 + 2T_3 + 4T_4 + T_5}{12}$$
+$$
+T_{avg} = \frac{T_1 + 4T_2 + 2T_3 + 4T_4 + T_5}{12}
+$$
 
 Computing instead a direct average yields a $+5$% error.
 
@@ -94,31 +96,45 @@ The radiative heat loss rate is $\beta\sigma(T^4 - T_0^4)$ where $\sigma = 5.67 
 
 Note that at temperatures close to $T_0$ the radiative expression can be written as
 
-$$A\beta\sigma(T^4 - T_0^4) \approx A\beta\sigma 4(T - T_0)T_0^3$$
+$$
+A\beta\sigma(T^4 - T_0^4) \approx A\beta\sigma 4(T - T_0)T_0^3
+$$
 
 This means that the linear heat loss rate at temperatures close to $T_0$ is
 
-$$A\left(\alpha + \beta\sigma 4T_0^3\right)(T - T_0)$$
+$$
+A\left(\alpha + \beta\sigma 4T_0^3\right)(T - T_0)
+$$
 
 For the uniform, low temperature cooling rod,
 
-$$mc\frac{\mathrm{d}T}{\mathrm{d}t} = -A\left(\alpha + \beta\sigma 4T_0^3\right)(T - T_0)$$
+$$
+mc\frac{\mathrm{d}T}{\mathrm{d}t} = -A\left(\alpha + \beta\sigma 4T_0^3\right)(T - T_0)
+$$
 
 The solution is of the form
 
-$$T - T_0 = Ce^{-Bt}$$
+$$
+T - T_0 = Ce^{-Bt}
+$$
 
 where
 
-$$B = A\frac{\alpha + \beta\sigma 4T_0^3}{mc}$$
+$$
+B = A\frac{\alpha + \beta\sigma 4T_0^3}{mc}
+$$
 
 On a log plot of $\ln(T - T_0)$ as a function of time $t$, the plot should be linear, with a slope given by
 
-$$-A\frac{\alpha + \beta\sigma 4T_0^3}{mc}$$
+$$
+-A\frac{\alpha + \beta\sigma 4T_0^3}{mc}
+$$
 
 It is also possible to plot $\mathrm{d}T/\mathrm{d}t$ as a function of $T - T_0$, and the plot will be linear, with a slope also given by
 
-$$-A\frac{\alpha + \beta\sigma 4T_0^3}{mc}$$
+$$
+-A\frac{\alpha + \beta\sigma 4T_0^3}{mc}
+$$
 
 The slope in either case is found to be $-1.78 \times 10^{-3}$ /s.
 
@@ -126,27 +142,37 @@ To find the blackbody behavior we want to heat the rod as much as possible such 
 
 The average temperature of the rod is computed from the five equally spaced points by
 
-$$T_{avg} = \frac{T_1 + 4T_2 + 2T_3 + 4T_4 + T_5}{12} = 662\ \mathrm{°C}.$$
+$$
+T_{avg} = \frac{T_1 + 4T_2 + 2T_3 + 4T_4 + T_5}{12} = 662\ \mathrm{°C}.
+$$
 
 Computing a direct average yields a $+1.5$% error.
 
 The average of $T^4$ is found from
 
-$$T^4_{\mathrm{avg}} = \frac{{T_1}^4 + 4{T_2}^4 + 2{T_3}^4 + 4{T_4}^4 + {T_5}^4}{12} = 7.95 \times 10^{11}\ \mathrm{K}^4$$
+$$
+T^4_{\mathrm{avg}} = \frac{{T_1}^4 + 4{T_2}^4 + 2{T_3}^4 + 4{T_4}^4 + {T_5}^4}{12} = 7.95 \times 10^{11}\ \mathrm{K}^4
+$$
 
 Computing a direct average yields a $+6.3$% error.
 
 The rate of linear temperature heat loss is found from above to be
 
-$$(-1.78 \times 10^{-3}\ /\mathrm{s})mc\Delta T = 59\ \mathrm{W}$$
+$$
+(-1.78 \times 10^{-3}\ /\mathrm{s})mc\Delta T = 59\ \mathrm{W}
+$$
 
 The blackbody remainder term is then
 
-$$300 - 59 = 241\ \mathrm{W},$$
+$$
+300 - 59 = 241\ \mathrm{W},
+$$
 
 and necessarily equals
 
-$$A\beta\sigma(T^4 - T_0^4) - A\beta\sigma 4T_0^3(T - T_0),$$
+$$
+A\beta\sigma(T^4 - T_0^4) - A\beta\sigma 4T_0^3(T - T_0),
+$$
 
 where the second term reflects the fact that we had considered part of the blackbody behavior as being linear.
 
@@ -156,19 +182,25 @@ Failing to subtract the second term would yield $\beta = 0.28$.
 
 We are now in a position to find $\alpha$, from
 
-$$-A\frac{\alpha + \beta\sigma 4T_0^3}{mc} = -1.78 \times 10^{-3}\ /\mathrm{s}$$
+$$
+-A\frac{\alpha + \beta\sigma 4T_0^3}{mc} = -1.78 \times 10^{-3}\ /\mathrm{s}
+$$
 
 which yields $\alpha = 2.93$
 
 Alternatively, for the uniform, high temperature cooling rod,
 
-$$mc\frac{\mathrm{d}T}{\mathrm{d}t} \approx -A\beta\sigma\left(T^4 - T_0^4\right)$$
+$$
+mc\frac{\mathrm{d}T}{\mathrm{d}t} \approx -A\beta\sigma\left(T^4 - T_0^4\right)
+$$
 
 as the radiative cooling effect will dominate.
 
 On a plot of $\mathrm{d}T/\mathrm{d}t$ as a function of $T^4 - T_0^4$, the plot should be linear, with a slope given by
 
-$$-\frac{A\beta\sigma}{mc}$$
+$$
+-\frac{A\beta\sigma}{mc}
+$$
 
 The slope is found to be $-7.8 \times 10^{-12}\ \mathrm{K^3/s}$
 
@@ -284,7 +316,9 @@ The temperature gradient is $-898$ K/m, so $k = 397$ W/mK. Don't forget that the
 - When computing spatial averages, if the rod is not mostly uniform in temperature, a Simpson's Rule technique or equivalent must be used to obtain the 0.3 pts. If instead all of the temperatures are within two error limits, then Simpson is not required to obtain the 0.3 pt.
 - Any numerical derivatives must use the symmetric form
 
-$$f'(x) \approx (f(x + h) - f(x - h))/2h$$
+$$
+f'(x) \approx (f(x + h) - f(x - h))/2h
+$$
 
 or some equivalent, or better, method.
 

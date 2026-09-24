@@ -42,65 +42,97 @@ verifier: 'mechanical'
 
 Теперь можем получить величины максимальных лучевых скоростей (которые уже не зависят от особенностей печати заданий и при верных измерениях у участников должны совпадать с авторскими значениями):
 
-$$v_{r,1} = \frac{47}{107} \cdot 60\ \text{км/с} = 26.4\ \text{км/с} \qquad v_{r,2} = \frac{46}{107} \cdot 60\ \text{км/с} = 25.8\ \text{км/с}$$
+$$
+v_{r,1} = \frac{47}{107} \cdot 60\ \text{км/с} = 26.4\ \text{км/с} \qquad v_{r,2} = \frac{46}{107} \cdot 60\ \text{км/с} = 25.8\ \text{км/с}
+$$
 
 Выполним оценку абсолютной $\Delta\mu$ и относительной $\varepsilon_{\mu}$ погрешностей определения величины $\mu$ – масштаба графика лучевой скорости. Цена деления стандартной линейки $\ell_0 = 1$ мм, тогда абсолютная $\Delta\mu_{\text{м}}$ и относительная $\varepsilon_v$ погрешности масштаба $\mu$ будут:
 
 Абсолютная ошибка $\Delta\mu$ величины $\mu$
 
-$$\Delta\mu = \mu\frac{\ell_0}{\ell},$$
+$$
+\Delta\mu = \mu\frac{\ell_0}{\ell},
+$$
 
 Относительная ошибка $\varepsilon_{\mu}$ величины $\mu$
 
-$$\varepsilon = \frac{\Delta\mu}{\mu} \cdot 100\% = \frac{\ell_0}{\ell} \cdot 100\%.$$
+$$
+\varepsilon = \frac{\Delta\mu}{\mu} \cdot 100\% = \frac{\ell_0}{\ell} \cdot 100\%.
+$$
 
 При записи последнего результата мы учли, что $(\ell_0/\ell_{ij}) \ll 1$. Тогда относительная $\varepsilon_{\mu}$ и абсолютная $\Delta\mu$ погрешности можно записать так:
 
-$$\varepsilon_{\mu} = \frac{1}{\ell} = \frac{1}{107} = 0.0093 \approx 0.93\%$$
+$$
+\varepsilon_{\mu} = \frac{1}{\ell} = \frac{1}{107} = 0.0093 \approx 0.93\%
+$$
 
-$$\Delta\mu = \frac{\varepsilon_{\mu}}{100\%} \cdot \mu = \frac{\frac{1}{107}}{100\%} \cdot 60 = 0.56\frac{\text{км}}{\text{с мм}}.$$
+$$
+\Delta\mu = \frac{\varepsilon_{\mu}}{100\%} \cdot \mu = \frac{\frac{1}{107}}{100\%} \cdot 60 = 0.56\frac{\text{км}}{\text{с мм}}.
+$$
 
 Представим **общий алгоритм оценки погрешностей** измеряемой угловой величины на примере абстрактной величины $X$. Погрешность складывается из погрешности измерение самой величины линейкой $\ell_0$ и погрешности масштаба, при помощи которого переводим измеряемые линейкой величины в угловые величины:
 
-$$X \pm \Delta X = (L \pm \ell_0) \cdot (\mu \pm \Delta\mu) \approx (L \cdot \mu)\left(1 + \frac{\ell_0}{L} + \frac{\Delta\mu}{\mu}\right) = X\left(1 + \frac{\ell_0}{L} + \frac{\Delta\mu}{\mu}\right)$$
+$$
+X \pm \Delta X = (L \pm \ell_0) \cdot (\mu \pm \Delta\mu) \approx (L \cdot \mu)\left(1 + \frac{\ell_0}{L} + \frac{\Delta\mu}{\mu}\right) = X\left(1 + \frac{\ell_0}{L} + \frac{\Delta\mu}{\mu}\right)
+$$
 
 Абсолютная погрешность величины $X$
 
-$$\Delta X = X\left(\frac{\ell_0}{L} + \frac{\Delta\mu}{\mu}\right),$$
+$$
+\Delta X = X\left(\frac{\ell_0}{L} + \frac{\Delta\mu}{\mu}\right),
+$$
 
 Относительная погрешность величины $X$
 
-$$\varepsilon_X = \frac{\Delta X}{X} \cdot 100\% = \frac{\ell_0}{L} \cdot 100\% + \frac{\Delta\mu}{\mu} \cdot 100\% = \varepsilon_L + \varepsilon_{\mu}$$
+$$
+\varepsilon_X = \frac{\Delta X}{X} \cdot 100\% = \frac{\ell_0}{L} \cdot 100\% + \frac{\Delta\mu}{\mu} \cdot 100\% = \varepsilon_L + \varepsilon_{\mu}
+$$
 
-$$\Delta X = X \cdot \frac{\varepsilon_X}{100\%}$$
+$$
+\Delta X = X \cdot \frac{\varepsilon_X}{100\%}
+$$
 
-$$\Delta v_{r,1} = v_{r,1}\left(\frac{\ell_0}{L} + \frac{\Delta\mu}{\mu}\right) = 26.4\left(\frac{1}{47} + \frac{0.56}{47}\right)\ \text{км/с} = 0.9\ \text{км/с}$$
+$$
+\Delta v_{r,1} = v_{r,1}\left(\frac{\ell_0}{L} + \frac{\Delta\mu}{\mu}\right) = 26.4\left(\frac{1}{47} + \frac{0.56}{47}\right)\ \text{км/с} = 0.9\ \text{км/с}
+$$
 
-$$\Delta v_{r,2} = 25.8\left(\frac{1}{46} + \frac{0.56}{46}\right)\ \text{км/с} = 0.9\ \text{км/с}$$
+$$
+\Delta v_{r,2} = 25.8\left(\frac{1}{46} + \frac{0.56}{46}\right)\ \text{км/с} = 0.9\ \text{км/с}
+$$
 
 Можно исключить из рассмотрения определение скорости центра масс, рассчитав максимальное и минимальное значение скоростей, а затем определив амплитуду скорости как половину их разности. В этом случае участник проделывает те же действия и вычисления «в уме», в явном виде их не описывая, и возможно, не осознавая. При этом такое решение засчитываться как полное при наличии верно полученного значения амплитуд скоростей.
 
 Зная угол наклона плоскости орбит системы к лучу зрения, можем получить и орбитальную скорость каждой компоненты:
 
-$$v_r = v_o\sin i \qquad \rightarrow \qquad v_{o,1} = \frac{v_{r,1}}{\sin i} = \frac{v_{r,1}}{\sin(43^{\circ})}$$
+$$
+v_r = v_o\sin i \qquad \rightarrow \qquad v_{o,1} = \frac{v_{r,1}}{\sin i} = \frac{v_{r,1}}{\sin(43^{\circ})}
+$$
 
 На следующем этапе свяжем орбитальную скорость каждого компонента системы с радиусом круговой орбиты каждого из компонентов вокруг общего центра масс:
 
-$$v_{o,i} = \frac{2\pi R_i}{T} \qquad \rightarrow \qquad R_i = \frac{v_{o,i}T}{2\pi}$$
+$$
+v_{o,i} = \frac{2\pi R_i}{T} \qquad \rightarrow \qquad R_i = \frac{v_{o,i}T}{2\pi}
+$$
 
 Расстояние между компонентами системы равно $a = R_1 + R_2$
 
-$$a = \frac{T}{2\pi}(v_{o,1} + v_{o,2}) = \frac{T}{2\pi\sin(43^{\circ})}(v_{r,1} + v_{r,2})$$
+$$
+a = \frac{T}{2\pi}(v_{o,1} + v_{o,2}) = \frac{T}{2\pi\sin(43^{\circ})}(v_{r,1} + v_{r,2})
+$$
 
 Подставим значения:
 
-$$a = \frac{104 \cdot 86400\ \text{с}}{2\pi 0.682}(26.4 + 25.8) \cdot 10^3\ \text{м/с} = 1.09 \cdot 10^{11}\ \text{м} = 0.73\ \text{а.е.}$$
+$$
+a = \frac{104 \cdot 86400\ \text{с}}{2\pi 0.682}(26.4 + 25.8) \cdot 10^3\ \text{м/с} = 1.09 \cdot 10^{11}\ \text{м} = 0.73\ \text{а.е.}
+$$
 
 В случае ошибочного использования $\cos i$ минимальное значение составит $a = 0.68$ а.е.
 
 Найдем ошибку определения радиуса орбиты:
 
-$$\Delta a = a\sqrt{\left(\frac{\Delta v_{r,1}}{v_{r,1}}\right)^2 + \left(\frac{\Delta v_{r,2}}{v_{r,2}}\right)^2} = 0.7\sqrt{\left(\frac{0.9}{26.4}\right)^2 + \left(\frac{0.9}{25.8}\right)^2} \approx 0.03$$
+$$
+\Delta a = a\sqrt{\left(\frac{\Delta v_{r,1}}{v_{r,1}}\right)^2 + \left(\frac{\Delta v_{r,2}}{v_{r,2}}\right)^2} = 0.7\sqrt{\left(\frac{0.9}{26.4}\right)^2 + \left(\frac{0.9}{25.8}\right)^2} \approx 0.03
+$$
 
 В случае ошибочного использования $\cos i$ ошибка определения радиуса орбиты составит также $\Delta a = 0.03$ а.е.
 
@@ -108,13 +140,17 @@ $$\Delta a = a\sqrt{\left(\frac{\Delta v_{r,1}}{v_{r,1}}\right)^2 + \left(\frac{
 
 Максимальное значение:
 
-$$\rho_{\max} = \frac{206265\ a}{r} = \frac{a\ \text{а.е}}{r\ \text{пк}} = 0.055''$$
+$$
+\rho_{\max} = \frac{206265\ a}{r} = \frac{a\ \text{а.е}}{r\ \text{пк}} = 0.055''
+$$
 
 В случае ошибочного использования $\cos i$ максимальное значение составит $\rho_{\max} = 0.052''$
 
 Найдем ошибку определения $\rho_{\max}$:
 
-$$\Delta\rho_{\max} = \rho_{\max}\frac{\Delta a}{a} = \frac{206265\ a}{r}\frac{\Delta a}{a} = \frac{\Delta a\ \text{а.е}}{r\ \text{пк}} = \Delta a\ \text{а.е}\pi = 0.03 \cdot 0.076'' \approx 0.002''$$
+$$
+\Delta\rho_{\max} = \rho_{\max}\frac{\Delta a}{a} = \frac{206265\ a}{r}\frac{\Delta a}{a} = \frac{\Delta a\ \text{а.е}}{r\ \text{пк}} = \Delta a\ \text{а.е}\pi = 0.03 \cdot 0.076'' \approx 0.002''
+$$
 
 В случае ошибочного использования $\cos i$ ошибка определения максимального углового разделения составит теже $\Delta\rho_{\max} = 0.002''$
 

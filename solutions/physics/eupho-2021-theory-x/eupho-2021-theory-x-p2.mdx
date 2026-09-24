@@ -17,7 +17,9 @@ One end of a thread is tied into a loop of length $L > 2\pi R$, and a cylinder o
 
 It might be useful to know that
 
-$$2\int\sqrt{1+x^2}\,\mathrm{d}x = x\sqrt{1+x^2} + \operatorname{arcsinh}x\,,$$
+$$
+2\int\sqrt{1+x^2}\,\mathrm{d}x = x\sqrt{1+x^2} + \operatorname{arcsinh}x\,,
+$$
 
 where $\operatorname{arcsinh}x \equiv \ln\left(x+\sqrt{1+x^2}\right)$.
 
@@ -43,51 +45,73 @@ Imagine that the side of the cylinder is cut along the generatrix $AB$ passing t
 
 Consider the forces acting on a small piece of the thread (with horizontal projection $\Delta x$) indicated with red line in both figures. These are the tensions at both ends of the small piece exerted by neighbouring parts of the thread, the normal force $\Delta N$ and the friction force $\Delta f$ exerted by the cylinder. On the verge of slipping, the direction of $\Delta f$ is parallel to the $z$-axis. Since the small piece of thread is in equilibrium, the $x$-component of the tension is the same everywhere:
 
-$$T_x = \mathrm{const}.$$
+$$
+T_x = \mathrm{const}.
+$$
 
 The normal force $\Delta N$ can be determined by looking at the top view of the loop in *Fig. 1*. The polar angle corresponding to small piece of thread is $\Delta\varphi = \Delta x/R$, so the force balance in the radial direction can be written as
 
-$$2T_x\underbrace{\sin\frac{\Delta\varphi}{2}}_{\approx\Delta\varphi/2} - \Delta N = 0 \quad\longrightarrow\quad \Delta N = T_x\frac{\Delta x}{R}\,. \qquad (4)$$
+$$
+2T_x\underbrace{\sin\frac{\Delta\varphi}{2}}_{\approx\Delta\varphi/2} - \Delta N = 0 \quad\longrightarrow\quad \Delta N = T_x\frac{\Delta x}{R}\,. \qquad (4)
+$$
 
 The frictional force on the verge of slipping is given by
 
-$$\Delta f = \mu\Delta N\,. \qquad (5)$$
+$$
+\Delta f = \mu\Delta N\,. \qquad (5)
+$$
 
 Thus, the force balance on the small piece of thread in the $z$ direction (see *Fig. 2*):
 
-$$T_x\left.\frac{\mathrm{d}z}{\mathrm{d}x}\right|_{x+\Delta x} - T_x\left.\frac{\mathrm{d}z}{\mathrm{d}x}\right|_{x} - \Delta f = 0\,, \qquad (6)$$
+$$
+T_x\left.\frac{\mathrm{d}z}{\mathrm{d}x}\right|_{x+\Delta x} - T_x\left.\frac{\mathrm{d}z}{\mathrm{d}x}\right|_{x} - \Delta f = 0\,, \qquad (6)
+$$
 
 where we expressed the $z$-component of the tension forces with $T_x$ and the tangent $\mathrm{d}z/\mathrm{d}x$. Using the three equations above and taking the limit $\Delta x \to 0$, we get the differential equation
 
-$$\frac{\mathrm{d}^2z}{\mathrm{d}x^2} = \frac{\mu}{R}\,,$$
+$$
+\frac{\mathrm{d}^2z}{\mathrm{d}x^2} = \frac{\mu}{R}\,,
+$$
 
 where we used the fact that $T_x \neq 0$. By direct integration and taking into account the boundary conditions $z(0) = 0$ and $z'(0) = 0$ we get
 
-$$z(x) = \frac{\mu}{2R}x^2\,,$$
+$$
+z(x) = \frac{\mu}{2R}x^2\,,
+$$
 
 so the shape of the thread on the unfolded side surface (*Fig. 2*) can be described by a parabola.
 
 The thread needs to span over the entire cylinder, so its length can be calculated as
 
-$$L_0 = \int_{-\pi R}^{\pi R}\sqrt{\mathrm{d}x^2 + \mathrm{d}z^2} = 2\int_0^{\pi R}\sqrt{1+\left(\frac{\mathrm{d}z}{\mathrm{d}x}\right)^2}\,\mathrm{d}x\,.$$
+$$
+L_0 = \int_{-\pi R}^{\pi R}\sqrt{\mathrm{d}x^2 + \mathrm{d}z^2} = 2\int_0^{\pi R}\sqrt{1+\left(\frac{\mathrm{d}z}{\mathrm{d}x}\right)^2}\,\mathrm{d}x\,.
+$$
 
 Substituting the $z(x)$ function we get:
 
-$$L_0 = 2\int_0^{\pi R}\sqrt{1+\left(\frac{\mu x}{R}\right)^2}\,\mathrm{d}x = \left(\frac{R}{\mu}\right)2\int_0^{\pi\mu}\sqrt{1+\xi^2}\,\mathrm{d}\xi\,,$$
+$$
+L_0 = 2\int_0^{\pi R}\sqrt{1+\left(\frac{\mu x}{R}\right)^2}\,\mathrm{d}x = \left(\frac{R}{\mu}\right)2\int_0^{\pi\mu}\sqrt{1+\xi^2}\,\mathrm{d}\xi\,,
+$$
 
 where we introduced the notation $\xi = \mu x/R$. Using the integral given in the text of the problem:
 
-$$L_0 = \pi R\sqrt{1+(\pi\mu)^2} + \frac{R}{\mu}\operatorname{arcsinh}(\pi\mu)\,.$$
+$$
+L_0 = \pi R\sqrt{1+(\pi\mu)^2} + \frac{R}{\mu}\operatorname{arcsinh}(\pi\mu)\,.
+$$
 
 If the length of the thread is shorter than the length calculated here, then there is no solution satisfying the thread length constraint, i.e. the thread cannot slip.
 
 *Note.* In the limit $\mu \to 0$ the loop slips even if $L = 2\pi R$, which should be reproduced by our final formula. Using the relation for the inverse hyperbolic function given in the problem text, then expanding the logarithm in Taylor series in linear order around $0$ we get:
 
-$$\operatorname{arcsinh}x \equiv \ln\left(x+\sqrt{1+x^2}\right) \approx \ln(x+1) \approx x\,,$$
+$$
+\operatorname{arcsinh}x \equiv \ln\left(x+\sqrt{1+x^2}\right) \approx \ln(x+1) \approx x\,,
+$$
 
 so for small values of $\mu$ we get
 
-$$L_0 \approx \pi R + \frac{R}{\mu}(\pi\mu) = 2\pi R\,.$$
+$$
+L_0 \approx \pi R + \frac{R}{\mu}(\pi\mu) = 2\pi R\,.
+$$
 
 | **Grading scheme: T2** | |
 |---|---|

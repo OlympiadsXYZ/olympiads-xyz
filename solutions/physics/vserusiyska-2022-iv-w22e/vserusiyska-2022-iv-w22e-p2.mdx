@@ -24,39 +24,57 @@ verifier: 'mechanical'
 
 В практической основе МНК лежит минимизация суммы квадратов отклонений экспериментальных точек от некоторой моделирующей (фитирующей) кривой. Пусть задан набор некоторый точек $(x_i, y_i)$, количество пар точек равно $n$. Зададим некоторую моделирующую функцию $f = f(x, a_1, a_2, \ldots)$, где $a_1, a_2, \ldots$ – параметры функции, которые можно варьировать. Вариация параметров должна привести к тому, что следующая сумма должна быть минимальной:
 
-$$S = \sum_n \Delta y_i^2 = \sum_n \left(y_i - f(x_i, a_1, a_2, \ldots)\right)^2 \to \min_{a_1, a_2, \ldots}$$
+$$
+S = \sum_n \Delta y_i^2 = \sum_n \left(y_i - f(x_i, a_1, a_2, \ldots)\right)^2 \to \min_{a_1, a_2, \ldots}
+$$
 
 Задача минимизации этой суммы сводится к решению системы уравнений:
 
-$$\begin{cases} \dfrac{\partial S}{\partial a_1} = 0 \\ \dfrac{\partial S}{\partial a_2} = 0 \\ \ldots \end{cases} \qquad (1)$$
+$$
+\begin{cases} \dfrac{\partial S}{\partial a_1} = 0 \\ \dfrac{\partial S}{\partial a_2} = 0 \\ \ldots \end{cases} \qquad (1)
+$$
 
 где значок $\partial$ обозначает дифференцирование по переменной, указанной в знаменателе, когда остальные переменные зафиксированы.
 
 Рассмотрим, как это работает, на примере хорошо вам известной линейной зависимости. Фитирующая функция – это $f(x) = kx + b$. Минимизируем следующую сумму: $S = \sum_n (y_i - kx_i - b)^2$. Согласно тому, что написано выше, получим систему
 
-$$\begin{cases} \dfrac{\partial S}{\partial k} = 0 = \sum_n 2(y_i - kx_i - b)(-x_i) \\ \dfrac{\partial S}{\partial b} = 0 = \sum_n 2(y_i - kx_i - b)(-1) \end{cases} \qquad (2)$$
+$$
+\begin{cases} \dfrac{\partial S}{\partial k} = 0 = \sum_n 2(y_i - kx_i - b)(-x_i) \\ \dfrac{\partial S}{\partial b} = 0 = \sum_n 2(y_i - kx_i - b)(-1) \end{cases} \qquad (2)
+$$
 
 Оба уравнения можно разделить на 2 и ничего не изменится. Таким образом, получим:
 
-$$\begin{cases} \sum_n (-x_i y_i) + \sum_n k x_i^2 + \sum_n b x_i = 0 \\ \sum_n (-y_i) + \sum_n k x_i + \sum_n b = 0 \end{cases} \qquad (3)$$
+$$
+\begin{cases} \sum_n (-x_i y_i) + \sum_n k x_i^2 + \sum_n b x_i = 0 \\ \sum_n (-y_i) + \sum_n k x_i + \sum_n b = 0 \end{cases} \qquad (3)
+$$
 
 и далее, вынося из-под знака суммы величины $k$ и $b$,
 
-$$\begin{cases} \sum_n x_i y_i = k \sum_n x_i^2 + b \sum_n x_i \\ \sum_n y_i = k \sum_n x_i + b \sum_n 1 \end{cases} \qquad (4)$$
+$$
+\begin{cases} \sum_n x_i y_i = k \sum_n x_i^2 + b \sum_n x_i \\ \sum_n y_i = k \sum_n x_i + b \sum_n 1 \end{cases} \qquad (4)
+$$
 
 видно, что мы получили систему линейных уравнений на параметры $k$ и $b$, решив ее, мы найдем те параметры $k$ и $b$, которые минимизируют исходную сумму. Коэффициенты в системе уравнений – это просто суммы по всему набору данных следующих величин $(x_i y_i), (x_i)^2, x_i, y_i$. Последний коэффициент $\sum_n 1$ перед $b$ – это просто число точек с данными, т.е. $\sum_n 1 = n$.
 
 Решив систему уравнений относительно $k$ и $b$, получим:
 
-$$k = \frac{-n\sum_n x_i y_i + \sum_n x_i \sum_n y_i}{-n\sum_n x_i^2 + \left(\sum_n x_i\right)^2}$$
+$$
+k = \frac{-n\sum_n x_i y_i + \sum_n x_i \sum_n y_i}{-n\sum_n x_i^2 + \left(\sum_n x_i\right)^2}
+$$
 
-$$b = \frac{-\sum_n x_i \sum_n x_i y_i + \sum_n x_i^2 \sum_n y_i}{-\left(\sum_n x_i\right)^2 + n\sum_n x_i^2}$$
+$$
+b = \frac{-\sum_n x_i \sum_n x_i y_i + \sum_n x_i^2 \sum_n y_i}{-\left(\sum_n x_i\right)^2 + n\sum_n x_i^2}
+$$
 
 Если числитель и знаменатель каждого выражения поделить на $n^2$, то получатся более изящные формулы:
 
-$$k = \frac{-\overline{xy} + \overline{x}\,\overline{y}}{-\overline{x^2} + \overline{x}^2}$$
+$$
+k = \frac{-\overline{xy} + \overline{x}\,\overline{y}}{-\overline{x^2} + \overline{x}^2}
+$$
 
-$$b = \frac{-\overline{x}\,\overline{xy} + \overline{x^2}\,\overline{y}}{-\overline{x}^2 + \overline{x^2}}$$
+$$
+b = \frac{-\overline{x}\,\overline{xy} + \overline{x^2}\,\overline{y}}{-\overline{x}^2 + \overline{x^2}}
+$$
 
 где черта означает усреднение величины по всему набору данных.
 
