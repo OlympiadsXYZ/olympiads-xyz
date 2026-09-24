@@ -249,3 +249,24 @@ test('a line that starts with a one-line $$…$$ becomes a display block; inline
   assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
   assert.doesNotMatch(compiled.stdout + compiled.stderr, /KaTeX parse error/);
 });
+
+test('printed lines keep their breaks, the masthead is one line, pipeline notes are not shown, marked-up points are not doubled', async t => {
+  const { lineBreaks } = await import('../problems-to-site.mjs');
+  assert.equal(lineBreaks(['---', 'id: x', '---', '', 'A) 5 km', 'B) 7 km', 'Тялото е', 'в покой.', '| a | b |', '|---|---|', '$$', 'x', '$$', 'Край'].join('\n')),
+    ['---', 'id: x', '---', '', 'A) 5 km  ', 'B) 7 km  ', 'Тялото е', 'в покой.', '| a | b |', '|---|---|', '$$', 'x', '$$', 'Край'].join('\n'));
+  const f = fixture(t), p = f.paper.problems[0];
+  f.paper.paper.title = 'НАЦИОНАЛНА ОЛИМПИАДА\n\nIII кръг\n10. 01. 2022';
+  f.paper.paper.caveat = 'Solutions incomplete in this window: handled by another window.';
+  p.parts = [{ label: 'a)', statement: 'Find the speed. **(2 points)**', points: 2 }, { label: 'b)', statement: 'Тяло с маса 3 т.', points: 3 }];
+  p.solution = { statement: 'Solution text.', incomplete: true, incompleteReason: 'The official solution covers part (a) only.' };
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  assert.ok(mdx.includes('*НАЦИОНАЛНА ОЛИМПИАДА · III кръг · 10. 01. 2022*'), mdx);
+  assert.doesNotMatch(mdx, /window/);
+  assert.ok(mdx.includes('The official solution covers part (a) only.'));
+  assert.ok(mdx.includes('**a)** Find the speed. **(2 points)**\n'));
+  assert.ok(mdx.includes('**b)** Тяло с маса 3 т. **[3 т.]**'));
+  const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), path.join(f.root, f.output)], { encoding: 'utf8' });
+  assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
+});

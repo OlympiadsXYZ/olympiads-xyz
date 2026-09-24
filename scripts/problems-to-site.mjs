@@ -209,8 +209,15 @@ function movedSolutionFigures(misplaced, solution) {
   return out;
 }
 
+// a transcribed "# Part I" / "## Solutions" would compete with the page's "## Условие" / "## Решение" (and enter the
+// table of contents): the text's top heading level becomes h3, deeper ones keep their distance
+function demoteHeadings(md) {
+  const levels = [...String(md).matchAll(/^(#{1,6})[ \t]/gm)].map(m => m[1].length);
+  const shift = levels.length ? Math.max(0, 3 - Math.min(...levels)) : 0;
+  return shift ? md.replace(/^(#{1,6})(?=[ \t])/gm, h => '#'.repeat(Math.min(6, h.length + shift))) : md;
+}
 function sourceText(text, problem) {
-  let rendered = mdText(text);
+  let rendered = demoteHeadings(mdText(text));
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
   for (const passage of [...(problem.sourceLayout?.underlines || [])].sort((a, b) => b.length - a.length)) {
     const needle = mdText(passage);
@@ -219,11 +226,25 @@ function sourceText(text, problem) {
   return rendered;
 }
 
+// page furniture read into a note ("1 / 4", "v3", a note that only repeats its title) is not shown; a bracketed
+// transcriber label ("[Бележка от източника]") loses its brackets
+const plainNote = t => String(t || '').replace(/[*_]/g, '').replace(/[.:]\s*$/, '').trim();
+const JUNK_NOTE = /^(?:(?:стр\.?|страница|page|p\.)\s*)?\d{1,3}\s*(?:\/|от|of|из)\s*\d{1,3}$|^-?\s*\d{1,3}\s*-?$|^v\d+(?:\.\d+)*$/i;
 function documentNoteLines(paper, position) {
-  return (paper.documentNotes || []).filter(n => n.position === position).flatMap(note => [
-    `<details>`, `<summary>${mdText(note.title)}</summary>`, '', mdText(note.statement), '', `</details>`, '',
-  ]);
+  return (paper.documentNotes || []).filter(n => n.position === position)
+    .filter(n => !JUNK_NOTE.test(plainNote(n.statement)) && plainNote(n.statement) !== plainNote(n.title))
+    .flatMap(note => [
+      `<details>`, `<summary>${mdText(String(note.title).replace(/^\[(.+)\]$/, '$1'))}</summary>`, '', mdText(note.statement), '', `</details>`, '',
+    ]);
 }
+
+// caveat / incompleteReason are the transcriber's notes; one written about the transcription run ("not in this window",
+// "supplied source", "per rules") is not shown to visitors (the page has a standard line). A plain English note stays:
+// many papers are English.
+// A note that only mentions the transcription ("indices restored from context", "not transcribed from an official
+// solutions file") is an honest quality remark and stays.
+const PIPELINE_NOTE = /\b(?:window|assembl\w*|placeholders?|supplied source|per rules|mid-document)\b|прозор\w*|предоставен\w*|подготвения източник|сдвоен/i;
+const visitorNote = t => t && !PIPELINE_NOTE.test(t) ? mdText(t) : null;
 
 // Short Bulgarian names, same as the archive's COMPETITION_META (src/archive/labels.ts).
 const COMPETITION_SHORT = { NOF: 'НОФ', NAO: 'НОА', ESF: 'НЕСФ', PSF: 'НПСФ' };
@@ -318,6 +339,36 @@ function displayFences(seg, before) {
 // drop as its meta), and every line inside a display block, a code fence or the frontmatter.
 const ONE_LINE_DISPLAY = /^([ \t]{0,3})\$\$((?:(?!\$\$)[^\n])+?)\$\$[ \t]*(.*)$/;
 const OPENS_BLOCK = /^(?:[-+*](?:[ \t]|$)|\d{1,9}[.)](?:[ \t]|$)|#{1,6}(?:[ \t]|$)|[>|<{]|=+[ \t]*$|`{3}|~{3}|\$\$)/;
+// Runs after displayMathLines in problemMdx: a single newline between two prose lines
+// becomes a Markdown hard break ("  \n") unless the first line is a wrapped sentence (ends in a lowercase letter, comma
+// or hyphen and the next line continues in lowercase, not with an "а)" item). Lines that open or belong to other blocks
+// (table rows, list items, headings, quotes, fences, JSX tags, "$$" blocks, frontmatter) are left alone.
+export function lineBreaks(mdx) {
+  const lines = String(mdx).split('\n');
+  let frontmatter = lines[0] === '---', code = false, block = false;
+  const BLOCK = /^\s*(?:\||[-+*](?:[ \t]|$)|\d{1,9}[.)](?:[ \t]|$)|#{1,6}(?:[ \t]|$)|>|<|`{3}|~{3}|\$\$|=+\s*$|-{3,}\s*$|\{\/\*)/;
+  const prose = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (frontmatter) { if (i > 0 && line === '---') frontmatter = false; prose.push(false); continue; }
+    if (block) { if (/^[ \t]*\$\$[ \t]*$/.test(line)) block = false; prose.push(false); continue; }
+    if (/^[ \t]{0,3}(?:`{3,}|~{3,})/.test(line)) { code = !code; prose.push(false); continue; }
+    if (code) { prose.push(false); continue; }
+    if (/^[ \t]*\$\$[^$]*$/.test(line)) { block = !/^[ \t]*\$\$.*\$\$[ \t]*$/.test(line); prose.push(false); continue; }
+    prose.push(line.trim() !== '' && !BLOCK.test(line));
+  }
+  for (let i = 0; i + 1 < lines.length; i++) {
+    if (!prose[i] || !prose[i + 1]) continue;
+    const a = lines[i], b = lines[i + 1];
+    if (/(?: {2,}|\\)$/.test(a) || /^· /.test(b)) continue; // the footer's "· официални решения" stays on its line
+    const item = /^\s*(?:\*\*|\*)?[\p{L}\d]{1,2}\s?[).](?:\*\*|\*)?\s/u.test(b);
+    const wrap = !item && /[\p{Ll},\-–(]$/u.test(a.trimEnd()) && /^\s*[\p{Ll}(]/u.test(b);
+    if (wrap) continue;
+    lines[i] = a.replace(/[ \t]*$/, '  ');
+  }
+  return lines.join('\n');
+}
+
 export function displayMathLines(mdx) {
   const lines = String(mdx).split('\n'), out = [];
   // block: inside a "$$" fence, which only a "$$" line of its own closes; span: text math that runs on to a later line
@@ -361,13 +412,16 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push('---');
   lines.push('');
   // Lead line: the paper's printed masthead (ground truth), the date and the points.
+  // the printed masthead is often several lines (201 papers), some with blank lines that split the italic lead into
+  // paragraphs with a literal "*" at each end: one line, escaped like every other prose field
+  const masthead = paper.title ? mdText(String(paper.title).split(/\s*\n\s*/).filter(Boolean).join(' · ').replace(/[ \t]{2,}/g, ' ')) : null;
   const lead = [
-    paper.title || null,
+    masthead,
     paper.held?.from ? dateBg(paper.held.from) : null,
     problem.points != null ? `${String(problem.points).replace('.', ',')} т.` : null,
   ].filter(Boolean);
   if (lead.length) lines.push(`*${lead.join(' · ')}*`, '');
-  if (paper.caveat) lines.push('<Warning title="Бележка към темата">', mdText(paper.caveat), '</Warning>', '');
+  if (visitorNote(paper.caveat)) lines.push('<Warning title="Бележка към темата">', visitorNote(paper.caveat), '</Warning>', '');
   lines.push(...documentNoteLines(paper, 'before-problem'));
   lines.push(`## Условие`);
   lines.push('');
@@ -379,12 +433,18 @@ function problemMdx(paper, problem, state, sourceFile) {
   for (const fig of figuresNotInline(problem.figures, problem.statement, problem.statementAfterParts, ...partTexts).filter(inStatement)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
     for (const part of problem.parts) {
-      const printedPoints = /\*{1,2}(\d+(?:[.,]\d+)?)\s*(?:т\.|точк[аи]\.?)[;:]?\*{1,2}\s*$/u.exec(String(part.statement));
+      const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
+      // the statement may already print its points at its end, marked up: "**2 т.**", "*2 точки;*", "(1 point)",
+      // "**[2.5 points]**" — never bare prose ("Тяло с маса 3 т." is a mass of 3 tonnes)
+      const printedPoints = /(?:\*{1,2}[(\[]?|[(\[])\s*(\d+(?:[.,]\d+)?)\s*(?:т\.?|точк[аи]\.?|точки|pts?\.?|points?|marks?|бал(?:л|ла|лов|а)?\.?)(?![\p{L}])\s*[.;:]?\s*(?:[)\]]\**|\*{1,2})\s*[.;:]?\s*$/iu.exec(String(text).trimEnd());
       const alreadyPrinted = printedPoints && Number(printedPoints[1].replace(',', '.')) === part.points;
       const pts = part.points != null && !alreadyPrinted ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
       // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
-      const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
-      lines.push(`${part.label && part.label !== '*' ? `**${part.label}** ` : ''}${sourceText(text, problem)}${pts}`); // an unlabelled printed part has an empty label
+      // a statement that opens with a table or a heading keeps the label on a line of its own (glued, the block does not
+      // start), and one that ends with a table row gets its points after the table (in the row, GFM drops the extra cell)
+      const body = sourceText(text, problem), label = part.label && part.label !== '*' ? `**${part.label}**` : ''; // an unlabelled printed part has an empty label
+      const opensBlock = /^\s*(?:\||#{1,6}[ \t])/.test(body), endsInRow = /(?:^|\n)[ \t]*\|[^\n]*$/.test(body.trimEnd());
+      lines.push(`${label ? label + (opensBlock ? '\n\n' : ' ') : ''}${body}${pts && endsInRow ? '\n\n' + pts.trim() : pts}`);
       lines.push('');
       for (const fig of figuresNotInline(part.figures, part.statement, part.statementAfter).filter(inStatement)) lines.push(figureMarkdown(fig), '');
       if (part.statementAfter) lines.push(sourceText(part.statementAfter, problem), '');
@@ -410,7 +470,7 @@ function problemMdx(paper, problem, state, sourceFile) {
   if (sol?.statement || sol?.incomplete || solutionFigures.length) {
     lines.push('## Решение', '');
     if (sol?.incomplete) {
-      lines.push('<Warning title="Непълно решение">', mdText(sol.incompleteReason) || 'Решението предстои да бъде довършено.', '</Warning>', '');
+      lines.push('<Warning title="Непълно решение">', visitorNote(sol.incompleteReason) || (sol.statement ? 'Официалното решение е непълно.' : 'В архива няма официално решение на тази задача.'), '</Warning>', '');
     }
     if (sol?.statement) lines.push('<Spoiler title="Покажи официалното решение">', '', sourceText(sol.statement, problem), '');
     else if (solutionFigures.length) lines.push('<Spoiler title="Покажи фигурите от официалното решение">', '');
@@ -437,7 +497,7 @@ function problemMdx(paper, problem, state, sourceFile) {
     }
     lines.push('');
   }
-  return displayMathLines(lines.join('\n'));
+  return lineBreaks(displayMathLines(lines.join('\n')));
 }
 
 // "III Национален кръг" -> "III"; keeps the slug short while staying unique
@@ -479,9 +539,25 @@ function problemInfo(paper, problem) {
 }
 
 function withPage(url, page) { return Number.isInteger(page) && page > 0 ? `${url}#page=${page}` : url; }
+// 2e+30 -> 2 \times 10^{30}, 10000000000 -> 1 \times 10^{10}; any other number prints as the data holds it (the decimal
+// separator is the paper's language's business, and English papers use a point)
+function texNumber(v) {
+  const s = Math.abs(v) >= 1e6 || (v !== 0 && Math.abs(v) < 1e-4) ? v.toExponential().replace(/\.?0+e/, 'e') : String(Number(v.toPrecision(12)));
+  const [m, e] = s.split('e');
+  return e ? `${m} \\times 10^{${Number(e)}}` : m;
+}
+// plain-text values print "10^9", "km s^-1", "M_gas": exponents become superscripts, subscripts <sub>
+const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻', '−': '⁻', '+': '⁺', '.': '·' };
+const plainScripts = t => t.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/).map((seg, i) => i % 2 ? seg : seg
+  .replace(/\^(?:\\?\{)?([-−+]?\d+(?:\.\d+)?)(?:\\?\})?/g, (_, d) => [...d].map(c => SUP[c] ?? c).join('')) // mdText has escaped the braces
+  .replace(/(?<=[\p{L}\d)])_(?:\\?\{)?([\p{L}\d]{1,8})(?:\\?\})?(?![\p{L}\d])/gu, '<sub>$1</sub>')).join('');
+// the formula shows the value when its leading digits appear in it ("\approx 36.76\ \text{km/s}")
+const showsValue = (latex, v) => latex.replace(/\{,\}|[{}\\ ,.]/g, '').includes(Math.abs(v).toExponential(6).split('e')[0].replace('.', '').replace(/0+$/, '').slice(0, 2) || '0');
 function renderAnswer(answer) {
-  if (answer.latex) return `$${answer.latex}$`;
-  if (answer.value != null) return mdText(String(answer.value)) + (answer.unit ? ` ${answer.unit}` : '');
+  const unit = answer.unit ? ` ${plainScripts(mdText(String(answer.unit)))}` : '';
+  if (answer.latex) return `$${answer.latex}$` + (typeof answer.value === 'number' && !showsValue(answer.latex, answer.value) ? ` ≈ $${texNumber(answer.value)}$${unit}` : '');
+  if (typeof answer.value === 'number') return /e/i.test(String(answer.value)) || Math.abs(answer.value) >= 1e6 ? `$${texNumber(answer.value)}$${unit}` : mdText(String(answer.value)) + unit;
+  if (answer.value != null) return plainScripts(mdText(String(answer.value))) + unit;
   // An integer choice index is zero-based only when the source explicitly
   // includes the choices array; otherwise preserve the printed identifier.
   if (answer.kind === 'choice' && answer.correct != null) {
