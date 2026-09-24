@@ -41,13 +41,17 @@ export const SidebarNav = () => {
 
   const [activeSection, setActiveSection] = useState(oriSection);
 
+  // Only chapters with published modules: most chapters are the planned syllabus (the section page lists them as
+  // coming), and here they were accordions with nothing inside — mechanics showed "Кинематика" twice.
   const links: NavLinkGroup[] = React.useMemo(() => {
-    return MODULE_ORDERING[activeSection].map((category: Chapter) => ({
-      label: category.name,
-      children: category.items.map(
-        moduleID => sidebarLinks.find(link => link.id === moduleID)! // lol O(n^2)?
-      ),
-    }));
+    return MODULE_ORDERING[activeSection]
+      .filter((category: Chapter) => category.items.length > 0)
+      .map((category: Chapter) => ({
+        label: category.name,
+        children: category.items.map(
+          moduleID => sidebarLinks.find(link => link.id === moduleID)! // lol O(n^2)?
+        ),
+      }));
   }, [activeSection, sidebarLinks]);
 
   return (
@@ -62,6 +66,11 @@ export const SidebarNav = () => {
         </div>
       </div>
       <div className="flex-1 h-0 overflow-y-auto">
+        {links.length === 0 && (
+          <p className="px-4 py-3 text-sm text-gray-500 dark:text-dark-med-emphasis">
+            В този раздел още няма публикувани модули.
+          </p>
+        )}
         {links.map(group => (
           <Accordion
             key={group.label}
