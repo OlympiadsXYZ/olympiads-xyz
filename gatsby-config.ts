@@ -9,7 +9,7 @@ const flags = {
 
 const siteMetadata = {
   title: `Olympiads XYZ`,
-  description: `A free comprehensive, well-organized resource from bulgarian science olympiad contenders designed to help students prepare for science olympiads, with a current focus on physics. Made by students, for students.`,
+  description: `Безплатни материали и архив с хиляди транскрибирани задачи от олимпиади и състезания по физика, астрономия, химия и география, с официални решения.`,
   author: `@olympiadsxyz`,
   siteUrl: `${SITE_URL}/`,
   keywords: ['Olympiads XYZ', 'Physics', 'Student olympiads'],
@@ -19,7 +19,13 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-sitemap',
     options: {
-      excludes: ['/license/', '/editor/'],
+      excludes: [
+        '/license/',
+        '/editor/',
+        '/editor/**',
+        '/dashboard/',
+        '/settings/',
+      ],
     },
   },
   {
