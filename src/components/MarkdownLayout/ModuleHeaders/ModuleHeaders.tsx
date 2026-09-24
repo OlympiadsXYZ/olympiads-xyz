@@ -64,6 +64,7 @@ export default function ModuleHeaders({
   const problemSolutionContext = useContext(ProblemSolutionContext);
   const problem = problemSolutionContext?.problem;
   const verification = problemSolutionContext?.verification;
+  const suffix = useSuffix(); // a hook: called on every render, the link below is conditional
 
   // either prerequisites for modules or appears in for problems
   let moduleHeaderLinks: { label: string; url?: string }[];
@@ -243,13 +244,17 @@ export default function ModuleHeaders({
             )}
           </Menu> */}
 
+          {/* a transcribed problem page is generated from its paper JSON (scripts/problems-to-site.mjs): an edit
+              made to the page would be overwritten on the next publication, so it gets no editor link */}
+          {!verification && (
           <Link
-            to={`/editor?filepath=${useSuffix()}`}
+            to={`/editor?filepath=${suffix}`}
             className="text-sm font-medium text-gray-600 hover:text-gray-900 my-0 dark:text-gray-400 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
           >
             <span>{t('edit_this_page')}</span>
             <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300" />
           </Link>
+          )}
         </div>
 
         {moduleHeaderLinks?.length > 0 && (
