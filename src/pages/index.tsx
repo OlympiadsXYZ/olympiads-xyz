@@ -154,7 +154,9 @@ export default function IndexPage(): JSX.Element {
 
           <div className="flex md:justify-center md:text-xl text-gray-600 dark:text-gray-400">
             <a
-              href="/"
+              href="https://usaco.guide"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center space-x-3 md:space-x-4"
             >
               <div className="h-9 w-9">
