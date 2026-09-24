@@ -77,7 +77,13 @@ const TYPE_COLORS: { [t: string]: string } = {
   results: 'amber',
 };
 
-export function EntryRow({ entry }: { entry: ClientEntry }): JSX.Element {
+export function EntryRow({
+  entry,
+  showRound = false,
+}: {
+  entry: ClientEntry;
+  showRound?: boolean;
+}): JSX.Element {
   const url = entryUrl(entry.key);
   const inner = (
     <>
@@ -86,6 +92,7 @@ export function EntryRow({ entry }: { entry: ClientEntry }): JSX.Element {
       </span>
       <span className="flex-1 min-w-0 break-words">{entry.title}</span>
       <span className="flex-none flex items-center gap-1.5">
+        {showRound && entry.round && <Badge>{label(ROUND_LABELS, entry.round)}</Badge>}
         <Badge color={TYPE_COLORS[entry.type]}>
           {label(TYPE_LABELS, entry.type)}
         </Badge>
@@ -140,6 +147,26 @@ export function sortEntries(entries: ClientEntry[]): ClientEntry[] {
   );
 }
 
+// Rows of one visible list, already sorted.
+function EntryRows({
+  entries,
+  showRound = false,
+}: {
+  entries: ClientEntry[];
+  showRound?: boolean;
+}): JSX.Element {
+  return (
+    <>
+      {entries.map(e => (
+        <EntryRow key={e.id} entry={e} showRound={showRound} />
+      ))}
+    </>
+  );
+}
+
+const NO_ROUND = '__none';
+const RESULTS = '__results';
+
 export function EntryList({
   entries,
   groupByRound = false,
@@ -151,34 +178,34 @@ export function EntryList({
   if (!groupByRound) {
     return (
       <div className="divide-y divide-gray-100 dark:divide-gray-800">
-        {sorted.map(e => (
-          <EntryRow key={e.id} entry={e} />
-        ))}
+        <EntryRows entries={sorted} />
       </div>
     );
   }
+  // Протоколите и класиранията са в отделна секция „Резултати“ накрая (с
+  // кръга като значка на реда); всичко останало е по кръгове.
   const byRound: { [r: string]: ClientEntry[] } = {};
   sorted.forEach(e => {
-    const r = e.round ?? '__none';
+    const r = e.type === 'results' ? RESULTS : e.round ?? NO_ROUND;
     if (!byRound[r]) byRound[r] = [];
     byRound[r].push(e);
   });
-  const roundKeys = Object.keys(byRound).sort(
-    (a, b) =>
-      roundSortKey(a === '__none' ? null : a) -
-      roundSortKey(b === '__none' ? null : b)
-  );
+  const sectionKey = (r: string) =>
+    r === RESULTS ? ROUND_ORDER.length + 2 : roundSortKey(r === NO_ROUND ? null : r);
+  const roundKeys = Object.keys(byRound).sort((a, b) => sectionKey(a) - sectionKey(b));
   return (
     <div className="space-y-6">
       {roundKeys.map(r => (
         <div key={r}>
           <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1 px-3">
-            {r === '__none' ? 'Общи материали' : label(ROUND_LABELS, r)}
+            {r === RESULTS
+              ? 'Резултати'
+              : r === NO_ROUND
+              ? 'Общи материали'
+              : label(ROUND_LABELS, r)}
           </h3>
           <div className="divide-y divide-gray-100 dark:divide-gray-800">
-            {byRound[r].map(e => (
-              <EntryRow key={e.id} entry={e} />
-            ))}
+            <EntryRows entries={byRound[r]} showRound={r === RESULTS} />
           </div>
         </div>
       ))}
@@ -359,9 +386,7 @@ export function LibraryTree({
             </span>
           </summary>
           <div className="px-2 pb-2 divide-y divide-gray-100 dark:divide-gray-800">
-            {sortEntries(byFolder[f]).map(e => (
-              <EntryRow key={e.id} entry={e} />
-            ))}
+            <EntryRows entries={sortEntries(byFolder[f])} />
           </div>
         </details>
       ))}

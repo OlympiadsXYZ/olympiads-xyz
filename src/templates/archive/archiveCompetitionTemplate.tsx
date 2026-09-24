@@ -42,6 +42,9 @@ export default function ArchiveCompetitionTemplate({ pageContext }: Props): JSX.
     filters.type.length ||
     filters.lang.length;
   const filtered = active ? applyFilters(entries, filters) : null;
+  // Сборници, бележки, регламенти и протоколи без година нямат своя
+  // годишна страница — показват се под годините.
+  const undated = entries.filter(e => e.year == null);
 
   return (
     <Layout>
@@ -85,17 +88,33 @@ export default function ArchiveCompetitionTemplate({ pageContext }: Props): JSX.
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
-              {years.map(y => (
-                <Link
-                  key={y}
-                  to={`/archive/${science}/${slug}/${y}/`}
-                  className="block text-center py-2.5 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 font-semibold text-gray-800 dark:text-gray-100 hover:border-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors tabular-nums"
-                >
-                  {y}
-                </Link>
-              ))}
-            </div>
+            <>
+              <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2">
+                {years.map(y => (
+                  <Link
+                    key={y}
+                    to={`/archive/${science}/${slug}/${y}/`}
+                    className="block text-center py-2.5 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 font-semibold text-gray-800 dark:text-gray-100 hover:border-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors tabular-nums"
+                  >
+                    {y}
+                  </Link>
+                ))}
+              </div>
+              {undated.length > 0 && (
+                <>
+                  <h2
+                    className={`text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 ${
+                      years.length ? 'mt-10' : ''
+                    }`}
+                  >
+                    Без година
+                  </h2>
+                  <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                    <EntryList entries={undated} />
+                  </div>
+                </>
+              )}
+            </>
           )}
         </div>
       </div>

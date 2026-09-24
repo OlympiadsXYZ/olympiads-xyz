@@ -129,10 +129,15 @@ export function groupCatalog(entries: CatalogEntry[]): { [science: string]: Scie
       out[e.subject] = { science: e.subject, competitions: {}, library: [], uncategorized: [] };
     }
     const s = out[e.subject];
-    if (e.kind === 'competition' && e.competition) {
+    const shelf = e.kind === 'book' || e.kind === 'handout';
+    // Принадлежността към състезание е `competition !== null`, не `kind`
+    // (Archive-Schema.md §3.2): протоколите (`results`), регламентите
+    // (`syllabus`) и програмите/данните (`misc`) на състезанието стоят на
+    // неговите страници, не в „Други материали“. Книгите остават на рафта.
+    if (e.competition && !shelf) {
       if (!s.competitions[e.competition]) s.competitions[e.competition] = [];
       s.competitions[e.competition].push(toClientEntry(e));
-    } else if (e.kind === 'book' || e.kind === 'handout') {
+    } else if (shelf) {
       s.library.push(toClientEntry(e, true));
     } else {
       s.uncategorized.push(toClientEntry(e, true));
