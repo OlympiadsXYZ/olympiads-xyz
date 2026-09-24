@@ -772,7 +772,13 @@ exports.createSchemaCustomization = ({ actions }) => {
   createTypes(typeDefs);
 };
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
-exports.onCreateWebpackConfig = ({ actions, stage, loaders, plugins }) => {
+exports.onCreateWebpackConfig = ({
+  actions,
+  stage,
+  loaders,
+  plugins,
+  getConfig,
+}) => {
   actions.setWebpackConfig({
     resolve: {
       alias: {
@@ -820,6 +826,14 @@ exports.onCreateWebpackConfig = ({ actions, stage, loaders, plugins }) => {
       },
     });
   }
+  // Fonts are always files. Gatsby's font rule inlines anything under 10 KB as a data URI, so six KaTeX fonts
+  // (Caligraphic, Script, Size1–4) went into the CSS as base64, and Gatsby inlines the CSS into every page: ~118 KB of
+  // each HTML file (280 KB of inline CSS). As files they are fetched once, cached, and only where a formula uses them.
+  const config = getConfig();
+  for (const rule of config.module?.rules ?? []) {
+    if (rule && String(rule.test).includes('woff')) rule.use = [loaders.file()];
+  }
+  actions.replaceWebpackConfig(config);
 };
 
 const getGitAuthorTime = (filePath: string): string => {
