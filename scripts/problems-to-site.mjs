@@ -27,7 +27,10 @@ const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resol
 const PROBLEMS_DIR = path.join(ROOT, 'content', 'problems');
 const SOLUTIONS_DIR = path.join(ROOT, 'solutions');
 const EXTRA = path.join(ROOT, 'content', 'extraProblems.json');
-const ARCHIVE_BASE = 'https://olympiads-xyz.vercel.app/archive';
+// the canonical host (SITE_URL in the deploy workflow): its /archive/<science>/* rewrite serves the bucket's PDFs.
+// Problem links used the vercel.app alias, so every PDF opened on a second origin. Absolute on purpose:
+// getProblemInfo (src/models/problem.ts) refuses a problem url that does not start with http.
+const ARCHIVE_BASE = 'https://www.olympiads.xyz/archive';
 const check = process.argv.includes('--check');
 
 const SCIENCE_PREFIX = {
