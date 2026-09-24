@@ -3,6 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import {
+  Level,
   LEVELS,
   LEVEL_LABELS,
   SECTION_LABELS,
@@ -160,12 +161,30 @@ export default function Template(props) {
   const taggedLevels = LEVELS.filter(option =>
     allChapters.some(chapter => chapter.levels?.includes(option))
   );
-  // Never show an empty section: if the global level has no categories
-  // here, display the first level that does (global level stays unchanged).
+  // Levels with at least one published module here. Most chapters are the
+  // planned syllabus with no modules yet: mechanics has modules only under
+  // «Специална тема», so the default 9–10 showed an empty page with 0 modules.
+  const levelsWithModules = taggedLevels.filter(option =>
+    allChapters.some(
+      chapter => chapter.levels?.includes(option) && chapter.items.length > 0
+    )
+  );
+  // Never show an empty section: if the global level has no modules here,
+  // display the first level that does (global level stays unchanged). A level
+  // picked on this page is shown as picked, modules or not, until the global
+  // level changes elsewhere.
+  const [pickedLevel, setPickedLevel] = React.useState<Level | null>(null);
   const displayLevel =
-    taggedLevels.length === 0 || taggedLevels.includes(level)
+    pickedLevel !== null && pickedLevel === level
       ? level
-      : taggedLevels[0];
+      : taggedLevels.length === 0 || levelsWithModules.includes(level)
+      ? level
+      : levelsWithModules[0] ??
+        (taggedLevels.includes(level) ? level : taggedLevels[0]);
+  const pickLevel = (option: Level) => {
+    setPickedLevel(option);
+    setLevel(option);
+  };
   // a chapter without `levels` is visible everywhere; before hydration
   // show everything (SSR stability)
   const chapterVisible = (chapter: (typeof allChapters)[0]) =>
@@ -225,7 +244,7 @@ export default function Template(props) {
                   {taggedLevels.map(option => (
                     <button
                       key={option}
-                      onClick={() => setLevel(option)}
+                      onClick={() => pickLevel(option)}
                       className={`px-3 py-1 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-white/60 ${
                         levelReady && option === displayLevel
                           ? 'bg-white text-gray-900'
@@ -236,6 +255,14 @@ export default function Template(props) {
                     </button>
                   ))}
                 </div>
+              )}
+              {levelReady && displayLevel !== level && (
+                <p
+                  className={`${HeroTextColor[division]} text-center text-sm -mt-4 sm:-mt-8 mb-8 px-4`}
+                >
+                  За {LEVEL_LABELS[level]} в този раздел още няма модули —
+                  показваме {LEVEL_LABELS[displayLevel]}.
+                </p>
               )}
               <div className="grid max-w-2xl mx-auto lg:max-w-full lg:grid-cols-2 gap-8">
                 <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg">
@@ -303,6 +330,11 @@ export default function Template(props) {
                   </p>
                 </div>
                 <div className="flex-1 pl-12">
+                  {category.items.length === 0 && (
+                    <p className="py-3 text-sm italic text-gray-400 dark:text-gray-500">
+                      Модулите в тази глава предстоят.
+                    </p>
+                  )}
                   {category.items.map(item => (
                     <ModuleLink
                       key={item.frontmatter.id}

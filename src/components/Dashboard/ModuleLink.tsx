@@ -133,7 +133,12 @@ function time_ago(time: unknown): string {
     return moment(time as string).fromNow();
   }
 }
+  // "N days ago" depends on the clock: the static HTML was rendered at build time, so it is computed only after
+  // hydration (a server/client text mismatch made React discard and re-render the whole section page)
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
   function timeAgoString(time: unknown): string {
+    if (!mounted) return '';
     const res = time_ago(time);
     return res && `${t('updated')}: ${res}`;
   }
