@@ -216,8 +216,32 @@ function demoteHeadings(md) {
   const shift = levels.length ? Math.max(0, 3 - Math.min(...levels)) : 0;
   return shift ? md.replace(/^(#{1,6})(?=[ \t])/gm, h => '#'.repeat(Math.min(6, h.length + shift))) : md;
 }
+// Placeholders a reader left where a figure is printed: "![alt](p2-sol-fig1)", "![alt](#p1-sol-fig2)",
+// "[[figure p2-sol-fig1]]", "[Figure: p1-sol-fig1]". The site read the image ones as relative URLs: 45 broken images on
+// 9 pages, the real figure shown elsewhere (rmph-2011-experiment-exp p2, apho-2023-theory-t1). Each now shows its
+// figure in place (figuresNotInline then leaves it out of the blocks); one whose figure does not exist keeps only its
+// description. A written description of an uncropped figure ("[Фигура: хоризонтална схема…]") is left as it is.
+const FIGURE_ID = /p\d+(?:-sol)?-fig\d+[a-z]?/;
+function problemFigures(problem) {
+  return [...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...(problem.solution?.figures || [])].filter(f => f?.id && f.url);
+}
+export function resolveFigurePlaceholders(text, problem) {
+  if (!text) return text;
+  const byId = new Map(problemFigures(problem).map(f => [f.id, f]));
+  const image = (alt, fig) => `![${String(alt || fig.alt || fig.caption || '').replace(/\s*\n\s*/g, ' ').replace(/[[\]]/g, '').trim()}](${fig.url})`;
+  return String(text)
+    .replace(/!\[([^\]\n]*)\]\((?!https?:|\/)([^)\s]*)\)/g, (m, alt, target) => {
+      const fig = byId.get((target.match(FIGURE_ID) || [])[0]);
+      if (fig) return image(alt, fig);
+      return alt.trim() ? `*[${alt.trim()}]*` : '';
+    })
+    .replace(/\[\[figure:?\s*(p\d+(?:-sol)?-fig\d+[a-z]?)\s*\]\]|\[(?:figure|фигура)\s*:\s*(p\d+(?:-sol)?-fig\d+[a-z]?)\s*\]/giu, (m, a, b) => {
+      const fig = byId.get(a || b);
+      return fig ? image('', fig) : m;
+    });
+}
 function sourceText(text, problem) {
-  let rendered = demoteHeadings(mdText(text));
+  let rendered = demoteHeadings(mdText(resolveFigurePlaceholders(text, problem)));
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
   for (const passage of [...(problem.sourceLayout?.underlines || [])].sort((a, b) => b.length - a.length)) {
     const needle = mdText(passage);
@@ -427,10 +451,11 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push('');
   lines.push(sourceText(problem.statement, problem).trimEnd());
   lines.push('');
-  const partTexts = (problem.parts ?? []).flatMap(p => [p.statement, p.statementAfter]);
+  const shown = t => resolveFigurePlaceholders(t, problem); // a placeholder shows its figure in place
+  const partTexts = (problem.parts ?? []).flatMap(p => [p.statement, p.statementAfter]).map(shown);
   const misplaced = misplacedSolutionFigures(paper, problem);
   const inStatement = fig => !misplaced.some(m => m.fig === fig);
-  for (const fig of figuresNotInline(problem.figures, problem.statement, problem.statementAfterParts, ...partTexts).filter(inStatement)) lines.push(figureMarkdown(fig), '');
+  for (const fig of figuresNotInline(problem.figures, shown(problem.statement), shown(problem.statementAfterParts), ...partTexts).filter(inStatement)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
     for (const part of problem.parts) {
       const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
@@ -446,7 +471,7 @@ function problemMdx(paper, problem, state, sourceFile) {
       const opensBlock = /^\s*(?:\||#{1,6}[ \t])/.test(body), endsInRow = /(?:^|\n)[ \t]*\|[^\n]*$/.test(body.trimEnd());
       lines.push(`${label ? label + (opensBlock ? '\n\n' : ' ') : ''}${body}${pts && endsInRow ? '\n\n' + pts.trim() : pts}`);
       lines.push('');
-      for (const fig of figuresNotInline(part.figures, part.statement, part.statementAfter).filter(inStatement)) lines.push(figureMarkdown(fig), '');
+      for (const fig of figuresNotInline(part.figures, shown(part.statement), shown(part.statementAfter)).filter(inStatement)) lines.push(figureMarkdown(fig), '');
       if (part.statementAfter) lines.push(sourceText(part.statementAfter, problem), '');
     }
   }
@@ -466,7 +491,7 @@ function problemMdx(paper, problem, state, sourceFile) {
   const sol = problem.solution;
   // solution figures found in the statement follow the solution's own figures, inside the same spoiler; without
   // solution text (an incomplete solution, or none at all) the figures still stay behind a spoiler
-  const solutionFigures = [...figuresNotInline(sol?.figures, sol?.statement), ...movedSolutionFigures(misplaced, sol)];
+  const solutionFigures = [...figuresNotInline(sol?.figures, shown(sol?.statement)), ...movedSolutionFigures(misplaced, sol && { ...sol, statement: shown(sol.statement) })];
   if (sol?.statement || sol?.incomplete || solutionFigures.length) {
     lines.push('## Решение', '');
     if (sol?.incomplete) {

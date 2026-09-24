@@ -270,3 +270,20 @@ test('printed lines keep their breaks, the masthead is one line, pipeline notes 
   const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), path.join(f.root, f.output)], { encoding: 'utf8' });
   assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
 });
+
+test('figure-id placeholders show their figure in place; one without a figure keeps only its description', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  const url = id => `https://example.org/${id}.png`;
+  p.figures = [{ id: 'p1-fig1', url: url('p1-fig1'), alt: 'Схема' }];
+  p.statement = 'Условие.\n\n![](p1-fig1)\n\nКрай.';
+  p.solution = { statement: 'Решение.\n\n![Графика](#p1-sol-fig1)\n\n[[figure p1-sol-fig2]]\n\n![Липсваща](p9-sol-fig9)', figures: [{ id: 'p1-sol-fig1', url: url('p1-sol-fig1'), alt: 'a' }, { id: 'p1-sol-fig2', url: url('p1-sol-fig2'), alt: 'Втора' }] };
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  assert.ok(mdx.includes(`![Схема](${url('p1-fig1')})`));
+  assert.ok(mdx.includes(`![Графика](${url('p1-sol-fig1')})`));
+  assert.ok(mdx.includes(`![Втора](${url('p1-sol-fig2')})`));
+  assert.ok(mdx.includes('*[Липсваща]*'));
+  for (const id of ['p1-fig1', 'p1-sol-fig1', 'p1-sol-fig2']) assert.equal(mdx.split(url(id)).length - 1, 1, id);
+  assert.doesNotMatch(mdx, /\]\((?!https?:)[^)]*\)|\[\[figure/);
+});
