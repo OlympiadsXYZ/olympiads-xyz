@@ -175,9 +175,11 @@ const SearchModalInterface: React.FC<SearchModalInterfaceProps> = ({
       setActive(i => Math.max(i - 1, -1));
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      if (active >= 0 && results[active]) open(results[active]);
-      else if (trimmed)
+      if (active >= 0 && results[active]) {
+        open(results[active]);
+      } else if (trimmed) {
         open({ key: 'all', href: allResultsURL, internal: true });
+      }
     }
   };
 
