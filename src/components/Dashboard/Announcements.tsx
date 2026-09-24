@@ -35,7 +35,7 @@ export default function Announcements({
           <div className="px-4 py-5 sm:p-6">
             {/* cursor-pointer */}
             <p className="text-sm leading-5 text-gray-500 dark:text-dark-med-emphasis">
-              {announcement.date}
+              {announcement.displayDate}
             </p>
             <h3 className="mt-2 text-xl leading-7 font-semibold text-gray-800 dark:text-dark-high-emphasis">
               {announcement.title}
