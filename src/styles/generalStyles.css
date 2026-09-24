@@ -428,6 +428,14 @@ html.transitioning-color-scheme * {
   /* Tailwind overrides border color; we need to un-override it so that fraction lines and stuff works */
   border-color: currentColor;
 }
+
+/* A display equation does not wrap: on a narrow screen it scrolls inside its own box instead of widening the page.
+   The padding keeps tall glyphs (integrals, stacked fractions) clear of the clipped vertical overflow. */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25em 0;
+}
 /*! purgecss end ignore */
 
 .tw-forms-disable input {
