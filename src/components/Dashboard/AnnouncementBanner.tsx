@@ -40,7 +40,7 @@ export default function AnnouncementBanner({ announcement, onDismiss }) {
               <button
                 type="button"
                 className="-mr-1 flex p-2 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 sm:-mr-2 transition ease-in-out duration-150"
-                aria-label="Dismiss"
+                aria-label="Затвори"
                 onClick={() => onDismiss()}
               >
                 <svg

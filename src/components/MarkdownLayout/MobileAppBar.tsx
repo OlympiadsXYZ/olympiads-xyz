@@ -10,7 +10,7 @@ export default function MobileAppBar() {
     <div className="sticky top-0 inset-x-0 bg-white dark:bg-dark-surface z-10 shadow lg:hidden pl-1 pt-1 flex items-center">
       <MobileMenuButtonContainer
         className="flex-shrink-0 -ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center"
-        aria-label="Open sidebar"
+        aria-label="Отвори страничното меню"
         onClick={() => setIsMobileNavOpen(true)}
       >
         <svg

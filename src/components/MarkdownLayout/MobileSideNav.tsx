@@ -44,7 +44,7 @@ export default function MobileSideNav() {
               <div className="absolute top-0 right-0 -mr-14 p-1">
                 <button
                   className="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
-                  aria-label="Close sidebar"
+                  aria-label="Затвори страничното меню"
                   onClick={() => setIsMobileNavOpen(false)}
                 >
                   <svg

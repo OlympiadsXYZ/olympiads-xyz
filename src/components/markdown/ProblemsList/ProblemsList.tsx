@@ -193,7 +193,7 @@ export function ProblemsList(unannotatedProps: ProblemsListProps): JSX.Element {
                 <button
                   type="button"
                   className="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150"
-                  aria-label="Close"
+                  aria-label="Затвори"
                   onClick={() => setShowModal(false)}
                 >
                   <svg

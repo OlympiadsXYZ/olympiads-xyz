@@ -1,4 +1,3 @@
-// eslint-disable react/no-unescaped-entities
 import { Link, PageProps } from 'gatsby';
 import * as React from 'react';
 import TopNavigationBar from '../components/TopNavigationBar/TopNavigationBar';
@@ -6,6 +5,9 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import '../i18n';
 import { useTranslation } from 'react-i18next';
+
+const linkClasses =
+  'text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline';
 
 export default function LicensePage(props: PageProps) {
   const { t } = useTranslation();
@@ -20,117 +22,80 @@ export default function LicensePage(props: PageProps) {
 
         <div className="mt-6 text-gray-900 text-lg dark:text-dark-high-emphasis">
           <p className="mb-4">
-            No part of this site may be used, reproduced, redistributed,
-            commercialized, or sold without prior written permission, except as
-            permitted under the{' '}
+            Собственото съдържание на Olympiads XYZ (текстовете на модулите,
+            подборът и подредбата на задачите и ресурсите) и изходният код на
+            сайта се разпространяват под лиценза{' '}
             <a
               rel="license noreferrer"
-              className={
-                'text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:underline'
-              }
-              href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
-              target={'_blank'}
+              className={linkClasses}
+              href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.bg"
+              target="_blank"
             >
               Creative Commons Attribution-NonCommercial-ShareAlike 4.0
-              International License
+              International (CC BY-NC-SA 4.0)
             </a>
-            .
-          </p>
-          <p className="mb-2">
-            "This site" includes, but is not limited to, the following:
-          </p>
-          <ul className="list-disc pl-10 mb-4">
-            <li>The format, layout, design, and features of the website</li>
-            <li>The contents of the Guide</li>
-            <li>
-              The structure and organization of topics listed in the guide
-            </li>
-            <li>Text content of each module</li>
-            <li>Problems and links listed in each module</li>
-          </ul>
-
-          <p className="mb-2">
-            Note: We provide examples below as a general summary of, but not a
-            substitute for,{' '}
+            . Пълният текст на лиценза е във файла{' '}
             <a
-              rel="license noreferrer"
-              className={
-                'text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:underline'
-              }
-              href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
-              target={'_blank'}
+              rel="noreferrer"
+              className={linkClasses}
+              href="https://github.com/OlympiadsXYZ/olympiads-xyz/blob/HEAD/LICENSE"
+              target="_blank"
             >
-              our license
-            </a>
-            .
+              LICENSE
+            </a>{' '}
+            в хранилището на проекта.
           </p>
           <p className="mb-2">
-            Examples of PERMITTED use cases that do not require prior written
-            permission include, but are not limited to, the following:
-          </p>
-          <ul className="list-disc pl-10 mb-4">
-            <li>Using these resources as an individual to improve</li>
-            <li>Sharing a link to these resources</li>
-            <li>
-              Using these resources as part of a FREE class/school club (if you
-              give credit where credit is due and provide a link to this site)
-              <ul className="list-disc pl-10">
-                <li>
-                  If you're offering free classes/are running a school club and
-                  would like specific resources, feel free to reach out to guide
-                  coordinator Nathan Wang (email below) and we will try our best
-                  to help!
-                </li>
-              </ul>
-            </li>
-            <li>
-              Writing FREELY AVAILABLE and OPEN SOURCE follow-up material
-              <ul className="list-disc pl-10">
-                <li>
-                  If you would like to contribute to this guide, please reach
-                  out to guide coordinator Nathan Wang; we'd greatly appreciate
-                  the help! Credit will be given where credit is due.
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <p className="mb-2">
-            Examples of use cases NOT PERMITTED without prior written permission
-            include, but are not limited to, the following:
+            Накратко, можете свободно да копирате, разпространявате и
+            преработвате материалите, при условие че спазвате следното:
           </p>
           <ul className="list-disc pl-10 mb-4">
             <li>
-              Hosting the contents of this website under a different website
-            </li>
-            <li>Using this guide in a paid class</li>
-            <li>
-              Using the curriculum (topic lists, topic ordering, problem sets,
-              resource lists), modified or otherwise, in a paid class
+              <strong>Признание</strong> — посочвате Olympiads XYZ като
+              източник, давате линк към сайта и към лиценза и отбелязвате, ако
+              сте направили промени;
             </li>
             <li>
-              Modifying the curriculum and selling access to the modified
-              curriculum or using the modified curriculum in a paid class
+              <strong>Некомерсиално</strong> — не използвате материалите с
+              търговска цел (например в платени курсове или за продажба);
+            </li>
+            <li>
+              <strong>Споделяне на споделеното</strong> — ако преработите
+              материалите, разпространявате резултата под същия лиценз.
             </li>
           </ul>
           <p className="mb-4">
-            We reserve the right to revoke permission to use any version of this
-            site at any time, including any or all of the permitted use cases
-            described above.
+            Това резюме не замества текста на лиценза; при разминаване важи
+            пълният текст.
+          </p>
+          <p className="mb-4">
+            Условията и официалните решения на олимпиадните задачи, както и
+            файловете в{' '}
+            <Link to="/archive/" className={linkClasses}>
+              Архива
+            </Link>
+            , са дело на съответните организатори и автори и авторските права
+            върху тях принадлежат на тях; лицензът по-горе не се отнася за тях.
+          </p>
+          <p className="mb-4">
+            Сайтът е изграден върху отворения код на{' '}
+            <a
+              rel="noreferrer"
+              className={linkClasses}
+              href="https://usaco.guide"
+              target="_blank"
+            >
+              USACO Guide
+            </a>
+            .
           </p>
           <p className="mb-6">
-            If you have questions regarding the usage of this site, or would
-            like to request to use these resources outside of the authorized use
-            cases described above, please contact us at{' '}
-            <a
-              href="mailto:usacoguide@gmail.com"
-              className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline"
-            >
+            Ако имате въпроси за използването на материалите или искате да ги
+            използвате извън условията на лиценза, пишете ни на{' '}
+            <a href="mailto:olympiads.xyz@gmail.com" className={linkClasses}>
               olympiads.xyz@gmail.com
             </a>
             .
-            {/* While USACO Director Dr. Brian Dean will make all final decisions, */}
-            {/* please do not contact him directly. Instead, direct any questions */}
-            {/* related to the USACO Guide to the coordinator, Nathan Wang. */}
           </p>
           <Link
             to="/"
