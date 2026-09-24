@@ -7,7 +7,6 @@ import {
   ChatAltIcon,
   ChevronDownIcon,
   CogIcon,
-  ExternalLinkIcon,
   LoginIcon,
   LogoutIcon,
   PresentationChartLineIcon,
@@ -149,7 +148,7 @@ export default function TopNavigationBar({
       {!hidePromoBar && (
         <>
           <Banner
-            text="Olympiads XYZ се завръща — Архивът е отново онлайн с над 4000 материала, заедно с изцяло нови модули по физика."
+            text="Olympiads XYZ се завръща — архивът е отново онлайн, а в раздел „Задачи“ има над 7000 олимпиадни задачи с официални решения."
             action="Разгледай Архива"
             link="/archive/"
           />
@@ -231,8 +230,6 @@ export default function TopNavigationBar({
                                   <a
                                     key={item.name}
                                     href={item.href}
-                                    target="_blank"
-                                    rel="noreferrer"
                                     className="-m-3 p-3 flex items-start rounded-lg transition ease-in-out duration-150"
                                     style={{
                                       backgroundColor: item.backgroundColor,
@@ -252,10 +249,7 @@ export default function TopNavigationBar({
                                     </div>
                                     <div className="ml-4">
                                       <div className="flex text-base font-medium text-gray-900 dark:text-dark-high-emphasis">
-                                        {item.name}{' '}
-                                        <span className="text-gray-400 mt-0.5 ml-2 h-5 w-5">
-                                          <ExternalLinkIcon />
-                                        </span>
+                                        {item.name}
                                       </div>
                                       <p className="mt-1 text-sm text-gray-500 dark:text-dark-med-emphasis">
                                         {item.description}
@@ -299,7 +293,7 @@ export default function TopNavigationBar({
               {/* Mobile menu button */}
               <MobileMenuButtonContainer
                 className="inline-flex items-center justify-center p-2"
-                aria-label="Main menu"
+                aria-label={t('top-nav_main-menu')}
                 aria-expanded="false"
                 onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
               >

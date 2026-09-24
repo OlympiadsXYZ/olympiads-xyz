@@ -27,11 +27,7 @@ export default function DifficultyBox({
       }
     >
       {difficulty === 'N/A' ? (
-        <TextTooltip
-          content={
-            'This problem was added automatically; if you want to suggest a difficulty, feel free to make a pull request!'
-          }
-        >
+        <TextTooltip content={t('n/a-tooltip')}>
           {t('n/a')}
         </TextTooltip>
       ) : (
