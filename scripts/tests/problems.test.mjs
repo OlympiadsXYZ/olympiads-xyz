@@ -208,7 +208,7 @@ test('new classification is searchable and source notes and common paragraphs re
   assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
 });
 
-test('a line that starts with a one-line $$…$$ becomes a display block; inline, table and fenced math stay as written', async t => {
+test('a one-line $$…$$ becomes a display block; table and fenced math stay as written', async t => {
   const { displayMathLines } = await import('../problems-to-site.mjs');
   const mdx = [
     '---', 'title: \'$$x$$\'', '---', '',
@@ -228,8 +228,8 @@ test('a line that starts with a one-line $$…$$ becomes a display block; inline
     'Общият ток се разделя:', '$$', 'I = I_1 + I_2', '$$', 'Тогава',
     '$$', 'T_0 \\approx 0.007\\ \\mathrm{s}', '$$', '**[2.0]**',
     '  $$', '  a = b', '  $$',
-    'Chain rule $$f(g(x))$$',
-    '$$m = 0.52$$.',
+    'Chain rule', '$$', 'f(g(x))', '$$',
+    '$$', 'm = 0.52.', '$$',
     '$$x$$ - 1 точка',
     '| $$a$$ | b |',
     '$$', 'E = mgx.\\ $$ still in the block', '$$',
@@ -295,4 +295,12 @@ test('emphasis stuck between punctuation and a letter pairs; lone and escaped as
   assert.equal(f('**2.** варовик; **11.**вода.'), '**2.** варовик; **11.**⍽вода.');
   assert.equal(f('| 0,5*(0,2;0)* |'), '| 0,5⍽*(0,2;0)* |');
   for (const t of ['M*, but *ok* here', 'δ*min = 1', '- ***** звезди', '\\*) бележка', '*a $x*y$ b*', 'plain *italic* and **bold**']) assert.equal(f(t), t);
+});
+
+test('a formula after text on its line becomes a block after the text, inside its list item; a closing mark goes into it', async () => {
+  const { displayMathLines } = await import('../problems-to-site.mjs');
+  assert.equal(displayMathLines('Chain rule $$f(g(x))$$'), 'Chain rule\n$$\nf(g(x))\n$$');
+  assert.equal(displayMathLines('- величина $$f = 1$$ – 1 точка'), '- величина\n  $$\n  f = 1\n  $$\n  – 1 точка');
+  assert.equal(displayMathLines('$$m = 0.52$$.'), '$$\nm = 0.52.\n$$');
+  for (const t of ['| a $$x$$ | b |', 'Цена $5 и $$x$$', '# Heading $$x$$']) assert.equal(displayMathLines(t), t);
 });

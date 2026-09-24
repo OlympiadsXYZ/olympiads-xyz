@@ -399,6 +399,7 @@ function displayFences(seg, before) {
 // open a block of its own (a list item, heading, quote, fence, tag or another "$$", whose first line a fence would
 // drop as its meta), and every line inside a display block, a code fence or the frontmatter.
 const ONE_LINE_DISPLAY = /^([ \t]{0,3})\$\$((?:(?!\$\$)[^\n])+?)\$\$[ \t]*(.*)$/;
+const MID_DISPLAY = /^(.*?\S)[ \t]*\$\$((?:(?!\$\$)[^\n])+?)\$\$[ \t]*(.*)$/;
 const OPENS_BLOCK = /^(?:[-+*](?:[ \t]|$)|\d{1,9}[.)](?:[ \t]|$)|#{1,6}(?:[ \t]|$)|[>|<{]|=+[ \t]*$|`{3}|~{3}|\$\$)/;
 // Runs after displayMathLines in problemMdx: a single newline between two prose lines
 // becomes a Markdown hard break ("  \n") unless the first line is a wrapped sentence (ends in a lowercase letter, comma
@@ -441,6 +442,8 @@ export function displayMathLines(mdx) {
     if (!span && /^[ \t]{0,3}(?:`{3,}|~{3,})/.test(line)) { code = !code; out.push(line); continue; }
     if (code) { out.push(line); continue; }
     const m = span ? null : ONE_LINE_DISPLAY.exec(line);
+    // a sentence mark after the formula ("$$m = 0.52$$.") goes inside the display, as typeset
+    if (m && /^[.,;:]$/.test(m[3])) { m[2] = `${m[2].trimEnd()}${m[3]}`; m[3] = ''; }
     const rest = m?.[3] ?? '';
     if (m && m[2].trim() && (rest === '' || (!/^[\p{P}\s]*$/u.test(rest) && !OPENS_BLOCK.test(rest)))) {
       // a block drops its lines' trailing space, so a closing control space ("…\sin\alpha.\ ", psf-2002-proletno-sp)
@@ -448,6 +451,21 @@ export function displayMathLines(mdx) {
       const body = m[2].trim().replace(/(?<!\\)((?:\\\\)*)\\$/, '$1');
       out.push(`${m[1]}$$`, `${m[1]}${body}`, `${m[1]}$$`);
       if (rest) lines.splice(i + 1, 0, m[1] + rest); // the rest is a line of its own, read like any other
+      continue;
+    }
+    // text before the formula on its line ("Chain rule $$…$$", "**а)** $$…$$", "- величина $$f = …$$"): the text
+    // keeps its line and the formula becomes a block after it, indented under a list item's text so it stays in the
+    // item; the rest of the line follows as a line of its own. Not in a table row, heading, quote or tag.
+    const mid = span ? null : MID_DISPLAY.exec(line);
+    if (mid && /^[.,;:]$/.test(mid[3])) { mid[2] = `${mid[2].trimEnd()}${mid[3]}`; mid[3] = ''; }
+    if (mid && !/^[ \t]*[|#>]|^[ \t]*</.test(line) && mid[2].trim() && !/\$\$/.test(mid[1])
+      && ((mid[1].replace(/\\\$/g, '').match(/\$/g) || []).length % 2 === 0) && !/\\$/.test(mid[1])
+      && (mid[3] === '' || (!/^[\p{P}\s]*$/u.test(mid[3]) && !OPENS_BLOCK.test(mid[3])))) {
+      const item = /^([ \t]*)(?:[-+*]|\d{1,9}[.)])([ \t]+|$)/.exec(mid[1]);
+      const ind = item ? ' '.repeat(item[0].length + (item[2] ? 0 : 1)) : /^[ \t]{0,3}/.exec(line)[0];
+      const body = mid[2].trim().replace(/(?<!\\)((?:\\\\)*)\\$/, '$1');
+      out.push(mid[1].trimEnd(), `${ind}$$`, `${ind}${body}`, `${ind}$$`);
+      if (mid[3]) lines.splice(i + 1, 0, ind + mid[3]);
       continue;
     }
     if (!span && /^[ \t]{0,3}\$\$[^$]*$/.test(line)) block = true;
