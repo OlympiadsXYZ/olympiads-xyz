@@ -1,8 +1,19 @@
+import { PageProps } from 'gatsby';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import SECTIONS, { Chapter } from '../../content/ordering';
 import Layout from '../components/layout';
 import ProblemHits from '../components/ProblemsPage/ProblemHits';
+import {
+  SUBJECT_ORDER,
+  competitionLabel,
+  loadProblemsIndex,
+  matchesAllTokens,
+  problemSearchText,
+  problemSourceLabel,
+  searchTokens,
+  subjectLabel,
+  tagLabel,
+} from '../components/ProblemsPage/problemSearch';
 import SearchBox from '../components/ProblemsPage/SearchBox';
 import Selection, {
   SelectionOption,
@@ -15,12 +26,10 @@ import { PROBLEM_PROGRESS_OPTIONS, ProblemProgress } from '../models/problem';
 import type { ProblemsIndexEntry } from '../problems/index-node';
 import '../i18n';
 
-/**
- * The static index written at build time by gatsby-node (see
- * src/problems/index-node.ts). This page used to query Algolia, which was never
- * configured for this project, so it always rendered zero problems.
- */
-const INDEX_URL = '/problems-data/index.json';
+// The problems come from the static index written at build time by
+// gatsby-node (see src/problems/index-node.ts), loaded through
+// loadProblemsIndex(). This page used to query Algolia, which was never
+// configured for this project, so it always rendered zero problems.
 
 const DIFFICULTY_ORDER = [
   'Very Easy',
@@ -51,7 +60,28 @@ const uniqueSorted = (values: string[], order?: string[]): string[] => {
 const toOptions = (values: string[]): SelectionOption[] =>
   values.map(value => ({ label: value, value }));
 
-export default function ProblemsPage() {
+/**
+ * One option per distinct label; values that share a label (e.g. the tags
+ * "Optics" and "Оптика") become a single option selecting all of them.
+ */
+const toLabelledOptions = (
+  values: string[],
+  label: (value: string) => string
+): SelectionOption[] => {
+  const byLabel = new Map<string, string[]>();
+  uniqueSorted(values).forEach(value => {
+    const key = label(value);
+    byLabel.set(key, [...(byLabel.get(key) ?? []), value]);
+  });
+  return [...byLabel.entries()]
+    .sort(([a], [b]) => a.localeCompare(b, 'bg'))
+    .map(([key, group]) => ({
+      label: key,
+      value: group.length === 1 ? group[0] : group,
+    }));
+};
+
+export default function ProblemsPage({ location }: PageProps) {
   const { t } = useTranslation();
   const userProgress = useUserProgressOnProblems();
 
@@ -66,16 +96,18 @@ export default function ProblemsPage() {
     HITS_PER_PAGE_OPTIONS[0]
   );
 
+  // /problems/?q=… (e.g. from the search modal) starts with that search term.
+  // Re-read on every navigation, including to the same URL from this page.
+  React.useEffect(() => {
+    setSearchTerm(new URLSearchParams(location?.search ?? '').get('q') ?? '');
+  }, [location?.search, location?.key]);
+
   React.useEffect(() => {
     let cancelled = false;
-    fetch(INDEX_URL)
-      .then(r => {
-        if (!r.ok) throw new Error(`${r.status}`);
-        return r.json();
-      })
+    loadProblemsIndex()
       .then(data => {
         if (cancelled) return;
-        setProblems(Array.isArray(data) ? data : []);
+        setProblems(data);
       })
       .catch(() => {
         // Missing or malformed index: render the empty state, don't crash.
@@ -99,11 +131,56 @@ export default function ProblemsPage() {
   };
 
   const selectionMetadata = React.useMemo(() => {
-    const moduleTitles = new Map<string, string>();
-    all.forEach(p =>
-      p.problemModules.forEach(m => moduleTitles.set(m.title, m.title))
+    // Competitions by subject (in SUBJECT_ORDER), then by number of problems.
+    const competitionCount = new Map<string, number>();
+    const competitionSubject = new Map<string, string>();
+    const sourceLabels = new Map<string, string>();
+    all.forEach(p => {
+      if (p.competition) {
+        competitionCount.set(
+          p.competition,
+          (competitionCount.get(p.competition) ?? 0) + 1
+        );
+        if (p.subject && !competitionSubject.has(p.competition)) {
+          competitionSubject.set(p.competition, p.subject);
+        }
+      }
+      if (p.source && !sourceLabels.has(p.source)) {
+        sourceLabels.set(p.source, problemSourceLabel(p));
+      }
+    });
+    const subjectRank = (subject: string | undefined) => {
+      const i = SUBJECT_ORDER.indexOf(subject ?? '');
+      return i === -1 ? SUBJECT_ORDER.length : i;
+    };
+    const competitions = [...competitionCount.keys()].sort(
+      (a, b) =>
+        subjectRank(competitionSubject.get(a)) -
+          subjectRank(competitionSubject.get(b)) ||
+        (competitionCount.get(b) ?? 0) - (competitionCount.get(a) ?? 0) ||
+        a.localeCompare(b)
     );
     return [
+      {
+        attribute: 'subject',
+        placeholder: 'Предмет',
+        searchable: false,
+        isMulti: true,
+        items: uniqueSorted(
+          all.map(p => p.subject ?? ''),
+          SUBJECT_ORDER
+        ).map(subject => ({ label: subjectLabel(subject), value: subject })),
+      },
+      {
+        attribute: 'competition',
+        placeholder: 'Състезание',
+        searchable: true,
+        isMulti: true,
+        items: competitions.map(code => ({
+          label: competitionLabel(code),
+          value: code,
+        })),
+      },
       {
         attribute: 'difficulty',
         placeholder: t('difficulty'),
@@ -117,25 +194,22 @@ export default function ProblemsPage() {
         ),
       },
       {
-        attribute: 'problemModules.title',
-        placeholder: t('modules'),
-        searchable: true,
-        isMulti: true,
-        items: toOptions(uniqueSorted([...moduleTitles.keys()])),
-      },
-      {
         attribute: 'source',
         placeholder: t('source'),
         searchable: true,
         isMulti: true,
-        items: toOptions(uniqueSorted(all.map(p => p.source))),
+        items: [...sourceLabels.entries()]
+          .map(([source, label]) => ({ label, value: source }))
+          .sort((a, b) =>
+            a.label.localeCompare(b.label, 'bg', { numeric: true })
+          ),
       },
       {
         attribute: 'tags',
         placeholder: t('tags'),
         searchable: true,
         isMulti: true,
-        items: toOptions(uniqueSorted(all.map(p => p.tags ?? []).flat())),
+        items: toLabelledOptions(all.flatMap(p => p.tags ?? []), tagLabel),
       },
       {
         attribute: 'fields',
@@ -162,26 +236,6 @@ export default function ProblemsPage() {
         ],
       },
       {
-        attribute: 'problemModules.id',
-        placeholder: t('sections'),
-        searchable: false,
-        isMulti: true,
-        items: (
-          [
-            [t('sections_general'), SECTIONS.general],
-            [t('sections_mechanics'), SECTIONS.mechanics],
-            [t('sections_thermodynamics'), SECTIONS.thermodynamics],
-            [t('sections_electromagnetism'), SECTIONS.electromagnetism],
-            [t('sections_optics'), SECTIONS.optics],
-            [t('sections_modern_physics'), SECTIONS['modern-physics']],
-            [t('sections_astronomy'), SECTIONS.astronomy],
-          ] as unknown as [string, Chapter[]][]
-        ).map(([section, chapters]) => ({
-          label: section,
-          value: (chapters ?? []).map(chapter => chapter.items).flat(),
-        })),
-      },
-      {
         attribute: 'progress',
         placeholder: t('status'),
         searchable: false,
@@ -195,10 +249,7 @@ export default function ProblemsPage() {
   }, [problems, t]);
 
   const matches = React.useMemo(() => {
-    const tokens = query
-      .toLowerCase()
-      .split(/\s+/)
-      .filter(token => token.length > 0);
+    const tokens = searchTokens(query);
     const sets: { [attribute: string]: Set<string> } = {};
     Object.keys(filters).forEach(attribute => {
       if (filters[attribute]?.length) {
@@ -206,9 +257,20 @@ export default function ProblemsPage() {
       }
     });
     return all.filter(problem => {
-      if (tokens.length) {
-        const haystack = `${problem.name} ${problem.source} ${(problem.tags ?? []).join(' ')} ${(problem.classificationTerms ?? []).join(' ')}`.toLowerCase();
-        if (!tokens.every(token => haystack.includes(token))) return false;
+      if (
+        tokens.length &&
+        !matchesAllTokens(problemSearchText(problem), tokens)
+      ) {
+        return false;
+      }
+      if (sets['subject'] && !sets['subject'].has(problem.subject ?? '')) {
+        return false;
+      }
+      if (
+        sets['competition'] &&
+        !sets['competition'].has(problem.competition ?? '')
+      ) {
+        return false;
       }
       if (sets['difficulty'] && !sets['difficulty'].has(problem.difficulty)) {
         return false;
@@ -219,20 +281,6 @@ export default function ProblemsPage() {
       if (
         sets['tags'] &&
         !(problem.tags ?? []).some(tag => sets['tags'].has(tag))
-      ) {
-        return false;
-      }
-      if (
-        sets['problemModules.title'] &&
-        !problem.problemModules.some(m =>
-          sets['problemModules.title'].has(m.title)
-        )
-      ) {
-        return false;
-      }
-      if (
-        sets['problemModules.id'] &&
-        !problem.problemModules.some(m => sets['problemModules.id'].has(m.id))
       ) {
         return false;
       }
