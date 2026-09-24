@@ -47,18 +47,20 @@ const Spoiler = ({
     <div
       className={`bg-gray-50 border border-gray-100 dark:border-transparent dark:bg-gray-800 dark:bg-opacity-50 rounded-md mb-4`}
     >
-      <p
-        className="p-4 flex items-start"
+      <button
+        type="button"
+        aria-expanded={show}
+        className="p-4 flex items-start w-full text-left cursor-pointer rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         onClick={e => {
           setShow(!show);
         }}
-        style={{ marginBottom: 0 }}
       >
         {show && (
           <svg
             className="h-6 w-6 text-gray-500 mr-4"
             fill="currentColor"
             viewBox="0 0 20 20"
+            aria-hidden="true"
           >
             <path
               fillRule="evenodd"
@@ -72,6 +74,7 @@ const Spoiler = ({
             className="h-6 w-6 text-gray-500 mr-4"
             fill="currentColor"
             viewBox="0 0 20 20"
+            aria-hidden="true"
           >
             <path
               fillRule="evenodd"
@@ -81,7 +84,7 @@ const Spoiler = ({
           </svg>
         )}
         <span className="flex-1">{title}</span>
-      </p>
+      </button>
 
       {show && (
         <div className="p-4 spoiler-body bg-white dark:bg-dark-surface dark:bg-opacity-40 no-y-margin">

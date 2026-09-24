@@ -7,7 +7,7 @@ import SEO from '../components/seo';
 export default function ArchiveMaintenancePage(): JSX.Element {
   return (
     <Layout>
-      <SEO title="Архив" pathname="/archive" />
+      <SEO title="Архив" pathname="/archive/" />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
         <div className="max-w-3xl mx-auto px-5 pt-28 pb-20">
