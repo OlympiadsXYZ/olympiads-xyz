@@ -77,11 +77,51 @@ const TYPE_COLORS: { [t: string]: string } = {
   results: 'amber',
 };
 
+// Keeps both ends of a long file name: the distinguishing part is often the
+// tail („…-0001.jpg“, „…_corrected.pdf“).
+function shortName(name: string): string {
+  return name.length > 40 ? `${name.slice(0, 16)}…${name.slice(-22)}` : name;
+}
+
+// Rows that would look identical in one list (same title, badges and file
+// icon) get their file name as a distinguishing detail — e.g. three
+// „Теоретични задачи – решения“ become T1_sol.pdf / T2_sol.pdf /
+// T3_sol_corrected.pdf. Parent folders are added while the names still clash.
+export function rowDetails(
+  entries: ClientEntry[],
+  withRound = false
+): { [id: string]: string } {
+  const byLook: { [k: string]: ClientEntry[] } = {};
+  entries.forEach(e => {
+    const k = [e.title, e.type, e.group, e.lang, e.ext, withRound ? e.round : '']
+      .map(v => v ?? '')
+      .join('\u0000');
+    if (!byLook[k]) byLook[k] = [];
+    byLook[k].push(e);
+  });
+  const out: { [id: string]: string } = {};
+  Object.values(byLook).forEach(same => {
+    if (same.length < 2) return;
+    const name = (e: ClientEntry, depth: number) => e.key.split('/').slice(-depth).join('/');
+    let depth = 1;
+    while (depth < 4 && new Set(same.map(e => name(e, depth))).size < same.length) depth++;
+    const full = same.map(e => name(e, depth));
+    const short = full.map(shortName);
+    const shown = new Set(short).size === new Set(full).size ? short : full;
+    same.forEach((e, i) => {
+      out[e.id] = shown[i];
+    });
+  });
+  return out;
+}
+
 export function EntryRow({
   entry,
+  detail,
   showRound = false,
 }: {
   entry: ClientEntry;
+  detail?: string;
   showRound?: boolean;
 }): JSX.Element {
   const url = entryUrl(entry.key);
@@ -90,7 +130,17 @@ export function EntryRow({
       <span className="flex-none w-11 text-[10px] font-bold text-gray-400 dark:text-gray-500 tracking-wide">
         {EXT_ICONS[entry.ext] ?? 'FILE'}
       </span>
-      <span className="flex-1 min-w-0 break-words">{entry.title}</span>
+      <span className="flex-1 min-w-0 break-words">
+        {entry.title}
+        {detail && (
+          <span
+            className="ml-2 font-mono text-xs text-gray-500 dark:text-gray-400 break-all"
+            title={entry.key.split('/').pop()}
+          >
+            {detail}
+          </span>
+        )}
+      </span>
       <span className="flex-none flex items-center gap-1.5">
         {showRound && entry.round && <Badge>{label(ROUND_LABELS, entry.round)}</Badge>}
         <Badge color={TYPE_COLORS[entry.type]}>
@@ -147,7 +197,8 @@ export function sortEntries(entries: ClientEntry[]): ClientEntry[] {
   );
 }
 
-// Rows of one visible list, already sorted.
+// Rows of one visible list, already sorted; rows that would look identical
+// get their file name (rowDetails).
 function EntryRows({
   entries,
   showRound = false,
@@ -155,10 +206,11 @@ function EntryRows({
   entries: ClientEntry[];
   showRound?: boolean;
 }): JSX.Element {
+  const details = rowDetails(entries, showRound);
   return (
     <>
       {entries.map(e => (
-        <EntryRow key={e.id} entry={e} showRound={showRound} />
+        <EntryRow key={e.id} entry={e} detail={details[e.id]} showRound={showRound} />
       ))}
     </>
   );
