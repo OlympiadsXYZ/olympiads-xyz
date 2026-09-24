@@ -15,7 +15,7 @@ export default function ArchiveIndexTemplate({ pageContext }: Props): JSX.Elemen
   const { sciences } = pageContext;
   return (
     <Layout>
-      <SEO title="Архив" pathname="/archive" />
+      <SEO title="Архив" pathname="/archive/" />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
         <div className="bg-blue-700 dark:bg-blue-900 py-12 px-5">

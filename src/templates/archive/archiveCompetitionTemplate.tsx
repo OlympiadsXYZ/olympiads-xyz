@@ -45,7 +45,7 @@ export default function ArchiveCompetitionTemplate({ pageContext }: Props): JSX.
 
   return (
     <Layout>
-      <SEO title={`Архив · ${scienceName} · ${name}`} pathname={`/archive/${science}/${slug}`} />
+      <SEO title={`Архив · ${scienceName} · ${name}`} pathname={`/archive/${science}/${slug}/`} />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
         <div className={`${colors.bg} py-10 px-5`}>

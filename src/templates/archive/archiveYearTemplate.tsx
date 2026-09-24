@@ -33,7 +33,7 @@ export default function ArchiveYearTemplate({ pageContext }: Props): JSX.Element
     <Layout>
       <SEO
         title={`Архив · ${scienceName} · ${competitionShort(competition)} ${year}`}
-        pathname={`/archive/${science}/${slug}/${year}`}
+        pathname={`/archive/${science}/${slug}/${year}/`}
       />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
