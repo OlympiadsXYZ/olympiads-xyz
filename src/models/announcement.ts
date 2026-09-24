@@ -22,9 +22,10 @@ const BG_MONTHS: { [prefix: string]: string } = {
  * returned unchanged.
  */
 export function formatAnnouncementDate(raw: string): string {
-  const match = /^([A-Za-z]+)\.?\s+(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?,\s*(\d{4})$/.exec(
-    raw.trim()
-  );
+  const match =
+    /^([A-Za-z]+)\.?\s+(\d{1,2})(?:\s*[-–]\s*(\d{1,2}))?,\s*(\d{4})$/.exec(
+      raw.trim()
+    );
   const month = match && BG_MONTHS[match[1].slice(0, 3).toLowerCase()];
   if (!match || !month) return raw;
   const days = match[3] ? `${match[2]}–${match[3]}` : match[2];
