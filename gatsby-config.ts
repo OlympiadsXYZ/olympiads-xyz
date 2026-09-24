@@ -119,18 +119,8 @@ const plugins = [
       },
     },
   },
-  {
-    resolve: '@sentry/gatsby',
-    options: {
-      dsn: 'https://2e28bddc353b46e7bead85347a099a04@o423042.ingest.sentry.io/5352677',
-      denyUrls: [/extensions\//i, /^chrome:\/\//i],
-      ...(process.env.NODE_ENV === 'production'
-        ? {}
-        : {
-            defaultIntegrations: false,
-          }),
-    },
-  },
+  // (no @sentry/gatsby: its DSN was the USACO Guide's own Sentry project, inherited from the fork, so this site's
+  // crash reports and user ids went to that project; it also put ~600 KB of Sentry source into every page)
   {
     // This plugin must be placed last in your list of plugins to ensure that it can query all the GraphQL data
     resolve: 'gatsby-plugin-algolia',

@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser';
 import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
 import {
   doc,
@@ -230,11 +229,8 @@ export const UserDataProvider = ({
           },
           error: error => {
             toast.error(error.message);
-            Sentry.captureException(error, {
-              extra: {
-                userId: user.uid,
-              },
-            });
+            // was reported, with the user's id, to the USACO Guide's Sentry project (a DSN inherited from the fork)
+            console.error('User data sync failed:', error);
           },
         });
       }
