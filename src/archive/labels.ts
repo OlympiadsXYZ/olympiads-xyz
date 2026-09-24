@@ -25,6 +25,23 @@ export const COMPETITION_META: { [code: string]: CompetitionMeta } = {
   'ПУ': { slug: 'pu', name: 'Състезание на ПУ „Паисий Хилендарски“', short: 'ПУ' },
   'Всерусийска': { slug: 'vsosh-phys', name: 'Всерусийска олимпиада по физика', short: 'ВсОШ' },
   'Московска': { slug: 'mos-phys', name: 'Московска олимпиада по физика', short: 'МОФ (Москва)' },
+  // BelPhO…Ibero-American тук и IOAA-Jr…O3A2 в астрономията нямаха ред до
+  // 24.09.2026 и се показваха със суровия код. `slug` е точно това, което
+  // competitionSlug() даваше без ред — адресите им вече са публични.
+  BelPhO: { slug: 'belpho', name: 'Беларуска републиканска олимпиада по физика', short: 'BelPhO' },
+  NBPhO: { slug: 'nbpho', name: 'Северно-балтийска олимпиада по физика', short: 'NBPhO' },
+  InPhO: { slug: 'inpho', name: 'Индийска национална олимпиада по физика', short: 'INPhO' },
+  ISPhO: { slug: 'ispho', name: 'Международна научна олимпиада по физика', short: 'ISPhO' },
+  OPhO: { slug: 'opho', name: 'Онлайн олимпиада по физика', short: 'OPhO' },
+  WoPhO: { slug: 'wopho', name: 'Световна олимпиада по физика', short: 'WoPhO' },
+  GPhO: { slug: 'gpho', name: 'Олимпиада по физика на страните от Персийския залив', short: 'GPhO' },
+  // Не е турнирът „Минко Балкански“ (код 'Балкански' по-горе).
+  Balkan: { slug: 'balkan', name: 'Балканска олимпиада по физика', short: 'BPO' },
+  Serbia: { slug: 'serbia', name: 'Сръбска олимпиада по физика', short: 'СФО' },
+  FYKOS: { slug: 'fykos', name: 'Кореспондентски семинар по физика FYKOS (Чехия)', short: 'FYKOS' },
+  China: { slug: 'china', name: 'Китайска олимпиада по физика', short: 'CPhO' },
+  Estonia: { slug: 'estonia', name: 'Естонска национална олимпиада по физика', short: 'Естония' },
+  'Ibero-American': { slug: 'ibero-american', name: 'Ибероамериканска олимпиада по физика', short: 'OIbF' },
   NAO: { slug: 'nao', name: 'Национална олимпиада по астрономия', short: 'НОА' },
   IAO: { slug: 'iao', name: 'Международна астрономическа олимпиада', short: 'IAO' },
   IOAA: { slug: 'ioaa', name: 'Международна олимпиада по астрономия и астрофизика', short: 'IOAA' },
@@ -43,6 +60,18 @@ export const COMPETITION_META: { [code: string]: CompetitionMeta } = {
   SPbA: { slug: 'spba', name: 'Санкт-Петербургска олимпиада по астрономия', short: 'СПбАО' },
   APAO: { slug: 'apao', name: 'Азиатско-тихоокеанска олимпиада по астрономия', short: 'APAO' },
   SAO: { slug: 'sao', name: 'Сингапурска олимпиада по астрономия', short: 'SAO' },
+  'IOAA-Jr': {
+    slug: 'ioaa-jr',
+    name: 'Международна олимпиада по астрономия и астрофизика за юноши',
+    short: 'IOAA Jr.',
+  },
+  OWAO: { slug: 'owao', name: 'Открита световна астрономическа олимпиада', short: 'OWAO' },
+  USAAAO: { slug: 'usaaao', name: 'Олимпиада по астрономия и астрофизика на САЩ', short: 'USAAAO' },
+  BAAO: { slug: 'baao', name: 'Британска олимпиада по астрономия и астрофизика', short: 'BAAO' },
+  // За 7–8 клас, успоредно с ВсОШ по астрономия.
+  Struve: { slug: 'struve', name: 'Олимпиада по астрономия „В. Я. Струве“ (Русия)', short: 'Струве' },
+  Samara: { slug: 'samara', name: 'Самарска олимпиада по астрономия', short: 'Самара' },
+  O3A2: { slug: 'o3a2', name: 'Онлайн олимпиада по астрономия и астрофизика', short: 'O3A2' },
   Nikola: { slug: 'nikola', name: 'Тренировъчна колекция „Никола“', short: 'Никола' },
   NOH: { slug: 'noh', name: 'Национална олимпиада по химия', short: 'НОХ' },
   HOOS: { slug: 'hoos', name: 'Национално състезание по ХООС', short: 'ХООС' },
