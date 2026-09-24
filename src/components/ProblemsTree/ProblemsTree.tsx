@@ -238,13 +238,32 @@ export default function ProblemsTree({
   const activeRef = React.useRef<HTMLDivElement>(null);
   const scrolledFor = React.useRef<string | null>(null);
 
+  const navRef = React.useRef<HTMLElement>(null);
+
+  // On a phone the desktop sidebar stays mounted but hidden (display: none): the 1.3 MB tree is loaded once the
+  // sidebar is actually shown, not on every mobile page view.
   React.useEffect(() => {
     let cancelled = false;
-    loadTree().then(data => {
-      if (!cancelled) setTree(data);
+    const load = () =>
+      loadTree().then(data => {
+        if (!cancelled) setTree(data);
+      });
+    const nav = navRef.current;
+    if (!nav || typeof ResizeObserver === 'undefined' || nav.getClientRects().length) {
+      load();
+      return () => {
+        cancelled = true;
+      };
+    }
+    const observer = new ResizeObserver(() => {
+      if (!nav.getClientRects().length) return;
+      observer.disconnect();
+      load();
     });
+    observer.observe(nav);
     return () => {
       cancelled = true;
+      observer.disconnect();
     };
   }, []);
 
@@ -285,6 +304,7 @@ export default function ProblemsTree({
 
   return (
     <nav
+      ref={navRef}
       className="flex-grow bg-white dark:bg-dark-surface flex flex-col h-0"
       aria-label="Задачи"
     >

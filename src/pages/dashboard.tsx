@@ -341,7 +341,11 @@ export const pageQuery = graphql`
         }
       }
     }
-    problems: allProblemInfo {
+    # only problems that belong to a module are used; all 7,770 put ~1 MB into the page data, which the logo link
+    # prefetches from almost every page
+    problems: allProblemInfo(
+      filter: { module: { frontmatter: { id: { ne: null } } } }
+    ) {
       edges {
         node {
           uniqueId
