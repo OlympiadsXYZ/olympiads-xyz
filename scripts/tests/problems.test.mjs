@@ -287,3 +287,12 @@ test('figure-id placeholders show their figure in place; one without a figure ke
   for (const id of ['p1-fig1', 'p1-sol-fig1', 'p1-sol-fig2']) assert.equal(mdx.split(url(id)).length - 1, 1, id);
   assert.doesNotMatch(mdx, /\]\((?!https?:)[^)]*\)|\[\[figure/);
 });
+
+test('emphasis stuck between punctuation and a letter pairs; lone and escaped asterisks stay literal', async () => {
+  const { emphasisFlanking } = await import('../problems-to-site.mjs');
+  const f = t => emphasisFlanking(t).replace(/ /g, '⍽');
+  assert.equal(f('(*фиг.*3)'), '(*фиг.*⍽3)');
+  assert.equal(f('**2.** варовик; **11.**вода.'), '**2.** варовик; **11.**⍽вода.');
+  assert.equal(f('| 0,5*(0,2;0)* |'), '| 0,5⍽*(0,2;0)* |');
+  for (const t of ['M*, but *ok* here', 'δ*min = 1', '- ***** звезди', '\\*) бележка', '*a $x*y$ b*', 'plain *italic* and **bold**']) assert.equal(f(t), t);
+});

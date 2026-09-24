@@ -333,14 +333,51 @@ function mdText(s) {
   const framed = String(s).replace(/\$\$[ \t]*\n?[ \t]*(?=\|[^\n]*\|[ \t]*\n[ \t]*\|)/g, '').replace(/(\n[ \t]*\|[^\n]*\|)[ \t]*\n?[ \t]*\$\$(?=[ \t]*(?:\n|$))/g, '$1');
   const tables = framed.split('\n').map(line => /^\s*\|/.test(line) ? line.replace(/\$[^$\n]*?\$/g, m => m.replace(/(?<!\\)\|/g, '\\vert ')) : line).join('\n');
   const parts = tables.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/);
-  return parts
+  return emphasisFlanking(parts
     // prose never carries HTML (validate.mjs refuses tags), so any "<" glued to what follows is text: '<', <=, <1
     // (MDX would read <' or <a as the start of a JSX tag and the build would die)
     // inside math: KaTeX in the site pipeline has no \nicefrac and rejects \tag outside a display environment
     // (IPhO 2023 Q1 rendered its numbered equations raw); the printed equation number becomes "\qquad (n)"
     // A lone trailing prose space is invisible; preserve Markdown's two-space breaks and all math.
     .map((seg, i) => (i % 2 ? displayFences(seg, parts[i - 1]).replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/(?<![\\ \t]) (?=\n)/g, '').replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
-    .join('');
+    .join(''));
+}
+// Markdown pairs "*"/"**" only when the marker is flanked right: a closing one after punctuation and before a letter
+// ("(*фиг.*3)", "**11.**вода") or an opening one after a letter and before punctuation ("0,5*(0,2;0)*") stays a
+// literal asterisk on the page (72 on 25 pages). On a line whose markers of one length pair up in order, a narrow
+// no-break space goes on the outside of such a marker ("фиг. 3", "11. вода"), where the print has its space. Math,
+// code and escaped "\*" are masked; a line with a run of three or more ("***Б)***", "*****" marks) or an odd count
+// of markers of a length ("M*", "δ*min") is left exactly as it is.
+const NNBSP = '\u202F';
+export function emphasisFlanking(text) {
+  if (!text || !String(text).includes('*')) return text;
+  const punct = c => c !== undefined && /[\p{P}\p{S}]/u.test(c), space = c => c === undefined || /\s/u.test(c);
+  const word = c => !space(c) && !punct(c);
+  return String(text).split('\n').map(line => {
+    const masked = line.replace(/\$\$[^$]*\$\$|\$[^$\n]*\$|`[^`]*`|\\\*/g, m => '#'.repeat(m.length));
+    const runs = [...masked.matchAll(/\*+/g)].filter(m => !(m.index === 0 && /^\*\s/.test(masked))); // a list bullet
+    if (runs.some(m => m[0].length > 2)) return line;
+    const fixes = [];
+    for (const len of [1, 2]) {
+      const rs = runs.filter(m => m[0].length === len);
+      if (!rs.length || rs.length % 2) continue;
+      const found = [];
+      const ok = rs.every((m, k) => {
+        const before = line[m.index - 1], after = line[m.index + len];
+        if (k % 2 === 0) { // opener: left-flanking, or stuck after a letter before punctuation
+          if (!space(after) && (!punct(after) || space(before) || punct(before))) return true;
+          if (word(before) && punct(after)) return found.push(m.index), true;
+        } else { // closer: right-flanking, or stuck after punctuation before a letter
+          if (!space(before) && (!punct(before) || space(after) || punct(after))) return true;
+          if (punct(before) && word(after)) return found.push(m.index + len), true;
+        }
+        return false;
+      });
+      if (ok) fixes.push(...found);
+    }
+    for (const at of fixes.sort((a, b) => b - a)) line = line.slice(0, at) + NNBSP + line.slice(at);
+    return line;
+  }).join('\n');
 }
 // A display block written with its fences glued to the content ("$$\begin{aligned}" … "\end{aligned}$$") is not a
 // math block to remark-math: the closing line is not a lone "$$", so the block runs on to the end of its container and
