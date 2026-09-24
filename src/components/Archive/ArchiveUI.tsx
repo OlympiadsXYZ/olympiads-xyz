@@ -83,17 +83,18 @@ function shortName(name: string): string {
   return name.length > 40 ? `${name.slice(0, 16)}…${name.slice(-22)}` : name;
 }
 
-// Rows that would look identical in one list (same title, badges and file
-// icon) get their file name as a distinguishing detail — e.g. three
-// „Теоретични задачи – решения“ become T1_sol.pdf / T2_sol.pdf /
-// T3_sol_corrected.pdf. Parent folders are added while the names still clash.
+// Rows in one list with the same title and badges get their file name as a
+// distinguishing detail — e.g. three „Теоретични задачи – решения“ become
+// T1_sol.pdf / T2_sol.pdf / T3_sol_corrected.pdf. The file icon is not enough
+// (a lone XLS among PDFs still says nothing about its content). Parent
+// folders are added while the names still clash.
 export function rowDetails(
   entries: ClientEntry[],
   withRound = false
 ): { [id: string]: string } {
   const byLook: { [k: string]: ClientEntry[] } = {};
   entries.forEach(e => {
-    const k = [e.title, e.type, e.group, e.lang, e.ext, withRound ? e.round : '']
+    const k = [e.title, e.type, e.group, e.lang, withRound ? e.round : '']
       .map(v => v ?? '')
       .join('\u0000');
     if (!byLook[k]) byLook[k] = [];
