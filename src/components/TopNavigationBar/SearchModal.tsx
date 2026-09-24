@@ -1,8 +1,74 @@
 import { Dialog, Transition } from '@headlessui/react';
+import { graphql, useStaticQuery } from 'gatsby';
 import React, { Fragment, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
+import MODULE_ORDERING, {
+  SECTION_LABELS,
+  SectionID,
+} from '../../../content/ordering';
+import type { SearchModule } from './SearchModalInterface';
 
 const SearchModalInterface = React.lazy(() => import('./SearchModalInterface'));
+
+type SearchModulesQuery = {
+  allXdm: {
+    nodes: {
+      frontmatter: {
+        id: string;
+        title: string | null;
+        description: string | null;
+      } | null;
+      fields: { division: string | null } | null;
+    }[];
+  };
+};
+
+/**
+ * The module pages the search modal looks through: title and description
+ * (a few KB), plus the section and chapters that list each module.
+ */
+function useSearchModules(): SearchModule[] {
+  const data: SearchModulesQuery = useStaticQuery(graphql`
+    query {
+      allXdm(filter: { fileAbsolutePath: { regex: "/content/" } }) {
+        nodes {
+          frontmatter {
+            id
+            title
+            description
+          }
+          fields {
+            division
+          }
+        }
+      }
+    }
+  `);
+  return React.useMemo(() => {
+    const chapters: { [id: string]: string[] } = {};
+    Object.values(MODULE_ORDERING).forEach(section =>
+      section.forEach(chapter =>
+        chapter.items.forEach(id => {
+          chapters[id] = [...new Set([...(chapters[id] ?? []), chapter.name])];
+        })
+      )
+    );
+    return (data?.allXdm?.nodes ?? []).flatMap(({ frontmatter, fields }) => {
+      const division = fields?.division as SectionID | null | undefined;
+      if (!frontmatter?.id || !frontmatter.title || !division) return [];
+      return [
+        {
+          id: frontmatter.id,
+          title: frontmatter.title,
+          description: frontmatter.description ?? '',
+          url: `/${division}/${frontmatter.id}`,
+          section: SECTION_LABELS[division] ?? division,
+          chapters: chapters[frontmatter.id] ?? [],
+        },
+      ];
+    });
+  }, [data]);
+}
 
 export interface SearchModalProps {
   isOpen: boolean;
@@ -14,6 +80,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
   onClose,
 }) => {
   const { t } = useTranslation();
+  const modules = useSearchModules();
   // Dialog throws an error if there isn't something to focus on initially
   // But since we're lazy loading search modal, there will be a period of time
   // where we have to focus the loading text until the modal loads (and auto focuses the input).
@@ -63,7 +130,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   </p>
                 }
               >
-                <SearchModalInterface />
+                <SearchModalInterface modules={modules} onClose={onClose} />
               </Suspense>
             </div>
           </Transition.Child>
