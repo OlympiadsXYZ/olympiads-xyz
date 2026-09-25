@@ -1,0 +1,109 @@
+---
+id: balkanski-1999-cgp-p2
+source: 'Балкански 1999, Теория'
+title: 'Задача 2. Problème II'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/1999/balkanski-1999-cgp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-25T07:46:27.545Z'
+verifier: 'same-model'
+---
+
+*Concours Général de Physique Minko Balkanski 1999 · 9 т.*
+
+<details>
+<summary>Бележка от източника</summary>
+
+La clarté et la précision de la rédaction, qui doit être obligatoirement en français, seront prises en compte dans la note finale.
+
+La durée de la composition est de 4 heures.
+
+</details>
+
+## Условие
+
+Les parties de ce problème sont indépendantes et peuvent être traitées dans l’ordre choisi par le candidat.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '23.7%', '--fig-max': '152px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-1999-cgp/p2-fig1-v2.png" alt="Pendule de longueur L portant la masse M; projectile m de vitesse v dirigé vers M." width="475" height="318" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '27.4%', '--fig-max': '176px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-1999-cgp/p2-fig2-v2.png" alt="Récipient de fluide avec trou latéral de section s, hauteur h et force F appliquée vers la droite." width="549" height="404" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '23.8%', '--fig-max': '153px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-1999-cgp/p2-fig3-v2.png" alt="Récipient suspendu à un fil de longueur L, déplacé horizontalement de Δx ; origine 0 et axe x." width="478" height="522" loading="lazy" decoding="async" />
+</figure>
+
+**1.** on considère un pendule simple de longueur $L$ et de masse $M$. **[4,5 т.]**
+
+Des points matériels de masse $m$ et de vitesse $v$ rencontrent successivement le pendule à chaque fois qu’il passe par sa position d’équilibre après avoir effectué une période complète. Le pendule est immobile au début. Des chocs sont parfaitement mous.
+
+**1.a.** Donner la période des petites oscillations du pendule. Varie-t-elle avec la masse du pendule? **[0,5 т.]**
+
+**1.b.** Donner la hauteur à laquelle le pendule s’élève après $n$ rencontres avec les points matériels. **[1,5 т.]**
+
+**1.c.** Donner une condition nécessaire pour que le pendule puisse faire un tour complet. Cette condition étant satisfaite donner le nombre $n$ de rencontres pour que cela puisse produire(on notera $E(x)$ la partie entière de $x$). **[2,5 т.]**
+
+**2.** Dans un récipient plein d’un fluide on perce un petit trou de section $s$. Le fluide a une masse volumique $\rho$ et la masse du récipient avec le fluide (considérée invariable) est $M$. On note avec $h$ la distance entre le trou et le niveau du fluide. **[4,5 т.]**
+
+**2.a.** Donner la vitesse d’écoulement du fluide à la sortie du trou. **[0,5 т.]**
+
+**2.b.** Quelle force $F$ doit-on appliquer pour maintenir le récipient immobile. **[2 т.]**
+
+On accroche maintenant le récipient avec un fil de longueur $L$.
+
+**2.c.** Calculer $\Delta x$. **[1,5 т.]**
+
+**2.d.** Expliquer brièvement ce qui se passe si le niveau du fluide varie lentement. (Une justification mathématique n’est pas demandée, mais le raisonnement doit être clair). **[0,5 т.]**
+
+**2.e.** Question bonus(facultative)(+2.5 points): Donner l’expression de $\Delta x$ en fonction du temps et la durée pour laquelle $h$ devient nulle. On supposera la section $S$ du récipient connue. **[2,5 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+1.a. La période des petites oscillations est $T=2\pi\sqrt{\frac{L}{g}}$. Elle ne dépend évidemment pas de la masse du pendule.
+
+1.b. Soit $V_n$ la vitesse du pendule juste après le n-ième choc. Alors, d’après la conservation de la quantité du mouvement on a :
+
+- au rang un $mv=(m+M)V_1$;
+- au rang deux $mv+(m+M)V_1=(2m+M)V_2$ d’où $V_2=\frac{2m}{2m+M}v$, par récurrence on obtient $V_n=\frac{nm}{M+nm}v$.
+
+Alors, comme après le choc le pendule oscille librement il y a conservation de l’énergie donc $(M+nm)gh_n=\frac{(M+nm)V_n^2}{2}$, d’où $h_n=\frac{(nmv)^2}{2g(M+nm)^2}$.
+
+1.c. Pour que le pendule puisse faire le tour complet il faut qu’il existe un entier $n$ tel que $h_n\geq2L$, c’est à dire $\frac{(nmv)^2}{2g(M+nm)^2}=2L$. On remarque que $V_n\rightarrow v$ en croissant. Donc si $v<2\sqrt{gL}$, le pendule ne fera jamais le tour complet. En revanche si $v>2\sqrt{gL}$ on trouve $n=E\left[\frac{2M\sqrt{gL}}{m(v-2\sqrt{gL})}\right]+1$.
+
+2.a. On applique la formule de Torricelli. On trouve $v=\sqrt{2gh}$.
+
+2.b. On a que $F=\frac{\Delta p}{\Delta t}=\frac{\Delta m}{\Delta t}v$. Pendant un intervalle $\Delta t$ il y a une quantité $\Delta m=sv\Delta t\rho$ qui sort. Donc $\vec F=sv^2\rho\vec e_x=2s\rho gh\vec e_x$.
+
+2.c. Les forces s’exerçant sur le récipient sont : le poids $\vec P=m\vec g$, la force de tension du fil $\vec T$ et l’opposé de la force calculée précédemment $\vec F=-sv^2\rho\vec e_x$. Comme le pendule est à l’équilibre on a $\vec F+\vec T+m\vec g=0$. En projetant cette équation selon la direction orthogonale à $\vec T$ on trouve $mg\sin(\theta)=2s\rho gh\cos(\theta)$, où $\theta$ est l’angle entre la verticale et le fil du pendule. Sachant que $\frac{\Delta x}{L}=\sin(\theta)$, on obtient $\Delta x=\frac{L}{\sqrt{1+\frac{m^2}{(2s\rho h)^2}}}$.
+
+2.d. Quand $h$ diminue $\Delta x$ diminue aussi, comme on le voit sur la formule précédente.
+
+2.e. On suppose que le niveau diminue lentement. Alors on a $-S\frac{dh}{dt}=sv=s\sqrt{2gh}$. D’où en intégrant $h=\left(\sqrt{h_0}-\frac{st}{2S}\sqrt{2g}\right)^2$. D’où $t=\frac{S}{s}\sqrt{\frac{2h_0}{g}}$. On a aussi :
+
+$$
+\Delta x=\frac{L}{\sqrt{1+\frac{m^2}{\left(2s\rho\left(\sqrt{h_0}-\frac{st}{2S}\sqrt{2g}\right)^2\right)^2}}}.
+$$
+
+
+</Spoiler>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Оценена трудност: 4/5.
+
+Механика · Флуиди · Махала · Непрекъснатост и закон на Бернули
+
+Предпоставки: Гимназиална подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [CGP_1999.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_1999.pdf)
+· официални решения: [CGP_1999_cr.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_1999_cr.pdf)
