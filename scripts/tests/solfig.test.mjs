@@ -106,6 +106,22 @@ test('combined problems+solutions PDF (SPbA): figures at or after the solution\'
   assert.equal((mdx.match(/Рис\. 1:/g) || []).length, 1);
 });
 
+test('a question photograph recovered from the solutions PDF stays visible without revealing answer figures', t => {
+  const id = 'vsoa-ru-2023-prac';
+  const photo = fig(id, 'p1-sol-photo', { document: 'solutions', page: 1, pdfRect: [20, 30, 300, 200] }, { role: 'statement' });
+  const answer = fig(id, 'p1-answer', { document: 'solutions', page: 2, pdfRect: [20, 30, 300, 200] });
+  const explicitAnswer = fig(id, 'p1-plot', { document: 'problems', page: 1, pdfRect: [20, 30, 300, 200] }, { role: 'solution' });
+  const problem = { id: id + '-p1', number: 1, statement: 'Use the original photograph.', figures: [photo, answer, explicitAnswer], solution: { statement: 'Official derivation.', figures: [] } };
+  const f = fixture(t, { paper: basePaper(id, { competition: 'VsOA-ru', year: 2023, solutionSource: { archiveKey: 'Астрономия/s.pdf' } }), problems: [problem] });
+  assert.equal(f.run().status, 0);
+  const mdx = f.page(problem.id);
+  assert.equal(placement(mdx, photo.url), 'statement');
+  assert.equal(placement(mdx, answer.url), 'solution-spoiler');
+  assert.equal(placement(mdx, explicitAnswer.url), 'solution-spoiler');
+  assert.equal(photo.source.document, 'solutions');
+  assert.deepEqual(misplacedSolutionFigures({}, problem).map(m => m.reason), ['document', 'role']);
+});
+
 test('statement figures the solution merely repeats stay in the statement (separate PDFs, reused url)', t => {
   const id = 'esf-2014-esenno-9';
   const statementFig = fig(id, 'p1-fig1', { page: 1, pdfRect: [119, 387, 508, 517] }, { caption: 'Фиг. 1' });

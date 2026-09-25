@@ -321,7 +321,11 @@ export function misplacedSolutionFigures(paper, problem) {
   const out = [];
   for (const item of inStatement) {
     const { fig } = item, place = figurePlace(fig);
-    const reason = SOLUTION_CROP.test(fig.id || '') || SOLUTION_CROP.test(cropName(fig.url)) ? 'id'
+    // The source document can repeat a question photograph before its solution.
+    // An explicit source-read role takes precedence over legacy crop heuristics.
+    if (fig.role === 'statement') continue;
+    const reason = fig.role === 'solution' ? 'role'
+      : SOLUTION_CROP.test(fig.id || '') || SOLUTION_CROP.test(cropName(fig.url)) ? 'id'
       : figureDocument(fig) === 'solutions' ? 'document'
       : listed.has(fig.id) ? 'listed'
       : place && anchors.some(a => a.scheme === place.scheme && a.doc === place.doc && notBefore(place, a)) ? 'position'
@@ -356,7 +360,7 @@ export function figuresBelowSolutionHeading(paper, problem, layer) {
   const out = [];
   for (const item of statementFigures(problem)) {
     const place = figurePlace(item.fig);
-    if (!place || place.doc !== 'problems' || misplaced.has(item.fig)) continue;
+    if (item.fig.role === 'statement' || !place || place.doc !== 'problems' || misplaced.has(item.fig)) continue;
     const figTop = place.scheme === 'pdf' ? place.rect[1] : layer.heights?.[place.page] ? place.rect[1] / BBOX_SCALE * layer.heights[place.page] : null;
     if (figTop == null) continue;
     if (place.page > page || (place.page === page && figTop >= top)) out.push({ ...item, heading: { page, text: layer.lines[heading].text.trim().slice(0, 40) } });

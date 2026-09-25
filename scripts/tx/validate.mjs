@@ -208,7 +208,7 @@ for (const { fig, path: p } of allFigures(data)) {
 }
 // a figure of the official solution kept in the statement or a part would be shown outside the solution spoiler;
 // the site moves it at render time (problems-to-site.mjs misplacedSolutionFigures), the candidate should not need that
-const WHY_SOLUTION = { id: 'its id names a solution crop', document: 'it is cropped from the solutions document', listed: 'problems-to-site.mjs SOLUTION_FIGURES lists it', position: 'it lies at or after the first figure of this problem\'s solution in the combined problems+solutions PDF' };
+const WHY_SOLUTION = { role: 'its explicit source-read role is solution', id: 'its id names a solution crop', document: 'it is cropped from the solutions document', listed: 'problems-to-site.mjs SOLUTION_FIGURES lists it', position: 'it lies at or after the first figure of this problem\'s solution in the combined problems+solutions PDF' };
 problems.forEach((pr, i) => {
   for (const m of misplacedSolutionFigures(paper, pr)) warn(`/problems/${i}/${m.path}`, `figure ${m.fig.id} belongs to the official solution (${WHY_SOLUTION[m.reason]}) but is listed under the ${m.where}; move it to solution.figures (the site shows it only inside the solution spoiler)`);
 });
