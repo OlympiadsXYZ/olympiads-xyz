@@ -1,8 +1,10 @@
 // Displayed CropBox coordinates: origin top-left, /Rotate applied. Keep the
 // renderer's cache identity independent of source hash and resolution.
 import fs from 'node:fs';
-export const PAGE_RENDERER = 'pdftoppm-cropbox-v1';
-export const pageRenderArgs = (file, prefix, dpi) => ['-cropbox', '-r', String(dpi), '-png', file, prefix];
+import { fileURLToPath } from 'node:url';
+export const PAGE_RENDER_HELPER = fileURLToPath(new URL('./render-pages.py', import.meta.url));
+export const PAGE_RENDERER = 'pymupdf-cropbox-v2';
+export const pageRenderArgs = (file, prefix, dpi) => [PAGE_RENDER_HELPER, '--dpi', String(dpi), file, prefix];
 
 // Legacy previews used MediaBox while pageSizes used CropBox. Detect this before
 // interpreting a reader's boxes or snapping them to PyMuPDF regions. PNG IHDR is

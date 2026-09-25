@@ -13,7 +13,7 @@
 // glyph for every character, with a real text layer, so pages, text layer and the checks downstream work unchanged.
 import fs from 'node:fs';
 import path from 'node:path';
-import { PAGE_RENDERER, pageRenderArgs, previewGeometryError } from './page-render.mjs';
+import { PAGE_RENDERER, PAGE_RENDER_HELPER, pageRenderArgs, previewGeometryError } from './page-render.mjs';
 import { supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
 import { XLSX_RENDERER_FINGERPRINT, xlsxCacheValid } from './xlsx-source.mjs';
 import { IMAGE_SOURCE_EXTENSION, IMAGE_RENDERER_FINGERPRINT, imageCacheValid } from './image-source.mjs';
@@ -135,7 +135,10 @@ if (args.gc) {
   console.log(`gc: removed src/, pages/, figs/ under ${path.relative(process.cwd(), dir)}`);
   process.exit(0);
 }
-for (const tool of ['rclone', 'pdftoppm', 'pdftotext', 'pdfinfo']) if (!which(tool)) fail(`${tool} not found on PATH`);
+for (const tool of ['rclone', 'python3', 'pdftotext', 'pdfinfo']) if (!which(tool)) fail(`${tool} not found on PATH`);
+
+const pageRendererInfo = JSON.parse(run('python3', [PAGE_RENDER_HELPER, '--info']).stdout.trim());
+if (pageRendererInfo.name !== PAGE_RENDERER || !pageRendererInfo.fingerprint) fail('invalid preview renderer identity');
 
 const { meta, keys, origin } = resolvePaper(paperId, { problems: args.problems, solutions: args.solutions });
 fs.mkdirSync(path.join(dir, 'src'), { recursive: true });
@@ -163,7 +166,7 @@ function pdfInfo(file) {
   const pageSizes = [];
   for (const m of out.matchAll(/^Page\s+(\d+) size:\s+([\d.]+) x ([\d.]+) pts/gm)) pageSizes[Number(m[1]) - 1] = { page: Number(m[1]), widthPt: Number(m[2]), heightPt: Number(m[3]) };
   // pdfinfo reports the unrotated effective CropBox (clipped to MediaBox).
-  // pdftoppm -cropbox and pdfcrop.py's page.rect apply /Rotate. Record that
+  // PyMuPDF previews and pdfcrop.py's page.rect apply /Rotate. Record that
   // displayed size: preview, permille proposals and cropper share one origin.
   for (const m of out.matchAll(/^Page\s+(\d+) rot:\s+(\d+)/gm)) {
     const s = pageSizes[Number(m[1]) - 1], rot = Number(m[2]) % 360;
@@ -243,7 +246,7 @@ for (const doc of Object.keys(keys)) {
   const bytes = fs.statSync(file).size;
   const info = pdfInfo(file);
   // Render only when the cached pages do not correspond to these exact bytes.
-  let pageImages = !args.force && prev && prev.sha256 === sha256 && prev.renderDpi === RENDER_DPI && prev.pageRenderer === PAGE_RENDERER ? renderedPages(doc, info.pages) : null;
+  let pageImages = !args.force && prev && prev.sha256 === sha256 && prev.renderDpi === RENDER_DPI && prev.pageRenderer === PAGE_RENDERER && prev.pageRendererInfo?.fingerprint === pageRendererInfo.fingerprint ? renderedPages(doc, info.pages) : null;
   if (!pageImages) {
     // Do not silently reinterpret candidates authored against a MediaBox preview.
     // An explicit migration must set those candidates aside and re-read/rebox.
@@ -253,8 +256,8 @@ for (const doc of Object.keys(keys)) {
       fail(`${mismatch}. Cached candidates may use the old coordinate space. Move them out of candidates/, rerun prepare, then re-read/rebox against the new previews; do not reuse their old boxes.`);
     }
     for (const f of fs.readdirSync(path.join(dir, 'pages'))) if (f.startsWith(`${doc}-`)) fs.rmSync(path.join(dir, 'pages', f));
-    run('pdftoppm', pageRenderArgs(file, path.join(dir, 'pages', doc), RENDER_DPI));
-    // pdftoppm pads page numbers to the width of the page count; normalise to two digits.
+    run('python3', pageRenderArgs(file, path.join(dir, 'pages', doc), RENDER_DPI));
+    // Normalise page numbers to the established minimum two-digit naming contract.
     for (const f of fs.readdirSync(path.join(dir, 'pages'))) {
       const m = new RegExp(`^${doc}-(\\d+)\\.png$`).exec(f);
       if (!m) continue;
@@ -276,7 +279,7 @@ for (const doc of Object.keys(keys)) {
   const conv = converted[doc] || (prev?.converted && prev.key === key && prev.sha256 === sha256 ? prev.converted : null);
   manifest.documents[doc] = {
     key, file: `src/${doc}.pdf`, sha256, bytes, pages: info.pages, pageSizes: info.pageSizes, producer: info.producer,
-    renderDpi: RENDER_DPI, pageRenderer: PAGE_RENDERER, pageImages, text: `text/${doc}.txt`,
+    renderDpi: RENDER_DPI, pageRenderer: PAGE_RENDERER, pageRendererInfo, pageImages, text: `text/${doc}.txt`,
     textChars: text.trim().length, textDigits: (text.match(/\d/g) || []).length,
     downloaded,
     ...(conv ? { converted: conv } : {}),

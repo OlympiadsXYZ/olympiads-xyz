@@ -38,9 +38,9 @@ for angle in (0,90,180,270):
  p.set_rotation(angle)
 D.save(sys.argv[1])
 print(json.dumps([{'page':p.number+1,'widthPt':p.rect.width,'heightPt':p.rect.height} for p in D]))`, pdf]));
-  assert.equal(PAGE_RENDERER, 'pdftoppm-cropbox-v1');
+  assert.equal(PAGE_RENDERER, 'pymupdf-cropbox-v2');
   const prefix = path.join(dir, 'preview');
-  run('pdftoppm', pageRenderArgs(pdf, prefix, 72));
+  run(python, pageRenderArgs(pdf, prefix, 72));
   const files = fs.readdirSync(dir).filter(f => /^preview-\d+\.png$/.test(f)).sort();
   assert.equal(files.length, 4);
   const metadata = run('pdfinfo', ['-f', '1', '-l', '4', pdf]);
@@ -113,4 +113,50 @@ for x in (c.width//4,3*c.width//4):
   const cached = prepare();
   assert.equal(cached.status, 0, cached.stdout + cached.stderr);
   assert.equal(fs.statSync(page).mtimeMs, mtime);
+  // Even identical source bytes/geometry must not reuse a prior backend or
+  // runtime version. A new render records the precise current fingerprint.
+  const fingerprint = prepared.documents.problems.pageRendererInfo.fingerprint;
+  assert.match(fingerprint, /^[a-f0-9]{64}$/);
+  for (const oldRenderer of ['pdftoppm-cropbox-v1', PAGE_RENDERER]) {
+    const stale = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
+    stale.documents.problems.pageRenderer = oldRenderer;
+    stale.documents.problems.pageRendererInfo.fingerprint = 'stale-runtime';
+    fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify(stale));
+    fs.utimesSync(page, new Date(0), new Date(0));
+    const migration = prepare();
+    assert.equal(migration.status, 0, migration.stdout + migration.stderr);
+    const refreshed = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
+    assert.equal(refreshed.documents.problems.pageRenderer, PAGE_RENDERER);
+    assert.equal(refreshed.documents.problems.pageRendererInfo.fingerprint, fingerprint);
+    assert.equal(refreshed.documents.problems.sha256, sha256);
+    assert.ok(fs.statSync(page).mtimeMs > 0);
+  }
+});
+
+test('Symbol glyph previews retain every character and equal the actual figure renderer', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'symbol-preview-'));
+  t.after(() => {
+    assert.equal(path.dirname(root), path.resolve(os.tmpdir()));
+    assert.ok(path.basename(root).startsWith('symbol-preview-'));
+    fs.rmSync(root, { recursive: true, force: true });
+  });
+  const pdf = path.join(root, 'symbol.pdf');
+  run(python, ['-c', `import fitz,sys
+D=fitz.open();p=D.new_page(width=400,height=120)
+# PDF's unembedded standard Symbol font: exercise actual Greek/math glyphs,
+# not Latin lookalikes or a raster image containing pre-rendered characters.
+for i,ch in enumerate('\u03b1\u03b8\u03c6\u03c0\u03bb\u0394\u2248\u2212'):
+ p.insert_text((20+45*i,70),ch,fontname='symb',fontsize=30)
+D.save(sys.argv[1])`, pdf]);
+  run(python, pageRenderArgs(pdf, path.join(root, 'preview'), 144));
+  run(python, [path.join(repo, 'scripts/pdfcrop.py'), pdf, path.join(root, 'crop'), '--dpi', '144', '--preview-dpi', '144', '--box', 'page=1,x0=0,y0=0,x1=800,y1=240,id=whole']);
+  run(python, ['-c', `from PIL import Image,ImageChops
+import sys
+p=Image.open(sys.argv[1]).convert('RGB');c=Image.open(sys.argv[2]).convert('RGB')
+assert p.size==(800,240)
+assert ImageChops.difference(p,c).getbbox() is None,'preview/crop rendering diverged'
+for i in range(8):
+ box=p.crop((40+90*i,70,120+90*i,145)).convert('L')
+ assert sum(v<128 for v in box.getdata())>25,('missing Symbol glyph',i)
+`, path.join(root, 'preview-01.png'), path.join(root, 'crop/whole.png')]);
 });
