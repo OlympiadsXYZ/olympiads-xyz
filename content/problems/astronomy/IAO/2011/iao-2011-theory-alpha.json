@@ -6,7 +6,7 @@
   "year": 2011,
   "round": "theory",
   "roundType": "theory",
-  "grade": "alpha",
+  "grade": "α",
   "lang": "en",
   "title": "XVI International Astronomy Olympiad. Almaty, Kazakhstan, 22 – 30. IX. 2011. Round Theo, Group α. Theoretical round. Problems to solve",
   "held": {
@@ -15,7 +15,7 @@
    "place": "Almaty, Kazakhstan"
   },
   "organiser": "Euro–Asian Astronomical Society",
-  "totalPoints": null,
+  "totalPoints": 40,
   "timeLimitMin": null,
   "source": {
    "archiveKey": "Астрономия/Състезания/IAO/2011/Теоретичен/alphatheo.pdf",
@@ -50,21 +50,33 @@
     "position": "after-problem"
    }
   ],
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/IAO/2011/Теоретичен/theosol.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "caveat": "The shared five-page official solution is a preliminary jury sketch. Tops of scanned pages 2–5 are truncated in the source itself (MediaBox equals CropBox); missing passages are marked explicitly. No detailed grading rubric is present in the year inventory; the solution introduction says correct student solutions are worth 8 points. The Bear drawing for problem 3 and the promised sector/point drawings for problem 5 are not supplied. The ray diagram for problem 4 has a partly clipped lower label. Printed slips, including the solar-mass exponent, latitude inconsistency and planetarium inequality, are retained with notes where relevant.",
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "opus-5-5",
-   "promptVersion": "v1",
-   "requestId": null,
-   "at": "2026-09-23",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/problem_structure_astra",
+   "at": "2026-09-25",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "1c5681e85fcbe703d9544083de434da5564989da8397cdcdc5672cc210087262"
+    "problems": "1c5681e85fcbe703d9544083de434da5564989da8397cdcdc5672cc210087262",
+    "solutions": "566e857275692bf24e64df3a772509b04a32288d2583544992ea49b912b760dc"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-09-23",
-   "notes": "No solutions document in the archive; every problem is marked incomplete with no answer. No points are printed. Page 2 is the bilingual picture page for problem 4 (photo cropped as p4-fig1; its bilingual heading „4. Снимок Юпитера. / 4. Photo of Jupiter.“ used as caption). Pages 3–4 are the bilingual data tables (planetary/moon data and constants), transcribed as Markdown tables in paper.documentNotes; hyphenated header words (Экс-цен-триси-тет, Ec-centri-city) joined, Russian and English header cells combined with „ / “, and the two-line Hubble parameter row split into two rows. Printed agreement/grammar errors kept as printed (D-P28): „only light through the holes are transmitted“ (p2), „whom was already met“ and „was tired to make“ (p3), „The answers … has to be written“ (general note). Printed forms kept: „Plank constant“ (name, never changed), „troph. years“, „diapason of values“. Masthead logos, the spiral-galaxy image and the language/group boxes are decoration."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-25",
+   "notes": "Astra personally read the distinct alpha and beta question pages, shared question attachment pages 2–4, and all five shared official solution pages. Identical source/page hashes bind shared visual reading without claiming repeat independent readings. Native reference tables retained after page comparison. The complete archive inventory was checked; the separate data PNGs repeat embedded reference pages. Proceedings was screened as an inventory contact sheet and relevant theory reproductions inspected, not claimed as a full source reading. Source gaps and printed slips retained explicitly. No separate model checker. Every final actual uploaded crop was personally inspected by this same reader, including both editions of repeated crops."
   }
  },
  "problems": [
@@ -72,7 +84,7 @@
    "id": "iao-2011-theory-alpha-p1",
    "number": 1,
    "title": "Observation of a star",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "Observations were done by the naked eye on June 16, 2008, Universal time was used. An observer has registered that a star passed zenith at $0^{\\mathrm{h}}18^{\\mathrm{m}}$, and at $8^{\\mathrm{h}}17^{\\mathrm{m}}$ its height above the horizon was $87^{\\circ}12'$. Find the latitude of the observations.",
    "figures": [],
@@ -84,23 +96,56 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "",
+    "statement": "**Theoretical round. Sketches for solutions. For preliminary work of Jury ONLY.**\n\n**Note for jury and team leaders.** The proposed sketches are not full; the team leaders have to give more detailed explanations for students. But the correct solutions in the students’ papers (enough for 8 pts) may be shorter.",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "No official solutions in the archive for this paper."
+    "sections": [
+     {
+      "id": "latitude",
+      "title": "Latitude of observation",
+      "statement": "The difference is $7^{\\mathrm h}59^{\\mathrm m}$ between the two observations. It is almost exactly $1/3$ of a sidereal day (the exact value is $7^{\\mathrm h}58^{\\mathrm m}41^{\\mathrm s}$). During this time the star moves $120^\\circ$ of its daily path. And its zenith distance has changed by $\\zeta=90^\\circ-87^\\circ12'=2^\\circ48'$. This value is small, so it is possible to work with the approximation of plane geometry. If $\\beta$ is the angular distance from the star to the pole P, we may conclude (see figure) that during this time the star has moved from the zenith point **Z** to point **Y**, and changed the zenith distance by\n\n$$\\zeta=2\\beta\\times\\sin(120^\\circ/2)=1.732\\times\\beta,$$\n\ntherefore\n\n$$\\beta=\\zeta/1.732=2^\\circ48'/1.732=1^\\circ37'.$$\n\nHence, the declination of the star is equal to\n\n$$\\delta=90^\\circ-\\beta=90^\\circ-1^\\circ37'=88^\\circ23'.$$\n\nAccordingly, this star culminates at zenith only at latitude $\\varphi=\\delta$, that is the latitude also equals $88^\\circ23'$.\n\nBut it is not a complete solution. However, the value of $88^\\circ23'$ is only the absolute value of the unknown value. In principle, both the values: $+88^\\circ23'$ (Northern latitude, the star is near the North Pole) and $-88^\\circ28'$ (Southern latitude, the star near the South Pole) can meet the condition of the more general problem. However, according to the condition of our problem the observations were made with the naked eye on 16 June, when polar day appears at such northern latitudes. Therefore, correct answer is only one: **$-88^\\circ23'$ ($88^\\circ23'$ South latitude).**\n\n*Transcription note: the intermediate southern value is printed $-88^\\circ28'$; the calculation and final answer print $-88^\\circ23'$. Both are retained.*",
+      "figures": [
+       {
+        "id": "p1-solution-polar-geometry-astra-s2-r1",
+        "alt": "Small polar-circle geometry with centre P, radii beta, zenith Z, point Y and central angle 120 degrees.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-theory-alpha/p1-solution-polar-geometry-astra-s2-r1.png",
+        "width": 450,
+        "height": 479,
+        "source": {
+         "page": 1,
+         "pdfRect": [
+          488.57,
+          198.72,
+          596.34,
+          313.52
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
     }
-   ]
+   ],
+   "answer": {
+    "kind": "expression",
+    "latex": "-88^\\circ23\\prime\\text{ (South latitude)}"
+   }
   },
   {
    "id": "iao-2011-theory-alpha-p2",
    "number": 2,
    "title": "Planetarium",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "Classical devices \"planetaria\" are arranged so that each group of stars is projected on a dome by a small optical system. Foils with hole-stars of the corresponding sizes are often used as these \"slides\" of constellations which are projected on the dome, so that most of the light is blocked by the foil (the black sky appears), and only light through the holes are transmitted (so stars appear). For example, images of $0^{\\mathrm{m}}$ stars on the foil have the size $l_0 = 0.1\\ \\mathrm{mm}$, and stars up to $6^{\\mathrm{m}}$ are demonstrated, the focal length of the projecting system is $f = 25\\ \\mathrm{cm}$, and the device has 16 separate projecting systems for every hemisphere. The dome of the planetarium of the observatory “Bobek” has a diameter of $2R = 10\\ \\mathrm{m}$.\n\nLet's suppose that all slides have been removed for replacement by more perfect ones, and the whole light began to be projected on the dome. What would the total stellar magnitude of the illuminated dome be (the artificial gray sky)? Would it be possible to read a newspaper in such an illuminance?\n\nThe answer has to include a list of the necessary parameters with formulae and numerical values.",
    "figures": [],
@@ -112,23 +157,38 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "",
+    "statement": "**Theoretical round. Sketches for solutions. For preliminary work of Jury ONLY.**\n\n**Note for jury and team leaders.** The proposed sketches are not full; the team leaders have to give more detailed explanations for students. But the correct solutions in the students’ papers (enough for 8 pts) may be shorter.",
     "figures": [],
+    "sections": [
+     {
+      "id": "dome-illumination",
+      "title": "Dome illumination",
+      "statement": "*Source gap: the top of the scanned page is cut off. The surviving calculation begins with the following displayed formula; the missing opening is not reconstructed.*\n\n$$L=\\Gamma\\cdot l_0,$$\n\nwhere $\\Gamma$ is the magnification coefficient of the projecting system, $\\Gamma=R/r$, $r$ is the distance from the hole in the foil to the projecting lens. By the lens formula, $1/R+1/r=1/F$, but since $R\\ll F$, one may use $\\Gamma\\approx R/F$.\n\n$$L=\\Gamma\\cdot l_0\\approx(R/F)\\cdot l_0=20\\cdot0.1\\,\\mathrm{mm}=2\\,\\mathrm{mm},$$\n\nAccordingly, the area of the illuminated surface of the dome which gives the star $0^{\\mathrm m}$ is equal to\n\n$$S_{m0}=\\pi L^2/4\\approx3.14\\,\\mathrm{mm}^2.$$\n\nAfter slides-foils have been removed the whole dome will be illuminated, i.e. a hemisphere of radius $R=5\\,\\mathrm m$ will shine, the area of shining surface is\n\n$$S=2\\pi R^2\\approx157\\,\\mathrm m^2.$$\n\nThus, the shining area will be\n\n$$K=S/S_{m0}=\\frac{2\\pi R^2}{\\pi L^2/4}=8(R/L)^2=8(F/l_0)^2=50000000.$$\n\nIn terms of stellar magnitudes the difference is\n\n$$\\Delta m=2.5^{\\mathrm m}\\lg K=2.5^{\\mathrm m}\\lg(8(F/l_0)^2)\\approx19.25^{\\mathrm m}.$$\n\nThus, the stellar magnitude of the dome will be $0^{\\mathrm m}-19.25^{\\mathrm m}=-19.25^{\\mathrm m}$. It gives an illuminance 1000 times less, than the illuminance outdoors at clear sunny day, and in 400 times larger than illuminance from full Moon. It corresponds approximately to indoors illuminance at daytime. Of course, it is possible to read without any problem.\n\nWe should note that the solution does not require the values of limiting stellar magnitude $6^{\\mathrm m}$, the number of projecting systems for the hemisphere and the diameter of the dome of the planetarium.\n\n*Transcription note: the source's inequality $R\\ll F$ is retained, although its numerical approximation uses the opposite scale relation.*"
+     }
+    ],
     "incomplete": true,
-    "incompleteReason": "No official solutions in the archive for this paper."
+    "incompleteReason": "The top of the source scan is cut off; missing opening/continuation lines are marked. All surviving supplied calculation is transcribed."
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
     }
-   ]
+   ],
+   "answer": {
+    "kind": "text",
+    "value": "−19.25 mag; yes, a newspaper can be read."
+   }
   },
   {
    "id": "iao-2011-theory-alpha-p3",
    "number": 3,
    "title": "Sunrise on Mars",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "The Polar Bear (whom was already met in the texts of many International Astronomy Olympiads) was tired to make astronomical observations on Earth. He made a fascinating journey to the North Pole of Mars, and decided to observe a sunrise there. Calculate how long this sunrise lasts. The solution has to include a picture with an image of the Bear on the North Pole of Mars. Necessary sizes or angular sizes should be in the picture. Assume that Mars is spherical and its orbit may be considered circular. Recollect for yourself the necessary information about the Polar Bear.",
    "figures": [],
@@ -140,40 +200,56 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "",
+    "statement": "**Theoretical round. Sketches for solutions. For preliminary work of Jury ONLY.**\n\n**Note for jury and team leaders.** The proposed sketches are not full; the team leaders have to give more detailed explanations for students. But the correct solutions in the students’ papers (enough for 8 pts) may be shorter.",
     "figures": [],
+    "sections": [
+     {
+      "id": "martian-sunrise",
+      "title": "Sunrise duration",
+      "statement": "For an observer on the North Pole of Mars the sunrise happens once a year, in time close to the day of the martian vernal equinox. The solution of the problem is analogous to the solution about the sunrise on the Earth's poles, but we have to remember that some parameters are different on Mars and on Earth:\n\n- $\\alpha$ — the visible angular size of Sun.\n- $v$ — the speed of the Sun along the planet's ecliptic.\n- $\\varepsilon$ — the inclination of the planet's equator plane to the plane of the planet's ecliptic.\n- $R$ — radius of the planet.\n\nFor the observer on the North Pole of Mars the angle between the ecliptic and the horizon is equal to $\\varepsilon=25.2^\\circ$. During the sunrise the Sun goes up to the angle equal to its apparent angular diameter, that is\n\n$$\\alpha=D/L,$$\n\nwhere $D$ is the diameter of the Sun, $L$ is the distance from Mars to the Sun. During this time the Sun moves an angular distance $\\varphi=\\alpha/\\sin\\varepsilon$ on the ecliptic. Thus, the duration of the sunset equals to $\\tau=\\varphi/v=\\alpha/(v\\sin\\varepsilon)$, where $v$ is the speed of the Sun along the martial ecliptic.\n\nDue to the large eccentricity of orbit of Mars both the distance $L$ and speed $v$ may vary significantly ($\\pm e=9.3\\%$ of mean value). Nevertheless we do not know a priory, and cannot understand from the tables, in which point of orbit Mars is situated at the moments of its vernal equinox. So we shall use mean values, equal to $L=228$ million km and $v=360^\\circ/687^{\\mathrm d}\\approx0.524^\\circ$ per day. Thus,\n\n$$\\tau=\\frac{(1.392/228)\\,\\mathrm{rad}\\times(180/\\pi)\\,{}^\\circ/\\mathrm{rad}}{(360^\\circ/687^{\\mathrm d})\\sin25.2^\\circ}\\approx1.57\\text{ days or }37.6\\text{ hours}.$$\n\n*Source note: “sunset” and the discussion of eccentricity are printed in this sunrise sketch; the question explicitly permits a circular orbit. The requested drawing of the Bear on Mars is not supplied in the available sketch.*"
+     }
+    ],
     "incomplete": true,
-    "incompleteReason": "No official solutions in the archive for this paper."
+    "incompleteReason": "The supplied numerical sketch gives 37.6 hours but does not include the drawing of the Bear requested in the question."
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 3
     }
-   ]
+   ],
+   "answer": {
+    "kind": "numeric",
+    "value": 37.6,
+    "unit": "hours"
+   }
   },
   {
    "id": "iao-2011-theory-alpha-p4",
    "number": 4,
    "title": "Photo of Jupiter",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "In the photo of Jupiter that was taken on October 19, 2009, one of the Galilean moons and its shadow on the disc of the planet can be seen. Jupiter was near the middle of Capricornus constellation when the photo was taken.\n\nFind the orbital distance from the moon to the surface of the planet. Determine the name of the moon. The solution should be illustrated by drawings. The name of the moon in the solution and in the drawings should be written (or duplicated) in English.",
    "figures": [
     {
-     "id": "p4-fig1",
-     "caption": "Theoretical round. Problems to solve. Picture. 4. Photo of Jupiter.",
-     "alt": "Colour photograph of Jupiter on a dark background: the banded disc with the Great Red Spot in the upper left part of the disc, a small bright moon to the left of the disc, and a small black round shadow on the disc to the right of centre.",
-     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-theory-alpha/p4-fig1-v2.png",
-     "width": 1276,
-     "height": 1039,
+     "id": "p4-jupiter-photo-astra-s2-r1",
+     "alt": "Colour photograph of Jupiter with a bright moon to the left and a dark circular moon shadow on its disc.",
+     "caption": "4. Photo of Jupiter.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-theory-alpha/p4-jupiter-photo-astra-s2-r1.png",
+     "width": 1253,
+     "height": 1008,
      "source": {
       "page": 2,
       "pdfRect": [
-       147.55,
-       333.45,
-       453.38,
-       582.66
+       150.52,
+       337.64,
+       450.99,
+       579.28
       ],
       "dpi": 300
      }
@@ -187,10 +263,56 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "",
+    "statement": "**Theoretical round. Sketches for solutions. For preliminary work of Jury ONLY.**\n\n**Note for jury and team leaders.** The proposed sketches are not full; the team leaders have to give more detailed explanations for students. But the correct solutions in the students’ papers (enough for 8 pts) may be shorter.",
     "figures": [],
+    "sections": [
+     {
+      "id": "photo-geometry",
+      "title": "Photo geometry and identification",
+      "statement": "*Source gap: the opening of this solution is missing at the top edge of scanned page 4. The visible text starts mid-sentence:*\n\n… moon (to the left) and to the shadow of the moon (to the right) the distance $L$ from the center of the moon to the center of Jupiter can be calculated using formulas of rectangular triangle:\n\n$$L^2=[(a+b)/\\tan\\alpha+R]^2+a^2,$$\n\n$$L/R=\\left\\{\\left[\\frac{a+b}{R\\tan\\alpha}+1\\right]^2+(a/R)^2\\right\\}^{1/2}.$$\n\nWhere $\\alpha$ is the angle between the direction to the Sun (The Sun beams come a little from the left) and the direction to the Earth (from where the picture is made). We can estimate this angle in two ways.\n\nOr we remember that the Capricorn is a zodiac constellation, and the center of this constellation (not zodiac sign, but zodiac constellation!) is passed by the Sun approximately in the end of January — the beginning of February. The angle between the Sun positions on October, 19th and, assume, on February, 3rd, is equal 3.6 months or $108^\\circ$.\n\nOr to start with that fact that the picture is made on October, 19th (a direct ascension of the Sun 26 days after an equinox we will estimate as $12^{\\mathrm h}+26\\cdot4^{\\mathrm m}=13^{\\mathrm h}44^{\\mathrm m}$), Jupiter was in the middle of Capricorn constellation (not zodiac sign, but constellation!) (right ascension of this point we will estimate to $21^{\\mathrm h}$), and both the Sun and Jupiter were close to the ecliptic, declination of both points nearby $-10^\\circ$–$-15^\\circ$. This data allow us to estimate the angle between Sun and Jupiter at the celestial sphere as about the difference in declinations, that is, $7^{\\mathrm h}16^{\\mathrm m}$ or $109^\\circ$.\n\nFrom the second drawing, knowing this angle $\\varphi$, and distances to the Sun from Earth $L_E$ and from Jupiter $L_J$, it is possible to calculate the angle corner $\\alpha$ necessary to us:\n\n$$L_J\\sin\\alpha=L_E\\sin\\varphi,\\qquad\\sin\\alpha=(L_E/L_J)\\sin\\varphi.$$\n\n$$\\sin\\alpha\\approx(1/5.2)\\sin108^\\circ\\approx(1/5.2)\\cdot0.95\\approx0.183.$$\n\n$$\\alpha\\approx10.5^\\circ.$$\n\nBy measuring the values **R, a and b** (accordingly 48.5 mm, 59 mm and 18 mm on the author printed picture, on other scaled printed pictures other values may be obtained, but their absolute values are not important, important is only ratios that do not depend on scale) in the photo, and using the formula for a rectangular triangle, we can receive a value of $L/R$ equal to 9.64.\n\nFrom the given tables it is possible to find that for Io this ratio equals to 5.90, for Europa — 9.39, for Ganimede — 14.97, for Callisto — 26.33. It is evident, that our calculations are made with some accuracy, and the proximity of values 9.64 and 9.39 (1.5% of accuracy) says that we see the moon **Europa** in the picture.\n\n*Transcription note: “difference in declinations” and “1.5%” follow the supplied sketch. The sketch reports distance from Jupiter's centre, while the question asks distance from its surface; a final subtraction of the radius is not explicitly supplied. The ray-diagram label at the bottom of scanned page 3 is partly cut off.*",
+      "figures": [
+       {
+        "id": "p4-solution-ray-geometry-astra-s2-r1",
+        "alt": "Jupiter, moon and shadow ray geometry with offsets a and b, viewing rays from Earth and oblique Sun rays; the lower Sun-rays label is clipped in the source.",
+        "caption": "The lower label is partly cut off in the source scan.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-theory-alpha/p4-solution-ray-geometry-astra-s2-r1.png",
+        "width": 562,
+        "height": 961,
+        "source": {
+         "page": 3,
+         "pdfRect": [
+          466.52,
+          552.65,
+          601.2,
+          783.04
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       },
+       {
+        "id": "p4-solution-sun-earth-jupiter-astra-s2-r1",
+        "alt": "Triangle of Sun S, Earth E and Jupiter J showing distances LE and LJ and angles phi and alpha.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-theory-alpha/p4-solution-sun-earth-jupiter-astra-s2-r1.png",
+        "width": 389,
+        "height": 681,
+        "source": {
+         "page": 4,
+         "pdfRect": [
+          507.55,
+          243.09,
+          600.61,
+          406.17
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     }
+    ],
     "incomplete": true,
-    "incompleteReason": "No official solutions in the archive for this paper."
+    "incompleteReason": "The opening of the source text is cut off, a ray-diagram label is partly clipped, and the sketch identifies Europa and gives centre-distance ratio L/R=9.64 but does not explicitly subtract Jupiter radius for the requested surface distance."
    },
    "sourceSpans": [
     {
@@ -200,14 +322,26 @@
     {
      "document": "problems",
      "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
     }
-   ]
+   ],
+   "answer": {
+    "kind": "text",
+    "value": "Europa; supplied sketch gives L/R = 9.64 from Jupiter’s centre (table: 9.39)."
+   }
   },
   {
    "id": "iao-2011-theory-alpha-p5",
    "number": 5,
    "title": "Jupiter disappeared",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "Let us suppose that Jupiter suddenly disappeared. The moons of Jupiter became independent bodies.",
    "figures": [],
@@ -215,12 +349,20 @@
     {
      "label": "5.1.",
      "statement": "Which former Galileo moon(s) and in what case may leave the Solar system?",
-     "points": null
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "Io, Europa, Ganimede and Callisto, in the escape sectors described in the sketch; the referenced sector diagram is absent."
+     }
     },
     {
      "label": "5.2.",
      "statement": "Which former Galileo moon(s) and in what case may fall into the Sun?",
-     "points": null
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "Io and Europa, at the two configurations near local conjunction described in the sketch; the referenced point diagram is absent."
+     }
     }
    ],
    "statementAfterParts": "The answers “which moon” and “in what case” (configurations at the moment of Jupiter disappearance) have to be given in the form of drawings, and calculations should be the base for the answers. The names of the moons in the solution and in the drawings should be written in English. Consider the orbit of Jupiter (before its disappearance) to be circular.",
@@ -230,15 +372,40 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "",
+    "statement": "**Theoretical round. Sketches for solutions. For preliminary work of Jury ONLY.**\n\n**Note for jury and team leaders.** The proposed sketches are not full; the team leaders have to give more detailed explanations for students. But the correct solutions in the students’ papers (enough for 8 pts) may be shorter.",
     "figures": [],
+    "sections": [
+     {
+      "id": "orbital-speeds",
+      "title": "Orbital velocities",
+      "statement": "Let us find the most important parameters that we need for the solution. The orbital velocities of Jupiter and its moons are,\n\nJupiter: $T=2\\pi\\cdot778600000/4332.59/86400=13.069\\,\\mathrm{km/s}$,\n\nand analogously:\n\n| Moon | Orbital velocity |\n|---|---:|\n| Io | 17.33 km/s |\n| Europa | 13.74 km/s |\n| Ganimede | 10.88 km/s |\n| Callisto | 8.20 km/s |\n\nAfter disappearance of Jupiter the velocity of each of its former moons relative to the Sun will remain and will be equal to sum of vectors of the velocity of Jupiter relative to the Sun and the velocity of the moons relative to Jupiter.\n\n*Transcription note: the symbol $T$ labels the speed calculation in the source.*"
+     },
+     {
+      "id": "solution-5-1",
+      "title": "5.1.",
+      "statement": "A body can leave the Solar system if its total energy in the field of gravitation of the Sun would exceed zero:\n\n$$-GMm/R+mv^2/2\\ge0\\quad\\text{or}\\quad mv^2/2\\ge GMm/R.$$\n\nBut also we know that for a circular orbit\n\n$$mv^2/2=GMm/2R.$$\n\nTherefore, the body can leave the Solar system if its full speed at the distance of the orbit of Jupiter is at least $2^{1/2}$ times larger than the orbital velocity of Jupiter, i.e. $2^{1/2}\\cdot13.07\\,\\mathrm{km/s}=18.48\\,\\mathrm{km/s}$. As we see, for any moon such a velocity is possible. At least, it is reached in a configuration of local opposition of the …\n\n*[The continuation is cut off between the bottom of page 4 and the top of page 5. The next surviving word is reproduced below.]*\n\n… disappears). The necessary drawing to this question should contain these sectors. Student have to find boundaries of the sectors geometrically from the diagram of geometrical summation of velocities or calculate the angles algebraically.\n\nAnswer: Io, Europa, Ganimede, Callisto, every moon in the case being in the sector shown at the drawing."
+     },
+     {
+      "id": "solution-5-2",
+      "title": "5.2.",
+      "statement": "A body can fall into the Sun in the opposite situation, if the velocity relative to the Sun is strongly reduced, namely reduced to zero the orbital component of the velocity, then it will move to the Sun or from the Sun by a thin ellipse and finally fall into the Sun. Or, as an alternative we may keep the velocity large, but its vector should be directed strictly to the Sun, so that the point of perihelion of the (not closed) orbit appear in the Sun. By the same diagram of geometrical summation of velocities we may find that falling into the Sun is possible only for Io and Europa, and for both of them it will take place only in two points, sometime before the local conjunctions with Sun (analog to new moon at Earth) and sometimes after. The necessary drawing to this question should contain these points. The student has to find the points geometrically from the diagram of geometrical summation of velocities or calculate their positions algebraically.\n\nAnswer: Io and Europa in the case being in the points of orbit shown at the drawing.\n\n*Note: the drawings will be presented for jury sometime later.*\n\n*Source gap: those promised sector/point diagrams are absent from the supplied solution PDF and the inspected year inventory. They are not invented here.*"
+     }
+    ],
     "incomplete": true,
-    "incompleteReason": "No official solutions in the archive for this paper."
+    "incompleteReason": "Part of the 5.1 continuation is cut off in the scan. The source promises sector/point drawings later, but those drawings are absent."
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
     }
    ]
   }
