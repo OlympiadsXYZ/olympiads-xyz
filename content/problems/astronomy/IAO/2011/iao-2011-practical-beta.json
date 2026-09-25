@@ -6,7 +6,7 @@
   "year": 2011,
   "round": "practical",
   "roundType": "practical",
-  "grade": "beta",
+  "grade": "β",
   "lang": "en",
   "title": "XVI International Astronomy Olympiad. Practical round. Problems to solve",
   "held": {
@@ -34,23 +34,33 @@
    ]
   },
   "status": "review",
-  "caveat": "The official solutions file covers only problem 6 and is printed in Russian; there is no official solution for problem 7 in the archive.",
+  "caveat": "The p7 grading allocations printed in the shared key sum to 80%; the remaining 20% is not specified. The key also prints an unparenthesized flux-ratio expression; the source expression and stated radius ratio are both retained. The English p6 question identifies NGC 5643, but its Russian key identifies NGC 6543. Printed light-speed scale and radial-velocity subscript inconsistencies in the key are retained and marked.",
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IAO/2011/Практически/alphabeta7sol.doc",
+    "pages": [
+     1,
+     2
+    ]
+   }
+  },
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "opus-5-5",
-   "promptVersion": "v1",
-   "requestId": null,
-   "at": "2026-09-23",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/problem_structure_astra",
+   "at": "2026-09-25",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "3f5ffe83f347391ccfc149a173644e3eaa44072b92f8d6b88fd93d148d064105",
-    "solutions": "4099626677c989a5db0a498d81f4dbb619d407a35cfa19123eb0ceb1035eefc2"
+    "solutions": "75b6b89820a0840a3e728570dc47dad7e89b953b4542722cb44eb52fca35dfc4",
+    "supplement-1": "ef26d8797400162e09a502eec98d5576d56fd19133dc419ad3a610b28bc42266"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-09-23",
-   "notes": "Problems are numbered 6 and 7 as printed (the practical round continues the olympiad numbering); ids use the printed numbers. Pages 2 and 4 of the problems PDF are the 'separate sheets' with the nebula photograph and the light curve, headed in Russian and English. The English statement prints 'NGC 5643' while the Russian solutions file prints 'NGC 6543' (the Cat's Eye nebula); both kept verbatim. The Ångström symbol is printed as 'Ǻ' and kept. The solutions file (beta6sol.doc) is in Russian, numbers the problem '2 Планетарная туманность', restates the problem with the photograph, and covers only problem 6; it is transcribed verbatim in Russian. In the solution only six v_r values are computed (v_r6 uses 6563,16, i.e. +66° 40′), while the table also lists −1,827 for +66° 39′; kept as printed. 'из за' (without hyphen) kept as printed. No points are printed anywhere. Problem 7 has no official solution in the archive."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-25",
+   "notes": "Astra single-pass direct visual reading of all question pages, both distinct Russian p6 keys and the shared two-page Russian p7 key. The original p6 solution archive keys remain owned by their respective editions; p7 is separately attributed to supplement-1. Native solution stages, source tables and all original question images retained; source discrepancies marked. The shared DOC has identical original bytes and rendered page-image hashes in both preparations, despite differing converted-PDF metadata hashes. No separate model checker. All 17 final actual crops across both editions were personally inspected, including repeated image crops; no snapping was used. Math typography was normalized without changing the printed values."
   }
  },
  "problems": [
@@ -63,9 +73,9 @@
    "statement": "The table provides the results of the measurements of the wavelength of the spectral line of hydrogen with $\\lambda_0 = 6562{,}81$Ǻ (Hα) of the planetary nebula NGC 5643 (points shown in the picture on separate sheet). Draw a graph that shows the dependence of the radial velocity of the points on the declination $\\delta$. Draw a diagram showing the direction in which each point is moving. Assuming that the extreme points in the table correspond to the boundary of the nebula, calculate the motion velocity (the velocity at which the nebula as a whole approaches or recedes) and the velocity of the nebula expansion.\n\n| $\\delta$ | +66° 34′ | +66° 35′ | +66° 36′ | +66° 37′ | +66° 38′ | +66° 39′ | +66° 40′ |\n|---|---|---|---|---|---|---|---|\n| λ, Ǻ | 6563,17 | 6562,80 | 6562,68 | 6562,40 | 6562,65 | 6562,77 | 6563,16 |",
    "figures": [
     {
-     "id": "p6-fig1",
+     "id": "p6-fig1-astra-s3-r1",
      "alt": "Colour photograph of the planetary nebula (Cat's Eye) on a black background; seven small white squares mark the measured points along a line running from the left edge through the central star to the upper right.",
-     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p6-fig1.png",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p6-fig1-astra-s3-r1.png",
      "width": 1632,
      "height": 1243,
      "source": {
@@ -83,8 +93,7 @@
    "parts": [],
    "answer": {
     "kind": "text",
-    "value": "v_c = 16,2 км/с, v_p = 16,2 + 18,7 = 34,9 км/с",
-    "note": "From the official (Russian) solution: v_c is the velocity of the nebula as a whole, v_p the expansion velocity."
+    "value": "Nebula recession speed 16.2 km/s; expansion speed 34.9 km/s."
    },
    "topics": [
     "astronomy/spectroscopy",
@@ -94,45 +103,70 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "2 Планетарная туманность\n\nВ таблице даны значения измерений длин волн спектральной линии водорода $\\lambda_0 = 6562{,}81$Ǻ (Hα) планетарной туманности NGC 6543 (точки показаны на рисунке). Постройте график зависимости радиальной скорости движения данных точек от координаты по склонению. Нарисуйте схему, показывающую, в каком направлении движется каждая точка. Считая, что крайние точки на таблице соответствуют границе туманности, определите скорость собственного движения (с какой скоростью приближается или удаляется вся туманность в целом) и скорость расширения туманности.\n\n| δ | +66° 34′ | +66° 35′ | +66° 36′ | +66° 37′ | +66° 38′ | +66° 39′ | +66° 40′ |\n|---|---|---|---|---|---|---|---|\n| λ, Ǻ | 6563,17 | 6562,80 | 6562,68 | 6562,40 | 6562,65 | 6562,77 | 6563,16 |\n\n**Решение**\n\nИзменение длины волны из за эффекта Доплера дается формулой\n\n$$\\lambda = \\lambda_0 \\frac{1 + \\frac{v}{c}\\cos\\theta}{\\sqrt{1 - \\frac{v^2}{c^2}}}$$\n\nгде $\\theta$ - угол между направлением на источник и вектором скорости в системе отсчёта приёмника.\n\nПри малых скоростях мы можем пренебречь корнем\n\n$$\\lambda = \\lambda_0 \\left(1 + \\frac{v}{c}\\cos\\theta\\right)$$\n\nРадиальная скорость $v_r = v\\cos\\theta$, отсюда\n\n$$v_r = \\left(\\frac{\\lambda}{\\lambda_0} - 1\\right)c$$\n\nпервая и последняя точки движутся от наблюдателя, остальные в сторону наблюдателя.\n\nТак как на краю туманности расширение идет перпендикулярно, то смещение спектра происходит из-за собственного движения туманности. Скорость в этих точках соответствует скорости собственного движения туманности. Радиальная скорость в центре есть разность (сумма векторов) скоростей собственного движения и скорости расширения туманности.\n\n$$v_{r1} = \\left(\\frac{6563{,}17}{6562{,}81} - 1\\right)299{,}79 = 16{,}445\\ \\text{км/с}$$\n\n$$v_{r2} = \\left(\\frac{6562{,}80}{6562{,}81} - 1\\right)299{,}79 = -0{,}456\\ \\text{км/с}$$\n\n$$v_{r3} = \\left(\\frac{6562{,}68}{6562{,}81} - 1\\right)299{,}79 = -5{,}938\\ \\text{км/с}$$\n\n$$v_{r4} = \\left(\\frac{6562{,}40}{6562{,}81} - 1\\right)299{,}79 = -18{,}729\\ \\text{км/с}$$\n\n$$v_{r5} = \\left(\\frac{6562{,}65}{6562{,}81} - 1\\right)299{,}79 = -7{,}308\\ \\text{км/с}$$\n\n$$v_{r6} = \\left(\\frac{6563{,}16}{6562{,}81} - 1\\right)299{,}79 = 15{,}988\\ \\text{км/с}$$\n\n| δ | +66° 34′ | +66° 35′ | +66° 36′ | +66° 37′ | +66° 38′ | +66° 39′ | +66° 40′ |\n|---|---|---|---|---|---|---|---|\n| $v_r$, км/с | 16,445 | -0,456 | -5,938 | -18,729 | -7,308 | -1,827 | 15,988 |\n\nРазность скоростей крайних точек соответствует перпендикулярной лучу зрения составляющей скорости туманности\n\n$v_c = 16{,}2$ км/с, $v_p = 16{,}2 + 18{,}7 = 34{,}9$ км/с",
-    "figures": [
+    "statement": "",
+    "sections": [
      {
-      "id": "p6-sol-fig1",
-      "alt": "Colour photograph of the Cat's Eye planetary nebula; seven measured points are marked by small white squares along a line running from the left through the central star to the upper right.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p6-sol-fig1.png",
-      "width": 1599,
-      "height": 1566,
-      "source": {
-       "page": 1,
-       "pdfRect": [
-        52.97,
-        70.74,
-        436.36,
-        446.22
-       ],
-       "dpi": 300,
-       "document": "solutions"
-      }
+      "id": "source-russian-problem",
+      "title": "2. Планетарная туманность",
+      "statement": "![Colour photograph of the Cat's Eye planetary nebula; seven measured points are marked by small white squares along a line running from the left through the central star to the upper right.](#p6-sol-fig1-astra-s3-r1)\n\n2 Планетарная туманность\n\nВ таблице даны значения измерений длин волн спектральной линии водорода $\\lambda_0 = 6562{,}81$Ǻ (Hα) планетарной туманности NGC 6543 (точки показаны на рисунке). Постройте график зависимости радиальной скорости движения данных точек от координаты по склонению. Нарисуйте схему, показывающую, в каком направлении движется каждая точка. Считая, что крайние точки на таблице соответствуют границе туманности, определите скорость собственного движения (с какой скоростью приближается или удаляется вся туманность в целом) и скорость расширения туманности.\n\n| δ | +66° 34′ | +66° 35′ | +66° 36′ | +66° 37′ | +66° 38′ | +66° 39′ | +66° 40′ |\n|---|---|---|---|---|---|---|---|\n| λ, Ǻ | 6563,17 | 6562,80 | 6562,68 | 6562,40 | 6562,65 | 6562,77 | 6563,16 |",
+      "figures": [
+       {
+        "id": "p6-sol-fig1-astra-s3-r1",
+        "alt": "Colour photograph of the Cat's Eye planetary nebula; seven measured points are marked by small white squares along a line running from the left through the central star to the upper right.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p6-sol-fig1-astra-s3-r1.png",
+        "width": 1599,
+        "height": 1566,
+        "source": {
+         "page": 1,
+         "pdfRect": [
+          52.97,
+          70.74,
+          436.36,
+          446.22
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
      },
      {
-      "id": "p6-sol-fig2",
-      "alt": "Chart of vr, км/с (vertical axis from −25 to 20) against δ (from +66° 34′ to +66° 40′): a broken line through 16.4, −0.5, −5.9, −18.7, −7.3, −1.8 and 16.0, V-shaped with its minimum at +66° 37′.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p6-sol-fig2.png",
-      "width": 2010,
-      "height": 776,
-      "source": {
-       "page": 2,
-       "pdfRect": [
-        55.35,
-        565.78,
-        537.57,
-        751.82
-       ],
-       "dpi": 300,
-       "document": "solutions"
-      }
+      "id": "doppler-calculation",
+      "title": "Решение: эффект Доплера",
+      "statement": "Изменение длины волны из за эффекта Доплера дается формулой\n\n$$\\lambda = \\lambda_0 \\frac{1 + \\frac{v}{c}\\cos\\theta}{\\sqrt{1 - \\frac{v^2}{c^2}}}$$\n\nгде $\\theta$ - угол между направлением на источник и вектором скорости в системе отсчёта приёмника.\n\nПри малых скоростях мы можем пренебречь корнем\n\n$$\\lambda = \\lambda_0 \\left(1 + \\frac{v}{c}\\cos\\theta\\right)$$\n\nРадиальная скорость $v_r = v\\cos\\theta$, отсюда\n\n$$v_r = \\left(\\frac{\\lambda}{\\lambda_0} - 1\\right)c$$\n\nпервая и последняя точки движутся от наблюдателя, остальные в сторону наблюдателя.\n\nТак как на краю туманности расширение идет перпендикулярно, то смещение спектра происходит из-за собственного движения туманности. Скорость в этих точках соответствует скорости собственного движения туманности. Радиальная скорость в центре есть разность (сумма векторов) скоростей собственного движения и скорости расширения туманности.\n\n$$v_{r1} = \\left(\\frac{6563{,}17}{6562{,}81} - 1\\right)299{,}79 = 16{,}445\\ \\text{км/с}$$\n\n$$v_{r2} = \\left(\\frac{6562{,}80}{6562{,}81} - 1\\right)299{,}79 = -0{,}456\\ \\text{км/с}$$\n\n$$v_{r3} = \\left(\\frac{6562{,}68}{6562{,}81} - 1\\right)299{,}79 = -5{,}938\\ \\text{км/с}$$\n\n$$v_{r4} = \\left(\\frac{6562{,}40}{6562{,}81} - 1\\right)299{,}79 = -18{,}729\\ \\text{км/с}$$\n\n$$v_{r5} = \\left(\\frac{6562{,}65}{6562{,}81} - 1\\right)299{,}79 = -7{,}308\\ \\text{км/с}$$\n\n$$v_{r6} = \\left(\\frac{6563{,}16}{6562{,}81} - 1\\right)299{,}79 = 15{,}988\\ \\text{км/с}$$\n\n| δ | +66° 34′ | +66° 35′ | +66° 36′ | +66° 37′ | +66° 38′ | +66° 39′ | +66° 40′ |\n|---|---|---|---|---|---|---|---|\n| $v_r$, км/с | 16,445 | -0,456 | -5,938 | -18,729 | -7,308 | -1,827 | 15,988 |\n\nРазность скоростей крайних точек соответствует перпендикулярной лучу зрения составляющей скорости туманности"
+     },
+     {
+      "id": "velocity-graph",
+      "title": "График и ответ",
+      "statement": "![Chart of vr, км/с (vertical axis from −25 to 20) against δ (from +66° 34′ to +66° 40′): a broken line through 16.4, −0.5, −5.9, −18.7, −7.3, −1.8 and 16.0, V-shaped with its minimum at +66° 37′.](#p6-sol-fig2-astra-s3-r1)\n\n$v_c = 16{,}2$ км/с, $v_p = 16{,}2 + 18{,}7 = 34{,}9$ км/с",
+      "figures": [
+       {
+        "id": "p6-sol-fig2-astra-s3-r1",
+        "alt": "Chart of vr, км/с (vertical axis from −25 to 20) against δ (from +66° 34′ to +66° 40′): a broken line through 16.4, −0.5, −5.9, −18.7, −7.3, −1.8 and 16.0, V-shaped with its minimum at +66° 37′.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p6-sol-fig2-astra-s3-r1.png",
+        "width": 2010,
+        "height": 776,
+        "source": {
+         "page": 2,
+         "pdfRect": [
+          55.35,
+          565.78,
+          537.57,
+          751.82
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "source-note",
+      "title": "Source notes",
+      "statement": "The English question prints NGC 5643; the Russian solution prints NGC 6543. The key writes the numerical light-speed factor as 299.79 while its km/s results imply a factor 1000 larger. The last displayed calculation is labelled vᵣ₆ but uses the seventh wavelength; the complete seven-value table, including −1.827 km/s, is retained. These printed inconsistencies have not been silently corrected."
      }
-    ]
+    ],
+    "figures": []
    },
    "sourceSpans": [
     {
@@ -162,9 +196,9 @@
    "statement": "Recently astronomers discovered an exoplanet that practically reflects no light and belongs to the class of hot Jupiters. Its mass corresponds to 12 Jupiter's masses, the average orbit radius is 0.036 AU and the period is 2.47 days. The given data about the exoplanet has been obtained with the help of the data from the \"Kepler\" telescope which continuously monitors the sky region between the constellations Cygnus and Lyra. The device was launched in March 2009 and is capable of seeing not only gas giants, but also planets with the size of Earth. Recently scientists have discovered that exoplanets are capable of causing huge tidal waves in the stars that have a significant influence on the spectral parameters of the emitted light from the star. In fact, with the help of this effect scientists have been able to prove that the planet moves around a star in a circular orbit.\n\nIn the graph (see separate sheet) the flux of radiation from the system vs. the phase (phase $\\phi$ given in radians) can be seen, normalized to the radiation flux from the star.",
    "figures": [
     {
-     "id": "p7-fig1",
+     "id": "p7-fig1-astra-s3-r1",
      "alt": "Light curve: E1/E0 on the vertical axis (0.985 to 1.015) against Orbital phase, φ on the horizontal axis (−0.6 to 0.6); data points with error bars, open and grey circles, and a smooth grey curve near 1 with a dip to about 0.995 centred at phase 0.0.",
-     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p7-fig1.png",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p7-fig1-astra-s3-r1.png",
      "width": 2480,
      "height": 959,
      "source": {
@@ -183,27 +217,47 @@
     {
      "label": "7.1.",
      "statement": "During the transit there are four \"contacts\" when the contour of the smaller object touches the contour of the larger object at one point. The contacts take place in the following order:\n\n- First contact: The smaller body is completely outside of the larger and moving inside.\n- Second contact: The smaller body is completely inside of the larger and continues to move inwards.\n- Third contact: The smaller body is completely inside of the larger and moves outwards.\n- Fourth contact: The smaller body is completely outside of the larger and starts to move away.\n\nIn the given graph mark the points of the first, second, third and the fourth contacts. Write in the copybook the value of the phase for each contact.",
-     "points": null
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\varphi_1=-0.3,\\ \\varphi_2=-0.05,\\ \\varphi_3=0.05,\\ \\varphi_4=0.3\\text{ rad}"
+     }
     },
     {
      "label": "7.2.",
      "statement": "Determine the duration of the transit (duration of the passage of the disk of planet over the disk of the star).",
-     "points": null
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "t=0.236\\text{ days}=5.66\\text{ hours}"
+     }
     },
     {
      "label": "7.3.",
      "statement": "Determine the inclination of the orbit (for exoplanets and binary stars the reference plane is assumed to be the \"image plane\" – the plane that is perpendicular to the line of sight).",
-     "points": null
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "i=62.18^\\circ"
+     }
     },
     {
      "label": "7.4.",
      "statement": "Calculate the radius of the star.",
-     "points": null
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "R_0=18.48\\cdot10^{-3}\\,\\mathrm{au}"
+     }
     },
     {
      "label": "7.5.",
      "statement": "Calculate the radius of the planet.",
-     "points": null
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "R_1=1.54\\cdot10^{-3}\\,\\mathrm{au}"
+     }
     }
    ],
    "topics": [
@@ -213,10 +267,51 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "",
+    "statement": "*Official solution source: the shared Russian document alphabeta7sol.doc. The question and observed light curve are already reproduced above; the supplied solution below retains its original language.*",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "The archive has no official solution for this problem (the solutions file beta6sol.doc covers only problem 6)."
+    "sections": [
+     {
+      "id": "solution-7-1",
+      "title": "1) Контакты — 10%",
+      "statement": "1) (10%)\n\n- Первый контакт: $-0{,}3$\n- Второй контакт: $-0{,}05$\n- Третий контакт: $0{,}05$\n- Четвёртый контакт: $0{,}3$"
+     },
+     {
+      "id": "solution-7-2",
+      "title": "2) Длительность прохождения — 20%",
+      "statement": "2) (20%) время (длительность) прохождения планеты\n\nпериод $T=2{,}47$ суток, разность фаз между первым и последним контактами $\\varphi_{14}=0{,}6$ рад.,\n\nполный период соответствует $6{,}28$ рад., отсюда время прохождения\n\n$$t=T\\frac{\\varphi_{14}}{2\\pi}=0{,}236\\text{ сут }(5{,}66\\text{ ч.}).$$"
+     },
+     {
+      "id": "solution-7-3-5",
+      "title": "3–5) Наклонение орбиты и радиусы",
+      "statement": "3) определение наклонения орбиты (20%)\n\n4) определение радиуса звезды (15%)\n\n5) определение радиуса планеты (15%)\n\nОбозначим $R_0$ — радиус звезды, $R_1$ — радиус экзопланеты.\n\nИз графика можем найти соотношение радиусов планеты и звезды: при прохождении поток излучения на минимуме соответствует покрытию планетой звезды, отсюда соотношение потоков будет соответствовать соотношению площадей поверхностей:\n\n$$S_0/S_1=E_0/E_1,\\quad E_0=1,\\quad E_1=7\\cdot10^{-3},$$\n\n$$(R_0/R_1)^2=E_0/E_1=1/7\\cdot10^{-3},\\quad\\text{отсюда }R_0=12R_1.$$\n\n*Transcription note: the unparenthesized quotient $1/7\\cdot10^{-3}$ is printed in the key; its stated radius ratio corresponds to $1/(7\\cdot10^{-3})$. The source expression and result are retained.*\n\n![Transit geometry: stellar circle, four planet contact positions 1–4, centre 0, angles alpha and beta, radii R0+R1 and R0−R1, and path lengths L12 and L23.](#p7-transit-geometry-astra-s3-r1)\n\nРассмотрим рисунок 1.\n\nНа рисунке цифрами обозначены точки, соответствующие контактам, $L_{12}$ и $L_{23}$ — расстояния между соответствующими контактами:\n\n$$L_{12}=2\\pi R\\frac{\\varphi_{12}}{2\\pi}=0.25R=0{,}009\\text{ а.е.}$$\n\n$$L_{23}=2\\pi R\\frac{\\varphi_{23}}{2\\pi}=0.1R=0.0036\\text{ а.е.}$$\n\nДля треугольников 012, 023 и 013 можем написать\n\n$$L_{12}^2=(R_0+R_1)^2+(R_0-R_1)^2-2(R_0+R_1)(R_0-R_1)\\cos\\alpha,$$\n\n$$L_{23}^2=2(R_0-R_1)^2(1-\\cos\\beta),$$\n\n$$(L_{12}+L_{23})^2=(R_0+R_1)^2+(R_0-R_1)^2-2(R_0+R_1)(R_0-R_1)\\cos(\\alpha+\\beta).$$\n\nИспользуя соотношения для радиусов, получим систему\n\n$$L_{12}^2=R_1^2(290-286\\cos\\alpha),\\qquad L_{23}^2=242R_1^2(1-\\cos\\beta),$$\n\n$$(L_{12}+L_{23})^2=R_1^2(290-286\\cos(\\alpha+\\beta)),$$\n\nотсюда $R_1=1{,}54\\cdot10^{-3}$ а.е., $R_0=18{,}48\\cdot10^{-3}$ а.е.\n\nТеперь, если найдем высоту равнобедренного треугольника\n\n$$H=\\sqrt{(R_0-R_1)^2-L_{23}^2/4}=\\sqrt{0{,}0002869636-0{,}00000324}=0.0168\\text{ а.е.},$$\n\nможем вычислить наклонение\n\n$$\\sin(90^\\circ-i)=H/R=0.0168/0.036=0.466,\\qquad i=62.18^\\circ.$$",
+      "figures": [
+       {
+        "id": "p7-transit-geometry-astra-s3-r1",
+        "alt": "Transit geometry: stellar circle, four planet contact positions 1–4, centre 0, angles alpha and beta, radii R0+R1 and R0−R1, and path lengths L12 and L23.",
+        "caption": "Рисунок 1. Геометрия контактов.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-beta/p7-transit-geometry-astra-s3-r1.png",
+        "width": 1919,
+        "height": 1267,
+        "source": {
+         "page": 2,
+         "pdfRect": [
+          77.99,
+          163.35,
+          538.16,
+          467.28
+         ],
+         "dpi": 300,
+         "document": "supplement-1"
+        }
+       }
+      ]
+     },
+     {
+      "id": "source-grading-note",
+      "title": "Source grading note",
+      "statement": "The source lists 10%, 20%, 20%, 15%, and 15% for the five items. These total 80%; no allocation for the remaining 20% is supplied. The printed percentages are preserved without normalization."
+     }
+    ]
    },
    "sourceSpans": [
     {
@@ -226,6 +321,14 @@
     {
      "document": "problems",
      "page": 4
+    },
+    {
+     "document": "supplement-1",
+     "page": 1
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
     }
    ]
   }
