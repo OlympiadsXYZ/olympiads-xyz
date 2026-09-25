@@ -326,7 +326,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
     createPage({
       path: `/archive/`,
-      component: path.resolve(`./src/templates/archive/archiveIndexTemplate.tsx`),
+      component: path.resolve(
+        `./src/templates/archive/archiveIndexTemplate.tsx`
+      ),
       context: {
         sciences: sciences.map(science => {
           const s = grouped[science];
@@ -363,9 +365,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         const slug = competitionSlug(code);
         const entries = s.competitions[code];
         const years = [
-          ...new Set(
-            entries.map(e => e.year).filter(y => y != null)
-          ),
+          ...new Set(entries.map(e => e.year).filter(y => y != null)),
         ].sort((a, b) => (b as number) - (a as number)) as number[];
         createPage({
           path: `/archive/${science}/${slug}/`,
@@ -402,6 +402,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     });
   }
 
+  require('./src/editor/index-node').writeEditorIndex(__dirname);
+
   // Check to make sure problems with the same unique ID have consistent information, and that there aren't duplicate slugs
   // Also creates user solution pages for each problem
   const problems = result.data.problems.edges;
@@ -418,11 +420,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     } = require('./src/problems/index-node');
     const problemNodes = problems.map(({ node }) => node);
     const count = writeProblemsIndex(__dirname, problemNodes);
-    console.info(`[problems] wrote static/problems-data/index.json (${count} problems)`);
+    console.info(
+      `[problems] wrote static/problems-data/index.json (${count} problems)`
+    );
     // Sidebar of problem pages: subject → competition → year → paper → problems.
     // Read by src/components/ProblemsTree at /problems-data/tree.json.
     const tree = writeProblemsTree(__dirname, problemNodes);
-    console.info(`[problems] wrote static/problems-data/tree.json (${tree.count} problems)`);
+    console.info(
+      `[problems] wrote static/problems-data/tree.json (${tree.count} problems)`
+    );
   }
 
   let problemSlugs = {}; // maps slug to problem unique ID
@@ -840,22 +846,26 @@ const getGitAuthorTime = (filePath: string): string => {
   try {
     // Handle paths with spaces or special characters
     const escapedPath = filePath.replace(/(\s+)/g, '\\$1');
-    
+
     // Get the last meaningful content change (not just formatting)
     // The -w flag ignores whitespace changes
     const lastContentChange = execSync(
       `git log -1 --format=%aI --follow -w -- "${escapedPath}"`
-    ).toString().trim();
-    
+    )
+      .toString()
+      .trim();
+
     if (lastContentChange) {
       return lastContentChange;
     }
-    
+
     // Fallback to file creation date if no content changes found
     const fileCreationDate = execSync(
       `git log --diff-filter=A --format=%aI -- "${escapedPath}"`
-    ).toString().trim();
-    
+    )
+      .toString()
+      .trim();
+
     return fileCreationDate || new Date().toISOString();
   } catch (e) {
     console.warn(`Failed to get git history for ${filePath}`, e);

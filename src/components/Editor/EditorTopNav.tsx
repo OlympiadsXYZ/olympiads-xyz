@@ -1,15 +1,9 @@
 import { InformationCircleIcon } from '@heroicons/react/outline';
-import classNames from 'classnames';
 import { useAtomValue, useSetAtom } from 'jotai';
 import React from 'react';
 import { activeFileAtom, saveFileAtom } from '../../atoms/editor';
 import { useDarkMode } from '../../context/DarkModeContext';
-import {
-  LANGUAGE_LABELS,
-  useSetThemeSetting,
-  useSetUserLangSetting,
-  useUserLangSetting,
-} from '../../context/UserDataContext/properties/simpleProperties';
+import { useSetThemeSetting } from '../../context/UserDataContext/properties/simpleProperties';
 import LogoSquare from '../LogoSquare';
 import { fetchFileContent } from './editorUtils';
 import { useTranslation } from 'react-i18next';
@@ -19,14 +13,18 @@ export const EditorTopNav = (): JSX.Element => {
   const activeFile = useAtomValue(activeFileAtom);
   const saveFile = useSetAtom(saveFileAtom);
   const isDarkMode = useDarkMode();
-  const userLang = useUserLangSetting();
-  const setUserLang = useSetUserLangSetting();
   const setTheme = useSetThemeSetting();
 
   const handleReloadContent = async () => {
     if (!activeFile) return;
     if (confirm('Reload file from GitHub? Your local changes will be lost.')) {
-      const data = await fetchFileContent(activeFile.path);
+      let data;
+      try {
+        data = await fetchFileContent(activeFile.path);
+      } catch (error) {
+        alert(error.message);
+        return;
+      }
       // note: we can't use setMarkdown / setProblems in sequence because setProblems would override setMarkdown
       saveFile({
         ...activeFile,
@@ -106,7 +104,8 @@ export const EditorTopNav = (): JSX.Element => {
         )}
       </div>
       <div className="flex items-center">
-        <LanguageSwitcher/> {/* TODO: Probably should change it to look a bit different but it does the job for now */}
+        <LanguageSwitcher />{' '}
+        {/* TODO: Probably should change it to look a bit different but it does the job for now */}
         {/* <nav className="flex space-x-1" aria-label="Tabs">
           {(['BG', 'java', 'py'] as const).map(tab => (
             <button
@@ -123,12 +122,9 @@ export const EditorTopNav = (): JSX.Element => {
             </button>
           ))}
         </nav> */}
-        
-
         <div className="mx-4 block border-l border-gray-200 dark:border-gray-700 h-6 self-center" />
-
         <a
-          href="/general/adding-solutions"
+          href="/general/editor-work-mdx#работа-с-редактора"
           target="_blank"
           rel="noreferrer"
           className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-gray-200 inline-flex items-center space-x-2 font-medium text-sm group transition"
@@ -136,10 +132,9 @@ export const EditorTopNav = (): JSX.Element => {
           <InformationCircleIcon className="h-6 w-6 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300 transition" />
           <span>{t('documentation')}</span>
         </a>
-
         <div className="mx-4 block border-l border-gray-200 dark:border-gray-700 h-6 self-center" />
-
         <button
+          aria-label={isDarkMode ? 'Светла тема' : 'Тъмна тема'}
           onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
           className="-mx-1 p-1 border-2 border-transparent text-gray-400 dark:text-gray-400 rounded-full hover:text-gray-300 dark:hover:text-dark-high-emphasis focus:outline-none focus:text-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700 transition"
         >

@@ -1,6 +1,6 @@
 ---
 id: eupho-2024-theory-x-p1
-source: 'EuPhO 2024, Теоретичен тур'
+source: 'EuPhO 2024, Теория'
 title: 'Задача 1. T1: Sliding puck (10 pts)'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2024/eupho-2024-theory-x.json'
@@ -15,8 +15,8 @@ verifier: 'same-model'
 
 A puck (a small disc) with radius $r$ and uniform density is moving on a horizontal plane with the velocity $v_0$ without rotation. The puck meets a fixed half-circular wall with a radius $R \gg r$ and starts to move along the wall. The coefficient of friction with the wall is $\mu$, and friction with the horizontal plane is negligible.
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-fig1-v2.png" alt="A half-circular wall of radius R opening to the right; the coefficient of friction μ is marked at the wall; a puck of radius r approaches with velocity v0 and exits with velocity ve." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '25.2%', '--fig-max': '162px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-fig1-v2.png" alt="A half-circular wall of radius R opening to the right; the coefficient of friction μ is marked at the wall; a puck of radius r approaches with velocity v0 and exits with velocity ve." width="505" height="618" loading="lazy" decoding="async" />
 </figure>
 
 **a)** Find the velocity of the puck $v_e$ when it leaves the wall. **[8 т.]**
@@ -34,6 +34,14 @@ When the puck moves along the wall, two forces (in addition to gravity and the n
 So as the puck moves along the circular wall, the speed of the puck decreases and the angular velocity of the puck's rotation around its vertical axis increases. The motion of the puck is rolling with sliding along the wall. At a certain point in time $t_1$, the contact point of the puck *may* have zero velocity and kinetic friction becomes static. From this point onwards, the puck will be rolling without sliding along the wall.
 
 From the zero velocity of the contact point, we find the relationship $\omega = v/r$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.8%', '--fig-max': '236px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig1.png" alt="Graph of $v$ (red solid line decreasing from $v_0$ to $v_1$), $r\omega$ (blue line increasing to $v_1$) and a black dashed/solid curve versus time $t$; the curves meet at $t_1$ at level $v_1$." width="738" height="709" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37%', '--fig-max': '237px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig2.png" alt="Puck (grey circle) inside a circular wall arc; force vectors $\vec{F}_f$, $\vec{N}$, velocity $\vec{v}$ and rotation angular velocity $\omega$ labelled." width="740" height="741" loading="lazy" decoding="async" />
+</figure>
 
 Let's focus on rolling with sliding first. The normal force $\vec{N}$ of the wall on the puck is also perpendicular to the velocity of the puck $\vec{v}$ at any instantaneous position of the puck. Force $\vec{N}$ changes the direction of the velocity $\vec{v}$. From Newton's law in normal direction, we find $N = mv^2/R$, where $m$ is the mass of the puck. Thus, the magnitude of the frictional force is $F_f = \mu N = \mu mv^2/R$.
 
@@ -102,6 +110,10 @@ v_e = v(t = t_e) = v_0\exp(-\pi\mu). \qquad (5)
 $$
 
 The graph $v_e(\mu)$ is shown in the figure.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37%', '--fig-max': '237px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig3.png" alt="Graph of $v_e(\mu)$: starts at $v_0$ and decreases exponentially as $v_e = v_0 e^{-\pi\mu}$ until $\pi\mu = \ln\frac{3}{2}$, then stays constant at $\frac{2}{3}v_0$." width="740" height="541" loading="lazy" decoding="async" />
+</figure>
 
 **Solution 2:** The equation for the translational motion of the puck is
 
@@ -204,18 +216,6 @@ From the way the problem is solved in the second solution, it can be seen that t
 - For each mistake in calculation (algebraic or numeric) 0.2 Pts. are deducted.
 - If a mistake leads to a dimensionally incorrect expression no marks are given for the result.
 - Propagating errors are not punished again unless they are dimensionally wrong or entail oversimplified/wrong physics (e.g. neglecting friction effects).
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig1.png" alt="Graph of $v$ (red solid line decreasing from $v_0$ to $v_1$), $r\omega$ (blue line increasing to $v_1$) and a black dashed/solid curve versus time $t$; the curves meet at $t_1$ at level $v_1$." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig2.png" alt="Puck (grey circle) inside a circular wall arc; force vectors $\vec{F}_f$, $\vec{N}$, velocity $\vec{v}$ and rotation angular velocity $\omega$ labelled." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p1-sol-fig3.png" alt="Graph of $v_e(\mu)$: starts at $v_0$ and decreases exponentially as $v_e = v_0 e^{-\pi\mu}$ until $\pi\mu = \ln\frac{3}{2}$, then stays constant at $\frac{2}{3}v_0$." />
-</figure>
 
 
 </Spoiler>

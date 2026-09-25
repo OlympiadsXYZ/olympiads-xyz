@@ -3,7 +3,9 @@ import prettier from 'prettier';
 import babelParser from 'prettier/parser-babel';
 import React, { useState } from 'react';
 import Modal from '../Modal';
+import { loadProblemsIndex } from '../ProblemsPage/problemSearch';
 import CopyButton from './CopyButton';
+import { editorProblemMetadata } from './editorUtils';
 import { useTranslation } from 'react-i18next';
 async function addProblem(
   url: string,
@@ -12,25 +14,19 @@ async function addProblem(
 ) {
   try {
     setStatus('Fetching metadata...');
-    const parsed = (
-      await fetch('/api/fetch-metadata', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url }),
-      }).then(res => res.json())
-    ).data;
-    const metadata = {
-      uniqueId: parsed.uniqueId,
-      name: parsed.name,
-      url,
-      source: parsed.source,
-      difficulty: 'N/A',
-      isStarred: false,
-      tags: ['Add Tags'],
-      solutionMetadata: parsed.solutionMetadata,
-    };
+    const problems = await loadProblemsIndex();
+    const parsed = problems.find(
+      problem =>
+        problem.url === url ||
+        problem.uniqueId === url ||
+        new URL(problem.problemURL, window.location.origin).href === url
+    );
+    if (!parsed) {
+      throw new Error(
+        'Задачата не е намерена. Въведете адрес или идентификатор от каталога със задачи.'
+      );
+    }
+    const metadata = editorProblemMetadata(parsed);
     setMetadata(
       await prettier.format(JSON.stringify(metadata, null, 2), {
         parser: 'json',

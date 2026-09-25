@@ -1,6 +1,6 @@
 ---
 id: eupho-2022-theory-x-p2
-source: 'EuPhO 2022, Теоретичен тур'
+source: 'EuPhO 2022, Теория'
 title: 'Задача 2. Thermal oscillations'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2022/eupho-2022-theory-x.json'
@@ -25,11 +25,11 @@ verifier: 'mechanical'
 
 A resistor is made of a material which undergoes a phase transition so that its resistance takes one of the two values, $R_1$ if its temperature is smaller than $T_c$, and $R_2 > R_1$ if the temperature is larger than $T_c$.
 
-This resistor is connected to a voltage source through an inductor of inductance $L$. It appears that if the applied voltage $V$ is between two critical values, $V_1 < V < V_2$, the temperature of the resistor starts oscillating. Assume that (i) the heat flux $P$ from the resistor to the ambient medium is given by $P = \alpha(T - T_0)$, where $\alpha$ is a constant, $T$ denotes the temperature of the resistor, and $T_0$ is the ambient temperature; (ii) the geometrical size of the resistor is so small that it will reach a thermal equilibrium much faster than the characteristic time $L/R_2$.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-fig1.png" alt="Circuit: a resistor R in series with an inductor L (coil) and a battery V, forming a single loop." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '16.2%', '--fig-max': '104px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-fig1.png" alt="Circuit: a resistor R in series with an inductor L (coil) and a battery V, forming a single loop." width="325" height="331" loading="lazy" decoding="async" />
 </figure>
+
+This resistor is connected to a voltage source through an inductor of inductance $L$. It appears that if the applied voltage $V$ is between two critical values, $V_1 < V < V_2$, the temperature of the resistor starts oscillating. Assume that (i) the heat flux $P$ from the resistor to the ambient medium is given by $P = \alpha(T - T_0)$, where $\alpha$ is a constant, $T$ denotes the temperature of the resistor, and $T_0$ is the ambient temperature; (ii) the geometrical size of the resistor is so small that it will reach a thermal equilibrium much faster than the characteristic time $L/R_2$.
 
 **(a)** Express $V_1$ and $V_2$ in terms of the other parameters defined above. **[2 т.]**
 
@@ -65,6 +65,11 @@ $$
 V_1 = \sqrt{R_1\alpha(T_c - T_0)} \quad \text{and} \quad V_2 = \sqrt{R_2\alpha(T_c - T_0)}. \qquad (2)
 $$
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '58.8%', '--fig-max': '377px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-sol-fig2.png" alt="Graph versus time t with axes labelled T and R (R in red). Red square wave between R₂ and R₁; black temperature curve: exponential relaxation segments meeting the dotted level T_c, jumping up above R₂ level and down below R₁ level at each phase transition." width="1177" height="702" loading="lazy" decoding="async" />
+<figcaption>Fig. 2</figcaption>
+</figure>
+
 **Part (b): Temperature behaviour**
 
 In the oscillating regime, we have a time-dependent current $I(t)$. The power dissipated over the resistor is $P_{\mathrm{el}}(t) = R(t)I(t)^2$. By assumption (ii), we may assume that the thermal equilibrium is reached very fast, i.e. $P_{\mathrm{el}}(t) = P(t)$. The temperature $T(t)$ is therefore determined by the current via
@@ -86,6 +91,11 @@ I_2 = \sqrt{\frac{\alpha(T_c - T_0)}{R_2}}
 $$
 
 is reached. This behaviour is shown in Fig. 1.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.1%', '--fig-max': '353px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-sol-fig1.png" alt="Graph versus time t with axes labelled I and R (R in red). Red square wave switching between levels R₂ and R₁; black current curve made of exponential segments rising from I₂ towards J₁ and falling from I₁ towards J₂ (dashed continuations), with horizontal dotted levels R₂, J₁, I₁, I₂, R₁, J₂; durations t₁ and t₂ marked." width="1102" height="699" loading="lazy" decoding="async" />
+<figcaption>Fig. 1</figcaption>
+</figure>
 
 Together with (3), we see that the temperature behaves like in Figure 2.
 
@@ -142,16 +152,6 @@ $$
 | c1 | Expressing the duration of each of the exponential segments as $t_j = \frac{L}{R_j}\ln\frac{\Delta I_{j,i}}{\Delta I_{j,f}}$ where $\Delta I_{j,i}$ and $\Delta I_{j,f}$ denote the corresponding initial and final departures of the current from the equilibrium value (full marks to be given if the final answer is correct). Subtract 0.2 for each incorrect $\Delta I_{j,i}$ and $\Delta I_{j,f}$, $i = 1, 2$ (this means that if none of them is correct, only 0.2 pts are given for c1). 60% of points if $t_j$ is related to $\Delta I_{j,i}$ and $\Delta I_{j,f}$ correctly, but not expressed explicitly. | 0.5+ 0.5 |
 | c2 | Correct first and second terms in the final answer (40% of it if the answer is not simplified) | 0.5+ 0.5 |
 | | **Total number of points for Task (c)** | **2.0** |
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-sol-fig1.png" alt="Graph versus time t with axes labelled I and R (R in red). Red square wave switching between levels R₂ and R₁; black current curve made of exponential segments rising from I₂ towards J₁ and falling from I₁ towards J₂ (dashed continuations), with horizontal dotted levels R₂, J₁, I₁, I₂, R₁, J₂; durations t₁ and t₂ marked." />
-<figcaption>Fig. 1</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2022-theory-x/p2-sol-fig2.png" alt="Graph versus time t with axes labelled T and R (R in red). Red square wave between R₂ and R₁; black temperature curve: exponential relaxation segments meeting the dotted level T_c, jumping up above R₂ level and down below R₁ level at each phase transition." />
-<figcaption>Fig. 2</figcaption>
-</figure>
 
 
 </Spoiler>

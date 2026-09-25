@@ -1,7 +1,7 @@
 ---
 id: ipho-2022-theory-q3-p1
-source: 'IPhO 2022, Теоретичен тур'
-title: 'Задача 1. Scaling laws (8 points)'
+source: 'IPhO 2022, Теория'
+title: 'Задача 3. Scaling laws (8 points)'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/IPhO/2022/ipho-2022-theory-q3.json'
 verification: 'reviewed'
@@ -15,11 +15,11 @@ verifier: 'same-model'
 
 Scaling laws describe the functional relationship between two physical quantities that scale with each other over a significant interval. This functional relationship can be a power law, but there are other possibilities, too. Oftentimes, exact expressions are beyond reach, but scaling laws can still be derived.
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q3/p1-fig1.png" alt="A spaghetti straw of diameter d and length l, balanced horizontally on a triangular support at its middle; the straw is bent slightly downward under its own weight." />
-</figure>
-
 **A.1** A Spaghetto straw of diameter $d$ is being balanced horizontally from its middle. If $d = 1\ \mathrm{mm}$, the straw breaks under its own weight once its length reaches $l = 50\ \mathrm{cm}$. What is the maximum length $l'$ of the straw of diameter $d' = 1\ \mathrm{cm}$ before it breaks under its own weight? **[2 т.]**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.7%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q3/p1-fig1.png" alt="A spaghetti straw of diameter d and length l, balanced horizontally on a triangular support at its middle; the straw is bent slightly downward under its own weight." width="1035" height="313" loading="lazy" decoding="async" />
+</figure>
 
 **B.1** The average grain volume of coarse-grained sand is 10 times as large as that of fine-grained sand. Wet fine-grained sand and wet coarse-grained sand have both optimal water content (i.e. assuming the maximal strength of the constructions from it) and are used to build two cylinders of exactly the same shape and size. The strength of each cylinder is tested by pressing it between two parallel plates. The cylinder made of coarse-grained sand gets destroyed once the force applied to press the plates reaches $F_\mathrm{c} = 10\ \mathrm{N}$. How large is the force $F_\mathrm{f}$ needed to destroy the cylinder made of fine-grained sand? You may ignore the effects of gravity. **[2 т.]**
 
@@ -73,6 +73,10 @@ Marking scheme: $\tau \propto d^2 l^2$ (0.4 pts); $F \propto \sigma d^2$ (0.5 
 This is Section 2.2.2 (statics) and 2.2.5 (hydrodynamics) of the syllabus.
 
 Due to wetting of the surfaces of the sand grains and its large surface tension water acts like a glue for sand. This means that all the grains need to be bound together by air-water interface. To achieve this there needs to be neither too little nor too much water: if there is too little water, most of the grains are dry with no surface tension binding them, and if there is too much water, almost all the grains are immersed into water, and again, there is no surface tension binding the grains. So, the overall strength of the buildings from wet sand depends on the water content; we assume that for the both types of sand, the water content is optimal, and the shape of the grains is statistically similar. Let us consider two neighbouring grains connected by a water meniscus — or "neck", as we shall be referring to it henceforth. Note that the "neck" may extend perpendicularly to the figure plane far away; so, more specifically, what the word "neck" will refer to is that part of the water-air interface for which the closest two grains are the ones under consideration.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.2%', '--fig-max': '354px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q3/p1-sol-fig1-v2.png" alt="Two orange sand grains joined by a blue water meniscus ('neck') between them" width="1105" height="387" loading="lazy" decoding="async" />
+</figure>
 
 There are two processes binding the sand grains together. The first one is the force due to the surface tension, $F_1 = \gamma l$, where $\gamma$ denotes the surface tension coefficient, and $l$ — the perimeter of the "neck"; with $l \sim r_g$, where $r_g$ denotes the length scale of a single grain, we obtain $F_s \sim \gamma r$. The second one is the pressure force caused by the negative capillary pressure in the neck, $F_p = \Delta p A$, where $A$ is the cross-sectional area of the "neck", and $\Delta p \sim \gamma/r$. With $A \sim r^2$ we obtain $F_2 \sim \gamma r$. Thus, the both components are of the same order of magnitude and using either of them will lead to the correct scaling law. These forces press the grains against each other, hence the normal force and friction force between the grains is also on the order of $F_s$ and $F_p$.
 
@@ -261,10 +265,6 @@ $$
 Notes: 1. To obtain $\omega_0 \propto 1/\sqrt{r}$ without dimensional analysis, note that a small displacement $y$ changes the submerged volume of the ball by $\Delta V \propto r^2 y$, so the change in buoyant force $F \propto r^2 y$, which gives $\omega_0 = \sqrt{k/m} \propto \sqrt{r^2/r^3} = \sqrt{1/r}$. 2. To obtain $F_d \propto \eta r v$ without dimensional analysis, note that the typical length scale $l$ in the variations in the velocity field of the water is proportional to $r$. Thus, the viscous shear $\sigma \propto \eta v/l \propto \eta v/r$. The total drag force is thus $F_d \sim A\sigma \propto \eta r v$, where $A$ is ball's area of contact with the water.
 
 Marking scheme: $\omega_0 \propto \sqrt{g/r}$ (0.4 pts); no justification (-0.2 pts); $F_d \propto \eta r v$ (0.6 pts); no justification (-0.3 pts); $\beta \propto 1/r^2$ (0.3 pts); $\frac{\beta^2}{\omega_0^2} = 1 - \frac{\omega^2}{\omega_0^2}$ (0.4 pts); $\frac{\beta^2}{\omega_0^2} \propto \frac{1}{r^3}$ (0.2 pts); Answer: 0.271 (0.1 pts).
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q3/p1-sol-fig1-v2.png" alt="Two orange sand grains joined by a blue water meniscus ('neck') between them" />
-</figure>
 
 
 </Spoiler>

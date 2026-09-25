@@ -9,6 +9,7 @@
 import { Link } from 'gatsby';
 import * as React from 'react';
 import {
+  problemLabel,
   ProblemsTreeData,
   TreeCompetition,
   TreePaper,
@@ -91,9 +92,7 @@ function pathTo(tree: ProblemsTreeData, problemId: string | null): string[] {
   return [];
 }
 
-export function problemLabel(p: TreeProblem): string {
-  return `Задача ${p.number}${p.title ? '. ' + p.title : ''}`;
-}
+export { problemLabel };
 
 // ---------------------------------------------------------------------------
 
@@ -249,7 +248,11 @@ export default function ProblemsTree({
         if (!cancelled) setTree(data);
       });
     const nav = navRef.current;
-    if (!nav || typeof ResizeObserver === 'undefined' || nav.getClientRects().length) {
+    if (
+      !nav ||
+      typeof ResizeObserver === 'undefined' ||
+      nav.getClientRects().length
+    ) {
       load();
       return () => {
         cancelled = true;

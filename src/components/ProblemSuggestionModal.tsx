@@ -320,19 +320,19 @@ export default function ProblemSuggestionModal({
         </div>
         <div className="ml-3">
           <h3 className="text-sm leading-5 font-medium text-green-800 dark:text-dark-high-emphasis">
-            Problem Suggestion Submitted!
+            Предложението е готово за преглед
           </h3>
           <div className="mt-2 text-sm leading-5 text-green-700 dark:text-dark-high-emphasis">
             <p>
-              Thanks for helping to improve the USACO Guide. You can track the
-              progress of your suggestion here:{' '}
+              Предложението още не е изпратено. Отворете GitHub, прегледайте го
+              и го публикувайте там:{' '}
               <a
                 href={createdIssueLink ?? undefined}
                 target="_blank"
                 rel="noreferrer"
                 className="underline text-black dark:text-white"
               >
-                {createdIssueLink}
+                Продължи към GitHub
               </a>
             </p>
           </div>
@@ -421,14 +421,14 @@ export default function ProblemSuggestionModal({
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 Help us improve Olympiads XYZ by suggesting a problem to add!
                 <br />
-                This will be submitted as a public{' '}
+                Предложението се преглежда и изпраща от вас като публично{' '}
                 <a
-                  href="https://github.com/OlympiadsXYZ/olympiads-xyz/pulls"
+                  href="https://github.com/OlympiadsXYZ/olympiads-xyz/issues"
                   target="_blank"
                   rel="noreferrer"
                   className="text-blue-600 dark:text-blue-300 underline"
                 >
-                  GitHub pull request
+                  предложение в GitHub
                 </a>
                 .
               </p>
@@ -462,8 +462,8 @@ export default function ProblemSuggestionModal({
                     {inEditor
                       ? 'Add Problem'
                       : loading
-                      ? 'Submitting...'
-                      : 'Submit Suggestion'}
+                      ? 'Подготовка…'
+                      : 'Подготви предложение'}
                   </button>
                 </span>
                 <span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">

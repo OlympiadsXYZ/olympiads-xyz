@@ -1,6 +1,6 @@
 ---
 id: eupho-2025-theory-x-p3
-source: 'EuPhO 2025, Теоретичен тур'
+source: 'EuPhO 2025, Теория'
 title: 'Задача 3. Crossed wires'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2025/eupho-2025-theory-x.json'
@@ -15,15 +15,15 @@ verifier: 'same-model'
 
 
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-fig1.png" alt="Two long straight wires X and Y crossing at an angle. Wire X lies along the x-axis carrying current I; wire Y is parallel to the y-axis and passes through (0,0,−a); axes x, y, z drawn; distance 3a marked along wire X; point P above the wire at distance r, with current direction arrows labelled I." />
-</figure>
-
 **a)** Current flows through an infinite, straight, thin wire. There is an externally imposed, uniform magnetic field directed parallel to the wire. Qualitatively sketch one of the magnetic field lines. **[1 т.]**
 
 **b)** Now consider two infinite, straight, thin wires (wires $X$ and $Y$), each carrying a current $I$ as shown in the figure. The x-axis coincides with wire $X$, while wire $Y$ is parallel to the y-axis and passes through the point $(0,0,-a)$. Let P be the point $(3a,0,r)$. Assuming $r \ll a$, calculate $d$, the distance of closest approach of the magnetic field line that passes through P to the wire $X$. **[5 т.]**
 
 **c)** Let $L$ be the length of this field line between P and its point of closest approach to wire X. Using values $a = 10\,\mathrm{cm}$ and $r = 1.0\,\mathrm{mm}$, calculate $L$ to within 20% relative error. **[4 т.]**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.7%', '--fig-max': '338px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-fig1.png" alt="Two long straight wires X and Y crossing at an angle. Wire X lies along the x-axis carrying current I; wire Y is parallel to the y-axis and passes through (0,0,−a); axes x, y, z drawn; distance 3a marked along wire X; point P above the wire at distance r, with current direction arrows labelled I." width="1055" height="668" loading="lazy" decoding="async" />
+</figure>
 
 ## Отговори
 
@@ -43,6 +43,15 @@ verifier: 'same-model'
 
 Now, consider the effect of introducing the externally imposed magnetic field. At any point, the total magnetic field is the vector sum of the magnetic field of the wire and the externally imposed magnetic field. The total magnetic field now has a component parallel to the wire. This means the magnetic field lines do not remain in a plane perpendicular to the wire. They do not form closed loops any more. Instead, they will spiral around the wire, tracing out a helix (blue curve in the figure).
 
+<div className="problem-figure-row">
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '57%', '--fig-max': '365px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig1-v2.png" alt="A straight wire carrying current I with a tightly wound blue helical field line around it; a single circular loop is highlighted in red." width="1142" height="407" loading="lazy" decoding="async" />
+</figure>
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '63.1%', '--fig-max': '404px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig2.png" alt="Two crossed wires X and Y with currents I; a funnel-shaped flux surface S of spiraling field lines surrounds wire X, with labels 2d, a, wire X, wire Y." width="1263" height="797" loading="lazy" decoding="async" />
+</figure>
+</div>
+
 **Part b)** It is a standard result that the magnetic field around an infinite, straight, thin wire carrying a current $I$ has magnitude $\mu_0 I/2\pi\rho$, where $\rho$ is the perpendicular distance to the wire. This magnetic field strength increases as $r$ decreases. Before considering the wire configuration of part b, it will be useful to discuss what happens in part a if the helical field line is very close to the wire. By 'close', we mean values of $\rho$ small enough that the magnetic field of the wire is much greater than the externally applied magnetic field. Then, the field lines cannot deviate much from the circular loops they would trace out if the externally applied field were not present. This means the helix would be wound very tightly.
 
 Now we move on to discuss the wire configuration of part b. Let the magnetic field due to wire $X$ be $\vec{B}_X$ and the magnetic field due to wire $Y$ be $\vec{B}_Y$. At any point in space, the magnetic field is the vector sum of $\vec{B}_X$ and $\vec{B}_Y$. At points that are close to wire $X$ (distances $\rho \ll a$), we have $|\vec{B}_X| \gg |\vec{B}_Y|$. Therefore, as in part a, the field lines near wire $X$ will not deviate very much from circular loops centered on wire $X$. However, $\vec{B}_Y$ has a component along wire $X$, so the field lines do not perfectly close on themselves. Instead, they will trace out a tightly wound spiral around wire $X$, as shown in the figure for the previous part. Unlike there, the spiral is not necessarily a perfect helix: as the field lines spiral to larger or smaller $x$, the radius $\rho(x)$ of the spiral might change. To find the distance of closest approach of a field line to wire $X$, we must find the minimal value of $\rho(x)$ as $x$ varies.
@@ -50,6 +59,10 @@ Now we move on to discuss the wire configuration of part b. Let the magnetic fie
 The spiraling field line shown in the figure below seems to trace out a surface, $S$, surrounding wire $X$. A more precise definition of $S$ is as follows. Let $C$ be the circle of radius $r$, centered on wire $X$, in the plane $x = 3a$. Through every point on $C$, we can draw a magnetic field line. The set of field lines passing through points of $C$ traces out a surface; this is the surface we define as $S$. Each field line in this set spirals around wire $X$ as described above, so $S$ looks like a 'funnel' whose cross section, at any fixed $x$, is nearly circular. The cross section is nearly circular as long as the condition $\rho \ll \sqrt{a^2 + x^2}$ is satisfied, because this means the magnetic field is perturbed only slightly by wire $Y$ and the field lines do not deviate much from the circular loops that they would trace if wire $Y$ were not present. Near point P, $\rho \ll \sqrt{a^2 + x^2}$ is satisfied because $r \ll a$. We will verify a posteriori that the magnetic field line never reaches values of $\rho$ that violate the condition $\rho \ll \sqrt{a^2+x^2}$.
 
 The key idea is that the magnetic flux through the middle of the 'funnel' $S$ is conserved. No magnetic flux exits through the sides of the funnel because—by construction—the magnetic field is tangent to $S$ at every point. For this reason, the region bounded by $S$ is called a 'flux tube'. The flux through the flux tube is entirely due to $\vec{B}_Y$, which is approximately uniform over the circular cross section at each $x$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.2%', '--fig-max': '334px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig3-v3.png" alt="Geometry diagram: wire X along the horizontal axis, wire Y below at distance a carrying current I into the page; distances a, x, sqrt(a^2+x^2), angle theta, and the flux tube cross-section of radius rho(x) with field B_Y and B_X labelled." width="1045" height="528" loading="lazy" decoding="async" />
+</figure>
 
 The component of $\vec{B}_Y$ directed along the wire is $B_\parallel = |\vec{B}_Y|\cos(\theta) = (\mu_0 I/2\pi)(a/(a^2+x^2))$ (see figure above). Therefore, the conserved flux is $\frac{1}{2}\mu_0 I a \rho^2/(a^2+x^2)$. The equation of $S$ is then $\rho^2/(a^2+x^2) = \text{const.} = r^2/10a^2$, using the fact that $S$ passes through P. We can now see that $\rho$ never grows so large that $\rho \ll \sqrt{a^2+x^2}$ fails, so our equation for $S$ remains valid for all $x$. Then, the minimal value of $\rho(x)$ is $\rho(0) = d = r/\sqrt{10}$.
 
@@ -135,18 +148,6 @@ This gives $L \approx 17.9a^2/r \approx 179$ m, as stated above.
 - If a mistake leads to a dimensionally incorrect expression no marks are given for the result.
 - Propagating errors are not punished again unless they are dimensionally wrong or entail oversimplified/wrong physics (e.g. neglecting friction effects).
 - In cases, where in part b) the distance of closest approach is determined by using an approximation that only considers the $B$-field close to P (or any similar simplification), the following maximum marks can be obtained: A to C - 0.2 each, E - 0.3 for the idea to determine $d$ from a local consideration, H - 0.4, K - 0.3 for a simplified calculation of $d$. Total: max. 1.6 Pts.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig1-v2.png" alt="A straight wire carrying current I with a tightly wound blue helical field line around it; a single circular loop is highlighted in red." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig2.png" alt="Two crossed wires X and Y with currents I; a funnel-shaped flux surface S of spiraling field lines surrounds wire X, with labels 2d, a, wire X, wire Y." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2025-theory-x/p3-sol-fig3-v3.png" alt="Geometry diagram: wire X along the horizontal axis, wire Y below at distance a carrying current I into the page; distances a, x, sqrt(a^2+x^2), angle theta, and the flux tube cross-section of radius rho(x) with field B_Y and B_X labelled." />
-</figure>
 
 
 </Spoiler>

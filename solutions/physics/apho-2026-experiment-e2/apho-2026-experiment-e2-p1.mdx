@@ -1,7 +1,7 @@
 ---
 id: apho-2026-experiment-e2-p1
-source: 'APhO 2026, Експериментален тур'
-title: 'Задача 1. Estimation of Unknown Resistance Using the Micro:bit''s Analog-to-Digital Converter (ADC)'
+source: 'APhO 2026, Експеримент'
+title: 'Задача 2. Estimation of Unknown Resistance Using the Micro:bit''s Analog-to-Digital Converter (ADC)'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/APhO/2026/apho-2026-experiment-e2.json'
 verification: 'reviewed'
@@ -42,6 +42,11 @@ Connect the three jumper wires from the expansion board according to their verti
 - 3c: Middle Jumper Wire (middle pin of expansion shield in Fig. 1). Connect to the circuit's power input (Vc,+) node.
 - 3d: Bottom Jumper Wire (bottom pin of expansion shield in Fig. 1). Connect to the circuit's ground (GND, -) reference node.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.6%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-fig1.png" alt="Photograph of the apparatus: a breadboard (1) with a resistor and yellow, red and black jumper wires; the Micro:bit (3) plugged into its expansion board (3a) with the top, middle and bottom jumper wires (3b, 3c, 3d); the AAA battery holder (3e); and below, four bags of resistors labelled A, B, C and D (2)." width="1033" height="1520" loading="lazy" decoding="async" />
+<figcaption>Fig.1</figcaption>
+</figure>
+
 2. Measurement Procedure
 
     1. Power Setup: Connect the Bottom (GND) and Middle (Vc) wires first, then switch the battery pack ON.
@@ -59,11 +64,6 @@ Connect the three jumper wires from the expansion board according to their verti
 **Part A. Exploring the Meaning of ADC Measurement Values (1.2 pts)**
 
 The objective is to investigate the correlation between the Micro:bit's digital output ($N$) and the node potential ($V$). By constructing a network using **eight identical resistors** from 'Resistor Set A', you will examine whether the built-in ADC truly conforms to an ideal linear model based on the collected data. For the measurement process, the Micro:bit's pin is assumed to be an ideal probe that does not disturb the circuit's potential distribution. Assuming all resistors have identical values, this part aims to logically infer whether a proportional relationship between voltage and ADC readings actually holds, by cross-referencing the data with the circuit's structural characteristics without the use of external measuring devices.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-fig1.png" alt="Photograph of the apparatus: a breadboard (1) with a resistor and yellow, red and black jumper wires; the Micro:bit (3) plugged into its expansion board (3a) with the top, middle and bottom jumper wires (3b, 3c, 3d); the AAA battery holder (3e); and below, four bags of resistors labelled A, B, C and D (2)." />
-<figcaption>Fig.1</figcaption>
-</figure>
 
 **A.1** Experimental Design and Circuit Schematics
 
@@ -178,6 +178,11 @@ Implement your design and estimate the value of $r$. Calculate the estimated res
 
 **A.1)**
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.4%', '--fig-max': '451px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig1-v2.png" alt="Resistor ladder: eight equal resistors r (r1 … r8) in series from Vc (+) to GND, with the nodes between them labelled a, b, c, d, e, f, g." width="1410" height="355" loading="lazy" decoding="async" />
+<figcaption>A.1)</figcaption>
+</figure>
+
 | Criteria | Points |
 |---|---|
 | If the circuit diagram connection (resistor ladder) is correctly expressed. | 0.4 |
@@ -219,6 +224,11 @@ maximum deviation =2.125/127.85*100=1.66%
 | If the student's conclusion regarding linearity matches the grader's recalculated data analysis | 0.1 |
 
 **B-1)**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '14.9%', '--fig-max': '95px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig2-v2.png" alt="Voltage divider: Vc (reading N_H) at the top, resistor r, node a (reading N), resistor R, and GND (reading N_L) at the bottom." width="298" height="596" loading="lazy" decoding="async" />
+<figcaption>B-1)</figcaption>
+</figure>
 
 | Criteria | Points |
 |---|---|
@@ -384,6 +394,11 @@ $r_2$ case:
 | $N, N_H, N_L$ are recorded for each unknown resistor and device. | 0.2 (0.1 per resistor) |
 | Points are awarded if the student's calculated value of unknown resistance directly matches the examiner's re-calculated value (derived from the student's raw data) within a ±1% relative tolerance. | 0.4 (0.2 per resistor) |
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '34%', '--fig-max': '218px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig3-v2.png" alt="Two voltage dividers: left, Vc (N_H) – r1 – node a (N) – R – GND (N_L); right, Vc (N_H) – r2 – node a (N) – r1 – GND (N_L)." width="680" height="730" loading="lazy" decoding="async" />
+<figcaption>C-2)</figcaption>
+</figure>
+
 **C-2)**
 
 Note: Alternative approaches are also acceptable, such as estimating unknown resistor 1 using the reference resistor, and then using the parallel combination of the reference resistor and unknown resistor 1 as a new reference to estimate unknown resistor 2.
@@ -436,6 +451,11 @@ maximum-minimum ($\Delta r_2$) =
 ※ The resistors used in this experiment are Class B resistors with a 0.1% tolerance; $R$ is specified as $510k\Omega$, $r$ as $680k\Omega$.
 
 **D.1)**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '45.7%', '--fig-max': '293px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig4-v2.png" alt="Two voltage dividers with the resistors swapped: left, Vc (N_H) – r – node a (N) – R – GND (N_L); right, Vc (N_H) – R – node b (N_b) – r – GND (N_L)." width="915" height="954" loading="lazy" decoding="async" />
+<figcaption>D.1)</figcaption>
+</figure>
 
 | Criteria | Points |
 |---|---|
@@ -511,26 +531,6 @@ maximum-minimum ($\Delta r$) =
 | Points are awarded if the student's calculated unknown resistance is within a ±1% tolerance of the examiner's re-calculated value. (Only the data from the single Micro:bit experiment that yielded the highest accuracy among the three will be evaluated.)" | 0.2 |
 | If at least one of the unknown resistance values estimated by each Micro:bit falls within the reference range, $668K\Omega \pm 5K\Omega$ | 0.3 |
 | Points are awarded if $\Delta r$ values (difference between the maximum and minimum) is correctly calculated and verifiable from the student's data. | 0.1 |
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig1-v2.png" alt="Resistor ladder: eight equal resistors r (r1 … r8) in series from Vc (+) to GND, with the nodes between them labelled a, b, c, d, e, f, g." />
-<figcaption>A.1)</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig2-v2.png" alt="Voltage divider: Vc (reading N_H) at the top, resistor r, node a (reading N), resistor R, and GND (reading N_L) at the bottom." />
-<figcaption>B-1)</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig3-v2.png" alt="Two voltage dividers: left, Vc (N_H) – r1 – node a (N) – R – GND (N_L); right, Vc (N_H) – r2 – node a (N) – r1 – GND (N_L)." />
-<figcaption>C-2)</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2026-experiment-e2/p1-sol-fig4-v2.png" alt="Two voltage dividers with the resistors swapped: left, Vc (N_H) – r – node a (N) – R – GND (N_L); right, Vc (N_H) – R – node b (N_b) – r – GND (N_L)." />
-<figcaption>D.1)</figcaption>
-</figure>
 
 
 </Spoiler>

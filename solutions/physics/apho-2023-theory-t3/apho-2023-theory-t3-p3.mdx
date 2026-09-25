@@ -1,6 +1,6 @@
 ---
 id: apho-2023-theory-t3-p3
-source: 'APhO 2023, Теоретичен тур'
+source: 'APhO 2023, Теория'
 title: 'Задача 3. Theoretical Problem 3: Cavitation'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/APhO/2023/apho-2023-theory-t3.json'
@@ -17,11 +17,21 @@ verifier: 'mechanical'
 
 Cavitation is the phenomenon of vapour bubbles or ``cavities'' occurring in a liquid medium due to *drop in pressure*. This is in contrast to boiling, where vapour bubbles are created due to *rise in temperature*. Since the vapour bubbles collapse and generate shock waves as well as supersonic jets when the dropped pressure is restored, cavitation is a constant source of damage and even of catastrophe in hydraulic machines, ships, and more generally in any device involving liquid flow. On the other hand, it has found many positive applications, for example in chemical industry, cleaning, and in treatment of kidney stones.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig1.png" alt="Two photographs side by side: (a) a black-and-white photo of a ship propeller in water with white helical cavitation trails streaming from the blade tips; (b) a colour photo of a metal propeller whose blade edge is pitted and eroded by cavitation damage." width="1638" height="573" loading="lazy" decoding="async" />
+<figcaption>Figure 1. (a) Cavitating propeller (b) Cavitation damage (Source: Wikimedia Commons)</figcaption>
+</figure>
+
 It is understood that cavitation generally grow out of microscopic bubbles, called *nuclei*, that preexisted in the liquid. These micro-bubbles are a few microns in size and contain both vapour and non-condensable gas (the latter is just air when ordinary water is under consideration). If the pressure in the liquid becomes sufficiently low, the nuclei grow into a macroscopic size, initiating cavitation. Liquid purified of such nuclei can even withstand negative pressure without cavitating. One usually compares this with solid under tension, which does not rupture easily if there are no preexisting pockets or cracks in it.
 
 In this problem, we will be concerned with various idealized scenarios related to cavitation. As is often the case, we can glean some nontrivial information from simple dimensional analysis. However, we will need differential equations embodying fundamental laws such as Newton's second law of motion and Fick's law of diffusion, if we want to conduct a more precise study.
 
 One of the first things we want to know is the so called *critical (or threshold) pressure*, that is the minimum value of the water pressure so that the nuclei remain microscopic without growing into macroscopic bubbles. The critical pressure is roughly equal to the vapour pressure at the given temperature, but the exact value is slightly lower due to surface tension and the air content of the nucleus.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig2.png" alt="(a) Phase diagram with axes p (vertical) and T (horizontal): blue phase-boundary curves meeting at a triple point, a curve ending at a critical point; from an open circle a green arrow points down (cavitation) and a red arrow points right (boiling). (b) Grey square labelled p∞ containing a light circle (bubble) with a radius arrow labelled R and the interior pressure labelled p_v+q." width="1638" height="709" loading="lazy" decoding="async" />
+<figcaption>Figure 2. (a) Cavitation (down arrow) and boiling (right arrow) on a phase diagram (b) Typical bubble (see Table 1 for notations)</figcaption>
+</figure>
 
 If the external pressure suddenly drops below the critical pressure of a nucleus, then the nucleus starts expanding and the expansion rate quickly reaches a stable value. In practice, after the bubble becomes macroscopic in size, the pressure is typically restored to its original value, and the bubble starts collapsing. We will model this situation by considering a macroscopic bubble in equilibrium, whose external pressure is then suddenly risen. The collapsing bubble will rebound after reaching a minimum size if the bubble had air in it. On the other hand, a pure vapour bubble would completely dissolve, with the shrinkage rate growing unboundedly as the radius of the bubble reaches zero. In reality, towards the end of the collapse, the bubble would lose its spherical shape, and the compressibility of water would become important. However, unless a particular question explicitly asserts otherwise, we will neglect those effects here.
 
@@ -34,6 +44,11 @@ Finally, there is a sort of paradox regarding the existence of nuclei in the fir
 **Vapour pressure**
 
 Let us say we have a closed jar containing water and air. If the air is too dry, then its humidity will increase due to evaporation of water. If the air is too wet, then its humidity will decrease due to condensation. It turns out that in equilibrium, the partial pressure $p_v = p_v(T)$ of vapour in air is a function of temperature.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig3.png" alt="(a) A closed jar with a light upper region labelled p_v+q (air and vapour) above a darker water region labelled u = Hq. (b) A parallelogram surface element labelled S pierced perpendicularly by an x axis with an arrow." width="1638" height="744" loading="lazy" decoding="async" />
+<figcaption>Figure 3. (a) Closed jar containing air and water in equilibrium (b) Diffusion flux through the surface S is proportional to the concentration gradient across S</figcaption>
+</figure>
 
 Now if a bubble changes its volume in an instant, then the humidity inside the bubble will lose its equilibrium with the surrounding water, and a new equilibrium must be reached either by condensation or evaporation. In reality this process is so rapid that we can justifiably assume that equilibrium is maintained at all times. Moreover, the heat lost or gained by the surrounding water during this process is negligible, so that the temperature remains constant. To conclude, we assume that the partial pressure of vapour contained in a bubble remains equal to $p_v$ at all times.
 
@@ -100,21 +115,6 @@ In Table 1, we list the notations used in the statement of the problem, and the 
 
 These are warm-up questions to get the initial feel of the phenomenon.
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig1.png" alt="Two photographs side by side: (a) a black-and-white photo of a ship propeller in water with white helical cavitation trails streaming from the blade tips; (b) a colour photo of a metal propeller whose blade edge is pitted and eroded by cavitation damage." />
-<figcaption>Figure 1. (a) Cavitating propeller (b) Cavitation damage (Source: Wikimedia Commons)</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig2.png" alt="(a) Phase diagram with axes p (vertical) and T (horizontal): blue phase-boundary curves meeting at a triple point, a curve ending at a critical point; from an open circle a green arrow points down (cavitation) and a red arrow points right (boiling). (b) Grey square labelled p∞ containing a light circle (bubble) with a radius arrow labelled R and the interior pressure labelled p_v+q." />
-<figcaption>Figure 2. (a) Cavitation (down arrow) and boiling (right arrow) on a phase diagram (b) Typical bubble (see Table 1 for notations)</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig3.png" alt="(a) A closed jar with a light upper region labelled p_v+q (air and vapour) above a darker water region labelled u = Hq. (b) A parallelogram surface element labelled S pierced perpendicularly by an x axis with an arrow." />
-<figcaption>Figure 3. (a) Closed jar containing air and water in equilibrium (b) Diffusion flux through the surface S is proportional to the concentration gradient across S</figcaption>
-</figure>
-
 **A.1** By performing a simple dimensional analysis, estimate the collapse time $T$ of a pure vapour bubble, in terms of bubble's initial radius $R_0$, water density $\rho$, water pressure $p_\infty$, and the vapour pressure $p_v$. Evaluate the formula with the numerical constant implicit in the formula equal to 1, when $R_0 = 1$ mm and the quantities $\rho, p_\infty$, and $p_v$ take their typical values from previous Notation Table . Assume no surface tension: $\sigma = 0$. **[0,5 т.]**
 
 **A.2** Suppose that a nucleus consisting of air and vapour, with radius $R_0 = 10^{-5}$ m, is in equilibrium when the external pressure $p_\infty = 101$ kPa. Find the partial pressure $q_0$ of air in the bubble. Now suppose that the external pressure $p_\infty$ was gradually decreased, and that the air inside the bubble follows an isothermal process. Find the critical pressure $p_c$, defined by the condition that if $p_\infty < p_c$ the bubble size grows without bound. The quantities $p_v$ and $\sigma$ take their typical values from the above Notation Table. **[1 т.]**
@@ -153,8 +153,8 @@ The quantities $p_\infty, \kappa, \delta$ and $\sigma$ take their typical values
 
 **C.2** Consider a conical crevice in the wall of a water container, with an aperture angle $\alpha$, see the following Figure. A small amount of air and vapour reside within the cone. Write down the condition of mechanical and diffusive equilibrium. Determine when the pocket of air stays in the crevice without disappearing. The contact angle of water on the surface is $\theta$. **[0,5 т.]**
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig4.png" alt="A conical crevice drawn in cross-section: two thick dark walls meeting at a vertex on the left with the aperture angle α marked; the light region near the vertex holds trapped air, and the darker water region on the right meets it along a curved meniscus; the contact angle θ is marked at the lower wall where the meniscus meets it." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.7%', '--fig-max': '254px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-fig4.png" alt="A conical crevice drawn in cross-section: two thick dark walls meeting at a vertex on the left with the aperture angle α marked; the light region near the vertex holds trapped air, and the darker water region on the right meets it along a curved meniscus; the contact angle θ is marked at the lower wall where the meniscus meets it." width="795" height="569" loading="lazy" decoding="async" />
 <figcaption>Conical Crevice</figcaption>
 </figure>
 
@@ -519,6 +519,11 @@ $$
 
 Since $u > u_i$, there will be diffusive flux directed away from the bubble, and the bubble will start losing air. As a result, the bubble shrinks and the surface tension term $2\sigma/R$ increases. Since the external pressure $p_\infty$ is constant, the partial air pressure $q$ increases, which leads to more diffusive flux. In the end, the bubble will get completely resorbed into water.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '75.6%', '--fig-max': '484px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig1.png" alt="(a) Grey square labelled p∞ and u_i with a light circle (bubble) labelled p_v+q inside and u=Hq just below it. (b) Grey square with a light inner circle whose radius arrow is labelled r, surrounded by a thin dark concentric spherical shell of thickness Δr marked by two opposing arrows." width="1514" height="751" loading="lazy" decoding="async" />
+<figcaption>Figure 1. (a) Initial configuration of the system (b) The geometry used in the solution</figcaption>
+</figure>
+
 To quantify the diffusion of air, let us consider the region enclosed by concentric spheres of radii $r$ and $r + \Delta r$ with $\Delta r$ small. The rate of change of air mass in this region is
 
 $$
@@ -661,6 +666,11 @@ Thus the nucleus collapses in a matter of seconds.
 
 **C2.** Consider a conical crevice in the wall of a water container, with an aperture angle $\alpha$. A small amount of air and vapour is trapped within the cone. Write down the condition of mechanical and diffusive equilibrium. Determine when the pocket of air stays in the crevice without disappearing.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.2%', '--fig-max': '251px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig2.png" alt="A conical crevice in cross-section: two thick dark walls meeting at a vertex on the left with the aperture angle α; trapped air (light) near the vertex and water (darker) to the right separated by a curved meniscus; the contact angle θ is marked where the meniscus meets the lower wall." width="784" height="583" loading="lazy" decoding="async" />
+<figcaption>Figure 2. Conical crevice</figcaption>
+</figure>
+
 **Solution.** The equilibrium conditions are
 
 $$
@@ -733,6 +743,10 @@ TSOGTGEREL GANTUMUR
 
 There has been a claim that if one uses (19) directly instead of (27), then one would have $\alpha = \frac{2}{3}$ instead of $\alpha = \frac{2}{5}$ (equation numbers refer to the solution uploaded to OlyExams). On the surface, it may look puzzling, and the leader of a team has even suggested that it means that the form $R(t) \sim (T - t)^\alpha$ is impossible. The following note is submitted by prof. Cheol-Hwang Park.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.7%', '--fig-max': '338px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig3.png" alt="Handwritten note by prof. Cheol-Hwang Park (image): starting from Eq. (19), RR'' + (3/2)R'^2 + 2σ/(ρR) = p_v − p_∞, it labels the first two terms ∝ (T−t) to the power 2α−2, the surface-tension term ∝ (T−t) to the power −α and the right-hand side ∝ (T−t) to the power 0, drops the last as negligible, equates 2α−2 = −α to get α = 2/3, and concludes that R(t) is not of the form (T−t)^α at R ≪ R0." width="1055" height="1256" loading="lazy" decoding="async" />
+</figure>
+
 However, a closer inspection will reveal at once that $\alpha = \frac{2}{5}$ is correct. The main thing to note is that the terms $RR''$ and $\frac{3}{2}(R')^2$ in (19) may separately have large magnitudes, but there is no guarantee that when combined they won’t cancel each other. Thus the above argument to force $\alpha = \frac{2}{3}$ is invalid.
 
 To go into a bit more detail, if $R(t) = (T - t)^{2/3}$ then
@@ -750,20 +764,6 @@ R(t) = (T - t)^{2/5}\big(c_0 + f(T - t)\big),
 $$
 
 with $f(0) = 0$, and then of course $f$ must be responsible for eliminating the term $\frac{2\sigma}{\rho R}$.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig1.png" alt="(a) Grey square labelled p∞ and u_i with a light circle (bubble) labelled p_v+q inside and u=Hq just below it. (b) Grey square with a light inner circle whose radius arrow is labelled r, surrounded by a thin dark concentric spherical shell of thickness Δr marked by two opposing arrows." />
-<figcaption>Figure 1. (a) Initial configuration of the system (b) The geometry used in the solution</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig2.png" alt="A conical crevice in cross-section: two thick dark walls meeting at a vertex on the left with the aperture angle α; trapped air (light) near the vertex and water (darker) to the right separated by a curved meniscus; the contact angle θ is marked where the meniscus meets the lower wall." />
-<figcaption>Figure 2. Conical crevice</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t3/p3-sol-fig3.png" alt="Handwritten note by prof. Cheol-Hwang Park (image): starting from Eq. (19), RR'' + (3/2)R'^2 + 2σ/(ρR) = p_v − p_∞, it labels the first two terms ∝ (T−t) to the power 2α−2, the surface-tension term ∝ (T−t) to the power −α and the right-hand side ∝ (T−t) to the power 0, drops the last as negligible, equates 2α−2 = −α to get α = 2/3, and concludes that R(t) is not of the form (T−t)^α at R ≪ R0." />
-</figure>
 
 
 </Spoiler>

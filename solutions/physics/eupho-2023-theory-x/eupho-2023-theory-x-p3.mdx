@@ -1,6 +1,6 @@
 ---
 id: eupho-2023-theory-x-p3
-source: 'EuPhO 2023, Теоретичен тур'
+source: 'EuPhO 2023, Теория'
 title: 'Задача 3. T3: Plate between magnets'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2023/eupho-2023-theory-x.json'
@@ -15,8 +15,8 @@ verifier: 'mechanical'
 
 Two identical long, cylindrical rod magnets of radius $R$ are close to each other and share the same vertical symmetry axis. The polarity of the two magnets is the same. As a result, the magnetic field in the air gap between the magnets is directed towards the $+z$ direction (see *figure*) and uniform with flux density $B$. The magnetic field outside the gap is zero. A horizontal large non-magnetic metal plate is placed in the air gap and moved with constant horizontal velocity $v$ in $+y$-direction. The thickness of the plate is $\delta$, the resistivity of the metal is $\varrho$.
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-fig1.png" alt="Two coaxial vertical cylindrical magnets of diameter 2R with a thin horizontal metal plate of thickness δ in the gap between them; the plate moves with velocity v; axes x, y, z drawn at the upper left." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44.1%', '--fig-max': '283px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-fig1.png" alt="Two coaxial vertical cylindrical magnets of diameter 2R with a thin horizontal metal plate of thickness δ in the gap between them; the plate moves with velocity v; axes x, y, z drawn at the upper left." width="884" height="636" loading="lazy" decoding="async" />
 </figure>
 
 **a)** Sketch the shape of current streamlines in the metal plate at a given time. Indicate the axes on your sketch. **[3 т.]**
@@ -89,6 +89,11 @@ $$
 \oint \vec{E}\cdot d\vec{l} = 0, \qquad (40)
 $$
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.5%', '--fig-max': '324px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig1-v4.png" alt="Current streamlines in the plate: inside the yellow circle of radius R parallel lines with arrows pointing in the +x direction (downwards); outside, the lines close on themselves in circular arcs on both sides with kinks on the boundary; axes x (down) and y (right)." width="1011" height="559" loading="lazy" decoding="async" />
+<figcaption>fig. 1</figcaption>
+</figure>
+
 where integration loop can be arbitrary. To close the system of equations we need to satisfy, we integrate Eq. 39 either over a closed loop entirely inside or entirely outside the circular region then we obtain zero, because for such loops $\oint \vec{v}\times\vec{B}\cdot d\vec{l} = 0$. From this we conclude that for such integration loops,
 
 $$
@@ -143,6 +148,11 @@ $$
 
 The normal component of this field exhibits discontinuity $\sigma/\varepsilon$ at the boundary of the cylinder given by the surface charge density $\sigma$, which can be found again from the superposition of the two cylinders: the non-overlapping region has the shape of a crescent moon of width $s$ in the $x$ direction; this means that the width in the radial direction is $t = s\cos\varphi$, where $\varphi$ denotes the angle between the radius vector and the $x-axis$. Hence, we can find the surface charge density as $\sigma = qt = P\cos\varphi$. Due to Gauss’ law, the radial electric field jumps by an amount given by the surface charge density, $\{E_r\} = \sigma/\varepsilon_0$. This corresponds to a jump in the magnitude of the current density
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.1%', '--fig-max': '327px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig2-v2.png" alt="Left: two overlapping charged cylinders −q (top) and +q (bottom) displaced by vector s, with vectors r, E_+ and E_− at a point. Right: field E_pol(r) of the polarised cylinder with polarisation P pointing down, uniform field lines inside, dipole field lines outside, − charges on the upper and + charges on the lower rim; axes x and y." width="1023" height="576" loading="lazy" decoding="async" />
+<figcaption>fig. 2</figcaption>
+</figure>
+
 $$
 \{j\} = \rho^{-1}\sigma/\varepsilon_0 = \rho^{-1}\sigma P\cos\varphi \qquad (45)
 $$
@@ -166,6 +176,11 @@ $$
 $$
 
 Now we can plot the graph:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '46.8%', '--fig-max': '300px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig3-v3.png" alt="Graph of j_x along the y axis: constant value vB/(2ϱ) for −R < y < R, jumps to −vB/(2ϱ) at y = ±R and then rises back towards zero as (R/r)² outside. Labels: j_x, y, −R, R, vB/2ϱ, −vB/2ϱ." width="936" height="407" loading="lazy" decoding="async" />
+<figcaption>fig. 3</figcaption>
+</figure>
 
 | Grading scheme part b) | Pts |
 |---|---|
@@ -275,9 +290,19 @@ $$
 
 What we need to notice is that there is no electric field outside of the cylinder ($r > R$) at large distances in the $z$ direction from the plate. Indeed, there are clearly no fields there (neither $\vec{B}$ nor $\vec{E}$) in the cylinder’s frame. Using the Lorentz transformation it is clear that no fields can emerge in our new frame. Meanwhile, outside the cylinder and inside the plate, there is definitely an electric field driving the current flow as derived above. The tangential-to-the-plate electric field cannot be discontinuous at the surface because the electrostatic field (in the cylinder’s frame) is potential. Hence, outside the cylinder and outside the plate, there is also an electric field in the neighbourhood of the plate, It is caused by the charge density formed on and in the plate, the generation of which is described in the solution of Part a). From large distances, however, these charges are seen as an electric dipole, whose field vanishes inversely proportional to the cubed distance.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.2%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig4-v2.png" alt="Stepping-cylinder model: left, the yellow circle with field B (out of the page) and the dashed circle displaced by −vτ; right, the overlap in yellow, the region left behind in red on the right and the newly covered region in green on the left; axes x and y; labels B, −vτ." width="1065" height="383" loading="lazy" decoding="async" />
+<figcaption>fig. 1</figcaption>
+</figure>
+
 A tempting but incorrect approach is trying to describe the motion of the cylinder in the plate’s frame as a discontinuous stepping motion of the cylinders: at the current position of the cylinder, the magnetic flux disappears and at the same time reappears at a small distance away from its previous position. According to the Faradey’s law, the disappearing flux will produce circular clockwise fieldlines of $\vec{E}$, and the reappearing flux will produce slightly displaced counterclockwise fieldlines. The corresponding fields and their superposition $\vec{E}_s(\vec{r})$ can be easily calculated, see below. The result turns out to be exactly the same as the field $\vec{E}_o(\vec{r})$ obtained above for the field inside the plate. However, the equivalence of these fields is just a coincidence (there is a good reason for this coincidence: in both cases, the field is obtained as a superposition of the fields produced by two overlapping cylinders). Furthermore, there is a fundamental difference: in reality, the field $\vec{E}_o(\vec{r})$ is only observed in the plate (at $z \approx 0$) and disappears at $z \gg R$; meanwhile, in the stepping cylinder model, the field $\vec{E}_s(\vec{r})$ remains the same regardless of the value of $z$.
 
 The reason why the stepping cylinder model gives an incorrect result — producing an electric field in those places where there clearly is none — lies in the theory of relativity. A continuously moving (not stepping) cylinder obtains a surface charge, because the current density and the charge density together form a 4-vector. There is a bound surface current on the surface of the cylinder (creating the magnetic field inside), and as the cylinder moves, the Lorentz transformation tells us that there will now also be a surface charge creating an electric field both inside and outside the cylinder. So, with a moving cylinder, the changing flux creates an electric field outside which is cancelled out by the surface charges on the cylinder. Inside the cylinder, these two fields add up constructively.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.2%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig5.png" alt="Left: green circular region with increasing field Ḃ and concentric circular field lines of the induced E, with position vector r and E marked; unit vector e_z out of the page. Right: overlapping green (Ḃ) and red (−Ḃ) circles with vectors r, r−vτ and −vτ." width="1065" height="468" loading="lazy" decoding="async" />
+<figcaption>fig. 2</figcaption>
+</figure>
 
 In what follows, we analyse mathematically the model of stepping cylinders. By considering two almost overlapping circles with a short time interval $\tau$ between, it is clear that any flux change occurs on rim (see fig. 1). This changing flux gives rise to an induced electric field which makes the charge carriers move inside the plate resulting electrical currents.
 
@@ -362,6 +387,11 @@ $$
 
 We will show that $\vec{j}_\mathrm{outside}$ is tangent to such a circle, regardless of the radius $a$.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '34%', '--fig-max': '218px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig6.png" alt="Circular streamlines outside the region: a circle of radius a centred at the tip of vector a, a point on it with position vector r, vector r − a and the tangent current density j_outside; further dashed circles through the origin with arrows." width="681" height="513" loading="lazy" decoding="async" />
+<figcaption>fig. 3</figcaption>
+</figure>
+
 Consider the scalar product
 
 $$
@@ -389,36 +419,6 @@ $$
 $$
 
 which is well satisfied for any metallic plates with reasonable orders of magnitude (e.g. $\delta \sim 1\ \mathrm{mm}$, $R \sim 1\ \mathrm{cm}$, $v \sim 1\ \mathrm{m/s}$).
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig1-v4.png" alt="Current streamlines in the plate: inside the yellow circle of radius R parallel lines with arrows pointing in the +x direction (downwards); outside, the lines close on themselves in circular arcs on both sides with kinks on the boundary; axes x (down) and y (right)." />
-<figcaption>fig. 1</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig2-v2.png" alt="Left: two overlapping charged cylinders −q (top) and +q (bottom) displaced by vector s, with vectors r, E_+ and E_− at a point. Right: field E_pol(r) of the polarised cylinder with polarisation P pointing down, uniform field lines inside, dipole field lines outside, − charges on the upper and + charges on the lower rim; axes x and y." />
-<figcaption>fig. 2</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig3-v3.png" alt="Graph of j_x along the y axis: constant value vB/(2ϱ) for −R < y < R, jumps to −vB/(2ϱ) at y = ±R and then rises back towards zero as (R/r)² outside. Labels: j_x, y, −R, R, vB/2ϱ, −vB/2ϱ." />
-<figcaption>fig. 3</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig4-v2.png" alt="Stepping-cylinder model: left, the yellow circle with field B (out of the page) and the dashed circle displaced by −vτ; right, the overlap in yellow, the region left behind in red on the right and the newly covered region in green on the left; axes x and y; labels B, −vτ." />
-<figcaption>fig. 1</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig5.png" alt="Left: green circular region with increasing field Ḃ and concentric circular field lines of the induced E, with position vector r and E marked; unit vector e_z out of the page. Right: overlapping green (Ḃ) and red (−Ḃ) circles with vectors r, r−vτ and −vτ." />
-<figcaption>fig. 2</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2023-theory-x/p3-sol-fig6.png" alt="Circular streamlines outside the region: a circle of radius a centred at the tip of vector a, a point on it with position vector r, vector r − a and the tangent current density j_outside; further dashed circles through the origin with arrows." />
-<figcaption>fig. 3</figcaption>
-</figure>
 
 
 </Spoiler>

@@ -1,6 +1,6 @@
 ---
 id: eupho-2021-experiment-exp-p1
-source: 'EuPhO 2021, Експериментален тур'
+source: 'EuPhO 2021, Експеримент'
 title: 'Задача 1. E1: Hidden wire'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2021/eupho-2021-experiment-exp.json'
@@ -17,16 +17,16 @@ verifier: 'mechanical'
 
 A very long copper wire runs horizontally at unknown depth $h$ under a horizontal square surface of side length $L = 100.0\ \mathrm{mm}$. The sides of the square are oriented West-East (the $x$-axis) and South-North (the $y$-axis), as shown in the figure. The origin of the coordinate system coincides with the South-West corner of the square.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '30.8%', '--fig-max': '197px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-fig1.png" alt="Grey square surface in the xy-plane with axes North (up) and East (right), corners marked 0 and L on both axes; the wire with current I enters under the bottom edge and leaves at the top edge; a compass at point (x, y) with dashed guide lines, its needle deflected by angle φ from the North direction." width="616" height="587" loading="lazy" decoding="async" />
+</figure>
+
 The wire is connected to an adjustable DC source (not shown in the figure), which can provide a current $I$ in the range from $-5\ \mathrm{A}$ to $5\ \mathrm{A}$. The reversal of the sign of the current corresponds to a reversal of the polarity of the source. A small compass can be placed on the square surface, (including its circumference) to sense the magnetic field of the wire through the deflection angle $\varphi$ between the magnetic needle and the North ($y$) direction. Positive $\varphi$ values correspond to an Eastward deflection, as shown in the figure, while negative $\varphi$ correspond to a Westward deflection. You can assume that:
 
 - The magnetic needle is a point-like magnetic dipole, which can rotate freely around the vertical axis, i.e. the compass is sensitive to the horizontal component of the magnetic field only.
 - The height of the needle above the surface is negligible compared to the depth of the wire beneath the surface, i.e. the needle is situated in the $xy$-plane.
 
 Design your experiment and make the necessary simulations to perform the following tasks:
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-fig1.png" alt="Grey square surface in the xy-plane with axes North (up) and East (right), corners marked 0 and L on both axes; the wire with current I enters under the bottom edge and leaves at the top edge; a compass at point (x, y) with dashed guide lines, its needle deflected by angle φ from the North direction." />
-</figure>
 
 **a.** Determine the orientation of the wire with respect to the coordinate system by specifying its equation in the form: $y = ax + b$, and estimate the uncertainties of the parameters $a$ and $b$. Draw the wire position on a graph and indicate the direction corresponding to a positive current $I$. **[3 т.]**
 
@@ -96,6 +96,17 @@ $$
 
 Equations (1) and (3) are sufficient to complete all tasks of the problem.
 
+<div className="problem-figure-row">
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44.3%', '--fig-max': '284px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig1.png" alt="(a) Vector triangle in the xy axes: the wire with current I at angle θ to the x-axis; at a point, B_E points North (y), B_h points perpendicular to the wire, their sum B makes angle φ with North; angle ψ between B_h and North. (b) Cross-section: wire (current I into the page) at depth h, two surface points at distance d on either side at distance r from the wire, angle α at the wire; vectors B_w and B_h drawn at each point." width="887" height="517" loading="lazy" decoding="async" />
+<figcaption>Figure 1: Notations used in the derivation of the basic equations.</figcaption>
+</figure>
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43.2%', '--fig-max': '276px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig2.png" alt="Graph of Y (mm) versus X (mm), both 0 to 100, with measured points with error bars and a red straight line falling from about y = 75 at x = 0 to about y = 17 at x = 100; an arrow on the line labelled I > 0 points towards increasing x." width="864" height="664" loading="lazy" decoding="async" />
+<figcaption>Figure 2: $xy$-projection of the wire with indicated positive $I$ direction.</figcaption>
+</figure>
+</div>
+
 **Task (a): Determination of the horizontal position of the wire**
 
 As evident from the vector triangle (Fig. 1), the maximum absolute value of the deflection angle at a given current is met at $d = 0$ where $B_{\mathrm{h}}$ is maximal, i.e. vertically above the wire. Therefore, the wire can be tracked by finding two or more points on the surface where $|\varphi|$ reaches a maximum. First, a coarse scan of the border with a step of, say, 10 mm, can be performed in order to locate intervals, where $|\varphi|$ goes through a maximum. In this way we establish that the wire projection crosses the West side ($x = 0$ mm) at $y \in [60\ \mathrm{mm}, 90\ \mathrm{mm}]$ and the East side ($x = 100$ mm) at $y \in [10\ \mathrm{mm}, 30\ \mathrm{mm}]$. A finer scan of these intervals with a step of 1 mm allows to determine the approximate coordinates of the two crosspoints as $P_1 = (0.0{\pm}0.5, 75{\pm}1)$ mm and $P_2 = (100.0{\pm}0.5, 17{\pm}1)$ mm. The uncertainty of the $y$ coordinate is 1 mm since near the maximum $|\varphi|$ changes slowly and takes the same rounded value at three consecutive points. Additional scans along vertical (horizontal) lines of intermediate $x$ ($y$) values could be done in order to find more points along the wire projection, and to determine the equation of the wire more precisely by means of a least-squares fit. A typical set of values is given in Table 1. The fitted equation of the wire is, respectively
@@ -152,6 +163,11 @@ k = \frac{2\pi B_{\mathrm{E}}(d^2 + h^2)}{\mu_0 h} \qquad (9)
 $$
 
 Therefore, the unknown $B_{\mathrm{E}}$ and $h$ can be estimated after obtaining $k$ for at least two different distances $d$ from the wire. Table 2 summarizes the results of measurements at $d_1 = 0$ mm (vertically above the wire) and at $d_2 = 10$ mm in a point with coordinates $x = 20$ mm and $y = 75$ mm. Figure 3 shows the corresponding U-I graphs, and the estimated values of the slope coefficients are also listed in the table 2.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43%', '--fig-max': '276px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig3.png" alt="Graph of I (A) from -5 to 5 versus U from -5 to 5 with two straight fit lines through the origin: a red line of slope about 1 labelled d1 = 0 mm and a steep blue line of slope about 5 labelled d2 = 10 mm, with the data points on each." width="862" height="678" loading="lazy" decoding="async" />
+<figcaption>Figure 3: U-I graphs for two different distances $d$ from the wire, and the corresponding linear fits.</figcaption>
+</figure>
 
 Table 2: Experimental data for the deflection angle $\varphi$ vs. current $I$ at two different distances $d$.
 
@@ -225,6 +241,11 @@ Table 3: Experimental data for the deflection angle $\varphi$ vs. distance $d$ a
 | 16 | 75 | 8 | -111 | 64 | 0.674 |
 | 18 | 75 | 9 | -98 | 81 | 0.796 |
 | 20 | 75 | 10 | -79 | 100 | 0.963 |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.9%', '--fig-max': '275px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig4.png" alt="Graph of V from 0.0 to 1.0 versus U (mm²) from 0 to 100 with eleven data points and a red rising straight fit line from about 0.21 at U = 0 to about 0.95 at U = 100." width="860" height="675" loading="lazy" decoding="async" />
+<figcaption>Figure 4: U-V graph obtained at a fixed current $I = 5.0$ A.</figcaption>
+</figure>
 
 From the fitting line we obtain:
 
@@ -324,26 +345,6 @@ The total mark for data recording and treatment (B2, see the table below) scales
 | | $h \in [4.7; 5.3]$ mm | +0.1 |
 | | $h \in [4.9; 5.1]$ mm | +0.2 |
 | **Total on Task B** | | **6.0** |
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig1.png" alt="(a) Vector triangle in the xy axes: the wire with current I at angle θ to the x-axis; at a point, B_E points North (y), B_h points perpendicular to the wire, their sum B makes angle φ with North; angle ψ between B_h and North. (b) Cross-section: wire (current I into the page) at depth h, two surface points at distance d on either side at distance r from the wire, angle α at the wire; vectors B_w and B_h drawn at each point." />
-<figcaption>Figure 1: Notations used in the derivation of the basic equations.</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig2.png" alt="Graph of Y (mm) versus X (mm), both 0 to 100, with measured points with error bars and a red straight line falling from about y = 75 at x = 0 to about y = 17 at x = 100; an arrow on the line labelled I > 0 points towards increasing x." />
-<figcaption>Figure 2: $xy$-projection of the wire with indicated positive $I$ direction.</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig3.png" alt="Graph of I (A) from -5 to 5 versus U from -5 to 5 with two straight fit lines through the origin: a red line of slope about 1 labelled d1 = 0 mm and a steep blue line of slope about 5 labelled d2 = 10 mm, with the data points on each." />
-<figcaption>Figure 3: U-I graphs for two different distances $d$ from the wire, and the corresponding linear fits.</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p1-sol-fig4.png" alt="Graph of V from 0.0 to 1.0 versus U (mm²) from 0 to 100 with eleven data points and a red rising straight fit line from about 0.21 at U = 0 to about 0.95 at U = 100." />
-<figcaption>Figure 4: U-V graph obtained at a fixed current $I = 5.0$ A.</figcaption>
-</figure>
 
 
 </Spoiler>

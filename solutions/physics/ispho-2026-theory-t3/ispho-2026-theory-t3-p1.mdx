@@ -1,7 +1,7 @@
 ---
 id: ispho-2026-theory-t3-p1
-source: 'ISPhO 2026, Теоретичен тур'
-title: 'Задача 1. PN junctions in semiconductors'
+source: 'ISPhO 2026, Теория'
+title: 'Задача 3. PN junctions in semiconductors'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/ISPhO/2026/ispho-2026-theory-t3.json'
 verification: 'reviewed'
@@ -29,6 +29,11 @@ Semiconductor devices, in particular diodes and transistors, are widely used in 
 Charge carriers concentration in semiconductors can be easily modified by adding a small amount of impurities, i.e., atoms of another chemical element. Impurities that increase the electron concentration are referred to as donors, semiconductor with excess of donors is called $n$-type (from negative) semiconductor. Hole concentration in $n$-type semiconductor is much lower than electron concentration. Impurities that increase holes concentration are referred to as acceptors, semiconductor with excess of acceptors is called $p$-type (from positive) semiconductor.
 
 Consider a contact of two semiconductors of $p$ and $n$ types ($pn$ junction). In practice we can dope different parts of semiconductor with different types of impurities. The current through the junction depends on the polarity of applied voltage. The resulting structure is a semiconductor diode.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.6%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-theory-t3/p1-fig1.png" alt="Diagram of a pn junction along the x axis: p-type region with N_a on the left, n-type region with N_d on the right, with a negatively charged depletion layer of width d_p and a positively charged depletion layer of width d_n at the boundary marked with minus and plus signs; the origin 0 is at the junction, x axis points right." width="1033" height="703" loading="lazy" decoding="async" />
+<figcaption>Fig. 1. Junction and depletion layers</figcaption>
+</figure>
 
 In this problem we consider the following model of a diode (Fig. 1).
 
@@ -73,6 +78,11 @@ $$
 
 If applied voltage $V > 0$, holes move from $p$-type semiconductor to $n$-type, while electrons move from $n$-type semiconductor to $p$-type. In addition, concentration of electrons in $n$-type semiconductor is determined by impurity concentration and does not change, while hole concentration increases. Similarly in $p$-type semiconductor hole concentration does not change while electron concentration increases.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31.5%', '--fig-max': '202px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-theory-t3/p1-fig2-v2.png" alt="Circuit diagram showing a pn junction (p block on left, n block on right) connected in a loop to a battery labeled V, with + terminal on the p side and - terminal on the n side." width="631" height="404" loading="lazy" decoding="async" />
+<figcaption>Fig. 2. Voltage applied to pn junction</figcaption>
+</figure>
+
 We obtained, that after the voltage is applied, the hole concentration in $n$-type semiconductor and electron concentration in $p$-type semiconductor are different from equilibrium ones. Electrons can move to the vacant places, corresponding to holes. In such process the electron and the hole disappear (recombine). Boltzmann distribution does not take recombination into account. Therefore without diffusion charge carriers concentrations change to equilibrium values.
 
 To be specific, consider holes in $n$-type semiconductor outside of depletion layer. Denote the hole concentration by $p_1$, equilibrium concentration without diffusion by $p_{10}$. The rate of concentration change due to recombination can be expressed as
@@ -89,6 +99,11 @@ $$
 
 where $D_p$ is holes diffusion coefficient.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31.5%', '--fig-max': '202px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-theory-t3/p1-fig3.png" alt="Diagram showing two parallel vertical planes at coordinates x and x+Δx, with hole diffusion flux arrows J_p(x) entering the left plane and J_p(x+Δx) entering the right plane, both pointing rightward." width="631" height="548" loading="lazy" decoding="async" />
+<figcaption>Fig. 3. Holes balance</figcaption>
+</figure>
+
 The characteristic length, over which the hole concentration changes due to recombination, is much larger than the depletion layer width. Therefore we can neglect recombination in depletion layer. The current through the junction can be calculated as a sum of electron current and hole current, independent of each other. To calculate the hole current we can consider $n$-type semiconductor near the depletion layer boundary, where the current is determined by diffusion and hole concentration can be calculated from Boltzmann distribution. The electron current can be found in the same way.
 
 The expression for the electron current can be obtained by analogy, if we replace hole concentration by electron concentration $n_{10}$, diffusion coefficient, recombination time and characteristic length by corresponding values for electrons, $D_n$, $\tau_n$ and $L_n$. Equilibrium holes and electrons concentrations are given by
@@ -104,21 +119,6 @@ The numerical values of the parameters are:
 - $\tau_n = \tau_p = 5.0\cdot10^{-7}\ \mathrm{s}$;
 - $D_n = 2.5\cdot10^{-3}\ \mathrm{m^2/s}$, $D_p = 1.0\cdot10^{-3}\ \mathrm{m^2/s}$;
 - $A = 1.0\cdot10^{-8}\ \mathrm{m^2}$.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-theory-t3/p1-fig1.png" alt="Diagram of a pn junction along the x axis: p-type region with N_a on the left, n-type region with N_d on the right, with a negatively charged depletion layer of width d_p and a positively charged depletion layer of width d_n at the boundary marked with minus and plus signs; the origin 0 is at the junction, x axis points right." />
-<figcaption>Fig. 1. Junction and depletion layers</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-theory-t3/p1-fig2-v2.png" alt="Circuit diagram showing a pn junction (p block on left, n block on right) connected in a loop to a battery labeled V, with + terminal on the p side and - terminal on the n side." />
-<figcaption>Fig. 2. Voltage applied to pn junction</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-theory-t3/p1-fig3.png" alt="Diagram showing two parallel vertical planes at coordinates x and x+Δx, with hole diffusion flux arrows J_p(x) entering the left plane and J_p(x+Δx) entering the right plane, both pointing rightward." />
-<figcaption>Fig. 3. Holes balance</figcaption>
-</figure>
 
 **A.1** Total electric charge near the junction must be equal to zero. Using this fact, write an equation connecting widths of depletion layers $d_n$, $d_p$ and impurities concentrations $N_a$, $N_d$. **[0,5 т.]**
 

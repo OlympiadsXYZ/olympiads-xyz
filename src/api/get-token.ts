@@ -1,22 +1,12 @@
-import { OAuthApp } from '@octokit/oauth-app';
 import { GatsbyFunctionRequest, GatsbyFunctionResponse } from 'gatsby';
 
-const app = new OAuthApp({
-  clientType: 'github-app',
-  clientId: process.env.GATSBY_EDITOR_CLIENT_ID ?? '', //TODO: create a Github OAuth app and link to firebase
-  clientSecret: process.env.EDITOR_CLIENT_SECRET ?? '',
-});
-interface RequestBody {
-  code: string;
-}
-export default async function handler(
-  request: GatsbyFunctionRequest<RequestBody>,
+// The static site uses GitHub's own editor. No OAuth token exchange is needed.
+export default function handler(
+  _request: GatsbyFunctionRequest,
   response: GatsbyFunctionResponse
 ) {
-  const {
-    authentication: { token },
-  } = await app.createToken({
-    code: request.body.code,
+  response.status(410).json({
+    error:
+      'Use the GitHub edit link in /editor to propose changes to OlympiadsXYZ/olympiads-xyz.',
   });
-  response.json({ token });
 }

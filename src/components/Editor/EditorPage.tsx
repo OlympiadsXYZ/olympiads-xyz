@@ -11,14 +11,13 @@
 
 import { PageProps } from 'gatsby';
 import { useAtomValue, useSetAtom } from 'jotai';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Split from 'react-split';
 import styled from 'styled-components';
 import {
   filesListAtom,
   monacoEditorInstanceAtom,
   openOrCreateExistingFileAtom,
-  tokenAtom,
 } from '../../atoms/editor';
 import QuizGeneratorProvider from '../../context/QuizGeneratorContext';
 import Layout from '../layout';
@@ -55,24 +54,6 @@ function getQueryVariable(query, variable) {
 export default function EditorPage(props: PageProps): JSX.Element {
   const editor = useAtomValue(monacoEditorInstanceAtom);
   const openOrCreateExistingFile = useSetAtom(openOrCreateExistingFileAtom);
-  const setToken = useSetAtom(tokenAtom);
-  useEffect(() => {
-    const code = new URLSearchParams(props.location.search).get('code');
-    if (!code) return;
-    fetch('/api/get-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ code }),
-    })
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-        setToken(json.token);
-      });
-    history.replaceState({}, '', '/editor');
-  }, [props.location.search, setToken]);
   const filesList = useAtomValue(filesListAtom); // null if hasn't been loaded from storage yet
   React.useEffect(() => {
     const defaultFilePath =
@@ -80,14 +61,16 @@ export default function EditorPage(props: PageProps): JSX.Element {
         ? getQueryVariable(props.location.search.slice(1), 'filepath')
         : null;
     if (defaultFilePath && filesList !== null) {
-      openOrCreateExistingFile(defaultFilePath);
+      openOrCreateExistingFile(defaultFilePath).catch(error =>
+        alert(error.message)
+      );
     }
   }, [filesList, openOrCreateExistingFile, props.location.search]);
 
   return (
     <QuizGeneratorProvider>
       <Layout>
-        <SEO title="Editor" />
+        <SEO title="Редактор" />
 
         <div className="h-screen flex flex-col min-w-[768px]">
           <EditorTopNav />
@@ -102,12 +85,7 @@ export default function EditorPage(props: PageProps): JSX.Element {
             >
               {/* https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.istandaloneeditorconstructionoptions.html */}
               <div className="flex items-stretch">
-                <EditorSidebar
-                  className="h-full flex-shrink-0"
-                  loading={
-                    !!new URLSearchParams(props.location.search).get('code')
-                  }
-                />
+                <EditorSidebar className="h-full flex-shrink-0" />
                 <MainEditorInterface className="h-full w-0 flex-1" />
               </div>
               <div className="flex flex-col">

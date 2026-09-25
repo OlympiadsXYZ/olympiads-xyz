@@ -6,47 +6,163 @@ export type CompetitionMeta = { slug: string; name: string; short: string };
 
 export const COMPETITION_META: { [code: string]: CompetitionMeta } = {
   NOF: { slug: 'nof', name: 'Национална олимпиада по физика', short: 'НОФ' },
-  PSF: { slug: 'psf', name: 'Пролетно национално състезание по физика', short: 'НПСФ' },
-  ESF: { slug: 'esf', name: 'Есенно национално състезание по физика', short: 'НЕСФ' },
-  IPhO: { slug: 'ipho', name: 'Международна олимпиада по физика', short: 'IPhO' },
-  IdPhO: { slug: 'idpho', name: 'Международна дистанционна олимпиада по физика', short: 'IdPhO' },
+  PSF: {
+    slug: 'psf',
+    name: 'Пролетно национално състезание по физика',
+    short: 'НПСФ',
+  },
+  ESF: {
+    slug: 'esf',
+    name: 'Есенно национално състезание по физика',
+    short: 'НЕСФ',
+  },
+  IPhO: {
+    slug: 'ipho',
+    name: 'Международна олимпиада по физика',
+    short: 'IPhO',
+  },
+  IdPhO: {
+    slug: 'idpho',
+    name: 'Международна дистанционна олимпиада по физика',
+    short: 'IdPhO',
+  },
   APhO: { slug: 'apho', name: 'Азиатска олимпиада по физика', short: 'APhO' },
-  EuPhO: { slug: 'eupho', name: 'Европейска олимпиада по физика', short: 'EuPhO' },
-  IZhO: { slug: 'izho', name: 'Международна олимпиада „Жаутиков“', short: 'IZhO' },
-  USAPhO: { slug: 'usapho', name: 'Олимпиада по физика на САЩ', short: 'USAPhO' },
-  IEPhO: { slug: 'iepho', name: 'Международна експериментална олимпиада по физика', short: 'IEPhO' },
+  EuPhO: {
+    slug: 'eupho',
+    name: 'Европейска олимпиада по физика',
+    short: 'EuPhO',
+  },
+  IZhO: {
+    slug: 'izho',
+    name: 'Международна олимпиада „Жаутиков“',
+    short: 'IZhO',
+  },
+  USAPhO: {
+    slug: 'usapho',
+    name: 'Олимпиада по физика на САЩ',
+    short: 'USAPhO',
+  },
+  IEPhO: {
+    slug: 'iepho',
+    name: 'Международна експериментална олимпиада по физика',
+    short: 'IEPhO',
+  },
   RMPh: { slug: 'rmph', name: 'Румънски майстори по физика', short: 'RMPh' },
   IOM: { slug: 'iom', name: 'Олимпиада на мегаполисите', short: 'IOM' },
-  IYPT: { slug: 'iypt', name: 'Международен турнир на младите физици', short: 'IYPT' },
-  IYNT: { slug: 'iynt', name: 'Международен турнир на младите природоизпитатели', short: 'IYNT' },
+  IYPT: {
+    slug: 'iypt',
+    name: 'Международен турнир на младите физици',
+    short: 'IYPT',
+  },
+  IYNT: {
+    slug: 'iynt',
+    name: 'Международен турнир на младите природоизпитатели',
+    short: 'IYNT',
+  },
   OPB: { slug: 'opb', name: 'Online Physics Brawl', short: 'OPB' },
-  'Балкански': { slug: 'balkanski', name: 'Турнир „Минко Балкански“', short: 'Балкански' },
+  Балкански: {
+    slug: 'balkanski',
+    name: 'Турнир „Минко Балкански“',
+    short: 'Балкански',
+  },
   'X-ENS': { slug: 'x-ens', name: 'Конкурс X-ENS (Франция)', short: 'X-ENS' },
-  'ПУ': { slug: 'pu', name: 'Състезание на ПУ „Паисий Хилендарски“', short: 'ПУ' },
-  'Всерусийска': { slug: 'vsosh-phys', name: 'Всерусийска олимпиада по физика', short: 'ВсОШ' },
-  'Московска': { slug: 'mos-phys', name: 'Московска олимпиада по физика', short: 'МОФ (Москва)' },
+  ПУ: {
+    slug: 'pu',
+    name: 'Състезание на ПУ „Паисий Хилендарски“',
+    short: 'ПУ',
+  },
+  Всерусийска: {
+    slug: 'vsosh-phys',
+    name: 'Всерусийска олимпиада по физика',
+    short: 'ВсОШ',
+  },
+  Московска: {
+    slug: 'mos-phys',
+    name: 'Московска олимпиада по физика',
+    short: 'МОФ (Москва)',
+  },
   // BelPhO…Ibero-American тук и IOAA-Jr…O3A2 в астрономията нямаха ред до
   // 24.09.2026 и се показваха със суровия код. `slug` е точно това, което
   // competitionSlug() даваше без ред — адресите им вече са публични.
-  BelPhO: { slug: 'belpho', name: 'Беларуска републиканска олимпиада по физика', short: 'BelPhO' },
-  NBPhO: { slug: 'nbpho', name: 'Северно-балтийска олимпиада по физика', short: 'NBPhO' },
-  InPhO: { slug: 'inpho', name: 'Индийска национална олимпиада по физика', short: 'INPhO' },
-  ISPhO: { slug: 'ispho', name: 'Международна научна олимпиада по физика', short: 'ISPhO' },
+  BelPhO: {
+    slug: 'belpho',
+    name: 'Беларуска републиканска олимпиада по физика',
+    short: 'BelPhO',
+  },
+  NBPhO: {
+    slug: 'nbpho',
+    name: 'Северно-балтийска олимпиада по физика',
+    short: 'NBPhO',
+  },
+  InPhO: {
+    slug: 'inpho',
+    name: 'Индийска национална олимпиада по физика',
+    short: 'INPhO',
+  },
+  ISPhO: {
+    slug: 'ispho',
+    name: 'Международна научна олимпиада по физика',
+    short: 'ISPhO',
+  },
   OPhO: { slug: 'opho', name: 'Онлайн олимпиада по физика', short: 'OPhO' },
-  WoPhO: { slug: 'wopho', name: 'Световна олимпиада по физика', short: 'WoPhO' },
-  GPhO: { slug: 'gpho', name: 'Олимпиада по физика на страните от Персийския залив', short: 'GPhO' },
+  WoPhO: {
+    slug: 'wopho',
+    name: 'Световна олимпиада по физика',
+    short: 'WoPhO',
+  },
+  GPhO: {
+    slug: 'gpho',
+    name: 'Олимпиада по физика на страните от Персийския залив',
+    short: 'GPhO',
+  },
   // Не е турнирът „Минко Балкански“ (код 'Балкански' по-горе).
-  Balkan: { slug: 'balkan', name: 'Балканска олимпиада по физика', short: 'BPO' },
+  Balkan: {
+    slug: 'balkan',
+    name: 'Балканска олимпиада по физика',
+    short: 'BPO',
+  },
   Serbia: { slug: 'serbia', name: 'Сръбска олимпиада по физика', short: 'СФО' },
-  FYKOS: { slug: 'fykos', name: 'Кореспондентски семинар по физика FYKOS (Чехия)', short: 'FYKOS' },
+  FYKOS: {
+    slug: 'fykos',
+    name: 'Кореспондентски семинар по физика FYKOS (Чехия)',
+    short: 'FYKOS',
+  },
   China: { slug: 'china', name: 'Китайска олимпиада по физика', short: 'CPhO' },
-  Estonia: { slug: 'estonia', name: 'Естонска национална олимпиада по физика', short: 'Естония' },
-  'Ibero-American': { slug: 'ibero-american', name: 'Ибероамериканска олимпиада по физика', short: 'OIbF' },
-  NAO: { slug: 'nao', name: 'Национална олимпиада по астрономия', short: 'НОА' },
-  IAO: { slug: 'iao', name: 'Международна астрономическа олимпиада', short: 'IAO' },
-  IOAA: { slug: 'ioaa', name: 'Международна олимпиада по астрономия и астрофизика', short: 'IOAA' },
-  GeCAA: { slug: 'gecaa', name: 'Глобално електронно състезание по астрономия и астрофизика', short: 'GeCAA' },
-  'VsOA-ru': { slug: 'vsoa', name: 'Всерусийска олимпиада по астрономия', short: 'ВсОА' },
+  Estonia: {
+    slug: 'estonia',
+    name: 'Естонска национална олимпиада по физика',
+    short: 'Естония',
+  },
+  'Ibero-American': {
+    slug: 'ibero-american',
+    name: 'Ибероамериканска олимпиада по физика',
+    short: 'OIbF',
+  },
+  NAO: {
+    slug: 'nao',
+    name: 'Национална олимпиада по астрономия',
+    short: 'НОА',
+  },
+  IAO: {
+    slug: 'iao',
+    name: 'Международна астрономическа олимпиада',
+    short: 'IAO',
+  },
+  IOAA: {
+    slug: 'ioaa',
+    name: 'Международна олимпиада по астрономия и астрофизика',
+    short: 'IOAA',
+  },
+  GeCAA: {
+    slug: 'gecaa',
+    name: 'Глобално електронно състезание по астрономия и астрофизика',
+    short: 'GeCAA',
+  },
+  'VsOA-ru': {
+    slug: 'vsoa',
+    name: 'Всерусийска олимпиада по астрономия',
+    short: 'ВсОА',
+  },
   // Районният (в Санкт-Петербург) и общинският (в Ленинградска област) етап на
   // ВсОШ по астрономия. Листовете се хостват на сайта на СПбАО, но носят главата
   // на ВсОШ — виж docs/Archive-SPbAO-Investigation.md §5.3.
@@ -55,29 +171,89 @@ export const COMPETITION_META: { [code: string]: CompetitionMeta } = {
     name: 'Всерусийска олимпиада по астрономия – районен етап (Санкт-Петербург)',
     short: 'ВсОШ (СПб)',
   },
-  'ZAO-ru': { slug: 'zao', name: 'Задочна руска олимпиада по астрономия', short: 'ЗАО' },
-  MosA: { slug: 'mosa', name: 'Московска олимпиада по астрономия', short: 'МАО' },
-  SPbA: { slug: 'spba', name: 'Санкт-Петербургска олимпиада по астрономия', short: 'СПбАО' },
-  APAO: { slug: 'apao', name: 'Азиатско-тихоокеанска олимпиада по астрономия', short: 'APAO' },
-  SAO: { slug: 'sao', name: 'Сингапурска олимпиада по астрономия', short: 'SAO' },
+  'ZAO-ru': {
+    slug: 'zao',
+    name: 'Задочна руска олимпиада по астрономия',
+    short: 'ЗАО',
+  },
+  MosA: {
+    slug: 'mosa',
+    name: 'Московска олимпиада по астрономия',
+    short: 'МАО',
+  },
+  SPbA: {
+    slug: 'spba',
+    name: 'Санкт-Петербургска олимпиада по астрономия',
+    short: 'СПбАО',
+  },
+  APAO: {
+    slug: 'apao',
+    name: 'Азиатско-тихоокеанска олимпиада по астрономия',
+    short: 'APAO',
+  },
+  SAO: {
+    slug: 'sao',
+    name: 'Сингапурска олимпиада по астрономия',
+    short: 'SAO',
+  },
   'IOAA-Jr': {
     slug: 'ioaa-jr',
     name: 'Международна олимпиада по астрономия и астрофизика за юноши',
     short: 'IOAA Jr.',
   },
-  OWAO: { slug: 'owao', name: 'Открита световна астрономическа олимпиада', short: 'OWAO' },
-  USAAAO: { slug: 'usaaao', name: 'Олимпиада по астрономия и астрофизика на САЩ', short: 'USAAAO' },
-  BAAO: { slug: 'baao', name: 'Британска олимпиада по астрономия и астрофизика', short: 'BAAO' },
+  OWAO: {
+    slug: 'owao',
+    name: 'Открита световна астрономическа олимпиада',
+    short: 'OWAO',
+  },
+  USAAAO: {
+    slug: 'usaaao',
+    name: 'Олимпиада по астрономия и астрофизика на САЩ',
+    short: 'USAAAO',
+  },
+  BAAO: {
+    slug: 'baao',
+    name: 'Британска олимпиада по астрономия и астрофизика',
+    short: 'BAAO',
+  },
   // За 7–8 клас, успоредно с ВсОШ по астрономия.
-  Struve: { slug: 'struve', name: 'Олимпиада по астрономия „В. Я. Струве“ (Русия)', short: 'Струве' },
-  Samara: { slug: 'samara', name: 'Самарска олимпиада по астрономия', short: 'Самара' },
-  O3A2: { slug: 'o3a2', name: 'Онлайн олимпиада по астрономия и астрофизика', short: 'O3A2' },
-  Nikola: { slug: 'nikola', name: 'Тренировъчна колекция „Никола“', short: 'Никола' },
+  Struve: {
+    slug: 'struve',
+    name: 'Олимпиада по астрономия „В. Я. Струве“ (Русия)',
+    short: 'Струве',
+  },
+  Samara: {
+    slug: 'samara',
+    name: 'Самарска олимпиада по астрономия',
+    short: 'Самара',
+  },
+  O3A2: {
+    slug: 'o3a2',
+    name: 'Онлайн олимпиада по астрономия и астрофизика',
+    short: 'O3A2',
+  },
+  Nikola: {
+    slug: 'nikola',
+    name: 'Тренировъчна колекция „Никола“',
+    short: 'Никола',
+  },
   NOH: { slug: 'noh', name: 'Национална олимпиада по химия', short: 'НОХ' },
   HOOS: { slug: 'hoos', name: 'Национално състезание по ХООС', short: 'ХООС' },
-  IChO: { slug: 'icho', name: 'Международна олимпиада по химия', short: 'IChO' },
-  IMChO: { slug: 'imcho', name: 'Международна Менделеевска олимпиада', short: 'IMChO' },
-  iGeo: { slug: 'igeo', name: 'Международна олимпиада по география', short: 'iGeo' },
+  IChO: {
+    slug: 'icho',
+    name: 'Международна олимпиада по химия',
+    short: 'IChO',
+  },
+  IMChO: {
+    slug: 'imcho',
+    name: 'Международна Менделеевска олимпиада',
+    short: 'IMChO',
+  },
+  iGeo: {
+    slug: 'igeo',
+    name: 'Международна олимпиада по география',
+    short: 'iGeo',
+  },
 };
 
 // Стари/разцепени кодове, слети в каноничните (D11, vocabulary.decisions.md).
@@ -86,6 +262,8 @@ export const COMPETITION_ALIASES: { [legacy: string]: string } = {
   'Олимпиада на мегаполисите': 'IOM',
   'Online Physics Brawl': 'OPB',
   'Московска олимпиада по физика': 'Московска',
+  // one transcribed paper (vserusiyska-2011-iii-region11e) carries the transliterated code of the Всерусийска folder
+  VSERUSIYSKA: 'Всерусийска',
 };
 
 export function canonicalCompetition(code: string): string {
@@ -98,10 +276,36 @@ Object.keys(COMPETITION_META).forEach(code => {
 });
 
 const CYR_TO_LAT: { [ch: string]: string } = {
-  а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ж: 'zh', з: 'z', и: 'i',
-  й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r', с: 's',
-  т: 't', у: 'u', ф: 'f', х: 'h', ц: 'ts', ч: 'ch', ш: 'sh', щ: 'sht',
-  ъ: 'a', ь: 'y', ю: 'yu', я: 'ya',
+  а: 'a',
+  б: 'b',
+  в: 'v',
+  г: 'g',
+  д: 'd',
+  е: 'e',
+  ж: 'zh',
+  з: 'z',
+  и: 'i',
+  й: 'y',
+  к: 'k',
+  л: 'l',
+  м: 'm',
+  н: 'n',
+  о: 'o',
+  п: 'p',
+  р: 'r',
+  с: 's',
+  т: 't',
+  у: 'u',
+  ф: 'f',
+  х: 'h',
+  ц: 'ts',
+  ч: 'ch',
+  ш: 'sh',
+  щ: 'sht',
+  ъ: 'a',
+  ь: 'y',
+  ю: 'yu',
+  я: 'ya',
 };
 
 export function competitionSlug(code: string): string {
@@ -131,7 +335,9 @@ export function competitionShort(code: string): string {
 export function sourceWithShortName(source: string): string {
   const space = source.indexOf(' ');
   const code = space < 0 ? source : source.slice(0, space);
-  return COMPETITION_META[code] ? competitionShort(code) + source.slice(code.length) : source;
+  return COMPETITION_META[code]
+    ? competitionShort(code) + source.slice(code.length)
+    : source;
 }
 
 export const ROUND_LABELS: { [code: string]: string } = {
@@ -161,11 +367,26 @@ export const ROUND_LABELS: { [code: string]: string } = {
 
 export const ROUND_ORDER = [
   // етапи
-  'I', 'II', 'III', 'zonal', 'IV', 'regional', 'selection', 'camp', 'distance',
+  'I',
+  'II',
+  'III',
+  'zonal',
+  'IV',
+  'regional',
+  'selection',
+  'camp',
+  'distance',
   // турове
-  'theory', 'experiment', 'practical', 'observational',
-  'data-analysis', 'team', 'creative',
-  'day-1', 'day-2', 'day-3',
+  'theory',
+  'experiment',
+  'practical',
+  'observational',
+  'data-analysis',
+  'team',
+  'creative',
+  'day-1',
+  'day-2',
+  'day-3',
 ];
 
 export const TYPE_LABELS: { [code: string]: string } = {
@@ -185,9 +406,19 @@ export const TYPE_LABELS: { [code: string]: string } = {
 };
 
 export const TYPE_ORDER = [
-  'problems', 'solutions', 'answers', 'answer-sheet', 'criteria',
-  'instructions', 'data', 'translation', 'results', 'official',
-  'book', 'handout', 'other',
+  'problems',
+  'solutions',
+  'answers',
+  'answer-sheet',
+  'criteria',
+  'instructions',
+  'data',
+  'translation',
+  'results',
+  'official',
+  'book',
+  'handout',
+  'other',
 ];
 
 // Рафтът на записа (schema.json → kind). Сайтът групира по competition, не по
@@ -202,7 +433,14 @@ export const KIND_LABELS: { [code: string]: string } = {
 };
 
 export const LANG_LABELS: { [code: string]: string } = {
-  bg: 'БГ', en: 'EN', ru: 'РУ', mk: 'МК', kk: 'КЗ', ro: 'РО', cs: 'ЧЕ', fr: 'ФР',
+  bg: 'БГ',
+  en: 'EN',
+  ru: 'РУ',
+  mk: 'МК',
+  kk: 'КЗ',
+  ro: 'РО',
+  cs: 'ЧЕ',
+  fr: 'ФР',
   sr: 'СР',
 };
 
@@ -216,14 +454,24 @@ export const SCIENCE_LABELS: { [code: string]: string } = {
   biology: 'Биология',
 };
 
-export const SCIENCE_COLORS: { [code: string]: { bg: string; text: string } } = {
-  physics: { bg: 'bg-blue-700 dark:bg-blue-900', text: 'text-blue-100' },
-  astronomy: { bg: 'bg-indigo-700 dark:bg-indigo-900', text: 'text-indigo-100' },
-  chemistry: { bg: 'bg-red-700 dark:bg-red-900', text: 'text-red-100' },
-  geography: { bg: 'bg-yellow-700 dark:bg-yellow-800', text: 'text-yellow-100' },
-  mathematics: { bg: 'bg-green-700 dark:bg-green-900', text: 'text-green-100' },
-  informatics: { bg: 'bg-sky-700 dark:bg-sky-900', text: 'text-sky-100' },
-};
+export const SCIENCE_COLORS: { [code: string]: { bg: string; text: string } } =
+  {
+    physics: { bg: 'bg-blue-700 dark:bg-blue-900', text: 'text-blue-100' },
+    astronomy: {
+      bg: 'bg-indigo-700 dark:bg-indigo-900',
+      text: 'text-indigo-100',
+    },
+    chemistry: { bg: 'bg-red-700 dark:bg-red-900', text: 'text-red-100' },
+    geography: {
+      bg: 'bg-yellow-700 dark:bg-yellow-800',
+      text: 'text-yellow-100',
+    },
+    mathematics: {
+      bg: 'bg-green-700 dark:bg-green-900',
+      text: 'text-green-100',
+    },
+    informatics: { bg: 'bg-sky-700 dark:bg-sky-900', text: 'text-sky-100' },
+  };
 
 export function groupLabel(group: string | null): string | null {
   if (!group) return null;
@@ -236,7 +484,10 @@ export function groupLabel(group: string | null): string | null {
   return group;
 }
 
-export function label(map: { [code: string]: string }, code: string | null): string | null {
+export function label(
+  map: { [code: string]: string },
+  code: string | null
+): string | null {
   if (!code) return null;
   return map[code] ?? code;
 }
@@ -250,7 +501,10 @@ export function formatBytes(n: number): string {
     v /= 1024;
     i++;
   }
-  const s = v >= 100 || i === 0 ? Math.round(v).toString() : v.toFixed(1).replace('.', ',');
+  const s =
+    v >= 100 || i === 0
+      ? Math.round(v).toString()
+      : v.toFixed(1).replace('.', ',');
   return `${s} ${units[i]}`;
 }
 
@@ -275,7 +529,9 @@ export function entryExt(file: string): string {
   if (ext === 'pdf') return 'pdf';
   if (['exe', 'linux', 'macos'].includes(ext)) return 'exe';
   if (['doc', 'docx', 'odt', 'rtf', 'txt', 'tex'].includes(ext)) return 'doc';
-  if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tif', 'tiff'].includes(ext)) return 'img';
+  if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tif', 'tiff'].includes(ext)) {
+    return 'img';
+  }
   if (['zip', 'rar', '7z', 'gz', 'tar'].includes(ext)) return 'zip';
   if (['xls', 'xlsx', 'csv', 'ods'].includes(ext)) return 'xls';
   if (['djvu', 'epub'].includes(ext)) return 'book';
@@ -284,9 +540,14 @@ export function entryExt(file: string): string {
 
 // The hosted base URL for archive files (R2 bucket / custom domain).
 // GATSBY_-prefixed so it's inlined into client bundles at build time.
-export const ARCHIVE_BASE_URL = (process.env.GATSBY_ARCHIVE_BASE_URL || '').replace(/\/$/, '');
+export const ARCHIVE_BASE_URL = (
+  process.env.GATSBY_ARCHIVE_BASE_URL || ''
+).replace(/\/$/, '');
 
 export function entryUrl(key: string): string | null {
   if (!ARCHIVE_BASE_URL) return null;
-  return `${ARCHIVE_BASE_URL}/${key.split('/').map(encodeURIComponent).join('/')}`;
+  return `${ARCHIVE_BASE_URL}/${key
+    .split('/')
+    .map(encodeURIComponent)
+    .join('/')}`;
 }

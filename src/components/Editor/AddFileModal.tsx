@@ -1,30 +1,33 @@
 import { Dialog } from '@headlessui/react';
 import { useSetAtom } from 'jotai';
 import React, { useState } from 'react';
-import { createNewInternalSolutionFileAtom, createNewModuleFileAtom } from '../../atoms/editor';
-import { AlgoliaEditorSolutionFile, AlgoliaEditorModuleFile } from '../../models/algoliaEditorFile';
+import {
+  createNewInternalSolutionFileAtom,
+  createNewModuleFileAtom,
+} from '../../atoms/editor';
+import {
+  AlgoliaEditorSolutionFile,
+  AlgoliaEditorModuleFile,
+} from '../../models/algoliaEditorFile';
 import Modal from '../Modal';
 import Select from '../Select';
 import { useTranslation } from 'react-i18next';
-import algoliasearch from 'algoliasearch/lite';
-import { indexName } from '../ProblemAutocompleteModal/ProblemAutocomplete';
-
+import { loadEditorFiles } from './editorSearch';
+import { loadProblemsIndex } from '../ProblemsPage/problemSearch';
 
 export default function AddFileModal(props) {
-  const searchClient = algoliasearch(
-    process.env.GATSBY_ALGOLIA_APP_ID ?? '',
-    process.env.GATSBY_ALGOLIA_SEARCH_KEY ?? ''
-  );
   const { t } = useTranslation();
-  const [section, setSection] = useState<'1_General' | '2_Physics_7_8' | '3_Physics_9_10' | '4_Physics_11_12' | '5_Physics_Olymp' | '6_Astronomy'>('1_General');
-  const [fileType, setFileType] = useState<'solution' | 'module' >('module');
-  const [fileStatus, setFileStatus] = useState<'Create File' | 'Creating File...'>('Create File');
+  const [section, setSection] = useState<string>('1_General');
+  const [fileType, setFileType] = useState<'solution' | 'module'>('module');
+  const [fileStatus, setFileStatus] = useState<
+    'Create File' | 'Creating File...'
+  >('Create File');
   const [fileURL, setFileURL] = useState('');
   const [moduleId, setModuleId] = useState('');
   const [moduleTitle, setModuleTitle] = useState('');
   const [moduleDescription, setModuleDescription] = useState('');
   const [problemId, setProblemId] = useState('');
-  
+
   const createSol = useSetAtom(createNewInternalSolutionFileAtom);
   const createModule = useSetAtom(createNewModuleFileAtom);
   const fileTypes = [
@@ -49,6 +52,7 @@ export default function AddFileModal(props) {
         <p className="mt-2">{t('file-type')}</p>
         <div className="mt-2 relative w-full dark:bg-black rounded-md shadow-sm">
           <Select
+            aria-label={t('file-type')}
             options={fileTypes}
             defaultValue={fileTypes[0]}
             value={fileTypes.find(t => t.value === fileType)}
@@ -62,6 +66,7 @@ export default function AddFileModal(props) {
             <input
               type="url"
               className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-700"
+              aria-label={t('problem-source-url')}
               placeholder={t('problem-source-url-placeholder')}
               onChange={e => setFileURL(e.target.value)}
             />
@@ -69,6 +74,7 @@ export default function AddFileModal(props) {
             <input
               type="text"
               className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-700"
+              aria-label={t('problem-id')}
               placeholder={t('problem-id-placeholder')}
               onChange={e => setProblemId(e.target.value)}
             />
@@ -79,6 +85,7 @@ export default function AddFileModal(props) {
             <input
               type="text"
               className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-700"
+              aria-label={t('module-id')}
               placeholder={t('module-id-placeholder')}
               onChange={e => setModuleId(e.target.value)}
             />
@@ -86,6 +93,7 @@ export default function AddFileModal(props) {
             <input
               type="text"
               className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-700"
+              aria-label={t('module-title')}
               placeholder={t('module-title-placeholder')}
               onChange={e => setModuleTitle(e.target.value)}
             />
@@ -93,6 +101,7 @@ export default function AddFileModal(props) {
             <input
               type="text"
               className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-900 dark:border-gray-700"
+              aria-label={t('module-description')}
               placeholder={t('module-description-placeholder')}
               onChange={e => setModuleDescription(e.target.value)}
             />
@@ -102,6 +111,8 @@ export default function AddFileModal(props) {
         <p className="mt-2">{t('section')}</p>
         <div className="mt-2 relative w-full dark:bg-black rounded-md shadow-sm">
           <Select
+            aria-label={t('section')}
+            value={sections.find(option => option.value === section)}
             options={sections}
             onChange={e => setSection(e.value)}
           />
@@ -113,9 +124,8 @@ export default function AddFileModal(props) {
           onClick={async () => {
             try {
               setFileStatus('Creating File...');
-              
+
               if (fileType === 'module') {
-                
                 if (!moduleId) {
                   alert(t('module-id-required'));
                   setFileStatus('Create File');
@@ -142,60 +152,44 @@ export default function AddFileModal(props) {
                   return;
                 }
 
-                // TODO: Change the index name for the modules
-                const index = searchClient.initIndex("olympiads_xyz_modules");
-                const { hits } = await index.search('', {
-                  filters: `objectID:${moduleId}`
-                });
-
-                console.log(hits);
-                
-                if (hits.length > 0 && moduleId) {
+                const files = await loadEditorFiles();
+                if (files.some(file => file.id === moduleId)) {
                   alert(t('module-id-already-exists'));
                   setFileStatus('Create File');
                   return;
                 }
 
-                
-                createModule({
+                await createModule({
                   id: moduleId,
                   title: moduleTitle,
                   description: moduleDescription,
                   section: section,
                 } as unknown as AlgoliaEditorModuleFile);
-
               } else {
-
-                const index = searchClient.initIndex(indexName);
-                const { hits } = await index.search('', {
-                  filters: `objectID:${problemId}`
-                });
-
-                
-                if (hits.length === 0 && problemId) {
+                const problems = await loadProblemsIndex();
+                const info = problems.find(p =>
+                  problemId ? p.uniqueId === problemId : p.url === fileURL
+                );
+                if (!info) {
                   alert(t('nonexistent-problem-id'));
-                }
-
-                const problemIdRegex = /^[a-z0-9-]+$/;
-                if (!problemIdRegex.test(problemId)) {
-                  alert(t('problem-id-format-invalid'));
                   setFileStatus('Create File');
                   return;
                 }
-
-                
-                const info = (
-                  await fetch('/api/fetch-metadata', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ url: fileURL }),
-                  }).then(res => res.json())
-                ).data;
-
-                // TODO: Check if that the problem section is correct!
-                createSol({
+                const files = await loadEditorFiles();
+                if (
+                  files.some(
+                    file =>
+                      file.id === info.uniqueId && file.kind === 'solution'
+                  ) ||
+                  info.solution?.kind === 'internal'
+                ) {
+                  alert(
+                    'Тази задача вече има решение. Отворете съществуващия файл или съобщете за грешка от страницата на задачата.'
+                  );
+                  setFileStatus('Create File');
+                  return;
+                }
+                await createSol({
                   id: problemId || info.uniqueId,
                   title: info.name,
                   source: info.source,

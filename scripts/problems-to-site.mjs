@@ -22,6 +22,8 @@ import { fileURLToPath } from 'node:url';
 import { readPapers, readJson, publicationState, atomicWrite, jsonText, sha256, controlledTopics, walkJson } from './lib/problem-data.mjs';
 import { classificationSearch, problemMetadataErrors } from './lib/problem-classification.mjs';
 import { readArchiveLabels } from './lib/labels.mjs';
+import { loadNavigation, roundLabel as navRoundLabel, gradeLabel as navGradeLabel, paperSuffix } from './lib/navigation.mjs';
+import { loadTreeModule } from './lib/load-tree.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -68,16 +70,196 @@ function figureMarkdown(fig) {
   // is plain text, so a "<" that would start a tag (a letter follows) becomes the full-width "＜"
   const alt = oneLine(fig.alt || fig.caption || '').replace(/"/g, "'").replace(/<(?=[\p{L}$_])/gu, '＜');
   const cap = fig.caption ? `\n<figcaption>${mdText(oneLine(fig.caption))}</figcaption>` : '';
-  return `<figure>\n<img src="${fig.url}" alt="${alt}" />${cap}\n</figure>`;
+  // the display width follows the printed width (figureSize); the styles live in src/styles/generalStyles.css
+  // (.problem-figure); width/height let the browser reserve the box before the crop loads
+  const size = figureSize(fig);
+  const attrs = size
+    ? ` className="problem-figure problem-figure--sized" style={{'--fig-w': '${size.widthPct}%', '--fig-max': '${size.maxPx}px'}}`
+    : ' className="problem-figure"';
+  const dims = Number.isInteger(fig.width) && Number.isInteger(fig.height) && fig.width > 0 && fig.height > 0 ? ` width="${fig.width}" height="${fig.height}"` : '';
+  return `<figure${attrs}>\n<img src="${fig.url}" alt="${alt}"${dims} loading="lazy" decoding="async" />${cap}\n</figure>`;
+}
+
+// A figure is shown at the width it was printed: its printed width (source.pdfRect, points) relative to a printed
+// text column (FIGURE_COLUMN_PT) becomes a share of the site's content column, and the crop is never upscaled past
+// its natural size (a 300 dpi crop of W px is W / (300/96) CSS px — the printed size on screen). A diagram printed
+// small stays small; one printed across the page fills the column.
+const FIGURE_COLUMN_PT = 480;
+export function figureSize(fig) {
+  const rect = fig?.source?.pdfRect;
+  const dpi = Number(fig?.source?.dpi ?? fig?.tx?.dpi) || null;
+  const px = Number.isFinite(fig?.width) && fig.width > 0 ? fig.width : null;
+  const printedPt = Array.isArray(rect) && rect.length === 4 && rect[2] > rect[0] ? rect[2] - rect[0] : px && dpi ? px / dpi * 72 : null;
+  const naturalPx = px && dpi ? px / (dpi / 96) : printedPt ? printedPt * 96 / 72 : null;
+  if (!printedPt || !naturalPx) return null;
+  return { widthPct: Math.min(100, Math.round(printedPt / FIGURE_COLUMN_PT * 1000) / 10), maxPx: Math.max(1, Math.round(naturalPx)) };
+}
+
+// Consecutive figures anchored with the same `row` sit side by side (.problem-figure-row stacks them on phones).
+function figureGroupLines(items) {
+  const out = [];
+  for (let i = 0; i < items.length;) {
+    let j = i + 1;
+    if (items[i].row) while (j < items.length && items[j].row === items[i].row) j++;
+    const blocks = items.slice(i, j).map(x => figureMarkdown(x.fig));
+    out.push(blocks.length > 1 ? `<div className="problem-figure-row">\n${blocks.join('\n')}\n</div>` : blocks[0], '');
+    i = j;
+  }
+  return out;
 }
 
 // Some transcriptions place a figure inline in the text (![…](url)) AND list it
 // in figures[]; emitting both rendered the figure twice. Only emit the block
 // for figures the surrounding text does not already show.
-function figuresNotInline(figs, ...texts) {
+// `candidates`: the figures the texts' placeholders may name (resolveFigureTarget).
+function figuresNotInline(figs, texts, candidates = figs) {
   const joined = texts.filter(Boolean).join('\n');
-  return (figs ?? []).filter(f => !(f.url && joined.includes(f.url)));
+  return (figs ?? []).filter(f => !figureShownInline(f, joined, candidates ?? []));
 }
+
+// A figure re-cropped after transcription is stored as "<crop>-v2.png" while the text may still inline the first
+// crop "<crop>.png" (the legacy НОА papers: 428 figures in 208 problems). It is the same picture: the page shows it
+// once, inline where the text puts it (figureShownInline), with the newest crop (newestInlineCrops).
+const INLINE_IMAGE = /(!\[[^\]]*\]\(\s*<?)([^)\s>]+)/g;
+const cropKey = url => String(url ?? '').replace(/[?#].*$/, '').replace(/-v\d+(\.[A-Za-z0-9]+)$/, '$1');
+const cropVersion = url => Number(/-v(\d+)\.[A-Za-z0-9]+(?:[?#].*)?$/.exec(String(url ?? ''))?.[1] ?? 1);
+const isUrl = target => /^(?:https?:)?\/\//i.test(String(target ?? ''));
+// The figure an inline image of the text stands for, among `figs`: a crop URL (any crop version of the figure), or a
+// placeholder the transcriber wrote where the figure is printed — the figure id ("p2-sol-fig1"), "#p1-sol-fig2", or
+// the id qualified by its problem or paper id ("ipho-2024-experiment-q4-p1-sol-fig1"). null when none matches ("#",
+// "figure:solutions-p4-…", an id the problem does not have).
+export function resolveFigureTarget(target, figs) {
+  target = String(target ?? '').trim();
+  const list = (figs || []).filter(f => f?.url);
+  if (!target) return null;
+  if (isUrl(target)) {
+    const key = cropKey(target);
+    const same = list.filter(f => cropKey(f.url) === key);
+    return same.sort((a, b) => cropVersion(b.url) - cropVersion(a.url))[0] ?? null;
+  }
+  const id = target.replace(/^#/, '');
+  if (!id) return null;
+  const exact = list.find(f => f.id === id);
+  if (exact) return exact;
+  // "<problem or paper id>-<figure id>": the qualifier has at least two words (a bare "p2-fig1" never matches "fig1")
+  return list.find(f => f.id && id.endsWith(`-${f.id}`) && id.slice(0, -f.id.length - 1).split('-').length >= 2) ?? null;
+}
+export function figureShownInline(fig, text, figs = [fig]) {
+  if (!fig?.url) return false;
+  text = String(text ?? '');
+  if (text.includes(fig.url)) return true;
+  const key = cropKey(fig.url);
+  for (const m of text.matchAll(INLINE_IMAGE)) {
+    if (isUrl(m[2]) ? cropKey(m[2]) === key : resolveFigureTarget(m[2], figs) === fig) return true;
+  }
+  return false;
+}
+export function newestInlineCrops(text, figs) {
+  const newest = new Map();
+  for (const f of figs) if (f?.url) {
+    const k = cropKey(f.url), cur = newest.get(k);
+    if (!cur || cropVersion(f.url) > cropVersion(cur)) newest.set(k, f.url);
+  }
+  if (!newest.size || text == null) return text;
+  return String(text).replace(INLINE_IMAGE, (m, pre, url) => {
+    const n = newest.get(cropKey(url));
+    return n && cropVersion(n) > cropVersion(url) ? pre + n : m;
+  });
+}
+
+// ---- figures the text itself places (inline images) ----
+// A transcription that puts a figure in its text as markdown (![alt](crop url), or a placeholder naming the figure)
+// marks the exact spot the figure is printed. A bare ![](url) renders at the crop's natural pixel width (a 300 dpi crop
+// is ~3x its printed size, capped at the column) and several of them on one line stack as full-width blocks. So:
+//   - a line that holds nothing but images, each of them one of the problem's figures, becomes that figure's sized
+//     <figure> block (figureMarkdown: printed width, reviewed alt, width/height, lazy loading) — several on one line
+//     sit side by side in a .problem-figure-row, as printed;
+//   - an image inside a line of text (or an indented one) becomes a sized inline <img> (.problem-inline-figure);
+//   - a placeholder that names no figure ("#", "figure:…", an id the problem does not have) is dropped: it would be a
+//     broken relative <img>;
+//   - an image in a table row, or one whose crop is not among the figures, stays markdown (with the newest crop).
+// The JSX goes in after mdText (which escapes braces) through private-use tokens.
+const IMAGE_MD = /!\[([^\]]*)\]\(\s*<?([^)\s>]*)>?(?:\s+"[^"]*")?\s*\)/g;
+const FIG_TOKEN = /(\d+)/g;
+const token = i => `${i}`;
+const plainWords = t => String(t ?? '').toLowerCase().replace(/[*_`$\\]/g, '').replace(/\s+/g, ' ').trim();
+function inlineFigureJsx(fig) {
+  const alt = String(fig.alt || fig.caption || '').replace(/\s*\n\s*/g, ' ').trim().replace(/"/g, "'").replace(/<(?=[\p{L}$_])/gu, '＜');
+  const size = figureSize(fig);
+  const style = size ? ` style={{'--fig-w': '${size.widthPct}%', '--fig-max': '${size.maxPx}px'}}` : '';
+  const dims = Number.isInteger(fig.width) && Number.isInteger(fig.height) && fig.width > 0 && fig.height > 0 ? ` width="${fig.width}" height="${fig.height}"` : '';
+  return `<img className="problem-inline-figure${size ? ' problem-inline-figure--sized' : ''}" src="${fig.url}" alt="${alt}"${dims} loading="lazy" decoding="async"${style} />`;
+}
+// text -> { text with tokens, jsx: [] }; `resolve(target)` -> figure or null
+export function placeInlineFigures(text, resolve) {
+  if (text == null) return { text, jsx: [] };
+  const jsx = [];
+  const lines = String(text).split('\n');
+  const out = [];
+  let fence = null, math = false, blankNext = false;
+  const whole = plainWords(text);
+  for (const line of lines) {
+    const inside = !!fence || math;
+    let emitted = line;
+    if (!inside && line.includes('![')) {
+      const images = [...line.matchAll(IMAGE_MD)];
+      const bare = images.length && !line.replace(IMAGE_MD, '').trim();
+      if (bare && !/^[ \t]/.test(line)) {
+        // a line of figures: blocks (a row when printed side by side), plus any image that is not a figure
+        const figs = [], keep = [];
+        for (const m of images) {
+          const fig = resolve(m[2]);
+          if (fig) figs.push(fig); else if (isUrl(m[2])) keep.push(m[0]);
+        }
+        const parts = [];
+        if (figs.length) {
+          // the text's own caption line ("*Фиг. 1*") already names the figure: no second caption under it
+          const blocks = figs.map(f => figureMarkdown(f.caption && whole.includes(plainWords(f.caption)) ? { ...f, caption: null } : f));
+          jsx.push(blocks.length > 1 ? `<div className="problem-figure-row">\n${blocks.join('\n')}\n</div>` : blocks[0]);
+          parts.push(token(jsx.length - 1));
+        }
+        if (keep.length) parts.push(keep.join(' '));
+        if (!parts.length) { emitted = null; }
+        else {
+          // a block always opens its own paragraph (also at the start: a part's label is prepended to the text)
+          if (!out.length || out[out.length - 1].trim()) out.push('');
+          parts.forEach((p, i) => { if (i) out.push(''); out.push(p); });
+          blankNext = true;
+          emitted = undefined;
+        }
+      } else if (!/^\s*\|/.test(line)) {
+        emitted = line.replace(IMAGE_MD, (m, alt, target) => {
+          const fig = resolve(target);
+          if (fig) { jsx.push(inlineFigureJsx(fig)); return token(jsx.length - 1); }
+          return isUrl(target) ? m : '';
+        });
+      } else {
+        // a table row: markdown stays (JSX in a cell is not safe); a placeholder becomes the figure's crop
+        emitted = line.replace(IMAGE_MD, (m, alt, target) => {
+          if (isUrl(target)) return m;
+          const fig = resolve(target);
+          return fig ? `![${alt}](${fig.url})` : '';
+        });
+      }
+    }
+    if (emitted !== undefined && emitted !== null) {
+      if (blankNext && emitted.trim()) out.push('');
+      if (emitted.trim()) blankNext = false;
+      out.push(emitted);
+    }
+    // fences and $$ blocks, as paragraphSpans reads them
+    const f = /^\s*(`{3,}|~{3,})/.exec(line);
+    if (fence) { if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null; }
+    else if (f) fence = f[1];
+    else if ((line.replace(/\\\$/g, '').match(/\$\$/g) || []).length % 2) math = !math;
+  }
+  return { text: out.join('\n'), jsx };
+}
+const restoreFigures = (rendered, jsx) => rendered == null ? rendered : String(rendered).replace(FIG_TOKEN, (m, i) => jsx[Number(i)] ?? '');
+
+const problemFigures = problem => [
+  ...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...(problem.solution?.figures || []),
+];
 
 // Solution figures stored in the statement (problem.figures / parts[].figures) would be shown under «Условие», outside
 // the solution spoiler — a leaked answer (nao-2000-ii-7-9 p3, spba-2023-ii-11-pract p1, ioaa-2016-theory-qp p12 …).
@@ -198,12 +380,12 @@ export function textLayerLines(tsv) {
   return { lines: out, heights };
 }
 // the moved figures the solution does not already show (same crop url, or the same box on the same page)
-function movedSolutionFigures(misplaced, solution) {
+function movedSolutionFigures(misplaced, solution, candidates) {
   const shown = [...(solution?.figures || [])];
   const text = solution?.statement || '';
   const out = [];
   for (const { fig } of misplaced) {
-    if (fig.url && text.includes(fig.url)) continue;
+    if (figureShownInline(fig, text, candidates ?? [fig])) continue;
     if (shown.some(s => (fig.url && s.url === fig.url) || samePlace(figurePlace(s), figurePlace(fig)))) continue;
     shown.push(fig); out.push(fig);
   }
@@ -222,33 +404,170 @@ function demoteHeadings(md) {
 // 9 pages, the real figure shown elsewhere (rmph-2011-experiment-exp p2, apho-2023-theory-t1). Each now shows its
 // figure in place (figuresNotInline then leaves it out of the blocks); one whose figure does not exist keeps only its
 // description. A written description of an uncropped figure ("[Фигура: хоризонтална схема…]") is left as it is.
-const FIGURE_ID = /p\d+(?:-sol)?-fig\d+[a-z]?/;
-function problemFigures(problem) {
-  return [...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...(problem.solution?.figures || [])].filter(f => f?.id && f.url);
-}
-export function resolveFigurePlaceholders(text, problem) {
+export function resolveFigurePlaceholders(text, problem, resolve = target => resolveFigureTarget(target, problemFigures(problem))) {
   if (!text) return text;
-  const byId = new Map(problemFigures(problem).map(f => [f.id, f]));
   const image = (alt, fig) => `![${String(alt || fig.alt || fig.caption || '').replace(/\s*\n\s*/g, ' ').replace(/[[\]]/g, '').trim()}](${fig.url})`;
   return String(text)
     .replace(/!\[([^\]\n]*)\]\((?!https?:|\/)([^)\s]*)\)/g, (m, alt, target) => {
-      const fig = byId.get((target.match(FIGURE_ID) || [])[0]);
+      const fig = resolve(target);
       if (fig) return image(alt, fig);
       return alt.trim() ? `*[${alt.trim()}]*` : '';
     })
     .replace(/\[\[figure:?\s*(p\d+(?:-sol)?-fig\d+[a-z]?)\s*\]\]|\[(?:figure|фигура)\s*:\s*(p\d+(?:-sol)?-fig\d+[a-z]?)\s*\]/giu, (m, a, b) => {
-      const fig = byId.get(a || b);
+      const fig = resolve(a || b);
       return fig ? image('', fig) : m;
     });
 }
-function sourceText(text, problem) {
-  let rendered = demoteHeadings(mdText(resolveFigurePlaceholders(text, problem)));
+// ---- figures inside the text (content/figure-anchors.json) ----
+// The data lists figures apart from the text; an overlay says where each one is printed:
+//   { version: 1, problems: { <problemId>: { <figure id>: { field, after, row?, method } } } }
+// field is the text field it is printed in ("statement", "statementAfterParts", "parts/<k>/statement",
+// "parts/<k>/statementAfter", "solution/statement"); the figure goes in at the first paragraph break at or after the
+// end of the first occurrence of `after` in that field (after: null — before the first paragraph). The data stays
+// hash-bound to its receipt; the page only moves figures. A figure keeps today's place when it has no anchor, when
+// `after` is not in the field (counted, never fatal), and when the anchor would cross the spoiler: a solution figure
+// (own or moved out of the statement by misplacedSolutionFigures) may only be anchored in solution/statement, a
+// statement figure never there.
+export const FIGURE_ANCHORS_FILE = 'content/figure-anchors.json';
+const ANCHOR_FIELD = /^(?:statement|statementAfterParts|solution\/statement|parts\/(\d+)\/(?:statement|statementAfter))$/;
+export function readFigureAnchors(root) {
+  const file = path.join(root, FIGURE_ANCHORS_FILE);
+  if (!fs.existsSync(file)) return null;
+  const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+  if (data?.version !== 1 || typeof data.problems !== 'object' || !data.problems) throw new Error(`${FIGURE_ANCHORS_FILE}: expected { version: 1, problems: {…} }`);
+  return data.problems;
+}
+export function newFigureStats() { return { anchored: 0, placed: 0, notFound: [], refused: [], unused: [] }; }
+
+// Paragraphs of a text field: blank lines split them, except inside $$…$$ display math and ``` / ~~~ fences; in a
+// list, an indented line after a blank line continues the item (its second paragraph). Returns [{ start, end }]
+// offsets into the text (end exclusive, the paragraph's last line included). scripts/figure-anchors.mjs computes its
+// anchors with this same function, so both sides agree on every boundary.
+export function paragraphSpans(text) {
+  const spans = [];
+  let open = null, gap = false, fence = null, math = false, list = false, pos = 0;
+  for (const line of String(text ?? '').split('\n')) {
+    const start = pos;
+    pos += line.length + 1;
+    const inside = !!fence || math;
+    if (!inside && /^\s*$/.test(line)) { if (open) gap = true; continue; }
+    if (open && gap && list && /^[ \t]/.test(line)) gap = false;
+    if (!open || gap) { open = { start, end: start + line.length }; spans.push(open); gap = false; list = false; }
+    else open.end = start + line.length;
+    if (!inside && /^\s*(?:[-*+]|\d+[.)])\s/.test(line)) list = true;
+    const f = /^\s*(`{3,}|~{3,})/.exec(line);
+    if (fence) { if (f && f[1][0] === fence[0] && f[1].length >= fence.length) fence = null; }
+    else if (f) fence = f[1];
+    else if ((line.replace(/\\\$/g, '').match(/\$\$/g) || []).length % 2) math = !math;
+  }
+  return spans;
+}
+
+// end offset of the first occurrence of `after` (exact; else with runs of whitespace compared as one space)
+function afterEnd(text, after) {
+  const at = text.indexOf(after);
+  if (at >= 0) return at + after.length;
+  const needle = after.replace(/\s+/g, ' ').trim();
+  if (!needle) return null;
+  let flat = '';
+  const map = [];
+  for (let i = 0; i < text.length; i++) {
+    if (/\s/.test(text[i])) { if (flat.endsWith(' ')) continue; flat += ' '; } else flat += text[i];
+    map.push(i);
+  }
+  const k = flat.indexOf(needle);
+  return k < 0 ? null : map[k + needle.length - 1] + 1;
+}
+
+// A paragraph break that falls inside a sentence: the paragraph before it ends in "," ";" or ":" and the one after it
+// goes on in lower case, with a sub-item ("а)", "- "), or with the formula the colon announces. A figure is never put
+// there (the photo between "at midday time:" and "in winter, in spring…"): it moves to the next break that ends a
+// sentence or an enumeration — the text a float figure is printed beside stays together.
+const OPEN_SENTENCE = /[,;:]$/;
+const GOES_ON = /^(?:\p{Ll}|\$|\**\s*[а-яa-z]\)|[-*+]\s|\d+[.)]\s)/u;
+export function splitsSentence(text, before, after) {
+  const end = String(text).slice(before.start, before.end).trimEnd().replace(/[*_\s]+$/, '');
+  const next = String(text).slice(after.start, after.end).trimStart();
+  return OPEN_SENTENCE.test(end) && GOES_ON.test(next);
+}
+const MAX_SENTENCE_MOVES = 8;
+
+// the paragraph slot a figure goes into: the number of paragraphs of the field printed before it
+export function anchorSlot(text, after, reviewed = false) {
+  const spans = paragraphSpans(text);
+  if (after == null) return 0;
+  const end = afterEnd(String(text ?? ''), String(after));
+  if (end == null) return null;
+  const i = spans.findIndex(s => s.end >= end);
+  let slot = i < 0 ? spans.length : i + 1;
+  for (let moved = 0; !reviewed && moved < MAX_SENTENCE_MOVES && slot > 0 && slot < spans.length && splitsSentence(text, spans[slot - 1], spans[slot]); moved++) slot++;
+  return slot;
+}
+
+// Decide where each rendered figure block goes. groups: [{ figs, solution }] in page order (statement figures,
+// then each part's, then the solution's). fields: field name -> the text the page prints for it (undefined when
+// the field does not exist). Returns { slots: Map<field, [{ fig, slot, row }]>, anchored: Set<fig> }.
+function planFigureAnchors(problemId, groups, fields, anchors, stats) {
+  const slots = new Map(), anchored = new Set();
+  const own = anchors?.[problemId];
+  if (!own || typeof own !== 'object') return { slots, anchored };
+  const rendered = new Set();
+  for (const { figs, solution } of groups) for (const fig of figs) {
+    if (!fig.id || rendered.has(fig.id)) continue;
+    rendered.add(fig.id);
+    const a = own[fig.id];
+    if (!a) continue;
+    if (stats) stats.anchored++;
+    const where = `${problemId} ${fig.id}`;
+    const field = typeof a.field === 'string' && ANCHOR_FIELD.test(a.field) ? a.field : null;
+    const why = !field ? 'unknown field'
+      : a.after != null && typeof a.after !== 'string' ? '"after" is not a string'
+      : field === 'solution/statement' && !solution ? 'a statement figure never goes into the solution'
+      : field !== 'solution/statement' && solution ? 'a solution figure stays in the solution spoiler'
+      : null;
+    if (why) { if (stats) stats.refused.push(`${where}: ${a.field ?? '(no field)'} (${why})`); continue; }
+    const text = fields[field];
+    const slot = text === undefined ? null : anchorSlot(text, a.after, !!a.reviewed);
+    if (slot == null) { if (stats) stats.notFound.push(`${where}: ${field}${text === undefined ? ' (no such field)' : ` "${String(a.after).slice(0, 40)}"`}`); continue; }
+    if (!slots.has(field)) slots.set(field, []);
+    slots.get(field).push({ fig, slot, row: typeof a.row === 'string' && a.row ? a.row : null });
+    anchored.add(fig);
+    if (stats) stats.placed++;
+  }
+  if (stats) for (const id of Object.keys(own)) if (!rendered.has(id)) stats.unused.push(`${problemId} ${id}`);
+  for (const list of slots.values()) list.sort((a, b) => a.slot - b.slot); // stable: page order within a slot
+  return { slots, anchored };
+}
+
+// A field's text cut at its figure slots: [{ text }] and [{ figures: lines }] in page order. Cuts fall only on
+// paragraph breaks, so $$…$$ and fences are never split; the first and last pieces keep the field's own ends.
+function splitAtFigures(text, placed) {
+  text = String(text ?? '');
+  const spans = paragraphSpans(text);
+  const bySlot = new Map();
+  for (const p of placed) { if (!bySlot.has(p.slot)) bySlot.set(p.slot, []); bySlot.get(p.slot).push(p); }
+  const cuts = [...new Set([0, ...bySlot.keys(), spans.length])].sort((a, b) => a - b);
+  const out = [];
+  cuts.forEach((slot, i) => {
+    if (bySlot.has(slot)) out.push({ figures: figureGroupLines(bySlot.get(slot)) });
+    const next = cuts[i + 1];
+    if (next != null && next > slot) {
+      const from = slot === 0 ? 0 : spans[slot].start, to = next === spans.length ? text.length : spans[next - 1].end;
+      out.push({ text: text.slice(from, to) });
+    }
+  });
+  return out;
+}
+
+function sourceText(text, problem, resolve = () => null) {
+  const placed = placeInlineFigures(newestInlineCrops(resolveFigurePlaceholders(text, problem, resolve), problemFigures(problem)), resolve);
+  let rendered = demoteHeadings(mdText(placed.text));
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
   for (const passage of [...(problem.sourceLayout?.underlines || [])].sort((a, b) => b.length - a.length)) {
     const needle = mdText(passage);
     if (needle) rendered = rendered.split(needle).join(`<u>${needle}</u>`);
   }
-  return rendered;
+  return restoreFigures(rendered, placed.jsx);
 }
 
 // page furniture read into a note ("1 / 4", "v3", a note that only repeats its title) is not shown; a bracketed
@@ -284,34 +603,29 @@ const visitorNote = t => t && !PIPELINE_NOTE.test(t) ? mdText(t) : null;
 
 // Short Bulgarian names and round labels: the archive's own (src/archive/labels.ts), so a page heading reads
 // "ВсОА 1994, Творчески тур" like the archive does, not "VsOA-ru 1994, creative".
-const { competitionShort: COMPETITION_SHORT, roundLabels: ROUND_LABELS } = readArchiveLabels();
+const { roundLabels: ROUND_LABELS } = readArchiveLabels();
 // The archive's I/II/III labels are the Bulgarian stages ("III кръг (национален)"); elsewhere a Roman round is only a
 // number (SPbA, Samara and BelPhO use them too), so it stays as printed.
 const BULGARIAN_COMPETITIONS = new Set(['NOF', 'NAO', 'ESF', 'PSF', 'NOH', 'HOOS']);
-function roundLabel(round, competition) {
+function archiveRoundLabel(round, competition) {
   if (!round) return null;
   if (/^(?:I|II|III|IV)$/.test(round) && !BULGARIAN_COMPETITIONS.has(competition)) return round;
   return ROUND_LABELS[round] ?? round;
 }
+// The sidebar's own code (src/problems/tree.ts, transpiled on first use): the page title and the source line use the
+// same functions as the sidebar row and the competition node, so the two cannot drift apart.
+let treeModule = null;
+const tree = () => treeModule || (treeModule = loadTreeModule());
 const MONTHS_BG = ['януари', 'февруари', 'март', 'април', 'май', 'юни', 'юли', 'август', 'септември', 'октомври', 'ноември', 'декември'];
 
-// "9" -> "9. клас", "9-10 клас" -> "9–10 клас"; group codes get their names
-// (physics ST/SP = the special-theme group; astronomy ML/ST = age groups);
-// anything else is left as printed.
-const GROUP_NAMES = {
-  physics: { ST: 'Специална тема', SP: 'Специална тема' },
-  astronomy: { ML: 'Младша възраст', ST: 'Старша възраст' },
-};
-// IAO's age groups are written both ways across papers ("alpha", "α"); the page shows the letter.
-const GREEK_GROUPS = { alpha: 'α', beta: 'β', gamma: 'γ' };
-function gradeLabel(grade, subject) {
-  if (!grade) return null;
-  const g = String(grade).replace(/\s*клас\.?$/u, '').trim().replace(/\s*-\s*/g, '–');
-  if (/^\d+$/.test(g)) return `${g}. клас`;
-  if (/^\d+–\d+$/.test(g)) return `${g} клас`;
-  const named = GROUP_NAMES[subject]?.[g.toUpperCase()] ?? GREEK_GROUPS[g.toLowerCase()];
-  return named ?? String(grade);
-}
+// Names on the page come from the navigation overlays, the same ones the sidebar uses (scripts/lib/navigation.mjs):
+// content/round-labels.json (canonical round label, grade names) and content/question-numbers.json (the printed
+// question number where the stored one differs). Loaded in main(); empty overlays mean raw round and stored number.
+let nav = { labels: {}, numbers: {} };
+// "9" -> "9. клас", "9-10 клас" -> "9–10 клас"; group codes get their names (a competition's own ones first)
+const gradeLabel = (grade, subject, competition) => navGradeLabel(grade, subject, competition, nav.labels);
+// the canonical round label; the raw round only for a paper the overlay does not label (check-navigation.mjs fails)
+const pageRound = paper => navRoundLabel(paper, nav.labels) ?? archiveRoundLabel(paper.round, paper.competition) ?? TOUR_LABELS[paper.roundType] ?? null;
 
 function dateBg(iso) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
@@ -322,10 +636,10 @@ function dateBg(iso) {
 // "НОА 2026, II кръг (областен), 9–10 клас" — what the page heading leads with.
 function paperDescriptor(paper) {
   return [
-    `${COMPETITION_SHORT[paper.competition] ?? paper.competition} ${paper.year}`,
-    // no round recorded: the tour it is ("IOAA 2012, Наблюдателен тур")
-    roundLabel(paper.round, paper.competition) ?? TOUR_LABELS[paper.roundType],
-    gradeLabel(paper.grade, paper.subject),
+    `${tree().competitionShortName(paper.competition)} ${paper.year}`,
+    pageRound(paper) || null,
+    gradeLabel(paper.grade, paper.subject, paper.competition),
+    paperSuffix(paper, nav.labels),
     paperQualifiers.get(paper.id),
   ].filter(Boolean).join(', ');
 }
@@ -348,7 +662,7 @@ const QUALIFIER_STEPS = [paper => LANGUAGE_NAMES[paper.lang] ?? paper.lang ?? nu
 
 // records: [{ paper, problems }] of the published papers
 export function qualifyPapers(records) {
-  const titles = new Map(records.map(({ paper, problems }) => [paper.id, new Set(problems.map(problemName))]));
+  const titles = new Map(records.map(({ paper, problems }) => [paper.id, new Set(problems.map(p => problemName(p)))]));
   const collides = group => {
     const seen = new Set();
     for (const paper of group) for (const t of titles.get(paper.id)) { if (seen.has(t)) return true; seen.add(t); }
@@ -573,7 +887,7 @@ export function displayMathLines(mdx) {
   return out.join('\n');
 }
 
-function problemMdx(paper, problem, state, sourceFile) {
+export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   const lines = [];
   lines.push('---');
   lines.push(`id: ${problem.id}`);
@@ -602,33 +916,74 @@ function problemMdx(paper, problem, state, sourceFile) {
   lines.push(...documentNoteLines(paper, 'before-problem'));
   lines.push(`## Условие`);
   lines.push('');
-  lines.push(sourceText(problem.statement, problem).trimEnd());
-  lines.push('');
-  const shown = t => resolveFigurePlaceholders(t, problem); // a placeholder shows its figure in place
-  const partTexts = (problem.parts ?? []).flatMap(p => [p.statement, p.statementAfter]).map(shown);
+  const partTexts = (problem.parts ?? []).flatMap(p => [p.statement, p.statementAfter]);
   const misplaced = misplacedSolutionFigures(paper, problem);
   const inStatement = fig => !misplaced.some(m => m.fig === fig);
-  for (const fig of figuresNotInline(problem.figures, shown(problem.statement), shown(problem.statementAfterParts), ...partTexts).filter(inStatement)) lines.push(figureMarkdown(fig), '');
+  const sol = problem.solution;
+  // the figure blocks the page shows (figures the text already shows inline are not repeated), and where the anchor
+  // overlay puts them; an unanchored figure keeps its place: statement figures after the statement, a part's after
+  // the part, solution figures (and the ones moved out of the statement) at the end of the solution spoiler
+  // the figures a text may show inline (placeInlineFigures): the statement side only its own figures (a solution
+  // figure named there stays out of the statement: the spoiler), the solution side its own, the moved ones and the
+  // statement's
+  const statementCandidates = [...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || [])].filter(inStatement);
+  // a25-I-56.pdf pp.5–6 repeats the question's six animal photos before its solution.
+  // The first combined solution crop actually covers the previous problem's text.
+  // Keep the six reviewed individual statement crops; neither repeated row adds information.
+  const duplicatePhotos = problem.id === 'nao-2025-i-5-6-p4'
+    && [1, 2, 3, 4, 5, 6].every(n => statementCandidates.some(f => f.id === `p4-fig${n}`));
+  const uniqueSolutionFigures = (sol?.figures || []).filter(f => !duplicatePhotos || !['p4-sol-fig1', 'p4-sol-fig2'].includes(f.id));
+  const solutionCandidates = [...uniqueSolutionFigures, ...misplaced.map(m => m.fig), ...statementCandidates];
+  const resolveStatement = target => resolveFigureTarget(target, statementCandidates);
+  const resolveSolution = target => resolveFigureTarget(target, solutionCandidates);
+  const shown = (text, resolve) => resolveFigurePlaceholders(text, problem, resolve);
+  const statementTexts = [problem.statement, problem.statementAfterParts, ...partTexts].map(t => shown(t, resolveStatement));
+  const solutionShown = shown(sol?.statement, resolveSolution);
+  const statementFigs = figuresNotInline(problem.figures, statementTexts, statementCandidates).filter(inStatement);
+  const partFigs = (problem.parts ?? []).map(part => figuresNotInline(part.figures, statementTexts, statementCandidates).filter(inStatement));
+  const solutionFigures = [...figuresNotInline(uniqueSolutionFigures, [solutionShown], solutionCandidates), ...movedSolutionFigures(misplaced, sol && { ...sol, statement: solutionShown }, solutionCandidates)];
+  // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
+  const partText = part => part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
+  const fields = { statement: problem.statement, statementAfterParts: problem.statementAfterParts ?? '', 'solution/statement': sol?.statement ?? '' };
+  (problem.parts ?? []).forEach((part, k) => { fields[`parts/${k}/statement`] = String(partText(part) ?? ''); fields[`parts/${k}/statementAfter`] = part.statementAfter ?? ''; });
+  const plan = planFigureAnchors(problem.id, [
+    { figs: statementFigs, solution: false }, ...partFigs.map(figs => ({ figs, solution: false })), { figs: solutionFigures, solution: true },
+  ], fields, figureOpts.anchors, figureOpts.stats);
+  const unanchored = figs => figs.filter(fig => !plan.anchored.has(fig));
+  // a text field with its anchored figures in place (without any, exactly the field as before)
+  const fieldLines = (field, text, render, always = false) => plan.slots.has(field)
+    ? splitAtFigures(text, plan.slots.get(field)).flatMap(piece => piece.figures ?? [render(piece.text), ''])
+    : text || always ? [render(text), ''] : [];
+  lines.push(...fieldLines('statement', problem.statement, t => sourceText(t, problem, resolveStatement).trimEnd(), true));
+  for (const fig of unanchored(statementFigs)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
-    for (const part of problem.parts) {
+    problem.parts.forEach((part, k) => {
       const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
       // the statement may already print its points at its end, marked up: "**2 т.**", "*2 точки;*", "(1 point)",
       // "**[2.5 points]**" — never bare prose ("Тяло с маса 3 т." is a mass of 3 tonnes)
       const printedPoints = /(?:\*{1,2}[(\[]?|[(\[])\s*(\d+(?:[.,]\d+)?)\s*(?:т\.?|точк[аи]\.?|точки|pts?\.?|points?|marks?|бал(?:л|ла|лов|а)?\.?)(?![\p{L}])\s*[.;:]?\s*(?:[)\]]\**|\*{1,2})\s*[.;:]?\s*$/iu.exec(String(text).trimEnd());
       const alreadyPrinted = printedPoints && Number(printedPoints[1].replace(',', '.')) === part.points;
       const pts = part.points != null && !alreadyPrinted ? ` **[${String(part.points).replace('.', ',')}\u00A0т.]**` : '';
-      // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
-      // a statement that opens with a table or a heading keeps the label on a line of its own (glued, the block does not
-      // start), and one that ends with a table row gets its points after the table (in the row, GFM drops the extra cell)
-      const body = sourceText(text, problem), label = part.label && part.label !== '*' ? `**${part.label}**` : ''; // an unlabelled printed part has an empty label
-      const opensBlock = /^\s*(?:\||#{1,6}[ \t])/.test(body), endsInRow = /(?:^|\n)[ \t]*\|[^\n]*$/.test(body.trimEnd());
-      lines.push(`${label ? label + (opensBlock ? '\n\n' : ' ') : ''}${body}${pts && endsInRow ? '\n\n' + pts.trim() : pts}`);
-      lines.push('');
-      for (const fig of figuresNotInline(part.figures, shown(part.statement), shown(part.statementAfter)).filter(inStatement)) lines.push(figureMarkdown(fig), '');
-      if (part.statementAfter) lines.push(sourceText(part.statementAfter, problem), '');
-    }
+      const label = part.label && part.label !== '*' ? `**${part.label}**` : '';
+      const renderPart = (value, prefix, suffix) => {
+        const body = sourceText(value, problem, resolveStatement);
+        const opensBlock = /^\s*(?:\||#{1,6}[ \t]|<figure|<div)/.test(body);
+        const endsInRow = /(?:^|\n)[ \t]*\|[^\n]*$/.test(body.trimEnd()) || /<\/(?:figure|div)>\s*$/.test(body);
+        return `${prefix ? prefix + (opensBlock ? '\n\n' : ' ') : ''}${body}${suffix && endsInRow ? '\n\n' + suffix.trim() : suffix}`;
+      };
+      const placed = plan.slots.get(`parts/${k}/statement`);
+      if (!placed) lines.push(renderPart(text, label, pts), '');
+      else {
+        const pieces = splitAtFigures(text, placed);
+        if (!pieces.some(p => p.text != null)) pieces.unshift({ text: '' });
+        const first = pieces.findIndex(p => p.text != null), last = pieces.map(p => p.text != null).lastIndexOf(true);
+        pieces.forEach((piece, i) => lines.push(...(piece.figures ?? [renderPart(piece.text, i === first ? label : '', i === last ? pts : ''), ''])));
+      }
+      for (const fig of unanchored(partFigs[k])) lines.push(figureMarkdown(fig), '');
+      lines.push(...fieldLines(`parts/${k}/statementAfter`, part.statementAfter, t => sourceText(t, problem, resolveStatement)));
+    });
   }
-  if (problem.statementAfterParts) lines.push(sourceText(problem.statementAfterParts, problem), '');
+  lines.push(...fieldLines('statementAfterParts', problem.statementAfterParts, t => sourceText(t, problem, resolveStatement)));
   const answers = [
     ...(problem.answer ? [{ label: '', answer: problem.answer }] : []),
     ...(problem.parts ?? []).filter(p => p.answer),
@@ -641,18 +996,17 @@ function problemMdx(paper, problem, state, sourceFile) {
     }
     lines.push('', '</Spoiler>', '');
   }
-  const sol = problem.solution;
   // solution figures found in the statement follow the solution's own figures, inside the same spoiler; without
   // solution text (an incomplete solution, or none at all) the figures still stay behind a spoiler
-  const solutionFigures = [...figuresNotInline(sol?.figures, shown(sol?.statement)), ...movedSolutionFigures(misplaced, sol && { ...sol, statement: shown(sol.statement) })];
   if (sol?.statement || sol?.incomplete || solutionFigures.length) {
     lines.push('## Решение', '');
     if (sol?.incomplete) {
       lines.push('<Warning title="Непълно решение">', visitorNote(sol.incompleteReason) || (sol.statement ? 'Официалното решение е непълно.' : 'В архива няма официално решение на тази задача.'), '</Warning>', '');
     }
-    if (sol?.statement) lines.push('<Spoiler title="Покажи официалното решение">', '', sourceText(sol.statement, problem), '');
+    if (sol?.statement) lines.push('<Spoiler title="Покажи официалното решение">', '');
     else if (solutionFigures.length) lines.push('<Spoiler title="Покажи фигурите от официалното решение">', '');
-    for (const fig of solutionFigures) lines.push(figureMarkdown(fig), '');
+    if (sol?.statement || solutionFigures.length) lines.push(...fieldLines('solution/statement', sol?.statement, t => sourceText(t, problem, resolveSolution)));
+    for (const fig of unanchored(solutionFigures)) lines.push(figureMarkdown(fig), '');
     if (sol?.statement || solutionFigures.length) lines.push('', '</Spoiler>', '');
   }
   lines.push(...documentNoteLines(paper, 'after-problem'));
@@ -685,16 +1039,16 @@ function shortRound(round) {
   return m ? m[1] : String(round).split(' ')[0];
 }
 
-// "Задача 3. Title"; a title that already starts with "Задача" is used as is,
-// and a non-numeric number ("Практически 1") is used as the label itself.
-function problemName(problem) {
-  if (problem.title && /^Задача\b/u.test(problem.title)) return problem.title;
-  const label = Number.isInteger(problem.number) ? `Задача ${problem.number}` : String(problem.number);
-  return `${label}${problem.title ? '. ' + problem.title : ''}`;
+// "Задача 3. Title" with the display number (question-numbers.json: the printed Q2 of a one-question file stored as
+// 1, or "2A" for a question's part) — exactly the sidebar row (tree.ts problemDisplayName): the display number always
+// leads, a title that repeats it ("2A. Optical properties", "10-1 «Сифон»") drops the repeat, a title that prints
+// another number keeps it after the display number, and a non-numeric number ("Практически 1") is the label itself.
+export function problemName(problem, numbers = nav.numbers) {
+  return tree().problemDisplayName(problem, numbers);
 }
 
 function problemInfo(paper, problem) {
-  const grade = gradeLabel(paper.grade, paper.subject);
+  const grade = gradeLabel(paper.grade, paper.subject, paper.competition);
   const classification = classificationSearch(problem.classification);
   return {
     uniqueId: problem.id,
@@ -707,7 +1061,7 @@ function problemInfo(paper, problem) {
     ...(paper.solutionSource?.archiveKey
       ? { solutionUrl: withPage(archiveUrl(paper.subject, paper.solutionSource.archiveKey), problem.sourceSpans?.find(s => s.document === 'solutions')?.page) }
       : {}),
-    source: `${paper.competition} ${paper.year}${paper.round ? ' ' + shortRound(paper.round) : ''}${paper.grade ? ' ' + paper.grade : ''}`,
+    source: `${paper.competition} ${paper.year}${pageRound(paper) ? ' ' + shortRound(pageRound(paper)) : ''}${paper.grade ? ' ' + paper.grade : ''}`,
     difficulty: problem.difficulty ?? 'N/A',
     isStarred: (problem.importance ?? 0) >= 3,
     tags: [...new Set([...controlledTopics(problem.topics, taxonomy).map(id => taxonomy.topics.find(t => t.id === id).label), ...(classification?.tags || []), ...(grade ? [grade] : []), paper.roundType].filter(Boolean))],
@@ -742,15 +1096,18 @@ function renderAnswer(answer) {
     const choice = Number.isInteger(answer.correct) && answer.choices?.[answer.correct] != null ? answer.choices[answer.correct] : answer.correct;
     return mdText(String(choice));
   }
-  return answer.note ? mdText(answer.note) : '';
+  return answer.note ? mdText(answerNotes[answer.note] ?? answer.note) : '';
 }
 
 // Run as a script only: validate.mjs and the tests import misplacedSolutionFigures from this file.
 let taxonomy;
+let answerNotes = {};
 function main() {
   const records = readPapers(ROOT);
   const ledger = readJson(path.join(ROOT, 'content/problem-publication.json'), { papers: {} });
   taxonomy = readJson(path.join(ROOT, 'content/problem-topics.json'), { topics: [] });
+  nav = loadNavigation(ROOT);
+  answerNotes = readJson(path.join(ROOT, 'content/answer-note-formatting.json'), { notes: {} }).notes;
   const curation = readJson(path.join(ROOT, 'content/problem-curation.json'), { modules: {} });
   const manifestFile = path.join(ROOT, 'content/problem-generated.json');
   const prior = readJson(manifestFile, { version: 1, files: {}, problemIds: [], moduleTables: [] });
@@ -760,6 +1117,7 @@ function main() {
   const allIds = new Set(records.flatMap(r => r.data.problems.map(p => p.id)));
   const owned = new Set(prior.problemIds);
   const planned = new Map(), generated = new Map(), excluded = [];
+  const figureOpts = { anchors: readFigureAnchors(ROOT), stats: newFigureStats() };
 
   // Bootstrap ownership only from the exact generator signature. Never sweep
   // arbitrary authored solutions merely because they live under solutions/.
@@ -794,7 +1152,7 @@ function main() {
     const { paper, problems } = record.data;
     for (const problem of problems) {
       const relative = `solutions/${paper.subject}/${paper.id}/${problem.id}.mdx`;
-      planned.set(relative, problemMdx(paper, problem, state, record.relativePath));
+      planned.set(relative, problemMdx(paper, problem, state, record.relativePath, figureOpts));
       generated.set(problem.id, problemInfo(paper, problem));
       // D-P5: ids that were live before the route freeze keep their slug URL
       // (content/problem-routes.json, bootstrapped from production); any id not
@@ -855,6 +1213,14 @@ function main() {
   }
   console.log(`${records.length} papers; ${generated.size} eligible problems; ${excluded.length} excluded papers; ${changed} ${check ? 'stale' : 'updated'} artifacts; ${stale} obsolete pages${check ? '' : ' removed'}.`);
   if (excluded.length) console.log(excluded.join('\n'));
+  if (figureOpts.anchors) {
+    // an anchor that does not apply leaves its figure where it was (never fatal): the summary says how many
+    const s = figureOpts.stats;
+    console.log(`figure anchors: ${s.placed}/${s.anchored} placed in the text; ${s.notFound.length} kept in place ("after" not in the field); ${s.refused.length} refused (field not allowed); ${s.unused.length} for no figure block on the page`);
+    for (const [label, list] of [['not found', s.notFound], ['refused', s.refused], ['unused', s.unused]]) {
+      if (list.length) console.log(`  ${label}: ${list.slice(0, 10).join('; ')}${list.length > 10 ? `; … ${list.length - 10} more` : ''}`);
+    }
+  }
   if (check && (changed || stale)) process.exitCode = 1;
 }
 const invokedAsScript = (() => { try { return fs.realpathSync(process.argv[1] || '') === fs.realpathSync(fileURLToPath(import.meta.url)); } catch { return false; } })();

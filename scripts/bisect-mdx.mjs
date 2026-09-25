@@ -12,7 +12,7 @@ const ok = async k => {
   let text = lines.slice(0, k).join('\n');
   const open = (text.match(/<Spoiler/g) || []).length - (text.match(/<\/Spoiler>/g) || []).length;
   if (open > 0) text += '\n\n</Spoiler>\n';
-  const openFig = (text.match(/<figure>/g) || []).length - (text.match(/<\/figure>/g) || []).length;
+  const openFig = (text.match(/<figure[\s>]/g) || []).length - (text.match(/<\/figure>/g) || []).length;
   if (openFig > 0) return true; // mid-figure prefixes are not meaningful
   try { await compile(text, { remarkPlugins: [gfm, remarkMath, remarkFrontmatter, remarkMdxFrontmatter] }); return true; } catch (e) { return false; }
 };

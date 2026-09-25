@@ -13,7 +13,6 @@ export const FileListSidebar: React.FC<{
   onCloseFile: (filePath: string) => void;
   onCloseAllFiles: () => void;
   onNewFile: (file: AlgoliaEditorFile) => void;
-  token: string;
 }> = ({
   files,
   activeFile,
@@ -63,6 +62,7 @@ export const FileListSidebar: React.FC<{
           </div>
           <button
             className="flex-shrink-0 focus:outline-none py-1 px-2 text-gray-400 dark:text-gray-600 hover:text-gray-700 dark:hover:text-gray-300 transition"
+            aria-label={'Затвори ' + file}
             onClick={() => onCloseFile(file)}
           >
             <XIcon className="h-4 w-4" />

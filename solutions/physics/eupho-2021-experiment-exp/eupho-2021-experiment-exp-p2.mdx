@@ -1,6 +1,6 @@
 ---
 id: eupho-2021-experiment-exp-p2
-source: 'EuPhO 2021, Експериментален тур'
+source: 'EuPhO 2021, Експеримент'
 title: 'Задача 2. E2: Hot Cylinder'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2021/eupho-2021-experiment-exp.json'
@@ -16,6 +16,10 @@ verifier: 'mechanical'
 **Introduction**
 
 A uniform metal rod of length $L = 30\ \mathrm{cm}$ and radius $r = 1\ \mathrm{cm}$ is made of an unknown metal and is kept at room temperature $T_0 = 26.9\ \mathrm{C} = 300\ \mathrm{K}$. The metal rod is weighed to be $m = 460\ \mathrm{g}$. Your task is to determine the thermal properties of the unknown metal. The metal rod can be heated at one of its ends, and temperature measurements can be performed on customizable locations along the rod. The heater is located between $x = 0$ and $x = L_h = 3\ \mathrm{cm}$ (see fig). The heater can be programmed by specifying a fixed power (in watts) and the duration (in seconds) for which the heater is turned on for. Temperature measurements are made by specifying up to five locations for the sensors along the rod, alongside with the frequency, starting time and the ending time of the measurements. The simulation will show the temperature readings in accelerated ”real time” (running around 10 times faster than in the real world).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '34.4%', '--fig-max': '220px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p2-fig1.png" alt="Horizontal rod of length L with the heater section of length L_h at the left end (hatched, labelled P); three temperature sensor points T1, T2, T3 along the rod; an arrow labelled x pointing to the right from the heated end." width="688" height="363" loading="lazy" decoding="async" />
+</figure>
 
 You may assume that all of the heating power goes into the rod, and that the rod loses heat to its surroundings via heat transfer with air and black body radiation. Heat transfer with air is linear in temperature of the rod, and can be described by a coefficient $\alpha$ such that the heat transfer per unit area per unit time is $\alpha(T - T_0)$. The air is well-ventilated such that $\alpha$ can be assumed to be constant throughout the surface of the rod and independent of the temperature of the surface. Heat loss via black body radiation can be described using the Stefan-Boltzmann law modified with emissivity $\beta$ such that the heat loss to radiation per unit area per unit time is $\beta\sigma(T^4 - T_0^4)$ where $\sigma = 5.67 \times 10^{-8}\ \mathrm{W/(m^2\,K^4)}$. Similar to $\alpha$, the emissivity can be assumed to be constant throughout the rod, and independent of temperature. The rod is further characterised by the thermal conductivity $k$ (such that the heat flux density along $x$ is $-k\mathrm{d}T/\mathrm{d}x$) and the specific heat capacity $c$.
 
@@ -49,10 +53,6 @@ If you enter an invalid input, a clarifying error message will be sent, and an a
 The program will then prompt to press **return** to start the experiment, or typing `restart` and pressing **return** to re-enter all the experimental parameters. After continuing with the simulation, the program will display a summary of the experimental setup, and then start printing out the time elapsed since the heater was turned on (`t(s)`), and all the sensor readings in the same order they were entered in the prompt (`Ti(C)`, where i corresponds to the i-th sensor).
 
 After the simulation ends, a new experiment can be started by typing `restart` and pressing **return**.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p2-fig1.png" alt="Horizontal rod of length L with the heater section of length L_h at the left end (hatched, labelled P); three temperature sensor points T1, T2, T3 along the rod; an arrow labelled x pointing to the right from the heated end." />
-</figure>
 
 ## Отговори
 
@@ -137,6 +137,11 @@ $$
 $$
 
 The slope in either case is found to be $-1.78 \times 10^{-3}$ /s.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51%', '--fig-max': '327px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p2-sol-fig1.png" alt="Chart titled Uniform Cooling: Natural Log of (T-T_background) from 0 to 6 versus time (second) from about 800 to 3600; blue points (Log Delta T) fall along a curve, red points (Log Delta T) at later times lie on a pink fitted line labelled -1.78E-03*x + 6.51." width="1021" height="1103" loading="lazy" decoding="async" />
+<figcaption>Uniform Cooling. Note that only the last points (in red) were used to determine the linear cooling line. It is clearly a good fit from $t = 2000$ s on, which corresponds to rod temperatures of $T < 45$ C.</figcaption>
+</figure>
 
 To find the blackbody behavior we want to heat the rod as much as possible such that the blackbody heating becomes the dominant form of heat loss. Since the hot rod is in steady state, the heat radiated must be equal to 300 W. Use the results from the beginning.
 
@@ -321,11 +326,6 @@ f'(x) \approx (f(x + h) - f(x - h))/2h
 $$
 
 or some equivalent, or better, method.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2021-experiment-exp/p2-sol-fig1.png" alt="Chart titled Uniform Cooling: Natural Log of (T-T_background) from 0 to 6 versus time (second) from about 800 to 3600; blue points (Log Delta T) fall along a curve, red points (Log Delta T) at later times lie on a pink fitted line labelled -1.78E-03*x + 6.51." />
-<figcaption>Uniform Cooling. Note that only the last points (in red) were used to determine the linear cooling line. It is clearly a good fit from $t = 2000$ s on, which corresponds to rod temperatures of $T < 45$ C.</figcaption>
-</figure>
 
 
 </Spoiler>

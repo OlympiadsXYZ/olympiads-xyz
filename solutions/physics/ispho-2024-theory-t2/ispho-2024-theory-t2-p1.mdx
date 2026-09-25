@@ -1,7 +1,7 @@
 ---
 id: ispho-2024-theory-t2-p1
-source: 'ISPhO 2024, Теоретичен тур'
-title: 'Задача 1. Memristors and NVRAM'
+source: 'ISPhO 2024, Теория'
+title: 'Задача 2. Memristors and NVRAM'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/ISPhO/2024/ispho-2024-theory-t2.json'
 verification: 'reviewed'
@@ -19,9 +19,19 @@ verifier: 'mechanical'
 
 There are several types of NVRAM. The most popular of them are based on semiconductor elements, and therefore are difficult to consider. In this task, we will examine both a promising realization of NVRAM – ReRAM (Resistive Random Access Memory) based on memristors, and a realization that have already almost disappeared into the past – ferroelectric memory (FeRAM, Ferroelectric Random Access Memory) based on segnetoelectrics.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37%', '--fig-max': '237px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig1-v2.png" alt="Photograph of a black USB flash drive with its cap removed, the metal USB connector visible." width="740" height="380" loading="lazy" decoding="async" />
+<figcaption>Fig. 1. NVRAM in your pocket</figcaption>
+</figure>
+
 ### Part A. Memristor
 
 In 1971, Prof. Leon O. Chua published a theoretical justification for the possibility of a **memristor** – an electrical element in which the relationship between voltage and current depends on the total charge flowing through the element.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.7%', '--fig-max': '312px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig2.png" alt="Square diagram with circles at the corners labelled voltage v, charge q, current i and flux Φ, divided by the diagonals into four coloured triangles: Capacitor dq = C dv (top, capacitor symbol), Resistor dv = R di (left, resistor symbol), Inductor dΦ = L di (bottom, coil symbol), Memristor dΦ = M dq (right, memristor symbol); the diagonals are labelled dq = i dt and dΦ = v dt." width="976" height="986" loading="lazy" decoding="async" />
+<figcaption>Fig. 2. Schematic depiction of the relationship between different electromagnetic quantities in various electronic components. Usually, this scheme is cited as part of the theoretical justification of the possibility of the existence of a memristor</figcaption>
+</figure>
 
 Memristor-based computing systems are currently attracting serious attention of researchers in the field of artificial intelligence, as they work on principles similar to the neurons of the human brain and can potentially achieve the same results with much lower energy consumption and relative architecture simplicity.
 
@@ -33,29 +43,14 @@ $$
 \begin{cases} R(x) = R_{\mathrm{off}}(1-x) + R_{\mathrm{on}}x \\ \dfrac{\mathrm{d}x}{\mathrm{d}t} = \dfrac{1}{\beta}I - \alpha x \end{cases}
 $$
 
-Here $x$ is some parameter determined by the internal state of the system, $\alpha, \beta > 0$ are known quantities, $I$ is current through the memristor, $R_{\mathrm{off}}$ and $R_{\mathrm{on}} = rR_{\mathrm{off}}$ ($r \gg 1$) are the resistances of the memristor in the ”off” and ”on” states, respectively.
-
-Let’s first consider the evolution of the memristor state under a constant voltage $U > 0$. Initially, the memristor is ”off” (i.e. $x = 0$).
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig1-v2.png" alt="Photograph of a black USB flash drive with its cap removed, the metal USB connector visible." />
-<figcaption>Fig. 1. NVRAM in your pocket</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig2.png" alt="Square diagram with circles at the corners labelled voltage v, charge q, current i and flux Φ, divided by the diagonals into four coloured triangles: Capacitor dq = C dv (top, capacitor symbol), Resistor dv = R di (left, resistor symbol), Inductor dΦ = L di (bottom, coil symbol), Memristor dΦ = M dq (right, memristor symbol); the diagonals are labelled dq = i dt and dΦ = v dt." />
-<figcaption>Fig. 2. Schematic depiction of the relationship between different electromagnetic quantities in various electronic components. Usually, this scheme is cited as part of the theoretical justification of the possibility of the existence of a memristor</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig3.png" alt="Orange atomic force microscope image of many parallel nanowires crossed diagonally by a single wire, with bright junctions along the crossing." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31%', '--fig-max': '199px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig3.png" alt="Orange atomic force microscope image of many parallel nanowires crossed diagonally by a single wire, with bright junctions along the crossing." width="622" height="608" loading="lazy" decoding="async" />
 <figcaption>Fig. 3. Atomic force microscope topographical scan of memristor prototype created by HP</figcaption>
 </figure>
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig4-v3.png" alt="Graph with axes U (horizontal) and I (vertical) showing several pinched hysteresis loops through the origin in different colours (magenta, red, green, blue, cyan) with arrows showing the direction of traversal; the widest loop is magenta, the narrowest are nearly straight lines." />
-<figcaption>Fig. 4. Memristor hysteresis loops on different frequencies</figcaption>
-</figure>
+Here $x$ is some parameter determined by the internal state of the system, $\alpha, \beta > 0$ are known quantities, $I$ is current through the memristor, $R_{\mathrm{off}}$ and $R_{\mathrm{on}} = rR_{\mathrm{off}}$ ($r \gg 1$) are the resistances of the memristor in the ”off” and ”on” states, respectively.
+
+Let’s first consider the evolution of the memristor state under a constant voltage $U > 0$. Initially, the memristor is ”off” (i.e. $x = 0$).
 
 **A1** Obtain a differential equation on $x(t)$. Express your answer in terms of $U$, $R_{\mathrm{off}}$, $r$, $\alpha$, and $\beta$.
 
@@ -68,6 +63,11 @@ For convenience, let’s introduce $\xi \equiv \dfrac{r-1}{\beta R_{\mathrm{off}
 **A4** Find the minimal energy $Q$ requires to switch the memristor from the initial off state to the on state. Express your answer in terms of $U$, $\alpha$, $\xi$, and $R_{\mathrm{off}}$.
 
 ### Part B. Memristor hysteresis
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '34.5%', '--fig-max': '221px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t2/p1-fig4-v3.png" alt="Graph with axes U (horizontal) and I (vertical) showing several pinched hysteresis loops through the origin in different colours (magenta, red, green, blue, cyan) with arrows showing the direction of traversal; the widest loop is magenta, the narrowest are nearly straight lines." width="691" height="576" loading="lazy" decoding="async" />
+<figcaption>Fig. 4. Memristor hysteresis loops on different frequencies</figcaption>
+</figure>
 
 If an an oscillating voltage is applied to the memristor, its resistance will also oscillate due to fluctuations in current and charge flowing through it. Because of this, at the same voltage, the current through the memristor will depend on whether the voltage increases or decreases. In $I - U$ coordinates, this behavior will look like hysteresis loops (Figure 4). It turns out that by measuring the characteristics of these loops it is possible to calculate some important parameters of the memristor, which we will do in this part.
 

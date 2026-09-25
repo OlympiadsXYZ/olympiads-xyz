@@ -60,7 +60,7 @@ const ol = ({ start, style, ...props }): JSX.Element => (
   <ol
     start={start}
     style={
-      Number(start) > 1
+      start != null && Number.isFinite(Number(start))
         ? { counterReset: `number ${Number(start) - 1}`, ...style }
         : style
     }
@@ -123,20 +123,16 @@ const pre = ({ children, copyButton = true, ...props }) => {
   if (!React.isValidElement(children)) return <pre {...props}>{children}</pre>;
   const code = children.props as { className?: string; children?: string };
 
-  return (
-    <pre {...props}>
-      {HIGHLIGHTED.test(code.className ?? '') ? (
-        <HighlightedCode
-          copyButton={copyButton}
-          isDarkMode={isDarkMode}
-          className={code.className!}
-        >
-          {code.children ?? ''}
-        </HighlightedCode>
-      ) : (
-        <PlainCode code={code.children} />
-      )}
-    </pre>
+  return HIGHLIGHTED.test(code.className ?? '') ? (
+    <HighlightedCode
+      copyButton={copyButton}
+      isDarkMode={isDarkMode}
+      className={code.className!}
+    >
+      {code.children ?? ''}
+    </HighlightedCode>
+  ) : (
+    <PlainCode code={code.children} />
   );
 };
 

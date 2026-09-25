@@ -1,24 +1,23 @@
-import { PageProps } from 'gatsby';
-import React, { useEffect, useState } from 'react';
+import { Link } from 'gatsby';
+import React from 'react';
 import Layout from '../../components/layout';
+import SEO from '../../components/seo';
 
-export default function EditorPagePr(props: PageProps): JSX.Element {
-  const [token, setToken] = useState<string | null>('fetching token...');
-  useEffect(() => {
-    const searchParams = new URLSearchParams(props.location.search);
-    const code = searchParams.get('code');
-    console.log('fetching');
-    fetch('/api/get-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ code }),
-    }).then(async res => setToken((await res.json()).token));
-  }, []);
+export default function EditorPagePr(): JSX.Element {
   return (
     <Layout>
-      <p>{token}</p>
+      <SEO title="Предложете редакция" />
+      <main className="max-w-3xl mx-auto p-6">
+        <h1 className="text-2xl font-bold mb-4">Предложете редакция</h1>
+        <p>
+          Отворете файла в{' '}
+          <Link to="/editor/" className="underline">
+            редактора
+          </Link>
+          , копирайте промените и изберете „Редактирай в GitHub“, за да ги
+          изпратите за преглед в Olympiads XYZ.
+        </p>
+      </main>
     </Layout>
   );
 }

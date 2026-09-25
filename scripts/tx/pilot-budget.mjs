@@ -115,7 +115,9 @@ export class PilotBudgetLedger {
     for (;;) {
       try { handle = await fs.open(this.lockPath, 'wx', 0o600); break; }
       catch (e) {
-        if (e.code !== 'EEXIST') throw e;
+        // Windows may report a just-unlinked file as EPERM until its last handle closes.
+        const deletingOnWindows = process.platform === 'win32' && ['EPERM', 'EACCES'].includes(e.code);
+        if (e.code !== 'EEXIST' && !deletingOnWindows) throw e;
         if (Date.now() - started >= this.lockTimeoutMs) fail('PILOT_BUDGET_LOCKED', `Budget lock exists: ${this.lockPath}. No automatic stale-lock takeover; inspect the owner and reconcile before manual recovery.`);
         await delay(Math.min(this.lockPollMs, Math.max(1, this.lockTimeoutMs - (Date.now() - started))));
       }

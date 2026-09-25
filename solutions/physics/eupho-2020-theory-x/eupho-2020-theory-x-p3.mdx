@@ -1,6 +1,6 @@
 ---
 id: eupho-2020-theory-x-p3
-source: 'EuPhO 2020, Теоретичен тур'
+source: 'EuPhO 2020, Теория'
 title: 'Задача 3. Cat eyes'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2020/eupho-2020-theory-x.json'
@@ -15,23 +15,23 @@ verifier: 'mechanical'
 
 You may have noticed that in darkness, when a cat is within the light beam of a headlamp, its eyes appear very bright, see the photo below (left). This phenomenon can be modelled by a lens setup, see the photo on right, and the diagram beneath the photos.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.3%', '--fig-max': '354px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-fig1.png" alt="Two photos side by side: left, a black cat in darkness with brightly glowing eyes; right, a camera lens seen from the front with a bright disc inside it, crossed by a red line with an arrow labelled x." width="1107" height="471" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.1%', '--fig-max': '359px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-fig2.png" alt="Diagram of the setup: a lamp and, below it at distance h, a camera on the left; a yellow light cone spreads to the right over distance L to a sheet of paper, in front of which stand a lens (vertical double arrow) and the focal plane (dashed line)." width="1122" height="338" loading="lazy" decoding="async" />
+</figure>
+
 The photo on right was taken by a digital single-lens reflex camera. The light intensity at the camera sensor pixels marked by a red line (in the photo) is shown in the graph below: the log base 10 of the light intensity (measured as the number of photons caught by each pixel) is plotted against the $x$-coordinate, with the pixels’ side length serving as the unit length.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.1%', '--fig-max': '359px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-fig3.png" alt="Graph of log₁₀I against x from 0 to about 510 pixels on a grid; the red curve starts near 1.6, rises at x ≈ 30 to a plateau ≈ 3.35, rises near x ≈ 110–140 to a plateau ≈ 4.4 up to x ≈ 240, falls steeply to a minimum ≈ 1.45 near x ≈ 340, then rises to ≈ 1.95 for x > 420." width="1122" height="752" loading="lazy" decoding="async" />
+</figure>
 
 The lens modelling cat eyes can be treated as an ideal thin lens of focal length $f = 55\,\mathrm{mm}$ and diameter $D = 39\,\mathrm{mm}$; however, you should keep in mind that the given graph shows real measurement data, and the lens has certain non-ideal features. Most importantly, partial reflections of brightly lit areas from the lens surfaces may decrease the contrast: dark areas seen through the lens appear less dark than they actually are; this effect can be neglected for the camera lens, but not so for the lens serving as a model of a cat’s eye.
 
 Based on the given data, estimate (with the accuracy of *ca* 20%) the distance $h$ between the axis of the camera and the axis of the lamp (which can be considered as a point source) if the distance of the camera from the paper sheet was $L = 4.8\,\mathrm{m}$.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-fig1.png" alt="Two photos side by side: left, a black cat in darkness with brightly glowing eyes; right, a camera lens seen from the front with a bright disc inside it, crossed by a red line with an arrow labelled x." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-fig2.png" alt="Diagram of the setup: a lamp and, below it at distance h, a camera on the left; a yellow light cone spreads to the right over distance L to a sheet of paper, in front of which stand a lens (vertical double arrow) and the focal plane (dashed line)." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-fig3.png" alt="Graph of log₁₀I against x from 0 to about 510 pixels on a grid; the red curve starts near 1.6, rises at x ≈ 30 to a plateau ≈ 3.35, rises near x ≈ 110–140 to a plateau ≈ 4.4 up to x ≈ 240, falls steeply to a minimum ≈ 1.45 near x ≈ 340, then rises to ≈ 1.95 for x > 420." />
-</figure>
 
 ## Отговори
 
@@ -117,9 +117,17 @@ Based on the graph, $d_{cr} \approx 90$ pixels (midpoint of the blurry edge is a
 
 *Remark 2.* The width of the crescent-shaped second-brightest area can be also measured from the photo of the lens with the required accuracy; however, measuring in pixels from the graph is more accurate.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.3%', '--fig-max': '361px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-sol-fig1.png" alt="Photo of the lens front with the bright blur-spot image; a red circle is fitted to the visible edge of the blur spot, a yellow double arrow labelled D’ spans the lens aperture and an orange arrow labelled h’ joins the centre of the lens (blue dot) to the centre of the fitted circle (red dot)." width="1127" height="1053" loading="lazy" decoding="async" />
+</figure>
+
 **Explanation 1:** Consider a small light source of luminance $\mathcal{L}$ and surface area $S$ at a large distance ${\updownarrow}$ from the camera. The illuminance (the luminous flux per unit area) at the position of the camera is proportional to ${\updownarrow}^{-2}$ and so is the total luminous flux received by the whole sensor. Meanwhile, all this light energy is focused onto a small area $S'$ on the sensor — onto the image of the light source, and this area is also proportional to ${\updownarrow}^{-2}$. Therefore, the illuminance $I$ at the position of those sensor pixels which are covered by the image is independent of the distance ${\updownarrow}$.
 
 **Explanation 2:** Consider a very narrow cone of light of solid angle $\omega$, starting from a very small area $S$ at the blur spot in a direction close to the surface normal, and carrying a total luminous flux $\Phi$. Since the cone is narrow, this light beam is entirely caught by the lens at distance $d_0$, and focused onto the image of surface area $S' = S(d_S/d_0)^2$ at distance $d_S$ from the lens. The light rays of this beam traverse the focus and form another light cone of solid angle $\omega'$ departing from the image. It is easy to see from similar triangles that $\omega/\omega' = (d_S/d_0)^2$. Then, the luminance of the image $\mathcal{L}_I = \Phi/(S'\omega') = \Phi/(S\omega)$, i.e. equal to the luminance of the blur spot.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '713px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-sol-fig2.png" alt="Ray diagram: sheet with the blur spot FG (red) on the left, the focal plane (dashed), the lens AB with centre O, the image of the blur spot HJ (red) with points Q and P and height h’, the lamp S and camera C on the right; blue rays SAG and SBF, green rays through O, magenta line 'to the centre of the lens' and green line 'to the centre of the bright spot' meeting at C with angles θ and θ_L; distances f, d₀, d_S and L-d₀ marked along the bottom." width="2228" height="948" loading="lazy" decoding="async" />
+</figure>
 
 *Remark 3:* After having derived **Explanation 1** and **Explanation 2** and calculated $d_0$, the geometrical optics aspect can also be tackled by considering the image of the camera through the lens. The region bounded by the darkest ring in the image represents the area on the paper sheet that is observable by the camera through the lens. This area can be approximated by a circular spot with diameter $d$ (represented by $D'$ in the graph) depending negligibly on the size of the lens of the camera. Given small angles and that the lamp and the camera have equal distances to the lens, the bright spot on the paper sheet also has a diameter of $d$, which means $d = D\sqrt{k}$. The angular distance between the lamp and the camera as seen from the center of the lens is $h/(L - d_0)$, and therefore, the distances between the two spots’ centers, and also thus their boundaries (represented by $d_{cr}$ in the graph), on the paper sheet are $d_0h/(L - d_0)$. We then obtain an equivalent equation to that above:
 
@@ -137,14 +145,6 @@ It should be noted that, compared to the original analysis, the deviation in thi
 | Relating correctly ratio of distances measurable either on the graph or on the photo to $h$. Partial score of 1.5 p if initial expressions are correct, but the final expression for a ratio of distances is not obtained or is incorrect. These points are distributed as follows: 0.3 p for the thin lens equation for the image of the blur spot (or for the image of the camera if alternative approach is used); 0.4 p for showing that $\theta_{BS} = \theta_L$; 0.4 p for a single relevant equation that relates $h$ to other distances; 0.4 p for a single relevant equation that relates a ratio of measurable distances to other distances in the system. Partial score of 1.0 p if initial expressions are not correct, but a diagram is drawn which shows the measurable-from-the-figures distances, together with other related distances, in a correct way. | 2.0 p |
 | Measuring these distances with a reasonable accuracy (only if the previous subscore is not 0). Partial score of 0.5 p if a relative mistake made in the range of 20% to 30%, and 0.8 p if in the range of 10% to 20% | 1.0 p |
 | Obtaining final answer with a reasonable accuracy. Partial score of 0.5 p if final formula is derived but not calculated numerically. Subtract 0.5 p if calculation mistake is made and subtract 0.2 p for rounding the result more than by 10% | 1.0 p |
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-sol-fig1.png" alt="Photo of the lens front with the bright blur-spot image; a red circle is fitted to the visible edge of the blur spot, a yellow double arrow labelled D’ spans the lens aperture and an orange arrow labelled h’ joins the centre of the lens (blue dot) to the centre of the fitted circle (red dot)." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2020-theory-x/p3-sol-fig2.png" alt="Ray diagram: sheet with the blur spot FG (red) on the left, the focal plane (dashed), the lens AB with centre O, the image of the blur spot HJ (red) with points Q and P and height h’, the lamp S and camera C on the right; blue rays SAG and SBF, green rays through O, magenta line 'to the centre of the lens' and green line 'to the centre of the bright spot' meeting at C with angles θ and θ_L; distances f, d₀, d_S and L-d₀ marked along the bottom." />
-</figure>
 
 
 </Spoiler>

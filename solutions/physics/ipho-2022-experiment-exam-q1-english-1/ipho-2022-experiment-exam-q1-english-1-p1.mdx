@@ -1,6 +1,6 @@
 ---
 id: ipho-2022-experiment-exam-q1-english-1-p1
-source: 'IPhO 2022, Експериментален тур'
+source: 'IPhO 2022, Експеримент'
 title: 'Задача 1. Planet'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/IPhO/2022/ipho-2022-experiment-exam-q1-english-1.json'
@@ -24,15 +24,28 @@ Before you start your experiments, you make the following observations about the
 - The ground temperature is $T_0 = 20\ {}^{\circ}\mathrm{C}$.
 - There seems to be a wind blowing along the equator that's uniform throughout the height of the tower; neglect the effect of the tower on the wind velocity.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '59.8%', '--fig-max': '383px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig1.png" alt="Drawing of a tall grey tower with three arched windows standing on a curved dark-red planet surface; a ball released from the top window follows a red dashed path, shown by black dots, that bends sideways and lands on the ground to the left of the tower base." width="1196" height="846" loading="lazy" decoding="async" />
+<figcaption>An artist's exaggerated rendition of the problem.</figcaption>
+</figure>
+
 **Description of the simulation software**
 
 The command line program simulates the measurements of the fall time $t$ and deflection from the base of the tower $s$, after providing the height $h$ at which the ball is dropped, its radius $r$, and density $\rho$. All values of the input parameters are entered through the keyboard after the corresponding prompts and are validated by pressing the **Enter** key.
 
 In order to get started, use the following authorization key when prompted:
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '46.6%', '--fig-max': '299px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig2.png" alt="Monospaced program prompt: Enter Valid Authorization Key: 12345678.888 (printed as an image)." width="934" height="102" loading="lazy" decoding="async" />
+</figure>
+
 Entering an incorrect value will put the program into test mode; you will need to restart the program.
 
 A typical output of a single simulation cycle of the program looks like:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '46.6%', '--fig-max': '299px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig3.png" alt="Monospaced console output of one simulation cycle: prompts 0 < h (m) < 2000 | h (m): 90; 5 < r (cm) < 50 | r (cm): 13; 0.1 < rho (g/cm^3) < 10.0 | rho (g/cm^3): 2; ...; t (s) = 3.5, s (m) = 0.1; a line of equals signs; then the prompt 0 < h (m) < 2000 | h (m):_ again (printed as an image)." width="934" height="380" loading="lazy" decoding="async" />
+</figure>
 
 First, you enter the height $h$ in m (the number between 0 and 2000), then the radius of the ball $r$ in cm (the number between 5 and 50) and finally the density of the ball $\rho$ in g/cm$^3$ (the number between 0.1 and 10). Each input is confirmed with the **Enter** key. The program will then output $t$ in s and $s$ in m.
 
@@ -41,6 +54,10 @@ The program then loops back to the height of the tower query.
 Entering a value that is out of range for the experiment will result in an error message,
 
 and then return you to the incorrectly answered prompt.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '23.1%', '--fig-max': '148px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig4.png" alt="Monospaced error message: Value Out Of Bounds! (printed as an image)." width="463" height="78" loading="lazy" decoding="async" />
+</figure>
 
 The height input $h$ will be rounded to 1 m, $r$ to 1 cm and $\rho$ to 0.01 g/cm$^3$. (There is no point in trying to input more precise numbers).
 
@@ -71,23 +88,6 @@ $$
 valid until the top of the atmosphere where $T = 0$ K. Here, $\gamma$ is the adiabatic coefficient, $\mu$ the molar mass of air (i.e. the gas in the atmosphere of the planet), $g$ the free-fall acceleration and $h$ the height from the ground.
 
 **Part A. Planetary properties (3.0 points)**
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig1.png" alt="Drawing of a tall grey tower with three arched windows standing on a curved dark-red planet surface; a ball released from the top window follows a red dashed path, shown by black dots, that bends sideways and lands on the ground to the left of the tower base." />
-<figcaption>An artist's exaggerated rendition of the problem.</figcaption>
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig2.png" alt="Monospaced program prompt: Enter Valid Authorization Key: 12345678.888 (printed as an image)." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig3.png" alt="Monospaced console output of one simulation cycle: prompts 0 < h (m) < 2000 | h (m): 90; 5 < r (cm) < 50 | r (cm): 13; 0.1 < rho (g/cm^3) < 10.0 | rho (g/cm^3): 2; ...; t (s) = 3.5, s (m) = 0.1; a line of equals signs; then the prompt 0 < h (m) < 2000 | h (m):_ again (printed as an image)." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-fig4.png" alt="Monospaced error message: Value Out Of Bounds! (printed as an image)." />
-</figure>
 
 **A.1** Determine the free-fall acceleration $g$ on the planet by making a suitable set of measurements and sketching an appropriate graph in the space provided. Provide an analysis of the uncertainty in your result. **[2 т.]**
 
@@ -149,6 +149,10 @@ $r = 50\ \mathrm{cm}$, $\rho = 10\ \mathrm{g/cm^3}$
 | 180 | 0.1 | 4.8 | 23.0 |
 | 200 | 0.1 | 5.1 | 26.0 |
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.2%', '--fig-max': '334px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig1.png" alt="Graph of t² (s²) versus h (m) for h from 0 to 200 m: eleven data points lying close to a straight fit line through the origin with a shaded uncertainty band; vertical axis t², s² from 0 to 25, horizontal axis h, m from 0 to 200." width="1045" height="738" loading="lazy" decoding="async" />
+</figure>
+
 Marking scheme:
 
 | Theory | $h = gt^2/2$ | 0.20 pts |
@@ -191,6 +195,10 @@ $$
 R = \frac{L^2 - H^2}{2H} = 13\,200\ \mathrm{km}.
 $$
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.5%', '--fig-max': '240px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig2.png" alt="Geometry sketch: an arc of the planet's surface with a tower on top; a dashed line of length L from the tower top touches the surface tangentially, a dashed radius R goes from the centre to the tangent point with a right-angle mark, and a dashed vertical line R + H runs from the centre to the tower top." width="750" height="639" loading="lazy" decoding="async" />
+</figure>
+
 Marking scheme:
 
 | Theory | correct geometry (either a figure or implicitly assumed) | 0.20 pts |
@@ -227,6 +235,10 @@ Marking scheme:
 | | **sum** | **0.5 pts** |
 
 The student can’t get overall negative points for value nor error (for example when the value is completely out of range and the units are wrong).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.2%', '--fig-max': '334px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig3.png" alt="Graph of s (m) versus t (s): points from the origin rising slowly up to t ≈ 5 s, then lying on a straight fit line with a shaded band up to t ≈ 15 s and s ≈ 16 m; axes labelled s, m and t, s." width="1045" height="737" loading="lazy" decoding="async" />
+</figure>
 
 **B.1:** In general, if the variations in gravitational acceleration are small (as is the case here as $H \ll R$), as a response to air drag, objects tend to terminal velocity where they experience no net acceleration. In the reference frame of air, this corresponds to the object falling straight down with some terminal speed $v_t$. In the lab frame, the object then has horizontal and vertical speeds of $u$ and $v_t$ respectively.
 
@@ -311,6 +323,10 @@ and the error is
 $$
 \Delta\rho_{a0} = \frac{2\Delta v_{t0}}{v_{t0}}\rho_{a0} = 0.07\ \mathrm{kg/m^3}.
 $$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.1%', '--fig-max': '334px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig4.png" alt="Graph of t (s) versus h (m) for h from 0 to 200 m: the first points curve up from the origin, the points from h = 80 m to 200 m lie on a straight fit line with a shaded band; axes labelled t, s and h, m." width="1043" height="738" loading="lazy" decoding="async" />
+</figure>
 
 Marking scheme:
 
@@ -400,6 +416,10 @@ $$
 $$
 
 We can also confirm that our assumption about the density of the atmosphere not dropping significantly in the upper parts of the tower holds true.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.3%', '--fig-max': '335px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig5.png" alt="Graph of ρ_a^0.4 in (kg/m³)^0.4 versus h (m) from 0 to 2000 m: ten scattered points decreasing from about 0.81 to about 0.57 with a descending straight fit line and a widening shaded uncertainty band; axes labelled ρ_a^0.4, (kg/m³)^0.4 and h, m." width="1048" height="741" loading="lazy" decoding="async" />
+</figure>
 
 Marking scheme:
 
@@ -566,28 +586,8 @@ Marking scheme:
 | | missing units for error | -0.05 pts |
 | | **sum** | **2.5 pts** |
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig1.png" alt="Graph of t² (s²) versus h (m) for h from 0 to 200 m: eleven data points lying close to a straight fit line through the origin with a shaded uncertainty band; vertical axis t², s² from 0 to 25, horizontal axis h, m from 0 to 200." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig2.png" alt="Geometry sketch: an arc of the planet's surface with a tower on top; a dashed line of length L from the tower top touches the surface tangentially, a dashed radius R goes from the centre to the tangent point with a right-angle mark, and a dashed vertical line R + H runs from the centre to the tower top." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig3.png" alt="Graph of s (m) versus t (s): points from the origin rising slowly up to t ≈ 5 s, then lying on a straight fit line with a shaded band up to t ≈ 15 s and s ≈ 16 m; axes labelled s, m and t, s." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig4.png" alt="Graph of t (s) versus h (m) for h from 0 to 200 m: the first points curve up from the origin, the points from h = 80 m to 200 m lie on a straight fit line with a shaded band; axes labelled t, s and h, m." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig5.png" alt="Graph of ρ_a^0.4 in (kg/m³)^0.4 versus h (m) from 0 to 2000 m: ten scattered points decreasing from about 0.81 to about 0.57 with a descending straight fit line and a widening shaded uncertainty band; axes labelled ρ_a^0.4, (kg/m³)^0.4 and h, m." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig6.png" alt="Graph of s (m) versus h^1.5 (m^1.5) from 0 to about 90000: eleven points on a straight fit line through the origin with a shaded band, s reaching about 4.8 m; axes labelled s, m and h^1.5, m^1.5." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.1%', '--fig-max': '334px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-experiment-exam-q1-english-1/p1-sol-fig6.png" alt="Graph of s (m) versus h^1.5 (m^1.5) from 0 to about 90000: eleven points on a straight fit line through the origin with a shaded band, s reaching about 4.8 m; axes labelled s, m and h^1.5, m^1.5." width="1043" height="741" loading="lazy" decoding="async" />
 </figure>
 
 

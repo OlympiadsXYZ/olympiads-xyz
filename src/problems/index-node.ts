@@ -10,7 +10,12 @@ import fs from 'fs';
 import path from 'path';
 import { COMPETITION_META, SCIENCE_LABELS } from '../archive/labels';
 import { getProblemURL, recentUsaco } from '../models/problem';
-import { assembleProblemsTree, PaperFile, ProblemsTreeData } from './tree';
+import {
+  assembleProblemsTree,
+  NavigationOverlays,
+  PaperFile,
+  ProblemsTreeData,
+} from './tree';
 
 export type ProblemsIndexModule = {
   id: string;
@@ -144,7 +149,14 @@ export function buildProblemsIndex(
       url: node.url,
       source: node.source,
       difficulty: node.difficulty,
-      ...(node.assessmentLabel ? { assessmentLabel: node.assessmentLabel, fields: node.fields, conceptIds: node.conceptIds, classificationTerms: node.classificationTerms } : {}),
+      ...(node.assessmentLabel
+        ? {
+            assessmentLabel: node.assessmentLabel,
+            fields: node.fields,
+            conceptIds: node.conceptIds,
+            classificationTerms: node.classificationTerms,
+          }
+        : {}),
       isStarred: !!node.isStarred,
       tags: [...new Set(node.tags ?? [])],
       problemModules: moduleInfo ? [moduleInfo] : [],
@@ -261,6 +273,31 @@ export function readProblemPapers(
 }
 
 /**
+ * The navigation overlays (presentation layer; the paper files are hash-bound
+ * to their receipts): content/round-labels.json gives every round its
+ * canonical label, content/question-numbers.json the printed question number
+ * where the stored one differs. A missing or unreadable file only means raw
+ * labels and stored numbers (scripts/check-navigation.mjs gates the content).
+ */
+export function readNavigationOverlays(repoRoot: string): NavigationOverlays {
+  const read = (relative: string) => {
+    const file = path.join(repoRoot, relative);
+    try {
+      return fs.existsSync(file)
+        ? JSON.parse(fs.readFileSync(file, 'utf8'))
+        : null;
+    } catch (e) {
+      console.warn(`[problems] skipping unreadable ${file}: ${e}`);
+      return null;
+    }
+  };
+  return {
+    labels: read(path.join('content', 'round-labels.json')),
+    numbers: read(path.join('content', 'question-numbers.json')),
+  };
+}
+
+/**
  * Builds the tree from the paper files, joining each problem to its
  * ProblemInfo node (by uniqueId) for the solution page URL. Problems without a
  * node are skipped with a warning.
@@ -274,10 +311,14 @@ export function buildProblemsTree(
     if (!node || !node.uniqueId || urlById.has(node.uniqueId)) continue;
     urlById.set(node.uniqueId, getProblemURL(node) + '/solution');
   }
-  return assembleProblemsTree(readPaperFiles(repoRoot), urlById, (pid, paper) =>
-    console.warn(
-      `[problems] tree: ${pid} (paper ${paper}) has no ProblemInfo node, skipped`
-    )
+  return assembleProblemsTree(
+    readPaperFiles(repoRoot),
+    urlById,
+    (pid, paper) =>
+      console.warn(
+        `[problems] tree: ${pid} (paper ${paper}) has no ProblemInfo node, skipped`
+      ),
+    readNavigationOverlays(repoRoot)
   );
 }
 

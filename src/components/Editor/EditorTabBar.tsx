@@ -1,16 +1,13 @@
-import { Buffer } from 'buffer';
 import classNames from 'classnames';
-import { useAtomValue, useSetAtom } from 'jotai';
-import React, { useCallback, useState } from 'react';
+import { useAtomValue } from 'jotai';
+import React, { useState } from 'react';
 import {
-  branchAtom,
-  githubInfoAtom,
-  octokitAtom,
-  saveFileAtom,
+  activeFileAtom,
   tabAtom,
   trueFileAtom,
   trueFilePathAtom,
 } from '../../atoms/editor';
+import { editorFileURL, downloadEditorFile } from './editorUtils';
 import { useQuizOpen } from '../../context/QuizGeneratorContext';
 import AddProblemModal from './AddProblemModal';
 import { useTranslation } from 'react-i18next';
@@ -38,90 +35,23 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
 }) => {
   const { t } = useTranslation();
   const { setOpen } = useQuizOpen();
-  const githubInfo = useAtomValue(githubInfoAtom);
-  const octokit = useAtomValue(octokitAtom);
-  const branch = useAtomValue(branchAtom);
-  const [commitState, setCommitState] = useState('Commit Code');
-  const [pullState, setPullState] = useState('Pull Code');
+  const activeFile = useAtomValue(activeFileAtom);
   const filePath = useAtomValue(trueFilePathAtom);
   const file = useAtomValue(trueFileAtom);
-  const saveFile = useSetAtom(saveFileAtom);
   const tab = useAtomValue(tabAtom);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const updateFile = useCallback(
-    async file => {
-      if (!octokit || !githubInfo || !branch) return;
-      setCommitState('Committing...');
-      let fileSha = undefined;
-      try {
-        fileSha = (
-          (await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-            owner: githubInfo.login,
-            repo: 'usaco-guide',
-            path: filePath,
-            ref: branch,
-            headers: {
-              'X-GitHub-Api-Version': '2022-11-28',
-            },
-          })) as any
-        ).data.sha;
-      } catch {
-        console.log("file doesn't exist yet");
-      }
-      const response = await octokit.request(
-        'PUT /repos/{owner}/{repo}/contents/{path}',
-        {
-          owner: githubInfo.login,
-          repo: 'usaco-guide',
-          path: filePath,
-          message: `Update ${filePath}`,
-          branch: branch,
-          sha: fileSha,
-          content: Buffer.from(file ?? '').toString('base64'),
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28',
-          },
-        }
+  const [copyStatus, setCopyStatus] = useState('');
+  const hasFile = filePath !== 'NONE' && file != null;
+  const copyFile = async () => {
+    try {
+      await navigator.clipboard.writeText(file ?? '');
+      setCopyStatus('Копирано. Поставете съдържанието в GitHub.');
+    } catch {
+      setCopyStatus(
+        'Копирането не успя. Изтеглете файла, за да запазите редакциите.'
       );
-      console.log('response: ', response);
-      window.open(response.data.commit.html_url, '_blank');
-      setCommitState('Commit Code');
-    },
-    [octokit, githubInfo, branch, filePath]
-  );
-  const pullCode = useCallback(async () => {
-    if (!octokit || !githubInfo || !branch) return;
-    setPullState('Pulling...');
-    const response = (
-      await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-        owner: githubInfo.login,
-        repo: 'usaco-guide',
-        path: filePath,
-        ref: branch,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
-      })
-    ).data;
-    if (!('type' in response) || response.type !== 'file') return; // should not happen
-    saveFile({
-      path: filePath,
-      update(f) {
-        if (tab == 'content') {
-          return {
-            ...f,
-            markdown: Buffer.from(response.content, 'base64').toString('utf-8'),
-          };
-        } else {
-          return {
-            ...f,
-            problems: Buffer.from(response.content, 'base64').toString('utf-8'),
-          };
-        }
-      },
-    });
-    setPullState('Pull Code');
-  }, [octokit, githubInfo, branch, filePath, tab, saveFile]);
+    }
+  };
   return (
     <>
       <div className="flex bg-gray-50 dark:bg-gray-950">
@@ -166,7 +96,7 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
         >
           {t('format-code')}
         </button>
-        {useAtomValue(tabAtom) === 'problems' && (
+        {tab === 'problems' && (
           <button
             className={classNames(
               'hover:text-gray-800 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800',
@@ -177,29 +107,38 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
             {t('add-problem')}
           </button>
         )}
-        {githubInfo && octokit && file && branch && (
-          <button
-            className={classNames(
-              'hover:text-gray-800 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800',
-              'px-3 py-2 font-medium text-sm focus:outline-none transition'
-            )}
-            onClick={() => updateFile(file)}
-          >
-            {commitState}
-          </button>
-        )}
-        {githubInfo && octokit && file && branch && (
-          <button
-            className={classNames(
-              'hover:text-gray-800 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800',
-              'px-3 py-2 font-medium text-sm focus:outline-none transition'
-            )}
-            onClick={() => pullCode()}
-          >
-            {pullState}
-          </button>
+        {hasFile && (
+          <>
+            <button
+              type="button"
+              className="px-3 py-2 text-sm hover:underline"
+              onClick={copyFile}
+            >
+              Копирай
+            </button>
+            <button
+              type="button"
+              className="px-3 py-2 text-sm hover:underline"
+              onClick={() => downloadEditorFile(filePath, file ?? '')}
+            >
+              Изтегли
+            </button>
+            <a
+              className="px-3 py-2 text-sm hover:underline"
+              href={editorFileURL(filePath, activeFile?.isNew)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Редактирай в GitHub
+            </a>
+          </>
         )}
       </div>
+      {copyStatus && (
+        <p role="status" className="px-3 py-2 text-sm">
+          {copyStatus}
+        </p>
+      )}
       <AddProblemModal
         isOpen={dialogOpen}
         onClose={() => setDialogOpen(false)}

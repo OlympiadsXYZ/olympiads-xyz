@@ -281,9 +281,9 @@ test('figure-id placeholders show their figure in place; one without a figure ke
   f.write(f.file, f.paper); f.approve();
   const result = f.run(); assert.equal(result.status, 0, result.stderr);
   const mdx = f.read(f.output);
-  assert.ok(mdx.includes(`![Схема](${url('p1-fig1')})`));
-  assert.ok(mdx.includes(`![Графика](${url('p1-sol-fig1')})`));
-  assert.ok(mdx.includes(`![Втора](${url('p1-sol-fig2')})`));
+  assert.ok(mdx.includes(`src="${url('p1-fig1')}" alt="Схема"`));
+  assert.ok(mdx.includes(`src="${url('p1-sol-fig1')}" alt="a"`));
+  assert.ok(mdx.includes(`src="${url('p1-sol-fig2')}" alt="Втора"`));
   assert.ok(mdx.includes('*[Липсваща]*'));
   for (const id of ['p1-fig1', 'p1-sol-fig1', 'p1-sol-fig2']) assert.equal(mdx.split(url(id)).length - 1, 1, id);
   assert.doesNotMatch(mdx, /\]\((?!https?:)[^)]*\)|\[\[figure/);
@@ -344,4 +344,184 @@ test('papers whose pages would share a heading get a language, a title or a file
   assert.equal(q.get('copy-a'), 'файл copy-a.pdf');
   assert.equal(q.has('alone'), false);
   assert.equal(q.has('other-names'), false);
+});
+
+// ---- figures inside the text (content/figure-anchors.json, problems-to-site.mjs planFigureAnchors) ----
+const IPHO_2016 = 'content/problems/physics/IPhO/2016/ipho-2016-theory-1.json';
+// a published paper copied into a scratch root with an anchor overlay (the paper bytes stay as published)
+function anchoredFixture(t, relPath, anchors) {
+  const root = fs.mkdtempSync(path.join(repo, 'tmp/figure-anchor-test-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const write = (file, value) => {
+    fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
+    fs.writeFileSync(path.join(root, file), typeof value === 'string' || Buffer.isBuffer(value) ? value : jsonText(value));
+  };
+  const bytes = fs.readFileSync(path.join(repo, relPath));
+  const data = JSON.parse(bytes.toString('utf8'));
+  write(relPath, bytes);
+  write('content/extraProblems.json', { EXTRA_PROBLEMS: [] });
+  write('content/problem-publication.json', { version: 1, papers: { [data.paper.id]: { kind: 'legacy', contentHash: sha256(bytes), sourceCommit: 'a'.repeat(40), recordedAt: '2026-09-23T00:00:00Z' } } });
+  if (anchors) write('content/figure-anchors.json', { version: 1, problems: anchors });
+  const run = () => spawnSync(process.execPath, [path.join(repo, 'scripts/problems-to-site.mjs'), '--root', root], { encoding: 'utf8' });
+  const pagePath = id => path.join(root, `solutions/${data.paper.subject}/${data.paper.id}/${id}.mdx`);
+  return { root, data, run, pagePath, page: id => fs.readFileSync(pagePath(id), 'utf8') };
+}
+const figUrl = (data, id) => data.problems[0].figures.concat(data.problems[0].solution?.figures || []).find(f => f.id === id).url;
+const inOrder = (mdx, marks) => { for (let i = 1; i < marks.length; i++) assert.ok(mdx.indexOf(marks[i - 1]) >= 0 && mdx.indexOf(marks[i - 1]) < mdx.indexOf(marks[i]), `${marks[i - 1]} before ${marks[i]}`); };
+
+test('anchored figures go in at the paragraph where the paper prints them (ipho-2016-theory-1-p1)', t => {
+  const f = anchoredFixture(t, IPHO_2016, { 'ipho-2016-theory-1-p1': {
+    'p1-fig1': { field: 'statement', after: 'See Fig. 1 for a side view', method: 'test' },
+    'p1-fig2': { field: 'statement', after: '(see Fig. 2)', method: 'test' },
+    'p1-fig3': { field: 'parts/0/statementAfter', after: 'See figure 3 for the setup.', method: 'test' },
+    'p1-fig4': { field: 'parts/4/statementAfter', after: 'curvature of the floor can be ignored.', method: 'test' },
+    'p1-fig5': { field: 'parts/12/statement', after: '(see figure 5)', method: 'test' },
+    'p1-sol-fig1': { field: 'solution/statement', after: 'According to the intersecting chord', method: 'test' },
+    'p1-sol-fig2': { field: 'statement', after: 'See Fig. 1', method: 'test' }, // a solution figure never leaves the spoiler
+  } });
+  const r = f.run(); assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /figure anchors: 6\/7 placed in the text; 0 kept in place/);
+  assert.match(r.stdout, /1 refused/);
+  const mdx = f.page('ipho-2016-theory-1-p1'), url = id => figUrl(f.data, id);
+  for (const id of ['p1-fig1', 'p1-fig2', 'p1-fig3', 'p1-fig4', 'p1-fig5', 'p1-sol-fig1', 'p1-sol-fig2']) assert.equal(mdx.split(url(id)).length - 1, 1, id);
+  inOrder(mdx, ['See Fig. 1 for a side view', url('p1-fig1'), 'The goal of this task is to determine', '(see Fig. 2)', url('p1-fig2'), '**A.1**']);
+  inOrder(mdx, ['**A.1**', 'See figure 3 for the setup', url('p1-fig3'), '**A.2**']);
+  inOrder(mdx, ['**A.5**', 'curvature of the floor can be ignored.', url('p1-fig4'), '**B.1**']);
+  inOrder(mdx, ['**B.8**', '(see figure 5)', url('p1-fig5'), '- Give an algebraic expression', '## Решение']);
+  inOrder(mdx, ['## Решение', '<Spoiler title="Покажи официалното решение">', 'According to the intersecting chord', url('p1-sol-fig1')]);
+  // the refused anchor leaves the solution figure at the end of the spoiler, after the solution text
+  inOrder(mdx, [url('p1-sol-fig1'), url('p1-sol-fig2')]);
+  assert.ok(mdx.indexOf(url('p1-sol-fig2')) < mdx.lastIndexOf('</Spoiler>'));
+  assert.ok(mdx.indexOf(url('p1-sol-fig2')) > mdx.indexOf('Finding the third zero thus gives'), 'after the solution text');
+  // a part split by a figure keeps its label on the first paragraph and its points at the end of the last one
+  assert.match(mdx, /\*\*B\.8\*\* Alice pulls the mass/);
+  // the printed width: Fig. 1 is 321.5 pt of a 480 pt column, its 1341 px crop 429 CSS px at 300 dpi
+  assert.ok(mdx.includes(`<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '67%', '--fig-max': '429px'}}>\n<img src="${url('p1-fig1')}"`));
+  const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), f.pagePath('ipho-2016-theory-1-p1')], { encoding: 'utf8' });
+  assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
+});
+
+test('an anchor whose text is not in the field keeps the figure in place; figures sharing a row sit side by side', t => {
+  const f = anchoredFixture(t, IPHO_2016, { 'ipho-2016-theory-1-p1': {
+    'p1-fig1': { field: 'statement', after: 'words the paper never prints', method: 'test' },
+    'p1-fig2': { field: 'parts/1/statementAfter', after: null, row: 'r1', method: 'test' },
+    'p1-fig3': { field: 'parts/1/statementAfter', after: null, row: 'r1', method: 'test' },
+    'p1-fig4': { field: 'parts/99/statement', after: null, method: 'test' },
+  } });
+  const r = f.run(); assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /figure anchors: 2\/4 placed in the text; 2 kept in place/);
+  const mdx = f.page('ipho-2016-theory-1-p1'), url = id => figUrl(f.data, id);
+  // today's place for an unplaced statement figure: after the statement, before the first part
+  inOrder(mdx, ['(see Fig. 2)', url('p1-fig1'), url('p1-fig4'), '**A.1**']);
+  const row = /<div className="problem-figure-row">\n<figure[^\n]*>\n<img src="([^"]+)"[^\n]*\n[^\n]*\n<\/figure>\n<figure[^\n]*>\n<img src="([^"]+)"/.exec(mdx);
+  assert.ok(row, 'one row holds both figures');
+  assert.deepEqual([row[1], row[2]], [url('p1-fig2'), url('p1-fig3')]);
+  inOrder(mdx, ['**A.2**', '<div className="problem-figure-row">', 'From the measurements in questions', '**A.3**']);
+  const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), f.pagePath('ipho-2016-theory-1-p1')], { encoding: 'utf8' });
+  assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
+});
+
+test('paragraph slots never split display math or a fenced block', async () => {
+  const { paragraphSpans, anchorSlot } = await import('../problems-to-site.mjs');
+  const text = 'One $a$.\n\n$$\nx = 1\n\ny = 2\n$$\n\n```\ncode\n\nmore\n```\n\n- item\n\n  continued\n\nLast.';
+  assert.deepEqual(paragraphSpans(text).map(s => text.slice(s.start, s.end)), ['One $a$.', '$$\nx = 1\n\ny = 2\n$$', '```\ncode\n\nmore\n```', '- item\n\n  continued', 'Last.']);
+  assert.equal(anchorSlot(text, null), 0);
+  assert.equal(anchorSlot(text, 'x = 1'), 2);
+  assert.equal(anchorSlot(text, 'code'), 3);
+  assert.equal(anchorSlot(text, 'item'), 4);
+  assert.equal(anchorSlot(text, 'Last.'), 5);
+  assert.equal(anchorSlot(text, 'One  $a$.'), 1); // runs of whitespace compare as one
+  assert.equal(anchorSlot(text, 'absent'), null);
+  const steps = '1. Структурната формула е:\n\n2. Следващата реакция.';
+  assert.equal(anchorSlot(steps, 'формула е:', true), 1); // PDF-reviewed drawing belongs to step 1
+});
+
+test('figure display width follows the printed width and never upscales the crop', async () => {
+  const { figureSize } = await import('../problems-to-site.mjs');
+  assert.deepEqual(figureSize({ width: 1341, source: { dpi: 300, pdfRect: [130.95, 457.15, 452.43, 585.95] } }), { widthPct: 67, maxPx: 429 });
+  assert.deepEqual(figureSize({ width: 3000, source: { dpi: 300, pdfRect: [0, 0, 720, 100] } }), { widthPct: 100, maxPx: 960 });
+  assert.deepEqual(figureSize({ width: 100, source: { dpi: 300, pdfRect: [0, 0, 24, 24] } }), { widthPct: 5, maxPx: 32 });
+  assert.deepEqual(figureSize({ width: 144, source: { dpi: 72 } }), { widthPct: 30, maxPx: 192 });
+  assert.equal(figureSize({ width: 933, height: 573 }), null); // nothing says how large it was printed
+});
+
+test('a part ending in an inline figure keeps its points outside the JSX block', t => {
+  const f = fixture(t);
+  f.paper.problems[0].parts = [{ label: 'А', statement: '![Схема](https://example.org/figure.png)', points: 5, figures: [{ id: 'p1-fig1', url: 'https://example.org/figure.png', alt: 'Схема', width: 200, height: 200 }] }];
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  assert.match(f.read(f.output), /<\/figure>\n\n\*\*\[5 т\.\]\*\*/);
+  const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), path.join(f.root, f.output)], { encoding: 'utf8' });
+  assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
+});
+
+test('NAO 2025 animal photos keep all six statement crops and omit the duplicate solution rows', async () => {
+  const { problemMdx } = await import('../problems-to-site.mjs');
+  const file = 'content/problems/astronomy/NAO/2025/nao-2025-i-5-6.json';
+  const data = JSON.parse(fs.readFileSync(path.join(repo, file), 'utf8'));
+  const problem = data.problems.find(p => p.id.endsWith('-p4'));
+  const mdx = problemMdx(data.paper, problem, { quality: 'legacy' }, file);
+  for (const fig of problem.figures) assert.ok(mdx.includes(fig.url), fig.id);
+  for (const fig of problem.solution.figures) assert.ok(!mdx.includes(fig.url), fig.id);
+});
+
+// nao-2013-iii-9-10 p1: the text inlines the first crop p1-fig1.png, figures[] holds the re-crop p1-fig1-v2.png — one
+// picture, shown once, inline, with the newest crop (a figure block next to it would repeat it)
+test('a figure whose other crop version the text inlines is shown once, inline, with the newest crop', async () => {
+  const { figureShownInline, newestInlineCrops } = await import('../problems-to-site.mjs');
+  const base = 'https://r2.example/problems/nao-2013-iii-9-10';
+  const text = `Графиките:\n\n![Площ на петната](${base}/p1-fig1.png)\n\n*Фиг. 1.*`;
+  const fig = { id: 'p1-fig1', url: `${base}/p1-fig1-v2.png` };
+  assert.equal(figureShownInline(fig, text), true);
+  assert.equal(figureShownInline({ id: 'p1-fig2', url: `${base}/p1-fig2-v2.png` }, text), false);
+  assert.equal(figureShownInline({ id: 'p1-fig10', url: `${base}/p1-fig10.png` }, text), false);
+  assert.equal(newestInlineCrops(text, [fig]), text.replace('p1-fig1.png', 'p1-fig1-v2.png'));
+  // an older version in figures[] never replaces the newer crop the text shows
+  const newer = text.replace('p1-fig1.png', 'p1-fig1-v3.png');
+  assert.equal(newestInlineCrops(newer, [fig]), newer);
+  assert.equal(newestInlineCrops(null, [fig]), null);
+});
+
+// Every figure block appears on its page exactly as often as before anchoring, and on the same side of the
+// «Решение» heading (a statement figure never enters the solution, a solution figure never leaves it) — over every
+// paper in the repository, with the committed overlay (when there is one) and with an adversarial overlay that
+// anchors every figure somewhere (valid fields, fields across the spoiler, missing text, rows).
+test('every figure of every paper stays exactly once on its page, on its own side of the solution heading', async () => {
+  const { problemMdx, readFigureAnchors, newFigureStats } = await import('../problems-to-site.mjs');
+  const { readPapers } = await import('../lib/problem-data.mjs');
+  const records = readPapers(repo);
+  const committed = readFigureAnchors(repo);
+  const state = { quality: 'legacy' };
+  const regions = (mdx, url) => {
+    const heading = mdx.indexOf('\n## Решение\n'), out = [];
+    for (let at = mdx.indexOf(url); at >= 0; at = mdx.indexOf(url, at + 1)) out.push(heading >= 0 && at > heading ? 'solution' : 'statement');
+    return out.join();
+  };
+  let pages = 0, figures = 0, placed = 0;
+  for (const record of records) {
+    const { paper, problems } = record.data;
+    for (const problem of problems) {
+      const urls = [...new Set([...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...(problem.solution?.figures || [])].map(f => f.url).filter(Boolean))];
+      if (!urls.length) continue;
+      const fieldNames = ['statement', 'statementAfterParts', 'solution/statement', ...(problem.parts || []).flatMap((_, k) => [`parts/${k}/statement`, `parts/${k}/statementAfter`])];
+      const textOf = name => name === 'statement' ? problem.statement : name === 'statementAfterParts' ? problem.statementAfterParts : name === 'solution/statement' ? problem.solution?.statement
+        : problem.parts[Number(name.split('/')[1])][name.split('/')[2]];
+      const synthetic = {};
+      [...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...(problem.solution?.figures || [])].forEach((fig, i) => {
+        const field = fieldNames[i % fieldNames.length], text = String(textOf(field) ?? '');
+        const after = i % 4 === 0 ? null : i % 4 === 3 ? 'text no paper prints' : text.slice(Math.floor(text.length / 2), Math.floor(text.length / 2) + 12) || null;
+        synthetic[fig.id] = { field, after, row: i % 3 ? 'r' : undefined, method: 'test' };
+      });
+      const base = problemMdx(paper, problem, state, record.relativePath, {});
+      const variants = [{ [problem.id]: synthetic }, ...(committed ? [committed] : [])];
+      for (const anchors of variants) {
+        const stats = newFigureStats();
+        const mdx = problemMdx(paper, problem, state, record.relativePath, { anchors, stats });
+        placed += stats.placed;
+        for (const url of urls) assert.equal(regions(mdx, url), regions(base, url), `${problem.id} ${url}`);
+      }
+      pages++; figures += urls.length;
+    }
+  }
+  assert.ok(pages > 1000 && figures > 5000 && placed > 1000, `${pages} pages, ${figures} figures, ${placed} placed`);
 });

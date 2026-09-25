@@ -8,14 +8,14 @@ from jsonschema import Draft202012Validator, FormatChecker
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 def validate(root=ROOT):
-    schema = json.loads((root / 'content/problems/schema.json').read_text())
+    schema = json.loads((root / 'content/problems/schema.json').read_text(encoding='utf-8'))
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     errors, paper_ids, problem_ids, count = [], set(), set(), 0
     for file in sorted((root / 'content/problems').rglob('*.json')):
         if file.name == 'schema.json':
             continue
         try:
-            data = json.loads(file.read_text())
+            data = json.loads(file.read_text(encoding='utf-8'))
         except (ValueError, OSError) as error:
             errors.append(f'{file}: {error}')
             continue

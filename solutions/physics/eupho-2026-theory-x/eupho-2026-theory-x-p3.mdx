@@ -1,6 +1,6 @@
 ---
 id: eupho-2026-theory-x-p3
-source: 'EuPhO 2026, Теоретичен тур'
+source: 'EuPhO 2026, Теория'
 title: 'Задача 3. Dry ice hockey (10 pts)'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2026/eupho-2026-theory-x.json'
@@ -21,15 +21,15 @@ $$
 
 where the latent heat of sublimation is $\lambda = 600\ \mathrm{kJ/kg}$, the molar mass is $\mu = 0.044\ \mathrm{kg/mol}$, and the gas constant is $R = 8.3\ \mathrm{J/(mol \cdot K)}$. The thermal conductivity of the $\mathrm{CO_2}$ gas is $\kappa = 10\ \mathrm{mW/(m \cdot K)}$ and its dynamic viscosity is $\eta = 10\ \mu\mathrm{Pa \cdot s}$. The density of dry ice is $\rho = 1500\ \mathrm{kg/m^3}$ and the gravitational acceleration is $g = 10\ \mathrm{m/s^2}$.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '47%', '--fig-max': '301px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-fig1.png" alt="Side-view schematic of a puck over a horizontal metal plate at temperature $T$: the yellow metal disc (thickness $h$) carries mass $M$ on top and moves with velocity $v$ to the right; below it is a gap of height $h$ containing gas, the gap radius is labelled $r$, the arrow $g$ points downward, and $v$ points to the right at the level of the disc." width="940" height="250" loading="lazy" decoding="async" />
+</figure>
+
 A puck of radius $r = 10\ \mathrm{mm}$ consists of a disc of dry ice of thickness $h = 1\ \mathrm{mm}$, and a metal disc of mass $M = 0.01\ \mathrm{kg}$ on top of it. The initial temperature of the puck is $T_\mathrm{s}$ and the ambient pressure is $p_0$.
 
 The puck is placed on a horizontal metal plate which is held at a constant temperature $T = T_\mathrm{s} + \Delta T$, and given an initial horizontal velocity $v = 10\ \mathrm{mm/s}$. After a very long time, the horizontal displacement $L$ of the metal disc is measured.
 
 Treat the $\mathrm{CO_2}$ gas as ideal. Assume no tilting of the puck at any moment, all surfaces are perfectly smooth, and the thermal conductivities of the metal, dry ice, and gas satisfy $\kappa_\mathrm{metal} \gg \kappa_\mathrm{ice} \gg \kappa$.
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-fig1.png" alt="Side-view schematic of a puck over a horizontal metal plate at temperature $T$: the yellow metal disc (thickness $h$) carries mass $M$ on top and moves with velocity $v$ to the right; below it is a gap of height $h$ containing gas, the gap radius is labelled $r$, the arrow $g$ points downward, and $v$ points to the right at the level of the disc." />
-</figure>
 
 **a)** When $\Delta T$ is sufficiently small, $L$ is negligible and independent of $\Delta T$. However, when $\Delta T$ reaches a critical value $\Delta T_c$, the function $L(\Delta T)$ starts to grow. Estimate $\Delta T_c$. **[2 т.]**
 
@@ -44,6 +44,10 @@ Treat the $\mathrm{CO_2}$ gas as ideal. Assume no tilting of the puck at any mom
 #### Part a
 
 **Summary:** The friction force on the sliding puck behaves differently depending on whether $\Delta T$ is larger or smaller than a threshold $\Delta T_c$. When $\Delta T$ is sufficiently large (i.e. the plate is hot enough), sublimation occurs on the lower surface of the puck. The gaseous $\mathrm{CO_2}$ formed by sublimation pushes the puck upwards, creating a gap between the puck and the plate. The friction in this regime is relatively low. If $\Delta T$ is too small, sublimation does not occur on the lower surface. In this regime, the puck remains in contact with the plate and the dry friction between the puck and the plate is large and independent of $\Delta T$. Thus, $\Delta T_c$ is the temperature above which sublimation can occur and create a gap.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '47.1%', '--fig-max': '302px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-sol-fig1.png" alt="Схема на пързалката: правоъгълник (пързалка) с маса M на разстояние d над плоча с температура T; стрелка g надолу вляво; хоризонтална стрелка r вдясно към p0; p_sat в пространството под пързалката; плочата е обозначена с T." width="943" height="310" loading="lazy" decoding="async" />
+</figure>
 
 ![p3-sol-fig1]
 
@@ -75,7 +79,7 @@ In this problem, we must assume there is no sublimation on the upper surface of 
 
 We can estimate $\Delta T_{\mathrm{ice}}$ using the fact that, if sublimation is occurring at the upper surface, then the gas layer there must be at a pressure below the pressure in the bottom layer by $\Delta p_{\mathrm{ice}} \approx \rho h g$, the pressure required to support the dry-ice disc. The temperature difference would then be $\Delta T_{\mathrm{ice}} \approx T_s(RT_s/\mu\lambda)(\Delta p_{\mathrm{ice}}/p_0)$ using (25). But this is only $\Delta T_{\mathrm{ice}} \approx 0.002\ \mathrm{K}$.
 
-#### Part b
+### Part b
 
 **Summary:** As $\Delta T$ increases above $\Delta T_c$, the rate of sublimation increases. More $\mathrm{CO_2}$ gas is created and the gap between the puck and the plate widens. The gas needs to flow out of the gap, and calculating the resulting flow (treating the $\mathrm{CO_2}$ gas as a fluid) will allow us to determine the gap width $d$ as a function of $\Delta T$. When the puck slides, the flow beneath it has a non-zero shear. The viscous force due to this shear is what slows the puck down. If $\Delta T$ is not too large, the viscous friction is large and the puck will come to a stop well before the dry ice has fully sublimated. We will refer to this regime as the 'low-temperature regime', $L \approx L_1(\Delta T)$.
 
@@ -211,7 +215,7 @@ Since $L_1(\Delta T) \sim \Delta T^{1/4}$, there is no elementary analytical for
 - If students obtain an estimate in the mark scheme in a rearranged form (e.g. they write down $\Delta T$ in terms of $d$ instead of $d$ in terms of $\Delta T$), they obtain full credit.
 - For part a) item F and part b) item Q, students who obtain a correct formula but make a mistake when substituting numbers into it receive 0.4 points.
 
-#### Marking scheme T3
+### Marking scheme T3
 
 | **Problem T3 a) 2pts** | | **Pts:** |
 |---|---|---|
@@ -245,12 +249,8 @@ Since $L_1(\Delta T) \sim \Delta T^{1/4}$, there is no elementary analytical for
 | P | Obtain $\Delta T_m \sim (\eta\rho\lambda/\kappa)(hr^2/M)$ or a numerical value for $\Delta T_m = 1\ \mathrm{K}\ldots 100\ \mathrm{K}$ | 0.7 |
 | Q | Numerical value for $L_{\max} = 0.1\ \mathrm{m}\ldots 10\ \mathrm{m}$ | 0.7 |
 
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-sol-fig1.png" alt="Схема на пързалката: правоъгълник (пързалка) с маса M на разстояние d над плоча с температура T; стрелка g надолу вляво; хоризонтална стрелка r вдясно към p0; p_sat в пространството под пързалката; плочата е обозначена с T." />
-</figure>
-
-<figure>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-sol-fig2-v2.png" alt="Логаритмичен график на L (m) спрямо ΔT (K); черна плътна крива с максимум около 10 K, червена прекъсната права L1 ~ ΔT^(1/4), синя прекъсната права L2 ~ ΔT^(-3/4); осите от 10^-1 до 10^1 m и от 10^-1 до над 10^2 K." />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.3%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p3-sol-fig2-v2.png" alt="Логаритмичен график на L (m) спрямо ΔT (K); черна плътна крива с максимум около 10 K, червена прекъсната права L1 ~ ΔT^(1/4), синя прекъсната права L2 ~ ΔT^(-3/4); осите от 10^-1 до 10^1 m и от 10^-1 до над 10^2 K." width="1067" height="415" loading="lazy" decoding="async" />
 </figure>
 
 
