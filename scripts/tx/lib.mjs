@@ -454,10 +454,12 @@ export const serialisePaper = data => JSON.stringify(data, null, 1) + '\n';
 
 // Reader/checker independence (Codex §4): a different model at least, ideally a
 // different provider family. Recorded in the receipt; publicationState requires it.
-export function independence(reader, checker) {
+export function independence(reader, checker, adjudicator = null) {
   const same = (a, b) => String(a || '').toLowerCase() === String(b || '').toLowerCase();
   const sameModel = same(reader?.provider, checker?.provider) && same(reader?.model, checker?.model);
-  return { independent: !!reader?.model && !!checker?.model && !sameModel, differentProvider: !!reader?.provider && !!checker?.provider && !same(reader.provider, checker.provider) };
+  const sameAdjudicator = adjudicator && same(adjudicator.provider, checker?.provider) && same(adjudicator.model, checker?.model);
+  const known = who => !!who?.model && !/unknown|unspecified/i.test(who.model);
+  return { independent: known(reader) && known(checker) && !sameModel && (!adjudicator || (known(adjudicator) && !sameAdjudicator)), differentProvider: !!reader?.provider && !!checker?.provider && !same(reader.provider, checker.provider) && (!adjudicator || !same(adjudicator.provider, checker.provider)), ...(adjudicator ? { adjudicatorSameModel: !!sameAdjudicator, adjudicatorModelKnown: known(adjudicator) } : {}) };
 }
 
 // D-P23: the reader fixes what is obviously wrong in the print (a non-word misspelling, an agreement error, the

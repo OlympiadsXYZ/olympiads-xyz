@@ -266,6 +266,10 @@ test('independence needs a different model; same provider is flagged', () => {
   const r = lib.independence({ provider: 'zai', model: 'glm-5.3-flash' }, { provider: 'zai', model: 'glm-4.6v' });
   assert.equal(r.independent, true); assert.equal(r.differentProvider, false);
   assert.equal(lib.independence({ provider: 'zai', model: 'x' }, { provider: 'gemini', model: 'y' }).differentProvider, true);
+  const repaired = lib.independence({ provider: 'agent', model: 'opus-5-5' }, { provider: 'agent', model: 'gpt-6-sol' }, { provider: 'agent', model: 'gpt-6-sol' });
+  assert.equal(repaired.independent, false, 'an older reader identity cannot disguise a same-model repair and check');
+  assert.equal(repaired.adjudicatorSameModel, true);
+  assert.equal(lib.independence({ provider: 'agent', model: 'opus-5-5' }, { provider: 'agent', model: 'gpt-6-sol' }, { provider: 'agent', model: 'codex-parent-model-unspecified' }).independent, false);
 });
 
 test('pageWindows splits long documents with one-page overlap and leaves short ones whole', () => {

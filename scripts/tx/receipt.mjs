@@ -53,9 +53,9 @@ const ignoredResolvedFlags = unresolved.filter(d => d.resolved).length;
 for (const p of figureEvidenceProblems(candidate)) blockers.push(`${p.path}: ${p.message}`);
 
 const reader = candidate.tx?.reader || {};
-const indep = independence(reader, reviewer);
+const indep = independence(reader, reviewer, adjudicator);
 const allowSame = !!args['allow-same-model'];
-if (!indep.independent && !allowSame) blockers.push(`reader ${reader.provider}:${reader.model} and checker ${reviewer.provider}:${reviewer.model} are the same model; pass --allow-same-model to accept a same-model check (recorded on the page)`);
+if (!indep.independent && !allowSame) blockers.push(`checker ${reviewer.provider}:${reviewer.model} uses the same model as the reader or adjudicator, or a model identity is unknown; pass --allow-same-model to accept a non-independent check (recorded on the page)`);
 
 const checkedAt = nowIso();
 const sourceHashes = Object.fromEntries(Object.entries(manifest.documents).map(([id, doc]) => [id, doc.sha256]));
