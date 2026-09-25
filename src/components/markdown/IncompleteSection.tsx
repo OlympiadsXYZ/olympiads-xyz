@@ -12,7 +12,7 @@ export const IncompleteSection = ({
     <Danger title={t('incomplete-section')}>
       {t('incomplete-section-text')} {' '}
       <a
-        href="https://github.com/cpinitiative/usaco-guide"
+        href="https://github.com/OlympiadsXYZ/olympiads-xyz"
         target="_blank"
         rel="noreferrer"
       >

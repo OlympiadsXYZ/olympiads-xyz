@@ -419,11 +419,11 @@ export default function ProblemSuggestionModal({
               </p>
             ) : (
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Help us improve the USACO Guide by suggesting a problem to add!
+                Help us improve Olympiads XYZ by suggesting a problem to add!
                 <br />
                 This will be submitted as a public{' '}
                 <a
-                  href="https://github.com/cpinitiative/usaco-guide/pulls"
+                  href="https://github.com/OlympiadsXYZ/olympiads-xyz/pulls"
                   target="_blank"
                   rel="noreferrer"
                   className="text-blue-600 dark:text-blue-300 underline"

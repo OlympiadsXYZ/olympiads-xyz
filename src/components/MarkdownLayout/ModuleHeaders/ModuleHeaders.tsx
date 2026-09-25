@@ -1,7 +1,6 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, ExternalLinkIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
-import { Link } from 'gatsby';
 import * as React from 'react';
 import { Fragment, useContext } from 'react';
 import {
@@ -245,15 +244,21 @@ export default function ModuleHeaders({
           </Menu> */}
 
           {/* a transcribed problem page is generated from its paper JSON (scripts/problems-to-site.mjs): an edit
-              made to the page would be overwritten on the next publication, so it gets no editor link */}
+              made to the page would be overwritten on the next publication, so it gets no editor link. Other pages
+              open in GitHub's editor, which forks the repository and opens a pull request; the /editor page still
+              commits through the USACO Guide's GitHub App to a fork of its repository. */}
           {!verification && (
-          <Link
-            to={`/editor?filepath=${suffix}`}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 my-0 dark:text-gray-400 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
-          >
-            <span>{t('edit_this_page')}</span>
-            <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300" />
-          </Link>
+            <a
+              href={encodeURI(
+                `https://github.com/OlympiadsXYZ/olympiads-xyz/edit/master/${suffix}`
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 my-0 dark:text-gray-400 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
+            >
+              <span>{t('edit_this_page')}</span>
+              <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300" />
+            </a>
           )}
         </div>
 
