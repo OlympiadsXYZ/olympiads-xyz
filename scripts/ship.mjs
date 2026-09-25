@@ -28,7 +28,7 @@ const gates = [
   // every paper has a canonical round label, no sidebar node shows one number twice, no number contradicts the title
   ['node', ['scripts/check-navigation.mjs']],
   ['node', ['scripts/check-mdx.mjs']],
-  ['node', ['--test', 'scripts/tests/problems.test.mjs', 'scripts/tests/tx.test.mjs', 'scripts/tests/navigation.test.mjs', 'scripts/tests/single-pass.test.mjs', 'scripts/tests/problem-sections.test.mjs']],
+  ['node', ['--test', 'scripts/tests/problems.test.mjs', 'scripts/tests/tx.test.mjs', 'scripts/tests/navigation.test.mjs', 'scripts/tests/gatsby-problem-nodes.test.mjs', 'scripts/tests/figure-anchors.test.mjs', 'scripts/tests/editor.test.mjs', 'scripts/tests/publication-concurrency.test.mjs', 'scripts/tests/single-pass.test.mjs', 'scripts/tests/problem-sections.test.mjs']],
   ['python3', ['scripts/validate-papers.py']],
 ];
 for (const [cmd, args] of gates) {
