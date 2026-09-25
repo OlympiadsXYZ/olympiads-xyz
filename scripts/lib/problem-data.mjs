@@ -48,6 +48,7 @@ export function publicationState(record, ledger) {
   if (paper.status === 'withdrawn' || paper.status === 'quarantined') return { eligible: false, reason: paper.status };
   const entry = ledger?.papers?.[paper.id];
   if (!entry) return { eligible: false, reason: 'no-publication-record' };
+  if (entry.supersededBy) return { eligible: false, reason: `superseded-by:${entry.supersededBy}` };
   if (entry.contentHash !== record.contentHash) return { eligible: false, reason: 'revision-needs-review' };
   if (entry.kind === 'legacy' && /^[a-f0-9]{40}$/.test(entry.sourceCommit || '') && entry.recordedAt) return { eligible: true, quality: 'legacy' };
   const review = entry.review;

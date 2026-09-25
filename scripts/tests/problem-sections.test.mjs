@@ -52,6 +52,19 @@ test('old frozen and id-based URLs both reach the canonical solution section', (
   assert.throws(() => problemAliases({ ...problem, aliases: [{ id: 'retired', sectionId: 'missing' }] }, {}), /Invalid alias/);
 });
 
+test('native section questions keep labels and points outside figure and table blocks', async () => {
+  const p = structuredClone(problem);
+  p.sections[0].parts = [
+    { label: 'a)', statement: 'Question.\n\n[[figure:p1-fig1]]', points: 1.5, figures: [fig('p1-fig1')] },
+    { label: 'b)', statement: '| A | B |\n| --- | --- |\n| 1 | 2 |', points: 2 }
+  ];
+  const mdx = problemMdx(paper, p, { quality: 'legacy' }, 'test.json');
+  assert.match(mdx, /<\/figure>\n\n\*\*\[1,5\sт\.\]\*\*/);
+  assert.match(mdx, /\*\*b\)\*\*\n\n\| A \| B \|/);
+  assert.match(mdx, /\| 1 \| 2 \|\n\n\*\*\[2\sт\.\]\*\*/);
+  await compile(mdx, { remarkPlugins: [gfm, math] });
+});
+
 import { problemMetadataErrors } from '../lib/problem-classification.mjs';
 test('underlining validates and renders section introduction, question and solution text', () => {
   const p = structuredClone(problem);
@@ -70,6 +83,22 @@ test('section part answers retain their section labels inside the answer spoiler
   const answer = mdx.indexOf('**Task E1, a)** 42 m');
   assert.ok(answer > mdx.indexOf('<Spoiler title="Покажи отговорите">'));
   assert.ok(answer < mdx.indexOf('</Spoiler>'));
+});
+
+test('scoped underlining marks the printed occurrence without changing repeated table text', async () => {
+  const p = structuredClone(problem);
+  p.statement = '| Item |\n| --- |\n| Flask for titration |';
+  p.sections[0].parts[0].statement = 'd) Fill the burette with the solution for titration.';
+  p.sourceLayout = { scopedUnderlines: [{ passage: 'for titration', context: 'Fill the burette with the solution for titration.' }] };
+  assert.deepEqual(problemMetadataErrors({ paper, problems: [p] }), []);
+  const validate = compileSchema('final').validate;
+  assert.equal(validate(stripTx({ paper, problems: [p] })), true, JSON.stringify(validate.errors));
+  const mdx = problemMdx(paper, p, { quality: 'legacy' }, 'test.json');
+  assert.equal((mdx.match(/<u>for titration<\/u>/g) || []).length, 1);
+  assert.ok(mdx.includes('| Flask for titration |'));
+  await compile(mdx, { remarkPlugins: [gfm, math] });
+  p.sourceLayout.scopedUnderlines[0].context = 'for titration';
+  assert.match(problemMetadataErrors({ paper, problems: [p] })[0].message, /unique source context/);
 });
 import fs from 'node:fs';
 import { createRequire } from 'node:module';

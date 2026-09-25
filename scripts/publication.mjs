@@ -36,12 +36,29 @@ function run() {
     if (!args.includes('--paper') || !args.includes('--receipt')) throw new Error('--paper and --receipt are required');
     const record = readPapers(root).find(p => p.data.paper.id === option('--paper'));
     if (!record) throw new Error('Paper not found');
+    if (ledger.papers[record.data.paper.id]?.supersededBy) throw new Error('Paper is superseded; approve its canonical replacement instead.');
     const review = JSON.parse(fs.readFileSync(option('--receipt'), 'utf8'));
     const entry = { kind: 'reviewed', contentHash: record.contentHash, recordedAt: new Date().toISOString(), review };
     if (!publicationState(record, { papers: { [record.data.paper.id]: entry } }).eligible) throw new Error('Receipt must pass for these exact bytes, identify reviewer and sources, and have no unresolved defects; draft papers cannot be approved.');
     ledger.papers[record.data.paper.id] = entry;
     atomicWrite(file, jsonText(ledger));
     console.log(`Approved ${record.data.paper.id} at ${record.contentHash}`);
+  } else if (command === 'supersede') {
+    if (!args.includes('--paper') || !args.includes('--by') || !args.includes('--reason')) throw new Error('--paper, --by and --reason are required');
+    const records = readPapers(root);
+    const record = records.find(r => r.data.paper.id === option('--paper'));
+    const replacement = records.find(r => r.data.paper.id === option('--by'));
+    if (!record || !replacement || record === replacement) throw new Error('Two distinct stored papers are required');
+    if (!publicationState(replacement, ledger).eligible) throw new Error('Replacement must be approved for its exact bytes');
+    const aliases = new Set(replacement.data.problems.flatMap(p => (p.aliases || []).map(a => a.id)));
+    if (record.data.problems.some(p => !aliases.has(p.id))) throw new Error('Replacement must preserve every former problem ID as an alias');
+    const entry = ledger.papers[record.data.paper.id];
+    if (!entry) throw new Error('Original publication record is required');
+    entry.supersededBy = replacement.data.paper.id;
+    entry.supersededReason = option('--reason');
+    entry.supersededAt = new Date().toISOString();
+    atomicWrite(file, jsonText(ledger));
+    console.log(`Superseded ${record.data.paper.id} with ${replacement.data.paper.id}; source and review history retained.`);
   } else if (command === 'attach-evidence') {
     // Historical provenance mined from agent journals (transcriber/verifier
     // identity, verdict, defect counts). It documents how a legacy revision came
@@ -72,12 +89,12 @@ function run() {
     }
     console.log(JSON.stringify(counts));
   } else {
-    console.log('publication.mjs adopt-legacy --source-ref COMMIT | approve --paper ID --receipt FILE | attach-evidence --file FILE | status');
+    console.log('publication.mjs adopt-legacy --source-ref COMMIT | approve --paper ID --receipt FILE | supersede --paper ID --by ID --reason TEXT | attach-evidence --file FILE | status');
     process.exitCode = 1;
   }
 }
 
-if (['adopt-legacy', 'approve', 'attach-evidence'].includes(command)) {
+if (['adopt-legacy', 'approve', 'supersede', 'attach-evidence'].includes(command)) {
   withFileLockSync(`${file}.lock`, run);
 } else {
   run(); // Status reads one atomic snapshot without waiting for a writer.

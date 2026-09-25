@@ -100,7 +100,7 @@ problems.forEach((pr, i) => {
     });
   }
   for (const alias of pr.aliases || []) {
-    if (!pr.sections?.some(s => s.id === alias.sectionId)) err(`${p}/aliases`, `missing section ${alias.sectionId}`);
+    if (alias.sectionId != null && !pr.sections?.some(s => s.id === alias.sectionId)) err(`${p}/aliases`, `missing section ${alias.sectionId}`);
     if (problems.some(other => other.id === alias.id)) err(`${p}/aliases`, `alias is still a problem: ${alias.id}`);
   }
   checkAnswer(pr.answer, `${p}/answer`);

@@ -173,6 +173,30 @@ test('lock wait is bounded and never automatically takes over an old owner', t =
   assert.deepEqual(JSON.parse(fs.readFileSync(lock)), owner);
 });
 
+test('superseding requires approved alias coverage and retains the original review', async t => {
+  const f = fixture(t);
+  const oldHash = f.paper('old-paper'), newHash = f.paper('new-paper');
+  for (const [id, hash] of [['old-paper', oldHash], ['new-paper', newHash]]) {
+    assert.equal((await f.start(['approve', '--paper', id, '--receipt', f.receipt(id, hash)]).done).code, 0);
+  }
+  const args = ['supersede', '--paper', 'old-paper', '--by', 'new-paper', '--reason', 'Duplicate source edition'];
+  const before = fs.readFileSync(f.ledger, 'utf8');
+  assert.match((await f.start(args).done).stderr, /every former problem ID/);
+  assert.equal(fs.readFileSync(f.ledger, 'utf8'), before);
+  const replacementFile = path.join(f.root, 'content/problems/new-paper.json');
+  const replacement = JSON.parse(fs.readFileSync(replacementFile));
+  replacement.problems[0].aliases = [{ id: 'old-paper-p1' }];
+  fs.writeFileSync(replacementFile, jsonText(replacement));
+  assert.match((await f.start(args).done).stderr, /approved for its exact bytes/);
+  const receipt = f.receipt('new-paper', sha256(fs.readFileSync(replacementFile)));
+  assert.equal((await f.start(['approve', '--paper', 'new-paper', '--receipt', receipt]).done).code, 0);
+  assert.equal((await f.start(args).done).code, 0);
+  const ledger = JSON.parse(fs.readFileSync(f.ledger));
+  assert.equal(ledger.papers['old-paper'].supersededBy, 'new-paper');
+  assert.deepEqual(ledger.papers['old-paper'].review, JSON.parse(before).papers['old-paper'].review);
+  assert.match((await f.start(['approve', '--paper', 'old-paper', '--receipt', f.receipt('old-paper', oldHash)]).done).stderr, /superseded/);
+});
+
 test('action failure releases our lock; replaced ownership is never unlinked', t => {
   const f = fixture(t), lock = `${f.ledger}.lock`;
   assert.throws(() => withFileLockSync(lock, () => { throw new Error('action failed'); }), /action failed/);

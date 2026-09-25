@@ -33,7 +33,15 @@ const gates = [
 ];
 for (const [cmd, args] of gates) {
   const r = run(cmd, args);
-  if (r.status !== 0) { log(`gate failed: ${cmd} ${args.join(' ')}\n${[r.stdout, r.stderr].filter(Boolean).join('\n').trim().split('\n').slice(-12).join('\n')}`); process.exit(2); }
+  if (r.status !== 0) {
+    const diagnostic = path.join(ROOT, 'tmp', 'ship-last-failure.log');
+    fs.mkdirSync(path.dirname(diagnostic), { recursive: true });
+    fs.writeFileSync(diagnostic, [r.stdout, r.stderr].filter(Boolean).join('\n'));
+    // Keep stdout failures visible even when stderr ends with many math warnings.
+    const tail = [r.stdout, r.stderr].filter(Boolean).map(s => s.trim().split('\n').slice(-12).join('\n')).join('\n');
+    log(`gate failed: ${cmd} ${args.join(' ')}\n${tail}\nFull output: ${diagnostic}`);
+    process.exit(2);
+  }
 }
 // Currency of the generated pages: while the loop workers keep promoting, papers land between the generate step
 // and this check ("stale artifacts"); regenerate and check again a few times before calling it a failure.

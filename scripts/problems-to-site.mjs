@@ -563,6 +563,10 @@ function sourceText(text, problem, resolve = () => null) {
   const placed = placeInlineFigures(newestInlineCrops(resolveFigurePlaceholders(text, problem, resolve), problemFigures(problem)), resolve);
   let rendered = demoteHeadings(mdText(placed.text));
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
+  for (const { passage, context } of problem.sourceLayout?.scopedUnderlines || []) {
+    const scope = mdText(context), needle = mdText(passage);
+    rendered = rendered.split(scope).join(scope.replace(needle, `<u>${needle}</u>`));
+  }
   for (const passage of [...(problem.sourceLayout?.underlines || [])].sort((a, b) => b.length - a.length)) {
     const needle = mdText(passage);
     if (needle) rendered = rendered.split(needle).join(`<u>${needle}</u>`);
@@ -888,12 +892,12 @@ export function displayMathLines(mdx) {
 }
 
 // Frozen routes are the problem base; the actual solution page lives below /solution.
-export function problemAliases(problem, routes, allIds = new Set()) {
+export function problemAliases(problem, routes, publishedIds = new Set()) {
   const aliases = {};
   const target = routes[problem.id] || `/problems/${problem.id}`;
   for (const alias of problem.aliases || []) {
-    if (allIds.has(alias.id) || !problem.sections?.some(s => s.id === alias.sectionId)) throw new Error(`Invalid alias ${alias.id} on ${problem.id}`);
-    const to = `${target}/solution#${alias.sectionId}`;
+    if (alias.id === problem.id || publishedIds.has(alias.id) || (alias.sectionId != null && !problem.sections?.some(s => s.id === alias.sectionId))) throw new Error(`Invalid alias ${alias.id} on ${problem.id}`);
+    const to = `${target}/solution${alias.sectionId == null ? '' : `#${alias.sectionId}`}`;
     for (const from of new Set([routes[alias.id], `/problems/${alias.id}`].filter(Boolean))) {
       aliases[from] = to;
       aliases[`${from}/solution`] = to;
@@ -909,6 +913,11 @@ function sectionFigures(sections) {
 function sectionTexts(sections) {
   return (sections || []).flatMap(s => [s.statement, s.statementAfterParts, ...(s.parts || []).flatMap(p => [p.statement, p.statementAfter])]);
 }
+function labelledPartText(body, prefix, suffix) {
+  const opensBlock = /^\s*(?:\||#{1,6}[ \t]|<figure|<div)/.test(body);
+  const endsInRow = /(?:^|\n)[ \t]*\|[^\n]*$/.test(body.trimEnd()) || /<\/(?:figure|div)>\s*$/.test(body);
+  return `${prefix ? prefix + (opensBlock ? '\n\n' : ' ') : ''}${body}${suffix && endsInRow ? '\n\n' + suffix.trim() : suffix}`;
+}
 export function sectionLines(sections, problem, resolve, solution = false) {
   const out = [];
   for (const section of sections || []) {
@@ -922,7 +931,7 @@ export function sectionLines(sections, problem, resolve, solution = false) {
     for (const part of section.parts || []) {
       const pts = part.points == null ? '' : ` **[${String(part.points).replace('.', ',')} т.]**`;
       const text = sourceText(part.statement, problem, resolve);
-      out.push(`**${mdText(part.label)}** ${text}${pts}`, '');
+      out.push(labelledPartText(text, `**${mdText(part.label)}**`, pts), '');
       for (const fig of figuresNotInline(part.figures, texts, candidates)) out.push(figureMarkdown(fig), '');
       if (part.statementAfter) out.push(sourceText(part.statementAfter, problem, resolve), '');
     }
@@ -1017,9 +1026,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       const label = part.label && part.label !== '*' ? `**${part.label}**` : '';
       const renderPart = (value, prefix, suffix) => {
         const body = sourceText(value, problem, resolveStatement);
-        const opensBlock = /^\s*(?:\||#{1,6}[ \t]|<figure|<div)/.test(body);
-        const endsInRow = /(?:^|\n)[ \t]*\|[^\n]*$/.test(body.trimEnd()) || /<\/(?:figure|div)>\s*$/.test(body);
-        return `${prefix ? prefix + (opensBlock ? '\n\n' : ' ') : ''}${body}${suffix && endsInRow ? '\n\n' + suffix.trim() : suffix}`;
+        return labelledPartText(body, prefix, suffix);
       };
       const placed = plan.slots.get(`parts/${k}/statement`);
       if (!placed) lines.push(renderPart(text, label, pts), '');
@@ -1172,6 +1179,7 @@ function main() {
   const routesFile = path.join(ROOT, 'content/problem-routes.json');
   const routes = readJson(routesFile, {});
   const allIds = new Set(records.flatMap(r => r.data.problems.map(p => p.id)));
+  const publishedIds = new Set(records.filter(r => publicationState(r, ledger).eligible).flatMap(r => r.data.problems.map(p => p.id)));
   const owned = new Set(prior.problemIds);
   const planned = new Map(), generated = new Map(), excluded = [];
   const aliases = {};
@@ -1216,7 +1224,7 @@ function main() {
       // (content/problem-routes.json, bootstrapped from production); any id not
       // in the frozen map is new and gets a stable id-based route.
       if (!routes[problem.id]) routes[problem.id] = `/problems/${problem.id}`;
-      for (const [from, to] of Object.entries(problemAliases(problem, routes, allIds))) {
+      for (const [from, to] of Object.entries(problemAliases(problem, routes, publishedIds))) {
         if (aliases[from] && aliases[from] !== to) throw new Error(`Alias collision: ${from}`);
         aliases[from] = to;
       }

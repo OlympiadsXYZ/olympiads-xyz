@@ -153,6 +153,31 @@ test('a model label alone cannot authorize publication; withdrawal always wins',
   assert.equal(publicationState(record, { papers: { x: { kind: 'legacy', contentHash: record.contentHash, sourceCommit: 'a'.repeat(40), recordedAt: 'today' } } }).eligible, false);
 });
 
+test('a superseded edition keeps its source but becomes redirects without shadowing a published problem', t => {
+  const f = fixture(t); f.approve();
+  const old = structuredClone(f.paper);
+  old.paper.id = 'old-edition'; old.problems[0].id = 'old-edition-p1';
+  const oldFile = 'content/problems/physics/NOF/2026/old-edition.json';
+  f.write(oldFile, old);
+  const ledger = JSON.parse(f.read('content/problem-publication.json'));
+  ledger.papers[old.paper.id] = { kind: 'legacy', contentHash: sha256(fs.readFileSync(path.join(f.root, oldFile))), sourceCommit: 'a'.repeat(40), recordedAt: 'today' };
+  f.write('content/problem-publication.json', ledger);
+  assert.equal(f.run().status, 0);
+  f.paper.problems[0].aliases = [{ id: old.problems[0].id }];
+  f.write(f.file, f.paper);
+  ledger.papers[f.paper.paper.id].contentHash = sha256(fs.readFileSync(path.join(f.root, f.file)));
+  f.write('content/problem-publication.json', ledger);
+  assert.match(f.run().stderr, /Invalid alias/);
+  ledger.papers[old.paper.id].supersededBy = f.paper.paper.id;
+  f.write('content/problem-publication.json', ledger);
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  assert.equal(fs.existsSync(path.join(f.root, oldFile)), true);
+  assert.equal(fs.existsSync(path.join(f.root, 'solutions/physics/old-edition/old-edition-p1.mdx')), false);
+  const aliases = JSON.parse(f.read('content/problem-aliases.json'));
+  assert.equal(aliases['/problems/old-edition-p1/solution'], `/problems/${f.paper.problems[0].id}/solution`);
+  assert.equal(JSON.parse(f.read('content/extraProblems.json')).EXTRA_PROBLEMS.length, 2);
+});
+
 test('missing or unassessed difficulty exports as N/A while explicit ratings are preserved', t => {
   const f = fixture(t);
   const cases = [

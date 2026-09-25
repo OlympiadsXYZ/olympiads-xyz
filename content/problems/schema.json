@@ -737,6 +737,29 @@
                 "minLength": 1
               },
               "description": "Exact underlined passages in this problem or its solution."
+            },
+            "scopedUnderlines": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "required": [
+                  "passage",
+                  "context"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "passage": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "context": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "description": "Underline one exact passage within a unique source context, leaving other occurrences unchanged."
             }
           }
         },
@@ -752,8 +775,7 @@
           "items": {
             "type": "object",
             "required": [
-              "id",
-              "sectionId"
+              "id"
             ],
             "additionalProperties": false,
             "properties": {
@@ -766,7 +788,7 @@
               }
             }
           },
-          "description": "Former problem IDs redirected to a section of this problem; not separate problems."
+          "description": "Former problem IDs redirected to this problem or an optional section; not separate problems."
         }
       }
     },

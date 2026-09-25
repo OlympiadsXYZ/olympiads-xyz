@@ -42,6 +42,11 @@ export function problemMetadataErrors(data, manifest = null) {
     const bodyText = body => [body?.title, body?.statement, body?.statementAfterParts, ...(body?.parts || []).flatMap(p => [p.statement, p.statementAfter])];
     const text = [...bodyText(problem), ...(problem.sections || []).flatMap(bodyText), ...bodyText(problem.solution), ...(problem.solution?.sections || []).flatMap(bodyText)].filter(Boolean).join('\n');
     for (const value of problem.sourceLayout?.underlines || []) if (!text.includes(value)) error(`${root}/sourceLayout/underlines`, `underlined passage not present in problem text: ${value}`);
+    for (const { passage, context } of problem.sourceLayout?.scopedUnderlines || []) {
+      if (typeof passage !== 'string' || !passage || typeof context !== 'string' || !context || context.split(passage).length !== 2 || text.split(context).length !== 2) {
+        error(`${root}/sourceLayout/scopedUnderlines`, 'underline needs one exact passage in one unique source context');
+      }
+    }
   }
   const notes = data.paper?.documentNotes;
   if (notes !== undefined && !Array.isArray(notes)) error('/paper/documentNotes', 'documentNotes must be an array of notes');
