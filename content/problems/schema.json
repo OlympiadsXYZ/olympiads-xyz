@@ -198,7 +198,13 @@
                   "pattern": "^[a-f0-9]{64}$"
                 }
               },
-              "description": "SHA-256 на точните PDF байтове, от които е четено"
+              "description": "SHA-256 на точните PDF байтове, от които е четено",
+              "patternProperties": {
+                "^supplement-[1-9][0-9]*$": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              }
             },
             "verifiedBy": {
               "type": [
@@ -331,10 +337,8 @@
                 "minLength": 1
               },
               "document": {
-                "enum": [
-                  "problems",
-                  "solutions"
-                ]
+                "type": "string",
+                "pattern": "^(problems|solutions|supplement-[1-9][0-9]*)$"
               },
               "page": {
                 "type": "integer",
@@ -348,6 +352,36 @@
               }
             }
           }
+        },
+        "supplementarySources": {
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^supplement-[1-9][0-9]*$": {
+              "type": "object",
+              "required": [
+                "archiveKey",
+                "pages"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "archiveKey": {
+                  "type": "string",
+                  "description": "Ключ в R2 кофата olympiads-archive"
+                },
+                "pages": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "minItems": 1,
+                  "uniqueItems": true
+                }
+              }
+            }
+          },
+          "description": "Additional source PDFs, each with its own document id and archive key."
         }
       }
     },
@@ -388,10 +422,8 @@
           "description": "Думите, записани в транскрипцията"
         },
         "document": {
-          "enum": [
-            "problems",
-            "solutions"
-          ]
+          "type": "string",
+          "pattern": "^(problems|solutions|supplement-[1-9][0-9]*)$"
         },
         "page": {
           "type": "integer",
@@ -479,14 +511,17 @@
             },
             "rotation": {
               "type": "integer",
-              "enum": [0, 90, 180, 270],
+              "enum": [
+                0,
+                90,
+                180,
+                270
+              ],
               "description": "Clockwise degrees applied to the cropped bitmap after cropping. Omitted means 0; page and pdfRect remain in the original PDF page coordinates."
             },
             "document": {
-              "enum": [
-                "problems",
-                "solutions"
-              ]
+              "type": "string",
+              "pattern": "^(problems|solutions|supplement-[1-9][0-9]*)$"
             }
           }
         }
@@ -742,10 +777,8 @@
       ],
       "properties": {
         "document": {
-          "enum": [
-            "problems",
-            "solutions"
-          ]
+          "type": "string",
+          "pattern": "^(problems|solutions|supplement-[1-9][0-9]*)$"
         },
         "page": {
           "type": "integer",

@@ -198,7 +198,7 @@ for (const r of results) {
   const f = allFigures(data).find(x => x.path === r.path).fig;
   if (dry) { f.tx = { ...f.tx, file: r.relFile, cropped: true, dryRun: true, upload: r.upload, px: r.px, pdfRect: r.pdfRect }; continue; }
   f.url = r.url; f.width = r.px[0]; f.height = r.px[1];
-  f.source = { page: r.page, pdfRect: r.pdfRect, dpi: FIGURE_DPI, ...(r.rotation ? { rotation: r.rotation } : {}), ...(r.document === 'solutions' ? { document: 'solutions' } : {}) };
+  f.source = { page: r.page, pdfRect: r.pdfRect, dpi: FIGURE_DPI, ...(r.rotation ? { rotation: r.rotation } : {}), ...(r.document !== 'problems' ? { document: r.document } : {}) };
   f.tx = { ...f.tx, file: r.relFile, remoteKey: r.remoteKey, upload: r.upload, cropped: true, dryRun: false, public200: r.public200 === true, md5: r.md5, sha256: r.sha256 };
 }
 report.figures = results;

@@ -6,6 +6,7 @@
 // recorded under tx.repairs with who made it and which defect it answers.
 // Anything else is reported as skipped and left for the adjudicator.
 import { pointerGet, pointerSet, allFigures, nowIso } from './lib.mjs';
+import { isDocumentId, SUPPLEMENT_ID } from './supplements.mjs';
 
 const parseBox = v => {
   if (Array.isArray(v) && v.length === 4 && v.every(n => typeof n === 'number' && Number.isFinite(n))) return v.map(n => Math.round(n));
@@ -282,8 +283,9 @@ export function applyFixes(candidate, fixes, { defects, round = 1, by = 'refix',
       // an object fix may also move the figure to another document/page and correct its caption/alt
       const o = f.value && typeof f.value === 'object' && !Array.isArray(f.value) ? f.value : null;
       const tx = o?.tx && typeof o.tx === 'object' ? o.tx : o || {};
+      if (tx.document !== undefined && (!isDocumentId(tx.document) || (SUPPLEMENT_ID.test(tx.document) && !candidate.paper?.supplementarySources?.[tx.document]))) { skipped.push({ ...entry, reason: 'unknown or undeclared document' }); continue; }
       if (tx.rotation !== undefined && ![0, 90, 180, 270].includes(tx.rotation)) { skipped.push({ ...entry, reason: 'rotation must be 0, 90, 180 or 270' }); continue; }
-      fig.tx = { ...(fig.tx || {}), ...(['problems', 'solutions'].includes(tx.document) ? { document: tx.document } : {}), ...(Number.isInteger(tx.page) && tx.page > 0 ? { page: tx.page } : {}), ...(tx.rotation !== undefined ? { rotation: tx.rotation } : {}), bbox: box, boxFrom: 'refix' }; // a judged box: snap.mjs leaves it alone
+      fig.tx = { ...(fig.tx || {}), ...(isDocumentId(tx.document) ? { document: tx.document } : {}), ...(Number.isInteger(tx.page) && tx.page > 0 ? { page: tx.page } : {}), ...(tx.rotation !== undefined ? { rotation: tx.rotation } : {}), bbox: box, boxFrom: 'refix' }; // a judged box: snap.mjs leaves it alone
       if (o) for (const k of ['caption', 'alt']) if (typeof o[k] === 'string' && o[k]) fig[k] = o[k];
       touched.add(figMatch[1]);
       applied.push({ ...entry, from, to: box, ...(o?.tx ? { moved: `${fig.tx.document} p.${fig.tx.page}` } : {}), note: f.note || null });

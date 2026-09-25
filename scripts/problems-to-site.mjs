@@ -1027,6 +1027,10 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       const s = paper.solutionSource.archiveKey;
       lines.push(`· официални решения: [${s.split('/').pop()}](${archiveUrl(paper.subject, s)})`);
     }
+    for (const supplement of Object.values(paper.supplementarySources || {})) {
+      const s = supplement.archiveKey;
+      lines.push(`· допълнителни данни: [${s.split('/').pop()}](${archiveUrl(paper.subject, s)})`);
+    }
     lines.push('');
   }
   return lineBreaks(displayMathLines(lines.join('\n')));

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// prepare.mjs <paperId> [--problems <key>] [--solutions <key>] [--force] [--gc]
+// prepare.mjs <paperId> [--problems <key>] [--solutions <key>] [--supplements <json-file>] [--force] [--gc]
 // Downloads the source PDFs once, records hashes/page geometry, renders pages at
 // 160 dpi and dumps the text layer. Idempotent by content hash: a second run
 // with the same keys and unchanged bytes does no network and no rendering; a
@@ -13,6 +13,7 @@
 // glyph for every character, with a real text layer, so pages, text layer and the checks downstream work unchanged.
 import fs from 'node:fs';
 import path from 'node:path';
+import { supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
 import {
   parseArgs, fail, run, resolvePaper, paperDir, manifestFile, readManifest, writeJson,
   sha256File, nowIso, RENDER_DPI, R2_REMOTE, which, ROOT, pdftotextBin,
@@ -140,6 +141,13 @@ fs.mkdirSync(path.join(dir, 'text'), { recursive: true });
 fs.mkdirSync(path.join(dir, 'candidates'), { recursive: true });
 
 const previous = readManifest(paperId); // --force re-downloads and re-renders regardless of it
+// Explicit file wins; otherwise preserve declared sources from a prior prepare.
+// Use an empty object file to deliberately remove supplements from the manifest.
+const supplementInput = args.supplements
+  ? JSON.parse(fs.readFileSync(path.resolve(args.supplements), 'utf8'))
+  : { ...Object.fromEntries(Object.entries(previous?.documents || {}).filter(([id]) => SUPPLEMENT_ID.test(id)).map(([id, d]) => [id, d.key])), ...Object.fromEntries(Object.entries(keys).filter(([id]) => SUPPLEMENT_ID.test(id))) };
+for (const id of Object.keys(keys)) if (SUPPLEMENT_ID.test(id)) delete keys[id];
+Object.assign(keys, supplementKeys(supplementInput));
 const manifest = {
   paperId, meta, origin, renderDpi: RENDER_DPI,
   documents: {},
@@ -170,7 +178,7 @@ function renderedPages(doc, expected) {
 }
 
 const converted = {}; // doc -> how a non-PDF source became src/<doc>.pdf (plain text only, for now)
-for (const doc of ['problems', 'solutions']) {
+for (const doc of Object.keys(keys)) {
   const key = keys[doc];
   if (!key) continue;
   const file = path.join(dir, 'src', `${doc}.pdf`);

@@ -9,6 +9,7 @@
 // mismatch between receipt and the bytes actually written.
 import fs from 'node:fs';
 import path from 'node:path';
+import { supplementarySourceErrors, sourceHashErrors } from './supplements.mjs';
 import {
   parseArgs, fail, readJson, readManifest, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems, sha256File, contentPathFor, run, ROOT, nowIso, writeJson, listContentFiles,
 } from './lib.mjs';
@@ -31,9 +32,8 @@ if (sha256File(path.resolve(args.candidate)) !== receipt.candidateSha256) fail('
 if (receipt.checkerCandidateSha256 && receipt.checkerCandidateSha256 !== receipt.candidateSha256) fail('receipt was issued for a candidate the checker did not check');
 const figProblems = figureEvidenceProblems(candidate);
 if (figProblems.length) fail(`figure evidence missing: ${figProblems.map(p => `${p.path}: ${p.message}`).join('; ')}`);
-for (const doc of ['problems', 'solutions']) {
-  if (receipt.sourceHashes?.[doc] && manifest.documents[doc]?.sha256 !== receipt.sourceHashes[doc]) fail(`source hash mismatch for ${doc} document`);
-}
+for (const message of sourceHashErrors(manifest, receipt.sourceHashes)) fail(message);
+for (const issue of supplementarySourceErrors(candidate, manifest)) fail(`${issue.path}: ${issue.message}`);
 
 const prov = provenanceFor(candidate, {
   reviewer: receipt.reviewer, promptVersion: receipt.promptVersion, checkedAt: receipt.checkedAt, sourceHashes: receipt.sourceHashes,

@@ -10,6 +10,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { problemMetadataErrors } from '../lib/problem-classification.mjs';
+import { isDocumentId, supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
 
 const require = createRequire(import.meta.url);
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -210,6 +211,7 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
     meta = { competition: p.competition, year: p.year, round: p.round ?? null, grade: p.grade ?? null, subject: p.subject, lang: p.lang };
     keys.problems ||= p.source?.archiveKey || null;
     keys.solutions ||= p.solutionSource?.archiveKey || null;
+    Object.assign(keys, supplementKeys(p.supplementarySources || {}));
     origin = path.relative(ROOT, existing);
   }
   if (!meta || !keys.problems) {
@@ -678,7 +680,7 @@ export function loadPrompt(stage, version = 'v1') {
 // `window` = { problems: [from, to], solutions: [from, to] } restricts the pages.
 export function pageImages(manifest, window = null) {
   const out = [];
-  for (const doc of ['problems', 'solutions']) {
+  for (const doc of Object.keys(manifest.documents || {})) {
     const d = manifest.documents?.[doc];
     if (!d) continue;
     const range = window?.[doc];
@@ -731,6 +733,7 @@ export function contextBlock(manifest) {
     `- paperId: ${manifest.paperId}`,
     `- subject: ${m.subject}; competition: ${m.competition}; catalogue year: ${m.year}; catalogue round: ${m.round ?? 'null'}; catalogue grade: ${m.grade ?? 'null'}; lang: ${m.lang || 'bg'}`,
     `- documents:\n${docs}`,
+    ...(Object.keys(manifest.documents || {}).some(id => SUPPLEMENT_ID.test(id)) ? [`- Supplementary PDFs keep their own identity: declare paper.supplementarySources as an object mapping each supplement-N to {archiveKey, pages}. Use that exact document id in source spans, figure tx, edits and documentNotes. Shared data tables belong in documentNotes with their printed heading and a Markdown table. Do not attribute a supplement page to the problems or solutions PDF, omit it, or invent a new problem for it.`] : []),
     ...(m.listed?.problems ? [`- the archive inventory lists ${m.listed.problems} top-level problem(s) in the problems document (${m.listed.titles.join('; ')})${m.listed.parts ? ` with about ${m.listed.parts} printed sub-tasks` : ''}: emit exactly one problems[] entry per top-level problem; printed sections and sub-tasks inside one (Part A/B/C, A.1, E1.3, а)/б)) are its parts[] — one entry per printed sub-task with its label and points — never problems of their own and never folded into the statement. Say so in tx.notes if the page really prints a different number.`] : []),
     ...(Object.values(manifest.documents || {}).some(d => /multi/i.test(String(d.key || d.file || ''))) ? [`- this file prints the same paper in SEVERAL LANGUAGES one after another: transcribe ONLY the ${m.lang || 'en'} version of every problem and solution — never the other languages' copies, never a mixture. Say in tx.notes which pages hold the ${m.lang || 'en'} version.`] : []),
     `- figure boxes are [x0, y0, x1, y1] in PERMILLE of the page (0–${BBOX_SCALE} across the width and across the height, origin top-left), independent of image resolution.`,
@@ -1043,7 +1046,7 @@ export function normaliseCandidate(c, opts = {}) {
       const out = {
         title: typeof n.title === 'string' && n.title.trim() ? n.title : (typeof n.heading === 'string' && n.heading.trim() ? n.heading : 'Note'),
         statement,
-        document: n.document === 'solutions' ? 'solutions' : 'problems',
+        document: isDocumentId(n.document) ? n.document : 'problems',
         page: Number.isInteger(n.page) && n.page >= 1 ? n.page : (Number.isInteger(Number(n.page)) && Number(n.page) >= 1 ? Number(n.page) : 1),
         position: n.position === 'after-problem' ? 'after-problem' : 'before-problem',
       };

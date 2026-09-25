@@ -20,6 +20,7 @@
 // blockers are listed. Exit 0 pass / 3 escalate / 1 fail.
 import path from 'node:path';
 import { checkerEvidenceProblems } from './evidence.mjs';
+import { supplementarySourceErrors } from './supplements.mjs';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, paperDir, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems,
   independence, nowIso, sha256File, editsNeedingModel,
@@ -42,6 +43,7 @@ const adjudicator = args.adjudicator ? parseWho(args.adjudicator, 'adjudicator')
 
 const candidateSha256 = sha256File(candFile);
 const blockers = checkerEvidenceProblems(checker, candidate, manifest, candidateSha256);
+for (const issue of supplementarySourceErrors(candidate, manifest)) blockers.push(`${issue.path}: ${issue.message}`);
 const claimedSha = checker.candidateSha256 || checker.checker?.candidateSha256 || null;
 
 const defects = Array.isArray(checker.defects) ? checker.defects : [];
@@ -56,7 +58,7 @@ const allowSame = !!args['allow-same-model'];
 if (!indep.independent && !allowSame) blockers.push(`reader ${reader.provider}:${reader.model} and checker ${reviewer.provider}:${reviewer.model} are the same model; pass --allow-same-model to accept a same-model check (recorded on the page)`);
 
 const checkedAt = nowIso();
-const sourceHashes = { problems: manifest.documents.problems.sha256, ...(manifest.documents.solutions ? { solutions: manifest.documents.solutions.sha256 } : {}) };
+const sourceHashes = Object.fromEntries(Object.entries(manifest.documents).map(([id, doc]) => [id, doc.sha256]));
 const checkerMode = checker.mode || checker.checker?.mode || null; // 'crops': the model audited the figure crops; the text was verified mechanically
 // D-P23: an agreement fix has the shape of a real-word swap („начинает“ → „начинается“), so only a model reading the
 // page verifies it; the text-layer-only verification of a crops/mechanical check never publishes one

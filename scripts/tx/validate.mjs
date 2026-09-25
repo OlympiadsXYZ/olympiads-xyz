@@ -7,6 +7,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { problemMetadataErrors } from '../lib/problem-classification.mjs';
 import { expectedProblemNumbers } from './source-numbering.mjs';
+import { isDocumentId, supplementarySourceErrors } from './supplements.mjs';
 import { spawnSync } from 'node:child_process';
 import { misplacedSolutionFigures, figuresBelowSolutionHeading, textLayerLines } from '../problems-to-site.mjs';
 import {
@@ -39,6 +40,7 @@ if (!validate(schemaInput)) for (const e of validate.errors) err(e.dataPath || '
 for (const issue of problemMetadataErrors(data, manifest)) err(issue.path, issue.message);
 
 const paper = data.paper || {};
+for (const issue of supplementarySourceErrors(data, manifest)) err(issue.path, issue.message);
 const paperId = args['paper-id'] || paper.id;
 if (args['paper-id'] && paper.id !== args['paper-id']) err('/paper/id', `paper.id "${paper.id}" != expected "${args['paper-id']}"`);
 if (manifest && paper.source?.archiveKey && manifest.documents?.problems?.key && paper.source.archiveKey !== manifest.documents.problems.key) err('/paper/source/archiveKey', 'does not match the prepared problems document');
@@ -79,7 +81,7 @@ problems.forEach((pr, i) => {
   if (pr.solution && !pr.solution.incomplete && !(pr.solution.statement || '').trim()) err(`${p}/solution/statement`, 'empty solution without incomplete: true');
   if (pr.solution?.incomplete && !pr.solution.incompleteReason) warn(`${p}/solution`, 'incomplete without incompleteReason');
   for (const s of pr.tx?.sourceSpans || pr.sourceSpans || []) {
-    if (!['problems', 'solutions'].includes(s.document)) err(`${p}/tx/sourceSpans`, `unknown document "${s.document}"`);
+    if (!isDocumentId(s.document)) err(`${p}/tx/sourceSpans`, `unknown document "${s.document}"`);
     else if (manifest && !manifest.documents[s.document]) err(`${p}/tx/sourceSpans`, `document "${s.document}" was not prepared`);
     else if (manifest && (s.page < 1 || s.page > manifest.documents[s.document].pages)) err(`${p}/tx/sourceSpans`, `page ${s.page} outside ${s.document} (1..${manifest.documents[s.document].pages})`);
   }
@@ -153,7 +155,7 @@ for (const { fig, path: p } of allFigures(data)) {
   if (!fig.url && !fig.tx?.bbox) err(p, 'figure has neither url nor tx.bbox');
   if (fig.tx) {
     const t = fig.tx;
-    if (!['problems', 'solutions'].includes(t.document)) err(`${p}/tx/document`, `unknown document "${t.document}"`);
+    if (!isDocumentId(t.document)) err(`${p}/tx/document`, `unknown document "${t.document}"`);
     if (!Number.isInteger(t.page) || t.page < 1) err(`${p}/tx/page`, 'page must be a positive integer');
     const b = t.bbox;
     // Boxes are permille of the page (0..1000 on each axis), see lib.mjs BBOX_SCALE.

@@ -18,6 +18,7 @@ const txModule = name => pathToFileURL(txScript(name)).href; // Windows needs fi
 const lib = await import(txModule('lib.mjs'));
 const { assembleWindows } = await import(txModule('assemble.mjs'));
 const { bindCheckerResult, adjudicationEvidenceProblems, evidenceKey } = await import(txModule('evidence.mjs'));
+const { supplementKeys, supplementarySourceErrors, sourceHashErrors } = await import(txModule('supplements.mjs'));
 
 test('API checker binding uses the bytes sent, preserving a bad model echo for audit', () => {
   const response = { candidateSha256: 'not supplied by old request', verdict: 'fail', defects: [] };
@@ -110,6 +111,59 @@ function sandbox(t) {
   const run = (script, argv) => spawnSync(process.execPath, [txScript(script), ...argv], { encoding: 'utf8', env: { ...process.env, OLYMPIADS_TX_DIR: root } });
   return { root, dir, write, run, read: f => JSON.parse(fs.readFileSync(f, 'utf8')) };
 }
+
+test('supplement pages must be declared, reviewed and bound to their own hashes', async t => {
+  const s = sandbox(t);
+  const m = structuredClone(manifest);
+  m.documents['supplement-1'] = { ...m.documents.solutions, key: 'Физика/zz/data.pdf', sha256: 'd'.repeat(64), pageImages: ['pages/supplement-1-01.png'] };
+  s.write('manifest.json', m);
+  const c = candidate();
+  c.paper.supplementarySources = { 'supplement-1': { archiveKey: m.documents['supplement-1'].key, pages: [1] } };
+  c.paper.documentNotes = [{ title: 'Data', statement: '| A | B |\n|---|---|\n| 1 | 2 |', document: 'supplement-1', page: 1, position: 'before-problem' }];
+  c.problems[0].tx.sourceSpans.push({ document: 'supplement-1', page: 1 });
+  assert.deepEqual(supplementarySourceErrors(c, m), []);
+  assert.equal(lib.pageImages(m).at(-1).document, 'supplement-1');
+  assert.deepEqual(supplementKeys(c.paper.supplementarySources), { 'supplement-1': 'Физика/zz/data.pdf' });
+  assert.throws(() => supplementKeys({ '../escape': 'data.pdf' }), /invalid supplement/);
+  for (const pages of [undefined, [], [1, 1], [0], [2]]) {
+    const invalid = structuredClone(c);
+    invalid.paper.supplementarySources['supplement-1'].pages = pages;
+    assert.ok(supplementarySourceErrors(invalid, m).length, `bad page list ${pages}`);
+  }
+  const file = s.write('candidate.json', c);
+  assert.equal(s.run('validate.mjs', [file, '--manifest', path.join(s.dir, 'manifest.json')]).status, 0);
+  const check = { candidateSha256: lib.sha256File(file), verdict: 'pass', summary: 'full source review', coverage: { pagesRead: lib.pageImages(m).map(({ document, page }) => ({ document, page })), problemsChecked: 1, figuresChecked: 1 }, defects: [] };
+  const checkFile = s.write('check.json', check), receiptFile = path.join(s.dir, 'receipt.json');
+  const args = [PAPER, '--candidate', file, '--defects', checkFile, '--reviewer', 'agent:gpt-test:session', '--out', receiptFile];
+  const receipt = s.run('receipt.mjs', args);
+  assert.equal(receipt.status, 0, receipt.stdout + receipt.stderr);
+  const hashes = s.read(receiptFile).sourceHashes;
+  assert.equal(hashes['supplement-1'], 'd'.repeat(64));
+  assert.deepEqual(sourceHashErrors(m, hashes), []);
+  assert.match(sourceHashErrors(m, { ...hashes, 'supplement-1': 'e'.repeat(64) }).join(), /supplement-1/);
+  delete hashes['supplement-1'];
+  assert.match(sourceHashErrors(m, hashes).join(), /supplement-1/);
+  check.coverage.pagesRead.pop(); s.write('check.json', check);
+  assert.notEqual(s.run('receipt.mjs', args).status, 0, 'unread supplementary pages cannot pass');
+  c.paper.supplementarySources['supplement-1'].archiveKey = 'wrong.pdf';
+  assert.match(supplementarySourceErrors(c, m).map(e => e.message).join(), /does not match/);
+  delete c.paper.supplementarySources;
+  assert.match(supplementarySourceErrors(c, m).map(e => e.message).join(), /not declared|undeclared/);
+});
+
+test('figure repairs retain a declared supplement identity and clear stale crop evidence', async () => {
+  const { applyFixes } = await import(txModule('fixes.mjs'));
+  const c = candidate();
+  const field = '/problems/0/figures/0/tx/bbox';
+  const fix = { path: field, value: { document: 'supplement-1', page: 1, bbox: [100, 100, 500, 500] } };
+  const options = { defects: [{ path: field, kind: 'figure', severity: 'major', description: 'wrong document' }] };
+  assert.equal(applyFixes(c, [fix], options).applied.length, 0);
+  c.paper.supplementarySources = { 'supplement-1': { archiveKey: 'data.pdf', pages: [1] } };
+  assert.equal(applyFixes(c, [fix], options).applied.length, 1);
+  assert.equal(c.problems[0].figures[0].tx.document, 'supplement-1');
+  assert.ok(!c.problems[0].figures[0].tx.public200);
+  assert.ok(!c.problems[0].figures[0].url);
+});
 
 test('bbox permille <-> preview pixel conversion round-trips', () => {
   const px = lib.bboxToPreviewPx([365, 275, 625, 430], size);
