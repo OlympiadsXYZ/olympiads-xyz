@@ -243,8 +243,9 @@ export function numberNamesCode(
 }
 
 /**
- * A problem's title for the sidebar row and the page title. With an overlaid
- * number, a title that repeats it drops the repeat: "2A. Optical properties",
+ * A problem's title for the sidebar row and the page title. A title with an
+ * explicit repeated number drops it: "8. Night Sky.". With an overlaid
+ * number, also handle forms such as "2A. Optical properties",
  * "10-1 «Сифон»" and "10 класс. Задача №1. Эффективная масса" shown as 10.1.
  */
 export function rowTitle(
@@ -253,12 +254,20 @@ export function rowTitle(
   stored: number | string
 ): string | null {
   if (!title) return null;
-  if (number === stored) return title;
+  const escaped = String(number).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (number === stored) {
+    // Require a complete number or punctuation followed by whitespace/end so
+    // titles such as "3.14 radians" and "3 bodies" keep their meaning.
+    return (
+      title
+        .replace(new RegExp(`^${escaped}(?:[.:)](?:\\s+|$)|$)`), '')
+        .trim() || null
+    );
+  }
   const code = gradeCode(title);
   if (code && numberNamesCode(number, code)) {
     return title.slice(code.head).trim() || null;
   }
-  const escaped = String(number).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return (
     title
       .replace(new RegExp(`^${escaped}(?:\\s*[.:)]\\s*|\\s+(?=\\S)|$)`), '')

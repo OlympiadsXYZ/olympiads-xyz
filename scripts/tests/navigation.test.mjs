@@ -147,6 +147,23 @@ test('page title uses the display number and drops a repeated one', () => {
   assert.equal(problemName({ id: 'e-p1', number: 4, title: 'Задача 4. Звезди' }, numbers), 'Задача 4. Звезди');
 });
 
+test('unoverlaid printed numbers appear once in both the sidebar and page title', () => {
+  const cases = [
+    [8, '8. Night Sky.', 'Задача 8. Night Sky.'],
+    [1, '1', 'Задача 1'],
+    [2, '2) Optical properties', 'Задача 2. Optical properties'],
+    [3, '3.14 radians', 'Задача 3. 3.14 radians'],
+    [3, '3 bodies', 'Задача 3. 3 bodies'],
+    [8, '9. Different printed number', 'Задача 8. 9. Different printed number'],
+  ];
+  for (const [number, title, expected] of cases) {
+    const file = paper({ competition: 'IPhO', round: 'theory', roundType: 'theory' }, [number], { title });
+    const [node] = nodesOf([file], { labels: LABELS });
+    assert.equal(tree.problemLabel(node.problems[0]), expected);
+    assert.equal(problemName(file.problems[0]), expected);
+  }
+});
+
 // ---------------------------------------------------------------------------
 // the gate
 
