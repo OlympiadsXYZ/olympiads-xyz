@@ -38,8 +38,8 @@ jobs:
         run: yarn install --frozen-lockfile
       # Source gates (D-P8): nothing is built from invalid, non-normalised, stale
       # or ineligible problem sources. Any drift fails the job before Gatsby runs.
-      - name: Install schema validator
-        run: python3 -m pip install --user "$(grep -i '^jsonschema==' scripts/requirements-transcription.txt)"
+      - name: Install transcription validation dependencies
+        run: python3 -m pip install --user -r scripts/requirements-transcription.txt
       - name: Validate papers against schema
         run: python3 scripts/validate-papers.py
       - name: Normalisation drift check
