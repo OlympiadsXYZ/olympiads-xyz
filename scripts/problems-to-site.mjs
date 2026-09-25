@@ -826,7 +826,11 @@ function main() {
   const unmanaged = extra.EXTRA_PROBLEMS.filter(p => !owned.has(p.uniqueId) && !allIds.has(p.uniqueId));
   const metadata = [...unmanaged, ...[...generated.values()].filter(p => !inModules.has(p.uniqueId))].sort((a, b) => a.uniqueId.localeCompare(b.uniqueId));
   planned.set('content/extraProblems.json', jsonText({ ...extra, EXTRA_PROBLEMS: metadata }));
-  planned.set('content/problem-routes.json', jsonText(Object.fromEntries(Object.entries(routes).sort(([a], [b]) => a.localeCompare(b)))));
+  const sortedRoutes = Object.entries(routes).sort(([a], [b]) => a.localeCompare(b));
+  planned.set('content/problem-routes.json', jsonText(Object.fromEntries(sortedRoutes)));
+  // What the browser needs (src/models/problem.ts): only the routes that are not "/problems/<id>", which getProblemURL
+  // gives any id it does not find. Three quarters of the ledger are such entries; every problem page loaded them.
+  planned.set('content/problem-routes.client.json', jsonText(Object.fromEntries(sortedRoutes.filter(([id, route]) => route !== `/problems/${id}`))));
   const manifest = { version: 1, files: Object.fromEntries([...planned].filter(([p]) => p.startsWith('solutions/')).map(([p, text]) => [p, sha256(text)])), problemIds: [...generated.keys()].sort(), moduleTables };
   planned.set('content/problem-generated.json', jsonText(manifest));
   let stale = 0;
