@@ -110,13 +110,24 @@ const HTML = new RegExp(`</?(?:${HTML_TAGS})(?:\\s[^<>]*)?/?>`, 'i');
 let mathCount = 0;
 walkStrings(data, (p, s) => {
   if (/\/(tx|classification|sourceLayout)\b/.test(p) || /\/(url|archiveKey|id|from|to)$/.test(p)) return;
+  const rendered = /\/(statement|statementAfterParts|statementAfter|caption|alt|title|label)$/.test(p) && !/\/answer\//.test(p);
+  // A missing JSON/JS escape can turn \tau, \beta, \frac or \rho into a control
+  // character plus the rest of the command. KaTeX accepts some of those as
+  // ordinary letters, so check the decoded string before its math is rendered.
+  if (rendered || /\/answer\/latex$/.test(p)) {
+    if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/u.test(s))
+      err(p, 'control character in rendered text (possible unescaped LaTeX command such as \\beta or \\frac)');
+    else if ((/\/answer\/latex$/.test(p) && /[\t\r]/u.test(s)) || mathSpans(s).some(span => /[\t\r]/u.test(span.inner)))
+      err(p, 'tab or carriage return inside math (possible unescaped LaTeX command such as \\tau or \\rho)');
+    else if (/\t(?:au|heta|imes|ext|ilde|op|riangle)(?=\b|[_^{}\\])/u.test(s) || /\r(?:ho|ight|angle)(?=\b|[_^{}\\])/u.test(s))
+      err(p, 'control character followed by a LaTeX command fragment (check escaping of \\tau, \\theta or \\rho)');
+  }
   const prose = proseOnly(s);
   if (HTML.test(prose)) err(p, `raw HTML tag in prose: ${HTML.exec(prose)[0].slice(0, 40)}`);
   if (/<<|>>/.test(prose)) err(p, 'bare << or >> outside math (MDX parses it as JSX); use $\\ll$ / $\\gg$');
   // bare LaTeX in prose: "(23^{h}56^{m})" — MDX reads {h} as a JavaScript expression and the site build dies.
   // answer.latex fields are raw LaTeX by design and notes are never rendered as MDX.
   // Only fields the generator renders as MDX prose can break the build; answer fields, notes and caveats get a warning.
-  const rendered = /\/(statement|statementAfterParts|statementAfter|caption|alt|title|label)$/.test(p) && !/\/answer\//.test(p);
   const bare = /[{}]/.test(prose) ? `braces outside math (MDX treats {…} as an expression): ${/[^{}]{0,20}[{}][^{}]{0,20}/.exec(prose)?.[0]?.trim()} — put the LaTeX inside $…$`
     : /\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.test(prose) ? `LaTeX command outside math (${/\\[a-zA-Z]{2,}|\\[,;:!]|\\ /.exec(prose)?.[0].trim()}); put it inside $…$ or write it as text` : null;
   if (bare && !/\/(latex|notes|caveat)$/.test(p) && !/\/answer\/(value|equivalentForms\/\d+)$/.test(p)) (rendered ? err : warn)(p, bare);

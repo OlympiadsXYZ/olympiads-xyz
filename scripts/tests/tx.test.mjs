@@ -909,6 +909,40 @@ test('LaTeX spacing and text commands outside math are normalised; a leftover co
   assert.match(r.stdout, /LaTeX command outside math \((\\\\|\\)alpha\)/); // the JSON report escapes the backslash
 });
 
+test('validate rejects decoded LaTeX escape controls without rejecting layout whitespace', t => {
+  const s = sandbox(t);
+  const check = (name, update) => {
+    const c = candidate();
+    update(c);
+    const r = s.run('validate.mjs', [s.write(`candidates/${name}.json`, c), '--paper-id', PAPER, '--manifest', path.join(s.dir, 'manifest.json')]);
+    return { status: r.status, report: JSON.parse(r.stdout) };
+  };
+  for (const [name, broken, field] of [
+    ['tau', '$\tau^*$', '/problems/0/parts/0/statement'], // JS decodes \t into a tab; KaTeX otherwise accepts au^*
+    ['beta', '$\beta$', '/problems/0/parts/0/statement'], // \b -> backspace
+    ['frac', '$\frac{1}{2}$', '/problems/0/parts/0/statement'], // \f -> form feed
+    ['rho', '$\rho$', '/problems/0/parts/0/statement'], // \r -> carriage return
+  ]) {
+    const { status, report } = check(name, c => { c.problems[0].parts[0].statement = `Find ${broken}.`; });
+    assert.notEqual(status, 0, `${name} must fail validation`);
+    assert.ok(report.errors.some(e => e.path === field && /control character|inside math/.test(e.message)), `${name}: ${JSON.stringify(report.errors)}`);
+  }
+  const raw = check('answer-latex', c => { c.problems[0].answer = { kind: 'expression', latex: '\tau^*' }; });
+  assert.notEqual(raw.status, 0);
+  assert.ok(raw.report.errors.some(e => e.path === '/problems/0/answer/latex' && /tab or carriage return|control character/.test(e.message)));
+  const rawRho = check('answer-rho', c => { c.problems[0].answer = { kind: 'expression', latex: '\rho' }; });
+  assert.notEqual(rawRho.status, 0);
+  assert.ok(rawRho.report.errors.some(e => e.path === '/problems/0/answer/latex' && /tab or carriage return/.test(e.message)));
+  const proseTau = check('prose-tau', c => { c.problems[0].statement = 'At time \tau^* find the displacement.'; });
+  assert.notEqual(proseTau.status, 0);
+  assert.ok(proseTau.report.errors.some(e => e.path === '/problems/0/statement' && /command fragment/.test(e.message)));
+  const good = check('escaped-and-layout', c => {
+    c.problems[0].statement = 'First paragraph.\n\nSecond paragraph with $\\tau^*$, $\\beta$, $\\frac{1}{2}$, and $\\rho$.\nObject 1\t( )\tObject 2\t( )';
+    c.problems[0].answer = { kind: 'expression', latex: '\\tau^* + \\rho' };
+  });
+  assert.equal(good.status, 0, JSON.stringify(good.report.errors));
+});
+
 test('normaliseCandidate cleans parts: duplicated label, printed points markers, a statement that repeats its parts', () => {
   const c = candidate();
   const pr = c.problems[0];
