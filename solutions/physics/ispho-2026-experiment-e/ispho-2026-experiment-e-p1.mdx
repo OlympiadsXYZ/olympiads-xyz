@@ -1,0 +1,484 @@
+---
+id: ispho-2026-experiment-e-p1
+source: 'ISPhO 2026, Експеримент'
+title: 'Задача 1. Fiber Bragg grating'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/ISPhO/2026/ispho-2026-experiment-e.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-25T14:34:01.876Z'
+verifier: 'single-pass'
+---
+
+*Fiber Bragg grating · 20 т.*
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Instructions for using the FBG-Writer software](#software)
+- [Part A. FBG fabrication technology](#a)
+- [Part B. Coupled mode theory](#b)
+- [Part C. Calibration of an FBG temperature sensor](#c)
+- [Part D. Using the FBG temperature sensor](#d)
+- [Part E. FBG dynamometer](#e)
+- [Part F. Birefringence in FBG](#f)
+
+</nav>
+
+An optical fiber is a dielectric waveguide structure made of an optically transparent material in the form of a thin filament. It is designed for the controlled transmission of electromagnetic signals in the visible and infrared spectral ranges. Today optical fibers designed for an operating wavelength of $1550\ \mathrm{nm}$ are widely used in long-haul communication links and telecommunication networks.
+
+In this problem we consider a single-mode fiber (SMF) shown in figure 1. It consists of a thin core with refractive index $n_c$ and a cladding with refractive index $n_s<n_c$. Due to the phenomenon of total internal reflection, the optical radiation remains confined within the core and propagates along its axis. The refractive-index difference between the core and the cladding provides the fiber with its waveguiding properties, allowing efficient light confinement even when the fiber is subjected to slight bends.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '78.1%', '--fig-max': '500px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/smf-astra-root21-20260925.png" alt="Fig.1: Structure of an SMF optical fiber" width="1564" height="657" loading="lazy" decoding="async" />
+</figure>
+
+
+During the fiber manufacturing process, various optical structures can be embedded within the fiber, allowing them to be readily integrated into measurement and sensing systems. We consider a structure known as a Fiber Bragg Grating (FBG). In this configuration the fiber core contains defects with a period $\Lambda$ (shown in gray in figure 2), which are regions with a slightly increased refractive index.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '80.4%', '--fig-max': '515px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/fbg-astra-root21-20260925.png" alt="Fig.2: Structure of an FBG" width="1608" height="763" loading="lazy" decoding="async" />
+</figure>
+
+
+A Fiber Bragg Grating exhibits the properties of a narrowband dielectric mirror: it reflects light whose vacuum wavelength is close to
+
+$$
+\lambda_B=2n_c\Lambda.
+$$
+
+Figure 2 shows the transmission spectrum of an FBG, i.e., the dependence of the energy transmission coefficient $T$ on the optical wavelength $\lambda$. The sharp minimum corresponds to the Bragg resonance at $\lambda_B$.
+
+<ProblemSection id="software">
+
+### Instructions for using the FBG-Writer software
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81%', '--fig-max': '519px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/writer-astra-root21-20260925.png" alt="Fig.3: FBG-Writer software interface" width="1621" height="959" loading="lazy" decoding="async" />
+</figure>
+
+
+The software shown in figure 3 allows you to “fabricate” FBG and investigate their transmission spectra over the wavelength range $[1540,1560]\ \mathrm{nm}$. The plot of $T(\lambda)$ dependence is displayed in the “Plot area” after pressing the “Calculate and plot” button. The spectrometer shows the vacuum wavelength of light $\lambda=2\pi c/\omega$.
+
+To get started with the software, select the tab corresponding to the desired part of the problem from the “Parts” menu. The parameter values can be adjusted in the “Settings” panel located on the left side of the application window. The wavelength range displayed on the plot is controlled by the “Min $\lambda$” and “Max $\lambda$” fields in the “Limits” panel. These limits can be set to any values within the interval $[1540,1560]\ \mathrm{nm}$. To apply the new limits, press the “Apply limits to active tab” button located in the “Limits” panel.
+
+You can zoom in on the area on the graph. To do this, click on the button with a magnifying glass located on the toolbar below and select the area of interest on the graph. To return to the original scale, click on the button with the image of the house.
+
+For convenience, throughout this problem the transmission coefficient $T$ is expressed in decibels (the conversion formula is $T[\mathrm{dB}]=10\log_{10}T$). In any practical measurement setup, there is a background illumination, so the value of $T$ cannot fall below a finite threshold.
+
+</ProblemSection>
+
+<ProblemSection id="a">
+
+### Part A. FBG fabrication technology (5 т.)
+
+One of the methods for manufacturing FBG involves drawing an optical fiber under a focused laser that emits very short but high-energy pulses of light.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '80.4%', '--fig-max': '515px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/manufacturing-astra-root21-20260925.png" alt="Fig.4: FBG manufacturing scheme" width="1608" height="520" loading="lazy" decoding="async" />
+</figure>
+
+
+Let $f$ denote the frequency of pulses (see the graph of the dependence of the laser light intensity on time in figure 4), the fiber velocity is denoted by $v$. The focused laser beam heats the fiber optic material and “sinters” it, forming small defects. If the velocity of the optical fiber is constant, then a periodic grating with a modulated refractive index is formed in it.
+
+**A.1** Express the defect period $\Lambda$ in terms of $f$ and $v$.
+
+*Answer-sheet field:* $\Lambda=\underline{\hspace{2cm}}$. **[0,2 т.]**
+
+Fiber Bragg Gratings are written using a pulsed laser with $f=1.00\ \mathrm{kHz}$.
+
+**A.2** The refractive index of the fiber core material is $n_c\approx1.45$. Estimate the fiber velocity $v_0$ that produces a grating with the wavelength of Bragg resonance $\lambda_B=1550\ \mathrm{nm}$.
+
+*Answer-sheet field:* $v_0=\underline{\hspace{2cm}}$. **[0,4 т.]**
+
+For the FBG manufacturing, the scheme shown in figure 4 is used. A slightly stretched optical fiber is fixed in the stage. The fabrication is controlled using three parameters: $\Delta Y$, $v$ and $L$. The manufacturing process and investigation of optical fiber include the following steps.
+
+1. The laser is off. Using $\Delta Y$, the vertical position of the fiber is adjusted. Ideally, the focused spot of the laser should coincide with the SMF center. If $\Delta Y$ differs from the optimal value, then the grating is written with a lower refractive index modulation.
+2. The stage begins to “creep” along the $X$ axis and accelerates to the velocity $v$.
+3. The laser turns on. The stage velocity is maintained constant and equal to $v$.
+4. After the stage has passed the distance $L\in[0,1000]\ \mathrm{mm}$, the laser turns off and the stage stops.
+5. The transmission spectrum (the dependence of the energy transmission coefficient $T$ on the radiation wavelength $\lambda$) of the resulting structure is measured.
+
+To complete part A, open the “Part A” tab in the FBG-Writer program. The $\Delta Y$ parameter is denoted as $dY$ in the software.
+
+**A.3** Using $\Delta Y=0.0\ \mu\mathrm m$, $v=v_0$, $L=50\ \mathrm{mm}$ write the grating. What is the wavelength of its Bragg resonance $\lambda_B$?
+
+*Answer-sheet field:* $\lambda_B=\underline{\hspace{2cm}}$. **[0,2 т.]**
+
+**A.4** Calculate the exact value of $n_c$.
+
+*Answer-sheet field:* $n_c=\underline{\hspace{2cm}}$. **[0,2 т.]**
+
+**A.5** At what stage velocity $v_{1550}$ will the wavelength $\lambda_B$ be exactly $1550\ \mathrm{nm}$?
+
+*Answer-sheet field:* $v_{1550}=\underline{\hspace{2cm}}$. **[0,2 т.]**
+
+Now let us find the optimal parameter $\Delta Y_0$.
+
+**A.6** Write the gratings using $v=v_{1550}$, $L=50\ \mathrm{mm}$ and different values of $\Delta Y$ in the range $[-3,3]\ \mu\mathrm m$. Plot the dependence of the transmission spectrum minimum $T_{\min}$ on $\Delta Y$.
+
+*Blank measurement table from the official answer sheet.*
+
+| $\Delta Y$ ($\mu\mathrm m$) | $T_{\min}$ (dB) |
+| --- | --- |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.5%', '--fig-max': '464px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-a6-astra-root21-20260925.png" alt="Blank plotting grid from the official answer sheet (A6)" width="1451" height="1463" loading="lazy" decoding="async" />
+</figure>
+
+**[1,8 т.]**
+
+**A.7** Determine the $\Delta Y_0$ at which the strongest grating is written.
+
+*Answer-sheet field:* $\Delta Y_0=\underline{\hspace{2cm}}$. **[0,3 т.]**
+
+Let us study how the transmission spectrum minimum $T_{\min}$ depends on the length of the grating $L$.
+
+**A.8** Write the gratings using $\Delta Y=\Delta Y_0$, $v=v_{1550}$ and different values of $L$. Plot the dependence of the transmission spectrum minimum $T_{\min}$ on $L$. Determine the slope of the linear section of the graph.
+
+*Blank measurement table from the official answer sheet.*
+
+| $L$ (mm) | $T_{\min}$ (dB) |
+| --- | --- |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.5%', '--fig-max': '464px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-a8-astra-root21-20260925.png" alt="Blank plotting grid from the official answer sheet (A8)" width="1451" height="1461" loading="lazy" decoding="async" />
+</figure>
+
+
+*Answer-sheet field:* $k=\underline{\hspace{2cm}}$. **[1,7 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### Part B. Coupled mode theory (2,9 т.)
+
+The behavior of light inside the SMF can be approximately described using Coupled Mode Theory (CMT). Consider the propagation of radiation with the wavelength $\lambda_B$ through the fiber core.
+
+The total electric field inside the SMF can be expressed as the sum of two waves traveling in different directions:
+
+$$
+E(z)=a(z)e^{+ikz}+b(z)e^{-ikz},
+$$
+
+where $a(z)$ is the complex amplitude of the wave traveling in the positive direction of the $z$ fiber axis, and $b(z)$ is the complex amplitude of the wave traveling in the negative direction of the $z$ fiber axis, $k=2\pi n_c/\lambda_B$ is the magnitude of the wave vector.
+
+When the radiation propagates in the SMF without any refractive index modulation, the amplitudes of both components remain constant:
+
+$$
+a=\mathrm{const},\qquad b=\mathrm{const}.
+$$
+
+However, when the radiation enters the grating, it begins to interact with its periodic structure. As a result, the amplitudes of the components change:
+
+$$
+\begin{cases}a'(z)=i\varkappa b(z),\\ b'(z)=-i\varkappa a(z).\end{cases}
+$$
+
+Here $\varkappa$ is the interaction constant, which is called the grating strength, $a'(z)$ is the derivative of the complex amplitude $a(z)$ with respect to coordinate $z$, $b'(z)$ is the derivative of the complex amplitude $b(z)$ with respect to coordinate $z$.
+
+**B.1** Eliminate the variable $b$ and obtain a second-order differential equation for $a$. **[0,5 т.]**
+
+Let us consider the problem of light passing through an FBG of length $L$. A wave with amplitude $a_0$ falls on the grating on the left. A wave with amplitude $t'a_0$ emerges from FBG on the right. In this case, $T=|t'|^2$ is the energy transmission coefficient.
+
+**B.2** Express $T$ in terms of $\varkappa$ and $L$.
+
+*Answer-sheet field:* $T=\underline{\hspace{2cm}}$. **[1,4 т.]**
+
+**B.3** Determine the strength $\varkappa_0$ of the gratings written in question A8.
+
+*Answer-sheet field:* $\varkappa_0=\underline{\hspace{2cm}}$. **[1 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### Part C. Calibration of an FBG temperature sensor (2,9 т.)
+
+When the SMF is heated with the written FBG, the wavelength of the Bragg resonance changes. This is caused by the thermal expansion increasing the distance between adjacent defects and by the temperature-induced change in the refractive index. The wavelength shift of the Bragg resonance can be written as
+
+$$
+\Delta\lambda_B=\lambda_B\cdot A\cdot\Delta t,
+$$
+
+where $\Delta t$ is the temperature change, $A$ is a constant with the units of $^\circ\mathrm C^{-1}$.
+
+Elongation of a sample with a length $l$ due to the thermal expansion is given by the equation $\Delta l=l\alpha\Delta t$, where $\alpha$ is the temperature coefficient of expansion.
+
+The temperature dependence of the refractive index is described by the equation $\Delta n_c=\frac{dn_c}{dt}\Delta t$, where $\Delta n_c$ is the refractive index change.
+
+**C.1** Derive the expression for $A$ in terms of $\alpha$, $\frac{dn_c}{dt}$ and $n_c$.
+
+*Answer-sheet field:* $A=\underline{\hspace{2cm}}$. **[0,4 т.]**
+
+To calibrate FBG as a temperature sensor, you have access to a grating with fixed parameters and a water bath with the ability to change the temperature in the range $t\in[25,100]\ ^\circ\mathrm C$.
+
+**C.2** Open the “Part C” tab in the FBG-Writer program. Measure the dependence of the wavelength $\lambda_B$ on $t$.
+
+*Blank measurement table from the official answer sheet.*
+
+| $t$ ($^\circ\mathrm C$) | $\lambda_B$ (nm) |
+| --- | --- |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+
+**[1,2 т.]**
+
+**C.3** Plot the dependence of $\lambda_B$ on $t$. Determine the value of the coefficient $A$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.5%', '--fig-max': '464px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-c3-astra-root21-20260925.png" alt="Blank plotting grid from the official answer sheet (C3)" width="1451" height="1457" loading="lazy" decoding="async" />
+</figure>
+
+
+*Answer-sheet field:* $A=\underline{\hspace{2cm}}$. **[0,8 т.]**
+
+**C.4** Estimate the minimum temperature change that can be detected using the FBG sensor. **[0,5 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="d">
+
+### Part D. Using the FBG temperature sensor (2,4 т.)
+
+The FBG provided earlier was placed in a container with molten low-density polyethylene LDPE, which was kept in the air. The FBG transmission spectrum was measured once a minute. During this process the LDPE solidified.
+
+**D.1** Open the “Part D” tab in the FBG-Writer program. Measure the dependence of the wavelength $\lambda_B$ on $t$. Obtain the necessary data from the spectra and then calculate the dependence of temperature $t$ on time $\tau$.
+
+*Blank measurement table from the official answer sheet.*
+
+| $\tau$ (min) | $\lambda_B$ (nm) | $t$ ($^\circ\mathrm C$) |
+| --- | --- | --- |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+
+**[1,6 т.]**
+
+**D.2** Plot the dependence of temperature $t$ on time $\tau$. Determine the LDPE solidification temperature $t_0$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.5%', '--fig-max': '464px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-d2-astra-root21-20260925.png" alt="Blank plotting grid from the official answer sheet (D2)" width="1451" height="1457" loading="lazy" decoding="async" />
+</figure>
+
+
+*Answer-sheet field:* $t_0=\underline{\hspace{2cm}}$. **[0,8 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="e">
+
+### Part E. FBG dynamometer (3,9 т.)
+
+When the SMF is stretched with the written FBG, the wavelength of the Bragg resonance changes. This is caused by the increase in spacing between adjacent defects and by the change in the refractive index of the sample due to elastic deformations of the medium. The change in the Bragg resonance wavelength induced by an applied force $F$ can be expressed as:
+
+$$
+\Delta\lambda_B=\lambda_B\cdot B\cdot F,
+$$
+
+where $B$ is a constant with the units of $\mathrm N^{-1}$. Fiber deformation is described by Hooke's law $\sigma=E\varepsilon$, where $\sigma$ is the mechanical stress (measured in Pa), $E$ is the Young's modulus of the fiber material, $\varepsilon$ is the strain ($\varepsilon=\Delta l/l$).
+
+The dependence of the refractive index of medium on stretching is described by the equation $\Delta n_c=\frac{dn_c}{d\varepsilon}\varepsilon$, where $\Delta n_c$ is the refractive index change. Let $S$ denote the cross-sectional area of the fiber.
+
+**E.1** Derive the expression for $B$ in terms of $E$, $S$, $n_c$ and $\frac{dn_c}{d\varepsilon}$.
+
+*Answer-sheet field:* $B=\underline{\hspace{2cm}}$. **[0,5 т.]**
+
+To calibrate the FBG as a strain sensor, you have access to a sample, one end of which is fixed, and a mechanical dynamometer that allows you to measure forces in the range $F\in[0,20]\ \mathrm{mN}$. The end of the dynamometer spring is firmly connected to the free end of the fiber.
+
+**E.2** Open the “Part E.I” tab in the FBG-Writer program. Measure the dependence of the wavelength $\lambda_B$ on $F$.
+
+*Blank measurement table from the official answer sheet.*
+
+| $F$ (mN) | $\lambda_B$ (nm) |
+| --- | --- |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+
+**[1 т.]**
+
+**E.3** Plot the dependence of $\lambda_B$ on $F$. Determine the value of the coefficient $B$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.5%', '--fig-max': '464px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-e3-astra-root21-20260925.png" alt="Blank plotting grid from the official answer sheet (E3)" width="1451" height="1457" loading="lazy" decoding="async" />
+</figure>
+
+
+*Answer-sheet field:* $B=\underline{\hspace{2cm}}$. **[0,7 т.]**
+
+You are given a spring of unknown stiffness $k$. One end of the SMF sample is fixed, and a spring is attached to the other end. The spring elongation $\Delta x$ is denoted as $x$ in the software.
+
+**E.4** Open the “Part E.II” tab in the FBG-Writer program. By changing the spring elongation $\Delta x$ in the range $[0,10]\ \mathrm{mm}$, measure the dependence $\lambda_B(\Delta x)$ and plot its graph. Determine the value of the spring stiffness $k$.
+
+*Blank measurement table from the official answer sheet.*
+
+| $\Delta x$ (mm) | $\lambda_B$ (nm) |
+| --- | --- |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+|   |   |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.5%', '--fig-max': '464px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-e4-astra-root21-20260925.png" alt="Blank plotting grid from the official answer sheet (E4)" width="1451" height="1461" loading="lazy" decoding="async" />
+</figure>
+
+
+*Answer-sheet field:* $k=\underline{\hspace{2cm}}$. **[1,7 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="f">
+
+### Part F. Birefringence in FBG (2,9 т.)
+
+When an FBG is written using a femtosecond laser (pulse duration $1\ \mathrm{fs}=10^{-15}\ \mathrm s$), elongated defects are formed in it, which leads to effective birefringence. The strength of the grating and the wavelength of the Bragg resonance depend on the polarization of the light. For radiation with polarization directed along defects, we introduce $\varkappa_{\parallel}$ and $\lambda_{B,\parallel}$, and for radiation with perpendicular polarization — $\varkappa_{\perp}$ and $\lambda_{B,\perp}$ (grating strength and wavelength, respectively). It is known that $\varkappa_{\parallel}<\varkappa_{\perp}$.
+
+If an FBG is illuminated with polarized light, the observed transmission spectrum will depend on the angle $\theta-\theta_0$ between the polarization of the light and the orientation of the grating defects.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.2%', '--fig-max': '450px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/birefringence-astra-root21-20260925.png" alt="Fig.5: Light propagation in an FBG with elongated defects" width="1405" height="871" loading="lazy" decoding="async" />
+</figure>
+
+
+You are given a fixed grating with a length $L=50\ \mathrm{mm}$ and birefringence. You can rotate the polarization of the radiation (angle $\theta$ in figure 5) and measure the transmission spectrum depending on the angle $\theta$.
+
+**F.1** Open the “Part F” tab in the FBG-Writer program. Determine the angle $\theta_0$ at which the defects are oriented to the $Y$ axis.
+
+*The official answer sheet provides four blank two-row, seven-column tables, with no printed column labels.*
+
+| | | | | | | |
+|---|---|---|---|---|---|---|
+| | | | | | | |
+
+| | | | | | | |
+|---|---|---|---|---|---|---|
+| | | | | | | |
+
+| | | | | | | |
+|---|---|---|---|---|---|---|
+| | | | | | | |
+
+| | | | | | | |
+|---|---|---|---|---|---|---|
+| | | | | | | |
+
+*Answer-sheet field:* $\theta_0=\underline{\hspace{2cm}}$. **[2 т.]**
+
+**F.2** Find the values of $\varkappa_{\parallel}$, $\varkappa_{\perp}$ and $\lambda_{B,\parallel}$, $\lambda_{B,\perp}$.
+
+*Answer-sheet field:* $\varkappa_{\parallel}=\underline{\hspace{2cm}}$.
+
+*Answer-sheet field:* $\varkappa_{\perp}=\underline{\hspace{2cm}}$.
+
+*Answer-sheet field:* $\lambda_{B,\parallel}=\underline{\hspace{2cm}}$.
+
+*Answer-sheet field:* $\lambda_{B,\perp}=\underline{\hspace{2cm}}$. **[0,9 т.]**
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+The archive solutions.txt explicitly lists the experimental solution as “E: (not available)”. The required FBG-Writer program and its generated measurement data are not included in the inspected 2026 archive inventory. The official blank answer sheets are preserved as question materials, not as solutions.
+</Warning>
+
+---
+
+Оригинал в Архива: [E.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/ISPhO/2026/Experiment/E.pdf)
+· допълнителни данни: [E_anssheet.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/ISPhO/2026/Experiment/E_anssheet.pdf)

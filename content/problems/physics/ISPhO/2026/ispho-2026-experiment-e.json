@@ -1,0 +1,578 @@
+{
+ "paper": {
+  "id": "ispho-2026-experiment-e",
+  "subject": "physics",
+  "competition": "ISPhO",
+  "year": 2026,
+  "round": "experiment",
+  "roundType": "experiment",
+  "grade": null,
+  "lang": "en",
+  "title": "Fiber Bragg grating",
+  "totalPoints": 20,
+  "timeLimitMin": null,
+  "status": "review",
+  "source": {
+   "archiveKey": "Физика/Състезания/ISPhO/2026/Experiment/E.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Физика/Състезания/ISPhO/2026/Experiment/E_anssheet.pdf",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   }
+  },
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root",
+   "at": "2026-09-25",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "5318aa69346b5b12b2ed6ab75f46a638028b95204fb29dc5c45409d4bbaabe32",
+    "supplement-1": "f28ba6e30b98f771cf749e6f2350df3a955b1653b7da9a5a70e3a0c6c2c328b3"
+   },
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-25",
+   "notes": "All8question and11blank answer-sheet pages personally visually read. One whole experiment,6scored PartsA–F and23subtasks;20points is sum of explicitly printed part scores. All5source figures and6blank plotting grids preserved as inspected crops. Answer fields and tables native; labeled horizontal measurement tables transposed without inventing measurements (A6:14slots,A8/C2/E2/E4:12each,D1:40);F1four2x7unlabeled blank tables preserved. Full19file year inventory read; solutions.txt explicitly says E not available, required FBG-Writer absent from inspected inventory. No solution or measurement invented."
+  }
+ },
+ "problems": [
+  {
+   "id": "ispho-2026-experiment-e-p1",
+   "number": 1,
+   "title": "Fiber Bragg grating",
+   "points": 20,
+   "problemType": "experiment",
+   "topics": [
+    "optics"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "statement": "An optical fiber is a dielectric waveguide structure made of an optically transparent material in the form of a thin filament. It is designed for the controlled transmission of electromagnetic signals in the visible and infrared spectral ranges. Today optical fibers designed for an operating wavelength of $1550\\ \\mathrm{nm}$ are widely used in long-haul communication links and telecommunication networks.\n\nIn this problem we consider a single-mode fiber (SMF) shown in figure 1. It consists of a thin core with refractive index $n_c$ and a cladding with refractive index $n_s<n_c$. Due to the phenomenon of total internal reflection, the optical radiation remains confined within the core and propagates along its axis. The refractive-index difference between the core and the cladding provides the fiber with its waveguiding properties, allowing efficient light confinement even when the fiber is subjected to slight bends.\n\n![Fig.1: Structure of an SMF optical fiber](smf-astra-root21-20260925)\n\nDuring the fiber manufacturing process, various optical structures can be embedded within the fiber, allowing them to be readily integrated into measurement and sensing systems. We consider a structure known as a Fiber Bragg Grating (FBG). In this configuration the fiber core contains defects with a period $\\Lambda$ (shown in gray in figure 2), which are regions with a slightly increased refractive index.\n\n![Fig.2: Structure of an FBG](fbg-astra-root21-20260925)\n\nA Fiber Bragg Grating exhibits the properties of a narrowband dielectric mirror: it reflects light whose vacuum wavelength is close to\n\n$$\\lambda_B=2n_c\\Lambda.$$\n\nFigure 2 shows the transmission spectrum of an FBG, i.e., the dependence of the energy transmission coefficient $T$ on the optical wavelength $\\lambda$. The sharp minimum corresponds to the Bragg resonance at $\\lambda_B$.",
+   "figures": [
+    {
+     "id": "smf-astra-root21-20260925",
+     "alt": "Fig.1: Structure of an SMF optical fiber",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/smf-astra-root21-20260925.png",
+     "width": 1564,
+     "height": 657,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       112.5,
+       320.76,
+       487.53,
+       478.21
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "fbg-astra-root21-20260925",
+     "alt": "Fig.2: Structure of an FBG",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/fbg-astra-root21-20260925.png",
+     "width": 1608,
+     "height": 763,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       104.76,
+       155.74,
+       490.5,
+       338.45
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "sections": [
+    {
+     "id": "software",
+     "title": "Instructions for using the FBG-Writer software",
+     "statement": "![Fig.3: FBG-Writer software interface](writer-astra-root21-20260925)\n\nThe software shown in figure 3 allows you to “fabricate” FBG and investigate their transmission spectra over the wavelength range $[1540,1560]\\ \\mathrm{nm}$. The plot of $T(\\lambda)$ dependence is displayed in the “Plot area” after pressing the “Calculate and plot” button. The spectrometer shows the vacuum wavelength of light $\\lambda=2\\pi c/\\omega$.\n\nTo get started with the software, select the tab corresponding to the desired part of the problem from the “Parts” menu. The parameter values can be adjusted in the “Settings” panel located on the left side of the application window. The wavelength range displayed on the plot is controlled by the “Min $\\lambda$” and “Max $\\lambda$” fields in the “Limits” panel. These limits can be set to any values within the interval $[1540,1560]\\ \\mathrm{nm}$. To apply the new limits, press the “Apply limits to active tab” button located in the “Limits” panel.\n\nYou can zoom in on the area on the graph. To do this, click on the button with a magnifying glass located on the toolbar below and select the area of interest on the graph. To return to the original scale, click on the button with the image of the house.\n\nFor convenience, throughout this problem the transmission coefficient $T$ is expressed in decibels (the conversion formula is $T[\\mathrm{dB}]=10\\log_{10}T$). In any practical measurement setup, there is a background illumination, so the value of $T$ cannot fall below a finite threshold.",
+     "figures": [
+      {
+       "id": "writer-astra-root21-20260925",
+       "alt": "Fig.3: FBG-Writer software interface",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/writer-astra-root21-20260925.png",
+       "width": 1621,
+       "height": 959,
+       "source": {
+        "page": 2,
+        "pdfRect": [
+         103.59,
+         498.42,
+         492.3,
+         728.23
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": []
+    },
+    {
+     "id": "a",
+     "title": "Part A. FBG fabrication technology",
+     "statement": "One of the methods for manufacturing FBG involves drawing an optical fiber under a focused laser that emits very short but high-energy pulses of light.\n\n![Fig.4: FBG manufacturing scheme](manufacturing-astra-root21-20260925)\n\nLet $f$ denote the frequency of pulses (see the graph of the dependence of the laser light intensity on time in figure 4), the fiber velocity is denoted by $v$. The focused laser beam heats the fiber optic material and “sinters” it, forming small defects. If the velocity of the optical fiber is constant, then a periodic grating with a modulated refractive index is formed in it.",
+     "figures": [
+      {
+       "id": "manufacturing-astra-root21-20260925",
+       "alt": "Fig.4: FBG manufacturing scheme",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/manufacturing-astra-root21-20260925.png",
+       "width": 1608,
+       "height": 520,
+       "source": {
+        "page": 3,
+        "pdfRect": [
+         104.76,
+         448.74,
+         490.5,
+         573.34
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "A.1",
+       "points": 0.2,
+       "statement": "Express the defect period $\\Lambda$ in terms of $f$ and $v$.\n\n*Answer-sheet field:* $\\Lambda=\\underline{\\hspace{2cm}}$.",
+       "figures": [],
+       "statementAfter": "Fiber Bragg Gratings are written using a pulsed laser with $f=1.00\\ \\mathrm{kHz}$."
+      },
+      {
+       "label": "A.2",
+       "points": 0.4,
+       "statement": "The refractive index of the fiber core material is $n_c\\approx1.45$. Estimate the fiber velocity $v_0$ that produces a grating with the wavelength of Bragg resonance $\\lambda_B=1550\\ \\mathrm{nm}$.\n\n*Answer-sheet field:* $v_0=\\underline{\\hspace{2cm}}$.",
+       "figures": [],
+       "statementAfter": "For the FBG manufacturing, the scheme shown in figure 4 is used. A slightly stretched optical fiber is fixed in the stage. The fabrication is controlled using three parameters: $\\Delta Y$, $v$ and $L$. The manufacturing process and investigation of optical fiber include the following steps.\n\n1. The laser is off. Using $\\Delta Y$, the vertical position of the fiber is adjusted. Ideally, the focused spot of the laser should coincide with the SMF center. If $\\Delta Y$ differs from the optimal value, then the grating is written with a lower refractive index modulation.\n2. The stage begins to “creep” along the $X$ axis and accelerates to the velocity $v$.\n3. The laser turns on. The stage velocity is maintained constant and equal to $v$.\n4. After the stage has passed the distance $L\\in[0,1000]\\ \\mathrm{mm}$, the laser turns off and the stage stops.\n5. The transmission spectrum (the dependence of the energy transmission coefficient $T$ on the radiation wavelength $\\lambda$) of the resulting structure is measured.\n\nTo complete part A, open the “Part A” tab in the FBG-Writer program. The $\\Delta Y$ parameter is denoted as $dY$ in the software."
+      },
+      {
+       "label": "A.3",
+       "points": 0.2,
+       "statement": "Using $\\Delta Y=0.0\\ \\mu\\mathrm m$, $v=v_0$, $L=50\\ \\mathrm{mm}$ write the grating. What is the wavelength of its Bragg resonance $\\lambda_B$?\n\n*Answer-sheet field:* $\\lambda_B=\\underline{\\hspace{2cm}}$.",
+       "figures": []
+      },
+      {
+       "label": "A.4",
+       "points": 0.2,
+       "statement": "Calculate the exact value of $n_c$.\n\n*Answer-sheet field:* $n_c=\\underline{\\hspace{2cm}}$.",
+       "figures": []
+      },
+      {
+       "label": "A.5",
+       "points": 0.2,
+       "statement": "At what stage velocity $v_{1550}$ will the wavelength $\\lambda_B$ be exactly $1550\\ \\mathrm{nm}$?\n\n*Answer-sheet field:* $v_{1550}=\\underline{\\hspace{2cm}}$.",
+       "figures": [],
+       "statementAfter": "Now let us find the optimal parameter $\\Delta Y_0$."
+      },
+      {
+       "label": "A.6",
+       "points": 1.8,
+       "statement": "Write the gratings using $v=v_{1550}$, $L=50\\ \\mathrm{mm}$ and different values of $\\Delta Y$ in the range $[-3,3]\\ \\mu\\mathrm m$. Plot the dependence of the transmission spectrum minimum $T_{\\min}$ on $\\Delta Y$.\n\n*Blank measurement table from the official answer sheet.*\n\n| $\\Delta Y$ ($\\mu\\mathrm m$) | $T_{\\min}$ (dB) |\n| --- | --- |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n\n![Blank plotting grid from the official answer sheet (A6)](grid-a6-astra-root21-20260925)",
+       "figures": [
+        {
+         "id": "grid-a6-astra-root21-20260925",
+         "alt": "Blank plotting grid from the official answer sheet (A6)",
+         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-a6-astra-root21-20260925.png",
+         "width": 1451,
+         "height": 1463,
+         "source": {
+          "page": 2,
+          "pdfRect": [
+           123.84,
+           335.07,
+           472.05,
+           686.16
+          ],
+          "dpi": 300,
+          "document": "supplement-1"
+         }
+        }
+       ]
+      },
+      {
+       "label": "A.7",
+       "points": 0.3,
+       "statement": "Determine the $\\Delta Y_0$ at which the strongest grating is written.\n\n*Answer-sheet field:* $\\Delta Y_0=\\underline{\\hspace{2cm}}$.",
+       "figures": [],
+       "statementAfter": "Let us study how the transmission spectrum minimum $T_{\\min}$ depends on the length of the grating $L$."
+      },
+      {
+       "label": "A.8",
+       "points": 1.7,
+       "statement": "Write the gratings using $\\Delta Y=\\Delta Y_0$, $v=v_{1550}$ and different values of $L$. Plot the dependence of the transmission spectrum minimum $T_{\\min}$ on $L$. Determine the slope of the linear section of the graph.\n\n*Blank measurement table from the official answer sheet.*\n\n| $L$ (mm) | $T_{\\min}$ (dB) |\n| --- | --- |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n\n![Blank plotting grid from the official answer sheet (A8)](grid-a8-astra-root21-20260925)\n\n*Answer-sheet field:* $k=\\underline{\\hspace{2cm}}$.",
+       "figures": [
+        {
+         "id": "grid-a8-astra-root21-20260925",
+         "alt": "Blank plotting grid from the official answer sheet (A8)",
+         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-a8-astra-root21-20260925.png",
+         "width": 1451,
+         "height": 1461,
+         "source": {
+          "page": 3,
+          "pdfRect": [
+           123.84,
+           349.38,
+           472.05,
+           699.61
+          ],
+          "dpi": 300,
+          "document": "supplement-1"
+         }
+        }
+       ]
+      }
+     ],
+     "points": 5
+    },
+    {
+     "id": "b",
+     "title": "Part B. Coupled mode theory",
+     "statement": "The behavior of light inside the SMF can be approximately described using Coupled Mode Theory (CMT). Consider the propagation of radiation with the wavelength $\\lambda_B$ through the fiber core.\n\nThe total electric field inside the SMF can be expressed as the sum of two waves traveling in different directions:\n\n$$E(z)=a(z)e^{+ikz}+b(z)e^{-ikz},$$\n\nwhere $a(z)$ is the complex amplitude of the wave traveling in the positive direction of the $z$ fiber axis, and $b(z)$ is the complex amplitude of the wave traveling in the negative direction of the $z$ fiber axis, $k=2\\pi n_c/\\lambda_B$ is the magnitude of the wave vector.\n\nWhen the radiation propagates in the SMF without any refractive index modulation, the amplitudes of both components remain constant:\n\n$$a=\\mathrm{const},\\qquad b=\\mathrm{const}.$$\n\nHowever, when the radiation enters the grating, it begins to interact with its periodic structure. As a result, the amplitudes of the components change:\n\n$$\\begin{cases}a'(z)=i\\varkappa b(z),\\\\ b'(z)=-i\\varkappa a(z).\\end{cases}$$\n\nHere $\\varkappa$ is the interaction constant, which is called the grating strength, $a'(z)$ is the derivative of the complex amplitude $a(z)$ with respect to coordinate $z$, $b'(z)$ is the derivative of the complex amplitude $b(z)$ with respect to coordinate $z$.",
+     "figures": [],
+     "parts": [
+      {
+       "label": "B.1",
+       "points": 0.5,
+       "statement": "Eliminate the variable $b$ and obtain a second-order differential equation for $a$.",
+       "figures": [],
+       "statementAfter": "Let us consider the problem of light passing through an FBG of length $L$. A wave with amplitude $a_0$ falls on the grating on the left. A wave with amplitude $t'a_0$ emerges from FBG on the right. In this case, $T=|t'|^2$ is the energy transmission coefficient."
+      },
+      {
+       "label": "B.2",
+       "points": 1.4,
+       "statement": "Express $T$ in terms of $\\varkappa$ and $L$.\n\n*Answer-sheet field:* $T=\\underline{\\hspace{2cm}}$.",
+       "figures": []
+      },
+      {
+       "label": "B.3",
+       "points": 1,
+       "statement": "Determine the strength $\\varkappa_0$ of the gratings written in question A8.\n\n*Answer-sheet field:* $\\varkappa_0=\\underline{\\hspace{2cm}}$.",
+       "figures": []
+      }
+     ],
+     "points": 2.9
+    },
+    {
+     "id": "c",
+     "title": "Part C. Calibration of an FBG temperature sensor",
+     "statement": "When the SMF is heated with the written FBG, the wavelength of the Bragg resonance changes. This is caused by the thermal expansion increasing the distance between adjacent defects and by the temperature-induced change in the refractive index. The wavelength shift of the Bragg resonance can be written as\n\n$$\\Delta\\lambda_B=\\lambda_B\\cdot A\\cdot\\Delta t,$$\n\nwhere $\\Delta t$ is the temperature change, $A$ is a constant with the units of $^\\circ\\mathrm C^{-1}$.\n\nElongation of a sample with a length $l$ due to the thermal expansion is given by the equation $\\Delta l=l\\alpha\\Delta t$, where $\\alpha$ is the temperature coefficient of expansion.\n\nThe temperature dependence of the refractive index is described by the equation $\\Delta n_c=\\frac{dn_c}{dt}\\Delta t$, where $\\Delta n_c$ is the refractive index change.",
+     "figures": [],
+     "parts": [
+      {
+       "label": "C.1",
+       "points": 0.4,
+       "statement": "Derive the expression for $A$ in terms of $\\alpha$, $\\frac{dn_c}{dt}$ and $n_c$.\n\n*Answer-sheet field:* $A=\\underline{\\hspace{2cm}}$.",
+       "figures": [],
+       "statementAfter": "To calibrate FBG as a temperature sensor, you have access to a grating with fixed parameters and a water bath with the ability to change the temperature in the range $t\\in[25,100]\\ ^\\circ\\mathrm C$."
+      },
+      {
+       "label": "C.2",
+       "points": 1.2,
+       "statement": "Open the “Part C” tab in the FBG-Writer program. Measure the dependence of the wavelength $\\lambda_B$ on $t$.\n\n*Blank measurement table from the official answer sheet.*\n\n| $t$ ($^\\circ\\mathrm C$) | $\\lambda_B$ (nm) |\n| --- | --- |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |",
+       "figures": []
+      },
+      {
+       "label": "C.3",
+       "points": 0.8,
+       "statement": "Plot the dependence of $\\lambda_B$ on $t$. Determine the value of the coefficient $A$.\n\n![Blank plotting grid from the official answer sheet (C3)](grid-c3-astra-root21-20260925)\n\n*Answer-sheet field:* $A=\\underline{\\hspace{2cm}}$.",
+       "figures": [
+        {
+         "id": "grid-c3-astra-root21-20260925",
+         "alt": "Blank plotting grid from the official answer sheet (C3)",
+         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-c3-astra-root21-20260925.png",
+         "width": 1451,
+         "height": 1457,
+         "source": {
+          "page": 5,
+          "pdfRect": [
+           123.84,
+           193.63,
+           472.05,
+           543.02
+          ],
+          "dpi": 300,
+          "document": "supplement-1"
+         }
+        }
+       ]
+      },
+      {
+       "label": "C.4",
+       "points": 0.5,
+       "statement": "Estimate the minimum temperature change that can be detected using the FBG sensor.",
+       "figures": []
+      }
+     ],
+     "points": 2.9
+    },
+    {
+     "id": "d",
+     "title": "Part D. Using the FBG temperature sensor",
+     "statement": "The FBG provided earlier was placed in a container with molten low-density polyethylene LDPE, which was kept in the air. The FBG transmission spectrum was measured once a minute. During this process the LDPE solidified.",
+     "figures": [],
+     "parts": [
+      {
+       "label": "D.1",
+       "points": 1.6,
+       "statement": "Open the “Part D” tab in the FBG-Writer program. Measure the dependence of the wavelength $\\lambda_B$ on $t$. Obtain the necessary data from the spectra and then calculate the dependence of temperature $t$ on time $\\tau$.\n\n*Blank measurement table from the official answer sheet.*\n\n| $\\tau$ (min) | $\\lambda_B$ (nm) | $t$ ($^\\circ\\mathrm C$) |\n| --- | --- | --- |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |\n|   |   |   |",
+       "figures": []
+      },
+      {
+       "label": "D.2",
+       "points": 0.8,
+       "statement": "Plot the dependence of temperature $t$ on time $\\tau$. Determine the LDPE solidification temperature $t_0$.\n\n![Blank plotting grid from the official answer sheet (D2)](grid-d2-astra-root21-20260925)\n\n*Answer-sheet field:* $t_0=\\underline{\\hspace{2cm}}$.",
+       "figures": [
+        {
+         "id": "grid-d2-astra-root21-20260925",
+         "alt": "Blank plotting grid from the official answer sheet (D2)",
+         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-d2-astra-root21-20260925.png",
+         "width": 1451,
+         "height": 1457,
+         "source": {
+          "page": 7,
+          "pdfRect": [
+           123.84,
+           193.63,
+           472.05,
+           543.02
+          ],
+          "dpi": 300,
+          "document": "supplement-1"
+         }
+        }
+       ]
+      }
+     ],
+     "points": 2.4
+    },
+    {
+     "id": "e",
+     "title": "Part E. FBG dynamometer",
+     "statement": "When the SMF is stretched with the written FBG, the wavelength of the Bragg resonance changes. This is caused by the increase in spacing between adjacent defects and by the change in the refractive index of the sample due to elastic deformations of the medium. The change in the Bragg resonance wavelength induced by an applied force $F$ can be expressed as:\n\n$$\\Delta\\lambda_B=\\lambda_B\\cdot B\\cdot F,$$\n\nwhere $B$ is a constant with the units of $\\mathrm N^{-1}$. Fiber deformation is described by Hooke's law $\\sigma=E\\varepsilon$, where $\\sigma$ is the mechanical stress (measured in Pa), $E$ is the Young's modulus of the fiber material, $\\varepsilon$ is the strain ($\\varepsilon=\\Delta l/l$).\n\nThe dependence of the refractive index of medium on stretching is described by the equation $\\Delta n_c=\\frac{dn_c}{d\\varepsilon}\\varepsilon$, where $\\Delta n_c$ is the refractive index change. Let $S$ denote the cross-sectional area of the fiber.",
+     "figures": [],
+     "parts": [
+      {
+       "label": "E.1",
+       "points": 0.5,
+       "statement": "Derive the expression for $B$ in terms of $E$, $S$, $n_c$ and $\\frac{dn_c}{d\\varepsilon}$.\n\n*Answer-sheet field:* $B=\\underline{\\hspace{2cm}}$.",
+       "figures": [],
+       "statementAfter": "To calibrate the FBG as a strain sensor, you have access to a sample, one end of which is fixed, and a mechanical dynamometer that allows you to measure forces in the range $F\\in[0,20]\\ \\mathrm{mN}$. The end of the dynamometer spring is firmly connected to the free end of the fiber."
+      },
+      {
+       "label": "E.2",
+       "points": 1,
+       "statement": "Open the “Part E.I” tab in the FBG-Writer program. Measure the dependence of the wavelength $\\lambda_B$ on $F$.\n\n*Blank measurement table from the official answer sheet.*\n\n| $F$ (mN) | $\\lambda_B$ (nm) |\n| --- | --- |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |",
+       "figures": []
+      },
+      {
+       "label": "E.3",
+       "points": 0.7,
+       "statement": "Plot the dependence of $\\lambda_B$ on $F$. Determine the value of the coefficient $B$.\n\n![Blank plotting grid from the official answer sheet (E3)](grid-e3-astra-root21-20260925)\n\n*Answer-sheet field:* $B=\\underline{\\hspace{2cm}}$.",
+       "figures": [
+        {
+         "id": "grid-e3-astra-root21-20260925",
+         "alt": "Blank plotting grid from the official answer sheet (E3)",
+         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-e3-astra-root21-20260925.png",
+         "width": 1451,
+         "height": 1457,
+         "source": {
+          "page": 9,
+          "pdfRect": [
+           123.84,
+           193.63,
+           472.05,
+           543.02
+          ],
+          "dpi": 300,
+          "document": "supplement-1"
+         }
+        }
+       ],
+       "statementAfter": "You are given a spring of unknown stiffness $k$. One end of the SMF sample is fixed, and a spring is attached to the other end. The spring elongation $\\Delta x$ is denoted as $x$ in the software."
+      },
+      {
+       "label": "E.4",
+       "points": 1.7,
+       "statement": "Open the “Part E.II” tab in the FBG-Writer program. By changing the spring elongation $\\Delta x$ in the range $[0,10]\\ \\mathrm{mm}$, measure the dependence $\\lambda_B(\\Delta x)$ and plot its graph. Determine the value of the spring stiffness $k$.\n\n*Blank measurement table from the official answer sheet.*\n\n| $\\Delta x$ (mm) | $\\lambda_B$ (nm) |\n| --- | --- |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n|   |   |\n\n![Blank plotting grid from the official answer sheet (E4)](grid-e4-astra-root21-20260925)\n\n*Answer-sheet field:* $k=\\underline{\\hspace{2cm}}$.",
+       "figures": [
+        {
+         "id": "grid-e4-astra-root21-20260925",
+         "alt": "Blank plotting grid from the official answer sheet (E4)",
+         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/grid-e4-astra-root21-20260925.png",
+         "width": 1451,
+         "height": 1461,
+         "source": {
+          "page": 10,
+          "pdfRect": [
+           123.84,
+           349.38,
+           472.05,
+           699.61
+          ],
+          "dpi": 300,
+          "document": "supplement-1"
+         }
+        }
+       ]
+      }
+     ],
+     "points": 3.9
+    },
+    {
+     "id": "f",
+     "title": "Part F. Birefringence in FBG",
+     "statement": "When an FBG is written using a femtosecond laser (pulse duration $1\\ \\mathrm{fs}=10^{-15}\\ \\mathrm s$), elongated defects are formed in it, which leads to effective birefringence. The strength of the grating and the wavelength of the Bragg resonance depend on the polarization of the light. For radiation with polarization directed along defects, we introduce $\\varkappa_{\\parallel}$ and $\\lambda_{B,\\parallel}$, and for radiation with perpendicular polarization — $\\varkappa_{\\perp}$ and $\\lambda_{B,\\perp}$ (grating strength and wavelength, respectively). It is known that $\\varkappa_{\\parallel}<\\varkappa_{\\perp}$.\n\nIf an FBG is illuminated with polarized light, the observed transmission spectrum will depend on the angle $\\theta-\\theta_0$ between the polarization of the light and the orientation of the grating defects.\n\n![Fig.5: Light propagation in an FBG with elongated defects](birefringence-astra-root21-20260925)\n\nYou are given a fixed grating with a length $L=50\\ \\mathrm{mm}$ and birefringence. You can rotate the polarization of the radiation (angle $\\theta$ in figure 5) and measure the transmission spectrum depending on the angle $\\theta$.",
+     "figures": [
+      {
+       "id": "birefringence-astra-root21-20260925",
+       "alt": "Fig.5: Light propagation in an FBG with elongated defects",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-experiment-e/birefringence-astra-root21-20260925.png",
+       "width": 1405,
+       "height": 871,
+       "source": {
+        "page": 7,
+        "pdfRect": [
+         126.18,
+         475.65,
+         463.14,
+         684.45
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "F.1",
+       "points": 2,
+       "statement": "Open the “Part F” tab in the FBG-Writer program. Determine the angle $\\theta_0$ at which the defects are oriented to the $Y$ axis.\n\n*The official answer sheet provides four blank two-row, seven-column tables, with no printed column labels.*\n\n| | | | | | | |\n|---|---|---|---|---|---|---|\n| | | | | | | |\n\n| | | | | | | |\n|---|---|---|---|---|---|---|\n| | | | | | | |\n\n| | | | | | | |\n|---|---|---|---|---|---|---|\n| | | | | | | |\n\n| | | | | | | |\n|---|---|---|---|---|---|---|\n| | | | | | | |\n\n*Answer-sheet field:* $\\theta_0=\\underline{\\hspace{2cm}}$.",
+       "figures": []
+      },
+      {
+       "label": "F.2",
+       "points": 0.9,
+       "statement": "Find the values of $\\varkappa_{\\parallel}$, $\\varkappa_{\\perp}$ and $\\lambda_{B,\\parallel}$, $\\lambda_{B,\\perp}$.\n\n*Answer-sheet field:* $\\varkappa_{\\parallel}=\\underline{\\hspace{2cm}}$.\n\n*Answer-sheet field:* $\\varkappa_{\\perp}=\\underline{\\hspace{2cm}}$.\n\n*Answer-sheet field:* $\\lambda_{B,\\parallel}=\\underline{\\hspace{2cm}}$.\n\n*Answer-sheet field:* $\\lambda_{B,\\perp}=\\underline{\\hspace{2cm}}$.",
+       "figures": []
+      }
+     ],
+     "points": 2.9
+    }
+   ],
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "sections": [],
+    "incomplete": true,
+    "incompleteReason": "The archive solutions.txt explicitly lists the experimental solution as “E: (not available)”. The required FBG-Writer program and its generated measurement data are not included in the inspected 2026 archive inventory. The official blank answer sheets are preserved as question materials, not as solutions."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "supplement-1",
+     "page": 1
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
+    },
+    {
+     "document": "supplement-1",
+     "page": 3
+    },
+    {
+     "document": "supplement-1",
+     "page": 4
+    },
+    {
+     "document": "supplement-1",
+     "page": 5
+    },
+    {
+     "document": "supplement-1",
+     "page": 6
+    },
+    {
+     "document": "supplement-1",
+     "page": 7
+    },
+    {
+     "document": "supplement-1",
+     "page": 8
+    },
+    {
+     "document": "supplement-1",
+     "page": 9
+    },
+    {
+     "document": "supplement-1",
+     "page": 10
+    },
+    {
+     "document": "supplement-1",
+     "page": 11
+    }
+   ]
+  }
+ ]
+}
