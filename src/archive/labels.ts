@@ -127,6 +127,13 @@ export function competitionShort(code: string): string {
   return COMPETITION_META[code]?.short ?? code;
 }
 
+/** A problem source led by a competition code, shown with the short name: "VsOA-ru 2019 III" → "ВсОА 2019 III". */
+export function sourceWithShortName(source: string): string {
+  const space = source.indexOf(' ');
+  const code = space < 0 ? source : source.slice(0, space);
+  return COMPETITION_META[code] ? competitionShort(code) + source.slice(code.length) : source;
+}
+
 export const ROUND_LABELS: { [code: string]: string } = {
   I: 'I кръг (общински)',
   II: 'II кръг (областен)',

@@ -1,6 +1,7 @@
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import * as React from 'react';
 import { useMarkdownProblemLists } from '../../context/MarkdownProblemListsContext';
+import { sourceWithShortName } from '../../archive/labels';
 import { getProblemURL, ProblemInfo } from '../../models/problem';
 import ProblemsListItemDropdown from './ProblemsList/ProblemsListItemDropdown';
 import ProblemStatusCheckbox from './ProblemsList/ProblemStatusCheckbox';
@@ -62,7 +63,7 @@ export default function FocusProblem({
                   </svg>
                 </div>
                 <div className="text-gray-500 text-sm mt-1 dark:text-dark-med-emphasis">
-                  {problem.source} - {problem.difficulty}
+                  {sourceWithShortName(problem.source)} - {problem.difficulty}
                 </div>
               </a>
             </div>

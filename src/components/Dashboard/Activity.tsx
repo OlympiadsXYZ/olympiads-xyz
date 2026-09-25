@@ -12,6 +12,21 @@ import { useTranslation } from 'react-i18next';
 type ModuleActivity = ReturnType<typeof useUserProgressOnModulesActivity>[0];
 type ProblemActivity = ReturnType<typeof useUserProgressOnProblemsActivity>[0];
 
+const MONTH_LABELS = [
+  'яну',
+  'фев',
+  'мар',
+  'апр',
+  'май',
+  'юни',
+  'юли',
+  'авг',
+  'сеп',
+  'окт',
+  'ное',
+  'дек',
+];
+
 export type ActivityHeatmapProps = {
   moduleActivities: { [key: number]: ModuleActivity[] };
   problemActivities: { [key: number]: ProblemActivity[] };
@@ -46,6 +61,7 @@ export function ActivityHeatmap({
         <div className="grid lg:grid-cols-3 lg:gap-x-6 gap-y-4 lg:gap-y-0">
           <div className="col-span-2">
             <CalendarHeatmap
+              monthLabels={MONTH_LABELS}
               startDate={startDate}
               endDate={endDate}
               values={Object.keys(activityCount).map(d => ({
@@ -68,8 +84,18 @@ export function ActivityHeatmap({
           <div className="col-span-1">
             {activeDate ? (
               <div className="text-gray-800 dark:text-gray-200">
-                <b>{activeDate.toString().substring(0, 16)}</b> <br />
-                <p>{activeDateProblemsSolved} {t('activity_problems-solved')}</p>
+                <b>
+                  {activeDate.toLocaleDateString('bg-BG', {
+                    weekday: 'short',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </b>{' '}
+                <br />
+                <p>
+                  {activeDateProblemsSolved} {t('activity_problems-solved')}
+                </p>
                 <p>
                   {activeDateModulesCompleted} {t('activity_modules-completed')}
                 </p>

@@ -87,7 +87,7 @@ export default function ResourcesListItem({
     <td
       className={`${
         resource.source && 'pl-2 sm:pl-6'
-      } pr-4 sm:pr-6 pt-4 pb-1 sm:pb-4 w-1/3 whitespace-nowrap text-sm leading-5 font-medium text-gray-900 dark:text-dark-high-emphasis`}
+      } pr-4 sm:pr-6 pt-4 pb-1 sm:pb-4 w-1/3 min-w-[12rem] text-sm leading-5 font-medium text-gray-900 dark:text-dark-high-emphasis`}
     >
       <div className="flex items-center">
         {resource.starred && (

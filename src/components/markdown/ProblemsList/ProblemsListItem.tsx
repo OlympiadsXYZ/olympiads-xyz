@@ -7,6 +7,7 @@ import {
   ProblemInfo,
   probSources,
 } from '../../../models/problem';
+import { sourceWithShortName } from '../../../archive/labels';
 import { UsacoTableProgress } from '../../Dashboard/DashboardProgress';
 import DifficultyBox from '../../DifficultyBox';
 import TextTooltip from '../../Tooltip/TextTooltip';
@@ -117,9 +118,11 @@ export default function ProblemsListItem(
   ) : (
     <td className="pl-4 md:pl-6 py-4 whitespace-nowrap text-sm leading-5 font-medium">
       {sourceTooltip ? (
-        <TextTooltip content={sourceTooltip}>{problem.source}</TextTooltip>
+        <TextTooltip content={sourceTooltip}>
+          {sourceWithShortName(problem.source)}
+        </TextTooltip>
       ) : (
-        problem.source
+        sourceWithShortName(problem.source)
       )}
     </td>
   );
@@ -131,7 +134,7 @@ export default function ProblemsListItem(
       ? `${getProblemURL(problem)}/solution`
       : null;
   const nameCol = (
-    <td className="pl-4 md:px-6 py-4 whitespace-nowrap text-sm leading-5 font-medium">
+    <td className="pl-4 md:px-6 py-4 min-w-[12rem] text-sm leading-5 font-medium">
       <div className="flex items-center">
         {isDivisionTable == false && problem.isStarred && (
           <Tooltip content={t('starred-tooltip')}>
@@ -147,9 +150,9 @@ export default function ProblemsListItem(
         <Anchor
           href={internalURL ?? problem.url}
           className={
-            (isDivisionTable == false && problem.isStarred
+            isDivisionTable == false && problem.isStarred
               ? 'pl-1 sm:pl-2'
-              : 'sm:pl-6') + ' truncate'
+              : 'sm:pl-6'
           }
           style={{ maxWidth: '20rem' }}
           target={internalURL ? undefined : '_blank'}

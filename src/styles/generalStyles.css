@@ -149,6 +149,14 @@ html.transitioning-color-scheme * {
     margin-bottom: 0 !important;
   }
 }
+.dark .markdown table:not(.no-markdown) th,
+.dark .markdown table:not(.no-markdown) td {
+  @apply border-gray-700;
+}
+/* a table scrolls inside its own box (HTMLComponents), with the space after it that a paragraph has */
+.markdown .markdown-table-scroll {
+  @apply overflow-x-auto max-w-full mb-6;
+}
 
 .markdown ul:not(.no-markdown) {
   @apply pl-8 list-disc mb-6;
@@ -221,6 +229,10 @@ html.transitioning-color-scheme * {
 .markdown ol > li {
   display: flex;
   counter-increment: number;
+}
+/* the item's content (HTMLComponents li) may shrink, so a display equation inside scrolls in its own box */
+.markdown ol > li > .flex-1 {
+  min-width: 0;
 }
 
 .markdown ol > li:before {

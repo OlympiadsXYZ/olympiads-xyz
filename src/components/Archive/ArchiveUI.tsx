@@ -143,7 +143,9 @@ export function EntryRow({
         )}
       </span>
       <span className="flex-none flex items-center gap-1.5">
-        {showRound && entry.round && <Badge>{label(ROUND_LABELS, entry.round)}</Badge>}
+        {showRound && entry.round && (
+          <Badge>{label(ROUND_LABELS, entry.round)}</Badge>
+        )}
         <Badge color={TYPE_COLORS[entry.type]}>
           {label(TYPE_LABELS, entry.type)}
         </Badge>
@@ -192,9 +194,10 @@ export function sortEntries(entries: ClientEntry[]): ClientEntry[] {
     (a, b) =>
       roundSortKey(a.round) - roundSortKey(b.round) ||
       typeSortKey(a.type) - typeSortKey(b.type) ||
-      (a.group ?? '').localeCompare(b.group ?? '') ||
+      // numeric: grades 7, 8, 9, 10 … (text order put 10, 11, 12 before 7), "стр. 1" before "стр. 2"
+      (a.group ?? '').localeCompare(b.group ?? '', 'bg', { numeric: true }) ||
       (a.lang === 'bg' ? 0 : 1) - (b.lang === 'bg' ? 0 : 1) ||
-      a.title.localeCompare(b.title)
+      a.title.localeCompare(b.title, 'bg', { numeric: true })
   );
 }
 
@@ -211,7 +214,12 @@ function EntryRows({
   return (
     <>
       {entries.map(e => (
-        <EntryRow key={e.id} entry={e} detail={details[e.id]} showRound={showRound} />
+        <EntryRow
+          key={e.id}
+          entry={e}
+          detail={details[e.id]}
+          showRound={showRound}
+        />
       ))}
     </>
   );
@@ -244,8 +252,12 @@ export function EntryList({
     byRound[r].push(e);
   });
   const sectionKey = (r: string) =>
-    r === RESULTS ? ROUND_ORDER.length + 2 : roundSortKey(r === NO_ROUND ? null : r);
-  const roundKeys = Object.keys(byRound).sort((a, b) => sectionKey(a) - sectionKey(b));
+    r === RESULTS
+      ? ROUND_ORDER.length + 2
+      : roundSortKey(r === NO_ROUND ? null : r);
+  const roundKeys = Object.keys(byRound).sort(
+    (a, b) => sectionKey(a) - sectionKey(b)
+  );
   return (
     <div className="space-y-6">
       {roundKeys.map(r => (
@@ -348,7 +360,9 @@ export function FilterBar({
   setFilters: (f: Filters) => void;
 }): JSX.Element {
   const distinct = (get: (e: ClientEntry) => string | null) =>
-    [...new Set(entries.map(get).filter((v): v is string => !!v))].sort();
+    [...new Set(entries.map(get).filter((v): v is string => !!v))].sort(
+      (x, y) => x.localeCompare(y, 'bg', { numeric: true })
+    );
   const toggle = (k: 'round' | 'group' | 'type' | 'lang') => (v: string) => {
     const cur = filters[k];
     setFilters({
@@ -424,7 +438,9 @@ export function LibraryTree({
     if (!byFolder[f]) byFolder[f] = [];
     byFolder[f].push(e);
   });
-  const folders = Object.keys(byFolder).sort();
+  const folders = Object.keys(byFolder).sort((x, y) =>
+    x.localeCompare(y, 'bg', { numeric: true })
+  );
   return (
     <div className="space-y-4">
       {folders.map(f => (

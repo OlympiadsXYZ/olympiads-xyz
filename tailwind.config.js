@@ -128,6 +128,10 @@ module.exports = {
   ],
   content: [
     './src/components/**/*.{js,ts,tsx}',
+    // colour classes named only in data modules (archive SCIENCE_COLORS: Informatics and Mathematics had none)
+    './src/archive/**/*.{js,ts,tsx}',
+    './src/problems/**/*.{js,ts,tsx}',
+    './src/utils/**/*.{js,ts,tsx}',
     './src/context/**/*.{js,ts,tsx}',
     './src/hooks/**/*.{js,ts,tsx}',
     './src/models/**/*.{js,ts,tsx}',

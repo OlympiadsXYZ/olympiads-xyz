@@ -53,6 +53,26 @@ const li = ({ children, ...props }): JSX.Element => (
     <div className="flex-1">{children}</div>
   </li>
 );
+// The ol numbers come from a CSS counter (generalStyles.css), which ignored a list's start: a list that resumed after a
+// paragraph or an equation ("3. …") was numbered from 1 again (noh-2012-ii-9-p3 showed 1; 1, 2, 3; 1; 1).
+const ol = ({ start, style, ...props }): JSX.Element => (
+  <ol
+    start={start}
+    style={
+      Number(start) > 1
+        ? { counterReset: `number ${Number(start) - 1}`, ...style }
+        : style
+    }
+    {...props}
+  />
+);
+// A wide table scrolls in its own box; the only scroll box was the whole article column, so on a phone swiping a
+// table moved every heading and paragraph with it (8% of problem pages).
+const table = (props): JSX.Element => (
+  <div className="markdown-table-scroll">
+    <table {...props} />
+  </div>
+);
 const inlineCode = (props): JSX.Element => (
   <code {...props} className="inline-code" />
 );
@@ -109,6 +129,8 @@ const HTMLComponents = {
   h4,
   p,
   li,
+  ol,
+  table,
   code: inlineCode,
   pre,
   a,

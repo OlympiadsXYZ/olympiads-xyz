@@ -2,10 +2,10 @@ import * as React from 'react';
 import Tooltip from '../Tooltip/Tooltip';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
-import { FaCheck } from "react-icons/fa";
-import { FaPenToSquare } from "react-icons/fa6";
-import { MdDoubleArrow } from "react-icons/md";
-import { PiEmptyBold } from "react-icons/pi";
+import { FaCheck } from 'react-icons/fa';
+import { FaPenToSquare } from 'react-icons/fa6';
+import { MdDoubleArrow } from 'react-icons/md';
+import { PiEmptyBold } from 'react-icons/pi';
 
 const ProgressBar = ({ text, green, yellow, blue }) => {
   return (
@@ -116,8 +116,8 @@ export default function DashboardProgress({
           number={notStarted}
           text={t('dashboard_not-started')}
           icon={PiEmptyBold}
-          textColor="text-gray-800"
-          bgColor="bg-gray-100"
+          textColor="text-gray-800 dark:text-gray-100"
+          bgColor="bg-gray-100 dark:bg-gray-700"
           subTextColor="text-gray-800 dark:text-gray-100"
         />
       </div>

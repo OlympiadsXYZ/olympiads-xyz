@@ -406,7 +406,7 @@ export default function ProblemsPage({ location }: PageProps) {
                 </div>
                 <select
                   aria-label="Задачи на страница"
-                  className="mt-1 lg:mt-0 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-700 dark:text-dark-high-emphasis text-sm px-2 py-1"
+                  className="mt-1 lg:mt-0 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-700 dark:text-dark-high-emphasis text-sm pl-2 pr-8 py-1"
                   value={hitsPerPage}
                   onChange={e => setHitsPerPage(parseInt(e.target.value, 10))}
                 >
