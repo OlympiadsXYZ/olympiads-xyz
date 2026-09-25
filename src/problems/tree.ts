@@ -408,6 +408,7 @@ const LANG_LABELS: { [code: string]: string } = {
   bg: 'на български',
   en: 'на английски',
   ru: 'на руски',
+  fr: 'на френски',
   other: 'на друг език',
 };
 
