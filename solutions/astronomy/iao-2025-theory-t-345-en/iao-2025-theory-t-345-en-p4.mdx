@@ -5,14 +5,14 @@ title: 'Задача 4. On a remote exoplanet'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IAO/2025/iao-2025-theory-t-345-en.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T09:21:35.757Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-25T11:29:58.913Z'
+verifier: 'single-pass'
 ---
 
-*XXIX IAO. IV International Remote Astronomy Olympiad. Dhaka, Bangladesh, 6-15. XI. 2025. Theoretical round. Problems to solve · 6 ноември 2025 г.*
+*XXIX IAO. IV International Remote Astronomy Olympiad. Dhaka, Bangladesh, 6-15. XI. 2025. Theoretical round. Problems to solve · 6 ноември 2025 г. · 8 т.*
 
 <Warning title="Бележка към темата">
-Problem 4 refers to a table printed on a separate sheet, which is not in the archive. No official solutions are in the archive.
+The separate table of constants and Hertzsprung–Russell diagram referenced by the solutions are not present in the inspected 2025 archive inventory. No replacement reference values have been invented. Problem 4 refers to a separate numbered exoplanet data table, absent from the inspected archive. The official solution and all grading criteria are restored, but the missing question table is not reconstructed from selected solution values. The official comet solution reuses a for two distances and includes an Earth/Saturn phrase and mismatched part references; the exoplanet power formulas have inconsistent factors. These printed items are retained and marked.
 </Warning>
 
 <details>
@@ -26,12 +26,174 @@ Problem 4 refers to a table printed on a separate sheet, which is not in the arc
 
 The table (see on a separate sheet) shows the characteristics of the Earth-like, presumably habitable exoplanet Antechea in the planetary system of the star Erythrelatis in the constellation Ursa Major. For comparison, similar characteristics of the Earth are given. Determine the spectral class (O, B, A, F, G, K, M) of the star Erythrelatis, if possible, also specify the subclass (for example, B8, A4, G2, etc.). The orbits of the planets can be considered circular. Explain which parameter from the table you use at each step of the solution (in square brackets, for example [#4]). At the end of the solution, specify which parameters the answer to the problem does not depend on (for example, "Not depend on [#1, 4, 5, 6]").
 
+*Source gap: the separate data table referenced above is absent from the available archive. The supplied solution is retained below.*
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- K7; not depending on [#1, 2, 3]. The grading criteria accept K5–K9.
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-The archive has no file with official solutions for this paper; the table on the separate sheet is also missing.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-jury-introduction">
+
+### Sketches for solutions — for jury job ONLY
+
+These solutions are written for jury members, so they contain a lot of explanations in the form of text. Students are instructed to use mostly formulas, calculations, drawings and graphs, writing texts is not allowed in the solutions. It is permitted to write a few keywords in English (for example, “Yes”, “No”, “Assume”, “Answer”, “Average”, “Minimum”, “Maximum”, “Impossible situation”, etc.), as well as terms contained in the accompanying tables and names of objects.
+
+If you find typos, errors or missing points in the solution, please inform the organizing committee. Any suggestions for modifying the solutions are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved.
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-balance">
+
+### Thermal balance
+
+To determine the spectral class of the star Erythrelatis, it is necessary to find the approximate temperature of its photosphere.
+
+The thermal balance of the planet is determined by the incoming and outgoing energy per unit of time.
+
+$$
+W_{in}=W_{out}.
+$$
+
+Incoming power:
+
+$$
+W_{in}=(1-\alpha)\cdot\sigma T_{star}^4\cdot\frac{\pi(\beta/2)^2}{4\pi}\cdot4\pi R_{planet}^2=(1-\alpha)\cdot\sigma T_{star}^4\cdot\frac{\pi\beta^2}{4}\cdot R_{planet}^2,
+$$
+
+where $\sigma$ is the Stefan–Boltzmann constant, $\alpha$ is the albedo of the planet, and $\beta$ is the angular diameter of the central star visible from the planet.
+
+Outgoing (radiated) power:
+
+$$
+W_{out}=\sigma T_{planet}^4\cdot4\pi R_{planet}^2=\sigma(T_{obs}-T_{GHE})^4\cdot R_{planet}^2,
+$$
+
+where $T_{planet}$ is the effective temperature of the planet, $T_{obs}$ is the observed mean temperature of the planet, and $T_{GHE}$ is the greenhouse effect.
+
+From these two equations:
+
+$$
+(1-\alpha)\cdot T_{star}^4\cdot\frac{\pi\beta^2}{4}=(T_{obs}-T_{GHE})^4,
+$$
+
+from where:
+
+$$
+T_{star}=(T_{obs}-T_{GHE})\cdot\sqrt[4]{\frac{4}{\pi\beta^2(1-\alpha)}}.
+$$
+
+Coefficients are not needed to compare the Sun and the star Erythrelatis, therefore:
+
+$$
+T_{star}\sim(T_{obs}-T_{GHE})\cdot\beta^{-1/2}(1-\alpha)^{-1/4},
+$$
+
+$$
+T_{ery}=T_{sun}\cdot\frac{(T_{obs}-T_{GHE})_{ant}}{(T_{obs}-T_{GHE})_{earth}}\cdot\left(\frac{\beta_{ery}}{\beta_{sun}}\right)^{-1/2}\cdot\left(\frac{1-\alpha_{ant}}{1-\alpha_{earth}}\right)^{-1/4}.
+$$
+
+*Transcription note: the absolute-power equalities and coefficient above follow the supplied sketch, including its disappearing factors. The subsequent comparison formula is also reproduced as supplied.*
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-diameter">
+
+### Angular diameter and refraction
+
+The angular diameter of the star Erythrelatis, visible from the planet Antechea, can be found by analyzing the data of the length of day and the duration from rise to set of the central star given in the table. For the Earth, we see that the time from sunrise to sunset is 406 seconds longer than half a day. Converting this value to angular minutes (the length of day corresponds to 21600 angular minutes), we get $\delta_{earth}=101.5'$. It can be verified that this addition is caused by refraction (twice $\rho_{earth}=34.8'$ at sunrise and sunset, data from the table of constants) and the angular diameter of the Sun (twice the angular radius of the Sun: at sunrise and sunset, $\beta_{sun}=31.9'$ in total).
+
+For Antechea, the time from rise to set of Erythrelatis is 324 seconds longer than half a day. Converting this value to angular minutes (note that the conversion coefficient is different here: 21600 angular minutes corresponds to 70832 seconds), we get $\delta_{ant}=98.8'$. This is also the doubled refraction at the horizon plus the apparent angular diameter of Erythrelatis.
+
+A significant error is possible here: twice subtract $\rho_{earth}=34.8'$ from $\delta_{ant}=98.8'$, and get $\beta_{ery}=29.2'$. (Looking ahead, we note that in this highly erroneous case, $T_{ery}\approx6300\,\mathrm K$ and spectral class F8 are obtained.)
+
+The value of refraction is proportional to the density of the atmosphere at the surface of the planet, which is the same as the ratio of pressure to temperature. (That this is the relationship can also be understood from the refraction formula given in the table of constants.) The temperature near the surface on both planets is the same, so the value of refraction is proportional to the atmospheric pressure:
+
+$$
+\rho_{ant}=\rho_{earth}\cdot\frac{P_{ant}}{P_{earth}}=15.08'.
+$$
+
+Thus, the angular diameter of the star Erythrelatis, as seen from the planet Antechea, is:
+
+$$
+\beta_{ery}=\delta_{ant}-2\rho_{ant}\approx68.6'.
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-class">
+
+### Spectral class
+
+According to the formula obtained above for $T_{ery}$:
+
+$$
+T_{ery}=5777\,\mathrm K\cdot\frac{259\,\mathrm K}{254\,\mathrm K}\cdot\left(\frac{68.6'}{31.9'}\right)^{-1/2}\cdot\left(\frac{0.64}{0.71}\right)^{-1/4}=4123\,\mathrm K\approx4100\,\mathrm K.
+$$
+
+Using the Hertzsprung–Russell diagram, we determine that stars of the K7 class have such a temperature.
+
+The answer to the problem does not depend on neither the equatorial radius of the planet [#1], the mass of the planet [#2] nor the acceleration of gravity [#3].
+
+Answer: the spectral class of the star Erythrelatis is **K7**. Not depending on [#1, 2, 3].
+
+*Source gap: the separate numbered exoplanet table, table of constants, and Hertzsprung–Russell diagram are referenced but absent from the available 2025 archive inventory. The numerical data above are transcribed from the official solution; they are not a reconstructed replacement for the missing question table.*
+
+</ProblemSection>
+
+<ProblemSection id="solution-grading-criteria">
+
+### Official grading criteria
+
+| Item | Criterion | pts |
+|---|---|---:|
+|  | Thermal balance | 0.8 |
+|  | Formula for incoming power | 0.5 |
+|  | Formula for outgoing power | 0.4 |
+|  | Using albedo | 0.4 |
+|  | Using greenhouse effect | 0.4 |
+|  | Analyzing time from sunrise to sunset vs half a day, additional angular sizes | 0.8 |
+|  | Using dependence on the angular size of the central star | 0.8 |
+|  | Using any refraction | 0.4 |
+|  | Using refraction depending on atmospheric pressure | 1.1 |
+|  | Using spectral class of the Sun or temperature of the Sun | 0.4 |
+|  | Final formula and/or correct calculations | 0.8 |
+|  | Final correct result in a range K5-K9 | 0.8 |
+|  | Postulating “Not depending on [#1, 2, 3]” | 0.4 |
+| | **Total** | **8** |
+
+</ProblemSection>
+
+<ProblemSection id="solution-general-grading-notes">
+
+### General notes for the jury
+
+**Note.** Jury members should evaluate the student’s solutions in essence, and not by looking on formal existence the mentioned sentences or formulae. The formal presence of the mentioned positions in the text is not necessary to give the respective points. Points should be done if the following steps de facto use these positions. (For example, except the final conclusion and artistic picture, all the points in solution of problem 2 may be in only one common formula.) Of course, fractions of the mentioned points should be awarded if only part of the item was done.
+
+**Note.** Jury members may elaborate more detailed criteria, and also create criteria for other correct ways of the student’s solutions.
+
+**Note.** Everywhere “formula” means “correct formula”, “calculation” means “correct calculation”, “picture” means “correct picture”, etc., and in all cases: based on **correct facts** and intermediate formulae or calculations.
+
+**Note.** Everywhere final calculation means also using correct number of significant digits. Excessive number of significant digits, especially in estimational problems, will lead to subtraction of the points (column “digits”, minus 1-2 points).
+
+**Note.** Solutions with **absurd or almost absurd** answers should be rated lower (maybe ignoring the scoring schemes below, and maybe down to zero, column “absurd”).
+
+Any suggestions for modifying the criteria are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved.
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [problems_t_345_en.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2025/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/problems_t_345_en.pdf)
+· официални решения: [solutions_t_en.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2025/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/solutions_t_en.pdf)
+· допълнителни данни: [criteria_t_en.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2025/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/criteria_t_en.pdf)

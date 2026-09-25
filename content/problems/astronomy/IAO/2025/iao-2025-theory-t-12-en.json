@@ -15,7 +15,7 @@
    "place": "Dhaka, Bangladesh"
   },
   "organiser": "Euro–Asian Astronomical Society",
-  "totalPoints": null,
+  "totalPoints": 16,
   "timeLimitMin": null,
   "source": {
    "archiveKey": "Астрономия/Състезания/IAO/2025/Теоретичен/problems_t_12_en.pdf",
@@ -33,21 +33,45 @@
     "position": "before-problem"
    }
   ],
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/IAO/2025/Теоретичен/solutions_t_en.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IAO/2025/Теоретичен/criteria_t_en.pdf",
+    "pages": [
+     1,
+     2,
+     3
+    ]
+   }
+  },
+  "caveat": "The separate table of constants and Hertzsprung–Russell diagram referenced by the solutions are not present in the inspected 2025 archive inventory. No replacement reference values have been invented. The official solution to 1.3 contains a malformed area equality and an inconsistent missing factor; the printed formulas and result are retained with a transcription note.",
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "opus-5-5",
-   "promptVersion": "v1",
-   "requestId": null,
-   "at": "2026-09-23",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/problem_structure_astra",
+   "at": "2026-09-25",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "79425e0c5f21bb03f30416db4ef0e80ee6e8f32ef588caa3364e662cb219561c"
+    "problems": "79425e0c5f21bb03f30416db4ef0e80ee6e8f32ef588caa3364e662cb219561c",
+    "solutions": "08d1a2e8eb4eb1904a84d4b4d322aeddc87d1805f6d75d3e3fba831665fd4f62",
+    "supplement-1": "9ca9913d04e3eca2c5d20438e75c845a5b4d916619e4e882996b57ab02e6ac3b"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-09-23",
-   "notes": "One-page problems document, no solutions file. Points and time limit are not printed. Group printed as α and γ (middle box empty); grade set to \"αγ\". The introductory 'Reminding' paragraph (italic, with 'minimum texts are allowed' and 'in English' underlined) is kept as a document note. The footnote (*) printed after part 1.3 is kept in statementAfterParts. Primes printed as ' in problem 1 and ′ in problem 2; both rendered as LaTeX primes. No figures."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-25",
+   "notes": "Fresh Astra single-pass visual reading of all three question pages and the six-page shared official solution plus three-page shared grading criteria. The nine shared pages were visually read once, at identical source hashes, and mapped to each paper. Original problem IDs, printed numbers and group labels retained. Native solution sections, mathematics and grading tables. No task figures occur; header emblems are not task figures. Existing source-faithful question text was retained after comparison. No separate model checker."
   }
  },
  "problems": [
@@ -55,7 +79,7 @@
    "id": "iao-2025-theory-t-12-en-p1",
    "number": 1,
    "title": "Ancient observations",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "In the year when the Bengali calendar (\\*) came into operation, court astronomers measured the maximum height of the center of the Sun during the summer and winter solstices. In the first case, they received the value $h_1 = 89^{\\circ}27'$, in the second $h_2 = 42^{\\circ}11'$. Both times the Sun was south of zenith. Find:",
    "figures": [],
@@ -63,17 +87,29 @@
     {
      "label": "1.1.",
      "statement": "at what latitude the observations were made,",
-     "points": null
+     "points": 3,
+     "answer": {
+      "kind": "expression",
+      "latex": "24^\\circ11\\prime"
+     }
     },
     {
      "label": "1.2.",
      "statement": "the angle of inclination of the ecliptic to the plane of the celestial equator in the specified epoch.",
-     "points": null
+     "points": 2,
+     "answer": {
+      "kind": "expression",
+      "latex": "23^\\circ38\\prime"
+     }
     },
     {
      "label": "1.3.",
      "statement": "What area has the Northern circumpolar zone (the territory inside the Arctic circle) gained (the “+” sign in the answer) or lost (the “–” sign in the answer) since then to the present?",
-     "points": null
+     "points": 3,
+     "answer": {
+      "kind": "expression",
+      "latex": "-56500\\,\\mathrm{km}^2"
+     }
     }
    ],
    "statementAfterParts": "(\\*) According to the Bengali calendar, the New Year begins in mid-April, the year 1432 is now, and today (November 8) is the 21$^{\\mathrm{st}}$ of the Seventh Month.",
@@ -86,12 +122,50 @@
    "solution": {
     "statement": "",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "The archive has no official solutions file for this paper."
+    "sections": [
+     {
+      "id": "jury-introduction",
+      "title": "Sketches for solutions — for jury job ONLY",
+      "statement": "These solutions are written for jury members, so they contain a lot of explanations in the form of text. Students are instructed to use mostly formulas, calculations, drawings and graphs, writing texts is not allowed in the solutions. It is permitted to write a few keywords in English (for example, “Yes”, “No”, “Assume”, “Answer”, “Average”, “Minimum”, “Maximum”, “Impossible situation”, etc.), as well as terms contained in the accompanying tables and names of objects.\n\nIf you find typos, errors or missing points in the solution, please inform the organizing committee. Any suggestions for modifying the solutions are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     },
+     {
+      "id": "solution-1-1",
+      "title": "1.1.",
+      "statement": "The latitude may be found by the formula\n\n$$\\varphi=90^\\circ-(h_1+h_2)/2=24^\\circ11'.$$\n\n(Probably the observations were done on the territory of Murshidabad, the medieval city and capital of the former Gauda Kingdom)."
+     },
+     {
+      "id": "solution-1-2",
+      "title": "1.2.",
+      "statement": "The angle of inclination of the ecliptic to the plane of the celestial equator at that time was equal to:\n\n$$\\varepsilon=(h_1-h_2)/2=23^\\circ38'.$$"
+     },
+     {
+      "id": "solution-1-3",
+      "title": "1.3.",
+      "statement": "The area that the northern circumpolar zone has lost is the ring between the Arctic Circle in 594 and the Arctic Circle in 2025, that is, between latitudes $\\varphi_1=90^\\circ-23^\\circ38'=66^\\circ22'$ and $\\varphi_2=90^\\circ-23^\\circ26'=66^\\circ34'$. If $R$ is the radius of the Earth, $\\varphi$ is expressed in radians, and $\\varphi_0=66^\\circ28'$ is the mean value of $\\varphi$, then the area of this ring is:\n\n$$S=R\\cos\\varphi_0\\cdot R(\\varphi_1-\\varphi_2)=23^\\circ38'.$$\n\n$$S=(6371\\,\\mathrm{km})^2\\cdot0.399\\cdot(12'/3438'/\\mathrm{rad})\\approx56500\\text{ sq.km.}$$\n\nAnswer: $-56500\\text{ sq.km.}$\n\n*Transcription note: the supplied sketch prints the first area formula ending in $23^\\circ38'$, omits a circumference factor, and then gives the positive numerical area and negative final answer above. These inconsistencies are retained rather than silently repaired.*"
+     },
+     {
+      "id": "grading-criteria",
+      "title": "Official grading criteria",
+      "statement": "| Item | Criterion | pts |\n|---|---|---:|\n| 1.1. | General understanding | 1 |\n| 1.1. | Latitude formula | 1 |\n| 1.1. | Latitude calculations | 1 |\n| 1.2. | Angle of inclination of the ecliptic formula | 1 |\n| 1.2. | Angle of inclination of the ecliptic calculations | 1 |\n| 1.3. | Formulas | 2 |\n| 1.3. | Calculations | 1 |\n| | **Total** | **8** |"
+     },
+     {
+      "id": "general-grading-notes",
+      "title": "General notes for the jury",
+      "statement": "**Note.** Jury members should evaluate the student’s solutions in essence, and not by looking on formal existence the mentioned sentences or formulae. The formal presence of the mentioned positions in the text is not necessary to give the respective points. Points should be done if the following steps de facto use these positions. (For example, except the final conclusion and artistic picture, all the points in solution of problem 2 may be in only one common formula.) Of course, fractions of the mentioned points should be awarded if only part of the item was done.\n\n**Note.** Jury members may elaborate more detailed criteria, and also create criteria for other correct ways of the student’s solutions.\n\n**Note.** Everywhere “formula” means “correct formula”, “calculation” means “correct calculation”, “picture” means “correct picture”, etc., and in all cases: based on **correct facts** and intermediate formulae or calculations.\n\n**Note.** Everywhere final calculation means also using correct number of significant digits. Excessive number of significant digits, especially in estimational problems, will lead to subtraction of the points (column “digits”, minus 1-2 points).\n\n**Note.** Solutions with **absurd or almost absurd** answers should be rated lower (maybe ignoring the scoring schemes below, and maybe down to zero, column “absurd”).\n\nAny suggestions for modifying the criteria are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "supplement-1",
      "page": 1
     }
    ]
@@ -100,7 +174,7 @@
    "id": "iao-2025-theory-t-12-en-p2",
    "number": 2,
    "title": "NGC of the Year",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "NGC 2025 is a small open cluster, visible as an $11^{\\mathrm{m}}$ object, located in the Mensa constellation, discovered by John Herschel on February 8, 1836. The coordinates of the center of the cluster are $05^{\\mathrm{h}}\\,32^{\\mathrm{m}}$, $-71^{\\circ}\\,43'$, and its angular size is $2.0'$. Estimate the minimum altitude required to ascend above Dhaka in a hot air balloon to observe the whole NGC 2025. Consider that a telescope powerful enough to observe $11^{\\mathrm{m}}$ objects can be mounted on this balloon, taking into account atmospheric extinction near the horizon.",
    "figures": [],
@@ -114,15 +188,53 @@
    "solution": {
     "statement": "",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "The archive has no official solutions file for this paper."
+    "sections": [
+     {
+      "id": "jury-introduction",
+      "title": "Sketches for solutions — for jury job ONLY",
+      "statement": "These solutions are written for jury members, so they contain a lot of explanations in the form of text. Students are instructed to use mostly formulas, calculations, drawings and graphs, writing texts is not allowed in the solutions. It is permitted to write a few keywords in English (for example, “Yes”, “No”, “Assume”, “Answer”, “Average”, “Minimum”, “Maximum”, “Impossible situation”, etc.), as well as terms contained in the accompanying tables and names of objects.\n\nIf you find typos, errors or missing points in the solution, please inform the organizing committee. Any suggestions for modifying the solutions are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     },
+     {
+      "id": "solution-altitude",
+      "title": "Altitude and refraction",
+      "statement": "The altitude $H$, which must be reached to see an object located slightly below the horizon (at a small angle $\\eta$), is determined by the formula, which is easy to obtain from the properties of a right-angled triangle by drawing the appropriate drawing:\n\n$$(R+H)^2=R^2+(\\eta R)^2\\quad\\Rightarrow\\quad H\\approx\\eta^2R/2.$$\n\nwhere $R$ is the radius of the Earth, and the angle $\\eta$ must be taken in radians. We can substitute the value of the radius of the Earth and convert radians to degrees, then we get the formula with a coefficient 970 m, connecting $H$ (in meters) with $\\eta$ (in degrees):\n\n$$H(\\mathrm{m})\\approx970\\,\\mathrm{m}\\cdot\\eta(\\mathrm{degrees})^2.$$\n\nTo see the whole cluster, you need to see its lowest point. The upper culmination of the lowest point of NGC 2025 in Dhaka will be at an altitude of\n\n$$h_0=90^\\circ-\\varphi+\\delta-\\varrho/2=90^\\circ-23^\\circ48'-71^\\circ43'-1'=-5^\\circ32'.$$\n\nthat is, $5^\\circ32'$ below the mathematical horizon. To compensate for this angle, you need to rise up to an altitude of about 30 km. This is an unimaginable height, exceeding the record for rising up in a thermal balloon.\n\nBut have we considered everything? Recall that there is refraction at the horizon, $\\rho\\approx35'$, which “raises” objects a little. Taking this refraction into account\n\n$$h_1=h_0+\\rho=-4^\\circ57',$$\n\nIn this case, you need to rise up about 24 km. Now let's note that when observing from such an altitude, refraction works almost twice: the first time on the way from the celestial object to the “point of contact of the ray of vision with the surface of the Earth”, and the second time on the way from the “point of contact” to the observer.\n\n$$h_2=h_0+2\\rho=-4^\\circ22',$$\n\nIn this case, you need to reach about 18.5 km altitude. This is already an achievable height for a thermal balloon. This answer is an estimation.\n\nYou can go deeper and calculate the refractive angle more accurately. Using the formula for the dependence of atmospheric pressure on altitude, it can be calculated that at an altitude of about 18.5–20 km, atmospheric pressure is approximately 10% of the pressure at sea level. This means that 90% of the atmosphere is located below, respectively, for the second time, in the area from the “touch point” to the observer, refraction must be taken into account by a factor of 0.9.\n\n$$h_3=h_0+1.9\\rho\\approx-4^\\circ25'.$$\n\nTaking this amendment into account, it is necessary to rise up about **19 km**."
+     },
+     {
+      "id": "grading-criteria",
+      "title": "Official grading criteria",
+      "statement": "| Item | Criterion | pts |\n|---|---|---:|\n|  | Formula connecting altitude with angle below horizon | 1.5 |\n|  | Formula for the upper culmination of the lowest point of NGC 2025 in Dhaka | 1 |\n|  | Refraction, understanding first $35\\prime$ | 1 |\n|  | Refraction, understanding second $35\\prime$ or little less than $35\\prime$ | 1 |\n|  | Calculations the upper culmination of the lowest point of NGC 2025 in Dhaka | 1 |\n|  | Calculations of the altitude | 1 |\n|  | Final answer (depending of reality) | 1.5 |\n| | **Total** | **8** |"
+     },
+     {
+      "id": "general-grading-notes",
+      "title": "General notes for the jury",
+      "statement": "**Note.** Jury members should evaluate the student’s solutions in essence, and not by looking on formal existence the mentioned sentences or formulae. The formal presence of the mentioned positions in the text is not necessary to give the respective points. Points should be done if the following steps de facto use these positions. (For example, except the final conclusion and artistic picture, all the points in solution of problem 2 may be in only one common formula.) Of course, fractions of the mentioned points should be awarded if only part of the item was done.\n\n**Note.** Jury members may elaborate more detailed criteria, and also create criteria for other correct ways of the student’s solutions.\n\n**Note.** Everywhere “formula” means “correct formula”, “calculation” means “correct calculation”, “picture” means “correct picture”, etc., and in all cases: based on **correct facts** and intermediate formulae or calculations.\n\n**Note.** Everywhere final calculation means also using correct number of significant digits. Excessive number of significant digits, especially in estimational problems, will lead to subtraction of the points (column “digits”, minus 1-2 points).\n\n**Note.** Solutions with **absurd or almost absurd** answers should be rated lower (maybe ignoring the scoring schemes below, and maybe down to zero, column “absurd”).\n\nAny suggestions for modifying the criteria are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "supplement-1",
+     "page": 1
     }
-   ]
+   ],
+   "answer": {
+    "kind": "numeric",
+    "value": 19,
+    "unit": "km",
+    "note": "Official refined estimate; the sketch also accepts the approximate 18.5 km estimate."
+   }
   }
  ]
 }

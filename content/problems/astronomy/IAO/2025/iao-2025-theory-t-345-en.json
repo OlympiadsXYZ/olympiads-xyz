@@ -15,7 +15,7 @@
    "place": "Dhaka, Bangladesh"
   },
   "organiser": "Euro–Asian Astronomical Society",
-  "totalPoints": null,
+  "totalPoints": 24,
   "timeLimitMin": null,
   "source": {
    "archiveKey": "Астрономия/Състезания/IAO/2025/Теоретичен/problems_t_345_en.pdf",
@@ -24,7 +24,7 @@
    ]
   },
   "status": "review",
-  "caveat": "Problem 4 refers to a table printed on a separate sheet, which is not in the archive. No official solutions are in the archive.",
+  "caveat": "The separate table of constants and Hertzsprung–Russell diagram referenced by the solutions are not present in the inspected 2025 archive inventory. No replacement reference values have been invented. Problem 4 refers to a separate numbered exoplanet data table, absent from the inspected archive. The official solution and all grading criteria are restored, but the missing question table is not reconstructed from selected solution values. The official comet solution reuses a for two distances and includes an Earth/Saturn phrase and mismatched part references; the exoplanet power formulas have inconsistent factors. These printed items are retained and marked.",
   "documentNotes": [
    {
     "title": "Reminding",
@@ -34,21 +34,44 @@
     "position": "before-problem"
    }
   ],
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/IAO/2025/Теоретичен/solutions_t_en.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IAO/2025/Теоретичен/criteria_t_en.pdf",
+    "pages": [
+     1,
+     2,
+     3
+    ]
+   }
+  },
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "opus-5-5",
-   "promptVersion": "v1",
-   "requestId": null,
-   "at": "2026-09-23",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/problem_structure_astra",
+   "at": "2026-09-25",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "cd8ec40b270dead7d8fff80b2e653f5f01b6348a629bf629a3dd1620f1088ba1"
+    "problems": "cd8ec40b270dead7d8fff80b2e653f5f01b6348a629bf629a3dd1620f1088ba1",
+    "solutions": "08d1a2e8eb4eb1904a84d4b4d322aeddc87d1805f6d75d3e3fba831665fd4f62",
+    "supplement-1": "9ca9913d04e3eca2c5d20438e75c845a5b4d916619e4e882996b57ab02e6ac3b"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-09-23",
-   "notes": "The page prints the problems as 3(αβγ), 4(αβγ) and 5(αβγ) (problems 3–5 of the theoretical round, common to groups α, β, γ); they keep the printed numbers 3, 4, 5, and the printed sub-task labels 3.1, 3.2, 5.1, 5.2 are kept. No points are printed. Problem 4 refers to a table on a separate sheet that is not in this file. The decimal separators are kept as printed: 0.5299 au with a point, 0,023 % with a comma."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-25",
+   "notes": "Fresh Astra single-pass visual reading of all three question pages and the six-page shared official solution plus three-page shared grading criteria. The nine shared pages were visually read once, at identical source hashes, and mapped to each paper. Original problem IDs, printed numbers and group labels retained. Native solution sections, mathematics and grading tables. No task figures occur; header emblems are not task figures. Existing source-faithful question text was retained after comparison. No separate model checker."
   }
  },
  "problems": [
@@ -56,7 +79,7 @@
    "id": "iao-2025-theory-t-345-en-p3",
    "number": 3,
    "title": "Comet Lemmon",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "Today, exactly during the theoretical round (at the end of the round for participants from the Eastern Hemisphere and at the beginning for the Western Hemisphere), comet C/2025 A6 (Lemmon) passes the perihelion of its orbit at a distance of p = 0.5299 au from the Sun. In its previous approach to the Sun, the comet was observed in the second half of the 7th century AD.",
    "figures": [],
@@ -64,12 +87,20 @@
     {
      "label": "3.1.",
      "statement": "Estimate the speed of the comet at the given moment.",
-     "points": null
+     "points": 3,
+     "answer": {
+      "kind": "expression",
+      "latex": "58\\,\\mathrm{km/s}"
+     }
     },
     {
      "label": "3.2.",
      "statement": "During the passage of the inner regions of the Solar System, a slight deceleration of the comet occurred, equivalent to the fact that at the perihelion point, the comet instantly lost δ = 0,023 % of its velocity. In what century will the inhabitants of the Earth see the comet during its next visit to the inner regions of the Solar System?",
-     "points": null
+     "points": 5,
+     "answer": {
+      "kind": "expression",
+      "latex": "3185\\text{ (32nd century)}"
+     }
     }
    ],
    "topics": [
@@ -81,13 +112,55 @@
    "solution": {
     "statement": "",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "The archive has no file with official solutions for this paper."
+    "sections": [
+     {
+      "id": "jury-introduction",
+      "title": "Sketches for solutions — for jury job ONLY",
+      "statement": "These solutions are written for jury members, so they contain a lot of explanations in the form of text. Students are instructed to use mostly formulas, calculations, drawings and graphs, writing texts is not allowed in the solutions. It is permitted to write a few keywords in English (for example, “Yes”, “No”, “Assume”, “Answer”, “Average”, “Minimum”, “Maximum”, “Impossible situation”, etc.), as well as terms contained in the accompanying tables and names of objects.\n\nIf you find typos, errors or missing points in the solution, please inform the organizing committee. Any suggestions for modifying the solutions are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     },
+     {
+      "id": "solution-orbit",
+      "title": "Initial orbit",
+      "statement": "If the comet was observed in the second half of the 7th century AD during its previous approach to the Sun, then its orbital period in the previous period can be estimated as $1350\\pm25$ years. According to Kepler's Third Law, such a period corresponds to the semimajor axis of the orbit\n\n$$a=T^{2/3}=122\\pm1.5\\,\\mathrm{au},$$\n\nThe eccentricity of the orbit:\n\n$$e=(a-p)/a=0.99566\\pm0.00005.$$"
+     },
+     {
+      "id": "solution-3-1",
+      "title": "3.1.",
+      "statement": "Such a small difference in eccentricity from unity indicates that the comet is moving along an almost parabolic trajectory. The velocity of the comet at perihelion (i.e., the speed at the moment) is almost equal to the II cosmic one:\n\n$$V_{II}=\\sqrt{\\frac{2GM_\\odot}{p}}=\\sqrt{\\frac{2\\cdot6.67\\cdot10^{-11}\\cdot1.99\\cdot10^{30}}{0.53\\cdot1.496\\cdot10^{11}}}=5.79\\cdot10^4\\,\\mathrm{m/s}=57.9\\,\\mathrm{km/s}.$$\n\nTo calculate, we converted astronomical units to meters. The result is a value in meters per second. Thus, the comet's perihelion velocity $V_p\\approx V_{II}=57.9\\,\\mathrm{km/s}\\approx58\\,\\mathrm{km/s}$.\n\n**3.1*.** A more accurate result can be obtained by applying the law of conservation of energy and Kepler's Second Law for the points of perihelion and aphelion of the orbit of the comet:\n\n$$\\frac{V_p^2}{2}-\\frac{GM_\\odot}{p}=\\frac{V_a^2}{2}-\\frac{GM_\\odot}{a},\\qquad V_p p=V_a a.$$\n\nHere $G$ is the gravitational constant, $M_\\odot$ is the mass of the Sun, and $p$ and $a$ are the distances at perihelion and aphelion, “which are equal to the radii of the orbits of the Earth and Saturn”.\n\n$$V_p=\\sqrt{\\frac{2GM_\\odot}{p(p/a+1)}}=\\sqrt{\\frac{2GM_\\odot}{p((1-e)+1)}}\\approx57.8\\,\\mathrm{km/s}.$$\n\nThe answer differs by about 0.2% from the parabolic value. This accuracy is unnecessary for the estimate, but the sketch calls the alternative absolutely correct.\n\n*Transcription note: the quoted Earth/Saturn phrase, reuse of $a$ for aphelion after semimajor axis, and printed substitution involving $e$ are in the supplied sketch.*\n\n*A note to the jury.* The blue text is not required for the first part, but may be useful for an alternative solution of the second part. The printed cross-references here read “p.1.1*”, “p.1.1.” and “p.1.2.”."
+     },
+     {
+      "id": "solution-3-2",
+      "title": "3.2.",
+      "statement": "But in this part of the problem, high accuracy is required, which was not important in clause 1.1. Using the formula obtained earlier\n\n$$V_p=\\sqrt{\\frac{2GM_\\odot}{p(p/a+1)}}=\\sqrt{\\frac{2GM_\\odot}{p(2-e)}},$$\n\nwe can get\n\n$$2-e=\\frac{2GM_\\odot}{pV_p^2}.$$\n\nFor small variations\n\n$$\\frac{\\Delta(2-e)}{2-e}=\\Delta\\left(\\frac{2GM_\\odot}{pV_p^2}\\right)\\bigg/\\frac{2GM_\\odot}{pV_p^2},$$\n\n$$\\frac{-\\Delta e}{2-e}=\\Delta\\left(\\frac{1}{V_p^2}\\right)\\bigg/\\frac{1}{V_p^2}=\\frac{-2\\Delta V_p}{V_p}.$$\n\nSince $\\Delta e$ is significantly less than $(2-e)$, and $(2-e)\\approx1$, we obtain\n\n$$\\Delta e\\approx\\frac{2\\Delta V_p}{V_p}=-2\\delta\\approx-0.046\\%.$$\n\nThe new eccentricity is:\n\n$$e_1=(a_1-p)/a_1=e\\cdot(1-0.00046)=0.9952,\\qquad1-e_1=0.0048.$$\n\nThe new semi-major axis of the orbit of the comet:\n\n$$a_1=p/(1-e_1)=0.5299\\,\\mathrm{au}/0.0048\\approx110\\,\\mathrm{au}.$$\n\nThe new orbital period:\n\n$$T_1=a_1^{3/2}\\approx1160\\text{ years}.$$\n\n$2025+1160=3185$. Thus, the next time inhabitants of the Earth will see comet C/2025 A6 (Lemmon) will be at the end of the **32th century** (*). This is two centuries earlier than if the comet had not lost 0.023% of its velocity at perihelion.\n\n(*) Provided that there are no major changes in the orbit in the outer part of the trajectory of the comet. There, even a minor affect from massive objects can lead to a significant change in trajectory, up to ejection of the comet outside our Solar System."
+     },
+     {
+      "id": "grading-criteria",
+      "title": "Official grading criteria",
+      "statement": "| Item | Criterion | pts |\n|---|---|---:|\n| 3.1. | Actual semimajor axis of the orbit | 1 |\n| 3.1. | Actual orbital period | 1 |\n| 3.1. | Actual eccentricity of the orbit | 1 |\n| 3.2. | Steps to get new eccentricity of the orbit | 2.5 |\n| 3.2. | Actual eccentricity of the orbit | 1 |\n| 3.2. | Actual orbital period | 1 |\n| 3.2. | Final conclusion | 0.5 |\n| | **Total** | **8** |"
+     },
+     {
+      "id": "general-grading-notes",
+      "title": "General notes for the jury",
+      "statement": "**Note.** Jury members should evaluate the student’s solutions in essence, and not by looking on formal existence the mentioned sentences or formulae. The formal presence of the mentioned positions in the text is not necessary to give the respective points. Points should be done if the following steps de facto use these positions. (For example, except the final conclusion and artistic picture, all the points in solution of problem 2 may be in only one common formula.) Of course, fractions of the mentioned points should be awarded if only part of the item was done.\n\n**Note.** Jury members may elaborate more detailed criteria, and also create criteria for other correct ways of the student’s solutions.\n\n**Note.** Everywhere “formula” means “correct formula”, “calculation” means “correct calculation”, “picture” means “correct picture”, etc., and in all cases: based on **correct facts** and intermediate formulae or calculations.\n\n**Note.** Everywhere final calculation means also using correct number of significant digits. Excessive number of significant digits, especially in estimational problems, will lead to subtraction of the points (column “digits”, minus 1-2 points).\n\n**Note.** Solutions with **absurd or almost absurd** answers should be rated lower (maybe ignoring the scoring schemes below, and maybe down to zero, column “absurd”).\n\nAny suggestions for modifying the criteria are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
     }
    ]
   },
@@ -95,9 +168,9 @@
    "id": "iao-2025-theory-t-345-en-p4",
    "number": 4,
    "title": "On a remote exoplanet",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
-   "statement": "The table (see on a separate sheet) shows the characteristics of the Earth-like, presumably habitable exoplanet Antechea in the planetary system of the star Erythrelatis in the constellation Ursa Major. For comparison, similar characteristics of the Earth are given. Determine the spectral class (O, B, A, F, G, K, M) of the star Erythrelatis, if possible, also specify the subclass (for example, B8, A4, G2, etc.). The orbits of the planets can be considered circular. Explain which parameter from the table you use at each step of the solution (in square brackets, for example [#4]). At the end of the solution, specify which parameters the answer to the problem does not depend on (for example, \"Not depend on [#1, 4, 5, 6]\").",
+   "statement": "The table (see on a separate sheet) shows the characteristics of the Earth-like, presumably habitable exoplanet Antechea in the planetary system of the star Erythrelatis in the constellation Ursa Major. For comparison, similar characteristics of the Earth are given. Determine the spectral class (O, B, A, F, G, K, M) of the star Erythrelatis, if possible, also specify the subclass (for example, B8, A4, G2, etc.). The orbits of the planets can be considered circular. Explain which parameter from the table you use at each step of the solution (in square brackets, for example [#4]). At the end of the solution, specify which parameters the answer to the problem does not depend on (for example, \"Not depend on [#1, 4, 5, 6]\").\n\n*Source gap: the separate data table referenced above is absent from the available archive. The supplied solution is retained below.*",
    "figures": [],
    "parts": [],
    "topics": [
@@ -109,21 +182,67 @@
    "solution": {
     "statement": "",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "The archive has no file with official solutions for this paper; the table on the separate sheet is also missing."
+    "sections": [
+     {
+      "id": "jury-introduction",
+      "title": "Sketches for solutions — for jury job ONLY",
+      "statement": "These solutions are written for jury members, so they contain a lot of explanations in the form of text. Students are instructed to use mostly formulas, calculations, drawings and graphs, writing texts is not allowed in the solutions. It is permitted to write a few keywords in English (for example, “Yes”, “No”, “Assume”, “Answer”, “Average”, “Minimum”, “Maximum”, “Impossible situation”, etc.), as well as terms contained in the accompanying tables and names of objects.\n\nIf you find typos, errors or missing points in the solution, please inform the organizing committee. Any suggestions for modifying the solutions are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     },
+     {
+      "id": "solution-balance",
+      "title": "Thermal balance",
+      "statement": "To determine the spectral class of the star Erythrelatis, it is necessary to find the approximate temperature of its photosphere.\n\nThe thermal balance of the planet is determined by the incoming and outgoing energy per unit of time.\n\n$$W_{in}=W_{out}.$$\n\nIncoming power:\n\n$$W_{in}=(1-\\alpha)\\cdot\\sigma T_{star}^4\\cdot\\frac{\\pi(\\beta/2)^2}{4\\pi}\\cdot4\\pi R_{planet}^2=(1-\\alpha)\\cdot\\sigma T_{star}^4\\cdot\\frac{\\pi\\beta^2}{4}\\cdot R_{planet}^2,$$\n\nwhere $\\sigma$ is the Stefan–Boltzmann constant, $\\alpha$ is the albedo of the planet, and $\\beta$ is the angular diameter of the central star visible from the planet.\n\nOutgoing (radiated) power:\n\n$$W_{out}=\\sigma T_{planet}^4\\cdot4\\pi R_{planet}^2=\\sigma(T_{obs}-T_{GHE})^4\\cdot R_{planet}^2,$$\n\nwhere $T_{planet}$ is the effective temperature of the planet, $T_{obs}$ is the observed mean temperature of the planet, and $T_{GHE}$ is the greenhouse effect.\n\nFrom these two equations:\n\n$$(1-\\alpha)\\cdot T_{star}^4\\cdot\\frac{\\pi\\beta^2}{4}=(T_{obs}-T_{GHE})^4,$$\n\nfrom where:\n\n$$T_{star}=(T_{obs}-T_{GHE})\\cdot\\sqrt[4]{\\frac{4}{\\pi\\beta^2(1-\\alpha)}}.$$\n\nCoefficients are not needed to compare the Sun and the star Erythrelatis, therefore:\n\n$$T_{star}\\sim(T_{obs}-T_{GHE})\\cdot\\beta^{-1/2}(1-\\alpha)^{-1/4},$$\n\n$$T_{ery}=T_{sun}\\cdot\\frac{(T_{obs}-T_{GHE})_{ant}}{(T_{obs}-T_{GHE})_{earth}}\\cdot\\left(\\frac{\\beta_{ery}}{\\beta_{sun}}\\right)^{-1/2}\\cdot\\left(\\frac{1-\\alpha_{ant}}{1-\\alpha_{earth}}\\right)^{-1/4}.$$\n\n*Transcription note: the absolute-power equalities and coefficient above follow the supplied sketch, including its disappearing factors. The subsequent comparison formula is also reproduced as supplied.*"
+     },
+     {
+      "id": "solution-diameter",
+      "title": "Angular diameter and refraction",
+      "statement": "The angular diameter of the star Erythrelatis, visible from the planet Antechea, can be found by analyzing the data of the length of day and the duration from rise to set of the central star given in the table. For the Earth, we see that the time from sunrise to sunset is 406 seconds longer than half a day. Converting this value to angular minutes (the length of day corresponds to 21600 angular minutes), we get $\\delta_{earth}=101.5'$. It can be verified that this addition is caused by refraction (twice $\\rho_{earth}=34.8'$ at sunrise and sunset, data from the table of constants) and the angular diameter of the Sun (twice the angular radius of the Sun: at sunrise and sunset, $\\beta_{sun}=31.9'$ in total).\n\nFor Antechea, the time from rise to set of Erythrelatis is 324 seconds longer than half a day. Converting this value to angular minutes (note that the conversion coefficient is different here: 21600 angular minutes corresponds to 70832 seconds), we get $\\delta_{ant}=98.8'$. This is also the doubled refraction at the horizon plus the apparent angular diameter of Erythrelatis.\n\nA significant error is possible here: twice subtract $\\rho_{earth}=34.8'$ from $\\delta_{ant}=98.8'$, and get $\\beta_{ery}=29.2'$. (Looking ahead, we note that in this highly erroneous case, $T_{ery}\\approx6300\\,\\mathrm K$ and spectral class F8 are obtained.)\n\nThe value of refraction is proportional to the density of the atmosphere at the surface of the planet, which is the same as the ratio of pressure to temperature. (That this is the relationship can also be understood from the refraction formula given in the table of constants.) The temperature near the surface on both planets is the same, so the value of refraction is proportional to the atmospheric pressure:\n\n$$\\rho_{ant}=\\rho_{earth}\\cdot\\frac{P_{ant}}{P_{earth}}=15.08'.$$\n\nThus, the angular diameter of the star Erythrelatis, as seen from the planet Antechea, is:\n\n$$\\beta_{ery}=\\delta_{ant}-2\\rho_{ant}\\approx68.6'.$$"
+     },
+     {
+      "id": "solution-class",
+      "title": "Spectral class",
+      "statement": "According to the formula obtained above for $T_{ery}$:\n\n$$T_{ery}=5777\\,\\mathrm K\\cdot\\frac{259\\,\\mathrm K}{254\\,\\mathrm K}\\cdot\\left(\\frac{68.6'}{31.9'}\\right)^{-1/2}\\cdot\\left(\\frac{0.64}{0.71}\\right)^{-1/4}=4123\\,\\mathrm K\\approx4100\\,\\mathrm K.$$\n\nUsing the Hertzsprung–Russell diagram, we determine that stars of the K7 class have such a temperature.\n\nThe answer to the problem does not depend on neither the equatorial radius of the planet [#1], the mass of the planet [#2] nor the acceleration of gravity [#3].\n\nAnswer: the spectral class of the star Erythrelatis is **K7**. Not depending on [#1, 2, 3].\n\n*Source gap: the separate numbered exoplanet table, table of constants, and Hertzsprung–Russell diagram are referenced but absent from the available 2025 archive inventory. The numerical data above are transcribed from the official solution; they are not a reconstructed replacement for the missing question table.*"
+     },
+     {
+      "id": "grading-criteria",
+      "title": "Official grading criteria",
+      "statement": "| Item | Criterion | pts |\n|---|---|---:|\n|  | Thermal balance | 0.8 |\n|  | Formula for incoming power | 0.5 |\n|  | Formula for outgoing power | 0.4 |\n|  | Using albedo | 0.4 |\n|  | Using greenhouse effect | 0.4 |\n|  | Analyzing time from sunrise to sunset vs half a day, additional angular sizes | 0.8 |\n|  | Using dependence on the angular size of the central star | 0.8 |\n|  | Using any refraction | 0.4 |\n|  | Using refraction depending on atmospheric pressure | 1.1 |\n|  | Using spectral class of the Sun or temperature of the Sun | 0.4 |\n|  | Final formula and/or correct calculations | 0.8 |\n|  | Final correct result in a range K5-K9 | 0.8 |\n|  | Postulating “Not depending on [#1, 2, 3]” | 0.4 |\n| | **Total** | **8** |"
+     },
+     {
+      "id": "general-grading-notes",
+      "title": "General notes for the jury",
+      "statement": "**Note.** Jury members should evaluate the student’s solutions in essence, and not by looking on formal existence the mentioned sentences or formulae. The formal presence of the mentioned positions in the text is not necessary to give the respective points. Points should be done if the following steps de facto use these positions. (For example, except the final conclusion and artistic picture, all the points in solution of problem 2 may be in only one common formula.) Of course, fractions of the mentioned points should be awarded if only part of the item was done.\n\n**Note.** Jury members may elaborate more detailed criteria, and also create criteria for other correct ways of the student’s solutions.\n\n**Note.** Everywhere “formula” means “correct formula”, “calculation” means “correct calculation”, “picture” means “correct picture”, etc., and in all cases: based on **correct facts** and intermediate formulae or calculations.\n\n**Note.** Everywhere final calculation means also using correct number of significant digits. Excessive number of significant digits, especially in estimational problems, will lead to subtraction of the points (column “digits”, minus 1-2 points).\n\n**Note.** Solutions with **absurd or almost absurd** answers should be rated lower (maybe ignoring the scoring schemes below, and maybe down to zero, column “absurd”).\n\nAny suggestions for modifying the criteria are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
     }
-   ]
+   ],
+   "answer": {
+    "kind": "text",
+    "value": "K7; not depending on [#1, 2, 3]. The grading criteria accept K5–K9."
+   }
   },
   {
    "id": "iao-2025-theory-t-345-en-p5",
    "number": 5,
    "title": "Canopus and Sirius",
-   "points": null,
+   "points": 8,
    "problemType": "theory",
    "statement": "",
    "figures": [],
@@ -131,12 +250,20 @@
     {
      "label": "5.1.",
      "statement": "Calculate the most favorable time for observations of Canopus in Dhaka over the next 24 hours. Bangladesh time should be used.",
-     "points": null
+     "points": 3.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "03{:}15\\text{ (Bangladesh time)}"
+     }
     },
     {
      "label": "5.2.",
      "statement": "Suppose that due to smog, Canopus will be visible in Dhaka only at the most favorable time for its observation, and at the limit of visibility to the naked eye. What magnitude will Sirius be visible at this time?",
-     "points": null
+     "points": 4.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "0.44\\text{ mag}"
+     }
     }
    ],
    "topics": [
@@ -148,13 +275,50 @@
    "solution": {
     "statement": "",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "The archive has no file with official solutions for this paper."
+    "sections": [
+     {
+      "id": "jury-introduction",
+      "title": "Sketches for solutions — for jury job ONLY",
+      "statement": "These solutions are written for jury members, so they contain a lot of explanations in the form of text. Students are instructed to use mostly formulas, calculations, drawings and graphs, writing texts is not allowed in the solutions. It is permitted to write a few keywords in English (for example, “Yes”, “No”, “Assume”, “Answer”, “Average”, “Minimum”, “Maximum”, “Impossible situation”, etc.), as well as terms contained in the accompanying tables and names of objects.\n\nIf you find typos, errors or missing points in the solution, please inform the organizing committee. Any suggestions for modifying the solutions are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     },
+     {
+      "id": "solution-5-1",
+      "title": "5.1.",
+      "statement": "Canopus is visible in Dhaka, but not high above the horizon. Therefore, the best conditions for the observation should be at the time of its upper culmination. The upper culmination of a celestial body occurs when its sidereal time equals to its right ascension. It is $6^{\\mathrm h}24^{\\mathrm m}$ for Canopus. The sidereal time is equal to the mean solar time at the date of autumnal equinox, and then begins to outstrip it with speed $1^{\\mathrm d}/365.2422$ per day (about $3^{\\mathrm m}56^{\\mathrm s}$ per day). 47–48 days passed since September 22 (autumnal equinox) till November 8–9 (the next 24 hours), let us use 47.5 days difference. The difference between the mean solar time and the sidereal time is now:\n\n$$24^{\\mathrm h}00^{\\mathrm m}\\times47.5/365.2422=3^{\\mathrm h}07^{\\mathrm m}.$$\n\nThus, now sidereal time $6^{\\mathrm h}24^{\\mathrm m}$ corresponds to\n\n$$6^{\\mathrm h}24^{\\mathrm m}-3^{\\mathrm h}07^{\\mathrm m}=3^{\\mathrm h}17^{\\mathrm m}\\quad\\text{mean solar time}.$$\n\nDhaka is located about $0.5^\\circ$ East from the $90^\\circ$ meridian, so the mean solar time here is $0.5^\\circ\\times4^{\\mathrm m}/{}^\\circ=2^{\\mathrm m}$ ahead of the local time UT+6 used in Bangladesh. So to get the answer for UT+6, you need to subtract these $2^{\\mathrm m}$, and we get\n\n$$3^{\\mathrm h}17^{\\mathrm m}-0^{\\mathrm h}02^{\\mathrm m}=3^{\\mathrm h}15^{\\mathrm m}\\quad\\text{time of Bangladesh}.$$\n\nThus, there will be favorable conditions for observing Canopus tonight. Don't miss the chance!"
+     },
+     {
+      "id": "solution-5-2",
+      "title": "5.2.",
+      "statement": "During the upper culmination, Canopus is at an altitude\n\n$$h_c=90^\\circ+\\delta_c-\\varphi=90^\\circ-52^\\circ42'-23^\\circ48'=13^\\circ30'.$$\n\nAt this time, Sirius is also located near the upper culmination (from the difference in right ascensions, it can be seen that its culmination will be only 21 minutes later), so its altitude is approximately equal to\n\n$$h_s\\approx90^\\circ+\\delta_s-\\varphi=90^\\circ-16^\\circ43'-23^\\circ48'=49^\\circ29'.$$\n\nIf the light of celestial bodies from the zenith passes through a layer $d_0$ of polluted air, then the layer from the stars at an altitude of $h$: $d_1=d_0/\\sin h$.\n\nFor Canopus, the layer is\n\n$$d_c=d_0/\\sin13^\\circ30'=4.28h_0,$$\n\nand for Sirius the layer is\n\n$$d_s=d_0/\\sin49^\\circ29'=1.32h_0.$$\n\nUnder the most favorable conditions, a layer of one atmosphere weakens light by $0.23^{\\mathrm m}$, thus, the exoatmospheric magnitude of Canopus is\n\n$$-0.72^{\\mathrm m}-0.23^{\\mathrm m}=-0.95^{\\mathrm m}.$$\n\nWe will assume that the limit of visibility by the naked eye is $6^{\\mathrm m}$. Thus, the layer $d_c=4.28h_0$ weakens the light by $6^{\\mathrm m}-(-0.95^{\\mathrm m})=6.95^{\\mathrm m}$. Accordingly, the layer $d_0$ weakens the light by $6.95^{\\mathrm m}/4.28=1.62^{\\mathrm m}$, and a layer $d_s=1.32h_0$ weakens the light by $1.62^{\\mathrm m}\\cdot1.32=2.13^{\\mathrm m}$.\n\nThe exoatmospheric magnitude of Sirius is\n\n$$-1.46^{\\mathrm m}-0.23^{\\mathrm m}=-1.69^{\\mathrm m}.$$\n\nThus, in the conditions of smog of the considered level, the apparent magnitude of Sirius will be\n\n$$-1.69^{\\mathrm m}+2.13^{\\mathrm m}=0.44^{\\mathrm m}.$$\n\n*Transcription note: the sketch changes the atmospheric layer notation from $d_0$ to $h_0$ in several expressions; this is retained.*"
+     },
+     {
+      "id": "grading-criteria",
+      "title": "Official grading criteria",
+      "statement": "| Item | Criterion | pts |\n|---|---|---:|\n| 5.1. | Understanding about upper culmination | 0.5 |\n| 5.1. | Using right ascension of Canopus | 1 |\n| 5.1. | Using difference in days since autumnal equinox | 0.5 |\n| 5.1. | Using Dhaka is located about 0.5° East from the 90° meridian | 0.5 |\n| 5.1. | Final formula and calculations | 1 |\n| 5.2. | Altitude of Canopus at upper culmination | 0.6 |\n| 5.2. | Altitude of Sirius at the time of upper culmination of Canopus | 0.6 |\n| 5.2. | Extinction in atmosphere | 1 |\n| 5.2. | Using limit of visibility by the naked eye | 0.4 |\n| 5.2. | Calculation the layers of atmosphere for Canopus and Sirius | 0.8 |\n| 5.2. | Final formula and/or correct calculations, final answer | 1.1 |\n| | **Total** | **8** |"
+     },
+     {
+      "id": "general-grading-notes",
+      "title": "General notes for the jury",
+      "statement": "**Note.** Jury members should evaluate the student’s solutions in essence, and not by looking on formal existence the mentioned sentences or formulae. The formal presence of the mentioned positions in the text is not necessary to give the respective points. Points should be done if the following steps de facto use these positions. (For example, except the final conclusion and artistic picture, all the points in solution of problem 2 may be in only one common formula.) Of course, fractions of the mentioned points should be awarded if only part of the item was done.\n\n**Note.** Jury members may elaborate more detailed criteria, and also create criteria for other correct ways of the student’s solutions.\n\n**Note.** Everywhere “formula” means “correct formula”, “calculation” means “correct calculation”, “picture” means “correct picture”, etc., and in all cases: based on **correct facts** and intermediate formulae or calculations.\n\n**Note.** Everywhere final calculation means also using correct number of significant digits. Excessive number of significant digits, especially in estimational problems, will lead to subtraction of the points (column “digits”, minus 1-2 points).\n\n**Note.** Solutions with **absurd or almost absurd** answers should be rated lower (maybe ignoring the scoring schemes below, and maybe down to zero, column “absurd”).\n\nAny suggestions for modifying the criteria are welcome, write justifications to gavrilovissp@list.ru and gavrilov@issp.ac.ru (to both addresses for reliability), if the suggestions are reasonable, the proposal can be approved."
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
     }
    ]
   }
