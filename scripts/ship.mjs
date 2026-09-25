@@ -33,7 +33,7 @@ const gates = [
 ];
 for (const [cmd, args] of gates) {
   const r = run(cmd, args);
-  if (r.status !== 0) { log(`gate failed: ${cmd} ${args.join(' ')}\n${(r.stderr || r.stdout).trim().split('\n').slice(-6).join('\n')}`); process.exit(2); }
+  if (r.status !== 0) { log(`gate failed: ${cmd} ${args.join(' ')}\n${[r.stdout, r.stderr].filter(Boolean).join('\n').trim().split('\n').slice(-12).join('\n')}`); process.exit(2); }
 }
 // Currency of the generated pages: while the loop workers keep promoting, papers land between the generate step
 // and this check ("stale artifacts"); regenerate and check again a few times before calling it a failure.
@@ -43,10 +43,10 @@ for (let attempt = 1; ; attempt++) {
   git(['add', 'content', 'solutions']);
   const r = run('node', ['scripts/problems-to-site.mjs', '--check']);
   if (r.status === 0) break;
-  if (attempt >= 4) { log(`gate failed: node scripts/problems-to-site.mjs --check\n${(r.stderr || r.stdout).trim().split('\n').slice(-6).join('\n')}`); process.exit(2); }
+  if (attempt >= 4) { log(`gate failed: node scripts/problems-to-site.mjs --check\n${[r.stdout, r.stderr].filter(Boolean).join('\n').trim().split('\n').slice(-12).join('\n')}`); process.exit(2); }
   log(`generated pages went stale during the gates (attempt ${attempt}); regenerating`);
   const g = run('node', ['scripts/problems-to-site.mjs']);
-  if (g.status !== 0) { log(`gate failed: node scripts/problems-to-site.mjs\n${(g.stderr || g.stdout).trim().split('\n').slice(-6).join('\n')}`); process.exit(2); }
+  if (g.status !== 0) { log(`gate failed: node scripts/problems-to-site.mjs\n${[g.stdout, g.stderr].filter(Boolean).join('\n').trim().split('\n').slice(-12).join('\n')}`); process.exit(2); }
 }
 const summary = (run('node', ['scripts/problems-to-site.mjs', '--check']).stdout.match(/\d+ papers; \d+ eligible problems/) || [''])[0];
 log(`gates green (${summary})`);
@@ -54,7 +54,7 @@ if (dry) { log('dry run: not committing'); process.exit(0); }
 const ledger = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'problem-publication.json'), 'utf8'));
 const kinds = {}; for (const v of Object.values(ledger.papers || ledger)) kinds[v.kind] = (kinds[v.kind] || 0) + 1;
 git(['add', 'content', 'solutions']);
-const staged = git(['diff', '--cached', '--name-only']).stdout.trim().split('\n').filter(Boolean);
+const staged = git(['diff', '--cached', '--name-only', '-z']).stdout.split('\0').filter(Boolean);
 if (!staged.length) { log('nothing staged after the gates'); process.exit(0); }
 const newPapers = staged.filter(f => /^content\/problems\/.*\.json$/.test(f)).length;
 const msg = `content: ship ${newPapers} promoted paper file(s) (${summary}; ledger ${Object.entries(kinds).map(([k, v]) => `${k} ${v}`).join(', ')})\n\nAutomated publication of checked content (scripts/ship.mjs). Per-paper receipts record transcription and review provenance.\n`;
