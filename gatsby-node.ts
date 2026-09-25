@@ -4,6 +4,7 @@ import path from 'path';
 import * as freshOrdering from './content/ordering';
 import { typeDefs } from './graphql-types';
 import { createXdmNode } from './src/gatsby/create-xdm-node';
+const problemRedirectTarget = require('./scripts/lib/problem-redirect-target.cjs');
 import {
   checkInvalidUsacoMetadata,
   getProblemInfo,
@@ -229,7 +230,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (fs.existsSync(aliasFile)) {
     const aliases = JSON.parse(fs.readFileSync(aliasFile, 'utf8'));
     for (const [fromPath, toPath] of Object.entries(aliases)) {
-      createRedirect({ fromPath, toPath: String(toPath), isPermanent: true, redirectInBrowser: true });
+      createRedirect({
+        fromPath,
+        toPath: problemRedirectTarget(
+          String(toPath),
+          process.env.SITE_URL || 'https://www.olympiads.xyz'
+        ),
+        isPermanent: true,
+        redirectInBrowser: true,
+      });
     }
   }
   const redirectsData = fs.readFileSync('./src/redirects.txt');

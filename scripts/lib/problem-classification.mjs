@@ -39,7 +39,7 @@ export function problemMetadataErrors(data, manifest = null) {
       if (!sourceHashes.length && stamped) sourceHashes.push(...(typeof stamped === 'string' ? [stamped] : Object.values(stamped)));
       if (c.sourceRef?.kind === 'source-pdf' && sourceHashes.length && !sourceHashes.includes(c.sourceRef.sha256)) error(`${root}/classification/sourceRef`, 'source hash does not match a prepared source PDF');
     }
-    const bodyText = body => [body?.statement, body?.statementAfterParts, ...(body?.parts || []).flatMap(p => [p.statement, p.statementAfter])];
+    const bodyText = body => [body?.title, body?.statement, body?.statementAfterParts, ...(body?.parts || []).flatMap(p => [p.statement, p.statementAfter])];
     const text = [...bodyText(problem), ...(problem.sections || []).flatMap(bodyText), ...bodyText(problem.solution), ...(problem.solution?.sections || []).flatMap(bodyText)].filter(Boolean).join('\n');
     for (const value of problem.sourceLayout?.underlines || []) if (!text.includes(value)) error(`${root}/sourceLayout/underlines`, `underlined passage not present in problem text: ${value}`);
   }

@@ -26,6 +26,22 @@ test('figure and schema traversal covers section and nested part figures', () =>
   const validate = compileSchema('final').validate;
   assert.equal(validate(stripTx({ paper, problems: [problem] })), true, JSON.stringify(validate.errors));
 });
+test('native section bracket placeholders render each figure once at its printed position', async () => {
+  const p = { id: 'test-2026-p1', number: 1, statement: 'Introduction.', sections: [{
+    id: 'part-1', title: 'Part 1', statement: 'Before setup.\n\n[[figure:p1-fig1]]\n\nAfter setup.',
+    figures: [fig('p1-fig1'), fig('p1-fig2')], parts: [{ label: '1.', statement: 'Question.',
+      statementAfter: 'Before continuation.\n\n[Figure: p1-fig2]\n\nAfter continuation.\n\n[[figure:p1-fig3]]', figures: [fig('p1-fig3')] }]
+  }], solution: { sections: [{ id: 'part-1', title: 'Part 1', statement: 'Before answer.\n\n[[figure:p1-sol-fig1]]\n\nAfter answer.', figures: [fig('p1-sol-fig1')] }] } };
+  const mdx = problemMdx(paper, p, { quality: 'legacy' }, 'test.json');
+  for (const id of ['p1-fig1', 'p1-fig2', 'p1-fig3', 'p1-sol-fig1']) {
+    assert.equal(mdx.split(`src="https://example.org/${id}.png"`).length - 1, 1, id);
+  }
+  for (const [id, before, after] of [['p1-fig1', 'Before setup.', 'After setup.'], ['p1-fig2', 'Before continuation.', 'After continuation.'], ['p1-sol-fig1', 'Before answer.', 'After answer.']]) {
+    const position = mdx.indexOf(`src="https://example.org/${id}.png"`);
+    assert.ok(position > mdx.indexOf(before) && position < mdx.indexOf(after), id);
+  }
+  await compile(mdx, { remarkPlugins: [gfm, math] });
+});
 test('old frozen and id-based URLs both reach the canonical solution section', () => {
   const aliases = problemAliases(problem, { 'test-2026-p1': '/problems/acoustic-levitation', 'test-2026-p2': '/problems/old-task-e2' });
   for (const base of ['/problems/old-task-e2', '/problems/test-2026-p2']) {
@@ -39,7 +55,7 @@ test('old frozen and id-based URLs both reach the canonical solution section', (
 import { problemMetadataErrors } from '../lib/problem-classification.mjs';
 test('underlining validates and renders section introduction, question and solution text', () => {
   const p = structuredClone(problem);
-  p.sourceLayout = { underlines: ['Setup.', 'Question.', 'Answer.'] };
+  p.sourceLayout = { underlines: ['Task E1', 'Setup.', 'Question.', 'Answer.'] };
   assert.deepEqual(problemMetadataErrors({ paper, problems: [p] }), []);
   const mdx = problemMdx(paper, p, { quality: 'legacy' }, 'test.json');
   for (const text of p.sourceLayout.underlines) assert.ok(mdx.includes(`<u>${text}</u>`));
@@ -80,4 +96,29 @@ test('matching heading slug and section anchor render one stable DOM id', async 
   const other = renderToStaticMarkup(React.createElement(section.default, { id: 'e1' }, React.createElement(html.default.h3, { id: 'task-e1' }, 'Task E1')));
   assert.match(other, /id="e1"/);
   assert.match(other, /id="task-e1"/);
+});
+
+import os from 'node:os';
+import path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+test('large printed totals require a complete matching native section score breakdown', t => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'section-score-'));
+  t.after(() => {
+    assert.equal(path.dirname(directory), path.resolve(os.tmpdir()));
+    assert.ok(path.basename(directory).startsWith('section-score-'));
+    fs.rmSync(directory, { recursive: true, force: true });
+  });
+  const file = path.join(directory, 'paper.json');
+  const p = { id: 'test-2026-p1', number: 1, points: 480, statement: 'Shared instructions.', sections: Array.from({ length: 6 }, (_, i) => ({ id: `map-${i + 1}`, title: `Map ${i + 1}`, statement: 'Source map.', points: 80 })) };
+  const run = () => {
+    fs.writeFileSync(file, JSON.stringify({ paper: { ...paper, totalPoints: 480 }, problems: [p] }));
+    return spawnSync(process.execPath, [fileURLToPath(new URL('../tx/validate.mjs', import.meta.url)), file, '--mode', 'final'], { encoding: 'utf8' });
+  };
+  let result = run(); assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /accounted for by all native section scores/);
+  p.sections[5].points = 79;
+  result = run(); assert.equal(result.status, 1); assert.match(result.stdout, /implausible points 480/);
+  p.sections[5].points = 80; delete p.sections[0].points;
+  result = run(); assert.equal(result.status, 1); assert.match(result.stdout, /implausible points 480/);
 });

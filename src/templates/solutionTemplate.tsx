@@ -66,9 +66,15 @@ export default function Template(props) {
           value={{ modulesThatHaveProblem, problem, verification }}
         >
           <ComparePanelProvider>
-            <MarkdownLayout markdownData={markdownData}>
+            <MarkdownLayout
+              markdownData={markdownData}
+              headerContent={
+                <div className="pt-4">
+                  <ProblemTopics tags={problemInfo.tags} />
+                </div>
+              }
+            >
               <div className="py-4">
-                <ProblemTopics tags={problemInfo.tags} />
                 <Markdown body={body} />
               </div>
             </MarkdownLayout>

@@ -66,7 +66,12 @@ problems.forEach((pr, i) => {
   if (!pr.statement || !String(pr.statement).trim()) { if ((pr.parts || []).length || (pr.sections || []).length) warn(`${p}/statement`, 'empty statement (the printed problem is only its parts)'); else err(`${p}/statement`, 'empty statement'); }
   else if (String(pr.statement).includes(WINDOW_PLACEHOLDER)) err(`${p}/statement`, `window placeholder "${WINDOW_PLACEHOLDER}" left unresolved (assemble.mjs did not find the statement in any window)`);
   if (typeof pr.points === 'number' && pr.points < 0) err(p, `negative points (${pr.points}): a penalty rule printed as a problem entry is not a problem — remove this entry ({"remove": true}); its printed text, if any, goes to the end of the previous problem's statement`);
-  else if (pr.points != null && (typeof pr.points !== 'number' || pr.points > 200)) err(`${p}/points`, `implausible points ${pr.points}`);
+  else if (pr.points != null) {
+    const completeSectionScore = pr.sections?.length && pr.sections.every(s => typeof s.points === 'number' && s.points >= 0)
+      && Math.abs(pr.sections.reduce((sum, s) => sum + s.points, 0) - pr.points) < 1e-9;
+    if (typeof pr.points !== 'number' || (pr.points > 200 && !completeSectionScore)) err(`${p}/points`, `implausible points ${pr.points}`);
+    else if (pr.points > 200) warn(`${p}/points`, `large source total ${pr.points} is accounted for by all native section scores`);
+  }
   const labels = new Set();
   let partSum = 0, partsWithPoints = 0;
   (pr.parts || []).forEach((pt, k) => {

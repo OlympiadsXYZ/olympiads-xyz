@@ -15,6 +15,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { PAGE_RENDERER, pageRenderArgs, previewGeometryError } from './page-render.mjs';
 import { supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
+import { XLSX_RENDERER_FINGERPRINT, xlsxCacheValid } from './xlsx-source.mjs';
 import {
   parseArgs, fail, run, resolvePaper, paperDir, manifestFile, readManifest, writeJson,
   sha256File, nowIso, RENDER_DPI, R2_REMOTE, which, ROOT, pdftotextBin,
@@ -178,17 +179,20 @@ function renderedPages(doc, expected) {
   return files.length === expected ? files.map(f => `pages/${f}`) : null;
 }
 
-const converted = {}; // doc -> how a non-PDF source became src/<doc>.pdf (plain text only, for now)
+const converted = {}; // doc -> provenance of the derived PDF
 for (const doc of Object.keys(keys)) {
   const key = keys[doc];
   if (!key) continue;
   const file = path.join(dir, 'src', `${doc}.pdf`);
   const prev = previous?.documents?.[doc];
+  const isXlsx = /\.xlsx$/i.test(key);
+  const workbook = file.replace(/\.pdf$/, '.xlsx');
   let downloaded = false;
   // Re-download when there is no file, when --force was given, when the archive
   // key differs from the one the cached file came from, or when the cached bytes
   // no longer match the manifest (a partial or tampered file).
-  const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || sha256File(file) !== prev.sha256;
+  const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || sha256File(file) !== prev.sha256
+    || (isXlsx && !xlsxCacheValid(prev, file, workbook));
   if (stale) {
     fs.rmSync(file, { force: true });
     if (/\.(jpe?g|png|gif)$/i.test(key)) {
@@ -203,6 +207,20 @@ for (const doc of Object.keys(keys)) {
       run('rclone', ['copyto', `${R2_REMOTE}/${key}`, office]);
       const r = run('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(ROOT, 'scripts', 'tx', 'office2pdf.ps1'), '-In', office, '-Out', file], { allowFail: true });
       if (r.status !== 0 || !fs.existsSync(file)) fail(`Word to PDF conversion failed for ${key}: ${(r.stderr || r.stdout || '').trim().slice(0, 300)}`);
+    } else if (isXlsx) {
+      // Keep original bytes separately. Native Excel preserves workbook layout and
+      // cached formulas; the helper inventories omitted print content and records
+      // complete-chart appendices separately from original print pages.
+      run('rclone', ['copyto', `${R2_REMOTE}/${key}`, workbook]);
+      const r = run('python3', [path.join(ROOT, 'scripts', 'tx', 'xlsx-to-pdf.py'), workbook, file], { allowFail: true });
+      if (r.status !== 0 || !fs.existsSync(file)) fail(`XLSX to PDF conversion failed for ${key}: ${(r.stderr || r.stdout || '').trim().slice(-2000)}`);
+      try { converted[doc] = JSON.parse(r.stdout.trim()); }
+      catch { fail(`XLSX converter did not return provenance for ${key}`); }
+      converted[doc].sourceFile = `src/${doc}.xlsx`;
+      converted[doc].rendererFingerprint = XLSX_RENDERER_FINGERPRINT;
+      if (converted[doc].sourceSha256 !== sha256File(workbook) || converted[doc].pdfSha256 !== sha256File(file)) fail(`XLSX conversion hash mismatch for ${key}`);
+    } else if (/\.(xls|xlsm|xlsb)$/i.test(key)) {
+      fail(`unsupported workbook format for ${key}; only native .xlsx conversion is implemented`);
     } else if (/\.txt$/i.test(key)) {
       // a plain-text paper (IYPT problem lists, IAO Bulgarian theory): fetched as is, typeset to PDF by PyMuPDF
       const txt = file.replace(/\.pdf$/, '.txt');

@@ -94,7 +94,9 @@ const ContentContainer = ({ children, tableOfContents }) => {
 export default function MarkdownLayout({
   markdownData,
   children,
+  headerContent,
 }: {
+  headerContent?: React.ReactNode;
   markdownData: ModuleInfo | SolutionInfo;
   children: React.ReactNode;
 }) {
@@ -178,16 +180,19 @@ export default function MarkdownLayout({
               <NotSignedInWarning />
 
               <ModuleHeaders moduleLinks={moduleLinks} />
+              {headerContent}
 
-              <div
-                className={
-                  tableOfContents.length > 1 && !comparePanel?.isSplit
-                    ? '2xl:hidden'
-                    : ''
-                }
-              >
-                <TableOfContentsBlock tableOfContents={tableOfContents} />
-              </div>
+              {!problemSolutionContext?.verification && (
+                <div
+                  className={
+                    tableOfContents.length > 1 && !comparePanel?.isSplit
+                      ? '2xl:hidden'
+                      : ''
+                  }
+                >
+                  <TableOfContentsBlock tableOfContents={tableOfContents} />
+                </div>
+              )}
 
               {children}
 

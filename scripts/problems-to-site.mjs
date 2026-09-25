@@ -914,9 +914,9 @@ export function sectionLines(sections, problem, resolve, solution = false) {
   for (const section of sections || []) {
     const anchor = `${solution ? 'solution-' : ''}${section.id}`;
     const points = section.points == null ? '' : ` (${String(section.points).replace('.', ',')} т.)`;
-    out.push(`<ProblemSection id="${anchor}">`, '', `### ${mdText(section.title)}${points}`, '');
+    out.push(`<ProblemSection id="${anchor}">`, '', `### ${sourceText(section.title, problem, resolve)}${points}`, '');
     if (section.statement) out.push(sourceText(section.statement, problem, resolve), '');
-    const texts = sectionTexts([section]);
+    const texts = sectionTexts([section]).map(text => resolveFigurePlaceholders(text, problem, resolve));
     const candidates = sectionFigures([section]);
     for (const fig of figuresNotInline(section.figures, texts, candidates)) out.push(figureMarkdown(fig), '');
     for (const part of section.parts || []) {

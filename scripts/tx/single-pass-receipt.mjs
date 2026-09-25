@@ -4,6 +4,7 @@
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { singlePassEvidenceProblems } from './single-pass-evidence.mjs';
+import { sourceConversions, sourceConversionProblems } from './source-conversions.mjs';
 import { supplementarySourceErrors } from './supplements.mjs';
 import {
   ROOT, parseArgs, fail, readJson, writeJson, readManifest, paperDir,
@@ -21,6 +22,7 @@ if (!manifest || !candidate || !evidence) fail('manifest, candidate or reader ev
 if (candidate.paper?.id !== paperId) fail('candidate paper id mismatch');
 const candidateSha256 = sha256File(candidatePath);
 const blockers = singlePassEvidenceProblems(evidence, candidate, manifest, candidateSha256);
+blockers.push(...sourceConversionProblems(manifest, paperDir(paperId)));
 for (const e of supplementarySourceErrors(candidate, manifest)) blockers.push(`${e.path}: ${e.message}`);
 for (const e of figureEvidenceProblems(candidate)) blockers.push(`${e.path}: ${e.message}`);
 const validationRun = spawnSync(process.execPath, [path.join(ROOT, 'scripts/tx/validate.mjs'), candidatePath, '--paper-id', paperId, '--manifest', path.join(paperDir(paperId), 'manifest.json')], { cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
@@ -44,6 +46,7 @@ const { validate } = compileSchema('final');
 if (!validate(final.data)) for (const e of validate.errors) blockers.push(`final schema ${e.dataPath || '/'}: ${e.message}`);
 const receipt = {
   paperId, verdict: blockers.length ? 'fail' : 'pass', contentHash: final.contentHash,
+  sourceConversions: sourceConversions(manifest),
   sourceHashes, reviewer, checkedAt, promptVersion, checkerMode: 'single-pass',
   reader: { provider: prov.provider, model: prov.model, requestId: prov.requestId, at: prov.at, promptVersion: prov.promptVersion },
   adjudicator, independence: { independent: false, differentProvider: false, allowSameModel: true, separateChecker: false },
