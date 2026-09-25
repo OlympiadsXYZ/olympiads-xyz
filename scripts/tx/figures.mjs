@@ -8,6 +8,7 @@
 // candidate (<name>.figs.json) with url/width/height/source filled in.
 // --dry-run crops and inspects but assigns NO url (so the result can never be
 // mistaken for uploaded figures); it is for looking at crops before spending.
+import { isOriginalImageFigure, originalImageInfo, copyOriginalImage } from './original-image-figure.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { previewGeometryError } from './page-render.mjs';
@@ -34,6 +35,10 @@ if (!dry && !which('rclone')) fail('rclone not found');
 
 const proposals = allFigures(data).filter(f => f.fig.tx?.bbox);
 for (const p of proposals) figureRotation(p.fig); // reject unsupported angles before any crop/upload
+for (const p of proposals.filter(p => isOriginalImageFigure(p.fig))) {
+  if (!args['no-snap']) fail('original-image extraction requires --no-snap');
+  originalImageInfo(p.fig, manifest, paperDir(paperId));
+}
 // Legacy MediaBox previews cannot be interpreted as displayed-CropBox boxes.
 // Fail before snapping or uploading; existing published crops remain untouched.
 for (const p of proposals) {
@@ -104,13 +109,18 @@ const dpi = manifest.renderDpi || RENDER_DPI;
 
 // 1. crop, grouped per document (one pdfcrop invocation per document)
 const byDoc = new Map();
+const cropInfo = new Map();
 for (const p of proposals) {
   const d = p.fig.tx.document;
+  if (isOriginalImageFigure(p.fig)) {
+    const info = originalImageInfo(p.fig, manifest, paperDir(paperId));
+    cropInfo.set(p.fig.id, copyOriginalImage(p.fig, manifest, paperDir(paperId), path.join(figDir, d, p.fig.id + info.extension)));
+    continue;
+  }
   if (!manifest.documents[d]) { report.errors.push({ id: p.fig.id, message: `document ${d} not prepared` }); continue; }
   if (!byDoc.has(d)) byDoc.set(d, []);
   byDoc.get(d).push(p);
 }
-const cropInfo = new Map();
 for (const [doc, list] of byDoc) {
   const pdf = path.join(paperDir(paperId), manifest.documents[doc].file);
   if (!fs.existsSync(pdf)) fail(`source PDF missing (${pdf}); re-run prepare.mjs`);
@@ -157,6 +167,8 @@ for (const p of proposals) {
   const entry = { id: fig.id, path: p.path, document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, rotation: figureRotation(fig) };
   if (!info) { entry.error = 'crop did not run'; report.errors.push({ id: fig.id, message: entry.error }); results.push(entry); continue; }
   const st = inspect(info.file);
+  entry.originalImage = info.originalImage; entry.dpi = info.dpi || FIGURE_DPI;
+  const extension = info.extension || '.png';
   entry.file = info.file; entry.px = info.px; entry.bytes = info.bytes; entry.pdfRect = info.pdfRect;
   if (!st) entry.error = 'could not inspect PNG (PIL missing?)';
   else if (st.w < MIN_PX || st.h < MIN_PX) entry.error = `crop too small (${st.w}x${st.h} px)`;
@@ -173,16 +185,16 @@ for (const p of proposals) {
   let key = null;
   const MAX_VERSIONS = 12; // a long repair loop re-crops a figure several times; identical bytes are reused, not re-uploaded
   for (let v = 1; v <= MAX_VERSIONS; v++) {
-    const name = v === 1 ? `${fig.id}.png` : `${fig.id}-v${v}.png`;
+    const name = v === 1 ? `${fig.id}${extension}` : `${fig.id}-v${v}${extension}`;
     const remote = listing.get(name);
-    if (!remote) { key = name.replace(/\.png$/, ''); entry.upload = 'new'; break; }
-    if (remote.md5 && remote.md5 === entry.md5) { key = name.replace(/\.png$/, ''); entry.upload = 'reused-identical-md5'; break; }
+    if (!remote) { key = name.slice(0, -extension.length); entry.upload = 'new'; break; }
+    if (remote.md5 && remote.md5 === entry.md5) { key = name.slice(0, -extension.length); entry.upload = 'reused-identical-md5'; break; }
     if (v === MAX_VERSIONS) entry.error = `${MAX_VERSIONS} versions of this figure already exist remotely; refusing to add more`;
   }
   if (entry.error) { report.errors.push({ id: fig.id, message: entry.error }); results.push(entry); continue; }
-  if (entry.upload === 'new') run('rclone', ['copyto', '--ignore-existing', info.file, `${R2_REMOTE}/problems/${paperId}/${key}.png`]);
-  entry.remoteKey = `problems/${paperId}/${key}.png`;
-  entry.url = figureUrl(paperId, key);
+  if (entry.upload === 'new') run('rclone', ['copyto', '--ignore-existing', info.file, `${R2_REMOTE}/problems/${paperId}/${key}${extension}`]);
+  entry.remoteKey = `problems/${paperId}/${key}${extension}`;
+  entry.url = figureUrl(paperId, key).replace(/\.png$/, extension);
   results.push(entry);
 }
 // verify public URLs (throttled)
@@ -208,7 +220,7 @@ for (const r of results) {
   const f = allFigures(data).find(x => x.path === r.path).fig;
   if (dry) { f.tx = { ...f.tx, file: r.relFile, cropped: true, dryRun: true, upload: r.upload, px: r.px, pdfRect: r.pdfRect }; continue; }
   f.url = r.url; f.width = r.px[0]; f.height = r.px[1];
-  f.source = { page: r.page, pdfRect: r.pdfRect, dpi: FIGURE_DPI, ...(r.rotation ? { rotation: r.rotation } : {}), ...(r.document !== 'problems' ? { document: r.document } : {}) };
+  f.source = { page: r.page, pdfRect: r.pdfRect, dpi: r.dpi, ...(r.originalImage ? { originalImage: r.originalImage } : {}), ...(r.rotation ? { rotation: r.rotation } : {}), ...(r.document !== 'problems' ? { document: r.document } : {}) };
   f.tx = { ...f.tx, file: r.relFile, remoteKey: r.remoteKey, upload: r.upload, cropped: true, dryRun: false, public200: r.public200 === true, md5: r.md5, sha256: r.sha256 };
 }
 report.figures = results;

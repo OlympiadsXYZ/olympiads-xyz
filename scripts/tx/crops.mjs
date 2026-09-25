@@ -6,6 +6,7 @@
 // receipts and adjudications. The benchmark bundle in bench/ ships candidates
 // but not crops (reproducible), and checkers/adjudicators must judge the crops,
 // not the box numbers. Existing files are kept unless --force is given.
+import { isOriginalImageFigure, copyOriginalImage } from './original-image-figure.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
@@ -36,6 +37,10 @@ for (const paperId of ids) {
       const file = path.isAbsolute(t.file) ? t.file : path.join(paperDir(paperId), t.file);
       if (seen.has(file)) continue;
       seen.add(file);
+      if (isOriginalImageFigure(fig)) {
+        copyOriginalImage(fig, manifest, paperDir(paperId), file);
+        made++; continue;
+      }
       if (fs.existsSync(file) && !args.force) { kept++; continue; }
       const doc = manifest.documents[t.document];
       const size = doc?.pageSizes?.[t.page - 1];

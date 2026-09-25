@@ -50,7 +50,7 @@ const defects = Array.isArray(checker.defects) ? checker.defects : [];
 const unresolved = defects.filter(d => d.severity !== 'info');
 const ignoredResolvedFlags = unresolved.filter(d => d.resolved).length;
 
-for (const p of figureEvidenceProblems(candidate)) blockers.push(`${p.path}: ${p.message}`);
+for (const p of figureEvidenceProblems(candidate, manifest, paperDir(paperId))) blockers.push(`${p.path}: ${p.message}`);
 
 const reader = candidate.tx?.reader || {};
 const indep = independence(reader, reviewer, adjudicator);

@@ -3,10 +3,7 @@
   "$id": "https://olympiads.xyz/schemas/problems.json",
   "title": "Olympiads XYZ — изпитна тема (paper) със задачи",
   "type": "object",
-  "required": [
-    "paper",
-    "problems"
-  ],
+  "required": ["paper", "problems"],
   "additionalProperties": false,
   "properties": {
     "paper": {
@@ -47,10 +44,7 @@
           "maximum": 2100
         },
         "round": {
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": ["string", "null"],
           "description": "Канонично име на кръга — същият речник като Архива"
         },
         "roundType": {
@@ -65,21 +59,11 @@
           ]
         },
         "grade": {
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": ["string", "null"],
           "description": "Клас/възрастова група, напр. \"9\", \"10-12\", \"junior\""
         },
         "lang": {
-          "enum": [
-            "bg",
-            "en",
-            "ru",
-            "de",
-            "fr",
-            "other"
-          ]
+          "enum": ["bg", "en", "ru", "de", "fr", "other"]
         },
         "title": {
           "type": "string"
@@ -105,16 +89,10 @@
           "type": "string"
         },
         "totalPoints": {
-          "type": [
-            "number",
-            "null"
-          ]
+          "type": ["number", "null"]
         },
         "timeLimitMin": {
-          "type": [
-            "number",
-            "null"
-          ]
+          "type": ["number", "null"]
         },
         "source": {
           "$ref": "#/$defs/pdfSource"
@@ -126,31 +104,16 @@
           "$ref": "#/$defs/pdfSource"
         },
         "status": {
-          "enum": [
-            "draft",
-            "review",
-            "published",
-            "quarantined",
-            "withdrawn"
-          ],
+          "enum": ["draft", "review", "published", "quarantined", "withdrawn"],
           "description": "published се задава само след човешки преглед"
         },
         "transcription": {
           "type": "object",
-          "required": [
-            "method",
-            "model",
-            "at"
-          ],
+          "required": ["method", "model", "at"],
           "additionalProperties": false,
           "properties": {
             "method": {
-              "enum": [
-                "vision",
-                "vision-pages",
-                "text-layer",
-                "manual"
-              ]
+              "enum": ["vision", "vision-pages", "text-layer", "manual"]
             },
             "provider": {
               "type": "string",
@@ -167,10 +130,7 @@
               "pattern": "^[a-f0-9]{64}$"
             },
             "requestId": {
-              "type": [
-                "string",
-                "null"
-              ],
+              "type": ["string", "null"],
               "description": "Идентификатор на заявката към доставчика, ако има"
             },
             "at": {
@@ -184,9 +144,7 @@
             },
             "sourceSha256": {
               "type": "object",
-              "required": [
-                "problems"
-              ],
+              "required": ["problems"],
               "additionalProperties": false,
               "properties": {
                 "problems": {
@@ -207,16 +165,10 @@
               }
             },
             "verifiedBy": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "verifiedAt": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "notes": {
               "type": "string"
@@ -275,11 +227,7 @@
           "description": "data-analysis: прикачени данни (в R2)",
           "items": {
             "type": "object",
-            "required": [
-              "id",
-              "url",
-              "format"
-            ],
+            "required": ["id", "url", "format"],
             "properties": {
               "id": {
                 "type": "string"
@@ -288,13 +236,7 @@
                 "type": "string"
               },
               "format": {
-                "enum": [
-                  "csv",
-                  "tsv",
-                  "json",
-                  "txt",
-                  "xlsx"
-                ]
+                "enum": ["csv", "tsv", "json", "txt", "xlsx"]
               },
               "caption": {
                 "type": "string"
@@ -309,10 +251,7 @@
           }
         },
         "caveat": {
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": ["string", "null"],
           "description": "Кратка бележка към читателя, показвана на всяка страница от темата — напр. непълен архивен източник. Не дублира transcription.notes."
         },
         "documentNotes": {
@@ -320,13 +259,7 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": [
-              "title",
-              "statement",
-              "document",
-              "page",
-              "position"
-            ],
+            "required": ["title", "statement", "document", "page", "position"],
             "properties": {
               "title": {
                 "type": "string",
@@ -345,10 +278,7 @@
                 "minimum": 1
               },
               "position": {
-                "enum": [
-                  "before-problem",
-                  "after-problem"
-                ]
+                "enum": ["before-problem", "after-problem"]
               }
             }
           }
@@ -359,10 +289,7 @@
           "patternProperties": {
             "^supplement-[1-9][0-9]*$": {
               "type": "object",
-              "required": [
-                "archiveKey",
-                "pages"
-              ],
+              "required": ["archiveKey", "pages"],
               "additionalProperties": false,
               "properties": {
                 "archiveKey": {
@@ -396,14 +323,7 @@
   "$defs": {
     "transcriptionEdit": {
       "type": "object",
-      "required": [
-        "path",
-        "printed",
-        "fixed",
-        "document",
-        "page",
-        "kind"
-      ],
+      "required": ["path", "printed", "fixed", "document", "page", "kind"],
       "additionalProperties": false,
       "properties": {
         "path": {
@@ -430,21 +350,14 @@
           "minimum": 1
         },
         "kind": {
-          "enum": [
-            "misspelling",
-            "agreement",
-            "pronoun",
-            "spacing"
-          ]
+          "enum": ["misspelling", "agreement", "pronoun", "spacing"]
         }
       },
       "description": "Една записана редакционна поправка (D-P23); никога за числа, единици, символи, имена, математика или научно съдържание"
     },
     "pdfSource": {
       "type": "object",
-      "required": [
-        "archiveKey"
-      ],
+      "required": ["archiveKey"],
       "additionalProperties": false,
       "properties": {
         "archiveKey": {
@@ -462,10 +375,7 @@
     },
     "figure": {
       "type": "object",
-      "required": [
-        "id",
-        "url"
-      ],
+      "required": ["id", "url"],
       "additionalProperties": false,
       "properties": {
         "role": {
@@ -493,10 +403,7 @@
         "source": {
           "type": "object",
           "description": "Откъде е изрязана — прави изрязването проверимо и повторимо",
-          "required": [
-            "page",
-            "pdfRect"
-          ],
+          "required": ["page", "pdfRect"],
           "additionalProperties": false,
           "properties": {
             "page": {
@@ -510,17 +417,31 @@
               "minItems": 4,
               "maxItems": 4
             },
+            "originalImage": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["archiveKey", "sha256", "derivedPdfSha256"],
+              "properties": {
+                "archiveKey": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "derivedPdfSha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              }
+            },
             "dpi": {
               "type": "number"
             },
             "rotation": {
               "type": "integer",
-              "enum": [
-                0,
-                90,
-                180,
-                270
-              ],
+              "enum": [0, 90, 180, 270],
               "description": "Clockwise degrees applied to the cropped bitmap after cropping. Omitted means 0; page and pdfRect remain in the original PDF page coordinates."
             },
             "document": {
@@ -533,32 +454,17 @@
     },
     "answer": {
       "type": "object",
-      "required": [
-        "kind"
-      ],
+      "required": ["kind"],
       "additionalProperties": false,
       "properties": {
         "kind": {
-          "enum": [
-            "numeric",
-            "expression",
-            "choice",
-            "text",
-            "derivation"
-          ]
+          "enum": ["numeric", "expression", "choice", "text", "derivation"]
         },
         "value": {
-          "type": [
-            "number",
-            "string",
-            "null"
-          ]
+          "type": ["number", "string", "null"]
         },
         "unit": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "tolerance": {
           "type": "number",
@@ -580,10 +486,7 @@
           }
         },
         "correct": {
-          "type": [
-            "integer",
-            "string"
-          ]
+          "type": ["integer", "string"]
         },
         "note": {
           "type": "string"
@@ -592,30 +495,20 @@
     },
     "problem": {
       "type": "object",
-      "required": [
-        "id",
-        "number",
-        "statement"
-      ],
+      "required": ["id", "number", "statement"],
       "additionalProperties": false,
       "properties": {
         "id": {
           "type": "string"
         },
         "number": {
-          "type": [
-            "integer",
-            "string"
-          ]
+          "type": ["integer", "string"]
         },
         "title": {
           "type": "string"
         },
         "points": {
-          "type": [
-            "number",
-            "null"
-          ]
+          "type": ["number", "null"]
         },
         "problemType": {
           "enum": [
@@ -654,13 +547,7 @@
           "description": "Пътеки от таксономията, напр. mechanics/energy"
         },
         "difficulty": {
-          "enum": [
-            "Very Easy",
-            "Easy",
-            "Normal",
-            "Hard",
-            "Very Hard"
-          ]
+          "enum": ["Very Easy", "Easy", "Normal", "Hard", "Very Hard"]
         },
         "importance": {
           "type": "integer",
@@ -747,10 +634,7 @@
               "uniqueItems": true,
               "items": {
                 "type": "object",
-                "required": [
-                  "passage",
-                  "context"
-                ],
+                "required": ["passage", "context"],
                 "additionalProperties": false,
                 "properties": {
                   "passage": {
@@ -778,9 +662,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": [
-              "id"
-            ],
+            "required": ["id"],
             "additionalProperties": false,
             "properties": {
               "id": {
@@ -799,10 +681,7 @@
     "sourceSpan": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "document",
-        "page"
-      ],
+      "required": ["document", "page"],
       "properties": {
         "document": {
           "type": "string",
@@ -833,41 +712,21 @@
     "classificationDifficulty": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "level",
-        "status",
-        "rationale",
-        "confidence"
-      ],
+      "required": ["level", "status", "rationale", "confidence"],
       "properties": {
         "level": {
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "minimum": 1,
           "maximum": 5
         },
         "status": {
-          "enum": [
-            "unrated",
-            "estimated",
-            "calibrated"
-          ]
+          "enum": ["unrated", "estimated", "calibrated"]
         },
         "rationale": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "confidence": {
-          "enum": [
-            "low",
-            "medium",
-            "high",
-            null
-          ]
+          "enum": ["low", "medium", "high", null]
         },
         "anchorIds": {
           "items": false,
@@ -901,11 +760,7 @@
                 "minLength": 1
               },
               "confidence": {
-                "enum": [
-                  "low",
-                  "medium",
-                  "high"
-                ]
+                "enum": ["low", "medium", "high"]
               }
             }
           }
@@ -919,9 +774,7 @@
             }
           },
           "then": {
-            "required": [
-              "anchorIds"
-            ],
+            "required": ["anchorIds"],
             "properties": {
               "anchorIds": {
                 "minItems": 1
@@ -962,17 +815,10 @@
         "sourceRef": {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "kind",
-            "sha256"
-          ],
+          "required": ["kind", "sha256"],
           "properties": {
             "kind": {
-              "enum": [
-                "canonical-paper",
-                "source-pdf",
-                "index-record"
-              ]
+              "enum": ["canonical-paper", "source-pdf", "index-record"]
             },
             "sha256": {
               "type": "string",
@@ -1300,10 +1146,7 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": [
-              "label",
-              "conceptIds"
-            ],
+            "required": ["label", "conceptIds"],
             "properties": {
               "label": {
                 "type": "string"
@@ -1546,12 +1389,7 @@
         "provenance": {
           "type": "object",
           "additionalProperties": false,
-          "required": [
-            "method",
-            "assessedAt",
-            "basis",
-            "reviewStatus"
-          ],
+          "required": ["method", "assessedAt", "basis", "reviewStatus"],
           "properties": {
             "method": {
               "enum": [
@@ -1565,24 +1403,13 @@
               "format": "date-time"
             },
             "basis": {
-              "enum": [
-                "existing-labels",
-                "statement",
-                "statement-and-solution"
-              ]
+              "enum": ["existing-labels", "statement", "statement-and-solution"]
             },
             "reviewStatus": {
-              "enum": [
-                "unreviewed",
-                "machine-reviewed",
-                "human-reviewed"
-              ]
+              "enum": ["unreviewed", "machine-reviewed", "human-reviewed"]
             },
             "rater": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             },
             "evidence": {
               "type": "string"
@@ -1598,42 +1425,28 @@
                 "properties": {
                   "difficulty": {
                     "type": "object",
-                    "required": [
-                      "status"
-                    ],
+                    "required": ["status"],
                     "properties": {
                       "status": {
-                        "enum": [
-                          "estimated",
-                          "calibrated"
-                        ]
+                        "enum": ["estimated", "calibrated"]
                       }
                     }
                   }
                 }
               },
               {
-                "required": [
-                  "partAssessments"
-                ],
+                "required": ["partAssessments"],
                 "properties": {
                   "partAssessments": {
                     "contains": {
-                      "required": [
-                        "difficulty"
-                      ],
+                      "required": ["difficulty"],
                       "properties": {
                         "difficulty": {
                           "type": "object",
-                          "required": [
-                            "status"
-                          ],
+                          "required": ["status"],
                           "properties": {
                             "status": {
-                              "enum": [
-                                "estimated",
-                                "calibrated"
-                              ]
+                              "enum": ["estimated", "calibrated"]
                             }
                           }
                         }
@@ -1649,20 +1462,14 @@
               "sourceRef": {
                 "properties": {
                   "kind": {
-                    "enum": [
-                      "canonical-paper",
-                      "source-pdf"
-                    ]
+                    "enum": ["canonical-paper", "source-pdf"]
                   }
                 }
               },
               "provenance": {
                 "properties": {
                   "basis": {
-                    "enum": [
-                      "statement",
-                      "statement-and-solution"
-                    ]
+                    "enum": ["statement", "statement-and-solution"]
                   }
                 }
               },
@@ -1676,10 +1483,7 @@
     },
     "part": {
       "type": "object",
-      "required": [
-        "label",
-        "statement"
-      ],
+      "required": ["label", "statement"],
       "additionalProperties": false,
       "properties": {
         "label": {
@@ -1689,10 +1493,7 @@
           "type": "string"
         },
         "points": {
-          "type": [
-            "number",
-            "null"
-          ]
+          "type": ["number", "null"]
         },
         "figures": {
           "type": "array",
@@ -1711,11 +1512,7 @@
     },
     "section": {
       "type": "object",
-      "required": [
-        "id",
-        "title",
-        "statement"
-      ],
+      "required": ["id", "title", "statement"],
       "additionalProperties": false,
       "properties": {
         "id": {
@@ -1727,10 +1524,7 @@
           "minLength": 1
         },
         "points": {
-          "type": [
-            "number",
-            "null"
-          ]
+          "type": ["number", "null"]
         },
         "statement": {
           "type": "string"

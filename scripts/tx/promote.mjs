@@ -32,7 +32,7 @@ if (!receipt.reviewer?.provider || !receipt.reviewer?.model || !receipt.reviewer
 if (receipt.independence && !receipt.independence.independent && !receipt.independence.allowSameModel) fail('receipt records a same-model check that was not explicitly allowed');
 if (sha256File(path.resolve(args.candidate)) !== receipt.candidateSha256) fail('candidate bytes changed since the receipt was written');
 if (receipt.checkerCandidateSha256 && receipt.checkerCandidateSha256 !== receipt.candidateSha256) fail('receipt was issued for a candidate the checker did not check');
-const figProblems = figureEvidenceProblems(candidate);
+const figProblems = figureEvidenceProblems(candidate, manifest, path.dirname(manifestFile(paperId)));
 if (figProblems.length) fail(`figure evidence missing: ${figProblems.map(p => `${p.path}: ${p.message}`).join('; ')}`);
 for (const message of sourceHashErrors(manifest, receipt.sourceHashes)) fail(message);
 for (const message of sourceConversionProblems(manifest, path.dirname(manifestFile(paperId)), receipt.sourceConversions || {})) fail(message);

@@ -25,7 +25,7 @@ const candidateSha256 = sha256File(candidatePath);
 const blockers = singlePassEvidenceProblems(evidence, candidate, manifest, candidateSha256);
 blockers.push(...sourceConversionProblems(manifest, paperDir(paperId)));
 for (const e of supplementarySourceErrors(candidate, manifest)) blockers.push(`${e.path}: ${e.message}`);
-for (const e of figureEvidenceProblems(candidate)) blockers.push(`${e.path}: ${e.message}`);
+for (const e of figureEvidenceProblems(candidate, manifest, paperDir(paperId))) blockers.push(`${e.path}: ${e.message}`);
 const validationRun = spawnSync(process.execPath, [path.join(ROOT, 'scripts/tx/validate.mjs'), candidatePath, '--paper-id', paperId, '--manifest', path.join(paperDir(paperId), 'manifest.json')], { cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
 let validation;
 try { validation = JSON.parse(validationRun.stdout); }
@@ -54,7 +54,7 @@ const receipt = {
   adjudicator, independence: { independent: false, differentProvider: false, allowSameModel: true, separateChecker: false },
   checkerVerdict: null, summary: 'Single-pass source transcription with automated validation; no separate model checker.',
   readerEvidence: evidence, coverage: { pagesRead: evidence.pagesRead, problemsRead: evidence.problemsRead, figuresInspected: evidence.figuresInspected },
-  automatedChecks: { schemaAndMath: validation?.ok === true, figureEvidence: figureEvidenceProblems(candidate).length === 0, warnings: validation?.warnings || [] },
+  automatedChecks: { schemaAndMath: validation?.ok === true, figureEvidence: figureEvidenceProblems(candidate, manifest, paperDir(paperId)).length === 0, warnings: validation?.warnings || [] },
   defects: [], blockers, informational: evidence.sourceGaps?.length || 0,
   candidate: candidatePath, candidateSha256, checkerCandidateSha256: null,
 };

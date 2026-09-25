@@ -2,6 +2,7 @@
 // Everything here is pure plumbing: paths, hashing, paper-id derivation,
 // schema compilation, math-span detection and the deterministic serialisation
 // that receipt.mjs and promote.mjs must agree on byte-for-byte.
+import { isOriginalImageFigure, originalImageEvidenceError } from './original-image-figure.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -396,9 +397,13 @@ export function checkerView(candidate) {
 }
 // Figure evidence a receipt needs before a candidate may pass: no dry-run
 // leftovers, and every pipeline-produced figure verified public (HEAD 200).
-export function figureEvidenceProblems(candidate) {
+export function figureEvidenceProblems(candidate, manifest, directory) {
   const problems = [];
   for (const { fig, path: p } of allFigures(candidate)) {
+    if (isOriginalImageFigure(fig)) {
+      const message = originalImageEvidenceError(fig, manifest, directory);
+      if (message) problems.push({ path: p, message });
+    }
     if (fig.tx?.dryRun) problems.push({ path: p, message: 'figure comes from a figures.mjs --dry-run (never uploaded)' });
     else if (fig.tx?.bbox && fig.tx.public200 !== true) problems.push({ path: p, message: 'figure proposal was not uploaded and HEAD-verified by figures.mjs' });
     else if (!fig.url) problems.push({ path: p, message: 'figure has no url' });
