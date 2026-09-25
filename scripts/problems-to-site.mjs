@@ -323,9 +323,71 @@ function dateBg(iso) {
 function paperDescriptor(paper) {
   return [
     `${COMPETITION_SHORT[paper.competition] ?? paper.competition} ${paper.year}`,
-    roundLabel(paper.round, paper.competition),
+    // no round recorded: the tour it is ("IOAA 2012, Наблюдателен тур")
+    roundLabel(paper.round, paper.competition) ?? TOUR_LABELS[paper.roundType],
     gradeLabel(paper.grade, paper.subject),
+    paperQualifiers.get(paper.id),
   ].filter(Boolean).join(', ');
+}
+
+// Papers whose pages would carry the same heading ("IOAA 2015, Теоретичен тур — Задача 2" from the short and the long
+// problems, in Bulgarian and in English) get just enough to tell them apart, in this order: the language, the paper's
+// own (short) title, and as a last resort its file ("файл 02-III-910.doc", a .doc and a .pdf of the same paper).
+// Papers whose problems are all named differently keep the plain descriptor. Filled by qualifyPapers().
+let paperQualifiers = new Map();
+const TOUR_LABELS = { theory: 'Теоретичен тур', experiment: 'Експериментален тур', practical: 'Практически тур', observation: 'Наблюдателен тур', test: 'Тест' };
+const LANGUAGE_NAMES = { bg: 'български', en: 'английски', ru: 'руски', mk: 'македонски', kk: 'казахски', ro: 'румънски', cs: 'чешки', fr: 'френски', sr: 'сръбски' };
+const shortTitle = t => {
+  const title = String(t || '').replace(/\s+/g, ' ').trim();
+  if (!title || title.length > 60) return null;
+  // an all-capitals heading ("SHORT PROBLEMS") is shown in sentence case
+  return title === title.toUpperCase() && /\p{Lu}{3}/u.test(title) ? title[0] + title.slice(1).toLowerCase() : title;
+};
+const fileLabel = paper => `файл ${path.basename(paper.source?.archiveKey || paper.id).trim()}`;
+const QUALIFIER_STEPS = [paper => LANGUAGE_NAMES[paper.lang] ?? paper.lang ?? null, paper => shortTitle(paper.title), fileLabel];
+
+// records: [{ paper, problems }] of the published papers
+export function qualifyPapers(records) {
+  const titles = new Map(records.map(({ paper, problems }) => [paper.id, new Set(problems.map(problemName))]));
+  const collides = group => {
+    const seen = new Set();
+    for (const paper of group) for (const t of titles.get(paper.id)) { if (seen.has(t)) return true; seen.add(t); }
+    return false;
+  };
+  const byDescriptor = papers => {
+    const groups = new Map();
+    for (const paper of papers) {
+      const key = paperDescriptor(paper);
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(paper);
+    }
+    return [...groups.values()];
+  };
+  const qualifiers = new Map(records.map(({ paper }) => [paper.id, []]));
+  const split = (group, steps) => {
+    if (group.length < 2 || !steps.length || !collides(group)) return;
+    const values = group.map(steps[0]);
+    if (new Set(values).size < 2) return split(group, steps.slice(1));
+    const parts = new Map();
+    group.forEach((paper, i) => {
+      if (values[i]) qualifiers.get(paper.id).push(values[i]);
+      if (!parts.has(values[i])) parts.set(values[i], []);
+      parts.get(values[i]).push(paper);
+    });
+    for (const part of parts.values()) split(part, steps.slice(1));
+  };
+  const saved = paperQualifiers, papers = records.map(r => r.paper);
+  paperQualifiers = new Map();
+  for (const group of byDescriptor(papers)) split(group, QUALIFIER_STEPS);
+  paperQualifiers = new Map([...qualifiers].filter(([, q]) => q.length).map(([id, q]) => [id, q.join(', ')]));
+  // a qualified descriptor that happens to equal another paper's ("X 2013, английски") takes the file too
+  for (const group of byDescriptor(papers)) {
+    if (group.length < 2 || !collides(group)) continue;
+    for (const paper of group) paperQualifiers.set(paper.id, [paperQualifiers.get(paper.id), fileLabel(paper)].filter(Boolean).join(', '));
+  }
+  const result = paperQualifiers;
+  paperQualifiers = saved;
+  return result;
 }
 
 function yamlStr(s) {
@@ -723,6 +785,7 @@ function main() {
   const moduleFiles = walkJson(path.join(ROOT, 'content')).filter(f => f.endsWith('.problems.json'));
   const modules = moduleFiles.map(file => ({ file, data: readJson(file) }));
   for (const { data } of modules) for (const [key, entries] of Object.entries(data)) if (key !== 'MODULE_ID' && Array.isArray(entries)) for (const p of entries) oldMetadata.set(p.uniqueId, p);
+  paperQualifiers = qualifyPapers(records.filter(r => publicationState(r, ledger).eligible).map(r => r.data));
   for (const record of records) {
     const metadataErrors = problemMetadataErrors(record.data);
     if (metadataErrors.length) throw new Error(`${record.relativePath}: ${metadataErrors.map(e => `${e.path}: ${e.message}`).join('; ')}`);

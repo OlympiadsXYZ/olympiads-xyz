@@ -324,3 +324,24 @@ test('a number and its points unit are kept on one line', t => {
   const mdx = f.raw(f.output);
   for (const s of ['5\u00A0т.', '(2\u00A0т.)', '[3\u00A0точки]', '**[4\u00A0т.]**']) assert.ok(mdx.includes(s), s);
 });
+
+test('papers whose pages would share a heading get a language, a title or a file, only as much as needed', async () => {
+  const { qualifyPapers } = await import('../problems-to-site.mjs');
+  const paper = (id, extra) => ({ id, subject: 'astronomy', competition: 'IOAA', year: 2015, round: 'theory', grade: null, lang: 'en', source: { archiveKey: `IOAA/2015/${id}.pdf` }, ...extra });
+  const problems = (...numbers) => numbers.map(number => ({ id: `p${number}`, number }));
+  const q = qualifyPapers([
+    { paper: paper('short-en', { title: 'SHORT PROBLEMS' }), problems: problems(1, 2) },
+    { paper: paper('short-bg', { lang: 'bg', title: 'КЪСИ ЗАДАЧИ' }), problems: problems(1, 2) },
+    { paper: paper('long-en', { title: 'LONG PROBLEMS' }), problems: problems(1) },
+    { paper: paper('copy-a', { year: 2016 }), problems: problems(1) },
+    { paper: paper('copy-b', { year: 2016 }), problems: problems(1) },
+    { paper: paper('alone', { year: 2017 }), problems: problems(1) },
+    { paper: paper('other-names', { year: 2017, lang: 'bg' }), problems: [{ id: 'x', number: 1, title: 'Звезди' }] },
+  ]);
+  assert.equal(q.get('short-bg'), 'български');
+  assert.equal(q.get('short-en'), 'английски, Short problems');
+  assert.equal(q.get('long-en'), 'английски, Long problems');
+  assert.equal(q.get('copy-a'), 'файл copy-a.pdf');
+  assert.equal(q.has('alone'), false);
+  assert.equal(q.has('other-names'), false);
+});
