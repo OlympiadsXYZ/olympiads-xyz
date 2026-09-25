@@ -563,13 +563,34 @@ function sourceText(text, problem, resolve = () => null) {
   const placed = placeInlineFigures(newestInlineCrops(resolveFigurePlaceholders(text, problem, resolve), problemFigures(problem)), resolve);
   let rendered = demoteHeadings(mdText(placed.text));
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
+  // Collect source ranges before inserting markup: overlapping labels such as
+  // "I вариант" and "II вариант" must never match inside an inserted wrapper.
+  const ranges = [];
+  const occurrences = (needle, visit) => {
+    if (!needle) return;
+    let at = 0;
+    while ((at = rendered.indexOf(needle, at)) !== -1) {
+      visit(at);
+      at += needle.length;
+    }
+  };
   for (const { passage, context } of problem.sourceLayout?.scopedUnderlines || []) {
     const scope = mdText(context), needle = mdText(passage);
-    rendered = rendered.split(scope).join(scope.replace(needle, `<u>${needle}</u>`));
+    const offset = scope.indexOf(needle);
+    if (needle && offset !== -1) occurrences(scope, at => ranges.push([at + offset, at + offset + needle.length]));
   }
-  for (const passage of [...(problem.sourceLayout?.underlines || [])].sort((a, b) => b.length - a.length)) {
+  for (const passage of problem.sourceLayout?.underlines || []) {
     const needle = mdText(passage);
-    if (needle) rendered = rendered.split(needle).join(`<u>${needle}</u>`);
+    occurrences(needle, at => ranges.push([at, at + needle.length]));
+  }
+  const merged = [];
+  for (const range of ranges.sort((a, b) => a[0] - b[0] || b[1] - a[1])) {
+    const previous = merged.at(-1);
+    if (previous && range[0] <= previous[1]) previous[1] = Math.max(previous[1], range[1]);
+    else merged.push([...range]);
+  }
+  for (const [start, end] of merged.reverse()) {
+    rendered = `${rendered.slice(0, start)}<u>${rendered.slice(start, end)}</u>${rendered.slice(end)}`;
   }
   return restoreFigures(rendered, placed.jsx);
 }

@@ -5,6 +5,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { singlePassEvidenceProblems } from './single-pass-evidence.mjs';
 import { sourceConversions, sourceConversionProblems } from './source-conversions.mjs';
+import { sourceReadScopes } from './source-read-scope.mjs';
 import { supplementarySourceErrors } from './supplements.mjs';
 import {
   ROOT, parseArgs, fail, readJson, writeJson, readManifest, paperDir,
@@ -47,6 +48,7 @@ if (!validate(final.data)) for (const e of validate.errors) blockers.push(`final
 const receipt = {
   paperId, verdict: blockers.length ? 'fail' : 'pass', contentHash: final.contentHash,
   sourceConversions: sourceConversions(manifest),
+  sourceReadScopes: sourceReadScopes(manifest),
   sourceHashes, reviewer, checkedAt, promptVersion, checkerMode: 'single-pass',
   reader: { provider: prov.provider, model: prov.model, requestId: prov.requestId, at: prov.at, promptVersion: prov.promptVersion },
   adjudicator, independence: { independent: false, differentProvider: false, allowSameModel: true, separateChecker: false },

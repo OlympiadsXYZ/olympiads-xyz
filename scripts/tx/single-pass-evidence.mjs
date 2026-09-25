@@ -1,4 +1,5 @@
 import { allFigures } from './lib.mjs';
+import { sourceReadScopeProblems } from './source-read-scope.mjs';
 
 // This checks the completeness of a reader's claim, not transcription accuracy.
 // Single-pass receipts never claim an independent source comparison.
@@ -10,7 +11,8 @@ export function singlePassEvidenceProblems(evidence, candidate, manifest, hash) 
   if (!known) errors.push('reader evidence must identify the source reader');
   const same = person => person?.provider === who?.provider && person?.model === who?.model && person?.requestId === who?.requestId;
   if (!same(candidate.tx?.reader) && !same(candidate.tx?.adjudicator)) errors.push('evidence reader does not match candidate reader or adjudicator');
-  const expected = new Set(Object.entries(manifest.documents).flatMap(([document, d]) => Array.from({ length: d.pages }, (_, i) => `${document}:${i + 1}`)));
+  errors.push(...sourceReadScopeProblems(manifest, candidate, evidence?.sourceReadScopes || {}));
+  const expected = new Set(Object.entries(manifest.documents).flatMap(([document, d]) => (Array.isArray(d.readScope?.pages) ? d.readScope.pages : Array.from({ length: d.pages }, (_, i) => i + 1)).map(page => `${document}:${page}`)));
   const seen = new Set();
   if (!Array.isArray(evidence?.pagesRead)) errors.push('reader pagesRead must be an array');
   else for (const p of evidence.pagesRead) {

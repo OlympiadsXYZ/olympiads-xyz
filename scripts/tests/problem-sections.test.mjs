@@ -85,6 +85,17 @@ test('section part answers retain their section labels inside the answer spoiler
   assert.ok(answer < mdx.indexOf('</Spoiler>'));
 });
 
+test('overlapping global and scoped underlines render each printed label once', async () => {
+  const p = structuredClone(problem);
+  p.statement = 'I вариант. II вариант.';
+  p.sourceLayout = { underlines: ['I вариант', 'II вариант'], scopedUnderlines: [{ passage: 'II вариант', context: 'II вариант.' }] };
+  assert.deepEqual(problemMetadataErrors({ paper, problems: [p] }), []);
+  const mdx = problemMdx(paper, p, { quality: 'legacy' }, 'test.json');
+  assert.ok(mdx.includes('<u>I вариант</u>. <u>II вариант</u>.'));
+  assert.equal((mdx.match(/<u>/g) || []).length, 2);
+  await compile(mdx, { remarkPlugins: [gfm, math] });
+});
+
 test('scoped underlining marks the printed occurrence without changing repeated table text', async () => {
   const p = structuredClone(problem);
   p.statement = '| Item |\n| --- |\n| Flask for titration |';

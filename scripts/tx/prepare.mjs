@@ -280,6 +280,7 @@ for (const doc of Object.keys(keys)) {
     textChars: text.trim().length, textDigits: (text.match(/\d/g) || []).length,
     downloaded,
     ...(conv ? { converted: conv } : {}),
+    ...(prev?.readScope && prev.key === key && prev.sha256 === sha256 ? { readScope: prev.readScope } : {}),
   };
 }
 if (!manifest.documents.problems) fail('no problems document resolved');

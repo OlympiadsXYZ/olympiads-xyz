@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { supplementarySourceErrors, sourceHashErrors } from './supplements.mjs';
 import { sourceConversionProblems } from './source-conversions.mjs';
+import { sourceReadScopeProblems } from './source-read-scope.mjs';
 import {
   parseArgs, fail, readJson, readManifest, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems, sha256File, contentPathFor, run, ROOT, nowIso, writeJson, listContentFiles, manifestFile,
 } from './lib.mjs';
@@ -35,6 +36,7 @@ const figProblems = figureEvidenceProblems(candidate);
 if (figProblems.length) fail(`figure evidence missing: ${figProblems.map(p => `${p.path}: ${p.message}`).join('; ')}`);
 for (const message of sourceHashErrors(manifest, receipt.sourceHashes)) fail(message);
 for (const message of sourceConversionProblems(manifest, path.dirname(manifestFile(paperId)), receipt.sourceConversions || {})) fail(message);
+for (const message of sourceReadScopeProblems(manifest, candidate, receipt.sourceReadScopes || {})) fail(message);
 for (const issue of supplementarySourceErrors(candidate, manifest)) fail(`${issue.path}: ${issue.message}`);
 
 const prov = provenanceFor(candidate, {
