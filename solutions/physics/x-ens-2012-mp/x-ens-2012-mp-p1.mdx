@@ -1,0 +1,214 @@
+---
+id: x-ens-2012-mp-p1
+source: 'X-ENS 2012, Приемен изпит, математика и физика'
+title: 'Задача 1. Effet du champ gravitationnel terrestre sur le mouvement d’un gyroscope en orbite'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2012/x-ens-2012-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-25T10:33:53.521Z'
+verifier: 'single-pass'
+---
+
+*ÉCOLE POLYTECHNIQUE – ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2012 — FILIÈRE MP — COMPOSITION DE PHYSIQUE (XULC)*
+
+<Warning title="Бележка към темата">
+Aucun corrigé officiel apparié n’est fourni dans le catalogue de l’archive.
+</Warning>
+
+<details>
+<summary>Consignes</summary>
+
+L’utilisation des calculatrices n’est pas autorisée pour cette épreuve.
+
+On se contentera, pour les applications numériques, d’un seul chiffre significatif.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [I. Une théorie du gravitomagnétisme](#i)
+- [II. Effet gravitomagnétique sur un satellite dû à sa révolution](#ii)
+- [III. Effet gravitomagnétique de la rotation de la Terre sur un satellite](#iii)
+- [IV. Mesure du mouvement du gyroscope](#iv)
+
+</nav>
+
+La théorie de la relativité générale, publiée par A. Einstein en 1916, prédit l’existence de deux effets, dits effet géodétique et effet Lense-Thirring, sur le mouvement d’un gyroscope en orbite autour de la Terre. Ceux-ci ont été mesurés avec succès par le satellite Gravity Probe B en 2008. Dans ce problème, nous allons essayer de rendre compte de ces perturbations du mouvement classique en nous fondant sur une généralisation post-newtonienne du champ gravitationnel obtenue par analogie avec l’électromagnétisme. Cette analogie permet de comprendre l’origine des phénomènes et d’en calculer un ordre de grandeur, mais ne donne pas les mêmes résultats que la théorie de la relativité générale.
+
+**Données numériques**
+
+| | | |
+|---|---|---|
+| Vitesse de la lumière dans le vide | $c$ | $=3,0\times10^8\ \mathrm{m\cdot s^{-1}}$ |
+| Rayon de la Terre | $R_\oplus$ | $=6,4\times10^6\ \mathrm{m}$ |
+| Accélération de la pesanteur à la surface de la Terre | $g$ | $=9,8\ \mathrm{m\cdot s^{-2}}$ |
+| Durée de l’année | $1\ \mathrm{an}$ | $=3,2\times10^7\ \mathrm{s}$ |
+| Masse de l’électron : | $m_e$ | $=9,1\times10^{-31}\ \mathrm{kg}$ |
+| Charge élémentaire : | $e$ | $=1,6\times10^{-19}\ \mathrm{C}$ |
+
+**Formulaire**
+
+$$
+\overrightarrow{\mathrm{rot}}\left(\overrightarrow{\mathrm{rot}}\,\vec A\right)=\overrightarrow{\mathrm{grad}}\left(\mathrm{div}\,\vec A\right)-\Delta\vec A
+$$
+
+<ProblemSection id="i">
+
+### I. Une théorie du gravitomagnétisme
+
+Dans cette partie, nous allons partir de l’analogie formelle entre le champ électrique et le champ gravitationnel. Ceci nous permettra de construire l’équivalent gravitationnel des équations de Maxwell et fera apparaître un champ « gravitomagnétique », analogue du champ magnétique.
+
+**I.1** Quelle est l’expression du champ électrique $\vec E$ créé en $M$ par une charge ponctuelle $q$ placée en $O$ ? Donner l’expression du champ gravitationnel $\vec g$ obtenu en $M$ en remplaçant $q$ par une masse ponctuelle $m$. On notera $G$ la constante de gravitation universelle.
+
+**I.2** On s’intéresse maintenant à une distribution continue de charge électrique ayant la densité $\rho_e(\vec r)$ ou de matière ayant la masse volumique $\rho(\vec r)$. En poursuivant l’analogie de la question précédente, justifier que la divergence du champ gravitationnel prend la forme $\mathrm{div}\,\vec g=\rho/\epsilon_g$, où $\epsilon_g$ est une constante dont on précisera l’expression. Montrer que l’on peut alors retrouver le théorème de Gauss gravitationnel.
+
+Dans le cas général, le champ électromagnétique vérifie les équations de Maxwell. En nous fondant sur l’analogie formelle entre le champ électrique d’une distribution de charge et le champ gravitationnel d’une distribution de masse, nous allons supposer l’existence d’un champ gravitomagnétique $\vec h$ couplé au champ gravitationnel $\vec g$ selon les équations
+
+$$
+\begin{aligned}\mathrm{div}\,\vec g&=\frac{\rho}{\epsilon_g}&\mathrm{div}\,\vec h&=0\\ \overrightarrow{\mathrm{rot}}\,\vec g&=-\frac{\partial\vec h}{\partial t}&\overrightarrow{\mathrm{rot}}\,\vec h&=\mu_g\left(\vec j+\epsilon_g\frac{\partial\vec g}{\partial t}\right)\end{aligned}
+$$
+
+où $\vec j=\rho\vec v$ désigne le vecteur densité de courant, $\vec v$ étant la vitesse de la matière au point considéré.
+
+**I.3** Quelle est la dimension de $\vec h$ ?
+
+**I.4** À partir de ces équations, déduire la forme locale de l’équation de conservation de la masse.
+
+**I.5** Montrer que le champ gravitationnel dans le vide, en l’absence de masse, est solution d’une équation d’onde. On suppose que la vitesse de propagation des ondes gravitationnelles est égale à $c$, vitesse de la lumière dans le vide. En déduire l’expression de $\mu_g$ en fonction de $G$ et $c$.
+
+**I.6** Rappeler l’expression de la force subie par une masse ponctuelle $m$ plongée dans un champ gravitationnel $\vec g$. Par analogie avec l’électromagnétisme, donner l’expression de la force de Lorentz due au champ gravitomagnétique $\vec h$.
+
+Nous allons maintenant comparer l’action du champ gravitationnel et du champ gravitomagnétique en étudiant le système constitué de deux fils parallèles infinis.
+
+**I.7** Déterminer le champ gravitationnel créé par un fil rectiligne infini, immobile, de masse linéique $\lambda$, en tout point extérieur à celui-ci. En particulier, on précisera les arguments de symétrie qui permettent de simplifier le calcul.
+
+**I.8** Exprimer la force gravitationnelle par unité de longueur $\vec F_g$ entre deux fils identiques et parallèles, séparés par une distance $d$.
+
+**I.9** On considère à présent un fil rectiligne infini de masse linéique $\lambda$ en mouvement uniforme à la vitesse $\vec v$ parallèle au fil. Déterminer le champ gravitomagnétique $\vec h$ qu’il crée en un point extérieur quelconque. Une fois encore, on précisera les arguments de symétrie qui permettent de simplifier le calcul.
+
+**I.10** Donner l’expression de la force gravitomagnétique par unité de longueur $\vec F_h$ entre deux fils rectilignes identiques et parallèles, en mouvement à la même vitesse $\vec v$ parallèle à leur direction et séparés par une distance $d$. Cette force est-elle attractive ou répulsive ? Comment s’écrit le rapport $\|\vec F_h\|/\|\vec F_g\|$ ? Quelle est l’importance relative des effets gravitomagnétiques pour des vitesses ordinaires ? Que se passe-t-il si on inverse le sens de la vitesse de l’un des fils ?
+
+On s’intéresse maintenant à l’action d’un champ gravitomagnétique sur un gyroscope.
+
+**I.11** Rappeler l’expression du moment magnétique $\vec M$ d’une spire circulaire de rayon $R$ parcourue par un courant $I$.
+
+**I.12** On considère une spire circulaire de masse $m$ et de rayon $R$ en rotation uniforme à la vitesse angulaire $\vec\omega$ autour de l’axe perpendiculaire à son plan et passant par son centre. En poursuivant l’analogie, montrer que son moment gravitomagnétique $\vec M_g$ est proportionnel à son moment cinétique $\vec\sigma$. Donner la valeur de la constante de proportionnalité. On supposera cette relation de proportionnalité générale.
+
+**I.13** Rappeler le couple que subit un moment magnétique plongé dans un champ magnétique uniforme et constant. On considère un gyroscope de moment cinétique $\vec\sigma$ placé dans un champ gravitomagnétique $\vec h$ uniforme et constant. Déduire par analogie l’équation du mouvement de $\vec\sigma$ et décrire succinctement son évolution au cours du temps.
+
+</ProblemSection>
+
+<ProblemSection id="ii">
+
+### II. Effet gravitomagnétique sur un satellite dû à sa révolution
+
+**II.1** On considère un satellite en orbite circulaire autour de la Terre. Exprimer sa vitesse $v$ en fonction de son altitude $a$, de la masse $M_\oplus$ et du rayon $R_\oplus$ de la Terre et de la constante de gravitation universelle $G$. Comment s’écrit cette vitesse en fonction de l’accélération de la pesanteur à la surface de la Terre $g$, de $a$ et de $R_\oplus$ ?
+
+*Application numérique* : Calculer $v$ pour un satellite orbitant à basse altitude $a\ll R_\oplus$. En déduire la valeur de sa période de révolution.
+
+Dans le référentiel barycentrique du satellite, la Terre tourne autour de lui, ce qui crée un champ gravitomagnétique dont nous allons étudier l’effet. Pour simplifier la modélisation, nous supposons, dans cette partie uniquement, que le référentiel barycentrique du satellite est galiléen.
+
+**II.2** Rappeler l’expression du champ magnétique $\vec B$ au centre d’une spire circulaire de rayon $R$ parcourue par un courant d’intensité $I$.
+
+**II.3** Par analogie, en déduire l’expression du champ gravitomagnétique $\vec h$ ressenti par le satellite, dans la limite où la Terre est ponctuelle. On l’exprimera en fonction de $v$, $c$ et de sa période de révolution $T$.
+
+**II.4** Un gyroscope est placé au centre de gravité du satellite en s’arrangeant pour qu’il n’ait aucun contact avec celui-ci, de sorte à lui laisser tous ses degrés de liberté de rotation. On notera $\vec\sigma$ le moment cinétique du gyroscope dans le référentiel barycentrique du satellite. La direction initiale de $\vec\sigma$ est dans le plan orbital du satellite.
+
+Montrer que $\vec\sigma$ précesse à une vitesse angulaire $\omega_1$ dont on donnera l’expression en fonction de $v$, $c$ et $T$ (effet dit « géodétique »). On précisera sur un schéma la direction et le sens du mouvement de précession.
+
+**II.5** Calculer numériquement l’angle dont tourne $\vec\sigma$ en un an pour un satellite orbitant à basse altitude. Comparer ce résultat théorique avec la valeur expérimentale $3,2\times10^{-5}$ radian mesurée par le satellite Gravity Probe B.
+
+</ProblemSection>
+
+<ProblemSection id="iii">
+
+### III. Effet gravitomagnétique de la rotation de la Terre sur un satellite
+
+Dans cette partie, il s’agit maintenant de calculer l’effet gravitomagnétique induit par la rotation propre de la Terre sur l’orientation d’un gyroscope en orbite. On désigne par $Oxyz$ un référentiel géocentrique, supposé galiléen, où $O$ est le centre de la Terre et $Oz$ son axe de rotation. On note $\vec\Omega_\oplus=\Omega_\oplus\vec e_z$ la vitesse angulaire de la Terre dans ce référentiel et $J_\oplus$ son moment d’inertie par rapport à l’axe $Oz$.
+
+**III.1** Donner l’expression du moment gravitomagnétique de la Terre, noté $\vec M_g$, dû à sa rotation propre.
+
+**III.2** On rappelle que le champ magnétique $\vec B$ créé en un point $P$ par un dipôle magnétique de moment $\vec M$ situé en $O$ est donné par
+
+$$
+\vec B=\frac{\mu_0}{4\pi}\frac{3(\vec M.\vec n)\vec n-\vec M}{r^3}\quad\text{avec}\quad\vec r=\overrightarrow{OP}\quad\text{et}\quad\vec n=\frac{\vec r}{r}
+$$
+
+Donner l’expression du champ gravitomagnétique de la Terre, assimilée dans la suite du problème à un moment gravitomagnétique ponctuel. Tracer l’allure de ses lignes de champ dans un plan contenant l’axe de rotation terrestre.
+
+On considère désormais un satellite de plan orbital $Oyz$ (orbite polaire). La position du satellite sur son orbite est repérée par un angle $\theta$ de sorte que les coordonnées du satellite sont données par $y=(R_\oplus+a)\sin\theta$ et $z=(R_\oplus+a)\cos\theta$.
+
+**III.3** Donner l’expression des composantes $h_y$ et $h_z$ du champ gravitomagnétique terrestre ressenti par le satellite en fonction de $\theta$.
+
+Comme dans la partie II, un gyroscope est placé au centre de gravité du satellite, sans contact avec celui-ci. On notera $\vec\sigma$ le moment cinétique du gyroscope dans le référentiel barycentrique du satellite. Initialement, la direction de $\vec\sigma$ est parallèle à $Oy$.
+
+**III.4** Exprimer la variation $\delta\vec\sigma$, supposée faible, de $\vec\sigma$ sur une période orbitale $T$.
+
+**III.5** De quel angle $\epsilon$ tourne $\vec\sigma$ pendant la période $T$ ? En déduire l’expression de la vitesse angulaire moyenne de précession de $\vec\sigma$, notée $\omega_2$ (effet dit « Lense-Thirring »).
+
+**III.6** On donne $J_\oplus\simeq\frac13 M_\oplus R_\oplus^2$ et on se place dans la limite où $a\ll R_\oplus$. Exprimer $\omega_2$ en fonction de $\Omega_\oplus$, $c$ et $v$, la vitesse du satellite.
+
+**III.7** Déterminer le rapport $\omega_2/\omega_1$, où $\omega_1$ est la vitesse angulaire calculée dans la partie II.
+
+*Application numérique* : le satellite Gravity Probe B a mesuré $|\omega_2|=1,9\times10^{-7}$ radian/an. L’ordre de grandeur de ce résultat est-il compatible avec la modélisation proposée plus haut ?
+
+**III.8** Le satellite Gravity Probe B a aussi mesuré la direction des deux mouvements de précession du gyroscope. Montrer que le choix d’une orbite polaire permet de séparer l’effet géodétique de l’effet Lense-Thirring.
+
+</ProblemSection>
+
+<ProblemSection id="iv">
+
+### IV. Mesure du mouvement du gyroscope
+
+Le gyroscope est une boule de quartz isolant revêtue d’une fine pellicule de niobium supraconducteur. L’ensemble est mis en rotation. Un supraconducteur en rotation est le siège d’un champ magnétique aligné avec son axe de rotation. La précession du gyroscope est déterminée par des mesures de flux de ce champ magnétique à travers une boucle à induction. Le but de cette partie est d’établir l’expression du champ magnétique engendré par un supraconducteur en rotation, puis d’estimer la précision de la mesure.
+
+**IV.1** On admet qu’il existe un choix du potentiel vecteur tel que la vitesse des électrons soit donnée en tout point du supraconducteur par
+
+$$
+\vec v=\frac{e}{m_e}\vec A\,,
+$$
+
+où $e$ est la charge élémentaire, $m_e$ est la masse de l’électron, et $\vec A$ est le potentiel vecteur au point où se trouve l’électron. Vérifier que cette équation est dimensionnellement correcte.
+
+**IV.2** On note $N$ la densité volumique d’électrons dans le supraconducteur. Exprimer la densité de courant $\vec j$ en supposant que les électrons sont les seuls porteurs de charge.
+
+**IV.3** On admet qu’un supraconducteur est un conducteur ohmique de résistivité nulle. Écrire la forme locale de l’équation de conservation de la charge en un point à l’intérieur du supraconducteur. Quelle condition impose-t-elle sur le potentiel vecteur $\vec A$ ?
+
+**IV.4** On suppose par ailleurs que le potentiel scalaire $V$ est partout nul à l’intérieur du supraconducteur. Exprimer le champ électrique $\vec E$ et le champ magnétique $\vec B$ en fonction de $\vec j$.
+
+**IV.5** Parmi les quatre équations de Maxwell, lesquelles sont automatiquement vérifiées par ces expressions de $\vec E$ et $\vec B$ ?
+
+**IV.6** Le supraconducteur est en rotation uniforme à la vitesse angulaire $\vec\Omega=\Omega\vec e_z$ autour de l’axe $Oz$. On suppose que les électrons sont au repos par rapport au supraconducteur. En déduire l’expression de $\vec v$ en un point $\vec r$, puis l’expression du champ $\vec B$ dans la pellicule supraconductrice.
+
+**IV.7** En déduire l’expression du champ $\vec B$ à l’intérieur de la boule constituant le gyroscope.
+
+*Application numérique* : La vitesse angulaire de rotation du gyroscope embarqué sur le satellite Gravity Probe B est $\Omega=900\ \mathrm{rad\cdot s^{-1}}$. Calculer $B$, module du champ magnétique à l’intérieur du gyroscope.
+
+**IV.8** Un magnétomètre appelé SQUID permet, par une mesure de flux du champ magnétique, de détecter la variation d’une composante quelconque du champ magnétique avec une précision $\delta B=5\times10^{-17}\ \mathrm{T}$. En déduire la précision relative sur la mesure de l’effet Lense-Thirring pour une expérience durant un an.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+Aucun corrigé officiel apparié n’est fourni dans le catalogue de l’archive.
+</Warning>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Трудност: неоценена.
+
+Механика · Магнетизъм и индукция · Гравитация · Момент на импулса · Магнитно поле
+
+Предпоставки: Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [MP_2012.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2012.pdf)

@@ -1,0 +1,406 @@
+---
+id: x-ens-2015-mp-p1
+source: 'X-ENS 2015, Приемен изпит, математика и физика'
+title: 'Задача 1. Propagation d’ondes le long d’une chaîne de pendules couplés'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2015/x-ens-2015-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-25T10:33:55.564Z'
+verifier: 'single-pass'
+---
+
+*ÉCOLE POLYTECHNIQUE – ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2015 — FILIÈRE MP — COMPOSITION DE PHYSIQUE (XULCR)*
+
+<Warning title="Бележка към темата">
+Aucun corrigé officiel apparié n’est fourni dans le catalogue de l’archive.
+</Warning>
+
+<details>
+<summary>Consignes</summary>
+
+L’utilisation des calculatrices n’est pas autorisée pour cette épreuve.
+
+Les résultats des applications numériques seront donnés avec un chiffre significatif.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1 Étude d’une chaîne de pendules couplés.](#part-1)
+- [1.1 Cas de deux pendules couplés.](#part-1-1)
+- [1.2 Cas de $N$ pendules couplés.](#part-1-2)
+- [1.3 Analogue électrique de la chaîne de pendules.](#part-1-3)
+- [1.3.2 Impédance mécanique de la chaîne de pendules.](#part-1-3-2)
+- [2 Non-linéarité et propagation d’un soliton.](#part-2)
+- [Onde solitaire, ou soliton.](#onde-solitaire)
+- [Initiation d’une onde soliton.](#initiation)
+- [Aspects énergétiques.](#energetique)
+- [Analogies avec d’autres systèmes physiques.](#analogies)
+
+</nav>
+
+**Introduction.**
+
+Cette étude porte sur la propagation d’ondes le long d’une chaîne de pendules couplés par l’intermédiaire d’un câble de torsion. Elle est conduite dans la limite du milieu continu.
+
+Elle comprend deux parties. Dans la première, l’étude est menée dans l’approximation linéaire. Dans ce cadre, nous nous intéressons également à l’analogue électrique d’une chaîne de pendules. Cette analogie est construite à partir de la notion d’impédance. Dans la seconde partie, nous quittons l’approximation linéaire pour décrire la propagation d’ondes d’extension spatiale limitée, appelées “solitons”.
+
+Des rappels sont faits occasionnellement, il est toutefois conseillé de suivre le cheminement de l’énoncé.
+
+<ProblemSection id="part-1">
+
+### 1 Étude d’une chaîne de pendules couplés.
+
+*Jusqu’à la question 26 incluse, nous nous plaçons dans l’approximation des petits angles.*
+
+</ProblemSection>
+
+<ProblemSection id="part-1-1">
+
+### 1.1 Cas de deux pendules couplés.
+
+Un câble de torsion $^{1}$, inextensible, de longueur $3a$, d’extension radiale et de masse négligeables, est fixé rigidement par ses extrémités à un support immobile.
+
+Deux pendules $(m,l)$ identiques sont soudés sur le câble, aux abscisses $x_1=a$ et $x_2=2a$ (figure 1). Chaque pendule est constitué d’une masse $m$ quasi-ponctuelle fixée à l’extrémité d’une tige de longueur $l$ et de masse négligeable.
+
+La tension du câble est telle qu’il reste rectiligne (selon $\vec e_x$). Le vecteur unitaire $\vec e_y$ est dirigé selon l’accélération de la pesanteur $\vec g$ et le trièdre $(\vec e_x,\vec e_y,\vec e_z)$ est direct. L’origine de l’axe $(Ox)$ est choisie à l’extrémité gauche $(O)$ du câble.
+
+$^{1}$. Ou tout autre élément susceptible de se déformer en torsion (seule déformation que nous considérons).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43.5%', '--fig-max': '279px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2015-mp/p1-fig1.png" alt="Deux pendules identiques sur trois portions de câble de longueur a; masses m, longueurs l, gravité et trièdre ex, ey, ez." width="871" height="611" loading="lazy" decoding="async" />
+<figcaption>Figure 1 – Deux pendules couplés par l’intermédiaire d’un câble de torsion.</figcaption>
+</figure>
+
+
+Le mouvement des pendules s’effectue, chacun, dans un plan vertical $(\vec e_y,\vec e_z)$, perpendiculaire au câble. Nous notons $\theta_1$ (resp. $\theta_2$) l’angle que forme le premier (resp. second) pendule avec la verticale. Ces angles algébriques sont comptés positivement dans le sens trigonométrique.
+
+Au repos, $\theta_1=\theta_2=0$, et le câble n’est soumis à aucune torsion. Lorsque les sections, délimitant une portion de câble de longueur $a$, tournent d’un angle de torsion relatif $\Delta\theta$, cette portion est alors soumise à un couple, parallèle à l’axe du câble. Sa norme s’exprime par le produit $C|\Delta\theta|$, où $C$ est la constante de raideur de torsion propre à la portion de câble. Enfin, nous négligeons tout phénomène dissipatif.
+
+Pour les applications numériques, nous adoptons les valeurs suivantes :
+
+$$
+\left\{\begin{aligned}g&=10\ \mathrm{m\cdot s^{-2}}\\m&=20\ \mathrm g&l&=10\ \mathrm{cm}\\a&=1\ \mathrm{cm}&C&=20\ \mathrm{Nm\cdot rad^{-1}}\end{aligned}\right.\qquad (1)
+$$
+
+**1.** Pour un tel système, en pratique, préciser dans quelle mesure il devient légitime de négliger les phénomènes dissipatifs. On donnera des critères qualitatifs, sans calcul.
+
+**2.** Établir les équations différentielles couplées régissant la dynamique du système. On fera apparaître deux pulsations caractéristiques $\omega_g\equiv\sqrt{g/l}$ et $\omega_C\equiv\sqrt{C/(ml^2)}$ dont on donnera une interprétation physique.
+
+**3.** Nous introduisons les nouvelles variables :
+
+$$
+\left\{\begin{aligned}\theta_+&=\theta_1+\theta_2\\\theta_-&=\theta_1-\theta_2\end{aligned}\right.\qquad (2)
+$$
+
+**(a)** Établir le système d’équations différentielles qu’elles vérifient.
+
+**(b)** Préciser l’intérêt de ce changement de variables.
+
+**4.** **(a)** Décrire le mouvement des deux pendules correspondant à chacun des deux états particuliers $(\theta_+(t)\,;\,\theta_-(t)=0)$ et $(\theta_+(t)=0\,;\,\theta_-(t))$, appelés modes propres.
+
+**(b)** Exprimer les pulsations correspondantes, appelées pulsations propres et notées $\omega_{1,1}$ et $\omega_{1,-1}$, en fonction de $\omega_g$ et $\omega_C$.
+
+**(c)** Pour un mode propre, justifier que les deux pendules oscillent à la même pulsation.
+
+**(d)** En considérant la torsion des différentes portions du câble, retrouver directement l’expression de $\omega_{1,1}$, ou celle de $\omega_{1,-1}$. Choix que l’on précisera.
+
+**5.** La constante de raideur de torsion $C$ dépend d’une caractéristique d’élasticité propre au matériau, $G$ (en Pa), du rayon $R$ du câble et de sa longueur $a$. Donner la forme de sa dépendance avec ces paramètres. On précisera la démarche suivie.
+
+</ProblemSection>
+
+<ProblemSection id="part-1-2">
+
+### 1.2 Cas de $N$ pendules couplés.
+
+Nous considérons dans cette partie une chaîne constituée de $N$ pendules $(m,l)$ identiques. Le $n^{ième}$ pendule oscille dans le plan $x_n=na$ et son paramètre angulaire est noté $\theta_n$ (figure 2). Le cadre général de l’étude reste inchangé et nous rappelons que nous restons dans l’approximation des petits angles.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52%', '--fig-max': '333px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2015-mp/p1-fig2.png" alt="Chaîne de pendules n−1, n, n+1 suspendus au câble de torsion, gravité et trièdre." width="1041" height="468" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – $N$ pendules couplés par l’intermédiaire d’un câble de torsion.</figcaption>
+</figure>
+
+**6.** Établir l’équation régissant le mouvement du $n^{ième}$ pendule ($1<n<N$).
+
+**7.** Passage à la limite du milieu continu.
+
+L’état de torsion du câble est décrit continûment par une fonction $\theta(x,t)$ telle que $\theta_n(t)=\theta(na,t)$. Nous nous plaçons dans une situation de déformation telle que le développement de cette fonction, dans le passage de l’abscisse $na$ à l’abscisse $na+a$, peut être limité au second ordre relativement au pas $a$. Établir alors que, dans cette limite du milieu continu, la fonction $\theta$ vérifie l’équation aux dérivées partielles :
+
+$$
+\frac{\partial^2\theta}{\partial t^2}-c_0^2\frac{\partial^2\theta}{\partial x^2}+\omega_0^2\theta=0\,,\qquad (3)
+$$
+
+où $c_0$ et $\omega_0$ sont des constantes que l’on exprimera et pour lesquelles on proposera une interprétation physique.
+
+**8.** Pour un pas $a$ fixé, préciser à quelle condition le passage à la limite du milieu continu demeure valide. Cette condition implique le pas $a$ ainsi que deux dérivées spatiales de la fonction $\theta$.
+
+**9.** Nous posons $\mu\equiv m/a$ et $\kappa\equiv Ca$. Exprimer alors $c_0$ en fonction de $\kappa$, $\mu$ et $l$.
+
+**10.** Justifier que $c_0$ reste inchangée si l’on modifie $a$ tout en maintenant le rapport $\mu$ fixé.
+
+**11.** Donner la valeur de $c_0$.
+
+*Dans la suite du problème, on conservera les notations $\omega_0$ et $c_0$, sans les expliciter.*
+
+Nous étudions la propagation d’une onde harmonique (OH) de pulsation $\omega$ ($\omega\in\mathbb R_+$) et de nombre d’onde $k$ ($k\in\mathbb C$), écrite en notation complexe :
+
+$$
+\underline\theta(x,t)=\theta_0\exp[j(\omega t-kx)]\,.\qquad (4)
+$$
+
+**12.** Nous supposons le pas $a$ fixé. Traduire, pour cette onde, la condition de validité de la limite continue établie question 8.
+
+**13.** **(a)** Établir la relation de dispersion du milieu, pour cette onde. On posera $\Omega\equiv\omega/\omega_0$ et $K=c_0k/\omega_0$.
+
+**(b)** Esquisser l’allure de l’évolution, avec $\Omega$, des parties réelle et imaginaire de $K$.
+
+**14.** Pour ces deux sous-questions, nous supposons $\Omega\geq1$.
+
+**(a)** Exprimer les vitesses de phase $V_\varphi$ et de groupe $V_G$ (adimensionnalisées), en fonction de $\Omega$.
+
+**(b)** Représenter leur allure sur un même graphique. Commenter brièvement ces évolutions.
+
+**15.** Nous imposons au premier pendule, à l’origine de la chaîne, un mouvement angulaire sinusoïdal. Décrire alors qualitativement le comportement du système mécanique selon la pulsation d’excitation, pour $\Omega\in[0\ +\infty]$ (la chaîne est supposée infinie).
+
+</ProblemSection>
+
+<ProblemSection id="part-1-3">
+
+### 1.3 Analogue électrique de la chaîne de pendules.
+
+**1.3.1 Impédance mécanique des éléments constituant le motif de la chaîne.**
+
+Nous considérons, successivement, un élément $(C,a)$ du câble de torsion puis un pendule $(m,l)$, qui composent le motif de base de la chaîne. Un opérateur mécanique extérieur à ces éléments, est susceptible d’imposer un moment de la forme $\underline{\mathcal M}=\mathcal M_0\exp(j\omega t)$, de direction portée par l’axe $\vec e_x$.
+
+**16.** L’une des extrémités de l’élément $(C,a)$ est supposée fixe, l’autre est soumise au moment $\underline{\mathcal M}$. Celle-ci répond alors à cette excitation par sa vitesse angulaire $\underline{\dot\theta}$ (portée par l’axe $\vec e_x$). Exprimer l’impédance mécanique de cet élément, définie par le rapport $\underline{\mathcal M}/\underline{\dot\theta}\equiv Z_{cable}(\omega)$.
+
+**17.** C’est maintenant à un pendule $(m,l)$, seul, soumis au champ de pesanteur, qu’est appliqué le moment $\underline{\mathcal M}$. Exprimer son impédance mécanique $Z_{pendule}(\omega)$.
+
+**18.** La figure 3 représente trois quadripôles électriques de structures différentes. Chacun de ces quadripôles constitue le motif de base d’une ligne bifilaire.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '75.3%', '--fig-max': '482px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2015-mp/p1-fig3-v2.png" alt="Trois quadripôles a, b, c avec condensateurs et inductances; longueurs a et bornes des lignes bifilaires." width="1507" height="446" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Différentes cellules de base d’une ligne électrique bifilaire.</figcaption>
+</figure>
+
+
+**(a)** À partir de l’expression de chacune des impédances $Z_{cable}(\omega)$ et $Z_{pendule}(\omega)$, et en considérant la structure de la chaîne, identifier le quadripôle électrique équivalent à un motif de la chaîne. On argumentera ce choix.
+
+**(b)** Indiquer l’analogue mécanique de chacun des trois composants électriques du quadripôle choisi.
+
+**19.** L’analogie électrique trouvée, dans la limite du milieu continu, est-il matérialisable par un câble coaxial tel que ceux utilisés en travaux pratiques ? On argumentera la réponse.
+
+</ProblemSection>
+
+<ProblemSection id="part-1-3-2">
+
+### 1.3.2 Impédance mécanique de la chaîne de pendules.
+
+Comme à la question 15, nous imposons au premier pendule de la chaîne, supposée infinie, un mouvement angulaire sinusoïdal $\underline\theta=\theta_0\exp(j\omega t)$. Nous nous plaçons dans la limite du milieu continu.
+
+Nous notons $\underline{\mathcal M}(x,t)$ le moment appliqué, par la partie gauche sur la partie droite de la chaîne, à travers la section d’abscisse $x$ du câble, à l’instant $t$. La rotation de cette section est repérée par l’angle $\theta(x,t)$.
+
+**20.** Exprimer l’impédance mécanique $Z_{meca}(\omega)\equiv\underline{\mathcal M}/\underline{\dot\theta}$ de la chaîne.
+
+**21.** L’écrire sous la forme $Z_{meca}=\pm\mu l^2c_0\,\Gamma(\Omega)$ où $\Gamma$ est une fonction de la variable $\Omega\equiv\omega/\omega_0$. On notera que $Z_{meca}$ est indépendante de $x$.
+
+**22.** Préciser la dimension de la fonction $\Gamma$.
+
+**23.** Illustrer graphiquement la dépendance, relativement à $\Omega$, des parties réelle et imaginaire de la fonction $\Gamma$.
+
+**24.** Analyser ces dépendances et en particulier leur limite vers les hautes fréquences. Pour $\Omega\geq1$ établir le lien entre $\Gamma$ et la vitesse de groupe adimensionnalisée $V_G$ obtenue question 14.
+
+**25.** Pour $\Omega\geq1$, il apparaît que l’impédance de la chaîne est réelle. L’opérateur mécanique fournit donc continûment de la puissance à la chaîne. Concilier ce fait avec l’absence de composant dissipatif dans son modèle.
+
+**26.** Pour $\Omega\leq1$, l’impédance de la chaîne est imaginaire. Analyser ce résultat à la lumière de la question 15.
+
+</ProblemSection>
+
+<ProblemSection id="part-2">
+
+### 2 Non-linéarité et propagation d’un soliton.
+
+*Dès lors, et jusqu’à la fin du sujet, nous quittons l’approximation des petits angles.*
+
+Dans cette partie, nous étudions la propagation d’ondes dans le milieu non-linéaire constitué par la chaîne infinie de pendules, dans la limite des milieux continus. Dans ces conditions, l’équation d’onde vérifiée par l’angle $\theta(x,t)$ de torsion du câble s’écrit :
+
+$$
+\frac{\partial^2\theta}{\partial t^2}-c_0^2\frac{\partial^2\theta}{\partial x^2}+\omega_0^2\sin\theta=0\,,\qquad (5)
+$$
+
+où $c_0$ et $\omega_0$ sont les constantes déterminées à la question 7. Rappelons que l’on conserve ces notations sans les expliciter.
+
+Nous considérons la longueur $L$ de la chaîne comme “infinie”. Les extrémités de la chaîne ont alors pour abscisses $\pm L/2\to\pm\infty$, $x=0$ étant celle de son milieu.
+
+Nous recherchons des solutions progressives de l’équation 5 sous la forme :
+
+$$
+\theta(x,t)=F(x-vt)\equiv F(z)\,,\qquad (6)
+$$
+
+où $v$ est une constante et $z=x-vt$ est la position dite réduite.
+
+**27.** Établir que $F$ est solution de l’équation :
+
+$$
+\frac12\left[\frac{\mathrm dF}{\mathrm dz}\right]^2+A\cos F=B\,,\qquad (7)
+$$
+
+où $A$ est une constante à exprimer et $B$ une constante d’intégration.
+
+**28.** **(a)** Justifier que l’étude du système est ainsi transposable à celle d’un point matériel, de masse unitaire, soumis au potentiel $V_{eff}(F)=A\cos F$, l’angle $F$ jouant le rôle de la position et la variable $z$ celui du temps. Soulignons qu’il s’agit d’une transposition, en particulier $V_{eff}$ n’a pas la dimension d’une énergie.
+
+**(b)** Quel est alors le rôle à attribuer à la constante $B$ ?
+
+**29.** **(a)** Représenter l’allure du potentiel dans chacun des cas, $v<c_0$ et $v>c_0$.
+
+**(b)** Sur chacun des tracés précédents, positionner la constante $B$ en envisageant les différentes situations (en vue d’une interprétation énergétique de ces diagrammes).
+
+**30.** Analyse qualitative des diagrammes d’énergie.
+
+**(a)** Nous nous plaçons dans le cas $v<c_0$ et $B\to A^-$ ($B$ tend vers $A$, par valeur inférieure). À partir du diagramme d’énergie, décrire le mouvement du point matériel en s’attachant à son aspect “temporel”.
+
+**(b)** Nous nous plaçons dans le cas $v>c_0$ et $A<B<-A$. À partir du diagramme d’énergie, décrire le mouvement du point matériel et en déduire celui de la chaîne de pendules.
+
+**(c)** Toujours pour $v>c_0$ et $A<B<-A$, mais avec $B\to A^+$, préciser quel cadre d’étude nous retrouvons alors.
+
+</ProblemSection>
+
+<ProblemSection id="onde-solitaire">
+
+### Onde solitaire, ou soliton.
+
+Pour $v<c_0$ et $B=A$, la fonction $F_d$ suivante est une solution progressive de l’équation 7 :
+
+$$
+F_d(z)=4\arctan\left[\exp\left(\frac z\lambda\right)\right]\,,\quad\text{où}\ z=x-vt\,,\ \lambda=\lambda_0\sqrt{1-v^2/c_0^2}\ \text{et}\ \lambda_0=c_0/\omega_0\,.\qquad (8)
+$$
+
+Nous sommes donc dans la situation décrite question 30a.
+
+**31.** **(a)** Représenter l’allure de la fonction $F_d$. Préciser notamment sa valeur en 0 et ses limites en $\pm\infty$.
+
+**(b)** Déterminer les limites en $\pm\infty$ de la dérivée spatiale $\partial\theta/\partial x$.
+
+**(c)** Sur la zone où sa variation est la plus marquée, nous approchons la fonction $F_d$ par sa tangente en 0, et par ses limites en $-\infty$ et $+\infty$ respectivement à gauche et à droite de cette zone. Dans ce cadre, déterminer l’extension spatiale caractéristique, notée $\Lambda$, de cette zone.
+
+**(d)** Calculer la valeur de $\lambda_0$.
+
+Un soliton apparaît ainsi être une onde d’étendue spatiale limitée.
+
+**32.** Pour ces deux sous-questions, nous supposons $v>0$.
+
+**(a)** Tracer, sur un même graphique, l’allure de l’angle $\theta$ le long de la chaîne, à trois instants $t_1<t_2<t_3$ que l’on fera apparaître sur les tracés.
+
+**(b)** De même, tracer sur un second graphique les trajectoires (en fonction du temps) des pendules situés à différentes positions $x_1<x_2<x_3$ que l’on fera apparaître sur les tracés.
+
+**33.** En représentant les pendules par des petits segments, illustrer l’allure de la chaîne à un instant donné.
+
+**34.** **(a)** En se reportant à la figure 2, préciser en quoi la solution $F_d$ est “dextre” (droite).
+
+**(b)** Donner alors, en le justifiant, la fonction $F_s$ décrivant un soliton “senestre” (gauche) se propageant vers $x>0$.
+
+Pour caractériser simultanément les évolutions spatiale et temporelle de la chaîne, nous représentons l’angle $\theta$ le long de la chaîne, à différents instants $t_n=t_0+n\Delta t$ ($n\in\mathbb Z$), régulièrement espacés. Afin que cette illustration reste lisible, les différentes courbes sont translatées verticalement, d’un pas $n\alpha$ ($\alpha>0$). Ainsi, on trace en réalité $n\alpha+\theta(x,t_0+n\Delta t)$ en fonction de $x$, et pour une série de valeurs de $n$. La figure 4 présente deux exemples de solitons, obtenus sur des chaînes identiques, mais avec des conditions initiales (excitations) différentes.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '69.8%', '--fig-max': '447px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2015-mp/p1-fig4.png" alt="Diagrammes spatio-temporels a et b; profils θ décalés, axes x en mètres, repères 2π et instants t1,t2,t3." width="1398" height="456" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Diagrammes spatio-temporels décrivant une onde soliton, pour des conditions initiales différentes, avec le pas de temps $\Delta t=0,12\ \mathrm s$.</figcaption>
+</figure>
+
+**35.** **(a)** Préciser, en le justifiant, s’il s’agit de solitons dextres ou senestres.
+
+**(b)** Estimer, dans chacun des cas, la valeur de la vitesse de propagation du soliton.
+
+**(c)** De même, estimer la valeur de $\lambda$.
+
+</ProblemSection>
+
+<ProblemSection id="initiation">
+
+### Initiation d’une onde soliton.
+
+Le pendule situé en $x=0$ est excité par un opérateur extérieur qui lui impose une rotation selon la loi horaire :
+
+$$
+\theta_0(t)=4\arctan[\exp(\Omega_0t)]\quad(t\in]-\infty,+\infty[\,,\ \Omega_0>0)\,.\qquad (9)
+$$
+
+**36.** **(a)** Expliquer pourquoi cette excitation crée deux solitons dans la chaîne.
+
+**(b)** Préciser leur sens de propagation et leur chiralité (dextre ou senestre).
+
+Nous nous intéressons par la suite à l’onde se propageant sur le domaine $x\geq0$.
+
+**37.** **(a)** Exprimer la vitesse réduite $v/c_0$ de propagation du soliton, en fonction du rapport $\Omega_0/\omega_0$, puis illustrer graphiquement cette dépendance.
+
+**(b)** Calculer la valeur de $v$ pour $\Omega_0/\omega_0=0,5$.
+
+</ProblemSection>
+
+<ProblemSection id="energetique">
+
+### Aspects énergétiques.
+
+L’énergie mécanique totale de la chaîne infinie parcourue par le soliton décrit par l’équation 8, ou son correspondant senestre, s’écrit :
+
+$$
+E=\frac{E_0}{\sqrt{1-v^2/c_0^2}}\quad\text{où}\quad E_0=8\sqrt{\mu g\kappa l}\,.\qquad (10)
+$$
+
+Nous considérons maintenant une chaîne dont la masse des pendules subit un saut en $x=0$, les autres paramètres restant inchangés. On note $\mu_-$ la masse linéique pour $x<0$ et $\mu_+$ celle pour $x\geq0$, avec $\mu_-<\mu_+$. Un soliton de vitesse $v_-$ est créé par un opérateur en $x\to-\infty$. Les diagrammes de la figure 5 décrivent cette situation pour un soliton à basse vitesse et un autre à haute vitesse.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.3%', '--fig-max': '386px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2015-mp/p1-fig5.png" alt="Diagrammes c et d des profils θ à travers un saut de masse en x=0; réflexion ou transmission et instants t1,t2,t3." width="1207" height="682" loading="lazy" decoding="async" />
+<figcaption>Figure 5 – Diagrammes spatio-temporels d’évolution d’un soliton parcourant une chaîne présentant un saut de masse linéique en $x=0$.</figcaption>
+</figure>
+
+**38.** En s’appuyant sur les résultats des questions 31c et 31d, préciser dans quelle mesure la relation 10 reste applicable à une chaîne occupant seulement un demi-espace. C’est un argument qualitatif qui est attendu.
+
+**39.** Commenter les diagrammes présentés figure 5 en précisant notamment l’évolution du soliton dans chacun des cas.
+
+**40.** **(a)** Quelle énergie minimale un soliton doit-il disposer pour être transmis dans la seconde moitié de la chaîne ($x>0$) ?
+
+**(b)** En déduire la valeur critique $v_C$ de la vitesse d’un soliton incident ($x<0$) au dessus de laquelle il poursuivra sa propagation dans la seconde moitié de la chaîne ($x>0$). On exprimera ce résultat en fonction de $\kappa$, $l$, $1/\mu_-$ et $1/\mu_+$.
+
+**41.** Plaçons-nous dans le cas particulier $\mu_+/\mu_-=8$. Comment faut-il alors choisir les rapports $\kappa_+/\kappa_-$ et $l_+/l_-$, pour qu’un soliton incident soit toujours transmis, et sans modification de sa vitesse, quelle qu’elle puisse être ?
+
+**42.** Lorsque les paramètres mécaniques $\mu$, $\kappa$ et $l$ varient continûment le long de la chaîne, l’équation de propagation 5 n’est plus valable. Comment faut-il alors la modifier pour qu’elle décrive un tel système ?
+
+</ProblemSection>
+
+<ProblemSection id="analogies">
+
+### Analogies avec d’autres systèmes physiques.
+
+**43.** Quelle analogie suggèrent les dépendances, par rapport à la vitesse $v$, de l’énergie $E$ et de la longueur $\lambda$ (ou $\Lambda$), relatives au soliton étudié ?
+
+**44.** Dans quelle(s) autre(s) situation(s) rencontre-t-on également ce type d’onde, d’extension spatiale limitée, se propageant sur une longue distance sans modification (sensible) de sa forme ?
+
+**45.** Peut-on observer la propagation d’un soliton dans un câble coaxial tel que ceux utilisés en travaux pratiques ? Dans une fibre optique ? On argumentera chacune des réponses.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+Aucun corrigé officiel apparié n’est fourni dans le catalogue de l’archive.
+</Warning>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Трудност: неоценена.
+
+Механика · Вълни и звук · Електричество · Махала · Разпространение на вълни · Променливотокови вериги
+
+Предпоставки: Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [MP_2015.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2015.pdf)
