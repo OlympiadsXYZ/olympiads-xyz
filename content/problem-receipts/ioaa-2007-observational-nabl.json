@@ -1,34 +1,96 @@
 {
   "paperId": "ioaa-2007-observational-nabl",
   "verdict": "pass",
-  "contentHash": "2f0b1c72226a2d5af916f5437055189b2378e206752a523c72db111f1a1ed92f",
+  "contentHash": "fd4b356dc4e9b2816d074e8b93229ef90f3c360c9724f2cbd852cb2002d627ec",
+  "sourceConversions": {},
   "sourceHashes": {
     "problems": "67e7cf41a2d58d8c888bb66d71ead9f7208ab9e21f0787ef79a702ae05af2804",
     "solutions": "cb77810d1fa709c7a96986629cd933dc6d630199d8e333b9a074df990e4b9dee"
   },
   "reviewer": {
     "provider": "mechanical",
-    "model": "textlayer+regions",
-    "requestId": "mech-r0"
+    "model": "single-pass-gates",
+    "requestId": "25633dfff62bc063e6be565a28887183ba3d024d2c540773bd9c77b4297fa070"
   },
-  "checkedAt": "2026-09-23T14:54:00.417Z",
-  "promptVersion": "mech-v1",
+  "checkedAt": "2026-09-25T09:49:25.610Z",
+  "promptVersion": "v2",
+  "checkerMode": "single-pass",
   "reader": {
     "provider": "agent",
-    "model": "opus-5-5",
-    "promptVersion": "v1",
-    "promptSha256": null,
-    "requestId": null,
-    "at": "2026-09-23"
-  },
-  "independence": {
-    "independent": true,
-    "differentProvider": true,
-    "allowSameModel": false
+    "model": "gpt-6-astra",
+    "requestId": "/root/sidebar_astra",
+    "at": "2026-09-25",
+    "promptVersion": "v2"
   },
   "adjudicator": null,
-  "checkerVerdict": "pass",
-  "summary": "Mechanical check only (no second model): mechanical pre-check (text layer, printed regions); no model was asked",
+  "independence": {
+    "independent": false,
+    "differentProvider": false,
+    "allowSameModel": true,
+    "separateChecker": false
+  },
+  "checkerVerdict": null,
+  "summary": "Single-pass source transcription with automated validation; no separate model checker.",
+  "readerEvidence": {
+    "candidateSha256": "25633dfff62bc063e6be565a28887183ba3d024d2c540773bd9c77b4297fa070",
+    "reader": {
+      "provider": "agent",
+      "model": "gpt-6-astra",
+      "promptVersion": "v2",
+      "requestId": "/root/sidebar_astra",
+      "at": "2026-09-25T09:47:40.161377+00:00"
+    },
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "problems",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      }
+    ],
+    "problemsRead": 1,
+    "figuresInspected": 4,
+    "summary": "Read all 5 original problem pages and both marking-scheme pages directly. One observation test explicitly divided into two Parts with common instructions and 20 minutes each. Merge legacy p1/p2 into one p1 with native part-i and part-ii; old p2 aliases part-ii. Preserve five pointer questions and two binocular questions with printed 10+10 scores, checking marks and examiner comment lines. Place two statement charts and two solution graphics beside their owning questions. The W label for the empty M31 frame is printed on the preceding page; preserved as native text immediately above the complete frame, not invented inside the crop. The printed 6.8-degree field and 3-degree frame mismatch, and printed 23-degree solution tolerance, remain unchanged. Part I official solutions absent. Country/student-code blanks omitted as page furniture. No source corrections; point awards converted to structured points once rather than duplicated in prose.",
+    "sourceGaps": [
+      "Official solutions for Part I absent; supplied marking scheme is Part II only."
+    ],
+    "startedAt": "2026-09-25T09:42:21.724Z",
+    "startedAtPrecision": "Preparation preceded direct source-page reading; exact first-image timestamp not recorded.",
+    "completedAt": "2026-09-25T09:49:24.702670+00:00",
+    "figureInspection": "Directly viewed every final actual crop, retaining all chart/frame borders, orientation labels, plotted points and scales. IOAA2007 W is a native printed label from the preceding page and is restored as text above the full answer frame. Integral binocular captions are not duplicated. IOAA2008 chart retains all horizon, direction, ecliptic and star labels and is rotated 90 degrees for reading. Upload/public verification passed.",
+    "normalizations": [],
+    "overlayFollowup": {
+      "removeProblemEntries": [
+        "iao-2016-observational-nabl-observational-original-p11",
+        "iao-2016-observational-nabl-observational-original-p9",
+        "ioaa-2007-observational-nabl-p2",
+        "ioaa-2008-observational-nabl-p1"
+      ],
+      "reason": "All prior figure anchors now live explicitly at source positions in candidate text; IOAA2007 p2 also becomes p1#part-ii."
+    }
+  },
   "coverage": {
     "pagesRead": [
       {
@@ -60,16 +122,24 @@
         "page": 2
       }
     ],
-    "problemsChecked": 2,
-    "figuresChecked": 4
+    "problemsRead": 1,
+    "figuresInspected": 4
+  },
+  "automatedChecks": {
+    "schemaAndMath": true,
+    "figureEvidence": true,
+    "warnings": [
+      {
+        "path": "/problems",
+        "message": "1 problem entries, the archive inventory lists 2 (printed sections and sub-tasks of one problem are its parts, not problems of their own)"
+      }
+    ]
   },
   "defects": [],
-  "informational": 0,
-  "ignoredResolvedFlags": 0,
   "blockers": [],
-  "candidateSha256": "7e57e55362efa94f625a906efee4a472902b95afda78a9cf203698b523e90656",
-  "checkerCandidateSha256": "7e57e55362efa94f625a906efee4a472902b95afda78a9cf203698b523e90656",
-  "checkerCrops": null,
-  "promotedAt": "2026-09-23T14:54:01.133Z",
+  "informational": 1,
+  "candidateSha256": "25633dfff62bc063e6be565a28887183ba3d024d2c540773bd9c77b4297fa070",
+  "checkerCandidateSha256": null,
+  "promotedAt": "2026-09-25T09:52:28.617Z",
   "promotedFile": "content\\problems\\astronomy\\IOAA\\2007\\ioaa-2007-observational-nabl.json"
 }

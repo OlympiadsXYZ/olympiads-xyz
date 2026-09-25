@@ -1,34 +1,99 @@
 {
   "paperId": "nof-2025-iii-8",
   "verdict": "pass",
-  "contentHash": "11b2bc2d2d184eace30592b737d0191e287cb9ec61f73329e1335ffa949fb726",
+  "contentHash": "447f5460c82c4217df6ec0a8f55f5de33b34c5238a5f6aa3ece88a3800fee8a0",
+  "sourceConversions": {},
   "sourceHashes": {
     "problems": "6a3fecf0e918d75de7e873dbb63cf07549dbbfc71c11ef94828fb2d41bde22e1",
     "solutions": "7814a5d6254cbf3f6efe30d42e4150b44b5d0a088d0b81c7e43409178de37cea"
   },
   "reviewer": {
-    "provider": "agent",
-    "model": "gpt-6-astra",
-    "requestId": "/root/overnight_publish_path:nof-2025-iii-8-source-check-1"
+    "provider": "mechanical",
+    "model": "single-pass-gates",
+    "requestId": "8448cf11dfe0f7b65742a3fd4dc6d9ab49fe1898d86dc5cda085b61655439efd"
   },
-  "checkedAt": "2026-09-14T08:08:57.666Z",
+  "checkedAt": "2026-09-25T10:01:04.222Z",
   "promptVersion": "v1",
+  "checkerMode": "single-pass",
   "reader": {
     "provider": "agent",
     "model": "gpt-6-astra",
-    "promptVersion": "v1",
-    "promptSha256": null,
-    "requestId": null,
-    "at": "2026-09-14"
+    "requestId": "/root/production_astra",
+    "at": "2026-09-25",
+    "promptVersion": "v1"
   },
+  "adjudicator": null,
   "independence": {
     "independent": false,
     "differentProvider": false,
-    "allowSameModel": true
+    "allowSameModel": true,
+    "separateChecker": false
   },
-  "adjudicator": null,
-  "checkerVerdict": "pass",
-  "summary": "All four source pages, the complete sanitized candidate and all three actual crops were checked. The three problems, twelve labelled entries, repeated section labels, shared section introductions, full official derivations, grading details and answer values match; every crop is complete, readable and free of surrounding prose.",
+  "checkerVerdict": null,
+  "summary": "Single-pass source transcription with automated validation; no separate model checker.",
+  "readerEvidence": {
+    "candidateSha256": "8448cf11dfe0f7b65742a3fd4dc6d9ab49fe1898d86dc5cda085b61655439efd",
+    "reader": {
+      "provider": "agent",
+      "model": "gpt-6-astra",
+      "requestId": "/root/production_astra"
+    },
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      }
+    ],
+    "problemsRead": 3,
+    "figuresInspected": 3,
+    "summary": "Fresh Astra full visual read of all2 question and2 matching official solution pages. Retained3 genuine numbered problems. Printed tasks1 and3 explicitly consist of two independent parts: migrated those to native sections, each shared introduction directly preceding its own questions and figure. Task2 remains a single problem with a/b questions. All full official solution equations and marking retained, including continuation of task2 across solution pages. Source equations and approximate values retained as printed. No missing official solution or figure identified.",
+    "sourceGaps": [],
+    "startedAt": "2026-09-25T09:54:03.679824+00:00",
+    "completedAt": "2026-09-25T10:01:02.439369+00:00",
+    "sourceHashes": {
+      "problems": "6a3fecf0e918d75de7e873dbb63cf07549dbbfc71c11ef94828fb2d41bde22e1",
+      "solutions": "7814a5d6254cbf3f6efe30d42e4150b44b5d0a088d0b81c7e43409178de37cea"
+    },
+    "figureInspections": [
+      {
+        "file": "tmp\\tx\\nof-2025-iii-8\\figs\\nof-2025-iii-8.astra-r1\\problems\\p1-fig1.png",
+        "sha256": "ce2ee3c64442b602bce6bf813b17732d065e37b7235bd6bea3a6b656c41a4310",
+        "inspection": "Visually inspected actual source crop; complete diagram and labels."
+      },
+      {
+        "file": "tmp\\tx\\nof-2025-iii-8\\figs\\nof-2025-iii-8.astra-r1\\problems\\p2-fig1.png",
+        "sha256": "b6eda20d830a14b90b736aeda7f03e2a474ae8a6586b726928540eb2f95c0ee4",
+        "inspection": "Visually inspected actual source crop; complete diagram and labels."
+      },
+      {
+        "file": "tmp\\tx\\nof-2025-iii-8\\figs\\nof-2025-iii-8.astra-r1\\problems\\p3-fig1.png",
+        "sha256": "3d09dadadf2d239fc24be9a6d7a508fb2bfdd99575b1d159216cda9e45f67fc3",
+        "inspection": "Visually inspected actual source crop; complete diagram and labels."
+      }
+    ],
+    "overlaysToRetire": {
+      "figure-anchors": [
+        "nof-2025-iii-8-p1",
+        "nof-2025-iii-8-p2",
+        "nof-2025-iii-8-p3"
+      ],
+      "question-numbers": []
+    },
+    "routeHandling": "All three existing problem IDs and printed numbers retained; no aliases or grouping across independent problems.",
+    "workflow": "Fresh single-pass Astra visual source read of every prepared problem and matching official solution page; no separate model checker."
+  },
   "coverage": {
     "pagesRead": [
       {
@@ -48,20 +113,28 @@
         "page": 2
       }
     ],
-    "problemsChecked": 3,
-    "figuresChecked": 3
+    "problemsRead": 3,
+    "figuresInspected": 3
+  },
+  "automatedChecks": {
+    "schemaAndMath": true,
+    "figureEvidence": true,
+    "warnings": [
+      {
+        "path": "/problems/0/statement",
+        "message": "empty statement (the printed problem is only its parts)"
+      },
+      {
+        "path": "/problems/2/statement",
+        "message": "empty statement (the printed problem is only its parts)"
+      }
+    ]
   },
   "defects": [],
-  "informational": 1,
-  "ignoredResolvedFlags": 0,
   "blockers": [],
-  "candidateSha256": "db982cca10382b306b7c180734da49e3ae8937522043c1a7515919d4224717e9",
-  "checkerCandidateSha256": "db982cca10382b306b7c180734da49e3ae8937522043c1a7515919d4224717e9",
-  "checkerCrops": [
-    "p1-fig1",
-    "p2-fig1",
-    "p3-fig1"
-  ],
-  "promotedAt": "2026-09-14T08:09:39.354Z",
+  "informational": 0,
+  "candidateSha256": "8448cf11dfe0f7b65742a3fd4dc6d9ab49fe1898d86dc5cda085b61655439efd",
+  "checkerCandidateSha256": null,
+  "promotedAt": "2026-09-25T10:03:03.534Z",
   "promotedFile": "content\\problems\\physics\\NOF\\2025\\nof-2025-iii-8.json"
 }

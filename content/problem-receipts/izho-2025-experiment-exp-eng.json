@@ -1,34 +1,113 @@
 {
   "paperId": "izho-2025-experiment-exp-eng",
   "verdict": "pass",
-  "contentHash": "ea2fe0d0d6c91e91a06a3c4c9df46765f3546d862899b81512103755af2c52fd",
+  "contentHash": "5dcf2d67d58febe9283e50fd831b3241a479de8ec49ee478d6d14010495fdb8f",
+  "sourceConversions": {},
   "sourceHashes": {
     "problems": "df8b34e0cbdc899f0bc25a2c9312409b705b493544614d9d7ed4724b281d07ad",
     "solutions": "93dd02088fa76d530b1d1191f4cfd97432de6db444e81565aac28b4cbad8f1b3"
   },
   "reviewer": {
-    "provider": "anthropic",
-    "model": "claude-sonnet-5",
-    "requestId": "req_011Cf8WsYchL3YBwRRLC92Vx"
+    "provider": "mechanical",
+    "model": "single-pass-gates",
+    "requestId": "f8f9b89c082d9ed87614d41c6453a5cc143aad6ae039cd0f36306ecb71d0db08"
   },
-  "checkedAt": "2026-09-17T06:11:46.635Z",
-  "promptVersion": "v1",
+  "checkedAt": "2026-09-25T10:04:03.294Z",
+  "promptVersion": "v2",
+  "checkerMode": "single-pass",
   "reader": {
-    "provider": "anthropic",
-    "model": "claude-sonnet-5",
-    "promptVersion": "v1",
-    "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
-    "requestId": "req_011Cf8WZCjN1En251gj21UZd,req_011Cf8WdEtCoskNhdhn5ir59",
-    "at": "2026-09-17"
+    "provider": "agent",
+    "model": "gpt-6-astra",
+    "requestId": "/root/sidebar_astra",
+    "at": "2026-09-25",
+    "promptVersion": "v2"
   },
+  "adjudicator": null,
   "independence": {
     "independent": false,
     "differentProvider": false,
-    "allowSameModel": true
+    "allowSameModel": true,
+    "separateChecker": false
   },
-  "adjudicator": null,
-  "checkerVerdict": "pass",
-  "summary": "Transcription is largely accurate and verbatim, but one documentNote uses an invented heading not present on the source page.",
+  "checkerVerdict": null,
+  "summary": "Single-pass source transcription with automated validation; no separate model checker.",
+  "readerEvidence": {
+    "candidateSha256": "f8f9b89c082d9ed87614d41c6453a5cc143aad6ae039cd0f36306ecb71d0db08",
+    "reader": {
+      "provider": "agent",
+      "model": "gpt-6-astra",
+      "promptVersion": "v2",
+      "requestId": "/root/sidebar_astra",
+      "at": "2026-09-25T10:02:46.255640+00:00"
+    },
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      },
+      {
+        "document": "problems",
+        "page": 4
+      },
+      {
+        "document": "problems",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 1
+      },
+      {
+        "document": "solutions",
+        "page": 2
+      },
+      {
+        "document": "solutions",
+        "page": 3
+      },
+      {
+        "document": "solutions",
+        "page": 4
+      },
+      {
+        "document": "solutions",
+        "page": 5
+      },
+      {
+        "document": "solutions",
+        "page": 6
+      }
+    ],
+    "problemsRead": 1,
+    "figuresInspected": 16,
+    "summary": "Read all 5 statement and all 6 solution pages directly. The cover explicitly specifies one problem: merged legacy four independent pages into Galvanic cells with Equipment and four native printed Parts, plus matching complete solution sections and full grading scheme. Restore 11 statement graphics including previously missing small circuit symbols and 5 solution graphics including the missing measurement circuit. Restore all four measurement tables (including Table 4 continuation), equations (1)–(17), explanatory paragraphs and complete grading rubric; legacy solution placeholders were empty. Preserve source discrepancies: R_k in equation (1) versus R_0k table header, printed table current values and mkA labels, voltage/current rubric ranges inconsistent with examples, formula reference (3), typo rwo, repeated rubric 4.3, and printed decimal separators. No inferred numerical corrections. Separate multimeter instructions absent.",
+    "sourceGaps": [
+      "The separately mentioned multimeter instructions are absent from the supplied PDFs."
+    ],
+    "startedAt": "2026-09-25T09:51:25.280Z",
+    "startedAtPrecision": "Preparation preceded direct source-page reading; exact first-image timestamp not recorded.",
+    "completedAt": "2026-09-25T10:04:02.382831+00:00",
+    "figureInspection": "Directly viewed all 23 final actual crops across this batch. All terminals, labels, chart borders, axis labels and annotations retained. PSF2003 printed figure labels retained as captions because outside the tight crops. IzHO all 11 statement graphics plus 5 solution graphics placed at source positions. PSF2011 two solution diagrams use annotated solution-page source. Upload/public verification passed.",
+    "normalizations": [],
+    "overlayFollowup": {
+      "removeProblemEntries": [
+        "izho-2025-experiment-exp-eng-p1",
+        "izho-2025-experiment-exp-eng-p2",
+        "izho-2025-experiment-exp-eng-p3",
+        "izho-2025-experiment-exp-eng-p4",
+        "psf-2011-proletno-11-12-p1"
+      ],
+      "reason": "All graphics now explicitly placed within their native sections; IzHO p2-p4 alias p1#part-2 through part-4."
+    }
+  },
   "coverage": {
     "pagesRead": [
       {
@@ -76,29 +155,24 @@
         "page": 6
       }
     ],
-    "problemsChecked": 4,
-    "figuresChecked": 12
+    "problemsRead": 1,
+    "figuresInspected": 16
+  },
+  "automatedChecks": {
+    "schemaAndMath": true,
+    "figureEvidence": true,
+    "warnings": [
+      {
+        "path": "/problems",
+        "message": "1 problem entries, the archive inventory lists 4 (printed sections and sub-tasks of one problem are its parts, not problems of their own)"
+      }
+    ]
   },
   "defects": [],
-  "informational": 2,
-  "ignoredResolvedFlags": 0,
   "blockers": [],
-  "candidateSha256": "74cc9a196d89540aa176db3e8910ad05a845e223a686f79f7ff4f4ade71e55e1",
-  "checkerCandidateSha256": "74cc9a196d89540aa176db3e8910ad05a845e223a686f79f7ff4f4ade71e55e1",
-  "checkerCrops": [
-    "p1-fig1",
-    "p1-fig2",
-    "p1-sol-fig1",
-    "p2-fig1",
-    "p2-fig2",
-    "p2-sol-fig1",
-    "p3-fig1",
-    "p4-fig1",
-    "p4-fig2",
-    "p4-fig3",
-    "p4-sol-fig3",
-    "p4-sol-fig4"
-  ],
-  "promotedAt": "2026-09-17T06:11:47.119Z",
+  "informational": 1,
+  "candidateSha256": "f8f9b89c082d9ed87614d41c6453a5cc143aad6ae039cd0f36306ecb71d0db08",
+  "checkerCandidateSha256": null,
+  "promotedAt": "2026-09-25T10:05:24.128Z",
   "promotedFile": "content\\problems\\physics\\IZhO\\2025\\izho-2025-experiment-exp-eng.json"
 }

@@ -1,0 +1,166 @@
+---
+id: ipho-1992-theory-23rd-theo-question-3-p3
+source: 'IPhO 1992, Теория'
+title: 'Задача 3. A SATELLITE IN SUNSHINE'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/1992/ipho-1992-theory-23rd-theo-question-3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-25T09:53:11.040Z'
+verifier: 'single-pass'
+---
+
+*XXIII IPHO — JULY 92*
+
+## Условие
+
+In this problem you will calculate the temperature of a space satellite. The satellite is assumed to be a sphere with a diameter of 1 m. All of the satellite remains at uniform temperature. All of the spherical surface of the satellite is coated with the same kind of coating. The satellite is located near the earth but is not in the earth's shadow.
+
+The surface temperature of the sun (its blackbody temperature) $T_{sun}=6000\ K$ and its radius is $6.96\times10^8\ m$. The distance between the sun and the earth is $1.5\times10^{11}\ m$. The sunlight heats the satellite to a temperature at which the blackbody emission from the satellite equals the power absorbed from the sunlight. The power per unit area emitted by a black body is given by Stefan-Boltzmann's law $P=\sigma T^4$ where $\sigma$ is the universal constant $5.67\times10^{-8}\ W\mathord\cdot m^{-2}K^{-4}$. In the first approximation, you can assume that both the sun and the satellite absorb all electromagnetic radiation incident upon them.
+
+**1)** Find an expression for the temperature $T$ of the satellite. What is the numerical value of this temperature?
+
+**2)** The blackbody radiation spectrum $u(T,f)$ of a body at temperature $T$ obeys Planck's radiation law
+
+$$
+u(T,f)df=\frac{8\pi k^4T^4}{c^3h^3}\frac{\eta^3d\eta}{e^\eta-1}
+$$
+
+where $\eta=hf/kT$ and $u(T,f)df$ is the energy density of the electromagnetic radiation in a frequency interval $[f,f+df]$. In the equation $h=6.6\times10^{-34}\ J\mathord\cdot s$ is Planck's constant, $k=1.4\times10^{-23}\ J\mathord\cdot K^{-1}$ is Boltzmann's constant, and $c=3.0\times10^8\ m\mathord\cdot s^{-1}$ is the speed of light.
+
+The blackbody spectrum, integrated over all frequencies $f$ and directions of emission, gives the total radiated power per unit area $P=\sigma T^4$ as expressed in the Stefan-Boltzmann law given above.
+
+$$
+\sigma=\frac{2\pi^5k^4}{15c^2h^3}
+$$
+
+The figure shows the normalized spectrum
+
+$$
+\frac{c^3h^3}{8\pi k^4}\frac{u(T,f)}{T^4}
+$$
+
+as a function of $\eta$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.1%', '--fig-max': '577px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1992-theory-23rd-theo-question-3/p3-fig1-astra-r5-20260925.png" alt="Normalized blackbody spectrum plotted against eta, with the vertical normalization and horizontal frequency label." width="1804" height="1092" loading="lazy" decoding="async" />
+</figure>
+
+
+In many applications it is necessary to keep the satellite as cool as possible. To cool the satellite, engineers use a reflective coating that reflects light above a cut-off frequency but does not prevent heat radiation at lower frequency from escaping. Assume that this (sharp) cut-off frequency corresponds to $hf/k=1200\ K$.
+
+What is the new equilibrium temperature of the satellite? The exact answer is not needed. Therefore, do not perform any tedious integrations; make approximations where necessary. The integral over the entire range is
+
+$$
+\int_0^\infty\frac{\eta^3d\eta}{e^\eta-1}=\frac{\pi^4}{15}
+$$
+
+and the maximum of $\eta^3/(e^\eta-1)$ occurs at $\eta=2.82$. For small $\eta$ you can expand the exponential function as $e^\eta=1+\eta$.
+
+**3)** If we now have a real satellite, with extending solar panels that generate electricity, the dissipated heat in the electronics inside the satellite acts as an extra source of heat. Assuming that the power of the internal heat source is 1 kW, what is the equilibrium temperature of the satellite in case 2 above?
+
+**4)** A manufacturer advertises a special paint in the following way:
+
+"This paint will reflect more than 90% of all incoming radiation (both visible light and infrared) but it will radiate at all frequencies (visible light and infrared) as a black body, thus removing lots of heat from the satellite. Thus the paint will help keep the satellite as cool as possible."
+
+Can such paint exist? Why or why not?
+
+**5)** What properties should a coating have in order to raise the temperature of a spherical body similar to that of the satellite considered here above the temperature calculated in 1?
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1)** 289 K
+- **2)** 41 K
+- **3)** 316 K
+- **4)** The paint cannot exist, because it would violate the second law of thermodynamics.
+- **5)** Transparent for high frequencies, but reflective and hence insulating at low frequencies.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**1.** Over the whole surface of the sun, the emitted energy is $4\pi R_{Sun}^2\cdot\sigma T_{Sun}^4$. All this energy passes through a spherical shell at earth’s distance $R$, where the intensity now is $4\pi R_{Sun}^2\cdot\sigma T_{Sun}^4/4\pi R^2$.
+
+The satellite is a circular object absorbing
+
+$$
+\pi r_{sat}^2\cdot\frac{4\pi R_{Sun}^2\cdot\sigma T_{Sun}^4}{4\pi R^2}
+$$
+
+but a spherical object emitting $4\pi r_{sat}^2\cdot\sigma T_{sat}^4$.
+
+Equating this absorption and emission we get $T_{sat}=T_{Sun}\sqrt{\frac{R_{Sun}}{2R}}$ giving $T_{sat}=289\ K=16\ ^\circ C$.
+
+**2.** We have to calculate what part of the absorbed power comes from the part of the spectrum below 1200 K.
+
+$$
+\eta_{cutoff}=\frac{1200\ K}{6000\ K}=0.2\ll1
+$$
+
+This fraction of power is
+
+$$
+\delta=\int_0^{\eta_{cutoff}}\frac{\eta^3d\eta}{e^\eta-1}\bigg/\int_0^{\eta_\infty}\frac{\eta^3d\eta}{e^\eta-1}
+$$
+
+$$
+\approx\int_0^{\eta_{cutoff}}\eta^2d\eta\bigg/\frac{\pi^4}{15}=\frac{\eta_{cutoff}^3}{3}\bigg/\frac{\pi^4}{15}=4.1\cdot10^{-4}
+$$
+
+Now, the satellite is cold with respect to 1200 K so we ignore that a small part of the satellite blackbody emission will be retained. The energy balance is now
+
+$$
+4\pi r_{sat}^2\cdot\sigma T_{sat}^4=\delta\cdot\pi r_{sat}^2\cdot\frac{4\pi R_{Sun}^2\cdot\sigma T_{Sun}^4}{4\pi R^2}
+$$
+
+by which the new satellite temperature is the previous corrected by a factor $\delta^{1/4}$
+
+$$
+T_{sat}=(4.1\cdot10^{-4})^{1/4}\cdot289\ K=41\ K
+$$
+
+**3.** The whole absorbed energy is
+
+$$
+\delta\cdot\pi r_{sat}^2\cdot\frac{4\pi R_{Sun}^2\cdot\sigma T_{Sun}^4}{4\pi R^2}=0.5\ W
+$$
+
+which is small (ignorable) compared to $P_{internal}=1\ kW$. Thus the energy balance becomes
+
+$$
+P_{internal}=4\pi r_{sat}^2\cdot\sigma T_{sat}^4
+$$
+
+giving $T_{sat}=274\ K$ ($\eta=4.38$). Note: strictly speaking, this is not accurate, because for a blackbody radiation of 274 K, some 33 % of the emitted power lies above the 1200 K cutoff ! This means that the satellite has to be hotter, to emit all of the 1 kW in frequencies below the cutoff. The resulting integral equation is
+
+$$
+\left(\frac{\eta}{4.38}\right)^4=\int_0^\eta\frac{\eta^3d\eta}{e^\eta-1}\bigg/\frac{\pi^4}{15}
+$$
+
+which can be solved numerically by iteration. The true solution is $\eta=3.80$ corresponding to a temperature of 316 K.
+
+**4.** The paint cannot exist, because it would violate the second law of thermodynamics. The physics textbook explanation is the principle of detailed balance, which means that for equilibrium to exist, the emission and absorption in a given frequency interval must match exactly. This should not be confused with the fact that reflection and absorption can be quite different. If the manufacturer’s paint existed, one could create a temperature difference between two bodies in a closed system, and hence a perpetum mobile.
+
+**5.** The coating should be transparent for high frequencies (in the range of the peak or tail of the sun’s radiation), but reflective and hence insulating at low frequencies (the satellite temperature).
+
+
+</Spoiler>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Трудност: неоценена.
+
+Топлинни явления · Топлинно излъчване
+
+Предпоставки: Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [23rd_IPhO_1992_Theo_Question_3.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1992/23rd_IPhO_1992_Theo_Question_3.pdf)
+· официални решения: [3_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1991_2000/1992/3_sol.pdf)

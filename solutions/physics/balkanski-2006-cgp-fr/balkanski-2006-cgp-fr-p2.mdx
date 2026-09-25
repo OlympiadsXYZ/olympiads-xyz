@@ -1,0 +1,183 @@
+---
+id: balkanski-2006-cgp-fr-p2
+source: 'Балкански 2006, Теория'
+title: 'Задача 2. La circulation sanguine'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2006/balkanski-2006-cgp-fr.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-25T09:53:11.541Z'
+verifier: 'single-pass'
+---
+
+*Concours Général de Physiques “Minko Balkanski” · 20 май 2006 г.*
+
+<Warning title="Бележка към темата">
+Les solutions officielles sont en anglais. La dernière question conceptuelle sur la relation pression–flux n’a pas de réponse explicite dans le corrigé fourni.
+</Warning>
+
+<details>
+<summary>Указания</summary>
+
+Les deux problèmes sont entièrement indépendants et peuvent être traités dans n’importe quel ordre.
+
+La clarté, la qualité et la précision de la rédaction, qui doit être obligatoirement en **français**, feront une part **très importante** de la note finale.
+
+La durée de la composition est de **4 heures**.
+
+</details>
+
+## Условие
+
+Dans cette partie du problème, on s'intéresse à la circulation sanguine dans les artères. On modélise une artère par un tuyau de rayon $r$ et de longueur $l$. Ce conduit est traversé par un flux $Q$. Lorsque le flux traverse le conduit, le fluide subit une force de frottement visqueux de la part de la paroi. Cette force est responsable d'une chute de pression $\Delta P$ entre les deux extrémités de l'artère.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '96.4%', '--fig-max': '617px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2006-cgp-fr/p2-fig1-astra-r5-20260925.png" alt="Réseau circulatoire branché, générations et paramètres du conduit." width="1929" height="1057" loading="lazy" decoding="async" />
+<figcaption>Figure 4. A. Représentation schématique du réseau circulatoire des mammifères, composé de conduits branchés, B. Représentation topographique de ce réseau, k spécifie l'ordre de branchement, commençant par l'aorte (k=0) et terminant par les capillaires (k=N), C. Paramètres d'un conduit typique d'ordre k</figcaption>
+</figure>
+
+
+On peut montrer qu'il existe une équivalence entre ce circuit hydrodynamique et un circuit électrique à condition d'associer un courant $I$ au débit $Q$, une tension $U$ à la chute de pression $\Delta P$ et une résistance $R$ à l'effet de la force visqueuse.
+
+**1.** Écrire la loi d'Ohm pour une artère.
+
+**2.** Déterminer la puissance fournie par le cœur. On prendra $Q=5\ l/min$, chute de pression dans la circulation systémique $\Delta P=100\ mmHg$.
+
+On considère un réseau d'artères, chaque artère de l'ordre $k$ se divise en $n_k$ artères d'ordre $k+1$, et de diamètre plus petit celui de l'artère dont elles sont issues. L'aorte désignera l'artère d’ordre $0$, les ramifications les plus petites, c'est-à-dire la dernière génération d'artères seront désignées de capillaires. Une artère typique d'un niveau de division $k$ a pour longueur $l_k$, pour rayon $r_k$ et pour chute de pression $\Delta p_k$ (Figure 4). On définit le débit dans une artère comme le produit entre l'aire d'une section de l'artère et la vitesse moyenne sur la section, c'est-à-dire $D_k=\pi r_k^2\bar u_k$.
+
+**3.** Déterminer le nombre total $N_k$ d’artères dans la génération $k$ ?
+
+**4.** Ecrire schématiquement la loi de conservation du flux ?
+
+On introduit les facteurs d'échelle $\beta_k=r_{k+1}/r_k$ et $\gamma_k=l_{k+1}/l_k$. On va considérer dans la suite que ces facteurs d’échelle ne dépendent pas de $k$, c'est-à-dire $\beta_k=\beta$, $\gamma_k=\gamma$ et $n_k=n$.
+
+**5.** Comment $\beta$ varie en fonction de $n$ ?
+
+Par des considérations qu'on ne détaillera pas ici, on peut déterminer la variation de $\gamma$ en fonction de n, $\gamma=n^{-1/3}$.
+
+**On essayera par la suite de déterminer par une autre méthode la variation de $\beta$, et $\gamma$ en fonction de $n$.**
+
+**6.** Ecrire le volume total du réseau (le volume de sang) $V_b$ en fonction de $n,\beta,\gamma,N$ et $V_0$. $N$ est le nombre de générations total et $V_0$ le volume de l’aorte. Simplifier cette relation dans le cas $n\gamma\beta^2<1$ et $N\gg1$, c'est cette relation qui sera retenue pour la suite.
+
+On considère que l'écoulement dans le système est laminaire, pour un tel écoulement la résistance hydrodynamique d'une artère est donnée par la loi de Poiseuille $R_k^h=8\mu l_k/\pi r_k^4$, où $\mu$ est la viscosité dynamique du fluide.
+
+**7.** Déterminer la résistance du réseau entier en fonction de $n,\beta,\gamma,N$ et la résistance totale de l’aorte $R_0^h$. Simplifier cette relation dans le cas où $\gamma/n\beta^4<1$, et $N\gg1$.
+
+**8.** Par analogie avec la loi d'Ohm déterminer la dépense cardiaque $W_c$, c'est-à-dire la puissance fournie par le cœur pour vaincre les forces visqueuses.
+
+Si on examine le système circulatoire, gardant à l'esprit l'idée d'économie, on se convainc facilement qu'il y a deux facteurs principaux antagonistes.
+
+Si l'artère est trop petite, le travail nécessaire pour faire couler le sang sera trop important (comme décrit par la loi de Poiseuille), en revanche si le volume du vaisseau est trop grand, le volume du sang qui lui est équivalent sera un fardeau pour le corps tout entier. Donc pour déterminer la situation la plus avantageuse pour l'être on se propose de minimiser la fonction $F(n)=W_c+b.V_b$, avec $b$ une constante dimensionnelle.
+
+**9.** Déterminer la variation de $\beta$ et $\gamma$ en fonction de $n$. Comparer avec les résultants obtenus précédemment.
+
+**On s'intéresse maintenant à la distribution de la pression le long de l'arbre artériel.**
+
+On a vu précédemment que lorsque l'on considère toutes les artères d'une génération donnée, on peut se ramener à considérer juste une artère équivalente. Par conséquent, l'réseau artériel entier sera équivalent à un circuit d'artères en série. Dans la suite on va considérer que les artères ont toutes la même épaisseur $d$ et le même module de Young $E$.
+
+*Rappel : Le module d'Young est définit comme une pression et il reflète les propriétés élastiques du matériau.*
+
+**10.** Déterminer une relation entre la pression moyenne dans une artère $P$, et $E,d$ et le rayon $r$ de l'artère.
+
+On considère que la pression qui règne à l'extérieur du vaisseau est nulle.
+
+**11.** En utilisant la loi de Poiseuille, déterminer la loi qui détermine la décroissance de la pression moyenne dans l'arbre artériel en fonction de la longueur.
+
+**12.** Il se trouve que cette loi donne une assez bonne approximation pour la pression en fonction de la longueur, mais elle n'est pas du tout admise pour donner une relation entre la pression et le flux. Avez-vous une idée pourquoi ?
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1.** $\Delta P=Q.R^h$
+- **2.** 1.1 W
+- **3.** $N_k=n_1.n_2...n_k$
+- **4.** $Q_k=\pi r_k^2\bar u_k=n_{k+1}Q_{k+1}=n_{k+1}.\pi r_{k+1}^2\bar u_{k+1}$
+- **5.** $\beta=n^{-1/2}$
+- **6.** $V_b=\frac{V_0}{1-\beta^2\gamma n}$
+- **7.** $R_t=\frac{R_0^h}{1-\gamma/(\beta^4n)}$
+- **8.** $W_c=\frac{Q^2R_0^h}{1-\gamma/(\beta^4n)}$
+- **9.** $\beta=n^{-1/3},\quad\gamma=n^{-1/3}$
+- **10.** $Ed=rP$
+- **11.** $P^{-3}=P_0^{-3}+\frac{24\mu lQ}{\pi(Ed)^4}$
+
+</Spoiler>
+
+## Решение
+
+<Warning title="Непълно решение">
+La réponse officielle numérotée12 donne l’intégration de la loi de pression, mais n’explique pas la question conceptuelle finale sur la relation pression–flux.
+</Warning>
+
+<Spoiler title="Покажи официалното решение">
+
+**1.** The Ohm’s law is : $U=I.R\Leftrightarrow\Delta P=Q.R^h$
+
+**2.** The power of the hart is $W_c=\Delta P.Q$. Numerical application $W_c=1.1W$
+
+**3.** $N_k=n_1.n_2...n_k$
+
+**4.** $Q_k=\pi r_k^2\bar u_k=n_{k+1}Q_{k+1}=n_{k+1}.\pi r_{k+1}^2\bar u_{k+1}$
+
+**5.** $n_k=n$, $\bar u_k=u$ so $\pi r_k^2=n\pi r_{k+1}^2\Rightarrow\beta=n^{-1/2}$
+
+**6.**
+
+$$
+V_b=\sum_{k=0}^{k=N}\pi r_k^2l_kN_k=\pi r_0^2l_0N_0\sum_{k=0}^{k=N}(\beta^2\gamma n)^k=V_0\frac{1-(\beta^2\gamma n)^{N+1}}{1-\beta^2\gamma n}
+$$
+
+Finally for $N\gg1$ and $\beta^2\gamma n<1$ we find $V_b=\frac{V_0}{1-\beta^2\gamma n}$
+
+**7.**
+
+$$
+R_t=\sum_{k=0}^{k=N}\frac{R_k^h}{N_k}=\sum_{k=0}^{k=N}\frac{8\mu l_k}{\pi r_k^4N_k}=R_0^h\sum_{k=0}^{k=N}\left(\frac{\gamma}{\beta^4n}\right)^k=R_0^h\frac{1-\left(\frac{\gamma}{\beta^4n}\right)^{N+1}}{1-\left(\frac{\gamma}{\beta^4n}\right)}
+$$
+
+After the approximations we find like in 6 $R_t=\frac{R_0^h}{1-\left(\frac{\gamma}{\beta^4n}\right)}$
+
+**8.** $W_c=\frac{Q^2R_0^h}{1-\frac{\gamma}{\beta^4n}}$
+
+**9.** We minimize $F(n)=W_c+b.V_b$ making $F'(n)=0$ leads to the following equations:
+
+**a.** $\beta^6n^2=1$
+
+**b.** $\frac{\gamma}{\beta^4n}=1$
+
+**c.** $n\beta^2\gamma=1$
+
+We can easily check that $\beta=n^{-1/3}$ and $\gamma=n^{-1/3}$ are the unique solutions of those equations
+
+**10.** We resolve on the following system (see figure)
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '30.6%', '--fig-max': '196px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2006-cgp-fr/p2-sol-fig1-astra-r5-20260925.png" alt="Arterial wall element with thickness d, pressure P, forces Ed and angle delta theta." width="613" height="246" loading="lazy" decoding="async" />
+</figure>
+
+
+$$
+dE\delta\theta=Pr\delta\theta\Rightarrow Ed=rP
+$$
+
+**11.** Following Ohm’s law we find $\Delta P=\frac{8\mu l}{\pi(Ed)^4}P^4Q$
+
+**12.** Writing this equation in differential form we find: $dP=\frac{8\mu}{\pi(Ed)^4}P^4Q.dl$ After integration we find $P^{-3}=P_0^{-3}+\frac{24\mu lQ}{\pi(Ed)^4}$
+
+
+</Spoiler>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Трудност: неоценена.
+
+Флуиди · Вискозитет и съпротивление
+
+Предпоставки: Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [CGP_2006_fr.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2006_fr.pdf)
+· официални решения: [CGP_2006_cr.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2006_cr.pdf)
