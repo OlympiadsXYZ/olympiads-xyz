@@ -5,15 +5,11 @@ title: 'Задача 4. α-4. Звезди на Марс'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IAO/2012/iao-2012-theory-bgtheo.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T08:40:22.757Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-25T14:51:11.566Z'
+verifier: 'single-pass'
 ---
 
-*XVII Международная астрономическая олимпиада — XVII International Astronomy Olympiad, Корея, Кванджу, 16 – 24. X. 2012, Gwangju, Korea. Round: Theo. Group: α, β. Задачи за теоретичния тур · 16 октомври 2012 г.*
-
-<Warning title="Бележка към темата">
-Условията са ръкописен превод; решения в архива няма.
-</Warning>
+*XVII Международная астрономическая олимпиада — XVII International Astronomy Olympiad, Корея, Кванджу, 16 – 24. X. 2012, Gwangju, Korea. Round: Theo. Group: α, β. Задачи за теоретичния тур · 16 октомври 2012 г. · 8 т.*
 
 <details>
 <summary>Общи забележки</summary>
@@ -26,16 +22,225 @@ verifier: 'mechanical'
 
 </details>
 
+<details>
+<summary>Planetary data</summary>
+
+**Элементы орбит. Физические характеристики некоторых планет, Луны, Солнца и Эриды**
+
+**Parameters of orbits. Physical characteristics of some planets, Moon, Sun and Eris**
+
+| Небесное тело, планета / Body, planet | Среднее расстояние от центрального тела / Average distance to central body, in astr. units | in $10^6$ km | Сидерический (или аналогичный) период обращения / Sidereal period (or analogous), in tropical years | in days | Наклон орбиты / Orbital inclination, $i$ | Эксцентриситет / Eccentricity, $e$ | Экваториальн. диаметр / Equat. diameter, km | Масса / Mass, $10^{24}$ kg | Средняя плотность / Av. density, g/cm³ | Ускор. своб. пад. у пов. / Grav. accelr. at surf., m/s² | Наклон оси / Axial tilt | Макс. блеск, вид. с Земли / Max. magn. From Earth **) | Альбедо / Albedo |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Солнце / Sun | $1,6\cdot10^9$ | $2,5\cdot10^{11}$ | $2,2\cdot10^8$ | $8\cdot10^{10}$ | | | 1392000 | 1989000 | 1,409 | | | $-26,74^{\mathrm m}$ | |
+| Меркурий / Mercury | 0,387 | 57,9 | 0,241 | 87,969 | $7,00^\circ$ | 0,206 | 4 879 | 0,3302 | 5,43 | 3,70 | $0,01^\circ$ | | 0,06 |
+| Венера / Venus | 0,723 | 108,2 | 0,615 | 224,7007 | 3,40 | 0,007 | 12 104 | 4,8690 | 5,24 | 8,87 | 177,36 | | 0,78 |
+| Земля / Earth | 1,000 | 149,6 | 1,000 | 365,2564 | 0,00 | 0,017 | 12 756 | 5,9742 | 5,515 | 9,81 | 23,44 | | 0,36 |
+| Луна / Moon | 0,00257 | 0,38440 | 0,0748 | 27,3217 | 5,15 | 0,055 | 3 475 | 0,0735 | 3,34 | 1,62 | 6,7 | $-12,7^{\mathrm m}$ | 0,07 |
+| Марс / Mars | 1,524 | 227,9 | 1,880 | 686,98 | 1,85 | 0,093 | 6 794 | 0,6419 | 3,94 | 3,71 | 25,19 | $-2,0^{\mathrm m}$ | 0,15 |
+| Юпитер / Jupiter | 5,204 | 778,6 | 11,862 | 4 332,59 | 1,30 | 0,048 | 142 984 | 1899,8 | 1,33 | 24,86 | 3,13 | $-2,7^{\mathrm m}$ | 0,66 |
+| Сатурн / Saturn | 9,584 | 1433,7 | 29,458 | 10 759,20 | 2,48 | 0,054 | 120 536 | 568,50 | 0,70 | 10,41 | 26,73 | $0,7^{\mathrm m}$ | 0,68 |
+| Эрида / Eris | 68,05 | | | 205 029 | 43,82 | 0,435 | 2 326 | 0,0167 | 2,52 | 0,7 | | | 0,96 |
+
+**) Для Луны – в среднем противостоянии.
+
+**) For Moon – in mean opposition.
+
+</details>
+
+<details>
+<summary>Константи</summary>
+
+**Некоторые константы и формулы / Some constants and formulae**
+
+| | | |
+|---|---|---|
+| Скорость света в вакууме, c (м/с) | 299 792 458 | Speed of light in vacuum, c (m/s) |
+| Гравитационная постоянная, G (Н·м²/кг²) | $6.674\cdot10^{-11}$ | Constant of gravitation, G (N·m²/kg²) |
+| Солнечная постоянная, A (Вт/м²) | 1367 | Solar constant, A (W/m²) |
+| Параметр Хаббла, $H_0$ (км/с/МПк), среднее значение | 71 | mean value, Hubble parameter, $H_0$ (km/s/Mpc) |
+| диапазон значений | 50-100 | diapason of values |
+| Постоянная Планка, h (Дж·с) | $6.626\cdot10^{-34}$ | Plank constant, h (J·s) |
+| Заряд электрона, e (Кл) | $1.602\cdot10^{-19}$ | Charge of electron, e (C) |
+| Масса электрона, $m_e$ (кг) | $9.109\cdot10^{-31}$ | Mass of electron, $m_e$ (kg) |
+| Соотношение масс протона и электрона | 1836.15 | Proton-to-electron ratio |
+| Постоянная Фарадея, F (Кл/моль) | 96 485 | Faraday constant, F (C/mol) |
+| Магнитная постоянная, $\mu_0$ (Гн/м) | $1.257\cdot10^{-6}$ | Magnetic constant, $\mu_0$ (H/m) |
+| Универсальная газовая постоянная, R (Дж/моль/К) | 8.314 | Universal gas constant, R (J/mol/K) |
+| Постоянная Больцмана, k (Дж/К) | $1.381\cdot10^{-23}$ | Boltzmann constant, k (J/K) |
+| Постоянная Стефана-Больцмана, $\sigma$ (Вт/м²/К⁴) | $5.670\cdot10^{-8}$ | Stefan-Boltzmann constant, $\sigma$ (W/m²/K⁴) |
+| Константа смещения Вина, b (м·К) | 0.002897 | Wien’s displacement constant, b (m·K) |
+| Лабораторная длина волны Hα (Å) | 6562.81 | Laboratory wavelength of Hα (Å) |
+| Длина тропического года, T (сут) | 365.242199 | Tropical year length, T (days) |
+| Стандартная атмосфера (Па) | 101 325 | Standard atmosphere (Pa) |
+| Ослабление видимого света земной атмосферой в зените (минимально) | $19\%,\ 0.23^{\mathrm m}$ | Visible light extinction by the terrestrial atmosphere in zenith (minimum) |
+| Показатель преломления воды при 20°C, n | 1.334 | Refractive index of water for 20°C, n |
+| Момент инерции шара | $I=\frac25 MR^2$ | Moment of inertia of a solid ball |
+| Площадь сферы | $S=4\pi R^2$ | Area of sphere |
+| π | 3.14159265 | π |
+| e | 2.71828183 | e |
+| Золотое сечение, φ | 1.61803399 | Golden ratio, φ |
+
+</details>
+
+<details>
+<summary>Data of some stars</summary>
+
+**Данные о некоторых звёздах / Data of some stars**
+
+| | | | RA | DEC | $p$ | $\mathbf m$ | S C | масса / mass |
+|---|---|---|---|---|---|---|---|---|
+| Солнце | Sun | $\odot$ | $0^{\mathrm h}-24^{\mathrm h}$ | $-23^\circ26'\ +23^\circ26'$ | $8''.794$ | $-26^{\mathrm m}.74$ | G2 | $1\ M_\odot$ |
+| Альдебаран | Aldebaran | α Tau | $04^{\mathrm h}35^{\mathrm m}55^{\mathrm s}$ | $16^\circ30'33''$ | $0''.048$ | $0^{\mathrm m}.85^{\mathrm v}$ | K5 | $2.5\ M_\odot$ |
+| Альтаир | Altair | α Aql | $19^{\mathrm h}50^{\mathrm m}47^{\mathrm s}$ | $08^\circ52'06''$ | $0''.195$ | $0^{\mathrm m}.77$ | A7 | $1.7\ M_\odot$ |
+| Антарес | Antares | α Sco | $16^{\mathrm h}29^{\mathrm m}24^{\mathrm s}$ | $-26^\circ25'55''$ | $0''.006$ | $0^{\mathrm m}.96$ | M1+B4 | $22.4\ M_\odot$ |
+| Арктур | Arcturus | α Boo | $14^{\mathrm h}15^{\mathrm m}40^{\mathrm s}$ | $19^\circ10'57''$ | $0''.089$ | $-0^{\mathrm m}.04^{\mathrm v}$ | K1 | $1.1\ M_\odot$ |
+| Ахернар | Achernar | α Eri | $01^{\mathrm h}37^{\mathrm m}43^{\mathrm s}$ | $-57^\circ14'12''$ | $0''.026$ | $0^{\mathrm m}.46$ | B3 | |
+| зв.Барнарда | Barnard’s star | Oph | $17^{\mathrm h}57^{\mathrm m}48^{\mathrm s}$ | $04^\circ41'36''$ | $0''.545$ | $9^{\mathrm m}.54$ | M4 | |
+| Бетельгейзе | Betelgeuse | α Ori | $05^{\mathrm h}55^{\mathrm m}10^{\mathrm s}$ | $07^\circ24'25''$ | $0''.005$ | $0^{\mathrm m}.5^{\mathrm v}$ | M1 | |
+| Вега | Vega | α Lyr | $18^{\mathrm h}36^{\mathrm m}56^{\mathrm s}$ | $38^\circ47'01''$ | $0''.129$ | $0^{\mathrm m}.03$ | A0 | |
+| Денеб | Deneb | α Cyg | $20^{\mathrm h}41^{\mathrm m}26^{\mathrm s}$ | $45^\circ16'49''$ | $0''.002$ | $1^{\mathrm m}.25$ | A2 | |
+| Канопус | Canopus | α Car | $06^{\mathrm h}23^{\mathrm m}57^{\mathrm s}$ | $-52^\circ41'45''$ | $0''.010$ | $-0^{\mathrm m}.72$ | F0 | |
+| Капелла | Capella | α Aur | $05^{\mathrm h}16^{\mathrm m}41^{\mathrm s}$ | $45^\circ59'53''$ | $0''.073$ | $0^{\mathrm m}.08$ | G5+G0 | |
+| Полярная | Polaris | α UMi | $02^{\mathrm h}31^{\mathrm m}49^{\mathrm s}$ | $89^\circ15'51''$ | $0''.0076$ | $1^{\mathrm m}.97^{\mathrm v}$ | F7 | |
+| Процион | Procyon | α CMi | $07^{\mathrm h}39^{\mathrm m}18^{\mathrm s}$ | $05^\circ13'30''$ | $0''.288$ | $0^{\mathrm m}.38$ | F5 | |
+| Ригель | Rigel | β Ori | $05^{\mathrm h}14^{\mathrm m}32^{\mathrm s}$ | $-08^\circ12'06''$ | $0''.013$ | $0^{\mathrm m}.12$ | B8 | |
+| Сириус | Sirius | α CMa | $06^{\mathrm h}45^{\mathrm m}09^{\mathrm s}$ | $-16^\circ42'58''$ | $0''.375$ | $-1^{\mathrm m}.46$ | A1 | |
+| Спика | Spica | α Vir | $13^{\mathrm h}25^{\mathrm m}12^{\mathrm s}$ | $-11^\circ09'41''$ | $0''.023$ | $0^{\mathrm m}.98$ | B1 | |
+| Альфа Центавра | Alpha Centauri | α Cen | $14^{\mathrm h}39^{\mathrm m}36^{\mathrm s}$ | $-60^\circ50'07''$ | $0''.751$ | $-0^{\mathrm m}.01$ ; $1^{\mathrm m}.33$ | G2 ; K1 | $2.0\ M_\odot$ |
+| Бета Центавра | Beta Centauri | β Cen | $14^{\mathrm h}03^{\mathrm m}49^{\mathrm s}$ | $-60^\circ22'23''$ | $0''.009$ | $0^{\mathrm m}.61$ | B1 | $21\ M_\odot$ |
+| Эпсилон Эридана | Epsilon Eridani | ε Eri | $03^{\mathrm h}32^{\mathrm m}56^{\mathrm s}$ | $-09^\circ27'30''$ | $0''.311$ | $3^{\mathrm m}.74$ | K2 | $0.82\ M_\odot$ |
+
+</details>
+
+<details>
+<summary>Note for jury and team leaders</summary>
+
+The proposed sketches are not full; the team leaders have to give more detailed explanations to students. But the correct solutions in the students’ papers (enough for 8 pts) may be shorter.
+
+</details>
+
+<details>
+<summary>Basic criteria for examiners — Note</summary>
+
+The given sketches are not full; the team leaders have to give more detailed explanations to students. But the correct solutions in the students’ papers (enough for 8 pts) may be shorter.
+
+</details>
+
+<details>
+<summary>Printed date</summary>
+
+The transit key prints “December 31, 2017” in an intermediate line, while its calculations and final answer concern 2117.
+
+</details>
+
+<details>
+<summary>Pseudovenus notation</summary>
+
+The orbital-radius formula retains the source’s linear slash and multiplication notation; the Moon-comparison formula likewise retains the printed placement of T_M and omega_P. The key explicitly permits a bonus for noting that the resulting orbit is outside Earth’s Hill sphere.
+
+</details>
+
+<details>
+<summary>Mars discrepancy and absent answer drawing</summary>
+
+The Mars key calculates about 2130 km but prints ~2300 km in its final answer. The requested Bear-and-Penguin drawing earns one point, but no completed drawing is supplied in the official key.
+
+</details>
+
+<details>
+<summary>Galaxy arithmetic and rubric</summary>
+
+The galaxy key prints 3.74+7.5=10.24 and M=−28.2, followed by a −0.2 correction and approximately 20 trillion stars; these printed inconsistent values are retained. Its listed criteria total 9 points (3+3+1+2), unlike the general note about 8 points, so the problem total remains unspecified.
+
+</details>
+
+<details>
+<summary>Reference editions</summary>
+
+The native planetary table follows the English PDF reference page (Mercury inclination 7.00°). The separately archived data_1.png instead prints 7.01°. Both source files were read; the discrepancy is retained here.
+
+</details>
+
+<details>
+<summary>Source ownership</summary>
+
+The Bulgarian manuscript’s nine IDs and shared αβ / distinct α and β tasks are retained. Full English sketches, both criterion sheets, all four standalone reference images and both English question editions were read. No Bulgarian official key is present in the full year inventory. The supplied sketches explicitly are not complete pedagogical solutions; no missing derivations are invented.
+
+</details>
+
 ## Условие
 
 Както знаете, миналата година Белият мечок (същият, който се среща в условията на задачите от много Международни астрономически олимпиади) беше тръгнал да прави астрономически наблюдения на Марс. Тази година към Марс е тръгнал и неговият приятел Пингвинът. В един и същи момент от време Мечокът и Пингвинът наблюдават звезди в зенита и виждат съответно Канопус и Сириус. Приблизително оценете какво е разстоянието (измерено на марсианската повърхност) между двете животни. А на каква височина над хоризонта Мечокът вижда Сириус? Решението придружете с рисунка на Мечока и Пингвина на Марс, на рисунката трябва да се посочат необходимите линейни или ъглови размери. Необходимите сведения за Белия мечок и за Пингвина си спомнете сами.
 
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- The key calculates 2130 km, but its final line prints ~2300 km; altitude 54°.
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-В архива липсва файл с решения
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+Официални скици на решенията и критерии за оценяване, на оригиналния английски език.
+
+<ProblemSection id="solution-official-sketch">
+
+### Official solution sketch
+
+As we may see from the “Data of some stars”, Canopus and Sirius have almost the same RA (Earth based coordinates) while the difference in DEC is significant. It means that the distance between these stars in the Earth sky is approximately equal to the difference in DEC,
+$$
+\beta=\delta_1-\delta_2=(-16°42^{\prime}58^{\prime\prime})-(-52°41^{\prime}45^{\prime\prime})\approx35°59^{\prime}\approx36°.
+$$
+After moving the observer to Mars, this angle will not change, although the coordinates in the Martian sky will be different. It means, the distance measured, by along Martian surface, between the points where Canopus and Sirius are in zenith is:
+$$
+\beta(\mathrm{rad})\times R=\beta(°)\times\pi R/180\approx2130\text{ km}.
+$$
+where $R=3397$ km is the radius of Mars.
+
+If the Bear sees Canopus in zenith, the zenith angle of Sirius will be $\beta\approx36°$, and its height above horizon
+$$
+h=90°-\beta\approx90°-36°=54°.
+$$
+Answers: ~2300 km, $54°$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-grading-criteria">
+
+### Basic criteria for examiners
+
+Angular distance at Earth sky — 2 pt.
+
+Understanding angular distance at Earth sky = angular distance at Martian sky — 1 pt.
+
+Understanding angular distance at = angular distance at planet’s surface — 1 pt.
+
+Calculation of the distance between Bear and Penguin — 2 pt.
+
+Calculation of the height of Sirius if Canopus in zenith — 1 pt.
+
+Necessary picture with Bear and Penguin (artistic style) — 1 pt.
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [bgtheo.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/bgtheo.pdf)
+· официални решения: [theosol1.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theosol1.png)
+· допълнителни данни: [theosol2.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theosol2.png)
+· допълнителни данни: [theosol3.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theosol3.png)
+· допълнителни данни: [theosol4.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theosol4.png)
+· допълнителни данни: [theo_cr_1.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theo_cr_1.png)
+· допълнителни данни: [theo_cr_2.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theo_cr_2.png)
+· допълнителни данни: [alphatheo.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/alphatheo.pdf)
+· допълнителни данни: [betatheo.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/betatheo.pdf)
+· допълнителни данни: [data_1.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%94%D0%B0%D0%BD%D0%BD%D0%B8/data_1.png)
+· допълнителни данни: [data_2.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%94%D0%B0%D0%BD%D0%BD%D0%B8/data_2.png)
+· допълнителни данни: [data_3.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%94%D0%B0%D0%BD%D0%BD%D0%B8/data_3.png)
+· допълнителни данни: [data_4.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2012/%D0%94%D0%B0%D0%BD%D0%BD%D0%B8/data_4.png)
