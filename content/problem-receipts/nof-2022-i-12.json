@@ -1,33 +1,76 @@
 {
   "paperId": "nof-2022-i-12",
   "verdict": "pass",
-  "contentHash": "aaadb5143805b155d2e5da5f278c764fc3276a99ca0c3b505de5717e9168649e",
+  "contentHash": "887b7736e962f7b41e3001eeaae62a4c62869429da61670103e254bb4a4d2213",
+  "sourceConversions": {},
+  "sourceReadScopes": {},
   "sourceHashes": {
     "problems": "e17dc2db271fe4e73eb319d03405e1d9969d1afead1cebef3643dc4dfacdb44d"
   },
   "reviewer": {
-    "provider": "anthropic",
-    "model": "claude-opus-5",
-    "requestId": "req_011Cf8XKWNyiGb9L6hZJ1D4L"
+    "provider": "mechanical",
+    "model": "single-pass-gates",
+    "requestId": "9e1c7fbbe1af1d55c878acf1b62ba746ceb120a753a0c3e6abaa12ba88329c5f"
   },
-  "checkedAt": "2026-09-17T06:17:28.313Z",
-  "promptVersion": "v1",
+  "checkedAt": "2026-09-25T10:47:22.804Z",
+  "promptVersion": "v2",
+  "checkerMode": "single-pass",
   "reader": {
-    "provider": "anthropic",
-    "model": "claude-sonnet-5",
-    "promptVersion": "v1",
-    "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
-    "requestId": "req_011Cf8X2wLvt9esQfWiJF5GP",
-    "at": "2026-09-17"
-  },
-  "independence": {
-    "independent": true,
-    "differentProvider": false,
-    "allowSameModel": true
+    "provider": "agent",
+    "model": "gpt-6-astra",
+    "requestId": "/root/sidebar_astra",
+    "at": "2026-09-25",
+    "promptVersion": "v2"
   },
   "adjudicator": null,
-  "checkerVerdict": "pass",
-  "summary": "Text, quantities and coverage match the printed pages; two figure crops swallow adjacent body text (the „Част 2“ heading and a line of Part 3 prose).",
+  "independence": {
+    "independent": false,
+    "differentProvider": false,
+    "allowSameModel": true,
+    "separateChecker": false
+  },
+  "checkerVerdict": null,
+  "summary": "Single-pass source transcription with automated validation; no separate model checker.",
+  "readerEvidence": {
+    "candidateSha256": "9e1c7fbbe1af1d55c878acf1b62ba746ceb120a753a0c3e6abaa12ba88329c5f",
+    "reader": {
+      "provider": "agent",
+      "model": "gpt-6-astra",
+      "promptVersion": "v2",
+      "requestId": "/root/sidebar_astra",
+      "at": "2026-09-25T10:45:51.875914+00:00"
+    },
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      }
+    ],
+    "problemsRead": 3,
+    "figuresInspected": 5,
+    "summary": "Read both original scan pages directly. Preserve 3 printed problems with native Parts 1/2 in problem1 and Parts1/2/3 in problem3. Restore all five drawings, including previously omitted pulley and collision diagrams; place the source note after part1 question B. Full archive-catalog search finds no matching official municipal solutions; all three explicit incomplete-solution notices retained. Handwritten year/grade reads 2022 XII, consistent with catalog. Printed numerical values, superscript zero in 27^0 C, capitalization and wording retained. No checker used.",
+    "sourceGaps": [
+      "No matching official municipal solution document was found in the full archive-catalog; all three problems retain explicit incomplete-solution notices."
+    ],
+    "startedAt": "2026-09-25T10:41:59.246Z",
+    "startedAtPrecision": "Preparation preceded direct source reading; first-image timestamp was not separately recorded.",
+    "completedAt": "2026-09-25T10:47:21.327760+00:00",
+    "figureInspection": "All 13 final crops directly viewed: 5 grade12 municipal, 4 grade8 municipal, 4 grade9 regional. Extended grade8 graph and force-diagram right boundaries to retain complete axis labels/ground line; directly viewed final replacements. No snapping. All figure references resolve and each appears once in generated MDX.",
+    "normalizations": [],
+    "overlayFollowup": {
+      "removeProblemEntries": [
+        "nof-2022-i-12-p1",
+        "nof-2022-i-12-p2",
+        "nof-2022-i-12-p3"
+      ],
+      "reason": "Explicit placement in native sections supersedes old anchors."
+    },
+    "solutionArchiveSearch": "Recursively inspected all archive-catalog JSON strings for 2022 National Physics Olympiad sources, including additions; municipal directory contains only grade8/9/10/11/12 problem PDFs; regional grade9 has matching original problem and solution PDFs."
+  },
   "coverage": {
     "pagesRead": [
       {
@@ -39,22 +82,24 @@
         "page": 2
       }
     ],
-    "problemsChecked": 3,
-    "figuresChecked": 5
+    "problemsRead": 3,
+    "figuresInspected": 5
+  },
+  "automatedChecks": {
+    "schemaAndMath": true,
+    "figureEvidence": true,
+    "warnings": [
+      {
+        "path": "/problems/0/statement",
+        "message": "empty statement (the printed problem is only its parts)"
+      }
+    ]
   },
   "defects": [],
-  "informational": 2,
-  "ignoredResolvedFlags": 0,
   "blockers": [],
-  "candidateSha256": "66686aeb5957e2504bbb0eb9c4a10b411a50bc0041cd15aeb63f1d56771b4d26",
-  "checkerCandidateSha256": "66686aeb5957e2504bbb0eb9c4a10b411a50bc0041cd15aeb63f1d56771b4d26",
-  "checkerCrops": [
-    "p1-fig1",
-    "p2-fig1",
-    "p3-fig1",
-    "p3-fig2",
-    "p3-fig3"
-  ],
-  "promotedAt": "2026-09-17T06:17:28.755Z",
+  "informational": 1,
+  "candidateSha256": "9e1c7fbbe1af1d55c878acf1b62ba746ceb120a753a0c3e6abaa12ba88329c5f",
+  "checkerCandidateSha256": null,
+  "promotedAt": "2026-09-25T10:57:50.431Z",
   "promotedFile": "content\\problems\\physics\\NOF\\2022\\nof-2022-i-12.json"
 }

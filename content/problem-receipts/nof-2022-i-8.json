@@ -1,33 +1,88 @@
 {
   "paperId": "nof-2022-i-8",
   "verdict": "pass",
-  "contentHash": "a7e776b82135be7013744702ac0185c3a7913033a528cc616189ce216d6b5fe8",
+  "contentHash": "68666efa1f8b3b2f60371f6496a7ee34c97383a909e7badbe3c7dce7417fedd5",
+  "sourceConversions": {},
+  "sourceReadScopes": {},
   "sourceHashes": {
     "problems": "3481e11510243175c5d99f2a8b2bef10573a430ec959c217b5be665c619b3217"
   },
   "reviewer": {
     "provider": "mechanical",
-    "model": "textlayer+regions",
-    "requestId": "mech-r3"
+    "model": "single-pass-gates",
+    "requestId": "a52f605b2bbc5adaa54eaaa962d2b9162e04e1a2851a484b113e259758cb771a"
   },
-  "checkedAt": "2026-09-23T00:50:05.666Z",
-  "promptVersion": "mech-v1",
+  "checkedAt": "2026-09-25T10:47:23.002Z",
+  "promptVersion": "v2",
+  "checkerMode": "single-pass",
   "reader": {
     "provider": "agent",
-    "model": "opus-5-5",
-    "promptVersion": "v1",
-    "promptSha256": null,
-    "requestId": null,
-    "at": "2026-09-23"
-  },
-  "independence": {
-    "independent": true,
-    "differentProvider": true,
-    "allowSameModel": false
+    "model": "gpt-6-astra",
+    "requestId": "/root/sidebar_astra",
+    "at": "2026-09-25",
+    "promptVersion": "v2"
   },
   "adjudicator": null,
-  "checkerVerdict": "pass",
-  "summary": "Mechanical check only (no second model): mechanical pre-check (text layer, printed regions); no model was asked",
+  "independence": {
+    "independent": false,
+    "differentProvider": false,
+    "allowSameModel": true,
+    "separateChecker": false
+  },
+  "checkerVerdict": null,
+  "summary": "Single-pass source transcription with automated validation; no separate model checker.",
+  "readerEvidence": {
+    "candidateSha256": "a52f605b2bbc5adaa54eaaa962d2b9162e04e1a2851a484b113e259758cb771a",
+    "reader": {
+      "provider": "agent",
+      "model": "gpt-6-astra",
+      "promptVersion": "v2",
+      "requestId": "/root/sidebar_astra",
+      "at": "2026-09-25T10:45:51.875914+00:00"
+    },
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      },
+      {
+        "document": "problems",
+        "page": 2
+      },
+      {
+        "document": "problems",
+        "page": 3
+      }
+    ],
+    "problemsRead": 3,
+    "figuresInspected": 4,
+    "summary": "Read all three original scan pages directly. Preserve all three independent numbered problems, fable attribution, native Parts/scenarios and full source wording. Restore original printed Напревете rather than a previous editorial spelling correction. Preserve the existing permitted й→ѝ pronoun normalization only, source context за да й покаже. All four figures explicitly placed; source lunar acceleration stays after Part3 questions. Full archive-catalog search finds no municipal solution files; explicit missing-source solution notices retained. No checker used.",
+    "sourceGaps": [
+      "No matching official municipal solution document was found in the full archive-catalog; all three problems retain explicit incomplete-solution notices."
+    ],
+    "startedAt": "2026-09-25T10:41:59.639Z",
+    "startedAtPrecision": "Preparation preceded direct source reading; first-image timestamp was not separately recorded.",
+    "completedAt": "2026-09-25T10:47:21.342392+00:00",
+    "figureInspection": "All 13 final crops directly viewed: 5 grade12 municipal, 4 grade8 municipal, 4 grade9 regional. Extended grade8 graph and force-diagram right boundaries to retain complete axis labels/ground line; directly viewed final replacements. No snapping. All figure references resolve and each appears once in generated MDX.",
+    "normalizations": [
+      {
+        "type": "Bulgarian pronoun",
+        "from": "й",
+        "to": "ѝ",
+        "context": "за да й покаже",
+        "note": "Existing permitted normalization retained after direct source reading."
+      }
+    ],
+    "overlayFollowup": {
+      "removeProblemEntries": [
+        "nof-2022-i-8-p1",
+        "nof-2022-i-8-p2",
+        "nof-2022-i-8-p3"
+      ],
+      "reason": "Explicit placement in native sections supersedes old anchors."
+    },
+    "solutionArchiveSearch": "Recursively inspected all archive-catalog JSON strings for 2022 National Physics Olympiad sources, including additions; municipal directory contains only grade8/9/10/11/12 problem PDFs; regional grade9 has matching original problem and solution PDFs."
+  },
   "coverage": {
     "pagesRead": [
       {
@@ -43,16 +98,24 @@
         "page": 3
       }
     ],
-    "problemsChecked": 3,
-    "figuresChecked": 4
+    "problemsRead": 3,
+    "figuresInspected": 4
+  },
+  "automatedChecks": {
+    "schemaAndMath": true,
+    "figureEvidence": true,
+    "warnings": [
+      {
+        "path": "/problems/2/statement",
+        "message": "empty statement (the printed problem is only its parts)"
+      }
+    ]
   },
   "defects": [],
-  "informational": 0,
-  "ignoredResolvedFlags": 0,
   "blockers": [],
-  "candidateSha256": "59eaf1fd8792c0eaf3e87313afcbd8835558de03e63c934923a5903d45a414be",
-  "checkerCandidateSha256": "59eaf1fd8792c0eaf3e87313afcbd8835558de03e63c934923a5903d45a414be",
-  "checkerCrops": null,
-  "promotedAt": "2026-09-23T00:50:06.128Z",
-  "promotedFile": "content/problems/physics/NOF/2022/nof-2022-i-8.json"
+  "informational": 1,
+  "candidateSha256": "a52f605b2bbc5adaa54eaaa962d2b9162e04e1a2851a484b113e259758cb771a",
+  "checkerCandidateSha256": null,
+  "promotedAt": "2026-09-25T10:57:52.017Z",
+  "promotedFile": "content\\problems\\physics\\NOF\\2022\\nof-2022-i-8.json"
 }

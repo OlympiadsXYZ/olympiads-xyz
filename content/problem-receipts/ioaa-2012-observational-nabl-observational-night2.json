@@ -1,67 +1,145 @@
 {
   "paperId": "ioaa-2012-observational-nabl-observational-night2",
   "verdict": "pass",
-  "contentHash": "fcc2eb1482bb89017fc5c0204baecf68b6f3dceb388b1f9f7c44c35cfb994221",
+  "contentHash": "bd45f4e0536441646a49b73bd6d0b9f7a255118184452e427a6c1c6814f70f15",
+  "sourceConversions": {},
+  "sourceReadScopes": {},
   "sourceHashes": {
-    "problems": "89614f23c6f961b0ab282a0fcc80863a27d645a44535e9812ae267a6bd73e8e7"
+    "problems": "89614f23c6f961b0ab282a0fcc80863a27d645a44535e9812ae267a6bd73e8e7",
+    "solutions": "1a43b5a94dc3742c9d4c2639695381ce661f1f6fc52002bee8370ce12553e8cd"
   },
   "reviewer": {
-    "provider": "anthropic",
-    "model": "claude-opus-5",
-    "requestId": "req_011Cf9CRivzZNPbkahiYYkEN"
+    "provider": "mechanical",
+    "model": "single-pass-gates",
+    "requestId": "3d141be7003053e7e75ff91511858c1f2b4a439945307c517f49835cdba344f6"
   },
-  "checkedAt": "2026-09-17T14:50:14.946Z",
-  "promptVersion": "v1",
-  "checkerMode": "crops",
+  "checkedAt": "2026-09-25T11:00:13.258Z",
+  "promptVersion": "v2",
+  "checkerMode": "single-pass",
   "reader": {
-    "provider": "anthropic",
-    "model": "claude-sonnet-5",
-    "promptVersion": "v1",
-    "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
-    "requestId": "req_011Cf9CGYs1dECMjvwxbTJPC",
-    "at": "2026-09-17"
-  },
-  "independence": {
-    "independent": true,
-    "differentProvider": false,
-    "allowSameModel": false
+    "provider": "agent",
+    "model": "gpt-6-astra",
+    "requestId": "/root/problem_structure_astra",
+    "at": "2026-09-25",
+    "promptVersion": "v2"
   },
   "adjudicator": null,
-  "checkerVerdict": "pass",
-  "summary": "Crop audit (3 crop(s)): All three star-chart crops show the complete maps with no swallowed body text; minor edge labels are part of the chart's own cropping. mechanical pre-check (text layer, printed regions); no model was asked",
+  "independence": {
+    "independent": false,
+    "differentProvider": false,
+    "allowSameModel": true,
+    "separateChecker": false
+  },
+  "checkerVerdict": null,
+  "summary": "Single-pass source transcription with automated validation; no separate model checker.",
+  "readerEvidence": {
+    "candidateSha256": "3d141be7003053e7e75ff91511858c1f2b4a439945307c517f49835cdba344f6",
+    "reader": {
+      "provider": "agent",
+      "model": "gpt-6-astra",
+      "requestId": "/root/problem_structure_astra",
+      "promptVersion": "v2"
+    },
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1,
+        "imageSha256": "15788ed9fdbfe0df6d3aa6073ac392839af8044f2d8f20142a9dcee03fb9cdfd"
+      },
+      {
+        "document": "problems",
+        "page": 2,
+        "imageSha256": "8063d199874becceaaec3e1667c96fe8a5d7b1ec4e744fcd7af60c58f4822e0f"
+      },
+      {
+        "document": "problems",
+        "page": 3,
+        "imageSha256": "55f72ded962bd2ac03b2e912b313b079b099d3007d7a62c48f62079881fd8cc9"
+      },
+      {
+        "document": "problems",
+        "page": 4,
+        "imageSha256": "92bc6fa54a6f242a483a1bca1118a60cb529986503a0b2ac69423314bb18996e"
+      },
+      {
+        "document": "solutions",
+        "page": 1,
+        "imageSha256": "6f4ea1e72cd5f5b41fac7bc0f5737dc873d6c01a9eea18414440bb5648f66a85"
+      }
+    ],
+    "sourceReadScopes": {},
+    "problemsRead": 5,
+    "figuresInspected": 3,
+    "figuresRead": [
+      {
+        "id": "ioaa2012-night2-chart4-astra-r11-20260925",
+        "document": "problems",
+        "page": 2,
+        "file": "figs/ioaa-2012-observational-nabl-observational-night2.candidate/problems/ioaa2012-night2-chart4-astra-r11-20260925.png",
+        "sha256": "01129f4d151dc1d0eb669ac79b5fedf1faa9e5d7ee7474b7122a273de0f165db"
+      },
+      {
+        "id": "ioaa2012-night2-chart5-astra-r11-20260925",
+        "document": "problems",
+        "page": 3,
+        "file": "figs/ioaa-2012-observational-nabl-observational-night2.candidate/problems/ioaa2012-night2-chart5-astra-r11-20260925.png",
+        "sha256": "b38b0514b37e1285398bb8b01d8cad4769fa1370cb637be09d0468e52aaa6c03"
+      },
+      {
+        "id": "ioaa2012-night2-chart6-astra-r11-20260925",
+        "document": "problems",
+        "page": 4,
+        "file": "figs/ioaa-2012-observational-nabl-observational-night2.candidate/problems/ioaa2012-night2-chart6-astra-r11-20260925.png",
+        "sha256": "af16a2f0e897c902d0c36718914b9b9519070bb42fc92e03a28181550cdda2a6"
+      }
+    ],
+    "summary": "Same Astra reader visually read all four original Bulgarian DOC pages and the complete one-page official English answer key. Also read the assigned four-page DOCX: despite catalog English label it contains the same Bulgarian tasks and charts; keep this existing canonical edition. Parallel English text-only DOC pages read and kept separate. Existing statement transcription retained after direct source reading; official solutions added and all chart crops regenerated with no snapping. No separate model checker. Every final actual crop was personally visually inspected by the same Astra reader. No separate model checker. Provenance correction: this is the fresh Astra source reader, not a separate adjudicator; previous statement transcription was used only as a draft and checked against every source page.",
+    "sourceGaps": [
+      "The official key gives only a)1.5 and b)0.5 for task2, with no explanatory sketch; these are retained without inventing their meaning. Task1 supplies only a time instruction.",
+      "The statement and official key disagree on allotted times: task2 totals5minutes in the statement but6minutes in the key; task4 is3minutes in the statement and5minutes in the key. Both printed versions are retained."
+    ]
+  },
   "coverage": {
     "pagesRead": [
       {
         "document": "problems",
-        "page": 1
+        "page": 1,
+        "imageSha256": "15788ed9fdbfe0df6d3aa6073ac392839af8044f2d8f20142a9dcee03fb9cdfd"
       },
       {
         "document": "problems",
-        "page": 2
+        "page": 2,
+        "imageSha256": "8063d199874becceaaec3e1667c96fe8a5d7b1ec4e744fcd7af60c58f4822e0f"
       },
       {
         "document": "problems",
-        "page": 3
+        "page": 3,
+        "imageSha256": "55f72ded962bd2ac03b2e912b313b079b099d3007d7a62c48f62079881fd8cc9"
       },
       {
         "document": "problems",
-        "page": 4
+        "page": 4,
+        "imageSha256": "92bc6fa54a6f242a483a1bca1118a60cb529986503a0b2ac69423314bb18996e"
+      },
+      {
+        "document": "solutions",
+        "page": 1,
+        "imageSha256": "6f4ea1e72cd5f5b41fac7bc0f5737dc873d6c01a9eea18414440bb5648f66a85"
       }
     ],
-    "problemsChecked": 5,
-    "figuresChecked": 3
+    "problemsRead": 5,
+    "figuresInspected": 3
+  },
+  "automatedChecks": {
+    "schemaAndMath": true,
+    "figureEvidence": true,
+    "warnings": []
   },
   "defects": [],
-  "informational": 0,
-  "ignoredResolvedFlags": 0,
   "blockers": [],
-  "candidateSha256": "01548b12710d87cb5d4c94df976d1f96cf40d5acbc0e58126f58574d15335693",
-  "checkerCandidateSha256": "01548b12710d87cb5d4c94df976d1f96cf40d5acbc0e58126f58574d15335693",
-  "checkerCrops": [
-    "p2-fig1",
-    "p3-fig1",
-    "p4-fig1"
-  ],
-  "promotedAt": "2026-09-17T14:50:15.576Z",
+  "informational": 2,
+  "candidateSha256": "3d141be7003053e7e75ff91511858c1f2b4a439945307c517f49835cdba344f6",
+  "checkerCandidateSha256": null,
+  "promotedAt": "2026-09-25T11:01:29.765Z",
   "promotedFile": "content\\problems\\astronomy\\IOAA\\2012\\ioaa-2012-observational-nabl-observational-night2.json"
 }
