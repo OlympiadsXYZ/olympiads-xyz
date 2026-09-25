@@ -1,23 +1,26 @@
 ---
 id: iao-2011-practical-bgpract-p3
 source: 'IAO 2011, Практически тур'
-title: 'Задача 3. β-6. Планетарна мъглявина'
+title: 'β-6. Планетарна мъглявина'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IAO/2011/iao-2011-practical-bgpract.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T08:53:36.851Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-25T13:46:42.454Z'
+verifier: 'single-pass'
 ---
 
 *XVI Международная астрономическая олимпиада / XVI International Astronomy Olympiad, Казахстан, Алма-Ата, 22 – 30. IX. 2011, Round Prac · 22 септември 2011 г.*
 
-<Warning title="Бележка към темата">
-Ръкописен български превод на практическия кръг. Изображенията на Сатурн, графиката на яркостта и снимката на мъглявината са били раздадени на отделни листове и не са включени в архивния файл; официални решения липсват.
-</Warning>
+<details>
+<summary>Възстановени източници</summary>
+
+Българските ръкописни условия са запазени. Липсващите изображения и графики са възстановени от съответните английски оригинали. Официалните решения са на руски език и са представени на този език. Подзадачите запазват отпечатаните групи α, β и αβ; всички съществуващи адреси на задачите са запазени.
+
+</details>
 
 ## Условие
 
-В таблицата са дадени резултатите от измерванията на дължината на вълната на спектралната линия на водорода с $\lambda_0=6562{,}81$ Å (H$\alpha$) на планетарната мъглявина NGC 6543 в точки, показани на снимката на отделен лист).
+В таблицата са дадени резултатите от измерванията на дължината на вълната на спектралната линия на водорода с $\lambda_0=6562{,}81$ Å (H$\alpha$) на планетарната мъглявина NGC 5643 в точки, показани на снимката на отделен лист).
 
 Начертайте графика на зависимостта на лъчевата скорост на точките от деклинацията $\delta$.
 
@@ -29,12 +32,139 @@ verifier: 'mechanical'
 |---|---|---|---|---|---|---|---|
 | λ, Å | 6563,17 | 6562,80 | 6562,68 | 6562,40 | 6562,65 | 6562,77 | 6563,16 |
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.6%', '--fig-max': '522px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-bgpract/beta-p6-fig1-astra-s12-r1.png" alt="Colour photograph of the planetary nebula (Cat's Eye) on a black background; seven small white squares mark the measured points along a line running from the left edge through the central star to the upper right." width="1632" height="1243" loading="lazy" decoding="async" />
+</figure>
+
+
+*Бележка за източника: шестата деклинация в ръкописната таблица е поправена и неясна; прочетена е като +66°39′, както е в английската таблица. Условието изписва NGC 5643, а руският ключ — NGC 6543; разликата е запазена.*
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- Nebula recession speed 16.2 km/s; expansion speed 34.9 km/s.
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-В архива липсва файл с решения
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+**Официално решение на руски език.**
+
+<ProblemSection id="solution-source-russian-problem">
+
+### 2. Планетарная туманность
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '79.9%', '--fig-max': '512px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-bgpract/beta-p6-sol-fig1-astra-s12-r1.png" alt="Colour photograph of the Cat's Eye planetary nebula; seven measured points are marked by small white squares along a line running from the left through the central star to the upper right." width="1599" height="1566" loading="lazy" decoding="async" />
+</figure>
+
+
+2 Планетарная туманность
+
+В таблице даны значения измерений длин волн спектральной линии водорода $\lambda_0 = 6562{,}81$Ǻ (Hα) планетарной туманности NGC 6543 (точки показаны на рисунке). Постройте график зависимости радиальной скорости движения данных точек от координаты по склонению. Нарисуйте схему, показывающую, в каком направлении движется каждая точка. Считая, что крайние точки на таблице соответствуют границе туманности, определите скорость собственного движения (с какой скоростью приближается или удаляется вся туманность в целом) и скорость расширения туманности.
+
+| δ | +66° 34′ | +66° 35′ | +66° 36′ | +66° 37′ | +66° 38′ | +66° 39′ | +66° 40′ |
+|---|---|---|---|---|---|---|---|
+| λ, Ǻ | 6563,17 | 6562,80 | 6562,68 | 6562,40 | 6562,65 | 6562,77 | 6563,16 |
+
+</ProblemSection>
+
+<ProblemSection id="solution-doppler-calculation">
+
+### Решение: эффект Доплера
+
+Изменение длины волны из за эффекта Доплера дается формулой
+
+$$
+\lambda = \lambda_0 \frac{1 + \frac{v}{c}\cos\theta}{\sqrt{1 - \frac{v^2}{c^2}}}
+$$
+
+где $\theta$ - угол между направлением на источник и вектором скорости в системе отсчёта приёмника.
+
+При малых скоростях мы можем пренебречь корнем
+
+$$
+\lambda = \lambda_0 \left(1 + \frac{v}{c}\cos\theta\right)
+$$
+
+Радиальная скорость $v_r = v\cos\theta$, отсюда
+
+$$
+v_r = \left(\frac{\lambda}{\lambda_0} - 1\right)c
+$$
+
+первая и последняя точки движутся от наблюдателя, остальные в сторону наблюдателя.
+
+Так как на краю туманности расширение идет перпендикулярно, то смещение спектра происходит из-за собственного движения туманности. Скорость в этих точках соответствует скорости собственного движения туманности. Радиальная скорость в центре есть разность (сумма векторов) скоростей собственного движения и скорости расширения туманности.
+
+$$
+v_{r1} = \left(\frac{6563{,}17}{6562{,}81} - 1\right)299{,}79 = 16{,}445\ \text{км/с}
+$$
+
+$$
+v_{r2} = \left(\frac{6562{,}80}{6562{,}81} - 1\right)299{,}79 = -0{,}456\ \text{км/с}
+$$
+
+$$
+v_{r3} = \left(\frac{6562{,}68}{6562{,}81} - 1\right)299{,}79 = -5{,}938\ \text{км/с}
+$$
+
+$$
+v_{r4} = \left(\frac{6562{,}40}{6562{,}81} - 1\right)299{,}79 = -18{,}729\ \text{км/с}
+$$
+
+$$
+v_{r5} = \left(\frac{6562{,}65}{6562{,}81} - 1\right)299{,}79 = -7{,}308\ \text{км/с}
+$$
+
+$$
+v_{r6} = \left(\frac{6563{,}16}{6562{,}81} - 1\right)299{,}79 = 15{,}988\ \text{км/с}
+$$
+
+| δ | +66° 34′ | +66° 35′ | +66° 36′ | +66° 37′ | +66° 38′ | +66° 39′ | +66° 40′ |
+|---|---|---|---|---|---|---|---|
+| $v_r$, км/с | 16,445 | -0,456 | -5,938 | -18,729 | -7,308 | -1,827 | 15,988 |
+
+Разность скоростей крайних точек соответствует перпендикулярной лучу зрения составляющей скорости туманности
+
+</ProblemSection>
+
+<ProblemSection id="solution-velocity-graph">
+
+### График и ответ
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '643px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2011-practical-bgpract/beta-p6-sol-fig2-astra-s12-r1.png" alt="Chart of vr, км/с (vertical axis from −25 to 20) against δ (from +66° 34′ to +66° 40′): a broken line through 16.4, −0.5, −5.9, −18.7, −7.3, −1.8 and 16.0, V-shaped with its minimum at +66° 37′." width="2010" height="776" loading="lazy" decoding="async" />
+</figure>
+
+
+$v_c = 16{,}2$ км/с, $v_p = 16{,}2 + 18{,}7 = 34{,}9$ км/с
+
+</ProblemSection>
+
+<ProblemSection id="solution-source-note">
+
+### Source notes
+
+The Bulgarian and English questions prints NGC 5643; the Russian solution prints NGC 6543. The key writes the numerical light-speed factor as 299.79 while its km/s results imply a factor 1000 larger. The last displayed calculation is labelled vᵣ₆ but uses the seventh wavelength; the complete seven-value table, including −1.827 km/s, is retained. These printed inconsistencies have not been silently corrected.
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [bgpract.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2011/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/bgpract.pdf)
+· официални решения: [alpha6sol.doc](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2011/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/alpha6sol.doc)
+· допълнителни данни: [beta6sol.doc](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2011/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/beta6sol.doc)
+· допълнителни данни: [alphabeta7sol.doc](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2011/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/alphabeta7sol.doc)
+· допълнителни данни: [alphapract.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2011/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/alphapract.pdf)
+· допълнителни данни: [betapract.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2011/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/betapract.pdf)
+· допълнителни данни: [data_1.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2011/%D0%94%D0%B0%D0%BD%D0%BD%D0%B8/data_1.png)
+· допълнителни данни: [data_2.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2011/%D0%94%D0%B0%D0%BD%D0%BD%D0%B8/data_2.png)
