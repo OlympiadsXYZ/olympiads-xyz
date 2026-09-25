@@ -21,6 +21,7 @@ import path from 'path';
 import { fileURLToPath } from 'node:url';
 import { readPapers, readJson, publicationState, atomicWrite, jsonText, sha256, controlledTopics, walkJson } from './lib/problem-data.mjs';
 import { classificationSearch, problemMetadataErrors } from './lib/problem-classification.mjs';
+import { readArchiveLabels } from './lib/labels.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -254,11 +255,22 @@ function sourceText(text, problem) {
 // transcriber label ("[Бележка от източника]") loses its brackets
 const plainNote = t => String(t || '').replace(/[*_]/g, '').replace(/[.:]\s*$/, '').trim();
 const JUNK_NOTE = /^(?:(?:стр\.?|страница|page|p\.)\s*)?\d{1,3}\s*(?:\/|от|of|из)\s*\d{1,3}$|^-?\s*\d{1,3}\s*-?$|^v\d+(?:\.\d+)*$/i;
+// The transcriber's own generic labels are in English ("Note", "Epigraph"); the page shows them in Bulgarian. A heading
+// the paper prints ("Instructions (Please Read Carefully)") is not one of these and stays as printed.
+const NOTE_TITLES = {
+  note: 'Бележка', notes: 'Бележки', 'general note': 'Бележка', 'source note': 'Бележка от източника',
+  'source footer': 'Бележка от източника', epigraph: 'Епиграф', authors: 'Автори', authorship: 'Автори',
+  instructions: 'Указания', constants: 'Константи', introduction: 'Увод', cover: 'Корица',
+};
+const noteTitle = t => {
+  const title = String(t).replace(/^\[(.+)\]$/, '$1');
+  return NOTE_TITLES[title.trim().replace(/[.:]$/, '').toLowerCase()] ?? title;
+};
 function documentNoteLines(paper, position) {
   return (paper.documentNotes || []).filter(n => n.position === position)
     .filter(n => !JUNK_NOTE.test(plainNote(n.statement)) && plainNote(n.statement) !== plainNote(n.title))
     .flatMap(note => [
-      `<details>`, `<summary>${mdText(String(note.title).replace(/^\[(.+)\]$/, '$1'))}</summary>`, '', mdText(note.statement), '', `</details>`, '',
+      `<details>`, `<summary>${mdText(noteTitle(note.title))}</summary>`, '', mdText(note.statement), '', `</details>`, '',
     ]);
 }
 
@@ -270,8 +282,17 @@ function documentNoteLines(paper, position) {
 const PIPELINE_NOTE = /\b(?:window|assembl\w*|placeholders?|supplied source|per rules|mid-document)\b|прозор\w*|предоставен\w*|подготвения източник|сдвоен/i;
 const visitorNote = t => t && !PIPELINE_NOTE.test(t) ? mdText(t) : null;
 
-// Short Bulgarian names, same as the archive's COMPETITION_META (src/archive/labels.ts).
-const COMPETITION_SHORT = { NOF: 'НОФ', NAO: 'НОА', ESF: 'НЕСФ', PSF: 'НПСФ' };
+// Short Bulgarian names and round labels: the archive's own (src/archive/labels.ts), so a page heading reads
+// "ВсОА 1994, Творчески тур" like the archive does, not "VsOA-ru 1994, creative".
+const { competitionShort: COMPETITION_SHORT, roundLabels: ROUND_LABELS } = readArchiveLabels();
+// The archive's I/II/III labels are the Bulgarian stages ("III кръг (национален)"); elsewhere a Roman round is only a
+// number (SPbA, Samara and BelPhO use them too), so it stays as printed.
+const BULGARIAN_COMPETITIONS = new Set(['NOF', 'NAO', 'ESF', 'PSF', 'NOH', 'HOOS']);
+function roundLabel(round, competition) {
+  if (!round) return null;
+  if (/^(?:I|II|III|IV)$/.test(round) && !BULGARIAN_COMPETITIONS.has(competition)) return round;
+  return ROUND_LABELS[round] ?? round;
+}
 const MONTHS_BG = ['януари', 'февруари', 'март', 'април', 'май', 'юни', 'юли', 'август', 'септември', 'октомври', 'ноември', 'декември'];
 
 // "9" -> "9. клас", "9-10 клас" -> "9–10 клас"; group codes get their names
@@ -281,12 +302,14 @@ const GROUP_NAMES = {
   physics: { ST: 'Специална тема', SP: 'Специална тема' },
   astronomy: { ML: 'Младша възраст', ST: 'Старша възраст' },
 };
+// IAO's age groups are written both ways across papers ("alpha", "α"); the page shows the letter.
+const GREEK_GROUPS = { alpha: 'α', beta: 'β', gamma: 'γ' };
 function gradeLabel(grade, subject) {
   if (!grade) return null;
   const g = String(grade).replace(/\s*клас\.?$/u, '').trim().replace(/\s*-\s*/g, '–');
   if (/^\d+$/.test(g)) return `${g}. клас`;
   if (/^\d+–\d+$/.test(g)) return `${g} клас`;
-  const named = GROUP_NAMES[subject]?.[g.toUpperCase()];
+  const named = GROUP_NAMES[subject]?.[g.toUpperCase()] ?? GREEK_GROUPS[g.toLowerCase()];
   return named ?? String(grade);
 }
 
@@ -300,7 +323,7 @@ function dateBg(iso) {
 function paperDescriptor(paper) {
   return [
     `${COMPETITION_SHORT[paper.competition] ?? paper.competition} ${paper.year}`,
-    paper.round || null,
+    roundLabel(paper.round, paper.competition),
     gradeLabel(paper.grade, paper.subject),
   ].filter(Boolean).join(', ');
 }
@@ -322,6 +345,9 @@ function yamlStr(s) {
 // ("&nbsp;&nbsp;&nbsp;", nof-2024-iii-11-12-exp2) — the page shows the character, the source bytes stay as approved
 const HTML_ENTITIES = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", deg: '°', times: '×', minus: '−', middot: '·', ndash: '–', mdash: '—', laquo: '«', raquo: '»', hellip: '…', plusmn: '±', micro: 'µ', ohm: 'Ω', Omega: 'Ω', alpha: 'α', beta: 'β', gamma: 'γ', lambda: 'λ', pi: 'π', rho: 'ρ', theta: 'θ', omega: 'ω', bull: '•', frac12: '½', sup2: '²', sup3: '³', le: '≤', ge: '≥', ne: '≠', asymp: '≈', infin: '∞', rarr: '→', larr: '←', prime: '′' };
 const decodeEntities = t => String(t).replace(/&(#(\d+)|#x([0-9a-f]+)|([a-z][a-z0-9]{1,7}));/gi, (m, _a, dec, hex, name) => dec ? String.fromCodePoint(Number(dec)) : hex ? String.fromCodePoint(parseInt(hex, 16)) : (HTML_ENTITIES[name] ?? m));
+// "[2 т.]", "(0,5 т)", "3 точки", "2 points": the number and its unit stay on one line (on a phone 40% of pages with
+// point markers broke one as "[2" / "т.]")
+const POINTS_SPACE = /(\d)[ \t]+(?=(?:т\.?|точк[аи]|точки|бала?|балла|points?|pts?\.?|marks?)(?![\p{L}\p{N}]))/gu;
 function mdText(s) {
   if (s == null) return s;
   if (/&(#\d+|#x[0-9a-f]+|[a-z][a-z0-9]{1,7});/i.test(s)) s = decodeEntities(s);
@@ -339,7 +365,7 @@ function mdText(s) {
     // inside math: KaTeX in the site pipeline has no \nicefrac and rejects \tag outside a display environment
     // (IPhO 2023 Q1 rendered its numbered equations raw); the printed equation number becomes "\qquad (n)"
     // A lone trailing prose space is invisible; preserve Markdown's two-space breaks and all math.
-    .map((seg, i) => (i % 2 ? displayFences(seg, parts[i - 1]).replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/(?<![\\ \t]) (?=\n)/g, '').replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m)))
+    .map((seg, i) => (i % 2 ? displayFences(seg, parts[i - 1]).replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/(?<![\\ \t]) (?=\n)/g, '').replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m).replace(POINTS_SPACE, '$1\u00A0')))
     .join(''));
 }
 // Markdown pairs "*"/"**" only when the marker is flanked right: a closing one after punctuation and before a letter
@@ -441,7 +467,17 @@ export function displayMathLines(mdx) {
     if (block) { if (/^[ \t]*\$\$[ \t]*$/.test(line)) block = false; out.push(line); continue; }
     if (!span && /^[ \t]{0,3}(?:`{3,}|~{3,})/.test(line)) { code = !code; out.push(line); continue; }
     if (code) { out.push(line); continue; }
+    // a quoted line ("> $$E_1 = kq/l^2,$$", nof-2020-ii-11-12) is read without its quote marks and every line it
+    // becomes gets them back, so the display stays in the quote
+    const quote = span ? null : /^((?:[ \t]{0,3}>[ \t]?)+)(.*\$\$.*)$/.exec(line);
+    if (quote && quote[2] !== '---' && !((quote[2].match(/(?<!\\)\$\$/g) || []).length % 2)) {
+      const inner = displayMathLines(quote[2]);
+      if (inner !== quote[2]) { const q = quote[1].replace(/[ \t]*$/, ' '); out.push(...inner.split('\n').map(l => q + l)); continue; }
+    }
     const m = span ? null : ONE_LINE_DISPLAY.exec(line);
+    // leader dots after a formula ("$$h_2 = … = 1{,}25\ \mathrm{cm}$$ ….."), which ran to a points column the page does
+    // not have, go
+    if (m && /^(?=.*…|\.{2})[.…]+$/.test(m[3])) m[3] = '';
     // a sentence mark after the formula ("$$m = 0.52$$.") goes inside the display, as typeset
     if (m && /^[.,;:]$/.test(m[3])) { m[2] = `${m[2].trimEnd()}${m[3]}`; m[3] = ''; }
     const rest = m?.[3] ?? '';
@@ -497,7 +533,7 @@ function problemMdx(paper, problem, state, sourceFile) {
   const lead = [
     masthead,
     paper.held?.from ? dateBg(paper.held.from) : null,
-    problem.points != null ? `${String(problem.points).replace('.', ',')} т.` : null,
+    problem.points != null ? `${String(problem.points).replace('.', ',')}\u00A0т.` : null,
   ].filter(Boolean);
   if (lead.length) lines.push(`*${lead.join(' · ')}*`, '');
   if (visitorNote(paper.caveat)) lines.push('<Warning title="Бележка към темата">', visitorNote(paper.caveat), '</Warning>', '');
@@ -518,7 +554,7 @@ function problemMdx(paper, problem, state, sourceFile) {
       // "**[2.5 points]**" — never bare prose ("Тяло с маса 3 т." is a mass of 3 tonnes)
       const printedPoints = /(?:\*{1,2}[(\[]?|[(\[])\s*(\d+(?:[.,]\d+)?)\s*(?:т\.?|точк[аи]\.?|точки|pts?\.?|points?|marks?|бал(?:л|ла|лов|а)?\.?)(?![\p{L}])\s*[.;:]?\s*(?:[)\]]\**|\*{1,2})\s*[.;:]?\s*$/iu.exec(String(text).trimEnd());
       const alreadyPrinted = printedPoints && Number(printedPoints[1].replace(',', '.')) === part.points;
-      const pts = part.points != null && !alreadyPrinted ? ` **[${String(part.points).replace('.', ',')} т.]**` : '';
+      const pts = part.points != null && !alreadyPrinted ? ` **[${String(part.points).replace('.', ',')}\u00A0т.]**` : '';
       // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
       // a statement that opens with a table or a heading keeps the label on a line of its own (glued, the block does not
       // start), and one that ends with a table row gets its points after the table (in the row, GFM drops the extra cell)

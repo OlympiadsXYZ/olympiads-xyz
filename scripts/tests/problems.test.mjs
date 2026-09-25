@@ -25,7 +25,8 @@ function fixture(t) {
   const approve = () => write('content/problem-publication.json', { version: 1, papers: { [paper.paper.id]: { kind: 'legacy', contentHash: sha256(fs.readFileSync(path.join(root, file))), sourceCommit: 'a'.repeat(40), recordedAt: new Date().toISOString() } } });
   const run = (...args) => spawnSync(process.execPath, [path.join(repo, 'scripts/problems-to-site.mjs'), '--root', root, ...args], { encoding: 'utf8' });
   const output = `solutions/physics/${paper.paper.id}/${paper.problems[0].id}.mdx`;
-  return { root, write, paper, file, approve, run, output, read: file => fs.readFileSync(path.join(root, file), 'utf8') };
+  // the generator keeps a number and its points unit together with a no-break space; the assertions read plain text
+  return { root, write, paper, file, approve, run, output, read: file => fs.readFileSync(path.join(root, file), 'utf8').replace(/\u00A0/g, ' '), raw: file => fs.readFileSync(path.join(root, file), 'utf8') };
 }
 
 test('unapproved draft never creates a page; explicit legacy migration preserves an exact revision', t => {
@@ -303,4 +304,23 @@ test('a formula after text on its line becomes a block after the text, inside it
   assert.equal(displayMathLines('- величина $$f = 1$$ – 1 точка'), '- величина\n  $$\n  f = 1\n  $$\n  – 1 точка');
   assert.equal(displayMathLines('$$m = 0.52$$.'), '$$\nm = 0.52.\n$$');
   for (const t of ['| a $$x$$ | b |', 'Цена $5 и $$x$$', '# Heading $$x$$']) assert.equal(displayMathLines(t), t);
+});
+
+test('a formula in a quote stays in the quote; leader dots after a formula go', async () => {
+  const { displayMathLines } = await import('../problems-to-site.mjs');
+  assert.equal(displayMathLines('> $$E_1 = kq,$$'), '> $$\n> E_1 = kq,\n> $$');
+  assert.equal(displayMathLines('> > text $$x$$ tail'), '> > text\n> > $$\n> > x\n> > $$\n> > tail');
+  assert.equal(displayMathLines('$$h = 1{,}25$$ …..'), '$$\nh = 1{,}25\n$$');
+  assert.equal(displayMathLines('$$t = 0{,}51$$ …'), '$$\nt = 0{,}51\n$$');
+  for (const t of ['> $$\na\n> $$', '> plain $a$']) assert.equal(displayMathLines(t), t);
+});
+
+test('a number and its points unit are kept on one line', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  p.points = 5;
+  p.parts = [{ label: 'а)', statement: 'Намерете скоростта (2 т.) и пътя [3 точки].', points: 4 }];
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.raw(f.output);
+  for (const s of ['5\u00A0т.', '(2\u00A0т.)', '[3\u00A0точки]', '**[4\u00A0т.]**']) assert.ok(mdx.includes(s), s);
 });

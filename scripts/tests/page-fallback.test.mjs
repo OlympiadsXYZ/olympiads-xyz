@@ -224,7 +224,10 @@ test('actual site generator preserves fallback text/figure order without repeati
   write('content/problem-publication.json', { version: 1, papers: { 'fallback-paper': { kind: 'legacy', contentHash: sha(fs.readFileSync(source)), sourceCommit: 'a'.repeat(40), recordedAt: '2026-09-14T00:00:00Z' } } });
   const result = spawnSync(process.execPath, [path.join(repo, 'scripts/problems-to-site.mjs'), '--root', root], { encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr || result.stdout);
-  const mdx = fs.readFileSync(path.join(root, 'solutions/physics/fallback-paper/fallback-paper-p1.mdx'), 'utf8');
+  // the page joins a number and its points unit with a no-break space and ends a printed line with a hard break (two
+  // spaces); what is tested here is the order
+  const mdx = fs.readFileSync(path.join(root, 'solutions/physics/fallback-paper/fallback-paper-p1.mdx'), 'utf8')
+    .replace(/\u00A0/g, ' ').replace(/ {2}\n/g, '\n');
   let prior = -1;
   for (const marker of ['Задача 1. Скорости', '(3 т.)', 'https://example.invalid/p1-fig1.png', '<figcaption>Фиг. 1</figcaption>', 'б) Намерете $t_2$.', 'Общо 5 точки.', '## Решение', 'Задача 1.\n$v_2=2v_1$', 'https://example.invalid/p1-sol-fig1.png']) {
     const at = mdx.indexOf(marker); assert.ok(at > prior, `Missing/reordered ${marker}`); prior = at;
