@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { archiveHref } from '../../archive/links';
 import { useDarkMode } from '../../context/DarkModeContext';
-import CodeBlock from './CodeBlock/CodeBlock';
+// type only: the component itself is loaded on demand (HighlightedCode)
+import type CodeBlockType from './CodeBlock/CodeBlock';
 
 // Note: try to avoid adding inline styles here; rather, use css selectors to target them.
 // Otherwise it's really hard to override some of these styles
@@ -89,17 +90,52 @@ const a = ({ children, ...props }) => {
     </a>
   );
 };
+// Only C++/Java/Python blocks are highlighted (CodeBlock, a USACO Guide feature); no page here has one, so the
+// highlighter (Prism, ~35 KB gzipped) is fetched when such a block mounts instead of shipping with every page. Any
+// other block is the plain <pre> CodeBlock renders for it; the server and the first client render show that too.
+const HIGHLIGHTED = /^language-(?:cpp|java|py|python)$/;
+const PlainCode = ({ code }: { code: unknown }): JSX.Element => (
+  <pre className="-mx-4 sm:-mx-6 md:mx-0 md:rounded bg-gray-100 p-4 mb-4 whitespace-pre-wrap break-all dark:bg-gray-900">
+    {String(code ?? '').replace(/^[\r\n]+|[\r\n]+$/g, '')}
+  </pre>
+);
+const HighlightedCode = (props: {
+  children: string;
+  className: string;
+  isDarkMode: boolean;
+  copyButton: boolean;
+}): JSX.Element => {
+  const [Block, setBlock] = React.useState<typeof CodeBlockType | null>(null);
+  React.useEffect(() => {
+    let live = true;
+    import('./CodeBlock/CodeBlock').then(m => {
+      if (live) setBlock(() => m.default);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
+  return Block ? <Block {...props} /> : <PlainCode code={props.children} />;
+};
 const pre = ({ children, copyButton = true, ...props }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const isDarkMode = useDarkMode();
+  if (!React.isValidElement(children)) return <pre {...props}>{children}</pre>;
+  const code = children.props as { className?: string; children?: string };
 
   return (
     <pre {...props}>
-      <CodeBlock
-        copyButton={copyButton}
-        isDarkMode={isDarkMode}
-        {...children.props}
-      />
+      {HIGHLIGHTED.test(code.className ?? '') ? (
+        <HighlightedCode
+          copyButton={copyButton}
+          isDarkMode={isDarkMode}
+          className={code.className!}
+        >
+          {code.children ?? ''}
+        </HighlightedCode>
+      ) : (
+        <PlainCode code={code.children} />
+      )}
     </pre>
   );
 };
