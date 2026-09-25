@@ -258,7 +258,7 @@ export function placeInlineFigures(text, resolve) {
 const restoreFigures = (rendered, jsx) => rendered == null ? rendered : String(rendered).replace(FIG_TOKEN, (m, i) => jsx[Number(i)] ?? '');
 
 const problemFigures = problem => [
-  ...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...(problem.solution?.figures || []),
+  ...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...sectionFigures(problem.sections), ...(problem.solution?.figures || []), ...sectionFigures(problem.solution?.sections),
 ];
 
 // Solution figures stored in the statement (problem.figures / parts[].figures) would be shown under «Условие», outside
@@ -887,6 +887,51 @@ export function displayMathLines(mdx) {
   return out.join('\n');
 }
 
+// Frozen routes are the problem base; the actual solution page lives below /solution.
+export function problemAliases(problem, routes, allIds = new Set()) {
+  const aliases = {};
+  const target = routes[problem.id] || `/problems/${problem.id}`;
+  for (const alias of problem.aliases || []) {
+    if (allIds.has(alias.id) || !problem.sections?.some(s => s.id === alias.sectionId)) throw new Error(`Invalid alias ${alias.id} on ${problem.id}`);
+    const to = `${target}/solution#${alias.sectionId}`;
+    for (const from of new Set([routes[alias.id], `/problems/${alias.id}`].filter(Boolean))) {
+      aliases[from] = to;
+      aliases[`${from}/solution`] = to;
+    }
+  }
+  return aliases;
+}
+
+// A source section is a semantic unit of one problem, never a second page.
+function sectionFigures(sections) {
+  return (sections || []).flatMap(s => [...(s.figures || []), ...(s.parts || []).flatMap(p => p.figures || [])]);
+}
+function sectionTexts(sections) {
+  return (sections || []).flatMap(s => [s.statement, s.statementAfterParts, ...(s.parts || []).flatMap(p => [p.statement, p.statementAfter])]);
+}
+export function sectionLines(sections, problem, resolve, solution = false) {
+  const out = [];
+  for (const section of sections || []) {
+    const anchor = `${solution ? 'solution-' : ''}${section.id}`;
+    const points = section.points == null ? '' : ` (${String(section.points).replace('.', ',')} т.)`;
+    out.push(`<ProblemSection id="${anchor}">`, '', `### ${mdText(section.title)}${points}`, '');
+    if (section.statement) out.push(sourceText(section.statement, problem, resolve), '');
+    const texts = sectionTexts([section]);
+    const candidates = sectionFigures([section]);
+    for (const fig of figuresNotInline(section.figures, texts, candidates)) out.push(figureMarkdown(fig), '');
+    for (const part of section.parts || []) {
+      const pts = part.points == null ? '' : ` **[${String(part.points).replace('.', ',')} т.]**`;
+      const text = sourceText(part.statement, problem, resolve);
+      out.push(`**${mdText(part.label)}** ${text}${pts}`, '');
+      for (const fig of figuresNotInline(part.figures, texts, candidates)) out.push(figureMarkdown(fig), '');
+      if (part.statementAfter) out.push(sourceText(part.statementAfter, problem, resolve), '');
+    }
+    if (section.statementAfterParts) out.push(sourceText(section.statementAfterParts, problem, resolve), '');
+    out.push('</ProblemSection>', '');
+  }
+  return out;
+}
+
 export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   const lines = [];
   lines.push('---');
@@ -899,7 +944,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   if (state.quality === 'reviewed' && state.verifiedAt) lines.push(`verifiedAt: ${yamlStr(state.verifiedAt)}`);
   // the page must not claim an independent model when the receipt records a same-model check (D-P7, D-P10)
   // a mechanical-only receipt (D-P21: no second model) is named as such, never as an independent model
-  if (state.quality === 'reviewed') lines.push(`verifier: ${yamlStr(state.mechanical ? 'mechanical' : state.cropAudit ? 'crop-audit' : state.independent === false ? 'same-model' : 'independent')}`);
+  if (state.quality === 'reviewed') lines.push(`verifier: ${yamlStr(state.singlePass ? 'single-pass' : state.mechanical ? 'mechanical' : state.cropAudit ? 'crop-audit' : state.independent === false ? 'same-model' : 'independent')}`);
   lines.push('---');
   lines.push('');
   // Lead line: the paper's printed masthead (ground truth), the date and the points.
@@ -926,18 +971,18 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   // the figures a text may show inline (placeInlineFigures): the statement side only its own figures (a solution
   // figure named there stays out of the statement: the spoiler), the solution side its own, the moved ones and the
   // statement's
-  const statementCandidates = [...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || [])].filter(inStatement);
+  const statementCandidates = [...(problem.figures || []), ...(problem.parts || []).flatMap(p => p.figures || []), ...sectionFigures(problem.sections)].filter(inStatement);
   // a25-I-56.pdf pp.5–6 repeats the question's six animal photos before its solution.
   // The first combined solution crop actually covers the previous problem's text.
   // Keep the six reviewed individual statement crops; neither repeated row adds information.
   const duplicatePhotos = problem.id === 'nao-2025-i-5-6-p4'
     && [1, 2, 3, 4, 5, 6].every(n => statementCandidates.some(f => f.id === `p4-fig${n}`));
   const uniqueSolutionFigures = (sol?.figures || []).filter(f => !duplicatePhotos || !['p4-sol-fig1', 'p4-sol-fig2'].includes(f.id));
-  const solutionCandidates = [...uniqueSolutionFigures, ...misplaced.map(m => m.fig), ...statementCandidates];
+  const solutionCandidates = [...sectionFigures(sol?.sections), ...uniqueSolutionFigures, ...misplaced.map(m => m.fig), ...statementCandidates];
   const resolveStatement = target => resolveFigureTarget(target, statementCandidates);
   const resolveSolution = target => resolveFigureTarget(target, solutionCandidates);
   const shown = (text, resolve) => resolveFigurePlaceholders(text, problem, resolve);
-  const statementTexts = [problem.statement, problem.statementAfterParts, ...partTexts].map(t => shown(t, resolveStatement));
+  const statementTexts = [problem.statement, problem.statementAfterParts, ...partTexts, ...sectionTexts(problem.sections)].map(t => shown(t, resolveStatement));
   const solutionShown = shown(sol?.statement, resolveSolution);
   const statementFigs = figuresNotInline(problem.figures, statementTexts, statementCandidates).filter(inStatement);
   const partFigs = (problem.parts ?? []).map(part => figuresNotInline(part.figures, statementTexts, statementCandidates).filter(inStatement));
@@ -954,6 +999,11 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   const fieldLines = (field, text, render, always = false) => plan.slots.has(field)
     ? splitAtFigures(text, plan.slots.get(field)).flatMap(piece => piece.figures ?? [render(piece.text), ''])
     : text || always ? [render(text), ''] : [];
+  if (problem.sections?.length) {
+    lines.push('<nav className="problem-sections-toc" aria-label="Части на задачата">', '', '**В тази задача**', '');
+    for (const section of problem.sections) lines.push(`- [${mdText(section.title)}](#${section.id})`);
+    lines.push('', '</nav>', '');
+  }
   lines.push(...fieldLines('statement', problem.statement, t => sourceText(t, problem, resolveStatement).trimEnd(), true));
   for (const fig of unanchored(statementFigs)) lines.push(figureMarkdown(fig), '');
   if (problem.parts?.length) {
@@ -983,10 +1033,12 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       lines.push(...fieldLines(`parts/${k}/statementAfter`, part.statementAfter, t => sourceText(t, problem, resolveStatement)));
     });
   }
+  lines.push(...sectionLines(problem.sections, problem, resolveStatement));
   lines.push(...fieldLines('statementAfterParts', problem.statementAfterParts, t => sourceText(t, problem, resolveStatement)));
   const answers = [
     ...(problem.answer ? [{ label: '', answer: problem.answer }] : []),
     ...(problem.parts ?? []).filter(p => p.answer),
+    ...(problem.sections ?? []).flatMap(section => (section.parts ?? []).filter(part => part.answer).map(part => ({ label: `${section.title}, ${part.label}`, answer: part.answer }))),
   ].map(p => ({ label: p.label, shown: renderAnswer(p.answer) })).filter(p => p.shown);
   if (answers.length) {
     lines.push('## Отговори', '');
@@ -998,16 +1050,17 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   }
   // solution figures found in the statement follow the solution's own figures, inside the same spoiler; without
   // solution text (an incomplete solution, or none at all) the figures still stay behind a spoiler
-  if (sol?.statement || sol?.incomplete || solutionFigures.length) {
+  if (sol?.statement || sol?.sections?.length || sol?.incomplete || solutionFigures.length) {
     lines.push('## Решение', '');
     if (sol?.incomplete) {
       lines.push('<Warning title="Непълно решение">', visitorNote(sol.incompleteReason) || (sol.statement ? 'Официалното решение е непълно.' : 'В архива няма официално решение на тази задача.'), '</Warning>', '');
     }
-    if (sol?.statement) lines.push('<Spoiler title="Покажи официалното решение">', '');
+    if (sol?.statement || sol?.sections?.length) lines.push('<Spoiler title="Покажи официалното решение">', '');
     else if (solutionFigures.length) lines.push('<Spoiler title="Покажи фигурите от официалното решение">', '');
     if (sol?.statement || solutionFigures.length) lines.push(...fieldLines('solution/statement', sol?.statement, t => sourceText(t, problem, resolveSolution)));
+    lines.push(...sectionLines(sol?.sections, problem, resolveSolution, true));
     for (const fig of unanchored(solutionFigures)) lines.push(figureMarkdown(fig), '');
-    if (sol?.statement || solutionFigures.length) lines.push('', '</Spoiler>', '');
+    if (sol?.statement || sol?.sections?.length || solutionFigures.length) lines.push('', '</Spoiler>', '');
   }
   lines.push(...documentNoteLines(paper, 'after-problem'));
   const classification = classificationSearch(problem.classification);
@@ -1121,6 +1174,7 @@ function main() {
   const allIds = new Set(records.flatMap(r => r.data.problems.map(p => p.id)));
   const owned = new Set(prior.problemIds);
   const planned = new Map(), generated = new Map(), excluded = [];
+  const aliases = {};
   const figureOpts = { anchors: readFigureAnchors(ROOT), stats: newFigureStats() };
 
   // Bootstrap ownership only from the exact generator signature. Never sweep
@@ -1162,6 +1216,10 @@ function main() {
       // (content/problem-routes.json, bootstrapped from production); any id not
       // in the frozen map is new and gets a stable id-based route.
       if (!routes[problem.id]) routes[problem.id] = `/problems/${problem.id}`;
+      for (const [from, to] of Object.entries(problemAliases(problem, routes, allIds))) {
+        if (aliases[from] && aliases[from] !== to) throw new Error(`Alias collision: ${from}`);
+        aliases[from] = to;
+      }
     }
   }
   // Keep routes reserved after withdrawal, so a title edit or later restoration
@@ -1189,6 +1247,7 @@ function main() {
   const metadata = [...unmanaged, ...[...generated.values()].filter(p => !inModules.has(p.uniqueId))].sort((a, b) => a.uniqueId.localeCompare(b.uniqueId));
   planned.set('content/extraProblems.json', jsonText({ ...extra, EXTRA_PROBLEMS: metadata }));
   const sortedRoutes = Object.entries(routes).sort(([a], [b]) => a.localeCompare(b));
+  planned.set('content/problem-aliases.json', jsonText(aliases));
   planned.set('content/problem-routes.json', jsonText(Object.fromEntries(sortedRoutes)));
   // What the browser needs (src/models/problem.ts): only the routes that are not "/problems/<id>", which getProblemURL
   // gives any id it does not find. Three quarters of the ledger are such entries; every problem page loaded them.

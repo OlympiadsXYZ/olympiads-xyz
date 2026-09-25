@@ -13,6 +13,7 @@
 // glyph for every character, with a real text layer, so pages, text layer and the checks downstream work unchanged.
 import fs from 'node:fs';
 import path from 'node:path';
+import { PAGE_RENDERER, pageRenderArgs, previewGeometryError } from './page-render.mjs';
 import { supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
 import {
   parseArgs, fail, run, resolvePaper, paperDir, manifestFile, readManifest, writeJson,
@@ -159,9 +160,9 @@ function pdfInfo(file) {
   const pages = Number(/^Pages:\s+(\d+)/m.exec(out)?.[1]);
   const pageSizes = [];
   for (const m of out.matchAll(/^Page\s+(\d+) size:\s+([\d.]+) x ([\d.]+) pts/gm)) pageSizes[Number(m[1]) - 1] = { page: Number(m[1]), widthPt: Number(m[2]), heightPt: Number(m[3]) };
-  // pdfinfo reports the unrotated media box, but pdftoppm renders the page as
-  // displayed (/Rotate applied) and every box a reader proposes is relative to
-  // that image; pdfcrop.py's page.rect is rotated too. Record the displayed size.
+  // pdfinfo reports the unrotated effective CropBox (clipped to MediaBox).
+  // pdftoppm -cropbox and pdfcrop.py's page.rect apply /Rotate. Record that
+  // displayed size: preview, permille proposals and cropper share one origin.
   for (const m of out.matchAll(/^Page\s+(\d+) rot:\s+(\d+)/gm)) {
     const s = pageSizes[Number(m[1]) - 1], rot = Number(m[2]) % 360;
     if (!s || !rot) continue;
@@ -216,10 +217,17 @@ for (const doc of Object.keys(keys)) {
   const bytes = fs.statSync(file).size;
   const info = pdfInfo(file);
   // Render only when the cached pages do not correspond to these exact bytes.
-  let pageImages = !args.force && prev && prev.sha256 === sha256 && prev.renderDpi === RENDER_DPI ? renderedPages(doc, info.pages) : null;
+  let pageImages = !args.force && prev && prev.sha256 === sha256 && prev.renderDpi === RENDER_DPI && prev.pageRenderer === PAGE_RENDERER ? renderedPages(doc, info.pages) : null;
   if (!pageImages) {
+    // Do not silently reinterpret candidates authored against a MediaBox preview.
+    // An explicit migration must set those candidates aside and re-read/rebox.
+    const oldImages = renderedPages(doc, info.pages);
+    const mismatch = oldImages?.map((image, i) => previewGeometryError(path.join(dir, image), info.pageSizes[i], prev?.renderDpi || RENDER_DPI)).find(Boolean);
+    if (mismatch && fs.readdirSync(path.join(dir, 'candidates')).some(f => f.endsWith('.json'))) {
+      fail(`${mismatch}. Cached candidates may use the old coordinate space. Move them out of candidates/, rerun prepare, then re-read/rebox against the new previews; do not reuse their old boxes.`);
+    }
     for (const f of fs.readdirSync(path.join(dir, 'pages'))) if (f.startsWith(`${doc}-`)) fs.rmSync(path.join(dir, 'pages', f));
-    run('pdftoppm', ['-r', String(RENDER_DPI), '-png', file, path.join(dir, 'pages', doc)]);
+    run('pdftoppm', pageRenderArgs(file, path.join(dir, 'pages', doc), RENDER_DPI));
     // pdftoppm pads page numbers to the width of the page count; normalise to two digits.
     for (const f of fs.readdirSync(path.join(dir, 'pages'))) {
       const m = new RegExp(`^${doc}-(\\d+)\\.png$`).exec(f);
@@ -230,6 +238,10 @@ for (const doc of Object.keys(keys)) {
     pageImages = renderedPages(doc, info.pages);
     if (!pageImages) throw new Error(`rendering ${doc} produced an unexpected page count`);
   }
+  for (let i = 0; i < pageImages.length; i++) {
+    const error = previewGeometryError(path.join(dir, pageImages[i]), info.pageSizes[i], RENDER_DPI);
+    if (error) fail(error);
+  }
   const textFile = path.join(dir, 'text', `${doc}.txt`);
   // The text layer belongs to these exact bytes: regenerate after any download or hash change.
   if (!fs.existsSync(textFile) || downloaded || prev?.sha256 !== sha256) { fs.rmSync(textFile, { force: true }); run(pdftotextBin(), ['-enc', 'UTF-8', '-layout', file, textFile], { allowFail: true }); }
@@ -238,7 +250,7 @@ for (const doc of Object.keys(keys)) {
   const conv = converted[doc] || (prev?.converted && prev.key === key && prev.sha256 === sha256 ? prev.converted : null);
   manifest.documents[doc] = {
     key, file: `src/${doc}.pdf`, sha256, bytes, pages: info.pages, pageSizes: info.pageSizes, producer: info.producer,
-    renderDpi: RENDER_DPI, pageImages, text: `text/${doc}.txt`,
+    renderDpi: RENDER_DPI, pageRenderer: PAGE_RENDERER, pageImages, text: `text/${doc}.txt`,
     textChars: text.trim().length, textDigits: (text.match(/\d/g) || []).length,
     downloaded,
     ...(conv ? { converted: conv } : {}),

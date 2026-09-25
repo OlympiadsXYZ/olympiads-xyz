@@ -63,7 +63,7 @@ problems.forEach((pr, i) => {
   if (ids.has(pr.id)) err(`${p}/id`, `duplicate id ${pr.id}`); ids.add(pr.id);
   if (Number.isInteger(pr.number)) { if (pr.number !== expectedNumbers[i]) err(`${p}/number`, `expected ${expectedNumbers[i]}, got ${pr.number} (use complete catalogue labels, or contiguous 1..N when labels are unavailable)`); }
   else warn(`${p}/number`, `non-integer number "${pr.number}"`);
-  if (!pr.statement || !String(pr.statement).trim()) { if ((pr.parts || []).length) warn(`${p}/statement`, 'empty statement (the printed problem is only its parts)'); else err(`${p}/statement`, 'empty statement'); }
+  if (!pr.statement || !String(pr.statement).trim()) { if ((pr.parts || []).length || (pr.sections || []).length) warn(`${p}/statement`, 'empty statement (the printed problem is only its parts)'); else err(`${p}/statement`, 'empty statement'); }
   else if (String(pr.statement).includes(WINDOW_PLACEHOLDER)) err(`${p}/statement`, `window placeholder "${WINDOW_PLACEHOLDER}" left unresolved (assemble.mjs did not find the statement in any window)`);
   if (typeof pr.points === 'number' && pr.points < 0) err(p, `negative points (${pr.points}): a penalty rule printed as a problem entry is not a problem — remove this entry ({"remove": true}); its printed text, if any, goes to the end of the previous problem's statement`);
   else if (pr.points != null && (typeof pr.points !== 'number' || pr.points > 200)) err(`${p}/points`, `implausible points ${pr.points}`);
@@ -77,8 +77,29 @@ problems.forEach((pr, i) => {
     checkAnswer(pt.answer, `${q}/answer`);
   });
   if (partsWithPoints && pr.points != null && partsWithPoints === (pr.parts || []).length && Math.abs(partSum - pr.points) > 1e-9) warn(`${p}/points`, `parts sum to ${partSum} but problem has ${pr.points} (fine if printed so; say it in tx.notes)`);
+  for (const [sections, prefix] of [[pr.sections, `${p}/sections`], [pr.solution?.sections, `${p}/solution/sections`]]) {
+    const sectionIds = new Set();
+    (sections || []).forEach((section, k) => {
+      const q = `${prefix}/${k}`;
+      if (sectionIds.has(section.id)) err(`${q}/id`, `duplicate section id ${section.id}`);
+      sectionIds.add(section.id);
+      if (!section.statement?.trim() && !(section.parts || []).length && !(section.figures || []).length) err(q, 'empty section');
+      const labels = new Set();
+      (section.parts || []).forEach((part, j) => {
+        if (labels.has(part.label)) err(`${q}/parts/${j}/label`, 'duplicate label within section');
+        labels.add(part.label);
+        if (!part.statement?.trim()) err(`${q}/parts/${j}/statement`, 'empty part statement');
+        if (part.points != null && (typeof part.points !== 'number' || part.points < 0)) err(`${q}/parts/${j}/points`, 'invalid part points');
+        checkAnswer(part.answer, `${q}/parts/${j}/answer`);
+      });
+    });
+  }
+  for (const alias of pr.aliases || []) {
+    if (!pr.sections?.some(s => s.id === alias.sectionId)) err(`${p}/aliases`, `missing section ${alias.sectionId}`);
+    if (problems.some(other => other.id === alias.id)) err(`${p}/aliases`, `alias is still a problem: ${alias.id}`);
+  }
   checkAnswer(pr.answer, `${p}/answer`);
-  if (pr.solution && !pr.solution.incomplete && !(pr.solution.statement || '').trim()) err(`${p}/solution/statement`, 'empty solution without incomplete: true');
+  if (pr.solution && !pr.solution.incomplete && !(pr.solution.statement || '').trim() && !(pr.solution.sections || []).length) err(`${p}/solution/statement`, 'empty solution without incomplete: true');
   if (pr.solution?.incomplete && !pr.solution.incompleteReason) warn(`${p}/solution`, 'incomplete without incompleteReason');
   for (const s of pr.tx?.sourceSpans || pr.sourceSpans || []) {
     if (!isDocumentId(s.document)) err(`${p}/tx/sourceSpans`, `unknown document "${s.document}"`);
@@ -90,7 +111,7 @@ const total = problems.reduce((a, pr) => a + (typeof pr.points === 'number' ? pr
 if (paper.totalPoints != null && problems.every(pr => typeof pr.points === 'number') && Math.abs(total - paper.totalPoints) > 1e-9) warn('/paper/totalPoints', `problems sum to ${total}, totalPoints is ${paper.totalPoints}`);
 const listed = manifest?.meta?.listed?.problems;
 if (listed && problems.length !== listed) warn('/problems', `${problems.length} problem entries, the archive inventory lists ${listed} (printed sections and sub-tasks of one problem are its parts, not problems of their own)`);
-const listedParts = manifest?.meta?.listed?.parts, haveParts = problems.reduce((a, p) => a + (p.parts || []).length, 0);
+const listedParts = manifest?.meta?.listed?.parts, haveParts = problems.reduce((a, p) => a + (p.parts || []).length + (p.sections || []).reduce((sum, s) => sum + (s.parts || []).length, 0), 0);
 if (listedParts >= 3 && haveParts === 0) warn('/problems', `no parts at all, the archive inventory lists about ${listedParts} printed sub-tasks — they were folded into the statement`);
 if (manifest) for (const doc of ['source', 'solutionSource']) {
   const d = doc === 'source' ? 'problems' : 'solutions';
@@ -201,7 +222,7 @@ if (problemsPdf && fs.existsSync(problemsPdf)) {
 
 const report = {
   ok: errors.length === 0, mode, file: path.resolve(file), paperId,
-  stats: { problems: problems.length, parts: problems.reduce((a, p) => a + (p.parts || []).length, 0), figures: figIds.size, mathSpans: mathCount, solutions: problems.filter(p => p.solution?.statement).length, incomplete: problems.filter(p => p.solution?.incomplete).length },
+  stats: { problems: problems.length, parts: problems.reduce((a, p) => a + (p.parts || []).length + (p.sections || []).reduce((sum, s) => sum + (s.parts || []).length, 0), 0), figures: figIds.size, mathSpans: mathCount, solutions: problems.filter(p => p.solution?.statement || p.solution?.sections?.length).length, incomplete: problems.filter(p => p.solution?.incomplete).length },
   errors, warnings,
 };
 if (!args.quiet) console.log(JSON.stringify(report, null, 2));

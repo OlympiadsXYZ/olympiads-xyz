@@ -11,7 +11,7 @@ const ProblemSolutionContext = React.createContext<{
 
 /** Publication quality of a transcribed page, from the publication ledger. */
 export type ProblemVerification = {
-  /** legacy = released before the ledger; reviewed = independent model pass; human = editor */
+  /** legacy = released before the ledger; reviewed = recorded validation (see verifier); human = editor */
   kind: string;
   /** ISO timestamp of the review receipt, when kind is 'reviewed' */
   verifiedAt?: string;

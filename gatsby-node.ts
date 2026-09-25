@@ -225,6 +225,13 @@ exports.onCreateNode = async api => {
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions;
+  const aliasFile = './content/problem-aliases.json';
+  if (fs.existsSync(aliasFile)) {
+    const aliases = JSON.parse(fs.readFileSync(aliasFile, 'utf8'));
+    for (const [fromPath, toPath] of Object.entries(aliases)) {
+      createRedirect({ fromPath, toPath: String(toPath), isPermanent: true, redirectInBrowser: true });
+    }
+  }
   const redirectsData = fs.readFileSync('./src/redirects.txt');
   (redirectsData + '')
     .split('\n')

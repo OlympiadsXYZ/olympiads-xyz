@@ -4,6 +4,7 @@ import MarkdownLayout from '../components/MarkdownLayout/MarkdownLayout';
 import Layout from '../components/layout';
 import Markdown from '../components/markdown/Markdown';
 import SEO from '../components/seo';
+import ProblemTopics from '../components/ProblemTopics';
 import { ConfettiProvider } from '../context/ConfettiContext';
 import { ComparePanelProvider } from '../components/ComparePanel/ComparePanelContext';
 import { ProblemSolutionContext } from '../context/ProblemSolutionContext';
@@ -67,6 +68,7 @@ export default function Template(props) {
           <ComparePanelProvider>
             <MarkdownLayout markdownData={markdownData}>
               <div className="py-4">
+                <ProblemTopics tags={problemInfo.tags} />
                 <Markdown body={body} />
               </div>
             </MarkdownLayout>
@@ -146,6 +148,7 @@ export const pageQuery = graphql`
       uniqueId
       url
       solutionUrl
+      tags
     }
   }
 `;

@@ -8,6 +8,7 @@
 // paddings, text sizes, hover and active colours, dark mode.
 import { Link } from 'gatsby';
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   problemLabel,
   ProblemsTreeData,
@@ -206,6 +207,74 @@ function ProblemRow({
   );
 }
 
+/** A native picker keeps decades of years out of the document's tab/scroll flow. */
+export function YearBrowser({
+  competition,
+  selectedYear,
+  onSelect,
+  children,
+}: {
+  competition: TreeCompetition;
+  selectedYear: number | undefined;
+  onSelect: (year: number) => void;
+  children: (year: TreeYear) => React.ReactNode;
+}) {
+  const { i18n } = useTranslation();
+  const english = i18n.language?.startsWith('en');
+  const years = competition.years;
+  const selected = years.find(year => year.year === selectedYear) ?? years[0];
+  if (!selected) return null;
+  const index = years.indexOf(selected);
+  const stepClass =
+    'flex h-10 w-9 flex-shrink-0 items-center justify-center rounded-md text-gray-500 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-30 disabled:cursor-default disabled:hover:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-blue-400';
+  return (
+    <div className="mb-2">
+      <div className="mx-4 ml-6 mb-1 rounded-lg border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-dark-surface">
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            aria-label={english ? 'Newer year' : 'По-нова година'}
+            disabled={index === 0}
+            onClick={() => onSelect(years[index - 1].year)}
+            className={stepClass}
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+          <label className="min-w-0 flex-1">
+            <span className="block pl-2 text-[10px] font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              {english ? 'Year' : 'Година'}
+            </span>
+            <select
+              aria-label={`${competition.short} · ${
+                english ? 'Year' : 'Година'
+              }`}
+              value={selected.year}
+              onChange={event => onSelect(Number(event.target.value))}
+              className="block w-full cursor-pointer rounded border-0 bg-transparent py-0 pl-2 pr-7 text-sm font-semibold tabular-nums text-gray-800 focus:ring-2 focus:ring-blue-500 dark:bg-dark-surface dark:text-dark-high-emphasis"
+            >
+              {years.map(year => (
+                <option key={year.year} value={year.year}>
+                  {year.year} · {year.count}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            aria-label={english ? 'Older year' : 'По-стара година'}
+            disabled={index === years.length - 1}
+            onClick={() => onSelect(years[index + 1].year)}
+            className={stepClass}
+          >
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+      {children(selected)}
+    </div>
+  );
+}
+
 function Skeleton() {
   const widths = ['w-24', 'w-40', 'w-32', 'w-36', 'w-28', 'w-44', 'w-32'];
   return (
@@ -277,6 +346,29 @@ export default function ProblemsTree({
     const path = pathTo(tree, currentProblemId);
     setExpanded(prev => {
       const next: Expanded = { ...(prev ?? readStoredExpanded()) };
+      // Migrate old sessions with many expanded years/competitions. Keep the
+      // current problem visible, with just one competition and year per branch.
+      for (const subject of tree.subjects) {
+        const selectedCompetition =
+          subject.competitions.find(comp =>
+            path.includes(competitionKey(subject, comp))
+          ) ??
+          subject.competitions.find(
+            comp => next[competitionKey(subject, comp)]
+          );
+        for (const comp of subject.competitions) {
+          next[competitionKey(subject, comp)] = comp === selectedCompetition;
+          const selectedYear =
+            comp.years.find(year =>
+              path.includes(yearKey(subject, comp, year))
+            ) ??
+            comp.years.find(year => next[yearKey(subject, comp, year)]) ??
+            comp.years[0];
+          for (const year of comp.years) {
+            next[yearKey(subject, comp, year)] = year === selectedYear;
+          }
+        }
+      }
       for (const key of path) next[key] = true;
       return next;
     });
@@ -368,63 +460,74 @@ export default function ProblemsTree({
                           count={comp.count}
                           open={cOpen}
                           onPath={path.has(cKey)}
-                          onToggle={() => toggle(cKey)}
+                          onToggle={() =>
+                            setExpanded(prev => {
+                              const next = { ...(prev ?? {}) };
+                              for (const sibling of subject.competitions) {
+                                const key = competitionKey(subject, sibling);
+                                next[key] = key === cKey && !prev?.[cKey];
+                              }
+                              return next;
+                            })
+                          }
                           rowClass="pl-6 py-2 font-medium"
                           textClass="text-gray-700 dark:text-dark-med-emphasis"
                           onPathTextClass="text-gray-900 dark:text-dark-high-emphasis"
                           chevronClass="h-4 w-4 text-gray-400"
                         />
-                        {cOpen &&
-                          comp.years.map(year => {
-                            const yKey = yearKey(subject, comp, year);
-                            const yOpen = isOpen(yKey);
-                            return (
-                              <div key={yKey}>
-                                <ToggleRow
-                                  label={String(year.year)}
-                                  count={year.count}
-                                  open={yOpen}
-                                  onPath={path.has(yKey)}
-                                  onToggle={() => toggle(yKey)}
-                                  rowClass="pl-8 py-2"
-                                  textClass="text-gray-600 dark:text-dark-med-emphasis"
-                                  onPathTextClass="text-gray-900 font-medium dark:text-dark-high-emphasis"
-                                  chevronClass="h-4 w-4 text-gray-400"
-                                />
-                                {yOpen &&
-                                  year.papers.map(paper => {
-                                    const pKey = paperKey(paper);
-                                    const pOpen = isOpen(pKey);
-                                    return (
-                                      <div key={pKey}>
-                                        <ToggleRow
-                                          label={paper.label}
-                                          count={paper.count}
-                                          open={pOpen}
-                                          onPath={path.has(pKey)}
-                                          onToggle={() => toggle(pKey)}
-                                          rowClass="pl-10 py-2"
-                                          textClass="text-gray-600 dark:text-dark-med-emphasis"
-                                          onPathTextClass="text-gray-900 font-medium dark:text-dark-high-emphasis"
-                                          chevronClass="h-4 w-4 text-gray-400"
+                        {cOpen && (
+                          <YearBrowser
+                            competition={comp}
+                            selectedYear={
+                              comp.years.find(year =>
+                                isOpen(yearKey(subject, comp, year))
+                              )?.year ?? comp.years[0]?.year
+                            }
+                            onSelect={year => {
+                              setExpanded(prev => {
+                                const next = { ...(prev ?? {}) };
+                                for (const item of comp.years) {
+                                  next[yearKey(subject, comp, item)] =
+                                    item.year === year;
+                                }
+                                return next;
+                              });
+                            }}
+                          >
+                            {year =>
+                              year.papers.map(paper => {
+                                const pKey = paperKey(paper);
+                                const pOpen = isOpen(pKey);
+                                return (
+                                  <div key={pKey}>
+                                    <ToggleRow
+                                      label={paper.label}
+                                      count={paper.count}
+                                      open={pOpen}
+                                      onPath={path.has(pKey)}
+                                      onToggle={() => toggle(pKey)}
+                                      rowClass="pl-8 py-2"
+                                      textClass="text-gray-600 dark:text-dark-med-emphasis"
+                                      onPathTextClass="text-gray-900 font-medium dark:text-dark-high-emphasis"
+                                      chevronClass="h-4 w-4 text-gray-400"
+                                    />
+                                    {pOpen &&
+                                      paper.problems.map(problem => (
+                                        <ProblemRow
+                                          key={problem.id}
+                                          problem={problem}
+                                          isActive={
+                                            problem.id === currentProblemId
+                                          }
+                                          activeRef={activeRef}
                                         />
-                                        {pOpen &&
-                                          paper.problems.map(problem => (
-                                            <ProblemRow
-                                              key={problem.id}
-                                              problem={problem}
-                                              isActive={
-                                                problem.id === currentProblemId
-                                              }
-                                              activeRef={activeRef}
-                                            />
-                                          ))}
-                                      </div>
-                                    );
-                                  })}
-                              </div>
-                            );
-                          })}
+                                      ))}
+                                  </div>
+                                );
+                              })
+                            }
+                          </YearBrowser>
+                        )}
                       </div>
                     );
                   })}

@@ -8,7 +8,10 @@ detection here and none should be added. The transcribing agent looks at the
 rendered page and says where the figure is; this only does the cropping.
 
 Boxes are given in the coordinate space of a preview render (default 160 dpi),
-because that is the image the agent actually looked at.
+of the displayed CropBox, with /Rotate applied (pdftoppm -cropbox),
+because that is the image the agent actually looked at. The origin is the
+visible page's top-left, not the MediaBox origin. pdfRect persists this same
+displayed CropBox space in PDF points; no translation is added on replay.
 
   pdfcrop.py in.pdf out_dir --dpi 300 --preview-dpi 160 \
       --box "page=1,x0=110,y0=400,x1=690,y1=670,id=p1-fig1"

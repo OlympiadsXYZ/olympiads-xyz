@@ -348,6 +348,12 @@ export function allFigures(data) {
   (data.problems || []).forEach((pr, i) => {
     (pr.figures || []).forEach((f, j) => out.push({ fig: f, path: `/problems/${i}/figures/${j}`, problem: pr }));
     (pr.parts || []).forEach((pt, k) => (pt.figures || []).forEach((f, j) => out.push({ fig: f, path: `/problems/${i}/parts/${k}/figures/${j}`, problem: pr })));
+    for (const [sections, prefix] of [[pr.sections, `/problems/${i}`], [pr.solution?.sections, `/problems/${i}/solution`]]) {
+      (sections || []).forEach((section, k) => {
+        (section.figures || []).forEach((f, j) => out.push({ fig: f, path: `${prefix}/sections/${k}/figures/${j}`, problem: pr }));
+        (section.parts || []).forEach((part, n) => (part.figures || []).forEach((f, j) => out.push({ fig: f, path: `${prefix}/sections/${k}/parts/${n}/figures/${j}`, problem: pr })));
+      });
+    }
     ((pr.solution || {}).figures || []).forEach((f, j) => out.push({ fig: f, path: `/problems/${i}/solution/figures/${j}`, problem: pr }));
   });
   return out;
@@ -645,7 +651,8 @@ export function provenanceFor(candidate, ctx) {
   const reader = candidate.tx?.reader || {};
   const sha = v => (typeof v === 'string' && /^[a-f0-9]{64}$/.test(v) ? v : undefined);
   const who = `${ctx.reviewer.provider}:${ctx.reviewer.model}`;
-  const how = ctx.reviewer.provider === 'mechanical' ? 'mechanical check only: schema, text layer, printed figures; no second model'
+  const how = ctx.mode === 'single-pass' ? 'single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker'
+    : ctx.reviewer.provider === 'mechanical' ? 'mechanical check only: schema, text layer, printed figures; no second model'
     : ctx.mode === 'crops' ? `${ctx.independent ? 'independent' : 'same-model'} crop audit; text verified mechanically against the PDF text layer`
     : ctx.independent ? 'independent checker' : 'same-model checker';
   const adj = ctx.adjudicator ? `; adjudicated by ${ctx.adjudicator.provider}:${ctx.adjudicator.model}` : '';
@@ -736,7 +743,7 @@ export function contextBlock(manifest) {
     `- subject: ${m.subject}; competition: ${m.competition}; catalogue year: ${m.year}; catalogue round: ${m.round ?? 'null'}; catalogue grade: ${m.grade ?? 'null'}; lang: ${m.lang || 'bg'}`,
     `- documents:\n${docs}`,
     ...(Object.keys(manifest.documents || {}).some(id => SUPPLEMENT_ID.test(id)) ? [`- Supplementary PDFs keep their own identity: declare paper.supplementarySources as an object mapping each supplement-N to {archiveKey, pages}. Use that exact document id in source spans, figure tx, edits and documentNotes. Shared data tables belong in documentNotes with their printed heading and a Markdown table. Do not attribute a supplement page to the problems or solutions PDF, omit it, or invent a new problem for it.`] : []),
-    ...(m.listed?.problems ? [`- the archive inventory lists ${m.listed.problems} top-level problem(s) in the problems document (${m.listed.titles.join('; ')})${m.listed.parts ? ` with about ${m.listed.parts} printed sub-tasks` : ''}: emit exactly one problems[] entry per top-level problem; printed sections and sub-tasks inside one (Part A/B/C, A.1, E1.3, а)/б)) are its parts[] — one entry per printed sub-task with its label and points — never problems of their own and never folded into the statement. Say so in tx.notes if the page really prints a different number.`] : []),
+    ...(m.listed?.problems ? [`- the archive inventory lists ${m.listed.problems} top-level problem(s) in the problems document (${m.listed.titles.join('; ')})${m.listed.parts ? ` with about ${m.listed.parts} printed sub-tasks` : ''}: emit exactly one problems[] entry per top-level problem; printed titled divisions inside one (Part A/B/C, Част I/II, Task E1/E2 within one experiment) are its sections[]; labelled sub-tasks inside a section are sections[].parts[], otherwise parts[]. Keep one entry per printed question with its label and points; never create separate problems or duplicate questions in introductory text. Say so in tx.notes if the page really prints a different number.`] : []),
     ...(Object.values(manifest.documents || {}).some(d => /multi/i.test(String(d.key || d.file || ''))) ? [`- this file prints the same paper in SEVERAL LANGUAGES one after another: transcribe ONLY the ${m.lang || 'en'} version of every problem and solution — never the other languages' copies, never a mixture. Say in tx.notes which pages hold the ${m.lang || 'en'} version.`] : []),
     `- figure boxes are [x0, y0, x1, y1] in PERMILLE of the page (0–${BBOX_SCALE} across the width and across the height, origin top-left), independent of image resolution.`,
   ].join('\n');
@@ -1146,7 +1153,7 @@ export function normaliseCandidate(c, opts = {}) {
       delete s.statement; s.incomplete = true; s.incompleteReason = s.incompleteReason || text;
       changes.push(`/problems/${i}/solution: a remark about the missing solutions stood in for the solution; marked incomplete`);
     }
-    if (!String(s.statement || '').trim() && !s.incomplete && !(s.figures || []).length) { s.incomplete = true; s.incompleteReason = s.incompleteReason || 'no solution text'; changes.push(`/problems/${i}/solution: empty solution marked incomplete`); }
+    if (!String(s.statement || '').trim() && !s.incomplete && !(s.figures || []).length && !(s.sections || []).length) { s.incomplete = true; s.incompleteReason = s.incompleteReason || 'no solution text'; changes.push(`/problems/${i}/solution: empty solution marked incomplete`); }
   });
   if (changes.length) c.tx = { ...(c.tx || {}), normalised: [...(c.tx?.normalised || []), ...changes] };
   return c;

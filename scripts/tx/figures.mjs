@@ -10,6 +10,7 @@
 // mistaken for uploaded figures); it is for looking at crops before spending.
 import fs from 'node:fs';
 import path from 'node:path';
+import { previewGeometryError } from './page-render.mjs';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, paperDir, allFigures, run, which, md5, headStatuses,
   PDFCROP, RENDER_DPI, FIGURE_DPI, R2_REMOTE, figureUrl, nowIso, bboxToPreviewPx, sha256File, figureRotation,
@@ -33,6 +34,15 @@ if (!dry && !which('rclone')) fail('rclone not found');
 
 const proposals = allFigures(data).filter(f => f.fig.tx?.bbox);
 for (const p of proposals) figureRotation(p.fig); // reject unsupported angles before any crop/upload
+// Legacy MediaBox previews cannot be interpreted as displayed-CropBox boxes.
+// Fail before snapping or uploading; existing published crops remain untouched.
+for (const p of proposals) {
+  const d = manifest.documents[p.fig.tx.document];
+  const page = p.fig.tx.page - 1;
+  const image = d?.pageImages?.[page];
+  const error = previewGeometryError(image && path.join(paperDir(paperId), image), d?.pageSizes?.[page], d?.renderDpi || manifest.renderDpi || RENDER_DPI);
+  if (error) fail(`${error}. Re-prepare this source and rebox against the corrected preview before cropping; do not reuse boxes from the old preview.`);
+}
 // Snap the proposals onto graphics the PDF itself contains (born-digital pages
 // only; scans are left alone). Recorded per figure as tx.bboxProposed/tx.snapped;
 // --no-snap keeps the reader's boxes (benchmarking raw reader quality).

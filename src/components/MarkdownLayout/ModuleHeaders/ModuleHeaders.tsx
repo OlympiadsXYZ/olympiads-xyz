@@ -134,7 +134,9 @@ export default function ModuleHeaders({
             <p className="text-gray-500 dark:text-dark-med-emphasis text-xs mt-1">
               {verification.kind === 'reviewed'
                 ? t(
-                    verification.verifier === 'mechanical'
+                    verification.verifier === 'single-pass'
+                      ? 'problem-verification-single-pass'
+                      : verification.verifier === 'mechanical'
                       ? 'problem-verification-reviewed-mechanical'
                       : verification.verifier === 'crop-audit'
                       ? 'problem-verification-reviewed-crop-audit'

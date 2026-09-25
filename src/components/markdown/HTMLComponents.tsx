@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ProblemSectionAnchor } from './ProblemSection';
 import { archiveHref } from '../../archive/links';
 import { useDarkMode } from '../../context/DarkModeContext';
 // type only: the component itself is loaded on demand (HighlightedCode)
@@ -7,14 +8,18 @@ import type CodeBlockType from './CodeBlock/CodeBlock';
 // Note: try to avoid adding inline styles here; rather, use css selectors to target them.
 // Otherwise it's really hard to override some of these styles
 
-export const OffsetAnchor = ({ id, ...props }): JSX.Element => (
+export const OffsetAnchor = ({ id, ...props }): JSX.Element | null => {
+  const sectionId = React.useContext(ProblemSectionAnchor);
+  if (sectionId === id) return null;
+  return (
   <span
     id={id}
     {...props}
     className="absolute"
     style={{ bottom: '60px', height: '2px' }}
   />
-);
+  );
+};
 
 const h1 = ({ id, children, ...props }): JSX.Element => (
   <h1

@@ -636,39 +636,7 @@
         "parts": {
           "type": "array",
           "items": {
-            "type": "object",
-            "required": [
-              "label",
-              "statement"
-            ],
-            "additionalProperties": false,
-            "properties": {
-              "label": {
-                "type": "string"
-              },
-              "statement": {
-                "type": "string"
-              },
-              "points": {
-                "type": [
-                  "number",
-                  "null"
-                ]
-              },
-              "figures": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/$defs/figure"
-                }
-              },
-              "answer": {
-                "$ref": "#/$defs/answer"
-              },
-              "statementAfter": {
-                "type": "string",
-                "description": "Unlabelled common source paragraph after this part and before the next part."
-              }
-            }
+            "$ref": "#/$defs/part"
           }
         },
         "answer": {
@@ -735,6 +703,12 @@
             },
             "incompleteReason": {
               "type": "string"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/section"
+              }
             }
           }
         },
@@ -765,6 +739,34 @@
               "description": "Exact underlined passages in this problem or its solution."
             }
           }
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          },
+          "description": "Printed sections within one problem, in source order. IDs are permanent in-page anchors."
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "sectionId"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "sectionId": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              }
+            }
+          },
+          "description": "Former problem IDs redirected to a section of this problem; not separate problems."
         }
       }
     },
@@ -1645,6 +1647,84 @@
           }
         }
       ]
+    },
+    "part": {
+      "type": "object",
+      "required": [
+        "label",
+        "statement"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "statement": {
+          "type": "string"
+        },
+        "points": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "figures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/figure"
+          }
+        },
+        "answer": {
+          "$ref": "#/$defs/answer"
+        },
+        "statementAfter": {
+          "type": "string",
+          "description": "Unlabelled common source paragraph after this part and before the next part."
+        }
+      }
+    },
+    "section": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "statement"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "points": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "statement": {
+          "type": "string"
+        },
+        "figures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/figure"
+          }
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/part"
+          }
+        },
+        "statementAfterParts": {
+          "type": "string"
+        }
+      }
     }
   }
 }
