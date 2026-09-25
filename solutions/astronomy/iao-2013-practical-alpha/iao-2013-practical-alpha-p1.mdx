@@ -5,8 +5,8 @@ title: 'Задача 7. Asteroid'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IAO/2013/iao-2013-practical-alpha.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-17T17:50:38.173Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-25T12:28:58.465Z'
+verifier: 'single-pass'
 ---
 
 *XVIII International Astronomy Olympiad — Vilnius, Lithuania, 6–14.IX.2013 — Practical round. Problems to solve · 6 септември 2013 г.*
@@ -19,6 +19,25 @@ Astronomers of two observatories, which are located at a distance of 3172 km fro
 
 Note: You are provided a transparency for measurements of angular displacements of the asteroid.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '74.3%', '--fig-max': '476px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2013-practical-alpha/p7-image-1-astra-s5-r1.png" alt="Fig. 7.1. Asteroid field at 4:53 UT, with 3 arcminute scale" width="1487" height="1422" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '61.5%', '--fig-max': '394px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2013-practical-alpha/p7-image-2-astra-s5-r1.png" alt="Fig. 7.2. Asteroid field at 7:16 UT" width="1231" height="1145" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '77.6%', '--fig-max': '497px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2013-practical-alpha/p7-image-3-astra-s5-r1.png" alt="Fig. 7.3. Observatory 2" width="1554" height="1236" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '73.7%', '--fig-max': '472px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2013-practical-alpha/p7-image-4-astra-s5-r1.png" alt="Fourth field, Observatory 1; printed Fig. 7.3 again in the source" width="1474" height="1355" loading="lazy" decoding="async" />
+</figure>
+
+
+*Source note: the fourth image is labelled “Fig. 7.3” again, although the question and solution refer to it as Fig. 7.4. The observatory labels on the images are retained.*
+
 **7.1.** Identify and mark the asteroid in the given Figs.
 
 **7.2.** Measure the angular displacement (in arcsec) of the asteroid as seen from Observatory 1 and calculate its angular velocity in arcsec/s.
@@ -29,10 +48,75 @@ Note: You are provided a transparency for measurements of angular displacements 
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архиве отсутствует файл с решениями для данного практического задания (изображения Figs. 7.1–7.4 не включены в данный документ).
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+Official solution. The millimetre measurements refer to the original printed sheets; use the scale bar when viewing resized images.
+
+<ProblemSection id="solution-identify">
+
+### 7.1. Identification
+
+Comparison of Figs. 7.1 and 7.2 allow us to identify the asteroid and evaluate its angular displacement due to its motion. We put the transparency on Fig. 7.1 and mark positions of several bright objects with a pencil. Then we put the transparency on Fig. 7.2 and move it until the markings of objects on the transparency will coincide with positions of corresponding objects in Fig. 7.2. We notice that one object changed its position considerably in Fig. 7.2. This is the asteroid.
+
+</ProblemSection>
+
+<ProblemSection id="solution-angular-velocity">
+
+### 7.2. Angular displacement and velocity
+
+We mark the position of the asteroid on the transparency. Then we measure the displacement of the asteroid on the transparency and get $\Delta l=44$ mm. Using the scale of Fig. 7.1 we calculate the angular displacement of the asteroid.
+
+$$
+\Delta\theta=180\times44/81=98\ \mathrm{arcsec}.
+$$
+
+The time interval between images of Figs. 7.1 and 7.2 is
+
+$$
+\Delta t=7\mathrm h16\mathrm m-4\mathrm h53\mathrm m=2\mathrm h23\mathrm m=8580\ \mathrm s.
+$$
+
+The angular velocity of the asteroid
+
+$$
+\mu=\Delta\theta/\Delta t=98/8580=0.011\ \mathrm{arcsec/s}.
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-distance">
+
+### 7.3. Parallax and distance
+
+The parallax of the asteroid is evaluated by comparison of Figs. 7.3 and 7.4. These two images were taken from two different locations at the same time. We mark the positions of the asteroid overlaying the same transparency on Figs. 7.3 and 7.4 and measure the displacement of the asteroid on the same transparency, $\Delta b=7$ mm.
+
+Angular displacement of the asteroid is $\Delta\phi=180\times7/81=16$ arcsec. Then the parallax $p=\Delta\phi/2=8$ arcsec.
+
+The distance of the asteroid is $d=B/(2\tan p)$, where B is the baseline, i.e. the distance between observatories. Then $d=206265B/(2p)$ since p is a small angle and measured in arcsec.
+
+$$
+d=206265\times3172/(2\times8)=40900000\ \mathrm{km}=0.27\ \mathrm{au}.
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-tangential-velocity">
+
+### 7.4. Tangential velocity
+
+The tangential linear velocity of the asteroid is $v=d\tan\mu$ or $v=d\mu/206265$.
+
+$$
+v=40900000\times0.011/206265=2\ \mathrm{km/s}.
+$$
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [alphapract7.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2013/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/alpha7/alphapract7.pdf)
+· официални решения: [a7sol.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2013/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/alpha7/a7sol.png)
+· допълнителни данни: [alphapract7data.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2013/%D0%9F%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8/alpha7/alphapract7data.pdf)
