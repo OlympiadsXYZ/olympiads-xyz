@@ -270,7 +270,7 @@ export function rowTitle(
   }
   return (
     title
-      .replace(new RegExp(`^${escaped}(?:\\s*[.:)]\\s*|\\s+(?=\\S)|$)`), '')
+      .replace(new RegExp(`^${escaped}(?:\\s*[.:)–—]\\s*|\\s+(?=\\S)|$)`), '')
       .trim() || null
   );
 }
@@ -291,7 +291,7 @@ const ROMAN_VALUES: { [r: string]: number } = {
 };
 // "Задача 3. …", "Задача №2 …", "Задача II. …", "Задача 10.1 …", "Задача 8 (група α)", "Задача – оценка"
 const TITLE_HEAD =
-  /^Задача(?![\p{L}\p{N}])\s*(?:№\s*)?(?:(\d+(?:\.\d+)*[A-Za-zА-Яа-я]?|[IVX]+)(?![\p{L}\p{N}]|\.\d))?/u;
+  /^Задача(?![\p{L}\p{N}])\s*(?:№\s*)?(?:(\d+(?:\.\d+)*[A-Za-zА-Яа-я]?|[IVX]+)(?![\p{L}\p{N}]|\.\d))?/iu;
 
 /** The number a row shows: "Задача 3", "Задача 2A", or a non-numeric number as is ("Практически 1"). */
 export function numberLabel(number: number | string): string {
@@ -339,7 +339,8 @@ export function problemLabel(p: {
     // only the points: "Задача 3 т."
     if (/^\s*(?:т|точк[аи])\.?\s*$/u.test(rest)) return label;
     const value =
-      ROMAN_VALUES[printed] ?? (/^\d+$/.test(printed) ? Number(printed) : null);
+      ROMAN_VALUES[printed.toUpperCase()] ??
+      (/^\d+$/.test(printed) ? Number(printed) : null);
     // "Задача II." on problem 2; "Задача 1." on "Наблюдателен 1" (a named tour numbers its own problems)
     const own = numeric ? shown : /(\d+)$/.exec(shown)?.[1];
     if (value != null && String(value) === own) {

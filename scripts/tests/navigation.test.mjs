@@ -139,6 +139,25 @@ test('printed question numbers: unambiguous forms only', () => {
 });
 
 test('page title uses the display number and drops a repeated one', () => {
+  assert.equal(
+    problemName({
+      id: 'nof-2012-i-8-p1',
+      number: 1,
+      title: 'ЗАДАЧА 1. – 10 точки',
+    }),
+    'ЗАДАЧА 1. – 10 точки'
+  );
+  assert.equal(
+    problemName({ id: 'lower-roman', number: 2, title: 'задача ii. Движение' }),
+    'Задача 2. Движение'
+  );
+  assert.equal(
+    problemName(
+      { id: 'iao-beta', number: 6, title: 'β-1 — Слънчева радиация' },
+      { problems: { 'iao-beta': 'β-1' } }
+    ),
+    'β-1. Слънчева радиация'
+  );
   const numbers = { problems: { 'a-p1': 2, 'b-p1': '2A', 'c-p1': 3 } };
   assert.equal(problemName({ id: 'a-p1', number: 1, title: 'Nonlinear Dynamics' }, numbers), 'Задача 2. Nonlinear Dynamics');
   assert.equal(problemName({ id: 'b-p1', number: 1, title: '2A. Optical properties' }, numbers), 'Задача 2A. Optical properties');
