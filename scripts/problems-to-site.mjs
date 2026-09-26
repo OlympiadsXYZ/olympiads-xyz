@@ -633,16 +633,55 @@ function documentNoteLines(paper, position) {
 // solutions file") is an honest quality remark and stays. The same filter covers answer notes ("No closed-form numeric
 // answer is printed in the visible window", izho-2022-theory-eng-docx) and the notes written for a later pass ("…
 // попълва се при верификация", nof-2019-iii-9; "…not supplied with the prepared source", apao-2012-theory-alpha).
-export const PIPELINE_NOTE = /\b(?:window|assembl\w*|placeholders?|supplied source|prepared source|per rules|mid-document|not (?:yet )?transcribed(?!\s+from))\b|прозор\w*|предоставен\w*|подготвения източник|сдвоен|верификаци\w*/i;
+export const PIPELINE_NOTE = /\b(?:window|assembl\w*|placeholders?|supplied source|prepared source|per rules|mid-document|not (?:yet )?transcribed(?!\s+from))\b|прозор\w*|предоставен\w*|подготвения източник|сдвоен|верификаци\w*|source préparée|(?:данном|этом|текущем) окне|окно охватывает|за пределами окна|предоставленн[а-яё]* (?:источник|материал)[а-яё]*|solution\.incomplete|answer\/solution|\bbbox\b/i;
 // a dropped note that said the source has no official solution keeps that fact, in Bulgarian
 const NO_OFFICIAL_SOLUTION = /\bno official solution|official solutions? (?:(?:document|file)s? )?(?:(?:is|are|was|were) )?not (?:supplied|provided|available|present|included)|не съдържа решението|няма официално решение/i;
 export const NO_OFFICIAL_SOLUTION_LINE = 'Официално решение не е налично в източника.';
 export function visitorNoteText(t) {
   if (!t || !String(t).trim()) return null;
   if (!PIPELINE_NOTE.test(t)) return String(t);
-  return NO_OFFICIAL_SOLUTION.test(t) ? NO_OFFICIAL_SOLUTION_LINE : null;
+  return NO_OFFICIAL_SOLUTION.test(t) || NO_ARCHIVE_SOLUTION.test(t) ? NO_OFFICIAL_SOLUTION_LINE : null;
 }
-const visitorNote = t => { const shown = visitorNoteText(t); return shown == null ? null : mdText(shown); };
+// An English or Russian note that only says the archive has no official solution ("The archive has no solutions file
+// for this paper.", "В архиве нет файла с решениями.", "…refers to exemplary solutions but contains no target URL…")
+// describes the archive, not the paper: the page says it in Bulgarian. About 1,200 pages carried such a note.
+export const NO_ARCHIVE_SOLUTION = new RegExp([
+  String.raw`\bno (?:matching |separate )?(?:official |published )?(?:experimental |theoretical |worked )?(?:solutions?|answers?|answer key|marking scheme)(?: (?:file|document|text|sheet)s?)?\b`,
+  String.raw`\bexemplary solutions\b[^.]*\bcontains? no\b`,
+  String.raw`(?:^|[.;:(]\s*|\bthe )(?:official )?solutions? (?:(?:file|document)s? )?(?:is|are|was|were) (?:not|absent|missing)\b`,
+  String.raw`\bwithout (?:any )?(?:official )?(?:solutions?|answers?)\b`,
+  String.raw`\b(?:does not|doesn't|do not) (?:contain|include|have) (?:an? |any )?(?:official )?(?:solutions?|answers?)\b`,
+  String.raw`\baucun (?:fichier |document )?(?:de )?(?:solutions?|corrigé)`,
+  String.raw`\bnot the official solutions?\b`,
+  String.raw`не найден[а-яё]*\s+(?:[^\s.;:]+\s+){0,2}решени`,
+  String.raw`(?<![а-яё])(?:нет|отсутству[а-яё]*)\s+(?:[^\s.;:]+\s+){0,3}(?:решени|ответ)`,
+  String.raw`(?<![а-яё])решени[а-яё]*\s+(?:[^\s.;:,]+\s+){0,5}(?:нет|отсутству[а-яё]*)(?![а-яё])`,
+  String.raw`шешім\S*\s+(?:\S+\s+){0,2}жоқ`,
+].join('|'), 'i');
+// IYPT/IYNT problems are open research problems: no paper has an official solution to show
+const OPEN_RESEARCH = /\bopen (?:research )?(?:problems?|tasks?|questions?)\b/i;
+// English, French, Russian or Kazakh, not Bulgarian: Latin letters outnumber Cyrillic, or letters and words that
+// Bulgarian does not have
+const FOREIGN_NOTE = t => /[ыэёәіңғүұқөһ]|(?<![а-яё])(?:нет|отсутству[а-яё]*|архиве|решениями|этого|этой)(?![а-яё])/i.test(t)
+  || (t.match(/[A-Za-z]/g) || []).length > (t.match(/[А-Яа-яЁё]/g) || []).length;
+export const OPEN_RESEARCH_LINE = 'Това е открита изследователска задача — официални решения не се публикуват.';
+export const NO_ARCHIVE_SOLUTION_LINE = 'В архива няма официално решение на тази задача.';
+// the "Непълно решение" box of a problem with no solution text: such a note gives way to one Bulgarian line. A note
+// on a partial solution says what is missing ("no solution for part f") and stays as written.
+export function incompleteNoteText(t, hasSolutionText) {
+  const shown = visitorNoteText(t);
+  if (shown == null || hasSolutionText || !FOREIGN_NOTE(shown) || !NO_ARCHIVE_SOLUTION.test(shown)) return shown;
+  return OPEN_RESEARCH.test(shown) ? OPEN_RESEARCH_LINE : NO_ARCHIVE_SOLUTION_LINE;
+}
+// the paper's "Бележка към темата": a note whose every sentence says the archive has no solutions is not shown on a
+// page whose "Непълно решение" box says it for this problem ("Решения задач 10 класса в архиве отсутствуют" is not
+// true of every problem in the paper, so it is never reworded); a note that says more stays as written
+export function caveatNoteText(t, solutionBoxShown) {
+  const shown = visitorNoteText(t);
+  if (shown == null || !solutionBoxShown || !FOREIGN_NOTE(shown)) return shown;
+  const sentences = shown.split(/(?<=[.!?;])\s+/).filter(s => s.trim());
+  return sentences.length && sentences.every(s => NO_ARCHIVE_SOLUTION.test(s) || OPEN_RESEARCH.test(s)) ? null : shown;
+}
 // The note lint (scripts/tests/problems.test.mjs runs it over every published page, a ship gate): the page's own
 // notes — the <Warning> boxes and the answers list — never carry a run note. Narrower than PIPELINE_NOTE, which may
 // drop an honest note; this one only names what is never printed by a paper.
@@ -653,6 +692,18 @@ export function pipelineNoteLeaks(mdx) {
   const answers = /\n## Отговори\n([\s\S]*?)<\/Spoiler>/.exec(text);
   if (answers) regions.push(answers[1]);
   return regions.flatMap(r => r.split('\n')).filter(line => PIPELINE_LEAK.test(line));
+}
+// The same gate for the archive-status notes: no English/Russian "the archive has no solutions" note in the
+// "Непълно решение" box of a page without solution text, nor as a "Бележка към темата" that the box repeats.
+export function archiveNoteLeaks(mdx) {
+  const text = String(mdx);
+  const box = /<Warning title="Непълно решение">\n([\s\S]*?)\n<\/Warning>/.exec(text);
+  const caveat = /<Warning title="Бележка към темата">\n([\s\S]*?)\n<\/Warning>/.exec(text);
+  const hasSolutionText = text.includes('<Spoiler title="Покажи официалното решение">');
+  const leaks = [];
+  if (box && incompleteNoteText(box[1], hasSolutionText) !== box[1]) leaks.push(box[1]);
+  if (caveat && box && caveatNoteText(caveat[1], true) == null && visitorNoteText(caveat[1]) != null) leaks.push(caveat[1]);
+  return leaks;
 }
 
 // Short Bulgarian names and round labels: the archive's own (src/archive/labels.ts), so a page heading reads
@@ -994,13 +1045,10 @@ export function sectionLines(sections, problem, resolve, solution = false) {
 // a part that opens with its points, marked up: "[1.2 points] …", "**(2 т.)** …", "(0,5 marks) …"
 const LEADING_POINTS = /^\s*(?:\*{1,2})?\s*[[(]\s*(\d+(?:[.,]\d+)?)\s*(?:points?|pts?\.?|marks?|т\.?|точк[аи]|точки)\s*[\])]/iu;
 // "Permanent magnets (10 points)", "E1 - Magnetic Pendulum (10 pts)": the page's lead line already prints the
-// problem's points ("… · 10 т."), so the heading does not repeat them (the sidebar keeps the printed title)
-const TRAILING_POINTS = /\s*[[(]\s*(\d+(?:[.,]\d+)?)\s*(?:points?|pts?\.?|marks?|т\.?|точк[аи]|точки)\s*[\])]\s*$/iu;
+// problem's points ("… · 10 т."), so the heading does not repeat them. The sidebar's own function (src/problems/tree.ts):
+// problemName already drops them from the title, so the sidebar row, previous/next and the card read the same.
 export function titleWithoutPoints(title, points) {
-  const m = TRAILING_POINTS.exec(String(title));
-  if (!m || points == null || Number(m[1].replace(',', '.')) !== Number(points)) return title;
-  const rest = String(title).slice(0, m.index).trim();
-  return rest ? rest : title;
+  return tree().titleWithoutPoints(title, points);
 }
 
 // "5 април 2019 г.", "3 т.": the number and its unit stay on one line (the lead line broke as "2019" / "г.")
@@ -1031,7 +1079,8 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
     problem.points != null ? `${String(problem.points).replace('.', ',')}\u00A0т.` : null,
   ].filter(Boolean);
   if (lead.length) lines.push(`*${keepUnits(lead.join(' · '))}*`, '');
-  if (visitorNote(paper.caveat)) lines.push('<Warning title="Бележка към темата">', visitorNote(paper.caveat), '</Warning>', '');
+  const caveat = caveatNoteText(paper.caveat, !!problem.solution?.incomplete);
+  if (caveat) lines.push('<Warning title="Бележка към темата">', mdText(caveat), '</Warning>', '');
   lines.push(...documentNoteLines(paper, 'before-problem'));
   lines.push(`## Условие`);
   lines.push('');
@@ -1131,8 +1180,9 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       // (nof-2019-iii-9 p3: "…предстои да бъде транскрибирано при верификацията")
       const standard = sol.statement ? 'Официалното решение е непълно.'
         : paper.solutionSource?.archiveKey ? 'Официалното решение не е транскрибирано — вижте файла с решенията в Архива (връзката е в края на страницата).'
-        : 'В архива няма официално решение на тази задача.';
-      lines.push('<Warning title="Непълно решение">', visitorNote(sol.incompleteReason) || standard, '</Warning>', '');
+        : NO_ARCHIVE_SOLUTION_LINE;
+      const note = incompleteNoteText(sol.incompleteReason, !!(sol.statement || sol.sections?.length));
+      lines.push('<Warning title="Непълно решение">', note ? mdText(note) : standard, '</Warning>', '');
     }
     if (sol?.statement || sol?.sections?.length) lines.push('<Spoiler title="Покажи официалното решение">', '');
     else if (solutionFigures.length) lines.push('<Spoiler title="Покажи фигурите от официалното решение">', '');
@@ -1223,11 +1273,15 @@ export function originalFormat(key) {
 }
 
 // The page of the original a problem (doc 'problems') or its official solution (doc 'solutions') is printed on, in
-// this order: the problem's own sourceSpans; content/problem-source-pages.json (scripts/backfill-source-pages.mjs, the
+// this order: a page pinned by hand in content/problem-source-pages.json ({ page, via: 'manual' }: the spans of an
+// imposed booklet list its pages out of order, vserusiyska-2011-iii-region11e); the problem's own sourceSpans (the lowest
+// page: spans are often listed in string order, 10 before 7); content/problem-source-pages.json (scripts/backfill-source-pages.mjs, the
 // text layer of the legacy papers without spans); the page of the problem's own figure cropped from that document
 // (the problem is printed there, if not always from its first line); the only page of a one-page document. null when
 // none says: the link then opens the document at its start, never at a guessed page.
 export function sourcePage(paper, problem, doc, overlay = sourcePages) {
+  const pinned = overlay?.[problem.id]?.[doc];
+  if (pinned?.via === 'manual' && Number.isInteger(pinned.page) && pinned.page > 0) return pinned.page;
   const span = (problem.sourceSpans || []).filter(s => s.document === doc && Number.isInteger(s.page) && s.page > 0).map(s => s.page);
   if (span.length) return Math.min(...span);
   const own = overlay?.[problem.id]?.[doc]?.page;

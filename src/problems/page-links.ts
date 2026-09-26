@@ -65,6 +65,8 @@ export type ArchiveYearLink = {
   path: string;
   /** "НОФ 2019" */
   label: string;
+  /** the year folder the page lists (2019) */
+  year: number;
 };
 
 /** The parts of an archive catalog entry (archive-catalog/*.json) the year pages are made from. */
@@ -104,6 +106,7 @@ export function archiveYearPages(rows: ArchiveCatalogRow[]): ArchiveYearPages {
       label: `${competitionShort(canonicalCompetition(e.competition))} ${
         e.year
       }`,
+      year: e.year,
     };
     byFile.set(e.file, link);
     const key = yearKey(e.subject, e.competition, e.year);
@@ -128,6 +131,12 @@ export function archiveYearLink(
 ): ArchiveYearLink | null {
   if (paper.archiveKey) {
     const own = pages.byFile.get(paper.archiveKey);
+    // a file shelved under another year (IZhO 2005 papers in the 2004 folder)
+    // names the folder, not a year the page heading contradicts
+    if (own && own.year !== paper.year) {
+      const short = competitionShort(canonicalCompetition(paper.competition));
+      return { ...own, label: `${short}, папка ${own.year}` };
+    }
     if (own) return own;
   }
   return (

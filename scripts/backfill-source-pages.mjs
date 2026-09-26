@@ -22,7 +22,9 @@
 // feeds, from the transcription cache; used only when its manifest names the paper's archive key) and
 // <cache-root>/figure-anchors/<paperId>/<document>.tsv (pdftotext -tsv, scripts/figure-anchors.mjs). With --download a
 // paper with neither is read from the archive bucket (pdftotext -tsv, cached like figure-anchors.mjs does).
-// Re-running recomputes the papers it reads and keeps every other entry.
+// Re-running recomputes the papers it reads and keeps every other entry. An entry with via 'manual' is a page pinned by
+// hand; it is never recomputed, and problems-to-site.mjs prefers it to the problem's own sourceSpans (an imposed
+// booklet's spans list the pages out of order; a span that names the photo page, not the text).
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -221,14 +223,19 @@ async function main() {
     const layers = readLayers(paper, cacheRoot);
     if (!layers.problems && download) layers.problems = await downloadLayer(paper, 'problems', cacheRoot);
     if (!layers.solutions && download && paper.solutionSource) layers.solutions = await downloadLayer(paper, 'solutions', cacheRoot);
-    for (const p of problems) delete entries[p.id];
+    // a page pinned by hand ({ page, via: 'manual' }) stays: it corrects what the spans or the text layer say
+    for (const p of problems) {
+      const pinned = Object.entries(entries[p.id] || {}).filter(([, v]) => v?.via === 'manual');
+      if (pinned.length) entries[p.id] = Object.fromEntries(pinned);
+      else delete entries[p.id];
+    }
     if (!layers.problems) { stats.noLayer += wanted.length; if (verbose) console.log(`${paper.id}: no text layer`); continue; }
     const found = paperPages(paper, problems, layers, numbers);
     const c = (stats.byCompetition[paper.competition] ??= { missing: 0, placed: 0 });
     c.missing += wanted.length;
     for (const p of problems) {
-      const entry = {};
-      for (const doc of ['problems', 'solutions']) { const hit = found[doc]?.get(p.id); if (hit) entry[doc] = hit; }
+      const entry = { ...entries[p.id] };
+      for (const doc of ['problems', 'solutions']) { const hit = found[doc]?.get(p.id); if (hit && !entry[doc]) entry[doc] = hit; }
       if (!Object.keys(entry).length) continue;
       entries[p.id] = entry;
       if (entry.problems) { stats.placed++; c.placed++; stats.via[entry.problems.via] = (stats.via[entry.problems.via] || 0) + 1; }

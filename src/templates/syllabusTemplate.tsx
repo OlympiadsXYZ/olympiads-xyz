@@ -269,7 +269,7 @@ export default function Template(props) {
                   </p>
                 )}
               {!sectionHasModules ? (
-                <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 shadow sm:rounded-lg">
+                <div className="max-w-2xl mx-4 sm:mx-auto bg-white dark:bg-gray-900 shadow rounded-lg">
                   <div className="px-4 py-5 sm:p-6">
                     <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
                       Модулите в този раздел предстоят
@@ -386,7 +386,12 @@ export default function Template(props) {
                     {category.description}
                   </p>
                 </div>
-                <div className="flex-1 pl-12">
+                {/* a chapter without modules: its note under the chapter's text on phones, not indented */}
+                <div
+                  className={`flex-1 ${
+                    category.items.length === 0 ? 'md:pl-12' : 'pl-12'
+                  }`}
+                >
                   {category.items.length === 0 && (
                     <p className="py-3 text-sm italic text-gray-500 dark:text-gray-500">
                       Модулите в тази глава предстоят.

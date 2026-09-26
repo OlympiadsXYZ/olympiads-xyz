@@ -66,9 +66,26 @@ test('a problem page links the archive year page that lists its paper, else its 
   const nof = links.archiveYearLink({ subject: 'physics', competition: 'NOF', year: 2019, archiveKey: 'elsewhere.pdf' }, pages);
   assert.match(nof.path, /\/2019\/$/);
   assert.equal(nof.label, 'НОФ 2019');
+  // a 2020 paper filed in the 2019 folder names the folder, not a second year
+  const shelved = links.archiveYearLink({ subject: 'physics', competition: 'NOF', year: 2020, archiveKey: 'Физика/Състезания/NOF/2019/NOF3.pdf' }, pages);
+  assert.match(shelved.path, /\/2019\/$/);
+  assert.equal(shelved.label, 'НОФ, папка 2019');
   // books are on the shelf, not on a year page; undated entries have no year page
   assert.equal(links.archiveYearLink({ subject: 'physics', competition: 'NOF', year: 2018 }, pages), null);
   assert.equal(links.archiveYearLink({ subject: 'astronomy', competition: 'NOF', year: 2019 }, pages), null);
+});
+
+test('the sidebar row and previous/next drop a points note the page heading drops', () => {
+  const file = paper('izho-2022-theory', { competition: 'IZhO', year: 2022 }, 2);
+  file.problems[0].title = 'Problem 1';
+  file.problems[1].title = 'Problem 2. Greenhouse effect (10.0 points)';
+  file.problems[0].points = 10;
+  file.problems[1].points = 10;
+  assert.equal(tree.problemDisplayName(file.problems[1]), 'Задача 2. Problem 2. Greenhouse effect');
+  assert.equal(tree.problemDisplayName({ ...file.problems[1], points: 8 }), 'Задача 2. Problem 2. Greenhouse effect (10.0 points)');
+  const urls = new Map(file.problems.map(p => [p.id, `/problems/${p.id}/solution`]));
+  const data = tree.assembleProblemsTree([file], urls, undefined, {});
+  assert.equal(links.problemNeighbours(data).get('izho-2022-theory-p1').next.label, 'Задача 2. Problem 2. Greenhouse effect');
 });
 
 test('only a real non-Bulgarian language code becomes a lang attribute', () => {
@@ -116,6 +133,13 @@ test('the list opens newest year first, a paper\'s problems in their order, prob
   assert.deepEqual(ids('oldest'), ['nof-2019-p2', 'nof-2019-p10', 'nao-2024-p1', 'ipho-2024-p1', 'usaco-x']);
   assert.deepEqual(ids('competition'), ['nao-2024-p1', 'nof-2019-p2', 'nof-2019-p10', 'ipho-2024-p1', 'usaco-x']);
   assert.equal(list[0].uniqueId, 'nof-2019-p10', 'the input is not reordered in place');
+  // one round in two files (1–2 in -x, 26–27 in -2) reads in problem order; two language versions stay whole
+  const h = (uniqueId, source) => ({ uniqueId, year: 2018, competition: 'HOOS', source });
+  const round = [h('hoos-2018-selection-2-p26', 'ХООС 2018, Подборен кръг'), h('hoos-2018-selection-2-p27', 'ХООС 2018, Подборен кръг'),
+    h('hoos-2018-selection-x-p2', 'ХООС 2018, Подборен кръг'), h('hoos-2018-selection-x-p1', 'ХООС 2018, Подборен кръг'),
+    h('hoos-2018-iii-p1', 'ХООС 2018, III кръг'), h('hoos-2018-cgp-fr-p1', 'Тема'), h('hoos-2018-cgp-en-p2', 'Тема'), h('hoos-2018-cgp-en-p1', 'Тема')];
+  assert.deepEqual(search.sortProblems(round, 'newest', rank).map(x => x.uniqueId), ['hoos-2018-cgp-en-p1', 'hoos-2018-cgp-en-p2', 'hoos-2018-cgp-fr-p1',
+    'hoos-2018-iii-p1', 'hoos-2018-selection-x-p1', 'hoos-2018-selection-x-p2', 'hoos-2018-selection-2-p26', 'hoos-2018-selection-2-p27']);
 });
 
 test('the filters, order and page survive a round trip through the URL', () => {
@@ -139,6 +163,12 @@ test('the filters, order and page survive a round trip through the URL', () => {
 
 test('counts read as Bulgarian', () => {
   assert.equal(search.problemsCountLabel(1), '1 задача');
+  // the count is of problems with a page here, the sidebar's number; source-only module problems come after it
+  const own = { solution: { kind: 'internal' } }, linked = { solution: { kind: 'link' } };
+  const all = [own, own, own, linked];
+  assert.equal(search.resultsCountLabel(all, all), '3 задачи · още 1 с връзка към източника');
+  assert.equal(search.resultsCountLabel([own], all), '1 задача от 3');
+  assert.equal(search.resultsCountLabel([own, own, own], [own, own, own]), '3 задачи');
   assert.equal(search.problemsCountLabel(8674), '8 674 задачи');
   assert.equal(sidebar.problemCount(50), '50 задачи');
   assert.equal(sidebar.problemCount(1, true), '1 problem');

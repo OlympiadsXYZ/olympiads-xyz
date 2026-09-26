@@ -109,6 +109,11 @@ export function competitionLabel(code: string): string {
     : meta.short;
 }
 
+/** "НОФ": the chip of a selected competition, which the long name would cut off. */
+export function competitionChipLabel(code: string): string {
+  return COMPETITION_META[code]?.short ?? code;
+}
+
 /**
  * The problem's source with the competition code replaced by its Bulgarian
  * short name: "NOF 2019 II 7" → "НОФ 2019 II 7".
@@ -220,9 +225,49 @@ export function sortProblems(
           byCompetition(a, b) || byYear(a, b, -1)
       : (a: ProblemsIndexEntry, b: ProblemsIndexEntry) =>
           byYear(a, b, sort === 'oldest' ? 1 : -1) || byCompetition(a, b);
-  return [...problems].sort(
-    (a, b) => cmp(a, b) || naturalId(a.uniqueId, b.uniqueId)
-  );
+  // Problems with one source label ("ХООС 2018, Подборен кръг") stay together
+  // where the first of them would be, and their papers go by the first
+  // problem number: a round split into two files (problems 1–25 in
+  // hoos-2018-selection-x, 26–30 in hoos-2018-selection-2) reads 1…30.
+  const parts = new Map<string, { paper: string; number: number }>();
+  const idParts = (id: string) => {
+    let known = parts.get(id);
+    if (!known) {
+      const m = /^(.*)-p(\d+)[a-z]*$/i.exec(id);
+      known = m
+        ? { paper: m[1], number: Number(m[2]) }
+        : { paper: id, number: Number.POSITIVE_INFINITY };
+      parts.set(id, known);
+    }
+    return known;
+  };
+  const groupFirst = new Map<string, string>();
+  const paperFirst = new Map<string, number>();
+  for (const p of problems) {
+    const label = p.source ?? p.uniqueId;
+    const first = groupFirst.get(label);
+    if (first === undefined || naturalId(p.uniqueId, first) < 0) {
+      groupFirst.set(label, p.uniqueId);
+    }
+    const { paper, number } = idParts(p.uniqueId);
+    paperFirst.set(paper, Math.min(paperFirst.get(paper) ?? number, number));
+  }
+  const inGroup = (a: ProblemsIndexEntry, b: ProblemsIndexEntry) => {
+    const x = idParts(a.uniqueId);
+    const y = idParts(b.uniqueId);
+    return (
+      naturalId(
+        groupFirst.get(a.source ?? a.uniqueId) as string,
+        groupFirst.get(b.source ?? b.uniqueId) as string
+      ) ||
+      (paperFirst.get(x.paper) as number) -
+        (paperFirst.get(y.paper) as number) ||
+      naturalId(x.paper, y.paper) ||
+      x.number - y.number ||
+      naturalId(a.uniqueId, b.uniqueId)
+    );
+  };
+  return [...problems].sort((a, b) => cmp(a, b) || inGroup(a, b));
 }
 
 // ---------------------------------------------------------------------------
@@ -300,6 +345,29 @@ export function formatCount(n: number): string {
 /** "1 задача", "8 674 задачи" */
 export function problemsCountLabel(n: number): string {
   return `${formatCount(n)} ${n === 1 ? 'задача' : 'задачи'}`;
+}
+
+/**
+ * The count above the list: problems with a page on this site, the number the
+ * sidebar shows ("Задачи 9 032"). The list also holds module problems that
+ * only link to their source (the archive or an olympiad's site); they are
+ * counted after it.
+ */
+export function resultsCountLabel(
+  matches: Pick<ProblemsIndexEntry, 'solution'>[],
+  all: Pick<ProblemsIndexEntry, 'solution'>[]
+): string {
+  const own = (list: Pick<ProblemsIndexEntry, 'solution'>[]) =>
+    list.filter(p => p.solution?.kind === 'internal').length;
+  const shown = own(matches);
+  const linked = matches.length - shown;
+  const main =
+    matches.length === all.length
+      ? problemsCountLabel(shown)
+      : `${problemsCountLabel(shown)} от ${formatCount(own(all))}`;
+  return linked
+    ? `${main} · още ${formatCount(linked)} с връзка към източника`
+    : main;
 }
 
 /** Link target of a problem: its page on this site, or the source document. */

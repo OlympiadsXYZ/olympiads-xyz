@@ -88,6 +88,13 @@ export default function IndexPage(): JSX.Element {
       }
     }
   }, [firebaseUser, loading, location]);
+  React.useEffect(() => {
+    // /faq redirects here (src/redirects.txt); Gatsby's trailing-slash rule turns the target into '/#faq/', which
+    // matches no id. Vercel redirects /faq to '/#faq' before this page loads; this covers `gatsby serve`.
+    if (location.hash !== '#faq/') return;
+    window.history.replaceState(window.history.state, '', '/#faq');
+    document.getElementById('faq')?.scrollIntoView();
+  }, [location.hash]);
 
   return (
     <Layout>

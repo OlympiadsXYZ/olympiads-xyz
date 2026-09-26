@@ -42,6 +42,20 @@ export default function StyledSelect(props) {
                 ...provided,
                 color: '#9ca3af',
               }),
+              // the chips of a multi-select: gray-700 with light text, not the light default
+              multiValue: provided => ({
+                ...provided,
+                backgroundColor: '#374151',
+              }),
+              multiValueLabel: provided => ({
+                ...provided,
+                color: 'rgba(255, 255, 255, 0.87)',
+              }),
+              multiValueRemove: provided => ({
+                ...provided,
+                color: '#9ca3af',
+                ':hover': { backgroundColor: '#4b5563', color: '#ffffff' },
+              }),
               singleValue: provided => ({
                 ...provided,
                 color: 'rgba(255, 255, 255, 0.87)',

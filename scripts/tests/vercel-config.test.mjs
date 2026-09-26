@@ -67,6 +67,13 @@ test('every generated problem route redirects from its bare form to its own /sol
   }
 });
 
+test('/faq ends on the home page FAQ anchor, with no slash after the hash', () => {
+  // the meta redirect Gatsby writes for src/redirects.txt points at '/#faq/', which matches no id
+  assert.deepEqual(redirect('/faq'), { status: 307, location: '/#faq' });
+  assert.deepEqual(redirect('/faq/'), { status: 307, location: '/#faq' });
+  assert.equal(redirect('/faqs/'), null);
+});
+
 test('the index, the data files and other sections are not redirected', () => {
   for (const p of ['/problems/', '/problems', '/problems-data/tree.json', '/problems-data/index.json',
     '/problems/index.html', '/problems/x/solution/', '/page-data/problems/page-data.json', '/archive/', '/mechanics/']) {

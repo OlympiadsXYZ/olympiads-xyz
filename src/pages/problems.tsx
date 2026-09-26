@@ -9,19 +9,19 @@ import {
   ProblemSort,
   SORT_OPTIONS,
   SUBJECT_ORDER,
+  competitionChipLabel,
   competitionLabel,
   loadProblemsIndex,
   matchesAllTokens,
   parseProblemsUrl,
   problemDifficulty,
   problemSearchText,
-  problemsCountLabel,
+  resultsCountLabel,
   problemsUrlSearch,
   searchTokens,
   sortProblems,
   subjectLabel,
   tagLabel,
-  formatCount,
 } from '../components/ProblemsPage/problemSearch';
 import SearchBox from '../components/ProblemsPage/SearchBox';
 import Selection, {
@@ -201,6 +201,7 @@ export default function ProblemsPage({ location }: PageProps) {
         isMulti: true,
         items: competitionOrder.map(code => ({
           label: competitionLabel(code),
+          chipLabel: competitionChipLabel(code),
           value: code,
         })),
       },
@@ -447,7 +448,7 @@ export default function ProblemsPage({ location }: PageProps) {
               id="problems-filters"
               className={`${
                 filtersOpen ? 'grid' : 'hidden'
-              } md:grid mb-4 items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-3`}
+              } md:grid mb-4 items-start grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-3`}
             >
               {selectionMetadata.map(props => (
                 <div
@@ -470,13 +471,7 @@ export default function ProblemsPage({ location }: PageProps) {
                 className="min-h-[1.25rem] text-sm font-medium text-gray-700 dark:text-dark-high-emphasis"
                 aria-live="polite"
               >
-                {problems === null
-                  ? null
-                  : matches.length === all.length
-                  ? problemsCountLabel(matches.length)
-                  : `${problemsCountLabel(matches.length)} от ${formatCount(
-                      all.length
-                    )}`}
+                {problems === null ? null : resultsCountLabel(matches, all)}
                 {selectedCount > 0 && (
                   <button
                     type="button"

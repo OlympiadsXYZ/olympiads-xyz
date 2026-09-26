@@ -130,7 +130,8 @@ test('top-level and part answers include zero and choice identifiers; missing so
   f.write(f.file, f.paper); f.approve(); assert.equal(f.run().status, 0);
   assert.match(f.read(f.output), /- Б/);
   assert.match(f.read(f.output), /0 s/);
-  assert.match(f.read(f.output), /Source has no solution/);
+  // an English "no solution" note reads in Bulgarian
+  assert.match(f.read(f.output), /Непълно решение">\nВ архива няма официално решение на тази задача\./);
 });
 
 test('routes survive title edits; curated records do not duplicate extraProblems', t => {
@@ -558,6 +559,10 @@ test('the original opens on the problem\'s own page: spans, then the page overla
   const problem = { id: 'x-p2', sourceSpans: [{ document: 'problems', page: 3 }, { document: 'problems', page: 2 }, { document: 'solutions', page: 2 }] };
   assert.equal(sourcePage(paper, problem, 'problems', {}), 2);
   assert.equal(sourcePage(paper, problem, 'solutions', {}), 2);
+  // a page pinned by hand wins over the spans (an imposed booklet lists its pages out of order); a computed one does not
+  assert.equal(sourcePage(paper, problem, 'problems', { 'x-p2': { problems: { page: 3, via: 'manual' } } }), 3);
+  assert.equal(sourcePage(paper, problem, 'problems', { 'x-p2': { problems: { page: 1, via: 'text' } } }), 2);
+  assert.equal(sourcePage(paper, problem, 'solutions', { 'x-p2': { problems: { page: 3, via: 'manual' } } }), 2, 'per document');
   const legacy = { id: 'x-p3', figures: [{ id: 'p3-fig1', source: { page: 3, pdfRect: [0, 0, 1, 1] } }], solution: { figures: [{ id: 'p3-sol-fig1', source: { page: 2, document: 'solutions' } }] } };
   assert.equal(sourcePage(paper, legacy, 'problems', { 'x-p3': { problems: { page: 2, via: 'text' } } }), 2, 'the overlay before a figure');
   assert.equal(sourcePage(paper, legacy, 'problems', {}), 3, 'the page of its own figure');
@@ -615,6 +620,41 @@ test('run notes never reach the page: caveats, incomplete reasons and answer not
   assert.deepEqual(pipelineNoteLeaks('<Warning title="x">\nSolutions not transcribed in this window.\n</Warning>'), ['Solutions not transcribed in this window.']);
 });
 
+test('an English or Russian "the archive has no solution" note reads in Bulgarian; a note on a partial solution stays', async t => {
+  const { incompleteNoteText, caveatNoteText, archiveNoteLeaks, NO_ARCHIVE_SOLUTION_LINE, OPEN_RESEARCH_LINE } = await import('../problems-to-site.mjs');
+  for (const note of ['The archive has no solutions file for this paper.', 'No official solutions are included in this problem PDF or in matching files in the archive.',
+    'The archive text refers to exemplary solutions but contains no target URL or solution text, and no matching solutions file.',
+    'В архиве отсутствует файл с решениями.', 'В архиве нет файла с решениями или ответами.', 'Официальные решения к этому тесту отсутствуют в архиве.',
+    'Aucun document de solutions officielles n’a été fourni dans l’archive.', 'Мұрағатта шешімдер файлы жоқ.']) {
+    assert.equal(incompleteNoteText(note, false), NO_ARCHIVE_SOLUTION_LINE, note);
+    assert.equal(incompleteNoteText(note, true), note, `with solution text: ${note}`);
+  }
+  assert.equal(incompleteNoteText('IYPT problems are open research problems; no official solutions are published.', false), OPEN_RESEARCH_LINE);
+  for (const note of ['На листе ответа размечены пять скоплений, но отсутствуют требуемые подписи пяти звёзд.', 'The official answer picture omits the ecliptic line.',
+    'В архива няма официално решение на тази задача.']) assert.equal(incompleteNoteText(note, false), note, note);
+  const caveat = 'The archive has no official answers or solutions for this blitz paper.';
+  assert.equal(caveatNoteText(caveat, true), null);
+  assert.equal(caveatNoteText(caveat, false), caveat, 'without the box the note is the only word on it');
+  assert.equal(caveatNoteText('The archive has no official solutions for this fieldwork paper, and the Appendix II contour map is not included.', true), null);
+  const more = 'The separate numbered exoplanet data table referenced by the problems and solutions are not in the archive.';
+  assert.equal(caveatNoteText(more, true), more);
+  // the lint
+  const page = (box, cav, solved) => [cav ? `<Warning title="Бележка към темата">\n${cav}\n</Warning>` : '', box ? `<Warning title="Непълно решение">\n${box}\n</Warning>` : '',
+    solved ? '<Spoiler title="Покажи официалното решение">' : ''].join('\n');
+  assert.deepEqual(archiveNoteLeaks(page('The archive has no solutions file for this paper.')), ['The archive has no solutions file for this paper.']);
+  assert.deepEqual(archiveNoteLeaks(page(NO_ARCHIVE_SOLUTION_LINE, caveat)), [caveat]);
+  assert.deepEqual(archiveNoteLeaks(page('The official solutions contain no solution for part f.', null, true)), []);
+  assert.deepEqual(archiveNoteLeaks(page(NO_ARCHIVE_SOLUTION_LINE)), []);
+  const f = fixture(t), p = f.paper.problems[0];
+  f.paper.paper.caveat = 'В архиве нет файла с решениями.';
+  p.solution = { incomplete: true, incompleteReason: 'The archive has no official solutions file for this paper.' };
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  assert.match(mdx, /<Warning title="Непълно решение">\nВ архива няма официално решение на тази задача\.\n<\/Warning>/);
+  assert.doesNotMatch(mdx, /Бележка към темата|archive has|архиве/);
+});
+
 test('points printed at the start of a part are not repeated; a title does not repeat the lead line\'s points; the lead line keeps "2019 г." together', async t => {
   const { titleWithoutPoints } = await import('../problems-to-site.mjs');
   assert.equal(titleWithoutPoints('Permanent magnets (10 points)', 10), 'Permanent magnets');
@@ -640,7 +680,7 @@ test('points printed at the start of a part are not repeated; a title does not r
 
 // the note lint: no published page shows a run note in its warnings or its answers (a ship gate)
 test('no published page shows a transcription-run note in a warning or an answer', async () => {
-  const { problemMdx, pipelineNoteLeaks } = await import('../problems-to-site.mjs');
+  const { problemMdx, pipelineNoteLeaks, archiveNoteLeaks } = await import('../problems-to-site.mjs');
   const { readPapers, readJson } = await import('../lib/problem-data.mjs');
   const ledger = readJson(path.join(repo, 'content/problem-publication.json'), { papers: {} });
   const leaks = [];
@@ -649,7 +689,8 @@ test('no published page shows a transcription-run note in a warning or an answer
     if (!publicationState(record, ledger).eligible) continue;
     for (const problem of record.data.problems) {
       pages++;
-      for (const line of pipelineNoteLeaks(problemMdx(record.data.paper, problem, { quality: 'legacy' }, record.relativePath))) leaks.push(`${problem.id}: ${line.slice(0, 120)}`);
+      const mdx = problemMdx(record.data.paper, problem, { quality: 'legacy' }, record.relativePath);
+      for (const line of [...pipelineNoteLeaks(mdx), ...archiveNoteLeaks(mdx)]) leaks.push(`${problem.id}: ${line.slice(0, 120)}`);
     }
   }
   assert.ok(pages > 1000, `${pages} pages`);

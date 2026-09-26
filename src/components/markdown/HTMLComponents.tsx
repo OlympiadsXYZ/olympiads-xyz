@@ -91,6 +91,23 @@ const cellText = (children: React.ReactNode): string | null => {
   }
   return text;
 };
+// A markdown table always has a header row; a transcribed table without one is written "| | |" over "| --- | --- |".
+// That header renders as an empty first row above the data ("Справочни данни", nao-2008-ii-9-10 задача 5): skipped.
+const thead = (props): JSX.Element | null => {
+  const rows = React.Children.toArray(props.children).filter(
+    React.isValidElement
+  ) as React.ReactElement[];
+  const empty =
+    rows.length > 0 &&
+    rows.every(row =>
+      (
+        React.Children.toArray(row.props.children).filter(
+          React.isValidElement
+        ) as React.ReactElement[]
+      ).every(cell => (cellText(cell.props.children) ?? 'x').trim() === '')
+    );
+  return empty ? null : <thead {...props} />;
+};
 // A short plain-text cell ("387 000 000 км", "88 земни дни") keeps its value on one line: on a phone the column
 // would otherwise break numbers between their digit groups; the table scrolls instead.
 const NOWRAP_CELL_MAX = 20;
@@ -201,6 +218,7 @@ const HTMLComponents = {
   li,
   ol,
   table,
+  thead,
   td,
   code: inlineCode,
   pre,
