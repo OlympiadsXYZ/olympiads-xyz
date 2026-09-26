@@ -464,6 +464,9 @@ exports.createPages =async ({ graphql, actions, reporter }) => {
   // ProblemInfo nodes, which only exist once sourcing is done. static/ is
   // copied into public/ after bootstrap, so this lands at
   // /problems-data/index.json. See src/problems/index-node.ts.
+  // Problems per subject ({ physics: 3402, … }), for the "Задачи по …" link
+  // on section pages that have no modules yet.
+  const problemCountBySubject: { [subject: string]: number } = {};
   // The problem pages get their previous/next problem (in the tree's order),
   // their paper's language and its archive year page in the page context
   // (src/problems/page-links.ts).
@@ -495,6 +498,9 @@ exports.createPages =async ({ graphql, actions, reporter }) => {
     console.info(
       `[problems] wrote static/problems-data/tree.json (${tree.count} problems)`
     );
+    (tree.subjects ?? []).forEach(subject => {
+      problemCountBySubject[subject.id] = subject.count;
+    });
     const neighbours = problemNeighbours(tree);
     const papers = readProblemPapers(__dirname);
     const yearPages = ARCHIVE_ENABLED
@@ -753,6 +759,7 @@ exports.createPages =async ({ graphql, actions, reporter }) => {
       component: syllabusTemplate,
       context: {
         division: division,
+        problemCountBySubject,
       },
     });
   });
