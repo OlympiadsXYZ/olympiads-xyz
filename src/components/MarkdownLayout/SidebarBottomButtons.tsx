@@ -6,6 +6,7 @@ import { useMarkdownLayout } from '../../context/MarkdownLayoutContext';
 import { useTranslation } from 'react-i18next';
 import '../../i18n';
 import LanguageDropdown from './LanguageDropButton';
+import { LANGUAGE_SWITCHER_ENABLED } from '../LanguageSwitcher';
 import { MdLanguage } from 'react-icons/md';
 
 const SidebarBottomButtons = () => {
@@ -14,13 +15,16 @@ const SidebarBottomButtons = () => {
   const { t } = useTranslation();
   return (
     <>
-      <div className="group items-center flex-shrink-0 border-t border-gray-200 dark:border-gray-800 flex">
-        <div className="group flex-1 flex items-center p-4 text-sm leading-4 font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-dark-med-emphasis dark:hover:text-dark-high-emphasis dark:focus:text-dark-high-emphasis dark:hover:bg-gray-900 dark:focus:bg-gray-900 focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">
-          <MdLanguage className="mr-4 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-400 transition ease-in-out duration-150" />
-          {t('language')}: 
+      {/* hidden with the other language switchers (LANGUAGE_SWITCHER_ENABLED) */}
+      {LANGUAGE_SWITCHER_ENABLED && (
+        <div className="group items-center flex-shrink-0 border-t border-gray-200 dark:border-gray-800 flex">
+          <div className="group flex-1 flex items-center p-4 text-sm leading-4 font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-dark-med-emphasis dark:hover:text-dark-high-emphasis dark:focus:text-dark-high-emphasis dark:hover:bg-gray-900 dark:focus:bg-gray-900 focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150">
+            <MdLanguage className="mr-4 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-400 transition ease-in-out duration-150" />
+            {t('language')}: 
+          </div>
+          <LanguageDropdown />
         </div>
-        <LanguageDropdown />
-      </div>
+      )}
       <div className="flex-shrink-0 border-t border-gray-200 dark:border-gray-800 flex">
         <Link
           className="group flex-1 flex items-center p-4 text-sm leading-5 font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 dark:text-dark-med-emphasis dark:hover:text-dark-high-emphasis dark:focus:text-dark-high-emphasis dark:hover:bg-gray-900 dark:focus:bg-gray-900 focus:outline-none focus:bg-gray-100 transition ease-in-out duration-150"

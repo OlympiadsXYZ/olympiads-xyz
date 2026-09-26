@@ -96,4 +96,15 @@ export const typeDefs = `
       sketch: String
       hasHints:Boolean
     }
+
+    # one node, created in sourceNodes (src/gatsby/site-stats.ts)
+    type SiteStats implements Node {
+      problems: Int!
+      problemsWithSolution: Int!
+      papers: Int!
+      subjects: [String!]!
+      archiveFiles: Int!
+      archiveCompetitionFiles: Int!
+      archiveCompetitions: Int!
+    }
   `;

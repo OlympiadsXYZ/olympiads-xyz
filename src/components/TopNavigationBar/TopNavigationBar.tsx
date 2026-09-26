@@ -1,6 +1,7 @@
 import { Popover, Transition } from '@headlessui/react';
 import {
   AcademicCapIcon,
+  ArchiveIcon,
   BookmarkIcon,
   ChartBarIcon,
   ChatAlt2Icon,
@@ -36,26 +37,28 @@ import ContactUsSlideover from '../ContactUsSlideover/ContactUsSlideover';
 import Logo from '../Logo';
 import LogoSquare from '../LogoSquare';
 import MobileMenuButtonContainer from '../MobileMenuButtonContainer';
-import SectionsDropdown from '../SectionsDropdown';
+import SectionsDropdown, { useNavSections } from '../SectionsDropdown';
 import { LoadingSpinner } from '../elements/LoadingSpinner';
 import Banner from './Banner';
 import { SearchModal } from './SearchModal';
 import { UserAvatarMenu } from './UserAvatarMenu';
 import { useLocation } from '@gatsbyjs/reach-router';
-import LanguageSwitcher from '../../components/LanguageSwitcher';
+import LanguageSwitcher, {
+  LANGUAGE_SWITCHER_ENABLED,
+} from '../../components/LanguageSwitcher';
 import LevelSwitcher from '../../components/LevelSwitcher';
-import { useLevel } from '../../context/LevelContext';
-import {
-  SECTIONS,
-  SECTION_LABELS,
-  chaptersForLevel,
-} from '../../../content/ordering';
+import { SECTION_LABELS } from '../../../content/ordering';
+import { useDarkMode } from '../../context/DarkModeContext';
+import { useSetThemeSetting } from '../../context/UserDataContext/properties/simpleProperties';
 import { MdLanguage } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 
+// small uppercase caption over a group of the phone menu
+const mobileCaptionClasses =
+  'text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-dark-med-emphasis';
+
 export default function TopNavigationBar({
   transparent = false,
-  linkLogoToIndex = false,
   currentSection = null,
   hidePromoBar = true,
   redirectToDashboard = false,
@@ -72,10 +75,9 @@ export default function TopNavigationBar({
   const isIndexPage = location.pathname === '/';
 
   const { t } = useTranslation();
-  const { level, levelReady } = useLevel();
-  const visibleSections = SECTIONS.filter(
-    section => !levelReady || chaptersForLevel(section, level).length > 0
-  );
+  const visibleSections = useNavSections();
+  const isDarkMode = useDarkMode();
+  const setTheme = useSetThemeSetting();
 
   const archive = [
     {
@@ -145,15 +147,7 @@ export default function TopNavigationBar({
 
   return (
     <>
-      {!hidePromoBar && (
-        <>
-          <Banner
-            text="Olympiads XYZ се завръща — архивът е отново онлайн, а в раздел „Задачи“ има над 7000 олимпиадни задачи с официални решения."
-            action="Разгледай Архива"
-            link="/archive/"
-          />
-        </>
-      )}
+      {!hidePromoBar && <Banner />}
 
       <nav
         className={classNames(
@@ -164,10 +158,12 @@ export default function TopNavigationBar({
         <div className="max-w-7xl px-2 sm:px-4 lg:px-8 mx-auto">
           <div className="flex justify-between h-16">
             <div className="flex px-2 lg:px-0">
+              {/* the home page; a signed-in visitor stays there unless redirectToDashboard (pages/index.tsx) */}
               <Link
-                to={linkLogoToIndex ? '/' : '/dashboard'}
+                to="/"
                 state={{ redirect: redirectToDashboard }}
                 className="flex-shrink-0 flex items-center"
+                aria-label={t('top-nav_home')}
               >
                 <div className="block sm:hidden">
                   <LogoSquare className="h-10 w-10" />
@@ -227,10 +223,10 @@ export default function TopNavigationBar({
                               <div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
                                 {/* Different archive sections */}
                                 {archive.map(item => (
-                                  <a
+                                  <Link
                                     key={item.name}
-                                    href={item.href}
-                                    className="-m-3 p-3 flex items-start rounded-lg transition ease-in-out duration-150"
+                                    to={item.href}
+                                    className="-m-3 p-3 flex items-start rounded-lg transition ease-in-out duration-150 hover:bg-gray-50 dark:hover:bg-gray-700"
                                     style={{
                                       backgroundColor: item.backgroundColor,
                                     }}
@@ -255,8 +251,17 @@ export default function TopNavigationBar({
                                         {item.description}
                                       </p>
                                     </div>
-                                  </a>
+                                  </Link>
                                 ))}
+                              </div>
+                              <div className="bg-gray-50 dark:bg-gray-900 px-5 py-4 sm:px-8">
+                                <Link
+                                  to="/archive/"
+                                  className="text-sm font-medium text-blue-700 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                                >
+                                  {t('top-nav_archive-all')}{' '}
+                                  <span aria-hidden="true">&rarr;</span>
+                                </Link>
                               </div>
                             </div>
                           </Popover.Panel>
@@ -269,7 +274,7 @@ export default function TopNavigationBar({
 
                 {/* Level Switcher (класова група) — site-wide, like the language switcher */}
                 <LevelSwitcher />
-                {/* Language Switcher ei tova mi izqde dushata*/}
+                {/* Language Switcher: renders nothing while LANGUAGE_SWITCHER_ENABLED is off */}
                 {!hideLanguageSwitcher && <LanguageSwitcher />}
               </div>
             </div>
@@ -288,13 +293,59 @@ export default function TopNavigationBar({
 
                 <span className="ml-2 font-medium">{t('top-nav_search')}</span>
               </button>
+              {/* one-click theme toggle; «Системна» stays in /settings */}
+              <button
+                type="button"
+                aria-label={
+                  isDarkMode ? t('top-nav_theme-light') : t('top-nav_theme-dark')
+                }
+                title={
+                  isDarkMode ? t('top-nav_theme-light') : t('top-nav_theme-dark')
+                }
+                onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
+                className="ml-1 p-1.5 rounded-full text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              >
+                {isDarkMode ? (
+                  <svg
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                    />
+                  </svg>
+                )}
+              </button>
             </div>
             <div className="flex items-center lg:hidden">
               {/* Mobile menu button */}
               <MobileMenuButtonContainer
                 className="inline-flex items-center justify-center p-2"
                 aria-label={t('top-nav_main-menu')}
-                aria-expanded="false"
+                aria-expanded={isMobileNavOpen}
                 onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
               >
                 {/* Icon when menu is closed. */}
@@ -389,8 +440,38 @@ export default function TopNavigationBar({
       */}
         <div className={`${isMobileNavOpen ? 'block' : 'hidden'} lg:hidden`}>
           <div className="grid grid-cols-1 divide-y divide-gray-300 dark:divide-gray-800 pb-6">
+            {/* the two things most visitors come for, first */}
             <div className="py-5 px-4">
-              <div className="group -m-3 p-3 flex items-center rounded-md">
+              <nav className="grid grid-cols-2 gap-x-8">
+                <Link
+                  to="/problems/"
+                  className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <QuestionMarkCircleIcon
+                    className="flex-shrink-0 h-6 w-6 text-blue-600 dark:text-blue-400"
+                    aria-hidden="true"
+                  />
+                  <span className="ml-3 text-base font-semibold text-gray-900 dark:text-gray-100">
+                    {t('top-nav_problems')}
+                  </span>
+                </Link>
+                <Link
+                  to="/archive/"
+                  className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <ArchiveIcon
+                    className="flex-shrink-0 h-6 w-6 text-blue-600 dark:text-blue-400"
+                    aria-hidden="true"
+                  />
+                  <span className="ml-3 text-base font-semibold text-gray-900 dark:text-gray-100">
+                    {t('top-nav_archive')}
+                  </span>
+                </Link>
+              </nav>
+            </div>
+            <div className="py-5 px-4">
+              <p className={mobileCaptionClasses}>{t('sections')}</p>
+              <div className="mt-3 group -m-3 p-3 flex items-center rounded-md">
                 <span className="text-base font-medium text-gray-700 dark:text-gray-300">
                   Ниво:
                 </span>
@@ -412,27 +493,15 @@ export default function TopNavigationBar({
                 ))}
               </div>
             </div>
-            {/* Begin nz kakvo pravi tova probably some menu for the groups*/}
             <div className="py-5 px-4">
-              <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                {/* <Link
-                  to="/groups/"
-                  className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  <UserGroupIcon
-                    className="flex-shrink-0 h-6 w-6 text-gray-600 dark:group-hover:text-gray-400"
-                    aria-hidden="true"
-                  />
-                  <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                    Groups
-                  </span>
-                </Link> */}
+              <p className={mobileCaptionClasses}>
+                {t('top-nav_archive-by-subject')}
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-y-4 gap-x-8">
                 {archive.map(item => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
-                    target=""
-                    rel="noreferrer"
+                    to={item.href}
                     className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <item.icon
@@ -443,25 +512,12 @@ export default function TopNavigationBar({
                     <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
                       {item.name}
                     </span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
             <div className="pt-5 px-4">
               <nav className="grid gap-y-8">
-                <Link
-                  key="Problems"
-                  to="/problems"
-                  className="group -m-3 p-3 flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  <QuestionMarkCircleIcon
-                    className="flex-shrink-0 h-6 w-6 text-gray-600 dark:group-hover:text-gray-400"
-                    aria-hidden="true"
-                  />
-                  <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                    {t('top-nav_problems')}
-                  </span>
-                </Link>
                 <a
                   className="group -m-3 p-3 cursor-pointer flex items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"
                   onClick={() => setIsContactUsActive(true)}
@@ -514,15 +570,17 @@ export default function TopNavigationBar({
                     </span>
                   </a>
                 )}
-                <div className="group -m-3 p-3 cursor-pointer flex items-center rounded-md">
-                  <MdLanguage className="h-6 w-6 text-gray-600 float-left dark:group-hover:text-gray-400 transition ease-in-out duration-150" />
-                  <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
-                    {t('language')}:
-                  </span>
-                  <div className="ml-3 text-gray-600 -m-3 p-3 cursor-pointer flex items-center rounded-md float-right hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <LanguageSwitcher />
+                {LANGUAGE_SWITCHER_ENABLED && (
+                  <div className="group -m-3 p-3 cursor-pointer flex items-center rounded-md">
+                    <MdLanguage className="h-6 w-6 text-gray-600 float-left dark:group-hover:text-gray-400 transition ease-in-out duration-150" />
+                    <span className="ml-3 text-base font-medium text-gray-700 dark:text-gray-300">
+                      {t('language')}:
+                    </span>
+                    <div className="ml-3 text-gray-600 -m-3 p-3 cursor-pointer flex items-center rounded-md float-right hover:bg-gray-100 dark:hover:bg-gray-700">
+                      <LanguageSwitcher />
+                    </div>
                   </div>
-                </div>
+                )}
               </nav>
             </div>
           </div>
