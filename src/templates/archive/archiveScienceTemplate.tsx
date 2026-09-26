@@ -4,6 +4,8 @@ import type { ClientEntry, CompetitionSummary } from '../../archive/catalog-node
 import {
   competitionName,
   competitionShort,
+  filesCount,
+  plural,
   SCIENCE_COLORS,
   SCIENCE_LABELS,
 } from '../../archive/labels';
@@ -13,6 +15,7 @@ import {
   EMPTY_FILTERS,
   EntryList,
   LibraryTree,
+  NoResults,
 } from '../../components/Archive/ArchiveUI';
 import TopNavigationBar from '../../components/TopNavigationBar/TopNavigationBar';
 import Layout from '../../components/layout';
@@ -26,6 +29,8 @@ type Props = {
     uncategorized: ClientEntry[];
   };
 };
+
+const MAX_RESULTS = 200;
 
 export default function ArchiveScienceTemplate({ pageContext }: Props): JSX.Element {
   const { science, competitions, library, uncategorized } = pageContext;
@@ -42,12 +47,27 @@ export default function ArchiveScienceTemplate({ pageContext }: Props): JSX.Elem
       .catch(() => setIndex([]));
   };
 
-  const results =
-    q.trim() && index ? applyFilters(index, { ...EMPTY_FILTERS, q }).slice(0, 200) : null;
+  const matched =
+    q.trim() && index ? applyFilters(index, { ...EMPTY_FILTERS, q }) : null;
+  const results = matched ? matched.slice(0, MAX_RESULTS) : null;
+  // Състезанията с години са карти; сборните файлове без година (Китай,
+  // Естония …) са един ред под тях, а не празни карти „без години“.
+  const dated = competitions.filter(c => c.yearMin != null);
+  const undated = competitions.filter(c => c.yearMin == null);
+  const shortNames = dated.slice(0, 4).map(c => competitionShort(c.code));
+  const description = dated.length
+    ? `Архив по ${name.toLowerCase()}: оригинални условия, решения и протоколи от ${plural(
+        competitions.length,
+        'състезание',
+        'състезания'
+      )} (${shortNames.join(', ')}${dated.length > shortNames.length ? ' и др.' : ''})${
+        library.length ? ', сборници и учебни материали' : ''
+      }.`
+    : `Архив по ${name.toLowerCase()}: книги и учебни материали.`;
 
   return (
     <Layout>
-      <SEO title={`Архив · ${name}`} pathname={`/archive/${science}/`} />
+      <SEO title={`Архив · ${name}`} description={description} pathname={`/archive/${science}/`} />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
         <main>
@@ -67,45 +87,69 @@ export default function ArchiveScienceTemplate({ pageContext }: Props): JSX.Elem
               loadIndex();
             }}
             placeholder={`Търси във всички материали по ${name.toLowerCase()}…`}
+            aria-label={`Търси в архива по ${name.toLowerCase()}`}
             className="w-full px-4 py-2.5 mb-6 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {results ? (
+          {results && matched ? (
             <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
               <p className="text-sm text-gray-500 dark:text-gray-400 px-3 pb-2">
-                {results.length === 200 ? 'Първите 200 резултата' : `${results.length} файла`}
+                {matched.length > MAX_RESULTS
+                  ? `Първите ${MAX_RESULTS} от ${filesCount(matched.length)}`
+                  : filesCount(matched.length)}
               </p>
-              <EntryList entries={results} />
+              {results.length ? (
+                <EntryList entries={results} />
+              ) : (
+                <NoResults onReset={() => setQ('')} />
+              )}
             </div>
           ) : (
             <>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">
-                Състезания
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
-                {competitions.map(c => (
-                  <Link
-                    key={c.code}
-                    to={`/archive/${science}/${c.slug}/`}
-                    className="block rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-baseline justify-between gap-2">
-                      <span className="font-semibold text-gray-900 dark:text-gray-100">
-                        {competitionName(c.code)}
-                      </span>
-                      <span className="text-xs font-bold text-gray-400 dark:text-gray-500">
-                        {competitionShort(c.code)}
-                      </span>
-                    </div>
-                    <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400">
-                      {c.yearMin && c.yearMax
-                        ? c.yearMin === c.yearMax
-                          ? c.yearMin
-                          : `${c.yearMin}–${c.yearMax}`
-                        : 'без години'}
+              {competitions.length > 0 && (
+                <>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+                    Състезания
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                    {dated.map(c => (
+                      <Link
+                        key={c.code}
+                        to={`/archive/${science}/${c.slug}/`}
+                        className="block rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-shadow"
+                      >
+                        <div className="flex items-baseline justify-between gap-2">
+                          <span className="font-semibold text-gray-900 dark:text-gray-100">
+                            {competitionName(c.code)}
+                          </span>
+                          <span className="text-xs font-bold text-gray-500 dark:text-gray-400">
+                            {competitionShort(c.code)}
+                          </span>
+                        </div>
+                        <p className="mt-1.5 text-sm text-gray-500 dark:text-gray-400">
+                          {c.yearMin === c.yearMax ? c.yearMin : `${c.yearMin}–${c.yearMax}`}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                  {undated.length > 0 && (
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-10">
+                      Сборни материали без година:{' '}
+                      {undated.map((c, i) => (
+                        <React.Fragment key={c.code}>
+                          {i > 0 && ' · '}
+                          <Link
+                            to={`/archive/${science}/${c.slug}/`}
+                            className="text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            {competitionName(c.code)}
+                          </Link>
+                        </React.Fragment>
+                      ))}
                     </p>
-                  </Link>
-                ))}
-              </div>
+                  )}
+                  {undated.length === 0 && <div className="mb-6" />}
+                </>
+              )}
               {library.length > 0 && (
                 <>
                   <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">

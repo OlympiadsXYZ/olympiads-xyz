@@ -365,14 +365,80 @@ export const ROUND_LABELS: { [code: string]: string } = {
   'day-3': 'Ден 3',
 };
 
+// „I кръг (общински)“ … са етапите на българските олимпиади. Другаде I/II/III е
+// само номер (СПбАО, Самара, USAPhO) или чужд етап: регионалният етап на ВсОШ се
+// показваше като „III кръг (национален)“. scripts/problems-to-site.mjs пази
+// същото множество за заглавията на задачите.
+export const BULGARIAN_STAGED = new Set([
+  'NOF',
+  'NAO',
+  'NOH',
+  'ESF',
+  'PSF',
+  'HOOS',
+]);
+
+const NUMBERED_ROUND_LABELS: { [code: string]: string } = {
+  I: 'I кръг',
+  II: 'II кръг',
+  III: 'III кръг',
+};
+
+// Системата на ВсОШ: училищен → общински → регионален → (окръжен до 2008) → финален.
+const VSOSH_STAGES: { [code: string]: string } = {
+  I: 'Училищен етап',
+  II: 'Общински етап',
+  regional: 'Регионален етап',
+  zonal: 'Зонален (окръжен) етап',
+  IV: 'Финален етап',
+};
+
+// Етикети на кръговете, които зависят от състезанието (заглавията на
+// файловете казват същото).
+export const COMPETITION_ROUND_LABELS: {
+  [competition: string]: { [code: string]: string };
+} = {
+  Всерусийска: VSOSH_STAGES,
+  'VsOA-ru': VSOSH_STAGES,
+  Struve: VSOSH_STAGES,
+  'VsOA-SPb': { I: 'Районен етап' },
+  BelPhO: { III: 'III етап (областен)', IV: 'IV етап (републикански)' },
+  USAPhO: { I: 'Квалификация (Quarterfinal)', II: 'Полуфинал (Semifinal)' },
+  USAAAO: {
+    I: 'Първи кръг (First Round)',
+    II: 'Втори кръг (NAC)',
+    III: 'Трети кръг (финал)',
+  },
+  Samara: { I: 'Тур 1', II: 'Тур 2', III: 'Тур 3' },
+};
+
+/** The label of a round on the archive pages of one competition. */
+export function roundLabel(
+  round: string | null,
+  competition?: string | null
+): string | null {
+  if (!round) return null;
+  const own = competition ? COMPETITION_ROUND_LABELS[competition] : undefined;
+  if (own && own[round]) return own[round];
+  if (
+    competition &&
+    NUMBERED_ROUND_LABELS[round] &&
+    !BULGARIAN_STAGED.has(competition)
+  ) {
+    return NUMBERED_ROUND_LABELS[round];
+  }
+  return ROUND_LABELS[round] ?? round;
+}
+
 export const ROUND_ORDER = [
   // етапи
   'I',
   'II',
   'III',
+  // регионалният етап (ВсОШ, Струве) е преди окръжния и финала
+  'regional',
   'zonal',
   'IV',
-  'regional',
   'selection',
   'camp',
   'distance',
@@ -517,8 +583,66 @@ export const EXT_LABELS: { [code: string]: string } = {
   xls: 'Таблица',
   book: 'Електронна книга',
   exe: 'Изпълним файл',
+  video: 'Видео',
+  web: 'Уеб страница',
+  nb: 'Тетрадка на Mathematica',
+  slides: 'Презентация',
   other: 'Файл',
 };
+
+// Short tag in the first column of a row.
+export const EXT_ICONS: { [code: string]: string } = {
+  pdf: 'PDF',
+  doc: 'DOC',
+  img: 'IMG',
+  zip: 'ZIP',
+  xls: 'XLS',
+  book: 'BOOK',
+  exe: 'ПРОГ',
+  video: 'ВИДЕО',
+  web: 'УЕБ',
+  nb: 'NB',
+  slides: 'PPT',
+  other: 'ФАЙЛ',
+};
+
+/** „1 файл“, „2 файла“: the count with the singular or the plural form. */
+export function plural(n: number, one: string, many: string): string {
+  return `${n} ${n === 1 ? one : many}`;
+}
+
+export const filesCount = (n: number): string => plural(n, 'файл', 'файла');
+
+// Имената на папките в библиотеката (ключовете в кофата са на английски).
+export const FOLDER_LABELS: { [name: string]: string } = {
+  Handouts: 'Материали',
+  'Problem books': 'Сборници',
+  Kalda: 'Яан Калда',
+  Zhou: 'Кевин Джоу',
+  Electromagnetism: 'Електромагнетизъм',
+  Mechanics: 'Механика',
+  Meta: 'Общи съвети',
+  Modern: 'Съвременна физика',
+  'Practice Olympiads': 'Тренировъчни олимпиади',
+  'Problem Solving': 'Решаване на задачи',
+  Relativity: 'Относителност',
+  Thermodynamics: 'Термодинамика',
+  Waves: 'Вълни',
+  Английски: 'На английски',
+  Руски: 'На руски',
+  limyungkuo: 'Lim Yung-Kuo',
+  MIPT: 'МФТИ',
+  Syllabus: 'По програмата',
+  Textbooks: 'Учебници',
+  'Chemistry books': 'Книги',
+  Algorithms: 'Алгоритми',
+  'Ethical hacking': 'Етично хакерство',
+  'Web development': 'Уеб разработка',
+};
+
+export function folderLabel(name: string): string {
+  return FOLDER_LABELS[name.normalize('NFC')] ?? name;
+}
 
 export function entryExt(file: string): string {
   const base = file.split('/').pop() ?? '';
@@ -528,6 +652,12 @@ export function entryExt(file: string): string {
   const ext = (base.split('.').pop() ?? '').toLowerCase();
   if (ext === 'pdf') return 'pdf';
   if (['exe', 'linux', 'macos'].includes(ext)) return 'exe';
+  if (['mp4', 'mov', 'avi', 'mkv', 'webm', 'wmv', 'm4v'].includes(ext)) {
+    return 'video';
+  }
+  if (['html', 'htm', 'mhtml'].includes(ext)) return 'web';
+  if (ext === 'nb') return 'nb';
+  if (['ppt', 'pptx', 'pps', 'ppsx', 'odp'].includes(ext)) return 'slides';
   if (['doc', 'docx', 'odt', 'rtf', 'txt', 'tex'].includes(ext)) return 'doc';
   if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tif', 'tiff'].includes(ext)) {
     return 'img';
