@@ -1,0 +1,124 @@
+---
+id: usaaao-2020-ii-second-exam-apr4-p9
+source: 'USAAAO 2020, II кръг'
+title: 'Задача 9'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/USAAAO/2020/usaaao-2020-ii-second-exam-apr4.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T07:26:04.417Z'
+verifier: 'mechanical'
+---
+
+*2020 National Astronomy Competition · 20 т.*
+
+<details>
+<summary>Instructions (Please Read Carefully)</summary>
+
+The top 5 eligible scorers on the NAC will be invited to represent USA at the next IOAA. The next 5 eligible scorers will be invited to join the USA guest team at the next IOAA. In order to qualify for the national team, you must be a high school student with US citizenship or permanent residency.
+
+This exam consists of 3 parts: Short Questions, Medium Questions and Long Questions.
+
+The test must be completed within 2.5 hours (150 minutes).
+
+Please solve each problem on a blank piece of paper and mark the number of the problem at the top of the page. The contestant’s full name in capital letters should appear at the top of each solution page. If the contestant uses scratch papers, those should be labeled with the contestant’s name as well and marked as “scratch paper” at the top of the page. Scratch paper will not be graded. Partial credit will be available given that correct and legible work was displayed in the solution.
+
+This is a written exam. Contestants can only use a scientific calculator for this exam. A table of physical constants will be provided. **Discussing the problems with other people is strictly prohibited in any way until the end of the examination period on April 5th.** Receiving any external help during the exam is strictly prohibited. This means that the only allowed items are: a scientific calculator, the provided table of constants, a pencil (or pen), an eraser, blank sheets of papers, and the exam. No books or notes are allowed during the exam.
+
+</details>
+
+## Условие
+
+In general relativity, the orbit of satellites around a massive object (like a black hole) are known as geodesics and do not obey all of Kepler’s laws for orbits. However, for objects that are moving at non-relativistic speeds, we can analyze the orbit using classical mechanics, with a corrective term added to Newton’s Law of gravity. In this case, the potential energy of an object in orbit around a black hole is:
+
+$$
+V_s(r) = -\frac{GMm}{r} - \frac{GML^2}{c^2mr^3}
+$$
+
+where $M$ and $m$ are the masses of the black hole and the object respectively, $c$ is the speed of light, $L$ is the angular momentum of the object in orbit and $r$ is the distance of that object from the black hole. Likewise, the gravitational force from a black hole has magnitude:
+
+$$
+F_s(r) = \frac{GMm}{r^2} + \frac{3GML^2}{c^2mr^4}
+$$
+
+You may assume that both conservation of energy and conservation of angular momentum hold in this regime.
+
+**(a)** Argue which of Kepler’s laws are still true.
+
+**(b)** Calculate the radius of a stable circular orbit with an angular momentum $L$ (you will get two solutions, the stable orbit generates the classical result under the proper limits)
+
+**(c)** What is the radius, $R_{ISCO}$ of the innermost stable circular orbit (the smallest stable circular obit) for a black hole of mass $M$? What is the numerical value of $R_{ISCO}$ for Sagittarius A*, which has mass $3.6 \times 10^{6}$ solar masses?
+
+**(d)** Suppose we discovered a new star orbiting Sagittarius A*, S99, that has a periapsis of $10R_{ISCO}$ and an apoapsis of 16 AU. Find the magnitude of velocity of S99 at both periapsis and apoapsis.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** Only Kepler’s law of areas still holds.
+- **(b)** $r = \frac{L^2}{2GMm^2}\left(1 + \sqrt{1 - 12\frac{G^2M^2m^2}{L^2c^2}}\right)$
+- **(c)** R<sub>ISCO</sub> = 6GM/c²; R<sub>ISCO</sub> = 3.20 × 10¹⁰ m ≈ 0.21 AU
+- **(d)** v<sub>1</sub> = 0.171c = 5.19 × 10⁷ m/s at periapsis; v<sub>2</sub> = 0.022c = 6.82 × 10⁶ m/s at apoapsis
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:**
+
+(a) Only Kepler’s law of areas still holds from the fact that we have a radial force.
+
+(b) Using centripetal force, we get that
+
+$$
+\frac{L^2}{mr^3} = \frac{GMm}{r^2} + \frac{3GML^2}{c^2mr^4}
+$$
+
+A little algebra later, we get the quadratic equation,
+
+$$
+r^2 - \frac{L^2}{GMm^2}r + \frac{3L^2}{m^2c^2} = 0
+$$
+
+Using the quadratic equation, we get:
+
+$$
+r = \frac{L^2}{2GMm^2}\left(1 \pm \sqrt{1 - 12\frac{G^2M^2m^2}{L^2c^2}}\right)
+$$
+
+Taking the limit that $c \rightarrow \infty$ we see that the plus solution gives us the classical result. Thus the stable orbit is
+
+$$
+r = \frac{L^2}{2GMm^2}\left(1 + \sqrt{1 - 12\frac{G^2M^2m^2}{L^2c^2}}\right)
+$$
+
+and the unstable orbit is
+
+$$
+r = \frac{L^2}{2GMm^2}\left(1 - \sqrt{1 - 12\frac{G^2M^2m^2}{L^2c^2}}\right)
+$$
+
+(c) The ISCO occurs with the smallest allowed value of $L$ which is $L^2 = \frac{12G^2M^2m^2}{c^2}$. This gives a value of $R_{ISCO} = \frac{6GM}{c^2}$ and calculating numerically we get $R_{ISCO} = 3.20 \times 10^{10} \approx 0.21$ AU.
+
+(d) One way to solve this problem is to first find the angular momentum of the orbit; to do this we use conservation of energy:
+
+$$
+\frac{L^2}{2mr_1^2} - \frac{GMm}{r_1} - \frac{GML^2}{c^2mr_1^3} = \frac{L^2}{2mr_2^2} + -\frac{GMm}{r_2} - \frac{GML^2}{c^2mr_2^3}
+$$
+
+Substituting $l = \frac{L}{m}$ and solving, we see that:
+
+$$
+l^2 = \frac{2GM(1/r_1 - 1/r_2)}{(1/r_1^2 - 1/r_2^2) - \frac{2GM}{c^2}(1/r_1^3 - 1/r_2^3)} = \frac{R_s(1/r_1 - 1/r_2)}{(1/r_1^2 - 1/r_2^2) - R_s(1/r_1^3 - 1/r_2^3)}c^2
+$$
+
+Where $R_s = 0.07$ AU is the Schwarchild radius of Sagittarius A*, $r_1 = 2.1$ AU and $r_2 = 16$ AU. Doing the calculations we get that $l = 0.36c\times$ AU. Thus the velocities are $v_1 = l/r_1 = 0.171c = 5.19 \times 10^{7}$ m/s and $v_2 = l/r_2 = 0.022c = 6.82 \times 10^{6}$ m/s.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [usaaao_second_exam_2020__apr4.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2020/2020-II/usaaao_second_exam_2020__apr4.pdf)
+· официални решения: [usaaao_second_exam_2020__apr4sol.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2020/2020-II/usaaao_second_exam_2020__apr4sol.pdf)

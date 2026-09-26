@@ -1,0 +1,144 @@
+---
+id: usapho-2020-x-p1
+source: 'USAPhO 2020, Полуфинал'
+title: 'Задача 1. Question A1. Braking up'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2020/usapho-2020-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T07:25:42.140Z'
+verifier: 'mechanical'
+---
+
+*USA Physics Olympiad Exam*
+
+<details>
+<summary>Information about USAPhO Test</summary>
+
+- This examination consists of two parts and six problems. Ordinarily, you will be given 90 minutes to complete Part A, take a 10-15 minute break, and return to complete Part B in 90 minutes.
+
+  You may choose to observe the above guideline if you’d like to practice for future USAPhO tests.
+
+- Ordinarily, you are allowed calculators, but they are not allowed to use symbolic math, programming, or graphical features of these calculators. Calculators must not be shared and their memory must be cleared of data and programs. Cell phones, smart watches, PDAs, or cameras cannot be used during the exam or while the exam papers are present. Students are not allowed to bring any tables, books, or collections of formulas.
+
+  You may choose to observe the above guideline if you’d like to practice for future USAPhO tests.
+
+Thank you for participating USAPhO this year under such extraordinary circumstances. We hope that you and your family stay safe, and that you continue to encourage more students like you to study physics and try out $F = ma$ test hosted by AAPT.
+
+We acknowledge the following people for their contributions to this year’s exam (in alphabetical order):
+
+*Ariel Amir, JiaJia Dong, Mark Eichenlaub, Abijith Krishnan, Kye W. Shi, and Mike Winer.*
+
+</details>
+
+## Условие
+
+An infinitely long wire with linear charge density $-\lambda$ lies along the $z$-axis. An infinitely long insulating cylindrical shell of radius $a$ is concentric with the wire and can rotate freely about the $z$-axis. The shell has moment of inertia per unit length $I$. Charge is uniformly distributed on the shell, with surface charge density $\dfrac{\lambda}{2\pi a}$.
+
+The system is immersed in an external magnetic field $B_0\hat{\mathbf{z}}$, and is initially at rest. Starting at $t = 0$, the external magnetic field is slowly reduced to zero over a time $T \gg a/c$, where $c$ is the speed of light.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '21%', '--fig-max': '135px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2020-x/p1-fig1.png" alt="A vertical cylindrical shell drawn around a long vertical wire (dashed axis line through its centre); the radius a is marked by a dotted line at the bottom face; an arrow labelled z points up with the label B_0 ẑ next to it." width="422" height="691" loading="lazy" decoding="async" />
+</figure>
+
+**a.** Find an expression of the final angular velocity $\omega$ of the cylinder in terms of the symbols given and other constants.
+
+**b.** You may be surprised that the expression you find above is not zero! However, the electric and magnetic fields can have angular momentum. Analogous to the “regular” angular momentum definition, the EM field angular momentum per unit volume at a displacement $\mathbf{r}$ from the axis of rotation is:
+
+$$
+\mathcal{L}(\mathbf{r}) = \mathbf{r} \times \mathcal{P}(\mathbf{r}).
+$$
+
+$\mathcal{P}(\mathbf{r})$ is a vector analogous to momentum, given by
+
+$$
+\mathcal{P}(\mathbf{r}) = \alpha \cdot \big(\mathbf{E}(\mathbf{r}) \times \mathbf{B}(\mathbf{r})\big).
+$$
+
+where $\alpha$ is some proportionality constant. Find an expression for $\alpha$ in terms of given variables and fundamental constants.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a.** $\omega(T) = \dfrac{\frac{\lambda a^2}{2I}B_0}{1 + \mu_0\frac{\lambda^2 a}{8\pi I}}$
+- **b.** $\alpha = \epsilon_0$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.** From Faraday’s law, you can find the induced electric field inside the cylinder at a distance $r$ from the wire:
+
+$$
+\oint \vec{E}_{\mathrm{ind}} \cdot d\vec{\ell} = -\frac{d\Phi_B}{dt} \qquad (A1-1)
+$$
+
+$$
+E_{\mathrm{ind}}(r) = -\frac{r}{2}\frac{dB}{dt} \qquad (A1-2)
+$$
+
+This induced field exerts a torque on the cylinder, causing it to rotate:
+
+$$
+\tau = 2\pi a \cdot \frac{\lambda}{2\pi a} \cdot E_{\mathrm{ind}}(a) \cdot a = I \cdot \frac{d\omega}{dt} \qquad (A1-3)
+$$
+
+$$
+\Rightarrow \frac{d\omega}{dt} = -\frac{\lambda a^2}{2I} \cdot \frac{dB}{dt} \qquad (A1-4)
+$$
+
+Integrate on both sides, and noting that $\omega(t = 0) = 0$, we have:
+
+$$
+\omega(T) = -\frac{\lambda a^2}{2I}\big(B(T) - B_0\big) \qquad (A1-5)
+$$
+
+It is important to note that $B(T) \neq 0$. Even though the external field decreases to zero, the now-rotating charged cylinder generates a magnetic field. Using Ampere’s Law, you can find at $t = T$, the magnetic field is:
+
+$$
+\oint \vec{B}_{\mathrm{ind}} \cdot d\vec{\ell} = \mu_0 I_{\mathrm{enc}}, \qquad (A1-6)
+$$
+
+$$
+\text{where} \quad I_{\mathrm{enc}} = \frac{\lambda}{2\pi a} \cdot \omega(T) \cdot a \qquad (A1-7)
+$$
+
+$$
+\Rightarrow B(T) = \mu_0 \frac{\lambda}{4\pi^2 a}\omega(T) \qquad (A1-8)
+$$
+
+Combining equations (A1-5) and (A1-8), we have:
+
+$$
+\omega(T) = \frac{\dfrac{\lambda a^2}{2I}B_0}{1 + \mu_0\dfrac{\lambda^2 a}{8\pi I}}
+$$
+
+**b.** The electric field inside the cylindrical shell is given by $\mathbf{E}(r) = -\frac{\lambda}{2\pi\epsilon_0 r}\hat{\mathbf{r}}$ inward. The magnetic field is given by $B(t)\hat{\mathbf{z}}$. Then:
+
+$$
+\mathcal{P}(\mathbf{r}) = \alpha\frac{\lambda B(t)}{2\pi\epsilon_0 r}\hat{\theta}.
+$$
+
+The angular momentum per unit volume is then:
+
+$$
+\mathcal{L}(\mathbf{r}) = -\alpha\frac{\lambda}{2\pi\epsilon_0}\hat{\mathbf{z}}
+$$
+
+The angular momentum *per unit length is then*:
+
+$$
+\mathbf{L} = -\frac{\alpha\lambda B(t)a^2}{2}\hat{\mathbf{z}}.
+$$
+
+Comparing this to Equation (A1-5) shows that $\alpha = \epsilon_0$.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2020_USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2020/2020_USAPhO.pdf)
+· официални решения: [2020_USAPhO_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2020/2020_USAPhO_solutions.pdf)

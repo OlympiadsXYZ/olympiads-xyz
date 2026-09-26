@@ -1,0 +1,170 @@
+---
+id: usapho-2020-x-p5
+source: 'USAPhO 2020, Полуфинал'
+title: 'Задача 5. Question B2. Mirror Mirror on the Wall'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2020/usapho-2020-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T07:25:42.140Z'
+verifier: 'mechanical'
+---
+
+*USA Physics Olympiad Exam*
+
+<details>
+<summary>Information about USAPhO Test</summary>
+
+- This examination consists of two parts and six problems. Ordinarily, you will be given 90 minutes to complete Part A, take a 10-15 minute break, and return to complete Part B in 90 minutes.
+
+  You may choose to observe the above guideline if you’d like to practice for future USAPhO tests.
+
+- Ordinarily, you are allowed calculators, but they are not allowed to use symbolic math, programming, or graphical features of these calculators. Calculators must not be shared and their memory must be cleared of data and programs. Cell phones, smart watches, PDAs, or cameras cannot be used during the exam or while the exam papers are present. Students are not allowed to bring any tables, books, or collections of formulas.
+
+  You may choose to observe the above guideline if you’d like to practice for future USAPhO tests.
+
+Thank you for participating USAPhO this year under such extraordinary circumstances. We hope that you and your family stay safe, and that you continue to encourage more students like you to study physics and try out $F = ma$ test hosted by AAPT.
+
+We acknowledge the following people for their contributions to this year’s exam (in alphabetical order):
+
+*Ariel Amir, JiaJia Dong, Mark Eichenlaub, Abijith Krishnan, Kye W. Shi, and Mike Winer.*
+
+</details>
+
+## Условие
+
+Consider a square room with side length $L$. The bottom wall of the room is a perfect mirror.* A perfect monochromatic point source with wavelength $\lambda$ is placed a distance $d$ above the center of the mirror, where $\lambda \ll d \ll L$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40.8%', '--fig-max': '261px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2020-x/p5-fig1.png" alt="A square room of side L (dimension arrows labelled L on the top and on the right side); the bottom wall is a thick line labelled mirror; a point source (dot) sits a height d above the center of the mirror; a dimension arrow labelled L/2 runs from the source to the right wall." width="816" height="809" loading="lazy" decoding="async" />
+</figure>
+
+\*Remember that the phase of light reflected by a mirror changes by $180^{\circ}$.
+
+**a.** On the right wall, an interference pattern emerges. What is the distance $y$ between the bottom corner and the closest bright fringe above it? Hint: you may assume $\lambda \ll y \ll L$ as well.
+
+**b.** You plan on running an experiment to determine $\lambda$ in a room with $L = 40$ m, and you know that $\lambda$ is between 550 and 750 nm. You will measure $d$ and $y_{10}$ (the distance of the tenth fringe from the corner) with the same ruler (with markings of 1 mm). At what $d$ should you place the point source to minimize your error in your $\lambda$ measurement? Roughly what is that minimum error?
+
+**c.** Now suppose we place a transparent hemispherical shell of thickness $s$ and index of refraction $n$ over the source such that all light from the source that directly strikes the right wall passes through the shell, and all light from the source that strikes the mirror first does not pass through the shell.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '24.2%', '--fig-max': '155px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2020-x/p5-fig2.png" alt="Close-up of the lower right corner of the room: the mirror (thick horizontal line) meets the right wall (vertical line); the point source at height d is covered by a small hemispherical shell labelled hemispherical shell; a dotted ray goes from the source to the corner; a dimension arrow labelled L/2 runs from the source to the right wall." width="485" height="439" loading="lazy" decoding="async" />
+</figure>
+
+At what $y$ is the fringe closest to the bottom-most corner now? (You may find it convenient to use $\lfloor x \rfloor$, the largest integer below $x$.) What is the spacing between the fringes now? Ignore any reflections or diffraction from the hemispherical shell.
+
+**d.** Now, suppose the hemispherical shell is removed, and we instead observe the interference pattern on the top wall. To the nearest integer, what is the total number of fringes that appear on the top wall? You may assume that $d \ll L$.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a.** $y = \frac{\lambda L}{8d}$
+- **b.** d = y<sub>10</sub> = 8 mm; Δλ ≈ 60 nm
+- **c.** $y = \frac{L}{4d}\left((n-1)s - \lambda\left\lfloor\frac{(n-1)s}{\lambda} - \frac{1}{2}\right\rfloor - \frac{\lambda}{2}\right),\quad \text{spacing } \lambda L/(4d)$
+- **d.** $2 \cdot \frac{2d}{\lambda}\left(1 - \frac{2}{\sqrt{5}}\right)$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.** This setup is essentially a double-slit experiment with the second slit being the image of the point source on the other side of the mirror, with the additional phase shift from the mirror. The distance between the source and a spot $y$ on the wall is given by $\sqrt{(d - y)^2 + (L/2)^2}$ and the distance between the image and a spot $y$ is given by $\sqrt{(d + y)^2 + (L/2)^2}$. Subtracting the two distances and adding in the phase shift gives us approximately
+
+$$
+L/2\left(\frac{2(d + y)^2}{L^2} - \frac{2(d - y)^2}{L^2}\right) + \lambda/2.
+$$
+
+This distance must be a multiple of $\lambda$ for interference to occur. Then,
+
+$$
+\frac{4dy}{L} + \lambda/2 = m\lambda.
+$$
+
+Substituting $m = 1$ gives us $y = \frac{\lambda L}{8d}$.
+
+**b.** Our error is given by
+
+$$
+\frac{\Delta\lambda}{\lambda} = \sqrt{\left(\frac{\Delta d}{d}\right)^2 + \left(\frac{\Delta y_{10}}{y_{10}}\right)^2}.
+$$
+
+Note that $\Delta d = \Delta y_{10} \sim 0.5$ mm. From earlier, note that after substituting $m = 10$, $y_{10} = \frac{19\lambda L}{8d}$.
+
+If we assume that $\lambda \sim 650$ nm, note that
+
+$$
+y_{10}d = 6.2 \times 10^{-5}\ \mathrm{m^2}.
+$$
+
+Choosing $d = y_{10}$ minimizes our error, so we get that $d = y_{10} = 8$ mm. Then, $\Delta\lambda \approx 60$ nm.
+
+Note: Accept any reasonable uncertainty in tick spacing $\sim 0.5$ mm or $\sim 1$ mm.
+
+**c.** Now the optical distance between the source and a spot $y$ on the wall is increased by $(n-1)s$. Then, we need
+
+$$
+\frac{4dy}{L} - (n - 1)s + \lambda/2 = m\lambda.
+$$
+
+To minimize $y$, we take $m$ to be $-\left\lfloor\frac{(n-1)s}{\lambda} - \frac{1}{2}\right\rfloor$. Then,
+
+$$
+y = \frac{L}{4d}\left((n - 1)s - \lambda\left\lfloor\frac{(n - 1)s}{\lambda} - \frac{1}{2}\right\rfloor - \frac{\lambda}{2}\right).
+$$
+
+Because $(n - 1)s$ is just an offset, the spacing between the fringes does not change, i.e., the spacing is still $\lambda L/(4d)$.
+
+**d.** Now, the distance between the source and a spot $x$ on the wall is given by $\sqrt{(L - d)^2 + x^2}$ and the distance between the image and a spot on the wall is $\sqrt{(L + d)^2 + x^2} + \lambda/2$. We do not assume $x \ll L$ this time. Subtracting the two distances gives us roughly
+
+$$
+\sqrt{L^2 + x^2}\sqrt{1 + \frac{2dL}{L^2 + x^2}} - \sqrt{L^2 + x^2}\sqrt{1 - \frac{2dL}{L^2 + x^2}} + \lambda/2 = m\lambda.
+$$
+
+Taylor expanding gives us
+
+$$
+\frac{2dL}{\sqrt{L^2 + x^2}} = (m - 1/2)\lambda.
+$$
+
+Then,
+
+$$
+x = \pm L\sqrt{\frac{4d^2}{(m - 1/2)^2\lambda^2} - 1}.
+$$
+
+For $x$ to be physical, we require that $m - 1/2 \leq 2d/\lambda$.
+
+The maximum allowed $x$ is $L/2$. Then,
+
+$$
+\sqrt{\frac{4d^2}{(m - 1/2)^2\lambda^2} - 1} \leq \frac{1}{2},
+$$
+
+so
+
+$$
+\frac{4d^2}{(m - 1/2)^2\lambda^2} \leq \frac{5}{4}.
+$$
+
+Thus, we have that
+
+$$
+m - 1/2 \geq \frac{4d}{\sqrt{5}\lambda}.
+$$
+
+Then, the number of fringes is
+
+$$
+2 \cdot \frac{2d}{\lambda}\left(1 - \frac{2}{\sqrt{5}}\right),
+$$
+
+where the extra factor of 2 comes from there being two sides to the interference pattern.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2020_USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2020/2020_USAPhO.pdf)
+· официални решения: [2020_USAPhO_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2020/2020_USAPhO_solutions.pdf)
