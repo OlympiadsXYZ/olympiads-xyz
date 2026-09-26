@@ -1,0 +1,233 @@
+---
+id: usapho-2024-exam-24-p5
+source: 'USAPhO 2024, Полуфинал'
+title: 'Задача 5. Question B2 · Solid Heat'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2024/usapho-2024-exam-24.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T18:43:36.275Z'
+verifier: 'mechanical'
+---
+
+*AAPT AIP UNITED STATES PHYSICS TEAM 2024 — USA Physics Olympiad Exam · 25 т.*
+
+<details>
+<summary>Important Instructions for the Exam Supervisor</summary>
+
+**DO NOT DISTRIBUTE THIS PAGE**
+
+- This examination has two parts. Each part has three questions and lasts for 90 minutes.
+- For each student, print out one copy of the exam and one copy of the answer sheets. Print everything single-sided, and do not staple anything. Divide the exam into the instructions (pages 2–3), Part A questions (pages 4–7), and Part B questions (pages 8–10). Page 11 is a graph page, in case students wish to use it as an additional page for problem B3.
+- Begin by giving students the instructions and all of the answer sheets. Let the students read the instructions and fill out their information on the answer sheets. They can keep the instructions for both parts of the exam. Also give students blank sheets of paper to use as scratch paper throughout the exam.
+- Students may bring calculators, but they may not use symbolic math, programming, or graphing features of these calculators. Calculators may not be shared, and their memory must be cleared of data and programs. Cell phones or other electronics may not be used during the exam or while the exam papers are present. Students may not use books or other references.
+- To start the exam, collect signed Honesty Policy, give students the Part A questions, and allow 90 minutes to complete Part A. Do not give students Part B during this time, even if they finish with time remaining. At the end of the 90 minutes, collect the Part A questions and answer sheets.
+- Then give students a 5 to 10 minute break. Then give them the Part B questions, and allow 90 minutes to complete Part B. Do not let students go back to Part A.
+- At the end of the exam, collect everything, including the questions, the instructions, the answer sheets, and the scratch paper. Give them the Honor Code Certification and collect signed Codes. Students may *not* keep the exam questions.
+- After the exam, sort each student’s answer sheets by page number. Scan every answer sheet, including blank ones. Everybody may discuss the questions after April 3rd. Until April 19th, hold on to all of the answer sheets in the event that your scans are lost or illegible.
+
+We acknowledge the following people for their contributions to this year’s exam (in alphabetical order):
+
+*Tengiz Bibilashvili, Kellan Colburn, Natalie LeBaron, Rishab Parthasarathy, Elena Yudovina, and Kevin Zhou.*
+
+</details>
+
+<details>
+<summary>Instructions for the Student</summary>
+
+- You should receive these instructions, the reference table on the next page, answer sheets, and blank paper for scratch work. Read this page carefully before the exam begins.
+- You may use a calculator, but its memory must be cleared of data and programs, and you may not use symbolic math, programming, or graphing features. Calculators may not be shared. Cell phones or other electronics may not be used during the exam or while the exam papers are present. You may not use books or other outside references.
+- When the exam begins, your proctor will give you the questions for Part A. You will have 90 minutes to complete three problems. Each question is worth 25 points, but they are not necessarily of the same difficulty. If you finish all of the questions, you may check your work, but you may not look at Part B during this time.
+- After 90 minutes, your proctor will collect the questions and answer sheets for Part A. You may then take a short break.
+- Then you will work on Part B. You have 90 minutes to complete three problems. Each question is worth 25 points. Do not look at Part A during this time. When the exam ends, you must return all papers to the proctor, including the exam questions.
+- **Do not discuss the questions of this exam, or their solutions, until April 4. Violations of this rule may result in disqualification.**
+
+Below are instructions for writing your solutions.
+
+- All of your solutions must be written on the official answer sheets. Nothing outside these answer sheets will be graded. Before the exam begins, write your name, student AAPT number, and proctor AAPT number as directed on the answer sheets.
+- There are several answer sheets per problem. If you run out of space for a problem, you may use the extra answer sheets, which are at the end of the answer sheet packet. To ensure this work is graded, you must indicate, at the bottom of your last answer sheet for that problem, that you are using these extra answer sheets.
+- Only write within the frame of each answer sheet. To simplify grading, we recommend drawing a box around your final answer for each subpart. You should organize your work linearly and briefly explain your reasoning, which will help you earn partial credit. You may use either pencil or pen, but sure to write clearly so your work will be legible after scanning.
+
+</details>
+
+<details>
+<summary>Fundamental Constants</summary>
+
+$g = 9.8\ \mathrm{N/kg}$ $\qquad$ $G = 6.67 \times 10^{-11}\ \mathrm{N \cdot m^2/kg^2}$
+
+$k = 1/4\pi\epsilon_0 = 8.99 \times 10^{9}\ \mathrm{N \cdot m^2/C^2}$ $\qquad$ $k_{\mathrm{m}} = \mu_0/4\pi = 10^{-7}\ \mathrm{T \cdot m/A}$
+
+$c = 3.00 \times 10^{8}\ \mathrm{m/s}$ $\qquad$ $k_{\mathrm{B}} = 1.38 \times 10^{-23}\ \mathrm{J/K}$
+
+$N_{\mathrm{A}} = 6.02 \times 10^{23}\ (\mathrm{mol})^{-1}$ $\qquad$ $R = N_{\mathrm{A}} k_{\mathrm{B}} = 8.31\ \mathrm{J/(mol \cdot K)}$
+
+$\sigma = 5.67 \times 10^{-8}\ \mathrm{J/(s \cdot m^2 \cdot K^4)}$ $\qquad$ $e = 1.602 \times 10^{-19}\ \mathrm{C}$
+
+$1\ \mathrm{eV} = 1.602 \times 10^{-19}\ \mathrm{J}$ $\qquad$ $h = 6.63 \times 10^{-34}\ \mathrm{J \cdot s} = 4.14 \times 10^{-15}\ \mathrm{eV \cdot s}$
+
+$m_e = 9.109 \times 10^{-31}\ \mathrm{kg} = 0.511\ \mathrm{MeV/c^2}$
+
+**Useful Approximations**
+
+$$
+(1+x)^n \approx 1 + nx + n(n-1)x^2/2 \text{ for } |nx| \ll 1
+$$
+
+$$
+e^x \approx 1 + x + x^2/2 + x^3/6 \text{ for } |x| \ll 1
+$$
+
+$$
+\sin\theta \approx \theta - \theta^3/6 \text{ for } |\theta| \ll 1
+$$
+
+$$
+\cos\theta \approx 1 - \theta^2/2 \text{ for } |\theta| \ll 1
+$$
+
+**You may use this sheet for both parts of the exam.**
+
+**End of Instructions for the Student**
+
+**DO NOT OPEN THIS TEST UNTIL YOU ARE TOLD TO BEGIN**
+
+</details>
+
+## Условие
+
+In classical thermodynamics, a solid containing $N$ atoms has a heat capacity $C_V = 3Nk_B$. The two parts of this question are independent. In both parts, we assume the solid has constant volume.
+
+**a.** In a simple quantum model of a solid, the energy is $E = \hbar\omega m$, where $m$ is the number of quanta and $\omega$ is a constant. Einstein showed that the entropy of such a solid is
+
+$$
+\frac{S}{k_B} = (3N+m)\ln(3N+m) - m\ln(m)
+$$
+
+up to a constant. According to the first law of thermodynamics, $dE = T\,dS$ for this system.
+
+**a. i.** Find an expression for $m$ in terms of $N$ and the quantity $\alpha = \hbar\omega/k_BT$.
+
+**a. ii.** We want to see how quantum effects modify the familiar classical result in the limit $\alpha \ll 1$, where the quantum corrections are small. Write an approximate expression for $m$, including terms of order $\alpha$ but neglecting terms of order $\alpha^2$ or higher.
+
+**a. iii.** The heat capacity, with its leading quantum correction, is $C_V \approx 3Nk_B(1 + b\alpha^n)$ for some constants $b$ and $n$. Find the values of $b$ and $n$.
+
+**b.** A vertical cylinder is filled with a monatomic ideal gas, and capped by a movable piston. The temperature is high enough for the piston to be modeled as a classical solid. The gas and piston contain the same number of atoms, but the mass of the gas is negligible compared to that of the piston. Assume the entire cylinder is in vacuum, and that the gas and piston do not transfer heat to their environment, but always remain in thermal equilibrium with each other.
+
+**b. i.** When the piston is in mechanical equilibrium, the column of gas has height $h$ and pressure $P = P_0$. At this point, find $dP/dh$ in terms of $P_0$ and $h$.
+
+**b. ii.** If the piston is given a small vertical impulse, what is the angular frequency of its subsequent oscillations? Give your answer solely in terms of $h$ and the gravitational acceleration $g$.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a. i.** $m = \frac{3N}{e^{\alpha} - 1}$
+- **a. ii.** $m = 3N\left(\frac{1}{\alpha} - \frac{1}{2} + \frac{\alpha}{12}\right)$
+- **a. iii.** $b = -1/12,\quad n = 2$
+- **b. i.** $\frac{dP}{dh} = -\frac{11P_0}{9h}$
+- **b. ii.** $\omega = \sqrt{\frac{11g}{9h}}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a. i.** Writing both sides of $dE = T\,dS$ in terms of $dm$ gives
+
+$$
+dE = \hbar\omega\,dm
+$$
+
+and
+
+$$
+T\,dS = k_BT\ln\left(\frac{3N+m}{m}\right)dm.
+$$
+
+Equating these and solving for $m$ gives
+
+$$
+m = \frac{3N}{e^{\alpha} - 1}.
+$$
+
+**a. ii.** We Taylor expand the exponential, for
+
+$$
+m = \frac{3N}{\alpha + \alpha^2/2 + \alpha^3/6 + \ldots} = \frac{3N}{\alpha}\,\frac{1}{1 + \alpha/2 + \alpha^2/6 + \ldots}.
+$$
+
+Since there’s a $1/\alpha$ in front, we need to expand the fraction to order $\alpha^2$, which means we need to use the geometric series formula to *second* order,
+
+$$
+\frac{1}{1+x} = 1 - x + x^2 + \ldots
+$$
+
+where here $x = \alpha/2 + \alpha^2/6$. This gives the final answer,
+
+$$
+m = 3N\left(\frac{1}{\alpha} - \frac{1}{2} + \frac{\alpha}{12}\right)
+$$
+
+**a. iii.** The heat capacity is
+
+$$
+C_V = \frac{dE}{dT} = \hbar\omega\frac{dm}{dT} \approx 3N\hbar\omega\frac{d}{dT}\left(\frac{k_BT}{\hbar\omega} - \frac{1}{2} + \frac{\hbar\omega}{12k_BT}\right).
+$$
+
+Carrying out the derivative yields
+
+$$
+C_V = 3Nk_B\left(1 - \frac{\alpha^2}{12}\right)
+$$
+
+from which we read off $b = -1/12$ and $n = 2$.
+
+**b. i.** If $n$ is the number of moles of gas and solid, then the heat capacity of the gas-piston system, at constant volume and pressure, is
+
+$$
+C_V = \frac{3}{2}nR + 3nR, \quad C_P = \frac{5}{2}nR + 3nR
+$$
+
+because the solid does not expand, and hence its contribution to $C_P$ is equal to its contribution to $C_V$. Thus, the adiabatic index is
+
+$$
+\gamma = \frac{C_P}{C_V} = \frac{11}{9}.
+$$
+
+Since the system doesn’t transfer heat to its environment, the quantity $PV^{\gamma}$ remains the same throughout the oscillations, where $V$ is the volume of the gas. Taking the differential of this relation, the pressure in the gas varies as
+
+$$
+\frac{dP}{dh} = -\frac{\gamma P_0}{h} = -\frac{11P_0}{9h}.
+$$
+
+**b. ii.** The net force on the piston, as a function of vertical displacement $z$, is
+
+$$
+F_z = -\frac{\gamma P_0 A}{h}\,z
+$$
+
+where $A$ is the piston’s cross-sectional area. Newton’s second law for the piston is
+
+$$
+F_z = m\frac{d^2z}{dt^2}
+$$
+
+where $m$ is the mass of the piston. Combining the two previous equations yields simple harmonic motion with
+
+$$
+\omega^2 = \frac{\gamma P_0 A}{mh}.
+$$
+
+To eliminate the unwanted parameters, we note that since the piston was originally in mechanical equilibrium, we have $P_0A = mg$, from which we conclude
+
+$$
+\omega = \sqrt{\frac{\gamma g}{h}} = \sqrt{\frac{11g}{9h}}.
+$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [USAPhO_Exam_24.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2024/USAPhO_Exam_24.pdf#page=9)
+· официални решения: [2024-USAPhO-Exam_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2024/2024-USAPhO-Exam_solutions.pdf#page=16)

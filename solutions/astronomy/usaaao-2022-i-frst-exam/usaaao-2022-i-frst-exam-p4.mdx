@@ -1,0 +1,94 @@
+---
+id: usaaao-2022-i-frst-exam-p4
+source: 'USAAAO 2022, I кръг'
+title: 'Задача 4'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/USAAAO/2022/usaaao-2022-i-frst-exam.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T19:21:49.522Z'
+verifier: 'mechanical'
+---
+
+*USAAAO 2022 - First Round · 5 февруари 2022 г.*
+
+## Условие
+
+What is the shortest distance (along the surface of the Earth) between two points on the Equator separated by $30^{\circ}$ of longitude? What is the shortest distance (along the surface of the Earth) between them if both the two points lie on the $60^{\circ}$ latitude while still separated by $30^{\circ}$ of longitude? (For simplicity, assume that the Earth is a sphere)
+
+(a) 3336 km, 1668 km
+
+(b) 3336 km, 1654 km
+
+(c) 6672 km, 3336 km
+
+(d) 3298 km, 1649 km
+
+(e) 3298 km, 1668 km
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- B
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:** We know the radius of the Earth from the formula sheet, $R_{\oplus} = 6.371 \times 10^6$ m. For the two points on the Equator, we can easily calculate the shortest distance between them as
+
+$$
+d_{\mathrm{equator}} = R\theta \qquad (1)
+$$
+
+$$
+d_{\mathrm{equator}} = R_{\oplus}\frac{\pi}{6} \qquad (2)
+$$
+
+$$
+d_{\mathrm{equator}} \approx 3.3358 \times 10^6\mathrm{m} \approx 3336\mathrm{km} \qquad (3)
+$$
+
+For the points on latitude $60^{\circ}$, we can calculate the distance between them, along the latitude, as $d_{60^{\circ}} = d_{\mathrm{equator}} \times \cos 60^{\circ} = \frac{d_{\mathrm{equator}}}{2} \approx 1668\mathrm{km}$.
+
+However, this naive approach is incorrect. The shortest distance between any two points is along the great circle connecting them, not along the latitude.
+
+The Equator is the great circle connecting the two points on the Equator. However, the $60^{\circ}$ latitude is not a great circle!
+
+We use spherical trigonometry to determine the arc length of the great circle connecting the points. Using the cosine formula, we know
+
+$$
+\cos c = \cos a \cos b + \sin a \sin b \cos C. \qquad (4)
+$$
+
+Here, we are considering a spherical triangle with two vertices as the discussed points and third one being the pole. So, $c$ is the arc length of the great circle which we need to find. $a$ and $b$ are the arc length of points from pole which is $90^{\circ} - 60^{\circ} = 30^{\circ}$. $C$ is the angle between the two longitudes, which is $30^{\circ}$. Substituting all the quantities, we get
+
+$$
+\cos c = \frac{\sqrt{3}}{2}\frac{\sqrt{3}}{2} + \frac{1}{2}\frac{1}{2}\frac{\sqrt{3}}{2} \qquad (5)
+$$
+
+$$
+c = \arccos\left(\frac{6 + \sqrt{3}}{8}\right) \approx 0.2595 \qquad (6)
+$$
+
+Arc length of great circle is
+
+$$
+R_{\oplus} \times c = 6371\mathrm{km} \times \arccos\left(\frac{6 + \sqrt{3}}{8}\right) \qquad (7)
+$$
+
+$$
+= 1653.57\mathrm{km} \qquad (8)
+$$
+
+**Answer: B**
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [usaaao_first_exam_2022_problems.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2022/2022-I/usaaao_first_exam_2022_problems.pdf#page=4)
+· официални решения: [usaaao_first_exam_2022_solutions-1.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2022/2022-I/usaaao_first_exam_2022_solutions-1.pdf#page=6)

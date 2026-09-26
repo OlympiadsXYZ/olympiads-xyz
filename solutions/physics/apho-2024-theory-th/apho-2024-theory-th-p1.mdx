@@ -1,0 +1,508 @@
+---
+id: apho-2024-theory-th-p1
+source: 'APhO 2024, Теория'
+title: 'Задача 1. Geometry of Water Fountain'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2024/apho-2024-theory-th.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T18:49:57.209Z'
+verifier: 'mechanical'
+---
+
+*24th Asian Physics Olympiad, Malaysia 2024 — APHO 2024 Theory, English (Official) · 10 т.*
+
+<details>
+<summary>General Instructions for Theoretical Examination</summary>
+
+Before the Exam
+
+1. The allocated time for theoretical examination is 5 hours for answering 3 questions that carry 10 points each.
+2. Please ensure that your student code matches the one on your desk. Place your ID / tag on the top right corner of the desk.
+3. Kindly ensure that you have the following items on the desk:
+   (i) A sealed envelope containing the Question Papers and Answer Scripts.  
+   (ii) A labelled envelope.  
+   (iii) Pens/relevant stationery (You need to bring in your own calculator).  
+   If you find that the items are incomplete, kindly raise your hands.
+4. You must not open the sealed envelopes before the start of the examination.
+
+During the Exam
+
+1. You must use the dedicated answer scripts provided for writing your answers. Write your answers only in boxed answer scripts. If you need more boxed answer scripts, please raise your hand and ask an invigilator. Clearly write your student code and write which question you are attempting on each of your extra requested answer scripts.
+2. **There are additional blank draft papers. These will not be marked.**
+3. Try to be as concise as possible in your answers: use equations, logical operators, and sketches to illustrate your thoughts whenever possible. Avoid the use of long sentences.
+4. Use an appropriate number of significant figures when stating numbers.
+5. You are not allowed to leave your working place without permission. If you need any assistance (malfunctioning calculator, need to visit a restroom, insufficient Draft Papers, etc), please draw the attention of the invigilator by raising your hand.
+
+At the end of the Exam
+
+1. At the end of the examination, you must stop writing immediately.
+2. Put all the Answer Scripts into the labelled envelope and seal it, including any blank Answer Scripts. It is your responsibility to ensure all Answer Scripts are inside the envelope and submitted to the invigilator.
+3. Put question papers and draft papers into another envelope. You are not allowed to take any sheets of paper out of the examination hall.
+4. Wait at your table in silence till your envelopes are collected. Once all envelopes are collected, your guide will escort you out of the examination area.
+
+</details>
+
+<details>
+<summary>Answer Scripts</summary>
+
+**You must use the dedicated Answer Scripts provided for writing your answers**. Write your answers only in boxed answer scripts. If you need more boxed answer scripts, please raise your hand and ask an invigilator. Clearly **write your student code** and **write which question number you are attempting** on each of your extra requested answer scripts.
+
+**There are additional blank draft papers. These will not be marked.**
+
+</details>
+
+<details>
+<summary>Physical Constants</summary>
+
+| Acceleration due to gravity | $g = 9.81\ \mathrm{m\,s^{-2}}$ |
+|---|---|
+| Boltzmann constant | $k_B = 1.38 \times 10^{-23}\ \mathrm{J\,K^{-1}}$ |
+| Current Mass of the Sun | $M_S = 2.00 \times 10^{30}\ \mathrm{kg}$ |
+| Current Radius of the Sun | $R_S = 7.00 \times 10^{8}\ m$ |
+| Average Mass of a Galaxy | $M_{galaxy} = 1.5 \times 10^{12}\ M_S$ |
+| Magnitude of the electron charge | $e = 1.60 \times 10^{-19}\ \mathrm{C}$ |
+| Mass of the electron | $m_e = 9.11 \times 10^{-31}\ \mathrm{kg}$ |
+| Mass of the proton | $m_p = 1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Mass of the neutron | $m_n = 1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Permeability of free space | $\mu_0 = 4\pi \times 10^{-7}\ \mathrm{T\,m\,A^{-1}}$ |
+| Permittivity of free space | $\varepsilon_0 = 8.85 \times 10^{-12}\ \mathrm{F\,m^{-1}}$ |
+| Intrinsic impedance of free space | $Z_0 = 120\pi\ \Omega$ |
+| Planck’s constant | $h = 6.63 \times 10^{-34}\ \mathrm{J\,s}$ |
+| Speed of light in vacuum | $c = 3.00 \times 10^{8}\ \mathrm{m\,s^{-1}}$ |
+| Stefan-Boltzmann constant | $\sigma = 5.67 \times 10^{-8}\ \mathrm{W\,m^{-2}\,K^{-4}}$ |
+| Universal Gravitational constant | $G = 6.67 \times 10^{-11}\ \mathrm{N\,m^{2}\,kg^{-2}}$ |
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Part A: Uniformly Distributed Holes on the Surface of the Hemisphere](#part-a)
+- [Part B: Non-Uniformly Distributed Holes on the Surface of the Hemisphere](#part-b)
+
+</nav>
+
+**Introduction**
+
+Water sprayers are found at various places such as agriculture farms, green parks or urban areas for functional purposes or for aesthetic art installation. Consider a hemispherical shaped fountain sprayer of radius $r$ at the height $h$ from the ground as shown in a cross-sectional diagram in **Fig. 1**. Let the radius of the hemisphere to be small compared to the range $R$, hence can be treated as a point source. However there are $\rho(\theta)$ number of holes per unit area at angle $\theta$. The water spurts in all directions at the same initial velocity $v_o$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2024-theory-th/p1-fig1.png" alt="Cross section of a hemispherical fountain of radius r on a vertical post of height h above the x axis, origin (0,0) at the foot of the post; blue parabolic water trajectories leave the hemisphere at angle θ, one landing at horizontal distance R; labelled boxes read 'hemispherical fountain, radius r with ρ(θ) number of holes per unit area, at angle θ' and 'water projectile trajectory'; axes x and y." width="1639" height="909" loading="lazy" decoding="async" />
+<figcaption>Fig. 1: Schematic cross section of a hemispherical shaped fountain sprayer.</figcaption>
+</figure>
+
+<ProblemSection id="part-a">
+
+### Part A: Uniformly Distributed Holes on the Surface of the Hemisphere (6 т.)
+
+First consider the holes distribution on the surface of the hemisphere to be uniform (i.e. $\rho(\theta)$ is a constant).
+
+**A.1** Express the instantaneous position $x(t)$ and $y(t)$ of a water element (can be treated as a stream of particles) launched at velocity $v_o$ at angle $\theta$. **[0,5 т.]**
+
+**A.2** Derive the water trajectory relation $y = y(x, \theta)$ and express in a same type of trigonometric function (e.g. in terms of sine, cosine or tangent ONLY). Note that $\theta > 0$. **[1 т.]**
+
+**A.3** The envelope is the minimal boundary which encloses all water trajectories (i.e. no water will be found beyond this boundary). Derive the equation for the envelope for this system. Express your answer as y(x). Sketch the envelope over the trajectories. **[3 т.]**
+
+**A.4** Calculate the range $R = R(\theta)$ as a function of angle $\theta$. **[1 т.]**
+
+**A.5** Letting $h \to 0$ in the range obtained in **A.4**, show that $R = \frac{v_o^2}{g} \sin 2\theta$. **[0,5 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="part-b">
+
+### Part B: Non-Uniformly Distributed Holes on the Surface of the Hemisphere (4 т.)
+
+Now, consider the area of holes per unit area $\rho(\theta)$ to be non-uniformly distributed and depended on the angle $\theta$.
+
+**B.1** Using the results from part **A.4** above, calculate the elemental area $dA_W$ of an annulus (ring) of radius $R$ and width $dR$ of the water hitting the ground. Express your answer in R, R' and d$\theta$. [hint: consider R'=$\frac{dR}{d\theta}$ ] **[1 т.]**
+
+**B.2** Determine the relation for $\rho(\theta)$ that gives a uniform spray coverage pattern on the ground by considering elemental area on the hemisphere in proportional to the elemental area of the water spray on the ground. Express your answer in terms of R and its derivative. [hint: consider condition where $R'(\theta) > 0$]. **[1 т.]**
+
+**B.3** Letting $h = 0$, calculate explicitly the relation for $\rho(\theta)$ that gives a uniform spray coverage pattern for $\theta < 45^{\circ}$. **[2 т.]**
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **Part A: Uniformly Distributed Holes on the Surface of the Hemisphere, A.1** $x(t) = (v_o\cos\theta)t,\quad y(t) = h + (v_o\sin\theta)t - \frac{1}{2}gt^2$
+- **Part A: Uniformly Distributed Holes on the Surface of the Hemisphere, A.2** $y = h + x\tan\theta - \frac{gx^2}{2v_o^2}(1 + \tan^2\theta)$
+- **Part A: Uniformly Distributed Holes on the Surface of the Hemisphere, A.3** $y = h + \frac{v_o^2}{2g} - \frac{gx^2}{2v_o^2}$
+- **Part A: Uniformly Distributed Holes on the Surface of the Hemisphere, A.4** $R = \frac{\tan\theta \pm \sqrt{\tan^2\theta + 4\frac{g}{2v_o^2}(1 + \tan^2\theta)h}}{\frac{g}{v_o^2}(1 + \tan^2\theta)}$
+- **Part A: Uniformly Distributed Holes on the Surface of the Hemisphere, A.5** Доказателство (Eq. (1.22)–(1.24) в официалното решение).
+- **Part B: Non-Uniformly Distributed Holes on the Surface of the Hemisphere, B.1** $dA_W = 2\pi R R'(\theta)\,d\theta$
+- **Part B: Non-Uniformly Distributed Holes on the Surface of the Hemisphere, B.2** $\rho(\theta) \sim \frac{R(\theta)R'(\theta)}{r^2\cos\theta}$
+- **Part B: Non-Uniformly Distributed Holes on the Surface of the Hemisphere, B.3** $\rho(\theta) \sim \frac{\sin(4\theta)}{\cos(\theta)}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-part-a">
+
+### Part A: Uniformly Distributed Holes on the Surface of the Hemisphere
+
+**A.1** Given the radius of the hemisphere is small compared to the range, that we can treat all the different water sprouts emanate from a point source at the center of the hemisphere at the same initial velocity but at different angles $\theta$. Note that the distribution of the holes on the surface of the hemisphere is uniform.
+
+Consider the motion in *x*- and *y*-directions with coordinate (*x*,*y*) as indicated in the **Fig. 1**.
+
+Horizontal motion – no acceleration
+
+$$
+x = x(t) = (v_o \cos\theta)t \qquad (1.1)
+$$
+
+**[0.2pt]**
+
+Vertical motion – ‘particle’ in free fall under gravity, $g$
+
+$$
+y = y(t) = h + (v_o \sin\theta)t - \frac{1}{2}gt^2 \qquad (1.2)
+$$
+
+**[0.3pt]** **[0,5 т.]**
+
+**A.2** Equation of water trajectory (or path of the projectile) is obtained by eliminating time $t$ from equations (1.1) and (1.2). **[0.1pt]**
+
+Using Eq. (1.1), we get $t = \frac{x}{v_0 \cos\theta}$ and substituting $t$ in Eq.(1.2) we obtain **[0.1pt]**
+
+$$
+y = h + x\frac{\sin\theta}{\cos\theta} - \frac{gx^2}{2v_o^2}\frac{1}{(\cos^2\theta)} \qquad (1.3)
+$$
+
+**[0.2pt]**
+
+$$
+= h + x\tan\theta - \frac{gx^2}{2v_o^2}(\sec^2\theta) \qquad (1.4)
+$$
+
+**[0.2pt]**
+
+Using trigonometry identity: $\sec^2\theta = 1 + \tan^2\theta$, thus we write: **[0.1pt]**
+
+$$
+y = h + x\tan\theta - \frac{gx^2}{2v_o^2}(1 + \tan^2\theta) \qquad (1.5)
+$$
+
+**[0.3pt]**
+
+or
+
+$$
+y' = y - h = x\tan\theta - \frac{gx^2}{2v_o^2}(1 + \tan^2\theta) \qquad (1.6)
+$$
+
+The equation of water trajectory is given by Eq. (1.5) (with reference to the ground) or Eq. (1.6) with reference to the base of the hemisphere. **[1 т.]**
+
+**A.3** We rewrite the trajectory equation in the form of quadratic function in $\tan\theta$ **[0.2pt]**
+
+$$
+\left(\frac{gx^2}{2v_o^2}\right)\tan^2\theta - x\tan\theta + \left(y' + \frac{gx^2}{2v_o^2}\right) = 0 \qquad (1.7)
+$$
+
+**[0.5pt]**
+
+where $y' = y - h$.
+
+Let $\tan\theta = u$, thus we express Eq. (1.7) as a quadratic function in $u$:
+
+$$
+au^2 + bu + c = 0 \qquad (1.8)
+$$
+
+**[0.3pt]**
+
+where
+
+$$
+a = \frac{gx^2}{2v_o^2}, \qquad b = -x, \qquad c = y' + \frac{gx^2}{2v_o^2}. \qquad (1.9)
+$$
+
+The quadratic equation Eq.(1.8) must have a real solution for $u$, i.e
+
+$$
+u = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \qquad (1.10)
+$$
+
+**[0.2pt]**
+
+Or the discriminant is non-negative, i.e. $b^2 - 4ac \geq 0$, which gives. **[0.2pt]**
+
+$$
+x^2 - 4\left(\frac{gx^2}{2v_o^2}\right)\left(y' + \frac{gx^2}{2v_o^2}\right) \geq 0 \qquad (1.11)
+$$
+
+**[0.4pt]**
+
+Re-arranging Eq.(1.11) for y’ to get
+
+$$
+-y' \geq \frac{gx^2}{2v_o^2} - \frac{v_o^2}{2g} \qquad (1.12)
+$$
+
+or
+
+$$
+y' \leq \frac{v_o^2}{2g} - \frac{gx^2}{2v_o^2} \qquad (1.13)
+$$
+
+**[0.2pt]**
+
+The water trajectory follows the inequality in (1.13) and the envelop of different water trajectories with different launch angles follow the parabolic equation:
+
+$$
+y' = \frac{v_o^2}{2g} - \frac{gx^2}{2v_o^2} \qquad (1.14)
+$$
+
+**[0.2pt]**
+
+Or
+
+$$
+y = h + \frac{v_o^2}{2g} - \frac{gx^2}{2v_o^2} \qquad (1.15)
+$$
+
+**[0.3pt]**
+
+The sketch of the envelop of water trajectory is shown below:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '75.7%', '--fig-max': '485px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2024-theory-th/p1-sol-fig1.png" alt="Sketch: a hemispherical fountain on a vertical post of height h above the x axis, origin (0,0) at the foot of the post; blue parabolic water trajectories leave the hemisphere at various angles θ and land on the ground, one at horizontal distance R; a thick black parabola touching all trajectories from above is marked with an arrow and the label y = h + v_o²/2g − gx²/2v_o²; axes x and y." width="1515" height="779" loading="lazy" decoding="async" />
+</figure>
+
+
+**[0.5pt]** **[3 т.]**
+
+**A.4** Recall the trajectory Eq. (1.5) and set $y = 0$ to obtain the horizontal range $x = R$:
+
+$$
+0 = h + R\tan\theta - \frac{gR^2}{2v_o^2}(1 + \tan^2\theta) \qquad (1.16)
+$$
+
+**[0.2pt]**
+
+$$
+\frac{g}{2v_o^2}(1 + \tan^2\theta)R^2 - (\tan\theta)R - h = 0 \qquad (1.17)
+$$
+
+**[0.2pt]**
+
+which is a quadratic equation
+
+$$
+a'R^2 + b'R + c' = 0 \qquad (1.18)
+$$
+
+**[0.2pt]**
+
+with
+
+$$
+a' = \frac{g}{2v_o^2}(1 + \tan^2\theta), \quad b' = -\tan\theta\,, \quad c = h., \qquad (1.19)
+$$
+
+The solution of Eq. (1.18) is the range of the water trajectory on the ground.
+
+$$
+R = \frac{-b' \pm \sqrt{b'^2 - 4a'c'}}{2a'} \qquad (1.20)
+$$
+
+**[0.1pt]**
+
+$$
+R = \frac{\tan\theta \pm \sqrt{\tan^2\theta + 4\frac{g}{2v_o^2}(1 + \tan^2\theta)h}}{\frac{g}{v_o^2}(1 + \tan^2\theta)} \qquad (1.21)
+$$
+
+**[0.3pt]** **[1 т.]**
+
+**A.5** Letting $h = 0$ in Eq.(1.21) gives
+
+$$
+R = \frac{\tan\theta \pm \sqrt{\tan^2\theta}}{\frac{g}{v_o^2}(1 + \tan^2\theta)} \qquad (1.22)
+$$
+
+**[0.2pt]**
+
+$$
+R = \frac{2\tan\theta}{\frac{g}{v_o^2}(1 + \tan^2\theta)} = \frac{2\tan\theta}{\frac{g}{v_o^2}(\sec^2\theta)} \qquad (1.23)
+$$
+
+$$
+= \frac{v_o^2}{g}2\sin\theta\cos\theta = \frac{v_o^2}{g}\sin 2\theta \qquad (1.24)
+$$
+
+**[0.3pt]** **[0,5 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-b">
+
+### Part B: Non-Uniformly Distributed Holes on the Surface of the Hemisphere
+
+**B.1** Recall the range from (**A.4**) above (Eq. (1.21))
+
+$$
+R = R(\theta) = \frac{\tan\theta \pm \sqrt{\tan^2\theta + 4\frac{g}{2v_o^2}(1 + \tan^2\theta)h}}{\frac{g}{v_o^2}(1 + \tan^2\theta)} \qquad (1.21)
+$$
+
+**[0.2pt]**
+
+Let
+
+$$
+\frac{dR}{d\theta} = R'(\theta) \qquad (1.25)
+$$
+
+**[0.2pt]**
+
+and thus
+
+$$
+dR = R'(\theta)d\theta. \qquad (1.26)
+$$
+
+**[0.2pt]**
+
+There is no need to determine the R' explicitely. Answers can be left in R'. Consider an annulus (or ring) water on the ground with radius *R* and thickness *dR* where the element area of annulus $dA_W$ is given by
+
+$$
+dA_W = 2\pi R \times dR \qquad (1.27)
+$$
+
+**[0.2pt]**
+
+$$
+= 2\pi RR'(\theta)d\theta \qquad (1.28)
+$$
+
+**[0.2pt]** **[1 т.]**
+
+**B.2** Number of holes in on the elemental area of annulus $dA_H$, on the hemisphere, of radius $r$ at angle $\theta$ with angular width $d\theta$ is
+
+$$
+dA_H = \rho(\theta) \times 2\pi(r\ \cos\theta)rd\theta \qquad (1.29)
+$$
+
+**[0.2pt]**
+
+In order the water sprouts to spray uniformly on the ground $dA_W \sim dA_H$ such that
+
+$$
+dA_H = \rho(\theta) \times 2\pi(r\cos\theta)rd\theta \sim 2\pi RR'(\theta)d\theta \sim dA_W \qquad (1.30)
+$$
+
+**[0.4pt]**
+
+And to ensure the expression is independent of $\rho(\theta)$, we express
+
+$$
+\rho\left(\theta\right) \sim \frac{R(\theta)R'(\theta)}{r^2\cos\theta} \qquad (1.31)
+$$
+
+**[0.3pt]**
+
+where $R(\theta)$ and $R'(\theta)$ are given by Eq. (1.21) and Eq.(1.25), respectively.
+
+If the distribution of the holes on the hemisphere follows Eq. (1.31), then the water spray on the ground will be uniform (independent of angle). The condition set for angle $\theta$ does not affect the general expression in (1.31). **[0.1pt]** **[1 т.]**
+
+**B.3** When $h = 0$, the range become simple to estimate, namely from Eq. (1.24) we have
+
+$$
+R(\theta) = \frac{v_o^2}{g}\sin 2\theta
+$$
+
+**[0.2pt]**
+
+and
+
+$$
+\frac{dR(\theta)}{d\theta} = \frac{2v_o^2}{g}\cos 2\theta \qquad (1.32)
+$$
+
+**[0.2pt]**
+
+$$
+dR = \frac{2v_o^2}{g}\cos 2\theta\ d\theta \qquad (1.33)
+$$
+
+**[0.1pt]**
+
+Consider an annulus (or ring) water on the ground with radius $R$ and thickness $dR$ where the element area of annulus $dA_W$ is given by
+
+$$
+dA_W = 2\pi R \times dR
+$$
+
+$$
+= 2\pi\left(\frac{v_o^2}{g}\sin 2\theta\right)\left(\frac{2v_o^2}{g}\cos 2\theta\right)d\theta \qquad (1.34)
+$$
+
+**[0.2pt]**
+
+$$
+= 2\pi\left(\frac{v_o^2}{g}\right)^2 2\sin 2\theta\cos 2\theta\ d\theta \qquad (1.35)
+$$
+
+**[0.2pt]**
+
+$$
+= 2\pi\left(\frac{v_o^2}{g}\right)^2 \sin 4\theta\ d\theta \qquad (1.36)
+$$
+
+**[0.1pt]**
+
+Thus, elemental area of water annulus $dA_W$ follows
+
+$$
+dA_W \propto \sin 4\theta\ d\theta. \qquad (1.37)
+$$
+
+**[0.1pt]**
+
+Recall from **B.2** the number of holes in on the elemental area of annulus $dA_H$, on the hemisphere, of radius $r$ at angle $\theta$ with angular width $d\theta$ is **[0.1pt]**
+
+$$
+dA_H = \rho(\theta) \times 2\pi(r\ \cos(\theta))rd\theta \sim \rho(\theta)\cos(\theta)d\theta.
+$$
+
+**[0.1pt]**
+
+In order the water sprouts to spray uniformly on the ground $dA_W \propto dA_H$ such that **[0.1pt]**
+
+$$
+dA_H \sim \rho(\theta)\cos\theta d\theta \sim \sin 4\theta\ d\theta. \qquad (1.38)
+$$
+
+**[0.3pt]**
+
+And to ensure the expression is independent of $\rho(\theta)$, we express
+
+$$
+\rho\left(\theta\right) \sim \frac{\sin(4\theta)}{\cos(\theta)}. \qquad (1.39)
+$$
+
+**[0.2pt]**
+
+If the distribution of the holes per unit area on the hemisphere follows Eq. (1.39), then the water sprayed on the ground will be uniform (independent of angle). The condition set on the angle only to avoid duplication of water hitting the same area for $0^o < \theta \leq 45^o\ or\ 45^o < \theta < 90^o$. **[0.1pt]** **[2 т.]**
+
+</ProblemSection>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '75.7%', '--fig-max': '485px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2024-theory-th/p1-sol-fig1.png" alt="Sketch: a hemispherical fountain on a vertical post of height h above the x axis, origin (0,0) at the foot of the post; blue parabolic water trajectories leave the hemisphere at various angles θ and land on the ground, one at horizontal distance R; a thick black parabola touching all trajectories from above is marked with an arrow and the label y = h + v_o²/2g − gx²/2v_o²; axes x and y." width="1515" height="779" loading="lazy" decoding="async" />
+<figcaption>Sketch of the envelop of water trajectory</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2024/Theory/th.pdf#page=4)
+· официални решения: [th_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2024/Theory/th_sol.pdf#page=1)
