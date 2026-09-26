@@ -284,3 +284,14 @@ Batching test (the same day): 15 papers with one agent each against 15 papers wi
 Weighted token cost per page was 42k against 40k (−5%, noise). Promotion was 15/15 against 13/15; neither failure came from
 batching (one size-guard stop, one Win2PDF-watermark false positive). The route stays at one paper per agent: batching buys
 nothing measurable and gives up isolation between papers.
+
+## D-P30 (2026-09-26) — papers over the 30-page cap are read in chunks
+
+**Decision (Margulan, 2026-09-26): "yes do split reads for the big papers".** The 206 papers over the D-P24 cap (148 short
+papers with long or shared solution booklets, about 1,780 indexed problems; 58 single booklets of 26–83 pages, about
+1,160) are read by a chain of agents per paper (`docs/handoff-2026-09-22/split-route.workflow.js`, queue
+`queue-split.json`). The first agent plans chunks of at most 24 page images from the text layers (statements first,
+cut at problem boundaries); each agent reads only its pages, adds what they print and promotes the paper. The
+candidate carries `tx.splitRead` and declares the pages read so far (`paper.source.pages`, `paper.solutionSource.pages`,
+`[]` for none yet), so the text-layer check looks for omissions only there; unread solutions are marked incomplete
+("предстои"), and a paper missing problems says so in `paper.caveat` until its last chunk. Piloted on five papers first.
