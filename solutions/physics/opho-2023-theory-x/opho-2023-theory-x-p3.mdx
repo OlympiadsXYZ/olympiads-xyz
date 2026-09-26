@@ -1,0 +1,413 @@
+---
+id: opho-2023-theory-x-p3
+source: 'OPhO 2023, Теория'
+title: 'Задача 3. T3: General Relativity'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2023/opho-2023-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T07:27:22.287Z'
+verifier: 'mechanical'
+---
+
+*2023 Online Physics Olympiad: Invitational Contest — Theoretical Examination · 5 август 2023 г.*
+
+<details>
+<summary>Sponsors</summary>
+
+This competition could not be possible without the help of our sponsors, who are all doing great things in physics, math, and education.
+
+</details>
+
+<details>
+<summary>Instructions for Theoretical Exam</summary>
+
+The theoretical examination consists of 3 long answer questions and 160 points over 2 full days from August 5, 0:01 am GMT.
+
+- **The team leader should submit their final solution document in this google form.**
+- If you wish to request a clarification, please use this form. To see all clarifications, view this document.
+- Participants are given a google form where they are allowed to submit up-to 100 megabytes of data for their solutions. It is recommended that participants write their solutions in LaTeX. However, handwritten solutions (or a combination of both) are accepted too. If participants have more than one photo of a handwritten solution (`jpg, png`, etc), it is required to organize them in the correct order in a `pdf` before submitting. If you wish a premade LaTeX template, we have made one for you here.
+- Since each question is a long answer response, participants will be judged on the quality of your work. To receive full points, participants need to show their work, including deriving equations. As a general rule of thumb, any common equations (such as the ones in the IPhO formula sheet) can be cited without proof.
+- Remember to state any approximations made and which system of equations were solved after every step. Explicitly showing every step of algebra is not necessary. Participants may leave all final answers in symbolic form (in terms of variables) unless otherwise specified. Be sure to state all assumptions.
+
+**Problems**
+
+- T1: Booster
+- T2: The Complex Potential
+- T3: General Relativity
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+| Proton mass | $m_p = 1.67 \cdot 10^{-27}\ \mathrm{kg}$ |
+|---|---|
+| Neutron mass | $m_n = 1.67 \cdot 10^{-27}\ \mathrm{kg}$ |
+| Electron mass | $m_e = 9.11 \cdot 10^{-31}\ \mathrm{kg}$ |
+| Avogadro’s constant | $N_0 = 6.02 \cdot 10^{23}\ \mathrm{mol}^{-1}$ |
+| Universal gas constant | $R = 8.31\ \mathrm{J/(mol \cdot K)}$ |
+| Boltzmann’s constant | $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$ |
+| Electron charge magnitude | $e = 1.60 \cdot 10^{-19}$ |
+| 1 electron volt | $1\ \mathrm{eV} = 1.60 \cdot 10^{-19}\ \mathrm{J}$ |
+| Speed of light | $c = 3.00 \cdot 10^{8}\ \mathrm{m/s}$ |
+| Universal Gravitational constant | $G = 6.67 \cdot 10^{-11}\ (\mathrm{N \cdot m^2})/\mathrm{kg}^2$ |
+| Acceleration due to gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| 1 unified atomic mass unit | $1\ \mathrm{u} = 1.66 \cdot 10^{-27}\ \mathrm{kg} = 931\ \mathrm{MeV/c^2}$ |
+| Planck’s constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s} = 4.41 \cdot 10^{-15}\ \mathrm{eV \cdot s}$ |
+| Permittivity of free space | $\epsilon_0 = 8.85 \cdot 10^{-12}\ \mathrm{C^2/(N \cdot m^2)}$ |
+| Coulomb’s law constant | $k = \frac{1}{4\pi\epsilon_0} = 8.99 \cdot 10^{9}\ (\mathrm{N \cdot m^2})/\mathrm{C}^2$ |
+| Permeability of free space | $\mu_0 = 4\pi \cdot 10^{-7}\ \mathrm{T \cdot m/A}$ |
+| Stefan-Boltzmann constant | $\sigma = 5.67 \cdot 10^{-8}\ \mathrm{W/m^2/K^4}$ |
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [The Alphabet of Spacetime Metrics](#alphabet-of-spacetime-metrics)
+- [The Spacetime Metric of a Black Hole](#spacetime-metric-of-a-black-hole)
+- [The Photon Sphere](#photon-sphere)
+
+</nav>
+
+
+
+<ProblemSection id="alphabet-of-spacetime-metrics">
+
+### The Alphabet of Spacetime Metrics
+
+In multivariable calculus, we study the generalization of line elements to various coordinate systems. A coordinate system in $\mathbb{R}^3$ can be described by a function $\psi$ that takes a point $(x, y, z) \in \mathbb{R}^3$ and outputs the three coordinates describing the same point in the coordinate system. For example, the $\psi$ describing spherical coordinates would be defined as $\psi(x, y, z) = (r, \theta, \phi)$. As there must be a unique representation of each point in $\mathbb{R}^3$ in the $\psi$ coordinates (ex. $r = 3, \theta = \frac{\pi}{2}, \phi = \pi$ cannot correspond to two points on the 3D space) there must be a one-to-one correspondence between points in $\mathbb{R}^3$ and points described in $\psi$ coordinates. Hence, there’s a well defined inverse function $\psi^{-1}$. In spherical coordinates, for instance, $\psi^{-1}(r, \theta, \phi) = (x, y, z)$.
+
+Suppose we have a coordinate system $\psi(x, y, z) = (q_1, q_2, q_3)$. We ask a very important question: if we make an increment of $dq_i$ in each $q_i$ in the $\psi$ coordinates, what’s the physical distance between the starting and the finishing points in $\mathbb{R}^3$? In other words, what’s the distance between the points $\psi^{-1}(q_1 + dq_1, q_2 + dq_2, q_3 + dq_3)$ and $\psi^{-1}(q_1, q_2, q_3)$? This distance is known as the *line element* generated by a coordinate system $\psi$. If the coordinate system is *orthogonal*, meaning the basis vectors $\hat{q_1}$, $\hat{q_2}$, $\hat{q_3}$ are all mutually perpendicular, we know that the physical displacements in taking $q_i \to q_i + dq_i$ are in perpendicular directions in $\mathbb{R}^3$, so we can find the line element by Pythagoras’s theorem.
+
+**(a)** Show that for an orthogonal coordinate system $\psi$ in an arbitrary $\mathbb{R}^n$, the square of the line element $ds^2$ has the form $\sum_{i=1}^n g_i(q_1, ..., q_n)dq_i^2$ where each $g_i$ is a function of $q_1, ..., q_n$. Find an expression for $g_i$ in terms of the derivatives of $\psi$ or $\psi^{-1}$.
+
+We can think of physical observers as coordinate systems. If an arbitrary observer moving in space-time measures an event $(t, x, y, z)$, the coordinates seen by the observer can be expressed as $\psi(t, x, y, z)$ by some function $\psi$. It turns out that special relativity can be described with the math we’ve developed so far. In particular, we can consider measuring space-time lengths by integrating the line element along paths in space-time. You are given that for *any* observer with the coordinate system $\psi \equiv (t, x, y, z)$, the line element is given by $ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2$
+
+**(b)** It’s a well-known result of special relativity that space-time lengths are measured to be the same regardless of the frame. Resolve the twin paradox by integrating the line element along the spaceship twin’s world-line.
+
+It turns out that physics in weak gravitational fields can also be described with the math we’ve developed so far. Consider a 1 dimensional system with a time-independent gravitational potential $\Phi(x)$ everywhere.
+
+**(c)** An important postulate of general relativity states that observers that move solely under the influence of gravity take the path with the longest space-time length. Suppose an observer of this system takes a path parameterized by a variable $\sigma \in [0, \sigma_f]$: $(t(\sigma), x(\sigma), y(\sigma), z(\sigma))$. Show that the line element $ds^2 = -(1 + 2\Phi(x))dt^2 + (1 - 2\Phi(x))dx^2$ generates equations of motion that are consistent with Newton’s laws (neglecting special relativity).
+
+**Hint:** Refer to the Euler-Lagrange equation, but you do NOT have to perform the derivation to solve this problem.
+
+**(d)** Derive a statement of time dilation at a point $(x, y, z)$.
+
+</ProblemSection>
+
+<ProblemSection id="spacetime-metric-of-a-black-hole">
+
+### The Spacetime Metric of a Black Hole
+
+As we saw in part 1, the Minkowski metric describes geometry of spacetime in special relativity and is given as
+
+$$
+ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2.
+$$
+
+In general relativity, the result is more complex, and we describe spacetime via the Schwarzchild metric, a solution of Einstein’s equations under spherical symmetry. The spacetime interval in spherical coordinates can be expressed in terms of proper time $\tau$ and the speed of light $c$ as
+
+$$
+ds^2 = -c^2d\tau^2 = -\left(1 - \frac{r_s}{r}\right)c^2dt^2 + \frac{dr^2}{1 - \frac{r_s}{r}} + r^2(d\theta^2 + \sin^2\theta d\phi^2)
+$$
+
+where $t$ is the coordinate time, $r$ is the radial coordinate, $\theta$ is the polar angle, $\phi$ is the azithumal coordinate, and $r_s$ is the Schwarzchild radius of a massive body. The Schwarzchild radius is related to the body’s mass $M$ by $r_s = \frac{2GM}{c^2}$ where $G$ is the universal gravitational constant.
+
+General relativity describes gravity as the consequence of curving spacetime. Geodesics generalize straight lines to curved spacetime and are very useful as a result. In the following problem, the radial geodesic equation may be helpful:
+
+$$
+\frac{\mathrm{d}^2r}{\mathrm{d}\tau^2} + \Gamma^r_{\mu\nu}\frac{\mathrm{d}\mu}{\mathrm{d}\tau}\frac{\mathrm{d}\nu}{\mathrm{d}\tau} = 0
+$$
+
+where $\Gamma$ represents a Christoffel symbol. The relevant terms of $\Gamma$ are $\Gamma^r_{tt}$ , $\Gamma^r_{rr}$ , $\Gamma^r_{\theta\theta}$ , and $\Gamma^r_{\phi\phi}$. Define $B = 1 - \frac{r_s}{r}$, then we can get:
+
+$$
+\begin{aligned}\Gamma^r_{tt} &= \frac{c^2B\frac{\mathrm{d}B}{\mathrm{d}r}}{2}\\ \Gamma^r_{rr} &= -\frac{B^{-1}\frac{\mathrm{d}B}{\mathrm{d}r}}{2}\\ \Gamma^r_{\theta\theta} &= -rB\\ \Gamma^r_{\phi\phi} &= -Br\sin^2\theta\end{aligned}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="photon-sphere">
+
+### The Photon Sphere
+
+In 2019, the first image of a black hole was taken in 2019 by the Event Horizon Telescope (EHT) at the center of the galaxy M87. The historic image of the black hole showcased a glowing ring of light surrounding the dark abyss known as the ”photon ring.” In this region, light rays follow closed circular paths due to the strong gravitational pull of the black hole. When a photon follows a closed circular path on the photon ring, it can effectively orbit the black hole multiple times before either escaping to infinity or being captured by the event horizon. This phenomenon is known as the ”photon sphere.”
+
+You may recall the massive outburst of media to the images of M87. Many were already talking about it before the images came out, like Veritasium. Take 10 minutes to watch the video.
+
+In this problem, we will be analyzing the optical effects for an observer next to a black hole. Assume for an idealized case that the black hole has a mass $M = 15M_\odot$ and is uncharged and not rotating.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.6%', '--fig-max': '312px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2023-theory-x/p3-fig1.png" alt="The Event Horizon Telescope image of the M87 black hole: a glowing orange ring, brighter at the bottom, around a dark centre on a black background." width="974" height="594" loading="lazy" decoding="async" />
+<figcaption>Figure 2: Event Horizon Telescope Collaboration</figcaption>
+</figure>
+
+**(e)** Prove that the minimum radius of the black hole’s photon ring follows the relationship $r_p = \frac{3}{2}r_s$.
+
+**(f)** Bill is near the black hole a distance $r_p$ away. Assume Bill’s width is $w = 2\delta$ where $\delta = 0.25$ m. Sketch light ray trajectories showing how Bill could see his own back. Determine the range for the angle of view $\alpha$ enabling this.
+
+**(g)** Approximately what is the orbital period (in miliseconds) of a singular photon in coordinate time $t$ around the black hole. At what mass of a black hole would this time be greater than the visual reaction time of a human $t_r = 150$ ms (meaning if you closed your eyes, it would take some time for you to visualize your back again)? Is this mass possible?
+
+**(h)** Propose a method (realistic or not) for Bill to safely get close to the black hole without getting ripped apart by gravity. If you believe there is no possible method, then give your reasoning behind why. You might want to consult various sources for information. To simplify the process and avoid teams searching for data such as ”shear stress of a human”, assume that Bill is a cylindrical object made of a material of your choosing that has a uniform density, a radius $\delta$, and a length of $L = 1.75$ m. Bill possesses exceptional engineering skills, enabling him to construct virtually anything, provided it doesn’t contravene the principles of physics.
+
+**(i)** Let’s assume that the galaxy has $N_{\mathrm{star}}$ stars, each emitting light isotropically with the same total power $L$. Assume the stars are distributed uniformly throughout a spherical volume of radius $R$. For an ideal case where the path of the light from the stars is not obstructed by any other celestial objects, estimate the expected number of photons from starlight that would contribute to the photon ring or fall in the event horizon per unit time.
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **The Alphabet of Spacetime Metrics, (a)** $g_i = \left(\frac{\partial\psi^{-1}}{\partial q_i}\right)^2$
+- **The Alphabet of Spacetime Metrics, (b)** $\tau = \frac{t_f}{\gamma}$
+- **The Alphabet of Spacetime Metrics, (d)** $\frac{\mathrm{d}\sigma}{\mathrm{d}t} = \sqrt{1 + 2\Phi(x)} \approx 1 + \Phi(x)$
+- **The Photon Sphere, (g)** $T = \frac{6\pi GM\sqrt{3}}{c^3}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution 3:**
+
+(a) By the multivariable chain rule, we can write the relationship between $x_i$ and $q_i$ as
+
+$$
+\mathrm{d}x_i = \frac{\partial x_i}{\partial q_1}\mathrm{d}q_1 + \frac{\partial x_i}{\partial q_2}\mathrm{d}q_2 + \cdots + \frac{\partial x_n}{\partial q_n}\mathrm{d}x_n = \sum_{j=1}^n\frac{\partial x_i}{\partial q_j}\mathrm{d}q_j.
+$$
+
+We know that in original coordinates, the infinitesimal line element can be written by the Pythagorean theorem as
+
+$$
+\mathrm{d}s = \sqrt{\mathrm{d}x_1^2 + \mathrm{d}x_2^2 + \cdots + \mathrm{d}x_n^2} \implies \mathrm{d}s^2 = \sum_{i=1}^n\mathrm{d}x_i^2
+$$
+
+Hence, we can find that
+
+$$
+\mathrm{d}s^2 = \sum_i^n\left(\frac{\partial\vec x}{\partial q_i}\right)^2\mathrm{d}q_i.
+$$
+
+This means that $g_i = \left(\frac{\partial\psi^{-1}}{\partial q_i}\right)^2$.
+
+**Grading Scheme**
+
+- **(1 pt)** Uses multivariable chain rule or equivalent to find infinitesimal length $\mathrm{d}x_i$.
+- **(1 pt)** Uses Pythagorean theorem to find formula for line element $\mathrm{d}s$.
+- **(1 pt)** Finds out that $g_i = \left(\frac{\partial\psi^{-1}}{\partial q_i}\right)^2$
+
+**Notes**
+
+- We do not expect competitors to provide the most mathematically rigorous solution. A solution with true rigor would be able to prove why $\mathrm{d}s^2$ takes the given form.
+- Some competitors were able to provide a solution explaining this. See the solution by $|\mathrm{Enloe}\rangle$ on our website.
+
+(b) Let us take a look at the Minkowski metric:
+
+$$
+\mathrm{d}s^2 = -c^2\mathrm{d}t^2 + \mathrm{d}x^2 + \mathrm{d}y^2 + \mathrm{d}z^2.
+$$
+
+Without loss of generalization, let us assume the rocket is moving only in the $x$-direction, meaning that $\mathrm{d}y = \mathrm{d}z = 0$. We can draw a spacetime diagram as shown below for the twin moving in the rocket:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.8%', '--fig-max': '243px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2023-theory-x/p3-sol-fig1.png" alt="Spacetime diagram with vertical axis ct and horizontal axis x: a red world-line goes from the origin to the point (d, ct_f/2) and back to (0, ct_f); dashed lines mark ct_f/2 on the ct axis and d on the x axis; ct_f is marked on the vertical axis." width="758" height="702" loading="lazy" decoding="async" />
+</figure>
+
+Note that $\mathrm{d}x = v\mathrm{d}t$ where $v$ is the constant velocity of the twin. Hence, we can rewrite as
+
+$$
+\mathrm{d}s^2 = (v^2 - c^2)\mathrm{d}t^2.
+$$
+
+Since $\mathrm{d}s^2$ is invariant, we can say that the time experienced by the twin on the spaceship is $\tau$. As the other twin is not moving, then (and by noting that $v$ changes sign at $ct_f/2$)
+
+$$
+-c^2\mathrm{d}\tau^2 = (v^2 - c^2)\mathrm{d}t^2 \implies \Delta\tau = \int_0^{t_f}\sqrt{1 - \frac{v^2}{c^2}}\mathrm{d}t \implies \tau = \frac{t_f}{\gamma}.
+$$
+
+Hence the twin on the spaceship ages less.
+
+**Grading Scheme**
+
+- **(0.5 pts)** Writes the relation $\mathrm{d}x = v\mathrm{d}t$.
+- **(1 pt)** Uses invariance to find $\tau$ in terms of $t$. (-0.5 points if they do not acknowledge the change in sign of $v$ at $ct_f/2$)
+- **(0.5 pts)** Concludes that the spaceship twin ages less.
+
+(c) We recall that the action of a system along a path $\vec q(t)$ between two times $t_1$ and $t_2$ is given as
+
+$$
+\mathcal{S} = \int_{t_1}^{t_2}\mathcal{L}(q_i, \dot q_i, t)\mathrm{d}t.
+$$
+
+We are given that the line element $\mathrm{d}s^2 = -(1 + 2\Phi(x))\mathrm{d}t^2 + (1 - 2\Phi(x))\mathrm{d}x^2$ (using units where $c = 1$). We can write an expression for the maximal spacetime length as
+
+$$
+\begin{aligned}\mathrm{d}s &= \sqrt{-(1 + 2\Phi(x))\mathrm{d}t^2 + (1 - 2\Phi(x))\mathrm{d}x^2}\\ &= \sqrt{-(1 + 2\Phi(x))\left(\frac{\mathrm{d}t}{\mathrm{d}\sigma}\right)^2 + (1 - 2\Phi(x))\left(\frac{\mathrm{d}x}{\mathrm{d}\sigma}\right)^2}\mathrm{d}\sigma\\ S = \int\mathrm{d}s &= \int\sqrt{-(1 + 2\Phi(x)) + (1 - 2\Phi(x))\dot x^2}\mathrm{d}\sigma\end{aligned}
+$$
+
+We notice that the expression inside the integral is the Lagrangian. Now we use the Euler-Lagrange equation $\frac{\partial L}{\partial x} = \frac{\mathrm{d}}{\mathrm{d}t}\frac{\mathrm{d}L}{\mathrm{d}\dot x}$ using the approximation $\Phi(x) \ll 1$ and $\dot x \ll 1$. Without much detail on calculations, one can recover that $\ddot x = -\Phi'(x)$. This resembles Newton’s second law $F = -m\frac{\mathrm{d}\Phi}{\mathrm{d}x}$.
+
+**Grading Scheme**
+
+- **(2 pts)** Is able to recover the Lagrangian. (-0.5 points if they write the integral with $\mathrm{d}t$ instead of $\mathrm{d}\sigma$.)
+- **(2 pts)** Is able to recover Newton’s second law by using the Euler-Lagrange equations. (-1 point if significant progress is achieved, but the final answer is not correct. -0.5 points if they don’t show how they used approximations)
+
+(d) To get rid of special relativistic effects, we assume zero velocity, and hence $\mathrm{d}s^2 = -(1 + 2\Phi(x))\mathrm{d}t^2$. As the factor for time dilation is $\gamma = \sigma/t$, we can write using $\mathrm{d}s^2 = -\mathrm{d}\sigma^2$ that
+
+$$
+\frac{\mathrm{d}\sigma}{\mathrm{d}t} = \sqrt{1 + 2\Phi(x)} \approx 1 + \Phi(x)
+$$
+
+**Grading Scheme**
+
+- **(1 pt)** Writes expression assuming $\mathrm{d}s^2$ for general relativistic effects.
+- **(1 pt)** Finds expression for time dilation.
+
+(e) We apply the radial geodesic. We note that $\frac{\mathrm{d}^2r}{\mathrm{d}\tau^2} = \frac{\mathrm{d}r}{\mathrm{d}\tau} = \frac{\mathrm{d}\theta}{\mathrm{d}\tau} = 0$. Thus, we can add the geodesic equations for $\Gamma^r_{tt}$ and $\Gamma^r_{\phi\phi}$, so that
+
+$$
+\Gamma^r_{tt}\left(\frac{\mathrm{d}t}{\mathrm{d}\tau}\right)^2 + \Gamma^r_{\phi\phi}\left(\frac{\mathrm{d}\phi}{\mathrm{d}t}\frac{\mathrm{d}t}{\mathrm{d}\tau}\right)^2 = 0
+$$
+
+$$
+\left(\frac{d\phi}{dt}\right)^2 = -\frac{\Gamma^r_{tt}}{\Gamma^r_{\phi\phi}} = -\frac{\frac{c^2B\frac{\mathrm{d}B}{\mathrm{d}r}}{2}}{-Br\sin^2\theta} = \frac{c^2\frac{\mathrm{d}B}{\mathrm{d}r}}{2r} = \frac{c^2r_s}{2r^3} = \frac{GM}{r^3}
+$$
+
+Thus,
+
+$$
+\left(r\frac{d\phi}{dt}\right)^2 = c^2 - \frac{2GM}{r} = \frac{GM}{r},
+$$
+
+which yields $r_p = \frac{3GM}{c^2}$.
+
+**Grading Scheme**
+
+- **(2 pts)** Recombines the radial geodesic equation to find a formula for $\frac{\mathrm{d}\phi}{\mathrm{d}t}$.
+- **(2 pts)** Finds the radius to be $r_p = \frac{3}{2}r_s$. (-1 pt if significant progress is achieved but the final answer is not correct)
+
+(f) Divide the Schwarzschild metric by the path parameter to obtain:
+
+$$
+0 = -\left(1 - \frac{r_s}{r}\right)c^2t^2 + \frac{\dot r^2}{1 - \frac{r_s}{r}} + r^2\dot\phi^2
+$$
+
+Where $ds^2 = 0$ for null geodesics. From this, we can identify the following conserved quantities:
+
+$$
+\begin{aligned}&\frac{\mathrm{d}}{\mathrm{d}\sigma}\left(r^2\dot\phi\right) \Rightarrow L = r^2\dot\phi \quad \text{(angular momentum)}\\ &\frac{\mathrm{d}}{\mathrm{d}s}\left(\left(1 - \frac{r_s}{r}\right)c^2\dot t\right) \Rightarrow E = \left(1 - \frac{r_s}{r}\right)c^2\dot t \quad \text{(energy)}\end{aligned}
+$$
+
+Here, $b = \frac{L}{E}$ is the impact parameter. The Schwarzschild metric, for $\theta = \frac{\pi}{2}$, can be rewritten as:
+
+$$
+0 = -\left(1 - \frac{r_s}{r}\right)c^2dt^2 + \frac{dr^2}{1 - \frac{r_s}{r}} + r^2d\phi^2
+$$
+
+This leads to:
+
+$$
+\begin{aligned}E^2 &= \left(\frac{\mathrm{d}r}{\mathrm{d}\phi}\right)^2 + \frac{L^2}{r^2}\left(1 - \frac{r_s}{r}\right)\\ \left(\frac{\mathrm{d}r}{\mathrm{d}t}\right)^2 &= -\left(1 - \frac{r_s}{r}\right) + \frac{r^4}{b^2}\end{aligned}
+$$
+
+Differentiating with respect to $\phi$ and substituting $1/r$ shows:
+
+$$
+\frac{\mathrm{d}^2}{\mathrm{d}\phi^2}\left(\frac{1}{r}\right) = \frac{r_p}{r^2} - \frac{1}{r}
+$$
+
+Considering a small perturbation $r = r_p \pm \delta$ leads to:
+
+$$
+\begin{aligned}\frac{\mathrm{d}^2}{\mathrm{d}\phi^2}\left(\frac{1}{r+\delta}\right) &= \frac{r_p}{(r+\delta)^2} - \frac{1}{r+\delta}\\ \frac{\mathrm{d}^2}{\mathrm{d}\phi^2}\left(\frac{1}{r}\left(1 + \frac{\delta}{r}\right)^{-1}\right) &= \frac{r_p}{r^2}\left(1 + \frac{\delta}{r}\right)^{-2} - \frac{1}{r}\left(1 + \frac{\delta}{r}\right)\\ -\frac{1}{r^2}\frac{\mathrm{d}^2\delta}{\mathrm{d}\phi^2} &= \frac{1}{r}\left[\left(1 - 2\frac{\delta}{r}\right) - \left(1 + \frac{\delta}{r}\right)\right]\end{aligned}
+$$
+
+Finally, we can retrieve a simple differential equation:
+
+$$
+\frac{\mathrm{d}^2\delta}{\mathrm{d}\phi^2} = \delta \Rightarrow \delta = Ae^{\phi} + Be^{-\phi}
+$$
+
+Given $\delta(0) = \delta_0$ (e.g., $\delta = 0.25$ m) and $\delta'(0) = r_p\beta$ (where $\beta$ is an arbitrary constant representing the angle), one can find $A$ and $B$ as
+
+$$
+\begin{aligned}\delta &= \delta_0\left(\frac{e^{\phi} + e^{-\phi}}{2}\right) + r_p^{\alpha}\left(\frac{e^{\phi} - e^{-\phi}}{2}\right)\\ &= \delta_0\cosh\phi + r_p\beta\sinh\phi\end{aligned}
+$$
+
+Thus, for the maximum case, we need $\delta(2\pi) = \delta_0$. To find $\alpha$, consider the symmetry and multiply the result by 2. Therefore,
+
+$$
+\delta_0 = \delta_0\cosh(2\pi) + \frac{r_p\alpha}{2}\sinh(2\pi) \implies \alpha = \frac{2\delta_0(1 - \cosh(2\pi))}{r_p\sinh(2\pi)}
+$$
+
+A drawing can be created on desmos.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '35.3%', '--fig-max': '227px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2023-theory-x/p3-sol-fig2.png" alt="Hand-drawn sketch: a black circle of radius r_p around the black hole; a blue light path slightly inside it and a red light path outside it, both with arrows circling the black hole; a short black bar marks Bill on the circle and a purple arc marks the angle α." width="708" height="751" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.1%', '--fig-max': '385px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2023-theory-x/p3-sol-fig3.png" alt="Desmos polar plot with rings labelled 100000, 200000, 300000 and angle marks from 0 to 11π/6: a blue circle of radius about 65000 and a red trajectory that starts near the circle and spirals outward, leaving the plot at the upper left." width="1204" height="1116" loading="lazy" decoding="async" />
+</figure>
+
+Notice how the angle $k$ must be extremely small for the effect to occur. In the above picture we set $k = 0.00000002$ and yet, the photon trajectory misses by about 3000 meters when we require the full deviation to be 0.25 m. Hence, it is extremely unlikely for one to be able to visualize this effect in real life. Additionally, it is worth noticing how these curves take form of spirals.
+
+**Grading Scheme**
+
+- **(2 pts)** For recovering expressions for angular momentum and energy.
+- **(2 pts)** For finding a differential equation in terms of $r_p, r$, and $\phi$.
+- **(4 pts)** For simplifying the differential equation and using proper approximation to find an expression for $\frac{\mathrm{d}^2\delta}{\mathrm{d}\phi^2}$.
+- **(2 pts)** For solving the differential equation and interpreting the results.
+- **(1 pts)** For creating a proper labelled diagram that represents the scenario.
+
+(g) The Schwarzchild Metric is represented by:
+
+$$
+(ds)^2 = \left(cdt\sqrt{1 - \frac{2GM}{rc^2}}\right)^2 - \left(\frac{dr}{\sqrt{1 - \frac{2GM}{rc^2}}}\right)^2 - (r\ d\theta)^2 - (r\sin\theta d\phi)^2
+$$
+
+as we are only worried about the $\phi$ direction, $dr = d\theta = 0$ and $\theta = \pi/2$. Therefore, we have
+
+$$
+c\sqrt{1 - \frac{2GM}{rc^2}} = r\ \frac{d\phi}{dt}
+$$
+
+To find the period, we need to calculate the angular speed of light in the $\phi$-direction at $\frac{3GM}{c^2}$. Therefore,
+
+$$
+\frac{d\phi}{dt} = \frac{c}{r}\sqrt{1 - \frac{2GM}{rc^2}} = \frac{c^3}{3GM\sqrt{3}}.
+$$
+
+Therefore, because angular speed is constant,
+
+$$
+T = \frac{2\pi}{\frac{d\phi}{dt}} = \frac{2\pi}{\frac{c^3}{3GM\sqrt{3}}} = \frac{6\pi GM\sqrt{3}}{c^3}
+$$
+
+**Grading Scheme**
+
+- **(2 pts)** For simplifying the Schwarzschild metric and finding a formula for $\frac{\mathrm{d}\phi}{\mathrm{d}t}$.
+- **(2 pts)** Getting the right answer.
+
+(h) **Grading Scheme**
+
+- **(4 pts)** Solid explanation proving point.
+
+(i) **Grading Scheme**
+
+- **(3 pts)** Finds the radius of the shadow disc is $\frac{3\sqrt{3}}{2}r_s$.
+- If part (f) was not attempted, +2 points for recovering expressions for angular momentum and energy.
+- **(3 pts)** +1.5 Uses solid angle $\Omega$ to find portion of light shining on disc. + 1.5 Integrates using number density to find total number of contributing photons. (-1 pt if correct answer is not obtained.)
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2023/theory.pdf#page=8)
+· официални решения: [theory_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2023/theory_sol.pdf#page=10)

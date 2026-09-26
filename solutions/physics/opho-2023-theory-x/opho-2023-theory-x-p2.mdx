@@ -1,0 +1,537 @@
+---
+id: opho-2023-theory-x-p2
+source: 'OPhO 2023, Теория'
+title: 'Задача 2. T2: The Complex Potential'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2023/opho-2023-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T07:27:22.287Z'
+verifier: 'mechanical'
+---
+
+*2023 Online Physics Olympiad: Invitational Contest — Theoretical Examination · 5 август 2023 г.*
+
+<details>
+<summary>Sponsors</summary>
+
+This competition could not be possible without the help of our sponsors, who are all doing great things in physics, math, and education.
+
+</details>
+
+<details>
+<summary>Instructions for Theoretical Exam</summary>
+
+The theoretical examination consists of 3 long answer questions and 160 points over 2 full days from August 5, 0:01 am GMT.
+
+- **The team leader should submit their final solution document in this google form.**
+- If you wish to request a clarification, please use this form. To see all clarifications, view this document.
+- Participants are given a google form where they are allowed to submit up-to 100 megabytes of data for their solutions. It is recommended that participants write their solutions in LaTeX. However, handwritten solutions (or a combination of both) are accepted too. If participants have more than one photo of a handwritten solution (`jpg, png`, etc), it is required to organize them in the correct order in a `pdf` before submitting. If you wish a premade LaTeX template, we have made one for you here.
+- Since each question is a long answer response, participants will be judged on the quality of your work. To receive full points, participants need to show their work, including deriving equations. As a general rule of thumb, any common equations (such as the ones in the IPhO formula sheet) can be cited without proof.
+- Remember to state any approximations made and which system of equations were solved after every step. Explicitly showing every step of algebra is not necessary. Participants may leave all final answers in symbolic form (in terms of variables) unless otherwise specified. Be sure to state all assumptions.
+
+**Problems**
+
+- T1: Booster
+- T2: The Complex Potential
+- T3: General Relativity
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+| Proton mass | $m_p = 1.67 \cdot 10^{-27}\ \mathrm{kg}$ |
+|---|---|
+| Neutron mass | $m_n = 1.67 \cdot 10^{-27}\ \mathrm{kg}$ |
+| Electron mass | $m_e = 9.11 \cdot 10^{-31}\ \mathrm{kg}$ |
+| Avogadro’s constant | $N_0 = 6.02 \cdot 10^{23}\ \mathrm{mol}^{-1}$ |
+| Universal gas constant | $R = 8.31\ \mathrm{J/(mol \cdot K)}$ |
+| Boltzmann’s constant | $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$ |
+| Electron charge magnitude | $e = 1.60 \cdot 10^{-19}$ |
+| 1 electron volt | $1\ \mathrm{eV} = 1.60 \cdot 10^{-19}\ \mathrm{J}$ |
+| Speed of light | $c = 3.00 \cdot 10^{8}\ \mathrm{m/s}$ |
+| Universal Gravitational constant | $G = 6.67 \cdot 10^{-11}\ (\mathrm{N \cdot m^2})/\mathrm{kg}^2$ |
+| Acceleration due to gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| 1 unified atomic mass unit | $1\ \mathrm{u} = 1.66 \cdot 10^{-27}\ \mathrm{kg} = 931\ \mathrm{MeV/c^2}$ |
+| Planck’s constant | $h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s} = 4.41 \cdot 10^{-15}\ \mathrm{eV \cdot s}$ |
+| Permittivity of free space | $\epsilon_0 = 8.85 \cdot 10^{-12}\ \mathrm{C^2/(N \cdot m^2)}$ |
+| Coulomb’s law constant | $k = \frac{1}{4\pi\epsilon_0} = 8.99 \cdot 10^{9}\ (\mathrm{N \cdot m^2})/\mathrm{C}^2$ |
+| Permeability of free space | $\mu_0 = 4\pi \cdot 10^{-7}\ \mathrm{T \cdot m/A}$ |
+| Stefan-Boltzmann constant | $\sigma = 5.67 \cdot 10^{-8}\ \mathrm{W/m^2/K^4}$ |
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [A Conformal Transformation](#conformal-transformation)
+- [A Conformal Transformed Electrostatic System](#conformal-transformed-electrostatic-system)
+- [On the Electrostatic Interaction between a Line Charge and a Conducting Wedge](#line-charge-conducting-wedge)
+
+</nav>
+
+
+
+<ProblemSection id="conformal-transformation">
+
+### A Conformal Transformation
+
+A complex number can be thought of as a mathematical object that ”stores” two real numbers. An element $z$ of the set of complex numbers $\mathbb{C}$ can be written as:
+
+$$
+z = x + iy
+$$
+
+where $i \equiv \sqrt{-1}$ is called the imaginary unit, and $x, y \in \mathbb{R}$. With this, one can think of constructing complex-valued functions – namely, a function $f : \mathbb{C} \to \mathbb{C}$:
+
+$$
+f(z) = f(x + iy) = w(x, y) + iu(x, y) \quad (1) \qquad (1)
+$$
+
+Since complex numbers encode two real numbers $x$ and $y$, we can consider complex-valued functions yielding two real-valued functions $w(x, y)$ and $u(x, y)$ that depend on $x, y$. $w$ and $u$, being real-valued multivariable functions, allow us to extend calculus on $\mathbb{R}^2$ to $\mathbb{C}$. You are given that the composition of two complex differentiable functions yields another complex differentiable function on the appropriate domain.
+
+**(a)** Starting from the definition of a derivative in single-variable calculus, show that if $f$ given in (1) is complex differentiable, $w$ and $u$ satisfy:
+
+$$
+\frac{\partial w}{\partial x} = \frac{\partial u}{\partial y} \quad \text{and} \quad \frac{\partial w}{\partial y} = -\frac{\partial u}{\partial x}
+$$
+
+**(b)** Show that $w(x, y)$ and $u(x, y)$ are solutions to the 2D Laplace equation:
+
+$$
+\nabla^2\phi = \frac{\partial^2\phi}{\partial x^2} + \frac{\partial^2\phi}{\partial y^2} = 0 \qquad (2)
+$$
+
+**(c)** A parametrized curve $\gamma$ on the complex plane can be thought of as a function that takes a real number $t$ and yields a point $\gamma(t)$ on the complex plane. Two parametrized curves $\gamma_1$ and $\gamma_2$ intersect at some point $p = \gamma_1(t_1) = \gamma_2(t_2)$; tangent lines of the two curves at $p$ form an angle $\alpha$. Show that the tangent lines of the curves $f \circ \gamma_1$ and $f \circ \gamma_2$ at $f(p)$ form the same angle $\alpha$, where $\circ$ is the composition function.
+
+</ProblemSection>
+
+<ProblemSection id="conformal-transformed-electrostatic-system">
+
+### A Conformal Transformed Electrostatic System
+
+We know from electrostatics that in a charge-free region, the electrostatic potential $\phi$ satisfies the Laplace equation $\nabla^2\phi = 0$. As you’ve shown above, this motivates the idea of defining a complex differentiable function whose real part is the electrostatic potential – complex differentiability encodes the fact that the electrostatic potential satisfies (2). Given a 2D electrostatics problem in a charge-free region, we define the *complex potential* $f(z)$ as:
+
+$$
+f(z) = \phi(x, y) + i\psi(x, y)
+$$
+
+where $\psi$ is an appropriate real-valued function that satisfies the conditions derived in question 1, making $f$ a complex differentiable function. You are given the uniqueness theorem: the 2D Laplace equation has a unique solution that satisfies specified boundary conditions.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '688px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2023-theory-x/p2-fig1.png" alt="Left: an irregular closed curve labelled C, with a dashed curve γ(t) crossing its boundary; at the crossing a small right triangle with hypotenuse dl and legs dx and dy, and a normal vector n. An arrow labelled f(z)=u(x,y)+iv(x,y) points right to a second irregular closed curve labelled f(C), where the image of the dashed curve is labelled f(γ(t)), a thick boundary segment dl’ and a normal vector n’." width="2151" height="1064" loading="lazy" decoding="async" />
+</figure>
+
+**(d)** Given a 2D electrostatics problem and an appropriate complex potential $f$, write the derivative $\frac{\mathrm{d}f}{\mathrm{d}z}$ in terms of the $x$ and $y$ components of the electric field: $\mathbf{E}(x, y) = E_x(x, y)\hat{x} + E_y(x, y)\hat{y}$.
+
+**(e)** Show that the function $\phi(x, y) = \frac{\phi_0}{\pi}\arctan\frac{y}{x}$ satisfies the 2D Laplace equation with the boundary condition $\phi(x > 0, 0) = 0$ while $\phi(x < 0, 0) = \phi_0$.
+
+**(f)** The complex logarithm function is defined at $z = re^{i\theta}$ as $\log(z) = \log|r| + i\theta$ for $r \neq 0$, $0 < \theta < 2\pi$. Show that the upper-half plane $\mathcal{H}$ (points on the complex plane with a positive imaginary part), under the logarithm map, turns into a strip bounded by $\mathrm{Im}(z) = 0$ and $\mathrm{Im}(z) = \pi$. You may assume that the logarithm function is complex differentiable on $\mathcal{H}$ and that its inverse is $e^z$ for this problem.
+
+**(g)** Starting from the electrostatic potential in (e), find the electrostatic potential in the region between two infinitely large capacitor plates separated by distance $d$. Carefully argue why this method yields the correct solution.
+
+**(h)** Show that the function $f(z) = \frac{i(1-z)}{(1+z)}$ maps the unit circle $\mathcal{C}$, centered at the origin, to the real line and the interior of the circle to $\mathcal{H}$. Determine the inverse $g$ of the function $f$ and explain why there’s a one-to-one correspondence between points bounded by $\mathcal{C}$ and $\mathcal{H}$.
+
+**(i)** Find the electrostatic potential in the region between an infinite rod of charge density $\lambda$ and a grounded concentric conducting cylindrical shell of radius $R$.
+
+**(j)** Now consider the same infinite rod suspended above a grounded conducting plate at a height $h$. Use your results for questions (h) and (i) to derive the electrostatic potential $\phi$ in the region above the plate.
+
+**(k)** Consider the curve $C$ shown in the figure below. You are given that the image of $\mathrm{d}l$ is $\mathrm{d}l'$. If we take some line element $\mathrm{d}l$ on the curve $C$, find the scaling factor to its image $\mathrm{d}l'$ on $f(C)$. This is known as a conformal transformation in which the mapping is a holomorphic function.
+
+**(l)** Take $C$ to represent a conductive surface. If $\phi$ is an appropriate solution to the 2D Laplace equation satisfying $\phi|_C = 0$, find expressions for the surface at $\mathrm{d}l$, the electrostatic potential $\phi'$ satisfying $\phi'|_{f(C)} = 0$, and the surface charge at $\mathrm{d}l'$ from $\phi'$.
+
+**(m)** Verify that your results for questions (k) and (l) are consistent.
+
+</ProblemSection>
+
+<ProblemSection id="line-charge-conducting-wedge">
+
+### On the Electrostatic Interaction between a Line Charge and a Conducting Wedge
+
+We can apply the knowledge we have gained here to solve a familiar physical puzzle. This puzzle has been widely known and popular in specific cases (e.g. easily solvable using the image method), but it lacks generality. Consider a grounded, infinitely large, conducting wedge with an opening angle $\theta$. Inside the wedge, there is a thin, infinitely long, straight line with a uniform charge density of $Q$ per unit length, positioned parallel to the edge of the wedge. The distance between the line and the edge is $L$, the plane that pass through both the line and the edge make an angle $\alpha$ with a face of the wedge.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '97%', '--fig-max': '621px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2023-theory-x/p2-fig2.png" alt="Cross-section of a grey conducting wedge (labelled “conducting wedge”) whose two faces meet at an apex at the top, opening downwards with opening angle θ; a line charge Q (labelled “line charge”) lies inside at distance L from the apex along a dotted line that makes angle α with the left face." width="1940" height="835" loading="lazy" decoding="async" />
+</figure>
+
+**(n)** Find the direction and the magnitude of the electrical force acting on the line per unit length. Solve for the general case of $2\pi > \theta > \alpha$, then evaluate your answer in the unit of $kQ^2/L$, for $\theta = 120^o$ and $\alpha = 30^o$.
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A Conformal Transformed Electrostatic System, (d)** $\frac{df}{dz} = -E_x + iE_y$
+- **A Conformal Transformed Electrostatic System, (g)** $\phi_c(x,y) = \frac{\phi_0}{d}y$
+- **A Conformal Transformed Electrostatic System, (i)** $\phi_I(r) = -\frac{\lambda}{2\pi\epsilon_0}\ln(r/R)$
+- **A Conformal Transformed Electrostatic System, (j)** $\phi(x,y) = \frac{\lambda}{2\pi\epsilon_0}\ln\sqrt{\frac{1+\frac{2}{h}y+\frac{x^2+y^2}{h^2}}{1-\frac{2}{h}y+\frac{x^2+y^2}{h^2}}}$
+- **A Conformal Transformed Electrostatic System, (k)** $|f'(\gamma(t_0))|$
+- **On the Electrostatic Interaction between a Line Charge and a Conducting Wedge, (n)** $\vec F = -k\frac{Q^2}{L}\left[\hat r + \frac{\pi}{\theta}\cot\left(\frac{\pi}{\theta}\alpha\right)\hat\varphi\right],\quad |\vec F| = \frac{\sqrt{13}}{2}\frac{kQ^2}{L} \approx 1.8028\,\frac{kQ^2}{L}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution 2:**
+
+**Part A**
+
+Has hinted in the problem, we define differentiability of complex functions just as we would in single variable calculus on the reals. A function $f : \mathbb{C} \to \mathbb{C}$, is complex-differentiable or *holomorphic* at a point $z_0 \in \mathbb{C}$ if the following limit converges to a number $f'(z_0) \in \mathbb{C}$:
+
+$$
+\lim_{h\to 0}\frac{f(z_0 + h) - f(z_0)}{h} = f'(z_0) \qquad (1)
+$$
+
+We call the number $f'(z_0)$ the derivative of $f$ at $z_0$. Note that the limit $h \to 0$ is taken by any sequence of points *in the complex plane* that converges to the origin. As in multivariable calculus on $\mathbb{R}^2$, $h$ can approach the origin in two different ways: along the real axis and along the imaginary axis – both limits should yield the same result if the limit in (1) indeed converges. If $h$ moves along the real axis, $h = \delta x \in \mathbb{R}$. The limit in (1) becomes:
+
+$$
+\lim_{\delta x\to 0}\frac{f(x_0 + \delta x + iy_0) - f(x_0 + iy_0)}{\delta x}
+$$
+
+where $z_0 = x_0 + iy_0$. If we write $f(x + iy) = w(x, y) + iu(x, y)$, the limit then becomes:
+
+$$
+\lim_{\delta x\to 0}\left[\frac{w(x_0 + \delta x, y_0) - w(x_0, y_0)}{\delta x} + i\frac{u(x_0 + \delta x, y_0) - u(x_0, y_0)}{\delta x}\right]
+$$
+
+but we see that these are just partial derivatives evaluated at $z_0$:
+
+$$
+\left[\frac{\partial w}{\partial x} + i\frac{\partial u}{\partial x}\right]_{z_0}
+$$
+
+Now, if we move along the imaginary axis, $h = i\delta y \in i\mathbb{R}$. The limit in (1) becomes:
+
+$$
+\lim_{\delta y\to 0}\frac{f(x_0 + i(y_0 + \delta y)) - f(x_0 + iy_0)}{i\delta y}
+$$
+
+Following a similar procedure from before:
+
+$$
+\lim_{\delta y\to 0}\left[\frac{w(x_0, y_0 + \delta y) - w(x_0, y_0)}{i\delta y} + i\frac{u(x_0, y_0 + \delta y) - u(x_0, y_0)}{i\delta y}\right]
+$$
+
+Since $\frac{1}{i} = -i$, the limit can be written as:
+
+$$
+\left[\frac{\partial u}{\partial y} - i\frac{\partial w}{\partial y}\right]_{z_0}
+$$
+
+As discussed, if $f$ is complex-differentiable at $z_0$, these limits should be equal. Equating real and imaginary parts, we find:
+
+$$
+\begin{gathered}\frac{\partial u}{\partial x} = -\frac{\partial w}{\partial y}\\ \frac{\partial w}{\partial x} = \frac{\partial u}{\partial y}\end{gathered} \qquad (2)
+$$
+
+**Part B**
+
+From the conditions in (2), we observe that:
+
+$$
+\begin{aligned}\nabla^2 w &= \frac{\partial^2 w}{\partial x^2} + \frac{\partial^2 w}{\partial y^2}\\ &= \frac{\partial^2 u}{\partial x\partial y} - \frac{\partial^2 u}{\partial y\partial x} = 0\end{aligned}
+$$
+
+It can similarly be shown that $\nabla^2 u = 0$. We therefore find that a holomorphic function has real and imaginary parts that satisfy the 2D Laplace equation.
+
+**Part C**
+
+The ‘tangent vectors’ along $\gamma_1$ at $t_1$ and $\gamma_2$ at $t_2$ are represented by the complex numbers $\gamma_1'(t_1)$ and $\gamma_2'(t_2)$, respectively. Let us denote the ‘dot product’ of two complex numbers $z$ and $w$ as: $\langle z, w\rangle \equiv \mathrm{Re}[z]\mathrm{Re}[w] + \mathrm{Im}[z]\mathrm{Im}[w]$. The cosine of the angle $\alpha$ is therefore:
+
+$$
+\cos\alpha = \frac{\langle\gamma_1'(t_1), \gamma_2'(t_2)\rangle}{\|\gamma_1'(t_1)\|\|\gamma_2'(t_2)\|}
+$$
+
+The transformed curves $f(\gamma_1(t))$ and $f(\gamma_2(t))$, at the intersection $f(p)$, will have tangent vectors $w_1 = \frac{d}{dt}f(\gamma_1(t))\big|_{t_1}$ and $w_2 = \frac{d}{dt}f(\gamma_2(t))\big|_{t_2}$, respectively. Let us write $\gamma_i(t) = x_i(t) + y_i(t)$ for $i = 1, 2$ and $\tilde p = (x_1(t_1), y_1(t_1)) = (x_2(t_2), y_2(t_2)) \in \mathbb{R}^2$ . Using the chain rule,
+
+$$
+\begin{aligned}\mathrm{Re}[w_1] &= \frac{\partial w}{\partial x}\bigg|_{\tilde p}\frac{dx_1}{dt}\bigg|_{t_1} + \frac{\partial w}{\partial y}\bigg|_{\tilde p}\frac{dy_1}{dt}\bigg|_{t_1}\\ \mathrm{Im}[w_1] &= \frac{\partial u}{\partial x}\bigg|_{\tilde p}\frac{dx_1}{dt}\bigg|_{t_1} + \frac{\partial u}{\partial y}\bigg|_{\tilde p}\frac{dy_1}{dt}\bigg|_{t_1}\end{aligned}
+$$
+
+And similarly for $w_2$:
+
+$$
+\begin{aligned}\mathrm{Re}[w_2] &= \frac{\partial w}{\partial x}\bigg|_{\tilde p}\frac{dx_2}{dt}\bigg|_{t_2} + \frac{\partial w}{\partial y}\bigg|_{\tilde p}\frac{dy_2}{dt}\bigg|_{t_2}\\ \mathrm{Im}[w_2] &= \frac{\partial u}{\partial x}\bigg|_{\tilde p}\frac{dx_2}{dt}\bigg|_{t_2} + \frac{\partial u}{\partial y}\bigg|_{\tilde p}\frac{dy_2}{dt}\bigg|_{t_2}\end{aligned}
+$$
+
+Now, let us consider the cosine of the angle formed between $w_1$ and $w_2$:
+
+$$
+\frac{\langle w_1, w_2\rangle}{\|w_1\|\|w_2\|}
+$$
+
+Denoting the $t$ derivatives with dots and omitting the input points/parameter values,
+
+$$
+\begin{aligned}\mathrm{Re}[w_1]\mathrm{Re}[w_2] &= \left(\frac{\partial w}{\partial x}\right)^2\dot x_1\dot x_2 + \frac{\partial w}{\partial x}\frac{\partial w}{\partial y}(\dot x_2\dot y_1 + \dot y_2\dot x_1) + \left(\frac{\partial w}{\partial y}\right)^2\dot y_1\dot y_2\\ \mathrm{Im}[w_1]\mathrm{Im}[w_2] &= \left(\frac{\partial u}{\partial x}\right)^2\dot x_1\dot x_2 + \frac{\partial u}{\partial x}\frac{\partial u}{\partial y}(\dot x_2\dot y_1 + \dot y_2\dot x_1) + \left(\frac{\partial u}{\partial y}\right)^2\dot y_1\dot y_2\end{aligned}
+$$
+
+Hence,
+
+$$
+\langle w_1, w_2\rangle = \left\|\frac{\partial f}{\partial x}\right\|^2\dot x_1\dot x_2 + \left[\frac{\partial u}{\partial x}\frac{\partial u}{\partial y} + \frac{\partial w}{\partial x}\frac{\partial w}{\partial y}\right](\dot x_2\dot y_1 + \dot y_2\dot x_1) + \left\|\frac{\partial f}{\partial y}\right\|^2\dot y_1\dot y_2
+$$
+
+Note that since $f$ is complex-differentiable, we require $\left\|\frac{\partial f}{\partial x}\right\|^2 = \left\|\frac{\partial f}{\partial y}\right\|^2 = \|f'(p)\|^2$. Applying the condition found in (a) to the second term, we find that it vanishes. Hence,
+
+$$
+\langle w_1, w_2\rangle = \left\|f'(p)\right\|^2(\dot x_1\dot x_2 + \dot y_1\dot y_2) = \left\|f'(p)\right\|^2\langle\gamma_1'(t_1), \gamma_2'(t_2)\rangle
+$$
+
+Now, observe that $w_1 = f'(p)\gamma_1'(t_1)$ and $w_2 = f'(p)\gamma_2'(t_2)$
+
+$$
+\frac{\langle w_1, w_2\rangle}{\|w_1\|\|w_2\|} = \frac{\langle\gamma_1'(t_1), \gamma_2'(t_2)\rangle}{\|\gamma_1'(t_1)\|\|\gamma_2'(t_2)\|}
+$$
+
+As was to be shown.
+
+**Part D**
+
+Note that for a holomorphic complex potential $f = \phi + i\psi$, taking the derivative in the real direction:
+
+$$
+\frac{df}{dz} = \frac{\partial\phi}{\partial x} + i\frac{\partial\psi}{\partial x}
+$$
+
+$\psi$ was chosen such that $\partial_x\psi = -\partial_y\phi = E_y$ so
+
+$$
+\frac{df}{dz} = -E_x + iE_y
+$$
+
+**Part E**
+
+There was a domain issue in the original problem statement – $\pi$ should be added/subtracted depending on the domain, but this shouldn’t matter in verifying the 2D Laplace equation since it involves derivatives. A better statement would be $\phi(r, \theta) = \frac{\phi_0}{\pi}\theta$ for $0 \le \theta \le \pi$, which clearly satisfies the given boundary conditions $\phi(x > 0, 0) = 0$, $\phi(x < 0, 0) = \phi_0$. In spherical coordinates, the Laplacian operator is
+
+$$
+\nabla^2 = \frac{1}{r}\frac{\partial}{\partial r}\left(r\frac{\partial}{\partial r}\right) + \frac{1}{r^2}\frac{\partial^2}{\partial\theta^2} + \frac{\partial^2}{\partial z^2}
+$$
+
+Hence,
+
+$$
+\nabla^2\phi(r, \theta) = 0
+$$
+
+By the uniqueness theorem, the true, unique electric field respecting the boundary conditions is modeled by $-\nabla\phi$.
+
+**Part F**
+
+A radial line on the upper half plane at angle $\theta \in (0, \pi)$ is the set of points $L_\theta = \{re^{i\theta} \in \mathcal{H}, r \in (0, \infty)\}$. Under the logarithm map, this set is mapped to $\log(L_\theta) = \{\log|r| + i\theta, r \in (0, \infty)\}$ which is clearly the horizontal line at $\mathrm{Im}[z] = \theta$ extending $-\infty < \mathrm{Re}[z] < \infty$. Since the upper half plane can be thought as the collection of the sets $L_\theta$ for $\theta \in (0, \pi)$, $\log\mathcal{H}$ is clearly the strip bounded by $\mathrm{Im}[z] = 0$ and $\mathrm{Im}[z] = \pi$. Let us call this strip $\mathcal{S}$. We are given that $\log(z)$ is holomorphic on $\mathcal{H}$ and that $e^z : \mathcal{S} \to \mathcal{H}$
+
+**Part G**
+
+Note that the boundary condition in (e), under the logarithm map, becomes the desired boundary conditions of two infinite capacitor plates. Let us crudely denote the ‘potential space’ as $\Phi$ – the space to which complex potentials map. For example, if $f$ is an appropriate complex potential to (e), we may write $f : \mathcal{H} \to \Phi$ with the boundary condition $\phi(x > 0, 0) = 0$ and $\phi(x < 0, 0) = \phi_0$ defined on the upper half plane $\mathcal{H}$. We observe that taking a map $f \circ e^z : \mathcal{S} \to \mathcal{H} \to \Phi$ defines a complex potential with the boundary conditions $\phi(x, 0) = 0$ and $\phi(x, \pi) = \phi_0$ defined on $\mathcal{S}$. For an arbitrary separation $d$, we can consider $f(e^{\frac{\pi}{d}z})$. Since $e^{\frac{\pi}{d}z}$ and $f$ are holomorphic, so is $f(e^{\frac{\pi}{d}z}) = \phi(e^{\frac{\pi}{d}z}) + i\psi(e^{\frac{\pi}{d}z})$. As verified in (b), this means that the real part, $\phi(e^{\frac{\pi}{d}z})$, satisfies the 2D Laplace equation, as well as the boundary conditions $\phi(x, 0) = 0$ and $\phi(x, d) = \phi_0$, hence a valid potential for this problem. We have:
+
+$$
+\phi_c(x, y) = \phi\left(e^{\frac{\pi}{d}r\cos\theta}, \frac{\pi}{d}r\sin\theta\right) = \frac{\phi_0}{d}r\sin\theta = \frac{\phi_0}{d}y
+$$
+
+for $y \in (0, d)$. This is indeed the expected result from basic electrostatics.
+
+**Part H**
+
+This problem really isn’t approachable without rigorous mathematical reasoning. The unit disc is the set defined by $\{z \in \mathbb{C}, |z| < 1\}$. The upper half plane is defined by the set $\{z \in \mathbb{C}, \mathrm{Im}[z] \ge 0\}$. We first show that $f(\mathcal{D}) \subseteq \mathcal{H}$. For any $\xi \in \mathcal{D}$, we observe that
+
+$$
+\begin{aligned}\mathrm{Im}\left[i\frac{1-\xi}{1+\xi}\right] &= \mathrm{Re}\left[\frac{1-\xi}{1+\xi}\right]\\ &= \mathrm{Re}\left[\frac{(1-\xi)(1+\xi^*)}{\|1+\xi\|^2}\right]\\ &= \mathrm{Re}\left[\frac{1+\xi^*-\xi-\|\xi\|^2}{\|1+\xi\|^2}\right]\\ &= \mathrm{Re}\left[\frac{1-2i\mathrm{Im}[\xi]-\|\xi\|^2}{\|1+\xi\|^2}\right]\\ &= \frac{1-\|\xi\|^2}{\|1+\xi\|^2}\end{aligned}
+$$
+
+Clearly, if $|\xi| < 1$, we have
+
+$$
+\mathrm{Im}\left[i\frac{1-\xi}{1+\xi}\right] > 0
+$$
+
+implying $f(\xi) \in \mathcal{H}$. Since for an arbitrary $f(\xi) \in f(\mathcal{D})$ we have $f(\xi) \in \mathcal{H}$, $f(\mathcal{D}) \subseteq \mathcal{H}$. Now we’d like to show that $\mathcal{H} \subseteq f(\mathcal{D})$. Consider an arbitrary $\omega \in \mathcal{H}$. We’d like to show that there exists a number $\xi \in \mathcal{D}$ such that $f(\xi) = \omega$, which would imply $\omega \in f(\mathcal{D})$. Observe that:
+
+$$
+\begin{gathered}i\frac{1-\xi}{1+\xi} = \omega\\ i - i\xi = \omega + \omega\xi\\ i - \omega = \xi(\omega + i)\\ \xi = \frac{i-\omega}{i+\omega}\end{gathered}
+$$
+
+Now, note that $\mathrm{Re}[i - \omega] = -\mathrm{Re}[i + \omega] = \mathrm{Re}[\omega]$, so when comparing $|i - \omega|$ and $|i + \omega|$, we need only compare the imaginary parts. Denoting $\omega_i \equiv \mathrm{Im}[\omega] > 0$,
+
+$$
+|\mathrm{Im}[i + \omega]| = |1 + \omega_i| \ge |1 - |\omega_i||
+$$
+
+since $\omega_i > 0$, we can get rid of the absolute value symbol – $|\omega_i| = \omega_i$ – and make the above a strict inequality. This suggests that $|\mathrm{Im}[i-\omega]| < |\mathrm{Im}[i+\omega]|$, which implies $|i-\omega| < |i+\omega|$, and we conclude:
+
+$$
+|\xi| = \left|\frac{i-\omega}{i+\omega}\right| < 1
+$$
+
+so for all $\omega \in \mathcal{H}$, there exists a $\xi \in \mathcal{D}$ with $f(\xi) = \omega$. We’ve shown that $f(\mathcal{D}) \subseteq \mathcal{H}$ and that $f(\mathcal{H}) \subseteq \mathcal{D}$, implying $f(\mathcal{D}) = \mathcal{H}$. The way we found $\xi$ above hints that the $\omega \in \mathcal{H}$, $\xi \in \mathcal{D}$ pair is defined uniquely – that there is a one-to-one correspondence such that $f$ is bijective. To show this, we can first suppose that $f$ has an inverse $h$ defined by:
+
+$$
+h(w) = \frac{i-w}{i+w}
+$$
+
+$h$ is clearly single-valued, and it’s easy to verify that $h(f(z)) = z$ and $f(h(w)) = w$. This would be a direct proof that $f$ is a bijection between $\mathcal{D}$ and $\mathcal{H}$. Now we observe the mapping of the circle $C = \{|z| = 1\}$. Note that there should be problems with $f$ around $z = -1 \in C$ since $f$ is not holomorphic at $z = -1$. For an arbitrary point $e^{i\theta} \in C$ with $\theta \in [0, 2\pi)$, it’s easy to simplify expressions down to:
+
+$$
+f(e^{i\theta}) = \frac{\sin\theta}{1+\cos\theta}
+$$
+
+Graphing this on desmos suggests that the arc $(0, \pi)$ maps to the positive real line and that $(\pi, 2\pi)$ maps to the negative real line. Notice there’s a jump from $\infty$ to $-\infty$ as we move from the top arc to the bottom arc at $\pi$ – this is where $f$ “breaks”.
+
+**Part I**
+
+This is a standard electrostatics problem. The potential $\phi_I$ in the region between the rod and the cylindrical shell can be found by integrating the appropriate electric field $\boldsymbol{E}$.
+
+$$
+\begin{gathered}\boldsymbol{E}(r) = \frac{\lambda}{2\pi\epsilon_0 r}\hat r\\ \phi_I(r) = -\frac{\lambda}{2\pi\epsilon_0}\ln(r/R)\end{gathered}
+$$
+
+where $R$ is the radius of the concentric cylindrical shell.
+
+**Part J**
+
+From our results in (h), let us define a map $g : \mathcal{D}_R \to \mathcal{H}$, where $\mathcal{D}_R$ is the disc of radius $R$ centered at the origin, as:
+
+$$
+g(z) = ih\frac{1 - z/R}{1 + z/R}
+$$
+
+Under this map, the set up in (i) is mapped to the boundary conditions on $\mathcal{H}$: $\phi = 0$ on the real line, infinite rod placed at $z = ih$. These are the exact boundary conditions that we require for this problem. The inverse map of $g$, denoted $H$, is given by:
+
+$$
+H(w) = R\frac{i - w/h}{i + w/h}
+$$
+
+$H$ is holomorphic everywhere on the complex plane except at $-ih$, which isn’t included in $\mathcal{H}$, so $H$ holomorphic on the upper half plane. Since the boundary condition satisfied by $\phi_I$ has the geometry of $\mathcal{D}_R$, we can consider a complex potential $f = \phi_I + i\psi_I$ that maps $f : \mathcal{D}_R \to \Phi$. As argued in (g), $f \circ H : \mathcal{H} \to \mathcal{D}_R \to \Phi$ is a holomorphic function on $\mathcal{H}$ that respects all necessary boundary conditions. Since $\phi_I$ is only dependent on $r$, we’d like to consider $|H(w)|$:
+
+$$
+\|H(\omega)\|^2 = R^2\frac{1 - \frac{2}{h}\mathrm{Im}[w] + \frac{\|w\|^2}{h^2}}{1 + \frac{2}{h}\mathrm{Im}[w] + \frac{\|w\|^2}{h^2}}
+$$
+
+If we identify $\mathrm{Im}[w] = y$ and $\|w\|^2 = x^2 + y^2$, the desired potential function is:
+
+$$
+\phi(x, y) = \frac{\lambda}{2\pi\epsilon_0}\ln\sqrt{\frac{1 + \frac{2}{h}y + \frac{x^2+y^2}{h^2}}{1 - \frac{2}{h}y + \frac{x^2+y^2}{h^2}}}
+$$
+
+A method of images results in the same expression.
+
+**Part K**
+
+If we parameterize the curve $C$ as $\gamma(t) = x(t) + iy(t)$, the length element $dl$ at $\gamma(t_0)$ can be written as:
+
+$$
+dl = \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}dt = |\gamma'(t_0)|dt
+$$
+
+with all derivatives evaluated at $t_0$. We can use the calculations in (c) to write $dl'$ in terms of $dt$:
+
+$$
+dl' = \left|\frac{d}{dt}f(\gamma(t))\bigg|_{t_0}\right|dt = |f'(\gamma(t_0))||\gamma'(t_0)|dt
+$$
+
+Hence, we find the scaling factor is $|f'(\gamma(t_0))|$.
+
+**Part L**
+
+If $\hat n$ is orthogonal to $dl$, the surface charge at $dl$ is proportional to $\nabla\phi \cdot \hat n$. Since the surface is a conductor, $\nabla\phi$ is parallel to $\hat n$ near the surface. From previous problems, we know that $\phi' = \phi \circ f^{-1}$ is the appropriate electrostatic potential in $f(C)$, and $\nabla\phi'$ is parallel to the mapping of $\hat n$, which remains orthogonal to the curve, as shown in (c). There’s a theorem that states that if $f$ is a bijective holomorphic map, $f'$ never vanishes, $f^{-1}$ is holomorphic, and the derivative of $f^{-1}$ is given by $\frac{1}{f'}$. However, since we deal with the individual real and imaginary components of complex functions in this question, we may crudely rely on calculus on $\mathbb{R}^2$. The surface charge at $dl'$ is proportional to $\nabla\phi' \cdot \hat n' = |\nabla\phi'|$. Carefully applying the chain rule results in:
+
+$$
+|\nabla\phi'| = \frac{|\nabla\phi|}{|f'(z)|}
+$$
+
+**Part M**
+
+If we take the charge at points to remain the same even after conformal transformations (think about stretching charged surfaces with the charges glued in place) we see that the scale factor found in (j) results in the scaling of the surface charge found in (l). Hence, given that functions behave nicely at boundaries, we can determine the surface charge of other surfaces simply by looking at the form of $f$ and its derivative.
+
+**Part N**
+
+The electrostatic system of interested is effectively two-dimensional. For simplicity, set $L = 1$ and $Q = +1$. We can recover the general answer with dimensional analysis later on.
+
+Consider a configuration in $z$-space in which the grounded conductor fills the area $\mathrm{Re}(z) < 0$ and a charge is placed at position $e^{+i\pi\alpha/\theta}$. This configuration can be mapped to our puzzle in $w$-space by the conformal transformation $w(z) = z^{\theta/\pi}$ as shown in the figure below.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.3%', '--fig-max': '450px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2023-theory-x/p2-sol-fig1.png" alt="Conformal map diagram. Left (z-space): a horizontal line with a vertical dotted line through the origin; a red charge Q = 1 at distance L = 1 from the origin at angle πα/θ above the horizontal, and a pale image charge −1 mirrored below. A curved arrow from z to the right labelled w(z) = z to the power θ/π. Right (w-space): a wedge with opening angle θ between a horizontal face and a slanted face; the charge lies at angle α from the horizontal face, with unit vectors r̂ and φ̂ drawn at the charge." width="1407" height="882" loading="lazy" decoding="async" />
+</figure>
+
+In $z$-space, the electric potential in open space is as if created by the original charge and the image charge $-1$ located at position $e^{-i\pi\alpha/\theta}$. Thus, the complex potential is given by:
+
+$$
+\phi(z) = \left[-2k\ln\left(z - e^{+i\pi\alpha/\theta}\right)\right] - \left[-2k\ln\left(z - e^{-i\pi\alpha/\theta}\right)\right] = 2k\ln\frac{z - e^{-i\pi\alpha/\theta}}{z - e^{+i\pi\alpha/\theta}}\ .
+$$
+
+After the transformation $z \to w(z)$, in $w$-space it becomes $\phi(z) \to \phi'(w)$:
+
+$$
+\phi'(w) = \phi(z)\Big|_{z\to w} = 2k\ln\frac{w - e^{-i\pi\alpha/\theta}}{w - e^{+i\pi\alpha/\theta}}\ .
+$$
+
+Choose a polar coordinate $w = (r, \varphi)$, then we can obtain the real potential as:
+
+$$
+\mathrm{Re}\left[\phi'(r, \varphi)\right] = k\ln\frac{1 + r^{2\pi/\theta} - 2r^{\pi/\theta}\cos\left[\frac{\pi}{\theta}(\varphi + \alpha)\right]}{1 + r^{2\pi/\theta} - 2r^{\pi/\theta}\cos\left[\frac{\pi}{\theta}(\varphi - \alpha)\right]}\ .
+$$
+
+Subtract this by the electric potential created by the original charge in the $w$-space, we have a regularized complex potential which is not singular at the location of that charge:
+
+$$
+\begin{aligned}\mathrm{Re}\left[\phi'_{\mathrm{reg}}(r, \varphi)\right] &= \mathrm{Re}\left\{\phi'(r, \varphi) - \left[-2k\ln\left(w - e^{i\alpha}\right)\right]\Big|_{w = re^{i\varphi}}\right\}\\ &= k\ln\frac{\left\{1 + r^{2\pi/\theta} - 2r^{\pi/\theta}\cos\left[\frac{\pi}{\theta}(\varphi + \alpha)\right]\right\}\left[1 + r^2 - 2r\cos(\varphi - \alpha)\right]}{1 + r^{2\pi/\theta} - 2r^{\pi/\theta}\cos\left[\frac{\pi}{\theta}(\varphi - \alpha)\right]}\ .\end{aligned}
+$$
+
+We can then calculate the electrical field created at the location of the original charge by the induced charge distributed on the conducting wedge:
+
+$$
+\vec E = -\left\{\partial_r\mathrm{Re}\left[\phi'_{\mathrm{reg}}(r, \varphi)\right]\hat r + \frac{1}{r}\partial_\varphi\mathrm{Re}\left[\phi'_{\mathrm{reg}}(r, \varphi)\right]\hat\varphi\right\}\Bigg|_{r=1, \varphi=\alpha} = -k\left[\hat r + \frac{\pi}{\theta}\cot\left(\frac{\pi}{\theta}\alpha\right)\hat\varphi\right]\ .
+$$
+
+The total electrostatic force acting on the original charge is therefore $\vec F = \vec E$, and after putting back $Q$ and $L$, we arrive at the expression:
+
+$$
+\vec F = -k\frac{Q^2}{L}\left[\hat r + \frac{\pi}{\theta}\cot\left(\frac{\pi}{\theta}\alpha\right)\hat\varphi\right]\ .
+$$
+
+For $\theta = 120^o$ and $\alpha = 30^o$, the magnitude of this force in the unit of $kQ^2/L$ is $\sqrt{13}/2 \approx 1.8028$.
+
+\* This part was created with helps from Quy C. Tran and Nam H. Nguyen.
+
+**Grading Scheme**
+
+(a) 1.5 pts
+
+(b) 1.5 pts
+
+(c) 5 pts
+
+(d) 1.5 pts
+
+(e) 1 pt
+
+(f) 1.5 pts
+
+(g) 7.5 pts
+
+(h) 7.5 pts
+
+(i) 1.5 pts
+
+(j) 7.5 pts
+
+(k) 5 pts
+
+(l) 5 pts
+
+(m) 1.5 pts
+
+(n) 15 pts
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2023/theory.pdf#page=5)
+· официални решения: [theory_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2023/theory_sol.pdf#page=3)

@@ -1,0 +1,151 @@
+---
+id: usapho-2020-x-p2
+source: 'USAPhO 2020, Полуфинал'
+title: 'Задача 2. Question A2. Swoosh!'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2020/usapho-2020-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T07:25:42.140Z'
+verifier: 'mechanical'
+---
+
+*USA Physics Olympiad Exam*
+
+<details>
+<summary>Information about USAPhO Test</summary>
+
+- This examination consists of two parts and six problems. Ordinarily, you will be given 90 minutes to complete Part A, take a 10-15 minute break, and return to complete Part B in 90 minutes.
+
+  You may choose to observe the above guideline if you’d like to practice for future USAPhO tests.
+
+- Ordinarily, you are allowed calculators, but they are not allowed to use symbolic math, programming, or graphical features of these calculators. Calculators must not be shared and their memory must be cleared of data and programs. Cell phones, smart watches, PDAs, or cameras cannot be used during the exam or while the exam papers are present. Students are not allowed to bring any tables, books, or collections of formulas.
+
+  You may choose to observe the above guideline if you’d like to practice for future USAPhO tests.
+
+Thank you for participating USAPhO this year under such extraordinary circumstances. We hope that you and your family stay safe, and that you continue to encourage more students like you to study physics and try out $F = ma$ test hosted by AAPT.
+
+We acknowledge the following people for their contributions to this year’s exam (in alphabetical order):
+
+*Ariel Amir, JiaJia Dong, Mark Eichenlaub, Abijith Krishnan, Kye W. Shi, and Mike Winer.*
+
+</details>
+
+## Условие
+
+In 1851, Léon Foucault built a pendulum 67 metres tall with a 28-kg weight. He connected it to the top of the Panthéon in Paris with a bearing that enabled it to freely change its plane of oscillation. Because of the Earth’s rotation, the plane of oscillation slowly moved over time: if we imagine a large horizontal clock under the pendulum, if initially the oscillations went from “12” to “6”, later on they would move to the “3-9” plane, for example, as shown in the figure below. Perhaps surprisingly, the time it took the oscillations to go back to their original plane is longer than 12 hours. In this problem we will investigate why this is the case, and what the shape the pendulum traces out.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '61.5%', '--fig-max': '394px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2020-x/p2-fig1.png" alt="Left: a pendulum hanging from a horizontal bar, its bob swinging above an elliptical shaded floor region. Right: a star-shaped rosette of straight line segments through a small central circle, with small arrows around it showing the direction of motion." width="1230" height="644" loading="lazy" decoding="async" />
+<figcaption>Figure 1: Left: A schematic of Foucault’s pendulum. Right: The pendulum motion projected on a horizontal plane in the *rotating* lab frame.</figcaption>
+</figure>
+
+First, consider the case of a Foucault pendulum installed precisely at *the North Pole*, with length $l$. We denote $\sqrt{g/l} = \omega$. The angular velocity of the Earth is $\Omega$.
+
+John is an observer looking at the pendulum from a *fixed point in space*. At $t = 0$, he sees the pendulum at position $(A, 0)$ and with velocity $(0, V)$ in the $x$-$y$ (horizontal) plane.
+
+**a.** For John, what are the approximate equations describing the motion of the pendulum in the $x$-$y$ plane? You may assume that the amplitude of the oscillations is small. We define the coordinates of the pendulum at rest as $(0, 0)$.
+
+**b.** What will the coordinates $x, y$ in Jonh’s frame be at a later time $t$?
+
+**c.** Ella, an observer resides at the North Pole, is also looking at the pendulum. What are the coordinates, $\tilde{x}(t)$ and $\tilde{y}(t)$, as observed by Ella? Assume that at time $t = 0$, the coordinate systems of John’s and Ella’s overlap.
+
+**d.** What is the speed of the pendulum bob observed by Ella at $t = 0$?
+
+**e.** Find the initial conditions for $A, V$, such that as *measured in Ella’s frame*:
+
+**i.** the pendulum passes precisely through its resting position.
+
+**ii.** it has a “spike” at the points of maximal amplitude (see figure below) instead of a “rounded” trajectory.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '73.3%', '--fig-max': '469px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2020-x/p2-fig2.png" alt="Two plots of trajectories on grey backgrounds. Left: straight crossing line segments meeting in sharp points at their ends (the “spike” case), x axis from -1 to 1, y axis from -2 to 2.5 (×10^-4). Right: narrow loops all passing through the origin with rounded ends, x axis from -0.4 to 0.4, y axis from -1.5 to 1.5 (×10^-4)." width="1467" height="631" loading="lazy" decoding="async" />
+<figcaption>Figure 2: Two possible trajectories with “spike”(left) and more “rounded” (right).</figcaption>
+</figure>
+
+In a rotating frame, a fictitious force known as the Coriolis force acts on the particles. For Foucault’s pendulum, the Coriolis force acts primarily in the horizontal plane, in a direction *perpendicular to the velocity of the mass in the Earth’s frame* with magnitude:
+
+$$
+F = 2m\Omega v \cdot \sin\theta, \qquad (A2-1)
+$$
+
+where $m$ and $v$ are the pendulum’s mass and its velocity, and $\theta$ the latitude ($90^{\circ}$ for the North Pole). *Note that when the velocity changes sign, so does the Coriolis force.*
+
+**f.** How long would it take for the plane of oscillation of Foucault’s pendulum to return to its initial value in Paris, which has a latitude of about $49^{\circ}$.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a.** $a_x + \omega^2 x = 0;\ a_y + \omega^2 y = 0$
+- **b.** $x(t) = A\cos(\omega t);\ y(t) = \frac{V}{\omega}\sin(\omega t)$
+- **c.** $\tilde{x} = A\cos(\omega t)\cos(\Omega t) + \frac{V}{\omega}\sin(\omega t)\sin(\Omega t),\quad \tilde{y} = -A\cos(\omega t)\sin(\Omega t) + \frac{V}{\omega}\sin(\omega t)\cos(\Omega t)$
+- **d.** $\tilde{v}_x = 0,\ \tilde{v}_y = V - \Omega A$
+- **i.** $V = 0$
+- **ii.** $V = \Omega A$
+- **f.** 16 h
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.** John’s reference frame is inertial and the point of attachment stationary, so this is a free-moving pendulum obeying simple harmonic motion in each axis:
+
+$$
+a_x + \omega^2 x = 0; a_y + \omega^2 y = 0, \qquad (A2-1)
+$$
+
+**b.** The solution to Eq.(A2-1) is the familiar simple harmonic motion. In general, if the displacement is $r = A\cos\omega t$, then the velocity is $v = -A\omega\sin\omega t$. Using the initial conditions provided, we have:
+
+$$
+x(t) = A\cos(\omega t); y(t) = \frac{V}{\omega}\sin(\omega t). \qquad (A2-2)
+$$
+
+Note that this corresponds to an ellipse.
+
+**c.** In the rotating frame, we have $\tilde{x} = x\cos(\Omega t) + y\sin(\Omega t)$, $\tilde{y} = -x\sin(\Omega t) + y\cos(\Omega t)$ (with $2\pi/\Omega = 24$ hrs). Plugging in the form of $x(t)$ and $y(t)$ we find:
+
+$$
+\tilde{x} = A\cos(\omega t)\cos(\Omega t) + \frac{V}{\omega}\sin(\omega t)\sin(\Omega t), \qquad (A2-3)
+$$
+
+and:
+
+$$
+\tilde{y} = -A\cos(\omega t)\sin(\Omega t) + \frac{V}{\omega}\sin(\omega t)\cos(\Omega t). \qquad (A2-4)
+$$
+
+**d.** In John’s frame, the velocity at this time is $(0, V)$. To get the velocity in Ella’s frame, we can either take the derivative of the result of part (c) directly, or transform the velocity obtained in John’s frame to Ella’s frame, not forgetting to add the term $-\Omega A$ to the initial velocity in the $y$ axis. This gives
+
+$$
+\tilde{v}_x \approx (V - \Omega A)\sin(\Omega t); \tilde{v}_y = (V - \Omega A)\cos(\Omega t). \qquad (A2-5)
+$$
+
+At $t = 0$, $\tilde{v}_x = 0$ and $\tilde{v}_y = V - \Omega A$.
+
+**e. i.** Considering the motion in John’s frame, clearly the pendulum will pass through the resting position if and only if $V = 0$.
+
+**e. ii.** To have a spike, we need the velocity to *vanish* at the extremal points in *Ella’s* frame. This gives the condition:
+
+$$
+V = \Omega A. \qquad (A2-6)
+$$
+
+Note that in Ella’s frame, this implies releasing the pendulum from rest at some amplitude.
+
+**f.** Since the expression for the Coriolis force only depends on the combination $\Omega\sin(\theta)$, and since the solution at the North Pole must be $\pi/\Omega = 12$hours, the time at a general latitude must be:
+
+$$
+T = \frac{\pi}{\Omega\sin(\theta)}. \qquad (A2-8)
+$$
+
+For Paris, the time is about 16 hours.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2020_USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2020/2020_USAPhO.pdf#page=3)
+· официални решения: [2020_USAPhO_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2020/2020_USAPhO_solutions.pdf#page=4)

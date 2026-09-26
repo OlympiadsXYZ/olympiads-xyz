@@ -1,0 +1,322 @@
+---
+id: usapho-2020-x-p4
+source: 'USAPhO 2020, Полуфинал'
+title: 'Задача 4. Question B1. String Cheese'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2020/usapho-2020-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T07:25:42.140Z'
+verifier: 'mechanical'
+---
+
+*USA Physics Olympiad Exam*
+
+<details>
+<summary>Information about USAPhO Test</summary>
+
+- This examination consists of two parts and six problems. Ordinarily, you will be given 90 minutes to complete Part A, take a 10-15 minute break, and return to complete Part B in 90 minutes.
+
+  You may choose to observe the above guideline if you’d like to practice for future USAPhO tests.
+
+- Ordinarily, you are allowed calculators, but they are not allowed to use symbolic math, programming, or graphical features of these calculators. Calculators must not be shared and their memory must be cleared of data and programs. Cell phones, smart watches, PDAs, or cameras cannot be used during the exam or while the exam papers are present. Students are not allowed to bring any tables, books, or collections of formulas.
+
+  You may choose to observe the above guideline if you’d like to practice for future USAPhO tests.
+
+Thank you for participating USAPhO this year under such extraordinary circumstances. We hope that you and your family stay safe, and that you continue to encourage more students like you to study physics and try out $F = ma$ test hosted by AAPT.
+
+We acknowledge the following people for their contributions to this year’s exam (in alphabetical order):
+
+*Ariel Amir, JiaJia Dong, Mark Eichenlaub, Abijith Krishnan, Kye W. Shi, and Mike Winer.*
+
+</details>
+
+## Условие
+
+
+
+**a.** When a faucet is turned on, a stream of water flows down with initial speed $v_0$ at the spout. For this problem, we define $y$ to be the vertical coordinate with its positive direction pointing up.
+
+Assuming the water speed is only affected by gravity as the water falls, find the speed of water $v(y)$ at height $y$. Define the zero of $y$ such that the equation for $v^2$ has only one term and find $y_0$, the height of the spout.
+
+**b.** Assume that the stream of water falling from the faucet is cylindrically symmetric about a vertical axis through the center of the stream. Also assume that the volume of water per unit time exiting the spout is constant, and that the shape of the stream of water is constant over time.
+
+In this case, the radius $r$ of the stream of water is a function of vertical position $y$. Let the radius at the faucet be $r_0$. Using your result from part (a), find $r(y)$.
+
+If $r(y)$ is not constant, it implies that the water has some radial velocity during its fall, in contradiction to our assumptions in part (a) that the motion is purely vertical. You may assume throughout the problem that any such radial velocity is negligibly small.
+
+**c.** The water-air interface has some surface tension, $\sigma$. The effect of surface tension is to change the pressure in the stream according to the *Young-Laplace equation*,
+
+$$
+\Delta P = \sigma\left(\frac{1}{r} + \frac{1}{R}\right),
+$$
+
+where $\Delta P$ is the difference in pressure between the stream and the atmosphere and $R$ is the radius of curvature of the vertical profile of the stream, visualized below. ($R < 0$ for the stream of water; the radius of curvature would be positive only if the stream profile curved inwards.)
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '18.4%', '--fig-max': '118px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2020-x/p4-fig1.png" alt="A grey vertical stream of water narrowing downwards, with three downward arrows inside; at the upper right edge a dotted circle touches the curved profile and an arrow inside it is labelled |R|." width="368" height="420" loading="lazy" decoding="async" />
+</figure>
+
+For this part of the problem, we assume that $|R| \gg |r|$, so that the curvature of the vertical profile of the stream can be ignored. Also assume that water is incompressible.
+
+Accounting for the pressure in the stream, find a new equation relating for $r(y)$ in terms of $\sigma, r_0, v_0$, and $\rho$, the density of water. You do not need to solve the equation for $r$.
+
+**d.** After falling for some distance, the water stream usually breaks into smaller droplets. This occurs because small random perturbations to the shape of the stream grow over time, eventually breaking the stream into apart.
+
+For the rest of this problem we ignore the change in the radius of the stream due to changing speed of the water, as considered earlier. Instead, we examine small random variations in the radius of the stream.
+
+Random variations can be broken down into a sum of sinusoidal variations in stream radius, each with a different wavenumber $k$. We can analyze these different sinusoidal variations independently.
+
+Consider a stream of water whose radius obeys
+
+$$
+r(y) = r_0 + A\cos(ky),
+$$
+
+where $A \ll r_0$ is the perturbation amplitude. To analyze such a stream, it is sufficient to consider only the thickest and thinnest parts of the stream.
+
+Accounting for both sources of curvature, find a condition on $r_0$ and $k$ such that the size of perturbations increases with time.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '22.6%', '--fig-max': '145px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2020-x/p4-fig2.png" alt="A grey vertical stream with wavy (sinusoidally varying) edges and three downward arrows inside; at the top the radius is marked with a double arrow labelled r(y), and a dotted circle touching the edge has a radius arrow labelled |R(y)|." width="452" height="611" loading="lazy" decoding="async" />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a.** $v = \sqrt{-2gy},\quad y_0 = \frac{-v_0^2}{2g}$
+- **b.** $r = r_0\sqrt[4]{\frac{v_0^2}{-2gy}}$
+- **c.** $\frac{1}{2}\rho v_0^2\frac{r_0^4}{r^4} + \rho g y = \sigma\left(\frac{1}{r_0} - \frac{1}{r}\right)$
+- **d.** $k < \frac{1}{r_0}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.** We can use energy conservation to answer this question. For a bit of water with mass $m$, the total energy $E$ is the sum of the kinetic and gravitational potential energies,
+
+$$
+E = \frac{1}{2}mv^2 + mgy. \qquad (B1-1)
+$$
+
+(With this sign convention, $g \approx 10\ \mathrm{m/s^2}$ is positive. As $y$ decreases, so does the potential energy.)
+
+As the bit of water falls, its energy remains constant, and is equal to the initial value of
+
+$$
+E = \frac{1}{2}mv_0^2 + mgy_0. \qquad (B1-2)
+$$
+
+Equating eliminating $E$ from equations B1-1 and B1-2, we have
+
+$$
+\frac{1}{2}mv^2 + mgy = \frac{1}{2}mv_0^2 + mgy_0,
+$$
+
+and solving for $v$, we get
+
+$$
+v = \sqrt{v_0^2 + 2g(y_0 - y)}
+$$
+
+The equation for $v^2$ has three terms, but we were asked to choose the zero of $y$ such that there is only one. Evidently, two of the terms must cancel, and these must be the two constant terms, since the final term varies with $y$.
+
+That means we need
+
+$$
+v_0^2 + 2gy_0 = 0.
+$$
+
+Solving for $y_0$, the vertical position of the spout is
+
+$$
+\boxed{y_0 = \frac{-v_0^2}{2g}}.
+$$
+
+With this choice of the zero of $y$, the equation for $v$ simplifies to
+
+$$
+\boxed{v = \sqrt{-2gy}}. \qquad (B1-3)
+$$
+
+We note that the result of this equation is real because $y < 0$ at the spout, and decreases as the water falls, so this equation shows that $v$ is real and increases as the water falls.
+
+**b.** The same volume of water must fall through any horizontal cross-section of the stream each second because water doesn’t disappear during its fall, and its density if constant. That volume per unit time $Q$ is the cross-sectional area of the stream multiplied by the speed of the water in the vertical direction. As an equation,
+
+$$
+Q = v\pi r^2. \qquad (B1-4)
+$$
+
+$Q$ is the same at all $y$, and is equal to its initial value of
+
+$$
+Q = v_0\pi r_0^2. \qquad (B1-5)
+$$
+
+Eliminating $Q$ from B1-4 and B1-5 and solving for $r$ gives
+
+$$
+r = r_0\sqrt{\frac{v_0}{v}}.
+$$
+
+Plugging in our equation B1-3 for $v$,
+
+$$
+\boxed{r = r_0\sqrt[4]{\frac{v_0^2}{-2gy}}}.
+$$
+
+**c.** Our conservation of energy approach from part (b) needs to be modified to account for the work done against pressure. As we look further down in the stream, the radius is smaller. This means the pressure is higher there, and the water is slowed compared to when we assumed only gravity acted on the water.
+
+The result of accounting for changes in pressure in a flow where no energy is dissipated is the *Bernoulli equation*,
+
+$$
+\frac{1}{2}\rho v^2 + \rho gy + P = \frac{1}{2}\rho v_0^2 + \rho gy_0 + P_0
+$$
+
+where $P_0$ is the pressure in the stream at the spout.
+
+Using the Young-Laplace equation to replace $P$ and $P_0$, we have
+
+$$
+\frac{1}{2}\rho v^2 + \rho gy + \frac{\sigma}{r} = \frac{1}{2}\rho v_0^2 + \rho gy_0 + \frac{\sigma}{r_0}.
+$$
+
+If we substitute in $y_0 = -\dfrac{v_0^2}{2g}$ and $v = v_0\dfrac{r_0^2}{r^2}$, this becomes
+
+$$
+\frac{1}{2}\rho v_0^2\frac{r_0^4}{r^4} + \rho gy + \frac{\sigma}{r} = \frac{1}{2}\rho v_0^2 - \rho g\frac{v_0^2}{2g} + \frac{\sigma}{r_0}.
+$$
+
+This may be simplified to
+
+$$
+\boxed{\frac{1}{2}\rho v_0^2\frac{r_0^4}{r^4} + \rho gy = \sigma\left(\frac{1}{r_0} - \frac{1}{r}\right)}.
+$$
+
+**d.** If the size of the perturbation increases with time, water must be flowing from the thin parts of the stream to the thick parts. For that to happen, the pressure needs to be higher in the thin parts of the stream than in the thick parts of the stream so that the pressure gradient will force water towards the thick parts, eventually breaking the stream into droplets.
+
+We consider a small patch with side lengths $h$ on the surface of the stream at the thinnest part of the stream. The pressure is
+
+$$
+\Delta P_{\mathrm{thin}} = \sigma\left(\frac{1}{r_{\mathrm{thin}}} + \frac{1}{R_{\mathrm{thin}}}\right).
+$$
+
+And at the thickest part of the stream,
+
+$$
+\Delta P_{\mathrm{thick}} = \sigma\left(\frac{1}{r_{\mathrm{thick}}} + \frac{1}{R_{\mathrm{thick}}}\right).
+$$
+
+We are looking for the wavenumbers such that
+
+$$
+\Delta P_{\mathrm{thin}} > \Delta P_{\mathrm{thick}}.
+$$
+
+Using the Young-Laplace equation, this becomes
+
+$$
+\sigma\left(\frac{1}{r_{\mathrm{thin}}} + \frac{1}{R_{\mathrm{thin}}}\right) > \sigma\left(\frac{1}{r_{\mathrm{thick}}} + \frac{1}{R_{\mathrm{thick}}}\right).
+$$
+
+Dropping the common factor $\sigma$,
+
+$$
+\left(\frac{1}{r_{\mathrm{thin}}} + \frac{1}{R_{\mathrm{thin}}}\right) > \left(\frac{1}{r_{\mathrm{thick}}} + \frac{1}{R_{\mathrm{thick}}}\right).
+$$
+
+To simplify this further, we will need to find $r$ and $R$ in terms of $A$ and $k$, the variables given in the problem statement.
+
+$r$ is the thickness of the stream, which from the equation given, varies sinusoidally. So
+
+$$
+r_{\mathrm{thin}} = r_0 - A.
+$$
+
+$$
+r_{\mathrm{thick}} = r_0 + A.
+$$
+
+We are going to need $\dfrac{1}{r}$ to use in the Young Laplace equation, so we make the approximations
+
+$$
+\frac{1}{r_{\mathrm{thin}}} \approx \frac{1}{r_0} + \frac{A}{r_0^2}.
+$$
+
+$$
+\frac{1}{r_{\mathrm{thick}}} \approx \frac{1}{r_0} - \frac{A}{r_0^2}.
+$$
+
+(To find these, recall $\dfrac{1}{1 - \epsilon} \approx 1 + \epsilon$ for small $\epsilon$.)
+
+The inequality now becomes
+
+$$
+\frac{1}{r_0} + \frac{A}{r_0^2} + \frac{1}{R_{\mathrm{thin}}} > \frac{1}{r_0} - \frac{A}{r_0^2} + \frac{1}{R_{\mathrm{thick}}}.
+$$
+
+This simplifies to
+
+$$
+\frac{2A}{r_0^2} > \frac{1}{R_{\mathrm{thick}}} - \frac{1}{R_{\mathrm{thin}}}.
+$$
+
+Next we need to determine the radius of curvature $R$ of the sinusoidal as a function of $k$ and $A$.
+
+To do this, we compare the sinusoidal function and a circle at small deviations from the thickest part of the stream.
+
+Recall that, for small $\theta$,
+
+$$
+\cos\theta \approx 1 - \frac{1}{2}\theta^2,
+$$
+
+which means that for small $x$,
+
+$$
+y_{\mathrm{sinusoidal}} = A\cos(kx) \approx A\left(1 - \frac{1}{2}k^2x^2\right).
+$$
+
+Next we consider a circle of radius $R$. If a particle moves along such a circle at speed $v$, its acceleration is $v^2/R$. This means that if the particle moves forward for a short time $t$, it moves forward a distance $vt$ and falls a distance $\dfrac{1}{2}\dfrac{v^2}{R}t^2$. If we set $vt = x$, then the $y$ position of the particle is given by
+
+$$
+y_{\mathrm{circle}} \approx y_0 - \frac{1}{2}\frac{x^2}{R}.
+$$
+
+Comparing $y_{\mathrm{circle}}$ and $y_{\mathrm{sinusoidal}}$, they give the same motion if $Ak^2 = \dfrac{1}{R}$.
+
+Then
+
+$$
+\frac{1}{R_{\mathrm{thin}}} = -Ak^2.
+$$
+
+$$
+\frac{1}{R_{\mathrm{thick}}} = Ak^2.
+$$
+
+Putting these into the inequality,
+
+$$
+\frac{2A}{r_0^2} > 2Ak^2.
+$$
+
+This simplifies to
+
+$$
+k < \frac{1}{r_0}.
+$$
+
+So the perturbations will grow as long as they have a wavenumber greater than one over the radius, or equivalently when the wavelength of the perturbation is longer than the circumference of the stream.
+
+This result was discovered experimentally by Plateau and derived theoretically by Rayleigh. The breaking up of a stream into droplets is called the *Plateau-Rayleigh instability.*
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2020_USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2020/2020_USAPhO.pdf#page=6)
+· официални решения: [2020_USAPhO_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2020/2020_USAPhO_solutions.pdf#page=9)
