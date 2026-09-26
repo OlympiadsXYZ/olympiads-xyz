@@ -54,6 +54,40 @@
       "source": "/beyond/:path*",
       "destination": "/mechanics",
       "permanent": true
+    },
+    {
+      "source": "/problems/:id([^/.]+){/}?",
+      "destination": "/problems/:id/solution/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/:file([^/]+[-.][0-9a-f]{20}\\.(?:js|css))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/static/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ],
   "rewrites": [
