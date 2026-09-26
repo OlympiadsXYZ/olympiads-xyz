@@ -22,12 +22,18 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
 jest.mock('../i18n', () => ({}));
-jest.mock('../components/layout', () => ({ children }) => <>{children}</>);
+jest.mock('../components/layout', () =>
+  function Layout({ children }) {
+    return <>{children}</>;
+  }
+);
 jest.mock('../components/seo', () => () => null);
 jest.mock('../components/TopNavigationBar/TopNavigationBar', () => () => null);
-jest.mock('../components/Dashboard/ModuleLink', () => ({ link }) => (
-  <div data-testid="module-link">{link.title}</div>
-));
+jest.mock('../components/Dashboard/ModuleLink', () =>
+  function ModuleLink({ link }) {
+    return <div data-testid="module-link">{link.title}</div>;
+  }
+);
 jest.mock('../components/Dashboard/DashboardProgress', () => ({
   __esModule: true,
   default: ({ total }) => <div data-testid="progress">{total} общо</div>,
