@@ -335,10 +335,36 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       loadCatalog,
       groupCatalog,
       competitionSummaries,
+      sortSciences,
+      scienceCard,
+      archiveProblemLinks,
+      attachProblemLinks,
     } = require('./src/archive/catalog-node');
     const { competitionSlug } = require('./src/archive/labels');
     const grouped = groupCatalog(loadCatalog(__dirname));
-    const sciences = Object.keys(grouped).sort();
+    const sciences = sortSciences(Object.keys(grouped));
+
+    // Year and competition pages link each document to its transcribed
+    // problems: the paper files name their source (and solution) archive key.
+    {
+      const { readPaperFiles } = require('./src/problems/index-node');
+      const urlById = new Map();
+      result.data.problems.edges.forEach(({ node }) => {
+        if (node.uniqueId && !urlById.has(node.uniqueId)) {
+          urlById.set(node.uniqueId, `${getProblemURL(node)}/solution/`);
+        }
+      });
+      const links = archiveProblemLinks(readPaperFiles(__dirname), urlById);
+      let linked = 0;
+      sciences.forEach(science => {
+        Object.values(grouped[science].competitions).forEach(entries => {
+          linked += attachProblemLinks(entries, links);
+        });
+      });
+      console.info(
+        `[archive] ${linked} archive files link to their problems on the site`
+      );
+    }
 
     createPage({
       path: `/archive/`,
@@ -346,19 +372,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         `./src/templates/archive/archiveIndexTemplate.tsx`
       ),
       context: {
-        sciences: sciences.map(science => {
-          const s = grouped[science];
-          const all = [
-            ...Object.values(s.competitions).flat(),
-            ...s.library,
-            ...s.uncategorized,
-          ];
-          return {
-            science,
-            count: all.length,
-            bytes: all.reduce((a, b) => a + b.size, 0),
-          };
-        }),
+        sciences: sciences.map(science => scienceCard(grouped[science])),
       },
     });
 
@@ -760,6 +774,8 @@ exports.onCreatePage = ({ page, actions }) => {
       const {
         loadCatalog,
         groupCatalog,
+        sortSciences,
+        scienceCard,
       } = require('./src/archive/catalog-node');
       const grouped = groupCatalog(loadCatalog(__dirname));
       actions.createPage({
@@ -768,21 +784,9 @@ exports.onCreatePage = ({ page, actions }) => {
           `./src/templates/archive/archiveIndexTemplate.tsx`
         ),
         context: {
-          sciences: Object.keys(grouped)
-            .sort()
-            .map(science => {
-              const s = grouped[science];
-              const all = [
-                ...Object.values(s.competitions).flat(),
-                ...s.library,
-                ...s.uncategorized,
-              ];
-              return {
-                science,
-                count: all.length,
-                bytes: all.reduce((a, b) => a + b.size, 0),
-              };
-            }),
+          sciences: sortSciences(Object.keys(grouped)).map(science =>
+            scienceCard(grouped[science])
+          ),
         },
       });
     }
