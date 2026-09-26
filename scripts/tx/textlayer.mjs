@@ -197,9 +197,15 @@ function candidateFields(c, hasSolutions) {
     const noImages = s.replace(/(?:!\[[^\]\n]*\]\([^)\n]*[/:][^)\n]*\)[ \t|]*)+\n+[ \t]*(\*{1,2}|_{1,2})[^\n*_]{1,200}\1[ \t]*(?=\n|$)/g, ' ').replace(/!\[[^\]\n]*\]\([^)\n]*\)/g, ' ');
     // an environment name is markup, never a printed word (\begin{cases}, \begin{aligned}, \begin{array}{cc}: agents
     // rewrote correct LaTeX to get past „cases“/„aligned“ flagged as unprinted, idpho-2020-theory-ipho-q2, ipho-2015-theory-1)
-    const prose = splitMath(noImages).map(seg => seg.math ? seg.text.replace(/\\(?:begin|end)\{[a-zA-Z*]+\}(?:\{[^}]*\})?/g, ' ').replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
+    const segments = splitMath(noImages);
+    const prose = segments.map(seg => seg.math ? seg.text.replace(/\\(?:begin|end)\{[a-zA-Z*]+\}(?:\{[^}]*\})?/g, ' ').replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
     const tokens = tokenise(prose);
-    fields.push({ path: p, doc, text: s, tokens, set: new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])])), altText: ALT_PATH.test(p) });
+    // a subscripted symbol is also present in the glued form the layer prints ($C_{cd}$ „Ccd“, $\Delta v_{tot}$ „vtot“):
+    // only as a word the field holds, never as a word it must find printed (usapho-2007-ii, baao-2024-ii-r2 were
+    // parked on „Ccd = Cbf = Ceg“ / „∆vtot“ reported as omitted)
+    const glued = segments.filter(seg => seg.math).flatMap(seg => [...seg.text.matchAll(/(?<![A-Za-z\\])([A-Za-z])_(?:\{([A-Za-z]{1,6})[,}]|([A-Za-z]))/g)].map(m => `${m[1]}${m[2] || m[3]}`));
+    const set = new Set([...tokens.flatMap(t => [t.w, ...(t.alt || [])]), ...tokenise(glued.join(' ')).map(t => t.w)]);
+    fields.push({ path: p, doc, text: s, tokens, set, altText: ALT_PATH.test(p) });
   });
   return fields;
 }
