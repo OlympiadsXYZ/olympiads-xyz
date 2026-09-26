@@ -203,7 +203,8 @@ function candidateFields(c, hasSolutions) {
     // a subscripted symbol is also present in the glued form the layer prints ($C_{cd}$ „Ccd“, $\Delta v_{tot}$ „vtot“):
     // only as a word the field holds, never as a word it must find printed (usapho-2007-ii, baao-2024-ii-r2 were
     // parked on „Ccd = Cbf = Ceg“ / „∆vtot“ reported as omitted)
-    const glued = segments.filter(seg => seg.math).flatMap(seg => [...seg.text.matchAll(/(?<![A-Za-z\\])([A-Za-z])_(?:\{([A-Za-z]{1,6})[,}]|([A-Za-z]))/g)].map(m => `${m[1]}${m[2] || m[3]}`));
+    // also through a font command: $A_{\mathrm{cs}}$ „Acs“, $\mathbf{v}_{\mathrm{rel}}$ „vrel“ (usapho-2021-plus)
+    const glued = segments.filter(seg => seg.math).flatMap(seg => [...seg.text.matchAll(/(?<![A-Za-z\\])([A-Za-z])\}?_(?:\{(?:\\(?:mathrm|text|rm|mathit)\{)?([A-Za-z]{1,6})[,}]|([A-Za-z]))/g)].map(m => `${m[1]}${m[2] || m[3]}`));
     const set = new Set([...tokens.flatMap(t => [t.w, ...(t.alt || [])]), ...tokenise(glued.join(' ')).map(t => t.w)]);
     fields.push({ path: p, doc, text: s, tokens, set, altText: ALT_PATH.test(p) });
   });
