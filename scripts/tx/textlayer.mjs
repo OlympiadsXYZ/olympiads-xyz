@@ -50,7 +50,7 @@ const NO_EXTRAS = /\/answer(\/|$)|^\/paper\//; // answers are summarised by the 
 // The paper's language decides which script carries the prose (the other script is formulas and
 // units), which structural words the transcription encodes as fields, and how a problem heading reads.
 const PROFILES = {
-  cyr: { content: /^[а-яѝё]+$/u, stop: /^(задач|решени|отговор|критери|фиг|рис|точк|балл|общо|подусловие|бележк|забележк|примечани|указани)/u,
+  cyr: { content: /^[а-яѝёѐ]+$/u, stop: /^(задач|решени|отговор|критери|фиг|рис|точк|балл|общо|подусловие|бележк|забележк|примечани|указани)/u,
     // "Задача 2.", "ЗАДАЧА 1. – 10 точки", "Задача II.", "Задача №3", "1 задача.", "2-ра задача"
     heading: /^\s*(?:(?:задача|з\s*а\s*д\s*а\s*ч\s*а)\s*(?:№\s*)?(\d+|[ivx]+)\b|(\d+)\s*(?:-?\s*(?:ва|ра|та|а|и|я))?\s+задача\b)/iu },
   // function names printed inside formulas (cos, min, ln) are Latin words to the content rule but never prose
@@ -65,7 +65,8 @@ const headingNumber = line => { const h = P.heading.exec(line); if (!h) return n
 const problemKey = n => { const s = String(n ?? '').trim().toLowerCase(); return String(ROMAN[s] || Number(s) || s); };
 
 // NFKC folds Word's math-italic glyphs (𝑐𝑜𝑛𝑠𝑡 → const) and ligature glyphs (ﬁ → fi) into plain letters before comparing
-const norm = w => fixHomoglyphs(w.normalize('NFKC')).toLowerCase().replace(/ё/g, 'е').replace(/ѝ/g, 'и');
+// some Russian PDFs encode ё as ѐ (U+0450) in their text layer: «расчѐте» for the printed «расчёте» (belpho-2024-iii)
+const norm = w => fixHomoglyphs(w.normalize('NFKC')).toLowerCase().replace(/[ёѐ]/g, 'е').replace(/ѝ/g, 'и');
 // a word runs through combining marks: a decomposed й (и + U+0306) or ѝ (и + U+0300) is one letter, not a word break
 // (nao-2008-iv-st: „отчитайте“ came out as „отчитаи“ + „те“ and a repair wrote the fragment into the paper)
 const WORD = /\p{L}[\p{L}\p{M}]*/gu;

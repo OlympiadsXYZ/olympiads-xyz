@@ -16,7 +16,7 @@ const R = {
   },
   required: ['paperId', 'chunk', 'done', 'status'],
 };
-const COMMON = p => `You are transcribing part of one long competition paper for Olympiads XYZ (an olympiad-prep site that publishes every problem of an archive verbatim, with figures and official solutions). Repository: ${REPO}. Paper: ${p.id}. It is over the 30-page cap for one agent, so it is read in chunks of at most 24 page images by a chain of agents (D-P30); you are one link of that chain.
+const COMMON = p => `${args.authorization ? `AUTHORIZATION: ${args.authorization}\n\n` : ''}You are transcribing part of one long competition paper for Olympiads XYZ (an olympiad-prep site that publishes every problem of an archive verbatim, with figures and official solutions). Repository: ${REPO}. Paper: ${p.id}. It is over the 30-page cap for one agent, so it is read in chunks of at most 24 page images by a chain of agents (D-P30); you are one link of that chain.
 
 On Windows, run commands with the Bash tool (Git Bash) and write every JSON file with the Write tool, never with a shell heredoc, echo or node -e string (Git Bash mangles backslashes, which corrupts LaTeX).
 
@@ -48,7 +48,7 @@ YOU ARE CHUNK ${k}. The plan is ${REPO}/tmp/tx/${p.id}/work/chunk-plan.json; do 
 5. If yours was the last chunk of the plan: make sure no incomplete mark of the "предстои" kind and no split caveat is left, then node scripts/tx/prepare.mjs ${p.id} --gc .`;
 const res = await pipeline(args.papers, async p => {
   const chunks = [];
-  for (let k = 1; k <= (args.maxChunks || 8); k++) {
+  for (let k = p.startChunk || 1; k <= (args.maxChunks || 8); k++) {
     const r = await agent(k === 1 ? FIRST(p) : NEXT(p, k), { label: `split:${p.id}#${k}`, phase: 'Papers', schema: R, effort: 'medium' });
     if (!r) break;
     chunks.push(r);

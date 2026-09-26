@@ -74,7 +74,12 @@ function unplacedGraphics(candidate, manifest, paperId) {
     let lastHeading = null; // carried across pages of the document
     // page furniture: a region printed at the same place on three or more pages (a logo, a header box)
     const furniture = g => regs.pages.filter(p => (p.regions || []).some(h => iou(h.bbox, g.bbox) >= 0.9)).length >= 3 && regs.pages.length >= 3;
+    // a split read (D-P30, tx.splitRead) owes only the figures of the pages it has read so far, as textlayer.mjs owes
+    // only their text (vserusiyska-2024-iv-ru24t chunk 1 was parked on 40 figures of the 60 pages not read yet)
+    const declared = doc === 'solutions' ? candidate.paper?.solutionSource?.pages : doc === 'problems' ? candidate.paper?.source?.pages : null;
+    const readPages = candidate.tx?.splitRead === true && Array.isArray(declared) && declared.every(Number.isInteger) ? new Set(declared) : null;
     for (const pg of regs.pages) {
+      if (readPages && !readPages.has(pg.page)) continue;
       const heads = (pg.headings || []).slice().sort((a, b) => a.y - b.y);
       for (const g of pg.regions || []) {
         const above = heads.filter(h => h.y <= g.bbox[1]).at(-1) || null;
