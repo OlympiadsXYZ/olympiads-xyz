@@ -224,7 +224,28 @@ exports.onCreateNode = async api => {
   }
 };
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
+// Counts the home page, the announcement bar and the 404 page show ("над 9000
+// задачи"), from the published problems and the archive catalog; read with
+// src/hooks/useSiteStats.ts. See src/gatsby/site-stats.ts.
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+  const { computeSiteStats } = require('./src/gatsby/site-stats');
+  const stats = computeSiteStats(__dirname);
+  console.info(
+    `[site-stats] ${stats.problems} problems (${stats.problemsWithSolution} with an official solution) in ${stats.papers} papers; archive ${stats.archiveFiles} files`
+  );
+  actions.createNode({
+    ...stats,
+    id: createNodeId('site-stats'),
+    parent: null,
+    children: [],
+    internal: {
+      type: 'SiteStats',
+      contentDigest: createContentDigest(stats),
+    },
+  });
+};
+
+exports.createPages =async ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions;
   const aliasFile = './content/problem-aliases.json';
   if (fs.existsSync(aliasFile)) {
@@ -335,10 +356,36 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       loadCatalog,
       groupCatalog,
       competitionSummaries,
+      sortSciences,
+      scienceCard,
+      archiveProblemLinks,
+      attachProblemLinks,
     } = require('./src/archive/catalog-node');
     const { competitionSlug } = require('./src/archive/labels');
     const grouped = groupCatalog(loadCatalog(__dirname));
-    const sciences = Object.keys(grouped).sort();
+    const sciences = sortSciences(Object.keys(grouped));
+
+    // Year and competition pages link each document to its transcribed
+    // problems: the paper files name their source (and solution) archive key.
+    {
+      const { readPaperFiles } = require('./src/problems/index-node');
+      const urlById = new Map();
+      result.data.problems.edges.forEach(({ node }) => {
+        if (node.uniqueId && !urlById.has(node.uniqueId)) {
+          urlById.set(node.uniqueId, `${getProblemURL(node)}/solution/`);
+        }
+      });
+      const links = archiveProblemLinks(readPaperFiles(__dirname), urlById);
+      let linked = 0;
+      sciences.forEach(science => {
+        Object.values(grouped[science].competitions).forEach(entries => {
+          linked += attachProblemLinks(entries, links);
+        });
+      });
+      console.info(
+        `[archive] ${linked} archive files link to their problems on the site`
+      );
+    }
 
     createPage({
       path: `/archive/`,
@@ -346,19 +393,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         `./src/templates/archive/archiveIndexTemplate.tsx`
       ),
       context: {
-        sciences: sciences.map(science => {
-          const s = grouped[science];
-          const all = [
-            ...Object.values(s.competitions).flat(),
-            ...s.library,
-            ...s.uncategorized,
-          ];
-          return {
-            science,
-            count: all.length,
-            bytes: all.reduce((a, b) => a + b.size, 0),
-          };
-        }),
+        sciences: sciences.map(science => scienceCard(grouped[science])),
       },
     });
 
@@ -429,11 +464,29 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // ProblemInfo nodes, which only exist once sourcing is done. static/ is
   // copied into public/ after bootstrap, so this lands at
   // /problems-data/index.json. See src/problems/index-node.ts.
-  {
+  // Problems per subject ({ physics: 3402, … }), for the "Задачи по …" link
+  // on section pages that have no modules yet.
+  const problemCountBySubject: { [subject: string]: number } = {};
+  // The problem pages get their previous/next problem (in the tree's order),
+  // their paper's language and its archive year page in the page context
+  // (src/problems/page-links.ts).
+  const problemPageLinks: (id: string) => {
+    prev: unknown;
+    next: unknown;
+    lang: string | null;
+    archiveYear: unknown;
+  } = (() => {
     const {
       writeProblemsIndex,
       writeProblemsTree,
+      readProblemPapers,
     } = require('./src/problems/index-node');
+    const {
+      problemNeighbours,
+      archiveYearPages,
+      archiveYearLink,
+      foreignLang,
+    } = require('./src/problems/page-links');
     const problemNodes = problems.map(({ node }) => node);
     const count = writeProblemsIndex(__dirname, problemNodes);
     console.info(
@@ -445,7 +498,29 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     console.info(
       `[problems] wrote static/problems-data/tree.json (${tree.count} problems)`
     );
-  }
+    (tree.subjects ?? []).forEach(subject => {
+      problemCountBySubject[subject.id] = subject.count;
+    });
+    const neighbours = problemNeighbours(tree);
+    const papers = readProblemPapers(__dirname);
+    const yearPages = ARCHIVE_ENABLED
+      ? archiveYearPages(
+          require('./src/archive/catalog-node').loadCatalog(__dirname)
+        )
+      : null;
+    return (id: string) => {
+      const paper = papers.get(id);
+      return {
+        prev: neighbours.get(id)?.prev ?? null,
+        next: neighbours.get(id)?.next ?? null,
+        lang: foreignLang(paper?.lang),
+        archiveYear:
+          paper && yearPages && typeof paper.year === 'number'
+            ? archiveYearLink(paper, yearPages)
+            : null,
+      };
+    };
+  })();
 
   let problemSlugs = {}; // maps slug to problem unique ID
   let problemInfo = {}; // maps unique problem ID to problem info
@@ -605,6 +680,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         component: solutionTemplate,
         context: {
           id: node.frontmatter.id,
+          ...problemPageLinks(node.frontmatter.id),
         },
       });
     } catch (e) {
@@ -683,6 +759,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: syllabusTemplate,
       context: {
         division: division,
+        problemCountBySubject,
       },
     });
   });
@@ -760,6 +837,8 @@ exports.onCreatePage = ({ page, actions }) => {
       const {
         loadCatalog,
         groupCatalog,
+        sortSciences,
+        scienceCard,
       } = require('./src/archive/catalog-node');
       const grouped = groupCatalog(loadCatalog(__dirname));
       actions.createPage({
@@ -768,21 +847,9 @@ exports.onCreatePage = ({ page, actions }) => {
           `./src/templates/archive/archiveIndexTemplate.tsx`
         ),
         context: {
-          sciences: Object.keys(grouped)
-            .sort()
-            .map(science => {
-              const s = grouped[science];
-              const all = [
-                ...Object.values(s.competitions).flat(),
-                ...s.library,
-                ...s.uncategorized,
-              ];
-              return {
-                science,
-                count: all.length,
-                bytes: all.reduce((a, b) => a + b.size, 0),
-              };
-            }),
+          sciences: sortSciences(Object.keys(grouped)).map(science =>
+            scienceCard(grouped[science])
+          ),
         },
       });
     }

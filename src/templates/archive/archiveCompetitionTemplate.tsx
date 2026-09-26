@@ -3,6 +3,8 @@ import * as React from 'react';
 import type { ClientEntry } from '../../archive/catalog-node';
 import {
   competitionName,
+  competitionShort,
+  filesCount,
   SCIENCE_COLORS,
   SCIENCE_LABELS,
 } from '../../archive/labels';
@@ -13,6 +15,7 @@ import {
   EntryList,
   FilterBar,
   Filters,
+  NoResults,
 } from '../../components/Archive/ArchiveUI';
 import TopNavigationBar from '../../components/TopNavigationBar/TopNavigationBar';
 import Layout from '../../components/layout';
@@ -41,14 +44,22 @@ export default function ArchiveCompetitionTemplate({ pageContext }: Props): JSX.
     filters.group.length ||
     filters.type.length ||
     filters.lang.length;
-  const filtered = active ? applyFilters(entries, filters) : null;
+  const filtered = active ? applyFilters(entries, filters, competition) : null;
   // Сборници, бележки, регламенти и протоколи без година нямат своя
   // годишна страница — показват се под годините.
   const undated = entries.filter(e => e.year == null);
 
   return (
     <Layout>
-      <SEO title={`Архив · ${scienceName} · ${name}`} pathname={`/archive/${science}/${slug}/`} />
+      <SEO
+        title={`Архив · ${scienceName} · ${name}`}
+        description={`${name} (${competitionShort(competition)}): оригиналните условия, решения и протоколи${
+          years.length
+            ? ` от ${years.length === 1 ? years[0] : `${years.length} години (${years[years.length - 1]}–${years[0]})`}`
+            : ''
+        }${undated.length ? ', сборници и материали без година' : ''}.`}
+        pathname={`/archive/${science}/${slug}/`}
+      />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
         <TopNavigationBar />
         <main>
@@ -65,27 +76,24 @@ export default function ArchiveCompetitionTemplate({ pageContext }: Props): JSX.
               { name },
             ]}
           />
-          <FilterBar entries={entries} filters={filters} setFilters={setFilters} />
+          <FilterBar
+            entries={entries}
+            filters={filters}
+            setFilters={setFilters}
+            competition={competition}
+          />
           {filtered ? (
             <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
               <p className="text-sm text-gray-500 dark:text-gray-400 px-3 pb-2">
-                {filtered.length} файла
+                {filesCount(filtered.length)}
               </p>
               {filtered.length ? (
-                <EntryList
-                  entries={filtered}
-                  groupByRound={false}
-                />
+                <EntryList entries={filtered} competition={competition} />
               ) : (
-                <p className="px-3 py-6 text-center text-gray-500 dark:text-gray-400">
-                  Нищо не е намерено.{' '}
-                  <button
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
-                    onClick={() => setFilters(EMPTY_FILTERS)}
-                  >
-                    Изчисти филтрите
-                  </button>
-                </p>
+                <NoResults
+                  onReset={() => setFilters(EMPTY_FILTERS)}
+                  resetLabel="Изчисти филтрите"
+                />
               )}
             </div>
           ) : (
@@ -111,7 +119,7 @@ export default function ArchiveCompetitionTemplate({ pageContext }: Props): JSX.
                     Без година
                   </h2>
                   <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
-                    <EntryList entries={undated} />
+                    <EntryList entries={undated} competition={competition} />
                   </div>
                 </>
               )}

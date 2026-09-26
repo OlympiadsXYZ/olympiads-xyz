@@ -4,6 +4,7 @@ import TextTooltip from '../../Tooltip/TextTooltip';
 import Tooltip from '../../Tooltip/Tooltip';
 import { Anchor } from './ProblemsListItem';
 import { useTranslation } from 'react-i18next';
+import { originalLinkKey } from '../../../utils/originalFormat';
 
 type ProblemListItemSolutionProps = {
   problem: ProblemInfo;
@@ -100,7 +101,7 @@ export default function ProblemListItemSolution(
             target="_blank"
             rel="noreferrer"
           >
-            {t('original-pdf')}
+            {t(originalLinkKey(problem.url))}
           </a>
         )}
       </>

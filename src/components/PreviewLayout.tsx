@@ -13,7 +13,6 @@ import MobileSideNav from './MarkdownLayout/MobileSideNav';
 import TableOfContentsBlock from './MarkdownLayout/TableOfContents/TableOfContentsBlock';
 import DesktopSidebar from './MarkdownLayout/DesktopSidebar';
 import MobileAppBar from './MarkdownLayout/MobileAppBar';
-import NotSignedInWarning from './MarkdownLayout/NotSignedInWarning';
 import ModuleHeaders from './MarkdownLayout/ModuleHeaders/ModuleHeaders';
 import ModuleProgressUpdateBanner from './MarkdownLayout/ModuleProgressUpdateBanner';
 
@@ -65,8 +64,6 @@ const PreviewLayout = ({ children }) => {
 
 
           <div className="w-full">
-
-              <NotSignedInWarning />
 
               <ModuleHeaders moduleLinks={[]} />
 

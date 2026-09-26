@@ -145,17 +145,41 @@ html.transitioning-color-scheme * {
   td {
     @apply border py-1 px-3;
   }
+  /* an empty row of a protocol to fill in keeps a row's height */
+  tr {
+    height: 1.6em;
+  }
   & > *:last-child {
     margin-bottom: 0 !important;
   }
+}
+/* a short plain-text cell (a number with its unit, a name) never wraps mid-value (HTMLComponents' td) */
+.markdown td.nowrap-cell {
+  white-space: nowrap;
 }
 .dark .markdown table:not(.no-markdown) th,
 .dark .markdown table:not(.no-markdown) td {
   @apply border-gray-700;
 }
-/* a table scrolls inside its own box (HTMLComponents), with the space after it that a paragraph has */
+/* a table scrolls inside its own box (HTMLComponents), with the space after it that a paragraph has.
+   Scroll shadows: the two covers (background-attachment: local) scroll with the table and hide the two shadows
+   (attached to the box) at whichever end is reached, so a shadow shows only on a side with more table to see. */
 .markdown .markdown-table-scroll {
   @apply overflow-x-auto max-w-full mb-6;
+  --table-scroll-bg: #fff;
+  --table-scroll-shadow: rgba(0, 0, 0, 0.18);
+  background: linear-gradient(to right, var(--table-scroll-bg) 30%, transparent),
+    linear-gradient(to left, var(--table-scroll-bg) 30%, transparent),
+    radial-gradient(farthest-side at 0 50%, var(--table-scroll-shadow), transparent),
+    radial-gradient(farthest-side at 100% 50%, var(--table-scroll-shadow), transparent);
+  background-position: left center, right center, left center, right center;
+  background-size: 2.5rem 100%, 2.5rem 100%, 0.75rem 100%, 0.75rem 100%;
+  background-repeat: no-repeat;
+  background-attachment: local, local, scroll, scroll;
+}
+.dark .markdown .markdown-table-scroll {
+  --table-scroll-bg: #121212;
+  --table-scroll-shadow: rgba(255, 255, 255, 0.22);
 }
 
 .markdown ul:not(.no-markdown) {
@@ -448,9 +472,13 @@ html.transitioning-color-scheme * {
   overflow-y: hidden;
   padding: 0.25em 0;
 }
-/* react-select's placeholder grey (#808080) is 3.9:1 on white; the site's gray-500 reads at 4.8:1 */
+/* react-select's placeholder grey (#808080) is 3.9:1 on white; the site's gray-500 reads at 4.8:1. On the dark
+   control (#111827) gray-500 is 3.9:1 too, so dark mode takes gray-400 (6.9:1). */
 .select__placeholder {
   color: #6b7280 !important;
+}
+.dark .select__placeholder {
+  color: #9ca3af !important;
 }
 /*! purgecss end ignore */
 

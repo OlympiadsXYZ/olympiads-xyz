@@ -233,5 +233,6 @@ test('generator: the page title and source line use the overlays; the printed ma
   assert.match(mdx, /^\*Theory · English \(Official\) · Q2 — Nonlinear Dynamics in Electric Circuits \(10[ \u00A0]points\)\*$/m);
   const extra = JSON.parse(fs.readFileSync(path.join(root, 'content/extraProblems.json'), 'utf8')).EXTRA_PROBLEMS.find(p => p.uniqueId === 'ipho-2016-theory-2-p1');
   assert.equal(extra.name, 'Задача 2. Nonlinear Dynamics in Electric Circuits');
-  assert.equal(extra.source, 'IPhO 2016 Теория');
+  // the card's source line: the competition code and year, then the page heading's labels (problemSource)
+  assert.equal(extra.source, 'IPhO 2016, Теория');
 });

@@ -1,4 +1,4 @@
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import * as React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
@@ -86,63 +86,46 @@ const HeroTextColor: { [key in SectionID]: string } = {
   astronomy: 'text-violet-100',
 };
 
+// Small print under the chapters of a section that has modules (it used to
+// open the hero and took half a phone screen, even on sections with none).
 const topicsWarning = (
   <>
-    Темите тук не са напълно изчерпателни за тази категория!
-    <br/>
-    Задачите може да съдържат допълнителни теми, които не са включени тук, или пък са от друг раздел. Стараем се да бъдем максимално изчерпателни, но това не винаги е възможно.
+    Темите тук не покриват изцяло раздела: задачите може да съдържат теми,
+    които не са включени тук или са от друг раздел. Стараем се да бъдем
+    максимално изчерпателни, но това не винаги е възможно.
   </>
 );
 const SECTION_DESCRIPTION: { [key in SectionID]: React.ReactNode } = {
   general: (
     <>
-      Не е нужно да правите всичко тук. Това е само въведение в олимпиадите и състезанията, плюс някой друг съвет как да ползвате уебсайта.
+      Не е нужно да правите всичко тук. Това е само въведение в олимпиадите и състезанията, плюс няколко съвета как да ползвате уебсайта.
       <br/>
-      Чуствайте се свободни да пропуснете нещата тук, които не ви интересуват.
+      Чувствайте се свободни да пропуснете нещата тук, които не ви интересуват.
     </>
   ),
-  mechanics: (
-    <>
-      {topicsWarning}
-      <br/>
-      Кинематика, динамика, енергия, гравитация, трептения и твърдо тяло.
-    </>
-  ),
-  thermodynamics: (
-    <>
-      {topicsWarning}
-      <br/>
-      Топлинни явления, идеален газ, статистическа физика.
-    </>
-  ),
-  electromagnetism: (
-    <>
-      {topicsWarning}
-      <br/>
-      Електростатика, вериги, магнетизъм и индукция.
-    </>
-  ),
-  optics: (
-    <>
-      {topicsWarning}
-      <br/>
-      Геометрична и вълнова оптика, лещи, огледала и оптични уреди.
-    </>
-  ),
-  'modern-physics': (
-    <>
-      {topicsWarning}
-      <br/>
-      Специална теория на относителността, квантова и атомна физика.
-    </>
-  ),
-  astronomy: (
-    <>
-      {topicsWarning}
-      <br/>
-      Модули по астрономия — от небесната сфера до космологията, за НОА, IAO и IOAA.
-    </>
-  ),
+  mechanics: 'Кинематика, динамика, енергия, гравитация, трептения и твърдо тяло.',
+  thermodynamics: 'Топлинни явления, идеален газ, статистическа физика.',
+  electromagnetism: 'Електростатика, вериги, магнетизъм и индукция.',
+  optics: 'Геометрична и вълнова оптика, лещи, огледала и оптични уреди.',
+  'modern-physics':
+    'Специална теория на относителността, квантова и атомна физика.',
+  astronomy:
+    'Модули по астрономия — от небесната сфера до космологията, за НОА, IAO и IOAA.',
+};
+
+// Subject of the section's problems on /problems and in /archive/<subject>/
+// (the codes of src/archive/labels.ts SCIENCE_LABELS), with its label after
+// "Задачи по" / "Архив по".
+const SECTION_SUBJECT: {
+  [key in SectionID]: { id: string; label: string } | null;
+} = {
+  general: null,
+  mechanics: { id: 'physics', label: 'физика' },
+  thermodynamics: { id: 'physics', label: 'физика' },
+  electromagnetism: { id: 'physics', label: 'физика' },
+  optics: { id: 'physics', label: 'физика' },
+  'modern-physics': { id: 'physics', label: 'физика' },
+  astronomy: { id: 'astronomy', label: 'астрономия' },
 };
 
 export default function Template(props) {
@@ -153,9 +136,17 @@ export default function Template(props) {
   }, {} as { [key: string]: (typeof data.modules.nodes)[0] });
 
   const { division } = props.pageContext;
+  const problemCountBySubject: { [subject: string]: number } =
+    props.pageContext.problemCountBySubject ?? {};
   const { level, levelReady, setLevel } = useLevel();
 
   const allChapters = getModulesForDivision(allModules, division);
+  // No published module at any level (thermodynamics, optics, …): the page
+  // shows the planned chapters and links to the subject's problems and
+  // archive instead of level pills and zero progress cards.
+  const sectionHasModules = allChapters.some(
+    chapter => chapter.items.length > 0
+  );
   // Levels this section actually differentiates on (docs/Structure.md).
   // No tagged chapters (astronomy, general) => level-independent section.
   const taggedLevels = LEVELS.filter(option =>
@@ -172,23 +163,34 @@ export default function Template(props) {
   // Never show an empty section: if the global level has no modules here,
   // display the first level that does (global level stays unchanged). A level
   // picked on this page is shown as picked, modules or not, until the global
-  // level changes elsewhere.
+  // level changes elsewhere. With no modules at any level there is nothing to
+  // fall back to: the global level stays (it used to claim "показваме 7–8
+  // клас" for a level that had no modules either).
   const [pickedLevel, setPickedLevel] = React.useState<Level | null>(null);
   const displayLevel =
     pickedLevel !== null && pickedLevel === level
       ? level
-      : taggedLevels.length === 0 || levelsWithModules.includes(level)
+      : taggedLevels.length === 0 ||
+        levelsWithModules.length === 0 ||
+        levelsWithModules.includes(level)
       ? level
-      : levelsWithModules[0] ??
-        (taggedLevels.includes(level) ? level : taggedLevels[0]);
+      : levelsWithModules[0];
   const pickLevel = (option: Level) => {
     setPickedLevel(option);
     setLevel(option);
   };
   // a chapter without `levels` is visible everywhere; before hydration
-  // show everything (SSR stability)
+  // show everything (SSR stability). A section without modules shows its
+  // whole plan, each chapter labelled with its levels.
   const chapterVisible = (chapter: (typeof allChapters)[0]) =>
-    !levelReady || !chapter.levels || chapter.levels.includes(displayLevel);
+    !sectionHasModules ||
+    !levelReady ||
+    !chapter.levels ||
+    chapter.levels.includes(displayLevel);
+  const subject = SECTION_SUBJECT[division as SectionID];
+  const subjectProblemCount = subject
+    ? problemCountBySubject[subject.id] ?? 0
+    : 0;
   const section = allChapters.filter(chapterVisible);
 
   const moduleIDs = section.reduce(
@@ -239,7 +241,7 @@ export default function Template(props) {
               >
                 {SECTION_DESCRIPTION[division]}
               </p>
-              {division !== 'general' && taggedLevels.length > 0 && (
+              {division !== 'general' && levelsWithModules.length > 0 && (
                 <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-12 px-4">
                   {taggedLevels.map(option => (
                     <button
@@ -256,42 +258,87 @@ export default function Template(props) {
                   ))}
                 </div>
               )}
-              {levelReady && displayLevel !== level && (
-                <p
-                  className={`${HeroTextColor[division]} text-center text-sm -mt-4 sm:-mt-8 mb-8 px-4`}
+              {levelReady &&
+                levelsWithModules.length > 0 &&
+                displayLevel !== level && (
+                  <p
+                    className={`${HeroTextColor[division]} text-center text-sm -mt-4 sm:-mt-8 mb-8 px-4`}
+                  >
+                    За {LEVEL_LABELS[level]} в този раздел още няма модули —
+                    показваме {LEVEL_LABELS[displayLevel]}.
+                  </p>
+                )}
+              {!sectionHasModules ? (
+                <div className="max-w-2xl mx-4 sm:mx-auto bg-white dark:bg-gray-900 shadow rounded-lg">
+                  <div className="px-4 py-5 sm:p-6">
+                    <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
+                      Модулите в този раздел предстоят
+                    </h2>
+                    <p className="mt-2 text-sm text-gray-600 dark:text-dark-med-emphasis">
+                      Подготвяме уроците по плана по-долу. Междувременно
+                      можете да решавате задачи от олимпиади и състезания и
+                      да разглеждате оригиналните материали в архива.
+                    </p>
+                    {subject && (
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        <Link
+                          to={`/problems/?subject=${subject.id}`}
+                          className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 transition"
+                        >
+                          Задачи по {subject.label}
+                          {subjectProblemCount > 0 &&
+                            ` (${subjectProblemCount.toLocaleString('bg-BG')})`}
+                        </Link>
+                        <a
+                          href={`/archive/${subject.id}/`}
+                          className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700 transition"
+                        >
+                          Архив по {subject.label}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className={`grid max-w-2xl mx-auto gap-8 ${
+                    moduleIDs.length > 0 && problemIDs.length > 0
+                      ? 'lg:max-w-full lg:grid-cols-2'
+                      : ''
+                  }`}
                 >
-                  За {LEVEL_LABELS[level]} в този раздел още няма модули —
-                  показваме {LEVEL_LABELS[displayLevel]}.
-                </p>
+                  {moduleIDs.length > 0 && (
+                    <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg">
+                      <div className="px-4 py-5 sm:p-6">
+                        <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
+                          {t('syllabus_modules-progress')}
+                        </h2>
+                        <div className="mt-6">
+                          <DashboardProgress
+                            {...moduleProgressInfo}
+                            total={moduleIDs.length}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {problemIDs.length > 0 && (
+                    <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg">
+                      <div className="px-4 py-5 sm:p-6">
+                        <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
+                          {t('syllabus_problems-progress')}
+                        </h2>
+                        <div className="mt-6">
+                          <DashboardProgress
+                            {...problemsProgressInfo}
+                            total={problemIDs.length}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
-              <div className="grid max-w-2xl mx-auto lg:max-w-full lg:grid-cols-2 gap-8">
-                <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg">
-                  <div className="px-4 py-5 sm:p-6">
-                    <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
-                      {t('syllabus_modules-progress')}
-                    </h2>
-                    <div className="mt-6">
-                      <DashboardProgress
-                        {...moduleProgressInfo}
-                        total={moduleIDs.length}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-white dark:bg-gray-900 shadow sm:rounded-lg">
-                  <div className="px-4 py-5 sm:p-6">
-                    <h2 className="text-lg leading-6 font-medium text-gray-900 dark:text-dark-high-emphasis">
-                      {t('syllabus_problems-progress')}
-                    </h2>
-                    <div className="mt-6">
-                      <DashboardProgress
-                        {...problemsProgressInfo}
-                        total={problemIDs.length}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <DottedLineContainer className="py-12 px-4 max-w-screen-xl mx-auto">
@@ -301,6 +348,11 @@ export default function Template(props) {
               </React.Fragment>
             ))}
           </DottedLineContainer>
+          {sectionHasModules && division !== 'general' && (
+            <p className="max-w-2xl mx-auto px-4 pb-12 text-center text-xs text-gray-500 dark:text-gray-400">
+              {topicsWarning}
+            </p>
+          )}
         </main>
       </div>
     </Layout>
@@ -322,6 +374,11 @@ export default function Template(props) {
                   <h2 className="text-2xl font-semibold leading-6 py-3 text-gray-500 dark:text-dark-med-emphasis group-hover:text-gray-800 dark:group-hover:text-dark-high-emphasis transition">
                     {category.name}
                   </h2>
+                  {!sectionHasModules && category.levels && (
+                    <p className="text-sm font-medium text-gray-500 dark:text-dark-med-emphasis">
+                      {category.levels.map(x => LEVEL_LABELS[x]).join(', ')}
+                    </p>
+                  )}
                   <div className="leading-6 py-3 text-gray-500 dark:text-dark-med-emphasis group-hover:text-gray-800 dark:group-hover:text-dark-high-emphasis transition">
                     {progressBar}
                   </div>
@@ -329,7 +386,12 @@ export default function Template(props) {
                     {category.description}
                   </p>
                 </div>
-                <div className="flex-1 pl-12">
+                {/* a chapter without modules: its note under the chapter's text on phones, not indented */}
+                <div
+                  className={`flex-1 ${
+                    category.items.length === 0 ? 'md:pl-12' : 'pl-12'
+                  }`}
+                >
                   {category.items.length === 0 && (
                     <p className="py-3 text-sm italic text-gray-500 dark:text-gray-500">
                       Модулите в тази глава предстоят.

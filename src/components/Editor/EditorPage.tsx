@@ -69,7 +69,7 @@ export default function EditorPage(props: PageProps): JSX.Element {
 
   return (
     <QuizGeneratorProvider>
-      <Layout>
+      <Layout footer="none">
         <SEO title="Редактор" />
 
         <div className="h-screen flex flex-col min-w-[768px]">

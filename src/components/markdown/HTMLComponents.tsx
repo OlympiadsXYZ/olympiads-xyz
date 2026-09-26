@@ -12,12 +12,12 @@ export const OffsetAnchor = ({ id, ...props }): JSX.Element | null => {
   const sectionId = React.useContext(ProblemSectionAnchor);
   if (sectionId === id) return null;
   return (
-  <span
-    id={id}
-    {...props}
-    className="absolute"
-    style={{ bottom: '60px', height: '2px' }}
-  />
+    <span
+      id={id}
+      {...props}
+      className="absolute"
+      style={{ bottom: '60px', height: '2px' }}
+    />
   );
 };
 
@@ -79,6 +79,56 @@ const table = (props): JSX.Element => (
     <table {...props} />
   </div>
 );
+// The plain text of a cell, or null when it holds anything else (math, a link, an image).
+const cellText = (children: React.ReactNode): string | null => {
+  let text = '';
+  for (const child of React.Children.toArray(children)) {
+    if (typeof child === 'string' || typeof child === 'number') {
+      text += String(child);
+    } else {
+      return null;
+    }
+  }
+  return text;
+};
+// A markdown table always has a header row; a transcribed table without one is written "| | |" over "| --- | --- |".
+// That header renders as an empty first row above the data ("Справочни данни", nao-2008-ii-9-10 задача 5): skipped.
+const thead = (props): JSX.Element | null => {
+  const rows = React.Children.toArray(props.children).filter(
+    React.isValidElement
+  ) as React.ReactElement[];
+  const empty =
+    rows.length > 0 &&
+    rows.every(row =>
+      (
+        React.Children.toArray(row.props.children).filter(
+          React.isValidElement
+        ) as React.ReactElement[]
+      ).every(cell => (cellText(cell.props.children) ?? 'x').trim() === '')
+    );
+  return empty ? null : <thead {...props} />;
+};
+// A short plain-text cell ("387 000 000 км", "88 земни дни") keeps its value on one line: on a phone the column
+// would otherwise break numbers between their digit groups; the table scrolls instead.
+const NOWRAP_CELL_MAX = 20;
+const td = ({ children, className, ...props }): JSX.Element => {
+  const text = cellText(children);
+  const nowrap =
+    text !== null &&
+    text.trim().length > 0 &&
+    text.trim().length <= NOWRAP_CELL_MAX;
+  return (
+    <td
+      {...props}
+      className={
+        [className, nowrap && 'nowrap-cell'].filter(Boolean).join(' ') ||
+        undefined
+      }
+    >
+      {children}
+    </td>
+  );
+};
 const inlineCode = (props): JSX.Element => (
   <code {...props} className="inline-code" />
 );
@@ -168,6 +218,8 @@ const HTMLComponents = {
   li,
   ol,
   table,
+  thead,
+  td,
   code: inlineCode,
   pre,
   a,

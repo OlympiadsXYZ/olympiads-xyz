@@ -9,6 +9,11 @@ import {
   MIN_PANEL_WIDTH,
   useComparePanel,
 } from './ComparePanelContext';
+import { embedUrl, isEmbeddable, originalFormat } from './originalFormat';
+
+// A frame that has not loaded by then gets the fallback link over it (a
+// browser without a PDF viewer downloads the file and never loads the frame).
+const EMBED_TIMEOUT_MS = 10000;
 
 /** "…/2019/NOF3_2019_9problems.pdf" -> "NOF3_2019_9problems.pdf" */
 export function pdfFileName(url: string): string {
@@ -43,6 +48,8 @@ export default function ComparePanel({
   const { problem } = useProblemSolutions();
   const compare = useComparePanel();
   const [isDragging, setIsDragging] = React.useState(false);
+  // per URL: the frame loaded, or failed / timed out (fallback shown)
+  const [loadedUrl, setLoadedUrl] = React.useState<string | null>(null);
   const [failedUrl, setFailedUrl] = React.useState<string | null>(null);
 
   const hasSolutions = !!problem.solutionUrl;
@@ -53,6 +60,18 @@ export default function ComparePanel({
       ? problem.solutionUrl
       : problem.url;
   const fileName = pdfFileName(url);
+  const format = originalFormat(url);
+  const embeddable = isEmbeddable(format);
+  const frameUrl = embedUrl(url, format);
+
+  React.useEffect(() => {
+    if (!embeddable || loadedUrl === frameUrl) return;
+    const timer = window.setTimeout(
+      () => setFailedUrl(frameUrl),
+      EMBED_TIMEOUT_MS
+    );
+    return () => window.clearTimeout(timer);
+  }, [frameUrl, embeddable, loadedUrl]);
   const docLabel =
     doc === 'solutions'
       ? t('compare_solutions_pdf')
@@ -211,34 +230,45 @@ export default function ComparePanel({
         </div>
 
         <div className="relative flex-1 min-h-0">
-          {/* Behind the iframe: visible when the browser leaves the frame
-              blank (no PDF viewer) or refuses to embed the file. */}
-          <div className="absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>
-              {t('compare_embed_fallback')}{' '}
-              <a
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                className="underline text-blue-600 dark:text-blue-400"
-              >
-                {t('compare_embed_fallback_link')}
-              </a>
-            </p>
-          </div>
-          {failedUrl !== url && (
+          {embeddable ? (
             <iframe
-              key={url}
-              src={url}
+              key={frameUrl}
+              src={frameUrl}
               title={`${docLabel} — ${fileName}`}
               loading="lazy"
-              onError={() => setFailedUrl(url)}
+              onLoad={() => {
+                setLoadedUrl(frameUrl);
+                if (failedUrl === frameUrl) setFailedUrl(null);
+              }}
+              onError={() => setFailedUrl(frameUrl)}
               className={classNames(
-                'absolute inset-0 w-full h-full border-0',
+                // opaque: a plain-text original has no background of its own
+                'absolute inset-0 w-full h-full border-0 bg-white',
                 // an iframe swallows mouse events, which would end the drag
                 isDragging && 'pointer-events-none'
               )}
             />
+          ) : null}
+          {/* Over the frame only when it failed or did not load in time; a
+              Word original is never embedded (the browser would download it). */}
+          {(!embeddable || failedUrl === frameUrl) && (
+            <div className="absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-gray-600 bg-gray-50 dark:bg-gray-900 dark:text-gray-300">
+              <p>
+                {embeddable
+                  ? t('compare_embed_fallback')
+                  : t('compare_word_not_embeddable')}{' '}
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline text-blue-700 dark:text-blue-400"
+                >
+                  {embeddable
+                    ? t('compare_embed_fallback_link')
+                    : t('compare_download_file')}
+                </a>
+              </p>
+            </div>
           )}
         </div>
       </aside>

@@ -1,8 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
+
+// Owner decision (2026-09): the switcher and the English option stay hidden
+// until the new interface (filters, levels, banner) is translated. Set to true
+// to bring back every switcher (top bar, phone menu, module sidebar, editor) and
+// the stored choice (gatsby-browser.tsx).
+export const LANGUAGE_SWITCHER_ENABLED = false;
 
 const LANGUAGES = ['bg', 'en'];
 // read back after hydration by gatsby-browser.tsx (onInitialClientRender)
@@ -17,7 +23,7 @@ export default function LanguageDropdown({
   sidebarNav = false,
   onSelect = null as ((section: string) => void) | null,
   noDarkMode = false,
-}): JSX.Element {
+}): JSX.Element | null {
   const { i18n } = useTranslation();
   // the label follows i18next (useTranslation re-renders on a change), so every mounted switcher agrees after
   // a navigation; local state reset to Bulgarian while the interface stayed English
@@ -33,6 +39,8 @@ export default function LanguageDropdown({
       // the choice just won't persist
     }
   };
+
+  if (!LANGUAGE_SWITCHER_ENABLED) return null;
 
   return (
     <Menu as="div">
@@ -81,13 +89,22 @@ export default function LanguageDropdown({
                       <button
                         onClick={() => changeLanguage(language)}
                         className={classNames(
-                          'w-full text-left block px-4 py-2 text-base font-medium leading-6 focus:outline-none',
+                          'w-full text-left flex items-center justify-between gap-3 px-4 py-2 text-base font-medium leading-6 focus:outline-none',
                           active
                             ? 'bg-gray-100 text-gray-900 dark:text-gray-100 dark:bg-gray-700'
                             : 'text-gray-700 dark:text-gray-100'
                         )}
+                        aria-current={
+                          language === selectedLanguage ? 'true' : undefined
+                        }
                       >
                         {LANGUAGE_LABELS[language]}
+                        {language === selectedLanguage && (
+                          <CheckIcon
+                            className="h-5 w-5 text-blue-600 dark:text-blue-400"
+                            aria-hidden="true"
+                          />
+                        )}
                       </button>
                     )}
                   </Menu.Item>

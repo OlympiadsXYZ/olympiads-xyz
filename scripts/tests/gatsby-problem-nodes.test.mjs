@@ -28,7 +28,8 @@ function loadHooks() {
       if (specifier === './src/gatsby/create-xdm-node') return { createXdmNode: () => { throw new Error('Unexpected MDX compilation'); } };
       if (specifier === './src/problems/index-node') return {
         writeProblemsIndex: (_root, nodes) => { captured.indexNodes = nodes; return nodes.length; },
-        writeProblemsTree: (_root, nodes) => ({ count: nodes.length }),
+        writeProblemsTree: (_root, nodes) => ({ count: nodes.length, subjects: [] }),
+        readProblemPapers: () => new Map(),
       };
       if (specifier.startsWith('.')) {
         const base = path.resolve(path.dirname(file), specifier);
@@ -141,6 +142,10 @@ test('the six rejected production IDs reach solution pages and keep the search i
     reporter: { panicOnBuild: message => { throw new Error(message); }, error: message => { throw new Error(message); } },
   });
   assert.deepEqual(pages.filter(page => page.path.endsWith('/solution')).map(page => page.context.id).sort(), [...expected].sort());
+  // the problem page's links (src/problems/page-links.ts) ride in its context, null without a tree or an archive
+  for (const page of pages.filter(p => p.path.endsWith('/solution'))) {
+    assert.deepEqual({ ...page.context, id: undefined }, { id: undefined, prev: null, next: null, lang: null, archiveYear: null });
+  }
   const { buildProblemsIndex } = load(path.join(repo, 'src/problems/index-node.ts'));
   const index = buildProblemsIndex(captured.indexNodes);
   for (const row of metadata) {

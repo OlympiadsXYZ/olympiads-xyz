@@ -5,7 +5,10 @@ import 'katex/dist/katex.min.css';
 import './src/styles/main.css';
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import i18n from './src/i18n';
-import { LANGUAGE_STORAGE_KEY } from './src/components/LanguageSwitcher';
+import {
+  LANGUAGE_STORAGE_KEY,
+  LANGUAGE_SWITCHER_ENABLED,
+} from './src/components/LanguageSwitcher';
 // import './build.css';
 
 export const wrapRootElement = wrap;
@@ -60,8 +63,10 @@ export const onClientEntry = () => {
 };
 
 // The interface language picked in the switcher. Applied after hydration, so the first client render matches the
-// Bulgarian HTML of the static build.
+// Bulgarian HTML of the static build. While the switcher is hidden a stored
+// English choice is ignored (nothing on the page could switch it back).
 export const onInitialClientRender = () => {
+  if (!LANGUAGE_SWITCHER_ENABLED) return;
   try {
     const lang = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
     if (lang && lang !== i18n.language && ['bg', 'en'].includes(lang)) {

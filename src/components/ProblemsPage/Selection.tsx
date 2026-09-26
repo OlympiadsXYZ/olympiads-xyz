@@ -5,6 +5,8 @@ import Select from '../Select';
 export type SelectionOption = {
   /** Label shown in the dropdown. */
   label: string;
+  /** Shorter label for the chip of a selected option ("НОФ"); label when absent. */
+  chipLabel?: string;
   /** The value(s) this option selects. Grouped options (e.g. sections) map to several. */
   value: string | string[];
 };
@@ -96,6 +98,14 @@ export default function Selection({
       isMulti={isMulti}
       isSearchable={searchable}
       options={options}
+      formatOptionLabel={(
+        option: SelectionOption,
+        { context }: { context: 'menu' | 'value' }
+      ) =>
+        context === 'value' && isMulti && option.chipLabel
+          ? option.chipLabel
+          : option.label
+      }
       className="text-black dark:text-white"
       classNamePrefix="select"
     />

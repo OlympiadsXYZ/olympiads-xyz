@@ -3,7 +3,7 @@
 // the site never touches the actual archive files.
 import fs from 'fs';
 import path from 'path';
-import { competitionSlug, entryExt } from './labels';
+import { competitionShort, competitionSlug, entryExt } from './labels';
 
 export type CatalogEntry = {
   id: string;
@@ -38,7 +38,68 @@ export type ClientEntry = {
   key: string; // path inside the hosted bucket == catalog `file`
   ext: string;
   folder?: string; // library entries only: folder path for tree grouping
+  // the transcribed problems of this document on the site (year and
+  // competition pages only; see archiveProblemLinks)
+  onSite?: ProblemLink;
 };
+
+export type ProblemLink = {
+  /** The solution page of the document's first published problem. */
+  url: string;
+  /** How many of its problems are published. */
+  count: number;
+};
+
+// Реда на предметите в архива: най-пълните рафтове първи; математиката и
+// информатиката са само библиотеки.
+export const SCIENCE_ORDER = [
+  'physics',
+  'astronomy',
+  'chemistry',
+  'geography',
+  'mathematics',
+  'informatics',
+];
+
+export function sortSciences(sciences: string[]): string[] {
+  const rank = (s: string) => {
+    const i = SCIENCE_ORDER.indexOf(s);
+    return i === -1 ? SCIENCE_ORDER.length : i;
+  };
+  return [...sciences].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
+}
+
+export type ScienceCard = {
+  science: string;
+  count: number;
+  bytes: number;
+  competitions: number;
+  yearMin: number | null;
+  yearMax: number | null;
+  /** Short names of the competitions with the most material. */
+  top: string[];
+};
+
+/** What a science's card on /archive/ says about it. */
+export function scienceCard(s: ScienceData): ScienceCard {
+  const summaries = competitionSummaries(s);
+  const all = [
+    ...Object.values(s.competitions).flat(),
+    ...s.library,
+    ...s.uncategorized,
+  ];
+  const mins = summaries.map(c => c.yearMin).filter((y): y is number => y != null);
+  const maxs = summaries.map(c => c.yearMax).filter((y): y is number => y != null);
+  return {
+    science: s.science,
+    count: all.length,
+    bytes: all.reduce((a, b) => a + b.size, 0),
+    competitions: summaries.length,
+    yearMin: mins.length ? Math.min(...mins) : null,
+    yearMax: maxs.length ? Math.max(...maxs) : null,
+    top: summaries.slice(0, 4).map(c => competitionShort(c.code)),
+  };
+}
 
 export type CompetitionSummary = {
   code: string;
@@ -133,8 +194,10 @@ export function groupCatalog(entries: CatalogEntry[]): { [science: string]: Scie
     // Принадлежността към състезание е `competition !== null`, не `kind`
     // (Archive-Schema.md §3.2): протоколите (`results`), регламентите
     // (`syllabus`) и програмите/данните (`misc`) на състезанието стоят на
-    // неговите страници, не в „Други материали“. Книгите остават на рафта.
-    if (e.competition && !shelf) {
+    // неговите страници, не в „Други материали“. Сборниците със задачи на едно
+    // състезание (IPhO 1967–1999, ВсОШ, Московска) също — под „Без година“ на
+    // състезанието, не в библиотеката; книгите без състезание остават на рафта.
+    if (e.competition) {
       if (!s.competitions[e.competition]) s.competitions[e.competition] = [];
       s.competitions[e.competition].push(toClientEntry(e));
     } else if (shelf) {
@@ -160,7 +223,57 @@ export function competitionSummaries(s: ScienceData): CompetitionSummary[] {
         yearMax: years.length ? Math.max(...years) : null,
       };
     })
-    .sort((a, b) => b.count - a.count);
+    // състезанията без нито една година (един сборен файл) — накрая
+    .sort(
+      (a, b) =>
+        Number(a.yearMin == null) - Number(b.yearMin == null) ||
+        b.count - a.count
+    );
+}
+
+/**
+ * Archive key → the transcribed problems of that document on the site. A paper
+ * counts when at least one of its problems has a page (`urlById`: problem id →
+ * its page, only published problems have one); its problem and solution files
+ * both link there. Keys are compared in NFC (the bucket mixes NFC and NFD).
+ */
+export function archiveProblemLinks(
+  papers: {
+    paper: {
+      source?: { archiveKey?: string } | null;
+      solutionSource?: { archiveKey?: string } | null;
+    };
+    problems: { id: string }[];
+  }[],
+  urlById: Map<string, string>
+): Map<string, ProblemLink> {
+  const out = new Map<string, ProblemLink>();
+  for (const { paper, problems } of papers) {
+    const urls = problems.map(p => urlById.get(p.id)).filter((u): u is string => !!u);
+    if (!urls.length) continue;
+    const keys = [paper.source?.archiveKey, paper.solutionSource?.archiveKey];
+    for (const key of new Set(keys.filter((k): k is string => !!k).map(k => k.normalize('NFC')))) {
+      const prev = out.get(key);
+      out.set(key, prev ? { url: prev.url, count: prev.count + urls.length } : { url: urls[0], count: urls.length });
+    }
+  }
+  return out;
+}
+
+/** Sets `onSite` on the entries whose document has problems on the site; returns how many. */
+export function attachProblemLinks(
+  entries: ClientEntry[],
+  links: Map<string, ProblemLink>
+): number {
+  let n = 0;
+  for (const e of entries) {
+    const link = links.get(e.key.normalize('NFC'));
+    if (link) {
+      e.onSite = link;
+      n += 1;
+    }
+  }
+  return n;
 }
 
 export function writeSearchIndexes(

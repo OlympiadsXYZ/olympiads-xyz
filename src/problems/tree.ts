@@ -71,8 +71,14 @@ export type PaperFile = {
     grade?: string | null;
     lang?: string | null;
     title?: string;
+    source?: { archiveKey?: string | null } | null;
   };
-  problems: { id: string; number: number | string; title?: string | null }[];
+  problems: {
+    id: string;
+    number: number | string;
+    title?: string | null;
+    points?: number | string | null;
+  }[];
 };
 
 /** content/round-labels.json */
@@ -359,16 +365,52 @@ export function problemLabel(p: {
   return `${label} ${rest.trim()}`;
 }
 
+// "(10 points)", "[2 т.]" at the end of a title that only repeats the
+// problem's points (the page's lead line shows them)
+const TRAILING_POINTS =
+  /\s*[[(]\s*(\d+(?:[.,]\d+)?)\s*(?:points?|pts?\.?|marks?|т\.?|точк[аи]|точки)\s*[\])]\s*$/iu;
+
+/**
+ * A title without a trailing points note that repeats the problem's points:
+ * "Greenhouse effect (10.0 points)" -> "Greenhouse effect" for 10 points.
+ * Other points stay, and a title that is only the points note is kept.
+ */
+export function titleWithoutPoints(
+  title: string,
+  points: number | string | null | undefined
+): string {
+  const m = TRAILING_POINTS.exec(String(title));
+  if (!m || points == null) return title;
+  if (Number(m[1].replace(',', '.')) !== Number(points)) return title;
+  const rest = String(title).slice(0, m.index).trim();
+  return rest ? rest : title;
+}
+
+// the row's title: the repeated number and the repeated points dropped
+function shownTitle(
+  p: {
+    title?: string | null;
+    number: number | string;
+    points?: number | string | null;
+  },
+  number: number | string
+): string | null {
+  const title = rowTitle(p.title, number, p.number);
+  return title == null ? null : titleWithoutPoints(title, p.points);
+}
+
 /** The problem's full name, as the page title and the sidebar row show it. */
 export function problemDisplayName(
-  problem: { id: string; number: number | string; title?: string | null },
+  problem: {
+    id: string;
+    number: number | string;
+    title?: string | null;
+    points?: number | string | null;
+  },
   numbers?: QuestionNumbers | null
 ): string {
   const number = displayNumber(problem, numbers);
-  return problemLabel({
-    number,
-    title: rowTitle(problem.title, number, problem.number),
-  });
+  return problemLabel({ number, title: shownTitle(problem, number) });
 }
 
 /**
@@ -657,7 +699,7 @@ export function assembleProblemsTree(
       problems.push({
         id: p.id,
         number,
-        title: rowTitle(p.title, number, p.number),
+        title: shownTitle(p, number),
         url,
       });
     }

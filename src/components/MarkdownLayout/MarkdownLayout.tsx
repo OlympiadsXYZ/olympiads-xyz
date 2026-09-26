@@ -27,7 +27,6 @@ import MobileSideNav from './MobileSideNav';
 import ModuleHeaders from './ModuleHeaders/ModuleHeaders';
 import ModuleProgressUpdateBanner from './ModuleProgressUpdateBanner';
 import NavBar from './NavBar';
-import NotSignedInWarning from './NotSignedInWarning';
 import TableOfContentsBlock from './TableOfContents/TableOfContentsBlock';
 import TableOfContentsSidebar from './TableOfContents/TableOfContentsSidebar';
 
@@ -177,8 +176,9 @@ export default function MarkdownLayout({
             <MobileAppBar />
 
             <ContentContainer tableOfContents={tableOfContents}>
-              <NotSignedInWarning />
-
+              {/* No sign-in card here: it pushed a problem's statement below
+                  the fold on phones. The dashboard keeps its sign-in line
+                  (owner decision, site audit 2026-09). */}
               <ModuleHeaders moduleLinks={moduleLinks} />
               {headerContent}
 

@@ -37,16 +37,29 @@ import {
   useFirebaseUser,
   useIsUserDataLoaded,
 } from '../context/UserDataContext/UserDataContext';
+import { useSiteStats } from '../hooks/useSiteStats';
+import {
+  approxCount,
+  mostHaveSolutions,
+  subjectList,
+} from '../utils/siteStatsFormat';
 
 const containerClasses = 'max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8';
 const headerClasses =
   'text-4xl md:text-5xl 2xl:text-6xl font-black text-black dark:text-white';
-const headerClassesNoText = 'text-4xl md:text-5xl 2xl:text-6xl font-black';
+// the text-* sizes set line-height 1, and the highlight box of the second line
+// then touched the descenders of the first (leading-* per breakpoint wins)
+const headerClassesNoText =
+  'text-4xl md:text-5xl 2xl:text-6xl font-black leading-tight md:leading-tight 2xl:leading-tight';
 const subtextClasses =
   'text-lg md:text-xl 2xl:text-2xl font-medium max-w-4xl leading-relaxed text-gray-700 dark:text-gray-400';
 const headerSubtextSpacerClasses = 'h-6 2xl:h-12';
 const whiteButtonClassesBig =
   'text-xl bg-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium text-gray-900 relative';
+const outlineButtonClassesBig =
+  'text-xl px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium text-gray-900 dark:text-white border border-gray-400 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-900 transition';
+const statCardClasses =
+  'flex flex-col rounded-lg bg-white dark:bg-gray-900 ring-1 ring-gray-200 dark:ring-gray-800 px-5 py-4 text-left';
 const whiteButtonClasses =
   'text-lg md:text-xl bg-white px-4 py-2 md:px-6 md:py-3 rounded-lg font-medium text-gray-900 relative';
 const usacoTitleClasses =
@@ -56,6 +69,8 @@ const linkTextStyles =
 
 export default function IndexPage(): JSX.Element {
   const { t } = useTranslation();
+  const stats = useSiteStats();
+  const subjects = subjectList(stats.subjects);
   const firebaseUser = useFirebaseUser();
   const loading = useIsUserDataLoaded();
   const location = useLocation();
@@ -73,6 +88,13 @@ export default function IndexPage(): JSX.Element {
       }
     }
   }, [firebaseUser, loading, location]);
+  React.useEffect(() => {
+    // /faq redirects here (src/redirects.txt); Gatsby's trailing-slash rule turns the target into '/#faq/', which
+    // matches no id. Vercel redirects /faq to '/#faq' before this page loads; this covers `gatsby serve`.
+    if (location.hash !== '#faq/') return;
+    window.history.replaceState(window.history.state, '', '/#faq');
+    document.getElementById('faq')?.scrollIntoView();
+  }, [location.hash]);
 
   return (
     <Layout>
@@ -125,33 +147,65 @@ export default function IndexPage(): JSX.Element {
                 dark:text-gray-300
               "
             >
-              {t('index_a-free-collection-of')}{' '}
-              <GradientText>{t('index_curated-resources')}</GradientText>{' '}
-              <br className="hidden md:block" />
-              {t('index_to-help-you-prepare-for-olympiads')}
+              {t('index_hero-lead')}{' '}
+              <GradientText>{t('index_hero-free')}</GradientText>
+              {t('index_hero-rest')}
             </p>
 
-            <div className="h-8 sm:h-8"></div>
+            <div className="h-8"></div>
 
-            <div className="flex md:justify-center">
+            {/* counted at build time (src/gatsby/site-stats.ts) */}
+            <dl className="grid sm:grid-cols-2 gap-4 w-full max-w-3xl md:mx-auto">
+              <div className={statCardClasses}>
+                <dt className="text-sm text-gray-600 dark:text-gray-400">
+                  {t('index_stat-problems', { subjects })}
+                  {mostHaveSolutions(stats) && (
+                    <>, {t('index_stat-problems-solved')}</>
+                  )}
+                </dt>
+                <dd className="order-first text-3xl font-black text-gray-900 dark:text-white">
+                  {approxCount(stats.problems)}+
+                </dd>
+              </div>
+              <div className={statCardClasses}>
+                <dt className="text-sm text-gray-600 dark:text-gray-400">
+                  {t('index_stat-archive', {
+                    competitions: stats.archiveCompetitions,
+                  })}
+                </dt>
+                <dd className="order-first text-3xl font-black text-gray-900 dark:text-white">
+                  {approxCount(stats.archiveFiles)}+
+                </dd>
+              </div>
+            </dl>
+
+            <div className="h-8"></div>
+
+            <div className="flex flex-wrap items-center md:justify-center gap-4">
               <GlowingRing>
                 <Link
-                  to="/dashboard"
+                  to="/problems/"
                   className={classNames(whiteButtonClassesBig, 'inline-block')}
                 >
-                  {t('index_get_started')}
+                  {t('index_cta-problems')}
                 </Link>
               </GlowingRing>
+              <Link
+                to="/archive/"
+                className={classNames(outlineButtonClassesBig, 'inline-block')}
+              >
+                {t('index_cta-archive')}
+              </Link>
             </div>
+            <div className="h-4"></div>
+            <p className="md:text-center text-base font-medium">
+              <Link to="/dashboard" className={linkTextStyles}>
+                {t('index_cta-modules')} &rarr;
+              </Link>
+            </p>
           </div>
 
           <div className="h-16 sm:h-10"></div>
-
-          <div className="flex md:justify-center md:text-xl text-gray-600 dark:text-gray-400 font-medium">
-            <span className="text-xs">{t('index_only-in-languages')}</span>
-          </div>
-          <div className="h-16 sm:h-14"></div>
-
 
           <div className="flex md:justify-center md:text-xl text-gray-600 dark:text-gray-400">
             <a
@@ -608,7 +662,7 @@ export default function IndexPage(): JSX.Element {
       {/* End Join our Team */}
 
       {/* Begin FAQ */}
-      <div className="bg-white dark:bg-dark-surface">
+      <div id="faq" className="bg-white dark:bg-dark-surface">
         <div className="max-w-screen-xl mx-auto pt-12 pb-16 sm:pt-16 sm:pb-20 px-4 sm:px-6 lg:pt-20 lg:pb-28 lg:px-8">
           <h2 className={classNames(headerClasses, 'dark:text-gray-100')}>
             {t('index_faq')}
@@ -652,7 +706,7 @@ export default function IndexPage(): JSX.Element {
                   </dt>
                   <dd className="mt-2">
                     <p className="text-base leading-6 text-gray-500 dark:text-gray-400">
-                      {t('index_a_topics')}
+                      {t('index_a_topics', { subjects })}
                     </p>
                   </dd>
                 </dl>
@@ -747,18 +801,6 @@ export default function IndexPage(): JSX.Element {
 
 
       </main>
-      <div className="bg-gray-100 dark:bg-gray-900">
-        <div className="max-w-screen-xl mx-auto py-12 px-4">
-          <p className="text-center text-base leading-6 text-gray-500 dark:text-dark-med-emphasis">
-            &copy; {new Date().getFullYear()} Olympiads XYZ. {t("index_powered-by")}
-            <br />
-            {t('index_copyright')}{' '}
-            <Link to="/license" className="underline">
-              {t('index_learn-more')}
-            </Link>
-          </p>
-        </div>
-      </div>
     </Layout>
   );
 }

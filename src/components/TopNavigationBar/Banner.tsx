@@ -1,16 +1,46 @@
+import { XIcon } from '@heroicons/react/solid';
+import { Link } from 'gatsby';
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSiteStats } from '../../hooks/useSiteStats';
+import {
+  approxCount,
+  mostHaveSolutions,
+  subjectList,
+} from '../../utils/siteStatsFormat';
 
-export default function Banner({
-  text,
-  action,
-  link,
-}: {
-  text: string;
-  action: string | null;
-  link: string | null;
-}) {
+// A dismissed banner stays closed on this browser until the id changes: give a
+// new announcement a new id. The counts in the text change with every build
+// and do not bring it back.
+export const BANNER_ID = 'problem-bank-2026-09';
+const BANNER_STORAGE_KEY = 'olympiads:banner-dismissed';
+
+export default function Banner() {
+  const { t } = useTranslation();
+  const stats = useSiteStats();
+  // rendered in the static HTML; hidden after hydration when dismissed here
+  const [dismissed, setDismissed] = React.useState(false);
+  React.useEffect(() => {
+    try {
+      if (window.localStorage.getItem(BANNER_STORAGE_KEY) === BANNER_ID) {
+        setDismissed(true);
+      }
+    } catch (e) {
+      // storage unavailable: the banner just shows
+    }
+  }, []);
+  const dismiss = () => {
+    setDismissed(true);
+    try {
+      window.localStorage.setItem(BANNER_STORAGE_KEY, BANNER_ID);
+    } catch (e) {
+      // closed for this page view only
+    }
+  };
+  if (dismissed || !stats || stats.problems === 0) return null;
+
   return (
-    <div className="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 dark:bg-[rgb(17_24_39)] px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+    <div className="relative isolate flex items-center gap-x-4 overflow-hidden bg-gray-50 dark:bg-[rgb(17_24_39)] pl-4 pr-2 py-2 sm:px-3.5 sm:before:flex-1">
       <div
         className="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl"
         aria-hidden="true"
@@ -36,33 +66,39 @@ export default function Banner({
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 min-w-0">
         <p className="text-sm leading-6 text-gray-900 dark:text-white">
-          {text}
+          {t('banner_problems', { n: approxCount(stats.problems) })}
+          {stats.subjects.length > 0 && (
+            <span className="hidden sm:inline">
+              {' '}
+              {t('banner_subjects', { subjects: subjectList(stats.subjects) })}
+            </span>
+          )}
+          {mostHaveSolutions(stats) && <> — {t('banner_most-solved')}</>}
+          <Link
+            to="/problems/"
+            className="ml-2 font-semibold underline decoration-gray-400 underline-offset-2 hover:decoration-current sm:hidden"
+          >
+            {t('banner_action')}&nbsp;<span aria-hidden="true">&rarr;</span>
+          </Link>
         </p>
-
-        {action && link ? (
-          <>
-            {/* <svg
-              viewBox="0 0 2 2"
-              className="inline h-0.5 w-0.5 fill-current"
-              aria-hidden="true"
-            >
-              <circle cx={1} cy={1} r={1} />
-            </svg> */}
-            <a
-              href={link}
-              className="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
-            >
-              {action} <span aria-hidden="true">&rarr;</span>
-            </a>
-          </>
-        ) : (
-          <></>
-        )}
+        <Link
+          to="/problems/"
+          className="hidden sm:block flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900"
+        >
+          {t('banner_action')} <span aria-hidden="true">&rarr;</span>
+        </Link>
       </div>
       <div className="flex flex-1 justify-end">
-        <span className="sr-only">Затвори</span>
+        <button
+          type="button"
+          onClick={dismiss}
+          className="-m-1 p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-900/5 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        >
+          <span className="sr-only">{t('banner_close')}</span>
+          <XIcon className="h-5 w-5" aria-hidden="true" />
+        </button>
       </div>
     </div>
   );

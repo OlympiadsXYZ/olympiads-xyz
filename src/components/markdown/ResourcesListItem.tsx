@@ -59,7 +59,7 @@ export default function ResourcesListItem({
   }, [userLang]); // hashes can change depending on lang
 
   const statusCol = (
-    <td className="pl-8 whitespace-nowrap text-sm font-medium">
+    <td className="pl-4 sm:pl-8 whitespace-nowrap text-sm font-medium">
       <div
         style={{ height: '1.25rem' }}
         className="flex items-center justify-center"
@@ -68,27 +68,33 @@ export default function ResourcesListItem({
       </div>
     </td>
   );
+  const source = resource.source ? (
+    resource.sourceDescription ? (
+      <TextTooltip content={resource.sourceDescription}>
+        {resource.source}
+      </TextTooltip>
+    ) : (
+      resource.source
+    )
+  ) : null;
+  // Below sm the source and the notes are stacked in the title cell: as
+  // separate columns they pushed the notes off a phone screen.
   const sourceCol = (
-    <td className="pl-6 sm:pl-8 pt-4 pb-1 sm:pb-4 min-w-[100px] max-w-[300px] w-[25%] text-sm leading-5 text-gray-500 dark:text-dark-med-emphasis">
-      {resource.source && (
-        <>
-          {resource.sourceDescription ? (
-            <TextTooltip content={resource.sourceDescription}>
-              {resource.source}
-            </TextTooltip>
-          ) : (
-            resource.source
-          )}
-        </>
-      )}
+    <td className="hidden sm:table-cell pl-8 py-4 min-w-[100px] max-w-[300px] w-[25%] text-sm leading-5 text-gray-500 dark:text-dark-med-emphasis">
+      {source}
     </td>
   );
   const urlCol = (
     <td
       className={`${
-        resource.source && 'pl-2 sm:pl-6'
-      } pr-4 sm:pr-6 pt-4 pb-1 sm:pb-4 w-1/3 min-w-[12rem] text-sm leading-5 font-medium text-gray-900 dark:text-dark-high-emphasis`}
+        resource.source ? 'pl-3 sm:pl-6' : 'pl-3 sm:pl-0'
+      } pr-2 sm:pr-6 py-4 sm:w-1/3 sm:min-w-[12rem] text-sm leading-5 font-medium text-gray-900 dark:text-dark-high-emphasis`}
     >
+      {source && (
+        <div className="sm:hidden mb-1 font-normal text-gray-500 dark:text-dark-med-emphasis">
+          {source}
+        </div>
+      )}
       <div className="flex items-center">
         {resource.starred && (
           <Tooltip content={t('starred-resources-tooltip')}>
@@ -110,12 +116,16 @@ export default function ResourcesListItem({
           {resource.title}
         </a>
       </div>
+      {resource.children && (
+        <div className="sm:hidden mt-1 font-normal text-gray-500 dark:text-dark-med-emphasis">
+          {resource.children}
+        </div>
+      )}
     </td>
   );
   const childrenCol = (
-    <td className="pl-6 sm:pl-8 pt-4 pb-1 sm:pb-4 min-w-[200px] w-[60%] text-sm leading-5 text-gray-500 dark:text-dark-med-emphasis">
-      <>{resource.children}</>
-      {/* This somehow fixes the centering on the mobile view, although it's still the same for desktop */}
+    <td className="hidden sm:table-cell pl-8 py-4 min-w-[200px] w-[60%] text-sm leading-5 text-gray-500 dark:text-dark-med-emphasis">
+      {resource.children}
     </td>
   );
 
