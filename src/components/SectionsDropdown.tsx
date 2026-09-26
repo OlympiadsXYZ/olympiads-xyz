@@ -1,13 +1,16 @@
 // Sections dropdown (Секции — docs/Structure.md), grouped by science:
 // ФИЗИКА heading over the physics sections, АСТРОНОМИЯ over astronomy.
-// The list is filtered by the site-wide level: a section with no categories
-// at the active level (e.g. Модерна физика at 7–8) is hidden.
+// A section is listed only when it has a published module at some level
+// (owner decision: Електромагнетизъм, Оптика, Астрономия … stay reachable by
+// URL but leave the menus until they have one), and the list is filtered by the
+// site-wide level: a section with no categories at the active level (e.g.
+// Модерна физика at 7–8) is hidden.
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
 import { Link } from 'gatsby';
 import * as React from 'react';
-import {
+import MODULE_ORDERING, {
   SECTIONS,
   SECTION_LABELS,
   SectionID,
@@ -16,6 +19,21 @@ import {
 import { useLevel } from '../context/LevelContext';
 import { useTranslation } from 'react-i18next';
 
+// Sections with at least one module in some chapter, whatever its level: the
+// section page falls back to a level that has modules (syllabusTemplate).
+export const SECTIONS_WITH_MODULES: SectionID[] = SECTIONS.filter(section =>
+  MODULE_ORDERING[section].some(chapter => chapter.items.length > 0)
+);
+
+/** The sections the menus list (Раздели dropdown, phone menu). */
+export function useNavSections(): SectionID[] {
+  const { level, levelReady } = useLevel();
+  return SECTIONS_WITH_MODULES.filter(
+    // before hydration show every section with modules to keep SSR markup stable
+    section => !levelReady || chaptersForLevel(section, level).length > 0
+  );
+}
+
 export default function SectionsDropdown({
   currentSection = null as string | null,
   sidebarNav = false,
@@ -23,11 +41,7 @@ export default function SectionsDropdown({
   noDarkMode = false,
 }): JSX.Element {
   const { t } = useTranslation();
-  const { level, levelReady } = useLevel();
-  const visibleSections = SECTIONS.filter(
-    // before hydration show everything to keep SSR markup stable
-    section => !levelReady || chaptersForLevel(section, level).length > 0
-  );
+  const visibleSections = useNavSections();
   return (
     <Menu as="div">
       {({ open }) => (

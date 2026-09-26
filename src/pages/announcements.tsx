@@ -24,7 +24,7 @@ export default function AnnouncementsPage(props: PageProps) {
     <Layout>
       <SEO title={t('announcements_title')} />
       <div className="min-h-screen bg-gray-100 dark:bg-dark-surface">
-        <TopNavigationBar linkLogoToIndex={true} redirectToDashboard={true} />
+        <TopNavigationBar redirectToDashboard={true} />
         <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-dark-high-emphasis text-center mx-auto mt-6">
           {t('announcements_title')}
         </h1>

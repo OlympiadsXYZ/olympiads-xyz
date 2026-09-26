@@ -224,7 +224,28 @@ exports.onCreateNode = async api => {
   }
 };
 
-exports.createPages = async ({ graphql, actions, reporter }) => {
+// Counts the home page, the announcement bar and the 404 page show ("над 9000
+// задачи"), from the published problems and the archive catalog; read with
+// src/hooks/useSiteStats.ts. See src/gatsby/site-stats.ts.
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+  const { computeSiteStats } = require('./src/gatsby/site-stats');
+  const stats = computeSiteStats(__dirname);
+  console.info(
+    `[site-stats] ${stats.problems} problems (${stats.problemsWithSolution} with an official solution) in ${stats.papers} papers; archive ${stats.archiveFiles} files`
+  );
+  actions.createNode({
+    ...stats,
+    id: createNodeId('site-stats'),
+    parent: null,
+    children: [],
+    internal: {
+      type: 'SiteStats',
+      contentDigest: createContentDigest(stats),
+    },
+  });
+};
+
+exports.createPages =async ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions;
   const aliasFile = './content/problem-aliases.json';
   if (fs.existsSync(aliasFile)) {

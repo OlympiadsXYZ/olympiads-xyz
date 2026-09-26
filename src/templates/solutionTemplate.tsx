@@ -63,7 +63,7 @@ export default function Template(props) {
     : undefined;
 
   return (
-    <Layout>
+    <Layout footer="sidebar">
       <SEO
         title={`${xdm.frontmatter.title} · ${xdm.frontmatter.source}`}
         description={`${xdm.frontmatter.source}: ${xdm.frontmatter.title} — ${

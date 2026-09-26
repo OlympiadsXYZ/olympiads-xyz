@@ -216,8 +216,9 @@ const SearchModalInterface: React.FC<SearchModalInterfaceProps> = ({
           <SearchIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
         </span>
       </div>
+      {/* on a phone the results fill the screen below the input (SearchModal's panel has my-2) */}
       {trimmed !== '' && (
-        <div className="max-h-[20rem] sm:max-h-[40rem] overflow-y-auto border-t border-gray-200 dark:border-gray-700">
+        <div className="max-h-[calc(100dvh-5rem)] sm:max-h-[40rem] overflow-y-auto border-t border-gray-200 dark:border-gray-700">
           {moduleHits.length > 0 && (
             <div className="divide-y divide-gray-200 dark:divide-gray-700">
               {heading('Модули')}

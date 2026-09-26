@@ -119,7 +119,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="inline-block bg-white dark:bg-dark-surface rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 sm:my-16 sm:align-middle sm:max-w-lg w-full">
+            <div className="inline-block bg-white dark:bg-dark-surface sm:rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-2 sm:my-16 sm:align-middle sm:max-w-lg w-full">
               <Suspense
                 fallback={
                   <p
