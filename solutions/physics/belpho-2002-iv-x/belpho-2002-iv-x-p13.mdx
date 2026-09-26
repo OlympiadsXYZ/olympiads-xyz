@@ -1,0 +1,86 @@
+---
+id: belpho-2002-iv-x-p13
+source: 'BelPhO 2002, Заключителен етап, 9–11 клас'
+title: 'Задача 11.3'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/BelPhO/2002/belpho-2002-iv-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T06:44:21.911Z'
+verifier: 'mechanical'
+---
+
+*Белорусская республиканская физическая олимпиада. Мозырь, 2002 год*
+
+## Условие
+
+Простейший модулированный радиосигнал может быть описан функцией $E = E_0\cos\omega_0t(1 + a\cos\omega_1t)$, где $\omega_0$ - несущая частота, $\omega_1$ - частота модуляции (частота полезного сигнала), причем $\omega_0 \gg \omega_1$, $a, E_0$ - постоянные величины, определяющие амплитуду и глубину модуляции сигнала. Скорость распространения электромагнитной волны $c$ зависит от ее частоты (из-за дисперсии) по приближенному закону $c(\omega) = c_0 - \gamma(\omega - \omega_0)$, где $c_0$ - скорость распространения волны с частотой $\omega_0$, $\gamma$ - известная малая постоянная $(c_0 \gg \gamma\omega_0)$. Определите скорость распространения полезного сигнала (скорость распространения огибающей) в данных условиях.
+
+*Подсказки*
+
+$$
+\cos A + \cos B = 2\cos\frac{A+B}{2}\cos\frac{A-B}{2};
+$$
+
+$$
+2\cos A\cos B = \cos(A+B) + \cos(A-B).
+$$
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $c = \frac{c_0}{1 + \gamma\frac{\omega_0}{c_0}} \approx c_0\left(1 - \gamma\frac{\omega_0}{c_0}\right)$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Представим сигнал в виде суммы трех гармонических составляющих
+
+$$
+E = E_0\cos\omega_0t(1 + a\cos\omega_1t) = E_0\cos\omega_0t + \frac{aE_0}{2}\cos(\omega_0 - \omega_1)t + \frac{aE_0}{2}\cos(\omega_0 + \omega_1)t. \qquad (1)
+$$
+
+Распространение монохроматической волны в пространстве вдоль оси $x$ описывается функцией
+
+$$
+E(t,x) = E_0\cos\left(\omega t - \frac{2\pi}{\lambda}x\right) = E_0\cos\left(\omega t - \frac{\omega}{c}x\right), \qquad (2)
+$$
+
+где $c$ - скорость распространения волны с частотой $\omega$. Применим эту формулу к сигналу (1), учитывая формулу для скорости распространения волн
+
+$$
+E(t,x) = E_0\cos\left(\omega_0t - \frac{\omega_0}{c_0}x\right)\omega_0t + \frac{aE_0}{2}\cos\left((\omega_0 - \omega_1)t - \frac{(\omega_0 - \omega_1)x}{c_0 + \gamma\omega_1}\right) + \frac{aE_0}{2}\cos\left((\omega_0 + \omega_1)t - \frac{(\omega_0 + \omega_1)x}{c_0 - \gamma\omega_1}\right)
+$$
+
+Далее упростим это выражение, используя малость величин $\dfrac{\omega_1}{\omega_0}, \dfrac{\gamma\omega_1}{c_0} \ll 1$. Тогда
+
+$$
+\frac{(\omega_0 - \omega_1)x}{c_0 + \gamma\omega_1} = \frac{x\omega_0}{c_0}\cdot\frac{1 - \frac{\omega_1}{\omega_0}}{1 + \gamma\frac{\omega_1}{c_0}} \approx \frac{x\omega_0}{c_0}\left(1 - \frac{\omega_1}{\omega_0} - \gamma\frac{\omega_1}{c_0}\right);
+$$
+
+$$
+\frac{(\omega_0 + \omega_1)x}{c_0 - \gamma\omega_1} \approx \frac{x\omega_0}{c_0}\left(1 + \frac{\omega_1}{\omega_0} + \gamma\frac{\omega_1}{c_0}\right);
+$$
+
+Воспользуемся теперь обратным преобразованием от суммы косинусов к их произведению
+
+$$
+E(t,x) = E_0\cos\left(\omega_0t - \frac{\omega_0}{c_0}x\right)\left(1 + a\cos\left(\omega_1t - \frac{\omega_0}{c_0}x\left(\frac{\omega_1}{\omega_0} + \gamma\frac{\omega_1}{c_0}\right)\right)\right).
+$$
+
+Скорость распространения сигнала можно найти из условия постоянства фазы (полагая ее равной, например, нулю). Окончательно получаем, что искомая скорость распространения огибающей (полезного сигнала)
+
+$$
+c = \frac{x}{t} = \frac{\omega_1}{\frac{\omega_0}{c_0}\left(\frac{\omega_1}{\omega_0} + \gamma\frac{\omega_1}{c_0}\right)} = \frac{c_0}{1 + \gamma\frac{\omega_0}{c_0}} \approx c_0\left(1 - \gamma\frac{\omega_0}{c_0}\right).
+$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2002problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BelPhO/IV/2002/2002problems.pdf)
+· официални решения: [2002solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BelPhO/IV/2002/2002solutions.pdf)

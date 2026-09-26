@@ -1,0 +1,199 @@
+---
+id: usapho-2021-x-p3
+source: 'USAPhO 2021, Полуфинал'
+title: 'Задача 3. A3 · Electroneering'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2021/usapho-2021-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T06:10:40.500Z'
+verifier: 'mechanical'
+---
+
+*USA Physics Olympiad Exam — 2021 USAPhO · 19 април 2021 г.*
+
+<details>
+<summary>Information About The 2021 USAPhO</summary>
+
+- The 2021 USAPhO consists of two 90-minute parts taking place on two separate days:
+  - Part A: Monday, April 19 from 4:00 pm to 5:30 pm Eastern Time
+  - Part B: Wednesday, April 21 from 4:00 pm to 5:30 pm Eastern Time
+
+  The exam is hosted by AAPT on the platform provided by Art of Problem Solving.
+- This year, we require the exam to be proctored by either your high school science/physics teacher, or your parent/guardian.
+- Before you start the exam, make sure you are provided with blank paper, both for your answers and scratch work, writing utensils, a hand-held scientific calculator with memory and programs erased, and a computer for you to log into the USAPhO testing page. Then agree to the Honor Policy, and download the USAPhO exam papers.
+- At the end of the exam, you have 20 minutes to upload solutions to all of the problems for that part. For each problem, scan or photograph each page of your solution, combine them into a single PDF file, and upload them on the testing platform.
+- USAPhO graders are not responsible for missing pages or illegible handwriting. No later submissions will be accepted.
+
+Thank you for participating in the USAPhO this year under such extraordinary circumstances. We hope that you and your family stay safe, and that you continue to encourage more students like you to study physics and try out the $F = ma$ exam hosted by AAPT.
+
+We acknowledge the following people for their contributions to this year’s exam (in alphabetical order):
+
+*JiaJia Dong, Mark Eichenlaub, Abijith Krishnan, Kye W. Shi, Brian Skinner, Mike Winer, and Kevin Zhou.*
+
+</details>
+
+## Условие
+
+An electron is a particle with charge $-q$, mass $m$, and magnetic moment $\mu$. In this problem we will explore whether a classical model consistent with these properties can also explain the rest energy $E_0 = mc^2$ of the electron.
+
+Let us describe the electron as a thin spherical shell with uniformly distributed charge and radius $R$. Recall that the magnetic moment of a closed, planar loop of current is always equal to the product of the current and the area of the loop. For the electron, a magnetic moment can be created by making the sphere rotate around an axis passing through its center.
+
+**a.** If no point on the sphere’s surface can travel faster than the speed of light (in the frame of the sphere’s center of mass), what is the maximum magnetic moment that the sphere can have? You may use the integral:
+
+$$
+\int_0^{\pi}\sin^3\theta\,d\theta = \frac{4}{3}.
+$$
+
+**b.** The electron’s magnetic moment is known to be $\mu = q\hbar/2m$, where $\hbar$ is the reduced Planck constant. In this model, what is the minimum possible radius of the electron? Express your answer in terms of $m$ and fundamental constants.
+
+**c.** Assuming the radius is the value you found in part (b), how much energy is stored in the electric field of the electron? Express your answer in terms of $E_0 = mc^2$ and the fine structure constant,
+
+$$
+\alpha = \frac{q^2}{4\pi\epsilon_0\hbar c} \approx \frac{1}{137}.
+$$
+
+**d.** Roughly estimate the total energy stored in the magnetic field of the electron, in terms of $E_0$ and $\alpha$. (Hint: one way to do this is to suppose the magnetic field has roughly constant magnitude inside the sphere and is negligible outside of it, then estimate the field inside the sphere.)
+
+**e.** How does your estimate for the total energy in the electric and magnetic fields compare to $E_0$?
+
+In parts (a) and (b), you can also give your answers up to a dimensionless multiplicative constant for partial credit.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a.** $\mu = \frac{1}{3}qcR$
+- **b.** $R = \frac{3}{2}\frac{\hbar}{mc}$
+- **c.** $U_E = \frac{1}{3}\alpha E_0$
+- **d.** $U_B \sim \alpha E_0$
+- **e.** Both U<sub>E</sub> and U<sub>B</sub> are much smaller than E<sub>0</sub>, by a factor of α ≪ 1, so this classical model cannot explain the origin of the electron’s rest energy.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.**
+
+A point on the sphere’s equator moves at a speed $\omega R$, where $\omega$ is the angular velocity of rotation. Setting $\omega R = c$ gives $\omega = c/R$.
+
+The spinning sphere can be thought of as a stack of infinitesimal current loops, all of which have a magnetic moment pointing in the same direction. Consider making a thin, circular slice of the sphere’s surface, corresponding to polar angles in the range $(\theta, \theta + d\theta)$. This slice has a radius $R\sin\theta$, so that the surface area of the slice is
+
+$$
+ds = 2\pi R\sin\theta\,R\,d\theta.
+$$
+
+The charge of the slice is
+
+$$
+dQ = -\frac{q\,ds}{4\pi R^2} = -\frac{q\sin\theta}{2}.
+$$
+
+Since the charge $dQ$ moves around the rotation axis one time per period $T = 2\pi/\omega$, the corresponding current is
+
+$$
+dI = \frac{dQ}{T} = -\frac{\omega q\sin\theta}{4\pi}.
+$$
+
+The magnitude of the magnetic moment of this slice is
+
+$$
+d\mu = \pi(R\sin\theta)^2\,|dI| = \frac{1}{4}q\omega R^2\sin^3\theta\,d\theta.
+$$
+
+Using the provided integral, the total magnetic moment is
+
+$$
+\mu = \int_0^{\pi}\frac{1}{4}q\omega R^2\sin^3\theta\,d\theta = \frac{1}{3}qcR.
+$$
+
+If you weren’t able to do this, you could also have given the answer $\mu \sim qcR$, which can be derived by dimensional analysis, for partial credit.
+
+**Alternative solution:** Note that for a uniformly charged ring of mass $dm$, charge $dq$, and radius $r$, rotating with angular velocity $\omega$, the ratio of the magnetic moment and the angular momentum is
+
+$$
+\frac{\mu}{L} = \frac{\pi r^2(\omega\,dq/2\pi)}{(r^2\,dm)\omega} = \frac{1}{2}\frac{dq}{dm}.
+$$
+
+The ratio is independent of $r$ and $\omega$. Since the sphere can be decomposed into such rings, the total magnetic moment and total angular momentum must have the same ratio,
+
+$$
+\frac{\mu}{L} = \frac{1}{2}\frac{q}{m}.
+$$
+
+Finally, we know that $L = (2/3)mR^2\omega$ for a spherical shell. Plugging this in and using $\omega = c/R$ gives $\mu = qcR/3$ as before, but with no integration required.
+
+**b.**
+
+Since the magnetic moment is fixed, and we want the radius to be small, we want the electron to be spinning as fast as possible. Thus, the magnetic moment has the value found in part (a), and equating this to the known value gives
+
+$$
+R = \frac{3}{2}\frac{\hbar}{mc}.
+$$
+
+Again, you can get $R \sim \hbar/mc$ by dimensional analysis.
+
+**c.**
+
+For a collection of charges, the total energy stored in the electrostatic field is
+
+$$
+U_E = \frac{1}{2}\sum_i q_iV_i
+$$
+
+where $V_i$ is the electric potential at $q_i$. In this case, the total charge is $q$, and all of the charge is at potential $q/4\pi\epsilon_0R$, so
+
+$$
+U_E = \frac{q^2}{8\pi\epsilon_0R}.
+$$
+
+Using the result of part (b),
+
+$$
+U_E = \frac{1}{3}\alpha E_0.
+$$
+
+Note that you can’t get this answer by dimensional analysis alone, since $\alpha$ is dimensionless. (However, if you found $R$ by dimensional analysis, and additionally reasoned that $U_E$ could depend only on $q$, $\epsilon_0$, and $R$, then you could derive $U_E \sim \alpha E_0$, for partial credit.)
+
+**d.**
+
+Following the hint, we can estimate
+
+$$
+U_B \sim \frac{B_0^2}{2\mu_0}\left(\frac{4}{3}\pi R^3\right)
+$$
+
+where $B_0$ is the typical magnetic field inside the sphere. Actually finding the value of $B_0$ would require doing some complicated integrals. To get a rough estimate, note that if we replaced the sphere with a ring of charge, then at the center of the ring,
+
+$$
+B_0 \sim \frac{\mu_0I}{R} \sim \frac{\mu_0qc}{R^2}.
+$$
+
+Thus, we have
+
+$$
+U_B \sim \frac{1}{\mu_0}\left(\frac{\mu_0qc}{R^2}\right)^2R^3 \sim \frac{\mu_0q^2c^2}{R} \sim \frac{\mu_0mc^3q^2}{\hbar}.
+$$
+
+To get this in terms of the fine structure constant, we use $c^2 = 1/\mu_0\epsilon_0$, giving
+
+$$
+U_B \sim mc^2\frac{q^2}{\epsilon_0\hbar c} \sim \alpha E_0.
+$$
+
+An even faster way to get this result is to note that in general, the energy stored in magnetic fields tends to be a factor of order $(v/c)^2$ smaller than the energy stored in electric fields, where $v$ is the speed of the charge. In this problem the charge is all moving relativistically, so we must have $U_B \sim U_E$.
+
+**e.**
+
+Both $U_E$ and $U_B$ are much smaller than $E_0$, by a factor of $\alpha \ll 1$. Thus, this classical model cannot explain the origin of the electron’s rest energy.
+
+There were many attempts to make classical models of the electron in the early 20$^{\mathrm{th}}$ century, but they all ran into difficulties like this one. For more on this subject, see chapter II-28 of the Feynman lectures.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2021-USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2021/2021-USAPhO.pdf)
+· официални решения: [2021-USAPhO_Solutions_v3.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2021/2021-USAPhO_Solutions_v3.pdf)

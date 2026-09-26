@@ -1,0 +1,624 @@
+---
+id: baao-2024-ii-r2-p1
+source: 'BAAO 2024, II кръг'
+title: 'Задача 1. Maximum Payload to Mars'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/BAAO/2024/baao-2024-ii-r2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T06:47:07.707Z'
+verifier: 'mechanical'
+---
+
+*British Astronomy and Astrophysics Olympiad 2023-2024 — Astro Round 2 — Tuesday 27th February 2024 · 27 февруари 2024 г. · 35 т.*
+
+<details>
+<summary>Указания</summary>
+
+**Time**: 3 hours ($\sim 60$ minutes for Q1, $\sim 55$ minutes for Q2 and $\sim 65$ minutes for Q3).
+
+**Questions**: All three questions should be attempted. Each question contains independent parts so that later parts can be attempted even if earlier parts are incomplete.
+
+**Solutions**: Answers and calculations are to be written on loose paper. START EACH QUESTION ON A NEW PAGE. Students should ensure their **name** and **school** is clearly written on the **first** answer sheet and that **all** pages are numbered. A standard formula booklet may be used.
+
+**Clarity**: Solutions must be written legibly, in black pen, and working down the page. Scribble will not be marked and overall clarity is an important aspect of this exam.
+
+**Instructions**: To accommodate students sitting the paper at different times, please **do not discuss** any aspect of the paper on the internet until 8 am Saturday 2nd March.
+
+**Calculators**: Any standard calculator may be used, but calculators cannot be programmable and must not have symbolic algebra capability.
+
+</details>
+
+<details>
+<summary>Training Dates and the IOAA</summary>
+
+**Training Dates and the IOAA** (Vassouras, Rio de Janeiro, Brazil, 17th - 26th August 2024)
+
+*The team will be chosen from students taking this paper. The best students that are eligible to represent the UK at the IOAA will be invited to attend the* **Training Camp** *to be held in Oxford from* **Tuesday 2nd to Saturday 6th April 2024**. *Astronomy material will be covered; problem solving skills and observational skills (telescope and naked eye observations) will be developed. At the Training Camp a Data Analysis exam along with a Round 3 theory paper will be sat. A team of five students (plus one reserve) will be selected for further training, including additional training camps in the summer.*
+
+*The BAAO are very proud to be sponsored by G-Research*
+
+</details>
+
+<details>
+<summary>Important Constants</summary>
+
+| Constant | Symbol | Value |
+|---|---|---|
+| Speed of light | $c$ | $3.00 \times 10^{8}\ \mathrm{m\,s^{-1}}$ |
+| Earth’s rotation period | 1 day | 24 hours |
+| Earth’s orbital period | 1 year | 365.25 days |
+| parsec | pc | $3.09 \times 10^{16}\ \mathrm{m}$ |
+| Astronomical Unit | au | $1.50 \times 10^{11}\ \mathrm{m}$ |
+| Radius of the Sun | $R_{\odot}$ | $6.96 \times 10^{8}\ \mathrm{m}$ |
+| Radius of the Earth | $R_{\oplus}$ | $6.37 \times 10^{6}\ \mathrm{m}$ |
+| Mass of the Sun | $M_{\odot}$ | $1.99 \times 10^{30}\ \mathrm{kg}$ |
+| Mass of the Earth | $M_{\oplus}$ | $5.97 \times 10^{24}\ \mathrm{kg}$ |
+| Luminosity of the Sun | $L_{\odot}$ | $3.83 \times 10^{26}\ \mathrm{W}$ |
+| Absolute magnitude of the Sun | $\mathcal{M}_{\odot}$ | $4.74$ |
+| Hubble constant | $H_0$ | $70\ \mathrm{km\ s^{-1}\ Mpc^{-1}}$ |
+| Stephan-Boltzmann constant | $\sigma$ | $5.67 \times 10^{-8}\ \mathrm{W\ m^{-2}\ K^{-4}}$ |
+| Gravitational constant | $G$ | $6.67 \times 10^{-11}\ \mathrm{m^{3}\ kg^{-1}\ s^{-2}}$ |
+| Boltzmann constant | $k_{\mathrm{B}}$ | $1.38 \times 10^{-23}\ \mathrm{J\ K^{-1}}$ |
+| Permittivity of free space | $\varepsilon_0$ | $8.85 \times 10^{-12}\ \mathrm{F\ m^{-1}}$ |
+| Permeability of free space | $\mu_0$ | $4\pi \times 10^{-7}\ \mathrm{H\ m^{-1}}$ |
+| Planck’s constant | $h$ | $6.63 \times 10^{-34}\ \mathrm{J\ s}$ |
+| Elementary charge | $e$ | $1.60 \times 10^{-19}\ \mathrm{C}$ |
+| Proton rest mass | $m_{\mathrm{p}}$ | $1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Electron rest mass | $m_{\mathrm{e}}$ | $9.11 \times 10^{-31}\ \mathrm{kg}$ |
+| Wien’s displacement law | $\lambda_{\max}T$ | $2.90 \times 10^{-3}\ \mathrm{m\ K}$ |
+| Avagadro’s constant | $N_A$ | $6.02 \times 10^{23}\ \mathrm{mol^{-1}}$ |
+
+**Basic calculus formulae**:
+
+Chain rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}f(g(x)) = f'(g(x))g'(x)
+$$
+
+Product rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}(uv) = \frac{\mathrm{d}u}{\mathrm{d}x}v + u\frac{\mathrm{d}v}{\mathrm{d}x}
+$$
+
+Quotient rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u}{v}\right) = \frac{\frac{\mathrm{d}u}{\mathrm{d}x}v - u\frac{\mathrm{d}v}{\mathrm{d}x}}{v^2}
+$$
+
+Integration by parts
+$$
+\int u\frac{\mathrm{d}v}{\mathrm{d}x}\,\mathrm{d}x = uv - \int v\frac{\mathrm{d}u}{\mathrm{d}x}\,\mathrm{d}x
+$$
+
+Standard integral
+$$
+\int \frac{1}{x}\,\mathrm{d}x = \ln|x| + C
+$$
+
+</details>
+
+<details>
+<summary>Important Formulae</summary>
+
+You might find the diagram of an elliptical orbit below useful in solving some of the questions:
+
+**Elements of an elliptic orbit**:
+
+- $a = \mathbf{OA}\ (= \mathbf{OP})$ semi-major axis
+- $b = \mathbf{OB}\ (= \mathbf{OC})$ semi-minor axis
+- $e = \sqrt{1 - \frac{b^2}{a^2}}$ eccentricity
+- $\mathbf{F}$ focus
+- $\mathbf{PF} = a(1 - e)$ periapsis distance (shortest distance from $\mathbf{F}$)
+- $\mathbf{AF} = a(1 + e)$ apoapsis distance (longest distance from $\mathbf{F}$)
+
+**Kepler’s Third Law**:
+$$
+T^2 = \frac{4\pi^2}{GM}a^3
+$$
+
+**Vis-Viva Equation**:
+$$
+v^2 = GM\left(\frac{2}{r} - \frac{1}{a}\right)
+$$
+
+**Wien’s Displacement Law**:
+$$
+\lambda_{\max}T = \mathrm{constant}
+$$
+
+**Stephan-Boltzmann Law**:
+$$
+L = 4\pi R^2\sigma T^4
+$$
+
+**Brightness (Intensity)**:
+$$
+b = \frac{L}{4\pi d^2}
+$$
+
+**Magnitudes**:
+$$
+\frac{b_1}{b_0} = 10^{-0.4(m_1 - m_0)}
+$$
+$$
+m - \mathcal{M} = 5\log\left(\frac{d}{10}\right)
+$$
+
+**Distance-Parallax Relation**:
+$$
+d = \frac{1}{p}
+$$
+
+**Rayleigh Criterion**:
+$$
+\theta = \frac{1.22\lambda}{D}
+$$
+
+**Redshift**:
+$$
+z = \frac{\Delta\lambda}{\lambda_{\mathrm{emit}}} \approx \frac{v}{c}
+$$
+
+**Hubble’s Law**:
+$$
+v = H_0 d
+$$
+
+</details>
+
+<details>
+<summary>Note for markers</summary>
+
+**Astro Round 2 2024 Paper Solutions and Marking Guidelines**
+
+**Note for markers:**
+
+- Answers to two or three significant figures are generally acceptable. The solution may give more in order to make the calculation clear. Units should be present on final answers when appropriate.
+- There are multiple ways to solve some of the questions; please accept all good solutions that arrive at the correct answer. Students getting the answer in a $\boxed{\text{box}}$ will get all the marks available for that calculation / part of the question (as indicated in red), so long as there are no unphysical / nonsensical steps or assumptions made (students may not explicitly calculate the intermediate stages and should not be penalised for this so long as their argument is clear).
+
+In these solutions a black [1] is a marking point and a bold **[n]** is the total for that calculation or part (printed in red in the source).
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [a.](#a)
+- [b.](#b)
+- [c.](#c)
+- [d.](#d)
+
+</nav>
+
+In order to travel from Earth to Mars, a spacecraft must travel on an elliptical orbit around the Sun. To make the transfer as efficient as possible, this ellipse should be chosen to have its perihelion (distance of closest approach to the sun) equal to the radius of the Earth’s orbit, and its aphelion (greatest distance from the sun) equal to that of Mars, as shown in Figure 1 below below. This is known as a Hohmann transfer orbit (HTO), and one can classically calculate the increase in speed between the Earth and a spacecraft necessary to get onto the ellipse. However, this simplistic calculation does not account for the energy needed to escape the Earth’s gravitational pull. This means it would only be accurate for a spacecraft orbiting the Sun at $1$ au with no planet nearby - in reality, the change in speed of the spacecraft must be larger so it can get onto a hyperbolic orbit around the Earth that will asymptote to the transfer ellipse’s perihelion velocity. By considering the increase and decrease in the speed of a spacecraft to move from escaping Earth’s gravity and being captured by Mars’ gravity, we can calculate the maximum payload we can transfer with current technology.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '83.1%', '--fig-max': '532px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2024-ii-r2/p1-fig1.png" alt="Left: the Sun at the centre of two circular orbits (Earth inner, Mars outer) with a dashed elliptical transfer orbit touching Earth (t=t1) and Mars (t=t2); Mars also shown at t=t1. Right: a zoomed-in box 'Zoomed in view of Earth' showing Earth inside its initial circular orbit, a Δv arrow and a dashed hyperbolic escape orbit approaching a vertical dashed asymptote." width="1663" height="930" loading="lazy" decoding="async" />
+<figcaption>**Figure 1:** The Hohmann transfer orbit (HTO) between Earth and Mars, as well as the hyperbolic departure orbit from Earth needed to escape the Earth’s gravity and move onto the elliptical transfer orbit. Credit: Ben Woodrow.</figcaption>
+</figure>
+
+<ProblemSection id="a">
+
+### a. (10 т.)
+
+The spacecraft leaves Earth at time $t_1$ and travels on the elliptical transfer orbit until it reaches its aphelion at time $t_2$, where it intercepts Mars, which is assumed to have a circular orbit with semi-major axis $1.52$ au. Assume the Earth’s orbit is also circular and all orbits are coplanar.
+
+**(i)** Calculate the transfer time $\Delta t = t_2 - t_1$ in years, and hence calculate the Earth-Sun-Mars angle, $\varphi$, at $t = t_1$ required for a successful transfer. **[3 т.]**
+
+**(ii)** Calculate the time between consecutive occurrences of this phase angle, known as the synodic period $T_{\mathrm{syn}}$. **[2 т.]**
+
+**(iii)** Calculate the perihelion velocity, $v_p$, of the transfer orbit and the orbital velocity of the Earth, $v_{\oplus}$ (these are both in the Sun’s rest frame) and hence show that the required increase in the velocity of the spacecraft, $\Delta v_{HTO,\oplus}$ (parallel to the Earth’s orbit) in the Earth’s rest frame is $\Delta v_{HTO,\oplus} = v_p - v_{\oplus} \approx 3\ \mathrm{km\ s^{-1}}$. **[3 т.]**
+
+**(iv)** What is the minimum distance from the Earth (in Earth radii) necessary for the spacecraft to be travelling at $\Delta v_{HTO,\oplus}$ (as measured by observers on Earth) and NOT still be in an elliptical orbit around the Earth? **[2 т.]**
+
+To put your answer to the previous question into context, geostationary satellites have an orbital radius of $\sim 6.6R_{\oplus}$, and given all spacecraft orbits prior to interplanetary transfer are in low Earth orbit (which is much closer) it should be clear that in order to enter the HTO, the spacecraft must first escape the gravity of the Earth. Whilst this could be achieved with a parabolic orbit, we need the asymptotic speed to be equal to the $\Delta v_{HTO,\oplus}$ calculated and so only a hyperbolic orbit can achieve this.
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### b. (14 т.)
+
+The spacecraft is initially in a circular orbit around the Earth with a radius of $r_0 = 8.00 \times 10^6$ m and orbital velocity $v_{c,\oplus}$ (all velocities in this part of the question are in the Earth’s rest frame). It then makes a single, instantaneous change in velocity $\Delta v_{hyp,\oplus}$, parallel to its direction of travel, to accelerate into a hyperbolic orbit, with a perigee velocity of $v_{p,\oplus} = v_{c,\oplus} + \Delta v_{hyp,\oplus}$ at a perigee distance of $r_0$, and an asymptotic velocity $v_{\infty,\oplus}$ (the value that the spacecraft’s velocity approaches as it gets far away from the Earth). To join the HTO we will assume $v_{\infty,\oplus} = \Delta v_{HTO,\oplus}$.
+
+**(i)** Calculate the total specific energy, $\varepsilon = \frac{E_{\mathrm{tot}}}{m}$, of the desired hyperbolic orbit, where $E_{\mathrm{tot}}$ is the total energy of the orbit and $m$ is the mass of the spacecraft. **[2 т.]**
+
+**(ii)** Find an expression for $\Delta v_{hyp,\oplus}$ in terms of $\varepsilon$, $r_0$, $G$ and $M_{\oplus}$ and hence calculate its value. [Hint: you should find $\Delta v_{hyp,\oplus} > \Delta v_{HTO,\oplus}$.] **[3 т.]**
+
+**(iii)** Hence calculate the specific angular momentum $h = rv_{\perp}$ of the hyperbolic orbit, where $r$ is the spacecraft’s distance from the focus of the hyperbolic orbit (in this case the centre of the Earth) and $v_{\perp}$ is the component of its velocity perpendicular to that distance. Note that $h$ is conserved over the orbit. **[2 т.]**
+
+**(iv)** Let $\theta$ be the perigee-Earth-spacecraft angle, which increases with time $t$ as the spacecraft moves along the hyperbolic orbit. Show that $\frac{\mathrm{d}\theta}{\mathrm{d}t} = \frac{h}{r^2}$, derive an expression for $\frac{\mathrm{d}r}{\mathrm{d}t}$ (in terms of $h$, $r$, $\varepsilon$, and any relevant constants), and hence find an expression for $\frac{\mathrm{d}r}{\mathrm{d}\theta}$. **[4 т.]**
+
+**(v)** It can be shown that solving your expression for $\frac{\mathrm{d}r}{\mathrm{d}\theta}$ gives the result $r = \frac{p}{1+e\cos\theta}$ where $p$ and $e$ are constants given by $p = \frac{h^2}{GM_{\oplus}}$ and $e = \sqrt{1 + \frac{h^2\varepsilon}{G^2M_{\oplus}^2}}$. Use this to determine the required Sun-Earth-Spacecraft angle at the time when the spacecraft accelerates into its hyperbolic orbit. **[3 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### c. (5 т.)
+
+Once the spacecraft arrives at Mars, it will approach Mars on a hyperbolic orbit similar to its departure orbit from Earth a velocity (relative to Mars) of $\Delta v_{HTO,M}$. It then has to decrease its velocity by $\Delta v_{hyp,M}$ to be captured into a circular orbit of radius $r$ (to be determined) and orbital velocity $v_{c,M}$. You are given that for this hyperbolic orbit, $\varepsilon = 3.49 \times 10^6$ J kg$^{-1}$, and that the mass of Mars, $M_M = 6.42 \times 10^{23}$ kg.
+
+**(i)** Find the value of $r$ that minimises $\Delta v_{hyp,M}$. [Hint: instead of trying to use the same equation as used in b.(ii), rewrite it as $\gamma = f(\alpha)$ where $\gamma = \frac{1}{\sqrt{\varepsilon}}\Delta v_{hyp,M}$ and $\alpha = \frac{\varepsilon r}{GM_M}$ are both dimensionless variables, and find the value of $\alpha$ that minimises $\gamma$.] **[4 т.]**
+
+**(ii)** Hence determine the minimum $\Delta v_{hyp,M}$ to capture into a circular orbit at Mars. **[1 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="d">
+
+### d. (6 т.)
+
+From this we can calculate the magnitude of the total change in velocity by the spacecraft that has to be done by its rockets, $\Delta v_{tot} = \Delta v_{hyp,\oplus} + \Delta v_{hyp,M}$, and hence calculate the maximum payload mass that it can carry to Mars.
+
+**(i)** Consider the ejection by the spacecraft’s engine of a small mass of fuel $\delta m$ at an exhaust velocity $v_e$. Show that the corresponding change in velocity of the spacecraft, $\delta v$, is given by $\delta v = \frac{v_e}{m}\delta m$, where $m$ is the current mass of the spacecraft. **[1 т.]**
+
+**(ii)** Hence, by integrating, show that the total change in velocity of the spacecraft is given by $\Delta v = v_e\ln\frac{m_1}{m_0}$, where $m_0$ is the dry mass of the spacecraft (total mass of everything except fuel), and $m_1$ is the wet mass (total mass including fuel). **[2 т.]**
+
+**(iii)** A future spacecraft for travelling to Mars has a dry mass (not including payload) of 1000 kg, can carry 5000 kg of fuel, and has an effective exhaust velocity from a hydrogen-oxygen rocket of 4.25 km s$^{-1}$. Calculate the maximum mass of payload it can carry to Mars, assuming that $\Delta v_{tot}$ is the total change in velocity needed for the mission.
+
+*Use $\Delta v_{tot} = 5$ km s$^{-1}$ if you did not make progress with previous parts.* **[3 т.]**
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a., (i)** 0.771 rad
+- **a., (ii)** 2.14 years
+- **a., (iii)** 2.925 km s⁻¹
+- **a., (iv)** 14.6 R_⊕
+- **b., (i)** $4.279 \times 10^{6}$ J kg⁻¹
+- **b., (ii)** 3.34 km s⁻¹
+- **b., (iii)** $8.32 \times 10^{10}$ m² s⁻¹
+- **b., (iv)** $\frac{\mathrm{d}r}{\mathrm{d}\theta} = \frac{r^2}{h}\sqrt{2\varepsilon + \frac{2GM_{\oplus}}{r} - \frac{h^2}{r^2}}$
+- **b., (v)** 1.98 rad
+- **c., (i)** $1.23 \times 10^{7}$ m
+- **c., (ii)** 1.87 km s⁻¹
+- **d., (iii)** 1077 kg
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Q1 – Maximum Payload to Mars** [35 marks]
+
+<ProblemSection id="solution-a">
+
+### a.
+
+**(i)** Calculating the semi-major axis of the transfer orbit by taking the average of the perihelion distance (at Earth) and the aphelion distance (at Mars)
+$$
+a_{HTO} = \frac{1}{2}\left(a_{\oplus} + a_{Mars}\right) = \frac{1}{2}(1 + 1.52) = 1.26\ \mathrm{au}
+$$
+[1]
+
+Hence, using the simplified version of Kepler’s 3rd Law for use in the Solar system, we can work out the period of the orbit and know that the transfer time is half that (since the probe only travels half an ellipse)
+$$
+\Delta t = \frac{1}{2}a_{HTO}^{3/2} = \frac{1}{2} \times 1.26^{3/2} = \boxed{0.707\ \mathrm{years}}
+$$
+(must be in years) [1] **[2]**
+
+[Accept using the SI units version of Kepler’s 3rd Law, which with the given precision and values of constants leads to $\Delta t = \frac{1}{2}\sqrt{\frac{4\pi^2}{GM_{\odot}}a_{HTO}^3} = \boxed{0.710\ \mathrm{years}}$]
+
+The phase angle we are after must be the angle that Mars travels through in time $\Delta t$ subtracted from π radians (or 180°)
+$$
+\varphi = \pi - 2\pi \times \frac{\Delta t}{T_{Mars}} = \pi - 2\pi \times \frac{0.707}{1.52^{3/2}} = \boxed{0.771\ \mathrm{rad}}\ (= 44.1^{\circ})
+$$
+[1] **[1]**
+
+[This value should be the same whichever version of Kepler’s third law they used since the corrective factor between the two methods cancels out if they used the same method to get the period of Mars]
+
+**(ii)** Looking at the difference in angular velocities
+$$
+\Delta\omega = \omega_{\oplus} - \omega_{Mars} = \frac{2\pi}{1} - \frac{2\pi}{1.52^{3/2}} = 2.93\ \mathrm{rad\ year^{-1}}
+$$
+[1]
+$$
+\therefore T_{syn} = \frac{2\pi}{\Delta\omega} = \frac{2\pi}{2.93} = \boxed{2.14\ \mathrm{years}}
+$$
+[1] **[2]**
+
+[Alternative method if they use the known formula for synodic period:
+$$
+\frac{1}{T_{syn}} = \frac{1}{T_{\oplus}} - \frac{1}{T_{Mars}} = \frac{1}{1} - \frac{1}{1.52^{\frac{3}{2}}} = 0.466\ year^{-1}
+$$
+[1]
+$$
+\therefore T_{syn} = \frac{1}{0.466} = \boxed{2.14\ \mathrm{years}}
+$$
+[1]
+
+If no other marks scored, they can get the first mark for the period of Mars as 1.87 years (if using simplified Kepler 3) or 1.88 years (if using the SI units version with given constants) – this may have been done in the previous part of the question]
+
+**(iii)** Using the vis-viva equation to get the perihelion velocity
+$$
+v_p = \sqrt{GM_{\odot}\left(\frac{2}{r_p} - \frac{1}{a}\right)} = \sqrt{6.67 \times 10^{-11} \times 1.99 \times 10^{30} \times \left(\frac{1}{1.50\times10^{11}} - \frac{1}{1.26\times1.50\times10^{11}}\right)} = \boxed{32.67\ \mathrm{km\ s^{-1}}}
+$$
+[1] **[1]**
+
+The orbital velocity of the Earth
+$$
+v_{\oplus} = \sqrt{\frac{GM_{\odot}}{r}} = \sqrt{\frac{6.67\times10^{-11}\times1.99\times10^{30}}{1.50\times10^{11}}} = \boxed{29.75\ \mathrm{km\ s^{-1}}}
+$$
+[1] **[1]**
+
+[Accept $v_{\oplus} = \frac{2\pi r}{T} = \frac{2\pi\times1.50\times10^{11}}{365.25\times24\times60\times60} = \boxed{29.87\ \mathrm{km\ s^{-1}}}$ using given constants]
+
+Hence the required increase in the velocity of the spacecraft is
+$$
+\Delta v_{HTO,\oplus} = 32.67 - 29.75 = \boxed{2.925\ \mathrm{km\ s^{-1}}}
+$$
+(must be at least 2 s.f.) [1] **[1]**
+
+[Accept using the other value of $v_{\oplus}$ to give $\boxed{2.807\ \mathrm{km\ s^{-1}}}$ for all the marks]
+
+**(iv)** Recognise that we want to know the distance at which this speed corresponds to escape velocity (or total energy is zero)
+$$
+\Delta v_{HTO,\oplus} = \sqrt{\frac{2GM_{\oplus}}{r}} \quad \text{or} \quad \frac{1}{2}m\left(\Delta v_{HTO,\oplus}\right)^2 - \frac{GM_{\oplus}m}{r} = 0
+$$
+[1]
+$$
+\therefore d = \frac{2GM_{\oplus}}{\Delta v_{HTO,\oplus}^2} = \frac{2\times6.67\times10^{-11}\times5.97\times10^{24}}{(2.925\times10^3)^2} = 9.31 \times 10^7\ m = \boxed{14.6\ R_{\oplus}}
+$$
+[1] **[2]**
+
+[Must be in units of $R_{\oplus}$ for the final mark. Allow full ecf on their value for $\Delta v_{HTO,\oplus}$. For reference, $\Delta v_{HTO,\oplus} = 2.807\ \mathrm{km\ s^{-1}} \rightarrow d = \boxed{15.9\ R_{\oplus}}$ and $\Delta v_{HTO,\oplus} = 3\ \mathrm{km\ s^{-1}} \rightarrow d = \boxed{13.9\ R_{\oplus}}$. If they get answers that are half these (due to assuming circular orbit) then only allow second mark]
+
+[All of these answers are clearly much further away from Earth than even geostationary orbits and so it is apparent that we must escape the Earth’s gravity with a hyperbolic orbit that then patches onto the elliptical Hohmann transfer orbit once far enough from Earth]
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b.
+
+**(i)** For a hyperbolic orbit, the total energy will be positive and so will be equal to the KE when infinitely far from the Earth (so GPE = 0)
+$$
+E_{tot} = GPE + KE = -\frac{GMm}{r} + \frac{1}{2}mv^2 = 0 + \frac{1}{2}mv_{\infty,\oplus}^2
+$$
+[1]
+$$
+\therefore \varepsilon = \frac{E_{tot}}{m} = \frac{1}{2}v_{\infty,\oplus}^2 = \frac{1}{2}\left(\Delta v_{HTO,\oplus}\right)^2 = \frac{1}{2}(2.925\times10^3)^2 = \boxed{4.279\times10^6\ \mathrm{J\ kg^{-1}}}
+$$
+[1] **[2]**
+
+[Allow full ecf for their value for $\Delta v_{HTO,\oplus}$. For reference, $\Delta v_{HTO,\oplus} = 2.807\ \mathrm{km\ s^{-1}} \rightarrow \varepsilon = \boxed{3.940\times10^6\ \mathrm{J\ kg^{-1}}}$ and $\Delta v_{HTO,\oplus} = 3\ \mathrm{km\ s^{-1}} \rightarrow \varepsilon = \boxed{4.5\times10^6\ \mathrm{J\ kg^{-1}}}$.]
+
+**(ii)** Using energy conservation, we can get an expression for the perigee velocity
+$$
+\varepsilon = -\frac{GM_{\oplus}}{r_0} + \frac{1}{2}v_{p,\oplus}^2 \qquad \therefore v_{p,\oplus} = \sqrt{2\left(\varepsilon + \frac{GM_{\oplus}}{r_0}\right)}
+$$
+[1]
+
+Hence the expression for $\Delta v_{hyp,\oplus}$ is
+$$
+\Delta v_{hyp,\oplus} = v_{p,\oplus} - v_{c,\oplus} = \boxed{\sqrt{2\left(\varepsilon + \frac{GM_{\oplus}}{r_0}\right)} - \sqrt{\frac{GM_{\oplus}}{r_0}}}
+$$
+[1] **[2]**
+
+[Accept any algebraically equivalent forms]
+
+Evaluating it with our calculated value of $\varepsilon$
+$$
+\Delta v_{hyp,\oplus} = \sqrt{2\left(4.279\times10^6 + \frac{6.67\times10^{-11}\times5.97\times10^{24}}{8.00\times10^6}\right)} - \sqrt{\frac{6.67\times10^{-11}\times5.97\times10^{24}}{8.00\times10^6}} = \boxed{3.34\ \mathrm{km\ s^{-1}}}
+$$
+[1] **[1]**
+
+[Allow full ecf from previous values of $\varepsilon$. If using $\varepsilon = 3.940\times10^6\ \mathrm{J\ kg^{-1}} \rightarrow \Delta v_{hyp,\oplus} = \boxed{3.31\ \mathrm{km\ s^{-1}}}$ and $\varepsilon = 4.5\times10^6\ \mathrm{J\ kg^{-1}} \rightarrow \Delta v_{hyp,\oplus} = \boxed{3.36\ \mathrm{km\ s^{-1}}}$]
+
+[This is reassuringly a little bigger than what we calculated for $\Delta v_{HTO,\oplus}$ in the naive case where we ignored having to escape Earth’s gravity – although it might surprise you to see that it’s not that much bigger (only about 10%); this is because a lot of work has already been done by the rocket getting the spacecraft into that low Earth orbit to begin with.]
+
+**(iii)** Since $h$ is conserved over the whole orbit, the obvious place to choose is where we know both $r$ and $v$ – this is the perigee, where also very conveniently $v_{\perp} = v_{p,\oplus}$
+$$
+h = rv_{\perp} = r_0v_{p,\oplus}
+$$
+[1]
+$$
+\therefore h = r_0\sqrt{2\left(\varepsilon + \frac{GM_{\oplus}}{r_0}\right)} = 8.00\times10^6 \times \sqrt{2\left(4.279\times10^6 + \frac{6.67\times10^{-11}\times5.97\times10^{24}}{8.00\times10^6}\right)} = \boxed{8.32\times10^{10}\ \mathrm{m^2\ s^{-1}}}
+$$
+[1] **[2]**
+
+[Allow full ecf from previous values of $\varepsilon$. If using $\varepsilon = 3.940\times10^6\ \mathrm{J\ kg^{-1}} \rightarrow h = \boxed{8.29\times10^{10}\ \mathrm{m^2s^{-1}}}$ and $\varepsilon = 4.5\times10^6\ \mathrm{J\ kg^{-1}} \rightarrow h = \boxed{8.33\times10^{10}\ \mathrm{m^2s^{-1}}}$]
+
+**(iv)** Combining the expression for specific angular momentum with a standard one for $\omega$
+$$
+\frac{\mathrm{d}\theta}{\mathrm{d}t} = \omega = \frac{v_{\perp}}{r} = \frac{h/r}{r} = \frac{h}{r^2}
+$$
+[1] **[1]**
+
+[Since this was a ‘show that’ question, the mark is not for the final result but for explicitly substituting $v_{\perp} = h/r$ into $\omega = v_{\perp}/r$]
+
+Considering energy conservation, using Pythagoras to resolve the velocity into perpendicular and parallel components
+$$
+\varepsilon = -\frac{GM_{\oplus}}{r} + \frac{1}{2}v^2 = -\frac{GM_{\oplus}}{r} + \frac{1}{2}\left(v_{\perp}^2 + v_{\parallel}^2\right) = -\frac{GM_{\oplus}}{r} + \frac{1}{2}\left(\left(\frac{h}{r}\right)^2 + v_{\parallel}^2\right)
+$$
+[1]
+
+[This mark could be awarded for just correct application of Pythagoras if the student makes no further progress]
+$$
+\therefore \frac{\mathrm{d}r}{\mathrm{d}t} = v_{\parallel} = \boxed{\sqrt{2\varepsilon + \frac{2GM_{\oplus}}{r} - \frac{h^2}{r^2}}}
+$$
+[1] **[2]**
+
+[Accept algebraically equivalent forms]
+
+Hence, using the chain rule
+$$
+\frac{\mathrm{d}r}{\mathrm{d}\theta} = \frac{\mathrm{d}t}{\mathrm{d}\theta}\frac{\mathrm{d}r}{\mathrm{d}t} = \left(\frac{\mathrm{d}\theta}{\mathrm{d}t}\right)^{-1}\frac{\mathrm{d}r}{\mathrm{d}t} = \boxed{\frac{r^2}{h}\sqrt{2\varepsilon + \frac{2GM_{\oplus}}{r} - \frac{h^2}{r^2}}}
+$$
+[1] **[1]**
+
+[Accept algebraically equivalent forms]
+
+**(v)** Using Figure 1 from the paper for reference:
+
+We have been given a polar form for the hyperbola, and we want to find the angle $\phi$ [accept any choice of notation]
+
+Considering the asymptote, $r \rightarrow \infty$ as $\theta \rightarrow \theta_{\infty}$, so from the polar equation this is achieved as
+$$
+1 + e\cos\theta_{\infty} = 0
+$$
+[1]
+
+[This mark can alternatively be scored for calculating $e = 1.09$]
+$$
+\therefore \theta_{\infty} = \cos^{-1}\left(-\frac{1}{e}\right) = \cos^{-1}\left(-\frac{1}{\sqrt{1 + \frac{\left(8.32\times10^{10}\right)^2\times4.279\times10^6}{\left(6.67\times10^{-11}\right)^2\left(5.97\times10^{24}\right)^2}}}\right) = 2.73\ \mathrm{rad}\ (= 156.5^{\circ})
+$$
+[1]
+
+By considering the diagram
+$$
+\phi + \theta_{\infty} = \frac{3\pi}{2}\ \mathrm{rad}
+$$
+$$
+\therefore \phi = \frac{3\pi}{2} - \theta_{\infty} = \frac{3\pi}{2} - 2.73 = \boxed{1.98\ \mathrm{rad}}\ (= 113.4^{\circ})
+$$
+[1] **[3]**
+
+[Allow ecf using their values of $\varepsilon$ and $h$. For reference, using the values of $\varepsilon$ and $h$ that come from $\Delta v_{HTO,\oplus} = 2.807\ \mathrm{km\ s^{-1}} \rightarrow \phi = \boxed{1.96\ \mathrm{rad}}\ (= 112.5^{\circ})$ and $\Delta v_{HTO,\oplus} = 3\ \mathrm{km\ s^{-1}} \rightarrow \phi = \boxed{1.99\ \mathrm{rad}}\ (= 113.9^{\circ})$.]
+
+[Although not needed to solve this question, the constant $p$ is known as the semi-latus rectum, and corresponds to the distance from the focus (at the centre of the Earth) to the hyperbola along a line perpendicular to the one between the focus and the perigee, known as the major axis. As you might have guessed, the constant $e$ is the eccentricity of the hyperbola; for hyperbolae $e > 1$]
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### c.
+
+**(i)** Recasting our expression for $\Delta v_{hyp,M}$ from b.(ii) in terms of $\gamma$ and $\alpha$, as suggested
+$$
+\Delta v_{hyp,M} = \sqrt{2\left(\varepsilon + \frac{GM_M}{r}\right)} - \sqrt{\frac{GM_M}{r}}
+$$
+$$
+\therefore \gamma\sqrt{\varepsilon} = \sqrt{2\left(\varepsilon + \frac{\varepsilon}{\alpha}\right)} - \sqrt{\frac{\varepsilon}{\alpha}} = \sqrt{\varepsilon}\left(\sqrt{2 + \frac{2}{\alpha}} - \sqrt{\frac{1}{\alpha}}\right)
+$$
+$$
+\therefore \gamma = \sqrt{2 + \frac{2}{\alpha}} - \sqrt{\frac{1}{\alpha}}
+$$
+[1]
+
+The minimum will correspond to a turning point, so we look where $\frac{\mathrm{d}\gamma}{\mathrm{d}\alpha} = 0$ and make use of the chain rule
+$$
+\frac{\mathrm{d}\gamma}{\mathrm{d}\alpha} = \frac{1}{2}\left(2 + \frac{2}{\alpha}\right)^{-1/2}\left(-2\alpha^{-2}\right) - \left(-\frac{1}{2}\alpha^{-3/2}\right)
+$$
+[correct differentiation] [1]
+$$
+\therefore \frac{1}{2}\left(2 + \frac{2}{\alpha}\right)^{-1/2}\left(-2\alpha^{-2}\right) - \left(-\frac{1}{2}\alpha^{-3/2}\right) = 0
+$$
+$$
+\therefore \frac{1}{2}\left(2 + \frac{2}{\alpha}\right)^{-1/2}\left(2\alpha^{-2}\right) = \left(\frac{1}{2}\alpha^{-3/2}\right)
+$$
+$$
+\therefore \left(2 + \frac{2}{\alpha}\right)^{-1/2} = \frac{1}{2}\alpha^{1/2}
+$$
+$$
+\therefore 2 + 2\alpha^{-1} = 4\alpha^{-1} \qquad \therefore 2 = 2\alpha^{-1} \qquad \therefore \boxed{\alpha = 1}
+$$
+[1] **[3]**
+
+Hence the value of r that minimises $\Delta v_{hyp,M}$ is
+$$
+r = \frac{GM_M\alpha}{\varepsilon} = \frac{6.67\times10^{-11}\times6.42\times10^{23}\times1}{3.49\times10^6} = \boxed{1.23\times10^7\ \mathrm{m}}
+$$
+[1] **[1]**
+
+[If this answer was achieved without following the suggested hint of recasting the expression in terms of $\gamma$ and $\alpha$, the student can still receive 4 marks]
+
+**(ii)** Substituting our value of r into the equation for $\Delta v_{hyp,M}$
+$$
+\Delta v_{hyp,M} = \sqrt{2\left(\varepsilon + \frac{GM_M}{r}\right)} - \sqrt{\frac{GM_M}{r}} = \sqrt{2\left(3.49\times10^6 + \frac{6.67\times10^{-11}\times6.42\times10^{23}}{1.23\times10^7}\right)} - \sqrt{\frac{6.67\times10^{-11}\times6.42\times10^{23}}{1.23\times10^7}} = \boxed{1.87\ \mathrm{km\ s^{-1}}}
+$$
+[1] **[1]**
+
+[Valid alternative method: since $\gamma = \sqrt{2 + \frac{2}{\alpha}} - \sqrt{\frac{1}{\alpha}}$ then if $\alpha = 1 \Longrightarrow \gamma = 1$, so $\Delta v_{hyp,M} = \gamma\sqrt{\varepsilon} = 1\times\sqrt{3.49\times10^6} = \boxed{1.87\ \mathrm{km\ s^{-1}}}$]
+
+</ProblemSection>
+
+<ProblemSection id="solution-d">
+
+### d.
+
+**(i)** By conserving momentum (should be explicitly stated)
+$$
+m\delta v - v_e\delta m = 0 \qquad \therefore \delta v = \frac{v_e}{m}\delta m
+$$
+[1] **[1]**
+
+[Since it is a ‘show that’ question, the mark is for clear reasoning rather than the final algebraic answer]
+
+**(ii)** Setting up the integral with the bounds the right way round
+$$
+\Delta v = \int_{m_0}^{m_1}\frac{v_e}{m}\,\mathrm{d}m
+$$
+[1]
+$$
+\therefore \Delta v = \left[v_e\ln m\right]_{m_0}^{m_1} = v_e\ln m_1 - v_e\ln m_0 = v_e\ln\frac{m_1}{m_0}
+$$
+[1] **[2]**
+
+[Since it is a ‘show that’ question, the second mark is for correct evaluation of the integral, clearly showing how they have integrated 1/m]
+
+**(iii)** Expanding the equation of the previous part to include the described quantities with correct dry and wet mass expressions [accept any choice of notation]
+$$
+\Delta v_{tot} = v_e\ln\frac{m_{empty} + m_{payload} + m_{fuel}}{m_{empty} + m_{payload}}
+$$
+[1]
+
+Rearranging for $m_{payload}$
+$$
+e^{\Delta v_{tot}/v_e} = \frac{m_e + m_p + m_f}{m_e + m_p}
+$$
+$$
+\therefore e^{\Delta v_{tot}/v_e}\left(m_e + m_p\right) = m_e + m_p + m_f
+$$
+$$
+\therefore e^{\Delta v_{tot}/v_e}m_p - m_p = m_e + m_f - e^{\Delta v_{tot}/v_e}m_e
+$$
+$$
+\therefore m_p = \frac{m_f + \left(1 - e^{\Delta v_{tot}/v_e}\right)m_e}{\left(e^{\Delta v_{tot}/v_e} - 1\right)}
+$$
+[1]
+
+Using our earlier values of $\Delta v_{hyp,\oplus}$ from b.(ii) and $\Delta v_{hyp,M}$ from c.(ii)
+$$
+\Delta v_{tot} = \Delta v_{hyp,\oplus} + \Delta v_{hyp,M} = 3.34 + 1.87 = 5.21\ \mathrm{km\ s^{-1}}
+$$
+$$
+\therefore m_p = \frac{5000 + \left(1 - \exp\left(\frac{5.21}{4.25}\right)\right)\times1000}{\exp\left(\frac{5.21}{4.25}\right) - 1} = \boxed{1077\ \mathrm{kg}}
+$$
+[1] **[3]**
+
+[Allow ecf from their values of $\Delta v_{hyp,\oplus}$ and $\Delta v_{hyp,M}$. For reference, if using $\Delta v_{hyp,\oplus} = 3.31\ \mathrm{km\ s^{-1}} \rightarrow m_p = \boxed{1100\ \mathrm{kg}}$, and $\Delta v_{hyp,\oplus} = 3.36\ \mathrm{km\ s^{-1}} \rightarrow m_p = \boxed{1062\ \mathrm{kg}}$. If they use the given value of $\Delta v_{tot} = 5\ \mathrm{km\ s^{-1}} \rightarrow m_p = \boxed{1229\ \mathrm{kg}}$]
+
+[In reality, the Orion spacecraft in the NASA Artemis programme (planned to send humans to Mars) has a dry mass 10 times heavier than this so the fuel requirements are enormous!]
+
+</ProblemSection>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.6%', '--fig-max': '209px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2024-ii-r2/p1-sol-fig1.png" alt="Zoomed view of Earth from Figure 1 annotated for the solution: Earth inside the initial circular orbit, a red line towards the Sun on the left, a blue arrow r from Earth to the hyperbolic escape orbit making angle θ with the perigee direction, a red arc marking angle ϕ between the Sun direction and the burn point, and a Δv arrow at the burn point." width="653" height="674" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Questions proposed by</summary>
+
+*Questions proposed by:*  
+*Francesca Di Cecio (University of Cambridge)*  
+*Ben Woodrow (University of Oxford)*  
+*Dr Alex Calverley (Surbiton High School)*
+
+</details>
+
+---
+
+Оригинал в Архива: [BAAO_R2_2024.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2024/BAAO_R2_2024.pdf)
+· официални решения: [BAAO_R2_2024_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2024/BAAO_R2_2024_solutions.pdf)

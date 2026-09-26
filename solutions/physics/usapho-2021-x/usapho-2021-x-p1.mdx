@@ -1,0 +1,207 @@
+---
+id: usapho-2021-x-p1
+source: 'USAPhO 2021, Полуфинал'
+title: 'Задача 1. A1 · Toffee Pudding'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2021/usapho-2021-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T06:10:40.500Z'
+verifier: 'mechanical'
+---
+
+*USA Physics Olympiad Exam — 2021 USAPhO · 19 април 2021 г.*
+
+<details>
+<summary>Information About The 2021 USAPhO</summary>
+
+- The 2021 USAPhO consists of two 90-minute parts taking place on two separate days:
+  - Part A: Monday, April 19 from 4:00 pm to 5:30 pm Eastern Time
+  - Part B: Wednesday, April 21 from 4:00 pm to 5:30 pm Eastern Time
+
+  The exam is hosted by AAPT on the platform provided by Art of Problem Solving.
+- This year, we require the exam to be proctored by either your high school science/physics teacher, or your parent/guardian.
+- Before you start the exam, make sure you are provided with blank paper, both for your answers and scratch work, writing utensils, a hand-held scientific calculator with memory and programs erased, and a computer for you to log into the USAPhO testing page. Then agree to the Honor Policy, and download the USAPhO exam papers.
+- At the end of the exam, you have 20 minutes to upload solutions to all of the problems for that part. For each problem, scan or photograph each page of your solution, combine them into a single PDF file, and upload them on the testing platform.
+- USAPhO graders are not responsible for missing pages or illegible handwriting. No later submissions will be accepted.
+
+Thank you for participating in the USAPhO this year under such extraordinary circumstances. We hope that you and your family stay safe, and that you continue to encourage more students like you to study physics and try out the $F = ma$ exam hosted by AAPT.
+
+We acknowledge the following people for their contributions to this year’s exam (in alphabetical order):
+
+*JiaJia Dong, Mark Eichenlaub, Abijith Krishnan, Kye W. Shi, Brian Skinner, Mike Winer, and Kevin Zhou.*
+
+</details>
+
+## Условие
+
+A box of mass $m$ is at rest on a horizontal floor. The coefficients of static and kinetic friction between the box and the floor are $\mu_0$ and $\mu$ (less than $\mu_0$), respectively. One end of a spring with spring constant $k$ is attached to the right side of the box, and the spring is initially held at its relaxed length. The other end of the spring is pulled horizontally to the right with constant velocity $v_0$. As a result, the box will move in fits and starts. Assume the box does not tip over.
+
+**a.** Calculate the distance $s$ that the spring is stretched beyond its rest length when the box is just about to start moving.
+
+**b.** Let the box start at $x = 0$, and let $t = 0$ be the time the box first starts moving. Find the acceleration of the box in terms of $x$, $t$, $v_0$, $s$, and the other parameters, while the box is moving.
+
+The position of the box as a function of time $t$ as defined in part (b) is
+
+$$
+x(t) = \frac{v_0}{\omega}(\omega t - \sin\omega t) + (1 - r)s(1 - \cos\omega t),
+$$
+
+where $\omega = \sqrt{k/m}$ and $r = \mu/\mu_0$. This expression applies as long as the box is still moving, and you can use it in the parts below. Express all your answers in terms of $v_0$, $\omega$, $s$, and $r$.
+
+**c.** Find the time $t_0$ when the box stops for the first time.
+
+**d.** For what values of $r$ will the spring always be at least as long as its rest length?
+
+**e.** After the box stops, how long will it stay at rest before starting to move again?
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a.** $s = \mu_0 mg/k$
+- **b.** $a = \frac{k}{m}(s + v_0t - x) - \mu g$
+- **c.** $t_0 = \frac{2\pi - 2\alpha}{\omega}, \quad \alpha = \tan^{-1}\frac{(1 - r)s\omega}{v_0}$
+- **d.** $r \geq \frac{1}{2}\left(1 + \left(\frac{v_0}{s\omega}\right)^2\right)$
+- **e.** $\frac{2(1 - r)s}{v_0}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.**
+
+This is when the spring force equals the maximal static friction, $ks = \mu_0 mg$, so $s = \mu_0 mg/k$.
+
+**b.**
+
+The net stretching of the spring is $s + v_0t - x$, leading to a rightward force $ks$. When the box is moving, it is always moving to the right, so the kinetic friction force $\mu mg$ is always in the leftward direction, which means
+
+$$
+ma = k(s + v_0t - x) - \mu mg
+$$
+
+which means
+
+$$
+a = \frac{k}{m}(s + v_0t - x) - \mu g.
+$$
+
+**c.**
+
+Taking the derivative, the velocity of the box is
+
+$$
+v = v_0(1 - \cos\omega t) + (1 - r)s\omega\sin\omega t.
+$$
+
+The box stops when this is equal to zero for the first time. There are several ways to evaluate this condition. First, we can use half-angle identities to find
+
+$$
+0 = 2v_0\sin^2\frac{\omega t}{2} + 2(1 - r)s\omega\sin\frac{\omega t}{2}\cos\frac{\omega t}{2}.
+$$
+
+As a result, the box stops when
+
+$$
+\tan\frac{\omega t}{2} = -\frac{(1 - r)s\omega}{v_0}.
+$$
+
+Using a basic property of the tangent function,
+
+$$
+\tan\left(\pi - \frac{\omega t}{2}\right) = \frac{(1 - r)s\omega}{v_0}.
+$$
+
+Solving for $t$, we conclude that
+
+$$
+t_0 = \frac{2\pi - 2\alpha}{\omega}, \quad \alpha = \tan^{-1}\frac{(1 - r)s\omega}{v_0}.
+$$
+
+Note that we cancelled a factor of $\sin\big(\omega t/2\big)$, which has a zero at $t = 2\pi/\omega$. However, this is a larger time than the one we just found, so it is irrelevant.
+
+Another way to arrive at the answer is to rewrite the original condition as
+
+$$
+1 = \cos\omega t - \tan\alpha\sin\omega t.
+$$
+
+Squaring both sides and using some trigonometric identities gives
+
+$$
+\tan\omega t = -\frac{2\tan\alpha}{1 - \tan^2\alpha}.
+$$
+
+This can then be further simplified using the tangent half-angle identity, upon which we recover the same result as above.
+
+**d.**
+
+The spring is stretched by $\Delta\ell = s + v_0t - x$. Inserting the solution for $x$, we have
+
+$$
+\Delta\ell = rs + \frac{v_0}{\omega}\sin\omega t + (1 - r)s\cos\omega t.
+$$
+
+The most convenient way to write this is to use the sine addition formula in reverse, getting
+
+$$
+\Delta\ell = rs + \frac{v_0}{\omega\cos\alpha}\sin(\omega t + \alpha).
+$$
+
+The minimum stretch thus occurs when
+
+$$
+\omega t + \alpha = \frac{3\pi}{2}.
+$$
+
+Of course, we should check that this time is before the box stops; comparing with the answer to part (c) shows that it is. For the spring to always be as long as its rest length, we need the stretch at this time to be nonnegative,
+
+$$
+rs - \frac{v_0}{\omega\cos\alpha} \geq 0.
+$$
+
+Solving the triangle, we have
+
+$$
+\cos\alpha = \frac{v_0}{\sqrt{v_0^2 + ((1 - r)s\omega)^2}}.
+$$
+
+Plugging this in and simplifying gives the answer,
+
+$$
+r \geq \frac{1}{2}\left(1 + \left(\frac{v_0}{s\omega}\right)^2\right).
+$$
+
+Note that if $v_0/s\omega$ is too large, then it is impossible to satisfy this condition, since we need to have $r < 1$.
+
+**e.**
+
+Using a result we found in part (d), the stretch is
+
+$$
+\Delta\ell = rs + \frac{v_0}{\omega\cos\alpha}\sin(\omega t_0 + \alpha)
+$$
+
+when the box stops. Plugging in the value of $t_0$ found in part (c),
+
+$$
+\Delta\ell = rs + \frac{v_0}{\omega\cos\alpha}\sin(2\pi - \alpha) = rs - \frac{v_0}{\omega}\tan\alpha = (2r - 1)s.
+$$
+
+The box starts to move again when the stretch becomes $s$, so the time is
+
+$$
+\frac{s - (2r - 1)s}{v_0} = \frac{2(1 - r)s}{v_0}.
+$$
+
+The pattern of motion investigated in this problem is known as “stick-slip” and occurs in many practical contexts.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2021-USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2021/2021-USAPhO.pdf)
+· официални решения: [2021-USAPhO_Solutions_v3.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2021/2021-USAPhO_Solutions_v3.pdf)

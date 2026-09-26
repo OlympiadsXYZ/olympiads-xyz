@@ -1,0 +1,598 @@
+---
+id: baao-2024-ii-r2-p3
+source: 'BAAO 2024, II кръг'
+title: 'Задача 3. Heat Transfer in the Sun'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/BAAO/2024/baao-2024-ii-r2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T06:47:07.707Z'
+verifier: 'mechanical'
+---
+
+*British Astronomy and Astrophysics Olympiad 2023-2024 — Astro Round 2 — Tuesday 27th February 2024 · 27 февруари 2024 г. · 35 т.*
+
+<details>
+<summary>Указания</summary>
+
+**Time**: 3 hours ($\sim 60$ minutes for Q1, $\sim 55$ minutes for Q2 and $\sim 65$ minutes for Q3).
+
+**Questions**: All three questions should be attempted. Each question contains independent parts so that later parts can be attempted even if earlier parts are incomplete.
+
+**Solutions**: Answers and calculations are to be written on loose paper. START EACH QUESTION ON A NEW PAGE. Students should ensure their **name** and **school** is clearly written on the **first** answer sheet and that **all** pages are numbered. A standard formula booklet may be used.
+
+**Clarity**: Solutions must be written legibly, in black pen, and working down the page. Scribble will not be marked and overall clarity is an important aspect of this exam.
+
+**Instructions**: To accommodate students sitting the paper at different times, please **do not discuss** any aspect of the paper on the internet until 8 am Saturday 2nd March.
+
+**Calculators**: Any standard calculator may be used, but calculators cannot be programmable and must not have symbolic algebra capability.
+
+</details>
+
+<details>
+<summary>Training Dates and the IOAA</summary>
+
+**Training Dates and the IOAA** (Vassouras, Rio de Janeiro, Brazil, 17th - 26th August 2024)
+
+*The team will be chosen from students taking this paper. The best students that are eligible to represent the UK at the IOAA will be invited to attend the* **Training Camp** *to be held in Oxford from* **Tuesday 2nd to Saturday 6th April 2024**. *Astronomy material will be covered; problem solving skills and observational skills (telescope and naked eye observations) will be developed. At the Training Camp a Data Analysis exam along with a Round 3 theory paper will be sat. A team of five students (plus one reserve) will be selected for further training, including additional training camps in the summer.*
+
+*The BAAO are very proud to be sponsored by G-Research*
+
+</details>
+
+<details>
+<summary>Important Constants</summary>
+
+| Constant | Symbol | Value |
+|---|---|---|
+| Speed of light | $c$ | $3.00 \times 10^{8}\ \mathrm{m\,s^{-1}}$ |
+| Earth’s rotation period | 1 day | 24 hours |
+| Earth’s orbital period | 1 year | 365.25 days |
+| parsec | pc | $3.09 \times 10^{16}\ \mathrm{m}$ |
+| Astronomical Unit | au | $1.50 \times 10^{11}\ \mathrm{m}$ |
+| Radius of the Sun | $R_{\odot}$ | $6.96 \times 10^{8}\ \mathrm{m}$ |
+| Radius of the Earth | $R_{\oplus}$ | $6.37 \times 10^{6}\ \mathrm{m}$ |
+| Mass of the Sun | $M_{\odot}$ | $1.99 \times 10^{30}\ \mathrm{kg}$ |
+| Mass of the Earth | $M_{\oplus}$ | $5.97 \times 10^{24}\ \mathrm{kg}$ |
+| Luminosity of the Sun | $L_{\odot}$ | $3.83 \times 10^{26}\ \mathrm{W}$ |
+| Absolute magnitude of the Sun | $\mathcal{M}_{\odot}$ | $4.74$ |
+| Hubble constant | $H_0$ | $70\ \mathrm{km\ s^{-1}\ Mpc^{-1}}$ |
+| Stephan-Boltzmann constant | $\sigma$ | $5.67 \times 10^{-8}\ \mathrm{W\ m^{-2}\ K^{-4}}$ |
+| Gravitational constant | $G$ | $6.67 \times 10^{-11}\ \mathrm{m^{3}\ kg^{-1}\ s^{-2}}$ |
+| Boltzmann constant | $k_{\mathrm{B}}$ | $1.38 \times 10^{-23}\ \mathrm{J\ K^{-1}}$ |
+| Permittivity of free space | $\varepsilon_0$ | $8.85 \times 10^{-12}\ \mathrm{F\ m^{-1}}$ |
+| Permeability of free space | $\mu_0$ | $4\pi \times 10^{-7}\ \mathrm{H\ m^{-1}}$ |
+| Planck’s constant | $h$ | $6.63 \times 10^{-34}\ \mathrm{J\ s}$ |
+| Elementary charge | $e$ | $1.60 \times 10^{-19}\ \mathrm{C}$ |
+| Proton rest mass | $m_{\mathrm{p}}$ | $1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Electron rest mass | $m_{\mathrm{e}}$ | $9.11 \times 10^{-31}\ \mathrm{kg}$ |
+| Wien’s displacement law | $\lambda_{\max}T$ | $2.90 \times 10^{-3}\ \mathrm{m\ K}$ |
+| Avagadro’s constant | $N_A$ | $6.02 \times 10^{23}\ \mathrm{mol^{-1}}$ |
+
+**Basic calculus formulae**:
+
+Chain rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}f(g(x)) = f'(g(x))g'(x)
+$$
+
+Product rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}(uv) = \frac{\mathrm{d}u}{\mathrm{d}x}v + u\frac{\mathrm{d}v}{\mathrm{d}x}
+$$
+
+Quotient rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u}{v}\right) = \frac{\frac{\mathrm{d}u}{\mathrm{d}x}v - u\frac{\mathrm{d}v}{\mathrm{d}x}}{v^2}
+$$
+
+Integration by parts
+$$
+\int u\frac{\mathrm{d}v}{\mathrm{d}x}\,\mathrm{d}x = uv - \int v\frac{\mathrm{d}u}{\mathrm{d}x}\,\mathrm{d}x
+$$
+
+Standard integral
+$$
+\int \frac{1}{x}\,\mathrm{d}x = \ln|x| + C
+$$
+
+</details>
+
+<details>
+<summary>Important Formulae</summary>
+
+You might find the diagram of an elliptical orbit below useful in solving some of the questions:
+
+**Elements of an elliptic orbit**:
+
+- $a = \mathbf{OA}\ (= \mathbf{OP})$ semi-major axis
+- $b = \mathbf{OB}\ (= \mathbf{OC})$ semi-minor axis
+- $e = \sqrt{1 - \frac{b^2}{a^2}}$ eccentricity
+- $\mathbf{F}$ focus
+- $\mathbf{PF} = a(1 - e)$ periapsis distance (shortest distance from $\mathbf{F}$)
+- $\mathbf{AF} = a(1 + e)$ apoapsis distance (longest distance from $\mathbf{F}$)
+
+**Kepler’s Third Law**:
+$$
+T^2 = \frac{4\pi^2}{GM}a^3
+$$
+
+**Vis-Viva Equation**:
+$$
+v^2 = GM\left(\frac{2}{r} - \frac{1}{a}\right)
+$$
+
+**Wien’s Displacement Law**:
+$$
+\lambda_{\max}T = \mathrm{constant}
+$$
+
+**Stephan-Boltzmann Law**:
+$$
+L = 4\pi R^2\sigma T^4
+$$
+
+**Brightness (Intensity)**:
+$$
+b = \frac{L}{4\pi d^2}
+$$
+
+**Magnitudes**:
+$$
+\frac{b_1}{b_0} = 10^{-0.4(m_1 - m_0)}
+$$
+$$
+m - \mathcal{M} = 5\log\left(\frac{d}{10}\right)
+$$
+
+**Distance-Parallax Relation**:
+$$
+d = \frac{1}{p}
+$$
+
+**Rayleigh Criterion**:
+$$
+\theta = \frac{1.22\lambda}{D}
+$$
+
+**Redshift**:
+$$
+z = \frac{\Delta\lambda}{\lambda_{\mathrm{emit}}} \approx \frac{v}{c}
+$$
+
+**Hubble’s Law**:
+$$
+v = H_0 d
+$$
+
+</details>
+
+<details>
+<summary>Note for markers</summary>
+
+**Astro Round 2 2024 Paper Solutions and Marking Guidelines**
+
+**Note for markers:**
+
+- Answers to two or three significant figures are generally acceptable. The solution may give more in order to make the calculation clear. Units should be present on final answers when appropriate.
+- There are multiple ways to solve some of the questions; please accept all good solutions that arrive at the correct answer. Students getting the answer in a $\boxed{\text{box}}$ will get all the marks available for that calculation / part of the question (as indicated in red), so long as there are no unphysical / nonsensical steps or assumptions made (students may not explicitly calculate the intermediate stages and should not be penalised for this so long as their argument is clear).
+
+In these solutions a black [1] is a marking point and a bold **[n]** is the total for that calculation or part (printed in red in the source).
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [a.](#a)
+- [b.](#b)
+- [c.](#c)
+- [d.](#d)
+- [e.](#e)
+
+</nav>
+
+There are three main methods of heat transfer: conduction, convection and radiation. Since stars are made of plasma, only convection and radiation are significant, with conduction only important in white dwarfs. Convection is dominant in regions of the star that have a steep temperature gradient and / or high opacity (meaning the material is effectively opaque to EM radiation), whilst radiation is dominant in regions with a low temperature gradient and low opacity (meaning the material is much more transparent). This means that the heat transfer method that dominates will vary with distance from the core and also stellar mass (see Figure 4).
+
+You are given that opacity, $\kappa$, is related to the density and temperature of the plasma following Kramers’ opacity law $\kappa \propto \rho T^{-7/2}$, and that in small stars the proton-proton chain for turning hydrogen into helium dominates in the core and has a relatively low temperature gradient whilst in large stars the CNO cycle dominates in the core, with a much steeper temperature gradient, and a shell of fusion via the proton-proton chain around that.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '95.5%', '--fig-max': '612px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2024-ii-r2/p3-fig1.png" alt="Three cut-away stars: a blue star labelled '> 1.5 solar masses' with a convective core (circulating loops) and a radiative outer region (zigzag arrows); an orange star labelled '0.5 - 1.5 solar masses' with a radiative core and a convective outer layer of loops; a red star labelled '< 0.5 solar masses' that is convective throughout. A legend box shows a loop symbol for Convection Zone and a zigzag arrow for Radiation Zone." width="1911" height="850" loading="lazy" decoding="async" />
+<figcaption>**Figure 4:** Types of heat transfer in different stars, showing the dependence on stellar mass on what type dominates at different distances from the core. Credit: Sun.org - www.sun.org.</figcaption>
+</figure>
+
+<ProblemSection id="a">
+
+### a. (5 т.)
+
+Use the above information plus your own knowledge about the key differences between small and large stars to qualitatively explain the pattern seen in Figure 4.
+
+In the Sun, the radiative zone extends out to a radius $r \approx 0.7\ R_{\odot}$, with the convective zone at larger radii. In this question we will investigate the physics of the two zones, starting with the convective zone.
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### b. (9 т.)
+
+Consider a parcel of gas at a distance $r$ from a star’s centre. It has pressure $p_{gas}$ and density $\rho_{gas}$, with initial values $p_0$ and $\rho_0$ respectively. The pressure and density of the surrounding stellar material will be denoted by $p_{\star}$ and $\rho_{\star}$ respectively. All of these variables are dependent on $r$.
+
+**(i)** If the parcel behaves adiabatically (i.e. no heat energy is exchanged between the parcel and its surroundings, leading to $p_{gas}(r)V_{gas}(r)^{\gamma} = \mathrm{constant}$ where $V_{gas}(r)$ is the volume of the parcel and $\gamma$ is a constant), derive an equation relating $p'_{gas} \equiv \frac{\mathrm{d}p_{gas}}{\mathrm{d}r}$ and $\rho'_{gas} \equiv \frac{\mathrm{d}\rho_{gas}}{\mathrm{d}r}$ of the form $p'_{gas} = B \times \rho'_{gas}$ where $B$ is an expression to be determined. **[4 т.]**
+
+**(ii)** State the condition for the parcel to rise by convection. **[1 т.]**
+
+**(iii)** The parcel begins at equilibrium with its surroundings so $p_{\star} = p_0$ and $\rho_{\star} = \rho_0$. Use the ideal gas law to relate the pressure $p_{\star}$, density $\rho_{\star}$, and temperature $T_{\star}$ gradients (with respect to $r$) in the star, and hence show that the condition for convection can be expressed as
+$$
+\frac{p'_{gas}}{p_{gas}} < \gamma\frac{\rho_{\star}}{\rho_{gas}}\left(\frac{p'_{\star}}{p_{\star}} - \frac{T'_{\star}}{T_{\star}}\right).
+$$
+**[4 т.]**
+
+Radiative flux refers to the total energy passing through a surface (in our case, a spherical layer of star) per unit time (i.e. the luminosity). It is proportional in magnitude to the temperature gradient across the surface and to the area of the layer, with a constant of proportionality $\lambda$ known as thermal conductivity, as shown mathematically below,
+$$
+L(r) = -4\pi r^2\lambda\frac{\mathrm{d}T}{\mathrm{d}r}.
+$$
+The kinetic theory of gases gives us that
+$$
+\lambda = \frac{1}{3}C_V\ell c,
+$$
+where $C_V$ is the heat capacity per unit volume of the photon gas, $\ell$ is the mean free path of photons in the gas, and $c$ is the speed of light. In the following parts of the question, you will find expressions for $C_V$ and $\ell$ to derive a more useful expression for radiative flux $L$ as a function of distance from the centre of the star $r$.
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### c. (4 т.)
+
+Given that the photon gas energy density (i.e. energy per unit volume), $u = \alpha \times f(T, \sigma, c)$ where $\sigma$ is the Stephan-Boltzmann constant and $\alpha = 4$ (a dimensionless constant), use dimensional analysis to find an expression for $u$ in terms of these variables, and hence $C_V$.
+
+</ProblemSection>
+
+<ProblemSection id="d">
+
+### d. (6 т.)
+
+Consider a beam of light of intensity $I$ propagating across a short distance $\mathrm{d}x$ through the star. The change in the intensity of the beam across this distance $\mathrm{d}I$ is proportional to the number of atoms encountered as well as the number of photons doing the encountering.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.9%', '--fig-max': '582px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2024-ii-r2/p3-fig2.png" alt="Left: a cross-section of the Sun with labelled layers Core, Radiative zone, Tachocline, Convective zone and Corona. Right: a colour contour map of the solar rotation rate Ω/2π in nHz (colour bar from 250 to 500) over a meridional disc with axes from −1.0 to 1.0, showing a uniform interior and faster rotation near the equator than near the poles in the outer layer." width="1819" height="920" loading="lazy" decoding="async" />
+<figcaption>**Figure 5:** *Left:* A simplified cross-section through the Sun, showing the tachocline at the bottom of the convective zone. Credit: ESA. *Right:* Rotation rate, as a function of depth and latitudes, inferred from 12.6 yr of helioseismology observations. The radiative zone clearly moves at a constant angular velocity, whilst the convective zone demonstrates that it has a higher angular velocity at the equator than at the poles. Credit: Korzennik and Eff-Darwich (2011).</figcaption>
+</figure>
+
+**(i)** Write an expression relating $\mathrm{d}I$ to the density $\rho_{\star}$ of the star as well as other parameters provided. There should be a constant of proportionality $\kappa$ in your answer with dimensions of length squared divided by mass; this is the opacity of the gas. Integrate this result to find an expression for $I(x)$, setting $I(0) = I_0$. **[2 т.]**
+
+**(ii)** Using your result, evaluate the photon mean free path $\ell$, and hence write an expression for the radiative flux $L(r)$ that includes temperature, density, and opacity. **[4 т.]**
+
+Using helioseismology we can determine that the radiative zone of the Sun rotates like a solid body at a constant angular velocity, whilst the convective zone undergoes differential rotation (so it rotates faster at the equator than at the poles) as shown in Figure 5. The thin layer between the radiative and convective zones is called the tachocline and since the change in angular velocity is rapid as you move through it, it experiences strong shear forces. The rapid acceleration (or deceleration) of the plasma is part of the solar magnetic dynamo responsible for creating the magnetic field that leads to sunspots.
+
+For the final part of this question you may assume the following:
+
+- The angular velocity of the convective zone varies linearly with latitude.
+- For mathematical convenience, the angular velocity of the radiative zone is equal to the angular velocity of the convective zone at a latitude of $45^{\circ}$.
+- The tachocline is a spherical shell of thickness $h$.
+- The angular velocity of the tachocline varies linearly between the boundaries with the radiative zone and the convective zone.
+- The parallel force per unit area due to a velocity gradient $\frac{\mathrm{d}u}{\mathrm{d}r}$ in a fluid (shear stress) is given by $\tau = \mu\frac{\mathrm{d}u}{\mathrm{d}r}$ where $\mu$ is the dynamic viscosity of the fluid.
+
+</ProblemSection>
+
+<ProblemSection id="e">
+
+### e. (11 т.)
+
+Derive an expression for the rate at which energy is dissipated due to shear stresses in the tachocline, in terms of $h$, $\mu$, $R$ and $\Delta$ where $R$ is the outer radius of the radiative zone and $\Delta$ is the difference between the angular velocity of the convective zone at the equator and at the poles. Hence evaluate this energy loss (to 1 s.f. in W) given $h = 0.03\ R_{\odot}$, $\mu = 3\ \mathrm{cm^2\ s^{-1}}$, $R = 0.7\ R_{\odot}$ and $\Delta = 1 \times 10^{-6}\ \mathrm{rad\ s^{-1}}$.
+
+*Advice: To simplify your algebra, you should consider working in the rotating frame of reference of the radiative zone and note that the fictitious forces introduced due to this change of frame are entirely radial. You may also use the following result:*
+$$
+\int x^2\cos x\,\mathrm{d}x = x^2\sin x + 2x\cos x - 2\sin x + C
+$$
+*where $C$ is an arbitrary integration constant.*
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $8 \times 10^{11}$ W
+- **b., (i)** $B = \gamma\frac{p_{gas}}{\rho_{gas}}$
+- **b., (ii)** $\rho_{gas} < \rho_{\star}$
+- **d., (i)** $I(x) = I_0e^{-\kappa\rho_{\star}x}$
+- **d., (ii)** $\ell = \frac{1}{\kappa\rho_{\star}},\quad L(r) = -\frac{64\pi r^2\sigma T^3}{3\kappa\rho_{\star}}\frac{\mathrm{d}T}{\mathrm{d}r}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Q3 – Heat Transfer in the Sun** [35 marks]
+
+<ProblemSection id="solution-a">
+
+### a.
+
+In this section the marks are for some attempt at an explanation for the five distinct environments, so it is one mark for each row
+
+| Feature | Explanation |
+|---|---|
+| Fully convective in small stars | High opacity due to low average star temperature (and relatively high average density) |
+| Radiative core in medium stars | Temperature is high enough for low opacity (and temperature dependence of p-p chain is not steep enough) |
+| Convective outer layers in medium stars | Temperature drops with increasing radius until opacity too high for radiative transfer |
+| Convective core in large stars | Hot enough for low opacity BUT CNO cycle is dominant and has extremely steep temperature dependence in the core (so convection favoured) |
+| Radiative outer layers in large stars | Still very hot for low opacity, and since now in p-p chain burning shell the temperature dependence is no longer steep enough to generate convective mixing |
+
+**[5]**
+
+[Do not have to mention any changes in density for the marks – the dependence of opacity on temperature is far more significant]
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b.
+
+**(i)** First we need to use the given relations to connect the pressure and density of the gas
+$$
+V_{gas} = \frac{M_{gas}}{\rho_{gas}} \propto \frac{1}{\rho_{gas}} \qquad \therefore \frac{p_{gas}}{\rho_{gas}^{\gamma}} = \mathrm{constant}
+$$
+[1]
+
+Differentiating with respect to r
+$$
+\frac{d}{dr}\left(\frac{p_{gas}}{\rho_{gas}^{\gamma}}\right) = \frac{p'_{gas}}{\rho_{gas}^{\gamma}} - \gamma\frac{p_{gas}\rho'_{gas}}{\rho_{gas}^{\gamma+1}} = 0
+$$
+[1]
+
+This can be simplified to
+$$
+\frac{p'_{gas}}{p_{gas}} - \gamma\frac{\rho'_{gas}}{\rho_{gas}} = 0
+$$
+[1]
+$$
+\therefore p'_{gas} = \gamma\frac{p_{gas}}{\rho_{gas}}\rho'_{gas} \qquad \therefore B = \boxed{\gamma\frac{p_{gas}}{\rho_{gas}}}
+$$
+[1] **[4]**
+
+[Expect students to state B explicitly but still give credit if they get the correct final version of $p'_{gas}$ and leave B implied]
+
+**(ii)**
+$$
+\boxed{\rho_{gas} < \rho_{\star}}
+$$
+[1] **[1]**
+
+[Accept $\boxed{\rho'_{gas} < \rho'_{\star}}$ too since parcel of gas starts in equilibrium, also award MP3 in part (iii)]
+
+**(iii)** From the ideal gas law
+$$
+\frac{pV}{T} = \mathrm{constant} \quad \therefore \frac{\rho_{\star}T_{\star}}{p_{\star}} = \mathrm{constant}
+$$
+(rearranged with one eye on what we want)
+$$
+\therefore \frac{d}{dr}\left(\frac{\rho_{\star}T_{\star}}{p_{\star}}\right) = \frac{\rho'_{\star}T_{\star}}{p_{\star}} + \frac{\rho_{\star}T'_{\star}}{p_{\star}} - \frac{\rho_{\star}T_{\star}p'_{\star}}{p_{\star}^2} = 0
+$$
+[1]
+$$
+\therefore \frac{\rho'_{\star}}{\rho_{\star}} = \frac{p'_{\star}}{p_{\star}} - \frac{T'_{\star}}{T_{\star}}
+$$
+[1] **[2]**
+
+Since the parcel of gas begins in equilibrium, our convection condition from b.(ii) becomes
+$$
+\rho'_{gas} < \rho'_{\star}
+$$
+[Award this mark if student already wrote this in b.(ii)] [1]
+
+Using our result from b.(i)
+$$
+\therefore \frac{\rho_{gas}}{\gamma p_{gas}}p'_{gas} < \rho'_{\star}
+$$
+$$
+\therefore \frac{\rho_{gas}}{\gamma p_{gas}}p'_{gas} < \rho_{\star}\left(\frac{p'_{\star}}{p_{\star}} - \frac{T'_{\star}}{T_{\star}}\right)
+$$
+[1] **[2]**
+
+(this can then be rearranged to get the expression we are after)
+
+[Since this is a ‘show that’, the marks are for the route rather than the final expression]
+
+We can assume that as the parcel rises, it expands sufficiently quickly that it is always in pressure equilibrium so that $p_{gas} \approx p_{\star}$. Also, $\rho_{\star} \approx \rho_{gas}$ to a rough approximation, so the inequality in this question can be rewritten in a more useful form as:
+$$
+\frac{p'_{\star}}{p_{\star}}\left(\frac{1}{\gamma} - 1\right) < -\frac{T'_{\star}}{T_{\star}}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### c.
+
+First we need to express all values in SI base units
+$$
+[u] = \mathrm{J\ m^{-3}} = \mathrm{kg\ m^{-1}\ s^{-2}} \qquad [T] = \mathrm{K}
+$$
+$$
+[\sigma] = \mathrm{W\ m^{-2}\ K^{-4}} = \mathrm{kg\ s^{-3}\ K^{-4}} \qquad [c] = \mathrm{m\ s^{-1}}
+$$
+[1]
+
+Setting up the equations to allow for dimensional consistency
+$$
+u = T^p\sigma^qc^r
+$$
+$$
+\therefore [\mathrm{kg}]: 1 = q \quad [\mathrm{m}]: -1 = r \quad [\mathrm{s}]: -2 = -3q - r \quad [\mathrm{K}]: 0 = p - 4q
+$$
+[1]
+
+Solving these gives
+$$
+p = 4, q = 1, r = -1 \qquad \therefore u = \frac{\alpha\sigma T^4}{c} = \boxed{\frac{4\sigma T^4}{c}}
+$$
+[1] **[3]**
+
+[Allow all the marks if they set up their equations in terms of J, m, s, K instead of all base units]
+
+We can now work out $C_V$ by differentiating $u$ with respect to $T$
+$$
+C_V = \frac{\mathrm{d}u}{\mathrm{d}T} = \boxed{\frac{16\sigma T^3}{c}}
+$$
+[1] **[1]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-d">
+
+### d.
+
+**(i)** From the given information (plus some dimensional analysis) it is clear that
+$$
+\mathrm{d}I \propto \rho_{\star}I\,\mathrm{d}x
+$$
+Introducing $\kappa$ and recognising the intensity is decreasing
+$$
+\mathrm{d}I = -\kappa\rho_{\star}I\,\mathrm{d}x
+$$
+[1]
+
+[This mark can be gained by either this line or the one before if the student makes no further progress]
+
+Carrying out the integration by separating variables and using $I_0$ as the boundary condition
+$$
+\int\frac{1}{I}\mathrm{d}I = -\kappa\rho_{\star}\int\mathrm{d}x \qquad \therefore \boxed{I(x) = I_0e^{-\kappa\rho_{\star}x}}
+$$
+[1] **[2]**
+
+**(ii)** We know that $dI \propto$ probability of particle interacting between $x$ and $x + dx$, so the expected value can be calculated using the (normalised) standard result from statistics
+$$
+\ell = \frac{\int_0^{\infty}xI\,\mathrm{d}x}{\int_0^{\infty}I\,\mathrm{d}x}
+$$
+[1]
+
+Evaluating the numerator using integration by parts
+$$
+\int_0^{\infty}xI\,\mathrm{d}x = \int_0^{\infty}xI_0e^{-\kappa\rho_{\star}x}\,\mathrm{d}x = \left[\frac{I_0xe^{-\kappa\rho_{\star}x}}{-\kappa\rho_{\star}}\right]_0^{\infty} - \int_0^{\infty} -\frac{I_0}{\kappa\rho_{\star}}e^{-\kappa\rho_{\star}x}\,\mathrm{d}x = 0 + \frac{1}{\kappa\rho_{\star}}\int_0^{\infty}I\,\mathrm{d}x
+$$
+[1]
+$$
+\therefore \ell = \frac{\int_0^{\infty}xI\,\mathrm{d}x}{\int_0^{\infty}I\,\mathrm{d}x} = \frac{\frac{1}{\kappa\rho_{\star}}\int_0^{\infty}I\,\mathrm{d}x}{\int_0^{\infty}I\,\mathrm{d}x} = \boxed{\frac{1}{\kappa\rho_{\star}}}
+$$
+[1] **[3]**
+
+Hence, using our results for $C_V$ from c. in the given expression for $\lambda$, the radiative flux is
+$$
+L(r) = -4\pi r^2\lambda\frac{\mathrm{d}T}{\mathrm{d}r} = -4\pi r^2\left(\frac{1}{3}C_V\ell c\right)\frac{\mathrm{d}T}{\mathrm{d}r} = -4\pi r^2\left(\frac{1}{3}\times\frac{16\sigma T^3}{c}\times\frac{1}{\kappa\rho_{\star}}\times c\right)\frac{\mathrm{d}T}{\mathrm{d}r} = \boxed{-\frac{64\pi r^2\sigma T^3}{3\kappa\rho_{\star}}\frac{\mathrm{d}T}{\mathrm{d}r}}
+$$
+[1] **[1]**
+
+[The second marking point can be awarded for recognising $\left[\frac{I_0xe^{-\kappa\rho_{\star}x}}{-\kappa\rho_{\star}}\right]_0^{\infty} = 0$ if their second integral is not correct meaning they make no further progress. Accept ecf on their expression for $C_V$]
+
+</ProblemSection>
+
+<ProblemSection id="solution-e">
+
+### e.
+
+Since the fictitious forces are entirely radial, they can be ignored for the purposes of this question. To further simplify matters, we can parametrise the problem in terms of $\theta = \varphi - \pi / 4$ where $\varphi$ is latitude, so that the relative velocity $u$ is zero when $\theta$ is zero. Let $\Omega(\theta)$ be the angular velocity of the convective zone and $u(r,\theta)$ be the speed of rotation of the tachocline where $r$ is the distance from the centre of the sun.
+
+*(We will use partial differentiation here rather than implicit differentiation for simplicity, but this does not change the final answer compared to if done more rigorously)*
+
+From the first two bullet points given
+$$
+\Omega(\theta) = \frac{\theta}{\pi/2}\Delta = \frac{2\theta}{\pi}\Delta
+$$
+[1]
+
+From the third and fourth bullet points given
+$$
+u(r,\theta) = \Omega(\theta)\frac{r-R}{h}r = \frac{2\theta r(r-R)}{\pi h}\Delta
+$$
+[1]
+
+Hence, using the relation given in the fifth bullet point
+$$
+\tau(r,\theta) = \mu\frac{\partial u}{\partial r} = \frac{2\theta}{\pi h}\mu\Delta(2r - R)
+$$
+[1]
+
+The power dissipated across a volume element of area $dA$ and height $dr$ is given by
+$$
+P = \mathrm{force} \times (\mathrm{relative})\ \mathrm{speed} \therefore \mathrm{d}P = \tau\,\mathrm{d}A \times \frac{\partial u}{\partial r}\mathrm{d}r
+$$
+[1]
+
+The area element is
+$$
+\mathrm{d}A = 2\pi(r\cos\varphi) \times r\,\mathrm{d}\theta = 2\pi r\cos\left(\theta + \frac{\pi}{4}\right)r\,\mathrm{d}\theta
+$$
+[1]
+
+Hence our expression becomes
+$$
+\mathrm{d}P = \frac{2\theta}{\pi h}\mu\Delta(2r - R) \times 2\pi r\cos\left(\theta + \frac{\pi}{4}\right)r\,\mathrm{d}\theta \times \frac{2\theta}{\pi h}\Delta(2r - R)\,\mathrm{d}r = \frac{8}{\pi h^2}\mu\Delta^2\theta^2\cos\left(\theta + \frac{\pi}{4}\right)\mathrm{d}\theta\,r^2(2r - R)^2\mathrm{d}r
+$$
+[1]
+
+For the total power we need to integrate over both $\theta$ and $r$
+$$
+P = \iint\mathrm{d}P = 2\int_{-\pi/4}^{\pi/4}\mathrm{d}P\,\mathrm{d}\theta \times \int_R^{R+h}\mathrm{d}P\,\mathrm{d}r = \frac{8}{\pi h^2}\mu\Delta^2\left[2\int_{-\pi/4}^{\pi/4}\theta^2\cos\left(\theta + \frac{\pi}{4}\right)\mathrm{d}\theta \times \int_R^{R+h}r^2(2r - R)^2\,\mathrm{d}r\right]
+$$
+
+Evaluating the first integral using the provided integration result (note: these limits mean it is just for one hemisphere, corresponding to latitudes from $\varphi = 0$ to $\varphi = \frac{\pi}{2}$, hence the factor of 2 above)
+$$
+\int_{-\pi/4}^{\pi/4}\theta^2\cos\left(\theta + \frac{\pi}{4}\right)\mathrm{d}\theta = \left(\frac{\pi}{4}\right)^2\sin\frac{\pi}{2} + 2\frac{\pi}{4}\cos 0 - 2\sin\frac{\pi}{2} = \frac{\pi^2}{16} + \frac{\pi}{2} - 2
+$$
+[1]
+
+Evaluating the second integral
+$$
+\int_R^{R+h}r^2(2r - R)^2\,\mathrm{d}r = \int_R^{R+h}4r^4 - 4Rr^3 + R^2r^2\,\mathrm{d}r = \left[\frac{4}{5}r^5 - Rr^4 + \frac{1}{3}R^2r^3\right]_R^{R+h} = \frac{4}{5}(R + h)^5 - R(R + h)^4 + \frac{1}{3}R^2(R + h)^3 - \frac{4}{5}R^5 + R^5 - \frac{1}{3}R^5
+$$
+[1]
+
+Taking out a common factor of $R^5$ and then expanding the brackets to get the first order terms only (since we know we only want the final result to 1 s.f and $h \ll R$)
+$$
+= R^5\left[\frac{4}{5}\left(1 + \frac{h}{R}\right)^5 - \left(1 + \frac{h}{R}\right)^4 + \frac{1}{3}\left(1 + \frac{h}{R}\right)^3 - \frac{4}{5} + 1 - \frac{1}{3}\right]
+$$
+$$
+\approx R^5\left[\frac{4}{5}\left(1 + 5\frac{h}{R}\right) - \left(1 + 4\frac{h}{R}\right) + \frac{1}{3}\left(1 + 3\frac{h}{R}\right) - \frac{4}{5} + 1 - \frac{1}{3}\right]
+$$
+$$
+= R^5\left[4\frac{h}{R} - 4\frac{h}{R} + \frac{h}{R}\right] = hR^4
+$$
+[1]
+
+Putting this all together for the final expression (and given there are two hemispheres)
+$$
+P = \frac{8}{\pi h^2}\mu\Delta^2\left[2 \times \left(\frac{\pi^2}{16} + \frac{\pi}{2} - 2\right) \times hR^4\right] = \boxed{\frac{\mu\Delta^2R^4}{\pi h}\left(\pi^2 + 8\pi - 32\right)}
+$$
+[1] **[10]**
+
+Substituting the given values
+$$
+P = \frac{3\times10^{-4}\times\left(1\times10^{-6}\right)^2\times\left(0.7\times6.96\times10^8\right)^4}{\pi\times0.03\times6.96\times10^8}\left(\pi^2 + 8\pi - 32\right) = 7.736\times10^{11}\ \mathrm{W} \sim \boxed{8\times10^{11}\ \mathrm{W}}
+$$
+(must be 1 s.f. for this mark) [1] **[1]**
+
+[This is only small compared to the luminosity of the Sun which is why the radiative and convective zones have not yet reached a common rotational velocity and are unlikely to do so (due to this resistive force) throughout the Sun’s life – it would need much greater dissipation for that]
+
+</ProblemSection>
+
+
+</Spoiler>
+
+<details>
+<summary>Questions proposed by</summary>
+
+*Questions proposed by:*  
+*Francesca Di Cecio (University of Cambridge)*  
+*Ben Woodrow (University of Oxford)*  
+*Dr Alex Calverley (Surbiton High School)*
+
+</details>
+
+---
+
+Оригинал в Архива: [BAAO_R2_2024.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2024/BAAO_R2_2024.pdf)
+· официални решения: [BAAO_R2_2024_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2024/BAAO_R2_2024_solutions.pdf)

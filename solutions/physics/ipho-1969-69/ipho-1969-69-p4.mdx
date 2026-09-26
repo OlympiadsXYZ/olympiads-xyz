@@ -1,0 +1,126 @@
+---
+id: ipho-1969-69-p4
+source: 'IPhO 1969, Теория'
+title: 'Задача 4'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/1969/ipho-1969-69.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T06:20:04.844Z'
+verifier: 'mechanical'
+---
+
+*3rd International Physics Olympiad 1969, Brno, Czechoslovakia*
+
+## Условие
+
+A glass plate is placed above a glass cube of 2 cm edges in such a way that there remains a thin air layer between them, see Figure 5. Electromagnetic radiation of wavelength between 400 nm and 1150 nm (for which the plate is penetrable) incident perpendicular to the plate from above is reflected from both air surfaces and interferes. In this range only two wavelengths give maximum reinforcements, one of them is $\lambda = 400\ \mathrm{nm}$. Find the second wavelength. Determine how it is necessary to warm up the cube so as it would touch the plate. The coefficient of linear thermal expansion is $\alpha = 8.0 \cdot 10^{-6}\,{}^{\circ}\mathrm{C}^{-1}$, the refractive index of the air $n = 1$. The distance of the bottom of the cube from the plate does not change during warming up.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.9%', '--fig-max': '249px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1969-69/p4-fig1.png" alt="A glass cube of height h standing on a horizontal base with a thin glass plate above it separated by a small air gap d; vertical arrows show radiation falling on the plate from above." width="779" height="460" loading="lazy" decoding="async" />
+<figcaption>Figure 5:</figcaption>
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- The second wavelength is 666.7 nm; the cube must be warmed up by 3.1 °C.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Condition for the maximum reinforcement can be written as
+
+$$
+2dn - \frac{\lambda_k}{2} = k\lambda_k\,,\ \text{ for } k = 0, 1, 2, \dots\,,
+$$
+
+*i.e.*
+
+$$
+2dn = (2k + 1)\frac{\lambda_k}{2}\,, \qquad (13)
+$$
+
+with $d$ being thickness of the layer, $n$ the refractive index and $k$ maximum order. Let us denote $\lambda' = 1150\ \mathrm{nm}$. Since for $\lambda = 400\ \mathrm{nm}$ the condition for maximum is satisfied by the assumption, let us denote $\lambda_p = 400\ \mathrm{nm}$, where $p$ is an unknown integer identifying the maximum order, for which
+
+$$
+\lambda_p(2p + 1) = 4dn \qquad (14)
+$$
+
+holds true. The equation (13) yields that for fixed $d$ the wavelength $\lambda_k$ increases with decreasing maximum order $k$ and vise versa. According to the assumption,
+
+$$
+\lambda_{p-1} < \lambda' < \lambda_{p-2}\,,
+$$
+
+*i.e.*
+
+$$
+\frac{4dn}{2(p - 1) + 1} < \lambda' < \frac{4dn}{2(p - 2) + 1}\,.
+$$
+
+Substituting to the last inequalities for $4dn$ using (14) one gets
+
+$$
+\frac{\lambda_p(2p + 1)}{2(p - 1) + 1} < \lambda' < \frac{\lambda_p(2p + 1)}{2(p - 2) + 1}\,.
+$$
+
+Let us first investigate the first inequality, straightforward calculations give us gradually
+
+$$
+\lambda_p(2p + 1) < \lambda'(2p - 1)\,, \quad 2p(\lambda' - \lambda_p) > \lambda' + \lambda_p\,,
+$$
+
+*i.e.*
+
+$$
+p > \frac{1}{2}\,\frac{\lambda' + \lambda_p}{\lambda' - \lambda_p} = \frac{1}{2}\,\frac{1150 + 400}{1150 - 400} = 1.\ \dots \qquad (15)
+$$
+
+Similarly, from the second inequality we have
+
+$$
+\lambda_p(2p + 1) > \lambda'(2p - 3)\,, \quad 2p(\lambda' - \lambda_p) < 3\lambda' + \lambda_p\,,
+$$
+
+*i.e.*
+
+$$
+p < \frac{1}{2}\,\frac{3\lambda' + \lambda_p}{\lambda' - \lambda_p} = \frac{1}{2}\,\frac{3 \cdot 1150 + 400}{1150 - 400} = 2.\ \dots \qquad (16)
+$$
+
+The only integer $p$ satisfying both (15) and (16) is $p = 2$.
+
+Let us now find the thickness $d$ of the air layer:
+
+$$
+d = \frac{\lambda_p}{4}(2p + 1) = \frac{400}{4}(2 \cdot 2 + 1)\ \mathrm{nm} = 500\ \mathrm{nm}\,.
+$$
+
+Substituting $d$ to the equation (13) we can calculate $\lambda_{p-1}$, *i.e.* $\lambda_1$:
+
+$$
+\lambda_1 = \frac{4dn}{2(p - 1) + 1} = \frac{4dn}{2p - 1}.
+$$
+
+Introducing the particular values we obtain
+
+$$
+\lambda_1 = \frac{4 \cdot 500 \cdot 1}{2 \cdot 2 - 1}\ \mathrm{nm} = 666.7\ \mathrm{nm}\,.
+$$
+
+Finally, let us determine temperature growth $\Delta t$. Generally, $\Delta l = \alpha l \Delta t$ holds true. Denoting the cube edge by $h$ we arrive at $d = \alpha h \Delta t$. Hence
+
+$$
+\Delta t = \frac{d}{\alpha h} = \frac{5 \cdot 10^{-7}}{8 \cdot 10^{-6} \cdot 2 \cdot 10^{-2}}\ {}^{\circ}\mathrm{C} = 3.1\,{}^{\circ}\mathrm{C}\,.
+$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [ipho69.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1967_1970/1969/ipho69.pdf)

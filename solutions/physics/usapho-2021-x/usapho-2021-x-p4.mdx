@@ -1,0 +1,184 @@
+---
+id: usapho-2021-x-p4
+source: 'USAPhO 2021, Полуфинал'
+title: 'Задача 4. B1 · Disk Jockey'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2021/usapho-2021-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T06:10:40.500Z'
+verifier: 'mechanical'
+---
+
+*USA Physics Olympiad Exam — 2021 USAPhO · 19 април 2021 г.*
+
+<details>
+<summary>Information About The 2021 USAPhO</summary>
+
+- The 2021 USAPhO consists of two 90-minute parts taking place on two separate days:
+  - Part A: Monday, April 19 from 4:00 pm to 5:30 pm Eastern Time
+  - Part B: Wednesday, April 21 from 4:00 pm to 5:30 pm Eastern Time
+
+  The exam is hosted by AAPT on the platform provided by Art of Problem Solving.
+- This year, we require the exam to be proctored by either your high school science/physics teacher, or your parent/guardian.
+- Before you start the exam, make sure you are provided with blank paper, both for your answers and scratch work, writing utensils, a hand-held scientific calculator with memory and programs erased, and a computer for you to log into the USAPhO testing page. Then agree to the Honor Policy, and download the USAPhO exam papers.
+- At the end of the exam, you have 20 minutes to upload solutions to all of the problems for that part. For each problem, scan or photograph each page of your solution, combine them into a single PDF file, and upload them on the testing platform.
+- USAPhO graders are not responsible for missing pages or illegible handwriting. No later submissions will be accepted.
+
+Thank you for participating in the USAPhO this year under such extraordinary circumstances. We hope that you and your family stay safe, and that you continue to encourage more students like you to study physics and try out the $F = ma$ exam hosted by AAPT.
+
+We acknowledge the following people for their contributions to this year’s exam (in alphabetical order):
+
+*JiaJia Dong, Mark Eichenlaub, Abijith Krishnan, Kye W. Shi, Brian Skinner, Mike Winer, and Kevin Zhou.*
+
+</details>
+
+## Условие
+
+A disk of uniform mass density, mass $M$, and radius $R$ sits at rest on a frictionless floor. The disk is attached to the floor by a frictionless pivot at its center, which keeps the center of the disk in place, but allows the disk to rotate freely. An ant of mass $m \ll M$ is initially standing on the edge of the disk; you may give your answers to leading order in $m/M$.
+
+**a.** The ant walks an angular displacement $\theta$ along the edge of the disk. Then it walks radially inward by a distance $h \ll R$, tangentially through an angular displacement $-\theta$, then back to its starting point on the disk. Assume the ant walks with constant speed $v$.
+
+Through what net angle does the disk rotate throughout this process, to leading order in $h/R$?
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '29.6%', '--fig-max': '189px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2021-x/p4-fig1.png" alt="A grey disk with a dot at its centre; two radii from the centre enclose an angle θ at the top; the ant’s closed path is drawn bold: along the rim through θ, radially inward, back along an inner arc, and out to the start, forming a thin annular sector of radial width h (marked by a dotted leader to the label h)." width="592" height="589" loading="lazy" decoding="async" />
+</figure>
+
+**b.** Now suppose the ant walks with speed $v$ along a circle of radius $r$, tangent to its starting point.
+
+Through what net angle does the disk rotate?
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '28.8%', '--fig-max': '185px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2021-x/p4-fig2.png" alt="A grey disk with a dot at its centre; a bold circle of radius r (dotted radius labelled r) lies inside the disk, touching the disk’s rim at the top." width="577" height="585" loading="lazy" decoding="async" />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a.** $\phi_1 + \phi_2 \approx -\frac{4m}{M}\frac{h\theta}{R}$
+- **b.** $\phi = \frac{4m}{M}\frac{\pi r^2}{R^2}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.**
+
+During the first leg of the trip, the disk has angular velocity
+
+$$
+\omega = -\frac{2mv}{MR}
+$$
+
+by conservation of angular momentum. Thus, the disk rotates through an angle
+
+$$
+\phi_1 = -\frac{2mv}{MR}\frac{\theta R}{v} = -\frac{2m\theta}{M}
+$$
+
+to leading order in $m/M$. (Here we have neglected the fact that the disk rotates under the ant as it is walking, somewhat reducing the distance it has to walk; this changes the answer only to higher order in $m/M$. The exact answer is a more complicated function of $m/M$. By going to “leading order”, we mean we are expanding that exact answer in a series in $m/M$, such as with the binomial theorem, and keeping only the first nonzero term.)
+
+When the ant is moving radially, $\omega = 0$, so no rotation occurs. On the last leg of the trip, the disk has angular velocity
+
+$$
+\omega = \frac{2mv(R - h)}{MR^2}
+$$
+
+which means the disk rotates through an angle
+
+$$
+\phi_2 = \frac{2mv(R - h)}{MR^2}\frac{\theta(R - h)}{v} = \frac{2m\theta}{M}\left(1 - \frac{h}{R}\right)^2.
+$$
+
+The net rotation is
+
+$$
+\phi_1 + \phi_2 = \frac{2m\theta}{M}\left(\left(1 - \frac{h}{R}\right)^2 - 1\right) \approx -\frac{4m}{M}\frac{h\theta}{R}.
+$$
+
+The sign is not important since it is convention-dependent. (Solutions that were not fully approximated were also accepted; however, not approximating early dramatically increases the amount of work you have to do.)
+
+Incidentally, you might have thought the answer had to be zero, by angular momentum conservation. After all, when a system has zero total linear momentum, its center of mass can’t move. But this problem shows that systems with zero total angular momentum *can* perform net rotations, which is the reason, e.g. that a falling cat can always land on its feet. In more advanced physics, this would be described by saying the constraint on the disc’s motion coming from angular momentum conservation is not holonomic.
+
+**b.**
+
+There are many ways to do this problem, so we’ll give a selection, starting with a straightforward solution and then considering some increasingly elegant solutions.
+
+**First solution:** The overall rotation angle of the disk is
+
+$$
+\phi = \int\omega\,dt = \frac{2}{MR^2}\int L\,dt = \frac{2m}{MR^2}\int\mathbf{r}\times\mathbf{v}\,dt
+$$
+
+where we again work to leading order in $m/M$, and $\mathbf{r}$ and $\mathbf{v}$ are the position and velocity of the ant. The coordinates of a point on the circle are given by
+
+$$
+(r\sin\theta, (R - r) + r\cos\theta).
+$$
+
+If the speed of the ant is $v$, the velocity is given by
+
+$$
+(v\cos\theta, -v\sin\theta).
+$$
+
+To evaluate the angular momentum, note that
+
+$$
+|\mathbf{v}\times\mathbf{r}| = vr\cos^2\theta + vr\sin^2\theta + v(R - r)\cos\theta = vr + v(R - r)\cos\theta.
+$$
+
+Thus, we have
+
+$$
+L = mv\big(r + (R - r)\cos\theta\big).
+$$
+
+Plugging this into the time integral above,
+
+$$
+\phi = \int\frac{2mv}{MR^2}\Big(r + (R - r)\cos\big(\theta(t)\big)\Big)\,\mathrm{d}t\,.
+$$
+
+Changing this to an integral over $\theta$ using $d\theta = v\,dt/r$,
+
+$$
+\phi = \int_0^{2\pi}\frac{2mr}{MR^2}\Big(r + (R - r)\cos\big(\theta(t)\big)\Big)\,\mathrm{d}\theta = \frac{4m}{M}\frac{\pi r^2}{R^2}.
+$$
+
+Of course, the problem could also be solved by parameterizing the ant’s path in a different way, such as by using polar coordinates with the origin at the center of the disk. The way we set it up here is the simplest, since it makes the integral easy. (For most students, the hardest part was finding a compact expression for $L$. A common mistake was assuming $L = mv_xr$ or a variant thereof.)
+
+**Second solution:** The net effect on the disk of one ant going in the circular path is the same as two ants going along the path, each with half the mass, and thus the same as four ants each with a quarter the mass, and so on. By repeating this logic, we can thus replace the ant with a ring of radius $r$ and mass $m$ of uniform density, which rotates around once. Therefore, the rotation angle is
+
+$$
+\phi = 2\pi\frac{I_{\mathrm{disk}}}{I_{\mathrm{ring}}} = 2\pi\frac{mr^2}{MR^2/2} = \frac{4m}{M}\frac{\pi r^2}{R^2}.
+$$
+
+This is very simple, though it’s a trick that only works for a circular trajectory.
+
+**Third solution:** Starting from the first line of the first solution, we notice that
+
+$$
+\int\mathbf{r}\times\mathbf{v}\,dt = \int\mathbf{r}\times d\mathbf{r} = 2A
+$$
+
+where $A$ is the area of the ant’s trajectory. Thus, we have
+
+$$
+\phi = \frac{4m}{M}\frac{A}{R^2} = \frac{4m}{M}\frac{\pi r^2}{R^2}.
+$$
+
+This makes it clear why the answer had to be simple in general: the angle can only depend on a geometric property of the ant’s trajectory, namely its area. This kind of phenomenon occurs in many fields of physics, and is generally known as a geometric phase.
+
+**Fourth solution:** We can decompose the circle into a stack of thin rectangles. The effect of a single ant going around the circle is the same as the effect of one ant going around each rectangle. But by slightly generalizing your result in part (a), you can show that the net rotation due to each rectangle is $(4m/M)(dA/R^2)$ where $dA$ is the area of that rectangle. Summing the areas gives the answer. Like the third solution, this works for any ant trajectory, and it makes it clear why it was the area of the trajectory that mattered.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2021-USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2021/2021-USAPhO.pdf)
+· официални решения: [2021-USAPhO_Solutions_v3.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2021/2021-USAPhO_Solutions_v3.pdf)

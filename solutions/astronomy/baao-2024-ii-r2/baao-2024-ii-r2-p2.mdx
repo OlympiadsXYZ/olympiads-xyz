@@ -1,0 +1,543 @@
+---
+id: baao-2024-ii-r2-p2
+source: 'BAAO 2024, II кръг'
+title: 'Задача 2. Discworld Astrophysics'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/BAAO/2024/baao-2024-ii-r2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T06:47:07.707Z'
+verifier: 'mechanical'
+---
+
+*British Astronomy and Astrophysics Olympiad 2023-2024 — Astro Round 2 — Tuesday 27th February 2024 · 27 февруари 2024 г. · 30 т.*
+
+<details>
+<summary>Указания</summary>
+
+**Time**: 3 hours ($\sim 60$ minutes for Q1, $\sim 55$ minutes for Q2 and $\sim 65$ minutes for Q3).
+
+**Questions**: All three questions should be attempted. Each question contains independent parts so that later parts can be attempted even if earlier parts are incomplete.
+
+**Solutions**: Answers and calculations are to be written on loose paper. START EACH QUESTION ON A NEW PAGE. Students should ensure their **name** and **school** is clearly written on the **first** answer sheet and that **all** pages are numbered. A standard formula booklet may be used.
+
+**Clarity**: Solutions must be written legibly, in black pen, and working down the page. Scribble will not be marked and overall clarity is an important aspect of this exam.
+
+**Instructions**: To accommodate students sitting the paper at different times, please **do not discuss** any aspect of the paper on the internet until 8 am Saturday 2nd March.
+
+**Calculators**: Any standard calculator may be used, but calculators cannot be programmable and must not have symbolic algebra capability.
+
+</details>
+
+<details>
+<summary>Training Dates and the IOAA</summary>
+
+**Training Dates and the IOAA** (Vassouras, Rio de Janeiro, Brazil, 17th - 26th August 2024)
+
+*The team will be chosen from students taking this paper. The best students that are eligible to represent the UK at the IOAA will be invited to attend the* **Training Camp** *to be held in Oxford from* **Tuesday 2nd to Saturday 6th April 2024**. *Astronomy material will be covered; problem solving skills and observational skills (telescope and naked eye observations) will be developed. At the Training Camp a Data Analysis exam along with a Round 3 theory paper will be sat. A team of five students (plus one reserve) will be selected for further training, including additional training camps in the summer.*
+
+*The BAAO are very proud to be sponsored by G-Research*
+
+</details>
+
+<details>
+<summary>Important Constants</summary>
+
+| Constant | Symbol | Value |
+|---|---|---|
+| Speed of light | $c$ | $3.00 \times 10^{8}\ \mathrm{m\,s^{-1}}$ |
+| Earth’s rotation period | 1 day | 24 hours |
+| Earth’s orbital period | 1 year | 365.25 days |
+| parsec | pc | $3.09 \times 10^{16}\ \mathrm{m}$ |
+| Astronomical Unit | au | $1.50 \times 10^{11}\ \mathrm{m}$ |
+| Radius of the Sun | $R_{\odot}$ | $6.96 \times 10^{8}\ \mathrm{m}$ |
+| Radius of the Earth | $R_{\oplus}$ | $6.37 \times 10^{6}\ \mathrm{m}$ |
+| Mass of the Sun | $M_{\odot}$ | $1.99 \times 10^{30}\ \mathrm{kg}$ |
+| Mass of the Earth | $M_{\oplus}$ | $5.97 \times 10^{24}\ \mathrm{kg}$ |
+| Luminosity of the Sun | $L_{\odot}$ | $3.83 \times 10^{26}\ \mathrm{W}$ |
+| Absolute magnitude of the Sun | $\mathcal{M}_{\odot}$ | $4.74$ |
+| Hubble constant | $H_0$ | $70\ \mathrm{km\ s^{-1}\ Mpc^{-1}}$ |
+| Stephan-Boltzmann constant | $\sigma$ | $5.67 \times 10^{-8}\ \mathrm{W\ m^{-2}\ K^{-4}}$ |
+| Gravitational constant | $G$ | $6.67 \times 10^{-11}\ \mathrm{m^{3}\ kg^{-1}\ s^{-2}}$ |
+| Boltzmann constant | $k_{\mathrm{B}}$ | $1.38 \times 10^{-23}\ \mathrm{J\ K^{-1}}$ |
+| Permittivity of free space | $\varepsilon_0$ | $8.85 \times 10^{-12}\ \mathrm{F\ m^{-1}}$ |
+| Permeability of free space | $\mu_0$ | $4\pi \times 10^{-7}\ \mathrm{H\ m^{-1}}$ |
+| Planck’s constant | $h$ | $6.63 \times 10^{-34}\ \mathrm{J\ s}$ |
+| Elementary charge | $e$ | $1.60 \times 10^{-19}\ \mathrm{C}$ |
+| Proton rest mass | $m_{\mathrm{p}}$ | $1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Electron rest mass | $m_{\mathrm{e}}$ | $9.11 \times 10^{-31}\ \mathrm{kg}$ |
+| Wien’s displacement law | $\lambda_{\max}T$ | $2.90 \times 10^{-3}\ \mathrm{m\ K}$ |
+| Avagadro’s constant | $N_A$ | $6.02 \times 10^{23}\ \mathrm{mol^{-1}}$ |
+
+**Basic calculus formulae**:
+
+Chain rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}f(g(x)) = f'(g(x))g'(x)
+$$
+
+Product rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}(uv) = \frac{\mathrm{d}u}{\mathrm{d}x}v + u\frac{\mathrm{d}v}{\mathrm{d}x}
+$$
+
+Quotient rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u}{v}\right) = \frac{\frac{\mathrm{d}u}{\mathrm{d}x}v - u\frac{\mathrm{d}v}{\mathrm{d}x}}{v^2}
+$$
+
+Integration by parts
+$$
+\int u\frac{\mathrm{d}v}{\mathrm{d}x}\,\mathrm{d}x = uv - \int v\frac{\mathrm{d}u}{\mathrm{d}x}\,\mathrm{d}x
+$$
+
+Standard integral
+$$
+\int \frac{1}{x}\,\mathrm{d}x = \ln|x| + C
+$$
+
+</details>
+
+<details>
+<summary>Important Formulae</summary>
+
+You might find the diagram of an elliptical orbit below useful in solving some of the questions:
+
+**Elements of an elliptic orbit**:
+
+- $a = \mathbf{OA}\ (= \mathbf{OP})$ semi-major axis
+- $b = \mathbf{OB}\ (= \mathbf{OC})$ semi-minor axis
+- $e = \sqrt{1 - \frac{b^2}{a^2}}$ eccentricity
+- $\mathbf{F}$ focus
+- $\mathbf{PF} = a(1 - e)$ periapsis distance (shortest distance from $\mathbf{F}$)
+- $\mathbf{AF} = a(1 + e)$ apoapsis distance (longest distance from $\mathbf{F}$)
+
+**Kepler’s Third Law**:
+$$
+T^2 = \frac{4\pi^2}{GM}a^3
+$$
+
+**Vis-Viva Equation**:
+$$
+v^2 = GM\left(\frac{2}{r} - \frac{1}{a}\right)
+$$
+
+**Wien’s Displacement Law**:
+$$
+\lambda_{\max}T = \mathrm{constant}
+$$
+
+**Stephan-Boltzmann Law**:
+$$
+L = 4\pi R^2\sigma T^4
+$$
+
+**Brightness (Intensity)**:
+$$
+b = \frac{L}{4\pi d^2}
+$$
+
+**Magnitudes**:
+$$
+\frac{b_1}{b_0} = 10^{-0.4(m_1 - m_0)}
+$$
+$$
+m - \mathcal{M} = 5\log\left(\frac{d}{10}\right)
+$$
+
+**Distance-Parallax Relation**:
+$$
+d = \frac{1}{p}
+$$
+
+**Rayleigh Criterion**:
+$$
+\theta = \frac{1.22\lambda}{D}
+$$
+
+**Redshift**:
+$$
+z = \frac{\Delta\lambda}{\lambda_{\mathrm{emit}}} \approx \frac{v}{c}
+$$
+
+**Hubble’s Law**:
+$$
+v = H_0 d
+$$
+
+</details>
+
+<details>
+<summary>Note for markers</summary>
+
+**Astro Round 2 2024 Paper Solutions and Marking Guidelines**
+
+**Note for markers:**
+
+- Answers to two or three significant figures are generally acceptable. The solution may give more in order to make the calculation clear. Units should be present on final answers when appropriate.
+- There are multiple ways to solve some of the questions; please accept all good solutions that arrive at the correct answer. Students getting the answer in a $\boxed{\text{box}}$ will get all the marks available for that calculation / part of the question (as indicated in red), so long as there are no unphysical / nonsensical steps or assumptions made (students may not explicitly calculate the intermediate stages and should not be penalised for this so long as their argument is clear).
+
+In these solutions a black [1] is a marking point and a bold **[n]** is the total for that calculation or part (printed in red in the source).
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [a.](#a)
+- [b.](#b)
+- [c.](#c)
+- [d.](#d)
+
+</nav>
+
+The inhabitants of Terry Pratchett’s fantasy *Discworld* series reside on a disc-shaped world carried through the universe by four elephants standing on a turtle. This disc is orbited by a “tiny sunlet” in what we shall assume to be 24-hour days with a uniform angular velocity and the geometry shown in Figure 2. The disc itself rotates about a perpendicular axis through its centre with a period of $800$ days, resulting in eight seasons throughout the year, although they have a different definition of a ‘solstice’. For them, a summer solstice (corresponding to the day with the highest peak temperature) occurs when the sunlet rises at your point on the Rim, and a second one happens 400 days later when the sunlet is setting at your point on the Rim, hence you get two summers (and indeed two of each season). Similarly, a winter solstice occurs 200 days after the summer solstice (when the disc has rotated a further $90^{\circ}$). The Hub (the centre of the disc) has no seasons and is covered in permafrost.
+
+The radius of the disc, $R$, is 8000 km; assume that this is also approximately equal to the sunlet’s orbital radius and that the disc’s average density is equal to that of the Earth.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '67.2%', '--fig-max': '431px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2024-ii-r2/p2-fig1.png" alt="A flat disc seen obliquely, labelled Hub at its centre and Rim at its edge, with arrows showing its rotation; a small sun with rays travels on a dashed circular orbit that passes over and under the disc, with arrowheads showing the direction of motion." width="1346" height="1222" loading="lazy" decoding="async" />
+<figcaption>**Figure 2:** The overall geography of *Discworld*, showing the vast flat world being orbited by the tiny sunlet. The days are 24 hours in length and a year lasts 800 days. The edge of the disc is known as the Rim and the centre is known as the Hub. Credit: Francesca Di Cecio.</figcaption>
+</figure>
+
+<ProblemSection id="a">
+
+### a. (9 т.)
+
+Figure 3 shows two logarithmic plots of solar intensity versus time over the duration of a year on the disc. In each case, observers recorded the solar intensity every 24 hours. One of the plots shows the curves obtained by observers at the same location each measuring at a different time of day, while the other plot shows the curves obtained by observers measuring at the same time of day as each other but from various locations on the disc.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '95.5%', '--fig-max': '612px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2024-ii-r2/p2-fig2.png" alt="Two side-by-side plots titled Plot 1 and Plot 2, each of log (intensity [arbitrary units]) from about −1.3 to 0.6 against time [days] from 0 to 800, with five coloured curves (blue, orange, green, red, purple). In Plot 1 the four varying curves all cross the flat purple line at about −1.02 at 200 and 600 days; in Plot 2 the curves reach minima near 400 days and do not share a common crossing point, the purple line being flat at about −0.8." width="1911" height="1001" loading="lazy" decoding="async" />
+<figcaption>**Figure 3:** Two logarithmic plots of solar intensity versus time over the duration of a year on the disc. One corresponds to 5 observers taking readings once every 24 hours for a year from the same location but at different times of day. The other corresponds to 5 observers taking readings once every 24 hours for a year from different locations but at the same time of day. Credit: Francesca Di Cecio.</figcaption>
+</figure>
+
+**(i)** With clear and explicit reasoning, decide which plot is which. Guesses will not be credited. **[2 т.]**
+
+**(ii)** Derive an equation relating the number of days ($n$) since the first summer solstice of the year and the altitude of the sunlet ($a$) as observed at the Rim $x$ hours after sunrise. It should be of the form $\tan(a) = \beta\sin(\pi x/12)$ where $\beta = f(n, x)$ which should be found. **[5 т.]**
+
+**(iii)** Derive an equation relating $n$ and the angle subtended at the observer by the Hub and the projection of the sunlet onto the disc ($b$). It should be of the form $\sin(b) = \beta\gamma$ where $\gamma = g(n, x)$ which should be found. **[2 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### b. (5 т.)
+
+The warmest part of the day at the Hub is at midday, and at this peak temperature the top layer of the ground is at a temperature of $0\ {}^{\circ}\mathrm{C}$.
+
+**(i)** Assuming the Hub is thermally isolated from the rest of the disc and that the icy surface reflects $80\%$ of the incident radiation but emits like a perfect black body, show that the luminosity of the sunlet is $\sim 3 \times 10^{-9}\ L_{\odot}$. [Hint: Consider that at this temperature the surface is in thermal equilibrium and so the power absorbed by a $1$ m$^2$ patch of ground equals the power emitted by that same patch.] **[3 т.]**
+
+**(ii)** The people of *Discworld* see the same spectrum of colours as we do (plus a magical eighth colour known as octarine), so we assume that its sunlet is a blackbody radiator with a peak wavelength of $500$ nm similar to our own Sun. Calculate the sunlet’s radius, $r_{\star}$. **[2 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### c. (3 т.)
+
+A spherical object of negligible mass and radius $r$ is a distance $x$ from a mass $m$. Find the strength of the gravitational field of $m$ at the location of the centre of the spherical object, $g_{centre}$, and at a point on the surface of the far side of the spherical object, $g_{far}$. Given that $r \ll x$, derive an expression for the tidal acceleration, $a_{tidal}$, on the spherical object due to mass $m$ where $a_{tidal} = g_{centre} - g_{far}$. [Hint: You may use the result $(1+y)^n \approx 1 + ny$ when $y \ll 1$.]
+
+</ProblemSection>
+
+<ProblemSection id="d">
+
+### d. (13 т.)
+
+The disc’s mass is dominated by the Supercontinent, on which most of the 41 novels are set, and a smaller landmass known as the Counterweight Continent, which is very dense due to its abundance of gold. For this question, model the disc as two equal and diametrically opposed point masses each of mass $M$ separated by $R$ symmetrically around the Hub, and neglect the gravitational effects of the elephants and the turtle on the sunlet. Take the disc’s thickness as being $R/4$.
+
+**(i)** Derive an expression for the tidal acceleration on the surface of the sunlet due to the disc at sunrise on some day of the year. Give your answer in terms of $M$, $R$, $r_{\star}$ and $\phi$ where $\phi$ is the Sunlet-Hub-Supercontinent angle. **[5 т.]**
+
+**(ii)** Use your equation to calculate the value of the maximum and minimum tidal acceleration experienced by the sunlet at sunrise. [Hint: Consider the value of $\phi$ needed in each case.] **[5 т.]**
+
+**(iii)** Compare these to the surface gravitational field strength of the sunlet, assuming it has the same average density as the Sun, and comment on whether or not the sunlet will noticeably change shape at sunrise in *Discworld*. **[3 т.]**
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a., (i)** Plot 1 is taken by observers at the same location but different times; Plot 2 is taken by observers at the same time but different locations.
+- **a., (ii)** $\beta = \left(1 - 2\cos\frac{\pi x}{12}\cos\frac{\pi n}{400} + \cos^2\frac{\pi x}{12}\right)^{-1/2}$
+- **a., (iii)** $\gamma = \cos\frac{\pi x}{12}\sin\frac{\pi n}{400}$
+- **b., (i)** $3.31 \times 10^{-9}$ L_☉
+- **b., (ii)** 39600 m
+- **d., (ii)** a<sub>tot</sub>,max = 0.0950 m s⁻² (ϕ = 0 or π); a<sub>tot</sub>,min = 0.0147 m s⁻² (ϕ = π/2)
+- **d., (iii)** g⋆ = 0.0156 m s⁻²; the sunlet WILL noticeably change shape at sunrise.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Q2 – *Discworld* Astrophysics** [30 marks]
+
+<ProblemSection id="solution-a">
+
+### a.
+
+**(i)** In Plot 1, all 5 observers record the same intensity on the winter solstice (i.e. 200 and 600 days after the first summer solstice) [1]
+
+(Since intensity / distance to sunlet is the same all day on the winter solstice that means) **Plot 1 is taken by observers at the same location** but different times [1] **[2]**
+
+(and so **Plot 2 is taken by observers at the same time** but different locations)
+
+[Do not give the second mark for correct guesses without explanation. If they do not link the shared intensity of the observers in Plot 1 to the winter solstice but get the correct answer, give one mark only. Expect to see both plots allocated a description for the second marking point but do not penalise if the students only write out one in full and leave the second implied]
+
+**(ii)** Relevant diagram e.g. [1]
+
+[**Individual notation will vary** and could be done as separate diagrams, but should ideally have 4 points [H, S, S’, O] and 4 angles (a, b, h, θ). Angle b may only be clearly indicated in a diagram in part iii) of this question, so look at these parts together when deciding diagram mark. No penalty if only two triangles drawn]
+
+Altitude of sunlet $= h = \frac{2\pi x}{24} = \frac{\pi x}{12}$ (so $SS' = R\sin\frac{\pi x}{12}$ and $HS' = R\cos\frac{\pi x}{12}$) [1]
+
+[This mark can be given from implied working for SS’ and / or HS’]
+
+Angle around the Rim the sunrise has moved since summer solstice $= \theta = \frac{\pi n}{400}$ [1]
+
+Applying the cosine rule to triangle HOS’
+$$
+(OS')^2 = (HO)^2 + (HS')^2 - 2(HO)(HS')\cos\theta
+$$
+$$
+\therefore (OS')^2 = R^2 + R^2\cos^2\frac{\pi x}{12} - 2R^2\cos\frac{\pi x}{12}\cos\frac{\pi n}{400}
+$$
+$$
+\therefore OS' = R\sqrt{1 - 2\cos\frac{\pi x}{12}\cos\frac{\pi n}{400} + \cos^2\frac{\pi x}{12}}
+$$
+[1]
+
+Hence in triangle OSS’
+$$
+\tan(a) = \frac{SS'}{OS'} = \frac{R\sin\frac{\pi x}{12}}{R\sqrt{1 - 2\cos\frac{\pi x}{12}\cos\frac{\pi n}{400} + \cos^2\frac{\pi x}{12}}} = \frac{\sin\frac{\pi x}{12}}{\sqrt{1 - 2\cos\frac{\pi x}{12}\cos\frac{\pi n}{400} + \cos^2\frac{\pi x}{12}}}
+$$
+$$
+\therefore \beta = \boxed{\left(1 - 2\cos\frac{\pi x}{12}\cos\frac{\pi n}{400} + \cos^2\frac{\pi x}{12}\right)^{-1/2}}
+$$
+[1] **[5]**
+
+[Accept algebraically equivalent forms e.g. $\boxed{\left(\left(\cos\frac{\pi x}{12} - \cos\frac{\pi n}{400}\right)^2 + \sin^2\frac{\pi n}{400}\right)^{-1/2}}$ from other valid methods, such as vector algebra. Simplification is not required. Expect students to state β explicitly but still give credit if they get the correct final version of tan (a) and leave β implied]
+
+**(iii)** Applying the sine rule to triangle HOS’
+$$
+\frac{\sin(b)}{HS'} = \frac{\sin\frac{\pi n}{400}}{OS'}
+$$
+[1]
+$$
+\therefore \sin(b) = \frac{R\cos\frac{\pi x}{12}\sin\frac{\pi n}{400}}{R\sqrt{1 - 2\cos\frac{\pi x}{12}\cos\frac{\pi n}{400} + \cos^2\frac{\pi x}{12}}} = \frac{\cos\frac{\pi x}{12}\sin\frac{\pi n}{400}}{\sqrt{1 - 2\cos\frac{\pi x}{12}\cos\frac{\pi n}{400} + \cos^2\frac{\pi x}{12}}}
+$$
+$$
+\therefore \gamma = \boxed{\cos\frac{\pi x}{12}\sin\frac{\pi n}{400}}
+$$
+[1] **[2]**
+
+[Accept algebraically equivalent forms from other valid methods. Expect students to state γ explicitly but still give credit if they get the correct final version of sin (b) and leave γ implied]
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b.
+
+**(i)** Incident power on a patch of ground of area A at a distance R from the sunlet
+$$
+P_i = \frac{L}{4\pi R^2} \times A \times (1 - 0.8)
+$$
+[1]
+
+Using the hint given, in thermal equilibrium this must be equal to the emitted power, so
+$$
+\frac{L}{4\pi R^2} \times A \times (1 - 0.8) = \sigma AT^4
+$$
+[1]
+
+Given that T = 0 °C = 273 K and that the areas cancel
+$$
+L = \frac{4\pi R^2\sigma T^4}{1 - 0.8} = \frac{4\pi\times\left(8000\times10^3\right)^2\times5.67\times10^{-8}\times273^4}{0.2} = 1.27\times10^{18}\ W = \boxed{3.31\times10^{-9}\ L_{\odot}}\ \left(\sim 3\times10^{-9}\ L_{\odot}\right)
+$$
+[1] **[3]**
+
+[Must be in units of $L_{\odot}$ and at least 2 s.f. for the final mark since it was a ‘show that’. If the student applies the concept of 80% reflected incorrectly then can still get second mark through ecf, although will not be able to get third mark]
+
+**(ii)** Using Wien’s displacement law
+$$
+T_{\star} = \frac{2.90\times10^{-3}}{\lambda_{max}} = \frac{2.90\times10^{-3}}{500\times10^{-9}} = 5800\ \mathrm{K}
+$$
+[1]
+
+Using the Stephan-Boltzmann law
+$$
+L = 4\pi r_{\star}^2\sigma T_{\star}^4 \quad \therefore r_{\star} = \sqrt{\frac{L}{4\pi\sigma T_{\star}^4}} = \sqrt{\frac{1.27\times10^{18}}{4\pi\times5.67\times10^{-8}\times5800^4}} = \boxed{3.96\times10^4\ \mathrm{m}}
+$$
+[1] **[2]**
+
+[If using $L = 3\times10^{-9}\ L_{\odot}$ then this leads to $r_{\star} = \boxed{3.77\times10^4\ \mathrm{m}}$ which also gets full credit]
+
+[The luminosity and size of this sunlet emphasise how small it really is – it is actually entirely unphysical to have a star this small, but *Discworld* is a piece of fiction!]
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### c.
+
+Starting with the gravitational field strengths
+$$
+g_{centre} = \frac{Gm}{x^2} \quad \text{and} \quad g_{far} = \frac{Gm}{(x+r)^2}
+$$
+[0.5 marks for each] [1]
+
+Hence the tidal acceleration is
+$$
+a_{tidal} = g_{centre} - g_{far} = \frac{Gm}{x^2} - \frac{Gm}{(x+r)^2} = \frac{Gm}{x^2} - \frac{Gm}{x^2\left(1+\frac{r}{x}\right)^2}
+$$
+$$
+= \frac{Gm}{x^2}\left(1 - \left(1 + \frac{r}{x}\right)^{-2}\right) \approx \frac{Gm}{x^2}\left(1 - \left(1 - \frac{2r}{x}\right)\right)
+$$
+[1]
+$$
+= \frac{Gm}{x^2} \times \frac{2r}{x} = \boxed{\frac{2Gmr}{x^3}}
+$$
+[1] **[3]**
+
+[The second mark is for correct application of the first order expansion suggested by the hint]
+
+[We have used the centre and far side of the small spherical object in our derivation here, but you would get the exact same answer if you used the centre and near side – this is why we can use this expression in the next part of the question]
+
+</ProblemSection>
+
+<ProblemSection id="solution-d">
+
+### d.
+
+**(i)** Relevant diagram e.g. [1]
+
+[No penalty here if they treat $x_1$ and $x_2$ as meeting at the same point on the surface of the sunlet and / or if they do not indicate the angle θ (notations may vary)]
+
+Using the cosine rule
+$$
+x_1^2 = R^2 + \left(\frac{R}{2}\right)^2 - 2R\left(\frac{R}{2}\right)\cos\phi = R^2\left(\frac{5}{4} - \cos\phi\right)
+$$
+[1]
+$$
+x_2^2 = R^2 + \left(\frac{R}{2}\right)^2 - 2R\left(\frac{R}{2}\right)\cos(\pi - \phi) = R^2\left(\frac{5}{4} + \cos\phi\right)
+$$
+[1]
+
+The total tidal acceleration at the surface of the sunlet in the direction of the centre of mass of the system is going to be equal to the sum of the components of the magnitudes of the tidal force caused by each (point) mass M
+$$
+a_{tot} = \frac{2GMr_{\star}}{x_1^3}\cos\theta_1 + \frac{2GMr_{\star}}{x_2^3}\cos\theta_2
+$$
+[for realising use of cos θ] [1]
+$$
+= \boxed{\frac{2GMr_{\star}}{R^3}\left[\left(\frac{5}{4} - \cos\phi\right)^{-\frac{3}{2}}\cos\theta_1 + \left(\frac{5}{4} + \cos\phi\right)^{-\frac{3}{2}}\cos\theta_2\right]}
+$$
+[1] **[5]**
+
+[If the student has a formula that ignores the θ factor (or their equivalent notation) max 4 marks. This is one route – there are many other (much longer) ways and so accept any valid approach that arrives at an algebraically equivalent expression e.g. using vectors with $\vec{\imath}$ the unit vector horizontally (choosing it to be positive to the left in our diagram) and $\vec{\jmath}$ the unit vector vertically (choosing it to be positive downwards) then you can derive an expression that avoids θ and is purely dependent on ϕ. Same first mark (diagram) then the remaining 4:
+$$
+\overrightarrow{x_1} = \frac{R}{2}(2 - \cos\phi)\vec{\imath} + \frac{R}{2}(\sin\phi)\vec{\jmath} \quad \text{and} \quad \left|\overrightarrow{x_1}\right| = x_1 = \frac{R}{2}\sqrt{5 - 4\cos\phi}
+$$
+[1]
+$$
+\overrightarrow{x_2} = \frac{R}{2}(2 + \cos\phi)\vec{\imath} - \frac{R}{2}(\sin\phi)\vec{\jmath} \quad \text{and} \quad \left|\overrightarrow{x_2}\right| = x_2 = \frac{R}{2}\sqrt{5 + 4\cos\phi}
+$$
+[1]
+$$
+\therefore \overrightarrow{a_{tot}} = 2GMr_{\star}\left(\frac{\overrightarrow{x_1}}{x_1^4} + \frac{\overrightarrow{x_2}}{x_2^4}\right) = \frac{16GMr_{\star}}{R^3}\left(\frac{(2-\cos\phi)\vec{\imath} + (\sin\phi)\vec{\jmath}}{(5-4\cos\phi)^2} + \frac{(2+\cos\phi)\vec{\imath} - (\sin\phi)\vec{\jmath}}{(5+4\cos\phi)^2}\right)
+$$
+$$
+= \frac{16GMr_{\star}}{R^3\left(25 - 16(\cos\phi)^2\right)^2}[((2 - \cos\phi)(5 + 4\cos\phi)^2 + (2 + \cos\phi)(5 - 4\cos\phi)^2)\vec{\imath} + \sin\phi((5 + 4\cos\phi)^2 - (5 - 4\cos\phi)^2)\vec{\jmath}]
+$$
+$$
+= \frac{64GMr_{\star}}{R^3(17 - 8\cos 2\phi)^2}((23 - 2\cos 2\phi)\vec{\imath} + 10(\sin 2\phi)\vec{\jmath})
+$$
+[1]
+$$
+\therefore \left|\overrightarrow{a_{tot}}\right| = \boxed{\frac{64GMr_{\star}}{R^3(17 - 8\cos 2\phi)}\sqrt{529 + 4\cos^2 2\phi - 92\cos 2\phi + 100\sin^2 2\phi}}
+$$
+[1]
+
+This can be further simplified to $\frac{64GMr_{\star}}{R^3(17-8u)^2}\sqrt{629 - 92u - 96u^2} = \boxed{\frac{64GMr_{\star}}{R^3(17-8u)^{3/2}}\sqrt{37 + 12u}}$ where $u = \cos 2\phi$, although this simplification is not needed for the marks]
+
+**(ii)** First we calculate M given the density of the disc is the same as the Earth’s average density
+$$
+\rho_{\oplus} = \frac{M_{\oplus}}{\frac{4}{3}\pi R_{\oplus}^3} = \frac{5.97\times10^{24}}{\frac{4}{3}\pi(6.37\times10^6)^3} = 5514\ \mathrm{kg\ m^{-3}}
+$$
+[1]
+$$
+\therefore M = \frac{1}{2}M_{tot} = \frac{1}{2}\rho_{\oplus}V_{disc} = \frac{1}{2}\rho_{\oplus}\pi R^2\left(\frac{R}{4}\right) = \frac{1}{8}\rho_{\oplus}\pi R^3 = \frac{1}{8}\times5514\times\pi\times(8000\times10^3)^3 = 1.11\times10^{24}\ \mathrm{kg}
+$$
+[1]
+
+For the maximum tidal acceleration
+$$
+\phi = 0\ \ (\text{or }\pi) \qquad (\text{so } \theta_1 = \theta_2 = 0)
+$$
+[0.5]
+$$
+\therefore a_{tot,max} = \frac{2GMr_{\star}}{R^3}\left[\left(\frac{5}{4} - 1\right)^{-\frac{3}{2}} + \left(\frac{5}{4} + 1\right)^{-\frac{3}{2}}\right] = \frac{448GMr_{\star}}{27R^3} = \frac{448\times6.67\times10^{-11}\times1.11\times10^{24}\times3.96\times10^4}{27\times(8000\times10^3)^3} = \boxed{0.0950\ \mathrm{m\ s^{-2}}}
+$$
+[1] **[3.5]**
+
+For the minimum tidal acceleration
+$$
+\phi = \frac{\pi}{2} \qquad \left(\text{so } \theta_1 = \theta_2 = \tan^{-1}\left(\frac{R/2}{R}\right) = \tan^{-1}\left(\frac{1}{2}\right)\right)
+$$
+[0.5]
+$$
+\therefore a_{tot,min} = \frac{2GMr_{\star}}{R^3}\left[\left(\frac{5}{4} - 0\right)^{-\frac{3}{2}}\cos\left(\tan^{-1}\left(\frac{1}{2}\right)\right) + \left(\frac{5}{4} + 0\right)^{-\frac{3}{2}}\cos\left(\tan^{-1}\left(\frac{1}{2}\right)\right)\right] = \frac{64GMr_{\star}}{25R^3} = \frac{64\times6.67\times10^{-11}\times1.11\times10^{24}\times3.96\times10^4}{25\times(8000\times10^3)^3} = \boxed{0.0147\ \mathrm{m\ s^{-2}}}
+$$
+[1] **[1.5]**
+
+[If the minimum tidal acceleration is calculated correctly first, then it is worth 3.5 marks and the maximum tidal acceleration is 1.5 marks i.e. they swap. The mass may not be calculated explicitly so award those marks if the working is clear in subsequent stages. If their formula in the previous part does not include angle θ (or equivalent) allow full ecf here – they will get the same value for the maximum tidal acceleration, but a slightly overestimated value for the minimum tidal acceleration of $a_{tot,min} = \frac{32GMr_{\star}}{5\sqrt{5}R^3} = \boxed{0.0164\ \mathrm{m\ s^{-2}}}$. Allow full ecf using $r_{\star} = 37.7$ km which gives $a_{tot,max} = \boxed{0.905\ \mathrm{m\ s^{-2}}}$ and $a_{tot,min} = \boxed{0.0140\ \mathrm{m\ s^{-2}}}$ (or, if leaving out θ, $a_{tot,min} = \boxed{0.0156\ \mathrm{m\ s^{-2}}}$)]
+
+**(iii)** First we calculate the mass of the sunlet, given it has the same average density as the Sun
+$$
+M_{\star} = \frac{4}{3}\pi r_{\star}^3\rho_{\odot} = \frac{4}{3}\pi r_{\star}^3\frac{M_{\odot}}{\frac{4}{3}\pi R_{\odot}^3} = \frac{r_{\star}^3}{r_{\odot}^3}M_{\odot} = \left(\frac{3.96\times10^4}{6.96\times10^8}\right)^3\times1.99\times10^{30} = 3.67\times10^{17}\ \mathrm{kg}
+$$
+[1]
+
+Hence the surface gravitational field strength is
+$$
+g_{\star} = \frac{GM_{\star}}{r_{\star}^2} = \boxed{0.0156\ \mathrm{m\ s^{-2}}}
+$$
+[1] **[2]**
+
+[Allow ecf using $r_{\star} = 37.7$ km which gives $M_{\star} = 3.18\times10^{17}$ kg and $g_{\star} = \boxed{0.0149\ \mathrm{m\ s^{-2}}}$]
+
+As the tidal acceleration is comparable to (or several times greater than) the surface gravitational field strength, **the sunlet WILL noticeably change shape at sunrise** [1] **[1]**
+
+[Needs to have a clear reason based upon comparison between $g_{\star}$ and $a_{tot}$ to get this mark]
+
+[The sunlet is actually within the Roche limit of the disc and so will form at least a teardrop shape (known as a Roche lobe) at sunrise since $0.94g_{\star} \leq a_{tot} \leq 6.09g_{\star}$. In fact, over the course of a year the sunlet should completely disintegrate – lucky it’s fiction!]
+
+</ProblemSection>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.8%', '--fig-max': '364px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2024-ii-r2/p2-sol-fig1.png" alt="Solution diagram for a.(ii): the disc drawn as an ellipse with the dashed orbit of the sun; points H (Hub), O (observer) on the Rim, S (sun) above the Rim and its projection S′ with a right angle; lengths R from H to S and H to O; angles h at H between HS and HS′, θ at H between HS′ and HO, a at O between OS′ and OS, and b at O between OH and OS′." width="1137" height="793" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '54.3%', '--fig-max': '348px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2024-ii-r2/p2-sol-fig2.png" alt="Solution diagram for d.(i): the sunlet (radius shown by a 2r arrow) on the left, a horizontal line of length R to the Hub, two point masses M each at distance R/2 from the Hub on a line at angle ϕ to the horizontal; distances x1 and x2 from the sunlet to the lower and upper mass, with angles θ1 and θ2 between these lines and the horizontal." width="1088" height="495" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Questions proposed by</summary>
+
+*Questions proposed by:*  
+*Francesca Di Cecio (University of Cambridge)*  
+*Ben Woodrow (University of Oxford)*  
+*Dr Alex Calverley (Surbiton High School)*
+
+</details>
+
+---
+
+Оригинал в Архива: [BAAO_R2_2024.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2024/BAAO_R2_2024.pdf)
+· официални решения: [BAAO_R2_2024_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2024/BAAO_R2_2024_solutions.pdf)
