@@ -1,0 +1,424 @@
+---
+id: izho-2025-theory-eng-p3
+source: 'IZhO 2025, Теория'
+title: 'Задача 3. Dirac''s monopole'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IZhO/2025/izho-2025-theory-eng.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T04:56:13.853Z'
+verifier: 'mechanical'
+---
+
+*XXI International Zhautykov Olympiad/Theoretical Competition · 14 януари 2025 г. · 10 т.*
+
+<details>
+<summary>Please read this first:</summary>
+
+1. The time available for the theoretical competition is 4 hours. There are three questions.
+2. You can use your own calculator for numerical calculations. If you don’t have one, please ask for it from Olympiad organizers.
+3. You are provided with ***Writing sheet*** and additional paper. You can use the additional paper for drafts of your solutions but these papers will not be checked. Your final solutions which will be evaluated should be on the ***Writing sheets***. Please use as little text as possible. You should mostly use equations, numbers, figures and plots.
+4. Use only the front side of ***Writing sheets*.** Write only inside the boxed area.
+5. Each task should be solved starting from a new page of the ***Writing sheets***
+6. Fill the boxes at the top of each sheet of paper with your country (**Country),** your student code (**Student Code**), the question number (**Question Number)**, the progressive number of each sheet **(Page Number**), and the total number of ***Writing sheets*** used (**Total Number of Pages**). If you use some blank ***Writing sheets*** for notes that you do not wish to be evaluated, put a large X across the entire sheet and do not include it in your numbering.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Introduction](#introduction)
+- [Classical description](#classical)
+- [Quantization of magnetic flux in superconductors](#quantization)
+- [Estimating the Dirac Monopole Mass](#monopole-mass)
+
+</nav>
+
+
+
+<ProblemSection id="introduction">
+
+### Introduction
+
+A monopole is a hypothetical elementary particle which, unlike all known magnets, is a unipolar magnet. The hypothesis of the existence of magnetic monopoles was put forward by the English physicist Paul Dirac in 1931, and a number of theoretical models have been developed to date of the electromagnetic field in the presence of magnetic charges (monopoles). Note that numerous attempts to experimentally detect magnetic monopoles have been unsuccessful.
+
+Let us accept the hypothesis of the existence of point-like monopoles with a magnetic charge $q_m$. By analogy with Coulomb's law, it is assumed that the magnetic field created by the monopole is central, and the modulus of the induction vector $B$ at a distance $r$ from the particle is determined by the formula
+$$
+B = \frac{\mu_0 q_m}{4\pi r^2},
+$$
+where $\mu_0$ is the magnetic constant.
+
+**3.1** The dimension of magnetic charge $q_m$ in the SI system of units is: $[q_m] = \mathrm{A}^{x_1}\cdot m^{x_2}\cdot kg^{x_3}\cdot s^{x_4}$, where $x_1, x_2, x_3, x_4$ are some integers. Find all $x_1, x_2, x_3, x_4$. **[0,8 т.]**
+
+A ring of radius $R = 2.50$ cm made of thin superconducting wire with thickness $\delta = R/100$ is used as a detector of varying magnetic fields. The induced electric current arising in the ring can be recorded and its strength can be measured. When particles with magnetic fields pass through the ring, conclusions about their magnetic field structures can be drawn from the character of the ring current variations. It is known that the inductance of a thin ring is determined by the formula
+$$
+L = \mu_0 R\left(\ln\frac{16R}{\delta} - 2\right).
+$$
+
+**3.2** Calculate the inductance $L$ of the superconducting ring. **[0,6 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="classical">
+
+### Classical description
+
+Assume that the motion of an electron in a superconductor obeys the laws of classical physics, and its mass can be neglected. This part of the problem requires drawing of schematic graphs. You are not required to strictly calculate the functions being analyzed, you are not required to indicate any numerical characteristics, it is enough to show its qualitative behavior: domains of increase and decrease, the presence of maxima and minima, the presence of discontinuity points, behavior with arguments tending to $\pm\infty$. You can construct these graphs even if you have not obtained the exact form of functional dependencies, such drawings will be graded as well.
+
+In the first experiment, a thin disk magnet is used, whose thickness is small compared to its radius. We align the $z$ -axis with the axis of the magnet, and place the origin at its center. It can be shown that the cross-sectional average axial component $B_z$ of the magnetic field induction vector on the axis of the magnet depends on the $z$ -coordinate according to the law
+$$
+B_z(z) = B_0\frac{a^3}{(z^2+a^2)^{3/2}},
+$$
+where $B_0, a$ are known positive constants.
+
+Let the disk magnet move with a constant velocity $\vec{V}$ along the axis of the superconducting ring, such that its axis always coincides with the axis of the ring. Let us consider this experiment in a frame of reference associated with the ring. We direct the coordinate axis $Ox$ along the axis of the ring, its origin is coincident with the ring center, so that the coordinate of the magnet $x$ changes from $-\infty$ to $+\infty$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40.9%', '--fig-max': '262px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2025-theory-eng/p3-fig1.png" alt="Thin disk magnet with faces S and N on the z axis; magnetic field lines pass through the disk along the axis and spread out on both sides; the axial field is labelled B_z(z)." width="819" height="313" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.7%', '--fig-max': '312px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2025-theory-eng/p3-fig2.png" alt="Disk magnet (S, N) with its field lines moving with velocity V along the x axis towards a ring of radius R whose centre O is at the origin of the x axis." width="976" height="436" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '35.2%', '--fig-max': '226px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2025-theory-eng/p3-fig3-v2.png" alt="Monopole at the origin O with radial field lines B; a ring of radius R on the z axis moving towards the monopole with velocity V (arrow pointing left)." width="705" height="422" loading="lazy" decoding="async" />
+</figure>
+
+**3.3** Find the dependence of the induction EMF $\varepsilon_{ind}(x)$, arising in the ring when the magnet moves, on the magnet coordinate $x$. Plot a schematic graph of this dependence. **[1,2 т.]**
+
+**3.4** Find the dependence of the current in the ring $I(x)$ on the coordinate of the magnet $x$, if at the initial moment of time the current was zero. Plot a schematic graph of this dependence. **[0,8 т.]**
+
+**3.5** Find the current in the ring $I_f$ after the magnet flies away through the ring. **[0,2 т.]**
+
+Let us now consider the second experiment on the passage of a monopole through the superconducting ring. Let the monopole move with a constant velocity $\vec{V}$ along the axis of the superconducting ring. In contrast, we consider this experiment in the reference frame associated with the monopole. Let us direct the coordinate axis $Oz$ along the axis of the ring, its origin is coincident with the monopole, so that the coordinate of the ring $z$ changes from $+\infty$ to $-\infty$.
+
+**3.6** Find the dependence of the Lorentz force $F_L(z)$, acting on a free electron in the ring from the magnetic field of the monopole, on the coordinate of the ring $z$. **[0,6 т.]**
+
+**3.7** Using the obtained dependence $F_L(z)$, find the EMF of induction in the ring $\varepsilon_{ind}(z)$ on the coordinate of the ring $z$. Plot a schematic graph of this dependence. **[0,6 т.]**
+
+**3.8** Find the dependence of the current in the ring $I(z)$ on the ring coordinate $z$ if at the initial moment of time there was no current in the ring. Plot a schematic graph of this dependence. **[0,8 т.]**
+
+**3.9** Find the current in the ring $I_f$ after the monopole flies away through the ring. **[0,2 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="quantization">
+
+### Quantization of magnetic flux in superconductors
+
+Quantum theory shows that free electrons in a superconductor combine into bound pairs that move as a single unit (such pairs are called Cooper pairs). To describe their motion, one can use a semiclassical approximation: Newton's equations are supplemented with Bohr's quantization rule, which in this case states that the angular momentum $M$ of a pair relative to the ring center can only take integer values that are multiples of the reduced Planck constant $\hbar$.
+
+**3.10** Express the change in the angular momentum of an electron pair $\Delta M$ moving along a circular superconducting ring through the change in the magnetic flux of the external magnetic field through the ring $\Delta\Phi$. **[0,6 т.]**
+
+**3.11** Find the minimum possible change in the magnetic flux of the external field through the ring, which is called the quantum of magnetic flux $\varphi_0$ and calculate its numerical value. **[0,4 т.]**
+
+**3.12** Find the change in current in the ring $\Delta I_0$ when the magnetic flux through it changes by 1 quantum $\varphi_0$. **[0,4 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="monopole-mass">
+
+### Estimating the Dirac Monopole Mass
+
+By applying the quantization rule to the total magnetic flux generated by the Dirac monopole, we can estimate the magnetic charge and its mass. A Dirac monopole is a monopole with the minimum possible magnetic charge $q_{m0}$.
+
+Theoretical physics uses the following model of an electron: it is a spherical particle with a charge uniformly distributed over the surface of a sphere whose radius is called the classical radius of an electron. It is also assumed that the rest mass of an electron is completely determined by the energy of its electrostatic field.
+
+**3.13** Find the numerical value of the minimum magnetic charge of a monopole $q_{m0}$. **[1 т.]**
+
+**3.14** Find the change in current $\Delta I$ in the superconducting ring if a Dirac monopole flies through it. **[0,2 т.]**
+
+**3.15** Express the classical radius of an electron $r_0$ through its mass $m_e$, charge $e$ and fundamental physical constants. Calculate its numerical value. **[0,8 т.]**
+
+**3.16** Assuming that the radius of the monopole is equal to the classical radius of the electron, and its rest mass is determined by the energy of its magnetic field, find the mass ratio of the Dirac monopole $m_m$ and of the electron $m_e$ and calculate its numerical value. **[0,8 т.]**
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **Introduction, 3.1** x<sub>1</sub> = 1; x<sub>2</sub> = 1; x<sub>3</sub> = 0; x<sub>4</sub> = 0 ([q<sub>m</sub>] = A·m)
+- **Introduction, 3.2** $1.69 \times 10^{-7}$ H
+- **Classical description, 3.3** $\varepsilon_{ind}(x) = V\pi R^2 B_0 a^3\frac{3x}{(x^2+a^2)^{5/2}}$
+- **Classical description, 3.4** $I(x) = -\frac{B_0\pi R^2}{L}\frac{a^3}{(x^2+a^2)^{3/2}}$
+- **Classical description, 3.5** $I_f = 0$
+- **Classical description, 3.6** $F_L(z) = -eV\frac{\mu_0 q_m}{4\pi}\frac{R}{(R^2+z^2)^{3/2}}$
+- **Classical description, 3.7** $\varepsilon_{ind}(z) = -\frac{\mu_0 q_m V}{2}\frac{R^2}{(R^2+z^2)^{3/2}}$
+- **Classical description, 3.8** $I = -\frac{\mu_0 q_m}{2L}\left(1 - \frac{z}{\sqrt{R^2+z^2}}\right)$
+- **Classical description, 3.9** $I_f = -\frac{\mu_0 q_m}{L}$
+- **Quantization of magnetic flux in superconductors, 3.10** $\Delta M = -\frac{e}{\pi}\Delta\Phi$
+- **Quantization of magnetic flux in superconductors, 3.11** $\varphi_0 = \frac{\pi}{e}\hbar$ ≈ $2.06 \times 10^{-15}$ Wb
+- **Quantization of magnetic flux in superconductors, 3.12** $\Delta I_0 = \frac{\varphi_0}{L}$ ≈ $1.22 \times 10^{-8}$ A
+- **Estimating the Dirac Monopole Mass, 3.13** $q_{m0} = \frac{\varphi_0}{\mu_0} = \frac{\pi\hbar}{e\mu_0}$ ≈ $1.64 \times 10^{-9}$ A·m
+- **Estimating the Dirac Monopole Mass, 3.14** $1.22 \times 10^{-8}$ A
+- **Estimating the Dirac Monopole Mass, 3.15** $r_0 = \frac{e^2}{8\pi\varepsilon_0 m_e c^2}$ ≈ $1.4 \times 10^{-15}$ m
+- **Estimating the Dirac Monopole Mass, 3.16** $\frac{m_m}{m_e} = \left(\frac{\pi}{e^2 c\mu_0}\right)^2$ ≈ $1170$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Introduction**
+
+**3.1** It is easy to establish that the dimension of the magnetic charge is equal to $[q_m] = \mathrm{A\cdot m}$, therefore we obtain
+$$
+x_1 = 1; x_2 = 1; x_3 = 0; x_4 = 0. \qquad (1)
+$$
+**3.2** Calculation using the given formula leads to the answer
+$$
+L = 1.69\cdot 10^{-7}\mathrm{Hn}. \qquad (2)
+$$
+
+**Classical description**
+
+**3.3** Since the average normal component of the magnetic induction vector over the cross-section is known, the magnetic flux through the ring is equal to
+$$
+\Phi = \pi R^2 B_z(x), \qquad (3)
+$$
+and the induction EMF in the ring is determined by M. Faraday's law of electromagnetic induction
+$$
+\varepsilon_{ind}(x) = -\frac{d\Phi}{dt}, \qquad (4)
+$$
+from which we finally find
+$$
+\varepsilon_{ind}(x) = -\frac{d\Phi}{dx}\frac{dx}{dt} = V\pi R^2 B_0 a^3\frac{3x}{(x^2+a^2)^{\frac{5}{2}}}. \qquad (5)
+$$
+The graph of this dependence is shown schematically in the figure below.
+
+**3.4** Since the ring is superconducting, the induction EMF that occurs in the ring when the external magnetic flux changes is compensated by the self-induction EMF, that is,
+$$
+\varepsilon_{ind} - L\frac{dI}{dt} = 0, \qquad (6)
+$$
+from where, taking into account formula (4) and integration with the initial condition, we obtain
+$$
+I(x) = -\frac{\Phi}{L} = -\frac{B_0\pi R^2}{L}\frac{a^3}{(x^2+a^2)^{\frac{3}{2}}}. \qquad (7)
+$$
+The schematic graph of this dependence is shown in the figure below. Up to a negative coefficient, this graph repeats the graph of the dependence of the magnetic flux through the ring on the ring coordinate.
+
+**3.5** As follows from the obtained expression (7), after the magnet flies away through the ring, the final current in the ring is found to be zero, that is
+$$
+I_f = 0. \qquad (8)
+$$
+**3.6** In the frame of reference associated with the monopole, the electrons in the ring are subject to the Lorentz force, whose magnitude can be represented as
+$$
+F_L(z) = -eVB_r(z), \qquad (9)
+$$
+where $B_r$ denotes the radial component of the magnetic field induction vector of the monopole. The minus sign appears because in this frame of reference the velocity of the ring is negative.
+
+The radial component of the induction vector in this case can be easily expressed using the formula given in the problem formulation:
+$$
+B_r(z) = \frac{\mu_0 q_m}{4\pi}\frac{R}{(R^2+z^2)^{\frac{3}{2}}}. \qquad (10)
+$$
+Thus, the dependence of the Lorentz force on the ring coordinate has the form
+$$
+F_L(z) = -eV\frac{\mu_0 q_m}{4\pi}\frac{R}{(R^2+z^2)^{\frac{3}{2}}}. \qquad (11)
+$$
+This force always points in one direction, which means that the resulting formula is valid for any values of the ring coordinate.
+
+**3.7** The induction EMF in this case is equal to the work of the Lorentz force to move a single charge along the ring
+$$
+\varepsilon_{ind}(z) = \frac{2\pi RF_L(z)}{e} = -\frac{\mu_0 q_m V}{2}\frac{R^2}{(R^2+z^2)^{\frac{3}{2}}}. \qquad (12)
+$$
+The schematic graph of this dependence is shown in the figure below.
+
+**3.8** From formula (6) we find the current strength by integrating, taking into account that $dz = -Vdt$, and also using the initial condition
+$$
+I = -\frac{\mu_0 q_m}{2L}\left(1 - \frac{z}{\sqrt{R^2+z^2}}\right). \qquad (13)
+$$
+The schematic graph of this dependence is shown in the figure below.
+
+**3.9** After the monopole passes away through the ring ($z = -\infty$), the ring current “remains”, whose strength is equal to
+$$
+I_f = -\frac{\mu_0 q_m}{L}. \qquad (14)
+$$
+Thus, unlike when a magnet passes through a ring, there must be a residual current that can be attempted to be detected in an experiment!
+
+**Quantization of magnetic flux in superconductors**
+
+**3.10** Cooper pairs are accelerated in the ring due to the action of the Lorentz force, therefore, using formula (12), which relates the force with the EMF arising in the ring, as well as M. Faraday's law (4), we obtain the following equation of motion of an electron in the ring
+$$
+m_e\frac{dv}{dt} = -\frac{e}{2\pi R}\frac{d\Phi}{dt}, \qquad (15)
+$$
+where $v$ designates the speed of its motion.
+
+The angular momentum of a pair of electrons relative to the center of the ring is equal to
+$$
+M = 2m_e vR, \qquad (16)
+$$
+therefore, the sought relationship takes the form
+$$
+\Delta M = -\frac{e}{\pi}\Delta\Phi. \qquad (17)
+$$
+**3.11** Considering that the change in the magnetic field of the induced current is equal in magnitude and opposite to the change in the magnetic flux of the external field and taking into account N. Bohr's quantization rule, we find
+$$
+\varphi_0 = \frac{\pi}{e}\hbar = 2.06\cdot 10^{-15}\ \mathrm{Wb}. \qquad (18)
+$$
+**3.12** From formula (7), which relates the change in flux to the current in the ring, we obtain
+$$
+\Delta I_0 = \frac{\varphi_0}{L} = 1.22\cdot 10^{-8}\mathrm{A}. \qquad (19)
+$$
+
+**Estimating the Dirac Monopole Mass**
+
+**3.13** The induction of the magnetic field of a monopole is determined by the formula from the problem statement, and since the magnetic field of a monopole is spherically symmetric, the total magnetic flux through a sphere, whose center coincides with the monopole, is equal to
+$$
+\Phi = \mu_0 q_m, \qquad (20)
+$$
+and since it is quantized
+$$
+\Phi = n\varphi_0, \qquad (21)
+$$
+where $n$ is an integer, then from expressions (20) and (21) we infer that the magnetic charge is also quantized
+$$
+q_m = n\frac{\varphi_0}{\mu_0}. \qquad (22)
+$$
+From formula (22) we conclude that the elementary magnetic charge is equal to
+$$
+q_{m0} = \frac{\varphi_0}{\mu_0} = \frac{\pi\hbar}{e\mu_0} = 1.64\cdot 10^{-9}\mathrm{A\cdot m}. \qquad (23)
+$$
+**3.14** Since the change in the magnetic flux through the ring during the flight of the Dirac monopole is equal to one quantum of the magnetic flux, the change in current in the ring is equal to the previously found value
+$$
+\Delta I = \Delta I_0 = 1.22\cdot 10^{-8}\mathrm{A}. \qquad (24)
+$$
+**3.15** The energy of the electric field of a sphere of radius $r_0$ uniformly charged over the surface can be calculated using the formula
+$$
+W_e = \frac{e^2}{8\pi\varepsilon_0 r_0}. \qquad (25)
+$$
+Equating this energy to the rest energy
+$$
+W_e = m_e c^2, \qquad (26)
+$$
+we find the classical radius of the electron
+$$
+r_0 = \frac{e^2}{8\pi\varepsilon_0 m_e c^2} = 1.40\cdot 10^{-15}\mathrm{m}. \qquad (27)
+$$
+**3.16** The energy of the magnetic field of the Dirac monopole $W_m$ is found by analogy with the electric field energy of electron (25) as
+$$
+W_m = \frac{\mu_0 q_{m0}^2}{8\pi r_0}. \qquad (28)
+$$
+Equating this energy to the rest energy
+$$
+W_m = m_m c^2, \qquad (29)
+$$
+we obtain for the sought mass ratio
+$$
+\frac{m_m}{m_e} = \frac{\mu_0\varepsilon_0 q_{m0}^2}{e^2} = \left(\frac{\pi}{e^2 c\mu_0}\right)^2 = 1.17\cdot 10^3. \qquad (30)
+$$
+
+|  | Content | Points |  |
+|---|---|---|---|
+| 3.1 | Formula (1): $x_1 = 1; x_2 = 1; x_3 = 0; x_4 = 0$, за каждое по 0.2 | 0.8 | **0.8** |
+| 3.2 | Numerical value in formula (2): $L = 1.69\cdot 10^{-7}$Гн | 0.6 | **0.6** |
+| 3.3 | Formula (3): $\Phi = \pi R^2 B_z(x)$ | 0.2 | 1.2 |
+|  | Formula (4): $\varepsilon_{ind}(x) = -\frac{d\Phi}{dt}$ | 0.2 |  |
+|  | Formula (5): $\varepsilon_{ind}(x) = V\pi R^2 B_0 a^3\frac{3x}{(x^2+a^2)^{\frac{5}{2}}}$ | 0.2 |  |
+|  | Qualitative graph: |  |  |
+|  | Tends to zero at infinity | 0.2 |  |
+|  | Passes through the origin | 0.2 |  |
+|  | Two local extrema, maximum and minimum | 0.2 |  |
+| 3.4 | Formula (6): $\varepsilon_{ind} - L\frac{dI}{dt} = 0$ | 0.2 | 0.8 |
+|  | Formula (7): $I(x) = -\frac{B_0\pi R^2}{L}\frac{a^3}{(x^2+a^2)^{\frac{3}{2}}}$ | 0.2 |  |
+|  | Qualitative graph: |  |  |
+|  | Tends to zero at infinity | 0.2 |  |
+|  | Extremum at the origin | 0.2 |  |
+| 3.5 | Formula (8): $I_f = 0$ | 0.2 | **0.2** |
+| 3.6 | Formula (9): $F_L(z) = -eVB_r(z)$ | 0.2 | 0.6 |
+|  | Formula (10): $B_r(z) = \frac{\mu_0 q_m}{4\pi}\frac{R}{(R^2+z^2)^{\frac{3}{2}}}$ | 0.2 |  |
+|  | Formula (11): $F_L(z) = -eV\frac{\mu_0 q_m}{4\pi}\frac{R}{(R^2+z^2)^{\frac{3}{2}}}$ | 0.2 |  |
+| 3.7 | Formula (12): $\varepsilon_{ind}(z) = -\frac{\mu_0 q_m V}{2}\frac{R}{(R^2+z^2)^{\frac{3}{2}}}$ | 0.2 | 0.6 |
+|  | Qualitative graph: |  |  |
+|  | Tends to zero at infinity | 0.2 |  |
+|  | Extremum at the origin | 0.2 |  |
+| 3.8 | Formula (13): $I = -\frac{\mu_0 q_m}{2L}\left(1 - \frac{z}{\sqrt{R^2+z^2}}\right)$ | 0.2 | 0.8 |
+|  | Quality graph: |  |  |
+|  | Tends to zero at plus infinity | 0.2 |  |
+|  | Reaches a constant value at minus infinity | 0.2 |  |
+|  | Monotonic in nature | 0.2 |  |
+| 3.9 | Formula (14): $I_f = -\frac{\mu_0 q_m}{L}$ | 0.2 | **0.2** |
+| 3.10 | Formula (15): $m_e\frac{dv}{dt} = -\frac{e}{2\pi R}\frac{d\Phi}{dt}$ | 0.2 | 0.6 |
+|  | Formula (16): $M = 2m_e vR$ | 0.2 |  |
+|  | Formula (17): $\Delta M = -\frac{e}{\pi}\Delta\Phi$ | 0.2 |  |
+| 3.11 | Formula (18): $\varphi_0 = \frac{\pi}{e}\hbar$ | 0.2 | 0.4 |
+|  | Numerical value in formula (18): $\varphi_0 = 2.06\cdot 10^{-15}\mathrm{Wb}$ | 0.2 |  |
+| 3.12 | Formula (19): $\Delta I_0 = \frac{\varphi_0}{L}$ | 0.2 | 0.4 |
+|  | Numerical value in formula (19): $\Delta I_0 = 1.22\cdot 10^{-8}\mathrm{A}$ | 0.2 |  |
+| 3.13 | Formula (20): $\Phi = \mu_0 q_m$ | 0.2 | 1.0 |
+|  | Formula (21): $\Phi = n\varphi_0$ | 0.2 |  |
+|  | Formula (22): $q_m = n\frac{\varphi_0}{\mu_0}$ | 0.2 |  |
+|  | Formula (23): $q_{m0} = \frac{\varphi_0}{\mu_0} = \frac{\pi\hbar}{e\mu_0}$ | 0.2 |  |
+|  | Numerical value in formula (23): $q_{m0} = 1.64\cdot 10^{-9}\mathrm{A\cdot m}$ | 0.2 |  |
+| 3.14 | Formula (24): $\Delta I = \Delta I_0$ | 0.2 | **0.2** |
+| 3.15 | Formula (25): $W_e = \frac{e^2}{8\pi\varepsilon_0 r_0}.$ | 0.2 | 0.8 |
+|  | Formula (26): $W_e = m_e c^2$ | 0.2 |  |
+|  | Formula (27): $r_0 = \frac{e^2}{8\pi\varepsilon_0 m_e c^2}$ | 0.2 |  |
+|  | Numerical value in formula (27): $r_0 = 1.40\cdot 10^{-15}\mathrm{m}$ | 0.2 |  |
+| 3.16 | Formula (28): $W_m = \frac{\mu_0 q_{m0}^2}{8\pi r_0}$ | 0.2 | 0.8 |
+|  | Formula (29): $W_m = m_m c^2$ | 0.2 |  |
+|  | Formula (30): $\frac{m_m}{m_e} = \frac{\mu_0\varepsilon_0 q_{m0}^2}{e^2} = \left(\frac{\pi}{e^2 c\mu_0}\right)^2$ | 0.2 |  |
+|  | Numerical value in formula (30): $\frac{m_m}{m_e} = 1.17\cdot 10^3$ | 0.2 |  |
+| **Total** |  |  | **10.0** |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44.1%', '--fig-max': '283px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2025-theory-eng/p3-sol-fig1-v2.png" alt="Schematic graph of ε_ind versus x on a grid: zero at large |x|, a minimum at negative x, passing through the origin, a maximum at positive x." width="884" height="520" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '35.5%', '--fig-max': '227px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2025-theory-eng/p3-sol-fig2-v2.png" alt="Schematic graph of I versus x on a grid: zero at large |x|, a symmetric negative dip with its minimum at x = 0." width="710" height="383" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40.2%', '--fig-max': '258px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2025-theory-eng/p3-sol-fig3-v2.png" alt="Schematic graph of ε_ind versus z on a grid: zero at large |z|, a symmetric negative dip with its minimum at z = 0." width="805" height="429" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.7%', '--fig-max': '254px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2025-theory-eng/p3-sol-fig4-v2.png" alt="Schematic graph of I versus z on a grid: a monotonic step-like curve, tending to zero at positive z and to a constant negative value at negative z." width="795" height="478" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Mathematical hint for the theoretical competition</summary>
+
+The following formulas may be useful:
+
+$\int x^n dx = \frac{x^{n+1}}{n+1} + C$, where $n \neq -1$ is a fixed number, $C$ refers to an arbitrary constant;
+
+$\int \frac{dx}{x} = \ln|x| + C$, where $C$ stands for an arbitrary constant;
+
+$\int \frac{dx}{(a^2+x^2)^{3/2}} = \frac{x}{a^2\sqrt{a^2+x^2}} + C$, where *a* – constant, $C$ – arbitrary constant;
+
+$(1+x)^{\gamma} \approx 1 + \gamma x + \frac{\gamma(\gamma-1)}{2}x^2$, for $|x| \ll 1$ and any value of $\gamma$;
+
+$\tan x \approx \sin x \approx x$, for $|x| \ll 1$;
+
+$\ln(1+x) \approx x$, for $|x| \ll 1$.
+
+***List of physical constants***
+
+Speed of light in vacuum $c = 3.00 \cdot 10^{8}$ m/s;
+
+Reduced Planck constant $\hbar = 1.05 \cdot 10^{-34}$ J·s;
+
+Magnetic constant $\mu_0 = 4\pi \cdot 10^{-7}$ H·m;
+
+Electric constant $\varepsilon_0 = 8.85 \cdot 10^{-12}$ F/m;
+
+Stefan-Boltzmann constant $\sigma = 5.67 \cdot 10^{-8}\ W/(m^2 \cdot K^4)$;
+
+Elementary charge $e = 1.60 \cdot 10^{-19}$ C;
+
+Electron mass $m_e = 9.11 \cdot 10^{-31}$ kg.
+
+</details>
+
+---
+
+Оригинал в Архива: [IZhO 2025 Theory_eng.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2025/Theory/IZhO%202025%20Theory_eng.pdf)
+· официални решения: [IZhO 2025 Theory_eng_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2025/Theory/IZhO%202025%20Theory_eng_sol.pdf)

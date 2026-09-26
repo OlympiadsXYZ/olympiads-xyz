@@ -1,0 +1,509 @@
+---
+id: izho-2019-theory-eng-p3
+source: 'IZhO 2019, Теория'
+title: 'Задача 3. Laser'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IZhO/2019/izho-2019-theory-eng.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T05:21:27.868Z'
+verifier: 'mechanical'
+---
+
+*XV International Zhautykov Olympiad/Theoretical Competition · 11 януари 2019 г. · 10 т.*
+
+<details>
+<summary>Please read this first:</summary>
+
+THEORETICAL COMPETITION
+
+January 11, 2019
+
+1. The time available for the theoretical competition is 4 hours. There are three questions.
+2. Use only the pen provided.
+3. You can use your own calculator for numerical calculations. If you don’t have one, please ask for it from Olympiad organizers.
+4. You are provided with ***Writing sheet*** and additional paper. You can use the additional paper for drafts of your solutions but these papers will not be checked. Your final solutions which will be evaluated should be on the ***Writing sheets***. Please use as little text as possible. You should mostly use equations, numbers, figures and plots.
+5. Use only the front side of ***Writing sheets*****.** Write only inside the boxed area.
+6. Begin each question on a separate sheet of paper.
+7. Fill the boxes at the top of each sheet of paper with your country (**Country),** your student code (**Student Code**), the question number (**Question Number)**, the progressive number of each sheet **(Page Number**), and the total number of ***Writing sheets*** used (**Total Number of Pages**). If you use some blank ***Writing sheets*** for notes that you do not wish to be evaluated, put a large X across the entire sheet and do not include it in your numbering.
+8. At the end of the exam, arrange all sheets for each problem in the following order:
+    - Used ***Writing sheets*** in order.
+    - The sheets you do not wish to be evaluated.
+    - Unused sheets.
+    - The printed problems.
+
+   Place the papers inside the envelope and leave everything on your desk. You are not allowed to take any paper out of the room.
+
+</details>
+
+<details>
+<summary>SOLUTIONS TO THE PROBLEMS OF THE THEORETICAL COMPETITION</summary>
+
+Attention. Points in grading are not divided!
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Population inversion: two-level system](#two-level)
+- [Population inversion: three-level system](#three-level)
+- [Population inversion: four-level system](#four-level)
+- [Resonator](#resonator)
+- [Stationary generation mode](#stationary)
+
+</nav>
+
+According to quantum theory, a molecule can only be found in certain states characterized by discrete energy values $E_0, E_1, E_2, \ldots$. These states are represented by horizontal segments on the vertical energy scale and are numbered in order of increasing energy, starting from 0. In the absence of external influence, the molecule is found in the state with the number 0 and the lowest possible energy $E_0$. This state is then called a ground state, and the rest are then called excited states. The molecule can be driven from one energy state to another by absorbing or emitting light quanta, i.e. photons. The intensity of the light flux is characterized everywhere below by the density of the photon flux $I$, i.e. the number of photons passing perpendicularly through the unit area per unit of time, the dimension of this quantity is obviously equal to $[I] = \mathrm{m^{-2}\cdot s^{-1}}$.
+
+For further consideration, it is necessary to take into account the following processes that take place when the light flux passes through a medium.
+
+**Absorption.** If a molecule is found in the ground state 0, then it can absorb a photon and be raised to the excited state 1. Such a transition is possible if the photon energy is equal to the difference between the energies of the excited and ground states, $h\nu_{01} = E_1 - E_0$, where $\nu_{01}$ is the photon frequency and $h = 6.63\cdot 10^{-34}\ \mathrm{J\cdot s}$ stands for the Planck constant. If $N_0$ molecules are found in the ground state 0, then the number of molecules $dN$ that have absorbed photons and have been elevated to the excited state in a very short time interval $dt$ is equal to
+$$
+dN = I\sigma_{01}N_0dt,\qquad (1)
+$$
+where the quantity $\sigma_{01}$ is called the absorption cross section and is determined by the properties of the molecules.
+
+**Stimulated emission.** If a molecule is found in the excited state 1, then under the influence of a photon with the frequency $\nu_{01}$, it can be forced to move to the ground state 0 with the emission of another photon that is completely identical to the first one and propagates in the same direction, has the same energy and polarization. The number of such transitions $dN$ for a very small time interval $dt$ is described by the formula similar to formula (1) as
+$$
+dN = I\sigma_{10}N_1dt,\qquad (2)
+$$
+where $N_1$ denotes the number of molecules in the excited state 1 with energy $E_1$, and $\sigma_{10}$ signifies the cross section of the stimulated emission.
+
+**Spontaneous emission.** A molecule in the excited state can spontaneously drop to its ground state with the emission of a photon. In contrast to the stimulated emission, the direction of emission and the polarization of the photon are both random, and the energy can slightly vary, i.e. the spontaneous emission cannot contribute to an increase in the light flux. The number of spontaneous transitions $dN$ from the excited state 1 to the ground state 0 for a very small time interval $dt$ is written as
+$$
+dN = AN_1dt = \frac{1}{\tau}N_1dt,\qquad (3)
+$$
+where $N_1$ still designates the number of molecules in the excited state 1 with energy $E_1$, $A$ is the transition probability or the Einstein coefficient, and its inverse value $\tau = A^{-1}$ is referred to as the lifetime of the excited state.
+
+To describe each state $k$ of the molecule, it is convenient to use not the total number $N_k$ of molecules in the state, but its reduced value divided by the total number of molecules $N$ in the medium
+$$
+n_k = \frac{N_k}{N},\qquad (4)
+$$
+This value is called the population of the state. For populations, the normalizing condition is satisfied: the sum of the populations of all the states of the molecules is equal to unity, i.e.
+$$
+n_0 + n_1 + n_2 + \ldots = 1.\qquad (5)
+$$
+If the number of molecules in a certain excited state exceeds the number of molecules in the ground state, then this state of the medium is called the population inversion, and the emitted radiation may prevail over absorption, which results in an increase in the intensity of the light flux propagating in such a medium. This phenomenon is used in optical quantum light generators, called lasers. The population inversion is conventionally created using an external energy source, called pumping. In this problem, we consider the operation of an optically pumped laser, when the population inversion is generated by an external light flux. Unlike this pumping light flux, the laser light flux is monochromatic, coherent, polarized and narrowly directed.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '11.4%', '--fig-max': '73px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig1.png" alt="Energy scale: horizontal level segments labelled E0 (lowest), E1 and E2, with dots above indicating further levels." width="229" height="317" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.2%', '--fig-max': '207px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig2.png" alt="Absorption: a wavy photon arrow hits a molecule (cloud), a block arrow leads to the excited molecule (dotted cloud); level diagram with an upward arrow from level 0 to level 1." width="646" height="218" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.7%', '--fig-max': '242px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig3.png" alt="Stimulated emission: a wavy photon arrow hits an excited molecule (dotted cloud), a block arrow leads to the molecule and two identical wavy photon arrows; level diagram with a downward arrow from level 1 to level 0." width="755" height="222" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31.2%', '--fig-max': '200px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig4.png" alt="Spontaneous emission: an excited molecule (dotted cloud), a block arrow, then the molecule emitting a wavy photon in a random direction; level diagram with a wavy downward arrow from level 1 to level 0." width="626" height="225" loading="lazy" decoding="async" />
+</figure>
+
+<ProblemSection id="two-level">
+
+### Population inversion: two-level system
+
+Consider a medium that is subject to monochromatic pumping light flux $I_0$. The incident light flux leads to transitions of molecules only between two states, i.e. the ground state 0 and the excited state 1. The absorption $\sigma_{01}$ and stimulated emission $\sigma_{10}$ cross sections are equal, i.e. $\sigma_{10} = \sigma_{01} = \sigma$ and the lifetime in the excited state is found to be $\tau$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '9.4%', '--fig-max': '60px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig5.png" alt="Two-level diagram: levels 0 and 1 with an upward arrow, a downward arrow and a wavy downward arrow between them." width="189" height="292" loading="lazy" decoding="async" />
+</figure>
+
+**3.1** Write down an equation describing the change in the population of the excited state 1 over time, i.e. express the derivative $dn_1/dt$ in terms of $n_1$, $I_0$, $\sigma$ and $\tau$.
+
+**3.2** Find the population of the excited state and the difference of the populations between the excited and ground states under steady conditions as functions of the pumping light flux $I_0$. Express your answer in terms of the parameter $I_0\sigma\tau$.
+
+**3.3** Is it possible to achieve an amplification of the laser light flux in this case?
+
+</ProblemSection>
+
+<ProblemSection id="three-level">
+
+### Population inversion: three-level system
+
+Let three states of the molecule be involved in possible transitions: the ground state 0 and the two excited states 1, 2. Under the action of the pumping light flux $I_0$, the molecule can be raised from the ground state 0 to the first excited state 1. The absorption cross section of this transition is equal to $\sigma$. As a result of intramolecular relaxation, the molecule that has resided in state 1 almost instantly drops to the lower energy state 2, whose lifetime is $\tau$. In this case, assume that the stimulated emission is completely absent.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '14.6%', '--fig-max': '94px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig6.png" alt="Three-level diagram: an upward arrow from level 0 to level 1, a short wavy arrow from level 1 down to level 2, and a long wavy arrow from level 2 down to level 0." width="294" height="344" loading="lazy" decoding="async" />
+</figure>
+
+**3.4** Write down an equation describing the change in the population $n_2$ of the excited state 2 over time.
+
+**3.5** Find the population $\bar{n}_2$ of the excited state 2 and the population difference $\left(\bar{n}_2 - \bar{n}_0\right)$ of the excited and the ground states under steady conditions as functions of the pumping light flux $I_0$. Express your answer in terms of the parameter $I_0\sigma\tau$.
+
+**3.6** At what minimum value of the parameter $I_0\sigma\tau$ is it possible to amplify the laser light flux with the frequency equal to the frequency of the transition $2 \to 0$?
+
+</ProblemSection>
+
+<ProblemSection id="four-level">
+
+### Population inversion: four-level system
+
+Let four states of the molecule be involved in possible transitions. Under the action of the pumping light flux $I_0$, the molecule can be raised from the ground state 0 to the first excited state 1. The absorption cross section of this transition is equal to $\sigma$. As a result of intramolecular relaxation, the molecule that has resided in state 1 almost instantly drops to the lower energy state 2, whose lifetime is $\tau$. From this state, the molecule undergoes a transition to the intermediate state 3, which results in the emission of a photon. In this case, assume that the stimulated emission is completely absent. As a result of intramolecular relaxation, the molecule that has fallen into state 3 almost instantly drops to the ground energy state 0.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '14.6%', '--fig-max': '94px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig7.png" alt="Four-level diagram: an upward arrow from level 0 to level 1, wavy arrows from level 1 down to 2, from 2 down to 3, and from 3 down to 0." width="294" height="345" loading="lazy" decoding="async" />
+</figure>
+
+**3.7** At what minimum value of the parameter $I_0\sigma\tau$ is it possible to amplify the laser light flux with the frequency equal to the frequency of the transition $2 \to 3$?
+
+</ProblemSection>
+
+<ProblemSection id="resonator">
+
+### Resonator
+
+The four-level system is usually implemented in dye solutions. Dyes consist of complex molecules with multiple energy states. Therefore, the possible energy states are grouped into bands: the ground state band $S_0$ contains an almost continuous spectrum of sub-levels, and the same is true for the first excited state band $S_1$. Thus, there are two bands of possible states. The absorption of the pumping light flux $I_0$ leads to transitions from the sublevels of the ground state band $S_0$ to different sublevels of the excited state band $S_1$. Transitions between the sub-levels of state 1 occur almost instantaneously, so the stimulated emission of the laser light flux $I_1$ occurs at lower frequencies, and the stimulated emission due to the pumping light flux $I_0$ can be neglected. In the approximation described, it is sufficient to know the population of the ground and excited state bands. Rhodamine 6G is used as a dye, for which: the absorption cross section in the transition $S_0 \to S_1$ is $\sigma_A = 3{,}90\cdot 10^{-16}\ \mathrm{cm^2}$; the stimulated emission cross section $S_1 \to S_0$ is $\sigma_E = 2{,}20\cdot 10^{-16}\ \mathrm{cm^2}$; the lifetime of the molecule in the state $S_1$ is $\tau = 4{,}20\cdot 10^{-9}\ \mathrm{s}$.
+
+To generate light, cuvette 1 with the solution of rhodamine 6G is placed between two parallel mirrors 2 and 3, thus forming a resonator. The solution is excited by a uniform pumping light flux 4 of intensity $I_0$, whose frequency strictly corresponds to the maximum absorption of the solution. The pumping light flux 4 is directed perpendicular to the axis of the resonator and fully illuminates the entire cell. The intensity of this flux, of course, decreases as it passes through the solution; however, for carrying out our estimations, consider $I_0$ constant in the entire bulk of the resonator, assuming it to be averaged over the solution volume. The laser light flux 5 generated in the resonator propagates along the resonator axis, and its amplification occurs due to multiple reflections from the resonator mirrors. Consider mirror 2 fully reflective, and the second mirror 3 translucent with the reflectance $\rho$. The absorption of light in the mirrors, the solvent-body, as well as the scattering of light and other losses can be completely ignored. The resonator has the following parameters: the cuvette length is $l = 3{,}00\ \mathrm{cm}$; the rhodamine 6G concentration is $\gamma = 1.30\cdot 10^{16}\ \mathrm{cm^{-3}}$; the reflection coefficient of the translucent mirror is $\rho = 0{,}90$; the refractive index of the solution of rhodamine 6G is $r = 1{,}50$. The speed of light is denoted as $c = 3{,}00\cdot 10^{10}\ \mathrm{cm/s}$.
+
+For a simplified description of the laser light flux propagating along the resonator axis, one can consider the intensity of the light fluxes averaged over the length of the resonator. We denote the average intensity of the laser light flux propagating to the translucent mirror as $I_G$, and the intensity of the laser light flux propagating in the opposite direction as $I'_G$. Since the transmittance of mirror 3 is small, then we can assume that the average intensities of these fluxes be approximately equal $I_G \approx I'_G$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '17.6%', '--fig-max': '113px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig8.png" alt="Band diagram of the dye: ground band S0 and excited band S1, each drawn as a stack of closely spaced sub-levels; an upward arrow I0 from S0 to S1, a downward arrow I1 from the bottom of S1 to S0, and short wavy relaxation arrows inside each band." width="353" height="454" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31.5%', '--fig-max': '202px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig9.png" alt="Resonator sketch: cuvette 1 between two parallel plate mirrors 2 (left) and 3 (right); pumping light flux 4 drawn as vertical arrows falling on the cuvette from above; laser light flux 5 as a horizontal block arrow along the axis inside the cuvette, with a dashed arrow leaving through mirror 3." width="631" height="481" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.2%', '--fig-max': '232px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-fig10.png" alt="Schematic resonator between two mirrors: arrow to the right labelled I_G and arrow to the left labelled I′_G inside; a dashed arrow leaving through the right mirror labelled (1 − ρ)I_G." width="725" height="379" loading="lazy" decoding="async" />
+</figure>
+
+**3.8** Let a laser light flux $I_G$ be created in the resonator. Show that in the absence of absorption and stimulated emission, the change in the intensity of the laser flux over time is described by the equation
+$$
+\frac{dI_G}{dt} = -\frac{1}{T}I_G,\qquad (6)
+$$
+where $T$ stands for the so-called photon lifetime in the resonator. Express the parameter $T$ in terms of the parameters of the resonator. Calculate its numerical value.
+
+**3.9** Show that in the absence of the photon losses through mirror 3, the laser light flux variation over time obeys the following equation
+$$
+\frac{dI_G}{dt} = KnI_G,\qquad (7)
+$$
+where $n$ designates the population of the excited state of rhodamine 6G, and $K$ is the resonator gain. Express the resonator gain $K$ in terms of the parameters of the resonator and the stimulated emission cross section $\sigma_E$ of rhodamine 6G. Calculate its numerical value.
+
+</ProblemSection>
+
+<ProblemSection id="stationary">
+
+### Stationary generation mode
+
+In this part, we assume that the pumping light flux is constant and does not depend on time. In the stationary mode, all quantities remain constant: the population of the excited state and the laser light flux. Assume that the population of the excited state is low, i.e. $n \ll 1$.
+
+**3.10** Write down a set of equations describing the change in the population $\frac{dn}{dt}$ of the excited state and the laser light flux $\frac{dI_G}{dt}$ in the resonator.
+
+**3.11** Obtain the formula and calculate a minimum (threshold) value $n_{th}$ of the population of the excited state at which the amplification (generation) of laser light in the resonator occurs. Express it in terms of the parameters of the resonator $K, T$.
+
+**3.12** Derive the formula and calculate a minimum (threshold) value of the pumping light flux $I_{0,th}$ at which the laser light amplification in the resonator starts. Let the wavelength of the pumping light flux be $\lambda = 520\mathrm{nm}$. Calculate the pumping flux in energetic units of $\mathrm{W/cm^2}$.
+
+**3.13** Find the laser flux at the output of the resonator as a function of the pumping light flux $I_0$, and express it in terms of the ratio $\eta = I_0 / I_{0,th}$, which is called the threshold overrun, and the characteristics of molecules. Draw a graph of the laser flux at the output of the resonator as a function $\eta$.
+
+**3.14** Find the quantum output $f = N_E / N_A$, i.e. the ratio of the number of photons $N_E$ leaving the resonator per unit of time to the number of photons $N_A$ absorbed in the resonator per the same unit of time as a function of the parameter $\eta$.
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **Population inversion: two-level system, 3.1** $\frac{dn_1}{dt} = -\frac{1}{\tau}n_1 - I_0\sigma n_1 + I_0\sigma\left(1 - n_1\right)$
+- **Population inversion: two-level system, 3.2** $\bar{n}_1 = \frac{I_0\sigma\tau}{1 + 2I_0\sigma\tau},\quad \Delta\bar{n} = -\frac{1}{1 + 2I_0\sigma\tau}$
+- **Population inversion: two-level system, 3.3** no
+- **Population inversion: three-level system, 3.4** $\frac{dn_2}{dt} = -\frac{n_2}{\tau} + I_0\sigma\left(1 - n_2\right)$
+- **Population inversion: three-level system, 3.5** $\bar{n}_2 = \frac{I_0\sigma\tau}{1 + I_0\sigma\tau},\quad \Delta n = \frac{I_0\sigma\tau - 1}{1 + I_0\sigma\tau}$
+- **Population inversion: three-level system, 3.6** $I_0\sigma\tau > 1$
+- **Population inversion: four-level system, 3.7** $I_0\sigma\tau > 0$
+- **Resonator, 3.8** $T = \frac{2rl}{c(1-\rho)} = 3{,}00\cdot 10^{-9}\ \mathrm{s}$
+- **Resonator, 3.9** $K = \frac{\gamma c\sigma_E}{r} = 5{,}72\cdot 10^{10}\ \mathrm{s^{-1}}$
+- **Stationary generation mode, 3.10** $\frac{dI_G}{dt} = KnI_G - \frac{1}{T}I_G,\quad \frac{dn}{dt} = I_0\sigma_A(1-n) - \frac{1}{\tau}n - 2I_G\sigma_En$
+- **Stationary generation mode, 3.11** $n_{th} = \frac{1}{KT} = 5{,}83\cdot 10^{-3}$
+- **Stationary generation mode, 3.12** $I_{0,th} \approx \frac{n_{th}}{\tau\sigma_A} = 3{,}58\cdot 10^{21}\ \mathrm{cm^{-2}\cdot s^{-1}},\quad I_E = \varepsilon I_{0,th} = 1{,}37\cdot 10^3\ \frac{\mathrm{W}}{\mathrm{cm^2}}$
+- **Stationary generation mode, 3.13** $I = (1-\rho)I_G = \frac{1-\rho}{2\tau\sigma_E}(\eta - 1) = E(\eta - 1),\quad E = 5{,}41\cdot 10^{22}\ \mathrm{cm^{-2}\cdot s^{-1}}$
+- **Stationary generation mode, 3.14** $f = \frac{\eta - 1}{\eta}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-two-level">
+
+### Population inversion: two-level system
+
+**3.1** The figure on the right shows a diagram of possible transitions and their probabilities. If the population of the excited state is equal to $n_1$, then the population of the ground state is equal to $\left(1 - n_1\right)$, since the molecule can only be in one of two states.
+
+The balance equation describing the change in the population directly follows from the drawn diagram as
+$$
+\frac{dn_1}{dt} = -\frac{1}{\tau}n_1 - I_0\sigma n_1 + I_0\sigma\left(1 - n_1\right).\qquad (1)
+$$
+
+**3.2** In the stationary mode $dn_1 / dt = 0$, then it follows from equation (1) that the population of the excited state is given by the formula
+$$
+\bar{n}_1 = \frac{I_0\sigma\tau}{1 + 2I_0\sigma\tau}.\qquad (2)
+$$
+Accordingly, the difference in the populations of the excited and ground states is equal to
+$$
+\Delta\bar{n} = \bar{n}_1 - \left(1 - \bar{n}_1\right) = 2\frac{I_0\sigma\tau}{1 + 2I_0\sigma\tau} - 1 = -\frac{1}{1 + 2I_0\sigma\tau}.\qquad (3)
+$$
+
+**3.3** Even with the intensity of the pumping light flux tending to infinity, the population inversion in the two-level system cannot be achieved, therefore, the laser light flux cannot be amplified in this system.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '20.5%', '--fig-max': '132px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-sol-fig1.png" alt="Two-level transition diagram: upper level n1, lower level (1 − n1); an upward arrow labelled I0σ, a downward arrow labelled I0σ and a wavy downward arrow labelled 1/τ." width="411" height="373" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-three-level">
+
+### Population inversion: three-level system
+
+**3.4** In this system, there are no forced transitions "down", so the balance equation for the population of state 2 is written as:
+$$
+\frac{dn_2}{dt} = -\frac{n_2}{\tau} + I_0\sigma\left(1 - n_2\right).\qquad (4)
+$$
+Here, it is taken into account that the molecule can only be in two states: the excited state 2, or the ground state 0.
+
+**3.5** In the stationary mode $dn_2 / dt = 0$, therefore, as it follows from equation (4), the population of the excited state is derived as
+$$
+\bar{n}_2 = \frac{I_0\sigma}{\frac{1}{\tau} + I_0\sigma} = \frac{I_0\sigma\tau}{1 + I_0\sigma\tau}.\qquad (5)
+$$
+The difference between the populations of the excited and ground states is found by the formula
+$$
+\Delta n = \bar{n}_2 - \bar{n}_0 = \bar{n}_2 - \left(1 - \bar{n}_2\right) = \frac{I_0\sigma\tau - 1}{1 + I_0\sigma\tau}.\qquad (6)
+$$
+
+**3.6** Laser light amplification is possible when the population inversion is reached, i.e. $\Delta n > 0$. It follows from formula (6) that this is possible when
+$$
+I_0\sigma\tau > 1.\qquad (7)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '19.2%', '--fig-max': '124px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-sol-fig2.png" alt="Three-level diagram: upward arrow I0σ from level 0 to level 1, wavy arrow from 1 to 2, level 2 with population n2, wavy arrow labelled 1/τ from 2 to 0; the ground level labelled (1 − n2)." width="386" height="408" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-four-level">
+
+### Population inversion: four-level system
+
+**3.7** In the four-level system, the balance equation for the population of state 2 coincides with equation (4), and the stationary value of the population of this state is also described by formula (5). The essential difference of this system is that from state 2 the transition is undertaken to intermediate state 3, whose population is practically equal to 0. Therefore, in this system the population difference is equal to
+$$
+\Delta n = \bar{n}_2 = \frac{I_0\sigma\tau}{1 + I_0\sigma\tau},\qquad (8)
+$$
+and the population inversion between states 2 and 3 is achieved with practically arbitrary value of the parameter
+$$
+I_0\sigma\tau > 0.\qquad (9)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '17.2%', '--fig-max': '110px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-sol-fig3.png" alt="Four-level diagram: upward arrow I0σ from level 0 to level 1, wavy arrow from 1 to 2 (population n2), wavy arrow labelled 1/τ from 2 to 3, wavy arrow from 3 to 0; the ground level labelled (1 − n2)." width="345" height="407" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-resonator">
+
+### Resonator
+
+**3.8** The change in the number $dN$ of photons in the resonator is due only to their output through the translucent mirror. For a short period of time $dt$, the number of photons that leave the resonator through the mirror is found to be
+$$
+dN_{out} = \left(1 - \rho\right)I_GSdt = -dN.\qquad (10)
+$$
+where $S$ stands for the cross section area of the resonator.
+
+The intensity of the laser light flux $I_G$ can be expressed in terms of the average density of photons $\frac{N}{Sl}$ in the resonator and the speed of their propagation $\frac{c}{r}$ in the form
+$$
+I_G = \frac{1}{2}\frac{N}{Sl}\frac{c}{r}.\qquad (11)
+$$
+The factor $1/2$ takes into account that the laser light in the resonator propagates in two opposite directions. Expressing the number of photons in the resonator through the intensity of the generation flux
+$$
+N = \frac{2rSl}{c}I_G\qquad (12)
+$$
+and substituting it into equation (10), one gets
+$$
+dI_G = -\frac{c}{2rSl}\left(1 - \rho\right)I_GSdt = -\left(1 - \rho\right)\frac{c}{2rl}I_Gdt.\qquad (13)
+$$
+This equation has the required form
+$$
+\frac{dI_G}{dt} = -\frac{c\left(1 - \rho\right)}{2rl}I_G = -\frac{1}{T}I_G,\qquad (14)
+$$
+where the photon lifetime in the resonator is determined by the formula
+$$
+T = \frac{2rl}{c\left(1 - \rho\right)} = 3{,}00\cdot 10^{-9}\,s.\qquad (15)
+$$
+
+**3.9** Consider the change in the number of photons in the presence of the stimulated emission and the absence of losses through the mirror. In accordance with the definition of the stimulated emission cross section, the number of generated photons can be described by the equation
+$$
+dN = 2I_G\sigma_En\gamma Vdt = 2I_G\sigma_En\gamma Sldt.\qquad (16)
+$$
+Here $n\gamma V$ denotes the number of dye molecules in the resonator being in the excited state, and $V = Sl$ is the resonator volume.
+
+Substituting the expression for the number of photons in the resonator (12) into the last equation, the desired equation is finally obtained
+$$
+\frac{dI_G}{dt} = \frac{\gamma c\sigma_E}{r}nI_G = KnI_G,\qquad (17)
+$$
+with the resonator gain
+$$
+K = \frac{\gamma c\sigma_E}{r} = 5{,}72\cdot 10^{10}\,s^{-1}.\qquad (18)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-stationary">
+
+### Stationary generation mode
+
+**3.10** To describe the dynamics of the intensity of the laser light flux, it is necessary to combine equations (14) and (17):
+$$
+\frac{dI_G}{dt} = KnI_G - \frac{1}{T}I_G.\qquad (19)
+$$
+The population of the excited state is described by the balance equation
+$$
+\frac{dn}{dt} = I_0\sigma_A\left(1 - n\right) - \frac{1}{\tau}n - 2I_G\sigma_En,\qquad (20)
+$$
+which takes into account the absorption of the pumping light flux, spontaneous and stimulated emissions from the excited state.
+
+**3.11** To initiate the laser light amplification, it is necessary that the derivative in equation (19) should be greater than zero, therefore the threshold value of the population of the excited state is equal to
+$$
+n_{th} = \frac{1}{KT} = 5{,}83\cdot 10^{-3} \ll 1.\qquad (21)
+$$
+
+**3.12** To derive the threshold value of the intensity of the pumping light flux, we make use of equation (20) in the absence of the laser light flux $I_G = 0$, whence we get
+$$
+I_{0,th} = \frac{n_{th}}{\tau\sigma_A\left(1 - n_{th}\right)} \approx \frac{n_{th}}{\tau\sigma_A} = 3{,}58\cdot 10^{21}\,cm^{-2}\cdot s^{-1}.\qquad (22)
+$$
+To find the pumping energy flux, the calculated flux (22) must be multiplied by the energy of one quantum
+$$
+\varepsilon = \frac{hc}{\lambda} = 3{,}83\cdot 10^{-19}\,J,\qquad (23)
+$$
+therefore, the pumping energy intensity is obtained as
+$$
+I_E = \varepsilon I_{0,th} = 1{,}37\cdot 10^3\,\frac{W}{cm^2}.\qquad (24)
+$$
+
+**3.13** In the stationary mode, the time derivatives in equations (19) and (20) vanish. Equation (19) then yields
+$$
+\bar{n} = \frac{1}{KT},\qquad (25)
+$$
+and it is found from equation (20) that
+$$
+I_G = \frac{I_0\sigma_A - \frac{1}{\tau}\bar{n}}{2\sigma_E\bar{n}}.\qquad (26)
+$$
+Expressing the intensity of the pumping light flux through its threshold value
+$$
+I_0 = \eta I_{0,th} = \eta\frac{\bar{n}}{\tau\sigma_A}\qquad (27)
+$$
+and substituting it into formula (23), one obtains
+$$
+I_G = \frac{\eta\frac{\bar{n}}{\tau\sigma_A}\sigma_A - \frac{1}{\tau}\bar{n}}{2\sigma_E\bar{n}} = \frac{\eta - 1}{2\tau\sigma_E}.\qquad (28)
+$$
+At the output of the resonator, the laser light intensity is equal to
+$$
+I = \left(1 - \rho\right)I_G = \frac{\left(1 - \rho\right)}{2\tau\sigma_E}(\eta - 1) = E\left(\eta - 1\right),\qquad (29)
+$$
+in which the constant factor is introduced as
+$$
+E = \frac{1 - \rho}{2\tau\sigma_E} = 5{,}41\cdot 10^{22}\,cm^{-2}\cdot s^{-1}.\qquad (30)
+$$
+The graph of relation (29) is a straight line, as shown in the figure below.
+
+**3.14** On the one hand, the number of light quanta absorbed in the resonator per unit time is calculated by the formula
+$$
+N_A = \eta I_{0,th}\sigma_A\gamma Sl.\qquad (31)
+$$
+On the other hand, the number of quanta leaving the resonator per unit time is
+$$
+N_E = E\left(\eta - 1\right)S.\qquad (32)
+$$
+Thus, the quantum output turns out to be equal
+$$
+f = \frac{N_E}{N_A} = \frac{E\left(\eta - 1\right)}{\left(I_0\right)_{tr}\sigma_A\left(\gamma l\right)}.\qquad (33)
+$$
+The substitution of all parameters included in this formula leads to the final result
+$$
+f = \frac{\eta - 1}{\eta}.\qquad (34)
+$$
+
+| Part | Content | Points | |
+|---|---|---|---|
+| **3.1** | Equation (1): $\frac{dn_1}{dt} = -\frac{1}{\tau}n_1 - I_0\sigma n_1 + I_0\sigma\left(1 - n_1\right)$ | 0,3 | **0,3** |
+| **3.2** | Formula (2): $\bar{n}_1 = \frac{I_0\sigma\tau}{1 + 2I_0\sigma\tau}$ | 0,2 | **0,3** |
+| | Formula (3): $\Delta\bar{n} = \bar{n}_1 - \left(1 - \bar{n}_1\right) = 2\frac{I_0\sigma\tau}{1 + 2I_0\sigma\tau} - 1 = -\frac{1}{1 + 2I_0\sigma\tau}$ | 0,1 | |
+| **3.3** | Answer: «no» | 0,2 | **0,2** |
+| **3.4** | Equation (4): $\frac{dn_2}{dt} = -\frac{n_2}{\tau} + I_0\sigma\left(1 - n_2\right)$ | 0,2 | **0,2** |
+| **3.5** | Formula (5): $\bar{n}_2 = \frac{I_0\sigma}{\frac{1}{\tau} + I_0\sigma} = \frac{I_0\sigma\tau}{1 + I_0\sigma\tau}$ | 0,1 | **0,2** |
+| | Formula (6): $\Delta n = \bar{n}_2 - \bar{n}_0 = \bar{n}_2 - \left(1 - \bar{n}_2\right) = \frac{I_0\sigma\tau - 1}{1 + I_0\sigma\tau}$ | 0,1 | |
+| **3.6** | Inequality (7): $I_0\sigma\tau > 1$ | 0,3 | **0,3** |
+| **3.7** | Formula (5) is again used | 0,1 | **0,5** |
+| | Formula (8): $\Delta n = \bar{n}_2 = \frac{I_0\sigma\tau}{1 + I_0\sigma\tau}$ | 0,1 | |
+| | Inequality (9): $I_0\sigma\tau > 0$ | 0,3 | |
+| **3.8** | Formula (10): $dN_{out} = \left(1 - \rho\right)I_GSdt = -dN$ | 0,3 | **1,5** |
+| | Formula (11): $I_G = \frac{1}{2}\frac{N}{Sl}\frac{c}{r}$ | 0,5 | |
+| | Formula (15): $T = \frac{2rl}{c\left(1 - \rho\right)}$ | 0,4 | |
+| | Numerical value: $T = 3{,}00\cdot 10^{-9}\,s$ | 0,3 | |
+| **3.9** | Formula (16): $dN = 2I_G\sigma_En\gamma Vdt = 2I_G\sigma_En\gamma Sldt$ | 0,6 | **1,5** |
+| | Formula (18): $K = \frac{\gamma c\sigma_E}{r}$ | 0,5 | |
+| | Numerical value: $K = 5{,}72\cdot 10^{10}\,s^{-1}$ | 0,4 | |
+| **3.10** | Equation (19): $\frac{dI_G}{dt} = KnI_G - \frac{1}{T}I_G$ | 0,2 | **0,5** |
+| | Equation (20): $\frac{dn}{dt} = I_0\sigma_A\left(1 - n\right) - \frac{1}{\tau}n - 2I_G\sigma_En$ | 0,3 | |
+| **3.11** | Derivative should be positive; | 0,1 | **0,5** |
+| | Formula (21): $n_{th} = \frac{1}{KT}$ | 0,2 | |
+| | Numerical value: $n_{th} = 5{,}83\cdot 10^{-3}$ | 0,2 | |
+| **3.12** | The intensity of the laser light flux: $I_G = 0$ | 0,1 | **1,0** |
+| | Formula (22): $I_{0,th} = \frac{n_{th}}{\tau\sigma_A\left(1 - n_{th}\right)} \approx \frac{n_{th}}{\tau\sigma_A}$ | 0,3 | |
+| | Numerical value: $I_{0,th} = 3{,}58\cdot 10^{21}\,cm^{-2}\cdot s^{-1}$ | 0,3 | |
+| | Formula (23): $\varepsilon = \frac{hc}{\lambda}$ | 0,1 | |
+| | Formula (24): $I_E = \varepsilon I_{0,th}$ | 0,1 | |
+| | Numerical value: $I_E = 1{,}37\cdot 10^3\,\frac{W}{cm^2}$ | 0,1 | |
+| **3.13** | Derivatives turn zero | 0,1 | **2,0** |
+| | Formula (25): $\bar{n} = \frac{1}{KT}$ | 0,2 | |
+| | Formula (26): $I_G = \frac{I_0\sigma_A - \frac{1}{\tau}\bar{n}}{2\sigma_E\bar{n}}$ | 0,2 | |
+| | Formula (27): $I_0 = \eta I_{0,th} = \eta\frac{\bar{n}}{\tau\sigma_A}$ | 0,2 | |
+| | Formula (28): $I_G = \frac{\eta\frac{\bar{n}}{\tau\sigma_A}\sigma_A - \frac{1}{\tau}\bar{n}}{2\sigma_E\bar{n}} = \frac{\eta - 1}{2\tau\sigma_E}$ | 0,3 | |
+| | Formula (30): $E = \frac{1 - \rho}{2\tau\sigma_E}$ | 0,2 | |
+| | Numerical value: $E = 5{,}41\cdot 10^{22}\,\text{см}^{-2}\cdot \text{с}^{-1}$ | 0,3 | |
+| | Drawing graph: axis are named and ticked | 0,1 | |
+| | Drawing graph: straight line | 0,2 | |
+| | Drawing graph: straight line passes through 1 | 0,2 | |
+| **3.14** | Formula (31): $N_A = \eta I_{0,th}\sigma_A\gamma Sl$ | 0,4 | **1,0** |
+| | Formula (32): $N_E = E\left(\eta - 1\right)S$ | 0,3 | |
+| | Formula (34): $f = \frac{\eta - 1}{\eta}$ | 0,3 | |
+| **Total** | | | **10,0** |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.8%', '--fig-max': '249px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2019-theory-eng/p3-sol-fig4.png" alt="Graph of the output laser flux I (in units of 10^22 см^-2·с^-1, vertical axis 0 to 30) versus η (horizontal axis 0 to 5): a straight line starting at η = 1, I = 0 and rising to about 27 at η = 5." width="777" height="632" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+
+</Spoiler>
+
+<details>
+<summary>Mathematical hint for the theoretical competition</summary>
+
+You may need to know the following integrals:
+
+$$
+\int\frac{dx}{ax+b} = \frac{1}{a}\ln|ax + b|.
+$$
+
+$$
+\int x^n dx = \frac{x^{n+1}}{n+1},\ \textit{where } n \textit{ is an integer number}
+$$
+
+</details>
+
+---
+
+Оригинал в Архива: [IZhO-2019-Theory_eng.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2019/Theory/IZhO-2019-Theory_eng.pdf)
+· официални решения: [IZhO-2019-Theory_eng_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IZhO/2019/Theory/IZhO-2019-Theory_eng_sol.pdf)

@@ -32,19 +32,19 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root",
-   "at": "2026-09-25",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-26",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "3230ce7003d819157d23dc1d5d8195a69b7c11518819ea04f3a93567294534d7",
     "solutions": "8f1b2ec7d4b9d72f9b67e7f265edaf8c5c20c07218bb9fd82844620890d2be34"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-25",
-   "notes": "Personally read all6original pages. One whole problem with6lettered questions, complete official solution and full mark table. Missing text-layer equations restored visually; printed notation/sign discrepancies explicit. Figure crop inspected before frozen evidence."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-26",
+   "notes": "Personally read all6original pages. One whole problem with6lettered questions, complete official solution and full mark table. Missing text-layer equations restored visually; printed notation/sign discrepancies explicit. Figure crop inspected before frozen evidence. The numerical-values table on problems page 2 has no printed header row; its first printed row serves as the Markdown header. repaired from the 2026-09-25 single-pass transcription by agent/gpt-6-astra"
   }
  },
  "problems": [
@@ -61,28 +61,27 @@
    ],
    "difficulty": "Hard",
    "importance": 2,
-   "figures": [],
    "parts": [],
    "statement": "In this problem you are asked to consider the mechanism of atom cooling with the help of laser radiation. Investigations in this field led to considerable progress in the understanding of the properties of quantum gases of cold atoms, and were awarded Nobel prizes in 1997 and 2001.",
    "sections": [
     {
      "id": "theoretical-introduction",
      "title": "Theoretical Introduction",
-     "statement": "Consider a simple two-level model of the atom, with ground state energy $E_g$ and excited state energy $E_e$. Energy difference is $E_g-E_e=\\eta\\omega_0$, the angular frequency of used laser is $\\omega$, and the laser detuning is $\\delta=\\omega-\\omega_0\\ll\\omega_0$. Assume that all atom velocities satisfy $\\upsilon\\ll c$, where $c$ is the light speed. You can always restrict yourself to first nontrivial orders in small parameters $\\upsilon/c$ and $\\delta/\\omega_0$. Natural width of the excited state $E_e$ due to spontaneous decay is $\\gamma\\ll\\omega_0$: for an atom in an excited state, the probability to return to a ground state per unit time equals $\\gamma$. When an atom returns to a ground state, it emits a photon of a frequency close to $\\omega_0$ in a random direction.\n\nIt can be shown in quantum mechanics, that when an atom is subject to low-intensity laser radiation, the probability to excite the atom per unit time depends on the frequency of radiation in the reference frame of the atom, $\\omega_a$, according to\n\n$$\\gamma_p=s_0\\frac{\\gamma/2}{1+4(\\omega_a-\\omega_0)^2/\\gamma^2}\\ll\\gamma,$$\n\nwhere $s_0\\ll1$ is a parameter, which depends on the properties of atoms and laser intensity.\n\n![Fig 1. Note that shown parameters are not in scale.](energy-levels-astra-root18-20260925)\n\nIn this problem properties of the gas of sodium atoms are investigated neglecting the interactions between the atoms. The laser intensity is small enough, so that the number of atoms in the excited state is always much smaller than number of atoms in the ground state. You can also neglect the effects of the gravitation, which are compensated in real experiments by an additional magnetic field.\n\nNumerical values:\n\n| Quantity | Value |\n| --- | --- |\n| Planck constant | $\\eta=1.05\\cdot10^{-34}\\ \\mathrm{J\\,s}$ |\n| Boltzmann constant | $k_B=1.38\\cdot10^{-23}\\ \\mathrm{J\\,K^{-1}}$ |\n| Mass of sodium atom | $m=3.81\\cdot10^{-26}\\ \\mathrm{kg}$ |\n| Frequency of used transition | $\\omega_0=2\\pi\\cdot5.08\\cdot10^{14}\\ \\mathrm{Hz}$ |\n| Excited state linewidth | $\\gamma=2\\pi\\cdot9.80\\cdot10^6\\ \\mathrm{Hz}$ |\n| Concentration of the atoms | $n=10^{14}\\ \\mathrm{cm^{-3}}$ |",
+     "statement": "Consider a simple two-level model of the atom, with ground state energy $E_g$ and excited state energy $E_e$. Energy difference is $E_g-E_e=\\eta\\omega_0$, the angular frequency of used laser is $\\omega$, and the laser detuning is $\\delta=\\omega-\\omega_0\\ll\\omega_0$. Assume that all atom velocities satisfy $\\upsilon\\ll c$, where $c$ is the light speed. You can always restrict yourself to first nontrivial orders in small parameters $\\upsilon/c$ and $\\delta/\\omega_0$. Natural width of the excited state $E_e$ due to spontaneous decay is $\\gamma\\ll\\omega_0$: for an atom in an excited state, the probability to return to a ground state per unit time equals $\\gamma$. When an atom returns to a ground state, it emits a photon of a frequency close to $\\omega_0$ in a random direction.\n\nIt can be shown in quantum mechanics, that when an atom is subject to low-intensity laser radiation, the probability to excite the atom per unit time depends on the frequency of radiation in the reference frame of the atom, $\\omega_a$, according to\n\n$$\\gamma_p=s_0\\frac{\\gamma/2}{1+4(\\omega_a-\\omega_0)^2/\\gamma^2}\\ll\\gamma,$$\n\nwhere $s_0\\ll1$ is a parameter, which depends on the properties of atoms and laser intensity.\n\n![Fig 1. Note that shown parameters are not in scale.](energy-levels-astra-root18-20260925)\n\nIn this problem properties of the gas of sodium atoms are investigated neglecting the interactions between the atoms. The laser intensity is small enough, so that the number of atoms in the excited state is always much smaller than number of atoms in the ground state. You can also neglect the effects of the gravitation, which are compensated in real experiments by an additional magnetic field.\n\nNumerical values:\n\n| Planck constant | $\\eta=1.05\\cdot10^{-34}\\ \\mathrm{J\\,s}$ |\n| --- | --- |\n| Boltzmann constant | $k_B=1.38\\cdot10^{-23}\\ \\mathrm{J\\,K^{-1}}$ |\n| Mass of sodium atom | $m=3.81\\cdot10^{-26}\\ \\mathrm{kg}$ |\n| Frequency of used transition | $\\omega_0=2\\pi\\cdot5.08\\cdot10^{14}\\ \\mathrm{Hz}$ |\n| Excited state linewidth | $\\gamma=2\\pi\\cdot9.80\\cdot10^6\\ \\mathrm{Hz}$ |\n| Concentration of the atoms | $n=10^{14}\\ \\mathrm{cm^{-3}}$ |",
      "figures": [
       {
        "id": "energy-levels-astra-root18-20260925",
        "alt": "Fig 1. Note that shown parameters are not in scale.",
-       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2006-theory-1/energy-levels-astra-root18-20260925.png",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2006-theory-1/energy-levels-astra-root18-20260925-v2.png",
        "width": 809,
-       "height": 517,
+       "height": 545,
        "source": {
         "page": 1,
         "pdfRect": [
          227.88,
-         557.41,
+         554.04,
          421.88,
-         681.16
+         684.54
         ],
         "dpi": 300
        }
@@ -140,7 +139,6 @@
    ],
    "solution": {
     "statement": "",
-    "figures": [],
     "incomplete": false,
     "sections": [
      {

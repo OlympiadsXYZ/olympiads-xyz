@@ -1,0 +1,471 @@
+---
+id: ioaa-2017-data-analysis-x-p2
+source: 'IOAA 2017, Анализ на данни'
+title: 'Задача 2. The search for dark matter'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2017/ioaa-2017-data-analysis-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T04:56:35.710Z'
+verifier: 'mechanical'
+---
+
+*Data Analysis Examination · 75 т.*
+
+<details>
+<summary>Указания</summary>
+
+1. The data analysis examination lasts for 4 hours and is worth a total of 150 marks.
+2. Dedicated IOAA **Summary Answer Sheets** are provided for writing your answers. Enter the final answers into the appropriate boxes in the corresponding **Summary Answer Sheet**. On each Answer Sheet, please fill in
+    - Student Code (Country Code and 1 digit)
+3. **Graph Papers** are required for your solutions. On each Graph Paper, please fill in
+    - Student Code (Country Code and 1 digit)
+    - Question no.
+    - Graph no. and total number of graph papers used.
+4. There are **Answer Sheets** for carrying out detailed work/rough work. On each Answer Sheet, please fill in
+    - Student Code (Country Code and 1 digit)
+    - Question no.
+    - Page no. and total number of pages.
+5. Start each problem on a separate Answer Sheet. Please write only on the printed side of the sheet. Do not use the reverse side. If you have written something on any sheet which you do not want to be evaluated, cross it out.
+6. Use as many mathematical expressions as you think that may help the evaluator to better understand your solutions. The evaluator may not understand your language. If it is necessary to explain something in words, please use short phrases (if possible in English).
+7. You are not allowed to leave your working desk without permission. If you need any assistance (malfunctioning calculator, need to visit a restroom, need more Answer Sheets, etc.), please draw the attention of the invigilator using the sign card.
+8. The beginning and end of the examination will be indicated by a long sound signal. Additionally, there will be a buzzer sound, fifteen minutes before the end of the examination (before the final sound signal).
+9. At the end of the examination you must stop writing immediately. Sort and put your Summary Answer Sheets, Graph Papers, and Answer Sheets for each part (D1 and D2) in separate stack. You are not allowed to take any sheet of paper out of the examination area.
+10. Wait at your table until your envelope is collected. Once all envelopes are collected, your student guide will escort you out of the examination area.
+11. A list of constants is given on the next page.
+
+</details>
+
+<details>
+<summary>Table of constants</summary>
+
+| | | |
+|---|---|---|
+| Mass ($M_{\oplus}$) | $5.98 \times 10^{24}$ kg | **Earth** |
+| Radius ($R_{\oplus}$) | $6.38 \times 10^{6}$ m | |
+| Acceleration of gravity ($g$) | 9.8 m s$^{-2}$ | |
+| Obliquity of Ecliptic | 23°27’ | |
+| Length of Tropical Year | 365.2422 mean solar days | |
+| Length of Sidereal Year | 365.2564 mean solar days | |
+| Albedo | 0.39 | |
+| Mass(M☾) | $7.35 \times 10^{22}$ kg | **Moon** |
+| Radius (R☾) | $1.74 \times 10^{6}$ m | |
+| Mean distance from Earth | $3.84 \times 10^{8}$ m | |
+| Orbital inclination with the Ecliptic | 5.14° | |
+| Albedo | 0.14 | |
+| Apparent magnitude (mean full moon) | -12.74 | |
+| Mass ($M_{\odot}$) | $1.99 \times 10^{30}$ kg | **Sun** |
+| Radius ($R_{\odot}$) | $6.96 \times 10^{8}$ m | |
+| Luminosity ($L_{\odot}$) | $3.83 \times 10^{26}$ W | |
+| Absolute Magnitude ($\mathcal{M}_{\odot}$) | 4.80 mag | |
+| Angular diameter | 0.5 degrees | |
+| 1 au | $1.50 \times 10^{11}$ m | **Physical constants** |
+| 1 pc | 206,265 au | |
+| Distance from Sun to Barnard’s Star | 1.83 pc | |
+| Gravitational constant ($G$) | $6.67 \times 10^{-11}\ \mathrm{N \cdot m^{2} \cdot kg^{-2}}$ | |
+| Planck constant ($h$) | $6.62 \times 10^{-34}\ \mathrm{J \cdot s}$ | |
+| Boltzmann constant ($k_{\mathrm{B}}$) | $1.38 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$ | |
+| Stefan-Boltzmann constant ($\sigma$) | $5.67 \times 10^{-8}\ \mathrm{W \cdot m^{-2} \cdot K^{-4}}$ | |
+| Hubble constant ($H_0$) | 72 km s$^{-1}$ Mpc$^{-1}$ | |
+| Speed of light in vacuum ($c$) | 299,792,458 m s$^{-1}$ | |
+| Proton mass | 938.27 MeV $\cdot$ c$^{-2}$ | |
+| Deuterium mass | 1875.60 MeV $\cdot$ c$^{-2}$ | |
+| Neutron mass | 939.56 MeV $\cdot$ c$^{-2}$ | |
+| Helium-3 mass | 2808.30 MeV $\cdot$ c$^{-2}$ | |
+| Helium-4 mass | 3727.40 MeV $\cdot$ c$^{-2}$ | |
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Part 1 The mass of dark matter and rotation curves of the galaxy](#part-1)
+- [Part 2 Dark matter distribution](#part-2)
+
+</nav>
+
+A low surface brightness galaxy (LSB) is a diffuse galaxy with a surface brightness that, when viewed from the Earth, is at least one magnitude lower than the ambient night sky.
+
+Some of its matter is in the form of “baryonic” matter such as neutral hydrogen gas and stars. However, most of its matter is in the form of invisible mass – so called “dark matter”. In this question, we will investigate the mass of dark matter in a galaxy, the effect of dark matter on the rotation curves of the galaxy, and the distribution of dark matter in the galaxy.
+
+The table below provides the data of a LSB galaxy named UGC4325. The galaxy is assumed to be edge-on. At every distance $r$ from the centre of the galaxy, we measure
+
+1. $\lambda_{\mathrm{obs}}$, the observed wavelength of the H$\alpha$ emission line. The Hubble expansion of the Universe has already been excluded from the data.
+2. $V_{\mathrm{gas}}$, the contribution of the gas component to the rotation due to $M_{\mathrm{gas}}$, derived from HI surface densities.
+3. $V_*$, the contribution of the stellar component to the rotation due to $M_*$, derived from $R$-band photometry.
+
+The rotational velocities of the test particle due to the gas component, $V_{\mathrm{gas}}$, and the star component, $V_*$, are defined as the velocities in the plane of the galaxy that would result from the corresponding components without any external influences. These velocities are calculated from the observed baryonic mass density distributions.
+
+| $r$ (kpc) | $\lambda_{\mathrm{obs}}$ (nm) | $V_{\mathrm{gas}}$ (km/s) | $V_*$ (km/s) |
+|---|---|---|---|
+| 0.70 | 656.371 | 2.87 | 20.97 |
+| 1.40 | 656.431 | 6.75 | 32.22 |
+| 2.09 | 656.464 | 14.14 | 40.91 |
+| 2.79 | 656.475 | 20.18 | 46.75 |
+| 3.49 | 656.478 | 24.08 | 50.10 |
+| 4.89 | 656.484 | 28.08 | 47.94 |
+| 6.25 | 656.481 | 29.25 | 45.47 |
+| 7.10 | 656.481 | 27.03 | 47.78 |
+| 9.03 | 656.482 | 25.90 | 45.32 |
+| 12.05 | 656.482 | 21.03 | 42.30 |
+
+The mass of dark matter $M_{\mathrm{DM}}(r)$ within a volume of radius $r$ can be defined in terms of the rotational velocity due to dark matter $V_{\mathrm{DM}}$, the radius $r$ and gravitational constant $G$,
+
+$$
+M_{\mathrm{DM}}(r) = \frac{rV_{\mathrm{DM}}^2}{G}. \qquad (1)
+$$
+
+To a good approximation, the observed rotational velocity $V_{\mathrm{obs}}$ can be modelled as
+
+$$
+V_{\mathrm{obs}}^2 = V_{\mathrm{gas}}^2 + V_*^2 + V_{\mathrm{DM}}^2. \qquad (2)
+$$
+
+The observed rotational velocity $V_{\mathrm{obs}}$ depends on the mass of the galaxy $M(r)$ within a volume of radius $r$ measured from the galaxy’s centre.
+
+The mass density $\rho_{\mathrm{DM}}(r)$ of dark matter within a volume of radius $r$ can be modelled by a galaxy density profile,
+
+$$
+\rho_{\mathrm{DM}}(r) = \frac{\rho_0}{1 + \left(\dfrac{r}{r_{\mathrm{C}}}\right)^2} \qquad (3)
+$$
+
+where $\rho_0$ and $r_{\mathrm{C}}$ are the central density and the core radius of the galaxy, respectively. According to the density profile, the mass of dark matter $M_{\mathrm{DM}}(r)$ within a volume of a radius $r$ can be described by
+
+$$
+M_{\mathrm{DM}}(r) = 4\pi\rho_0 r_{\mathrm{C}}^2\left[r - r_C \arctan(r/r_C)\right]. \qquad (4)
+$$
+
+<ProblemSection id="part-1">
+
+### Part 1 The mass of dark matter and rotation curves of the galaxy
+
+**(D2.1)** In laboratories on Earth, H$\alpha$ has an emitted wavelength $\lambda_{\mathrm{emit}}$ of 656.281 nm. Compute the observed rotational velocities of the galaxy $V_{\mathrm{obs}}$ and the rotational velocities due to the dark matter $V_{\mathrm{DM}}$ at distance $r$ in units of km s$^{-1}$.
+
+For the different values of $r$ given in the table, compute the dynamical mass $M(r)$ and the mass of dark matter $M_{\mathrm{DM}}(r)$ in solar masses. **[21 т.]**
+
+**(D2.2)** Create rotation curves of the galaxy on graph paper by plotting the points of $V_{\mathrm{obs}}$, $V_{\mathrm{DM}}$, $V_{\mathrm{gas}}$, $V_*$ versus the radius $r$ and draw smooth curves through the points (mark your graph as “D2.2”).
+
+Order the contribution of the different components to the observed velocity in descending order. **[16 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="part-2">
+
+### Part 2 Dark matter distribution
+
+**(D2.3)** Take a data point at small $r$ and large $r$ to estimate $\rho_0$ and $r_C$. Note that for large values of $x$, $\arctan(x) \approx \pi/2$ and at small $x$, $\arctan(x) \approx x - x^3/3$. **[7 т.]**
+
+**(D2.4)** By comparing Equation (4) to a linear function, the central density $\rho_0$ could also be found by a linear fit. Plot an appropriate graph so that a linear fit can be used to find another value of $\rho_0$. Evaluate $\rho_0$ in units of M$_{\odot}$ kpc$^{-3}$. (Mark your graph as “D2.4”). If you cannot find the value of $r_C$ from the previous part, use $r_{\mathrm{C}} =$ 3.2 kpc as an estimate for this part. **[19 т.]**
+
+**(D2.5)** Compute logarithmic values of the dark matter density, $\ln[\rho_{\mathrm{DM}}(r)]$, and plot the distribution of dark matter in the galaxy as a function of radius $r$ on graph paper. (Mark your graph as “D2.5”). **[12 т.]**
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **Part 2 Dark matter distribution, (D2.3)** ρ₀ ≈ 1.42 × 10⁸ M☉/kpc³; r<sub>C</sub> = 0.964 kpc (Method 2); r<sub>C</sub> = 1.01 kpc (Method 1)
+- **Part 2 Dark matter distribution, (D2.4)** ρ₀ ≈ 1.43 × 10⁸ M☉/kpc³ (Solution 1, with r<sub>C</sub> = 3.2 kpc)
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**(D2) The search for dark matter** [75 marks]
+
+A low surface brightness galaxy (LSB) is a diffuse galaxy with a surface brightness that, when viewed from the Earth, is at least one magnitude lower than the ambient night sky.
+
+Some of its matter is in the form of “baryonic” matter such as neutral hydrogen gas and stars. However, most of its matter is in the form of invisible mass which is so called “dark matter”. In this question, we will investigate the mass of dark matter in a galaxy, the effect of dark matter on the rotation curves of the galaxy, and the distribution of dark matter in the galaxy.
+
+The table below provides the data of a LSB galaxy named UGC4325. The galaxy is assumed to be edge-on. At every distance $r$ from the centre of the galaxy, we measure
+
+1. $\lambda_{\mathrm{obs}}$, the observed wavelength of the H$\alpha$ emission line. The Hubble expansion of the Universe has already been excluded from the data.
+2. $V_{\mathrm{gas}}$, the contribution of the gas component to the rotation due to $M_{\mathrm{gas}}$, derived from HI surface densities.
+3. $V_*$, the contribution of the stellar component to the rotation due to $M_*$, derived from $R$-band photometry.
+
+The rotational velocities of the test particle due to the gas component, $V_{\mathrm{gas}}$, and the star component, $V_*$, are defined as the velocities in the plane of the galaxy that would result from the corresponding components without any external influences. These velocities are calculated from the observed baryonic mass density distributions.
+
+| $r$ (kpc) | $\lambda_{\mathrm{obs}}$ (nm) | $V_{\mathrm{gas}}$ (km/s) | $V_*$ (km/s) |
+|---|---|---|---|
+| 0.70 | 656.371 | 2.87 | 20.97 |
+| 1.40 | 656.431 | 6.75 | 32.22 |
+| 2.09 | 656.464 | 14.14 | 40.91 |
+| 2.79 | 656.475 | 20.18 | 46.75 |
+| 3.49 | 656.478 | 24.08 | 50.10 |
+| 4.89 | 656.484 | 28.08 | 47.94 |
+| 6.25 | 656.481 | 29.25 | 45.47 |
+| 7.10 | 656.481 | 27.03 | 47.78 |
+| 9.03 | 656.482 | 25.90 | 45.32 |
+| 12.05 | 656.482 | 21.03 | 42.30 |
+
+The mass of dark matter $M_{\mathrm{DM}}(r)$ within a volume of radius $r$ can be defined in terms of the rotational velocity due to dark matter $V_{\mathrm{DM}}$, the radius $r$ and gravitational constant $G$,
+
+$$
+M_{\mathrm{DM}}(r) = \frac{rV_{\mathrm{DM}}^2}{G}. \qquad (1)
+$$
+
+For the best estimate, the observed rotational velocity $V_{\mathrm{obs}}$ can be modeled as
+
+$$
+V_{\mathrm{obs}}^2 = V_{\mathrm{gas}}^2 + V_*^2 + V_{\mathrm{DM}}^2. \qquad (2)
+$$
+
+The observed rotational velocity $V_{\mathrm{obs}}$ depends on the mass of the galaxy $M(r)$ within a volume of radius $r$ measured from the galaxy’s centre.
+
+The mass density $\rho_{\mathrm{DM}}(r)$ of dark matter within a volume of radius $r$ can be modeled by a galaxy density profile,
+
+$$
+\rho_{\mathrm{DM}}(r) = \frac{\rho_0}{1 + \left(\dfrac{r}{r_{\mathrm{C}}}\right)^2} \qquad (3)
+$$
+
+where $\rho_0$ and $r_{\mathrm{C}}$ are the central density and the core radius of the galaxy, respectively. According to the density profile, the mass of dark matter $M_{\mathrm{DM}}(r)$ within a volume of a radius $r$ can be described by
+
+$$
+M_{\mathrm{DM}}(r) = 4\pi\rho_0 r_{\mathrm{C}}^2\left[r - r_C \arctan(r/r_C)\right]. \qquad (4)
+$$
+
+**Part 1 The mass of dark matter and rotation curves of the galaxy**
+
+(D2.1) In laboratories on Earth, H$\alpha$ has an emitted wavelength $\lambda_{\mathrm{emit}}$ of 656.281 nm. Compute the observed rotational velocities of the galaxy $V_{\mathrm{obs}}$ and the rotational velocities due to the dark matter $V_{\mathrm{DM}}$ at distance $r$ in units of km/s.
+
+For the different values of $r$ given in the table, compute the dynamical mass $M(r)$ and the mass of dark matter $M_{\mathrm{DM}}(r)$ in solar masses. [21]
+
+**Solution:**
+
+Redshift: $z = \dfrac{\lambda_{\mathrm{obs}} - \lambda_{\mathrm{emit}}}{\lambda_{\mathrm{emit}}}$ [0.5]
+
+Observed rotation velocity: $V_{\mathrm{obs}} = zc$ [0.5]
+
+Values correctly computed: 20.0 (0.5 for each values)
+
+| $r$ (kpc) | $z$ | $V_{\mathrm{obs}}$ (km/s) | $V_{\mathrm{DM}}$ (km/s) | $M(r)$ ($M_{\odot}$) | $M_{\mathrm{DM}}(r)$ ($M_{\odot}$) |
+|---|---|---|---|---|---|
+| 0.70 | 1.37x10$^{-4}$ | 41.11 | 35.25 | 2.75x10$^{8}$ | 2.02x10$^{8}$ |
+| 1.40 | 2.29 x10$^{-4}$ | 68.52 | 60.10 | 1.53x10$^{9}$ | 1.18x10$^{9}$ |
+| 2.09 | 2.79 x10$^{-4}$ | 83.60 | 71.52 | 3.40x10$^{9}$ | 2.49x10$^{9}$ |
+| 2.79 | 2.96 x10$^{-4}$ | 88.62 | 72.53 | 5.09x10$^{9}$ | 3.41x10$^{9}$ |
+| 3.49 | 3.00 x10$^{-4}$ | 89.99 | 70.77 | 6.57x10$^{9}$ | 4.06x10$^{9}$ |
+| 4.89 | 3.09 x10$^{-4}$ | 92.73 | 74.25 | 9.78x10$^{9}$ | 6.27x10$^{9}$ |
+| 6.25 | 3.05 x10$^{-4}$ | 91.36 | 73.65 | 1.21x10$^{10}$ | 7.88x10$^{9}$ |
+| 7.10 | 3.05 x10$^{-4}$ | 91.36 | 73.03 | 1.38 x10$^{10}$ | 8.80x10$^{9}$ |
+| 9.03 | 3.06 x10$^{-4}$ | 91.82 | 75.54 | 1.77x10$^{10}$ | 1.20x10$^{10}$ |
+| 12.05 | 3.06 x10$^{-4}$ | 91.82 | 78.74 | 2.36x10$^{10}$ | 1.74x10$^{10}$ |
+
+(D2.2) Create rotation curves of the galaxy on graph paper by plotting the points of $V_{\mathrm{obs}}$, $V_{\mathrm{DM}}$, $V_{\mathrm{gas}}$, $V_*$ versus the radius $r$ and draw smooth curves through the points (mark your graph as “D2.2”).
+
+Order the contribution of the different components to the observed velocity in descending order. [16]
+
+- Plot uses more than 50% of graph paper: 1.0
+- Both axes labels ($V$ and $r$) and their units presented: 2.0
+- Ticks and values on axes (or scale written explicitly): 1.0
+- All plots labels ($V_{\mathrm{obs}}$, $V_{\mathrm{DM}}$, $V_{\mathrm{gas}}$, $V_*$) presented: 2.0, each label gets 0.5 mark
+- Points correctly plotted: 4 (0.1 for each point)
+  Values of $V_{\mathrm{obs}}$, $V_{\mathrm{DM}}$ wrong due to wrong values of $z$ gets a maximum of 4.0 marks
+- Smooth curve through points: 4.0 (1.0 per curve)
+- Order of contribution: 2.0, correct order only
+
+(D2.3) Take a data points at small $r$ and large $r$ to estimate $\rho_0$ and $r_C$. Note that for large values of $x$, $\arctan(x) \approx \pi/2$ and at small $x$, $\arctan(x) \approx x - x^3/3$. [7]
+
+**Solution**
+
+**Evaluating for $\rho_0$:**
+
+$$
+M_{\mathrm{DM}}(r) = 4\pi\rho_0 r_{\mathrm{C}}^2\left[r - r_C \arctan(r/r_C)\right]
+$$
+
+$M_{DM}(r) = 4\pi\rho_0 r_C^3[x - \arctan(x)]$, where $x = r/r_C$ [1.0]
+
+$M_{DM}(r) \approx 4\pi\rho_0 r_C^3\left[x - \left(x - \frac{x^3}{3}\right)\right]$, for small $x$ [1.0]
+
+$$
+M_{DM}(r) \approx 4\pi\rho_0 r_C^3\left(\frac{x^3}{3}\right) = \frac{4\pi\rho_0 r^3}{3}
+$$
+
+$\rho_0 \approx \frac{2.02\times10^8 M_{\odot}\times3}{4\pi(0.7kpc)^3} = 1.42\times10^8 M_{\odot}/kpc^3$ [1.5]
+
+Selected correct data to put into the formula gets 0.5, correct answer gets 0.5 and correct unit gets 0.5.
+
+$$
+M_{DM}(r) = 4\pi\rho_0 r_C^2\left[r - r_C \arctan\left(\frac{r}{r_C}\right)\right]
+$$
+
+**Evaluating for $r_C$ (Method 1):**
+
+$M_{DM}(r) \approx 4\pi\rho_0 r_C^2\left[r - r_C\frac{\pi}{2}\right]$, [1.0]
+
+Take the last two data points at large $r$, then we get (for $r \gg r_C$
+
+$\Delta M_{DM}(r) \approx 4\pi\rho_0 r_C^2[\Delta r]$ [1.5]
+
+$r_C = 1.01\ kpc$ [1.0]
+
+**Evaluating for $r_C$ (Method 2):**
+
+$M_{DM}(r) \approx 4\pi\rho_0 r_C^2\left[r - r_C\frac{\pi}{2}\right]$, [1.0]
+
+Take the last data point, we get a cubic equation which students can solve to give
+
+$r_C = -0.855, 0.964, 7.56$ kpc [1.0]
+
+Select the correct $r_C =$ 0.964 for the final answer because for the last data point $r \gg r_C$ [1.5]
+
+**Less accurate $r_C$:**
+
+Omit the last term,
+
+$M_{DM}(r) \approx 4\pi\rho_0 r_C^2 r$ [1.0]
+
+$r_C \approx \sqrt{\dfrac{1.74\times10^{10}M_{\odot}}{4\pi\times1.40\times\frac{10^8M_{\odot}}{kpc^3}\times12.05kpc}} = 0.901\ kpc$ [1.0]
+
+**Part 2 Dark matter distribution**
+
+(D2.4) By comparing Equation (4) to a linear function, the central density $\rho_0$ could also be found by a linear fit. Plot an appropriate graph so that a linear fit can be used to find another value of $\rho_0$. Evaluate $\rho_0$ in units of $\frac{M_{\odot}}{kpc^3}$ (mark your graph as “D2.4”). If you cannot find the value of $r_C$ from the previous part, use $r_{\mathrm{C}} =$ 3.2 kpc as an estimate for this part. [19]
+
+**Solution 1:**
+
+$x = \left[r - r_c \arctan\left(\frac{r}{r_C}\right)\right]$
+
+$y = M_{DM}(r)$
+
+| $x = [r - r_C\arctan(r/r_C)]$ (kpc) | $y = M_{\mathrm{DM}}(r)$ (kg) |
+|---|---|
+| 0.010855 | 2.02x10$^{8}$ |
+| 0.0803 | 1.18x10$^{9}$ |
+| 0.2386 | 2.49x10$^{9}$ |
+| 0.495 | 3.41x10$^{9}$ |
+| 0.838 | 4.06x10$^{9}$ |
+| 1.718 | 6.27x10$^{9}$ |
+| 2.738 | 7.88x10$^{9}$ |
+| 3.428 | 8.80x10$^{9}$ |
+| 5.093 | 1.20x10$^{10}$ |
+| 7.854 | 1.74x10$^{10}$ |
+
+- Choose correct axes: 1.0, each correct axis get 0.5 mark
+- Values correctly computed: 8.0 (0.4 for each value, 20 data points)
+- Plot uses more than 50% of graph paper: 1.0
+- Both axes labels presented: 1.0
+- Ticks and values on axes (or scale written explicitly): 1.0
+- Points correctly plotted: 4.0 (0.2 for each point, 20 data points)
+  Values of x axis wrong due to previous wrong values get a maximum of 2.0 marks
+- Credit for good visual linear fit: 1.0
+- Correct value of slope: 1.0
+- Correct value of $\rho_0$: 1.0
+
+**Solution 2:**
+
+$x = \frac{r_C}{r}\arctan\left(\frac{r}{r_C}\right)$
+
+$y = M_{DM}(r)$
+
+| $x = \dfrac{r_C}{r}\arctan\left(\dfrac{r}{r_C}\right)$ | $y = M_{\mathrm{DM}}(r)$ ($M_{\odot}$) |
+|---|---|
+| 0.984 | 2.89x10$^{8}$ |
+| 0.943 | 8.40 x10$^{8}$ |
+| 0.886 | 1.19x10$^{9}$ |
+| 0.822 | 1.22x10$^{9}$ |
+| 0.760 | 1.16x10$^{9}$ |
+| 0.649 | 1.28x10$^{9}$ |
+| 0.562 | 1.26x10$^{9}$ |
+| 0.517 | 1.24x10$^{9}$ |
+| 0.436 | 1.33x10$^{9}$ |
+| 0.348 | 1.44x10$^{9}$ |
+
+- Choose correct axes: 1.0, each correct axis get 0.5 mark
+- Values correctly computed: 8.0 (0.4 for each value, 20 data points)
+- Plot uses more than 50% of graph paper: 1.0
+- Both axes labels presented: 1.0
+- Ticks and values on axes (or scale written explicitly): 1.0
+- Points correctly plotted: 4.0 (0.2 for each point, 20 data points)
+  Values of x axis wrong due to previous wrong values gets a maximum of 2.0 marks
+- Credit for good visual linear fit: 1.0
+- Correct value of slope: 1.0
+- Correct value of $\rho_0$: 1.0
+
+(D2.5) Compute logarithmic values of the dark matter density, ln [$\rho_{\mathrm{DM}}$(r)], and plot the distribution of the dark matter in the galaxy as a function of radius $r$ on graph paper (mark your graph as “D2.5”). [12]
+
+**Solution 1:** $r_c = 0.906\ kpc$ from D2.3
+
+| $r$ (kpc) | ln [$\rho_{\mathrm{DM}}$(r)] ($\frac{M_{\odot}}{kpc^3}$) |
+|---|---|
+| 0.70 | 16.11 |
+| 1.40 | 15.36 |
+| 2.09 | 14.73 |
+| 2.79 | 14.23 |
+| 3.49 | 13.81 |
+| 4.89 | 13.17 |
+| 6.25 | 12.69 |
+| 7.10 | 12.44 |
+| 9.03 | 11.97 |
+| 12.05 | 11.40 |
+
+- Values correctly computed: 4.0 (0.4 for each values, 10 data points)
+  Values of ln [$\rho_{\mathrm{DM}}$(r)] wrong due to the wrong value of $\rho_0$ gets a maximum of 2.0 marks
+- Plot uses more than 50% of graph paper: 1.0
+- Both axes labels presented: 1.0
+- Ticks and values on axes (or scale written explicitly): 1.0
+- Points correctly plotted: 4.0 (0.4 for each point, 10 data points)
+  Values of ln [$\rho_{\mathrm{DM}}$(r)] wrong due to previous wrong values gets a maximum of 2.0 marks
+- Smooth curve through points: 1.0
+
+**Solution 2:** $r_c = 3.2\ kpc$
+
+| $r$ (kpc) | ln [$\rho_{\mathrm{DM}}$(r)] ($\frac{M_{\odot}}{kpc^3}$) |
+|---|---|
+| 0.70 | 12.79 |
+| 1.40 | 11.95 |
+| 2.09 | 11.47 |
+| 2.79 | 11.21 |
+| 3.49 | 11.07 |
+| 4.89 | 11.16 |
+| 6.25 | 11.26 |
+| 7.10 | 11.16 |
+| 9.03 | 11.27 |
+| 12.05 | 11.41 |
+
+- Values correctly computed: 4.0 (0.4 for each values, 10 data points)
+  Values of ln [$\rho_{\mathrm{DM}}$(r)] wrong due to the wrong value of $\rho_0$ gets a maximum of 2.0 marks
+- Plot uses more than 50% of graph paper: 1.0
+- Both axes labels presented: 1.0
+- Ticks and values on axes (or scale written explicitly): 1.0
+- Points correctly plotted: 4.0 (0.4 for each point, 10 data points)
+  Values of ln [$\rho_{\mathrm{DM}}$(r)] wrong due to previous wrong values gets a maximum of 2.0 marks
+- Smooth curve through points: 1.0
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.4%', '--fig-max': '489px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2017-data-analysis-x/p2-sol-fig1.png" alt="Photographed hand-drawn rotation curves on graph paper: V (km/s) from 0 to 100 against r (kpc) from 1 to 12, with four smooth curves labelled V_obs (crosses, levelling near 92 km/s), V_DM (squares, near 70–80 km/s), V_* (triangles, peaking near 50 km/s) and V_gas (circles, peaking near 29 km/s); a legend lists the four symbols." width="1529" height="1776" loading="lazy" decoding="async" />
+<figcaption>Graph Number D2.2</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '73.9%', '--fig-max': '474px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2017-data-analysis-x/p2-sol-fig2.png" alt="Hand-drawn graph: M_DM [×10¹⁰ M☉] from 0.0 to 1.8 against r − r_C arctan(r/r_C) [kpc] from 0 to 8; points on a straight rising line; handwritten working: slope = Δy/Δx = (1.7 − 0.6)×10¹⁰ M☉ / (7.5 − 2) kpc = 2×10⁹ M☉/kpc, ρ₀ = slope/(4π r_C²) = 2×10⁹/(4π(3.2)²) = 1.43×10⁸ M☉/(kpc)³." width="1480" height="1965" loading="lazy" decoding="async" />
+<figcaption>Graph Number D2.4: Solution 1</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.6%', '--fig-max': '523px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2017-data-analysis-x/p2-sol-fig3.png" alt="Hand-drawn graph: M_DM/r (×10⁸ M☉/kpc) from 1 to 16 against (r_C/r) arctan(r/r_C) from 0.1 to 1.0; scattered points with a falling fitted straight line; handwritten working: slope = Δy/Δx = (16 − 9)×10⁸ M☉/kpc / (0.9 − 0.25) = 0.1×10¹⁰ M☉/kpc³." width="1633" height="1902" loading="lazy" decoding="async" />
+<figcaption>Graph Number D2.4: Solution 2</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '58.9%', '--fig-max': '377px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2017-data-analysis-x/p2-sol-fig4.png" alt="Hand-drawn graph: Ln(ρ_DM) [M☉/kpc³] from 11.0 to 17.0 against r [kpc] from 1 to 13; ten points on a smooth falling curve from about 16.1 at r = 0.7 kpc to about 11.4 at r = 12 kpc." width="1179" height="1264" loading="lazy" decoding="async" />
+<figcaption>Graph Number D2.5: Solution 1</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '54.5%', '--fig-max': '348px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2017-data-analysis-x/p2-sol-fig5.png" alt="Hand-drawn graph: Ln(ρ_DM) [M☉/kpc³] from 11.0 to 13.0 against r [kpc] from 1 to 14; crosses with a smooth curve falling steeply from about 12.8 at r ≈ 0.7 kpc to a minimum near 11.1 at r ≈ 4–5 kpc and rising slowly to about 11.4 at r ≈ 12 kpc." width="1089" height="1569" loading="lazy" decoding="async" />
+<figcaption>Graph Number D2.5 Solution 2</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [DataAnalysis.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2017/Data%20Analysis/DataAnalysis.pdf)
+· официални решения: [DataAnalysis_Solution.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2017/Data%20Analysis/DataAnalysis_Solution.pdf)

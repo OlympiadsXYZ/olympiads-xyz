@@ -46,10 +46,10 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/sidebar_astra",
-   "at": "2026-09-25",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-26",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
@@ -57,9 +57,9 @@
     "solutions": "4a3131151ed3e769728d02dd16b9277a52310a3aed71722c90798524b0326920",
     "supplement-1": "fcb97ba9c398d69d421f5f71f53336953e015da509bb8582e05ff5e7e95416a2"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-25",
-   "notes": "Directly read2 original question pages,4 primarysolution pages and3 original two-up ST_spec supplement pages (9total). Additionally directly read all4 same primarysolution pages in PyMuPDF after crop inspection showed Poppler preview omits Greek/minus/approximation glyphs that are actually intact in PDF. No source glyph gap: full primary interference transcription and separately labelled complete scanned cosine-square version retained, including extra four-slit equation; original phase-sum and circuit U=Ri/2 then U=Ri unchanged, scanned U=I2R=iR variant excerpt included. Date30October vs12-13November discrepancy disclosed. Preserve3 independent tasks/routes, two blackhole Parts, constants and unused-electron/proton note, all grading. Nine no-snap crops retain all question/solution diagrams and scanned circuit variant. Full2011/2012 inventory checked:2012/ST_spec is same2011paper and included;2011/ST_spec is2010otherpaper. No missing source content or checker."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-26",
+   "notes": "Directly read2 original question pages,4 primarysolution pages and3 original two-up ST_spec supplement pages (9total). Additionally directly read all4 same primarysolution pages in PyMuPDF after crop inspection showed Poppler preview omits Greek/minus/approximation glyphs that are actually intact in PDF. No source glyph gap: full primary interference transcription and separately labelled complete scanned cosine-square version retained, including extra four-slit equation; original phase-sum and circuit U=Ri/2 then U=Ri unchanged, scanned U=I2R=iR variant excerpt included. Date30October vs12-13November discrepancy disclosed. Preserve3 independent tasks/routes, two blackhole Parts, constants and unused-electron/proton note, all grading. Nine no-snap crops retain all question/solution diagrams and scanned circuit variant. Full2011/2012 inventory checked:2012/ST_spec is same2011paper and included;2011/ST_spec is2010otherpaper. No missing source content or checker. repaired from the 2026-09-25 single-pass transcription by agent/gpt-6-astra. Removed two inserted editorial notes („[Бележка от източника: …]“) that are printed nowhere: one in the solution of Задача 1 before the second (scanned supplement-1, p.1) solution text, one at the end of the solution of Задача 3 (solutions p.4) before the scan excerpt p3-sol-scan-variant. Background kept here instead: Задача 1's solution carries first the solutions-PDF text (Варна, 30 Октомври 2011 г.) and then the text of the scanned edition in supplement-1 (Варна, 12-13 ноември 2011 г.), which uses a cosine form; the image at the end of Задача 3 (p3-sol-scan-variant) is Фигура 3в of the scanned edition, supplement-1 p.2. Restored the scanned second text of Задача 1 to its printed wording (supplement-1 p.1): „Електричните полета далеч от екрана създадени от трите процепа са съответно“, „максимално голям, когато“, „Окончателно имаме“, „когато“ without colons, г) as one paragraph „… [0.5т], а първият до него максимум …“, д) „Аналогично на първата точка имаме за електричното поле“ with the printed ⇒ arrows."
   }
  },
  "problems": [
@@ -105,39 +105,39 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "**а)** Нека електричните полета далеч от екрана и създавани от всеки процеп в направление $\\theta$ да са:\n\n$$\\mathrm{E}_1 = \\mathrm{E}_0 e^{i\\omega t + i\\phi 1}$$\n$$\\mathrm{E}_2 = \\mathrm{E}_0 e^{i\\omega t + i\\phi 2}\\quad \\text{[0.5т]}$$\n$$\\mathrm{E}_3 = \\mathrm{E}_0 e^{i\\omega t + i\\phi 3}$$\n\nТогава пълното електрично поле е\n\n$$\\mathrm{E} = \\mathrm{E}_1 + \\mathrm{E}_2 + \\mathrm{E}_3 \\quad \\text{[0.5т]}$$\n\nЗа простота нека изберем $\\phi_1 = 0$. Изразяваме $\\phi_2$ и $\\phi_3$ чрез разликата в оптичните пътища (виж *Фигура 1.*)\n\n![](p1-sol-primary-fig1)\n\nТогава за интензитета имаме:\n\n$$\\mathrm{I} \\sim |\\mathrm{E}|^2 = \\mathrm{E}_0^2\\left(3 + 2\\cos\\phi_2 + 2\\cos\\phi_3 + 2\\cos(\\phi_2+\\phi_3)\\right) \\quad \\text{[0.5т]}$$\n\nИли окончателно имаме:\n\n$$\\mathrm{I} = \\mathrm{I}_0\\left(3 + 2\\cos\\frac{2\\pi \\mathrm{d}_1\\sin\\theta}{\\lambda} + 2\\cos\\frac{2\\pi \\mathrm{d}_2\\sin\\theta}{\\lambda} + 2\\cos\\frac{2\\pi(\\mathrm{d}_1+\\mathrm{d}_2)\\sin\\theta}{\\lambda}\\right) \\quad \\text{[0.5т]}$$\n\n**б)** Очевидно интензитетът осцилира за двете функции и ще е максимално голям когато и двете функции са максимални, тоест:\n\n$$\\mathrm{I}_{\\max} = 9\\mathrm{I}_0 \\quad \\text{[2т]}$$\n\nОсвен абсолютния максимум ще има и по-малки максимуми.\n\n**в)** За да имаме абсолютен максимум в направление $\\theta$, трябва да се удовлетворяват следните две равенства\n\n$$\\frac{2\\pi \\mathrm{d}_1}{\\lambda}\\sin\\theta = 2\\mathrm{n}\\pi \\quad (\\mathrm{n} = 0,1,2,3....)$$\n$$\\frac{2\\pi(\\mathrm{d}_1+\\mathrm{d}_2)}{\\lambda}\\sin\\theta = 2\\mathrm{m}\\pi \\quad (\\mathrm{m} = 0,1,2,3....) \\quad \\text{[0.5т]}$$\n\n$$\\Rightarrow \\frac{\\mathrm{m}}{\\mathrm{d}_1+\\mathrm{d}_2} = \\frac{\\mathrm{n}}{\\mathrm{d}_1} \\quad \\text{[0.5т]}$$\n\nОкончателно имаме:\n\n$$\\frac{\\mathrm{d}_2}{\\mathrm{d}_1} = \\frac{\\mathrm{m}}{\\mathrm{n}} - 1 \\quad \\text{[1т]}$$\n\n**г)** За $\\mathrm{d}_1 = \\mathrm{d}_2 = \\mathrm{d}$ имаме абсолютен максимум в направление $\\theta$, когато:\n\n$$\\frac{2\\pi \\mathrm{d}}{\\lambda}\\sin\\theta = 2\\mathrm{n}\\pi \\quad (\\mathrm{n} = 0,1,2,3....)$$\n$$\\frac{4\\pi \\mathrm{d}}{\\lambda}\\sin\\theta = 2\\mathrm{m}\\pi \\quad (\\mathrm{m} = 0,1,2,3....) \\quad \\text{[0.5т]}$$\n\nОчевидно нулевият максимум е при $\\mathrm{n} = 0$ и $\\mathrm{m} = 0$, което отговаря на $\\theta_0 = 0$ **[0.5т]**\n\nА първият до него максимум е при $\\mathrm{n} = 1$ и $\\mathrm{m} = 2$, което отговаря на $\\theta_1 = \\operatorname{Arcsin}\\left(\\dfrac{\\lambda}{\\mathrm{d}}\\right)$ **[1т]**\n\n**д)** Аналогично на първата точка за електричното поле имаме\n\n$$\\mathrm{E} = \\mathrm{E}_1 + \\mathrm{E}_2 + \\mathrm{E}_3 + \\mathrm{E}_4$$\n$$\\Rightarrow \\mathrm{I}_{\\max} = 16\\mathrm{I}_0 \\quad \\text{[1т]}$$\n\nВече лесно може да се обобщи за $\\mathrm{N}$ процепа\n\n$$\\mathrm{I}_{\\max} = \\mathrm{N}^2\\mathrm{I}_0 \\quad \\text{[1т]}$$\n\n[Бележка от източника: Следва другият официален вариант от ST_spec.pdf (12–13 ноември 2011 г.). Той използва косинусов запис, различен от горния вариант, датиран 30 октомври 2011 г. Двете изложения са запазени поотделно.]\n\n**а)** Електричните полета създавани от всеки процеп са съответно\n\n$$E_1=E_0\\cos\\left(\\frac{2\\pi c}{\\lambda}t+\\phi_1\\right)$$\n$$E_2=E_0\\cos\\left(\\frac{2\\pi c}{\\lambda}t+\\phi_2\\right)\\qquad\\text{[0.5т]}$$\n$$E_3=E_0\\cos\\left(\\frac{2\\pi c}{\\lambda}t+\\phi_3\\right)$$\n\nПълното електрично поле е\n\n$$E=E_1+E_2+E_3\\qquad\\text{[0.5т]}$$\n\nЗа простота нека изберем момента време да е $t=0$ и $\\phi_1=0$. Тогава $\\phi_2$ и $\\phi_3$ може да изразим чрез разликата в оптичните пътища (виж *Фигура 1.*)\n\n![](p1-sol-scan-fig1)\n\nТогава за интензитета имаме\n\n$$I=E^2=E_0^2\\left[1+\\cos\\left(\\frac{2\\pi\\Delta_1}{\\lambda}\\right)+\\cos\\left(\\frac{2\\pi(\\Delta_1+\\Delta_2)}{\\lambda}\\right)\\right]^2\\qquad\\text{[0.5т]}$$\n\nИли окончателно имаме\n\n$$I=I_0\\left[1+\\cos\\left(\\frac{2\\pi d_1}{\\lambda}\\sin\\theta\\right)+\\cos\\left(\\frac{2\\pi(d_1+d_2)}{\\lambda}\\sin\\theta\\right)\\right]^2\\qquad\\text{[0.5т]}$$\n\n**б)** Очевидно интензитетът осцилира за двете функции и ще е максимално голям когато и двете функции са максимални, тоест:\n\n$$\\mathrm{I}_{\\max} = 9\\mathrm{I}_0 \\quad \\text{[2т]}$$\n\nОсвен абсолютния максимум ще има и по-малки максимуми.\n\n**в)** За да имаме абсолютен максимум в направление $\\theta$, трябва да се удовлетворяват следните две равенства\n\n$$\\frac{2\\pi \\mathrm{d}_1}{\\lambda}\\sin\\theta = 2\\mathrm{n}\\pi \\quad (\\mathrm{n} = 0,1,2,3....)$$\n$$\\frac{2\\pi(\\mathrm{d}_1+\\mathrm{d}_2)}{\\lambda}\\sin\\theta = 2\\mathrm{m}\\pi \\quad (\\mathrm{m} = 0,1,2,3....) \\quad \\text{[0.5т]}$$\n\n$$\\Rightarrow \\frac{\\mathrm{m}}{\\mathrm{d}_1+\\mathrm{d}_2} = \\frac{\\mathrm{n}}{\\mathrm{d}_1} \\quad \\text{[0.5т]}$$\n\nОкончателно имаме:\n\n$$\\frac{\\mathrm{d}_2}{\\mathrm{d}_1} = \\frac{\\mathrm{m}}{\\mathrm{n}} - 1 \\quad \\text{[1т]}$$\n\n**г)** За $\\mathrm{d}_1 = \\mathrm{d}_2 = \\mathrm{d}$ имаме абсолютен максимум в направление $\\theta$, когато:\n\n$$\\frac{2\\pi \\mathrm{d}}{\\lambda}\\sin\\theta = 2\\mathrm{n}\\pi \\quad (\\mathrm{n} = 0,1,2,3....)$$\n$$\\frac{4\\pi \\mathrm{d}}{\\lambda}\\sin\\theta = 2\\mathrm{m}\\pi \\quad (\\mathrm{m} = 0,1,2,3....) \\quad \\text{[0.5т]}$$\n\nОчевидно нулевият максимум е при $\\mathrm{n} = 0$ и $\\mathrm{m} = 0$, което отговаря на $\\theta_0 = 0$ **[0.5т]**\n\nА първият до него максимум е при $\\mathrm{n} = 1$ и $\\mathrm{m} = 2$, което отговаря на $\\theta_1 = \\operatorname{Arcsin}\\left(\\dfrac{\\lambda}{\\mathrm{d}}\\right)$ **[1т]**\n\n**д)** Аналогично на първата точка за електричното поле имаме\n\n$$\\mathrm{E} = \\mathrm{E}_1 + \\mathrm{E}_2 + \\mathrm{E}_3 + \\mathrm{E}_4$$\n$$I=E^2=E_0^2\\left[1+\\cos\\left(\\frac{2\\pi\\Delta_1}{\\lambda}\\right)+\\cos\\left(\\frac{2\\pi(\\Delta_1+\\Delta_2)}{\\lambda}\\right)+\\cos\\left(\\frac{2\\pi(\\Delta_1+\\Delta_2+\\Delta_3)}{\\lambda}\\right)\\right]^2$$\n\n$$\\Rightarrow \\mathrm{I}_{\\max} = 16\\mathrm{I}_0 \\quad \\text{[1т]}$$\n\nВече лесно може да се обобщи за $\\mathrm{N}$ процепа\n\n$$\\mathrm{I}_{\\max} = \\mathrm{N}^2\\mathrm{I}_0 \\quad \\text{[1т]}$$",
+    "statement": "**а)** Нека електричните полета далеч от екрана и създавани от всеки процеп в направление $\\theta$ да са:\n\n$$\\mathrm{E}_1 = \\mathrm{E}_0 e^{i\\omega t + i\\phi 1}$$\n$$\\mathrm{E}_2 = \\mathrm{E}_0 e^{i\\omega t + i\\phi 2}\\quad \\text{[0.5т]}$$\n$$\\mathrm{E}_3 = \\mathrm{E}_0 e^{i\\omega t + i\\phi 3}$$\n\nТогава пълното електрично поле е\n\n$$\\mathrm{E} = \\mathrm{E}_1 + \\mathrm{E}_2 + \\mathrm{E}_3 \\quad \\text{[0.5т]}$$\n\nЗа простота нека изберем $\\phi_1 = 0$. Изразяваме $\\phi_2$ и $\\phi_3$ чрез разликата в оптичните пътища (виж *Фигура 1.*)\n\n![](p1-sol-primary-fig1)\n\nТогава за интензитета имаме:\n\n$$\\mathrm{I} \\sim |\\mathrm{E}|^2 = \\mathrm{E}_0^2\\left(3 + 2\\cos\\phi_2 + 2\\cos\\phi_3 + 2\\cos(\\phi_2+\\phi_3)\\right) \\quad \\text{[0.5т]}$$\n\nИли окончателно имаме:\n\n$$\\mathrm{I} = \\mathrm{I}_0\\left(3 + 2\\cos\\frac{2\\pi \\mathrm{d}_1\\sin\\theta}{\\lambda} + 2\\cos\\frac{2\\pi \\mathrm{d}_2\\sin\\theta}{\\lambda} + 2\\cos\\frac{2\\pi(\\mathrm{d}_1+\\mathrm{d}_2)\\sin\\theta}{\\lambda}\\right) \\quad \\text{[0.5т]}$$\n\n**б)** Очевидно интензитетът осцилира за двете функции и ще е максимално голям когато и двете функции са максимални, тоест:\n\n$$\\mathrm{I}_{\\max} = 9\\mathrm{I}_0 \\quad \\text{[2т]}$$\n\nОсвен абсолютния максимум ще има и по-малки максимуми.\n\n**в)** За да имаме абсолютен максимум в направление $\\theta$, трябва да се удовлетворяват следните две равенства\n\n$$\\frac{2\\pi \\mathrm{d}_1}{\\lambda}\\sin\\theta = 2\\mathrm{n}\\pi \\quad (\\mathrm{n} = 0,1,2,3....)$$\n$$\\frac{2\\pi(\\mathrm{d}_1+\\mathrm{d}_2)}{\\lambda}\\sin\\theta = 2\\mathrm{m}\\pi \\quad (\\mathrm{m} = 0,1,2,3....) \\quad \\text{[0.5т]}$$\n\n$$\\Rightarrow \\frac{\\mathrm{m}}{\\mathrm{d}_1+\\mathrm{d}_2} = \\frac{\\mathrm{n}}{\\mathrm{d}_1} \\quad \\text{[0.5т]}$$\n\nОкончателно имаме:\n\n$$\\frac{\\mathrm{d}_2}{\\mathrm{d}_1} = \\frac{\\mathrm{m}}{\\mathrm{n}} - 1 \\quad \\text{[1т]}$$\n\n**г)** За $\\mathrm{d}_1 = \\mathrm{d}_2 = \\mathrm{d}$ имаме абсолютен максимум в направление $\\theta$, когато:\n\n$$\\frac{2\\pi \\mathrm{d}}{\\lambda}\\sin\\theta = 2\\mathrm{n}\\pi \\quad (\\mathrm{n} = 0,1,2,3....)$$\n$$\\frac{4\\pi \\mathrm{d}}{\\lambda}\\sin\\theta = 2\\mathrm{m}\\pi \\quad (\\mathrm{m} = 0,1,2,3....) \\quad \\text{[0.5т]}$$\n\nОчевидно нулевият максимум е при $\\mathrm{n} = 0$ и $\\mathrm{m} = 0$, което отговаря на $\\theta_0 = 0$ **[0.5т]**\n\nА първият до него максимум е при $\\mathrm{n} = 1$ и $\\mathrm{m} = 2$, което отговаря на $\\theta_1 = \\operatorname{Arcsin}\\left(\\dfrac{\\lambda}{\\mathrm{d}}\\right)$ **[1т]**\n\n**д)** Аналогично на първата точка за електричното поле имаме\n\n$$\\mathrm{E} = \\mathrm{E}_1 + \\mathrm{E}_2 + \\mathrm{E}_3 + \\mathrm{E}_4$$\n$$\\Rightarrow \\mathrm{I}_{\\max} = 16\\mathrm{I}_0 \\quad \\text{[1т]}$$\n\nВече лесно може да се обобщи за $\\mathrm{N}$ процепа\n\n$$\\mathrm{I}_{\\max} = \\mathrm{N}^2\\mathrm{I}_0 \\quad \\text{[1т]}$$\n\n**а)** Електричните полета далеч от екрана създадени от трите процепа са съответно\n\n$$E_1=E_0\\cos\\left(\\frac{2\\pi c}{\\lambda}t+\\phi_1\\right)$$\n$$E_2=E_0\\cos\\left(\\frac{2\\pi c}{\\lambda}t+\\phi_2\\right)\\qquad\\text{[0.5т]}$$\n$$E_3=E_0\\cos\\left(\\frac{2\\pi c}{\\lambda}t+\\phi_3\\right)$$\n\nПълното електрично поле е\n\n$$E=E_1+E_2+E_3\\qquad\\text{[0.5т]}$$\n\nЗа простота нека изберем момента време да е $t=0$ и $\\phi_1=0$. Тогава $\\phi_2$ и $\\phi_3$ може да изразим чрез разликата в оптичните пътища (виж *Фигура 1.*)\n\n![](p1-sol-scan-fig1)\n\nТогава за интензитета имаме\n\n$$I=E^2=E_0^2\\left[1+\\cos\\left(\\frac{2\\pi\\Delta_1}{\\lambda}\\right)+\\cos\\left(\\frac{2\\pi(\\Delta_1+\\Delta_2)}{\\lambda}\\right)\\right]^2\\qquad\\text{[0.5т]}$$\n\nИли окончателно имаме\n\n$$I=I_0\\left[1+\\cos\\left(\\frac{2\\pi d_1}{\\lambda}\\sin\\theta\\right)+\\cos\\left(\\frac{2\\pi(d_1+d_2)}{\\lambda}\\sin\\theta\\right)\\right]^2\\qquad\\text{[0.5т]}$$\n\n**б)** Очевидно интензитетът осцилира за двете функции и ще е максимално голям, когато и двете функции са максимални, тоест:\n\n$$\\mathrm{I}_{\\max} = 9\\mathrm{I}_0 \\quad \\text{[2т]}$$\n\nОсвен абсолютния максимум ще има и по-малки максимуми.\n\n**в)** За да имаме абсолютен максимум в направление $\\theta$, трябва да се удовлетворяват следните две равенства\n\n$$\\frac{2\\pi \\mathrm{d}_1}{\\lambda}\\sin\\theta = 2\\mathrm{n}\\pi \\quad (\\mathrm{n} = 0,1,2,3....)$$\n$$\\frac{2\\pi(\\mathrm{d}_1+\\mathrm{d}_2)}{\\lambda}\\sin\\theta = 2\\mathrm{m}\\pi \\quad (\\mathrm{m} = 0,1,2,3....) \\quad \\text{[0.5т]}$$\n\n$$\\Rightarrow \\frac{\\mathrm{m}}{\\mathrm{d}_1+\\mathrm{d}_2} = \\frac{\\mathrm{n}}{\\mathrm{d}_1} \\quad \\text{[0.5т]}$$\n\nОкончателно имаме\n\n$$\\frac{\\mathrm{d}_2}{\\mathrm{d}_1} = \\frac{\\mathrm{m}}{\\mathrm{n}} - 1 \\quad \\text{[1т]}$$\n\n**г)** За $\\mathrm{d}_1 = \\mathrm{d}_2 = \\mathrm{d}$ имаме абсолютен максимум в направление $\\theta$, когато\n\n$$\\frac{2\\pi \\mathrm{d}}{\\lambda}\\sin\\theta = 2\\mathrm{n}\\pi \\quad (\\mathrm{n} = 0,1,2,3....)$$\n$$\\frac{4\\pi \\mathrm{d}}{\\lambda}\\sin\\theta = 2\\mathrm{m}\\pi \\quad (\\mathrm{m} = 0,1,2,3....) \\quad \\text{[0.5т]}$$\n\nОчевидно нулевият максимум е при $\\mathrm{n} = 0$ и $\\mathrm{m} = 0$, което отговаря на $\\theta_0 = 0$ **[0.5т]**, а първият до него максимум е при $\\mathrm{n} = 1$ и $\\mathrm{m} = 2$, което отговаря на $\\theta_1 = \\operatorname{Arcsin}\\left(\\dfrac{\\lambda}{\\mathrm{d}}\\right)$ **[1т]**\n\n**д)** Аналогично на първата точка имаме за електричното поле\n\n$$\\mathrm{E} = \\mathrm{E}_1 + \\mathrm{E}_2 + \\mathrm{E}_3 + \\mathrm{E}_4 \\Rightarrow$$\n$$I=E^2=E_0^2\\left[1+\\cos\\left(\\frac{2\\pi\\Delta_1}{\\lambda}\\right)+\\cos\\left(\\frac{2\\pi(\\Delta_1+\\Delta_2)}{\\lambda}\\right)+\\cos\\left(\\frac{2\\pi(\\Delta_1+\\Delta_2+\\Delta_3)}{\\lambda}\\right)\\right]^2$$\n\n$$\\Rightarrow \\mathrm{I}_{\\max} = 16\\mathrm{I}_0 \\quad \\text{[1т]}$$\n\nВече лесно може да се обобщи за $\\mathrm{N}$ процепа $\\Rightarrow$\n\n$$\\mathrm{I}_{\\max} = \\mathrm{N}^2\\mathrm{I}_0 \\quad \\text{[1т]}$$",
     "figures": [
      {
-      "id": "p1-sol-scan-fig1",
+      "id": "p1-sol-fig1",
       "alt": "Фигура 1. Оптичните пътища в сканираното решение.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p1-sol-scan-fig1.png",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p1-sol-fig1.png",
       "width": 696,
-      "height": 693,
+      "height": 648,
       "source": {
        "page": 1,
        "pdfRect": [
-        137.21,
-        218.57,
-        304.07,
-        384.52
+        137.25,
+        218.97,
+        303.98,
+        374.27
        ],
        "dpi": 300,
        "document": "supplement-1"
       }
      },
      {
-      "id": "p1-sol-primary-fig1",
+      "id": "p1-sol-fig2",
       "alt": "Фигура 1. Оптичните пътища в първия официален вариант.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p1-sol-primary-fig1.png",
-      "width": 1045,
-      "height": 1066,
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p1-sol-fig2.png",
+      "width": 1044,
+      "height": 955,
       "source": {
        "page": 1,
        "pdfRect": [
-        179.01,
-        265.05,
-        429.48,
-        520.7
+        179.1,
+        277.02,
+        429.57,
+        506.02
        ],
        "dpi": 300,
        "document": "solutions"
@@ -149,16 +149,16 @@
     {
      "id": "p1-fig1",
      "alt": "Фигура 1. Трите процепа и разстоянията между тях.",
-     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p1-fig1-v2.png",
-     "width": 1126,
-     "height": 1145,
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p1-fig1-v3.png",
+     "width": 1124,
+     "height": 1074,
      "source": {
       "page": 1,
       "pdfRect": [
-       164.7,
-       313.65,
-       434.7,
-       588.15
+       164.93,
+       314.05,
+       434.57,
+       571.68
       ],
       "dpi": 300
      }
@@ -265,16 +265,16 @@
       {
        "id": "p3-fig21",
        "alt": "Фигура 2 а. Безкрайната електрична верига.",
-       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-fig21.png",
-       "width": 1248,
-       "height": 777,
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-fig21-v2.png",
+       "width": 1246,
+       "height": 773,
        "source": {
         "page": 2,
         "pdfRect": [
-         133.65,
-         329.85,
-         432.9,
-         516.15
+         133.96,
+         330.89,
+         432.81,
+         516.1
         ],
         "dpi": 300
        }
@@ -289,16 +289,16 @@
       {
        "id": "p3-fig22",
        "alt": "Фигура 2 б. Безкрайната електрична верига.",
-       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-fig22.png",
-       "width": 914,
-       "height": 914,
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-fig22-v2.png",
+       "width": 916,
+       "height": 944,
        "source": {
         "page": 2,
         "pdfRect": [
-         17.55,
-         506.25,
-         236.7,
-         725.35
+         17.28,
+         505.98,
+         236.93,
+         732.47
         ],
         "dpi": 300
        }
@@ -313,16 +313,16 @@
       {
        "id": "p3-fig23",
        "alt": "Фигура 2 в. Безкрайната електрична верига.",
-       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-fig23.png",
-       "width": 908,
-       "height": 880,
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-fig23-v2.png",
+       "width": 906,
+       "height": 853,
        "source": {
         "page": 2,
         "pdfRect": [
-         315,
-         514.8,
-         532.76,
-         725.85
+         317.3,
+         517.77,
+         534.6,
+         722.39
         ],
         "dpi": 300
        }
@@ -338,21 +338,21 @@
    "difficulty": "Very Hard",
    "importance": 2,
    "solution": {
-    "statement": "**а)** При включване на източник на напрежение между точки А и Б, ребрата В-Г и Д-Е имат еднакъв потенциал (*Фигура 2а*) и могат да се махнат, понеже по тях не тече ток (*Фигура 2б*). След което схемата се опростява до две безкрайни дълги схеми свързани успоредни помежду си (*Фигура 2в*).\n\n![](p3-sol-fig2)\n\nСега вече можем да пресметнем съпротивлението между точки А и Б:\n\n$$\\frac{1}{\\mathrm{R}_{\\mathrm{АБ}}} = \\frac{1}{\\mathrm{R}} + \\frac{2}{\\mathrm{r}} \\quad \\text{[1т]}$$\n\nкъдето $\\mathrm{r}$ е съпротивлението на полубезкрайната верига. Използваме добре познатия трик, че съпротивлението на безкрайно дълга верига не се променя, ако махнем едно повтарящо се звено. Тогава за $\\mathrm{r}$ имаме:\n\n$$\\mathrm{r} = 2\\mathrm{R} + \\frac{\\mathrm{Rr}}{\\mathrm{r}+\\mathrm{R}} \\quad \\text{[1т]} \\Rightarrow$$\n\n$$\\mathrm{R}_{\\mathrm{АБ}} \\approx \\frac{\\mathrm{R}}{\\sqrt{3}} \\quad \\text{[1т]}$$\n\n**б)** Ако в точка А от веригата приложим положителен потенциал, от съображение на симетрия, към точка Б ще протича ток $\\mathrm{i}/3$ **[0.5т]** от общия ток (*Фигура 3б*). Аналогично, ако към точка Б приложим отрицателен потенциал, то към точка Б ще протича ток $\\mathrm{i}/3$ **[0.5т]** от общия ток. Използвайки принципа на суперпозицията и прилагайки едновременно и положителното напрежение към точка А и отрицателното към точка Б, то ще получим ток $2\\mathrm{i}/3$ **[0.5т]**, който ще протече между точки А и Б $\\Rightarrow$ Използвайки закона на Ом, имаме $\\mathrm{U}_{\\mathrm{АБ}} = \\mathrm{R}2\\mathrm{i}/3$ **[0.5т]** или за ефективното съпротивлението между точки А и Б, имаме $\\mathrm{R}_{\\mathrm{АБ}} = 2\\mathrm{R}/3$ **[1т]**\n\n![](p3-sol-fig3)\n\n**в)** Аналогично на точка б) разглеждаме тока, който протича по отделните клонове, като ток в близките клонове е $\\mathrm{i}/3$ **[0.5т]**, докато в по-далечните е $\\mathrm{i}/6$ **[0.5т]** (*Фигура 3в*). При едновременно подаване на потенциал към точки А и Б, токът, който протича между тях, е\n\n$$\\mathrm{I} = \\mathrm{i}/3 + \\mathrm{i}/6 = \\mathrm{i}/2 \\quad \\text{[1т]}$$\n\nа падът на напреженията между точки А и Б е\n\n$$\\mathrm{U} = \\mathrm{Ri}/3 + \\mathrm{Ri}/6 = \\mathrm{Ri}/2$$\n\nАналогично общият пад на напрежението е\n\n$$\\mathrm{U} = \\mathrm{Ri} \\quad \\text{[1т]}$$\n\nСледователно ефективното съпротивление между точки А и Б ще е $\\mathrm{R}_{\\mathrm{АБ}} = \\mathrm{U}/\\mathrm{i} = \\mathrm{R}$ **[1т]**\n\n\n\n[Бележка от източника: В този PDF е отпечатана последователността $U=Ri/3+Ri/6=Ri/2$, а след нея $U=Ri$. В сканирания официален вариант ST_spec.pdf вместо това е записано $U=I\\,2R=iR$. Запазени са и двата източника; съответният откъс от скана е показан по-долу. В подточка б) източникът два пъти посочва точка Б; това не е поправяно.]\n\n![](p3-sol-scan-variant)\n\n",
+    "statement": "**а)** При включване на източник на напрежение между точки А и Б, ребрата В-Г и Д-Е имат еднакъв потенциал (*Фигура 2а*) и могат да се махнат, понеже по тях не тече ток (*Фигура 2б*). След което схемата се опростява до две безкрайни дълги схеми свързани успоредни помежду си (*Фигура 2в*).\n\n![](p3-sol-fig2)\n\nСега вече можем да пресметнем съпротивлението между точки А и Б:\n\n$$\\frac{1}{\\mathrm{R}_{\\mathrm{АБ}}} = \\frac{1}{\\mathrm{R}} + \\frac{2}{\\mathrm{r}} \\quad \\text{[1т]}$$\n\nкъдето $\\mathrm{r}$ е съпротивлението на полубезкрайната верига. Използваме добре познатия трик, че съпротивлението на безкрайно дълга верига не се променя, ако махнем едно повтарящо се звено. Тогава за $\\mathrm{r}$ имаме:\n\n$$\\mathrm{r} = 2\\mathrm{R} + \\frac{\\mathrm{Rr}}{\\mathrm{r}+\\mathrm{R}} \\quad \\text{[1т]} \\Rightarrow$$\n\n$$\\mathrm{R}_{\\mathrm{АБ}} \\approx \\frac{\\mathrm{R}}{\\sqrt{3}} \\quad \\text{[1т]}$$\n\n**б)** Ако в точка А от веригата приложим положителен потенциал, от съображение на симетрия, към точка Б ще протича ток $\\mathrm{i}/3$ **[0.5т]** от общия ток (*Фигура 3б*). Аналогично, ако към точка Б приложим отрицателен потенциал, то към точка Б ще протича ток $\\mathrm{i}/3$ **[0.5т]** от общия ток. Използвайки принципа на суперпозицията и прилагайки едновременно и положителното напрежение към точка А и отрицателното към точка Б, то ще получим ток $2\\mathrm{i}/3$ **[0.5т]**, който ще протече между точки А и Б $\\Rightarrow$ Използвайки закона на Ом, имаме $\\mathrm{U}_{\\mathrm{АБ}} = \\mathrm{R}2\\mathrm{i}/3$ **[0.5т]** или за ефективното съпротивлението между точки А и Б, имаме $\\mathrm{R}_{\\mathrm{АБ}} = 2\\mathrm{R}/3$ **[1т]**\n\n![](p3-sol-fig3)\n\n**в)** Аналогично на точка б) разглеждаме тока, който протича по отделните клонове, като ток в близките клонове е $\\mathrm{i}/3$ **[0.5т]**, докато в по-далечните е $\\mathrm{i}/6$ **[0.5т]** (*Фигура 3в*). При едновременно подаване на потенциал към точки А и Б, токът, който протича между тях, е\n\n$$\\mathrm{I} = \\mathrm{i}/3 + \\mathrm{i}/6 = \\mathrm{i}/2 \\quad \\text{[1т]}$$\n\nа падът на напреженията между точки А и Б е\n\n$$\\mathrm{U} = \\mathrm{Ri}/3 + \\mathrm{Ri}/6 = \\mathrm{Ri}/2$$\n\nАналогично общият пад на напрежението е\n\n$$\\mathrm{U} = \\mathrm{Ri} \\quad \\text{[1т]}$$\n\nСледователно ефективното съпротивление между точки А и Б ще е $\\mathrm{R}_{\\mathrm{АБ}} = \\mathrm{U}/\\mathrm{i} = \\mathrm{R}$ **[1т]**\n\n![](p3-sol-scan-variant)\n\n",
     "figures": [
      {
       "id": "p3-sol-fig2",
       "alt": "Фигура 2 а, б, в. Последователните еквивалентни схеми.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-sol-fig2.png",
-      "width": 2199,
-      "height": 558,
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-sol-fig2-v2.png",
+      "width": 2198,
+      "height": 474,
       "source": {
        "page": 3,
        "pdfRect": [
-        43.15,
-        463.99,
-        570.69,
-        597.65
+        43.42,
+        468.99,
+        570.6,
+        582.66
        ],
        "dpi": 300,
        "document": "solutions"
@@ -361,34 +361,34 @@
      {
       "id": "p3-sol-fig3",
       "alt": "Фигура 3 б, в. Разпределението на токовете.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-sol-fig3.png",
-      "width": 1943,
-      "height": 704,
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-sol-fig3-v2.png",
+      "width": 1942,
+      "height": 643,
       "source": {
        "page": 4,
        "pdfRect": [
-        96.71,
-        261,
-        562.64,
-        429.8
+        96.97,
+        256.82,
+        562.86,
+        410.89
        ],
        "dpi": 300,
        "document": "solutions"
       }
      },
      {
-      "id": "p3-sol-scan-variant",
-      "alt": "Подточка в) от сканирания официален вариант, с формулата U = I 2R = iR.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-sol-scan-variant.png",
-      "width": 1447,
-      "height": 282,
+      "id": "p3-sol-fig1",
+      "alt": "Фигура 3в от сканираното издание (supplement-1, с. 2): шестоъгълна мрежа с точки А и Б и токовете i/3, i/6, i/12 по клоновете.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/esf-2011-esenno-st/p3-sol-fig1.png",
+      "width": 622,
+      "height": 430,
       "source": {
        "page": 2,
        "pdfRect": [
-        471.38,
-        368.77,
-        818.59,
-        436.23
+        635.72,
+        248.13,
+        784.76,
+        351.05
        ],
        "dpi": 300,
        "document": "supplement-1"

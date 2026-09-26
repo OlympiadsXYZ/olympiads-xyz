@@ -1,0 +1,271 @@
+---
+id: ipho-1995-theory-th-p2
+source: 'IPhO 1995, Теория'
+title: 'Задача 2. Sound Propagation'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/1995/ipho-1995-theory-th.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T05:18:10.353Z'
+verifier: 'mechanical'
+---
+
+*XXVI IPhO — Theoretical Questions · 20 т.*
+
+## Условие
+
+*Introduction*
+
+The speed of propagation of sound in the ocean varies with depth, temperature and salinity. Figure 1(a) below shows the variation of sound speed $c$ with depth $z$ for a case where a minimum speed value $c_0$ occurs midway between the ocean surface and the sea bed. Note that for convenience $z = 0$ at the depth of this sound speed minimum, $z = z_S$ at the surface and $z = -z_b$ at the sea bed. Above $z = 0$, $c$ is given by
+
+$$
+c = c_0 + bz\ .
+$$
+
+Below $z = 0$, $c$ is given by
+
+$$
+c = c_0 - bz\ .
+$$
+
+In each case $b = \left|\dfrac{dc}{dz}\right|$, that is, $b$ is the magnitude of the sound speed gradient with depth; $b$ is assumed constant.
+
+Figure 1(b) shows a section of the $z$–$x$ plane through the ocean, where $x$ is a horizontal direction. The variation of $c$ with respect to $z$ is shown in figure 1(a). At the position $z = 0$, $x = 0$, a sound source $S$ is located. A ‘sound ray’ is emitted from $S$ at an angle $\theta_0$ as shown. Because of the variation of $c$ with $z$, the ray will be refracted.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31%', '--fig-max': '199px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p2-fig1.png" alt="Graph of sound speed c (horizontal axis) against depth z (vertical axis, marked z_S at the top, 0 and −z_b at the bottom): a V-shaped line with its vertex at c0 on z = 0, the upper branch labelled c=c0+bz and the lower branch c=c0−bz, between horizontal lines at z_S and −z_b." width="621" height="811" loading="lazy" decoding="async" />
+<figcaption>Figure 1 (a)</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.8%', '--fig-max': '274px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p2-fig2.png" alt="Section of the z–x plane: vertical z axis with dashed lines at z_S and −z_b; source S at the origin, receiver H at x = X on the dashed x axis; a curved ray leaves S at angle θ0 to the vertical and bends over, with the local angle θ marked against a vertical line further along the ray." width="856" height="833" loading="lazy" decoding="async" />
+<figcaption>Figure 1 (b)</figcaption>
+</figure>
+
+**(a)** Show that the trajectory of the ray, leaving the source $S$ and constrained to the $z$–$x$ plane forms an arc of a circle with radius $R$ where
+
+$$
+R = \frac{c_0}{b\sin\theta_0} \quad \text{for} \quad 0 \le \theta_0 < \frac{\pi}{2}\ .
+$$
+**[6 т.]**
+
+**(b)** Derive an expression involving $z_S$, $c_0$ and $b$ to give the smallest value of the angle $\theta_0$ for upwardly directed rays which can be transmitted without the sound wave reflecting from the sea surface. **[3 т.]**
+
+**(c)** Figure 1(b) shows the position of a sound receiver $H$ which is located at the position $z = 0$, $x = X$. Derive an expression involving $b$, $X$ and $c_0$ to give the series of angles $\theta_0$ required for the sound ray emerging from $S$ to reach the receiver $H$. Assume that $z_S$ and $z_b$ are sufficiently large to remove the possibility of reflection from sea surface or sea bed. **[4 т.]**
+
+**(d)** Calculate the smallest four values of $\theta_0$ for refracted rays from $S$ to reach $H$ when
+
+- $X = 10000\ \mathrm{m}$
+- $c_0 = 1500\ \mathrm{ms^{-1}}$
+- $b = 0.02000\ \mathrm{s^{-1}}$ **[2 т.]**
+
+**(e)** Derive an expression to give the time taken for sound to travel from $S$ to $H$ following the ray path associated with the **smallest** value of angle $\theta_0$, as determined in part (c). Calculate the value of this transit time for the conditions given in part (d). The following result may be of assistance:
+
+$$
+\int \frac{dx}{\sin x} = \ln\tan\left(\frac{x}{2}\right)
+$$
+
+Calculate the time taken for the direct ray to travel from $S$ to $H$ along $z = 0$. Which of the two rays will arrive first, the ray for which $\theta_0 = \pi/2$, or the ray with the smallest value of $\theta_0$ as calculated for part (d)? **[5 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(b)** $\theta_0 = \sin^{-1}\left[\frac{c_0}{bz_s + c_0}\right]$
+- **(c)** $\theta_0 = \cot^{-1}\left[\frac{bX}{2nc_0}\right] = \tan^{-1}\left[\frac{2nc_0}{bX}\right],\quad n = 1, 2, 3, \ldots$
+- **(d)** θ0 = 86.19°, 88.09°, 88.73°, 89.04° (n = 1, 2, 3, 4)
+- **(e)** t13 = −(2/b) ln tan(θ0/2) = 6.6546 s for n = 1; direct ray t = X/c0 = 6.6666 s; the n = 1 ray arrives first.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**(a)**
+
+Snell’s Law may be expressed as
+
+$$
+\frac{\sin\theta}{\sin\theta_0} = \frac{c}{c_0}\ , \qquad (1)
+$$
+
+where $c$ is the speed of sound.  
+Consider some element of ray path $ds$ and treat this as, locally, an arc of a circle of radius $R$. Note that $R$ may take up any value between 0 and $\infty$. Consider a ray component which is initially directed upward from $S$.
+
+In the diagram, $ds = Rd\theta$, or $\dfrac{ds}{d\theta} = R$.
+
+From equation (1), for a small change in speed $dc$,
+
+$$
+\cos\theta d\theta = \frac{\sin\theta_0}{c_0}dc
+$$
+
+For the upwardly directed ray $c = c_0 + bz$ so $dc = bdz$ and
+
+$$
+\frac{\sin\theta_0}{c_0}b\,dz = \cos\theta d\theta\ , \quad \text{hence} \quad dz = \frac{c_0}{\sin\theta_0}\frac{1}{b}\cos\theta\,d\theta\ .
+$$
+
+We may also write (here treating $ds$ as straight) $dz = ds\cos\theta$. So
+
+$$
+ds = \frac{c_0}{\sin\theta_0}\frac{1}{b}\,d\theta
+$$
+
+Hence
+
+$$
+\frac{ds}{d\theta} = R = \frac{c_0}{\sin\theta_0}\frac{1}{b}\ .
+$$
+
+This result strictly applies to the small arc segments $ds$. Note that from equation (1), however, it also applies for all $\theta$, i.e. for all points along the trajectory, which therefore forms an arc of a circle with radius $R$ until the ray enters the region $z < 0$.
+
+**(b)**
+
+Here
+
+$$
+\begin{aligned} z_s &= R - R\sin\theta_0 \\ &= R(1 - \sin\theta_0) \\ &= \frac{c_0}{b\sin\theta_0}(1 - \sin\theta_0)\ , \end{aligned}
+$$
+
+from which
+
+$$
+\theta_0 = \sin^{-1}\left[\frac{c_0}{bz_s + c_0}\right]\ .
+$$
+
+**(c)**
+
+The simplest pathway between $S$ and $H$ is a single arc of a circle passing through $S$ and $H$. For this pathway:
+
+$$
+X = 2R\cos\theta_0 = \frac{2c_0\cos\theta_0}{b\sin\theta_0} = \frac{2c_0}{b}\cot\theta_0\ .
+$$
+
+Hence
+
+$$
+\cot\theta_0 = \frac{bX}{2c_0}\ .
+$$
+
+The next possibility consists of two circular arcs linked as shown.
+
+For this pathway:
+
+$$
+\frac{X}{2} = 2R\cos\theta_0 = \frac{2c_0}{b}\cot\theta_0\ .
+$$
+
+i.e.
+
+$$
+\cot\theta_0 = \frac{bX}{4c_0}\ .
+$$
+
+In general, for values of $\theta_0 < \frac{\pi}{2}$, rays emerging from $S$ will reach $H$ in $n$ arcs for launch angles given by
+
+$$
+\theta_0 = \cot^{-1}\left[\frac{bX}{2nc_0}\right] = \tan^{-1}\left[\frac{2nc_0}{bX}\right]
+$$
+
+where $n = 1, 2, 3, 4, \ldots$  
+Note that when $n = \infty$, $\theta_0 = \frac{\pi}{2}$ as expected for the axial ray.
+
+**(d)**
+
+With the values cited, the four smallest values of launch angle are
+
+| $n$ | $\theta_0$ (degrees) |
+|---|---|
+| 1 | 86.19 |
+| 2 | 88.09 |
+| 3 | 88.73 |
+| 4 | 89.04 |
+
+**(e)**
+
+The ray path associated with the smallest launch angle consists of a single arc as shown:
+
+We seek
+
+$$
+\int_1^3 dt = \int_1^3 \frac{ds}{c}
+$$
+
+Try first:
+
+$$
+t_{12} = \int_1^2 \frac{ds}{c} = \int_{\theta_0}^{\pi/2} \frac{Rd\theta}{c}
+$$
+
+Using
+
+$$
+R = \frac{c}{b\sin\theta}
+$$
+
+gives
+
+$$
+t_{12} = \frac{1}{b}\int_{\theta_0}^{\pi/2} \frac{d\theta}{\sin\theta}
+$$
+
+so that
+
+$$
+t_{12} = \frac{1}{b}\left[\ln\tan\frac{\theta}{2}\right]_{\theta_0}^{\pi/2} = -\frac{1}{b}\ln\tan\frac{\theta_0}{2}
+$$
+
+Noting that $t_{13} = 2t_{12}$ gives
+
+$$
+t_{13} = -\frac{2}{b}\ln\tan\frac{\theta_0}{2}\ .
+$$
+
+For the specified $b$, this gives a transit time for the smallest value of launch angle cited in the answer to part (d), of
+
+$$
+t_{13} = 6.6546\ \mathrm{s}
+$$
+
+The axial ray will have travel time given by
+
+$$
+t = \frac{X}{c_0}
+$$
+
+For the conditions given,
+
+$$
+t_{13} = 6.6666\ \mathrm{s}
+$$
+
+thus this axial ray travels slower than the example cited for $n = 1$, thus the $n = 1$ ray will arrive first.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.2%', '--fig-max': '206px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p2-sol-fig1.png" alt="Small element of the ray path: a chord ds at angle θ to the vertical, rising by dz, with two radii R to the centre of curvature enclosing the angle dθ." width="645" height="457" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.4%', '--fig-max': '246px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p2-sol-fig2.png" alt="Ray leaving z = 0 at angle θ0 to the vertical and curving up to just below the surface z = z_S; the radius R from the centre of curvature makes angle θ0, and the vertical distance R sin θ0 below z = 0 is marked." width="769" height="643" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44.6%', '--fig-max': '286px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p2-sol-fig3.png" alt="Single circular arc from S at x = 0 to H at x = X, launched at angle θ0 to the vertical; two radii R meet at the centre of the circle below the line SH." width="893" height="471" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44.6%', '--fig-max': '286px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p2-sol-fig4.png" alt="Two linked circular arcs from S (x = 0) to H (x = X): the ray first curves above the line SH, then below it, crossing it at the midpoint." width="893" height="215" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43.4%', '--fig-max': '278px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p2-sol-fig5.png" alt="Single arc from point 1 (S) through the top point 2 to point 3 (H)." width="869" height="275" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1991_2000/1995/Theory/th.pdf)
+· официални решения: [th_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1991_2000/1995/Theory/th_sol.pdf)

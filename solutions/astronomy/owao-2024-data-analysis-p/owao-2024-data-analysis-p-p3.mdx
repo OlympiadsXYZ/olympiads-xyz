@@ -1,0 +1,359 @@
+---
+id: owao-2024-data-analysis-p-p3
+source: 'OWAO 2024, Практически тур'
+title: 'Задача 3. Ephemeric Quest'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2024/owao-2024-data-analysis-p.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T05:18:56.980Z'
+verifier: 'mechanical'
+---
+
+*2024 ⋄ Practical Round ⋄ Problems · 20 т.*
+
+<details>
+<summary>Указания</summary>
+
+1. The practical round is 5 hours long and accounts for 30 % of the total grade.
+
+2. The maximum score for each problem is 20 points. The round total is 60 points.
+
+3. Paper and electronic versions of problems are identical. The necessary files can be downloaded from the testing system.
+
+4. **Please present your solution as an electronic report,** containing information about your work, plots and tables, intermediate and final results, and conclusions.
+
+5. **Please include your participant code** (string like `AA-1`) at the beginning of each report.
+
+6. **Submit your report in PDF format.** If necessary, also attach working files (images, source code, etc.). ZIP format archives are accepted. The maximum file upload size is 10 MB.
+
+7. During the practical round, you can use:
+
+- browser, e. g. Google Chrome/Chromium,
+- text editor, e. g. Microsoft Word/LibreOffice Writer/Google Docs,
+- spreadsheet editor, e. g. Microsoft Excel/LibreOffice Calc/Google Sheets.
+
+You may also use:
+
+- development tools, e. g. Python & Jupyter Notebook,
+- graphic editors, e. g. Paint/GIMP,
+- other applications for data processing, analysis, report generation, including online applications (Google Colab, Desmos, etc.).
+
+8. This is an individual competition. **You must not use collaborative tools and functions.**
+
+9. You may find and use documentation for the software and libraries used but **not reference literature on astronomy, physics and mathematics.**
+
+10. Please remember that the jury may not understand your language. It is expected that solutions are written in plain English. Use mathematical expressions, numbers and images.
+
+11. Some problems are quite difficult. Remember that partial solutions are also scored.
+
+12. A list of constants is given on page 8.
+
+Go to `https://my.sirius.online/`, log in with your email and password, and select the Practical round. The countdown will begin after you click the Start button.
+
+Good luck!
+
+</details>
+
+## Условие
+
+The file `ephem.dat` contains ephemerides of some small body of the Solar system. The first and second columns of the file contain the date and universal time of the observation, followed by the right ascension (in hours, minutes and seconds) and declination (in degrees, minutes and seconds) for the observer on the Earth (geocentric location):
+
+| Date | Time | Right ascension | Declination |
+|---|---|---|---|
+| 2023-Mar-18 | 00:00:00 | $23^{\mathrm{h}}\,59^{\mathrm{m}}\,03.88^{\mathrm{s}}$ | $0^{\circ}\,44'\,46.9''$ |
+| 2023-Mar-19 | 00:00:00 | $0^{\mathrm{h}}\,0^{\mathrm{m}}\,41.94^{\mathrm{s}}$ | $0^{\circ}\,55'\,34.0''$ |
+| … | … | … | … |
+
+The absolute magnitude of the object is $H = 18.51^{\mathrm{m}}$. The orbit of the object is circular, the inclination is small.
+
+**Please include your participant code** at the beginning of your report.
+
+**a)** Determine whether the object’s orbit lies inside or outside the Earth’s orbit.
+
+**b)** Estimate the radius of the object’s orbit.
+
+**c)** Estimate the minimal time interval between two consecutive greatest elongations or consecutive quadratures.
+
+**d)** Determine the difference between the maximal and minimal apparent magnitudes of the object for an observer on the Earth during one synodic period.
+
+**e)** Plot the dependence of the apparent magnitude of the object on time for an observer on the Earth during one synodic period.
+
+*Hint:* for the Solar system objects, the absolute magnitude, commonly called $H$, is defined as the apparent magnitude that the object would have if it were one astronomical unit (1.00 au) from both the Sun and the observer, and in conditions of ideal solar opposition (the apparent phase is 1.00).
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** Outside: the object is superior to the Earth.
+- **b)** 2.57 au
+- **c)** 0.49 yr
+- **d)** -1.8 mag
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:**
+
+a) First of all, we plot the positions of an object in the sky in equatorial coordinates. Note that the right ascensions of the object vary widely. Let us look at the area of the graph that is mostly interesting for us, where we can see a loop of apparent retrograde motion (see Figure 7). The color on the graph shows the number of the observation day, for convenience.
+
+The center of the retrograde motion arc corresponds to the observations in the winter of 2023. But the right ascensions of the object correspond to the summer zodiac constellations. Consequently, the retrograde motion arc is observed in the vicinity of the opposition, and the object is superior to the Earth.
+
+b) There are several ways to determine the radius of an object’s orbit.
+
+**Method 1.** Let us analyze the simplest one. We can determine the point of opposition of the object and estimate the angular velocity of its movement across the sky.
+
+Let $a$ be the radius of the object’s orbit, $a_{\oplus}$ be the radius of the Earth’s orbit, $V$ be the orbital velocity of the object, $V_{\oplus}$ be the velocity of the Earth. The angular velocity of an object moving across the sky in its opposition is
+
+$$
+\omega = \frac{V_{\oplus}-V}{a-a_{\oplus}}\,.
+$$
+
+Since the object’s orbit is circular, the velocity is inversely proportional to the square root of the radius of the orbit:
+
+$$
+\omega = \frac{V_{\oplus}-V_{\oplus}\cdot\sqrt{\frac{a_{\oplus}}{a}}}{a-a_{\oplus}} = \frac{V_{\oplus}}{a}\cdot\frac{1-\sqrt{\frac{a_{\oplus}}{a}}}{1-\frac{a_{\oplus}}{a}} = \frac{V_{\oplus}}{a}\cdot\frac{1}{1+\sqrt{\frac{a_{\oplus}}{a}}} = \frac{V_{\oplus}}{a+\sqrt{aa_{\oplus}}}\,.
+$$
+
+Now we have the equation for the radius of the object’s orbit:
+
+$$
+a+\sqrt{aa_{\oplus}}-\frac{V_{\oplus}}{\omega} = 0.
+$$
+
+The opposition occurs approximately on November 21. Let us determine how far the object has moved in 4 days in the vicinity of this date. One can take a different time interval, so the answers may be slightly different
+
+19.11.2023: $\alpha_1 = 3^{\mathrm{h}}\,55^{\mathrm{m}}\,47.92^{\mathrm{s}}$, $\delta_1 = 22^{\circ}\,32'\,37.1''$,
+
+23.11.2023: $\alpha_2 = 3^{\mathrm{h}}\,51^{\mathrm{m}}\,45.64^{\mathrm{s}}$, $\delta_2 = 22^{\circ}\,20'\,06.2''$.
+
+The angle $\theta$ traversed by the object is estimated by Pythagorean theorem taking into account the correction for small circles: $\theta\approx\sqrt{(\delta_1-\delta_2)^2+(\alpha_1-\alpha_2)^2\cos^2\delta_1}\approx 0.956^{\circ}$, or by the spherical law of cosines: $\theta = \arccos\left(\sin\delta_1\sin\delta_2+\cos\delta_1\cos\delta_2\cos(\alpha_1-\alpha_2)\right)\approx 0.956^{\circ}$.
+
+So an estimation of the angular velocity is
+
+$$
+\omega = \frac{0.956^{\circ}}{4\ \mathrm{d}} = 0.239^{\circ}/\mathrm{d}.
+$$
+
+Substituting this value into the equation above, we obtain
+
+$$
+\frac{V_{\oplus}}{\omega} = \frac{V_{\oplus}}{\omega_{\oplus}}\cdot\frac{\omega_{\oplus}}{\omega} = a_{\oplus}\cdot\frac{360^{\circ}}{\omega T_{\oplus}} = a_{\oplus}\times\frac{360^{\circ}}{0.239^{\circ}/d\times 365.26^{\mathrm{d}}} = 4.124a_{\oplus}
+$$
+
+$$
+\Longrightarrow\qquad \frac{a}{a_{\oplus}}+\sqrt{\frac{a}{a_{\oplus}}} = 4.124.
+$$
+
+This equation can be solved using iterative method:
+
+$$
+\frac{a_{n+1}}{a_{\oplus}} = 4.124-\sqrt{\frac{a_n}{a_{\oplus}}}\,, \qquad a_0 = 1\ \mathrm{au},
+$$
+
+that quickly converges to $a = 2.57$ au or $3.8\cdot 10^{11}$ m. The data table corresponds to the asteroid 2021 GK$_{139}$. The real value for the semi-major axis of its orbit is 2.595 au.
+
+**Method 2.** A more complex method requires the use of the information about the stationary points. Let us determine the relation between the radius of the object’s orbit and the length of the arc of its retrograde motion.
+
+We introduce a coordinate system centered on the Earth as shown in Figure 8. The coordinates of the object in such a system are $(a\sin\lambda;\ a\cos\lambda-a_{\oplus})$. The relative velocity of the object is $(V\cos\lambda-V_{\oplus},\ -V\sin\lambda)$.
+
+At the stationary points, the observed relative velocity of the object is directed along the line of sight. We can write the proportionality
+
+$$
+\frac{V\cos\lambda-V_{\oplus}}{a\sin\lambda} = \frac{-V\sin\lambda}{a\cos\lambda-a_{\oplus}} \quad\Longrightarrow\quad \frac{\sqrt{a_{\oplus}/a}\cdot\cos\lambda-1}{a\sin\lambda} = \frac{-\sqrt{a_{\oplus}/a}\cdot\sin\lambda}{a\cos\lambda-a_{\oplus}}\,.
+$$
+
+If we measure $a$ in AU, we’ll get
+
+$$
+\sqrt{a}\cos^2\lambda-\frac{1}{\sqrt{a}}\cos\lambda-a\cos\lambda+1 = -\sqrt{a}\sin^2\lambda \quad\Longrightarrow\quad \cos\lambda = \frac{\sqrt{a}+1}{a+1/\sqrt{a}}\,.
+$$
+
+Based on the track of an object on the celestial sphere, we determine the length of the retrograde motion arc. The distance between the stationary points turns out to be about $14^{\circ}$. This value can be measured directly from the plot, taking into account the projection effect, or estimated using the spherical law of cosines based on the coordinates of the stationary points. The stationary points themselves correspond approximately to October 6, 2023 and January 9, 2024. During this time, due to the movement of the Earth in its orbit, the observer’s line of sight will rotate $95^{\circ}$, so the corresponding angle $\theta$ in Figure 8 equals to $(95^{\circ}+14^{\circ})/2\approx 54^{\circ}$.
+
+By the law of sines
+
+$$
+\frac{\sin\theta}{a} = \frac{\sin(\theta-\lambda)}{a_{\oplus}}\,.
+$$
+
+We need to find both the radius $a$ and the angle $\lambda$. It seems meaningful to determine the roots numerically. For example, we use the bisection-like method on the segment $[1.5; 10]$ au and calculate $\lambda$ from both the sine theorem ($\lambda_1$) and the $\cos\lambda$ estimate ($\lambda_2$):
+
+| $a$ | 1.5 | 10.0 | 5.0 | 3.0 | 2.5 |
+|---|---|---|---|---|---|
+| $\lambda_1$, $^{\circ}$ | 16.2 | 66.2 | 53.6 | 40.2 | 34.5 |
+| $\lambda_2$, $^{\circ}$ | $21.4^{\circ}$ | 49.4 | 44.7 | 38.4 | 35.1 |
+
+We can take the value of 2.5 au as a fair estimation.
+
+**Method 3 (sketch).** Finally, one can simply convert the object’s coordinates to the ecliptic system, calculate the ecliptic longitude of the Sun (for details see Problem 2) and the object’s elongation at each point. Next, we will notice two points, for example, with zero elongation (the conjunction of the object with the Sun). The time difference at these points corresponds to the synodic period of the object. Then it is easy to determine the sidereal period, and then the radius of the object’s orbit.
+
+c) It was previously shown that the object is superior. Then the concept of the greatest elongation is meaningless for it.
+
+Since the time interval between quadratures is related to the value of the synodic period, let us first estimate the synodic period using Kepler’s third law:
+
+$$
+S = \frac{T\cdot T_{\oplus}}{T-T_{\oplus}} = \frac{a^{1.5}\cdot a_{\oplus}^{1.5}}{a^{1.5}-a_{\oplus}^{1.5}} = 1.3\ \mathrm{yr}.
+$$
+
+We should estimate the angle $\theta$ centered on the Sun between the direction to Earth and the object in quadrature (see Figure 9): $\theta = \arccos(a_{\oplus}/a)\approx 67^{\circ}$.
+
+Then the minimal time interval between successive quadratures is $\Delta T = \dfrac{2\theta}{360^{\circ}}\cdot S = 0.49$ yr.
+
+d) Let us think about the moments when the minimal and maximal magnitudes are reached. Note that the magnitude dependence on the observed phase is insignificant. The minimal phase corresponds to the point of quadrature,
+
+$$
+\Phi_{\min} = \frac{1+\cos\varphi}{2} = \frac{1+\cos\arcsin(a_{\oplus}/a)}{2}\approx 0.96.
+$$
+
+This value differs very slightly from 1, and within the accuracy of our calculations, we can ignore the phase change.
+
+The object’s orbit is circular, so the most significant factor is the difference in the distances between the Earth and the object. The object becomes the faintest in its conjunction, and the brightest in its opposition:
+
+$$
+m_o-m_c = -2.5\lg\frac{E_o}{E_c} = -2.5\lg\frac{(a-a_{\oplus})^{-2}}{(a+a_{\oplus})^{-2}} = 5\lg\frac{a-a_{\oplus}}{a+a_{\oplus}} = -1.8^{\mathrm{m}}.
+$$
+
+e) We have to express the dependence of the apparent magnitude on the distance $r$ to the object. The illuminance from the Sun is inversely proportional to the square of the distance from the Sun to the object. Also, the illuminance created by an object on the Earth is inversely proportional to the square of the distance from the object to the Earth. We use Pogson’s law and write
+
+$$
+m(r)-H = -2.5\lg\frac{a_{\oplus}^2a_{\oplus}^2}{r^2a^2} = 5\lg\frac{ra}{a_{\oplus}^2}\,.
+$$
+
+If we express distances in astronomical units, the formula takes the form
+
+$$
+m(r) = H+5\lg ra.
+$$
+
+Let $t=0$ correspond to the moment of the opposition. At the time $t$, the difference between the heliocentric longitudes of the Earth and the object is
+
+$$
+\Delta\lambda = \frac{t}{S}\cdot 360^{\circ}.
+$$
+
+The distance to the object is related to the $\Delta\lambda$ with the law of cosines (see Figure 10):
+
+$$
+r = \sqrt{a_{\oplus}^2+a^2-2a_{\oplus}a\cos\Delta\lambda}.
+$$
+
+In au, $r = \sqrt{1+a^2-2a\cos\Delta\lambda}$. Finally, we obtain the dependence of the apparent magnitude on the number of days since the opposition
+
+$$
+\begin{aligned} m(t) &= H+5\lg\left(a\sqrt{1+a^2-2a\cos\Delta\lambda}\right) = \\ &= H+5\lg a+2.5\lg\left(1+a^2-2a\cdot\cos\left(\frac{t}{S}\cdot 360^{\circ}\right)\right). \end{aligned}
+$$
+
+The graph of this dependence is shown in Figure 11.
+
+**Marking Scheme:**
+
+- Question (a)
+  1. Description of the method for determining the location of the object’s orbit — **2 pt.**
+  2. The answer — **1 pt** *is given only if the description of the method is provided.*
+- Question (b)
+  3. Description of the method for determining the radius of the orbit, taking data from the graph, data processing — **2 pt.** + **1 pt.** + **1 pt.**
+  4. The answer — **1 pt** *is given only if the description and data processing are provided.*
+- Question (c)
+  5. Understanding possible configurations, choosing the necessary data — **1 pt.**
+  6. Writing the correct formulae and the final expression — **1 pt.** + **1 pt.**
+  7. Answer — **1 pt**.
+- Question (d)
+  8. Understanding the necessary configurations, choosing the correct data — **1 pt.**
+  9. Writing the correct formulae and the final expression — **1 pt.** + **1 pt.**
+  10. Answer — **1 pt**.
+- Question (e)
+  11. Dependence of the apparent magnitude on the date — **2 pt.**
+  12. Calculation of values, plot — **1 pt.** + **1 pt.**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '99%', '--fig-max': '634px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig1.png" alt="Track of dots plotting δ, deg from 18 to 24 against α, deg from 70 on the left to 45 on the right, forming a narrow retrograde loop between α ≈ 65° and 51°; dot colour from purple to orange encodes the day number on a colour bar labelled Day from 0 to 600." width="1980" height="563" loading="lazy" decoding="async" />
+<figcaption>Figure 7: The positions of an object on the celestial sphere observed from the Earth. The equatorial coordinates in degrees are plotted along the axes. The color shows the number of the day since the start of the observation</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '27.8%', '--fig-max': '178px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig2.png" alt="Diagram with the Sun (⊙) at the top and the Earth (⊕) below it at distance a⊕; axes X to the right and Y downward from the Earth; the object is a dot at distance a from the Sun, making angle λ at the Sun with the Sun–Earth line and angle θ at the Earth with the Y axis; velocity vectors V⊕ along X and V at the object." width="557" height="675" loading="lazy" decoding="async" />
+<figcaption>Figure 8: Determining the positions of the stationary points</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '47.5%', '--fig-max': '304px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig3.png" alt="Circle of radius a (object’s orbit) centred on the Sun ⊙; the Earth ⊕ lies a⊕ below the Sun; a horizontal chord through the Earth meets the circle at two dots (the quadratures); angle θ at the Sun between the directions to the Earth and to the right-hand dot, angle φ at that dot." width="951" height="966" loading="lazy" decoding="async" />
+<figcaption>Figure 9: Geometry of the quadratures of the object</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '47.5%', '--fig-max': '304px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig4.png" alt="Circle of radius a centred on the Sun ⊙ with the Earth ⊕ a⊕ below the Sun; the object is a dot on the circle at lower left, at distance r from the Earth; the angle Δλ at the Sun lies between the directions to the object and to the Earth." width="951" height="966" loading="lazy" decoding="async" />
+<figcaption>Figure 10: Geometry for an arbitrary configuration of the object</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '82.1%', '--fig-max': '526px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig5.png" alt="Purple curve plotting m (mag) from 21.6 to 23.4 against t (days) from 0 to about 470: it rises from 21.6 at t = 0 to a maximum of about 23.37 near t ≈ 237 and falls back to 21.6 at the end." width="1643" height="1204" loading="lazy" decoding="async" />
+<figcaption>Figure 11: The object’s apparent magnitude on the number of days since the opposition</figcaption>
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Константи</summary>
+
+**Universal**
+
+| | |
+|---|---|
+| Speed of light | $c = 3.00\cdot 10^{8}\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63\cdot 10^{-34}\ \mathrm{J\cdot s}$ |
+| Boltzmann constant | $k_B = 1.38\cdot 10^{-23}\ \mathrm{J/K}$ |
+| Gas constant | $\mathfrak{R} = 8.314\ \mathrm{J/(mol\cdot K)}$ |
+| Proton mass | $m_p = 1.673\cdot 10^{-27}\ \mathrm{kg}$ |
+
+**Astronomical**
+
+| | |
+|---|---|
+| Astronomical unit | $1\ \mathrm{au} = 149.6\cdot 10^{6}\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+| Hubble constant | $H_0 = 70\ \mathrm{(km/s)/Mpc}$ |
+
+**Sun**
+
+| | |
+|---|---|
+| Radius | $R_{\odot} = 6.96\cdot 10^{5}\ \mathrm{km}$ |
+| Mass | $\mathfrak{M}_{\odot} = 1.99\cdot 10^{30}\ \mathrm{kg}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8\cdot 10^{3}\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828\cdot 10^{26}\ \mathrm{W}$ |
+
+**Earth**
+
+| | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Sidereal day | $\tau_{\oplus} = 23^{\mathrm{h}}\,56^{\mathrm{m}}\,04^{\mathrm{s}}$ |
+| Obliquity of ecliptic | $\varepsilon_{\oplus} = 23.437^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+| | $x_{\oplus} = 283.3^{\circ}$ |
+
+**Mars**
+
+| | |
+|---|---|
+| Radius | $R_M = 3390\ \mathrm{km}$ |
+| Sidereal day | $\tau_M = 24^{\mathrm{h}}\,37^{\mathrm{m}}\,23^{\mathrm{s}}$ |
+| Obliquity (axial tilt) | $\varepsilon_M = 25.192^{\circ}$ |
+| Orbital semi-major axis | $a_M = 1.52\ \mathrm{au}$ |
+| Orbital period | $T_M = 1.88\ \mathrm{yr}$ |
+| Orbital eccentricity | $e_M = 0.0934$ |
+| | $x_M = 251^{\circ}$ |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO-2024-prob-P.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2024/Data%20Analysis/OWAO-2024-prob-P.pdf)
+· официални решения: [OWAO-2024-sol-P.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2024/Data%20Analysis/OWAO-2024-sol-P.pdf)

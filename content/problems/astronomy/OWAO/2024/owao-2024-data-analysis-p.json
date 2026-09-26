@@ -1,0 +1,614 @@
+{
+ "paper": {
+  "id": "owao-2024-data-analysis-p",
+  "subject": "astronomy",
+  "competition": "OWAO",
+  "year": 2024,
+  "round": "data-analysis",
+  "roundType": "data-analysis",
+  "grade": null,
+  "lang": "en",
+  "title": "2024 ⋄ Practical Round ⋄ Problems",
+  "totalPoints": 60,
+  "timeLimitMin": 300,
+  "source": {
+   "archiveKey": "Астрономия/Състезания/OWAO/2024/Data Analysis/OWAO-2024-prob-P.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/OWAO/2024/Data Analysis/OWAO-2024-sol-P.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ]
+  },
+  "status": "review",
+  "documentNotes": [
+   {
+    "title": "Instructions",
+    "statement": "1. The practical round is 5 hours long and accounts for 30 % of the total grade.\n\n2. The maximum score for each problem is 20 points. The round total is 60 points.\n\n3. Paper and electronic versions of problems are identical. The necessary files can be downloaded from the testing system.\n\n4. **Please present your solution as an electronic report,** containing information about your work, plots and tables, intermediate and final results, and conclusions.\n\n5. **Please include your participant code** (string like `AA-1`) at the beginning of each report.\n\n6. **Submit your report in PDF format.** If necessary, also attach working files (images, source code, etc.). ZIP format archives are accepted. The maximum file upload size is 10 MB.\n\n7. During the practical round, you can use:\n\n- browser, e. g. Google Chrome/Chromium,\n- text editor, e. g. Microsoft Word/LibreOffice Writer/Google Docs,\n- spreadsheet editor, e. g. Microsoft Excel/LibreOffice Calc/Google Sheets.\n\nYou may also use:\n\n- development tools, e. g. Python & Jupyter Notebook,\n- graphic editors, e. g. Paint/GIMP,\n- other applications for data processing, analysis, report generation, including online applications (Google Colab, Desmos, etc.).\n\n8. This is an individual competition. **You must not use collaborative tools and functions.**\n\n9. You may find and use documentation for the software and libraries used but **not reference literature on astronomy, physics and mathematics.**\n\n10. Please remember that the jury may not understand your language. It is expected that solutions are written in plain English. Use mathematical expressions, numbers and images.\n\n11. Some problems are quite difficult. Remember that partial solutions are also scored.\n\n12. A list of constants is given on page 8.\n\nGo to `https://my.sirius.online/`, log in with your email and password, and select the Practical round. The countdown will begin after you click the Start button.\n\nGood luck!",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   },
+   {
+    "title": "Constants",
+    "statement": "**Universal**\n\n| | |\n|---|---|\n| Speed of light | $c = 3.00\\cdot 10^{8}\\ \\mathrm{m/s}$ |\n| Planck constant | $h = 6.63\\cdot 10^{-34}\\ \\mathrm{J\\cdot s}$ |\n| Boltzmann constant | $k_B = 1.38\\cdot 10^{-23}\\ \\mathrm{J/K}$ |\n| Gas constant | $\\mathfrak{R} = 8.314\\ \\mathrm{J/(mol\\cdot K)}$ |\n| Proton mass | $m_p = 1.673\\cdot 10^{-27}\\ \\mathrm{kg}$ |\n\n**Astronomical**\n\n| | |\n|---|---|\n| Astronomical unit | $1\\ \\mathrm{au} = 149.6\\cdot 10^{6}\\ \\mathrm{km}$ |\n| Parsec | $1\\ \\mathrm{pc} = 206\\,265\\ \\mathrm{au}$ |\n| Hubble constant | $H_0 = 70\\ \\mathrm{(km/s)/Mpc}$ |\n\n**Sun**\n\n| | |\n|---|---|\n| Radius | $R_{\\odot} = 6.96\\cdot 10^{5}\\ \\mathrm{km}$ |\n| Mass | $\\mathfrak{M}_{\\odot} = 1.99\\cdot 10^{30}\\ \\mathrm{kg}$ |\n| Absolute magnitude | $M_{\\odot} = 4.74^{\\mathrm{m}}$ (bol.) |\n| Effective temperature | $T_{\\odot} = 5.8\\cdot 10^{3}\\ \\mathrm{K}$ |\n| Luminosity | $L_{\\odot} = 3.828\\cdot 10^{26}\\ \\mathrm{W}$ |\n\n**Earth**\n\n| | |\n|---|---|\n| Radius | $R_{\\oplus} = 6371\\ \\mathrm{km}$ |\n| Sidereal day | $\\tau_{\\oplus} = 23^{\\mathrm{h}}\\,56^{\\mathrm{m}}\\,04^{\\mathrm{s}}$ |\n| Obliquity of ecliptic | $\\varepsilon_{\\oplus} = 23.437^{\\circ}$ |\n| Surface gravity | $g = 9.81\\ \\mathrm{m/s^2}$ |\n| Orbital period | $T_{\\oplus} = 365.26^{\\mathrm{d}}$ |\n| Orbital eccentricity | $e_{\\oplus} = 0.0167$ |\n| | $x_{\\oplus} = 283.3^{\\circ}$ |\n\n**Mars**\n\n| | |\n|---|---|\n| Radius | $R_M = 3390\\ \\mathrm{km}$ |\n| Sidereal day | $\\tau_M = 24^{\\mathrm{h}}\\,37^{\\mathrm{m}}\\,23^{\\mathrm{s}}$ |\n| Obliquity (axial tilt) | $\\varepsilon_M = 25.192^{\\circ}$ |\n| Orbital semi-major axis | $a_M = 1.52\\ \\mathrm{au}$ |\n| Orbital period | $T_M = 1.88\\ \\mathrm{yr}$ |\n| Orbital eccentricity | $e_M = 0.0934$ |\n| | $x_M = 251^{\\circ}$ |",
+    "document": "problems",
+    "page": 8,
+    "position": "after-problem"
+   }
+  ],
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-26",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "468156102af5572f61123e70baaf7fc50d69417e203c2f130432213652840ebb",
+    "solutions": "1d6ceb04a9134ca7e4b319c0113b3e4dce21ccf4149746cd092302fc6520aa99"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-26",
+   "notes": "The masthead prints 'Practical Round'; the archive folder calls it 'Data Analysis' (same round; kept round 'data-analysis'). Problem 3 is printed 'Ephemeric Quest' (the catalogue lists 'Epheneric Quest'). Point values per part are not printed in the problem statements; they appear only in the marking schemes, so parts carry points null. Problem 1 marking scheme sums to 20 (a 5, b 5, c 3, d 2, e 5); Problem 3 sums to 20 (a 3, b 5, c 4, d 4, e 4); Problem 2 marking scheme as printed sums to 17 (a 3, b 1, c 3, d 2, e 4, f 4) although the instructions state 20 points per problem — kept as printed. The solutions document repeats each full statement before 'Solution:'; only the solution and marking scheme are transcribed into solution.statement. In the solutions document the statement of Problem 2 defines x differently ('Let x be the ecliptic longitude of the Sun measured from the vernal equinox for the planet when this planet is at perihelion.') and numbers the figures 3 and 4 instead of 1 and 2; the problems-document wording is used in the statement, and the solution's Note explains the ambiguity. Agreement errors kept as printed (D-P28): 'Assume the planet pass perihelion' (problems p4, solutions p6); 'L & D-type correspond to the asteroids' (solutions p3). Solutions p3 prints 'approximately 17 % of the real asteroids are of this type' for S-type and 'In reality ... (about 77 %) are the C-type' — kept verbatim. The constants table (problems p8, repeated on solutions p19) is transcribed once in paper.documentNotes. Table 1 (problems p3) prints two or three boundary lines per type; each line is one table row with the type in the first row only."
+  }
+ },
+ "problems": [
+  {
+   "id": "owao-2024-data-analysis-p-p1",
+   "number": 1,
+   "title": "Scattering of Stones",
+   "points": 20,
+   "problemType": "data-analysis",
+   "statement": "There are various spectral types of asteroids. Multiband photometry data can be used to determine the type of a particular asteroid. The article by Choi et al. (2023) provides photometric data ($g$, $r$, $i$, $z$) for several thousand asteroids, as well as describes a method for determining their types. The catalog of photometric data is provided in a separate table `ast.dat`. The description of the columns is indicated in the file itself.\n\nWe will use a simplified version of the method. First of all, the standardized magnitudes are transformed to the reflectances in magnitude by subtracting the solar colors:\n\n$$\\begin{aligned} (g'-r') &= (g-r)-(g-r)_{\\odot}\\,, &\\qquad (g-r)_{\\odot} &= 0.61;\\\\ (r'-i') &= (r-i)-(r-i)_{\\odot}\\,, &\\qquad (r-i)_{\\odot} &= 0.35;\\\\ (i'-z') &= (i-z)-(i-z)_{\\odot}\\,, &\\qquad (i-z)_{\\odot} &= 0.16. \\end{aligned}$$\n\nNext, the coefficient $a$ of least-squares linear regression is estimated:\n\n$$(r'-i') = a\\cdot(g'-r')+b.$$\n\nWe assume that the errors in both color indexes are distributed according to the same law, so we use the simple estimation — Deming linear regression:\n\n$$\\overline{(g'-r')} = \\frac{1}{n}\\sum_{j=1}^{n}(g'-r')_j\\,, \\qquad \\overline{(r'-i')} = \\frac{1}{n}\\sum_{j=1}^{n}(r'-i')_j\\,;$$\n\n$$s_{g'-r'} = \\frac{1}{n}\\sum_{j=1}^{n}\\Big((g'-r')_j-\\overline{(g'-r')}\\Big)^2, \\qquad s_{r'-i'} = \\frac{1}{n}\\sum_{j=1}^{n}\\Big((r'-i')_j-\\overline{(r'-i')}\\Big)^2;$$\n\n$$s_{g'-r',r'-i'} = \\frac{1}{n}\\sum_{j=1}^{n}\\Big((g'-r')_j-\\overline{(g'-r')}\\Big)\\Big((r'-i')_j-\\overline{(r'-i')}\\Big);$$\n\n$$a = \\frac{s_{r'-i'}-s_{g'-r'}+\\sqrt{(s_{r'-i'}-s_{g'-r'})^2+4s^2_{g'-r',r'-i'}}}{2s_{g'-r',r'-i'}}\\,.$$\n\nFurther, the so-called principal component (PC) is estimated for each asteroid. For the $j$-th asteroid\n\n$$\\mathrm{PC}_j = (g'-r')_j\\cos\\theta+(r'-i')_j\\sin\\theta, \\qquad \\theta\\equiv\\arctan a.$$\n\nBased on the values of PC and $(i'-z')$, the spectral types of asteroids can be approximately determined. The taxonomy boundaries are given in Table 1 below.\n\n***We will only work with asteroids whose magnitude uncertainties are less than or equal to 0.05 in all photometric bands.***\n\n**Please include your participant code** at the beginning of your report.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Plot the dependence $(r'-i')$ on $(g'-r')$ for suitable asteroids. How many objects are on the graph?",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 3504,
+      "unit": null,
+      "tolerance": 0,
+      "note": "Official solution: the filtered catalog contains n = 3504 suitable objects (of 6793)."
+     }
+    },
+    {
+     "label": "b)",
+     "statement": "Determine the coefficient $a$ of Deming linear regression in the $(g'-r')$ versus $(r'-i')$ color plane.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.4,
+      "unit": null,
+      "tolerance": 0.01,
+      "note": "Official solution: a = 0.400, θ = arctan(0.400) = 21.8°."
+     }
+    },
+    {
+     "label": "c)",
+     "statement": "Plot the dependence $(i'-z')$ on PC for the same asteroids.",
+     "points": null
+    },
+    {
+     "label": "d)",
+     "statement": "What spectral type does asteroid 8 Flora belong to?",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "S-type (silicaceous)"
+     }
+    },
+    {
+     "label": "e)",
+     "statement": "How many asteroids belong to each type listed in the table?",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "L & D: 606; S: 1439; V: 207; C: 582; X: 401; Other: 269",
+      "note": "Due to rounding errors the numbers may slightly differ (official solution)."
+     }
+    }
+   ],
+   "statementAfterParts": "Table 1: Parametric boundaries for different spectral types of asteroids\n\n| Type | Boundaries |\n|---|---|\n| L & D | $-0.195\\leqslant \\mathrm{PC}<0.025$ |\n| | $-0.150\\leqslant (i'-z')<0.040$ |\n| S | $-0.195\\leqslant \\mathrm{PC}<0.025$ |\n| | $-0.320\\leqslant (i'-z')<-0.150$ |\n| V | $-0.195\\leqslant \\mathrm{PC}<0.025$ |\n| | $-0.610\\leqslant (i'-z')<-0.320$ |\n| C | $\\mathrm{PC}\\geqslant -0.395$ |\n| | $(i'-z')+2.778\\mathrm{PC}<-0.864$ |\n| | $-0.210\\leqslant (i'-z')<0.040$ |\n| X | $\\mathrm{PC}<-0.195$ |\n| | $(i'-z')+2.778\\mathrm{PC}\\geqslant -0.864$ |\n| | $-0.210\\leqslant (i'-z')<0.040$ |",
+   "topics": [
+    "astronomy/photometry",
+    "astronomy/asteroids",
+    "data-analysis/regression"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "**Solution:**\n\na) The original catalog lists 6793 asteroids. We leave only objects with the magnitude uncertainties less than or equal to $0.05^m$ in all photometric bands, as prescribed. The filtered catalog contains $n=3504$ suitable objects.\n\nThe dependence of $(r'-i')$ on $(g'-r')$ is shown in Figure 1.\n\nb) First, we list the values of all calculated quantities needed for estimating the coefficient $a$.\n\n$$\\overline{(g'-r')} = \\frac{1}{3504}\\sum_{j=1}^{3504}(g'-r')_j = -0.100;$$\n\n$$\\overline{(r'-i')} = \\frac{1}{3504}\\sum_{j=1}^{3504}(r'-i')_j = -0.177;$$\n\n$$s_{g'-r'} = \\frac{1}{3504}\\sum_{j=1}^{3504}\\Big((g'-r')_j+0.100\\Big)^2 = 9.36\\cdot 10^{-3};$$\n\n$$s_{r'-i'} = \\frac{1}{3504}\\sum_{j=1}^{3504}\\Big((r'-i')_j+0.177\\Big)^2 = 3.99\\cdot 10^{-3};$$\n\n$$s_{g'-r',r'-i'} = \\frac{1}{3504}\\sum_{j=1}^{3504}\\Big((g'-r')_j+0.100\\Big)\\Big((r'-i')_j+0.177\\Big) = 2.56\\cdot 10^{-3}.$$\n\nNext, we calculate an estimate of the angular regression coefficient\n\n$$a = \\frac{3.99-9.36+\\sqrt{(3.99-9.36)^2+4\\cdot(2.56)^2}}{2\\cdot 2.56} = 0.400;$$\n\n$$\\theta = \\arctan(0.400) = 21.8^{\\circ}.$$\n\nNote that the simple least squares method, assuming errors in only one of the coordinates, leads to a significantly different result and is not applicable for this problem.\n\nc) Using the value of Deming regression angle $\\theta$ obtained above, we calculate the principal component for each asteroid:\n\n$$\\mathrm{PC}_j = \\cos 21.8^{\\circ}\\cdot(g'-r')_j+\\sin 21.8^{\\circ}\\cdot(r'-i')_j = 0.928(g'-r')_j+0.371(r'-i')_j\\,.$$\n\nThe dependence of $(i'-z')$ on PC is shown in Figure 2.\n\nd) For 8 Flora $(i'-z') = -0.19$, $\\mathrm{PC} = 2.2\\cdot 10^{-3}$. This asteroid belongs to S-type (silicaceous).\n\ne) Due to rounding errors in the previous stages, the number of asteroids may slightly differ from the one shown in the table.\n\n| Type | L & D | S | V | C | X | Other |\n|---|---|---|---|---|---|---|\n| $N$ | 606 | 1439 | 207 | 582 | 401 | 269 |\n| % | 17 | 41 | 6 | 17 | 11 | 8 |\n\nThe spectral types in question approximately correspond to SMASS II taxonomic system. Note that in the filtered catalog, the most numerous were the S-type (silicaceous) asteroids; approximately 17 % of the real asteroids are of this type. In reality, among all known asteroids, the most numerous objects (about 77 %) are the C-type asteroids (carbonaceous), but they comprise only 17 % in the catalog in this problem. The V-type (volcanic-type or vestoids) asteroids were the least common in our sample, in reality they also comprise approximately 6 % of the main-belt asteroids. The X-group collects together several types of asteroids with similar spectra, namely metallic asteroids, ones with high albedo and asteroids with red spectra. L & D-type correspond to the asteroids with very steep red slope in spectra.\n\n**Marking Scheme:**\n\n- Question (a)\n  1. $(g'-r';\\ r'-i')$ plot — **2 pt.**\n  2. $n=3504$ — **3 pt.**\n     OR $n\\in[3500;\\ 3510]$ — 2 pt., $n\\in[3300;\\ 3700]$ — 1 pt.\n- Question (b)\n  3. $a=0.40$ — **5 pt.**\n     For every deviation step of 0.01, 1 point is deducted, e. g. the answer $a=0.37$ is worth 2 pt.\n     The score for this question cannot be negative.\n\n4. Question (c): $(\\mathrm{PC};\\ i'-z')$ plot — **3 pt.**\n5. Question (d): spectral type with justification — **2 pt.**\n6. Question (e): correct number for each spectral type — **1 pt**. × **5** = **5 pt**.",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "caption": "Figure 1: $(r'-i')$ on $(g'-r')$: the most populated area",
+      "alt": "Scatter plot of several thousand purple points: (r'-i') on the vertical axis from -0.5 to 0.1 against (g'-r') on the horizontal axis from -0.5 to 0.3; two dense clusters, one near (-0.23, -0.24) and a larger one near (-0.05, -0.15).",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p1-sol-fig1.png",
+      "width": 1547,
+      "height": 1151,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        108.94,
+        119.57,
+        479.79,
+        395.68
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p1-sol-fig2",
+      "caption": "Figure 2: $(i'-z')$ on PC: the most populated area",
+      "alt": "Scatter plot of purple points: (i'-z') on the vertical axis from about -0.7 to 0.3 against PC on the horizontal axis from -0.5 to 0.3; a cluster near PC -0.3, (i'-z') -0.15 and a denser cluster near PC -0.1, (i'-z') -0.2 with a tail down to -0.6.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p1-sol-fig2.png",
+      "width": 1547,
+      "height": 1144,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        108.94,
+        468.09,
+        479.79,
+        742.54
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    }
+   ]
+  },
+  {
+   "id": "owao-2024-data-analysis-p-p2",
+   "number": 2,
+   "title": "Support Service",
+   "points": 20,
+   "problemType": "data-analysis",
+   "statement": "An analemma (from Ancient Greek αναλημμα – “support”) is a diagram showing the position of the Sun in the sky as seen from a fixed location on the Earth at the same mean solar time, as that position varies over the course of a year. It is directly related to the so-called equation of time — the difference between mean and true solar time (that is, the difference between the right ascensions of the true and mean Sun):\n\n$$\\eta = t_{\\mathrm{mean}}-t_{\\mathrm{true}} = \\alpha_{\\mathrm{true}}-\\alpha_{\\mathrm{mean}}.$$\n\nThis difference is due to two reasons: the tilt of the planet’s axis of rotation (obliquity) and the eccentricity of its orbit.\n\nAssume the planet pass perihelion at the moment $t=0$. If the planet moved uniformly, its position would be determined by the mean anomaly\n\n$$M(t) = \\frac{2\\pi t}{T},$$\n\nwhere $T$ is the orbital period of the planet.\n\nThe actual position of the planet in its orbit is determined by the true anomaly $\\nu$. The true anomaly $\\nu$ is geometrically related to the eccentric anomaly $E$, which shows the position of some imaginary point on the auxiliary circle (see Figure 1).\n\nPlease note that\n\n$$\\tan\\frac{\\nu}{2} = \\sqrt{\\frac{1+e}{1-e}}\\cdot\\tan\\frac{E}{2},$$\n\nwhere $e$ is the eccentricity of the planet’s orbit. Also, the mean and eccentric anomalies (expressed in radians) are related by Kepler’s equation:\n\n$$E-e\\cdot\\sin E = M.$$\n\n**Please include your participant code** at the beginning of your report.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "caption": "Figure 1: Geometric meaning and connection between different anomalies. $C$ is the center of the ellipse and auxiliary circle, $P$ is the pericenter of the orbit",
+     "alt": "Quarter of an auxiliary circle (outer arc) and of the orbit ellipse (inner arc) with centre C on the left and pericentre P on the right of a horizontal axis; the Sun is a large dot on the axis; lines from C make angles E and M with the axis, a line from the Sun to the planet (small dot on the ellipse) makes angle ν; a vertical line from the auxiliary circle through the planet meets the axis at a right angle. Labels: auxiliary circle, orbit (ellipse), C, E, M, ν, P.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p2-fig1.png",
+     "width": 1117,
+     "height": 1148,
+     "source": {
+      "page": 4,
+      "pdfRect": [
+       157.77,
+       458.82,
+       425.61,
+       734.13
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p2-fig2",
+     "caption": "Figure 2: Analemmas of five imaginary planets",
+     "alt": "Five panels, Planet 1 to Planet 5, each plotting the declination of the Sun δ in degrees against the equation of time η in “local” minutes (axis increasing to the left). Planet 1: an ellipse spanning about ±135 min and ±30°. Planet 2: a rounded triangle with apex at 20° and flat base at −20°, η from about 500 to −500. Planet 3: a figure-eight through the origin between +10° and −10°, η about ±500. Planet 4: an asymmetric loop with a sharp corner at η ≈ 500, δ = 20°, reaching −20° near η ≈ −130. Planet 5: a teardrop from 40° at the top to a small loop near −30° to −40°, η about ±60.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p2-fig2.png",
+     "width": 2025,
+     "height": 2678,
+     "source": {
+      "page": 6,
+      "pdfRect": [
+       54.76,
+       106.92,
+       540.49,
+       749.29
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Plot the difference $(\\nu-M)$ as a function of time $t\\in[0;\\ T]$ for the orbits of the Earth and Mars. For convenience, express $(\\nu-M)$ in “local” minutes: 1 solar day $=$ 24 hours, 1 hour $=$ 60 minutes.",
+     "points": null,
+     "statementAfter": "Let $x$ be the ecliptic longitude of the planet’s perihelion, measured from the vernal equinox for this planet. You can find the corresponding values in the Constants Table."
+    },
+    {
+     "label": "b)",
+     "statement": "Express the “local” ecliptic longitude of the Sun $\\lambda$ in terms of $\\nu$ and $x$.",
+     "points": null,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\lambda = \\nu + x"
+     },
+     "statementAfter": "Hour angles and right ascensions are measured along the celestial equator. Since the ecliptic is inclined to the celestial equator by an angle of $\\varepsilon$, both of these parameters are related to the ecliptic longitude nonlinearly. For example, for right ascension $\\alpha$ we have:\n\n$$\\tan\\alpha = \\tan\\lambda\\cdot\\cos\\varepsilon.$$"
+    },
+    {
+     "label": "c)",
+     "statement": "Plot the difference $(\\alpha-\\lambda)$ expressed in “local” minutes as a function of time $t\\in[0;\\ T]$ for the orbits of the Earth and Mars.",
+     "points": null,
+     "statementAfter": "The equation of time can be represented as the sum\n\n$$\\eta(t) = (\\nu-M)+(\\alpha-\\lambda).$$"
+    },
+    {
+     "label": "d)",
+     "statement": "Plot the equation of time $\\eta$ expressed in “local” minutes as a function of time $t\\in[0;\\ T]$ for the orbits of the Earth and Mars.",
+     "points": null,
+     "statementAfter": "The declination of the Sun $\\delta$ can be expressed by the formula\n\n$$\\sin\\delta = \\sin\\lambda\\cdot\\sin\\varepsilon.$$"
+    },
+    {
+     "label": "e)",
+     "statement": "Plot the analemma corresponding to mean noon for an observer at mid-latitudes of the Northern Hemisphere of the Earth and Mars (north is up, west is to the right).",
+     "points": null
+    },
+    {
+     "label": "f)",
+     "statement": "There are the analemmas of five imaginary planets in Figure 2. Determine the parameters $e$, $x$, and $\\varepsilon$ for each model. In case there are several possible answers, please provide any.",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "Planet 1: e = 0.3, x = 90°, ε = 30°; Planet 2: e = 0.9, x = 90°, ε = 20°; Planet 3: e = 0.9, x = 0°, ε = 10°; Planet 4: e = 0.9, x = 305°, ε = 20°; Planet 5: e = 0.1, x = 90°, ε = 40°",
+      "note": "Possible values from the official solution; other equivalent answers are accepted."
+     }
+    }
+   ],
+   "topics": [
+    "astronomy/celestial-mechanics",
+    "astronomy/time",
+    "astronomy/spherical-astronomy"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**Solution:**\n\na) It is convenient to use the eccentric anomaly $E$ as a parameter. For $E=0$ to $2\\pi$ we can tabulate calculations in radians:\n\n$$M = E-e\\cdot\\sin E, \\qquad t = \\frac{M}{2\\pi}\\cdot T;$$\n\n$$\\nu = 2\\arctan\\left(\\sqrt{\\frac{1+e}{1-e}}\\cdot\\tan\\frac{E}{2}\\right)+2\\pi k,$$\n\nwhere $k=0$ if $E\\leqslant\\pi$, and $k=1$ if $E>\\pi$.\n\nTo convert the obtained results from radians to “local” minutes we have to multiply them by factor $\\frac{24\\times 60}{2\\pi} = \\frac{720}{\\pi}$.\n\nb) Parameters $\\lambda$, $\\nu$, and $x$ are measured along the “local” ecliptic in the same direction. Also $\\Delta\\lambda = \\Delta\\nu$. When the planet is at the perihelion, $\\lambda = x$ and $\\nu = 0$, so\n\n$$\\lambda = \\nu+x.$$\n\nc) The right ascension\n\n$$\\alpha = \\arctan(\\tan\\lambda\\cdot\\cos\\varepsilon)+\\pi n,$$\n\nwhere integer $n$ is chosen so that $0\\leqslant\\alpha<\\pi$ when $0\\leqslant\\lambda<\\pi$, and $\\pi\\leqslant\\alpha<2\\pi$ when $\\pi\\leqslant\\lambda<2\\pi$. Please do not forget to convert the results to the local minutes!\n\nd–e) We have everything we need to plot the following graph:\n\n$$\\begin{cases} \\eta = (\\nu-M)+(\\alpha-\\lambda);\\\\ \\delta = \\arcsin(\\sin\\lambda\\cdot\\sin\\varepsilon). \\end{cases}$$\n\nSee Figures 5 and 6.\n\nf) Varying parameters $e$, $x$, and $\\varepsilon$, we can adjust the calculated analemmas to the model ones.\n\nNote that the maximum Sun declination for each planet is $\\varepsilon$. A symmetric figure means that $x$ is divisible by $\\pi/2 = 90^{\\circ}$.\n\nThe possible values of $e$, $x$, and $\\varepsilon$ for each model planet are shown in the table below:\n\n| Planet | 1 | 2 | 3 | 4 | 5 |\n|---|---|---|---|---|---|\n| $e$ | 0.3 | 0.9 | 0.9 | 0.9 | 0.1 |\n| $x$, $^{\\circ}$ | 90 | 90 | 0 | 305 | 90 |\n| $\\varepsilon$, $^{\\circ}$ | 30 | 20 | 10 | 20 | 40 |\n\n**Marking Scheme:**\n\n1. Question (a) — **3 pt.**\n2. Question (b) — **1 pt.**\n3. Question (c) — **3 pt.**\n4. Question (d) — **2 pt.**\n5. Question (e) — **4 pt.**\n6. Question (f)\n   - $\\varepsilon$: method — **1 pt.** + values — **0.4 pt**. × **5** = **2 pt.**\n   - $x$: method — **1 pt.** + values — **0.2 pt.** × **5** = **1 pt.**\n   - $e$: method — **1 pt.** + values — **0.2 pt.** × **5** = **1 pt.**\n\n*Note.* In the original formulation of the problem, the notation $x$ could be understood ambiguously. Using the well-known ideas about the Earth’s orbit (the Earth passes the perihelion on January 2–5) one could easily guess how to interpret this designation correctly. However, solutions with an “inverted” ecliptic longitude of the pericenter are assessed without penalty.",
+    "figures": [
+     {
+      "id": "p2-sol-fig1",
+      "caption": "Figure 5: Composition of the equation of time for the Earth and Mars",
+      "alt": "Two panels, The Earth and Mars, plotting “Local” minutes against t/T from 0 to 1: dashed black curve ν − M, red dash-dotted curve α − λ and solid blue curve η. For the Earth η ranges from about +14 to −16 minutes; for Mars from about +51 to −40 minutes.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p2-sol-fig1.png",
+      "width": 2044,
+      "height": 1737,
+      "source": {
+       "page": 10,
+       "pdfRect": [
+        54.76,
+        100.17,
+        545.27,
+        516.91
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p2-sol-fig2",
+      "caption": "Figure 6: Calculated analemmas for the Earth and Mars",
+      "alt": "Two panels, The Earth and Mars, plotting the declination of the Sun δ in degrees against the equation of time η in “local” minutes (axis increasing to the left). The Earth: a figure-eight between about +23° and −23°, η about ±16 min, crossing near δ = 9°. Mars: a single asymmetric teardrop loop between about +25° and −25°, η from about 50 to −40 min.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p2-sol-fig2.png",
+      "width": 2020,
+      "height": 881,
+      "source": {
+       "page": 10,
+       "pdfRect": [
+        54.76,
+        548.91,
+        539.33,
+        760.23
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 11
+    }
+   ]
+  },
+  {
+   "id": "owao-2024-data-analysis-p-p3",
+   "number": 3,
+   "title": "Ephemeric Quest",
+   "points": 20,
+   "problemType": "data-analysis",
+   "statement": "The file `ephem.dat` contains ephemerides of some small body of the Solar system. The first and second columns of the file contain the date and universal time of the observation, followed by the right ascension (in hours, minutes and seconds) and declination (in degrees, minutes and seconds) for the observer on the Earth (geocentric location):\n\n| Date | Time | Right ascension | Declination |\n|---|---|---|---|\n| 2023-Mar-18 | 00:00:00 | $23^{\\mathrm{h}}\\,59^{\\mathrm{m}}\\,03.88^{\\mathrm{s}}$ | $0^{\\circ}\\,44'\\,46.9''$ |\n| 2023-Mar-19 | 00:00:00 | $0^{\\mathrm{h}}\\,0^{\\mathrm{m}}\\,41.94^{\\mathrm{s}}$ | $0^{\\circ}\\,55'\\,34.0''$ |\n| … | … | … | … |\n\nThe absolute magnitude of the object is $H = 18.51^{\\mathrm{m}}$. The orbit of the object is circular, the inclination is small.\n\n**Please include your participant code** at the beginning of your report.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "a)",
+     "statement": "Determine whether the object’s orbit lies inside or outside the Earth’s orbit.",
+     "points": null,
+     "answer": {
+      "kind": "text",
+      "value": "Outside: the object is superior to the Earth."
+     }
+    },
+    {
+     "label": "b)",
+     "statement": "Estimate the radius of the object’s orbit.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 2.57,
+      "unit": "au",
+      "tolerance": 0.1,
+      "note": "Method 1 gives a = 2.57 au (3.8·10^11 m); Method 2 gives about 2.5 au; the real semi-major axis of asteroid 2021 GK139 is 2.595 au."
+     }
+    },
+    {
+     "label": "c)",
+     "statement": "Estimate the minimal time interval between two consecutive greatest elongations or consecutive quadratures.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 0.49,
+      "unit": "yr",
+      "tolerance": 0.01,
+      "note": "Greatest elongation is meaningless for a superior object; the value is the minimal interval between successive quadratures (S = 1.3 yr, θ ≈ 67°)."
+     }
+    },
+    {
+     "label": "d)",
+     "statement": "Determine the difference between the maximal and minimal apparent magnitudes of the object for an observer on the Earth during one synodic period.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": -1.8,
+      "unit": "mag",
+      "tolerance": 0.1,
+      "note": "Printed as m_o − m_c = −1.8^m (opposition minus conjunction), i.e. an amplitude of 1.8 magnitudes."
+     }
+    },
+    {
+     "label": "e)",
+     "statement": "Plot the dependence of the apparent magnitude of the object on time for an observer on the Earth during one synodic period.",
+     "points": null
+    }
+   ],
+   "statementAfterParts": "*Hint:* for the Solar system objects, the absolute magnitude, commonly called $H$, is defined as the apparent magnitude that the object would have if it were one astronomical unit (1.00 au) from both the Sun and the observer, and in conditions of ideal solar opposition (the apparent phase is 1.00).",
+   "topics": [
+    "astronomy/solar-system",
+    "astronomy/planetary-configurations",
+    "astronomy/photometry"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**Solution:**\n\na) First of all, we plot the positions of an object in the sky in equatorial coordinates. Note that the right ascensions of the object vary widely. Let us look at the area of the graph that is mostly interesting for us, where we can see a loop of apparent retrograde motion (see Figure 7). The color on the graph shows the number of the observation day, for convenience.\n\nThe center of the retrograde motion arc corresponds to the observations in the winter of 2023. But the right ascensions of the object correspond to the summer zodiac constellations. Consequently, the retrograde motion arc is observed in the vicinity of the opposition, and the object is superior to the Earth.\n\nb) There are several ways to determine the radius of an object’s orbit.\n\n**Method 1.** Let us analyze the simplest one. We can determine the point of opposition of the object and estimate the angular velocity of its movement across the sky.\n\nLet $a$ be the radius of the object’s orbit, $a_{\\oplus}$ be the radius of the Earth’s orbit, $V$ be the orbital velocity of the object, $V_{\\oplus}$ be the velocity of the Earth. The angular velocity of an object moving across the sky in its opposition is\n\n$$\\omega = \\frac{V_{\\oplus}-V}{a-a_{\\oplus}}\\,.$$\n\nSince the object’s orbit is circular, the velocity is inversely proportional to the square root of the radius of the orbit:\n\n$$\\omega = \\frac{V_{\\oplus}-V_{\\oplus}\\cdot\\sqrt{\\frac{a_{\\oplus}}{a}}}{a-a_{\\oplus}} = \\frac{V_{\\oplus}}{a}\\cdot\\frac{1-\\sqrt{\\frac{a_{\\oplus}}{a}}}{1-\\frac{a_{\\oplus}}{a}} = \\frac{V_{\\oplus}}{a}\\cdot\\frac{1}{1+\\sqrt{\\frac{a_{\\oplus}}{a}}} = \\frac{V_{\\oplus}}{a+\\sqrt{aa_{\\oplus}}}\\,.$$\n\nNow we have the equation for the radius of the object’s orbit:\n\n$$a+\\sqrt{aa_{\\oplus}}-\\frac{V_{\\oplus}}{\\omega} = 0.$$\n\nThe opposition occurs approximately on November 21. Let us determine how far the object has moved in 4 days in the vicinity of this date. One can take a different time interval, so the answers may be slightly different\n\n19.11.2023: $\\alpha_1 = 3^{\\mathrm{h}}\\,55^{\\mathrm{m}}\\,47.92^{\\mathrm{s}}$, $\\delta_1 = 22^{\\circ}\\,32'\\,37.1''$,\n\n23.11.2023: $\\alpha_2 = 3^{\\mathrm{h}}\\,51^{\\mathrm{m}}\\,45.64^{\\mathrm{s}}$, $\\delta_2 = 22^{\\circ}\\,20'\\,06.2''$.\n\nThe angle $\\theta$ traversed by the object is estimated by Pythagorean theorem taking into account the correction for small circles: $\\theta\\approx\\sqrt{(\\delta_1-\\delta_2)^2+(\\alpha_1-\\alpha_2)^2\\cos^2\\delta_1}\\approx 0.956^{\\circ}$, or by the spherical law of cosines: $\\theta = \\arccos\\left(\\sin\\delta_1\\sin\\delta_2+\\cos\\delta_1\\cos\\delta_2\\cos(\\alpha_1-\\alpha_2)\\right)\\approx 0.956^{\\circ}$.\n\nSo an estimation of the angular velocity is\n\n$$\\omega = \\frac{0.956^{\\circ}}{4\\ \\mathrm{d}} = 0.239^{\\circ}/\\mathrm{d}.$$\n\nSubstituting this value into the equation above, we obtain\n\n$$\\frac{V_{\\oplus}}{\\omega} = \\frac{V_{\\oplus}}{\\omega_{\\oplus}}\\cdot\\frac{\\omega_{\\oplus}}{\\omega} = a_{\\oplus}\\cdot\\frac{360^{\\circ}}{\\omega T_{\\oplus}} = a_{\\oplus}\\times\\frac{360^{\\circ}}{0.239^{\\circ}/d\\times 365.26^{\\mathrm{d}}} = 4.124a_{\\oplus}$$\n\n$$\\Longrightarrow\\qquad \\frac{a}{a_{\\oplus}}+\\sqrt{\\frac{a}{a_{\\oplus}}} = 4.124.$$\n\nThis equation can be solved using iterative method:\n\n$$\\frac{a_{n+1}}{a_{\\oplus}} = 4.124-\\sqrt{\\frac{a_n}{a_{\\oplus}}}\\,, \\qquad a_0 = 1\\ \\mathrm{au},$$\n\nthat quickly converges to $a = 2.57$ au or $3.8\\cdot 10^{11}$ m. The data table corresponds to the asteroid 2021 GK$_{139}$. The real value for the semi-major axis of its orbit is 2.595 au.\n\n**Method 2.** A more complex method requires the use of the information about the stationary points. Let us determine the relation between the radius of the object’s orbit and the length of the arc of its retrograde motion.\n\nWe introduce a coordinate system centered on the Earth as shown in Figure 8. The coordinates of the object in such a system are $(a\\sin\\lambda;\\ a\\cos\\lambda-a_{\\oplus})$. The relative velocity of the object is $(V\\cos\\lambda-V_{\\oplus},\\ -V\\sin\\lambda)$.\n\nAt the stationary points, the observed relative velocity of the object is directed along the line of sight. We can write the proportionality\n\n$$\\frac{V\\cos\\lambda-V_{\\oplus}}{a\\sin\\lambda} = \\frac{-V\\sin\\lambda}{a\\cos\\lambda-a_{\\oplus}} \\quad\\Longrightarrow\\quad \\frac{\\sqrt{a_{\\oplus}/a}\\cdot\\cos\\lambda-1}{a\\sin\\lambda} = \\frac{-\\sqrt{a_{\\oplus}/a}\\cdot\\sin\\lambda}{a\\cos\\lambda-a_{\\oplus}}\\,.$$\n\nIf we measure $a$ in AU, we’ll get\n\n$$\\sqrt{a}\\cos^2\\lambda-\\frac{1}{\\sqrt{a}}\\cos\\lambda-a\\cos\\lambda+1 = -\\sqrt{a}\\sin^2\\lambda \\quad\\Longrightarrow\\quad \\cos\\lambda = \\frac{\\sqrt{a}+1}{a+1/\\sqrt{a}}\\,.$$\n\nBased on the track of an object on the celestial sphere, we determine the length of the retrograde motion arc. The distance between the stationary points turns out to be about $14^{\\circ}$. This value can be measured directly from the plot, taking into account the projection effect, or estimated using the spherical law of cosines based on the coordinates of the stationary points. The stationary points themselves correspond approximately to October 6, 2023 and January 9, 2024. During this time, due to the movement of the Earth in its orbit, the observer’s line of sight will rotate $95^{\\circ}$, so the corresponding angle $\\theta$ in Figure 8 equals to $(95^{\\circ}+14^{\\circ})/2\\approx 54^{\\circ}$.\n\nBy the law of sines\n\n$$\\frac{\\sin\\theta}{a} = \\frac{\\sin(\\theta-\\lambda)}{a_{\\oplus}}\\,.$$\n\nWe need to find both the radius $a$ and the angle $\\lambda$. It seems meaningful to determine the roots numerically. For example, we use the bisection-like method on the segment $[1.5; 10]$ au and calculate $\\lambda$ from both the sine theorem ($\\lambda_1$) and the $\\cos\\lambda$ estimate ($\\lambda_2$):\n\n| $a$ | 1.5 | 10.0 | 5.0 | 3.0 | 2.5 |\n|---|---|---|---|---|---|\n| $\\lambda_1$, $^{\\circ}$ | 16.2 | 66.2 | 53.6 | 40.2 | 34.5 |\n| $\\lambda_2$, $^{\\circ}$ | $21.4^{\\circ}$ | 49.4 | 44.7 | 38.4 | 35.1 |\n\nWe can take the value of 2.5 au as a fair estimation.\n\n**Method 3 (sketch).** Finally, one can simply convert the object’s coordinates to the ecliptic system, calculate the ecliptic longitude of the Sun (for details see Problem 2) and the object’s elongation at each point. Next, we will notice two points, for example, with zero elongation (the conjunction of the object with the Sun). The time difference at these points corresponds to the synodic period of the object. Then it is easy to determine the sidereal period, and then the radius of the object’s orbit.\n\nc) It was previously shown that the object is superior. Then the concept of the greatest elongation is meaningless for it.\n\nSince the time interval between quadratures is related to the value of the synodic period, let us first estimate the synodic period using Kepler’s third law:\n\n$$S = \\frac{T\\cdot T_{\\oplus}}{T-T_{\\oplus}} = \\frac{a^{1.5}\\cdot a_{\\oplus}^{1.5}}{a^{1.5}-a_{\\oplus}^{1.5}} = 1.3\\ \\mathrm{yr}.$$\n\nWe should estimate the angle $\\theta$ centered on the Sun between the direction to Earth and the object in quadrature (see Figure 9): $\\theta = \\arccos(a_{\\oplus}/a)\\approx 67^{\\circ}$.\n\nThen the minimal time interval between successive quadratures is $\\Delta T = \\dfrac{2\\theta}{360^{\\circ}}\\cdot S = 0.49$ yr.\n\nd) Let us think about the moments when the minimal and maximal magnitudes are reached. Note that the magnitude dependence on the observed phase is insignificant. The minimal phase corresponds to the point of quadrature,\n\n$$\\Phi_{\\min} = \\frac{1+\\cos\\varphi}{2} = \\frac{1+\\cos\\arcsin(a_{\\oplus}/a)}{2}\\approx 0.96.$$\n\nThis value differs very slightly from 1, and within the accuracy of our calculations, we can ignore the phase change.\n\nThe object’s orbit is circular, so the most significant factor is the difference in the distances between the Earth and the object. The object becomes the faintest in its conjunction, and the brightest in its opposition:\n\n$$m_o-m_c = -2.5\\lg\\frac{E_o}{E_c} = -2.5\\lg\\frac{(a-a_{\\oplus})^{-2}}{(a+a_{\\oplus})^{-2}} = 5\\lg\\frac{a-a_{\\oplus}}{a+a_{\\oplus}} = -1.8^{\\mathrm{m}}.$$\n\ne) We have to express the dependence of the apparent magnitude on the distance $r$ to the object. The illuminance from the Sun is inversely proportional to the square of the distance from the Sun to the object. Also, the illuminance created by an object on the Earth is inversely proportional to the square of the distance from the object to the Earth. We use Pogson’s law and write\n\n$$m(r)-H = -2.5\\lg\\frac{a_{\\oplus}^2a_{\\oplus}^2}{r^2a^2} = 5\\lg\\frac{ra}{a_{\\oplus}^2}\\,.$$\n\nIf we express distances in astronomical units, the formula takes the form\n\n$$m(r) = H+5\\lg ra.$$\n\nLet $t=0$ correspond to the moment of the opposition. At the time $t$, the difference between the heliocentric longitudes of the Earth and the object is\n\n$$\\Delta\\lambda = \\frac{t}{S}\\cdot 360^{\\circ}.$$\n\nThe distance to the object is related to the $\\Delta\\lambda$ with the law of cosines (see Figure 10):\n\n$$r = \\sqrt{a_{\\oplus}^2+a^2-2a_{\\oplus}a\\cos\\Delta\\lambda}.$$\n\nIn au, $r = \\sqrt{1+a^2-2a\\cos\\Delta\\lambda}$. Finally, we obtain the dependence of the apparent magnitude on the number of days since the opposition\n\n$$\\begin{aligned} m(t) &= H+5\\lg\\left(a\\sqrt{1+a^2-2a\\cos\\Delta\\lambda}\\right) = \\\\ &= H+5\\lg a+2.5\\lg\\left(1+a^2-2a\\cdot\\cos\\left(\\frac{t}{S}\\cdot 360^{\\circ}\\right)\\right). \\end{aligned}$$\n\nThe graph of this dependence is shown in Figure 11.\n\n**Marking Scheme:**\n\n- Question (a)\n  1. Description of the method for determining the location of the object’s orbit — **2 pt.**\n  2. The answer — **1 pt** *is given only if the description of the method is provided.*\n- Question (b)\n  3. Description of the method for determining the radius of the orbit, taking data from the graph, data processing — **2 pt.** + **1 pt.** + **1 pt.**\n  4. The answer — **1 pt** *is given only if the description and data processing are provided.*\n- Question (c)\n  5. Understanding possible configurations, choosing the necessary data — **1 pt.**\n  6. Writing the correct formulae and the final expression — **1 pt.** + **1 pt.**\n  7. Answer — **1 pt**.\n- Question (d)\n  8. Understanding the necessary configurations, choosing the correct data — **1 pt.**\n  9. Writing the correct formulae and the final expression — **1 pt.** + **1 pt.**\n  10. Answer — **1 pt**.\n- Question (e)\n  11. Dependence of the apparent magnitude on the date — **2 pt.**\n  12. Calculation of values, plot — **1 pt.** + **1 pt.**",
+    "figures": [
+     {
+      "id": "p3-sol-fig1",
+      "caption": "Figure 7: The positions of an object on the celestial sphere observed from the Earth. The equatorial coordinates in degrees are plotted along the axes. The color shows the number of the day since the start of the observation",
+      "alt": "Track of dots plotting δ, deg from 18 to 24 against α, deg from 70 on the left to 45 on the right, forming a narrow retrograde loop between α ≈ 65° and 51°; dot colour from purple to orange encodes the day number on a colour bar labelled Day from 0 to 600.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig1.png",
+      "width": 1980,
+      "height": 563,
+      "source": {
+       "page": 13,
+       "pdfRect": [
+        57.74,
+        102.69,
+        532.76,
+        237.42
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig2",
+      "caption": "Figure 8: Determining the positions of the stationary points",
+      "alt": "Diagram with the Sun (⊙) at the top and the Earth (⊕) below it at distance a⊕; axes X to the right and Y downward from the Earth; the object is a dot at distance a from the Sun, making angle λ at the Sun with the Sun–Earth line and angle θ at the Earth with the Y axis; velocity vectors V⊕ along X and V at the object.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig2.png",
+      "width": 557,
+      "height": 675,
+      "source": {
+       "page": 14,
+       "pdfRect": [
+        230.35,
+        590.98,
+        363.73,
+        752.67
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig3",
+      "caption": "Figure 9: Geometry of the quadratures of the object",
+      "alt": "Circle of radius a (object’s orbit) centred on the Sun ⊙; the Earth ⊕ lies a⊕ below the Sun; a horizontal chord through the Earth meets the circle at two dots (the quadratures); angle θ at the Sun between the directions to the Earth and to the right-hand dot, angle φ at that dot.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig3.png",
+      "width": 951,
+      "height": 966,
+      "source": {
+       "page": 16,
+       "pdfRect": [
+        70.25,
+        93.46,
+        298.21,
+        324.99
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig4",
+      "caption": "Figure 10: Geometry for an arbitrary configuration of the object",
+      "alt": "Circle of radius a centred on the Sun ⊙ with the Earth ⊕ a⊕ below the Sun; the object is a dot on the circle at lower left, at distance r from the Earth; the angle Δλ at the Sun lies between the directions to the object and to the Earth.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig4.png",
+      "width": 951,
+      "height": 966,
+      "source": {
+       "page": 16,
+       "pdfRect": [
+        318.46,
+        93.46,
+        546.48,
+        324.99
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p3-sol-fig5",
+      "caption": "Figure 11: The object’s apparent magnitude on the number of days since the opposition",
+      "alt": "Purple curve plotting m (mag) from 21.6 to 23.4 against t (days) from 0 to about 470: it rises from 21.6 at t = 0 to a maximum of about 23.37 near t ≈ 237 and falls back to 21.6 at the end.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p3-sol-fig5.png",
+      "width": 1643,
+      "height": 1204,
+      "source": {
+       "page": 17,
+       "pdfRect": [
+        93.46,
+        458.82,
+        487.53,
+        747.59
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 12
+    },
+    {
+     "document": "solutions",
+     "page": 13
+    },
+    {
+     "document": "solutions",
+     "page": 14
+    },
+    {
+     "document": "solutions",
+     "page": 15
+    },
+    {
+     "document": "solutions",
+     "page": 16
+    },
+    {
+     "document": "solutions",
+     "page": 17
+    },
+    {
+     "document": "solutions",
+     "page": 18
+    }
+   ]
+  }
+ ]
+}

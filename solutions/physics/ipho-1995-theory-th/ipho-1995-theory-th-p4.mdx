@@ -1,0 +1,230 @@
+---
+id: ipho-1995-theory-th-p4
+source: 'IPhO 1995, Теория'
+title: 'Задача 4. Original Theoretical Question 3: Laser and Mirror'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/1995/ipho-1995-theory-th.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T05:18:10.353Z'
+verifier: 'mechanical'
+---
+
+*XXVI IPhO — Theoretical Questions*
+
+## Условие
+
+The following question was not used in the XXVI IPhO examination.
+
+**(a)** Light of frequency $f_i$ and speed $c$ is directed at an angle of incidence $\theta_i$ to the normal of a mirror, which is receding at speed $u$ in the direction of the normal. Assuming the photons in the light beam undergo an elastic collision *in the rest frame of the mirror*, determine in terms of $\theta_i$ and $u/c$ the angle of reflection $\theta_r$ of the light and the reflected frequency $f_r$, with respect to the original frame.
+
+[You may assume the following Lorentz transformation rules apply to a particle with energy $E$ and momentum $\mathbf{p}$:
+
+$$
+p_\perp = p_\perp\ ,\quad p_\parallel = \frac{p_\parallel - vE/c^2}{\sqrt{1 - v^2/c^2}}\ ,\quad E = \frac{E - vp_\parallel}{\sqrt{1 - v^2/c^2}}\ ,
+$$
+
+where $\mathbf{v}$ is the relative velocity between the two inertial frames; $p$ stands for the component of momentum perpendicular to $\mathbf{v}$ and $p$ represents the component of momentum parallel to $\mathbf{v}$.]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '24.8%', '--fig-max': '159px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p4-fig1.png" alt="Mirror as a horizontal line moving up with velocity u; incident ray f_i arrives from lower left at angle θ_i to the normal, reflected ray f_r leaves to the lower right at angle θ_r." width="497" height="419" loading="lazy" decoding="async" />
+</figure>
+
+**(b)** A thin rectangular light mirror, perfectly reflecting on each side, of width $2a$ and mass $m$, is mounted in a vacuum (to eliminate air resistance), on essentially frictionless needle bearings, so that it can rotate about a vertical axis. A narrow laser beam operating continuously with power $P$ is incident on the mirror, at a distance $b$ from the axis, as drawn.
+
+Suppose the mirror is originally at rest. The impact of the light causes the mirror to acquire a very small but not constant angular acceleration. To analyse the situation approximately, assume that at any given stage in the acceleration process the angular velocity $\omega$ of the mirror is constant throughout any one complete revolution, but takes on a slightly larger value in the next revolution due to the angular momentum imparted to the mirror by the light during the preceding revolution. Ignoring second order terms in the ratio (mirror velocity / $c$), calculate this increment of angular momentum per revolution at any given value of $\omega$. [HINT: You may find it useful to know that $\int \sec^2\theta\ d\theta = \tan\theta$.]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '49.6%', '--fig-max': '317px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p4-fig2.png" alt="Two views of the mirror. Elevation: a rectangle with a dashed vertical rotation axis and the beam spot at distance b from the axis. Plan: the mirror as a slanted double line of half-widths a on either side of the axis, the incident beam at distance b from the axis." width="992" height="439" loading="lazy" decoding="async" />
+</figure>
+
+**(c)** Using the fact that the velocity of recoil of the mirror remains small compared with $c$, derive an approximate expression for $\omega$ as a function of time.
+
+**(d)** As the mirror rotates, there will be instants when the light is reflected from its edge, giving the reflected ray an angle of somewhat more than $90^{\circ}$ with respect to the incident beam.. A screen 10 km away, with its normal perpendicular to the incident beam, intercepts the beam reflected from near the mirror’s edge. Find the deviation $\xi$ of that extreme spot from its initial position (as shown by the dashed line, when the mirror was almost at rest), after the laser has operated for 24 hours. You may suppose the laser power is $P = 100$ W, that the mirror has mass $m = 1$ gram and that the geometry of the apparatus corresponds to $a = b\sqrt{2}$. Neglect diffraction effects at the edge.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.4%', '--fig-max': '355px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p4-fig3.png" alt="Laser below the mirror sends a beam upward; the beam reflects from the mirror edge towards a distant vertical screen on the left; the dashed horizontal line marks the initial spot and ξ the deviation on the screen." width="1109" height="597" loading="lazy" decoding="async" />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** $\tan\theta_r = \frac{\tan\theta_i(1 - u^2/c^2)}{1 + u^2/c^2 - 2u\sec\theta_i/c},\quad \frac{f_r}{f_i} = \frac{1 - 2u\cos\theta_i/c + u^2/c^2}{1 - u^2/c^2}$
+- **(b)** $\frac{dL}{dn} \simeq \frac{8bP}{\omega c}\left(\alpha - \frac{\omega b}{c}\tan\alpha\right),\quad \cos\alpha = b/a$
+- **(c)** $\omega(t) \simeq \frac{4bP\alpha t}{\pi cI}$
+- **(d)** 2.9 mm
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**(a)**
+
+Choose a frame where $z$ is along the normal to the mirror and the light rays define the $x$–$z$ plane. For convenience, recording the energy-momentum in the four-vector form, $(p_x, p_y, p_z, E/c)$, the initial photon has
+
+$$
+P_i = (p\sin\theta_i, 0, p\cos\theta_i, p)
+$$
+
+where $p = E_i/c = hf_i/c$.
+
+By the given Lorentz transformation rules, in the moving mirror frame the energy-momentum of the incident photon reads
+
+$$
+P_{\mathrm{mirror}} = \left(p\sin\theta_i, 0, \frac{p\cos\theta_i - up/c}{\sqrt{1 - u^2/c^2}}, \frac{p - up\cos\theta_i/c}{\sqrt{1 - u^2/c^2}}\right)\ .
+$$
+
+Assuming the collision is elastic in that frame, the reflected photon has energy-momentum,
+
+$$
+P'_{\mathrm{mirror}} = \left(p\sin\theta_i, 0, \frac{-p\cos\theta_i + up/c}{\sqrt{1 - u^2/c^2}}, \frac{p - up\cos\theta_i/c}{\sqrt{1 - u^2/c^2}}\right)\ .
+$$
+
+Transforming back to the original frame, we find that the reflected photon has
+
+$$
+\begin{aligned} p_{xr} &= p\sin\theta_i\ , \quad p_{yr} = 0 \\ p_{zr} &= \frac{(-p\cos\theta_i + up/c) + u(p - up\cos\theta_i/c)/c}{1 - u^2/c^2} \\ E_r/c &= \frac{(p - up\cos\theta_i/c) + u(-p\cos\theta_i + up/c)/c}{1 - u^2/c^2} \end{aligned}
+$$
+
+Simplifying these expressions, the energy-momentum of the reflected photon in the original frame is
+
+$$
+P_r = \left(p\sin\theta_i, 0, \frac{p(-\cos\theta_i + 2u/c - u^2\cos\theta_i/c^2)}{1 - u^2/c^2}, \frac{p(1 - 2u\cos\theta_i/c + u^2/c^2)}{1 - u^2/c^2}\right)\ .
+$$
+
+Hence the angle of reflection $\theta_r$ is given by
+
+$$
+\tan\theta_r = -\frac{p_{xr}}{p_zr} = \frac{\sin\theta_i(1 - u^2/c^2)}{\cos\theta_i - 2u/c + u^2\cos\theta_i/c^2} = \frac{\tan\theta_i(1 - u^2/c^2)}{1 + u^2/c^2 - 2u\sec\theta_i/c}\ ,
+$$
+
+while the ratio of reflected frequency $f_r$ to incident frequency $f_i$ is simply the energy ratio,
+
+$$
+\frac{f_r}{f_i} = \frac{E_r}{E_i} = \frac{1 - 2u\cos\theta_i/c + u^2/c^2}{1 - u^2/c^2}\ .
+$$
+
+[For future use we may record the changes to first order in $u/c$:
+
+$$
+\tan\theta_r \simeq \tan\theta_i(1 + 2u\sec\theta_i/c) \quad \text{so}
+$$
+
+$$
+\tan(\theta_r - \theta_i) = \frac{\tan\theta_r - \tan\theta_i}{1 + \tan\theta_r\tan\theta_i} \simeq \frac{2u\tan\theta_i\sec\theta_i/c}{1 + \tan^2\theta_i} \simeq \frac{2u\sin\theta_i}{c}
+$$
+
+Thus, $\theta_r \simeq \theta_i + 2u\sin\theta_i/c$ and $f_r = f_i(1 - 2u\cos\theta_i/c)$.]
+
+**(b)**
+
+Hereafter define $\theta_i = \theta$. Provided that $b/\cos\theta < a$ the laser light will reflect off the mirror, so $\cos\theta > b/a$ is needed for photon energy-momentum to be imparted to the mirror. Let us then define a critical angle $\alpha$ via $\cos\alpha = b/a$.
+
+The change in the normal component $\Delta p_\parallel$ of the momentum of a single photon is
+
+$$
+\begin{aligned} \Delta L &= \frac{\Delta p_\parallel b}{\cos\theta} = \frac{b}{\cos\theta}\left[p\cos\theta - \frac{p(-\cos\theta + 2u/c - u^2\cos\theta/c^2)}{1 + u^2/c^2}\right]\ , \\ \Delta L &= \frac{bp(2\cos\theta - 2u/c)}{\cos\theta(1 + u^2/c^2)} = \frac{2bp(1 - u\sec\theta/c)}{(1 + u^2/c^2)} \simeq 2bp(1 - u\sec\theta/c)\ . \end{aligned}
+$$
+
+Since $u\cos\theta = \omega b$, $\Delta L \simeq 2bp(1 - \omega b\sec^2\theta/c)$ per photon. Suppose $N$ photons strike every second (and $|\theta|$ is less than the critical angle $\alpha$). Then in time $dt$ we have $Ndt$ photons. But $dt = d\theta/\omega$, so in this time we have,
+
+$$
+dL = N\frac{d\theta}{\omega} \times 2bp\left(\frac{\omega b}{c}\sec^2\theta\right)
+$$
+
+Thus the change in $\Delta L$ per revolution is
+
+$$
+\frac{dL}{dn} = 2 \times \frac{2bpN}{\omega}\int_{-a}^{a}(1 - \omega b\sec^2\theta/c)\,d\theta
+$$
+
+where $n$ refers to the number of revolutions. So
+
+$$
+\frac{dL}{dn} \simeq \frac{8bpN}{\omega}\left(\alpha - \frac{\omega b}{c}\tan\alpha\right) = \frac{8bP}{\omega c}\left(\alpha - \frac{\omega b}{c}\tan\alpha\right)\ ,
+$$
+
+since each photon has energy $pc$ and laser power equals $P = Npc$.  
+Clearly $\omega_b \ll c$ always, so $dL/dn \simeq 8bP\alpha/\omega c$; thus
+
+$$
+\frac{dL}{dt} = \frac{dL}{dn}\frac{dn}{dt} = \frac{\omega}{2\pi}\frac{dL}{dn} = \frac{4bP\alpha}{\pi c}\ .
+$$
+
+**(c)**
+
+Therefore if $I$ is the moment of inertia of the mirror about its axis of rotation,
+
+$$
+I\frac{d\omega}{dt} \simeq \frac{4bP\alpha}{\pi c}\ , \quad \text{or} \quad \omega(t) \simeq \frac{4bP\alpha t}{\pi cI}\ .
+$$
+
+[Some students may derive the rate of change of angular velocity using energy conservation, rather than considering the increase of angular momentum of the mirror: To first order in $v/c$, $E_r = E(1 - 2u\cos\theta/c)$, therefore the energy imparted to the mirror is
+
+$$
+\Delta E = E - E_r \simeq \frac{2uE\cos\theta}{c} = \frac{2\omega bE}{c}
+$$
+
+In one revolution, the number of photons intersected is
+
+$$
+\frac{4\alpha}{2\pi} \times n\frac{2\pi}{\omega} = \frac{4\alpha n}{\omega}\ .
+$$
+
+Therefore the rate of increase of rotational energy $(E_{\mathrm{rot}} = I\omega^2/2)$ is
+
+$$
+\frac{dE_{\mathrm{rot}}}{dt} = \frac{4\alpha N}{\omega}\frac{2\omega bE}{c}\frac{dn}{dt} = \frac{8\alpha bP}{c}\frac{\omega}{2\pi} = \frac{4\alpha bP\omega}{\pi c}
+$$
+
+Thus $I\omega.d\omega/dt = 4\alpha bP/\pi c$, leading to $\omega(t) \simeq 4\alpha bPt/\pi cI$, again.]
+
+**(d)**
+
+To estimate the deflection of the beam, one first needs to work out the moment of inertia of a rectangle of mass $m$ and side $2a$ about the central axis. This is just like a rod. From basic principles,
+
+$$
+I = \int_{-a}^{a}\frac{m\,dx}{2a}x^2 = \left[\frac{mx^3}{6a}\right]_{-a}^{a} = \frac{ma^2}{3} = \frac{mb^2\sec^2\alpha}{3}\ .
+$$
+
+With the stated geometry, $a = b\sqrt{2}$, or $\alpha = 45^{\circ}$, so
+
+$$
+\omega \simeq \frac{12\alpha Pt\cos^2\alpha}{\pi mcb} \rightarrow \frac{3Pt}{mca\sqrt{2}}\ .
+$$
+
+At the edge, $u = \omega a = 3Pt/mc\sqrt{2}$, and the angle of deviation is
+
+$$
+\delta = \frac{2u\sin\alpha}{c} = \frac{3Pt}{mc^2}
+$$
+
+[Interestingly, it is determined by the ratio of the energy produced by the laser to the rest-mass energy of the mirror.]
+
+Using the given numbers, and in SI units, the deviation is
+
+$$
+\xi \simeq 10^4\delta = \frac{10^4 \times 3 \times 100 \times 24 \times 3600}{10^{-3} \times (3 \times 10^8)^2} \simeq 2.9\ \mathrm{mm}\ .
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43%', '--fig-max': '276px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p4-sol-fig1.png" alt="Mirror moving up with velocity u; incident ray f_i at angle θ_i and reflected ray f_r at angle θ_r to the normal." width="861" height="703" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.4%', '--fig-max': '272px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p4-sol-fig2.png" alt="Plan view of the tilted mirror: incident beam at distance b from the axis (dashed), angle θ between the beam and the mirror normal at the point of incidence and at the axis; the distance along the mirror from the axis to the point of incidence is b secθ and the half-width is a." width="849" height="636" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.3%', '--fig-max': '271px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1995-theory-th/p4-sol-fig3.png" alt="Laser beam reflected from the mirror edge (mirror at π/4) towards a screen 10^4 m away; the deviation angle δ and the displacement ξ on the screen are marked." width="847" height="460" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [th.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1991_2000/1995/Theory/th.pdf)
+· официални решения: [th_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1991_2000/1995/Theory/th_sol.pdf)

@@ -1,0 +1,283 @@
+---
+id: owao-2024-data-analysis-p-p2
+source: 'OWAO 2024, Практически тур'
+title: 'Задача 2. Support Service'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2024/owao-2024-data-analysis-p.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-26T05:18:56.980Z'
+verifier: 'mechanical'
+---
+
+*2024 ⋄ Practical Round ⋄ Problems · 20 т.*
+
+<details>
+<summary>Указания</summary>
+
+1. The practical round is 5 hours long and accounts for 30 % of the total grade.
+
+2. The maximum score for each problem is 20 points. The round total is 60 points.
+
+3. Paper and electronic versions of problems are identical. The necessary files can be downloaded from the testing system.
+
+4. **Please present your solution as an electronic report,** containing information about your work, plots and tables, intermediate and final results, and conclusions.
+
+5. **Please include your participant code** (string like `AA-1`) at the beginning of each report.
+
+6. **Submit your report in PDF format.** If necessary, also attach working files (images, source code, etc.). ZIP format archives are accepted. The maximum file upload size is 10 MB.
+
+7. During the practical round, you can use:
+
+- browser, e. g. Google Chrome/Chromium,
+- text editor, e. g. Microsoft Word/LibreOffice Writer/Google Docs,
+- spreadsheet editor, e. g. Microsoft Excel/LibreOffice Calc/Google Sheets.
+
+You may also use:
+
+- development tools, e. g. Python & Jupyter Notebook,
+- graphic editors, e. g. Paint/GIMP,
+- other applications for data processing, analysis, report generation, including online applications (Google Colab, Desmos, etc.).
+
+8. This is an individual competition. **You must not use collaborative tools and functions.**
+
+9. You may find and use documentation for the software and libraries used but **not reference literature on astronomy, physics and mathematics.**
+
+10. Please remember that the jury may not understand your language. It is expected that solutions are written in plain English. Use mathematical expressions, numbers and images.
+
+11. Some problems are quite difficult. Remember that partial solutions are also scored.
+
+12. A list of constants is given on page 8.
+
+Go to `https://my.sirius.online/`, log in with your email and password, and select the Practical round. The countdown will begin after you click the Start button.
+
+Good luck!
+
+</details>
+
+## Условие
+
+An analemma (from Ancient Greek αναλημμα – “support”) is a diagram showing the position of the Sun in the sky as seen from a fixed location on the Earth at the same mean solar time, as that position varies over the course of a year. It is directly related to the so-called equation of time — the difference between mean and true solar time (that is, the difference between the right ascensions of the true and mean Sun):
+
+$$
+\eta = t_{\mathrm{mean}}-t_{\mathrm{true}} = \alpha_{\mathrm{true}}-\alpha_{\mathrm{mean}}.
+$$
+
+This difference is due to two reasons: the tilt of the planet’s axis of rotation (obliquity) and the eccentricity of its orbit.
+
+Assume the planet pass perihelion at the moment $t=0$. If the planet moved uniformly, its position would be determined by the mean anomaly
+
+$$
+M(t) = \frac{2\pi t}{T},
+$$
+
+where $T$ is the orbital period of the planet.
+
+The actual position of the planet in its orbit is determined by the true anomaly $\nu$. The true anomaly $\nu$ is geometrically related to the eccentric anomaly $E$, which shows the position of some imaginary point on the auxiliary circle (see Figure 1).
+
+Please note that
+
+$$
+\tan\frac{\nu}{2} = \sqrt{\frac{1+e}{1-e}}\cdot\tan\frac{E}{2},
+$$
+
+where $e$ is the eccentricity of the planet’s orbit. Also, the mean and eccentric anomalies (expressed in radians) are related by Kepler’s equation:
+
+$$
+E-e\cdot\sin E = M.
+$$
+
+**Please include your participant code** at the beginning of your report.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.8%', '--fig-max': '357px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p2-fig1.png" alt="Quarter of an auxiliary circle (outer arc) and of the orbit ellipse (inner arc) with centre C on the left and pericentre P on the right of a horizontal axis; the Sun is a large dot on the axis; lines from C make angles E and M with the axis, a line from the Sun to the planet (small dot on the ellipse) makes angle ν; a vertical line from the auxiliary circle through the planet meets the axis at a right angle. Labels: auxiliary circle, orbit (ellipse), C, E, M, ν, P." width="1117" height="1148" loading="lazy" decoding="async" />
+<figcaption>Figure 1: Geometric meaning and connection between different anomalies. $C$ is the center of the ellipse and auxiliary circle, $P$ is the pericenter of the orbit</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '648px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p2-fig2.png" alt="Five panels, Planet 1 to Planet 5, each plotting the declination of the Sun δ in degrees against the equation of time η in “local” minutes (axis increasing to the left). Planet 1: an ellipse spanning about ±135 min and ±30°. Planet 2: a rounded triangle with apex at 20° and flat base at −20°, η from about 500 to −500. Planet 3: a figure-eight through the origin between +10° and −10°, η about ±500. Planet 4: an asymmetric loop with a sharp corner at η ≈ 500, δ = 20°, reaching −20° near η ≈ −130. Planet 5: a teardrop from 40° at the top to a small loop near −30° to −40°, η about ±60." width="2025" height="2678" loading="lazy" decoding="async" />
+<figcaption>Figure 2: Analemmas of five imaginary planets</figcaption>
+</figure>
+
+**a)** Plot the difference $(\nu-M)$ as a function of time $t\in[0;\ T]$ for the orbits of the Earth and Mars. For convenience, express $(\nu-M)$ in “local” minutes: 1 solar day $=$ 24 hours, 1 hour $=$ 60 minutes.
+
+Let $x$ be the ecliptic longitude of the planet’s perihelion, measured from the vernal equinox for this planet. You can find the corresponding values in the Constants Table.
+
+**b)** Express the “local” ecliptic longitude of the Sun $\lambda$ in terms of $\nu$ and $x$.
+
+Hour angles and right ascensions are measured along the celestial equator. Since the ecliptic is inclined to the celestial equator by an angle of $\varepsilon$, both of these parameters are related to the ecliptic longitude nonlinearly. For example, for right ascension $\alpha$ we have:
+
+$$
+\tan\alpha = \tan\lambda\cdot\cos\varepsilon.
+$$
+
+**c)** Plot the difference $(\alpha-\lambda)$ expressed in “local” minutes as a function of time $t\in[0;\ T]$ for the orbits of the Earth and Mars.
+
+The equation of time can be represented as the sum
+
+$$
+\eta(t) = (\nu-M)+(\alpha-\lambda).
+$$
+
+**d)** Plot the equation of time $\eta$ expressed in “local” minutes as a function of time $t\in[0;\ T]$ for the orbits of the Earth and Mars.
+
+The declination of the Sun $\delta$ can be expressed by the formula
+
+$$
+\sin\delta = \sin\lambda\cdot\sin\varepsilon.
+$$
+
+**e)** Plot the analemma corresponding to mean noon for an observer at mid-latitudes of the Northern Hemisphere of the Earth and Mars (north is up, west is to the right).
+
+**f)** There are the analemmas of five imaginary planets in Figure 2. Determine the parameters $e$, $x$, and $\varepsilon$ for each model. In case there are several possible answers, please provide any.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **b)** $\lambda = \nu + x$
+- **f)** Planet 1: e = 0.3, x = 90°, ε = 30°; Planet 2: e = 0.9, x = 90°, ε = 20°; Planet 3: e = 0.9, x = 0°, ε = 10°; Planet 4: e = 0.9, x = 305°, ε = 20°; Planet 5: e = 0.1, x = 90°, ε = 40°
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:**
+
+a) It is convenient to use the eccentric anomaly $E$ as a parameter. For $E=0$ to $2\pi$ we can tabulate calculations in radians:
+
+$$
+M = E-e\cdot\sin E, \qquad t = \frac{M}{2\pi}\cdot T;
+$$
+
+$$
+\nu = 2\arctan\left(\sqrt{\frac{1+e}{1-e}}\cdot\tan\frac{E}{2}\right)+2\pi k,
+$$
+
+where $k=0$ if $E\leqslant\pi$, and $k=1$ if $E>\pi$.
+
+To convert the obtained results from radians to “local” minutes we have to multiply them by factor $\frac{24\times 60}{2\pi} = \frac{720}{\pi}$.
+
+b) Parameters $\lambda$, $\nu$, and $x$ are measured along the “local” ecliptic in the same direction. Also $\Delta\lambda = \Delta\nu$. When the planet is at the perihelion, $\lambda = x$ and $\nu = 0$, so
+
+$$
+\lambda = \nu+x.
+$$
+
+c) The right ascension
+
+$$
+\alpha = \arctan(\tan\lambda\cdot\cos\varepsilon)+\pi n,
+$$
+
+where integer $n$ is chosen so that $0\leqslant\alpha<\pi$ when $0\leqslant\lambda<\pi$, and $\pi\leqslant\alpha<2\pi$ when $\pi\leqslant\lambda<2\pi$. Please do not forget to convert the results to the local minutes!
+
+d–e) We have everything we need to plot the following graph:
+
+$$
+\begin{cases} \eta = (\nu-M)+(\alpha-\lambda);\\ \delta = \arcsin(\sin\lambda\cdot\sin\varepsilon). \end{cases}
+$$
+
+See Figures 5 and 6.
+
+f) Varying parameters $e$, $x$, and $\varepsilon$, we can adjust the calculated analemmas to the model ones.
+
+Note that the maximum Sun declination for each planet is $\varepsilon$. A symmetric figure means that $x$ is divisible by $\pi/2 = 90^{\circ}$.
+
+The possible values of $e$, $x$, and $\varepsilon$ for each model planet are shown in the table below:
+
+| Planet | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|
+| $e$ | 0.3 | 0.9 | 0.9 | 0.9 | 0.1 |
+| $x$, $^{\circ}$ | 90 | 90 | 0 | 305 | 90 |
+| $\varepsilon$, $^{\circ}$ | 30 | 20 | 10 | 20 | 40 |
+
+**Marking Scheme:**
+
+1. Question (a) — **3 pt.**
+2. Question (b) — **1 pt.**
+3. Question (c) — **3 pt.**
+4. Question (d) — **2 pt.**
+5. Question (e) — **4 pt.**
+6. Question (f)
+   - $\varepsilon$: method — **1 pt.** + values — **0.4 pt**. × **5** = **2 pt.**
+   - $x$: method — **1 pt.** + values — **0.2 pt.** × **5** = **1 pt.**
+   - $e$: method — **1 pt.** + values — **0.2 pt.** × **5** = **1 pt.**
+
+*Note.* In the original formulation of the problem, the notation $x$ could be understood ambiguously. Using the well-known ideas about the Earth’s orbit (the Earth passes the perihelion on January 2–5) one could easily guess how to interpret this designation correctly. However, solutions with an “inverted” ecliptic longitude of the pericenter are assessed without penalty.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '654px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p2-sol-fig1.png" alt="Two panels, The Earth and Mars, plotting “Local” minutes against t/T from 0 to 1: dashed black curve ν − M, red dash-dotted curve α − λ and solid blue curve η. For the Earth η ranges from about +14 to −16 minutes; for Mars from about +51 to −40 minutes." width="2044" height="1737" loading="lazy" decoding="async" />
+<figcaption>Figure 5: Composition of the equation of time for the Earth and Mars</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '646px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2024-data-analysis-p/p2-sol-fig2.png" alt="Two panels, The Earth and Mars, plotting the declination of the Sun δ in degrees against the equation of time η in “local” minutes (axis increasing to the left). The Earth: a figure-eight between about +23° and −23°, η about ±16 min, crossing near δ = 9°. Mars: a single asymmetric teardrop loop between about +25° and −25°, η from about 50 to −40 min." width="2020" height="881" loading="lazy" decoding="async" />
+<figcaption>Figure 6: Calculated analemmas for the Earth and Mars</figcaption>
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Константи</summary>
+
+**Universal**
+
+| | |
+|---|---|
+| Speed of light | $c = 3.00\cdot 10^{8}\ \mathrm{m/s}$ |
+| Planck constant | $h = 6.63\cdot 10^{-34}\ \mathrm{J\cdot s}$ |
+| Boltzmann constant | $k_B = 1.38\cdot 10^{-23}\ \mathrm{J/K}$ |
+| Gas constant | $\mathfrak{R} = 8.314\ \mathrm{J/(mol\cdot K)}$ |
+| Proton mass | $m_p = 1.673\cdot 10^{-27}\ \mathrm{kg}$ |
+
+**Astronomical**
+
+| | |
+|---|---|
+| Astronomical unit | $1\ \mathrm{au} = 149.6\cdot 10^{6}\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc} = 206\,265\ \mathrm{au}$ |
+| Hubble constant | $H_0 = 70\ \mathrm{(km/s)/Mpc}$ |
+
+**Sun**
+
+| | |
+|---|---|
+| Radius | $R_{\odot} = 6.96\cdot 10^{5}\ \mathrm{km}$ |
+| Mass | $\mathfrak{M}_{\odot} = 1.99\cdot 10^{30}\ \mathrm{kg}$ |
+| Absolute magnitude | $M_{\odot} = 4.74^{\mathrm{m}}$ (bol.) |
+| Effective temperature | $T_{\odot} = 5.8\cdot 10^{3}\ \mathrm{K}$ |
+| Luminosity | $L_{\odot} = 3.828\cdot 10^{26}\ \mathrm{W}$ |
+
+**Earth**
+
+| | |
+|---|---|
+| Radius | $R_{\oplus} = 6371\ \mathrm{km}$ |
+| Sidereal day | $\tau_{\oplus} = 23^{\mathrm{h}}\,56^{\mathrm{m}}\,04^{\mathrm{s}}$ |
+| Obliquity of ecliptic | $\varepsilon_{\oplus} = 23.437^{\circ}$ |
+| Surface gravity | $g = 9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_{\oplus} = 365.26^{\mathrm{d}}$ |
+| Orbital eccentricity | $e_{\oplus} = 0.0167$ |
+| | $x_{\oplus} = 283.3^{\circ}$ |
+
+**Mars**
+
+| | |
+|---|---|
+| Radius | $R_M = 3390\ \mathrm{km}$ |
+| Sidereal day | $\tau_M = 24^{\mathrm{h}}\,37^{\mathrm{m}}\,23^{\mathrm{s}}$ |
+| Obliquity (axial tilt) | $\varepsilon_M = 25.192^{\circ}$ |
+| Orbital semi-major axis | $a_M = 1.52\ \mathrm{au}$ |
+| Orbital period | $T_M = 1.88\ \mathrm{yr}$ |
+| Orbital eccentricity | $e_M = 0.0934$ |
+| | $x_M = 251^{\circ}$ |
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO-2024-prob-P.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2024/Data%20Analysis/OWAO-2024-prob-P.pdf)
+· официални решения: [OWAO-2024-sol-P.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2024/Data%20Analysis/OWAO-2024-sol-P.pdf)

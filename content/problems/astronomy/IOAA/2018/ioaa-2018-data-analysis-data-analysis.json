@@ -101,10 +101,10 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/production_astra",
-   "at": "2026-09-25",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-26",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
@@ -115,8 +115,9 @@
     "supplement-3": "7f396ea8b8c2b1206be0ac066f3fe552ec7bd4234200bad0d88dbff04c358438",
     "supplement-4": "7fb44a5087911e236be340541d75e737a49b6bc58db4747429f242cb0e9eab7f"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-25"
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-26",
+   "notes": "repaired from the 2026-09-25 single-pass transcription by agent/gpt-6-astra. Removed the invented table header „Question | Answer field“ from both Summary Answer Sheet sections (supplement-2 p.1 prints the items as lines), the reader's \"Source note\" in the D2 answer-sheet section, and the invented description of the graph sheets (supplement-3 p.1, supplement-4 p.1); section title and captions now the printed „Graph Paper“ / „Graph Paper（log）“. Printed as is: the Summary Answer Sheet labels the mass-function field (D2.2.2) while the problem text asks it in (D2.2.3)."
   }
  },
  "problems": [
@@ -126,7 +127,6 @@
    "statement": "As a by-product of the star-forming process in a galaxy, interstellar dust can significantly absorb stellar light in ultraviolet (UV) and optical bands, and then re-emit in far-infrared (FIR), which corresponds to a wavelength range of $10$–$300\\,\\mu\\mathrm m$.",
    "points": 75,
    "problemType": "practical",
-   "figures": [],
    "parts": [],
    "sections": [
     {
@@ -224,20 +224,20 @@
     {
      "id": "answer-form",
      "title": "Summary Answer Sheet — (D1) Dust and Young Stars in Galaxies",
-     "statement": "Student’s Code: □□□–□□\n\n| Question | Answer field |\n|---|---|\n| (D1.1.1) | The UV slope of such a typical galaxy is □; |\n| (D1.1.2) | See Figure 1; |\n| (D1.1.3) | The UV slope of CR7 is □; [YES] or [NO]? □; |\n| (D1.2.1) | See Figure 2; The best-fit Equation is: □; |\n| (D1.2.2) | The dispersion is □ dex; |\n| (D1.3.1) | $A_{1600}$ as a function of IRX: □; |\n| (D1.3.2) | See Figure 3; The Best-fit Equation is: □; |\n| (D1.3.3) | Expected UV slope of a dust-free galaxy: □; |\n| (D1.4.1) | The IRX of CR7 is □; Here the value is a □ limit (please fill with [upper] or [lower]); |\n| (D1.4.2) | Is the current observation deep enough ([YES] or [NO])? □. |",
+     "statement": "Student’s Code: □□□–□□\n\n(D1.1.1) The UV slope of such a typical galaxy is □;\n\n(D1.1.2) See Figure 1;\n\n(D1.1.3) The UV slope of CR7 is □; [YES] or [NO]? □;\n\n(D1.2.1) See Figure 2; The best-fit Equation is: □;\n\n(D1.2.2) The dispersion is □ dex;\n\n(D1.3.1) $A_{1600}$ as a function of IRX: □;\n\n(D1.3.2) See Figure 3; The Best-fit Equation is: □;\n\n(D1.3.3) Expected UV slope of a dust-free galaxy: □;\n\n(D1.4.1) The IRX of CR7 is □; Here the value is a □ limit (please fill with [upper] or [lower]);\n\n(D1.4.2) Is the current observation deep enough ([YES] or [NO])? □.",
      "parts": [],
      "figures": []
     },
     {
      "id": "graph-paper",
-     "title": "Shared graph paper",
-     "statement": "Student’s Code: □□□–□□\n\nThe two archived blank graph sheets accompany the data-analysis paper. The logarithmic sheet is rotated for upright reading; its full printed grid and scale labels are preserved.\n\n![](fig6)\n\n![](fig7)",
+     "title": "Graph Paper",
+     "statement": "Student’s Code: □□□–□□\n\n![](fig6)\n\n![](fig7)",
      "parts": [],
      "figures": [
       {
        "id": "fig6",
-       "alt": "Graph Paper — complete blank linear grid.",
-       "caption": "Graph Paper — complete blank linear grid.",
+       "alt": "Blank linear graph paper sheet with Student’s Code boxes in the header.",
+       "caption": "Graph Paper",
        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig6.png",
        "width": 1873,
        "height": 2829,
@@ -255,11 +255,11 @@
       },
       {
        "id": "fig7",
-       "alt": "Graph Paper (log) — complete blank logarithmic grid and printed scales.",
-       "caption": "Graph Paper (log) — complete blank logarithmic grid and printed scales.",
-       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig7-v2.png",
-       "width": 2864,
-       "height": 1920,
+       "alt": "Blank logarithmic graph paper sheet; the left scale is labelled 10^3.00 to 10^3.50 in steps of 0.05, the right scale 1000 to 3200 in steps of 200.",
+       "caption": "Graph Paper（log）",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig7.png",
+       "width": 1920,
+       "height": 2864,
        "source": {
         "page": 1,
         "pdfRect": [
@@ -269,7 +269,6 @@
          778.01
         ],
         "dpi": 300,
-        "rotation": 90,
         "document": "supplement-4"
        }
       }
@@ -278,7 +277,6 @@
    ],
    "solution": {
     "statement": "Official solution and grading. Section 1.4 is explicitly marked “discarded” in the official key; its printed questions and worked answers are retained.",
-    "figures": [],
     "sections": [
      {
       "id": "d11",
@@ -305,16 +303,16 @@
           "id": "fig1",
           "alt": "Figure 1. Official fit to the CR7 photometry.",
           "caption": "Figure 1. Official fit to the CR7 photometry.",
-          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig1.png",
-          "width": 1587,
-          "height": 983,
+          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig1-v2.png",
+          "width": 1563,
+          "height": 1064,
           "source": {
            "page": 4,
            "pdfRect": [
-            107.1,
-            463.1,
-            487.89,
-            698.85
+            110.07,
+            451.3,
+            484.92,
+            706.46
            ],
            "dpi": 300,
            "document": "solutions"
@@ -339,16 +337,16 @@
           "id": "fig2",
           "alt": "Figure 2. Official IRX–β fit.",
           "caption": "Figure 2. Official IRX–β fit.",
-          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig2.png",
-          "width": 1612,
-          "height": 1071,
+          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig2-v2.png",
+          "width": 1707,
+          "height": 1159,
           "source": {
            "page": 5,
            "pdfRect": [
-            107.1,
-            450.45,
-            493.83,
-            707.27
+            92.83,
+            439.52,
+            502.2,
+            717.39
            ],
            "dpi": 300,
            "document": "solutions"
@@ -385,16 +383,16 @@
           "id": "fig3",
           "alt": "Figure 3. Official attenuation–β fit.",
           "caption": "Figure 3. Official attenuation–β fit.",
-          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig3.png",
-          "width": 1489,
-          "height": 966,
+          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig3-v2.png",
+          "width": 1501,
+          "height": 983,
           "source": {
            "page": 7,
            "pdfRect": [
-            124.96,
+            122,
             391.55,
             481.95,
-            623.07
+            627.3
            ],
            "dpi": 300,
            "document": "solutions"
@@ -548,7 +546,6 @@
    "statement": "Astronomers discovered an extraordinary binary system in the constellation of Auriga during the course of the Apache Point Observatory Galactic Evolution Experiment (APOGEE). In these questions, you will try to analyse the data and recreate their discovery for yourself.\n\nThe research team is aiming to find compact stars in binary systems using the radial velocity (RV) technique. They examined archival APOGEE spectra of “single” stars and measured the apparent variation of their RV within this data. Among ~200 stars with the highest accelerations, researchers searched for periodic photometric variations in data from the All-Sky Automated Survey for Supernovae (ASAS-SN) that might be indicative of transits, ellipsoidal variations or starspots. After this process, they spotted a star named 2M05215658+4359220, with a large variation in RV and photometric variability.",
    "points": 75,
    "problemType": "practical",
-   "figures": [],
    "parts": [],
    "sections": [
     {
@@ -632,14 +629,13 @@
     {
      "id": "answer-form",
      "title": "Summary Answer Sheet — (D2) Compact Object in a Binary System",
-     "statement": "Student’s Code: □□□–□□\n\n| Question | Answer field |\n|---|---|\n| (D2.1.1) | The maximum acceleration is □ km/s/day; |\n| (D2.1.2) | Estimate for the mass of the companion: □ $M_\\odot$; |\n| (D2.2.1) | See Figure 4; $P_{\\mathrm{orb}}=$ □; $K=$ □; |\n| (D2.2.2) | $f(M_1,M_2)=$ □ $M_\\odot$; |\n| (D2.3.1) | $\\sin i=$ □; $R_1=$ □ $R_\\odot$; $L_1=$ □ $L_\\odot$; $M_1=$ □ $M_\\odot$; |\n| (D2.3.2) | The type of this star should be □; |\n| (D2.3.3) | See Figure 5; |\n| (D2.3.4) | The possible mass of the unseen companion is □ $M_\\odot$; It could be a □. |\n\nSource note: the answer form labels the mass-function field (D2.2.2), although the main question labels that request (D2.2.3); the form has no separate radius field.",
+     "statement": "Student’s Code: □□□–□□\n\n(D2.1.1) The maximum acceleration is □ km/s/day;\n\n(D2.1.2) Estimate for the mass of the companion: □ $M_\\odot$;\n\n(D2.2.1) See Figure 4; $P_{\\mathrm{orb}}=$ □; $K=$ □;\n\n(D2.2.2) $f(M_1,M_2)=$ □ $M_\\odot$;\n\n(D2.3.1) $\\sin i=$ □; $R_1=$ □ $R_\\odot$; $L_1=$ □ $L_\\odot$; $M_1=$ □ $M_\\odot$;\n\n(D2.3.2) The type of this star should be □;\n\n(D2.3.3) See Figure 5;\n\n(D2.3.4) The possible mass of the unseen companion is □ $M_\\odot$; It could be a □.",
      "parts": [],
      "figures": []
     }
    ],
    "solution": {
     "statement": "Official solution and grading. The repeated questions in the solution PDF use slightly different wording, rounded APOGEE velocities and six stellar-type options; the independently archived question edition above is retained.",
-    "figures": [],
     "sections": [
      {
       "id": "d21",
@@ -674,16 +670,16 @@
           "id": "fig4",
           "alt": "Figure 4. Official TRES radial-velocity sinusoid.",
           "caption": "Figure 4. Official TRES radial-velocity sinusoid.",
-          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig4.png",
-          "width": 1191,
-          "height": 755,
+          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig4-v2.png",
+          "width": 1209,
+          "height": 829,
           "source": {
            "page": 11,
            "pdfRect": [
-            190.4,
-            421.02,
-            476.01,
-            602.01
+            188.6,
+            411.75,
+            478.39,
+            610.47
            ],
            "dpi": 300,
            "document": "solutions"
@@ -738,16 +734,16 @@
           "id": "fig5",
           "alt": "Figure 5. Official mass-function curves, mass range and compact-object limits.",
           "caption": "Figure 5. Official mass-function curves, mass range and compact-object limits.",
-          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig5.png",
-          "width": 1191,
-          "height": 773,
+          "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2018-data-analysis-data-analysis/fig5-v2.png",
+          "width": 1243,
+          "height": 853,
           "source": {
            "page": 14,
            "pdfRect": [
-            157.68,
-            277.88,
-            443.3,
-            463.1
+            148.77,
+            268.61,
+            446.85,
+            473.22
            ],
            "dpi": 300,
            "document": "solutions"
