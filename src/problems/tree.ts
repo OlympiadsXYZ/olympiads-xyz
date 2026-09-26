@@ -71,6 +71,7 @@ export type PaperFile = {
     grade?: string | null;
     lang?: string | null;
     title?: string;
+    source?: { archiveKey?: string | null } | null;
   };
   problems: { id: string; number: number | string; title?: string | null }[];
 };

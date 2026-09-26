@@ -11,10 +11,15 @@ import {
 } from '../../context/UserDataContext/properties/simpleProperties';
 import { ProblemDifficulty, ProblemInfo } from '../../models/problem';
 import type { ProblemsIndexEntry } from '../../problems/index-node';
+import { originalFormat } from '../ComparePanel/originalFormat';
 import DifficultyBox from '../DifficultyBox';
 import Info from '../markdown/Info';
 import ProblemStatusCheckbox from '../markdown/ProblemsList/ProblemStatusCheckbox';
-import { problemSourceLabel, tagLabel } from './problemSearch';
+import {
+  problemDifficulty,
+  problemSourceLabel,
+  tagLabel,
+} from './problemSearch';
 
 /**
  * Renders `text`, with every case-insensitive occurrence of `query` marked.
@@ -118,7 +123,9 @@ export function ProblemHit({
           rel="noreferrer"
           className="text-gray-500 dark:text-dark-med-emphasis text-sm"
         >
-          {internalURL ? t('original-pdf') : t('view-solution')}
+          {internalURL
+            ? t(`original-${originalFormat(problem.url)}`)
+            : t('view-solution')}
           <svg
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -158,9 +165,20 @@ export function ProblemHit({
       )}
 
       <div className="pt-4">
+        {/* one badge style for every card: an estimated level (the
+            classification's "Оценена трудност: 3/5") on the same scale */}
         {!hideDifficulty && (
-          problem.assessmentLabel ? <span className="mr-2 text-sm text-gray-600 dark:text-dark-med-emphasis">{problem.assessmentLabel}</span> :
-          <DifficultyBox difficulty={problem.difficulty as ProblemDifficulty} />
+          <span
+            title={
+              /\d\s*\/\s*5/.test(problem.assessmentLabel ?? '')
+                ? problem.assessmentLabel ?? undefined
+                : undefined
+            }
+          >
+            <DifficultyBox
+              difficulty={problemDifficulty(problem) as ProblemDifficulty}
+            />
+          </span>
         )}
         {showTags &&
           problem.tags?.map(tag => (

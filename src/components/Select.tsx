@@ -29,9 +29,18 @@ export default function StyledSelect(props) {
                 ...provided,
                 backgroundColor: '#374151',
               }),
+              // the chevron and the clear cross: gray-400, readable on the dark control
               indicatorsContainer: provided => ({
                 ...provided,
-                color: '#374151',
+                color: '#9ca3af',
+              }),
+              dropdownIndicator: provided => ({
+                ...provided,
+                color: '#9ca3af',
+              }),
+              clearIndicator: provided => ({
+                ...provided,
+                color: '#9ca3af',
               }),
               singleValue: provided => ({
                 ...provided,

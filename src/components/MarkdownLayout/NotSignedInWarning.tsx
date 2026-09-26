@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 //   }
 // `;
 
+// Not rendered anywhere at the moment: the sign-in nudge lives only on the
+// dashboard (its own "not signed in" line), not on module or problem pages.
 export default function NotSignedInWarning() {
   const { t } = useTranslation();
   const { signIn } = useSignIn();

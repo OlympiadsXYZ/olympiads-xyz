@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, ExternalLinkIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
+import { Link } from 'gatsby';
 import * as React from 'react';
 import { Fragment, useContext } from 'react';
 import {
@@ -64,6 +65,7 @@ export default function ModuleHeaders({
   const problemSolutionContext = useContext(ProblemSolutionContext);
   const problem = problemSolutionContext?.problem;
   const verification = problemSolutionContext?.verification;
+  const archiveYear = problemSolutionContext?.archiveYear;
   const suffix = useSuffix(); // a hook: called on every render, the link below is conditional
 
   // either prerequisites for modules or appears in for problems
@@ -333,6 +335,17 @@ export default function ModuleHeaders({
               <CompareToggleButton />
               <ReportIssueLink />
             </div>
+            {/* the paper's page in the archive: its solutions, results and
+                the other papers of that year */}
+            {archiveYear && (
+              <Link
+                to={archiveYear.path}
+                className="mt-3 inline-block text-sm font-medium text-blue-700 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                {t('archive_year_link', { paper: archiveYear.label })}{' '}
+                <span aria-hidden="true">→</span>
+              </Link>
+            )}
           </div>
         )}
       </div>

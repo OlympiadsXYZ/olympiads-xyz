@@ -429,11 +429,26 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   // ProblemInfo nodes, which only exist once sourcing is done. static/ is
   // copied into public/ after bootstrap, so this lands at
   // /problems-data/index.json. See src/problems/index-node.ts.
-  {
+  // The problem pages get their previous/next problem (in the tree's order),
+  // their paper's language and its archive year page in the page context
+  // (src/problems/page-links.ts).
+  const problemPageLinks: (id: string) => {
+    prev: unknown;
+    next: unknown;
+    lang: string | null;
+    archiveYear: unknown;
+  } = (() => {
     const {
       writeProblemsIndex,
       writeProblemsTree,
+      readProblemPapers,
     } = require('./src/problems/index-node');
+    const {
+      problemNeighbours,
+      archiveYearPages,
+      archiveYearLink,
+      foreignLang,
+    } = require('./src/problems/page-links');
     const problemNodes = problems.map(({ node }) => node);
     const count = writeProblemsIndex(__dirname, problemNodes);
     console.info(
@@ -445,7 +460,26 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     console.info(
       `[problems] wrote static/problems-data/tree.json (${tree.count} problems)`
     );
-  }
+    const neighbours = problemNeighbours(tree);
+    const papers = readProblemPapers(__dirname);
+    const yearPages = ARCHIVE_ENABLED
+      ? archiveYearPages(
+          require('./src/archive/catalog-node').loadCatalog(__dirname)
+        )
+      : null;
+    return (id: string) => {
+      const paper = papers.get(id);
+      return {
+        prev: neighbours.get(id)?.prev ?? null,
+        next: neighbours.get(id)?.next ?? null,
+        lang: foreignLang(paper?.lang),
+        archiveYear:
+          paper && yearPages && typeof paper.year === 'number'
+            ? archiveYearLink(paper, yearPages)
+            : null,
+      };
+    };
+  })();
 
   let problemSlugs = {}; // maps slug to problem unique ID
   let problemInfo = {}; // maps unique problem ID to problem info
@@ -605,6 +639,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         component: solutionTemplate,
         context: {
           id: node.frontmatter.id,
+          ...problemPageLinks(node.frontmatter.id),
         },
       });
     } catch (e) {

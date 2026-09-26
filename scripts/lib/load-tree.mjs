@@ -9,6 +9,11 @@ import { fileURLToPath } from 'node:url';
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
 export function loadTreeModule(repo = REPO) {
+  return loadTsModule(path.join(repo, 'src', 'problems', 'tree.ts'), repo);
+}
+
+/** Any shared-safe TypeScript module of src/ (relative imports only, no JSX), loaded the same way. */
+export function loadTsModule(file, repo = REPO) {
   const require = createRequire(path.join(repo, 'package.json'));
   const ts = require('typescript');
   const modules = new Map();
@@ -28,5 +33,5 @@ export function loadTreeModule(repo = REPO) {
     new Function('require', 'module', 'exports', compiled)(dependency, module, module.exports);
     return module.exports;
   };
-  return load(path.join(repo, 'src', 'problems', 'tree.ts'));
+  return load(file);
 }

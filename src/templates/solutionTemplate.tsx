@@ -9,11 +9,23 @@ import { ConfettiProvider } from '../context/ConfettiContext';
 import { ComparePanelProvider } from '../components/ComparePanel/ComparePanelContext';
 import { ProblemSolutionContext } from '../context/ProblemSolutionContext';
 import { SolutionInfo } from '../models/solution';
+import type { ArchiveYearLink, ProblemNeighbour } from '../problems/page-links';
 import { removeDuplicates } from '../utils/utils';
+
+/** Set by gatsby-node on transcribed problem pages (src/problems/page-links.ts). */
+type SolutionPageContext = {
+  id: string;
+  prev?: ProblemNeighbour | null;
+  next?: ProblemNeighbour | null;
+  /** The paper's language when it is not Bulgarian ("en", "ru", …). */
+  lang?: string | null;
+  archiveYear?: ArchiveYearLink | null;
+};
 
 export default function Template(props) {
   const { xdm, allProblemInfo, problemInfo } = props.data;
   const { body } = xdm;
+  const pageContext: SolutionPageContext = props.pageContext ?? {};
 
   const modulesThatHaveProblem: { id: string; title: string }[] =
     removeDuplicates(
@@ -63,7 +75,14 @@ export default function Template(props) {
 
       <ConfettiProvider>
         <ProblemSolutionContext.Provider
-          value={{ modulesThatHaveProblem, problem, verification }}
+          value={{
+            modulesThatHaveProblem,
+            problem,
+            verification,
+            prev: pageContext.prev ?? null,
+            next: pageContext.next ?? null,
+            archiveYear: pageContext.archiveYear ?? null,
+          }}
         >
           <ComparePanelProvider>
             <MarkdownLayout
@@ -74,7 +93,9 @@ export default function Template(props) {
                 </div>
               }
             >
-              <div className="py-4">
+              {/* a paper printed in English or Russian is read (and
+                  hyphenated, spoken) in its own language */}
+              <div className="py-4" lang={pageContext.lang ?? undefined}>
                 <Markdown body={body} />
               </div>
             </MarkdownLayout>
