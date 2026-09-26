@@ -30,7 +30,9 @@ for (const id of ids) {
   const A = shingles(t);
   if (A.size < 20) continue;
   const hits = [];
-  for (const c of corpus) { if (c.id === id || !c.set.size) continue; let n = 0; for (const s of A) if (c.set.has(s)) n++; const v = n / A.size; if (v >= 0.5) hits.push([c.kind + ':' + c.id, v]); }
+  // a published paper's text is LaTeX, the tranche paper's the raw text layer, so formula-heavy twins score lower
+  // against live papers: rmph-2017-theory-theoretical1 matched the live rmph-2018-theory-t1 (the same problem) at 49%
+  for (const c of corpus) { if (c.id === id || !c.set.size) continue; let n = 0; for (const s of A) if (c.set.has(s)) n++; const v = n / A.size; if (v >= (c.kind === 'live' ? 0.35 : 0.5)) hits.push([c.kind + ':' + c.id, v]); }
   if (hits.length) { flagged++; console.log(`${id.padEnd(50)} ${String(A.size).padStart(5)} ${hits.sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => `${k} ${(v * 100).toFixed(0)}%`).join(', ')}`); }
 }
-console.log(`${flagged} of ${ids.length} overlap another text by 50% or more`);
+console.log(`${flagged} of ${ids.length} overlap another text by 50% or more (a published paper by 35%)`);
