@@ -445,7 +445,10 @@ export function textLayerCheck(candidate, manifest, paperId) {
     // the same for the problems document when paper.source.pages declares part of it: one language of a bilingual PDF
     // (balkanski-2011-cgp: French pp. 1–4 and 8–9), a converter's evaluation page (ipho-2007-experiment: Win2PDF p.8)
     const declared = doc === 'solutions' ? candidate?.paper?.solutionSource?.pages : doc === 'problems' ? candidate?.paper?.source?.pages : null;
-    const omissionPages = Array.isArray(declared) && declared.length && declared.every(Number.isInteger) && d.pages && declared.length < d.pages ? new Set(declared) : null;
+    // a split read (D-P30: a paper over 30 pages read in chunks, tx.splitRead) declares the pages read so far; an empty
+    // list means none of this document yet (the statements chunk before any solution page) — only a split read may say so
+    const splitRead = candidate?.tx?.splitRead === true;
+    const omissionPages = Array.isArray(declared) && (declared.length || splitRead) && declared.every(Number.isInteger) && d.pages && declared.length < d.pages ? new Set(declared) : null;
     const joinFields = fields.filter(f => f.doc === doc || shared.test(f.path));
     // a recorded misspelling broken at a line end ("обрато-" / "пропорционална") joins like a transcribed word
     const joinKnown = editPrinted.size ? new Set([...allWords, ...editPrinted]) : allWords;
