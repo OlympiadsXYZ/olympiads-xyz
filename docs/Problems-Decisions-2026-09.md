@@ -265,7 +265,13 @@ Why: verbatim print is never wrong, and it publishes papers that were otherwise 
 `tx.notes`, so a later model-check pass can apply the agreement fixes if Margulan wants D-P23 applied in full. This is
 reversible and awaits his confirmation.
 
-## D-P29 (2026-09-23, pending Margulan) — the IYPT 1988–1993 critical edition is held
+## D-P29 (2026-09-23; decided 2026-09-26) — the IYPT 1988–1993 critical edition is published
+
+**Decision (Margulan, 2026-09-26):** publish what the archive has. A note the editors printed 30 years ago is not a reason
+to hold the papers ("just publish what we have"). All six years (`iypt-1988-x` … `iypt-1993-x`) are live since
+2026-09-25, and the en/ru plan's holds on them are lifted.
+
+The original record, for history:
 
 The archive's IYPT 1988–1993 papers come from Ilya Martchenko's critical edition. Page 1 prints „FINAL DRAFT. — Please do not
 re-publish. Suggestions and criticism welcome“, and the edition adds his own notes, sources and afterword. `iypt-1993-x`
