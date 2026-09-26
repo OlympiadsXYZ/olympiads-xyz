@@ -38,11 +38,7 @@ import {
   useIsUserDataLoaded,
 } from '../context/UserDataContext/UserDataContext';
 import { useSiteStats } from '../hooks/useSiteStats';
-import {
-  approxCount,
-  mostHaveSolutions,
-  subjectList,
-} from '../utils/siteStatsFormat';
+import { subjectList } from '../utils/siteStatsFormat';
 
 const containerClasses = 'max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8';
 const headerClasses =
@@ -56,10 +52,6 @@ const subtextClasses =
 const headerSubtextSpacerClasses = 'h-6 2xl:h-12';
 const whiteButtonClassesBig =
   'text-xl bg-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium text-gray-900 relative';
-const outlineButtonClassesBig =
-  'text-xl px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium text-gray-900 dark:text-white border border-gray-400 dark:border-gray-600 hover:bg-white dark:hover:bg-gray-900 transition';
-const statCardClasses =
-  'flex flex-col rounded-lg bg-white dark:bg-gray-900 ring-1 ring-gray-200 dark:ring-gray-800 px-5 py-4 text-left';
 const whiteButtonClasses =
   'text-lg md:text-xl bg-white px-4 py-2 md:px-6 md:py-3 rounded-lg font-medium text-gray-900 relative';
 const usacoTitleClasses =
@@ -69,8 +61,7 @@ const linkTextStyles =
 
 export default function IndexPage(): JSX.Element {
   const { t } = useTranslation();
-  const stats = useSiteStats();
-  const subjects = subjectList(stats.subjects);
+  const subjects = subjectList(useSiteStats().subjects);
   const firebaseUser = useFirebaseUser();
   const loading = useIsUserDataLoaded();
   const location = useLocation();
@@ -147,65 +138,33 @@ export default function IndexPage(): JSX.Element {
                 dark:text-gray-300
               "
             >
-              {t('index_hero-lead')}{' '}
-              <GradientText>{t('index_hero-free')}</GradientText>
-              {t('index_hero-rest')}
+              {t('index_a-free-collection-of')}{' '}
+              <GradientText>{t('index_curated-resources')}</GradientText>{' '}
+              <br className="hidden md:block" />
+              {t('index_to-help-you-prepare-for-olympiads')}
             </p>
 
-            <div className="h-8"></div>
+            <div className="h-8 sm:h-8"></div>
 
-            {/* counted at build time (src/gatsby/site-stats.ts) */}
-            <dl className="grid sm:grid-cols-2 gap-4 w-full max-w-3xl md:mx-auto">
-              <div className={statCardClasses}>
-                <dt className="text-sm text-gray-600 dark:text-gray-400">
-                  {t('index_stat-problems', { subjects })}
-                  {mostHaveSolutions(stats) && (
-                    <>, {t('index_stat-problems-solved')}</>
-                  )}
-                </dt>
-                <dd className="order-first text-3xl font-black text-gray-900 dark:text-white">
-                  {approxCount(stats.problems)}+
-                </dd>
-              </div>
-              <div className={statCardClasses}>
-                <dt className="text-sm text-gray-600 dark:text-gray-400">
-                  {t('index_stat-archive', {
-                    competitions: stats.archiveCompetitions,
-                  })}
-                </dt>
-                <dd className="order-first text-3xl font-black text-gray-900 dark:text-white">
-                  {approxCount(stats.archiveFiles)}+
-                </dd>
-              </div>
-            </dl>
-
-            <div className="h-8"></div>
-
-            <div className="flex flex-wrap items-center md:justify-center gap-4">
+            <div className="flex md:justify-center">
               <GlowingRing>
                 <Link
-                  to="/problems/"
+                  to="/dashboard"
                   className={classNames(whiteButtonClassesBig, 'inline-block')}
                 >
-                  {t('index_cta-problems')}
+                  {t('index_get_started')}
                 </Link>
               </GlowingRing>
-              <Link
-                to="/archive/"
-                className={classNames(outlineButtonClassesBig, 'inline-block')}
-              >
-                {t('index_cta-archive')}
-              </Link>
             </div>
-            <div className="h-4"></div>
-            <p className="md:text-center text-base font-medium">
-              <Link to="/dashboard" className={linkTextStyles}>
-                {t('index_cta-modules')} &rarr;
-              </Link>
-            </p>
           </div>
 
           <div className="h-16 sm:h-10"></div>
+
+          <div className="flex md:justify-center md:text-xl text-gray-600 dark:text-gray-400 font-medium">
+            <span className="text-xs">{t('index_only-in-languages')}</span>
+          </div>
+          <div className="h-16 sm:h-14"></div>
+
 
           <div className="flex md:justify-center md:text-xl text-gray-600 dark:text-gray-400">
             <a
