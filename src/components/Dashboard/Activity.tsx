@@ -107,10 +107,6 @@ export function ActivityHeatmap({
             )}
           </div>
         </div>
-
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-3">
-          {t('activity_note')}
-        </p>
       </div>
     </div>
   );

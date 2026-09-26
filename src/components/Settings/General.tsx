@@ -101,24 +101,28 @@ export default function General(): JSX.Element {
             </div>
             <Switch checked={showIgnored} onChange={b => setShowIgnored(b)} />
           </li>
-          <li className="py-4 flex items-center justify-between">
+        </ul>
+        {/* A connection workaround (Firebase long polling), not a preference:
+            kept out of sight unless someone needs it. */}
+        <details className="border-t border-gray-200 dark:border-gray-700 py-4 group">
+          <summary className="cursor-pointer text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100">
+            {t('settings_advanced')}
+          </summary>
+          <div className="mt-4 flex items-center justify-between gap-4">
             <div className="flex flex-col">
-              <p
-                className="text-sm font-medium text-gray-500 dark:text-gray-300"
-                id="privacy-option-2-label"
-              >
-                {t('settings_use-long-polling')} -{' '}
-                <span className="font-bold">
-                  {t('settings_use-long-polling-description')}
-                </span>
+              <p className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                {t('settings_use-long-polling')}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                {t('settings_use-long-polling-description')}
               </p>
             </div>
             <Switch
               checked={isLongPolling}
               onChange={b => setIsLongPolling(b)}
             />
-          </li>
-        </ul>
+          </div>
+        </details>
       </div>
     </div>
   );

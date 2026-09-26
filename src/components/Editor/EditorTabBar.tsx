@@ -74,13 +74,13 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
       </div>
       <div
         className={
-          'flex bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400'
+          'flex flex-wrap bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-400'
         }
       >
         <button
           className={classNames(
             'hover:text-gray-800 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800',
-            'px-3 py-2 text-sm font-medium focus:outline-none transition'
+            'px-3 py-2 text-sm font-medium whitespace-nowrap focus:outline-none transition'
           )}
           onClick={() => setOpen(true)}
           type="button"
@@ -90,7 +90,7 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
         <button
           className={classNames(
             'hover:text-gray-800 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800',
-            'px-3 py-2 font-medium text-sm focus:outline-none transition'
+            'px-3 py-2 font-medium text-sm whitespace-nowrap focus:outline-none transition'
           )}
           onClick={() => onFormatCode()}
         >
@@ -100,7 +100,7 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
           <button
             className={classNames(
               'hover:text-gray-800 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-800',
-              'px-3 py-2 font-medium text-sm focus:outline-none transition'
+              'px-3 py-2 font-medium text-sm whitespace-nowrap focus:outline-none transition'
             )}
             onClick={() => setDialogOpen(true)}
           >
@@ -111,20 +111,20 @@ const EditorTabBar: React.FC<EditorTabBarProps> = ({
           <>
             <button
               type="button"
-              className="px-3 py-2 text-sm hover:underline"
+              className="px-3 py-2 text-sm whitespace-nowrap hover:underline"
               onClick={copyFile}
             >
               Копирай
             </button>
             <button
               type="button"
-              className="px-3 py-2 text-sm hover:underline"
+              className="px-3 py-2 text-sm whitespace-nowrap hover:underline"
               onClick={() => downloadEditorFile(filePath, file ?? '')}
             >
               Изтегли
             </button>
             <a
-              className="px-3 py-2 text-sm hover:underline"
+              className="px-3 py-2 text-sm whitespace-nowrap hover:underline"
               href={editorFileURL(filePath, activeFile?.isNew)}
               target="_blank"
               rel="noreferrer"

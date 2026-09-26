@@ -13,6 +13,25 @@ export const difficultyClasses = {
     'bg-orange-100 text-orange-800 dark:bg-orange-800 dark:text-orange-100',
   Insane: 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100',
 };
+const difficultyKeys: { [key in ProblemDifficulty]: string } = {
+  'N/A': 'n/a',
+  'Very Easy': 'very-easy',
+  Easy: 'easy',
+  Normal: 'normal',
+  Hard: 'hard',
+  'Very Hard': 'very-hard',
+  Insane: 'insane',
+};
+
+/** The translated difficulty ("Лесна"); unknown values come back as is. */
+export function difficultyLabel(
+  difficulty: string,
+  t: (key: string) => string
+): string {
+  const key = difficultyKeys[difficulty as ProblemDifficulty];
+  return key ? t(key) : difficulty;
+}
+
 export default function DifficultyBox({
   difficulty,
 }: {
@@ -31,7 +50,7 @@ export default function DifficultyBox({
           {t('n/a')}
         </TextTooltip>
       ) : (
-        difficulty === 'Very Easy' ? (t('very-easy'))  : (difficulty === 'Easy' ? (t('easy')) : (difficulty === 'Normal' ? (t('normal')) : (difficulty === 'Hard' ? (t('hard')) : (difficulty === 'Very Hard' ? (t('very-hard')) : (difficulty === 'Insane' ? t('insane') : '' )))))
+        difficultyKeys[difficulty] ? t(difficultyKeys[difficulty]) : ''
       )}
     </span>
   );
