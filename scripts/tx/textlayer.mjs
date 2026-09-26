@@ -41,7 +41,9 @@ import { parseArgs, fail, readJson, writeJson, readManifest, paperDir, walkStrin
 export const TEXTLAYER_VERSION = 3; // 2: D-P23 recorded fixes (tx.edits); 3: eligibility, span-exact acceptance, lapsed records
 const MIN_TRUST = 0.8, MIN_LAYER_WORDS = 40;
 // fields whose words are the reader's own (alt text, notes) or not prose
-const SKIP_PATH = /\/(tx|classification|sourceLayout|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
+// sourceSpans: page provenance ({document: 'problems' | 'solutions' | 'supplement', page}), not printed text — a
+// „supplement“ span was reported as a word printed nowhere (ioaa-2019-observational-nabl, 2026-09-26)
+const SKIP_PATH = /\/(tx|classification|sourceLayout|sourceSpans|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
 const ALT_PATH = /\/alt$/; // the reader's own words: never "unprinted", but a misread printed term in it is still worth fixing
 const NO_EXTRAS = /\/answer(\/|$)|^\/paper\//; // answers are summarised by the reader; masthead fields come from letterheads that are often images
 // structural words the transcription encodes as fields, not prose
@@ -190,7 +192,9 @@ function candidateFields(c, hasSolutions) {
     // A legacy transcription carries its figures inline: "![alt](url)" plus an italic caption line under the image.
     // The alt text is a description by design and the caption line is the figure's caption, not the field's prose
     // (nao-2018-ii-7-8, nao-2020-i-5-6, nao-2021-iv-ml-prak: „Гравюра“, „Снимка“, „Изображение“ printed nowhere).
-    const noImages = s.replace(/(?:!\[[^\]\n]*\]\([^)\n]*\)[ \t|]*)+\n+[ \t]*(\*{1,2}|_{1,2})[^\n*_]{1,200}\1[ \t]*(?=\n|$)/g, ' ').replace(/!\[[^\]\n]*\]\([^)\n]*\)/g, ' ');
+    // Only a real image (a url with "/" or ":") has that caption line: a figure-id placeholder ("![](p1-fig1)") does
+    // not, and the bold heading printed after it was dropped as a caption (nof-2020-iii-7, 2026-09-26).
+    const noImages = s.replace(/(?:!\[[^\]\n]*\]\([^)\n]*[/:][^)\n]*\)[ \t|]*)+\n+[ \t]*(\*{1,2}|_{1,2})[^\n*_]{1,200}\1[ \t]*(?=\n|$)/g, ' ').replace(/!\[[^\]\n]*\]\([^)\n]*\)/g, ' ');
     // an environment name is markup, never a printed word (\begin{cases}, \begin{aligned}, \begin{array}{cc}: agents
     // rewrote correct LaTeX to get past „cases“/„aligned“ flagged as unprinted, idpho-2020-theory-ipho-q2, ipho-2015-theory-1)
     const prose = splitMath(noImages).map(seg => seg.math ? seg.text.replace(/\\(?:begin|end)\{[a-zA-Z*]+\}(?:\{[^}]*\})?/g, ' ').replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
@@ -231,6 +235,21 @@ function lexiconFiles() {
   const walk = d => { let out = []; try { for (const e of fs.readdirSync(d, { withFileTypes: true })) out = out.concat(e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith('.json') && e.name !== 'schema.json' ? [path.join(d, e.name)] : []); } catch { /* no content: an empty lexicon */ } return out; };
   LEXICON = walk(dir).map(f => { try { return { id: path.basename(f, '.json'), text: fs.readFileSync(f, 'utf8').normalize('NFC').toLowerCase().replace(/ё/g, 'е') }; } catch { return null; } }).filter(Boolean);
   return LEXICON;
+}
+// A source file shared by several papers (one solutions booklet for problems 1–7, split into three papers:
+// iao-2025-theory-t-12/-345/-67-en) prints other papers' passages on this paper's pages. A run the layer finds
+// nowhere in this transcription is not an omission when a published sibling from the same file carries it. Returns
+// the id of that sibling, or null. The sibling must hold every missing word and most (60%) of the printed
+// span's word triples in order — a span may cross two of its fields (a heading, then the statement), so not all.
+const siblingWords = new Map();
+const lc = w => w.normalize('NFC').toLowerCase().replace(/ё/g, 'е');
+function siblingHolding(spanWords, missingWords, docKey, paperId) {
+  if (!docKey || spanWords.length < 3) return null;
+  const key = lc(docKey);
+  if (!siblingWords.has(key)) siblingWords.set(key, lexiconFiles().filter(f => f.text.includes(JSON.stringify(key).slice(1, -1))).map(f => { const ws = [...f.text.matchAll(WORD)].map(m => m[0]); return { id: f.id, set: new Set(ws), tri: new Set(ws.slice(2).map((w, i) => `${ws[i]} ${ws[i + 1]} ${w}`)) }; }));
+  const span = spanWords.map(lc), missing = missingWords.map(lc);
+  const tri = span.slice(2).map((w, i) => `${span[i]} ${span[i + 1]} ${w}`);
+  return siblingWords.get(key).find(f => f.id !== paperId && missing.every(w => f.set.has(w)) && tri.filter(t => f.tri.has(t)).length >= 0.6 * tri.length)?.id || null;
 }
 const knownCache = new Map();
 function knownElsewhere(w, paperId) {
@@ -416,7 +435,9 @@ export function textLayerCheck(candidate, manifest, paperId) {
     // a solutions document shared by several papers (one marking file for every fieldwork task, igeo-2015-experiment-
     // fwe1task1): a passage the paper must carry comes only from the pages it declares it took its solutions from; every
     // page still counts as print for the words it does carry (wopho-2013-q2 transcribes a header from an earlier page)
-    const declared = doc === 'solutions' ? candidate?.paper?.solutionSource?.pages : null;
+    // the same for the problems document when paper.source.pages declares part of it: one language of a bilingual PDF
+    // (balkanski-2011-cgp: French pp. 1–4 and 8–9), a converter's evaluation page (ipho-2007-experiment: Win2PDF p.8)
+    const declared = doc === 'solutions' ? candidate?.paper?.solutionSource?.pages : doc === 'problems' ? candidate?.paper?.source?.pages : null;
     const omissionPages = Array.isArray(declared) && declared.length && declared.every(Number.isInteger) && d.pages && declared.length < d.pages ? new Set(declared) : null;
     const joinFields = fields.filter(f => f.doc === doc || shared.test(f.path));
     // a recorded misspelling broken at a line end ("обрато-" / "пропорционална") joins like a transcribed word
@@ -519,6 +540,8 @@ export function textLayerCheck(candidate, manifest, paperId) {
           // a run whose printed span is mostly symbols is equation lettering the layer strings together ("Rp /Rs = , "
           // p 2 # 1/2 tF (1 ) b2 = p 1.0 tT": ioaa-2016-theory-qp), not a passage a transcription can omit
           if (text.length >= 20 && text.replace(/[\p{L}\s]/gu, '').length > 0.3 * text.length) { run = []; return; }
+          const sibling = siblingHolding([...text.matchAll(WORD)].map(m => m[0]), run.map(t => t.raw), d.key, paperId);
+          if (sibling) { result.notes.push(`${doc} p.${pg.page}: „${text.slice(0, 120)}“ is transcribed in ${sibling}, which shares this source file — not an omission of ${paperId}`); run = []; return; }
           info.omissions++;
           result.defects.push({ path: f?.path || null, document: doc, page: pg.page, severity: run.length >= 6 ? 'critical' : 'major', kind: 'omission', source: 'text-layer', confidence: f && !f.fallback ? 0.9 : 0.6,
             description: `Text-layer check: the printed passage „${text}“ (${doc} p.${pg.page}, printed line: „${lines.slice(0, 160)}“) does not appear in the transcription; restore it verbatim in its printed place${f?.fallback ? ' (field guessed from the problem heading)' : ''}.`, suggestedFix: null, words: run.map(t => t.raw) });

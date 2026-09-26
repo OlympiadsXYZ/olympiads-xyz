@@ -21,6 +21,8 @@
 import path from 'node:path';
 import { checkerEvidenceProblems } from './evidence.mjs';
 import { supplementarySourceErrors } from './supplements.mjs';
+import { sourceConversions } from './source-conversions.mjs';
+import { sourceReadScopes } from './source-read-scope.mjs';
 import {
   parseArgs, fail, readJson, writeJson, readManifest, paperDir, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems,
   independence, nowIso, sha256File, editsNeedingModel,
@@ -77,6 +79,11 @@ const receipt = {
   paperId, verdict,
   contentHash: final.contentHash,
   sourceHashes,
+  // promote.mjs binds image-to-PDF conversions and read scopes (pages of a compilation) to the receipt; without these
+  // two fields every verified-route paper with a converted .jpg source or a readScope was refused at promote
+  // (iao-2002-theory-alpha, ioaa-2009-*, 2026-09-26)
+  sourceConversions: sourceConversions(manifest),
+  sourceReadScopes: sourceReadScopes(manifest),
   reviewer, checkedAt, promptVersion, ...(checkerMode ? { checkerMode } : {}),
   reader: { provider: prov.provider, model: prov.model, promptVersion: prov.promptVersion, promptSha256: prov.promptSha256 ?? null, requestId: prov.requestId, at: prov.at },
   independence: { ...indep, allowSameModel: allowSame },
