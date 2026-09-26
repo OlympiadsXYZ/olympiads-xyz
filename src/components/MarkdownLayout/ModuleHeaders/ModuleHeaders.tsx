@@ -18,6 +18,7 @@ import {
 } from '../../../context/UserDataContext/properties/simpleProperties';
 import { ModuleInfo, ModuleLinkInfo } from '../../../models/module';
 import { useProblemsProgressInfo } from '../../../utils/getProgressInfo';
+import { viewStatementKey } from '../../../utils/originalFormat';
 import {
   CompareToggleButton,
   ReportIssueLink,
@@ -121,7 +122,9 @@ export default function ModuleHeaders({
           <h1 className="text-2xl font-bold text-gray-900 dark:text-dark-high-emphasis sm:text-3xl">
             {markdownData.title}
           </h1>
-          {markdownData.author && (
+          {/* a transcribed problem's provenance is one short line (its author line said the same thing); the
+              detail — which check, by which kind of reader — stays in the line's tooltip */}
+          {markdownData.author && !verification && (
             <p className={`text-gray-500 dark:text-dark-med-emphasis mt-1`}>
               {t('author')}
               {markdownData.author.indexOf(',') !== -1
@@ -130,28 +133,43 @@ export default function ModuleHeaders({
               : {markdownData.author}
             </p>
           )}
-          {verification && (
-            <p className="text-gray-500 dark:text-dark-med-emphasis text-xs mt-1">
-              {verification.kind === 'reviewed'
-                ? t(
-                    verification.verifier === 'single-pass'
-                      ? 'problem-verification-single-pass'
-                      : verification.verifier === 'mechanical'
-                      ? 'problem-verification-reviewed-mechanical'
-                      : verification.verifier === 'crop-audit'
-                      ? 'problem-verification-reviewed-crop-audit'
-                      : verification.verifier === 'same-model'
-                      ? 'problem-verification-reviewed-same-model'
-                      : 'problem-verification-reviewed',
-                    {
-                      date: formatVerifiedAt(verification.verifiedAt),
-                    }
-                  )
-                : verification.kind === 'human'
-                ? t('problem-verification-human')
-                : t('problem-verification-legacy')}
-            </p>
-          )}
+          {verification &&
+            (() => {
+              const date = formatVerifiedAt(verification.verifiedAt);
+              const detail =
+                verification.kind === 'reviewed'
+                  ? t(
+                      verification.verifier === 'single-pass'
+                        ? 'problem-verification-single-pass'
+                        : verification.verifier === 'mechanical'
+                        ? 'problem-verification-reviewed-mechanical'
+                        : verification.verifier === 'crop-audit'
+                        ? 'problem-verification-reviewed-crop-audit'
+                        : verification.verifier === 'same-model'
+                        ? 'problem-verification-reviewed-same-model'
+                        : 'problem-verification-reviewed',
+                      { date }
+                    )
+                  : verification.kind === 'human'
+                  ? t('problem-verification-human')
+                  : t('problem-verification-legacy');
+              const line =
+                verification.kind === 'reviewed'
+                  ? date
+                    ? t('problem-provenance-checked', { date })
+                    : t('problem-provenance-checked-undated')
+                  : verification.kind === 'human'
+                  ? t('problem-provenance-human')
+                  : t('problem-provenance-unchecked');
+              return (
+                <p
+                  className="text-gray-500 dark:text-dark-med-emphasis text-xs mt-1"
+                  title={detail}
+                >
+                  {line}
+                </p>
+              );
+            })()}
           {markdownData instanceof ModuleInfo && markdownData.contributors && (
             <p className={`text-gray-500 dark:text-dark-med-emphasis text-xs`}>
               {t('contributor')}
@@ -309,7 +327,7 @@ export default function ModuleHeaders({
                 rel="noreferrer"
                 className="text-sm font-medium text-gray-800 hover:text-gray-900 my-0 dark:text-gray-200 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
               >
-                <span>{t('view_problem_statement')}</span>
+                <span>{t(viewStatementKey(problem.url))}</span>
                 <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300" />
               </a>
               <CompareToggleButton />

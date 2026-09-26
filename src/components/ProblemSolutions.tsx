@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import DynamicMarkdownRenderer from './DynamicMarkdownRenderer/DynamicMarkdownRenderer';
 import CollapsibleMarkdown from './markdown/CollapsibleMarkdown/CollapsibleMarkdown';
+import { viewStatementKey } from '../utils/originalFormat';
 
 export default function ProblemSolutions({
   modulesThatHaveProblem,
@@ -128,7 +129,7 @@ export default function ProblemSolutions({
                 rel="noreferrer"
                 className="text-sm font-medium text-gray-800 hover:text-gray-900 my-0 dark:text-gray-200 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
               >
-                <span>{t('view_problem_statement')}</span>
+                <span>{t(viewStatementKey(problem.url))}</span>
                 <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300" />
               </a>
             </div>

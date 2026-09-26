@@ -8,7 +8,11 @@
 // (see src/archive/catalog-node.ts).
 import fs from 'fs';
 import path from 'path';
-import { COMPETITION_META, SCIENCE_LABELS } from '../archive/labels';
+import {
+  canonicalCompetition,
+  COMPETITION_META,
+  SCIENCE_LABELS,
+} from '../archive/labels';
 import { getProblemURL, recentUsaco } from '../models/problem';
 import {
   assembleProblemsTree,
@@ -262,7 +266,11 @@ export function readProblemPapers(
 ): Map<string, ProblemPaperInfo> {
   const info = new Map<string, ProblemPaperInfo>();
   forEachPaperFile(repoRoot, ({ paper, problems }) => {
-    const value = { subject: paper.subject, competition: paper.competition };
+    // a legacy code (VSERUSIYSKA) is listed under its canonical competition, as in the sidebar (paperCompetition)
+    const value = {
+      subject: paper.subject,
+      competition: canonicalCompetition(paper.competition),
+    };
     for (const problem of problems) {
       if (problem && problem.id && !info.has(problem.id)) {
         info.set(problem.id, value);

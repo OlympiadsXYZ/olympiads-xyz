@@ -550,3 +550,108 @@ test('every figure of every paper stays exactly once on its page, on its own sid
   }
   assert.ok(pages > 1000 && figures > 5000 && placed > 1000, `${pages} pages, ${figures} figures, ${placed} placed`);
 });
+
+// ---- the original's link, notes, points, source line (site audit 2026-09, batch A) ----
+test('the original opens on the problem\'s own page: spans, then the page overlay, then its figure, then a one-page document; never on a Word or text file', async () => {
+  const { sourcePage, withPage, originalFormat } = await import('../problems-to-site.mjs');
+  const paper = { source: { archiveKey: 'Физика/a.pdf', pages: [1, 2, 3] }, solutionSource: { archiveKey: 'Физика/s.pdf', pages: [1, 2] } };
+  const problem = { id: 'x-p2', sourceSpans: [{ document: 'problems', page: 3 }, { document: 'problems', page: 2 }, { document: 'solutions', page: 2 }] };
+  assert.equal(sourcePage(paper, problem, 'problems', {}), 2);
+  assert.equal(sourcePage(paper, problem, 'solutions', {}), 2);
+  const legacy = { id: 'x-p3', figures: [{ id: 'p3-fig1', source: { page: 3, pdfRect: [0, 0, 1, 1] } }], solution: { figures: [{ id: 'p3-sol-fig1', source: { page: 2, document: 'solutions' } }] } };
+  assert.equal(sourcePage(paper, legacy, 'problems', { 'x-p3': { problems: { page: 2, via: 'text' } } }), 2, 'the overlay before a figure');
+  assert.equal(sourcePage(paper, legacy, 'problems', {}), 3, 'the page of its own figure');
+  assert.equal(sourcePage(paper, legacy, 'solutions', {}), 2);
+  assert.equal(sourcePage(paper, { id: 'x-p4' }, 'problems', {}), null, 'nothing says: no page, never page 1 by default');
+  assert.equal(sourcePage({ source: { archiveKey: 'a.pdf', pages: [4] } }, { id: 'y' }, 'problems', {}), 4);
+  assert.equal(withPage('https://x/a.pdf', 3), 'https://x/a.pdf#page=3');
+  assert.equal(withPage('https://x/%D0%B0.pdf', 3, 'Физика/а.PDF'), 'https://x/%D0%B0.pdf#page=3');
+  for (const key of ['a.doc', 'a.docx', 'a.txt']) assert.equal(withPage(`https://x/${key}`, 3, key), `https://x/${key}`);
+  assert.equal(withPage('https://x/a.pdf', null), 'https://x/a.pdf');
+  assert.deepEqual(['a.pdf', 'b.DOC', 'c.docx', 'd.txt', 'e.zip'].map(originalFormat), ['pdf', 'word', 'word', 'text', 'other']);
+});
+
+test('generated page: the original link carries the overlay page, a Word original none; the card source has names, not codes', t => {
+  const f = fixture(t);
+  f.paper.paper.source.pages = [1, 2];
+  f.paper.paper.grade = '9';
+  f.paper.paper.round = 'III кръг (национален)';
+  f.write(f.file, f.paper); f.approve();
+  f.write('content/problem-source-pages.json', { version: 1, problems: { 'nof-2026-ii-7-p1': { problems: { page: 2, via: 'text' } } } });
+  let result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const info = () => JSON.parse(fs.readFileSync(path.join(f.root, 'content/extraProblems.json'), 'utf8')).EXTRA_PROBLEMS.find(p => p.uniqueId === 'nof-2026-ii-7-p1');
+  assert.match(info().url, /exam\.pdf#page=2$/);
+  assert.match(f.read(f.output), /Оригинал в Архива: \[exam\.pdf\]\([^)]*exam\.pdf#page=2\)/);
+  assert.match(info().source, /^NOF 2026, .*9\. клас/);
+  f.paper.paper.source.archiveKey = 'Физика/exam.docx';
+  f.write(f.file, f.paper); f.approve();
+  result = f.run(); assert.equal(result.status, 0, result.stderr);
+  assert.doesNotMatch(info().url, /#page=/);
+  assert.doesNotMatch(f.read(f.output), /#page=/);
+});
+
+test('run notes never reach the page: caveats, incomplete reasons and answer notes', async t => {
+  const { visitorNoteText, NO_OFFICIAL_SOLUTION_LINE, pipelineNoteLeaks } = await import('../problems-to-site.mjs');
+  for (const note of ['Official solution not transcribed in this window.', 'No closed-form numeric answer is printed in the visible window; official solution not transcribed here.',
+    'Попълва се от страница 2 на решенията при верификация.', 'Решението … предстои да бъде транскрибирано при верификацията.']) assert.equal(visitorNoteText(note), null, note);
+  assert.equal(visitorNoteText('Official solutions were not supplied with the prepared source.'), NO_OFFICIAL_SOLUTION_LINE);
+  assert.equal(visitorNoteText('Архивният файл с решения не съдържа решението на Задача 1 — стойността се попълва при верификация по пълния оригинал.'), NO_OFFICIAL_SOLUTION_LINE);
+  for (const note of ['The official solution covers part (a) only.', 'Answers are derived, not transcribed from an official solutions file.', 'Close all the windows.']) assert.equal(visitorNoteText(note), note);
+  const f = fixture(t), p = f.paper.problems[0];
+  f.paper.paper.solutionSource = { archiveKey: 'Физика/solutions.pdf' };
+  delete p.answer;
+  p.parts = [{ label: 'а)', statement: 'Първо.', answer: { kind: 'text', note: 'Official solution not transcribed in this window.' } },
+    { label: 'б)', statement: 'Второ.', answer: { kind: 'text', note: 'Стойността се дочита от страница 2 на решенията — попълва се при верификация.' } },
+    { label: 'в)', statement: 'Трето.', answer: { kind: 'numeric', value: 5, unit: 'm' } }];
+  p.solution = { incomplete: true, incompleteReason: 'Решението е на страница 2 от PDF-а с решенията и предстои да бъде транскрибирано при верификацията.' };
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  assert.doesNotMatch(mdx, /window|верификаци/);
+  assert.match(mdx, /## Отговори[\s\S]*- \*\*в\)\*\* 5 m/);
+  assert.doesNotMatch(mdx, /- \*\*а\)\*\*/);
+  assert.match(mdx, /Официалното решение не е транскрибирано — вижте файла с решенията в Архива/);
+  assert.deepEqual(pipelineNoteLeaks(mdx), []);
+  assert.deepEqual(pipelineNoteLeaks('<Warning title="x">\nSolutions not transcribed in this window.\n</Warning>'), ['Solutions not transcribed in this window.']);
+});
+
+test('points printed at the start of a part are not repeated; a title does not repeat the lead line\'s points; the lead line keeps "2019 г." together', async t => {
+  const { titleWithoutPoints } = await import('../problems-to-site.mjs');
+  assert.equal(titleWithoutPoints('Permanent magnets (10 points)', 10), 'Permanent magnets');
+  assert.equal(titleWithoutPoints('E1 - Magnetic Pendulum (10 pts)', 10), 'E1 - Magnetic Pendulum');
+  assert.equal(titleWithoutPoints('Hertzian Contact Stress [10 points]', 8), 'Hertzian Contact Stress [10 points]', 'other points stay');
+  assert.equal(titleWithoutPoints('Магнити (10 т.)', null), 'Магнити (10 т.)');
+  const f = fixture(t), p = f.paper.problems[0];
+  f.paper.paper.title = 'Национална олимпиада по физика 2019 г.';
+  f.paper.paper.held = { from: '2019-04-05' };
+  p.title = 'Ping-Pong Resistor (10 points)';
+  p.points = 10;
+  p.parts = [{ label: '(a)', statement: '[1.2 points] Calculate the force.', points: 1.2 }, { label: '(b)', statement: '**(2 т.)** Намерете заряда.', points: 2 }, { label: '(c)', statement: 'Find it.', points: 3 }];
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const raw = f.raw(f.output), mdx = f.read(f.output);
+  assert.match(mdx, /^title: '.*Ping-Pong Resistor'$/m);
+  assert.doesNotMatch(mdx, /title: .*10 points/);
+  assert.ok(mdx.includes('**(a)** [1.2 points] Calculate the force.\n'), mdx);
+  assert.ok(mdx.includes('**(b)** **(2 т.)** Намерете заряда.\n'));
+  assert.ok(mdx.includes('**(c)** Find it. **[3 т.]**'));
+  assert.ok(raw.includes('2019 г. · 5 април 2019 г. · 10 т.'), raw.split('\n').find(l => l.startsWith('*')));
+});
+
+// the note lint: no published page shows a run note in its warnings or its answers (a ship gate)
+test('no published page shows a transcription-run note in a warning or an answer', async () => {
+  const { problemMdx, pipelineNoteLeaks } = await import('../problems-to-site.mjs');
+  const { readPapers, readJson } = await import('../lib/problem-data.mjs');
+  const ledger = readJson(path.join(repo, 'content/problem-publication.json'), { papers: {} });
+  const leaks = [];
+  let pages = 0;
+  for (const record of readPapers(repo)) {
+    if (!publicationState(record, ledger).eligible) continue;
+    for (const problem of record.data.problems) {
+      pages++;
+      for (const line of pipelineNoteLeaks(problemMdx(record.data.paper, problem, { quality: 'legacy' }, record.relativePath))) leaks.push(`${problem.id}: ${line.slice(0, 120)}`);
+    }
+  }
+  assert.ok(pages > 1000, `${pages} pages`);
+  assert.deepEqual(leaks, []);
+});
