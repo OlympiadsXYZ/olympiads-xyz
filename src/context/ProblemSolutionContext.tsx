@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ProblemInfo } from '../models/problem';
+import type { ArchiveYearLink, ProblemNeighbour } from '../problems/page-links';
 
 const ProblemSolutionContext = React.createContext<{
   // url = the problems PDF; solutionUrl = the official solutions PDF, if any
@@ -7,6 +8,11 @@ const ProblemSolutionContext = React.createContext<{
   modulesThatHaveProblem: { id: string; title: string }[];
   // present on transcribed problem pages only (see solutionTemplate.tsx)
   verification?: ProblemVerification;
+  // previous/next problem and the paper's archive year page, on transcribed
+  // problem pages (gatsby-node → src/problems/page-links.ts)
+  prev?: ProblemNeighbour | null;
+  next?: ProblemNeighbour | null;
+  archiveYear?: ArchiveYearLink | null;
 } | null>(null);
 
 /** Publication quality of a transcribed page, from the publication ledger. */

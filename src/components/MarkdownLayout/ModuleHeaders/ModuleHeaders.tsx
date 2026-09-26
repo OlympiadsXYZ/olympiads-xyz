@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon, ExternalLinkIcon } from '@heroicons/react/solid';
 import classNames from 'classnames';
+import { Link } from 'gatsby';
 import * as React from 'react';
 import { Fragment, useContext } from 'react';
 import {
@@ -18,6 +19,7 @@ import {
 } from '../../../context/UserDataContext/properties/simpleProperties';
 import { ModuleInfo, ModuleLinkInfo } from '../../../models/module';
 import { useProblemsProgressInfo } from '../../../utils/getProgressInfo';
+import { originalFormat } from '../../ComparePanel/originalFormat';
 import {
   CompareToggleButton,
   ReportIssueLink,
@@ -63,6 +65,8 @@ export default function ModuleHeaders({
   const problemSolutionContext = useContext(ProblemSolutionContext);
   const problem = problemSolutionContext?.problem;
   const verification = problemSolutionContext?.verification;
+  const archiveYear = problemSolutionContext?.archiveYear;
+  const problemFormat = originalFormat(problem?.url);
   const suffix = useSuffix(); // a hook: called on every render, the link below is conditional
 
   // either prerequisites for modules or appears in for problems
@@ -309,12 +313,27 @@ export default function ModuleHeaders({
                 rel="noreferrer"
                 className="text-sm font-medium text-gray-800 hover:text-gray-900 my-0 dark:text-gray-200 dark:hover:text-gray-100 group inline-flex items-center space-x-1.5"
               >
-                <span>{t('view_problem_statement')}</span>
+                <span>
+                  {problemFormat === 'pdf'
+                    ? t('view_problem_statement')
+                    : t(`original_statement_${problemFormat}`)}
+                </span>
                 <ExternalLinkIcon className="h-5 w-5 text-gray-400 group-hover:text-gray-600 dark:text-gray-400 dark:group-hover:text-gray-300" />
               </a>
               <CompareToggleButton />
               <ReportIssueLink />
             </div>
+            {/* the paper's page in the archive: its solutions, results and
+                the other papers of that year */}
+            {archiveYear && (
+              <Link
+                to={archiveYear.path}
+                className="mt-3 inline-block text-sm font-medium text-blue-700 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                {t('archive_year_link', { paper: archiveYear.label })}{' '}
+                <span aria-hidden="true">→</span>
+              </Link>
+            )}
           </div>
         )}
       </div>

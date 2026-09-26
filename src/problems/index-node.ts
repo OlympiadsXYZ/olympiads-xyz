@@ -51,10 +51,20 @@ export type ProblemsIndexEntry = {
   subject?: string | null;
   /** Competition code ("NOF", "NAO", …; see COMPETITION_META). */
   competition?: string | null;
+  /** Year of the paper (or the first year in the source of a problem without one). */
+  year?: number | null;
 };
 
-/** Where a problem was set: the subject and competition of its paper. */
-export type ProblemPaperInfo = { subject: string; competition: string };
+/** Where a problem was set: its paper's subject, competition and year. */
+export type ProblemPaperInfo = {
+  subject: string;
+  competition: string;
+  year?: number | null;
+  /** The paper's language code ("bg", "en", "ru", …). */
+  lang?: string | null;
+  /** The paper's problems file in the archive (the catalog's `file`). */
+  archiveKey?: string | null;
+};
 
 /**
  * Modules whose problems are made-up illustrations rather than real problems:
@@ -81,7 +91,7 @@ type ProblemNode = {
 };
 
 /**
- * Adds the subject and competition of the problem's paper. A problem without
+ * Adds the subject, competition and year of the problem's paper. A problem without
  * a paper file (listed only in modules) gets its subject from an
  * /archive/<subject>/ link and its competition from the first word of the
  * source when that is a known competition code.
@@ -101,7 +111,14 @@ function withPaperInfo(
     paper?.subject ??
     (fromURL && SCIENCE_LABELS[fromURL] ? fromURL : null) ??
     (competition ? subjectByCompetition.get(competition) ?? null : null);
-  return { ...entry, subject, competition };
+  const fromSource = /(?:^|\D)((?:19|20)\d\d)(?!\d)/.exec(entry.source ?? '');
+  const year =
+    typeof paper?.year === 'number'
+      ? paper.year
+      : fromSource
+      ? Number(fromSource[1])
+      : null;
+  return { ...entry, subject, competition, year };
 }
 
 /**
@@ -254,15 +271,22 @@ export function readPaperFiles(repoRoot: string): PaperFile[] {
 }
 
 /**
- * Problem id → subject and competition of its paper. Keeps only those two
- * fields, so the (large) paper files are not all held in memory at once.
+ * Problem id → subject, competition, year, language and archive file of its
+ * paper. Keeps only those fields, so the (large) paper files are not all held
+ * in memory at once.
  */
 export function readProblemPapers(
   repoRoot: string
 ): Map<string, ProblemPaperInfo> {
   const info = new Map<string, ProblemPaperInfo>();
   forEachPaperFile(repoRoot, ({ paper, problems }) => {
-    const value = { subject: paper.subject, competition: paper.competition };
+    const value: ProblemPaperInfo = {
+      subject: paper.subject,
+      competition: paper.competition,
+      year: typeof paper.year === 'number' ? paper.year : null,
+      lang: paper.lang ?? null,
+      archiveKey: paper.source?.archiveKey ?? null,
+    };
     for (const problem of problems) {
       if (problem && problem.id && !info.has(problem.id)) {
         info.set(problem.id, value);

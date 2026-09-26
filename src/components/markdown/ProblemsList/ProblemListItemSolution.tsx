@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { getProblemURL, ProblemInfo } from '../../../models/problem';
+import { originalFormat } from '../../ComparePanel/originalFormat';
 import TextTooltip from '../../Tooltip/TextTooltip';
 import Tooltip from '../../Tooltip/Tooltip';
 import { Anchor } from './ProblemsListItem';
@@ -100,7 +101,7 @@ export default function ProblemListItemSolution(
             target="_blank"
             rel="noreferrer"
           >
-            {t('original-pdf')}
+            {t(`original-${originalFormat(problem.url)}`)}
           </a>
         )}
       </>

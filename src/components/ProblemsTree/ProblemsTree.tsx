@@ -18,6 +18,7 @@ import {
   TreeSubject,
   TreeYear,
 } from '../../problems/tree';
+import { problemCount, sidebarScrollTop } from './sidebarScroll';
 
 const TREE_URL = '/problems-data/tree.json';
 const STORAGE_KEY = 'problems-tree:expanded';
@@ -131,7 +132,8 @@ function Count({
 }) {
   return (
     <span
-      className={`ml-2 flex-shrink-0 text-xs tabular-nums text-gray-500 dark:text-gray-500 ${className}`}
+      className={`ml-2 flex-shrink-0 text-xs tabular-nums text-gray-500 dark:text-gray-400 ${className}`}
+      title={problemCount(value)}
     >
       {value}
     </span>
@@ -229,45 +231,48 @@ export function YearBrowser({
     'flex h-10 w-9 flex-shrink-0 items-center justify-center rounded-md text-gray-500 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-30 disabled:cursor-default disabled:hover:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-blue-400';
   return (
     <div className="mb-2">
-      <div className="mx-4 ml-6 mb-1 rounded-lg border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-dark-surface">
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            aria-label={english ? 'Newer year' : 'По-нова година'}
-            disabled={index === 0}
-            onClick={() => onSelect(years[index - 1].year)}
-            className={stepClass}
-          >
-            <span aria-hidden="true">←</span>
-          </button>
-          <label className="min-w-0 flex-1">
-            <span className="block pl-2 text-[10px] font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
-              {english ? 'Year' : 'Година'}
-            </span>
-            <select
-              aria-label={`${competition.short} · ${
-                english ? 'Year' : 'Година'
-              }`}
-              value={selected.year}
-              onChange={event => onSelect(Number(event.target.value))}
-              className="block w-full cursor-pointer rounded border-0 bg-transparent py-0 pl-2 pr-7 text-sm font-semibold tabular-nums text-gray-800 focus:ring-2 focus:ring-blue-500 dark:bg-dark-surface dark:text-dark-high-emphasis"
+      {/* sticky: scrolling through a long year keeps its picker in view */}
+      <div className="sticky top-0 z-10 bg-white pt-1 pb-1 dark:bg-dark-surface">
+        <div className="mx-4 ml-6 rounded-lg border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-dark-surface">
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              aria-label={english ? 'Newer year' : 'По-нова година'}
+              disabled={index === 0}
+              onClick={() => onSelect(years[index - 1].year)}
+              className={stepClass}
             >
-              {years.map(year => (
-                <option key={year.year} value={year.year}>
-                  {year.year} · {year.count}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            type="button"
-            aria-label={english ? 'Older year' : 'По-стара година'}
-            disabled={index === years.length - 1}
-            onClick={() => onSelect(years[index + 1].year)}
-            className={stepClass}
-          >
-            <span aria-hidden="true">→</span>
-          </button>
+              <span aria-hidden="true">←</span>
+            </button>
+            <label className="min-w-0 flex-1">
+              <span className="block pl-2 text-[10px] font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                {english ? 'Year' : 'Година'}
+              </span>
+              <select
+                aria-label={`${competition.short} · ${
+                  english ? 'Year' : 'Година'
+                }`}
+                value={selected.year}
+                onChange={event => onSelect(Number(event.target.value))}
+                className="block w-full cursor-pointer rounded border-0 bg-transparent py-0 pl-2 pr-7 text-sm font-semibold tabular-nums text-gray-800 focus:ring-2 focus:ring-blue-500 dark:bg-dark-surface dark:text-dark-high-emphasis"
+              >
+                {years.map(year => (
+                  <option key={year.year} value={year.year}>
+                    {year.year} · {problemCount(year.count, english)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              type="button"
+              aria-label={english ? 'Older year' : 'По-стара година'}
+              disabled={index === years.length - 1}
+              onClick={() => onSelect(years[index + 1].year)}
+              className={stepClass}
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
       </div>
       {children(selected)}
@@ -307,6 +312,7 @@ export default function ProblemsTree({
   const scrolledFor = React.useRef<string | null>(null);
 
   const navRef = React.useRef<HTMLElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   // On a phone the desktop sidebar stays mounted but hidden (display: none): the 1.3 MB tree is loaded once the
   // sidebar is actually shown, not on every mobile page view.
@@ -382,9 +388,21 @@ export default function ProblemsTree({
   React.useEffect(() => {
     if (!expanded || !currentProblemId) return;
     if (scrolledFor.current === currentProblemId) return;
-    if (activeRef.current) {
+    const item = activeRef.current;
+    const container = scrollRef.current;
+    if (item && container) {
       scrolledFor.current = currentProblemId;
-      activeRef.current.scrollIntoView({ block: 'center' });
+      // Scroll the sidebar only (scrollIntoView could also scroll the page),
+      // keeping the competition row and its year picker above the problem.
+      const base = container.getBoundingClientRect().top - container.scrollTop;
+      const anchor = item.closest('[data-tree-competition]');
+      const itemRect = item.getBoundingClientRect();
+      container.scrollTop = sidebarScrollTop({
+        anchorTop: anchor ? anchor.getBoundingClientRect().top - base : null,
+        itemTop: itemRect.top - base,
+        itemHeight: itemRect.height,
+        viewHeight: container.clientHeight,
+      });
     }
   }, [expanded, currentProblemId]);
 
@@ -411,14 +429,17 @@ export default function ProblemsTree({
           >
             <span>Задачи</span>
             {tree ? (
-              <span className="text-sm tabular-nums text-gray-400 group-hover:text-gray-500 dark:text-gray-500">
+              <span
+                className="text-sm tabular-nums text-gray-500 group-hover:text-gray-600 dark:text-gray-400"
+                title={problemCount(tree.count)}
+              >
                 {tree.count}
               </span>
             ) : null}
           </Link>
         </div>
       </div>
-      <div className="flex-1 h-0 overflow-y-auto">
+      <div ref={scrollRef} className="flex-1 h-0 overflow-y-auto">
         {tree === undefined ? (
           <Skeleton />
         ) : tree === null ? (
@@ -446,14 +467,14 @@ export default function ProblemsTree({
                   rowClass="pl-4 py-3 font-semibold"
                   textClass="text-gray-800 dark:text-dark-high-emphasis"
                   onPathTextClass="text-gray-800 dark:text-dark-high-emphasis"
-                  chevronClass="h-5 w-5 text-gray-600"
+                  chevronClass="h-5 w-5 text-gray-600 dark:text-gray-400"
                 />
                 {sOpen &&
                   subject.competitions.map(comp => {
                     const cKey = competitionKey(subject, comp);
                     const cOpen = isOpen(cKey);
                     return (
-                      <div key={cKey}>
+                      <div key={cKey} data-tree-competition={comp.code}>
                         <ToggleRow
                           label={comp.short}
                           title={comp.name}

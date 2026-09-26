@@ -79,6 +79,10 @@ it('opens the current year and problem, with all 70 years in one picker', async 
   const picker = await screen.findByRole('combobox', { name: 'IZhO · Year' });
   expect(picker).toHaveValue('1980');
   expect(screen.getAllByRole('option')).toHaveLength(70);
+  // the count says what it counts
+  expect(
+    screen.getByRole('option', { name: '1980 · 1 problem' })
+  ).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Задача 1' })).toHaveAttribute(
     'href',
     '/problems/1980/'

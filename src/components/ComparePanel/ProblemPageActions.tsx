@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useProblemSolutions } from '../../context/ProblemSolutionContext';
 import { COMPARE_MEDIA_QUERY, useComparePanel } from './ComparePanelContext';
 import { pdfFileName } from './ComparePanel';
+import { isEmbeddable, originalFormat } from './originalFormat';
 
 /**
  * Actions in a problem page's top box, next to "Оригинал на условието (PDF)".
@@ -22,11 +23,14 @@ const iconClass =
 /**
  * Toggles the side-by-side PDF panel. Below the md breakpoint there is no room
  * for a split view, so the button opens the problems PDF in a new tab instead.
+ * A Word original cannot be shown in a frame (it downloads), so it gets no
+ * button: the original's link next to it downloads the file.
  */
-export function CompareToggleButton(): JSX.Element {
+export function CompareToggleButton(): JSX.Element | null {
   const { t } = useTranslation();
   const { problem } = useProblemSolutions();
   const compare = useComparePanel();
+  if (!isEmbeddable(originalFormat(problem.url))) return null;
 
   const onClick = () => {
     if (window.matchMedia(COMPARE_MEDIA_QUERY).matches) {
