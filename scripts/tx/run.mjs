@@ -513,7 +513,11 @@ for (;;) {
       const data = readJson(src, null);
       if (data && typeof data === 'object') {
         const before = JSON.stringify(data);
-        { const docs = readJson(manifestPath, null)?.documents || {}; normaliseCandidate(data, { solutionsDocument: !!docs.solutions, documents: Object.keys(docs) }); }
+        {
+          const docs = readJson(manifestPath, null)?.documents || {};
+          const printedText = Object.keys(docs).map(d => { try { return fs.readFileSync(path.join(dir, 'text', `${d}.txt`), 'utf8'); } catch { return ''; } }).join('\n').toLowerCase().replace(/\s+/g, ' ');
+          normaliseCandidate(data, { solutionsDocument: !!docs.solutions, documents: Object.keys(docs), printedText });
+        }
         // the archive keys are the manifest's, never the reader's copy of a long Cyrillic path
         const man = readJson(manifestPath, null);
         if (man?.documents?.problems && data.paper) {

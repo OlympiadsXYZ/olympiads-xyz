@@ -1080,7 +1080,10 @@ export function normaliseCandidate(c, opts = {}) {
     const NOTE = /(?:^|\n)[ \t]*[*_]{0,2}[ \t]*(?:(?:забележка|бележка)\s+(?:към|на|от|за)\s+транскрип\S*|transcri(?:ber'?s?|ption)\s+note|note\s+(?:on|about)\s+the\s+transcription)[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/giu;
     const notes = [];
     let out = s.replace(NOTE, m => { notes.push(m.trim().replace(/^[*_]+|[*_]+$/g, '').trim()); return '\n'; });
-    out = out.split(/\n[ \t]*\n/).filter(para => { const t = para.trim(); if (t.length < 400 && !/\$\$/.test(t) && ASIDE.test(t)) { notes.push(t); return false; } return true; }).join('\n\n');
+    // an aside phrase the paper itself prints ("Reflex (0, 0) … is omitted here for clarity" in a Figure 8 caption,
+    // idpho-2020-experiment-ipho-exp-q1) is text, not a remark: opts.printedText is the paper's text layer
+    const printedAside = t => { const m = ASIDE.exec(t); return !!(m && opts.printedText && opts.printedText.includes(m[0].toLowerCase())); };
+    out = out.split(/\n[ \t]*\n/).filter(para => { const t = para.trim(); if (t.length < 400 && !/\$\$/.test(t) && ASIDE.test(t) && !printedAside(t)) { notes.push(t); return false; } return true; }).join('\n\n');
     out = out.replace(/\n{3,}/g, '\n\n').trim();
     if (!notes.length || out === s) return;
     pointerSet(c, p, out);

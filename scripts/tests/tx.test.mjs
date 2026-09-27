@@ -1278,6 +1278,14 @@ test('a reader\'s aside about its own work in place of text moves to tx.notes', 
   const d = candidate(); d.problems[0].statement = 'Find the mass of the box. The first line of the table gives the density.';
   lib.normaliseCandidate(d);
   assert.match(d.problems[0].statement, /mass of the box/, 'ordinary prose stays');
+  // a caption that prints an aside phrase stays when the text layer has it (idpho-2020-experiment-ipho-exp-q1)
+  const caption = 'Figure 8: Reflexes $(h = 2n+1, k = 0)$ are systematically absent. Note: Reflex $(0, 0)$ with relatively high intensity is omitted here for clarity.';
+  const e = candidate(); e.problems[0].figures = [{ id: 'p1-fig8', alt: 'Diffraction pattern.', caption, tx: { document: 'problems', page: 1, bbox: [0, 0, 500, 500] } }];
+  lib.normaliseCandidate(e, { printedText: 'figure 8: reflexes (h = 2n+1, k = 0) are systematically absent. note: reflex (0, 0) with relatively high intensity is omitted here for clarity.' });
+  assert.equal(e.problems[0].figures[0].caption, caption);
+  const f = candidate(); f.problems[0].figures = [{ id: 'p1-fig8', alt: 'Diffraction pattern.', caption, tx: { document: 'problems', page: 1, bbox: [0, 0, 500, 500] } }];
+  lib.normaliseCandidate(f, { printedText: 'figure 8: reflexes are systematically absent.' });
+  assert.equal(f.problems[0].figures[0].caption, '', 'not printed: still a remark');
 });
 
 test('a $$ frame around a Markdown table is not math: the frame goes, the table stays', () => {
