@@ -89,6 +89,15 @@ test('(a) a recorded misspelling broken at a line end in the layer is still foun
   assert.deepEqual(r.defects, [], JSON.stringify(r.defects, null, 1));
 });
 
+test('a word set as an image is never „fixed“ to half of a word broken at a line end (vsoa-ru-2013-tepr)', t => {
+  // the layer has „ослабле-“ / „ние“ (not transcribed: never joined); the city table is an image the layer cannot read
+  const page1 = `Задача 1. \n${PRINTED.join('\n')}\nСигнал испытывает заметное ослабле-\nние в плотной атмосфере планеты.\n`;
+  const { check } = sandbox(t, { page1 });
+  const r = check(candidate({ statement: `${FIXED}\n\n| Город | Широта |\n|---|---|\n| Ярославль | 57 |`, edits: [edit(), agreement] }));
+  assert.ok(!r.defects.some(d => /ослабле/i.test(d.suggestedFix || '')), JSON.stringify(r.defects, null, 1));
+  assert.ok(r.defects.some(d => (d.words || []).includes('Ярославль') || /Ярославль/.test(d.description)), 'still reported for a dispute');
+});
+
 test('(c) the same fixes without a record stay defects with the restore-the-print mechanical fix', t => {
   const { check } = sandbox(t);
   const r = check(candidate());

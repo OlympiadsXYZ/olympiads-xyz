@@ -460,6 +460,18 @@ export function textLayerCheck(candidate, manifest, paperId) {
     const tokens = pages.flatMap(p => p.tokens);
     const layerSet = new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])]));
     const layerRaw = new Map(); for (const t of tokens) if (!t.fragment && !layerRaw.has(t.w)) layerRaw.set(t.w, t.raw);
+    // half of a word broken at a line end („ослабле-“, „трицы“ of „ма-трицы“, „афрагмой“ of „ди-афрагмой“) that the page
+    // never prints whole: no printed spelling, so never the replacement for a word the layer cannot read (a table set as
+    // an image: „Ярославль“ → „ослабле“, „Троицк“ → „трицы“, „Диафрагма“ → „Афрагмой“, vsoa-ru-2013/2014-tepr)
+    // (every lowercase word that opens a line is marked a possible tail: it is a fragment only below an unjoined head)
+    const fragmentOnly = new Set();
+    {
+      const heads = tokens.filter(t => t.fragment === 'head' && !t.joined);
+      // a joined tail keeps only its half as w (the head carries the whole word)
+      const isFragment = t => (t.joined && t.skip) || (t.fragment === 'head' && !t.joined) || (t.fragment === 'tail' && !t.joined && heads.some(h => h.page === t.page && h.line < t.line && h.line >= t.line - 8));
+      const whole = new Set(tokens.filter(t => !isFragment(t)).map(t => t.w));
+      for (const t of tokens) if (isFragment(t) && !whole.has(t.w)) fragmentOnly.add(t.w);
+    }
     layerSets[doc] = layerSet;
     // the solutions document reprints statements before solving them, so for it every transcribed word counts as
     // present; a "problems" document that prints solutions too (a marking scheme, "Detailed solution") is treated the same
@@ -625,8 +637,12 @@ export function textLayerCheck(candidate, manifest, paperId) {
       const altMisread = (a, b) => Math.abs(a.length - b.length) <= 1 && commonPrefix(a, b) >= 4 && commonSuffix(a, b) >= 3 && commonPrefix(a, b) < Math.min(a.length, b.length) - 3 && lev(a, b) <= 0.35 * Math.max(a.length, b.length);
       // a layer word that is the transcribed word cut at a line break („компонен“ + „тите“) is a fragment, not the printed spelling
       const fragmentOf = (x, w) => (w.startsWith(x) && layerSet.has(w.slice(x.length))) || (w.endsWith(x) && layerSet.has(w.slice(0, w.length - x.length)));
-      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && P.content.test(x) && !fragmentOf(x, w) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
+      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && P.content.test(x) && !fragmentOf(x, w) && !fragmentOnly.has(x) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
       let rest = extras;
+      // a block of unprinted words is text the layer cannot see (a table set as an image): a near-match there is chance
+      // („Середина“ → „Среди“ in an eclipse table, vsoa-ru-2013-tepr), so it is reported without a mechanical fix
+      // (a field whose unprinted words are mostly near-matches is misread, not unseen: nao-2009-iii-11-12)
+      const unseenBlock = extras.length >= 6 && misread.length < 0.5 * extras.length;
       if (!minor && misread.length) {
         let fixed = f.text; for (const m of misread) fixed = replaceWord(fixed, m.raw, m.printed);
         if (fixed !== f.text) {
@@ -635,7 +651,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
             description: `Text-layer check: the transcription has ${misread.map(m => `„${m.raw}“`).join(', ')} where the ${doc} document prints ${misread.map(m => `„${m.printed}“`).join(', ')}${f.altText ? ' — use the printed term if the description names it' : ` and no tx.edits record explains it — ${RESTORE}`}.`,
             // alt text is the reader's own description: a near-match between two real words is no misreading
             // („grey construction lines“ became „conservation lines“, wopho-2013-q2), so it is never rewritten mechanically
-            suggestedFix: f.altText ? null : fixed });
+            suggestedFix: f.altText || unseenBlock ? null : fixed });
           rest = extras.filter(e => !misread.some(m => m.raw === e));
         }
       }
