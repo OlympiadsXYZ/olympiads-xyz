@@ -40,10 +40,14 @@ jobs:
           df -h /mnt && sudo fallocate -l 32G /mnt/extra.swap && sudo chmod 600 /mnt/extra.swap
           sudo mkswap /mnt/extra.swap && sudo swapon /mnt/extra.swap && free -m
       # hack to build graphql types
+      # `yarn build` pins a 3.5 GB heap in package.json; at ~2,180 papers the build needs more (OOM 2026-09-26), so
+      # this runs gatsby directly with the deploy's 10 GB heap.
       - name: Build GraphQL types
-        run: yarn build
+        run: npx gatsby build
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
+          GATSBY_CPU_COUNT: "1"
+          GATSBY_VERBOSE_LOGGING: "2"
+          NODE_OPTIONS: --max-old-space-size=10240
 
       - name: Run tests
         run: yarn test --passWithNoTests
@@ -85,9 +89,11 @@ jobs:
         run: |
           df -h /mnt && sudo fallocate -l 32G /mnt/extra.swap && sudo chmod 600 /mnt/extra.swap
           sudo mkswap /mnt/extra.swap && sudo swapon /mnt/extra.swap && free -m
-      - run: yarn build
+      - run: npx gatsby build
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
+          GATSBY_CPU_COUNT: "1"
+          GATSBY_VERBOSE_LOGGING: "2"
+          NODE_OPTIONS: --max-old-space-size=10240
 
       - name: run Lighthouse CI
         run: |

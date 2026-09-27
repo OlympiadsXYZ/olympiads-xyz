@@ -315,6 +315,19 @@ test('figure-id placeholders show their figure in place; one without a figure ke
   assert.doesNotMatch(mdx, /\]\((?!https?:)[^)]*\)|\[\[figure/);
 });
 
+test('a placeholder whose description holds brackets shows its figure in place (imcho-2013 p1)', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  const url = id => `https://example.org/${id}.png`;
+  p.figures = [{ id: 'p1-fig2', url: url('p1-fig2'), alt: 'Plots of 1/[A] and ln[A] against t.' }];
+  p.statement = 'Determine the reaction order:\n\n![Plots of 1/[A] and ln[A] against t.](#p1-fig2)\n\nEnd.';
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  assert.equal(mdx.split(url('p1-fig2')).length - 1, 1);
+  assert.doesNotMatch(mdx, /\]\(#p1-fig2\)/);
+  assert.ok(mdx.indexOf(url('p1-fig2')) > mdx.indexOf('Determine the reaction order') && mdx.indexOf(url('p1-fig2')) < mdx.indexOf('End.'));
+});
+
 test('emphasis stuck between punctuation and a letter pairs; lone and escaped asterisks stay literal', async () => {
   const { emphasisFlanking } = await import('../problems-to-site.mjs');
   const f = t => emphasisFlanking(t).replace(/ /g, '⍽');

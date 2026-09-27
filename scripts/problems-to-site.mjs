@@ -120,7 +120,9 @@ function figuresNotInline(figs, texts, candidates = figs) {
 // A figure re-cropped after transcription is stored as "<crop>-v2.png" while the text may still inline the first
 // crop "<crop>.png" (the legacy НОА papers: 428 figures in 208 problems). It is the same picture: the page shows it
 // once, inline where the text puts it (figureShownInline), with the newest crop (newestInlineCrops).
-const INLINE_IMAGE = /(!\[[^\]]*\]\(\s*<?)([^)\s>]+)/g;
+// An alt may hold one level of brackets ("1/[A], ln[A] against t"): [^\]]* stopped at the first "]" and left the image
+// as text, its figure shown elsewhere (imcho-2013-experiment-47-mmo-exp p1, found by the link check).
+const INLINE_IMAGE = /(!\[(?:[^[\]]|\[[^[\]]*\])*\]\(\s*<?)([^)\s>]+)/g;
 const cropKey = url => String(url ?? '').replace(/[?#].*$/, '').replace(/-v\d+(\.[A-Za-z0-9]+)$/, '$1');
 const cropVersion = url => Number(/-v(\d+)\.[A-Za-z0-9]+(?:[?#].*)?$/.exec(String(url ?? ''))?.[1] ?? 1);
 const isUrl = target => /^(?:https?:)?\/\//i.test(String(target ?? ''));
@@ -179,7 +181,7 @@ export function newestInlineCrops(text, figs) {
 //     broken relative <img>;
 //   - an image in a table row, or one whose crop is not among the figures, stays markdown (with the newest crop).
 // The JSX goes in after mdText (which escapes braces) through private-use tokens.
-const IMAGE_MD = /!\[([^\]]*)\]\(\s*<?([^)\s>]*)>?(?:\s+"[^"]*")?\s*\)/g;
+const IMAGE_MD = /!\[((?:[^[\]]|\[[^[\]]*\])*)\]\(\s*<?([^)\s>]*)>?(?:\s+"[^"]*")?\s*\)/g;
 const FIG_TOKEN = /(\d+)/g;
 const token = i => `${i}`;
 const plainWords = t => String(t ?? '').toLowerCase().replace(/[*_`$\\]/g, '').replace(/\s+/g, ' ').trim();
@@ -412,7 +414,7 @@ export function resolveFigurePlaceholders(text, problem, resolve = target => res
   if (!text) return text;
   const image = (alt, fig) => `![${String(alt || fig.alt || fig.caption || '').replace(/\s*\n\s*/g, ' ').replace(/[[\]]/g, '').trim()}](${fig.url})`;
   return String(text)
-    .replace(/!\[([^\]\n]*)\]\((?!https?:|\/)([^)\s]*)\)/g, (m, alt, target) => {
+    .replace(/!\[((?:[^[\]\n]|\[[^[\]\n]*\])*)\]\((?!https?:|\/)([^)\s]*)\)/g, (m, alt, target) => {
       const fig = resolve(target);
       if (fig) return image(alt, fig);
       return alt.trim() ? `*[${alt.trim()}]*` : '';
