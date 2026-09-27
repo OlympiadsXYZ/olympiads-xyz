@@ -161,26 +161,16 @@ test('the footer is part of every page layout', () => {
   expect(container.querySelector('footer')).toBeNull();
 });
 
-test('home: the counts, the problems and archive buttons, the modules link', () => {
+// The hero is the original one again (2026-09-26: Margulan rejected the counts-and-buttons redesign): the subtitle
+// and the one "Нека да започнем!" button to the dashboard.
+test('home: the original hero (subtitle, get-started button), the FAQ, one footer', () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const IndexPage = require('../../pages/index').default;
   const { container } = render(<IndexPage />);
   const main = container.querySelector('main') as HTMLElement;
-  expect(main).toHaveTextContent('9000+');
-  expect(main).toHaveTextContent('7300+');
-  expect(main).toHaveTextContent(
-    'задачи от олимпиади по физика, астрономия, химия и география, повечето с официални решения'
-  );
-  expect(main).toHaveTextContent('от 58 състезания');
+  expect(main).toHaveTextContent('Безплатна колекция от подбрани');
   expect(
-    within(main).getByRole('link', { name: 'Разгледай задачите' })
-  ).toHaveAttribute('href', '/problems/');
-  expect(within(main).getByRole('link', { name: 'Архив' })).toHaveAttribute(
-    'href',
-    '/archive/'
-  );
-  expect(
-    within(main).getByRole('link', { name: /Към модулите и напредъка/ })
+    within(main).getByRole('link', { name: 'Нека да започнем!' })
   ).toHaveAttribute('href', '/dashboard');
   expect(container.querySelector('#faq')).not.toBeNull();
   expect(container.querySelectorAll('footer')).toHaveLength(1);
