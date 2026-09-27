@@ -1,0 +1,841 @@
+---
+id: apho-2018-experiment-exp-p1
+source: 'APhO 2018, Експеримент'
+title: 'Задача 1. Giant Magnetoresistance (GMR)'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2018/apho-2018-experiment-exp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-27T04:38:57.271Z'
+verifier: 'mechanical'
+---
+
+*19th APhO — Asian Physics Olympiad — Hanoi - Viet Nam 2018 — Experiment Q1: Giant Magnetoresistance (GMR)*
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [A. Understanding of magnetic fields (1.0 point)](#a)
+- [B. Investigation of the GMR effect using a GMR magnetic sensor (7 points)](#b)
+- [C. Study of GMR magnetic sensor (6 points)](#c)
+- [D. Applications of GMR magnetic sensors (6 points)](#d)
+
+</nav>
+
+**I. INTRODUCTION**
+
+*Magnetoresistance* is the dependence of electrical resistance of a sample on the strength of an external magnetic field. It is characterized by the following formula:
+
+$$
+\delta(B) = \frac{R(B) - R(0)}{R(0)} \qquad (1)
+$$
+
+where *R(B)* is the resistance of the sample in the magnetic field *B*, and *R(0)* corresponds to $B = 0$; $\delta(B)$ is called the *relative change of resistance.*
+
+There exist several “normal” magnetoresistance effects whose relative change of resistance is small at relatively weak magnetic field, typically in the order of less than several percent. For instance, one of the magnetoresistance effects may arise from the direct action of magnetic field on electric current. Due to the Lorentz force, the flow of the charge carriers is deflected, leading to the effective reduction in the mobility. Hence, the electric conductivity will decrease with increasing magnetic field, and the resistance of the sample will increase. It occurs in a relatively large range of change in the strength of the magnetic field.
+
+*Giant magnetoresistance* arises from the interaction of the spin of conduction electrons with the magnetic moments in the solid. This effect consists of the reduction of the electrical resistance in multilayer structures composed of alternating ferromagnetic and non-ferromagnetic layers with thickness of several nanometers when an external magnetic field is applied. The change of the electric resistance is large in relatively weak field; therefore it is called Giant Magneto Resistance (GMR) effect. Due to the practical significance of GMR, its discoverers, Albert Fert and Peter Grünberg, were awarded the Nobel Prize in Physics, in 2007.
+
+In such a multilayer, two adjacent ferromagnetic layers have spontaneous magnetization with opposite directions in the absence of an external magnetic field. Let us suppose that scattering of conduction electrons with magnetic moments of the solid is weak for electrons with spin parallel to the magnetization direction and is strong for electrons with spin antiparallel to the magnetization direction. Thus, both the parallel-spin and antiparallel-spin electrons are scattered strongly within one of the ferromagnetic layers. Therefore, in this case the total resistivity of the multilayer is high (see Fig. 1a)
+
+If a sufficiently strong magnetic field is applied parallel to the plane of the layers, then all ferromagnetic layers are magnetized in the same direction of the magnetic field. As a consequence, the electrons with spin parallel to the magnetization direction pass through the structure almost without scattering on magnetic moments. On the contrary, the electrons with spin antiparallel to the magnetization are scattered strongly within the ferromagnetic layers. Since conduction occurs in parallel for the two spin channels, the total resistance of the multilayer is determined mainly by the highly-conductive parallel-spin electrons and appears to be low (see Fig. 1b). In Figure 1, *R* denotes the high resistance of the layer with strong scattering, and *r*- the low resistance of the layer with weak scattering. $R_0$ is the resistance of the structure in a zero magnetic field, and $R_B$ is that in a sufficiently strong magnetic field which makes the two adjacent ferromagnetic layers magnetized in the same direction. The equivalent electrical model (so-called "two resistor" model) of the GMR effect is shown at the bottom of Figure 1. The circuit of the model represents one GMR element.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-fig1.png" alt="Two panels a) and b). Each shows a three-layer structure (green ferromagnetic layers around a blue spacer) with black magnetization arrows labelled 1, blue electron paths labelled 2 with yellow scattering flashes, and electron spins labelled 3. In a) the two magnetizations are opposite; in b) they are parallel. Below each is the two-resistor circuit: a) branches R–r and r–R, labelled R0; b) branches r–r and R–R, labelled RB." width="1638" height="1047" loading="lazy" decoding="async" />
+<figcaption>Figure 1: GMR effect model. (1) magnetization; (2) electron path; (3) electron spin</figcaption>
+</figure>
+
+
+One of the applications of GMR is the *magnetic sensor*, also called *magnetometer*, which can be used to measure the strength of an applied magnetic field. A widely used GMR magnetic sensor consists of four GMR elements connected in a Wheatstone bridge as shown in Fig. 2b. Each GMR element consists of a multilayer structure as described in the above model. Two of these elements are shielded to prevent the applied magnetic field from reaching them hence they are not sensitive to the external magnetic field. The magnetic sensor is packaged in an 8-pin device as shown in Fig. 2a. The supply voltage is connected to pins 4 and 8. The signal output is taken from pins 1 and 5. This is the normal way of operation. However, during solving the problem, you can connect the power supply to any other pair of pins without destroying the sensor. The axis of sensitivity of the sensor is indicated by the arrow on Fig. 2a. The magnetic sensor is not sensitive to an applied magnetic field which is perpendicular to this axis.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-fig2.png" alt="a) Top view of the 8-pin sensor package with pins 1–4 on the left and 8–5 on the right, a small circle marking pin 1 and a vertical double arrow showing the axis of sensitivity. b) Wheatstone bridge inside a dashed box: elements d and a from pin 8, c and b to pin 4, with the midpoints connected to pins 1 and 5." width="1638" height="825" loading="lazy" decoding="async" />
+<figcaption>Figure 2</figcaption>
+</figure>
+
+
+We call the resistance of the elements *a*, *b*, *c*, *d* as shown in Fig.2b.
+
+Please note that resistance of the elements can be considered not dependent on current.
+
+To fabricate sensors with different sensitivities, an integrated *flux concentrator* is used. Thanks to it, the magnetic field acting on the elements inside the sensor is stronger than the applied magnetic field.
+
+Due to the presence of ferromagnetic materials in the flux concentrator and in the magnetic layers of the multilayer structure, there exists hysteresis in electrical characteristics of the sensor.
+
+**The aims of the experiment are:**
+
+1. Investigation of the GMR effect.
+2. Investigation of the GMR magnetic sensor.
+3. Study of some applications of the GMR magnetic sensor.
+
+**II. APPARATUS**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '653px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-fig3.png" alt="Photograph of the apparatus on a table with numbered labels 1–21 and 6a: leads, rheostat, power strip, battery box, flat coil, adjustable DC source with adapter, tall pole, circular coil, two printed circuit boards with grids, transverse rail, turntable, platform with rail, sensor, sensor holder, round graduated table, sensor connection box, connection box, ferromagnetic sheets, permanent magnet plate, three multimeters and the double-filament bulb." width="2040" height="1650" loading="lazy" decoding="async" />
+</figure>
+
+
+|  |  |  |  |
+|---|---|---|---|
+| 1 | Leads | 12 | Platform with longitudinal rail |
+| 2 | Rheostat | 13 | Magnetic sensor |
+| 3 | 220-V AC supply cord | 14 | Sensor holder |
+| 4 | Battery \*) | 15 | Round table graduated in degrees fixed on the support with short pole (not seen in the picture) |
+| 5 | Flat coil | 16 | Sensor connection box \*) |
+| 6 | Adjustable DC current source (with its adapter [6a]) | 17 | Connection box |
+| 7 | Support with tall pole | 18 | Ferromagnetic sheets |
+| 8 | Circular coil | 19 | Plate of permanent magnet |
+| 9 | Printed circuit boards with buried electric circuit | 20 | Multimeters \*) (3 pcs) |
+| 10 | Transverse rail | 21 | Double-filament electric bulb |
+| 11 | Turntable |  |  |
+
+\*) See more details in the Appendix
+
+**Warning:** *The 220 V AC voltage is used only for the table lamp (it is not shown in the Figure 3) and the adapter (6a) of the adjustable DC current source. Plugging any other device to this voltage is strictly forbidden.*
+
+**III. EXPERIMENT**
+
+<ProblemSection id="a">
+
+### A. Understanding of magnetic fields (1.0 point) (1 т.)
+
+In this experimental problem, the magnetic field may be
+
+- the magnetic field created by
+  - a circular coil carrying an electric current;
+  - a flat coil carrying an electric current;
+  - a plate of permanent magnet.
+- the magnetic field of the Earth.
+
+**1. Understanding of magnetic field created by a circular coil**
+
+The circular coil [8] has an average diameter *d* = 10.0 cm and the number of turns $N = 500$. The magnetic field created by this coil at its center when a current $I$ flows in it can be approximated to that of a circular current loop with radius equal to the average radius of the circular coil and a current equal to $500I$.
+
+**A.1** The magnitude of the magnetic field at the center of the circular coil can be written in the form $B = kI$. Calculate the numerical value of $k$ if *B* is measured mT and $I$ - in mA **[0,5 т.]**
+
+**2. Understanding of the Earth's magnetic field**
+
+The Earth's magnetic field exists everywhere. It can be considered as a uniform magnetic field in a large region of space around each given point. The magnitude of the horizontal component of the Earth's magnetic field is denoted as $B_h$ .
+
+**A.2** Write down the expression for the magnitude $B_\beta$ of the Earth's magnetic field measured in the horizontal plane and in the direction making an angle $\beta$ with the horizontal component of the Earth's magnetic field in terms of $\beta$ and $B_h$. **[0,5 т.]**
+
+**Note:** *Always take into account the effect of the Earth's magnetic field on the magnetic measurements.*
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### B. Investigation of the GMR effect using a GMR magnetic sensor (7 points) (7 т.)
+
+***Note:*** *This part is relatively independent of the remaining parts. You can also solve parts C and D without having to solve part B.*
+
+In this part, we investigate the dependence on the external magnetic field of the resistance of each element inside the magnetic sensor. The circular coil [8] stands on the longitudinal rail. The sensor holder [14] is screwed on the round plate [15] in the horizontal position, with the magnetic sensor [13] at the center of the circular coil, and the sensor axis perpendicular to the plane of the coil. By changing the electric current in the coil, we vary the magnetic field acting on the sensor. Be sure that the axis of sensitivity of the magnetic sensor is oriented along the West - East direction (marked on the experiment table) so that the Earth's magnetic field does not affect your measurements. Note that the West-East direction has been determined locally using a magnetic compass.
+
+The magnetic sensor is supplied by the battery [4]. The circular coil is fed by current from the adjustable DC current source [6].
+
+**1. Determination of resistance of GMR elements**
+
+***a. Resistance of the elements at*** $B = 0$.
+
+Set the current in the circular coil at $I = 0$
+
+**B.1** Sketch the diagrams of the experiment and find the expressions for calculating the resistance of each element in terms of measurement data. **[1,25 т.]**
+
+**B.2** Perform the measurements and calculations to determine the resistance of the elements *a, b, c and d* at $B = 0$. **[1,25 т.]**
+
+***b. Resistance of the elements at maximum external magnetic field***.
+
+Set the current $I$ in the coil to the highest possible value.
+
+**B.3** Perform the measurements and calculations to determine the resistance of the elements *a, b, c and d* in the maximum external magnetic field. **[0,5 т.]**
+
+***c. Properties of the elements.***
+
+**B.4** Indicate which elements are sensitive to the magnetic field. **[0,25 т.]**
+
+**2. Characteristics of a GMR element**
+
+In this section, you will study the properties of one of the two GMR elements which are not shielded. Choose one of such GMR elements and determine $\delta(B)$ - the dependence on the external magnetic field of the relative change of resistance.
+
+**B.5** Give the name of the chosen GMR element. Sketch diagrams of the experiment and find the expressions for calculating $\delta(B)$ in terms of measurement data. **[0,75 т.]**
+
+**B.6** Perform the measurements and calculations to determine $\delta(B)$ with the external magnetic field *B,* in the range from zero to the maximum possible value. Fill the table with the values of the measured quantities and determine $\delta(B)$ corresponding to the values of the current $I$ and the external magnetic field *B*. **[1,25 т.]**
+
+**B.7** Plot on a graph $\delta(B)$ as a function of the external magnetic field *B* (**Graph 1**) **[0,5 т.]**
+
+**B.8** Determine the average slope $\alpha = \frac{\triangle\delta(B)}{\triangle B}$ of the curve $\delta(B)$ in the region in which $\delta(B)$ depends strongly on $B$. **[0,25 т.]**
+
+**B.9** Determine the GMR coefficient $\delta = \frac{\triangle R_{max}}{R(0)}$ of the element. Here $\triangle R_{max}$ is the maximum change of the resistance in a magnetic field. **[0,25 т.]**
+
+**B.10** Find the value of the resistances *R* and *r* of the GMR element according to the model given in Figure 1 and the ratio $\gamma = \frac{r}{R}$. **[0,75 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### C. Study of GMR magnetic sensor (6 points) (6 т.)
+
+In this part, we investigate the most important characteristics of the magnetic sensor [13]. The circular coil [8] stands on the longitudinal rail [12]. The sensor holder [14] is screwed on the round plate [15] in the horizontal position, such that the sensor is at the center of the circular coil, and the sensor axis is perpendicular to the plane of the coil. By changing the electric current in the coil, we vary the magnetic field acting on the sensor. Be sure that the axis of sensitivity of the magnetic sensor is oriented along the East-West direction so that the Earth's magnetic field does not affect your measurements.
+
+**1. Characteristics of sensor output signal**
+
+The magnetic sensor is supplied by the battery [4] at maximum voltage. The supply voltage is connected to pins 4 and 8. The circular coil is fed by the adjustable DC current source [6].
+
+**a.** First, set the current $I$ in the coil to the highest possible value. The voltage between pins 1 and 5 is the output signal *S* of the sensor.
+
+**b.** While gradually decreasing the current in the coil to $I = 0$ , read the value of *S* corresponding to each value of $I$.
+
+**c.** Change the direction of current $I$ in the coil. While gradually increasing the current to its maximum value, read the value of *S* corresponding to each value of $I$.
+
+**d.** While gradually decreasing the current to $I = 0$, read the value of *S* corresponding to each value of $I$.
+
+**e.** Change the direction of current $I$ in the coil. While gradually increasing the current to its maximum value, read the value of *S* corresponding to each value of $I$.
+
+**C.1** Fill the table with the values of *S* corresponding to the values of the current $I$ in the coil and the external magnetic field *B* during the above measuring process. **[1 т.]**
+
+**C.2** Plot the graph $S(B)$ of the output signal *S* as a function of the external magnetic field *B* **(Graph 2)**. **[1 т.]**
+
+**C.3** 1. Circle the region of saturation in the curve $S(B)$ and label it with “S”.
+2. Circle the region of linearity in the curve $S(B)$ and label it with “L”. For this region, find the average value of the slope $m = \frac{\triangle S}{\triangle B}$. **[0,5 т.]**
+
+**C.4** From the graph $S(B)$, determine the coercive field $B_C$, which is the external magnetic field needed to make *S* minimum after being magnetized in the opposite direction with a saturation field. **[0,5 т.]**
+
+**Note:** *In the case you want to use the linear region of the curve $S(B)$, a small plate of permanent magnet [19] is provided. Just place the permanent magnet on the sensor holder [14], near the sensor [13], and change the relative position of the magnet to the sensor to choose the working point on the curve. Once the suitable working point is found, you can fix the magnet on the holder by means of adhesive tape. This process is called* ***biasing***.
+
+**2. Dependence of output signal on supply voltage**
+
+The magnetic sensor is supplied by the battery [4]. By connecting the sensor to different sockets on the battery box, you can change the supply voltage *E*. The current $I$ in the circular coil is set at a value corresponding to the linear region on the curve *S*(*B*).
+
+**C.5** Fill the table with the values of $S$ corresponding to the values of $E$ **[0,25 т.]**
+
+**C.6** Plot a graph of $S$ as a function of $E$ **[0,25 т.]**
+
+**C.7** Derive an analytical expression relating the output signal $S$ of the sensor with the slope $\alpha$ of the GMR element found in B.8, the supply voltage $E$ and the applied magnetic field *B*. Here, we assume that $\alpha$ is the same for the two elements and there is no hysteresis in the characteristics of the elements. Besides, we assume here that in the absence of a magnetic field, values of resistance of all 4 elements are the same. **[0,5 т.]**
+
+**3. Study of effects of a flux concentrator**
+
+The integrated flux concentrator inside the magnetic sensor consists of two thin-film ferromagnetic structures with thickness in the order of micrometers, with length in the order of some hundreds of micrometers. The purpose of the flux concentrator is to magnify the magnetic field in the gap between the structures.
+
+In order to study the effect of a flux concentrator on a magnetic sensor, we use an external flux concentrator made of two ferromagnetic sheets (as shown in Fig. 4) placed near the two ends of the sensor, with length $L_2$, and mutual distance $L_1$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-fig4.png" alt="Two grey rectangular ferromagnetic sheets of length L2 separated by a gap L1; the small sensor sits in the gap where the field is B (arrow). Uniform external field B0 is shown by arrows on both sides." width="1638" height="542" loading="lazy" decoding="async" />
+<figcaption>Figure 4. Diagram of the flux concentrator</figcaption>
+</figure>
+
+
+Once the sensor with a flux concentrator is put in a uniform magnetic field of magnitude $B_0$, the effective magnetic field acting on the sensor is $B$. In a not very large range of change of $L_1$, $B$ can be approximately found by using the empirical formula:
+
+$$
+\frac{B}{B_0} = n\frac{L_2}{L_1} + 1 \qquad (2)
+$$
+
+You are asked to perform an experiment with the magnetic sensor and the two ferromagnetic sheets [18] to determine the value of *n* in formula (2).
+
+**C.8** Which magnetic field in the following will you use in this experiment?
+
+a. The field of the circular coil carrying an electric current
+
+b. The field of the flat coil carrying an electric current
+
+c. The field of the plate of permanent magnet
+
+d. The magnetic field of the Earth
+
+(0.25pt)
+
+Sketch diagrams of the experiment and find expressions to determine the value of *n* in terms of measurement data. (0.75pt) **[1 т.]**
+
+**C.9** Perform the experiment to find $B/B_0$ for different values of $L_1$ and fill the table with the measurement data. **[0,5 т.]**
+
+**C.10** Plot a graph of $B/B_0$ as a function of an appropriate variable to determine the value of *n* (**Graph 4**).
+
+Give the value of *n* . **[0,5 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="d">
+
+### D. Applications of GMR magnetic sensors (6 points) (6 т.)
+
+In this part, we consider some applications of the magnetic sensor.
+
+**1. Measuring the Earth's magnetic field**
+
+You are asked to use the magnetic sensor to determine some parameters of the Earth's magnetic field. Some extra graph sheets are provided, in case you need them for solving this question.
+
+***a. Magnitude of the horizontal component of the Earth's magnetic field***
+
+Fix the round plate [15] in the horizontal plane. The sensor holder [14] is screwed on the round plate. By rotating the sensor holder on the round plate, you can determine the component in the horizontal plane of the Earth's magnetic field in different directions of the sensor axis.
+
+**D.1** Sketch diagrams of the experiment and find expressions for calculating the magnitude $B_h$ of the horizontal component of the Earth's magnetic field in terms of measurement data. **[0,5 т.]**
+
+**D.2** Perform the measurements and calculations to find $B_h$. **[0,25 т.]**
+
+***b. Magnitude of the Earth's magnetic field and magnetic inclination***
+
+The magnetic inclination is defined as the angle $\theta$ between the Earth's magnetic field vector $\vec{B}_{Earth}$ and the horizontal plane.
+
+Fix the round plate [15] to the tall pole [7], with the round plate in the vertical plane containing the South-North direction. The sensor holder [14] is screwed on the round plate. By rotating the sensor holder on the round plate, you can determine the component of the Earth's magnetic field in different directions of the sensor axis.
+
+**D.3** Sketch diagrams of the experiment and find expressions for calculating the Earth's magnetic field $B_{Earth}$ and the magnetic inclination $\theta$ in terms of measurement data. **[0,75 т.]**
+
+**D.4** Perform measurements and calculations to find $B_{Earth}$ and $\theta$. **[0,5 т.]**
+
+**2. DC wattmeter**
+
+In this section, you use the magnetic sensor to form the circuit of a wattmeter. The flat coil [5] wraps around the sensor. This flat coil is connected in series with the load, so the electric current $I$ in the flat coil is the same as that in the load. The current $I$ in the flat coil creates the magnetic field which acts on the sensor, and the voltage *U* across the load is used to supply the sensor.
+
+The output signal *S* of the sensor is used to determine the power P dissipated in the load.
+
+The double-filament electric bulb [21] is used as the load. By using the three terminals of the bulb in different ways, you may obtain several values of the load’s resistance $R_L$.
+
+In many cases, the Wheatstone bridge of the magnetic sensor is unbalanced even when there is no external magnetic field acting on it. This is due to a small difference in the resistance of the elements and remanence of the ferromagnetic layers. In this case, you need to balance the bridge before using it in the circuit of the wattmeter. The sensor holder [14] is screwed on the round plate [15] in the horizontal position. The sensor is supplied by the battery [4] with the highest voltage. Orient the sensor perpendicular to the Earth's magnetic field. Observe the output signal *S* on a multimeter. If $S = 0$ , the bridge is balanced, and you do not need to do anything else. If $S \neq 0$ , the bridge is unbalanced, and you need to balance it. Connect the rheostat [2] in parallel with one of the elements *a*, *b*, *c*, and *d*, for which once the rheostat is connected to it, *S* decreases its magnitude. Adjust the rheostat to reduce *S* to zero. Now the bridge is balanced. This process is called *balancing*.
+
+In some cases, the use of the rheostat cannot help to balance the bridge. In such cases, it suffices to rotate the sensor holder by a small angle such that the output signal *S* is reduced to $S = 0$.
+
+**D.5** Sketch the diagram of the wattmeter circuit together with the load and the multimeters used in the measurements. **[0,5 т.]**
+
+Use the Connection Box [17] to build the circuit of the wattmeter according to your diagram. Vary the resistance $R_L$ of the load and adjust the output of the DC current source [6] to change the voltage *U* across the load.
+
+**D.6** Fill the table with the values of the sensor output signal $S$ corresponding to the values of $I$ and *U*, and of $P = U.I$ **[0,75 т.]**
+
+**D.7** Plot a graph of $P$ as a function of $S$ (**Graph 5**) **[0,5 т.]**
+
+The curve $P = f(S)$ is called the calibration curve of the wattmeter.
+
+**D.8** Find the form of the function $P = f(S)$ of the calibration curve and determine values of its coefficients. **[0,25 т.]**
+
+**3. Detection of buried electrical circuits**
+
+In this section, you are asked to use the magnetic sensor to form a device for finding the shapes of two buried electric circuits. The electric circuit is made on the hidden surface of a printed circuit board. A grid sheet attached on the reversed surface of the printed circuit board serves as a system of coordinates.
+
+You may carry out this experiment in the following way. Set the round plate [15] in the horizontal position and fixed to the short pole. The sensor holder [14] is screwed on the round plate. The printed circuit board with the buried electric circuit [9] lies flat on the turntable [11]. The turntable is free to rotate in the horizontal plane, and also to move in two perpendicular directions along the rails [10] and [12]. Connect the conductors of the printed circuit board to the adjustable DC current source [6], with the red conductor at the positive terminal. Adjust the DC current source to choose a value of the current in the circuit. By moving the printed circuit board relatively to the magnetic sensor [13], and looking at the change in the output signal *S* of the sensor, you can detect the position and the shape of the buried circuit and also the direction of the current in the buried circuit. Some larger scale Grid Sheets are provided, in case you need them in solving this question.
+
+**D.9** Draw a diagram of the buried electric circuits together with the direction of the current in them on the grid sheets in the Answer Sheet. **[2 т.]**
+
+</ProblemSection>
+
+**APPENDIX**
+
+**1. Instructions for the multimeter**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-fig5.png" alt="Photograph of a KYORITSU MODEL 1009 digital multimeter with labels 1–12: display, REL, HOLD and Hz/DUTY keys, COM, V/Ω/Hz, mA and A terminals, function selector switch, RESET, SELECT and RANGE keys." width="1638" height="2183" loading="lazy" decoding="async" />
+<figcaption>Figure A1</figcaption>
+</figure>
+
+
+|  |  |  |  |
+|---|---|---|---|
+| 1 | Display | 7 | Measuring terminal (mA) |
+| 2 | REL Key | 8 | Measuring terminal (A) |
+| 3 | HOLD Key | 9 | Function Selector Switch |
+| 4 | Hz/DUTY Key | 10 | RESET Key |
+| 5 | Measuring terminal (COM) | 11 | SELECT Key |
+| 6 | Measuring terminal (V/Ω/Hz) | 12 | RANGE Key |
+
+- To avoid complications do not use the following keys: REL Key [2], HOLD Key [3], Hz, DUTY Key [4], RESET Key [10].
+- To power on the multimeter and begin a measurement, rotate the Function Selector Switch [9] to the desired function.
+- Use the Measuring terminal (V/Ω/Hz) [6] and Measuring terminal (COM) [5] for measuring voltage and resistance.
+- Use the Measuring terminal (A) [8] and Measuring terminal (COM) [5] and Function A for measuring current.
+- The multimeter is automatically switched off about 30 minutes after power on. Rotate the Function Selector Switch to OFF and then back to the function to continue the measurement.
+
+To avoid automatic switching off, press the SELECT Key while rotating the Function Selector Switch to the desired function.
+
+**2. The battery**
+
+The circuit of the battery is given in Fig A2.
+
+The battery is switched on when the button is pressed, and is switched off when the button is released.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.6%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-fig6.png" alt="Circuit of the battery: four cells in series with taps to terminals 1, 2, 3 and 4; terminal 0 is connected through a push-button switch to the first cell." width="1033" height="762" loading="lazy" decoding="async" />
+<figcaption>Figure A2</figcaption>
+</figure>
+
+
+**3. Sensor connection box**
+
+Before using the sensor, its cable needs to be plugged to the sensor connection box. Once the sensor is connected to this box, the numbers labeled on the box correspond to the pin numbers in Figure 2.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **A. Understanding of magnetic fields (1.0 point), A.1** 0.00628 mT/mA
+- **A. Understanding of magnetic fields (1.0 point), A.2** $B_\beta = B_h\cos\beta$
+- **B. Investigation of the GMR effect using a GMR magnetic sensor (7 points), B.4** a, c
+- **B. Investigation of the GMR effect using a GMR magnetic sensor (7 points), B.8** -0.067 mT⁻¹
+- **B. Investigation of the GMR effect using a GMR magnetic sensor (7 points), B.9** 13.5 %
+- **C. Study of GMR magnetic sensor (6 points), C.4** 0.1 mT
+- **C. Study of GMR magnetic sensor (6 points), C.7** $|S| = \frac{E}{2}\cdot|\alpha|\cdot B$
+- **C. Study of GMR magnetic sensor (6 points), C.10** 0.56
+- **D. Applications of GMR magnetic sensors (6 points), D.2** 0.035 mT
+- **D. Applications of GMR magnetic sensors (6 points), D.4** B<sub>Earth</sub> = 0.041 mT; θ = 31°
+- **D. Applications of GMR magnetic sensors (6 points), D.8** $P = \kappa S,\ \kappa = 0.026\ \mathrm{W/mV}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-a">
+
+### A. Understanding of magnetic fields (1.0 point)
+
+**1. Understanding of magnetic field created by a circular coil**
+
+**A.1** $k = 6.28\times10^{-3}\ \mathrm{mT/mA}$ **[0,5 т.]**
+
+**2. Understanding of the Earth’s magnetic field**
+
+**A.2** $B_\beta = B_\mathrm{h}\cos\beta$ **[0,5 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### B. Investigation of the GMR effect using a GMR magnetic sensor (7 points)
+
+**2. Determination of resistance of GMR elements**
+
+**a.** ***Resistance of the elements at*** $B = 0$.
+
+**B.1** Diagrams of the experiment and the expressions for calculating the resistance of each element *a*, *b*, *c* and *d*.
+
+a. Short circuit pins 8 and 4.
+
+$R_{5,84} = m;\ R_{1,84} = n$
+
+$$
+\frac{1}{m} = \frac{1}{a} + \frac{1}{b} \qquad (1)
+$$
+
+$$
+\frac{1}{n} = \frac{1}{c} + \frac{1}{d} \qquad (2)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '25.1%', '--fig-max': '161px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig1.png" alt="Bridge of elements d, a (top, from pin 8) and c, b (bottom, to pin 4) inside a dashed box, with midpoints at pins 1 and 5; pins 8 and 4 short-circuited for resistance measurements." width="504" height="519" loading="lazy" decoding="async" />
+</figure>
+
+
+b. Connect pins 8 and 4 to a battery.
+
+$$
+\frac{U_{8,5}}{U_{5,4}} = p;\ \frac{U_{8,1}}{U_{1,4}} = q
+$$
+
+$$
+\frac{a}{b} = p \qquad (3)
+$$
+
+$$
+\frac{d}{c} = q \qquad (4)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31.1%', '--fig-max': '200px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig2.png" alt="The same bridge d, a, c, b with pins 1, 5, 8, 4, and a battery connected between pins 8 and 4." width="624" height="522" loading="lazy" decoding="async" />
+</figure>
+
+
+Solve the system of equations (1), (2), (3) and (4). Obtain:
+
+$$
+a = m(p+1);\ b = m\left(1 + \frac{1}{p}\right)
+$$
+
+$$
+c = n\left(1 + \frac{1}{q}\right);\ d = n(q+1)
+$$
+**[1,25 т.]**
+
+**B.2** For $B = 0$:
+
+$a = 4960\ \Omega$; $b = 4870\ \Omega$; $c = 4950\ \Omega$; $d = 4970\ \Omega$ **[1,25 т.]**
+
+**b.** ***Resistance of the elements at maximum external magnetic field***
+
+**B.3** $a = 4320\ \Omega$; $b = 4870\ \Omega$; $c = 4310\ \Omega$; $d = 4970\ \Omega$ **[0,5 т.]**
+
+**c.** ***Properties of the elements***
+
+**B.4** Elements sensitive to the magnetic field are: *a*, *c* **[0,25 т.]**
+
+**2. Characteristics of a GMR element**
+
+**B.5** The name of the chosen element: *a*
+
+Diagrams of the experiment and the expressions for calculating $\delta(B)$.
+
+**1.** Method 1:
+
+The same as used in B.1 with different values of the current *I* in the circular coil.
+
+**2.** Method 2:
+
+Connect the sensor to the battery according to the diagram, forming a bridge. The GMR element under consideration is *a*.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '35.3%', '--fig-max': '227px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig3.png" alt="Bridge d, a, c, b with pins 8, 1, 5, 4 powered by a battery of voltage E with midpoint E/2 and 0; a voltmeter V between pin 5 and the battery midpoint reads ΔU." width="708" height="515" loading="lazy" decoding="async" />
+</figure>
+
+
+If at $I = 0$ the bridge is balanced, then $\Delta U = 0$.
+
+Set the current *I* in the coil, the resistance of *a* becomes $R + \Delta R$, then $\Delta U \neq 0$. Because $\Delta U = \frac{E\cdot R}{R + R + \Delta R} - \frac{E}{2}$, then
+
+$$
+\delta(B) = \frac{\Delta R}{R} \approx -\frac{\Delta U}{E/4}.
+$$
+
+If at $I = 0$, the bridge is unbalanced and the initial voltage is $\Delta U_0$, then $\frac{\Delta R}{R} = -\frac{\Delta U - \Delta U_0}{E/4}$ and $\delta(B) = \frac{\Delta R}{R} \approx -\frac{\Delta U - \Delta U_0}{E/4}$
+
+The voltages are measured relatively to the middle point of the battery.
+
+The maximum value of $\Delta R/R$ is about 10%. The error in determining it by using above approximations is less than 1% and can be accepted. **[0,75 т.]**
+
+**B.6** Table of $\delta(B)$ corresponding to the values *I* and *B*.
+
+$E = 6300\ \mathrm{mV}$
+
+| *I* (mA) | *B* (mT) | $\Delta U$ (mV) | $\Delta U - \Delta U_0$ | $\delta(B)$ |
+|---:|---:|---:|---:|---:|
+| 0 | 0 | -25.8 | 0 | 0 |
+| 10 | 0.0628 | -21 | 4.8 | -0.00305 |
+| 20 | 0.126 | -15.7 | 10.1 | -0.00641 |
+| 45 | 0.283 | -2.1 | 23.7 | -0.01504 |
+| 67 | 0.421 | 11.1 | 36.9 | -0.02343 |
+| 87 | 0.546 | 24.5 | 50.3 | -0.03193 |
+| 107 | 0.672 | 38.1 | 63.9 | -0.04057 |
+| 129 | 0.810 | 54 | 79.8 | -0.05067 |
+| 156 | 0.980 | 74 | 99.8 | -0.06336 |
+| 186 | 1.168 | 96 | 121.8 | -0.07733 |
+| 215 | 1.350 | 117.3 | 143.1 | -0.09085 |
+| 240 | 1.507 | 134.5 | 160.3 | -0.10177 |
+| 268 | 1.683 | 152.6 | 178.4 | -0.11326 |
+| 303 | 1.903 | 170.6 | 196.4 | -0.12469 |
+| 330 | 2.072 | 179.6 | 205.4 | -0.13041 |
+| 354 | 2.223 | 184.1 | 209.9 | -0.13326 |
+| 384 | 2.411 | 186.2 | 212 | -0.13460 |
+| 405 | 2.543 | 186.7 | 212.5 | -0.13492 |
+| 436 | 2.738 | 187.1 | 212.9 | -0.13517 |
+| 469 | 2.945 | 187.2 | 213 | -0.13523 |
+
+**[1,25 т.]**
+
+**B.7** **Graph 1-** Graph of the relative change of resistance
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '78.4%', '--fig-max': '502px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig4.png" alt="Graph 1: δ(B) (from 0 to −0.14) versus B [mT] (0 to 3); red triangles decrease almost linearly from 0 to about −0.13 near 2 mT and then level off at about −0.135." width="1569" height="1083" loading="lazy" decoding="async" />
+</figure>
+
+**[0,5 т.]**
+
+**B.8** The average slope $\alpha = \frac{\Delta\delta(B)}{\Delta B}$ of the curve $\delta(B)$
+
+$\alpha = -0.067\ \mathrm{mT^{-1}}$ **[0,25 т.]**
+
+**B.9** The GMR coefficient
+
+$\delta = \frac{\Delta R_\mathrm{max}}{R(0)} = 13.5\,\%$ **[0,25 т.]**
+
+**B.10** The value of the resistances *r* and *R* of the GMR element:
+
+$$
+r = R_0 - \sqrt{R_0(R_0 - R_\mathrm{B})};\ R = R_0 + \sqrt{R_0(R_0 - R_\mathrm{B})}
+$$
+
+Choose element *a* in B.2 and B.3, then:
+
+$r = 3180\,\Omega$; $R = 6740\,\Omega$; $\gamma = \frac{r}{R} = 0.47$ **[0,75 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### C. Study of GMR magnetic sensor (6 points)
+
+**1. Characteristics of sensor output signal**
+
+**C.1** Table with the values of the output signal *S* corresponding to the values of the current *I* and the magnetic field *B*.
+
+| ***I*** | ***B*** | ***S*** | ***I*** | ***B*** | ***S*** |
+|---|---|---|---|---|---|
+|  |  |  |  |  |  |
+
+**[1 т.]**
+
+**C.2** **Graph 2 -** Graph $S(B)$ of the output signal *S* as a function of the applied magnetic field *B*.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '98.6%', '--fig-max': '631px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig5.png" alt="Graph 2: S [mV] (0 to 500) versus B [mT] (−3.0 to 3.0); a V-shaped hysteresis curve of green triangles with minimum near B = 0 and saturation near 420 mV at both ends. Blue ellipses mark the saturation regions S at the ends and the linear regions L on both branches." width="1972" height="1314" loading="lazy" decoding="async" />
+</figure>
+
+**[1 т.]**
+
+**C.3** 1. Region of saturation in the curve $S(B)$: S
+2. Region of linearity in the curve $S(B)$: L
+
+$m = 2.0\times10^{2}\ \mathrm{mV/mT}$ **[0,5 т.]**
+
+**C.4** The coercive field is
+
+$B_\mathrm{c} = 0.10\ \mathrm{mT}$ **[0,5 т.]**
+
+**2. Dependence of output signal on the voltage**
+
+**C.5** Table with the values of $S$ corresponding to the values of $E$.
+
+| *E* (V) | *S* (mV) |
+|---|---|
+| 0 | 0 |
+| 1.51 | 91.5 |
+| 3.1 | 183 |
+| 4.6 | 274 |
+| 6.25 | 365 |
+
+**[0,25 т.]**
+
+**C.6** **Graph 3 -** $S$ as a function of $E$ .
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.5%', '--fig-max': '490px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig6.png" alt="Graph 3: S [mV] (0 to 400) versus E [V] (0 to 7); five black triangles on a straight line through the origin; fit label y=a x, max dev:3.10, r²=0.999, a=58.9." width="1531" height="1024" loading="lazy" decoding="async" />
+</figure>
+
+**[0,25 т.]**
+
+**C.7**
+$$
+|S| = \frac{E}{2}\cdot|\alpha|\cdot B
+$$
+**[0,5 т.]**
+
+**3. Study of effects of a flux concentrator**
+
+**C.8** **1.** The magnetic field used in this experiment. (0.25 pt)
+
+Put a cross in the appropriate box
+
+|  |  |
+|---|---|
+| a. The field of the circular coil carrying an electric current |  |
+| b. The field of the flat coil carrying an electric current |  |
+| c. The field of the plate of permanent magnet |  |
+| d. The magnetic field of the Earth | X |
+
+**2.** Diagrams of the experiment and expressions to determine the value of *n*. (0.75 pt)
+
+1. The sensor on the round plate in the horizontal plane.
+2. With no flux concentrator
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '64%', '--fig-max': '410px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig7.png" alt="Top views of the sensor holder on the round plate: left, the holder perpendicular to the South-North direction (reading S1); middle, the holder along the South-North direction (reading S2); right, an arrow from S to N." width="1281" height="506" loading="lazy" decoding="async" />
+</figure>
+
+
+a. Orient the sensor perpendicular to the South-North direction. Note the value $S_1$.
+
+b. Rotate the sensor along the South-North direction. Note the value $S_2$.
+
+c. $\Delta S_0 = S_2 - S_1$; $B_0 = |\Delta S_0|/m$.
+
+3.With flux concentrator
+
+For each value of $L_1$, do the same, to obtain $B = |\Delta S|/m$. **[1 т.]**
+
+**C.9** Table to find $B/B_0$ for different values of $L_1$. $B/B_0 = \Delta S/\Delta S_0$
+
+$S_1 = 17\ \mathrm{mV}$; $\Delta S_0 = 21.2 - 17 = 4.2\ \mathrm{mV}$.
+
+| $L_1$ (mm) | $S_2$ (mV) | $1/L_1$ (mm$^{-1}$) | $\Delta S = S_2 - S_1$ | $B/B_0$ |
+|---|---|---|---|---|
+| 5 | 33.2 | 0.200 | 16.2 | 3.86 |
+| 6 | 31.2 | 0.167 | 14.2 | 3.38 |
+| 7 | 30.2 | 0.143 | 13.2 | 3.14 |
+| 8 | 28.6 | 0.125 | 11.6 | 2.76 |
+| 9 | 27.7 | 0.111 | 10.7 | 2.55 |
+| 10 | 26.8 | 0.100 | 9.8 | 2.33 |
+| 11 | 26.4 | 0.0909 | 9.4 | 2.24 |
+| 13 | 25.4 | 0.0769 | 8.4 | 2.00 |
+| 15 | 24.6 | 0.0667 | 7.6 | 1.81 |
+| $\infty$ | 21.2 | 0.0000 | 4.2 | 1.00 |
+
+**[0,5 т.]**
+
+**C.10** **Graph 4** – Graph of $B/B_0$ as a function of $1/L_1$.
+
+Use the function $\frac{B}{B_0} = nL_2\cdot\frac{1}{L_1} + 1$. Find $a = nL_2 = 14.1$.
+
+Obtain $n = \frac{a}{L_2} = \frac{14.1}{25} = 0.56$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91.9%', '--fig-max': '589px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig8.png" alt="Graph 4: B/B0 (0 to 4) versus 1/L1 [mm⁻¹] (0 to 0.20); green squares on a straight line starting at 1; fit label y=a x+1, max dev:0.131, r²=0.992, a=14.1." width="1840" height="1294" loading="lazy" decoding="async" />
+</figure>
+
+**[0,5 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-d">
+
+### D. Applications of GMR magnetic sensors (6 points)
+
+**1. Measurements of the Earth’s magnetic field**
+
+***a. Magnitude of the horizontal component of the Earth’s magnetic field***
+
+**D.1** Diagrams of the experiment and expressions for calculating $B_\mathrm{h}$ .
+
+**1.** The sensor on the round plate in the horizontal plane. Carry out the biasing.
+
+**2.** Method 1
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.9%', '--fig-max': '390px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig9.png" alt="Top view: the sensor holder on the round plate perpendicular to the South-North direction, and a dashed copy rotated by the angle α (curved arrow); right, an arrow from S to N." width="1220" height="615" loading="lazy" decoding="async" />
+</figure>
+
+
+a. Set $\alpha = 0$ - the sensor perpendicular to the direction South-North.
+
+b. Rotate the sensor holder, measure $S = f(\alpha)$
+
+c. Fit the curve *S* to a sine function $S = a\sin\alpha$.
+
+d. $B_\mathrm{h} = a/m$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '59.3%', '--fig-max': '380px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig10.png" alt="Graph of S [mV] (about 99 to 111) versus α [degree] (0 to 800): green points on a fitted sine curve; fit label y=a sin(x+b)+c, r²=0.9979, a=6.091, b=-0.5577, c=105.2, σa=0.05912, σb=0.5406, σc=0.04123, prob=1.000." width="1186" height="766" loading="lazy" decoding="async" />
+</figure>
+
+
+**3.** Method 2
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '47.2%', '--fig-max': '302px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig11.png" alt="Two top views of the sensor holder on the round plate along the South-North direction, pointing north (S1 (max, min)) and pointing south (S2(min, max)); right, an arrow from S to N." width="944" height="644" loading="lazy" decoding="async" />
+</figure>
+
+
+a. Orient the sensor along the Earth’s magnetic field. Find the direction with the maximum (or minimum) value of *S*. Note this value $S_1$
+
+b. Rotate the sensor holder by about 180$^\mathrm{o}$. Find the direction with the minimum (or maximum) value of *S*. Note this value $S_2$
+
+$$
+B_\mathrm{h} = \frac{|S_1 - S_2|}{2m}
+$$
+**[0,5 т.]**
+
+**D.2** $B_\mathrm{h} = 0.035\ \mathrm{mT}$. **[0,25 т.]**
+
+***b. Magnitude of the Earth’s magnetic field and magnetic inclination***
+
+**D.3** Diagrams of the experiment and expressions for calculating $B_\mathrm{Earth}$ and $\theta$.
+
+**1.** The sensor on the round plate in the vertical plane containing the South-North direction. Carry out the biasing.
+
+**2.** Method 1
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '67.3%', '--fig-max': '431px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig12.png" alt="Side views in the vertical South-North plane (arrow from S to N pointing down-left): the sensor holder tilted by α1 below the horizontal dashed line (S1(max, min)), rotated to α3=α2+90 (S3), and tilted by α2 (S2 (min, max))." width="1347" height="641" loading="lazy" decoding="async" />
+</figure>
+
+
+a. Orient the sensor along the Earth’s magnetic field. Find the direction with the maximum (or minimum) value of *S*. Note this value $S_1$ and the angle $\alpha_1$ between the sensor direction and the horizontal.
+
+b. Rotate the sensor holder by about 180$^\mathrm{o}$. Find the direction with the minimum (or maximum) value of *S*. Note this value $S_2$ and the angle $\alpha_2$ between the sensor direction and the horizontal.
+
+c. Orient the sensor in the direction midway between $\alpha_1$ and $\alpha_2$ with the angle $\alpha_3 = \alpha_2 + 90^\mathrm{o}$. Note the value $S_3$.
+
+d. Starting from $\alpha_3$, rotate the sensor holder, take the values of *S* corresponding to values of $\alpha$. Measure $S = f(\alpha)$.
+
+e. $S - S_3 = a\sin\alpha$. Obtain *a* from fitting.
+
+f. $B_\mathrm{Earth} = a/m$
+
+g. $\theta = \mathbf{Arccos}\frac{B_\mathrm{h}}{B_\mathrm{Earth}}$
+
+**3.** Method 2
+
+Orient the sensor along the Earth’s magnetic field. Find the direction with the maximum (or minimum) value of *S*. The angle $\theta$ between the sensor direction and the horizontal is the magnetic inclination.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.8%', '--fig-max': '358px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig13.png" alt="Side views in the vertical South-North plane (arrow from S to N): the sensor holder tilted by θ from the horizontal dashed line in two opposite orientations, labelled S (max, min) and S (min, max)." width="1118" height="562" loading="lazy" decoding="async" />
+</figure>
+
+
+From the obtained $\theta$, $B_\mathrm{Earth} = B_\mathrm{h}/\cos\theta$.
+
+This method may have systematic errors due to the relative misalignment of the sensor to the sensor holder. To eliminate this error, rotate the round plate together with the sensor holder by 180$^\mathrm{o}$ about a horizontal axis along the South-North direction. Repeat the measurement. The magnetic inclination is the mean value of the two obtained angles. **[0,75 т.]**
+
+**D4** $B_\mathrm{Earth} = 0.041\ \mathrm{mT}$
+
+$\theta = 31^\mathrm{o}$ **[0,5 т.]**
+
+**2. DC wattmeter**
+
+**D.5** Diagram of the wattmeter circuit together with the load and the multimeters.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.3%', '--fig-max': '354px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig14.png" alt="Wattmeter circuit: from the + and − terminals, an ammeter A (current I) and the flat coil in series feed the load R_L, with a voltmeter V (U) across it; the sensor pins 8 and 4 are connected across the load, and a voltmeter V between pins 1 and 5 reads S." width="1107" height="621" loading="lazy" decoding="async" />
+</figure>
+
+**[0,5 т.]**
+
+**D.6** Table with the values of the sensor output signal *S* corresponding to the values of *I* and *U*, and of $P = I\cdot U$ .
+
+| *I* (A) | *U* (V) | *P* (W) | *S* (mV) |
+|---|---|---|---|
+| 0.30 | 2.64 | 0.792 | 18.3 |
+| 0.35 | 3.9 | 1.365 | 42 |
+| 0.40 | 5.37 | 2.15 | 74.3 |
+| 0.45 | 6.94 | 3.12 | 112.4 |
+| 0.50 | 8.67 | 4.34 | 162.4 |
+| 0.543 | 10.29 | 5.59 | 215.4 |
+| 0.20 | 0.89 | 0.178 | 4.9 |
+| 0.25 | 1.53 | 0.382 | 11.5 |
+| 0.50 | 1.3 | 0.65 | 25.8 |
+| 0.60 | 2.13 | 1.28 | 50.7 |
+| 0.70 | 3.1 | 2.17 | 88.1 |
+| 0.80 | 4.1 | 3.28 | 137 |
+| 0.97 | 6.11 | 5.92 | 253 |
+| 0.30 | 3.13 | 0.939 | 31.4 |
+| 0.442 | 7.74 | 3.42 | 128 |
+
+**[0,75 т.]**
+
+**D.7** **Graph 5 -** Calibration curve of the wattmeter $P = f(S)$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '87.7%', '--fig-max': '562px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig15.png" alt="Graph 5: P [W] (0 to 6) versus S [mV] (0 to 250); boxed-cross points along a straight line through the origin; fit label y=a x, max dev:0.319, r²=0.991, a=0.0258." width="1755" height="1297" loading="lazy" decoding="async" />
+</figure>
+
+**[0,5 т.]**
+
+**D.8** The function: $P = \kappa S$
+
+The coefficient: $\kappa = 0.026\ \mathrm{W/mV}$ **[0,25 т.]**
+
+**b. Detection of buried electrical circuits**
+
+**D.9**
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.1%', '--fig-max': '449px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2018-experiment-exp/p1-sol-fig16.png" alt="Two circular grid sheets 1 and 2 with X and Y axes graduated 0–28. Sheet 1 shows a V-shaped conductor with arrows: current goes down the left arm to the bottom near (16, 2) and up the right arm. Sheet 2 shows an N-shaped conductor with arrows: down the left vertical, up the diagonal and down the right vertical." width="1404" height="687" loading="lazy" decoding="async" />
+</figure>
+
+**[2 т.]**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [exp.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2018/Experiment/exp.pdf#page=1)
+· официални решения: [exp_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2018/Experiment/exp_sol.pdf#page=1)

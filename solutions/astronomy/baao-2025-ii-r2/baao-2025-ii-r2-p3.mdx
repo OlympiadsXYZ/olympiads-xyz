@@ -1,0 +1,623 @@
+---
+id: baao-2025-ii-r2-p3
+source: 'BAAO 2025, II кръг'
+title: 'Задача 3. Gravitational Microlensing'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/BAAO/2025/baao-2025-ii-r2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-27T04:30:19.485Z'
+verifier: 'mechanical'
+---
+
+*British Astronomy and Astrophysics Olympiad 2024-2025 — Astro Round 2 — Tuesday 25th February 2025 · 25 февруари 2025 г. · 40 т.*
+
+<details>
+<summary>Указания</summary>
+
+**This question paper must not be photographed or taken out of the exam room**
+
+**Time**: 3 hours ($\sim 50$ minutes for Q1, $\sim 65$ minutes for Q2 and $\sim 65$ minutes for Q3).
+
+**Questions**: All three questions should be attempted. Each question contains independent parts so that later parts can be attempted even if earlier parts are incomplete. **The questions build in difficulty**.
+
+**Solutions**: Answers and calculations are to be written on loose paper. Students should ensure their **name** and **school** is clearly written on the **first** answer sheet and that **all** pages are numbered. A standard formula booklet may be used. START EACH QUESTION ON A NEW PAGE.
+
+**Clarity**: Solutions must be written legibly, in black or blue pen, and working down the page. Scribble will not be marked and overall clarity is an important aspect of this exam.
+
+**Instructions**: To accommodate students sitting the paper at different times, please **do not discuss** any aspect of the paper on the internet until 8 am Thursday 6th March.
+
+**Calculators**: Any standard calculator may be used, but calculators cannot be programmable and must not have symbolic algebra capability.
+
+</details>
+
+<details>
+<summary>Training Dates and the IOAA</summary>
+
+**Training Dates and the IOAA** (Mumbai, India, 11th - 21st August 2025)
+
+*The best students taking this paper eligible to represent the UK at the IOAA will be invited to attend the* **Selection Camp** *to be held in Oxford from* **Monday 7th to Friday 11th April 2025**. *At the camp, problem solving skills and observational skills (including with telescopes) will be developed, and students will sit a Data Analysis exam along with the Round 3 paper. From this, a team of five students (plus one reserve) will be selected for further training, including additional camps in the summer.*
+
+*The BAAO are very proud to be sponsored by G-Research*
+
+</details>
+
+<details>
+<summary>Important Constants</summary>
+
+| Constant | Symbol | Value |
+|---|---|---|
+| Speed of light | $c$ | $3.00 \times 10^{8}\ \mathrm{m\ s^{-1}}$ |
+| Earth’s rotation period | 1 day | 24 hours |
+| Earth’s orbital period | 1 year | 365.25 days |
+| parsec | pc | $3.09 \times 10^{16}\ \mathrm{m}$ |
+| Astronomical Unit | au | $1.50 \times 10^{11}\ \mathrm{m}$ |
+| Radius of the Sun | $R_{\odot}$ | $6.96 \times 10^{8}\ \mathrm{m}$ |
+| Radius of the Earth | $R_{\oplus}$ | $6.37 \times 10^{6}\ \mathrm{m}$ |
+| Mass of the Sun | $M_{\odot}$ | $1.99 \times 10^{30}\ \mathrm{kg}$ |
+| Mass of the Earth | $M_{\oplus}$ | $5.97 \times 10^{24}\ \mathrm{kg}$ |
+| Luminosity of the Sun | $L_{\oplus}$ | $3.83 \times 10^{26}\ \mathrm{W}$ |
+| Absolute magnitude of the Sun | $\mathcal{M}_{\odot}$ | $4.74$ |
+| Hubble constant | $H_0$ | $70\ \mathrm{km\ s^{-1}\ Mpc^{-1}}$ |
+| Stephan-Boltzmann constant | $\sigma$ | $5.67 \times 10^{-8}\ \mathrm{W\ m^{-2}\ K^{-4}}$ |
+| Gravitational constant | $G$ | $6.67 \times 10^{-11}\ \mathrm{m^{3}\ kg^{-1}\ s^{-2}}$ |
+| Boltzmann constant | $k_{\mathrm{B}}$ | $1.38 \times 10^{-23}\ \mathrm{J\ K^{-1}}$ |
+| Permittivity of free space | $\varepsilon_0$ | $8.85 \times 10^{-12}\ \mathrm{F\ m^{-1}}$ |
+| Permeability of free space | $\mu_0$ | $4\pi \times 10^{-7}\ \mathrm{H\ m^{-1}}$ |
+| Planck’s constant | $h$ | $6.63 \times 10^{-34}\ \mathrm{J\ s}$ |
+| Elementary charge | $e$ | $1.60 \times 10^{-19}\ \mathrm{C}$ |
+| Proton rest mass | $m_{\mathrm{p}}$ | $1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Electron rest mass | $m_{\mathrm{e}}$ | $9.11 \times 10^{-31}\ \mathrm{kg}$ |
+| Wien’s displacement law | $\lambda_{\max}T$ | $2.90 \times 10^{-3}\ \mathrm{m\ K}$ |
+| Avagadro’s constant | $N_A$ | $6.02 \times 10^{23}\ \mathrm{mol^{-1}}$ |
+
+**Basic calculus formulae**:
+
+Chain rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}f(g(x)) = f'(g(x))g'(x)
+$$
+
+Product rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}(uv) = \frac{\mathrm{d}u}{\mathrm{d}x}v + u\frac{\mathrm{d}v}{\mathrm{d}x}
+$$
+
+Quotient rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u}{v}\right) = \frac{\frac{\mathrm{d}u}{\mathrm{d}x}v - u\frac{\mathrm{d}v}{\mathrm{d}x}}{v^2}
+$$
+
+Integration by parts
+$$
+\int u\frac{\mathrm{d}v}{\mathrm{d}x}\,\mathrm{d}x = uv - \int v\frac{\mathrm{d}u}{\mathrm{d}x}\,\mathrm{d}x
+$$
+
+Standard integral
+$$
+\int \frac{1}{x}\,\mathrm{d}x = \ln|x| + C
+$$
+
+</details>
+
+<details>
+<summary>Important Formulae</summary>
+
+You might find the diagram of an elliptical orbit below useful in solving some of the questions:
+
+**Elements of an elliptic orbit**:
+
+- $a = \mathbf{OA}\ (= \mathbf{OP})$ semi-major axis
+- $b = \mathbf{OB}\ (= \mathbf{OC})$ semi-minor axis
+- $e = \sqrt{1 - \frac{b^2}{a^2}}$ eccentricity
+- $\mathbf{F}$ focus
+- $\mathbf{PF} = a(1 - e)$ periapsis distance (shortest distance from $\mathbf{F}$)
+- $\mathbf{AF} = a(1 + e)$ apoapsis distance (longest distance from $\mathbf{F}$)
+
+**Kepler’s Third Law**:
+$$
+T^2 = \frac{4\pi^2}{GM}a^3
+$$
+
+**Vis-Viva Equation**:
+$$
+v^2 = GM\left(\frac{2}{r} - \frac{1}{a}\right)
+$$
+
+**Wien’s Displacement Law**:
+$$
+\lambda_{\max}T = \mathrm{constant}
+$$
+
+**Stephan-Boltzmann Law**:
+$$
+L = 4\pi R^2\sigma T^4
+$$
+
+**Brightness (Intensity)**:
+$$
+b = \frac{L}{4\pi d^2}
+$$
+
+**Magnitudes**:
+$$
+\frac{b_1}{b_0} = 10^{-0.4(m_1 - m_0)}
+$$
+$$
+m - \mathcal{M} = 5\log\left(\frac{d}{10}\right)
+$$
+
+**Distance-Parallax Relation**:
+$$
+d = \frac{1}{p}
+$$
+
+**Rayleigh Criterion**:
+$$
+\theta = \frac{1.22\lambda}{D}
+$$
+
+**Redshift**:
+$$
+z = \frac{\Delta\lambda}{\lambda_{\mathrm{emit}}} \approx \frac{v}{c}
+$$
+
+**Hubble’s Law**:
+$$
+v = H_0 d
+$$
+
+</details>
+
+<details>
+<summary>Note for markers</summary>
+
+**Astro Round 2 2025 Paper Solutions and Marking Guidelines**
+
+**Note for markers:**
+
+- Answers to two or three significant figures are generally acceptable. The solution may give more in order to make the calculation clear. Units should be present on final answers when appropriate.
+- There are multiple ways to solve some of the questions; please accept all good solutions that arrive at the correct answer. Students getting the answer in a $\boxed{\text{box}}$ will get all the marks available for that calculation / part of the question (as indicated in red), so long as there are no unphysical / nonsensical steps or assumptions made (students may not explicitly calculate the intermediate stages and should not be penalised for this so long as their argument is clear).
+
+In these solutions a plain [1] is a marking point and a bold **[n]** is the total for that calculation or part (printed in red in the source).
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [a.](#a)
+- [b.](#b)
+- [c.](#c)
+- [d.](#d)
+
+</nav>
+
+When a ray of light passes near to a massive body, the ray is deflected towards it by a very small angle due to the body’s gravity. This effect is known as gravitational lensing. The angle of deflection $\delta$ is given by the formula
+$$
+\delta = \frac{4GM}{bc^2}\ ,
+$$
+where $b$ is the impact parameter, defined as the distance of closest approach between the ray’s original trajectory and the lensing mass.
+
+One particularly interesting example of this phenomenon is Gravitational Microlensing, where the body causing the deflection is a relatively small mass such as a star or planet. This allows us to detect objects which are too dim to observe directly, such as exoplanets and brown dwarfs. In this question, we will examine how microlensing can be used to discover exoplanets by studying the gravitational interaction of light with the planet and its host star.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '73.8%', '--fig-max': '472px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p3-fig1.png" alt="Left panel: observer O₁ on plane P_O, lens L on plane P_L and source S on one horizontal line; distances D_L (O₁ to L), D_LS (L to S) and D_S (O₁ to S) marked above; two rays from S bend at distance b above and below L towards O₁, arriving at angle θ_E on each side, with the deflection angle δ marked. Right panel: observer O₂ displaced a distance a below O₁ on P_O; rays from S pass the lens plane at b₋ above L and b₊ below L and reach O₂ at angles θ₋ and θ₊; a dotted line from O₂ to S makes the angle φ with the direction to L." width="1476" height="601" loading="lazy" decoding="async" />
+<figcaption>**Figure 6:** The lensing setup in both the aligned (left panel) and unaligned (right panel) cases. Note that the diagrams have been greatly scaled up in the vertical direction to make them visible, and in reality all rays are almost parallel. Credit: Ben Woodrow</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '77.3%', '--fig-max': '495px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p3-fig2.png" alt="Light curve titled OGLE-2012-BLG-0406: I magnitude (inverted axis, 15.5 to 17) against HJD − 2450000 (about 5950 to 6250). The baseline is near 16.35 on the left, the curve brightens smoothly to a peak of about 15.55 near 6140 and fades to about 16.25 by 6240; a sharp anomaly of points reaching about 15.4 appears near 6115–6120. A thin magenta model curve runs through the data points." width="1547" height="1208" loading="lazy" decoding="async" />
+<figcaption>**Figure 7:** The light curve from the microlensing event OGLE-2012-BLG-0406, showing the variation in apparent magnitude against time in days. Credit: Udalski (2018).</figcaption>
+</figure>
+
+<ProblemSection id="a">
+
+### a. (7 т.)
+
+First, we will consider the scenario where the source $S$, the lensing mass $L$, and the observer $O_1$ are directly aligned, as shown in the left of Figure 6. This is an especially interesting case, as light from the source is able to reach the observer by passing around the source in any direction, creating a circular image known as an Einstein Ring, with angular radius $\theta_E$. We will assume that the lensing deflection occurs instantaneously at the point where the light passes though the lensing plane $P_L$. Since all the angles involved are extremely small, the impact parameter $b$ is simply the distance between this point and $L$.
+
+**(i)** Show that the Einstein radius is given by the formula
+$$
+\theta_E = \sqrt{\frac{4GM}{c^2}\cdot\frac{D_{LS}}{D_SD_L}}\ .
+$$
+**[4 т.]**
+
+**(ii)** Calculate the Einstein radius for a hypothetical Jupiter-sized exoplanet in a system with parallax $0.196$ milliarcseconds (mas), lensing light from a source star with parallax $0.087$ mas. Jupiter has a mass of $318\ M_{\oplus}$. **[3 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### b. (11 т.)
+
+We will now consider how the lensed source will appear to an observer $O_2$, still situated in the plane $P_O$, but now at a distance $a$ from $O_1$. In this case, instead of seeing the full Einstein Ring around the lens, the observer will see two point images at angles $\theta_+$ and $\theta_-$, one each side of the lens. The situation is shown in the right panel of Figure 6. This a much more typical scenario, as perfect alignments like the one in the previous part are extremely rare.
+
+**(i)** Find an equation which must be satisfied by each of the angles $\theta_{\pm}$. Hence, find show that $\theta_+$ in terms of $\theta_E$ and the Source-Observer-Lens angle $\varphi$ is given by
+$$
+\theta_+ = \frac{1}{2}\left(\varphi + \sqrt{\varphi^2 + 4\theta_E^2}\right)
+$$
+and find an equivalent formula for $\theta_-$. **[6 т.]**
+
+**(ii)** Determine the maximum value of the angular displacement of the image at $\theta_+$ from the unlensed position of the source as $\varphi$ varies, and the corresponding value of $\varphi$. **[4 т.]**
+
+**(iii)** What is the smallest diameter of telescope which would be able to resolve this maximal displacement for the hypothetical exoplanet mentioned earlier? **[1 т.]**
+
+As you have just seen, the deflection caused by typically sized exoplanets is typically not directly observable by conventional optical means. Fortunately, the lensing also has a secondary effect of magnifying the brightness of the source, which is much more easily detected.
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### c. (15 т.)
+
+We will now attempt to calculate the size of the amplification effect caused by the lensing.
+
+**(i)** Find expressions for $a$ and the impact parameters $b_{\pm}$ in terms of $\varphi$, $\theta_E$ and the various $D$. **[3 т.]**
+
+**(ii)** Consider changing $\varphi$ by a small increment $\mathrm{d}\varphi$. Determine the corresponding changes $\mathrm{d}a$ and $\mathrm{d}b_{\pm}$. **[3 т.]**
+
+**(iii)** By considering the total power incident on the annulus of points in $P_O$ between $a$ and $a + \mathrm{d}a$ with and without the lensing effect, determine the brightness of each of the two images compared to the unlensed brightness of the source. Give your answer in terms of the ratio $u = \frac{\varphi}{\theta_E}$. **[6 т.]**
+
+**(iv)** Assuming that the observer cannot resolve the two images, show that the total amplification factor is given by
+$$
+A = \frac{u^2 + 2}{u\sqrt{u^2 + 4}}\ .
+$$
+**[1 т.]**
+
+**(v)** For the same hypothetical exoplanet considered earlier, calculate the percentage increase in source brightness due to the lensing effect given $\varphi = 0.07$ mas. **[2 т.]**
+
+This increase in brightness is much more easily detected than the change in image position angle found earlier, and so is the focus of many astronomical surveys.
+
+</ProblemSection>
+
+<ProblemSection id="d">
+
+### d. (7 т.)
+
+In 2012, researchers at the Optical Gravitational Lensing Experiment (OGLE) studied a microlensing event caused by a star and its exoplanet lensing the light from a more distant star. The light curve is shown in Figure 7. Most of the curve is a typical single source microlensing event with the star as the lens, as we considered in b. earlier. The anomaly at around $t = 6130$ is due to interaction with the exoplanet. As the source and lens move across the sky relative to each other, the value of $u$ changes, causing the variation in the brightness of the source. We will assume that the source and lens are moving with a constant relative angular velocity.
+
+**(i)** Using values taken from Figure 7, a suitable numerical method and the formula given above for $A$, determine the minimum value of $u$ over the course of this lensing interaction. **[4 т.]**
+
+**(ii)** Determine the Einstein crossing time $t_E$, defined as the time taken for the source and lens to move relative to each other by an angle $\theta_E$. **[3 т.]**
+
+These parameters describing the geometry of the microlensing event make it possible to fit a suitable model for a binary lens to match the anomaly seen in the data and determine the position and mass of the exoplanet.
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a., (ii)** $1.41 \times 10^{-10}$ rad
+- **b., (i)** $\theta_- = \frac{1}{2}\left(\varphi - \sqrt{\varphi^2 + 4\theta_E^2}\right)$
+- **b., (ii)** θ₊ − φ = θ<sub>E</sub>, at φ = 0
+- **b., (iii)** 4300 m
+- **c., (i)** $b_{\pm} = \frac{D_L}{2}\left(\varphi \pm \sqrt{\varphi^2 + 4\theta_E^2}\right),\quad a = \frac{D_LD_S}{D_{LS}}\varphi$
+- **c., (ii)** $\mathrm{d}a = \frac{D_LD_S}{D_{LS}}\mathrm{d}\varphi,\quad \mathrm{d}b_{\pm} = \frac{D_L}{2}\left(1 \pm \frac{\varphi}{\sqrt{\varphi^2 + 4\theta_E^2}}\right)\mathrm{d}\varphi$
+- **c., (iii)** $\frac{1}{2}\left(\frac{u^2 + 2}{u\sqrt{u^2 + 4}} \pm 1\right)$
+- **c., (v)** 3.5 %
+- **d., (i)** 0.527
+- **d., (ii)** 70 days
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**1 Gravitational Microlensing (Model Solution)**
+
+The marks for each step are given in round brackets; the total for each part in square brackets.
+
+<ProblemSection id="solution-a">
+
+### a.
+
+**(i)** [4]
+
+By geometry and the small angle approximation for $\tan x$, we have:
+$$
+b = \theta_ED_L \qquad (1)
+$$
+
+By considering the angle $\alpha$ shown in Figure 1, we also have:
+$$
+\delta = \theta_E + \alpha \qquad (1)
+$$
+$$
+b = \alpha D_{LS} \qquad (1)
+$$
+
+Hence:
+$$
+\frac{4GM}{bc^2} = \delta = \theta_E + \alpha = \left(1 + \frac{D_L}{D_{LS}}\right)\theta_E
+$$
+$$
+\frac{4GM}{D_L\theta_Ec^2} = \frac{D_S}{D_{LS}}\theta_E
+$$
+$$
+\theta_E = \sqrt{\frac{4GM}{c^2}\cdot\frac{D_{LS}}{D_LD_S}} \qquad (1)
+$$
+
+**(ii)** [3]
+
+Using the definition of parallax, we have:
+$$
+D_S = \frac{1}{0.087} = 11.5\mathrm{kpc} \qquad D_L = \frac{1}{0.196} = 5.1\mathrm{kpc} \qquad (1)
+$$
+$$
+D_{LS} = D_S - D_L = 6.1\mathrm{kpc} \qquad (1)
+$$
+$$
+\theta_E = \sqrt{\frac{4GM}{c^2}\cdot\frac{D_{LS}}{D_SD_L}} = \sqrt{\frac{4\times6.67\times10^{-11}\times318\times5.97\times10^{24}}{(3.00\times10^8)^2}\cdot\frac{6.4}{11.5\times5.1\times3.09\times10^{19}}} = 1.41\times10^{-10}\mathrm{rad} \qquad (1)
+$$
+
+**Marking scheme**
+
+(a) (i) [1] Deduces $b = \theta_ED_L$  
+[1] Considers the angle $\alpha$ and finds one of the corresponding equations **or** finds another similarly useful geometric construction and a corresponding equation  
+[1] Makes all necessary small angle approximations for their method  
+[1] Makes all necessary substitutions for their method  
+*(If none of marks 2-4 scored, award 1 mark for substitution of expression for b or δ into any correct geometric equation. Award 3 marks for any solution only missing approximations. Must be rearranged into the final form to score full marks)*
+
+(ii) [1] Finds $D_S = 11.5$kpc or $D_L = 5.1$kpc  
+[1] Finds all 3 $D$’s  
+[1] Calculates $\theta_E = 1.41\times10^{-10}$rad $(= (8.08\times10^{-9})^{\circ} = 0.0291$mas$)$  
+*(Award one of the first 2 marks if the same error is made for both parallax calculations and $D_{LS}$ is correct for their values)*
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b.
+
+**(i)** [6]
+
+By small angles:
+$$
+b_+ = \theta_+D_L \qquad (1)
+$$
+
+Extending the ray’s trajectory and considering the distance $y$, as shown in Figure 2, by small angle approximations:
+$$
+D_{LS}\delta_+ = y = D_S(\theta_+ - \varphi) \qquad (2)
+$$
+$$
+D_{LS}\cdot\frac{4GM}{b_+c^2} = D_S(\theta_+ - \varphi)
+$$
+$$
+D_{LS}\cdot\frac{4GM}{D_L\theta_+c^2} = D_S(\theta_+ - \varphi) \qquad (1)
+$$
+$$
+\theta_+^2 - \theta_+\varphi = \frac{4GM}{c^2}\cdot\frac{D_{LS}}{D_LD_S} = \theta_E^2
+$$
+$$
+\theta_+^2 - \theta_+\varphi - \theta_E^2 = 0 \qquad (1)
+$$
+
+Since we can do exactly the same construction with $\theta_-$ (using a sign convention where $\theta_-$ is negative), it satisfies the same equation. Thus the $\theta_{\pm}$ are the 2 roots of this equation, and from the quadratic formula, we have:
+$$
+\theta_{\pm} = \frac{1}{2}\left(\varphi \pm \sqrt{\varphi^2 + 4\theta_E^2}\right) \qquad (1)
+$$
+
+**(ii)** [4]
+
+The displacement of the source from its unlensed position is given by the expression $\theta_+ - \varphi$. Differentiating, we have: (1)
+$$
+\frac{d}{d\varphi}(\theta_+ - \varphi) = \frac{1}{2}\cdot\frac{d}{d\varphi}\left(\sqrt{\varphi^2 + 4\theta_E^2} - \varphi\right) = \frac{1}{2}\left(\frac{\varphi}{\sqrt{\varphi^2 + 4\theta_E^2}} - 1\right) < 0 \qquad (1)
+$$
+
+Thus, the displacement is decreasing with $\varphi$, and so for minimal displacement we pick $\varphi = 0$, corresponding to $\theta_+ - \varphi = \theta_E$. (2)
+
+**(iii)** [1]
+
+By the Rayleigh criterion for an example wavelength of 500 nm (any wavelength corresponding to visible light is fine):
+$$
+d = 1.22\cdot\frac{\lambda}{\theta_E} = 1.22\cdot\frac{5.0\times10^{-7}}{1.41\times10^{-10}} = 4300\ \mathrm{m} \qquad (1)
+$$
+
+We remark that this is an absurd size for an optical telescope, so the deflection cannot be detected by conventional means (although it may be observed using interferometry).
+
+**Marking scheme**
+
+(b) (i) [1] Deduces $b = D_L\theta$  
+[1] Helpful geometric observation which could be used to find $\theta$ and a corresponding expression  
+[1] Finds any equation which would reduce to the correct quadratic upon substitutions of $b = D_L\theta$ and the formulae for $\delta$ and $\theta_E$ $D_S\theta = D_S\varphi + D_{LS}\delta$ or $\frac{D_LD_S}{D_{LS}}\varphi + D_L\delta = \frac{bD_S}{D_{LS}}$)  
+[1] Correctly makes any 2 of the above substitutions  
+[1] Obtains $\theta^2 - \varphi\theta - \theta_E^2 = 0$  
+[1] Deduces $\theta_- = \pm\frac{1}{2}\left(\sqrt{\varphi^2 + 4\theta_E^2} - \varphi\right)$ *(Ignore sign)*
+
+(ii) *(Allow full marks for all parts from (b-ii) to (c-iii) considering only $\theta_+$, $b_+$ in place of $\theta_{\pm}$, $b_{\pm}$)*  
+[1] Considers the angle $\varepsilon = \theta_+ - \varphi$  
+[1] Differentiates $\varepsilon$ correctly *(Award this mark for correctly differentiating $\theta_+$ if the first mark has been lost)*  
+[1] Deduces $\varepsilon$ decreasing with $\varphi$ and hence minimised when $\varphi = 0$  
+[1] Deduces $\varepsilon_{\min} = \theta_E$
+
+(iii) [1] Correct Rayleigh criterion calculation for a sensible wavelength. 500 nm gives 4300 m.
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### c.
+
+**(i)** [3]
+
+By small angles:
+$$
+b_{\pm} = D_L\theta_{\pm} = \frac{D_L}{2}\left(\varphi \pm \sqrt{\varphi^2 + 4\theta_E^2}\right) \qquad (1)
+$$
+
+By considering Figure 3:
+$$
+a = D_S\beta = D_S\cdot\frac{x}{D_{LS}} = D_S\cdot\frac{x}{D_{LS}} = D_S\cdot\frac{D_L\varphi}{D_{LS}} = \frac{D_LD_S}{D_{LS}}\cdot\varphi \qquad (2)
+$$
+
+**(ii)** [3]
+
+By differentiating:
+$$
+da = \frac{D_LD_S}{D_LS}\cdot d\varphi \qquad (1)
+$$
+$$
+db_{\pm} = D_L\theta_{\pm} = \frac{D_L}{2}\left(1 \pm \frac{\varphi}{\sqrt{\varphi^2 + 4\theta_E^2}}\right)d\varphi \qquad (2)
+$$
+
+**(iii)** [6]
+
+Let $A$ be the annulus described above, and $B$ the corresponding annulus of points in $P_L$ between $b_{\pm}$ and $b_{\pm} + db_{\pm}$. Let $P$ be the luminosity of the source. Without the lensing effect:
+$$
+\text{Unlensed Power on } A = \frac{\text{Area of } A}{4\pi D_S^2}\cdot P \qquad (2)
+$$
+
+Since $A$ is a narrow strip with length $2\pi a$ and width $da$, it has area $2\pi a\cdot da$. Hence:
+$$
+\text{Unlensed Power on } A = \frac{2\pi a\cdot da}{4\pi D_S^2}\cdot P \qquad (1)
+$$
+
+When the lensing effect is present, the rays passing through $A$ which contribute to the image we are considering are exactly the ones which are incident on $B$. Thus:
+$$
+\text{Lensed Power on } A = \text{Power on } B = \frac{\text{Area of } B}{4\pi D_{LS}^2}\cdot P = \frac{2\pi|b|\cdot|db|}{4\pi D_{LS}^2}\cdot P \qquad (1)
+$$
+
+Therefore, the ratio of powers on the annuli, which is the same as the ratio of brightnesses (since the power is constant over the annulus for small enough $d\varphi$), is given by:
+$$
+\frac{\text{Lensed Brightness}}{\text{Unlensed Brightness}} = \frac{|b|\cdot|db|}{a\cdot da}\cdot\frac{D_S^2}{D_{LS}^2} = \frac{\frac{D_L}{2}\left|\varphi \pm \sqrt{\varphi^2 + 4\theta_E^2}\right|\cdot\frac{D_L}{2}\left|1 \pm \frac{\varphi}{\sqrt{\varphi^2 + 4\theta_E^2}}\right|\cdot d\varphi}{\left(\frac{D_LD_S}{D_{LS}}\right)^2\varphi\cdot d\varphi}\cdot\frac{D_S^2}{D_{LS}^2}
+$$
+$$
+= \frac{1}{4}\left|1 \pm \frac{\sqrt{u^2 + 4}}{u}\right|\cdot\left|1 \pm \frac{u}{\sqrt{u^2 + 4}}\right| \qquad (1)
+$$
+$$
+= \frac{1}{4}\frac{\left(\sqrt{u^2 + 4} \pm u\right)^2}{u\sqrt{u^2 + 4}} = \frac{1}{4}\frac{\left(u^2 + 4 \pm 2u\sqrt{u^2 + 4} + 1\right)}{u\sqrt{u^2 + 4}} = \frac{1}{2}\left(\frac{u^2 + 2}{u\sqrt{u^2 + 4}} \pm 1\right) \qquad (1)
+$$
+
+**(iv)** [1]
+$$
+A = A_+ + A_- = \frac{1}{2}\left(\frac{u^2 + 2}{u\sqrt{u^2 + 4}} + 1\right) + \frac{1}{2}\left(\frac{u^2 + 2}{u\sqrt{u^2 + 4}} - 1\right) = \frac{u^2 + 2}{u\sqrt{u^2 + 4}} \qquad (1)
+$$
+
+**(v)** [2]
+$$
+u = \frac{\varphi}{\theta_E} = \frac{0.07\ \mathrm{mas}}{0.0291\ \mathrm{mas}} = 2.4 \qquad (1)
+$$
+$$
+A = \frac{u^2 + 2}{u\sqrt{u^2 + 4}} = \frac{2.4^2 + 2}{2.4\sqrt{2.4^2 + 4}} = 1.035
+$$
+
+So the % increase in brightness is 3.5% (1)
+
+**Marking scheme**
+
+(c) (i) [1] Finds $b\pm$  
+[1] Helpful geometric observation which could be used to find $a$ and a corresponding expression (e.g. considering the length given by $\varphi D_L$ and $\frac{D_{SL}}{D_S}$ and finding either one of those expressions)  
+[1] Finds $a = \frac{D_LD_S}{D_{LS}}\varphi$
+
+(ii) [1] Correctly finds $da = \frac{D_LD_S}{D_{LS}}d\varphi$ (ECF their $a$)  
+[1] Attempts to differentiate their $b$ and uses any one differentiation rule correctly  
+[1] Correctly finds $db = \frac{D_L}{2}\left(1 \pm \frac{\varphi}{\sqrt{\varphi^2 + 4\theta_E^2}}\right)d\varphi$ (ECF their b)
+
+(iii) [1] Formula for area of annulus (in terms of $a$ or $b$)  
+[1] Correct brightness on either plane (allow unnecessary terms accounting for extra distance due to $a$ or $b$ as long as they are correct)  
+[1] Determines power on any relevant annulus (ECF the above)  
+[1] Determines power on the other annulus (does not need to be simplified)  
+[1] Finds an expression for the ratio of powers in terms of only $u$  
+[1] Correctly simplifies their expression
+
+(iv) [1] Sums brightnesses from both images to obtain $A$
+
+(v) [1] Determines $u = 2.4$  
+[1] Determines % increase (= 3.5%)
+
+</ProblemSection>
+
+<ProblemSection id="solution-d">
+
+### d.
+
+**i)** [4]
+
+Reading values from Figure 6, we see that the baseline magnitude of the source is $m = 16.35$, and the peak magnitude is $m = 15.55$. Thus: (1)
+$$
+A = 10^{0.4(16.35-15.55)} = 2.09 \qquad (1)
+$$
+
+We therefore need to solve for $u$ in the equation:
+$$
+\frac{u^2 + 2}{u\sqrt{u^2 + 4}} = 2.09
+$$
+
+This could be done with Newton-Raphson iteration, or even by by rearranging into a quadratic in $u^2$ to solve exactly, but it is easiest to use the following fixed-point iteration scheme:
+$$
+u_{n+1} = \frac{u_n^2 + 2}{2.09\sqrt{u_n^2 + 4}} \qquad (1)
+$$
+
+Applying the scheme, with $u_0 = 1$ (any sensible value will work fine), it converges in relatively few iterations to $u = 0.527$ (1)
+
+**ii)** [3]
+
+Figure 4 shows the movement of the source relative to the lens, as it would be seen by the observer without the lensing effect. Therefore, at a time of $t_E$ from the peak brightness, the source will have traversed a distance of $\theta_E$ from the point of closest approach, and will therefore be at a value of $u = \sqrt{0.527^2 + 1^2} = 1.13$. Therefore: (1)
+$$
+A = \frac{1.13^2 + 1}{1.13\sqrt{1.13^2 + 4}} = 1.26 \qquad (1)
+$$
+$$
+m = m_0 - 2.5\log 1.26 = 16.05
+$$
+
+From the graph, this happens at $t \approx 6210$, while the peak occurs at $t \approx 6140$. Thus, $t_E = 6210 - 6140 = 70$ days. (1)
+
+**Marking scheme**
+
+(d) (i) [1] Reads $m_0 \in [16.30, 16.36]$ or $m_{\mathrm{peak}} \in [15.52, 15.58]$ from figure 6  
+[1] Determines $A = 2.09$ (ECF any sensible values for $m$ read from the graph)  
+[1] Sets up an appropriate numerical method to solve for $u$ or rearranges to a quadratic in $u^2$  
+[1] Finds $u = 0.527$ (ECF their A)
+
+(ii) [1] Deduces that 1 Einstein time away from the peak, $u = \sqrt{u_0^2 + 1^2} = 1.13$  
+[1] Deduces $A = 1.26$ at $t_E$ away  
+[1] Uses the graph to see that this is $70 \pm 15$ days away from the peak
+
+</ProblemSection>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.6%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p3-sol-fig1.png" alt="Hand-drawn diagram on lined paper: observer O₁, lens L and source S on a horizontal line with distances D_L and D_LS marked below; a ray from S rises to the lens plane (dashed vertical line) at height b above L, making angle α at S, and is deflected by δ there towards O₁, where it arrives at angle θ_E." width="1033" height="664" loading="lazy" decoding="async" />
+<figcaption>Figure 1: Diagram for (a-i)</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '61.8%', '--fig-max': '396px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p3-sol-fig2.png" alt="Hand-drawn diagram: observer O₂, lens L and source S; the ray from S passes below L at distance b₊ in the lens plane, is deflected by δ₊ and reaches O₂ at angle θ₊ from the direction to L; the extension of the ray past the lens reaches a distance y below S; the angle φ between O₂L and O₂S is marked." width="1236" height="577" loading="lazy" decoding="async" />
+<figcaption>Figure 2: Diagram for (b-i)</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.7%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p3-sol-fig3.png" alt="Hand-drawn diagram: observer O₂ a distance a below the line through L and S; the line from O₂ to S passes a distance x below L; the angle φ at O₂ between the directions to L and to S, and the angle β at S." width="1035" height="468" loading="lazy" decoding="async" />
+<figcaption>Figure 3: Diagram for (c-i)</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '61.8%', '--fig-max': '396px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p3-sol-fig4.png" alt="Hand-drawn sketch: the path of the source as a dashed horizontal line with arrow ('Path of Source'), the source at peak brightness marked × at distance φ₀ from the lens (dotted line down to 'Lens' with a right angle), and the source after t_E marked × a further θ_E along the path, at distance φ = √(φ₀² + θ_E²) from the lens, hence u = √(u₀² + 1)." width="1236" height="513" loading="lazy" decoding="async" />
+<figcaption>Figure 4: Diagram for (d-ii)</figcaption>
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Questions proposed by</summary>
+
+END OF PAPER
+
+*Questions proposed by:*  
+*James Kennedy (University of Oxford)*  
+*Charlotte Stevenson (University of Oxford)*  
+*Ben Woodrow (University of Oxford)*  
+*Dr Alex Calverley (Surbiton High School)*
+
+</details>
+
+---
+
+Оригинал в Архива: [BAAO_R2_2025.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2025/BAAO_R2_2025.pdf#page=10)
+· официални решения: [BAAO_R2_2025_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2025/BAAO_R2_2025_solutions.pdf#page=10)

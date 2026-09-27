@@ -1,0 +1,445 @@
+---
+id: baao-2023-x-p1
+source: 'BAAO 2023, Теория'
+title: 'Задача 1. Solar Analemma'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/BAAO/2023/baao-2023-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-27T04:30:20.718Z'
+verifier: 'mechanical'
+---
+
+*British Astronomy and Astrophysics Olympiad 2022-2023 — Astronomy & Astrophysics Competition Paper — Monday 6th February 2023 · 6 февруари 2023 г. · 35 т.*
+
+<details>
+<summary>Указания</summary>
+
+**This question paper must not be photographed or taken out of the exam room**
+
+**Time**: 3 hours ($\sim 65$ minutes for Q1, $\sim 70$ minutes for Q2 and $\sim 45$ minutes for Q3).
+
+**Questions**: All three questions should be attempted. Each question contains independent parts so that later parts can be attempted even if earlier parts are incomplete.
+
+**Solutions**: Answers and calculations are to be written on loose paper. **YOU WILL NEED GRAPH PAPER**. Students should ensure their **name** and **school** is clearly written on the **first** answer sheet and that **all** pages are numbered. **EACH QUESTION ANSWERED must be started on a new page.** A standard formula booklet with standard physical constants may be used if desired.
+
+**Instructions**: To accommodate students sitting the paper at different times, please **do not discuss** any aspect of the paper on the internet until 8 am Saturday 11th February.
+
+**Clarity**: Solutions must be written legibly, in black pen, and working down the page. Scribble will not be marked and overall clarity is an important aspect of this exam.
+
+**Eligibility**: The International Olympiad will be held in August 2023; all sixth form students are eligible to participate.
+
+**Calculators**: Any standard calculator may be used, but calculators cannot be programmable and must not have symbolic algebra capability.
+
+**Training Dates and the IOAA** (Chorzów, Poland, 10th - 20th August 2023)
+
+*The team will be selected from students taking this paper. The best students that are eligible to represent the UK at the IOAA will be invited to attend the* **Training Camp** *to be held in Oxford from* **Saturday 1st to Wednesday 5th April 2023**. *Astronomy material will be covered; problem solving skills and observational skills (telescope and naked eye observations) will be developed. At the Training Camp a Data Analysis exam along with a Round 3 theory paper will be sat. A team of five students (plus one reserve) will be selected for further training, including additional training camps in the summer.*
+
+</details>
+
+<details>
+<summary>Important Constants</summary>
+
+| Constant | Symbol | Value |
+|---|---|---|
+| Speed of light | $c$ | $3.00 \times 10^{8}\ \mathrm{m\,s^{-1}}$ |
+| Earth’s rotation period | 1 day | 24 hours |
+| Earth’s orbital period | 1 year | 365.25 days |
+| parsec | pc | $3.09 \times 10^{16}\ \mathrm{m}$ |
+| Astronomical Unit | au | $1.50 \times 10^{11}\ \mathrm{m}$ |
+| Radius of the Sun | $R_{\odot}$ | $6.96 \times 10^{8}\ \mathrm{m}$ |
+| Radius of the Earth | $R_{\oplus}$ | $6.37 \times 10^{6}\ \mathrm{m}$ |
+| Mass of the Sun | $M_{\odot}$ | $1.99 \times 10^{30}\ \mathrm{kg}$ |
+| Mass of the Earth | $M_{\oplus}$ | $5.97 \times 10^{24}\ \mathrm{kg}$ |
+| Luminosity of the Sun | $L_{\odot}$ | $3.85 \times 10^{26}\ \mathrm{W}$ |
+| Stephan-Boltzmann constant | $\sigma$ | $5.67 \times 10^{-8}\ \mathrm{J\,m^{-2}\,K^{-4}}$ |
+| Gravitational constant | $G$ | $6.67 \times 10^{-11}\ \mathrm{m^{3}\,kg^{-1}\,s^{-2}}$ |
+| Boltzmann constant | $k_{\mathrm{B}}$ | $1.38 \times 10^{-23}\ \mathrm{J\,K^{-1}}$ |
+| Permittivity of free space | $\varepsilon_0$ | $8.85 \times 10^{-12}\ \mathrm{F\,m^{-1}}$ |
+| Permeability of free space | $\mu_0$ | $4\pi \times 10^{-7}\ \mathrm{H\,m^{-1}}$ |
+| Planck’s constant | $h$ | $6.63 \times 10^{-34}\ \mathrm{J\,s}$ |
+| Elementary charge | $e$ | $1.60 \times 10^{-19}\ \mathrm{C}$ |
+| Proton rest mass | $m_{\mathrm{p}}$ | $1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Electron rest mass | $m_{\mathrm{e}}$ | $9.11 \times 10^{-31}\ \mathrm{kg}$ |
+| Wien’s displacement law | $\lambda_{\max}T$ | $2.90 \times 10^{-3}\ \mathrm{m\,K}$ |
+| Avagadro’s constant | $N_A$ | $6.02 \times 10^{23}\ \mathrm{mol^{-1}}$ |
+
+**Basic calculus formulae**:
+
+| | |
+|---|---|
+| Chain rule | $\frac{\mathrm{d}}{\mathrm{d}x}f(g(x)) = f'(g(x))g'(x)$ |
+| Product rule | $\frac{\mathrm{d}}{\mathrm{d}x}(uv) = \frac{\mathrm{d}u}{\mathrm{d}x}v + u\frac{\mathrm{d}v}{\mathrm{d}x}$ |
+| Quotient rule | $\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u}{v}\right) = \frac{\frac{\mathrm{d}u}{\mathrm{d}x}v - u\frac{\mathrm{d}v}{\mathrm{d}x}}{v^2}$ |
+| Integration by parts | $\int u\frac{\mathrm{d}v}{\mathrm{d}x}\,\mathrm{d}x = uv - \int v\frac{\mathrm{d}u}{\mathrm{d}x}\,\mathrm{d}x$ |
+| Standard integral | $\int \frac{1}{x}\,\mathrm{d}x = \ln\vert x\vert  + C$ |
+
+</details>
+
+<details>
+<summary>Important Formulae</summary>
+
+You might find the diagram of an elliptical orbit below useful in solving some of the questions:
+
+**Elements of an elliptic orbit**:
+
+| | |
+|---|---|
+| $a = \mathbf{OA}\ (= \mathbf{OP})$ | semi-major axis |
+| $b = \mathbf{OB}\ (= \mathbf{OC})$ | semi-minor axis |
+| $e = \sqrt{1 - \frac{b^2}{a^2}}$ | eccentricity |
+| $\mathbf{F}$ | focus |
+| $\mathbf{PF} = a(1-e)$ | periapsis distance (shortest distance from $\mathbf{F}$) |
+| $\mathbf{AF} = a(1+e)$ | apoapsis distance (longest distance from $\mathbf{F}$) |
+
+**Kepler’s Third Law**: For an elliptical orbit, the square of the period, $T$, of an object about the focus is proportional to the cube of the semi-major axis, $a$ (as defined above), such that
+
+$$
+T^2 = \frac{4\pi^2}{GM}a^3\,,
+$$
+
+where $M$ is the total mass of the system (typically dominated by the central object) and $G$ is the universal gravitational constant.
+
+**Vis-Viva Equation**: For an elliptical orbit, the speed $v$ of an object at a distance $r$ from the focus is related to the semi-major axis, $a$, total mass of the system, $M$, and universal gravitational constant, $G$, (as defined above), such that
+
+$$
+v^2 = GM\left(\frac{2}{r} - \frac{1}{a}\right)\,.
+$$
+
+**Magnitudes**: The apparent magnitudes of two objects, $m_1$ and $m_0$, are related to their apparent brightnesses, $b_1$ and $b_0$, via the formula
+
+$$
+\frac{b_1}{b_0} = 10^{-0.4(m_1 - m_0)}\,.
+$$
+
+The absolute magnitude of an object, $\mathcal{M}$, is the same as its apparent magnitude when viewed from 10 pc, hence the relationship between apparent and absolute magnitude and distance is
+
+$$
+m - \mathcal{M} = 5\log\left(\frac{d}{10}\right),
+$$
+
+where $d$ is measured in parsecs.
+
+</details>
+
+<details>
+<summary>Note for markers</summary>
+
+**BAAO 2022/23 Solutions and Marking Guidelines**
+
+**Note for markers:**
+
+- Answers to two or three significant figures are generally acceptable. The solution may give more in order to make the calculation clear. Units should be present on final answers when appropriate.
+- There are multiple ways to solve some of the questions; please accept all good solutions that arrive at the correct answer. Students getting the answer in a box will get all the marks available for that calculation / part of the question (as indicated in red), so long as there are no unphysical / nonsensical steps or assumptions made (students may not explicitly calculate the intermediate stages and should not be penalised for this so long as their argument is clear).
+
+</details>
+
+## Условие
+
+Plotting the position of the Sun in the sky at the same time every day, you get an interesting figure-of-eight shape known as an analemma (see Figure 1). For observers in the Northern hemisphere, you might expect to always see the Sun due South at midday, however on some days the Sun has already passed through that bearing and on others it needs a few more minutes before it gets there. This is due to two effects: the axial tilt of the Earth, and the fact the Earth’s orbit is not perfectly circular
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '88.5%', '--fig-max': '567px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2023-x/p1-fig1.png" alt="Photograph of the Callanish standing stones on grass under a blue sky, with the low winter Sun glowing behind them; above the stones a vertical figure-of-eight of white dots (the Sun's noon positions) forms the analemma, with a small upper loop and a large lower loop. Watermark 'gmrphotographer' in the lower right corner." width="1772" height="2032" loading="lazy" decoding="async" />
+<figcaption>Figure 1: The analemma above was composed from images taken every few days at noon near the village of Callanish in the Outer Hebrides in Scotland. In the foreground are the Callanish Stones and the main photo was taken on the winter solstice (when the maximum angle the Sun reaches above the horizon is the lowest of the year, so is at the bottom of the analemma). Credit: Giuseppe Petricca.</figcaption>
+</figure>
+
+The vertical co-ordinate of a point in the analemma is entirely determined by the Earth’s axial tilt. This is known as the solar declination, $\delta$, and varies sinusoidally throughout the year. The horizontal co-ordinate of a point in the analemma is determined by a combination of the Earth’s axial tilt and the eccentricity of the Earth’s orbit. Both of these individually vary sinusoidally, but the superposition of the two is no longer sinusoidal.
+
+We will define $\alpha$ as the angle between due South and the Sun at local midday as seen from Oxford, where a positive value means the Sun has already passed through due South (so is on the right of the figure above) whilst a negative value means the Sun has yet to pass through due South. If $\alpha_{\mathrm{tilt}}$ is the contribution due to the axial tilt and $\alpha_{\mathrm{ecc}}$ is the contribution due to the Earth’s orbital eccentricity, then
+
+$$
+\alpha = \alpha_{\mathrm{tilt}} + \alpha_{\mathrm{ecc}}\,.
+$$
+
+If the angle of the axial tilt is $\varepsilon$ and the eccentricity of the Earth’s orbit is $e$, and we assume that both are small enough that the sinusoidal approximation of $\delta$, $\alpha_{\mathrm{tilt}}$, and $\alpha_{\mathrm{ecc}}$ apply, then we find the following boundary conditions:
+
+- $\delta$ has a period of 1 year, an amplitude of $\varepsilon$, is maximum at the summer solstice (21st June) and minimum at the winter solstice (21st December)
+- $\alpha_{\mathrm{tilt}}$ has a period of 0.5 years, an amplitude (in radians) of $\tan^2(\varepsilon/2)$, is zero at the solstices and the equinoxes (vernal equinox = 21st March, autumnal equinox = 21st September), and (using our sign convention) positive just after the vernal equinox
+- $\alpha_{\mathrm{ecc}}$ has a period of 1 year, an amplitude (in radians) of $2e$, is zero at the perihelion (4th January) and the aphelion (6th July), and (using our sign convention) negative just after the perihelion
+
+Given the $n^{\mathrm{th}}$ day of the year, a value can be calculated for $\delta$ and $\alpha$, and these are the co-ordinates for the analemma (it is drawn by these parametric equations). For the Earth, $\varepsilon = 23.44^{\circ}$ and $e = 0.0167$.
+
+**a. (i)** Although $\alpha$ is really an angle in radians (where $2\pi$ radians $= 360^{\circ}$), it is normally more useful to convert it into time units (essentially the time since the Sun was due South, or the time until the Sun reaches due South). Taking the mean solar day to be exactly 24 hours:
+
+Convert the amplitude of $\alpha_{\mathrm{tilt}}$ and $\alpha_{\mathrm{ecc}}$ for the Earth into minutes. **[3 т.]**
+
+**a. (ii)** Determine equations for $\delta$ (in degrees) and $\alpha_{\mathrm{tilt}}$ and $\alpha_{\mathrm{ecc}}$ (both in minutes) as a function of the day of the year, $n$. Take $n = 1$ to be 1st January and $n = 365$ to be 31st December. **[3 т.]**
+
+**a. (iii)** Sketch the analemma you would see if the Earth’s orbit was circular (i.e. $e = 0$) but with the current value of $\varepsilon$, with $\alpha$ on the $x$-axis (in minutes) and $\delta$ on the $y$-axis. **[3 т.]**
+
+**b. (i)** Using your equations derived in the previous part, sketch on GRAPH PAPER on the same set of axes:
+
+$\alpha_{\mathrm{ecc}}$ (vertical axis) in minutes against $n$ (horizontal axis). **[1 т.]**
+
+**b. (ii)** $\alpha_{\mathrm{tilt}}$ in minutes against $n$. **[1 т.]**
+
+**b. (iii)** Hence, carry out the superposition of those two waves to get $\alpha$ against $n$. [Note: a clear indication of the general shape will do - no need to spend very long on making this perfect] **[2 т.]**
+
+**c. (i)** Using your graph to guide you to the relevant point of the year, but using your precise algebraic expressions (rather than reading off the graph):
+
+What are the dates and values of the maximum and minimum values of $\alpha$? **[5 т.]**
+
+**c. (ii)** What are the dates when the Sun is due South at midday? **[5 т.]**
+
+**c. (iii)** What are the dates when the Sun passes between the large and small loops in the figure-of-eight (i.e. the crossover point)? [Note: $\alpha \neq 0$ at that point, but is small] **[5 т.]**
+
+Consider an alternative version of Earth, known as Earth 2.0. On this planet, the year is unchanged and the perihelion and aphelion are at the same time, but it has a different axial tilt, a different orbital eccentricity, and a different month for the vernal equinox (although it is still on the 21st day of that month). The analemma as viewed from Earth 2.0 is show in Figure 2 below.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '83.6%', '--fig-max': '535px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2023-x/p1-fig2.png" alt="Yellow closed curve on a grey background with black horizontal and vertical axes. The vertical axis has ticks labelled +15 degrees (top) and -15 degrees (bottom); the horizontal axis has ticks labelled -0h26m47s (left) and 0h18m56s (right). Yellow circles with month letters lie on the curve: going round from the top, F, J, D, N, O, S, A, J, J, M, A, M. The loop reaches the top near F, the far left near A, the far right near O and the bottom near A and S." width="1672" height="1446" loading="lazy" decoding="async" />
+<figcaption>Figure 2: The analemma of the Sun at midday as seen by an observer on Earth 2.0. In this situation, $\alpha$ ranges from $-26$ mins $47$ secs to $18$ mins $56$ secs. The circled letters correspond to the same (unknown) day of each month (for example 5th Jan, 5th Feb, 5th March etc.). Credit: Bob Urschel.</figcaption>
+</figure>
+
+**d. (i)** Considering data from Figure 2, determine for Earth 2.0:
+
+The axial tilt, $\varepsilon$. **[1 т.]**
+
+**d. (ii)** The month of the vernal equinox. **[1 т.]**
+
+**d. (iii)** The eccentricity of the orbit, $e$. **[5 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a. (i)** α<sub>tilt</sub> amplitude 9.86 minutes (= 9 m 51.8 s); α<sub>ecc</sub> amplitude 7.65 minutes (= 7 m 39.3 s)
+- **a. (ii)** $\delta = -23.44^{\circ}\cos\left(2\pi\frac{n+10}{365}\right),\quad \alpha_{tilt} = -9.86\sin\left(4\pi\frac{n+10}{365}\right),\quad \alpha_{ecc} = -7.65\sin\left(2\pi\frac{n-4}{365}\right)$
+- **c. (i)** Minimum: 13th Feb (n = 44), α = −14.31 mins; maximum: 31st Oct (n = 304), α = +16.57 mins
+- **c. (ii)** 16th Apr, 13th Jun, 31st Aug and 25th Dec (n = 106, 164, 243, 359)
+- **c. (iii)** 14th Apr (n = 104) and 29th Aug (n = 241)
+- **d. (i)** 15 °
+- **d. (ii)** November
+- **d. (iii)** 0.0498
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Q1 – Solar Analemma** **[35 marks]**
+
+**a. (i)**
+
+To convert from radians to minutes of time need to multiply by a factor of:
+
+$$
+\frac{24\times60}{2\pi} = \frac{720}{\pi}
+$$
+[1]
+
+Putting the numbers into the given formula:
+
+$\alpha_{tilt} = \tan^2\left(\frac{23.44^{\circ}}{2}\right) = 0.0430\ \mathrm{rad} = \boxed{9.86\ \text{minutes}}\ (= 9\ \mathrm{m}\ 51.8\ \mathrm{s})$ [1]
+
+$\alpha_{ecc} = 2\times0.0167 = 0.0334\ \mathrm{rad} = \boxed{7.65\ \text{minutes}}\ (= 7\ \mathrm{m}\ 39.3\ \mathrm{s})$ [1] **[3]**
+
+[If they only calculate both $\alpha$ in radians, award 1 mark. If they confuse the needed conversion with arcminutes (giving $\alpha_{\mathrm{tilt}}$ = 148’ and $\alpha_{\mathrm{ecc}}$ = 115’), lose first mark but give ecf. Conversion done correctly to just one $\alpha$ means max 2 marks. **Allow ecf for later parts**.]
+
+**a. (ii)**
+
+Considering the number of days between the winter solstice (21st Dec) and 1st Jan, which is a minimum, then
+
+$$
+\boxed{\delta = -23.44^{\circ}\cos\left(2\pi\frac{n+10}{365}\right)}
+$$
+[1] **[1]**
+
+Since the winter solstice is a zero point, and $\alpha_{\mathrm{tilt}}$ is negative after it, with double the frequency of $\delta$:
+
+$$
+\boxed{\alpha_{tilt} = -9.86\sin\left(4\pi\frac{n+10}{365}\right)}
+$$
+[1] **[1]**
+
+Since perihelion on 4th Jan is a zero point and $\alpha_{\mathrm{ecc}}$ is negative after it, with the same frequency as $\delta$
+
+$$
+\boxed{\alpha_{ecc} = -7.65\sin\left(2\pi\frac{n-4}{365}\right)}
+$$
+[1] **[1]**
+
+[**Allow any equivalent expressions** in sin or cos, or using degrees inside the trigonometric functions. In these equations we are assuming midday on 1st Jan has n = 1 (so n = 0 & n = 365 at midday on 31st Dec) – do not penalise students for choosing a different zero point (e.g. midnight on 1st Jan) and hence getting slightly different additive terms to their n (allow ±1)]
+
+**a. (iii)**
+
+Correct shape, with rotational and reflectional symmetry and passing through (0,0) [1]
+
+$\alpha$ axis labelled and extrema labelled as -9.86 mins and 9.86 mins (allow ecf from a)i)) [1]
+
+$\delta$ axis labelled and extrema labelled as -23.44° and 23.44° [1]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.8%', '--fig-max': '312px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2023-x/p1-sol-fig1.png" alt="Figure-of-eight analemma for a circular orbit: blue curve symmetric about both axes, crossing at the origin, with loops reaching about ±10 on the horizontal axis α (mins) and ±23 on the vertical axis δ (°). Grid from -15 to 15 horizontally and -30 to 30 vertically." width="976" height="913" loading="lazy" decoding="async" />
+</figure>
+
+**[3]**
+
+**b.**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.3%', '--fig-max': '489px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2023-x/p1-sol-fig2.png" alt="Graph of α (mins) from -20 to 20 against Day number, n, from 0 to about 365. Orange line alpha_ecc: one sine period with amplitude about 7.65, negative from n = 4 to about 186. Blue line alpha_tilt: two periods with amplitude about 9.86. Grey line alpha: their sum, with minima near -14 (n ≈ 44) and -6 (n ≈ 207) and maxima near 4 (n ≈ 134) and 16.5 (n ≈ 304). Legend: alpha_ecc, alpha_tilt, alpha." width="1527" height="920" loading="lazy" decoding="async" />
+</figure>
+
+Part i) is the orange line [1] **[1]**
+
+Part ii) is the blue line [1] **[1]**
+
+Part iii) is the grey line
+
+Has two maxima / minima (one bigger than the other) in ≈ the right place [1]
+
+Largest maxima is larger amplitude than the lowest minima [1] **[2]**
+
+[Allow ecf from earlier parts. Lose 0.5 marks for missing axes labels]
+
+**c. (i)**
+
+We can use the differential of $\alpha$ to find turning points, and then we know from the graph we want the ones near n ≈ 50 and n ≈ 300
+
+$$
+\alpha = \alpha_{tilt} + \alpha_{ecc} = -9.86\sin\left(4\pi\frac{n+10}{365}\right) - 7.65\sin\left(2\pi\frac{n-4}{365}\right)
+$$
+
+$$
+\therefore \frac{\mathrm{d}\alpha}{\mathrm{d}n} = -9.86\times\frac{4\pi}{365}\cos\left(4\pi\frac{n+10}{365}\right) - 7.65\times\frac{2\pi}{365}\cos\left(2\pi\frac{n-4}{365}\right)
+$$
+[1]
+
+Looking where d$\alpha$/dn = 0 (using any suitable method e.g. binary search) we find turning points in $\alpha$ at
+
+$n = 44, 134, 207, 304$ [0.5 marks for each] [2]
+
+We want the first and last values:
+
+$n = 44 \therefore \text{date} = \boxed{13^{\text{th}}\ \text{Feb}}$ and $\alpha = \boxed{-14.31\ \text{mins}}$ [1]
+
+$n = 304 \therefore \text{date} = \boxed{31^{\text{st}}\ \text{Oct}}$ and $\alpha = \boxed{+16.57\ \text{mins}}$ [1] **[5]**
+
+[Do not penalise non-integer n. Allow n and dates consistent with their counting system (so may be different by ±1). For the final two marks it is 0.5 marks for a correct date and 0.5 marks for a correct $\alpha$]
+
+[Our equation for alpha is known as the Equation of Time, and positive values mean that the Sun is ahead of the clock (so to the right of due south in the photo). Despite our approximations for the two components of $\alpha$, we are relatively close to the real extrema: -14.25 mins on 11th Feb and +16.42 mins on 3rd Nov]
+
+**c. (ii)**
+
+These correspond to when $\alpha$ = 0 [1]
+
+Using any suitable method (e.g. binary search)
+
+$n = 106, 164, 243, 359$ [0.5 marks for each] [2]
+
+These correspond to the following dates:
+
+$\boxed{16^{\text{th}}\ \text{Apr}}, \boxed{13^{\text{th}}\ \text{Jun}}, \boxed{31^{\text{st}}\ \text{Aug}}$ and $\boxed{25^{\text{th}}\ \text{Dec}}$ [0.5 marks for each] [2] **[5]**
+
+[Do not penalise non-integer n. Allow n and dates consistent with their counting system (so may be different by ±1)]
+
+[The real values are 15th Apr, 13th Jun, 1st Sep, and 25th Dec, so our approximations have done very well]
+
+**c. (iii)**
+
+We are told that $\alpha$ is small and can see from the photo that it is not near the solstices, so must be near the zero points in $\alpha$ far from the solstices i.e. 16th Apr and 31st Aug [1]
+
+On 16th Apr $\delta$ is increasing, and on 31st Aug $\delta$ is decreasing. The know that $\delta$ at the crossover is equal on both dates (due to the equation for $\delta$ being double valued in the range of n) and between their two values of $\delta$ therefore the relevant dates must be **earlier** [1]
+
+Using a suitable method (e.g. starting a binary search with these points as initial values)
+
+$n = 106, \alpha = -0.10\ \text{mins}, \delta = 9.69^{\circ}$ $\qquad$ $n = 243, \alpha = -0.14\ \text{mins}, \delta = 8.20^{\circ}$
+
+$n = 105, \alpha = -0.35\ \text{mins}, \delta = 9.32^{\circ}$ $\qquad$ $n = 242, \alpha = -0.47\ \text{mins}, \delta = 8.57^{\circ}$
+
+$n = 104, \alpha = -0.61\ \text{mins}, \delta = 8.95^{\circ}$ $\qquad$ $n = 241, \alpha = -0.79\ \text{mins}, \delta = 8.95^{\circ}$
+
+$n = 103, \alpha = -0.87\ \text{mins}, \delta = 8.57^{\circ}$ $\qquad$ $n = 240, \alpha = -1.10\ \text{mins}, \delta = 9.32^{\circ}$
+
+[2]
+
+$\therefore n = 104$ so date $= \boxed{14^{\text{th}}\ \text{Apr}}$ and n = 241 so date $= \boxed{29^{\text{th}}\ \text{Aug}}$ [1] **[5]**
+
+[A wide variety of numerical methods might be employed here, although binary search close to the roots of $\alpha$ is probably the quickest. Allow ecf considerations as in earlier steps. Give 0.5 marks for each correct date]
+
+[The real dates are 12th Apr and 29th Aug, so we have again done rather well]
+
+**d. (i)**
+
+The extrema in $\delta$ will be $\pm\varepsilon$ so just reading off the graph $\boxed{\varepsilon = 15^{\circ}}$ [1] **[1]**
+
+**d. (ii)**
+
+At the vernal equinox, $\delta$ = 0 and is increasing, so it must be $\boxed{\text{November}}$ [1] **[1]**
+
+[Allow 0.5 marks for May, if it is clear it was chosen due to requiring $\delta$ = 0]
+
+**d. (iii)**
+
+With the information in the previous two parts, we can create an equation for $\alpha$
+
+The component due to eccentricity has the same general form
+
+$$
+\alpha_{ecc} = -2e\sin\left(2\pi\frac{n-4}{365}\right)
+$$
+[0.5]
+
+Using the earlier equations for $\alpha_{\mathrm{tilt}}$
+
+$$
+\alpha_{tilt} = \tan^2\left(\frac{15^{\circ}}{2}\right) = 0.0173\ \mathrm{rad} = 3.97\ \text{minutes}
+$$
+[0.5]
+
+Since the vernal equinox is now 21st November (30 days earlier than the winter solstice used to be), our sinusoidal equation can be modified to
+
+$$
+\alpha_{tilt} = 3.97\sin\left(4\pi\frac{n+40}{365}\right)
+$$
+[Accept equivalent forms] [0.5]
+
+Putting in data for one extremum (e.g. -26 mins 47 secs = -26.783 mins) and knowing it is a turning point (so $\frac{\mathrm{d}\alpha}{\mathrm{d}n} = 0$) gives us two equations:
+
+$-2e\sin\left(2\pi\frac{n_1-4}{365}\right) + 3.97\sin\left(4\pi\frac{n_1+40}{365}\right) = -26.783$ ①
+
+$-2e\times\frac{2\pi}{365}\cos\left(2\pi\frac{n_1-4}{365}\right) + 3.97\times\frac{4\pi}{365}\cos\left(4\pi\frac{n_1+40}{365}\right) = 0$ ② [0.5]
+
+Combining ① and ② to eliminate e, gives the equation
+
+$$
+\tan\left(2\pi\frac{n_1-4}{365}\right) - \frac{1}{2}\tan\left(4\pi\frac{n_1+40}{365}\right) - \frac{26.783}{3.97\times2\cos\left(4\pi\frac{n_1+40}{365}\right)} = 0
+$$
+[1]
+
+Using an appropriate numerical method to solve it for $n_1$, the only valid values in the allowed region are
+
+$n_1 = 96$ or $278$ [1]
+
+Recognising that the relevant extremum is around April, $n_1$ = 96 is the correct one to choose.
+
+Putting this into either ① or ② leads to $\boxed{e = 0.0498}$ [1] **[5]**
+
+[Using the other extremum gets $n_2 = 92$ or $274$ and so recognising the latter is the correct one to use gives $\boxed{e = 0.0499}$. The method outlined here works in general, however in this specific case an alternative (much shorter) method will work; $\alpha_{\mathrm{tilt}}$ has minima at n = 97 and 279, which almost exactly coincide with the turning points of $\alpha_{\mathrm{ecc}}$ at n = 95 (min) and 278 (max). Consequently, by considering how the graph of $\alpha_{\mathrm{ecc}}$, $\alpha_{\mathrm{tilt}}$ and $\alpha$ would look, it is clear that $-2e - 3m57 \approx -26m47$ and $2e - 3m57 \approx 18m56$. Taking the average of the modulus of the extrema in $\alpha$, and assuming that is 2e gives $\boxed{e = 0.0499}$. Students that use this approach to take advantage of the greatly simplifying phase relationship between $\alpha_{\mathrm{ecc}}$ and $\alpha_{\mathrm{tilt}}$ receive full credit (same first 1.5 marks, 1 mark for turning points, 0.5 marks for recognising the consequences of the tuning points being close together, 1 mark for setting up equations, 1 mark for final answer). Those whose working implies they did not recognise this was a special case (and hence suggest this method would always work) get 1 mark only for a correct final answer]
+
+The relevant graph of superposition is below, emphasising why in this case the simple method would work due to the alignment of the minima of $\alpha_{\mathrm{tilt}}$ with the max / min of $\alpha_{\mathrm{ecc}}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '78.1%', '--fig-max': '500px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2023-x/p1-sol-fig3.png" alt="Grey panel with blue frame and legend: Total Effect Range: -0h26m47s, +0h18m56s (yellow); Eccentricity Effect Range: ±0h22m51s (red); Tilt Effect Range: ±0h3m57s (cyan). A horizontal axis carries yellow circles with month letters J F M A M J J A S O N D J. The red curve is one sine period with a minimum near April and a maximum near October; the cyan curve is a small two-period wave with minima near April and October; the yellow curve is their sum with a deep minimum near April and a lower maximum near October." width="1564" height="1359" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Questions proposed by</summary>
+
+END OF PAPER
+
+*Questions proposed by:*
+
+*Dr Alex Calverley (Surbiton High School)*
+
+*Josh Brown (University of Cambridge)*
+
+</details>
+
+---
+
+Оригинал в Архива: [BAAO_2023.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2023/BAAO_2023.pdf#page=4)
+· официални решения: [BAAO_2023_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2023/BAAO_2023_solutions.pdf#page=1)

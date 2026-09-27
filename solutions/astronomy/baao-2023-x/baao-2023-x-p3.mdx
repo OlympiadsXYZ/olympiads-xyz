@@ -1,0 +1,470 @@
+---
+id: baao-2023-x-p3
+source: 'BAAO 2023, Теория'
+title: 'Задача 3. Planetary Migration in Protoplanetary Discs'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/BAAO/2023/baao-2023-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-27T04:30:20.718Z'
+verifier: 'mechanical'
+---
+
+*British Astronomy and Astrophysics Olympiad 2022-2023 — Astronomy & Astrophysics Competition Paper — Monday 6th February 2023 · 6 февруари 2023 г. · 25 т.*
+
+<details>
+<summary>Указания</summary>
+
+**This question paper must not be photographed or taken out of the exam room**
+
+**Time**: 3 hours ($\sim 65$ minutes for Q1, $\sim 70$ minutes for Q2 and $\sim 45$ minutes for Q3).
+
+**Questions**: All three questions should be attempted. Each question contains independent parts so that later parts can be attempted even if earlier parts are incomplete.
+
+**Solutions**: Answers and calculations are to be written on loose paper. **YOU WILL NEED GRAPH PAPER**. Students should ensure their **name** and **school** is clearly written on the **first** answer sheet and that **all** pages are numbered. **EACH QUESTION ANSWERED must be started on a new page.** A standard formula booklet with standard physical constants may be used if desired.
+
+**Instructions**: To accommodate students sitting the paper at different times, please **do not discuss** any aspect of the paper on the internet until 8 am Saturday 11th February.
+
+**Clarity**: Solutions must be written legibly, in black pen, and working down the page. Scribble will not be marked and overall clarity is an important aspect of this exam.
+
+**Eligibility**: The International Olympiad will be held in August 2023; all sixth form students are eligible to participate.
+
+**Calculators**: Any standard calculator may be used, but calculators cannot be programmable and must not have symbolic algebra capability.
+
+**Training Dates and the IOAA** (Chorzów, Poland, 10th - 20th August 2023)
+
+*The team will be selected from students taking this paper. The best students that are eligible to represent the UK at the IOAA will be invited to attend the* **Training Camp** *to be held in Oxford from* **Saturday 1st to Wednesday 5th April 2023**. *Astronomy material will be covered; problem solving skills and observational skills (telescope and naked eye observations) will be developed. At the Training Camp a Data Analysis exam along with a Round 3 theory paper will be sat. A team of five students (plus one reserve) will be selected for further training, including additional training camps in the summer.*
+
+</details>
+
+<details>
+<summary>Important Constants</summary>
+
+| Constant | Symbol | Value |
+|---|---|---|
+| Speed of light | $c$ | $3.00 \times 10^{8}\ \mathrm{m\,s^{-1}}$ |
+| Earth’s rotation period | 1 day | 24 hours |
+| Earth’s orbital period | 1 year | 365.25 days |
+| parsec | pc | $3.09 \times 10^{16}\ \mathrm{m}$ |
+| Astronomical Unit | au | $1.50 \times 10^{11}\ \mathrm{m}$ |
+| Radius of the Sun | $R_{\odot}$ | $6.96 \times 10^{8}\ \mathrm{m}$ |
+| Radius of the Earth | $R_{\oplus}$ | $6.37 \times 10^{6}\ \mathrm{m}$ |
+| Mass of the Sun | $M_{\odot}$ | $1.99 \times 10^{30}\ \mathrm{kg}$ |
+| Mass of the Earth | $M_{\oplus}$ | $5.97 \times 10^{24}\ \mathrm{kg}$ |
+| Luminosity of the Sun | $L_{\odot}$ | $3.85 \times 10^{26}\ \mathrm{W}$ |
+| Stephan-Boltzmann constant | $\sigma$ | $5.67 \times 10^{-8}\ \mathrm{J\,m^{-2}\,K^{-4}}$ |
+| Gravitational constant | $G$ | $6.67 \times 10^{-11}\ \mathrm{m^{3}\,kg^{-1}\,s^{-2}}$ |
+| Boltzmann constant | $k_{\mathrm{B}}$ | $1.38 \times 10^{-23}\ \mathrm{J\,K^{-1}}$ |
+| Permittivity of free space | $\varepsilon_0$ | $8.85 \times 10^{-12}\ \mathrm{F\,m^{-1}}$ |
+| Permeability of free space | $\mu_0$ | $4\pi \times 10^{-7}\ \mathrm{H\,m^{-1}}$ |
+| Planck’s constant | $h$ | $6.63 \times 10^{-34}\ \mathrm{J\,s}$ |
+| Elementary charge | $e$ | $1.60 \times 10^{-19}\ \mathrm{C}$ |
+| Proton rest mass | $m_{\mathrm{p}}$ | $1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Electron rest mass | $m_{\mathrm{e}}$ | $9.11 \times 10^{-31}\ \mathrm{kg}$ |
+| Wien’s displacement law | $\lambda_{\max}T$ | $2.90 \times 10^{-3}\ \mathrm{m\,K}$ |
+| Avagadro’s constant | $N_A$ | $6.02 \times 10^{23}\ \mathrm{mol^{-1}}$ |
+
+**Basic calculus formulae**:
+
+| | |
+|---|---|
+| Chain rule | $\frac{\mathrm{d}}{\mathrm{d}x}f(g(x)) = f'(g(x))g'(x)$ |
+| Product rule | $\frac{\mathrm{d}}{\mathrm{d}x}(uv) = \frac{\mathrm{d}u}{\mathrm{d}x}v + u\frac{\mathrm{d}v}{\mathrm{d}x}$ |
+| Quotient rule | $\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u}{v}\right) = \frac{\frac{\mathrm{d}u}{\mathrm{d}x}v - u\frac{\mathrm{d}v}{\mathrm{d}x}}{v^2}$ |
+| Integration by parts | $\int u\frac{\mathrm{d}v}{\mathrm{d}x}\,\mathrm{d}x = uv - \int v\frac{\mathrm{d}u}{\mathrm{d}x}\,\mathrm{d}x$ |
+| Standard integral | $\int \frac{1}{x}\,\mathrm{d}x = \ln\vert x\vert  + C$ |
+
+</details>
+
+<details>
+<summary>Important Formulae</summary>
+
+You might find the diagram of an elliptical orbit below useful in solving some of the questions:
+
+**Elements of an elliptic orbit**:
+
+| | |
+|---|---|
+| $a = \mathbf{OA}\ (= \mathbf{OP})$ | semi-major axis |
+| $b = \mathbf{OB}\ (= \mathbf{OC})$ | semi-minor axis |
+| $e = \sqrt{1 - \frac{b^2}{a^2}}$ | eccentricity |
+| $\mathbf{F}$ | focus |
+| $\mathbf{PF} = a(1-e)$ | periapsis distance (shortest distance from $\mathbf{F}$) |
+| $\mathbf{AF} = a(1+e)$ | apoapsis distance (longest distance from $\mathbf{F}$) |
+
+**Kepler’s Third Law**: For an elliptical orbit, the square of the period, $T$, of an object about the focus is proportional to the cube of the semi-major axis, $a$ (as defined above), such that
+
+$$
+T^2 = \frac{4\pi^2}{GM}a^3\,,
+$$
+
+where $M$ is the total mass of the system (typically dominated by the central object) and $G$ is the universal gravitational constant.
+
+**Vis-Viva Equation**: For an elliptical orbit, the speed $v$ of an object at a distance $r$ from the focus is related to the semi-major axis, $a$, total mass of the system, $M$, and universal gravitational constant, $G$, (as defined above), such that
+
+$$
+v^2 = GM\left(\frac{2}{r} - \frac{1}{a}\right)\,.
+$$
+
+**Magnitudes**: The apparent magnitudes of two objects, $m_1$ and $m_0$, are related to their apparent brightnesses, $b_1$ and $b_0$, via the formula
+
+$$
+\frac{b_1}{b_0} = 10^{-0.4(m_1 - m_0)}\,.
+$$
+
+The absolute magnitude of an object, $\mathcal{M}$, is the same as its apparent magnitude when viewed from 10 pc, hence the relationship between apparent and absolute magnitude and distance is
+
+$$
+m - \mathcal{M} = 5\log\left(\frac{d}{10}\right),
+$$
+
+where $d$ is measured in parsecs.
+
+</details>
+
+<details>
+<summary>Note for markers</summary>
+
+**BAAO 2022/23 Solutions and Marking Guidelines**
+
+**Note for markers:**
+
+- Answers to two or three significant figures are generally acceptable. The solution may give more in order to make the calculation clear. Units should be present on final answers when appropriate.
+- There are multiple ways to solve some of the questions; please accept all good solutions that arrive at the correct answer. Students getting the answer in a box will get all the marks available for that calculation / part of the question (as indicated in red), so long as there are no unphysical / nonsensical steps or assumptions made (students may not explicitly calculate the intermediate stages and should not be penalised for this so long as their argument is clear).
+
+</details>
+
+## Условие
+
+Young, Earth-like planets interact with the protoplanetary discs in which they form, and as a result migrate to different orbital radii. The aim of this question is to quantify this migration in a simple model. We shall think of protoplanetary discs as consisting of nested circular orbits of gas and dust around a central star. For a thin disc (with small vertical extent), we assign to the disc a surface density (or mass per unit area) $\Sigma$, and semi-thickness $H$, which in general vary over the disc’s extent. The disc’s ‘aspect ratio’ at radius $r$ from the central star is denoted $h = H/r$. This question is concerned with the migration of ‘small’ planets, such that $M_p/M_{\star} = q \ll h^3$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '84.8%', '--fig-max': '543px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2023-x/p3-fig1.png" alt="Left: ALMA image of HL Tau — an inclined elliptical orange-yellow disc on black, with a bright centre and concentric bright rings separated by dark gaps. Right: simulation of a face-on orange disc with a black central hole; a small bright spot (the planet) to the right of the hole launches a single thin bright spiral arm winding around the disc." width="1698" height="871" loading="lazy" decoding="async" />
+<figcaption>Figure 6: *Left:* ALMA image of the young star HL Tau and its protoplanetary disk. This image of planet formation reveals multiple rings and gaps that herald the presence of emerging planets as they sweep their orbits clear of dust and gas. Credit: ALMA (NRAO/ESO/NAOJ) / C. Brogan, B. Saxton (NRAO/AUI/NSF). *Right:* A small planet orbits whilst embedded in a protoplanetary disc, exciting a 1-armed spiral density wave. Credit: Frédéric Masset.</figcaption>
+</figure>
+
+**a.** Consider a planet of mass $M_p$ in a circular orbit of radius $r_p$ about a star of mass $M_{\star}$, with $M_p/M_{\star} = q \ll 1$. Show that it has angular velocity and angular momentum about the central star given by:
+
+$$
+\Omega_p = \sqrt{\frac{GM_{\star}}{r_p^3}}, \quad L = M_p\sqrt{GM_{\star}r_p}
+$$
+**[2 т.]**
+
+**b.** Consider now a rotationally symmetric disc with surface density profile $\Sigma = \Sigma_0\,(r/r_0)^{-3/2}$, and outer radius $r_{\mathrm{out}} = 9r_0$. Find the mass of the disc $M_{\mathrm{disc}}$ in terms of $\Sigma_0$ and $r_0$ assuming its inner radius $r_{\mathrm{in}} \ll r_0$. **[4 т.]**
+
+Since the planet is assumed small ($q \ll h^3$), its interaction with the gas in the disc constitutes the excitation of a spiral density wave, and redistribution of matter in the co-orbital region (that is, matter orbiting at radii $r \approx r_p$), as shown in Figure 6. The resulting non-uniform density distribution induced in the disc exerts a net gravitational force, and hence a torque on the planet, which has been estimated using analytical methods. This torque, $\Gamma$, acts to change the planet’s angular momentum, and hence its orbital radius, causing it to ‘migrate’, via:
+
+$$
+\frac{\mathrm{d}L}{\mathrm{d}t} = \Gamma
+$$
+
+It is convenient to write the torque in terms of the reference value
+
+$$
+\Gamma_0 = \left(\frac{q}{h}\right)^2\Sigma_p r_p^4\Omega_p^2\,.
+$$
+
+**c.** From 2-dimensional steady fluid-dynamical disc models, it is predicted that the total torque $\Gamma$ has two main contributions: from the spiral wave, the ‘Lindblad torque’, $\Gamma_L$, and from the co-orbital region, the ‘Corotation torque’, $\Gamma_C$. For a disc of uniform entropy ($\mathrm{d}s = 0$), and with surface density profile $\Sigma \propto r^{-\alpha}$, and pressure profile $P \propto r^{-\delta}$, Tanaka et al. (2002) and Paardekooper & Papaloizou (2009) find these torques are given by:
+
+$$
+\Gamma_L = (-3.20 + 0.86\alpha - 2.33\delta)\Gamma_0
+$$
+
+$$
+\Gamma_C = 5.97\,(1.5 - \alpha)\,\Gamma_0
+$$
+
+We assume the gas in the disc obeys the ideal gas law, so that:
+
+$$
+\frac{P}{\Sigma T} = \text{constant}, \quad \mathrm{d}s = \text{constant}\times\left(\frac{1}{\gamma-1}\frac{\mathrm{d}T}{T} - \frac{\mathrm{d}\Sigma}{\Sigma}\right)\,,
+$$
+
+where $T$ is the absolute temperature and $\gamma$ is the adiabatic index (the ratio of the heat capacity at constant pressure to the heat capacity at constant volume). Show that for a disc of uniform entropy,
+
+$$
+\Gamma = \Gamma_L + \Gamma_C = (5.76 - (5.11 + 2.33\gamma)\alpha)\,\Gamma_0\,.
+$$
+
+*[Hint: if* $\frac{\mathrm{d}y}{y} = \lambda\frac{\mathrm{d}x}{x}$*, then* $y \propto x^{\lambda}$*.]* **[5 т.]**
+
+**d.** Assume the disc model from part b. with $h = \mathrm{const}$. Find the time taken for the orbital radius of the planet to halve from initial radius $r_0$. Take $\gamma = 1.4$, and give your answer in terms of the migration timescale,
+
+$$
+t_{\mathrm{m}} = \frac{1}{h}\left(\frac{h^3}{q}\right)\frac{M_{\star}}{M_{\mathrm{disc}}}\tau_0\,,
+$$
+
+where $\tau_0$ is the orbital period at radius $r_0$. **[9 т.]**
+
+**e.** If the disc has mass $M_{\mathrm{disc}} = 0.01M_{\star}$ and aspect ratio $h = 0.05$, and if $q = 5\times10^{-6}$ and $\tau_0 = 10$ years, find the elapsed time in years for the migration described in part d. to occur. Is this a feasible mechanism for planetary migration given the lifetime of the disc is roughly $10$ Myr? **[2 т.]**
+
+**f.** Whilst the planet excites a spiral density wave over the whole disc, in fact the dominant contribution to the torque from the spiral is from only a small neighbourhood around the planet, so that $\alpha$ may be replaced by
+
+$$
+-\frac{r_p}{\Sigma_p}\left.\frac{\mathrm{d}\Sigma}{\mathrm{d}r}\right|_p\,.
+$$
+
+Near the inner radius of the disc, the surface density departs from the above power-law behaviour and smoothly decreases to $0$. Does the migration stop before the planet reaches the disc’s inner radius? **[3 т.]**
+
+**Helpful equations:**
+
+The moment of inertia, $I$, of a point mass $m$ moving in a circle of radius $r$ is $I = mr^2$.
+
+The angular momentum, $L$, of a spinning object with an angular velocity of $\Omega$ is $L = I\Omega = r\times p$, where $p$ is the linear momentum of a point particle a distance $r$ from the axis of rotation.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **b.** $M_{\mathrm{disc}} = 12\pi\Sigma_0 r_0^2$
+- **d.** $t = 0.221\,t_{\mathrm{m}}$
+- **e.** 110000 yr
+- **f.** Yes — the migration does halt before the inner edge of the disc (α changes from 1.5 to negative values, so it passes through α<sub>crit</sub> where Γ = 0).
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Q3 – Planetary Migration in Protoplanetary Discs** **[25 marks]**
+
+**a.**
+
+Balancing the centripetal force with the gravitational force [accept balancing accelerations]
+
+$$
+M_pr_p\Omega_p^2 = \frac{GM_*M_p}{r_p^2}
+$$
+[1] **[1]**
+
+Cancelling $M_{\mathrm{p}}$ and rearranging gives $\Omega_p = \sqrt{\frac{GM_*}{r_p^3}}$ as required
+
+[This was a ‘show that’, so the mark is for the algebraic route to the answer, not the final answer]
+
+Using the equations for the hint at the end of the question
+
+$$
+L = I\Omega_p = M_pr_P^2\Omega_p
+$$
+[1] **[1]**
+
+Substituting the expression for $\Omega_{\mathrm{p}}$ gives $L = M_p\sqrt{GM_*r_p}$ as required
+
+[This was a ‘show that’, so the mark is for the algebraic route to the answer, not the final answer]
+
+**b.**
+
+We will need to integrate the surface density (mass per unit area) over the total area of the disc
+
+$$
+M_{disc} = \int_{r_{in}}^{r_{out}}\Sigma\,\mathrm{d}A
+$$
+[1]
+
+Given $r_{\mathrm{out}} = 9r_0$ and $r_{\mathrm{in}} \ll r_0$ our lower integral limit is ≈ 0, and $\mathrm{d}A = 2\pi r\ \mathrm{d}r$ so
+
+$$
+M_{disc} = \int_0^{9r_0}\Sigma_0\left(\frac{r}{r_0}\right)^{-3/2}2\pi r\ \mathrm{d}r
+$$
+[1]
+
+$$
+= \left[\Sigma_0r_0^{3/2}4\pi r^{1/2}\right]_0^{9r_0}
+$$
+[1]
+
+$$
+= 12\pi\Sigma_0r_0^2
+$$
+[1] **[4]**
+
+[If the first mark is not already given, it can be scored for either a correct approximation of 0 for the lower integral limit, or for converting from dA to dr. Students that do $M_{disc} = \int_0^{9r_0}\Sigma\,\mathrm{d}r = -\frac{2}{3}\Sigma_0r_0$ get a maximum of 1 mark (for the lower integral limit), since the negative total mass is non-physical]
+
+**c.**
+
+The final expression does not include $\delta$, so we need to find it as a function of $\alpha$ and $\gamma$ so we can combine the given expressions. Given $\Sigma \propto r^{-\alpha}$ and $P \propto r^{-\delta}$,
+
+$\frac{P}{\Sigma T} = \text{constant} \therefore T \propto \frac{P}{\Sigma} \propto \frac{r^{-\delta}}{r^{-\alpha}} \Rightarrow T \propto r^{-\delta+\alpha}$ ① [1]
+
+We are told it is a disc of uniform entropy (so ds = 0)
+
+$$
+ds = \text{constant}\times\left(\frac{1}{\gamma-1}\frac{dT}{T} - \frac{d\Sigma}{\Sigma}\right) = 0 \therefore \frac{dT}{T} = (\gamma-1)\frac{d\Sigma}{\Sigma}
+$$
+[1]
+
+Using the hint given
+
+$$
+\Rightarrow T \propto \Sigma^{\gamma-1}
+$$
+[1]
+
+But given $\Sigma \propto r^{-\alpha}$ from earlier
+
+$\Rightarrow T \propto r^{-\alpha\gamma+\alpha}$ ② [1]
+
+Comparing ① and ②
+
+$$
+\Rightarrow \delta = \alpha\gamma
+$$
+[1] **[5]**
+
+Substituting this into the given expressions for $\Gamma_{\mathrm{L}}$ and $\Gamma_{\mathrm{C}}$ gives the required expression
+
+$$
+\Gamma = \Gamma_L + \Gamma_C = (-3.20 + 0.86\alpha - 2.33\alpha\gamma + 5.97\times1.5 - 5.97\alpha)\Gamma_0
+$$
+
+$$
+= (5.755 - (5.11 + 2.33\gamma)\alpha)\Gamma_0
+$$
+[‘Show that’ so mark for route not answer]
+
+**d.**
+
+Using our earlier expression for L and assuming only the orbital radius changes with time
+
+$$
+\Gamma = \frac{\mathrm{d}L}{\mathrm{d}t} = \frac{\mathrm{d}}{\mathrm{d}t}\left(M_p\sqrt{GM_*r_p}\right) = \frac{1}{2}M_p\sqrt{GM_*}r_p^{-1/2}\frac{\mathrm{d}r_p}{\mathrm{d}t}
+$$
+[1]
+
+In the model of part b., $\Sigma \propto r^{-3/2}$ so by comparison with part c. $\alpha = 3/2$, and we are told $\gamma = 1.4$
+
+Using the expression from part c. for $\Gamma$ and inputting $\Gamma_0$ with the earlier expression for $\Omega_{\mathrm{p}}$
+
+$$
+\Gamma = (5.76 - (5.11 + 2.33\gamma)\alpha)\Gamma_0
+$$
+
+$$
+= (5.76 - (5.11 + 2.33\times1.4)\times1.5)\times\left(\frac{q}{h}\right)^2\Sigma_pr_p^4\frac{GM_*}{r_p^3}
+$$
+[1]
+
+$$
+= -6.80\left(\frac{q}{h}\right)^2\Sigma_pGM_*r_p
+$$
+[1]
+
+Equating these two expressions for $\Gamma$ and rearranging for $\mathrm{d}r_{\mathrm{p}}/\mathrm{d}t$
+
+$$
+\frac{1}{2}M_p\sqrt{GM_*}r_p^{-1/2}\frac{\mathrm{d}r_p}{\mathrm{d}t} = -6.80\left(\frac{q}{h}\right)^2\Sigma_pGM_*r_p
+$$
+
+$$
+\therefore \frac{\mathrm{d}r_p}{\mathrm{d}t} = -13.60\left(\frac{q}{h}\right)^2\Sigma_p\frac{\sqrt{GM_*}}{M_P}r_p^{3/2}
+$$
+[1]
+
+However, we recognise that $\Sigma_p = \Sigma_0\left(\frac{r_p}{r_0}\right)^{-3/2}$
+
+$$
+\therefore \frac{\mathrm{d}r_p}{\mathrm{d}t} = -13.60\left(\frac{q}{h}\right)^2\Sigma_0\frac{\sqrt{GM_*}}{M_P}r_0^{3/2}
+$$
+[1]
+
+All of the parameters on the right hand side are constant $\therefore \frac{\mathrm{d}r_p}{\mathrm{d}t} = \mathrm{constant}$, so if in time t the radius of the planet has halved, $\frac{\mathrm{d}r_p}{\mathrm{d}t} = -\frac{\frac{1}{2}r_0}{t}$ [negative since $r_{\mathrm{p}}$ is decreasing] [1]
+
+Substituting it in and rearranging for t
+
+$$
+-\frac{\frac{1}{2}r_0}{t} = -13.60\left(\frac{q}{h}\right)^2\Sigma_0\frac{\sqrt{GM_*}}{M_P}r_0^{3/2}
+$$
+
+$$
+\therefore t = \frac{1}{27.19}\left(\frac{h}{q}\right)^2\frac{1}{\Sigma_0}\frac{M_p}{\sqrt{GM_*}}\frac{1}{\sqrt{r_0}}
+$$
+[1]
+
+From Kepler’s 3rd law, we can derive an expression for the initial orbital period, $\tau_0$
+
+$$
+\tau_0 = \frac{2\pi}{\sqrt{GM_*}}r_0^{3/2}
+$$
+
+$$
+\therefore t = \frac{1}{27.19}\left(\frac{h}{q}\right)^2\frac{M_p}{2}\frac{\tau_0}{\pi\Sigma_0r_0^2}
+$$
+[1]
+
+As found in part b., $M_{disc} = 12\pi\Sigma_0r_0^2$ and remembering that $q = M_p/M_*$
+
+$$
+\therefore t = \frac{1}{27.19}\left(\frac{h}{q}\right)^2\frac{M_p}{2}\frac{12\tau_0}{M_{disc}} = \frac{6}{27.19}\frac{1}{h}\frac{h^3}{q}\frac{M_*}{M_{disc}}\tau_0 = \boxed{0.221t_m}
+$$
+[1] **[9]**
+
+[Must be in terms of the migration timescale, $t_{\mathrm{m}}$, for the final mark. The numerical factor may be left as 1/4.53 or equivalent rather than evaluated]
+
+**e.**
+
+Substituting the numbers into the equation we just derived
+
+$$
+t = 0.221\times\frac{1}{0.05}\times\frac{0.05^3}{5\times10^{-6}}\times\frac{1}{0.01}\times10\ \text{yrs} = \boxed{110\ 000\ \text{yrs}}
+$$
+[1] **[1]**
+
+Since $t < 10$ Myr then $\boxed{\text{yes}}$, it is a feasible mechanism [1] **[1]**
+
+[Award 0.5 marks for calculating $t_{\mathrm{m}}$ (= 0.5 Myr). Second mark can only be gained with a sensible comparison between their t (allowing ecf) and 10 Myr, not for a bald statement. Allow use of the more precise formula for $\Gamma$ from c. leading to 110 246 years rather than 110 327 years]
+
+**f.**
+
+The migration will stop when $\Gamma$ = 0, which we can use to define a critical value of $\alpha$
+
+$$
+\Gamma = (5.76 - (5.11 + 2.33\gamma)\alpha_{crit})\Gamma_0 = 0
+$$
+
+$$
+\therefore \alpha_{crit} = \frac{5.76}{5.11+2.33\gamma}
+$$
+[1]
+
+Since $\gamma \geq 1$ this means $0 < \alpha_{crit} < 0.774$
+
+Far from the inner edge (as used previously in the question), $\alpha = 3/2 = 1.5$
+
+We are told that $\Sigma$ decreases to zero at the inner edge, so the variation of $\Sigma$ as a function of increasing r must be that it starts from zero at $r_{\mathrm{inner}}$, increases smoothly to some maximum, and then decreases again following $\Sigma \propto r^{-3/2}$.
+
+Since $\alpha = -\frac{r_p}{\Sigma_p}\left.\frac{d\Sigma}{dr}\right|_p$ then following the behaviour described above there must be a region near $r_{\mathrm{inner}}$ where $\left.\frac{d\Sigma}{dr}\right|_p$ is positive (since in that region $\Sigma$ is increasing with increasing r) and so (since $r_{\mathrm{p}}$ and $\Sigma_{\mathrm{p}}$ are also positive) $\alpha$ is negative [1]
+
+[This mark is for any reasoning that to match the described behaviour then there must be a change in the sign of $\alpha$ as you approach $r_{\mathrm{inner}}$]
+
+This means far from the inner edge $\alpha = 1.5 > \text{all possible } \alpha_{crit}$
+
+and close to the inner edge $\alpha < 0 < \text{all possible } \alpha_{crit}$
+
+so there must be a place in the disc between $r_{\mathrm{outer}}$ and $r_{\mathrm{inner}}$ where $\alpha = \alpha_{crit}$
+
+hence $\boxed{\text{the migration does halt}}$ before the inner edge of the disc [1] **[3]**
+
+[No mark for a bald statement without some attempt at mathematical justification]
+
+[This is the reason planets are able to form **and** survive to be detected in mature star systems, otherwise planets would only be a feature of young systems (before spiralling into their star) and life on Earth would not have had enough time to evolve]
+
+
+</Spoiler>
+
+<details>
+<summary>Questions proposed by</summary>
+
+END OF PAPER
+
+*Questions proposed by:*
+
+*Dr Alex Calverley (Surbiton High School)*
+
+*Josh Brown (University of Cambridge)*
+
+</details>
+
+---
+
+Оригинал в Архива: [BAAO_2023.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2023/BAAO_2023.pdf#page=10)
+· официални решения: [BAAO_2023_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2023/BAAO_2023_solutions.pdf#page=12)

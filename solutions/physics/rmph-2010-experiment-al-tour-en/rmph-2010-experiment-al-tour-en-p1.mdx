@@ -1,0 +1,425 @@
+---
+id: rmph-2010-experiment-al-tour-en-p1
+source: 'RMPh 2010, Експеримент'
+title: 'Задача 1. Determining the values of the parameters of a real diode by studying its current-voltage characteristic'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/RMPh/2010/rmph-2010-experiment-al-tour-en.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-27T04:54:44.743Z'
+verifier: 'mechanical'
+---
+
+*3rd Romanian Master of Sciences 2010 Physics – Experimental Tour · 10 т.*
+
+## Условие
+
+A theoretical model is a number of mathematical equations which relate the quantities involved in a physical phenomenon. The validity of a model consists in the concordance between the measured data and the predicted values.  
+The simplest situation which can occur in a model is the case when two quantities $\left(y_{\mathrm{model}}, x_{\mathrm{model}}\right)$ are in a linear dependency. It is to be expected that the experimental pairs of measured values $\left(x^i_{measured}, y^i_{measured}\right),\ i=\overline{1,N}$ are subject to imprecision. This is why the plotted pairs of coordinates form a “cloud” around the predicted straight line, called <u>fitting line</u>.  
+It is assumed that the best fit of the experimental data with the theoretical model is attained when the sum of the squared distances from these points to the predicted line has the smallest possible value. The slope $a$ and the slope-intercept $b$ for a linear model are given by
+
+$$
+a=\frac{N\sum_{i=1}^{N}x_i\cdot y_i-\sum_{i=1}^{N}x_i\cdot\sum_{i=1}^{N}y_i}{N\cdot\sum_{i=1}^{N}x_i^2-\left(\sum_{i=1}^{N}x_i\right)^2}\qquad (1)
+$$
+
+$$
+b=\frac{\sum_{i=1}^{N}x_i^2\cdot\sum_{i=1}^{N}y_i-\sum_{i=1}^{N}x_i\cdot\sum_{i=1}^{N}x_i\cdot y_i}{N\cdot\sum_{i=1}^{N}x_i^2-\left(\sum_{i=1}^{N}x_i\right)^2}\qquad (2)
+$$
+
+Whether there really is a linear dependency between the two quantities is a matter described by the so-called <u>correlation coefficient</u> $G$.
+
+$$
+G=\frac{N\cdot\sum_{i=1}^{N}x_i\cdot y_i-\sum_{i=1}^{N}x_i\cdot\sum_{i=1}^{N}y_i}{\sqrt{\left|N\cdot\sum_{i=1}^{N}x_i^2-\left(\sum_{i=1}^{N}x_i\right)^2\right|\cdot\left|N\cdot\sum_{i=1}^{N}y_i^2-\left(\sum_{i=1}^{N}y_i\right)^2\right|}}\qquad (3)
+$$
+
+$G=+1$ if there truly is a linear dependency with positive slope. $G=-1$ if there truly is a linear dependency with negative slope. In general, $-1\le G\le 1$ and the more G gets closer to 0, the less credible the linear dependency is.  
+Very few of the physical models imply a linear dependency, but often a suitable rearrangement of a mathematical function can lead to one. The relation between the current $I$ and the voltage $V$ for an ideal diode is given by
+
+$$
+I=I_0\cdot\left(e^{\frac{qV}{\eta\cdot k_B\cdot T}}-1\right)\qquad (4)
+$$
+
+where $q=1.60\times 10^{-19}C$ is the elementary electrical charge, and $k_B=1.38\times 10^{-23}J\cdot K^{-1}$ is the Boltzmann constant. For ordinary experimental conditions, $T=300K$ and $q/\left(k_BT\right)=38.64V^{-1}$. The quantities which determine the non-linear dependency of I with V are the diode factor $\eta$ and the saturation current $I_0$. The curve I versus V looks something like in Figure 1. When subject to large enough positive voltages, the diode’s resistance can be considered zero. When subject to large enough negative voltages, the diode’s resistance can be considered infinite.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '41.7%', '--fig-max': '267px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/rmph-2010-experiment-al-tour-en/p1-fig1.png" alt="Schematic I-V curve of an ideal diode: axes I (vertical) and V (horizontal); for negative V the curve runs as a horizontal line just below the V-axis, for positive V it rises steeply and becomes vertical. Labels under the axis: “Polarizare inversă” (left) and “Polarizare directă” (right)." width="834" height="699" loading="lazy" decoding="async" />
+<figcaption>Figure 1. Schematic curve for the I-V characteristic of an ideal diode</figcaption>
+</figure>
+
+Admitting that $0{,}5\le\eta\le 3$, for $V<0$ we get $qV/\left(\eta\cdot k_B\cdot T\right)\ll 0$ and thus $e^{\frac{qV}{\eta\cdot k_B\cdot T}}\cong 0$. So, for reversed polarity, (4) reduces to
+
+$$
+I=-I_0\qquad (5)
+$$
+
+Plotting the I-V characteristic for negative polarity we get a line parallel to the V-axis, which allows us to determine the value of $I_0$.  
+For $V>0$, $qV/\left(\eta\cdot k_B\cdot T\right)\gg 0$ and thus $e^{\frac{qV}{\eta\cdot k_B\cdot T}}\gg 1$. Consequently, (4) becomes
+
+$$
+I=I_0\cdot e^{\frac{qV}{\eta\cdot k_B\cdot T}}\qquad (6)
+$$
+
+or
+
+$$
+\ln(I)=\ln(I_0)+\frac{qV}{\eta k_BT}\qquad (7)
+$$
+
+As you can see, writing the I-V characteristic as $\ln(I)=f(V)$, we get a linear dependency. The slope allows us to determine the value of the diode factor, while the slope-intercept allows us to determine the value of the saturation current.  
+One can consider that a „real” diode consists of an ideal diode connected in parallel with a shunt with resistance R, and the whole connected in series with a resistor $r$. Typical values for the characteristic resistances of r and R are $0.01\Omega<r<10\Omega$, and $75k\Omega<R<1M\Omega$ respectively.
+
+The I-V characteristic of a real diode is given by
+
+$$
+I=I_0\cdot\left(e^{\frac{q(V-r\cdot I)}{\eta\cdot k_B\cdot T}}-1\right)+\frac{V-r\cdot I}{R}\qquad (8)
+$$
+
+Experimental problem 1 asks you to determine the values of the parameters $R, r, I_0, \eta$ of a diode, by using the data in the following two tables.
+
+*Table 1. Pairs of experimental data current-voltage for a real diode with reversed polarity*
+
+| No. | U(V) | I(µA) | Nr. | U(V) | I(µA) | Nr. | U(V) | I(µA) | Nr. | U(V) | I(µA) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 0 | 0 | 9 | -0.5 | -11 | 16 | -1.2 | -12 | 24 | -2 | -14 |
+| 2 | -0.05 | -6 | 10 | -0.6 | -11 | 17 | -1.3 | -13 | 25 | -2.05 | -14 |
+| 3 | -0.1 | -9 | 11 | -0.7 | -11 | 18 | -1.4 | -13 | 26 | -2.1 | -14 |
+| 4 | -0.15 | -10 | 12 | -0.8 | -12 | 19 | -1.5 | -13 | 27 | -2.2 | -14 |
+| 5 | -0.2 | -10 | 13 | -0.9 | -12 | 20 | -1.6 | -13 | 28 | -2.3 | -15 |
+| 6 | -0.25 | -10 | 14 | -1 | -12 | 21 | -1.7 | -13 | 29 | -2.4 | -15 |
+| 7 | -0.3 | -11 | 15 | -1.1 | -12 | 22 | -1.8 | -14 | 30 | -2.5 | -15 |
+| 8 | -0.4 | -11 |  |  |  | 23 | -1.9 | -14 |  |  |  |
+
+In order to determine the values of the parameters of the diode for reversed polarity follow de below procedure:
+
+**1.** In the corresponding box on the answer sheet write down the expression of (6) for large values of the negative voltage $V\ll 0$. **[0,4 т.]**
+
+**2.** Using the experimental data, plot on the provided millimetric paper the I-V curve for reversed polarity. **[0,6 т.]**
+
+**3.** In the corresponding box on the answer sheet write down the linear form of the I-V characteristic for reversed polarity and indicate the expressions of the slope $a$ and of the slope-intercept $b$. **[0,6 т.]**
+
+**4.** Neglect from the experimental data the entries corresponding to small values of the negative voltage, and fill in Table 3 on the answer sheet. **[0,8 т.]**
+
+**5.** Determine the parameters of the fitting line and fill in the corresponding boxes on the answer sheet. **[0,8 т.]**
+
+**6.** Determine the correlation coefficient and write it down in the corresponding box on the answer sheet. **[0,4 т.]**
+
+**7.** Determine the values of the parameters $R, I_0$ and write them down in the corresponding boxes on the answer sheet. **[0,8 т.]**
+
+*Table 2. Pairs of experimental data current-voltage for a real diode with forward polarity*
+
+| No. | Voltage (V) | Current (A) | No. | Voltage (V) | Current (A) |
+|---|---|---|---|---|---|
+| 1 | 0.345 | 0.007 | 11 | 0.491 | 0.082 |
+| 2 | 0.383 | 0.015 | 12 | 0.498 | 0.090 |
+| 3 | 0.406 | 0.022 | 13 | 0.504 | 0.097 |
+| 4 | 0.423 | 0.030 | 14 | 0.511 | 0.105 |
+| 5 | 0.437 | 0.037 | 15 | 0.516 | 0.112 |
+| 6 | 0.449 | 0.045 | 16 | 0.522 | 0.120 |
+| 7 | 0.459 | 0.052 | 17 | 0.527 | 0.127 |
+| 8 | 0.468 | 0.060 | 18 | 0.533 | 0.135 |
+| 9 | 0.477 | 0.067 | 19 | 0.538 | 0.142 |
+| 10 | 0.484 | 0.075 | 20 | 0.543 | 0.150 |
+
+In order to determine the values of the parameters of the diode for forward polarity follow de below procedure:
+
+**8.** In the corresponding box on the answer sheet write down the expression of (6) for large values of the positive voltage, $V\gg 0$. **[0,4 т.]**
+
+**9.** Using the experimental data, plot on the provided millimetric paper the graph $\ln(I)=f(V)$ for forward polarity. **[1 т.]**
+
+**10.** Fill in Table 4 on the answer sheet only with the experimental data corresponding to moderate values of the positive voltage. **[0,8 т.]**
+
+**11.** Determine the parameters of the fitting line and fill in the corresponding boxes on the answer sheet. **[0,8 т.]**
+
+**12.** Determine the correlation coefficient and write it down in the corresponding box on the answer sheet. **[0,4 т.]**
+
+**13.** Draw on the graph plotted at point 9 the resulting fitting line. **[0,6 т.]**
+
+**14.** Determine the values of the parameters $\eta, I_0$ and write them down in the corresponding boxes on the answer sheet. **[0,8 т.]**
+
+**15.** The measured data for large positive voltages lay below the fitting line. Try to provide an explanation for this fact **[0,6 т.]**
+
+**16.** Determine the value of the resistor $r$ and write it down in the corresponding box on the answer sheet. **[0,2 т.]**
+
+*Delia DAVIDESCU – National Centre for Assessment and Examination - MECTS*  
+*Adrian DAFINEI, Ph.D. – Faculty of Physics – University of Bucharest*
+
+**Answer Sheet**
+
+**1.** The expression of (6) for large values of the negative voltage:
+
+**2.** The $I-V$ graph: drawn on the provided millimetric paper.
+
+**3.** The linear form of the $I-V$ curve for reversed polarity:
+
+The expression for the slope $a$:
+
+The expression for the slope-intercept $b$:
+
+**4.** Table 3 – Processed data for reversed polarity
+
+| No. | $U_i$ | $I_i$ | $U_i^2$ | $I_i^2$ | $U_i\cdot I_i$ |
+|---|---|---|---|---|---|
+| 1 |  |  |  |  |  |
+| 2 |  |  |  |  |  |
+| 3 |  |  |  |  |  |
+| 4 |  |  |  |  |  |
+| 5 |  |  |  |  |  |
+| 6 |  |  |  |  |  |
+| 7 |  |  |  |  |  |
+| 8 |  |  |  |  |  |
+| 9 |  |  |  |  |  |
+| 10 |  |  |  |  |  |
+| Σ |  |  |  |  |  |
+
+**5.** The parameters of the fitting line
+
+The slope of the fitting line:
+
+The slope-intercept of the fitting line:
+
+**6.** The correlation coefficient :
+
+7\. The value of the parameter $I_0$ :
+
+The value of the parameter $R$ :
+
+**8.** The form of (6) for large values of the positive voltage :
+
+**9.** The $\ln(I)=f(V)$ graph for forward polarity: drawn on the provided millimetric paper.
+
+**10.** Table 4 - Processed data for forward polarity
+
+| No. | $U(V)$ | $I(A)$ | $\ln(I)$ | $U^2$ | $(\ln(I))^2$ | $U\cdot\ln(I)$ |
+|---|---|---|---|---|---|---|
+| 1 |  |  |  |  |  |  |
+| 2 |  |  |  |  |  |  |
+| 3 |  |  |  |  |  |  |
+| 4 |  |  |  |  |  |  |
+| 5 |  |  |  |  |  |  |
+| 6 |  |  |  |  |  |  |
+| 7 |  |  |  |  |  |  |
+| 8 |  |  |  |  |  |  |
+| 9 |  |  |  |  |  |  |
+| 10 |  |  |  |  |  |  |
+| Σ |  |  |  |  |  |  |
+
+**11.** The parameters of the fitting line
+
+The slope of the fitting line
+
+The slope-intercept of the fitting line
+
+**12.** The correlation coefficient
+
+13\. The drawing of the resulting line on the graph plotted at point 9.
+
+14\. The expression of the parameter $\eta$ :
+
+The value of the parameter $\eta$ :
+
+The expression of the parameter $I_0$ :
+
+The value of the parameter $I_0$ :
+
+15\. The explanation you provide for the fact that the measured data for large positive voltages lay below the fitting line.
+
+16\. The value of the resistor $r$
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **7.** I0 = 9.6 µA; R ≅ 460 kΩ
+- **14.** η = 2.4; I0 = 3.7×10⁻⁵ A ≅ 30 µA
+- **16.** 0.2 Ω
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Evaluation Sheet**
+
+**Any other correct solution will be evaluated accordingly**
+
+***Experimental problem 1***
+
+**1.** **For:** **0.4p**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '62.2%', '--fig-max': '398px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/rmph-2010-experiment-al-tour-en/p1-sol-fig1.png" alt="Graph of Curent (µA) versus Tensiunea(V) from -2.5 V to 0 V, current axis from -16 to 2: star-marked points form a staircase curve from about -15 µA at -2.5 V rising to 0 at 0 V, with a steep rise near 0 V. Legend text: “Caracteristica IV a diodei reale în cadranul patru”." width="1245" height="1043" loading="lazy" decoding="async" />
+</figure>
+
+$I=-I_0\cdot+\frac{V}{R}$ 0.4p
+
+**2.** **For:** **0.6p**
+
+(graph) 0.6p
+
+**3.** **For:** **0.6p**
+
+Linear expression of the $I-V$ characteristic for reversed polarity
+
+$I=\frac{V}{R}-I_0$ 0.2p
+
+$a=1/R$ 0.2p
+
+$b=-I_0$ 0.2p
+
+**4.** **For:** **0.8p**
+
+correctly filling in the Table 3 0.8p
+
+**5.** **For:** **0.8p**
+
+the slope of the fitting line
+
+$$
+a=\frac{10\sum_{i=1}^{10}U_i\cdot I_i-\sum_{i=1}^{10}U_i\cdot\sum_{i=1}^{10}I_i}{10\cdot\sum_{i=1}^{10}U_i^2-\left(\sum_{i=1}^{10}U_i\right)^2}
+$$
+
+$$
+a=\frac{10\cdot 298.8-20.95\cdot 142}{10\cdot 44.49-(20.95)^2}=\frac{13.1}{5.99}\frac{\mu A}{V}=2.18\times 10^{-6}\frac{A}{V}
+$$
+0.4p
+
+the slope-intercept of the fitting line
+
+$$
+b=\frac{\sum_{i=1}^{10}U_i^2\cdot\sum_{i=1}^{10}I_i-\sum_{i=1}^{10}U_i\cdot\sum_{i=1}^{10}U_i\cdot I_i}{10\cdot\sum_{i=1}^{N}U_i^2-\left(\sum_{i=1}^{N}U_i\right)^2}
+$$
+
+$$
+b=\frac{44.49\cdot(-142)-(-20.95)\cdot 298.8}{5.99}=\frac{-57.72}{5.99}\mu A=-9.6\mu A
+$$
+0.4p
+
+**6.** **For:** **0.4p**
+
+the correlation coefficient for the presumed linear dependency
+
+$$
+G=\frac{10\cdot\sum_{i=1}^{10}U_i\cdot I_i-\sum_{i=1}^{10}U_i\cdot\sum_{i=1}^{10}I_i}{\sqrt{\left|10\cdot\sum_{i=1}^{10}U_i^2-\left(\sum_{i=1}^{10}U_i\right)^2\right|\cdot\left|10\cdot\sum_{i=1}^{10}I_i^2-\left(\sum_{i=1}^{10}I_i\right)^2\right|}}
+$$
+
+$$
+G=\frac{10\times 298.8-20.95\times 142}{\sqrt{5.99\times 36}}=\frac{13.1}{14.6}\cong 0.90
+$$
+0.4p
+
+**7.** **For:** **0.8p**
+
+$I_0=9.6\mu A$ 0.4p
+
+$R=\frac{1}{a}\cong 460k\Omega$ 0.4p
+
+**8.** **For:** **0.4p**
+
+$I=I_0\cdot e^{\frac{q(V-r\cdot I)}{\eta\cdot k_B\cdot T}}$ 0.4p
+
+**9.** **For:** **1.0p**
+
+$$
+\ln(I)=\ln(I_0)+\frac{q(V-rI)}{\eta k_BT}
+$$
+0.2p
+
+for experimental data within the range $V>rI$
+
+$$
+\ln(I)=\ln(I_0)+\frac{qV}{\eta k_BT}
+$$
+0.2p
+
+(graph) 0.6p
+
+**10.** **For:** **0.8p**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '57.9%', '--fig-max': '371px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/rmph-2010-experiment-al-tour-en/p1-sol-fig2.png" alt="Graph of ln(I) (from -5.0 to -1.5) versus U(V) (0.35 to 0.55): star-marked points joined by a line rising from about -5.0 at 0.345 V to about -1.9 at 0.543 V, slightly concave. Legend: “Polarizare directă semilogaritmic”." width="1159" height="958" loading="lazy" decoding="async" />
+</figure>
+
+correctly filling in table 4 0.8p
+
+**11.** **For:** **0.8p**
+
+the slope of the fitting line
+
+$$
+a=\frac{10\sum_{i=1}^{10}U_i\cdot\ln(I_i)-\sum_{i=1}^{10}U_i\cdot\sum_{i=1}^{10}\ln(I_i)}{10\cdot\sum_{i=1}^{10}U_i^2-\left(\sum_{i=1}^{10}U_i\right)^2}
+$$
+
+$$
+a=\frac{10\cdot(-12.493)+(4.857)\cdot(25.849)}{10\cdot(2.363)-(4.857)^2}=\frac{0.6185}{0.0395}=15.66
+$$
+0.4p
+
+the slope-intercept of the fitting line
+
+$$
+b=\frac{\sum_{i=1}^{10}U_i^2\cdot\sum_{i=1}^{10}\ln(I_i)-\sum_{i=1}^{10}U_i\cdot\sum_{i=1}^{10}U_i\cdot\ln(I_i)}{10\cdot\sum_{i=1}^{N}U_i^2-\left(\sum_{i=1}^{N}U_i\right)^2}
+$$
+
+$$
+b=\frac{(2.363)\cdot(-25.849)+(4.857)\cdot(12.493)}{0.0395}=\frac{-0.403}{0.0395}=-10.15
+$$
+0.4p
+
+**12.** **For:** **0.4p**
+
+the correlation coefficient for the presumed linear dependency
+
+$$
+G=\frac{10\cdot\sum_{i=1}^{10}U_i\cdot\ln(I_i)-\sum_{i=1}^{10}U_i\cdot\sum_{i=1}^{10}\ln(I_i)}{\sqrt{\left|10\cdot\sum_{i=1}^{10}U_i^2-\left(\sum_{i=1}^{10}U_i\right)^2\right|\cdot\left|10\cdot\sum_{i=1}^{10}\left(\ln(I_i)\right)^2-\left(\sum_{i=1}^{10}\ln(I_i)\right)^2\right|}}
+$$
+
+$$
+G=\frac{0.6185}{\sqrt{0.04\cdot 8.4}}\cong 1
+$$
+0.4p
+
+**13.** **For:** **0,6p**
+
+(graph) 0.6p
+
+**14.** **For:** **0.8p**
+
+$$
+\begin{cases}\eta=\frac{q}{a\cdot k_BT}\\ I_0=e^b\end{cases}
+$$
+0.4p
+
+$$
+\begin{cases}\eta=\frac{38{,}64}{15{,}66}=2.4\\ I_0=3.7\times 10^{-5}A\cong 30\mu A\end{cases}
+$$
+0,4p
+
+**15.** **For:** **0.6p**
+
+(graph) 0.6p
+
+$\Delta V=rI$
+
+$0.02=r\cdot 0.15$
+
+**16.** **For:** **0.2p**
+
+$r\cong 0.2\Omega$ 0.2p
+
+***TOTAL*** **10p**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.8%', '--fig-max': '344px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/rmph-2010-experiment-al-tour-en/p1-sol-fig3.png" alt="Graph of ln(I) versus U(V) with the star-marked data points and a straight fitting line; the points at large voltages lie below the line. Legend: “Caracteristica IV Polarizare directă semilogaritmic si dreapta de fit”." width="1076" height="885" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '49.8%', '--fig-max': '319px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/rmph-2010-experiment-al-tour-en/p1-sol-fig4.png" alt="Graph of ln(I) versus U(V) with data points and the fitting line; a horizontal line at ln(I) ≈ -1.9 meets the fitting line and the last data point, and two vertical lines drop to the U axis near 0.525 V and 0.545 V, showing the voltage difference ΔV." width="997" height="836" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [experimental_tour_problems_EN.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/RMPh/2010/experimental_tour_problems_EN.pdf#page=1)
+· официални решения: [experimental_tour_solutions_EN.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/RMPh/2010/experimental_tour_solutions_EN.pdf#page=1)

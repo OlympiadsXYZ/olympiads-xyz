@@ -1,0 +1,574 @@
+---
+id: baao-2025-ii-r2-p1
+source: 'BAAO 2025, II кръг'
+title: 'Задача 1. Gravity Train'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/BAAO/2025/baao-2025-ii-r2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-27T04:30:19.485Z'
+verifier: 'mechanical'
+---
+
+*British Astronomy and Astrophysics Olympiad 2024-2025 — Astro Round 2 — Tuesday 25th February 2025 · 25 февруари 2025 г. · 30 т.*
+
+<details>
+<summary>Указания</summary>
+
+**This question paper must not be photographed or taken out of the exam room**
+
+**Time**: 3 hours ($\sim 50$ minutes for Q1, $\sim 65$ minutes for Q2 and $\sim 65$ minutes for Q3).
+
+**Questions**: All three questions should be attempted. Each question contains independent parts so that later parts can be attempted even if earlier parts are incomplete. **The questions build in difficulty**.
+
+**Solutions**: Answers and calculations are to be written on loose paper. Students should ensure their **name** and **school** is clearly written on the **first** answer sheet and that **all** pages are numbered. A standard formula booklet may be used. START EACH QUESTION ON A NEW PAGE.
+
+**Clarity**: Solutions must be written legibly, in black or blue pen, and working down the page. Scribble will not be marked and overall clarity is an important aspect of this exam.
+
+**Instructions**: To accommodate students sitting the paper at different times, please **do not discuss** any aspect of the paper on the internet until 8 am Thursday 6th March.
+
+**Calculators**: Any standard calculator may be used, but calculators cannot be programmable and must not have symbolic algebra capability.
+
+</details>
+
+<details>
+<summary>Training Dates and the IOAA</summary>
+
+**Training Dates and the IOAA** (Mumbai, India, 11th - 21st August 2025)
+
+*The best students taking this paper eligible to represent the UK at the IOAA will be invited to attend the* **Selection Camp** *to be held in Oxford from* **Monday 7th to Friday 11th April 2025**. *At the camp, problem solving skills and observational skills (including with telescopes) will be developed, and students will sit a Data Analysis exam along with the Round 3 paper. From this, a team of five students (plus one reserve) will be selected for further training, including additional camps in the summer.*
+
+*The BAAO are very proud to be sponsored by G-Research*
+
+</details>
+
+<details>
+<summary>Important Constants</summary>
+
+| Constant | Symbol | Value |
+|---|---|---|
+| Speed of light | $c$ | $3.00 \times 10^{8}\ \mathrm{m\ s^{-1}}$ |
+| Earth’s rotation period | 1 day | 24 hours |
+| Earth’s orbital period | 1 year | 365.25 days |
+| parsec | pc | $3.09 \times 10^{16}\ \mathrm{m}$ |
+| Astronomical Unit | au | $1.50 \times 10^{11}\ \mathrm{m}$ |
+| Radius of the Sun | $R_{\odot}$ | $6.96 \times 10^{8}\ \mathrm{m}$ |
+| Radius of the Earth | $R_{\oplus}$ | $6.37 \times 10^{6}\ \mathrm{m}$ |
+| Mass of the Sun | $M_{\odot}$ | $1.99 \times 10^{30}\ \mathrm{kg}$ |
+| Mass of the Earth | $M_{\oplus}$ | $5.97 \times 10^{24}\ \mathrm{kg}$ |
+| Luminosity of the Sun | $L_{\oplus}$ | $3.83 \times 10^{26}\ \mathrm{W}$ |
+| Absolute magnitude of the Sun | $\mathcal{M}_{\odot}$ | $4.74$ |
+| Hubble constant | $H_0$ | $70\ \mathrm{km\ s^{-1}\ Mpc^{-1}}$ |
+| Stephan-Boltzmann constant | $\sigma$ | $5.67 \times 10^{-8}\ \mathrm{W\ m^{-2}\ K^{-4}}$ |
+| Gravitational constant | $G$ | $6.67 \times 10^{-11}\ \mathrm{m^{3}\ kg^{-1}\ s^{-2}}$ |
+| Boltzmann constant | $k_{\mathrm{B}}$ | $1.38 \times 10^{-23}\ \mathrm{J\ K^{-1}}$ |
+| Permittivity of free space | $\varepsilon_0$ | $8.85 \times 10^{-12}\ \mathrm{F\ m^{-1}}$ |
+| Permeability of free space | $\mu_0$ | $4\pi \times 10^{-7}\ \mathrm{H\ m^{-1}}$ |
+| Planck’s constant | $h$ | $6.63 \times 10^{-34}\ \mathrm{J\ s}$ |
+| Elementary charge | $e$ | $1.60 \times 10^{-19}\ \mathrm{C}$ |
+| Proton rest mass | $m_{\mathrm{p}}$ | $1.67 \times 10^{-27}\ \mathrm{kg}$ |
+| Electron rest mass | $m_{\mathrm{e}}$ | $9.11 \times 10^{-31}\ \mathrm{kg}$ |
+| Wien’s displacement law | $\lambda_{\max}T$ | $2.90 \times 10^{-3}\ \mathrm{m\ K}$ |
+| Avagadro’s constant | $N_A$ | $6.02 \times 10^{23}\ \mathrm{mol^{-1}}$ |
+
+**Basic calculus formulae**:
+
+Chain rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}f(g(x)) = f'(g(x))g'(x)
+$$
+
+Product rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}(uv) = \frac{\mathrm{d}u}{\mathrm{d}x}v + u\frac{\mathrm{d}v}{\mathrm{d}x}
+$$
+
+Quotient rule
+$$
+\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u}{v}\right) = \frac{\frac{\mathrm{d}u}{\mathrm{d}x}v - u\frac{\mathrm{d}v}{\mathrm{d}x}}{v^2}
+$$
+
+Integration by parts
+$$
+\int u\frac{\mathrm{d}v}{\mathrm{d}x}\,\mathrm{d}x = uv - \int v\frac{\mathrm{d}u}{\mathrm{d}x}\,\mathrm{d}x
+$$
+
+Standard integral
+$$
+\int \frac{1}{x}\,\mathrm{d}x = \ln|x| + C
+$$
+
+</details>
+
+<details>
+<summary>Important Formulae</summary>
+
+You might find the diagram of an elliptical orbit below useful in solving some of the questions:
+
+**Elements of an elliptic orbit**:
+
+- $a = \mathbf{OA}\ (= \mathbf{OP})$ semi-major axis
+- $b = \mathbf{OB}\ (= \mathbf{OC})$ semi-minor axis
+- $e = \sqrt{1 - \frac{b^2}{a^2}}$ eccentricity
+- $\mathbf{F}$ focus
+- $\mathbf{PF} = a(1 - e)$ periapsis distance (shortest distance from $\mathbf{F}$)
+- $\mathbf{AF} = a(1 + e)$ apoapsis distance (longest distance from $\mathbf{F}$)
+
+**Kepler’s Third Law**:
+$$
+T^2 = \frac{4\pi^2}{GM}a^3
+$$
+
+**Vis-Viva Equation**:
+$$
+v^2 = GM\left(\frac{2}{r} - \frac{1}{a}\right)
+$$
+
+**Wien’s Displacement Law**:
+$$
+\lambda_{\max}T = \mathrm{constant}
+$$
+
+**Stephan-Boltzmann Law**:
+$$
+L = 4\pi R^2\sigma T^4
+$$
+
+**Brightness (Intensity)**:
+$$
+b = \frac{L}{4\pi d^2}
+$$
+
+**Magnitudes**:
+$$
+\frac{b_1}{b_0} = 10^{-0.4(m_1 - m_0)}
+$$
+$$
+m - \mathcal{M} = 5\log\left(\frac{d}{10}\right)
+$$
+
+**Distance-Parallax Relation**:
+$$
+d = \frac{1}{p}
+$$
+
+**Rayleigh Criterion**:
+$$
+\theta = \frac{1.22\lambda}{D}
+$$
+
+**Redshift**:
+$$
+z = \frac{\Delta\lambda}{\lambda_{\mathrm{emit}}} \approx \frac{v}{c}
+$$
+
+**Hubble’s Law**:
+$$
+v = H_0 d
+$$
+
+</details>
+
+<details>
+<summary>Note for markers</summary>
+
+**Astro Round 2 2025 Paper Solutions and Marking Guidelines**
+
+**Note for markers:**
+
+- Answers to two or three significant figures are generally acceptable. The solution may give more in order to make the calculation clear. Units should be present on final answers when appropriate.
+- There are multiple ways to solve some of the questions; please accept all good solutions that arrive at the correct answer. Students getting the answer in a $\boxed{\text{box}}$ will get all the marks available for that calculation / part of the question (as indicated in red), so long as there are no unphysical / nonsensical steps or assumptions made (students may not explicitly calculate the intermediate stages and should not be penalised for this so long as their argument is clear).
+
+In these solutions a plain [1] is a marking point and a bold **[n]** is the total for that calculation or part (printed in red in the source).
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [a.](#a)
+- [b.](#b)
+- [c.](#c)
+
+</nav>
+
+First proposed by Robert Hooke in a conversation with Isaac Newton, and later explored mathematically by Paul Cooper in the $1960$s and several science fiction authors thereafter, a ‘gravity train’ involves drilling a tunnel through the Earth to connect two locations that are often far apart and using only gravitational forces to accelerate and decelerate the train on its journey. In this question we will investigate the physics of this novel form of transportation.
+
+You may wish to make use of Newton’s Shell Theorem, which states that if an object is at a distance $r$ from the centre of mass of a sphere of radius $R$, the gravitational force it experiences is identical to that from a point mass at the location of the centre of mass with a mass equal to the mass enclosed by a shell of radius $r$.
+
+Throughout this question we will assume that the Earth is a solid sphere of uniform density, $\rho$, and that all tunnels are maintained in vacuum.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '95.5%', '--fig-max': '612px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p1-fig1.png" alt="Left: a circle (the Earth) with a vertical tunnel along the diameter from A (top) to B (bottom) through the centre O, the radius R⊕ marked by a horizontal arrow, a point mass m in the tunnel at distance r from O, and a dashed straight chord tunnel from A to C with midpoint S, a dotted line from O perpendicular to the chord at S and the distance q along the chord. Right: the same circle with a curved hypocycloid route from A to C and a small circle of radius b rolling inside the large circle, with the tracing point P marked in red." width="1911" height="1046" loading="lazy" decoding="async" />
+<figcaption>**Figure 1:** *Left:* A tunnel through the Earth along the diameter connecting point $A$ and point $B$, as well as a straight line chord connecting point $A$ to to point $C$. The midpoint of $AB$ is indicated $O$, and the midpoint of $AC$ is indicated $S$. The distance of the gravity train (represented as a point mass of mass $m$) from $O$ is given by $r$, and from $S$ is given by $q$. *Right:* An alternative route from $A$ to $C$ using a hypocycloid. This special shape is generated by the trace of a fixed point $P$ on a small circle of radius $b$ that rolls within the larger circle. Credit: Alex Calverley.</figcaption>
+</figure>
+
+Figure 1 shows possible routes for the gravity train as explored by Paul Cooper. The simplest case is between two points, $A$ and $B$, that are on completely opposite sides of the planet, and so line $AOB$ is a diameter of the Earth, with $O$ at the centre of the Earth. A more convenient case is along an arbitrary chord to point $C$, with $S$ as the midpoint, and Cooper showed that the quickest route between two arbitrary points on the Earth’s surface is along the hypocycloid curve connecting the two - this is a special type of curve, generated by the trace of a fixed point $P$ on a small circle of radius $b$ that rolls within the larger circle.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.5%', '--fig-max': '311px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p1-fig2.png" alt="A circular tunnel cross-section on a green background with compass labels N (top), S (bottom), W (left) and E (right); a grey square (the train) sits on the West wall and a red dashed arrow runs from it horizontally to the East wall." width="971" height="987" loading="lazy" decoding="async" />
+<figcaption>**Figure 2:** Looking directly into a tunnel positioned at the equator from above it, with the train (in grey) on rails on the West wall. Without the rails, the Coriolis force would mean it drifts eastwards (to the right) along the tunnel’s cross-sectional diameter until it hits the East wall. Credit: Alex Calverley.</figcaption>
+</figure>
+
+<ProblemSection id="a">
+
+### a. (10 т.)
+
+In this part of the question you should ignore any effects of the Earth’s rotation. Assume the gravity train always starts from rest at point $A$.
+
+**(i)** Show that the gravity train using the route $AOB$ would undergo simple harmonic motion (SHM) and hence that the time $t_{AB}$ to get from $A$ to $B$ is a function of $g_0$ and $R_{\oplus}$, where $g_0$ is the gravitational field strength at the surface of the Earth. Hence show $t_{AB}$ is about $42$ minutes. **[3 т.]**
+
+**(ii)** Compare this to the time taken by a satellite to go from $A$ to $B$ when orbiting in a circular orbit of radius $R_{\oplus}$. **[1 т.]**
+
+**(iii)** What is the largest speed achieved by the gravity train? What is this the same as? **[2 т.]**
+
+**(iv)** Gravity trains could potentially be used in the future to mine the asteroid belt, as a way to haul raw material to a central refining point or port for launch back to Earth. The dwarf planet Ceres has an average density of $2.16\ \mathrm{g\ cm^{-3}}$. What would be $t_{AB}$ on Ceres? **[2 т.]**
+
+**(v)** The route $ASC$ is an arbitrary chord through the planet. Given the gravity train is constrained to travel along frictionless rails, determine the time $t_{AC}$ to go along this route. Compare your answer to $t_{AB}$. You may wish to make use of the notation in Figure 1. **[2 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### b. (9 т.)
+
+Cooper showed that the time taken to travel along a hypocycloid made by a circle of radius $b$ is
+$$
+t_{hyp} = \frac{2\pi b}{R_{\oplus}}\sqrt{\frac{R_{\oplus}(R_{\oplus} - b)}{bg_0}}\ .
+$$
+For all points $A$ and $C$, $t_{hyp} \leq t_{AC}$. Again, ignore the Earth’s rotation and assume the gravity train starts from rest at point $A$.
+
+**(i)** When $t_{hyp} = t_{AC}$, what is the value of $b$? What situation does this correspond to? **[2 т.]**
+
+**(ii)** Consider a chord between $A$ and $C$ with a maximum depth below the Earth’s surface of $d$, and the hypocycloid has a maximum depth of $\alpha d$ where $\alpha > 1$. If $C$ is chosen such that $t_{hyp} = \frac{1}{2}t_{AC}$, find the latitude, $\varphi$, of $C$ if $A$ is the North Pole (for which $\varphi = 90^{\circ}$) and hence find $\alpha$. **[7 т.]**
+
+So far we have ignored the Earth’s rotation, and this would be fine for a tunnel travelling from the North Pole to the South Pole, however if we had instead tried to go between two points anywhere else (whether a diameter or a chord), other forces would have to be taken into account. Moving into a rotating co-ordinate system (of constant angular velocity) means that in order for Newton’s laws of motion to hold, we have to introduce two ‘fictitious forces’: a centrifugal force, $F_{Cent}$, that acts radially and a Coriolis force, $F_{Cor}$ that acts tangentially (perpendicular to both the particle’s velocity and to the Earth’s axis of rotation).
+
+The magnitude of the centrifugal force is equal to that of the centripetal force, but pointed away from the rotational axis. The magnitude of the Coriolis force is given by
+$$
+F_{Cor} = 2m\Omega v_{\perp}
+$$
+where $m$ is the particle’s mass, $v_{\perp}$ is its velocity component perpendicular to the Earth’s axis of rotation, and $\Omega$ is the Earth’s angular velocity. A consequence of the Coriolis force is that the gravity train, unless constrained on rails, will drift eastwards and crash into the side. For a tunnel starting at the equator with the train on the West wall, this is movement to the right (see Figure 2).
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### c. (11 т.)
+
+Suppose the tunnel along the diameter $AOB$ is now in the plane of the Earth’s equator, and so rotational effects will have to be considered.
+
+**(i)** The centrifugal acceleration $\left(\frac{F_{Cent}}{m}\right)$ is greatest at the surface of the Earth. Show that it is $< 1\%$ of $g_0$, and so we are justified in ignoring it. **[1 т.]**
+
+**(ii)** Sketch how the Coriolis acceleration $\left(\frac{F_{Cor}}{m}\right)$ experienced by the gravity train varies as a function of $r$ (as defined in Figure 1 as the distance from $O$) indicating numerical values on the $y$-axes that confirm we cannot treat it as negligible. You may find it easiest to reverse your $r$ axis so it goes from $R_{\oplus}$ (at A) to $0$ to $-R_{\oplus}$ (at B). Treat eastwards as positive. **[3 т.]**
+
+**(iii)** If the train was originally on the West side of the tunnel (as shown in Figure 2) and became detached from its rails the moment the journey started, find an expression for the West-East displacement as a function of time. **[3 т.]**
+
+**(iv)** If the distance between the top of the gravity train and the other side of the tunnel is $500\ \mathrm{m}$ (it’s a very wide tunnel!), how much time will elapse before it crashes into the wall?  
+*(You may wish to use the small angle approximation for* $\sin x$ *that* $\sin x \approx x - x^3/6$*)* **[2 т.]**
+
+**(v)** How far below the surface did the train crash? Give your answer as a percentage of $R_{\oplus}$. **[2 т.]**
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a., (i)** 42.2 min
+- **a., (ii)** t is the same (t = π√(R⊕³/GM⊕) = 42.2 minutes)
+- **a., (iii)** 7.91 km s⁻¹
+- **a., (iv)** 4044 s
+- **a., (v)** t<sub>AC</sub> = t<sub>AB</sub> (SHM with the same ω as for the route AB)
+- **b., (i)** $b = \frac{R_{\oplus}}{2}$
+- **b., (ii)** φ = 65.9° N; α = 6.07
+- **c., (i)** 0.34 %
+- **c., (ii)** 1.15 m s⁻²
+- **c., (iii)** $s_{Cor} = 2\Omega R_{\oplus}\left(t - \frac{1}{\omega}\sin\omega t\right)$
+- **c., (iv)** 128 s
+- **c., (v)** 1.26 %
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Q1 – Gravity Train** [30 marks]
+
+<ProblemSection id="solution-a">
+
+### a.
+
+**i.** Given a uniform density Earth, the mass enclosed by a sphere of radius $r$ (with $r \leq R_{\oplus}$)
+$$
+M_{enclosed} = M_{\oplus}\frac{r^3}{R_{\oplus}^3}
+$$
+Applying Newton’s shell theorem to get that the acceleration experienced is $g(r)$
+$$
+a = -\frac{GM_{enclosed}}{r^2} = -\frac{G}{r^2}\frac{M_{\oplus}r^3}{R_{\oplus}^3} = -\frac{GM_{\oplus}}{R_{\oplus}^3}r \quad \therefore \text{SHM with } \omega^2 = \frac{GM_{\oplus}}{R_{\oplus}^3} = \frac{g_0}{R_{\oplus}}
+$$
+[1] **[1]**
+
+[Expect some comparison to the general SHM equation ($a = -\omega^2 r$) or written argument with the SHM definition to get this mark. Do not penalise students for dropping the $\oplus$ symbol. Allow $\omega$ or $\omega^2$ expressed in any valid combination of constants]
+
+We know that the period of SHM will be $T = \frac{2\pi}{\omega}$ and hence since A→B is just one-way
+$$
+t_{AB} = \frac{T}{2} = \frac{\pi}{\omega} = \boxed{\pi\sqrt{\frac{R_{\oplus}}{g_0}}}
+$$
+[1] **[1]**
+
+[Must be as a function of $R_{\oplus}$ and $g_0$ for this mark. If they leave it as $t_{AB} = \pi\sqrt{\frac{R_{\oplus}^3}{GM_{\oplus}}}$ or in the form needed for part iv. ($t_{AB} = \pi\sqrt{\frac{3}{4G\pi\rho}}$) then award 0.5 marks]
+
+Substituting in the numbers
+$$
+t_{AB} = \pi\sqrt{\frac{6.37\times10^6}{9.81}} = 2532\ \mathrm{s} = \boxed{42.2\ \mathrm{mins}} \quad (= 42\ \mathrm{mins}\ 12\ \mathrm{secs})
+$$
+[1] **[1]**
+
+[Must be in minutes (or mins and seconds) for this mark and $\geq 3$ s.f (in mins). Accept answers that use an alternative expression for $t_{AB}$ or round to 42.2 minutes or have a remainder that rounds to 11-12 seconds. If left in seconds award 0.5 marks]
+
+**ii.** Using the speed of an object in a circular orbit and half the circumference of the Earth
+$$
+t = \frac{s}{v} = \frac{\pi R_{\oplus}}{\sqrt{\frac{GM_{\oplus}}{R_{\oplus}}}} = \pi\sqrt{\frac{R_{\oplus}^3}{GM_{\oplus}}}\ (= 42.2\ \mathrm{minutes}) \quad \therefore \boxed{t \text{ is the same}}
+$$
+[1] **[1]**
+
+[Do not penalise them for finding a few seconds discrepancy, depending on the values of constants they are using, and so simply stating the times are very close / very similar. Allow use of Kepler’s 3rd Law as an alternative route to get $t = \frac{T}{2} = \frac{1}{2}\sqrt{\frac{4\pi^2}{GM_{\oplus}}R_{\oplus}^3} = \pi\sqrt{\frac{R_{\oplus}^3}{GM_{\oplus}}}$. Allow ecf on this question if their $t$ is right but is different to their $t_{AB}$ from part i.]
+
+**iii.** Given it follows SHM
+$$
+v_{max} = \omega R_{\oplus} = \sqrt{\frac{GM_{\oplus}}{R_{\oplus}^3}} \times R_{\oplus} = \sqrt{\frac{GM_{\oplus}}{R_{\oplus}}}\ \left(= \sqrt{g_0R_{\oplus}}\right) = \boxed{7.91\ \mathrm{km\ s^{-1}}}
+$$
+[1] **[1]**
+
+[Accept answers that round to 7.90 km s$^{-1}$ or 7.91 km s$^{-1}$, based upon the values of constants being used. Allow use of energy conservation where $GPE + KE = E_{tot}$ and so (following the method of Astro R1 2024 Q2 for the GPE) you have the expression $\left(-\frac{3GM_{\oplus}m}{2R_{\oplus}} + \frac{GM_{\oplus}m}{2R_{\oplus}^3}r^2\right) + \frac{1}{2}mv^2 = -\frac{GM_{\oplus}m}{R_{\oplus}}$ which you evaluate at $r = 0$. An alternative energy conservation route is that the work done by gravitational forces is equal to the change in KE of the gravity train, and so (using that $g \propto r$ inside a uniform density planet) the work done is $F_{G,average}R_{\oplus} = mg_{average}R_{\oplus} = \frac{1}{2}mg_0R_{\oplus}$ etc.]
+
+This is the same as $\boxed{\text{the circular orbital velocity for an orbit with radius } R_{\oplus}}$ [1] **[1]**
+
+[Allow ecf with this mark e.g. if a student finds $v_{max} = \sqrt{\frac{2GM_{\oplus}}{R_{\oplus}}} = 11.2\ \mathrm{km\ s^{-1}}$, and correctly identifies it as the escape velocity, give this mark]
+
+**iv.** Since $\rho = \frac{M}{\frac{4}{3}\pi R^3}$ we can express $t_{AB}$ as a function of $\rho$
+$$
+t_{AB} = \pi\sqrt{\frac{R^3}{GM}} = \pi\sqrt{\frac{R^3}{G\times\frac{4}{3}\pi R^3\rho}} = \pi\sqrt{\frac{3}{4G\pi\rho}}
+$$
+[1]
+
+Substituting in the numbers using that 2.16 g cm$^{-3}$ = 2160 kg m$^{-3}$
+$$
+t_{AB} = \pi\sqrt{\frac{3}{4\pi\times6.67\times10^{-11}\times2160}} = \boxed{4044\ \mathrm{s}}\ (= 67.4\ \mathrm{mins} = 1.12\ \mathrm{hours})
+$$
+[1] **[2]**
+
+[Since unit not specified in the question, accept answer in seconds, minutes or hours. Accept students showing that $t_{AB} \propto \rho^{-1/2}$ and then using $\rho_{\oplus} = 5.514\ \mathrm{g\ cm^{-3}}$ and their earlier answer in a scaling relationship]
+
+**v.** Consider when the gravity train is at point D, which is a distance r from O and q from S (using the Figure 1 notation)
+
+The gravitational acceleration the gravity train experiences is the component of $g$ in the direction of S
+$$
+a = -g\cos\theta = -\frac{GM_{enc}}{r^2}\cos\theta = -\frac{g_0}{R_{\oplus}}r\cos\theta
+$$
+[1]
+
+But since $\cos\theta = \frac{q}{r}$ $\therefore a = -\frac{g_0}{R_{\oplus}}q$
+
+This is SHM with the same $\omega$ as for the route AB
+$$
+\therefore \boxed{t_{AC} = t_{AB}}
+$$
+[1] **[2]**
+
+[Allow any valid method that demonstrates this equivalence, or if a student uses numerical comparisons. Don’t penalise if they just keep the algebraic expressions to magnitudes]
+
+The article by Cooper was called “To Everywhere in 42 Minutes” and celebrated this fact that the smaller acceleration exactly balanced the shorter distance to travel. This only holds on the assumption of a uniform density Earth – using a realistic model for the density distribution of the Earth the time $t_{AB}$ becomes $\sim 38$ minutes and the position of C matters such that $38\ \mathrm{mins} < t_{AC} < 42\ \mathrm{mins}$ (with shorter chords having the longer times). Coincidentally, this shorter time for $t_{AB}$ is very similar to what you would get if you assumed $a = g_0$ throughout and applied simple SUVAT to get $t_{AB} = 2\sqrt{\frac{2R_{\oplus}}{g_0}}$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b.
+
+**i.** Given that $t_{AC} = t_{AB}$ we are looking at the situation
+$$
+\frac{2\pi b}{R_{\oplus}}\sqrt{\frac{R_{\oplus}(R_{\oplus} - b)}{bg_0}} = \pi\sqrt{\frac{R_{\oplus}}{g_0}} \quad \therefore \boxed{b = \frac{R_{\oplus}}{2}}
+$$
+[1] **[1]**
+
+This means that the chord will have to pass through the centre
+$$
+\therefore \boxed{\text{the path is along a diameter}}\ (\text{i.e. } AC = AB)
+$$
+[1] **[1]**
+
+**ii.** Modifying what we did in the previous part to work out the new $b$
+$$
+\frac{2\pi b}{R_{\oplus}}\sqrt{\frac{R_{\oplus}(R_{\oplus} - b)}{bg_0}} = \frac{\pi}{2}\sqrt{\frac{R_{\oplus}}{g_0}}
+$$
+
+Cancelling the $\pi$ and $g_0$ and rearranging gets the quadratic
+$$
+\therefore 16b^2 - 16R_{\oplus}b + R_{\oplus}^2 = 0
+$$
+[1]
+
+The solutions are
+$$
+\frac{b}{R_{\oplus}} = \frac{16\pm\sqrt{16^2 - 4\times16\times1}}{32} = \frac{1}{2} \pm \frac{\sqrt{192}}{32} = \frac{1}{2} \pm \frac{8\sqrt{3}}{32} = \frac{1}{2} \pm \frac{1}{4}\sqrt{3}
+$$
+[0.5]
+
+We know that $b < \frac{1}{2}R_{\oplus}$ and so we need the **negative** solution
+$$
+\therefore b = \left(\frac{1}{2} - \frac{1}{4}\sqrt{3}\right)R_{\oplus}\ (= 426.7\ \mathrm{km})
+$$
+[0.5]
+
+It is clear that the arc length AC is equal to the circumference of the small circle
+$$
+\therefore 2\pi b = R_{\oplus}\phi
+$$
+[1]
+$$
+\therefore \phi = \frac{2\pi b}{R_{\oplus}} = 2\pi\left(\frac{1}{2} - \frac{1}{4}\sqrt{3}\right) = 0.42\ \mathrm{rad} = 24.1^{\circ}
+$$
+[0.5]
+$$
+\therefore \varphi = 90^{\circ} - 24.1^{\circ} = \boxed{65.9^{\circ}\ \mathrm{N}}
+$$
+[0.5] **[4]**
+
+[No penalty if they exclude the N so long as their value is positive]
+
+The deepest part of both routes occurs at the midway point
+$$
+\therefore d = R_{\oplus} - R_{\oplus}\cos\left(\frac{\phi}{2}\right)\ (= 140.5\ \mathrm{km})
+$$
+[1]
+
+[Accept equivalent expressions e.g. $d = 2R_{\oplus}\sin^2\left(\frac{\phi}{4}\right)$]
+
+Considering the geometry
+$$
+2b = \alpha d
+$$
+[1]
+
+[If they forget that $b$ is the radius not the diameter and so use $b = \alpha d$ then award 0.5 marks]
+$$
+\therefore \alpha = \frac{2b}{d} = \frac{1 - \frac{1}{2}\sqrt{3}}{1 - \cos\left(\frac{\phi}{2}\right)} = \boxed{6.07}
+$$
+[1] **[3]**
+
+[Allow ecf from their chosen geometry e.g. if they get $\alpha = 3.04$ due to confusing diameter and radius in MP6]
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### c.
+
+**i.** We can evaluate $a_{Cent}$ at the Earth’s surface and compare it to $g_0$
+$$
+\frac{a_{Cent}}{g_0} = \frac{\Omega^2R_{\oplus}}{g_0} = \frac{\left(\frac{2\pi}{60\times60\times24}\right)^2\times6.37\times10^6}{9.81} = \frac{0.0337}{9.81} = 3.43\times10^{-3} = \boxed{0.34\%}
+$$
+[1] **[1]**
+
+[If they only calculate $a_{Cent} = 0.0337\ \mathrm{m\ s^{-2}}$ or if they forget to convert from fraction to percentage (i.e. leave their answer as $3.43\times10^{-3}\%$) then award only 0.5 marks. Expect to see a clear comparison made with 1%, whether by stating that $0.34\% < 1\%$ or that $0.0337\ \mathrm{m\ s^{-2}} < 0.0981\ \mathrm{m\ s^{-2}}$ (i.e. 1% of $g_0$), but no penalty if absent]
+
+**ii.** Using the given formula for the Coriolis force and that $v$ varies with $r$ following SHM
+$$
+a_{Cor} = 2\Omega v = 2\Omega\omega\sqrt{R_{\oplus}^2 - r^2}
+$$
+[1] **[1]**
+
+[Accept any equivalent form using $\omega = \sqrt{\frac{g_0}{R_{\oplus}}}$ or alternatives from a) i.]
+$$
+\therefore \text{maximum value is } a_{Cor} = 2\Omega v_{max} = 2\times\left(\frac{2\pi}{60\times60\times24}\right)\times7905 = \boxed{1.15\ \mathrm{m\ s^{-2}}}
+$$
+[1] **[1]**
+
+[This is about 12% of $g_0$ so we need to take it into consideration]
+
+Sketch is of the upper half of an **ellipse** [Accept semicircle] [1] **[1]**
+
+[No penalty if they decide not to reverse the $r$ axis. If their sketch is two quarter ellipses with a discontinuity at $r = 0$, or is the bottom half of an ellipse, award 0.5 marks]
+
+**iii.** Again, taking advantage of the properties of SHM
+$$
+a_{Cor} = 2\Omega v = 2\Omega\omega R_{\oplus}\sin\omega t
+$$
+[1]
+$$
+\therefore v_{Cor} = \int_0^t a_{Cor}\,\mathrm{dt} = 2\Omega R_{\oplus}(1 - \cos\omega t)
+$$
+[1]
+$$
+\therefore s_{Cor} = \int_0^t v_{Cor}\,\mathrm{dt} = \boxed{2\Omega R_{\oplus}\left(t - \frac{1}{\omega}\sin\omega t\right)}
+$$
+[1] **[3]**
+
+[Accept any algebraically equivalent expressions]
+
+**iv.** Using the given hint for the small angle approximation for $\sin x$
+$$
+s_{Cor} = 2\Omega R_{\oplus}\left(t - \frac{1}{\omega}\left(\omega t - \frac{(\omega t)^3}{6}\right)\right) = 2\Omega R_{\oplus}\left(\frac{\omega^2}{6}t^3\right) = \frac{\Omega R_{\oplus}\omega^2t^3}{3}
+$$
+$$
+\therefore t = \sqrt[3]{\frac{3s_{Cor}}{\Omega R_{\oplus}\omega^2}}\ \left(= \sqrt[3]{\frac{3s_{Cor}}{\Omega g_0}}\right)
+$$
+[1]
+$$
+\therefore t = \sqrt[3]{\frac{3\times500}{\left(\frac{2\pi}{60\times60\times24}\right)\times9.81}} = \boxed{128\ \mathrm{s}}
+$$
+[1] **[2]**
+
+[The first marking point is for a correctly rearranged equation for $t$ OR for a successful usage of the small angle approximation]
+
+**v.** Finding the fraction of the distance travelled
+$$
+\frac{R_{\oplus} - r}{R_{\oplus}} = \frac{R_{\oplus} - R_{\oplus}\cos\omega t}{R_{\oplus}} = 1 - \cos\omega t
+$$
+[1]
+$$
+\therefore \frac{R_{\oplus} - r}{R_{\oplus}} = 1 - \cos\left(\sqrt{\frac{9.81}{6.37\times10^6}}\times128\right) = 0.0126 = \boxed{1.26\%}
+$$
+[1] **[2]**
+
+[If they forget to put their calculator into radians they will get 0.000385% - in this case give only 1.5 marks total]
+
+</ProblemSection>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '30.4%', '--fig-max': '195px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p1-sol-fig1.png" alt="Right triangle for part a.(v): the vertical radius from A down to O labelled R⊕, the chord from A through the train position D to S, the line r from O to D, the angle θ at D between r and the chord, the distance q from D to S along the chord, and a right angle at S between the chord and OS." width="609" height="941" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '27.3%', '--fig-max': '175px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p1-sol-fig2.png" alt="Diagram for part b.(ii): a quarter of the Earth’s circle with centre O, A at the top and C lower right, the angle ϕ at O between OA and OC, a dashed straight chord AC, the curved hypocycloid from A to C through the red point P, and a small circle rolling inside the large circle with its diameter 2b and the chord depth d marked by arrows." width="547" height="730" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.5%', '--fig-max': '336px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/baao-2025-ii-r2/p1-sol-fig3.png" alt="Sketch for part c.(ii): the Coriolis acceleration a_Cor on the vertical axis against r on a reversed horizontal axis running from R⊕ on the left through 0 to −R⊕ on the right; the curve is the upper half of an ellipse with its maximum 1.15 m s⁻² at r = 0." width="1050" height="496" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Questions proposed by</summary>
+
+END OF PAPER
+
+*Questions proposed by:*  
+*James Kennedy (University of Oxford)*  
+*Charlotte Stevenson (University of Oxford)*  
+*Ben Woodrow (University of Oxford)*  
+*Dr Alex Calverley (Surbiton High School)*
+
+</details>
+
+---
+
+Оригинал в Архива: [BAAO_R2_2025.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2025/BAAO_R2_2025.pdf#page=4)
+· официални решения: [BAAO_R2_2025_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BAAO/2025/BAAO_R2_2025_solutions.pdf#page=1)

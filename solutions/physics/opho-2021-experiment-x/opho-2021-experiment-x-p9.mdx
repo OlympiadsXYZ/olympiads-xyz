@@ -1,0 +1,137 @@
+---
+id: opho-2021-experiment-x-p9
+source: 'OPhO 2021, Експеримент'
+title: 'Задача 9. Problem 3.2'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2021/opho-2021-experiment-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-27T04:33:11.299Z'
+verifier: 'mechanical'
+---
+
+*2021 Online Physics Olympiad: Invitational Contest — Experimental Exam · 7 т.*
+
+<details>
+<summary>Sponsors</summary>
+
+This competition could not be possible without the help of our sponsors, who are all doing great things in physics, math, and education.
+
+</details>
+
+<details>
+<summary>General Instructions</summary>
+
+The experimental examination consists of 1 long answer question worth 50 points over 1 full day from August 15, 0:01 am GMT.
+
+- **The team leader should submit their final solution document in this google form. We don’t anticipate a tie, but in the rare circumstance that there is one, the time you submit will be used to break it.**
+- If you wish to request a clarification, please use this form. To see all clarifications, view this document.
+- Participants are given a google form where they are allowed to submit up-to 1 gigabyte of data for their solutions. It is recommended that participants write their solutions in $\LaTeX$. However, handwritten solutions (or a combination of both) are accepted too. If participants have more than one photo of a handwritten solution (`jpg, png`, etc), it is required to organize them in the correct order in a `pdf` before submitting.
+
+</details>
+
+<details>
+<summary>Specific Rules</summary>
+
+For any part of this paper, you are allowed to use online tools and resources to help you, as long as you are not requesting help from anyone outside of your team. Allowable resources include Wikipedia, research papers, Wolfram Alpha, Python, Excel, etc.
+
+**However, you must document every resource that you use and cite them when applicable.** As a general rule of thumb, you should derive any results that cannot be found on Wikipedia. Therefore, solutions along the lines of: “By Wolfram Alpha, this is true.” will not be accepted. Be reasonable please.
+
+**Every time you are asked to run an experiment, you must provide the input parameters and a screenshot of the output.**
+
+</details>
+
+<details>
+<summary>Accessing the Program</summary>
+
+To access the Python notebook, follow this **link**. You will be able to perform all the code online, without downloading anything. If you cannot access the link, we will also provide the source code on our website.
+
+</details>
+
+<details>
+<summary>Background Information</summary>
+
+In this problem, you will use a computer simulation written in *Python* to complete a series of questions relating to slit interference patterns. While you do not need to understand how exactly the code produces the results, it may be beneficial to understand the algorithm the code takes.
+
+The program uses a simple algorithm to determine the interference pattern.
+
+1. An aperture pattern is created by specifying `slits`.
+2. The slits are divided into uniform $\lambda \times \lambda$ segments.
+3. For each position $x$ on the screen, a wave is generated (and represented as a phasor) between the point $x$ and the center of *each* segment created in the previous step.
+4. These phasors are added up and squared to get the intensity.
+5. The final intensity pattern is normalized such that the maximum value is 1.
+
+For this entire problem, assume that the heights of the slits are $\lambda$.
+
+**Remark: This algorithm treats the $d = \lambda$ case as a thin slit (i.e. point source), and it is inaccurate for wide slits (try to see why). This only causes an issue for problem 1.2 & 1.3. Thin slits are used for all other experimental parts afterwards.**
+
+</details>
+
+<details>
+<summary>Part One</summary>
+
+Let us first gain confidence in using the program. To do so, we will derive
+
+$$
+\frac{\sin(x)}{x} = \cos(x/2)\cos(x/4)\cos(x/8)\cdots \qquad (1)
+$$
+
+via a series of questions.
+
+</details>
+
+<details>
+<summary>Part Three</summary>
+
+In the previous two parts, you have mostly been asked questions that can be solved analytically, and then used the code to double check your answer. Now, we will ask a few questions that requires data analysis.
+
+</details>
+
+## Условие
+
+The following diagram shows the **amplitude** of the interference pattern produced by a series of 9 thin slits, centered at $-4\lambda, -3\lambda, \ldots, +4\lambda$. Each slit reduces the wavelength by some factor (this factor isn’t necessarily the same for each slit).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '688px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2021-experiment-x/p9-fig1.png" alt="Plot titled 'Amplitude as a Function of Distance': normalized amplitude (vertical axis 0.0 to 1.0) against screen position (horizontal axis -400000 to 400000). A single central peak of 1.0 at 0 falling to zero near ±100000, followed by small side lobes of about 0.06 near ±150000 and about 0.04 near ±290000, with zeros near ±220000 and ±375000." width="2149" height="1127" loading="lazy" decoding="async" />
+</figure>
+
+
+Again, the screen is the same distance away as the previous problem and the same scale is used. Determine how much each slit reduces the amplitude of light that passes through.
+
+Let $f_x$ be the reduction factor of the slit centered at $x$, which has units of $\lambda$. For example, the rightmost slit is located at $x = 4$. Make a plot of $(x, f_x)$ for $0 \leq x \leq 4$ and make note of patterns you see.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 0.0854δ(x ± 4) + 0.2070δ(x ± 3) + 0.2973δ(x ± 2) + 0.4130δ(x ± 1) + 0.5126δ(x); f<sub>x</sub> against x forms a straight line (r² = 0.998).
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Similar to the previous problem, we “cut” off the interference pattern at a small angle (but big enough such that the distinctive behaviour of the curve is captured). Scaling $x$ to be $\dfrac{2\pi}{\lambda D}x$, we can determine the Fourier coefficients to be:
+
+| Parameter | Value | Standard Deviation |
+|---|---|---|
+| a0 | 2.045300e-01 | 1.285129e-04 |
+| a1 | 3.294887e-01 | 1.439479e-04 |
+| a2 | 2.371716e-01 | 8.086478e-05 |
+| a3 | 1.652102e-01 | 8.350614e-05 |
+| a4 | 6.081714e-02 | 2.142034e-04 |
+
+Taking the Fourier Transform analytically, we get
+
+$$
+0.0854\delta(x \pm 4) + 0.2070\delta(x \pm 3) + 0.2973\delta(x \pm 2) + 0.4130\delta(x \pm 1) + 0.5126\delta(x) \qquad (22)
+$$
+
+Plotting $f_X$ against $x$ forms a straight line ($r^2 = 0.998$).
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [experiment.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2021/experiment.pdf#page=6)
