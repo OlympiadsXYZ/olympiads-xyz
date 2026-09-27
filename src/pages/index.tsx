@@ -159,10 +159,6 @@ export default function IndexPage(): JSX.Element {
           </div>
 
           <div className="h-16 sm:h-10"></div>
-
-          <div className="flex md:justify-center md:text-xl text-gray-600 dark:text-gray-400 font-medium">
-            <span className="text-xs">{t('index_only-in-languages')}</span>
-          </div>
           <div className="h-16 sm:h-14"></div>
 
 
