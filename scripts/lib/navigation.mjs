@@ -81,14 +81,14 @@ export function displayNumber(problem, numbers) {
 // "Задача 2", "Задание 2". A title naming two different numbers ("Problem 1 · Problem 2 …") proves nothing and
 // yields null. "Problems 20-24 June" (plural) and "Q23S1D" (a code) do not match.
 const TITLE_PATTERNS = [
-  /(?<![\p{L}\p{N}])[QTEТЕ](\d{1,2})(?![\p{L}\p{N}])/gu,
-  /(?<![\p{L}])(?:Question|Problem|Task)\s*(?:No\.?|nr\.?|#)?\s*(\d{1,2})(?![\p{N}])/giu,
-  /(?<![\p{L}])(?:Theoretical|Experimental)\s+(?:Problem\s+|Question\s+)?(?:No\.?\s*)?(\d{1,2})(?![\p{N}])/giu,
-  /(?<![\p{L}])(?:Задача|Задание)\s*№?\s*(\d{1,2})(?![\p{N}])/giu,
+  /(?<![\p{L}\p{N}])[QTEТЕ](\d{1,2}(?:\.\d{1,2})*)(?![\p{L}\p{N}]|\.\d)/gu,
+  /(?<![\p{L}])(?:Question|Problem|Task)\s*(?:No\.?|nr\.?|#)?\s*(\d{1,2}(?:\.\d{1,2})*)(?![\p{N}]|\.\d)/giu,
+  /(?<![\p{L}])(?:Theoretical|Experimental)\s+(?:Problem\s+|Question\s+)?(?:No\.?\s*)?(\d{1,2}(?:\.\d{1,2})*)(?![\p{N}]|\.\d)/giu,
+  /(?<![\p{L}])(?:Задача|Задание)\s*№?\s*(\d{1,2}(?:\.\d{1,2})*)(?![\p{N}]|\.\d)/giu,
 ];
 export function printedNumbersIn(text) {
   const found = new Set();
-  for (const re of TITLE_PATTERNS) for (const m of String(text ?? '').matchAll(re)) found.add(Number(m[1]));
+  for (const re of TITLE_PATTERNS) for (const m of String(text ?? '').matchAll(re)) found.add(m[1].includes('.') ? m[1] : Number(m[1]));
   return [...found];
 }
 /** The one question number the title prints, or null (none, or several different ones). */

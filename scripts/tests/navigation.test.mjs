@@ -131,6 +131,11 @@ test('printed question numbers: unambiguous forms only', () => {
   assert.equal(printedQuestionNumber('Eka Tjipta Foundation Problem. Theoretical 1: Motion of a Rolling Rod'), 1);
   assert.equal(printedQuestionNumber('BPO6 Problems 20-24 June 2024. Montenegro'), null);
   assert.equal(printedQuestionNumber('Q23S1D'), null);
+  assert.equal(printedQuestionNumber('Fieldwork Exercise 1 — Task 1.4'), '1.4');
+  assert.equal(printedQuestionNumber('Task 1.10'), '1.10');
+  assert.equal(printedQuestionNumber('Задача 2.3.1'), '2.3.1');
+  assert.equal(printedQuestionNumber('Task 1.3 · Task 1.4'), null);
+  assert.equal(printedQuestionNumber('Problem 3. Motion'), 3);
   assert.equal(printedQuestionNumber('Problem 1: Resistor circuit · Problem 2: The descent of a skier'), null);
   const evidence = numberEvidence({ id: 'ioaa-2021-theory-tq-10-q', title: 'Theory — Q10-1, English (Official)', source: { archiveKey: 'IOAA/2021/Theory/TQ-10-Q.pdf' } }, [{ number: 1 }]);
   assert.deepEqual([...new Set(evidence.map(e => e.n))], [10]);
