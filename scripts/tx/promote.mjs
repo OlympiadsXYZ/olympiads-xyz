@@ -12,6 +12,7 @@ import path from 'node:path';
 import { supplementarySourceErrors, sourceHashErrors } from './supplements.mjs';
 import { sourceConversionProblems } from './source-conversions.mjs';
 import { sourceReadScopeProblems } from './source-read-scope.mjs';
+import { assertReplacementLinks } from './replacement-links.mjs';
 import {
   parseArgs, fail, readJson, readManifest, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems, sha256File, contentPathFor, run, ROOT, nowIso, writeJson, listContentFiles, manifestFile,
 } from './lib.mjs';
@@ -53,6 +54,13 @@ if (fs.existsSync(target) && !args.replace) fail(`${path.relative(ROOT, target)}
 // a replacement whose year (or subject/competition) changed lands in another folder: the earlier file goes once the
 // new one is verified, or the tree holds the paper id twice (nao-2002-i-11-12 re-filed from 2001 to 2002)
 const previous = args.replace ? listContentFiles().filter(f => path.basename(f) === `${paperId}.json` && path.resolve(f) !== path.resolve(target)) : [];
+// Check the current file and any prior classification path before any write.
+if (args.replace) {
+  for (const file of [...(fs.existsSync(target) ? [target] : []), ...previous]) {
+    try { assertReplacementLinks(readJson(file), final.data); }
+    catch (error) { fail(`${path.relative(ROOT, file)}: ${error.message}`); }
+  }
+}
 fs.mkdirSync(path.dirname(target), { recursive: true });
 { // atomic, with the same rename retry writeJson has (the ship and other workers read this tree)
   const tmp = `${target}.${process.pid}.partial`;
