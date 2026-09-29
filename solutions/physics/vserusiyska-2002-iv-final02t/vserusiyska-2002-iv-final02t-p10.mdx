@@ -1,0 +1,95 @@
+---
+id: vserusiyska-2002-iv-final02t-p10
+source: 'ВсОШ 2002, Заключителен етап'
+title: 'Задача 11.1. Бусинка'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Всерусийска/2002/vserusiyska-2002-iv-final02t.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T06:15:30.327Z'
+verifier: 'mechanical'
+---
+
+*XXXVI Всероссийская олимпиада школьников по физике. Заключительный этап. Теоретический тур*
+
+## Условие
+
+Гладкая проволока изогнута так, что если совместить ось $Oy$ с одной ее частью, то другая часть проволоки будет совпадать с графиком функции $y = ax^3$ при $x > 0$ (рис. 7). Проволока равномерно вращается вокруг вертикальной оси $Oy$ с угловой скоростью $\omega$. На нее надета бусинка $M$, которая может скользить вдоль проволоки с пренебрежимо малым трением. Найдите координаты $x_0$ и $y_0$ равновесного положения бусинки и период $T$ малых колебаний относительно этого положения.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '18.9%', '--fig-max': '121px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vserusiyska-2002-iv-final02t/p10-fig1.png" alt="Оси x и y с началом O; кривая y = ax³ проходит через точку M с координатами (x₀, y₀), отмеченными пунктиром; под началом координат стрелка вращения ω вокруг оси Oy." width="379" height="368" loading="lazy" decoding="async" />
+<figcaption>Рис. 7</figcaption>
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $x_0 = \frac{\omega^2}{3ag},\quad y_0 = \frac{\omega^6}{27a^2g^3},\quad T = \frac{2\pi}{\omega}\sqrt{1 + \frac{\omega^8}{9a^2g^4}}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Касательная к проволоке в точке $(x_0, y_0)$ — положении равновесия бусинки — составляет угол $\alpha_0$ с осью $Ox$, причем $\operatorname{tg}\alpha_0 = y_x'(x_0) = 3ax_0^2$. (1) Второй закон Ньютона в проекции на эту касательную имеет вид: $m\omega^2x_0\cos\alpha_0 = mg\sin\alpha_0$. (2)
+
+Из (1) и (2) находим $\quad x_0 = \dfrac{\omega^2}{3ag},\quad y(x_0) = \dfrac{\omega^6}{27a^2g^3}.$
+
+Пусть $\Delta x$ и $\Delta y$ — смещения бусинки при малых колебаниях, тогда
+
+$$
+\Delta y = a(x_0 + \Delta x)^3 - ax_0^3 \approx 3ax_0^2\Delta x + 3ax_0\Delta x^2.
+$$
+
+Малое смещение бусинки вдоль проволоки
+
+$$
+s \approx \sqrt{\Delta x^2 + \Delta y^2} = \sqrt{1 + y_x'(x_0)^2}\Delta x = \sqrt{1 + \frac{\omega^8}{9a^2g^4}}\Delta x.
+$$
+
+В системе отсчета, вращающейся вместе с проволокой, кинетическая энергия бусинки
+
+$$
+E_{\text{к}} = \frac{m}{2}\left(\frac{ds}{dt}\right)^2;
+$$
+
+потенциальная энергия в полях силы тяжести и центробежной силы
+
+$$
+E_{\text{п}} = mg(y_0 + \Delta y) - \frac{m\omega^2}{2}(x_0 + \Delta x)^2 =
+$$
+
+$$
+= mgy_0 + mg(3ax_0^2\Delta x + 3ax_0\Delta x^2) - \left(\frac{m\omega^2}{2}x_0^2 + m\omega^2x_0\Delta x + \frac{m\omega^2}{2}\Delta x^2\right).
+$$
+
+Из (1) и (2) следует $3ax_0^2mg\Delta x = m\omega^2x_0\Delta x$, поэтому
+
+$$
+E_{\text{п}} = C + \frac{m\omega^2}{2}\Delta x^2,\qquad \text{где}\qquad C = mgy_0 - \frac{m}{2}\omega^2x_0^2.
+$$
+
+Выразим полную механическую энергию через $s$:
+
+$$
+E = \frac{m}{2}\left(\frac{ds}{dt}\right)^2 + \frac{m\omega^2}{2}\frac{s^2}{1 + \omega^8/(9a^2g^4)} + C.
+$$
+
+Энергия гармонических колебаний имеет вид $E = mv^2/2 + kx^2/2 + C$, что соответствует нашему случаю ($k$ — эффективная жесткость). Период колебаний
+
+$$
+T = 2\pi\sqrt{\frac{m}{k}} = \frac{2\pi}{\omega}\sqrt{1 + \frac{\omega^8}{9a^2g^4}}.
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '26.1%', '--fig-max': '167px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vserusiyska-2002-iv-final02t/p10-sol-fig1.png" alt="Оси x и y с началом O, кривая проволоки проходит через точку M (x₀, y₀); в точке M приложены сила реакции N⃗ (вверх-влево), центробежная сила F⃗ц (вправо) и сила тяжести mg⃗ (вниз); пунктиром проведена касательная, образующая с осью x угол α₀; внизу стрелка вращения ω." width="523" height="482" loading="lazy" decoding="async" />
+<figcaption>Рис. 15</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [final02T.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%92%D1%81%D0%B5%D1%80%D1%83%D1%81%D0%B8%D0%B8%CC%86%D1%81%D0%BA%D0%B0/2002/2002-V/final02T.pdf#page=3)

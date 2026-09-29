@@ -1,0 +1,390 @@
+---
+id: x-ens-2019-pc-ulm-p2
+source: 'X-ENS 2019, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 2. II. Détection par la méthode des vitesses radiales'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2019/x-ens-2019-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:49.094Z'
+verifier: 'mechanical'
+---
+
+*ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2019 — FILIERE PC - Epreuve n° 7 — COMPOSITION DE PHYSIQUE C (U) · 24 април 2019 г.*
+
+<Warning title="Бележка към темата">
+Le corrigé officiel ne figure pas dans l’archive : seul l’énoncé est publié.
+</Warning>
+
+<details>
+<summary>Détection et caractérisation des exoplanètes</summary>
+
+Le sujet comprend 18 pages numérotées de 1 à 18
+
+Il y a trente ans, en 1989, était annoncée la première détection d’une **exoplanète**, c’est-à-dire une planète en orbite autour d’une étoile autre que le Soleil, en l’occurrence l’étoile $\gamma$CepA, sous-géante orange et membre principal d’un système binaire situé à quelques 45 années-lumière de la Terre, dans la constellation de Céphée. Si l’existence de cette exoplanète ne fut confirmée définitivement qu’en 2002, on considère généralement que cette découverte fut la première du genre. À ce titre, cette planète fut choisie en 2014 pour recevoir un nom au terme du concours *NameExoWorlds*$^{1}$ organisé par l’Union Astronomique Internationale. En décembre 2015, elle fut baptisée Tadmor, autre nom de la cité de Palmyre (Syrie).
+
+Cette découverte ouvrit la voie à une moisson toujours plus importante d’objets exoplanétaires, jalonnée par plusieurs détections notables :
+
+– **1992** : première détection confirmée d’exoplanètes, autour du pulsar B1257+12 (Wolszczan *et al.*)  
+– **1995** : première planète confirmée autour d’une étoile de la séquence principale, c’est-à-dire semblable au Soleil, 51Peg b, ultérieurement nommée Dimidium (Mayor & Queloz)  
+– **1999** : détection d’un système composé de plusieurs planètes, en l’occurrence quatre, autour d’une étoile de la séquence principale, $\upsilon$And.  
+– **1999** : détection d’une exoplanète par la méthode des transits en sus de la méthode des vitesses radiales, HD209458 b, surnommée Osiris. Cet objet a également fourni la première détection d’une atmosphère exoplanétaire, en 2001.  
+– **2004** : observation d’une exoplanète par imagerie directe infrarouge, 2M1207 b, en orbite autour d’une naine brune (Chauvin *et al.*).  
+– **2006** : détection d’une exoplanète par effet de microlentille gravitationnelle, OGLE-2005-BLG-390L b.  
+– **2007** : découverte d’exoplanètes dans la zone d’habitabilité, c’est-à-dire potentiellement susceptibles de receler de l’eau sous forme liquide, dans le système Gliese581 (von Bloh *et al.*).  
+– **2008** : détection d’une signature de molécule organique, en l’occurrence du méthane, dans une atmosphère exoplanétaire, celle de HD189733 b.  
+– **2008** : mesure du mouvement orbital de plusieurs planètes du système HR8799 par imagerie directe.  
+– **2014** : détection de 715 exoplanètes, autour de 305 étoiles, par la mission spatiale Kepler.  
+– **2016** : découverte d’une exoplanète de masse comparable à la Terre, dans la zone d’habitabilité de Proxima Centauri, plus proche voisine du Soleil.  
+– **2017** : détection d’un système, TRAPPIST-1, composé de sept planètes de masses comparables à la Terre et situées dans la zone d’habitabilité de leur étoile.
+
+Au 1$^{\text{er}}$ janvier 2019, on compte 2946 systèmes exoplanétaires confirmés, dont 650 multiples, pour un total de 3947 exoplanètes.
+
+$^{1}$ http://nameexoworlds.iau.org
+
+Nous allons nous intéresser dans ce problème à quelques uns des aspects de la physique mise en jeu pour la détection et la caractérisation des exoplanètes. L’information permettant de mettre en évidence ces exoplanètes étant de nature électromagnétique, la première partie introduit les grandeurs physiques utiles dans le traitement des questions de rayonnement. La deuxième partie traite de la méthode des vitesses radiales, qui a permis les premières découvertes. La troisième partie traite de la méthode des transits, mise à l’honneur par la mission spatiale Kepler. Si la problématique est commune aux différentes parties du problème, celles-ci sont néanmoins très largement indépendantes. On précise que dans tout le problème, les notations en **gras** représentent des vecteurs. En particulier, la notation $\mathbf{rot}\,\boldsymbol{a}$ désigne le vecteur rotationnel du vecteur $\boldsymbol{a}$, la notation $\mathrm{div}\,\boldsymbol{a}$ en désignant la divergence. La notation $\boldsymbol{a}\wedge\boldsymbol{b}$ désigne le produit vectoriel des deux vecteurs $\boldsymbol{a}$ et $\boldsymbol{b}$, et la notation $\boldsymbol{a}.\boldsymbol{b}$ leur produit scalaire. La calculatrice n’étant pas autorisée, on fera les applications numériques à la main, en utilisant les valeurs indiquées dans le formulaire ci-après. Pour certaines de ces applications, on pourra donner une estimation grossière. Les candidats sont invités à ne pas négliger ces questions.
+
+</details>
+
+<details>
+<summary>Formulaire</summary>
+
+| Vitesse de la lumière dans le vide | $c$ | $=$ | $3{,}0 \times 10^{8}\ \mathrm{m\,s^{-1}}$ |
+|---|---|---|---|
+| Constante de Planck | $h$ | $=$ | $6{,}6 \times 10^{-34}\ \mathrm{J\,s}$ |
+| Constante de Boltzmann | $k$ | $=$ | $1{,}4 \times 10^{-23}\ \mathrm{J\,K^{-1}}$ |
+| Constante de la gravitation | $G$ | $=$ | $6{,}7 \times 10^{-11}\ \mathrm{m^{3}\,kg^{-1}\,s^{-2}}$ |
+| Charge élémentaire | $e$ | $=$ | $1{,}6 \times 10^{-19}\ \mathrm{C}$ |
+| Nombre d’Avogadro | $\mathcal{N}_A$ | $=$ | $6{,}0 \times 10^{23}\ \mathrm{mol^{-1}}$ |
+| Masse de l’électron | $m_e$ | $=$ | $9{,}1 \times 10^{-31}\ \mathrm{kg}$ |
+| Masse du proton | $m_p$ | $=$ | $1{,}7 \times 10^{-27}\ \mathrm{kg}$ |
+| Permittivité du vide | $\epsilon_0$ | $=$ | $8{,}8 \times 10^{-12}\ \mathrm{F\,m^{-1}}$ |
+| Perméabilité du vide | $\mu_0$ | $=$ | $1{,}3 \times 10^{-6}\ \mathrm{H\,m^{-1}}$ |
+| | | | |
+| Masse du Soleil | $M_{\odot}$ | $=$ | $2{,}0 \times 10^{30}\ \mathrm{kg}$ |
+| Rayon du Soleil | $R_{\odot}$ | $=$ | $7{,}0 \times 10^{8}\ \mathrm{m}$ |
+| Température de surface du Soleil | $T_{\odot}$ | $=$ | $5800\ \mathrm{K}$ |
+| Rayon de la Terre | $R_T$ | $=$ | $6{,}4 \times 10^{6}\ \mathrm{m}$ |
+| Masse de la Terre | $M_T$ | $=$ | $6{,}0 \times 10^{24}\ \mathrm{kg}$ |
+| Distance moyenne Soleil-Terre | $D_T$ | $=$ | $1{,}5 \times 10^{11}\ \mathrm{m} = 1\ \mathrm{UA}$ [unité astronomique] |
+| Rayon de Jupiter | $R_J$ | $=$ | $7{,}0 \times 10^{7}\ \mathrm{m}$ |
+| Masse de Jupiter | $M_J$ | $=$ | $1{,}9 \times 10^{27}\ \mathrm{kg}$ |
+| Distance moyenne Soleil-Jupiter | $D_J$ | $=$ | $7{,}8 \times 10^{11}\ \mathrm{m}$ |
+
+$$
+\mathrm{div}\,(\boldsymbol{a}\wedge\boldsymbol{b}) = \boldsymbol{b}.\mathbf{rot}\,\boldsymbol{a} - \boldsymbol{a}.\mathbf{rot}\,\boldsymbol{b} \qquad\qquad \int_0^{+\infty} \frac{x^3}{e^x - 1}\,\mathrm{d}x = \frac{\pi^4}{15}
+$$
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [II.1 - Réduction du problème de Kepler à deux corps](#ii-1)
+- [II.2 - Résolution du mouvement relatif](#ii-2)
+- [II.3 - Cinématique de l’étoile en présence d’une planète](#ii-3)
+- [II.4 - Principe de la spectroscopie Doppler](#ii-4)
+- [II.5 - Étude d’un réseau en réflexion](#ii-5)
+- [II.6 - Un réseau échelle “blazé”](#ii-6)
+
+</nav>
+
+La première méthode fiable de détection des exoplanètes repose sur l’exploitation du fait que l’interaction gravitationnelle entre une étoile et une planète a non seulement un impact sur le mouvement de la planète, mais aussi, et réciproquement, sur le mouvement de l’étoile. C’est la mesure de ce mouvement stellaire, et plus précisément de la **vitesse radiale** de l’étoile, c’est-à-dire de la composante de sa vitesse projetée sur la ligne de visée la reliant à l’observateur, qui permet de détecter l’existence d’une planète en orbite autour de cette étoile. Dans cette partie, nous allons d’abord établir l’expression de cette vitesse radiale, en fonction des différents paramètres physiques du problème. Nous étudierons ensuite le principe de fonctionnement d’un instrument dédié à sa mesure.
+
+<ProblemSection id="ii-1">
+
+### II.1 - Réduction du problème de Kepler à deux corps
+
+On considère le problème suivant, dit de Kepler : un système constitué d’une étoile $E$, de masse $M$, et d’une planète $P$, de masse $m$, toutes deux assimilées à des objets ponctuels, en interaction gravitationnelle. On fait l’hypothèse que ce système est isolé, et on se place dans un référentiel $(\mathcal{R})$, supposé Galiléen, attaché à un observateur terrestre $O$. On note $\boldsymbol{R_E} = \boldsymbol{OE}$ le rayon vecteur liant cet observateur à l’étoile, $\boldsymbol{R_P} = \boldsymbol{OP}$ celui le liant à la planète, et $\boldsymbol{r} = \boldsymbol{R_P} - \boldsymbol{R_E}$ le rayon vecteur liant l’étoile à la planète.
+
+**Q13.** Écrire les équations du mouvement de chacun des deux corps dans $(\mathcal{R})$.
+
+**Q14.** On note $C$ le centre de masse du système. Déterminer son rayon vecteur $\boldsymbol{R_C} = \boldsymbol{OC}$ en fonction des paramètres du problème.
+
+**Q15.** Montrer que le mouvement du centre de masse est rectiligne uniforme. Dans toute la suite du problème, on supposera, sans perte de généralité, que $C$ est fixe par rapport à $O$, soit $\boldsymbol{R_C} = \mathbf{C^{te}}$. Le référentiel barycentrique $(\mathcal{R}_C)$ est alors confondu avec $(\mathcal{R})$.
+
+**Q16.** Exprimer les vecteurs $\boldsymbol{R_E}$ et $\boldsymbol{R_P}$ en fonction de $\boldsymbol{R_C}$, $\boldsymbol{r}$, et des masses $m$ et $M$, puis les vecteurs position $\boldsymbol{r_E}$ et $\boldsymbol{r_P}$ des deux astres par rapport au centre de masse $C$.
+
+**Q17.** Montrer que le mouvement relatif de $P$ par rapport à $E$ obéit à l’équation
+
+$$
+\mu\frac{\mathrm{d}^2\boldsymbol{r}}{\mathrm{d}t^2} = \boldsymbol{F}, \qquad (10)
+$$
+
+où $\mu = mM/(M+m)$ est la **masse réduite**, et où l’on explicitera l’expression de la force $\boldsymbol{F}$. On pourra poser $M_{\mathrm{t}} = M + m$ pour désigner la masse totale du système. Une fois qu’on aura résolu le mouvement relatif décrit par l’équation (10), ce qu’on fera dans la partie II.2, comment s’en déduiront les trajectoires de $E$ et $P$ dans le référentiel $(\mathcal{R})$ ? Pourquoi dit-on que l’on a ainsi réduit le problème de Kepler ?
+
+</ProblemSection>
+
+<ProblemSection id="ii-2">
+
+### II.2 - Résolution du mouvement relatif
+
+On considère donc le mouvement $\boldsymbol{r}(t)$, décrit par l’équation (10), d’une particule ponctuelle fictive $X$ de masse $\mu$, soumise à la force centrale $\boldsymbol{F} = F(r)\boldsymbol{e}_r$, dans le référentiel $(\mathcal{R})$. Le vecteur $\boldsymbol{e}_r$ est le vecteur unitaire radial dirigé vers l’extérieur du centre de force, et $r = ||\boldsymbol{r}||$. On note $\boldsymbol{v}$ le vecteur vitesse de $X$.
+
+**Q18.** Montrer que la force $\boldsymbol{F}$ dérive d’une énergie potentielle
+
+$$
+\mathcal{E}_p(r) = -G\frac{\mu M_{\mathrm{t}}}{r}. \qquad (11)
+$$
+
+**Q19.** Montrer que le moment cinétique $\boldsymbol{L} = \boldsymbol{r}\wedge\mu\boldsymbol{v}$ de $X$ par rapport au centre de force $C$ se conserve. Quelle conséquence peut-on en tirer quant à la trajectoire de $X$ ?
+
+**Q20.** On prend comme coordonnées un système cylindrique $(r, \theta, z)$ dans lequel l’axe $Cz$ est celui portant le moment cinétique, $\boldsymbol{L} = L\boldsymbol{e}_z$. Exprimer $L$ en fonction de ces coordonnées.
+
+**Q21.** Montrer que l’énergie mécanique $\mathcal{E}$ de $X$, qui se conserve, peut se mettre sous la forme
+
+$$
+\mathcal{E} = \frac{\mu}{2}\left(\frac{\mathrm{d}r}{\mathrm{d}t}\right)^2 + \mathcal{E}_{p,\mathrm{eff}}(r), \qquad (12)
+$$
+
+où $\mathcal{E}_{p,\mathrm{eff}}(r)$ est une énergie potentielle effective qu’on exprimera en fonction de $\mathcal{E}_p(r)$, $L$, $\mu$, et $r$.
+
+**Q22.** Représenter graphiquement l’énergie potentielle effective $\mathcal{E}_{p,\mathrm{eff}}(r)$. Discuter la nature des trajectoires en fonction de la valeur de $\mathcal{E}$. En particulier, quelle est la condition sur $\mathcal{E}$ pour que la trajectoire de la particule $X$ soit bornée ? **On se place dans ce cas de figure pour le reste du problème.**
+
+**Q23.** En posant $u = 1/r$, montrer que les distances minimale $r_{\min}$ (**périastre**) et maximale $r_{\max}$ (**apoastre**) entre le centre de force $C$ et la particule fictive $X$ peuvent se mettre sous la forme
+
+$$
+r_{\min} = \frac{p}{1+e} \qquad \text{et} \qquad r_{\max} = \frac{p}{1-e}. \qquad (13)
+$$
+
+On exprimera les paramètres $p$ et $e$ en fonction de $G$, $\mu$, $M_{\mathrm{t}}$, $L$ et $\mathcal{E}$. Quelles sont les bornes des valeurs possibles de $e$ ?
+
+**Q24.** Montrer, à partir de l’équation énergétique (12), que si l’on considère la trajectoire de $X$ par le biais de $u(\theta)$ plutôt que par celui du couple $\{r(t), \theta(t)\}$, on aboutit à une équation de la forme
+
+$$
+\mathcal{E} = A_0\left(\frac{\mathrm{d}u}{\mathrm{d}\theta}\right)^2 + A_1 u^2 + A_2 u. \qquad (14)
+$$
+
+On précisera les constantes $A_0$, $A_1$ et $A_2$ en fonction de $L$, $\mu$, $M_{\mathrm{t}}$ et $G$. En déduire que $u$ obéit à une équation d’oscillateur harmonique. En posant comme condition “initiale” que $X$ passe au périastre lorsque $\theta = 0$, en déduire que la trajectoire a pour équation
+
+$$
+r(\theta) = \frac{p}{1 + e\cos\theta} \qquad (15)
+$$
+
+qui est celle d’une ellipse. Les coefficients $p$ et $e$ sont respectivement le **paramètre** et l’**excentricité** de cette ellipse.
+
+**Q25.** **On se place désormais dans le cas d’un mouvement circulaire.** Que vaut l’excentricité dans ce cas ? Calculer le rayon $r_0$ de cette trajectoire, en fonction de $G$, $\mu$, $M_{\mathrm{t}}$ et $L$. Que peut-on dire du module de la vitesse de la particule fictive $X$ ? Calculer sa valeur $v_0$, en fonction des mêmes paramètres que $r_0$. Montrer que l’angle $\theta$ évolue avec le temps selon $\theta(t) = \theta_0 + \omega_0 t$, en explicitant la pulsation $\omega_0$.
+
+**Q26.** À partir du système de coordonnées cylindriques $(r, \theta, z)$ de la question **Q20**, on peut aussi définir un système de coordonnées cartésiennes $(x, y, z)$, tel que $x = r\cos\theta$ et $y = r\sin\theta$. Exprimer le mouvement $\{x(t), y(t)\}$ de la particule fictive en prenant comme origine des temps un instant où $y(0) = 0$ et $x(0) > 0$, afin de fixer $\theta_0$. Montrer que $\omega_0^2 r_0^3 = GM_{\mathrm{t}}$. Comment s’appelle cette relation ?
+
+</ProblemSection>
+
+<ProblemSection id="ii-3">
+
+### II.3 - Cinématique de l’étoile en présence d’une planète
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '89.9%', '--fig-max': '576px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2019-pc-ulm/p2-fig1.png" alt="À gauche : axes x [UA] et y [UA] gradués, origine C, graduation 1 sur chaque axe, dans un carré vide. À droite : observateur O relié par une ligne pointillée puis pleine au centre de masse C ; vecteur n selon la ligne de visée ; axe y incliné de l’angle i par rapport à la verticale, portant la planète P ; axe z ; l’étoile E (disque jaune) près de C." width="1799" height="716" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – *Gauche :* Représentation du plan de la trajectoire - *Droite :* Définition de l’angle $i$ d’inclinaison du plan de la trajectoire par rapport à la ligne de visée. Le vecteur unitaire $\boldsymbol{n}$ définit la ligne de visée vers le centre de masse $C$ du système.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.6%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2019-pc-ulm/p2-fig2.png" alt="Graphique RV [m/s] (de −4 à 8) en fonction de Phase [days] (de 0 à 11) : points UVES (triangles), HARPS pre-2016 (carrés) et HARPS PRD (cercles) avec barres d’erreur, et courbe sinusoïdale ajustée d’amplitude environ 1,5 m/s, minimum vers 1 jour, maximum vers 6 jours." width="1033" height="882" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Mesures de la vitesse radiale de l’étoile Proxima Centauri avec les instruments HARPS et UVES de l’ESO. Les données (représentées par les cercles, carrés et triangles) ont été prises au cours de 16 ans d’observations, et compilées pour faire ressortir, par ajustement (courbe en traits pleins), le signal périodique associé à la présence d’une planète (Anglada-Escudé *et al.*, 2016).</figcaption>
+</figure>
+
+**Q27.** Maintenant que nous avons déterminé le mouvement de la particule fictive $X$, on revient à la situation considérée initialement, pour laquelle une étoile $E$ de masse $M$ et une planète $P$ de masse $m$ sont en interaction gravitationnelle. **On rappelle qu’on se place dans le cas d’un mouvement circulaire.** En utilisant les résultats de **Q16** et **Q26**, exprimer les lois du mouvement $x_P(t)$, $y_P(t)$, $x_E(t)$ et $y_E(t)$ des deux astres par rapport au centre de masse $C$ supposé fixe. On posera $\beta = m/M < 1$.
+
+**Q28.** Reproduire le schéma de gauche de la Fig. 3 et y tracer les trajectoires de la particule fictive $X$ et des deux astres $E$ et $P$, dans le cas $r_0 = 1\ \mathrm{UA}$ et $\beta = 1/3$. On représentera également les positions de $X$, $E$ et $P$ à un instant donné.
+
+**Q29.** Le plan $Cxy$ des trajectoires de $E$ et $P$ forme un angle $i$, compris entre $-\pi/2$ et $\pi/2$, avec le **plan du ciel** (c’est-à-dire le plan perpendiculaire à la ligne de visée $OC$), comme indiqué sur le schéma de droite de la Fig. 3. Calculer la composante $v_{\parallel} = \boldsymbol{v}_E.\boldsymbol{n}$ de la vitesse de l’étoile le long de la ligne de visée. Cette composante est appelée **vitesse radiale**.
+
+**Q30.** Tracer l’allure de la vitesse radiale $v_{\parallel}(t)$ en fonction du temps. C’est ce signal que l’on détecte par spectroscopie Doppler, comme on le verra dans la suite. Montrer que la mesure de l’amplitude $K$ et de la période $\mathcal{T}$ de la variation de cette vitesse radiale en fonction du temps permet de contraindre la masse $m$ de la planète en orbite autour de l’étoile, si l’on connaît la masse $M$ de cette dernière et l’angle $i$ de l’orbite planétaire. On fera apparaître la **fonction de masse** du système, définie par
+
+$$
+f = \frac{(m\sin i)^3}{(M+m)^2}. \qquad (16)
+$$
+
+**Q31.** Simplifier le résultat obtenu dans le cas où la masse de la planète est très petite devant celle de l’étoile. Donner alors une estimation de la masse minimale $m_{>}$ de la planète. Pour quelle inclinaison de l’orbite est-il plus facile de détecter la présence d’une planète en orbite autour de l’étoile ? Vaut-il mieux que l’étoile soit de faible masse ou de grande masse ?
+
+**Q32.** La Fig. 4, tirée de Anglada-Escudé *et al.* (2016) représente les mesures de la vitesse radiale de l’étoile Proxima Centauri effectuées à l’aide de deux instruments, HARPS et UVES, de l’Observatoire Européen Austral (ESO), au Chili. Estimer la période $\mathcal{T}$ et l’amplitude $K$ du signal, et en déduire une estimation (grossière) de la masse minimale de la planète Proxima Centauri b. La masse de l’étoile Proxima Centauri est de $2{,}4 \times 10^{29}\ \mathrm{kg}$, soit 0,12 masse solaire.
+
+</ProblemSection>
+
+<ProblemSection id="ii-4">
+
+### II.4 - Principe de la spectroscopie Doppler
+
+Le principe de la mesure des vitesses radiales des étoiles, et de leurs variations au cours du temps qui signalent la présence d’une planète, repose sur **l’effet Doppler-Fizeau**. Celui-ci stipule que la longueur d’onde $\lambda_o$ d’un signal en provenance d’une source $E$, telle que mesurée par un observateur $O$, diffère de la longueur d’onde $\lambda$ du signal dans le référentiel de la source si celle-ci est en mouvement par rapport à $O$. En notant $v_{\parallel}$ la projection de la vitesse de la source sur la ligne de visée, on a
+
+$$
+\frac{\lambda_o}{\lambda} = \sqrt{\frac{c + v_{\parallel}}{c - v_{\parallel}}} \qquad (17)
+$$
+
+où $c$ est la célérité de l’onde (électromagnétique dans notre cas). La convention utilisée est que $v_{\parallel} > 0$ si la source s’éloigne de l’observateur. On précise que la mesure des vitesses radiales $v_{\parallel}$ se fait en mesurant le décalage au cours du temps de raies spectrales en absorption dans le spectre de l’étoile.
+
+**Q33.** Montrer que si la vitesse est faible ($v_{\parallel} \ll c$), alors le décalage en longueur d’onde $\delta\lambda = \lambda_o - \lambda$ vérifie
+
+$$
+\frac{\delta\lambda}{\lambda} = \frac{v_{\parallel}}{c}. \qquad (18)
+$$
+
+On se placera dans cette approximation classique, c’est-à-dire non-relativiste, pour le reste du problème.
+
+**Q34.** Citer un exemple de cet effet dans un autre domaine de la physique que l’électromagnétisme.
+
+Les spectromètres sont de manière générale des instruments permettant de disperser, c’est-à-dire de séparer spatialement des vibrations lumineuses de différentes longueurs d’onde présentes dans un faisceau. Leur caractéristique fondamentale est le **pouvoir de résolution**
+
+$$
+\mathcal{R} = \frac{\lambda}{\Delta\lambda}, \qquad (19)
+$$
+
+où $\Delta\lambda$ est le plus petit écart entre longueurs d’onde qui puisse être distingué au voisinage de $\lambda$.
+
+**Q35.** Étant donné un spectromètre dont le pouvoir de résolution est $\mathcal{R}$, quelle doit être l’amplitude $K$ de la vitesse radiale de l’étoile pour détecter la présence d’une exoplanète ? Montrer que le pouvoir de résolution du spectromètre utilisé pour détecter la planète Proxima Centauri b (Fig. 4) doit satisfaire
+
+$$
+\mathcal{R} \geqslant \frac{c}{m_{>}}\left(\frac{M^2\mathcal{T}}{2\pi G}\right)^{1/3}. \qquad (20)
+$$
+
+L’instrument en question, HARPS (**H***igh* **A***ccuracy* **R***adial velocity* **P***lanet* **S***earcher*), est un spectromètre à réseau de type échelle installé au foyer du télescope de 3,6 m de diamètre de l’ESO, à l’Observatoire de La Silla, au Chili. On discute dans la suite de cette partie du principe de cet instrument.
+
+</ProblemSection>
+
+<ProblemSection id="ii-5">
+
+### II.5 - Étude d’un réseau en réflexion
+
+L’élément de base de l’instrument est un réseau de diffraction fonctionnant en réflexion, constitué de $N$ éléments répartis uniformément sur une longueur $L$, comme indiqué sur la Fig. 5. On peut se les représenter comme des bandes réfléchissantes de largeur $\epsilon$, et on note $a$ le pas du réseau, avec $a > \epsilon$. Il est éclairé sous une incidence $\theta_i$ par une onde lumineuse plane, et on considère les rayons réfléchis avec un angle $\theta_r$. On commence par supposer que chaque élément du réseau est infiniment étroit ($\epsilon \to 0$), et que l’onde plane incidente est monochromatique, de pulsation $\omega$. Le champ électrique qui la caractérise peut alors être représenté en notation complexe par
+
+$$
+\mathcal{E}_i\left(\boldsymbol{r}, t\right) = E_i e^{i(\boldsymbol{k}_i.\boldsymbol{r} - \omega t)}. \qquad (21)
+$$
+
+On notera la convention utilisée ici pour la phase de l’onde, à savoir $\boldsymbol{k}_i.\boldsymbol{r} - \omega t$ et non $\omega t - \boldsymbol{k}_i.\boldsymbol{r}$. On notera aussi que cette écriture (21) nous place dans l’approximation scalaire et on ignore donc tout effet lié à la polarisation. Le vecteur d’onde incident est $\boldsymbol{k}_i = k\boldsymbol{n}_i$, avec $k = (2\pi)/\lambda$ le nombre d’onde. Les différents éléments du réseau sont repérés par les vecteurs $\boldsymbol{r}_p = pa\boldsymbol{e}_z$ avec $p$ un entier variant de 0 à $N - 1$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '78.8%', '--fig-max': '504px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2019-pc-ulm/p2-fig3.png" alt="Réseau horizontal de longueur L portant des éléments hachurés de largeur ϵ espacés du pas a ; deux rayons incidents rouges de direction n_i (avec un front d’onde en pointillés) frappent deux éléments et repartent selon n_r ; angles θ_i et θ_r mesurés par rapport à la normale en pointillés ; convention de signe « + » (flèche courbe) et vecteur e_z horizontal." width="1576" height="899" loading="lazy" decoding="async" />
+<figcaption>Figure 5 – Schéma d’un réseau en réflexion de pas $a$. Les angles sont comptés algébriquement selon la convention indiquée. On a donc, dans le cas représenté ici, $\theta_i > 0$ et $\theta_r < 0$.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.6%', '--fig-max': '388px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2019-pc-ulm/p2-fig4.png" alt="Graphique de R(κ) (de 0,0 à 1,0) en fonction de κ (abscisse sans valeurs) : cinq pics fins équidistants de hauteur 1, séparés par de petits lobes secondaires." width="1214" height="931" loading="lazy" decoding="async" />
+<figcaption>Figure 6 – Fonction réseau $\mathsf{R}(\kappa)$.</figcaption>
+</figure>
+
+**Q36.** Montrer que le champ électrique incident sur l’élément $p$ s’écrit
+
+$$
+\mathcal{E}_i\left(\boldsymbol{r}_p, t\right) = E_i e^{ip\varphi_i} e^{-i\omega t}, \qquad (22)
+$$
+
+en exprimant le déphasage $\varphi_i$ en fonction de $a$, $k$ et $\theta_i$.
+
+**Q37.** Chaque élément $p$ est la source d’une onde plane dans la direction $\boldsymbol{n}_r$, dont le champ électrique est
+
+$$
+\mathcal{E}_r^{(p)}\left(\boldsymbol{r}, t\right) = \rho\,\mathcal{E}_i\left(\boldsymbol{r_p}, t\right) e^{i\boldsymbol{k}_r.(\boldsymbol{r} - \boldsymbol{r}_p)}, \qquad (23)
+$$
+
+où le coefficient de réflexion complexe $\rho$ est supposé de module unité, $|\rho| = 1$. Le vecteur d’onde réfléchi est $\boldsymbol{k}_r = k\boldsymbol{n}_r$, ce qui suppose que la réflexion se fait sans changement de la longueur d’onde. Montrer que cette onde peut se mettre sous la forme
+
+$$
+\mathcal{E}_r^{(p)}\left(\boldsymbol{r}, t\right) = \rho\,E_i e^{ip(\varphi_i + \varphi_r)} e^{i(\boldsymbol{k}_r.\boldsymbol{r} - \omega t)}, \qquad (24)
+$$
+
+en précisant l’expression du déphasage $\varphi_r$ en fonction de $a$, $k$ et $\theta_r$. Pour la suite on posera $\varphi = \varphi_i + \varphi_r$.
+
+**Q38.** En déduire que l’onde réfléchie totale dans la direction $\theta_r$ est aussi une onde plane progressive monochromatique, dont le champ électrique est représenté par
+
+$$
+\mathcal{E}_r\left(\boldsymbol{r}, t\right) = E_r e^{i(\boldsymbol{k}_r.\boldsymbol{r} - \omega t)}, \qquad (25)
+$$
+
+en explicitant l’amplitude complexe $E_r$ en fonction de $E_i$, $\rho$, $\varphi$ et $N$.
+
+**Q39.** Montrer que l’interférence des ondes réfléchies par deux éléments adjacents $p$ et $p+1$ est constructive si et seulement si $\theta_i$ et $\theta_r$ vérifient la relation
+
+$$
+a\left(\sin\theta_i + \sin\theta_r\right) = q\lambda, \qquad (26)
+$$
+
+où $q \in \mathbb{Z}$ est un entier relatif quelconque appelé **ordre de diffraction**. Cette relation constitue la **formule des réseaux en réflexion**. Dans ce cas, les interférences entre les $N$ ondes réfléchies sont bien évidemment toutes constructives.
+
+**Q40.** Montrer que l’intensité lumineuse dans la direction $\theta_r$ peut se mettre sous la forme
+
+$$
+I(\theta_r) = I_0 N^2\left[\frac{\sin\left(N\pi\kappa a\right)}{N\sin\left(\pi\kappa a\right)}\right]^2 = I_0 N^2\mathsf{R}(\kappa) \quad \text{avec} \quad \kappa = \frac{\sin\theta_i + \sin\theta_r}{\lambda}, \qquad (27)
+$$
+
+où $I_0$ est une constante qu’on ne cherchera pas à calculer.
+
+**Q41.** La **fonction réseau** $\mathsf{R}(\kappa)$ est représentée sur la Fig. 6 mais sans l’indication des valeurs des abscisses. Que valent l’écart $\Delta\kappa$ entre deux pics consécutifs (où $\mathsf{R}(\kappa) = 1$) et la largeur caractéristique $\delta\kappa$ de chacun de ces pics (calculée comme étant l’intervalle entre les premières annulations de part et d’autre du pic) ? On exprimera ces grandeurs en fonction de $N$ et $a$.
+
+**Q42.** On considère une lumière dont le spectre couvre l’intervalle $[\lambda_b, \lambda_r]$, où les deux longueurs d’onde extrêmes correspondent au bleu et au rouge. Par exemple, la couverture spectrale de HARPS va de $\lambda_b = 378\ \mathrm{nm}$ à $\lambda_r = 691\ \mathrm{nm}$. On suppose pour simplifier, dans toute la suite, que ce spectre est plat, c’est-à-dire que l’intensité est indépendante de $\lambda$. La lumière est-elle dispersée dans l’ordre $q = 0$ ?
+
+**Q43.** On pose $y_q(\lambda) = \sin\theta_r(q, \lambda)$ où $\theta_r(q, \lambda)$ est l’angle de réflexion de la composante de longueur d’onde $\lambda$ dans l’ordre $q$. Représenter graphiquement $y_q(\lambda)$ pour quelques ordres successifs ($q = 0$, $q = 1$, $q = 2$) et en déduire qu’on a un **recouvrement des ordres** $q$ et $q + 1$ (en expliquant ce que cela signifie) si
+
+$$
+\frac{q}{q+1} > \frac{\lambda_b}{\lambda_r}. \qquad (28)
+$$
+
+On pourra faire un schéma. À partir de quel ordre observe-t-on un recouvrement dans le cas de HARPS ?
+
+**Q44.** En considérant que deux longueurs d’ondes proches $\lambda$ et $\lambda + \Delta\lambda$ (avec $\Delta\lambda \ll \lambda$) sont distinguables dans l’ordre $q$ dès lors que le pic de diffraction de l’une correspond au premier zéro de l’autre, montrer que le pouvoir de résolution du réseau dans l’ordre $q$ est $\mathcal{R} = qN$. Comment doit-on alors choisir l’ordre $q$ dans lequel travailler ?
+
+**Q45.** On tient maintenant compte de la largeur finie $\epsilon$ de chacun des éléments. Justifier par analogie que le champ électrique associé à l’onde réfléchie par l’élément $p$ s’écrit maintenant sous la forme
+
+$$
+\mathcal{E}_r^{(p)}\left(\boldsymbol{r}, t\right) = \rho E_i e^{ip\varphi}\, e^{i(\boldsymbol{k}_r.\boldsymbol{r} - \omega t)} \int_{-\epsilon/2}^{\epsilon/2} \exp\left[i\frac{\xi}{a}\varphi\right]\frac{\mathrm{d}\xi}{\epsilon}. \qquad (29)
+$$
+
+**Q46.** En déduire que l’intensité lumineuse dans la direction $\theta_r$ est alors donnée par
+
+$$
+I(\theta_r) = I_0 N^2\mathsf{F}(\kappa)\mathsf{R}(\kappa) \quad \text{avec} \quad \mathsf{F}(\kappa) = \left[\frac{\sin\left(\pi\kappa\epsilon\right)}{\pi\kappa\epsilon}\right]^2. \qquad (30)
+$$
+
+La fonction $\mathsf{F}$ correspond à la figure de diffraction d’un élément unique. Représenter la nouvelle distribution de l’intensité lumineuse en fonction de $\kappa$, en supposant, pour cet exemple, que $\epsilon = a/5$. Pour quel ordre de diffraction $q$ a-t-on une intensité maximale ? Quelle relation classique de l’optique géométrique retrouve-t-on alors ?
+
+**Q47.** À quelle difficulté se heurte-t-on pour travailler à fort pouvoir de résolution ?
+
+</ProblemSection>
+
+<ProblemSection id="ii-6">
+
+### II.6 - Un réseau échelle “blazé”
+
+Pour remédier à ce problème, les réseaux sont en pratique **blazés** pour présenter un maximum de luminosité dans un ordre $q \neq 0$. Pour ces réseaux, la forme du motif est celle représentée sur la Fig. 7. On appelle $\gamma$ **l’angle de blaze**. On ne cherchera pas à calculer la forme de la nouvelle figure de diffraction $\mathsf{F}_\gamma(\kappa)$ associée à ce motif individuel, et on admettra que son maximum correspond à la direction déterminée par la relation de l’optique géométrique retrouvée à la question **Q46**. On suppose également que l’angle d’incidence est grand, avec $\theta_i \geqslant \gamma$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.7%', '--fig-max': '452px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2019-pc-ulm/p2-fig5.png" alt="Motif de réseau blazé : facette longue inclinée de l’angle γ par rapport au plan du réseau (pas a, vecteur e_z), avec une facette courte perpendiculaire ; faisceau incident rouge (bande rose) de direction n_i arrivant sur la facette courte ; rayons réfléchis bleus dont la direction n_r ; angles θ_i et θ_r mesurés par rapport à la normale au réseau en pointillés ; convention de signe « + »." width="1414" height="920" loading="lazy" decoding="async" />
+<figcaption>Figure 7 – Schéma d’un motif de réseau en réflexion blazé.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '71.7%', '--fig-max': '459px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2019-pc-ulm/p2-fig6.png" alt="Faisceau polychromatique arrivant sur le réseau (en bas) et diffracté en rayons Rouge, Vert et Bleu vers une lentille inclinée (flèche double « Lentille ») qui les focalise sur une barrette CCD hachurée placée dans son plan focal à la distance f ; la coordonnée X le long de la CCD a son origine X = 0." width="1434" height="885" loading="lazy" decoding="async" />
+<figcaption>Figure 8 – Montage Réseau-Lentille-CCD</figcaption>
+</figure>
+
+**Q48.** Déterminer l’angle $\theta_{r,\max}$ correspondant au maximum de luminosité de $\mathsf{F}_\gamma$, en fonction de $\theta_i$ et $\gamma$.
+
+**Q49.** Le réseau échelle de HARPS fonctionne dans la **configuration de Littrow**, pour laquelle l’incidence est normale sur les facettes courtes du motif du réseau. Que devient alors $\theta_{r,\max}$ ? En déduire l’expression de l’ordre $q_{\max}(\lambda)$ de diffraction dans lequel se concentre le maximum d’émission, en fonction de $a$, $\lambda$ et $\gamma$. Inverser cette relation pour obtenir $\lambda_{\max}(q)$, longueur d’onde de la composante la plus intense dans un ordre $q$ donné.
+
+**Q50.** HARPS présente un angle de blaze $\gamma = 75^{\circ}$, et contient 31,6 éléments individuels par millimètre. En déduire une estimation (grossière) des ordres $q_r = q_{\max}(\lambda_r)$ et $q_b = q_{\max}(\lambda_b)$ dans lesquels les longueurs d’ondes extrêmes présentent le maximum de luminosité.
+
+**Q51.** En sortie du réseau, on place une lentille, de focale $f$, comme indiqué sur la Fig. 8, et une barrette CCD qui sert de détecteur dans le plan focal de cette lentille. On précise qu’une barrette CCD est un ensemble de détecteurs ponctuels placés les uns à côté des autres sur une ligne, et repérés par une coordonnée $X$. On place cette barrette de telle sorte que $X = 0$ corresponde à $\theta_r = \theta_{r,\max}$. On pose $\theta_r = \theta_{r,\max} + \delta\theta$ et on suppose que $\delta\theta \ll 1$. Quelle est la relation entre $X$ et $\delta\theta$ ?
+
+**Q52.** Montrer que pour un ordre de diffraction $q$ donné, la position de la radiation de longueur d’onde $\lambda$ sur le détecteur est donnée par
+
+$$
+X(\lambda, q) = \frac{f}{\cos\gamma}\left(\frac{q}{a}\lambda - 2\sin\gamma\right). \qquad (31)
+$$
+
+Représenter graphiquement $X(\lambda, q)$ en fonction de $\lambda$, pour quelques ordres $q$.
+
+À une position $X = X_0$ donnée sur le détecteur, ou - ce qui revient au même - dans une direction $\delta\theta_0$ donnée, on a donc une superposition d’un ensemble **discret** de composantes de longueurs d’onde $\lambda_q$, solutions de l’équation $X(\lambda_q, q) = X_0$. Pour les séparer, on dispose un second élément disperseur entre le réseau échelle et le détecteur. Ce second élément est typiquement un **grism**, c’est-à-dire un prisme auquel on accole un réseau de diffraction en transmission. Pour parvenir à séparer les ordres qui se recouvrent, on place ce grism de telle sorte qu’il disperse la lumière perpendiculairement à la direction $X$. C’est ce qu’on appelle une **dispersion croisée**. On ne la traitera pas ici.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+Le corrigé officiel ne figure pas dans l’archive.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2019_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2019_ulm.pdf#page=8)

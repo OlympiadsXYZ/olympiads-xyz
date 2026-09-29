@@ -1,0 +1,161 @@
+---
+id: x-ens-2010-mp-p1
+source: 'X-ENS 2010, Приемен изпит, математика и физика'
+title: 'Задача 1. Refroidissement d’un résonateur mécanique'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2010/x-ens-2010-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:44.532Z'
+verifier: 'mechanical'
+---
+
+*SESSION 2010 — Filière MP — PHYSIQUE MPI — Épreuve commune aux ENS de Paris, Lyon et Cachan*
+
+<details>
+<summary>Consignes</summary>
+
+*L’usage de la calculatrice est interdit.*
+
+Le candidat est prié d’accorder un soin particulier à la clarté et à la concision de ses réponses.
+
+Les quatre parties du problème sont indépendantes.
+
+Si le résultat d’une question est donné, il peut être utilisé dans les questions suivantes sans démonstration.
+
+</details>
+
+<details>
+<summary>Увод</summary>
+
+Le but de ce problème est l’étude d’un résonateur mécanique de taille micrométrique du type de celui de la figure 1, sur lequel est déposé un empilement de couches fines qui forment un miroir de très bonne qualité optique. Un tel système possède des propriétés optiques et mécaniques qui en font un outil de choix pour étudier le couplage *optomécanique* entre les mouvements du résonateur et la lumière qui se réfléchit dessus.
+
+Dans le problème, le micro-résonateur est assimilé à un oscillateur harmonique de masse $m$, de fréquence de résonance $f_0$, sur lequel se réfléchit un faisceau lumineux de longueur d’onde $\lambda$. Dans les applications numériques on utilisera les valeurs suivantes des paramètres :
+
+$$
+\begin{aligned} m &= 100\,\mu\mathrm{g} \\ f_0 &= 1\,\mathrm{MHz} \\ \lambda &= 630\,\mathrm{nm} \end{aligned}
+$$
+
+Dans la première partie, on étudie les mouvements du micro-résonateur engendrés par l’agitation du gaz qui l’entoure et une technique de réduction de ces mouvements. Les parties 2 et 3 présentent un montage interférométrique ainsi que le photodétecteur qu’il inclut, tous deux utilisés pour observer les déplacements du micro-résonateur. Dans la dernière partie est étudiée la possibilité d’utiliser un micro-résonateur pour réduire les fluctuations d’intensité intrinsèques que présente la lumière laser.
+
+On donne les valeurs des constantes physiques utilisées dans le problème :
+
+$c = 3{,}0 \times 10^{8}\ \mathrm{m \cdot s^{-1}}$ vitesse de la lumière
+
+$k_B = 1{,}4 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$ constante de Boltzmann
+
+$h = 6{,}6 \times 10^{-34}\ \mathrm{J \cdot s}$ constante de Planck
+
+$e = 1{,}6 \times 10^{-19}\ \mathrm{C}$ charge élémentaire
+
+</details>
+
+<details>
+<summary>Notations</summary>
+
+Dans la première partie, pour toute grandeur $A(t)$ relative à l’oscillateur harmonique, $\langle A\rangle$ désignera la valeur moyenne temporelle de $A(t)$, calculée sur une période d’oscillation.
+
+Dans la partie 4, la moyenne statistique d’une variable aléatoire $X$ sera notée $\overline{X}$ et son écart-type $\sigma(X) = \sqrt{\overline{X^2} - \left(\overline{X}\right)^2}$.
+
+Dans les parties 3 et 4 du problème on adopte une description corpusculaire de la lumière. Un faisceau lumineux de longueur d’onde $\lambda$ est alors assimilé à un courant de photons. Chaque photon du faisceau se déplace à la vitesse $c$, transporte une énergie $E_{\mathrm{ph}}$ et véhicule une quantité de mouvement $\vec{p}_{\mathrm{ph}}$ données par
+
+$$
+\begin{aligned} E_{\mathrm{ph}} &= \frac{hc}{\lambda}, \\ \vec{p}_{\mathrm{ph}} &= \frac{h}{\lambda}\,\vec{u}, \end{aligned}
+$$
+
+où le vecteur unitaire $\vec{u}$ indique la direction de propagation du photon.
+
+</details>
+
+## Условие
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.1%', '--fig-max': '462px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p1-fig1.png" alt="À gauche : image de microscopie électronique d’un micro-résonateur (pont central portant un disque clair entre deux zones sombres), échelle 20 µm, avec un encart montrant l’empilement de couches à l’échelle 2 µm. À droite : trois schémas du pont déformé portant le miroir, flèches verticales indiquant le déplacement, étiquette « Miroir »." width="1444" height="738" loading="lazy" decoding="async" />
+<figcaption>Figure 1: Micro-résonateur mécanique sur lequel est déposé un empilement de couches fines formant un miroir de très grande réflectivité. Le pont central se déforme, provoquant un déplacement sinusoïdal du miroir à une fréquence de l’ordre du mégahertz.</figcaption>
+</figure>
+
+Cette partie traite des mouvements du micro-résonateur induits par l’agitation thermique du gaz qui l’entoure et d’une technique permettant de réduire l’amplitude de ces mouvements thermiques.
+
+Le micro-résonateur est assimilé à l’oscillateur harmonique de la figure 2, constitué d’un miroir de masse $m$ se déplaçant uniquement selon l’axe horizontal $Ox$, et d’un ressort sans masse, de raideur $K$. La position du miroir est repérée par son abscisse $x(t)$. Lorsque le ressort est au repos, le miroir est à l’abscisse $x = 0$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '41.2%', '--fig-max': '264px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p1-fig2.png" alt="Axe horizontal x d’origine O ; miroir de masse m relié par un ressort de raideur K à un bâti fixe à droite ; flèche x(t) indiquant le déplacement du miroir par rapport à O." width="824" height="376" loading="lazy" decoding="async" />
+<figcaption>Figure 2: Schéma de l’oscillateur mécanique.</figcaption>
+</figure>
+
+**1.** Donner la pulsation propre $\omega_0 = 2\pi \times f_0$ de cet oscillateur.
+
+Les collisions entre le miroir et les molécules du gaz qui l’entoure produisent une force de frottement visqueux $F_v = -m\gamma v_x$ où $v_x$ est la valeur algébrique de la vitesse du miroir.
+
+**2.** Exprimer la nouvelle pulsation de résonance $\omega$ du système et montrer que dans la limite d’un mouvement faiblement amorti ($0 \le \gamma \ll \omega_0$) cette pulsation est égale au premier ordre relativement à $\lambda/\omega_0$, à $\omega_0$.
+
+Dans toute la suite du problème, on se placera dans cette limite.
+
+**3.** Tracer qualitativement $x(t)$. On supposera qu’à $t = 0$, le miroir est en $x = x_0$ et qu’il est lâché sans vitesse initiale.
+
+**4.** Exprimer les énergies cinétique $E_c(t)$, potentielle élastique $E_p(t)$ et mécanique $E_m(t)$ de l’oscillateur.
+
+Les collisions entre le miroir et les molécules du gaz à la température $T$ se produisent à des temps aléatoires (voir figure 3) et vont engendrer des fluctuations de la position du miroir. La force de frottement visqueux $F_v$ s’accompagne ainsi d’une force supplémentaire aléatoire $F_T$ appelée force de Langevin. Cependant, étant donné que l’oscillateur est faiblement amorti, il est fortement résonant à la pulsation $\omega_0$ et son mouvement est quasiment sinusoïdal. On considèrera donc dans la suite que le mouvement de l’oscillateur s’écrit
+
+$$
+x(t) = x_T \cos(\omega_0 t + \varphi(t)). \qquad (1)
+$$
+
+La phase $\varphi(t)$ est une fonction aléatoire lentement variable. Elle ne joue en réalité aucun rôle dans les calculs qui vont suivre et on la prendra nulle à tout instant
+
+$$
+\varphi(t) = 0. \qquad (2)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '41.9%', '--fig-max': '268px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p1-fig3.png" alt="Le même oscillateur (miroir, ressort, bâti, axe x) entouré de molécules de gaz représentées par des points avec des flèches de vitesse de part et d’autre du miroir ; étiquette « molécules de gaz » ; flèche x(t)." width="839" height="348" loading="lazy" decoding="async" />
+<figcaption>Figure 3: Oscillateur mécanique soumis aux collisions avec les molécules du gaz.</figcaption>
+</figure>
+
+**5.** Expliquer pourquoi la force de Langevin $F_T$ a une valeur moyenne temporelle nulle.
+
+On admettra que le théorème d’équipartition de l’énergie appliqué à l’oscillateur impose
+
+$$
+\langle E_c\rangle = \langle E_p\rangle = \frac{1}{2}k_B T. \qquad (3)
+$$
+
+**6.** Exprimer l’amplitude $x_T$ des oscillations.
+
+**7.** Donner l’ordre de grandeur de l’amplitude de ces oscillations pour un micro-résonateur mécanique de masse $m = 100\,\mu\mathrm{g}$ et de fréquence de résonance $f_0 = 1\,\mathrm{MHz}$, à température ambiante.
+
+**8.** Grâce à un bilan d’énergie, montrer que la puissance moyenne de la force de Langevin s’écrit
+
+$$
+P_{F_T} = \gamma k_B T. \qquad (4)
+$$
+
+On suppose qu’une mesure de la position du miroir est effectuée en continu grâce à un dispositif optique. À partir de cette mesure, on contre-réagit en appliquant une force extérieure $F_{cr}$ sur le miroir, par exemple grâce à un dispositif électrostatique (voir figure 4). On suppose dans la suite que cette force est proportionnelle la vitesse du miroir : $F_{cr} = -gm\gamma v_x$ où $g$ est un paramètre positif sans dimension, qui caractérise le gain du système de mesure et de contre-réaction. Le paramètre $g$ peut prendre des valeurs grandes devant 1. On supposera cependant que, malgré cette force visqueuse supplémentaire, le miroir reste dans le régime de faible amortissement.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '57%', '--fig-max': '365px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p1-fig4.png" alt="Bloc « Système optique de mesure de position » envoyant un « Faisceau laser » aller-retour sur le miroir relié à un ressort ; une ligne de rétroaction relie le bloc à des électrodes placées près du miroir, qui exercent la force F_cr ; étiquettes x(t) et « Electrode »." width="1142" height="450" loading="lazy" decoding="async" />
+<figcaption>Figure 4: Dispositif de contre-réaction sur le miroir. Une électrode permet d’appliquer une force électrostatique sur le miroir.</figcaption>
+</figure>
+
+La présence de cette force de contre-réaction ne modifie pas le couplage entre le miroir et le gaz qui l’entoure. On admettra que la puissance moyenne de la force de Langevin est, par conséquent, identique au cas sans contre-réaction.
+
+**9.** En régime permanent, calculer la nouvelle amplitude $x_{cr}$ des oscillations.
+
+**10.** En déduire l’expression de l’énergie mécanique en présence de contre-réaction, puis que cette énergie correspond à celle d’un oscillateur à une température $T'$ telle que
+
+$$
+T' = \frac{1}{1+g}T. \qquad (5)
+$$
+
+La force extérieure $F_{cr}$ permet donc de réduire les oscillations thermiques du miroir en augmentant artificiellement les frottements visqueux.
+
+**11.** Il est également possible d’augmenter les frottements visqueux simplement en augmentant la pression du gaz dans lequel baigne le miroir. Expliquer qualitativement pourquoi un tel procédé ne permet pas de réduire l’amplitude des oscillations thermiques.
+
+## Решение
+
+<Warning title="Непълно решение">
+Le corrigé officiel est absent de l’archive.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2010.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2010.pdf#page=2)

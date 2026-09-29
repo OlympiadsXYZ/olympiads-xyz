@@ -1,0 +1,170 @@
+---
+id: balkanski-2022-cgp-r2-p1
+source: 'Балкански 2022, Теория'
+title: 'Задача 1. La technique Patch Clamp'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2022/balkanski-2022-cgp-r2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:57:12.131Z'
+verifier: 'mechanical'
+---
+
+*Concours Général de Physique «Minko Balkanski» · 27 август 2022 г.*
+
+<Warning title="Бележка към темата">
+L'archive ne contient pas de solutions officielles pour cette épreuve. L'énoncé est publié en français ; la version anglaise imprimée dans le même document (pages 10–16) n'est pas reprise.
+</Warning>
+
+<details>
+<summary>Прочетете внимателно!</summary>
+
+**Част първа и част втора** съдържат условията на задачите съответно на френски и английски език. Единствените външни документи, на които имате право, са френски и английски речници. Ако желаете, можете да ползвате калкулатори.
+
+При оценяването на задачите голяма тежест ще имат **яснотата и стилът** на изложените решения и аргументация. Не използвайте излишна проза в аргументите си, бъдете точни и кратки. Използването на схеми за онагледяване на разсъжденията Ви е желателно. **Пишете само на езика, който сте избрали (френски или английски).**
+
+Разполагате с **4 часа**. Успех!
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Préliminaires](#preliminaires)
+- [Modèle simplifié de l'amplificateur Patch Clamp](#modele-simplifie)
+
+</nav>
+
+Inventé par E. Neher et B. Sakmann, le patch-clamp (ou l'électrophysiologie cellulaire) est la technique de référence pour l'étude électrophysiologique des canaux ioniques. Chaque canal est traversé par un flux ionique élevé (de l'ordre de $10^6$ ions/seconde) et génère un courant électrique. Le patch-clamp consiste donc à enregistrer l'activité électrique d'une membrane cellulaire.
+
+<ProblemSection id="preliminaires">
+
+### Préliminaires
+
+**La loi d'Ohm**
+
+On considère un milieu homogène conducteur de conductivité électrique $\sigma$. Une charge, de masse $m$ et de charge $q$, est susceptible de se déplacer librement à l'intérieur de ce matériau, mais subit au cours de son mouvement de nombreux chocs que l'on modélise globalement par une force de frottement du type $\overrightarrow{f_{fr}} = -\alpha\overrightarrow{v}$ où $\overrightarrow{v}$ est la vitesse de la charge et $\alpha$ une constante positive. On suppose que le matériau étudié est placé dans un champ électrique uniforme et constant $\overrightarrow{E} = E\overrightarrow{e_x}$ où $E = constante$. La charge subit alors une force électrique $\overrightarrow{f} = q\overrightarrow{E}$. On négligera les forces de pesanteur.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.6%', '--fig-max': '209px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2022-cgp-r2/p1-fig1.png" alt="Montage convertisseur courant-tension : source de courant I reliée à l'entrée e1 (−) de l'AO, résistance R entre l'entrée e1 et la sortie s, source de tension V_réf sur l'entrée e2 (+), tension de sortie V_0 mesurée par rapport à la masse." width="654" height="496" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.6%', '--fig-max': '209px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2022-cgp-r2/p1-fig2.png" alt="Montage soustracteur : v_1 appliquée à l'entrée − de l'AO à travers R_1, v_2 appliquée à l'entrée + à travers R'_1, R'_2 entre l'entrée + et la masse, R_2 entre l'entrée − et la sortie ; tension de sortie v_s." width="654" height="495" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.6%', '--fig-max': '209px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2022-cgp-r2/p1-fig3.png" alt="Montage non inverseur : tension v_1 sur l'entrée + de l'AO, résistance R entre l'entrée − et la masse, R_var entre l'entrée − et la sortie ; tension de sortie v." width="654" height="496" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.6%', '--fig-max': '209px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2022-cgp-r2/p1-fig4.png" alt="Circuit du régime transitoire : générateur v_e(t) débitant le courant i(t) à travers R_1 dans l'association en parallèle de R_2 et du condensateur C ; tension u(t) aux bornes de R_2 et C." width="654" height="527" loading="lazy" decoding="async" />
+</figure>
+
+**1.** En appliquant la relation fondamentale de la dynamique, déterminer l'équation vérifiée par la vitesse $\overrightarrow{v}$ et par l'accélération $\overrightarrow{a}$.
+
+**2.** Préciser la vitesse limite $\overrightarrow{v_{\infty}}$ atteinte par la charge et le temps caractéristique $\tau$ du régime transitoire.
+
+**3.** Sachant que le matériau possède $n$ charges mobiles par unité de volume, en déduire le vecteur densité volumique de courant $\overrightarrow{j}$ en fonction de $n, q, \alpha, \overrightarrow{E}$, lorsque le régime permanent est atteint.
+
+**4.** Rappeler la loi d'Ohm et la présenter sous sa forme locale. En déduire que la conductivité du matériau vaut $\sigma = \frac{nq^2\tau}{m}$.
+
+**5.** Montrer que la force $\overrightarrow{f} = q\overrightarrow{E}$ est une force conservative. Préciser l'expression de l'énergie potentielle $E_p$. On prendra $E_p(x = 0) = 0$. En déduire l'expression du potentiel $V(x)$ en fonction de $E$ et $x$.
+
+**6.** Une portion de ce conducteur de section $S$ et de longueur $L$ est soumise à une difference de potentiel $U$. En déduire que la résistance $R$ de cette portion vaut $R = \frac{L}{\sigma S}$.
+
+**Conversion intensité-tension par un montage amplificateur opérationnel**
+
+L'amplificateur opérationnel (AO) est supposé parfait et fonctionne en régime linéaire. Admettons que dans ce régime $v_{e1} = v_{e2}$ - le potentiel à l'entré 1 est égal au potentiel à l'entré 2, et $i_{e1} = i_{e2} = i_s = 0$, les courants entrants et sortants de l'AO sont nuls. Sur le schéma on voit une source de courant et une source de tension.
+
+**7.** Exprimer la tension de sortie $V_0$ en fonction de l'intensité du courant $i$, de la tension de référence $V_{ref}$ et de $R$.
+
+**Montage soustracteur et amplificateur**
+
+Comme dans la question précédente - on suppose que l'AO est parfait et fonctionne en régime linéaire.
+
+**8.** Exprimer la tension de sortie $v_s$ en fonction de $v_1$ et de $v_2$ ainsi que des différentes résistances. Le montage est présenté sur la figure en dessus.
+
+**9.** Que se passe-t-il si les quatre résistances sont identiques ?
+
+**10.** L'AO est à nouveau supposé parfait et fonctionnant en régime linéaire. Déterminer la tension $v$ en fonction de $v_3$, $R$ et $R_{var}$. Donner un nom à ce montage. Le montage est présenté sur la figure au-dessous.
+
+**Étude d'un régime transitoire**
+
+Nous considérons le circuit ci-contre constitué d'un condensateur de capacité $C$, initialement déchargé, de deux résistances $R_1$ et $R_2$, alimenté par un générateur délivrant un signal variable dans le temps $v_e(t)$. Nous allons appliquer à ce circuit une stimulation d'amplitude $\Delta V = V_{ref} > 0$ et de durée $\Delta t$, c'est-à-dire $v_e(t)$ va varier dans le temps suivant cette loi.
+
+**11.** Donner l'allure de $v_e(t)$.
+
+**12.** Exprimer $i(t = 0^+)$ en fonction de $v_{ref}$ et $R_1$. ($0^+$ vaut dire le moment juste après $t = 0$)
+
+**13.** Exprimer $i(t = \Delta t^-)$ en fonction de $v_{ref}$, $R_1$ et $R_2$. On suppose $\Delta t$ suffisamment grand pour que le circuit ait atteint un régime permanent à l'instant $\Delta t^-$. ($\Delta t^-$ vaut dire le moment juste avant $t = \Delta t$)
+
+**14.** Établir l'équation vérifiée par $u(t)$ en fonction de $R_1$, $R_2$, $C$ et $v_e(t)$. Préciser la constante de temps $\tau'$ de ce circuit.
+
+**15.** En supposant $\tau' \ll \Delta t$, préciser la valeur $u(\Delta t)$. Qualitativement proposer comment $u(t)$ varie dans le temps. Qualitativement proposer comment $i(t)$ varie dans le temps.
+
+</ProblemSection>
+
+<ProblemSection id="modele-simplifie">
+
+### Modèle simplifié de l'amplificateur Patch Clamp
+
+Les techniques de potentiel imposé à une membrane ont pour finalité le maintien du potentiel membranaire d'une cellule ou d'un groupe de cellules à une valeur fixe et l'enregistrement simultané des courants ioniques liés aux transferts d'ions à travers la membrane. Toute mesure nécessite une paire d'électrodes : une électrode de mesure reliée à un convertisseur et une électrode de référence indifférente (généralement une électrode au calomel ou au chlorure d'argent), montées en opposition. La pipette d'enregistrement est un simple tube de verre contenant une solution ionique de composition fixée par l'expérience dans lequel est placée une électrode d'argent chlorurée. L'ensemble permet la conduction électrique entre la membrane cellulaire ou l'intérieur de la cellule et le premier étage de l'amplificateur qui est un convertisseur courant tension (bloc (2)). Nous donnons ci-dessus le schéma électrique équivalent en configuration cellule entière qui permet l'enregistrement de courants macroscopiques. Le second étage ( blocs (3) et (4) ) retranche la tension de référence et amplifie le signal d'un facteur compris entre 1 et 200.
+
+**Étude de l'amplificateur**
+
+En utilisant les résultats des question préliminaires :
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2022-cgp-r2/p1-fig5.png" alt="Schéma de l'amplificateur Patch Clamp : pipette+électrode plongée dans la solution au contact de la membrane, électrode de référence à la masse ; bloc (2) convertisseur courant-tension (AO avec R_f, courant i(t), sortie V_0, entrée + reliée à V_réf, impulsion de 0 à Δt) ; bloc (3) soustracteur à quatre résistances R, sortie v_1 ; bloc (4) amplificateur non inverseur avec R et R_var, sortie v." width="1638" height="881" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.6%', '--fig-max': '209px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2022-cgp-r2/p1-fig6.png" alt="Coupe de la pipette posée sur la membrane dans la solution : zone de contact de diamètre d et de hauteur h, colonne d'épaisseur e entourant la zone de contact ; légendes pipette, membrane, solution." width="654" height="783" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2022-cgp-r2/p1-fig7.png" alt="Schéma en configuration cellule entière : bloc (1) avec R_1 en série avec l'association parallèle de R_2 et C, courant i(t) ; bloc (2) convertisseur avec R_f et sortie V_0, entrée + reliée à V_réf (impulsion de 0 à Δt) ; bloc (3) soustracteur à résistances R, sortie v_1 ; bloc (4) amplificateur avec R et R_var, sortie v." width="1638" height="619" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44%', '--fig-max': '282px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2022-cgp-r2/p1-fig8.png" alt="Enregistrement de v(t) en rouge : t de −0,4 à 1,2 s en abscisse, v de −0,2 à 0,2 V en ordonnée ; nul pour t < 0, saut à −0,2 à t = 0 puis remontée exponentielle vers environ −0,04 ; à t ≈ 0,5 saut à +0,2 puis décroissance exponentielle vers 0." width="882" height="625" loading="lazy" decoding="async" />
+</figure>
+
+**16.** Exprimer $V_0$ en fonction de $V_{ref}$, $i(t)$ et $R_f$.
+
+**17.** Exprimer $V_1$ en fonction de $V_{ref}$ et $V_0$, puis en fonction de $i(t)$ et $R_f$.
+
+**18.** Exprimer $v$ en fonction de $i(t)$, $R_f$, $R$ et $R_{var}$.
+
+**Mesure de la résistance de *seal***
+
+La pipette est modélisable par une résistance $R_{pip} = 10M\Omega$. La zone de contact (ZC) entre la pipette et la membrane peut être représentée par un cylindre de diamètre $d = 1\mu m$ et de hauteur $h = 2\mu m$, de conductivité $\sigma = 10^{-2}\Omega^{-1}.cm^{-1}$.
+
+**19.** En utilisant le résultat établi dans la partie préliminaire, exprimer la résistance d'accès $R_{accs}$ à la membrane en fonction de $h$, $d$ et $\sigma$. Calculer numériquement $R_{accs}$.
+
+Il se forme de plus une résistance de jonction, ou de fuite, appelée résistance de *seal* conditionnant la stabilité de la liaison pipette membrane. Cette résistance est constituée par une colonne cylindrique entourant la zone ZC, de même conductivité $\sigma$ que ZC. Cette colonne a l'épaisseur $e = 3 \times 10^{-10}m$ ($e \ll d$) et la hauteur $h = 2\mu m$.
+
+**20.** Exprimer la résistance de jonction $R_{seal}$ en fonction de $h$, $d$, $e$ et $\sigma$. Calculer numériquement $R_{seal}$.
+
+**21.** Quel est alors le montage électrique équivalent à l'association de ces trois résistance : $R_{pip}$, $R_{accs}$ et $R_{seal}$ ? Compte tenu des valeurs numériques, simplifier le montage.
+
+**Mesure en configuration cellule entière**
+
+On modélise par $R_1$ la résistance équivalente de la pipette précédente, $R_2$ et $C$ représentent la résistance et la capacité de la membrane (bloc 1) :
+
+**22.** Déduire de l'enregistrement de $v(t)$ donné ci-dessous les valeurs de $R_1$, $R_2$ et $C$. On précise que $V_{ref} = 5mV$, $R_f = 100M\Omega$ et $R_{var} = 0$. Sur cet enregistrement, l'abscisse $t$ est en secondes et l'ordonnée $v$ est en volts.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+L'archive ne contient pas de fichier de solutions pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [CGP_2022_r2.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2022_r2.pdf#page=3)

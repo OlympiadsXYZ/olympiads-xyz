@@ -1,0 +1,138 @@
+---
+id: x-ens-2024-pc-ulm-p2
+source: 'X-ENS 2024, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 2. Une particule soumise à une force $\alpha/x^3 - k\,x$'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2024/x-ens-2024-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:16.923Z'
+verifier: 'mechanical'
+---
+
+*ECOLES NORMALES SUPERIEURES · CONCOURS D’ADMISSION 2024 · FILIERE PC - Epreuve n° 7 · PHYSIQUE C (U) · 18 април 2024 г.*
+
+<Warning title="Бележка към темата">
+Le fichier d’archive ne contient que l’énoncé ; aucun corrigé officiel.
+</Warning>
+
+<details>
+<summary>Consignes</summary>
+
+JEUDI 18 AVRIL 2024 — 08h00 - 14h00
+
+*Durée : 6 heures*
+
+*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve*
+
+</details>
+
+<details>
+<summary>Début de l’épreuve</summary>
+
+*Ce sujet comporte 13 pages numérotées de 1 à 13.*
+
+</details>
+
+<details>
+<summary>Consignes et indications générales</summary>
+
+- *On néglige la gravité dans tout le sujet.*
+- *Aucune question ne fait appel à la mécanique quantique.*
+- *La justification des réponses et des étapes de raisonnement est prise en compte dans la notation.*
+- *Pour les questions ouvertes appelant une justification ou une discussion, la longueur de la réponse attendue est entre quelques mots et quelques lignes (mais les réponses plus longues ne sont pas sanctionnées).*
+- *Il est parfois demandé de vérifier que l’on retrouve une expression déjà obtenue dans une question précédente, ce qui peut aider à détecter et corriger d’éventuelles erreurs.*
+
+</details>
+
+<details>
+<summary>Notations et conventions</summary>
+
+- $(Oxyz)$ est un repère orthonormé, fixe dans le référentiel du laboratoire considéré comme un référentiel galiléen. Les vecteurs unitaires associés sont notés $(\vec{u}_x, \vec{u}_y, \vec{u}_z)$.
+- Élément de volume : $d\tau = dx\,dy\,dz$.
+- Norme d’un vecteur : $A = \|\vec{A}\|$.
+- $\dot{f}$ désigne la dérivée temporelle $\dfrac{df}{dt}$ d’une fonction $f(t)$, et $\ddot{f} = \dfrac{d^2f}{dt^2}$.
+- Pour une fonction $f(\vec{r})$ qui ne dépend pas de la direction de $\vec{r}$, on pourra noter $f(r)$ au lieu de $f(\vec{r})$.
+- « Positif » signifie « supérieur ou égal à zéro ».
+
+</details>
+
+<details>
+<summary>Formulaire</summary>
+
+En coordonnées sphériques :
+
+$$
+\begin{aligned} \overrightarrow{\mathrm{grad}}\, f &= \frac{\partial f}{\partial r}\,\vec{u}_r + \frac{1}{r}\,\frac{\partial f}{\partial \theta}\,\vec{u}_\theta + \frac{1}{r\,\sin\theta}\,\frac{\partial f}{\partial \varphi}\,\vec{u}_\varphi ,\\ \mathrm{div}\,\vec{A} &= \frac{1}{r^2}\,\frac{\partial}{\partial r}\left(r^2 A_r\right) + \frac{1}{r\,\sin\theta}\,\frac{\partial}{\partial \theta}\left(\sin\theta\; A_\theta\right) + \frac{1}{r\,\sin\theta}\,\frac{\partial A_\varphi}{\partial \varphi} . \end{aligned}
+$$
+
+$$
+\mathrm{div}\left(f\,\vec{A}\right) = \overrightarrow{\mathrm{grad}}\, f \cdot \vec{A} + f\,\mathrm{div}\,\vec{A}
+$$
+
+</details>
+
+<details>
+<summary>Données numériques</summary>
+
+Masse molaire du lithium 6 : $M\left({}^{6}\mathrm{Li}\right) = 6{,}02\ \mathrm{g\cdot mol^{-1}}$
+
+Nombre d’Avogadro : $\mathscr{N}_A = 6{,}02 \times 10^{23}\ \mathrm{mol^{-1}}$
+
+$k = 1{,}02 \times 10^{-18}\ \mathrm{kg\cdot s^{-2}}$
+
+$\sigma = 60\ \mu\mathrm{m}$
+
+</details>
+
+<details>
+<summary>Увод</summary>
+
+On appelle « système de particules en interaction » un système composé de $N$ particules interagissant entre elles. Il peut s’agir par exemple de molécules dans un gaz ou un liquide, d’électrons et d’ions dans un plasma, ou encore d’étoiles dans une galaxie.
+
+D’ordinaire, ces systèmes ont les caractéristiques suivantes. Dès que $N > 2$, il est impossible d’obtenir des résultats exacts sur l’évolution en fonction du temps des positions des $N$ particules par des calculs analytiques, c’est-à-dire sans utiliser de simulations numériques. Cependant, lorsque $N$ est grand, le comportement du système devient plus simple à décrire. Au bout d’un certain temps, le système atteint un état d’équilibre, décrit par la thermodynamique ou la statique des fluides. Ceci est vrai même si le système n’échange pas de chaleur avec son environnement. Pour décrire cet état d’équilibre aux échelles macroscopiques ou mésoscopiques, il suffit de connaître quelques fonctions qui relient entre elles des grandeurs thermodynamiques telles que la pression, la température ou l’énergie interne. La détermination de ces fonctions nécessite de construire des tableaux de données à partir de mesures expérimentales ou de simulations numériques (à la différence d’un gaz parfait, pour lequel ces fonctions ont des expressions connues). De plus, l’évolution d’un fluide en fonction du temps peut être décrite par la mécanique des fluides, qui fait intervenir quelques grandeurs supplémentaires telles que la viscosité dynamique. Ces grandeurs (appelées coefficients de transport) sont des fonctions des grandeurs thermodynamiques, et la détermination de ces fonctions nécessite là encore de construire des tableaux de données à partir d’expériences ou de simulations numériques.
+
+Certains systèmes particuliers de particules en interaction possèdent des propriétés qui font exception à une ou plusieurs des caractéristiques énoncées dans le paragraphe précédent : on qualifiera de telles propriétés de *propriétés extraordinaires*.
+
+Nous serons amenés à rencontrer de telles propriétés extraordinaires dans les parties 3 et 4. Alors que le système étudié en partie 3 n’a pas à ce jour de réalisation expérimentale, la partie 4 est reliée à des expériences actuelles avec des gaz froids. La partie 1 concerne la réalisation d’un piège optique pouvant servir dans ces expériences. Les parties suivantes sont indépendantes de la partie 1, à l’exception de deux questions où un lien avec la partie 1 sera indiqué dans l’énoncé. La partie 2 concerne un problème à une particule dont l’étude est utile pour les parties 3 et 4.
+
+</details>
+
+## Условие
+
+Dans cette partie, on considère une particule de masse $m$ se déplaçant à une dimension le long de la demi-droite $(Ox)$, de sorte que son vecteur position est $\vec{r} = x\,\vec{u}_x$ avec $x > 0$.
+
+La particule est soumise à une force $\vec{F} = F_x\,\vec{u}_x$ avec $F_x = \dfrac{\alpha}{x^3} - k\,x$, où $\alpha$ et $k$ sont des constantes strictement positives.
+
+**7)** Montrer que la force $\vec{F}$ est conservative, et que l’énergie potentielle correspondante s’écrit
+
+$$
+U(x) = \frac{A}{x^2} + B\,x^2 + C
+$$
+
+où $C$ est une constante arbitraire et où l’on exprimera $A$ et $B$ en fonction de $\alpha$ et $k$.
+
+Dans la suite on prend $C = 0$.
+
+**8)** On pose $g = x^2$, et on note $E$ l’énergie mécanique de la particule. Exprimer $m\,\ddot{g}$ en fonction de $E$, $g$ et $k$.
+
+**9)** On pose $\omega = \sqrt{\dfrac{k}{m}}$, $g_0 = g(t = 0)$ et $h_0 = \dot{g}(t = 0)$. En résolvant l’équation différentielle trouvée à la question précédente, exprimer $g(t)$ en fonction de $t$, $g_0$, $h_0$, $\omega$ et $\dfrac{E}{k}$.
+
+Dans la suite, la particule est lâchée à $t = 0$ en $x = x_0$ avec une vitesse nulle.
+
+**10)** Exprimer $x(t)$ en fonction de $t$, $\omega$, $\dfrac{\alpha}{k}$ et $x_0$. Exprimer la période de $x(t)$ en fonction de $\omega$.
+
+**11)** Commenter brièvement le fait que la période est indépendante de l’amplitude.
+
+**12)** On note $x_{\min}$ et $x_{\max}$ les valeurs minimale et maximale de la fonction $x(t)$. À partir de l’expression de $x(t)$ obtenue à la question **10**, tracer l’allure de $x(t)^2$ en fonction de $t$, et exprimer $x_{\min}$ et $x_{\max}$ en fonction de $x_0$ et $\dfrac{\alpha}{k}$. On distinguera entre les cas $x_0 > x_c$ et $x_0 < x_c$, où $x_c$ est une grandeur que l’on exprimera en fonction de $\dfrac{\alpha}{k}$.
+
+**13)** Tracer l’allure de $U(x)$. Par une approche énergétique, vérifier la validité des expressions de $x_c$, $x_{\min}$ et $x_{\max}$ obtenues à la question précédente.
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2024_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2024_ulm.pdf#page=5)

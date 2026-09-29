@@ -1,0 +1,253 @@
+---
+id: x-ens-2025-mp-p1
+source: 'X-ENS 2025, Приемен изпит, математика и физика'
+title: 'Задача 1. Exosquelette actif'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2025/x-ens-2025-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T06:00:29.453Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE POLYTECHNIQUE — CONCOURS D’ADMISSION 2025 — FILIÈRE MP – Épreuve n°4 — PHYSIQUE ET SCIENCES DE L’INGÉNIEUR (X) · 15 април 2025 г.*
+
+<details>
+<summary>Page de garde</summary>
+
+**ÉCOLE POLYTECHNIQUE**
+
+**CONCOURS D’ADMISSION 2025**
+
+**MARDI 15 AVRIL 2025** — **14h00 – 18h00**
+
+**FILIÈRE MP – Épreuve n°4**
+
+**PHYSIQUE ET SCIENCES DE L’INGÉNIEUR (X)**
+
+**Durée : 4 heures**
+
+***L’utilisation de calculatrices n’est pas autorisée pour cette épreuve.***
+
+*Cette composition ne concerne qu’une partie des candidats de la filière MP. Les autres candidats effectuent parallèlement la composition d’informatique A.*
+
+*Pour la filière MP, il y a donc deux enveloppes de sujets, pour cette séance.*
+
+</details>
+
+<details>
+<summary>Consignes</summary>
+
+Cette épreuve comprend deux parties indépendantes. La première partie, dédiée aux sciences de l’ingénieur, propose une étude d’un exosquelette actif. La seconde, consacrée à la physique, s’intéresse à l’analyse de deux instabilités mécaniques présentant des similarités.
+
+➞ *Il est conseillé de ne pas consacrer plus de deux heures par partie.*
+
+➞ *Les applications numériques seront effectuées avec la précision qu’un calcul à la main permet aisément, et sans excéder deux chiffres significatifs. Les ordres de grandeur seront donnés avec un seul chiffre significatif.*
+
+➞ *Les réponses aux questions relevant de considérations qualitatives devront être systématiquement argumentées.*
+
+➞ *Les références des questions abordées devront être indiquées de façon claire.*
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1 Modélisation du coude humain.](#s1)
+- [2 Modélisation de l’interaction robot-humain.](#s2)
+- [3 Pilotage en boucle fermée de position.](#s3)
+
+</nav>
+
+**Partie Sciences de l’ingénieur**
+
+**Présentation.**
+
+Un exosquelette est une machine permettant à un humain de réaliser des actions en assistant ses mouvements. Les exosquelettes se présentent comme des dispositifs possédant des éléments rigides articulés entre eux dont l’architecture mécanique reproduit, avec une certaine fidélité, celle du squelette humain. Il existe deux grandes catégories d’exosquelettes : les exosquelettes actionnés, ou actifs, équipés de moteurs capables de fournir des efforts et les exosquelettes non-actionnés, ou passifs, qui utilisent des structures de type ressort qui permettent de stocker et de restituer de l’énergie.
+
+Dans ce sujet, on étudie l’exosquelette de bras ABLE développé depuis plusieurs années par le CEA LIST. Cet exosquelette a été utilisé récemment dans le cadre d’un projet européen visant à améliorer l’expérience de rééducation des patients victimes d’un AVC.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.8%', '--fig-max': '332px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-mp/p1-fig1.png" alt="Photographie d’un homme portant deux exosquelettes de bras ABLE-7D blancs, un sur chaque bras, les mains tenant des poignées." width="1038" height="720" loading="lazy" decoding="async" />
+<figcaption>Figure 1 – Utilisation de deux robots ABLE-7D dans le cadre du projet européen.</figcaption>
+</figure>
+
+L’exosquelette ABLE existe en plusieurs versions (1D, 4D, 7D) selon le nombre de degrés de liberté offerts (un exemple est donné sur la figure (**1**)). La figure (**2**) est une photographie de l’exosquelette ABLE 1D où sont définis les éléments qui le constituent.
+
+On ne s’intéressera qu’au seul degré de liberté de flexion/extension du coude, le bras étant fixe et vertical.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '63.5%', '--fig-max': '407px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-mp/p1-fig2.png" alt="Photographie de l’exosquelette ABLE 1D avec des flèches rouges désignant : « Articulations fixes », « Support contenant la motorisation », « Attache du bras », « Articulation », « Coulisse articulée », « Chariot avec attache de l’avant-bras »." width="1271" height="1365" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – Description de l’exosquelette ABLE 1D.</figcaption>
+</figure>
+
+La particularité de l’exosquelette ABLE réside dans les actionneurs dont il est équipé. Ceux-ci utilisent un système de vis/écrou et de câbles pour transmettre les efforts du moteur électrique vers les articulations. Ces actionneurs réversibles peuvent être placés loin des articulations permettant ainsi d’alléger les différentes parties de l’exosquelette. Dans tout le sujet, on appellera *robot* l’exosquelette à un degré de liberté.
+
+*L’objectif de l’étude proposée est de déterminer la commande des moteurs de l’exosquelette permettant de rendre l’interaction avec l’humain la plus fluide possible.*
+
+<ProblemSection id="s1">
+
+### 1 Modélisation du coude humain.
+
+Reportons-nous à la figure (**3**). On associe au bras **0**, supposé fixe, le repère $R_0 = (O,\overrightarrow{x},\overrightarrow{y_0},\overrightarrow{z_0})$. On associe à l’avant-bras **1** le repère $R_1 = (O,\overrightarrow{x},\overrightarrow{y_1},\overrightarrow{z_1})$ tel que $\theta_1 = (\overrightarrow{y_0},\overrightarrow{y_1}) = (\overrightarrow{z_0},\overrightarrow{z_1})$, $\theta_1 \in ]-90^{\circ},90^{\circ}[$.
+
+Le centre de masse $G_1$ de l’avant-bras **1** est défini par le vecteur $\overrightarrow{OG_1} = l_1\overrightarrow{y_1}$. On note $m_1$ la masse de l’avant-bras et de la main et $J_1$ son moment d’inertie autour de l’axe $(O,\overrightarrow{x})$. L’accélération de la pesanteur est notée $\overrightarrow{g} = -g\overrightarrow{z_0}$. On introduit un couple de frottement visqueux $\overrightarrow{C}_{v1} = C_{v1}\overrightarrow{x} = -\nu_1\dfrac{\mathrm{d}\theta_1}{\mathrm{d}t}\overrightarrow{x}$ au niveau de l’articulation du coude. L’humain exerce un couple $C_1\overrightarrow{x}$ au niveau de l’articulation pour mettre en mouvement l’avant-bras.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '69.9%', '--fig-max': '448px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-mp/p1-fig3.png" alt="Schéma plan : le bras 0 vertical fixé au bâti, de vecteur z0 vers le haut, l’articulation O (axe x sortant) et l’avant-bras 1 en bleu, de O jusqu’à B, portant G1 ; vecteurs y0 horizontal et y1 le long de l’avant-bras, angle θ1 entre eux ; cote L entre O et B." width="1400" height="822" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Paramétrage du coude.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32%', '--fig-max': '205px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-mp/p1-fig4.png" alt="Image d’un buste humain de profil, bras le long du corps, avant-bras pointant l’index vers une cible ; angle θ du coude mesuré depuis l’horizontale repérée 0°, avec positions extrêmes en pointillés." width="640" height="829" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Situation expérimentale.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '49.9%', '--fig-max': '319px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-mp/p1-fig5.png" alt="Graphe de θ̇1 (°/s) de 0 à 200 en fonction du temps (s) de 0,00 à 1,25 : une bosse en cloche culminant vers 215 °/s à environ 0,53 s, entre 0,3 s et 0,85 s." width="998" height="450" loading="lazy" decoding="async" />
+<figcaption>Figure 5 – Dépendance de la vitesse angulaire $\dot{\theta}_1$ vis-à-vis du temps, pour une expérience type.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.3%', '--fig-max': '233px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-mp/p1-fig6.png" alt="Profil triangulaire de θ̇1 en fonction de t : montée linéaire de 0 à ωmax en T/2, puis descente linéaire jusqu’à 0 en T." width="727" height="548" loading="lazy" decoding="async" />
+<figcaption>Figure 6 – Profil de vitesse angulaire adopté.</figcaption>
+</figure>
+
+**1.** Sur la base du paramétrage qui a été fixé, établir une équation différentielle décrivant le mouvement de l’avant-bras. Préciser l’origine de cette équation.
+
+**2.** Comment cette équation est-elle modifiée si une masse ponctuelle $m$ est placée en bout de l’avant-bras (au point B) et déplacée par l’utilisateur ?
+
+• Afin d’être en mesure d’asservir correctement le mouvement de l’avant-bras, il est nécessaire de déterminer préalablement la valeur des paramètres intervenant dans cette équation.
+
+Il existe plusieurs techniques permettant de déterminer $J_1$ et $m_1l_1$. Pour mesurer le terme $m_1l_1$, on demande à un patient de se placer verticalement sur une plateforme d’effort. On réalise l’étude dans le plan $(O,\overrightarrow{y_0},\overrightarrow{z_0})$. On note $S$ le point de contact entre le patient et le sol. La plateforme permet de mesurer la force verticale, notée $F(t)\vec{z}_0$, et le moment en $S$, noté $M(t)\overrightarrow{x}$, exercés par le sol sur le patient. On mesure également $\overrightarrow{SO} = H\overrightarrow{z_0}$. Le patient doit alors garder le bras collé le long de son corps et opérer **lentement** une flexion/extension du coude.
+
+**3.** Représenter un schéma illustrant l’essai réalisé, en le paramétrant. Expliquer comment déterminer le terme $m_1l_1$ à partir des grandeurs mesurées par la plateforme.
+
+• On peut déterminer le terme $J_1$ avec la même expérience en demandant au patient de réaliser un mouvement particulier et en mesurant l’accélération angulaire du coude. L’expérience classique consiste à lui faire exécuter une flexion du coude à une vitesse naturelle, d’une position initiale vers une position finale pour laquelle l’index du patient se trouve au niveau d’une cible (se reporter à la figure (**4**)).
+
+La figure (**5**) donne un exemple de courbe de vitesse angulaire obtenue au cours de cette expérience.
+
+Il est nécessaire de modéliser le mouvement de l’avant-bras en vue de pouvoir reproduire cette expérience avec l’exosquelette et d’analyser différents pilotages. Le profil de vitesse angulaire quasi symétrique de la figure (**5**) est approché par une loi triangulaire, comme le représente la figure (**6**). La vitesse angulaire maximale est notée $\omega_{\max}$ et l’avant-bras évolue de la position initiale $-\theta_0$ à la position finale $\theta_0$, en un temps $T$.
+
+**4.** Déterminer une relation entre $\theta_0$, $\omega_{\max}$ et $T$. En déduire la valeur de la vitesse angulaire maximale $\omega_{\max}$ en $^{\circ}/\mathrm{s}$, pour $\theta_0 = 30^{\circ}$ et $T = 0{,}5\ \mathrm{s}$.
+
+</ProblemSection>
+
+<ProblemSection id="s2">
+
+### 2 Modélisation de l’interaction robot-humain.
+
+Sans défaut de positionnement, l’exosquelette serait confondu avec le coude et la motorisation de l’articulation de l’exosquelette reviendrait à agir directement sur la flexion/extension du coude.
+
+Il est nécessaire de mettre en place une cinématique particulière entre l’exosquelette et l’avant-bras pour permettre le mouvement et éviter tout problème de contrainte.
+
+Le schéma cinématique représenté sur la figure (**7**) décrit l’implantation du robot au niveau de l’avant-bras.
+
+Le bâti du robot est associé au bras **0**. On définit le point $O'$ par la relation $\overrightarrow{OO'} = -d\,(\cos\alpha\,\overrightarrow{y_0} + \sin\alpha\,\overrightarrow{z_0})$, où $d > 0$ et $\alpha = (\overrightarrow{y_0},\overrightarrow{O'O})$ tel que $0 < \alpha < \pi/2$ dans la configuration décrite par la figure (**7**). On associe le repère $R_2 = (O',\overrightarrow{x},\overrightarrow{y_2},\overrightarrow{z_2})$ au solide 2 mis en mouvement par la motorisation. Ce solide est en rotation autour de l’axe $(O',\overrightarrow{x})$ par rapport au solide **0** d’un angle $\theta_2 = (\overrightarrow{y_0},\overrightarrow{y_2}) = (\overrightarrow{z_0},\overrightarrow{z_2})$, $\theta_2 \in ]-90^{\circ},90^{\circ}[$. Le solide **3** est composé d’une glissière, de direction $\overrightarrow{y_2}$ et d’une tige reliant ce solide à l’avant-bras **1** par la liaison pivot située en A. En posant $\overrightarrow{OA} = L_1\overrightarrow{y_1}$ et $\overrightarrow{O'A} = \lambda\overrightarrow{y_2}$, on introduit la distance constante $L_1 = OA$ et la distance variable $\lambda = O'A$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '66.2%', '--fig-max': '424px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-mp/p1-fig7.png" alt="Schéma cinématique : deux bâtis 0 (points O et O′) avec vecteurs z0 ; l’avant-bras 1 en bleu de O à B passant par la pivot A ; le solide 2 en rouge tournant autour de O′ (vecteur y2, angle θ2) ; le solide 3 en vert (glissière sur 2 et tige reliée à A) ; vecteurs y0, y1, angle θ1, axe x sortant." width="1325" height="966" loading="lazy" decoding="async" />
+<figcaption>Figure 7 – Implantation de l’exosquelette (représenté ici dans une position où les angles $\theta_1$ et $\theta_2$ sont négatifs).</figcaption>
+</figure>
+
+**5.** Déterminer une relation entre $\theta_1$ et $\theta_2$, fonction de $d$, $L_1$ et $\alpha$.
+
+**6.** En pratique, $d \ll L_1$. Montrer alors que $\theta_2 \approx \theta_1$.
+
+Dans toute la suite du problème nous nous placerons dans la situation telle que $d \ll L_1$. Nous considérerons alors que $\theta_1 = \theta_2$, angle que nous noterons simplement $\theta$.
+
+• Le moteur de l’exosquelette doit permettre de mettre en mouvement l’avant-bras et d’assurer toute la chaîne cinématique. C’est pourquoi il est nécessaire de modifier l’équation de mouvement établie initialement pour tenir compte de l’exosquelette.
+
+On conserve le paramétrage défini dans la première partie et on ajoute les paramètres cinétiques de l’exosquelette. On note $J_2$ le moment d’inertie du solide **2** autour de l’axe $(O',\overrightarrow{x})$, $m_2$ la masse du solide **2** et $G_2$ son centre de masse tel que $\overrightarrow{O'G_2} = l_2\overrightarrow{y_2}$. On suppose négligeables la masse et l’inertie du solide **3**. Le moteur exerce un couple $C_2\overrightarrow{x}$ sur le solide **2**. On introduit un coefficient de frottement fluide $\nu_2$ relatif à la liaison pivot 2/0. L’action des frottements secs sur cette liaison est modélisée par un couple $-C_s\overrightarrow{x}$ supposé constant. Les autres liaisons sont supposées énergétiquement parfaites.
+
+**7.** Déterminer la puissance des efforts extérieurs et la puissance intérieure, en précisant les différents termes qui interviennent.
+
+**8.** Déterminer l’énergie cinétique de l’ensemble en mouvement.
+
+**9.** Montrer, en précisant le théorème utilisé et le système étudié, que l’équation de mouvement obtenue prend la forme suivante :
+
+$$
+J\ddot{\theta} + \nu\dot{\theta} + f(\theta) = C_1 + C_2 - C_s \qquad (3)
+$$
+
+On donnera l’expression des paramètres $J$ et $\nu$, et de la fonction $f$.
+
+• Le moteur à courant continu de l’articulation du coude est piloté en courant de telle sorte que c’est directement le couple $C_2$ qui est contrôlé. Pour établir un modèle de commande de l’exosquelette, il est nécessaire de disposer d’une relation linéaire. Pour cela, on s’intéresse aux variations d’angle autour de la position $0^{\circ}$ (des variations de $\pm 30^{\circ}$ restent acceptables). On note $C_2 = C_0 + \Delta C$ le couple appliqué par le moteur où $C_0$ est le couple d’équilibre et $\Delta C$ son écart à la valeur d’équilibre. On suppose ici que $C_1 = 0$.
+
+**10.** Déterminer la relation linéaire reliant $\theta$ et $\Delta C$. Préciser l’expression de $C_0$.
+
+</ProblemSection>
+
+<ProblemSection id="s3">
+
+### 3 Pilotage en boucle fermée de position.
+
+Nous avons mentionné, dans la partie introductive, quelles étaient les deux situations d’utilisation d’un exosquelette. Dans un cas, l’utilisateur est passif (i.e. il ne fournit pas d’effort). Les propriétés mécaniques (raideur, inertie, amortissement) de son avant-bras doivent être prises en compte dans la commande. Ce sont les exosquelettes d’assistance complète, dans le cas de rééducation notamment. Dans l’autre situation, l’utilisateur est actif. Ses actions doivent être prises en compte dans la commande comme un contrôle volontaire.
+
+La commande classique utilisée consiste à réaliser un asservissement de position de l’exosquelette incluant un asservissement de vitesse. L’angle $\theta$ est mesuré par un capteur (un codeur incrémental) de gain unitaire. La vitesse angulaire $\omega = \mathrm{d}\theta/\mathrm{d}t$ est calculée à partir du signal mesuré par le codeur incrémental.
+
+La consigne de position angulaire $\theta_c$ est, soit fixée (cas d’un utilisateur passif), soit estimée à partir du mouvement souhaité par l’utilisateur. Dans les deux cas, l’évolution de $\theta_c$ suit la forme de la loi donnée en première partie, par intégration de la courbe présentée sur la figure (**6**).
+
+Le correcteur relatif à la boucle interne de vitesse est un correcteur proportionnel-intégral de fonction de transfert :
+
+$$
+H_c(p) = \frac{K_p(1+\tau_i p)}{\tau_i p} \qquad (4)
+$$
+
+Celui pour la boucle de position est modélisé par un simple gain proportionnel $K$. La sortie du correcteur pour la boucle de vitesse correspond directement au couple $\Delta C$ de commande.
+
+On adopte les valeurs suivantes : $J = 0{,}15\ \mathrm{kg{\cdot}m^2}$ et $\nu = 0{,}015\ \mathrm{N{\cdot}m{\cdot}s{\cdot}rad^{-1}}$.
+
+Le cahier des charges à satisfaire est le suivant :
+
+| Critères | Niveaux |
+| --- | --- |
+| **Stabilité** : Marge de phase | $\geq 45^{\circ}$ |
+| **Rapidité** | optimale ($t_{5\%} \leq 0{,}2\,\mathrm{s}$) |
+| **Précision** | |
+| Erreur en position (en réponse à un échelon unitaire) | nulle |
+| Erreur en vitesse (en réponse à une rampe unitaire ) | $\leq 0{,}9$ rad/s |
+| Erreur en accélération (en réponse à une parabole unitaire) | finie |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.8%', '--fig-max': '466px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-mp/p1-fig8.png" alt="Deux graphes en fonction du temps (s) de 0 à 1. En haut : angle (°) de −10 à 70, courbes « Angle consigne (°) » (tirets), « Angle réel sans masse (°) » (trait plein) et « Angle réel avec masse (°) » (pointillés), toutes tendant vers 60°, la courbe avec masse dépassant à environ 65°. En bas : vitesse (°/s) de −100 à 300, courbes « Vitesse souhaitée (°/s) » (triangle culminant vers 240 à 0,25 s), « Vitesse réelle sans masse (°/s) » et « Vitesse réelle avec masse (°/s) » (pic vers 265, oscillations jusqu’à −60)." width="1457" height="1446" loading="lazy" decoding="async" />
+<figcaption>Figure 8 – Courbes de position et de vitesse angulaire simulées, avec et sans masse portée en bout de bras.</figcaption>
+</figure>
+
+**11.** Mettre en place un schéma-bloc qui traduit l’équation linéarisée et le principe de la boucle de vitesse interne à la boucle de position pour représenter ce modèle de commande en boucle fermée de position.
+
+**12.** Rappeler quelle information brute donne un codeur incrémental et comment il est possible d’en déduire la vitesse angulaire.
+
+• On règle, dans un premier temps, la boucle de vitesse de manière à ce que la fonction de transfert en boucle fermée $BF_{\omega}(p)$, de cette boucle interne, corresponde à une fonction de transfert du premier ordre de constante de temps égale à $\tau = 0{,}05$ s et de gain unitaire.
+
+**13.** En utilisant la méthode de réglage du correcteur proportionnel-intégral par compensation de pôle, indiquer quelle expression prendre pour $\tau_i$ en fonction de $J$ et $\nu$. En déduire alors que $BF_{\omega}(p)$ est bien une fonction du premier ordre. Déterminer la valeur de $K_p$ pour obtenir la constante de temps souhaitée.
+
+La fonction de transfert en boucle ouverte de la boucle de position (avec retour unitaire) est donc de la forme suivante :
+
+$$
+BO_{\theta}(p) = \frac{K}{(1+\tau p)p} \qquad \text{où} \quad \tau = 0{,}05\ \mathrm{s} \quad \text{, compte-tenu du réglage précédent.} \qquad (5)
+$$
+
+**14.** Justifier que la réponse est précise pour une entrée en échelon. Donner l’erreur pour une entrée en rampe unitaire puis pour une entrée en parabole. Que peut-on conclure vis-à-vis du cahier des charges ?
+
+**15.** Déterminer la valeur de $K$ permettant d’obtenir la marge de phase indiquée dans le cahier des charges. Faire l’application numérique.
+
+**16.** Déterminer la valeur de $K$ permettant d’obtenir une réponse en boucle fermée la plus rapide possible (il peut y avoir un dépassement).
+
+• On retient la valeur de $K$ la plus grande permettant de respecter la marge de phase. On réalise alors une simulation où une consigne angulaire, correspondant au profil de vitesse angulaire représenté sur la figure (**6**), est imposée et on relève l’évolution de l’angle de l’avant-bras et la vitesse angulaire au cours du temps. On réalise une autre simulation pour laquelle une masse $m = 2$ kg est portée en bout de bras. On obtient les réponses représentées sur la figure (**8**).
+
+**17.** Commenter la qualité de l’asservissement réalisé en analysant la précision, la rapidité et l’amortissement sur la courbe de position. Indiquer quel(s) critère(s) est/sont dégradé(s) par la levée de la masse et expliquer succinctement pourquoi.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2025.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2025.pdf#page=2)

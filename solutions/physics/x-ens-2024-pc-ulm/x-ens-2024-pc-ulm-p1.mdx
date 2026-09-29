@@ -1,0 +1,166 @@
+---
+id: x-ens-2024-pc-ulm-p1
+source: 'X-ENS 2024, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 1. Un atome dans un piège optique'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2024/x-ens-2024-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:16.923Z'
+verifier: 'mechanical'
+---
+
+*ECOLES NORMALES SUPERIEURES · CONCOURS D’ADMISSION 2024 · FILIERE PC - Epreuve n° 7 · PHYSIQUE C (U) · 18 април 2024 г.*
+
+<Warning title="Бележка към темата">
+Le fichier d’archive ne contient que l’énoncé ; aucun corrigé officiel.
+</Warning>
+
+<details>
+<summary>Consignes</summary>
+
+JEUDI 18 AVRIL 2024 — 08h00 - 14h00
+
+*Durée : 6 heures*
+
+*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve*
+
+</details>
+
+<details>
+<summary>Début de l’épreuve</summary>
+
+*Ce sujet comporte 13 pages numérotées de 1 à 13.*
+
+</details>
+
+<details>
+<summary>Consignes et indications générales</summary>
+
+- *On néglige la gravité dans tout le sujet.*
+- *Aucune question ne fait appel à la mécanique quantique.*
+- *La justification des réponses et des étapes de raisonnement est prise en compte dans la notation.*
+- *Pour les questions ouvertes appelant une justification ou une discussion, la longueur de la réponse attendue est entre quelques mots et quelques lignes (mais les réponses plus longues ne sont pas sanctionnées).*
+- *Il est parfois demandé de vérifier que l’on retrouve une expression déjà obtenue dans une question précédente, ce qui peut aider à détecter et corriger d’éventuelles erreurs.*
+
+</details>
+
+<details>
+<summary>Notations et conventions</summary>
+
+- $(Oxyz)$ est un repère orthonormé, fixe dans le référentiel du laboratoire considéré comme un référentiel galiléen. Les vecteurs unitaires associés sont notés $(\vec{u}_x, \vec{u}_y, \vec{u}_z)$.
+- Élément de volume : $d\tau = dx\,dy\,dz$.
+- Norme d’un vecteur : $A = \|\vec{A}\|$.
+- $\dot{f}$ désigne la dérivée temporelle $\dfrac{df}{dt}$ d’une fonction $f(t)$, et $\ddot{f} = \dfrac{d^2f}{dt^2}$.
+- Pour une fonction $f(\vec{r})$ qui ne dépend pas de la direction de $\vec{r}$, on pourra noter $f(r)$ au lieu de $f(\vec{r})$.
+- « Positif » signifie « supérieur ou égal à zéro ».
+
+</details>
+
+<details>
+<summary>Formulaire</summary>
+
+En coordonnées sphériques :
+
+$$
+\begin{aligned} \overrightarrow{\mathrm{grad}}\, f &= \frac{\partial f}{\partial r}\,\vec{u}_r + \frac{1}{r}\,\frac{\partial f}{\partial \theta}\,\vec{u}_\theta + \frac{1}{r\,\sin\theta}\,\frac{\partial f}{\partial \varphi}\,\vec{u}_\varphi ,\\ \mathrm{div}\,\vec{A} &= \frac{1}{r^2}\,\frac{\partial}{\partial r}\left(r^2 A_r\right) + \frac{1}{r\,\sin\theta}\,\frac{\partial}{\partial \theta}\left(\sin\theta\; A_\theta\right) + \frac{1}{r\,\sin\theta}\,\frac{\partial A_\varphi}{\partial \varphi} . \end{aligned}
+$$
+
+$$
+\mathrm{div}\left(f\,\vec{A}\right) = \overrightarrow{\mathrm{grad}}\, f \cdot \vec{A} + f\,\mathrm{div}\,\vec{A}
+$$
+
+</details>
+
+<details>
+<summary>Données numériques</summary>
+
+Masse molaire du lithium 6 : $M\left({}^{6}\mathrm{Li}\right) = 6{,}02\ \mathrm{g\cdot mol^{-1}}$
+
+Nombre d’Avogadro : $\mathscr{N}_A = 6{,}02 \times 10^{23}\ \mathrm{mol^{-1}}$
+
+$k = 1{,}02 \times 10^{-18}\ \mathrm{kg\cdot s^{-2}}$
+
+$\sigma = 60\ \mu\mathrm{m}$
+
+</details>
+
+<details>
+<summary>Увод</summary>
+
+On appelle « système de particules en interaction » un système composé de $N$ particules interagissant entre elles. Il peut s’agir par exemple de molécules dans un gaz ou un liquide, d’électrons et d’ions dans un plasma, ou encore d’étoiles dans une galaxie.
+
+D’ordinaire, ces systèmes ont les caractéristiques suivantes. Dès que $N > 2$, il est impossible d’obtenir des résultats exacts sur l’évolution en fonction du temps des positions des $N$ particules par des calculs analytiques, c’est-à-dire sans utiliser de simulations numériques. Cependant, lorsque $N$ est grand, le comportement du système devient plus simple à décrire. Au bout d’un certain temps, le système atteint un état d’équilibre, décrit par la thermodynamique ou la statique des fluides. Ceci est vrai même si le système n’échange pas de chaleur avec son environnement. Pour décrire cet état d’équilibre aux échelles macroscopiques ou mésoscopiques, il suffit de connaître quelques fonctions qui relient entre elles des grandeurs thermodynamiques telles que la pression, la température ou l’énergie interne. La détermination de ces fonctions nécessite de construire des tableaux de données à partir de mesures expérimentales ou de simulations numériques (à la différence d’un gaz parfait, pour lequel ces fonctions ont des expressions connues). De plus, l’évolution d’un fluide en fonction du temps peut être décrite par la mécanique des fluides, qui fait intervenir quelques grandeurs supplémentaires telles que la viscosité dynamique. Ces grandeurs (appelées coefficients de transport) sont des fonctions des grandeurs thermodynamiques, et la détermination de ces fonctions nécessite là encore de construire des tableaux de données à partir d’expériences ou de simulations numériques.
+
+Certains systèmes particuliers de particules en interaction possèdent des propriétés qui font exception à une ou plusieurs des caractéristiques énoncées dans le paragraphe précédent : on qualifiera de telles propriétés de *propriétés extraordinaires*.
+
+Nous serons amenés à rencontrer de telles propriétés extraordinaires dans les parties 3 et 4. Alors que le système étudié en partie 3 n’a pas à ce jour de réalisation expérimentale, la partie 4 est reliée à des expériences actuelles avec des gaz froids. La partie 1 concerne la réalisation d’un piège optique pouvant servir dans ces expériences. Les parties suivantes sont indépendantes de la partie 1, à l’exception de deux questions où un lien avec la partie 1 sera indiqué dans l’énoncé. La partie 2 concerne un problème à une particule dont l’étude est utile pour les parties 3 et 4.
+
+</details>
+
+## Условие
+
+Dans cette partie, on considère un atome de masse $m$, de vecteur position $\vec{r} = x\,\vec{u}_x + y\,\vec{u}_y + z\,\vec{u}_z$. L’atome est soumis à une force conservative $\vec{F}$. On note $U(\vec{r})$ l’énergie potentielle associée à cette force $\vec{F}$.
+
+**1)** Dans cette question on suppose que $U$ est de la forme
+
+$$
+U(\vec{r}) = U(r) = U_0 + \frac{1}{2}\,k\,r^2 \qquad (1)
+$$
+
+où $U_0$ et $k$ sont des constantes et $k > 0$. On pose $\omega = \sqrt{\dfrac{k}{m}}$.
+
+**a)** Montrer que chacune des fonctions $x(t)$, $y(t)$ et $z(t)$ vérifie une équation différentielle.
+
+**b)** On note $\vec{v}(0)$ la vitesse de l’atome à $t = 0$. Exprimer $\vec{r}(t)$ en fonction de $t$, $\omega$, $\vec{r}(0)$ et $\vec{v}(0)$.
+
+Dans la suite de cette partie, on considère que la force $\vec{F}$ est due à l’effet de faisceaux laser, et on admet que l’énergie potentielle est
+
+$$
+U(\vec{r}) = -\,\gamma\,\left\langle \|\vec{E}(\vec{r},t)\|^2 \right\rangle
+$$
+
+où $\gamma$ est une constante strictement positive, $\vec{E}(\vec{r},t)$ est le champ électrique, et $\left\langle \|\vec{E}(\vec{r},t)\|^2 \right\rangle$ désigne la moyenne temporelle (aussi appelée moyenne dans le temps) de $\|\vec{E}(\vec{r},t)\|^2$ à $\vec{r}$ fixé.
+
+On utilise simultanément trois faisceaux laser. On admet que les champs électriques associés à chacun des trois faisceaux sont :
+
+$$
+\begin{aligned} \vec{E}_1(\vec{r},t) &= a(y,z)\,\cos(q\,x - \Omega\,t + \varphi_1)\,\vec{u}_y \\ \vec{E}_2(\vec{r},t) &= a(x,z)\,\cos(q\,y - \Omega\,t + \varphi_2)\,\vec{u}_z \\ \vec{E}_3(\vec{r},t) &= a(x,y)\,\cos(q\,z - \Omega\,t + \varphi_3)\,\vec{u}_x \end{aligned}
+$$
+
+où la fonction $a$ est définie par
+
+$$
+a(X,Y) = \mathscr{E}\,\exp\left(-\frac{X^2+Y^2}{\sigma^2}\right)
+$$
+
+et où $\mathscr{E}$, $\sigma$, $q$, $\Omega$, $\varphi_1$, $\varphi_2$ et $\varphi_3$ sont des paramètres constants, avec $\mathscr{E}$, $\sigma$, $q$ et $\Omega$ strictement positifs (la longueur de Rayleigh n’apparaît pas car elle peut être considérée comme infinie).
+
+**2)** Pour chacun des trois faisceaux, indiquer la direction et le sens de propagation ainsi que la polarisation de la lumière correspondants.
+
+**3)** Exprimer $U(\vec{r})$ en fonction de $x$, $y$, $z$, $\gamma$, $\mathscr{E}$ et $\sigma$.
+
+**4)** Montrer que si $r \ll \sigma$, alors
+
+$$
+U(\vec{r}) - U(\vec{0}) \approx \frac{1}{2}\,k\,r^2 \qquad (2)
+$$
+
+où l’on exprimera $k$ en fonction de $\gamma$, $\mathscr{E}$ et $\sigma$.
+
+**5)** On considère un atome de lithium 6. On utilisera les données numériques figurant en bas de la page 1, en particulier la valeur de $k$.
+
+**a)** On fait l’hypothèse que pour décrire le mouvement de l’atome, on peut remplacer $U(\vec{r})$ par son expression approchée donnée par l’équation (2). Déterminer la valeur numérique de la période du mouvement $\tau$ avec un chiffre significatif.
+
+**b)** En $t = 0$, l’atome se trouve à l’origine avec une vitesse $v(0) = 1\ \mathrm{cm/s}$. L’hypothèse faite à la question **5a** est-elle légitime ?
+
+**6)** Dans toute cette question, on considère une situation où les polarisations des faisceaux ne sont pas parfaitement contrôlées, tandis que les phases $\varphi_1, \varphi_2$ et $\varphi_3$ sont toujours fixées. Citer un effet qui apparaît alors et qui modifie le résultat obtenu à la question **3**. Proposer une modification des caractéristiques des faisceaux permettant d’éliminer cet effet et de retrouver le résultat de la question **3**. On pourra répondre brièvement et sans calculs.
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2024_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2024_ulm.pdf#page=3)

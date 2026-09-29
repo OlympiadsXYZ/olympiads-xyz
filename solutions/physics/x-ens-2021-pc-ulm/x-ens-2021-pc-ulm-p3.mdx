@@ -1,0 +1,217 @@
+---
+id: x-ens-2021-pc-ulm-p3
+source: 'X-ENS 2021, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 3. Documents'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2021/x-ens-2021-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:59:37.678Z'
+verifier: 'mechanical'
+---
+
+*ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2021 — FILIERE PC - Epreuve n° 7 — PHYSIQUE C (U) · 15 април 2021 г.*
+
+<details>
+<summary>Page de garde</summary>
+
+JEUDI 15 AVRIL 2021, 08h00 - 14h00
+
+*Durée : 6 heures*
+
+*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve*
+
+</details>
+
+<details>
+<summary>L’eau dans l’atmosphère</summary>
+
+Ce sujet comprend 22 pages numérotées de 1 à 22.
+
+La présence d’eau dans l’atmosphère joue un rôle majeur dans le climat terrestre. L’eau est en effet le principal gaz à effet de serre de l’atmosphère terrestre. D’autre part, des effets thermiques importants sont associés aux changements de phase de l’eau. Enfin, les nuages modifient significativement l’albédo de l’atmosphère. Dans ce problème, nous étudierons uniquement des conséquences des deux premiers effets, et nous n’étudierons pas explicitement les nuages.
+
+Le but de ce problème est de comprendre le profil vertical de température dans l’atmosphère, ainsi que son évolution avec la modification de la concentration en dioxyde de carbone dans l’atmosphère. Nous utiliserons des modèles très simplifiés, mais qui permettent de comprendre les mécanismes physiques en jeu, ainsi que de déterminer des valeurs numériques approchées.
+
+Nous considérons pour simplifier tout au long de ce sujet que l’eau dans l’atmosphère est uniquement présente sous forme de vapeur et sous forme liquide : la présence de cristaux de glace est négligée.
+
+**Consignes :**
+
+Toutes les réponses doivent être justifiées de manière précise et concise. Il faut citer les lois physiques utilisées. Les réponses aux questions doivent être autant que possible appuyées sur les documents et des applications numériques
+
+Lorsqu’un document est utilisé, il faut citer le numéro du document et expliquer comment l’information est extraite de celui-ci. Pour les textes, il faut mentionner les lignes où se trouvent les informations. Pour les courbes, il faut donner les valeurs lues sur les courbes avant d’utiliser ces valeurs dans les raisonnements.
+
+Il faut définir les notations et les abréviations qui ne le sont pas dans l’énoncé.
+
+Les calculatrices sont strictement interdites. Sauf mention contraire, les applications numériques doivent être effectuées avec 1 chiffre significatif.
+
+**Plan :**
+
+Des données sont fournies en partie 1. Il s’agit de représentations de fonctions utiles (partie 1.1), de données numériques (partie 1.2), et d’indications concernant l’identité thermodynamique (partie 1.3) et le rayonnement thermique (partie 1.4).
+
+La courbe de saturation de l’eau est calculée en partie 2. Des documents utiles pour la suite sont présentés en partie 3. Les profils verticaux de température, pression, concentration sont étudiés en partie 4, en négligeant tout effet radiatif. La partie 5 discute des effets radiatifs, d’abord en négligeant la convection puis en étudiant le couplage entre les effets radiatifs et de convection.
+
+Ces différentes parties ne sont pas indépendantes et il est vivement conseillé de traiter les questions dans l’ordre proposé. Cependant, le début de chacune des parties 4.1, 4.4, 5.1 et 5.2 est indépendant des questions précédentes.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [3.1 Atmosphère](#s3-1)
+- [3.2 Convection](#s3-2)
+- [3.3 Composition de l’air sec](#s3-3)
+- [3.4 Eau dans l’atmosphère](#s3-4)
+- [3.5 Effet de serre](#s3-5)
+
+</nav>
+
+Cette partie présente des documents utiles pour tout le problème. Elle ne comporte pas de questions. Il est conseillé de passer 10 minutes à une première lecture des documents, puis d’y revenir par la suite lorsque cela est pertinent.
+
+Remarque : les différents documents présentés dans ce problème sont globalement cohérents. Cependant, ils proviennent de sources différentes, avec des choix de modélisation ou des méthodes et des zones de mesures différentes. Il ne faut donc pas s’attendre à des accords parfaits sur les détails.
+
+<ProblemSection id="s3-1">
+
+### 3.1 Atmosphère
+
+Dans le cosmos, la plupart des astres sont entourés d’une enveloppe essentiellement gazeuse qui constitue leur atmosphère. En l’absence d’autre précision, ce terme s’applique naturellement à l’atmosphère terrestre, qui est composée d’air dans lequel flottent de nombreuses particules solides ou liquides d’origine très diverse (eau condensée, aérosols).
+
+En fait, notre atmosphère est divisée en plusieurs couches caractérisées entre autres par leur profil thermique vertical (ou profil vertical de température), c’est-à-dire par la façon dont la température de l’air y croît, décroît ou reste constante lorsqu’on s’élève en altitude. Ainsi, le domaine de la basse atmosphère s’identifie à la troposphère, riche en vapeur d’eau et en nuages, et au sein de laquelle la température décroît dans l’ensemble assez régulièrement avec l’altitude. L’épaisseur de cette troposphère se réduit avec la latitude : son ordre de grandeur est la dizaine de km dans les régions tempérées, mais se réduit à 7 km aux pôles alors qu’il frôle la vingtaine de km au-dessus de la zone équatoriale.
+
+Vient ensuite le domaine de la moyenne atmosphère, qui superpose la stratosphère - jusqu’à une cinquantaine de km d’altitude - et la mésosphère. L’air y garde une composition identique à celle de la basse atmosphère (hormis le cas de l’ozone et celui de l’eau, réduite à un gaz à l’état de traces) et voit ses mouvements régis par les mêmes lois qu’elle. Cependant, les réactions photochimiques induites par la présence d’ozone stratosphérique fournissent à l’air un apport de chaleur, de sorte que lorsqu’on s’élève dans la stratosphère, la température devient d’abord constante, puis se met à croître ; ce n’est que plus haut, dans la mésosphère, que le profil thermique vertical est à nouveau décroissant.
+
+Au-delà débute le domaine de la haute atmosphère où, dans la thermosphère, des transformations physiques et chimiques affectent de plus en plus profondément un air devenu très raréfié et soumis à une température considérablement croissante avec l’altitude. La thermosphère est prolongée par l’exosphère, où l’altitude est désormais suffisante pour qu’une part notable des particules ionisées constituant alors l’atmosphère échappe à l’attraction de la gravitation terrestre.
+
+On peut ainsi considérer que l’épaisseur de l’enveloppe atmosphérique ne va pratiquement pas au-delà de 1 500 km, ce qui dépasse tout de même de très loin la pellicule d’air où se situent la grande majorité des phénomènes météorologiques, lesquels restent enserrés dans la troposphère et la basse stratosphère. Cependant, la décroissance rapide de la pression atmosphérique avec l’altitude a pour conséquence que les neuf dixièmes de la masse de l’atmosphère se situent en dessous de 16 km d’altitude, et les quatre-vingt-dix-neuf centièmes en dessous de 30 km : on peut donc affirmer que la majeure partie de cette masse ressortit au domaine d’études de la météorologie, entendue au sens courant.
+
+L’atmosphère est cette mince enveloppe gazeuse qui entoure notre planète ; elle n’est pas du tout immobile par rapport à la Terre ; elle est au contraire animée en permanence de mouvements divers.
+
+Ces mouvements de l’atmosphère présentent des caractéristiques extrêmement variables :
+
+- parfois, c’est une agréable brise qui vient nous rafraîchir, par un bel après-midi d’été, quand nous sommes en bord de mer ;
+
+- parfois, ce sont des vents violents qui balaient une grande partie de la France en s’enroulant autour d’une vaste zone de basses pressions ; de temps en temps ces vents sont si violents qu’ils peuvent déraciner les arbres et faire s’envoler les toits ;
+
+- et, parfois, ces mouvements de l’atmosphère se présentent sous la forme d’ascendances rapides, avec des vitesses verticales de l’ordre de 10 m/s ; ces ascendances sont localisées, se produisant sur une surface horizontale peu étendue, de l’ordre du kilomètre carré, et elles peuvent donner naissance à un nuage d’orage, le célèbre cumulonimbus.
+
+*Source : Météo France*
+
+</ProblemSection>
+
+<ProblemSection id="s3-2">
+
+### 3.2 Convection
+
+Dans un sens général, plus large que ceux auxquels se restreint la météorologie, la convection désigne l’ensemble des mouvements internes qui animent un fluide et qui impliquent par conséquent le transport des propriétés des parcelles de ce fluide au cours de son déplacement. En météorologie, cependant, les caractéristiques des mouvements de l’atmosphère sont profondément différentes suivant que l’on envisage le transport horizontal des propriétés de l’air ou leur transport vertical : le premier concerne couramment des trajets de plusieurs centaines ou plusieurs milliers de kilomètres et est gouverné en premier lieu par la pression atmosphérique qui détermine le champ de vent, alors que le second, pratiquement limité à l’épaisseur de la troposphère - soit une dizaine à une vingtaine de kilomètres d’altitude - , est d’abord lié aux répartitions verticale et horizontale de la température et aux phénomènes d’instabilité qui peuvent en résulter. C’est pourquoi, au sens météorologique, l’emploi du terme "convection" se limite au transport vertical des propriétés de l’air, le transport horizontal desdites propriétés étant désigné par un autre terme : l’advection (il s’agit en fait de l’advection horizontale).
+
+En réalité, il est très usuel en météorologie de ne recourir à ce terme de convection que dans un sens encore plus restreint, celui des mouvements verticaux ayant pour seule origine un profil vertical de température générateur d’instabilité (du fait de ce genre de profil, la poussée d’Archimède, qui tire la parcelle d’air vers le haut, excède le poids de la parcelle, qui l’entraîne vers le bas). Du reste, cette catégorie d’instabilité est appelée instabilité convective, et les processus ou les phénomènes qu’elle est capable de générer à certaines échelles spatio-temporelles sont qualifiés tout simplement de convectifs ; ils sont pourtant loin de représenter l’ensemble des processus et des phénomènes caractérisés par des mouvements verticaux : mais c’est parmi eux que se trouvent des phénomènes clés de la météorologie, comme par exemple les brises, les orages, les cyclones tropicaux ou les moussons.
+
+*Source : Météo France*
+
+</ProblemSection>
+
+<ProblemSection id="s3-3">
+
+### 3.3 Composition de l’air sec
+
+| Gaz | Proportion en volume |
+|---|---|
+| Diazote N$_2$ | 78,084% |
+| Dioxygène O$_2$ | 20,948% |
+| Argon Ar | 0,9340% |
+| Dioxyde de carbone CO$_2$ | 410 ppm |
+| Néon Ne | 18,18 ppm |
+| Hélium He | 5,24 ppm |
+| Méthane CH$_4$ | 1,7 ppm |
+
+Table 1 – Composition de l’air sec en 2020, au niveau du sol. ppm : parties par million : 410 ppm pour le CO$_2$ signifie que sur un million de molécules de gaz, 410 sont du CO$_2$. Seuls les principaux gaz sont indiqués. Source : [1].
+
+**3.3.1 Atmosphère standard**
+
+Les profils correspondants à l’atmosphère standard sont donnés en figure 4.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '78.1%', '--fig-max': '500px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc-ulm/p3-fig1.png" alt="Cinq profils en fonction de l’altitude (0 à 50 km) : (a) température (K, de 220 à 280) décroissant de 288 K au sol jusqu’à environ 217 K à la tropopause vers 11 km (ligne pointillée, zones Troposphère, Tropopause, Stratosphère), constante jusqu’à 20 km puis croissante ; (b) pression (hPa, échelle log de 10^0 à 10^3) ; (c) masse volumique (kg.m^-3, échelle log de 10^-3 à 10^0) ; (d) vapeur d’eau (kg.m^-3, échelle log de 10^-7 à 10^-3) ; (e) ozone (kg.m^-3, échelle log autour de 10^-8 à 10^-7) avec un maximum vers 20–25 km." width="1564" height="1938" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Température, pression, masse volumique totale, masse volumique de vapeur d’eau, masse volumique d’ozone en fonction de l’altitude. Ces donnés constituent l’atmosphère standard, qui est représentative des profils mesurés aux latitudes moyennes. **Valeur intégrée verticalement de la quantité de vapeur d’eau** : $14{,}4\ \mathrm{kg \cdot m^{-2}}$. Sources : ”U.S. Standard Atmosphere” (1976) et [1].</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="s3-4">
+
+### 3.4 Eau dans l’atmosphère
+
+La proportion d’eau dans l’air varie beaucoup, typiquement entre 0,5% et 5% en volume. L’humidité relative est définie comme la pression partielle de vapeur d’eau divisée par la pression partielle de vapeur d’eau à saturation, à la température considérée. Des valeurs typiques de cette humidité relative sont données en figure 5.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.7%', '--fig-max': '363px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc-ulm/p3-fig2.png" alt="Deux cartes d’isovaleurs de l’humidité relative (%) en fonction de la latitude (90 à 0, axe LATITUDE) et de l’altitude (0 à 5 km) : en haut « été », isolignes de 40 à 80 ; en bas « hiver », isolignes de 35 à 80. L’humidité décroît avec l’altitude, avec un minimum vers 30–40° de latitude." width="1135" height="955" loading="lazy" decoding="async" />
+<figcaption>Figure 5 – Humidité relative moyenne en %, en fonction de la latitude et de l’altitude, dans l’hémisphère Nord. La latitude de 90 correspond au pôle Nord, celle de 0 à l’équateur. Figure du haut : valeurs en été, figure du bas : valeurs en hiver. Source : [4].</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="s3-5">
+
+### 3.5 Effet de serre
+
+Des données sur des gaz à effet de serre de l’atmosphère sont présentées dans les tableaux 2 et 3.
+
+| Gaz | Contribution (en %) |
+|---|---|
+| Eau | 60 |
+| CO$_2$ | 26 |
+| CH$_4$ et N$_2$O | 8 |
+| O$_3$ | 6 |
+
+Table 2 – Contribution relative des différents gaz à l’effet de serre terrestre. Comme les spectres d’absorption des différents gaz se recouvrent partiellement, il s’agit de valeurs effectives. Source : [5].
+
+| Gaz | Temps d’ajustement |
+|---|---|
+| CO$_2$ | 45 ans |
+| CH$_4$ | 12 ans |
+| N$_2$O | 120 ans |
+| Eau | 10 jours |
+
+Table 3 – Temps d’ajustement pour des gaz à effet de serre. Ce temps est défini comme le temps caractéristique de retour à l’équilibre après un ajout de gaz. Les valeurs pour CH$_4$ et N$_2$O sont fiables et liées à la dissociation de ces molécules par des réactions photochimiques. La valeur pour l’eau est fiable et liée aux précipitations (pluie, neige). La valeur pour le CO$_2$ est très incertaine, il est possible que la valeur soit plus grande que celle de ce tableau. Source : [7] et [8].
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+<details>
+<summary>Références</summary>
+
+[1] K. N. Liou, *An Introduction to Atmospheric Radiation*, Academic Press (2002)
+
+[2] Geoffrey K. Vallis, *Atmospheric and Oceanic Fluid Dynamics*, Cambridge University Press (2017)
+
+[3] Bernard Diu, Claudine Guthmann, Bernard Roulet et Danielle Lederer, *Thermodynamique*, Hermann (2007)
+
+[4] Syukuro Manabe and Richard T. Wetherald, *Thermal Equilibrium of the Atmosphere with a Given Distribution of Relative Humidity*, Journal of the Atmospheric Sciences, volume 24, no. 3, pages 241–259 (1967)
+
+[5] Jean-Louis Dufresne et Jacques Treiner, *L’effet de serre atmosphérique : plus subtil qu’on ne le croit !*, Bulletin de l’Union des Physiciens, volume 105, pages 821–840 (2011)
+
+[6] Wenyi Zhong and Joanna D. Haigh, *The greenhouse effect and carbon dioxide*, Weather, volume 68, no. 4, pages 100–105 (2013)
+
+[7] Stephen E. Schwartz, *Ressource Letter GECC-1 : The Greenhouse Effect and Climate Change : Earth’s Natural Greenhouse Effect*, American Journal of Physics, volume 86(8), pages 565–576 (2018)
+
+[8] Stephen E. Schwartz, *Ressource Letter GECC-2 : The Greenhouse Effect and Climate Change : The intensified Greenhouse Effect*, American Journal of Physics, volume 86(9), pages 645–656 (2018)
+
+[9] David Archer, *Global Warming : Understanding the Forecast*, John Wiley & Sons
+
+[10] M. Diallo, B. Legras, E. Ray, A. Engel, and J. A. Añel, *Global distribution of* CO$_2$ *in the upper troposphere and stratosphere*, Atmosopheric Chemistry and Physics, volume 17, pages 3861–3878 (2017)
+
+[11] Changements climatiques 2014 : Rapport de synthèse. Contribution des Groupes de travail I, II et III au cinquième Rapport d’évaluation du Groupe d’experts intergouvernemental sur l’évolution du climat [Sous la direction de l’équipe de rédaction principale, R.K. Pachauri et L.A. Meyer]. GIEC, Genève, Suisse `https://www.ipcc.ch/site/assets/uploads/2018/02/SYR_AR5_FINAL_full_fr.pdf`
+
+Fin du sujet
+
+</details>
+
+---
+
+Оригинал в Архива: [PC_2021_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2021_ulm.pdf#page=6)

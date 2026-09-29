@@ -1,0 +1,141 @@
+---
+id: x-ens-2010-mp-p3
+source: 'X-ENS 2010, Приемен изпит, математика и физика'
+title: 'Задача 3. Le photodétecteur'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2010/x-ens-2010-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:44.532Z'
+verifier: 'mechanical'
+---
+
+*SESSION 2010 — Filière MP — PHYSIQUE MPI — Épreuve commune aux ENS de Paris, Lyon et Cachan*
+
+<details>
+<summary>Consignes</summary>
+
+*L’usage de la calculatrice est interdit.*
+
+Le candidat est prié d’accorder un soin particulier à la clarté et à la concision de ses réponses.
+
+Les quatre parties du problème sont indépendantes.
+
+Si le résultat d’une question est donné, il peut être utilisé dans les questions suivantes sans démonstration.
+
+</details>
+
+<details>
+<summary>Увод</summary>
+
+Le but de ce problème est l’étude d’un résonateur mécanique de taille micrométrique du type de celui de la figure 1, sur lequel est déposé un empilement de couches fines qui forment un miroir de très bonne qualité optique. Un tel système possède des propriétés optiques et mécaniques qui en font un outil de choix pour étudier le couplage *optomécanique* entre les mouvements du résonateur et la lumière qui se réfléchit dessus.
+
+Dans le problème, le micro-résonateur est assimilé à un oscillateur harmonique de masse $m$, de fréquence de résonance $f_0$, sur lequel se réfléchit un faisceau lumineux de longueur d’onde $\lambda$. Dans les applications numériques on utilisera les valeurs suivantes des paramètres :
+
+$$
+\begin{aligned} m &= 100\,\mu\mathrm{g} \\ f_0 &= 1\,\mathrm{MHz} \\ \lambda &= 630\,\mathrm{nm} \end{aligned}
+$$
+
+Dans la première partie, on étudie les mouvements du micro-résonateur engendrés par l’agitation du gaz qui l’entoure et une technique de réduction de ces mouvements. Les parties 2 et 3 présentent un montage interférométrique ainsi que le photodétecteur qu’il inclut, tous deux utilisés pour observer les déplacements du micro-résonateur. Dans la dernière partie est étudiée la possibilité d’utiliser un micro-résonateur pour réduire les fluctuations d’intensité intrinsèques que présente la lumière laser.
+
+On donne les valeurs des constantes physiques utilisées dans le problème :
+
+$c = 3{,}0 \times 10^{8}\ \mathrm{m \cdot s^{-1}}$ vitesse de la lumière
+
+$k_B = 1{,}4 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$ constante de Boltzmann
+
+$h = 6{,}6 \times 10^{-34}\ \mathrm{J \cdot s}$ constante de Planck
+
+$e = 1{,}6 \times 10^{-19}\ \mathrm{C}$ charge élémentaire
+
+</details>
+
+<details>
+<summary>Notations</summary>
+
+Dans la première partie, pour toute grandeur $A(t)$ relative à l’oscillateur harmonique, $\langle A\rangle$ désignera la valeur moyenne temporelle de $A(t)$, calculée sur une période d’oscillation.
+
+Dans la partie 4, la moyenne statistique d’une variable aléatoire $X$ sera notée $\overline{X}$ et son écart-type $\sigma(X) = \sqrt{\overline{X^2} - \left(\overline{X}\right)^2}$.
+
+Dans les parties 3 et 4 du problème on adopte une description corpusculaire de la lumière. Un faisceau lumineux de longueur d’onde $\lambda$ est alors assimilé à un courant de photons. Chaque photon du faisceau se déplace à la vitesse $c$, transporte une énergie $E_{\mathrm{ph}}$ et véhicule une quantité de mouvement $\vec{p}_{\mathrm{ph}}$ données par
+
+$$
+\begin{aligned} E_{\mathrm{ph}} &= \frac{hc}{\lambda}, \\ \vec{p}_{\mathrm{ph}} &= \frac{h}{\lambda}\,\vec{u}, \end{aligned}
+$$
+
+où le vecteur unitaire $\vec{u}$ indique la direction de propagation du photon.
+
+</details>
+
+## Условие
+
+On étudie dans cette partie le montage électronique de photodétection utilisé dans le dispositif de mesure de la partie précédente.
+
+Une photodiode est un dipôle électronique qui permet convertir la puissance lumineuse qui arrive sur sa partie photo-sensible en courant électrique. Dans son utilisation la plus courante, on applique à ses bornes une tension $u_D$ positive d’une dizaine de volts ou plus et lorsqu’elle est éclairée, un courant inverse $i_D$ positif la traverse (voir la convention de la figure 9). Dans cette configuration, la photodiode est équivalente en première approximation au montage de droite de la figure 9 : un générateur de courant $i_D$ positif proportionnel à la puissance lumineuse $P$ reçue : $i_D = \kappa P$, où le facteur $\kappa$ positif est appelé photo-sensibilité.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '59%', '--fig-max': '378px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p3-fig1.png" alt="À gauche : symbole de photodiode éclairée par une puissance P (deux flèches), traversée par le courant i_D, avec la tension u_D. À droite : générateur de courant i_D = κ P avec la tension u_D." width="1181" height="250" loading="lazy" decoding="async" />
+<figcaption>Figure 9: À gauche : symbole d’une photodiode. À droite : son modèle électrique équivalent.</figcaption>
+</figure>
+
+On rappelle que l’on adopte dans cette partie une description corpusculaire de la lumière.
+
+**23.** On note $\Phi$ le nombre de photons frappant la photodiode par unité de temps. Exprimer $\Phi$ lorsque la photodiode est éclairée par une onde lumineuse de longueur d’onde $\lambda$ et de puissance $P$ entièrement captée par la photodiode.
+
+**24.** Dans le cas d’une photodiode idéale, chaque photon reçu par le composant donne naissance à un électron de conduction dans le circuit. Exprimer la photo-sensibilité $\kappa$ d’une photodiode idéale lorsqu’elle est éclairée par une onde lumineuse de longueur d’onde $\lambda$.
+
+**25.** Donner la valeur numérique de $\kappa$ pour une onde lumineuse de longueur d’onde $\lambda = 630\,\mathrm{nm}$.
+
+On réalise le montage de la figure 10 avec un amplificateur opérationnel idéal en régime linéaire alimenté entre les tensions $V_{cc}$ et $-V_{cc}$ avec $V_{cc} = 15\,\mathrm{V}$. Les photodiodes sont identiques et possèdent une photo-sensibilité $\kappa$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44%', '--fig-max': '282px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p3-fig2.png" alt="Deux photodiodes en série éclairées par P2 (en haut, reliée à Vcc = +15V) et P1 (en bas, reliée à −Vcc = −15V) ; leur point commun est relié à une résistance R vers la masse et à l’entrée + d’un amplificateur opérationnel monté en suiveur ; tension de sortie s." width="881" height="636" loading="lazy" decoding="async" />
+<figcaption>Figure 10: Montage du photodétecteur. L’amplificateur opérationnel est alimenté entre les tensions $+V_{cc}$ et $-V_{cc}$.</figcaption>
+</figure>
+
+**26.** Exprimer la tension $s$ en fonction des puissances lumineuses $P_1$ et $P_2$ reçues par les deux photodiodes.
+
+**27.** Donner une valeur de $R$ qui permette de mesurer, avec la plus grande sensibilité possible, la différence $P_2 - P_1$ avec des puissances $P_2$ et $P_1$ allant jusqu’à $10\,\mathrm{mW}$, en conservant des tensions $u_{D_1}$ et $u_{D_2}$ aux bornes des photodiodes d’au moins $10\,\mathrm{V}$.
+
+Une photodiode réelle possède en pratique une capacité parasite $C$ (voir figure 11). Celle-ci a pour effet de modifier la réponse du montage de la figure 10 lorsque les puissances lumineuses $P_1$ et $P_2$ dépendent du temps.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '33.2%', '--fig-max': '213px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p3-fig3.png" alt="Générateur de courant i_D = κ P en parallèle avec un condensateur C ; tension u_D aux bornes." width="665" height="239" loading="lazy" decoding="async" />
+<figcaption>Figure 11: Schéma équivalent d’une photodiode en régime dynamique.</figcaption>
+</figure>
+
+**28.** Pour le montage de la figure 10 avec des photodiodes réelles, calculer la tension $s(t)$ en régime permanent, lorsque les puissances $P_1$ et $P_2$ sont de la forme
+
+$$
+P_1 = P_0(1 - \xi\cos(\omega t)) \qquad (11)
+$$
+
+$$
+P_2 = P_0(1 + \xi\cos(\omega t)) \qquad (12)
+$$
+
+où le coefficient de modulation $\xi$ est compris entre 0 et 1.
+
+**29.** Définir alors une fréquence de coupure du montage.
+
+**30.** Un tel montage est-il approprié pour mesurer une modulation de $P_1$ et $P_2$ de pulsation $\omega = \omega_0 = 2\pi \times 1\,\mathrm{MHz}$ autour d’une puissance moyenne $P_0 = 5\,\mathrm{mW}$, avec des photodiodes dont la capacité parasite est de l’ordre de $1\,\mathrm{nF}$ ?
+
+Pour éliminer les effets de la capacité parasite on réalise le montage de la figure 12 avec des amplificateurs opérationnels idéaux fonctionnant en régime linéaire. Les photodiodes possèdent une capacité parasite $C$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '66.2%', '--fig-max': '424px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p3-fig4.png" alt="Trois étages : Étage 1 et Étage 2, chacun une photodiode (P1, P2) reliée à −Vcc = −15V et à l’entrée − d’un amplificateur opérationnel avec résistance de contre-réaction R′, entrée + à la masse ; Étage 3, un amplificateur soustracteur à quatre résistances R recevant les sorties des étages 1 et 2 ; tension de sortie s." width="1325" height="906" loading="lazy" decoding="async" />
+<figcaption>Figure 12: Montage complet du photodétecteur. Les amplificateurs opérationnels sont alimentés entre les tensions $+V_{cc}$ et $-V_{cc}$.</figcaption>
+</figure>
+
+**31.** Expliquer en quoi les étages 1 et 2 éliminent les effets de la capacité parasite des photodiodes.
+
+**32.** Exprimer la tension de sortie $s$ en fonction de $P_1$, $P_2$ et des valeurs des différents paramètres du montage.
+
+## Решение
+
+<Warning title="Непълно решение">
+Le corrigé officiel est absent de l’archive.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2010.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2010.pdf#page=9)

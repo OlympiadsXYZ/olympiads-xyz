@@ -1,0 +1,106 @@
+---
+id: vserusiyska-2003-iv-final03t-p14
+source: 'ВсОШ 2003, Заключителен етап, 9–11 клас'
+title: 'Задача 14. Нелинейный элемент'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Всерусийска/2003/vserusiyska-2003-iv-final03t.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T06:11:54.126Z'
+verifier: 'mechanical'
+---
+
+*XXXVII Всероссийская олимпиада школьников по физике. Заключительный этап. Теоретический тур. Методическое пособие*
+
+## Условие
+
+В цепи (рис. 8) электродвижущая сила источника $\mathscr{E} = 12$ В, сопротивление резистора $R = 4$ Ом, индуктивность катушки $L = 0{,}5$ Гн, а нелинейный элемент Э имеет известную вольт-амперную характеристику $I(U)$ (рис. 9). В начальный момент ключ К разомкнут, ток в катушке не течет.
+
+<div className="problem-figure-row">
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '20.2%', '--fig-max': '129px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vserusiyska-2003-iv-final03t/p14-fig1.png" alt="Схема: нелинейный элемент Э (полярность + и −) параллельно катушке L; эта пара последовательно с ключом К, источником и резистором R." width="404" height="313" loading="lazy" decoding="async" />
+<figcaption>Рис. 8</figcaption>
+</figure>
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31.2%', '--fig-max': '200px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vserusiyska-2003-iv-final03t/p14-fig2.png" alt="Вольт-амперная характеристика нелинейного элемента: ток I равен нулю при U меньше U0 = 4 В и вертикальный скачок при U = U0; оси I и U." width="625" height="524" loading="lazy" decoding="async" />
+<figcaption>Рис. 9</figcaption>
+</figure>
+</div>
+
+**1.** Какое количество теплоты $Q_{\text{э}}$ выделится на нелинейном элементе после замыкания ключа?
+
+**2.** Построить качественный график зависимости тока в катушке от времени.
+
+Внутренним сопротивлением источника пренебречь. Укажите характерные точки на графике.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1.** 1 J
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+После замыкания ключа через резистор будет течь ток
+
+$$
+I_0 = \frac{\mathscr{E} - U_0}{R}. \qquad (1)
+$$
+
+Такой же ток в начальный момент течет через элемент Э. Ток в катушке $L$ будет меняться со временем по линейному закону, пока не достигнет значения $I_0$. В самом деле:
+
+$$
+U_0 = L\frac{\Delta I}{\Delta t}, \qquad \text{откуда} \qquad I_L = \frac{U_0}{L}t. \qquad (2)
+$$
+
+В момент времени $t = \tau$ ток через катушку $I_L = I_0$, следовательно,
+
+$$
+\tau = \frac{LI_0}{U_0} = \frac{L}{R}\frac{(\mathscr{E} - U_0)}{U_0}.
+$$
+
+В этот момент ток через элемент Э прекращает течь. В промежуток времени $0 < t < \tau$ ток в элементе Э нетрудно найти, принимая во внимание соотношения (1) и (2):
+
+$$
+I_{\text{Э}} = I_0 - I_L = \frac{\mathscr{E} - U_0}{R} - \frac{U_0}{L}t \qquad (0 < t < \tau),
+$$
+
+$$
+I_{\text{Э}} = 0 \qquad (t \ge \tau).
+$$
+
+Таким образом, зависимость тока от времени будет иметь вид, представленный на рисунке 23. Из графика находим заряд $q_{\text{э}}$, протекающий через нелинейный элемент:
+
+$$
+q_{\text{э}} = \frac{1}{2}I_0\tau = \frac{1}{2}\frac{(\mathscr{E} - U_0)^2}{U_0}\cdot\frac{L}{R^2}.
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '27.2%', '--fig-max': '174px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vserusiyska-2003-iv-final03t/p14-sol-fig1.png" alt="График тока через элемент I_э от времени t: линейное убывание от I0 до нуля в момент τ, далее ноль; заштрихованный треугольник — заряд q_э." width="545" height="417" loading="lazy" decoding="async" />
+<figcaption>Рис. 23</figcaption>
+</figure>
+
+С учетом этого нетрудно найти искомое количество теплоты
+
+$$
+Q_{\text{э}} = q_{\text{э}}U_0 = \frac{L}{2}\left(\frac{\mathscr{E} - U_0}{R}\right)^2 = 1\ \text{Дж}.
+$$
+
+Как уже было сказано, сила тока в катушке в промежутке времени от 0 до $\tau = 0{,}25$ с линейно возрастает от нуля до значения $I_0 = 2$ А. При $t > \tau$ ток через нелинейный элемент не течет, а в катушке возрастает, стремясь асимптотически к значению $I_\infty = 3$ А.
+
+Зависимость тока через катушку от времени представлена на рисунке 24.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.5%', '--fig-max': '234px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vserusiyska-2003-iv-final03t/p14-sol-fig2.png" alt="График тока в катушке I_L, А от времени t, с: линейный рост от 0 до 2 А за 0,25 с, затем асимптотическое приближение к 3 А; отметки 0,25; 0,5; 0,75; 1 по оси t." width="731" height="430" loading="lazy" decoding="async" />
+<figcaption>Рис. 24</figcaption>
+</figure>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [final03T.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%92%D1%81%D0%B5%D1%80%D1%83%D1%81%D0%B8%D0%B8%CC%86%D1%81%D0%BA%D0%B0/2003/2003-V/final03T.pdf#page=4)

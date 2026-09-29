@@ -1,0 +1,179 @@
+---
+id: balkanski-2013-cgp-p3
+source: 'Балкански 2013, Теория'
+title: 'Задача 3. La thèse étendue de Church-Turing et les bulles de savons'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2013/balkanski-2013-cgp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T06:04:07.709Z'
+verifier: 'mechanical'
+---
+
+*Concours Général de Physique “Minko Balkanski” · 11 май 2013 г. · 9 т.*
+
+<details>
+<summary>Прочетете внимателно!</summary>
+
+Част първа и част втора съдържат условията на трите задачи съответно на френски и английски език. Част трета съдържа фигурите използвани за онагледяване на въпросите и помощни таблици и формули. Единствените външни документи, на които имате право са френски и английски речници. Ако желаете, можете да ползвате калкулатори.
+
+При оценяването на задачите голяма тежест ще имат *яснотата и стилът* на изложените решения и аргументация. Не използвайте излишна проза в аргументите си, бъдете точни и *кратки*. Използването на схеми за онагледяване на разсъжденията Ви е желателно. *Пишете само на езика, който сте избрали* (френски или английски).
+
+Задачите не дават еднакъв брой точки.
+
+При намиране на грешка в условията на задачите отбележете я в работата си и продължете *без да повдигате въпроси към квесторите.*
+
+Решенията ще бъдат изложени на сайта на Фондация Миню Балкански в деня на състезанието. Класирането ще бъде изложено също там месец по-късно. Ако имате въпроси и коментари можете да ги насочите към krastanov.stefan@gmail.com. С първенците ще се свържем чрез e-mail или по телефон. Бъдете сигурни да попълните правилно информацията за контакт.
+
+Разполагате с 4 часа. Успех!
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [3.1 Le problème “difficile” est ces solutions](#s3-1)
+- [3.1.1 Recherche d'un minima d'énergie](#s3-1-1)
+- [3.1.2 Recherche d'un minimum de distance](#s3-1-2)
+- [3.2 La question fondamentale](#s3-2)
+
+</nav>
+
+Dans le paragraphe qui suit nous allons utiliser des exemples simples dans lesquels les explications et les réponses fournies seront purement qualitative et “à la main”. L'objective étant de découvrir la théorie physique derrière les questions posées ci-dessous.
+
+La théorie de la complexité est un domaine des mathématiques, et plus précisément de l'informatique théorique, qui étudie formellement la quantité de ressources (en temps et en espace) nécessaire pour la résolution de problèmes au moyen de l'exécution d'un algorithme. Il s'agit donc d'étudier la difficulté intrinsèque de problèmes posés mathématiquement. Dans ce domaine nous pouvons définir des problèmes “faciles” et “difficiles” (au respect d'une structure similaire aux ordinateur actuels). Un exemple de problème “facile” est la multiplication, qui peut être effectuer quasi instantanément. Un exemple de problème “difficile” est de trouver le chemin le plus court entre des villes. Les meilleurs algorithmes actuelles croissent exponentiellement avec le nombre de villes [Munroe(2009)].
+
+La thèse étendue de Church-Turing et ses corollaires font le lien entre la théorie de la complexité et la réalité physique. Ils prouvent un nouveau principe fondamental similaire à la conservation de l'énergie, la vitesse de la lumière, le premier et le deuxième principe de la thermodynamique etc [Aaronson(2011a)]. La thèse postule qu'aucun ordinateur ne peut être construit pour résoudre des problèmes “difficiles” de manière “efficace”. Dans cet exercice nous n'aurons pas le temps pour exposer complètement ces idées mais vous pouvez consulter la vidéo par [Aaronson(2011b)].
+
+<ProblemSection id="s3-1">
+
+### 3.1 Le problème “difficile” est ces solutions
+
+Nous allons nous intéresser à un problème algorithmique considéré comme “difficile”, notamment la construction d'un arbre de Steiner. L'énonce du problème est : “Proposer un algorithme (ou dans notre cas un dispositif physique) qui nous donne en sortie l'ensemble des segments les plus courts qui lient un nombre quelconque de points” (cf. fig. 3) Nous allons créer un algorithme pour trouver une solution efficace (en refusant la thèse de Church-Turing) et ensuite nous allons essayer de comprendre pourquoi notre raisonnement est faussé.
+
+Ceci est un problème de minimisation et en physique un grand nombre de systèmes évoluent en cherchant le minimum d'un état.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '45.9%', '--fig-max': '294px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2013-cgp/p3-fig1.png" alt="Trois panneaux de quatre points, étiquetés (a) Initial problem, (b) Bad Solution, (c) Good Solution : (a) les quatre points seuls ; (b) une mauvaise solution reliant les points par des segments avec un pont horizontal près des deux points du haut ; (c) la bonne solution, un arbre de Steiner avec deux points de jonction reliés par un segment horizontal central." width="918" height="314" loading="lazy" decoding="async" />
+<figcaption>Figure 3: Steiner tree</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="s3-1-1">
+
+### 3.1.1 Recherche d'un minima d'énergie
+
+**1.** Pourquoi le minimum de l'énergie potentielle d'un système nous donne son état d'équilibre ? Pour répondre à cette question vous pouvez vous demander : **[2 т.]**
+
+**(a)** Qu'est-ce qu'il signifie un équilibre ?
+
+**(b)** Comment évoluent l'énergie potentielle et cinétique pour des état loin de leur équilibre ?
+
+**(c)** Quel est le rôle de la dissipation d'énergie et le frottement ?
+
+**2.** Considérons un bâton de dynamite. Les débris d'explosion du dynamite sont dans un état énergétique plus bas que dans le bâton (c'est de la que l'énergie destructive vient) pourquoi la proposition suivante est fausse : “L'état qui représente une énergie plus basse est celui d'équilibre, donc un bâton de dynamite ne peut pas exister, car il n'est pas dans son état d'énergie minimale (il va exploser à l'instant qu'il est créé)”. Dans votre réponse vous pouvez vous servir d'un schéma pour illustrer votre raisonnement. **[2 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="s3-1-2">
+
+### 3.1.2 Recherche d'un minimum de distance
+
+Pour résoudre le problème de l'arbre de Steiner nous avons besoin d'un système qui par le billet de recherche d'un minimum de l'énergie, va trouver un minimum des distances. L'exemple que nous allons utiliser pour répondre à cette question sera une membrane savonneuse.
+
+**1.** Si nous admettons que le bord de la membrane exerce une force par unité de longueur $\frac{dF}{dl} = \sigma$ ($\sigma$ dépend de la nature et la composition de la membrane), trouver l'énergie par unité de longueur que nous devons fournir pour créer cette membrane. **[2 т.]**
+
+**2.** Proposer un dispositif physique qui résout le problème de Steiner (au moins pour un certain nombre de configuration/points) **[2 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="s3-2">
+
+### 3.2 La question fondamentale (1 т.)
+
+Pourquoi notre dispositif n'est pas applicable en règle générale ? En prenant en compte votre réponse à la 3.1.1, qu'est-ce qu'il peut empêcher l'utilisation/ le fonctionnement de notre appareil physique ?
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+9pt total
+
+<ProblemSection id="solution-s3-1-1">
+
+### 3.1.1 Recherche d'un minima d'énergie
+
+1. 2pt
+
+(b) potential energy becomes kinetic energy
+
+(c) if the kinetic energy is not dissipated it can transform back into potential energy moving the system far from equilibrium
+
+2. 2pt ; equilibrium is obtained at local minimum, not necessarily a global one
+
+</ProblemSection>
+
+<ProblemSection id="solution-s3-1-2">
+
+### 3.1.2 Recherche d'un minimum de distance
+
+1. 2pt
+
+2. two plates separated by bars at the positions of the points 2pt
+
+</ProblemSection>
+
+<ProblemSection id="solution-s3-2">
+
+### 3.2 La question fondamentale (1 т.)
+
+1pt
+
+it can easily get stuck in a local minimum
+
+</ProblemSection>
+
+
+</Spoiler>
+
+<details>
+<summary>2 Tables des formules</summary>
+
+**Séries :** $\sum_{i=0}^{n} a^i = \frac{1-a^{n+1}}{1-a}$
+
+**Trigonométrie :** $\sin(a+b) = \sin(a)\cos(b)+\sin(b)\cos(a)$ ; $\cos(a+b) = \cos(a)\cos(b)-\sin(a)\sin(b)$.
+
+**Intégrales :** $\int x^n dx = \frac{x^{n+1}}{n} + C$ ; $\int \frac{dx}{x} = \ln(x) + C$ ; $\int \exp(ax)\, dx = \frac{\exp(ax)}{a} + C$ ; $\int \sin(ax) = \frac{-\cos(ax)}{a} + C$ ; $\int \cos(ax) = \frac{\sin(ax)}{a} + C$. $\int_a^b v\,du = [vu]_a^b - \int_\alpha^\beta u\,dv$
+
+**Complexes :** $\imath^2 = -1$ ; $\exp(\imath x) = \cos(x) + \imath\sin(\imath x)$ ; $\overline{(x+\imath y)} = (x-\imath y)$ ; $||x+\imath y|| = \sqrt{(x+\imath y)\overline{(x+\imath y)}} = \sqrt{(x+\imath y)(x-\imath y)} = \sqrt{x^2+y^2}$.
+
+**Geométrie :** $S_{sphere} = 4\pi R^2$, $V_{sphere} = \frac{4}{3}\pi R^3$.
+
+**Thermodynamique :** premier principe $dU = dQ - pdV$ ; entropie $dS = \frac{dQ}{T}$ ; gas parfait $pV = nR_gT$ ; coefficient de Laplace $\gamma = \frac{C_p}{C_V}$ ; constante d'Avogadro : $N_A = 6.02 \times 10^{23}\mathrm{mol}^{-1}$.
+
+**Gravitation :** constante de Newton $G = 6.7 \times 10^{-11}\mathrm{m}^3\mathrm{kg}^{-1}\mathrm{s}^{-2}$ ; force $F = G\frac{M_1M_2}{r^2}$ ; energie $E = -G\frac{M_1M_2}{r}$.
+
+**Elasticité :** module de Young $F = -\frac{\Delta L}{L}ES$
+
+</details>
+
+<details>
+<summary>Références</summary>
+
+[Aaronson(2011a)] S. Aaronson. Why philosophers should care about computational complexity. *arXiv preprint arXiv :1108.1791*, 2011a.
+
+[Aaronson(2011b)] Scott Aaronson. Quantum computing and the limits of the efficiently computable - 2011 buhl lecture, 2011b. URL `http://youtu.be/8bLXHvH9s1A`.
+
+[Munroe(2009)] Randall Munroe. Travelling salesman problem, 2009. URL `http://xkcd.com/399/`.
+
+</details>
+
+---
+
+Оригинал в Архива: [CGP_2013.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2013.pdf#page=5)
+· официални решения: [CGP_2013_cr.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2013_cr.pdf#page=5)

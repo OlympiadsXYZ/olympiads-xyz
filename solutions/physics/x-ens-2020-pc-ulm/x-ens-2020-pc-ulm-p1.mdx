@@ -1,0 +1,221 @@
+---
+id: x-ens-2020-pc-ulm-p1
+source: 'X-ENS 2020, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 1. Première partie — Gravitation et principe d’équivalence'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2020/x-ens-2020-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:48.177Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE NORMALE SUPÉRIEURE — CONCOURS D’ADMISSION 2020 — FILIÈRE PC — COMPOSITION DE PHYSIQUE – C – (U) — Gravitation et secteur sombre de l’Univers · 23 април 2020 г.*
+
+<details>
+<summary>Consignes</summary>
+
+- L’usage de calculatrices n’est pas autorisé. Les applications numériques seront effectuées avec un chiffre significatif.
+- Le sujet comprend 15 pages numérotées de 1 à 15.
+- Dans le cas où un(e) candidat(e) repère ce qui lui semble être une erreur d’énoncé, il (elle) le signale lisiblement sur sa copie, propose la correction et poursuit l’épreuve en conséquence.
+
+</details>
+
+<details>
+<summary>Gravitation et secteur sombre de l’Univers</summary>
+
+Cette épreuve propose d’étudier quelques sujets liés à l’interaction gravitationnelle. Cette interaction est traitée dans un cadre newtonien dans les deux premières parties, puis dans le cadre de la relativité générale.
+
+Alors que la première partie traite de considérations générales sur la gravitation, tout particulièrement autour du principe d’équivalence, les parties suivantes se focalisent sur la matière et l’énergie noires, dont l’explication complète pose encore problème aux physiciens. Ces deux dernières parties se concentrent sur les principales observations qui ont amené à postuler l’existence de ce secteur sombre de l’Univers.
+
+***Ce sujet comporte trois parties largement indépendantes. Elles ont cependant été pensées pour être effectuées dans l’ordre, et les candidats sont encouragés à procéder ainsi.***
+
+</details>
+
+<details>
+<summary>Formulaire</summary>
+
+**Constantes fondamentales**
+
+- Constante de la gravitation $G = 6{,}67 \times 10^{-11}\ \mathrm{m^3 \cdot kg^{-1} \cdot s^{-2}}$
+- Vitesse de la lumière $c = 3{,}00 \times 10^{8}\ \mathrm{m \cdot s^{-1}}$
+- Constante de Boltzmann $k_B = 1{,}38 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$
+- Constante de Stefan $^{1}$ $\sigma = 5{,}7 \times 10^{-8}\ \mathrm{W \cdot m^{-2} \cdot K^{-4}}$
+
+**Caractéristiques du Soleil et de la Lune**
+
+- Masse du Soleil $M_\odot = 2{,}0 \times 10^{30}\ \mathrm{kg}$
+- Rayon du Soleil $R_\odot = 700\,000\ \mathrm{km}$
+- Température de surface $T_{\mathrm{surf}} = 5750\ \mathrm{K}$
+- Distance Terre-Soleil $D_{T-S} = 150 \times 10^{6}\ \mathrm{km}$
+- Masse de la Lune $M_L = 7{,}35 \times 10^{22}\ \mathrm{kg}$
+- Rayon de la Lune $R_L = 1740\ \mathrm{km}$
+
+**Analyse vectorielle et intégrales utiles**
+
+- Divergence en coordonnées cylindriques $(r, \theta, z)$ :
+
+$$
+\vec{\nabla} \cdot \vec{A} = \frac{1}{r}\frac{\partial (rA_r)}{\partial r} + \frac{1}{r}\frac{\partial A_\theta}{\partial \theta} + \frac{\partial A_z}{\partial z} \qquad (1)
+$$
+
+- Intégrale Gaussienne :
+
+$$
+\int_{-\infty}^{+\infty} \mathrm{e}^{-\alpha\, x^2}\mathrm{d}x = \sqrt{\frac{\pi}{\alpha}} \qquad (2)
+$$
+
+- Une intégrale utile :
+
+$$
+\int_0^1 \frac{\mathrm{d}x}{\sqrt{\frac{1}{x} - 1}} = \frac{\pi}{2} \qquad (3)
+$$
+
+**Graphes des fonctions $x \mapsto \exp(-x)$ et $x \mapsto \ln(x)$** (voir la figure « Graphes des fonctions » de la première partie)
+
+$^{1}$ On rappelle que la loi de Stefan s’écrit $\varphi(T) = \sigma T^4$, où $\varphi$ est la densité surfacique de flux émis par un corps noir à la température $T$.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1 Équations du champ gravitationnel](#p1-s1)
+- [2 Chute libre et principe d’équivalence](#p1-s2)
+- [3 Test du principe d’équivalence](#p1-s3)
+- [4 Des trajectoires de chute libre similaires ?](#p1-s4)
+- [5 Effondrement d’une boule homogène](#p1-s5)
+
+</nav>
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '88%', '--fig-max': '564px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc-ulm/p1-fig1.png" alt="Deux graphes du formulaire. À gauche, exp(−x) en échelle logarithmique de 10^−5 à 10^1 pour x de 0 à 10 : une droite rouge décroissante. À droite, ln(x) pour x de 1 à 18 environ, axe vertical de 0,0 à 3,0 : une courbe rouge croissante et concave." width="1761" height="751" loading="lazy" decoding="async" />
+<figcaption>Graphes des fonctions $x \mapsto \exp(-x)$ et $x \mapsto \ln(x)$</figcaption>
+</figure>
+
+<ProblemSection id="p1-s1">
+
+### 1 Équations du champ gravitationnel
+
+Dans tout le sujet, on note $\vec{K}$ le champ de gravitation tel que la force exercée par ce champ sur une particule de masse $m$ est $\vec{F}_{\mathrm{grav}} = m\vec{K}$.
+
+**1** Rappeler les équations du champ électrostatique $\vec{E}$, ainsi que la force exercée par un tel champ sur une particule de charge $q$. On notera $\rho_q$ la densité de charge électrique.
+
+**2** En vous appuyant sur l’analogie entre les forces électrostatique et gravitationnelle, écrire les équations régissant le champ gravitationnel $\vec{K}$. Ces équations feront apparaître une densité volumique $\rho(\vec{r})$ qu’on définira, et dont on donnera la dimension.
+
+**3** Au-delà des équations de champ, voyez-vous une différence simple entre l’électrostatique et la gravitation ?
+
+**4** On considère une boule homogène de rayon $R$ et de densité volumique de charge uniforme $\rho_{q,0}$. Calculer le champ électrostatique à l’intérieur et à l’extérieur de cette boule. On précisera avec soin les considérations d’invariance et de symétrie effectuées.
+
+**5** On considère à présent une boule homogène de rayon $R$ et de densité de matière uniforme $\rho_0$. Déterminer le champ gravitationnel à l’intérieur et à l’extérieur de cette boule. Montrer notamment qu’on retrouve hors de la boule :
+
+$$
+\vec{K}(\vec{r}) = -GM\frac{\vec{r}}{r^3}, \qquad (4)
+$$
+
+où $M$ est la masse totale de la boule, et où le vecteur position $\vec{r}$ a pour origine le centre de la boule.
+
+</ProblemSection>
+
+<ProblemSection id="p1-s2">
+
+### 2 Chute libre et principe d’équivalence
+
+On étudie à présent le cas d’observateurs non chargés électriquement se trouvant respectivement dans un champ électrostatique ou gravitationnel uniforme et ne dépendant pas du temps. On suppose le référentiel d’étude galiléen.
+
+**6** Dans le cas électrostatique expliquer brièvement comment il est possible de déterminer la direction et la valeur du champ électrique par des expériences locales (qui peuvent mettre en jeu des particules chargées). Aucun développement calculatoire n’est attendu ici.
+
+**7** Dans le cas gravitationnel, l’observateur initialement au repos est lui-même soumis au champ gravitationnel. On dit qu’il est en chute libre. Dans son référentiel, comment est modifiée la deuxième loi de Newton par rapport au référentiel galiléen initial ?
+
+**8** Dans ce dernier cas, est-il possible pour l’observateur en chute libre de déterminer la direction et la valeur du champ gravitationnel par des expériences locales ?
+
+**9** Pourquoi un astronaute est-il en impesanteur dans la station spatiale internationale ?
+
+Les résultats précédents sont liés au fait que le même terme de masse $m$ apparaît dans le terme inertiel du principe fondamental de la dynamique et dans la force subie par un point matériel dans un champ de gravitation $\vec{K}$. Il serait cependant possible de distinguer ces deux masses, et de les nommer respectivement masse inertielle $m_i$ et masse grave $m_g$. L’égalité de ces deux termes de masse pour tout type de corps matériels peut être pris comme un principe physique, nommé principe d’équivalence. Ce principe peut être testé en introduisant un ratio $\alpha_{\mathrm{eq}} = \frac{m_i}{m_g}$, qui doit être égal à 1 si le principe d’équivalence est vérifié.
+
+**10** Écrire dans un référentiel galiléen l’équation régissant la dynamique d’une particule de masses inertielle $m_i$ et grave $m_g$ dans un champ de gravitation $\vec{K}$. Est-il possible d’identifier un équivalent du terme $\alpha_{\mathrm{eq}}$ en électrostatique ? Commenter.
+
+**11** On entend parfois énoncer que le principe d’équivalence empêche de différencier une force créée par un champ de gravitation d’une force d’inertie. Au-delà des propriétés purement locales, voyez-vous une caractéristique que ces deux types de force n’ont pas en commun ?
+
+</ProblemSection>
+
+<ProblemSection id="p1-s3">
+
+### 3 Test du principe d’équivalence
+
+Le 2 août 1971, lors de la mission Apollo 15, l’astronaute David Scott laisse tomber au même moment sur la Lune un marteau et une plume, qui touchent le sol au même instant. On supposera que les deux objets sont lâchés sans vitesse initiale d’une hauteur $z_0 = 1$ m, et qu’en l’absence de protocole rigoureux, les temps de chute sont les mêmes avec une incertitude de $\delta t = 0,02$ s.
+
+**12** Expliquer pourquoi cette expérience peut servir de test au principe d’équivalence. On supposera pour simplifier les considérations qu’un des deux objets a un coefficient $\alpha_{\mathrm{eq}}$ exactement égal à 1, et l’autre à $1 + \delta\alpha_{\mathrm{eq}}$.
+
+**13** Obtenir littéralement avec quelle précision $\delta\alpha_{\mathrm{eq}}$ le principe d’équivalence est vérifié dans l’expérience d’Apollo 15. On donnera le résultat obtenu en fonction de $\delta t$, $z_0$, $G$, et des caractéristiques de la Lune, et on pourra supposer que $\delta\alpha_{\mathrm{eq}}$ est petit devant l’unité.
+
+**14** Effectuer l’application numérique de la question précédente.
+
+*En décembre 2017, le satellite MICROSCOPE effectuait un test du principe d’équivalence avec une précision relative de $2 \times 10^{-14}$. Des précisions relatives de $10^{-15}$ sont attendues pour cet instrument.* **Dans la suite du sujet, on considérera $\alpha_{\mathrm{eq}} = 1$.**
+
+</ProblemSection>
+
+<ProblemSection id="p1-s4">
+
+### 4 Des trajectoires de chute libre similaires ?
+
+Le principe d’équivalence est aussi nommé universalité de la chute libre, signifiant que tous les objets *tombent de la même façon* dans un champ de gravitation. Dans la vie de tous les jours, nous visualisons cependant des trajectoires géométriques de chute libre très différentes. Nous montrons dans cette partie quelle caractéristique de ces trajectoires ne dépend que du champ de gravitation. On approximera dans cette partie la norme $g$ du champ de gravité terrestre à $10\ \mathrm{m \cdot s^{-2}}$, et on négligera tout frottement.
+
+On considère pour cela les trajectoires paraboliques d’un point matériel entre deux positions, comme représentées dans la figure 1, en supposant le référentiel d’étude galiléen. Les trajectoires sont décrites dans un repère plan $(A, x, y)$, où $y$ est l’axe vertical orienté vers le haut. Elles partent d’un point initial $(x_A, y_A) = (0, 0)$ à l’instant $t = 0$, et se terminent au point $(x_B, y_B) = (L, 0)$ au temps $t_L$. Le vecteur vitesse initial est noté $\vec{v}_A = (\dot{x}_0, \dot{y}_0)$. Le point le plus haut de la trajectoire a une ordonnée $y = h$, et une vitesse $\vec{v}_h$, dont on note $v_h$ la norme. On étudie dans cette partie des trajectoires de différentes hauteurs $h$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.6%', '--fig-max': '324px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc-ulm/p1-fig2.png" alt="Repère (x, y) : deux arcs de parabole en pointillés partent du point A (x = 0, y = 0) et arrivent au point B (x = L, y = 0) ; l’arc le plus haut atteint la hauteur h, marquée sur l’axe y, où la vitesse horizontale v_h est dessinée par une flèche." width="1013" height="783" loading="lazy" decoding="async" />
+<figcaption>Figure 1 – Schéma des trajectoires étudiées.</figcaption>
+</figure>
+
+**15** Montrer à l’aide de lois de conservations que $v_{B,x} = \dot{x}_0$ et $v_{B,y} = -\dot{y}_0$, où les deux grandeurs $v_{B,x}$ et $v_{B,y}$ sont les composantes selon $x$ et $y$ de la vitesse du point matériel en $B$.
+
+**16** On étudie des trajectoires de différentes hauteurs et vitesses au sommet, la longueur au sol $L$ de la trajectoire étant fixée. Par intégration des équations du mouvement, obtenir l’expression de la hauteur $h$ et du temps de parcours $t_L$ en fonction de $g$, $L$, et $v_h$.
+
+**17** Calculer numériquement ces deux grandeurs pour $L = 10$m et pour des trajectoires correspondant à une balle de volley ($v_h = 5\ \mathrm{m \cdot s^{-1}}$) et de fusil ($v_h = 500\ \mathrm{m \cdot s^{-1}}$).
+
+**18** Pour décrire géométriquement ces trajectoires, on introduit leur *rayon de courbure* $\mathcal{R}$. Dans une approximation où les trajectoires sont de petits arcs de cercles de hauteur $h$ et de longueur de base $L$, on admet que celui-ci s’écrit $\mathcal{R} = L^2/8h$. Calculer le rayon de courbure des deux trajectoires de la question précédente, et conclure sur leur similarité.
+
+**19** Une façon plus générale de représenter ces trajectoires est de le faire dans un diagramme temps-espace. Un tel diagramme est ici tridimensionnel, deux des axes correspondant à $x$ et $y$, et un troisième axe correspondant à $c{\cdot}t$ (où $c$ est la vitesse de la lumière, permettant d’avoir trois directions de même dimension). Tracer les deux trajectoires précédentes dans un tel diagramme, pour lequel on indiquera la coordonnée $y$ sur l’axe vertical. Calculer le rayon de courbure de chacune de ces trajectoires dans le plan qui la contient. Conclure sur leur similarité.
+
+*Cette approche a la particularité de faire apparaître une même courbure pour toutes les trajectoires spatio-temporelles de chute libre. Dans le cadre de la relativité générale, cette courbure sera alors une propriété de l’espace-temps, et plus des trajectoires : ces dernières deviennent des trajectoires rectilignes, mais dans un espace-temps courbe.*
+
+</ProblemSection>
+
+<ProblemSection id="p1-s5">
+
+### 5 Effondrement d’une boule homogène
+
+On présente dans cette dernière sous-partie une autre manifestation du principe d’équivalence, toujours dans un cadre de gravitation newtonienne. On considère pour cela l’effondrement d’une boule sous l’effet de son propre champ de gravitation. Le système étudié est une boule homogène de grains de matière, initialement au repos à $t = 0$ dans un référentiel galiléen, de densité initiale $\rho_0$ et de rayon initial $R$. On suppose que les grains ne subissent aucun frottement ou collision, et que la seule force à laquelle ils sont soumis est donc l’interaction gravitationnelle créée par les autres grains, qui sont décrits par la densité volumique de masse $\rho(t)$.
+
+**20** Exprimer la force subie par un grain de matière situé en $\vec{r} + \delta\vec{r}$ dans le référentiel du grain de matière situé en $\vec{r}$, lui-même en chute libre, pour l’instant initial où la boule est de densité homogène $\rho_0$. On notera $m$ la masse d’un grain de matière.
+
+**21** Est-il possible à l’intérieur de la boule de déterminer la direction de son centre par des expériences locales ? Conclure sur le fait que si la sphère est homogène et au repos à un instant initial, elle restera homogène durant son effondrement.
+
+**22** On ne précisera plus par la suite la position particulière $\vec{r}$ du grain de matière dans le référentiel duquel on se place, et on repérera dans son référentiel les autres grains simplement par leur position relative $\delta\vec{r}$. Utiliser les résultats des questions précédentes pour écrire l’équation d’évolution de la position d’un grain $\delta\vec{r}$, qui ne fera plus intervenir que $G$, $\rho_0$ ainsi que la position relative $\delta\vec{r}_0$ de ce grain de matière à l’instant initial. En obtenir une équation scalaire pour $x = \delta r/\delta r_0$, le ratio des normes des vecteurs $\delta\vec{r}$ et $\delta\vec{r}_0$.
+
+**23** Calculer à partir de l’équation différentielle obtenue à la question précédente l’intégrale première suivante :
+
+$$
+\frac{1}{2}\dot{x}^2 = \frac{4\pi G\rho_0}{3}\left(\frac{1}{x} - 1\right). \qquad (5)
+$$
+
+**24** On dit que le nuage s’est effondré sur lui-même lorsque $\delta\vec{r} = \vec{0}$. À quoi cela correspond-il ? Vous attendez-vous à ce qu’une telle situation soit réalisée physiquement ?
+
+**25** À partir de l’intégrale première de l’équation (5), calculer le temps d’effondrement $\Delta t$ de la boule de matière. Commenter les dépendances du résultat obtenu en les paramètres du problème.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+Le fichier des solutions officielles manque dans l’archive.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2020_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2020_ulm.pdf#page=5)

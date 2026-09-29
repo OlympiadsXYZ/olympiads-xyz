@@ -1,0 +1,183 @@
+---
+id: x-ens-2010-mp-p2
+source: 'X-ENS 2010, Приемен изпит, математика и физика'
+title: 'Задача 2. Mesure de petits déplacements'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2010/x-ens-2010-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:44.532Z'
+verifier: 'mechanical'
+---
+
+*SESSION 2010 — Filière MP — PHYSIQUE MPI — Épreuve commune aux ENS de Paris, Lyon et Cachan*
+
+<details>
+<summary>Consignes</summary>
+
+*L’usage de la calculatrice est interdit.*
+
+Le candidat est prié d’accorder un soin particulier à la clarté et à la concision de ses réponses.
+
+Les quatre parties du problème sont indépendantes.
+
+Si le résultat d’une question est donné, il peut être utilisé dans les questions suivantes sans démonstration.
+
+</details>
+
+<details>
+<summary>Увод</summary>
+
+Le but de ce problème est l’étude d’un résonateur mécanique de taille micrométrique du type de celui de la figure 1, sur lequel est déposé un empilement de couches fines qui forment un miroir de très bonne qualité optique. Un tel système possède des propriétés optiques et mécaniques qui en font un outil de choix pour étudier le couplage *optomécanique* entre les mouvements du résonateur et la lumière qui se réfléchit dessus.
+
+Dans le problème, le micro-résonateur est assimilé à un oscillateur harmonique de masse $m$, de fréquence de résonance $f_0$, sur lequel se réfléchit un faisceau lumineux de longueur d’onde $\lambda$. Dans les applications numériques on utilisera les valeurs suivantes des paramètres :
+
+$$
+\begin{aligned} m &= 100\,\mu\mathrm{g} \\ f_0 &= 1\,\mathrm{MHz} \\ \lambda &= 630\,\mathrm{nm} \end{aligned}
+$$
+
+Dans la première partie, on étudie les mouvements du micro-résonateur engendrés par l’agitation du gaz qui l’entoure et une technique de réduction de ces mouvements. Les parties 2 et 3 présentent un montage interférométrique ainsi que le photodétecteur qu’il inclut, tous deux utilisés pour observer les déplacements du micro-résonateur. Dans la dernière partie est étudiée la possibilité d’utiliser un micro-résonateur pour réduire les fluctuations d’intensité intrinsèques que présente la lumière laser.
+
+On donne les valeurs des constantes physiques utilisées dans le problème :
+
+$c = 3{,}0 \times 10^{8}\ \mathrm{m \cdot s^{-1}}$ vitesse de la lumière
+
+$k_B = 1{,}4 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$ constante de Boltzmann
+
+$h = 6{,}6 \times 10^{-34}\ \mathrm{J \cdot s}$ constante de Planck
+
+$e = 1{,}6 \times 10^{-19}\ \mathrm{C}$ charge élémentaire
+
+</details>
+
+<details>
+<summary>Notations</summary>
+
+Dans la première partie, pour toute grandeur $A(t)$ relative à l’oscillateur harmonique, $\langle A\rangle$ désignera la valeur moyenne temporelle de $A(t)$, calculée sur une période d’oscillation.
+
+Dans la partie 4, la moyenne statistique d’une variable aléatoire $X$ sera notée $\overline{X}$ et son écart-type $\sigma(X) = \sqrt{\overline{X^2} - \left(\overline{X}\right)^2}$.
+
+Dans les parties 3 et 4 du problème on adopte une description corpusculaire de la lumière. Un faisceau lumineux de longueur d’onde $\lambda$ est alors assimilé à un courant de photons. Chaque photon du faisceau se déplace à la vitesse $c$, transporte une énergie $E_{\mathrm{ph}}$ et véhicule une quantité de mouvement $\vec{p}_{\mathrm{ph}}$ données par
+
+$$
+\begin{aligned} E_{\mathrm{ph}} &= \frac{hc}{\lambda}, \\ \vec{p}_{\mathrm{ph}} &= \frac{h}{\lambda}\,\vec{u}, \end{aligned}
+$$
+
+où le vecteur unitaire $\vec{u}$ indique la direction de propagation du photon.
+
+</details>
+
+## Условие
+
+L’observation des effets du couplage entre le micro-résonateur et la lumière requiert un dispositif de mesure de position capable de détecter des mouvements plus petits que la longueur d’onde du laser. Une possibilité est d’inclure le micro-résonateur dans un montage interférométrique de type Michelson. Dans cette partie est étudié le principe d’une mesure interférométrique des déplacements d’un oscillateur mécanique sur lequel est déposé un miroir.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '80.8%', '--fig-max': '517px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p2-fig1.png" alt="Interféromètre de Michelson : Laser, puis « Circulateur optique », puis « Lame séparatrice » de centre O ; miroir fixe M1 en haut, miroir M2 monté sur un ressort à droite (décalages ΔL0 et x(t)) ; photodétecteurs Ph1 sous la lame et Ph2 sous le circulateur, reliés à un soustracteur de sortie s(t)." width="1617" height="814" loading="lazy" decoding="async" />
+<figcaption>Figure 5: Montage interférométrique de mesure de petits déplacements.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '65.3%', '--fig-max': '418px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p2-fig2.png" alt="À gauche : circulateur optique avec voie 1 (entrée à gauche), voie 2 (à droite, bidirectionnelle) et voie 3 (sortie vers le bas). À droite : lame séparatrice avec coefficient de réflexion r sur une face et −r sur l’autre face." width="1307" height="397" loading="lazy" decoding="async" />
+<figcaption>Figure 6: À gauche : circulateur optique. À droite : convention pour les coefficients de réflexion sur les faces de la lame séparatrice.</figcaption>
+</figure>
+
+On considère le montage optique de la figure 5. L’onde incidente est une onde plane monochromatique de longueur d’onde $\lambda = 630\,\mathrm{nm}$ et d’intensité $I_0$. Le centre de la lame séparatrice est noté $O$. Elle fait un angle de $\pi/4$ avec la direction de propagation de l’onde incidente. Les coefficients de réflexion et de transmission en amplitude sont notés respectivement $r$ et $t$ et sont tels que $r = t = 1/\sqrt{2}$. On prendra les conventions de la figure 6 pour les coefficients de réflexion des deux faces de la lame séparatrice et on négligera son épaisseur. Les deux miroirs font un angle de $\pi/2$ entre eux, et la différence de longueur des bras $OM_2 - OM_1$ sera notée $\Delta L$. La position du miroir $M_2$ est repérée par son abscisse $x(t)$, la position $x = 0$ correspondant à la position du miroir lorsque l’oscillateur est au repos. Dans ce cas, la différence de longueur des deux bras de l’interféromètre est $\Delta L_0$. Ainsi $\Delta L(t) = \Delta L_0 + x(t)$.
+
+Le circulateur optique est un dispositif optique passif possédant trois voies et qui présente la propriété suivante : une onde plane entrant par la voie 1 ressort inchangée par la voie 2, une onde plane entrant par la voie 2 ressort inchangée par la voie 3 (voir figure 6). Dans le cas présent, le circulateur optique permet de séparer le faisceau incident du faisceau réfléchi par l’interféromètre.
+
+**12.** Exprimer les intensités $I_1$ et $I_2$ reçues par les photorécepteurs $Ph_1$ et $Ph_2$, en fonction de $I_0$, $\lambda$, $x(t)$ et $\Delta L_0$.
+
+Les photorécepteurs font partie d’un montage électronique soustracteur qui délivre en sortie une tension $s$ proportionnelle à la différence d’intensité reçue par les photorécepteurs : $s = \eta\,(I_2 - I_1)$ où $\eta$ un paramètre positif qui désigne le gain électronique global du montage.
+
+**13.** On cherche à mesurer des déplacements $x(t)$ de l’oscillateur, d’amplitude petite devant la longueur d’onde $\lambda$. Montrer que dans ces conditions $s(t)$ peut se mettre sous la forme
+
+$$
+s(t) = s_0 + \alpha x(t), \qquad (6)
+$$
+
+où l’on donnera les expressions de $s_0$ et $\alpha$.
+
+Le facteur $\alpha$ est appelé sensibilité de la mesure.
+
+**14.** Comment doit-on choisir $\Delta L_0$ pour obtenir une sensibilité maximale et positive ? Que vaut alors $s_0$ ?
+
+La valeur de la sensibilité dans ces conditions sera notée $\alpha_{\mathrm{max}}$.
+
+Au cours de l’expérience, les variations de température dans le laboratoire entraînent des dilatations thermiques des matériaux qui constituent l’interféromètre et provoquent une variation lente $D(t)$ de la différence de longueur des bras de l’interféromètre qui peut atteindre plusieurs longueurs d’onde en quelques minutes. La différence de longueur des bras vaut alors $\Delta L(t) = \Delta L_0 + D(t) + x(t)$, où $D(t)$ ne peut pas être considéré petit devant la longueur d’onde $\lambda$.
+
+Au début de l’expérience, on fixe $\Delta L_0$ pour avoir une sensibilité $\alpha$ égale à $\alpha_{\mathrm{max}}$.
+
+**15.** Quelle conséquence sur la sensibilité de la mesure provoque une variation $D(t)$ de l’ordre de $\lambda/8$ ?
+
+On suppose que $D(t)$ varie linéairement avec le temps selon
+
+$$
+D(t) = \lambda\frac{t}{t_d}, \qquad (7)
+$$
+
+avec une constante de temps $t_d$ de l’ordre d’une dizaine de secondes.
+
+**16.** Mettre la sortie $s(t)$ sous la forme
+
+$$
+s(t) = s_0'(t) + \alpha'(t)x(t). \qquad (8)
+$$
+
+En déduire le temps maximal $t_{\mathrm{exp}}$ que peut durer l’expérience sans que la sensibilité ne varie de manière significative.
+
+**17.** La valeur $t_{\mathrm{exp}}$ est-elle adéquate pour mesurer les oscillations du miroir ?
+
+Dans la suite, on dira que l’interféromètre fonctionne en régime linéaire lorsque $\Delta L_0$ est fixé pour avoir $\alpha = \alpha_{\mathrm{max}}$ et $|\Delta L(t) - \Delta L_0| \ll \lambda/8$. Dans ce régime, on fera l’approximation que la sensibilité est constante et donc qu’en première approximation $s(t) = \alpha_{\mathrm{max}} \times (\Delta L(t) - \Delta L_0)$.
+
+Pour contrer l’effet de dilatation et garder l’interféromètre le plus longtemps possible dans le régime linéaire, le miroir $M_1$ est placé sur une platine de micropositionnement qui permet de le déplacer d’une quantité $l_C(t)$. Ce déplacement est commandé par la tension $u_C(t)$ qui est appliquée sur la platine selon
+
+$$
+l_C(t) = \beta\, u_C(t), \qquad (9)
+$$
+
+où $\beta$ est un paramètre positif.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.4%', '--fig-max': '489px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p2-fig3.png" alt="Le montage de la figure 5 où le miroir M1 est porté par une « Platine de micropositionnement » commandée par la tension u_C(t) (déplacement l_C(t)) ; le miroir M2 est repéré par ΔL0, D(t) et x(t) ; la sortie s(t) du soustracteur des photodétecteurs Ph1 et Ph2 est renvoyée sur la platine." width="1529" height="1011" loading="lazy" decoding="async" />
+<figcaption>Figure 7: Montage interférométrique asservi.</figcaption>
+</figure>
+
+La différence de longueur des bras vaut alors $\Delta L(t) = \Delta L_0 + D(t) - l_C(t) + x(t)$.
+
+On réalise un asservissement de l’interféromètre en appliquant la tension $u_C(t) = s(t)$ sur la platine (voir figure 7).
+
+**18.** Dans le régime linéaire de l’interféromètre, exprimer $s(t)$ en fonction de $\alpha_{\mathrm{max}}$, $\beta$, $D(t)$ et $x(t)$.
+
+**19.** En présence de l’asservissement et en supposant une évolution linéaire de $D(t)$ selon l’équation (7), donner une expression approchée du nouveau temps $t_{\mathrm{max}}$ que peut durer l’expérience avant que l’interféromètre ne sorte du régime linéaire. Donner un ordre de grandeur de $t_{\mathrm{max}}$ pour un produit $\beta \times \alpha_{\mathrm{max}}$ de l’ordre de 1000.
+
+**20.** Montrer qu’en contrepartie la sensibilité de la mesure est réduite d’un facteur que l’on précisera.
+
+Comme les dilatations thermiques et le mouvement de l’oscillateur sont des phénomènes dont les temps caractéristiques sont très différents ($t_d \simeq 10\,\mathrm{s}$ pour les dilatations thermiques et $1/f_0 \simeq 1\,\mu\mathrm{s}$ pour le mouvement de l’oscillateur de fréquence $f_0 = 1\,\mathrm{MHz}$), il est possible de les dissocier grâce à un filtre et de réaliser un asservissement de la position du miroir $M_1$ qui ne dégrade pas la sensibilité de la mesure.
+
+On ajoute donc un filtre électronique dont la fonction de transfert en pulsation est
+
+$$
+H(\omega) = \frac{1}{1 + i\dfrac{\omega}{\omega_c}}\ , \qquad (10)
+$$
+
+où $i^2 = -1$.
+
+**21.** De quel type de filtre s’agit-il ? Comment choisir la pulsation $\omega_c$ pour qu’un tel filtre discrimine l’effet de dilatation et celui d’oscillation ?
+
+**22.** Le filtre est inséré dans le montage de mesure entre la sortie du système de photodétection et la platine de micropositionnement (voir figure 8). Donner l’expression complexe de $s(\omega)$ en fonction de $\alpha_{\mathrm{max}}$, $\beta$, $H(\omega)$, $D(\omega)$ et $x(\omega)$. En déduire qu’avec ce montage, la durée maximale de la mesure reste de l’ordre de $t_{\mathrm{max}}$, tandis que la sensibilité pour la mesure des oscillations du miroir est de l’ordre de $\alpha_{\mathrm{max}}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.7%', '--fig-max': '452px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2010-mp/p2-fig4.png" alt="Le montage asservi de la figure 7 en notation fréquentielle : platine de micropositionnement commandée par u_C(ω) (déplacement l_C(ω)), miroir M2 repéré par ΔL0, D(ω), x(ω) ; la sortie s(ω) passe par un filtre H(ω) avant d’être renvoyée sur la platine." width="1414" height="941" loading="lazy" decoding="async" />
+<figcaption>Figure 8: Montage interférométrique asservi avec filtre.</figcaption>
+</figure>
+
+Un tel dispositif peut maintenir une sensibilité optimale pendant des temps longs et permet de mesurer de très petits déplacements du micro-résonateur en moyennant un grand nombre de fois les signaux acquis.
+
+## Решение
+
+<Warning title="Непълно решение">
+Le corrigé officiel est absent de l’archive.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2010.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2010.pdf#page=6)

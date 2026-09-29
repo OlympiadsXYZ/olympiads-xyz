@@ -1,0 +1,480 @@
+---
+id: x-ens-2021-pc-p1
+source: 'X-ENS 2021, Приемен изпит, физика и химия'
+title: 'Задача 1. Mécanique de la cellule'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2021/x-ens-2021-pc.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:59:06.575Z'
+verifier: 'mechanical'
+---
+
+*ECOLE POLYTECHNIQUE - ESPCI — ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2021 — FILIERE PC - Epreuve n° 5 — PHYSIQUE B (XEULC) · 14 април 2021 г.*
+
+<details>
+<summary>Consignes</summary>
+
+MERCREDI 14 AVRIL 2021, 08h00 - 12h00
+
+Durée : 4 heures
+
+L’utilisation des calculatrices n’est pas autorisée pour cette épreuve
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [I Questions préliminaires et ordres de grandeur](#i)
+- [II Suivi de particule unique et viscosité du cytoplasme](#ii)
+- [II.A Approche microscopique de la diffusion dans un gaz](#ii-a)
+- [II.B Mouvement brownien et modèle de marche au hasard](#ii-b)
+- [II.C Particule brownienne mésoscopique et modèle de Langevin](#ii-c)
+- [II.D Rhéologie passive du cytoplasme cellulaire par suivi de particule unique](#ii-d)
+- [III Expériences d’indentation et d’élasticité de la cellule](#iii)
+- [III.A Déformations d’un solide élastique](#iii-a)
+- [III.A.a Étirement longitudinal](#iii-a-a)
+- [III.A.b Contrainte de cisaillement](#iii-a-b)
+- [III.B Indendation par pointe AFM (Atomic Force Microscope)](#iii-b)
+- [III.C Oscillations de la pointe AFM et réponse harmonique](#iii-c)
+- [IV Modèles visco-élastiques du cytoplasme cellulaire](#iv)
+- [IV.A Cas élémentaires : solide de Hooke et fluide newtonien](#iv-a)
+- [IV.B Cas harmonique et aspects énergétiques](#iv-b)
+- [IV.C Modèles de Kelvin-Voigt d’un fluide visco-élastique](#iv-c)
+
+</nav>
+
+Le but de ce problème est d’étudier quelques propriétés mécaniques des cellules biologiques. D’un point de vue physique, une cellule est un objet ’mou’ qui consomme de l’énergie sous forme d’ATP. Il s’agit donc d’un système hors d’équilibre thermodynamique. Nous nous intéresserons ici essentiellement à la caractérisation de la rhéologie cellulaire, c’est-à-dire aux propriétés mécaniques de la cellule. Le formulaire donne les valeurs des paramètres utiles pour les estimations d’ordre de grandeur et les applications numériques ainsi qu’un bref formulaire d’analyse vectorielle et une figure rappelant les caractéristiques d’une ellipse lors d’une étude harmonique.
+
+Les deux dernières parties du problème (III et IV) sont indépendantes des deux premières (I et II). Des résultats intermédiaires au sein des différents paragraphes permettent de progresser dans le sujet.
+
+**Notations, formulaire et données numériques**
+
+- Vitesse caractéristique de l’écoulement dans le cytoplasme : $u = 0{,}1\ \mu\mathrm{m.s^{-1}}$
+- Taille caractéristique d’une cellule : $L = 10\ \mu\mathrm{m}$
+- Viscosité dynamique du cytoplasme : $\eta_c = 1\ \mathrm{Pa.s^{-1}}$
+- Masse volumique du cytoplasme : $\rho_c = 1{,}00 \times 10^{3}\ \mathrm{kg.m^{-3}}$
+- Viscosité cinématique du cytoplasme : $\nu_c = \dfrac{\eta_c}{\rho_c} = 1 \times 10^{-3}\ \mathrm{m^{2}.s^{-1}}$
+- Rayon d’une bille de latex : $R_\mathrm{b} = 1\ \mu\mathrm{m}$
+- Température : $T = 310\ \mathrm{K}$
+- Constante de Boltzmann : $k_\mathrm{B} = 1{,}4 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$
+- Expression de l’opérateur laplacien scalaire $\Delta\phi = \mathrm{div}(\overrightarrow{\mathrm{grad}}\ \phi)$, où $\phi$ est un champ scalaire
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '93.5%', '--fig-max': '599px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig1.png" alt="Deux graphes. a) « Influence du déphasage » : courbes $y=\cos(\omega t+\phi)$ en fonction de $x=\cos(\omega t)$ pour $\phi=\pi$, $2\pi/3$, $\pi/2$, $\pi/3$ et $0$ (segments et ellipses dans le carré $[-1,1]$, axes de $-1{,}5$ à $1{,}5$). b) « Influence de l’amplitude » : courbes $y=\cos(\omega t+\pi/5)$ en fonction de $x=A\cos(\omega t)$ pour $A=0{,}25$ ; $1{,}25$ ; $2$ ; $5$ ; $10$ (axe x de $-15$ à $15$), ellipses de plus en plus inclinées et allongées." width="1871" height="752" loading="lazy" decoding="async" />
+<figcaption>Figure 1 – Caractéristiques d’une ellipse pour une étude harmonique.</figcaption>
+</figure>
+
+<ProblemSection id="i">
+
+### I Questions préliminaires et ordres de grandeur
+
+La figure 2 schématise une cellule eucaryote$^{1}$. Le problème étudiera les propriétés mécaniques de la cellule entière ou de son cytoplasme. La taille caractéristique de la cellule considérée se situe entre 10 et 100 $\mu$m. L’intérieur de la cellule, appelé cytoplasme, est un milieu riche en protéines, compartiments membranaires et filaments du cytosquelette. Du point de vue de la physique de la matière molle, le cytoplasme est un fluide complexe dont les propriétés mécaniques font l’objet du sujet. Les vitesses de déplacements d’objets à l’intérieur du cytoplasme, par exemple les vésicules de transport intracellulaire ou les filaments du cytosquelette qui polymérisent ou dépolymérisent, sont de l’ordre de $0{,}1\ \mu\mathrm{m.s^{-1}}$.
+
+Dans cette partie préliminaire, nous supposons que le cytoplasme est un fluide newtonien de masse volumique $\rho_c$. Nous utiliserons des arguments d’ordre de grandeur, ainsi que les grandeurs sans dimension définies en mécanique des fluides pour simplifier l’étude du cytoplasme.
+
+- On désigne par $\overrightarrow{v}(\overrightarrow{r},t)$ le champ de vitesse du fluide intracellulaire en un point $\mathrm{M}(\overrightarrow{r})$ du cytoplasme et à l’instant $t$, dans un repère $\mathcal{R} = (\mathrm{O}xyz)$ associé au référentiel de la cellule, supposé galiléen.
+
+Nous rappelons l’équation de Navier-Stokes pour un écoulement incompressible :
+
+$$
+\rho_c \frac{\mathrm{d}}{\mathrm{d}t}\overrightarrow{v} = \overrightarrow{f} - \overrightarrow{\mathrm{grad}}\, p + \eta_c \Delta \overrightarrow{v}\ , \qquad (1)
+$$
+
+où $\overrightarrow{f}$ désigne la résultante des forces volumiques extérieures exercée sur une particule de fluide du cytoplasme, $p$ est la pression, $\eta_c$ est la viscosité dynamique du cytoplasme. L’écoulement dans le cytoplasme est considéré comme incompressible. L’opérateur $\Delta$ représente l’opérateur laplacien. La dérivée particulaire $\dfrac{\mathrm{d}}{\mathrm{d}t}$ a pour expression :
+
+$$
+\frac{\mathrm{d}}{\mathrm{d}t} = \frac{\partial}{\partial t} + \overrightarrow{v} \cdot \overrightarrow{\mathrm{grad}}\ . \qquad (2)
+$$
+
+Afin de simplifier l’étude du cytoplasme, il est nécessaire de comparer les effets de différents phénomènes entre eux. Pour cela, nous introduisons des grandeurs sans dimension et différents temps caractéristiques associés à certains phénomènes pour identifier ceux qui sont déterminants dans le comportement mécanique du cytoplasme.
+
+- On définit le nombre de Reynolds, noté Re, comme le rapport sans dimension entre le terme convectif de la dérivée particulaire et les forces volumiques de viscosité intervenant dans l’équation de Navier-Stokes (ou, de façon équivalente, comme le rapport entre le temps caractéristique de diffusion de la quantité de mouvement et le temps caractéristique de convection).
+
+$^{1}$ Cellule comportant un noyau et un cytoplasme.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '35%', '--fig-max': '224px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig2.png" alt="Schéma d’une cellule au contour irrégulier, de taille « 10-100 µm » (flèche double au-dessus), contenant un noyau et des filaments ; légendes « Filaments du cytosquelette », « Noyau », « Cytoplasme »." width="700" height="513" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – Schéma d’une cellule eucaryote. Les différents compartiments cellulaires évoqués dans l’énoncé sont représentés, ainsi que les échelles de longueurs utilisées.</figcaption>
+</figure>
+
+**1.** Donner l’expression de Re pour l’écoulement dans le cytoplasme cellulaire en fonction de la dimension caractéristique de l’extension de l’écoulement $L$, de la viscosité cinématique $\nu_\mathrm{c}$ et de la vitesse caractéristique $u$. Donner un ordre de grandeur de Re et conclure sur le rôle du terme convectif dans les écoulements du cytoplasme à l’intérieur de la cellule.
+
+- Nous supposons que les forces volumiques extérieures et de pression exercées sur une particule de fluide dans le cytoplasme sont négligeables devant les forces volumiques de viscosité.
+
+Pour estimer la contribution du terme inertiel (terme en $\partial\vec{v}/\partial t$ dans l’expression de la dérivée particulaire), on définit un temps caractéristique $\tau_\mathrm{inertie}$ tel que
+
+$$
+\left|\rho_c \frac{\partial \overrightarrow{v}}{\partial t}\right| \sim \rho_c \frac{u}{\tau_\mathrm{inertie}}\ .
+$$
+
+**2.** On fait l’hypothèse que les forces volumiques de viscosité et le terme inertiel dans l’équation de Navier-Stokes sont du même ordre de grandeur. Exprimer $\tau_\mathrm{inertie}$ en fonction de $L$, $\rho_c$ et $\eta_c$ puis calculer numériquement $\tau_\mathrm{inertie}$. En comparant $\tau_\mathrm{inertie}$ avec les temps caractéristiques (supérieurs à la milliseconde) mis en jeu au cours des expériences de rhéologie cellulaire que nous évoquerons dans la suite, justifier le fait que l’on conserve les forces volumiques de viscosité et le terme inertiel dans l’équation de Navier-Stokes.
+
+**3.** Déduire des approximations et hypothèses précédentes l’équation qui régit la dynamique de l’écoulement cytoplasmique. Rappeler le nom de ce type d’équation et donner une interprétation du coefficient de viscosité cinématique $\nu_\mathrm{c}$ relativement à cette équation.
+
+</ProblemSection>
+
+<ProblemSection id="ii">
+
+### II Suivi de particule unique et viscosité du cytoplasme
+
+On étudie dans cette partie les phénomènes de diffusion dans le cytoplasme cellulaire, considéré comme un fluide newtonien. Les paragraphes préliminaires (II.A, II.B et II.C) abordent quelques modèles simplifiés. Ils nous permettront, à partir d’une étude microscopique de la diffusion de particules d’un gaz, et celle d’une particule en mouvement brownien dans un fluide, de relier le coefficient de diffusion $D$ d’une particule brownienne à la viscosité dynamique $\eta$ d’un fluide. Cette relation, appelée relation d’Einstein, s’applique à un fluide newtonien. Elle est à la base d’une méthode de rhéologie passive permettant d’accéder à la viscosité $\eta_\mathrm{c}$ du cytoplasme à partir du suivi d’une particule unique (II.D).
+
+</ProblemSection>
+
+<ProblemSection id="ii-a">
+
+### II.A Approche microscopique de la diffusion dans un gaz
+
+On considère un gaz monoatomique, dont les particules ont une masse $m$, un rayon $r_\mathrm{p}$ et une vitesse moyenne d’agitation thermique $\overline{v}$ (cette vitesse est la vitesse quadratique moyenne définie comme la racine carrée de la moyenne de la vitesse au carré soit $\overline{v} = \sqrt{\langle v^2 \rangle}$). Le nombre total de particules est noté $N$, le volume du gaz est noté $V$ et sa température thermodynamique est notée $T$. Le gaz est considéré à l’équilibre thermique. On notera $k_\mathrm{B}$ la constante de Boltzmann, $n = N/V$ le nombre de particules du gaz par unité de volume et $\rho = Nm/V = nm$ sa masse volumique.
+
+On modélise les particules du gaz comme des billes de rayon $r_\mathrm{p}$, qui ne peuvent s’interpénétrer, et qui peuvent subir des collisions entre elles (ce modèle s’appelle le modèle des sphères dures). On note $\tau_\mathrm{col}$ le temps de collision défini comme le temps moyen entre deux collisions successives. La distance moyenne parcourue par une particule entre deux collisions successives subies par la même particule est appelée libre parcours moyen, noté $\ell$. Enfin, la section efficace de choc d’une particule, $\sigma_\mathrm{eff} = 4\pi r_\mathrm{p}^2$, est la surface plane perpendiculaire à la vitesse d’une particule définissant son extension spatiale.
+
+Nous étudions dans ce paragraphe le transport de particules du gaz par diffusion au sein de ce gaz.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.6%', '--fig-max': '254px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig3.png" alt="Cylindre horizontal de volume V entre les abscisses x-l et x+l (axe gradué x-l, x, x+l) ; section S à gauche ; nombres volumiques n(x-l) et n(x+l) aux extrémités ; flèches de flux $\phi_{N,e}$ entrant à gauche et $\phi_{N,s}$ sortant à droite." width="793" height="576" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Modèle à une dimension pour l’approche microscopique de la diffusion de particules dans un gaz.</figcaption>
+</figure>
+
+**4.** Relier le libre parcours moyen $\ell$ au temps de collision $\tau_\mathrm{col}$ et à la vitesse $\overline{v}$. Quel est l’ordre de grandeur du nombre de particules se trouvant en moyenne dans le volume $\sigma_\mathrm{eff}\ell$ ? En déduire que $\ell = \dfrac{c}{n\sigma_\mathrm{eff}}$, où $c$ est une constante numérique. On admettra que $c = \dfrac{1}{\sqrt{2}}$. On pourra effectuer un schéma pour illustrer le raisonnement.
+
+- On s’intéresse ici à la diffusion des particules de gaz se déplaçant sous l’effet d’un gradient de nombre de particules par unité de volume $n(x)$ unidimensionnel. La vitesse des particules est supposée uniforme (indépendante de l’abscisse $x$) et égale à la vitesse quadratique moyenne du gaz, $\overline{v}$. On considère un volume $V = 2S\ell$ de gaz situé entre les abscisses $x - \ell$ et $x + \ell$ (voir figure 3). Le nombre volumique de particules de gaz à l’abscisse $x - \ell$ (resp. $x + \ell$) est notée $n(x - \ell)$ (resp. $n(x + \ell)$). On note $\Phi_{\mathcal{N},e}$ le flux de particules de gaz à l’abscisse $x - \ell$, par unité de surface $S$, entrant dans le volume $V$ et $\Phi_{\mathcal{N},s}$ le flux de particules de gaz à l’abscisse $x + \ell$, par unité de surface $S$, sortant du volume $V$.
+
+On suppose que les particules se déplacent dans la direction $+x$ et que le nombre de particules par unité de volume $n(x)$ varie lentement sur des distances de l’ordre de $\ell$. S’il entre $\mathrm{d}\mathcal{N}_e$ particules de gaz dans le volume $V$ à l’abscisse $x - \ell$ entre les instants $t$ et $t + \mathrm{d}t$, alors $\Phi_{\mathcal{N},e} = \dfrac{1}{S}\dfrac{\mathrm{d}\mathcal{N}_e}{\mathrm{d}t}$. De la même façon, s’il sort $\mathrm{d}\mathcal{N}_s$ particules de gaz du volume $V$ à l’abscisse $x + \ell$ entre les instants $t$ et $t + \mathrm{d}t$, alors $\Phi_{\mathcal{N},s} = \dfrac{1}{S}\dfrac{\mathrm{d}\mathcal{N}_s}{\mathrm{d}t}$.
+
+**5.** Montrer qu’entre les dates $t$ et $t + \mathrm{d}t$, $\mathrm{d}\mathcal{N}_e$ particules de gaz entrent dans le volume $V$ et $\mathrm{d}\mathcal{N}_s$ particules de gaz en sortent, avec $\mathrm{d}\mathcal{N}_e = S\overline{v}n(x-\ell)\mathrm{d}t$ et $\mathrm{d}\mathcal{N}_s = S\overline{v}n(x+\ell)\mathrm{d}t$. À l’aide d’un bilan portant sur le nombre de particules dans le volume $V$, en déduire que le flux de particules par unité de surface dans la direction $+x$ défini par $\Phi_{\mathcal{N},+x} = \Phi_{\mathcal{N},e} - \Phi_{\mathcal{N},s}$ s’écrit $\Phi_{\mathcal{N},+x} = -2\overline{v}\ell\dfrac{\mathrm{d}n}{\mathrm{d}x}$.
+
+**6.** En tenant compte des déplacements des particules dans toutes les directions de l’espace, on peut montrer que le flux de particules par unité de surface dans $V$ est $\Phi_{\mathcal{N}} = \dfrac{1}{6}\Phi_{\mathcal{N},x} = -\dfrac{1}{3}\overline{v}\ell\dfrac{\mathrm{d}n}{\mathrm{d}x}$. En identifiant la relation précédente à la loi de Fick reliant le flux de particules au gradient de nombre de particules $n(x)$, montrer que le coefficient de diffusion $D$ des particules de gaz s’écrit $D = \dfrac{1}{3}\overline{v}\ell$.
+
+**7.** À l’aide du théorème d’équipartition de l’énergie : $\dfrac{1}{2}m\overline{v}^2 = \dfrac{3}{2}k_\mathrm{B}T$, montrer que le coefficient de diffusion $D$ s’écrit :
+
+$$
+D = \frac{k_\mathrm{B}T}{m}\tau_\mathrm{col}\ . \qquad (3)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="ii-b">
+
+### II.B Mouvement brownien et modèle de marche au hasard
+
+Nous nous intéressons dans la suite au mouvement brownien d’une particule dans un fluide sous l’effet de l’agitation thermique. Nous allons établir, pour une telle particule, la relation $D = A\dfrac{\ell^2}{\tau_\mathrm{col}}$, où $A$ est un facteur numérique que nous déterminerons.
+
+Pour décrire le mouvement d’une telle particule soumise à l’agitation thermique, on considère une marche aléatoire dans un espace à trois dimensions de $N$ pas partant du point $\mathrm{A} = \mathrm{P}_0$ fixe et arrivant au point $\mathrm{B} = \mathrm{P}_N$, dont la position dépend de la trajectoire suivie (paramétrée par les $N + 1$ points $(\mathrm{P}_0,\mathrm{P}_1,\ldots,\mathrm{P}_i,\ldots,\mathrm{P}_N)$, avec $i = 0,1,\ldots,N$). On note $\overrightarrow{d_i}$ le vecteur tel que $\overrightarrow{d_i} = \overrightarrow{\mathrm{P}_i\mathrm{P}_{i+1}}$. La suite des vecteurs $\overrightarrow{d_i}$, où l’indice $i$ prend ici des valeurs entre 0 et $N - 1$, représente une trajectoire (une réalisation) suivie par la particule entre les points $A$ et $B$ fixés (voir figure 4). Les points $P_i$, appelés points de collision, sont les points où la particule change de direction. La durée de parcours entre chaque point de collision est en moyenne égale au temps de collision $\tau_\mathrm{col}$.
+
+Le temps moyen mis par la particule pour aller de $A$ à $B$ est noté $t$.
+
+Nous adoptons ci-dessous quelques hypothèses et définissons certaines notations concernant la marche au hasard présentée ci-dessus et schématisée sur la figure 4.
+
+- La marche au hasard est isotrope : toutes les orientations des vecteurs $\overrightarrow{d_i}$ sont équiprobables.
+- La marche au hasard est homogène : chaque point de collision obéit à la même loi de probabilité.
+- On désigne par $\langle f \rangle$ la moyenne d’une grandeur $f(t)$ sur tous les chemins possibles à $N$ pas, entre A et B. On admet les propriétés suivantes : $\dfrac{\mathrm{d}}{\mathrm{d}t}\langle f \rangle = \left\langle \dfrac{\mathrm{d}f}{\mathrm{d}t} \right\rangle$ et $\langle fg \rangle = \langle f \rangle \langle g \rangle$ si $f$ et $g$ sont deux grandeurs indépendantes.
+- On note $\bar{f}$, la moyenne temporelle de $f$ sur un chemin donné entre A et B. L’hypothèse dite d’ergodicité stipule $\langle f \rangle = \overline{f}$.
+- Nous n’étudions pas le détail des collisions et nous nous limitons aux caractéristiques de la marche aléatoire évoquées ci-dessus.
+
+On désigne par $\overrightarrow{\delta} = \displaystyle\sum_{i=0}^{N-1} \overrightarrow{d_i} = \overrightarrow{\mathrm{AB}}$ un chemin possible pour aller de A à B en effectuant $N$ pas. La marche aléatoire étant homogène et isotrope, $\left\langle \overrightarrow{\delta} \right\rangle = \overrightarrow{0}$, ce qui signifie que B est situé sur une sphère de centre A et de rayon moyen au carré $\langle \| \overrightarrow{\mathrm{AB}} \|^2 \rangle$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.2%', '--fig-max': '245px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig4.png" alt="Trajectoire en ligne brisée partant de A=P0 et arrivant à B=PN, avec le vecteur $\overrightarrow{AB}$ ; points Pi, Pi+1, Pi+2 ; vecteur $\overrightarrow{d_i}=\overrightarrow{P_iP_{i+1}}$ en flèche épaisse et angle $\theta_i$ marqué entre le prolongement pointillé de APi et di." width="765" height="699" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Modèle de marche aléatoire à $N$ pas dans un espace à trois dimensions.</figcaption>
+</figure>
+
+**8.** Montrer que $\left\langle \mathrm{AP}_{i+1}^2 \right\rangle = \left\langle \mathrm{AP}_i^2 \right\rangle + \left\langle d_i^2 \right\rangle + \left\langle 2\overrightarrow{d_i}.\overrightarrow{\mathrm{AP}_i} \right\rangle$.
+
+**9.** On note $\theta_i$ l’angle entre les vecteurs $\overrightarrow{\mathrm{AP}_i}$ et $\overrightarrow{d_i}$ (voir figure 4). Le libre parcours moyen $\ell$ est ici la valeur moyenne qu’aurait la composante du vecteur $\overrightarrow{d_i}$ dans l’une des trois directions de l’espace, repérées par les vecteurs $\overrightarrow{e_x}$, $\overrightarrow{e_y}$ et $\overrightarrow{e_z}$, formant une base orthonormée. On a donc $\left\langle d_{i,x}^2 \right\rangle = \left\langle d_{i,y}^2 \right\rangle = \left\langle d_{i,z}^2 \right\rangle = \ell^2$. En considérant que les variables $\| \overrightarrow{d_i} \|$, $\| \overrightarrow{\mathrm{AP}_i} \|$ et $\theta_i$ sont des grandeurs indépendantes, montrer que $\left\langle \mathrm{AP}_{i+1}^2 \right\rangle = \left\langle \mathrm{AP}_i^2 \right\rangle + 3\ell^2$.
+
+**10.** En déduire que $\left\langle \| \overrightarrow{\delta} \|^2 \right\rangle = 3N\ell^2$.
+
+**11.** Indiquer la relation entre le temps moyen $t$ pour aller de A à B, le temps de collision $\tau_\mathrm{col}$ et le nombre de pas de la marche aléatoire $N$. En déduire alors l’expression de $\left\langle \| \overrightarrow{\delta} \|^2 \right\rangle$ en fonction de $t$, $\ell$ et $\tau_\mathrm{col}$.
+
+**12.** Le coefficient de diffusion de particules à trois dimensions étant défini par $\overline{\| \overrightarrow{\delta} \|^2} = 6Dt$, préciser l’expression de $D$ en fonction du libre parcours moyen $\ell$ et du temps de collision $\tau_\mathrm{col}$. Comparer cette expression à celle de $D$, obtenue par l’approche microscopique de la diffusion de particules à la question **6**.
+
+</ProblemSection>
+
+<ProblemSection id="ii-c">
+
+### II.C Particule brownienne mésoscopique et modèle de Langevin
+
+Nous nous intéressons maintenant à une particule brownienne de grandes dimensions devant les dimensions atomiques et se déplaçant dans un fluide à la température $T$. Nous utilisons le modèle de Langevin pour établir la relation d’Einstein, reliant le coefficient de diffusion $D$ de cette particule brownienne et la viscosité dynamique du fluide. Notons que le coefficient de diffusion que nous obtiendrons dans cette situation ne possède pas le même statut que celui du paragraphe II.A, qui décrivait l’auto-diffusion dans un gaz.
+
+On considère des particules sphériques de rayon $r_\mathrm{p}$, de masse $m$, se déplaçant à la vitesse $\overrightarrow{V}$ dans un liquide de viscosité dynamique $\eta$. La position d’une particule au point M est repérée par le vecteur $\overrightarrow{\mathrm{OM}}(t) = (x(t), y(t), z(t))$ dans un système de coordonnées cartésiennes de repère $(\mathrm{O}, \overrightarrow{e_x}, \overrightarrow{e_y}, \overrightarrow{e_z})$. Les particules sont soumises à :
+
+- une force de frottement fluide due au liquide, dont l’expression est donnée par la force de Stokes $\overrightarrow{F}_\eta = -6\pi\eta r_\mathrm{p}\overrightarrow{V}$, avec $\overrightarrow{V}$ la vitesse d’une particule ;
+- une force aléatoire $\overrightarrow{f}(t) = (f_x, f_y, f_z)$ telle que $\langle f_x \rangle = \langle f_y \rangle = \langle f_z \rangle = 0$ (où $\langle \ldots \rangle$ désigne la moyenne sur un grand nombre de particules). Cette moyenne est l’analogue de la moyenne sur les chemins possibles, définie précédemment dans le cadre de la marche aléatoire, et possède les mêmes propriétés.
+
+On suppose que l’équilibre thermodynamique est atteint.
+
+**13.** En utilisant le théorème d’équipartition de l’énergie, déterminer l’expression de $\langle \dot{x}^2 \rangle$, où la notation $\dot{x}$ désigne la dérivée de $x(t)$ par rapport au temps, composante de la vitesse dans la direction $\overrightarrow{e_x}$.
+
+**14.** On suppose que les variables $x$ et $f_x$ sont indépendantes. À partir du principe fondamental de la dynamique appliqué à une particule, établir l’équation différentielle vérifiée par $\langle x\dot{x} \rangle$.
+
+**15.** Résoudre cette équation différentielle et montrer qu’en régime permanent, on obtient $\langle x\dot{x} \rangle = k_\mathrm{B}T/6\pi\eta r_\mathrm{p}$. On introduira une durée caractéristique $\tau$ et on donnera un critère d’atteinte du régime permanent.
+
+**16.** En supposant que $\left\langle x^2 \right\rangle (t = 0) = 0$ et des durées longues devant $\tau$, montrer que $\left\langle x^2 \right\rangle (t) = 2Dt$ et établir la relation d’Einstein
+
+$$
+D = \frac{k_\mathrm{B}T}{6\pi\eta r_\mathrm{p}}\ . \qquad (4)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="ii-d">
+
+### II.D Rhéologie passive du cytoplasme cellulaire par suivi de particule unique
+
+Une technique expérimentale de rhéologie passive pour mesurer la viscosité $\eta_c$ du cytoplasme cellulaire consiste à suivre au microscope le déplacement d’une bille de taille micrométrique (rayon $R_\mathrm{b}$), qui a été introduite dans le cytoplasme, au cours du temps (figure 5). La bille est visualisée à intervalles de temps réguliers par vidéomicroscopie. On note $\Delta t_\mathrm{min}$ l’intervalle de temps entre deux images (ou temps d’acquisition des images) et $N_\mathrm{tot}$ le nombre total d’images. Un algorithme de suivi de particule unique permet ensuite d’obtenir les coordonnées $x_\mathrm{b}(t)$ et $y_\mathrm{b}(t)$ du centre de masse de la bille et sa trajectoire en deux dimensions, à une résolution inférieure au pixel de la caméra utilisée. À partir de $x_\mathrm{b}(t)$ et $y_\mathrm{b}(t)$, on calcule le déplacement quadratique moyen $\delta^2(t) = \left\langle x_\mathrm{b}(t)^2 + y_\mathrm{b}(t)^2 \right\rangle$, à la date $t = t_i = i\Delta t_\mathrm{min}$ où $i = 1 \ldots N_\mathrm{tot}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '35%', '--fig-max': '224px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig5.png" alt="Même schéma de cellule que la figure 2 (taille « 10-100 µm », légendes « Filaments du cytosquelette », « Noyau », « Cytoplasme ») avec en plus une petite bille grise de diamètre 2Rb dans le cytoplasme." width="700" height="516" loading="lazy" decoding="async" />
+<figcaption>Figure 5 – Schéma d’une cellule eucaryote en présence d’une bille. Une bille de diamètre $2R_\mathrm{b}$ est placée à l’intérieur de la cellule. Elle permet d’étudier les actions mécaniques exercées dans le cytoplasme en jouant le rôle de particule-sonde de l’écoulement dans le cytoplasme.</figcaption>
+</figure>
+
+**17.** En supposant que le mouvement de la bille dans le cytoplasme est purement diffusif (on notera $D$ son coefficient de diffusion), représenter graphiquement l’évolution temporelle de $\delta^2(t)$ (de façon qualitative) et expliquer comment la mesure de $\delta^2(t)$ permet d’accéder à la viscosité du cytoplasme $\eta_\mathrm{c}$.
+
+**18.** On visualise le déplacement d’une bille de rayon $R_\mathrm{b} = 1\ \mu\mathrm{m}$ à 6 images par seconde. Le déplacement quadratique moyen entre deux images est mesuré et on obtient 0,2 pixel. Sachant que les images obtenues sont calibrées à 0,05 $\mu$m par pixel, en déduire une estimation numérique du coefficient de diffusion de la bille, puis de la viscosité du cytoplasme.
+
+En pratique, le mouvement de la bille aux temps longs est rarement gouverné par le seul phénomène de diffusion. Certains constituants du cytoplasme peuvent avoir une influence sur le mouvement de la bille et induire une déviation par rapport au mouvement diffusif usuel.
+
+- Des assemblages moléculaires, appelés moteurs moléculaires, peuvent entraîner la bille à une vitesse moyenne de dérive $\bar{v}_\mathrm{mot}$. Ce phénomène vient s’ajouter au phénomène de diffusion.
+- Les filaments du cytosquelette forment un réseau complexe dont la maille caractéristique est de l’ordre de 50 à 100 nm (Fig. 5). Le mouvement de la bille peut être restreint dans une zone de l’espace de rayon caractéristique $R_\mathrm{cage}$, à l’intérieur du cytoplasme.
+
+**19.** Illustrer à l’aide d’un schéma la trajectoire de la bille en présence de moteurs moléculaires. On supposera que le mouvement de dérive à la vitesse $\bar{v}_\mathrm{mot}$ dû aux moteurs moléculaires se superpose au mouvement dû à la diffusion, et conduit à un comportement diffusif avec dérive. Établir l’équation donnant $\delta^2(t)$ en fonction de $\bar{v}_\mathrm{mot}$, $D$ et de $t$. Vérifier que le mouvement est bien diffusif sans dérive aux temps courts. Représenter graphiquement, et de façon qualitative, l’évolution temporelle de $\delta^2(t)$ en représentation log-log.
+
+**20.** Représenter à l’aide d’un schéma la trajectoire de la bille en situation de diffusion confinée dans une zone restreinte de l’espace. Montrer que l’expression $\delta^2(t) = \alpha R_\mathrm{cage}^2 \left[1 - \exp\left(-4Dt/R_\mathrm{cage}^2\right)\right]$, avec $\alpha$ un facteur numérique, peut modéliser un comportement où le mouvement de la bille est restreint dans une cage de rayon caractéristique $R_\mathrm{cage}$. Vérifier que le mouvement est bien diffusif sans confinement aux temps courts. Représenter graphiquement, et de façon qualitative, l’évolution temporelle de $\delta^2(t)$ en représentation log-log.
+
+</ProblemSection>
+
+<ProblemSection id="iii">
+
+### III Expériences d’indentation et d’élasticité de la cellule
+
+Dans cette partie nous allons nous intéresser aux déformations élastiques de la cellule. Pour cela, nous définissons ici les notions de déformation et de contrainte, notions centrales de la théorie de l’élasticité des matériaux. La déformation $\varepsilon(t)$ du matériau est une grandeur sans dimension qui dépend de la géométrie du système physique modélisé. Différentes situations sont représentées sur la figure 6. En général, la déformation $\varepsilon$ est égale à $\varepsilon = x/L$ où $x$ est la distance sur laquelle le matériau est déformé relativement à une longueur caractéristique $L$ de l’échantillon. La contrainte $\sigma(t)$ exercée sur le matériau est définie comme $\sigma = F/S$ où $F$ est la force qui provoque la déformation appliquée sur une surface $S$ et homogène à une pression. La déformation et la contrainte sont des grandeurs algébriques.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.2%', '--fig-max': '520px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig6.png" alt="a) « Extension uniaxiale » : parallélépipède de hauteur L0 (gris) étiré verticalement en un bloc plus haut de hauteur L (noir), force $\vec{F}$ vers le haut, surface S hachurée, repère x, y, z. b) « Cisaillement » : bloc de hauteur L incliné d’un angle θ, face supérieure S déplacée de Δx, force horizontale $\vec{F}$ avec F=σS." width="1626" height="717" loading="lazy" decoding="async" />
+<figcaption>Figure 6 – (a) : Déformation d’un matériau par étirement. (b) : Déformation d’un matériau par cisaillement. (a) Dans le cas d’un étirement uniaxial $\Delta L = L(t) - L_0$ sous l’effet d’une force verticale, la déformation est $\varepsilon = \Delta L/L_0$ et la contrainte est $\sigma = F/S$ où la force d’étirement $\vec{F}$ est normale à la surface $S$. (b) Dans le cas d’un cisaillement horizontal sous l’effet d’une force horizontale, le plan $z = 0$ est fixe et la déformation est $\varepsilon = \Delta x/L$ où $\Delta x$ est le déplacement horizontal du matériau à une hauteur $z = L$ dans le matériau. La contrainte est $\sigma = F/S$ où la force de cisaillement $\vec{F}$ est tangentielle à la surface $S$. On note $\theta$ l’angle d’inclinaison par rapport à la verticale.</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="iii-a">
+
+### III.A Déformations d’un solide élastique
+
+Pour un matériau homogène, linéaire et purement élastique, la déformation est proportionnelle à la contrainte appliquée. On parle alors de solide de Hooke. La constante de proportionnalité entre la contrainte et la déformation est analogue à la constante de raideur $k$ d’un ressort obéissant à la loi de Hooke $F = k\Delta x$ où $\Delta x$ est l’allongement du ressort et $F$ la norme de la force de rappel du ressort. Nous étudions dans la suite deux cas particuliers simples de déformations d’un solide élastique pour comprendre quelques éléments de la théorie de l’élasticité.
+
+</ProblemSection>
+
+<ProblemSection id="iii-a-a">
+
+### III.A.a Étirement longitudinal
+
+On considère un cylindre d’axe vertical $(\mathrm{O}z)$, de longueur $L_0$ et de rayon $r_0$. On étire le cylindre verticalement selon son axe. Sa longueur augmente et son rayon diminue alors, tels que $L = L_0 + \Delta L$ et $r = r_0 + \Delta r$ (voir Figure 7).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48%', '--fig-max': '308px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig7.png" alt="« Extension uniaxiale » : à gauche un cylindre de hauteur L0 et de rayon r0, force $\vec{F}$ verticale vers le haut ; une grosse flèche mène à droite à un cylindre plus long et plus mince, de hauteur L0+ΔL et de rayon r0+Δr." width="961" height="885" loading="lazy" decoding="async" />
+<figcaption>Figure 7 – Cylindre en traction. On étire verticalement un cylindre d’axe vertical, de longueur $L_0$ et de rayon $r_0$. Après étirement, sa longueur est $L = L_0 + \Delta L$ et son rayon est $r = r_0 + \Delta r$.</figcaption>
+</figure>
+
+**21.** On suppose que le matériau constituant le cylindre est incompressible et donc que le volume du cylindre est conservé. En supposant les déformations petites devant les dimensions du cylindre ($|\Delta L| \ll L_0$ et $|\Delta r| \ll r_0$), montrer qu’on a la relation $\dfrac{\Delta r}{r_0} = -\nu\dfrac{\Delta L}{L_0}$ où $\nu$ est une constante dont on déterminera la valeur.
+
+- Pour un matériau élastique, linéaire et compressible, la relation $\dfrac{\Delta r}{r_0} = -\nu\dfrac{\Delta L}{L_0}$ est vérifiée et signifie que la déformation du solide dans la direction normale à la contrainte $\varepsilon_\perp = \dfrac{\Delta r}{r_0}$ est proportionnelle à la déformation dans la direction parallèle à la contrainte $\varepsilon_\parallel = \dfrac{\Delta L}{L_0}$ de sorte que $\varepsilon_\perp = -\nu\varepsilon_\parallel$. Le coefficient $\nu = -\dfrac{\varepsilon_\perp}{\varepsilon_\parallel} = -\dfrac{\Delta r/r_0}{\Delta L/L_0}$ est appelé coefficient de Poisson du solide et tel que $-1 \le \nu \le 1/2$.
+
+Pour une contrainte unidirectionnelle normale à la surface $S$ (figures 6 (a) et 7), la linéarité entre contrainte et déformation dans la direction de la contrainte s’écrit $\sigma = E\varepsilon_\parallel$ (loi de Hooke) où la constante de proportionnalité $E$ est appelée module de Young du solide.
+
+**22.** Déterminer la dimension du module de Young $E$.
+
+**23.** On considère un cylindre élastique, linéaire et compressible, de coefficient de Poisson $\nu$ soumis à la même contrainte d’extension verticale. On suppose toujours que les déformations sont petites devant les dimensions du cylindre. Montrer que la variation relative de volume du cylindre $\dfrac{\Delta V}{V_0}$ est reliée à la contrainte appliquée $\sigma$ par la relation $\dfrac{\Delta V}{V_0} = \dfrac{1 - 2\nu}{E}\sigma$ où $V_0$ est le volume du cylindre avant extension.
+
+</ProblemSection>
+
+<ProblemSection id="iii-a-b">
+
+### III.A.b Contrainte de cisaillement
+
+On considère un solide de forme parallélépipédique soumis à une contrainte de cisaillement (Figure 6 (b)). Dans ce cas, avec les notations de la figure 6 (b), la contrainte est tangentielle à la surface $S$ et la déformation dans la direction de la contrainte est $\varepsilon_\parallel = \Delta x/L = \tan\theta$. Pour de petites déformations, la linéarité entre contrainte et déformation dans la direction de la contrainte se traduit par $\sigma = G\varepsilon_\parallel$ (la loi de Hooke pour le cisaillement) où la constante de proportionnalité $G$ est appelée module de cisaillement du solide. La théorie de l’élasticité montre que le module de cisaillement s’écrit en fonction du module de Young et du coefficient de Poisson selon l’expression
+
+$$
+G = \frac{E}{2(1 + \nu)}\ . \qquad (5)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.6%', '--fig-max': '343px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig8.png" alt="« Torsion » : cylindre vertical de longueur L, vecteur $\vec{e}_z$ selon l’axe ; « moment de torsion $\vec{M}$ » vers le haut ; sur le plan supérieur, centre O, rayon R, élément dS à la distance r, force $\vec{dF}$ et angle φ ; génératrice inclinée d’un angle θ ; légendes « plan supérieur : rotation d'angle φ » et « plan inférieur : fixe »." width="1072" height="1187" loading="lazy" decoding="async" />
+<figcaption>Figure 8 – Cylindre sollicité en torsion. La surface supérieure d’un cylindre de longueur $L$ et de rayon $R$ subit une rotation d’angle $\varphi$ par rapport à la surface inférieure du cylindre qui reste fixe. Le moment de torsion crée une contrainte de cisaillement dans le matériau.</figcaption>
+</figure>
+
+**24.** Pour une petite déformation ($|\Delta x| \ll L$), montrer que le module de cisaillement s’écrit $G = \dfrac{F}{S\theta}$, où $\theta$ est l’angle d’inclinaison du solide par rapport à la verticale, défini sur la figure 6 (b).
+
+- Un exemple classique de cisaillement pur est donné par la torsion d’un fil cylindrique (fil de torsion). On considère un fil élastique assimilé à un cylindre de rayon $R$ , de longueur $L$ (avec $L \gg R$), d’axe vertical $(\mathrm{O}z)$ soumis à un moment de torsion $\overrightarrow{\mathcal{M}}$ de direction parallèle à l’axe du cylindre. Le plan supérieur du cylindre tourne alors d’un angle $\varphi$, supposé petit, par rapport au plan inférieur qui reste fixe (Figure 8). On note $\overrightarrow{e_z}$ le vecteur unitaire vertical. On appelle ici O le point d’intersection entre l’axe du cylindre et le plan supérieur du cylindre.
+
+**25.** Montrer qu’un élément de surface $\mathrm{d}S$ du plan supérieur du cylindre situé à la distance $r$ de l’axe du cylindre subit une déformation $\varepsilon(r) = \dfrac{r}{L}\varphi$ selon la direction orthoradiale.
+
+**26.** À partir de la loi de Hooke pour le cisaillement et de la définition de la contrainte, déduire l’expression de la norme $\mathrm{d}F$ de la force tangentielle $\overrightarrow{\mathrm{d}F}$ qui s’exerce sur l’élément de surface $\mathrm{d}S$ en fonction de $G$, $r$, $L$, $\varphi$, et $\mathrm{d}S$.
+
+**27.** Exprimer le moment de torsion $\overrightarrow{\mathcal{M}}$ dû aux forces de cisaillement et montrer qu’il se met sous la forme $\overrightarrow{\mathcal{M}} = C\varphi\overrightarrow{e_z}$ où la raideur du fil de torsion $C$ est une constante (appelée constante de torsion) qu’on déterminera en fonction de $G$, $R$ et $L$.
+
+</ProblemSection>
+
+<ProblemSection id="iii-b">
+
+### III.B Indendation par pointe AFM (Atomic Force Microscope)
+
+Une technique expérimentale permettant de sonder les propriétés mécaniques des cellules consiste à indenter (c’est-à-dire déformer localement) la cellule à l’aide d’une pointe de microscope à force atomique (AFM pour ’atomic force microscope’). Les figures 9 et 10 représentent, respectivement, le principe et les résultats d’une expérience d’indentation d’une cellule par une pointe AFM pyramidale. La géométrie de la pointe d’AFM joue un rôle important et détermine le comportement de la force $F(\delta)$ appliquée sur la cellule en fonction de l’indentation, notée $\delta$. On réalise la déformation en restant dans le régime élastique de la cellule (déformation réversible). La pointe AFM est le plus souvent une pyramide à base carrée et, dans ce cas, la dépendance de la force $F(\delta)$ n’est plus linéaire en fonction de l’indentation, à la différence des exemples abordés au paragraphe III.A. La force varie alors en $\delta^2$ et s’exprime de la manière suivante :
+
+$$
+F(\delta) = C\, E^*\delta^2\ , \qquad (6)
+$$
+
+où $C$ est une constante numérique dépendant de la pointe AFM et $E^* = \dfrac{E}{1 - \nu^2}$ est appelé module de Young effectif.
+
+Lors de l’expérience d’indentation, la pointe AFM est déplacée verticalement selon l’axe $(\mathrm{O}z)$ vers le bas grâce à un levier flexible dont la raideur est modélisée par une constante de raideur $k_{AFM}$ et dont la hauteur $z$ à son extrémité est imposée par le déplacement d’un système piézo-électrique.
+
+On note $\zeta$ la distance verticale entre la pointe et l’extrémité du levier (aussi appelée déflexion du levier). Au début de l’expérience ($t = 0$), la base de la pointe affleure la cellule sans l’indenter, et l’extrémité du levier et le haut de la pointe sont alignés de sorte que $\zeta(0) = z(0) = \delta = 0$ (voir figure 9). Lorsqu’on indente la cellule ($t > 0$), la force $F(\delta)$ et l’indentation $\delta$ augmentent. On suppose que la force exercée par le levier sur la pointe est celle d’un ressort de constante de raideur $k_{AFM}$ et d’allongement $\zeta$. On donne les caractéristiques suivantes de la pointe et du levier : $C = 0{,}5$ et $k_{AFM} = 0{,}1\ \mathrm{N.m^{-1}}$.
+
+L’indentation est effectuée à l’aide d’un déplacement du levier à vitesse constante et mesurée grâce à une méthode optique. Une photodiode permet de repérer la position d’un point lumineux issu de la réflexion d’un faisceau laser sur un miroir placé sur la pointe. On néglige les éventuels frottements exercés par le milieu extracellulaire sur la pointe et le levier dans cette expérience.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '655px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig9.png" alt="À gauche : repère x, y, z (z vers le bas) ; « Laser » réfléchi par un « Miroir » vers une « Photodiode » ; « Levier » horizontal à t=0 et fléchi à t>0 ; « Pointe AFM » pyramidale exerçant une force F sur une « Cellule » dans le « Milieu extracellulaire », indentation δ. À droite : détail du levier à t=0 et t>0, indentation δ, déflexion ζ, axe vertical z gradué 0 et z(t)." width="2047" height="499" loading="lazy" decoding="async" />
+<figcaption>Figure 9 – Schéma de principe d’une expérience d’indentation d’une cellule par une pointe AFM. Les schémas représentent l’expérience vue de profil (axe vertical $(\mathrm{O}z)$ dirigé vers le bas) à l’instant initial $t = 0$ où le levier est horizontal et à un instant $t > 0$ au cours de l’indentation où le levier est défléchi. Lorsque le levier est abaissé, la pointe indente la cellule et le levier fléchit. L’extrémité du levier est repérée par sa position verticale $z$. L’indentation $\delta$ correspond à la position verticale de la pointe. La déflexion du levier est notée $\zeta$.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '83.1%', '--fig-max': '532px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig10.png" alt="Deux graphes « Force F (nN) » (de −1 à 3) en fonction de « Indentation δ (µm) » (de −0,5 à 2). À gauche : courbe 1 (rouge) atteignant environ 2,2 nN à 2 µm et courbe 2 (bleue) atteignant environ 1 nN à 2 µm, toutes deux nulles jusqu’à environ 0,3 µm. À droite : courbe d’aller (trait plein) montant jusqu’à environ 2,3 nN vers 1,15 µm et courbe de retour (tirets) plus basse, descendant sous zéro avant de revenir à 0." width="1663" height="752" loading="lazy" decoding="async" />
+<figcaption>Figure 10 – Résultats d’une expérience d’indentation d’une cellule par une pointe AFM. Graphe de gauche : courbes force-indentation $F(\delta)$ pour deux cellules différentes (courbes 1 et 2 respectivement). Graphe de droite : expérience où la cellule est d’abord indentée jusqu’à $1\ \mu\mathrm{m}$ environ en descendant le levier puis en remontant le levier.</figcaption>
+</figure>
+
+**28.** Expliquer, synthétiquement, comment on peut déduire la force $F$ appliquée sur la cellule à partir de la mesure de la position de l’extrémité du levier et de la position de la pointe.
+
+**29.** La figure 10 (graphe de gauche) représente les courbes d’indentation $F(\delta)$ pour deux cellules différentes correspondant aux courbes 1 et 2 respectivement. Déterminer en exploitant la figure quelle cellule sera la plus déformable. Donner une estimation numérique du module de Young effectif $E^*$ des deux cellules.
+
+**30.** On effectue une expérience d’indentation jusqu’à 1 $\mu$m environ puis on retire la pointe (voir figure 10, graphe de droite). Proposer une explication permettant de comprendre le comportement quasi-statique observé et analyser le rôle éventuel de la dissipation visqueuse.
+
+</ProblemSection>
+
+<ProblemSection id="iii-c">
+
+### III.C Oscillations de la pointe AFM et réponse harmonique
+
+On utilise le dispositif expérimental, décrit au paragraphe précédent (figure 9), dans lequel on fait osciller la pointe AFM pour indenter la cellule de manière périodique. L’évolution temporelle du déplacement piézoélectrique du levier est $z(t) = z_0 + z_1\cos(\omega t + \varphi_z)$ où $z_0$ est la position moyenne du levier, $z_1$ l’amplitude des oscillations, $\omega$ la pulsation et $\varphi_z$ la phase. On suppose que l’amplitude des oscillations $z_1$ est petite devant la position moyenne $z_0$. Dans ces conditions, l’indentation $\delta$ et la force $F$ sont également périodiques de pulsation $\omega$ et leurs évolutions sont données par : $\delta(t) = \delta_0 + \delta_1\cos(\omega t + \varphi_\delta)$ et $F(t) = F_0 + F_1\cos(\omega t + \varphi_F)$. Nous rappelons que la pointe AFM est pyramidale et donc $F(\delta) = CE^*\delta^2$. Les valeurs moyennes de $F$ et $\delta$ sont telles que $F(\delta_0) = F_0$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40.4%', '--fig-max': '259px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig11.png" alt="Graphe « Force F (nN) » (de −0,4 à 0,4) en fonction de « Indentation δ (nm) » (de −40 à 40) : quatre ellipses centrées à l’origine, étiquetées 0,1 Hz, 1 Hz, 10 Hz et 100 Hz ; plus la fréquence est élevée, plus l’ellipse est redressée et large." width="809" height="790" loading="lazy" decoding="async" />
+<figcaption>Figure 11 – Réponse harmonique dans une expérience d’oscillations à faible amplitude de la pointe AFM. Courbes représentant la force $F$ en fonction de l’indentation $\delta$ à des fréquences d’oscillations variant entre 0,1 et 100 Hz.</figcaption>
+</figure>
+
+**31.** En linéarisant l’expression de $F(\delta)$ aux petites amplitudes d’oscillations, exprimer $F(\delta) - F_0$ en fonction de $\delta - \delta_0$, $C$, $E^*$ et $\delta_0$.
+
+**32.** En utilisant l’expression du module de cisaillement $G = \dfrac{E}{2(1 + \nu)}$, vue au paragraphe III.A, et en exprimant $E^*$ en fonction de $G$, déduire de la question précédente l’expression du module de cisaillement $G$ de la cellule en fonction de $\delta_0$, $C$, $\nu$, $F - F_0$, et $\delta - \delta_0$.
+
+On introduit les notations complexes suivantes $\underline{F}(\omega)$ et $\underline{\delta}(\omega)$ associées à $F - F_0$ et $\delta - \delta_0$ telles que :
+
+$$
+\underline{F}(\omega) = F_1 e^{\mathrm{i}(\omega t + \varphi_F)} \qquad \mathrm{et} \qquad \underline{\delta}(\omega) = \delta_1 e^{\mathrm{i}(\omega t + \varphi_\delta)}\ , \qquad F_1,\, \delta_1 \in \mathbb{R}^+\ . \qquad (7)
+$$
+
+Le module de cisaillement complexe $\underline{G}(\omega)$ est défini par $\underline{G}(\omega) = \dfrac{(1 - \nu)}{4C\delta_0}\dfrac{\underline{F}(\omega)}{\underline{\delta}(\omega)}$. On peut alors écrire une relation linéaire entre les grandeurs complexes $\underline{F}(\omega)$ et $\underline{\delta}(\omega)$, en introduisant une grandeur $\underline{Z}(\omega)$ analogue à une impédance électrique, telle que :
+
+$$
+\underline{Z}(\omega) = \frac{\underline{F}(\omega)}{\underline{\delta}(\omega)} = \frac{4C\delta_0}{1 - \nu}\,\underline{G}(\omega)\ . \qquad (8)
+$$
+
+Le module de cisaillement $\underline{G}(\omega)$ comporte une partie réelle, notée $G'(\omega)$, et une partie imaginaire, notée $G''(\omega)$.
+
+**33.** En interprétant l’expression $\underline{F}(\omega) = \left(\mathrm{Re}(\underline{Z}(\omega)) + i\omega\,\mathrm{Im}\left(\dfrac{\underline{Z}(\omega)}{\omega}\right)\right)\underline{\delta}(\omega)$ comme une relation entre la force $F$, l’indentation $\delta$ et la dérivée de $\delta$ par rapport au temps, proposer une interprétation physique des parties réelle et imaginaire de $\underline{G}(\omega)$. Déterminer le déphasage $\varphi$ entre $\underline{F}(\omega)$ et $\underline{\delta}(\omega)$ en fonction de $G'(\omega)$ et $G''(\omega)$ et discuter les cas $\varphi = 0$ et $\varphi = \pi/2$.
+
+**34.** La figure 11 représente les résultats expérimentaux d’une expérience d’oscillations d’une pointe AFM pour une amplitude d’oscillation de 50 nm à différentes fréquences. Interpréter le tracé de la force $F$ en fonction de l’indentation $\delta$. Discuter notamment l’évolution de la direction du demi-grand axe des ellipses observées ainsi que leur largeur, en fonction de la fréquence des oscillations. On pourra s’appuyer sur la figure 1 en préambule du sujet.
+
+</ProblemSection>
+
+<ProblemSection id="iv">
+
+### IV Modèles visco-élastiques du cytoplasme cellulaire
+
+La cellule et son cytoplasme ont à la fois des caractéristiques mécaniques d’un solide élastique (solide de Hooke) et d’un fluide visqueux (fluide newtonien). Ce sont donc des milieux visco-élastiques. Nous introduisons ici les modèles visco-élastiques les plus couramment utilisés en mécanique cellulaire. À partir de la déformation $\varepsilon(t)$ du matériau et de la contrainte $\sigma(t)$ appliquée au matériau (définies au paragraphe III et sur la figure 6), on définit le module de cisaillement par $G(t) = \dfrac{\sigma(t)}{\varepsilon(t)}$.
+
+Pour caractériser un matériau visco-élastique, on utilise :
+
+- l’expérience dite de fluage où on impose une contrainte constante $\sigma(t) = \sigma_0 = \mathrm{C^{\underline{te}}}$ et on mesure la déformation en fonction du temps $\varepsilon(t)$ ;
+- l’expérience de dynamique oscillatoire où la déformation et la contrainte oscillent de façon harmonique à la pulsation $\omega$, $\varepsilon(t) = \varepsilon_0\cos(\omega t)$ et $\sigma(t) = \sigma_0\cos(\omega t + \varphi)$, où $\varphi$ est le déphasage entre la contrainte et la déformation.
+
+Dans cette partie, nous étudierons d’abord les propriétés des deux éléments de base, le solide de Hooke (représenté par un élément élastique analogue à un ressort de module de Young $E$) et le fluide newtonien (représenté par un élément visqueux analogue à un amortisseur fluide de viscosité $\eta$) (paragraphes IV.A et IV.B) avant de les combiner dans le modèle visco-élastique de Kelvin-Voigt (paragraphe IV.C) qui associe un élément élastique et un élément visqueux en parallèle (Figure 12).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '93.5%', '--fig-max': '599px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc/p1-fig12.png" alt="Trois cadres. « Elément élastique (solide de Hooke) » : ressort, « Module d'Young E », $\sigma_\mathrm{el}=E\varepsilon_\mathrm{el}$. « Elément visqueux (fluide newtonien) » : amortisseur, « Viscosité η », $\sigma_\mathrm{visc}=\eta\dot{\varepsilon}_\mathrm{visc}$. « Modèle de Kelvin-Voigt » : ressort E et amortisseur η en parallèle entre deux bornes, accolade « matériau visco-élastique »." width="1871" height="481" loading="lazy" decoding="async" />
+<figcaption>Figure 12 – Éléments de base pour la modélisation d’un matériau visco-élastique linéaire. De gauche à droite, sont représentés : un élément élastique (solide de Hooke de module de Young $E$), un élément visqueux (fluide newtonien de viscosité $\eta$) et une association en parallèle de ces deux éléments dans le modèle de Kelvin-Voigt.</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="iv-a">
+
+### IV.A Cas élémentaires : solide de Hooke et fluide newtonien
+
+- Nous rappelons qu’un solide de Hooke obéit à la loi du même nom : $\sigma = E\varepsilon$.
+
+**35.** Nous étudions la réponse du solide de Hooke dans une expérience de fluage. On considère un échelon de contrainte, qui a pour expression $\sigma(t) = \sigma_0 = \mathrm{C^{\underline{te}}}$ pour toute date $t > 0$. Déterminer l’expression de $\varepsilon(t)$.
+
+- Un fluide newtonien est un matériau purement visqueux. Il est caractérisé par sa viscosité $\eta$. On peut montrer que la contrainte $\sigma$ est proportionnelle au taux de déformation $\dot{\varepsilon} = \dfrac{\mathrm{d}\varepsilon}{\mathrm{d}t}$, telle que $\sigma = \eta\dot{\varepsilon}$.
+
+**36.** Dans le cadre d’une expérience de fluage, on soumet le fluide newtonien à un échelon de contrainte ($\sigma(t) = \sigma_0$ pour tout temps $t > 0$). Déterminer l’expression de $\varepsilon(t)$, en supposant la déformation du fluide nulle à $t = 0$.
+
+</ProblemSection>
+
+<ProblemSection id="iv-b">
+
+### IV.B Cas harmonique et aspects énergétiques
+
+On considère maintenant un matériau visco-élastique soumis à une sollicitation où la déformation et la contrainte oscillent à la pulsation $\omega$. On utilise la notation complexe : $\underline{\varepsilon} = \varepsilon_0 e^{\mathrm{i}\omega t}$ et $\underline{\sigma} = \sigma_0 e^{\mathrm{i}(\omega t + \varphi)} = \sigma_0 e^{\mathrm{i}\varphi}e^{\mathrm{i}\omega t}$, où $\varepsilon_0 \in \mathbb{R}$ et $\sigma_0 \in \mathbb{R}$. Le module de cisaillement complexe est $\underline{G} = \underline{\sigma}/\underline{\varepsilon} = G' + \mathrm{i}G''$, avec $G' = \mathrm{Re}(\underline{G})$ et $G'' = \mathrm{Im}(\underline{G})$. On note $G_0 = |\underline{G}|$ le module de $\underline{G}$.
+
+**37.** Déterminer l’expression de $\underline{G}$ pour un solide de Hooke d’une part, puis pour un fluide newtonien d’autre part. En déduire $G'$, $G''$, $G_0$ et le déphasage $\varphi$ pour un solide de Hooke puis pour un fluide newtonien.
+
+**38.** Définir le travail élémentaire par unité de volume $\delta w$ fourni par une contrainte $\sigma$ au cours d’une déformation infinitésimale $\mathrm{d}\varepsilon$.
+
+**39.** Déterminer $\delta w$ dans le cas où $\varepsilon(t) = \varepsilon_0\cos(\omega t)$ et $\sigma(t) = \sigma_0\cos(\omega t + \varphi)$ . On mettra l’expression de $\delta w$ sous la forme suivante : $\delta w = \delta w_1 + \delta w_2$, avec $\delta w_1 = -\omega\sigma_0\varepsilon_0\cos\varphi\cos\omega t\sin\omega t\,\mathrm{d}t$ et $\delta w_2 = \omega\sigma_0\varepsilon_0\sin\varphi\sin^2\omega t\,\mathrm{d}t$.
+
+**40.** Exprimer l’énergie volumique de déformation $w_T$ fournie à l’unité de volume sur une période $T = \dfrac{2\pi}{\omega}$ en fonction de $\varepsilon_0$, $\sigma_0$ et $\varphi$. En déduire $w_T$ pour un solide de Hooke, puis pour un fluide newtonien. Proposer une interprétation de $w_T$ pour un matériau visco-élastique linéaire.
+
+**41.** Exprimer l’énergie volumique $w_{1,\,T/4}$, due à $\delta w_1$, fournie à l’unité de volume sur un quart de période $T/4$ et définie par : $w_{1,\,T/4} = \int_0^{T/4}\delta w_1$. En déduire $w_{1,\,T/4}$ pour un solide de Hooke et pour un fluide newtonien. Proposer une interprétation de $w_{1,\,T/4}$ pour un matériau visco-élastique linéaire.
+
+**42.** À partir des questions **40** et **41**, déterminer $\tan\varphi$ et en donner une signification à partir de grandeurs énergétiques pour un matériau visco-élastique linéaire.
+
+</ProblemSection>
+
+<ProblemSection id="iv-c">
+
+### IV.C Modèles de Kelvin-Voigt d’un fluide visco-élastique
+
+Le modèle de Kelvin-Voigt est un des modèles les plus élémentaires décrivant le comportement d’un matériau visco-élastique linéaire. Il combine les propriétés d’un solide de Hooke et d’un fluide newtonien.
+
+La figure 12 représente le modèle de Kelvin-Voigt sous la forme d’un ressort et d’un amortisseur associés en parallèle et avec les propriétés suivantes :
+
+- le ressort est un élément élastique de module de Young $E$, soumis à la contrainte $\sigma_\mathrm{el}$, et subissant la déformation $\varepsilon_\mathrm{el}$ ;
+- l’amortisseur est un élément visqueux de viscosité $\eta$, de contrainte $\sigma_\mathrm{visc}$, et de déformation $\varepsilon_\mathrm{visc}$.
+
+**43.** Établir l’expression de la déformation $\varepsilon_\mathrm{KV}$ et de la contrainte $\sigma_\mathrm{KV}$ en fonction des paramètres du ressort et de l’amortisseur.
+
+**44.** Établir l’équation différentielle vérifiée par la contrainte $\sigma_\mathrm{KV}$ et la déformation $\varepsilon_\mathrm{KV}$ du matériau visco-élastique. On fera apparaître un temps de relaxation $\tau = \dfrac{\eta}{E}$.
+
+**45.** Dans le cas d’une expérience de fluage (échelon de contrainte $\sigma_\mathrm{KV}(t > 0) = \sigma_0$), déterminer l’évolution de la déformation $\varepsilon_\mathrm{KV}(t)$ en résolvant l’équation différentielle de la question **44** et en prenant comme condition initiale $\varepsilon_\mathrm{KV}(t = 0) = 0$. Donner l’allure graphique de $\sigma_\mathrm{KV}(t)$ et $\varepsilon_\mathrm{KV}(t)$.
+
+**46.** Dans le cas d’une déformation et d’une contrainte harmoniques, établir l’équation algébrique, associée à l’équation différentielle de la question **44**, à l’aide des notations complexes introduites au paragraphe IV.B. En déduire l’expression du module de cisaillement complexe $\underline{G}_\mathrm{KV}(\omega)$, puis les expressions de $G'_\mathrm{KV}(\omega)$, $G''_\mathrm{KV}(\omega)$ et $\varphi_\mathrm{KV}(\omega)$ en fonction de $\omega$, $E$ et $\tau$.
+
+**47.** Donner l’allure graphique de $G'_\mathrm{KV}$ et $G''_\mathrm{KV}$. On fera apparaître une pulsation caractéristique $\omega_c$ et on analysera les régimes asymptotiques. Discuter le comportement aux temps longs (basses fréquences) et aux temps courts (hautes fréquences) du matériau visco-élastique dans le modèle de Kelvin-Voigt et comparer au solide élastique et au fluide newtonien.
+
+**48.** À l’aide des résultats des expériences d’indentation par une pointe AFM en réponse harmonique présentés sur la figure 11 (partie III.C, question **34**), discuter la validité du modèle de Kelvin-Voigt pour appréhender le comportement mécanique d’une cellule. On pourra s’appuyer sur l’évolution des caractéristiques des ellipses observées dans les expériences en fonction de la fréquence.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2021.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2021.pdf#page=2)

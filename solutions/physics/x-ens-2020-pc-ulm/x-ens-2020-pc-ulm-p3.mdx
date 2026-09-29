@@ -1,0 +1,191 @@
+---
+id: x-ens-2020-pc-ulm-p3
+source: 'X-ENS 2020, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 3. Troisième partie — Cosmologie et énergie noire'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2020/x-ens-2020-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:48.177Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE NORMALE SUPÉRIEURE — CONCOURS D’ADMISSION 2020 — FILIÈRE PC — COMPOSITION DE PHYSIQUE – C – (U) — Gravitation et secteur sombre de l’Univers · 23 април 2020 г.*
+
+<details>
+<summary>Consignes</summary>
+
+- L’usage de calculatrices n’est pas autorisé. Les applications numériques seront effectuées avec un chiffre significatif.
+- Le sujet comprend 15 pages numérotées de 1 à 15.
+- Dans le cas où un(e) candidat(e) repère ce qui lui semble être une erreur d’énoncé, il (elle) le signale lisiblement sur sa copie, propose la correction et poursuit l’épreuve en conséquence.
+
+</details>
+
+<details>
+<summary>Gravitation et secteur sombre de l’Univers</summary>
+
+Cette épreuve propose d’étudier quelques sujets liés à l’interaction gravitationnelle. Cette interaction est traitée dans un cadre newtonien dans les deux premières parties, puis dans le cadre de la relativité générale.
+
+Alors que la première partie traite de considérations générales sur la gravitation, tout particulièrement autour du principe d’équivalence, les parties suivantes se focalisent sur la matière et l’énergie noires, dont l’explication complète pose encore problème aux physiciens. Ces deux dernières parties se concentrent sur les principales observations qui ont amené à postuler l’existence de ce secteur sombre de l’Univers.
+
+***Ce sujet comporte trois parties largement indépendantes. Elles ont cependant été pensées pour être effectuées dans l’ordre, et les candidats sont encouragés à procéder ainsi.***
+
+</details>
+
+<details>
+<summary>Formulaire</summary>
+
+**Constantes fondamentales**
+
+- Constante de la gravitation $G = 6{,}67 \times 10^{-11}\ \mathrm{m^3 \cdot kg^{-1} \cdot s^{-2}}$
+- Vitesse de la lumière $c = 3{,}00 \times 10^{8}\ \mathrm{m \cdot s^{-1}}$
+- Constante de Boltzmann $k_B = 1{,}38 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$
+- Constante de Stefan $^{1}$ $\sigma = 5{,}7 \times 10^{-8}\ \mathrm{W \cdot m^{-2} \cdot K^{-4}}$
+
+**Caractéristiques du Soleil et de la Lune**
+
+- Masse du Soleil $M_\odot = 2{,}0 \times 10^{30}\ \mathrm{kg}$
+- Rayon du Soleil $R_\odot = 700\,000\ \mathrm{km}$
+- Température de surface $T_{\mathrm{surf}} = 5750\ \mathrm{K}$
+- Distance Terre-Soleil $D_{T-S} = 150 \times 10^{6}\ \mathrm{km}$
+- Masse de la Lune $M_L = 7{,}35 \times 10^{22}\ \mathrm{kg}$
+- Rayon de la Lune $R_L = 1740\ \mathrm{km}$
+
+**Analyse vectorielle et intégrales utiles**
+
+- Divergence en coordonnées cylindriques $(r, \theta, z)$ :
+
+$$
+\vec{\nabla} \cdot \vec{A} = \frac{1}{r}\frac{\partial (rA_r)}{\partial r} + \frac{1}{r}\frac{\partial A_\theta}{\partial \theta} + \frac{\partial A_z}{\partial z} \qquad (1)
+$$
+
+- Intégrale Gaussienne :
+
+$$
+\int_{-\infty}^{+\infty} \mathrm{e}^{-\alpha\, x^2}\mathrm{d}x = \sqrt{\frac{\pi}{\alpha}} \qquad (2)
+$$
+
+- Une intégrale utile :
+
+$$
+\int_0^1 \frac{\mathrm{d}x}{\sqrt{\frac{1}{x} - 1}} = \frac{\pi}{2} \qquad (3)
+$$
+
+**Graphes des fonctions $x \mapsto \exp(-x)$ et $x \mapsto \ln(x)$** (voir la figure « Graphes des fonctions » de la première partie)
+
+$^{1}$ On rappelle que la loi de Stefan s’écrit $\varphi(T) = \sigma T^4$, où $\varphi$ est la densité surfacique de flux émis par un corps noir à la température $T$.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1 Univers de Friedmann-Lemaître](#p3-s1)
+- [2 Équations de Friedmann et dynamique de l’Univers](#p3-s2)
+- [3 Expansion accélérée de l’Univers et énergie noire](#p3-s3)
+
+</nav>
+
+
+
+<ProblemSection id="p3-s1">
+
+### 1 Univers de Friedmann-Lemaître
+
+Utilisant la relativité générale pour décrire la gravitation, il est possible sous certaines hypothèses d’avoir des modèles simples décrivant la structure et la dynamique de l’Univers aux grandes échelles. Les principales hypothèses sont que l’Univers est homogène et isotrope aux échelles étudiées, et qu’il ne possède donc pas de position ou de direction privilégiées. Ce modèle, dit d’espace-temps de Friedmann-Lemaître (voire de Friedmann-Lemaître-Robertson-Walker) décrit l’Univers par un paramètre d’échelle dépendant du temps $a(t)$, ainsi qu’un paramètre de courbure. Le paramètre de courbure décrit la possibilité d’avoir un Univers à géométrie sphérique, hyperbolique, ou plane. Dans la suite, on supposera que l’Univers est plat dans une très bonne approximation (ce qui est vérifié observationnellement), et on ne considérera donc pas de paramètre de courbure. L’évolution temporelle de l’Univers est donc intégralement décrite par son facteur d’échelle $a(t)$ tel que la distance physique $\mathrm{d}\vec{r}(t)$ entre deux objets comobiles, à savoir qui n’ont pas d’autres mouvements l’un par rapport à l’autre que celui lié à l’expansion ou à la contraction de l’Univers, vérifie
+
+$$
+\mathrm{d}\vec{r}(t_2) = \frac{a(t_2)}{a(t_1)}\mathrm{d}\vec{r}(t_1), \qquad (11)
+$$
+
+avec $t_1$ et $t_2$ deux instants quelconques. On note conventionnellement $t_0$ le temps actuel, et $a_0 = a(t_0)$ le facteur d’échelle associé.
+
+**49** La relativité générale est la théorie qui décrit la gravitation au-delà du formalisme newtonien. Préciser à quelle époque et par qui cette théorie a été élaborée, ainsi que les limites de validité de la physique newtonienne.
+
+**50** Comment est modifié un volume délimité par des observateurs comobiles lorsque le facteur d’échelle passe d’une valeur $a_1$ à une valeur $a_2$ ?
+
+**51** Une étude dynamique donne parfois que $a(t) \to 0$ dans le passé en un temps fini. À quelle événement bien connu cela correspond-t-il ?
+
+Ce point particulier permet de donner une référence aux temps cosmologiques, et donc de définir un âge de l’Univers : fixant par convention $t = 0$ lorsque $a = 0$, le temps actuel $t_0$ est aussi l’âge de l’Univers.
+
+**52** On définit le paramètre de Hubble
+
+$$
+H(t) = \frac{\dot{a}(t)}{a(t)}. \qquad (12)
+$$
+
+Les mesures actuelle donnent pour les temps présents $H(t_0) = H_0 = 67{,}74\ \mathrm{km \cdot s^{-1} \cdot Mpc^{-1}}$. On définit aussi le temps de Hubble $t_H = 1/H_0$, qui vaut $4{,}55{\times}10^{17}$ s. Dans un modèle simple d’expansion linéaire $a(t) = \alpha t$, où $\alpha$ est une constante positive, quel est l’âge de l’Univers ? Exprimer cet âge en années.
+
+</ProblemSection>
+
+<ProblemSection id="p3-s2">
+
+### 2 Équations de Friedmann et dynamique de l’Univers
+
+On prend comme hypothèse que l’Univers est rempli d’un seul fluide homogène et isotrope. Ce fluide peut décrire aussi bien un gaz de poussière interstellaire que du rayonnement électromagnétique, mais on se restreindra dans cette partie au cas du gaz interstellaire. Celui-ci est décrit par sa densité d’énergie $u(t)$, ainsi que sa pression $P$. Dans ce cadre, la relativité générale permet d’obtenir la $1^{\text{ère}}$ équation de Friedmann :
+
+$$
+\frac{\dot{a}^2}{a^2} = \frac{8\pi G}{3c^2}u(t). \qquad (13)
+$$
+
+**53** Vérifier que cette équation est bien homogène.
+
+**54** On suppose que l’évolution de l’Univers est adiabatique réversible, et que le seul travail est celui des forces de pression. En raisonnant sur l’évolution temporelle d’un volume d’Univers délimité par des observateurs comobiles, obtenir une équation d’évolution temporelle pour $u$ faisant intervenir les grandeurs $u$, $H$, et $P$.
+
+**55** En déduire la $2^{\text{ème}}$ équation de Friedmann :
+
+$$
+\frac{\ddot{a}}{a} = -\frac{4\pi G}{3c^2}\left(u + 3P\right), \qquad (14)
+$$
+
+qui décrit la dynamique de l’Univers. Sous quelle condition l’expansion de l’Univers est-elle accélérée ou ralentie ?
+
+**56** On suppose par la suite que le fluide remplissant l’Univers est décrit par une équation d’état $P = wu$, où $w$, qui est une constante décrivant le fluide en question, est nommé *paramètre d’état*. Montrer alors que l’évolution temporelle de la densité d’énergie vérifie $u \propto a^\gamma$, où on précisera la valeur de l’exposant $\gamma$.
+
+**57** On considère le cas où le fluide est un gaz de poussière non collisionnel, et où la seule énergie des particules est leur énergie de masse $E = mc^2$. En utilisant le résultat de la question précédente et en considérant la dilatation d’un volume d’Univers, en déduire la valeur de $w$. Ce résultat est-il compatible avec les hypothèses d’absence de collision dans le gaz de poussière ?
+
+**58** Montrer que l’on peut obtenir pour un Univers rempli par un fluide de paramètre d’état $w$ l’équation
+
+$$
+H^2(t) = {H_0}^2\left(\frac{a_0}{a(t)}\right)^{3(1+w)}, \qquad (15)
+$$
+
+avec $a_0$ le facteur d’échelle aux temps actuels.
+
+**59** Reformuler cette équation de la façon la plus simple possible en introduisant les grandeurs adimensionnées $x = a/a_0$ et $\tau = H_0 t$.
+
+</ProblemSection>
+
+<ProblemSection id="p3-s3">
+
+### 3 Expansion accélérée de l’Univers et énergie noire
+
+**60** On commence par considérer un Univers de matière, décrit par un gaz de poussière non collisionnel, dont le paramètre d’état a été déterminé dans les questions précédentes. Déterminer la loi d’évolution $x_{\mathrm{mat}}(\tau)$ puis $a_{\mathrm{mat}}(t)$ en prenant comme origine des temps $a_{\mathrm{mat}}(0) = 0$. Tracer $a_{\mathrm{mat}}(t)$.
+
+**61** La durée de vie de l’Univers est-elle finie ou infinie ? Déterminer et calculer numériquement l’âge de l’Univers dans un tel modèle.
+
+**62** Les observations cosmologiques récentes indiquent que l’expansion de l’Univers est actuellement accélérée. Est-ce compatible avec un Univers dominé par de la matière, pour lequel on supposera que $w = 0$ est une très bonne approximation ?
+
+Pour expliquer l’accélération de l’expansion de l’Univers, il a été postulé que ce dernier était dominé par une forme d’énergie dite *noire*, visible uniquement par son effet sur l’expansion de l’Univers. Cette énergie noire aurait un paramètre d’état $w = -1$.
+
+**63** À partir de l’évolution temporelle de la densité d’énergie par unité de volume d’un fluide vérifiant $w = -1$, expliquer pourquoi l’énergie noire est fréquemment qualifiée d’énergie du vide.
+
+**64** Déterminer la loi d’évolution de $a_\Lambda(t)$ pour un Univers dominé par l’énergie noire, en prenant comme condition initiale $a_\Lambda(t_0) = a_0$. Tracer $a_\Lambda(t)$. Est-ce compatible avec une expansion accélérée de l’Univers ?
+
+**65** Les observations astrophysiques et cosmologiques actuelles accréditent fortement l’hypothèse d’un Big-Bang. Est-ce compatible avec un modèle d’Univers dominé uniquement par de l’énergie noire ?
+
+**66** Proposer un modèle d’Univers rassemblant les ingrédients précédents et qui pourrait être naturellement compatible avec un Big-Bang dans le passé et une phase présente d’expansion accélérée.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+Le fichier des solutions officielles manque dans l’archive.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2020_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2020_ulm.pdf#page=15)

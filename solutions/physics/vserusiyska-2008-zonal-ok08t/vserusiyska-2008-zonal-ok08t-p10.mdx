@@ -1,0 +1,91 @@
+---
+id: vserusiyska-2008-zonal-ok08t-p10
+source: 'ВсОШ 2008, Зонален етап, 9–11 клас'
+title: 'Задача 10. Муравей-спортсмен'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Всерусийска/2008/vserusiyska-2008-zonal-ok08t.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T06:19:21.166Z'
+verifier: 'mechanical'
+---
+
+*XLII Всероссийская олимпиада школьников по физике. Окружной этап. Теоретический тур*
+
+## Условие
+
+Муравей из точки $A$ без начальной скорости скользит по гладкой соломинке, у которой наклонный прямолинейный участок $AB$ в точке $B$ плавно переходит в дугу $BC$ с радиусом кривизны $R$, а эта дуга в точке $C$ также плавно переходит в горизонтальный прямолинейный участок $CD$ (рис. 11).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '26%', '--fig-max': '166px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vserusiyska-2008-zonal-ok08t/p10-fig1.png" alt="Соломинка: наклонный отрезок AB, дуга BC и горизонтальный отрезок CD (точки D, C, B, A слева направо); стрелка g вниз." width="520" height="174" loading="lazy" decoding="async" />
+<figcaption>Рис. 11</figcaption>
+</figure>
+
+Известно, что $AB : BC : CD = 1 : 2 : 3$, и суммарная длина пути много меньше $R$.
+
+Вычислите время скольжения муравья по соломинке от точки $A$ до точки $D$.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- $t = \sqrt{\frac{R}{g}}\left(1 + \frac{\pi}{4} + \frac{3}{2\sqrt{2}}\right) \approx 2{,}85\sqrt{\frac{R}{g}}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Полное время движения муравья складывается из времени движения $t_1$ по участку $AB$, времени $t_2$ на участке $BC$ и времени $t_3$ на участке $CD$. Пусть $AB = l$.
+
+1. Восстановим из точек $B$ и $C$ перпендикуляры к траектории движения муравья, они являются радиусами дуги $BC$ (рис. 24). Пусть $\angle BOC = \alpha = 2l/R$. Поскольку $l \ll R$, то $\sin\alpha \approx \alpha = 2l/R$. Ускорение на прямолинейном участке $AB$ равно $a_1 = g\sin\alpha = 2gl/R$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '28.4%', '--fig-max': '182px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/vserusiyska-2008-zonal-ok08t/p10-sol-fig1.png" alt="Траектория D–C–B–A с центром дуги O; радиусы OC и OB образуют угол α; наклон AB под углом α; высоты h1 и h2; стрелка g вниз." width="570" height="388" loading="lazy" decoding="async" />
+<figcaption>Рис. 24</figcaption>
+</figure>
+
+$$
+\text{Поскольку}\quad l = \frac{a_1t_1^2}{2},\quad \text{то}\quad t_1 = \sqrt{\frac{2l}{a_1}} = \sqrt{\frac{R}{g}}.
+$$
+
+Скорость в конце этого участка $v_B = \sqrt{2gh_1} = \sqrt{2gl\sin\alpha} = 2l\sqrt{g/R}$.
+
+2. Вычислим $t_2$. Из закона сохранения энергии найдём скорость $v_C$ муравья в точке $C$. Это будет его наибольшая скорость.
+
+$$
+mg(h_1 + h_2) = \frac{mv_C^2}{2},\quad \text{следовательно,}\quad v_C = \sqrt{2g(h_1 + h_2)}.
+$$
+
+Найдём $h_1 + h_2$.
+
+$$
+h_1 = l\sin\alpha = 2\frac{l^2}{R},\quad h_2 = R(1 - \cos\alpha) = 2R\sin^2(\alpha/2) = 2R(\alpha/2)^2 = 2\frac{l^2}{R},
+$$
+
+$$
+h_1 + h_2 = 4\frac{l^2}{R},\quad \text{таким образом,}\quad v_C = 2l\sqrt{\frac{2g}{R}}.
+$$
+
+На участке $BC$ движение муравья аналогично колебательному движению математического маятника с длиной подвеса $R$. Его циклическая частота $\omega = \sqrt{g/R}$. Время $t_2$ движения муравья из точки $B$ в точку $C$ равно времени его обратного движения из точки $C$ в точку $B$, которое можно найти из уравнения гармонических колебаний:
+
+$$
+v_B = v_C\cos\left(\sqrt{\frac{g}{R}}t_2\right),\quad \text{откуда}\quad t_2 = \sqrt{\frac{R}{g}}\arccos\frac{v_B}{v_C} = \frac{\pi}{4}\sqrt{\frac{R}{g}}.
+$$
+
+.
+
+3. На отрезке $CD$ муравей движется равномерно со скоростью $v_C$, следовательно, $t_3 = \dfrac{3l}{v_C} = \dfrac{3}{2}\sqrt{\dfrac{R}{2g}}$.
+
+Полное время движения муравья
+
+$$
+t = t_1 + t_2 + t_3 = \sqrt{\frac{R}{g}}\left(1 + \frac{\pi}{4} + \frac{3}{2\sqrt{2}}\right) \approx 2{,}85\sqrt{\frac{R}{g}}.
+$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [ok08T.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%92%D1%81%D0%B5%D1%80%D1%83%D1%81%D0%B8%D0%B8%CC%86%D1%81%D0%BA%D0%B0/2008/2008-IV/ok08T.pdf#page=4)

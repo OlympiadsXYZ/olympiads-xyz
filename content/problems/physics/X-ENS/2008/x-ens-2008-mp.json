@@ -1,0 +1,1343 @@
+{
+ "paper": {
+  "id": "x-ens-2008-mp",
+  "subject": "physics",
+  "competition": "X-ENS",
+  "year": 2008,
+  "round": null,
+  "roundType": "theory",
+  "grade": null,
+  "lang": "fr",
+  "title": "SESSION 2008 — Filière MP — PHYSIQUE MPI — Épreuve commune aux ENS de Paris, Lyon et Cachan — Le vent solaire",
+  "totalPoints": null,
+  "timeLimitMin": 300,
+  "source": {
+   "archiveKey": "Физика/Състезания/Минко Балкански/ENS-X-exams/MP/MP_2008.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/Минко Балкански/ENS-X-exams/MP/MP_2008_sol.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+   ]
+  },
+  "status": "review",
+  "documentNotes": [
+   {
+    "title": "Consignes",
+    "statement": "*L’usage de calculatrices électroniques de poche à alimentation autonome, non imprimantes et sans document d’accompagnement, est autorisé. Cependant, une seule calculatrice à la fois est autorisée sur la table ou le poste de travail, et aucun échange n’est autorisé entre les candidats.*\n\nLes parties 1 et 2 sont assez largement indépendantes l’une de l’autre.\n\nLe candidat est prié d’accorder un soin particulier à la clarté et à la concision de ses réponses ainsi qu’aux applications numériques demandées.",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   },
+   {
+    "title": "Le vent solaire",
+    "statement": "Le vent solaire est l’extension aux grandes distances de l’atmosphère solaire (appelée la couronne solaire, voir Fig. 1). C’est un flux de plasma (particules ionisées) issu d’une région de la couronne solaire appelée l’exobase, et qui s’étend dans tout le système solaire. Ce plasma est globalement neutre, complètement ionisé et constitué d’électrons et d’ions $\\mathrm{H}^+$ (on utilisera le terme de proton pour désigner l’ion $\\mathrm{H}^+$ dans tout le problème). Le tableau 1 récapitule les caractéristiques principales de ce vent solaire au niveau de la Terre.\n\nLe but de cette étude est de comprendre l’origine physique du vent solaire et d’estimer sa vitesse asymptotique.\n\n| | valeur | unité |\n|---|---|---|\n| Densité particulaire moyenne | $7{,}1 \\times 10^{6}$ | m$^{-3}$ |\n| Vitesse du vent solaire lent ($v_{\\mathrm{SN}}$) | 400 | km.s$^{-1}$ |\n| Vitesse du vent solaire rapide | 750 | km.s$^{-1}$ |\n| Température | $1{,}3 \\times 10^{5}$ | K |\n| Champ magnétique | 7,0 | nT |\n\nTab. 1: Caractéristiques du vent solaire à une unité astronomique (1 UA).",
+    "document": "problems",
+    "page": 2,
+    "position": "before-problem"
+   },
+   {
+    "title": "Constantes physiques",
+    "statement": "| notation | grandeur | valeur | unité |\n|---|---|---|---|\n| $e$ | charge élémentaire | $1{,}6 \\times 10^{-19}$ | C |\n| $m_e$ | masse de l’électron | $9{,}1 \\times 10^{-31}$ | kg |\n| $m_p$ | masse du proton | $1{,}6 \\times 10^{-27}$ | kg |\n| $k_{\\mathrm{B}}$ | constante de Boltzmann | $1{,}4 \\times 10^{-23}$ | J.K$^{-1}$ |\n| $\\varepsilon_0$ | permittivité diélectrique du vide | $8{,}8 \\times 10^{-12}$ | F.m$^{-1}$ |\n| $\\mu_0$ | perméabilité magnétique du vide | $4\\pi \\times 10^{-7}$ | H.m$^{-1}$ |\n| UA | unité astronomique (distance Terre-Soleil) | $1{,}5 \\times 10^{11}$ | m |\n| G | constante de gravitation | $6{,}7 \\times 10^{-11}$ | kg$^{-1}$.m$^{3}$.s$^{-2}$ |\n| $\\mathrm{M}_\\odot$ | masse du Soleil | $2{,}0 \\times 10^{30}$ | kg |\n| $\\mathrm{R}_\\odot$ | rayon du Soleil | $7{,}0 \\times 10^{8}$ | m |\n| $\\Omega_\\odot$ | pulsation de rotation du Soleil | $2{,}9 \\times 10^{-6}$ | rad.s$^{-1}$ |",
+    "document": "problems",
+    "page": 3,
+    "position": "before-problem"
+   },
+   {
+    "title": "Notations",
+    "statement": "| | grandeur | unité |\n|---|---|---|\n| $n_e$ | densité d’électrons | m$^{-3}$ |\n| $n_p$ | densité de protons | m$^{-3}$ |\n| T | température | K |",
+    "document": "problems",
+    "page": 3,
+    "position": "before-problem"
+   },
+   {
+    "title": "Formulaire",
+    "statement": "On rappelle quelques expressions d’analyse vectorielle en coordonnées sphériques :\n\n$$\\mathrm{div}\\,(\\overrightarrow{\\mathrm{A}}) = \\frac{1}{r^2}\\frac{\\partial}{\\partial r}\\left(r^2 \\mathrm{A}_r\\right) + \\frac{1}{r\\sin\\theta}\\frac{\\partial}{\\partial\\theta}\\left(\\sin\\theta\\,\\mathrm{A}_\\theta\\right) + \\frac{1}{r\\sin\\theta}\\frac{\\partial \\mathrm{A}_\\varphi}{\\partial\\varphi} ,$$\n\n$$\\Delta f(r) = \\frac{1}{r}\\frac{\\mathrm{d}^2}{\\mathrm{d}r^2}\\left(rf(r)\\right) .$$\n\nOn donne la valeur de l’intégrale suivante ($a > 0$) :\n\n$$\\int_{-\\infty}^{\\infty} e^{-ax^2}\\,\\mathrm{d}x = \\sqrt{\\frac{\\pi}{a}} .$$",
+    "document": "problems",
+    "page": 3,
+    "position": "before-problem"
+   },
+   {
+    "title": "Corrigé de l’épreuve de physique MPI 2008",
+    "statement": "Le lecteur intéressé pourra consulter cette bibliographie introductive sur laquelle le sujet s’est en partie appuyé :\n\n- « How does the solar wind blow ? a simple kinetic model », Nicole Meyer-Vernet, *Eur. J. Phys.* **20**, 167 (1999)\n- « Basics of the solar wind », Nicole Meyer-Vernet (Cambridge University Press, 2007)\n- « Physics of space plasmas : an introduction », George K. Parks (Boulder, 2004)\n- « Physics of the space environment », Tamas I. Gombosi (Cambridge University Press, 1998)",
+    "document": "solutions",
+    "page": 1,
+    "position": "before-problem"
+   }
+  ],
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-29",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "92f479da981484e88ada1221723cf288461adf75f5dec98089167a9e4fe00d10",
+    "solutions": "a73d6203485dd34e82c9816ee54c0c74f9a4314e41b6d228398bf35b329f6a10"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Page de garde (p. 1 du sujet) scannée, sans couche texte ; le reste est une composition LaTeX avec une couche texte fiable (formules mises à part). Le sujet imprime une seule épreuve « Le vent solaire » en deux parties : partie 1 (questions 1–29) et partie 2 (questions 30–69) ; elles sont transcrites comme deux problèmes, les sous-parties imprimées (1.1, 1.2.1, …, 2.3) comme sections et les questions numérotées comme parts. Le titre 1.2 (sans texte propre) est fusionné avec 1.2.1 dans le titre de section ; dans le corrigé, 2.2 est fusionné avec 2.2.1 et les questions 30–31 sont regroupées sous « 2 Le vent solaire ». L’introduction, le tableau 1, les constantes physiques, les notations et le formulaire (p. 2–3) sont en documentNotes ; la Fig. 1 (p. 2) est rattachée au problème 2 (section 2.1 y renvoie). La photo de la comète Hale-Bopp (p. 14) est rattachée à la section 2.3 avec le paragraphe qui la décrit ; les pages 15–16 du sujet sont blanches. Le sujet ne comporte aucun barème : points null partout. Formes imprimées conservées telles quelles (accords non corrigés, D-P28) : sujet — « de très bon conducteurs » (q. 25), « vers la fin années 90 » (2.2.4) ; corrigé — « l’énergie potentiel domine » (q. 4), « exponentiel décroissante » et « fournit dans l’énoncé » (q. 7), « un tranche d’épaisseur » et « déformé » (q. 11), « zones de champ non magnétisés » (q. 23), « projeté sur » (q. 27), « telle qu’elle a été modélisé » (q. 39), « On trouver » (q. 54), « flux d’électron » (q. 57), « condition limite au limite » (q. 34), légende « Spiral de Parker » (p. 12 du corrigé). Erreurs imprimées conservées dans les formules : q. 20 du corrigé « (⟨v_e²)^{1/2}⟩ » (parenthèses mal imbriquées) ; q. 42 du corrigé « ∫ dv 4πv⁴ g_{e,p}(v) » (devrait porter sur f) ; q. 46 « 6.7 × 10¹⁴ » avec un point décimal ; q. 69 « Θ = Arctan(DΩ☉/vSN)² ». Le corrigé (q. 26) signale lui-même une erreur dans l’énoncé de la question 26. Les résultats encadrés du corrigé sont rendus avec \\boxed ; les soulignements du corrigé ne sont pas reproduits."
+  }
+ },
+ "problems": [
+  {
+   "id": "x-ens-2008-mp-p1",
+   "number": 1,
+   "title": "Généralités sur les plasmas rencontrés en astrophysique",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Un plasma est un ensemble de charges positives et négatives libres en interaction coulombienne. On ne considère que les plasmas complètement ionisés et globalement neutres.",
+   "figures": [],
+   "sections": [
+    {
+     "id": "s1-1",
+     "title": "1.1 Plasma cinétique ou plasma collisionnel",
+     "statement": "",
+     "parts": [
+      {
+       "label": "1.",
+       "statement": "Donner un ordre de grandeur de l’énergie cinétique moyenne $\\langle \\mathrm{E}_c\\rangle$ d’un électron en fonction de la température T.",
+       "points": null
+      },
+      {
+       "label": "2.",
+       "statement": "Estimer la distance moyenne entre deux électrons en fonction de la densité $n_e$.",
+       "points": null
+      },
+      {
+       "label": "3.",
+       "statement": "En déduire un ordre de grandeur de l’énergie potentielle d’une paire d’électrons $\\langle \\mathrm{E}_p\\rangle$ en fonction de $e$, $n_e$ et $\\varepsilon_0$.",
+       "points": null
+      },
+      {
+       "label": "4.",
+       "statement": "On définit le rapport $\\Gamma = \\dfrac{\\langle \\mathrm{E}_p\\rangle}{\\langle \\mathrm{E}_c\\rangle}$. Donner son expression et calculer son ordre de grandeur pour le vent solaire (voir Tab. 1) et les différents plasmas du tableau 2. Le régime $\\Gamma \\ll 1$ correspond au plasma dit *cinétique* et $\\Gamma \\gg 1$ au plasma dit *collisionnel*. Justifier succinctement ces dénominations.",
+       "points": null
+      }
+     ],
+     "statementAfterParts": "| Plasma | $n_e$ (m$^{-3}$) | T (K) |\n|---|---|---|\n| Couronne solaire | $10^{15}$ | $10^{6}$ |\n| Ionosphère terrestre | $10^{12}$ | $10^{3}$ |\n| Métal solide typique | $10^{29}$ | $10^{2}$ |\n| Intérieur stellaire | $10^{33}$ | $10^{7}$ |\n\nTab. 2: Caractéristiques de quelques plasmas."
+    },
+    {
+     "id": "s1-2-1",
+     "title": "1.2 Écrantage électrique dans la couronne solaire — 1.2.1 Situation d’équilibre",
+     "statement": "On considère un proton au repos dans le plasma et on cherche le potentiel qui règne au voisinage de ce proton. On admet qu’à l’équilibre thermodynamique, les distributions d’équilibre des électrons et des protons autour de ce proton sont données par :\n\n$$n_e(r) = n_0 \\exp\\left(\\frac{e\\mathrm{V}(r)}{k_{\\mathrm{B}}\\mathrm{T}}\\right) , \\tag{1}$$\n\n$$n_p(r) = n_0 \\exp\\left(\\frac{-e\\mathrm{V}(r)}{k_{\\mathrm{B}}\\mathrm{T}}\\right) , \\tag{2}$$\n\noù $\\mathrm{V}(r)$ est le potentiel électrique régnant à la distance $r$ du proton de référence et $n_0$ une constante.",
+     "parts": [
+      {
+       "label": "5.",
+       "statement": "Commenter brièvement l’origine des relations ci-dessus.",
+       "points": null
+      },
+      {
+       "label": "6.",
+       "statement": "Déterminer une équation différentielle impliquant le potentiel électrique $\\mathrm{V}(r)$.",
+       "points": null
+      },
+      {
+       "label": "7.",
+       "statement": "On se place dans la limite $\\Gamma \\ll 1$ (plasma cinétique). Montrer que le potentiel prend alors la forme suivante :\n\n$$\\mathrm{V}(r) = \\frac{e}{4\\pi\\varepsilon_0 r}\\,\\exp\\left(-\\frac{r}{\\lambda_{\\mathrm{D}}}\\right) . \\tag{3}$$\n\nDonner l’expression de $\\lambda_{\\mathrm{D}}$, appelée longueur de Debye.",
+       "points": null
+      },
+      {
+       "label": "8.",
+       "statement": "Tracer la courbe $\\mathrm{V}(r)$ et la comparer à celle du potentiel créé par une charge ponctuelle. À quelle échelle spatiale peut-on considérer que le plasma est neutre ? Quel est le phénomène ainsi mis en évidence ?",
+       "points": null
+      },
+      {
+       "label": "9.",
+       "statement": "Calculer la longueur de Debye pour le vent solaire. Quelle en est la conséquence directe pour les satellites ?",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 6.6,
+        "unit": "m",
+        "tolerance": 0.1,
+        "note": "Corrigé officiel : λD ≈ 6,6 m."
+       }
+      }
+     ]
+    },
+    {
+     "id": "s1-2-2",
+     "title": "1.2.2 Ondes acoustiques dans un plasma cinétique",
+     "statement": "On considère toujours le cas d’un plasma cinétique et on suppose maintenant que les protons sont susceptibles de se déplacer, de telle sorte que des ondes, qualifiées d’acoustiques, peuvent se propager dans ce plasma.\n\nOn envisage un modèle unidimensionnel et on note $\\xi(x,t)$ le déplacement d’une tranche de protons par rapport à sa position d’équilibre $x$, à l’instant $t$. On se place dans le cas de faibles déplacements relatifs (c’est-à-dire $|\\partial\\xi/\\partial x| \\ll 1$). On suppose que la longueur d’onde de ces ondes est grande devant la longueur de Debye introduite dans la partie précédente.\n\nOn admet que la densité d’équilibre $n_e$ des électrons, vue dans le cas statique de la partie précédente, demeure valable dans le cas quasi-statique de cette partie (cela est valable si la fréquence des ondes est petite devant la pulsation-plasma des électrons). Par contre, la densité $n_p(x,t)$ des protons ne s’écrit alors plus comme l’équation (2). Enfin, on ne considère pas les forces de pression ni celles de gravitation.",
+     "figures": [
+      {
+       "id": "p1-fig2",
+       "caption": "Fig. 2: Ondes acoustiques dans un plasma, à t donné. Les traits pointillés représentent la position d’équilibre et ξ(x, t) représente le déplacement des protons par rapport à leur position d’équilibre.",
+       "alt": "Axes x (horizontal) et z (vertical) ; plusieurs traits verticaux pleins, chacun à côté d’un trait vertical pointillé (position d’équilibre) ; une petite flèche horizontale sous l’un d’eux est marquée ξ(x,t).",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p1-fig2.png",
+       "width": 554,
+       "height": 682,
+       "source": {
+        "page": 5,
+        "pdfRect": [
+         246.91,
+         353.65,
+         379.62,
+         517.01
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "10.",
+       "statement": "Montrer que les hypothèses permettent de développer la densité en protons, à l’ordre non nul le plus bas, sous la forme :\n\n$$\\frac{n_p(x,t)}{n_0} = 1 + \\frac{e\\mathrm{V}(x,t)}{k_{\\mathrm{B}}\\mathrm{T}} + o\\left(\\frac{e\\mathrm{V}(x,t)}{k_{\\mathrm{B}}\\mathrm{T}}\\right) .$$",
+       "points": null
+      },
+      {
+       "label": "11.",
+       "statement": "À l’aide d’un bilan de matière, montrer qu’au même degré d’approximation qu’à la question précédente, le déplacement $\\xi(x,t)$ est lié au potentiel $\\mathrm{V}(x,t)$ par l’équation :\n\n$$\\frac{\\partial\\xi(x,t)}{\\partial x} = -\\frac{e\\mathrm{V}(x,t)}{k_{\\mathrm{B}}\\mathrm{T}} ,$$\n\noù $\\mathrm{V}(x,t)$ est le potentiel électrique en $x$, à l’instant $t$.",
+       "points": null
+      },
+      {
+       "label": "12.",
+       "statement": "Écrire le système d’équations différentielles couplant le déplacement $\\xi(x,t)$ et le potentiel $\\mathrm{V}(x,t)$. On admettra que $\\mathrm{d}\\xi/\\mathrm{d}t = \\partial\\xi/\\partial t$.",
+       "points": null
+      },
+      {
+       "label": "13.",
+       "statement": "Montrer que le déplacement $\\xi(x,t)$ vérifie une équation de propagation d’onde.",
+       "points": null
+      },
+      {
+       "label": "14.",
+       "statement": "Donner l’expression de la vitesse « acoustique » $c_s$ associée au mouvement des protons. Expliquer brièvement pourquoi de telles ondes peuvent exister alors que le plasma est supposé cinétique.",
+       "points": null
+      },
+      {
+       "label": "15.",
+       "statement": "Calculer numériquement $c_s$ pour le vent solaire et commenter.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 34,
+        "unit": "km/s",
+        "tolerance": 1,
+        "note": "Corrigé officiel : cs ≈ 34 km.s⁻¹."
+       }
+      }
+     ]
+    },
+    {
+     "id": "s1-3",
+     "title": "1.3 Écrantage magnétique",
+     "statement": "La plupart des plasmas astrophysiques sont soumis à un champ magnétique, en particulier le plasma du vent solaire. On étudie dans les parties 1.3.1 et 1.3.2 la réponse d’un plasma à une perturbation magnétique extérieure. Pour ces deux parties uniquement, on suppose que les protons sont fixes et que seuls les électrons sont susceptibles de se déplacer.\n\nOn considère un modèle unidimensionnel où le plasma, homogène et globalement neutre, occupe le demi-espace $x > 0$ (voir Fig. 3). Le demi-espace $x < 0$ est supposé vide et soumis à un champ magnétique homogène :\n\n$$\\overrightarrow{\\mathrm{B}}_0 = \\mathrm{B}_0(t)\\overrightarrow{e_z} \\qquad (x < 0) .$$\n\nOn suppose que le champ magnétique dans le plasma s’écrit $\\overrightarrow{\\mathrm{B}} = \\mathrm{B}(x,t)\\,\\overrightarrow{e_z}$ (pour $x > 0$).\n\nOn admet que les plasmas considérés sont de très bons conducteurs. En conséquence, **dans toute la partie 1.3**, on pourra négliger le terme en dérivation temporelle du champ électrique dans l’équation de Maxwell-Ampère (approximation des régimes quasi-stationnaires, ou ARQS).",
+     "figures": [
+      {
+       "id": "p1-fig3",
+       "caption": "Fig. 3: Configuration étudiée dans la partie 1.3.",
+       "alt": "Axes x (horizontal, origine 0) et z (vertical) ; à gauche de l’axe z la mention « vide », à droite le demi-plan hachuré marqué « plasma ».",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p1-fig3.png",
+       "width": 577,
+       "height": 492,
+       "source": {
+        "page": 6,
+        "pdfRect": [
+         244.53,
+         274.5,
+         382.59,
+         392.36
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "16.",
+       "statement": "Montrer qu’un champ électrique se forme alors dans le plasma et que celui-ci est nécessairement de la forme $\\overrightarrow{\\mathrm{E}} = \\mathrm{E}(x,t)\\,\\overrightarrow{e_y}$.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s1-3-1",
+     "title": "1.3.1 Cas d’un plasma collisionnel (Γ ≫ 1)",
+     "statement": "",
+     "parts": [
+      {
+       "label": "17.",
+       "statement": "Rappeler l’expression de la loi d’Ohm locale. On notera $\\gamma$ la conductivité électrique.",
+       "points": null
+      },
+      {
+       "label": "18.",
+       "statement": "Montrer que le champ magnétique vérifie une équation de diffusion magnétique, analogue à une équation de diffusion thermique, et exprimer le coefficient de diffusion magnétique associé.",
+       "points": null
+      },
+      {
+       "label": "19.",
+       "statement": "Estimer le temps caractéristique de diffusion du champ magnétique sur une longueur égale au rayon solaire. On admet que, pour l’intérieur du Soleil, $\\gamma \\approx 6 \\times 10^{6}\\ \\Omega^{-1}.\\mathrm{m}^{-1}$. Que peut-on en conclure ?",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 4000000000000000000,
+        "unit": "s",
+        "tolerance": 1000000000000000000,
+        "note": "Corrigé officiel : τ ≈ R☉² μ0 γ = 4 × 10¹⁸ s."
+       }
+      }
+     ]
+    },
+    {
+     "id": "s1-3-2",
+     "title": "1.3.2 Cas d’un plasma cinétique (Γ ≪ 1)",
+     "statement": "On admet qu’en absence de collision, la loi d’Ohm doit être remplacée par l’équation du mouvement des électrons.",
+     "parts": [
+      {
+       "label": "20.",
+       "statement": "On note $\\overrightarrow{v_e} = v_e(x,t)\\,\\overrightarrow{e_y}$ la vitesse d’ensemble des électrons. À quelle condition peut-on négliger la force de Lorentz magnétique ? Vérifier numériquement que cette condition est remplie.",
+       "points": null
+      },
+      {
+       "label": "21.",
+       "statement": "Écrire les équations couplées portant sur $\\mathrm{E}(x,t)$, $v_e(x,t)$ et le champ magnétique $\\mathrm{B}(x,t)$ à l’intérieur du plasma.",
+       "points": null
+      },
+      {
+       "label": "22.",
+       "statement": "En déduire l’expression de $\\mathrm{B}(x,t)$ pour $\\mathrm{B}_0(t)$ donné, en introduisant une longueur caractéristique $\\lambda_{\\mathrm{pl}}$.",
+       "points": null
+      },
+      {
+       "label": "23.",
+       "statement": "Comparer ce résultat à celui de la question 18. Calculer numériquement $\\lambda_{\\mathrm{pl}}$ pour le vent solaire.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 2,
+        "unit": "km",
+        "tolerance": 0.5,
+        "note": "Corrigé officiel : λpl ≈ 2 km."
+       }
+      },
+      {
+       "label": "24.",
+       "statement": "La causalité est-elle vérifiée par l’expression obtenue à la question précédente ? Relier ce résultat à l’une des hypothèses. Comment celle-ci peut-elle se reformuler en fonction de $\\mathrm{B}_0(t)$ et $\\lambda_{\\mathrm{pl}}$ ?",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s1-3-3",
+     "title": "1.3.3 Ondes d’Alfvén dans un plasma cinétique avec champ magnétique",
+     "statement": "On considère un plasma cinétique dans lequel, en l’absence de perturbation, règne un champ magnétique uniforme et statique $\\overrightarrow{\\mathrm{B}_0} = \\mathrm{B}_0\\overrightarrow{e_z}$. En accord avec ce qui a été vu dans la partie précédente, ce champ magnétique ne peut pas provenir de l’extérieur du plasma, mais est supposé créé à l’intérieur de celui-ci par des sources dont on ne se préoccupera pas.\n\nOn recherche des modes d’oscillation incompressible des protons (à $n_p$ constante), tels que ceux représentés sur la figure 4. Le déplacement $\\xi(z,t)$ des protons est parallèle à l’axe $x$ et ne dépend que de $z$ et de $t$. Ces modes d’oscillations sont appelés ondes d’Alfvén. On recherche le champ magnétique sous la forme :\n\n$$\\overrightarrow{\\mathrm{B}} = \\mathrm{B}_0\\overrightarrow{e_z} + \\mathrm{B}(z,t)\\overrightarrow{e_x} . \\tag{4}$$",
+     "figures": [
+      {
+       "id": "p1-fig4",
+       "caption": "Fig. 4: Ondes d’Alfvén, à t donné.",
+       "alt": "Axes x (horizontal) et z (vertical) ; quatre droites verticales pointillées (positions d’équilibre) et, autour de chacune, une courbe ondulée verticale ; une flèche horizontale entre une droite pointillée et sa courbe est marquée ξ(z,t).",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p1-fig4.png",
+       "width": 599,
+       "height": 551,
+       "source": {
+        "page": 7,
+        "pdfRect": [
+         241.56,
+         501.84,
+         384.98,
+         634.01
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "25.",
+       "statement": "On rappelle que les plasmas cinétiques sont de très bon conducteurs et que $\\overrightarrow{v_e}$ désigne la vitesse d’ensemble des électrons. Justifier que l’on peut écrire $\\overrightarrow{\\mathrm{E}} + \\overrightarrow{v_e} \\wedge \\overrightarrow{\\mathrm{B}} = \\overrightarrow{0}$.",
+       "points": null
+      },
+      {
+       "label": "26.",
+       "statement": "Justifier que, pour assurer la cohérence de ce modèle, il faut pouvoir négliger le courant de protons devant le courant électronique, si bien que :\n\n$$\\overrightarrow{j} = \\overrightarrow{j_e} + \\overrightarrow{j_p} \\approx \\overrightarrow{j_e} .$$",
+       "points": null
+      },
+      {
+       "label": "27.",
+       "statement": "À l’aide des équations de Maxwell, des questions précédentes et de l’équation du mouvement des protons, montrer que le champ magnétique $\\mathrm{B}(z,t)$ vérifie une équation de propagation.",
+       "points": null
+      },
+      {
+       "label": "28.",
+       "statement": "Donner l’expression de la vitesse de propagation $v_{\\mathrm{A}}$, appelée « vitesse d’Alfvén », en fonction de $\\mathrm{B}_0$, $n_p$, $\\mu_0$ et $m_p$.",
+       "points": null
+      },
+      {
+       "label": "29.",
+       "statement": "Calculer numériquement $v_{\\mathrm{A}}$ pour le vent solaire.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 59,
+        "unit": "km/s",
+        "tolerance": 1,
+        "note": "Corrigé officiel : vA ≈ 59 km.s⁻¹."
+       }
+      }
+     ]
+    }
+   ],
+   "topics": [
+    "electromagnetism/plasmas",
+    "waves/plasma-waves",
+    "electromagnetism/magnetic-diffusion"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "sections": [
+     {
+      "id": "s1-1",
+      "title": "1.1 Plasma cinétique ou plasma collisionnel",
+      "statement": "",
+      "parts": [
+       {
+        "label": "1.",
+        "statement": "$\\boxed{\\mathrm{E}_c \\approx k_{\\mathrm{B}}\\mathrm{T}}$ si on suppose l’équilibre thermique."
+       },
+       {
+        "label": "2.",
+        "statement": "La distance moyenne est de l’ordre de $\\boxed{n_e^{-1/3}}$."
+       },
+       {
+        "label": "3.",
+        "statement": "$\\boxed{\\mathrm{E}_p \\approx e^2/(4\\pi\\varepsilon_0 n_e^{-1/3})\\ .}$"
+       },
+       {
+        "label": "4.",
+        "statement": "On a $\\boxed{\\Gamma = \\dfrac{e^2 n_e^{1/3}}{4\\pi\\varepsilon_0 k_{\\mathrm{B}}\\mathrm{T}}\\ .}$\n\nLes plasmas spatiaux (vent solaire, couronne solaire et ionosphère) sont des plasmas cinétiques (gaz parfait chargé), ce qui ne veut pas dire que les interactions coulombiennes ne jouent pas de rôle, comme on va le voir avec les phénomènes d’écrantage ci-dessous (interactions longues portées). L’intérieur stellaire est marginalement cinétique alors que les électrons dans un métal forment un plasma collisionnel.\n\n| Plasma | Γ |\n|---|---|\n| Vent solaire à 1 UA | $2 \\times 10^{-8}$ |\n| Couronne solaire | $2 \\times 10^{-6}$ |\n| Ionosphère | $2 \\times 10^{-4}$ |\n| Intérieur stellaire | $2 \\times 10^{-1}$ |\n| Métal | $9 \\times 10^{2}$ |\n\nDans un plasma cinétique, l’énergie cinétique domine alors que dans un plasma collisionnel, l’énergie potentiel domine (leur comportement est contrôlé par les interactions courtes portées)."
+       }
+      ]
+     },
+     {
+      "id": "s1-2-1",
+      "title": "1.2 Écrantage électrique dans la couronne solaire — 1.2.1 Situation d’équilibre",
+      "statement": "",
+      "figures": [
+       {
+        "id": "p1-sol-fig1",
+        "alt": "Graphe V en fonction de r : deux courbes décroissantes partant de l’infini près de l’axe vertical ; la courbe du bas (potentiel de Yukawa) tend très vite vers zéro, la courbe du haut (potentiel de Coulomb) décroît plus lentement.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p1-sol-fig1.png",
+        "width": 1109,
+        "height": 783,
+        "source": {
+         "page": 2,
+         "pdfRect": [
+          157.68,
+          313.24,
+          423.63,
+          500.98
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ],
+      "parts": [
+       {
+        "label": "5.",
+        "statement": "On reconnaît un facteur de Boltzmann pour l’équilibre thermique. La neutralité électrique est bien assurée pour $\\mathrm{V}(r) = 0$ ($n_0$ représente la densité pour $r \\to \\infty$, c’est donc la valeur donnée dans les différents tableaux)."
+       },
+       {
+        "label": "6.",
+        "statement": "L’équation de Poisson s’écrit $\\Delta\\mathrm{V}(r) + \\rho(r)/\\varepsilon_0 = 0$ avec $\\rho(r) = -en_e(r) + en_p(r)$. À l’aide du Laplacien en coordonnées sphériques, on obtient :\n\n$$\\boxed{\\frac{\\mathrm{d}^2}{\\mathrm{d}r^2}\\left(r\\mathrm{V}(r)\\right) = \\frac{2ren_0}{\\varepsilon_0}\\,\\mathrm{sh}\\left(\\frac{e\\mathrm{V}(r)}{k_{\\mathrm{B}}\\mathrm{T}}\\right)\\ .}$$"
+       },
+       {
+        "label": "7.",
+        "statement": "Dans un plasma cinétique, $e\\mathrm{V}(r) \\ll k_{\\mathrm{B}}\\mathrm{T}$, donc on peut développer le sh et l’équation précédente se ramène à une EDL d’ordre 2 sur $r\\mathrm{V}(r)$. Seule la solution en exponentiel décroissante est valable pour éviter la divergence en $r \\to \\infty$. Pour $r \\to 0$, le potentiel est dominé par celui créé par l’ion de référence, ce qui permet de déterminer la constante d’intégration. On se retrouve avec un potentiel du type Yukawa fournit dans l’énoncé, où :\n\n$$\\boxed{\\lambda_{\\mathrm{D}} = \\sqrt{\\frac{\\varepsilon_0 k_{\\mathrm{B}}\\mathrm{T}}{2n_0 e^2}}\\ .}$$"
+       },
+       {
+        "label": "8.",
+        "statement": "La longueur de Debye est l’échelle spatiale caractérisant l’hypothèse de quasi neutralité car si $\\mathrm{V}(r) = 0$, alors $n_e = n_p = n_0$ d’après les équations (1) et (2). On a un phénomène d’écrantage, le champ électrique est nul sur une distance plus grande que $\\lambda_{\\mathrm{D}}$. La figure ci-dessous représente le potentiel de Yukawa (courbe du bas) ainsi que le potentiel de Coulomb (courbe du haut). Le potentiel de Yukawa décroît beaucoup plus vite vers zéro."
+       },
+       {
+        "label": "9.",
+        "statement": "On trouve $\\boxed{\\lambda_{\\mathrm{D}} \\approx 6{,}6\\ \\mathrm{m}}$, c’est donc petit devant les échelles spatiales qui sont de l’ordre de l’unité astronomique (ou au moins du rayon solaire). Par contre, cela peut intervenir pour l’environnement immédiat des satellites qu’on envoie dans l’espace (c’est en particulier une des raisons pour laquelle ceux-ci se chargent)."
+       }
+      ]
+     },
+     {
+      "id": "s1-2-2",
+      "title": "1.2.2 Ondes acoustiques dans un plasma cinétique",
+      "statement": "",
+      "parts": [
+       {
+        "label": "10.",
+        "statement": "L’équation de Poisson permet de calculer $n_p$ en fonction de $n_e$ et du potentiel $\\mathrm{V}(x,t)$\n\n$$\\frac{\\partial^2\\mathrm{V}(x,t)}{\\partial x^2} + \\frac{e(n_p(x,t) - n_e(x,t))}{\\varepsilon_0} = 0 .$$\n\nDonc\n\n$$n_p(x,t) = -\\frac{\\varepsilon_0}{e}\\frac{\\partial^2\\mathrm{V}(x,t)}{\\partial x^2} + n_0\\exp\\left(\\frac{e\\mathrm{V}(x,t)}{k_{\\mathrm{B}}\\mathrm{T}}\\right)$$\n\nOn développe ensuite l’exponentielle avec l’hypothèse de plasma cinétique $\\Gamma \\ll 1$. Il nous reste à vérifier qu’on peut négliger le terme $\\dfrac{\\varepsilon_0}{e}\\dfrac{\\partial^2\\mathrm{V}(x,t)}{\\partial x^2}$ devant $\\dfrac{n_0 e\\mathrm{V}(x,t)}{k_{\\mathrm{B}}\\mathrm{T}}$, ce qui est le cas puisque le rapport entre les deux termes est de l’ordre de $(\\lambda_{\\mathrm{D}}/\\mathrm{L})^2 \\ll 1$, où L est une distance caractéristique liée à l’onde (par exemple la longueur d’onde) qui est grande devant la longueur de Debye par hypothèse."
+       },
+       {
+        "label": "11.",
+        "statement": "On fait un bilan de conservation du nombre de protons sur un tranche d’épaisseur $\\mathrm{d}x$ en l’absence puis déformé par la présence de l’onde :\n\n$$n_0 \\times \\mathrm{d}x = n_p \\times (\\mathrm{d}x + \\mathrm{d}\\xi) ,$$\n\nd’où le résultat en utilisant la question 10."
+       },
+       {
+        "label": "12.",
+        "statement": "Avec le PFD, cela donne finalement :\n\n$$\\begin{aligned} \\frac{\\partial^2\\xi(x,t)}{\\partial t^2} &= -\\frac{e}{m_p}\\frac{\\partial\\mathrm{V}(x,t)}{\\partial x} , \\\\ \\frac{\\partial\\xi(x,t)}{\\partial x} &= -\\frac{e\\mathrm{V}(x,t)}{k_{\\mathrm{B}}\\mathrm{T}} . \\end{aligned}$$"
+       },
+       {
+        "label": "13.",
+        "statement": "On obtient immédiatement l’équation de d’Alembert :\n\n$$\\boxed{\\frac{\\partial^2\\xi(x,t)}{\\partial x^2} - \\frac{m_p}{k_{\\mathrm{B}}\\mathrm{T}}\\frac{\\partial^2\\xi(x,t)}{\\partial t^2} = 0\\ .}$$"
+       },
+       {
+        "label": "14.",
+        "statement": "On a $\\boxed{c_s = \\sqrt{\\dfrac{k_{\\mathrm{B}}\\mathrm{T}}{m_p}}}$. L’onde acoustique n’est pas créée par des chocs protons-protons, mais par l’intermédiaire du champ électrique (collision « longue portée »)."
+       },
+       {
+        "label": "15.",
+        "statement": "L’application numérique donne $\\boxed{c_s \\approx 34\\ \\mathrm{km.s^{-1}}}$. On a $c_s < v_{\\mathrm{SN}}$, donc le vent solaire est supersonique."
+       }
+      ]
+     },
+     {
+      "id": "s1-3",
+      "title": "1.3 Écrantage magnétique",
+      "statement": "",
+      "parts": [
+       {
+        "label": "16.",
+        "statement": "L’induction implique qu’un champ électrique doit se créer, qui satisfait à l’équation de Maxwell-Faraday $\\overrightarrow{\\mathrm{rot}}\\ \\overrightarrow{\\mathrm{E}} = -\\partial_t\\overrightarrow{\\mathrm{B}}$. Avec les invariances selon $y$ et $z$, on déduit de l’équation de Maxwell-Faraday que $\\mathrm{E}_z$ est constant, donc nul. De plus, avec $\\mathrm{div}\\ \\overrightarrow{\\mathrm{E}} = 0$ car le plasma est neutre, on déduit aussi que $\\mathrm{E}_x$ est constant donc nul."
+       }
+      ]
+     },
+     {
+      "id": "s1-3-1",
+      "title": "1.3.1 Cas d’un plasma collisionnel (Γ ≫ 1)",
+      "statement": "",
+      "parts": [
+       {
+        "label": "17.",
+        "statement": "On a $\\boxed{\\overrightarrow{j} = \\gamma\\overrightarrow{\\mathrm{E}}}$."
+       },
+       {
+        "label": "18.",
+        "statement": "Les équations de Maxwell fournissent les relations suivantes :\n\n$$\\begin{aligned} \\frac{\\partial\\mathrm{E}(x,t)}{\\partial x} &= -\\frac{\\partial\\mathrm{B}(x,t)}{\\partial t} , \\\\ \\frac{\\partial\\mathrm{B}(x,t)}{\\partial x} &= -\\mu_0 j(x,t) = -\\mu_0\\gamma\\mathrm{E}(x,t) . \\end{aligned}$$\n\nEn éliminant le champ électrique, on a :\n\n$$\\boxed{\\frac{\\partial^2\\mathrm{B}(x,t)}{\\partial x^2} = \\mu_0\\gamma\\frac{\\partial\\mathrm{B}(x,t)}{\\partial t}\\ .}$$\n\nDonc le coefficient de diffusion s’écrit $\\boxed{\\mathrm{D} = 1/(\\mu_0\\gamma)}$. Le champ magnétique pénètre de façon diffusive dans le plasma, contrairement au cas du plasma sans collision (cf 1.3.2)."
+       },
+       {
+        "label": "19.",
+        "statement": "La longueur de pénétration L au bout d’un temps $\\tau$ s’écrit qualitativement $\\boxed{\\mathrm{L} \\approx \\sqrt{\\mathrm{D} \\times \\tau}}$ donc $\\boxed{\\tau \\approx \\mathrm{R}_\\odot^2\\mu_0\\gamma = 4 \\times 10^{18}\\ \\mathrm{s}}$ ! La diffusion est très lente car $\\gamma$ est très grand."
+       }
+      ]
+     },
+     {
+      "id": "s1-3-2",
+      "title": "1.3.2 Cas d’un plasma cinétique (Γ ≪ 1)",
+      "statement": "",
+      "parts": [
+       {
+        "label": "20.",
+        "statement": "L’hypothèse est valable pour un mouvement non relativiste des électrons. Avec la température qui est donnée pour le vent solaire à 1 UA, on obtient une vitesse quadratique moyenne de l’ordre de :\n\n$$\\boxed{(\\langle v_e^2)^{1/2}\\rangle \\approx 2{,}5 \\times 10^{6}\\ \\mathrm{m.s^{-1}} \\approx c/122\\ ,}$$\n\ndonc on est bien dans une situation non relativiste."
+       },
+       {
+        "label": "21.",
+        "statement": "Les équations de Maxwell et le PFD nous donnent :\n\n$$\\begin{aligned} \\frac{\\partial\\mathrm{E}(x,t)}{\\partial x} &= -\\frac{\\partial\\mathrm{B}(x,t)}{\\partial t} , \\\\ \\frac{\\partial\\mathrm{B}(x,t)}{\\partial x} &= \\mu_0 n_e e v_e(x,t) , \\\\ \\frac{\\partial v_e(x,t)}{\\partial t} &= -\\frac{e}{m_e}\\,\\mathrm{E}(x,t) . \\end{aligned}$$"
+       },
+       {
+        "label": "22.",
+        "statement": "On résout le système précédent en $\\boxed{\\mathrm{B}(x,t) = \\mathrm{B}_0(t)\\ \\exp\\left(-\\dfrac{x}{\\lambda_{\\mathrm{pl}}}\\right)\\ .}$\n\nAvec\n\n$$\\boxed{\\lambda_{\\mathrm{pl}} = \\sqrt{\\frac{m_e}{\\mu_0 n_e e^2}}\\ .}$$"
+       },
+       {
+        "label": "23.",
+        "statement": "On observe un écrantage magnétique sur une distance de l’ordre de la longueur plasma $\\lambda_{\\mathrm{pl}}$, zone d’interface entre des parties magnétisées et des parties non magnétisées du plasma. Le champ magnétique ne pénètre pas dans les zones de champ non magnétisés. L’ordre de grandeur pour les plasmas spatiaux est de $\\boxed{\\lambda_{\\mathrm{pl}} \\approx 2\\ \\mathrm{km}}$."
+       },
+       {
+        "label": "24.",
+        "statement": "La causalité est violée. On a négligé le terme de déplacement dans Maxwell-Ampère, alors que c’est lui qui fait justement la propagation. Si on en tient compte, on n’a plus ce découplage entre le temps $t$ et la position $x$ et donc le problème de causalité disparaît. Notre modèle n’est valable que si le champ magnétique évolue à une fréquence plus petite que $c/\\lambda_{\\mathrm{pl}}$, donc qualitativement\n\n$$\\boxed{\\left|\\frac{1}{\\mathrm{B}_0}\\frac{\\mathrm{dB}_0}{\\mathrm{d}t}\\right| \\ll \\frac{c}{\\lambda_{\\mathrm{pl}}}\\ .}$$"
+       }
+      ]
+     },
+     {
+      "id": "s1-3-3",
+      "title": "1.3.3 Ondes d’Alfvén dans un plasma cinétique avec champ magnétique",
+      "statement": "",
+      "parts": [
+       {
+        "label": "25.",
+        "statement": "Les électrons éliminent rapidement le champ électrique qu’ils voient (condition de conducteur parfait), donc dans le référentiel de leur mouvement d’ensemble :\n\n$$\\overrightarrow{\\mathrm{E}}' = \\overrightarrow{0} = \\overrightarrow{\\mathrm{E}} + \\overrightarrow{v_e} \\wedge \\overrightarrow{\\mathrm{B}} .$$\n\nAutrement dit, la force de Lorentz qui agit sur eux est constamment nulle :\n\n$$\\boxed{m_e\\frac{\\mathrm{d}\\overrightarrow{v_e}}{\\mathrm{d}t} = 0\\ .}$$"
+       },
+       {
+        "label": "26.",
+        "statement": "D’après le choix de la forme du champ magnétique et l’hypothèse d’ARQS, on voit que $\\overrightarrow{\\mathrm{rot}}\\ \\overrightarrow{\\mathrm{B}}$ est porté seulement par $\\overrightarrow{e_y}$, or $\\overrightarrow{v_p}$ est selon $\\overrightarrow{e_x}$ car on cherche des solutions d’oscillations protoniques unidirectionnelles. Attention à l’erreur dans l’énoncé, on doit déduire de cette question que $(\\overrightarrow{j}_e + \\overrightarrow{j}_p) \\cdot \\overrightarrow{e_x} = 0$."
+       },
+       {
+        "label": "27.",
+        "statement": "On peut écrire le système d’équations suivant :\n\n$$\\begin{aligned} \\mathrm{div}\\ \\overrightarrow{\\mathrm{E}} &= \\frac{e(n_p - n_e)}{\\varepsilon_0} = 0 , \\\\ \\mathrm{div}\\ \\overrightarrow{\\mathrm{B}} &= 0 , \\\\ \\overrightarrow{\\mathrm{rot}}\\ \\overrightarrow{\\mathrm{E}} &= -\\frac{\\partial\\overrightarrow{\\mathrm{B}}}{\\partial t} , \\\\ \\overrightarrow{\\mathrm{rot}}\\ \\overrightarrow{\\mathrm{B}} &= -\\mu_0 e n_e\\overrightarrow{v_e} + \\mu_0 e n_p\\overrightarrow{v_p} , \\\\ m_p\\frac{\\mathrm{d}\\overrightarrow{v_p}}{\\mathrm{d}t} &= e(\\overrightarrow{\\mathrm{E}} + \\overrightarrow{v_p} \\wedge \\overrightarrow{\\mathrm{B}}) . \\end{aligned}$$\n\nL’équation du mouvement projeté sur $\\overrightarrow{e_x}$, $\\overrightarrow{e_y}$ et $\\overrightarrow{e_z}$ donne :\n\n$$\\begin{aligned} & m_p\\frac{\\partial v_p(z,t)}{\\partial t} = e\\mathrm{E}_x , \\\\ & \\mathrm{E}_y = v_p(z,t)\\mathrm{B}_0 , \\\\ & \\mathrm{E}_z = 0 . \\end{aligned}$$\n\nPuis l’équation de Maxwell Faraday donne :\n\n$$\\begin{aligned} \\partial_t\\mathrm{B}(z,t) &= \\partial_z\\mathrm{E}_y , \\\\ \\partial_z\\mathrm{E}_x &= \\partial_x\\mathrm{E}_z , \\\\ \\partial_x\\mathrm{E}_y &= \\partial_y\\mathrm{E}_x . \\end{aligned}$$\n\nD’où on en déduit :\n\n$$\\partial_t\\mathrm{B}(z,t) = \\mathrm{B}_0\\partial_z v_p(z,t) \\qquad \\Rightarrow \\qquad \\frac{\\partial^2\\mathrm{B}(z,t)}{\\partial t^2} = \\mathrm{B}_0\\frac{\\partial}{\\partial z}\\frac{\\partial v_p(z,t)}{\\partial t} = \\frac{\\mathrm{B}_0 e}{m_p}\\frac{\\partial\\mathrm{E}_x}{\\partial z} .$$\n\nL’équation de Maxwell-Ampère projetée sur $\\overrightarrow{e_y}$ donne :\n\n$$\\partial_z\\mathrm{B}(z,t) = -\\mu_0 n_e e v_{e,y} .$$\n\nDonc en utilisant $\\overrightarrow{\\mathrm{E}} + \\overrightarrow{v_e} \\wedge \\overrightarrow{\\mathrm{B}} = \\overrightarrow{0}$, cela donne, projeté sur $\\overrightarrow{e_x}$ :\n\n$$\\mathrm{E}_x = -v_{e,y}\\mathrm{B}_0 = \\frac{\\mathrm{B}_0}{\\mu_0 n_e e}\\,\\partial_z\\mathrm{B}(z,t) .$$\n\nOn obtient bien ce qu’il faut en remplaçant :\n\n$$\\boxed{\\frac{\\partial^2\\mathrm{B}(z,t)}{\\partial z^2} - \\frac{1}{v_{\\mathrm{A}}^2}\\frac{\\partial^2\\mathrm{B}(z,t)}{\\partial t^2} = 0\\ .}$$"
+       },
+       {
+        "label": "28.",
+        "statement": "On a $\\boxed{v_{\\mathrm{A}} = \\sqrt{\\dfrac{\\mathrm{B}_0^2}{\\mu_0 n_p m_p}}\\ ,}$ car $n_e = n_p = n_0$ et comme c’est incompressible, c’est donc constant. La vitesse d’Alfvén est donc la vitesse de propagation des perturbations magnétiques."
+       },
+       {
+        "label": "29.",
+        "statement": "$\\boxed{v_{\\mathrm{A}} \\approx 59\\ \\mathrm{km.s^{-1}}}$. Comme $v_{\\mathrm{A}} < v_{\\mathrm{SN}}$, le vent solaire est superalfvénique."
+       }
+      ]
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "x-ens-2008-mp-p2",
+   "number": 2,
+   "title": "Le vent solaire",
+   "points": null,
+   "problemType": "theory",
+   "statement": "On modélise le vent solaire comme un plasma cinétique complètement ionisé constitué d’électrons et de protons. On appelle vitesse du vent solaire celle des protons.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "caption": "Fig. 1: Schéma du Soleil et de l’ensemble de la couronne solaire. Le dessin n’est pas à l’échelle.",
+     "alt": "Le Soleil (disque gris, rayon R☉) au centre d’un cercle pointillé de rayon r0 marqué « exobase » ; à l’intérieur « barosphère », à l’extérieur « exosphère » ; des flèches radiales partent du cercle vers l’extérieur, l’une marquée « vent solaire ».",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p2-fig1.png",
+     "width": 1099,
+     "height": 962,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       181.49,
+       266.08,
+       445.05,
+       496.8
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "30.",
+     "statement": "À l’aide des données du tableau 1, estimer le temps que mettrait le Soleil à perdre toute sa masse si le vent solaire était l’unique mécanisme de perte de masse.",
+     "points": null,
+     "answer": {
+      "kind": "numeric",
+      "value": 1.6e+21,
+      "unit": "s",
+      "tolerance": 100000000000000000000,
+      "note": "Corrigé officiel : τSN ≈ 1,6 × 10²¹ s = 4,9 × 10¹³ ans."
+     }
+    },
+    {
+     "label": "31.",
+     "statement": "Comparer la perte d’énergie due au vent solaire avec la perte d’énergie due à la radiation électromagnétique. On rappelle qu’au niveau de la Terre (à 1 UA), le flux lumineux reçu de la part du Soleil est d’environ 1000 W.m$^{-2}$.",
+     "points": null
+    }
+   ],
+   "sections": [
+    {
+     "id": "s2-1",
+     "title": "2.1 Modèle hydrostatique de Chapman pour la couronne solaire (1957)",
+     "statement": "La couronne solaire, supposée ici à symétrie sphérique, est la partie de l’atmosphère solaire située au-delà du rayon solaire et qui se dilue dans l’espace (voir Fig. 1). Dans le modèle dit hydrostatique, on décrit la couronne solaire comme un gaz parfait d’électrons et de protons dans lequel les collisions assurent les échanges thermiques (modèle collisionnel, ou « fluide »), de telle sorte que la température est la même pour les électrons et les protons. On néglige les éventuels champs électrique et magnétique, ainsi que tout mouvement d’ensemble. On admet de plus que dans les plasmas considérés, la conductivité thermique $\\lambda$ n’est pas constante, mais dépend de la température T selon la loi :\n\n$$\\lambda = \\Lambda_0\\,\\mathrm{T}^{5/2} , \\tag{5}$$\n\noù $\\Lambda_0$ est une constante.",
+     "parts": [
+      {
+       "label": "32.",
+       "statement": "Justifier, à l’aide de ce qui a été vu dans la partie 1, que l’on peut *a priori* négliger le champ électrique.",
+       "points": null
+      },
+      {
+       "label": "33.",
+       "statement": "Exprimer la pression $p(r)$ du plasma, à la distance $r$ du centre du Soleil, en fonction de la température $\\mathrm{T}(r)$ et de la densité $n_p(r)$ en protons.",
+       "points": null
+      },
+      {
+       "label": "34.",
+       "statement": "On suppose que le régime permanent est atteint. Montrer que la température $\\mathrm{T}(r)$ s’écrit sous la forme :\n\n$$\\mathrm{T}(r) = \\mathrm{T}_0\\left(\\frac{r}{r_0}\\right)^{-\\mu} ,$$\n\noù $r_0$ est une constante et $\\mathrm{T}_0 \\equiv \\mathrm{T}(r_0)$. Déterminer la valeur de $\\mu$.",
+       "points": null,
+       "answer": {
+        "kind": "expression",
+        "latex": "\\mu = 2/7",
+        "note": "Corrigé officiel."
+       }
+      },
+      {
+       "label": "35.",
+       "statement": "Avec ce modèle, quelle serait la température au niveau de la Terre ? Utiliser les données du tableau 3 de la partie 2.2.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 680000,
+        "unit": "K",
+        "tolerance": 10000,
+        "note": "Corrigé officiel : T(r = 1 UA) ≈ 6,8 × 10⁵ K."
+       }
+      },
+      {
+       "label": "36.",
+       "statement": "Établir l’équation de l’équilibre hydrostatique et l’écrire sous la forme :\n\n$$\\frac{\\mathrm{d}p}{\\mathrm{d}r} = -\\frac{p}{\\mathrm{H}(r)} .$$\n\nDonner l’expression de $\\mathrm{H}(r)$.",
+       "points": null
+      },
+      {
+       "label": "37.",
+       "statement": "En déduire que la pression $p(r)$ s’écrit :\n\n$$p(r) = p_\\infty\\exp\\left[\\frac{7\\mathrm{GM}_\\odot m_p}{10k_{\\mathrm{B}}\\mathrm{T}_0\\,r_0}\\left(\\frac{r}{r_0}\\right)^{-5/7}\\right] ,$$\n\net donner l’expression de $p_\\infty$ en fonction de $p_0 \\equiv p(r_0)$.",
+       "points": null
+      },
+      {
+       "label": "38.",
+       "statement": "Calculer numériquement $p_\\infty$ et comparer cette valeur à la pression du milieu interstellaire, qui est de l’ordre de $10^{-14}$ Pa.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 3.7e-7,
+        "unit": "Pa",
+        "tolerance": 1e-8,
+        "note": "Corrigé officiel : p∞ = 3,7 × 10⁻⁷ Pa."
+       }
+      },
+      {
+       "label": "39.",
+       "statement": "Quelle(s) critique(s) peut-on faire à ce modèle ? Dans quelle mesure suggère-t-il l’existence d’un vent solaire ?",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s2-2",
+     "title": "2.2 Modèle exosphérique du vent solaire",
+     "statement": "La couronne solaire est maintenant modélisée comme la succession de deux régions séparées par une frontière appelée l’exobase. Cette frontière est définie comme la sphère de rayon $r_0 \\approx 5\\mathrm{R}_\\odot$. Sous l’exobase se situe la barosphère, dans laquelle les collisions dominent et où le modèle d’équilibre hydrostatique précédent est valable. Au-delà de l’exobase se situe l’exosphère, dans laquelle le plasma est supposé sans collision (cinétique). Le vent solaire est émis au niveau de l’exobase. Les données utiles concernant l’exobase sont rassemblées dans le tableau 3.\n\n| | Notation | Valeur | Unité |\n|---|---|---|---|\n| Température de l’exobase | $\\mathrm{T}_0$ | $2 \\times 10^{6}$ | K |\n| Densité particulaire de référence à l’exobase | $n_0$ | $3{,}1 \\times 10^{10}$ | m$^{-3}$ |\n| Altitude de l’exobase | $r_0$ | $5\\ \\mathrm{R}_\\odot$ | m |\n| Indice lorentzien | $\\kappa$ | 3 | sans unité |\n\nTab. 3: Caractéristiques de l’exobase."
+    },
+    {
+     "id": "s2-2-1",
+     "title": "2.2.1 Distribution des vitesses au niveau de l’exobase",
+     "statement": "La loi de distribution des vitesses est notée $f_{e,p}(\\overrightarrow{v})$. Elle est définie telle que la probabilité élémentaire $\\mathrm{dP}_{e,p}$ d’observer une particule (électron $e$ ou proton $p$) dont le vecteur vitesse est compris entre $\\overrightarrow{v}$ et $\\overrightarrow{v} + \\mathrm{d}\\overrightarrow{v}$ s’écrit :\n\n$$\\mathrm{dP}_{e,p}(\\overrightarrow{v}, \\overrightarrow{v} + \\mathrm{d}\\overrightarrow{v}) = f_{e,p}(\\overrightarrow{v})\\mathrm{d}v_x\\mathrm{d}v_y\\mathrm{d}v_z .$$\n\nLa notation indicielle $e, p$ spécifie que les quantités se rapportent à celles des électrons pour l’indice $e$ ou à celles des protons pour l’indice $p$.\n\nOn suppose, pour le moment, que cette distribution des vitesses est maxwellienne pour les électrons et les protons, soit :\n\n$$f_{e,p}(\\overrightarrow{v}) = \\left(\\frac{m_{e,p}}{2\\pi k_{\\mathrm{B}}\\mathrm{T}_0}\\right)^{3/2}\\exp\\left(-\\frac{m_{e,p}\\overrightarrow{v}^2}{2k_{\\mathrm{B}}\\mathrm{T}_0}\\right) . \\tag{6}$$",
+     "parts": [
+      {
+       "label": "40.",
+       "statement": "Vérifier que :\n\n$$\\iiint \\mathrm{d}v_x\\mathrm{d}v_y\\mathrm{d}v_z f_{e,p}(\\overrightarrow{v}) = 1 .$$",
+       "points": null
+      },
+      {
+       "label": "41.",
+       "statement": "Montrer que la distribution $g_{e,p}(v)$ de la norme $v$ de la vitesse s’écrit :\n\n$$g_{e,p}(v) = 4\\pi v^2 f_{e,p}(\\overrightarrow{v}) .$$",
+       "points": null
+      },
+      {
+       "label": "42.",
+       "statement": "Exprimer la vitesse quadratique moyenne $\\sqrt{\\langle v_{e,p}^2\\rangle}$ ainsi que la vitesse la plus probable, notée $w_{e,p}$.",
+       "points": null
+      },
+      {
+       "label": "43.",
+       "statement": "Exprimer la vitesse de libération $v_{\\mathrm{lib}}$ au niveau de l’exobase. Cette vitesse est-elle la même pour les électrons et les protons ? Faire l’application numérique.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 270000,
+        "unit": "m/s",
+        "tolerance": 10000,
+        "note": "Corrigé officiel : vlib = (2GM☉/r0)^(1/2) ≈ 2,7 × 10⁵ m.s⁻¹."
+       }
+      },
+      {
+       "label": "44.",
+       "statement": "Exprimer, sous forme intégrale, les flux (nombre de particules par unité de temps et par unité de surface) d’électrons $\\mathrm{F}_e$ et de protons $\\mathrm{F}_p$ qui s’échappent au niveau de l’exobase (on précisera soigneusement les bornes des intégrales pour chaque variable).",
+       "points": null
+      },
+      {
+       "label": "45.",
+       "statement": "En déduire qu’ils s’écrivent finalement :\n\n$$\\mathrm{F}_{e,p} = \\frac{n_0}{2\\sqrt{\\pi}}w_{e,p}\\left(1 + \\frac{v_{\\mathrm{lib}}^2}{w_{e,p}^2}\\right)\\exp\\left(-\\frac{v_{\\mathrm{lib}}^2}{w_{e,p}^2}\\right) . \\tag{7}$$",
+       "points": null
+      },
+      {
+       "label": "46.",
+       "statement": "Faire l’application numérique. En déduire qu’un champ électrique doit nécessairement apparaître.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s2-2-2",
+     "title": "2.2.2 Première approche : modèle de Chamberlain (1960)",
+     "statement": "Le modèle de Chamberlain consiste à tenir compte du potentiel électrique $\\mathrm{V}(r)$, créé par la séparation de charge, en imposant la neutralité électrique de l’équilibre hydrostatique du plasma (pour lequel la distribution de Boltzmann est valable). On appelle $\\phi_g(r) = -\\mathrm{GM}_\\odot/r$ le potentiel gravitationnel dans l’exosphère.",
+     "parts": [
+      {
+       "label": "47.",
+       "statement": "En s’inspirant des équations (1) et (2), exprimer $n_e(r)$ et $n_p(r)$ en fonction de $\\phi_g(r)$ et $\\mathrm{V}(r)$.",
+       "points": null
+      },
+      {
+       "label": "48.",
+       "statement": "Montrer que le potentiel électrique, appelé potentiel de Pannekoek-Rosseland (PR), s’écrit :\n\n$$\\mathrm{V}_{\\mathrm{PR}}(r) = \\frac{(m_p - m_e)}{2e}\\,\\frac{\\mathrm{GM}_\\odot}{r} . \\tag{8}$$\n\nFaire l’application numérique au niveau de l’exobase.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 190,
+        "unit": "V",
+        "tolerance": 10,
+        "note": "Corrigé officiel : VPR(r0) ≈ 190 V."
+       }
+      },
+      {
+       "label": "49.",
+       "statement": "Exprimer les nouvelles vitesses de libération $v_{\\mathrm{lib}}^{e,p}$ pour les électrons et les protons en fonction de G, $\\mathrm{M}_\\odot$, $r_0$ et des masses $m_p$ et $m_e$.",
+       "points": null
+      },
+      {
+       "label": "50.",
+       "statement": "Calculer le rapport $\\mathrm{F}_e/\\mathrm{F}_p$ en fonction de $m_p/m_e$. Quelle conclusion peut-on en tirer ?",
+       "points": null,
+       "answer": {
+        "kind": "expression",
+        "latex": "\\frac{F_e}{F_p} = \\sqrt{\\frac{m_p}{m_e}} \\approx 42",
+        "note": "Corrigé officiel."
+       }
+      },
+      {
+       "label": "51.",
+       "statement": "Quelle hypothèse faut-il remettre en question ?",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s2-2-3",
+     "title": "2.2.3 Modèle de Lemaire et Scherer (1971)",
+     "statement": "Le modèle de Lemaire et Scherer supprime l’hypothèse évoquée dans la question 51, mais impose la nullité du courant électrique qui s’échappe du Soleil. Le potentiel au niveau de l’exobase, noté $\\mathrm{V}(r_0)$, n’est donc plus égal à $\\mathrm{V}_{\\mathrm{PR}}(r_0)$ et doit être déterminé de façon consistante.\n\nPour augmenter le flux de protons, le modèle de Lemaire et Scherer fait l’hypothèse que presque tous les protons peuvent quitter l’exobase, de telle sorte que la vitesse de libération des protons est quasi-nulle.",
+     "parts": [
+      {
+       "label": "52.",
+       "statement": "Montrer que les hypothèses précédentes permettent d’écrire :\n\n$$v_{\\mathrm{lib}}^e \\approx \\sqrt{\\frac{2e\\mathrm{V}(r_0)}{m_e}} .$$",
+       "points": null
+      },
+      {
+       "label": "53.",
+       "statement": "Établir ensuite l’équation implicite suivante, portant sur le potentiel $\\mathrm{V}(r_0)$ :\n\n$$\\left(1 + \\frac{e\\mathrm{V}(r_0)}{k_{\\mathrm{B}}\\mathrm{T}_0}\\right)e^{-\\frac{e\\mathrm{V}(r_0)}{k_{\\mathrm{B}}\\mathrm{T}_0}} = \\sqrt{\\frac{m_e}{m_p}} . \\tag{9}$$",
+       "points": null
+      },
+      {
+       "label": "54.",
+       "statement": "On pose $\\mathrm{U}_0 \\equiv \\frac{e\\mathrm{V}(r_0)}{k_{\\mathrm{B}}\\mathrm{T}_0}$ et on admet que la solution de l’équation précédente donne environ $\\mathrm{U}_0 \\approx 5$. Calculer $\\mathrm{V}(r_0)$, comparer au résultat trouvé à la question 48 et commenter.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 880,
+        "unit": "V",
+        "tolerance": 10,
+        "note": "Corrigé officiel : V(r0) ≈ 880 V."
+       }
+      },
+      {
+       "label": "55.",
+       "statement": "À l’aide d’un bilan d’énergie, exprimer la vitesse asymptotique $v_{\\mathrm{SN}}$ (pour $r \\to \\infty$) du vent solaire.",
+       "points": null
+      },
+      {
+       "label": "56.",
+       "statement": "Calculer numériquement $v_{\\mathrm{SN}}$ et comparer les ordres de grandeur des contributions thermique, électrique et gravitationnelle intervenant dans l’expression précédente de $v_{\\mathrm{SN}}$.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 430,
+        "unit": "km/s",
+        "tolerance": 10,
+        "note": "Corrigé officiel : vSN ≈ 430 km.s⁻¹."
+       }
+      }
+     ]
+    },
+    {
+     "id": "s2-2-4",
+     "title": "2.2.4 Distribution suprathermique des électrons : modèle de Pierrard et Lemaire (1996)",
+     "statement": "Le modèle précédent rend compte de la vitesse du vent solaire dit lent, que l’on observe dans le plan de l’écliptique (donc sur Terre). Un vent solaire qualifié de rapide, d’une vitesse de l’ordre de 750 km.s$^{-1}$, a été observé par la sonde Ulysse, vers la fin années 90, en dehors du plan de l’écliptique. Afin de l’expliquer, on suppose que les protons conservent une distribution maxwellienne des vitesses, mais que la distribution des vitesses des électrons, au niveau de l’exobase, est une lorentzienne donnée par :\n\n$$f_e(\\overrightarrow{v}) = \\frac{1}{2\\pi}\\frac{\\mathrm{A}_\\kappa}{(\\kappa w^2)^{3/2}}\\left(1 + \\frac{\\overrightarrow{v}^2}{\\kappa w^2}\\right)^{-(\\kappa+1)} , \\tag{10}$$\n\noù $w$ est une constante qui sera déterminée plus tard et $\\mathrm{A}_\\kappa$, dont on ne cherchera pas l’expression, assure la normalisation $\\iiint f_e(\\overrightarrow{v})\\mathrm{d}v_x\\mathrm{d}v_y\\mathrm{d}v_z = 1$. L’indice $\\kappa$ est compris entre 2 et 5 pour le vent solaire (on prendra $\\kappa = 3$ pour les applications numériques). Comme dans le modèle précédent, on impose la nullité du courant électrique qui s’échappe du Soleil.",
+     "parts": [
+      {
+       "label": "57.",
+       "statement": "Représenter qualitativement les distributions maxwellienne et lorentzienne. En déduire, toujours qualitativement, que l’accélération du vent solaire peut être plus importante avec un tel modèle.",
+       "points": null
+      },
+      {
+       "label": "58.",
+       "statement": "Calculer la vitesse la plus probable.",
+       "points": null
+      },
+      {
+       "label": "59.",
+       "statement": "Montrer que la vitesse quadratique moyenne des électrons s’écrit :\n\n$$\\langle v^2\\rangle = w^2\\,\\frac{3\\kappa}{2\\kappa - 3} .$$\n\nOn pourra effectuer une intégration par parties et utiliser la normalisation de $f_e(\\overrightarrow{v})$.",
+       "points": null
+      },
+      {
+       "label": "60.",
+       "statement": "En déduire l’expression de $w$ en fonction de $\\mathrm{T}_0$, si on définit la température comme dans le cas d’une distribution maxwellienne. Faire l’application numérique.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 5500000,
+        "unit": "m/s",
+        "tolerance": 100000,
+        "note": "Corrigé officiel : w ≈ 5,5 × 10⁶ m.s⁻¹."
+       }
+      },
+      {
+       "label": "61.",
+       "statement": "Calculer le flux électronique $\\mathrm{F}_e$ émis au niveau de l’exobase en supposant que $v_{\\mathrm{lib}}^e \\gg w$. Vérifier cette hypothèse *a posteriori*.",
+       "points": null
+      },
+      {
+       "label": "62.",
+       "statement": "On fait l’approximation $v_{\\mathrm{lib}}^p \\simeq 0$. Montrer que alors :\n\n$$\\mathrm{U}_0 \\equiv \\frac{e\\mathrm{V}(r_0)}{k_{\\mathrm{B}}\\mathrm{T}_0} \\simeq \\frac{2\\kappa - 3}{2\\kappa}\\left[\\beta_\\kappa\\sqrt{\\frac{m_p}{m_e}}\\right]^{1/(\\kappa-1)} .$$\n\nDonner l’expression de $\\beta_\\kappa$.",
+       "points": null
+      },
+      {
+       "label": "63.",
+       "statement": "Calculer enfin la vitesse asymptotique $v_{\\mathrm{SN}}$ du vent solaire pour $\\kappa = 3$. On donne $\\mathrm{A}_3 = 2^4/\\pi$.",
+       "points": null,
+       "answer": {
+        "kind": "numeric",
+        "value": 700,
+        "unit": "km/s",
+        "tolerance": 10,
+        "note": "Corrigé officiel : U0 ≈ 16 et vSN ≈ 700 km.s⁻¹."
+       }
+      },
+      {
+       "label": "64.",
+       "statement": "Quelles sont les principales limitations du modèle que l’on vient de développer ?",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s2-3",
+     "title": "2.3 Vent solaire avec champ magnétique : spirale de Parker",
+     "statement": "Quand on tient compte de l’effet du champ magnétique créé par le Soleil, on admet que les équations couplées entre les champs électromagnétiques et le mouvement des particules entraînent les conséquences suivantes :\n\n- au niveau de l’exobase, le vent solaire est émis radialement dans le référentiel en rotation avec le Soleil,\n- la vitesse du vent solaire dans ce même référentiel (notée $\\overrightarrow{v_{\\mathrm{SN}}}$ et dont la norme est supposée constante) est toujours colinéaire au champ magnétique $\\overrightarrow{\\mathrm{B}}$.\n\nOn se place en coordonnées sphériques ayant pour axe, l’axe de rotation du Soleil. On note $\\theta$ la colatitude et $\\varphi$ l’angle azimutal (longitude).",
+     "figures": [
+      {
+       "id": "p2-fig2",
+       "alt": "Photographie en noir et blanc de la comète Hale-Bopp sur un fond d’étoiles : une tête brillante d’où partent deux queues, une queue courbe et diffuse et une queue droite plus fine, séparées par un angle.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p2-fig2.png",
+       "width": 846,
+       "height": 661,
+       "source": {
+        "page": 14,
+        "pdfRect": [
+         211.82,
+         329.22,
+         414.72,
+         487.53
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "65.",
+       "statement": "Établir, dans le référentiel en rotation avec le Soleil, la courbe paramétrée $(\\theta(r), \\varphi(r))$ représentant la trajectoire des particules.",
+       "points": null
+      },
+      {
+       "label": "66.",
+       "statement": "On cherche le champ magnétique sous la forme :\n\n$$\\overrightarrow{\\mathrm{B}}(r,\\theta) = \\mathrm{B}_r(r)\\overrightarrow{e_r} + \\mathrm{B}_\\varphi(r,\\theta)\\overrightarrow{e_\\varphi} .$$\n\nExprimer $\\mathrm{B}_r(r)$ en fonction de la valeur $\\mathrm{B}_0$ du champ magnétique au niveau de l’exobase.",
+       "points": null
+      },
+      {
+       "label": "67.",
+       "statement": "En déduire l’expression du champ magnétique $\\overrightarrow{\\mathrm{B}}$ et montrer que sa norme vaut :\n\n$$\\mathrm{B} = \\mathrm{B}_0\\left(\\frac{r_0}{r}\\right)^2\\sqrt{1 + (r - r_0)^2\\left(\\frac{\\Omega_\\odot\\sin\\theta}{v_{\\mathrm{SN}}}\\right)^2} .$$",
+       "points": null
+      },
+      {
+       "label": "68.",
+       "statement": "Tracer les lignes de champ magnétique dans le plan $\\theta = \\pi/2$ et pour $\\theta = \\pi/4$. Ces lignes de champ forment ce qu’on appelle des spirales de Parker. Quelles sont les différences avec le champ magnétique créé par un dipôle magnétique ?",
+       "points": null
+      },
+      {
+       "label": "69.",
+       "statement": "À l’aide des données fournies dans les différents tableaux, calculer la valeur du champ magnétique $\\mathrm{B}_0$ à retenir au niveau de l’exobase pour $\\theta = \\pi/2$. Quel angle fait la spirale de Parker au niveau de la Terre par rapport au rayon vecteur ?",
+       "points": null,
+       "answer": {
+        "kind": "text",
+        "value": "B0 ≈ 8,7 × 10⁻⁶ T ; Θ ≈ 47°",
+        "note": "Corrigé officiel."
+       }
+      }
+     ],
+     "statementAfterParts": "**Fin du sujet**\n\nLa photographie de la page ci-après représente la comète Hale-Bopp au moment de son passage à proximité de la Terre en 1997. Cette photo met en évidence à la fois la présence du rayonnement électromagnétique émis par le Soleil et la présence du vent solaire. On peut en effet distinguer deux queues : la queue courbe est due à la pression de radiation du Soleil sur les poussières neutres de la comète tandis que la queue droite est due au vent solaire et provient de l’interaction de celui-ci avec les ions de la comète. L’angle entre ces deux queues est dû à la spirale de Parker."
+    }
+   ],
+   "topics": [
+    "astrophysics/solar-wind",
+    "thermodynamics/kinetic-theory",
+    "electromagnetism/magnetic-fields"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "sections": [
+     {
+      "id": "s2-0",
+      "title": "2 Le vent solaire",
+      "statement": "",
+      "parts": [
+       {
+        "label": "30.",
+        "statement": "On se place à $\\mathrm{R} = 1$ UA, la masse perdue pendant $\\mathrm{d}t$ vaut $\\mathrm{dM} = n_0 \\times 4\\pi\\mathrm{R}^2 v_{\\mathrm{SN}}\\mathrm{d}t \\times m_p$ (en négligeant la masse des électrons), ce qui donne un temps de vie de\n\n$$\\boxed{\\tau_{\\mathrm{SN}} = \\frac{\\mathrm{M}_\\odot}{4\\pi n_\\oplus\\mathrm{R}^2 v_{\\mathrm{SN}} m_p} \\approx 1{,}6 \\times 10^{21}\\ \\mathrm{s} = 4{,}9 \\times 10^{13}\\ \\mathrm{ans}\\ .}$$\n\nOù $n_\\oplus = 7{,}1 \\times 10^{6}\\ \\mathrm{m^{-3}}$ est la densité particulaire du vent solaire au niveau de la Terre. La perte de masse par le vent solaire n’est pas le mécanisme qui fixe la durée de vie du Soleil (de l’ordre de $10^{10}$ ans)."
+       },
+       {
+        "label": "31.",
+        "statement": "L’énergie perdue pendant $\\mathrm{d}t$ est l’énergie cinétique des particules (à 1 UA, on néglige l’énergie potentielle), donc\n\n$$\\boxed{\\mathrm{P}_{\\mathrm{SN}} = 2\\pi m_p v_{\\mathrm{SN}}^3 n_\\oplus\\mathrm{R}^2 \\approx 10^{20}\\ \\mathrm{W}\\ .}$$\n\nAlors que la puissance électromagnétique s’écrit simplement\n\n$$\\boxed{\\mathrm{P}_{\\mathrm{EM}} \\approx 10^{3} \\times 4\\pi\\mathrm{R}^2 = 2{,}8 \\times 10^{26}\\ \\mathrm{W}\\ .}$$\n\nLa perte d’énergie est dominée par les photons par 6 ordres de grandeur."
+       }
+      ]
+     },
+     {
+      "id": "s2-1",
+      "title": "2.1 Modèle hydrostatique de Chapman pour la couronne solaire (1957)",
+      "statement": "",
+      "parts": [
+       {
+        "label": "32.",
+        "statement": "D’après la partie 1 sur l’écrantage, le plasma se comporte comme un bon conducteur, donc le champ électrique est nul, sauf bien sûr localement, mais ici les échelles de distance sont grandes devant la longueur de Debye $\\lambda_{\\mathrm{D}} = 6{,}6$ m."
+       },
+       {
+        "label": "33.",
+        "statement": "$p(r) = p_p(r) + p_e(r) = n_p(r)k_{\\mathrm{B}}\\mathrm{T}(r) + n_e(r)k_{\\mathrm{B}}\\mathrm{T}(r) = 2n_p(r)k_{\\mathrm{B}}\\mathrm{T}(r)$ .\n\nDonc\n\n$$\\boxed{p(r) = 2n_p(r)k_{\\mathrm{B}}\\mathrm{T}(r)\\ .}$$"
+       },
+       {
+        "label": "34.",
+        "statement": "En régime permanent, l’équation de diffusion de la chaleur s’écrit $\\mathrm{div}\\ \\overrightarrow{j}_{\\mathrm{th}} = 0$, ce qui donne l’équation différentielle :\n\n$$\\frac{\\mathrm{d}}{\\mathrm{d}r}\\left(r^2\\mathrm{T}^{5/2}(r)\\,\\frac{\\mathrm{dT}}{\\mathrm{d}r}\\right) = 0 .$$\n\nAvec la condition limite au limite $\\mathrm{T}(r = \\infty) = 0$, on en déduit le résultat par une méthode de séparation des variables, avec $\\boxed{\\mu = 2/7}$."
+       },
+       {
+        "label": "35.",
+        "statement": "On prend $r = 1$ UA, ce qui donne\n\n$$\\boxed{\\mathrm{T}(r = 1\\ \\mathrm{UA}) \\approx 6{,}8 \\times 10^{5}\\ \\mathrm{K}\\ ,}$$\n\nce qui est en accord qualitatif avec la donnée du tableau 1."
+       },
+       {
+        "label": "36.",
+        "statement": "À l’aide de l’équilibre hydrostatique $\\overrightarrow{\\mathrm{grad}}\\ p = \\rho\\overrightarrow{g}$, puis de la loi des gaz parfaits ainsi que de l’expression précédente de $\\rho$ en fonction de $p$ (si on néglige $m_e$ devant $m_p$), on obtient ce qu’il faut une fois projeté sur $\\overrightarrow{e_r}$ avec\n\n$$\\mathrm{H}(r) = -\\frac{2k_{\\mathrm{B}}\\mathrm{T}(r)}{m_p g(r)} .$$\n\nAvec le théorème de Gauss, on a immédiatement :\n\n$$g(r) = -\\frac{\\mathrm{GM}_\\odot}{r^2} .$$\n\nEt enfin, en utilisant l’expression de $\\mathrm{T}(r)$, on a finalement pour $\\mathrm{H}(r)$ :\n\n$$\\boxed{\\mathrm{H}(r) = \\frac{2k_{\\mathrm{B}}\\mathrm{T}_0 r_0^{2/7}}{\\mathrm{GM}_\\odot m_p}\\,r^{12/7}\\ .}$$"
+       },
+       {
+        "label": "37.",
+        "statement": "On obtient à l’aide de l’équation d’équilibre hydrostatique :\n\n$$\\frac{\\mathrm{d}p(r)}{\\mathrm{d}r} = -\\frac{\\mathrm{GM}_\\odot m_p}{2k_{\\mathrm{B}}\\mathrm{T}_0 r^2}\\left(\\frac{r}{r_0}\\right)^{\\mu} p(r) .$$\n\nL’expression de $p_\\infty$ s’écrit :\n\n$$\\boxed{p_\\infty = p_0\\exp\\left[-\\frac{7\\mathrm{GM}_\\odot m_p}{10k_{\\mathrm{B}}\\mathrm{T}_0\\,r_0}\\right]\\ .}$$"
+       },
+       {
+        "label": "38.",
+        "statement": "On a $p_0 = 1{,}7 \\times 10^{-6}$ Pa par la question 33, donc :\n\n$$\\boxed{p_\\infty = 3{,}7 \\times 10^{-7}\\ \\mathrm{Pa}\\ .}$$\n\nLa pression ne s’annule pas à l’infini, ce qui suggère l’existence d’un vent solaire : la pression $p_\\infty$ est beaucoup plus grande que la pression du milieu interstellaire qui est de l’ordre de $10^{-14}$ Pa."
+       },
+       {
+        "label": "39.",
+        "statement": "C’est un modèle statique d’une part, et d’autre part il suppose un plasma collisionnel, ce qui n’est pas notre cas. Dans un plasma cinétique, la diffusion de la température telle qu’elle a été modélisé ($\\overrightarrow{j} = -\\lambda\\,\\overrightarrow{\\mathrm{grad}}\\ \\mathrm{T}$) n’a plus de sens."
+       }
+      ]
+     },
+     {
+      "id": "s2-2-1",
+      "title": "2.2 Modèle exosphérique du vent solaire — 2.2.1 Distribution des vitesses au niveau de l’exobase",
+      "statement": "",
+      "parts": [
+       {
+        "label": "40.",
+        "statement": "Il suffit d’utiliser l’intégrale donnée au début du sujet à trois reprises."
+       },
+       {
+        "label": "41.",
+        "statement": "Il suffit pour cela d’intégrer, dans l’espace des vitesses, $f_{e,p}(\\overrightarrow{v})\\mathrm{d}^3\\overrightarrow{v}$ sur une couronne sphérique d’épaisseur $\\mathrm{d}v$ :\n\n$$g_{e,p}(v)\\mathrm{d}v = \\iiint_{\\mathrm{d}v} f_{e,p}(\\overrightarrow{v})\\mathrm{d}^3\\overrightarrow{v} = 4\\pi v^2 f_{e,p}(\\overrightarrow{v})\\mathrm{d}v$$\n\nd’où le résultat."
+       },
+       {
+        "label": "42.",
+        "statement": "La vitesse quadratique moyenne vaut :\n\n$$\\langle v_{e,p}^2\\rangle = \\iiint_{-\\infty}^{\\infty}\\mathrm{d}v_x\\mathrm{d}v_y\\mathrm{d}v_z v^2 f_{e,p}(\\overrightarrow{v}) = \\int_0^{\\infty}\\mathrm{d}v\\ 4\\pi v^4 g_{e,p}(v) .$$\n\nDonc\n\n$$\\boxed{\\langle v_{e,p}^2\\rangle = \\frac{3k_{\\mathrm{B}}\\mathrm{T}_0}{m_{e,p}}\\ .}$$\n\nLa vitesse la plus probable est celle pour laquelle :\n\n$$\\frac{\\mathrm{d}g_{e,p}}{\\mathrm{d}v} = 0 ,$$\n\ndonc\n\n$$\\boxed{w_{e,p} = \\sqrt{\\frac{2k_{\\mathrm{B}}\\mathrm{T}_0}{m_{e,p}}}\\ .}$$\n\nCes deux vitesses ne sont pas égales car les distributions $g_{e,p}$ ne sont pas symétriques."
+       },
+       {
+        "label": "43.",
+        "statement": "Comme on est dans l’exosphère, il n’y a pas de collisions, donc l’énergie d’une particule se conserve et un simple bilan d’énergie entre l’exobase et l’infini donne :\n\n$$\\boxed{v_{\\mathrm{lib}} = \\left(\\frac{2\\mathrm{GM}_\\odot}{r_0}\\right)^{1/2} \\approx 2{,}7 \\times 10^{5}\\ \\mathrm{m.s^{-1}}\\ .}$$\n\nC’est la même vitesse pour les électrons et les protons. Comme les électrons sont en moyenne plus rapides car plus légers, on s’attend à ce qu’il y en ait davantage qui s’échappent."
+       },
+       {
+        "label": "44.",
+        "statement": "Voir question suivante."
+       },
+       {
+        "label": "45.",
+        "statement": "Le nombre de particules quittant l’exobase entre $t$ et $t + \\mathrm{d}t$ est égal au nombre de particules $\\mathrm{d}^2\\mathrm{N}_{e,p}$ comprises dans un bout de couronne sphérique d’épaisseur $\\mathrm{d}r = v_r\\mathrm{d}t$ et de base dS, et qui ont une vitesse supérieure à la vitesse de libération (on se place en coordonnées sphériques dans l’espace des vitesses) :\n\n$$\\begin{aligned} \\mathrm{d}^2\\mathrm{N}_{e,p} &= n_0\\int_{v_r^2 + v_\\theta^2 + v_\\varphi^2 > v_{\\mathrm{lib}}^2}\\mathrm{d}v_r\\mathrm{d}v_\\theta\\mathrm{d}v_\\varphi f_{e,p}(\\overrightarrow{v}) \\times v_r\\mathrm{d}t\\mathrm{dS} \\\\ \\mathrm{d}^2\\mathrm{N}_{e,p} &= n_0\\mathrm{d}t\\mathrm{dS}\\left(\\frac{m_{e,p}}{2\\pi k_{\\mathrm{B}}\\mathrm{T}_0}\\right)^{3/2}2\\pi\\int_0^{\\pi/2}\\sin\\theta\\mathrm{d}\\theta\\int_{v_{\\mathrm{lib}}}^{\\infty}\\mathrm{d}v\\ v^3\\cos\\theta e^{-\\frac{m_{e,p}v^2}{2k_{\\mathrm{B}}\\mathrm{T}_0}} \\\\ \\mathrm{F}_{e,p} &= \\frac{\\mathrm{d}^2\\mathrm{N}_{e,p}}{\\mathrm{d}t\\mathrm{dS}} = \\frac{n_0}{\\sqrt{\\pi}w_{e,p}^3}\\int_{v_{\\mathrm{lib}}}^{\\infty}\\mathrm{d}v\\ v^3 e^{-\\frac{v^2}{w_{e,p}^2}} \\end{aligned}$$\n\nOn intègre entre 0 et $\\pi/2$ pour ne prendre que les particules qui ont une vitesse radiale positive (et $v_r = v\\cos\\theta$). Avec une intégration par parties, on obtient le résultat demandé."
+       },
+       {
+        "label": "46.",
+        "statement": "On a $w_e \\approx 7{,}8 \\times 10^{6}\\ \\mathrm{m.s^{-1}}$ et $w_p \\approx 1{,}9 \\times 10^{5}\\ \\mathrm{m.s^{-1}}$. Donc $\\boxed{\\mathrm{F}_e = 6{,}8 \\times 10^{16}\\ \\mathrm{s^{-1}.m^{-2}}}$ et $\\boxed{\\mathrm{F}_p = 6.7 \\times 10^{14}\\ \\mathrm{s^{-1}.m^{-2}}}$. Il va donc se créer une importante séparation de charge qui sera à l’origine d’un champ électrique (qui assurera la quasi-neutralité)."
+       }
+      ]
+     },
+     {
+      "id": "s2-2-2",
+      "title": "2.2.2 Première approche : modèle de Chamberlain (1960)",
+      "statement": "",
+      "parts": [
+       {
+        "label": "47.",
+        "statement": "Comme on est à l’équilibre hydrostatique, on peut utiliser les distributions de Boltzmann et donc :\n\n$$\\boxed{n_e(r) = n_0\\exp\\left(-\\frac{m_e(\\phi_g(r) - \\phi_g(r_0)) - e(\\mathrm{V}(r) - \\mathrm{V}(r_0))}{k_{\\mathrm{B}}\\mathrm{T}_0}\\right)\\ .}$$\n\n$$\\boxed{n_p(r) = n_0\\exp\\left(-\\frac{m_p(\\phi_g(r) - \\phi_g(r_0)) + e(\\mathrm{V}(r) - \\mathrm{V}(r_0))}{k_{\\mathrm{B}}\\mathrm{T}_0}\\right)\\ .}$$"
+       },
+       {
+        "label": "48.",
+        "statement": "C’est immédiat à partir de $n_e = n_p$ (condition de neutralité), de la question précédente, et du fait que $\\mathrm{V}_{\\mathrm{PR}} \\to 0$ pour $r \\to \\infty$. On trouve $\\boxed{\\mathrm{V}_{\\mathrm{PR}}(r_0) \\approx 190\\ \\mathrm{V}}$."
+       },
+       {
+        "label": "49.",
+        "statement": "À l’aide d’un bilan d’énergie analogue à la question 43, on trouve\n\n$$v_{\\mathrm{lib}}^{e,p} = \\left(-2\\phi_g(r_0) \\pm \\frac{2e\\mathrm{V}_{\\mathrm{PR}}(r_0)}{m_{e,p}}\\right)^{1/2} .$$\n\nC’est-à-dire\n\n$$\\boxed{v_{\\mathrm{lib}}^{e,p} = \\left(\\frac{\\mathrm{GM}_\\odot}{r_0}\\,\\frac{m_p + m_e}{m_{e,p}}\\right)^{1/2}\\ .}$$"
+       },
+       {
+        "label": "50.",
+        "statement": "La question précédente donne :\n\n$$\\frac{v_{\\mathrm{lib}}^e}{w_e} = \\frac{v_{\\mathrm{lib}}^p}{w_p} = \\frac{\\mathrm{GM}_\\odot(m_p + m_e)}{r_0 k_{\\mathrm{B}}\\mathrm{T}_0} \\quad \\text{et} \\quad \\frac{v_{\\mathrm{lib}}^e}{v_{\\mathrm{lib}}^p} = \\sqrt{\\frac{m_p}{m_e}} .$$\n\nEn utilisant l’équation donnée, on en déduit :\n\n$$\\boxed{\\frac{\\mathrm{F}_e}{\\mathrm{F}_p} = \\frac{w_e}{w_p} = \\sqrt{\\frac{m_p}{m_e}} \\approx 42\\ .}$$\n\nDonc malgré la neutralité, le modèle de Chamberlain prévoit que le Soleil se charge positivement."
+       },
+       {
+        "label": "51.",
+        "statement": "L’hypothèse de neutralité est trop contraignante, il faut se contenter de la quasi-neutralité pour lever ce problème. En effet, $n_p \\neq n_e$ d’après l’équation de Poisson."
+       }
+      ]
+     },
+     {
+      "id": "s2-2-3",
+      "title": "2.2.3 Modèle de Lemaire et Scherer (1971)",
+      "statement": "",
+      "parts": [
+       {
+        "label": "52.",
+        "statement": "Le fait que la vitesse $v_{\\mathrm{lib}}^p$ soit négligeable montre que le potentiel gravitationnel $m_p\\phi_g(r_0)$ compense à peu près le potentiel électrique $e\\mathrm{V}(r_0)$. Or, comme $m_p \\gg m_e$, on en déduit que $e\\mathrm{V}(r_0) \\gg m_e\\phi_g(r_0)$, donc la vitesse de libération des électrons se simplifie comme demandé."
+       },
+       {
+        "label": "53.",
+        "statement": "Il suffit d’écrire la condition de nullité du courant électrique, qui donne :\n\n$$\\left(1 + \\frac{e\\mathrm{V}(r_0)}{k_{\\mathrm{B}}\\mathrm{T}_0}\\right)e^{-\\frac{e\\mathrm{V}(r_0)}{k_{\\mathrm{B}}\\mathrm{T}_0}} = \\sqrt{\\frac{m_e}{m_p}}\\left(1 + \\left(\\frac{v_{\\mathrm{lib}}^p}{w_p}\\right)^2\\right)e^{-\\left(\\frac{v_{\\mathrm{lib}}^p}{w_p}\\right)^2} .$$\n\nEnsuite, il suffit de constater que $\\frac{v_{\\mathrm{lib}}^p}{w_p} \\ll \\frac{e\\mathrm{V}(r_0)}{k_{\\mathrm{B}}\\mathrm{T}_0}$, qui est équivalent à avoir $\\frac{v_{\\mathrm{lib}}^p}{v_{\\mathrm{lib}}^e} \\ll \\left(\\frac{m_e}{m_p}\\right)^{1/4}$, car avec PR, on avait $\\frac{v_{\\mathrm{lib}}^p}{v_{\\mathrm{lib}}^e} = \\left(\\frac{m_e}{m_p}\\right)^{1/2}$ et $m_e \\ll m_p$. On obtient alors ce qu’il faut."
+       },
+       {
+        "label": "54.",
+        "statement": "On trouver $\\boxed{\\mathrm{V}(r_0) \\approx 880\\ \\mathrm{V}}$. C’est normal de trouver davantage qu’à la question 48 car il faut davantage chasser les protons pour assurer une nullité du courant électrique."
+       },
+       {
+        "label": "55.",
+        "statement": "On fait un bilan d’énergie entre l’exobase et l’infini, où $\\dfrac{3k_{\\mathrm{B}}\\mathrm{T}_0}{2m_p}$ représente l’énergie cinétique au niveau de l’exobase. Puis on utilise le fait que la température, comme les potentiels électrique et gravitationnel tendent vers zéro à l’infini :\n\n$$\\boxed{\\frac{v_{\\mathrm{SN}}^2}{2} \\simeq \\frac{3k_{\\mathrm{B}}\\mathrm{T}_0}{2m_p} + \\frac{e\\mathrm{V}(r_0)}{m_p} - \\frac{\\mathrm{GM}_\\odot}{r_0}\\ .}$$"
+       },
+       {
+        "label": "56.",
+        "statement": "On trouve $\\boxed{v_{\\mathrm{SN}} \\approx 430\\ \\mathrm{km.s^{-1}}}$, ce qui est le bon ordre de grandeur. Chacun des termes dans le bilan précédent est du même ordre de grandeur : $2{,}6 \\times 10^{10}\\ \\mathrm{J.kg^{-1}}$ pour l’énergie thermique, $8{,}8 \\times 10^{10}\\ \\mathrm{J.kg^{-1}}$ pour l’énergie électrique et $-3{,}7 \\times 10^{10}\\ \\mathrm{J.kg^{-1}}$ pour l’énergie gravitationnelle."
+       }
+      ]
+     },
+     {
+      "id": "s2-2-4",
+      "title": "2.2.4 Distribution suprathermique des électrons : modèle de Pierrard et Lemaire (1996)",
+      "statement": "",
+      "parts": [
+       {
+        "label": "57.",
+        "statement": "Une distribution suprathermique va augmenter sensiblement le flux d’électron, sans forcément changer la densité moyenne, donc augmenter le champ électrique accélérateur."
+       },
+       {
+        "label": "58.",
+        "statement": "Il suffit de dériver la distribution de la norme des vitesses $g_e(v) = 4\\pi v^2 f_e(\\overrightarrow{v})$ et on trouve sans difficulté que $w$ est effectivement la vitesse la plus probable."
+       },
+       {
+        "label": "59.",
+        "statement": "La vitesse quadratique moyenne s’écrit :\n\n$$\\langle v^2\\rangle = 2\\frac{\\mathrm{A}_\\kappa}{(\\kappa w^2)^{3/2}}\\int_0^{\\infty}\\mathrm{d}v\\ \\frac{v^4}{\\left(1 + \\frac{v^2}{\\kappa w^2}\\right)^{1+\\kappa}} .$$\n\nEn appelant I l’intégrale, on montre à l’aide d’une IPP que :\n\n$$\\mathrm{I} = \\frac{3w^2}{2}\\int_0^{\\infty}\\mathrm{d}v\\ \\frac{v^2}{\\left(1 + \\frac{v^2}{\\kappa w^2}\\right)^{\\kappa}} .$$\n\nPuis il suffit de multiplier dans l’intégrale par $(1 + v^2/(\\kappa w^2))$ au numérateur et au dénominateur pour montrer que :\n\n$$\\mathrm{I} = \\frac{3w^2}{2}\\int_0^{\\infty}\\mathrm{d}v\\ \\frac{v^2}{\\left(1 + \\frac{v^2}{\\kappa w^2}\\right)^{1+\\kappa}} + \\frac{3}{2\\kappa}\\mathrm{I} .$$\n\nEnfin, on utilise la normalisation pour intégrer la seule intégrale qui reste, ce qui fournit le résultat demandé. On déduit que nécessairement $\\kappa > 3/2$."
+       },
+       {
+        "label": "60.",
+        "statement": "À partir de la définition de la température cinétique qui est $m_e\\langle v^2\\rangle/2 = 3k_{\\mathrm{B}}\\mathrm{T}_0/2$, on a immédiatement le résultat suivant :\n\n$$\\boxed{w^2 = \\frac{2\\kappa - 3}{\\kappa}\\,\\frac{k_{\\mathrm{B}}\\mathrm{T}_0}{m_e} \\qquad \\Rightarrow \\qquad w \\approx 5{,}5 \\times 10^{6}\\ \\mathrm{m.s^{-1}}\\ .}$$"
+       },
+       {
+        "label": "61.",
+        "statement": "On a :\n\n$$\\mathrm{F}_e(r_0) \\approx \\frac{n_0}{2}\\,\\frac{\\mathrm{A}_\\kappa}{(\\kappa w^2)^{3/2}}\\int_{v_{\\mathrm{lib}}^e}^{\\infty}\\mathrm{d}v\\ \\frac{v^3}{(v^2/\\kappa w^2)^{\\kappa+1}} .$$\n\nD’où\n\n$$\\boxed{\\mathrm{F}_e(r_0) = \\frac{n_0\\mathrm{A}_\\kappa}{4}\\,\\frac{\\kappa^{1/2}}{(\\kappa - 1)}\\,w\\left(\\frac{\\kappa w^2}{v_{\\mathrm{lib}}^{e\\,2}}\\right)^{\\kappa-1}\\ .}$$\n\nOn aurait pu aussi calculer le flux de façon exacte :\n\n$$\\mathrm{F}_e(r_0) = \\frac{n_0}{4\\kappa^{3/2}}\\,w\\mathrm{A}_\\kappa\\left(1 + \\frac{v_{\\mathrm{lib}}^{e\\,2}}{w^2}\\right)\\left(1 + \\frac{v_{\\mathrm{lib}}^{e\\,2}}{\\kappa w^2}\\right)^{-\\kappa} .$$"
+       },
+       {
+        "label": "62.",
+        "statement": "En égalant le flux d’électrons avec le flux de protons qui s’exprime à l’aide de l’équation (7) avec $v_{\\mathrm{lib}}^p = 0$, on obtient :\n\n$$\\frac{v_{\\mathrm{lib}}^{e\\,2}}{w^2} = \\left[\\frac{\\sqrt{\\pi}}{2}\\,\\frac{\\kappa^{\\kappa-1/2}\\mathrm{A}_\\kappa}{\\kappa - 1}\\,\\frac{w}{w_p}\\right]^{1/(\\kappa-1)} = \\left[\\frac{\\sqrt{\\pi}}{2}\\,\\frac{\\kappa^{\\kappa-1/2}\\mathrm{A}_\\kappa}{\\kappa - 1}\\sqrt{\\frac{2\\kappa - 3}{2\\kappa}}\\sqrt{\\frac{m_p}{m_e}}\\right]^{1/(\\kappa-1)}$$\n\nOn obtient le résultat demandé à l’aide de\n\n$$v_{\\mathrm{lib}}^e \\approx \\sqrt{\\frac{2e\\mathrm{V}(r_0)}{m_e}}$$\n\nOn doit aussi utiliser l’expression de $w$ trouvée plus haut et on trouve pour $\\beta_\\kappa$ :\n\n$$\\boxed{\\beta_\\kappa = \\frac{\\sqrt{\\pi}}{2}\\,\\frac{\\kappa^{\\kappa-1/2}\\mathrm{A}_\\kappa}{\\kappa - 1}\\sqrt{\\frac{2\\kappa - 3}{2\\kappa}}\\ .}$$"
+       },
+       {
+        "label": "63.",
+        "statement": "L’expression précédente donne que $\\boxed{\\mathrm{U}_0 = \\dfrac{e\\mathrm{V}(r_0)}{k_{\\mathrm{B}}\\mathrm{T}_0} \\approx 16}$. Avec cette valeur, on voit que le potentiel électrostatique domine dans le bilan d’énergie de la question 55, de telle sorte qu’on peut écrire :\n\n$$\\boxed{v_{\\mathrm{SN}} \\approx \\left(\\frac{2e\\mathrm{V}(r_0)}{m_p}\\right)^{1/2} \\approx 700\\ \\mathrm{km.s^{-1}}\\ .}$$\n\nOn voit donc que modifier la queue de la distribution des vitesses électroniques au niveau de l’exobase suffit à considérablement augmenter la vitesse d’éjection des protons, donc du vent solaire."
+       },
+       {
+        "label": "64.",
+        "statement": "On n’a pas tenu compte du champ magnétique solaire, ni de la rotation du Soleil. Ces deux effets rajoutent des termes dans le bilan d’énergie."
+       }
+      ]
+     },
+     {
+      "id": "s2-3",
+      "title": "2.3 Vent solaire avec champ magnétique : spirale de Parker",
+      "statement": "",
+      "figures": [
+       {
+        "id": "p2-sol-fig1",
+        "caption": "Fig. 1: Spiral de Parker. Image credit : Steve Suess, NASA/MSFC.",
+        "alt": "Illustration en couleur de l’héliosphère : le Soleil au centre d’une sphère (« Termination Shock »), entourée de l’« Heliopause » ; lignes de champ magnétique en spirales (orange près du pôle, jaune-vert dans le plan équatorial) ; légende « Streamlines » et « Magnetic Field Lines » ; mention « S. T. Suess Rev1,18Mar'99 ».",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p2-sol-fig1.png",
+        "width": 1305,
+        "height": 1250,
+        "source": {
+         "page": 12,
+         "pdfRect": [
+          133.29,
+          341.86,
+          446.27,
+          641.61
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ],
+      "parts": [
+       {
+        "label": "65.",
+        "statement": "On a dans le référentiel en rotation (pour $r > r_0$) :\n\n$$\\begin{aligned} v'_r &= v_{\\mathrm{SN}} , \\\\ v'_\\theta &= 0 , \\\\ v'_\\varphi &= -(r - r_0)\\Omega_\\odot\\sin\\theta . \\end{aligned}$$\n\nCes équations s’intègrent car $v_{\\mathrm{SN}}$ est supposée constante. En éliminant le temps $t$, on obtient :\n\n$$\\begin{aligned} \\theta(r) &= \\mathrm{constante} , \\\\ \\varphi(r) &= \\varphi_0 - \\frac{\\Omega_\\odot}{v_{\\mathrm{SN}}}(r - r_0) . \\end{aligned}$$"
+       },
+       {
+        "label": "66.",
+        "statement": "$\\mathrm{div}\\ \\overrightarrow{\\mathrm{B}} = 0$ donne $\\partial_r(r^2\\mathrm{B}_r) = 0$, donc :\n\n$$\\boxed{\\mathrm{B}_r(r) = \\mathrm{B}_0\\left(\\frac{r_0}{r}\\right)^2\\ ,}$$\n\nen remarquant qu’au niveau de l’exobase, le champ magnétique est purement radial."
+       },
+       {
+        "label": "67.",
+        "statement": "Il suffit d’écrire la condition que $\\overrightarrow{\\mathrm{B}}$ est colinéaire à la vitesse, c’est-à-dire $\\mathrm{B}_\\varphi/\\mathrm{B}_r = v'_\\varphi/v'_r$ puis le résultat de la question précédente pour aboutir à :\n\n$$\\boxed{\\overrightarrow{\\mathrm{B}} = \\mathrm{B}_0\\left(\\frac{r_0}{r}\\right)^2\\overrightarrow{e_r} - \\mathrm{B}_0\\left(\\frac{r_0}{r}\\right)^2(r - r_0)\\frac{\\Omega_\\odot\\sin\\theta}{v_{\\mathrm{SN}}}\\,\\overrightarrow{e_\\varphi}\\ .}$$\n\nD’où le résultat pour la norme."
+       },
+       {
+        "label": "68.",
+        "statement": "La forme des lignes de champ est complètement différente, avec une spirale ici (voir Fig. 1). La composante radiale décroit en $1/r^2$ alors que la composante tangentielle décroît en $1/r$. Ce champ magnétique est différent de celui donné par un dipôle magnétique qui donnerait une décroissance en $1/r^3$."
+       },
+       {
+        "label": "69.",
+        "statement": "On obtient, à partir de la valeur du champ magnétique du tableau 1 :\n\n$\\mathrm{B}_\\oplus = 7 \\times 10^{-9}\\ \\mathrm{T}$ à $\\mathrm{D} = 1\\ \\mathrm{UA} \\gg r_0$ et $\\theta = \\pi/2$ ,\n\ndonc\n\n$$\\boxed{\\mathrm{B}_0 \\approx \\left(\\frac{\\mathrm{D}}{r_0}\\right)^2\\frac{\\mathrm{B}_\\oplus}{\\left(1 + \\frac{\\mathrm{D}^2\\Omega_\\odot^2}{v_{\\mathrm{SN}}^2}\\right)^{1/2}} \\approx 8{,}7 \\times 10^{-6}\\ \\mathrm{T}\\ ,}$$\n\nce qui colle qualitativement avec les observations. On trouve un angle de :\n\n$$\\Theta = \\mathrm{Arctan}\\left(\\frac{\\mathrm{D}\\Omega_\\odot}{v_{\\mathrm{SN}}}\\right)^2 \\approx 47^{\\circ} .$$\n\n**Fin du sujet**"
+       }
+      ]
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 9
+    },
+    {
+     "document": "problems",
+     "page": 10
+    },
+    {
+     "document": "problems",
+     "page": 11
+    },
+    {
+     "document": "problems",
+     "page": 12
+    },
+    {
+     "document": "problems",
+     "page": 13
+    },
+    {
+     "document": "problems",
+     "page": 14
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 11
+    },
+    {
+     "document": "solutions",
+     "page": 12
+    },
+    {
+     "document": "solutions",
+     "page": 13
+    }
+   ]
+  }
+ ]
+}

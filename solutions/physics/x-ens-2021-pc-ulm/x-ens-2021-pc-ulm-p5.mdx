@@ -1,0 +1,453 @@
+---
+id: x-ens-2021-pc-ulm-p5
+source: 'X-ENS 2021, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 5. Radiation'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2021/x-ens-2021-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:59:37.678Z'
+verifier: 'mechanical'
+---
+
+*ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2021 — FILIERE PC - Epreuve n° 7 — PHYSIQUE C (U) · 15 април 2021 г.*
+
+<details>
+<summary>Page de garde</summary>
+
+JEUDI 15 AVRIL 2021, 08h00 - 14h00
+
+*Durée : 6 heures*
+
+*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve*
+
+</details>
+
+<details>
+<summary>L’eau dans l’atmosphère</summary>
+
+Ce sujet comprend 22 pages numérotées de 1 à 22.
+
+La présence d’eau dans l’atmosphère joue un rôle majeur dans le climat terrestre. L’eau est en effet le principal gaz à effet de serre de l’atmosphère terrestre. D’autre part, des effets thermiques importants sont associés aux changements de phase de l’eau. Enfin, les nuages modifient significativement l’albédo de l’atmosphère. Dans ce problème, nous étudierons uniquement des conséquences des deux premiers effets, et nous n’étudierons pas explicitement les nuages.
+
+Le but de ce problème est de comprendre le profil vertical de température dans l’atmosphère, ainsi que son évolution avec la modification de la concentration en dioxyde de carbone dans l’atmosphère. Nous utiliserons des modèles très simplifiés, mais qui permettent de comprendre les mécanismes physiques en jeu, ainsi que de déterminer des valeurs numériques approchées.
+
+Nous considérons pour simplifier tout au long de ce sujet que l’eau dans l’atmosphère est uniquement présente sous forme de vapeur et sous forme liquide : la présence de cristaux de glace est négligée.
+
+**Consignes :**
+
+Toutes les réponses doivent être justifiées de manière précise et concise. Il faut citer les lois physiques utilisées. Les réponses aux questions doivent être autant que possible appuyées sur les documents et des applications numériques
+
+Lorsqu’un document est utilisé, il faut citer le numéro du document et expliquer comment l’information est extraite de celui-ci. Pour les textes, il faut mentionner les lignes où se trouvent les informations. Pour les courbes, il faut donner les valeurs lues sur les courbes avant d’utiliser ces valeurs dans les raisonnements.
+
+Il faut définir les notations et les abréviations qui ne le sont pas dans l’énoncé.
+
+Les calculatrices sont strictement interdites. Sauf mention contraire, les applications numériques doivent être effectuées avec 1 chiffre significatif.
+
+**Plan :**
+
+Des données sont fournies en partie 1. Il s’agit de représentations de fonctions utiles (partie 1.1), de données numériques (partie 1.2), et d’indications concernant l’identité thermodynamique (partie 1.3) et le rayonnement thermique (partie 1.4).
+
+La courbe de saturation de l’eau est calculée en partie 2. Des documents utiles pour la suite sont présentés en partie 3. Les profils verticaux de température, pression, concentration sont étudiés en partie 4, en négligeant tout effet radiatif. La partie 5 discute des effets radiatifs, d’abord en négligeant la convection puis en étudiant le couplage entre les effets radiatifs et de convection.
+
+Ces différentes parties ne sont pas indépendantes et il est vivement conseillé de traiter les questions dans l’ordre proposé. Cependant, le début de chacune des parties 4.1, 4.4, 5.1 et 5.2 est indépendant des questions précédentes.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [5.1 Spectres](#s5-1)
+- [5.2 Équilibre radiatif](#s5-2)
+- [5.3 Équilibre radiatif-convectif](#s5-3)
+- [Effet d’un changement de la concentration en gaz à effet de serre](#s5-3b)
+- [5.4 Étude en fonction de la longueur d’onde](#s5-4)
+- [5.5 Modèle numérique](#s5-5)
+
+</nav>
+
+*Dans cette partie, nous étudions l’influence des transferts thermiques radiatifs.*
+
+<ProblemSection id="s5-1">
+
+### 5.1 Spectres
+
+Dans cette partie, nous étudions la forme du spectre d’émission d’un corps noir à la température moyenne actuelle de la surface terrestre, à savoir $T_0 = 288\ \mathrm{K}$, ainsi que le spectre du soleil.
+
+Des indications sur le rayonnement thermique sont données dans la partie 1.4.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '54.6%', '--fig-max': '349px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc-ulm/p5-fig1.png" alt="Graphique « Spectre d’irradiance solaire » : irradiance (W/m²/nm, de 0 à 2,5) en fonction de la longueur d’onde (nm, de 250 à 2500), zones UV, Visible et Infrarouge séparées par des pointillés vers 400 et 700 nm ; maximum d’environ 2 W/m²/nm vers 450–500 nm puis décroissance lente dans l’infrarouge." width="1092" height="825" loading="lazy" decoding="async" />
+<figcaption>Figure 8 – Spectre solaire en haut de l’atmosphère.«UV» : rayonnement ultraviolet. Source : Wikipédia.</figcaption>
+</figure>
+
+**Q32** Donner la valeur numérique de la longueur d’onde pour laquelle l’émission de rayonnement terrestre est maximale.
+
+Donner les bornes du domaine de longueurs d’onde où est émis l’essentiel de l’énergie.
+
+**Q33** Comparer au spectre solaire en haut de l’atmosphère (figure 8) et commenter.
+
+</ProblemSection>
+
+<ProblemSection id="s5-2">
+
+### 5.2 Équilibre radiatif
+
+Dans cette partie, nous négligeons tout effet de convection.
+
+Nous ferons aussi des hypothèses simplificatrices sur les spectres d’absorption et d’émission des gaz. Les spectres réels seront étudiés en partie 5.4.
+
+Nous considérons un rayonnement dirigé vers le haut selon $+\overrightarrow{e}_z$, et dont la longueur d’onde vaut $\lambda$. Le flux énergétique est noté $I_\lambda$. Nous admettons que l’énergie absorbée par la tranche d’atmosphère $[z, z + \mathrm{d}z]$ est $I_\lambda k_\lambda \rho \mathrm{d}z$, où $k_\lambda$ ne dépend que de $\lambda$ et où $\rho$ est la masse volumique du gaz à effet de serre considéré.
+
+Nous définissons une autre variable d’espace $\tau_\lambda$ par $\mathrm{d}\tau_\lambda = k_\lambda \rho(-\mathrm{d}z)$. Il s’agit d’un changement de variables : la tranche d’atmosphère $[z, z + \mathrm{d}z]$ peut être notée $[\tau_\lambda, \tau_\lambda + \mathrm{d}\tau_\lambda]$. La variable $\tau_\lambda$ est adimensionnée et augmente vers le bas (voir figure 9). L’origine $\tau_\lambda = 0$ correspond au «haut de l’atmosphère», c’est-à-dire la hauteur au-dessus de laquelle la masse volumique des gaz présents est telle que les phénomènes radiatifs sont négligeables. Cette hauteur dépend du modèle considéré, mais se trouve toujours à moins de 100 km de la surface. Dans ce sujet, nous ne considérons pas l’absorption ou l’émission de rayonnement par l’ozone.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '46.8%', '--fig-max': '300px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc-ulm/p5-fig2.png" alt="Schéma : surface au niveau 0, axe vertical e_z, tranche entre z et z+dz en pointillés, flèches vers le haut notées I_λ ; à droite, flèche U_λ vers le haut et D_λ vers le bas ; axe τ orienté vers le bas partant de 0 en haut." width="936" height="626" loading="lazy" decoding="async" />
+<figcaption>Figure 9 – Schéma d’une tranche d’atmosphère entre $z$ et $z + \mathrm{d}z$.</figcaption>
+</figure>
+
+**Q34** Dans quel autre contexte rencontre-t-on une expression similaire à $I_\lambda k_\lambda \rho \mathrm{d}z$ pour l’absorption du rayonnement ?
+
+**Q35** Nous admettons que la tranche d’atmosphère émet un rayonnement thermique dans toutes les directions. Le rayonnement émis dans la direction $\overrightarrow{e}_z$ vaut $A_\lambda k_\lambda \rho \mathrm{d}z$ (voir partie 1.4).
+
+En effectuant un bilan sur la tranche d’atmosphère $[z, z + \mathrm{d}z]$ qui tient compte de l’émission de rayonnement thermique et de l’absorption, calculer l’expression de :
+
+$$
+\frac{\mathrm{d}I_\lambda}{\mathrm{d}\tau_\lambda}. \qquad (15)
+$$
+
+Nous considérons à partir de maintenant tout le rayonnement émis vers le haut, c’est-à-dire dont le vecteur de propagation $\overrightarrow{a}$ vérifie $\overrightarrow{a} \cdot \overrightarrow{e}_z > 0$. Nous notons $U_\lambda$ le flux énergétique hémisphérique vers le haut, qui est l’intégrale sur les directions $\overrightarrow{a}$ de termes similaires à $I_\lambda$.
+
+Nous admettons :
+
+$$
+\frac{\mathrm{d}U_\lambda}{\mathrm{d}\tau_\lambda^*} = U_\lambda - B_\lambda, \qquad (16)
+$$
+
+avec $\tau_\lambda^* = \zeta\tau_\lambda$ avec $\zeta \approx 5/3$. Pour simplifier les notations, l’exposant $^*$ ne sera plus utilisé dans les questions suivantes.
+
+**Q36** Expliquer qualitativement pourquoi $\zeta > 1$ en 2 phrases maximum.
+
+**Q37** Nous appelons $D_\lambda$ le flux énergétique vers le bas et nous choisissons la convention $D_\lambda > 0$, avec ce flux vers le bas orienté selon $-\overrightarrow{e}_z$ (voir figure 9)
+
+Donner l’équation pour $D_\lambda$, en s’inspirant de l’équation (16).
+
+**Q38** Nous considérons le rayonnement infrarouge et nous supposons pour simplifier que $\tau_\lambda$ est indépendant de $\lambda$ (la dépendance en longueur d’onde sera discutée en partie 5.4). Nous notons alors $\tau_\lambda = \tau$. Les valeurs intégrées pour les longueurs d’onde supérieures à $5\ \mu\mathrm{m}$ sont notées avec un indice $L$.
+
+Montrer l’égalité suivante :
+
+$$
+\frac{\mathrm{d}(U_L - D_L)}{\mathrm{d}\tau} = (U_L + D_L) - 2B, \qquad (17)
+$$
+
+et donner l’équation vérifiée par :
+
+$$
+\frac{\mathrm{d}(U_L + D_L)}{\mathrm{d}\tau}. \qquad (18)
+$$
+
+**Q39** Nous considérons que l’atmosphère est à l’équilibre radiatif local, c’est-à-dire qu’il n’y a pas d’échauffement ni de refroidissement des tranches d’air liés à l’inhomogénéité du rayonnement infrarouge
+
+Que vaut dans cette hypothèse d’équilibre radiatif local l’expression :
+
+$$
+\frac{\mathrm{d}(U_L - D_L)}{\mathrm{d}z}? \qquad (19)
+$$
+
+**Q40** Nous appelons $U_{Lt} = U_L(\tau = 0)$ la valeur de $U_L$ en haut de l’atmosphère.
+
+Quelle est la valeur de $D_L(\tau = 0)$ ? On pourra utiliser la figure 8.
+
+**Q41** Montrer l’égalité suivante, toujours dans l’hypothèse de l’équilibre radiatif local :
+
+$$
+\frac{\mathrm{d}^2(U_L + D_L)}{\mathrm{d}\tau^2} = 0. \qquad (20)
+$$
+
+En déduire une expression de $D_L$, $U_L$ et $B$ en fonction de $\tau$ et $U_{Lt}$.
+
+**Q42** Nous prenons comme forme pour $\tau$ :
+
+$$
+\tau(z) = \tau_0 \exp(-z/H_a), \qquad (21)
+$$
+
+avec $H_a = 2\ \mathrm{km}$, $\tau_0 = 5$. Il s’agit de paramètres effectifs, une «moyenne» sur les spectres et les espèces chimiques.
+
+Justifier qualitativement la dépendance exponentielle de $\tau$ avec $z$, et l’ordre de grandeur de $H_a$.
+
+**Q43** Montrer que la température $T$ est reliée à $z$ selon l’expression :
+
+$$
+\sigma T^4 = \frac{U_{Lt}}{2}\left(1 + \tau_0 \exp(-z/H_a)\right). \qquad (22)
+$$
+
+La constante solaire, aussi appelée irradiance solaire totale, exprime la quantité d’énergie solaire que recevrait une surface de $1\ \mathrm{m^2}$ située à une distance de 1 au (distance moyenne Terre-Soleil), exposée perpendiculairement aux rayons du Soleil, en l’absence d’atmosphère, pendant 1 seconde. C’est donc la densité de flux énergétique en haut de l’atmosphère.
+
+Pour la Terre elle vaut : $F = 1\,360\ \mathrm{W \cdot m^{-2}}$.
+
+**Q44** La fraction du rayonnement solaire réfléchie par les nuages, l’atmosphère et le sol est appelée albédo $\alpha$. Nous prendrons $\alpha = 0{,}3$.
+
+En utilisant la valeur de la constante solaire, déterminer la valeur numérique de $U_{Lt}$ avec deux chiffres significatifs.
+
+**Q45** Calculer avec deux chiffres significatifs la température en haut de l’atmosphère $T_t$ pour la valeur de $U_{Lt}$ trouvée à la question précédente.
+
+**Q46** Calculer numériquement la température à la surface (remarque : il est normal de trouver une température de surface différente de $T_0 = 288\ \mathrm{K}$ dans cette question). Calculer numériquement le gradient thermique à la surface.
+
+**Q47** Tracer le profil de température en vous servant des questions précédentes.
+
+**Q48** On définit la température d’émission $T_e$ par $\sigma T_e^4 = U_{Lt}$. Calculer $T_e$ en fonction de la température en haut de l’atmosphère, $T_t$, puis calculer numériquement $T_e$ avec deux chiffres significatifs.
+
+Laquelle de ces températures est la plus grande ? Interpréter.
+
+</ProblemSection>
+
+<ProblemSection id="s5-3">
+
+### 5.3 Équilibre radiatif-convectif
+
+Dans cette partie, nous continuons à prendre en compte les paramètres effectifs de la partie précédente (partie 5.2) pour les effets radiatifs, et en particulier l’expression de $\tau(z)$ de l’équation (21). Nous continuons également à considérer un albédo constant $\alpha = 0{,}3$.
+
+À la différence de la partie précédente, nous ne négligeons plus la convection.
+
+**Q49** Nous considérons que l’atmosphère est saturée en eau. Est-ce que le profil de la question **Q47** est stable ?
+
+**Q50** Estimer à partir des documents un temps caractéristique lié à la convection.
+
+**Q51** Quel est d’après vous l’ordre de grandeur de la baisse typique de la température pendant une nuit claire ?
+
+En comparant cette valeur à la température $T_0$, déduire un temps de relaxation typique lié aux phénomènes radiatifs dans l’atmosphère terrestre.
+
+À partir de cette question, nous considérons que le profil de température correspond à la limite de la stabilité pour une atmosphère saturée, de la surface ($z = 0$) jusqu’à la tropopause ($z = H_t$). Pour simplifier, nous considérerons que le gradient thermique $\Gamma = -\mathrm{d}T/\mathrm{d}z$ est constant et vaut $\Gamma = 6{,}5\ \mathrm{K \cdot km^{-1}}$. La température est constante au-delà de $H_t$ dans ce modèle, ce qui signifie que nous ne modélisons pas l’augmentation de la température due à l’absorption des ultraviolets par l’ozone de la stratosphère.
+
+D’autre part, nous considérons simultanément que l’atmosphère est globalement à l’équilibre radiatif, c’est-à-dire que la puissance associée au rayonnement sortant de l’atmosphère est égale à la puissance reçue du soleil. Dans ce modèle, la hauteur de la tropopause $H_t$ est le degré de liberté qui permet de satisfaire cette contrainte.
+
+**Q52** Justifier que nous prenons comme gradient thermique le gradient correspondant à la convection (humide) plutôt que le profil radiatif.
+
+Nous considérons que les équations sur $U_L$, $D_L$, $B$ et $\tau(z)$ vues dans la partie précédente restent valables, à l’exception de l’équation d’équilibre radiatif local (question **Q39**). Cependant, les calculs numériques montrent que la valeur de $B/U_L$ est proche de celle correspondant à l’équilibre radiatif local, et le tracé de $B/U_L$ montre que cette quantité vaut en première approximation :
+
+$$
+\frac{B}{U_L} = 1 - \frac{z}{2H_t}. \qquad (23)
+$$
+
+**Q53** Montrer que l’équation (23) est cohérente avec la valeur de $B/U_L$ en $z = 0$ et en $z = H_t$.
+
+**Q54** Calculer en fonction de $z$ et de $H_t$ l’expression suivante :
+
+$$
+\frac{\mathrm{d}\ln U_L}{\mathrm{d}\tau}. \qquad (24)
+$$
+
+**Q55** En déduire une expression de :
+
+$$
+\frac{\mathrm{d}\ln U_L}{\mathrm{d}z}. \qquad (25)
+$$
+
+**Q56** Montrer l’égalité approchée suivante, en supposant $H_a \ll H_t$ :
+
+$$
+\ln\left(\frac{U_L(H_t)}{U_L(0)}\right) \approx -\frac{\tau_0 H_a}{2H_t}. \qquad (26)
+$$
+
+**Q57** D’autre part, exprimer $U_L(H_t)$ en fonction notamment de $T_t$.
+
+**Q58** En utilisant une condition d’équilibre thermique à la surface, montrer l’égalité suivante :
+
+$$
+\ln\left(\frac{U_L(H_t)}{U_L(0)}\right) \approx \ln(2) - \frac{4\Gamma H_t}{T_t}, \qquad (27)
+$$
+
+où $\Gamma$ est le gradient thermique, supposé constant ($\Gamma = 6{,}5\ \mathrm{K \cdot km^{-1}}$).
+
+**Q59** Déduire des questions précédentes :
+
+$$
+H_t = \frac{1}{16\Gamma}\left(CT_t + \sqrt{C^2 T_t^2 + 32\Gamma\tau_0 H_a T_t}\right). \qquad (28)
+$$
+
+avec $C = 2\ln(2) = 1{,}39$
+
+**Q60** En déduire la valeur numérique de la hauteur de la tropopause $H_t$ dans ce modèle. Indications : $16 \times 6{,}5 = 104$ et $(2\ln(2))^2 = 1{,}9$. La valeur trouvée est-elle en accord avec les observations dans l’atmosphère ?
+
+</ProblemSection>
+
+<ProblemSection id="s5-3b">
+
+### Effet d’un changement de la concentration en gaz à effet de serre
+
+Dans cette partie, nous supposons toujours que $\Gamma = 6{,}5\ \mathrm{K \cdot km^{-1}}$ reste constant.
+
+**Q61** Les modèles numériques montrent que les émissions de vapeur d’eau d’origine humaine (irrigation, combustion, tours de refroidissement des centrales thermiques, ...) n’affectent pas le climat, au contraire des émissions de CO$_2$.
+
+Justifier brièvement cette propriété.
+
+**Q62** Justifier qualitativement que $H_t$ augmente si la concentration en CO$_2$ augmente.
+
+Tracer les profils verticaux de température pour la concentration de CO$_2$ initiale et une concentration plus élevée. On indiquera $H_t$ ainsi que $H_e$, l’altitude qui correspond à la hauteur d’émission $T_e$.
+
+Quelle est la conséquence sur la température au sol ?
+
+</ProblemSection>
+
+<ProblemSection id="s5-4">
+
+### 5.4 Étude en fonction de la longueur d’onde
+
+Dans les parties précédentes, nous avons considéré que l’absorption était la même dans tout le domaine infrarouge. Nous discutons les écarts (importants) à cette hypothèse dans cette partie.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '74.8%', '--fig-max': '479px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc-ulm/p5-fig3.png" alt="Radiance (W m^-2 sr^-1/cm^-1, de 0 à 0,20) en fonction du nombre d’onde (cm^-1, de 0 à 2000), avec un second axe en longueur d’onde (µm : ∞, 50, 20, 12.5, 10, 8, 5). Courbes de corps noir à 175, 200, 225, 250, 275 et 300 K et spectre mesuré, avec un creux profond vers 600–750 cm^-1 (proche de la courbe à 225 K) et un autre vers 1000–1050 cm^-1." width="1497" height="825" loading="lazy" decoding="async" />
+<figcaption>Figure 10 – Courbe de la radiance en haut de l’atmosphère, en fonction du nombre d’onde et de la longueur d’onde, mesuré par le satellite Nimbus 4. Des courbes d’émission du corps noir à différentes températures sont superposées à cette courbe. Source : [1].</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.7%', '--fig-max': '363px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc-ulm/p5-fig4.png" alt="Coefficient d’absorption (m²kg^-1, échelle log de 10^-6 à 10^6) en fonction du nombre d’onde (cm^-1, de 0 à 3000), axe supérieur en longueur d’onde (µm : 100, 25, 15, 10, 7.5, 6.3, 5, 4.3, 3.5). H2O en noir, CO2 en gris avec des pics vers 15 µm (environ 667 cm^-1) et 4,3 µm (environ 2350 cm^-1)." width="1135" height="979" loading="lazy" decoding="async" />
+<figcaption>Figure 11 – Coefficient d’absorption pour l’eau (en noir) et pour le dioxyde de carbone (en gris). Ce coefficient d’absorption est noté $k_\lambda$ dans ce sujet. Source : [6] et base de données HITRAN2004.</figcaption>
+</figure>
+
+**Q63** À partir notamment de la figure 11, déterminer (approximativement) les valeurs de $\tau_\lambda$ sur toute la hauteur de l’atmosphère, pour $\lambda_1 = 15\ \mu\mathrm{m}$ (soit environ $650\ \mathrm{cm^{-1}}$) et pour $\lambda_2 = 11\ \mu\mathrm{m}$ (soit environ $900\ \mathrm{cm^{-1}}$). Nous prenons comme valeur de concentration en CO$_2$ la valeur 300 ppm, soit une concentration en masse d’environ $450 \times 10^{-6}$ (450 mg de CO$_2$ par kg d’air). Cette concentration est proche de la concentration préindustrielle.
+
+Commenter les valeurs obtenues pour $\tau_\lambda$.
+
+**Q64** Estimer l’altitude où est émise le rayonnement pour ces deux longueurs d’onde, à partir notamment de la figure 10. Faire le lien avec la question précédente.
+
+**Q65** Nous étudions qualitativement l’effet d’un doublement de la concentration en CO$_2$ dans l’atmosphère, c’est-à-dire le passage de 300 ppm à 600 ppm. Nous considérons dans cette question que la concentration massique en eau est constante lorsque la concentration en CO$_2$ change.
+
+Déterminer 3 types de comportements suivant la longueur d’onde. À quel type de comportement correspond le raisonnement de la question **Q62** ?
+
+Commenter le rôle de ces 3 zones de longueurs d’onde dans l’augmentation de la température au sol.
+
+</ProblemSection>
+
+<ProblemSection id="s5-5">
+
+### 5.5 Modèle numérique
+
+Comme les spectres d’absorption de l’eau et du CO$_2$ ont une forme compliquée, il n’est pas possible d’obtenir de manière analytique la variation du profil de température lorsque la concentration en CO$_2$ change. Il est par contre possible d’obtenir cette variation en utilisant des simulations numériques à une dimension d’espace.
+
+Dans cette partie, nous présentons quelques éléments du modèle numérique de S. Manabe et R. Wetherald (1967) [4]. Ces simulations ont permis d’obtenir la variation du profil de température lorsque la concentration CO$_2$ passe de 300 ppm à 600 ppm. La variation de température au sol, d’environ 2,4 K, est dans la gamme 1,5 − 4,5 K considérée actuellement comme la plus probable à partir des reconstitutions du climat passé et de simulations 3D couplant l’atmosphère et l’océan notamment [11].
+
+Ce modèle de S. Manabe et R. Wetherald prend en compte l’absorption (faible) du rayonnement solaire par l’atmosphère, modélise plusieurs types de nuages, et considère 3 gaz à effet de serre : l’eau, le CO$_2$ et l’ozone. Pour simplifier, nous ne discuterons pas ici cette absorption du rayonnement solaire, les nuages ne sont pris en compte que par leur contribution à l’albédo. L’ozone, qui change peu le profil de température dans la troposphère ne sera pas considéré, et nous ne discuterons pas la gestion de l’existence de gammes de longueurs d’onde où l’eau et le CO$_2$ absorbent tous deux de manière significative.
+
+Nous notons $T_\lambda$ la transmittance monochromatique définie par : $T_\lambda = \exp(-\tau)$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.7%', '--fig-max': '363px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2021-pc-ulm/p5-fig5.png" alt="Émissivité ε (%) de 0 à 100 en fonction de u (g cm^-2, échelle log de 10^-5 à 10^2), panneau (a) : courbe continue pour −40 °C et courbe en tirets pour 20 °C, presque confondues, croissant d’environ 2 % à 10^-5 jusqu’à 100 % à 10^2." width="1135" height="713" loading="lazy" decoding="async" />
+<figcaption>Figure 12 – Émissivité en fonction de $u$ pour l’eau. Source : [1].</figcaption>
+</figure>
+
+**Q66** En utilisant notamment le résultat de la question **Q37**, et en multipliant par $\exp(\tau)$, montrer que :
+
+$$
+D_\lambda = \int_0^{\tau} B_\lambda(\tau')\frac{\mathrm{d}}{\mathrm{d}\tau'}T_\lambda(\tau - \tau')\,\mathrm{d}\tau', \qquad (29)
+$$
+
+où pour simplifier nous notons $\tau$ la variable notée $\tau_\lambda$ à la question **Q37**.
+
+Montrer de même que :
+
+$$
+U_\lambda = B_\lambda(\tau_0)T_\lambda(\tau_0 - \tau) - \int_{\tau}^{\tau_0} B_\lambda(\tau')\frac{\mathrm{d}}{\mathrm{d}\tau'}T_\lambda(\tau' - \tau)\,\mathrm{d}\tau', \qquad (30)
+$$
+
+où $\tau_0$ est la valeur de $\tau$ en $z = 0$ (cette valeur dépend de $\lambda$, mais comme mentionné plus haut nous omettons cette précision pour simplifier les notations). Nous supposerons que la surface terrestre se comporte comme un corps noir.
+
+**Q67** Nous introduisons la coordonnée $u_v$ (pour l’eau) définie par :
+
+$$
+u_v = \int_0^{z} \rho_v(z')\,\mathrm{d}z' \qquad (31)
+$$
+
+où $\rho_v$ est la masse volumique de vapeur d’eau. Nous notons $u_t$ la valeur en haut de l’atmosphère.
+
+Comme à la question **Q38**, nous notons $D_L$ la valeur de $D_\lambda$ intégrée sur tout le spectre infrarouge. Au contraire de la question **Q38**, nous prenons maintenant en compte le fait que $\tau$ dépend de $\lambda$.
+
+Montrer que :
+
+$$
+D_L = \int_{\lambda^*}^{+\infty}\int_{u_t}^{u} B_\lambda(T(u'))\frac{\mathrm{d}}{\mathrm{d}u'}T_\lambda(u' - u)\,\mathrm{d}u'\,\mathrm{d}\lambda, \qquad (32)
+$$
+
+où pour simplifier nous notons $u$ au lieu de $u_v$, et où $\lambda^* = 5\ \mu\mathrm{m}$. Remarque sur les notations : ici $T(u)$ désigne la température absolue à la hauteur repérée par $u$ et $T_\lambda$ la transmittance monochromatique.
+
+Calculer de même $U_L$.
+
+**Q68** Nous introduisons l’émissivité globale isotherme $\epsilon(u, T)$ par :
+
+$$
+\epsilon(u, T) = \int_{\lambda^*}^{+\infty} B_\lambda(T)[1 - T_\lambda(u)]\frac{\mathrm{d}\lambda}{\sigma T^4}. \qquad (33)
+$$
+
+Exprimer $U_L$ et $D_L$ en fonction de $\epsilon(u, T)$. Les expressions obtenues ne devront pas faire apparaître $T_\lambda$.
+
+Quel est l’intérêt d’introduire la variable $u$ ?
+
+**Q69** L’émissivité pour l’eau est donnée en figure 12. Commenter brièvement cette courbe.
+
+**Q70** Exprimer la dérivée particulaire $\mathrm{d}T/\mathrm{d}t$ en fonction de dérivées partielles.
+
+Nous considérons une atmosphère saturée en eau. En effectuant un bilan d’énergie, montrer :
+
+$$
+\rho c_p\frac{\partial T}{\partial t} = \rho c_p w(\Gamma - \Gamma_s) + \frac{\partial(D_L - U_L)}{\partial z}, \qquad (34)
+$$
+
+avec $\Gamma = \partial T/\partial z$ et où $w = \frac{\mathrm{d}z}{\mathrm{d}t}$ est la vitesse de la tranche de fluide. Il peut être utile de s’inspirer de la question **Q22**.
+
+**Q71** Que vaut $\partial T/\partial t$ dans les zones où il n’y a pas de convection ?
+
+Dans les zones où se produit de la convection, la méthode consiste à imposer $\Gamma = \Gamma_s$, tout en conservant globalement l’énergie. La zone où se produit la convection est en contact avec la surface. Écrire l’équation de conservation de l’énergie globale.
+
+**Q72** La dimension d’espace (selon $z$) est discrétisée en 18 niveaux notés par un exposant $n$ ($n \in [1, 18]$). Le temps discrétisé est noté par un indice $i$. La condition initiale est une température constante selon $z$. Nous considérons que le profil de concentration des gaz à effet de serre est constant en temps dans cette question, mais qu’il dépend de $z$.
+
+Décrire en moins d’une page les principales étapes d’un algorithme en temps qui converge vers le profil de température à l’équilibre.
+
+**Q73** En fait, les simulations numériques 3D montrent qu’il est plus réaliste de considérer que c’est l’humidité relative qui est constante, plutôt que la concentration en vapeur d’eau. Justifier qualitativement cette affirmation à partir de la figure 5.
+
+**Q74** S. Manabe et R. Wetherald [4] trouvent une augmentation de la température de surface de 1,33 K pour une doublement de la concentration en CO$_2$ en considérant que la concentration massique en vapeur d’eau est constante, et de 2,36 K sous l’hypothèse plus réaliste que l’humidité relative est constante.
+
+Expliquer qualitativement cette différence.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+Le corrigé officiel n’est pas disponible dans l’archive.
+</Warning>
+
+<details>
+<summary>Références</summary>
+
+[1] K. N. Liou, *An Introduction to Atmospheric Radiation*, Academic Press (2002)
+
+[2] Geoffrey K. Vallis, *Atmospheric and Oceanic Fluid Dynamics*, Cambridge University Press (2017)
+
+[3] Bernard Diu, Claudine Guthmann, Bernard Roulet et Danielle Lederer, *Thermodynamique*, Hermann (2007)
+
+[4] Syukuro Manabe and Richard T. Wetherald, *Thermal Equilibrium of the Atmosphere with a Given Distribution of Relative Humidity*, Journal of the Atmospheric Sciences, volume 24, no. 3, pages 241–259 (1967)
+
+[5] Jean-Louis Dufresne et Jacques Treiner, *L’effet de serre atmosphérique : plus subtil qu’on ne le croit !*, Bulletin de l’Union des Physiciens, volume 105, pages 821–840 (2011)
+
+[6] Wenyi Zhong and Joanna D. Haigh, *The greenhouse effect and carbon dioxide*, Weather, volume 68, no. 4, pages 100–105 (2013)
+
+[7] Stephen E. Schwartz, *Ressource Letter GECC-1 : The Greenhouse Effect and Climate Change : Earth’s Natural Greenhouse Effect*, American Journal of Physics, volume 86(8), pages 565–576 (2018)
+
+[8] Stephen E. Schwartz, *Ressource Letter GECC-2 : The Greenhouse Effect and Climate Change : The intensified Greenhouse Effect*, American Journal of Physics, volume 86(9), pages 645–656 (2018)
+
+[9] David Archer, *Global Warming : Understanding the Forecast*, John Wiley & Sons
+
+[10] M. Diallo, B. Legras, E. Ray, A. Engel, and J. A. Añel, *Global distribution of* CO$_2$ *in the upper troposphere and stratosphere*, Atmosopheric Chemistry and Physics, volume 17, pages 3861–3878 (2017)
+
+[11] Changements climatiques 2014 : Rapport de synthèse. Contribution des Groupes de travail I, II et III au cinquième Rapport d’évaluation du Groupe d’experts intergouvernemental sur l’évolution du climat [Sous la direction de l’équipe de rédaction principale, R.K. Pachauri et L.A. Meyer]. GIEC, Genève, Suisse `https://www.ipcc.ch/site/assets/uploads/2018/02/SYR_AR5_FINAL_full_fr.pdf`
+
+Fin du sujet
+
+</details>
+
+---
+
+Оригинал в Архива: [PC_2021_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2021_ulm.pdf#page=14)

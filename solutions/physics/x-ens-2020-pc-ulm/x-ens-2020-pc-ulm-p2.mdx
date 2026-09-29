@@ -1,0 +1,233 @@
+---
+id: x-ens-2020-pc-ulm-p2
+source: 'X-ENS 2020, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 2. Deuxième partie — Galaxies et matière noire'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2020/x-ens-2020-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:58:48.177Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE NORMALE SUPÉRIEURE — CONCOURS D’ADMISSION 2020 — FILIÈRE PC — COMPOSITION DE PHYSIQUE – C – (U) — Gravitation et secteur sombre de l’Univers · 23 април 2020 г.*
+
+<details>
+<summary>Consignes</summary>
+
+- L’usage de calculatrices n’est pas autorisé. Les applications numériques seront effectuées avec un chiffre significatif.
+- Le sujet comprend 15 pages numérotées de 1 à 15.
+- Dans le cas où un(e) candidat(e) repère ce qui lui semble être une erreur d’énoncé, il (elle) le signale lisiblement sur sa copie, propose la correction et poursuit l’épreuve en conséquence.
+
+</details>
+
+<details>
+<summary>Gravitation et secteur sombre de l’Univers</summary>
+
+Cette épreuve propose d’étudier quelques sujets liés à l’interaction gravitationnelle. Cette interaction est traitée dans un cadre newtonien dans les deux premières parties, puis dans le cadre de la relativité générale.
+
+Alors que la première partie traite de considérations générales sur la gravitation, tout particulièrement autour du principe d’équivalence, les parties suivantes se focalisent sur la matière et l’énergie noires, dont l’explication complète pose encore problème aux physiciens. Ces deux dernières parties se concentrent sur les principales observations qui ont amené à postuler l’existence de ce secteur sombre de l’Univers.
+
+***Ce sujet comporte trois parties largement indépendantes. Elles ont cependant été pensées pour être effectuées dans l’ordre, et les candidats sont encouragés à procéder ainsi.***
+
+</details>
+
+<details>
+<summary>Formulaire</summary>
+
+**Constantes fondamentales**
+
+- Constante de la gravitation $G = 6{,}67 \times 10^{-11}\ \mathrm{m^3 \cdot kg^{-1} \cdot s^{-2}}$
+- Vitesse de la lumière $c = 3{,}00 \times 10^{8}\ \mathrm{m \cdot s^{-1}}$
+- Constante de Boltzmann $k_B = 1{,}38 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$
+- Constante de Stefan $^{1}$ $\sigma = 5{,}7 \times 10^{-8}\ \mathrm{W \cdot m^{-2} \cdot K^{-4}}$
+
+**Caractéristiques du Soleil et de la Lune**
+
+- Masse du Soleil $M_\odot = 2{,}0 \times 10^{30}\ \mathrm{kg}$
+- Rayon du Soleil $R_\odot = 700\,000\ \mathrm{km}$
+- Température de surface $T_{\mathrm{surf}} = 5750\ \mathrm{K}$
+- Distance Terre-Soleil $D_{T-S} = 150 \times 10^{6}\ \mathrm{km}$
+- Masse de la Lune $M_L = 7{,}35 \times 10^{22}\ \mathrm{kg}$
+- Rayon de la Lune $R_L = 1740\ \mathrm{km}$
+
+**Analyse vectorielle et intégrales utiles**
+
+- Divergence en coordonnées cylindriques $(r, \theta, z)$ :
+
+$$
+\vec{\nabla} \cdot \vec{A} = \frac{1}{r}\frac{\partial (rA_r)}{\partial r} + \frac{1}{r}\frac{\partial A_\theta}{\partial \theta} + \frac{\partial A_z}{\partial z} \qquad (1)
+$$
+
+- Intégrale Gaussienne :
+
+$$
+\int_{-\infty}^{+\infty} \mathrm{e}^{-\alpha\, x^2}\mathrm{d}x = \sqrt{\frac{\pi}{\alpha}} \qquad (2)
+$$
+
+- Une intégrale utile :
+
+$$
+\int_0^1 \frac{\mathrm{d}x}{\sqrt{\frac{1}{x} - 1}} = \frac{\pi}{2} \qquad (3)
+$$
+
+**Graphes des fonctions $x \mapsto \exp(-x)$ et $x \mapsto \ln(x)$** (voir la figure « Graphes des fonctions » de la première partie)
+
+$^{1}$ On rappelle que la loi de Stefan s’écrit $\varphi(T) = \sigma T^4$, où $\varphi$ est la densité surfacique de flux émis par un corps noir à la température $T$.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1 Généralités](#p2-s1)
+- [2 Équation d’équilibre radial](#p2-s2)
+- [3 Distribution de matière visible dans la Voie lactée](#p2-s3)
+- [4 Halo de matière noire](#p2-s4)
+- [5 Distribution de densité perpendiculaire au disque](#p2-s5)
+
+</nav>
+
+
+
+<ProblemSection id="p2-s1">
+
+### 1 Généralités
+
+Notre Galaxie, la Voie lactée, est un système auto-gravitant dont la partie la plus visible est un disque d’étoiles en rotation. Ses dimensions sont généralement indiquées en parsec (pc), grandeur qui a été initialement définie comme la distance à laquelle le segment Terre-Soleil est vu sous un angle d’une seconde d’arc. La Voie lactée est une galaxie spirale qui fait environ 20 kpc de rayon et de l’ordre de 300 pc d’épaisseur. Elle contient de 200 à 400 milliards d’étoiles, dont on pourra identifier les propriétés à celles du Soleil. La densité d’étoiles dans la Galaxie est suffisamment faible pour qu’on puisse largement négliger toute possibilité de chocs entre celles-ci.
+
+**26** Donner la valeur en mètre d’un parsec. On rappelle qu’une minute d’arc correspond à un $60^{\text{ème}}$ de degré, et qu’une seconde d’arc correspond un $60^{\text{ème}}$ de minute d’arc.
+
+**27** En supposant qu’on peut considérer seulement l’émission thermique des étoiles, donner un ordre de grandeur de la puissance totale émise sous forme de rayonnement électromagnétique par la Galaxie.
+
+</ProblemSection>
+
+<ProblemSection id="p2-s2">
+
+### 2 Équation d’équilibre radial
+
+On peut décomposer le mouvement des étoiles de la Voie lactée en un mouvement de rotation d’ensemble sur son plan galactique, auquel s’additionne une petite dispersion de vitesse. On se placera par la suite dans un système de coordonnées cylindriques $(r, \theta, z)$ où l’axe $z$ est aligné avec l’axe de rotation de la Galaxie. On séparera le mouvement d’ensemble du disque, qui est l’objet des parties 2 à 4, et le mouvement particulier des étoiles qui ne sera étudié que perpendiculairement au disque, ce qui est l’objet de la partie 5. On suppose dans toute la suite que la Galaxie est axisymétrique vis-à-vis de son axe de rotation, et que son mouvement d’ensemble de rotation est stationnaire et peut être étudié indépendamment de la coordonnée $z$. On utilisera également le rayon sphérique donné par $\tilde{r} = \sqrt{r^2 + z^2}$.
+
+**28** En supposant que les trajectoires des étoiles qui suivent le mouvement d’ensemble du disque sont des cercles contenus dans des plans de $z$ constant, expliquer pourquoi ce mouvement d’ensemble est entièrement décrit par la donnée de sa vitesse angulaire de rotation $\dot{\theta}(r)$.
+
+**29** Plutôt que de travailler avec $\dot{\theta}(r)$, on préférera introduire la vitesse orthoradiale $v_\theta$, composante de la vitesse sur $\vec{e}_\theta$. Obtenir que la dynamique sur le plan $(r, \theta)$ d’une étoile suivant le mouvement d’ensemble, et qui est soumise uniquement à l’interaction gravitationnelle, est entièrement donnée par l’équation d’équilibre radial :
+
+$$
+-\frac{v_\theta^2(r)}{r} = K_r(r), \qquad (6)
+$$
+
+où $K_r$ est le champ gravitationnel projeté sur la direction $\vec{e}_r$. Cette équation sera utilisée dans les trois parties suivantes.
+
+</ProblemSection>
+
+<ProblemSection id="p2-s3">
+
+### 3 Distribution de matière visible dans la Voie lactée
+
+On commence par considérer un modèle simplifié de galaxie à symétrie sphérique, et on étudie son mouvement d’ensemble de rotation dans son plan équatorial (vis-à-vis de son axe de rotation) en coordonnées polaires $(r, \theta)$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '659px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc-ulm/p2-fig1.png" alt="Deux graphes V_c (km s⁻¹) en fonction de R (kpc). À gauche (NGC 3198, R de 0 à 38 kpc) : la vitesse monte rapidement jusqu’à environ 150 km/s vers 5 kpc, culmine vers 160 km/s à 13 kpc puis reste à peu près constante ; légende THINGS (2008), Begeman (1987), Sicking (1997). À droite (NGC 2403, R de 0 à 19 kpc) : montée jusqu’à environ 125 km/s vers 5 kpc puis plateau vers 130–140 km/s ; légende THINGS (2008), Begeman (1987), Sicking (1997), Fraternali et al (2002)." width="2059" height="1057" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – Courbes de rotation de galaxies en fonction de la distance à leur centre [$v_\theta = f(r)$], observées pour les galaxies NGC 3198 (gauche) et NGC 2403 (droite). On remarque que les résultats sont très similaires.</figcaption>
+</figure>
+
+**30** Utilisant l’équation d’équilibre radial, et en négligeant tout mouvement sur $\vec{e}_z$, obtenir une équation reliant $v_\theta(r)$ sur ce plan équatorial à la masse $M_{\mathrm{int}}(r)$ contenue dans la boule de rayon $r$ centrée en $r = 0$.
+
+**31** On suppose à présent que la Galaxie est une boule homogène de rayon $R$ et de densité $\rho_0$. Calculer $v_\theta(r)$ sur son plan équatorial pour $r \lt R$ et $r \gt R$, et rassembler ces résultats dans une courbe.
+
+En pratique, la matière visible de la Voie lactée est contenue dans son bulbe central et dans son disque, dont les densités de matière peuvent être décrites par les deux fonctions suivantes :
+
+$$
+\rho_b(\tilde{r}) = \frac{\rho_{b,0}}{(1 + \tilde{r}/R_b)^2}\exp\left[-\left(\frac{\tilde{r}}{R_{\mathrm{cut}}}\right)^2\right], \quad \text{et} \quad \rho_d(r, z) = \frac{\Sigma_{d,0}}{2z_d}\exp\left(-\frac{|z|}{z_d} - \frac{r}{R_d}\right), \qquad (7)
+$$
+
+où $\tilde{r}$ est le rayon sphérique défini au début de la sous-partie précédente. On prendra comme valeurs numériques $R_b = 75$ pc, $R_{\mathrm{cut}} = 2$ kpc, $z_d = 300$ pc, et $R_d = 3$ kpc.
+
+**32** Représenter sur un schéma le bulbe et le disque galactique, dont on fera apparaître les dimensions caractéristiques. Aucun calcul précis n’est demandé.
+
+**33** Quelle est la masse totale $M_d$ du disque galactique (la contribution du bulbe n’est pas demandée) ? On calculera sa valeur numérique exprimée en masses solaires $M_\odot$, en prenant $\Sigma_{d,0} = 750\ M_\odot \cdot \mathrm{pc}^{-2}$.
+
+**34** Donner une valeur approximative du rayon $R_{\mathrm{vis}}$ à l’intérieur duquel presque toute la matière visible de la Galaxie est contenue. Si on suppose que les résultats obtenus en symétrie sphérique sont valides au-delà de ce rayon, quel est le comportement de $v_\theta(r)$ dans le plan galactique ? Préciser à quoi correspond le pré-facteur que ce comportement fait apparaître.
+
+**35** La figure 2 donne deux exemples de courbes de rotation pour des galaxies spirales similaires à la nôtre. Ces courbes représentent la vitesse de rotation en fonction de la distance au centre de la galaxie. Vous semblent-elles compatibles avec les résultats obtenus aux questions précédentes ?
+
+</ProblemSection>
+
+<ProblemSection id="p2-s4">
+
+### 4 Halo de matière noire
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.3%', '--fig-max': '335px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc-ulm/p2-fig2.png" alt="Graphe de f(x) pour x de 0,0 à 5,0 (axe vertical de 0,00 à 0,48) : la courbe rouge croît rapidement depuis 0, atteint un maximum d’environ 0,465 vers x ≈ 2,2 puis décroît lentement jusqu’à environ 0,44 en x = 5." width="1048" height="955" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Courbe de la fonction $f(x) = \sqrt{\frac{\ln(1+x)}{x} - \frac{1}{1+x}}$.</figcaption>
+</figure>
+
+**36** Expliquer pourquoi la présence d’un halo galactique de matière dite *noire* pourrait permettre d’expliquer les courbes de la figure 2. On précisera l’utilisation de l’adjectif *noir*, ainsi que la répartition approximative de cette matière dans ces galaxies qui pourrait expliquer ces courbes (aucun calcul détaillé n’est attendu à ce stade).
+
+**37** Un premier modèle pour décrire la répartition de masse du halo de matière noire est le modèle de Navarro-Frenk-White, qui introduit dans un cadre de symétrie sphérique la densité de masse suivante :
+
+$$
+\rho_h(\tilde{r}) = \frac{\rho_{h,0}}{\frac{\tilde{r}}{R_h}\left(1 + \frac{\tilde{r}}{R_h}\right)^2}, \qquad (8)
+$$
+
+où $\rho_{h,0}$ et $R_h$ sont des constantes qui dépendent de la galaxie étudiée, et où $\tilde{r}$ est le rayon sphérique défini précédemment. Cette densité de matière vous semble-t-elle physiquement valide dans les limites $\tilde{r} \to 0$ et $\tilde{r} \to \infty$ ?
+
+**38** En utilisant les résultats de la figure 3, expliquer pourquoi le modèle de Navarro-Frenk-White permet de retrouver l’allure générale des courbes de rotations des galaxies NGC 3198 et NGC 2403 données dans la figure 2. En déduire une valeur approximative pour le rayon $R_h$ de la galaxie NGC 3198, décrite dans la courbe de gauche de cette figure.
+
+**39** Pour éviter que la masse totale du halo de matière noire soit infinie, on pose généralement que la densité de matière noire $\rho_h$ tombe brutalement à zéro pour un rayon $r = \beta R_h$, où le facteur $\beta$ varie d’une galaxie à l’autre. Pour la Voie lactée, on a $\rho_{h,0} = 0{,}012\ M_\odot \cdot \mathrm{pc}^{-3}$, $R_h = 18$ kpc, et $\beta \simeq 10$. En déduire la masse totale $M_h$ du halo de matière noire exprimée en masse solaire, et la comparer à la masse du disque galactique. Commenter.
+
+**40** Comparer également les ordres de grandeur des densités de matières visible et noire dans le système solaire, sachant que le Soleil se situe dans le disque galactique à une distance de l’ordre de 8 kpc du centre galactique. Conclure sur la prédominance de matière noire dans l’environnement solaire proche, dans le cadre du modèle de Navarro-Frenk-White.
+
+</ProblemSection>
+
+<ProblemSection id="p2-s5">
+
+### 5 Distribution de densité perpendiculaire au disque
+
+On s’intéresse dans cette partie à la détermination de la densité massique de matière noire au niveau du disque galactique. Celle-ci pourrait en effet être corrélée à la densité de matière lumineuse, et y être donc plus élevée sur le disque que dans le modèle à symétrie sphérique de Navarro-Frenk-White. C’est l’observation du déplacement des étoiles perpendiculairement au disque de la Galaxie qui permet d’avoir des informations sur la distribution locale de matière. Ce déplacement se superpose au mouvement d’ensemble de rotation, et on suppose qu’on peut étudier ces deux mouvements indépendamment. Comme dans les parties précédentes, on note $z$ la direction perpendiculaire au plan galactique, et on suppose que la Galaxie est approximativement axisymétrique. On se place également en coordonnées cylindriques $(r, \theta, z)$ d’origine le centre de la Voie lactée.
+
+**41** On se place dans le disque galactique. En utilisant les résultats précédents, montrer que la distribution totale de matière (visible et noire) vérifie :
+
+$$
+\rho\left(\vec{r}\right) = -\frac{1}{4\pi G}\left(\frac{\partial K_z}{\partial z} - \frac{1}{r}\frac{\partial {v_\theta}^2}{\partial r}\right), \qquad (9)
+$$
+
+où $\rho$ est la densité de matière et $v_\theta$ la vitesse de rotation d’ensemble au rayon $r$.
+
+**42** Au voisinage du Soleil, soit pour un rayon de l’ordre de 8 kpc, justifier qu’on puisse négliger le deuxième terme du membre de droite de l’équation (9).
+
+On omettra jusqu’à la fin de cette partie les dépendances en $r$ et $\theta$ des grandeurs étudiées, supposant que dans une approximation de disque fin, les distances caractéristiques de variations sont beaucoup plus petites selon la direction $\vec{e}_z$ que selon les directions $\vec{e}_r$ et $\vec{e}_\theta$.
+
+**43** On étudie à présent le mouvement propre d’une étoile, c’est-à-dire par rapport au mouvement de rotation de la Galaxie. On peut isoler le mouvement selon l’axe $z$, qui est celui étudié dans cette partie. Donner le signe de $K_z$ pour $z \gt 0$ puis pour $z \lt 0$, et décrire qualitativement le mouvement propre d’une étoile perpendiculairement au disque galactique si celle-ci est liée gravitationnellement à la Galaxie.
+
+**44** On décrit le mouvement d’une étoile tel que discuté à la question précédente par sa vitesse perpendiculaire $v_z(z)$. Obtenir une équation reliant la vitesse $v_z(z)$ à $v_z(0)$. Cette équation fera apparaître une intégrale de $K_z$.
+
+À partir de maintenant, on distingue différents types d’étoiles, qui sont désignés par un indice $i$. On introduit la grandeur $\bar{\rho}_i[z, v_z]$ qui décrit la densité d’étoile de type $i$ à l’altitude $z$ par rapport au plan galactique et de vitesse $v_z$. Ainsi, le nombre d’étoiles de type $i$ de position $z$, de vitesse $v_z$ à $\mathrm{d}v_z$ près, et dans un volume $\mathrm{d}^3V = \mathrm{d}x \cdot \mathrm{d}y \cdot \mathrm{d}z$, est $\bar{\rho}_i[z, v_z]\mathrm{d}v_z\mathrm{d}^3V$. Il faut multiplier cette densité par la masse des étoiles de type $i$ pour obtenir une densité de masse. On suppose également par la suite que la distribution de vitesse sur $z$ pour un type d’étoile $i$ est décrite par une statistique du type
+
+$$
+\bar{\rho}_i\left[0, v_z\right] = \tilde{\rho}_i(0)\frac{1}{\sqrt{2\pi}\sigma_i}\exp\left[-\frac{{v_z}^2}{2{\sigma_i}^2}\right], \qquad (10)
+$$
+
+où $\sigma_i$ est la dispersion de vitesse des étoiles de type $i$.
+
+**45** Quelle est la dimension de $\bar{\rho}_i\left[z, v_z\right]$ ? Montrer que $\tilde{\rho}_i(0)$ est bien la densité volumique d’étoiles de type $i$ dans le plan galactique.
+
+**46** La Galaxie contenant un très grand nombre d’étoiles de tout type qui se rapprochent et s’éloignent du plan galactique, et supposant que le déplacement de ces étoiles perpendiculairement au plan galactique a atteint un régime stationnaire, on écrit que $\bar{\rho}_i[0, v_z(0)] = \bar{\rho}_i[z, v_z(z)]$, où $v_z(z)$ est le terme calculé à la question 44 à partir de $v_z(0)$. Justifier cette égalité à partir de considérations physiques. En déduire la valeur de $\bar{\rho}_i\left[z, v_z\right]$.
+
+**47** En déduire finalement $\tilde{\rho}_i(z)$, la densité volumique d’étoiles de type $i$ à l’altitude $z$. Conclure sur la possibilité d’estimer la densité totale de matière contribuant à engendrer un champ de gravitation en fonction de la dispersion de vitesse ainsi que la distribution verticale d’une population d’étoiles.
+
+**48** En utilisant la méthode décrite dans cette partie, on peut estimer la densité de masse gravitante proche du Soleil à $(0{,}076 \pm 0,015)\ \mathrm{M}_\odot \cdot \mathrm{pc}^{-3}$, à comparer à une densité de l’ordre de $(0{,}043 \pm 0,011)\ \mathrm{M}_\odot \cdot \mathrm{pc}^{-3}$ estimée pour la matière visible. Commenter cette observation par rapport aux résultats de la question 40.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+Le fichier des solutions officielles manque dans l’archive.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2020_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2020_ulm.pdf#page=10)

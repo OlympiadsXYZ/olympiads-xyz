@@ -1,0 +1,210 @@
+---
+id: x-ens-2025-pc-ulm-p8
+source: 'X-ENS 2025, Приемен изпит, физика и химия · Юлм'
+title: 'Задача 2.4. Énergie propre des circuits magnétiques'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2025/x-ens-2025-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:59:31.978Z'
+verifier: 'mechanical'
+---
+
+*ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2025 — FILIERE PC - Epreuve n° 7 — PHYSIQUE C (U) · 17 април 2025 г.*
+
+<details>
+<summary>Consignes</summary>
+
+JEUDI 17 AVRIL 2025 — 08h00 - 14h00
+
+Durée : 6 heures
+
+L’utilisation des calculatrices n’est pas autorisée pour cette épreuve
+
+</details>
+
+<details>
+<summary>Autour de l’énergie électromagnétique</summary>
+
+Cette épreuve propose d’étudier l’énergie électromagnétique de distributions de charges et de courants. On essaiera notamment de déterminer l’énergie de telles distributions à partir des travaux nécessaires pour les mettre en place, et de relier les différentes formulations possibles de ces énergies. On s’interrogera également sur la signification physique de l’énergie propre de telles distributions, en lien avec les différents modèles microscopiques utilisés pour décrire ces distributions.
+
+Le sujet est divisé en deux parties largement indépendantes l’une de l’autre, la première traitant de l’énergie de distributions de charges en électrostatique et la deuxième traitant de l’énergie de distributions de courants dans l’approximation des régimes quasi-stationnaires (ARQS). Ces deux parties ont cependant été pensées pour être effectuées dans l’ordre, et les candidats sont encouragés à procéder ainsi.
+
+Tout résultat fourni dans l’énoncé peut être utilisé pour les questions ultérieures, même s’il n’a pas été démontré. Dans le cas où un(e) candidat(e) repère ce qui lui semble être une erreur d’énoncé, il (elle) le signale lisiblement sur sa copie, propose la correction et poursuit l’épreuve en conséquence.
+
+**La plus grande importance doit être accordée à la qualité de la rédaction et de la présentation. Certaines questions, marquées par une étoile (\*), requièrent une réflexion plus poussée de la part des candidats, sans être nécessairement plus calculatoires. Elles seront valorisées en conséquence, même si le raisonnement est inachevé. Les réponses doivent être clairement argumentées, en s’appuyant si nécessaire sur des schémas, tout en restant aussi concises que possible.**
+
+**Ce sujet comporte 15 pages, numérotées de 1 à 15.**
+
+</details>
+
+<details>
+<summary>Formulaire — Analyse vectorielle et intégrales utiles</summary>
+
+— On désigne par :
+
+- $\overrightarrow{\mathrm{grad}}\,\phi$ le gradient d’un champ scalaire $\phi$,
+- $\mathrm{div}\,\vec{X}$ la divergence d’un champ vecteur $\vec{X}$,
+- $\overrightarrow{\mathrm{rot}}\,\vec{X}$ le rotationnel d’un champ vecteur $\vec{X}$.
+
+— Pour $\phi$ et $\vec{X}$ des champs scalaire et vecteur quelconques :
+
+- $\overrightarrow{\mathrm{rot}}\left(\overrightarrow{\mathrm{grad}}\,\phi\right) = \vec{0}$,
+- $\mathrm{div}\left(\overrightarrow{\mathrm{rot}}\,\vec{X}\right) = 0$.
+
+— Notant $\vec{r}_{AB} = \vec{r}_B - \vec{r}_A$, le gradient de $1/r_{AB}$ vaut :
+
+$$
+\overrightarrow{\mathrm{grad}}_B\left(\frac{1}{r_{AB}}\right) = -\frac{\vec{r}_{AB}}{{r_{AB}}^{3}} \quad \text{en faisant varier } \vec{r}_B\text{, donnant : } \quad \mathrm{d}\left(\frac{1}{r_{AB}}\right) = \overrightarrow{\mathrm{grad}}_B\left(\frac{1}{r_{AB}}\right)\cdot\mathrm{d}\vec{r}_B, \qquad (1)
+$$
+
+$$
+\overrightarrow{\mathrm{grad}}_A\left(\frac{1}{r_{AB}}\right) = \frac{\vec{r}_{AB}}{{r_{AB}}^{3}} \quad \text{en faisant varier } \vec{r}_A\text{, donnant : } \quad \mathrm{d}\left(\frac{1}{r_{AB}}\right) = \overrightarrow{\mathrm{grad}}_A\left(\frac{1}{r_{AB}}\right)\cdot\mathrm{d}\vec{r}_A. \qquad (2)
+$$
+
+— Pour $\phi$, $\vec{X}$ et $\vec{Y}$ des champs scalaire et vecteurs quelconques :
+
+$$
+\mathrm{div}\,(\phi\vec{X}) = \phi\left(\mathrm{div}\,\vec{X}\right) + (\overrightarrow{\mathrm{grad}}\,\phi)\cdot\vec{X}. \qquad (3)
+$$
+
+$$
+\mathrm{div}\,(\vec{X}\wedge\vec{Y}) = \vec{Y}\cdot\left(\overrightarrow{\mathrm{rot}}\,\vec{X}\right) - \vec{X}\cdot\left(\overrightarrow{\mathrm{rot}}\,\vec{Y}\right). \qquad (4)
+$$
+
+— Le produit mixte de trois vecteurs $\vec{X}$, $\vec{Y}$ et $\vec{Z}$ possède les propriétés suivantes :
+
+$$
+\left(\vec{X}\wedge\vec{Y}\right)\cdot\vec{Z} = \left(\vec{Z}\wedge\vec{X}\right)\cdot\vec{Y} = -\left(\vec{X}\wedge\vec{Z}\right)\cdot\vec{Y} \qquad (5)
+$$
+
+— Dans tout le sujet, on note $\mathrm{d}\tau_{\vec{r}}$ les éléments de volume dans les intégrales, où l’indice $\vec{r}$ repère des éléments de volume $\mathrm{d}\tau$ sur lesquels l’intégration est effectuée. On repère similairement $\mathrm{d}\vec{S}_{\vec{r}}$ et $\mathrm{d}\vec{l}_{\vec{r}}$ les éléments de surface et de longueur, respectivement.
+
+— On rappelle les formulations des intégrales sur tout l’espace en coordonnées cartésiennes $(x, y, z)$, cylindriques $(r, \theta, z)$, et sphériques $(r, \theta, \phi)$ :
+
+$$
+\begin{aligned}\iiint F(\vec{r})\mathrm{d}\tau_{\vec{r}} &= \iiint_{x,y,z=-\infty}^{x,y,z=+\infty} F(x, y, z)\,\mathrm{d}x\,\mathrm{d}y\,\mathrm{d}z\\ &= \int_{r=0}^{+\infty}\int_{\theta=0}^{2\pi}\int_{z=-\infty}^{+\infty} F(r, \theta, z)\, r\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}z\\ &= \int_{r=0}^{+\infty}\int_{\theta=0}^{\pi}\int_{\phi=0}^{2\pi} F(r, \theta, \phi)\, r\sin\theta\,\mathrm{d}r\,\mathrm{d}\theta\,\mathrm{d}\phi.\end{aligned}
+$$
+
+— On a :
+
+$$
+\iiint \frac{\vec{r}\cdot(\vec{r} + \vec{n})}{r^3|\vec{r} + \vec{n}|^3}\mathrm{d}\tau_{\vec{r}} = 4\pi, \qquad (6)
+$$
+
+où l’intégrale est effectuée sur tout l’espace et $\vec{n}$ est un vecteur unitaire quelconque, et
+
+$$
+\int_0^{\pi}\sin^3\theta\,\mathrm{d}\theta = \frac{4}{3}. \qquad (7)
+$$
+
+</details>
+
+<details>
+<summary>Symétries et propriétés à grande distance des champs E et B</summary>
+
+On rappelle quelques propriétés des champs électrique $\vec{E}(\vec{r})$ et magnétique $\vec{B}(\vec{r})$ créés par des distributions de charges $\rho(\vec{r})$ et de courants $\vec{j}(\vec{r})$. On note également $V(\vec{r})$ le potentiel électrique.
+
+— Symétries des champs par rapport aux charges et courants :
+
+- les plans de symétrie de $\rho$ et $\vec{j}$ sont de symétrie pour $\vec{E}$ et d’antisymétrie pour $\vec{B}$,
+- les plans d’antisymétrie de $\rho$ et $\vec{j}$ sont d’antisymétrie pour $\vec{E}$ et de symétrie pour $\vec{B}$.
+
+— Soit $z = 0$ un plan de symétrie du champ $\vec{X}(\vec{r})$ dans un repère cartésien $(x, y, z)$, on a :
+
+$$
+\vec{X}_N(x, y, z) = -\vec{X}_N(x, y, -z),
+$$
+
+$$
+\vec{X}_T(x, y, z) = \vec{X}_T(x, y, -z),
+$$
+
+où $\vec{X}_N$ et $\vec{X}_T$ sont les composantes normale et tangentielle de $\vec{X}$ par rapport à ce plan. Pour $z = 0$, on a $\vec{X}_N = \vec{0}$, et $\vec{X}(x, y, 0)$ est donc contenu dans le plan de symétrie.
+
+— Soit $z = 0$ un plan d’antisymétrie du champ $\vec{X}(\vec{r})$ dans un repère cartésien $(x, y, z)$, on a :
+
+$$
+\vec{X}_N(x, y, z) = \vec{X}_N(x, y, -z),
+$$
+
+$$
+\vec{X}_T(x, y, z) = -\vec{X}_T(x, y, -z).
+$$
+
+où $\vec{X}_N$ et $\vec{X}_T$ sont les composantes normale et tangentielle de $\vec{X}$ par rapport à ce plan. Pour $z = 0$, on a $\vec{X}_T = \vec{0}$, et $\vec{X}(x, y, 0)$ est donc perpendiculaire au plan de symétrie.
+
+— On considère les champs à grande distance de distributions finies de charges et de courants, de charge totale $Q$. En électrostatique, magnétostatique, et dans l’Approximation des Régimes Quasi-Stationnaires (ARQS), on a :
+
+- si $Q \neq 0$, $\vec{E}$ et $V$ décroissent respectivement en $r^{-2}$ et $r^{-1}$,
+- si $Q = 0$, $\vec{E}$ et $V$ décroissent respectivement au moins en $r^{-3}$ et $r^{-2}$,
+- quelle que soit $Q$, $\vec{B}$ décroît au moins en $r^{-3}$.
+
+— Discontinuité des champs électriques et magnétiques :
+
+- les champs $\vec{E}$ ne sont pas définis sur une distribution surfacique de charges,
+- les champs $\vec{B}$ ne sont pas définis sur une distribution linéique de courants.
+
+</details>
+
+<details>
+<summary>Constantes fondamentales</summary>
+
+— Vitesse de la lumière $c = 3{,}0\times 10^{8}\ \mathrm{m\cdot s^{-1}}$
+
+— Constante de Planck $h = 6{,}6\times 10^{-34}\ \mathrm{J\cdot s}$
+
+— Permittivité diélectrique du vide $\varepsilon_0 = 8{,}9\times 10^{-12}\ \mathrm{F\cdot m^{-1}}$
+
+— Perméabilité magnétique du vide $\mu_0 = 1{,}3\times 10^{-6}\ \mathrm{T\cdot m\cdot A^{-1}}$
+
+— Masse de l’électron $m_e = 9{,}1\times 10^{-31}\ \mathrm{kg}$
+
+— Charge élémentaire $e = 1{,}6\times 10^{-19}\ \mathrm{C}$
+
+On rappelle que $\mu_0\epsilon_0 c^2 = 1$.
+
+</details>
+
+## Условие
+
+Dans cette section, on cherche à faire le lien entre l’énergie magnétique propre d’une distribution de courant, et l’énergie cinétique des électrons qui composent ce courant. En effet, on a vu dans la première partie que l’on pouvait associer l’énergie de masse $m_e c^2$ d’un électron à son énergie propre électrostatique. En considérant uniquement le champ électrique à l’extérieur d’un électron de rayon $r_e$, on a :
+
+$$
+m_e = \frac{e^2}{8\pi\varepsilon_0}\frac{1}{r_e c^2}. \qquad (32)
+$$
+
+Pour déterminer l’énergie magnétique propre d’un électron, on a besoin de calculer le champ magnétique créé par celui-ci quand il est en mouvement, ce que l’on souhaite faire à partir d’un changement de référentiel. On note pour cela $\vec{E}$ et $\vec{B}$ les champs électrique et magnétique dans un référentiel Galiléen $\mathcal{R}$, et $\vec{E}'$ et $\vec{B}'$ ces champs dans le référentiel $\mathcal{R}'$ se déplaçant en translation rectiligne uniforme à vitesse $\vec{V}$ par rapport à $\mathcal{R}$.
+
+**57** En mécanique Newtonienne, la force subie par un point matériel ne doit pas changer lorsqu’on passe d’un référentiel Galiléen à un autre par une translation rectiligne uniforme. Déduire dans ce cadre le champ magnétique créé par un électron, que l’on suppose ponctuel, se déplaçant à la vitesse $\vec{v}_e$. Commenter ce résultat.
+
+On se place à présent dans le cadre d’une transformation relativiste des champs électromagnétiques. En prenant les notations décrites plus haut, les champs $\vec{E}'$ et $\vec{B}'$ dans le référentiel $\mathcal{R}'$, se déplaçant en translation rectiligne uniforme à la vitesse $\vec{V}$ par rapport à $\mathcal{R}$, s’écrivent :
+
+$$
+\left\{\begin{aligned} \vec{E}'_{\parallel} &= \vec{E}_{\parallel},\\ \vec{B}'_{\parallel} &= \vec{B}_{\parallel},\\ \vec{E}'_{\perp} &= \gamma\left(\vec{E}_{\perp} + \vec{V}\wedge\vec{B}\right),\\ \vec{B}'_{\perp} &= \gamma\left(\vec{B}_{\perp} - \tfrac{1}{c^2}\vec{V}\wedge\vec{E}\right), \end{aligned}\right. \qquad (33)
+$$
+
+où l’on a distingué avec les notations $\parallel$ et $\perp$ les composantes des champs respectivement parallèles et perpendiculaires au vecteur $\vec{V}$, et où :
+
+$$
+\gamma = \frac{1}{\sqrt{1 - V^2/c^2}}. \qquad (34)
+$$
+
+**58** En déduire l’expression des champs électrique et magnétique créés par un électron se déplaçant à la vitesse $\vec{v}_e$, que l’on écrira en fonction de $\varepsilon_0$, $\mu_0$, $e$, $\vec{v}_e$ et du vecteur $\vec{r}$ repérant le point où le champ est considéré par rapport à la position de l’électron. On supposera que l’électron se déplace à une vitesse $v_e \ll c$ et on ne gardera que les termes dominants en $v_e/c$.
+
+**59** On considère un électron de rayon $r_e$, se déplaçant à la vitesse $\vec{v}_e$. Justifier qu’à un facteur numérique $\lambda$ près, proche de l’unité, on peut interpréter l’énergie magnétique $U_{\mathrm{m}}^{e}$ associée au champ créé par l’électron comme l’énergie cinétique de celui-ci. On utilisera l’équation (27) en ne considérant que la contribution liée au champ à l’extérieur de l’électron. Dans le cadre de cette interprétation, à quoi correspond la *masse* de l’électron ? Dans la suite, on omettra le facteur $\lambda$.
+
+**60** On considère à présent un solénoïde de longueur $L$, composé de $N$ spires circulaires de rayon $R$ parcourues par un courant $I$. On suppose que les fils de ce solénoïde sont de section circulaire, de rayon $a$, et contiennent $n_e$ électrons de conduction par unité de volume. Calculer l’énergie cinétique totale $E_c^{\mathrm{tot}}$ des électrons de conduction dans ce solénoïde, que l’on exprimera en fonction de $e$, $m_e$, $n_e$ et des paramètres du circuit.
+
+**61** En effectuant une application numérique, comparer cette énergie cinétique à l’énergie magnétique propre du solénoïde. On pourra utiliser le champ créé par un solénoïde infini, et ne calculer que la contribution à l’énergie magnétique du champ à l’intérieur du solénoïde. On prendra $n_e = 8{,}5\times 10^{28}\ \mathrm{m^{-3}}$ (densité typique des électrons de conduction pour le cuivre), $I = 1{,}0\ \mathrm{A}$, $N = 5000$, $R = 2\ \mathrm{cm}$, $L = 20\ \mathrm{cm}$, $a = 1{,}0\ \mathrm{mm}$.
+
+**62*** D’où vient la différence constatée à la question précédente ? En vous appuyant sur un exemple simple, déterminer une borne supérieure absolue $U_{\mathrm{ms}}^{\max}$ de l’énergie magnétique du solénoïde en fonction de l’énergie cinétique des électrons de conduction. En donner une estimation numérique. Quelle taille devrait avoir le solénoïde pour que son énergie magnétique approche cette borne ?
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2025_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2025_ulm.pdf#page=15)

@@ -1,0 +1,563 @@
+---
+id: x-ens-2008-mp-p1
+source: 'X-ENS 2008, Приемен изпит, математика и физика'
+title: 'Задача 1. Généralités sur les plasmas rencontrés en astrophysique'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2008/x-ens-2008-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T06:11:19.600Z'
+verifier: 'mechanical'
+---
+
+*SESSION 2008 — Filière MP — PHYSIQUE MPI — Épreuve commune aux ENS de Paris, Lyon et Cachan — Le vent solaire*
+
+<details>
+<summary>Consignes</summary>
+
+*L’usage de calculatrices électroniques de poche à alimentation autonome, non imprimantes et sans document d’accompagnement, est autorisé. Cependant, une seule calculatrice à la fois est autorisée sur la table ou le poste de travail, et aucun échange n’est autorisé entre les candidats.*
+
+Les parties 1 et 2 sont assez largement indépendantes l’une de l’autre.
+
+Le candidat est prié d’accorder un soin particulier à la clarté et à la concision de ses réponses ainsi qu’aux applications numériques demandées.
+
+</details>
+
+<details>
+<summary>Le vent solaire</summary>
+
+Le vent solaire est l’extension aux grandes distances de l’atmosphère solaire (appelée la couronne solaire, voir Fig. 1). C’est un flux de plasma (particules ionisées) issu d’une région de la couronne solaire appelée l’exobase, et qui s’étend dans tout le système solaire. Ce plasma est globalement neutre, complètement ionisé et constitué d’électrons et d’ions $\mathrm{H}^+$ (on utilisera le terme de proton pour désigner l’ion $\mathrm{H}^+$ dans tout le problème). Le tableau 1 récapitule les caractéristiques principales de ce vent solaire au niveau de la Terre.
+
+Le but de cette étude est de comprendre l’origine physique du vent solaire et d’estimer sa vitesse asymptotique.
+
+| | valeur | unité |
+|---|---|---|
+| Densité particulaire moyenne | $7{,}1 \times 10^{6}$ | m$^{-3}$ |
+| Vitesse du vent solaire lent ($v_{\mathrm{SN}}$) | 400 | km.s$^{-1}$ |
+| Vitesse du vent solaire rapide | 750 | km.s$^{-1}$ |
+| Température | $1{,}3 \times 10^{5}$ | K |
+| Champ magnétique | 7,0 | nT |
+
+Tab. 1: Caractéristiques du vent solaire à une unité astronomique (1 UA).
+
+</details>
+
+<details>
+<summary>Constantes physiques</summary>
+
+| notation | grandeur | valeur | unité |
+|---|---|---|---|
+| $e$ | charge élémentaire | $1{,}6 \times 10^{-19}$ | C |
+| $m_e$ | masse de l’électron | $9{,}1 \times 10^{-31}$ | kg |
+| $m_p$ | masse du proton | $1{,}6 \times 10^{-27}$ | kg |
+| $k_{\mathrm{B}}$ | constante de Boltzmann | $1{,}4 \times 10^{-23}$ | J.K$^{-1}$ |
+| $\varepsilon_0$ | permittivité diélectrique du vide | $8{,}8 \times 10^{-12}$ | F.m$^{-1}$ |
+| $\mu_0$ | perméabilité magnétique du vide | $4\pi \times 10^{-7}$ | H.m$^{-1}$ |
+| UA | unité astronomique (distance Terre-Soleil) | $1{,}5 \times 10^{11}$ | m |
+| G | constante de gravitation | $6{,}7 \times 10^{-11}$ | kg$^{-1}$.m$^{3}$.s$^{-2}$ |
+| $\mathrm{M}_\odot$ | masse du Soleil | $2{,}0 \times 10^{30}$ | kg |
+| $\mathrm{R}_\odot$ | rayon du Soleil | $7{,}0 \times 10^{8}$ | m |
+| $\Omega_\odot$ | pulsation de rotation du Soleil | $2{,}9 \times 10^{-6}$ | rad.s$^{-1}$ |
+
+</details>
+
+<details>
+<summary>Notations</summary>
+
+| | grandeur | unité |
+|---|---|---|
+| $n_e$ | densité d’électrons | m$^{-3}$ |
+| $n_p$ | densité de protons | m$^{-3}$ |
+| T | température | K |
+
+</details>
+
+<details>
+<summary>Formulaire</summary>
+
+On rappelle quelques expressions d’analyse vectorielle en coordonnées sphériques :
+
+$$
+\mathrm{div}\,(\overrightarrow{\mathrm{A}}) = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2 \mathrm{A}_r\right) + \frac{1}{r\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\,\mathrm{A}_\theta\right) + \frac{1}{r\sin\theta}\frac{\partial \mathrm{A}_\varphi}{\partial\varphi} ,
+$$
+
+$$
+\Delta f(r) = \frac{1}{r}\frac{\mathrm{d}^2}{\mathrm{d}r^2}\left(rf(r)\right) .
+$$
+
+On donne la valeur de l’intégrale suivante ($a > 0$) :
+
+$$
+\int_{-\infty}^{\infty} e^{-ax^2}\,\mathrm{d}x = \sqrt{\frac{\pi}{a}} .
+$$
+
+</details>
+
+<details>
+<summary>Corrigé de l’épreuve de physique MPI 2008</summary>
+
+Le lecteur intéressé pourra consulter cette bibliographie introductive sur laquelle le sujet s’est en partie appuyé :
+
+- « How does the solar wind blow ? a simple kinetic model », Nicole Meyer-Vernet, *Eur. J. Phys.* **20**, 167 (1999)
+- « Basics of the solar wind », Nicole Meyer-Vernet (Cambridge University Press, 2007)
+- « Physics of space plasmas : an introduction », George K. Parks (Boulder, 2004)
+- « Physics of the space environment », Tamas I. Gombosi (Cambridge University Press, 1998)
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1.1 Plasma cinétique ou plasma collisionnel](#s1-1)
+- [1.2 Écrantage électrique dans la couronne solaire — 1.2.1 Situation d’équilibre](#s1-2-1)
+- [1.2.2 Ondes acoustiques dans un plasma cinétique](#s1-2-2)
+- [1.3 Écrantage magnétique](#s1-3)
+- [1.3.1 Cas d’un plasma collisionnel (Γ ≫ 1)](#s1-3-1)
+- [1.3.2 Cas d’un plasma cinétique (Γ ≪ 1)](#s1-3-2)
+- [1.3.3 Ondes d’Alfvén dans un plasma cinétique avec champ magnétique](#s1-3-3)
+
+</nav>
+
+Un plasma est un ensemble de charges positives et négatives libres en interaction coulombienne. On ne considère que les plasmas complètement ionisés et globalement neutres.
+
+<ProblemSection id="s1-1">
+
+### 1.1 Plasma cinétique ou plasma collisionnel
+
+**1.** Donner un ordre de grandeur de l’énergie cinétique moyenne $\langle \mathrm{E}_c\rangle$ d’un électron en fonction de la température T.
+
+**2.** Estimer la distance moyenne entre deux électrons en fonction de la densité $n_e$.
+
+**3.** En déduire un ordre de grandeur de l’énergie potentielle d’une paire d’électrons $\langle \mathrm{E}_p\rangle$ en fonction de $e$, $n_e$ et $\varepsilon_0$.
+
+**4.** On définit le rapport $\Gamma = \dfrac{\langle \mathrm{E}_p\rangle}{\langle \mathrm{E}_c\rangle}$. Donner son expression et calculer son ordre de grandeur pour le vent solaire (voir Tab. 1) et les différents plasmas du tableau 2. Le régime $\Gamma \ll 1$ correspond au plasma dit *cinétique* et $\Gamma \gg 1$ au plasma dit *collisionnel*. Justifier succinctement ces dénominations.
+
+| Plasma | $n_e$ (m$^{-3}$) | T (K) |
+|---|---|---|
+| Couronne solaire | $10^{15}$ | $10^{6}$ |
+| Ionosphère terrestre | $10^{12}$ | $10^{3}$ |
+| Métal solide typique | $10^{29}$ | $10^{2}$ |
+| Intérieur stellaire | $10^{33}$ | $10^{7}$ |
+
+Tab. 2: Caractéristiques de quelques plasmas.
+
+</ProblemSection>
+
+<ProblemSection id="s1-2-1">
+
+### 1.2 Écrantage électrique dans la couronne solaire — 1.2.1 Situation d’équilibre
+
+On considère un proton au repos dans le plasma et on cherche le potentiel qui règne au voisinage de ce proton. On admet qu’à l’équilibre thermodynamique, les distributions d’équilibre des électrons et des protons autour de ce proton sont données par :
+
+$$
+n_e(r) = n_0 \exp\left(\frac{e\mathrm{V}(r)}{k_{\mathrm{B}}\mathrm{T}}\right) , \qquad (1)
+$$
+
+$$
+n_p(r) = n_0 \exp\left(\frac{-e\mathrm{V}(r)}{k_{\mathrm{B}}\mathrm{T}}\right) , \qquad (2)
+$$
+
+où $\mathrm{V}(r)$ est le potentiel électrique régnant à la distance $r$ du proton de référence et $n_0$ une constante.
+
+**5.** Commenter brièvement l’origine des relations ci-dessus.
+
+**6.** Déterminer une équation différentielle impliquant le potentiel électrique $\mathrm{V}(r)$.
+
+**7.** On se place dans la limite $\Gamma \ll 1$ (plasma cinétique). Montrer que le potentiel prend alors la forme suivante :
+
+$$
+\mathrm{V}(r) = \frac{e}{4\pi\varepsilon_0 r}\,\exp\left(-\frac{r}{\lambda_{\mathrm{D}}}\right) . \qquad (3)
+$$
+
+Donner l’expression de $\lambda_{\mathrm{D}}$, appelée longueur de Debye.
+
+**8.** Tracer la courbe $\mathrm{V}(r)$ et la comparer à celle du potentiel créé par une charge ponctuelle. À quelle échelle spatiale peut-on considérer que le plasma est neutre ? Quel est le phénomène ainsi mis en évidence ?
+
+**9.** Calculer la longueur de Debye pour le vent solaire. Quelle en est la conséquence directe pour les satellites ?
+
+</ProblemSection>
+
+<ProblemSection id="s1-2-2">
+
+### 1.2.2 Ondes acoustiques dans un plasma cinétique
+
+On considère toujours le cas d’un plasma cinétique et on suppose maintenant que les protons sont susceptibles de se déplacer, de telle sorte que des ondes, qualifiées d’acoustiques, peuvent se propager dans ce plasma.
+
+On envisage un modèle unidimensionnel et on note $\xi(x,t)$ le déplacement d’une tranche de protons par rapport à sa position d’équilibre $x$, à l’instant $t$. On se place dans le cas de faibles déplacements relatifs (c’est-à-dire $|\partial\xi/\partial x| \ll 1$). On suppose que la longueur d’onde de ces ondes est grande devant la longueur de Debye introduite dans la partie précédente.
+
+On admet que la densité d’équilibre $n_e$ des électrons, vue dans le cas statique de la partie précédente, demeure valable dans le cas quasi-statique de cette partie (cela est valable si la fréquence des ondes est petite devant la pulsation-plasma des électrons). Par contre, la densité $n_p(x,t)$ des protons ne s’écrit alors plus comme l’équation (2). Enfin, on ne considère pas les forces de pression ni celles de gravitation.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '27.6%', '--fig-max': '177px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p1-fig2.png" alt="Axes x (horizontal) et z (vertical) ; plusieurs traits verticaux pleins, chacun à côté d’un trait vertical pointillé (position d’équilibre) ; une petite flèche horizontale sous l’un d’eux est marquée ξ(x,t)." width="554" height="682" loading="lazy" decoding="async" />
+<figcaption>Fig. 2: Ondes acoustiques dans un plasma, à t donné. Les traits pointillés représentent la position d’équilibre et ξ(x, t) représente le déplacement des protons par rapport à leur position d’équilibre.</figcaption>
+</figure>
+
+**10.** Montrer que les hypothèses permettent de développer la densité en protons, à l’ordre non nul le plus bas, sous la forme :
+
+$$
+\frac{n_p(x,t)}{n_0} = 1 + \frac{e\mathrm{V}(x,t)}{k_{\mathrm{B}}\mathrm{T}} + o\left(\frac{e\mathrm{V}(x,t)}{k_{\mathrm{B}}\mathrm{T}}\right) .
+$$
+
+**11.** À l’aide d’un bilan de matière, montrer qu’au même degré d’approximation qu’à la question précédente, le déplacement $\xi(x,t)$ est lié au potentiel $\mathrm{V}(x,t)$ par l’équation :
+
+$$
+\frac{\partial\xi(x,t)}{\partial x} = -\frac{e\mathrm{V}(x,t)}{k_{\mathrm{B}}\mathrm{T}} ,
+$$
+
+où $\mathrm{V}(x,t)$ est le potentiel électrique en $x$, à l’instant $t$.
+
+**12.** Écrire le système d’équations différentielles couplant le déplacement $\xi(x,t)$ et le potentiel $\mathrm{V}(x,t)$. On admettra que $\mathrm{d}\xi/\mathrm{d}t = \partial\xi/\partial t$.
+
+**13.** Montrer que le déplacement $\xi(x,t)$ vérifie une équation de propagation d’onde.
+
+**14.** Donner l’expression de la vitesse « acoustique » $c_s$ associée au mouvement des protons. Expliquer brièvement pourquoi de telles ondes peuvent exister alors que le plasma est supposé cinétique.
+
+**15.** Calculer numériquement $c_s$ pour le vent solaire et commenter.
+
+</ProblemSection>
+
+<ProblemSection id="s1-3">
+
+### 1.3 Écrantage magnétique
+
+La plupart des plasmas astrophysiques sont soumis à un champ magnétique, en particulier le plasma du vent solaire. On étudie dans les parties 1.3.1 et 1.3.2 la réponse d’un plasma à une perturbation magnétique extérieure. Pour ces deux parties uniquement, on suppose que les protons sont fixes et que seuls les électrons sont susceptibles de se déplacer.
+
+On considère un modèle unidimensionnel où le plasma, homogène et globalement neutre, occupe le demi-espace $x > 0$ (voir Fig. 3). Le demi-espace $x < 0$ est supposé vide et soumis à un champ magnétique homogène :
+
+$$
+\overrightarrow{\mathrm{B}}_0 = \mathrm{B}_0(t)\overrightarrow{e_z} \qquad (x < 0) .
+$$
+
+On suppose que le champ magnétique dans le plasma s’écrit $\overrightarrow{\mathrm{B}} = \mathrm{B}(x,t)\,\overrightarrow{e_z}$ (pour $x > 0$).
+
+On admet que les plasmas considérés sont de très bons conducteurs. En conséquence, **dans toute la partie 1.3**, on pourra négliger le terme en dérivation temporelle du champ électrique dans l’équation de Maxwell-Ampère (approximation des régimes quasi-stationnaires, ou ARQS).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '28.8%', '--fig-max': '185px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p1-fig3.png" alt="Axes x (horizontal, origine 0) et z (vertical) ; à gauche de l’axe z la mention « vide », à droite le demi-plan hachuré marqué « plasma »." width="577" height="492" loading="lazy" decoding="async" />
+<figcaption>Fig. 3: Configuration étudiée dans la partie 1.3.</figcaption>
+</figure>
+
+**16.** Montrer qu’un champ électrique se forme alors dans le plasma et que celui-ci est nécessairement de la forme $\overrightarrow{\mathrm{E}} = \mathrm{E}(x,t)\,\overrightarrow{e_y}$.
+
+</ProblemSection>
+
+<ProblemSection id="s1-3-1">
+
+### 1.3.1 Cas d’un plasma collisionnel (Γ ≫ 1)
+
+**17.** Rappeler l’expression de la loi d’Ohm locale. On notera $\gamma$ la conductivité électrique.
+
+**18.** Montrer que le champ magnétique vérifie une équation de diffusion magnétique, analogue à une équation de diffusion thermique, et exprimer le coefficient de diffusion magnétique associé.
+
+**19.** Estimer le temps caractéristique de diffusion du champ magnétique sur une longueur égale au rayon solaire. On admet que, pour l’intérieur du Soleil, $\gamma \approx 6 \times 10^{6}\ \Omega^{-1}.\mathrm{m}^{-1}$. Que peut-on en conclure ?
+
+</ProblemSection>
+
+<ProblemSection id="s1-3-2">
+
+### 1.3.2 Cas d’un plasma cinétique (Γ ≪ 1)
+
+On admet qu’en absence de collision, la loi d’Ohm doit être remplacée par l’équation du mouvement des électrons.
+
+**20.** On note $\overrightarrow{v_e} = v_e(x,t)\,\overrightarrow{e_y}$ la vitesse d’ensemble des électrons. À quelle condition peut-on négliger la force de Lorentz magnétique ? Vérifier numériquement que cette condition est remplie.
+
+**21.** Écrire les équations couplées portant sur $\mathrm{E}(x,t)$, $v_e(x,t)$ et le champ magnétique $\mathrm{B}(x,t)$ à l’intérieur du plasma.
+
+**22.** En déduire l’expression de $\mathrm{B}(x,t)$ pour $\mathrm{B}_0(t)$ donné, en introduisant une longueur caractéristique $\lambda_{\mathrm{pl}}$.
+
+**23.** Comparer ce résultat à celui de la question 18. Calculer numériquement $\lambda_{\mathrm{pl}}$ pour le vent solaire.
+
+**24.** La causalité est-elle vérifiée par l’expression obtenue à la question précédente ? Relier ce résultat à l’une des hypothèses. Comment celle-ci peut-elle se reformuler en fonction de $\mathrm{B}_0(t)$ et $\lambda_{\mathrm{pl}}$ ?
+
+</ProblemSection>
+
+<ProblemSection id="s1-3-3">
+
+### 1.3.3 Ondes d’Alfvén dans un plasma cinétique avec champ magnétique
+
+On considère un plasma cinétique dans lequel, en l’absence de perturbation, règne un champ magnétique uniforme et statique $\overrightarrow{\mathrm{B}_0} = \mathrm{B}_0\overrightarrow{e_z}$. En accord avec ce qui a été vu dans la partie précédente, ce champ magnétique ne peut pas provenir de l’extérieur du plasma, mais est supposé créé à l’intérieur de celui-ci par des sources dont on ne se préoccupera pas.
+
+On recherche des modes d’oscillation incompressible des protons (à $n_p$ constante), tels que ceux représentés sur la figure 4. Le déplacement $\xi(z,t)$ des protons est parallèle à l’axe $x$ et ne dépend que de $z$ et de $t$. Ces modes d’oscillations sont appelés ondes d’Alfvén. On recherche le champ magnétique sous la forme :
+
+$$
+\overrightarrow{\mathrm{B}} = \mathrm{B}_0\overrightarrow{e_z} + \mathrm{B}(z,t)\overrightarrow{e_x} . \qquad (4)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '29.9%', '--fig-max': '192px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p1-fig4.png" alt="Axes x (horizontal) et z (vertical) ; quatre droites verticales pointillées (positions d’équilibre) et, autour de chacune, une courbe ondulée verticale ; une flèche horizontale entre une droite pointillée et sa courbe est marquée ξ(z,t)." width="599" height="551" loading="lazy" decoding="async" />
+<figcaption>Fig. 4: Ondes d’Alfvén, à t donné.</figcaption>
+</figure>
+
+**25.** On rappelle que les plasmas cinétiques sont de très bon conducteurs et que $\overrightarrow{v_e}$ désigne la vitesse d’ensemble des électrons. Justifier que l’on peut écrire $\overrightarrow{\mathrm{E}} + \overrightarrow{v_e} \wedge \overrightarrow{\mathrm{B}} = \overrightarrow{0}$.
+
+**26.** Justifier que, pour assurer la cohérence de ce modèle, il faut pouvoir négliger le courant de protons devant le courant électronique, si bien que :
+
+$$
+\overrightarrow{j} = \overrightarrow{j_e} + \overrightarrow{j_p} \approx \overrightarrow{j_e} .
+$$
+
+**27.** À l’aide des équations de Maxwell, des questions précédentes et de l’équation du mouvement des protons, montrer que le champ magnétique $\mathrm{B}(z,t)$ vérifie une équation de propagation.
+
+**28.** Donner l’expression de la vitesse de propagation $v_{\mathrm{A}}$, appelée « vitesse d’Alfvén », en fonction de $\mathrm{B}_0$, $n_p$, $\mu_0$ et $m_p$.
+
+**29.** Calculer numériquement $v_{\mathrm{A}}$ pour le vent solaire.
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **1.2 Écrantage électrique dans la couronne solaire — 1.2.1 Situation d’équilibre, 9.** 6.6 m
+- **1.2.2 Ondes acoustiques dans un plasma cinétique, 15.** 34 km/s
+- **1.3.1 Cas d’un plasma collisionnel (Γ ≫ 1), 19.** $4 \times 10^{18}$ s
+- **1.3.2 Cas d’un plasma cinétique (Γ ≪ 1), 23.** 2 km
+- **1.3.3 Ondes d’Alfvén dans un plasma cinétique avec champ magnétique, 29.** 59 km/s
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-s1-1">
+
+### 1.1 Plasma cinétique ou plasma collisionnel
+
+**1.** $\boxed{\mathrm{E}_c \approx k_{\mathrm{B}}\mathrm{T}}$ si on suppose l’équilibre thermique.
+
+**2.** La distance moyenne est de l’ordre de $\boxed{n_e^{-1/3}}$.
+
+**3.** $\boxed{\mathrm{E}_p \approx e^2/(4\pi\varepsilon_0 n_e^{-1/3})\ .}$
+
+**4.** On a $\boxed{\Gamma = \dfrac{e^2 n_e^{1/3}}{4\pi\varepsilon_0 k_{\mathrm{B}}\mathrm{T}}\ .}$
+
+Les plasmas spatiaux (vent solaire, couronne solaire et ionosphère) sont des plasmas cinétiques (gaz parfait chargé), ce qui ne veut pas dire que les interactions coulombiennes ne jouent pas de rôle, comme on va le voir avec les phénomènes d’écrantage ci-dessous (interactions longues portées). L’intérieur stellaire est marginalement cinétique alors que les électrons dans un métal forment un plasma collisionnel.
+
+| Plasma | Γ |
+|---|---|
+| Vent solaire à 1 UA | $2 \times 10^{-8}$ |
+| Couronne solaire | $2 \times 10^{-6}$ |
+| Ionosphère | $2 \times 10^{-4}$ |
+| Intérieur stellaire | $2 \times 10^{-1}$ |
+| Métal | $9 \times 10^{2}$ |
+
+Dans un plasma cinétique, l’énergie cinétique domine alors que dans un plasma collisionnel, l’énergie potentiel domine (leur comportement est contrôlé par les interactions courtes portées).
+
+</ProblemSection>
+
+<ProblemSection id="solution-s1-2-1">
+
+### 1.2 Écrantage électrique dans la couronne solaire — 1.2.1 Situation d’équilibre
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.4%', '--fig-max': '355px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2008-mp/p1-sol-fig1.png" alt="Graphe V en fonction de r : deux courbes décroissantes partant de l’infini près de l’axe vertical ; la courbe du bas (potentiel de Yukawa) tend très vite vers zéro, la courbe du haut (potentiel de Coulomb) décroît plus lentement." width="1109" height="783" loading="lazy" decoding="async" />
+</figure>
+
+**5.** On reconnaît un facteur de Boltzmann pour l’équilibre thermique. La neutralité électrique est bien assurée pour $\mathrm{V}(r) = 0$ ($n_0$ représente la densité pour $r \to \infty$, c’est donc la valeur donnée dans les différents tableaux).
+
+**6.** L’équation de Poisson s’écrit $\Delta\mathrm{V}(r) + \rho(r)/\varepsilon_0 = 0$ avec $\rho(r) = -en_e(r) + en_p(r)$. À l’aide du Laplacien en coordonnées sphériques, on obtient :
+
+$$
+\boxed{\frac{\mathrm{d}^2}{\mathrm{d}r^2}\left(r\mathrm{V}(r)\right) = \frac{2ren_0}{\varepsilon_0}\,\mathrm{sh}\left(\frac{e\mathrm{V}(r)}{k_{\mathrm{B}}\mathrm{T}}\right)\ .}
+$$
+
+**7.** Dans un plasma cinétique, $e\mathrm{V}(r) \ll k_{\mathrm{B}}\mathrm{T}$, donc on peut développer le sh et l’équation précédente se ramène à une EDL d’ordre 2 sur $r\mathrm{V}(r)$. Seule la solution en exponentiel décroissante est valable pour éviter la divergence en $r \to \infty$. Pour $r \to 0$, le potentiel est dominé par celui créé par l’ion de référence, ce qui permet de déterminer la constante d’intégration. On se retrouve avec un potentiel du type Yukawa fournit dans l’énoncé, où :
+
+$$
+\boxed{\lambda_{\mathrm{D}} = \sqrt{\frac{\varepsilon_0 k_{\mathrm{B}}\mathrm{T}}{2n_0 e^2}}\ .}
+$$
+
+**8.** La longueur de Debye est l’échelle spatiale caractérisant l’hypothèse de quasi neutralité car si $\mathrm{V}(r) = 0$, alors $n_e = n_p = n_0$ d’après les équations (1) et (2). On a un phénomène d’écrantage, le champ électrique est nul sur une distance plus grande que $\lambda_{\mathrm{D}}$. La figure ci-dessous représente le potentiel de Yukawa (courbe du bas) ainsi que le potentiel de Coulomb (courbe du haut). Le potentiel de Yukawa décroît beaucoup plus vite vers zéro.
+
+**9.** On trouve $\boxed{\lambda_{\mathrm{D}} \approx 6{,}6\ \mathrm{m}}$, c’est donc petit devant les échelles spatiales qui sont de l’ordre de l’unité astronomique (ou au moins du rayon solaire). Par contre, cela peut intervenir pour l’environnement immédiat des satellites qu’on envoie dans l’espace (c’est en particulier une des raisons pour laquelle ceux-ci se chargent).
+
+</ProblemSection>
+
+<ProblemSection id="solution-s1-2-2">
+
+### 1.2.2 Ondes acoustiques dans un plasma cinétique
+
+**10.** L’équation de Poisson permet de calculer $n_p$ en fonction de $n_e$ et du potentiel $\mathrm{V}(x,t)$
+
+$$
+\frac{\partial^2\mathrm{V}(x,t)}{\partial x^2} + \frac{e(n_p(x,t) - n_e(x,t))}{\varepsilon_0} = 0 .
+$$
+
+Donc
+
+$$
+n_p(x,t) = -\frac{\varepsilon_0}{e}\frac{\partial^2\mathrm{V}(x,t)}{\partial x^2} + n_0\exp\left(\frac{e\mathrm{V}(x,t)}{k_{\mathrm{B}}\mathrm{T}}\right)
+$$
+
+On développe ensuite l’exponentielle avec l’hypothèse de plasma cinétique $\Gamma \ll 1$. Il nous reste à vérifier qu’on peut négliger le terme $\dfrac{\varepsilon_0}{e}\dfrac{\partial^2\mathrm{V}(x,t)}{\partial x^2}$ devant $\dfrac{n_0 e\mathrm{V}(x,t)}{k_{\mathrm{B}}\mathrm{T}}$, ce qui est le cas puisque le rapport entre les deux termes est de l’ordre de $(\lambda_{\mathrm{D}}/\mathrm{L})^2 \ll 1$, où L est une distance caractéristique liée à l’onde (par exemple la longueur d’onde) qui est grande devant la longueur de Debye par hypothèse.
+
+**11.** On fait un bilan de conservation du nombre de protons sur un tranche d’épaisseur $\mathrm{d}x$ en l’absence puis déformé par la présence de l’onde :
+
+$$
+n_0 \times \mathrm{d}x = n_p \times (\mathrm{d}x + \mathrm{d}\xi) ,
+$$
+
+d’où le résultat en utilisant la question 10.
+
+**12.** Avec le PFD, cela donne finalement :
+
+$$
+\begin{aligned} \frac{\partial^2\xi(x,t)}{\partial t^2} &= -\frac{e}{m_p}\frac{\partial\mathrm{V}(x,t)}{\partial x} , \\ \frac{\partial\xi(x,t)}{\partial x} &= -\frac{e\mathrm{V}(x,t)}{k_{\mathrm{B}}\mathrm{T}} . \end{aligned}
+$$
+
+**13.** On obtient immédiatement l’équation de d’Alembert :
+
+$$
+\boxed{\frac{\partial^2\xi(x,t)}{\partial x^2} - \frac{m_p}{k_{\mathrm{B}}\mathrm{T}}\frac{\partial^2\xi(x,t)}{\partial t^2} = 0\ .}
+$$
+
+**14.** On a $\boxed{c_s = \sqrt{\dfrac{k_{\mathrm{B}}\mathrm{T}}{m_p}}}$. L’onde acoustique n’est pas créée par des chocs protons-protons, mais par l’intermédiaire du champ électrique (collision « longue portée »).
+
+**15.** L’application numérique donne $\boxed{c_s \approx 34\ \mathrm{km.s^{-1}}}$. On a $c_s < v_{\mathrm{SN}}$, donc le vent solaire est supersonique.
+
+</ProblemSection>
+
+<ProblemSection id="solution-s1-3">
+
+### 1.3 Écrantage magnétique
+
+**16.** L’induction implique qu’un champ électrique doit se créer, qui satisfait à l’équation de Maxwell-Faraday $\overrightarrow{\mathrm{rot}}\ \overrightarrow{\mathrm{E}} = -\partial_t\overrightarrow{\mathrm{B}}$. Avec les invariances selon $y$ et $z$, on déduit de l’équation de Maxwell-Faraday que $\mathrm{E}_z$ est constant, donc nul. De plus, avec $\mathrm{div}\ \overrightarrow{\mathrm{E}} = 0$ car le plasma est neutre, on déduit aussi que $\mathrm{E}_x$ est constant donc nul.
+
+</ProblemSection>
+
+<ProblemSection id="solution-s1-3-1">
+
+### 1.3.1 Cas d’un plasma collisionnel (Γ ≫ 1)
+
+**17.** On a $\boxed{\overrightarrow{j} = \gamma\overrightarrow{\mathrm{E}}}$.
+
+**18.** Les équations de Maxwell fournissent les relations suivantes :
+
+$$
+\begin{aligned} \frac{\partial\mathrm{E}(x,t)}{\partial x} &= -\frac{\partial\mathrm{B}(x,t)}{\partial t} , \\ \frac{\partial\mathrm{B}(x,t)}{\partial x} &= -\mu_0 j(x,t) = -\mu_0\gamma\mathrm{E}(x,t) . \end{aligned}
+$$
+
+En éliminant le champ électrique, on a :
+
+$$
+\boxed{\frac{\partial^2\mathrm{B}(x,t)}{\partial x^2} = \mu_0\gamma\frac{\partial\mathrm{B}(x,t)}{\partial t}\ .}
+$$
+
+Donc le coefficient de diffusion s’écrit $\boxed{\mathrm{D} = 1/(\mu_0\gamma)}$. Le champ magnétique pénètre de façon diffusive dans le plasma, contrairement au cas du plasma sans collision (cf 1.3.2).
+
+**19.** La longueur de pénétration L au bout d’un temps $\tau$ s’écrit qualitativement $\boxed{\mathrm{L} \approx \sqrt{\mathrm{D} \times \tau}}$ donc $\boxed{\tau \approx \mathrm{R}_\odot^2\mu_0\gamma = 4 \times 10^{18}\ \mathrm{s}}$ ! La diffusion est très lente car $\gamma$ est très grand.
+
+</ProblemSection>
+
+<ProblemSection id="solution-s1-3-2">
+
+### 1.3.2 Cas d’un plasma cinétique (Γ ≪ 1)
+
+**20.** L’hypothèse est valable pour un mouvement non relativiste des électrons. Avec la température qui est donnée pour le vent solaire à 1 UA, on obtient une vitesse quadratique moyenne de l’ordre de :
+
+$$
+\boxed{(\langle v_e^2)^{1/2}\rangle \approx 2{,}5 \times 10^{6}\ \mathrm{m.s^{-1}} \approx c/122\ ,}
+$$
+
+donc on est bien dans une situation non relativiste.
+
+**21.** Les équations de Maxwell et le PFD nous donnent :
+
+$$
+\begin{aligned} \frac{\partial\mathrm{E}(x,t)}{\partial x} &= -\frac{\partial\mathrm{B}(x,t)}{\partial t} , \\ \frac{\partial\mathrm{B}(x,t)}{\partial x} &= \mu_0 n_e e v_e(x,t) , \\ \frac{\partial v_e(x,t)}{\partial t} &= -\frac{e}{m_e}\,\mathrm{E}(x,t) . \end{aligned}
+$$
+
+**22.** On résout le système précédent en $\boxed{\mathrm{B}(x,t) = \mathrm{B}_0(t)\ \exp\left(-\dfrac{x}{\lambda_{\mathrm{pl}}}\right)\ .}$
+
+Avec
+
+$$
+\boxed{\lambda_{\mathrm{pl}} = \sqrt{\frac{m_e}{\mu_0 n_e e^2}}\ .}
+$$
+
+**23.** On observe un écrantage magnétique sur une distance de l’ordre de la longueur plasma $\lambda_{\mathrm{pl}}$, zone d’interface entre des parties magnétisées et des parties non magnétisées du plasma. Le champ magnétique ne pénètre pas dans les zones de champ non magnétisés. L’ordre de grandeur pour les plasmas spatiaux est de $\boxed{\lambda_{\mathrm{pl}} \approx 2\ \mathrm{km}}$.
+
+**24.** La causalité est violée. On a négligé le terme de déplacement dans Maxwell-Ampère, alors que c’est lui qui fait justement la propagation. Si on en tient compte, on n’a plus ce découplage entre le temps $t$ et la position $x$ et donc le problème de causalité disparaît. Notre modèle n’est valable que si le champ magnétique évolue à une fréquence plus petite que $c/\lambda_{\mathrm{pl}}$, donc qualitativement
+
+$$
+\boxed{\left|\frac{1}{\mathrm{B}_0}\frac{\mathrm{dB}_0}{\mathrm{d}t}\right| \ll \frac{c}{\lambda_{\mathrm{pl}}}\ .}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-s1-3-3">
+
+### 1.3.3 Ondes d’Alfvén dans un plasma cinétique avec champ magnétique
+
+**25.** Les électrons éliminent rapidement le champ électrique qu’ils voient (condition de conducteur parfait), donc dans le référentiel de leur mouvement d’ensemble :
+
+$$
+\overrightarrow{\mathrm{E}}' = \overrightarrow{0} = \overrightarrow{\mathrm{E}} + \overrightarrow{v_e} \wedge \overrightarrow{\mathrm{B}} .
+$$
+
+Autrement dit, la force de Lorentz qui agit sur eux est constamment nulle :
+
+$$
+\boxed{m_e\frac{\mathrm{d}\overrightarrow{v_e}}{\mathrm{d}t} = 0\ .}
+$$
+
+**26.** D’après le choix de la forme du champ magnétique et l’hypothèse d’ARQS, on voit que $\overrightarrow{\mathrm{rot}}\ \overrightarrow{\mathrm{B}}$ est porté seulement par $\overrightarrow{e_y}$, or $\overrightarrow{v_p}$ est selon $\overrightarrow{e_x}$ car on cherche des solutions d’oscillations protoniques unidirectionnelles. Attention à l’erreur dans l’énoncé, on doit déduire de cette question que $(\overrightarrow{j}_e + \overrightarrow{j}_p) \cdot \overrightarrow{e_x} = 0$.
+
+**27.** On peut écrire le système d’équations suivant :
+
+$$
+\begin{aligned} \mathrm{div}\ \overrightarrow{\mathrm{E}} &= \frac{e(n_p - n_e)}{\varepsilon_0} = 0 , \\ \mathrm{div}\ \overrightarrow{\mathrm{B}} &= 0 , \\ \overrightarrow{\mathrm{rot}}\ \overrightarrow{\mathrm{E}} &= -\frac{\partial\overrightarrow{\mathrm{B}}}{\partial t} , \\ \overrightarrow{\mathrm{rot}}\ \overrightarrow{\mathrm{B}} &= -\mu_0 e n_e\overrightarrow{v_e} + \mu_0 e n_p\overrightarrow{v_p} , \\ m_p\frac{\mathrm{d}\overrightarrow{v_p}}{\mathrm{d}t} &= e(\overrightarrow{\mathrm{E}} + \overrightarrow{v_p} \wedge \overrightarrow{\mathrm{B}}) . \end{aligned}
+$$
+
+L’équation du mouvement projeté sur $\overrightarrow{e_x}$, $\overrightarrow{e_y}$ et $\overrightarrow{e_z}$ donne :
+
+$$
+\begin{aligned} & m_p\frac{\partial v_p(z,t)}{\partial t} = e\mathrm{E}_x , \\ & \mathrm{E}_y = v_p(z,t)\mathrm{B}_0 , \\ & \mathrm{E}_z = 0 . \end{aligned}
+$$
+
+Puis l’équation de Maxwell Faraday donne :
+
+$$
+\begin{aligned} \partial_t\mathrm{B}(z,t) &= \partial_z\mathrm{E}_y , \\ \partial_z\mathrm{E}_x &= \partial_x\mathrm{E}_z , \\ \partial_x\mathrm{E}_y &= \partial_y\mathrm{E}_x . \end{aligned}
+$$
+
+D’où on en déduit :
+
+$$
+\partial_t\mathrm{B}(z,t) = \mathrm{B}_0\partial_z v_p(z,t) \qquad \Rightarrow \qquad \frac{\partial^2\mathrm{B}(z,t)}{\partial t^2} = \mathrm{B}_0\frac{\partial}{\partial z}\frac{\partial v_p(z,t)}{\partial t} = \frac{\mathrm{B}_0 e}{m_p}\frac{\partial\mathrm{E}_x}{\partial z} .
+$$
+
+L’équation de Maxwell-Ampère projetée sur $\overrightarrow{e_y}$ donne :
+
+$$
+\partial_z\mathrm{B}(z,t) = -\mu_0 n_e e v_{e,y} .
+$$
+
+Donc en utilisant $\overrightarrow{\mathrm{E}} + \overrightarrow{v_e} \wedge \overrightarrow{\mathrm{B}} = \overrightarrow{0}$, cela donne, projeté sur $\overrightarrow{e_x}$ :
+
+$$
+\mathrm{E}_x = -v_{e,y}\mathrm{B}_0 = \frac{\mathrm{B}_0}{\mu_0 n_e e}\,\partial_z\mathrm{B}(z,t) .
+$$
+
+On obtient bien ce qu’il faut en remplaçant :
+
+$$
+\boxed{\frac{\partial^2\mathrm{B}(z,t)}{\partial z^2} - \frac{1}{v_{\mathrm{A}}^2}\frac{\partial^2\mathrm{B}(z,t)}{\partial t^2} = 0\ .}
+$$
+
+**28.** On a $\boxed{v_{\mathrm{A}} = \sqrt{\dfrac{\mathrm{B}_0^2}{\mu_0 n_p m_p}}\ ,}$ car $n_e = n_p = n_0$ et comme c’est incompressible, c’est donc constant. La vitesse d’Alfvén est donc la vitesse de propagation des perturbations magnétiques.
+
+**29.** $\boxed{v_{\mathrm{A}} \approx 59\ \mathrm{km.s^{-1}}}$. Comme $v_{\mathrm{A}} < v_{\mathrm{SN}}$, le vent solaire est superalfvénique.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [MP_2008.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2008.pdf#page=4)
+· официални решения: [MP_2008_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2008_sol.pdf#page=1)
