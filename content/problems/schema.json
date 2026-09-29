@@ -409,6 +409,7 @@
             { "required": ["pdfRect"], "not": { "required": ["embeddedImage"] } },
             { "required": ["embeddedImage"], "not": { "anyOf": [{ "required": ["pdfRect"] }, { "required": ["originalImage"] }, { "required": ["dpi"] }] } }
           ],
+          "allOf": [{ "if": { "required": ["nativeImageCrop"] }, "then": { "required": ["pdfRect", "dpi"], "not": { "anyOf": [{ "required": ["originalImage"] }, { "required": ["embeddedImage"] }] } } }],
           "additionalProperties": false,
           "properties": {
             "page": {
@@ -433,6 +434,27 @@
                 "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
                 "derivedPdfSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
                 "relationshipIds": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+              }
+            },
+            "nativeImageCrop": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["archiveKey", "sha256", "derivedPdfSha256", "sourcePx", "rawSourcePx", "exifOrientation", "pixelBox", "rotation", "encoding", "pixelMode", "pixelSha256", "helperSha256", "pillow", "webp"],
+              "properties": {
+                "archiveKey": { "type": "string", "minLength": 1 },
+                "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                "derivedPdfSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                "sourcePx": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "integer", "minimum": 1 } },
+                "rawSourcePx": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "integer", "minimum": 1 } },
+                "exifOrientation": { "type": "integer", "minimum": 1, "maximum": 8 },
+                "pixelBox": { "type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "integer", "minimum": 0 } },
+                "rotation": { "enum": [0, 90, 180, 270] },
+                "encoding": { "const": "webp-lossless" },
+                "pixelMode": { "enum": ["RGB", "RGBA"] },
+                "pixelSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                "helperSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                "pillow": { "type": "string", "minLength": 1 },
+                "webp": { "type": "string", "minLength": 1 }
               }
             },
             "originalImage": {

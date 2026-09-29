@@ -2,6 +2,7 @@
 // Everything here is pure plumbing: paths, hashing, paper-id derivation,
 // schema compilation, math-span detection and the deterministic serialisation
 // that receipt.mjs and promote.mjs must agree on byte-for-byte.
+import { isNativeImageCrop, nativeImageCropEvidenceError } from './native-image-crop.mjs';
 import { isOriginalImageFigure, originalImageEvidenceError } from './original-image-figure.mjs';
 import { isEmbeddedImageFigure, embeddedImageEvidenceError } from './embedded-image-figure.mjs';
 import fs from 'node:fs';
@@ -401,6 +402,10 @@ export function checkerView(candidate) {
 export function figureEvidenceProblems(candidate, manifest, directory) {
   const problems = [];
   for (const { fig, path: p } of allFigures(candidate)) {
+    if (isNativeImageCrop(fig)) {
+      const message = nativeImageCropEvidenceError(fig, manifest, directory);
+      if (message) problems.push({ path: p, message });
+    }
     if (isEmbeddedImageFigure(fig)) {
       const message = embeddedImageEvidenceError(fig, manifest, directory);
       if (message) problems.push({ path: p, message });

@@ -8,6 +8,7 @@
 // not the box numbers. Existing files are kept unless --force is given.
 import { isOriginalImageFigure, copyOriginalImage } from './original-image-figure.mjs';
 import { isEmbeddedImageFigure, copyEmbeddedImage } from './embedded-image-figure.mjs';
+import { isNativeImageCrop, nativeImageCropInfo, writeNativeImageCrop, nativeImageCropEvidenceError } from './native-image-crop.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
@@ -38,6 +39,17 @@ for (const paperId of ids) {
       const file = path.isAbsolute(t.file) ? t.file : path.join(paperDir(paperId), t.file);
       if (seen.has(file)) continue;
       seen.add(file);
+      if (isNativeImageCrop(fig)) {
+        if (fs.existsSync(file) && !args.force) {
+          if (!t.dryRun) { const error = nativeImageCropEvidenceError(fig, manifest, paperDir(paperId)); if (error) fail(error); }
+          kept++; continue;
+        }
+        const result = nativeImageCropInfo(fig, manifest, paperDir(paperId));
+        if (t.sha256 && t.sha256 !== result.sha256) fail('native-image-crop replay bytes differ from frozen candidate');
+        writeNativeImageCrop(fig, manifest, paperDir(paperId), file);
+        if (!t.dryRun) { const error = nativeImageCropEvidenceError(fig, manifest, paperDir(paperId)); if (error) fail(error); }
+        made++; continue;
+      }
       if (isEmbeddedImageFigure(fig)) {
         copyEmbeddedImage(fig, manifest, paperDir(paperId), file);
         made++; continue;

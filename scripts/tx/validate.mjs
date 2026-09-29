@@ -2,6 +2,7 @@
 // validate.mjs <candidate.json> [--paper-id X] [--manifest m] [--mode candidate|final] [--quiet]
 // Mechanical checks a model cannot be trusted to do on itself. Prints a JSON
 // report; exits 1 when there is at least one error.
+import { isNativeImageCrop, nativeImageCropInfo, nativeImageCropEvidenceError } from './native-image-crop.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
@@ -31,6 +32,16 @@ const mode = args.mode || (hasTx || allFigures(data).some(f => !f.fig.url) ? 'ca
 const manifest = args.manifest ? readJson(path.resolve(args.manifest), null) : null;
 if (args.manifest && !manifest) err('', `manifest not readable: ${args.manifest}`);
 
+// New opt-in crop evidence is checked only when its source manifest is supplied.
+if (manifest) for (const { fig, path: p } of allFigures(data)) {
+  if (!isNativeImageCrop(fig)) continue;
+  try {
+    if (fig.source || fig.url) {
+      const message = nativeImageCropEvidenceError(fig, manifest, path.dirname(path.resolve(args.manifest)));
+      if (message) err(p, message);
+    } else nativeImageCropInfo(fig, manifest, path.dirname(path.resolve(args.manifest)));
+  } catch (error) { err(p, error.message); }
+}
 // 1. schema
 const { validate, schema } = compileSchema(mode);
 // Candidate mode: readers may put a tx block on any object (solution, part…); promote strips them all,
