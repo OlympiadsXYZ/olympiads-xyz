@@ -98,6 +98,14 @@ test('a word set as an image is never „fixed“ to half of a word broken at a 
   assert.ok(r.defects.some(d => (d.words || []).includes('Ярославль') || /Ярославль/.test(d.description)), 'still reported for a dispute');
 });
 
+test('a layer whose ligatures map to a wrong letter („Xltered“, „fows“) never rewrites the transcribed word (iom-2020-blitz-tasks)', t => {
+  const page1 = `Задача 1. \n${PRINTED.join('\n')}\nThe resulting mixture is Xltered and the Xltrate slowly fows into the second vessel below.\n`;
+  const { check } = sandbox(t, { page1 });
+  const r = check(candidate({ statement: `${FIXED} The resulting mixture is filtered and the filtrate slowly flows into the second vessel below.`, edits: [edit(), agreement] }));
+  assert.ok(!r.defects.some(d => /Xltered|Xltrate|\bfows\b/.test(d.suggestedFix || '')), JSON.stringify(r.defects, null, 1));
+  assert.deepEqual(r.defects, [], JSON.stringify(r.defects, null, 1));
+});
+
 test('(c) the same fixes without a record stay defects with the restore-the-print mechanical fix', t => {
   const { check } = sandbox(t);
   const r = check(candidate());

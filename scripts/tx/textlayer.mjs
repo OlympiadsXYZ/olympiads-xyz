@@ -428,6 +428,17 @@ export function textLayerCheck(candidate, manifest, paperId) {
   const ligPiecesOf = w => LIG.test(w) ? w.split(/ffi|ffl|ff|fi|fl/).filter(p => p.length >= 3) : [];
   const ligPresent = (set, w) => { const ps = ligPiecesOf(w); return ps.length > 0 && ps.every(p => set.has(p)); };
   const ligPieces = new Set([...allWords].flatMap(ligPiecesOf));
+  // A layer whose ligature glyphs map to a wrong letter prints „satisXes“, „Xltered“, „coeUcient“, „fows“ (fl lost its l)
+  // for satisfies, filtered, coefficient, flows (iom-2020-blitz-tasks): such a token stands for the transcribed word — the
+  // check "fixed" eight correct words into these forms. brokenLig maps each broken form to its word.
+  const brokenLig = new Map();
+  for (const w of allWords) {
+    if (!LIG.test(w)) continue;
+    for (const [lig, subs] of [['ffi', ['u', 'x']], ['ffl', ['u', 'x']], ['ff', ['u', 'x']], ['fi', ['x', 'u']], ['fl', ['x', 'u', 'f']]]) {
+      if (!w.includes(lig)) continue;
+      for (const s of subs) { const v = w.split(lig).join(s); if (v.length >= 4 && v !== w && !allWords.has(v) && !brokenLig.has(v)) brokenLig.set(v, w); }
+    }
+  }
   // the layer glues a word to its neighbour at a lost space („flowsIn“ for „flows In“): the transcribed word is
   // present when a layer token is it plus another transcribed word (else the check would "fix" flows → flowsIn)
   const gluedInLayer = (set, w) => { for (const t of set) { if (t.length <= w.length) continue; if (t.startsWith(w) && allWords.has(t.slice(w.length))) return true; if (t.endsWith(w) && allWords.has(t.slice(0, t.length - w.length))) return true; } return false; };
@@ -458,6 +469,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
       joinAdjacentFragments(pg, joinFields, allWords);
     }
     const tokens = pages.flatMap(p => p.tokens);
+    for (const t of tokens) if (!t.alt && brokenLig.has(t.w)) t.alt = [brokenLig.get(t.w)];
     const layerSet = new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])]));
     const layerRaw = new Map(); for (const t of tokens) if (!t.fragment && !layerRaw.has(t.w)) layerRaw.set(t.w, t.raw);
     // half of a word broken at a line end („ослабле-“, „трицы“ of „ма-трицы“, „афрагмой“ of „ди-афрагмой“) that the page
