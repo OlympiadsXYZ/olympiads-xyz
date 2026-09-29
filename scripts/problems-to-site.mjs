@@ -565,8 +565,23 @@ function splitAtFigures(text, placed) {
   return out;
 }
 
+// A song's words quoted in a paper are copyrighted: the transcription leaves them out and names the page they are
+// printed on, „[Текстът на песента е в оригинала: решенията, с. 12.]“ (textlayer.mjs accepts the omission only when
+// tx.omitted declares it). The page turns the note into a link that opens the original PDF on that page
+// (samara-2018-i-8-9 problem 1 asks for five song fragments; its official solution quotes them).
+export const LYRICS_NOTE = /\[Текстът на песента е в оригинала: (условието|решенията), с\. (\d+)\.\]/g;
+let lyricsPaper = null;
+export function linkLyrics(text, paper = lyricsPaper) {
+  if (!paper || !text || !String(text).includes('Текстът на песента')) return text;
+  return String(text).replace(LYRICS_NOTE, (m, doc, page) => {
+    const key = doc === 'решенията' ? paper.solutionSource?.archiveKey || paper.source?.archiveKey : paper.source?.archiveKey;
+    if (!key) return m;
+    return `*[Текстът на песента е в оригинала: ${doc}, с. ${page} ↗](${withPage(archiveUrl(paper.subject, key), Number(page), key)})*`;
+  });
+}
+
 function sourceText(text, problem, resolve = () => null) {
-  const placed = placeInlineFigures(newestInlineCrops(resolveFigurePlaceholders(text, problem, resolve), problemFigures(problem)), resolve);
+  const placed = placeInlineFigures(newestInlineCrops(resolveFigurePlaceholders(linkLyrics(text), problem, resolve), problemFigures(problem)), resolve);
   let rendered = demoteHeadings(mdText(placed.text));
   // Wrappers are generated from exact source passages; raw HTML remains forbidden in content.
   // Collect source ranges before inserting markup: overlapping labels such as
@@ -701,7 +716,7 @@ export function archiveNoteLeaks(mdx) {
   const text = String(mdx);
   const box = /<Warning title="Непълно решение">\n([\s\S]*?)\n<\/Warning>/.exec(text);
   const caveat = /<Warning title="Бележка към темата">\n([\s\S]*?)\n<\/Warning>/.exec(text);
-  const hasSolutionText = text.includes('<Spoiler title="Покажи официалното решение">');
+  const hasSolutionText = /<Spoiler title="Покажи (?:официалното решение|решението от архива)">/.test(text);
   const leaks = [];
   if (box && incompleteNoteText(box[1], hasSolutionText) !== box[1]) leaks.push(box[1]);
   if (caveat && box && caveatNoteText(caveat[1], true) == null && visitorNoteText(caveat[1]) != null) leaks.push(caveat[1]);
@@ -1057,6 +1072,7 @@ export function titleWithoutPoints(title, points) {
 const keepUnits = t => String(t).replace(/(\d)[ \t]+(?=(?:г\.|т\.)(?![\p{L}\p{N}]))/gu, '$1 ');
 
 export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
+  lyricsPaper = paper; // linkLyrics: the paper whose originals a lyrics note links to
   const lines = [];
   lines.push('---');
   lines.push(`id: ${problem.id}`);
@@ -1180,14 +1196,14 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
     if (sol?.incomplete) {
       // without the transcriber's note: a paper with a solutions file has a solution the page does not show yet
       // (nof-2019-iii-9 p3: "…предстои да бъде транскрибирано при верификацията")
-      const standard = sol.statement ? 'Официалното решение е непълно.'
+      const standard = sol.attribution === 'archive' ? 'Решението от архива е непълно.' : sol.statement ? 'Официалното решение е непълно.'
         : paper.solutionSource?.archiveKey ? 'Официалното решение не е транскрибирано — вижте файла с решенията в Архива (връзката е в края на страницата).'
         : NO_ARCHIVE_SOLUTION_LINE;
       const note = incompleteNoteText(sol.incompleteReason, !!(sol.statement || sol.sections?.length));
       lines.push('<Warning title="Непълно решение">', note ? mdText(note) : standard, '</Warning>', '');
     }
-    if (sol?.statement || sol?.sections?.length) lines.push('<Spoiler title="Покажи официалното решение">', '');
-    else if (solutionFigures.length) lines.push('<Spoiler title="Покажи фигурите от официалното решение">', '');
+    if (sol?.statement || sol?.sections?.length) lines.push(sol.attribution === 'archive' ? '<Spoiler title="Покажи решението от архива">' : '<Spoiler title="Покажи официалното решение">', '');
+    else if (solutionFigures.length) lines.push(sol?.attribution === 'archive' ? '<Spoiler title="Покажи фигурите от решението в архива">' : '<Spoiler title="Покажи фигурите от официалното решение">', '');
     if (sol?.statement || solutionFigures.length) lines.push(...fieldLines('solution/statement', sol?.statement, t => sourceText(t, problem, resolveSolution)));
     lines.push(...sectionLines(sol?.sections, problem, resolveSolution, true));
     for (const fig of unanchored(solutionFigures)) lines.push(figureMarkdown(fig), '');
@@ -1209,7 +1225,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
     lines.push(`Оригинал в Архива: [${src.split('/').pop()}](${withPage(archiveUrl(paper.subject, src), sourcePage(paper, problem, 'problems'), src)})`);
     if (paper.solutionSource?.archiveKey) {
       const s = paper.solutionSource.archiveKey;
-      lines.push(`· официални решения: [${s.split('/').pop()}](${withPage(archiveUrl(paper.subject, s), sourcePage(paper, problem, 'solutions'), s)})`);
+      lines.push(`· ${sol?.attribution === 'archive' ? 'решение от архива' : 'официални решения'}: [${s.split('/').pop()}](${withPage(archiveUrl(paper.subject, s), sourcePage(paper, problem, 'solutions'), s)})`);
     }
     for (const supplement of Object.values(paper.supplementarySources || {})) {
       const s = supplement.archiveKey;

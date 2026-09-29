@@ -183,6 +183,18 @@ function joinAdjacentFragments(page, fields, known) {
     tail.joined = true; tail.skip = true;
   }
 }
+// Song lyrics a paper quotes are copyrighted and are never transcribed: the text holds this note naming the page they
+// are printed on (problems-to-site.mjs links it to that page of the original), and tx.omitted declares the page
+// ({document, page, reason: "lyrics", note}). An omission on a declared page of a paper whose text carries the note
+// for that page is information, not a defect (samara-2018-i-8-9: five song fragments in problem 1's solution).
+export const LYRICS_NOTE = /\[Текстът на песента е в оригинала: (условието|решенията), с\. (\d+)\.\]/g;
+function lyricsPages(c) {
+  const noted = new Set();
+  walkStrings(c, (p, s) => { if (/\/tx\b/.test(p)) return; for (const m of String(s).matchAll(LYRICS_NOTE)) noted.add(`${m[1] === 'решенията' ? 'solutions' : 'problems'}|${m[2]}`); });
+  const out = new Set();
+  for (const o of c?.tx?.omitted || []) if (o?.reason === 'lyrics' && Number.isInteger(o.page) && noted.has(`${o.document}|${o.page}`)) out.add(`${o.document}|${o.page}`);
+  return out;
+}
 function candidateFields(c, hasSolutions) {
   const fields = [];
   walkStrings(c, (p, s) => {
@@ -195,7 +207,8 @@ function candidateFields(c, hasSolutions) {
     // (nao-2018-ii-7-8, nao-2020-i-5-6, nao-2021-iv-ml-prak: „Гравюра“, „Снимка“, „Изображение“ printed nowhere).
     // Only a real image (a url with "/" or ":") has that caption line: a figure-id placeholder ("![](p1-fig1)") does
     // not, and the bold heading printed after it was dropped as a caption (nof-2020-iii-7, 2026-09-26).
-    const noImages = s.replace(/(?:!\[[^\]\n]*\]\([^)\n]*[/:][^)\n]*\)[ \t|]*)+\n+[ \t]*(\*{1,2}|_{1,2})[^\n*_]{1,200}\1[ \t]*(?=\n|$)/g, ' ').replace(/!\[[^\]\n]*\]\([^)\n]*\)/g, ' ');
+    // a lyrics note („[Текстът на песента е в оригинала: решенията, с. 12.]“, see LYRICS_NOTE) is the site's, not printed
+    const noImages = s.replace(LYRICS_NOTE, ' ').replace(/(?:!\[[^\]\n]*\]\([^)\n]*[/:][^)\n]*\)[ \t|]*)+\n+[ \t]*(\*{1,2}|_{1,2})[^\n*_]{1,200}\1[ \t]*(?=\n|$)/g, ' ').replace(/!\[[^\]\n]*\]\([^)\n]*\)/g, ' ');
     // an environment name is markup, never a printed word (\begin{cases}, \begin{aligned}, \begin{array}{cc}: agents
     // rewrote correct LaTeX to get past „cases“/„aligned“ flagged as unprinted, idpho-2020-theory-ipho-q2, ipho-2015-theory-1)
     const segments = splitMath(noImages);
@@ -471,6 +484,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
     // a split read (D-P30: a paper over 30 pages read in chunks, tx.splitRead) declares the pages read so far; an empty
     // list means none of this document yet (the statements chunk before any solution page) — only a split read may say so
     const splitRead = candidate?.tx?.splitRead === true;
+    const lyrics = lyricsPages(candidate);
     const omissionPages = Array.isArray(declared) && (declared.length || splitRead) && declared.every(Number.isInteger) && d.pages && declared.length < d.pages ? new Set(declared) : null;
     const joinFields = fields.filter(f => f.doc === doc || shared.test(f.path));
     // a recorded misspelling broken at a line end ("обрато-" / "пропорционална") joins like a transcribed word
@@ -591,11 +605,14 @@ export function textLayerCheck(candidate, manifest, paperId) {
           if (text.length >= 20 && text.replace(/[\p{L}\s]/gu, '').length > 0.3 * text.length) { run = []; return; }
           const sibling = siblingHolding([...text.matchAll(WORD)].map(m => m[0]), run.map(t => t.raw), d.key, paperId);
           if (sibling) { result.notes.push(`${doc} p.${pg.page}: „${text.slice(0, 120)}“ is transcribed in ${sibling}, which shares this source file — not an omission of ${paperId}`); run = []; return; }
+          // song lyrics the paper declares left out (the passage itself is not quoted here: receipts are published)
+          if (lyrics.has(`${doc}|${pg.page}`)) { result.notes.push(`${doc} p.${pg.page}: ${run.length} printed words not transcribed — song lyrics, declared in tx.omitted and linked from the text`); run = []; return; }
           info.omissions++;
           result.defects.push({ path: f?.path || null, document: doc, page: pg.page, severity: run.length >= 6 ? 'critical' : 'major', kind: 'omission', source: 'text-layer', confidence: f && !f.fallback ? 0.9 : 0.6,
             description: `Text-layer check: the printed passage „${text}“ (${doc} p.${pg.page}, printed line: „${lines.slice(0, 160)}“) does not appear in the transcription; restore it verbatim in its printed place${f?.fallback ? ' (field guessed from the problem heading)' : ''}.`, suggestedFix: null, words: run.map(t => t.raw) });
         } else for (const t of run) {
           if (t.w.length < 5 || problemIdx == null) continue; // before the first heading: masthead, instructions, grading notes — not transcribed prose
+          if (lyrics.has(`${doc}|${pg.page}`)) continue; // a word of declared song lyrics
           const line = byLine.get(t.line) || [];
           const content = line.filter(x => !isNeutral(x));
           if (content.length < 2 || content.filter(present).length < 0.5 * content.length) continue; // a formula line or lettering, not transcribed prose

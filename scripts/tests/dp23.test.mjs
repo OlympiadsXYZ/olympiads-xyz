@@ -114,6 +114,22 @@ test('a TeX layer: OT1 ligature codes read as letters, lost accents stand for th
   assert.deepEqual(r.defects, [], JSON.stringify(r.defects, null, 1));
 });
 
+test('song lyrics left out with the page note and declared in tx.omitted are information, not an omission (samara-2018-i-8-9)', t => {
+  const page1 = `Задача 1. \n${PRINTED.join('\n')}\nпервая строка условного куплета здесь идет\nвторая строка условного куплета здесь тоже\n`;
+  const { check } = sandbox(t, { page1 });
+  const note = '[Текстът на песента е в оригинала: условието, с. 1.]';
+  const declared = candidate({ statement: `${FIXED}\n\n${note}`, edits: [edit(), agreement] });
+  declared.tx.omitted = [{ document: 'problems', page: 1, reason: 'lyrics', note: 'test' }];
+  const r = check(declared);
+  assert.deepEqual(r.defects.filter(d => d.kind === 'omission' || /Текстът|песента/.test(d.description)), [], JSON.stringify(r.defects, null, 1));
+  assert.ok(r.notes.some(n => /song lyrics, declared in tx\.omitted/.test(n)) && !r.notes.some(n => /куплета/.test(n)), 'the note counts words, never quotes them');
+  // without the declaration (or without the note in the text) the passage is an omission as before
+  const undeclared = check(candidate({ statement: `${FIXED}\n\n${note}`, edits: [edit(), agreement] }));
+  assert.ok(undeclared.defects.some(d => d.kind === 'omission'));
+  const noNote = candidate({ statement: FIXED, edits: [edit(), agreement] }); noNote.tx.omitted = [{ document: 'problems', page: 1, reason: 'lyrics' }];
+  assert.ok(check(noNote).defects.some(d => d.kind === 'omission'));
+});
+
 test('(c) the same fixes without a record stay defects with the restore-the-print mechanical fix', t => {
   const { check } = sandbox(t);
   const r = check(candidate());

@@ -328,6 +328,15 @@ test('a placeholder whose description holds brackets shows its figure in place (
   assert.ok(mdx.indexOf(url('p1-fig2')) > mdx.indexOf('Determine the reaction order') && mdx.indexOf(url('p1-fig2')) < mdx.indexOf('End.'));
 });
 
+test('a lyrics note links to its page of the original PDF (problems or solutions document)', async () => {
+  const { linkLyrics } = await import('../problems-to-site.mjs');
+  const paper = { subject: 'astronomy', source: { archiveKey: 'Астрономия/Състезания/Samara/2018/Tasks.pdf' }, solutionSource: { archiveKey: 'Астрономия/Състезания/Samara/2018/Decisions.pdf' } };
+  const out = linkLyrics('Название: «X». [Текстът на песента е в оригинала: решенията, с. 12.] Месяц — Луна.', paper);
+  assert.match(out, /\*\[Текстът на песента е в оригинала: решенията, с\. 12 ↗\]\(https:\/\/www\.olympiads\.xyz\/archive\/astronomy\/[^)]*Decisions\.pdf#page=12\)\*/);
+  assert.match(linkLyrics('[Текстът на песента е в оригинала: условието, с. 8.]', paper), /Tasks\.pdf#page=8\)/);
+  assert.equal(linkLyrics('no note here', paper), 'no note here');
+});
+
 test('emphasis stuck between punctuation and a letter pairs; lone and escaped asterisks stay literal', async () => {
   const { emphasisFlanking } = await import('../problems-to-site.mjs');
   const f = t => emphasisFlanking(t).replace(/ /g, '⍽');
