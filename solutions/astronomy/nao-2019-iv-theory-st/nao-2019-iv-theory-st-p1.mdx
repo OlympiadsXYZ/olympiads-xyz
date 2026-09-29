@@ -1,0 +1,111 @@
+---
+id: nao-2019-iv-theory-st-p1
+source: 'НОА 2019, IV кръг, Старша възраст'
+title: 'Задача 1. Метеорна фотометрия'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/NAO/2019/nao-2019-iv-theory-st.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T20:56:15.219Z'
+verifier: 'single-pass'
+---
+
+*17 юли 2019 г.*
+
+## Условие
+
+Опитният наблюдател на променливи звезди Денислав Бончев разглежда снимка, направена в Кавказката планинска обсерватория на Московския университет. Снимката е направена без водещо устройство с време на експонация 10 минути. На нея се виждат звездни следи и един метеор, чиято продължителност е била 2 секунди. Денислав решава да определи звездната величина на метеора, макар да разбира, че това е по-различно от фотометрията на променливите звезди.
+
+При обработката на изображението по показанията на пикселите са получени стойности за осветеността в четири малки области, изразени в условни единици:
+
+| Област № | 1 | 2 | 3 | 4 |
+| --- | --- | --- | --- | --- |
+| Осветеност в условни единици | 213 | 225 | 88 | 190 |
+
+В област 3 е измерена фоновата осветеност, създавана от нощното небе. Следата, в която се намира област 2, е оставена от звезда със звездна величина $2.8^{\mathrm m}$.
+
+[[figure:p2-meteor]]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '2594px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nao-2019-iv-theory-st/p1-fig1.webp" alt="Оригинална снимка на звездни следи и метеор с означени области 1–4." width="4053" height="2772" loading="lazy" decoding="async" />
+<figcaption>Снимка към задача 1. Областите 1–4 са означени в оригинала.</figcaption>
+</figure>
+
+**а)** Размерите на цифровата матрица на фотоапарата са $22.5\times15.0\,\mathrm{mm}$. Определете фокусното разстояние на обектива.
+
+**б)** Определете звездната величина на метеора.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Во-первых, заметим, что треки звёзд почти не искривлены. Значит, они находятся довольно близко к экватору и $\cos\delta$ можно пренебречь. За 10 минут звёзды проходят
+
+$$
+\alpha=\frac{10^{\mathrm m}}{23^{\mathrm h}56^{\mathrm m}4^{\mathrm s}}\cdot360^\circ=2^\circ30.5'.
+$$
+
+Теперь определяем, что большая сторона кадра – $9^\circ36.5'$. А меньшая $6^\circ23.3'$. Как известно, поле зрения объектива
+
+$$
+\gamma=2\operatorname{arctg}\frac{l}{2f},
+$$
+
+где $l$ – размер матрицы и $f$ – фокусное расстояние. Отсюда находим $f$ для каждой стороны кадра и усредняем:
+
+$$
+f_1=\frac{l}{2\operatorname{tg}(\gamma/2)}\approx134\text{ мм},
+$$
+
+$$
+f_2\approx135\text{ мм}.
+$$
+
+135 мм – очень распространённое фокусное расстояние для фотообъективов.
+
+Теперь звёздные величины. Трек метеора в 2,65 раза короче трека звезды. Из таблицы видим, что он в
+
+$$
+\frac{190-88}{225-88}\approx0{,}74
+$$
+
+раза интенсивнее (нужно учесть фон неба!). Плюс трек звезды экспонировался в 300 раз дольше. Следовательно поток от метеора составляет $\eta$ потока от звезды.
+
+$$
+\eta=\frac{300}{2.65}\cdot\frac{190-88}{225-88}\approx84{,}3,
+$$
+
+$$
+\Delta m=-2{,}5\lg\eta=-4{,}8^{\mathrm m}.
+$$
+
+Соответственно звёздная величина метеора примерно: $-2^{\mathrm m}$.
+
+<ProblemSection id="solution-source-note">
+
+### Бележка към източника
+
+В официалния сниман сборник решението на тази задача е на руски; езикът е запазен. За нея няма отпечатани точки или отделни критерии в предоставените страници.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [a19-IV-teorST1.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST1.jpg)
+· допълнителни данни: [a19-IV-teorST2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST2.jpg)
+· допълнителни данни: [a19-IV-teorST3.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST3.jpg)
+· допълнителни данни: [a19-IV-teorST4.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST4.jpg)
+· допълнителни данни: [a19-IV-teorST5.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST5.jpg)
+· допълнителни данни: [a19-IV-teorST6.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST6.jpg)
+· допълнителни данни: [a19-IV-teorST7.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST7.jpg)
+· допълнителни данни: [a19-IV-teorST8.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST8.jpg)
+· допълнителни данни: [IMG_20190719_144821.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144821.jpg)
+· допълнителни данни: [IMG_20190719_144834.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144834.jpg)
+· допълнителни данни: [IMG_20190719_144852.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144852.jpg)
+· допълнителни данни: [IMG_20190719_144902.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144902.jpg)
+· допълнителни данни: [IMG_20190719_144916.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144916.jpg)
+· допълнителни данни: [IMG_20190719_144932.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144932.jpg)
+· допълнителни данни: [IMG_20190719_144945.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144945.jpg)
+· допълнителни данни: [IMG_20190719_145009.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_145009.jpg)

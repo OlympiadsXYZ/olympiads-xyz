@@ -5,17 +5,18 @@ title: 'Задача 1. D1. Photometric comparison of surveys'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2024/ioaa-2024-data-analysis-examination-4be56bf77fe045b9b48eb5cc0c83d0fa-preview-1.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:09:59.170Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T20:55:00.189Z'
+verifier: 'single-pass'
 ---
 
 *Data Analysis Examination, English (Official) — IOAA 2024, Rio de Janeiro, Brazil · 17 август 2024 г. · 75 т.*
 
 <Warning title="Бележка към темата">
-Official solutions are missing from the archive; answers are not provided.
+The archived question paper assigns 25 and 15 points to D2(a,b), whereas both official solution/marking editions assign 20 and 20. The later typeset marking scheme uses 12.5/14 per SDSS point and 12.5/12 per DES point; the other archived rubric interchanges these denominators. The earlier solution statement omits the absolute values in D2(d), which the question and typeset key include. Printed numerical values and ranges are retained: the DES intercept range is printed in descending order, and the worked-key table gives 21.2540 for Table 2 ID 5 whereas the question gives 21.2524. Blank graph paper, Detailed Worksheets and summary Answer Sheet mentioned in the instructions were not found in the archived source pack. The earlier key describes the z-axis as pointing toward angular momentum; the typeset key says antiparallel. The typeset wording is retained. The typeset key repeats the cluster name as VW-CL160 in its question table, while the original question and calculated-values table have VVV-CL160.
 </Warning>
 
-## Условие
+<details>
+<summary>Указания</summary>
 
 1. The Data Analysis competition will be 3 hours in duration and is marked out of a total of 150 points.
 
@@ -44,6 +45,10 @@ Official solutions are missing from the archive; answers are not provided.
 9. At the end of the competition you must stop writing immediately. Sort and put your Summary Answer Sheets, Graph Papers, and Detailed Worksheets in one stack. Put all other papers in another stack. You are not allowed to take any sheet of paper out of the examination area.
 
 10. Wait at your table until your envelope is collected. Once all envelopes are collected, your student guide will escort you out of the competition room.
+
+</details>
+
+## Условие
 
 You are an astronomer working with large photometric surveys, such as the Sloan Digital Sky Survey (SDSS) and the Dark Energy Survey (DES), both of which have your host, Observatório Nacional, as a participant. SDSS used a 2.5 m telescope in Apache Point, USA, during the 2000s, and DES used a 4 m telescope in Cerro Tololo, Chile, from 2013 to 2019. Even though they mostly covered different hemispheres of the sky, they had an equatorial region in common known as Stripe 82 that you can use to compare and calibrate the photometry of different data sets, like SDSS and DES.
 
@@ -97,12 +102,176 @@ Table 2:
 
 **(e)** Using the matched table from part (d), plot the $g$-band magnitude of each survey against the other, Table 1 on $x$-axis, and Table 2 on $y$-axis using the millimetre (linear) paper marked as Graph 2. Draw on error bars for each point in both horizontal and vertical directions, using values **double** err $m_g$ (known as a $2\sigma$ uncertainty). From your graph, identify the stars that would be suitable for photometric calibration between the two surveys and write down their correspondings IDs from Table 1. **[15 т.]**
 
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- (a) Table 1: DES; Table 2: SDSS. (b) SDSS: $A=0.2780$, $B=-7.3108$; DES: $A=0.4063$, $B=-10.7597$. (c) SDSS: $S/N=22$; DES: $S/N=106$. (d) Matching IDs $(ID_1,ID_2)$: $(3,8),(9,6),(4,13),(6,1),(12,9),(2,7),(8,11)$. (e) Table 1 IDs 8 and 9 for zero offset; 2, 3, 4 and 6 for non-zero offset.
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-solution-a">
+
+### (a)
+
+DES is Table 1 and SDSS Table 2, since faint stars will have higher uncertainties. SDSS uses a smaller telescope (2.5 m) than DES (4 m), hence, it is typically shallower and has larger errors. Just looking at the error distribution should be enough to tell who has larger errors.
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-b">
+
+### (b)
+
+The linear regression of each curve:
+
+[[fig:p1-sol-fig1]]
+
+The reported parameters are:
+
+**SDSS:**
+
+$$
+\log_{10}(\operatorname{err}m_g)=A\cdot m_g+B
+$$
+
+$A=0.2780$ (acceptable from 0.2502 to 0.3058 which is within 10% range of the fit)
+
+$B=-7.3108$ (acceptable from -8.0419 to -6.5797 which is within 10% range of the fit)
+
+**DES:**
+
+$$
+\log_{10}(\operatorname{err}m_g)=A\cdot m_g+B
+$$
+
+$A=0.4063$ (acceptable from 0.3657 to 0.4470 which is within 10% range of the fit)
+
+$B=-10.7597$ (acceptable from -10.2217 to -11.2977 which is within 10% range of the fit)
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '96%', '--fig-max': '615px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2024-data-analysis-examination-4be56bf77fe045b9b48eb5cc0c83d0fa-preview-1/p1-sol-fig1.png" alt="Semi-logarithmic magnitude-error plots for DES and SDSS with fitted lines." width="1921" height="1453" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-c">
+
+### (c)
+
+Using that $S/N\sim1/\operatorname{err}m_g$ and above fits we can arrive at the following:
+
+**SDSS:** $\log_{10}(\operatorname{err}m_g)=0.2780\cdot21.5-7.3108\ \longrightarrow\ \operatorname{err}m_g=0.0464$
+
+**DES:** $\log_{10}(\operatorname{err}m_g)=0.4063\cdot21.5-10.7597\ \longrightarrow\ \operatorname{err}m_g=0.0095$
+
+Accepted answers follow below.
+
+| | err | S/N |
+|---|---|---|
+| SDSS err at 21.5 mag | 0.05 | **22** (acceptable from 19.8 to 24.2, within 10% range of the result) |
+| DES err at 21.5 mag | 0.01 | **106** (acceptable from 95.4 to 116.6, within 10% range of the result) |
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-d">
+
+### (d)
+
+One tip for this question is that the student should realize that the SDSS RA coordinate is sorted, so it can be used as the reference for the scanning of DES coordinates to perform the match. These are the stars that can be matched between catalogs:
+
+| $ID_1$ | RA (deg) | Dec (deg) | $m_g$ (mag) | err $m_g$ (mag) | $ID_2$ | RA (deg) | Dec (deg) | $m_g$ (mag) | err $m_g$ (mag) | Sep (arcsec) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 3 | 0.064911 | 0.026395 | 21.3931 | 0.0084 | 8 | 0.064910 | 0.026419 | 21.6428 | 0.0488 | 0.08475 |
+| 9 | 0.057422 | 0.076006 | 21.8897 | 0.0127 | 6 | 0.057414 | 0.075999 | 21.8884 | 0.0578 | 0.03724 |
+| 4 | 0.098343 | 0.054871 | 21.3934 | 0.0088 | 13 | 0.098343 | 0.054854 | 21.6542 | 0.0499 | 0.06186 |
+| 6 | 0.006188 | 0.066928 | 21.5490 | 0.0088 | 1 | 0.006167 | 0.066874 | 21.9020 | 0.0576 | 0.2076 |
+| 12 | 0.071089 | 0.091053 | 21.4390 | 0.0098 | 9 | 0.071102 | 0.091058 | 21.9259 | 0.0751 | 0.05009 |
+| 2 | 0.064741 | 0.021568 | 21.1111 | 0.0067 | 7 | 0.064745 | 0.021583 | 21.3634 | 0.0422 | 0.0565 |
+| 8 | 0.076715 | 0.079496 | 21.4808 | 0.0089 | 11 | 0.076709 | 0.079474 | 21.5303 | 0.0476 | 0.08276 |
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-e">
+
+### (e)
+
+The figure of g magnitude of DES vs SDSS should look like this with the best linear fit:
+
+[[fig:p1-sol-fig2]]
+
+[[fig:p1-sol-fig3]]
+
+The student should identify the stars that are closest to the one-to-one line ($x=y$) between surveys. This could be with a zero offset, or a non-zero offset. The **two** stars that would be suitable for photometric calibration with zero offset are the ones with ID's **8 and 9** of Table 1 (DES). The **four** stars that would be suitable for photometric calibration with non-zero offset are the ones with ID's **2, 3, 4 and 6** of Table 1 (DES).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '97.2%', '--fig-max': '622px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2024-data-analysis-examination-4be56bf77fe045b9b48eb5cc0c83d0fa-preview-1/p1-sol-fig2-v2.png" alt="Matched magnitudes with double error bars and zero-offset calibration line." width="1944" height="1424" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '97.2%', '--fig-max': '622px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2024-data-analysis-examination-4be56bf77fe045b9b48eb5cc0c83d0fa-preview-1/p1-sol-fig3-v2.png" alt="Matched magnitudes with double error bars and non-zero-offset calibration line." width="1944" height="1424" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-marking-general">
+
+### Marking scheme — General Rules
+
+These are general guidelines for the grading of all problems. All of the rules listed below refer to deductions on specific items in the marking scheme.
+
+| | |
+|---|---|
+| Using less than 70% of the total area for the graph | Deduct 20% of the marks for correct graph |
+| Non-constant scale for axis | Deduct 20% of the marks for correct graph |
+| Missing or incorrect labels or units in the axes | Deduct 20% of the marks for correct graph |
+
+</ProblemSection>
+
+<ProblemSection id="solution-marking-scheme">
+
+### Marking scheme
+
+**(a) 5 points**
+
+- **5 points:** Realize that the data from the left table is from DES, whereas the one from the right table is from SDSS.
+
+**(b) 35 points**
+
+- **12.5 points:** Correct graph for SDSS data using semi-log paper. $\frac{12.5}{14}$ points will be awarded for each correctly placed point.
+- **12.5 points:** Correct graph for DES data using semi-log paper. $\frac{12.5}{12}$ points will be awarded for each correctly placed point.
+- **5 points:** Correct parameters A and B for SDSS data. 2.5 points will be awarded for each correct parameter within a 10% range of the correct fit.
+- **5 points:** Correct parameters A and B for DES data. 2.5 points will be awarded for each correct parameter within a 10% range of the correct fit.
+
+**Note:** If the student uses a graphical method to obtain parameters A and B but does not draw support lines, then no marks are given. As graphical methods can depart from analytical.
+
+**(c) 5 points**
+
+- **2.5 points:** Obtain correct values for the Signal to Noise ratio ($S/N$) within a 10% range for SDSS.
+- **2.5 points:** Obtain correct values for the Signal to Noise ratio ($S/N$) within a 10% range for DES.
+
+**(d) 15 points**
+
+- **15 points:** Match correctly the IDs of the data sets. $\frac{15}{7}$ points for each match.
+
+**(e) 15 points**
+
+- **12 points:** Correct graph using millimeter paper. $\frac{12}{7}$ points will be awarded for each correctly placed point and double error bars.
+- **3 points:** Correct identification of the stars that would be suitable for photometric calibration between the two surveys using ID's of Table 1 (DES).
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [data_analysis_examination_4be56bf77fe045b9b48eb5cc0c83d0fa_preview (1).pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2024/Exams/data_analysis_examination_4be56bf77fe045b9b48eb5cc0c83d0fa_preview%20(1).pdf#page=2)
+· официални решения: [data analysis solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2024/Solutions/data%20analysis%20solutions.pdf#page=1)
+· допълнителни данни: [data analysis marking scheme.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2024/Solutions/data%20analysis%20marking%20scheme.pdf)
+· допълнителни данни: [IOAA_2024_Data_Analysis.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2024/Data%20Analysis/IOAA_2024_Data_Analysis.pdf)
+· допълнителни данни: [IOAA_2024_Data_Analysis_Solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2024/Data%20Analysis/IOAA_2024_Data_Analysis_Solutions.pdf)
+· допълнителни данни: [IOAA_2024_Data_Analysis_Marking_Scheme.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2024/Data%20Analysis/IOAA_2024_Data_Analysis_Marking_Scheme.pdf)

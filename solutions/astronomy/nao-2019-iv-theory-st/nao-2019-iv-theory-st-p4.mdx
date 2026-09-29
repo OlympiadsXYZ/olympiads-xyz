@@ -1,0 +1,176 @@
+---
+id: nao-2019-iv-theory-st-p4
+source: 'НОА 2019, IV кръг, Старша възраст'
+title: 'Задача 4. Геометрично албедо'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/NAO/2019/nao-2019-iv-theory-st.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T20:56:15.219Z'
+verifier: 'single-pass'
+---
+
+*17 юли 2019 г.*
+
+## Условие
+
+Геометричното албедо $A$ на тяло в Слънчевата система е параметър, за който е в сила съотношението:
+
+$$
+E=\frac{AP}{\pi r^2},
+$$
+
+където $P$ е мощността, с която слънчевите лъчи осветяват тялото, а $E$ е осветеността, която отразените от тялото лъчи създават на разстояние $r$ в посока обратно към Слънцето. Повечето известни транснептунови обекти имат високи стойности на геометричното албедо (напр. Хаумея: 0.80, Ерида: 0.96). Нека приемем, че всички транснептунови обекти със звездна величина до $23.0\,\mathrm{mag}$ вече са открити. Нека разгледаме хипотетичен транснептунов обект на име X (който все още не е открит), с размери и маса като тези на Земята и геометрично албедо 0.90, който се движи по кръгова орбита около Слънцето.
+
+**а)** На какво минимално разстояние (в AU) може да бъде обектът X от нас?
+
+**б)** Наблюдаваме обекта X в близкия инфрачервен диапазон с космически телескоп с диаметър на главното огледало $D$. Оценете минималната стойност на $D$, при която можем да засечем обекта да се отмества спрямо звездите на две последователни 20-минутни експозиции.
+
+**в)** Нека разгледаме обект Y, който се движи около Слънцето още по-далече от X по орбита с ексцентрицитет 0.40, има сферична форма и геометрично албедо 0.70. Наблюдаван от спътника си Z, обектът Y изглежда 900 пъти по-слаб от Слънцето, когато е в максимален блясък. Спътникът Z се движи по кръгова орбита с орбитален период $11.7^{\mathrm d}$. Каква е средната плътност на обекта Y?
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-solution-a">
+
+### а) Минимално разстояние
+
+Разглеждаме граничния случай, в който звездната величина на X е $m_X=23.0\,\mathrm{mag}$.
+
+Сравняваме я със слънцето (светимост $L$), гледано от Земята:
+
+$$
+E_X=\frac{L}{4\pi(r+1\,\mathrm{AU})^2}\frac{\pi R^2A}{\pi r^2},
+$$
+
+$$
+E_{\mathrm{SOL}}=\frac{L}{4\pi(1\,\mathrm{AU})^2}
+$$
+
+са осветеностите от обекта X и от Слънцето.
+
+$$
+m_X=m_{\mathrm{SOL}}-2.5\lg(E_X/E_{\mathrm{SOL}})=m_{\mathrm{SOL}}-2.5\lg\frac{A(1\,\mathrm{AU})^2R^2}{r^2(r+1)^2},
+$$
+
+$$
+\frac{A^{1/2}(1\,\mathrm{AU})R}{r(r+1\,\mathrm{AU})}=10^{0.2\Delta m}.
+$$
+
+Можем да решим квадратното уравнение или просто да приемем, че $1\,\mathrm{AU}\ll r$ и получаваме за минималното разстояние $r=600\,\mathrm{AU}$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-b">
+
+### б) Диаметър на огледалото
+
+На $600\,\mathrm{AU}$ орбиталната скорост е много ниска и ъгловото отместване би било основно поради орбиталното движение на Земята, когато тя е в опозиция. Скоростта на земята е
+
+$$
+v_E=29.8\,\mathrm{km/s}.
+$$
+
+Ъгловата скорост на неподвижен обект на $600\,\mathrm{AU}$ поради това движение е
+
+$$
+\omega=v_E/r.
+$$
+
+За $t=20\,\mathrm{min}$ отместването е $\theta=\omega t=0.082''$.
+
+С космически телескоп разделителната способност ще е дифракционна. В близкия инфрачервен диапазон ($\lambda\sim1\,\mathrm{\mu m}$) тя е:
+
+$$
+\theta=1.22\lambda/D,
+$$
+
+$$
+D=3\,\mathrm m
+$$
+
+(до към $6\,\mathrm m$ при стойност $\lambda\sim2\,\mathrm{\mu m}$).
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-c">
+
+### в) Средна плътност
+
+Максимален блясък обект Y ще има в пълна фаза. Осветеностите, които Слънцето и обект Y създават на обект Z са съответно:
+
+$$
+E_S=\frac{L}{4\pi r_Y^2},
+$$
+
+$$
+E_Y=\frac{L}{4\pi r_Y^2}\frac{\pi R_Y^2A}{\pi r_Z^2}.
+$$
+
+Дадено е $E_S/E_Y=900$.
+
+$$
+\frac{r_Z^2}{R_Y^2A}=900\Rightarrow r_Z^3=30^3A^{3/2}R_Y^3.
+$$
+
+Ако орбиталният период на Z е $P_Z$, а масата на Y е $M_Y$, от III закон на Кеплер
+
+$$
+\frac{r_Z^3}{P_Z^2}=\frac{GM_Y}{4\pi^2}.
+$$
+
+Заместваме $r_Z^3$ и групираме:
+
+$$
+\frac{4\pi^2 30^3A^{3/2}}{GP_Z^2}=\frac{M_Y}{R_Y^3}.
+$$
+
+В същото време от дефиницията за средна плътност на кълбо
+
+$$
+\frac{M_Y}{R_Y^3}=\frac43\pi\rho.
+$$
+
+Заместваме и
+
+$$
+\frac{4\pi^2 30^3A^{3/2}}{GP_Z^2}=\frac43\pi\rho.
+$$
+
+Средната плътност е
+
+$$
+\rho=\frac{3\pi30^3A^{3/2}}{GP_Z^2}=2.19\,\mathrm{g/cm^3}.
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-source-note">
+
+### Бележки върху копието
+
+Ръкописните оценки са 4 т. за а), 5 т. за б) и 6 т. за в); в условието няма отпечатани точки. Формулата за $m_X$ запазва отпечатаното $(r+1)^2$, а следващият ред изписва $r+1\,\mathrm{AU}$. Знакът на експонентата $0.2\Delta m$ и означенията са запазени от оригинала.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [a19-IV-teorST1.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST1.jpg)
+· допълнителни данни: [a19-IV-teorST2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST2.jpg)
+· допълнителни данни: [a19-IV-teorST3.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST3.jpg)
+· допълнителни данни: [a19-IV-teorST4.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST4.jpg)
+· допълнителни данни: [a19-IV-teorST5.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST5.jpg)
+· допълнителни данни: [a19-IV-teorST6.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST6.jpg)
+· допълнителни данни: [a19-IV-teorST7.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST7.jpg)
+· допълнителни данни: [a19-IV-teorST8.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/a19-IV-teorST8.jpg)
+· допълнителни данни: [IMG_20190719_144821.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144821.jpg)
+· допълнителни данни: [IMG_20190719_144834.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144834.jpg)
+· допълнителни данни: [IMG_20190719_144852.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144852.jpg)
+· допълнителни данни: [IMG_20190719_144902.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144902.jpg)
+· допълнителни данни: [IMG_20190719_144916.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144916.jpg)
+· допълнителни данни: [IMG_20190719_144932.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144932.jpg)
+· допълнителни данни: [IMG_20190719_144945.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_144945.jpg)
+· допълнителни данни: [IMG_20190719_145009.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2019/2019-IV/NOA4_2019_%D1%81%D1%82%D0%B0%D1%80%D1%88%D0%B0/%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/IMG_20190719_145009.jpg)
