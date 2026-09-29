@@ -52,8 +52,12 @@ function run() {
     if (!publicationState(replacement, ledger).eligible) throw new Error('Replacement must be approved for its exact bytes');
     const aliases = new Set(replacement.data.problems.flatMap(p => (p.aliases || []).map(a => a.id)));
     if (record.data.problems.some(p => !aliases.has(p.id))) throw new Error('Replacement must preserve every former problem ID as an alias');
-    const entry = ledger.papers[record.data.paper.id];
-    if (!entry) throw new Error('Original publication record is required');
+    // An unapproved stored draft can also be a duplicate. Record its exact
+    // withheld revision without inventing a historical approval or review.
+    const entry = ledger.papers[record.data.paper.id] ||= {
+      kind: 'withheld', contentHash: record.contentHash,
+      recordedAt: new Date().toISOString(), reason: 'no-publication-record',
+    };
     entry.supersededBy = replacement.data.paper.id;
     entry.supersededReason = option('--reason');
     entry.supersededAt = new Date().toISOString();

@@ -57,6 +57,32 @@ function fixture(t) {
   };
   return { root, write, ledger, paper, receipt, start };
 }
+test('superseding an unpublished duplicate preserves its withheld history and requires approved replacement aliases', async t => {
+  const f = fixture(t);
+  const oldHash = f.paper('unpublished');
+  f.paper('replacement');
+  f.write('content/problem-publication.json', { version: 1, papers: {} });
+  const args = ['supersede', '--paper', 'unpublished', '--by', 'replacement', '--reason', 'Same printed questions; complete key retained.'];
+  assert.notEqual((await f.start(args).done).code, 0);
+  let replacement = JSON.parse(fs.readFileSync(path.join(f.root, 'content/problems/replacement.json')));
+  let replacementHash = sha256(fs.readFileSync(path.join(f.root, 'content/problems/replacement.json')));
+  assert.equal((await f.start(['approve', '--paper', 'replacement', '--receipt', f.receipt('replacement', replacementHash)]).done).code, 0);
+  assert.notEqual((await f.start(args).done).code, 0);
+  replacement.problems[0].aliases = [{ id: 'unpublished-p1' }];
+  f.write('content/problems/replacement.json', replacement);
+  replacementHash = sha256(fs.readFileSync(path.join(f.root, 'content/problems/replacement.json')));
+  assert.equal((await f.start(['approve', '--paper', 'replacement', '--receipt', f.receipt('replacement', replacementHash)]).done).code, 0);
+  const result = await f.start(args).done;
+  assert.equal(result.code, 0, result.stderr);
+  const entry = JSON.parse(fs.readFileSync(f.ledger)).papers.unpublished;
+  assert.equal(entry.kind, 'withheld');
+  assert.equal(entry.contentHash, oldHash);
+  assert.equal(entry.reason, 'no-publication-record');
+  assert.equal(entry.supersededBy, 'replacement');
+  assert.equal(entry.review, undefined);
+  assert.equal(sha256(fs.readFileSync(path.join(f.root, 'content/problems/unpublished.json'))), oldHash);
+});
+
 async function waitFor(predicate) {
   const deadline = Date.now() + 5_000;
   while (!predicate()) {
