@@ -8,10 +8,18 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { nativeImageCropInfo, writeNativeImageCrop, nativeImageCropEvidenceError } from '../tx/native-image-crop.mjs';
 import { IMAGE_RENDERER_FINGERPRINT } from '../tx/image-source.mjs';
-import { sha256File, figureEvidenceProblems, compileSchema, stripTx } from '../tx/lib.mjs';
+import { sha256File, figureEvidenceProblems, compileSchema, stripTx, normaliseCandidate } from '../tx/lib.mjs';
 
 const repo = fileURLToPath(new URL('../../', import.meta.url));
 const python = args => { const r = spawnSync('python3', args, { encoding: 'utf8' }); assert.equal(r.status, 0, r.stderr); return r.stdout; };
+test('renaming a solution figure retains native crop intent while clearing stale evidence', () => {
+  const fig = { id: 'velocity-curve', url: 'https://example.test/old.png', width: 1, height: 1, source: { page: 1 }, tx: { extraction: 'native-image-crop', document: 'supplement-1', page: 1, bbox: [100, 200, 900, 600], rotation: 90, file: 'old.png', sha256: 'stale' } };
+  const candidate = { paper: { id: 'zz-2099-native' }, problems: [{ id: 'zz-2099-native-p1', number: 1, statement: 'Question', solution: { statement: 'Answer', figures: [fig] } }] };
+  normaliseCandidate(candidate);
+  assert.equal(fig.id, 'p1-sol-fig1');
+  assert.deepEqual(fig.tx, { extraction: 'native-image-crop', document: 'supplement-1', page: 1, bbox: [100, 200, 900, 600], rotation: 90 });
+  for (const key of ['url', 'source', 'width', 'height']) assert.equal(fig[key], undefined);
+});
 function fixture(t, extension = '.png', mode = 'RGB', orientation = 1) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'native-crop-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));

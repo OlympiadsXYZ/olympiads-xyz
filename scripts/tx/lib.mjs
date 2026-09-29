@@ -918,7 +918,7 @@ export function normaliseCandidate(c, opts = {}) {
           const from = fig.id; fig.id = `${stem}${k}`; seen.add(fig.id);
           const rotation = fig.tx?.rotation !== undefined ? fig.tx.rotation : fig.source?.rotation;
           delete fig.url; delete fig.width; delete fig.height; delete fig.source;
-          if (fig.tx) fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(rotation !== undefined ? { rotation } : {}), ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}) };
+          if (fig.tx) fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(rotation !== undefined ? { rotation } : {}), ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}), ...(fig.tx.extraction === 'native-image-crop' ? { extraction: fig.tx.extraction } : {}) };
           changes.push(`/problems/${i}: figure id ${from ?? '(none)'} renamed to ${fig.id} (duplicate or missing); crop evidence cleared`);
         }
       }
