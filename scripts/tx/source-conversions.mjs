@@ -3,6 +3,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { xlsxCacheValid } from './xlsx-source.mjs';
 import { IMAGE_SOURCE_EXTENSION, imageCacheValid } from './image-source.mjs';
 import { PAGED_SOURCE_EXTENSION, pagedKind, pagedCacheValid } from './paged-source.mjs';
+import { zipCacheValid } from './zip-source.mjs';
 
 // Keep original archive files distinguishable from their derived page renderings
 // in portable receipts. The reader sees PDF pages, including converted images.
@@ -16,6 +17,11 @@ export function sourceConversionProblems(manifest, directory, recorded) {
   const errors = [];
   for (const [id, doc] of Object.entries(manifest.documents || {})) {
     const converted = doc.converted;
+    if (/\.zip$/i.test(doc.key || '') || converted?.from === 'zip-entry' || doc.archiveEntry) {
+      if (recorded !== undefined && !isDeepStrictEqual(recorded[id], converted)) errors.push(`conversion provenance mismatch for ${id} ZIP entry`);
+      if (!zipCacheValid(doc, directory)) errors.push(`original ZIP, selected entry or derived PDF no longer matches verified conversion for ${id}`);
+      continue;
+    }
     if (IMAGE_SOURCE_EXTENSION.test(doc.key || '') && converted?.from !== 'image') {
       errors.push(`missing original image conversion provenance for ${id}; rerun prepare`);
       continue;

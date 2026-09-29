@@ -1,5 +1,6 @@
 // Named supplementary PDFs retain their own source identity, pages and hashes.
 // Never concatenate them into the problems PDF and attribute them to its key.
+import { validArchiveEntry } from './zip-source.mjs';
 export const SUPPLEMENT_ID = /^supplement-[1-9][0-9]*$/;
 export const isDocumentId = id => id === 'problems' || id === 'solutions' || SUPPLEMENT_ID.test(id);
 
@@ -9,6 +10,8 @@ export function supplementKeys(value) {
   for (const [id, entry] of Object.entries(value)) {
     const key = typeof entry === 'string' ? entry : entry?.archiveKey;
     if (!SUPPLEMENT_ID.test(id) || typeof key !== 'string' || !key.trim()) throw new Error(`invalid supplement ${id}`);
+    if (typeof entry === 'object' && entry.archiveEntry !== undefined && (!/\.zip$/i.test(key) || !validArchiveEntry(entry.archiveEntry))) throw new Error(`invalid ZIP entry for ${id}`);
+    if (/\.zip$/i.test(key) && !validArchiveEntry(entry?.archiveEntry)) throw new Error(`ZIP supplement ${id} needs an explicit archiveEntry`);
     keys[id] = key;
   }
   return keys;
@@ -24,6 +27,7 @@ export function supplementarySourceErrors(candidate, manifest) {
     if (!SUPPLEMENT_ID.test(id)) errors.push({ path: field, message: 'invalid supplementary document id' });
     if (!Array.isArray(source.pages) || !source.pages.length || new Set(source.pages).size !== source.pages.length) errors.push({ path: field, message: 'supplementary pages must be a nonempty list of distinct page numbers' });
     if (manifest && (!doc || source.archiveKey !== doc.key)) errors.push({ path: field, message: 'does not match a prepared supplementary document' });
+    if (manifest && source.archiveEntry !== doc?.archiveEntry) errors.push({ path: field, message: 'archive entry does not match the prepared supplementary document' });
     for (const pg of Array.isArray(source.pages) ? source.pages : []) if (!Number.isInteger(pg) || pg < 1 || (doc && pg > doc.pages)) errors.push({ path: field, message: `page ${pg} outside ${id}` });
   }
   for (const id of Object.keys(manifest?.documents || {})) if (SUPPLEMENT_ID.test(id) && !sources[id]) errors.push({ path: '/paper/supplementarySources', message: `prepared ${id} is not declared in the paper` });

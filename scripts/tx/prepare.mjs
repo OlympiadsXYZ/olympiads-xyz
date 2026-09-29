@@ -15,11 +15,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { PAGE_RENDERER, PAGE_RENDER_HELPER, pageRenderArgs, previewGeometryError } from './page-render.mjs';
 import { supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
+import { inspectZipEntry, zipCacheValid, ZIP_RENDERER_FINGERPRINT } from './zip-source.mjs';
 import { XLSX_RENDERER_FINGERPRINT, xlsxCacheValid } from './xlsx-source.mjs';
 import { IMAGE_SOURCE_EXTENSION, IMAGE_RENDERER_FINGERPRINT, imageCacheValid } from './image-source.mjs';
 import { PAGED_SOURCE_EXTENSION, pagedKind, pagedFingerprint, pagedCacheValid } from './paged-source.mjs';
 import {
-  parseArgs, fail, run, resolvePaper, paperDir, manifestFile, readManifest, writeJson,
+  parseArgs, fail, run, resolvePaper, findContentFile, paperDir, manifestFile, readManifest, writeJson,
   sha256File, nowIso, RENDER_DPI, R2_REMOTE, which, ROOT, pdftotextBin,
 } from './lib.mjs';
 
@@ -150,9 +151,11 @@ fs.mkdirSync(path.join(dir, 'candidates'), { recursive: true });
 const previous = readManifest(paperId); // --force re-downloads and re-renders regardless of it
 // Explicit file wins; otherwise preserve declared sources from a prior prepare.
 // Use an empty object file to deliberately remove supplements from the manifest.
+const canonicalFile = findContentFile(paperId);
+const canonicalSupplements = canonicalFile ? JSON.parse(fs.readFileSync(canonicalFile)).paper.supplementarySources || {} : {};
 const supplementInput = args.supplements
   ? JSON.parse(fs.readFileSync(path.resolve(args.supplements), 'utf8'))
-  : { ...Object.fromEntries(Object.entries(previous?.documents || {}).filter(([id]) => SUPPLEMENT_ID.test(id)).map(([id, d]) => [id, d.key])), ...Object.fromEntries(Object.entries(keys).filter(([id]) => SUPPLEMENT_ID.test(id))) };
+  : { ...canonicalSupplements, ...Object.fromEntries(Object.entries(previous?.documents || {}).filter(([id]) => SUPPLEMENT_ID.test(id)).map(([id, d]) => [id, d.archiveEntry ? { archiveKey: d.key, archiveEntry: d.archiveEntry } : d.key])), ...Object.fromEntries(Object.entries(keys).filter(([id]) => SUPPLEMENT_ID.test(id) && !previous?.documents?.[id]?.archiveEntry && !canonicalSupplements[id]?.archiveEntry)) };
 for (const id of Object.keys(keys)) if (SUPPLEMENT_ID.test(id)) delete keys[id];
 Object.assign(keys, supplementKeys(supplementInput));
 const manifest = {
@@ -188,6 +191,7 @@ const converted = {}; // doc -> provenance of the derived PDF
 for (const doc of Object.keys(keys)) {
   const key = keys[doc];
   if (!key) continue;
+  const archiveEntry = supplementInput[doc]?.archiveEntry;
   const file = path.join(dir, 'src', `${doc}.pdf`);
   const prev = previous?.documents?.[doc];
   const isXlsx = /\.xlsx$/i.test(key);
@@ -199,13 +203,25 @@ for (const doc of Object.keys(keys)) {
   // Re-download when there is no file, when --force was given, when the archive
   // key differs from the one the cached file came from, or when the cached bytes
   // no longer match the manifest (a partial or tampered file).
-  const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || sha256File(file) !== prev.sha256
+  const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || prev.archiveEntry !== archiveEntry || sha256File(file) !== prev.sha256
+    || (archiveEntry && !zipCacheValid(prev, dir))
     || (isXlsx && !xlsxCacheValid(prev, file, workbook))
     || (isImage && !imageCacheValid(prev, file, imageSource))
     || (isPaged && !pagedCacheValid(prev, file, imageSource));
   if (stale) {
     fs.rmSync(file, { force: true });
-    if (isImage) {
+    if (archiveEntry) {
+      const archive = path.join(dir, 'src', `${doc}.zip`);
+      const extracted = path.join(dir, 'src', `${doc}${path.extname(archiveEntry).toLowerCase()}`);
+      run('rclone', ['copyto', `${R2_REMOTE}/${key}`, archive]);
+      const selected = inspectZipEntry(archive, archiveEntry, extracted);
+      if (/\.pdf$/i.test(archiveEntry)) { /* selected bytes already occupy file */ }
+      else {
+        const r = run('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(ROOT, 'scripts', 'tx', 'office2pdf.ps1'), '-In', extracted, '-Out', file], { allowFail: true });
+        if (r.status !== 0 || !fs.existsSync(file)) fail(`ZIP Word entry conversion failed for ${key} / ${archiveEntry}: ${(r.stderr || r.stdout || '').trim().slice(0, 300)}`);
+      }
+      converted[doc] = { from: 'zip-entry', archiveKey: key, entry: archiveEntry, sourceFile: `src/${doc}.zip`, sourceSha256: sha256File(archive), entryFile: `src/${doc}${path.extname(archiveEntry).toLowerCase()}`, entrySha256: selected.entrySha256, pdfSha256: sha256File(file), rendererFingerprint: ZIP_RENDERER_FINGERPRINT };
+    } else if (isImage) {
       // Keep each original image separate from its lossless page rendering.
       run('rclone', ['copyto', `${R2_REMOTE}/${key}`, imageSource]);
       const r = run('python3', [path.join(ROOT, 'scripts', 'tx', 'image-to-pdf.py'), imageSource, file], { allowFail: true });
@@ -290,7 +306,7 @@ for (const doc of Object.keys(keys)) {
   // a converted source keeps its record while the cached PDF is the one it produced
   const conv = converted[doc] || (prev?.converted && prev.key === key && prev.sha256 === sha256 ? prev.converted : null);
   manifest.documents[doc] = {
-    key, file: `src/${doc}.pdf`, sha256, bytes, pages: info.pages, pageSizes: info.pageSizes, producer: info.producer,
+    key, ...(archiveEntry ? { archiveEntry } : {}), file: `src/${doc}.pdf`, sha256, bytes, pages: info.pages, pageSizes: info.pageSizes, producer: info.producer,
     renderDpi: RENDER_DPI, pageRenderer: PAGE_RENDERER, pageRendererInfo, pageImages, text: `text/${doc}.txt`,
     textChars: text.trim().length, textDigits: (text.match(/\d/g) || []).length,
     downloaded,

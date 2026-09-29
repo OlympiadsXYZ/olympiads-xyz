@@ -1213,7 +1213,8 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
     }
     for (const supplement of Object.values(paper.supplementarySources || {})) {
       const s = supplement.archiveKey;
-      lines.push(`· допълнителни данни: [${s.split('/').pop()}](${archiveUrl(paper.subject, s)})`);
+      const label = supplement.archiveEntry ? mdText(`${s.split('/').pop()} / ${supplement.archiveEntry}`) : s.split('/').pop();
+      lines.push(`· допълнителни данни: [${label}](${archiveUrl(paper.subject, s)})`);
     }
     lines.push('');
   }
