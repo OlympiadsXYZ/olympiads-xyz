@@ -17,6 +17,7 @@ import { PAGE_RENDERER, PAGE_RENDER_HELPER, pageRenderArgs, previewGeometryError
 import { supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
 import { inspectZipEntry, zipCacheValid, ZIP_RENDERER_FINGERPRINT } from './zip-source.mjs';
 import { XLSX_RENDERER_FINGERPRINT, xlsxCacheValid } from './xlsx-source.mjs';
+import { XLS_RENDERER_FINGERPRINT, xlsCacheValid } from './xls-source.mjs';
 import { IMAGE_SOURCE_EXTENSION, IMAGE_RENDERER_FINGERPRINT, imageCacheValid } from './image-source.mjs';
 import { PAGED_SOURCE_EXTENSION, pagedKind, pagedFingerprint, pagedCacheValid } from './paged-source.mjs';
 import {
@@ -195,7 +196,8 @@ for (const doc of Object.keys(keys)) {
   const file = path.join(dir, 'src', `${doc}.pdf`);
   const prev = previous?.documents?.[doc];
   const isXlsx = /\.xlsx$/i.test(key);
-  const workbook = file.replace(/\.pdf$/, '.xlsx');
+  const isXls = /\.xls$/i.test(key);
+  const workbook = file.replace(/\.pdf$/, isXls ? '.xls' : '.xlsx');
   const isImage = IMAGE_SOURCE_EXTENSION.test(key);
   const isPaged = PAGED_SOURCE_EXTENSION.test(key);
   const imageSource = file.replace(/\.pdf$/, path.extname(key).toLowerCase());
@@ -206,6 +208,7 @@ for (const doc of Object.keys(keys)) {
   const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || prev.archiveEntry !== archiveEntry || sha256File(file) !== prev.sha256
     || (archiveEntry && !zipCacheValid(prev, dir))
     || (isXlsx && !xlsxCacheValid(prev, file, workbook))
+    || (isXls && !xlsCacheValid(prev, file, workbook))
     || (isImage && !imageCacheValid(prev, file, imageSource))
     || (isPaged && !pagedCacheValid(prev, file, imageSource));
   if (stale) {
@@ -246,20 +249,20 @@ for (const doc of Object.keys(keys)) {
       run('rclone', ['copyto', `${R2_REMOTE}/${key}`, office]);
       const r = run('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(ROOT, 'scripts', 'tx', 'office2pdf.ps1'), '-In', office, '-Out', file], { allowFail: true });
       if (r.status !== 0 || !fs.existsSync(file)) fail(`Word to PDF conversion failed for ${key}: ${(r.stderr || r.stdout || '').trim().slice(0, 300)}`);
-    } else if (isXlsx) {
+    } else if (isXlsx || isXls) {
       // Keep original bytes separately. Native Excel preserves workbook layout and
       // cached formulas; the helper inventories omitted print content and records
       // complete-chart appendices separately from original print pages.
       run('rclone', ['copyto', `${R2_REMOTE}/${key}`, workbook]);
-      const r = run('python3', [path.join(ROOT, 'scripts', 'tx', 'xlsx-to-pdf.py'), workbook, file], { allowFail: true });
-      if (r.status !== 0 || !fs.existsSync(file)) fail(`XLSX to PDF conversion failed for ${key}: ${(r.stderr || r.stdout || '').trim().slice(-2000)}`);
+      const r = run('python3', [path.join(ROOT, 'scripts', 'tx', isXls ? 'xls-to-pdf.py' : 'xlsx-to-pdf.py'), workbook, file], { allowFail: true });
+      if (r.status !== 0 || !fs.existsSync(file)) fail(`Workbook to PDF conversion failed for ${key}: ${(r.stderr || r.stdout || '').trim().slice(-2000)}`);
       try { converted[doc] = JSON.parse(r.stdout.trim()); }
-      catch { fail(`XLSX converter did not return provenance for ${key}`); }
-      converted[doc].sourceFile = `src/${doc}.xlsx`;
-      converted[doc].rendererFingerprint = XLSX_RENDERER_FINGERPRINT;
-      if (converted[doc].sourceSha256 !== sha256File(workbook) || converted[doc].pdfSha256 !== sha256File(file)) fail(`XLSX conversion hash mismatch for ${key}`);
-    } else if (/\.(xls|xlsm|xlsb)$/i.test(key)) {
-      fail(`unsupported workbook format for ${key}; only native .xlsx conversion is implemented`);
+      catch { fail(`Workbook converter did not return provenance for ${key}`); }
+      converted[doc].sourceFile = `src/${doc}${isXls ? '.xls' : '.xlsx'}`;
+      converted[doc].rendererFingerprint = isXls ? XLS_RENDERER_FINGERPRINT : XLSX_RENDERER_FINGERPRINT;
+      if (converted[doc].sourceSha256 !== sha256File(workbook) || converted[doc].pdfSha256 !== sha256File(file)) fail(`Workbook conversion hash mismatch for ${key}`);
+    } else if (/\.(xlsm|xlsb)$/i.test(key)) {
+      fail(`unsupported workbook format for ${key}; only .xlsx and bounded static BIFF8 .xls conversion are implemented`);
     } else if (/\.txt$/i.test(key)) {
       // a plain-text paper (IYPT problem lists, IAO Bulgarian theory): fetched as is, typeset to PDF by PyMuPDF
       const txt = file.replace(/\.pdf$/, '.txt');

@@ -276,3 +276,9 @@ spans all compile, both figure boxes in range; 4 schema errors on `answer`
 the `answer` object. The candidate splits 1.1/1.2 and 3.1/3.2 into five problems
 where the old Opus JSON has three — a numbering convention the checker/adjudicator
 must settle, not a validator matter.
+
+### Legacy XLS sources
+
+`prepare.mjs` supports a bounded static BIFF8 `.xls` profile using `xls-to-pdf.py` and installed Microsoft Excel on Windows. It retains the original OLE bytes, native print layout, sheet/omission inventory and complete chart appendices. Every nonempty source cell is compared before and after read-only, manual-calculation export. Original/PDF hashes and the independent XLS renderer fingerprint are bound in portable receipts. Existing XLSX fingerprints remain unchanged.
+
+This profile rejects unknown BIFF records, formula cells, defined names, macros, external links, refreshable connections, non-chart embedded objects and unsupported sheet types before Excel opens the file. `.xlsm`/`.xlsb` remain unsupported. Python `xlrd` is required only for XLS conversion. Supporting-link classification follows [MS-XLS SupBook](https://learn.microsoft.com/en-us/openspecs/office_file_formats/ms-xls/31ed3738-e4ff-4b60-804c-ac49ac1ee6c0). Do not relabel an XLS as XLSX or fabricate a PDF source key.

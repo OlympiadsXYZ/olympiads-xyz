@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 import { xlsxCacheValid } from './xlsx-source.mjs';
+import { xlsCacheValid } from './xls-source.mjs';
 import { IMAGE_SOURCE_EXTENSION, imageCacheValid } from './image-source.mjs';
 import { PAGED_SOURCE_EXTENSION, pagedKind, pagedCacheValid } from './paged-source.mjs';
 import { zipCacheValid } from './zip-source.mjs';
@@ -30,20 +31,21 @@ export function sourceConversionProblems(manifest, directory, recorded) {
       errors.push(`missing original paged source conversion provenance for ${id}; rerun prepare`);
       continue;
     }
-    if (!['xlsx', 'image', 'presentation', 'djvu'].includes(converted?.from)) continue;
+    if (/\.xls$/i.test(doc.key || '') && converted?.from !== 'xls') { errors.push(`missing original XLS conversion provenance for ${id}; rerun prepare`); continue; }
+    if (!['xls', 'xlsx', 'image', 'presentation', 'djvu'].includes(converted?.from)) continue;
     const image = converted.from === 'image';
     const paged = ['presentation', 'djvu'].includes(converted.from);
     const kind = paged ? converted.from : image ? 'image' : 'workbook';
     if (recorded !== undefined && !isDeepStrictEqual(recorded[id], converted)) {
       errors.push(`conversion provenance mismatch for ${id} ${kind}`);
     }
-    const extension = image || paged ? path.extname(doc.key || '').toLowerCase() : '.xlsx';
+    const extension = image || paged || converted.from === 'xls' ? path.extname(doc.key || '').toLowerCase() : '.xlsx';
     const pdf = `src/${id}.pdf`, source = `src/${id}${extension}`;
-    if ((image && !IMAGE_SOURCE_EXTENSION.test(doc.key || '')) || (paged && !PAGED_SOURCE_EXTENSION.test(doc.key || '')) || doc.file !== pdf || converted.sourceFile !== source) {
+    if ((converted.from === 'xls' && !/\.xls$/i.test(doc.key || '')) || (image && !IMAGE_SOURCE_EXTENSION.test(doc.key || '')) || (paged && !PAGED_SOURCE_EXTENSION.test(doc.key || '')) || doc.file !== pdf || converted.sourceFile !== source) {
       errors.push(`unexpected converted source paths for ${id} ${kind}`);
       continue;
     }
-    const valid = paged ? pagedCacheValid : image ? imageCacheValid : xlsxCacheValid;
+    const valid = paged ? pagedCacheValid : image ? imageCacheValid : converted.from === 'xls' ? xlsCacheValid : xlsxCacheValid;
     if (!valid(doc, path.join(directory, pdf), path.join(directory, source))) {
       errors.push(`original ${kind} or derived PDF no longer matches verified conversion for ${id}`);
     }
