@@ -3,6 +3,7 @@
 // schema compilation, math-span detection and the deterministic serialisation
 // that receipt.mjs and promote.mjs must agree on byte-for-byte.
 import { isOriginalImageFigure, originalImageEvidenceError } from './original-image-figure.mjs';
+import { isEmbeddedImageFigure, embeddedImageEvidenceError } from './embedded-image-figure.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -400,6 +401,10 @@ export function checkerView(candidate) {
 export function figureEvidenceProblems(candidate, manifest, directory) {
   const problems = [];
   for (const { fig, path: p } of allFigures(candidate)) {
+    if (isEmbeddedImageFigure(fig)) {
+      const message = embeddedImageEvidenceError(fig, manifest, directory);
+      if (message) problems.push({ path: p, message });
+    }
     if (isOriginalImageFigure(fig)) {
       const message = originalImageEvidenceError(fig, manifest, directory);
       if (message) problems.push({ path: p, message });

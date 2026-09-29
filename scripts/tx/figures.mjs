@@ -9,6 +9,7 @@
 // --dry-run crops and inspects but assigns NO url (so the result can never be
 // mistaken for uploaded figures); it is for looking at crops before spending.
 import { isOriginalImageFigure, originalImageInfo, copyOriginalImage } from './original-image-figure.mjs';
+import { isEmbeddedImageFigure, embeddedImageInfo, copyEmbeddedImage } from './embedded-image-figure.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { previewGeometryError } from './page-render.mjs';
@@ -38,6 +39,10 @@ for (const p of proposals) figureRotation(p.fig); // reject unsupported angles b
 for (const p of proposals.filter(p => isOriginalImageFigure(p.fig))) {
   if (!args['no-snap']) fail('original-image extraction requires --no-snap');
   originalImageInfo(p.fig, manifest, paperDir(paperId));
+}
+for (const p of proposals.filter(p => isEmbeddedImageFigure(p.fig))) {
+  if (!args['no-snap']) fail('embedded-image extraction requires --no-snap');
+  embeddedImageInfo(p.fig, manifest, paperDir(paperId));
 }
 // Legacy MediaBox previews cannot be interpreted as displayed-CropBox boxes.
 // Fail before snapping or uploading; existing published crops remain untouched.
@@ -117,6 +122,11 @@ const byDoc = new Map();
 const cropInfo = new Map();
 for (const p of proposals) {
   const d = p.fig.tx.document;
+  if (isEmbeddedImageFigure(p.fig)) {
+    const info = embeddedImageInfo(p.fig, manifest, paperDir(paperId));
+    cropInfo.set(p.fig.id, copyEmbeddedImage(p.fig, manifest, paperDir(paperId), path.join(figDir, d, p.fig.id + info.extension)));
+    continue;
+  }
   if (isOriginalImageFigure(p.fig)) {
     const info = originalImageInfo(p.fig, manifest, paperDir(paperId));
     cropInfo.set(p.fig.id, copyOriginalImage(p.fig, manifest, paperDir(paperId), path.join(figDir, d, p.fig.id + info.extension)));
@@ -172,7 +182,7 @@ for (const p of proposals) {
   const entry = { id: fig.id, path: p.path, document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, rotation: figureRotation(fig) };
   if (!info) { entry.error = 'crop did not run'; report.errors.push({ id: fig.id, message: entry.error }); results.push(entry); continue; }
   const st = inspect(info.file);
-  entry.originalImage = info.originalImage; entry.dpi = info.dpi || FIGURE_DPI;
+  entry.originalImage = info.originalImage; entry.embeddedImage = info.embeddedImage; entry.dpi = info.embeddedImage ? undefined : info.dpi || FIGURE_DPI;
   const extension = info.extension || '.png';
   entry.file = info.file; entry.px = info.px; entry.bytes = info.bytes; entry.pdfRect = info.pdfRect;
   if (!st) entry.error = 'could not inspect PNG (PIL missing?)';
@@ -225,7 +235,7 @@ for (const r of results) {
   const f = allFigures(data).find(x => x.path === r.path).fig;
   if (dry) { f.tx = { ...f.tx, file: r.relFile, cropped: true, dryRun: true, upload: r.upload, px: r.px, pdfRect: r.pdfRect }; continue; }
   f.url = r.url; f.width = r.px[0]; f.height = r.px[1];
-  f.source = { page: r.page, pdfRect: r.pdfRect, dpi: r.dpi, ...(r.originalImage ? { originalImage: r.originalImage } : {}), ...(r.rotation ? { rotation: r.rotation } : {}), ...(r.document !== 'problems' ? { document: r.document } : {}) };
+  f.source = { page: r.page, pdfRect: r.pdfRect, dpi: r.dpi, ...(r.originalImage ? { originalImage: r.originalImage } : {}), ...(r.embeddedImage ? { embeddedImage: r.embeddedImage } : {}), ...(r.rotation ? { rotation: r.rotation } : {}), ...(r.document !== 'problems' ? { document: r.document } : {}) };
   f.tx = { ...f.tx, file: r.relFile, remoteKey: r.remoteKey, upload: r.upload, cropped: true, dryRun: false, public200: r.public200 === true, md5: r.md5, sha256: r.sha256 };
 }
 report.figures = results;
