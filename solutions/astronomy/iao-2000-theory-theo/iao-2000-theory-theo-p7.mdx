@@ -5,26 +5,77 @@ title: 'Задача 7. Groups A and B. 5.'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IAO/2000/iao-2000-theory-theo.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T09:30:49.124Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-29T18:49:45.995Z'
+verifier: 'single-pass'
 ---
 
 *Theoretical round. Problems to solve*
 
-<Warning title="Бележка към темата">
-The problem about the radio source on a satellite of "Olympia" refers to a figure (signal level vs time) that is not included in the archive file. No official solutions are available in the archive.
-</Warning>
+<details>
+<summary>Source editions and printed discrepancies</summary>
+
+The English questions are retained with their original group/number titles and routes. The official Russian keys and missing Olympia signal graph are supplied from the proceedings. Printed source wording and repeated words are retained. The Moon key prints a sign-inconsistent intermediate eccentricity equation; it is preserved along with the subsequent positive formula. The star-size key prints “больше” despite its absorption argument; the calendar key repeats “начинающихся с”; the quasar key prints R=c/H in its final numerical line. These source readings are not silently corrected.
+
+</details>
 
 ## Условие
 
 There is a radio source placed on a satellite of some planet named "Olympia". The radio source is working all the time but an observer does not register the signal all the time due to eclipses. The figure shows the level of the receiving signal by the observer vs time. Find from these data the average density of the planet. Take into account that the orbit of the satellite is circular, the observer is in the plane of the satellite's orbit and "Olympia" is far away from the observer.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '678px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2000-theory-theo/p7-olympia-signal.png" alt="Official Olympia radio signal versus time in days." width="2118" height="525" loading="lazy" decoding="async" />
+</figure>
+
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+Легко понять, что течение тех периодов, где сигнала нет ($t=0{,}0351$ дня), спутник движется за планетой (т.е. он затемнён «Олимпией») и $T=0{,}3000$ дня — полный период обращения спутника вокруг «Олимпии». Если $R$ и $V$ — радиус орбиты спутника и его орбитальная скорость, $\rho$, $r$ и $M$ — средняя плотность, радиус и масса планеты, то можно записать:
+
+$$
+V\cdot t\approx d=2r.
+$$
+
+(Не следует писать $V\cdot t=d$, поскольку траектория спутника не является прямой),
+
+$$
+V\cdot T=2\pi R,
+$$
+$$
+GM/R^2=V^2/R.
+$$
+
+Из этих двух уравнений:
+
+$$
+T/t\approx2\pi R/2r=\pi R/r.
+$$
+
+Из третьего:
+
+$$
+V^2\cdot R=GM=G\cdot\frac43\cdot\pi\cdot\rho\cdot r^3,
+$$
+$$
+\rho=\frac{V^2\cdot R}{G\cdot\frac43\cdot\pi\cdot r^3}.
+$$
+
+и ещё раз принимая во внимание, что $V=2\pi R/T$:
+
+$$
+\rho=\frac{(2\pi R/T)^2\cdot R}{G\cdot\frac43\cdot\pi\cdot r^3}=\frac{3\pi}{G}\frac{(R/r)^3}{T^2}=\frac{3}{\pi^2G}\frac{(T/t)^3}{T^2}=\frac{3}{\pi^2G}\frac{T}{t^3}.
+$$
+
+После вычислений в системе СИ, где $T=25920\ \text{с}$, $t\approx3030\ \text{с}$, $G=6{,}67\cdot10^{-11}\ \text{Н}\cdot\text{м}^2/\text{кг}^2$.
+
+$$
+\rho\approx4250\ \text{кг/м}^3.
+$$
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [theo.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2000/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theo.pdf#page=2)
+· допълнителни данни: [proceedings_2.PDF](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2000/proceedings_2.PDF)

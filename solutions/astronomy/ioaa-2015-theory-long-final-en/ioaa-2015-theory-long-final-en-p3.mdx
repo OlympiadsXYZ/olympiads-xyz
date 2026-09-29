@@ -5,13 +5,120 @@ title: 'Задача 3'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2015/ioaa-2015-theory-long-final-en.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T10:43:35.645Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-29T18:57:22.973Z'
+verifier: 'single-pass'
 ---
 
 *International Olympiad on Astronomy and Astrophysics 2015, Central Java - Indonesia — Long Problems*
 
+<Warning title="Бележка към темата">
+The revised official marking scheme is primary. Earlier image-key questions and marking weights differ and are labelled separately. The revised key leaves problem 3(d) blank; the earlier distance derivation adds an assumption absent from the final question. Printed algebraic inconsistencies are retained.
+</Warning>
+
+<details>
+<summary>Instruction — Theoretical Round</summary>
+
+1. Write your answer on the answer-sheet only. You can use more than one sheet for one problem. Please ask the organizer for the additional answer-sheets.
+
+2. Different problems should be done on different sheets.
+
+3. You can use your own calculator without program and graphic facility.
+
+4. You can ask the organizer for rough paper.
+
+</details>
+
+<details>
+<summary>Astronomical and Physical Constants — 20150729</summary>
+
+| Constant | Value |
+|---|---|
+| Astronomical unit (AU) | $1.4960\times10^{11}\ \mathrm m$ |
+| Light year (ly) | $9.4605\times10^{15}\ \mathrm m=63\,240\ \mathrm{au}$ |
+| Parsec (pc) | $3.0860\times10^{16}\ \mathrm m=206\,265\ \mathrm{au}$ |
+| Jansky (Jy) | $10^{-26}\ \mathrm{W\,m^{-2}\,Hz^{-1}}$ |
+| 1 Sidereal year | 365.2564 solar days |
+| 1 Tropical year | 365.2422 solar days |
+| 1 Calendar year | 365.2425 solar days |
+| 1 Sidereal day | $23^{\mathrm h}\ 56^{\mathrm m}\ 04^{\mathrm s}.091$ |
+| 1 Solar day | $24^{\mathrm h}\ 03^{\mathrm m}\ 56^{\mathrm s}.555$ units of sidereal time |
+| 1 Å | $10^{-10}\ \mathrm m$ |
+| 1 erg | $10^{-7}\ \mathrm J$ |
+| 1 dyne | $10^{-5}\ \mathrm N$ |
+| Mass of Earth | $5.9736\times10^{24}\ \mathrm{kg}$ |
+| Mean radius of Earth | $6.371\times10^6\ \mathrm m$ |
+| Equatorial radius of Earth | $6.378\times10^6\ \mathrm m$ |
+| Mean velocity of Earth on its orbit | $29.783\ \mathrm{km\,s^{-1}}$ |
+| Mass of Moon | $7.3490\times10^{22}\ \mathrm{kg}$ |
+| Radius of Moon | $1.737\times10^6\ \mathrm m$ |
+| Mass of Jupiter | $1.89813\times10^{27}\ \mathrm{kg}$ |
+| Mean Earth – Moon distance | $3.844\times10^8\ \mathrm m$ |
+| Mass of Sun | $1.98892\times10^{30}\ \mathrm{kg}$ |
+| Radius of Sun | $6.96\times10^8\ \mathrm m$ |
+| Effective temperature of the Sun | 5780 K |
+| Luminosity of the Sun | $3.96\times10^{26}\ \mathrm{J\,s^{-1}}$ |
+| Solar constant | $1366\ \mathrm{W\,m^{-2}}$ |
+| Brightness of the Sun in V-band | −26.8 mag. |
+| Absolute brightness of the Sun in V-band | 4.75 mag. |
+| Absolute bolometric brightness of Sun | 4.72 mag. |
+| Angular diameter of the Sun | 30′ |
+| Speed of light in vacuum (c) | $2.9979\times10^8\ \mathrm{m\,s^{-1}}$ |
+| Gravitational constant (G) | $6.6738\times10^{-11}\ \mathrm{N\,m^2\,kg^{-2}}$ |
+| Boltzmann constant (k) | $1.381\times10^{-23}\ \mathrm{m\,kg\,s^{-2}\,K^{-1}}$ |
+| Universal gas constant (R) | $8.31\ \mathrm{J\,K^{-1}\,mol^{-1}}$ |
+| Stefan–Boltzmann constant (σ) | $5.6704\times10^{-8}\ \mathrm{kg\,s^{-3}\,K^{-4}}$ |
+| Planck constant (h) | $6.6261\times10^{-34}\ \mathrm{J\,s}$ |
+| Wien's constant (b) | $2.8978\times10^{-3}\ \mathrm{m\,K}$ |
+| Hubble constant (H₀) | $70\ \mathrm{km\,s^{-1}\,Mpc^{-1}}$ |
+
+</details>
+
+<details>
+<summary>Astronomical and Physical Constants — continuation</summary>
+
+| Constant | Value |
+|---|---|
+| electron charge (e) | $1.602\times10^{-19}\ \mathrm C$ |
+| Mass of hydrogen atom | $1.67\times10^{27}\ \mathrm{kg}$ |
+| Current inclination of the ecliptic (ε) | 23º 26.3′ |
+| Coordinates of the northern ecliptic pole for epoch 2000.0 (αE, δE) | $18^{\mathrm h}\ 00^{\mathrm m}\ 00^{\mathrm s},+66^{\circ}\ 33.6^{\prime}$ |
+| Coordinates of the northern galactic pole for epoch 2000.0 (αG, δG) | $12^{\mathrm h}\ 51^{\mathrm m},+27^{\circ}\ 08^{\prime}$ |
+
+You can try to solve an equation $x=f(x)$ using iteration: $x_{n+1}=f(x_n)$.
+
+Basic equations of spherical trigonometry
+
+$$
+\sin a\sin B=\sin b\sin A
+$$
+
+$$
+\sin a\cos B=\cos b\sin c-\sin b\cos c\cos A,
+$$
+
+$$
+\cos a=\cos b\cos c+\sin b\sin c\cos A.
+$$
+
+Rayleigh-Jeans formula (long wavelength approximation of Planck’s Law):
+
+$$
+B_
+u(T)=\frac{2kT
+u^2}{c^2}
+$$
+
+</details>
+
 ## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Basic equations of spherical trigonometry — reference diagram](#reference-triangle)
+
+</nav>
 
 Suppose a static spherical star consists of $N$ neutral particles with radius $R$ (see Figure 3).
 
@@ -57,12 +164,263 @@ For the next parts, assume the star is the Sun.
 
 **f.** Calculate the heat capacity $C_v$ of the Sun assuming its surface temperature varies from 5500 K to 6000 K in one second.
 
+<ProblemSection id="reference-triangle">
+
+### Basic equations of spherical trigonometry — reference diagram
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '24.6%', '--fig-max': '157px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-en/p3-reference-triangle.png" alt="Spherical triangle with vertices A,B,C and opposite sides a,b,c." width="492" height="366" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
 ## Решение
 
 <Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
+The revised official key leaves final problem 3(d) blank (15 points). The earlier image edition gives a distance derivation only after adding a 0.1% temperature-error assumption absent from the final question; it is retained separately, not presented as a complete final-edition answer.
 </Warning>
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-revised-a">
+
+### Revised marking scheme — a. (15 т.)
+
+Defining $\Delta T=T_R-T_0$ and $\Delta T\approx0$, we have
+
+$$
+PV=Nk\frac{\Delta T}{\ln(1+\Delta T/T_0)}\qquad (3)
+$$
+
+using $\ln(1+\Delta T/T_0)\approx\Delta T/T_0$, we then obtain
+
+$$
+PV=NkT_0\qquad (4)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-revised-b">
+
+### Revised marking scheme — b. (30 т.)
+
+The internal energy of the star is $U=Mc^2$ ($U(T)=M(T)c^2$ for ideal star). Thus, the constant volume heat capacity of the star has the form
+
+$$
+C_v=\left(\frac{\Delta Q}{\Delta T}\right)_V=\left(\frac{\Delta M}{\Delta T}\right)_Vc^2
+$$
+
+for small $\Delta T$. Then, using first law of thermodynamics, the constant pressure heat capacity of the star is
+
+$$
+C_p=\left(\frac{\Delta Q}{\Delta T}\right)_P=\left(\frac{\Delta M}{\Delta T}\right)_Vc^2+P\frac{\Delta V}{\Delta T}=C_v+P\frac{\Delta V}{\Delta T}
+$$
+
+for small $\Delta T$. Defining $\Delta T=T_2-T_1$, then
+
+$$
+P\Delta V=Nk\left(\frac{T_1-T_0+\Delta T}{\ln((T_1+\Delta T)/T_0)}-\frac{T_1-T_0}{\ln(T_1/T_0)}\right)
+$$
+
+Using the approximation
+
+$$
+\ln((T_1+\Delta T)/T_0)\approx\ln\left(\frac{T_1}{T_0}\right)+\frac{\Delta T}{T_1}
+$$
+
+$$
+\left(1+\frac{\Delta T}{T_1\ln(T_1/T_0)}\right)^{-1}\approx1-\frac{\Delta T}{T_1\ln(T_1/T_0)}
+$$
+
+then we have
+
+$$
+P\frac{\Delta V}{\Delta T}=\frac{Nk}{\ln(T/T_0)}\left(1-\frac{(T-T_0)/T}{\ln(T/T_0)}\right)
+$$
+
+where $T_1\equiv T$. Finally, we obtain
+
+$$
+C_p=\left(\frac{\Delta Q}{\Delta T}\right)_P=\left(\frac{\Delta M}{\Delta T}\right)_Vc^2+P\frac{\Delta V}{\Delta T}=C_v+\frac{Nk}{\ln(T/T_0)}\left(1-\frac{(T-T_0)/T}{\ln(T/T_0)}\right)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-revised-c">
+
+### Revised marking scheme — c. (20 т.)
+
+Since $C_v$ is constant, the heat produced by the star is given by
+
+$$
+Q_H=C_v(T_f-T_i)+P\Delta V
+$$
+
+$$
+=C_v(T_i-T_f)+Nk\left(\frac{T_f-T_0}{\ln(T_f/T_0)}-\frac{T_i-T_0}{\ln(T_i/T_0)}\right)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-revised-d">
+
+### Revised marking scheme — d. (15 т.)
+
+| Part | Points |
+|---|---:|
+| d. | 15 |
+
+</ProblemSection>
+
+<ProblemSection id="solution-revised-e">
+
+### Revised marking scheme — e. (10 т.)
+
+Energy per second radiated by the Sun
+
+$$
+L_\odot=Nh\nu
+$$
+
+where $N$ is the number of photon. Thus
+
+$$
+N=\frac{L_\odot}{h\nu}=\frac{3.96\times10^{26}}{6.6261\times10^{-34}\times5\times10^{14}}=1.195\times10^{45}\ \text{photons}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-revised-f">
+
+### Revised marking scheme — f. (10 т.)
+
+Energy per second radiated by the Sun is proportional to mass defect of the Sun
+
+$$
+L_\odot=\Delta Mc^2
+$$
+
+Thus,
+
+$$
+C_v=\frac{\Delta Mc^2}{\Delta T}=\frac{L_\odot}{\Delta T}=\frac{3.96\times10^{26}}{6000-5500}\ \mathrm{J/K}=7.92\times10^{23}\ \mathrm{J/K}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-isothermal">
+
+### Earlier image edition — b. Isothermal work (15 т.)
+
+Find the work of the star when it expands from $V_1$ to $V_2$ in isothermal process where $T_R$ and $T_0$ are constants.
+
+If the gas undergoes isothermal process where $T_R$ and $T_0$ are constant, then the work has the form
+
+$$
+W=\int_{V_1}^{V_2}P\,dV=Nk\frac{T_R-T_0}{\ln(T_R/T_0)}\ln\left(\frac{V_2}{V_1}\right)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-distance">
+
+### Earlier image edition — e. Distance with 0.1% temperature error (15 т.)
+
+Suppose there is an observer far away from the star. Related to point d., estimate the distance of the observer if the observer has 0.1% error in measuring the effective temperature around the star.
+
+The error 0.1%, namely
+
+$$
+\frac{T_f-T_{\mathrm{eff}}}{T_f}=\frac1{1000}
+$$
+
+then $T_{\mathrm{eff}}=\frac{999}{1000}T_f$. From Stefan law of black body radiation
+
+$$
+\frac{Q_H}{4\pi r_0^2}=\sigma T_{\mathrm{eff}}^4=\sigma\left(\frac{999}{1000}\right)^4T_f^4
+$$
+
+where $r_0$ is the observer's distance which is given by
+
+$$
+r_0=\left(\frac{Q_H}{4\pi\sigma}\right)^{1/2}\left(\frac{1000}{999}\right)^2T_f^{-2}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-scores">
+
+### Earlier image edition — marking weights
+
+| Part | Points |
+|---|---:|
+| a. | 10 |
+| b. Isothermal work | 15 |
+| c. Heat capacities | 25 |
+| d. Isobaric heat | 20 |
+| e. Distance | 15 |
+| f. Photons | 7 |
+| g. Heat capacity | 8 |
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-page-7">
+
+### Earlier image edition — original page 7
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.3%', '--fig-max': '328px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-en/p3-sol-earlier-7.png" alt="Complete original earlier-edition key page 7 of 10, preserving draft questions, diagrams and marking weights." width="1026" height="1320" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-page-8">
+
+### Earlier image edition — original page 8
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.7%', '--fig-max': '324px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-en/p3-sol-earlier-8.png" alt="Complete original earlier-edition key page 8 of 10, preserving draft questions, diagrams and marking weights." width="1014" height="1324" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-page-9">
+
+### Earlier image edition — original page 9
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51%', '--fig-max': '326px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-en/p3-sol-earlier-9.png" alt="Complete original earlier-edition key page 9 of 10, preserving draft questions, diagrams and marking weights." width="1020" height="1324" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-page-10">
+
+### Earlier image edition — original page 10
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.6%', '--fig-max': '324px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-en/p3-sol-earlier-10.png" alt="Complete original earlier-edition key page 10 of 10, preserving draft questions, diagrams and marking weights." width="1012" height="1322" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [Long_problem_Final_EN.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/Long_problem_Final_EN.pdf#page=2)
+· официални решения: [Long Problem Solution-Marking Scheme [Revised] - 310715 - 13.58.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Long%20Problem%20Solution-Marking%20Scheme%20%5BRevised%5D%20-%20310715%20-%2013.58.pdf#page=11)
+· допълнителни данни: [long_sol_1.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_1.png)
+· допълнителни данни: [long_sol_2.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_2.png)
+· допълнителни данни: [long_sol_3.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_3.png)
+· допълнителни данни: [long_sol_4.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_4.png)
+· допълнителни данни: [long_sol_5.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_5.png)
+· допълнителни данни: [long_sol_6.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_6.png)
+· допълнителни данни: [long_sol_7.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_7.png)
+· допълнителни данни: [long_sol_8.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_8.png)
+· допълнителни данни: [long_sol_9.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_9.png)
+· допълнителни данни: [long_sol_10.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_10.png)
+· допълнителни данни: [9th IOAA Constants Table 20150729.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/9th%20IOAA%20Constants%20Table%2020150729.pdf)
+· допълнителни данни: [constants.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Constants/constants.pdf)
+· допълнителни данни: [instructions.docx](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/instructions.docx)

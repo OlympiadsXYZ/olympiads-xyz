@@ -18,24 +18,42 @@
    ]
   },
   "status": "review",
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IAO/2000/proceedings_3.PDF",
+    "pages": [
+     1,
+     2,
+     3
+    ]
+   }
+  },
+  "documentNotes": [
+   {
+    "title": "Recovered source material",
+    "statement": "The English document prints “Sorry, figures are not ready.” This original notice is retained, but the genuine missing radio figure and official Russian key have now been recovered from proceedings_3.PDF. The figure is displayed after a 180-degree rotation of its upside-down source page. The crest of the 1.4 cm curve is cut by the original scan boundary; the entire available page is retained. The supplied key remains in its original Russian.",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   }
+  ],
   "transcription": {
    "method": "vision-pages",
-   "provider": "anthropic",
-   "model": "claude-sonnet-5",
-   "promptVersion": "v1",
-   "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
-   "requestId": "req_011Cf9S5MuH182V4muswnhNH",
-   "at": "2026-09-17",
+   "provider": "agent",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/sidebar_astra",
+   "at": "2026-09-29",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "a2168cc3d06323ba503f7f41a88910dd75d439d3f90859ea8732bd9c3626cc67"
+    "problems": "a2168cc3d06323ba503f7f41a88910dd75d439d3f90859ea8732bd9c3626cc67",
+    "supplement-1": "1763237d5ea3101dbdfe635ed9a81d73e9350e3a03a7e42ed271800ebcc2d058"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-09-17",
-   "notes": "Figures are noted in source as not ready ('Sorry, figures are not ready.'); no actual figure image is present on the page. The proposed bbox is a placeholder for where the figure would appear based on layout, but no visual content exists to crop. This should be flagged for the pipeline as there is no real figure to extract."
-  },
-  "caveat": "No figures were actually rendered on the source page; the document explicitly states 'Sorry, figures are not ready.' No solutions document was provided/found for this problem."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Full original English alpha task read and retained with native Introduction/Task headings and route p2. Genuine Russian matching task/image/key proceedings3 pp1–3 personally read in50 and radio source reread in52. No invented answers; original notice retained with recovery caveat. Final crop pending inspection."
+  }
  },
  "problems": [
   {
@@ -44,23 +62,26 @@
    "title": "A \"DRILLING\" OF THE MOON WITH THE HELP OF RATAN",
    "points": null,
    "problemType": "observation",
-   "statement": "Dear students, you are to see the first colonies on the Moon. The areas of the Moon surface consisting of oxygen-bearing rock are already being searched for them. First of all these are ilmenite basalts. Beside oxygen (10% from the weight) the ilmenite (FeTiO₃) can give a pure iron.\nWith the help of the radio telescope RATAN-600 a \"radio drilling\" of the Moon was carried out: unlike the visible light, radio waves come from under its surface. The depth of the \"drilling\" increases with the increase of wavelength. At the wavelength of 1 cm the Moon is transparent down to 0.5 m, at 30 cm – down to 10 m. The regions with increased content of ilmenite are also distinguished by an increased radio emission level.\nFig.1 presents radio cuts of the Moon obtained at its passage through the \"knife\" beams of RATAN. From the 6 used wave lengths only 3 are presented, since the cut at 2.1 cm almost repeats the cut at 1.4 cm, and the cuts at 3.9 and 31 cm differ little from the cut at 8.2 cm. The last could be said also about 13-cm cut, but at the moment of observation the transmitters left at the Moon by American astronauts were operating, exactly at this wavelength.\nThe cuts at different wavelengths can be compared both to each other and to the seas and continents known to you in the image of the Moon in visible light. A band covered in the observations at 1.4 cm is marked in it. In other wavelengths the beams cover the entire disk of the Moon in altitude. The positions of transmitters operating at the wavelength of 13 cm are also shown.",
-   "figures": [],
-   "parts": [
+   "statement": "Sorry, figures are not ready.",
+   "figures": [
     {
-     "label": "1",
-     "statement": "What transmitters were operating at the moment of observation?",
-     "points": null
-    },
-    {
-     "label": "2",
-     "statement": "What is the difference in the image of the Moon in cm wavelength from its image in visible wavelengths? What is the reason for it?",
-     "points": null
-    },
-    {
-     "label": "3",
-     "statement": "What region would you recommend for the settlement of first colonies?",
-     "points": null
+     "id": "p2-ratan-radio",
+     "alt": "Original Moon radio cuts at 1.4, 8.2 and 13 cm and transmitter positions.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2000-practical-alpha/p2-ratan-radio.png",
+     "width": 2551,
+     "height": 3299,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       0,
+       0,
+       612.22,
+       791.76
+      ],
+      "dpi": 300,
+      "rotation": 180,
+      "document": "supplement-1"
+     }
     }
    ],
    "topics": [
@@ -70,14 +91,36 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "",
-    "incomplete": true,
-    "incompleteReason": "В архива липсва файл с решения / No solutions file available in the archive."
+    "statement": "Основной вклад дают A12, A14 и A16. По ним можно оценить реальное разрешение на волне 13 см и пересчитать его на другие волны!\n\nГлавное отличие — «потемнение к краю» радиоизображения. Оно подобно солнечному и вызвано той же причиной: получаемая Луной энергия в радиодиапазоне переизлучается не поверхностью (как в оптике), а толстым слоем.\n\nИльменит переизлучает особенно эффективно. Самое сильное поярчание на 1.4 см соответствует Морю Спокойствия (Mare Tranquillitatis)."
    },
+   "sections": [
+    {
+     "id": "introduction",
+     "title": "Introduction:",
+     "statement": "Dear students, you are to see the first colonies on the Moon. The areas of the Moon surface consisting of oxygen-bearing rock are already being searched for them. First of all these are ilmenite basalts. Beside oxygen (10% from the weight) the ilmenite (FeTiO₃) can give a pure iron.\nWith the help of the radio telescope RATAN-600 a \"radio drilling\" of the Moon was carried out: unlike the visible light, radio waves come from under its surface. The depth of the \"drilling\" increases with the increase of wavelength. At the wavelength of 1 cm the Moon is transparent down to 0.5 m, at 30 cm – down to 10 m. The regions with increased content of ilmenite are also distinguished by an increased radio emission level.\nFig.1 presents radio cuts of the Moon obtained at its passage through the \"knife\" beams of RATAN. From the 6 used wave lengths only 3 are presented, since the cut at 2.1 cm almost repeats the cut at 1.4 cm, and the cuts at 3.9 and 31 cm differ little from the cut at 8.2 cm. The last could be said also about 13-cm cut, but at the moment of observation the transmitters left at the Moon by American astronauts were operating, exactly at this wavelength.\nThe cuts at different wavelengths can be compared both to each other and to the seas and continents known to you in the image of the Moon in visible light. A band covered in the observations at 1.4 cm is marked in it. In other wavelengths the beams cover the entire disk of the Moon in altitude. The positions of transmitters operating at the wavelength of 13 cm are also shown.\n\n![](p2-ratan-radio)\n\n"
+    },
+    {
+     "id": "task",
+     "title": "Task:",
+     "statement": "What transmitters were operating at the moment of observation?\n\nWhat is the difference in the image of the Moon in cm wavelength from its image in visible wavelengths? What is the reason for it?\n\nWhat region would you recommend for the settlement of first colonies?"
+    }
+   ],
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "supplement-1",
+     "page": 1
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
+    },
+    {
+     "document": "supplement-1",
+     "page": 3
     }
    ]
   }
