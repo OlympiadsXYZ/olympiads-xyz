@@ -5,11 +5,32 @@ title: 'Задача 6. Macondo and Melquiades (12 points).'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-theory-tq-6-q.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:22:39.602Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T16:39:46.552Z'
+verifier: 'single-pass'
 ---
 
 *Theory — Q6-1 / Q6-2, English (Official) — Macondo and Melquiades · 12 т.*
+
+<details>
+<summary>Standard Table of Constants — values used in this problem</summary>
+
+Wien displacement law: $\lambda_{\max}T=2.898\times10^{-3}\ \mathrm{m\,K}$. Universal gravitational constant: $G=6.674\times10^{-11}\ \mathrm{N\,m^2\,kg^{-2}}$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — astronomical units</summary>
+
+1 astronomical unit (au): $1\ au=1.496\times10^{11}m$. 1 parsec (pc): $1\ pc=206265\ au=3.086\times10^{16}m$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — solar mass</summary>
+
+Sun: mass $1.989\times10^{30}\ kg$.
+
+</details>
 
 ## Условие
 
@@ -32,12 +53,144 @@ This star has an effective temperature of 4995 K and an apparent visual magnitud
 
 **6.5** Find the orbital radius of Melquiades (in $au$) and its orbital period (in days). **[4 т.]**
 
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **6.1** 580.2 nm
+- **6.2** $d=28.55\ \mathrm{pc},\quad M_V=6.02$
+- **6.3** 43.644 km/s
+- **6.4** 40 km/s
+- **6.5** $a=0.48\ \mathrm{au},\quad T=147\ \mathrm{days}$
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+### 6.1
+
+From Wien’s law:
+
+$$
+\lambda_{\max}=\frac{2.898\times10^{-3}\ \mathrm{m\cdot K}}{T_{\mathrm{eff}}(K)}=\frac{2.898\times10^{-3}\ \mathrm{m\cdot K}}{4995K}
+$$
+
+$$
+\lambda_{\max}=5.8\times10^{-7}\ \mathrm{m}=580.2\ \mathrm{nm}
+$$
+
+[2 point]
+
+### 6.2
+
+With the parallax doable to find the distance from Earth:
+
+$$
+d=\frac{1}{\mathrm{pllx}(\mathrm{arcsec})}=\frac{1}{0.035\ \mathrm{arcsec}}=28.55\ \mathrm{pc}
+$$
+
+[1 point]
+
+$$
+M_v=m_v-5\log(d[\mathrm{pc}])+5
+$$
+
+$$
+M_v=8.3-5\log(28.57)+5=6.02
+$$
+
+[1 point]
+
+### 6.3
+
+[2 point]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.3%', '--fig-max': '437px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-theory-tq-6-q/p1-sol-fig1.png" alt="Official radial-velocity plot annotated with horizontal lines at maximum and minimum." width="1367" height="845" loading="lazy" decoding="async" />
+</figure>
+
+
+Each division on Y has 0.002 km s⁻¹, so the maximum radial velocity is 43.662 km s⁻¹ and the minimus is 43.626 km s⁻¹. Then, the mean radial velocity of Macondo is $v_r=43.644\mathrm{km\,s^{-1}}$.
+
+### 6.4
+
+The tangential velocity of Macondo, from the plot, is its variation from the mean system velocity
+
+$$
+v_s=43.662\ \mathrm{km\,s^{-1}}-43.644\ \mathrm{km\,s^{-1}}=0.018\ \mathrm{km\,s^{-1}}
+$$
+
+The masses of the star and the planet are known so it is only needed to find orbital velocity of Melquiades. But first it is important to convert the mass of the star to kg.
+
+$$
+0.7M_\odot\times\frac{1.989\times10^{30}\ \mathrm{kg}}{1M_\odot}=1.4\times10^{30}\ \mathrm{kg}
+$$
+
+[1 point]
+
+$$
+v_p=\frac{m_s}{m_p}v_s=\frac{1.4\times10^{30}\ \mathrm{kg}}{7\times10^{26}\ \mathrm{kg}}\times0.02\ \mathrm{km\cdot s^{-1}}=40\ \mathrm{km\cdot s^{-1}}
+$$
+
+[1 point]
+
+### 6.5
+
+As the motion of the planet is circular, the orbital period is:
+
+$$
+T=\frac{2\pi}{v_p}\times a
+$$
+
+being $a$ the distance to the central star.
+
+With the 3rd Kepler’s law, the orbital period is
+
+$$
+T^2=\frac{4\pi^2}{Gm_s}\times a^3
+$$
+
+Then, combining both expressions of $T$ is possible to find $a$
+
+$$
+\left(\frac{2\pi}{v_p}\times a\right)^2=\frac{4\pi^2}{Gm_s}\times a^3
+$$
+
+$$
+\left(\frac{2\pi}{v_p}\right)^2\frac{Gm_s}{4\pi^2}=a
+$$
+
+$$
+a=7.25\times10^{10}\ \mathrm{m}=0.48\ \mathrm{au}
+$$
+
+[2 point]
+
+With the previous solution is able to find the orbital period:
+
+$$
+T=\frac{2\pi}{v_p}\times a=\frac{2\pi\times(7.21\times10^{10}\ \mathrm{m})}{36000\ \mathrm{m\cdot s^{-1}}}=1.27\times10^7\ \mathrm{s}=147\ \mathrm{days}
+$$
+
+[2 point]
+
+
+</Spoiler>
+
+<details>
+<summary>Official solution source discrepancy</summary>
+
+The supplied key uses 28.55 pc and then 28.57 in 6.2; 0.018 km/s and then 0.02 km/s in 6.4; and 40 km/s, 36000 m/s, 7.25×10¹⁰ m and 7.21×10¹⁰ m across 6.4–6.5. These printed values and the resulting 147 days are retained without recomputation.
+
+</details>
 
 ---
 
 Оригинал в Архива: [TQ-6-Q.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-6-Q.pdf#page=1)
+· официални решения: [TQ6.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/solutions/TQ6.pdf#page=1)
+· допълнителни данни: [TQ-6-A.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-6-A.pdf)
+· допълнителни данни: [Standard-Table-of-constants.docx.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/Standard-Table-of-constants.docx.pdf)
+· допълнителни данни: [TQ-G.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-G.pdf)
+· допълнителни данни: [data.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Theoretical/data.pdf)

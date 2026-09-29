@@ -18,22 +18,86 @@
    ]
   },
   "status": "review",
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/IOAA/2021/solutions/TQ3.pdf",
+   "pages": [
+    1
+   ]
+  },
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2021/exam/TQ-3-A.pdf",
+    "pages": [
+     1
+    ]
+   },
+   "supplement-2": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2021/exam/Standard-Table-of-constants.docx.pdf",
+    "pages": [
+     1,
+     2
+    ]
+   },
+   "supplement-3": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2021/exam/TQ-G.pdf",
+    "pages": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "supplement-4": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2021/Theoretical/data.pdf",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   }
+  },
+  "documentNotes": [
+   {
+    "title": "Standard Table of Constants — values used in this problem",
+    "statement": "Universal gravitational constant: $G=6.674\\times10^{-11}\\ \\mathrm{N\\,m^2\\,kg^{-2}}$.",
+    "document": "supplement-3",
+    "page": 2,
+    "position": "before-problem"
+   },
+   {
+    "title": "Standard Table of Constants — values used in this problem",
+    "statement": "Mars: mean radius $3\\ 390\\ km$; mass $6.417\\times10^{23}\\ kg$.",
+    "document": "supplement-3",
+    "page": 4,
+    "position": "before-problem"
+   }
+  ],
   "transcription": {
    "method": "vision-pages",
-   "provider": "zai",
-   "model": "glm-5.3-flash",
-   "promptVersion": "v1",
-   "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
-   "requestId": "202609140503393c7adad53ef74aa2",
-   "at": "2026-09-13",
+   "provider": "agent",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/problem_structure_astra",
+   "at": "2026-09-29",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "54b3408950a356ed04f5de140c0eb2d7a6aa503c9ae74213dcdeb72ea7a8c86f"
+    "problems": "54b3408950a356ed04f5de140c0eb2d7a6aa503c9ae74213dcdeb72ea7a8c86f",
+    "solutions": "f7bbaae9f9f0edb8a1b788b46254b78510de1660f397e5fbf4e01cc856ee5929",
+    "supplement-1": "36a8e7112cee844dffa1f1ce0b46b37dc57f1a154c27c02075928e81d7d50b6f",
+    "supplement-2": "c6c15cc1c33590e7892fa6d417ca7c5f68920e51a5c8af5c1e3f6949450ae6dd",
+    "supplement-3": "45b231be0cd63844541119d780262bcc1350806ff5f760e29bd49ef0a35c87a3",
+    "supplement-4": "6c391e8e8cbe4995f5e8a7a69138b19b10fd88d1b9142b6e715e7580984f0d2e"
    },
-   "verifiedBy": "zai:glm-5.3-flash (same-model checker, prompt v1)",
-   "verifiedAt": "2026-09-13",
-   "notes": "Single-problem paper: the printed task '3 Mars (10 points)' with printed sub-tasks 3.1, 3.2, 3.3 is emitted as one top-level problem with three parts, per numbering convention. Numeric answers in the answer fields are computed by the transcriber (Mars: GM = 4.2828e13 m^3 s^-2, radius 3.39e6 m) since no official solutions document exists in the archive; they are not from the source. Units in the sub-tasks are printed as '(km s^{-1})' and '(J)'."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Astra single-pass source recovery, no separate checker. New question, exact official key and answer form visually read in solutions27. Shared 15 reference/instruction pages were personally read in solutions26, reused only after exact document SHA256 equality; evidence binds prior reading. All supplied key prose/equations/scoring restored, published question ID/native parts preserved, unsupported computed answers replaced with official values or removed where source is absent. Required constants represented natively and full original supplementary PDFs retained. One unchanged actual published figure downloaded, SHA256 verified and personally inspected; no recropping/snapping. Combined-key original pages 3–5 additionally inspected to establish truncation."
   }
  },
  "problems": [
@@ -47,7 +111,7 @@
    "figures": [
     {
      "id": "p1-fig1",
-     "alt": "Mars drawn as a shaded circle with center point; a parabolic trajectory AB comes in from upper left with apoapsis at B to the right of the planet; point C lies on the Martian surface diametrically opposite B; an arrow labeled r_B points from the center of Mars to B; the post-deceleration ellipse passes through B (apoapsis) and grazes the surface at C (periapsis).",
+     "alt": "Mars and the spacecraft trajectory: incoming path AB, point B at distance r_B from the centre, and surface point C on the opposite side.",
      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-theory-tq-3-q/p1-fig1.png",
      "width": 1033,
      "height": 937,
@@ -71,9 +135,7 @@
      "answer": {
       "kind": "numeric",
       "value": 3.55,
-      "unit": "km/s",
-      "tolerance": 0.01,
-      "note": "Computed from the parabolic-orbit relation $v=\\sqrt{2GM_{\\rm Mars}/r_B}$ with $GM_{\\rm Mars}=4.2828\\times10^{13}\\ \\mathrm{m^3\\,s^{-2}}$; the archive contains no official solutions document."
+      "unit": "km/s"
      }
     },
     {
@@ -83,22 +145,13 @@
      "answer": {
       "kind": "numeric",
       "value": -210000000000,
-      "unit": "J",
-      "tolerance": 2000000000,
-      "note": "Computed from $E=-GM_{\\rm Mars}m/(r_B+r_C)$ with $r_C$ equal to the Martian radius $\\approx 3.39\\times10^{6}\\ \\mathrm{m}$; the archive contains no official solutions document."
+      "unit": "J"
      }
     },
     {
      "label": "3.3",
      "statement": "Calculate the speed $(km\\ s^{-1})$ of the spacecraft at point $C$.",
-     "points": 3,
-     "answer": {
-      "kind": "numeric",
-      "value": 4.11,
-      "unit": "km/s",
-      "tolerance": 0.01,
-      "note": "Computed from the vis-viva relation on the ellipse with periares $r_B$ and apoares $r_C$ (at the surface); the archive contains no official solutions document."
-     }
+     "points": 3
     }
    ],
    "topics": [
@@ -108,14 +161,18 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "",
+    "statement": "**3.1** Since the path between A and B is parabolic, the total energy of the spacecraft is zero,\n\n$$E_{AB}=0,\\quad\\leftrightarrow\\quad\\varepsilon=1.$$\n\nSo, when you get to point B, then\n\n$$E=\\frac12mv_B^2-\\frac{GMm}{r_B}=0;$$\n\n[1 point]\n\nFrom where\n\n$$v_B=\\sqrt{\\frac{2GM}{r_B}}$$\n\n[1 point]\n\nReplacing with available values\n\n$$v_B=\\sqrt{\\frac{2\\times(6{,}67\\times10^{-11})\\times(6{,}4\\times10^{23})}{6{,}8\\times10^6}}\\approx3{,}55\\ km\\ s^{-1}$$\n\n[1 point]\n\n**3.2 There are two possible solutions**\n\n**Solution A**\n\nImmediately after breaking the total energy and the angular momentum change since the braking force is tangential, but along the elliptical path BC the values with which it passes through are conserved and take on during the entire journey. C; then applying conservation of energy between points B’ (immediately after braking) and C as well as conservation of the angular momentum between B' and C, we have\n\n$$\\frac12mv_{B'}^2-\\frac{GMm}{r_B}=\\frac12mv_C^2-\\frac{GMm}{R_M}\\qquad Eq.\\ 1$$\n\n[1 point]\n\n$$L=mv_{B'}r_B=mv_CR_M\\qquad Eq.\\ 2$$\n\n[1 point]\n\nFrom these two equations we solve for $v_c$ and it's result is used to calculate the total energy in C which gives us:\n\n$$E_{elipse}=-\\frac{GMm}{R_M+r_B}\\approx-2.10\\times10^{11}J\\qquad Eq.\\ 3a$$\n\n[2 points]\n\nIn both methods, this and next, two points for getting the equation and two points for calculation + negative sign + unit.",
     "figures": [],
     "incomplete": true,
-    "incompleteReason": "The archive contains no solutions file for this paper."
+    "incompleteReason": "Official TQ3.pdf ends after 3.2 Solution A. The promised second method and all of 3.3 are absent; combined Theory Solutions.pdf page 3 has the same ending, with TQ4 starting on page 4."
    },
    "sourceSpans": [
     {
      "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
      "page": 1
     }
    ]

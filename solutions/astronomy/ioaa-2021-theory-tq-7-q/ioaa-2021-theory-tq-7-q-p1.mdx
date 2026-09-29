@@ -5,18 +5,39 @@ title: 'Задача 7. Menkalinan (β Aurigae) (13 points).'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-theory-tq-7-q.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:06:30.476Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T16:39:47.160Z'
+verifier: 'single-pass'
 ---
 
 *Theory — 14th IOAA, International Olympiad on Astronomy and Astrophysics — Q7-1 / Q7-2, English (Official) · 13 т.*
+
+<details>
+<summary>Standard Table of Constants — values used in this problem</summary>
+
+Speed of light in vacuum: $c=2.998\times10^8\ \mathrm{m\,s^{-1}}$. Universal gravitational constant: $G=6.674\times10^{-11}\ \mathrm{N\,m^2\,kg^{-2}}$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — astronomical units</summary>
+
+1 light year (ly): $1\ ly=63241\ au=9.46\times10^{15}m$. 1 parsec (pc): $1\ pc=206265\ au=3.086\times10^{16}m$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — solar mass</summary>
+
+Sun: mass $1.989\times10^{30}\ kg$.
+
+</details>
 
 ## Условие
 
 Almost half of the stars that we see are either binary or multiple star systems. A well-known example of this is Menkalinan (Beta Aurigae), which was initially thought to be a single star, but today recognised as a binary system comprising two stars that we will refer to as Menkalinan A and B. In the following figure, a spectrum of the system (obtained by the observatory of the Universidad de los Andes, in Bogotá) is shown:
 
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '71.7%', '--fig-max': '459px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-theory-tq-7-q/p1-fig1.png" alt="Plot of relative flux (0–1.2) versus wavelength (about 6525–6605 nm region, ticks 6530–6600). A broad double absorption dip with two minima labelled A (about 6561) and B (about 6565) in red, reaching flux about 0.25–0.35." width="1434" height="1151" loading="lazy" decoding="async" />
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-theory-tq-7-q/p1-fig1.png" alt="Relative flux versus wavelength in angstroms, ticks 6530–6600, with absorption minima A near 6561 and B near 6565." width="1434" height="1151" loading="lazy" decoding="async" />
 <figcaption>Spectrum of Menkalinan binary system in the region of Hα. Y-axis is for the relative flux, and X-axis measures wavelengths. Menkalinan A is marked as A in the graph, and Menkalinan B is marked as B.</figcaption>
 </figure>
 
@@ -38,12 +59,143 @@ $$
 
 to estimate the luminosity of each star (in solar luminosity). **[2 т.]**
 
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **7.1** $v_A=-82.23\ \mathrm{km/s},\quad v_B=+100.50\ \mathrm{km/s}$
+- **7.2** $M_{\mathrm{tot}}=37.868M_\odot$
+- **7.3** $m_A=19.177M_\odot,\quad m_B=18.691M_\odot$
+- **7.4** $L_A=3.088\times10^4L_\odot,\quad L_B=2.823\times10^4L_\odot$
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-В архива липсва файл с официални решения за тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+### 7.1
+
+Observing the plot, it is possible to estimate the wavelength of both Hα lines and later find the velocity of each star by Doppler.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '65.5%', '--fig-max': '419px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-theory-tq-7-q/p1-sol-fig1.png" alt="Official spectrum annotated with vertical lines at the two measured H-alpha wavelengths, 6561 and 6565 angstroms." width="1310" height="1084" loading="lazy" decoding="async" />
+</figure>
+
+
+$$
+v_A=\frac{6561\ \mathrm{\mathring A}-6562.8\ \mathrm{\mathring A}}{6562.8\ \mathrm{\mathring A}}\times(2.998\cdot10^5\ \mathrm{km\cdot s^{-1}})=-82.23\ \mathrm{km\cdot s^{-1}}
+$$
+
+[2 point]
+
+$$
+v_B=\frac{6565\ \mathrm{\mathring A}-6562.8\ \mathrm{\mathring A}}{6562.8\ \mathrm{\mathring A}}\times(2.998\cdot10^5\ \mathrm{km\cdot s^{-1}})=+100.50\ \mathrm{km\cdot s^{-1}}
+$$
+
+[2 point]
+
+So, Menkalinan A is approaching and Menkalinan B is moving away from us. [1 point]
+
+### 7.2
+
+$$
+m_A>m_B\Rightarrow\alpha_B>\alpha_A
+$$
+
+From the definition of CM:
+
+$$
+\frac{\alpha_B}{\alpha_A}=1.026
+$$
+
+[0.5 points]
+
+$$
+\alpha=(\alpha_A+\alpha_B)=\alpha_B\left(1+\frac{\alpha_A}{\alpha_B}\right)=1.975\alpha_B
+$$
+
+[0.5 points]
+
+Applying the 3rd Kepler’s law, the total mass of the system is:
+
+$$
+M_{\mathrm{tot}}=\frac{4\pi^2}{G}\times\frac{\alpha^3\cdot d^3}{T^2}
+$$
+
+[1 point]
+
+$$
+M_{\mathrm{tot}}=\frac{4\pi^2}{G}\times\frac{(0.00662''\times\frac{1\ \mathrm{rad}}{206265''})^3\cdot(81.1\ \mathrm{ly}\cdot\frac{9.46\cdot10^{15}\ \mathrm{m}}{1\ \mathrm{ly}})^3}{(3.96\ \mathrm{d}\cdot\frac{86400\ \mathrm{s}}{1\ \mathrm{d}})^2}
+$$
+
+$$
+M_{\mathrm{tot}}=7.528\cdot10^{31}\ \mathrm{kg}=37.868M_\odot
+$$
+
+[2 point]
+
+### 7.3
+
+$$
+\frac{m_A}{m_B}=1.026
+$$
+
+$$
+M_{\mathrm{tot}}=m_A+m_B=1.026m_B+m_B=2.026m_B=37.868M_\odot
+$$
+
+$$
+m_B=18.691M_\odot
+$$
+
+[1 point]
+
+$$
+m_A=1.026m_B=19.177M_\odot
+$$
+
+[1 point]
+
+### 7.4
+
+Using the mass/luminosity relation given:
+
+$$
+\frac{L_A}{L_\odot}=\left(\frac{m_A}{M_\odot}\right)^{3.5}=\left(\frac{19.177M_\odot}{M_\odot}\right)^{3.5}\quad3.088\times10^4
+$$
+
+$$
+L_A=3.088\times10^4L_\odot
+$$
+
+[1 point]
+
+$$
+\frac{L_B}{L_\odot}=\left(\frac{m_B}{M_\odot}\right)^{3.5}=\left(\frac{18.691M_\odot}{M_\odot}\right)^{3.5}=2.823\times10^4
+$$
+
+$$
+L_B=2.823\times10^4L_\odot
+$$
+
+[1 point]
+
+
+</Spoiler>
+
+<details>
+<summary>Official solution source discrepancy</summary>
+
+The first luminosity calculation in official solution 7.4 omits the equality sign before 3.088×10⁴. Its spacing and the following explicit result are retained.
+
+</details>
 
 ---
 
 Оригинал в Архива: [TQ-7-Q.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-7-Q.pdf#page=1)
+· официални решения: [TQ7 (1).pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/solutions/TQ7%20(1).pdf#page=1)
+· допълнителни данни: [TQ-7-A.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-7-A.pdf)
+· допълнителни данни: [Standard-Table-of-constants.docx.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/Standard-Table-of-constants.docx.pdf)
+· допълнителни данни: [TQ-G.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-G.pdf)
+· допълнителни данни: [data.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Theoretical/data.pdf)

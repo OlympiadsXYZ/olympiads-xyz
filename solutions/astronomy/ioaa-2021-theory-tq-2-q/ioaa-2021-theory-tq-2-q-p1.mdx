@@ -5,11 +5,32 @@ title: 'Задача 2. Temperature of the Earth (10 points).'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-theory-tq-2-q.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:03:48.520Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T16:30:04.251Z'
+verifier: 'single-pass'
 ---
 
 *Theory — Q2-1 — Temperature of the Earth (10 points). · 10 т.*
+
+<details>
+<summary>Standard Table of Constants — values used in this problem</summary>
+
+Stefan-Boltzmann constant: $\sigma=5.670\times10^{-8}\ \mathrm{W\,m^{-2}\,K^{-4}}$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — values used in this problem</summary>
+
+1 astronomical unit (au): $1\ au=1.496\times10^{11}m$. Effective temperature of Sun: $5778K$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — values used in this problem</summary>
+
+Sun: mean radius $695\ 500\ km$. Earth: mean radius $6\ 378\ km$; semi-major axis $1.000000\ au$.
+
+</details>
 
 ## Условие
 
@@ -26,18 +47,90 @@ For simplicity, consider the reabsorption effect as happening only once, and do 
 
 <Spoiler title="Покажи отговорите">
 
-- **2.1** 5 °C
-- **2.2** -18.5 °C
-- **2.3** 43.5 °C
+- **2.1** 5.43 °C
+- **2.2** -18.34 °C
+- **2.3** 12.53 °C
 
 </Spoiler>
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+**2.1** The solar radiation intensity ($I_T$) received on Earth is:
+
+$$
+I_T=\frac{P_s}{4\pi r_{s-t}^2}=\sigma T_s^4\cdot\left(\frac{R_s}{r_{s-t}}\right)^2
+$$
+
+[1 point]
+
+with $P_s=4\pi\sigma R_s^2T_s^4$.
+
+Also, Earth would absorb energy at this rate:
+
+$$
+P_{abs}=I_T\pi R_t^2=\pi\sigma T_s^4\cdot\left(\frac{R_s\cdot R_t}{r_{s-t}}\right)^2
+$$
+
+With $R_t=6.4\times10^6m$ as the radius of the planet “disk”. [1 point]
+
+Then, by thermal equilibrium, the absorbed radiation would be radiated over the planet’s surface:
+
+$$
+P_{abs}=P_{rad}
+$$
+
+With
+
+$$
+P_{rad}=4\pi\sigma R_t^2T_t^4
+$$
+
+$$
+\pi\sigma T_s^4\cdot\left(\frac{R_s\cdot R_t}{r_{s-t}}\right)^2=4\pi\sigma R_t^2T_t^4
+$$
+
+[1 point]
+
+$$
+T_t=T_s\cdot\left(\frac{R_s}{2r_{s-t}}\right)^{\frac12}=278.58\ K=5.43\ ^\circ C
+$$
+
+[1 point]
+
+This would be very cold but still viable to harbor life.
+
+**2.2** The Earth’s absorbed radiation, considering the albedo, is:
+
+$$
+P'_{abs}=0.7\cdot\pi\sigma T_s^4\cdot\left(\frac{R_s\cdot R_t}{r_{s-t}}\right)^2
+$$
+
+[1 point]
+
+$$
+T'_T=T_s\ (0.7)^{\frac14}\cdot\left(\frac{R_s}{2r_{s-t}}\right)^{\frac12}=254.81\ K=-18.34\ ^\circ C
+$$
+
+[1 point]
+
+**2.3** If Earth reabsorbs 58% of the 70% re emitted energy, then:
+
+$$
+T''_T=T_s\ [0.7+(0.58\cdot0.7)]^{\frac14}\cdot\left(\frac{R_s}{2r_{s-t}}\right)^{\frac12}=285.68\ K=12.53\ ^\circ C
+$$
+
+[4 points]
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [TQ-2-Q.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-2-Q.pdf#page=1)
+· официални решения: [TQ2.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/solutions/TQ2.pdf#page=1)
+· допълнителни данни: [TQ-2-A.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-2-A.pdf)
+· допълнителни данни: [Standard-Table-of-constants.docx.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/Standard-Table-of-constants.docx.pdf)
+· допълнителни данни: [TQ-G.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-G.pdf)
+· допълнителни данни: [data.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Theoretical/data.pdf)

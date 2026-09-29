@@ -5,11 +5,32 @@ title: 'Задача 4. ALMA - Calculating photons (10 points).'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-theory-tq-4-q.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:12:20.236Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T16:30:06.382Z'
+verifier: 'single-pass'
 ---
 
 *Theory — Q4-1, English (Official) — ALMA - Calculating photons · 10 т.*
+
+<details>
+<summary>Standard Table of Constants — values used in this problem</summary>
+
+Speed of light in vacuum: $c=2.998\times10^8\ \mathrm{m\,s^{-1}}$. Planck constant: $h=6.626\times10^{-34}\ \mathrm{J\,s}$. Boltzmann constant: $k_B=1.381\times10^{-23}\ \mathrm{J\,K^{-1}}$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — values used in this problem</summary>
+
+1 jansky: $1\ Jy=10^{-26}\ \mathrm{W\,m^{-2}\,Hz^{-1}}$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — values used in this problem</summary>
+
+Rayleigh-Jeans law is given by $B_\nu=\frac{2k_BT}{c^2}\nu^2$ which is the power emitted per unit emitting area, per steradian, per unit frequency.
+
+</details>
 
 ## Условие
 
@@ -27,12 +48,143 @@ Imagine that a single $12\ \mathrm{m}$ antenna is being calibrated, pointing to 
 
 **4.5** For a radio antenna, the term SEFD refers to 'System Equivalent Flux Density', which is a characteristic energy flux density of the antenna, depending on its temperature and size. We also note that for energy estimation of radio photons, Rayleigh-Jeans approximation is valid. Assuming a system temperature of $691\ K$, what would be the SEFD of the full ALMA observatory in Jansky if all the 66 antennas could work together? **[2 т.]**
 
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **4.1** 1820 photon/s
+- **4.2** 48900 photon/s
+- **4.3** 83.9 arcsec
+- **4.4** $0.0516\ arcsec\quad\text{or}\quad0.0258\ arcsec$
+- **4.5** 290.5 Jy
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+**4.1** To get the number of photons per second we have to multiply the Flux by the area of the dish, to know the incoming energy per second, and divide this by the energy of a photon.
+
+For $\lambda_1=0.32\ mm=3.2\times10^{-4}m$:
+
+Energy of a photon: $E=\frac{hc}{\lambda}=6.2076\times10^{-22}Jules$ [1 point]
+
+Area of the disk: $A=\pi R^2=113\ m^2$
+
+Number of photons per second:
+
+$$
+n_1=\frac{flux\times A}{E}\approx1820\ photon/s
+$$
+
+[1 point]
+
+**4.2** Same calculation, just changing the energy of the individual photons:
+
+For $\lambda_2=8.6\ mm=8.6\times10^{-3}m$
+
+Energy of a photon: $E=\frac{hc}{\lambda}=2.31\times10^{-23}Jules$ [1 point]
+
+Number of photons per second:
+
+$$
+n_2=\frac{flux\times A}{E}\approx48900\ photon/s
+$$
+
+[1 point]
+
+**4.3** Spatial resolution of a single telescope is given by:
+
+$$
+\theta=1.22\frac{\lambda}{D}
+$$
+
+where D represents the diameter of the dish. This value will be given in radians, so it must be converted to arcsec afterwards.
+
+For a frequency of 74.9 GHz, the corresponding wavelength is:
+
+$$
+\lambda=\frac{c}{f}=4\ mm
+$$
+
+[1 point]
+
+And the spatial resolution:
+
+$$
+\theta=1.22\frac{4mm}{12\ m}\approx83.9\ arcsec
+$$
+
+[1 point]
+
+**4.4** For an array the correct expression is:
+
+$$
+\theta=\frac{\lambda}{B}\qquad\text{or}\qquad\theta=\frac{\lambda}{2B}
+$$
+
+[1 point]
+
+being B the longest baseline in the array.
+
+So in this case:
+
+$$
+\theta=\frac{4\ mm}{16\ km}\approx0.0516\ arcsec\qquad\text{or}\qquad0.0258\ arcsec
+$$
+
+[1 point]
+
+**4.5** The SEFD is a characteristic flux of a system, found by dividing the characteristic energy associated to the so-called temperature of the antenna by its effective area:
+
+$$
+SEFD=\frac{2kT_{sys}}{A_e}
+$$
+
+[1 point]
+
+As no additional information is given about the effective area, the actual physical area of the array should be used:
+
+$$
+A=54\left(\pi\times6^2\right)+12\left(\pi\times3.5^2\right)\approx6569\ m^2
+$$
+
+[0.5 point]
+
+Substituting the Boltzmann constant, the given temperature of the antenna, and converting the answer to Jansky we get:
+
+$$
+SEFD\approx290.5\ Jy
+$$
+
+[0.5 point]
+
+NOTES:
+
+| Question | We indicate the answer must be: | Tolerance |
+| --- | --- | --- |
+| 4.a | Approximated to the nearest integer | +/- 10 photons |
+| 4.b | Approximated to the nearest integer | +/- 10 photons |
+| 4.c | 2 digit of precision | [83.0 , 85.0] |
+| 4.d | 2 digits of precision | 0.05 exact |
+| 4.e | 2 digit of precision | [289.0 , 291.0] |
+
+
+</Spoiler>
+
+<details>
+<summary>Official marking-note discrepancy</summary>
+
+The worked solution gives both 0.0516 arcsec and 0.0258 arcsec for 4.4, while its tolerance table states “0.05 exact”. Both source statements are retained.
+
+</details>
 
 ---
 
 Оригинал в Архива: [TQ-4-Q.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-4-Q.pdf#page=1)
+· официални решения: [TQ4.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/solutions/TQ4.pdf#page=1)
+· допълнителни данни: [TQ-4-A.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-4-A.pdf)
+· допълнителни данни: [Standard-Table-of-constants.docx.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/Standard-Table-of-constants.docx.pdf)
+· допълнителни данни: [TQ-G.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-G.pdf)
+· допълнителни данни: [data.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Theoretical/data.pdf)
