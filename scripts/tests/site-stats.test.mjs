@@ -68,6 +68,7 @@ test('an official solution is solution text or sections, as the problem page sho
   assert.equal(hasOfficialSolution({ statement: '', sections: [{}] }), true);
   assert.equal(hasOfficialSolution({ statement: '  ', incomplete: true }), false);
   assert.equal(hasOfficialSolution(null), false);
+  assert.equal(hasOfficialSolution({ statement: 'Unsigned handwritten archive solution', attribution: 'archive' }), false);
 });
 
 test('stats count published problems, their papers and the visible archive', () => {

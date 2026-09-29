@@ -37,6 +37,7 @@ type PaperFile = {
   problems?: {
     id?: string;
     solution?: {
+      attribution?: 'official' | 'archive';
       statement?: string | null;
       sections?: unknown[] | null;
     } | null;
@@ -82,12 +83,12 @@ function paperFiles(repoRoot: string): string[] {
 
 export const hasOfficialSolution = (
   solution:
-    | { statement?: string | null; sections?: unknown[] | null }
+    | { statement?: string | null; sections?: unknown[] | null; attribution?: 'official' | 'archive' }
     | null
     | undefined
 ): boolean =>
   !!(
-    solution &&
+    solution && solution.attribution !== 'archive' &&
     ((typeof solution.statement === 'string' && solution.statement.trim()) ||
       (Array.isArray(solution.sections) && solution.sections.length > 0))
   );

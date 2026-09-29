@@ -1078,7 +1078,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   lines.push(`id: ${problem.id}`);
   lines.push(`source: ${yamlStr(paperDescriptor(paper))}`);
   lines.push(`title: ${yamlStr(titleWithoutPoints(problemName(problem), problem.points))}`);
-  lines.push(`author: 'Olympiads XYZ · транскрипция на официалните материали'`);
+  lines.push(`author: 'Olympiads XYZ · ${problem.solution?.attribution === 'archive' ? 'транскрипция на архивни материали' : 'транскрипция на официалните материали'}'`);
   lines.push(`canonicalSource: ${yamlStr(String(sourceFile).split(path.sep).join('/'))}`); // repo-relative with forward slashes on every OS
   lines.push(`verification: ${yamlStr(state.quality)}`);
   if (state.quality === 'reviewed' && state.verifiedAt) lines.push(`verifiedAt: ${yamlStr(state.verifiedAt)}`);
@@ -1385,7 +1385,7 @@ function main() {
         else if (e.name.endsWith('.mdx')) {
           const bytes = fs.readFileSync(file), text = bytes.toString('utf8');
           const id = /^id: ([^\n]+)$/m.exec(text)?.[1];
-          if (id && text.includes("author: 'Olympiads XYZ · транскрипция на официалните материали'")) {
+          if (id && ["author: 'Olympiads XYZ · транскрипция на официалните материали'", "author: 'Olympiads XYZ · транскрипция на архивни материали'"].some(marker => text.includes(marker))) {
             prior.files[path.relative(ROOT, file)] = sha256(bytes);
             owned.add(id);
           }
