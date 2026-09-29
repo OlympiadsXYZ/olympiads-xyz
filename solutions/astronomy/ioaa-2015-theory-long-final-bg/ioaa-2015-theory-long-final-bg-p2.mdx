@@ -5,41 +5,275 @@ title: 'Задача 2'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2015/ioaa-2015-theory-long-final-bg.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-17T14:53:08.611Z'
-verifier: 'crop-audit'
+verifiedAt: '2026-09-29T19:07:50.019Z'
+verifier: 'single-pass'
 ---
 
 *IOAA 2015 — ДЪЛГИ ЗАДАЧИ*
 
 <Warning title="Бележка към темата">
-В архива липсва файл с решения за тази задача (дълги задачи, финал).
+Официалните решения и критерии са запазени на английски. В българската задача 3 няма въпрос за разстоянието: части d/e съответстват на e/f от английския финал. В задача 1(c) българският текст определя височината на точката от орбитата, а английският финал — на горната допирателна към спътника; решението следва английската формулировка. По-ранните варианти са показани отделно и не заместват финалните условия.
 </Warning>
+
+<details>
+<summary>Instruction — Theoretical Round</summary>
+
+1. Write your answer on the answer-sheet only. You can use more than one sheet for one problem. Please ask the organizer for the additional answer-sheets.
+
+2. Different problems should be done on different sheets.
+
+3. You can use your own calculator without program and graphic facility.
+
+4. You can ask the organizer for rough paper.
+
+</details>
+
+<details>
+<summary>Astronomical and Physical Constants — 20150729</summary>
+
+| Constant | Value |
+|---|---|
+| Astronomical unit (AU) | $1.4960\times10^{11}\ \mathrm m$ |
+| Light year (ly) | $9.4605\times10^{15}\ \mathrm m=63\,240\ \mathrm{au}$ |
+| Parsec (pc) | $3.0860\times10^{16}\ \mathrm m=206\,265\ \mathrm{au}$ |
+| Jansky (Jy) | $10^{-26}\ \mathrm{W\,m^{-2}\,Hz^{-1}}$ |
+| 1 Sidereal year | 365.2564 solar days |
+| 1 Tropical year | 365.2422 solar days |
+| 1 Calendar year | 365.2425 solar days |
+| 1 Sidereal day | $23^{\mathrm h}\ 56^{\mathrm m}\ 04^{\mathrm s}.091$ |
+| 1 Solar day | $24^{\mathrm h}\ 03^{\mathrm m}\ 56^{\mathrm s}.555$ units of sidereal time |
+| 1 Å | $10^{-10}\ \mathrm m$ |
+| 1 erg | $10^{-7}\ \mathrm J$ |
+| 1 dyne | $10^{-5}\ \mathrm N$ |
+| Mass of Earth | $5.9736\times10^{24}\ \mathrm{kg}$ |
+| Mean radius of Earth | $6.371\times10^6\ \mathrm m$ |
+| Equatorial radius of Earth | $6.378\times10^6\ \mathrm m$ |
+| Mean velocity of Earth on its orbit | $29.783\ \mathrm{km\,s^{-1}}$ |
+| Mass of Moon | $7.3490\times10^{22}\ \mathrm{kg}$ |
+| Radius of Moon | $1.737\times10^6\ \mathrm m$ |
+| Mass of Jupiter | $1.89813\times10^{27}\ \mathrm{kg}$ |
+| Mean Earth – Moon distance | $3.844\times10^8\ \mathrm m$ |
+| Mass of Sun | $1.98892\times10^{30}\ \mathrm{kg}$ |
+| Radius of Sun | $6.96\times10^8\ \mathrm m$ |
+| Effective temperature of the Sun | 5780 K |
+| Luminosity of the Sun | $3.96\times10^{26}\ \mathrm{J\,s^{-1}}$ |
+| Solar constant | $1366\ \mathrm{W\,m^{-2}}$ |
+| Brightness of the Sun in V-band | −26.8 mag. |
+| Absolute brightness of the Sun in V-band | 4.75 mag. |
+| Absolute bolometric brightness of Sun | 4.72 mag. |
+| Angular diameter of the Sun | 30′ |
+| Speed of light in vacuum (c) | $2.9979\times10^8\ \mathrm{m\,s^{-1}}$ |
+| Gravitational constant (G) | $6.6738\times10^{-11}\ \mathrm{N\,m^2\,kg^{-2}}$ |
+| Boltzmann constant (k) | $1.381\times10^{-23}\ \mathrm{m\,kg\,s^{-2}\,K^{-1}}$ |
+| Universal gas constant (R) | $8.31\ \mathrm{J\,K^{-1}\,mol^{-1}}$ |
+| Stefan–Boltzmann constant (σ) | $5.6704\times10^{-8}\ \mathrm{kg\,s^{-3}\,K^{-4}}$ |
+| Planck constant (h) | $6.6261\times10^{-34}\ \mathrm{J\,s}$ |
+| Wien's constant (b) | $2.8978\times10^{-3}\ \mathrm{m\,K}$ |
+| Hubble constant (H₀) | $70\ \mathrm{km\,s^{-1}\,Mpc^{-1}}$ |
+
+</details>
+
+<details>
+<summary>Astronomical and Physical Constants — continuation</summary>
+
+| Constant | Value |
+|---|---|
+| electron charge (e) | $1.602\times10^{-19}\ \mathrm C$ |
+| Mass of hydrogen atom | $1.67\times10^{27}\ \mathrm{kg}$ |
+| Current inclination of the ecliptic (ε) | 23º 26.3′ |
+| Coordinates of the northern ecliptic pole for epoch 2000.0 (αE, δE) | $18^{\mathrm h}\ 00^{\mathrm m}\ 00^{\mathrm s},+66^{\circ}\ 33.6^{\prime}$ |
+| Coordinates of the northern galactic pole for epoch 2000.0 (αG, δG) | $12^{\mathrm h}\ 51^{\mathrm m},+27^{\circ}\ 08^{\prime}$ |
+
+You can try to solve an equation $x=f(x)$ using iteration: $x_{n+1}=f(x_n)$.
+
+Basic equations of spherical trigonometry
+
+$$
+\sin a\sin B=\sin b\sin A
+$$
+
+$$
+\sin a\cos B=\cos b\sin c-\sin b\cos c\cos A,
+$$
+
+$$
+\cos a=\cos b\cos c+\sin b\sin c\cos A.
+$$
+
+Rayleigh-Jeans formula (long wavelength approximation of Planck’s Law):
+
+$$
+B_
+u(T)=\frac{2kT
+u^2}{c^2}
+$$
+
+</details>
 
 ## Условие
 
 Две масивни звезди A и B с маси $m_A$ и $m_B$, се намират на разстояние d една от друга. Те се движат около общия център на масите под действие на гравитационни сили. Приемете, че техните орбити са кръгови и лежат в равнината X-Y, като началото на координатната система е в центъра на масите. (виж Фигура 2).
 
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.3%', '--fig-max': '355px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-bg/p2-fig1-v2.png" alt="Триизмерна координатна система X-Y-Z; двете звезди A и B по кръгови орбити около центъра на масите в равнината X-Y; наблюдател по посока, сключваща ъгъл θ с оста Z в равнината Y-Z." width="1108" height="763" loading="lazy" decoding="async" />
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-bg/p2-fig1-v3.png" alt="Триизмерна координатна система X-Y-Z; двете звезди A и B по кръгови орбити около центъра на масите в равнината X-Y; наблюдател по посока, сключваща ъгъл θ с оста Z в равнината Y-Z." width="1108" height="846" loading="lazy" decoding="async" />
 <figcaption>Фигура 2</figcaption>
 </figure>
 
 **a.** Изразете линейната и ъгловата скорост на звездата A.
 
-**b.** Един наблюдател се намира в равнината Y-Z (виж Фигура 2) и наблюдава звездите от голямо разстояние под ъгъл $\theta$ спрямо оста Z. Той измерва, че скоростта на компонентата A по лъча на зрение (лъчевата скорост) се променя с времето по следния закон: $K\cos(\omega t+\varepsilon)$, където $K$ и $\varepsilon$ са положителни.
+Един наблюдател се намира в равнината Y-Z (виж Фигура 2) и наблюдава звездите от голямо разстояние под ъгъл $\theta$ спрямо оста Z. Той измерва, че скоростта на компонентата A по лъча на зрение (лъчевата скорост) се променя с времето по следния закон: $K\cos(\omega t+\varepsilon)$, където $K$ и $\varepsilon$ са положителни.
 
-Представете израза $K^3/\omega G$ като функция на $m_A$, $m_B$ и $\theta$ ($G$ е гравитационната константа).
+**b.** Представете израза $K^3/\omega G$ като функция на $m_A$, $m_B$ и $\theta$ ($G$ е гравитационната константа).
 
-**c.** Да предположим, че наблюдателят определя масата на звездата A и получава стойност 30$M_S$, където $M_S$ е масата на Слънцето. Освен това, той наблюдава рентгеново лъчение, излъчено от обекта B и благодарение на това той може да заключи, че тя е или неутронна звезда или черна дупка. Крайното заключение зависи от точната стойност на $m_B$: 1) ако $m_B$ < 2$M_S$, то звездата B е неутронна звезда или 2) ако $m_B$ > 2$M_S$, то звездата B е черна дупка.
+Да предположим, че наблюдателят определя масата на звездата A и получава стойност 30$M_S$, където $M_S$ е масата на Слънцето. Освен това, той наблюдава рентгеново лъчение, излъчено от обекта B и благодарение на това той може да заключи, че тя е или неутронна звезда или черна дупка. Крайното заключение зависи от точната стойност на $m_B$: 1) ако $m_B$ < 2$M_S$, то звездата B е неутронна звезда или 2) ако $m_B$ > 2$M_S$, то звездата B е черна дупка.
 
-Според измерванията на наблюдателя $\frac{K^3}{\omega G}=\frac{1}{250}M_S$. Всъщност, стойността на $\theta$ обикновено е неизвестна. Какво условие трябва да изпълнява този ъгъл, за да бъде обектът B черна дупка?
+**c.** Според измерванията на наблюдателя $\frac{K^3}{\omega G}=\frac{1}{250}M_S$. Всъщност, стойността на $\theta$ обикновено е неизвестна. Какво условие трябва да изпълнява този ъгъл, за да бъде обектът B черна дупка?
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архива липсва файл с решения за дългите задачи от финала.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-revised-a">
+
+### Revised marking scheme — a. (30 т.)
+
+The center of gravity of the stars is relatively to the star A given by
+
+$$
+r_A=\frac{m_B}{m_A+m_B}d
+$$
+
+and since the orbit of A is a circle, then
+
+$$
+F_{AX}=\frac{Gm_Am_B}{d^2}=\frac{m_Av_A^2}{r_A}
+$$
+
+So, we get
+
+$$
+v_A=m_B\sqrt{\frac{G}{(m_A+m_B)d}}
+$$
+
+The angular velocity of A is given by
+
+$$
+\omega=\frac{v_A}{r_A}=\sqrt{\frac{G(m_A+m_B)}{d^3}}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-revised-b">
+
+### Revised marking scheme — b. (30 т.)
+
+In Cartesian coordinate system, the velocity of A is
+
+$$
+\vec v_A(t)=v_A(-\sin(\omega t+\varepsilon)\hat\imath+\cos(\omega t+\varepsilon)\hat\jmath)
+$$
+
+Unit vector of the observer is
+
+$$
+\hat r_P=\cos\theta\,\hat k+\sin\theta\,\hat\jmath
+$$
+
+so the component of $\vec v_A$ in the line of the observer sight is given by
+
+$$
+\vec v_A\cdot\hat r_P=v_A\sin\theta\cos(\omega t+\varepsilon)
+$$
+
+Since the component of $\vec v_A$ in the line of the observer sight is $K\cos(\omega t+\varepsilon)$, then
+
+$$
+K=v_A\sin\theta
+$$
+
+Finally, we have
+
+$$
+\frac{K^3}{\omega G}=\frac{m_B^3}{(m_A+m_B)^2}\sin^3\theta\qquad (**)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-revised-c">
+
+### Revised marking scheme — c. (40 т.)
+
+From the result in b., namely eq. (**), we get
+
+$$
+\sin^3\theta=\frac{K^3}{\omega G}\frac{(m_A+m_B)^2}{m_B^3}<\frac1{250}\frac{32^2}{8}=\frac{64}{125}
+$$
+
+Since $\theta\in[0,\pi]$, then $\sin\theta<0,8$. Thus, the probability of B is a black hole is the same as the probability of $\sin\theta<0,8$ for $\theta\in[0,\pi]$. So $\theta$ is less than $53^\circ$ or greater than $127^\circ$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-probability">
+
+### Earlier image edition — probability question
+
+A measurement has been done by the observer which results $\frac{K^3}{\omega G}=\frac1{250}M_S$. If the value of $\cos\theta$ has the same probability, then calculate the probability of B to be a black hole. (Hint: Use $\int\sin x\,dx=-\cos x+C$)
+
+Since $\theta\in[0,\pi]$, then $\sin\theta<0,8$. Thus, the probability of B is a black hole is the same as the probability of $\sin\theta<0,8$ for $\theta\in[0,\pi]$. Since $\sin^{-1}0,8=53^\circ$ or $127^\circ$, then
+
+$$
+P(\text{B:Black Hole})=1-\frac{\int_{53^\circ}^{127^\circ}\sin\theta\,d\theta}{\int_{0^\circ}^{180^\circ}\sin\theta\,d\theta}=1-0,6=0,4
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-page-4">
+
+### Earlier image edition — original page 4
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.1%', '--fig-max': '327px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-bg/p2-sol-earlier-4.png" alt="Complete original earlier-edition key page 4 of 10, preserving draft questions, diagrams and marking weights." width="1022" height="1328" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-page-5">
+
+### Earlier image edition — original page 5
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51%', '--fig-max': '326px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-bg/p2-sol-earlier-5.png" alt="Complete original earlier-edition key page 5 of 10, preserving draft questions, diagrams and marking weights." width="1020" height="1322" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-earlier-page-6">
+
+### Earlier image edition — original page 6
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51%', '--fig-max': '326px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-long-final-bg/p2-sol-earlier-6.png" alt="Complete original earlier-edition key page 6 of 10, preserving draft questions, diagrams and marking weights." width="1020" height="1322" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [Long_problem_Final_BG.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/Long_problem_Final_BG.pdf#page=2)
+· официални решения: [Long Problem Solution-Marking Scheme [Revised] - 310715 - 13.58.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Long%20Problem%20Solution-Marking%20Scheme%20%5BRevised%5D%20-%20310715%20-%2013.58.pdf)
+· допълнителни данни: [long_sol_1.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_1.png)
+· допълнителни данни: [long_sol_2.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_2.png)
+· допълнителни данни: [long_sol_3.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_3.png)
+· допълнителни данни: [long_sol_4.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_4.png)
+· допълнителни данни: [long_sol_5.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_5.png)
+· допълнителни данни: [long_sol_6.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_6.png)
+· допълнителни данни: [long_sol_7.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_7.png)
+· допълнителни данни: [long_sol_8.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_8.png)
+· допълнителни данни: [long_sol_9.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_9.png)
+· допълнителни данни: [long_sol_10.png](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/Long/long_sol_10.png)
+· допълнителни данни: [9th IOAA Constants Table 20150729.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/9th%20IOAA%20Constants%20Table%2020150729.pdf)
+· допълнителни данни: [constants.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Constants/constants.pdf)
+· допълнителни данни: [instructions.docx](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2015/Theoretical/instructions.docx)
