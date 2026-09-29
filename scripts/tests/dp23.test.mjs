@@ -106,6 +106,14 @@ test('a layer whose ligatures map to a wrong letter („Xltered“, „fows“) 
   assert.deepEqual(r.defects, [], JSON.stringify(r.defects, null, 1));
 });
 
+test('a TeX layer: OT1 ligature codes read as letters, lost accents stand for the accented word (balkanski-2014/2015-cgp)', t => {
+  const page1 = `Задача 1. \n${PRINTED.join('\n')}\nConsiderons un solenoide in\x1Cni et demontrez que le champ est uniforme dans tout le volume interieur.\n`;
+  const { check } = sandbox(t, { page1 });
+  const r = check(candidate({ statement: `${FIXED} Considérons un solénoïde infini et démontrez que le champ est uniforme dans tout le volume intérieur.`, edits: [edit(), agreement] }));
+  assert.ok(!r.defects.some(d => /\binni\b|demontrez|interieur/.test(d.suggestedFix || '')), JSON.stringify(r.defects, null, 1));
+  assert.deepEqual(r.defects, [], JSON.stringify(r.defects, null, 1));
+});
+
 test('(c) the same fixes without a record stay defects with the restore-the-print mechanical fix', t => {
   const { check } = sandbox(t);
   const r = check(candidate());

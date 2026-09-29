@@ -432,9 +432,16 @@ export function textLayerCheck(candidate, manifest, paperId) {
   // for satisfies, filtered, coefficient, flows (iom-2020-blitz-tasks): such a token stands for the transcribed word — the
   // check "fixed" eight correct words into these forms. brokenLig maps each broken form to its word.
   const brokenLig = new Map();
+  // TeX draws an accent as a glyph of its own, which the layer loses: „demontrez“, „preciser“ for démontrez, préciser
+  // (balkanski-2015-cgp) — the Latin word without its accents stands for it too (Cyrillic й/ё never pass the /^[a-z]+$/ test)
+  for (const w of allWords) {
+    const bare = w.normalize('NFD').replace(/\p{M}/gu, '');
+    if (bare !== w && /^[a-z]+$/.test(bare) && bare.length >= 4 && !allWords.has(bare) && !brokenLig.has(bare)) brokenLig.set(bare, w);
+  }
   for (const w of allWords) {
     if (!LIG.test(w)) continue;
-    for (const [lig, subs] of [['ffi', ['u', 'x']], ['ffl', ['u', 'x']], ['ff', ['u', 'x']], ['fi', ['x', 'u']], ['fl', ['x', 'u', 'f']]]) {
+    // '' — the glyph dropped with no gap: „inni“ for infini (balkanski-2014-cgp; its pieces are too short for ligPieces)
+    for (const [lig, subs] of [['ffi', ['u', 'x', '']], ['ffl', ['u', 'x', '']], ['ff', ['u', 'x', '']], ['fi', ['x', 'u', '']], ['fl', ['x', 'u', 'f', '']]]) {
       if (!w.includes(lig)) continue;
       for (const s of subs) { const v = w.split(lig).join(s); if (v.length >= 4 && v !== w && !allWords.has(v) && !brokenLig.has(v)) brokenLig.set(v, w); }
     }
@@ -450,7 +457,11 @@ export function textLayerCheck(candidate, manifest, paperId) {
     const info = { trusted: false, reason: null, layerWords: 0, candidateWords: 0, candidateCovered: null, layerCovered: null, omissions: 0, misreadings: 0, unprinted: 0 };
     result.documents[doc] = info;
     if (!file || !fs.existsSync(file)) { info.reason = 'no text layer'; continue; }
-    const pages = layerPages(fs.readFileSync(file, 'utf8'));
+    // TeX's OT1 encoding puts the ligatures at 0x1B–0x1F (ff fi fl ffi ffl): a layer that keeps those codes prints
+    // „in\x1Cni“ for infini, which split the word (balkanski-2014-cgp). They become their letters; other control codes
+    // (0x01 carries an accent in the same PDFs: „G\x01en\x01erale“) stay as they are.
+    const OT1_LIG = { '\x1B': 'ff', '\x1C': 'fi', '\x1D': 'fl', '\x1E': 'ffi', '\x1F': 'ffl' };
+    const pages = layerPages(fs.readFileSync(file, 'utf8').replace(/(?<=\p{L})[\x1B-\x1F](?=\p{L})/gu, c => OT1_LIG[c]));
     // a solutions document shared by several papers (one marking file for every fieldwork task, igeo-2015-experiment-
     // fwe1task1): a passage the paper must carry comes only from the pages it declares it took its solutions from; every
     // page still counts as print for the words it does carry (wopho-2013-q2 transcribes a header from an earlier page)
@@ -472,6 +483,9 @@ export function textLayerCheck(candidate, manifest, paperId) {
     for (const t of tokens) if (!t.alt && brokenLig.has(t.w)) t.alt = [brokenLig.get(t.w)];
     const layerSet = new Set(tokens.flatMap(t => [t.w, ...(t.alt || [])]));
     const layerRaw = new Map(); for (const t of tokens) if (!t.fragment && !layerRaw.has(t.w)) layerRaw.set(t.w, t.raw);
+    // a replacement comes only from the pages the paper declares it read: a bilingual PDF's other version is no source
+    // (balkanski-2014-cgp: French „infini“ → „winding“ from the English pages it leaves out)
+    const replacementSet = omissionPages ? new Set(tokens.filter(t => omissionPages.has(t.page)).flatMap(t => [t.w, ...(t.alt || [])])) : layerSet;
     // half of a word broken at a line end („ослабле-“, „трицы“ of „ма-трицы“, „афрагмой“ of „ди-афрагмой“) that the page
     // never prints whole: no printed spelling, so never the replacement for a word the layer cannot read (a table set as
     // an image: „Ярославль“ → „ослабле“, „Троицк“ → „трицы“, „Диафрагма“ → „Афрагмой“, vsoa-ru-2013/2014-tepr)
@@ -649,7 +663,7 @@ export function textLayerCheck(candidate, manifest, paperId) {
       const altMisread = (a, b) => Math.abs(a.length - b.length) <= 1 && commonPrefix(a, b) >= 4 && commonSuffix(a, b) >= 3 && commonPrefix(a, b) < Math.min(a.length, b.length) - 3 && lev(a, b) <= 0.35 * Math.max(a.length, b.length);
       // a layer word that is the transcribed word cut at a line break („компонен“ + „тите“) is a fragment, not the printed spelling
       const fragmentOf = (x, w) => (w.startsWith(x) && layerSet.has(w.slice(x.length))) || (w.endsWith(x) && layerSet.has(w.slice(0, w.length - x.length)));
-      const misread = extras.map(raw => { const w = norm(raw); const near = [...layerSet].filter(x => x.length >= 5 && P.content.test(x) && !fragmentOf(x, w) && !fragmentOnly.has(x) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
+      const misread = extras.map(raw => { const w = norm(raw); const near = [...replacementSet].filter(x => x.length >= 5 && P.content.test(x) && !fragmentOf(x, w) && !fragmentOnly.has(x) && (f.altText ? altMisread(x, w) : !allWords.has(x) && similar(x, w))); return near.length === 1 ? { raw, printed: layerRaw.get(near[0]) || near[0] } : null; }).filter(Boolean);
       let rest = extras;
       // a block of unprinted words is text the layer cannot see (a table set as an image): a near-match there is chance
       // („Середина“ → „Среди“ in an eclipse table, vsoa-ru-2013-tepr), so it is reported without a mechanical fix
