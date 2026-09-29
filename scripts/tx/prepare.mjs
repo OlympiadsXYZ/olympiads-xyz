@@ -17,6 +17,7 @@ import { PAGE_RENDERER, PAGE_RENDER_HELPER, pageRenderArgs, previewGeometryError
 import { supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
 import { XLSX_RENDERER_FINGERPRINT, xlsxCacheValid } from './xlsx-source.mjs';
 import { IMAGE_SOURCE_EXTENSION, IMAGE_RENDERER_FINGERPRINT, imageCacheValid } from './image-source.mjs';
+import { PAGED_SOURCE_EXTENSION, pagedKind, pagedFingerprint, pagedCacheValid } from './paged-source.mjs';
 import {
   parseArgs, fail, run, resolvePaper, paperDir, manifestFile, readManifest, writeJson,
   sha256File, nowIso, RENDER_DPI, R2_REMOTE, which, ROOT, pdftotextBin,
@@ -192,6 +193,7 @@ for (const doc of Object.keys(keys)) {
   const isXlsx = /\.xlsx$/i.test(key);
   const workbook = file.replace(/\.pdf$/, '.xlsx');
   const isImage = IMAGE_SOURCE_EXTENSION.test(key);
+  const isPaged = PAGED_SOURCE_EXTENSION.test(key);
   const imageSource = file.replace(/\.pdf$/, path.extname(key).toLowerCase());
   let downloaded = false;
   // Re-download when there is no file, when --force was given, when the archive
@@ -199,7 +201,8 @@ for (const doc of Object.keys(keys)) {
   // no longer match the manifest (a partial or tampered file).
   const stale = !fs.existsSync(file) || args.force || !prev || prev.key !== key || sha256File(file) !== prev.sha256
     || (isXlsx && !xlsxCacheValid(prev, file, workbook))
-    || (isImage && !imageCacheValid(prev, file, imageSource));
+    || (isImage && !imageCacheValid(prev, file, imageSource))
+    || (isPaged && !pagedCacheValid(prev, file, imageSource));
   if (stale) {
     fs.rmSync(file, { force: true });
     if (isImage) {
@@ -212,6 +215,15 @@ for (const doc of Object.keys(keys)) {
       converted[doc].sourceFile = `src/${doc}${path.extname(key).toLowerCase()}`;
       converted[doc].rendererFingerprint = IMAGE_RENDERER_FINGERPRINT;
       if (converted[doc].sourceSha256 !== sha256File(imageSource) || converted[doc].pdfSha256 !== sha256File(file)) fail(`image conversion hash mismatch for ${key}`);
+    } else if (isPaged) {
+      run('rclone', ['copyto', `${R2_REMOTE}/${key}`, imageSource]);
+      const helper = pagedKind(key) === 'presentation' ? 'presentation-to-pdf.py' : 'djvu-to-pdf.py';
+      const r = run('python3', [path.join(ROOT, 'scripts', 'tx', helper), imageSource, file], { allowFail: true });
+      if (r.status !== 0 || !fs.existsSync(file)) fail(`paged source conversion failed for ${key}: ${(r.stderr || r.stdout || '').trim().slice(-2000)}`);
+      try { converted[doc] = JSON.parse(r.stdout.trim()); } catch { fail(`paged converter did not return provenance for ${key}`); }
+      converted[doc].sourceFile = `src/${doc}${path.extname(key).toLowerCase()}`;
+      converted[doc].rendererFingerprint = pagedFingerprint(key);
+      if (converted[doc].sourceSha256 !== sha256File(imageSource) || converted[doc].pdfSha256 !== sha256File(file)) fail(`paged conversion hash mismatch for ${key}`);
     } else if (/\.(docx?|rtf|odt)$/i.test(key)) {
       // a Word document in the archive: fetched as is, printed to PDF by the installed Word (office2pdf.ps1)
       const office = file.replace(/\.pdf$/, path.extname(key).toLowerCase());
