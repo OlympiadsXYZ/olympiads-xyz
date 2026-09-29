@@ -1,0 +1,492 @@
+{
+ "paper": {
+  "id": "x-ens-2020-pc",
+  "subject": "physics",
+  "competition": "X-ENS",
+  "year": 2020,
+  "round": null,
+  "roundType": "theory",
+  "grade": null,
+  "lang": "fr",
+  "title": "ÉCOLE POLYTECHNIQUE - ESPCI, ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2020 — FILIÈRE PC - Épreuve n°5 — PHYSIQUE B (XEULC)",
+  "held": {
+   "from": "2020-04-22",
+   "to": "2020-04-22"
+  },
+  "organiser": "École polytechnique - ESPCI, Écoles normales supérieures",
+  "totalPoints": null,
+  "timeLimitMin": 240,
+  "source": {
+   "archiveKey": "Физика/Състезания/Минко Балкански/ENS-X-exams/PC/PC_2020.pdf",
+   "pages": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "status": "review",
+  "documentNotes": [
+   {
+    "title": "Consignes",
+    "statement": "MERCREDI 22 AVRIL 2020 - 08h00 – 12h00\n\nDurée : 4 heures\n\n*L’utilisation de calculatrices n’est pas autorisée pour cette épreuve.*",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   },
+   {
+    "title": "Ondes de gravité dans un fluide",
+    "statement": "Des ondes de gravité peuvent apparaître au sein d’un fluide stratifié, c’est-à-dire un fluide dont la masse volumique varie spatialement selon une direction particulière, généralement la verticale. Elles sont appelées ondes internes. Des ondes peuvent également apparaître à l’interface entre deux fluides de masses volumiques différentes et non miscibles. Elles sont dites ondes de surface. Les vagues à la surface d’un océan en sont une manifestation. Notons qu’il s’agit là d’une situation limite de la précédente.\n\nCette étude comprend deux parties qui peuvent être abordées de façon indépendante. La première s’intéresse aux ondes à l’interface eau/air, la seconde est consacrée aux ondes internes dans l’eau. Nous définissons le référentiel $\\mathcal{R}(\\mathrm{O},x,y,z)$, supposé galiléen, tel que le champ de gravité s’exprime $\\vec{g} = -g\\,\\vec{u}_y$. Nous restreindrons ces études à des situations spatialement bidimensionnelles, dans le plan vertical $(\\mathrm{O},x,y)$.\n\nEn vue des applications numériques nous adoptons les valeurs suivantes : $D = 15\\ \\mathrm{cm}$ , $L = 15\\ \\mathrm{cm}$ et $H = 20\\ \\mathrm{cm}$. Ces grandeurs seront introduites et présentées dans la suite.\n\n**N.B. :** Nous considérerons que le principe (ou théorème) d’ARCHIMÈDE reste applicable hors du domaine de la stricte statique des fluides.",
+    "document": "problems",
+    "page": 3,
+    "position": "before-problem"
+   }
+  ],
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-29",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "a9926671d3c5172e03d2bb83c8e12f499e7b5a0555bc0b5762ba79e0631d7aa6"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-29",
+   "notes": "La page 2 du PDF est une page grise vide (page de garde intercalaire) ; elle ne contient aucun texte. Aucun barème n’est imprimé : tous les points sont null. Aucun corrigé officiel dans l’archive. Le texte d’introduction commun aux deux parties (« Ondes de gravité dans un fluide ») est placé dans paper.documentNotes. Les numéros de ligne en marge sont omis. Les renvois imprimés en couleur « figure (1) », « relation (1) » etc. sont transcrits tels quels. Formes conservées telles qu’imprimées : « une demie longueur d’onde » et « une demie période » (question 22 ; l’accord standard serait « demi- ») ; « ses comportements limite et asymptotique » (question 16) ; « de l’ordre de 10^7 m » pour ℓ (partie 2), alors que la figure 5 utilise ℓ = 12 m. Les noms propres en petites capitales (ARCHIMÈDE, REYNOLDS) sont écrits en majuscules. La note de bas de page 1 (page 6) est placée après la question 41, à sa position imprimée.",
+   "edits": [
+    {
+     "path": "/problems/0/parts/10/statementAfter",
+     "printed": "générent",
+     "fixed": "génèrent",
+     "document": "problems",
+     "page": 4,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "x-ens-2020-pc-p1",
+   "number": 1,
+   "title": "Ondes de surface.",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Reportons-nous à la figure (1). Nous considérons un objet cylindrique, de masse volumique $\\rho_{\\mathrm{c}}$ uniforme, de diamètre $D = 2R$ et de longueur $L$, flottant à la surface de l’eau de masse volumique $\\rho$. Cette eau est contenue dans un canal de largeur très légèrement supérieure à $L$ (mais considérée égale à $L$), de profondeur $H$ et de longueur très supérieure à toutes les longueurs caractéristiques du système. L’origine O du repère est placée au niveau de la surface de l’eau. Nous notons $Y$ l’ordonnée du centre de masse G du flotteur et $u = Y - Y_0$ son écart par rapport à son ordonnée d’équilibre $Y_0$ (fluide et flotteur à l’équilibre). Nous nous placerons toujours dans le cas où l’axe du flotteur reste parallèle à l’axe $(\\mathrm{O}z)$ et tel que $|u| \\ll R$. Nous négligerons l’action de l’air sur le flotteur.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "caption": "FIGURE 1 – Objet cylindrique $(\\rho_{\\mathrm{c}}, D, L)$ flottant horizontalement à la surface de l’eau $(\\rho)$ d’un canal (vues de face et de côté). Ces figures ne sont pas à l’échelle. En particulier, la largeur du canal n’est que très légèrement supérieure à $L$ (l’écart est exagéré sur le schéma afin de le rendre visible).",
+     "alt": "Deux schémas. À gauche, vue de face : axes x et y d’origine O au niveau de la surface ; flotteur circulaire de diamètre D et de centre G à moitié immergé, étiqueté « Flotteur ρc » ; vecteur g vers le bas ; « Air » au-dessus, « Eau ρ » en dessous ; profondeur H jusqu’au fond « Canal ». À droite, vue de côté : axes y et z, flotteur rectangulaire de longueur L étiqueté « Flotteur », G, O, ρc, dans le canal rempli d’« Eau ρ ».",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p1-fig1.png",
+     "width": 1514,
+     "height": 457,
+     "source": {
+      "page": 3,
+      "pdfRect": [
+       116.1,
+       409.99,
+       479.2,
+       519.43
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "caption": "FIGURE 2 – Évolution temporelle expérimentale de l’ordonnée $Y$ du centre de masse G du flotteur.",
+     "alt": "Graphique de Y (mm) en fonction de t (s), de 0 à 2,2 s en abscisse et de −10 à 4 mm en ordonnée, avec des points en losanges : Y vaut environ −10 mm jusqu’à 0,5 s, monte jusqu’à environ 3,5 mm vers 0,78 s, redescend vers −2 mm vers 1,03 s, puis oscille avec une amplitude décroissante autour de 0.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p1-fig2.png",
+     "width": 1403,
+     "height": 1085,
+     "source": {
+      "page": 4,
+      "pdfRect": [
+       111.33,
+       130.5,
+       447.66,
+       390.64
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig3",
+     "caption": "FIGURE 3 – Chronophotographie illustrant l’évolution de l’interface eau/air (cadence de 250 images par seconde sur une durée de 3 s). La ligne horizontale en trait pointillé tracée sur la photographie du haut représente la ligne des pixels suivis temporellement et qui est reportée chronologiquement, de haut en bas, pour former l’image du bas.",
+     "alt": "En haut, photographie du canal à t=1s avec le flotteur circulaire à la surface de l’eau colorée et une ligne horizontale en pointillés juste sous la surface. En bas, chronophotographie : bande verticale sombre centrale (trace du flotteur) et, de part et d’autre, des lignes obliques colorées qui s’éloignent du centre ; flèche verticale vers le bas étiquetée « temps ».",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p1-fig3.png",
+     "width": 2000,
+     "height": 1226,
+     "source": {
+      "page": 5,
+      "pdfRect": [
+       57.15,
+       106.07,
+       536.94,
+       399.92
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "1.",
+     "statement": "Nous souhaitons que le cylindre flotte, à l’équilibre, en étant à moitié immergé dans l’eau. Préciser la relation que doit alors vérifier $\\rho_{\\mathrm{c}}$. Calculer sa valeur numérique.\n\n*Nous nous placerons dans cette situation dans toute cette partie.*",
+     "points": null,
+     "statementAfter": "• Nous supposons que l’équilibre du flotteur a été légèrement perturbé (verticalement) et souhaitons exprimer la pulsation $\\omega_0$ de ses oscillations libres. Nous négligerons ici toute cause de dissipation d’énergie mécanique et nous nous placerons dans le cas où le fond du canal n’influence pas le mouvement du flotteur."
+    },
+    {
+     "label": "2.",
+     "statement": "Sur la base de considérations physiques et d’arguments dimensionnels, établir la dépendance de $\\omega_0^2$ avec les différents paramètres du problème. On détaillera chaque étape du raisonnement.",
+     "points": null
+    },
+    {
+     "label": "3.",
+     "statement": "Exprimer, au premier ordre relativement au rapport $u/R$ et en fonction de $L$, $D$ et $u$, la variation algébrique $\\delta V_{\\mathrm{im}}$ de volume immergé du flotteur par rapport à la situation d’équilibre.",
+     "points": null
+    },
+    {
+     "label": "4.",
+     "statement": "Établir l’équation différentielle vérifiée par la variable $u$. On fera apparaître la pulsation $\\omega_0$ dont on donnera l’expression en fonction de $g$ et $D$.",
+     "points": null
+    },
+    {
+     "label": "5.",
+     "statement": "Calculer la valeur numérique de la fréquence $f_0$ correspondant à $\\omega_0$.",
+     "points": null,
+     "statementAfter": "• La figure (2) représente l’évolution temporelle de l’ordonnée $Y$ du centre de masse G du flotteur, obtenue expérimentalement."
+    },
+    {
+     "label": "6.",
+     "statement": "Déterminer, à partir de la figure (2), la pseudo-fréquence $f_{\\mathrm{exp}}$ des oscillations du flotteur ainsi que l’amplitude initiale $u_0$. Proposer une estimation (approximative) du facteur de qualité $Q$ de cet oscillateur (en précisant la méthode adoptée).",
+     "points": null
+    },
+    {
+     "label": "7.",
+     "statement": "Comparer à $f_0$ la pseudo-fréquence $f_{\\mathrm{exp}}$ des oscillations du flotteur estimée à partir de la figure (2).",
+     "points": null,
+     "statementAfter": "• Nous souhaitons maintenant identifier les effets responsables de l’amortissement des oscillations du flotteur. Nous commençons par l’effet de traînée."
+    },
+    {
+     "label": "8.",
+     "statement": "Préciser, sur la base d’une argumentation, l’expression du nombre de REYNOLDS $\\mathrm{R_e}$ qu’il convient d’associer à l’écoulement de l’eau autour du flotteur en mouvement. En donner une estimation (nous adopterons, pour la viscosité cinématique de l’eau, la valeur $10^{-6}\\ \\mathrm{m^2 \\cdot s^{-1}}$). Commenter ce résultat.",
+     "points": null
+    },
+    {
+     "label": "9.",
+     "statement": "Donner l’expression de la force de traînée $\\vec{F}_{\\mathrm{T}}$ qui paraît alors la mieux adaptée à décrire l’action mécanique du fluide sur le flotteur en mouvement (toujours transversalement à son axe) à la vitesse $\\vec{V} = V\\,\\vec{u}_y$. On raisonnera comme si le cylindre était totalement immergé dans un milieu infini et on s’inspirera du résultat connu relatif à un objet sphérique.",
+     "points": null
+    },
+    {
+     "label": "10.",
+     "statement": "Exprimer, à partir de grandeurs caractéristiques que l’on précisera, le rapport caractéristique $K_{\\mathrm{TR}}$ de la force de traînée à la force de rappel gravitationnel qui est intervenue en question (**4**) lors de l’établissement de l’équation différentielle.",
+     "points": null
+    },
+    {
+     "label": "11.",
+     "statement": "Estimer numériquement le rapport $K_{\\mathrm{TR}}$. Conclure sur la participation de l’effet de traînée à l’amortissement des oscillations du flotteur.",
+     "points": null,
+     "statementAfter": "• Nous recherchons maintenant la cause de l’amortissement des oscillations du flotteur dans les ondes de surface qu’elles génèrent. L’image inférieure de la figure (3) est une chronophotographie permettant de donner une représentation de l’évolution temporelle de la surface libre eau/air. Pour cela on réalise un film du canal à raison de 250 images par seconde, pendant 3 s. Pour chaque image (telle que celle du haut de la figure (3)), on stocke l’état de couleur de chacun des pixels correspondant à une ligne horizontale prédéterminée (en pratique, située très légèrement en dessous de l’interface libre eau/air au repos [ligne en trait pointillé sur la figure du haut]). Ces lignes de pixels sont ensuite représentées les unes en dessous des autres en respectant la chronologie de la prise d’images (figure du bas). Cette chronophotographie se rapporte à l’expérience relative à l’évolution représentée sur la figure (2)."
+    },
+    {
+     "label": "12.",
+     "statement": "Proposer une interprétation des lignes obliques situées de part et d’autre de la frange sombre verticale et centrale (trace du flotteur).",
+     "points": null
+    },
+    {
+     "label": "13.",
+     "statement": "Déterminer, à partir de cette chronophotographie, la fréquence $f'_{\\mathrm{exp}}$ des oscillations du flotteur. On précisera la démarche suivie.",
+     "points": null
+    },
+    {
+     "label": "14.",
+     "statement": "De la même manière, déterminer la longueur d’onde $\\lambda_{\\mathrm{exp}}$ des ondes de surface.",
+     "points": null
+    },
+    {
+     "label": "15.",
+     "statement": "Estimer la célérité $c_{\\mathrm{exp}}$ de ces ondes de surface.",
+     "points": null,
+     "statementAfter": "• Nous admettons que la relation de dispersion liant la pulsation $\\omega$ $(\\omega \\geq 0)$ au nombre d’onde $k$ des ondes de surface se propageant dans un canal de profondeur $H$ est donnée par la relation :\n\n$$\\omega^2 = gk\\tanh(kH) \\quad \\text{où} \\quad k = \\frac{2\\pi}{\\lambda} > 0 \\quad \\text{et} \\quad \\tanh(kH) = \\frac{\\sinh(kH)}{\\cosh(kH)} = \\frac{\\exp(2kH) - 1}{\\exp(2kH) + 1} \\tag{1}$$"
+    },
+    {
+     "label": "16.",
+     "statement": "Représenter l’allure graphique de la fonction $\\omega = \\omega(k)$. On précisera ses comportements limite et asymptotique.",
+     "points": null
+    },
+    {
+     "label": "17.",
+     "statement": "Indiquer à quelle condition le milieu peut être considéré comme non dispersif.",
+     "points": null
+    },
+    {
+     "label": "18.",
+     "statement": "Associer la célérité $c_{\\mathrm{exp}}$ calculée à la question (**15**) à l’une des vitesses de groupe ou de phase.",
+     "points": null
+    },
+    {
+     "label": "19.",
+     "statement": "Déduire de la relation (1), dans la limite $kH \\ll 1$, l’expression de la célérité $c$ des ondes de surface. Calculer sa valeur numérique. Vérifier la compatibilité de cette valeur avec celle de $c_{\\mathrm{exp}}$ déterminée en réponse à la question (**15**).",
+     "points": null,
+     "statementAfter": "• Nous décrivons l’évolution spatio-temporelle de la hauteur (algébrique) $h$ des vagues formant l’onde de surface par l’équation :\n\n$$h(x,t) = A\\sin(\\Omega_0 t \\pm kx) \\quad (A = \\mathrm{Cste} \\in \\mathbb{R}_+ \\,;\\ \\Omega_0 \\in \\mathbb{R}_+ \\,;\\ k \\in \\mathbb{R}_+) \\tag{2}$$\n\n**N.B. :** En réalité, l’amplitude $A$ dépend du temps (amortissement des oscillations du flotteur excitant les ondes de surface) et de l’espace (amortissement des ondes de surface). Nous considérerons ici simplement que cette amplitude ne varie pas (sensiblement) sur l’échelle d’une période ni sur celle d’une longueur d’onde. En pratique, sauf à la question (**23**), nous considérerons donc l’amplitude $A$ comme constante et uniforme.\n\nNous adoptons comme état de référence, notamment pour ce qui concerne les énergies, la situation correspondant à une interface plane et immobile. Par ailleurs, nous considérons que nous pouvons nous placer dans la limite des faibles profondeurs ($kH \\ll 1$). Nous notons $c$ la célérité des ondes de surface."
+    },
+    {
+     "label": "20.",
+     "statement": "Exprimer l’énergie potentielle de pesanteur $E_{\\mathrm{p}} = E_{\\mathrm{p}}(\\rho, g, L, A, \\lambda)$ emmagasinée par l’onde, sur une étendue spatiale (selon $(\\mathrm{O}x)$) égale à une longueur d’onde. Rappelons que la largeur de la cuve (égale à la longueur du flotteur) est notée $L$.",
+     "points": null
+    },
+    {
+     "label": "21.",
+     "statement": "En déduire l’expression du flux (moyen) d’énergie potentielle $\\Phi_{\\mathrm{p}} = \\Phi_{\\mathrm{p}}(\\rho, g, L, A, c)$ $([\\Phi_{\\mathrm{p}}] = \\mathrm{W})$ traversant une section verticale d’abscisse donnée.",
+     "points": null
+    },
+    {
+     "label": "22.",
+     "statement": "Nous cherchons d’abord à relier l’amplitude $A$ des ondes à l’amplitude $B$ $(B \\geq 0)$ des oscillations du flotteur. Nous considérons alors que le volume total des bosses (occupant chacune une demie longueur d’onde) des ondes se formant de part et d’autre du flotteur est égal à celui balayé par le flotteur sur une demie période. Dans cette démarche nous considérons que le flotteur oscille à amplitude constante sur l’échelle d’une période (hypothèse jumelle de celle adjointe à l’équation (2)).\n\nExprimer, dans ces conditions, l’amplitude $A$ en fonction de $B$, $D$ et $\\lambda$.",
+     "points": null
+    },
+    {
+     "label": "23.",
+     "statement": "En reliant la variation d’énergie par unité de temps du flotteur au flux $\\Phi_{\\mathrm{p}}$ qu’il rayonne par le biais des ondes de surface, établir que l’amplitude $B$ de ses oscillations vérifie l’équation différentielle du premier ordre :\n\n$$\\dot{B} + \\frac{B}{\\tau} = 0 \\tag{3}$$\n\nOn explicitera la dépendance de la constante $\\tau$ avec le diamètre $D$, la célérité $c$ et la longueur d’onde $\\lambda$.",
+     "points": null
+    },
+    {
+     "label": "24.",
+     "statement": "Déduire du résultat précédent l’expression du facteur de qualité $Q$ du système oscillant. On exprimera $Q$ en fonction de la célérité $c$ des ondes, de la période $T$ des oscillations et du diamètre $D$ du cylindre.",
+     "points": null
+    },
+    {
+     "label": "25.",
+     "statement": "Estimer la valeur de ce facteur de qualité. Analyser ce résultat.",
+     "points": null
+    }
+   ],
+   "topics": [
+    "mechanics/oscillations",
+    "fluids/surface-waves",
+    "waves/dispersion"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "L’archive ne contient pas de corrigé officiel pour cette épreuve."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "x-ens-2020-pc-p2",
+   "number": 2,
+   "title": "Ondes internes.",
+   "points": null,
+   "problemType": "theory",
+   "statement": "La masse volumique de l’eau varie en fonction de la salinité, de la température et de la pression, ce qui conduit généralement à une stratification verticale du milieu océanique. Nous considérons ici que la masse volumique $\\rho_0$ du milieu, en situation d’équilibre, varie selon la relation :\n\n$$\\rho_0(y) = \\rho_0(0) - \\bar{\\rho}\\,\\frac{y}{\\ell} \\tag{4}$$\n\nLa grandeur $\\bar{\\rho}$ représente la masse volumique moyenne (selon la verticale) et la grandeur $\\rho_0(0)$ celle correspondant au fond océanique ($y = 0$). La longueur caractéristique $\\ell$ est de l’ordre de $10^7$ m. Le plan $(\\mathrm{O},z,x)$ du référentiel $\\mathcal{R}(\\mathrm{O},x,y,z)$ est placé au niveau du fond océanique (se reporter à la figure (4)). Enfin, nous négligerons toute cause de dissipation de l’énergie mécanique.\n\n*Le traitement de la sous-partie suivante (questions (**26**), (**27**) et (**28**)) n’est pas indispensable à la suite de l’étude.*\n\n• Un cylindre homogène de centre de masse G, de diamètre $D = 2R$, de longueur $L = D$ et de masse volumique $\\rho_{\\mathrm{c}}$ (de valeur *a priori* différente de celle prise en partie (**1**)) trouve son équilibre, entre deux eaux, à une altitude $Y_0$. Nous notons $Y = Y_0 + u$ l’ordonnée de son centre de masse G, la variable $u$ représentant l’écart à sa position d’équilibre. Nous supposons que son axe reste en permanence parallèle à l’axe $(\\mathrm{O}z)$. Ce système est représenté sur la figure (4).",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "caption": "FIGURE 4 – Objet cylindrique $(\\rho_{\\mathrm{c}}, D, L)$ immergé dans l’eau $(\\rho_0(y))$. Ces figures ne sont pas à l’échelle. En particulier, la largeur du canal n’est que très légèrement supérieure à $L$ (l’écart est exagéré sur le schéma afin de le rendre visible).",
+     "alt": "Deux schémas. À gauche, vue de face : axes x et y d’origine O au fond ; hauteur d’eau H jusqu’à la surface (« Air » au-dessus) ; cylindre de diamètre D et de centre G à l’ordonnée Y, étiqueté « Cylindre » ; « Eau ρ0(y) » ; vecteur g vers le bas. À droite, vue de côté : axes y et z d’origine O, cylindre rectangulaire de longueur L étiqueté « Cylindre », G, dans le « Canal » rempli d’« Eau ρ0(y) ».",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p2-fig1.png",
+     "width": 1556,
+     "height": 618,
+     "source": {
+      "page": 7,
+      "pdfRect": [
+       110.11,
+       38.74,
+       483.35,
+       186.88
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p2-fig2",
+     "caption": "FIGURE 5 – Cartographie spatiale instantanée du champ $\\partial\\delta\\rho/\\partial y$ d’un milieu verticalement et linéairement stratifié ($\\ell = 12$ m), excité par les oscillations verticales $(\\omega)$ d’un cylindre (situé au centre de la figure). La valeur est codée par la couleur allant du bleu (négatif extrême) au rouge (positif extrême).",
+     "alt": "Carte en fausses couleurs dans le plan (x, y) : fond jaune-vert ; depuis le centre partent quatre faisceaux obliques en forme de X, alternant bandes rouges et bleu clair, avec des taches bleu foncé et rouge foncé près du centre où se trouve le cylindre ; axes x et y en pointillés.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p2-fig2.png",
+     "width": 1606,
+     "height": 1008,
+     "source": {
+      "page": 9,
+      "pdfRect": [
+       105.97,
+       38.74,
+       491.08,
+       280.35
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p2-fig3",
+     "caption": "FIGURE 6 – Relief sous-marin formant une falaise verticale.",
+     "alt": "Quadrillage en pointillés dans le plan (x, y) d’origine 0 : la moitié gauche, blanche, est étiquetée « Océan » ; la moitié droite, grisée, est étiquetée « Obstacle » et forme une paroi verticale.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p2-fig3.png",
+     "width": 944,
+     "height": 762,
+     "source": {
+      "page": 9,
+      "pdfRect": [
+       184.54,
+       335.92,
+       410.76,
+       518.62
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "26.",
+     "statement": "Établir l’équation algébrique satisfaite par l’ordonnée $Y_0$ ainsi que l’équation différentielle vérifiée par la variable $u$. On fera apparaître la pulsation propre $\\Omega_0$ $(\\Omega_0 > 0)$ des oscillations du cylindre que l’on exprimera en fonction des grandeurs $g$, $\\ell$, $\\bar{\\rho}$ et $\\rho_{\\mathrm{c}}$. On considérera que l’action du fluide sur le cylindre est traduite simplement par la poussée d’ARCHIMÈDE.\n\n*Il sera avantageux de noter que la masse volumique de l’eau varie de façon affine avec l’altitude $y$.*",
+     "points": null
+    },
+    {
+     "label": "27.",
+     "statement": "Dans le cas où $Y_0 = H/2$, exprimer $\\Omega_0^2$ en fonction de $g$ et $\\ell$.",
+     "points": null
+    },
+    {
+     "label": "28.",
+     "statement": "Calculer la valeur de la période $T_0$ associée à $\\Omega_0$.",
+     "points": null,
+     "statementAfter": "• Nous étudions maintenant la propagation des ondes internes dans le milieu océanique stratifié. Nous imaginons que ces ondes sont excitées à la pulsation $\\omega$, par exemple par les oscillations verticales imposées à l’objet cylindrique immergé représenté figure (4). Dans la situation de référence, qui correspond à l’océan au repos, la vitesse du fluide est uniformément nulle et sa masse volumique varie selon la relation (4). L’excitation entraîne des variations de vitesse qui s’accompagnent de variations de la masse volumique et de la pression du fluide, par rapport à la situation de référence. Nous notons les champs correspondants de vitesse, de masse volumique et de pression, réponses à cette excitation, sous la forme :\n\n$$\\begin{cases} \\delta\\vec{v}(x,y,t) = \\delta v_x(x,y,t)\\,\\vec{u}_x + \\delta v_y(x,y,t)\\,\\vec{u}_y \\\\ \\rho(x,y,t) = \\rho_0(y) + \\delta\\rho(x,y,t) \\\\ P(x,y,t) = P_0(y) + \\delta P(x,y,t) \\end{cases} \\tag{5}$$\n\nL’indice “0” se rapporte à la situation de référence. Nous recherchons chacune de ces variations sous la forme d’ondes planes harmoniques que nous écrivons en représentation complexe :\n\n$$\\delta\\psi = A_\\psi \\exp\\left[i(\\omega t - k_x x - k_y y)\\right] \\quad (A_\\psi \\in \\mathbb{C},\\ \\omega \\geq 0,\\ k_x \\in \\mathbb{R},\\ k_y \\in \\mathbb{R}) \\tag{6}$$\n\nEnfin, nous considérons l’écoulement du fluide comme incompressible et parfait."
+    },
+    {
+     "label": "29.",
+     "statement": "Représenter, sur un schéma, dans le cas où $k_x = 2k_y > 0$, la direction de propagation $\\vec{u}$ de l’onde. Faire ensuite apparaître les longueurs d’onde $\\lambda_x$ et $\\lambda_y$ en précisant comment elles sont obtenues.",
+     "points": null,
+     "statementAfter": "• Nous admettons que les fonctions variations $\\delta\\psi$ sont solutions du système d’équations différentielles linéaires (au premier ordre par rapport à chacune des fonctions $\\delta\\psi$) :\n\n$$\\begin{cases} (1)\\ \\ \\dfrac{\\partial \\delta v_x}{\\partial x} + \\dfrac{\\partial \\delta v_y}{\\partial y} = 0 \\\\[1ex] (2)\\ \\ \\dfrac{\\partial \\delta\\rho}{\\partial t} + \\delta v_y \\dfrac{\\partial \\rho_0}{\\partial y} = 0 \\\\[1ex] (3)\\ \\ \\bar{\\rho}\\,\\dfrac{\\partial \\delta v_x}{\\partial t} = -\\dfrac{\\partial \\delta P}{\\partial x} \\\\[1ex] (4)\\ \\ \\bar{\\rho}\\,\\dfrac{\\partial \\delta v_y}{\\partial t} = -\\dfrac{\\partial \\delta P}{\\partial y} - g\\,\\delta\\rho \\end{cases} \\tag{7}$$"
+    },
+    {
+     "label": "30.",
+     "statement": "Préciser ce que traduit chacune de ces équations.",
+     "points": null
+    },
+    {
+     "label": "31.",
+     "statement": "Introduire, dans le système différentiel (7), les fonctions sous leur forme donnée par l’équation (6) afin d’établir un système linéaire d’équations algébriques vérifié par les amplitudes complexes de ces fonctions.",
+     "points": null
+    },
+    {
+     "label": "32.",
+     "statement": "Déduire de ce système d’équations la relation de dispersion liant $\\omega$, $k_x$ et $k_y$. Vérifier qu’elle peut s’écrire sous la forme :\n\n$$\\omega^2\\,(k_x^2 + k_y^2) = \\alpha^2 k_x^2 \\tag{8}$$\n\noù $\\alpha$ est une constante positive, propre au milieu stratifié, que l’on exprimera en fonction des grandeurs $g$ et $\\ell$.",
+     "points": null
+    },
+    {
+     "label": "33.",
+     "statement": "Écrire cette relation de dispersion en faisant apparaître l’angle $\\theta$ que forme le vecteur d’onde $\\vec{k}$ avec l’axe horizontal $(\\mathrm{O}x)$.",
+     "points": null
+    },
+    {
+     "label": "34.",
+     "statement": "Analyser cette relation de dispersion. On s’interrogera notamment sur la façon dont le vecteur d’onde $\\vec{k}$ est lié à la pulsation d’excitation $\\omega$.",
+     "points": null
+    },
+    {
+     "label": "35.",
+     "statement": "Exprimer, en faisant apparaître les composantes $k_x$ et $k_y$, la vitesse de phase $\\vec{V}_\\phi$ de ces ondes. Rappelons que cette vitesse est celle des plans de phase.",
+     "points": null
+    },
+    {
+     "label": "36.",
+     "statement": "Exprimer, en faisant apparaître les composantes $k_x$ et $k_y$, la vitesse de groupe $\\vec{V}_{\\mathrm{g}}$ de ces ondes. Nous admettrons que chacune de ses composantes s’exprime de la même manière que dans le cas unidimensionnel, mais avec la composante correspondante du vecteur d’onde.\n\nCette vitesse est celle de propagation de l’énergie. Elle définit une direction orientée qui est l’analogue de ce que représente un rayon lumineux en optique.",
+     "points": null
+    },
+    {
+     "label": "37.",
+     "statement": "Établir que les vitesses de phase et de groupe sont orthogonales. Établir que leurs composantes selon l’axe $(\\mathrm{O}x)$ sont de même signe. En s’appuyant sur la première équation du système (7), montrer que la vitesse $\\delta\\vec{v}$ est orthogonale au vecteur d’onde $\\vec{k}$.",
+     "points": null
+    },
+    {
+     "label": "38.",
+     "statement": "Représenter, sur un schéma, la vitesse de groupe, la vitesse de phase ainsi que la direction de la vitesse $\\delta\\vec{v}$, dans le cas où $k_x = 2k_y > 0$.",
+     "points": null,
+     "statementAfter": "• La figure (5) représente une cartographie$^{1}$ spatiale instantanée du champ $\\partial\\delta\\rho/\\partial y$, en régime établi. La valeur va croissant depuis la couleur bleue (négatif intense) vers la couleur rouge (positif intense) en passant par le niveau zéro en jaune-vert. Dans cette expérience, le milieu est linéairement stratifié et tel que la longueur $\\ell$ introduite dans la présentation de la partie (**2**) est égale à 12 m. Ce milieu est excité harmoniquement à la pulsation $\\omega$ par les oscillations verticales imposées à un cylindre d’axe perpendiculaire au plan de la figure. Ce cylindre est situé au centre de la figure."
+    },
+    {
+     "label": "39.",
+     "statement": "Commenter cette cartographie. Le champ représenté peut-il être décrit par une unique onde plane (une argumentation est attendue) ?",
+     "points": null
+    },
+    {
+     "label": "40.",
+     "statement": "Estimer, à partir de la cartographie représentée figure (5), la valeur de la pulsation excitatrice $\\omega$.",
+     "points": null
+    },
+    {
+     "label": "41.",
+     "statement": "Les ondes internes peuvent interagir avec le relief sous-marin et subir des réflexions. Représenter, sur un schéma (inspiré de la figure (6)), le vecteur d’onde et la vitesse de groupe (orientant l’équivalent du rayon lumineux) d’une onde, avant puis après sa réflexion sur une paroi verticale. Le vecteur d’onde incident est tel que $k_x = 2k_y > 0$. Nous admettrons que l’onde réfléchie vérifie la relation de dispersion de l’onde incidente.",
+     "points": null,
+     "statementAfter": "$^{1}$ Pour réaliser cette cartographie on place une grille derrière la cuve et on photographie son image vue depuis le devant de la cuve, cylindre et fluide étant au repos. On photographie ensuite à nouveau cette grille, à un instant donné, lorsque les oscillations sont établies. C’est à partir de la comparaison de ces deux photographies que l’on accède au gradient de masse volumique, *via* le gradient d’indice optique qu’il induit."
+    },
+    {
+     "label": "42.",
+     "statement": "Le vecteur d’onde incident est toujours tel que $k_x = 2k_y > 0$ mais le plan représentant la paroi sous-marine a maintenant pour équation cartésienne $y - 2x = \\mathrm{Cste}$. Représenter, sur un schéma inspiré de la figure (6) et adapté à cette nouvelle situation, deux rayons voisins parallèles incidents puis réfléchis (rappelons encore qu’un “rayon” est orienté par la vitesse de groupe). Analyser cette situation d’un point de vue énergétique.",
+     "points": null
+    }
+   ],
+   "topics": [
+    "fluids/internal-waves",
+    "waves/dispersion",
+    "mechanics/oscillations"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "L’archive ne contient pas de corrigé officiel pour cette épreuve."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "problems",
+     "page": 9
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,321 @@
+---
+id: balkanski-2026-cgp-p1
+source: 'Балкански 2026, Теория'
+title: 'Задача 1. Phase-detection autofocus'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2026/balkanski-2026-cgp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:33:53.557Z'
+verifier: 'mechanical'
+---
+
+*Concours Général de Physique «Minko Balkanski» · 31 юли 2026 г. · 10 т.*
+
+<details>
+<summary>Прочетете внимателно!</summary>
+
+**Част първа и част втора** съдържат условията на задачите съответно на френски и английски език. Единствените външни документи, на които имате право, са френски и английски речници. Употребата на калкулатори е позволена.
+
+При оценяването на задачите голяма тежест ще имат **яснотата и стилът** на изложените решения и аргументация. Не използвайте излишна проза в аргументите си, бъдете кратки, точни и ясни. Използването на схеми за онагледяване на разсъжденията Ви е желателно. **Пишете само на езика, който сте избрали (френски или английски).**
+
+Задачите носят еднакъв брой точки. Разпределяйте времето си разумно: ако се затрудните на даден въпрос или задача, можете спокойно да продължите нататък и да се върнете към него по-късно.
+
+Разполагате с **4 часа**. Успех!
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [I. Formation of a sharp image](#i)
+- [II. Study of the autofocus module](#ii)
+
+</nav>
+
+This problem studies a simplified phase-detection autofocus system of the type used in single-lens reflex cameras. The main camera objective is modelled as a thin converging lens $(L)$ with optical centre $O$, object and image foci $F$ and $F'$, and image focal length $f' = \overline{OF'} > 0$.
+
+After unfolding the optical path produced by two redirecting mirrors, the autofocus module can be represented on the same axis as the objective. It contains a field lens $(LC)$ of focal length $f'_c = 12\ \mathrm{mm}$, two separator microlenses $(LS_1)$ and $(LS_2)$ of equal focal length $f'_s = 3\ \mathrm{mm}$, and two linear sensors $(C_1)$ and $(C_2)$. The microlens centres are separated by $2a = 2\ \mathrm{mm}$. Each sensor contains 48 equally spaced photodiodes along a $1\ \mathrm{mm}$ line; use the sampling pitch $d = 1\ \mathrm{mm}/48$.
+
+An electronic unit compares the two recorded intensity profiles. Their relative shift gives the sign and magnitude of the focusing error; a controller then drives a servomotor that translates the focusing group.
+
+<ProblemSection id="i">
+
+### I. Formation of a sharp image
+
+**1.** State the Gaussian conditions and approximations under which the thin lens $(L)$ is used.
+
+**2.** The object is represented by a segment $(AB)$ perpendicular to the optical axis and its image by $(A'B')$. The point $C$ is where the image sensor meets the axis. Define
+
+$$
+p = \overline{OA},\qquad p' = \overline{OA'},\qquad x = \overline{CA},\qquad x_0 = \overline{CO},\qquad x' = \overline{CA'}.
+$$
+
+Algebraic distances are positive from left to right, in the direction of light propagation; transverse segments are positive upwards and angles are positive counterclockwise.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '89.1%', '--fig-max': '570px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2026-cgp/p1-fig1.png" alt="Optical axis with tick marks; object AB drawn as a vertical arrow with B at the top and A on the axis, labelled x below; focus F on the axis; the thin lens (L) as a vertical double arrow with centre O and x0 below; image focus F'; the sensor at point C on the right; a horizontal double arrow below labelled D spanning from the object to the sensor; at the right, sign conventions with + arrows upwards, to the right and a counterclockwise angle." width="1782" height="450" loading="lazy" decoding="async" />
+<figcaption>Figure I.1 – Image construction by the camera lens.</figcaption>
+</figure>
+
+**2. a)** Starting from the Descartes thin-lens equation
+
+$$
+\frac{1}{-p} + \frac{1}{p'} = \frac{1}{f'},
+$$
+
+derive the transverse magnification relation connecting $\overline{AB}$, $\overline{A'B'}$, $p$ and $p'$, and hence obtain Newton's conjugation relation connecting $\overline{FA}$, $\overline{F'A'}$ and $f'$.
+
+**2. b)** On the copy of the figure provided on the supplementary sheet, construct $(A'B')$ with a ruler using two principal rays. Check the position of $A'$ using Newton's relation. Is the image formed on the sensor?
+
+**3.** Let $D = |\overline{AC}|$ be the object-to-sensor distance and $T = \overline{OC} = -x_0 > 0$ the lens-to-sensor distance.
+
+**3. a)** Assuming that the objective lies between the object and sensor, obtain the two possible solutions for $T$. Retain the solution $T < D/2$, corresponding to the objective close to the sensor, and show that
+
+$$
+T = \frac{D - \sqrt{D^2 - 4Df'}}{2}.
+$$
+
+**3. b)** Find the condition on $D$ and $f'$ for these positions to be real. Give a geometrical interpretation of the limiting case.
+
+**3. c)** Determine $T_\infty$ when the object is at infinity.
+
+**3. d)** For $f' = 50\ \mathrm{mm}$, the objective must focus between infinity and $D_{\mathrm{min}} = 40\ \mathrm{cm}$. Calculate the required travel $\delta = T(D_{\mathrm{min}}) - T_\infty$. In which direction must the lens move as the object approaches?
+
+**3. e)** A full-frame sensor of dimensions $36\ \mathrm{mm} \times 24\ \mathrm{mm}$ contains 24 million square pixels. The camera must resolve the $10\ \mathrm{cm}$ width of an object at $2.0\ \mathrm{km}$; require its image to span at least two pixels. Neglecting diffraction and aberrations, determine the minimum focal length. The numerical data in this part are independent of part d).
+
+</ProblemSection>
+
+<ProblemSection id="ii">
+
+### II. Study of the autofocus module
+
+After unfolding the optical path, the system is represented below. The point $S$ is where the microlens plane meets the axis and $P$ is where the photosensor plane meets it.
+
+When focus is correct, the intermediate image $(A'B')$ is formed in the plane of the field lens $(LC)$, whose optical centre is $O_c$. The microlenses lie in the image focal plane of $(LC)$, so $O_cS = f'_c$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '89.2%', '--fig-max': '571px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2026-cgp/p1-fig2.png" alt="Unfolded optical axis: the objective (L) with centre O at the left; at distance T the field lens (LC) with centre Oc, the intermediate image A'B' (A' on the axis, B' below); dashed chief rays at angles β1 and β2 going to the two microlenses (LS1) and (LS2) with centres Os1 and Os2, each at distance a from the axis; the sensors C1 and C2 on the right; distances f'c from (LC) to the microlens plane and SP from the microlenses to the sensors; y and x axes at the right." width="1784" height="516" loading="lazy" decoding="async" />
+<figcaption>Figure I.2 – Unfolded model of the phase-detection autofocus module.</figcaption>
+</figure>
+
+**4.** First consider the correctly focused configuration.
+
+**4. a)** The plane containing $(LC)$ is conjugate to the photosensor plane through each microlens. Determine the distance $SP$.
+
+**4. b)** On the corresponding figure on the supplementary sheet, complete the construction of the secondary images $(A''_1B''_1)$ and $(A''_2B''_2)$. The points $A''_1$ and $A''_2$, which are images of the axial point $A'$, lie at the respective centres of $(C_1)$ and $(C_2)$. Compare the orientation of the secondary images with that of $(A'B')$.
+
+**4. c)** Explain the role of the field lens: why does it allow both microlenses to receive bundles from the same point of the intermediate image? Which measured quantity carries the defocus information?
+
+**4. d)** For the axial point $A'$, use the geometry of the figure and the small-angle approximation to determine the two chief-ray angles $\beta_1$ and $\beta_2$ in terms of $a$ and $f'_c$. State their signs, then calculate their magnitude.
+
+**5.** The objective remains fixed and the initially focused object moves by a small distance $\Delta x > 0$ towards the camera. The primary image point then moves by $\Delta x'$ beyond the sensor plane. Use $f' = 50\ \mathrm{mm}$ for numerical applications.
+
+**5. a)** Starting from the thin-lens equation, show to first order that
+
+$$
+\Delta x' = \left(\frac{T}{D - T}\right)^2 \Delta x.
+$$
+
+For $D = 1.0\ \mathrm{m}$ and $\Delta x = 1.0\ \mathrm{cm}$, first calculate $\Delta x'$ using the exact value of $T$ obtained in Question 3a), then give the estimate obtained from $D \gg T$ and $T \simeq f'$.
+
+**5. b)** $A'$, which lies to the right of $(LC)$, is a virtual object for that lens. If $A'_c$ is its image through $(LC)$, show that
+
+$$
+\overline{O_cA'_c} = \frac{f'_c\,\Delta x'}{f'_c + \Delta x'}.
+$$
+
+Justify the approximation $\overline{O_cA'_c} \simeq \Delta x'$.
+
+**5. c)** $\star$ Using the approximation from part b), let $s = f'_c - \Delta x'$ be the new object distance for the microlenses. Use their conjugation relation to show that both secondary images undergo the same longitudinal displacement
+
+$$
+\Delta x''_1 = \Delta x''_2 = \left(\frac{f'_s}{f'_c - f'_s}\right)^2 \Delta x'.
+$$
+
+**5. d)** $\star$ Using the rays through the microlens centres, show to first order that
+
+$$
+\Delta\beta_1 = +\frac{a\,\Delta x'}{f'^2_c},\qquad \Delta\beta_2 = -\frac{a\,\Delta x'}{f'^2_c}.
+$$
+
+In the fixed photosensor plane, the centre of each profile follows the chief ray. Using the distance $SP$ found in Question 4a), show that
+
+$$
+\Delta y''_1 = SP\,\Delta\beta_1 = +\frac{a f'_s}{f'_c(f'_c - f'_s)}\Delta x',\qquad \Delta y''_2 = SP\,\Delta\beta_2 = -\frac{a f'_s}{f'_c(f'_c - f'_s)}\Delta x'.
+$$
+
+Calculate $\Delta x''_1$, $\Delta x''_2$, $\Delta y''_1$ and $\Delta y''_2$ numerically.
+
+**5. e)** Describe the relative shift of the two intensity profiles on the sensors and calculate its value. Compare it with the photodiode pitch $d$. Briefly explain why correlation of the complete intensity profiles may nevertheless measure a shift smaller than one pitch. How does the sign of the shift distinguish focus in front of the sensor from focus behind it?
+
+**6.** The objective is now moved so that the image is formed again on the sensor. The algebraic lens displacement $\Delta x_L$ is positive in the direction of light propagation.
+
+**6. a)** What is the sign of $\Delta x_L$ when the object has approached, so that $\Delta x > 0$?
+
+**6. b)** Linearising the thin-lens equation while the object and lens move simultaneously, show that
+
+$$
+\Delta x_L = K_L \Delta x,\qquad K_L = -\frac{T^2}{D(D - 2T)}.
+$$
+
+For $D = 1.0\ \mathrm{m}$ and $\Delta x = 1.0\ \mathrm{cm}$, first calculate $K_L$ and $\Delta x_L$ using the exact value of $T$, then give the estimate obtained from $D \gg T$ and $T \simeq f'$.
+
+**7.** Describe a complete autofocus loop: acquisition of the two profiles, estimation of their relative shift, determination of the error sign, motor command, and stopping criterion. Also give one situation in which phase-detection autofocus performs poorly.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+<details>
+<summary>Annexe : constantes et relations utiles — Reference sheet : constants and useful relations</summary>
+
+**Constantes communes / Common constants**
+
+$$
+G = 6.67 \times 10^{-11}\ \mathrm{m^3\,kg^{-1}\,s^{-2}},\qquad \sigma = 5.67 \times 10^{-8}\ \mathrm{W\,m^{-2}\,K^{-4}},
+$$
+
+$$
+1\ \mathrm{an} = 1\ \mathrm{yr} = 3.16 \times 10^{7}\ \mathrm{s},\qquad \ln 2 = 0.693,\qquad 1\ \mathrm{rad} = 57.3^{\circ}.
+$$
+
+**Français**
+
+Les relations ci-dessous peuvent être utilisées directement. Elles ne remplacent pas le choix et la justification du modèle physique.
+
+**Problème I – petites variations et optique**
+
+Pour $|\theta| \ll 1\ \mathrm{rad}$ :
+
+$$
+\sin\theta \simeq \tan\theta \simeq \theta.
+$$
+
+Au premier ordre :
+
+$$
+F(z + \Delta z) - F(z) \simeq F'(z)\Delta z,
+$$
+
+$$
+\Delta\left(\frac{1}{z}\right) \simeq -\frac{\Delta z}{z^2}.
+$$
+
+**Problème II – seuil, équations et intégrales**
+
+Pour la question 3d) :
+
+$$
+q_c = c(T_s - T_0) + x_c L,
+$$
+
+$$
+y = \frac{2q_c}{\chi u_\infty^2},\qquad \frac{\mu}{(1+\mu)^2} = y,
+$$
+
+$$
+y\mu^2 + (2y - 1)\mu + y = 0.
+$$
+
+La racine physique vérifie $0 < \mu < 1$.
+
+Si $dv/dt = (v_t - v)/\tau$ et $v(0) = 0$ :
+
+$$
+v(t) = v_t\left(1 - e^{-t/\tau}\right).
+$$
+
+Si $dr/dt = -kr$ :
+
+$$
+\ln(r_2/r_1) = -k(t_2 - t_1).
+$$
+
+Intégrales utiles :
+
+$$
+\int_{r/2}^{r} s\,ds = \frac{3r^2}{8},\qquad \int_0^R r^4\,dr = \frac{R^5}{5},
+$$
+
+$$
+\int T^{-4}\,dT = -\frac{1}{3T^3}.
+$$
+
+Pour $|z| \ll 1$ : $(1 - z)^3 \simeq 1 - 3z$.
+
+**English**
+
+The relations below may be used directly. They do not replace the choice and justification of a physical model.
+
+**Problem I – small changes and optics**
+
+For $|\theta| \ll 1\ \mathrm{rad}$:
+
+$$
+\sin\theta \simeq \tan\theta \simeq \theta.
+$$
+
+To first order:
+
+$$
+F(z + \Delta z) - F(z) \simeq F'(z)\Delta z,
+$$
+
+$$
+\Delta\left(\frac{1}{z}\right) \simeq -\frac{\Delta z}{z^2}.
+$$
+
+**Problem II – threshold, equations, and integrals**
+
+For Question 3d):
+
+$$
+q_c = c(T_s - T_0) + x_c L,
+$$
+
+$$
+y = \frac{2q_c}{\chi u_\infty^2},\qquad \frac{\mu}{(1+\mu)^2} = y,
+$$
+
+$$
+y\mu^2 + (2y - 1)\mu + y = 0.
+$$
+
+The physical root satisfies $0 < \mu < 1$.
+
+If $dv/dt = (v_t - v)/\tau$ and $v(0) = 0$:
+
+$$
+v(t) = v_t\left(1 - e^{-t/\tau}\right).
+$$
+
+If $dr/dt = -kr$:
+
+$$
+\ln(r_2/r_1) = -k(t_2 - t_1).
+$$
+
+Useful integrals:
+
+$$
+\int_{r/2}^{r} s\,ds = \frac{3r^2}{8},\qquad \int_0^R r^4\,dr = \frac{R^5}{5},
+$$
+
+$$
+\int T^{-4}\,dT = -\frac{1}{3T^3}.
+$$
+
+For $|z| \ll 1$: $(1 - z)^3 \simeq 1 - 3z$.
+
+</details>
+
+---
+
+Оригинал в Архива: [CGP_2026.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2026.pdf#page=2)

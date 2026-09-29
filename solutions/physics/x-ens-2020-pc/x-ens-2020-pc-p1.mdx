@@ -1,0 +1,149 @@
+---
+id: x-ens-2020-pc-p1
+source: 'X-ENS 2020, Приемен изпит, физика и химия'
+title: 'Задача 1. Ondes de surface.'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2020/x-ens-2020-pc.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:34:19.053Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE POLYTECHNIQUE - ESPCI, ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2020 — FILIÈRE PC - Épreuve n°5 — PHYSIQUE B (XEULC) · 22 април 2020 г.*
+
+<details>
+<summary>Consignes</summary>
+
+MERCREDI 22 AVRIL 2020 - 08h00 – 12h00
+
+Durée : 4 heures
+
+*L’utilisation de calculatrices n’est pas autorisée pour cette épreuve.*
+
+</details>
+
+<details>
+<summary>Ondes de gravité dans un fluide</summary>
+
+Des ondes de gravité peuvent apparaître au sein d’un fluide stratifié, c’est-à-dire un fluide dont la masse volumique varie spatialement selon une direction particulière, généralement la verticale. Elles sont appelées ondes internes. Des ondes peuvent également apparaître à l’interface entre deux fluides de masses volumiques différentes et non miscibles. Elles sont dites ondes de surface. Les vagues à la surface d’un océan en sont une manifestation. Notons qu’il s’agit là d’une situation limite de la précédente.
+
+Cette étude comprend deux parties qui peuvent être abordées de façon indépendante. La première s’intéresse aux ondes à l’interface eau/air, la seconde est consacrée aux ondes internes dans l’eau. Nous définissons le référentiel $\mathcal{R}(\mathrm{O},x,y,z)$, supposé galiléen, tel que le champ de gravité s’exprime $\vec{g} = -g\,\vec{u}_y$. Nous restreindrons ces études à des situations spatialement bidimensionnelles, dans le plan vertical $(\mathrm{O},x,y)$.
+
+En vue des applications numériques nous adoptons les valeurs suivantes : $D = 15\ \mathrm{cm}$ , $L = 15\ \mathrm{cm}$ et $H = 20\ \mathrm{cm}$. Ces grandeurs seront introduites et présentées dans la suite.
+
+**N.B. :** Nous considérerons que le principe (ou théorème) d’ARCHIMÈDE reste applicable hors du domaine de la stricte statique des fluides.
+
+</details>
+
+## Условие
+
+Reportons-nous à la figure (1). Nous considérons un objet cylindrique, de masse volumique $\rho_{\mathrm{c}}$ uniforme, de diamètre $D = 2R$ et de longueur $L$, flottant à la surface de l’eau de masse volumique $\rho$. Cette eau est contenue dans un canal de largeur très légèrement supérieure à $L$ (mais considérée égale à $L$), de profondeur $H$ et de longueur très supérieure à toutes les longueurs caractéristiques du système. L’origine O du repère est placée au niveau de la surface de l’eau. Nous notons $Y$ l’ordonnée du centre de masse G du flotteur et $u = Y - Y_0$ son écart par rapport à son ordonnée d’équilibre $Y_0$ (fluide et flotteur à l’équilibre). Nous nous placerons toujours dans le cas où l’axe du flotteur reste parallèle à l’axe $(\mathrm{O}z)$ et tel que $|u| \ll R$. Nous négligerons l’action de l’air sur le flotteur.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '75.6%', '--fig-max': '484px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p1-fig1.png" alt="Deux schémas. À gauche, vue de face : axes x et y d’origine O au niveau de la surface ; flotteur circulaire de diamètre D et de centre G à moitié immergé, étiqueté « Flotteur ρc » ; vecteur g vers le bas ; « Air » au-dessus, « Eau ρ » en dessous ; profondeur H jusqu’au fond « Canal ». À droite, vue de côté : axes y et z, flotteur rectangulaire de longueur L étiqueté « Flotteur », G, O, ρc, dans le canal rempli d’« Eau ρ »." width="1514" height="457" loading="lazy" decoding="async" />
+<figcaption>FIGURE 1 – Objet cylindrique $(\rho_{\mathrm{c}}, D, L)$ flottant horizontalement à la surface de l’eau $(\rho)$ d’un canal (vues de face et de côté). Ces figures ne sont pas à l’échelle. En particulier, la largeur du canal n’est que très légèrement supérieure à $L$ (l’écart est exagéré sur le schéma afin de le rendre visible).</figcaption>
+</figure>
+
+**1.** Nous souhaitons que le cylindre flotte, à l’équilibre, en étant à moitié immergé dans l’eau. Préciser la relation que doit alors vérifier $\rho_{\mathrm{c}}$. Calculer sa valeur numérique.
+
+*Nous nous placerons dans cette situation dans toute cette partie.*
+
+• Nous supposons que l’équilibre du flotteur a été légèrement perturbé (verticalement) et souhaitons exprimer la pulsation $\omega_0$ de ses oscillations libres. Nous négligerons ici toute cause de dissipation d’énergie mécanique et nous nous placerons dans le cas où le fond du canal n’influence pas le mouvement du flotteur.
+
+**2.** Sur la base de considérations physiques et d’arguments dimensionnels, établir la dépendance de $\omega_0^2$ avec les différents paramètres du problème. On détaillera chaque étape du raisonnement.
+
+**3.** Exprimer, au premier ordre relativement au rapport $u/R$ et en fonction de $L$, $D$ et $u$, la variation algébrique $\delta V_{\mathrm{im}}$ de volume immergé du flotteur par rapport à la situation d’équilibre.
+
+**4.** Établir l’équation différentielle vérifiée par la variable $u$. On fera apparaître la pulsation $\omega_0$ dont on donnera l’expression en fonction de $g$ et $D$.
+
+**5.** Calculer la valeur numérique de la fréquence $f_0$ correspondant à $\omega_0$.
+
+• La figure (2) représente l’évolution temporelle de l’ordonnée $Y$ du centre de masse G du flotteur, obtenue expérimentalement.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.1%', '--fig-max': '449px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p1-fig2.png" alt="Graphique de Y (mm) en fonction de t (s), de 0 à 2,2 s en abscisse et de −10 à 4 mm en ordonnée, avec des points en losanges : Y vaut environ −10 mm jusqu’à 0,5 s, monte jusqu’à environ 3,5 mm vers 0,78 s, redescend vers −2 mm vers 1,03 s, puis oscille avec une amplitude décroissante autour de 0." width="1403" height="1085" loading="lazy" decoding="async" />
+<figcaption>FIGURE 2 – Évolution temporelle expérimentale de l’ordonnée $Y$ du centre de masse G du flotteur.</figcaption>
+</figure>
+
+**6.** Déterminer, à partir de la figure (2), la pseudo-fréquence $f_{\mathrm{exp}}$ des oscillations du flotteur ainsi que l’amplitude initiale $u_0$. Proposer une estimation (approximative) du facteur de qualité $Q$ de cet oscillateur (en précisant la méthode adoptée).
+
+**7.** Comparer à $f_0$ la pseudo-fréquence $f_{\mathrm{exp}}$ des oscillations du flotteur estimée à partir de la figure (2).
+
+• Nous souhaitons maintenant identifier les effets responsables de l’amortissement des oscillations du flotteur. Nous commençons par l’effet de traînée.
+
+**8.** Préciser, sur la base d’une argumentation, l’expression du nombre de REYNOLDS $\mathrm{R_e}$ qu’il convient d’associer à l’écoulement de l’eau autour du flotteur en mouvement. En donner une estimation (nous adopterons, pour la viscosité cinématique de l’eau, la valeur $10^{-6}\ \mathrm{m^2 \cdot s^{-1}}$). Commenter ce résultat.
+
+**9.** Donner l’expression de la force de traînée $\vec{F}_{\mathrm{T}}$ qui paraît alors la mieux adaptée à décrire l’action mécanique du fluide sur le flotteur en mouvement (toujours transversalement à son axe) à la vitesse $\vec{V} = V\,\vec{u}_y$. On raisonnera comme si le cylindre était totalement immergé dans un milieu infini et on s’inspirera du résultat connu relatif à un objet sphérique.
+
+**10.** Exprimer, à partir de grandeurs caractéristiques que l’on précisera, le rapport caractéristique $K_{\mathrm{TR}}$ de la force de traînée à la force de rappel gravitationnel qui est intervenue en question (**4**) lors de l’établissement de l’équation différentielle.
+
+**11.** Estimer numériquement le rapport $K_{\mathrm{TR}}$. Conclure sur la participation de l’effet de traînée à l’amortissement des oscillations du flotteur.
+
+• Nous recherchons maintenant la cause de l’amortissement des oscillations du flotteur dans les ondes de surface qu’elles génèrent. L’image inférieure de la figure (3) est une chronophotographie permettant de donner une représentation de l’évolution temporelle de la surface libre eau/air. Pour cela on réalise un film du canal à raison de 250 images par seconde, pendant 3 s. Pour chaque image (telle que celle du haut de la figure (3)), on stocke l’état de couleur de chacun des pixels correspondant à une ligne horizontale prédéterminée (en pratique, située très légèrement en dessous de l’interface libre eau/air au repos [ligne en trait pointillé sur la figure du haut]). Ces lignes de pixels sont ensuite représentées les unes en dessous des autres en respectant la chronologie de la prise d’images (figure du bas). Cette chronophotographie se rapporte à l’expérience relative à l’évolution représentée sur la figure (2).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '640px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2020-pc/p1-fig3.png" alt="En haut, photographie du canal à t=1s avec le flotteur circulaire à la surface de l’eau colorée et une ligne horizontale en pointillés juste sous la surface. En bas, chronophotographie : bande verticale sombre centrale (trace du flotteur) et, de part et d’autre, des lignes obliques colorées qui s’éloignent du centre ; flèche verticale vers le bas étiquetée « temps »." width="2000" height="1226" loading="lazy" decoding="async" />
+<figcaption>FIGURE 3 – Chronophotographie illustrant l’évolution de l’interface eau/air (cadence de 250 images par seconde sur une durée de 3 s). La ligne horizontale en trait pointillé tracée sur la photographie du haut représente la ligne des pixels suivis temporellement et qui est reportée chronologiquement, de haut en bas, pour former l’image du bas.</figcaption>
+</figure>
+
+**12.** Proposer une interprétation des lignes obliques situées de part et d’autre de la frange sombre verticale et centrale (trace du flotteur).
+
+**13.** Déterminer, à partir de cette chronophotographie, la fréquence $f'_{\mathrm{exp}}$ des oscillations du flotteur. On précisera la démarche suivie.
+
+**14.** De la même manière, déterminer la longueur d’onde $\lambda_{\mathrm{exp}}$ des ondes de surface.
+
+**15.** Estimer la célérité $c_{\mathrm{exp}}$ de ces ondes de surface.
+
+• Nous admettons que la relation de dispersion liant la pulsation $\omega$ $(\omega \geq 0)$ au nombre d’onde $k$ des ondes de surface se propageant dans un canal de profondeur $H$ est donnée par la relation :
+
+$$
+\omega^2 = gk\tanh(kH) \quad \text{où} \quad k = \frac{2\pi}{\lambda} > 0 \quad \text{et} \quad \tanh(kH) = \frac{\sinh(kH)}{\cosh(kH)} = \frac{\exp(2kH) - 1}{\exp(2kH) + 1} \qquad (1)
+$$
+
+**16.** Représenter l’allure graphique de la fonction $\omega = \omega(k)$. On précisera ses comportements limite et asymptotique.
+
+**17.** Indiquer à quelle condition le milieu peut être considéré comme non dispersif.
+
+**18.** Associer la célérité $c_{\mathrm{exp}}$ calculée à la question (**15**) à l’une des vitesses de groupe ou de phase.
+
+**19.** Déduire de la relation (1), dans la limite $kH \ll 1$, l’expression de la célérité $c$ des ondes de surface. Calculer sa valeur numérique. Vérifier la compatibilité de cette valeur avec celle de $c_{\mathrm{exp}}$ déterminée en réponse à la question (**15**).
+
+• Nous décrivons l’évolution spatio-temporelle de la hauteur (algébrique) $h$ des vagues formant l’onde de surface par l’équation :
+
+$$
+h(x,t) = A\sin(\Omega_0 t \pm kx) \quad (A = \mathrm{Cste} \in \mathbb{R}_+ \,;\ \Omega_0 \in \mathbb{R}_+ \,;\ k \in \mathbb{R}_+) \qquad (2)
+$$
+
+**N.B. :** En réalité, l’amplitude $A$ dépend du temps (amortissement des oscillations du flotteur excitant les ondes de surface) et de l’espace (amortissement des ondes de surface). Nous considérerons ici simplement que cette amplitude ne varie pas (sensiblement) sur l’échelle d’une période ni sur celle d’une longueur d’onde. En pratique, sauf à la question (**23**), nous considérerons donc l’amplitude $A$ comme constante et uniforme.
+
+Nous adoptons comme état de référence, notamment pour ce qui concerne les énergies, la situation correspondant à une interface plane et immobile. Par ailleurs, nous considérons que nous pouvons nous placer dans la limite des faibles profondeurs ($kH \ll 1$). Nous notons $c$ la célérité des ondes de surface.
+
+**20.** Exprimer l’énergie potentielle de pesanteur $E_{\mathrm{p}} = E_{\mathrm{p}}(\rho, g, L, A, \lambda)$ emmagasinée par l’onde, sur une étendue spatiale (selon $(\mathrm{O}x)$) égale à une longueur d’onde. Rappelons que la largeur de la cuve (égale à la longueur du flotteur) est notée $L$.
+
+**21.** En déduire l’expression du flux (moyen) d’énergie potentielle $\Phi_{\mathrm{p}} = \Phi_{\mathrm{p}}(\rho, g, L, A, c)$ $([\Phi_{\mathrm{p}}] = \mathrm{W})$ traversant une section verticale d’abscisse donnée.
+
+**22.** Nous cherchons d’abord à relier l’amplitude $A$ des ondes à l’amplitude $B$ $(B \geq 0)$ des oscillations du flotteur. Nous considérons alors que le volume total des bosses (occupant chacune une demie longueur d’onde) des ondes se formant de part et d’autre du flotteur est égal à celui balayé par le flotteur sur une demie période. Dans cette démarche nous considérons que le flotteur oscille à amplitude constante sur l’échelle d’une période (hypothèse jumelle de celle adjointe à l’équation (2)).
+
+Exprimer, dans ces conditions, l’amplitude $A$ en fonction de $B$, $D$ et $\lambda$.
+
+**23.** En reliant la variation d’énergie par unité de temps du flotteur au flux $\Phi_{\mathrm{p}}$ qu’il rayonne par le biais des ondes de surface, établir que l’amplitude $B$ de ses oscillations vérifie l’équation différentielle du premier ordre :
+
+$$
+\dot{B} + \frac{B}{\tau} = 0 \qquad (3)
+$$
+
+On explicitera la dépendance de la constante $\tau$ avec le diamètre $D$, la célérité $c$ et la longueur d’onde $\lambda$.
+
+**24.** Déduire du résultat précédent l’expression du facteur de qualité $Q$ du système oscillant. On exprimera $Q$ en fonction de la célérité $c$ des ondes, de la période $T$ des oscillations et du diamètre $D$ du cylindre.
+
+**25.** Estimer la valeur de ce facteur de qualité. Analyser ce résultat.
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2020.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2020.pdf#page=3)

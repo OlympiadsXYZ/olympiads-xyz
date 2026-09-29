@@ -1,0 +1,394 @@
+---
+id: balkanski-2026-cgp-p2
+source: 'Балкански 2026, Теория'
+title: 'Задача 2. How an Asteroid Forms Its Core'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2026/balkanski-2026-cgp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:33:53.557Z'
+verifier: 'mechanical'
+---
+
+*Concours Général de Physique «Minko Balkanski» · 31 юли 2026 г. · 10 т.*
+
+<details>
+<summary>Прочетете внимателно!</summary>
+
+**Част първа и част втора** съдържат условията на задачите съответно на френски и английски език. Единствените външни документи, на които имате право, са френски и английски речници. Употребата на калкулатори е позволена.
+
+При оценяването на задачите голяма тежест ще имат **яснотата и стилът** на изложените решения и аргументация. Не използвайте излишна проза в аргументите си, бъдете кратки, точни и ясни. Използването на схеми за онагледяване на разсъжденията Ви е желателно. **Пишете само на езика, който сте избрали (френски или английски).**
+
+Задачите носят еднакъв брой точки. Разпределяйте времето си разумно: ако се затрудните на даден въпрос или задача, можете спокойно да продължите нататък и да се върнете към него по-късно.
+
+Разполагате с **4 часа**. Успех!
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [I. Impact heating and partial melting](#i)
+- [II. Sinking of iron droplets](#ii)
+- [III. Energy released by differentiation](#iii)
+- [IV. Does the asteroid cool too quickly?](#iv)
+
+</nav>
+
+We study a fictitious spherical asteroid called *Balkania*. It is initially homogeneous: iron is uniformly dispersed in silicate material. A collision heats it and produces partial melting. Iron droplets may then sink and form a metallic core. The model is deliberately simplified; any additional assumption must be stated clearly.
+
+Subparts marked $\star$ are more difficult. They may be left for a second pass; no later question depends on them unless the required result is supplied again.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '88.5%', '--fig-max': '567px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2026-cgp/p2-fig1.png" alt="Three-stage schematic: a small impactor of radius b moving with speed u∞ towards a large sphere of radius R with dispersed iron dots („before collision: dispersed iron“); arrow „collision“ to a partially molten body with a wavy surface and arrows („partially molten body“, legend „• Fe ▬ silicates“, „schematic, not to scale“); arrow „settling“ to a differentiated body with a dark core of radius Rc, a mantle and a „cold crust“, outer radius R („after differentiation: metallic core“)." width="1771" height="565" loading="lazy" decoding="async" />
+<figcaption>Figure II.1 – Collision, partial melting, settling, and core formation.</figcaption>
+</figure>
+
+**Data for Balkania.**
+
+| | |
+|---|---|
+| Initial radius | $R = 2.0 \times 10^5\ \mathrm{m}$ |
+| Initial iron volume fraction | $\phi = 1/8$ |
+| Silicate density | $\rho_s = 3.0 \times 10^3\ \mathrm{kg\,m^{-3}}$ |
+| Iron density | $\rho_f = 7.0 \times 10^3\ \mathrm{kg\,m^{-3}}$ |
+| Mean specific heat capacity | $c = 1.0 \times 10^3\ \mathrm{J\,kg^{-1}\,K^{-1}}$ |
+| Initial temperature | $T_0 = 1250\ \mathrm{K}$ |
+| Onset-of-melting temperature | $T_s = 1400\ \mathrm{K}$ |
+| Effective latent heat of melting | $L = 2.5 \times 10^5\ \mathrm{J\,kg^{-1}}$ |
+| Thermal diffusivity | $\kappa = 1.0 \times 10^{-6}\ \mathrm{m^2\,s^{-1}}$ |
+| Surface emissivity | $\varepsilon = 0.80$ |
+
+**Collision.** The impactor is spherical, has radius $b = 8.0 \times 10^4\ \mathrm{m}$, and has the same composition and mean density as Balkania. Its speed at infinity is $u_\infty = 4.0 \times 10^3\ \mathrm{m\,s^{-1}}$. Balkania is treated as fixed during the approach. The collision is perfectly inelastic: the bodies remain joined. A fraction $\chi = 0.50$ of the kinetic-energy loss during the collision is converted into uniform internal energy of the merged body; mass loss is neglected.
+
+**Iron droplets.** Their radius is $a = 5.0 \times 10^{-3}\ \mathrm{m}$. The dynamic viscosity of the molten silicate is $\eta = 20\ \mathrm{Pa\,s}$.
+
+<ProblemSection id="i">
+
+### I. Impact heating and partial melting
+
+**1.** Determine Balkania's mean density $\rho$. Then calculate the iron *mass* fraction.
+
+**2.** Let $M$ be the mass of Balkania and $m$ the mass of the impactor.
+
+**2. a)** Calculate $M$, $m$, and the ratio $\mu = m/M$.
+
+**2. b)** Using conservation of the impactor's mechanical energy during the approach, show that
+
+$$
+v_{\mathrm{imp}}^2 = u_\infty^2 + \frac{2GM}{R + b},
+$$
+
+where $v_{\mathrm{imp}}$ is its speed just before contact. Calculate $v_{\mathrm{imp}}$ and comment on the importance of gravitational acceleration.
+
+**3.** Let $V$ be the common speed of the two bodies immediately after the collision.
+
+**3. a)** Using conservation of momentum, express $V$. Show that the kinetic-energy loss during the collision is
+
+$$
+E_{\mathrm{loss}} = \frac{1}{2}\frac{Mm}{M + m}v_{\mathrm{imp}}^2.
+$$
+
+**3. b)** Show that the deposited energy per unit mass of the merged body is
+
+$$
+q_{\mathrm{imp}} = \frac{\chi}{2}\frac{\mu}{(1 + \mu)^2}v_{\mathrm{imp}}^2,
+$$
+
+and calculate it.
+
+**3. c)** The energy $c(T_s - T_0)$ first heats the body to $T_s$. The remaining energy causes melting at approximately constant temperature. Determine the molten fraction $x$. Iron droplets can move when $x \geq x_c = 0.30$. Does the collision trigger differentiation?
+
+**3. d)** $\star$ Neglecting gravitational acceleration during the approach, determine the minimum impactor radius $b_{\mathrm{min}} < R$ required to reach exactly $x = x_c$.
+
+</ProblemSection>
+
+<ProblemSection id="ii">
+
+### II. Sinking of iron droplets
+
+In Parts II–IV, to keep the model analytically simple, use Balkania's initial values $R$ and $M$ and neglect the mass increase caused by the impactor. The gravitational field is approximated by that of the initial homogeneous sphere of density $\rho$. You may use the result that a homogeneous spherical shell produces no gravitational field at an interior point.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '65.4%', '--fig-max': '419px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2026-cgp/p2-fig2.png" alt="Left: a large circle with centre O („centre of Balkania“), a radius vector r to a small droplet near the surface moving with velocity v inward. Arrow „enlargement“ to the right: a grey droplet of radius a („moving iron droplet“) with velocity v pointing „towards the centre“, force F_eff pointing left and drag F_D pointing right; labels |F_eff| = (ρf − ρs)Vg(r) and |F_D| = 6πηav. Note below: „Effective weight drives the droplet inward; Stokes drag opposes the motion.“" width="1310" height="522" loading="lazy" decoding="async" />
+<figcaption>Figure II.2 – Position, velocity, and force balance of an iron droplet.</figcaption>
+</figure>
+
+**4.** At a distance $r \leq R$ from the centre, show that the gravitational field strength is
+
+$$
+g(r) = \frac{4\pi G\rho}{3}r.
+$$
+
+Calculate the surface acceleration $g(R)$.
+
+**5.** After differentiation, all the iron forms a pure spherical core of radius $R_c$. By conserving the total iron volume, determine $R_c/R$.
+
+**6.** An iron droplet of volume $\mathcal{V}$ is at distance $r$ from the centre.
+
+**6. a)** Taking account of weight and buoyancy, show that the inward resultant force has magnitude
+
+$$
+F = (\rho_f - \rho_s)\mathcal{V}g(r).
+$$
+
+**6. b)** At low Reynolds number, the Stokes drag force has magnitude $F_D = 6\pi\eta a v$. Assuming terminal speed, show that
+
+$$
+v_t(r) = \frac{2(\rho_f - \rho_s)a^2}{9\eta}g(r).
+$$
+
+**6. c)** Calculate $v_t(R)$. Check the consistency of the Stokes regime using
+
+$$
+\mathrm{Re} = \frac{2\rho_s a v_t}{\eta}.
+$$
+
+**7.** $\star$ Over a very short time interval, take the position $r$ and hence $v_t$ as constant. Establish the equation of motion of a droplet released from rest in the form
+
+$$
+\frac{dv}{dt} = \frac{v_t - v}{\tau}.
+$$
+
+Express and calculate $\tau$. Estimate the distance $v_t(R)\tau$ and justify the terminal-speed assumption used in Question 6.
+
+**8.** Consider a droplet initially at the surface. Since $g(r) \propto r$, write $v_t(r) = kr$.
+
+**8. a)** Obtain an expression for $k$, then calculate the settling time $t_{\mathrm{set}}$ from $R$ to $R_c$.
+
+**8. b)** Deduce the dependence of $t_{\mathrm{set}}$ on $a$ and $\eta$. Determine the minimum droplet radius $a_{100}$ that reaches the core in less than 100 yr, with all other data unchanged.
+
+**9.** $\star$ At the end of differentiation, calculate the field $g_f(R_c)$ just outside the core, neglecting the field of the outer mantle. Compare it with the initial homogeneous field $g_i(R_c)$. Does the calculation of $t_{\mathrm{set}}$ tend to overestimate or underestimate the actual final settling time?
+
+</ProblemSection>
+
+<ProblemSection id="iii">
+
+### III. Energy released by differentiation
+
+Assume radial ordering is preserved: the iron initially contained inside a sphere of radius $r$ is found, after differentiation, inside a pure iron sphere of radius $r_f$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.8%', '--fig-max': '389px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2026-cgp/p2-fig3.png" alt="Left: a sphere with a grey shell of radius r („initial state, dispersed iron shell“); arrow labelled $r_f = \phi^{1/3} r = r/2$ to the right: a sphere with a small dark shell of radius r_f inside the core („final state, shell inside the core“). Below: dV_f = φ4πr²dr and the note „Conservation of iron volume imposes the same radial scale factor on every shell.“" width="1217" height="552" loading="lazy" decoding="async" />
+<figcaption>Figure II.3 – Radial mapping of iron shells during differentiation.</figcaption>
+</figure>
+
+**10.** Show that $r_f = r/2$.
+
+**11.** For a small iron volume initially at distance $r$, approximate its displacement as a motion from $r$ to $r/2$ in the initial field.
+
+**11. a)** Show that the gravitational work released per unit iron volume is
+
+$$
+w(r) = (\rho_f - \rho_s)\int_{r/2}^{r} g(s)\,ds = \frac{\pi}{2}G\rho(\rho_f - \rho_s)r^2.
+$$
+
+**11. b)** The iron volume initially contained in the shell $[r, r + dr]$ is $dV_f = \phi 4\pi r^2 dr$. Hence obtain the total released energy,
+
+$$
+E_{\mathrm{diff}} = \frac{\pi^2}{20}G\rho(\rho_f - \rho_s)R^5.
+$$
+
+**12.** Assume that this energy is fully converted into heat within the asteroid.
+
+**12. a)** Calculate the mean temperature rise $\Delta T_{\mathrm{diff}} = E_{\mathrm{diff}}/(Mc)$. Compare it with the impact heating.
+
+**12. b)** Determine the radius $R_\star$ for which differentiation alone would produce a mean temperature rise of 100 K, with all other data unchanged. Interpret the result.
+
+</ProblemSection>
+
+<ProblemSection id="iv">
+
+### IV. Does the asteroid cool too quickly?
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70.1%', '--fig-max': '449px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2026-cgp/p2-fig4.png" alt="A sphere with a thin dark outer layer („cold crust, thickness ℓ“) and a grey inner sphere („warm interior forming core“); arrows pointing outward all around labelled „thermal radiation“. Note below: „Two limiting models are compared: an isothermal interior and purely diffusive transport.“" width="1404" height="562" loading="lazy" decoding="async" />
+<figcaption>Figure II.4 – Thermal structure, surface radiation, and diffusion depth.</figcaption>
+</figure>
+
+**13.** At temperature $T_s$, radiation received from space is neglected.
+
+**13. a)** Calculate the initial radiated power
+
+$$
+P_{\mathrm{rad}} = 4\pi R^2\varepsilon\sigma T_s^4.
+$$
+
+**13. b)** In an isothermal model, the molten fraction $x$ first solidifies at $T \simeq T_s$. Taking the radiated power as constant and equal to its value in part a), estimate the time $t_{\mathrm{sol}}$ required to remove the latent heat $MxL$.
+
+**13. c)** $\star$ After solidification, write the differential energy balance governing $T(t)$ when the radiated power varies as $T^4$. Using the mathematical hints, calculate the time $t_{\mathrm{sens}}$ required to cool from 1400 K to 1300 K. Estimate $t_{\mathrm{iso}} = t_{\mathrm{sol}} + t_{\mathrm{sens}}$ and compare it with $t_{\mathrm{set}}$.
+
+**14.** In a solid or a liquid without efficient mixing, heat diffuses over a distance of order
+
+$$
+\ell \simeq \sqrt{\kappa t}.
+$$
+
+**14. a)** Calculate $\ell$ during $t_{\mathrm{set}}$ and compare it with $R$. Also estimate the diffusion time $R^2/\kappa$ across the entire asteroid.
+
+**14. b)** The exact volume fraction in the surface layer of thickness $\ell$ is
+
+$$
+f_{\mathrm{layer}} = 1 - \left(1 - \frac{\ell}{R}\right)^3.
+$$
+
+Estimate it, then explain how a cold crust can coexist with an interior that remains partially molten. Conclude whether the core can form within the diffusive model.
+
+**14. c)** $\star$ How would very efficient internal convection modify this conclusion? A qualitative discussion is sufficient.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+<details>
+<summary>Annexe : constantes et relations utiles — Reference sheet : constants and useful relations</summary>
+
+**Constantes communes / Common constants**
+
+$$
+G = 6.67 \times 10^{-11}\ \mathrm{m^3\,kg^{-1}\,s^{-2}},\qquad \sigma = 5.67 \times 10^{-8}\ \mathrm{W\,m^{-2}\,K^{-4}},
+$$
+
+$$
+1\ \mathrm{an} = 1\ \mathrm{yr} = 3.16 \times 10^{7}\ \mathrm{s},\qquad \ln 2 = 0.693,\qquad 1\ \mathrm{rad} = 57.3^{\circ}.
+$$
+
+**Français**
+
+Les relations ci-dessous peuvent être utilisées directement. Elles ne remplacent pas le choix et la justification du modèle physique.
+
+**Problème I – petites variations et optique**
+
+Pour $|\theta| \ll 1\ \mathrm{rad}$ :
+
+$$
+\sin\theta \simeq \tan\theta \simeq \theta.
+$$
+
+Au premier ordre :
+
+$$
+F(z + \Delta z) - F(z) \simeq F'(z)\Delta z,
+$$
+
+$$
+\Delta\left(\frac{1}{z}\right) \simeq -\frac{\Delta z}{z^2}.
+$$
+
+**Problème II – seuil, équations et intégrales**
+
+Pour la question 3d) :
+
+$$
+q_c = c(T_s - T_0) + x_c L,
+$$
+
+$$
+y = \frac{2q_c}{\chi u_\infty^2},\qquad \frac{\mu}{(1+\mu)^2} = y,
+$$
+
+$$
+y\mu^2 + (2y - 1)\mu + y = 0.
+$$
+
+La racine physique vérifie $0 < \mu < 1$.
+
+Si $dv/dt = (v_t - v)/\tau$ et $v(0) = 0$ :
+
+$$
+v(t) = v_t\left(1 - e^{-t/\tau}\right).
+$$
+
+Si $dr/dt = -kr$ :
+
+$$
+\ln(r_2/r_1) = -k(t_2 - t_1).
+$$
+
+Intégrales utiles :
+
+$$
+\int_{r/2}^{r} s\,ds = \frac{3r^2}{8},\qquad \int_0^R r^4\,dr = \frac{R^5}{5},
+$$
+
+$$
+\int T^{-4}\,dT = -\frac{1}{3T^3}.
+$$
+
+Pour $|z| \ll 1$ : $(1 - z)^3 \simeq 1 - 3z$.
+
+**English**
+
+The relations below may be used directly. They do not replace the choice and justification of a physical model.
+
+**Problem I – small changes and optics**
+
+For $|\theta| \ll 1\ \mathrm{rad}$:
+
+$$
+\sin\theta \simeq \tan\theta \simeq \theta.
+$$
+
+To first order:
+
+$$
+F(z + \Delta z) - F(z) \simeq F'(z)\Delta z,
+$$
+
+$$
+\Delta\left(\frac{1}{z}\right) \simeq -\frac{\Delta z}{z^2}.
+$$
+
+**Problem II – threshold, equations, and integrals**
+
+For Question 3d):
+
+$$
+q_c = c(T_s - T_0) + x_c L,
+$$
+
+$$
+y = \frac{2q_c}{\chi u_\infty^2},\qquad \frac{\mu}{(1+\mu)^2} = y,
+$$
+
+$$
+y\mu^2 + (2y - 1)\mu + y = 0.
+$$
+
+The physical root satisfies $0 < \mu < 1$.
+
+If $dv/dt = (v_t - v)/\tau$ and $v(0) = 0$:
+
+$$
+v(t) = v_t\left(1 - e^{-t/\tau}\right).
+$$
+
+If $dr/dt = -kr$:
+
+$$
+\ln(r_2/r_1) = -k(t_2 - t_1).
+$$
+
+Useful integrals:
+
+$$
+\int_{r/2}^{r} s\,ds = \frac{3r^2}{8},\qquad \int_0^R r^4\,dr = \frac{R^5}{5},
+$$
+
+$$
+\int T^{-4}\,dT = -\frac{1}{3T^3}.
+$$
+
+For $|z| \ll 1$: $(1 - z)^3 \simeq 1 - 3z$.
+
+</details>
+
+---
+
+Оригинал в Архива: [CGP_2026.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2026.pdf#page=5)

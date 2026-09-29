@@ -1,0 +1,638 @@
+{
+ "paper": {
+  "id": "x-ens-2024-mp",
+  "subject": "physics",
+  "competition": "X-ENS",
+  "year": 2024,
+  "round": null,
+  "roundType": "theory",
+  "grade": null,
+  "lang": "fr",
+  "title": "ECOLE POLYTECHNIQUE — ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2024 — FILIERE MP - Epreuve n° 5 — PHYSIQUE (XULSR)",
+  "held": {
+   "from": "2024-04-17",
+   "to": "2024-04-17"
+  },
+  "organiser": "École polytechnique, Écoles normales supérieures",
+  "totalPoints": null,
+  "timeLimitMin": 240,
+  "source": {
+   "archiveKey": "Физика/Състезания/Минко Балкански/ENS-X-exams/MP/MP_2024.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  "status": "review",
+  "documentNotes": [
+   {
+    "title": "Consignes",
+    "statement": "MERCREDI 17 AVRIL 2024 — 08h00 - 12h00\n\n*Durée : 4 heures*\n\n*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve*",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   },
+   {
+    "title": "Différents aspects du champ électromagnétique : du classique au quantique",
+    "statement": "Le champ électromagnétique est à l’origine de nombreux phénomènes physiques, de la structure du proton aux amas de galaxies, dont certains sont connus depuis l’Antiquité. Pourtant, il faut attendre le XIX$^{\\text{ème}}$ siècle pour voir émerger les théories électrostatique et magnétostatique, grâce aux contributions de COULOMB, GAUSS, AMPÈRE, BIOT, *etc.* Suivent la compréhension des phénomènes non-statiques comme l’induction et la propagation des ondes électromagnétiques. Tous ces travaux forment la théorie classique de l’électromagnétisme, qui culmine en 1864 avec la formulation des équations de MAXWELL. Cependant, cette théorie échoue à prévoir certaines observations expérimentales comme le spectre du corps noir, l’effet photoélectrique ou encore l’effet COMPTON. Le début du XX$^{\\text{ème}}$ siècle voit ces différents problèmes résolus grâce à Max PLANCK et sa théorie des quanta, ainsi qu’à Albert EINSTEIN et son interprétation en « grains de lumière » du champ électromagnétique, supposé continu jusqu’ici. Ces grains seront appelés plus tard « photons » par Gilbert LEWIS (1926), et sont à la base d’une nouvelle interprétation du champ électromagnétique : l’interprétation corpusculaire.\n\nDepuis maintenant plus d’un siècle, la correspondance entre les approches classique et quantique a été démontrée, et les notions de photon et d’onde électromagnétique sont aujourd’hui réunies au sein du concept de dualité onde-corpuscule. L’aspect ondulatoire est exploité dans d’innombrables applications notamment en télécommunications, et l’aspect corpusculaire continue de fasciner les physiciens, avec des prix Nobel récents liés au comportement purement quantique des photons (S. HAROCHE 2012, A. ASPECT 2022).\n\nCe sujet propose l’étude de différents aspects - classique et quantique - du champ électromagnétique. La première partie dresse une analogie mécanique du champ classique, et établit l’existence d’une quantité de mouvement et d’un moment cinétique qui lui sont associés. Nous étudions dans un second temps le rayonnement du corps noir, et les étapes historiques qui ont conduit à introduire la notion de photon. Enfin, nous adoptons un point de vue purement corpusculaire et étudions la statistique d’émission des photons par différentes sources de lumière.\n\n- *Les trois parties constituant ce sujet sont indépendantes et peuvent être traitées séparément. Le sujet comporte 13 pages.*\n- *Les applications numériques seront effectuées avec la précision qu’un calcul à la main permet aisément, et (sauf mention contraire) sans excéder deux chiffres significatifs. Les ordres de grandeur seront donnés avec un seul chiffre significatif. Les données numériques ont été choisies pour faciliter les calculs.*\n- *Les références des questions abordées devront être indiquées de façon claire.*",
+    "document": "problems",
+    "page": 2,
+    "position": "before-problem"
+   },
+   {
+    "title": "Notations, formulaire et données numériques",
+    "statement": "**Constantes fondamentales et données numériques** : *les valeurs numériques sont données avec deux chiffres significatifs et sous forme approchées pour faciliter les applications numériques.*\n\n- Célérité de la lumière : $c \\simeq 3{,}0 \\times 10^{8}\\ \\mathrm{m.s^{-1}}$\n- Charge élémentaire : $e \\simeq 1{,}6 \\times 10^{-19}\\ \\mathrm{C}$\n- Constante de PLANCK : $h \\simeq 6{,}6 \\times 10^{-34}\\ \\mathrm{J.s}$\n- Constante de BOLTZMANN : $k_{\\mathrm{B}} \\simeq 1{,}4 \\times 10^{-23}\\ \\mathrm{J.K^{-1}}$\n- $hc \\simeq 1{,}2\\ \\mathrm{eV}.\\mu\\mathrm{m}$\n\n**Formulaire** :\n\n- Espérance $\\mathbb{E}$, variance $V$ et écart-type $\\Delta X$ d’une variable aléatoire $X$ dont les valeurs discrètes $\\{X_n\\}_{n\\in\\mathbb{N}}$ suivent une loi de probabilité $\\mathcal{P}$ :\n\n$$\\mathbb{E}(X) = \\sum_{n=0}^{+\\infty} X_n \\mathcal{P}(X = X_n) \\quad ; \\quad V(X) = \\mathbb{E}(X^2) - \\mathbb{E}(X)^2 \\quad ; \\quad \\Delta X = \\sqrt{V(X)}\\ .$$\n\n- Caractéristiques d’une loi binomiale de paramètres $N$ et $p$ :\n\n  Loi de probabilité : $\\mathcal{P}(X = n) = \\dbinom{N}{n} p^n (1-p)^{N-n}$\n\n  Espérance et variance : $\\mathbb{E}(X) = Np \\quad ; \\quad V(X) = Np(1-p)$\n\n- Développement limité : $(1+x)^{\\alpha} = 1 + \\alpha x + o(x)$.",
+    "document": "problems",
+    "page": 2,
+    "position": "before-problem"
+   }
+  ],
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-29",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "9d7194be312b1d67c2a14cdc1ac08a6f8e2967c78136e9690232732632f01c80"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Aucun barème n’est imprimé : tous les points sont null. Aucun corrigé officiel dans l’archive. Le sujet imprimé comporte 44 questions numérotées de 1 à 45 : la question 32 n’existe pas (la numérotation passe de 31 à 33, page 10/13) ; les numéros sont conservés tels qu’imprimés. Les parties I, II et III sont les trois problèmes ; les sous-parties titrées (II.A, II.B, II.C, III.A, III.B, III.B.a, III.B.b, III.C, III.C.a, III.C.b, III.C.c) sont des sections (les sous-sous-parties III.B.a/b et III.C.a/b/c sont des sections à part entière, les sections III.B et III.C ne contenant que leur texte d’introduction). L’introduction générale, les consignes et le formulaire sont placés dans paper.documentNotes. Les noms propres en petites capitales (COULOMB, PLANCK, EINSTEIN, RAYLEIGH-JEANS, BOSE-EINSTEIN, POISSON…) sont écrits en majuscules. Les guillemets ≪ ≫ du PDF sont rendus par « ». Formes conservées telles qu’imprimées (erreurs d’accord, D-P28) : « sous forme approchées » (formulaire, page 1/13 du sujet), « Pour toutes les longueurs d’onde exceptée λ = 546 nm » (III.A). Autres particularités conservées : « Deux dynodes adjacentes étant séparées par une tension … » (phrase sans verbe principal, III.C.a) ; le produit vectoriel de la densité de quantité de mouvement est imprimé avec ϵ0 alors que la suite utilise ε0 ; l’exponentielle de l’équation (13) est imprimée en italique « e ». La figure 4 (a, b, c) est découpée en une seule image."
+  }
+ },
+ "problems": [
+  {
+   "id": "x-ens-2024-mp-p1",
+   "number": 1,
+   "title": "Champ électromagnétique classique et grandeurs mécaniques associées",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Nous étudions dans cette partie quelques grandeurs mécaniques associées au champ électromagnétique, notamment sa quantité de mouvement. Soit $(\\overrightarrow{E}(M,t), \\overrightarrow{B}(M,t))$ le champ électromagnétique en un point $M$ quelconque de l’espace, muni d’un repère orthonormé cartésien $(Oxyz)$. On définit les densités volumiques de quantité de mouvement $\\overrightarrow{g}_{\\mathrm{em}}(M,t)$ et de moment cinétique $\\overrightarrow{\\ell}_{\\mathrm{em}}(M,t)$ par\n\n$$\\overrightarrow{G}_{\\mathrm{em}}(t) = \\iiint_{\\mathcal{E}} \\overrightarrow{g}_{\\mathrm{em}}(M,t)\\,\\mathrm{d}V \\qquad \\text{et} \\qquad \\overrightarrow{L}_{\\mathrm{em}}(t) = \\iiint_{\\mathcal{E}} \\overrightarrow{\\ell}_{\\mathrm{em}}(M,t)\\mathrm{d}V\\ , \\tag{1}$$\n\noù $\\overrightarrow{G}_{\\mathrm{em}}(t)$ est la quantité de mouvement du champ électromagnétique à l’instant $t$ et $\\overrightarrow{L}_{\\mathrm{em}}(t)$ son moment cinétique au même instant. Les intégrales portent sur tout l’espace $\\mathcal{E}$ et $\\mathrm{d}V$ est l’élément infinitésimal de volume.\n\nLa densité de quantité de mouvement du champ électromagnétique s’écrit $\\overrightarrow{g}_{\\mathrm{em}}(M,t) = \\epsilon_0 \\overrightarrow{E} \\wedge \\overrightarrow{B}$ et la densité de moment cinétique par rapport au point $O$, $\\overrightarrow{\\ell}_{\\mathrm{em}}(M,t) = \\overrightarrow{OM} \\wedge \\overrightarrow{g}_{\\mathrm{em}}(M,t)$.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "caption": "FIGURE 1 – Schéma du solénoïde.",
+     "alt": "À gauche, un solénoïde cylindrique de longueur L (flèche double au-dessus) enroulé de spires, avec l’axe z en pointillé passant par le centre O ; le courant i entre par un fil en bas à gauche et sort en bas à droite. À droite, une vue en coupe : un cercle de rayon b, l’axe z sortant du plan au centre, et le sens du courant i indiqué sur le cercle.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p1-fig1.png",
+     "width": 1638,
+     "height": 541,
+     "source": {
+      "page": 4,
+      "pdfRect": [
+       102.38,
+       40.41,
+       495.27,
+       170.05
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "1.",
+     "statement": "Rappeler l’expression du vecteur de POYNTING, noté $\\overrightarrow{\\Pi}(M,t)$. Donner sa dimension et son unité courante.",
+     "points": null
+    },
+    {
+     "label": "2.",
+     "statement": "Exprimer $\\overrightarrow{g}_{\\mathrm{em}}(M,t)$ en fonction de $\\overrightarrow{\\Pi}(M,t)$. Donner la dimension de $\\overrightarrow{g}_{\\mathrm{em}}$ et $\\overrightarrow{\\ell}_{\\mathrm{em}}$, et vérifier que $\\overrightarrow{G}_{\\mathrm{em}}$ et $\\overrightarrow{L}_{\\mathrm{em}}$ sont respectivement homogènes à une quantité de mouvement et un moment cinétique.",
+     "points": null,
+     "statementAfter": "Dans la suite, l’étude porte sur un système montrant l’existence d’une quantité de mouvement $\\overrightarrow{G}_{\\mathrm{em}}$ du champ électromagnétique.\n\nOn considère un solénoïde d’axe $(Oz)$ (représenté figure 1), comportant $N$ spires, de rayon $b$ et de longueur $L$ suffisamment grande pour négliger les effets de bords aux extrémités de celui-ci. Le solénoïde est parcouru par un courant $i(t)$, *a priori* variable dans le temps. La dépendance temporelle du courant $i$ n’est pas connue mais on considère que le courant $i$ est égal à une constante $i_0$ pour $t < 0$, et décroît à partir de l’instant $t = 0$ sur une durée caractéristique $\\tau$. On considérera par la suite que $i(t \\geq \\tau) = 0$. L’approximation des régimes quasi-stationnaires est supposée applicable. Un point $M$ de l’espace est repéré par ses coordonnées cylindriques $(r, \\theta, z)$ dans le repère mobile $(\\vec{e}_r, \\vec{e}_\\theta, \\vec{e}_z)$. $O$ est le centre du solénoïde. On note $\\mathcal{V}_{\\mathrm{sol}}$ le volume à l’intérieur du solénoïde."
+    },
+    {
+     "label": "3.",
+     "statement": "Déterminer l’expression du champ magnétique $\\overrightarrow{B}_{\\mathrm{sol}}(M,t)$ produit à l’intérieur et à l’extérieur du solénoïde, et pour chacune des phases temporelles : $t < 0$, $t \\in [0,\\tau[$ et $t \\geq \\tau$. On justifiera les éventuelles approximations et on précisera si le champ magnétique est homogène à l’intérieur et à l’extérieur du solénoïde.",
+     "points": null
+    },
+    {
+     "label": "4.",
+     "statement": "Exprimer le champ électrique $\\overrightarrow{E}_{\\mathrm{sol}}(M,t)$ produit à l’intérieur et à l’extérieur du solénoïde et pour chacune des phases temporelles : $t < 0$, $t \\in [0,\\tau[$ et $t \\geq \\tau$. On justifiera les éventuelles approximations et on précisera si le champ électrique est homogène à l’intérieur et à l’extérieur du solénoïde.",
+     "points": null,
+     "statementAfter": "Pendant la phase $t < 0$, on positionne une charge ponctuelle $q$ et de masse $m$ dans le plan $(Oxy)$. Cette charge est supposée immobile et initialement en un point extérieur au solénoïde et noté $P$, de telle sorte que la distance $\\parallel \\overrightarrow{OP} \\parallel$ est très petite devant la longueur $L$ du solénoïde. On choisira $\\overrightarrow{OP} = a\\vec{e}_x$."
+    },
+    {
+     "label": "5.",
+     "statement": "En supposant que $\\tau$ est suffisamment petit pour qu’on puisse négliger le déplacement de la charge ponctuelle pendant l’intervalle $[0,\\tau]$, déterminer l’expression de la vitesse $\\overrightarrow{v}_P$ pour des instants $t \\geq \\tau$. On négligera l’influence du poids de la particule devant les forces électromagnétiques. On exprimera le résultat en faisant apparaître les grandeurs caractéristiques de la charge, $q$, $m$ et $a$, et celles qui sont caractéristiques du solénoïde, $b$, $L$, $N$ et $i_0$.",
+     "points": null
+    },
+    {
+     "label": "6.",
+     "statement": "Rappeler sans démonstration l’expression du champ électrostatique en un point $M$ de l’espace, produit par une charge ponctuelle $q$, située en $P$.",
+     "points": null
+    },
+    {
+     "label": "7.",
+     "statement": "Exprimer $\\overrightarrow{G}_{\\mathrm{em}}(t)$ en présence de la charge $q$, de position initiale $P$, pour les phases $t < 0$ et $t \\geq \\tau$. On pourra utiliser l’expression de l’intégrale suivante $\\displaystyle\\iiint_{\\mathcal{V}_{\\mathrm{sol}}} \\frac{\\overrightarrow{PM}}{\\parallel \\overrightarrow{PM} \\parallel^3}\\mathrm{d}V = -\\frac{2\\pi b^2}{a}\\vec{e}_x$.",
+     "points": null
+    },
+    {
+     "label": "8.",
+     "statement": "À partir d’un bilan de quantité de mouvement, expliquer comment la charge ponctuelle est mise en mouvement. En particulier, la quantité de mouvement de la particule est-elle conservée au cours du temps ? Celle du champ électromagnétique ? Celle de l’ensemble $\\{$charge + champ électromagnétique$\\}$ ?",
+     "points": null
+    }
+   ],
+   "topics": [
+    "electromagnetism/induction",
+    "electromagnetism/momentum"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "L’archive ne contient pas de corrigé officiel pour cette épreuve."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "problems",
+     "page": 4
+    }
+   ]
+  },
+  {
+   "id": "x-ens-2024-mp-p2",
+   "number": 2,
+   "title": "Du classique au quantique : le rayonnement du corps noir",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Nous nous intéressons dans cette partie aux propriétés du champ électromagnétique confiné dans une enceinte cubique de côté $L$, assimilée à un corps noir. Lorsque cette enceinte est mise au contact d’un thermostat de température $T$, on constate qu’elle rayonne un champ électromagnétique dont l’énergie se répartit suivant différentes composantes fréquentielles, appelées « modes », définis par leurs fréquences et leurs polarisations. La loi de répartition de l’énergie influe sur le spectre d’émission du corps noir et le spectre observé expérimentalement ne peut se comprendre que dans le cadre d’un modèle de rayonnement quantifié.",
+   "figures": [],
+   "parts": [],
+   "sections": [
+    {
+     "id": "ii-a",
+     "title": "II.A Densité de modes électromagnétiques dans une cavité",
+     "statement": "Dans un premier temps, on considère un champ électromagnétique piégé entre deux parois planes et infinies, constituées d’un métal que l’on supposera parfait (conductivité $\\gamma$ infinie) pour faciliter l’étude. Les deux parois sont positionnées aux abscisses $x = 0$ et $x = L$ et sont infinies selon les directions $(Oy)$ et $(Oz)$. Le champ piégé entre ces deux parois est harmonique (monochromatique) de pulsation $\\omega$ fixée et de la forme : $\\overrightarrow{E}(M,t) = E_0(x)\\mathrm{e}^{\\mathrm{i}\\omega t}\\vec{e}_y$, avec $\\mathrm{i}^2 = -1$. L’espace situé entre les deux parois infinies est vide de charge et de courant.\n\nLes conditions de passage à une interface entre deux milieux 1 et 2 sont rappelées ci-dessous :\n\n$$\\overrightarrow{E}_2 - \\overrightarrow{E}_1 = \\frac{\\sigma}{\\varepsilon_0}\\overrightarrow{n}_{1\\to 2}\\ , \\tag{2}$$\n\noù $\\overrightarrow{n}_{1\\to 2}$ est la normale à l’interface entre les deux milieux et orientée du milieu 1 vers le milieu 2, $\\sigma$ la densité surfacique de charge de l’interface et $\\varepsilon_0$ la permittivité diélectrique du vide. Nous rappelons que le champ électrique dans un métal considéré comme parfait est nul.",
+     "figures": [
+      {
+       "id": "p2-fig1",
+       "caption": "FIGURE 2 – Représentation de $\\overrightarrow{k}$ dans l’espace des vecteurs d’onde pour un triplet $(n_x, n_y, n_z) = (1, 2, 3)$. À droite, le carré grisé symbolise le volume occupé par le mode $(1, 2, 3)$, en projection dans le plan $(k_x, k_y)$. Le disque gris matérialise l’ensemble des modes dans le plan $(k_x, k_y)$ dont la norme du vecteur d’onde est inférieure à une valeur fixée $k$.",
+       "alt": "À gauche, une sphère dans l’espace (kx, ky, kz) avec le plan équatorial grisé, des nœuds marqués par des points sur les axes kx, ky et kz, et un vecteur k issu de l’origine avec ses projections en pointillés. À droite, la projection dans le plan (kx, ky) : un disque gris, un réseau de points de pas π/L (indiqué par une flèche double), un vecteur issu de l’origine vers un nœud entouré d’un petit carré grisé en pointillés.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p2-fig1.png",
+       "width": 1399,
+       "height": 626,
+       "source": {
+        "page": 6,
+        "pdfRect": [
+         137.52,
+         41.26,
+         473.27,
+         191.12
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "9.",
+       "statement": "Donner l’équation à laquelle obéit le champ électromagnétique entre les deux parois. En déduire une équation différentielle vérifiée par $E_0(x)$. On note $k = \\dfrac{\\omega}{c}$ la norme du vecteur d’onde.",
+       "points": null
+      },
+      {
+       "label": "10.",
+       "statement": "En précisant les conditions aux limites en $x = 0$ et $x = L$ sur $E_0$ et en expliquant leur origine, déterminer l’expression de $E_0(x)$. Montrer que les conditions aux limites conduisent à une quantification de la pulsation et déterminer l’expression de cette pulsation $\\omega_n$, $n \\in \\mathbb{N}^*$.",
+       "points": null
+      },
+      {
+       "label": "11.",
+       "statement": "Pour un champ électrique dont l’expression serait $\\overrightarrow{E}(M,t) = E_0(x)\\mathrm{e}^{\\mathrm{i}\\omega t}\\vec{e}_z$, montrer que la condition obtenue précédemment est la même. En déduire que pour une pulsation $\\omega_n$ donnée respectant cette condition, il est possible d’avoir deux champs électriques solutions dont les polarisations sont rectilignes et perpendiculaires entre elles.",
+       "points": null,
+       "statementAfter": "Nous considérons maintenant l’enceinte dans sa totalité comme une cavité cubique constituée de parois métalliques parfaitement conductrices. La résolution est alors plus complexe que dans le cas unidimensionnel. Les solutions permises dans le cas à trois dimensions sont des modes électromagnétiques dont la pulsation $\\omega_{n_x,n_y,n_z}$ est quantifiée par trois entiers naturels strictement positifs, $n_x$, $n_y$, $n_z$. Nous précisons que pour chaque pulsation $\\omega_{n_x,n_y,n_z}$ du champ électrique solution du problème, il y a deux modes associés, correspondant aux deux polarisations rectilignes indépendantes. Les expressions de la pulsation et du vecteur d’onde pour ces deux polarisations sont\n\n$$\\omega_{n_x,n_y,n_z} = \\frac{\\pi c}{L}\\left(n_x^2 + n_y^2 + n_z^2\\right)^{1/2} \\qquad \\text{et} \\qquad \\overrightarrow{k}_{n_x,n_y,n_z} = \\frac{\\pi}{L}\\left(n_x\\vec{e}_x + n_y\\vec{e}_y + n_z\\vec{e}_z\\right)\\ . \\tag{3}$$\n\nSur la figure 2, on représente un vecteur d’onde donné dans l’espace cartésien des vecteurs d’onde $(k_x, k_y, k_z)$. Dans cet espace, les modes électromagnétiques occupent les nœuds d’un réseau cubique de pas $\\dfrac{\\pi}{L}$. Le volume occupé par un nœud est $\\left(\\dfrac{\\pi}{L}\\right)^3$, chaque nœud représentant deux modes de polarisations indépendantes. La contrainte donnée par la relation de dispersion dans le vide à l’intérieur de la cavité $\\overrightarrow{k}^2 = \\dfrac{\\omega^2}{c^2}$ est représentée par une sphère de rayon $\\parallel \\overrightarrow{k} \\parallel$ (à gauche figure 2) et par un cercle dans le plan $(k_x, k_y)$ (à droite figure 2). On rappelle que $n_x$, $n_y$, $n_z$ appartiennent à $\\mathbb{N}^*$."
+      },
+      {
+       "label": "12.",
+       "statement": "Exprimer le nombre de modes $\\mathcal{N}(\\omega)$ pour lesquels la pulsation est inférieure à $\\omega$ fixée.",
+       "points": null
+      },
+      {
+       "label": "13.",
+       "statement": "Déterminer l’expression du nombre de modes $\\mathcal{D}(\\omega)$ par unité de pulsation $\\omega$. En déduire l’expression du nombre de modes $\\mathcal{D}(\\nu)$ par unité de fréquence $\\nu$\n\n$$\\mathcal{D}(\\nu) = \\frac{8\\pi V}{c^3}\\nu^2\\ , \\tag{4}$$\n\noù $V$ est le volume de la cavité.",
+       "points": null
+      }
+     ],
+     "statementAfterParts": "En résumé, le raisonnement précédent revient à considérer chaque mode propre électromagnétique pouvant exister dans la cavité comme un oscillateur harmonique unidimensionnel, de pulsation $\\omega_{n_x,n_y,n_z}$ fixée par trois entiers naturels strictement positifs, et de polarisation rectiligne fixée. À une pulsation donnée correspondent deux états de polarisation rectiligne indépendants pour le champ électromagnétique. Dans la suite, nous adoptons deux approches pour déterminer l’expression de la densité spectrale d’énergie électromagnétique moyenne contenue dans la cavité, notée $\\overline{\\mathcal{U}}(\\nu)$ et homogène à une énergie par unité de fréquence."
+    },
+    {
+     "id": "ii-b",
+     "title": "II.B Composition spectrale du rayonnement : approche de Rayleigh-Jeans",
+     "statement": "En 1900, Lord RAYLEIGH utilise une approche de mécanique statistique pour aboutir à une expression de $\\overline{\\mathcal{U}}(\\nu)$ qui explique le spectre du corps noir aux basses fréquences. Corrigée plus tard par James JEANS, cette loi se révèlera erronée et sera finalement remplacée par la loi issue des travaux de Max PLANCK. Elle contient tout de même un point de raisonnement important dont s’inspirera ce dernier, et permet de rendre compte d’une partie des observations expérimentales.",
+     "figures": [
+      {
+       "id": "p2-fig2",
+       "caption": "FIGURE 3 – Composition spectrale du fond diffus cosmologique. La quantité $I_\\nu$ en ordonnée est proportionnelle à la densité spectrale $\\overline{\\mathcal{U}}(\\nu)$ du rayonnement céleste. Les mesures de $I_\\nu$ sont représentées par des points, en fonction de la fréquence (exprimée en Hz, axe inférieur) et de la longueur d’onde (exprimée en cm, axe supérieur) du rayonnement. Le trait plein correspond au rayonnement observé pour un corps noir idéal de température $T = 2{,}73$ K. Source : Smoot *et al.*, Cosmic background radiation, *Eur. Phys. J. C* **15** (2000).",
+       "alt": "Graphique log-log : en ordonnée I_ν (W m⁻² sr⁻¹ Hz⁻¹) de 10⁻²² à 10⁻¹⁷, en abscisse inférieure Frequency (GHz) de 1 à 1000, en abscisse supérieure Wavelength (cm) 10, 1.0, 0.1. Courbe « 2.73 K blackbody » croissante jusqu’à un maximum vers 160 GHz puis décroissant rapidement, avec des points de mesure. Légende : + FIRAS COBE satellite, * DMR COBE satellite, × UBC sounding rocket, ◇ LBL-Italy White Mt. & South Pole, □ Princeton ground & balloon, △ Cyanogen optical.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p2-fig2.png",
+       "width": 1236,
+       "height": 906,
+       "source": {
+        "page": 7,
+        "pdfRect": [
+         150.62,
+         40.41,
+         447.03,
+         257.62
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "14.",
+       "statement": "En utilisant le théorème d’équipartition de l’énergie appliqué au champ électromagnétique contenu dans la cavité en contact avec un thermostat de température fixée $T$, déterminer l’expression de la densité spectrale d’énergie électromagnétique moyenne $\\overline{\\mathcal{U}}(\\nu)$ dans la cavité,\n\n$$\\overline{\\mathcal{U}}(\\nu) = A\\nu^2 k_{\\mathrm{B}}T\\ , \\tag{5}$$\n\noù $A$ est un préfacteur, dépendant de $V$ et de $c$ notamment, à déterminer.",
+       "points": null,
+       "statementAfter": "La figure 3 présente des données expérimentales sur la composition spectrale du « fond diffus cosmologique ». Découvert en 1965, ce rayonnement en provenance de l’espace interstellaire est très proche de celui du corps noir idéal, et présente un maximum d’émission dans le domaine micro-onde."
+      },
+      {
+       "label": "15.",
+       "statement": "Comparer la densité spectrale $\\overline{\\mathcal{U}}(\\nu)$ prévue par le modèle de RAYLEIGH-JEANS aux données de la figure 3. Expliquer pourquoi l’on parlait de « catastrophe ultraviolette » jusqu’au début du XX$^{\\text{ème}}$ siècle. Quelle hypothèse réalisée dans le raisonnement précédent pourrait être erronée ?",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "ii-c",
+     "title": "II.C Hypothèse des quanta et approche de Planck",
+     "statement": "Peu de temps après les travaux de Lord RAYLEIGH, Max PLANCK suppose que les échanges d’énergie entre un mode électromagnétique de fréquence $\\nu$ fixée et la matière constituant les parois de la cavité sont réalisés de manière quantifiée, et ne se produisent que par quantités discrètes d’énergie. Par la suite, ces quanta d’énergie seront appelés « photons », ayant chacun pour énergie $\\mathcal{E} = h\\nu$, où $h$ est la constante de PLANCK. Dans ce modèle, un mode électromagnétique de fréquence $\\nu$ contenant $n$ photons a donc pour énergie $\\mathcal{E}_n(\\nu) = nh\\nu$. On parle alors d’état à $n$ photons pour le mode électromagnétique de fréquence $\\nu$.\n\nAu contact d’un thermostat de température $T$, les états du système $\\{$cavité + champ$\\}$ ne sont pas équiprobables : leur probabilité d’occupation dépend de l’énergie $\\mathcal{E}_n(\\nu) = nh\\nu$ suivant la statistique de MAXWELL-BOLTZMANN.",
+     "parts": [
+      {
+       "label": "16.",
+       "statement": "Exprimer la probabilité $\\mathcal{P}_n(\\nu)$ qu’un mode électromagnétique de fréquence $\\nu$ contienne $n$ photons. On notera $\\mathcal{Z}(\\beta,\\nu)$ la fonction de normalisation de la probabilité $\\mathcal{P}_n(\\nu)$ qui assure que $\\displaystyle\\sum_{n=0}^{+\\infty}\\mathcal{P}_n(\\nu) = 1$, avec $\\beta = \\dfrac{1}{k_{\\mathrm{B}}T}$. Cette fonction porte le nom de fonction de partition.",
+       "points": null
+      },
+      {
+       "label": "17.",
+       "statement": "En utilisant la condition de normalisation ci-dessus, déterminer l’expression de $\\mathcal{Z}(\\beta,\\nu)$. En déduire que\n\n$$\\mathcal{P}_n(\\nu) = \\mathrm{e}^{-\\beta nh\\nu}\\left(1 - \\mathrm{e}^{-\\beta h\\nu}\\right)\\ . \\tag{6}$$",
+       "points": null
+      },
+      {
+       "label": "18.",
+       "statement": "Établir l’expression du nombre moyen de photons, noté $\\overline{n}(\\nu)$, contenus dans le mode électromagnétique de fréquence $\\nu$. On pourra poser $x = \\mathrm{e}^{-\\beta h\\nu}$ afin de faciliter les calculs.",
+       "points": null
+      },
+      {
+       "label": "19.",
+       "statement": "Montrer que la probabilité $\\mathcal{P}_n$ peut se réécrire sous la forme\n\n$$\\mathcal{P}_n = \\frac{1}{\\overline{n}+1}\\left(\\frac{\\overline{n}}{\\overline{n}+1}\\right)^n\\ . \\tag{7}$$\n\nCette distribution de probabilité, appelée distribution de BOSE-EINSTEIN, est caractéristique des modes électromagnétiques du rayonnement de corps noir (aussi appelé *rayonnement thermique*).",
+       "points": null
+      },
+      {
+       "label": "20.",
+       "statement": "Calculer l’énergie moyenne $\\overline{\\mathcal{E}}(\\nu)$ du mode électromagnétique de fréquence $\\nu$. Montrer que la densité spectrale d’énergie moyenne associée $\\overline{\\mathcal{U}}(\\nu)$ s’écrit\n\n$$\\overline{\\mathcal{U}}(\\nu) = \\frac{8\\pi\\nu^2 V}{c^3}\\frac{h\\nu}{\\mathrm{e}^{\\beta h\\nu} - 1}\\ . \\tag{8}$$",
+       "points": null
+      },
+      {
+       "label": "21.",
+       "statement": "En comparant deux énergies caractéristiques, déterminer les expressions asymptotiques de la densité spectrale d’énergie électromagnétique moyenne d’un mode dans la cavité dans les régimes basse et haute fréquences. Tracer sur un même graphique les allures obtenues pour la courbe représentative de $\\overline{\\mathcal{U}}(\\nu)$ en fonction de $\\nu$ dans l’approche de RAYLEIGH-JEANS et dans celle de PLANCK. Expliquer en quoi les travaux de ce dernier ont permis de résoudre la « catastrophe ultraviolette » à laquelle conduit l’approche de RAYLEIGH-JEANS, et évoquée à la question **15**.",
+       "points": null
+      }
+     ]
+    }
+   ],
+   "topics": [
+    "modern-physics/blackbody-radiation",
+    "electromagnetism/waves",
+    "thermodynamics/statistical-physics"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "L’archive ne contient pas de corrigé officiel pour cette épreuve."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "problems",
+     "page": 8
+    }
+   ]
+  },
+  {
+   "id": "x-ens-2024-mp-p3",
+   "number": 3,
+   "title": "Interprétation quantique du rayonnement électromagnétique",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Pour justifier l’aspect quantifié des échanges d’énergie dans le raisonnement de PLANCK, Albert EINSTEIN propose en 1905 une interprétation du rayonnement électromagnétique en termes de grains de lumière (qui ne seront appelés « photons » que plus tard en 1926, par le chimiste Gilbert LEWIS). Ce caractère granulaire de la lumière a permis d’expliquer un phénomène qui demeurait jusqu’alors incompris : l’effet photoélectrique, que l’on se propose d’étudier dans une première partie (III.A). Dans un second temps, on s’intéresse aux statistiques d’émission des photons suivant la nature de la source lumineuse (III.B). Enfin, nous verrons comment il est possible de caractériser expérimentalement une source en mesurant sa statistique d’émission à l’aide d’un photodétecteur adapté (III.C).",
+   "figures": [],
+   "parts": [],
+   "sections": [
+    {
+     "id": "iii-a",
+     "title": "III.A Effet photoélectrique",
+     "statement": "Observé pour la première fois en 1887 par Heinrich HERTZ, l’effet photoélectrique désigne la capacité d’un rayonnement électromagnétique à arracher les électrons libres (électrons de conduction) d’un matériau conducteur. Ces électrons peuvent être collectés au sein d’un circuit électrique, ce qui permet de mesurer un courant en présence du rayonnement : on parle de *photo-courant*.\n\nAfin de tester la théorie d’EINSTEIN, Robert Andrews MILLIKAN réalise en 1914 une expérience d’effet photoélectrique, qui s’avérera concluante et permettra même de déterminer la valeur de la constante $h$. Le principe de l’expérience est le suivant : au sein d’une chambre à vide, il place une cathode métallique en lithium reliée à une anode au moyen d’un générateur de tension continue $u$, et d’un ampère-mètre mesurant le courant $i$ dans le circuit, figure 4 (a). Un faisceau monochromatique issu d’une lampe à vapeur de mercure éclaire la cathode, sa longueur d’onde $\\lambda$ pouvant être réglée sur l’une des raies spectrales émises par la vapeur : 313 nm, 365 nm, 405 nm, 435 nm et 546 nm. La puissance lumineuse $P$ du faisceau est également réglable.\n\nPour toutes les longueurs d’onde exceptée $\\lambda = 546$ nm, MILLIKAN mesure un photo-courant $i > 0$ lorsqu’aucune tension n’est appliquée. En faisant varier $u$ pour ces longueurs d’onde, il effectue les observations expérimentales suivantes :\n\n*i)* *Augmenter la tension $u$ provoque l’augmentation du courant $i$, jusqu’à une valeur de saturation $I_{\\mathrm{sat}}$. À l’inverse, $i$ s’annule si on réduit $u$ jusqu’à une valeur négative $-U_0$ appelée potentiel d’arrêt. La courbe $i = f(u)$ ainsi obtenue présente l’allure schématisée figure 4 (b).*\n\n*ii)* *Le potentiel d’arrêt $U_0$ ne dépend que de la fréquence $\\nu$.*\n\n*iii)* *Le courant de saturation $I_{\\mathrm{sat}}$ augmente avec la puissance lumineuse $P$.*",
+     "figures": [
+      {
+       "id": "p3-fig1",
+       "caption": "FIGURE 4 – Étude expérimentale de l’effet photoélectrique. (a) Schéma de la cellule photoélectrique. (b) Allure d’une courbe photocourant-potentiel. (c) Données expérimentales $U_0 = f(\\nu)$ relevées par MILLIKAN. L’axe vertical est gradué tous les 0,2 V et l’axe horizontal tous les $5 \\times 10^{13}$ Hz. Au niveau de l’intersection du trait plein et du trait pointillé, on lit $\\nu_0 = 57{,}0 \\times 10^{13}$ Hz. Source : R. A. Millikan, *A Direct Photoelectric Determination of Planck’s \"h\"*, Phys. Rev. **7**, 355 (1916).",
+       "alt": "(a) Cellule photoélectrique : ampoule contenant une cathode et une anode, éclairée par un « Flux lumineux » ondulé ; circuit extérieur avec un ampèremètre A, un générateur de tension réglable u (bornes + et −) et le courant i. (b) Courbe i en fonction de u : nulle en −U0, croissante à travers 0 puis saturant à Isat (pointillé horizontal). (c) Graphique manuscrit de Millikan sur papier millimétré : Volts en ordonnée (de −0,2 à 1,8), Frequency en abscisse (55×10¹³ à 105), points de mesure alignés sur une droite en tirets coupant l’axe 0 à ν0 = 57,0×10¹³.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p3-fig1.png",
+       "width": 1791,
+       "height": 1720,
+       "source": {
+        "page": 9,
+        "pdfRect": [
+         82.17,
+         134.68,
+         511.92,
+         547.24
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "22.",
+       "statement": "L’énergie nécessaire pour arracher un électron de conduction dans le lithium vaut $W_0 = 2{,}4\\ \\mathrm{eV}$. Montrer en quoi l’hypothèse corpusculaire d’EINSTEIN permet d’expliquer qu’aucun photo-courant n’est mesuré pour $\\lambda = 546$ nm. On donne $hc \\simeq 1{,}2\\ \\mathrm{eV}.\\mu\\mathrm{m}$.",
+       "points": null,
+       "statementAfter": "On appelle *photo-électrons* les électrons qui sont éjectés de la cathode par effet photoélectrique. On suppose que ces derniers sont éjectés de la cathode avec des vitesses $\\overrightarrow{v}$ de même norme et de directions aléatoires."
+      },
+      {
+       "label": "23.",
+       "statement": "Expliquer qu’en l’absence de tension $u$ appliquée, on observe tout de même un photo-courant non-nul. Comment évolue la situation lorsqu’on applique une tension $u < 0$ ? Justifier alors l’appellation « potentiel d’arrêt » donnée à la tension $U_0$.",
+       "points": null
+      },
+      {
+       "label": "24.",
+       "statement": "En considérant que l’énergie du rayonnement incident est intégralement transmise aux électrons libres de la cathode, exprimer le potentiel d’arrêt $U_0$ en fonction de $e$, $h$, $\\nu$ et du travail d’extraction $W_0$, et justifier l’observation *ii*).",
+       "points": null
+      },
+      {
+       "label": "25.",
+       "statement": "La figure 4 (c) représente les mesures $U_0 = f(\\nu)$ obtenues par MILLIKAN lui-même, en relevant le potentiel d’arrêt en fonction des longueurs d’onde associées aux différentes raies du mercure. À partir de ces mesures, déterminer la valeur numérique à laquelle il est parvenu pour la constante de PLANCK $h$, et estimer l’incertitude $\\Delta h$ associée.",
+       "points": null
+      },
+      {
+       "label": "26.",
+       "statement": "Justifier que le courant $i$ augmente progressivement à mesure qu’on applique une tension $u > 0$ croissante et expliquer la limitation du courant à une valeur de saturation, notée $I_{\\mathrm{sat}}$.",
+       "points": null
+      },
+      {
+       "label": "27.",
+       "statement": "On appelle rendement quantique $\\eta$ la probabilité qu’un photo-électron soit émis lorsqu’un photon frappe la cathode. Exprimer $I_{\\mathrm{sat}}$ en fonction de $\\eta$ et justifier l’observation *iii*). Reproduire l’allure de la courbe (b), figure 4, pour différentes valeurs de la puissance lumineuse $P$ à fréquence $\\nu$ fixée, et proposer alors une méthode qui permettrait de déterminer $\\eta$ pour la cathode en lithium utilisée ici.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "iii-b",
+     "title": "III.B Statistiques d’émission de photons",
+     "statement": "Dans cette section, on s’intéresse à la distribution de probabilité $\\mathcal{P}_n$ qui caractérise le nombre $n$ de photons émis par une source lumineuse pendant une durée $\\tau$ donnée. Deux types de sources sont étudiés : une source thermique et une source laser.",
+     "parts": []
+    },
+    {
+     "id": "iii-b-a",
+     "title": "III.B.a Source de rayonnement thermique",
+     "statement": "Nous avons vu dans la section II.C que le spectre d’un corps noir porté à température $T$ non nulle est formé d’une superposition de modes de différentes fréquences. Dans toute la suite, on admettra que le nombre $n$ de photons émis à la fréquence $\\nu$ pendant une durée $\\tau$ suit une statistique de BOSE-EINSTEIN similaire à celle trouvée en question **19** pour le nombre de photons contenus dans le mode électromagnétique $\\nu$. Ainsi la probabilité $\\mathcal{P}_n$ qu’une source thermique émette $n$ photons à la fréquence $\\nu$ pendant la durée $\\tau$ s’écrit\n\n$$\\mathcal{P}_n = \\frac{1}{\\overline{n}+1}\\left(\\frac{\\overline{n}}{\\overline{n}+1}\\right)^n\\ , \\tag{9}$$\n\noù $\\overline{n}$ désigne le nombre de photons émis en moyenne sur une durée $\\tau$.",
+     "parts": [
+      {
+       "label": "28.",
+       "statement": "Pour caractériser les fluctuations du nombre de photons autour de la valeur moyenne $\\overline{n}$, on utilise l’écart-type $\\Delta n$ (défini dans le formulaire). Déterminer $\\Delta n$ en fonction de $\\overline{n}$.",
+       "points": null
+      },
+      {
+       "label": "29.",
+       "statement": "Représenter l’allure de la probabilité $\\mathcal{P}_n$ en fonction de $n$, en faisant apparaître qualitativement la moyenne $\\overline{n}$ et l’écart-type $\\Delta n$ sur le graphique.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "iii-b-b",
+     "title": "III.B.b Source laser",
+     "statement": "On considère maintenant une source laser monochromatique de fréquence $\\nu$, et de puissance constante $P$. En raison de la nature corpusculaire du rayonnement, le nombre $n$ de photons émis pendant une durée $\\tau$ donnée est susceptible de fluctuer autour de sa valeur moyenne $\\overline{n}$. On définit le flux de photons $\\Phi$ comme le nombre moyen de photons émis par unité de temps :\n\n$$\\Phi = \\frac{\\overline{n}}{\\tau}\\ . \\tag{10}$$",
+     "parts": [
+      {
+       "label": "30.",
+       "statement": "Exprimer le flux $\\Phi$ en fonction de la puissance incidente $P$. Évaluer numériquement $\\Phi$ pour une source laser de puissance $P = 1$ mW et de longueur d’onde $\\lambda = 400$ nm. En déduire une valeur numérique de la durée qui sépare l’émission de deux photons en moyenne pour une telle source.",
+       "points": null,
+       "statementAfter": "De même que précédemment pour une source de rayonnement thermique, on souhaite maintenant déterminer la probabilité $\\mathcal{P}_n$ que $n$ photons soient émis par le laser pendant une durée $\\tau$, choisie suffisamment grande de sorte que le nombre de photons moyen $\\overline{n} = \\Phi\\tau$ soit un entier naturel bien défini."
+      },
+      {
+       "label": "31.",
+       "statement": "En supposant que les photons sont émis indépendamment les uns des autres, et en négligeant les émissions multiples dans un intervalle de temps élémentaire $\\delta\\tau = \\tau/N$ (avec $N$ le nombre de subdivisions de la durée $\\tau$ et $N \\gg \\overline{n}$), justifier que la probabilité $\\mathcal{P}_n$ suit une loi binomiale dont l’expression est donnée par\n\n$$\\mathcal{P}_n = \\binom{N}{n}p^n(1-p)^{N-n}\\ . \\tag{11}$$\n\nOn précisera la signification physique de $p$. Exprimer $p$ à l’aide du formulaire sachant que cette loi doit conduire à un nombre moyen $\\overline{n}$ de photons émis.",
+       "points": null
+      },
+      {
+       "label": "33.",
+       "statement": "En utilisant le formulaire, donner également l’expression de l’écart-type $\\Delta n$ dans la limite $N \\gg \\overline{n}$. Comparer au cas d’une source de rayonnement thermique (cf. question **28**) et interpréter en termes de stabilité de la source.",
+       "points": null,
+       "statementAfter": "À partir de l’équivalent de Stirling $\\ln N! \\underset{N\\to+\\infty}{\\sim} N\\ln N - N$, on peut montrer que\n\n$$\\lim_{N\\to+\\infty}\\left(\\frac{N!}{(N-n)!N^n}\\right) = 1\\ . \\tag{12}$$"
+      },
+      {
+       "label": "34.",
+       "statement": "En développant $(1-p)^{N-n}$ dans la limite $N \\to +\\infty$, et en utilisant le résultat (12), montrer que la statistique d’émission de la source laser tend vers une distribution de POISSON, caractérisée par sa seule valeur moyenne $\\overline{n}$ :\n\n$$\\lim_{N\\to+\\infty}\\mathcal{P}_n = \\frac{\\overline{n}^n}{n!}e^{-\\overline{n}}\\ . \\tag{13}$$",
+       "points": null,
+       "statementAfter": "On admet que pour des nombres moyens de photons $\\overline{n} > 5$, la loi de POISSON peut correctement être approchée par une loi normale, dont la représentation graphique est une gaussienne d’écart-type $\\Delta n = \\sqrt{\\overline{n}}$ centrée sur la moyenne $\\overline{n}$."
+      },
+      {
+       "label": "35.",
+       "statement": "Sur le même graphique, représenter l’allure des lois de probabilité $\\mathcal{P}_n$ d’un mode thermique et d’une source laser de même fréquence $\\nu$ telles que $\\overline{n} = 10$.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "iii-c",
+     "title": "III.C Détection de photons et caractérisation expérimentale d’une source",
+     "statement": "Pour mettre en évidence expérimentalement la statistique d’émission d’une source de lumière, il est nécessaire de pouvoir détecter des photons uniques. Pour cela, on utilise des détecteurs qui fonctionnent sur le principe de l’effet photoélectrique étudié à la section III.A et qui permettent la conversion d’un photon en photo-électron. La collecte des photo-électrons produits permet d’accéder à la statistique d’émission des photons incidents. Nous étudions dans la suite le fonctionnement de l’un de ces détecteurs : le photomultiplicateur, et nous l’utiliserons pour caractériser expérimentalement la statistique d’émission de sources laser et thermique.",
+     "parts": []
+    },
+    {
+     "id": "iii-c-a",
+     "title": "III.C.a Fonctionnement d’un photomultiplicateur",
+     "statement": "Un photomultiplicateur est un détecteur de lumière très sensible, capable de détecter des photons uniques. Il est constitué d’un tube à vide à l’intérieur duquel se trouve une cathode portée au potentiel nul, et une anode collectrice sous haute tension. La cathode et l’anode sont séparées par une série d’électrodes intermédiaires appelées dynodes. Elles sont portées à des potentiels croissants grâce à un générateur de tension continue $U_0$ (à ne pas confondre avec le potentiel d’arrêt de la partie III.A) et un circuit diviseur de tension. Deux dynodes adjacentes étant séparées par une tension $\\Delta U = U_0/k$ où $k$ est le nombre de dynodes.\n\nSous l’effet d’un flux lumineux, des photo-électrons sont susceptibles d’être arrachés à la cathode par effet photoélectrique. Ils sont alors accélérés vers la première dynode, et provoquent en la frappant l’éjection de nouveaux électrons. Le processus se reproduit en avalanche jusqu’à ce que l’anode en sortie collecte un nombre macroscopique d’électrons. Le courant anodique total $I$ est finalement récolté sous forme d’une tension $u$ sur une résistance de charge $R_c = 1\\ \\mathrm{k\\Omega}$. L’observation du signal $u(t)$ à l’oscilloscope présente une série de pics aléatoires correspondant chacun à la détection d’un photon. Chaque pic présente une largeur typique de 20 ns correspondant au temps de réponse du photomultiplicateur. Le schéma du principe de fonctionnement du photomultiplicateur et les signaux observés sont représentés sur la figure 5.",
+     "figures": [
+      {
+       "id": "p3-fig2",
+       "caption": "FIGURE 5 – Fonctionnement d’un photomultiplicateur.",
+       "alt": "À gauche, schéma d’un photomultiplicateur : un photon (flèche ondulée) frappe la cathode, un électron e⁻ est accéléré vers une série de dynodes avec des trajectoires en avalanche jusqu’à l’anode ; courant I dans la résistance Rc aux bornes de laquelle on mesure u ; chaîne de résistances R reliant les dynodes, tension ΔU entre deux dynodes, générateur U0 (bornes − et +), masse. Au centre, « Signal observé sur l’oscilloscope » : u(t) en fonction de t, suite de pics fins aléatoires, dont un encadré en rouge. À droite, « Signal d’un photon unique » : u(t) en fonction de t, un pic de largeur 20 ns.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p3-fig2.png",
+       "width": 2100,
+       "height": 577,
+       "source": {
+        "page": 12,
+        "pdfRect": [
+         54.18,
+         301.41,
+         557.78,
+         439.47
+        ],
+        "dpi": 300
+       }
+      },
+      {
+       "id": "p3-fig3",
+       "caption": "FIGURE 6 – Spécifications du photomultiplicateur. Gauche : taux de comptage $\\varGamma$ en sortie du photomultiplicateur en fonction de la puissance lumineuse relative incidente sur la photocathode. Droite : Courbes de réponse spectrale pour différents modèles de photomultiplicateurs : n°01, n°04, n°110, n°113, n°210. On signale que les réponses des modèles n°110 et n°113 coïncident pour des longueurs d’onde supérieures à 300 nm.",
+       "alt": "Fiche « SPECIFICATIONS ». À gauche, graphique « Linéarité » (TPMOB0217EA) en échelles logarithmiques : Γ (Hz) de 10³ à 10¹⁰ en fonction de la « Puissance lumineuse relative (sans unité) » de 10³ à 10¹² ; droite « THEORETICAL VALUE », courbe « OUTPUT COUNT » qui suit la droite jusqu’à environ 10⁷ Hz, sature vers 3×10⁷ Hz puis chute vers 10¹¹ ; courbe en escalier « OVER LIGHT DETECTION OUTPUT » passant de 0 V à +4 V. À droite, graphique « Réponse spectrale » (TPMOB0215ED) : Γ/P (Hz · pW⁻¹) de 10³ à 10⁶ en fonction de la « Longueur d’onde λ (nm) » de 100 à 900, courbes des modèles -01, -04, -110, -113 et -210.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p3-fig3.png",
+       "width": 2040,
+       "height": 1134,
+       "source": {
+        "page": 13,
+        "pdfRect": [
+         54.18,
+         40.41,
+         543.47,
+         312.35
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "36.",
+       "statement": "On suppose que lorsqu’un électron frappe une dynode, deux nouveaux électrons sont éjectés. Estimer numériquement la hauteur $u_{\\mathrm{max}}$ d’un pic de tension occasionné par l’arrivée d’un photon, pour un photomultiplicateur contenant $k = 20$ dynodes. On donne $2^{20} \\simeq 10^6$.",
+       "points": null
+      },
+      {
+       "label": "37.",
+       "statement": "Le circuit diviseur de tension est composé de $k$ résistances identiques $R$ en série. Sachant que l’alimentation haute tension délivre une puissance continue de 2 W, déterminer la valeur de $R$ pour assurer une différence de potentiel $\\Delta U = 100$ V entre deux dynodes successives. Estimer l’énergie cinétique que cela permet de communiquer aux électrons secondaires avant leur impact sur une dynode. Comparer cette énergie au travail d’extraction d’une dynode en phosphure de gallium : $W_{\\mathrm{GaP}} = 2{,}2$ eV.",
+       "points": null
+      },
+      {
+       "label": "38.",
+       "statement": "On définit $\\varGamma$ le taux de comptage en sortie du photomultiplicateur comme le nombre moyen de photons détectés par unité de temps, exprimé en Hz. Donner $\\varGamma$ en fonction de la puissance incidente $P$, du rendement quantique $\\eta$ (défini à la question **27**) et de l’énergie d’un photon de fréquence $\\nu$.",
+       "points": null
+      },
+      {
+       "label": "39.",
+       "statement": "En exploitant la courbe de réponse spectrale $\\dfrac{\\varGamma}{P} = f(\\lambda)$ représentée sur la figure 6, estimer numériquement $\\eta$ pour un rayonnement incident de longueur d’onde 400 nm, et pour le modèle de photomultiplicateur n°110.",
+       "points": null
+      },
+      {
+       "label": "40.",
+       "statement": "Au regard du signal correspondant à la détection d’un photon unique, expliquer pourquoi le domaine de linéarité du photomultiplicateur est limité par son temps de réponse fini. Estimer alors le taux de comptage maximum au-delà duquel la réponse du photomultiplicateur n’est plus linéaire. Comparer aux spécifications de la figure 6. En déduire la puissance lumineuse maximale $P_{\\mathrm{max}}$ qui ne doit pas être dépassée pour demeurer dans le régime linéaire avec un rayonnement à 400 nm. Commenter cette valeur.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "iii-c-b",
+     "title": "III.C.b Mesure de la statistique d’émission d’un laser",
+     "statement": "Nous utilisons le photomultiplicateur précédent pour mettre en évidence la statistique poissonnienne qui caractérise une source laser (obtenue à la question **34**). On utilise pour cela un laser à argon fonctionnant à 400 nm, dont la puissance est atténuée à 0,1 pW au moyen d’un filtre absorbant. Pour une fenêtre de détection de durée $\\tau$, un circuit électronique permet de compter les pics de tension en sortie du photomultiplicateur et ainsi convertir la tension $u(t)$ en un compte de photons $n$.",
+     "parts": [
+      {
+       "label": "41.",
+       "statement": "Calculer numériquement le compte moyen $\\overline{n}$ et l’écart-type $\\Delta n$ auxquels on s’attend pour une fenêtre de détection de durée $\\tau = 0{,}1\\ \\mathrm{s}$ sachant que le rendement quantique du photomultiplicateur vaut 25%.",
+       "points": null,
+       "statementAfter": "On définit le rapport signal-sur-bruit ($SNR$ pour *signal-to-noise ratio*) par le rapport des comptes moyens de photons sur l’amplitude typique des fluctuations :\n\n$$SNR = \\frac{\\overline{n}}{\\Delta n}\\ . \\tag{14}$$"
+      },
+      {
+       "label": "42.",
+       "statement": "Proposer un protocole permettant de déterminer si le laser à argon présente bien une statistique d’émission poissonnienne.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "iii-c-c",
+     "title": "III.C.c Mesure de la statistique d’émission d’une source thermique",
+     "statement": "On cherche ici à mettre en évidence de façon expérimentale la statistique de BOSE-EINSTEIN, définie par l’équation (9), qui caractérise l’émission de photons par une source de rayonnement thermique. On considère pour cela le rayonnement issu d’une lampe à filament de tungstène, pouvant être assimilée à un corps noir dont le maximum d’émission se situe dans l’infrarouge $\\lambda_0 = 1\\ \\mu\\mathrm{m}$. La largeur spectrale pouvant être détectée par le photomultiplicateur vaut typiquement $\\Delta\\lambda = 300$ nm.",
+     "parts": [
+      {
+       "label": "43.",
+       "statement": "Exprimer le temps de cohérence $\\tau_c$ de la lumière émise par la lampe, en fonction de ses caractéristiques spectrales. L’estimer numériquement.",
+       "points": null
+      },
+      {
+       "label": "44.",
+       "statement": "En admettant que le temps de cohérence d’une source polychromatique correspond au temps caractéristique de ses variations d’intensité, expliquer pourquoi il est très difficile de mettre en évidence les grandes fluctuations du nombre de photons prévues par la statistique de BOSE-EINSTEIN pour une telle lampe.",
+       "points": null
+      },
+      {
+       "label": "45.",
+       "statement": "L’expression de l’écart-type $\\Delta n$ trouvée pour une source thermique à la question **28** suppose un rayonnement monochromatique. On peut montrer que pour une superposition de $N_m$ modes de fréquences différentes, l’écart-type devient\n\n$$\\Delta n = \\sqrt{\\overline{n} + \\frac{\\overline{n}^2}{N_m}}\\ . \\tag{15}$$\n\nJustifier que pour un rayonnement thermique ayant un spectre large, la distribution de BOSE-EINSTEIN initialement prévue tend vers une distribution de POISSON. Proposer un lien entre ce résultat et le constat réalisé à la question précédente (**44**). Comment pourrait-on obtenir une source de lumière qui présente une statistique de BOSE-EINSTEIN aux temps de détection accessibles expérimentalement ?",
+       "points": null
+      }
+     ]
+    }
+   ],
+   "topics": [
+    "modern-physics/photoelectric-effect",
+    "modern-physics/photon-statistics",
+    "optics/detectors"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "L’archive ne contient pas de corrigé officiel pour cette épreuve."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "problems",
+     "page": 9
+    },
+    {
+     "document": "problems",
+     "page": 10
+    },
+    {
+     "document": "problems",
+     "page": 11
+    },
+    {
+     "document": "problems",
+     "page": 12
+    },
+    {
+     "document": "problems",
+     "page": 13
+    },
+    {
+     "document": "problems",
+     "page": 14
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,189 @@
+---
+id: x-ens-2016-mp-p1
+source: 'X-ENS 2016, Приемен изпит, математика и физика, математика и физика'
+title: 'Задача 1. Cavité résonante de longueur fixée'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2016/x-ens-2016-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:33:09.325Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE POLYTECHNIQUE – ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2016 — FILIÈRE MP — COMPOSITION DE PHYSIQUE (XULCR)*
+
+<details>
+<summary>Consignes</summary>
+
+*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve.*
+
+*Les résultats des applications numériques seront donnés avec un chiffre significatif.*
+
+</details>
+
+<details>
+<summary>Optomécanique en cavité</summary>
+
+L’optomécanique se consacre à l’étude du couplage de dispositifs mécaniques à une onde électromagnétique. Ce problème étudie différents aspects d’un système optomécanique modèle, à savoir une cavité résonante linéaire formée de deux miroirs semi-réfléchissants parallèles se faisant face, dont l’un est mobile.
+
+Dans la première partie, on établit les équations dynamiques générales d’une cavité de longueur *fixée*, soumise à un champ électromagnétique incident. Dans la seconde partie, on étudie le couplage optomécanique en supposant que l’un des miroirs est libre de se déplacer sous l’action de la force d’origine électromagnétique imposée par le faisceau incident, et d’une force de rappel élastique appliquée par le support sur lequel ce miroir est monté.
+
+Dans tout ce problème, on utilise le signe ” $\equiv$ ” (plutôt que ” $=$ ”) pour définir une grandeur.
+
+Dans les applications numériques, on prendra $c \approx 3 \times 10^{8}\ \mathrm{m.s^{-1}}$ pour la vitesse de la lumière dans le vide, $\pi \approx 3$ et $\sqrt{0{,}9} \approx 0{,}9$.
+
+</details>
+
+## Условие
+
+On considère une cavité linéaire, d’axe $(Oz)$, délimitée par deux miroirs (diélectriques) semi-réfléchissants plans identiques, notés $(M_1)$ et $(M_2)$. On admettra que les faces « internes » des miroirs $(M_1)$ et $(M_2)$ – c’est-à-dire les faces dirigées vers l’intérieur de la cavité (représentées en trait plein sur la figure 1), ont même coefficient de réflexion en amplitude (pour le champ électrique) pris égal à $(-\rho)$, où $\rho$ est supposé réel et positif ; le coefficient de réflexion des faces « externes » de $(M_1)$ et $(M_2)$ – c’est-à-dire les faces dirigées vers l’extérieur de la cavité (représentées par les zones grisées sur la figure 1), est quant à lui pris égal à $\rho$. On admettra aussi que les deux miroirs $(M_1)$ et $(M_2)$ possèdent le même coefficient de transmission en amplitude (pour le champ électrique), noté $\tau$, que l’on suppose réel et positif ; ce coefficient est identique pour les deux sens de traversée des miroirs. On admettra enfin que les coefficients $(\rho, \tau)$ ne dépendent pas de la pulsation du champ incident, et que la relation $\tau^2 + \rho^2 = 1$ est vérifiée. On note $R \equiv \rho^2$ et $T \equiv \tau^2$. Dans cette partie, on suppose les deux miroirs fixes dans le référentiel du laboratoire et l’on note $L$ la distance qui sépare $(M_1)$ et $(M_2)$.
+
+On envoie vers la cavité formée par $(M_1)$ et $(M_2)$ une onde incidente plane progressive monochromatique se propageant selon l’axe $(Oz)$ et polarisée selon l’axe $(Ox)$, décrite par son champ électrique :
+
+$$
+\vec{E}_i(z,t) = \Re\left[E_i(z,t)\right]\vec{e}_x \qquad (1)
+$$
+
+$$
+E_i(z,t) = \mathscr{E}_i \exp\left[\mathrm{i}\omega\left(t - \frac{z}{c}\right)\right] \qquad (2)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '82.6%', '--fig-max': '529px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2016-mp/p1-fig1.png" alt="Schéma de la cavité : axe horizontal z et axe vertical x d’origine O ; miroir (M1) en z = 0 et miroir (M2) à la distance L, faces externes grisées. Zone (I) à gauche avec les champs E_i (vecteur d’onde k_i vers la droite) et E_r (k_r vers la gauche) ; zone (II) entre les miroirs avec E_+ (k_+) et E_− (k_−) ; zone (III) à droite avec E_t (k_t)." width="1653" height="876" loading="lazy" decoding="async" />
+<figcaption>Figure 1 – Cavité résonante linéaire de longueur $L$, soumise à un champ incident (partie 1).</figcaption>
+</figure>
+
+où $\Re$ désigne la partie réelle, $\mathscr{E}_i$ l’amplitude de l’onde incidente à l’origine des temps et des coordonnées, supposée réelle, et $\mathrm{i}^2 = -1$. Vous admettrez que cette onde crée une onde réfléchie dans le demi-espace $z < 0$ de même direction de polarisation que l’onde incidente, de sorte que le champ total en amont de la cavité (dans la zone notée I sur la figure 1) s’écrit
+
+$$
+\vec{E}_I(z,t) = \Re\left[E_i(z,t) + E_r(z,t)\right]\vec{e}_x \qquad (3)
+$$
+
+$$
+E_r(z,t) = \mathscr{E}_r \exp\left[\mathrm{i}\omega\left(t + \frac{z}{c}\right)\right] \qquad (4)
+$$
+
+où $\mathscr{E}_r$ désigne l’amplitude de l’onde réfléchie à l’origine des temps et des coordonnées, *a priori* complexe.
+
+De même, le champ créé à l’intérieur de la cavité (zone II) prend la forme générale
+
+$$
+\vec{E}_{II}(z,t) = \Re\left[E_+(z,t) + E_-(z,t)\right]\vec{e}_x \qquad (5)
+$$
+
+$$
+E_+(z,t) = \mathscr{E}_+ \exp\left[\mathrm{i}\omega\left(t - \frac{z}{c}\right)\right] \qquad (6)
+$$
+
+$$
+E_-(z,t) = \mathscr{E}_- \exp\left[\mathrm{i}\omega\left(t + \frac{z}{c}\right)\right] \qquad (7)
+$$
+
+Enfin, le champ au-delà de la cavité (zone III) s’écrit
+
+$$
+\vec{E}_{III}(z,t) = \Re\left[E_t(z,t)\,\vec{e}_x\right] \qquad (8)
+$$
+
+$$
+E_t(z,t) = \mathscr{E}_t \exp\left[\mathrm{i}\omega\left(t - \frac{z}{c}\right)\right] \qquad (9)
+$$
+
+Ces différents champs sont représentés sur la figure 1 ainsi que les vecteurs d’ondes associés
+
+$$
+\vec{k}_i = \vec{k}_+ = \vec{k}_t = \frac{\omega}{c}\vec{e}_z \qquad (10)
+$$
+
+$$
+\vec{k}_r = \vec{k}_- = -\frac{\omega}{c}\vec{e}_z \qquad (11)
+$$
+
+**1)** Que représentent les coefficients $R$ et $T$ ? Que signifie physiquement la relation $R + T = 1$ ?
+
+**2)** Justifiez la nature progressive choisie pour le champ $\vec{E}_{III}(z,t)$.
+
+**3)** Au moyen des coefficients de réflexion et transmission, écrivez trois relations entre les amplitudes $\mathscr{E}_i, \mathscr{E}_+, \mathscr{E}_-$ et $\mathscr{E}_t$ traduisant la transmission/réflexion en $z = 0$ et $z = L$.
+
+**4)** Déduisez les amplitudes $\mathscr{E}_+$, $\mathscr{E}_-$ et $\mathscr{E}_t$ en fonction de $\mathscr{E}_i$, $\omega$, $L$, $c$, $R$ et $T$. Vous mettrez le résultat sous la forme
+
+$$
+\mathscr{E}_+ = \frac{\Theta(\omega)}{\sqrt{T}}\mathscr{E}_i \qquad (12)
+$$
+
+$$
+\mathscr{E}_- = -\Theta(\omega)\sqrt{\frac{R}{T}}\exp\left(-\frac{2\mathrm{i}\omega L}{c}\right)\mathscr{E}_i \qquad (13)
+$$
+
+$$
+\mathscr{E}_t = \Theta(\omega)\,\mathscr{E}_i \qquad (14)
+$$
+
+et vérifierez que la fonction $\Theta(\omega)$ prend la forme
+
+$$
+\Theta(\omega) \equiv \frac{T}{1 - R\exp\left(-\dfrac{2\mathrm{i}\omega L}{c}\right)} \qquad (15)
+$$
+
+**5)** Exprimez la fonction $|\Theta(\omega)|^2$ et tracez sa représentation graphique pour $R = 0{,}9$ en fonction de la variable réduite $\left(\dfrac{\omega L}{c}\right)$.
+
+**6)** Montrez l’existence d’une famille discrète de pulsations $\omega_{n\in\mathbb{N}}$ du champ incident pour lesquelles $|\Theta|^2$ est maximale. À quoi ces pulsations correspondent-elles physiquement pour l’intensité transmise ?
+
+**7)** Montrez que l’intensité (moyennée sur une période) $I_{II}(z)$ à l’intérieur de la cavité se met sous la forme $I_{II}(z) = \dfrac{1}{T}|\Theta(\omega)|^2\mathscr{L}(\omega,z)I_i$ où $I_i$ désigne l’intensité incidente et $\mathscr{L}(\omega,z)$ un terme que vous exprimerez en fonction de $R$ et $\omega(z-L)/c$.
+
+**8)** Tracez les courbes représentatives de $\mathscr{L}(\omega_n,z)$ pour $R = 0{,}9$ et $n = 1$, 2 et 3 en fonction de la variable réduite $(z/L)$. Même question pour $R = 1$ ; quelle est la nature de l’onde observée à l’intérieur de la cavité dans ce cas ?
+
+**9)** On revient au cas général $(R < 1)$. En vous plaçant au voisinage d’une pulsation $\omega_n$ déterminez une expression approchée de la fonction $\Theta(\omega)$ puis mettez la fonction $|\Theta(\omega)|^2$ sous la forme
+
+$$
+|\Theta(\omega)|^2 \approx \frac{1}{1 + 4\left(\dfrac{\omega - \omega_n}{\Delta\omega_{\frac{1}{2}}}\right)^2} \qquad (16)
+$$
+
+où $\Delta\omega_{\frac{1}{2}}$ est un paramètre dont vous préciserez l’expression et la signification physique. Donnez l’expression approchée de $\Delta\omega_{\frac{1}{2}}$ dans la limite $T \ll 1$.
+
+**10)** En vous servant des résultats précédents, établissez une analogie entre la cavité étudiée et des dispositifs rencontrés dans un (d’) autre(s) domaine(s) de la physique. À partir de cette analogie, définissez un facteur de qualité pour la cavité considérée et indiquez sa signification physique.
+
+Dans les questions 11 à 15, on cherche à relier le paramètre $\Delta\omega_{\frac{1}{2}}$ au taux de perte en énergie de la cavité. Pour ce faire, on va suivre une approche particulaire. On rappelle qu’une onde électromagnétique est composée de photons, particules sans masse, dont la quantité de mouvement $p$ et l’énergie $E$ sont données par les formules $p = \hbar\omega/c$ et $E = \hbar\omega$, où $\omega$ est la pulsation du rayonnement électromagnétique considéré. On admet que, lorsqu’il atteint l’un des miroirs $(M_1)$ ou $(M_2)$, un photon est transmis, sans modification de son énergie ni de sa quantité de mouvement, avec la probabilité $T$, tandis qu’il « rebondit », sans modification de son énergie mais avec une quantité de mouvement opposée, avec la probabilité $R$.
+
+**11)** Exprimez le temps $\Delta t$ mis par un photon pour parcourir une longueur de cavité.
+
+**12)** Durant cet intervalle de temps, combien un photon subit-il de rebonds sur les parois de la cavité ?
+
+**13)** Quelle est la probabilité pour ce photon de quitter la cavité pendant la durée $\Delta t$ ?
+
+**14)** Si la cavité contient, à l’instant $t$, $n_{ph}(t)$ photons, combien de photons auront quitté la cavité à l’instant $(t + \Delta t)$ (on suppose $n_{ph} \gg 1$) ?
+
+**15)** Reliez l’énergie électromagnétique $E_{em}(t)$ contenue dans la cavité au nombre de photons $n_{ph}(t)$. En supposant $n_{ph} \gg 1$, exprimez la variation d’énergie électromagnétique $(\Delta E_{em})_{\mathrm{pertes}}$ entre $t$ et $t + \Delta t$ due aux pertes au niveau des miroirs. En assimilant $(\Delta E_{em})_{\mathrm{pertes}}$ et $\Delta t$ à des éléments infinitésimaux exprimez le taux de perte de la cavité $\gamma \equiv -\dfrac{1}{E_{em}}\left(\dfrac{\mathrm{d}E_{em}}{\mathrm{d}t}\right)_{\mathrm{pertes}}$. Finalement, reliez $\gamma$ au paramètre $\Delta\omega_{\frac{1}{2}}$ introduit à la question 9.
+
+On suppose maintenant que les champs sont quasi-monochromatiques, c’est-à-dire qu’ils peuvent se mettre sous la forme de paquets d’ondes
+
+$$
+E_+(z,t) = \frac{1}{\sigma}\int \mathscr{E}_+(\omega)\exp\left[\mathrm{i}\omega\left(t - \frac{z}{c}\right)\right]\,\mathrm{d}\omega \qquad (17)
+$$
+
+$$
+E_i(z,t) = \frac{1}{\sigma}\int \mathscr{E}_i(\omega)\exp\left[\mathrm{i}\omega\left(t - \frac{z}{c}\right)\right]\,\mathrm{d}\omega, \qquad (18)
+$$
+
+où les fonctions $\mathscr{E}_+(\omega)$ et $\mathscr{E}_i(\omega)$ ne prennent de valeurs significatives que sur l’intervalle $\left[\omega_c - \dfrac{\sigma}{2}, \omega_c + \dfrac{\sigma}{2}\right]$ autour d’une pulsation $\omega_c = \omega_n$ où $n \in \mathbb{N}^*$ et $\sigma \ll \dfrac{\pi c}{L}$.
+
+**16)** Rappelez brièvement pourquoi un paquet d’ondes de la forme précédente constitue une solution des équations de Maxwell.
+
+**17)** En utilisant la forme approchée pour $\Theta(\omega)$ obtenue à la question 9, établissez la relation linéaire entre les composantes $\mathscr{E}_+(\omega)$ et $\mathscr{E}_i(\omega)$ dans le régime $R \approx 1$.
+
+**18)** Déduisez du résultat précédent l’équation différentielle vérifiée par la fonction $E_+$
+
+$$
+\frac{\partial}{\partial t}E_+ \approx -\left[\frac{\gamma}{2} - \mathrm{i}\omega_c\right]E_+ + \sqrt{\frac{\gamma c}{4L}}E_i. \qquad (19)
+$$
+
+**19)** On considère une cavité de longueur $L = 0{,}9\ \mathrm{mm}$, constituée de deux miroirs de même coefficient $R = 0{,}99$. Calculez $\omega_{3000}$ ainsi que la longueur d’onde associée $\lambda_{3000}$. À quel type d’onde électromagnétique a-t-on affaire ? Calculez $\Delta\omega_{\frac{1}{2}}$ ainsi que le facteur de qualité $Q_{3000}$. Commenter la comparaison aux ordres de grandeur caractéristiques rencontrés dans d’autres domaines de la physique.
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2016.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2016.pdf#page=1)

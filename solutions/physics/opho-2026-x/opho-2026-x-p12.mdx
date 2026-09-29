@@ -1,0 +1,225 @@
+---
+id: opho-2026-x-p12
+source: 'OPhO 2026, Единствен кръг'
+title: 'Задача 12. Compressing Light'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2026/opho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:43:04.524Z'
+verifier: 'mechanical'
+---
+
+*2026 Online Physics Olympiad · 21 август 2026 г.*
+
+<details>
+<summary>Last updated</summary>
+
+*Last updated: 22nd August 03:35 UTC*
+
+</details>
+
+<details>
+<summary>Sponsors</summary>
+
+This competition would not be possible without the help of our sponsors.
+
+</details>
+
+<details>
+<summary>Corrections (all times are in UTC)</summary>
+
+- Q8: Cleared up wording (21/08 04:40 and 04:52)
+- Q3: improved wording (21/08 08:49)
+- Q19: Improved wording (21/08 09:42)
+- Q16: Attempts reset (21/08 22:00), Error bound increased (22/8 02:30)
+- Q1: Improved wording (22/08 03:35)
+
+</details>
+
+<details>
+<summary>Указания</summary>
+
+**Format.** The OPhO is a team-based competition (3 members at most per team). Unlike previous years, the 2026 OPhO consists of a single round held from August 21, 12 am (UTC), to August 23, 11:59 pm (UTC). The contest is made up of three parts, all running concurrently over the full contest window:
+
+- **Short Answer** — problems requiring numerical answers, submitted on the OPhO portal;
+- **Long Answer** — problems requiring full written solutions, submitted on the OPhO portal;
+- **Simulation** — computational problems requiring teams to run a provided executable locally, with solutions submitted on the OPhO portal.
+
+All teams have access to all three parts for the entire duration of the contest. Submissions are made on the OPhO portal https://opho.physoly.org/ using the team login, and may be made at any time within the contest window.
+
+**Short Answer.** Teams submit numerical answers on the portal, with up to three attempts per problem. *Every* answer submission must be accompanied by a file upload, on the portal, of the working used to obtain that answer. This working will not be graded, but submissions without it will not be accepted. The base score for each problem depends on the number of teams that successfully answer it, each incorrect attempt multiplies the base score by a factor of 0.8, and there is no time factor. The score for an individual problem follows:
+
+$$
+w(N) = (0.8)^i\left[e^{-\frac{x(N)}{200}} + e^{-\frac{x(N)^2}{100}} + 1\right],
+$$
+
+where $i \in \{0, 1, 2\}$ represents whether a team got it on the first, second, or third try, $N$ represents the number of teams that answer the problem correctly, and $x(N)$ is the sum of $(0.8)^i$ across all teams that have solved the problem. The base score is independent of problem number, but expect questions to be ordered roughly by difficulty. A team’s raw Short Answer total is the sum of these values, and all raw totals are then scaled linearly such that the top team receives 55 points.
+
+**Long Answer.** Teams submit full solutions on the portal. Rubrics are predetermined, and solutions will be reviewed to determine the proper number of points to give. The points breakdown is given per problem, for a total of 35 points. It is recommended that participants write their solutions in LaTeX. Handwritten solutions (or a combination of both) are accepted too; if participants have more than one photo of a handwritten solution (`jpg`, `png`, etc.), it is required that they be organized in the correct order in a `pdf` before submitting.
+
+**Simulation.** Teams will need to be able to run a provided executable locally. Solutions are submitted on the portal and will be graded against predetermined rubrics. The points breakdown is given per problem, for a total of 10 points.
+
+**Scoring.** A team’s cumulative score is the sum of its scaled Short Answer score (out of 55 points), Long Answer score (out of 35 points), and Simulation score (out of 10 points), for a maximum score of 100 points.
+
+**Permitted Resources.** Use of the internet is allowed, including textbooks, published papers, calculators, and computer algebra systems. However, the use of AI tools of any kind is strictly prohibited. This includes, but is not limited to, large language models (e.g. ChatGPT, Claude, Gemini), AI coding assistants, AI-generated search summaries, and any other AI-powered assistance.
+
+**Dishonest Behavior.** Please refrain from cheating in any form. This includes, but is not limited to, creating alternate accounts to gain additional attempts, sharing answers with other teams, posting problems online, utilizing AI tools as described above, or employing any other method to gain an unfair advantage.
+
+We have previously caught numerous teams engaging in such practices, and pursuing dishonest tactics provides no genuine sense of security. Any teams found to be acting maliciously will be notified via email, along with the opportunity to appeal. Failing to provide a valid appeal will result in a ban from participating in any future Physoly competitions. Our utmost priority is to ensure an enjoyable contest experience for all participants, and we remain committed to preventing any disruption to the fun for others.
+
+**Awards and Results.** The top competitors will be recognized on the website. No cash prizes will be awarded this year.
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e = 9.11 \cdot 10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0 = 6.02 \cdot 10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R = 8.31\ \mathrm{J/(mol \cdot K)}$
+- Boltzmann’s constant, $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e = 1.60 \cdot 10^{-19}\ \mathrm{C}$
+- 1 electron volt, $1\ \mathrm{eV} = 1.60 \cdot 10^{-19}\ \mathrm{J}$
+- Speed of light, $c = 3.00 \cdot 10^{8}\ \mathrm{m/s}$
+- Universal Gravitational constant,
+  $$
+  G = 6.67 \cdot 10^{-11}\ \mathrm{(N \cdot m^2)/kg^2}
+  $$
+- Solar Mass
+  $$
+  M_\odot = 1.988 \cdot 10^{30}\ \mathrm{kg}
+  $$
+- Acceleration due to gravity, $g = 9.8\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit,
+  $$
+  1\ \mathrm{u} = 1.66 \cdot 10^{-27}\ \mathrm{kg} = 931\ \mathrm{MeV/c^2}
+  $$
+- Planck’s constant,
+  $$
+  h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s} = 4.41 \cdot 10^{-15}\ \mathrm{eV \cdot s}
+  $$
+- Permittivity of free space,
+  $$
+  \epsilon_0 = 8.85 \cdot 10^{-12}\ \mathrm{C^2/(N \cdot m^2)}
+  $$
+- Coulomb’s law constant,
+  $$
+  k = \frac{1}{4\pi\epsilon_0} = 8.99 \cdot 10^{9}\ \mathrm{(N \cdot m^2)/C^2}
+  $$
+- Permeability of free space,
+  $$
+  \mu_0 = 4\pi \cdot 10^{-7}\ \mathrm{T \cdot m/A}
+  $$
+- Magnetic constant,
+  $$
+  \frac{\mu_0}{4\pi} = 1 \cdot 10^{-7}\ \mathrm{(T \cdot m)/A}
+  $$
+- 1 atmospheric pressure,
+  $$
+  1\ \mathrm{atm} = 1.01 \cdot 10^{5}\ \mathrm{N/m^2} = 1.01 \cdot 10^{5}\ \mathrm{Pa}
+  $$
+- Wien’s displacement constant, $b = 2.9 \cdot 10^{-3}\ \mathrm{m \cdot K}$
+- Stefan-Boltzmann constant,
+  $$
+  \sigma = 5.67 \cdot 10^{-8}\ \mathrm{W/m^2/K^4}
+  $$
+
+</details>
+
+## Условие
+
+A perfectly insulating rigid cylinder is closed at one end and sealed by a movable piston at the other. The cylinder contains a photon gas at initial temperature $T = 1000\ \mathrm{K}$ in a complete vacuum. The walls and piston are purely reflecting. Initially, the cylinder has a length $L$ and cross sectional area $A = 5.929\ \mathrm{m^2}$. The piston is slowly compressed until the final length of the cylinder is $L_f = L/8$. Find the pressure exerted by the gas on the face of the piston. Give your answer in Pa.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 0.02352 Pa
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Despite the slow compression, the photon gas actually never reaches equilibrium as the walls are perfectly reflecting, so one component of the photon’s momentum will increase while the others will stay constant. This leads to anisotropic pressure on the walls of the cylinder. Take the cylinder axis along $z$. Consider a photon with initial momentum $\vec{p} = (p_x, p_y, p_z)$. For a very slowly moving piston, the adiabatic invariant is $p_z L$. With a compression ratio $\lambda = 8$, the final energy of the photon is
+
+$$
+E = c\sqrt{p_x^2 + p_y^2 + \lambda^2 p_z^2}
+$$
+
+However, we can immediately express the energy of the photon in spherical coordinates $(p_0, \theta, \phi)$, where $\theta$ is the angle with the $z$ axis. Then the energy of the photon is
+
+$$
+E = cp_0\sqrt{\lambda^2\cos^2\theta + \sin^2\theta}
+$$
+
+The total energy $U$ is the integral of $E$ over the initial Planck distribution. However, because $cp_0 = E_0$, the energy just scales by a factor, with
+
+$$
+U = \int E\ dn = \int E_0\sqrt{\lambda^2\cos^2\theta + \sin^2\theta}
+$$
+
+Since the initial distribution is isotropic, we can separate the angular integral. The initial energy $U_i$ is evenly distributed over solid angles, so the angular probability density is $\frac{1}{4\pi}\sin\theta\,d\theta\,d\phi$:
+
+$$
+U = U_i\frac{1}{4\pi}\int_0^{2\pi}d\phi\int_0^{\pi}\sqrt{\lambda^2\cos^2\theta + \sin^2\theta}\sin\theta\,d\theta
+$$
+
+Substitute $u = \cos\theta$,
+
+$$
+U(\lambda) = \frac{U_i}{2}\int_{-1}^{1}\sqrt{\lambda^2 u^2 + 1 - u^2}\,du = U_i\int_0^1\sqrt{1 + (\lambda^2 - 1)u^2}\,du
+$$
+
+Now, we can use principle of virtual work to find the pressure.
+
+$$
+P = -\frac{\partial U}{\partial V} = \frac{\lambda^2}{V_i}\frac{\partial U}{\partial\lambda}
+$$
+
+For the initial state, the internal energy is $3P_i V_i$. Therefore,
+
+$$
+P_z = 3P_i\lambda^2\frac{d}{d\lambda}\left[\int_0^1\sqrt{1 + (\lambda^2 - 1)u^2}\,du\right]
+$$
+
+Differentiating under the integral sign,
+
+$$
+\frac{d}{d\lambda}\int_0^1\sqrt{1 + (\lambda^2 - 1)u^2}\,du = \int_0^1\frac{\lambda u^2}{\sqrt{1 + (\lambda^2 - 1)u^2}}\,du
+$$
+
+Let $\beta = \sqrt{\lambda^2 - 1}$. The integral becomes:
+
+$$
+\lambda\int_0^1\frac{u^2}{\sqrt{1 + \beta^2 u^2}}\,du
+$$
+
+Applying the trigonometric substitution $\beta u = \sinh t$ and $du = \frac{1}{\beta}\cosh t\,dt$:
+
+$$
+= \frac{\lambda}{\beta^3}\int_0^{\mathrm{arsinh}(\beta)}\sinh^2 t\,dt = \frac{\lambda}{\beta^3}\left[\frac{1}{2}(\sinh t\cosh t - t)\right]_0^{\mathrm{arsinh}(\beta)}
+$$
+
+At the upper limit, $\sinh t = \beta = \sqrt{\lambda^2 - 1}$ and $\cosh t = \lambda$. Therefore $t = \ln\big(\lambda + \sqrt{\lambda^2 - 1}\big)$. Plugging these bounds in:
+
+$$
+P_z = 3P_i\lambda^3\left[\frac{\lambda\sqrt{\lambda^2 - 1} - \ln\big(\lambda + \sqrt{\lambda^2 - 1}\big)}{2(\lambda^2 - 1)^{3/2}}\right]
+$$
+
+For $T = 1000$ K:
+
+$$
+P_i = \frac{4\sigma}{3c}T^4 \implies P_z = \frac{4\sigma T^4}{c}\lambda^3\left[\frac{\lambda\sqrt{\lambda^2 - 1} - \ln\big(\lambda + \sqrt{\lambda^2 - 1}\big)}{2(\lambda^2 - 1)^{3/2}}\right] \approx \boxed{2.352 \times 10^{-2}\ \mathrm{Pa}}
+$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/problems.pdf#page=9)
+· официални решения: [solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/solutions.pdf#page=21)

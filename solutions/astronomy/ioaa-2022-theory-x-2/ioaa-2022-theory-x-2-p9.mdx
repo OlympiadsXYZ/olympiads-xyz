@@ -1,0 +1,95 @@
+---
+id: ioaa-2022-theory-x-2-p9
+source: 'IOAA 2022, Теория'
+title: 'Задача 9. Solar Retrograde Motion on Mercury'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2022/ioaa-2022-theory-x-2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:31:06.636Z'
+verifier: 'mechanical'
+---
+
+*International Olympiad on Astronomy and Astrophysics 2022 Georgia — Theoretical Competition · 16 август 2022 г. · 20 т.*
+
+## Условие
+
+Mercury’s orbit has an unusually high eccentricity. Further, its sidereal rotational period is $\frac{2}{3}$ of its sidereal year. As a consequence of these factors, the Sun will exhibit retrograde motion in Mercury’s sky, when Mercury is near perihelion.
+
+Calculate the total duration of this apparent solar retrograde motion during one orbit of Mercury around the Sun. Express your answer in Earth days. **(20pt)**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 8.28 days
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+From Kepler’s 3$^{\mathrm{rd}}$ Law, $T^2 = a^3$ in units of Earth years and au respectively.
+
+$$
+\therefore T_{\mathrm{Mercury}} = \sqrt{(0.387)^3} = 0.240\,75\,\mathrm{yr} = 87.934\,\mathrm{days} \qquad \mathbf{2.0}
+$$
+
+We know that $\omega_{\mathrm{orb}} = v/r$ so will vary throughout the orbit (since $r$ varies within an ellipse) whilst $\omega_{\mathrm{rot}}$ is constant.
+
+$$
+\omega_{\mathrm{rot}} = \frac{2\pi}{T_{\mathrm{rot}}} = \frac{2\pi}{\frac{2}{3} \times 87.934 \times 86400} = 1.24 \times 10^{-6}\,\mathrm{rad/s} \qquad \mathbf{2.0}
+$$
+
+For retrograde motion, we need $\omega_{\mathrm{orb}} \geq \omega_{\mathrm{rot}}$.
+
+Using the vis-viva equation for the critical value of $r$ for when $\omega_{\mathrm{rot}} = \omega_{\mathrm{orb}}$,
+
+$$
+\begin{aligned} \omega_{\mathrm{orb}}^2 = \frac{v^2}{r^2} = \frac{GM_{\odot}}{r^2}\left(\frac{2}{r} - \frac{1}{a}\right) &= \omega_{\mathrm{rot}}^2 \\ \frac{2GM_{\odot}}{r^3} - \frac{\mathrm{GM}_{\odot}}{ar^2} &= \omega_{\mathrm{rot}}^2 \\ \therefore \frac{\omega_{\mathrm{rot}}^2}{GM_{\odot}} r^3 + \frac{1}{a} r - 2 &= 0 \\ (1.160 \times 10^{-32})r^3 + (1.725 \times 10^{-11})r - 2 &= 0 \quad (\text{if } r \text{ is in meters}) \\ 38.99r^3 + 2.584r - 2 &= 0 \quad (\text{if } r \text{ is in au}) && \mathbf{4.0} \end{aligned}
+$$
+
+Solving the cubic equation (by any valid method) gives only one non-imaginary root
+
+One possible way would be to use iterations for this polynomial $f(r)$, using perihelion distance as the starting guess.
+
+| $r$ | $f(r)$ |
+|---|---|
+| 0.3073 | -0.07482 |
+| 0.3100 | -0.03747 |
+| 0.3120 | -0.00967 |
+| 0.3140 | 0.01841 |
+| 0.3130 | 0.00433 |
+| 0.3127 | 0.00012 |
+
+$$
+\therefore r = 0.3127\,\mathrm{au} = 4.684 \times 10^{10}\,\mathrm{m} \qquad \mathbf{4.0}
+$$
+
+From knowledge of ellipses, if $E$ is the eccentric anomaly
+
+$$
+\begin{aligned} r &= a(1 - e\cos E) \\ \therefore E &= \cos^{-1}\left[\frac{1}{e}\left(1 - \frac{r}{a}\right)\right] = \cos^{-1}\left[\frac{1}{0.206}\left(1 - \frac{0.3127}{0.387}\right)\right] \\ E &= 0.3706\,\mathrm{rad} = 21.23^{\circ} = 21^{\circ}14' && \mathbf{3.0} \end{aligned}
+$$
+
+Using Kepler’s Equation we can find the mean anomaly, $M$
+
+$$
+\begin{aligned} M &= E - e\sin E = 0.3706 - 0.206 \times \sin 0.3706 \\ &= 0.2960\,\mathrm{rad} = 16.96^{\circ} = 16^{\circ}58' && \mathbf{2.0} \end{aligned}
+$$
+
+This is relative to the perihelion, so symmetry demands that the total time the sun is in retrograde corresponds to
+
+$$
+\begin{aligned} \Delta M &= 2M \\ \therefore T_{\odot,retro} &= T_{\mathrm{Mercury}}\frac{\Delta M}{2\pi} = 87.934 \times \frac{2 \times 0.296}{2\pi} \\ T_{\odot,retro} &= \boxed{8.28\,\mathrm{days}} && \mathbf{3.0} \end{aligned}
+$$
+
+[Accept alternative methods making use of the true anomaly e.g. with the relation $\cos E = \frac{e + \cos\nu}{1 + e\cos\nu}$. ]
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Theory Problems.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2022/Theory%20Problems.pdf#page=5)
+· официални решения: [Theory Solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2022/Theory%20Solutions.pdf#page=9)

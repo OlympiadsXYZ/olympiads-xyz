@@ -1,0 +1,193 @@
+---
+id: balkanski-2024-cgp-p1
+source: 'Балкански 2024, Теория'
+title: 'Задача 1. Le vent à l''échelle des prévisions météorologiques nationales'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2024/balkanski-2024-cgp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:40:17.720Z'
+verifier: 'mechanical'
+---
+
+*Concours Général de Physique «Minko Balkanski» — 8 août 2024 · 8 август 2024 г.*
+
+<details>
+<summary>Прочетете внимателно!</summary>
+
+**Част първа и част втора** съдържат условията на задачите съответно на френски и английски език. Единствените външни документи, на които имате право, са френски и английски речници. Ако желаете, можете да ползвате калкулатори.
+
+При оценяването на задачите голяма тежест ще имат **яснотата и стилът** на изложените решения и аргументация. Не използвайте излишна проза в аргументите си, бъдете точни и кратки. Използването на схеми за онагледяване на разсъжденията Ви е желателно. **Пишете само на езика, който сте избрали (френски или английски).**
+
+Разполагате с **4 часа**. Успех!
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1. Modèles d'équilibre de l'atmosphère](#s1)
+- [2. Dynamique des mouvements atmosphériques à l'échelle synoptique :le vent géostrophique](#s2)
+
+</nav>
+
+L'air qui constitue l'atmosphère terrestre est concentré dans une couche d'une dizaine de kilomètres d'épaisseur au-dessus du sol : la troposphère.
+
+On considère cet air comme un fluide constitué de domaines élémentaires dont les dimensions horizontales sont en France de quelques dizaines de kilomètres et les dimensions verticales d'une dizaine de mètres.
+
+La première partie de ce problème présente différents modèles d'équilibre de l'atmosphère. La deuxième partie décrit les mouvements horizontaux et verticaux de cette atmosphère à grande échelle et présente le modèle dit du vent géostrophique.
+
+Dans tout le problème, l'air sera considéré comme un gaz parfait.
+
+| Vitesse horizontale du vent | $V_h$ | $10ms^{-1}$ |
+|---|---|---|
+| Vitesse verticale du vent | $V_z$ | $10^{-2}ms^{-1}$ |
+| Échelle de temps des mouvements verticaux et horizontaux | $\tau$ | $10^5s$ |
+| Échelle des gradients horizontaux de pression | $\Vert\nabla_h P\Vert$ | $10^{-3}Nm^{-3}$ |
+
+Table 1 : Échelles caractéristiques de l'atmosphère aux latitudes moyennes ($\phi \approx 45^{\circ}$)
+
+**Données numériques**
+
+Constante des gaz parfaits : $R = 8.3Jmol^{-1}K^{-1}$
+
+Pression atmosphérique au niveau de la mer : $P_0 = 10^5Pa$
+
+Masse molaire de l'air : $M_a = 29g \cdot mol^{-1}$
+
+Rayon de la Terre : $r_T = 6.4 \cdot 10^3km$
+
+Accélération de la pesanteur en France : $g = 9.8ms^{-2}$
+
+Latitude typique de la France : $\phi = 45^{\circ}$
+
+<ProblemSection id="s1">
+
+### 1. Modèles d'équilibre de l'atmosphère
+
+On considère de l'air en équilibre dans le référentiel terrestre $R$. Chaque élément de ce fluide est donc en équilibre sous l'action des forces extérieures à cet élément, qui sont de deux types : les forces de pression et la force due au champ de pesanteur.
+
+**1.** L'air étant considéré comme un gaz parfait, calculer sa masse volumique $\rho_0 = \rho(P_0, T_0)$ dans les conditions normales de température $T_0 = 273K$ et de pression $P = P_0$.
+
+**2.** On choisit dans $R$ un repère orthonormé. L'état de l'atmosphère est caractérisé par les champs de pression $P(x, y, z)$ et de température $T(x, y, z)$ :
+
+**2. (a)** Écrire la condition d'équilibre mécanique de l'air soumis aux forces de pression et au champ de pesanteur, supposé localement uniforme.
+
+**2. (b)** En déduire que P ne dépend que de $z$ et établir l'équation permettant de déterminer $P(z)$ en fonction de $M_a, P, g, T$ et de la constante des gaz parfaits $R$.
+
+**3.** On considère dans un premier temps l'atmosphère en équilibre isotherme.
+
+**3. (a)** Justifier que la pression varie avec l'altitude $z$ selon une loi du type :
+
+$$
+P(z) = P_0exp(-\frac{z}{H}) \qquad (1)
+$$
+
+où $H$ est une longueur nommée hauteur d'échelle de l'atmosphère que l'on explicitera en fonction de $M_a, R, g$ et $T$ . Calculer la hauteur d'échelle $H_0$ de l'atmosphère isotherme à $T_0 = 273K$.
+
+**3. (b)** L'hypothèse d'une température uniforme est-elle justifiée ?
+
+**4.** On considère maintenant l'atmosphère en équilibre adiabatique caractérisé à toute altitude par la relation $P = K\rho^{\gamma}$ où $K$ est une constante et $\gamma = \frac{C_p}{C_v} \approx 1.4$ est le rapport des capacités thermiques à pression et volume constants des gaz parfaits diatomiques.
+
+**4. (a)** Discuter comment nous pouvons trouver la forme explicite de $P(z)$ et de $T(z)$. Admettons pour la suite que leurs formes explicites sont les suivantes :
+
+$$
+P(z) = P_0(1 - \frac{z}{\frac{\gamma}{\gamma-1}H_0})^{\frac{\gamma}{\gamma-1}} \qquad (2)
+$$
+
+$$
+T(z) = T_0(1 - \frac{z}{\frac{\gamma}{\gamma-1}H_0}) \qquad (3)
+$$
+
+**4. (b)** Calculer numériquement le gradient vertical de température en $Kkm^{-1}$ correspondant à ce modèle d'atmosphère en équilibre adiabatique.
+
+**4. (c)** Représenter graphiquement les allures des variations de la pression et de son gradient en fonction de l'altitude. (L'allure générale est demandée et non pas l'allure précise !)
+
+**4. (d)** Calculer numériquement ce gradient de pression pour $z = 0, 2500$ et $5000m$.
+
+**4. (e)** À partir des gradients de pression trouvés, donner un ordre de grandeur de l'échelle de la dimension verticale $L_z$ sur laquelle la pression varie de $100Pa$.
+
+**4. (f)** Exprimer le rapport des masses volumiques de l'air $\rho(P, T)/\rho(P_0, T_0)$ en fonction de $z, H_0$ et $\gamma$. Calculer $\rho$ à $2500m$ d'altitude.
+
+</ProblemSection>
+
+<ProblemSection id="s2">
+
+### 2. Dynamique des mouvements atmosphériques à l'échelle synoptique :le vent géostrophique
+
+**5.** La Figure 1 représente les lignes isobares, cotées en $hPa$ et tracées de $2hPa$ en $2hPa$, au niveau de la mer en Europe de l'Ouest, le 23 janvier 2002 à 0h.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.3%', '--fig-max': '252px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2024-cgp/p1-fig1.png" alt="Carte des isobares (en hPa) au niveau de la mer sur l'Europe de l'Ouest et l'Atlantique, Servei de Meteorologia de Catalunya ; dépression centrée vers 972 hPa à l'ouest, isobares cotées 976 à 1024, graduation de latitude 30° à 50° à droite, mentions « Pressió hPa » et « Anàlisi 00Z 23-GEN-02 »." width="788" height="762" loading="lazy" decoding="async" />
+<figcaption>Figure 1 – Lignes isobares</figcaption>
+</figure>
+
+**5. (a)** Déterminer sur cette carte de pression la valeur du gradient de pression horizontal à Bordeaux. Comparer à la donnée de la Table 1. Dorénavant, la valeur du gradient horizontal de pression utilisée dans les applications numériques sera celle donnée par cette Table 1.
+
+**5. (b)** Sachant qu'on attribue habituellement aux domaines élémentaires des dimensions horizontales $L_h$ telles que la pression horizontale varie en moyenne de $100Pa$, déterminer un ordre de grandeur de $L_h$.
+
+Dans la suite du problème, nous nous placerons à cette échelle.
+
+**6. (a)** Donner l'expression du champ de gravitation terrestre $\overrightarrow{g}^*(\overrightarrow{r})$ en un point repéré par $\overrightarrow{r}$ par rapport au centre de la Terre, assimilée à une sphère homogène de masse $M_T$. On désignera par $G$ la constante de gravitation universelle.
+
+**6. (b)** Proposer une expression donnant la variation avec l'altitude $z$ du module $g^*(z) = ||\overrightarrow{g}^*||$ en fonction du rapport $\frac{z}{r_T}$ et de $g^*(0)$. Quelle est l'erreur relative commise à $2500m$ d'altitude si l'on remplace $g^*(z)$ par $g_0^* = g^*(0)$.
+
+**7.** Soit $R_0$ le référentiel barycentrique terrestre, géocentrique, que l'on considérera comme galiléen, et soit $R_l$ le référentiel terrestre local, dont l'origine $O$ a pour latitude $\phi$ (Figure 2). On choisit $Ox$ tangent au parallèle passant par $O$ et dirigé vers l'Est, $Oy$ tangent au méridien passant par $O$ et dirigé vers le Nord. Le référentiel $R_l$ est animé par rapport à $R_0$ d'un mouvement de rotation diurne uniforme de vitesse angulaire $\omega$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.3%', '--fig-max': '252px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2024-cgp/p1-fig2.png" alt="Sphère terrestre avec l'axe des pôles N–S, l'équateur et un parallèle ; au point O du parallèle, les axes x (vers l'Est), y (vers le Nord) et z (verticale, dans le prolongement d'une droite en pointillés issue du centre) ; l'angle de latitude φ est marqué au centre." width="788" height="737" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – Référentiel</figcaption>
+</figure>
+
+**7. (a)** Préciser dans $R_l$ la direction de l'accélération d'entraînement $\overrightarrow{\Gamma}_E(\overrightarrow{r})$. Pour un point d'altitude $z$ à la verticale de $O$, établir l'expression de son module $\Gamma_E(z)$ en fonction de $\omega, z, r_T$ et $\phi$. Quelle est l'erreur relative commise sur $\Gamma_E$ à $2500m$ d'altitude si l'on remplace $\Gamma_E(z)$ par $\Gamma_{E0} = \Gamma_E(0)$. Calculer la valeur typique de $\Gamma_{E0}$ en France.
+
+**7. (b)** Soit $\overrightarrow{g}(\overrightarrow{r})$ le champ de pesanteur local, dont la direction est donnée par celle d'un fil à plomb. Déduire des résultats précédents la relation entre le champ de pesanteur $\overrightarrow{g}(\overrightarrow{r})$, le champ de gravitation terrestre $\overrightarrow{g}^*(\overrightarrow{r})$ et l'accélération d'entraînement $\overrightarrow{\Gamma}_E(\overrightarrow{r})$. Justifier l'hypothèse d'un champ de pesanteur localement uniforme $\overrightarrow{g}$ utilisée en 1.
+
+**7. (c)** Une particule de masse $m$ se déplace à la vitesse $\overrightarrow{V}$ dans $R_l$. Donner l'expression de l'accélération d'inertie due à la vitesse $\overrightarrow{\Gamma_C}$ en fonction de $\overrightarrow{V}$ et $\overrightarrow{\omega}$. Exprimer cette force d'inertie $\overrightarrow{F_C}$ dans $Oxyz$ en fonction de $m, \omega$, de la latitude $\phi$ et des composantes $(V_x, V_y, V_z)$ de $\overrightarrow{V}$.
+
+**8.** Sur l'air atmosphérique en mouvement s'exercent les forces de pesanteur, d'inertie due à la vitesse et de gradient de pression. Écrire l'équation vectorielle du mouvement d'un domaine particulaire. En déduire les trois équations donnant les coordonnées de l'accélération locale $\overrightarrow{\Gamma} = \overrightarrow{A}$ dans $Oxyz$.
+
+**9.** On se propose tout d'abord d'étudier les mouvements verticaux de l'air dans le cadre du modèle d'atmosphère en équilibre adiabatique.
+
+**9. (a)** Évaluer les ordres de grandeur des différents termes situés dans le second membre de l'équation du mouvement vertical, en utilisant les résultats trouvés à la question 4.d) lorsqu'on se place à $2500m$ d'altitude, pour une latitude $\phi = 45^{\circ}$ et un vent de l'ordre de $10ms^{-1}$. Que peut-on en déduire sur l'importance de la composante verticale de la force d'inertie due à la vitesse ?
+
+**9. (b)** Les observations montrent qu'en dehors de très brèves périodes d'adaptation aux perturbations verticales, les ascendances ou descendances sont particulièrement stables dans le temps. Que peut-on en conclure concernant l'amplitude de l'accélération verticale ? À partir des données de la Table 1, estimer l'ordre de grandeur de l'accélération verticale. En effectuant alors les simplifications légitimes, à quoi se réduit l'équation du mouvement vertical de l'air ? Conclure quant aux résultats de la partie 1.
+
+**10.** On étudie maintenant les mouvements horizontaux de l'air en se plaçant à $2500m$ d'altitude.
+
+**10. (a)** En s'appuyant sur les données de la Table 1, simplifier les équations du mouvement horizontal. On définit le paramètre de Coriolis $k$ par $k = 2\omega sin\phi$ : quelles sont ses valeurs numériques respectives à des latitudes de $45^{\circ}$ dans les hémisphères Nord et Sud.
+
+**10. (b)** On définit la vitesse relative horizontale par $\overrightarrow{V_h} = V_x\overrightarrow{e_x}+V_y\overrightarrow{e_y}$ . Montrer que la force de Coriolis horizontale (celle qui porte le paramètre $k$) par unité de masse peut s'exprimer sous la forme : $f_{Ch} = -k(\overrightarrow{e_z} \wedge \overrightarrow{V_h})$. Que peut-on en conclure sur l'orientation du vecteur $\overrightarrow{f_{Ch}}$ par rapport au vecteur $\overrightarrow{V_h}$ dans les hémisphères Nord et Sud ?
+
+**10. (c)** Calculer le module de la force horizontale de Coriolis rapportée à l'unité de masse $\overrightarrow{f_{Ch}}$ à une altitude de $2500m$ pour laquelle le vent a une vitesse horizontale de $15ms^{-1}$ à une latitude de $45^{\circ}$. En prenant comme gradient horizontal de pression à la même altitude celui donné par la Table 1, calculer le module de la force de pression horizontale par unité de masse $\overrightarrow{f_{Ph}}$.
+
+**10. (d)** De façon générale, les observations montrent que les accélérations tangentielles subies par les domaines particulaires dans leurs mouvements horizontaux sont toujours très faibles dans les grands mouvements atmosphériques sous nos latitudes moyennes. De même les accélérations normales sont en général très petites sauf à l'avant des dépressions mobiles. En vous appuyant sur les données de la Table 1, estimer l'ordre de grandeur des modules des quantités $\overrightarrow{f_{Ch}}$, $\overrightarrow{f_{Ph}}$ et de l'accélération horizontale $\overrightarrow{\Gamma_h} = \overrightarrow{A_h}$. Que peut-on en conclure pour la valeur de la somme vectorielle $\overrightarrow{f_{Ph}} + \overrightarrow{f_{Ch}}$ ?
+
+**11.** On appelle vent géostrophique le vent fictif de vitesse horizontale $\overrightarrow{V_g}$ vérifiant identiquement l'équation $\overrightarrow{f_{Ph}} + \overrightarrow{f_{Ch}} = 0$.
+
+**11. (a)** Montrer que ce vent est entièrement déterminé par la connaissance de la distribution spatiale de pression et exprimer son champ de vitesse $\overrightarrow{V_g}$ à l'aide du gradient horizontal de pression $\overrightarrow{\nabla_h}(P)$.
+
+**11. (b)** Quelle est la valeur de l'accélération $\Gamma_g$ et la nature locale de la trajectoire des particules constituant le vent géostrophique ? Préciser sur un schéma les orientations respectives de $\overrightarrow{V_g}$, $\overrightarrow{f_{Ph}}$ et $\overrightarrow{f_{Ch}}$ dans les hémisphères Nord et Sud.
+
+**11. (c)** Compte tenu des ordres de grandeurs donnés dans la Table 1, vérifier que, pour la latitude de $45^{\circ}$, le module $V_g$ de la vitesse géostrophique est égal à $V_h$. Définir à l'aide de la figure 3 la fourchette de latitude pour laquelle l'écart relatif $\frac{|V_g-V_h|}{V_h}$ reste inférieur à $30\%$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '58.2%', '--fig-max': '372px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2024-cgp/p1-fig3.png" alt="Courbe décroissante de (V_g − V_h)/V_h en % (axe vertical de −40 à 120) en fonction de la latitude φ en degrés (axe horizontal de 20 à 90) : environ 107 % à 20°, nulle vers 47°, tendant vers environ −30 % à 90° ; mention « (1/ρ)‖∇_h(P)‖ = Cte »." width="1164" height="685" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Écart relatif en fonction de la latitude</figcaption>
+</figure>
+
+**11. (d)** En déduire les deux conditions nécessaires pour que le vent géostrophique soit une bonne approximation $\overrightarrow{V_g} \approx \overrightarrow{V_h}$ du vent réel. Ces conditions sont-elles vérifiées aux latitudes équatoriales ($\phi < 20^{\circ}$) ?
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+Aucune solution officielle dans l'archive.
+</Warning>
+
+---
+
+Оригинал в Архива: [CGP_2024.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2024.pdf#page=3)

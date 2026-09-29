@@ -1,0 +1,113 @@
+---
+id: ioaa-2022-theory-x-2-p4
+source: 'IOAA 2022, Теория'
+title: 'Задача 4. Journey Between Galaxies'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2022/ioaa-2022-theory-x-2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:31:06.636Z'
+verifier: 'mechanical'
+---
+
+*International Olympiad on Astronomy and Astrophysics 2022 Georgia — Theoretical Competition · 16 август 2022 г. · 10 т.*
+
+## Условие
+
+We start a long journey to a planet located at a distance of $d_0 = 10\,\mathrm{Mpc}$ at the start of our journey. During our travel, the universe keeps expanding according to Hubble-Lemaître’s law. (Assume that Hubble’s constant ($H$) does not change.)
+
+**(a)** Write an expression for the distance between Earth and the planet at a time $t$ from the start of our journey. **[2 т.]**
+
+**(b)** What minimum constant speed $v_0$ should the rocket have to reach the destination? Assuming that the speed of our rocket is $v_0 = 1000\,\mathrm{km/s}$, can we reach the planet? Write **YES** or **NO**. If yes, how long will our journey take?
+
+*Hint:* A simplified way to account for the expansion of our universe is to introduce a “scale factor” $a(t)$, which relates distance between two objects $l(t)$ at a time $t$ to a distance $l_0$ at a time $t = 0$ as $l(t) = a(t)l_0$ **[8 т.]**
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** $d(t) = d_0 e^{Ht}$
+- **(b)** $v_0 > Hd_0 = 70\,\mathrm{km/s}$; YES; $t_0 \approx 5.3 \times 10^{16}\,\mathrm{s} = 17\,\mathrm{Gyr}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+(a) By the Hubble’s Law, the rate of recession is
+
+$$
+v(t) = \frac{\Delta d}{\Delta t} = Hd(t) \qquad \mathbf{1.0}
+$$
+
+Thus, by referring to the given relation,
+
+$$
+d(t) = Ce^{Ht}
+$$
+
+at time $t = 0$, $d(0) = d_0 = C$. Thus, the distance at a time $t$:
+
+$$
+d(t) = d_0 e^{Ht} \qquad \mathbf{1.0}
+$$
+
+(b) It is easier to solve this problem, if we consider coordinate system that changes its scale in such a way that distance between earth and our destination does not change (called co-moving frame). Let $v(t)$ be the velocity in this frame at time $t$ and let $l(t)$ be the total distance traveled until the moment $t$.
+
+$$
+\begin{aligned} v(t)d(t) &= v_0 d_0 \\ v(t) &= v_0 \frac{d_0}{d(t)} = v_0 \frac{d_0}{d_0 e^{Ht}} \\ v(t) &= \frac{\Delta l}{\Delta t} = -v_0 e^{-Ht} && \mathbf{3.0} \end{aligned}
+$$
+
+$$
+l(t) = -\frac{v_0}{-H} e^{-Ht} + C
+$$
+
+for specific cases:
+
+$$
+l(t_0) = \frac{v_0}{H} e^{-Ht_0} + C
+$$
+
+$$
+l(0) = \frac{v_0}{H} + C
+$$
+
+subtracting yields:
+
+$$
+l(0) = \frac{v_0}{H} - \frac{v_0}{H} e^{-Ht_0}
+$$
+
+thus:
+
+$$
+\therefore l_{\mathrm{Total}} = d_0 = -\frac{v_0}{H}(e^{-Ht_0} - 1) \qquad \mathbf{2.0}
+$$
+
+Rearranging,
+
+$$
+t_0 = -\frac{1}{H} ln \left(1 - \frac{Hd_0}{v_0}\right) \qquad \mathbf{1.0}
+$$
+
+Thus, condition for reaching the planet at all:
+
+$$
+\begin{aligned} 1 - \frac{Hd_0}{v_0} &> 0 \\ v_0 &> Hd_0 = 70\,\mathrm{km/s} && \mathbf{1.0} \end{aligned}
+$$
+
+(However at this speed it will take eternity to reach it)
+
+For $v_0 = 1000\,\mathrm{km/s}$ we can reach the planet, in:
+
+$$
+t_0 \approx 5.3 \times 10^{16}\,\mathrm{s} = 17\,\mathrm{Gyr} \qquad \mathbf{1.0}
+$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Theory Problems.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2022/Theory%20Problems.pdf#page=2)
+· официални решения: [Theory Solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2022/Theory%20Solutions.pdf#page=2)

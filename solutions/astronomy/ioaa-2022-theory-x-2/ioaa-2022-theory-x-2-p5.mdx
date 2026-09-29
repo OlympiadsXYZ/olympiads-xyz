@@ -1,0 +1,105 @@
+---
+id: ioaa-2022-theory-x-2-p5
+source: 'IOAA 2022, Теория'
+title: 'Задача 5. Flaring protoplanetary disk'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2022/ioaa-2022-theory-x-2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:31:06.636Z'
+verifier: 'mechanical'
+---
+
+*International Olympiad on Astronomy and Astrophysics 2022 Georgia — Theoretical Competition · 16 август 2022 г. · 10 т.*
+
+## Условие
+
+Planets are the products of collapsing clouds forming circumstellar disks around the young stars. In this problem, we examine the thermal structure of a type of protoplanetary disks. We consider radiation from the central star to be the dominant heating process and assume that the disk is optically thick and the radiation can be only absorbed in the surface layers of the disk. This type of disk is called a *flaring* disk (see figure 1 below). In this case, the star illuminates the surface of the disk directly, and the shallow angle $\beta$ between the light rays and the surface of the disk increases with distance from the star.
+
+**(a)** Find an expression for $\beta$ as a function of $r$. Assume $h(r) \ll r$.
+
+Hint: the expression involves $h(r)$, $r$ and $\frac{\Delta h(r)}{\Delta r}$ **[4 т.]**
+
+**(b)** Find an expression for the equilibrium temperature of the disk ($T_D$) as a function of $\beta(r)$, $r$ and luminosity ($L_s$) of the star (Ignore the size of the star). **[3 т.]**
+
+**(c)** We parameterize the disc height as $h(r) = ar^b$, where $a$ and $b$ are constants. For which values of $a$ and $b$ is the condition for an isothermal layer ($T_D =$Constant) satisfied? Write your answer for constant $a$ in terms of $T_D$ and $L_S$
+
+*Hint:* If $\Delta r \ll r$, then $(1 + \frac{\Delta r}{r})^b \approx 1 + \frac{b\Delta r}{r}$. **[3 т.]**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.6%', '--fig-max': '388px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2022-theory-x-2/p5-fig1.png" alt="Cross-section of a flaring disk: an orange star on the left labelled Star, a grey disk labelled Flaring disk cross-section that thickens outward, a dotted upper edge labelled Surface layer, a horizontal arrow r from the star and a vertical arrow h(r) up to the surface." width="1214" height="524" loading="lazy" decoding="async" />
+<figcaption>Figure 1: cross section of flaring disk</figcaption>
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** $\beta = \frac{\Delta h(r)}{\Delta r} - \frac{h(r)}{r}$
+- **(b)** $T_D = \left(\frac{L_s \beta}{4\pi\sigma r^2}\right)^{\frac{1}{4}}$
+- **(c)** $b = 3,\quad a = \frac{2\pi\sigma T_{SL}^4}{L_s}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.6%', '--fig-max': '388px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2022-theory-x-2/p5-sol-fig1.png" alt="Flaring disk cross-section as in Figure 1 with added construction: two orange rays from the Star to the surface, the ray angle h/r at the star, a tangent line to the surface meeting the midplane at angle dh/dr, the angle β between the ray and the tangent at the surface, and labels Surface layer, tangent, h(r), r." width="1214" height="524" loading="lazy" decoding="async" />
+</figure>
+
+(a) The angle between the light beam and the horizontal plane is
+
+$$
+\theta_l \approx \tan\theta_l = \frac{h(r)}{r} \qquad \mathbf{1.0}
+$$
+
+Additionally, a tangent is inclined to the disc plane with an angle of
+
+$$
+\theta_T \approx \tan\theta_T = \frac{\Delta h(r)}{\Delta r} \qquad \mathbf{2.0}
+$$
+
+An exterior angle of a triangle is equal to the sum of its two interior opposite angles. Thus,
+
+$$
+\beta = \theta_T - \theta_l = \frac{\Delta h(r)}{\Delta r} - \frac{h(r)}{r} \qquad \mathbf{1.0}
+$$
+
+(b) The flux from of stellar radiation at distance $r$ from the star is $E_s = \frac{L_s}{4\pi r^2}$, where $L_s$ is the luminosity of the star. However, the irradiation flux is the normal projection of this flux onto the infinitesimal small surface $A$ of the disk.
+
+$$
+Q_+ = E_s A \sin\beta \approx \frac{L_s A \beta}{4\pi r^2} \qquad \mathbf{1.5}
+$$
+
+From the Stefan-Boltzmann law, the cooling rate is give by
+
+$$
+Q_- = A\sigma T_D^4. \qquad \mathbf{0.5}
+$$
+
+In the thermal equilibrium
+
+$$
+Q_+ = Q_- \Longrightarrow T_D = \left(\frac{L_s \beta}{4\pi\sigma r^2}\right)^{\frac{1}{4}} \qquad \mathbf{1.0}
+$$
+
+(c) The condition for the isothermal layer can be solved by applying
+
+$$
+\begin{aligned} \beta &= \frac{\Delta h(r)}{\Delta r} - \frac{h(r)}{r} = \frac{a(r + \Delta r)^b - ar^b}{\Delta r} - \frac{ar^b}{r} \\ &= ar^b \left(\frac{(1 + \frac{\Delta r}{r})^b - 1}{\Delta r} - \frac{1}{r}\right) = ar^b \left(\frac{b\Delta r}{r\Delta r} - \frac{1}{r}\right) \\ &= a(b - 1)r^{b-1} \propto r^2 \\ \Longrightarrow b &= 3 && \mathbf{2.0} \end{aligned}
+$$
+
+Finally, one can determine the second constant by
+
+$$
+\begin{aligned} \beta &= a(b - 1)r^{b-1} = 2ar^2 \\ \therefore T_{SL}^4 &= \left(\frac{aL_s}{2\pi\sigma}\right) \\ a &= \left(\frac{2\pi\sigma T_{SL}^4}{L_s}\right) && \mathbf{1.0} \end{aligned}
+$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [Theory Problems.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2022/Theory%20Problems.pdf#page=3)
+· официални решения: [Theory Solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2022/Theory%20Solutions.pdf#page=3)

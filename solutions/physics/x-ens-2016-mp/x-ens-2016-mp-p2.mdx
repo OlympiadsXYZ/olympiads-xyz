@@ -1,0 +1,148 @@
+---
+id: x-ens-2016-mp-p2
+source: 'X-ENS 2016, Приемен изпит, математика и физика, математика и физика'
+title: 'Задача 2. Cavité résonante à miroir mobile'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2016/x-ens-2016-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:33:09.325Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE POLYTECHNIQUE – ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2016 — FILIÈRE MP — COMPOSITION DE PHYSIQUE (XULCR)*
+
+<details>
+<summary>Consignes</summary>
+
+*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve.*
+
+*Les résultats des applications numériques seront donnés avec un chiffre significatif.*
+
+</details>
+
+<details>
+<summary>Optomécanique en cavité</summary>
+
+L’optomécanique se consacre à l’étude du couplage de dispositifs mécaniques à une onde électromagnétique. Ce problème étudie différents aspects d’un système optomécanique modèle, à savoir une cavité résonante linéaire formée de deux miroirs semi-réfléchissants parallèles se faisant face, dont l’un est mobile.
+
+Dans la première partie, on établit les équations dynamiques générales d’une cavité de longueur *fixée*, soumise à un champ électromagnétique incident. Dans la seconde partie, on étudie le couplage optomécanique en supposant que l’un des miroirs est libre de se déplacer sous l’action de la force d’origine électromagnétique imposée par le faisceau incident, et d’une force de rappel élastique appliquée par le support sur lequel ce miroir est monté.
+
+Dans tout ce problème, on utilise le signe ” $\equiv$ ” (plutôt que ” $=$ ”) pour définir une grandeur.
+
+Dans les applications numériques, on prendra $c \approx 3 \times 10^{8}\ \mathrm{m.s^{-1}}$ pour la vitesse de la lumière dans le vide, $\pi \approx 3$ et $\sqrt{0{,}9} \approx 0{,}9$.
+
+</details>
+
+## Условие
+
+Dans cette partie, on suppose que le miroir $(M_2)$ est libre de se déplacer selon la direction $z$. Il est soumis à la force imposée par le champ électromagnétique à l’intérieur de la cavité ainsi qu’à une force de rappel élastique linéaire modélisée par un ressort de raideur $K$ et de masse négligeable devant celle du miroir $(M_2)$ qu’on notera $m$. Expérimentalement, cette configuration peut être réalisée en suspendant le miroir comme un pendule. On repère la position de $(M_2)$ par son écart, noté $\xi(t)$, à sa position d’équilibre à champ incident nul, correspondant à une longueur de cavité $L$ (cf Figure 2). On supposera que le mouvement de $(M_2)$ reste de faible amplitude devant la longueur initiale $L$ de la cavité.
+
+**20)** Exprimez la longueur de la cavité à la date $t$.
+
+**21)** Donnez la nouvelle expression $\omega_c(t)$ de la pulsation introduite dans la première partie. Calculez sa forme approchée au premier ordre en $\xi/L$. Vous ferez intervenir les grandeurs $\bar{\omega}_c \equiv \dfrac{n\pi c}{L}$ et $G_c \equiv \dfrac{\bar{\omega}_c}{L}$ (appelée « constante de couplage électromécanique »).
+
+**22)** À quelle condition (intuitive) l’équation dynamique (19) reste-t-elle valable ? Pour répondre à cette question, vous pourrez introduire l’échelle des variations temporelles de la fonction $\xi(t)$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.2%', '--fig-max': '322px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2016-mp/p2-fig1.png" alt="Schéma de la cavité à miroir mobile : axes x et z d’origine O ; miroir (M1) en z = 0, miroir (M2) à droite ; zones (I), (II) et (III) ; une ligne pointillée marque la position d’équilibre à la distance L de (M1), et une flèche épaisse ξ(t) indique le déplacement de (M2) au-delà." width="1006" height="648" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – Cavité résonante à miroir mobile (partie 2).</figcaption>
+</figure>
+
+On suppose que le champ incident est monochromatique, de pulsation $\omega_L = \bar{\omega}_c + \Delta$,
+
+$$
+E_i(z,t) = \mathscr{E}_i \exp\left[\mathrm{i}\omega_L\left(t - \frac{z}{c}\right)\right] \qquad (20)
+$$
+
+où $\mathscr{E}_i$ est une constante réelle, et l’on écrit la composante $E_+$ du champ à l’intérieur de la cavité sous la forme
+
+$$
+E_+(z,t) = \mathscr{E}_+(t)\exp\left[\mathrm{i}\omega_L\left(t - \frac{z}{c}\right)\right] \qquad (21)
+$$
+
+**23)** Pourquoi suppose-t-on, *a priori*, que $\mathscr{E}_+(t)$ dépend du temps ? Justifiez qualitativement que $\mathscr{E}_+(t)$ ne varie pas de manière significative sur une période du champ incident.
+
+**24)** Montrez que $\mathscr{E}_+(t)$ vérifie
+
+$$
+\frac{\mathrm{d}}{\mathrm{d}t}\mathscr{E}_+(t) \approx -\left[\mathrm{i}\left(\Delta + G_c\xi\right) + \frac{\gamma}{2}\right]\mathscr{E}_+(t) + \sqrt{\frac{\gamma c}{4L}}\mathscr{E}_i \qquad (22)
+$$
+
+Dans les questions 25 à 34, on souhaite déterminer l’expression de la force imposée au miroir $(M_2)$ par le champ électromagnétique en cavité, appelée « force de pression de radiation », en fonction des paramètres du problème et notamment du déplacement $\xi(t)$. Pour ce faire, on va suivre le même type d’approche particulaire que dans les questions 11 à 15.
+
+**25)** Exprimez la quantité de mouvement fournie au miroir $(M_2)$ par un photon de pulsation $\omega_L$ lors d’un rebond. Comme dans la première partie, on supposera que ce rebond ne modifie pas l’énergie du photon de manière significative mais change sa quantité de mouvement en son opposée.
+
+**26)** En notant $\mathrm{d}N_{ph} = \pi_{ph}(t)\,\mathrm{d}t$ le nombre de photons qui frappent le miroir $(M_2)$ entre $t$ et $t + \mathrm{d}t$, donnez l’expression de la force de pression de radiation due au champ à l’intérieur de la cavité.
+
+**27)** Reliez $\pi_{ph}(t)$ à la puissance électromagnétique, moyennée sur une période du champ incident, qui est réfléchie par le miroir $(M_2)$ à l’instant $t$.
+
+**28)** Montrez que, dans la limite $R \approx 1$, la force de pression de radiation instantanée prend alors la forme
+
+$$
+F_{pr}(t) \approx \varepsilon_0\mathscr{S}\left|\mathscr{E}_+(t)\right|^2 \qquad (23)
+$$
+
+On introduit les nouvelles grandeurs $a$ et $a_i$ définies par
+
+$$
+\mathscr{E}_+ = a\sqrt{\frac{\hbar\omega_L}{\varepsilon_0\mathscr{S}L}} \qquad (24)
+$$
+
+$$
+\mathscr{E}_i = a_i\sqrt{\frac{2\hbar\omega_L}{\varepsilon_0 c\mathscr{S}}} \qquad (25)
+$$
+
+**29)** Précisez les dimensions respectives de $a$ et $a_i$ et explicitez la signification physique des quantités $|a|^2$ et $|a_i|^2$.
+
+**30)** Établissez l’équation régissant l’évolution de $a$.
+
+**31)** Établissez l’équation mécanique sur $\xi(t)$ régissant le mouvement du miroir. Vous introduirez la pulsation propre de l’oscillateur $\Omega$ que vous relierez à la raideur $K$ du ressort et la masse $m$ de $(M_2)$.
+
+**32)** On se propose d’étudier le système dans le cas $\gamma \gg \Omega$. Que signifie cette condition physiquement ?
+
+**33)** Montrez que, pour des temps $t \gg 1/\gamma$, on peut alors écrire
+
+$$
+a(t) \approx \frac{\sqrt{\dfrac{\gamma}{2}}}{\mathrm{i}\left[\Delta + G_c\xi(t)\right] + \dfrac{\gamma}{2}}a_i. \qquad (26)
+$$
+
+**34)** Dans le régime considéré à la question précédente, établissez l’expression de la force de pression de radiation.
+
+Dans la suite du problème, on supposera toujours être dans les conditions d’application de la formule (26).
+
+Le but des questions 35 à 40 est d’étudier les positions d’équilibre mécanique du miroir mobile $(M_2)$, ainsi que leur stabilité.
+
+**35)** Établissez la condition d’équilibre mécanique du miroir mobile $(M_2)$ reliant $\xi$ à $|a_i|^2$ .
+
+**36)** En l’absence de champ incident, déterminez le nombre et la nature (stable ou instable) de points d’équilibre du miroir mobile $(M_2)$.
+
+On considère maintenant le cas d’un champ incident non nul.
+
+**37)** Mettez la condition d’équilibre identifiée à la question 35 sous la forme $A\xi = F(\xi)$, où $F$ est une fonction sans dimension de maximum unité et $A$ une constante qui s’exprime en fonction des paramètres du problème, puis montrez comment déterminer graphiquement le(s) point(s) d’équilibre du miroir $(M_2)$.
+
+**38)** À l’aide de la représentation graphique de la question précédente, montrez que le miroir $(M_2)$ possède au plus trois points d’équilibre et étudiez leur stabilité respective. Justifiez le nom de bistabilité donné au phénomène observé.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.7%', '--fig-max': '388px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2016-mp/p2-fig2.png" alt="Relevé expérimental : puissance transmise Pt en ordonnée (niveaux Pt(inf) et Pt(sup) marqués) en fonction de la puissance incidente Pi en abscisse (deux graduations marquées Pi(inf) sur l’original). Cycle d’hystérésis bruité : plateau inférieur près de Pt(inf), montée brusque vers le plateau supérieur à droite (flèche vers le haut), et chute brusque vers le plateau inférieur plus à gauche (flèche vers le bas)." width="1214" height="707" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Relevé expérimental de la puissance $P_t$ (représentée en ordonnée) transmise par une cavité ($L = 0{,}9$ mm, $m = 60$ mg, $R = 0{,}99$) obtenu en faisant passer très lentement la puissance du champ incident $P_i$ (représentée en abscisse) de $P_i^{(\mathrm{inf})} = 1{,}1\ \mathrm{W}$ à $P_i^{(\mathrm{sup})} = 2{,}2\ \mathrm{W}$ et inversement. Lors du passage $P_i^{(\mathrm{inf})} \to P_i^{(\mathrm{sup})}$, on suit la partie inférieure du cycle d’hystérésis (le niveau moyen du plateau inférieur est $P_t^{(\mathrm{inf})} \approx 0{,}2\ \mathrm{mW}$) ; au cours du passage $P_i^{(\mathrm{sup})} \to P_i^{(\mathrm{inf})}$, on suit la partie supérieure du cycle (le niveau moyen du plateau supérieur est $P_t^{(\mathrm{sup})} \approx 5\ \mathrm{mW}$). La figure est extraite de A. Dorsel *et al*, Phys. Rev. Lett. **51**, 1550 (1983).</figcaption>
+</figure>
+
+**39)** À partir de la condition d’équilibre de la question 35, montrez qu’il est nécessaire de choisir $\Delta < -\dfrac{\gamma\sqrt{3}}{2}$ pour obtenir plus d’un point d’équilibre pour le miroir $(M_2)$.
+
+**40)** En supposant $\Delta < -\dfrac{\gamma\sqrt{3}}{2}$, identifiez l’intervalle dans lequel $|a_i|^2$ doit se situer pour qu’il existe plus d’un point d’équilibre pour le miroir mobile $(M_2)$.
+
+Dans les questions suivantes, on considère une cavité de longueur initiale $L = 0{,}9\ \mathrm{mm}$, constituée d’un miroir massif (immobile) et d’un miroir mobile de masse 60 mg, tous deux possédant le même coefficient $R = 0{,}99$. La figure 3 présente un relevé expérimental de la puissance transmise par la cavité, notée $P_t$ et représentée en ordonnée, obtenu lorsque l’on fait passer très lentement la puissance incidente $P_i$ (représentée en abscisse) de la valeur inférieure $P_i^{(\mathrm{inf})}$ vers la valeur supérieure $P_i^{(\mathrm{sup})}$, puis inversement. La courbe obtenue, appelée cycle d’hystérésis, présente deux branches dont le sens de parcours est indiqué par des flèches : durant la première phase, c’est-à-dire lorsque l’on augmente $P_i$ de $P_i^{(\mathrm{inf})}$ à $P_i^{(\mathrm{sup})}$, on suit la partie inférieure du cycle ; au cours de la deuxième phase, c’est-à-dire lorsque l’on diminue $P_i$ de $P_i^{(\mathrm{sup})}$ à $P_i^{(\mathrm{inf})}$, on suit la partie supérieure du cycle.
+
+**41)** Établissez la relation entre puissances transmise et incidente faisant intervenir la quantité $\xi$.
+
+**42)** En vous appuyant sur les résultats des questions 37 et 38, donnez une interprétation qualitative des résultats obtenus. Expliquez notamment l’existence de deux plateaux pour la puissance transmise et le « passage » de l’un à l’autre de ces plateaux. Vous pourrez vous aider de représentations graphiques de votre choix pour illustrer votre réponse.
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2016.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2016.pdf#page=4)

@@ -1,0 +1,310 @@
+---
+id: opho-2026-x-p7
+source: 'OPhO 2026, Единствен кръг'
+title: 'Задача 7. Fridge Magnet'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2026/opho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:43:04.524Z'
+verifier: 'mechanical'
+---
+
+*2026 Online Physics Olympiad · 21 август 2026 г.*
+
+<details>
+<summary>Last updated</summary>
+
+*Last updated: 22nd August 03:35 UTC*
+
+</details>
+
+<details>
+<summary>Sponsors</summary>
+
+This competition would not be possible without the help of our sponsors.
+
+</details>
+
+<details>
+<summary>Corrections (all times are in UTC)</summary>
+
+- Q8: Cleared up wording (21/08 04:40 and 04:52)
+- Q3: improved wording (21/08 08:49)
+- Q19: Improved wording (21/08 09:42)
+- Q16: Attempts reset (21/08 22:00), Error bound increased (22/8 02:30)
+- Q1: Improved wording (22/08 03:35)
+
+</details>
+
+<details>
+<summary>Указания</summary>
+
+**Format.** The OPhO is a team-based competition (3 members at most per team). Unlike previous years, the 2026 OPhO consists of a single round held from August 21, 12 am (UTC), to August 23, 11:59 pm (UTC). The contest is made up of three parts, all running concurrently over the full contest window:
+
+- **Short Answer** — problems requiring numerical answers, submitted on the OPhO portal;
+- **Long Answer** — problems requiring full written solutions, submitted on the OPhO portal;
+- **Simulation** — computational problems requiring teams to run a provided executable locally, with solutions submitted on the OPhO portal.
+
+All teams have access to all three parts for the entire duration of the contest. Submissions are made on the OPhO portal https://opho.physoly.org/ using the team login, and may be made at any time within the contest window.
+
+**Short Answer.** Teams submit numerical answers on the portal, with up to three attempts per problem. *Every* answer submission must be accompanied by a file upload, on the portal, of the working used to obtain that answer. This working will not be graded, but submissions without it will not be accepted. The base score for each problem depends on the number of teams that successfully answer it, each incorrect attempt multiplies the base score by a factor of 0.8, and there is no time factor. The score for an individual problem follows:
+
+$$
+w(N) = (0.8)^i\left[e^{-\frac{x(N)}{200}} + e^{-\frac{x(N)^2}{100}} + 1\right],
+$$
+
+where $i \in \{0, 1, 2\}$ represents whether a team got it on the first, second, or third try, $N$ represents the number of teams that answer the problem correctly, and $x(N)$ is the sum of $(0.8)^i$ across all teams that have solved the problem. The base score is independent of problem number, but expect questions to be ordered roughly by difficulty. A team’s raw Short Answer total is the sum of these values, and all raw totals are then scaled linearly such that the top team receives 55 points.
+
+**Long Answer.** Teams submit full solutions on the portal. Rubrics are predetermined, and solutions will be reviewed to determine the proper number of points to give. The points breakdown is given per problem, for a total of 35 points. It is recommended that participants write their solutions in LaTeX. Handwritten solutions (or a combination of both) are accepted too; if participants have more than one photo of a handwritten solution (`jpg`, `png`, etc.), it is required that they be organized in the correct order in a `pdf` before submitting.
+
+**Simulation.** Teams will need to be able to run a provided executable locally. Solutions are submitted on the portal and will be graded against predetermined rubrics. The points breakdown is given per problem, for a total of 10 points.
+
+**Scoring.** A team’s cumulative score is the sum of its scaled Short Answer score (out of 55 points), Long Answer score (out of 35 points), and Simulation score (out of 10 points), for a maximum score of 100 points.
+
+**Permitted Resources.** Use of the internet is allowed, including textbooks, published papers, calculators, and computer algebra systems. However, the use of AI tools of any kind is strictly prohibited. This includes, but is not limited to, large language models (e.g. ChatGPT, Claude, Gemini), AI coding assistants, AI-generated search summaries, and any other AI-powered assistance.
+
+**Dishonest Behavior.** Please refrain from cheating in any form. This includes, but is not limited to, creating alternate accounts to gain additional attempts, sharing answers with other teams, posting problems online, utilizing AI tools as described above, or employing any other method to gain an unfair advantage.
+
+We have previously caught numerous teams engaging in such practices, and pursuing dishonest tactics provides no genuine sense of security. Any teams found to be acting maliciously will be notified via email, along with the opportunity to appeal. Failing to provide a valid appeal will result in a ban from participating in any future Physoly competitions. Our utmost priority is to ensure an enjoyable contest experience for all participants, and we remain committed to preventing any disruption to the fun for others.
+
+**Awards and Results.** The top competitors will be recognized on the website. No cash prizes will be awarded this year.
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e = 9.11 \cdot 10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0 = 6.02 \cdot 10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R = 8.31\ \mathrm{J/(mol \cdot K)}$
+- Boltzmann’s constant, $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e = 1.60 \cdot 10^{-19}\ \mathrm{C}$
+- 1 electron volt, $1\ \mathrm{eV} = 1.60 \cdot 10^{-19}\ \mathrm{J}$
+- Speed of light, $c = 3.00 \cdot 10^{8}\ \mathrm{m/s}$
+- Universal Gravitational constant,
+  $$
+  G = 6.67 \cdot 10^{-11}\ \mathrm{(N \cdot m^2)/kg^2}
+  $$
+- Solar Mass
+  $$
+  M_\odot = 1.988 \cdot 10^{30}\ \mathrm{kg}
+  $$
+- Acceleration due to gravity, $g = 9.8\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit,
+  $$
+  1\ \mathrm{u} = 1.66 \cdot 10^{-27}\ \mathrm{kg} = 931\ \mathrm{MeV/c^2}
+  $$
+- Planck’s constant,
+  $$
+  h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s} = 4.41 \cdot 10^{-15}\ \mathrm{eV \cdot s}
+  $$
+- Permittivity of free space,
+  $$
+  \epsilon_0 = 8.85 \cdot 10^{-12}\ \mathrm{C^2/(N \cdot m^2)}
+  $$
+- Coulomb’s law constant,
+  $$
+  k = \frac{1}{4\pi\epsilon_0} = 8.99 \cdot 10^{9}\ \mathrm{(N \cdot m^2)/C^2}
+  $$
+- Permeability of free space,
+  $$
+  \mu_0 = 4\pi \cdot 10^{-7}\ \mathrm{T \cdot m/A}
+  $$
+- Magnetic constant,
+  $$
+  \frac{\mu_0}{4\pi} = 1 \cdot 10^{-7}\ \mathrm{(T \cdot m)/A}
+  $$
+- 1 atmospheric pressure,
+  $$
+  1\ \mathrm{atm} = 1.01 \cdot 10^{5}\ \mathrm{N/m^2} = 1.01 \cdot 10^{5}\ \mathrm{Pa}
+  $$
+- Wien’s displacement constant, $b = 2.9 \cdot 10^{-3}\ \mathrm{m \cdot K}$
+- Stefan-Boltzmann constant,
+  $$
+  \sigma = 5.67 \cdot 10^{-8}\ \mathrm{W/m^2/K^4}
+  $$
+
+</details>
+
+## Условие
+
+Note: This problem consists of two parts, but there is only one input. Hence, submit the **product** of both answers. For example, if your answer to part 1 is $2\,\mathrm{kA/m}$ and your answer to part 2 is $3\,\mathrm{kA/m}$, you should submit $2 \times 3 = 6$ as your final answer.
+
+Iron is a ferromagnetic material which we assume to have a relative permeability $\mu_r = 1.0 \times 10^5$ and negligible hysteresis. Suppose we have a cylindrical neodymium magnet with mass density $\rho = 7500\,\mathrm{kg\,m^{-3}}$, radius $R$ and length $L$. The neodymium magnet has a uniform magnetisation density $M$ directed along its axis of rotational symmetry. We place the flat side of the magnet on the vertical wall of a fridge, which can be treated as a large cube of iron. The coefficient of static friction between the magnet and the fridge surface is $\mu_s = 0.3$ (not to be confused with the relative permeability defined earlier!). Assume that the magnetisation density of the neodymium magnets are independent of the magnetic field.
+
+**1.** If $R = 10\,\mathrm{cm}$ and $L = 0.4\,\mathrm{cm}$, find the minimum value of $M$ (in units of $\mathrm{kA/m}$) such that the magnet remains stuck on the fridge in its original orientation.
+
+**2.** If $R = 0.4\,\mathrm{cm}$ and $L = 10\,\mathrm{cm}$, find the minimum value of $M$ (in units of $\mathrm{kA/m}$) such that the magnet remains stuck on the fridge in its original orientation.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 80377 kA²/m²
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part 1**  
+The ferromagnet attracts magnetic field lines, much like how a conductor attracts electric field lines. Hence, we can make use of image currents or image charges to compute the magnetic field. For every current loop outside the iron block, there is a corresponding image current within the iron block, thus keeping the field lines perpendicular to the block. Hence, the force on the magnet due to the iron block is equal to that of an identical magnet adjacent to the magnet.  
+We know that the force per unit length on a current carrying wire due to a magnetic field is
+
+$$
+\mathbf{F} = \mathbf{I} \times \mathbf{B}
+$$
+
+Hence, the magnitude of force per unit surface area $P$ on the curved surface of the magnet when exposed to a radial field $B_r$ is
+
+$$
+P = MB_r
+$$
+
+This is akin to a pressure, though it is parallel rather than perpendicular to the curved surface.  
+The magnetic field created by the image magnet at a perpendicular distance $z \ll R$ from the iron block, at some point on the curved surface of the magnet is
+
+$$
+\begin{aligned} B_r &= \frac{\mu_0 M}{2\pi}\int_0^L \frac{1}{z + z'}\,\mathrm{d}z' \\ &= \frac{\mu_0 M}{2\pi}\ln\left(\frac{z + L}{z}\right) \end{aligned}
+$$
+
+We can use the formula for the magnetic field of an infinite straight wire here, integrated over the length of the image magnet, since the radius of curvature of the wire $R$ is much larger than the maximum value of $z$.  
+The force between the magnet and the fridge is
+
+$$
+\begin{aligned} F &= M\int_0^L B_r\,(2\pi R\,\mathrm{d}z) \\ &= 2\pi RM\int_0^L B_r\,\mathrm{d}z \\ &= \mu_0 M^2 R\int_0^L \ln\left(\frac{z + L}{z}\right)\mathrm{d}z \\ &= \mu_0 M^2 R\int_0^L (\ln(z + L) - \ln(z))\,\mathrm{d}z \\ &= \mu_0 M^2 R(2L\ln(2L) - 2L - 2(L\ln L - L)) \\ &= (2\ln 2)\mu_0 M^2 RL \end{aligned}
+$$
+
+In this part of the problem, $M$ needs to be sufficiently large to prevent the magnet from slipping:
+
+$$
+\mu_s F \geq \rho\pi R^2 Lg \implies F \geq \frac{\pi}{\mu_s}\rho R^2 Lg
+$$
+
+We can confirm this is the dominant effect, as compared to no-toppling. We can find out if the magnet topples over by performing torque balance about the bottom point of the magnet in contact with the iron block, noting that the magnetic force produces a torque as if it was acting at the center of the cross-section (by symmetry).
+
+$$
+FR \geq \rho\pi R^2 Lg\frac{L}{2} \implies F \geq \frac{\pi}{2}\rho RL^2 g
+$$
+
+No-slip is dominant when
+
+$$
+\frac{R}{\mu_s} > \frac{L}{2} \implies \mu_s < \frac{2R}{L}
+$$
+
+which we can confirm to be true numerically. Hence,
+
+$$
+\boxed{M \geq \sqrt{\frac{\pi}{2\ln 2}\frac{\rho g R}{\mu_0\mu_s}}} \approx 210196\,\mathrm{A/m}
+$$
+
+**Part 2**
+
+In this part of the problem, $M$ has to be large enough to prevent toppling, since $\mu_s > 2R/L$.  
+There are two main ways to solve this problem. The first is using magnetic poles (Gilbert model), and the second is to use current cylinders (Amperian model).  
+**Solution 1: Gilbert model**  
+Let us briefly introduce the Gilbert model. We can essentially compute the **B** field within magnetised materials by first calculating the bound magnetic charges in the material:
+
+$$
+\rho_m = -\nabla \cdot \mathbf{M}
+$$
+
+There is also a surface magnetic charge density:
+
+$$
+\sigma_m = \mathbf{M} \cdot \hat{\mathbf{n}}
+$$
+
+The magnetic charges produce an **H** field similar to how electric charges produce an **E** field:
+
+$$
+\nabla \cdot \mathbf{H} = \rho_m \iff \nabla \cdot (\epsilon_0\mathbf{E}) = \rho_e
+$$
+
+The **B** field is related to **H** and **M**:
+
+$$
+\mathbf{B} \equiv \mu_0(\mathbf{M} + \mathbf{H})
+$$
+
+Magnetic charges experience a magnetic force: $\mathbf{F} = q_m\mathbf{B}$.  
+For more information on this model, see Kevin Zhou E8.  
+The magnet has two poles with opposite charges at its flat ends, each with magnetic charge density of magnitude $\sigma = M$. It has no volume charge density since **M** is uniform. The iron creates image (magnetic) charges opposite in magnitude to the actual charges. Since $R \ll L$, the force between the magnet and the iron is equal to that between the two "discs" of magnetic charge adjacent to each other at the boundary between the iron and the magnet. From Gauss’s law, the magnitude of the **B** field created by the image disc at the location of the actual disc is
+
+$$
+B_i = \mu_0 H = \mu_0\frac{\sigma_m}{2} = \frac{\mu_0}{2}M
+$$
+
+, noting that the **M** field *created* by the image disc is 0. Hence the force experienced by the actual disc is
+
+$$
+F = M\pi R^2 B_i = \frac{\pi}{2}\mu_0 M^2 R^2
+$$
+
+We have ignored the contribution to the **B** field due to the actual magnet, as the magnet cannot exert force on itself, so we know it wouldn’t contribute anything. Alternatively, we can include the **B** field due to the actual magnet to find the total force on the magnet, but we have to include the force on both poles (both the end touching the fridge and the far end).
+
+$$
+F \geq \frac{\pi}{2}\rho RL^2 g \implies \boxed{M \geq \sqrt{\frac{\rho g L^2}{\mu_0 R}} \approx 382392\,\mathrm{A/m}}
+$$
+
+**Solution 2: Amperian model + Maxwell stress-energy tensor/virtual work**  
+This problem can also be solved with the Amperian model, but it takes significantly more thought. With the image currents, the **B** field in the area where the magnet contacts the iron is equal to that of the center of a long magnet, and we know that is
+
+$$
+B_0 = \mu_0 M
+$$
+
+The **B** field at the surface of the iron block is 0 everywhere else. Now, we use the Maxwell stress-energy tensor to determine the force experienced by the magnet. Magnetic fields carry a tension per unit area of $B^2/2\mu_0$ along the field lines, and a pressure of that same magnitude perpendicular to the field lines. This result can be stated without proof.  
+We consider the volume outside the iron block. This volume experiences tension due to the **B** field in the circular area between the iron block and the magnet, and no force anywhere else since the **B** field is 0 on the rest of the boundary. Hence, the force on this volume is
+
+$$
+F = \frac{B_0^2}{2\mu_0}\pi R^2 = \frac{\pi}{2}\mu_0 M^2 R^2
+$$
+
+which is also equal to the force on the magnet, since there are no other objects in this volume. Then, we can proceed as in solution 1.  
+Note that an alternative way to obtain the same result without using the Maxwell stress-energy tensor is to use the principle of virtual work: when we move the magnet away from the iron block by a small displacement $\delta z$, the magnetic field energy increases by
+
+$$
+\delta U = \frac{B_0^2}{2\mu_0}\pi R^2\,\delta z
+$$
+
+Note that the magnetic field energy inside the iron block is insignificant as the energy per unit volume is $B^2/2\mu$, and $\mu \gg \mu_0$. By the principle of virtual work, the force needed to perform this virtual displacement is
+
+$$
+F = \frac{B_0^2}{2\mu_0}\pi R^2
+$$
+
+**Solution 3: Amperian model + clever integration**  
+Another method is using clever integration. We know from part (a) that the force per unit surface area of the magnet is $P = MB_r$. We will only consider the magnetic field created by the image currents, since the bound currents in the actual magnet cannot possibly exert a self-force.  
+The total force on the magnet is
+
+$$
+F = M\iint_A B_r\,\mathrm{d}A = M\Phi
+$$
+
+where $A$ is the curved surface of the magnet. This is related to the total magnetic flux through the curved surface of the magnet!  
+Now, consider the closed Gaussian surface corresponding to the actual neodymium magnet. The magnetic flux at the far end of the neodymium magnet created by the magnetic field of the image currents is negligible, since the neodymium magnet is very long. Hence, **the magnetic flux through the curved surface of the magnet is equal to the magnetic flux passing through the circular area between the iron and the magnet**. Again, remember that we are only considering the “induced" magnetic field created by the image currents. Since the magnetic flux at the center of a long magnet with radius $R$ and magnetisation $M$ is $\Phi_c = \mu_0 M\pi R^2$, the magnetic flux produced by each semi-infinite half of the magnet is $\Phi_e = \Phi_c/2 = \pi\mu_0 MR^2/2$.  
+Hence we get the force
+
+$$
+F = M\Phi = M\pi\mu_0 MR^2/2 = \frac{\pi}{2}\mu_0 M^2 R^2
+$$
+
+Then, proceed as in solution 1.
+
+**Summary**  
+The product of the two answers are $\boxed{80377\,\mathrm{kA^2\,m^{-2}}}$  
+**Exact solution**  
+It is possible to get the exact force between the cylindrical magnet and the ferromagnetic block: see this paper, which gives the force between coaxial uniformly charged disks. We can plot it on a Desmos graph. The answer to (a) is $210396\,\mathrm{A/m}$, while the answer to (b) is $382659\,\mathrm{A/m}$. Hence the final answer is $\boxed{80510\,\mathrm{kA^2/m^2}}$, which is within 0.2% of the approximate answer.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/problems.pdf#page=7)
+· официални решения: [solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/solutions.pdf#page=11)

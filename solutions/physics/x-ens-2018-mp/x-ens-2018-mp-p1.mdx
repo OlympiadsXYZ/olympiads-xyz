@@ -1,0 +1,291 @@
+---
+id: x-ens-2018-mp-p1
+source: 'X-ENS 2018, Приемен изпит, математика и физика'
+title: 'Задача 1. Étude du dispositif de propulsion du lanceur ARIANE 5'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2018/x-ens-2018-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:33:45.358Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE POLYTECHNIQUE – ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2018 — FILIÈRE MP — COMPOSITION DE PHYSIQUE (XULCR)*
+
+<details>
+<summary>Consignes</summary>
+
+(Durée : 4 heures)
+
+*L’utilisation de calculatrices n’est pas autorisée pour cette épreuve.*  
+*Les résultats des applications numériques seront donnés avec un chiffre significatif.*
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1 Analyse préliminaire.](#s1)
+- [2 Relation de HUGONIOT.](#s2)
+- [3 Dépendance des grandeurs avec le nombre de MACH.](#s3)
+- [4 Caractérisation de la situation au col.](#s4)
+- [5 Adaptation en pression.](#s5)
+- [6 Propulseurs d’appoint.](#s6)
+
+</nav>
+
+VULCAIN est le nom du moteur qui assure la propulsion de l’étage principal des lanceurs européens ARIANE 5$^{1}$. La réaction exothermique du dihydrogène et du dioxygène$^{2}$, dans une chambre de combustion, produit de la vapeur d’eau à hautes température et pression qui s’évacue à grande vitesse à travers une tuyère. C’est l’éjection de ce gaz de combustion qui génère la poussée participant à propulsion de la fusée.
+
+Une tuyère est un conduit qui permet de convertir, dans les meilleures conditions, l’énergie produite par la combustion en force propulsive. La figure (1) représente trois types de tuyère : divergente ; convergente ; convergente-divergente, connue sous le nom de tuyère de LAVAL.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '97.5%', '--fig-max': '624px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp/p1-fig1.png" alt="Trois schémas de tuyère le long d’un axe x d’origine 0. (a) Une chambre de combustion rectangulaire (Chambre de combustion, P0, T0) alimentée par une flèche « 2H2+O2 », suivie d’une tuyère divergente où une flèche « Vapeur 2H2O » indique l’écoulement. (b) Une tuyère convergente. (c) Une tuyère convergente-divergente (tuyère de Laval)." width="1951" height="486" loading="lazy" decoding="async" />
+</figure>
+
+Pour la première phase de vol, le propulseur VULCAIN est assisté de deux puissants réacteurs à poudre qui fournissent la majeure partie de la poussée nécessaire au décollage.
+
+◦ Cadre (très simplifié) de l’étude du système de propulsion du moteur VULCAIN :
+
+- Tous les gaz sont parfaits.
+- Dans la tuyère, l’écoulement du gaz est unidirectionnel (selon l’axe $Ox$) et unidimensionnel (les grandeurs sont uniformes sur toute section droite).
+- L’évolution du gaz le long de la tuyère est adiabatique et réversible. L’écoulement est stationnaire.
+- La gravité est négligée dans l’étude de la tuyère.
+
+◦ Grandeurs, définitions, notations et données utilisées dans cette étude :
+
+- La variable $x$ représente l’abscisse le long de la tuyère. L’origine est choisie en sortie de la chambre de combustion, ce qui correspond également à l’entrée de la tuyère.
+- Les grandeurs physiques, à l’abscisse $x$ : la pression $P(x)$ ; la température $T(x)$ ; la masse volumique $\rho(x)$ ; la vitesse $v(x)$ ; la célérité du son $c(x)$ ; le nombre de MACH $M(x) \equiv v(x)/c(x)$ ; l’aire $A(x)$ de la section de la tuyère.
+- Pour $x = 0$, ces grandeurs portent l’indice “0”.
+- Les pression et température dans la chambre de combustion : $P_0 = 110 \times 10^5\ \mathrm{Pa}$, $T_0 = 3\,500\ \mathrm{K}$.
+- La constante spécifique de la vapeur d’eau : $r \equiv R/M_{\mathrm{H_2O}} = 462\ \mathrm{J \cdot K^{-1} \cdot kg^{-1}}$, où $R$ est la constante des gaz parfaits et $M_{\mathrm{H_2O}}$ est la masse molaire de l’eau.
+- Le rapport des capacités calorifiques ($C_P/C_V$) pour la vapeur d’eau : $\gamma = 1{,}3$ (supposé constant).
+- Les diamètre et section d’entrée de la tuyère : $d_0 = 0{,}5\ \mathrm{m}$ , $A_0 \simeq 0{,}196\ \mathrm{m^2}$.
+- La masse de gaz de combustion produit par unité de temps : $D = 250\ \mathrm{kg \cdot s^{-1}}$. Ce débit est supposé constant.
+- La masse initiale de l’ensemble de la fusée (avec carburants et comburants) : $m_{\mathrm{F0}} = 800 \times 10^3\ \mathrm{kg}$.
+- La différentielle $\mathrm{d}f$ désigne l’accroissement infinitésimal de la fonction $f$ entre les abscisses $x$ et $x + \mathrm{d}x$.
+- Nous appelons différentielle logarithmique d’une fonction $f$, la grandeur :
+
+$$
+\frac{\mathrm{d}f}{f} = \mathrm{d}(\ln(f/f_0)) \qquad (f/f_0 \in \mathbb{R}_+^{\star}) \qquad (1)
+$$
+
+En particulier, appliquée à un produit de deux fonctions de la forme $P = f^{\alpha} g^{\beta}$, elle s‘écrit :
+
+$$
+\frac{\mathrm{d}P}{P} = \alpha\frac{\mathrm{d}f}{f} + \beta\frac{\mathrm{d}g}{g} \qquad (2)
+$$
+
+- Le symbole “$\equiv$” spécifie une égalité introduisant et définissant une grandeur.
+
+$^{1}$ Ces lanceurs sont utilisés pour le transport et la mise sur orbite de satellites.
+
+$^{2}$ Ces carburant et comburant sont stockés, sous leur état liquide, chacun dans un réservoir.
+
+<ProblemSection id="s1">
+
+### 1 Analyse préliminaire.
+
+**1.** Nous notons $\vec{v}_{\mathrm{s}} = v_{\mathrm{s}}\,\vec{e}_x$ la vitesse du gaz en sortie de tuyère, par rapport à la fusée. La force $\vec{F}$, dite de poussée, ressentie par la fusée, s’exprime :
+
+$$
+\vec{F} = -D\,v_{\mathrm{s}}\,\vec{e}_x \qquad (3)
+$$
+
+Proposer une brève argumentation en faveur de cette expression.
+
+**2.** En précisant les éventuelles hypothèses introduites, exprimer la vitesse quadratique moyenne $\langle \vec{v}^{\,2} \rangle$ de la vapeur d’eau dans la chambre de combustion. On fera apparaître la constante spécifique $r$.
+
+**3.** Exprimer la poussée (notée $F_{\mathrm{th}}$) qui serait fournie, directement en sortie de chambre (en absence de tuyère), si elle était la conséquence de la conversion idéalisée de l’énergie produite par la combustion. On considérera alors que le gaz, à la température $T_0$, traverse la section $A_0$ à la vitesse $v_{\mathrm{th}} \equiv \langle \vec{v}^{\,2} \rangle^{1/2}$. On exprimera ce résultat en fonction de $P_0$ et $A_0$.
+
+**4.** Calculer sa valeur. Commenter ce résultat.
+
+**5.** Exprimer, en fonction de $\gamma$, $r$ et $T$, le rapport $\mathrm{d}P/\mathrm{d}\rho$ que nous noterons $c^2$. La grandeur $c$ est identifiée à la célérité des ondes sonores (en évolution adiabatique réversible) dans le gaz. Dans la suite, nous appellerons nombre de MACH le rapport $M \equiv v/c$.
+
+**6.** Nous considérons dorénavant le mode de fonctionnement non idéalisé du propulseur. Exprimer la vitesse $v_0$ du gaz à l’entrée de la tuyère en fonction de $P_0$, $T_0$, $D$, $A_0$ et $r$. Calculer sa valeur.
+
+**7.** Calculer la valeur du nombre de MACH $M_0$ à l’entrée de la tuyère. En déduire la nature subsonique ($M_0 < 1$) ou supersonique ($M_0 > 1$) de l’écoulement gazeux. Le calcul donne $c_0 \simeq 1\,450\ \mathrm{m \cdot s^{-1}}$.
+
+</ProblemSection>
+
+<ProblemSection id="s2">
+
+### 2 Relation de HUGONIOT.
+
+En vue d’étudier les performances de la tuyère, nous allons tout d’abord établir une relation entre les différentielles $\mathrm{d}A$ et $\mathrm{d}v$, paramétrée par le nombre de MACH $M$.
+
+Nous admettons que les différentielles de la vitesse et de la pression sont reliées par l’égalité, issue du principe fondamental de la dynamique :
+
+$$
+\rho\, v\mathrm{d}v = -\mathrm{d}P \qquad (4)
+$$
+
+**8.** Justifier que le produit $\rho v A$ est uniforme le long de la tuyère.
+
+**9.** Exprimer la différentielle logarithmique du produit $\rho v A$. En y faisant apparaître $c^2$ et intervenir la relation (4), établir l’égalité, connue sous le nom de relation de HUGONIOT :
+
+$$
+\frac{\mathrm{d}A}{A} = \left(M^2 - 1\right)\frac{\mathrm{d}v}{v} \qquad (5)
+$$
+
+**10.** L’expression de la poussée donnée par la relation (3) révèle que, pour un débit $D$ fixé, cette force est d’autant plus grande que la vitesse d’éjection des gaz est élevée. En considérant que $M_0 < 1$, indiquer quelle(s) tuyère(s) représentée(s) figure (1) ne présente(nt) pas la géométrie adaptée.
+
+**11.** Dans le cas d’une tuyère convergente-divergente (et toujours pour $M_0 < 1$), donner l’allure des deux évolutions envisageables de la vitesse le long de la tuyère. On raisonnera à partir de l’évolution du signe de $\mathrm{d}A$ le long d’une telle tuyère. En déduire la condition assurant la croissance monotone de la vitesse depuis son entrée jusqu’à sa sortie. La tuyère est alors dite amorcée. C’est dans cette situation que nous chercherons à la faire fonctionner.
+
+**12.** Une tuyère divergente équipe pourtant certains propulseurs d’avions de chasse. Préciser leur condition de fonctionnement.
+
+</ProblemSection>
+
+<ProblemSection id="s3">
+
+### 3 Dépendance des grandeurs avec le nombre de MACH.
+
+La relation de HUGONIOT n’est pas immédiatement exploitable car le nombre de MACH dépend de la vitesse $v(x)$ mais également de la température $T(x)$, à travers la célérité du son $c(x)$. Nous allons d’abord établir une relation différentielle liant les seules variables $A$ et $M$.
+
+**13.** Exprimer $\mathrm{d}M/M$ en fonction de $\mathrm{d}v/v$ et $\mathrm{d}T/T$.
+
+**14.** En traduisant la propriété d’adiabaticité et de réversibilité de l’évolution, et en utilisant la relation (4), exprimer $\mathrm{d}v/v$ en fonction de $\mathrm{d}T/T$, $M$ et $\gamma$.
+
+**15.** Enfin, en faisant disparaître $v$ au profit de $M$ dans l’équation (5), établir la relation cherchée :
+
+$$
+\frac{\mathrm{d}A}{A} = \frac{M^2 - 1}{1 + \alpha M^2}\,\frac{\mathrm{d}M}{M} \qquad (6)
+$$
+
+où $\alpha$ est une constante positive que l’on explicitera.
+
+• En vue d’intégrer cette équation différentielle à variables séparées, décomposons d’abord la fonction $g$ définie par $g(M) = \dfrac{1}{A}\dfrac{\mathrm{d}A}{\mathrm{d}M}$ en éléments simples. Écrivons-là :
+
+$$
+g(M) = \frac{M^2 - 1}{M\,(1 + \alpha M^2)} = \frac{C_1}{M} + \frac{C_2 + C_3 M}{1 + \alpha M^2} \qquad (7)
+$$
+
+**16.** Déterminer les constantes $C_1$, $C_2$ et $C_3$.
+
+**17.** Intégrer l’équation différentielle (6). Nous écrirons sa solution sous la forme $A\,f(M) = \mathrm{Cste}$ en choisissant $f$ telle que $\dfrac{f(M)}{M} \xrightarrow{M \to 0} 1$. Nous poserons $\beta = (1 + \alpha)/(2\alpha)$.
+
+**18.** Justifier que la fonction $f$ admet un extremum. Le situer sur l’axe des abscisses. Ces résultats peuvent s’obtenir avec un minimum de calculs.
+
+**19.** En déduire l’allure graphique de la fonction $A = A(M)$. On marquera d’une étoile le point $(M_0, A_0)$.
+
+**20.** Pour des conditions d’entrée fixées $(P_0, T_0, A_0, D)$ (avec toujours $M_0 < 1$), décrire les parcours possibles du point $(M, A)$ sur ce tracé lorsque le gaz progresse de l’entrée à la sortie de la tuyère (convergente-divergente), selon l’importance de la restriction de sa section au col.
+
+**21.** En déduire l’allure de la dépendance de $M$ avec l’abscisse $x$, pour une tuyère amorcée ($M = 1$ au col).
+
+**22.** Sur le même graphe, donner l’allure de cette dépendance pour un nombre de MACH $M_0'$, à l’entrée de la même tuyère, légèrement inférieur ($M_0' < M_0 < 1$).
+
+</ProblemSection>
+
+<ProblemSection id="s4">
+
+### 4 Caractérisation de la situation au col.
+
+Nous affectons l’indice “c” aux grandeurs relatives au col de la tuyère.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.3%', '--fig-max': '386px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp/p1-fig2.png" alt="Courbe rouge de A/Ac en fonction de M, M de 0 à 4,5 et A/Ac de 0 à 30 : la courbe descend depuis environ 15 près de M = 0 jusqu’à un minimum égal à 1 en M = 1, puis remonte jusqu’à environ 27 en M = 4,5. Grille pointillée." width="1206" height="934" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – Dépendance du rapport de sections $A/A_{\mathrm{c}}$ avec $M$.</figcaption>
+</figure>
+
+**23.** Exprimer le rapport $k_{\mathrm{c0}} \equiv A_{\mathrm{c}}/A_0$ pour la tuyère amorcée ($M_{\mathrm{c}} = 1$), en fonction de $\alpha$, $\beta$ et $M_0$. Commenter ce résultat.
+
+**24.** On utilisant la figure (2) représentant la dépendance du rapport $A/A_{\mathrm{c}}$ avec $M$, déterminer la valeur de $k_{\mathrm{c0}}$ puis celle de la section $A_{\mathrm{c}}$.
+
+</ProblemSection>
+
+<ProblemSection id="s5">
+
+### 5 Adaptation en pression.
+
+Pour des paramètres fixés à l’entrée de la tuyère, la relation de HUGONIOT permet d’établir la condition de son amorçage mais elle n’en impose aucune à sa sortie. Nous admettons que le fonctionnement de la tuyère est optimal lorsque la pression à sa sortie est égale à la pression extérieure (absence d’onde de choc, ou de détente). La tuyère est alors dite “adaptée”. Nous notons $P_{\mathrm{e}}$ cette pression et la choisissons égale à $10^5\ \mathrm{Pa}$ (situation de la fusée au décollage). La figure (3) illustre les trois régimes de fonctionnement possibles, en sortie de tuyère. Nous affectons l’indice “s” aux grandeurs relatives à la sortie de la tuyère.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '96.2%', '--fig-max': '616px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp/p1-fig3.png" alt="Trois schémas a), b), c) d’une chambre ronde suivie d’une tuyère convergente-divergente (contour bleu) ; le gaz grisé sort de la tuyère : en a) le jet garde la largeur de la sortie, en b) le jet se resserre après la sortie, en c) le jet s’élargit après la sortie." width="1926" height="397" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Les trois régimes de fonctionnement de la tuyère selon la situation de la pression du gaz à sa sortie, par rapport à la pression extérieure $P_{\mathrm{e}}$. Le gaz de combustion occupe le domaine grisé.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '61.5%', '--fig-max': '394px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp/p1-fig4.png" alt="Courbe rouge de P/P0 en fonction de M (0 à 4,5), axe vertical logarithmique de 10^-3 à 10^0 : la courbe part de 1 en M = 0 et décroît jusqu’à environ 2,5·10^-3 en M = 4,5. Grille pointillée." width="1231" height="917" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Dépendance du rapport $P/P_0$ avec $M$, en coordonnées semi-logarithmiques.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.5%', '--fig-max': '388px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp/p1-fig5.png" alt="Courbe rouge de T/T0 en fonction de M (0 à 4,5), axe vertical de 0 à 1,2 : la courbe part de 1 en M = 0 et décroît jusqu’à environ 0,25 en M = 4,5. Grille pointillée." width="1211" height="920" loading="lazy" decoding="async" />
+<figcaption>Figure 5 – Dépendance du rapport $T/T_0$ avec $M$.</figcaption>
+</figure>
+
+**25.** Proposer une association argumentée de chacun des trois cas illustrés sur la figure (3) au régime sous-détendu ($P_{\mathrm{s}} > P_{\mathrm{e}}$), adapté ($P_{\mathrm{s}} = P_{\mathrm{e}}$) ou sur-détendu ($P_{\mathrm{s}} < P_{\mathrm{e}}$) qui lui correspond.
+
+**26.** Montrer que la relation différentielle liant $\mathrm{d}v$ à $\mathrm{d}T$, établie en réponse à la question (**14**), conduit à la relation :
+
+$$
+\frac{\gamma r}{\gamma - 1}\mathrm{d}T + v\,\mathrm{d}v = 0 \qquad (8)
+$$
+
+Indiquer la loi de conservation qu’elle traduit.
+
+**27.** En utilisant le résultat de la question (**13**), déduire la relation :
+
+$$
+T\,(1 + \alpha M^2) = \mathrm{Cste} \qquad (9)
+$$
+
+**28.** Établir une relation similaire liant la pression au nombre de MACH.
+
+**29.** Exprimer alors $M_{\mathrm{s}}^{\,2}$ à la sortie de la tuyère correspondant à son adaptation à la pression $P_{\mathrm{e}}$. Donner une forme approchée de cette relation en tenant compte des ordres de grandeur des termes qui y interviennent.
+
+**30.** Extraire la valeur de $M_{\mathrm{s}}$ de la figure (4) représentant la dépendance de $P/P_0$ avec $M$.
+
+**31.** Extraire, de la figure (2) représentant la dépendance du rapport $A/A_{\mathrm{c}}$ avec $M$, la valeur du rapport $k_{\mathrm{sc}} \equiv A_{\mathrm{s}}/A_{\mathrm{c}}$ dans les conditions d’adaptation à la pression $P_{\mathrm{e}}$.
+
+**32.** En s’aidant de la figure (5) représentant la dépendance du rapport $T/T_0$ avec $M$, calculer la force de poussée $F_{\mathrm{s}}$. Commenter la comparaison de cette force avec le poids de la fusée puis à la force $F_{\mathrm{th}}$ calculée question (**3**).
+
+**33.** Dans le cas du moteur VULCAIN, le rapport $k_{\mathrm{sc}}$ est choisi égal à 45. Au décollage, le régime est-il alors adapté, sous-détendu ou sur-détendu ? Donner une raison possible de ce choix.
+
+**34.** Indiquer, par exemple à l’aide d’un schéma, où s’appliquent les efforts qui contribuent à la poussée de la fusée. Préciser la difficulté technique que cela soulève.
+
+**35.** Parmi toutes les hypothèses adoptées *a priori*, indiquer, sur la base d’une brève argumentation, celle qui paraît la plus discutable.
+
+</ProblemSection>
+
+<ProblemSection id="s6">
+
+### 6 Propulseurs d’appoint.
+
+Le moteur VULCAIN n’assure qu’une proportion réduite de la poussée lors de la sortie de l’atmosphère. La fusée ARIANE est flanquée de deux très puissants propulseurs latéraux (ou boosters). Les carburant et comburant sont mélangés en proportion stœchiométrique et forment, avec un liant, un milieu solide (nommé grain) dont la combustion produit le gaz de propulsion. Le grain, de forme générale cylindrique, comporte, sur toute la hauteur du booster, un canal de forme appropriée, qui tient lieu de chambre de combustion. La réaction chimique est initiée par une dispositif d’allumage (en haut du booster). Après une phase transitoire de propagation, la combustion s’effectue uniformément sur la surface du canal. Le gaz produit s’échappe à la base du booster qui se termine par une tuyère, tout comme le moteur VULCAIN. La figure (6) présente trois géométries de canal.
+
+Nous notons $H$ la hauteur du booster, $R_0$ son rayon, $\mu$ la masse volumique du mélange réactif solide, $Q = Q(t)$ le débit de masse de gaz éjecté. Nous considérons que la vitesse $u$ du front de combustion (interface de combustion où s’effectue la transformation du grain en gaz) est constante. Nous négligeons la présence du liant (en faible proportion) dans le composé réactif solide.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.4%', '--fig-max': '272px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp/p1-fig6.png" alt="Trois cylindres gris en perspective : a) cylindre fendu par une fente plane diamétrale sur toute sa hauteur ; b) cylindre percé d’un canal cylindrique central ; c) cylindre percé d’un canal annulaire entourant un cylindre central." width="849" height="398" loading="lazy" decoding="async" />
+<figcaption>Figure 6 – Différentes géométries du canal dans un booster : a) canal plan, b) canal cylindrique et c) canal annulaire.</figcaption>
+</figure>
+
+**36.** Sans calcul, tracer l’allure de la dépendance temporelle du débit $Q$ pour les boosters (a) et (b). On veillera à attribuer à chacun des ces tracés la courbure qui lui correspond.
+
+**37.** Le booster (c) est percé d’un canal annulaire de rayons initiaux $R_0/2$ et $R_0/2 + e_0$. Exprimer le débit $Q(t)$ en fonction des paramètres du booster. Nous considérerons que $e_0 \ll R_0$.
+
+**38.** Tracer l’allure de l’évolution de ce débit au cours du temps.
+
+**39.** Quelle conception semble-t-elle la plus appropriée ? Une argumentation est attendue.
+
+**40.** Le booster (c) présente un inconvénient pratique : la fixation du cylindre central aux parois du booster est fragile et peut céder au cours du vol. Proposer une géométrie de canal, inspirée des configurations (a) et (b), qui présente l’avantage de la conception (c) sans son inconvénient de fragilité.
+
+**41.** La figure (7) représente l’évolution de la vitesse du lanceur ARIANE 5 sur le début de son vol. Le point repéré par une étoile situe l’extinction des boosters. Sur la première phase ($t \in [0, t^{\star}]$), la masse du lanceur s’est réduite de 800 à 250 tonnes. Sur cette phase, sa trajectoire est quasi-verticale. Quelques secondes après leur extinction, les boosters sont largués, ce qui déleste la fusée d’encore 76 tonnes. Interpréter cette évolution. Estimer la poussée au décollage. La comparer à la participation du moteur VULCAIN calculée en question (**32**). On indiquera le pourcentage de contribution du moteur VULCAIN à la poussée totale (au décollage).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '65.5%', '--fig-max': '420px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp/p1-fig7.png" alt="Courbe rouge de la vitesse V (m·s^-1, de 0 à 2 500) en fonction du temps t (s, de 0 à 200) : croissance de plus en plus rapide de 0 à environ 2 000 m/s en t ≈ 110 s, point marqué d’une étoile noire à la cassure, puis croissance lente et linéaire jusqu’à environ 2 370 m/s en t = 200 s. Grille pointillée." width="1311" height="969" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2018.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2018.pdf#page=1)

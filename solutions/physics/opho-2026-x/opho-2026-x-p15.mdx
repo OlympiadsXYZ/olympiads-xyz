@@ -1,0 +1,187 @@
+---
+id: opho-2026-x-p15
+source: 'OPhO 2026, Единствен кръг'
+title: 'Задача 15. Aberration'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2026/opho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:43:04.524Z'
+verifier: 'mechanical'
+---
+
+*2026 Online Physics Olympiad · 21 август 2026 г.*
+
+<details>
+<summary>Last updated</summary>
+
+*Last updated: 22nd August 03:35 UTC*
+
+</details>
+
+<details>
+<summary>Sponsors</summary>
+
+This competition would not be possible without the help of our sponsors.
+
+</details>
+
+<details>
+<summary>Corrections (all times are in UTC)</summary>
+
+- Q8: Cleared up wording (21/08 04:40 and 04:52)
+- Q3: improved wording (21/08 08:49)
+- Q19: Improved wording (21/08 09:42)
+- Q16: Attempts reset (21/08 22:00), Error bound increased (22/8 02:30)
+- Q1: Improved wording (22/08 03:35)
+
+</details>
+
+<details>
+<summary>Указания</summary>
+
+**Format.** The OPhO is a team-based competition (3 members at most per team). Unlike previous years, the 2026 OPhO consists of a single round held from August 21, 12 am (UTC), to August 23, 11:59 pm (UTC). The contest is made up of three parts, all running concurrently over the full contest window:
+
+- **Short Answer** — problems requiring numerical answers, submitted on the OPhO portal;
+- **Long Answer** — problems requiring full written solutions, submitted on the OPhO portal;
+- **Simulation** — computational problems requiring teams to run a provided executable locally, with solutions submitted on the OPhO portal.
+
+All teams have access to all three parts for the entire duration of the contest. Submissions are made on the OPhO portal https://opho.physoly.org/ using the team login, and may be made at any time within the contest window.
+
+**Short Answer.** Teams submit numerical answers on the portal, with up to three attempts per problem. *Every* answer submission must be accompanied by a file upload, on the portal, of the working used to obtain that answer. This working will not be graded, but submissions without it will not be accepted. The base score for each problem depends on the number of teams that successfully answer it, each incorrect attempt multiplies the base score by a factor of 0.8, and there is no time factor. The score for an individual problem follows:
+
+$$
+w(N) = (0.8)^i\left[e^{-\frac{x(N)}{200}} + e^{-\frac{x(N)^2}{100}} + 1\right],
+$$
+
+where $i \in \{0, 1, 2\}$ represents whether a team got it on the first, second, or third try, $N$ represents the number of teams that answer the problem correctly, and $x(N)$ is the sum of $(0.8)^i$ across all teams that have solved the problem. The base score is independent of problem number, but expect questions to be ordered roughly by difficulty. A team’s raw Short Answer total is the sum of these values, and all raw totals are then scaled linearly such that the top team receives 55 points.
+
+**Long Answer.** Teams submit full solutions on the portal. Rubrics are predetermined, and solutions will be reviewed to determine the proper number of points to give. The points breakdown is given per problem, for a total of 35 points. It is recommended that participants write their solutions in LaTeX. Handwritten solutions (or a combination of both) are accepted too; if participants have more than one photo of a handwritten solution (`jpg`, `png`, etc.), it is required that they be organized in the correct order in a `pdf` before submitting.
+
+**Simulation.** Teams will need to be able to run a provided executable locally. Solutions are submitted on the portal and will be graded against predetermined rubrics. The points breakdown is given per problem, for a total of 10 points.
+
+**Scoring.** A team’s cumulative score is the sum of its scaled Short Answer score (out of 55 points), Long Answer score (out of 35 points), and Simulation score (out of 10 points), for a maximum score of 100 points.
+
+**Permitted Resources.** Use of the internet is allowed, including textbooks, published papers, calculators, and computer algebra systems. However, the use of AI tools of any kind is strictly prohibited. This includes, but is not limited to, large language models (e.g. ChatGPT, Claude, Gemini), AI coding assistants, AI-generated search summaries, and any other AI-powered assistance.
+
+**Dishonest Behavior.** Please refrain from cheating in any form. This includes, but is not limited to, creating alternate accounts to gain additional attempts, sharing answers with other teams, posting problems online, utilizing AI tools as described above, or employing any other method to gain an unfair advantage.
+
+We have previously caught numerous teams engaging in such practices, and pursuing dishonest tactics provides no genuine sense of security. Any teams found to be acting maliciously will be notified via email, along with the opportunity to appeal. Failing to provide a valid appeal will result in a ban from participating in any future Physoly competitions. Our utmost priority is to ensure an enjoyable contest experience for all participants, and we remain committed to preventing any disruption to the fun for others.
+
+**Awards and Results.** The top competitors will be recognized on the website. No cash prizes will be awarded this year.
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e = 9.11 \cdot 10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0 = 6.02 \cdot 10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R = 8.31\ \mathrm{J/(mol \cdot K)}$
+- Boltzmann’s constant, $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e = 1.60 \cdot 10^{-19}\ \mathrm{C}$
+- 1 electron volt, $1\ \mathrm{eV} = 1.60 \cdot 10^{-19}\ \mathrm{J}$
+- Speed of light, $c = 3.00 \cdot 10^{8}\ \mathrm{m/s}$
+- Universal Gravitational constant,
+  $$
+  G = 6.67 \cdot 10^{-11}\ \mathrm{(N \cdot m^2)/kg^2}
+  $$
+- Solar Mass
+  $$
+  M_\odot = 1.988 \cdot 10^{30}\ \mathrm{kg}
+  $$
+- Acceleration due to gravity, $g = 9.8\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit,
+  $$
+  1\ \mathrm{u} = 1.66 \cdot 10^{-27}\ \mathrm{kg} = 931\ \mathrm{MeV/c^2}
+  $$
+- Planck’s constant,
+  $$
+  h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s} = 4.41 \cdot 10^{-15}\ \mathrm{eV \cdot s}
+  $$
+- Permittivity of free space,
+  $$
+  \epsilon_0 = 8.85 \cdot 10^{-12}\ \mathrm{C^2/(N \cdot m^2)}
+  $$
+- Coulomb’s law constant,
+  $$
+  k = \frac{1}{4\pi\epsilon_0} = 8.99 \cdot 10^{9}\ \mathrm{(N \cdot m^2)/C^2}
+  $$
+- Permeability of free space,
+  $$
+  \mu_0 = 4\pi \cdot 10^{-7}\ \mathrm{T \cdot m/A}
+  $$
+- Magnetic constant,
+  $$
+  \frac{\mu_0}{4\pi} = 1 \cdot 10^{-7}\ \mathrm{(T \cdot m)/A}
+  $$
+- 1 atmospheric pressure,
+  $$
+  1\ \mathrm{atm} = 1.01 \cdot 10^{5}\ \mathrm{N/m^2} = 1.01 \cdot 10^{5}\ \mathrm{Pa}
+  $$
+- Wien’s displacement constant, $b = 2.9 \cdot 10^{-3}\ \mathrm{m \cdot K}$
+- Stefan-Boltzmann constant,
+  $$
+  \sigma = 5.67 \cdot 10^{-8}\ \mathrm{W/m^2/K^4}
+  $$
+
+</details>
+
+## Условие
+
+A convex lens is formed by a flat circular surface of diameter $2r_0$ and a spherical surface with radius of curvature $R$, as shown in the figure. It has a refractive index $n = 1.5$.
+
+Light of uniform intensity $I = 30\mathrm{W\,m^{-2}}$ is incident on the flat surface parallel to the optical axis. The entire lens is illuminated. The intensity pattern produced on the focal plane is shown in the image below. (The y-axis is in units of $\mathrm{kW\,m^{-2}}$ and the x-axis is in units of mm.)
+
+You should be able to reverse engineer the radius of curvature $R$ and also the diameter of the lens $2r_0$ from the plot. Find their product $2Rr_0$ in units of $m^2$, correct to 5%. Ignore diffraction effects.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '84.4%', '--fig-max': '540px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p15-fig1.png" alt="Left: a plano-convex lens (green cap) cut from a dashed circle; a double arrow labelled r0 runs along the flat face from its left end, and a radius labelled R runs from the circle's centre to the edge of the flat face. Right: a plot of Intensity (kW/m²) from 0 to 200 against Distance along optical plane (mm) from 0.00 to 2.00; the curve falls steeply from above 200 near 0.2 mm, passes about 75 at 0.4 mm and about 25 near 0.8 mm, stays near 20 until 1.25 mm and then drops abruptly to 0." width="1689" height="823" loading="lazy" decoding="async" />
+<figcaption>Figure 3: Left: Shape of the lens. Right: Graph of intensity.</figcaption>
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- 0.034 m²
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Consider a spherical lens made of a material of refractive index $n$ and radius of curvature $R$. The position of the curved surface of the lens is given by $z(r) = \sqrt{R^2 - r^2} - R$, if we take the centre of the lens to be at the origin. A light ray arriving at a radius $r$ makes an angle $\theta_i = \arcsin\left(\frac{r}{R}\right)$ with the normal of the curved surface of the lens. Thus it exits with an angle $\theta_r = \arcsin\left(\frac{nr}{R}\right)$.  
+The trajectory of the light ray may be described by the equation  
+$r'(z) = r - \tan(\theta_r - \theta_i)(z - (\sqrt{R^2 - r^2} - R))$  
+also,
+
+$$
+\tan(\theta_r - \theta_i) = \frac{\sin\theta_r\cos\theta_i - \sin\theta_i\cos\theta_r}{\cos\theta_r\cos\theta_i - \sin\theta_r\sin\theta_i}
+$$
+
+If we expand this up to third order in $\frac{r}{R}$ we find it is equal to $(n - 1)\frac{r}{R} + \frac{1}{2}(n - 1)(n^2 - n + 1)\left(\frac{r}{R}\right)^3$. Also $z - (\sqrt{R^2 - r^2} - R) \approx z + \frac{1}{2}\frac{r^2}{R}$, and so we obtain
+
+$$
+r'(z) = r - \left((n - 1)\frac{z}{R}r + \frac{z}{2}(n - 1)(n^2 - n + 1)\left(\frac{r}{R}\right)^3 + \frac{R}{2}(n - 1)\left(\frac{r}{R}\right)^3\right)
+$$
+
+Comparing the first order term at $z = f$ the focal plane, we find $R = (n - 1)f$. This leaves us with a third order term
+
+$$
+r'(f) = -\frac{R}{2}\left((n^2 - n + 1) + (n - 1)\right)\left(\frac{r}{R}\right)^3 = -\frac{1}{2}n^2 R\left(\frac{r}{R}\right)^3
+$$
+
+Thus a ring of radius $r$ incident on the lens gets mapped to a ring of radius $r' = \frac{1}{2}n^2 R\left(\frac{r}{R}\right)^3$ on the focal plane. By conservation of energy, $2\pi r\,dr\,I_0 = 2\pi r'\,dr'\,I$ which gives $I = I_0\frac{r}{r'}\frac{dr}{dr'} = I_0\frac{2}{n^2}\left(\frac{R}{r}\right)^2\frac{1}{\frac{3}{2}n^2\left(\frac{r}{R}\right)^2} = \frac{4}{3n^4}I_0\left(\frac{R}{r}\right)^4 = \frac{2^{2/3}}{3n^{4/3}}I_0\left(\frac{R}{r'}\right)^{4/3}$. This can be rearranged to become $R = \frac{3^{3/4}n}{\sqrt{2}}r'\left(\frac{I_0}{I}\right)^{3/4}$.  
+and of course for $r' > \frac{1}{2}n^2 R\left(\frac{r_0}{R}\right)^3$ the intensity would simply be 0.  
+We can fit any point or range of points on the non-zero part of the graph, which is independent of $r_0$, to find $R$. This can be improved by reading off the image using a pixel counter (or even just using a ruler on the page). Using e.g. (1.00, 22) we find $R \approx 0.34$. Fitting the cutoff point to $r_0$ gives us $r_0 \approx 0.050$ and so $2Rr_0 \approx 0.034$.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/problems.pdf#page=10)
+· официални решения: [solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/solutions.pdf#page=25)

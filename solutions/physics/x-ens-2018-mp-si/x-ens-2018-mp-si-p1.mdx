@@ -1,0 +1,217 @@
+---
+id: x-ens-2018-mp-si-p1
+source: 'X-ENS 2018, Приемен изпит, математика и физика, математика и физика · инженерни науки'
+title: 'Задача 1. Première partie — Étude d’un dispositif de protection contre les surintensités'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2018/x-ens-2018-mp-si.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:41:23.515Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE POLYTECHNIQUE — CONCOURS D’ADMISSION 2018 — FILIÈRE MP — COMPOSITION DE PHYSIQUE ET SCIENCES DE L’INGÉNIEUR – (X)*
+
+<details>
+<summary>Consignes</summary>
+
+*L’usage de calculatrice n’est pas autorisé pour cette épreuve. Les résultats des applications numériques seront donnés avec un chiffre significatif.*
+
+*Les candidats indiqueront très clairement les parties et références des questions abordées.*
+
+</details>
+
+<details>
+<summary>Présentation de l’épreuve</summary>
+
+Cette épreuve comprend deux parties indépendantes sur le thème de la stabilité d’équilibre. La première porte sur l’étude d’un dispositif de protection électrique basé sur un effet de couplage électrique–thermique. La seconde s’intéresse au flambement des structures en coque mince. Les calculs relatifs à la section (3) de la première partie sont indépendants des résultats des parties précédentes. Il est conseillé de ne pas consacrer plus de 2h00 par partie.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1 Équations de fonctionnement.](#s1)
+- [2 Étude du régime stationnaire.](#s2)
+- [3 Analyse de la stabilité du point de fonctionnement.](#s3)
+
+</nav>
+
+Cette partie est consacrée à l’étude du fonctionnement d’un composant électrique commercialisé sous le nom de “fusible auto-réarmable”. C’est l’augmentation de sa résistance avec la température qui limite la durée de la surintensité dans les circuits ou matériels électriques qu’il protège. Ce fusible particulier$^{1}$ offre l’avantage de rejoindre spontanément son état faiblement résistif après disparition de la surcharge. La figure (1) présente un tel composant.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '19.2%', '--fig-max': '124px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p1-fig1.png" alt="Photographie d’un fusible auto-réarmable : boîtier plat rectangulaire jaune-brun aux coins arrondis, marqué « 0100 », avec deux pattes métalliques en bas." width="386" height="397" loading="lazy" decoding="async" />
+<figcaption>Figure 1 – Un type de fusible auto-réarmable (*Bel Fuse, Inc.* – $120\ \mathrm{V}$ $1\ \mathrm{A}$) : $20{,}1\times 11{,}5\times 4{,}1\ \mathrm{mm}^3$ (épaisseur, hors du plan de la figure).</figcaption>
+</figure>
+
+Nous modélisons ce composant par un dipôle ohmique (que nous appellerons indifféremment résistance), de forme parallélépipèdique, dont la conductivité électrique $\sigma$ dépend de la température $T$. Ce dipôle est alimenté par un générateur G de résistance interne $R_{\mathrm{G}}$ et de force électromotrice continue $U_{\mathrm{G}}$. La figure (2) représente ce système. La connexion (en A et B) des fils avec le dipôle est assurée par deux électrodes métalliques planes de surface $S$. L’état du générateur est décrit par la différence de potentiel $U$ à ses bornes et le courant $I$ qu’il débite. L’état du dipôle est défini par le champ spatio-temporel de température $T(x,t)$ et celui du champ électrique $\vec{E}=E(x,t)\,\vec{u}_x$. L’état du milieu extérieur est caractérisé par sa température $T_{\mathrm{e}}$ supposée constante et uniforme. Nous notons $c$ la capacité thermique (à pression constante), par unité de volume, du matériau constituant la résistance et $\lambda$ sa conductivité thermique. Ces deux grandeurs sont supposées indépendantes de la température.
+
+$^{1}$ Le nom de “fusible” qui a été attribué à ce composant est donc impropre.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '41.8%', '--fig-max': '268px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p1-fig2.png" alt="Schéma : dipôle rectangulaire grisé de largeur 2a (propriétés (c,λ)) entre deux électrodes de contact verticales A et B, repère O, axes x, y, z ; « Surface S », « Electrodes de contact » ; températures T_e de part et d’autre ; circuit fermé par le générateur G, courant I, tension U." width="836" height="710" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – Système constitué du générateur $\mathrm{G}(U_{\mathrm{G}},R_{\mathrm{G}})$ et du dipôle ohmique soumis à la différence de potentiel $U=V_{\mathrm{A}}-V_{\mathrm{B}}\geq 0$ et traversé par le courant $I$. Le milieu extérieur est maintenu à la température $T_{\mathrm{e}}$.</figcaption>
+</figure>
+
+<ProblemSection id="s1">
+
+### 1 Équations de fonctionnement.
+
+Nous allons établir les équations décrivant le fonctionnement couplé électrique–thermique du système.
+
+**1.** Nous avons implicitement supposé que les grandeurs $T$ et $E$ décrivant l’état du dipôle sont invariantes selon les directions orthogonales à l’axe $(\mathrm{O}x)$. Préciser à quelles conditions on s’approche électriquement et thermiquement de cette situation.
+
+**2.** Justifier que le courant $I$ est indépendant de $x$. Nous noterons $J=I/S$ le courant par unité de surface.
+
+**3.** Préciser la symétrie spatiale que présentent la répartition de température $T(x,t)$ et celle du champ électrique $\vec{E}(x,t)$. On procédera avec rigueur en détaillant le raisonnement conduit.
+
+**4.** Établir l’équation différentielle vérifiée par la température en considérant sa dépendance temporelle. On fera apparaître le courant par unité de surface $J$.
+
+**5.** Établir la loi d’Ohm pour le dipôle. En déduire l’expression de sa résistance $R$ (sous forme d’une intégrale).
+
+**6.** Écrire l’équation de fonctionnement du générateur reliant $U$ à $I$.
+
+**7.** Déduire des résultats précédents (questions (5) et (6)) l’expression du courant par unité de surface $J$ en fonction de $U_{\mathrm{G}}$, $R_{\mathrm{G}}$, $R$ et $S$.
+
+Cette relation, conjointe à l’équation thermique obtenue en réponse à la question (4), décrit le couplage électrique–thermique sur lequel va reposer cette étude.
+
+</ProblemSection>
+
+<ProblemSection id="s2">
+
+### 2 Étude du régime stationnaire.
+
+Nous nous plaçons en régime supposé stationnaire et cherchons à caractériser le point de fonctionnement du système générateur–dipôle (dans le milieu extérieur à $T_{\mathrm{e}}$ fixée).
+
+**8.** Établir, à partir de chacune des équations thermique et électrique (obtenues questions (4) et (5)), l’équation d’énergie (ou de puissance) qui lui correspond. Vérifier que les deux équations obtenues traduisent, conjointement, la conversion de l’énergie électrique fournie par le générateur en chaleur reçue par le milieu extérieur.
+
+• Nous envisageons ici une situation telle qu’il devient légitime d’écrire la conductivité électrique sous la forme d’un développement limité au premier ordre relativement à l’écart de température :
+
+$$
+\sigma(T)=\sigma_{\mathrm{e}}\left(1+\varepsilon\frac{T-T_{\mathrm{e}}}{T_{\mathrm{e}}}\right)\quad\text{où}\quad\frac{T-T_{\mathrm{e}}}{T_{\mathrm{e}}}\ll 1\qquad (1)
+$$
+
+De plus, nous supposons que $\sigma$ varie modérément avec la température, c’est-à-dire que $|\varepsilon|\ll 1$. Enfin, nous effectuons le changement de variables :
+
+$$
+\begin{cases}X=x/a\\ Y=Y(X)=(T-T_{\mathrm{e}})/T_{\mathrm{e}}\end{cases}\qquad\text{et posons}\quad K=\frac{J^2a^2}{\lambda T_{\mathrm{e}}\sigma_{\mathrm{e}}}\qquad (2)
+$$
+
+**9.** Attribuer une signification physique au rapport $K$.
+
+**10.** Établir que l’équation thermique et l’expression de $R$, avec ces nouvelles variables, au premier ordre relativement à $\varepsilon Y$, deviennent :
+
+$$
+\begin{cases}\dfrac{\mathrm{d}^2Y}{\mathrm{d}X^2}-\varepsilon KY=-K\\[2mm] R=\dfrac{2a}{S\sigma_{\mathrm{e}}}\displaystyle\int_0^1(1-\varepsilon Y)\,\mathrm{d}X\end{cases}\qquad (3)
+$$
+
+• Nous recherchons la solution de l’équation thermique sous la forme d’un développement limité au premier ordre par rapport au paramètre $\varepsilon$ :
+
+$$
+\begin{cases}Y(X)=Y_0(X)+\varepsilon Y_1(X)\\ K=K_0+\varepsilon K_1\end{cases}\qquad (4)
+$$
+
+Dans la suite, l’indice “0” fera référence à la situation pour laquelle $\varepsilon=0$. Nous notons ainsi, toujours au premier ordre par rapport à $\varepsilon$, $R=R_0-\varepsilon R_1$. Par ailleurs, nous adoptons la condition aux frontières $T(\pm a)=T_{\mathrm{e}}$.
+
+**11.** Exprimer $R_0$ et $R_1$ (cette dernière, sous forme intégrale). On veillera à respecter la cohérence d’ordre des développements effectués.
+
+**12.** En déduire l’expression de $K_0$ en fonction de $I_0$, $T_{\mathrm{e}}$, $S$, $a$, $\lambda$ et $\sigma_{\mathrm{e}}$, puis celle de $K_1$ en fonction de $K_0$, $R_{\mathrm{G}}$, $R_0$ et $R_1$.
+
+**13.** Établir le système d’équations différentielles dont sont solutions $Y_0$ et $Y_1$.
+
+• L’intégration du système d’équations différentielles obtenu, respectant les conditions aux frontières adoptées, conduit à la fonction $Y$ :
+
+$$
+Y(X)=\frac{K_0}{2}(1-X^2)+\varepsilon\frac{K_0^2}{24}(1-X^2)\left(\Delta+X^2\right)\quad\text{où}\quad\Delta=12\frac{K_1}{K_0^2}-5=\frac{3R_0-5R_{\mathrm{G}}}{R_0+R_{\mathrm{G}}}\qquad (5)
+$$
+
+**14.** Exprimer $\Delta$ dans chacun des deux cas limites où le générateur G se comporte comme une source idéale de tension (cas $\mathrm{G}_U$) ou comme une source idéale de courant (cas $\mathrm{G}_I$). On notera $\Delta$ respectivement $\Delta_U$ et $\Delta_I$.
+
+• La résistance du dipôle, issue de cette modélisation, s’écrit :
+
+$$
+R=R_0\left(1-\varepsilon\frac{K_0}{3}\right)\quad\text{où}\quad K_0\propto I_0^2\qquad (6)
+$$
+
+**15.** Illustrer, dans le plan $(x=I,y=U)$, la construction graphique du point de fonctionnement P adopté par le système générateur–résistance dans le milieu extérieur. Nous supposerons $\varepsilon>0$.
+
+**16.** Préciser la situation de la fonction $Y$ (équation (5)) par rapport à la fonction $Y_0$, dans chacun des deux cas $\mathrm{G}_U$ et $\mathrm{G}_I$. Justifier physiquement ces résultats. On pourra raisonner sur la détermination graphique du point de fonctionnement (question (15)) dans les situations $\mathrm{G}_U$ et $\mathrm{G}_I$. Nous supposerons $\varepsilon>0$.
+
+</ProblemSection>
+
+<ProblemSection id="s3">
+
+### 3 Analyse de la stabilité du point de fonctionnement.
+
+L’équation (6) peut également s’écrire $R=R_0\left(1-\varepsilon\langle Y_0\rangle\right)$ où $\langle Y_0\rangle$ désigne la moyenne de la fonction $Y_0$ sur l’intervalle $[-1,+1]$. Dans un cadre moins restrictif que celui associé à l’équation (1), nous supposons que l’on peut encore écrire $R=R(\langle T\rangle)$. Afin d’étudier les conditions de stabilité du point de fonctionnement nous adoptons la modélisation simplifiée suivante :
+
+- La température du dipôle est uniforme, égale à sa température moyenne, notée maintenant simplement $T$ ;
+- La résistance $R$ du dipôle est une fonction de $T$ ;
+- La dépendance $R=R(T)$ est caractérisée par le coefficient $\alpha=\alpha(T)$ défini par : $\alpha=\dfrac{1}{R}\dfrac{\mathrm{d}R}{\mathrm{d}T}$ ;
+- Le flux thermique par unité de surface traversant la frontière du dipôle, vers l’extérieur, s’écrit $\varphi=h(T-T_{\mathrm{e}})$. Le coefficient $h$ (supposé constant) rend compte synthétiquement du processus complexe d’échange thermique à l’interface solide–fluide.
+
+Nous notons $Z^\star$ une grandeur $Z$ relative à l’état présumé stationnaire. En particulier, nous posons $T=T^\star+\theta$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '59.3%', '--fig-max': '380px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p1-fig3.png" alt="Repère à quatre cadrans numérotés (1) à (4) : axe horizontal r vers la droite (graduations r_e et 1) et T vers la gauche (T_e marqué), axe vertical ascendant T-T_e et Af(r), axe vertical descendant T (T_e, T_1, T_2). Cadran (2) : courbe Af(r) en cloche avec maximum en r = 1 (pointillé vertical). Cadran (3) : droite descendant vers le point T_e sur l’axe T. Cadran (1) : courbe décroissante r=r(T) partant de r_e. Cadran (4) : bissectrice en pointillé reportant T_1 et T_2 sur l’axe horizontal gauche." width="1187" height="745" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Repère à quatre cadrans permettant d’illustrer l’évolution de la température $T$ depuis la situation initiale $(T_{\mathrm{e}},r_{\mathrm{e}})$ (immédiatement après branchement du générateur) à la situation d’équilibre $(T^\star,r^\star)$. L’évolution représentée dans le cadrant (2) est paramétrée par la constante $A$.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '62.5%', '--fig-max': '400px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p1-fig4.png" alt="Nuage de points expérimentaux (losanges bleus) R (Ω) de 0 à 50 en fonction de T (°C) de 10 à 70 : R vaut environ 1 Ω de 20 à 40 °C, puis croît lentement (≈ 2,5 Ω à 50 °C, ≈ 4 Ω à 54 °C) et très brusquement vers 57–60 °C jusqu’à environ 46 Ω." width="1251" height="983" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Variation de la résistance d’un fusible auto-réarmable avec sa température (sur un domaine restreint de variation de sa résistance).</figcaption>
+</figure>
+
+**17.** Établir l’équation différentielle vérifiée par la température $T$. On posera $C=2caS$.
+
+**18.** Établir que cette équation différentielle, développée linéairement dans le voisinage de l’état présumé stationnaire, fait apparaître une équation algébrique (notée $\mathrm{EQ}^\star$) définissant l’équilibre (grandeurs étoilées), que l’on précisera, ainsi que l’équation différentielle associée :
+
+$$
+\frac{\mathrm{d}\theta}{\mathrm{d}t}=-k\,\theta\quad\text{où}\quad k=\frac{1}{C}\left\{\frac{(R^\star-R_{\mathrm{G}})\alpha^\star R^\star {I^\star}^2}{R_{\mathrm{G}}+R^\star}+2hS\right\}\qquad (7)
+$$
+
+**19.** Commenter l’influence, sur la stabilité de l’équilibre supposé, des termes intervenant dans l’expression du facteur $k$.
+
+**20.** Compléter cette analyse en étudiant les cas limites où le générateur fixe la tension $U$ (cas $\mathrm{G}_U$) et celui où il fixe le courant $I$ (cas $\mathrm{G}_I$).
+
+• Nous nous proposons maintenant d’étudier le cas général pour lequel le générateur ne fixe ni la tension, ni le courant. Nous supposons $\alpha=\mathrm{Cste}>0$. Nous notons $R_{\mathrm{e}}=R(T_{\mathrm{e}})$ et posons $r=R/R_{\mathrm{G}}$ en adoptant $r_{\mathrm{e}}=R_{\mathrm{e}}/R_{\mathrm{G}}<1$ (par exemple $r_{\mathrm{e}}=1/4$, pour fixer un ordre de grandeur).
+
+**21.** En explicitant la constante $A$ (en fonction de $U_{\mathrm{G}}$, $R_{\mathrm{G}}$, $h$ et $S$) et la fonction $f$, écrire l’équation différentielle obtenue en réponse à la question (17) sous la forme :
+
+$$
+\frac{ca}{h}\frac{\mathrm{d}T}{\mathrm{d}t}=F(T)\quad\text{où}\quad F(T)=Af(r)-(T-T_{\mathrm{e}})\quad\left(\text{on choisira } f \text{ telle que } f(1)=\frac{1}{4}\right)\qquad (8)
+$$
+
+**22.** Justifier, au vu de la dépendance de la fonction $f$ avec $r$, que la température est nécessairement bornée.
+
+**23.** Justifier que la construction graphique relative à la question (15) corrobore ce résultat.
+
+• Il s’agit maintenant d’étudier l’évolution de la température à partir de l’instant de “branchement” du générateur. Nous allons illustrer graphiquement cette évolution, depuis la situation initiale $(T(t=0^+)=T_{\mathrm{e}},r(t=0^+)=r_{\mathrm{e}})$, immédiatement après branchement du générateur, vers la situation d’équilibre $(T^\star,r^\star)$, dans le repère à quatre cadrans représenté figure (3). Notons que l’axe vertical ascendant porte une double échelle : à droite elle se rapporte à $Af(r)$ (fonction de $r$ – cadrant (2)), à gauche à $T-T_{\mathrm{e}}$ (fonction de $T$ – cadrant (3)). Le cadrant (1) représente la fonction $r=r(T)$. Le cadrant (4) permet simplement le report de la température de l’axe vertical descendant sur l’axe horizontal gauche.
+
+**24.** Exprimer la dépendance de $r$ avec $T$. On fera apparaître $T_{\mathrm{e}}$ et $r_{\mathrm{e}}$.
+
+**25.** Reproduire le graphe à quatre cadrans de la figure (3). Pour les trois températures $T_{\mathrm{e}}<T_1<T_2$ qui y sont repérées, représenter les points correspondants dans les cadrans (1), (2) et (3) (légende : $\circ$ pour $T_{\mathrm{e}}$, $\square$ pour $T_1$, $\bullet$ pour $T_2$).
+
+**26.** En déduire la situation d’équilibre dont on repérera par une étoile $(\star)$ les points correspondants dans chacun de ces trois cadrans. On précisera le raisonnement ayant conduit à sa détermination.
+
+**27.** Déterminer à quelle condition $r^\star>1$.
+
+**28.** Ce couplage thermique–électrique (dans le cas $\alpha>0$) est mis à profit pour réaliser des fusibles auto-réarmables (voir le paragraphe introductif). Le dipôle résistif est alors placé en série avec la charge à protéger des surintensités. Nous supposons maintenant que la résistance $R_{\mathrm{G}}$ joue le rôle de cette charge (le générateur G devenant alors idéal). Justifier le choix $r_{\mathrm{e}}<1$ et, idéalement en pratique, $r_{\mathrm{e}}\ll 1$.
+
+**29.** Imaginons que la surintensité est due à une élévation accidentelle de $U_{\mathrm{G}}$. En s’appuyant sur les réponses apportées aux questions (25) et (26), expliquer le principe de fonctionnement d’un tel fusible.
+
+• À titre d’information, le matériau constituant un fusible auto-réarmable se présente comme une matrice polymérique chargée de particules de carbone. À basse température, cette matrice adopte une structure cristalline qui offre l’ordre et la proximité nécessaires à ces particules pour assurer efficacement la conduction électrique. À plus haute température, la structure transite vers une phase amorphe qui ne présente plus ces qualités. La figure (4) représente la dépendance expérimentale de la résistance d’un tel composant avec sa température. On remarquera que cette dépendance particulière de sa résistance avec la température lui permet de très bien assurer sa fonction (identifiée en réponse à la question (29)).
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2018_SI.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2018_SI.pdf#page=1)

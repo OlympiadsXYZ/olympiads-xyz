@@ -1,0 +1,81 @@
+---
+id: x-ens-2014-mp-p2
+source: 'X-ENS 2014, Приемен изпит, математика и физика'
+title: 'Задача 2. Détection électrostatique'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2014/x-ens-2014-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:37:18.251Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE POLYTECHNIQUE – ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2014 — FILIÈRE MP — COMPOSITION DE PHYSIQUE (XULCR)*
+
+<details>
+<summary>Consignes</summary>
+
+(Durée : 4 heures)
+
+L’utilisation des calculatrices n’est pas autorisée pour cette épreuve.  
+On se contentera, pour les applications numériques, d’un seul chiffre significatif.
+
+</details>
+
+<details>
+<summary>Centrale inertielle</summary>
+
+Une centrale inertielle est un ensemble d’accéléromètres et de gyromètres qui mesure l’accélération et la vitesse angulaire d’un mobile et permet de le positionner dans l’espace. La miniaturisation et le désormais faible coût de ces capteurs permettent de les intégrer dans de nombreux dispositifs électroniques embarqués. On les retrouve par exemple dans les systèmes de navigation automobile pour pallier la perte momentanée du signal GPS, dans les disques durs d’ordinateurs portables pour prévenir des chocs éventuels et protéger les têtes de lecture, dans les smartphones ou dans les manettes de jeu vidéo pour détecter les mouvements du joueur.
+
+L’objet de ce problème est l’étude de différents types d’accéléromètres et de gyromètres. Les quatre parties du problème sont indépendantes.
+
+Dans le problème $g$ désigne l’accélération de la pesanteur que l’on prendra égale à $10\ \mathrm{m\cdot s^{-2}}$ dans les applications numériques et $c$ désigne la vitesse de la lumière dans le vide que l’on prendra égale à $3 \times 10^{8}\ \mathrm{m\cdot s^{-1}}$.
+
+</details>
+
+## Условие
+
+Dans cette partie est étudié le système de détection du déplacement de la masse d’épreuve de l’accéléromètre. Une première méthode est la détection capacitive dont le principe est présenté sur la figure 2. Une électrode est déposée sur la masse d’épreuve et fait face à une électrode fixe, le tout formant un condensateur. Un mouvement de la masse d’épreuve modifie la distance entre les électrodes et donc la capacité de ce condensateur.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.2%', '--fig-max': '488px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2014-mp/p2-fig1.png" alt="Coupe du « Boîtier de l’accéléromètre » : une « Électrode fixe » verticale fixée au boîtier fait face à une « Électrode mobile » portée par la « Masse d’épreuve » grise ; la distance entre elles est notée e + X, le déplacement X est repéré sous l’électrode mobile." width="1526" height="464" loading="lazy" decoding="async" />
+<figcaption>Figure 2: Mesure capacitive de la position de la masse d’épreuve.</figcaption>
+</figure>
+
+La mesure du déplacement de la masse d’épreuve revient donc à une mesure électronique de la capacité d’un condensateur.
+
+On assimile les deux électrodes à deux plans infinis parallèles séparés d’une distance $e + X$. La différence de potentiel entre l’électrode fixe et l’électrode mobile est $U$.
+
+**12.** Etablir l’expression du champ électrique entre les deux électrodes du condensateur en fonction de $U$, $e$, $X$. On précisera la méthode et les arguments de symétrie employés.
+
+**13.** En déduire l’expression de la capacité $C_1$ du condensateur formé par les deux électrodes. On exprimera le résultat en fonction de $e$, $X$, et de la capacité $C$ du condensateur pour $X = 0$, dont on précisera l’expression.
+
+Cette méthode capacitive est couramment utilisée pour détecter des déplacements d’objets massifs. Cependant la capacité $C_1$ ne dépend pas linéairement du déplacement $X$ et dans les accéléromètres miniatures la force électrostatique produite par le système de détection peut se révéler gênante.
+
+**14.** Donner la force qu’exerce l’électrode fixe sur l’électrode mobile en fonction de $U$, $e$, $X$, et $C$. On précisera si cette force est attractive ou répulsive.
+
+Les caractéristiques typiques d’un accéléromètre miniature sont $C = 0{,}1\ \mathrm{pF}$, $e = 1\ \mu\mathrm{m}$, $U = 1\ \mathrm{V}$ et la masse d’épreuve est de $1\ \mu\mathrm{g}$.
+
+**15.** Pour $X = 0$, donner l’ordre de grandeur de la force électrostatique s’exerçant sur l’électrode mobile et discuter de la possibilité de réaliser une mesure capacitive du déplacement de la masse d’épreuve d’un accéléromètre prévu pour mesurer des accélérations de $1g$.
+
+Dans les systèmes miniatures tels que l’accéléromètre ADLX, une seconde électrode fixe est placée symétriquement par rapport à $X = 0$ (voir figure 3). La distance entre cette électrode et l’électrode mobile est donc $e - X$. La première électrode fixe est portée au potentiel $V_s$, la seconde au potentiel $-V_s$. On mesure alors le potentiel de l’électrode mobile.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '86.8%', '--fig-max': '556px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2014-mp/p2-fig2.png" alt="Coupe du « Boîtier de l’accéléromètre » avec deux électrodes fixes (« Électrode fixe 1 », « Électrode fixe 2 ») reliées à deux générateurs Vs dont le point milieu est à la masse ; l’électrode mobile, portée par la « Masse d’épreuve », est à la distance e + X de l’électrode 1 et e − X de l’électrode 2, déplacement X ; un « Fil souple » la relie à un « Voltmètre » V relié à la masse." width="1737" height="629" loading="lazy" decoding="async" />
+<figcaption>Figure 3: Mesure électrostatique de position à deux électrodes fixes.</figcaption>
+</figure>
+
+**16.** En considérant que l’électrode mobile reste isolée et globalement neutre, donner le potentiel $V$ de l’électrode mobile en fonction $X$, $e$, et $V_s$.
+
+**17.** Dans cette configuration, quelle est la force électrostatique s’exerçant sur l’électrode mobile ?
+
+**18.** Déduire des deux questions précédentes l’avantage d’un système possédant 2 électrodes fixes par rapport à celui à une seule électrode fixe.
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2014.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2014.pdf#page=3)

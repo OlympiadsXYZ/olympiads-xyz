@@ -1,0 +1,100 @@
+---
+id: x-ens-2025-pc-p3
+source: 'X-ENS 2025, Приемен изпит, физика и химия'
+title: 'Задача 3. II – Mesure de la durée de l’impulsion'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2025/x-ens-2025-pc.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:32:33.051Z'
+verifier: 'mechanical'
+---
+
+*ECOLE POLYTECHNIQUE - ESPCI ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2025 — FILIERE PC - Epreuve n° 5 — PHYSIQUE B (XEULS) · 16 април 2025 г.*
+
+<details>
+<summary>Consignes</summary>
+
+MERCREDI 16 AVRIL 2025, 08h00 - 12h00
+
+Durée : 4 heures
+
+L’utilisation des calculatrices n’est pas autorisée pour cette épreuve
+
+</details>
+
+<details>
+<summary>Production et caractérisation d’impulsions laser attosecondes</summary>
+
+*On se contentera de réponses courtes, sauf lorsqu’il est demandé de justifier un résultat donné.*
+
+*Les applications numériques seront données avec un seul chiffre significatif.*
+
+*Les parties* I, II *et* III *peuvent être résolues de manière indépendante pour l’essentiel.*
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Largeur du paquet d’ondes](#largeur)
+- [Mesure des phases relatives](#mesure)
+
+</nav>
+
+La figure 3 montre que le spectre de la lumière émise par l’argon contient un grand nombre de pics d’intensité comparables, associés aux harmoniques du laser incident. Nous allons montrer qu’une telle superposition d’harmoniques peut engendrer une impulsion très brève, puis décrire la méthode expérimentale qui permet de mesurer sa durée.
+
+<ProblemSection id="largeur">
+
+### Largeur du paquet d’ondes
+
+On modélise la lumière émise comme une onde scalaire, qui est une superposition d’harmoniques de pulsations $q\omega$, où $q$ est un entier strictement positif et $\omega$ la pulsation du laser. On note $A_q$ l’amplitude réelle et positive de l’harmonique $q$, et $\varphi_q$ sa phase.
+
+**27.** Exprimer la puissance instantanée $I(t)$ (à une constante multiplicative globale près) en fonction des $A_q$ et des $\varphi_q$. Expliquer pourquoi elle ne dépend des phases $\varphi_q$ qu’à travers leurs différences $\varphi_q - \varphi_{q'}$.
+
+**28.** On considère d’abord le cas où l’onde est composée de $N$ harmoniques successives de $q = n$ à $q = n+N-1$, d’amplitude et de phase identique. Montrer que dans le cas $N \gg 1$, la puissance instantanée $I(t)$ présente une série de pics étroits identiques espacés de $T = 2\pi/\omega$. Déterminer la demi-largeur des pics en fonction de $T$ et $N$.
+
+**29.** Montrer que la position temporelle des pics de puissance se décale si les $N$ phases $\varphi_q$ sont en progression arithmétique, les amplitudes $A_q$ restant identiques.
+
+</ProblemSection>
+
+<ProblemSection id="mesure">
+
+### Mesure des phases relatives
+
+En pratique, on ne mesure pas directement $I(t)$. On mesure les amplitudes des harmoniques et leurs phases relatives, et on en déduit $I(t)$ par calcul, en utilisant le résultat de la question **27**. Nous allons décrire la mesure des phases relatives suivant la méthode nommée RABITT, un acronyme anglais signifiant “reconstruction de battements attosecondes par interférence de transitions à deux photons”. Cette méthode utilise une technique dite “pompe-sonde”, dans laquelle le faisceau laser est séparé en deux sous-faisceaux dits “pompe” et “sonde”, qui suivent deux trajets différents.
+
+La pompe est utilisée pour produire les harmoniques, suivant le dispositif détaillé dans la première partie. Ces harmoniques se propagent dans la même direction que celle de l’onde émise par le laser pompe, un filtre en aluminium ne laissant passer que celles de rang $q$ suffisamment élevé. Nous appelons “faisceau d’harmoniques” le faisceau obtenu après ce filtrage.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.1%', '--fig-max': '353px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2025-pc/p3-fig4.png" alt="Carte en niveaux de gris : en abscisse le retard (fs) de −15 à 15, en ordonnée la valeur de q ; des bandes horizontales claires et continues aux valeurs impaires 17, 19, 21, 23, 25 et, entre elles, des bandes modulées périodiquement en fonction du retard aux valeurs paires." width="1102" height="829" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Nombre de photoélectrons d’énergie $E_q - I_P$ en fonction du retard $\tau$ et de $q$, les zones les plus claires correspondant aux plus grands nombres [extrait de l’article “Physics of attosecond pulses produced via high harmonic generation”, par Katalin Varjù, Per Johnsson, Johan Mauritsson, Anne L’Huillier, Rodrigo López-Martens, Am. J. Phys. 77, 389–395 (2009)].</figcaption>
+</figure>
+
+**30.** Rappeler l’expression de l’énergie $E_q$ d’un photon dans l’harmonique de rang $q$.
+
+Si le faisceau d’harmoniques est focalisé sur un nouvel échantillon d’argon, et si l’énergie $E_q$ est supérieure à l’énergie d’ionisation $I_P$, l’absorption du photon par un atome d’argon conduit, par effet photoélectrique, à l’éjection d’un électron dont l’énergie cinétique vaut $E_q - I_P$. Dans la méthode RABITT, le faisceau d’harmoniques est mélangé avec le faisceau sonde avant d’être focalisé sur l’argon. L’action combinée des deux faisceaux peut aussi conduire à l’éjection d’un électron d’énergie $E_{q+1} - I_P$, ce qu’on appelle une transition à deux photons.
+
+**31.** D’après la figure 3, le faisceau d’harmoniques ne comprend que les harmoniques impaires, et deux pics successifs $q$ et $q+2$ ont des amplitudes approximativement égales. En un point donné, l’amplitude du champ électrique associé à ces deux pics est proportionnelle à $A_p(t) = \cos(q\omega t+\varphi_q)+\cos((q+2)\omega t+\varphi_{q+2})$. L’amplitude du champ électrique du faisceau sonde est, elle, proportionnelle à $A_s(t) = \cos(\omega(t+\tau))$, où $\tau$ est un retard ajustable. On admet que l’amplitude de probabilité du processus quantique de transition à deux photons est proportionnelle au produit de ces amplitudes, $A_p(t)A_s(t)$. En utilisant une représentation complexe, isoler dans ce produit les composantes proportionnelles à $\exp(i(q+1)\omega t)$, correspondant à l’éjection d’un électron d’énergie $E_{q+1} - I_P$.
+
+**32.** Exprimer la probabilité correspondante, et tracer sa variation en fonction de $\tau$. Pourquoi parle-t-on d’*interférence* de transitions à deux photons ? Exprimer l’intervalle entre deux maximums de probabilité.
+
+**33.** La mesure de l’énergie cinétique de l’électron donne accès à la valeur de $q$ (voir la fin du problème). La figure 4 représente le nombre d’électrons émis en fonction de $\tau$ et $q$. Commenter cette figure à la lueur de la figure 3 et des deux dernières questions, en distinguant les valeurs de $q$ paires et impaires. Vérifier que la valeur de $T$ déduite de cette figure est compatible avec celle obtenue à la question **3**.
+
+**34.** Comment, sur la figure 4, peut-on vérifier si $\varphi_{q+2} - \varphi_q$ est indépendant de $q$ ?
+
+**35.** Dans ce cas, donner une estimation de la durée de l’impulsion du faisceau d’harmoniques.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [PC_2025.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2025.pdf#page=5)

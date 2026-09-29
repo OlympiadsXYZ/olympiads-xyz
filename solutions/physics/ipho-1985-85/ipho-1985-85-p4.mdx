@@ -1,0 +1,212 @@
+---
+id: ipho-1985-85-p4
+source: 'IPhO 1985, Теория и експеримент'
+title: 'Задача 4. Exercise A'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/1985/ipho-1985-85.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:20:33.931Z'
+verifier: 'mechanical'
+---
+
+*Problems and solutions of the 16th IPhO Portorož, Slovenia, (Former Yugoslavia), 1985 · 10 т.*
+
+## Условие
+
+Follow the acceleration and the deceleration of a brass disk, driven by an AC electric motor. From the measured times of half turns, plot the angle, angular velocity and angular acceleration of the disk as functions of time. Determine the torque and power of the motor as functions of angular velocity.
+
+**Instrumentation**
+
+1. AC motor with switch and brass disk
+2. Induction sensor
+3. Multichannel stop-watch (computer)
+
+**Instruction**
+
+The induction sensor senses the iron pegs, mounted on the disk, when they are closer than 0.5 mm and sends a signal to the stop-watch. The stop-watch is programmed on a computer so that it registers the time at which the sensor senses the approaching peg and stores it in memory. You run the stop-watch by giving it simple numerical commands, i. e. pressing one of the following numbers:
+
+5 – MEASURE.
+
+The measurement does not start immediately. The stop-watch waits until you specify the number of measurements, that is, the number of successive detections of the pegs:
+
+3 – 30 measurements
+
+6 – 60 measurements
+
+Either of these commands starts the measurement. When a measurement is completed, the computer displays the results in graphic form. The vertical axis represents the length of the interval between detection of the pegs and the horizontal axis is the number of the interval.
+
+7 – display results in numeric form.
+
+The first column is the number of times a peg has passed the detector, the second is the time elapsed from the beginning of the measurement and the third column is the length of the time interval between the detection of the two pegs.
+
+In the case of 60 measurements:
+
+8 – displays the first page of the table
+
+2 – displays the second page of the table
+
+4 – displays the results graphically.
+
+A measurement can be interrupted before the prescribed number of measurements by pressing any key and giving the disk another half turn.
+
+The motor runs on 25 V AC. You start it with a switch on the mounting base. It may sometimes be necessary to give the disk a light push or to tap the base plate to start the disk.
+
+The total moment of inertia of all the rotating parts is: $(14.0 \pm 0.5)\cdot 10^{-6}\ \mathrm{kgm^2}$.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+The plot of the angle as a function of time for a typical measurement of the acceleration of the disk is shown in Fig. 9.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.3%', '--fig-max': '463px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1985-85/p4-sol-fig1.png" alt="Graph of the angle φ (rd, axis 10 to 80) against time t (1 to 4 s): measured points (circles) on a smooth curve rising ever more steeply from the origin to about 72 rd at about 4.2 s." width="1447" height="1129" loading="lazy" decoding="async" />
+<figcaption>Fig. 9 Angle vs. time</figcaption>
+</figure>
+
+The angular velocity is calculated using the formula:
+
+$$
+\omega_i(t_i') = \frac{\pi}{(t_{i+i} - t_i)}
+$$
+
+and corresponds to the time in the middle of the interval $(t_i, t_{i+1})$: $t_i' = \tfrac{1}{2}(t_{i+1} + t_i)$. The calculated values are displayed in Table 1 and plotted in Fig. 10.
+
+Observing the time intervals of half turns when the constant angular velocity is reached, one can conclude that the iron pegs are not positioned perfectly symmetrically. This systematic error can be neglected in the calculation of angular velocity, but not in the calculation of angular acceleration. To avoid this error we use the time intervals of full turns:
+
+$$
+\alpha_i(t_i'') = \frac{\Delta\omega_i}{\Delta t_i}\,,
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70%', '--fig-max': '448px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1985-85/p4-sol-fig2.png" alt="Graph of the angular velocity ω (s⁻¹, axis 10 to 40) against time t (1 to 4 s): points with error bars on a curve rising slowly from about 7 s⁻¹ at 0.3 s, then steeply after 2.5 s, levelling off at about 39–40 s⁻¹ after 3.7 s." width="1400" height="1104" loading="lazy" decoding="async" />
+<figcaption>Fig. 10 Angular velocity vs. time</figcaption>
+</figure>
+
+where $\Delta t_i = t_{2i+2} - t_{2i}$,
+
+$$
+\Delta\omega_i = \frac{2\pi}{(t_{2i+3} - t_{2i+1})} - \frac{2\pi}{(t_{2i+1} - t_{2i-1})}
+$$
+
+and $t_i'' = t_{2i+1}'$.
+
+The angular acceleration as a function of time is plotted in Fig. 11.
+
+The torque, $M$, and the power, $P$, necessary to drive the disk (net torque and net power), are calculated using the relation:
+
+$$
+M(t) = I\alpha(t)
+$$
+
+and
+
+$$
+P(t) = M(t)\omega(t)
+$$
+
+where the moment of inertia, $I = (14.0 \pm 0.5)\cdot 10^{-6}\ \mathrm{kgm^2}$, is given. The corresponding angular velocity is determined from the plot in Fig. 10 by interpolation. This plot is used also to find the torque and the power as functions of angular velocity (Fig. 12 and 13).
+
+| $i$ | $t$ | $\delta t$ | $\varphi$ | $t'$ | $\omega$ | $\alpha$ |
+|---:|---:|---:|---:|---:|---:|---:|
+|  | ms | ms | rd | ms | s$^{-1}$ | s$^{-2}$ |
+| 1 | 0.0 |  | 0.0 |  |  |  |
+|  |  |  |  | 272.0 | 5.78 |  |
+| 2 | 543.9 | 543.9 | 3.14 |  |  |  |
+|  |  |  |  | 758.7 | 7.31 |  |
+| 3 | 973.5 | 429.6 | 6.28 |  |  | 3.38 |
+|  |  |  |  | 1156.3 | 8.60 |  |
+| 4 | 1339.0 | 365.5 | 9.42 |  |  |  |
+|  |  |  |  | 1499.9 | 9.76 |  |
+| 5 | 1660.8 | 327.8 | 12.57 |  |  | 5.04 |
+|  |  |  |  | 1798.6 | 11.40 |  |
+| 6 | 1936.3 | 275.5 | 15.71 |  |  |  |
+|  |  |  |  | 2057.1 | 13.01 |  |
+| 7 | 2177.8 | 241.5 | 18.85 |  |  | 5.96 |
+|  |  |  |  | 2287.2 | 14.36 |  |
+| 8 | 2396.6 | 218.8 | 21.99 |  |  |  |
+|  |  |  |  | 2498.1 | 15.48 |  |
+| 9 | 2599.6 | 203.0 | 25.73 |  |  | 9.40 |
+|  |  |  |  | 2689.6 | 17.46 |  |
+| 10 | 2779.5 | 179.9 | 28.27 |  |  |  |
+|  |  |  |  | 2859.4 | 19.66 |  |
+| 11 | 2939.3 | 159.8 | 31.42 |  |  | 18.22 |
+|  |  |  |  | 3008.6 | 22.65 |  |
+| 12 | 3078.0 | 138.7 | 34.56 |  |  |  |
+|  |  |  |  | 3139.9 | 25.38 |  |
+| 13 | 3201.8 | 123.8 | 37.70 |  |  | 25.46 |
+|  |  |  |  | 3256.6 | 28.66 |  |
+| 14 | 3311.4 | 109.6 | 40.84 |  |  |  |
+|  |  |  |  | 3361.8 | 31.20 |  |
+| 15 | 3472.1 | 100.7 | 43.98 |  |  | 26.89 |
+|  |  |  |  | 3458.2 | 34.11 |  |
+| 16 | 3504.2 | 92.1 | 47.12 |  |  |  |
+|  |  |  |  | 3547.8 | 36.07 |  |
+| 17 | 3591.3 | 87.1 | 50.27 |  |  | 21.72 |
+|  |  |  |  | 3632.4 | 38.27 |  |
+| 18 | 3673.4 | 82.1 | 53.41 |  |  |  |
+|  |  |  |  | 3713.5 | 39.22 |  |
+| 19 | 3753.5 | 80.1 | 56.55 |  |  | 4.76 |
+|  |  |  |  | 3792.8 | 39.97 |  |
+| 20 | 3832.7 | 78.6 | 59.69 |  |  |  |
+|  |  |  |  | 3872.4 | 39.03 |  |
+| 21 | 3912.6 | 80.5 | 62.83 |  |  | −1.69 |
+|  |  |  |  | 3952.7 | 39.22 |  |
+| 22 | 3992.7 | 80.1 | 65.97 |  |  |  |
+|  |  |  |  | 4032.8 | 39.22 |  |
+| 23 | 4072.8 | 80.1 | 69.12 |  |  | 0.77 |
+|  |  |  |  | 4112.4 | 39.67 |  |
+| 24 | 4152.0 | 79.2 | 72.26 |  |  |  |
+|  |  |  |  | 4192.3 | 39.03 |  |
+| 25 | 4232.5 | 80.5 | 75.40 |  |  | −0.15 |
+|  |  |  |  | 4272.4 | 39.42 |  |
+| 26 | 4312.3 | 79.7 | 78.54 |  |  |  |
+
+Table 1
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70%', '--fig-max': '448px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1985-85/p4-sol-fig3.png" alt="Graph of the angular acceleration α (s⁻², axis marks 10 and 20) against time t (1 to 3 s and beyond): points with error bars rising from about 3 s⁻² at 1 s to a peak of about 27 s⁻² at about 3.4 s, then falling steeply to slightly negative values near 3.9 s and returning to about zero." width="1400" height="1018" loading="lazy" decoding="async" />
+<figcaption>Fig. 11 Angular acceleration vs. time</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '70%', '--fig-max': '448px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1985-85/p4-sol-fig4.png" alt="Graph of the torque M (10⁻⁵ Nm, axis 10 to 40) against angular velocity ω (10 to 40 s⁻¹): the full curve (net torque, points with error bars) and the dashed curve slightly above it (total torque) both rise from about 5–8 at ω ≈ 8 s⁻¹ to a maximum near 38–41 at ω ≈ 31–33 s⁻¹ and drop to zero at about 39 s⁻¹." width="1400" height="813" loading="lazy" decoding="async" />
+<figcaption>Fig. 12 Net torque (full line) and total torque (dashed line) vs. angular velocity</figcaption>
+</figure>
+
+To find the total torque and the power of the motor, the torque and the power losses due to the friction forces have to be determined and added to the corresponding values of net torque and power. By measuring the angular velocity during the deceleration of the disk after the motor has been switched off (Fig. 14), we can determine the torque of friction which is approximately constant and is equal to $M' = (3.1 \pm 0.3)\cdot 10^{-5}\ \mathrm{Nm}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '71.3%', '--fig-max': '456px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1985-85/p4-sol-fig5.png" alt="Graph of the power P (axis marks 5 and 10⁻³ W) against angular velocity ω (10 to 40 s⁻¹): a full curve with points and error bars (net power) rising to a maximum at ω ≈ 34 s⁻¹ and falling to zero at about 39 s⁻¹, a dashed curve above it (total power), and a straight dash-dotted line rising slowly from the origin (power losses)." width="1426" height="968" loading="lazy" decoding="async" />
+<figcaption>Fig. 13 Net power (full line), power loses (dashed and dotted line) and total power (dashed line) vs. angular velocity</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '64.6%', '--fig-max': '414px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1985-85/p4-sol-fig6.png" alt="Graph of the angular velocity ω (axis marks 10 and 20, unit printed as s⁻²) against time t (1 to 6 s): points with error bars along a straight falling line from about 19 at 0.3 s to about 4 at 6.2 s." width="1294" height="1010" loading="lazy" decoding="async" />
+<figcaption>Fig. 14 Angular velocity vs. time during deceleration</figcaption>
+</figure>
+
+The total torque and the total power are shown in Fig. 12 and 13.
+
+**Marking scheme**
+
+a) Determination of errors 1 p.
+
+b) Plot of angle vs. time 1 p.
+
+c) Plot of angular velocity and acceleration 3 p.
+
+d) Correct times for angular velocity 1 p.
+
+e) Plot of net torque vs. angular velocity 2 p. (Plot of torque vs. time only, 1 p.)
+
+f) Plot of net power vs. angular velocity 1 p.
+
+g) Determination of friction 1 p.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [ipho85.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1981_1990/1985/ipho85.pdf#page=4)

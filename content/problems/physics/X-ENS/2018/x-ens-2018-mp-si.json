@@ -1,0 +1,843 @@
+{
+ "paper": {
+  "id": "x-ens-2018-mp-si",
+  "subject": "physics",
+  "competition": "X-ENS",
+  "year": 2018,
+  "round": null,
+  "roundType": "theory",
+  "grade": "MP",
+  "lang": "fr",
+  "title": "ÉCOLE POLYTECHNIQUE — CONCOURS D’ADMISSION 2018 — FILIÈRE MP — COMPOSITION DE PHYSIQUE ET SCIENCES DE L’INGÉNIEUR – (X)",
+  "totalPoints": null,
+  "timeLimitMin": 240,
+  "status": "review",
+  "source": {
+   "archiveKey": "Физика/Състезания/Минко Балкански/ENS-X-exams/MP/MP_2018_SI.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "caveat": "Aucun corrigé officiel apparié n’est fourni dans le catalogue de l’archive.",
+  "documentNotes": [
+   {
+    "title": "Consignes",
+    "statement": "*L’usage de calculatrice n’est pas autorisé pour cette épreuve. Les résultats des applications numériques seront donnés avec un chiffre significatif.*\n\n*Les candidats indiqueront très clairement les parties et références des questions abordées.*",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   },
+   {
+    "title": "Présentation de l’épreuve",
+    "statement": "Cette épreuve comprend deux parties indépendantes sur le thème de la stabilité d’équilibre. La première porte sur l’étude d’un dispositif de protection électrique basé sur un effet de couplage électrique–thermique. La seconde s’intéresse au flambement des structures en coque mince. Les calculs relatifs à la section (3) de la première partie sont indépendants des résultats des parties précédentes. Il est conseillé de ne pas consacrer plus de 2h00 par partie.",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   }
+  ],
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-29",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "54ad142c6f560660e4bc79ce676f9908acb4193acfeddbdfb13605afcf9f60e8"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Lecture visuelle des onze pages. Deux parties imprimées indépendantes transcrites comme deux problèmes : Première partie (sections 1, 2, 3 ; questions 1. à 29.) et Seconde partie (sections 1, 1.1, 1.2, 1.3, 1.3.1, 1.3.2 ; questions 1. à 30., la numérotation recommence). Les paragraphes à puce intercalés entre questions sont dans statementAfter de la question qui précède ; le paragraphe « À titre d’information » est dans statementAfterParts de la section 3. Consignes et présentation de l’épreuve dans paper.documentNotes. Figures : 4 dans la première partie (figure 1 p. 1, figure 2 p. 2, figure 3 p. 4, figure 4 p. 5), 12 dans la seconde (p. 6 à 11), leur numérotation recommence à 1. Aucun barème imprimé. Aucun corrigé apparié, aucune réponse inventée. Numéros d’équation conservés tels qu’imprimés, y compris la suite (30), (33), (43), (46), (51) de la seconde partie. Noms en petites capitales écrits « Ohm », « Laplace ». Note de bas de page 1 (p. 1) placée à la fin de l’énoncé de la première partie. Formes imprimées conservées : « parallélépipèdique » (accent grave, coupé en fin de ligne « paral-lélépipèdique »), « cadrant (2) », « cadrant (3) », « Le cadrant (1) », « Le cadrant (4) », « dans le cadrant (2) » (mot existant employé pour « cadran »), « encore appelée ETFE », « Compte-tenu », « CentraleSupelec », « Ethylène » sans accent, « Electrodes » sans accent sur la figure 2 ; question 5 de la seconde partie : définition de $\\psi(Y)$ puis « Exprimer la grandeur $\\Psi$ » (majuscule imprimée) ; question 20 de la seconde partie : $h$ figure dans la liste des paramètres sans être défini dans la section 1.2. Erreur d’accord laissée telle qu’imprimée (D-P28) : « un modèle simplifiée du fonctionnement du moteur » (p. 10, section 1.3.2). Correction orthographique : « identifée » → « identifiée » (p. 4, voir tx.edits).",
+   "edits": [
+    {
+     "path": "/problems/0/sections/2/statementAfterParts",
+     "printed": "identifée",
+     "fixed": "identifiée",
+     "document": "problems",
+     "page": 4,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "x-ens-2018-mp-si-p1",
+   "number": 1,
+   "title": "Première partie — Étude d’un dispositif de protection contre les surintensités",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Cette partie est consacrée à l’étude du fonctionnement d’un composant électrique commercialisé sous le nom de “fusible auto-réarmable”. C’est l’augmentation de sa résistance avec la température qui limite la durée de la surintensité dans les circuits ou matériels électriques qu’il protège. Ce fusible particulier$^{1}$ offre l’avantage de rejoindre spontanément son état faiblement résistif après disparition de la surcharge. La figure (1) présente un tel composant.\n\nNous modélisons ce composant par un dipôle ohmique (que nous appellerons indifféremment résistance), de forme parallélépipèdique, dont la conductivité électrique $\\sigma$ dépend de la température $T$. Ce dipôle est alimenté par un générateur G de résistance interne $R_{\\mathrm{G}}$ et de force électromotrice continue $U_{\\mathrm{G}}$. La figure (2) représente ce système. La connexion (en A et B) des fils avec le dipôle est assurée par deux électrodes métalliques planes de surface $S$. L’état du générateur est décrit par la différence de potentiel $U$ à ses bornes et le courant $I$ qu’il débite. L’état du dipôle est défini par le champ spatio-temporel de température $T(x,t)$ et celui du champ électrique $\\vec{E}=E(x,t)\\,\\vec{u}_x$. L’état du milieu extérieur est caractérisé par sa température $T_{\\mathrm{e}}$ supposée constante et uniforme. Nous notons $c$ la capacité thermique (à pression constante), par unité de volume, du matériau constituant la résistance et $\\lambda$ sa conductivité thermique. Ces deux grandeurs sont supposées indépendantes de la température.\n\n$^{1}$ Le nom de “fusible” qui a été attribué à ce composant est donc impropre.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "caption": "Figure 1 – Un type de fusible auto-réarmable (*Bel Fuse, Inc.* – $120\\ \\mathrm{V}$ $1\\ \\mathrm{A}$) : $20{,}1\\times 11{,}5\\times 4{,}1\\ \\mathrm{mm}^3$ (épaisseur, hors du plan de la figure).",
+     "alt": "Photographie d’un fusible auto-réarmable : boîtier plat rectangulaire jaune-brun aux coins arrondis, marqué « 0100 », avec deux pattes métalliques en bas.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p1-fig1.png",
+     "width": 386,
+     "height": 397,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       251.19,
+       401.58,
+       343.48,
+       496.71
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p1-fig2",
+     "caption": "Figure 2 – Système constitué du générateur $\\mathrm{G}(U_{\\mathrm{G}},R_{\\mathrm{G}})$ et du dipôle ohmique soumis à la différence de potentiel $U=V_{\\mathrm{A}}-V_{\\mathrm{B}}\\geq 0$ et traversé par le courant $I$. Le milieu extérieur est maintenu à la température $T_{\\mathrm{e}}$.",
+     "alt": "Schéma : dipôle rectangulaire grisé de largeur 2a (propriétés (c,λ)) entre deux électrodes de contact verticales A et B, repère O, axes x, y, z ; « Surface S », « Electrodes de contact » ; températures T_e de part et d’autre ; circuit fermé par le générateur G, courant I, tension U.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p1-fig2.png",
+     "width": 836,
+     "height": 710,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       197.05,
+       36.18,
+       397.67,
+       206.28
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "sections": [
+    {
+     "id": "s1",
+     "title": "1 Équations de fonctionnement.",
+     "statement": "Nous allons établir les équations décrivant le fonctionnement couplé électrique–thermique du système.",
+     "parts": [
+      {
+       "label": "1.",
+       "statement": "Nous avons implicitement supposé que les grandeurs $T$ et $E$ décrivant l’état du dipôle sont invariantes selon les directions orthogonales à l’axe $(\\mathrm{O}x)$. Préciser à quelles conditions on s’approche électriquement et thermiquement de cette situation.",
+       "points": null
+      },
+      {
+       "label": "2.",
+       "statement": "Justifier que le courant $I$ est indépendant de $x$. Nous noterons $J=I/S$ le courant par unité de surface.",
+       "points": null
+      },
+      {
+       "label": "3.",
+       "statement": "Préciser la symétrie spatiale que présentent la répartition de température $T(x,t)$ et celle du champ électrique $\\vec{E}(x,t)$. On procédera avec rigueur en détaillant le raisonnement conduit.",
+       "points": null
+      },
+      {
+       "label": "4.",
+       "statement": "Établir l’équation différentielle vérifiée par la température en considérant sa dépendance temporelle. On fera apparaître le courant par unité de surface $J$.",
+       "points": null
+      },
+      {
+       "label": "5.",
+       "statement": "Établir la loi d’Ohm pour le dipôle. En déduire l’expression de sa résistance $R$ (sous forme d’une intégrale).",
+       "points": null
+      },
+      {
+       "label": "6.",
+       "statement": "Écrire l’équation de fonctionnement du générateur reliant $U$ à $I$.",
+       "points": null
+      },
+      {
+       "label": "7.",
+       "statement": "Déduire des résultats précédents (questions (5) et (6)) l’expression du courant par unité de surface $J$ en fonction de $U_{\\mathrm{G}}$, $R_{\\mathrm{G}}$, $R$ et $S$.\n\nCette relation, conjointe à l’équation thermique obtenue en réponse à la question (4), décrit le couplage électrique–thermique sur lequel va reposer cette étude.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s2",
+     "title": "2 Étude du régime stationnaire.",
+     "statement": "Nous nous plaçons en régime supposé stationnaire et cherchons à caractériser le point de fonctionnement du système générateur–dipôle (dans le milieu extérieur à $T_{\\mathrm{e}}$ fixée).",
+     "parts": [
+      {
+       "label": "8.",
+       "statement": "Établir, à partir de chacune des équations thermique et électrique (obtenues questions (4) et (5)), l’équation d’énergie (ou de puissance) qui lui correspond. Vérifier que les deux équations obtenues traduisent, conjointement, la conversion de l’énergie électrique fournie par le générateur en chaleur reçue par le milieu extérieur.",
+       "points": null,
+       "statementAfter": "• Nous envisageons ici une situation telle qu’il devient légitime d’écrire la conductivité électrique sous la forme d’un développement limité au premier ordre relativement à l’écart de température :\n\n$$\\sigma(T)=\\sigma_{\\mathrm{e}}\\left(1+\\varepsilon\\frac{T-T_{\\mathrm{e}}}{T_{\\mathrm{e}}}\\right)\\quad\\text{où}\\quad\\frac{T-T_{\\mathrm{e}}}{T_{\\mathrm{e}}}\\ll 1\\tag{1}$$\n\nDe plus, nous supposons que $\\sigma$ varie modérément avec la température, c’est-à-dire que $|\\varepsilon|\\ll 1$. Enfin, nous effectuons le changement de variables :\n\n$$\\begin{cases}X=x/a\\\\ Y=Y(X)=(T-T_{\\mathrm{e}})/T_{\\mathrm{e}}\\end{cases}\\qquad\\text{et posons}\\quad K=\\frac{J^2a^2}{\\lambda T_{\\mathrm{e}}\\sigma_{\\mathrm{e}}}\\tag{2}$$"
+      },
+      {
+       "label": "9.",
+       "statement": "Attribuer une signification physique au rapport $K$.",
+       "points": null
+      },
+      {
+       "label": "10.",
+       "statement": "Établir que l’équation thermique et l’expression de $R$, avec ces nouvelles variables, au premier ordre relativement à $\\varepsilon Y$, deviennent :\n\n$$\\begin{cases}\\dfrac{\\mathrm{d}^2Y}{\\mathrm{d}X^2}-\\varepsilon KY=-K\\\\[2mm] R=\\dfrac{2a}{S\\sigma_{\\mathrm{e}}}\\displaystyle\\int_0^1(1-\\varepsilon Y)\\,\\mathrm{d}X\\end{cases}\\tag{3}$$",
+       "points": null,
+       "statementAfter": "• Nous recherchons la solution de l’équation thermique sous la forme d’un développement limité au premier ordre par rapport au paramètre $\\varepsilon$ :\n\n$$\\begin{cases}Y(X)=Y_0(X)+\\varepsilon Y_1(X)\\\\ K=K_0+\\varepsilon K_1\\end{cases}\\tag{4}$$\n\nDans la suite, l’indice “0” fera référence à la situation pour laquelle $\\varepsilon=0$. Nous notons ainsi, toujours au premier ordre par rapport à $\\varepsilon$, $R=R_0-\\varepsilon R_1$. Par ailleurs, nous adoptons la condition aux frontières $T(\\pm a)=T_{\\mathrm{e}}$."
+      },
+      {
+       "label": "11.",
+       "statement": "Exprimer $R_0$ et $R_1$ (cette dernière, sous forme intégrale). On veillera à respecter la cohérence d’ordre des développements effectués.",
+       "points": null
+      },
+      {
+       "label": "12.",
+       "statement": "En déduire l’expression de $K_0$ en fonction de $I_0$, $T_{\\mathrm{e}}$, $S$, $a$, $\\lambda$ et $\\sigma_{\\mathrm{e}}$, puis celle de $K_1$ en fonction de $K_0$, $R_{\\mathrm{G}}$, $R_0$ et $R_1$.",
+       "points": null
+      },
+      {
+       "label": "13.",
+       "statement": "Établir le système d’équations différentielles dont sont solutions $Y_0$ et $Y_1$.",
+       "points": null,
+       "statementAfter": "• L’intégration du système d’équations différentielles obtenu, respectant les conditions aux frontières adoptées, conduit à la fonction $Y$ :\n\n$$Y(X)=\\frac{K_0}{2}(1-X^2)+\\varepsilon\\frac{K_0^2}{24}(1-X^2)\\left(\\Delta+X^2\\right)\\quad\\text{où}\\quad\\Delta=12\\frac{K_1}{K_0^2}-5=\\frac{3R_0-5R_{\\mathrm{G}}}{R_0+R_{\\mathrm{G}}}\\tag{5}$$"
+      },
+      {
+       "label": "14.",
+       "statement": "Exprimer $\\Delta$ dans chacun des deux cas limites où le générateur G se comporte comme une source idéale de tension (cas $\\mathrm{G}_U$) ou comme une source idéale de courant (cas $\\mathrm{G}_I$). On notera $\\Delta$ respectivement $\\Delta_U$ et $\\Delta_I$.",
+       "points": null,
+       "statementAfter": "• La résistance du dipôle, issue de cette modélisation, s’écrit :\n\n$$R=R_0\\left(1-\\varepsilon\\frac{K_0}{3}\\right)\\quad\\text{où}\\quad K_0\\propto I_0^2\\tag{6}$$"
+      },
+      {
+       "label": "15.",
+       "statement": "Illustrer, dans le plan $(x=I,y=U)$, la construction graphique du point de fonctionnement P adopté par le système générateur–résistance dans le milieu extérieur. Nous supposerons $\\varepsilon>0$.",
+       "points": null
+      },
+      {
+       "label": "16.",
+       "statement": "Préciser la situation de la fonction $Y$ (équation (5)) par rapport à la fonction $Y_0$, dans chacun des deux cas $\\mathrm{G}_U$ et $\\mathrm{G}_I$. Justifier physiquement ces résultats. On pourra raisonner sur la détermination graphique du point de fonctionnement (question (15)) dans les situations $\\mathrm{G}_U$ et $\\mathrm{G}_I$. Nous supposerons $\\varepsilon>0$.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s3",
+     "title": "3 Analyse de la stabilité du point de fonctionnement.",
+     "statement": "L’équation (6) peut également s’écrire $R=R_0\\left(1-\\varepsilon\\langle Y_0\\rangle\\right)$ où $\\langle Y_0\\rangle$ désigne la moyenne de la fonction $Y_0$ sur l’intervalle $[-1,+1]$. Dans un cadre moins restrictif que celui associé à l’équation (1), nous supposons que l’on peut encore écrire $R=R(\\langle T\\rangle)$. Afin d’étudier les conditions de stabilité du point de fonctionnement nous adoptons la modélisation simplifiée suivante :\n\n- La température du dipôle est uniforme, égale à sa température moyenne, notée maintenant simplement $T$ ;\n- La résistance $R$ du dipôle est une fonction de $T$ ;\n- La dépendance $R=R(T)$ est caractérisée par le coefficient $\\alpha=\\alpha(T)$ défini par : $\\alpha=\\dfrac{1}{R}\\dfrac{\\mathrm{d}R}{\\mathrm{d}T}$ ;\n- Le flux thermique par unité de surface traversant la frontière du dipôle, vers l’extérieur, s’écrit $\\varphi=h(T-T_{\\mathrm{e}})$. Le coefficient $h$ (supposé constant) rend compte synthétiquement du processus complexe d’échange thermique à l’interface solide–fluide.\n\nNous notons $Z^\\star$ une grandeur $Z$ relative à l’état présumé stationnaire. En particulier, nous posons $T=T^\\star+\\theta$.",
+     "figures": [
+      {
+       "id": "p1-fig3",
+       "caption": "Figure 3 – Repère à quatre cadrans permettant d’illustrer l’évolution de la température $T$ depuis la situation initiale $(T_{\\mathrm{e}},r_{\\mathrm{e}})$ (immédiatement après branchement du générateur) à la situation d’équilibre $(T^\\star,r^\\star)$. L’évolution représentée dans le cadrant (2) est paramétrée par la constante $A$.",
+       "alt": "Repère à quatre cadrans numérotés (1) à (4) : axe horizontal r vers la droite (graduations r_e et 1) et T vers la gauche (T_e marqué), axe vertical ascendant T-T_e et Af(r), axe vertical descendant T (T_e, T_1, T_2). Cadran (2) : courbe Af(r) en cloche avec maximum en r = 1 (pointillé vertical). Cadran (3) : droite descendant vers le point T_e sur l’axe T. Cadran (1) : courbe décroissante r=r(T) partant de r_e. Cadran (4) : bissectrice en pointillé reportant T_1 et T_2 sur l’axe horizontal gauche.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p1-fig3.png",
+       "width": 1187,
+       "height": 745,
+       "source": {
+        "page": 4,
+        "pdfRect": [
+         155.97,
+         284.58,
+         440.51,
+         463.05
+        ],
+        "dpi": 300
+       }
+      },
+      {
+       "id": "p1-fig4",
+       "caption": "Figure 4 – Variation de la résistance d’un fusible auto-réarmable avec sa température (sur un domaine restreint de variation de sa résistance).",
+       "alt": "Nuage de points expérimentaux (losanges bleus) R (Ω) de 0 à 50 en fonction de T (°C) de 10 à 70 : R vaut environ 1 Ω de 20 à 40 °C, puis croît lentement (≈ 2,5 Ω à 50 °C, ≈ 4 Ω à 54 °C) et très brusquement vers 57–60 °C jusqu’à environ 46 Ω.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p1-fig4.png",
+       "width": 1251,
+       "height": 983,
+       "source": {
+        "page": 5,
+        "pdfRect": [
+         132.16,
+         67.36,
+         432.18,
+         303.08
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "17.",
+       "statement": "Établir l’équation différentielle vérifiée par la température $T$. On posera $C=2caS$.",
+       "points": null
+      },
+      {
+       "label": "18.",
+       "statement": "Établir que cette équation différentielle, développée linéairement dans le voisinage de l’état présumé stationnaire, fait apparaître une équation algébrique (notée $\\mathrm{EQ}^\\star$) définissant l’équilibre (grandeurs étoilées), que l’on précisera, ainsi que l’équation différentielle associée :\n\n$$\\frac{\\mathrm{d}\\theta}{\\mathrm{d}t}=-k\\,\\theta\\quad\\text{où}\\quad k=\\frac{1}{C}\\left\\{\\frac{(R^\\star-R_{\\mathrm{G}})\\alpha^\\star R^\\star {I^\\star}^2}{R_{\\mathrm{G}}+R^\\star}+2hS\\right\\}\\tag{7}$$",
+       "points": null
+      },
+      {
+       "label": "19.",
+       "statement": "Commenter l’influence, sur la stabilité de l’équilibre supposé, des termes intervenant dans l’expression du facteur $k$.",
+       "points": null
+      },
+      {
+       "label": "20.",
+       "statement": "Compléter cette analyse en étudiant les cas limites où le générateur fixe la tension $U$ (cas $\\mathrm{G}_U$) et celui où il fixe le courant $I$ (cas $\\mathrm{G}_I$).",
+       "points": null,
+       "statementAfter": "• Nous nous proposons maintenant d’étudier le cas général pour lequel le générateur ne fixe ni la tension, ni le courant. Nous supposons $\\alpha=\\mathrm{Cste}>0$. Nous notons $R_{\\mathrm{e}}=R(T_{\\mathrm{e}})$ et posons $r=R/R_{\\mathrm{G}}$ en adoptant $r_{\\mathrm{e}}=R_{\\mathrm{e}}/R_{\\mathrm{G}}<1$ (par exemple $r_{\\mathrm{e}}=1/4$, pour fixer un ordre de grandeur)."
+      },
+      {
+       "label": "21.",
+       "statement": "En explicitant la constante $A$ (en fonction de $U_{\\mathrm{G}}$, $R_{\\mathrm{G}}$, $h$ et $S$) et la fonction $f$, écrire l’équation différentielle obtenue en réponse à la question (17) sous la forme :\n\n$$\\frac{ca}{h}\\frac{\\mathrm{d}T}{\\mathrm{d}t}=F(T)\\quad\\text{où}\\quad F(T)=Af(r)-(T-T_{\\mathrm{e}})\\quad\\left(\\text{on choisira } f \\text{ telle que } f(1)=\\frac{1}{4}\\right)\\tag{8}$$",
+       "points": null
+      },
+      {
+       "label": "22.",
+       "statement": "Justifier, au vu de la dépendance de la fonction $f$ avec $r$, que la température est nécessairement bornée.",
+       "points": null
+      },
+      {
+       "label": "23.",
+       "statement": "Justifier que la construction graphique relative à la question (15) corrobore ce résultat.",
+       "points": null,
+       "statementAfter": "• Il s’agit maintenant d’étudier l’évolution de la température à partir de l’instant de “branchement” du générateur. Nous allons illustrer graphiquement cette évolution, depuis la situation initiale $(T(t=0^+)=T_{\\mathrm{e}},r(t=0^+)=r_{\\mathrm{e}})$, immédiatement après branchement du générateur, vers la situation d’équilibre $(T^\\star,r^\\star)$, dans le repère à quatre cadrans représenté figure (3). Notons que l’axe vertical ascendant porte une double échelle : à droite elle se rapporte à $Af(r)$ (fonction de $r$ – cadrant (2)), à gauche à $T-T_{\\mathrm{e}}$ (fonction de $T$ – cadrant (3)). Le cadrant (1) représente la fonction $r=r(T)$. Le cadrant (4) permet simplement le report de la température de l’axe vertical descendant sur l’axe horizontal gauche."
+      },
+      {
+       "label": "24.",
+       "statement": "Exprimer la dépendance de $r$ avec $T$. On fera apparaître $T_{\\mathrm{e}}$ et $r_{\\mathrm{e}}$.",
+       "points": null
+      },
+      {
+       "label": "25.",
+       "statement": "Reproduire le graphe à quatre cadrans de la figure (3). Pour les trois températures $T_{\\mathrm{e}}<T_1<T_2$ qui y sont repérées, représenter les points correspondants dans les cadrans (1), (2) et (3) (légende : $\\circ$ pour $T_{\\mathrm{e}}$, $\\square$ pour $T_1$, $\\bullet$ pour $T_2$).",
+       "points": null
+      },
+      {
+       "label": "26.",
+       "statement": "En déduire la situation d’équilibre dont on repérera par une étoile $(\\star)$ les points correspondants dans chacun de ces trois cadrans. On précisera le raisonnement ayant conduit à sa détermination.",
+       "points": null
+      },
+      {
+       "label": "27.",
+       "statement": "Déterminer à quelle condition $r^\\star>1$.",
+       "points": null
+      },
+      {
+       "label": "28.",
+       "statement": "Ce couplage thermique–électrique (dans le cas $\\alpha>0$) est mis à profit pour réaliser des fusibles auto-réarmables (voir le paragraphe introductif). Le dipôle résistif est alors placé en série avec la charge à protéger des surintensités. Nous supposons maintenant que la résistance $R_{\\mathrm{G}}$ joue le rôle de cette charge (le générateur G devenant alors idéal). Justifier le choix $r_{\\mathrm{e}}<1$ et, idéalement en pratique, $r_{\\mathrm{e}}\\ll 1$.",
+       "points": null
+      },
+      {
+       "label": "29.",
+       "statement": "Imaginons que la surintensité est due à une élévation accidentelle de $U_{\\mathrm{G}}$. En s’appuyant sur les réponses apportées aux questions (25) et (26), expliquer le principe de fonctionnement d’un tel fusible.",
+       "points": null
+      }
+     ],
+     "statementAfterParts": "• À titre d’information, le matériau constituant un fusible auto-réarmable se présente comme une matrice polymérique chargée de particules de carbone. À basse température, cette matrice adopte une structure cristalline qui offre l’ordre et la proximité nécessaires à ces particules pour assurer efficacement la conduction électrique. À plus haute température, la structure transite vers une phase amorphe qui ne présente plus ces qualités. La figure (4) représente la dépendance expérimentale de la résistance d’un tel composant avec sa température. On remarquera que cette dépendance particulière de sa résistance avec la température lui permet de très bien assurer sa fonction (identifiée en réponse à la question (29))."
+    }
+   ],
+   "topics": [
+    "electricity/dc-circuits",
+    "thermodynamics/heat-conduction",
+    "stability/equilibrium"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "Aucun corrigé officiel apparié n’est fourni dans le catalogue de l’archive."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "problems",
+     "page": 3
+    },
+    {
+     "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "problems",
+     "page": 5
+    }
+   ]
+  },
+  {
+   "id": "x-ens-2018-mp-si-p2",
+   "number": 2,
+   "title": "Seconde partie — Étude du flambement, sous chargement extérieur, d’une membrane fine gonflée",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Nous nous proposons d’étudier une instabilité pouvant apparaître sur les structures en coque mince. Ces structures, de faible épaisseur par rapport à leurs autres dimensions, sont très utilisées pour leur intérêt architectural. Elles peuvent être en béton, acier, bois ou encore en toile tendue. Dans ce dernier cas, la forme de la toile peut être déterminée par les conditions sur ses frontières. Elle peut également être contrôlée et ainsi s’adapter aux nécessités d’usage, ou prévenir les instabilités dues aux chargements climatiques. Les dispositifs de contrôle agissent principalement sur la tension de la toile pour maîtriser, à chaque instant, sa forme.\n\nParmi les procédés récents utilisant un contrôle, les membranes en Ethylène Tétrafluoroéthylène, encore appelée ETFE, ont apporté un renouveau dans les formes architecturales. Elles sont légères, thermiquement isolantes et adaptables à des géométries variées. Ces éléments de toiture, ou de façade, sont composés de deux membranes formant une chambre gonflée, fixées à leurs périphéries sur une structure porteuse. On appelle un tel élément gonflé un coussin ETFE. La pression intérieure du coussin est contrôlée en permanence afin de maintenir une géométrie stable, assurer l’étanchéité et compenser d’éventuelles fuites d’air. Parmi les projets emblématiques réalisés avec cette technologie citons le centre national aquatique de Pékin construit pour les jeux olympiques d’été de 2008, la couverture du bâtiment de CentraleSupelec ou encore la couverture de la station du RER E Rosa Parks (voir figure (1)).\n\nL’objet de cette partie est d’étudier le comportement d’un coussin ETFE et, en particulier, l’adaptation de sa pression de gonflement pour éviter les risques de flambement, y compris en cas de faible fuite d’air. Nous étudierons dans un premier temps un modèle simplifié de flambement de coques minces, puis nous améliorerons le modèle mécanique pour identifier les paramètres du modèle initial, enfin nous étudierons le contrôle commande de stabilisation de la forme. La figure (2) schématise la structure d’un coussin ETFE.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "caption": "Figure 1 – Exemple de couverture en membrane ETFE.",
+     "alt": "Photographie de l’intérieur d’une station couverte par une toiture transparente en membranes ETFE portée par des arcs en bois et des poteaux obliques.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig1.png",
+     "width": 955,
+     "height": 653,
+     "source": {
+      "page": 6,
+      "pdfRect": [
+       182.16,
+       40.41,
+       411.35,
+       197.01
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p2-fig2",
+     "caption": "Figure 2 – Schéma d’un coussin ETFE : 1- membrane supérieure, 2- membrane inférieure, 3- cadre de fixation du coussin, 4- système d’injection d’air, 5- système de purge d’air en cas de surpression.",
+     "alt": "Coupe d’un coussin ETFE en forme de lentille : membrane supérieure (1) et inférieure (2) fixées de chaque côté sur un cadre grisé (3) ; conduit coudé avec ventilateur relié au bas de la membrane inférieure (4) ; petit évent sur la membrane supérieure (5).",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig2.png",
+     "width": 1192,
+     "height": 709,
+     "source": {
+      "page": 6,
+      "pdfRect": [
+       151.79,
+       229.01,
+       437.54,
+       399.06
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "sections": [
+    {
+     "id": "s1",
+     "title": "1 Modèle simplifié de flambement de coque.",
+     "statement": "Dans cette partie, nous étudions le comportement mécanique d’un élément de toiture ETFE. Celui-ci est soumis aux chargements extérieurs tels que le vent, la neige ou d’autres sollicitations ponctuelles comme les charges de maintenance. Nous limitons notre étude à l’analyse du comportement mécanique de la membrane supérieure d’un coussin ETFE. Celle-ci subit les chargements extérieurs sur sa face supérieure et la différence de pression entre la pression de gonflement et la pression de l’atmosphère."
+    },
+    {
+     "id": "s1-1",
+     "title": "1.1 Première approche du flambement : déplacement du sommet de la coque mince modélisée par un système à 1 degré de liberté.",
+     "statement": "Nous nous intéressons au premier mode de flambement de la membrane supérieure, sous chargement uniforme, correspondant à son affaissement. Nous considérons la partie supérieure du coussin ETFE et restreignons l’étude de sa déformation au déplacement de son sommet. Sur la figure (3), la structure est modélisée par deux ressorts de raideur $k$ et de longueur à vide $a$ et est soumise à la charge verticale $2\\vec{F}=2F\\,\\vec{u}_y$.\n\nCompte-tenu de la symétrie de cette structure, nous réduisons son modèle à un seul ressort, comme le représente la figure (4). Ce ressort est fixé à une extrémité par une rotule, au point A. Son autre extrémité, le point B, peut glisser sans frottement exclusivement suivant l’axe $(\\mathrm{O},\\vec{u}_y)$ de la glissière. La projection orthogonale du point A sur cet axe définit le point O. Nous notons $\\vec{\\mathrm{AO}}=\\ell\\,\\vec{u}_x$ et $\\vec{\\mathrm{OB}}=y\\,\\vec{u}_y$.",
+     "figures": [
+      {
+       "id": "p2-fig3",
+       "caption": "Figure 3 – Modèle élastique pour l’étude du flambement de la membrane supérieure du coussin ETFE.",
+       "alt": "Deux ressorts (k, a) en forme de toit reliant les appuis articulés A et C au sommet B, sur lequel s’exerce une force verticale ascendante 2F.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig3.png",
+       "width": 1006,
+       "height": 597,
+       "source": {
+        "page": 7,
+        "pdfRect": [
+         175.59,
+         42.08,
+         416.7,
+         185.22
+        ],
+        "dpi": 300
+       }
+      },
+      {
+       "id": "p2-fig4",
+       "caption": "Figure 4 – Modèle élastique réduit à un seul ressort.",
+       "alt": "Un ressort (k, a) incliné entre le point A (rotule) et le point B qui glisse sur un axe vertical passant par O ; force F verticale en B ; distance horizontale ℓ entre A et O ; hauteur y de B au-dessus de O ; vecteurs unitaires u_x et u_y en O.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig4.png",
+       "width": 731,
+       "height": 653,
+       "source": {
+        "page": 7,
+        "pdfRect": [
+         211.9,
+         213.84,
+         386.91,
+         370.44
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "1.",
+       "statement": "Nous considérons d’abord le cas $F=0$. Établir l’équation d’équilibre du système à partir d’un raisonnement énergétique.",
+       "points": null
+      },
+      {
+       "label": "2.",
+       "statement": "Discuter la situation des positions d’équilibre du système selon la valeur du rapport $a/\\ell$. On commentera brièvement ces résultats.",
+       "points": null
+      },
+      {
+       "label": "3.",
+       "statement": "Étudier la stabilité des positions d’équilibre.",
+       "points": null,
+       "statementAfter": "• Nous supposons dorénavant $a/\\ell>1$ et que la force $\\vec{F}$ ($|\\vec{F}|\\neq 0$) appliquée à la structure est indépendante de la position du point B."
+      },
+      {
+       "label": "4.",
+       "statement": "Construire, à partir d’un bilan énergétique, la grandeur $W(y)$ dont le minimum caractérise l’état d’équilibre du système.",
+       "points": null
+      },
+      {
+       "label": "5.",
+       "statement": "Nous posons $Y=y/\\ell$, $A=a/\\ell$ $(A>1)$, $E^\\star=\\dfrac{1}{2}k\\ell^2$, $\\alpha=\\dfrac{F}{k\\ell}$ et $\\psi(Y)=\\dfrac{W(y)}{E^\\star}$. Exprimer la grandeur $\\Psi$ à l’aide de $Y$, $A$ et $\\alpha$.",
+       "points": null
+      },
+      {
+       "label": "6.",
+       "statement": "Donner l’allure de la représentation graphique de $\\psi$ pour deux valeurs (positives) du paramètre $\\alpha$ illustrant les deux types de situation envisageables.",
+       "points": null
+      },
+      {
+       "label": "7.",
+       "statement": "Écrire l’équation d’équilibre sous la forme $\\Phi(Y)=\\alpha$.",
+       "points": null
+      },
+      {
+       "label": "8.",
+       "statement": "Préciser l’équivalent de $\\Phi$ pour $Y\\to\\pm\\infty$ et celui pour $Y\\to 0$. Exprimer les zéros de cette fonction.",
+       "points": null
+      },
+      {
+       "label": "9.",
+       "statement": "En s’appuyant sur ces résultats, esquisser l’allure de la représentation graphique de $\\Phi$.",
+       "points": null
+      },
+      {
+       "label": "10.",
+       "statement": "Indiquer comment résoudre graphiquement l’équation d’équilibre.",
+       "points": null
+      },
+      {
+       "label": "11.",
+       "statement": "Commenter, à partir de cette analyse graphique, les différentes situations d’équilibre du système.",
+       "points": null
+      },
+      {
+       "label": "12.",
+       "statement": "Notons $\\alpha_1$ une valeur de $\\alpha$ telle qu’il n’existe qu’une seule position d’équilibre $Y_{\\mathrm{eq}1}$, avec $Y_{\\mathrm{eq}1}>0$. Donner l’aspect graphique de la dépendance de $Y_{\\mathrm{eq}}$ (de l’équilibre stable) avec $\\alpha$ lorsque ce paramètre évolue de $\\alpha_1$ à $-\\alpha_1$. Le phénomène de saut qui apparaît sur ce tracé est la manifestation d’une instabilité appelée flambement.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s1-2",
+     "title": "1.2 Détermination des paramètres du modèle élastique.",
+     "statement": "Nous considérons la membrane supérieure du coussin ETFE en vue d’identifier les paramètres $(k,a,F)$ intervenant dans le modèle développé dans la partie précédente. Dans un premier temps, nous analyserons le lien entre la tension dans la membrane et la différence de pression entre la pression de gonflement et la pression atmosphérique, ainsi que le lien entre $a$ et le rayon de courbure de cette membrane. Enfin, nous identifierons la raideur $k$ du coussin ETFE gonflé.\n\nLa géométrie (idéalisée) du coussin ETFE se présente comme un secteur de cylindre d’ouverture angulaire $2\\theta$, de longueur $L$ (assez grande pour pouvoir s’affranchir des effets de bord) selon son axe $\\vec{u}_z$, de rayon $R$ et de distance $2\\ell$ entre les deux lignes de fixation. Sa courbure résulte de la différence, notée $P$, entre la pression intérieure au coussin (pression de gonflement) et la pression atmosphérique extérieure. En réaction à $P$, une tension linéique $T$ $\\left[\\mathrm{N\\cdot m^{-1}}\\right]$ apparaît sur le pourtour de cette membrane. La figure (5) représente un tronçon de longueur $\\mathrm{d}z$ du secteur de cylindre, à l’équilibre mécanique. La figure (6) précise sa géométrie.",
+     "figures": [
+      {
+       "id": "p2-fig5",
+       "caption": "Figure 5 – Élément $[z,z+\\mathrm{d}z]$ du tube modélisant la membrane soumise à la différence de pression.",
+       "alt": "Tube cylindrique en pointillés d’axe u_z dont un élément d’arc de membrane grisé est soumis à la pression P (flèches radiales) et aux tensions T dz et T′ dz à ses deux bords.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig5.png",
+       "width": 800,
+       "height": 566,
+       "source": {
+        "page": 8,
+        "pdfRect": [
+         195.26,
+         47.97,
+         386.91,
+         183.51
+        ],
+        "dpi": 300
+       }
+      },
+      {
+       "id": "p2-fig6",
+       "caption": "Figure 6 – Géométrie du tronçon élémentaire. Les tensions linéiques $T_0$ et $T_0'$ sont supposées indépendantes de $z$.",
+       "alt": "Arc de cercle de rayon R entre les points de fixation M et N distants de 2ℓ, sommet J ; demi-angle θ de part et d’autre de la verticale ; pression P (flèches radiales) ; tensions T_0 dz en M et T_0′ dz en N tangentes à l’arc ; vecteurs u_x et u_y au centre.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig6.png",
+       "width": 1048,
+       "height": 685,
+       "source": {
+        "page": 8,
+        "pdfRect": [
+         165.46,
+         206.28,
+         416.7,
+         370.44
+        ],
+        "dpi": 300
+       }
+      },
+      {
+       "id": "p2-fig7",
+       "caption": "Figure 7 – Simplification géométrique adoptée de la configuration de membrane sous chargement.",
+       "alt": "À gauche, membrane courbe sur deux appuis soumise à la pression P et à la charge répartie −q dz e_y, avec déflexion f(x) à l’abscisse x (courbe déformée en pointillés) ; double flèche d’équivalence ; à droite, membrane plane entre deux appuis tendue par T_0 dz et T_0′ dz, chargée par −q dz e_y, déflexion f(x) en pointillés ; repères e_x, e_y.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig7.png",
+       "width": 2084,
+       "height": 492,
+       "source": {
+        "page": 8,
+        "pdfRect": [
+         47.61,
+         604.48,
+         547.65,
+         722.34
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "13.",
+       "statement": "Déterminer l’expression de chacune des tensions linéiques $T_0$ et $T_0'$ apparaissant sur les frontières de la membrane (figure (6)), en fonction de la différence de pression $P$ et des paramètres géométriques du coussin.",
+       "points": null
+      },
+      {
+       "label": "14.",
+       "statement": "Nous identifions la longueur à vide $a$ du ressort, introduite dans la partie précédente (figure (4)), à la distance entre le point de fixation M (ou N), et le sommet J du dôme formé par la membrane gonflée (figure (6)). Exprimer $a$ en fonction de $\\ell$ et $R$.",
+       "points": null
+      },
+      {
+       "label": "15.",
+       "statement": "Exprimer $a/\\ell$ à l’ordre deux en $\\ell/R$.",
+       "points": null,
+       "statementAfter": "• On propose maintenant de déterminer la raideur du coussin ETFE gonflé, sous chargement de type neige. Considérons alors que le coussin ETFE gonflé est soumis à une charge linéique uniforme $-q\\,\\mathrm{d}z\\,\\vec{u}_y$ $\\left[\\mathrm{N\\cdot m^{-1}}\\right]$. Cette charge produit une déflexion de la membrane, par rapport à sa configuration sans charge. En vue de déterminer cette déflexion, nous considérons un modèle simplifié où la géométrie sans charge serait plane. La différence de pression $P$ et la courbure sont simplement traduites par leur conséquence, c’est-à-dire la présence de tensions $T_0\\,\\mathrm{d}z$ et $T_0'\\,\\mathrm{d}z$ appliquées aux extrémités d’un tronçon $[z,z+\\mathrm{d}z]$ de membrane. On supposera ainsi que la charge de neige est négligeable devant la pression de gonflement, c’est-à-dire $q\\ll P$, afin que les tensions $T_0\\,\\mathrm{d}z$ et $T_0'\\,\\mathrm{d}z$ soient identiques à celles trouvées en question 13. Sa déflexion est notée $f=f(x)$, comptée positivement suivant $-\\vec{u}_y$. La figure (7) illustre le passage de la géométrie réelle courbe à la géométrie simplifiée plane de la membrane. La figure (8) détaille le système finalement étudié. La figure (9) isole un élément $[x,x+\\mathrm{d}x]$ de ce système."
+      },
+      {
+       "label": "16.",
+       "statement": "Établir les relations d’équilibre de l’élément $[x,x+\\mathrm{d}x]$ représenté figure (9).",
+       "points": null,
+       "figures": [
+        {
+         "id": "p2-fig8",
+         "caption": "Figure 8 – Déflexion $f=f(x)$ du tronçon $[z,z+\\mathrm{d}z]$ de membrane soumise à la charge linéique uniforme $-q\\mathrm{d}z\\,\\vec{u}_y$ (avec $\\|\\vec{T}_0\\|=\\|\\vec{T}_0{}'\\|$).",
+         "alt": "Membrane entre deux appuis, fléchie vers le bas sous la charge répartie −q dz e_y ; tensions T_0 dz et T_0′ dz aux extrémités, dirigées vers le haut le long de la membrane ; abscisse x et déflexion f(x) ; repère e_x, e_y.",
+         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig8.png",
+         "width": 1424,
+         "height": 321,
+         "source": {
+          "page": 9,
+          "pdfRect": [
+           117.86,
+           46.31,
+           459.54,
+           122.89
+          ],
+          "dpi": 300
+         }
+        },
+        {
+         "id": "p2-fig9",
+         "caption": "Figure 9 – Élément $[x,x+\\mathrm{d}x]$ du tronçon de membrane représenté figure (8).",
+         "alt": "Élément courbe de membrane chargé par −q dz e_y ; à gauche la tension T(x) dz faisant l’angle α(x) avec l’horizontale, à droite la tension T(x+dx) dz faisant l’angle α(x+dx).",
+         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig9.png",
+         "width": 829,
+         "height": 453,
+         "source": {
+          "page": 9,
+          "pdfRect": [
+           197.64,
+           165.01,
+           396.45,
+           273.6
+          ],
+          "dpi": 300
+         }
+        }
+       ],
+       "statementAfter": "• Dans toute la suite, nous supposons $|\\alpha|\\ll 1$."
+      },
+      {
+       "label": "17.",
+       "statement": "Démontrer que la tension linéique est uniforme. L’exprimer en fonction de $P$ et $R$.",
+       "points": null
+      },
+      {
+       "label": "18.",
+       "statement": "Exprimer la déflexion $f=f(x)$ en fonction de $x$ et des paramètres $q$, $T_0$ et $\\ell$.",
+       "points": null
+      },
+      {
+       "label": "19.",
+       "statement": "Exprimer la déflexion maximale $f_M$ en fonction de $q$, $P$, $R$ et $\\ell$.",
+       "points": null
+      },
+      {
+       "label": "20.",
+       "statement": "Nous identifions la déflexion maximale $f_M$ de la membrane au déplacement du point $B$ sous l’action de la force $\\vec{F}=-q\\ell L\\,\\vec{u}_y$ (voir figures (3) et (4)). Déduire de cette analogie l’expression de la raideur $k$. On donnera cette expression en fonction de $P$, $R$, $L$, $\\ell$, $h$ et $D=R\\,(1-\\cos\\theta)$ (voir figure (6)). On supposera $f_M\\ll D$.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s1-3",
+     "title": "1.3 Analyse du système de contrôle–commande du gonflement du coussin ETFE.",
+     "statement": "Afin de maintenir le coussin ETFE dans un bon état de gonflement, en situation normale comme en situation dégradée, un système de contrôle–commande surveille et ajuste la quantité et la pression de l’air. En fonctionnement normal, cette régulation doit permettre de limiter l’effet de la dilatation thermique de l’air. En fonctionnement dégradé, par exemple lors d’un percement de la membrane, elle assure la sécurité des personnes situées sous la structure.\n\nOn étudie ici la régulation dans le cas d’un percement de la membrane ETFE. Celui-ci peut être dû à un endommagement du tissu ETFE ou à une mauvaise régulation de la purge en air. Cette partie propose tout d’abord l’étude temporelle d’une régulation sans intervention d’un système de pompage. Ensuite, elle étudie cette réponse avec système de pompage. On néglige la compressibilité de l’air, aussi on modélisera, dans les schémas, le “fluide” emprisonné dans le coussin ETFE comme un fluide incompressible.\n\nNous notons $F(p)$ l’image, dans le domaine de Laplace, d’une fonction $f(t)$."
+    },
+    {
+     "id": "s1-3-1",
+     "title": "1.3.1 Modèle sans groupe de pompage.",
+     "statement": "Le système de régulation de l’air est représenté schématiquement dans la figure (10). Le coussin est modélisé par un réservoir de section $S$ et de hauteur $h=h(t)$ sur laquelle le contrôle est effectué. La hauteur consigne est notée $h_c$. En bas du réservoir, une purge permet une vidange avec un débit $d_2(t)$. Le réservoir est rempli selon le débit $d_1(t)$ contrôlé par une vanne régulée de manière proportionnelle à la différence $h_c-h$, avec des conditions de limitation supérieure et inférieure, soit :\n\n$$\\begin{cases}d_1(t)=0, & h_c<h(t),\\\\ d_1(t)=K\\,(h_c-h(t)), & h_\\ell\\leq h(t)\\leq h_c\\quad(K>0),\\\\ d_1(t)=D, & h(t)<h_\\ell\\quad\\text{où}\\quad h_\\ell=h_c-D/K\\quad(D>0).\\end{cases}\\tag{30}$$",
+     "figures": [
+      {
+       "id": "p2-fig10",
+       "caption": "Figure 10 – Schéma du système de régulation du réservoir sans groupe de pompage.",
+       "alt": "Réservoir ouvert rempli de liquide dégradé en gris ; flotteur à la hauteur h(t) relié par une tige à une vanne conique sur le conduit d’arrivée d_1 en haut ; niveaux h_c (au-dessus) et h_ℓ (au-dessous) en pointillés ; sortie d_2 en bas à droite.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig10.png",
+       "width": 854,
+       "height": 913,
+       "source": {
+        "page": 10,
+        "pdfRect": [
+         193.46,
+         42.08,
+         398.25,
+         261
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "21.",
+       "statement": "Établir l’équation, en grandeurs de Laplace, décrivant ce dispositif de régulation pour $h_\\ell\\leq h(t)\\leq h_c$.",
+       "points": null
+      },
+      {
+       "label": "22.",
+       "statement": "Représenter le schéma fonctionnel correspondant.",
+       "points": null
+      },
+      {
+       "label": "23.",
+       "statement": "Le réservoir est initialement plein ($h(0)=h_c$). On étudie la réponse du système à un créneau de vidange défini par la séquence :\n\n$$\\begin{cases}d_2(t)=2D, & t\\in[0,\\tau],\\\\ d_2(t)=0, & t\\notin[0,\\tau].\\end{cases}\\tag{33}$$\n\noù $\\tau=S/K$ représente le temps caractéristique du système. Exprimer la dépendance temporelle de l’évolution $h=h(t)$ pour $t\\in[0,\\tau]$. On précisera le temps $T_1$ pour lequel le débit maximal de remplissage est atteint ainsi que la hauteur d’eau minimale $h_{\\min}$.",
+       "points": null
+      },
+      {
+       "label": "24.",
+       "statement": "En déduire l’évolution temporelle de $h(t)$ pour $t\\in[\\tau,+\\infty]$. On précisera le temps $T_2$ à partir duquel le débit de remplissage est inférieur au débit maximal.",
+       "points": null
+      },
+      {
+       "label": "25.",
+       "statement": "Esquisser la courbe de la réponse temporelle à ce créneau de vidange. Donner les valeurs frontières pour $S=2\\ \\mathrm{m^2}$, $K=2\\times 10^{-3}\\ \\mathrm{m^2\\cdot s^{-1}}$, $h_c=2\\ \\mathrm{m}$ et $D=2\\times 10^{-3}\\ \\mathrm{m^3\\cdot s^{-1}}$, avec $\\ln(2)\\approx 0{,}7$.",
+       "points": null
+      }
+     ]
+    },
+    {
+     "id": "s1-3-2",
+     "title": "1.3.2 Modèle avec groupe de pompage.",
+     "statement": "Le système inclut maintenant un groupe de pompage qui régule le débit de remplissage $d_1$ en fonction du niveau d’eau $h$ du réservoir. Ce groupe de pompage est composé d’un système électronique de mesure de la hauteur d’eau et d’un groupe motopompe. Le système électronique convertit la différence entre la hauteur d’eau $h(t)$ et la hauteur consigne $h_c$ en un angle de rotation consigne $\\theta_c$ selon une relation intégratrice de constante $B\\in\\mathbb{R}^+$ :\n\n$$\\Theta_c(p)=\\frac{B}{p}\\left(H_c(p)-H(p)\\right)\\tag{43}$$\n\nLe groupe motopompe est composé de deux parties : un moteur et un système de pompage hydraulique. Le comportement du moteur est complexe et dépend notamment du couple résistant qu’oppose l’eau pompée. Ainsi, nous proposons un modèle simplifiée du fonctionnement du moteur résumé dans le schéma fonctionnel représenté figure (11). Dans ce modèle intervient le moment d’inertie $J$ du rotor du moteur autour de son axe ainsi qu’une constante de “frottement” positive $f$. Le couple résistant opposé par les frottements internes et l’eau pompée s’écrit alors $f\\dot{\\theta}$. La régulation du moteur se fait en position pour un angle consigne $\\theta_c$ avec un contrôle proportionnel de coefficient $A\\in\\mathbb{R}^+$.\n\nEnfin, l’angle de rotation du moteur met en mouvement le système de pompage hydraulique qui assure un débit de remplissage du réservoir $d_1(t)$ proportionnel à la vitesse de rotation du groupe motopompe. Ainsi, le débit de remplissage du réservoir est donné par : $d_1(t)=C\\dot{\\theta}(t)$. La figure (12) représente le système étudié. Dans un premier temps, nous étudierons la régulation propre du groupe de pompage. Puis, nous l’intégrerons dans le système global de régulation du réservoir. Enfin, nous étudierons la réponse de ce système à une fuite de faible débit constant.",
+     "figures": [
+      {
+       "id": "p2-fig11",
+       "caption": "Figure 11 – Schéma fonctionnel du groupe motopompe.",
+       "alt": "Schéma-bloc : entrée Θ_c(p) vers un comparateur (+, −), bloc A, second comparateur (−, −), bloc 1/(Jp²), sortie Θ(p) ; boucle interne de retour par le bloc fp vers le second comparateur ; boucle externe de retour unitaire de Θ(p) vers le premier comparateur.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig11.png",
+       "width": 1350,
+       "height": 594,
+       "source": {
+        "page": 11,
+        "pdfRect": [
+         130.95,
+         46.31,
+         454.77,
+         188.6
+        ],
+        "dpi": 300
+       }
+      },
+      {
+       "id": "p2-fig12",
+       "caption": "Figure 12 – Structure générale du dispositif de régulation du niveau $h$ avec groupe de pompage.",
+       "alt": "Groupe motopompe (cadre pointillé : pompe à hélice entraînée par l’angle θ d’un moteur recevant la consigne θ_c) alimentant par un conduit le réservoir avec le débit d_1 ; flotteur à la hauteur h(t) relié par un bras au capteur ; niveaux h_c et h_ℓ en pointillés ; sortie d_2 en bas à droite.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-mp-si/p2-fig12.png",
+       "width": 1259,
+       "height": 730,
+       "source": {
+        "page": 11,
+        "pdfRect": [
+         145.85,
+         217.21,
+         447.66,
+         392.31
+        ],
+        "dpi": 300
+       }
+      }
+     ],
+     "parts": [
+      {
+       "label": "26.",
+       "statement": "Exprimer la fonction de transfert $T(p)=\\Theta(p)/\\Theta_c(p)$ du groupe de pompage dont le schéma fonctionnel est représenté figure (11).",
+       "points": null
+      },
+      {
+       "label": "27.",
+       "statement": "Exprimer la fonction de transfert du système de régulation du réservoir définie par le rapport :\n\n$$U(p)=\\frac{H_c(p)-H(p)}{D_2(p)}\\tag{46}$$",
+       "points": null
+      },
+      {
+       "label": "28.",
+       "statement": "Représenter le schéma fonctionnel du système global de régulation du niveau du réservoir en notation de Laplace.",
+       "points": null
+      },
+      {
+       "label": "29.",
+       "statement": "Déterminer la limite pour $t\\to\\infty$ de la hauteur $h$ en réponse à un échelon de débit de fuite tel que :\n\n$$\\begin{cases}d_2(t)=0 & \\text{pour}\\quad t\\in\\,]-\\infty,0[\\\\ d_2(t)=D>0 & \\text{pour}\\quad t\\in[0,+\\infty[\\end{cases}\\tag{51}$$",
+       "points": null
+      },
+      {
+       "label": "30.",
+       "statement": "Commenter le résultat précédent. Proposer une modification simple du système de régulation afin que cette limite se fixe sur $h_c$.",
+       "points": null
+      }
+     ]
+    }
+   ],
+   "topics": [
+    "mechanics/statics",
+    "mechanics/stability",
+    "control/feedback"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "",
+    "figures": [],
+    "incomplete": true,
+    "incompleteReason": "Aucun corrigé officiel apparié n’est fourni dans le catalogue de l’archive."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "problems",
+     "page": 9
+    },
+    {
+     "document": "problems",
+     "page": 10
+    },
+    {
+     "document": "problems",
+     "page": 11
+    }
+   ]
+  }
+ ]
+}

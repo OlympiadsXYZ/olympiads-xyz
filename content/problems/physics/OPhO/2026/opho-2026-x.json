@@ -1,0 +1,1394 @@
+{
+ "paper": {
+  "id": "opho-2026-x",
+  "subject": "physics",
+  "competition": "OPhO",
+  "year": 2026,
+  "round": null,
+  "roundType": "mixed",
+  "grade": null,
+  "lang": "en",
+  "title": "2026 Online Physics Olympiad",
+  "held": {
+   "from": "2026-08-21",
+   "to": "2026-08-23",
+   "place": "Online"
+  },
+  "organiser": "Online Physics Olympiad",
+  "totalPoints": 100,
+  "timeLimitMin": 4320,
+  "source": {
+   "archiveKey": "Физика/Състезания/OPhO/2026/problems.pdf"
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/OPhO/2026/solutions.pdf"
+  },
+  "status": "review",
+  "documentNotes": [
+   {
+    "title": "Last updated",
+    "statement": "*Last updated: 22nd August 03:35 UTC*",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   },
+   {
+    "title": "Sponsors",
+    "statement": "This competition would not be possible without the help of our sponsors.",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   },
+   {
+    "title": "Corrections (all times are in UTC)",
+    "statement": "- Q8: Cleared up wording (21/08 04:40 and 04:52)\n- Q3: improved wording (21/08 08:49)\n- Q19: Improved wording (21/08 09:42)\n- Q16: Attempts reset (21/08 22:00), Error bound increased (22/8 02:30)\n- Q1: Improved wording (22/08 03:35)",
+    "document": "problems",
+    "page": 1,
+    "position": "before-problem"
+   },
+   {
+    "title": "Instructions",
+    "statement": "**Format.** The OPhO is a team-based competition (3 members at most per team). Unlike previous years, the 2026 OPhO consists of a single round held from August 21, 12 am (UTC), to August 23, 11:59 pm (UTC). The contest is made up of three parts, all running concurrently over the full contest window:\n\n- **Short Answer** — problems requiring numerical answers, submitted on the OPhO portal;\n- **Long Answer** — problems requiring full written solutions, submitted on the OPhO portal;\n- **Simulation** — computational problems requiring teams to run a provided executable locally, with solutions submitted on the OPhO portal.\n\nAll teams have access to all three parts for the entire duration of the contest. Submissions are made on the OPhO portal https://opho.physoly.org/ using the team login, and may be made at any time within the contest window.\n\n**Short Answer.** Teams submit numerical answers on the portal, with up to three attempts per problem. *Every* answer submission must be accompanied by a file upload, on the portal, of the working used to obtain that answer. This working will not be graded, but submissions without it will not be accepted. The base score for each problem depends on the number of teams that successfully answer it, each incorrect attempt multiplies the base score by a factor of 0.8, and there is no time factor. The score for an individual problem follows:\n\n$$w(N) = (0.8)^i\\left[e^{-\\frac{x(N)}{200}} + e^{-\\frac{x(N)^2}{100}} + 1\\right],$$\n\nwhere $i \\in \\{0, 1, 2\\}$ represents whether a team got it on the first, second, or third try, $N$ represents the number of teams that answer the problem correctly, and $x(N)$ is the sum of $(0.8)^i$ across all teams that have solved the problem. The base score is independent of problem number, but expect questions to be ordered roughly by difficulty. A team’s raw Short Answer total is the sum of these values, and all raw totals are then scaled linearly such that the top team receives 55 points.\n\n**Long Answer.** Teams submit full solutions on the portal. Rubrics are predetermined, and solutions will be reviewed to determine the proper number of points to give. The points breakdown is given per problem, for a total of 35 points. It is recommended that participants write their solutions in LaTeX. Handwritten solutions (or a combination of both) are accepted too; if participants have more than one photo of a handwritten solution (`jpg`, `png`, etc.), it is required that they be organized in the correct order in a `pdf` before submitting.\n\n**Simulation.** Teams will need to be able to run a provided executable locally. Solutions are submitted on the portal and will be graded against predetermined rubrics. The points breakdown is given per problem, for a total of 10 points.\n\n**Scoring.** A team’s cumulative score is the sum of its scaled Short Answer score (out of 55 points), Long Answer score (out of 35 points), and Simulation score (out of 10 points), for a maximum score of 100 points.\n\n**Permitted Resources.** Use of the internet is allowed, including textbooks, published papers, calculators, and computer algebra systems. However, the use of AI tools of any kind is strictly prohibited. This includes, but is not limited to, large language models (e.g. ChatGPT, Claude, Gemini), AI coding assistants, AI-generated search summaries, and any other AI-powered assistance.\n\n**Dishonest Behavior.** Please refrain from cheating in any form. This includes, but is not limited to, creating alternate accounts to gain additional attempts, sharing answers with other teams, posting problems online, utilizing AI tools as described above, or employing any other method to gain an unfair advantage.\n\nWe have previously caught numerous teams engaging in such practices, and pursuing dishonest tactics provides no genuine sense of security. Any teams found to be acting maliciously will be notified via email, along with the opportunity to appeal. Failing to provide a valid appeal will result in a ban from participating in any future Physoly competitions. Our utmost priority is to ensure an enjoyable contest experience for all participants, and we remain committed to preventing any disruption to the fun for others.\n\n**Awards and Results.** The top competitors will be recognized on the website. No cash prizes will be awarded this year.",
+    "document": "problems",
+    "page": 2,
+    "position": "before-problem"
+   },
+   {
+    "title": "List of Constants",
+    "statement": "- Proton mass, $m_p = 1.67 \\cdot 10^{-27}\\ \\mathrm{kg}$\n- Neutron mass, $m_n = 1.67 \\cdot 10^{-27}\\ \\mathrm{kg}$\n- Electron mass, $m_e = 9.11 \\cdot 10^{-31}\\ \\mathrm{kg}$\n- Avogadro’s constant, $N_0 = 6.02 \\cdot 10^{23}\\ \\mathrm{mol^{-1}}$\n- Universal gas constant, $R = 8.31\\ \\mathrm{J/(mol \\cdot K)}$\n- Boltzmann’s constant, $k_B = 1.38 \\cdot 10^{-23}\\ \\mathrm{J/K}$\n- Electron charge magnitude, $e = 1.60 \\cdot 10^{-19}\\ \\mathrm{C}$\n- 1 electron volt, $1\\ \\mathrm{eV} = 1.60 \\cdot 10^{-19}\\ \\mathrm{J}$\n- Speed of light, $c = 3.00 \\cdot 10^{8}\\ \\mathrm{m/s}$\n- Universal Gravitational constant, $$G = 6.67 \\cdot 10^{-11}\\ \\mathrm{(N \\cdot m^2)/kg^2}$$\n- Solar Mass $$M_\\odot = 1.988 \\cdot 10^{30}\\ \\mathrm{kg}$$\n- Acceleration due to gravity, $g = 9.8\\ \\mathrm{m/s^2}$\n- 1 unified atomic mass unit, $$1\\ \\mathrm{u} = 1.66 \\cdot 10^{-27}\\ \\mathrm{kg} = 931\\ \\mathrm{MeV/c^2}$$\n- Planck’s constant, $$h = 6.63 \\cdot 10^{-34}\\ \\mathrm{J \\cdot s} = 4.41 \\cdot 10^{-15}\\ \\mathrm{eV \\cdot s}$$\n- Permittivity of free space, $$\\epsilon_0 = 8.85 \\cdot 10^{-12}\\ \\mathrm{C^2/(N \\cdot m^2)}$$\n- Coulomb’s law constant, $$k = \\frac{1}{4\\pi\\epsilon_0} = 8.99 \\cdot 10^{9}\\ \\mathrm{(N \\cdot m^2)/C^2}$$\n- Permeability of free space, $$\\mu_0 = 4\\pi \\cdot 10^{-7}\\ \\mathrm{T \\cdot m/A}$$\n- Magnetic constant, $$\\frac{\\mu_0}{4\\pi} = 1 \\cdot 10^{-7}\\ \\mathrm{(T \\cdot m)/A}$$\n- 1 atmospheric pressure, $$1\\ \\mathrm{atm} = 1.01 \\cdot 10^{5}\\ \\mathrm{N/m^2} = 1.01 \\cdot 10^{5}\\ \\mathrm{Pa}$$\n- Wien’s displacement constant, $b = 2.9 \\cdot 10^{-3}\\ \\mathrm{m \\cdot K}$\n- Stefan-Boltzmann constant, $$\\sigma = 5.67 \\cdot 10^{-8}\\ \\mathrm{W/m^2/K^4}$$",
+    "document": "problems",
+    "page": 4,
+    "position": "before-problem"
+   }
+  ],
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-09-29",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "e849f3eb5e747dde93c34acc860e9a960082a4bd6e3937c7a9f683c2e592a475",
+    "solutions": "f84b081832d5967073b1ed95c02796ea1728c9da94299f08bc0f45a5fde349a0"
+   },
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Split read (D-P30), chunk 1 of 3: problems pp.1-16 (front matter and all 23 statements) and solutions pp.5-11 (official solutions 1-6); chunk 2 of 3: solutions pp.12-32 (official solutions 7-19); chunk 3 of 3: solutions pp.1-4 (a verbatim reprint of problems pp.1-4, already in documentNotes) and pp.33-42 (official solutions 20-22; problem 23 is reprinted on p.42 with no solution). The solutions document reprints pp.1-4 and every statement before its solution. The masthead prints a trailing colon (\"2026 Online Physics Olympiad:\"). The paper is divided into \"1 Short-Answer\" (problems 1-19, no per-problem points; scored by the formula in the instructions and scaled to 55 points), \"2 Long-Answer\" (problems 20-22, part points printed, 35 points in total) and \"3 Simulation Lab\" (problem 23, 10 points; no per-problem points printed); per-problem points are therefore null. The catalogue lists 23 problems; the page prints 23. Kept as printed: problem 11 \"The five images below shows\", \"the rest represents\", \"the edges of the letter is\", \"each apertures\" (agreement errors, D-P28); problem 7 \"the magnetisation density of the neodymium magnets are\" (agreement); problem 16 \"an uniform\"; problem 13 \"Achilles has sealed, opaque container\" (missing article) and \"spreads(standard deviation)\"; problem 6 \"Given:R1\" without a space; problem 18 prints I = 0 A. Words hyphenated at line ends are joined (\"neg-ligible\", \"thermody-namic\", \"Tristan-land\"). Solution 2 speaks of \"the Teo II team\" and \"Teo II receiving the message\" although the problem is about Teo I, and prints \"as t ≥ v/d\" (dimensionally d/v) — kept verbatim. Solution 3 prints a truncated sentence \"much larger than any contribution due to Let us warm up\" — kept verbatim. Solution 5 prints \"by the the belt\" and the mixed quotes “loop\" — kept. Problem 1 answer: the solution gives 4ω − Ω = 0.273ω, i.e. 4 − β = 0.273. Chunk 2: the solutions document reprints each statement (with its figures) before its solution; the reprints are not transcribed again. Solution 7 prints \"The product of the two answers are\" (agreement, D-P28, kept) and \"image currrents\" (fixed to \"currents\", tx.edits); it refers to the parts as \"part (a)\"/\"(b)\" although the problem labels them 1. and 2.; \"see this paper\" and \"Desmos graph\" are hyperlinks in the source (link text kept). Solution 8 prints \"a must be larger\" with a in roman type and the second derivative as V′eff′(R) — kept. Solution 11 prints \"both A and X doesn't contain\", \"the first and the fourth aperture is\", \"both pattern exhibits\" (agreement, kept), \"within in the first image ,\" and \"As for the second and the fourth\" (the solution means the fifth) — kept verbatim. Solution 14 prints the real insect at \"(v_g t_1, L_0)\" (v_g, t_1 not defined) — kept. Solution 17 ends with a stray period on its own line after the final formula — kept. Solution 18 prints no numerical value, only the boxed expression; the answer is recorded as an expression. Solution 19 prints \"Lets begin\" and \"Using incompressibility\" — kept. Chunk 3: solution 20 prints its own part scheme A1-A3, B1-B2, C1-C2 with sub-point values (1.0), (1.5), (1.0), (0.5), (1.0), (1.0), (1.5) (7.5 in total) that differ from the part points printed in the statement ([1.5], [2.5], [0.5], [1.0], [1.5], [0.5], [2.5], 10 in total) — both kept as printed. Solution 20 prints $P(r) \\propto e^{-kr^2/k_BT}$ (without the factor 2 used later), the second denominator $Z_0(R_0)^2$ (zero, not o) in $g''(R_0)$, $\\lambda_T$ alongside $\\lambda$, \"where upon you obtain\", and \"$r < R_0$.The total\" without a space — all kept. Solution 21 uses $\\lambda$ for the wavelength of the ray oscillation. Solution 22 prints $\\theta_0 = \\arcsin(b) - \\arcsin(n_u/b')$ and the integration limit $\\arcsin(\\theta_m)$ — kept verbatim. Words hyphenated at line ends are joined (\"distri-bution\", \"Fur-thermore\", \"un-perturbed\", \"require-ment\", \"Alto-gether\", \"Fi-nally\", \"physi-cally\", \"ac-counting\"). The solutions document reprints the statements of 20-22 (with the Einstein-ring image on p.39) before the solutions; the reprints are not transcribed again. Problem 23 (simulation) has no official solution: solutions p.42 prints its statement only.",
+   "edits": [
+    {
+     "path": "/problems/6/solution/statement",
+     "printed": "currrents",
+     "fixed": "currents",
+     "document": "solutions",
+     "page": 14,
+     "kind": "misspelling"
+    }
+   ]
+  }
+ },
+ "problems": [
+  {
+   "id": "opho-2026-x-p1",
+   "number": 1,
+   "title": "Very Large Angle Pendulum",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A simple pendulum of length $l$ in a uniform gravitational field $g$ is initially in stable equilibrium. It is given an impulse suddenly so that it has an angular velocity $4\\omega$ where $\\omega := \\sqrt{g/l}$. We find that the pendulum makes full turns with angular frequency $\\beta\\omega$ where $\\beta$ is slightly less than 4. Find $4 - \\beta$ to 1% accuracy. Note that a simple pendulum is essentially just a point mass on a string of length $l$.",
+   "parts": [],
+   "answer": {
+    "kind": "numeric",
+    "value": 0.273,
+    "tolerance": 0.001,
+    "note": "$4\\omega - \\Omega = 0.273\\,\\omega$"
+   },
+   "topics": [
+    "mechanics/oscillations",
+    "mechanics/nonlinear-oscillations"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "We can test a trial solution\n\n$$\\theta = \\Omega t + \\sum_n A_n \\sin(n\\Omega t)$$\n\nwhere $\\Omega$ is the frequency of turns made. (There will never be any $\\cos(n\\Omega t)$ terms because otherwise $\\ddot{\\theta}(t = 0)$ will be non-zero.) For accuracy to 1%, only the first 2 terms are necessary. Compare terms in $\\ddot{\\theta} = -\\omega^2 \\sin\\theta$:\n\n$$\\begin{aligned} \\Omega^2 A_1 \\sin\\Omega t + 4\\Omega^2 A_2 \\sin 2\\Omega t &= \\omega^2 \\sin\\Omega t \\cos\\big(A_1 \\sin\\Omega t + A_2 \\sin 2\\Omega t\\big) \\\\ &\\quad + \\omega^2 \\cos\\Omega t \\sin\\big(A_1 \\sin\\Omega t + A_2 \\sin 2\\Omega t\\big) \\\\ &\\approx \\omega^2 \\sin\\Omega t + \\omega^2 A_1 \\cos\\Omega t \\sin\\Omega t \\\\ &= \\omega^2 \\sin\\Omega t + \\tfrac{1}{2}\\omega^2 A_1 \\sin 2\\Omega t \\end{aligned} \\tag{1}$$\n\nThus\n\n$$A_1 = \\left(\\frac{\\omega}{\\Omega}\\right)^2 \\qquad \\text{and} \\qquad A_2 = \\frac{1}{8}\\left(\\frac{\\omega}{\\Omega}\\right)^4.$$\n\nInvoking the initial condition we find\n\n$$\\Omega\\left(1 + \\left(\\frac{\\omega}{\\Omega}\\right)^2 + \\frac{1}{4}\\left(\\frac{\\omega}{\\Omega}\\right)^4\\right) = 4\\omega$$\n\ngiving $\\Omega = 3.727\\,\\omega$ and hence $4\\omega - \\Omega = 0.273\\,\\omega$."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p2",
+   "number": 2,
+   "title": "Teo I",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Upon the discovery of the exoplanet Teo I by the esteemed astronomer and astrophysicist Kai Wen, news sources around the world (that is to say, Earth) began buzzing with excitement due to the remarkable similarities Teo I shared with planet Earth. \"From our readings, it appears that not only does Teo I share several physical similarities with Earth, with identical surface gravity, atmospheric composition, average temperature and size, but also *cultural* similarities!\". Indeed, the residents of Teo I engage in many activities that may be familiar to the residents of our lovely planet. For example, chess, boxing, chessboxing, large amounts of gambling and of course, physics olympiads. Kai Wen decided to immediately challenge the inhabitants of Teo I to a high stakes no limit Holdem (also known as poker) match, wagering his entire life savings (approximately five (5) Singaporean dollars). Unfortunately, soon after the events of this problem, the astronomers of Earth reclassified Teo I as uninhabited following numerous mysterious explosions detected in the planet’s atmosphere.\n\nIn order to reach Teo I, Kai Wen designs a photon rocket, which has a total mass $M = 10^5\\ \\mathrm{kg}$ and a payload with mass $m = 2000\\mathrm{kg}$. The rocket has been calibrated to run out of fuel upon reaching Teo I, after decelerating to rest. (Due to a slight miscalculation, Kai Wen forgot to reserve any fuel to return to Earth). Naturally, in order to ensure the terms of the match are fair, Kai Wen sends out a radio message detailing his challenge and urging the inhabitants of Teo I to begin training their best poker team. To place both teams on an even playing field, both teams must engage in the same amount of training. From prior research, it is known that the rate of increase in one’s poker ability is directly proportional to the magnitude of the local gravitational acceleration. The radio message and the photon rocket are launched simultaneously as measured by an observer at infinity.\n\nWhat is the maximum possible distance, in light years, between Teo I and Earth?",
+   "parts": [],
+   "answer": {
+    "kind": "numeric",
+    "value": 92.8,
+    "unit": "ly",
+    "tolerance": 0.1
+   },
+   "topics": [
+    "relativity/special-relativity",
+    "relativity/rockets"
+   ],
+   "difficulty": "Normal",
+   "importance": 1,
+   "solution": {
+    "statement": "Refer to the Earth Team as A and the Teo II team as B. Let the distance be $d$.\nTeam A’s training is on the rocket, where the effective gravity is just the proper acceleration of the rocket. Therefore, their total training is equal to\n\n$$T_A \\propto \\int a\\, d\\tau$$\n\nTeam B’s training is simply equal to\n\n$$T_B \\propto g(t - d/c)$$\n\nNote that the proper acceleration is simply the derivative of rapidity w.r.t proper time. Therefore, the total training of team A is proportional to $c\\Delta\\eta$, where $\\Delta\\eta$ is the total rapidity change. In the instantaneous rest frame of the rocket,\n\n$$dv = -c\\frac{dM}{M}$$\n\n$$\\implies \\Delta\\eta = \\ln\\frac{M_i}{M_f}$$\n\nLet $\\eta_m$ be the maximum rapidity reached by the rocket. Then, the total rapidity change is equal to $2\\eta_m$. Therefore:\n\n$$\\eta_m = \\frac{1}{2}\\ln\\frac{M}{m}$$\n\nBecause the training experienced by team B only depends on the time elapsed between Teo II receiving the message and the photon rocket arriving, we wish to minimize this time interval, as the training experienced by team A only depends on $M$ and $m$. Let $r = M/m$. Then, we have:\n\n$$v = c\\tanh(\\eta_m) = c\\frac{r - 1}{r + 1}$$\n\nNote that as $t \\geq v/d$, we can find the minimum training received by team B.\n\n$$\\implies T_B \\propto \\frac{2gd}{c(r - 1)}$$\n\nWe want this equal to the training experienced by team A:\n\n$$\\frac{2gd}{c(r - 1)} = c\\ln(r)$$\n\n$$\\implies d = \\frac{c^2}{2g}\\left(\\frac{M}{m} - 1\\right)\\ln\\frac{M}{m}$$\n\n$$d \\approx 92.8\\ \\mathrm{l.y.}$$"
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p3",
+   "number": 3,
+   "title": "Kugel Fountain",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A Kugel fountain is a water feature that uses the phenomenon of hydroplaning to suspend large rocks above a thin film of water.\n\nOne such fountain has a flat base. A circular hole is drilled through the center of the fountain and fitted with a vertical pipe of radius $a = 4\\,\\mathrm{cm}$. The opening of the pipe is flush with the base. Water flows out of the pipe at a volume flow rate $Q = 100\\,\\mathrm{cm^3/s}$. A puck-shaped rock with radius $R = 120\\,\\mathrm{cm}$ is placed on the fountain, with its flat side resting on the base and its center right above the pipe’s center. The water film suspends it, and thickness of the water film between the rock and the base is $h = 0.8\\,\\mathrm{mm}$. Find the weight of the rock $W$ in Newtons to 5% accuracy.\n\nAssume that the water beneath the rock is in steady-state laminar flow (although this is not very realistic due to the high Reynolds number of the flow). The viscosity of water at room temperature is $\\mu = 8.9 \\times 10^{-4}\\,\\mathrm{Pa\\,s}$.",
+   "parts": [],
+   "answer": {
+    "kind": "numeric",
+    "value": 751,
+    "unit": "N",
+    "tolerance": 1
+   },
+   "topics": [
+    "fluids/viscosity",
+    "fluids/lubrication"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "Because the water film is so thin, viscous effects become very significant. In fact, as we will show later, the excess pressure required to overcome viscous effects is much larger than any contribution due to Let us warm up by solving a simpler problem. Consider a water pipe with a rectangular cross-section of width $w$ and height $h \\ll w$. Water flows through the pipe at a volumetric flow rate $Q$. Assume that the water is undergoing steady-state laminar flow. Our goal is to find the pressure gradient in the fluid.\nFirst note that pressure is uniform across a cross-section of the pipe, as the fluid has to be flowing in parallel layers. We can ignore the contribution of gravity since that just gives an additional constant contribution proportional to depth. Also, since $w \\gg h$, we ignore the edge effects close to the vertical walls.\nPerforming force balance on a layer of fluid, we get (defining $z$ to be positive upwards and $x$ to be positive in the direction of fluid flow.)\n\n$$\\frac{d\\tau}{dz} = \\frac{dP}{dx}$$\n\n$$\\mu\\frac{d^2v}{dz^2} = \\frac{dP}{dx}$$\n\nSince the LHS must be independent of x and the RHS is independent of z, the values of both must be constant.\n\n$$\\therefore \\mu\\frac{d^2v}{dz^2} = \\frac{dP}{dx} = k$$\n\nDefining $z = 0$ at the middle of the pipe and $v_0$ to be the velocity of the fluid at that point, we can write the speed of fluid $v$ as a function of $z$\n\n$$v = v_0 + \\frac{k}{2\\mu}z^2$$\n\nThe fluid velocity must be 0 at $z = \\pm h/2$, so\n\n$$k = -8v_0\\frac{\\mu}{h^2}$$\n\n$$\\therefore v = v_0\\left(1 - 4\\left(\\frac{z}{h}\\right)^2\\right)$$\n\nPressure difference\n\n$$\\frac{dP}{dx} = -8v_0\\frac{\\mu}{h^2}$$\n\nWe express $v_0$ in terms of $Q$:\n\n$$Q = \\int v\\,\\mathrm{d}A = 2wv_0\\int_0^{h/2}\\left(1 - 4\\left(\\frac{z}{h}\\right)^2\\right)\\mathrm{d}z = \\frac{2}{3}whv_0$$\n\n$$\\frac{dP}{dx} = -12\\frac{Q\\mu}{wh^3}$$\n\nApplying this to our problem, at every radius $r$ the width is $2\\pi r$, so\n\n$$\\frac{dP}{dr} = -\\frac{6\\mu Q}{\\pi h^3 r}$$\n\nIntegrating from $r = R$ to an arbitrary $r$, we find that the excess pressure at a radial distance $r$ is\n\n$$\\Delta P = \\frac{6\\mu Q}{\\pi h^3}\\ln\\frac{R}{r}$$\n\nIntegrating this over area in polar coordinates from $r = a$ to $r = R$, the force on the rock, which is equal to its weight, is\n\n$$W = 3\\frac{\\mu Q R^2}{h^3} = \\boxed{751\\,\\mathrm{N}}$$\n\nNote that $a^2 \\ll R^2$, so the contribution to the force due to the water in the $r < a$ region is insignificant.\nNow, let us estimate the effect of dynamic pressure. For this part, we are just obtaining an estimate, so we assume that the velocity profile is uniform in the vertical axis.\n\n$$P_{\\mathrm{dyn}} = -\\frac{1}{2}\\rho v^2 = -\\frac{1}{2}\\rho\\left(\\frac{Q}{2\\pi r h}\\right)^2$$\n\nIntegrating over the area $a < r < R$,\n\n$$F_{\\mathrm{dyn}} = \\frac{1}{4\\pi}\\frac{\\rho Q^2}{h^2}\\ln\\frac{R}{a} = 4.2\\,\\mathrm{N}$$\n\nThis is around 0.5% of the answer, so it is definitely insignificant."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p4",
+   "number": 4,
+   "title": "A Different Kind of Superfluid",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Consider a very large tub of a superconducting fluid with negligible surface tension. The fluid has density $\\rho_l = 670\\ \\mathrm{kg/m^3}$. A small magnet is slowly lowered to a height $h = 1\\ \\mathrm{m}$ above the fluid surface. The magnet has net dipole moment of magnitude $m = 5929\\ \\mathrm{A \\cdot m^2}$, oriented vertically. Find the magnitude of the maximum vertical deflection of the fluid surface (as compared to the height of the fluid surface very far from the magnet). Input your answer in micrometers.",
+   "parts": [],
+   "answer": {
+    "kind": "numeric",
+    "value": 62.822,
+    "unit": "μm",
+    "tolerance": 0.001
+   },
+   "topics": [
+    "electromagnetism/superconductors",
+    "electromagnetism/method-of-images",
+    "fluids/hydrostatics"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "We can assume small deflection of the surface (this can be confirmed later) and since $B = 0$ inside the fluid, we can use the method of images. The $z$ component of the field vanishes, and we only consider the radial field component, which is\n\n$$B(r) = \\frac{3\\mu_0 m h r}{2\\pi(r^2 + h^2)^{5/2}}$$\n\nThis exerts a pressure $B^2/2\\mu_0$, enforcing hydrostatic equilibrium we can get the result for the liquid surface,\n\n$$z(r) = -\\frac{9\\mu_0 m^2 h^2 r^2}{8\\pi^2 \\rho_l g (r^2 + h^2)^5}$$\n\nFinding the critical points, we see that the deflection is maximal at $r = h/2$.\n\n$$|z_{\\min}| = \\frac{288\\mu_0 m^2}{3125\\pi^2 \\rho_l g h^6} = \\boxed{62.822\\,\\mu\\mathrm{m}}$$\n\nThis is much less than $h$, so the assumption made is valid."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p5",
+   "number": 5,
+   "title": "Belt friction",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Belts are sometimes used to \"connect\" the rotation of two wheels. This problem will explore the mechanics of such systems. There are two uniform cylinders, Cylinders 1 and 2. Cylinders 1 and 2 have masses $M_1 = 1\\,\\mathrm{kg}$ and $M_2 = 2\\,\\mathrm{kg}$, radii $R_1 = 0.2\\,\\mathrm{m}$ and $R_2 = 0.6\\,\\mathrm{m}$ respectively. The central axes of the cylinders are attached to separate horizontal frictionless axles a distance $L = 1.1\\,\\mathrm{m}$ apart such that the cylinders can freely rotate. A taut inelastic belt with a mass much less than the mass of the cylinders is wrapped around both cylinders. There is significant friction between the belt and the surface of the cylinders.\n\nCylinder 1 is quickly spun up to an angular speed of $\\omega_0 = 20\\,\\mathrm{rad/s}$ (clockwise), fast enough that Cylinder 2 does not rotate while Cylinder 1 is being spun up. Then, the cylinders are left to rotate freely. After a time $t = 0.4\\,\\mathrm{s}$, both cylinders reach a constant angular velocity. Find the magnitude of the average vertical force exerted by the axle of Cylinder 1 on the cylinder (in Newtons), across the 0.4 seconds. Gravity is pointing downwards in the diagram provided.",
+   "figures": [
+    {
+     "id": "p5-fig1",
+     "alt": "Two grey discs side by side joined by a thick dark belt wrapped around both: the small left disc has radius arrow R1, the large right disc radius arrow R2, and a dimension arrow L spans the distance between the two centres.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p5-fig1.png",
+     "width": 1260,
+     "height": 655,
+     "source": {
+      "page": 6,
+      "pdfRect": [
+       154.85,
+       406.3,
+       457.15,
+       563.13
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "answer": {
+    "kind": "numeric",
+    "value": 11.012,
+    "unit": "N",
+    "tolerance": 0.001
+   },
+   "topics": [
+    "mechanics/rigid-body-rotation",
+    "mechanics/friction"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "Let us ignore gravity first. The key to solving this problem is noticing that the tension in the belt varies with position due to friction with the surface of the cylinders. Specifically, one should notice that the total tangential force the belt exerts on one cylinder is equal to the increase in tension over the arc of the belt. Since the total change in tension over one \"loop\" is 0, **the tangential force exerted by the belt on one cylinder is equal and opposite in \"direction\" to the other cylinder**.\n\n$$\\frac{\\tau_1}{R_1} + \\frac{\\tau_2}{R_2} = 0$$\n\nThis allows us to get a conservation law.\n\n$$\\frac{d}{dt}\\left(\\frac{L_1}{R_1} + \\frac{L_2}{R_2}\\right) = 0 \\implies \\frac{L_1}{R_1} + \\frac{L_2}{R_2} = \\mathrm{constant}$$\n\nSubstituting\n\n$$L_1 = \\frac{1}{2}M_1 R_1^2 \\omega_1, \\quad L_2 = \\frac{1}{2}M_2 R_2^2 \\omega_2$$\n\n$$\\therefore M_1 R_1 \\omega_0 = M_1 R_1 \\omega_{1,f} + M_2 R_2 \\omega_{2,f}$$\n\nAfter a long time, the belt stops slipping, so\n\n$$\\omega_{1,f} R_1 = \\omega_{2,f} R_2 \\implies \\omega_{2,f} = \\frac{M_1}{M_1 + M_2}\\frac{R_1}{R_2}\\omega_0$$\n\nAngular momentum is not conserved as the axles exert a force on the cylinders, creating a net torque. The change in angular momentum is\n\n$$\\Delta\\mathcal{L} = \\frac{1}{2}M_1 R_1^2(\\omega_{1,f} - \\omega_0) + \\frac{1}{2}M_2 R_2^2 \\omega_{2,f} = \\frac{1}{2}\\frac{M_1 M_2}{M_1 + M_2}R_1(R_2 - R_1)\\omega_0$$\n\nInterestingly the sign depends on whether $R_2 > R_1$! Here, we have taken positive change as into the page. Since $R_2 > R_1$, the impulse on Cylinder 1 is upwards. The magnitude of the average force is then\n\n$$\\langle F_1 \\rangle = \\frac{\\Delta\\mathcal{L}}{Lt} = \\frac{1}{2}\\frac{M_1 M_2}{M_1 + M_2}R_1(R_2 - R_1)\\frac{\\omega_0}{Lt}$$\n\nAdding gravity in,\n\n$$\\begin{aligned} \\langle F_1 \\rangle + M_1 g &= \\frac{1}{2}\\frac{M_1 M_2}{M_1 + M_2}R_1(R_2 - R_1)\\frac{\\omega_0}{Lt} + M_1 g \\\\ &= \\boxed{11.012\\,\\mathrm{N}} \\end{aligned}$$\n\nYou may have noticed that if you assume constant coefficient of friction $\\mu$, the Capstan equation seems to imply that the tension in the belt does not return to its original value after one “loop\". This is resolved by the the belt undergoing stick-slip on one or both of the cylinders, thus modifying the effective coefficient of friction so that tension is conservative."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p6",
+   "number": 6,
+   "title": "Stars and Deltas",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Consider two infinite planar resistive networks.\n\n**Circuit 1.** The network is obtained by tiling the plane with rhombi having interior angles 60° and 120°, as depicted. Each edge of the tiling is occupied by a resistor. Edges are partitioned into three classes by orientation, indicated by colour: yellow edges each carry resistance $R_1$, blue edges each carry resistance $R_2$, and green edges each carry resistance $R_3$. Let $R_{AB}$ denote the equivalent resistance measured between the terminals $A$ and $B$ marked in the figure.\n\n**Circuit 2.** The network is obtained by tiling the plane with regular hexagons and equilateral triangles (the tri-hexagonal tiling), as depicted, with a resistor on every edge. Grey edges each carry resistance $R_4$, red edges each carry resistance $R_5$, and magenta edges each carry resistance $R_6$. Let $R_{CD}$ denote the equivalent resistance between the terminals $C$ and $D$ marked in the figure.\n\nIn both networks, all mutually parallel edges (i.e. all edges of the same orientation) belong to the same colour class and hence carry equal resistance. Note that there are no direct resistor connections between nodes A and B, nor between the nodes C and D.\n\nGiven:$R_1 = 1\\,\\Omega$, $R_2 = 2\\,\\Omega$, $R_3 = 3\\,\\Omega$, $R_4 = 3\\,\\Omega$, $R_5 = 1.5\\,\\Omega$, $R_6 = 1\\,\\Omega$.\n\nDetermine the product $R_{AB} \\times R_{CD}$, expressed in $\\Omega^2$.",
+   "figures": [
+    {
+     "id": "p6-fig1",
+     "alt": "Two network drawings with dashed lines indicating they continue to infinity. Left, labelled \"Circuit 1\": a tiling of 60°/120° rhombi with yellow horizontal edges and blue and green slanted edges; two nodes are marked by hand in red as A (lower) and B (upper). Right, labelled \"Circuit 2\": a tri-hexagonal tiling inside a hexagonal outline with grey vertical edges, red edges rising to the right and magenta edges falling to the right; two nearby nodes are marked by hand in red as C and D.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p6-fig1.png",
+     "width": 1582,
+     "height": 829,
+     "source": {
+      "page": 7,
+      "pdfRect": [
+       116.28,
+       92.65,
+       495.72,
+       291.46
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "answer": {
+    "kind": "numeric",
+    "value": 3,
+    "unit": "Ω^2",
+    "tolerance": 0.01
+   },
+   "topics": [
+    "electricity/dc-circuits",
+    "electricity/infinite-networks"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Notice that structurally, circuits 1 and 2 are duals of each other. In fact, if you construct the dual of Circuit 1 and multiply each of the resulting resistances by 3, you get Circuit 2. (This is because of the specific values of $R_i$ chosen)\nSo, we have, $R_{AB} \\times R_{CD} = 3$"
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 6
+    },
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 11
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p7",
+   "number": 7,
+   "title": "Fridge Magnet",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Note: This problem consists of two parts, but there is only one input. Hence, submit the **product** of both answers. For example, if your answer to part 1 is $2\\,\\mathrm{kA/m}$ and your answer to part 2 is $3\\,\\mathrm{kA/m}$, you should submit $2 \\times 3 = 6$ as your final answer.\n\nIron is a ferromagnetic material which we assume to have a relative permeability $\\mu_r = 1.0 \\times 10^5$ and negligible hysteresis. Suppose we have a cylindrical neodymium magnet with mass density $\\rho = 7500\\,\\mathrm{kg\\,m^{-3}}$, radius $R$ and length $L$. The neodymium magnet has a uniform magnetisation density $M$ directed along its axis of rotational symmetry. We place the flat side of the magnet on the vertical wall of a fridge, which can be treated as a large cube of iron. The coefficient of static friction between the magnet and the fridge surface is $\\mu_s = 0.3$ (not to be confused with the relative permeability defined earlier!). Assume that the magnetisation density of the neodymium magnets are independent of the magnetic field.",
+   "parts": [
+    {
+     "label": "1.",
+     "statement": "If $R = 10\\,\\mathrm{cm}$ and $L = 0.4\\,\\mathrm{cm}$, find the minimum value of $M$ (in units of $\\mathrm{kA/m}$) such that the magnet remains stuck on the fridge in its original orientation.",
+     "points": null
+    },
+    {
+     "label": "2.",
+     "statement": "If $R = 0.4\\,\\mathrm{cm}$ and $L = 10\\,\\mathrm{cm}$, find the minimum value of $M$ (in units of $\\mathrm{kA/m}$) such that the magnet remains stuck on the fridge in its original orientation.",
+     "points": null
+    }
+   ],
+   "topics": [
+    "electromagnetism/magnetostatics",
+    "electromagnetism/magnetic-materials",
+    "mechanics/friction"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**Part 1**\nThe ferromagnet attracts magnetic field lines, much like how a conductor attracts electric field lines. Hence, we can make use of image currents or image charges to compute the magnetic field. For every current loop outside the iron block, there is a corresponding image current within the iron block, thus keeping the field lines perpendicular to the block. Hence, the force on the magnet due to the iron block is equal to that of an identical magnet adjacent to the magnet.\nWe know that the force per unit length on a current carrying wire due to a magnetic field is\n\n$$\\mathbf{F} = \\mathbf{I} \\times \\mathbf{B}$$\n\nHence, the magnitude of force per unit surface area $P$ on the curved surface of the magnet when exposed to a radial field $B_r$ is\n\n$$P = MB_r$$\n\nThis is akin to a pressure, though it is parallel rather than perpendicular to the curved surface.\nThe magnetic field created by the image magnet at a perpendicular distance $z \\ll R$ from the iron block, at some point on the curved surface of the magnet is\n\n$$\\begin{aligned} B_r &= \\frac{\\mu_0 M}{2\\pi}\\int_0^L \\frac{1}{z + z'}\\,\\mathrm{d}z' \\\\ &= \\frac{\\mu_0 M}{2\\pi}\\ln\\left(\\frac{z + L}{z}\\right) \\end{aligned}$$\n\nWe can use the formula for the magnetic field of an infinite straight wire here, integrated over the length of the image magnet, since the radius of curvature of the wire $R$ is much larger than the maximum value of $z$.\nThe force between the magnet and the fridge is\n\n$$\\begin{aligned} F &= M\\int_0^L B_r\\,(2\\pi R\\,\\mathrm{d}z) \\\\ &= 2\\pi RM\\int_0^L B_r\\,\\mathrm{d}z \\\\ &= \\mu_0 M^2 R\\int_0^L \\ln\\left(\\frac{z + L}{z}\\right)\\mathrm{d}z \\\\ &= \\mu_0 M^2 R\\int_0^L (\\ln(z + L) - \\ln(z))\\,\\mathrm{d}z \\\\ &= \\mu_0 M^2 R(2L\\ln(2L) - 2L - 2(L\\ln L - L)) \\\\ &= (2\\ln 2)\\mu_0 M^2 RL \\end{aligned}$$\n\nIn this part of the problem, $M$ needs to be sufficiently large to prevent the magnet from slipping:\n\n$$\\mu_s F \\geq \\rho\\pi R^2 Lg \\implies F \\geq \\frac{\\pi}{\\mu_s}\\rho R^2 Lg$$\n\nWe can confirm this is the dominant effect, as compared to no-toppling. We can find out if the magnet topples over by performing torque balance about the bottom point of the magnet in contact with the iron block, noting that the magnetic force produces a torque as if it was acting at the center of the cross-section (by symmetry).\n\n$$FR \\geq \\rho\\pi R^2 Lg\\frac{L}{2} \\implies F \\geq \\frac{\\pi}{2}\\rho RL^2 g$$\n\nNo-slip is dominant when\n\n$$\\frac{R}{\\mu_s} > \\frac{L}{2} \\implies \\mu_s < \\frac{2R}{L}$$\n\nwhich we can confirm to be true numerically. Hence,\n\n$$\\boxed{M \\geq \\sqrt{\\frac{\\pi}{2\\ln 2}\\frac{\\rho g R}{\\mu_0\\mu_s}}} \\approx 210196\\,\\mathrm{A/m}$$\n\n**Part 2**\n\nIn this part of the problem, $M$ has to be large enough to prevent toppling, since $\\mu_s > 2R/L$.\nThere are two main ways to solve this problem. The first is using magnetic poles (Gilbert model), and the second is to use current cylinders (Amperian model).\n**Solution 1: Gilbert model**\nLet us briefly introduce the Gilbert model. We can essentially compute the **B** field within magnetised materials by first calculating the bound magnetic charges in the material:\n\n$$\\rho_m = -\\nabla \\cdot \\mathbf{M}$$\n\nThere is also a surface magnetic charge density:\n\n$$\\sigma_m = \\mathbf{M} \\cdot \\hat{\\mathbf{n}}$$\n\nThe magnetic charges produce an **H** field similar to how electric charges produce an **E** field:\n\n$$\\nabla \\cdot \\mathbf{H} = \\rho_m \\iff \\nabla \\cdot (\\epsilon_0\\mathbf{E}) = \\rho_e$$\n\nThe **B** field is related to **H** and **M**:\n\n$$\\mathbf{B} \\equiv \\mu_0(\\mathbf{M} + \\mathbf{H})$$\n\nMagnetic charges experience a magnetic force: $\\mathbf{F} = q_m\\mathbf{B}$.\nFor more information on this model, see Kevin Zhou E8.\nThe magnet has two poles with opposite charges at its flat ends, each with magnetic charge density of magnitude $\\sigma = M$. It has no volume charge density since **M** is uniform. The iron creates image (magnetic) charges opposite in magnitude to the actual charges. Since $R \\ll L$, the force between the magnet and the iron is equal to that between the two \"discs\" of magnetic charge adjacent to each other at the boundary between the iron and the magnet. From Gauss’s law, the magnitude of the **B** field created by the image disc at the location of the actual disc is\n\n$$B_i = \\mu_0 H = \\mu_0\\frac{\\sigma_m}{2} = \\frac{\\mu_0}{2}M$$\n\n, noting that the **M** field *created* by the image disc is 0. Hence the force experienced by the actual disc is\n\n$$F = M\\pi R^2 B_i = \\frac{\\pi}{2}\\mu_0 M^2 R^2$$\n\nWe have ignored the contribution to the **B** field due to the actual magnet, as the magnet cannot exert force on itself, so we know it wouldn’t contribute anything. Alternatively, we can include the **B** field due to the actual magnet to find the total force on the magnet, but we have to include the force on both poles (both the end touching the fridge and the far end).\n\n$$F \\geq \\frac{\\pi}{2}\\rho RL^2 g \\implies \\boxed{M \\geq \\sqrt{\\frac{\\rho g L^2}{\\mu_0 R}} \\approx 382392\\,\\mathrm{A/m}}$$\n\n**Solution 2: Amperian model + Maxwell stress-energy tensor/virtual work**\nThis problem can also be solved with the Amperian model, but it takes significantly more thought. With the image currents, the **B** field in the area where the magnet contacts the iron is equal to that of the center of a long magnet, and we know that is\n\n$$B_0 = \\mu_0 M$$\n\nThe **B** field at the surface of the iron block is 0 everywhere else. Now, we use the Maxwell stress-energy tensor to determine the force experienced by the magnet. Magnetic fields carry a tension per unit area of $B^2/2\\mu_0$ along the field lines, and a pressure of that same magnitude perpendicular to the field lines. This result can be stated without proof.\nWe consider the volume outside the iron block. This volume experiences tension due to the **B** field in the circular area between the iron block and the magnet, and no force anywhere else since the **B** field is 0 on the rest of the boundary. Hence, the force on this volume is\n\n$$F = \\frac{B_0^2}{2\\mu_0}\\pi R^2 = \\frac{\\pi}{2}\\mu_0 M^2 R^2$$\n\nwhich is also equal to the force on the magnet, since there are no other objects in this volume. Then, we can proceed as in solution 1.\nNote that an alternative way to obtain the same result without using the Maxwell stress-energy tensor is to use the principle of virtual work: when we move the magnet away from the iron block by a small displacement $\\delta z$, the magnetic field energy increases by\n\n$$\\delta U = \\frac{B_0^2}{2\\mu_0}\\pi R^2\\,\\delta z$$\n\nNote that the magnetic field energy inside the iron block is insignificant as the energy per unit volume is $B^2/2\\mu$, and $\\mu \\gg \\mu_0$. By the principle of virtual work, the force needed to perform this virtual displacement is\n\n$$F = \\frac{B_0^2}{2\\mu_0}\\pi R^2$$\n\n**Solution 3: Amperian model + clever integration**\nAnother method is using clever integration. We know from part (a) that the force per unit surface area of the magnet is $P = MB_r$. We will only consider the magnetic field created by the image currents, since the bound currents in the actual magnet cannot possibly exert a self-force.\nThe total force on the magnet is\n\n$$F = M\\iint_A B_r\\,\\mathrm{d}A = M\\Phi$$\n\nwhere $A$ is the curved surface of the magnet. This is related to the total magnetic flux through the curved surface of the magnet!\nNow, consider the closed Gaussian surface corresponding to the actual neodymium magnet. The magnetic flux at the far end of the neodymium magnet created by the magnetic field of the image currents is negligible, since the neodymium magnet is very long. Hence, **the magnetic flux through the curved surface of the magnet is equal to the magnetic flux passing through the circular area between the iron and the magnet**. Again, remember that we are only considering the “induced\" magnetic field created by the image currents. Since the magnetic flux at the center of a long magnet with radius $R$ and magnetisation $M$ is $\\Phi_c = \\mu_0 M\\pi R^2$, the magnetic flux produced by each semi-infinite half of the magnet is $\\Phi_e = \\Phi_c/2 = \\pi\\mu_0 MR^2/2$.\nHence we get the force\n\n$$F = M\\Phi = M\\pi\\mu_0 MR^2/2 = \\frac{\\pi}{2}\\mu_0 M^2 R^2$$\n\nThen, proceed as in solution 1.\n\n**Summary**\nThe product of the two answers are $\\boxed{80377\\,\\mathrm{kA^2\\,m^{-2}}}$\n**Exact solution**\nIt is possible to get the exact force between the cylindrical magnet and the ferromagnetic block: see this paper, which gives the force between coaxial uniformly charged disks. We can plot it on a Desmos graph. The answer to (a) is $210396\\,\\mathrm{A/m}$, while the answer to (b) is $382659\\,\\mathrm{A/m}$. Hence the final answer is $\\boxed{80510\\,\\mathrm{kA^2/m^2}}$, which is within 0.2% of the approximate answer."
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 80377,
+    "unit": "kA^2/m^2",
+    "tolerance": 1,
+    "note": "Part 1: $M \\approx 210196\\ \\mathrm{A/m}$; part 2: $M \\approx 382392\\ \\mathrm{A/m}$. The exact solution printed in the official solution gives $80510\\ \\mathrm{kA^2/m^2}$ (within 0.2%)."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 11
+    },
+    {
+     "document": "solutions",
+     "page": 12
+    },
+    {
+     "document": "solutions",
+     "page": 13
+    },
+    {
+     "document": "solutions",
+     "page": 14
+    },
+    {
+     "document": "solutions",
+     "page": 15
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p8",
+   "number": 8,
+   "title": "Fabric of Reality",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Consider a weightless fabric with constant surface tension $\\gamma$, initially stretched taut in the horizontal plane. The outer boundary of the fabric is a circle of radius $b$. A circular region of radius $a \\ll b$ is carved out from the fabric, concentric with the outer boundary. A ring with weight $W < 2\\pi a\\gamma$ uniformly distributed along its length is then attached along the inner circular boundary. This causes the fabric to sag under the action of the mass.\n\nParticles with negligible mass can perform circular orbits around the center of the fabric. When $\\frac{W}{\\gamma a} < \\xi$ holds, all such circular orbits are stable. Determine the numerical value of $\\xi$.",
+   "parts": [],
+   "topics": [
+    "mechanics/surface-tension",
+    "mechanics/orbital-stability"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Performing vertical force balance on all of the fabric within a radius $r$,\n\n$$2\\pi\\gamma r\\sin\\theta = W \\implies \\frac{z'}{\\sqrt{z'^2 + 1}} = \\frac{W}{2\\pi\\gamma r}$$\n\nWe let $\\lambda \\equiv W/2\\pi\\gamma$ for simplicity. Then,\n\n$$\\frac{z'}{\\sqrt{z'^2 + 1}} = \\frac{\\lambda}{r} \\implies \\frac{dz}{dr} = \\frac{1}{\\sqrt{(r/\\lambda)^2 - 1}}$$\n\nFor the purposes of finding stability, we can use the effective potential\n\n$$V_{\\mathrm{eff}} = \\frac{L^2}{2mr^2} + mgz$$\n\nFor a circular orbit of radius $R$, force balance in the rotating frame gives\n\n$$\\frac{\\omega^2 R}{g} = \\frac{dz}{dr}\\Big|_{r=R} = \\frac{1}{\\sqrt{(R/\\lambda)^2 - 1}}$$\n\n$$L = m\\omega R^2 = m\\sqrt{\\frac{gR^3}{\\sqrt{(R/\\lambda)^2 - 1}}}$$\n\nFor a stable orbit, we need\n\n$$V'_{\\mathrm{eff}}{}'(R) \\geq 0 \\implies \\frac{3L^2}{mR^4} + mgz''(R) \\geq 0$$\n\nUsing the expression for $L$ found earlier and differentiating $z'$ to obtain $z''$, we get the inequality\n\n$$R \\geq \\sqrt{\\frac{3}{2}}\\lambda$$\n\nOf course, for all circular orbits to be stable, a must be larger than this value. Hence,\n\n$$a \\geq \\sqrt{\\frac{3}{2}}\\lambda \\implies \\xi = 2\\pi\\sqrt{\\frac{2}{3}} \\approx 5.13$$"
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 5.13,
+    "tolerance": 0.01,
+    "latex": "\\xi = 2\\pi\\sqrt{\\frac{2}{3}}"
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 16
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p9",
+   "number": 9,
+   "title": "Beam Splitter",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Zeus, an aspiring optics enthusiast, fires a laser producing a beam of unpolarized light. Being somewhat careless with expensive equipment, he manages to trap this beam inside a glass slab of refractive index $n = 4$, length $l$, and breadth $b = 2\\,\\mathrm{m}$, with the beam propagating at an angle $\\theta = 30^{\\circ}$ to the normal. Zeus positions a camera at the far end inside the slab.\n\nThe camera can distinguish between the two linearly polarized components if the separation between the centers of the two beams is $x = 1\\,\\mathrm{mm}$. In order for the two components to be distinguishable, what is the minimum length $\\ell$ (in meters) of the glass slab? The light has a vacuum wavelength $\\lambda = 633\\,\\mathrm{nm}$, and the slab is surrounded by air.\n\nNeglect the diffraction effects of the laser.",
+   "parts": [],
+   "topics": [
+    "optics/total-internal-reflection",
+    "optics/polarization"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Let a plane, $s$-polarised wave travel in a medium of index $n_1$ and be incident on an interface with a medium of lower index $n_2 < n_1$, at an angle $\\theta_1$ exceeding the critical angle $\\theta_c = \\arcsin(n_2/n_1)$. Choose the $x$-axis along the interface and the $y$-axis along its normal, and write the incident field as\n\n$$E_i = E_0\\exp\\big[i(\\omega t - \\vec{k} \\cdot \\vec{r})\\big], \\qquad \\vec{k} \\cdot \\vec{r} = k\\sin\\theta\\,x + k\\cos\\theta\\,y,$$\n\nwith $k = 2\\pi/\\lambda_1$ and $\\lambda_1 = \\lambda/n_1$ the wavelength in the incident medium.\nThe Fresnel coefficient for $s$-polarisation is\n\n$$r_s = \\frac{n_1\\cos\\theta_1 - n_2\\cos\\theta_2}{n_1\\cos\\theta_1 + n_2\\cos\\theta_2}.$$\n\nBeyond the critical angle Snell’s law yields a complex transmitted angle, and\n\n$$n_2\\cos\\theta_2 = n_2\\sqrt{1 - \\frac{n_1^2}{n_2^2}\\sin^2\\theta_1} = i\\sqrt{n_1^2\\sin^2\\theta_1 - n_2^2},$$\n\nso that $r_s$ is the ratio of a complex number and its conjugate. Hence $|r_s| = 1$ and\n\n$$E_r = E_i\\exp(2i\\phi_0), \\qquad \\phi_0(\\theta_1) = \\arctan\\left(\\frac{1}{\\cos\\theta_1}\\sqrt{\\sin^2\\theta_1 - \\frac{n_2^2}{n_1^2}}\\right).$$\n\nThe reflection is total, and its sole effect is a phase shift $2\\phi_0$ that depends on the angle of incidence.\nA physical beam is not a single plane wave but a packet of wavevectors spanning a narrow range of angles about a central value $\\theta_0$. Writing the angular spectrum as $A(\\theta)$ and suppressing the common factor $e^{i\\omega t}$,\n\n$$E_{\\mathrm{in}} = \\int A(\\theta)\\,\\exp\\big[-i\\,(k\\sin\\theta\\,x + k\\cos\\theta\\,y)\\big]\\,d\\theta,$$\n\n$$E_{\\mathrm{out}} = \\int A(\\theta)\\,\\exp\\big[2i\\phi_0(\\theta)\\big]\\exp\\big[-i\\,(k\\sin\\theta\\,x + k\\cos\\theta\\,y)\\big]\\,d\\theta,$$\n\neach component acquiring its own phase shift on reflection.\nSince the spectrum is narrow, expand to first order in $(\\theta - \\theta_0)$:\n\n$$\\phi_0(\\theta) \\simeq \\phi_0(\\theta_0) + (\\theta - \\theta_0)\\frac{\\partial\\phi_0}{\\partial\\theta}, \\qquad \\sin\\theta \\simeq \\sin\\theta_0 + (\\theta - \\theta_0)\\cos\\theta_0, \\qquad \\cos\\theta \\simeq \\cos\\theta_0 - (\\theta - \\theta_0)\\sin\\theta_0.$$\n\nSubstituting, the two fields separate into a carrier wave times a slowly varying envelope:\n\n$$E_{\\mathrm{in}} = e^{-i(k\\sin\\theta_0 x + k\\cos\\theta_0 y)}\\int A(\\theta)\\,\\exp\\big[-i(\\theta - \\theta_0)(k\\cos\\theta_0\\,x - k\\sin\\theta_0\\,y)\\big]\\,d\\theta,$$\n\n$$E_{\\mathrm{out}} = e^{2i\\phi_0}\\,e^{-i(k\\sin\\theta_0 x + k\\cos\\theta_0 y)}\\int A(\\theta)\\,\\exp\\left[i(\\theta - \\theta_0)\\left(2\\frac{\\partial\\phi_0}{\\partial\\theta} - k\\cos\\theta_0\\,x + k\\sin\\theta_0\\,y\\right)\\right]d\\theta.$$\n\nThe extra term $2(\\theta - \\theta_0)\\,\\partial_\\theta\\phi_0$ is precisely what would be produced by translating the argument $x$ of the envelope, so that\n\n$$\\boxed{E_{\\mathrm{out}}(x, y) = e^{2i\\phi_0}\\,E_{\\mathrm{in}}\\left(x - \\frac{2}{k\\cos\\theta_0}\\frac{\\partial\\phi_0}{\\partial\\theta},\\ y\\right)}$$\n\nThat is, the reflected beam emerges displaced along the interface by $\\Delta x = \\dfrac{2}{k\\cos\\theta_0}\\dfrac{\\partial\\phi_0}{\\partial\\theta}$, rather than from the geometrical point of incidence.\nDifferentiating $\\phi_0$, with $n \\equiv n_1/n_2$,\n\n$$\\frac{\\partial\\phi_0}{\\partial\\theta} = \\frac{\\sin\\theta}{\\sqrt{\\sin^2\\theta - n^{-2}}}.$$\n\nThe displacement measured perpendicular to the beam axis is $D_s = \\Delta x\\cos\\theta_0$, whence\n\n$$D_s = \\frac{2}{k}\\frac{\\partial\\phi_0}{\\partial\\theta} = \\frac{\\lambda_1}{\\pi}\\frac{n\\sin\\theta}{\\sqrt{n^2\\sin^2\\theta - 1}}, \\qquad \\lambda_1 = \\frac{\\lambda}{n_1}.$$\n\nThe shift is of the order of a wavelength, and diverges as $\\theta \\to \\theta_c$, where the first-order expansion (and hence this treatment) ceases to be valid.\nThis result gives the lateral displacement $D_s$ for s-polarized light. An entirely analogous calculation for p-polarized light yields\n\n$$D_p = \\frac{D_s}{\\sin^2\\theta\\,(n^2 + 1) - 1}.$$\n\nFor the two polarization components to be distinguished by the camera, the accumulated difference in lateral displacement after $N$ total internal reflections must equal the prescribed separation $x$:\n\n$$N\\,|D_s - D_p| = x.$$\n\nSince each reflection corresponds to a longitudinal advance of $b\\tan\\theta$ along the slab, the minimum slab length required is\n\n$$l_{\\min} = N\\,b\\tan\\theta = \\frac{b\\,x\\,\\tan\\theta}{|D_s - D_p|}.$$\n\nSubstituting the given values yields\n\n$$\\boxed{l_{\\min} = \\frac{26\\pi bx}{9\\lambda} = 28675\\ \\mathrm{m}}.$$"
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 28675,
+    "unit": "m",
+    "tolerance": 1,
+    "latex": "l_{\\min} = \\frac{26\\pi bx}{9\\lambda}"
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 16
+    },
+    {
+     "document": "solutions",
+     "page": 17
+    },
+    {
+     "document": "solutions",
+     "page": 18
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p10",
+   "number": 10,
+   "title": "Countless Collisions",
+   "points": null,
+   "problemType": "theory",
+   "statement": "This problem is one-dimensional, with all objects constrained to the $x$-axis. Consider a block of mass $M$ with initial velocity $-v_0$ and position $x = L$ at $t = 0$. A dispenser is positioned at $x = 0$, given an initial velocity $v_1$, and uniformly releases small balls of mass $m$ and initial velocity $u$ relative to the lab frame in time intervals of $k$ starting at $t = 0$. If all collisions are elastic, find the minimum distance between the dispenser and block after a very long time has elapsed. Neglect all collisions with the dispenser and assume that the dispenser always moves at the same velocity. Report the answer in meters.\n\nUse the following parameters: $M = 59290\\ \\mathrm{kg}$, $v_0 = 5.929\\ \\mathrm{m/s}$, $v_1 = 2.34\\ \\mathrm{m/s}$, $L = 5929\\ \\mathrm{m}$, $m = 0.5929\\ \\mathrm{kg}$, $k = 0.005929\\ \\mathrm{s}$, $u = 5.929\\ \\mathrm{m/s}$.",
+   "parts": [],
+   "topics": [
+    "mechanics/collisions",
+    "mechanics/momentum"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Work in the big block’s frame and let its velocity relative to the lab frame be $v$. In this frame, each small block comes in with velocity $u - v$ and has velocity $v - u$ after the collision. Boosting back to the lab frame after the collision gives velocity $2v - u$ for the small block. Now we conserve energy in the lab frame, letting $v_f$ represent the velocity of block $M$ after the collision.\n\n$$\\frac{1}{2}mu^2 + \\frac{1}{2}Mv^2 = \\frac{1}{2}Mv_f^2 + \\frac{1}{2}m(2v - u)^2$$\n\n$$Mv_f^2 = Mv^2 + 4muv - 4mv^2$$\n\n$$v_f = \\sqrt{v^2 + 4muv/M - 4mv^2/M} \\approx v(1 + 2mu/(Mv) - 2m/M)$$\n\nSince all collisions are elastic and the balls are identical, we can treat the balls as freely passing through each other. Let $v_M$ be the velocity of $M$. Due to the doppler shift, the frequency $f$ at which balls collide with $M$ is\n\n$$f = \\frac{1}{k}(\\frac{u - v_M}{u - v_1})$$\n\nUse the previously derived formula and let the function $m(t)$ represent the total mass which has collided with the big block as a function of time $t'$, where the first collision happens at $t' = 0$:\n\n$$\\frac{\\mathrm{d}v_M}{\\mathrm{d}m(t')} = 2u/M - 2v_M/M$$\n\n$$\\int_{-v_0}^{v_M}\\frac{1}{u - v_M}\\mathrm{d}v_M = \\int_0^{m(t)}\\frac{2}{M}\\mathrm{d}m(t')$$\n\n$$\\ln\\left(\\frac{u + v_0}{u - v_M}\\right) = 2m(t')/M$$\n\n$$v_M = u - (u + v_0)e^{-\\frac{2m(t')}{M}}$$\n\nWe know that\n\n$$\\frac{\\mathrm{d}m(t')}{\\mathrm{d}t'} = mf = \\frac{m}{k}(\\frac{u - v_M}{u - v_1})$$\n\n$$\\int_0^{m(t)}\\frac{\\mathrm{d}m(t)}{(u + v_0)e^{-\\frac{2m(t')}{M}}} = \\int_0^{t'}\\frac{m\\mathrm{d}t'}{k(u - v_1)}$$\n\n$$\\frac{M}{2}(e^{\\frac{2m(t')}{M}} - 1) = \\frac{m(u + v_0)t'}{k(u - v_1)}$$\n\n$$e^{\\frac{2m(t')}{M}} = 1 + \\frac{2m(u + v_0)t'}{Mk(u - v_1)}$$\n\nThus,\n\n$$v_M = u - \\frac{u + v_0}{1 + \\frac{2m(u + v_0)t'}{Mk(u - v_1)}}$$\n\nThe distance $d$ between the dispenser and the block as a function of $t'$ is\n\n$$d = L - v_1(\\frac{L}{u + v_0}) - v_0(\\frac{L}{u + v_0}) - v_1 t' + \\int_0^{t'} v_M\\mathrm{d}t'$$\n\n$$d = L - \\frac{(v_0 + v_1)L}{u + v_0} - v_1 t' + ut' - \\frac{Mk(u - v_1)}{2m}\\ln\\left(1 + \\frac{2m(u + v_0)t'}{Mk(u - v_1)}\\right)$$\n\nNow, there are a number of ways to proceed: we can visually identify the minimum $d$ on a graph, set the derivative of $d$ with respect to $t'$ equal to zero, solve for $t'$, and plug back into the expression for $d$, or set the previous expression for $v_M$ equal to $v_1$ before solving for $t'$ and proceeding as the previous method. Regardless of the method chosen, the minimum should be found to occur at $t' \\approx 207$ s and $d \\approx 1265$ m."
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 1265,
+    "unit": "m",
+    "tolerance": 1,
+    "note": "The minimum occurs at $t' \\approx 207\\ \\mathrm{s}$."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 18
+    },
+    {
+     "document": "solutions",
+     "page": 19
+    },
+    {
+     "document": "solutions",
+     "page": 20
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p11",
+   "number": 11,
+   "title": "Diffractive Cryptography",
+   "points": null,
+   "problemType": "theory",
+   "statement": "The five images below shows five diffraction patterns. The central image is a diffraction pattern from an aperture which resembles one mathematical binary operation $(+, -, \\times, \\div)$, while the rest represents the English alphabet. The possible alphabetical apertures are the following letters, with the corresponding assigned digits: $A = 01$,$B = 02$, ..., $Z = 26$. The font of the aperture is sans serif, that is, written such that the edges of the letter is a simple straight edge. To encrypt the message, the corresponding digits of each apertures are concatenated, then operated by the binary operation. Determine the result of the encrypted message up to three significant figures. (e.g. if the apertures are AC×KM, it represents $0103 \\times 1113$).\n\nDo not solve this by using external tools to apply the Fourier Transform.",
+   "figures": [
+    {
+     "id": "p11-fig1",
+     "caption": "Figure 1: Diffraction patterns.",
+     "alt": "Five square greyscale diffraction patterns in a row on black backgrounds: the first shows a bright star of crossing streaks (an X with a vertical line); the second a bright centre with concentric rings; the third (central) a bright centre with faint horizontal and vertical streaks; the fourth crossing diagonal streaks with a horizontal line bounded by bright diagonal bands; the fifth an elongated vertical oval of rings.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p11-fig1.png",
+     "width": 1480,
+     "height": 321,
+     "source": {
+      "page": 9,
+      "pdfRect": [
+       126.68,
+       53.06,
+       481.64,
+       129.87
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p11-fig2",
+     "caption": "Figure 2: Example font used in the message.",
+     "alt": "Grid of the capital letters A to Z in a bold sans-serif font, three rows: A B C D E F G H I, J K L M N O P Q R, S T U V W X Y Z.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p11-fig2.png",
+     "width": 1067,
+     "height": 427,
+     "source": {
+      "page": 9,
+      "pdfRect": [
+       176.26,
+       171.09,
+       432.09,
+       273.24
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "topics": [
+    "optics/diffraction",
+    "optics/fourier-optics"
+   ],
+   "difficulty": "Normal",
+   "importance": 1,
+   "solution": {
+    "statement": "For the first and fourth diffraction pattern, we eliminate any curvy characters, leaving A,H,K,M, and X. Since there are four straight fringes, we must have four edges/slits in the direction perpendicular to the fringes, this leaves only K and M left, since H contains no diagonals, and both A and X doesn’t contain a vertical line. Finally, we notice the lack of a double slit secondary pattern within in the first image , in contrast to the fourth image which shows a clear single+double slit pattern. Hence the first and the fourth aperture is K and M, respectively.\nAs for the second and the fourth, we observe concentric fringes, therefore we only consider curvy alphabets, being C,G,O, and Q. Since both pattern exhibits an additional perpendicular linear fringes, we have that there must be either a rectangle, or two perpendicular edges in the pattern, eliminating O and C. Finally, the orientation of the second pattern is rotated, which must correspond to Q, while the fifth corresponds to G.\nFor the central operation, it must be the division symbol, as it is the only character with circular curvature. Therefore, the final result is\n\n$$\\mathrm{KQ/MG} = 1117/1307 = 0.855$$"
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 0.855,
+    "tolerance": 0.001,
+    "note": "KQ/MG = 1117/1307"
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 8
+    },
+    {
+     "document": "problems",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 20
+    },
+    {
+     "document": "solutions",
+     "page": 21
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p12",
+   "number": 12,
+   "title": "Compressing Light",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A perfectly insulating rigid cylinder is closed at one end and sealed by a movable piston at the other. The cylinder contains a photon gas at initial temperature $T = 1000\\ \\mathrm{K}$ in a complete vacuum. The walls and piston are purely reflecting. Initially, the cylinder has a length $L$ and cross sectional area $A = 5.929\\ \\mathrm{m^2}$. The piston is slowly compressed until the final length of the cylinder is $L_f = L/8$. Find the pressure exerted by the gas on the face of the piston. Give your answer in Pa.",
+   "parts": [],
+   "topics": [
+    "thermodynamics/photon-gas",
+    "thermodynamics/adiabatic-processes"
+   ],
+   "difficulty": "Easy",
+   "importance": 2,
+   "solution": {
+    "statement": "Despite the slow compression, the photon gas actually never reaches equilibrium as the walls are perfectly reflecting, so one component of the photon’s momentum will increase while the others will stay constant. This leads to anisotropic pressure on the walls of the cylinder. Take the cylinder axis along $z$. Consider a photon with initial momentum $\\vec{p} = (p_x, p_y, p_z)$. For a very slowly moving piston, the adiabatic invariant is $p_z L$. With a compression ratio $\\lambda = 8$, the final energy of the photon is\n\n$$E = c\\sqrt{p_x^2 + p_y^2 + \\lambda^2 p_z^2}$$\n\nHowever, we can immediately express the energy of the photon in spherical coordinates $(p_0, \\theta, \\phi)$, where $\\theta$ is the angle with the $z$ axis. Then the energy of the photon is\n\n$$E = cp_0\\sqrt{\\lambda^2\\cos^2\\theta + \\sin^2\\theta}$$\n\nThe total energy $U$ is the integral of $E$ over the initial Planck distribution. However, because $cp_0 = E_0$, the energy just scales by a factor, with\n\n$$U = \\int E\\ dn = \\int E_0\\sqrt{\\lambda^2\\cos^2\\theta + \\sin^2\\theta}$$\n\nSince the initial distribution is isotropic, we can separate the angular integral. The initial energy $U_i$ is evenly distributed over solid angles, so the angular probability density is $\\frac{1}{4\\pi}\\sin\\theta\\,d\\theta\\,d\\phi$:\n\n$$U = U_i\\frac{1}{4\\pi}\\int_0^{2\\pi}d\\phi\\int_0^{\\pi}\\sqrt{\\lambda^2\\cos^2\\theta + \\sin^2\\theta}\\sin\\theta\\,d\\theta$$\n\nSubstitute $u = \\cos\\theta$,\n\n$$U(\\lambda) = \\frac{U_i}{2}\\int_{-1}^{1}\\sqrt{\\lambda^2 u^2 + 1 - u^2}\\,du = U_i\\int_0^1\\sqrt{1 + (\\lambda^2 - 1)u^2}\\,du$$\n\nNow, we can use principle of virtual work to find the pressure.\n\n$$P = -\\frac{\\partial U}{\\partial V} = \\frac{\\lambda^2}{V_i}\\frac{\\partial U}{\\partial\\lambda}$$\n\nFor the initial state, the internal energy is $3P_i V_i$. Therefore,\n\n$$P_z = 3P_i\\lambda^2\\frac{d}{d\\lambda}\\left[\\int_0^1\\sqrt{1 + (\\lambda^2 - 1)u^2}\\,du\\right]$$\n\nDifferentiating under the integral sign,\n\n$$\\frac{d}{d\\lambda}\\int_0^1\\sqrt{1 + (\\lambda^2 - 1)u^2}\\,du = \\int_0^1\\frac{\\lambda u^2}{\\sqrt{1 + (\\lambda^2 - 1)u^2}}\\,du$$\n\nLet $\\beta = \\sqrt{\\lambda^2 - 1}$. The integral becomes:\n\n$$\\lambda\\int_0^1\\frac{u^2}{\\sqrt{1 + \\beta^2 u^2}}\\,du$$\n\nApplying the trigonometric substitution $\\beta u = \\sinh t$ and $du = \\frac{1}{\\beta}\\cosh t\\,dt$:\n\n$$= \\frac{\\lambda}{\\beta^3}\\int_0^{\\mathrm{arsinh}(\\beta)}\\sinh^2 t\\,dt = \\frac{\\lambda}{\\beta^3}\\left[\\frac{1}{2}(\\sinh t\\cosh t - t)\\right]_0^{\\mathrm{arsinh}(\\beta)}$$\n\nAt the upper limit, $\\sinh t = \\beta = \\sqrt{\\lambda^2 - 1}$ and $\\cosh t = \\lambda$. Therefore $t = \\ln\\big(\\lambda + \\sqrt{\\lambda^2 - 1}\\big)$. Plugging these bounds in:\n\n$$P_z = 3P_i\\lambda^3\\left[\\frac{\\lambda\\sqrt{\\lambda^2 - 1} - \\ln\\big(\\lambda + \\sqrt{\\lambda^2 - 1}\\big)}{2(\\lambda^2 - 1)^{3/2}}\\right]$$\n\nFor $T = 1000$ K:\n\n$$P_i = \\frac{4\\sigma}{3c}T^4 \\implies P_z = \\frac{4\\sigma T^4}{c}\\lambda^3\\left[\\frac{\\lambda\\sqrt{\\lambda^2 - 1} - \\ln\\big(\\lambda + \\sqrt{\\lambda^2 - 1}\\big)}{2(\\lambda^2 - 1)^{3/2}}\\right] \\approx \\boxed{2.352 \\times 10^{-2}\\ \\mathrm{Pa}}$$"
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 0.02352,
+    "unit": "Pa",
+    "tolerance": 0.00001,
+    "note": "$\\approx 2.352 \\times 10^{-2}\\ \\mathrm{Pa}$"
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 21
+    },
+    {
+     "document": "solutions",
+     "page": 22
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p13",
+   "number": 13,
+   "title": "The Odyssey",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Achilles has sealed, opaque container holding one mole of free neutrons together with one mole of a hypothetical particle called the \"Odysseon,\" whose rest mass is $m_{Od} = 0.511\\ \\mathrm{MeV}/c^2$. The two species inside are in mutual thermal equilibrium at a temperature $T = 1.4 \\times 10^{10}\\ \\mathrm{K}$.\n\nHe then pokes a tiny hole in the container’s wall, allowing particles of both types to effuse out. As each particle escapes, Achilles records its kinetic energy, and in this way builds up a separate kinetic-energy distribution (spectrum) for each species.\n\nOdysseus, in his wisdom, advises Achilles against analyzing two separate spectra. Achilles, however, trusts his own approach and presses on — computing the root-mean-square (RMS) fluctuation in kinetic energy of the effusing particles, once for the neutrons and once for the Odysseons.\n\nDetermine the ratio of these RMS kinetic-energy spreads(standard deviation),\n\n$$\\rho = \\frac{\\sigma_{KE(Od)}}{\\sigma_{KE(n)}}.$$\n\nAssumptions: the effusion process is quasi-static, both gases behave ideally, and thermal radiation inside the chamber may be ignored.",
+   "parts": [],
+   "topics": [
+    "thermodynamics/kinetic-theory",
+    "relativity/relativistic-statistics"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Since the temperature is extremely high, relativistic effects must be taken into account throughout the analysis.\nWithin the chamber, the momentum distribution of the gas molecules is given by\n\n$$f(p) \\propto p^2 e^{-E/k_B T}.$$\n\nHowever, molecules with higher speeds effuse out of the chamber at a proportionally higher rate, and this must be incorporated into the distribution of the effusing molecules. Using the relativistic relation $v = \\dfrac{pc^2}{E}$, the effusive momentum distribution is therefore\n\n$$F(p) \\propto \\frac{pc^2}{E}\\,f(p).$$\n\nBecause the total energy differs from the kinetic energy only by the (constant) rest energy, the variance of the kinetic energy is identical to the variance of the total energy:\n\n$$\\sigma_{KE}^2 = \\langle E^2\\rangle - \\langle E\\rangle^2 = \\frac{\\displaystyle\\int_0^\\infty E^2\\,\\frac{pc^2}{E}\\,p^2 e^{-E/k_B T}\\,dp}{\\displaystyle\\int_0^\\infty \\frac{pc^2}{E}\\,p^2 e^{-E/k_B T}\\,dp} - \\left(\\frac{\\displaystyle\\int_0^\\infty E\\,\\frac{pc^2}{E}\\,p^2 e^{-E/k_B T}\\,dp}{\\displaystyle\\int_0^\\infty \\frac{pc^2}{E}\\,p^2 e^{-E/k_B T}\\,dp}\\right)^2.$$\n\nIt is convenient to non-dimensionalize this expression. Let\n\n$$\\delta = \\frac{mc^2}{k_B T}, \\qquad p = xmc, \\qquad \\text{so that} \\qquad E = \\sqrt{x^2 + 1}\\,mc^2.$$\n\nUnder this substitution, the variance becomes\n\n$$\\frac{\\sigma_{KE}^2}{k_B^2 T^2} = \\delta^2\\left[\\frac{\\displaystyle\\int_0^\\infty \\sqrt{x^2 + 1}\\,x^3 e^{-\\delta\\sqrt{x^2+1}}\\,dx}{\\displaystyle\\int_0^\\infty \\frac{x^3}{\\sqrt{x^2 + 1}}e^{-\\delta\\sqrt{x^2+1}}\\,dx} - \\left(\\frac{\\displaystyle\\int_0^\\infty x^3 e^{-\\delta\\sqrt{x^2+1}}\\,dx}{\\displaystyle\\int_0^\\infty \\frac{x^3}{\\sqrt{x^2 + 1}}e^{-\\delta\\sqrt{x^2+1}}\\,dx}\\right)^2\\right].$$\n\nSubstituting $u = \\sqrt{1 + x^2}$ allows each integral to be expressed in terms of $I_0(\\delta) = \\displaystyle\\int_0^\\infty e^{-\\delta u}\\,du = \\frac{e^{-\\delta}}{\\delta}$ and its derivatives with respect to $\\delta$. Carrying out this reduction yields the closed-form result\n\n$$\\frac{\\sigma_{KE}^2}{k_B^2 T^2} = \\frac{2\\delta^2 + 6\\delta + 3}{(\\delta + 1)^2} \\equiv g(\\delta).$$\n\nFinally, evaluating this expression for the two given values $\\delta_1 = 0.423188$ and $\\delta_2 = 778.112$ gives the ratio\n\n$$\\rho = \\sqrt{\\frac{g(\\delta_1)}{g(\\delta_2)}} = 1.2058.$$"
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 1.2058,
+    "tolerance": 0.0001
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 22
+    },
+    {
+     "document": "solutions",
+     "page": 23
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p14",
+   "number": 14,
+   "title": "Pursuit of Happiness?",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Consider a standard two-dimensional flat Cartesian plane somewhere deep in outer space (called Tristanland). An overworked member of the OPhO committee is standing at rest at the origin. Suddenly, they see an Amazingly Gracious Insect (AGI) at rest at $(0, L_0 = 10^9\\ \\mathrm{m})$. At $t = 0$, the committee member begins chasing the AGI in their vision; they run at a constant speed of $v_C = 10^8\\ \\mathrm{m/s}$, while the elusive AGI begins running at the same speed in the positive $x$ direction as soon as it sees the committee member coming. After a long time, there is a constant distance $d$ between the committee member and the AGI; find $d$ in meters.",
+   "parts": [],
+   "topics": [
+    "mechanics/kinematics",
+    "mechanics/pursuit-curves"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "It takes time $\\Delta t_0 = \\frac{L_0}{c}$ for the insect to see the committee member coming. Then, it takes an additional $\\Delta t_1 = \\frac{L_0 - v_C\\Delta t_0}{c + v_C}$ for the committee member to see the insect begin to run; before then, the committee member runs perfectly vertically. We call the image of the insect that the committee member sees the “fake insect.\" At $t = \\Delta t_0 + \\Delta t_1$, the committee member is a vertical distance of $L_0 - v_C(\\Delta t_0 + \\Delta t_1)$ away from the fake insect, while the real insect is at $(v_g t_1, L_0)$.\nLet $t_f$ be the time at which the real insect “sent\" the signal for the fake insect that the committee member observes at $t$. The fake insect’s $x$ coordinate $x_f$ is then $x_f = v_C(t_f - \\Delta t_0)$ and its velocity is $v_f = v_C\\frac{dt_f}{dt}$. We also know that $r = c(t - t_f) \\to \\frac{dt_f}{dt} = 1 - \\frac{1}{c}\\frac{dr}{dt}$, giving us\n\n$$v_f = v_C(1 - \\frac{1}{c}\\frac{dr}{dt})$$\n\nNow we work in terms of the angle $\\theta$ between the committee member’s velocity vector and the insect’s velocity vector and the distance $r$ between the committee member and the insect. We have the following differential equations:\n\n$$\\frac{dr}{dt} = -v_C + v_f\\cos\\theta = -v_C + v_C(1 - \\frac{1}{c}\\frac{dr}{dt})\\cos\\theta$$\n\n$$r\\frac{d\\theta}{dt} = -v_f\\sin\\theta = -v_C(1 - \\frac{1}{c}\\frac{dr}{dt})\\sin\\theta$$\n\nSolve the first equation for $\\frac{dr}{dt}$:\n\n$$\\frac{dr}{dt} = \\frac{-v_C + v_C\\cos\\theta}{1 + (v_C/c)\\cos\\theta}$$\n\nPlug in this expression into the second equation and solve for $\\frac{d\\theta}{dt}$:\n\n$$\\frac{d\\theta}{dt} = -\\frac{v_C}{r}(\\frac{(c + v_C)\\sin\\theta}{c + v_C\\cos\\theta})$$\n\nDividing the two equations yields\n\n$$\\frac{dr}{d\\theta} = \\frac{rc(1 - \\cos\\theta)}{(c + v_C)\\sin\\theta} = \\frac{rc}{c + v_C}\\tan\\frac{\\theta}{2}$$\n\nNow we integrate on both sides to find the asymptotic distance $d_f$ between the fake insect and the committee member:\n\n$$\\int_{L_0 - v_C(\\Delta t_0 + \\Delta t_1)}^{d_f}\\frac{dr}{r} = \\int_{\\pi/2}^{0}\\frac{c}{c + v_C}\\tan\\frac{\\theta}{2}d\\theta$$\n\nSolving for $d$ and plugging in the values, we get\n\n$$d_f = (L_0 - v_C(\\Delta t_0 + \\Delta t_1))e^{(\\int_{\\pi/2}^{0}\\frac{c}{c + v_C}\\tan\\frac{\\theta}{2}d\\theta)} \\approx 2.97 \\cdot 10^{8}\\ \\mathrm{m}$$\n\nWe are not done yet; we need to account for the asymptotic distance between the fake insect and the real insect. Let $t_d$ represent the time it takes a photon from the real insect to reach the observer. We then obtain the following relations, where the first comes from considering the time it takes a photon to travel from the real insect to the committee member while accounting for relative velocity and the second coming from the committee member’s measurement of the distance between themself and the fake insect:\n\n$$t_d = \\frac{d}{c + v_C}$$\n\n$$d_f = d - v_C t_d$$\n\nEliminating $t_d$ and solving for $d$, we finally obtain our final answer,\n\n$$d = \\frac{d_f(c + v_C)}{c} \\approx 3.96 \\cdot 10^{8}\\ \\mathrm{m}$$"
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 396000000,
+    "unit": "m",
+    "tolerance": 1000000,
+    "note": "$d \\approx 3.96 \\cdot 10^{8}\\ \\mathrm{m}$"
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 24
+    },
+    {
+     "document": "solutions",
+     "page": 25
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p15",
+   "number": 15,
+   "title": "Aberration",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A convex lens is formed by a flat circular surface of diameter $2r_0$ and a spherical surface with radius of curvature $R$, as shown in the figure. It has a refractive index $n = 1.5$.\n\nLight of uniform intensity $I = 30\\mathrm{W\\,m^{-2}}$ is incident on the flat surface parallel to the optical axis. The entire lens is illuminated. The intensity pattern produced on the focal plane is shown in the image below. (The y-axis is in units of $\\mathrm{kW\\,m^{-2}}$ and the x-axis is in units of mm.)\n\nYou should be able to reverse engineer the radius of curvature $R$ and also the diameter of the lens $2r_0$ from the plot. Find their product $2Rr_0$ in units of $m^2$, correct to 5%. Ignore diffraction effects.",
+   "figures": [
+    {
+     "id": "p15-fig1",
+     "caption": "Figure 3: Left: Shape of the lens. Right: Graph of intensity.",
+     "alt": "Left: a plano-convex lens (green cap) cut from a dashed circle; a double arrow labelled r0 runs along the flat face from its left end, and a radius labelled R runs from the circle's centre to the edge of the flat face. Right: a plot of Intensity (kW/m²) from 0 to 200 against Distance along optical plane (mm) from 0.00 to 2.00; the curve falls steeply from above 200 near 0.2 mm, passes about 75 at 0.4 mm and about 25 near 0.8 mm, stays near 20 until 1.25 mm and then drops abruptly to 0.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p15-fig1.png",
+     "width": 1689,
+     "height": 823,
+     "source": {
+      "page": 10,
+      "pdfRect": [
+       101.61,
+       318.38,
+       506.74,
+       515.61
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "topics": [
+    "optics/geometrical-optics",
+    "optics/spherical-aberration"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "Consider a spherical lens made of a material of refractive index $n$ and radius of curvature $R$. The position of the curved surface of the lens is given by $z(r) = \\sqrt{R^2 - r^2} - R$, if we take the centre of the lens to be at the origin. A light ray arriving at a radius $r$ makes an angle $\\theta_i = \\arcsin\\left(\\frac{r}{R}\\right)$ with the normal of the curved surface of the lens. Thus it exits with an angle $\\theta_r = \\arcsin\\left(\\frac{nr}{R}\\right)$.\nThe trajectory of the light ray may be described by the equation\n$r'(z) = r - \\tan(\\theta_r - \\theta_i)(z - (\\sqrt{R^2 - r^2} - R))$\nalso,\n\n$$\\tan(\\theta_r - \\theta_i) = \\frac{\\sin\\theta_r\\cos\\theta_i - \\sin\\theta_i\\cos\\theta_r}{\\cos\\theta_r\\cos\\theta_i - \\sin\\theta_r\\sin\\theta_i}$$\n\nIf we expand this up to third order in $\\frac{r}{R}$ we find it is equal to $(n - 1)\\frac{r}{R} + \\frac{1}{2}(n - 1)(n^2 - n + 1)\\left(\\frac{r}{R}\\right)^3$. Also $z - (\\sqrt{R^2 - r^2} - R) \\approx z + \\frac{1}{2}\\frac{r^2}{R}$, and so we obtain\n\n$$r'(z) = r - \\left((n - 1)\\frac{z}{R}r + \\frac{z}{2}(n - 1)(n^2 - n + 1)\\left(\\frac{r}{R}\\right)^3 + \\frac{R}{2}(n - 1)\\left(\\frac{r}{R}\\right)^3\\right)$$\n\nComparing the first order term at $z = f$ the focal plane, we find $R = (n - 1)f$. This leaves us with a third order term\n\n$$r'(f) = -\\frac{R}{2}\\left((n^2 - n + 1) + (n - 1)\\right)\\left(\\frac{r}{R}\\right)^3 = -\\frac{1}{2}n^2 R\\left(\\frac{r}{R}\\right)^3$$\n\nThus a ring of radius $r$ incident on the lens gets mapped to a ring of radius $r' = \\frac{1}{2}n^2 R\\left(\\frac{r}{R}\\right)^3$ on the focal plane. By conservation of energy, $2\\pi r\\,dr\\,I_0 = 2\\pi r'\\,dr'\\,I$ which gives $I = I_0\\frac{r}{r'}\\frac{dr}{dr'} = I_0\\frac{2}{n^2}\\left(\\frac{R}{r}\\right)^2\\frac{1}{\\frac{3}{2}n^2\\left(\\frac{r}{R}\\right)^2} = \\frac{4}{3n^4}I_0\\left(\\frac{R}{r}\\right)^4 = \\frac{2^{2/3}}{3n^{4/3}}I_0\\left(\\frac{R}{r'}\\right)^{4/3}$. This can be rearranged to become $R = \\frac{3^{3/4}n}{\\sqrt{2}}r'\\left(\\frac{I_0}{I}\\right)^{3/4}$.\nand of course for $r' > \\frac{1}{2}n^2 R\\left(\\frac{r_0}{R}\\right)^3$ the intensity would simply be 0.\nWe can fit any point or range of points on the non-zero part of the graph, which is independent of $r_0$, to find $R$. This can be improved by reading off the image using a pixel counter (or even just using a ruler on the page). Using e.g. (1.00, 22) we find $R \\approx 0.34$. Fitting the cutoff point to $r_0$ gives us $r_0 \\approx 0.050$ and so $2Rr_0 \\approx 0.034$."
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 0.034,
+    "unit": "m^2",
+    "tolerance": 0.001,
+    "note": "$R \\approx 0.34$, $r_0 \\approx 0.050$"
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 25
+    },
+    {
+     "document": "solutions",
+     "page": 26
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p16",
+   "number": 16,
+   "title": "Bee greed",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A large number of particles with $q/m = 0.5\\ \\mathrm{C/kg}$ that do not interact with each other have been launched with an uniform, isotropic angular distribution spanning on the xy plane from the origin with unknown speed $v$. Space around that point is divided along a 2d grid analogous to a chessboard/checkerboard pattern with side length $a$, squares of one \"color\" (Not the one in the image) have a magnetic field $\\vec{B}$ with an unknown magnitude along the $\\hat{z}$ axis, and those of the other one have no magnetic field inside them. Find the radius of curvature of the particles’ motion in the $B$ field using the following heatmap of squares in which they were detected between 55 and 65 seconds. (The number embedded in each square is the average percentage of particles that ended up there)",
+   "figures": [
+    {
+     "id": "p16-fig1",
+     "alt": "Heatmap on a square grid with red grid lines, x (m) and y (m) axes from about −5 to 5 with ticks at −4, −2, 0, 2, 4; each cell has side 1 m. Two bright yellow cells read 45.328 (just left of and above the origin) and 45.329 (just right of and below the origin); the surrounding purple cells carry small percentages such as 1.159, 1.073, 1.265, 1.254, 1.080, 1.153, 0.501, 0.260, 0.259 and values down to 0.002.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p16-fig1.png",
+     "width": 863,
+     "height": 866,
+     "source": {
+      "page": 11,
+      "pdfRect": [
+       201.96,
+       52.29,
+       408.83,
+       259.79
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "topics": [
+    "electromagnetism/charged-particle-motion",
+    "electromagnetism/magnetic-force"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "We can see that the radius of curvature $R_c$ has to be way smaller than $a$ here, because particles are getting pushed out of the $B$-field squares and square boundaries act in ways somewhat analogous to walls. The probability of finding a particle in a $B$-field square will be proportional to its expected path length in those squares, approximately $\\pi R_c$. The expected length of a random straight segment through a square can be shown to be $\\pi a/4$, therefore\n\n$$\\frac{n_B}{n_\\varnothing} = \\frac{4R_c}{a}. \\tag{2}$$\n\nThis yields a value of $R_c \\sim 0.005\\,454\\,\\mathrm{m}$ with our data."
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 0.005454,
+    "unit": "m",
+    "tolerance": 0.000001
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 10
+    },
+    {
+     "document": "problems",
+     "page": 11
+    },
+    {
+     "document": "solutions",
+     "page": 26
+    },
+    {
+     "document": "solutions",
+     "page": 27
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p17",
+   "number": 17,
+   "title": "Not Quite Now",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A plane electromagnetic wave propagates in vacuum along the $-Z$-direction. In the lab frame, its intensity profile at the initial time $t = 0$ can be approximated as:\n\n$$I_{\\mathrm{lab}}(x, y, z, t = 0) = I_0\\left(1 + \\frac{z}{L}\\right),$$\n\nfor $(x, y, z)$ over scales $\\gg R$, and the profile thereafter propagates rigidly at speed $c$. An object which is a sphere of radius $R$ in its own rest frame is constrained by an external force to move along $+Z$ with constant relativistic speed $v$; its surface has absorptivity $\\alpha$ and reflectivity $r = 1 - \\alpha$, with reflection taken to be specular. Note that $r$ and $\\alpha$ are constant across the surface, independent of wave polarization or the angle of incidence.\n\nAt every instant in the sphere’s rest frame, only a fraction $\\eta$ of the absorbed energy is retained by the sphere, the remainder being re-emitted isotropically in that frame.\n\nAssuming the sphere’s size is **NOT** negligible compared to the length scale $L$, find the force $F_{rad}(t)$ applied by the radiation on the sphere as felt in the lab frame, if the sphere’s center starts from the origin at the initial time $t = 0$.\n\nNumerical data: Take $I_0 = 300\\,\\mathrm{W\\,m^{-2}}$, $L = 3.0\\,\\mathrm{m}$, $R = 0.30\\,\\mathrm{m}$, $v = \\frac{3}{5}c$, $\\alpha = \\frac{2}{5}$, $\\eta = \\frac{1}{2}$ (so $r = \\frac{3}{5}$), and evaluate $F_{\\mathrm{rad}}(t)$ at $t = 2.50\\,\\mathrm{ns}$. Evaluate in Newtons, and use a negative sign if force is along $-Z$ and vice versa.",
+   "figures": [
+    {
+     "id": "p17-fig1",
+     "alt": "Hand sketch: a sphere drawn as an ellipse with its centre on a dashed horizontal axis; a vertical dashed radius labelled R goes down from the centre and an arrow goes right from the centre along the axis; to the right, a column of short arrows points left (the incoming wave), and at far right an arrow labelled z points right.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p17-fig1.png",
+     "width": 964,
+     "height": 552,
+     "source": {
+      "page": 11,
+      "pdfRect": [
+       190.35,
+       477.58,
+       421.65,
+       609.84
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "topics": [
+    "relativity/special-relativity",
+    "electromagnetism/radiation-pressure"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "Let\n\n$$\\beta \\equiv \\frac{v}{c}, \\qquad \\gamma \\equiv \\frac{1}{\\sqrt{1 - \\beta^2}}, \\qquad D \\equiv \\gamma(1 + \\beta) = \\sqrt{\\frac{1 + \\beta}{1 - \\beta}}. \\tag{3}$$\n\nSince the beam propagates along $-Z$ at speed $c$, its lab-frame profile is\n\n$$I_{\\mathrm{lab}}(z, t) = I_{\\mathrm{lab}}(z + ct, 0) = I_0\\left(1 + \\frac{z + ct}{L}\\right). \\tag{4}$$\n\nFor a plane wave traveling opposite to the boost direction, the intensity in the sphere rest frame is Doppler-enhanced by a factor $D^2$, and its argument is squeezed by the same factor. Hence\n\n$$I'(z', t') = D^2\\,I_{\\mathrm{lab}}\\big(D(z' + ct'), 0\\big) = D^2 I_0\\left(1 + \\frac{D(z' + ct')}{L}\\right). \\tag{5}$$\n\nNow consider the ring on the sphere at polar angle $\\theta$ (measured from the $+z'$-axis). The illuminated hemisphere is $0 \\leq \\theta \\leq \\pi/2$, and the ring area is\n\n$$dA = 2\\pi R^2\\sin\\theta\\,d\\theta, \\qquad z' = R\\cos\\theta. \\tag{6}$$\n\nTo compute the *lab-frame* force at a fixed lab time $t$, one must evaluate each ring at the corresponding time in the sphere frame. Using the Lorentz transformation and the fact that points on the same ring have the same $z'$, one finds\n\n$$t'_\\theta(t) = \\frac{t}{\\gamma} - \\frac{vR\\cos\\theta}{c^2}. \\tag{7}$$\n\nThis is the key kinematic ingredient: a common lab-time slice does not correspond to a common $t'$ over the whole sphere.\nSubstituting $z' = R\\cos\\theta$ and $t' = t'_\\theta(t)$ gives a useful simplification,\n\n$$D\\big(z' + ct'\\big) = ct(1 + \\beta) + \\frac{R\\cos\\theta}{\\gamma}, \\tag{8}$$\n\nso that the ring sees the intensity\n\n$$I_\\theta(t) \\equiv I'\\left(R\\cos\\theta,\\ \\frac{t}{\\gamma} - \\frac{vR\\cos\\theta}{c^2}\\right) = D^2 I_0\\left[1 + \\frac{ct(1 + \\beta)}{L} + \\frac{R\\cos\\theta}{\\gamma L}\\right]. \\tag{9}$$\n\nThe incident power on the ring in the sphere frame is\n\n$$d\\dot{E}'_{\\mathrm{inc}} = I_\\theta(t)\\cos\\theta\\,dA. \\tag{10}$$\n\nAbsorption transfers momentum along the beam direction, while specular reflection adds the usual extra normal impulse. Therefore the ring contributes, in the sphere frame,\n\n$$\\frac{d^2 p'_z}{dt'\\,d\\theta} = -\\frac{2\\pi R^2}{c}\\,I_\\theta(t)\\sin\\theta\\left[\\alpha\\cos\\theta + 2r\\cos^3\\theta\\right]. \\tag{11}$$\n\nOnly the retained fraction of the absorbed energy contributes to the sphere’s internal-energy increase. Thus\n\n$$\\frac{d^2 E'}{dt'\\,d\\theta} = 2\\pi R^2\\,\\eta\\alpha\\,I_\\theta(t)\\sin\\theta\\cos\\theta. \\tag{12}$$\n\nThe longitudinal momentum rate in the lab frame is obtained by Lorentz-transforming the infinitesimal energy–momentum transfer. Since the ring is followed along its own worldline, $dt = \\gamma\\,dt'$, and one gets\n\n$$\\frac{d^2 p_z}{dt\\,d\\theta} = \\frac{d^2 p'_z}{dt'\\,d\\theta} + \\frac{v}{c^2}\\frac{d^2 E'}{dt'\\,d\\theta}. \\tag{13}$$\n\nThe extra term is precisely why one cannot use naive longitudinal-force invariance here: the sphere is gaining internal energy in its own rest frame, so the time component of the transferred 4-momentum is nonzero and mixes into the spatial component under a boost.\nSubstituting the two rates above yields\n\n$$\\frac{d^2 p_z}{dt\\,d\\theta} = -\\frac{2\\pi R^2}{c}\\,I_\\theta(t)\\sin\\theta\\left[\\alpha(1 - \\eta\\beta)\\cos\\theta + 2r\\cos^3\\theta\\right]. \\tag{14}$$\n\nHence the total radiation force on the sphere is\n\n$$F_{\\mathrm{rad}}(t) = \\int_0^{\\pi/2}\\frac{d^2 p_z}{dt\\,d\\theta}\\,d\\theta. \\tag{15}$$\n\nUsing\n\n$$\\int_0^{\\pi/2}\\sin\\theta\\cos\\theta\\,d\\theta = \\frac{1}{2}, \\qquad \\int_0^{\\pi/2}\\sin\\theta\\cos^2\\theta\\,d\\theta = \\frac{1}{3}, \\tag{16}$$\n\n$$\\int_0^{\\pi/2}\\sin\\theta\\cos^3\\theta\\,d\\theta = \\frac{1}{4}, \\qquad \\int_0^{\\pi/2}\\sin\\theta\\cos^4\\theta\\,d\\theta = \\frac{1}{5}, \\tag{17}$$\n\none finds\n\n$$F_{\\mathrm{rad}}(t) = -\\frac{2\\pi R^2 I_0}{c}\\left(\\frac{1 + \\beta}{1 - \\beta}\\right)\\left[\\frac{\\alpha(1 - \\eta\\beta) + r}{2}\\left(1 + \\frac{ct(1 + \\beta)}{L}\\right) + \\left(\\frac{\\alpha(1 - \\eta\\beta)}{3} + \\frac{2r}{5}\\right)\\frac{R}{\\gamma L}\\right]. \\tag{18}$$\n\nThis force points along $-Z$.\n\n**Checks.** In the limit $L \\to \\infty$, the beam is uniform and the result reduces to the usual projected-area radiation-pressure expression, dressed by the relativistic Doppler factor. In the limit $\\eta \\to 0$, no energy is retained in the rest frame, and the additional mixing term from $dE'/dt'$ disappears.\n\n**Numerical evaluation:** with $\\beta = \\frac{3}{5}$, $\\gamma = \\frac{5}{4}$, $\\dfrac{1 + \\beta}{1 - \\beta} = 4$, $\\dfrac{ct(1 + \\beta)}{L} = \\frac{2}{5}$, $\\dfrac{R}{\\gamma L} = \\frac{2}{25}$, the result is\n\n$$F_{\\mathrm{rad}}(t) = -\\frac{2\\pi(0.30)^2(300)}{3.00 \\times 10^8}(4)\\left[\\frac{\\frac{2}{5}\\left(1 - \\frac{1}{2} \\cdot \\frac{3}{5}\\right) + \\frac{3}{5}}{2}\\left(1 + \\frac{2}{5}\\right) + \\left(\\frac{\\frac{2}{5}\\left(1 - \\frac{1}{2} \\cdot \\frac{3}{5}\\right)}{3} + \\frac{2}{5} \\cdot \\frac{3}{5}\\right)\\frac{2}{25}\\right] \\approx -1.45 \\times 10^{-6}\\ \\mathrm{N},$$\n\n.",
+    "figures": [
+     {
+      "id": "p17-sol-fig1",
+      "alt": "Hand sketch labelled S': a circle (the sphere) with its centre on a horizontal axis; two lines from the centre at angle θ to the axis meet a ring drawn as a thin ellipse on the right side of the sphere; at the top of the ring a normal arrow and a reflected blue arrow make angles θ with an incoming blue arrow; a column of blue arrows on the right points left (the incident wave), and an arrow at far right is labelled z'.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p17-sol-fig1.png",
+      "width": 924,
+      "height": 509,
+      "source": {
+       "page": 29,
+       "pdfRect": [
+        194.62,
+        218.61,
+        416.16,
+        340.56
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": -0.00000145,
+    "unit": "N",
+    "tolerance": 1e-8
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 11
+    },
+    {
+     "document": "solutions",
+     "page": 27
+    },
+    {
+     "document": "solutions",
+     "page": 28
+    },
+    {
+     "document": "solutions",
+     "page": 29
+    },
+    {
+     "document": "solutions",
+     "page": 30
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p18",
+   "number": 18,
+   "title": "Farampere",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Consider a hollow metallic ring torus of mean radius $R$ and tube thickness $2b$, with $b \\ll R$. A $90^{\\circ}$ wedge of the torus is cut out and displaced outward, along its own line of symmetry, by a distance $R$ (see the figures below). We call the displaced quarter $A$ and the remaining three-quarter arc $B$.\n\nEach piece is wired as a bent coaxial line. A uniform current runs along the toroidal (outer) surface in the directions shown, and at each open end radial spokes hand it off to an inner wire of radius $a$ running along the axial circle, so that within both $A$ and $B$ the current closes on itself. An external source drives the current at a common time-rate $\\dot{I}$. Find the interaction force between $A$ and $B$ arising from the changing current.\n\nFor a numerical estimate, take $a = 1.0\\,\\mathrm{mm}$, $b = 5.0\\,\\mathrm{cm}$, $R = 10\\,\\mathrm{m}$, $I = 0\\,\\mathrm{A}$, and $\\dot{I} = 10^8\\,\\mathrm{A\\ s^{-1}}$; Use a negative sign if the force is attractive (the pieces pull together) and a positive sign if it is repulsive.",
+   "figures": [
+    {
+     "id": "p18-fig1",
+     "alt": "Hand sketches. Left: top view of the ring torus as two concentric circles divided into segments, with a radius arrow R from the centre, a small gap marked a, a tube-width arrow b, and a dashed diagonal line with a right-angle mark at the centre indicating the 90° wedge. Right: the displaced quarter (left piece) separated by a distance marked R from the remaining three-quarter arc; both pieces show current arrows along the tube, radial spokes at the open ends and an AC source symbol (~); dots mark the centres.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p18-fig1.png",
+     "width": 2102,
+     "height": 846,
+     "source": {
+      "page": 12,
+      "pdfRect": [
+       53.87,
+       152.87,
+       558.14,
+       355.59
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [],
+   "topics": [
+    "electromagnetism/induction",
+    "electromagnetism/inductance"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "Let $r$ be the radial distance inside the tube. Inside the tube, the magnetic field is:\n\n$$B = \\frac{\\mu_0 I}{2\\pi r}$$\n\nThus, the electric field inside the tube is given by (via Faraday’s law):\n\n$$E = \\frac{\\mu_0\\dot{I}}{2\\pi}\\ln\\frac{b}{r}$$\n\nThis is the electric field directed along the arc of the cable thingy. Because the field runs along the cable and stops at the two ends, there must be some buildup of charge. By Gauss law,\n\n$$\\sigma = \\epsilon_0 E \\implies \\sigma(r) = \\frac{\\mu_0\\varepsilon_0\\dot{I}}{2\\pi}\\ln\\frac{b}{r}$$\n\n$$\\implies Q \\approx \\frac{\\dot{I}b^2}{4c^2}$$\n\nThis reduces the problem to finding the interaction force between 4 point charges, as $R \\gg b$ we may neglect higher order multipole terms in the force. Each diagonal pair of point charges is $\\sqrt{3}R$ apart. The two near pairs are separated by $R$. These pairs have opposite charges, so they contribute an attractive force $2kQ^2/R^2$. The diagonal pairs have the same sign, so the two pairs contribute a repulsive force $2kQ^2/(3\\sqrt{3}R^2)$. Adding them together, we obtain,\n\n$$\\boxed{F = \\frac{2Q^2}{4\\pi\\varepsilon_0 R^2}\\left(1 - \\frac{1}{3\\sqrt{3}}\\right) = \\left(1 - \\frac{1}{3\\sqrt{3}}\\right)\\frac{\\mu_0\\dot{I}^2 b^4}{32\\pi c^2 R^2}}$$"
+   },
+   "answer": {
+    "kind": "expression",
+    "latex": "F = \\frac{2Q^2}{4\\pi\\varepsilon_0 R^2}\\left(1 - \\frac{1}{3\\sqrt{3}}\\right) = \\left(1 - \\frac{1}{3\\sqrt{3}}\\right)\\frac{\\mu_0\\dot{I}^2 b^4}{32\\pi c^2 R^2}",
+    "note": "The official solution gives only this expression; no numerical value is printed."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 12
+    },
+    {
+     "document": "solutions",
+     "page": 30
+    },
+    {
+     "document": "solutions",
+     "page": 31
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p19",
+   "number": 19,
+   "title": "Whiplash",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A perfectly flexible, inextensible rope of length $L = 100\\ \\mathrm{m}$ and linear mass density $\\mu = 0.1\\ \\mathrm{kg\\ m^{-1}}$ is attached to the end of a rigid rod of length $h = 0.3\\ \\mathrm{m}$. The other end of the rod is kept fixed at the origin. The rod is suddenly rotated by 180 degrees at an angular velocity $\\omega = 30\\ \\mathrm{rad/s}$. The initial shape of the rope is an arc of radius $R = 250\\ \\mathrm{m}$, and the rope makes a right angle with the rod where they are attached. Find the total kinetic energy of the rope, in joules. Ignore air resistance and gravity.",
+   "parts": [],
+   "topics": [
+    "mechanics/strings",
+    "mechanics/impulse"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "Lets begin by making a few key observations. Firstly, the only thing that the rod can do is drag the rope’s attached end around in a circle of radius $h$ at speed $\\omega h$. Note that to impart the maximum amount of kinetic energy, we should have the rod instantly reach $\\omega$ to jerk the rope into motion, and because $L \\gg h$, we can ignore all the work the rod does after the initial jerk.\nLet $s$ be the arc-length along the rope. We can just solve the boundary conditions (attached end of rope moves at $\\omega h$ and using inextensibility of the rope). Write $\\mathbf{v} = v_t\\hat{\\mathbf{t}} + v_n\\hat{\\mathbf{n}}$, where $\\hat{\\mathbf{t}}$ and $\\hat{\\mathbf{n}}$ are the unit vectors in the tangential and normal directions. Let $\\kappa = 1/R$. Then, $\\hat{\\mathbf{t}}' = \\kappa\\hat{\\mathbf{n}}$ and $\\hat{\\mathbf{n}}' = -\\kappa\\hat{\\mathbf{t}}$. Thus, the velocity satisfies\n\n$$\\partial_s\\mathbf{v} = (v_t' - \\kappa v_n)\\hat{\\mathbf{t}} + (v_n' + \\kappa v_t)\\hat{\\mathbf{n}}$$\n\nUsing incompressibility ($\\hat{\\mathbf{t}} \\cdot \\partial_s\\mathbf{v} = 0$) and using the principle of stationary action, we obtain the differential equation\n\n$$v_t = R^2 v_t''$$\n\nWhich has the solution (considering boundary conditions)\n\n$$v_t(s) = \\omega h\\frac{\\cosh((L - s)/R)}{\\cosh(L/R)}$$\n\nIntegrating over the entire rope to find the energy,\n\n$$E = \\frac{1}{2}\\mu\\omega^2 h^2 R\\tanh\\left(\\frac{L}{R}\\right)$$\n\nThis is our upper bound for energy, and is clearly attainable if the rope is aligned with the initial velocity of the rod’s endpoint.\n\n$$E \\approx 384.7\\ \\mathrm{J}$$"
+   },
+   "answer": {
+    "kind": "numeric",
+    "value": 384.7,
+    "unit": "J",
+    "tolerance": 0.1
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 12
+    },
+    {
+     "document": "solutions",
+     "page": 31
+    },
+    {
+     "document": "solutions",
+     "page": 32
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p20",
+   "number": 20,
+   "title": "Spherical Membrane",
+   "points": null,
+   "problemType": "theory",
+   "statement": "An ideal gas consisting of $2N$ classical particles of mass $m$ is confined within an harmonic isotropic potential.\n\n$$V(r) = kr^2/2$$\n\nThe system is kept at a constant temperature $T$ by a thermal bath. A massless, perfectly flexible and perfectly conducting spherical membrane is placed concentrically with the origin. Let the radius of the membrane be $R$. For all parts, assume $N \\gg 1$. When possible, give your answer in terms of $\\lambda = \\sqrt{k_B T/k}$.\n\nInitially, the membrane is completely impermeable to the gas particles, and acts as a movable spherical piston. It partitions the gas into two subsystems, an \"inner\" gas containing $N$ particles with $r < R$ and an \"outer\" gas containing $N$ particles in the region $r > R$. The membrane can freely expand or contract. In the thermodynamic limit ($N \\to \\infty$), the membrane settles at an equilibrium radius $R_0$.",
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "Given $R_0 = \\alpha\\lambda$, find the value of $\\alpha$. [1.5 pts]",
+     "points": 1.5,
+     "statementAfter": "As $N$ is finite, the membrane radius $R$ actually undergoes tiny fluctuations around $R_0$.",
+     "answer": {
+      "kind": "numeric",
+      "value": 1.538,
+      "tolerance": 0.001,
+      "note": "$\\int_0^{\\alpha} x^2 e^{-x^2/2}dx = \\sqrt{\\pi/8}$"
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "Derive an expression for the mean-square fluctuation $\\langle (R - R_0)^2 \\rangle$ in terms of $N$, $\\lambda$ and $\\alpha$. [2.5 pts]",
+     "points": 2.5,
+     "statementAfter": "When the fluctuations of the membrane are ignored, the system has a heat capacity $C_0$. However, when the membrane is free to fluctuate the system has a different heat capacity $C_1$.",
+     "answer": {
+      "kind": "expression",
+      "latex": "\\langle (R - R_0)^2\\rangle = \\frac{\\pi\\lambda^2}{16N\\alpha^4 e^{-\\alpha^2}}"
+     }
+    },
+    {
+     "label": "(c)",
+     "statement": "Calculate the difference $\\Delta C = C_1 - C_0$. [0.5 pts]",
+     "points": 0.5,
+     "statementAfter": "Suppose the membrane is now semi-permeable, allowing gas particles to pass through it only if the radial velocity satisfies $mv_r^2/2 > \\epsilon_0$, where $\\epsilon_0$ is a fixed energy threshold.",
+     "answer": {
+      "kind": "expression",
+      "latex": "\\Delta C = \\frac{1}{2}k_B"
+     }
+    },
+    {
+     "label": "(d)",
+     "statement": "Find all macroscopic equilibrium positions $R_1$ of the membrane. [1.0 pts]",
+     "points": 1,
+     "statementAfter": "Now, consider fixing the membrane at $R_0$. Let $N_i$ denote the number of particles with $r < R_0$.",
+     "answer": {
+      "kind": "text",
+      "value": "There are infinitely many equilibrium positions: the membrane can be stable at any radius."
+     }
+    },
+    {
+     "label": "(e)",
+     "statement": "Find the mean square fluctuation $\\langle (N_i - N)^2 \\rangle$. [1.5 pts]",
+     "points": 1.5,
+     "statementAfter": "We now once again consider the non-permeable membrane. Suppose the system is initially in thermodynamic and mechanical equilibrium. At time $t = 0$, the stiffness of the harmonic trap is suddenly doubled from $k \\to 2k$.",
+     "answer": {
+      "kind": "expression",
+      "latex": "\\langle (N_i - N)^2\\rangle = \\frac{N}{2}"
+     }
+    },
+    {
+     "label": "(f)",
+     "statement": "Find the net force acting on the membrane at $t = 0$. [0.5 pts]",
+     "points": 0.5,
+     "statementAfter": "Suppose the membrane now has a constant surface tension $\\sigma > 0$, with $\\sigma\\lambda^2 \\ll N k_B T$. The trap stiffness is restored to its original value, and the system is allowed to reach equilibrium.",
+     "answer": {
+      "kind": "numeric",
+      "value": 0,
+      "unit": "N",
+      "tolerance": 0,
+      "note": "The net force is exactly zero."
+     }
+    },
+    {
+     "label": "(g)",
+     "statement": "Estimate the change in the equilibrium radius $\\Delta R$ to first order. [2.5 pts]",
+     "points": 2.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\Delta R = -\\frac{\\pi^2\\sigma\\lambda^3}{2Nk_BT\\alpha^3\\exp(-\\alpha^2)}"
+     }
+    }
+   ],
+   "topics": [
+    "thermodynamics/statistical-mechanics",
+    "thermodynamics/fluctuations"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "**Part A: Impermeable Membrane**\n**A1** (1.0) First, note that without the membrane, the gas particles will follow a Boltzmann distribution in $r$, with $P(r) \\propto e^{-kr^2/k_BT}$. In order for the distribution to be in an equilibrium, each spherical shell of the gas must be subject to zero net force. Therefore, the equilibrium radius $R_0$ of the membrane is simply where half the particles are inside the membrane ($r < R$) and half are outside $r > R$. Note that the partition function is also a constant. With these 2 observations, we can proceed with\n\n$$\\begin{gathered} \\int_0^{R_0} 4\\pi r^2 \\exp\\left(-\\frac{kr^2}{2k_BT}\\right) dr = \\int_{R_0}^{\\infty} 4\\pi r^2 \\exp\\left(-\\frac{kr^2}{2k_BT}\\right) dr \\\\ \\implies \\int_0^{R_0} r^2 \\exp\\left(-\\frac{kr^2}{2k_BT}\\right) dr = \\frac{1}{2}\\int_0^{\\infty} r^2 \\exp\\left(-\\frac{kr^2}{2k_BT}\\right) dr \\end{gathered}$$\n\nWe can non-dimensionalize the integrals by substituting $x = r/\\lambda$.\n\n$$\\int_0^{\\alpha} x^2 e^{-x^2/2}dx = \\frac{1}{2}\\int_0^{\\infty} x^2 e^{-x^2/2}dx = \\sqrt{\\frac{\\pi}{8}}$$\n\nEquivalently, one could note that the partition function $Z(R)$ is the product of the inner and outer partition functions $Z(R) = Z_i(R)Z_o(R)$, and maximise the entropy $S = k_B\\ln(Z)$, where upon you obtain $Z_i(R_0) = Z_o(R_0)$. Evaluating numerically, $\\alpha \\approx 1.538$.\n**A2** (1.5) Note that the Helmholtz free energy of a system is given by\n\n$$F = -k_BT\\ln(Z)$$\n\nThus, the probability of the membrane being in a certain state is given by\n\n$$P(R) \\propto (Z(R))^N = \\exp(Ng(R))$$\n\nWhere $g(R) = \\ln(Z_i) + \\ln(Z_o)$. Now, for large $N$ we can expand $g(R)$ as a Taylor series around the maximum value $R_0$. Noting that $g'(R_0) = 0$, we obtain\n\n$$g(R) \\approx g(R_0) + \\frac{1}{2}g''(R_0)(R - R_0)^2$$\n\nUpon differentiating $g'(R)$ to find $g''(R)$, note that the term $1/Z_i - 1/Z_o$ vanishes at $R_0$ so we can simplify to\n\n$$g''(R_0) = 4\\pi R_0^2\\exp\\left(-\\frac{R_0^2}{2\\lambda^2}\\right)\\left(-\\frac{Z_i'(R_0)}{Z_o(R_0)^2} + \\frac{Z_o'(R_0)}{Z_0(R_0)^2}\\right)$$\n\nNote that $Z_i(R_0) = Z_o(R_0) = Z(R_0)/2$, and that\n\n$$Z \\propto \\int_0^{\\infty} 4\\pi r^2\\exp\\left(-\\frac{kr^2}{2k_BT}\\right) dr = \\sqrt{8\\pi^3}\\lambda^3$$\n\nSubstituting all the values in\n\n$$g''(R_0) \\propto -\\frac{16\\alpha^4 e^{-\\alpha^2}}{\\pi\\lambda^2}$$\n\nNote that the probability distribution takes the form of a standard Gaussian, where the variance is\n\n$$\\sigma^2 = \\frac{1}{Ng''(R_0)}$$\n\n$$\\implies \\langle (R - R_0)^2\\rangle = \\frac{\\pi\\lambda^2}{16N\\alpha^4 e^{-\\alpha^2}}$$\n\n**A3** (1.0) Note that allowing for a mobile membrane adds one degree of freedom to the system. Furthermore, this mode is associated with a harmonic potential in $\\delta R$, so we can use the equipartition theorem to conclude that\n\n$$\\Delta C = \\frac{1}{2}k_B$$\n\n**Part B: Semi-permeable Membrane**\n**B1** (0.5) Note that as the membrane now allows particles to pass through, any number of particles could be on either side of the membrane. This means that, using similar reasoning to A1, the equilibrium positions of the membrane actually disappear, as the membrane could end up in *any* radius $R$. As such, there are infinitely many instantaneous equilibrium positions, as the membrane can be stable at any radius.\n**B2** (1.0) When the membrane is fixed at $R_0$, particles independently transition across the boundary. Since $R_0$ was defined as the median radius of the spatial distribution, any given particle has an independent probability $p = 1/2$ of being inside $r < R_0$.The total number of particles $N_i$ inside the membrane follows a binomial distribution with parameters $2N$ and $p = 1/2$. The variance is:\n\n$$\\langle (N_i - N)^2\\rangle = (2N)p(1 - p) = 2N\\left(\\frac{1}{2}\\right)\\left(\\frac{1}{2}\\right) = \\frac{N}{2}$$\n\n**Part C: Small perturbations**\n**C1** (1.0) Note that, as the particles have nonzero mass and therefore have inertia, they cannot instantaneously change their momentum. Therefore, the local density profiles just inside and just outside the boundary are completely unchanged. As $P = nk_BT$, the pressure remains unchanged, and thus the net force is exactly zero.\n**C2** (1.5) Due to the contribution from surface tension, there is an additional term in the free energy\n\n$$F(R) = -k_BTN\\ln Z_{\\mathrm{in}}(R) - k_BTN\\ln Z_{\\mathrm{out}}(R) + 4\\pi\\sigma R^2$$\n\nSetting the derivative to zero in order to find the new equilibrium\n\n$$-k_BTN\\left(\\frac{Z_{\\mathrm{in}}'(R)}{Z_{\\mathrm{in}}(R)} + \\frac{Z_{\\mathrm{out}}'(R)}{Z_{\\mathrm{out}}(R)}\\right) + 8\\pi\\sigma R = 0$$\n\nLet us convert this entirely into dimensionless variables by defining $x = R/\\lambda_T$, alongside the scaled partition integrals $\\tilde{Z}_{\\mathrm{in}}(x) = \\int_0^x u^2 e^{-u^2/2}du$ and $\\tilde{Z}_{\\mathrm{out}}(x) = \\int_x^{\\infty} u^2 e^{-u^2/2}du$. Recalling the derivatives from A1, the equilibrium condition simplifies to:\n\n$$xe^{-x^2/2}\\left(\\frac{1}{\\tilde{Z}_{\\mathrm{out}}(x)} - \\frac{1}{\\tilde{Z}_{\\mathrm{in}}(x)}\\right) = \\frac{8\\pi\\sigma\\lambda_T^2}{k_BTN}$$\n\nLet $f(x) = xe^{-x^2/2}\\left(\\frac{1}{\\tilde{Z}_{\\mathrm{out}}(x)} - \\frac{1}{\\tilde{Z}_{\\mathrm{in}}(x)}\\right)$. We perform a first-order Taylor expansion around the unperturbed universal constant $\\alpha$:\n\n$$f(\\alpha + \\Delta\\alpha) \\approx f(\\alpha) + f'(\\alpha)\\Delta\\alpha = \\frac{8\\pi\\sigma\\lambda_T^2}{k_BTN}$$\n\nNote that $f(\\alpha) = 0$ by definition, so solving for $\\Delta\\alpha$ using $\\tilde{Z}_{\\mathrm{in}}'(\\alpha) = -\\tilde{Z}_{\\mathrm{out}}'(\\alpha) = \\alpha^2 e^{-\\alpha^2/2}$:\n\n$$\\Delta R = \\lambda\\Delta\\alpha = -\\frac{\\pi^2\\sigma\\lambda^3}{2Nk_BT\\alpha^3\\exp(-\\alpha^2)}$$",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 13
+    },
+    {
+     "document": "solutions",
+     "page": 33
+    },
+    {
+     "document": "solutions",
+     "page": 34
+    },
+    {
+     "document": "solutions",
+     "page": 35
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p21",
+   "number": 21,
+   "title": "Teo II",
+   "points": null,
+   "problemType": "theory",
+   "statement": "Kai Wen has discovered another planet: Teo II, a small, dense core with mass $M$ surrounded by an atmosphere with negligible mass. The atmosphere is isothermal with temperature $T$, and is composed of two gases with equal adiabatic constants but different molecular masses $\\alpha m, (1 - \\alpha)m$ where $\\alpha < 1/2$. Define the dimensionless radial coordinate $\\eta = \\dfrac{rkT}{GMm}$, and let the mole fraction of the lighter gas be $\\chi(\\eta)$.\n\nKai Wen is still angry about his decisive poker loss to the inhabitants of Teo I. He detonates a large bomb at radius $\\eta_0$, sending sound waves through the atmosphere. After a long time, he notices that the sound intensity is large at radius $\\eta_0$.",
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "Find $\\eta_0$ in terms of $\\chi_0 = \\chi(\\eta_0)$. [3.5 pts]",
+     "points": 3.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\eta_0 = \\frac{(1 - 2\\alpha)^2}{2}\\frac{\\chi_0(1 - \\chi_0)}{\\alpha\\chi_0 + (1 - \\alpha)(1 - \\chi_0)}"
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "What are the possible values for $\\eta_0$, if $\\alpha$ is fixed but the atmospheric composition can vary? [3.5 pts]",
+     "points": 3.5,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\eta_0 \\in \\left(0, \\frac{2 - \\sqrt{1 + 12\\alpha - 12\\alpha^2}}{3}\\right)"
+     }
+    },
+    {
+     "label": "(c)",
+     "statement": "Inspecting more closely, he sees that in general, the locations of locally maximum intensity on the sphere of radius $\\eta_0$ form rings. What is the smallest possible $\\eta_0$ such that there are *no* rings? [3.0 pts]",
+     "points": 3,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\eta_0 = (1 - 2\\alpha)^2/4",
+      "note": "Attained at $\\chi_0 = 1/2$."
+     }
+    }
+   ],
+   "topics": [
+    "waves/sound",
+    "thermodynamics/isothermal-atmosphere"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "**(a)** If the speed of sound were constant, the sound would not be refracted and all of it would escape. Thus, the trapping of the sound must be due to a varying speed of sound $c(\\eta)$. Considering a ray at angle $\\theta$, divide the atmosphere into slices of height $d\\eta$, each with constant speed of sound:\n\nSnell's law gives $\\dfrac{1}{c}\\cos(\\theta') = \\dfrac{1}{c + dc}\\cos(\\theta + d\\theta)$. Furthermore, note that $\\theta' = \\theta + \\dfrac{d\\eta}{\\eta\\tan(\\theta)}$. Altogether, we obtain $\\tan(\\theta)\\dfrac{d\\theta}{d\\eta} = -\\dfrac{1}{c}\\dfrac{dc}{d\\eta} + \\dfrac{1}{r} = -\\dfrac{d\\ln(c)}{d\\eta} + \\dfrac{1}{\\eta}$, where the first term is due to refraction and the second is due to the curvature of the sphere. We expect the intensity to be maximized at the radius where rays can propagate indefinitely; thus, we need $\\left.\\dfrac{d\\ln(c)}{d\\eta}\\right|_{\\eta_0} = \\dfrac{1}{\\eta_0}$.\nThe cause of the changing speed of sound is the changing density of the atmosphere. Note that the density is $\\rho = mn(\\alpha\\chi + (1 - \\alpha)(1 - \\chi))$ where $n$ is the total number density, while the pressure is $P = nkT$. Thus, since the composite gas has constant adiabatic index $\\gamma$, we have:\n\n$$c = \\sqrt{\\frac{\\gamma P}{\\rho}} = \\sqrt{\\frac{\\gamma}{\\alpha\\chi + (1 - \\alpha)(1 - \\chi)}\\frac{kT}{m}}$$\n\n$$\\Rightarrow \\frac{d\\ln(c)}{d\\eta} = -\\frac{1}{2}\\frac{d}{d\\eta}\\ln(\\alpha\\chi + (1 - \\alpha)(1 - \\chi)) = \\frac{1 - 2\\alpha}{2}\\frac{\\chi'}{\\alpha\\chi + (1 - \\alpha)(1 - \\chi)}$$\n\nLetting the number densities of each gas be $n_i$, thermal equilibrium implies:\n\n$$n_i(\\eta) \\propto \\exp\\left(-\\frac{m_iV(\\eta)}{kT}\\right) = \\exp\\left(\\frac{m_i}{m\\eta}\\right)$$\n\nGiving $n_i' = -\\dfrac{m_i}{m\\eta^2}n_i$. Then, we have:\n\n$$\\chi' = \\frac{d}{d\\eta}\\frac{n_1}{n_1 + n_2} = \\frac{n_1'n_2 - n_1n_2'}{(n_1 + n_2)^2} = (n_1'/n_1 - n_2'/n_2)\\frac{n_1n_2}{(n_1 + n_2)^2} = (1 - 2\\alpha)\\chi(1 - \\chi)\\frac{1}{\\eta^2}$$\n\n$$\\Rightarrow \\frac{1}{\\eta_0} = \\left.\\frac{d\\ln(c)}{d\\eta}\\right|_{\\eta_0} = \\frac{(1 - 2\\alpha)^2}{2}\\frac{\\chi_0(1 - \\chi_0)}{\\alpha\\chi_0 + (1 - \\alpha)(1 - \\chi_0)}\\frac{1}{\\eta_0^2}$$\n\n$$\\Rightarrow \\boxed{\\eta_0 = \\frac{(1 - 2\\alpha)^2}{2}\\frac{\\chi_0(1 - \\chi_0)}{\\alpha\\chi_0 + (1 - \\alpha)(1 - \\chi_0)}}$$\n\n**(b)** One might think that any $\\eta_0$ given by some $\\chi_0 \\in (0, 1)$ is possible. However, our only requirement above was that $\\eta_0$ is a stationary point; we still need to show stability, so that nearby rays oscillate around $\\eta_0$.\nFor this, note that $\\tan(\\theta)\\dfrac{d\\theta}{d\\eta} = \\dfrac{d\\theta}{d\\xi} \\approx \\dfrac{d^2\\eta}{d\\xi^2}$ where $\\xi$ is the tangential distance, giving $\\dfrac{d^2\\eta}{d\\xi^2} \\approx -\\dfrac{d\\ln(c/\\eta)}{d\\eta}$. Thus, we can consider $\\ln(c/\\eta)$ as an effective potential, whose local minima are stable equilibria for $\\eta$. We compute:\n\n$$\\begin{aligned} \\frac{d^2\\ln(c/\\eta)}{d\\eta^2} &= \\frac{d}{d\\eta}\\left(\\frac{1 - 2\\alpha}{2}\\frac{\\chi'}{\\alpha\\chi + (1 - \\alpha)(1 - \\chi)} - \\frac{1}{\\eta}\\right) \\\\ &= \\frac{1 - 2\\alpha}{2}\\left(\\frac{\\chi''}{\\alpha\\chi + (1 - \\alpha)(1 - \\chi)} - \\frac{(2\\alpha - 1)\\chi'^2}{(\\alpha\\chi + (1 - \\alpha)(1 - \\chi))^2}\\right) + \\frac{1}{\\eta^2} \\end{aligned}$$\n\nNote that:\n\n$$\\chi'' = \\frac{d}{d\\eta}\\frac{(1 - 2\\alpha)\\chi(1 - \\chi)}{\\eta^2} = \\left(\\frac{(1 - 2\\alpha)(1 - 2\\chi)}{\\eta^2} - \\frac{2}{\\eta}\\right)\\chi'$$\n\n$$\\begin{aligned} \\Rightarrow \\left.\\frac{d^2\\ln(c/\\eta)}{d\\eta^2}\\right|_{\\eta_0} &= \\left(\\frac{(1 - 2\\alpha)(1 - 2\\chi_0)}{\\eta_0^2} - \\frac{2}{\\eta_0}\\right)\\cdot\\frac{1}{\\eta_0} + \\frac{2}{\\eta_0^2} + \\frac{1}{\\eta_0^2} \\\\ &= \\frac{(1 - 2\\alpha)(1 - 2\\chi_0)}{\\eta_0^3} + \\frac{1}{\\eta_0^2} \\\\ &= \\frac{1 - 2\\alpha}{2\\eta_0^3(\\alpha\\chi_0 + (1 - \\alpha)(1 - \\chi_0))}(3(1 - 2\\alpha)\\chi_0^2 + (6\\alpha - 5)\\chi_0 + 2(1 - \\alpha)) \\end{aligned}$$\n\nThus, $\\left.\\dfrac{d^2\\ln(c/\\eta)}{d\\eta^2}\\right|_{\\eta_0} > 0$ iff $\\chi_0 \\in \\left(0, \\dfrac{5 - 6\\alpha - \\sqrt{1 + 12\\alpha - 12\\alpha^2}}{6(1 - 2\\alpha)}\\right)$. One can verify that $\\eta_0$ is an increasing function of $\\chi_0$ on this interval (the local maximum is at $\\chi_0 = \\dfrac{\\sqrt{1 - \\alpha}}{\\sqrt{\\alpha} + \\sqrt{1 - \\alpha}}$), showing that $\\boxed{\\eta_0 \\in \\left(0, \\dfrac{2 - \\sqrt{1 + 12\\alpha - 12\\alpha^2}}{3}\\right)}$.\n**(c)** Since near-horizontal rays oscillate around $\\eta_0$ with the same period (and all originate at the detonation point), the rings are the locations where the rays converge, and occur at spacing $\\lambda/2$ where $\\lambda$ is the wavelength of the oscillation. Using $\\dfrac{d^2\\eta}{d\\xi^2} \\approx -\\left.\\dfrac{d^2\\ln(c/\\eta)}{d\\eta^2}\\right|_{\\eta_0}\\eta$, we have $\\left(\\dfrac{2\\pi}{\\lambda}\\right)^2 = \\left.\\dfrac{d^2\\ln(c/\\eta)}{d\\eta^2}\\right|_{\\eta_0}$.\nFor there to be no rings, the only location of convergence can be at the poles, meaning $\\lambda/\\eta_0 \\in 2\\pi, 4\\pi, \\ldots$. Note that $\\eta_0^2\\left.\\dfrac{d^2\\ln(c/\\eta)}{d\\eta^2}\\right|_{\\eta_0} = \\dfrac{(1 - 2\\alpha)(1 - 2\\chi_0)}{\\eta_0} + 1$ is a decreasing function of $\\eta_0$, so to minimize $\\eta_0$ we should take $\\lambda/\\eta_0 = 2\\pi$. Thus, we need $\\left.\\dfrac{d^2\\ln(c/\\eta)}{d\\eta^2}\\right|_{\\eta_0} = \\dfrac{1}{\\eta_0^2}$, implying $\\chi_0 = 1/2$ (independent of $\\alpha$!) and $\\boxed{\\eta_0 = (1 - 2\\alpha)^2/4}$.",
+    "figures": [
+     {
+      "id": "p21-sol-fig1",
+      "alt": "Two concentric circular arcs (curving downwards to the right): the lower one labelled η with speed of sound c, the upper one labelled η + dη with speed of sound c + dc. A blue ray leaves the lower arc at angle θ to it, crosses to the upper arc where it makes angle θ′ with the arc, and continues as an arrow at angle θ + dθ.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p21-sol-fig1.png",
+      "width": 1320,
+      "height": 509,
+      "source": {
+       "page": 37,
+       "pdfRect": [
+        149.94,
+        125.14,
+        466.33,
+        247.1
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 14
+    },
+    {
+     "document": "solutions",
+     "page": 36
+    },
+    {
+     "document": "solutions",
+     "page": 37
+    },
+    {
+     "document": "solutions",
+     "page": 38
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p22",
+   "number": 22,
+   "title": "Einstein Ring",
+   "points": null,
+   "problemType": "theory",
+   "statement": "A transparent unit sphere has a small hemispherical indent in its surface, located at $\\hat{z}$. UV light shines on the indent from the $\\hat{z}$ direction. The sphere is doped with fluorescent dye that has a chance to absorb UV light and reemit it as blue light in a random direction. The concentration of dye is small, so a UV photon typically travels a very long distance before being absorbed. Assume that light is either totally reflected or transmitted at interfaces.\n\nA camera far away from the sphere in the $\\hat{z}$ direction takes the following image; the center and boundary of the sphere are marked. If the sphere’s indices of refraction for blue and UV light are $n_b$ and $n_u$ respectively:",
+   "figures": [
+    {
+     "id": "p22-fig1",
+     "alt": "Camera image on a black square background: a dashed white circle marks the boundary of the sphere, and a small white cross marks its centre; inside, a wide blue-violet ring fills the disc from just inside the dashed boundary down to a black central disc whose radius is roughly 0.6 of the sphere's radius.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p22-fig1.png",
+     "width": 1674,
+     "height": 1677,
+     "source": {
+      "page": 15,
+      "pdfRect": [
+       105.25,
+       318.38,
+       506.74,
+       720.72
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "(a)",
+     "statement": "Find $n_b$. [6.0 pts]",
+     "points": 6,
+     "answer": {
+      "kind": "numeric",
+      "value": 1.9,
+      "tolerance": 0.001,
+      "note": "Printed $n_b = 1.900$, from the inner radius $b_1 = 0.593$ of the ring."
+     }
+    },
+    {
+     "label": "(b)",
+     "statement": "Find $n_u$. [5.0 pts]",
+     "points": 5,
+     "answer": {
+      "kind": "numeric",
+      "value": 1.45,
+      "tolerance": 0.01,
+      "note": "From the outer radius $b_2 = 0.984$ of the ring."
+     }
+    },
+    {
+     "label": "(c)",
+     "statement": "For which values $(n_b, n_u)$ does a similar ring appear? [4.0 pts]",
+     "points": 4,
+     "answer": {
+      "kind": "expression",
+      "latex": "n_b \\in (\\sqrt{2}, 2),\\quad n_u > \\sqrt{2}"
+     }
+    }
+   ],
+   "topics": [
+    "optics/refraction",
+    "optics/total-internal-reflection"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "**(a-b)** Note that all blue photons in the image exit the sphere directly after being emitted, as reflected blue photons are trapped and we are ignoring partial reflections. Thus, to find the intensity $I(b)$ at an image point with impact parameter $b < 1$, we integrate over the possible origins for a trajectory leading to that point, which lie along the refracted segment $L$. Since the emitted photon's direction is uniform, we do not need to know the absorbed photon's direction, so it suffices to know the distribution of absorption locations $P(\\vec{r})$.\n\n$$I(b) \\propto \\int_L P(\\vec{r})\\,d\\ell$$\n\nTo find $P(\\vec{r})$, note that UV photons which leave the sphere are unlikely to be absorbed, so it suffices to consider UV photons trapped inside the sphere by reflection, which must originate at the hemisphere. Consider the trajectory of a single UV photon originating at azimuth $\\phi$ and polar angle $\\theta_0$, which is trapped if $\\sin(\\theta_0) > 1/n_u$. Generically, $\\theta_0$ is irrational, so the final polar angle $\\theta$ is approximately uniformly distributed and we can take $\\vec{r}$ to be sampled from the plane of the trajectory with some probability distribution $P(r, \\theta \\mid \\theta_0, \\phi) = f(r)$. Note that $f(r)$ is nonzero for $r \\in (\\sin(\\theta_0), 1)$.\n\nThen, given a UV photon emitted at azimuth $\\phi$, we see that $\\vec{r}$ has distribution $P(r, \\theta \\mid \\phi) = \\displaystyle\\int_0^{\\arcsin(1/n_u)} P(r, \\theta \\mid \\theta_0, \\phi)P(\\theta_0 \\mid \\phi)\\,d\\theta_0 = g(r)$, which is nonzero for $r \\in (1/n_u, 1)$. Finally, the unconditional distribution is $P(r, \\theta, \\phi) = P(r, \\theta \\mid \\phi)P(\\phi) = \\dfrac{1}{2\\pi}g(r)$, giving $P(\\vec{r}) = \\dfrac{1}{r^2\\sin(\\theta)}P(r, \\theta, \\phi) = \\dfrac{g(r)}{2\\pi r^2\\sin(\\theta)}$. We see that $P(\\vec{r})$ diverges if $\\theta = 0, \\pi$ and $r \\in (1/n_u, 1)$; physically, this is because the trajectories of all UV photons intersect these segments, with the divergence being cut off by the finite size of the source.\nThus, $I(b)$ is large if $L$ intersects the locus of divergence, i.e. $d \\in (1/n_u, 1)$. Note that:\n\n$$\\begin{aligned} d &= \\frac{\\sin(\\alpha)}{\\tan(\\alpha - \\beta)} - \\cos(\\alpha) \\\\ &= \\frac{\\sin(\\arcsin(b))}{\\tan(\\arcsin(b) - \\arcsin(b/n_b))} - \\cos(\\arcsin(b)) \\\\ &= b\\bigg/\\left(\\frac{\\frac{b}{\\sqrt{1-b^2}} - \\frac{b/n_b}{\\sqrt{1-(b/n_b)^2}}}{1 + \\frac{b}{\\sqrt{1-b^2}}\\frac{b/n_b}{\\sqrt{1-(b/n_b)^2}}}\\right) - \\sqrt{1 - b^2} \\\\ &= \\frac{\\sqrt{(1 - b^2)(n_b^2 - b^2)} + b^2}{\\sqrt{n_b^2 - b^2} - \\sqrt{1 - b^2}} - \\sqrt{1 - b^2} \\\\ &= \\frac{1}{\\sqrt{n_b^2 - b^2} - \\sqrt{1 - b^2}} \\end{aligned}$$\n\nThis is a decreasing function of $b$, explaining the appearance of the ring. In particular, the inner radius $b_1 = 0.593$ of the ring corresponds to $d = 1$ and the outer radius $b_2 = 0.984$ corresponds to $d = 1/n_u$, giving:\n\n$$n_b = \\sqrt{2\\left(1 + \\sqrt{1 - b_1^2}\\right)} = \\boxed{1.900}, \\quad n_u = \\sqrt{n_b^2 - b_2^2} - \\sqrt{1 - b_2^2} = \\boxed{1.45}$$\n\n**(c)** Note that $d(0) = \\dfrac{1}{n_b - 1}, d(1) = \\dfrac{1}{\\sqrt{n_b^2 - 1}}$. For a ring (and not a disk) to appear, we need $d(0) > 1, d(1) < 1$, so $\\boxed{n_b \\in (\\sqrt{2}, 2)}$. This is not the only constraint: we must also ensure that some UV light remains trapped in the sphere. For this, consider a UV ray with initial impact parameter $0 < b' < 1$ on the hemisphere; we calculate $\\theta_0 = \\arcsin(b) - \\arcsin(n_u/b')$. We see that $\\dfrac{d\\theta_0}{db'} = \\dfrac{1}{\\sqrt{1 - b'^2}} - \\dfrac{1}{\\sqrt{n_u^2 - b'^2}} > 0$, so the maximum value of $\\theta_0$ is $\\theta_m = \\pi/2 - \\arcsin(1/n_u)$. We need $\\theta_m > \\arcsin(1/n_u)$, implying $\\boxed{n_u > \\sqrt{2}}$.\nRemark: One might expect that $I(b) = \\displaystyle\\int_L S(b, \\vec{r})P(\\vec{r})\\,d\\ell$ where $S(b, \\vec{r})$ is a geometric factor accounting for effects such as magnification. In fact, due to a principle called the *conservation of etendue*, $S(b, \\vec{r})$ is constant. This knowledge is not necessary to solve the problem.\nRemark: In order for the ring to be the dominant effect observed, we should check that the $\\hat{z}$ axis is the *only* place where $P(\\vec{r})$ diverges; in particular, $P(r, \\theta \\mid \\phi)$ must be bounded. To see this, note that $P(r, \\theta \\mid \\phi) = \\displaystyle\\int_{1/n_u}^{\\arcsin(\\theta_m)} P(r, \\theta \\mid \\theta_0, \\phi)P(\\sin(\\theta_0) \\mid \\phi)\\,d\\sin(\\theta_0)$. One can easily calculate $P(r, \\theta \\mid \\theta_0, \\phi) = \\dfrac{1}{\\cos(\\theta_0)}\\dfrac{r}{\\sqrt{r^2 - \\sin^2(\\theta_0)}}$ for $r \\in (\\sin(\\theta_0), 1)$. Furthermore, $P(\\sin(\\theta_0) \\mid \\phi) = P(b \\mid \\phi)/\\dfrac{d\\sin(\\theta_0)}{db} = \\dfrac{b}{2}\\dfrac{1}{\\cos(\\theta_0)\\frac{d\\theta_0}{db}}$. Because $\\cos(\\theta_0) > \\cos(\\theta_m)$ and $\\dfrac{d\\theta_0}{db} > 1 - 1/n_u$ are bounded away from 0, we can write $P(r, \\theta \\mid \\phi) < C\\displaystyle\\int_{1/n_u}^{\\arcsin(\\theta_m)} \\dfrac{r}{\\sqrt{r^2 - \\sin^2(\\theta_0)}}\\,d\\sin(\\theta_0)$, which is clearly bounded.",
+    "figures": [
+     {
+      "id": "p22-sol-fig1",
+      "alt": "Cross-section of the unit sphere with the small indent on the right at the ẑ axis (dashed horizontal line through the centre ending in an arrow labelled ẑ). A dashed radius at angle α to the axis reaches the surface; there a horizontal blue arrow leaves the sphere at height b (bracket on the right labelled b). Inside, the blue refracted segment L makes angle β with the dashed radius and meets the axis at distance d (bracket) from the centre, continuing to the opposite side of the sphere.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p22-sol-fig1.png",
+      "width": 904,
+      "height": 750,
+      "source": {
+       "page": 40,
+       "pdfRect": [
+        261.95,
+        154.44,
+        478.58,
+        334.21
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p22-sol-fig2",
+      "alt": "Left: a circle with the indent on the right; a pink UV ray leaves the indent at angle θ0 to the horizontal and bounces around inside the circle many times, forming a star-shaped pattern that leaves an empty central region. An arrow points right to a second circle filled with a pink annulus whose inner empty disc has radius marked sin(θ0).",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p22-sol-fig2.png",
+      "width": 1454,
+      "height": 638,
+      "source": {
+       "page": 40,
+       "pdfRect": [
+        131.58,
+        447.48,
+        480.42,
+        600.34
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 15
+    },
+    {
+     "document": "solutions",
+     "page": 39
+    },
+    {
+     "document": "solutions",
+     "page": 40
+    },
+    {
+     "document": "solutions",
+     "page": 41
+    }
+   ]
+  },
+  {
+   "id": "opho-2026-x-p23",
+   "number": 23,
+   "title": "Spinny Spin Spin",
+   "points": null,
+   "problemType": "practical",
+   "statement": "It is well known that the spin of an electron is related to its magnetic moment by $\\boldsymbol{m} = -g\\mu_B \\boldsymbol{S}$, where $\\mu_B$ is the Bohr magneton, $g$ is a dimensionless factor that depends on the electron’s environment, and $\\boldsymbol{S}$ is a vector of magnitude $\\frac{1}{2}$. The angular momentum of the electron is given by $\\hbar\\boldsymbol{S}$.\n\nNow, an ensemble of $N = 100000$ electron spins are distributed roughly evenly along a rod of length 2. The rod points in the $x$ direction. The left end of the rod is given the coordinate $\\boldsymbol{\\xi} = -1$ and the right end of the rod is given the coordinate $\\boldsymbol{\\xi} = 1$. The magnetic field along the rod points in the $z$ direction and is given by $B_z = B_0 + B_1\\xi$. It is known that $B_0$ is on the order of $0.01T$ and $B_1 \\ll B_0$. You can also add a bias magnetic field $\\boldsymbol{B} = b\\hat{z}$ which is uniform, but due to budget constraints this magnetic field must be limited to a magnitude of $0.01T$.\n\nThe spins are placed in a thermal bath and allowed to thermalise. In this initial stage, the spin will either align with the magnetic field or antiparallel to it according to the Boltzmann distribution. At time $t = 0$, a strong magnetic field pulse is applied to the system to rotate all spins $90^{\\circ}$ anticlockwise about the $y$ axis. You can then set a sensor to detect the total magnetisation around the $x$ and $y$ axes at certain times (for convenience it will be given in units of $\\mu_B$), but remember these measurements are subject to noise! Also, a protection circuit is in place to prevent the initial magnetic field pulse from destroying the measurement circuit, so nothing will be recorded before $t = 100$ns. After $t = 10000$ns the measurement circuit runs out of memory and nothing will be recorded either.\n\nYour goal is to find $g$, $B_0$ to 5% accuracy, as well as $B_1$ to 15% accuracy. Give the magnetic fields in units of Tesla. You may assume the spins do not interact with the environment or with each other after $t = 0$.",
+   "parts": [],
+   "topics": [
+    "quantum/spin-precession",
+    "data-analysis/simulation"
+   ],
+   "difficulty": "Hard",
+   "importance": 1,
+   "solution": {
+    "statement": "",
+    "incomplete": true,
+    "incompleteReason": "В официалните решения е отпечатано само условието на тази задача (симулация) — решение няма."
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 16
+    },
+    {
+     "document": "solutions",
+     "page": 42
+    }
+   ]
+  }
+ ]
+}

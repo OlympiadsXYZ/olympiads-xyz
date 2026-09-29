@@ -1,0 +1,125 @@
+---
+id: x-ens-2023-pc-p10
+source: 'X-ENS 2023, Приемен изпит, физика и химия'
+title: 'Задача 10. II.3 Effet systématique dans le cas d’un laser de profil gaussien'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2023/x-ens-2023-pc.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:42:47.274Z'
+verifier: 'mechanical'
+---
+
+*ECOLE POLYTECHNIQUE - ESPCI — ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2023 — FILIERE PC - Epreuve n° 5 — PHYSIQUE B (XEULS) — Mesure de la constante de structure fine · 19 април 2023 г.*
+
+<details>
+<summary>Constantes fondamentales et autres valeurs numériques</summary>
+
+**Constantes fondamentales et autres valeurs numériques :**
+
+- célérité de la lumière dans le vide : $c \simeq 3 \times 10^{8}\ \mathrm{m \cdot s^{-1}}$
+- permittivité diélectrique du vide : $\epsilon_0 \simeq 9 \times 10^{-12}\ \mathrm{F \cdot m^{-1}}$
+- charge élémentaire : $e \simeq 1{,}5 \times 10^{-19}\ \mathrm{C}$
+- constante de Planck : $h \simeq 7 \times 10^{-34}\ \mathrm{J \cdot s}$
+- constante de Planck réduite : $\hbar = h/2\pi \simeq 1 \times 10^{-34}\ \mathrm{J \cdot s}$
+- constante de Boltzmann : $k_B \simeq 1{,}5 \times 10^{-23}\ \mathrm{J \cdot K^{-1}}$
+- masse atomique d’un atome de Rubidium 87 : $m \simeq 1{,}5 \times 10^{-25}\ \mathrm{kg}$
+
+</details>
+
+<details>
+<summary>Увод</summary>
+
+Ce sujet propose de s’intéresser à la mesure de la constante de structure fine $\alpha$, dont Richard Feynman, célèbre physicien du XX$^{\mathrm{e}}$ siècle, disait qu’elle est “*l’un des plus grands mystères de la physique : un nombre magique qui nous parvient sans que l’homme puisse le comprendre.*”
+
+Cette constante, sans dimension, est directement reliée à l’interaction électromagnétique. Elle est donnée par la relation :
+
+$$
+\alpha = \frac{e^2}{4\pi\epsilon_0\hbar c} \qquad (1)
+$$
+
+Une valeur approchée de $\alpha$ est $1/137$. La mesure la plus précise à ce jour donne :
+
+$$
+1/\alpha = 137{,}035999206 \pm 11 \times 10^{-9} \qquad (2)
+$$
+
+soit une incertitude relative de l’ordre de $8 \times 10^{-11}$. Ce sujet a pour but d’expliquer comment la constante de structure fine $\alpha$ a pu être mesurée avec une telle précision.
+
+</details>
+
+## Условие
+
+Dans cette partie, on cherche à déterminer $\delta k_{\mathrm{rel}}$ pour un faisceau laser de profil gaussien. Le faisceau se propage selon la direction $(\mathrm{O}z)$. Le foyer du laser est situé en $z = 0$.
+
+Un faisceau gaussien est une superposition d’ondes planes selon une distribution gaussienne de la forme $f(k_x, k_y) = \exp(-(k_x^2 + k_y^2)w_0^2/4)$ dans l’espace des composantes $(k_x, k_y)$ du vecteur d’onde, d’extension typique $\sim 1/w_0$ dans les directions $k_x$ et $k_y$, avec $w_0$ une constante réelle positive. Ainsi le champ électrique du faisceau (de polarisation linéaire orientée par le vecteur $\vec{u}$) s’écrit :
+
+$$
+\vec{E}(\vec{r}) = E(\vec{r})\vec{u} = E_0\vec{u} \iint_{-\infty}^{+\infty} \exp(j\vec{k} \cdot \vec{r}) \exp\left(-\frac{k_x^2 + k_y^2}{4}w_0^2\right) \mathrm{d}k_x \mathrm{d}k_y \qquad (16)
+$$
+
+**17.a** On fait l’approximation $w_0 \gg \lambda$, avec $\lambda$ la longueur d’onde du laser. Montrer que $k_z \simeq k - \dfrac{k_x^2 + k_y^2}{2k}$. (On rappelle $k = 2\pi/\lambda$).
+
+**17.b** On donne le résultat général :
+
+$$
+\iint_{-\infty}^{+\infty} \exp\left(-\frac{1}{2}a(k_x^2 + k_y^2) + j(\alpha k_x + \beta k_y)\right) \mathrm{d}k_x \mathrm{d}k_y = \frac{2\pi}{a} \exp\left(-\frac{1}{2a}(\alpha^2 + \beta^2)\right) \qquad (17)
+$$
+
+où $\alpha$ et $\beta$ sont deux nombres réels, et $a$ un nombre imaginaire de partie réelle positive. Montrer que :
+
+$$
+E(\vec{r}) \propto \exp(jkz)\frac{1}{\frac{w_0^2}{2} + \frac{jz}{k}} \exp\left(-\frac{x^2 + y^2}{w_0^2 + \frac{2jz}{k}}\right) \qquad (18)
+$$
+
+**18.a** En déduire que :
+
+$$
+\phi(x, y, z) = kz + \frac{r^2}{w(z)^2}\frac{z}{z_R} - \arctan(z/z_R) \qquad (19)
+$$
+
+avec $r^2 = x^2 + y^2$, $z_R = w_0^2 k/2$ et $w(z) = w_0\sqrt{1 + (z/z_R)^2}$.
+
+**18.b** En déduire $p_z$ l’impulsion du photon projeté sur l’axe $(Oz)$. Montrer que, en $z = 0$ (foyer optique du laser, où l’intensité est maximale), on a la correction :
+
+$$
+\delta k_{\mathrm{rel}}(z = 0) \equiv \frac{p_z(z = 0) - \hbar k}{\hbar k} = \frac{2}{k^2}\left(\frac{r^2}{w_0^4} - \frac{1}{w_0^2}\right) \qquad (20)
+$$
+
+Cette correction est appelée “correction de Gouy”.
+
+**18.c** On considère un nuage d’atomes d’extension spatiale typique $r \simeq 0{,}5\ \mathrm{mm}$ placé en $z = 0$ dans le champ du laser, et on s’intéresse à l’impulsion effective transférée aux atomes. On a $w(z) \simeq w_0 \simeq 5\ \mathrm{mm}$ et $\lambda \simeq 800\ \mathrm{nm}$. Quel est le terme dominant dans la correction de Gouy ? Quel est donc le signe de $\delta k_{\mathrm{rel}}(z = 0)$ au niveau du maximum d’intensité du faisceau laser ? Donner la valeur numérique de $\delta k_{\mathrm{rel}}(z = 0)$. Cette erreur relative est-elle importante compte-tenu de l’incertitude relative obtenue sur la mesure de $m$ (donnée par l’Éq. (6)) ?
+
+## Решение
+
+<Warning title="Непълно решение">
+Le sujet est archivé sans corrigé officiel.
+</Warning>
+
+<details>
+<summary>Pour aller plus loin</summary>
+
+**Pour aller plus loin :**
+
+Le Modèle standard est actuellement la théorie la plus aboutie pour décrire les particules élémentaires et trois des quatre interactions fondamentales de l’univers (interactions électromagnétique, forte et faible). En revanche, ce modèle n’inclut pas l’interaction gravitationnelle et ne permet ni de comprendre la “matière noire”, ni l’“énergie sombre”, ni les différences de proportion observées dans l’Univers entre matière et anti-matière. Les mesures extrêmement précises de certaines constantes fondamentales imposent des contraintes fortes sur les nouvelles théories candidates, et permettent d’écarter celles dont les prévisions sont incompatibles avec les résultats de la mesure.
+
+Comme indiqué au début du sujet, la mesure la plus précise de $\alpha$ a été effectuée par interférométrie atomique, et repose sur la mesure de la masse de l’atome de Rubidium 87.
+
+La valeur de $1/\alpha$ reportée en Éq. (3) est déterminée à partir d’une autre mesure : la valeur du “moment magnétique anomal” de l’électron¹, grandeur sans dimension notée $a_e$. Cette grandeur peut être reliée théoriquement à $\alpha$ par des calculs effectués dans le cadre du Modèle Standard :
+
+$$
+a_e = \sum_{i=0}^{+\infty} C_i \alpha^i + a_{e,0} \qquad (22)
+$$
+
+Les dix premiers termes de cette série, et le terme $a_{e,0}$, ont pu être calculés numériquement avec précision. La mesure de $a_e$ et l’inversion de l’équation précédente a pu conduire à la valeur de $\alpha$ donnée par l’Éq. (3).
+
+L’accord entre ces deux mesures de $\alpha$ est à l’heure actuelle l’un des tests les plus robustes du Modèle Standard.
+
+⋆ ⋆ ⋆
+
+¹ Le rapport du moment magnétique et du moment cinétique d’un électron est appelé “*facteur de Landé*”, noté $g_l$. L’équation de Dirac, qui décrit les particules relativistes de spin 1/2, prédit que le facteur de Landé est égal à 2 pour l’électron. Expérimentalement, le facteur de Landé $g_{l,\mathrm{exp}}$ mesuré est légèrement différent de 2 (sa valeur expérimentale est très proche de $2{,}0023$). Le moment magnétique anomal de l’électron est défini comme : $a_e = (g_{l,\mathrm{exp}} - 2)/2$.
+
+</details>
+
+---
+
+Оригинал в Архива: [PC_2023.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2023.pdf#page=11)

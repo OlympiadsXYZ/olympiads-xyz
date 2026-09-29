@@ -1,0 +1,116 @@
+---
+id: x-ens-2024-mp-p1
+source: 'X-ENS 2024, Приемен изпит, математика и физика'
+title: 'Задача 1. Champ électromagnétique classique et grandeurs mécaniques associées'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2024/x-ens-2024-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:44:17.867Z'
+verifier: 'mechanical'
+---
+
+*ECOLE POLYTECHNIQUE — ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2024 — FILIERE MP - Epreuve n° 5 — PHYSIQUE (XULSR) · 17 април 2024 г.*
+
+<details>
+<summary>Consignes</summary>
+
+MERCREDI 17 AVRIL 2024 — 08h00 - 12h00
+
+*Durée : 4 heures*
+
+*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve*
+
+</details>
+
+<details>
+<summary>Différents aspects du champ électromagnétique : du classique au quantique</summary>
+
+Le champ électromagnétique est à l’origine de nombreux phénomènes physiques, de la structure du proton aux amas de galaxies, dont certains sont connus depuis l’Antiquité. Pourtant, il faut attendre le XIX$^{\text{ème}}$ siècle pour voir émerger les théories électrostatique et magnétostatique, grâce aux contributions de COULOMB, GAUSS, AMPÈRE, BIOT, *etc.* Suivent la compréhension des phénomènes non-statiques comme l’induction et la propagation des ondes électromagnétiques. Tous ces travaux forment la théorie classique de l’électromagnétisme, qui culmine en 1864 avec la formulation des équations de MAXWELL. Cependant, cette théorie échoue à prévoir certaines observations expérimentales comme le spectre du corps noir, l’effet photoélectrique ou encore l’effet COMPTON. Le début du XX$^{\text{ème}}$ siècle voit ces différents problèmes résolus grâce à Max PLANCK et sa théorie des quanta, ainsi qu’à Albert EINSTEIN et son interprétation en « grains de lumière » du champ électromagnétique, supposé continu jusqu’ici. Ces grains seront appelés plus tard « photons » par Gilbert LEWIS (1926), et sont à la base d’une nouvelle interprétation du champ électromagnétique : l’interprétation corpusculaire.
+
+Depuis maintenant plus d’un siècle, la correspondance entre les approches classique et quantique a été démontrée, et les notions de photon et d’onde électromagnétique sont aujourd’hui réunies au sein du concept de dualité onde-corpuscule. L’aspect ondulatoire est exploité dans d’innombrables applications notamment en télécommunications, et l’aspect corpusculaire continue de fasciner les physiciens, avec des prix Nobel récents liés au comportement purement quantique des photons (S. HAROCHE 2012, A. ASPECT 2022).
+
+Ce sujet propose l’étude de différents aspects - classique et quantique - du champ électromagnétique. La première partie dresse une analogie mécanique du champ classique, et établit l’existence d’une quantité de mouvement et d’un moment cinétique qui lui sont associés. Nous étudions dans un second temps le rayonnement du corps noir, et les étapes historiques qui ont conduit à introduire la notion de photon. Enfin, nous adoptons un point de vue purement corpusculaire et étudions la statistique d’émission des photons par différentes sources de lumière.
+
+- *Les trois parties constituant ce sujet sont indépendantes et peuvent être traitées séparément. Le sujet comporte 13 pages.*
+- *Les applications numériques seront effectuées avec la précision qu’un calcul à la main permet aisément, et (sauf mention contraire) sans excéder deux chiffres significatifs. Les ordres de grandeur seront donnés avec un seul chiffre significatif. Les données numériques ont été choisies pour faciliter les calculs.*
+- *Les références des questions abordées devront être indiquées de façon claire.*
+
+</details>
+
+<details>
+<summary>Notations, formulaire et données numériques</summary>
+
+**Constantes fondamentales et données numériques** : *les valeurs numériques sont données avec deux chiffres significatifs et sous forme approchées pour faciliter les applications numériques.*
+
+- Célérité de la lumière : $c \simeq 3{,}0 \times 10^{8}\ \mathrm{m.s^{-1}}$
+- Charge élémentaire : $e \simeq 1{,}6 \times 10^{-19}\ \mathrm{C}$
+- Constante de PLANCK : $h \simeq 6{,}6 \times 10^{-34}\ \mathrm{J.s}$
+- Constante de BOLTZMANN : $k_{\mathrm{B}} \simeq 1{,}4 \times 10^{-23}\ \mathrm{J.K^{-1}}$
+- $hc \simeq 1{,}2\ \mathrm{eV}.\mu\mathrm{m}$
+
+**Formulaire** :
+
+- Espérance $\mathbb{E}$, variance $V$ et écart-type $\Delta X$ d’une variable aléatoire $X$ dont les valeurs discrètes $\{X_n\}_{n\in\mathbb{N}}$ suivent une loi de probabilité $\mathcal{P}$ :
+
+$$
+\mathbb{E}(X) = \sum_{n=0}^{+\infty} X_n \mathcal{P}(X = X_n) \quad ; \quad V(X) = \mathbb{E}(X^2) - \mathbb{E}(X)^2 \quad ; \quad \Delta X = \sqrt{V(X)}\ .
+$$
+
+- Caractéristiques d’une loi binomiale de paramètres $N$ et $p$ :
+
+  Loi de probabilité : $\mathcal{P}(X = n) = \dbinom{N}{n} p^n (1-p)^{N-n}$
+
+  Espérance et variance : $\mathbb{E}(X) = Np \quad ; \quad V(X) = Np(1-p)$
+
+- Développement limité : $(1+x)^{\alpha} = 1 + \alpha x + o(x)$.
+
+</details>
+
+## Условие
+
+Nous étudions dans cette partie quelques grandeurs mécaniques associées au champ électromagnétique, notamment sa quantité de mouvement. Soit $(\overrightarrow{E}(M,t), \overrightarrow{B}(M,t))$ le champ électromagnétique en un point $M$ quelconque de l’espace, muni d’un repère orthonormé cartésien $(Oxyz)$. On définit les densités volumiques de quantité de mouvement $\overrightarrow{g}_{\mathrm{em}}(M,t)$ et de moment cinétique $\overrightarrow{\ell}_{\mathrm{em}}(M,t)$ par
+
+$$
+\overrightarrow{G}_{\mathrm{em}}(t) = \iiint_{\mathcal{E}} \overrightarrow{g}_{\mathrm{em}}(M,t)\,\mathrm{d}V \qquad \text{et} \qquad \overrightarrow{L}_{\mathrm{em}}(t) = \iiint_{\mathcal{E}} \overrightarrow{\ell}_{\mathrm{em}}(M,t)\mathrm{d}V\ , \qquad (1)
+$$
+
+où $\overrightarrow{G}_{\mathrm{em}}(t)$ est la quantité de mouvement du champ électromagnétique à l’instant $t$ et $\overrightarrow{L}_{\mathrm{em}}(t)$ son moment cinétique au même instant. Les intégrales portent sur tout l’espace $\mathcal{E}$ et $\mathrm{d}V$ est l’élément infinitésimal de volume.
+
+La densité de quantité de mouvement du champ électromagnétique s’écrit $\overrightarrow{g}_{\mathrm{em}}(M,t) = \epsilon_0 \overrightarrow{E} \wedge \overrightarrow{B}$ et la densité de moment cinétique par rapport au point $O$, $\overrightarrow{\ell}_{\mathrm{em}}(M,t) = \overrightarrow{OM} \wedge \overrightarrow{g}_{\mathrm{em}}(M,t)$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p1-fig1.png" alt="À gauche, un solénoïde cylindrique de longueur L (flèche double au-dessus) enroulé de spires, avec l’axe z en pointillé passant par le centre O ; le courant i entre par un fil en bas à gauche et sort en bas à droite. À droite, une vue en coupe : un cercle de rayon b, l’axe z sortant du plan au centre, et le sens du courant i indiqué sur le cercle." width="1638" height="541" loading="lazy" decoding="async" />
+<figcaption>FIGURE 1 – Schéma du solénoïde.</figcaption>
+</figure>
+
+**1.** Rappeler l’expression du vecteur de POYNTING, noté $\overrightarrow{\Pi}(M,t)$. Donner sa dimension et son unité courante.
+
+**2.** Exprimer $\overrightarrow{g}_{\mathrm{em}}(M,t)$ en fonction de $\overrightarrow{\Pi}(M,t)$. Donner la dimension de $\overrightarrow{g}_{\mathrm{em}}$ et $\overrightarrow{\ell}_{\mathrm{em}}$, et vérifier que $\overrightarrow{G}_{\mathrm{em}}$ et $\overrightarrow{L}_{\mathrm{em}}$ sont respectivement homogènes à une quantité de mouvement et un moment cinétique.
+
+Dans la suite, l’étude porte sur un système montrant l’existence d’une quantité de mouvement $\overrightarrow{G}_{\mathrm{em}}$ du champ électromagnétique.
+
+On considère un solénoïde d’axe $(Oz)$ (représenté figure 1), comportant $N$ spires, de rayon $b$ et de longueur $L$ suffisamment grande pour négliger les effets de bords aux extrémités de celui-ci. Le solénoïde est parcouru par un courant $i(t)$, *a priori* variable dans le temps. La dépendance temporelle du courant $i$ n’est pas connue mais on considère que le courant $i$ est égal à une constante $i_0$ pour $t < 0$, et décroît à partir de l’instant $t = 0$ sur une durée caractéristique $\tau$. On considérera par la suite que $i(t \geq \tau) = 0$. L’approximation des régimes quasi-stationnaires est supposée applicable. Un point $M$ de l’espace est repéré par ses coordonnées cylindriques $(r, \theta, z)$ dans le repère mobile $(\vec{e}_r, \vec{e}_\theta, \vec{e}_z)$. $O$ est le centre du solénoïde. On note $\mathcal{V}_{\mathrm{sol}}$ le volume à l’intérieur du solénoïde.
+
+**3.** Déterminer l’expression du champ magnétique $\overrightarrow{B}_{\mathrm{sol}}(M,t)$ produit à l’intérieur et à l’extérieur du solénoïde, et pour chacune des phases temporelles : $t < 0$, $t \in [0,\tau[$ et $t \geq \tau$. On justifiera les éventuelles approximations et on précisera si le champ magnétique est homogène à l’intérieur et à l’extérieur du solénoïde.
+
+**4.** Exprimer le champ électrique $\overrightarrow{E}_{\mathrm{sol}}(M,t)$ produit à l’intérieur et à l’extérieur du solénoïde et pour chacune des phases temporelles : $t < 0$, $t \in [0,\tau[$ et $t \geq \tau$. On justifiera les éventuelles approximations et on précisera si le champ électrique est homogène à l’intérieur et à l’extérieur du solénoïde.
+
+Pendant la phase $t < 0$, on positionne une charge ponctuelle $q$ et de masse $m$ dans le plan $(Oxy)$. Cette charge est supposée immobile et initialement en un point extérieur au solénoïde et noté $P$, de telle sorte que la distance $\parallel \overrightarrow{OP} \parallel$ est très petite devant la longueur $L$ du solénoïde. On choisira $\overrightarrow{OP} = a\vec{e}_x$.
+
+**5.** En supposant que $\tau$ est suffisamment petit pour qu’on puisse négliger le déplacement de la charge ponctuelle pendant l’intervalle $[0,\tau]$, déterminer l’expression de la vitesse $\overrightarrow{v}_P$ pour des instants $t \geq \tau$. On négligera l’influence du poids de la particule devant les forces électromagnétiques. On exprimera le résultat en faisant apparaître les grandeurs caractéristiques de la charge, $q$, $m$ et $a$, et celles qui sont caractéristiques du solénoïde, $b$, $L$, $N$ et $i_0$.
+
+**6.** Rappeler sans démonstration l’expression du champ électrostatique en un point $M$ de l’espace, produit par une charge ponctuelle $q$, située en $P$.
+
+**7.** Exprimer $\overrightarrow{G}_{\mathrm{em}}(t)$ en présence de la charge $q$, de position initiale $P$, pour les phases $t < 0$ et $t \geq \tau$. On pourra utiliser l’expression de l’intégrale suivante $\displaystyle\iiint_{\mathcal{V}_{\mathrm{sol}}} \frac{\overrightarrow{PM}}{\parallel \overrightarrow{PM} \parallel^3}\mathrm{d}V = -\frac{2\pi b^2}{a}\vec{e}_x$.
+
+**8.** À partir d’un bilan de quantité de mouvement, expliquer comment la charge ponctuelle est mise en mouvement. En particulier, la quantité de mouvement de la particule est-elle conservée au cours du temps ? Celle du champ électromagnétique ? Celle de l’ensemble $\{$charge + champ électromagnétique$\}$ ?
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2024.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2024.pdf#page=3)

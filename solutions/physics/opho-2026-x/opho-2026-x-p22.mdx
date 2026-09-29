@@ -1,0 +1,200 @@
+---
+id: opho-2026-x-p22
+source: 'OPhO 2026, Единствен кръг'
+title: 'Задача 22. Einstein Ring'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2026/opho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:43:04.524Z'
+verifier: 'mechanical'
+---
+
+*2026 Online Physics Olympiad · 21 август 2026 г.*
+
+<details>
+<summary>Last updated</summary>
+
+*Last updated: 22nd August 03:35 UTC*
+
+</details>
+
+<details>
+<summary>Sponsors</summary>
+
+This competition would not be possible without the help of our sponsors.
+
+</details>
+
+<details>
+<summary>Corrections (all times are in UTC)</summary>
+
+- Q8: Cleared up wording (21/08 04:40 and 04:52)
+- Q3: improved wording (21/08 08:49)
+- Q19: Improved wording (21/08 09:42)
+- Q16: Attempts reset (21/08 22:00), Error bound increased (22/8 02:30)
+- Q1: Improved wording (22/08 03:35)
+
+</details>
+
+<details>
+<summary>Указания</summary>
+
+**Format.** The OPhO is a team-based competition (3 members at most per team). Unlike previous years, the 2026 OPhO consists of a single round held from August 21, 12 am (UTC), to August 23, 11:59 pm (UTC). The contest is made up of three parts, all running concurrently over the full contest window:
+
+- **Short Answer** — problems requiring numerical answers, submitted on the OPhO portal;
+- **Long Answer** — problems requiring full written solutions, submitted on the OPhO portal;
+- **Simulation** — computational problems requiring teams to run a provided executable locally, with solutions submitted on the OPhO portal.
+
+All teams have access to all three parts for the entire duration of the contest. Submissions are made on the OPhO portal https://opho.physoly.org/ using the team login, and may be made at any time within the contest window.
+
+**Short Answer.** Teams submit numerical answers on the portal, with up to three attempts per problem. *Every* answer submission must be accompanied by a file upload, on the portal, of the working used to obtain that answer. This working will not be graded, but submissions without it will not be accepted. The base score for each problem depends on the number of teams that successfully answer it, each incorrect attempt multiplies the base score by a factor of 0.8, and there is no time factor. The score for an individual problem follows:
+
+$$
+w(N) = (0.8)^i\left[e^{-\frac{x(N)}{200}} + e^{-\frac{x(N)^2}{100}} + 1\right],
+$$
+
+where $i \in \{0, 1, 2\}$ represents whether a team got it on the first, second, or third try, $N$ represents the number of teams that answer the problem correctly, and $x(N)$ is the sum of $(0.8)^i$ across all teams that have solved the problem. The base score is independent of problem number, but expect questions to be ordered roughly by difficulty. A team’s raw Short Answer total is the sum of these values, and all raw totals are then scaled linearly such that the top team receives 55 points.
+
+**Long Answer.** Teams submit full solutions on the portal. Rubrics are predetermined, and solutions will be reviewed to determine the proper number of points to give. The points breakdown is given per problem, for a total of 35 points. It is recommended that participants write their solutions in LaTeX. Handwritten solutions (or a combination of both) are accepted too; if participants have more than one photo of a handwritten solution (`jpg`, `png`, etc.), it is required that they be organized in the correct order in a `pdf` before submitting.
+
+**Simulation.** Teams will need to be able to run a provided executable locally. Solutions are submitted on the portal and will be graded against predetermined rubrics. The points breakdown is given per problem, for a total of 10 points.
+
+**Scoring.** A team’s cumulative score is the sum of its scaled Short Answer score (out of 55 points), Long Answer score (out of 35 points), and Simulation score (out of 10 points), for a maximum score of 100 points.
+
+**Permitted Resources.** Use of the internet is allowed, including textbooks, published papers, calculators, and computer algebra systems. However, the use of AI tools of any kind is strictly prohibited. This includes, but is not limited to, large language models (e.g. ChatGPT, Claude, Gemini), AI coding assistants, AI-generated search summaries, and any other AI-powered assistance.
+
+**Dishonest Behavior.** Please refrain from cheating in any form. This includes, but is not limited to, creating alternate accounts to gain additional attempts, sharing answers with other teams, posting problems online, utilizing AI tools as described above, or employing any other method to gain an unfair advantage.
+
+We have previously caught numerous teams engaging in such practices, and pursuing dishonest tactics provides no genuine sense of security. Any teams found to be acting maliciously will be notified via email, along with the opportunity to appeal. Failing to provide a valid appeal will result in a ban from participating in any future Physoly competitions. Our utmost priority is to ensure an enjoyable contest experience for all participants, and we remain committed to preventing any disruption to the fun for others.
+
+**Awards and Results.** The top competitors will be recognized on the website. No cash prizes will be awarded this year.
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e = 9.11 \cdot 10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0 = 6.02 \cdot 10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R = 8.31\ \mathrm{J/(mol \cdot K)}$
+- Boltzmann’s constant, $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e = 1.60 \cdot 10^{-19}\ \mathrm{C}$
+- 1 electron volt, $1\ \mathrm{eV} = 1.60 \cdot 10^{-19}\ \mathrm{J}$
+- Speed of light, $c = 3.00 \cdot 10^{8}\ \mathrm{m/s}$
+- Universal Gravitational constant,
+  $$
+  G = 6.67 \cdot 10^{-11}\ \mathrm{(N \cdot m^2)/kg^2}
+  $$
+- Solar Mass
+  $$
+  M_\odot = 1.988 \cdot 10^{30}\ \mathrm{kg}
+  $$
+- Acceleration due to gravity, $g = 9.8\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit,
+  $$
+  1\ \mathrm{u} = 1.66 \cdot 10^{-27}\ \mathrm{kg} = 931\ \mathrm{MeV/c^2}
+  $$
+- Planck’s constant,
+  $$
+  h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s} = 4.41 \cdot 10^{-15}\ \mathrm{eV \cdot s}
+  $$
+- Permittivity of free space,
+  $$
+  \epsilon_0 = 8.85 \cdot 10^{-12}\ \mathrm{C^2/(N \cdot m^2)}
+  $$
+- Coulomb’s law constant,
+  $$
+  k = \frac{1}{4\pi\epsilon_0} = 8.99 \cdot 10^{9}\ \mathrm{(N \cdot m^2)/C^2}
+  $$
+- Permeability of free space,
+  $$
+  \mu_0 = 4\pi \cdot 10^{-7}\ \mathrm{T \cdot m/A}
+  $$
+- Magnetic constant,
+  $$
+  \frac{\mu_0}{4\pi} = 1 \cdot 10^{-7}\ \mathrm{(T \cdot m)/A}
+  $$
+- 1 atmospheric pressure,
+  $$
+  1\ \mathrm{atm} = 1.01 \cdot 10^{5}\ \mathrm{N/m^2} = 1.01 \cdot 10^{5}\ \mathrm{Pa}
+  $$
+- Wien’s displacement constant, $b = 2.9 \cdot 10^{-3}\ \mathrm{m \cdot K}$
+- Stefan-Boltzmann constant,
+  $$
+  \sigma = 5.67 \cdot 10^{-8}\ \mathrm{W/m^2/K^4}
+  $$
+
+</details>
+
+## Условие
+
+A transparent unit sphere has a small hemispherical indent in its surface, located at $\hat{z}$. UV light shines on the indent from the $\hat{z}$ direction. The sphere is doped with fluorescent dye that has a chance to absorb UV light and reemit it as blue light in a random direction. The concentration of dye is small, so a UV photon typically travels a very long distance before being absorbed. Assume that light is either totally reflected or transmitted at interfaces.
+
+A camera far away from the sphere in the $\hat{z}$ direction takes the following image; the center and boundary of the sphere are marked. If the sphere’s indices of refraction for blue and UV light are $n_b$ and $n_u$ respectively:
+
+**(a)** Find $n_b$. [6.0 pts]
+
+**(b)** Find $n_u$. [5.0 pts]
+
+**(c)** For which values $(n_b, n_u)$ does a similar ring appear? [4.0 pts]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '83.6%', '--fig-max': '536px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p22-fig1.png" alt="Camera image on a black square background: a dashed white circle marks the boundary of the sphere, and a small white cross marks its centre; inside, a wide blue-violet ring fills the disc from just inside the dashed boundary down to a black central disc whose radius is roughly 0.6 of the sphere's radius." width="1674" height="1677" loading="lazy" decoding="async" />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** 1.9
+- **(b)** 1.45
+- **(c)** $n_b \in (\sqrt{2}, 2),\quad n_u > \sqrt{2}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**(a-b)** Note that all blue photons in the image exit the sphere directly after being emitted, as reflected blue photons are trapped and we are ignoring partial reflections. Thus, to find the intensity $I(b)$ at an image point with impact parameter $b < 1$, we integrate over the possible origins for a trajectory leading to that point, which lie along the refracted segment $L$. Since the emitted photon's direction is uniform, we do not need to know the absorbed photon's direction, so it suffices to know the distribution of absorption locations $P(\vec{r})$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '45.1%', '--fig-max': '289px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p22-sol-fig1.png" alt="Cross-section of the unit sphere with the small indent on the right at the ẑ axis (dashed horizontal line through the centre ending in an arrow labelled ẑ). A dashed radius at angle α to the axis reaches the surface; there a horizontal blue arrow leaves the sphere at height b (bracket on the right labelled b). Inside, the blue refracted segment L makes angle β with the dashed radius and meets the axis at distance d (bracket) from the centre, continuing to the opposite side of the sphere." width="904" height="750" loading="lazy" decoding="async" />
+</figure>
+
+$$
+I(b) \propto \int_L P(\vec{r})\,d\ell
+$$
+
+To find $P(\vec{r})$, note that UV photons which leave the sphere are unlikely to be absorbed, so it suffices to consider UV photons trapped inside the sphere by reflection, which must originate at the hemisphere. Consider the trajectory of a single UV photon originating at azimuth $\phi$ and polar angle $\theta_0$, which is trapped if $\sin(\theta_0) > 1/n_u$. Generically, $\theta_0$ is irrational, so the final polar angle $\theta$ is approximately uniformly distributed and we can take $\vec{r}$ to be sampled from the plane of the trajectory with some probability distribution $P(r, \theta \mid \theta_0, \phi) = f(r)$. Note that $f(r)$ is nonzero for $r \in (\sin(\theta_0), 1)$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.7%', '--fig-max': '465px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2026-x/p22-sol-fig2.png" alt="Left: a circle with the indent on the right; a pink UV ray leaves the indent at angle θ0 to the horizontal and bounces around inside the circle many times, forming a star-shaped pattern that leaves an empty central region. An arrow points right to a second circle filled with a pink annulus whose inner empty disc has radius marked sin(θ0)." width="1454" height="638" loading="lazy" decoding="async" />
+</figure>
+
+Then, given a UV photon emitted at azimuth $\phi$, we see that $\vec{r}$ has distribution $P(r, \theta \mid \phi) = \displaystyle\int_0^{\arcsin(1/n_u)} P(r, \theta \mid \theta_0, \phi)P(\theta_0 \mid \phi)\,d\theta_0 = g(r)$, which is nonzero for $r \in (1/n_u, 1)$. Finally, the unconditional distribution is $P(r, \theta, \phi) = P(r, \theta \mid \phi)P(\phi) = \dfrac{1}{2\pi}g(r)$, giving $P(\vec{r}) = \dfrac{1}{r^2\sin(\theta)}P(r, \theta, \phi) = \dfrac{g(r)}{2\pi r^2\sin(\theta)}$. We see that $P(\vec{r})$ diverges if $\theta = 0, \pi$ and $r \in (1/n_u, 1)$; physically, this is because the trajectories of all UV photons intersect these segments, with the divergence being cut off by the finite size of the source.  
+Thus, $I(b)$ is large if $L$ intersects the locus of divergence, i.e. $d \in (1/n_u, 1)$. Note that:
+
+$$
+\begin{aligned} d &= \frac{\sin(\alpha)}{\tan(\alpha - \beta)} - \cos(\alpha) \\ &= \frac{\sin(\arcsin(b))}{\tan(\arcsin(b) - \arcsin(b/n_b))} - \cos(\arcsin(b)) \\ &= b\bigg/\left(\frac{\frac{b}{\sqrt{1-b^2}} - \frac{b/n_b}{\sqrt{1-(b/n_b)^2}}}{1 + \frac{b}{\sqrt{1-b^2}}\frac{b/n_b}{\sqrt{1-(b/n_b)^2}}}\right) - \sqrt{1 - b^2} \\ &= \frac{\sqrt{(1 - b^2)(n_b^2 - b^2)} + b^2}{\sqrt{n_b^2 - b^2} - \sqrt{1 - b^2}} - \sqrt{1 - b^2} \\ &= \frac{1}{\sqrt{n_b^2 - b^2} - \sqrt{1 - b^2}} \end{aligned}
+$$
+
+This is a decreasing function of $b$, explaining the appearance of the ring. In particular, the inner radius $b_1 = 0.593$ of the ring corresponds to $d = 1$ and the outer radius $b_2 = 0.984$ corresponds to $d = 1/n_u$, giving:
+
+$$
+n_b = \sqrt{2\left(1 + \sqrt{1 - b_1^2}\right)} = \boxed{1.900}, \quad n_u = \sqrt{n_b^2 - b_2^2} - \sqrt{1 - b_2^2} = \boxed{1.45}
+$$
+
+**(c)** Note that $d(0) = \dfrac{1}{n_b - 1}, d(1) = \dfrac{1}{\sqrt{n_b^2 - 1}}$. For a ring (and not a disk) to appear, we need $d(0) > 1, d(1) < 1$, so $\boxed{n_b \in (\sqrt{2}, 2)}$. This is not the only constraint: we must also ensure that some UV light remains trapped in the sphere. For this, consider a UV ray with initial impact parameter $0 < b' < 1$ on the hemisphere; we calculate $\theta_0 = \arcsin(b) - \arcsin(n_u/b')$. We see that $\dfrac{d\theta_0}{db'} = \dfrac{1}{\sqrt{1 - b'^2}} - \dfrac{1}{\sqrt{n_u^2 - b'^2}} > 0$, so the maximum value of $\theta_0$ is $\theta_m = \pi/2 - \arcsin(1/n_u)$. We need $\theta_m > \arcsin(1/n_u)$, implying $\boxed{n_u > \sqrt{2}}$.  
+Remark: One might expect that $I(b) = \displaystyle\int_L S(b, \vec{r})P(\vec{r})\,d\ell$ where $S(b, \vec{r})$ is a geometric factor accounting for effects such as magnification. In fact, due to a principle called the *conservation of etendue*, $S(b, \vec{r})$ is constant. This knowledge is not necessary to solve the problem.  
+Remark: In order for the ring to be the dominant effect observed, we should check that the $\hat{z}$ axis is the *only* place where $P(\vec{r})$ diverges; in particular, $P(r, \theta \mid \phi)$ must be bounded. To see this, note that $P(r, \theta \mid \phi) = \displaystyle\int_{1/n_u}^{\arcsin(\theta_m)} P(r, \theta \mid \theta_0, \phi)P(\sin(\theta_0) \mid \phi)\,d\sin(\theta_0)$. One can easily calculate $P(r, \theta \mid \theta_0, \phi) = \dfrac{1}{\cos(\theta_0)}\dfrac{r}{\sqrt{r^2 - \sin^2(\theta_0)}}$ for $r \in (\sin(\theta_0), 1)$. Furthermore, $P(\sin(\theta_0) \mid \phi) = P(b \mid \phi)/\dfrac{d\sin(\theta_0)}{db} = \dfrac{b}{2}\dfrac{1}{\cos(\theta_0)\frac{d\theta_0}{db}}$. Because $\cos(\theta_0) > \cos(\theta_m)$ and $\dfrac{d\theta_0}{db} > 1 - 1/n_u$ are bounded away from 0, we can write $P(r, \theta \mid \phi) < C\displaystyle\int_{1/n_u}^{\arcsin(\theta_m)} \dfrac{r}{\sqrt{r^2 - \sin^2(\theta_0)}}\,d\sin(\theta_0)$, which is clearly bounded.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/problems.pdf#page=15)
+· официални решения: [solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/solutions.pdf#page=39)

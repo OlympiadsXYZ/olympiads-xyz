@@ -1,0 +1,86 @@
+---
+id: x-ens-2014-mp-p1
+source: 'X-ENS 2014, Приемен изпит, математика и физика'
+title: 'Задача 1. Étude d’un accéléromètre pendulaire'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2014/x-ens-2014-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:37:18.251Z'
+verifier: 'mechanical'
+---
+
+*ÉCOLE POLYTECHNIQUE – ÉCOLES NORMALES SUPÉRIEURES — CONCOURS D’ADMISSION 2014 — FILIÈRE MP — COMPOSITION DE PHYSIQUE (XULCR)*
+
+<details>
+<summary>Consignes</summary>
+
+(Durée : 4 heures)
+
+L’utilisation des calculatrices n’est pas autorisée pour cette épreuve.  
+On se contentera, pour les applications numériques, d’un seul chiffre significatif.
+
+</details>
+
+<details>
+<summary>Centrale inertielle</summary>
+
+Une centrale inertielle est un ensemble d’accéléromètres et de gyromètres qui mesure l’accélération et la vitesse angulaire d’un mobile et permet de le positionner dans l’espace. La miniaturisation et le désormais faible coût de ces capteurs permettent de les intégrer dans de nombreux dispositifs électroniques embarqués. On les retrouve par exemple dans les systèmes de navigation automobile pour pallier la perte momentanée du signal GPS, dans les disques durs d’ordinateurs portables pour prévenir des chocs éventuels et protéger les têtes de lecture, dans les smartphones ou dans les manettes de jeu vidéo pour détecter les mouvements du joueur.
+
+L’objet de ce problème est l’étude de différents types d’accéléromètres et de gyromètres. Les quatre parties du problème sont indépendantes.
+
+Dans le problème $g$ désigne l’accélération de la pesanteur que l’on prendra égale à $10\ \mathrm{m\cdot s^{-2}}$ dans les applications numériques et $c$ désigne la vitesse de la lumière dans le vide que l’on prendra égale à $3 \times 10^{8}\ \mathrm{m\cdot s^{-1}}$.
+
+</details>
+
+## Условие
+
+L’accéléromètre ADLX qui équipe les manettes des consoles Nintendo WiiU$^{\mathrm{TM}}$ est un accéléromètre de type pendulaire. La fiche constructeur précise qu’il peut mesurer des accélérations comprises entre $-5g$ et $+5g$, que la plus petite accélération mesurable est de $0{,}01g$, et qu’il peut résister à des chocs allant jusqu’à $10\,000g$.
+
+**1.** Donner, en précisant la méthode utilisée, les ordres de grandeur des accélérations subies par la manette de jeu placée dans la main d’un joueur agitant rapidement ou lentement le bras. Les situer relativement aux valeurs annoncées par le constructeur.
+
+Un accéléromètre pendulaire peut être assimilé à un système masse-ressort amorti, dont le schéma de principe est présenté sur la figure 1. L’accéléromètre se compose d’une masse d’épreuve $m$, astreinte à se déplacer selon un axe $\vec{u}$ solidaire du boîtier extérieur de l’accéléromètre. La masse d’épreuve est reliée au boîtier par un ressort de raideur $k$. On note $X$ la position de la masse d’épreuve par rapport au centre du boîtier. La position au repos de la masse d’épreuve, lorsque l’axe $\vec{u}$ est horizontal, est $X = 0$. On suppose que la masse d’épreuve subit également une force de frottement visqueux $\vec{F} = -2m\gamma\dot{X}\vec{u}$ où $\gamma$ est une constante positive.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '78.7%', '--fig-max': '504px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2014-mp/p1-fig1.png" alt="Schéma d’un boîtier rectangulaire (« Boîtier de l’accéléromètre ») contenant un ressort de raideur k fixé à la paroi gauche et relié à une masse grise m (« Masse d’épreuve ») ; vecteur unitaire u vers la droite, déplacement X repéré sous la masse. À gauche le repère R (O, x, y, z), à droite le vecteur g dirigé vers le bas." width="1575" height="432" loading="lazy" decoding="async" />
+<figcaption>Figure 1: Schéma d’un accéléromètre pendulaire.</figcaption>
+</figure>
+
+Le boîtier se déplace dans un référentiel $\mathcal{R}$ supposé Galiléen et on note $\vec{a}$ son accélération dans ce référentiel. Lorsque le boîtier subit une accélération, la masse d’épreuve quitte sa position d’équilibre. La mesure de la position $X$ permet alors de déduire l’accélération du boîtier.
+
+On suppose tout d’abord que l’accéléromètre garde une orientation fixe et horizontale selon l’axe $Ox$ ($\vec{u} = \vec{e_x}$). De plus, l’accéléromètre ne se déplace que selon l’axe $Ox$ ($\vec{a} = a(t)\vec{e_x}$). On note $\omega_r = \sqrt{k/m}$.
+
+**2.** Donner l’équation différentielle vérifiée par la variable $X$, faisant intervenir $\omega_r$, $\gamma$ et $a(t)$.
+
+On suppose que l’accéléromètre ainsi que sa masse d’épreuve sont immobiles pour des temps $t$ négatifs, et que l’accéléromètre subit une accélération constante $\vec{a} = a\vec{e_x}$ pour les temps $t$ positifs.
+
+**3.** Donner l’expression de la solution de l’équation différentielle dans le cas faiblement amorti où $\gamma < \omega_r$ et dans le cas fortement amorti où $\gamma > \omega_r$. On ne cherchera pas à calculer les constantes d’intégration qui apparaissent dans les expressions.
+
+**4.** Montrer que dans les deux cas, faiblement et fortement amorti, $X(t)$ tend vers une valeur stationnaire dont on donnera l’expression.
+
+**5.** Tracer l’allure de $X(t)$ dans les deux cas, faiblement et fortement amortis.
+
+On appelle temps de réponse de l’accéléromètre le temps caractéristique pour que $X(t)$ atteigne le régime stationnaire.
+
+**6.** Donner le temps de réponse de l’accéléromètre dans les deux cas, faiblement et fortement amorti.
+
+**7.** Tracer l’allure du temps de réponse de l’accéléromètre en fonction du paramètre $\gamma$, pour une pulsation $\omega_r$ fixée.
+
+**8.** D’après le graphe de la question précédente, quel est le temps de réponse minimal pour un accéléromètre de pulsation $\omega_r$ donnée ?
+
+D’après la fiche constructeur, l’accéléromètre ADLX possède les caractéristiques suivantes : pulsation de résonance $\omega_r = 2\pi \times 5\,500\ \mathrm{rad\cdot s^{-1}}$, facteur de qualité $Q = \omega_r/\gamma = 5$.
+
+**9.** Donner la valeur du temps de réponse de l’accéléromètre, ainsi que celle du déplacement stationnaire de la masse d’épreuve pour une accélération de $1g$.
+
+**10.** Pourquoi peut-on dire que les performances de ce type d’accéléromètre résultent d’un compromis entre temps de réponse et sensibilité, c’est-à-dire qu’un accéléromètre pendulaire très sensible aura un temps de réponse long ?
+
+**11.** On considère que l’accéléromètre n’est plus horizontal et qu’il subit une accélération constante $\vec{a}$ d’orientation quelconque. Montrer que ce type d’accéléromètre n’est pas capable de mesurer la composante de l’accélération $\vec{a}$ selon $\vec{u}$ mais une quantité que l’on exprimera en fonction de $\vec{a}$, $\vec{u}$ et l’accélération de la pesanteur $\vec{g}$.
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2014.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2014.pdf#page=1)

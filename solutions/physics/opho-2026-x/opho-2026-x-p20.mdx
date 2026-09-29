@@ -1,0 +1,299 @@
+---
+id: opho-2026-x-p20
+source: 'OPhO 2026, Единствен кръг'
+title: 'Задача 20. Spherical Membrane'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2026/opho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:43:04.524Z'
+verifier: 'mechanical'
+---
+
+*2026 Online Physics Olympiad · 21 август 2026 г.*
+
+<details>
+<summary>Last updated</summary>
+
+*Last updated: 22nd August 03:35 UTC*
+
+</details>
+
+<details>
+<summary>Sponsors</summary>
+
+This competition would not be possible without the help of our sponsors.
+
+</details>
+
+<details>
+<summary>Corrections (all times are in UTC)</summary>
+
+- Q8: Cleared up wording (21/08 04:40 and 04:52)
+- Q3: improved wording (21/08 08:49)
+- Q19: Improved wording (21/08 09:42)
+- Q16: Attempts reset (21/08 22:00), Error bound increased (22/8 02:30)
+- Q1: Improved wording (22/08 03:35)
+
+</details>
+
+<details>
+<summary>Указания</summary>
+
+**Format.** The OPhO is a team-based competition (3 members at most per team). Unlike previous years, the 2026 OPhO consists of a single round held from August 21, 12 am (UTC), to August 23, 11:59 pm (UTC). The contest is made up of three parts, all running concurrently over the full contest window:
+
+- **Short Answer** — problems requiring numerical answers, submitted on the OPhO portal;
+- **Long Answer** — problems requiring full written solutions, submitted on the OPhO portal;
+- **Simulation** — computational problems requiring teams to run a provided executable locally, with solutions submitted on the OPhO portal.
+
+All teams have access to all three parts for the entire duration of the contest. Submissions are made on the OPhO portal https://opho.physoly.org/ using the team login, and may be made at any time within the contest window.
+
+**Short Answer.** Teams submit numerical answers on the portal, with up to three attempts per problem. *Every* answer submission must be accompanied by a file upload, on the portal, of the working used to obtain that answer. This working will not be graded, but submissions without it will not be accepted. The base score for each problem depends on the number of teams that successfully answer it, each incorrect attempt multiplies the base score by a factor of 0.8, and there is no time factor. The score for an individual problem follows:
+
+$$
+w(N) = (0.8)^i\left[e^{-\frac{x(N)}{200}} + e^{-\frac{x(N)^2}{100}} + 1\right],
+$$
+
+where $i \in \{0, 1, 2\}$ represents whether a team got it on the first, second, or third try, $N$ represents the number of teams that answer the problem correctly, and $x(N)$ is the sum of $(0.8)^i$ across all teams that have solved the problem. The base score is independent of problem number, but expect questions to be ordered roughly by difficulty. A team’s raw Short Answer total is the sum of these values, and all raw totals are then scaled linearly such that the top team receives 55 points.
+
+**Long Answer.** Teams submit full solutions on the portal. Rubrics are predetermined, and solutions will be reviewed to determine the proper number of points to give. The points breakdown is given per problem, for a total of 35 points. It is recommended that participants write their solutions in LaTeX. Handwritten solutions (or a combination of both) are accepted too; if participants have more than one photo of a handwritten solution (`jpg`, `png`, etc.), it is required that they be organized in the correct order in a `pdf` before submitting.
+
+**Simulation.** Teams will need to be able to run a provided executable locally. Solutions are submitted on the portal and will be graded against predetermined rubrics. The points breakdown is given per problem, for a total of 10 points.
+
+**Scoring.** A team’s cumulative score is the sum of its scaled Short Answer score (out of 55 points), Long Answer score (out of 35 points), and Simulation score (out of 10 points), for a maximum score of 100 points.
+
+**Permitted Resources.** Use of the internet is allowed, including textbooks, published papers, calculators, and computer algebra systems. However, the use of AI tools of any kind is strictly prohibited. This includes, but is not limited to, large language models (e.g. ChatGPT, Claude, Gemini), AI coding assistants, AI-generated search summaries, and any other AI-powered assistance.
+
+**Dishonest Behavior.** Please refrain from cheating in any form. This includes, but is not limited to, creating alternate accounts to gain additional attempts, sharing answers with other teams, posting problems online, utilizing AI tools as described above, or employing any other method to gain an unfair advantage.
+
+We have previously caught numerous teams engaging in such practices, and pursuing dishonest tactics provides no genuine sense of security. Any teams found to be acting maliciously will be notified via email, along with the opportunity to appeal. Failing to provide a valid appeal will result in a ban from participating in any future Physoly competitions. Our utmost priority is to ensure an enjoyable contest experience for all participants, and we remain committed to preventing any disruption to the fun for others.
+
+**Awards and Results.** The top competitors will be recognized on the website. No cash prizes will be awarded this year.
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n = 1.67 \cdot 10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e = 9.11 \cdot 10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0 = 6.02 \cdot 10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R = 8.31\ \mathrm{J/(mol \cdot K)}$
+- Boltzmann’s constant, $k_B = 1.38 \cdot 10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e = 1.60 \cdot 10^{-19}\ \mathrm{C}$
+- 1 electron volt, $1\ \mathrm{eV} = 1.60 \cdot 10^{-19}\ \mathrm{J}$
+- Speed of light, $c = 3.00 \cdot 10^{8}\ \mathrm{m/s}$
+- Universal Gravitational constant,
+  $$
+  G = 6.67 \cdot 10^{-11}\ \mathrm{(N \cdot m^2)/kg^2}
+  $$
+- Solar Mass
+  $$
+  M_\odot = 1.988 \cdot 10^{30}\ \mathrm{kg}
+  $$
+- Acceleration due to gravity, $g = 9.8\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit,
+  $$
+  1\ \mathrm{u} = 1.66 \cdot 10^{-27}\ \mathrm{kg} = 931\ \mathrm{MeV/c^2}
+  $$
+- Planck’s constant,
+  $$
+  h = 6.63 \cdot 10^{-34}\ \mathrm{J \cdot s} = 4.41 \cdot 10^{-15}\ \mathrm{eV \cdot s}
+  $$
+- Permittivity of free space,
+  $$
+  \epsilon_0 = 8.85 \cdot 10^{-12}\ \mathrm{C^2/(N \cdot m^2)}
+  $$
+- Coulomb’s law constant,
+  $$
+  k = \frac{1}{4\pi\epsilon_0} = 8.99 \cdot 10^{9}\ \mathrm{(N \cdot m^2)/C^2}
+  $$
+- Permeability of free space,
+  $$
+  \mu_0 = 4\pi \cdot 10^{-7}\ \mathrm{T \cdot m/A}
+  $$
+- Magnetic constant,
+  $$
+  \frac{\mu_0}{4\pi} = 1 \cdot 10^{-7}\ \mathrm{(T \cdot m)/A}
+  $$
+- 1 atmospheric pressure,
+  $$
+  1\ \mathrm{atm} = 1.01 \cdot 10^{5}\ \mathrm{N/m^2} = 1.01 \cdot 10^{5}\ \mathrm{Pa}
+  $$
+- Wien’s displacement constant, $b = 2.9 \cdot 10^{-3}\ \mathrm{m \cdot K}$
+- Stefan-Boltzmann constant,
+  $$
+  \sigma = 5.67 \cdot 10^{-8}\ \mathrm{W/m^2/K^4}
+  $$
+
+</details>
+
+## Условие
+
+An ideal gas consisting of $2N$ classical particles of mass $m$ is confined within an harmonic isotropic potential.
+
+$$
+V(r) = kr^2/2
+$$
+
+The system is kept at a constant temperature $T$ by a thermal bath. A massless, perfectly flexible and perfectly conducting spherical membrane is placed concentrically with the origin. Let the radius of the membrane be $R$. For all parts, assume $N \gg 1$. When possible, give your answer in terms of $\lambda = \sqrt{k_B T/k}$.
+
+Initially, the membrane is completely impermeable to the gas particles, and acts as a movable spherical piston. It partitions the gas into two subsystems, an "inner" gas containing $N$ particles with $r < R$ and an "outer" gas containing $N$ particles in the region $r > R$. The membrane can freely expand or contract. In the thermodynamic limit ($N \to \infty$), the membrane settles at an equilibrium radius $R_0$.
+
+**(a)** Given $R_0 = \alpha\lambda$, find the value of $\alpha$. [1.5 pts]
+
+As $N$ is finite, the membrane radius $R$ actually undergoes tiny fluctuations around $R_0$.
+
+**(b)** Derive an expression for the mean-square fluctuation $\langle (R - R_0)^2 \rangle$ in terms of $N$, $\lambda$ and $\alpha$. [2.5 pts]
+
+When the fluctuations of the membrane are ignored, the system has a heat capacity $C_0$. However, when the membrane is free to fluctuate the system has a different heat capacity $C_1$.
+
+**(c)** Calculate the difference $\Delta C = C_1 - C_0$. [0.5 pts]
+
+Suppose the membrane is now semi-permeable, allowing gas particles to pass through it only if the radial velocity satisfies $mv_r^2/2 > \epsilon_0$, where $\epsilon_0$ is a fixed energy threshold.
+
+**(d)** Find all macroscopic equilibrium positions $R_1$ of the membrane. [1.0 pts]
+
+Now, consider fixing the membrane at $R_0$. Let $N_i$ denote the number of particles with $r < R_0$.
+
+**(e)** Find the mean square fluctuation $\langle (N_i - N)^2 \rangle$. [1.5 pts]
+
+We now once again consider the non-permeable membrane. Suppose the system is initially in thermodynamic and mechanical equilibrium. At time $t = 0$, the stiffness of the harmonic trap is suddenly doubled from $k \to 2k$.
+
+**(f)** Find the net force acting on the membrane at $t = 0$. [0.5 pts]
+
+Suppose the membrane now has a constant surface tension $\sigma > 0$, with $\sigma\lambda^2 \ll N k_B T$. The trap stiffness is restored to its original value, and the system is allowed to reach equilibrium.
+
+**(g)** Estimate the change in the equilibrium radius $\Delta R$ to first order. [2.5 pts]
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **(a)** 1.538
+- **(b)** $\langle (R - R_0)^2\rangle = \frac{\pi\lambda^2}{16N\alpha^4 e^{-\alpha^2}}$
+- **(c)** $\Delta C = \frac{1}{2}k_B$
+- **(d)** There are infinitely many equilibrium positions: the membrane can be stable at any radius.
+- **(e)** $\langle (N_i - N)^2\rangle = \frac{N}{2}$
+- **(f)** 0 N
+- **(g)** $\Delta R = -\frac{\pi^2\sigma\lambda^3}{2Nk_BT\alpha^3\exp(-\alpha^2)}$
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part A: Impermeable Membrane**  
+**A1** (1.0) First, note that without the membrane, the gas particles will follow a Boltzmann distribution in $r$, with $P(r) \propto e^{-kr^2/k_BT}$. In order for the distribution to be in an equilibrium, each spherical shell of the gas must be subject to zero net force. Therefore, the equilibrium radius $R_0$ of the membrane is simply where half the particles are inside the membrane ($r < R$) and half are outside $r > R$. Note that the partition function is also a constant. With these 2 observations, we can proceed with
+
+$$
+\begin{gathered} \int_0^{R_0} 4\pi r^2 \exp\left(-\frac{kr^2}{2k_BT}\right) dr = \int_{R_0}^{\infty} 4\pi r^2 \exp\left(-\frac{kr^2}{2k_BT}\right) dr \\ \implies \int_0^{R_0} r^2 \exp\left(-\frac{kr^2}{2k_BT}\right) dr = \frac{1}{2}\int_0^{\infty} r^2 \exp\left(-\frac{kr^2}{2k_BT}\right) dr \end{gathered}
+$$
+
+We can non-dimensionalize the integrals by substituting $x = r/\lambda$.
+
+$$
+\int_0^{\alpha} x^2 e^{-x^2/2}dx = \frac{1}{2}\int_0^{\infty} x^2 e^{-x^2/2}dx = \sqrt{\frac{\pi}{8}}
+$$
+
+Equivalently, one could note that the partition function $Z(R)$ is the product of the inner and outer partition functions $Z(R) = Z_i(R)Z_o(R)$, and maximise the entropy $S = k_B\ln(Z)$, where upon you obtain $Z_i(R_0) = Z_o(R_0)$. Evaluating numerically, $\alpha \approx 1.538$.  
+**A2** (1.5) Note that the Helmholtz free energy of a system is given by
+
+$$
+F = -k_BT\ln(Z)
+$$
+
+Thus, the probability of the membrane being in a certain state is given by
+
+$$
+P(R) \propto (Z(R))^N = \exp(Ng(R))
+$$
+
+Where $g(R) = \ln(Z_i) + \ln(Z_o)$. Now, for large $N$ we can expand $g(R)$ as a Taylor series around the maximum value $R_0$. Noting that $g'(R_0) = 0$, we obtain
+
+$$
+g(R) \approx g(R_0) + \frac{1}{2}g''(R_0)(R - R_0)^2
+$$
+
+Upon differentiating $g'(R)$ to find $g''(R)$, note that the term $1/Z_i - 1/Z_o$ vanishes at $R_0$ so we can simplify to
+
+$$
+g''(R_0) = 4\pi R_0^2\exp\left(-\frac{R_0^2}{2\lambda^2}\right)\left(-\frac{Z_i'(R_0)}{Z_o(R_0)^2} + \frac{Z_o'(R_0)}{Z_0(R_0)^2}\right)
+$$
+
+Note that $Z_i(R_0) = Z_o(R_0) = Z(R_0)/2$, and that
+
+$$
+Z \propto \int_0^{\infty} 4\pi r^2\exp\left(-\frac{kr^2}{2k_BT}\right) dr = \sqrt{8\pi^3}\lambda^3
+$$
+
+Substituting all the values in
+
+$$
+g''(R_0) \propto -\frac{16\alpha^4 e^{-\alpha^2}}{\pi\lambda^2}
+$$
+
+Note that the probability distribution takes the form of a standard Gaussian, where the variance is
+
+$$
+\sigma^2 = \frac{1}{Ng''(R_0)}
+$$
+
+$$
+\implies \langle (R - R_0)^2\rangle = \frac{\pi\lambda^2}{16N\alpha^4 e^{-\alpha^2}}
+$$
+
+**A3** (1.0) Note that allowing for a mobile membrane adds one degree of freedom to the system. Furthermore, this mode is associated with a harmonic potential in $\delta R$, so we can use the equipartition theorem to conclude that
+
+$$
+\Delta C = \frac{1}{2}k_B
+$$
+
+**Part B: Semi-permeable Membrane**  
+**B1** (0.5) Note that as the membrane now allows particles to pass through, any number of particles could be on either side of the membrane. This means that, using similar reasoning to A1, the equilibrium positions of the membrane actually disappear, as the membrane could end up in *any* radius $R$. As such, there are infinitely many instantaneous equilibrium positions, as the membrane can be stable at any radius.  
+**B2** (1.0) When the membrane is fixed at $R_0$, particles independently transition across the boundary. Since $R_0$ was defined as the median radius of the spatial distribution, any given particle has an independent probability $p = 1/2$ of being inside $r < R_0$.The total number of particles $N_i$ inside the membrane follows a binomial distribution with parameters $2N$ and $p = 1/2$. The variance is:
+
+$$
+\langle (N_i - N)^2\rangle = (2N)p(1 - p) = 2N\left(\frac{1}{2}\right)\left(\frac{1}{2}\right) = \frac{N}{2}
+$$
+
+**Part C: Small perturbations**  
+**C1** (1.0) Note that, as the particles have nonzero mass and therefore have inertia, they cannot instantaneously change their momentum. Therefore, the local density profiles just inside and just outside the boundary are completely unchanged. As $P = nk_BT$, the pressure remains unchanged, and thus the net force is exactly zero.  
+**C2** (1.5) Due to the contribution from surface tension, there is an additional term in the free energy
+
+$$
+F(R) = -k_BTN\ln Z_{\mathrm{in}}(R) - k_BTN\ln Z_{\mathrm{out}}(R) + 4\pi\sigma R^2
+$$
+
+Setting the derivative to zero in order to find the new equilibrium
+
+$$
+-k_BTN\left(\frac{Z_{\mathrm{in}}'(R)}{Z_{\mathrm{in}}(R)} + \frac{Z_{\mathrm{out}}'(R)}{Z_{\mathrm{out}}(R)}\right) + 8\pi\sigma R = 0
+$$
+
+Let us convert this entirely into dimensionless variables by defining $x = R/\lambda_T$, alongside the scaled partition integrals $\tilde{Z}_{\mathrm{in}}(x) = \int_0^x u^2 e^{-u^2/2}du$ and $\tilde{Z}_{\mathrm{out}}(x) = \int_x^{\infty} u^2 e^{-u^2/2}du$. Recalling the derivatives from A1, the equilibrium condition simplifies to:
+
+$$
+xe^{-x^2/2}\left(\frac{1}{\tilde{Z}_{\mathrm{out}}(x)} - \frac{1}{\tilde{Z}_{\mathrm{in}}(x)}\right) = \frac{8\pi\sigma\lambda_T^2}{k_BTN}
+$$
+
+Let $f(x) = xe^{-x^2/2}\left(\frac{1}{\tilde{Z}_{\mathrm{out}}(x)} - \frac{1}{\tilde{Z}_{\mathrm{in}}(x)}\right)$. We perform a first-order Taylor expansion around the unperturbed universal constant $\alpha$:
+
+$$
+f(\alpha + \Delta\alpha) \approx f(\alpha) + f'(\alpha)\Delta\alpha = \frac{8\pi\sigma\lambda_T^2}{k_BTN}
+$$
+
+Note that $f(\alpha) = 0$ by definition, so solving for $\Delta\alpha$ using $\tilde{Z}_{\mathrm{in}}'(\alpha) = -\tilde{Z}_{\mathrm{out}}'(\alpha) = \alpha^2 e^{-\alpha^2/2}$:
+
+$$
+\Delta R = \lambda\Delta\alpha = -\frac{\pi^2\sigma\lambda^3}{2Nk_BT\alpha^3\exp(-\alpha^2)}
+$$
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/problems.pdf#page=13)
+· официални решения: [solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2026/solutions.pdf#page=33)

@@ -5,15 +5,11 @@ title: 'Задача 21'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/USAPhO/2026/usapho-2026-fma-exam.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-27T05:06:32.585Z'
+verifiedAt: '2026-09-29T05:00:24.458Z'
 verifier: 'mechanical'
 ---
 
 *2026 $F = ma$ Exam · 1 т.*
-
-<Warning title="Бележка към темата">
-Транскрибирани са всички 25 въпроса и официалните решения на въпроси 1–20; решенията на въпроси 21–25 предстоят.
-</Warning>
 
 <details>
 <summary>Указания</summary>
@@ -55,13 +51,84 @@ What is the minimum number of jumps needed for the student to land off the platf
 
 (E) It is impossible to move outward by purely vertical jumps
 
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- C
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-Официалното решение е на страници, които предстои да бъдат транскрибирани.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+First determine the time of flight for one jump. From vertical kinematics, a jump that reaches a maximum height $h$ has a total time in the air
+
+$$
+\tau = 2\sqrt{\frac{2h}{g}}.
+$$
+
+Now analyze the horizontal motion in the inertial frame. At the instant of takeoff from radius $r$, the student has horizontal tangential speed
+
+$$
+v = \omega r,
+$$
+
+because they were co-rotating with the platform. While airborne, there is no horizontal force, so this tangential speed remains constant.
+
+Choose coordinates so that takeoff occurs from
+
+$$
+(x, y) = (r, 0)
+$$
+
+with velocity along the positive $y$-direction. After a time $\tau$,
+
+$$
+x = r, \qquad y = v\tau = \omega r\tau.
+$$
+
+The distance from the center when the student lands is therefore
+
+$$
+r' = \sqrt{r^2 + (\omega r\tau)^2} = r\sqrt{1 + \omega^2\tau^2}.
+$$
+
+When the student lands, friction brings them back into co-rotation with the platform at this new radius before the next jump. Thus, each jump multiplies the radius by a factor
+
+$$
+F = \sqrt{1 + \omega^2\tau^2}.
+$$
+
+After $N$ jumps, the radius is approximately
+
+$$
+r_N \approx r_0F^N.
+$$
+
+To reach the edge, require
+
+$$
+r_N \geq 2.0\ \mathrm{m}.
+$$
+
+This gives
+
+$$
+F^N \geq 2 \quad \Rightarrow \quad N > \frac{\ln 2}{\ln F} \approx 4.5.
+$$
+
+The smallest integer satisfying this condition is
+
+$$
+N = 5.
+$$
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [2026_FMA_exam.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/Fma/2026/2026_FMA_exam.pdf#page=22)
-· официални решения: [2026_FMA_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/Fma/2026/2026_FMA_solutions.pdf)
+· официални решения: [2026_FMA_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/Fma/2026/2026_FMA_solutions.pdf#page=23)

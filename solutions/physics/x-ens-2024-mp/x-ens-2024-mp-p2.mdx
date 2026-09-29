@@ -1,0 +1,199 @@
+---
+id: x-ens-2024-mp-p2
+source: 'X-ENS 2024, Приемен изпит, математика и физика'
+title: 'Задача 2. Du classique au quantique : le rayonnement du corps noir'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2024/x-ens-2024-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T05:44:17.867Z'
+verifier: 'mechanical'
+---
+
+*ECOLE POLYTECHNIQUE — ECOLES NORMALES SUPERIEURES — CONCOURS D’ADMISSION 2024 — FILIERE MP - Epreuve n° 5 — PHYSIQUE (XULSR) · 17 април 2024 г.*
+
+<details>
+<summary>Consignes</summary>
+
+MERCREDI 17 AVRIL 2024 — 08h00 - 12h00
+
+*Durée : 4 heures*
+
+*L’utilisation des calculatrices n’est pas autorisée pour cette épreuve*
+
+</details>
+
+<details>
+<summary>Différents aspects du champ électromagnétique : du classique au quantique</summary>
+
+Le champ électromagnétique est à l’origine de nombreux phénomènes physiques, de la structure du proton aux amas de galaxies, dont certains sont connus depuis l’Antiquité. Pourtant, il faut attendre le XIX$^{\text{ème}}$ siècle pour voir émerger les théories électrostatique et magnétostatique, grâce aux contributions de COULOMB, GAUSS, AMPÈRE, BIOT, *etc.* Suivent la compréhension des phénomènes non-statiques comme l’induction et la propagation des ondes électromagnétiques. Tous ces travaux forment la théorie classique de l’électromagnétisme, qui culmine en 1864 avec la formulation des équations de MAXWELL. Cependant, cette théorie échoue à prévoir certaines observations expérimentales comme le spectre du corps noir, l’effet photoélectrique ou encore l’effet COMPTON. Le début du XX$^{\text{ème}}$ siècle voit ces différents problèmes résolus grâce à Max PLANCK et sa théorie des quanta, ainsi qu’à Albert EINSTEIN et son interprétation en « grains de lumière » du champ électromagnétique, supposé continu jusqu’ici. Ces grains seront appelés plus tard « photons » par Gilbert LEWIS (1926), et sont à la base d’une nouvelle interprétation du champ électromagnétique : l’interprétation corpusculaire.
+
+Depuis maintenant plus d’un siècle, la correspondance entre les approches classique et quantique a été démontrée, et les notions de photon et d’onde électromagnétique sont aujourd’hui réunies au sein du concept de dualité onde-corpuscule. L’aspect ondulatoire est exploité dans d’innombrables applications notamment en télécommunications, et l’aspect corpusculaire continue de fasciner les physiciens, avec des prix Nobel récents liés au comportement purement quantique des photons (S. HAROCHE 2012, A. ASPECT 2022).
+
+Ce sujet propose l’étude de différents aspects - classique et quantique - du champ électromagnétique. La première partie dresse une analogie mécanique du champ classique, et établit l’existence d’une quantité de mouvement et d’un moment cinétique qui lui sont associés. Nous étudions dans un second temps le rayonnement du corps noir, et les étapes historiques qui ont conduit à introduire la notion de photon. Enfin, nous adoptons un point de vue purement corpusculaire et étudions la statistique d’émission des photons par différentes sources de lumière.
+
+- *Les trois parties constituant ce sujet sont indépendantes et peuvent être traitées séparément. Le sujet comporte 13 pages.*
+- *Les applications numériques seront effectuées avec la précision qu’un calcul à la main permet aisément, et (sauf mention contraire) sans excéder deux chiffres significatifs. Les ordres de grandeur seront donnés avec un seul chiffre significatif. Les données numériques ont été choisies pour faciliter les calculs.*
+- *Les références des questions abordées devront être indiquées de façon claire.*
+
+</details>
+
+<details>
+<summary>Notations, formulaire et données numériques</summary>
+
+**Constantes fondamentales et données numériques** : *les valeurs numériques sont données avec deux chiffres significatifs et sous forme approchées pour faciliter les applications numériques.*
+
+- Célérité de la lumière : $c \simeq 3{,}0 \times 10^{8}\ \mathrm{m.s^{-1}}$
+- Charge élémentaire : $e \simeq 1{,}6 \times 10^{-19}\ \mathrm{C}$
+- Constante de PLANCK : $h \simeq 6{,}6 \times 10^{-34}\ \mathrm{J.s}$
+- Constante de BOLTZMANN : $k_{\mathrm{B}} \simeq 1{,}4 \times 10^{-23}\ \mathrm{J.K^{-1}}$
+- $hc \simeq 1{,}2\ \mathrm{eV}.\mu\mathrm{m}$
+
+**Formulaire** :
+
+- Espérance $\mathbb{E}$, variance $V$ et écart-type $\Delta X$ d’une variable aléatoire $X$ dont les valeurs discrètes $\{X_n\}_{n\in\mathbb{N}}$ suivent une loi de probabilité $\mathcal{P}$ :
+
+$$
+\mathbb{E}(X) = \sum_{n=0}^{+\infty} X_n \mathcal{P}(X = X_n) \quad ; \quad V(X) = \mathbb{E}(X^2) - \mathbb{E}(X)^2 \quad ; \quad \Delta X = \sqrt{V(X)}\ .
+$$
+
+- Caractéristiques d’une loi binomiale de paramètres $N$ et $p$ :
+
+  Loi de probabilité : $\mathcal{P}(X = n) = \dbinom{N}{n} p^n (1-p)^{N-n}$
+
+  Espérance et variance : $\mathbb{E}(X) = Np \quad ; \quad V(X) = Np(1-p)$
+
+- Développement limité : $(1+x)^{\alpha} = 1 + \alpha x + o(x)$.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [II.A Densité de modes électromagnétiques dans une cavité](#ii-a)
+- [II.B Composition spectrale du rayonnement : approche de Rayleigh-Jeans](#ii-b)
+- [II.C Hypothèse des quanta et approche de Planck](#ii-c)
+
+</nav>
+
+Nous nous intéressons dans cette partie aux propriétés du champ électromagnétique confiné dans une enceinte cubique de côté $L$, assimilée à un corps noir. Lorsque cette enceinte est mise au contact d’un thermostat de température $T$, on constate qu’elle rayonne un champ électromagnétique dont l’énergie se répartit suivant différentes composantes fréquentielles, appelées « modes », définis par leurs fréquences et leurs polarisations. La loi de répartition de l’énergie influe sur le spectre d’émission du corps noir et le spectre observé expérimentalement ne peut se comprendre que dans le cadre d’un modèle de rayonnement quantifié.
+
+<ProblemSection id="ii-a">
+
+### II.A Densité de modes électromagnétiques dans une cavité
+
+Dans un premier temps, on considère un champ électromagnétique piégé entre deux parois planes et infinies, constituées d’un métal que l’on supposera parfait (conductivité $\gamma$ infinie) pour faciliter l’étude. Les deux parois sont positionnées aux abscisses $x = 0$ et $x = L$ et sont infinies selon les directions $(Oy)$ et $(Oz)$. Le champ piégé entre ces deux parois est harmonique (monochromatique) de pulsation $\omega$ fixée et de la forme : $\overrightarrow{E}(M,t) = E_0(x)\mathrm{e}^{\mathrm{i}\omega t}\vec{e}_y$, avec $\mathrm{i}^2 = -1$. L’espace situé entre les deux parois infinies est vide de charge et de courant.
+
+Les conditions de passage à une interface entre deux milieux 1 et 2 sont rappelées ci-dessous :
+
+$$
+\overrightarrow{E}_2 - \overrightarrow{E}_1 = \frac{\sigma}{\varepsilon_0}\overrightarrow{n}_{1\to 2}\ , \qquad (2)
+$$
+
+où $\overrightarrow{n}_{1\to 2}$ est la normale à l’interface entre les deux milieux et orientée du milieu 1 vers le milieu 2, $\sigma$ la densité surfacique de charge de l’interface et $\varepsilon_0$ la permittivité diélectrique du vide. Nous rappelons que le champ électrique dans un métal considéré comme parfait est nul.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '69.9%', '--fig-max': '448px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p2-fig1.png" alt="À gauche, une sphère dans l’espace (kx, ky, kz) avec le plan équatorial grisé, des nœuds marqués par des points sur les axes kx, ky et kz, et un vecteur k issu de l’origine avec ses projections en pointillés. À droite, la projection dans le plan (kx, ky) : un disque gris, un réseau de points de pas π/L (indiqué par une flèche double), un vecteur issu de l’origine vers un nœud entouré d’un petit carré grisé en pointillés." width="1399" height="626" loading="lazy" decoding="async" />
+<figcaption>FIGURE 2 – Représentation de $\overrightarrow{k}$ dans l’espace des vecteurs d’onde pour un triplet $(n_x, n_y, n_z) = (1, 2, 3)$. À droite, le carré grisé symbolise le volume occupé par le mode $(1, 2, 3)$, en projection dans le plan $(k_x, k_y)$. Le disque gris matérialise l’ensemble des modes dans le plan $(k_x, k_y)$ dont la norme du vecteur d’onde est inférieure à une valeur fixée $k$.</figcaption>
+</figure>
+
+**9.** Donner l’équation à laquelle obéit le champ électromagnétique entre les deux parois. En déduire une équation différentielle vérifiée par $E_0(x)$. On note $k = \dfrac{\omega}{c}$ la norme du vecteur d’onde.
+
+**10.** En précisant les conditions aux limites en $x = 0$ et $x = L$ sur $E_0$ et en expliquant leur origine, déterminer l’expression de $E_0(x)$. Montrer que les conditions aux limites conduisent à une quantification de la pulsation et déterminer l’expression de cette pulsation $\omega_n$, $n \in \mathbb{N}^*$.
+
+**11.** Pour un champ électrique dont l’expression serait $\overrightarrow{E}(M,t) = E_0(x)\mathrm{e}^{\mathrm{i}\omega t}\vec{e}_z$, montrer que la condition obtenue précédemment est la même. En déduire que pour une pulsation $\omega_n$ donnée respectant cette condition, il est possible d’avoir deux champs électriques solutions dont les polarisations sont rectilignes et perpendiculaires entre elles.
+
+Nous considérons maintenant l’enceinte dans sa totalité comme une cavité cubique constituée de parois métalliques parfaitement conductrices. La résolution est alors plus complexe que dans le cas unidimensionnel. Les solutions permises dans le cas à trois dimensions sont des modes électromagnétiques dont la pulsation $\omega_{n_x,n_y,n_z}$ est quantifiée par trois entiers naturels strictement positifs, $n_x$, $n_y$, $n_z$. Nous précisons que pour chaque pulsation $\omega_{n_x,n_y,n_z}$ du champ électrique solution du problème, il y a deux modes associés, correspondant aux deux polarisations rectilignes indépendantes. Les expressions de la pulsation et du vecteur d’onde pour ces deux polarisations sont
+
+$$
+\omega_{n_x,n_y,n_z} = \frac{\pi c}{L}\left(n_x^2 + n_y^2 + n_z^2\right)^{1/2} \qquad \text{et} \qquad \overrightarrow{k}_{n_x,n_y,n_z} = \frac{\pi}{L}\left(n_x\vec{e}_x + n_y\vec{e}_y + n_z\vec{e}_z\right)\ . \qquad (3)
+$$
+
+Sur la figure 2, on représente un vecteur d’onde donné dans l’espace cartésien des vecteurs d’onde $(k_x, k_y, k_z)$. Dans cet espace, les modes électromagnétiques occupent les nœuds d’un réseau cubique de pas $\dfrac{\pi}{L}$. Le volume occupé par un nœud est $\left(\dfrac{\pi}{L}\right)^3$, chaque nœud représentant deux modes de polarisations indépendantes. La contrainte donnée par la relation de dispersion dans le vide à l’intérieur de la cavité $\overrightarrow{k}^2 = \dfrac{\omega^2}{c^2}$ est représentée par une sphère de rayon $\parallel \overrightarrow{k} \parallel$ (à gauche figure 2) et par un cercle dans le plan $(k_x, k_y)$ (à droite figure 2). On rappelle que $n_x$, $n_y$, $n_z$ appartiennent à $\mathbb{N}^*$.
+
+**12.** Exprimer le nombre de modes $\mathcal{N}(\omega)$ pour lesquels la pulsation est inférieure à $\omega$ fixée.
+
+**13.** Déterminer l’expression du nombre de modes $\mathcal{D}(\omega)$ par unité de pulsation $\omega$. En déduire l’expression du nombre de modes $\mathcal{D}(\nu)$ par unité de fréquence $\nu$
+
+$$
+\mathcal{D}(\nu) = \frac{8\pi V}{c^3}\nu^2\ , \qquad (4)
+$$
+
+où $V$ est le volume de la cavité.
+
+En résumé, le raisonnement précédent revient à considérer chaque mode propre électromagnétique pouvant exister dans la cavité comme un oscillateur harmonique unidimensionnel, de pulsation $\omega_{n_x,n_y,n_z}$ fixée par trois entiers naturels strictement positifs, et de polarisation rectiligne fixée. À une pulsation donnée correspondent deux états de polarisation rectiligne indépendants pour le champ électromagnétique. Dans la suite, nous adoptons deux approches pour déterminer l’expression de la densité spectrale d’énergie électromagnétique moyenne contenue dans la cavité, notée $\overline{\mathcal{U}}(\nu)$ et homogène à une énergie par unité de fréquence.
+
+</ProblemSection>
+
+<ProblemSection id="ii-b">
+
+### II.B Composition spectrale du rayonnement : approche de Rayleigh-Jeans
+
+En 1900, Lord RAYLEIGH utilise une approche de mécanique statistique pour aboutir à une expression de $\overline{\mathcal{U}}(\nu)$ qui explique le spectre du corps noir aux basses fréquences. Corrigée plus tard par James JEANS, cette loi se révèlera erronée et sera finalement remplacée par la loi issue des travaux de Max PLANCK. Elle contient tout de même un point de raisonnement important dont s’inspirera ce dernier, et permet de rendre compte d’une partie des observations expérimentales.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '61.8%', '--fig-max': '396px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2024-mp/p2-fig2.png" alt="Graphique log-log : en ordonnée I_ν (W m⁻² sr⁻¹ Hz⁻¹) de 10⁻²² à 10⁻¹⁷, en abscisse inférieure Frequency (GHz) de 1 à 1000, en abscisse supérieure Wavelength (cm) 10, 1.0, 0.1. Courbe « 2.73 K blackbody » croissante jusqu’à un maximum vers 160 GHz puis décroissant rapidement, avec des points de mesure. Légende : + FIRAS COBE satellite, * DMR COBE satellite, × UBC sounding rocket, ◇ LBL-Italy White Mt. & South Pole, □ Princeton ground & balloon, △ Cyanogen optical." width="1236" height="906" loading="lazy" decoding="async" />
+<figcaption>FIGURE 3 – Composition spectrale du fond diffus cosmologique. La quantité $I_\nu$ en ordonnée est proportionnelle à la densité spectrale $\overline{\mathcal{U}}(\nu)$ du rayonnement céleste. Les mesures de $I_\nu$ sont représentées par des points, en fonction de la fréquence (exprimée en Hz, axe inférieur) et de la longueur d’onde (exprimée en cm, axe supérieur) du rayonnement. Le trait plein correspond au rayonnement observé pour un corps noir idéal de température $T = 2{,}73$ K. Source : Smoot *et al.*, Cosmic background radiation, *Eur. Phys. J. C* **15** (2000).</figcaption>
+</figure>
+
+**14.** En utilisant le théorème d’équipartition de l’énergie appliqué au champ électromagnétique contenu dans la cavité en contact avec un thermostat de température fixée $T$, déterminer l’expression de la densité spectrale d’énergie électromagnétique moyenne $\overline{\mathcal{U}}(\nu)$ dans la cavité,
+
+$$
+\overline{\mathcal{U}}(\nu) = A\nu^2 k_{\mathrm{B}}T\ , \qquad (5)
+$$
+
+où $A$ est un préfacteur, dépendant de $V$ et de $c$ notamment, à déterminer.
+
+La figure 3 présente des données expérimentales sur la composition spectrale du « fond diffus cosmologique ». Découvert en 1965, ce rayonnement en provenance de l’espace interstellaire est très proche de celui du corps noir idéal, et présente un maximum d’émission dans le domaine micro-onde.
+
+**15.** Comparer la densité spectrale $\overline{\mathcal{U}}(\nu)$ prévue par le modèle de RAYLEIGH-JEANS aux données de la figure 3. Expliquer pourquoi l’on parlait de « catastrophe ultraviolette » jusqu’au début du XX$^{\text{ème}}$ siècle. Quelle hypothèse réalisée dans le raisonnement précédent pourrait être erronée ?
+
+</ProblemSection>
+
+<ProblemSection id="ii-c">
+
+### II.C Hypothèse des quanta et approche de Planck
+
+Peu de temps après les travaux de Lord RAYLEIGH, Max PLANCK suppose que les échanges d’énergie entre un mode électromagnétique de fréquence $\nu$ fixée et la matière constituant les parois de la cavité sont réalisés de manière quantifiée, et ne se produisent que par quantités discrètes d’énergie. Par la suite, ces quanta d’énergie seront appelés « photons », ayant chacun pour énergie $\mathcal{E} = h\nu$, où $h$ est la constante de PLANCK. Dans ce modèle, un mode électromagnétique de fréquence $\nu$ contenant $n$ photons a donc pour énergie $\mathcal{E}_n(\nu) = nh\nu$. On parle alors d’état à $n$ photons pour le mode électromagnétique de fréquence $\nu$.
+
+Au contact d’un thermostat de température $T$, les états du système $\{$cavité + champ$\}$ ne sont pas équiprobables : leur probabilité d’occupation dépend de l’énergie $\mathcal{E}_n(\nu) = nh\nu$ suivant la statistique de MAXWELL-BOLTZMANN.
+
+**16.** Exprimer la probabilité $\mathcal{P}_n(\nu)$ qu’un mode électromagnétique de fréquence $\nu$ contienne $n$ photons. On notera $\mathcal{Z}(\beta,\nu)$ la fonction de normalisation de la probabilité $\mathcal{P}_n(\nu)$ qui assure que $\displaystyle\sum_{n=0}^{+\infty}\mathcal{P}_n(\nu) = 1$, avec $\beta = \dfrac{1}{k_{\mathrm{B}}T}$. Cette fonction porte le nom de fonction de partition.
+
+**17.** En utilisant la condition de normalisation ci-dessus, déterminer l’expression de $\mathcal{Z}(\beta,\nu)$. En déduire que
+
+$$
+\mathcal{P}_n(\nu) = \mathrm{e}^{-\beta nh\nu}\left(1 - \mathrm{e}^{-\beta h\nu}\right)\ . \qquad (6)
+$$
+
+**18.** Établir l’expression du nombre moyen de photons, noté $\overline{n}(\nu)$, contenus dans le mode électromagnétique de fréquence $\nu$. On pourra poser $x = \mathrm{e}^{-\beta h\nu}$ afin de faciliter les calculs.
+
+**19.** Montrer que la probabilité $\mathcal{P}_n$ peut se réécrire sous la forme
+
+$$
+\mathcal{P}_n = \frac{1}{\overline{n}+1}\left(\frac{\overline{n}}{\overline{n}+1}\right)^n\ . \qquad (7)
+$$
+
+Cette distribution de probabilité, appelée distribution de BOSE-EINSTEIN, est caractéristique des modes électromagnétiques du rayonnement de corps noir (aussi appelé *rayonnement thermique*).
+
+**20.** Calculer l’énergie moyenne $\overline{\mathcal{E}}(\nu)$ du mode électromagnétique de fréquence $\nu$. Montrer que la densité spectrale d’énergie moyenne associée $\overline{\mathcal{U}}(\nu)$ s’écrit
+
+$$
+\overline{\mathcal{U}}(\nu) = \frac{8\pi\nu^2 V}{c^3}\frac{h\nu}{\mathrm{e}^{\beta h\nu} - 1}\ . \qquad (8)
+$$
+
+**21.** En comparant deux énergies caractéristiques, déterminer les expressions asymptotiques de la densité spectrale d’énergie électromagnétique moyenne d’un mode dans la cavité dans les régimes basse et haute fréquences. Tracer sur un même graphique les allures obtenues pour la courbe représentative de $\overline{\mathcal{U}}(\nu)$ en fonction de $\nu$ dans l’approche de RAYLEIGH-JEANS et dans celle de PLANCK. Expliquer en quoi les travaux de ce dernier ont permis de résoudre la « catastrophe ultraviolette » à laquelle conduit l’approche de RAYLEIGH-JEANS, et évoquée à la question **15**.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+L’archive ne contient pas de corrigé officiel pour cette épreuve.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2024.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2024.pdf#page=4)
