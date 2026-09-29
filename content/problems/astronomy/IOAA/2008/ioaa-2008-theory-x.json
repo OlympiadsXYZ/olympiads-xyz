@@ -32,7 +32,7 @@
    ]
   },
   "status": "review",
-  "caveat": "The archive holds no official solutions for this paper.",
+  "caveat": "The official key places the final short question 10 in long_sol.doc as question 1 and the final long question 1 in short_sol.doc as question 10. Solutions are matched by their statements. For short question 5 the key uses dark-energy density 6.7 × 10⁻³⁰ g/cm³, whereas the final question specifies 7.1 × 10⁻³⁰ g/cm³; the supplied solution is retained without recalculation. Printed numerical, unit and notation discrepancies in the original keys are preserved.",
   "documentNotes": [
    {
     "title": "Please read this carefully:",
@@ -70,21 +70,64 @@
     "position": "before-problem"
    }
   ],
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/IOAA/2008/Theoretical/short_sol.doc",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+   ]
+  },
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2008/Theoretical/long_sol.doc",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "supplement-2": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2008/constants.doc",
+    "pages": [
+     1,
+     2
+    ]
+   }
+  },
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "opus-5-5",
-   "promptVersion": "v1",
-   "requestId": null,
-   "at": "2026-09-26",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/problem_structure_astra",
+   "at": "2026-09-29",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "b13435434b1931c53f603574145db4be5e4a56694d1ae795c2fa381fda86a767"
+    "problems": "b13435434b1931c53f603574145db4be5e4a56694d1ae795c2fa381fda86a767",
+    "solutions": "39940401e69d49b9d8a22d1e042f75f9dfbb7e1114ae36f2aa3bc37952464fa9",
+    "supplement-1": "c257e17ea13e94a65becfd4787b0ff4ed02b5c261deb033158e770fc6be5e251",
+    "supplement-2": "80cf5f4422ebb2a5baeaa3c82825cfd0fa2095f64a3ade380a115bebc1ca3acd"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-09-26",
-   "notes": "The paper prints fifteen short questions (Theoretical Part 1, numbered 1-15, 20 points each) and three long questions (Theoretical Part 2, printed as 1-3, 100 points each); the catalogue lists 15 problems. Part 2 questions 1-3 are problems 16-18 here, with the printed part and number kept in the title. Printed totals: 300 + 300 = 600 points; time 5 hours. The archive holds no solutions document, so every solution is marked incomplete and no answers are given. Kept as printed: the Helium mass in the constants table is printed as 1.646723 × 10^-27 kg (physically about 6.6465 × 10^-27 kg); the Sun effective temperature is printed as '5 800 oK'; the constants table on page 3 ends with an empty row (not transcribed); the conversion table has no header row, so its first row stands as the Markdown header. Agreement errors kept as printed (D-P28): Part 2 Q1 'the orbits are circular and has an inclination'. Other printed wording kept: 'primarily in term of equations', 'the ratio between the density of Dark Matter to the density of Dark Energy', 'with aperture and focal length are 600 mm and 10 780 mm', 'its luminosity B-band'. In Part 2 Q3 the label b. is printed on a note rather than a question; it is kept as printed. The mass symbol in Q4 and Q15 is printed as a script M (rendered as \\mathfrak{M}); the Moon symbol in the constants table is written as ☽. The first line of Part 2 Q1 has a wide printed indent after '1.'."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Astra single-pass: all33 original prepared pages personally read and checkpoints recorded. Source ownership matched by content: short_sol question10 is final long1/p16, long_sol question1 is final short10/p10. All18 original IDs and full independent problems retained. Full supplied keys and marking percentages restored. Constants DOC matches question tables, including printed helium mass1.646723e-27kg. Printed discrepancies preserved: Q1 alpha<< incomplete notation; Q5 density6.7vs7.1e-30; Q6 Doppler denominator; Q10 differing separation values; Q14 positive8 exponent in substitution and graph labels disagree with table; Q15 pc/cm/kg units and arithmetic; Q17 BCsign and4.75 solarbolometric value versus reference4.72; Q18 key introduction and timeline3/2 versus calculation2/3 and finalquestion2/3, original keya,b,c correspond finala,c,d (finalb is explanatory note). No inferred corrections or separate model checker."
   }
  },
  "problems": [
@@ -104,13 +147,36 @@
    "difficulty": "Easy",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "From the Astronomical and Physical constant:\n\nMean distance Earth to Moon: $r=384399$ km\n\nDiameter of the Earth: $D=12742$ km\n\n$$r=\\frac D\\alpha,\\quad \\alpha\\text{ in radian }(\\alpha\\ll)$$\n\n**(25%)**\n\nIn arcminutes,\n\n$$\\alpha=3438'\\times\\frac{12742}{384399}=113.96'=7.60\\text{ minutes}$$\n\n**(50%)**\n\nThus, the difference in apparent right ascension is 7.60 minutes.\n\n**Figure: (25%)**",
+    "figures": [
+     {
+      "id": "p1-sol-fig1",
+      "alt": "Earth and Moon parallax sightlines against the background stars.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p1-sol-fig1.png",
+      "width": 569,
+      "height": 840,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        126.81,
+        231.52,
+        263.16,
+        432.77
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 1
     }
    ]
   },
@@ -130,13 +196,21 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "Pixel size (″) = 206265 × pixel size (μm)/(1000 × focal length (mm))\n\n$$=206265\\times9/(1000\\times1000)=1.86''\\qquad(30\\%)$$\n\nSolar diameter $=32\\times60''/1.86''/\\text{pixel}=1034$ pixels $=9306\\ \\mu\\mathrm m$\n\nSolar radius, $R=4653\\ \\mu\\mathrm m$ **(25%)**\n\nIf $A_s$ is the measured area, then\n\n$$A_s=5\\times4\\times81\\ \\mu\\mathrm m^2=1620\\ \\mu\\mathrm m^2\\qquad(15\\%)$$\n\nThe corrected area due to the projection effect is\n\n$$A_m=A_s\\cdot10^6/(2\\pi R^2\\cos B\\cos L)$$\n\n$$=1620\\times10^6/(2\\times3.14\\times4653^2\\times\\cos8^\\circ\\times\\cos40^\\circ)$$\n\n$$=15.7\\text{ msh}\\qquad(30\\%)$$",
+    "figures": []
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
     }
    ]
   },
@@ -156,13 +230,40 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "The position of the Sun on June 19, 2008: $\\delta\\approx+23^\\circ.5$, $\\alpha\\approx6^{\\mathrm h}=90^\\circ$\n\nAt full moon phase, the declination of the Moon is between $\\delta\\approx-18^\\circ.5$ and $\\delta\\approx-28^\\circ.5$ depending on the position of node. **(20%)**\n\nSpherical triangle: $ZPM$, $Z=$ zenith, $P=$ south celestial pole and $M=$ moon.\n\n$ZP=m=(90^\\circ-6^\\circ49')=83^\\circ11'$; $ZM=p=90^\\circ$ and,\n\n$$PM=z=90^\\circ-23^\\circ30'=66^\\circ30'$$\n\nThe greatest possible value of $PM=z=90^\\circ-18^\\circ30'=71^\\circ30'$ and the smallest possible value of $PM=z=90^\\circ-28^\\circ30'=61^\\circ30'$\n\n$$\\cos p=\\cos m\\cos z+\\sin m\\sin z\\cos\\angle P\\qquad(20\\%)$$\n\nThe maximum value of $PM$\n\n$$\\cos90^\\circ=\\cos83^\\circ11'\\cos71^\\circ30'+\\sin83^\\circ11'\\sin71^\\circ30'\\cos\\angle P$$\n\n$$\\cos\\angle P=-\\cot83^\\circ11'\\cot71^\\circ30'=-0.1195\\times0.3346=-0.0401$$\n\n$$\\angle P=92^\\circ17'53''=6^{\\mathrm h}9^{\\mathrm m}11^{\\mathrm s}$$\n\n$$2\\angle P=12^{\\mathrm h}18^{\\mathrm m}22^{\\mathrm s}\\qquad(30\\%)$$\n\nThe minimum value of $PM$\n\n$$\\cos90^\\circ=\\cos83^\\circ11'\\cos61^\\circ30'+\\sin83^\\circ11'\\sin61^\\circ30'\\cos\\angle P$$\n\n$$\\cos\\angle P=-\\cot83^\\circ11'\\cot61^\\circ30'=-0.1195\\times0.5430=-0.0649$$\n\n$$\\angle P=93^\\circ43'16''=6^{\\mathrm h}14^{\\mathrm m}53^{\\mathrm s}$$\n\n$$2\\angle P=12^{\\mathrm h}29^{\\mathrm m}46^{\\mathrm s}\\qquad(30\\%)$$",
+    "figures": [
+     {
+      "id": "p3-sol-fig1",
+      "alt": "Celestial sphere with zenith Z, pole P, Moon M and celestial equator.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p3-sol-fig1.png",
+      "width": 988,
+      "height": 857,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        188.73,
+        472.36,
+        425.7,
+        677.79
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
     }
    ]
   },
@@ -182,12 +283,20 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "The mass of three helium nuclei $=3\\times4.002603$ amu $=12.007809$ amu **(20%)**\n\nThe mass converted to energy is the difference between the sum of the masses of three helium nuclei and the mass of the resulting carbon nucleus:\n\n$$12.007809\\text{ amu}-12.000000\\text{ amu}=7.81\\times10^{-3}\\text{ amu}.\\qquad(15\\%)$$\n\nThis represents a fractional loss of mass of $\\frac{7.81\\times10^{-3}}{12.007809}=6.5\\times10^{-4}$ of the original mass. **(15%)**\n\nThe stellar mass $m=20\\times(1.99\\times10^{33})=3.98\\times10^{34}$ g\n\nThus $6.5\\times10^{-4}$ of 20% of the star's mass will be converted into energy during triple-α process, or\n\n$$E=mc^2=0.2(3.98\\times10^{34})(6.5\\times10^{-4})(3\\times10^{10})^2=4.66\\times10^{51}\\text{ erg}\\qquad(25\\%)$$\n\nThe helium-burning lifetime is\n\n$$t=\\frac E{0.3L}=\\frac{4.66\\times10^{51}}{0.3(100)(3.96\\times10^{33})}=3.92\\times10^{16}\\text{ s}=1.24\\times10^9\\text{ years}\\qquad(25\\%)$$",
+    "figures": []
    },
    "sourceSpans": [
     {
      "document": "problems",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
      "page": 4
     }
    ]
@@ -207,8 +316,10 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
+    "statement": "Universe change in size and redshift relation:\n\n$$1+z=\\frac{\\mathrm{size}_{\\rm now}}{\\mathrm{size}_{\\rm at\\ z}}\\Longrightarrow\\mathrm{size}_{\\rm at\\ z}=\\frac1{1+z}\\mathrm{size}_{\\rm now}=\\frac1{1+1100}\\mathrm{size}_{\\rm now}=0.00091\\mathrm{size}_{\\rm now}$$\n\nso that the size of the Universe at the time of CMB emission was 0.00091 of its $\\mathrm{size}_{\\rm now}$. **(50%)**\n\nIf $A=\\frac{V_{\\rm CMB\\ at\\ emission\\ time}}{V_{\\rm Now}}=(0.00091)^3=7.5\\times10^{-10}$ then the density of the Dark Matter at CMB emission time\n\n$$\\rho_{DM\\ \\rm at\\ CMB}=\\frac{\\rho_{DM}}A=\\frac{2.4\\times10^{-30}}{7.5\\times10^{-10}}=3.2\\times10^{-21}\\text{ g/cm}^3.\\qquad(25\\%)$$\n\nThe ratio between the density of Dark Matter to the density of Dark Energy at the time CMB was emitted\n\n$$=\\frac{\\rho_{DM\\ \\rm at\\ CMB}}{\\rho_\\Lambda}=\\frac{3.2\\times10^{-21}}{6.7\\times10^{-30}}=4.8\\times10^8\\qquad(25\\%)$$",
+    "figures": [],
     "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "incompleteReason": "The supplied official key uses dark-energy density 6.7 × 10⁻³⁰ g/cm³; the final question specifies 7.1 × 10⁻³⁰ g/cm³. The key is preserved, but no supplied numerical solution for the exact final data was found."
    },
    "sourceSpans": [
     {
@@ -218,6 +329,10 @@
     {
      "document": "problems",
      "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 4
     }
    ]
   },
@@ -237,12 +352,20 @@
    "difficulty": "Easy",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "Rest frequency $\\nu_o=1420.41$ MHz\n\nDetected frequency $\\nu=1421.23$ MHz\n\n$$\\Delta\\nu=\\nu_o-\\nu=1420.41-1421.23=-0.82\\text{ MHz}\\qquad(25\\%)$$\n\nUsing Doppler’s shift, the speed of the cloud is:\n\n$$v=\\frac{\\Delta\\nu}{\\nu_o}c=\\frac{-0.82}{1421.23}(3\\times10^{10})=-1.73\\times10^7\\text{ cm/s}\\qquad(15\\%)$$\n\nSince $v$ is negative, then the cloud is moving toward us. **(10%)**\n\n(Since $\\nu>\\nu_o$, then the cloud is moving toward us)\n\nIf $\\mathcal M$ is mass of black hole, $v$ is the speed of the cloud and $R$ is the orbital radius of cloud, then\n\n$$\\mathcal M=\\frac{Rv^2}G\\qquad(25\\%)$$\n\n$R=0.2\\text{ pc}=0.2\\times(3.086\\times10^{18}\\text{ cm})=6.17\\times10^{17}\\text{ cm}$, and from the Table of Astronomical and Physical constants: $G=6.67\\times10^{-8}\\text{ cm}^3/\\text{s}^2\\text{ g}$\n\nThen,\n\n$$\\mathcal M=\\frac{Rv^2}G=\\frac{(6.17\\times10^{17})(-1.73\\times10^7)^2}{6.67\\times10^{-8}}=2.78\\times10^{39}\\text{ gr}=1.40\\times10^6\\mathcal M_\\odot\\qquad(25\\%)$$",
+    "figures": []
    },
    "sourceSpans": [
     {
      "document": "problems",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
      "page": 5
     }
    ]
@@ -263,13 +386,21 @@
    "difficulty": "Easy",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "$L=$ Luminosity of the giant stars in the giant branch\n\n$L_{MS}=$ Luminosity of the main sequence star\n\n$F=$ Flux of the giant stars in the giant branch\n\n$F_{MS}=$ Flux of the main sequence star\n\n$T=$ Temperature of the giant star\n\n$T_{MS}=$ Temperature of the main sequence star\n\n$R=$ Radius of the giant star\n\n$R_{MS}=$ Radius of the main sequence star\n\nUse the radius-luminosity-temperature relation\n\n$$\\frac L{L_{MS}}=\\frac{R^2T^4}{R_{MS}^2T_{MS}^4}=\\left(\\frac R{R_{MS}}\\right)^2\\left(\\frac T{T_{MS}}\\right)^4=(100)^2\\left(\\frac13\\right)^4=123.5\\qquad(50\\%)$$\n\n$$F=\\frac L{4\\pi d^2},\\qquad\\frac F{F_{MS}}=\\frac L{L_{MS}}\\left(\\frac{d_{MS}}d\\right)^2$$\n\nthat is, the star becomes 123.5 times brighter when it becomes a giant star. To be just barely visible using the same telescope, we push the star farther so that it becomes 123.5 times dimmer (flux is inversely proportional to a square of the distance).\n\n$$\\frac1{123.5}=\\left[\\frac{1/d}{1/d_{MS}}\\right]^2\\Longrightarrow\\frac d{d_{MS}}=11.11\\Longrightarrow d=11.11d_{MS}$$\n\n$$=11.11(20)\\text{ pc}=222.20\\text{ pc}\\qquad(50\\%)$$",
+    "figures": []
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
     }
    ]
   },
@@ -289,13 +420,44 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "**Figure: (10%)**\n\nD in the figure is the center of the Moon. The Moon’s gravitational acceleration at A and at center of the Earth C are\n\n$$\\vec g_A=-\\frac{G\\mathcal M}{r_A^2}\\hat r_A$$\n\n$$\\vec g_C=-\\frac{G\\mathcal M}{r_C^2}\\hat r_C=-\\frac{G\\mathcal M}{r^2}\\hat r_C$$\n\nTheir directions are toward the Moon. $\\mathcal M$ is the mass of the Moon.\n\n$r_A=AD$ and $r_C=CD=r$. $\\hat r_A$, $\\hat r_C$ are unit vectors from the center of the Moon toward A and C, respectively **(20%)**\n\nThe Moon’s gravitational acceleration at A according to observers is\n\n$$\\vec g'_A=\\vec g_A-\\vec g_C=-\\left(\\frac{G\\mathcal M}{r_A^2}\\hat r_A-\\frac{G\\mathcal M}{r^2}\\hat r_C\\right)=-\\left(\\frac{G\\mathcal M}{r_A^3}\\vec r_A-\\frac{G\\mathcal M}{r^3}\\vec r_C\\right)$$\n\nSince $\\vec r_A=\\vec r_C+\\vec R$, $\\vec R$ is the position of A with respect to the Earth’s center of mass\n\n$$\\vec g'_A=\\vec g_A-\\vec g_C=-\\frac{G\\mathcal M}{r_A^3}\\vec R-\\left(\\frac{G\\mathcal M}{r_A^3}-\\frac{G\\mathcal M}{r^3}\\right)\\vec r_C\\qquad(20\\%)$$\n\nThe first term is in radial direction. The tangential or horizontal component of the second term is equal to the horizontal component of the acceleration of sea water at A:\n\n$$g'_A\\text{ (horizontal)}=\\left(\\frac{G\\mathcal M}{r^3}-\\frac{G\\mathcal M}{r_A^3}\\right)r\\sin\\varphi$$\n\n$$=G\\mathcal M\\left(\\frac1{r^3}-\\frac1{(r^2+R^2-2Rr\\cos\\varphi)^{3/2}}\\right)r\\sin\\varphi\\qquad(50\\%)$$\n\n$$=\\frac{G\\mathcal M}{r^2}\\left(1-\\frac1{[1+(R/r)^2-2(R/r)\\cos\\varphi]^{3/2}}\\right)\\sin\\varphi$$",
+    "figures": [
+     {
+      "id": "p8-sol-fig1",
+      "alt": "Earth and Moon tidal acceleration vectors at A and C; radius R and angle phi.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p8-sol-fig1.png",
+      "width": 1475,
+      "height": 730,
+      "source": {
+       "page": 7,
+       "pdfRect": [
+        130.99,
+        69.89,
+        484.65,
+        245.02
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
     }
    ]
   },
@@ -315,13 +477,40 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "Power of radiation received by the Earth from the Sun is\n\n$$P_m=\\sigma T_{\\rm eff\\odot}^4\\,4\\pi R_\\odot^2\\frac{\\pi r_\\oplus^2}{4\\pi x^2}t_1\\qquad(40\\%)$$\n\nPower radiated by the Earth and reach the outer space\n\n$$P_{out}=\\sigma T_\\oplus^4\\,4\\pi r_\\oplus^2t_2\\qquad(30\\%)$$\n\nIn equilibrium $P_{in}=P_{out}$ **(5%)**\n\n$$\\sigma T_{\\rm eff\\odot}^4\\frac{\\pi r_\\oplus^2}{4\\pi x^2}4\\pi R_\\odot^2t_1=\\sigma T_\\oplus^4\\,4\\pi r_\\oplus^2t_2$$\n\n$$T_\\oplus^4=\\frac{T_{\\rm eff\\odot}^4t_1R_\\odot^2}{4t_2x^2}$$\n\n$$T_\\oplus=\\sqrt[4]{\\frac{T_{\\rm eff\\odot}^4t_1R_\\odot^2}{4t_2x^2}}=T_{\\rm eff\\odot}\\sqrt[4]{\\frac{t_1}{4t_2}\\left(\\frac{R_\\odot}x\\right)^2}\\qquad(25\\%)$$",
+    "figures": [
+     {
+      "id": "p9-sol-fig1",
+      "alt": "Radiation from Sun to Earth and atmosphere over distance x.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p9-sol-fig1.png",
+      "width": 1601,
+      "height": 636,
+      "source": {
+       "page": 8,
+       "pdfRect": [
+        116.1,
+        345.2,
+        500.13,
+        497.61
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
     }
    ]
   },
@@ -352,13 +541,40 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "a. Chip size: $(9\\times765)\\ \\mu\\mathrm m\\times(9\\times510)\\ \\mu\\mathrm m=6885\\ \\mu\\mathrm m\\times4590\\ \\mu\\mathrm m\\approx6.9\\text{ mm}\\times4.6\\text{ mm}$ **(10%)**\n\nFor Zeiss telescope: FL = 10780 mm\n\nPixel size (arc sec) = 206265 × pixel size (μm)/(1000 × focal length (mm))″ **(10%)**\n\n$$=206265\\times9/(1000\\times10780)=0.1722''\\qquad(10\\%)$$\n\nFOV CCD chip $=(765\\times510)\\times0.1722=131.7330\\times87.8220''=2.1956\\times1.4637'$ **(10%)**\n\nFor $\\mu$ Sco 1: $\\alpha_1=20^{\\mathrm h}17^{\\mathrm m}38^{\\mathrm s}.90=20.2941^{\\mathrm h}=304.4121^\\circ$\n\n$$\\delta_1=-12^\\circ30'30''=-12.5083^\\circ$$\n\nFor $\\mu$ Sco 2: $\\alpha_2=20^{\\mathrm h}18^{\\mathrm m}03^{\\mathrm s}.30=20.3009^{\\mathrm h}=304.5138^\\circ$\n\n$$\\delta_2=-12^\\circ32'41''=-12.5447^\\circ$$\n\nLet the angular separation between the stars be $\\gamma$\n\nUse spherical trigonometry:\n\n$$\\cos\\gamma=\\cos(90^\\circ-\\delta_1)\\cos(90^\\circ-\\delta_2)+\\sin(90^\\circ-\\delta_1)\\sin(90^\\circ-\\delta_2)\\cos(\\alpha_2-\\alpha_1)\\qquad(10\\%)$$\n\n$$\\cos\\gamma=\\cos(90^\\circ-(-12.5083))\\cos(90^\\circ-(-12.5447))+\\sin(90^\\circ-(-12.5083))\\sin(90^\\circ-(-12.5447))\\cos(304.5138^\\circ-304.4121^\\circ)$$\n\n$$\\cos\\gamma=\\cos(102.5083^\\circ)\\cos(102.5447^\\circ)+\\sin(102.5083^\\circ)\\sin(102.5447^\\circ)\\cos(0.1017^\\circ)=0.999998298\\qquad(10\\%)$$\n\n$$\\gamma=0.1057^\\circ=6.3424'$$\n\nNO, because $\\gamma>\\sqrt{2.1956^2+1.4637^2}$ (diagonal of FOV Chip). **(10%)**\n\nb. Position angle ($S_1$):\n\n$$\\frac{\\sin(\\alpha_2-\\alpha_1)}{\\sin\\gamma}=\\frac{\\sin S_1}{\\sin(90^\\circ-\\delta_2)}$$\n\n$$\\sin S_1=\\frac{\\sin(0^\\circ6'6'')\\sin(102^\\circ32'41'')}{\\sin(6'.1020)}=0.9388$$\n\n$$S_1=69.8535^\\circ\\text{ or }110.1466^\\circ\\qquad(20\\%)$$\n\nFrom the figure above, we found that the correct position angle is $110.15^\\circ$ **(10%)**\n\n($\\pm6^\\circ$ is full mark)",
+    "figures": [
+     {
+      "id": "p10-sol-fig1",
+      "alt": "Spherical triangle P S1 S2 and coordinate differences.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p10-sol-fig1.png",
+      "width": 467,
+      "height": 439,
+      "source": {
+       "page": 2,
+       "pdfRect": [
+        131.58,
+        182.7,
+        243.49,
+        287.95
+       ],
+       "dpi": 300,
+       "document": "supplement-1"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 6
+    },
+    {
+     "document": "supplement-1",
+     "page": 1
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
     }
    ]
   },
@@ -396,13 +612,40 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "$D=10$ cm, f-ratio 15 or $f=F/D=15$, then $F=150$ cm\n\n($D=$ diameter of the telescope and $F$ is the focal length of the telescope).\n\n$S=$ scale of the image on the focal plane of the telescope $=(206265/F)$ (″/mm)\n\n$$=(206265/1500)=137.51''/\\text{mm}\\qquad(25\\%)$$\n\nAngular diameter of the Sun $=137.51''/\\text{mm}\\times13.817\\text{ mm}$\n\n$$=1899.97567''=0^\\circ.527771019=0^\\circ31'39''.98$$\n\nDistance of the Sun $=1392000/((0^\\circ.527771019/180^\\circ)\\times\\pi)$\n\n$$=151118045.9\\text{ km}\\qquad(25\\%)$$\n\nAngular diameter of the Moon $=137.51''/\\text{mm}\\times13.235\\text{ mm}$\n\n$$=1819.94485''=0^\\circ.505540236=0^\\circ30'19''.94$$\n\nDistance of the Moon $=3476/(0^\\circ.505540236/180^\\circ\\times\\pi)=393955.0515$ km. **(25%)**\n\nThe percentage of the solar disk covered by the Moon is $(13.235\\text{ mm}/13.817\\text{ mm})^2\\times100\\%=91.75\\%$. **(25%)**",
+    "figures": [
+     {
+      "id": "p11-sol-fig1",
+      "alt": "Annular solar eclipse photograph repeated in the official solution.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p11-sol-fig1.png",
+      "width": 1172,
+      "height": 959,
+      "source": {
+       "page": 11,
+       "pdfRect": [
+        178.6,
+        90.09,
+        459.63,
+        319.95
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    },
+    {
+     "document": "solutions",
+     "page": 11
     }
    ]
   },
@@ -422,13 +665,21 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "The relation between flux $F$ and luminosity $L$: $F=\\frac L{4\\pi d^2}$\n\nFor Vega: $F_V=\\frac{L_V}{4\\pi d_V^2}$\n\nFor Supernova: $F_{SN}=\\frac{L_{SN}}{4\\pi d_{SN}^2}$\n\n$$F_{SN}=1.6\\times10^{-7}F_V\\Longrightarrow\\frac{L_{SN}}{4\\pi d_{SN}^2}=(1.6\\times10^{-7})\\frac{L_V}{4\\pi d_V^2}$$\n\n$$L_{SN}d_V^2=(1.6\\times10^{-7})L_Vd_{SN}^2\\qquad(25\\%)$$\n\n$$d_{SN}=d_V\\left[\\frac1{1.6\\times10^{-7}}\\frac{L_{SN}}{L_V}\\right]^{1/2}=7.76\\left[\\frac1{1.6\\times10^{-7}}\\frac{5.8\\times10^9}{130}\\right]^{1/2}=129581812.59\\text{ pc}$$\n\n$$=1.3\\times10^8\\text{ pc}\\qquad(35\\%)$$\n\nIf $t_H$ is the Hubble time, then the relation between redshift, distance, and Hubble time is:\n\n$$t_H=\\frac{d_{SN}}{cz}=\\left[\\frac{1.3\\times10^8\\text{ pc}}{(1\\text{ lyr/yr})(0.03)}\\right]\\left[\\frac{3.26\\text{ lyr}}{1\\text{ pc}}\\right]=1.41\\times10^{10}\\text{ years}\\qquad(40\\%)$$",
+    "figures": []
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 11
+    },
+    {
+     "document": "solutions",
+     "page": 12
     }
    ]
   },
@@ -447,13 +698,77 @@
    "difficulty": "Easy",
    "importance": 1,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "",
+    "figures": [],
+    "sections": [
+     {
+      "id": "method-1",
+      "title": "I. Algebraic Solution",
+      "statement": "Let $y=mx$ be the line of sight of the telescope. **(20%)**\n\nThen, the intersection of the line of sight and the circle is\n\n$$x^2+(mx)^2-10x-8(mx)+40=0$$\n\n$$(1+m^2)x^2-(10+8m)x+40=0\\qquad(20\\%)$$\n\nThe equation will have solution if its discriminant\n\n$$D=b^2-4ac\\geq0,$$\n\n$$=(-(10+8m))^2-4(1+m^2)40\\geq0.$$\n\nThe solution of the inequality is\n\n$$\\frac56-\\frac{\\sqrt{10}}{12}\\leq m\\leq\\frac56+\\frac{\\sqrt{10}}{12}\\qquad(20\\%)$$\n\nTherefore the exact value of the maximum value of $\\tan\\varphi$ is $\\frac56+\\frac{\\sqrt{10}}{12}$ **(20%)**\n\nand the minimum value is $\\frac56-\\frac{\\sqrt{10}}{12}$ **(20%)**",
+      "figures": [
+       {
+        "id": "p13-sol-fig1",
+        "alt": "Algebraic construction: sightline y=mx intersects the circle.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p13-sol-fig1.png",
+        "width": 651,
+        "height": 643,
+        "source": {
+         "page": 13,
+         "pdfRect": [
+          120.87,
+          90.94,
+          276.84,
+          245.02
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "method-2",
+      "title": "II. Geometric Solution",
+      "statement": "Let us write the equation of the circle in the following form **(20%)**\n\n$$(x-5)^2+(y-4)^2=-40+25+16=1$$\n\nThe centre of the circle is (5,4) and the radius is 1\n\nFirst we obtain $\\tan\\alpha=\\frac45$ and $\\tan\\beta=\\frac1{\\sqrt{40}}$ **(20%)**\n\nThe minimum value of tan of elevation angle is **(30%)**\n\n$$\\tan(\\alpha-\\beta)=\\frac{\\tan\\alpha-\\tan\\beta}{1+\\tan\\alpha\\tan\\beta}=\\frac{\\frac45-\\frac1{\\sqrt{40}}}{1+\\frac4{5\\sqrt{40}}}=\\frac56-\\frac{\\sqrt{10}}{12}$$\n\nThe maximum value of tan of elevation angle is\n\n$$\\tan(\\alpha+\\beta)=\\frac{\\tan\\alpha+\\tan\\beta}{1-\\tan\\alpha\\tan\\beta}=\\frac{\\frac45+\\frac1{\\sqrt{40}}}{1-\\frac4{5\\sqrt{40}}}=\\frac56+\\frac{\\sqrt{10}}{12}\\qquad(30\\%)$$",
+      "figures": [
+       {
+        "id": "p13-sol-fig2",
+        "alt": "Geometric construction with tangent sightlines, centre (5,4), alpha and beta.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p13-sol-fig2-v2.png",
+        "width": 685,
+        "height": 583,
+        "source": {
+         "page": 13,
+         "pdfRect": [
+          120.29,
+          565.83,
+          284.58,
+          705.6
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 12
+    },
+    {
+     "document": "solutions",
+     "page": 13
+    },
+    {
+     "document": "solutions",
+     "page": 14
     }
    ]
   },
@@ -472,13 +787,40 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "The mechanical energy is conserved and has the form **(10%)**\n\n$$E=\\frac{p^2}{2m}-\\frac{G\\mathcal Mm}{r}=\\frac{p^2}{2m}-G\\mathcal Mmu$$\n\nInsert the values for $p$ and $u$ for points A and B and solve for $m$ and $E$.\n\n**(20%)**\n\n$$E_A=\\frac{p_A^2}{2m}-G\\mathcal Mmu_A,\\qquad E_B=\\frac{p_B^2}{2m}-G\\mathcal Mmu_B$$\n\n$$\\frac{p_A^2}{2m}-G\\mathcal Mmu_A=\\frac{p_B^2}{2m}-G\\mathcal Mmu_B$$\n\n$$m=\\sqrt{\\frac{p_A^2-p_B^2}{2G\\mathcal M(u_A-u_B)}}$$\n\n$$m=\\sqrt{\\frac{(5.2\\times10^7)^2-(1.94\\times10^9)^2}{2(6.6726\\times10^{-11})(5.9736\\times10^{24})(5.15\\times10^8-1.94\\times10^{-6})}}=50\\text{ tons}.\\qquad(20\\%)$$\n\nThus,\n\n$$E=E_A=\\frac{p_A^2}{2m}-G\\mathcal Mmu_A$$\n\n$$E=\\frac{(5.20\\times10^7)^2}{2(50000)}-(6.6726\\times10^{-11})(5.9736\\times10^{24})(50000)(5.15\\times10^{-8})$$\n\n$$=-1.0\\times10^{12}\\text{ J}\\qquad(20\\%)$$\n\nTo sketch the curve, we use the equation\n\n$$E=\\frac{p^2}{2m}-G\\mathcal Mmu\\Longrightarrow u=\\frac1{2G\\mathcal Mm^2}p^2-\\frac E{G\\mathcal Mm}\\Longrightarrow\\text{Parabolic curve}\\qquad(10\\%)$$\n\n**Figure: (20%)**",
+    "figures": [
+     {
+      "id": "p14-sol-fig1",
+      "alt": "Printed parabolic u versus p curve with original point labels A(0.052,1.94) and B(5.15,194.17).",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p14-sol-fig1.png",
+      "width": 685,
+      "height": 583,
+      "source": {
+       "page": 15,
+       "pdfRect": [
+        121.46,
+        454.68,
+        285.8,
+        594.45
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 14
+    },
+    {
+     "document": "solutions",
+     "page": 15
     }
    ]
   },
@@ -498,13 +840,21 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "Absolute B magnitude of NGC 2639:\n\n$$M_B=-9.95\\log v_{max}+3.15=-9.95\\log(324)+3.15=-21.83\\qquad(20\\%)$$\n\n$$\\log R_{25}=-0.249M_B-4.00=1.4357\\Longrightarrow R_{25}=27.2678\\text{ pc}=8.41\\times10^{19}\\text{ cm}\\qquad(20\\%)$$\n\nMass estimation of NGC 2639:\n\n$$\\mathcal M=\\frac{v^2R_{25}}G=\\frac{(324\\times10^5)^2(8.41\\times10^{19})}{6.6726\\times10^{-8}}=1.32\\times10^{42}\\text{ kg}=6.62\\times10^{11}\\mathcal M_\\odot\\qquad(20\\%)$$\n\nThe B magnitude of the Sun:\n\n$$M_{B\\odot}=M_{V\\odot}+(m_{B\\odot}-m_{V\\odot})=4.82+0.64=5.46\\qquad(20\\%)$$\n\nmeaning the Sun is fainter in the blue band relative to the A0 standard star.\n\nLuminosity of NGC 2639 in solar luminosity ($L_\\odot$):\n\n$$L=10^{0.4(M_{B\\odot}-M_B)}=10^{0.4(5.46+21.83)}L_\\odot=8.24\\times10^{10}L_\\odot\\qquad(20\\%)$$",
+    "figures": []
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 15
+    },
+    {
+     "document": "solutions",
+     "page": 16
     }
    ]
   },
@@ -541,13 +891,58 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "Binary Periode: $P=30$ days $=0.0821$ years\n\nTime of eclipse: $t_e=8$ hours $=0.0009$ years\n\nTime of total eclipse: $t_t=1$ hour 18 minute $=0.0001$ years\n\nRadial velocity of primary star: $V_{r1}=30$ km/s $=6.3285$ AU/year\n\nThe velocity of secondary star: $V_{r2}=40$ km/s $=8.4380$ AU/year\n\nFor circular orbit $V_r=\\frac{2\\pi a}P\\longrightarrow a=\\frac{PV_r}{2\\pi}$ ($a=$ radius orbit)\n\nFor primary star: **(10%)**\n\n$$a_1=\\frac{PV_{r1}}{2\\pi}=\\frac{(0.0821)(6.3285)}{2\\pi}=0.0827\\text{ AU}=1.24\\times10^7\\text{ km}$$\n\nFor secondary star: **(10%)**\n\n$$a_2=\\frac{PV_{r2}}{2\\pi}=\\frac{(0.0821)(8.4380)}{2\\pi}=0.1103\\text{ AU}=1.65\\times10^7\\text{ km}$$\n\n$$a=a_1+a_2=0.0827+0.1103=0.1930\\text{ AU}=2.89\\times10^7\\text{ km}$$\n\nThe radius of primary star can be determined from the equation: **(10%)**\n\n$$\\frac{t_e+t_t}P=\\frac{4R_1}{2\\pi a}\\quad\\text{or}\\quad R_1=\\frac{2\\pi a}{4P}(t_e+t_t)=\\frac{2\\pi(0.1930)}{4(0.0821)}(0.0009+0.0001)$$\n\n$$=0.0039\\text{ AU}=5.86\\times10^5\\text{ km}=0.84R_\\odot\\qquad(20\\%)$$\n\nThe radius of secondary star can be determined from the equation: **(10%)**\n\n$$\\frac{t_e-t_t}P=\\frac{4R_2}{2\\pi a}\\quad\\text{or}\\quad R_2=\\frac{2\\pi a}{4P}(t_e-t_t)$$\n\n$$=\\frac{2\\pi(0.1930)}{4(0.0821)}(0.0009-0.0001)$$\n\n$$=0.0028\\text{ AU}=4.22\\times10^5\\text{ km}=0.61R_\\odot\\qquad(15\\%)$$\n\nFrom the Kepler’s third law: $\\frac{a^3\\sin^3i}{P^2}=(\\mathcal M_1+\\mathcal M_2)$\n\nand $\\frac{\\mathcal M_1}{\\mathcal M_2}=\\frac{a_2}{a_1}$\n\nSince $i=90^\\circ$, $\\sin i=\\sin90^\\circ=1$, and then\n\n$$\\mathcal M_1=\\frac{a^3}{P^2(1+a_1/a_2)}=\\frac{(0.1930)^3}{(0.0821)^2(1+0.0827/0.1103)}=0.61\\mathcal M_\\odot\\qquad(15\\%)$$\n\n$$\\mathcal M_2=\\frac{a^3}{P^2(1+a_2/a_1)}=\\frac{(0.1930)^3}{(0.0821)^2(1+0.1103/0.0827)}=0.46\\mathcal M_\\odot\\qquad(10\\%)$$",
+    "figures": [
+     {
+      "id": "p16-sol-fig1",
+      "alt": "Original repeated eclipsing-binary light curve with contact points A–H.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p16-sol-fig1.png",
+      "width": 1492,
+      "height": 850,
+      "source": {
+       "page": 9,
+       "pdfRect": [
+        138.15,
+        348.57,
+        495.95,
+        552.33
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p16-sol-fig2",
+      "alt": "Eclipse duration diagram with contact points A B C D and te, tt.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p16-sol-fig2-v2.png",
+      "width": 527,
+      "height": 397,
+      "source": {
+       "page": 9,
+       "pdfRect": [
+        409.64,
+        602.01,
+        535.86,
+        697.14
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 10
     }
    ]
   },
@@ -584,8 +979,28 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "$U=8.15$, $B=8.50$, and $V=8.14$.\n\n$(U-B)_o=-0.45$, $R=2.3R_\\odot=1.60\\times10^{11}$ cm,\n\n$M_{bol}=-0.25$, $BC=-0.15$",
+    "figures": [],
+    "sections": [
+     {
+      "id": "part-1",
+      "title": "a)",
+      "statement": "$U-B=8.15-8.50=-0.35$\n\nThe color excess for U-B:\n\n$$E(U-B)=(U-B)-(U-B)_o=-0.35-(-0.45)=0.10$$\n\nThe relation between color excess of U-B and of B-V:\n\n$$E(U-B)=0.72E(B-V)\\Longrightarrow E(B-V)=0.10/0.72=0.14\\qquad(15\\%)$$\n\nLet $A_v$ be the interstellar extinction and $R=3.2$, then\n\n$$A_v=3.2E(B-V)=3.2(0.14)=0.45$$\n\n$$V-V_o=A_v\\Longrightarrow V_o=V-A_v=8.14-0.45=7.69$$\n\n$$E(B-V)=(B-V)-(B-V)_o\\Longrightarrow(B-V)_o=(B-V)-E(B-V)$$\n\n$$=(8.50-8.14)-0.14=0.22\\qquad(15\\%)$$\n\n$$(B-V)_o=B_o-V_o=0{,}22\\Longrightarrow B_o=0.22+V_o=0.22+7.69=7.91\\qquad(10\\%)$$\n\n$$(U-B)_o=U_o-B_o=-0{,}45\\Longrightarrow U_o=B_o-0.45=7.91-0.45=7.46\\qquad(10\\%)$$",
+      "figures": []
+     },
+     {
+      "id": "part-2",
+      "title": "b)",
+      "statement": "Luminosity - absolute magnitude relation:\n\n$$M_{bol}-M_{bol\\odot}=-2.5\\log L/L_\\odot\\Longrightarrow L/L_\\odot=10^{-(M_{bol}-M_{bol\\odot})/2.5}$$\n\n$$=10^{-(-0.25-4.75)/2.5}=100\\qquad(10\\%)$$\n\n$$L=100L_\\odot=3.90\\times10^{35}\\text{ erg/det}$$\n\n$$L=4\\pi\\sigma R^2T_{ef}^4$$\n\n$$T_{ef}=\\left(\\frac L{4\\pi\\sigma R^2}\\right)^{1/4}=\\left(\\frac{3.90\\times10^{35}}{4\\pi(5.67\\times10^{-5})(1.60\\times10^{11})^2}\\right)^{1/4}=12092\\text{ K}\\qquad(15\\%)$$",
+      "figures": []
+     },
+     {
+      "id": "part-3",
+      "title": "c)",
+      "statement": "$$M_v-M_{bol}=BC\\Longrightarrow M_v=M_{bol}+BC=-0.25-0.15=-0.40\\qquad(10\\%)$$\n\n$$m_v-M_v=-5+5\\log d+A_v\\Longrightarrow5\\log d=m_v-M_v+5-A_v$$\n\n$$=8.14+0.40+5-0.45=13.09$$\n\n$$d=10^{13.09/5}=10^{2.62}=414.9\\text{ pc}\\qquad(15\\%)$$",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
@@ -595,6 +1010,14 @@
     {
      "document": "problems",
      "page": 10
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
+    },
+    {
+     "document": "supplement-1",
+     "page": 3
     }
    ]
   },
@@ -634,13 +1057,83 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "incomplete": true,
-    "incompleteReason": "The archive holds no official solutions for this paper."
+    "statement": "",
+    "figures": [],
+    "sections": [
+     {
+      "id": "part-1",
+      "title": "a)",
+      "statement": "$$X_o=d\\theta_o$$\n\nwhere $d=c(t_o-t_r)\\approx ct_o$, $t_o\\gg t_r$.\n\nScale factor $S$ is defined as such $S_o=S(t=t_o)=1$ and $S_t=S(t<t_o)<1$.\n\nMaximum distance between objects at the time of recombination\n\n$$X_r=S_rX_o=S_r\\theta_ot_oc$$\n\nOn the other hand $X_r=ct_r$, such that\n\n$$ct_r=S_r\\theta_ot_oc\\quad\\text{or}\\quad\\theta_o=\\frac{t_r}{S_rt_o}\\qquad(20\\%)$$\n\nFrom $T\\propto\\frac1S$ then $\\frac{S_o}{S_r}=\\frac{T_r}{T_o}$ and $\\frac1{S_r}=\\frac{T_r}{T_o}$.\n\nSo,\n\n$$\\theta_o=\\frac{t_rT_r}{t_oT_o}=\\frac{(3\\times10^5\\text{ yr})(3000\\text{ K})}{(1.5\\times10^{10}\\text{ yr})(3\\text{ K})}=2\\times10^{-2}\\text{ rad}=1.14^\\circ\\qquad(20\\%)$$",
+      "figures": [
+       {
+        "id": "p18-sol-fig1",
+        "alt": "Cosmological horizon geometry with distance d, angle theta0 and present separation X0.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p18-sol-fig1.png",
+        "width": 1268,
+        "height": 584,
+        "source": {
+         "page": 4,
+         "pdfRect": [
+          147.65,
+          341.01,
+          451.89,
+          480.78
+         ],
+         "dpi": 300,
+         "document": "supplement-1"
+        }
+       }
+      ]
+     },
+     {
+      "id": "part-2",
+      "title": "b)",
+      "statement": "NO, because $\\alpha>\\theta_o$ **(20%)**",
+      "figures": []
+     },
+     {
+      "id": "part-3",
+      "title": "c)",
+      "statement": "From the time at recombination ($t_r$) to the current time ($t_o$) $S\\propto t^{2/3}$, we derive\n\n$$\\frac{S_o}{S_r}=\\left(\\frac{t_o}{t_r}\\right)^{2/3}=\\left(\\frac{1.5\\times10^{10}\\text{ years}}{3\\times10^5\\text{ years}}\\right)^{2/3}=1.36\\times10^3$$\n\nThe size of our universe at $t_r$ is\n\n$$\\frac{1.5\\times10^{10}\\text{ light years}}{1.36\\times10^3}=1.11\\times10^7\\text{ light years}\\qquad(20\\%)$$\n\nWhen the inflation stopped, the Universe was radiation dominated ($t_r=3\\times10^5$ years to $t_i=10^{-32}$ s), we get\n\n$$\\frac{S_r}{S_i}=\\left(\\frac{t_r}{t_i}\\right)^{1/2}=\\left(\\frac{9.46\\times10^{12}\\text{ s}}{10^{-32}\\text{ s}}\\right)^{1/2}=3.08\\times10^{22}.$$\n\nThe size of universe at the end of the inflation period was\n\n$$\\frac{1.1\\times10^7\\text{ light years}}{3.08\\times10^{22}}=3.57\\times10^{-16}\\text{ light years}\\approx3\\text{ m}\\qquad(20\\%)$$",
+      "figures": [
+       {
+        "id": "p18-sol-fig2",
+        "alt": "Timeline from inflation to recombination and present; original matter-era exponent 3/2 retained.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2008-theory-x/p18-sol-fig2-v2.png",
+        "width": 1502,
+        "height": 415,
+        "source": {
+         "page": 5,
+         "pdfRect": [
+          145.89,
+          119.57,
+          506.07,
+          218.93
+         ],
+         "dpi": 300,
+         "document": "supplement-1"
+        }
+       }
+      ]
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 10
+    },
+    {
+     "document": "supplement-1",
+     "page": 3
+    },
+    {
+     "document": "supplement-1",
+     "page": 4
+    },
+    {
+     "document": "supplement-1",
+     "page": 5
     }
    ]
   }

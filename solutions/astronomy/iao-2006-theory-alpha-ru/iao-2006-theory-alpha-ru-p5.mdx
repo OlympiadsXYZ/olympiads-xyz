@@ -1,0 +1,111 @@
+---
+id: iao-2006-theory-alpha-ru-p5
+source: 'IAO 2006, Теория, Група α'
+title: 'Задача 5. Спутник Луны.'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IAO/2006/iao-2006-theory-alpha-ru.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T20:03:07.136Z'
+verifier: 'single-pass'
+---
+
+*Задачи теоретического тура · 10 ноември 2006 г.*
+
+<details>
+<summary>Общее замечание</summary>
+
+Не исключено, что не во всех задачах вопросы поставлены корректно. Некоторые вопросы (возможно, главный вопрос задачи, возможно – подвопрос) могут не иметь смысла. В этом случае следует написать в ответе (по-русски или по-английски): **«ситуация невозможна - situation is impossible»**. Естественно, ответ должен быть подкреплён вычислениями или логическими рассуждениями.
+
+</details>
+
+<details>
+<summary>Source annotations</summary>
+
+Printed source inconsistencies are retained: the English telescope key repeats Δx_m on the right of its displacement identity; the galaxy key uses both1.89×10⁻³ and1.86×10⁻³rad; the alpha eccentricity ratio has a sign inconsistency before the later positive0.07 result. The English polar key prints71°06′N/72°48′S; the Russian copy has handwritten70°06′N/71°48′S. No scientific correction has been silently substituted. Russian telescope statement has a handwritten correction from refractor to reflector; Russian displacement identity is similarly corrected by hand. Russian galaxy key refers to English, which is retained in its original language. Top of the first equation on Russian key3 is slightly clipped; complete matching English equation confirms its symbols.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Таблица данных о планетах](#planetary-data)
+
+</nav>
+
+На рисунке представлены два фотоснимка Луны, полученные одной и той же камерой, установленной на спутнике Луны. Первый снимок был сделан, когда спутник находился вблизи периселения, второй – вблизи апоселения. Оцените из этих данных величину эксцентриситета орбиты спутника. Оцените минимальный период времени между моментами, когда эти снимки могли быть сделаны.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.9%', '--fig-max': '358px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2006-theory-alpha-ru/p5-moon-pair.png" alt="p5 moon pair" width="1120" height="611" loading="lazy" decoding="async" />
+</figure>
+
+<ProblemSection id="planetary-data">
+
+### Таблица данных о планетах
+
+При решении каждой задачи можно использовать данные прилагаемой «Таблицы данных о планетах».
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '1588px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2006-theory-alpha-ru/planetary-data.jpg" alt="planetary data" width="2481" height="3508" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Полушарие Луны, запечатлённое на фотографиях, примерно то же, что мы видим с Земли. Учитывая, что Луна повёрнута к Земле одной стороной, можно сделать вывод, что фотографирование производилось из точек пространства, расположенных примерно между Землёй и Луной.
+
+Диаметр изображений Луны ($d$) на каждом снимке пропорционален её угловому размеру, видимому со спутника: $d\sim\alpha=D/L$, где $D$ – диаметр Луны и $L$ – расстояние от неё до спутника. $D$ постоянно, а $L$ зависит от положения спутника:
+
+$L=L_0(1+e)$ для апоселения;
+
+$L=L_0(1-e)$ для периселения.
+
+Поэтому, если известны диаметры изображений Луны для периселения ($d_P$) и апоселения ($d_A$) орбиты спутника, можно написать:
+
+$$
+d_P/d_A=\alpha_P/\alpha_A=[D/(1-e)]/[D/(1+e)]=(1+e)/(1-e).
+$$
+
+И: $e=(1-d_P/d_A)/(1+d_P/d_A)$.
+
+Представленные два фотоснимка были сделаны в моменты около положений периселения и апоселения (а не точно в эти моменты), поэтому $d_1\approx d_P$ и $d_2\approx d_A$; и вместо “=” в предыдущей формуле должны написать “$\approx$”:
+
+$$
+e\approx(d_1-d_2)/(d_1+d_2).
+$$
+
+Измеряя размеры изображений можно найти $d_1\approx46{,}5$ мм, $d_2\approx40{,}5$ мм.
+
+$$
+e\approx(d_1-d_2)/(d_1+d_2)\approx0{,}07.
+$$
+
+Принимая во внимание, что орбита спутника более-менее постоянна в пространстве, потребуется около полугода для изменения ситуации «полная Луна для спутника в периселении» на «полная Луна для спутника в апоселении» (Солнце относительно Луны должно быть с противоположной стороны).
+
+<ProblemSection id="solution-jury-note">
+
+### Примечание для жюри
+
+Примечание для жюри, задачи4 и5. Из-за разницы в принтерах масштабы рисунков были разными у разных экземплярах условий. Поэтому измеренные длины могут быть не теми, как написано здесь в решениях. Однако, их отношения, необходимые для получения результатов, должны быть теми же.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theo1.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theo1.jpg)
+· официални решения: [theosol1.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theosol1.jpg)
+· допълнителни данни: [theo2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theo2.jpg)
+· допълнителни данни: [theodata1.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theodata1.pdf)
+· допълнителни данни: [theodata2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theodata2.jpg)
+· допълнителни данни: [constants.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%94%D0%B0%D0%BD%D0%BD%D0%B8/constants.jpg)
+· допълнителни данни: [theosol2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theosol2.jpg)
+· допълнителни данни: [theosol3.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theosol3.jpg)
+· допълнителни данни: [theosol2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theosol2.jpg)

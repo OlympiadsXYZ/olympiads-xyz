@@ -50,21 +50,79 @@
     "position": "after-problem"
    }
   ],
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/IOAA/2015/Short Problem Solution-Marking Scheme 30.07.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+   ]
+  },
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2015/Theoretical/Short/Short_Problem_Solution.docx",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   }
+  },
+  "caveat": "Официалното решение на задача 12 е за кинетична енергия 1 GeV, докато българското условие задава пълна енергия 1 GeV. Решението е запазено с това изрично несъответствие.",
   "transcription": {
    "method": "vision-pages",
-   "provider": "openai",
-   "model": "gpt-5.6-luna",
-   "promptVersion": "complete-paper-reader-v3",
-   "promptSha256": "78f2d9f6ec0bc48353c2b19ce418724ad976a3801e97fc186f4bdf442c8c653e",
-   "requestId": "whole-luna-7c1120613a901feb3e1b8f2579de87e582dfdf52",
-   "at": "2026-09-14",
+   "provider": "agent",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/problem_structure_astra",
+   "at": "2026-09-29",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "de3977c33446692e3f25a3879fdb9f2ccaa3dfb683b535cb1f4ea183adf5a3fe"
+    "problems": "de3977c33446692e3f25a3879fdb9f2ccaa3dfb683b535cb1f4ea183adf5a3fe",
+    "solutions": "5f452e16cad9c1f3cbb384744d84820363bdf349aa94ee665e1c4b71af849325",
+    "supplement-1": "4b420aa3efdd9233758f8944936f29b57ff4ce38a66782885d26e4bc97f73d8b"
    },
-   "verifiedBy": "openai:gpt-5.6-terra (independent checker, prompt final-candidate-api-experiment-v4; adjudicated by deterministic:complete-paper-reader-v3)",
-   "verifiedAt": "2026-09-14"
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Astra single-pass source recovery. All 4 Bulgarian question pages, all 21 older DOCX key pages and all 22 revised 30.07 PDF key pages personally read. Existing English transcription was a drafting aid, compared directly against supplied sources; no second model checker. Revised PDF is primary: recovers Q2, final-data Q10, both corrected Io methods Q13 and missing Q15 equations. Bulgarian wording/IDs remain; solutions remain English. Older DOCX retained as comparison source only; unrelated superseded proton-fusion task13 was not attached to Bulgarian Io13. Source discrepancies retained: Q2 reciprocal labels and intermediate ratios; Q3 0.995 and 86701.8; Q5 missing0.5 on right side; Q7 gravitational constant value/units; Q8 flux arithmetic; Q10 printed 2/5 m_H^2, Boltzmann exponent and frequency exponent; Q12 total versus kinetic energy mismatch; Q13 initial force arguments retain R_Io despite subsequent R_Io/2 and 3R_Io/8; Q15 positive arcsine value, longitude282°58′48, numerical polynomial and alternative results as printed."
   }
  },
  "problems": [
@@ -76,15 +134,35 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1 Determine planet periods",
+      "statement": "**[50]**\n\nSynodic period of planet 1 and 2 (assume $P_1 < P_2$) is $\\frac{1}{P_S} = \\frac{1}{P_1} - \\frac{1}{P_2} \\;\\rightarrow\\; P_S = \\frac{P_1P_2}{P_2 - P_1}$\n\nResonant orbit happens if\n\n$$P_S = mP_1 \\;\\rightarrow\\; \\frac{P_1P_2}{P_2 - P_1} = mP_1 \\;\\rightarrow\\; m = \\frac{P_2}{P_2 - P_1} > 1,\\ \\mathrm{integer}$$\n\nUsing the data of the Gliesean system we have\n\n| Gliese System | Mass (kg) | Semi Major Axis (m) | Period (Earth, days) $P = 2\\pi\\sqrt{\\frac{a^3}{GM_G}}$ |\n|---|---|---|---|\n| Gliese 876 star | $6.64359\\times10^{29}$ | | |\n| Gliese 876 b | $4.31938\\times10^{27}$ | $3.1161\\times10^{10}$ | 60.07568 |\n| Gliese 876 c | $1.35564\\times10^{27}$ | $1.9388\\times10^{10}$ | 29.48304 |\n| Gliese 876 d | $4.079\\times10^{25}$ | $3.1116\\times10^{9}$ | 1.8956 |\n| Gliese 876 e | $8.7194\\times10^{25}$ | $5.0011\\times10^{10}$ | 122.1432 |",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2 Calculate resonant orbit for each planet",
+      "statement": "From the results above we see that\n\n- Gliese 876 c and Gliese 876 b have resonant orbit\n\n$$m = \\frac{P_b}{P_b - P_c} = 1.96 \\approx 2$$\n\n**[25]**\n\n- Gliese 876 b and Gliese 876 e have resonant orbit\n\n$$m = \\frac{P_e}{P_e - P_b} = 1.9679 \\approx 2$$\n\n**[25]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
     }
    ],
    "topics": [
@@ -131,15 +209,32 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
-    "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "statement": "Answer and Marking Scheme:",
+    "sections": [
+     {
+      "id": "first-version",
+      "title": "First Version",
+      "statement": "**1** Kepler third Law for satellite and Moon\n\n$$\\frac{P_S^2}{a_S^3}=\\frac{P_S^2}{(15.3R_P)^3}=\\frac{4\\pi^2}{GM_P};$$\n$$\\frac{P_M^2}{a_M^3}=\\frac{P_M^2}{(60.3R_E)^3}=\\frac{4\\pi^2}{GM_E};$$\n\n**[30]**\n\n**2** Express mass in term of mass density:\n\n$$\\frac{P_S^2}{(15.3R_P)^3}=\\frac{4\\pi^2}{GM_P}=\\frac{4\\pi^2}{G\\rho_P\\frac43\\pi R_P^3}$$\n$$\\frac{P_M^2}{(60.3R_E)^3}=\\frac{4\\pi^2}{GM_E}=\\frac{4\\pi^2}{G\\rho_E\\frac43\\pi R_E^3}$$\n\n**[30]**\n\n**3** Evaluate ratio of mass-density:\n\n$$\\frac{\\rho_E}{\\rho_P}=\\frac{60.3^3\\times P_S^2}{15.3^3\\times P_M^2}$$\n\n**[30]**\n\n$$\\frac{\\rho_E}{\\rho_P}=0.238\\approx0.24$$\n\n**[10]**"
+     },
+     {
+      "id": "second-version",
+      "title": "Second Alternate Version",
+      "statement": "- The period of the Satellite: $P_S=7\\ days,3\\ hours,43\\ minutes=0.0196\\ years$,\n- Mean orbital radius of the Satellite: $a_S=15.3R_P$; $R_P$: radius of the Planet.\n- The period of the Moon: $P_M=27\\ days,7\\ hours,43\\ minutes=0.0749\\ years$,\n- Mean orbital radius of the Moon: $a_M=60.3R_E$; $R_E$: radius of the Earth.\n- Mass of the Sun ($M$)\n- Kepler’s Third Law: $G(M+m)=4\\pi^2\\frac{a^3}{T^2}\\rightarrow$\n- Mass of the Planet: $m_P$\n- Radius of the Planet: $R_P$\n- Semi major axis of the Planet = Mean orbital radius of the Planet: $a_P$\n- Semi major axis of the Satellite = Mean orbital radius of the Satellite: $a_S$\n- Semi major axis of the Moon = Mean orbital radius of the Moon: $a_M$\n- Mass of the Earth: $m_E$\n- Radius of the Earth: $R_E$\n- Semi major axis of the Earth = Mean orbital radius of the Earth: $a_E$\n\nPlanet – Satellite:\n\n$$G(m_P+m_S)=4\\pi^2\\frac{a_S^3}{P_S^2},m_P\\gg m_S\\rightarrow G(m_P)=4\\pi^2\\frac{a_S^3}{P_S^2}\\qquad(1)$$\n\n**(5)**\n\nThe Earth–the Moon:\n\n$$G(m_E+m_M)=4\\pi^2\\frac{a_M^3}{P_M^2},m_E\\gg m_M\\rightarrow G(m_E)=4\\pi^2\\frac{a_M^3}{P_M^2}\\qquad(2)$$\n\n**(5)**\n\nPlanet–Sun:\n\n$$G(M+m_P)=4\\pi^2\\frac{a_P^3}{P_P^2},M\\gg m_P\\rightarrow G(M)=4\\pi^2\\frac{a_P^3}{P_P^2}\\qquad(3)$$\n\n**(5)**\n\nEarth–Sun:\n\n$$G(M+m_E)=4\\pi^2\\frac{a_E^3}{P_E^2},M\\gg m_E\\rightarrow G(M)=4\\pi^2\\frac{a_E^3}{P_E^2}\\qquad(4)$$\n\n**(5)**\n\nFrom equation (1) and (3):\n\n$$\\frac{m_P}{M}=\\frac{4\\pi^2\\frac{a_S^3}{P_S^2}}{4\\pi^2\\frac{a_P^3}{P_P^2}}=\\frac{(a_S)^3}{(a_P)^3}\\frac{(P_P)^2}{(P_S)^2}=\\frac{(15.3R_P)^3}{(a_P)^3}\\frac{(P_P)^2}{(P_S)^2}=\\frac{(15.3R_P)^3}{(a_P)^3}\\frac{(P_P)^2}{(0.0196)^2}$$\n\n**(20)**\n\nFrom equation (2) and (4):\n\n$$\\frac{m_E}{M}=\\frac{4\\pi^2\\frac{a_M^3}{P_M^2}}{4\\pi^2\\frac{a_E^3}{P_E^2}}=\\frac{(a_M)^3}{(a_E)^3}\\frac{(P_E)^2}{(P_M)^2}=\\frac{(60.3R_E)^3}{(a_E)^3}\\frac{(P_E)^2}{(P_M)^2}=\\frac{(60.3R_E)^3}{(a_E)^3}\\frac{(P_E)^2}{(0.0749)^2}=\\frac{(60.3R_E)^3}{(1)^3}\\frac{(1)^2}{(0.0749)^2}$$\n\n**(20)**\n\n$$\\rightarrow\\quad\\frac{m_E}{m_P}=\\frac{\\frac{(15.3R_P)^3}{(a_P)^3}\\frac{(P_P)^2}{(0.0196)^2}}{\\frac{(60.3R_E)^3}{(1)^3}\\frac{(1)^2}{(0.0749)^2}}=\\frac{(15.3R_P)^3/(0.0196)^2}{(60.3R_E)^3/(0.0749)^2}$$\n\n**(20)**\n\n$$\\rightarrow\\quad\\frac{\\rho_P}{\\rho_E}=\\frac{m_P/Vol_P}{m_E/Vol_E}=\\frac{m_P/\\frac43\\pi(R_P)^3}{m_E/\\frac43\\pi(R_E)^3}=\\frac{(15.3R_P)^3/(0.0196)^2}{(60.3R_E)^3/(0.0749)^2}\\cdot\\frac{\\frac43\\pi(R_E)^3}{\\frac43\\pi(R_P)^3}=\\frac{\\frac{(15.3)^3}{(0.0196)^2}}{\\frac{(60.3)^3}{(0.0749)^2}}=0.24$$\n\n**(20)**"
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
     }
    ],
    "topics": [
@@ -186,15 +281,85 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1 Calculate the Earth revolution speed",
+      "statement": "**[20]**\n\nEarth revolution speed is\n\n$$v_E = \\frac{2\\pi\\bar{r}_E}{T_E} = \\frac{2\\pi a_E}{T_E} = 29805\\ m/s$$",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2 Calculate Julietta revolution speed",
+      "statement": "**[25]**\n\nJulietta revolution is (since the given data is semimajor axis, the orbit of Julietta is ellipse)\n\n$$v_J = \\sqrt{GM\\left(\\frac{2}{r_J} - \\frac{1}{a}\\right)} = 16742{,}9\\ m/s$$",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3 Calculate the approximate dimension of Julietta",
+      "statement": "From the geometry\n\n$$\\cos\\alpha = \\frac{r_E^2 + r_J^2 - r_{J-E}^2}{2r_Er_J} = 0.995$$\n\nThus, Julietta’s relative projected speed to Earth is\n\n$$v_{J,rel} = v_E - v_J\\cos\\alpha = 13984.16\\ m/s$$\n\n**[40]**\n\nHence, the approximate dimension of Julietta is\n\n$$l_J = v_{J,rel}t_{occil} = 86701.8\\ m$$\n\n**[15]**",
+      "figures": [
+       {
+        "id": "p3-sol-fig1",
+        "alt": "Geometry of the Sun S, Earth E and Julietta J, with orbital radii, velocities and angle alpha.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-short-final-bg/p3-sol-fig1.png",
+        "width": 717,
+        "height": 582,
+        "source": {
+         "page": 5,
+         "pdfRect": [
+          96.07,
+          463.32,
+          268.07,
+          602.73
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "supplementary-orbit-view",
+      "title": "1285 Julietta",
+      "statement": "http://ssd.jpl.nasa.gov/sbdb.cgi?sstr=1285%20julietta;old=0;orb=1;cov=0;log=0;cad=0#orb",
+      "figures": [
+       {
+        "id": "p3-sol-fig2",
+        "alt": "Original orbit-view screenshot from the earlier official DOCX key: 1285 Julietta on May 27, 2015, Earth distance 2.156 AU and Sun distance 3.076 AU.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-short-final-bg/p3-sol-fig2.png",
+        "width": 1819,
+        "height": 1317,
+        "source": {
+         "page": 6,
+         "pdfRect": [
+          73.44,
+          325.53,
+          509.8,
+          641.52
+         ],
+         "dpi": 300,
+         "document": "supplement-1"
+        }
+       }
+      ]
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "supplement-1",
+     "page": 6
     }
    ],
    "topics": [
@@ -243,15 +408,37 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1 Identify the relationship between the telescope’s resolution and the angular size of black hole",
+      "statement": "**[25]**\n\nThis problem can be solved by using relationship between the telescope’s resolution and the angular size of black holes which can be seen in this equation:\n\n$$\\phi_{telescope} \\le \\phi_{blackhole} \\;\\Rightarrow\\; 1.2\\frac{\\lambda}{D_{telescope}} \\le \\frac{\\text{Diameter of event horizon}}{\\text{Observer Distance to galatic' s the center}}$$\n\n$$1.2\\frac{\\lambda}{D_{telescope}} \\le \\frac{2R_{blackhole}}{d}$$",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2 Identify the relation for determining the distance",
+      "statement": "**[50]**\n\nThen, it is assumed that the radius of black hole is the Schwarszchild radius; and the telescope is also Earth-sized telescope. Therefore:\n\n$$1.2\\frac{\\lambda}{2R_{Earth}} \\le \\frac{2R_{Schwarzchild,BH}}{d}$$\n\n$$d \\le \\frac{4\\times R_{Schwarzchild,BH}\\times R_{Earth}}{1.2\\times\\lambda} \\;\\Rightarrow\\; d \\le \\frac{4\\times M_{Black\\ Hole}\\times R_{Schwarchild,Sun}\\times R_{Earth}}{1.2\\times M_{Sun}\\times\\lambda}$$\n\n$$d \\le \\frac{4\\times2.1\\times10^{10}M_{Sun}\\times R_{Schwarchild,Sun}\\times R_{Earth}}{1.2\\times M_{Sun}\\times\\lambda} \\;\\Rightarrow\\; d \\le \\frac{8.4\\times10^{10}\\times R_{Schwarchild,Sun}\\times R_{Earth}}{1.2\\times\\lambda}$$",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3 Calculating the maximum-observer distance",
+      "statement": "**[25]**\n\nTo find the maximum distance, then we should use the minimum λ.\n\nTherefore:\n\n$$d_{\\max} = \\frac{8.4\\times10^{10}\\times R_{Schwarchild,Sun}\\times R_{Earth}}{1.2\\times\\lambda_{\\min}} = \\frac{8.4\\times10^{10}\\times2.95\\times10^{3}\\times6.3708\\times10^{6}}{1.2\\times20\\times10^{-6}}\\ m = 6.6\\times10^{25}\\ m$$",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 6
     }
    ],
    "topics": [
@@ -300,15 +487,62 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1 Identify expression for $r(\\theta)$.",
+      "statement": "**[30]**\n\nWe know that $r(\\theta) = \\frac{a(1-e^2)}{1-e\\cos\\theta}$. Hence\n\n$$r(0) = \\frac{a(1-e^2)}{1-e} = a(1+e)$$\n\n$$r\\left(\\frac{\\pi}{2}\\right) = \\frac{a(1-e^2)}{1-e\\times0} = a(1-e^2)$$",
+      "figures": [
+       {
+        "id": "p5-sol-fig1",
+        "alt": "Two ellipses showing r(theta), theta, Delta theta1 and Delta theta2.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-short-final-bg/p5-sol-fig1.png",
+        "width": 1773,
+        "height": 390,
+        "source": {
+         "page": 7,
+         "pdfRect": [
+          85.68,
+          386.51,
+          511.02,
+          479.97
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "step-2",
+      "title": "2 Estimate area of sectors using area of triangles.",
+      "statement": "**[20]**\n\nEstimate the area of swept out sectors as the area of sectors of circles\n\n$$A(S_1) \\approx 0.5\\times\\Delta\\theta_1\\times(r(0))^2 = \\Delta\\theta_1(a(1+e))^2$$\n\n$$A(S_2) \\approx 0.5\\times\\Delta\\theta_2\\times\\left(r\\left(\\tfrac{\\pi}{2}\\right)\\right)^2 = \\Delta\\theta_2(a(1-e^2))^2$$",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3 Use Kepler’s second law to find a relation between the ratio $\\frac{\\Delta\\theta_1}{\\Delta\\theta_2}$ and the eccentricity $e$.",
+      "statement": "**[30]**\n\nUse Kepler’s second law to obtain that\n\n$$A(S_1) = A(S_2)$$\n\n$$\\Delta\\theta_1\\times(a(1+e))^2 = \\Delta\\theta_2\\times(a(1-e^2))^2$$\n\nThus,\n\n$$\\frac{\\Delta\\theta_1}{\\Delta\\theta_2} = \\left(\\frac{1-e^2}{1+e}\\right)^2 = (1-e)^2 = \\frac{2'44''}{21'17''} \\approx 0.12843$$",
+      "figures": []
+     },
+     {
+      "id": "step-4",
+      "title": "4 Obtain an estimate value of the eccentricity.",
+      "statement": "**[20]**\n\nThus, the eccentricity is $e \\approx 1 - \\sqrt{0.12843} = 0.64$",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 7
     }
    ],
    "topics": [
@@ -355,15 +589,31 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1",
+      "statement": "Atmospheric optical depth $\\tau_A$ can be determined from the measured flux, that is:\n\n$S_{meas} = \\exp(-\\tau_A)\\,S_{real}$\n\n$14.27 = \\exp(-\\tau_A)\\times21.86 \\;\\rightarrow\\; \\exp(-\\tau_A) = 14.27/21.86 = 0.65$\n\nThen\n\n$\\tau_A = -\\ln(0.65) = 0.43$\n\n**[50]**",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2",
+      "statement": "Now we have:\n\n$\\tau_A = \\tau_Z\\sec z$\n\n$\\tau_z = \\tau_A\\cos z$\n\n$= 0.43\\times\\cos(90 - 35)^{\\circ} = 0.25$\n\nwhere z is zenith angle.\n\n**[50]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 8
     }
    ],
    "topics": [
@@ -410,15 +660,55 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1",
+      "statement": "We have the total energy of the escaping galaxy:\n\n$E_T = E_K + E_P = \\frac{mV^2}{2} - \\frac{GMm}{R}$\n\n**[15]**",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2",
+      "statement": "Where $V$ is velocity of galaxy and $R$ radius of galaxy cluster\n\nGalaxy will escape from galaxy cluster if the total energy, $E_T = 0$\n\n**[10]**",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3",
+      "statement": "$E_T = 0 \\rightarrow \\frac{mV^2}{2} - \\frac{GMm}{R} = 0$\n\n$V^2 = \\frac{2GM}{R}$\n\n**[15]**",
+      "figures": []
+     },
+     {
+      "id": "step-4",
+      "title": "4",
+      "statement": "Escape velocity\n\n$$V^2 = \\frac{2G\\left(\\frac{4\\pi}{3}R^3\\rho\\right)}{R}$$\n\n**[20]**",
+      "figures": []
+     },
+     {
+      "id": "step-5",
+      "title": "5",
+      "statement": "Density of cluster\n\n$$\\rho = \\frac{3V^2}{8\\pi GR^2}$$\n\n**[15]**",
+      "figures": []
+     },
+     {
+      "id": "step-6",
+      "title": "6",
+      "statement": "V=700 km/s\n\nR=10 Mpc\n\n$G=6.6378\\times10^{-11}\\mathrm{Nm^2kg}$\n\n$\\rho=9.20121\\times10^{-27}\\mathrm{kg/m^3}$\n\n**[25]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 9
     }
    ],
    "topics": [
@@ -465,15 +755,37 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1",
+      "statement": "During 700 µs, the radio wave travels about r = c t = $3\\times10^{10}\\times700\\times10^{-6} = 2.1\\times10^{7}$ cm. The region from where the burst originates must be no larger than the distance that light can travel during the duration of the burst. So we estimate that r is the size of the source. (r = $2.1\\times10^{7}$ cm, R = 2.3 kpc)\n\n**[10]**\n\nFlux density observed at 1660 MHz is\n\n$S_{1660MHz} = 0.35$ kJy\n\n$= 0.35\\times10^{3}\\times10^{-23}$ ergs s$^{-1}$ cm$^{-2}$ Hz$^{-1}$\n\n$= 3.5\\times10^{-21}$ ergs s$^{-1}$ cm$^{-2}$ Hz$^{-1}$\n\n**[10]**",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2",
+      "statement": "The solid angle subtended by this source of radiation is\n\n$\\Omega = \\pi\\,(r/R)^2 = 3.14\\,(2.1\\times10^{7}/2.3\\times10^{3}\\times3.086\\times10^{18})^2$\n\n$= 2.75\\times10^{-29}$ sr\n\n**[30]**",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3",
+      "statement": "The flux density is related to the total brightness by the relation:\n\n$S_{1660MHz} = B_{1660MHz}\\,\\Omega$\n\n**[20]**\n\nwhile at this frequency, the total brightness can be approximated from the Rayleigh-Jeans formula:\n\n$B_{1660MHz} = 2kT_b\\nu^2/c^2$\n\n**[20]**\n\nwhere $T_b$ is the brightness temperature. Then we have:\n\n$T_b = S_{1660MHz}c^2/2k\\nu^2\\Omega$\n\n$T_b = [3.5\\times10^{-21}\\times(3\\times10^{10})^2]/[2\\times(1.38\\times10^{-16})\\times(1660\\times10^{6})^2\\times(2.75\\times10^{-29})]$\n\n$= 1.5\\times10^{26}$ K\n\n**[10]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 10
     }
    ],
    "topics": [
@@ -524,13 +836,41 @@
    "solution": {
     "statement": "",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1",
+      "statement": "Solar luminosity is\n\n$L_\\odot = 4\\pi R_\\odot^2\\sigma T_\\odot^4$\n\n$= 4\\times3.14\\times(6.96\\times10^{10})^2\\,(5.67\\times10^{-5})(5780)^4$ ergs/sec\n\n$= 3.9\\times10^{33}$ ergs/sec\n\n**[10]**",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2",
+      "statement": "Flux of the Sun intercepted by Venus is\n\n$L_V = (A_{V(projected)}/A_{(sphere,0.72au)})\\times L_\\odot$\n\nAlso,\n\n$L_V = 4\\pi R_V^2\\sigma T_V^4$\n\nSo,\n\n$4\\pi R_V^2\\sigma T_V^4 = (\\pi R_V^2/4\\pi d^2)\\times L_\\odot = (\\pi R_V^2/4\\pi d^2)\\times4\\pi R_\\odot^2\\sigma T_\\odot^4$\n\n**[30]**",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3",
+      "statement": "Therefore,\n\n$T_V^4 = (R_\\odot^2/4d^2)\\times T_\\odot^4 = [(6.957\\times10^{5}\\ \\mathrm{km})^2/4\\times(0.72\\times149.6\\times10^{6})^2]\\times(5780)^4$\n\n$= (483998490000/46407499776000000)\\times(5780)^4 = (4.84\\times10^{11}/4.64\\times10^{16})\\times(5780)^4$\n\n$= 1.0429316216908190111241385226915\\mathrm{e}{-5}\\times1114577187760656$\n\n$= 1.04\\times10^{-5}\\times1.11\\times10^{15}$\n\n$= 11624277939.308134327737156481455 = 1.1624\\times10^{10}$\n\n$T_V = 328.5$ K\n\n**[20]**",
+      "figures": []
+     },
+     {
+      "id": "step-4",
+      "title": "4",
+      "statement": "The flux density of Venus at closest approach to Earth at an observing frequency of 5 GHz:\n\n($1'' = 4.84\\times10^{-6}$ rad)\n\n$S_{5GHz} = B_{5GHz}\\,\\Omega = (2kT_b\\nu^2/c^2)\\,\\Omega \\qquad (\\rightarrow T_b = T_V)$\n\n$= (2\\times1.38\\times10^{-16}\\times328.5\\times(5\\times10^{9})^2\\times\\pi\\,(66\\times4.84\\times10^{-6})^2)/(3\\times10^{10})^2$\n\n$= 8.07\\times10^{-22}$ ergs s$^{-1}$ cm$^{-2}$ Hz$^{-1}$\n\n$= 80.7$ Jy\n\n**[40]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 11
     }
    ],
    "topics": [
@@ -579,15 +919,37 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1",
+      "statement": "The molecules rotate with angular velocity $\\omega$ and for spherical molecules, their moment of inertia is\n\n$$I_H=I_{cm}+m_Hr_H^2$$\n$$=\\frac25m_H^2+m_Hr_H^2=\\frac75m_Hr_H^2$$\n\nFor $H_2$ molecule, yield\n\n$$I_{H_2}=2I_H=\\frac{14}{5}m_Hr_H^2,$$\n\nThus\n\n$$I=6.401\\times10^{-48}\\ \\mathrm{Kg\\ m^2}$$\n\n**[30]**",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2",
+      "statement": "In thermal equilibrium(only 2 rotational degrees of freedom), we have:\n\n$$\\frac12I\\omega^2=kT$$\n\n**[30]**",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3",
+      "statement": "So we can estimate:\n\n$$\\omega=\\sqrt{2kT/I}=(2\\times1.38\\times10^{-16}\\times115/6{,}40\\times10^{-48})^{1/2}=2.23\\times10^{13}s^{-1}$$\n\n$$\\nu=\\frac{\\omega}{2\\pi}=3.55\\times10^{13}\\mathrm{Hz}$$\n\n**[40]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 12
     }
    ],
    "topics": [
@@ -634,15 +996,43 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1",
+      "statement": "$\\frac{1}{2}mv_0^{\\ 2} - \\frac{GmM}{R} = 0 \\rightarrow R = \\frac{2GM}{v_0^{\\ 2}}$\n\n**[20]**",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2",
+      "statement": "$\\Delta m(r) = \\rho4\\pi r^2\\Delta r = 4\\pi\\alpha r\\Delta r \\rightarrow M = 2\\pi\\alpha R^2$\n\n$(dm(r) = \\rho4\\pi r^2dr = 4\\pi\\alpha rdr \\rightarrow M = 2\\pi\\alpha R^2)$\n\n**[30]**",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3",
+      "statement": "$M = \\alpha2\\pi R^2 = \\alpha2\\pi\\frac{4G^2M^2}{v_0^{\\ 4}} \\rightarrow M = \\frac{v_0^{\\ 4}}{8\\pi\\alpha G^2}$\n\n**[30]**",
+      "figures": []
+     },
+     {
+      "id": "step-4",
+      "title": "4",
+      "statement": "$M = \\frac{v_0^{\\ 4}}{8\\pi\\alpha G^2} = \\frac{(1.5\\times10^{4}\\ ms^{-1})^4}{8\\pi(5\\times10^{13}\\ kgm^{-2})(6.67\\times10^{-11}\\mathrm{kg^{-1}m^3s^{-2}})^2} = 9.1\\times10^{21}\\ kg$\n\n**[20]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 13
     }
    ],
    "topics": [
@@ -689,15 +1079,45 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "A proton with a kinetic energy of $1\\,GeV$ propagates out from the surface of the Sun towards the Earth. Neglecting the magnetic field of the Sun, calculate the travel time of the proton as seen from the Earth.\n\n**Answer**",
     "figures": [],
     "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "incompleteReason": "Задача 12: двата английски ключа задават кинетична енергия 1 GeV, а българското условие — пълна енергия 1 GeV; липсва официално решение за точно тази българска формулировка.",
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1",
+      "statement": "$E_0 = m_0c^2 = 941\\ MeV$\n\n**[20]**",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2",
+      "statement": "$\\gamma = \\frac{1}{\\sqrt{1 - \\frac{v^2}{c^2}}} = \\frac{K}{E_0} + 1 = \\frac{1000\\ MeV}{941\\ MeV} + 1 = 2.062$\n\n**[20]**",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3",
+      "statement": "$1 - \\frac{v^2}{c^2} \\approx \\frac{1}{4} \\rightarrow v \\approx 0.87c$\n\n**[30]**",
+      "figures": []
+     },
+     {
+      "id": "step-4",
+      "title": "4",
+      "statement": "$$Elapse\\ time = \\frac{Earth - Sun\\ distance}{speed} = \\frac{1.50\\times10^{11}m}{0.87\\times(3\\times10^{8})\\ m/s} = 9.6\\ minutes$$\n\n**[30]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 14
     }
    ],
    "topics": [
@@ -743,14 +1163,35 @@
    "parts": [],
    "solution": {
     "statement": "",
-    "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "first-solution",
+      "title": "Answer and Marking Scheme",
+      "statement": "**1 Calculate the tidal force**\n\nThe tidal force (assuming the point mass of hemisphere is located at $R_{Io}/2$):\n\n$$F_{tidal}=F(r-R_{Io})-F(r+R_{Io})$$\n\n$$=-\\frac{GM_J\\frac{m_{Io}}2}{(r-\\frac{R_{Io}}2)^2}+\\frac{GM_J\\frac{m_{Io}}2}{(r+\\frac{R_{Io}}2)^2}=-GM_J\\frac{m_{Io}}2\\left[\\frac1{(r-\\frac{R_{Io}}2)^2}-\\frac1{(r+\\frac{R_{Io}}2)^2}\\right]$$\n\n$$=-\\frac{GM_J\\frac{m_{Io}}2}{r^2}\\left[\\frac{\\frac{2R_{Io}}r}{1-(\\frac{R_{Io}}r)^2}\\right]$$\n\n**[40]**\n\nThe term $\\left(\\frac{R_{Io}}r\\right)^2$ is too small and it can be ignored , so that\n\n$$F_{tidal}=-\\frac{GM_Jm_{Io}R_{Io}}{r^3}$$\n\n**[10]**\n\n**2 Calculate the difference of the tidal force**\n\nThe difference in the tidal force experienced at perijove (closest to Jupiter) and apojove (furthest from Jupiter)\n\n$$\\Delta F=\\left|F_{tidal}(r_{peri})-F_{tidal}(r_{apo})\\right|$$\n\n**[15]**\n\n$$= GM_Jm_{Io}R_{Io}\\left[\\frac1{r_{peri}^3}-\\frac1{r_{apo}^3}\\right]=6.65\\times10^{18}\\ N$$\n\n**[15]**\n\n**3 Calculate the average power of work done**\n\nHence, the average power of the work done on the rock during one-half orbit is\n\n$$\\overline P=\\frac{\\Delta F\\ d}{t_{Io}/2}$$\n\n**[10]**\n\n$$\\overline P=4.35\\times10^{15}W$$\n\n**[10]**"
+     },
+     {
+      "id": "alternate-solution",
+      "title": "Alternate solution",
+      "statement": "If assume the mass of the hemisphere is located at the center of mass of a solid hemisphere, $3R_{Io}/8$, then\n\n**1 Calculate the tidal force**\n\nThe tidal force (assuming the point mass of hemisphere is located at $3R_{Io}/8$):\n\n$$F_{tidal}=F(r-R_{Io})-F(r+R_{Io})$$\n\n$$=-\\frac{GM_J\\frac{m_{Io}}2}{(r-\\frac{3R_{Io}}8)^2}+\\frac{GM_J\\frac{m_{Io}}2}{(r+\\frac{3R_{Io}}8)^2}=-GM_J\\frac{m_{Io}}2\\left[\\frac1{(r-\\frac{3R_{Io}}8)^2}-\\frac1{(r+\\frac{3R_{Io}}8)^2}\\right]$$\n\n$$=-\\frac{GM_J\\frac{m_{Io}}2}{r^2}\\left[\\frac{\\frac{3R_{Io}}{2r}}{1-(\\frac{6R_{Io}}{8r})^2}\\right]$$\n\n**[40]**\n\nThe term $\\left(\\frac{R_{Io}}r\\right)^2$ is too small and it can be ignored , so that\n\n$$F_{tidal}=-\\frac{3GM_Jm_{Io}R_{Io}}{4r^3}$$\n\n**[10]**\n\n**2 Calculate the difference of the tidal force**\n\nThe difference in the tidal force experienced at perijove (closest to Jupiter) and apojove (furthest from Jupiter)\n\n$$\\Delta F=\\left|F_{tidal}(r_{peri})-F_{tidal}(r_{apo})\\right|$$\n\n**[15]**\n\n$$=\\frac34 GM_Jm_{Io}R_{Io}\\left[\\frac1{r_{peri}^3}-\\frac1{r_{apo}^3}\\right]=4.97\\times10^{18}\\ N$$\n\n**[15]**\n\n**3 Calculate the average power of work done**\n\nHence, the average power of the work done on the rock during one-half orbit is\n\n$$\\overline P=\\frac{\\Delta F\\ d}{t_{Io}/2}$$\n\n**[10]**\n\n$$\\overline P=3.25\\times10^{15}W$$\n\n**[10]**"
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 15
+    },
+    {
+     "document": "solutions",
+     "page": 16
+    },
+    {
+     "document": "solutions",
+     "page": 17
     }
    ],
    "topics": [
@@ -799,15 +1240,37 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
+    "statement": "**Answer and Marking Scheme:**",
     "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "sections": [
+     {
+      "id": "step-1",
+      "title": "1",
+      "statement": "To decide how far one can see on average in a universe filled with spherical objects of radius *R*, it is simplest to think of a long cylinder along the line of sight. If an object is closer than *R* to the line of sight, then the line of sight intersects its surface. For a distance $\\ell$, the cylindrical volume which would contain such objects is $\\pi R^2\\ell$. If the density of objects is *n*, then the volume that will on average contain one object is defined by $\\pi R^2\\ell n = 1$ and the average distance to which we see before our vision is blocked is\n\n$$\\ell = \\frac{1}{\\pi R^2n}$$\n\n**[50]**",
+      "figures": []
+     },
+     {
+      "id": "step-2",
+      "title": "2",
+      "statement": "The average radius *R* in Mpc\n\n$$R = \\frac{6.96\\times10^{8}\\ \\mathrm{m}}{3.086\\times10^{22}\\mathrm{m\\ Mpc^{-1}}} = 2.3\\times10^{-14}\\ \\mathrm{Mpc}$$\n\n**[25]**",
+      "figures": []
+     },
+     {
+      "id": "step-3",
+      "title": "3",
+      "statement": "Then\n\n$$\\ell = \\frac{1}{3.14\\,(2.3\\times10^{-14}\\ \\mathrm{Mpc})^2(10^{9}\\ \\mathrm{Mpc^{-3}})} = 6.3\\times10^{17}\\ \\mathrm{Mpc}$$\n\n**[25]**",
+      "figures": []
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 18
     }
    ],
    "topics": [
@@ -854,15 +1317,141 @@
    "figures": [],
    "parts": [],
    "solution": {
-    "statement": "",
-    "figures": [],
-    "incomplete": true,
-    "incompleteReason": "В предоставените източници няма официално решение."
+    "statement": "Answer and Marking Scheme:",
+    "sections": [
+     {
+      "id": "version-1",
+      "title": "1st version",
+      "statement": "**1 Determine coordinates of Lima and Yogyakarta.** **[15]**\n\nAssume that the equator is the $z = 0$ plane and the Earth is a unit sphere.\n\nThe Cartesian coordinates of the Lima is\n\n$$\\boldsymbol{x_1} = (x_1, y_1, z_1)$$\n\n$$= (\\cos(-12^{0}2')\\cos(282^{\\circ}58'48), \\cos(-12^{\\circ}2')\\sin(282^{\\circ}58'48), \\sin(-12^{0}2'))$$\n\n$$= (0.2197308726, -0.9530236794, -0.2084807188)$$\n\nThe Cartesian coordinates of the Yogyakarta is\n\n$$\\boldsymbol{x_2} = (x_2, y_2, z_2) = (\\cos(-7^{0}47')\\cos(110^{0}26'), \\cos(-7^{\\circ}47')\\sin(110^{0}26'), \\sin(-7^{0}47'))$$\n\n$$= (-0.3459009563, 0.9284459898, -0.1354273699)$$\n\n**2 Determine the normal of the plane defined by Lima, Yogyakarta, and center of the Earth.** **[20]**\n\nThe normal of the plane containing the two places and the center of the Earth is\n\n$$\\boldsymbol{x_1}\\times\\boldsymbol{x_2} = (a, b, c) = (0.3226285776, 0.1018712545, -0.12564355210)$$\n\n**3 Find the equation of the (shortest flight) path from Lima to Yogyakarta.** **[25]**\n\nLet the equation of the place be $ax + by + cz = 0$ or equivalently\n\n$$y = -a'x - c'z$$\n\nwhere $a' = -3.16702272082062$ and $c' = 1.23335628599724$. For the sake of simplicity, from now let us denote $a'$ and $c'$ as $a$ and $c$, respectively.\n\nIntersection of the Earth and the plane is the large circle $x^2 + (-ax - cz)^2 + z^2 = 1$ or equivalently\n\n$$(1+a^2)x^2+2acxz+(1+c^2)z^2-1=0$$\n\nIt is also the equation for the shortest flight path from Lima to Yogyakarta.\n\n**4 Determine the z-value of the southernmost point of the path (at the point, the discriminant of the equation**\n\n$$(1 + a^2)x^2 + 2acmx + (1 + c^2)m^2 - 1 = 0$$\n\n**equals zero).** **[30]**\n\nThe plane $z = m$, it intersects the large circle at at either at one or two points. The number of intersection point at the highest or at the lowest point is one, i.e. when the discriminant is zero.\n\n$$(1 + a^2)x^2 + 2acmx + (1 + c^2)m^2 - 1 = 0$$\n\nThe discriminant is\n\n$$D = (2acm)^2 - 4(1 + a^2)[(1 + c^2)m^2 - 1]$$\n\n$$= 4 + 4a^2 - (4 + 4a^2 + 4c^2)m^2$$\n\nTherefore $D = 0$, if $m = \\pm\\sqrt{\\frac{1 + a^2}{1 + a^2 + c^2}} = 0.937444937497383$. Then choose\n\n$$z = -0.937444937497383$$\n\n**5 Determine the latitude of the southernmost point.** **[10]**\n\nThus, the latitude of the point is $\\sin^{-1}z = 1.21521692653748 = 69.6268010651290^{\\circ} = 69^{\\circ}37'36''S$.",
+      "figures": [
+       {
+        "id": "p15-sol-fig1",
+        "alt": "Spherical geometry of the shortest flight path between Lima and Yogyakarta, with the source-labelled arcs and angles.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-short-final-bg/p15-sol-fig1-v2.png",
+        "width": 518,
+        "height": 526,
+        "source": {
+         "page": 19,
+         "pdfRect": [
+          387.4,
+          460.93,
+          511.65,
+          586.89
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "version-2",
+      "title": "2nd version (using the Law of Cosines for sides)",
+      "statement": "**Answer and Marking Scheme:**\n\n**1 Determine length of the sides of the triangle** **[20]**\n\n$s_2 = 90^{\\circ} - 12^{\\circ}2' = 77^{\\circ}58' = 1.3608\\ rad, s_3 = 90^{\\circ} - 7^{\\circ}47' = 82^{\\circ}13' = 1.4350\\ rad; A_1 = (180^{\\circ} - 77^{\\circ}1') + (180^{\\circ} - 110^{\\circ}26') = 172^{\\circ}33' = 3.0116\\ rad$\n\nUsing Law of Cosines for sides\n\n$$\\cos s_1=(\\cos s_2)(\\cos s_3)+(\\sin s_2)(\\sin s_3)(\\cos A_1)$$\n\nto obtain $s_1 = 2.7724.\\mathrm{rad}$\n\n**2 Determine the angles of the triangle** **[30]**\n\nThen use\n\n$$\\cos s_2 = (\\cos s_1)(\\cos s_3) + (\\sin s_1)(\\sin s_3)(\\cos A_2)$$\n\nto obtain $A_2 = 0.35921$ rad. Similarly, use Law of Cosines\n\n$$\\cos s_3 = (\\cos s_1)(\\cos s_2) + (\\sin s_1)(\\sin s_2)(\\cos A_3)$$\n\nto get that $A_3 = 0.3642$ rad.\n\n**3 Use Law of Cosines for sides to construct an equation in $\\cos s_2'$.** **[20]**\n\nIf P is the southernmost point, then the angle $A_3$ is a right angle, $A_3 = \\frac{\\pi}{2}$, the Law of\n\n$$\\cos s_3=\\cos s_1'\\cos s_2'+\\sin s_1'\\sin s_2'\\cos A_3=\\cos s_1'\\cos s_2'$$\n\nThus,\n\n$$\\cos s_1'=\\frac{\\cos s_3}{\\cos s_2'}=\\frac{0.13538}{\\cos s_2'}.$$\n\nThen substitute it to get\n\n$$\\cos s_2'=\\cos s_1'\\cos s_3+\\sin s_1'\\sin s_3\\cos A_2$$\n$$=\\frac{\\cos s_3}{\\cos s_2'}\\cos s_3+\\sqrt{1-\\left(\\frac{\\cos s_3}{\\cos s_2'}\\right)^2}\\sin s_3\\cos A_2$$\n\n**4 Solve the equation** **[20]**\n\nLet $x = \\cos s_2'$. Then\n\n$$x = \\frac{0.018328}{x} + \\sqrt{\\frac{x^2 - 0.018328}{x^2}}\\times0.92756$$\n\nMultiply both sides by $x$ to get\n\n$$x^2 = 0.018328 + x\\sqrt{\\frac{x^2 - 0.018328}{x^2}}\\times0.92756$$\n\n$$x^2 - 0.018328 = x\\sqrt{\\frac{x^2 - 0.018328}{x^2}}\\times0.92756$$\n\n$$(x^2 - 0.018328)^2 = (x^2 - 0.018328)\\times(0.92756)^2$$\n\n$$x^4 - 0.89702x^2 + 0.016105 = 0$$\n\nwhich is a quadratic equation of $x^2$. The roots are $\\pm0.13538$ and $\\pm0.93739$.\n\n**5 Determine the Latitude** **[10]**\n\nThus,\n\n$$s_2' = \\cos^{-1}0.93739 = 0.35574\\ \\mathrm{rad} = 20^{\\circ}23'$$\n\nor\n\n$$s_2' = \\cos^{-1}0.13538 = 1.4350\\ \\mathrm{rad} = 82^{\\circ}13'$$\n\nThe latitude is $69^{\\circ}37'S$ or 7°47′S. The second one is impossible because it higher then the latitude of Lima. Thus the answer is\n\n$$69^{\\circ}37'S$$",
+      "figures": [
+       {
+        "id": "p15-sol-fig2",
+        "alt": "Spherical geometry of the shortest flight path between Lima and Yogyakarta, with the source-labelled arcs and angles.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-short-final-bg/p15-sol-fig2.png",
+        "width": 483,
+        "height": 473,
+        "source": {
+         "page": 20,
+         "pdfRect": [
+          373.32,
+          357.21,
+          488.97,
+          470.43
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       },
+       {
+        "id": "p15-sol-fig3",
+        "alt": "Spherical geometry of the shortest flight path between Lima and Yogyakarta, with the source-labelled arcs and angles.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-short-final-bg/p15-sol-fig3.png",
+        "width": 519,
+        "height": 532,
+        "source": {
+         "page": 20,
+         "pdfRect": [
+          380.07,
+          545.67,
+          504.27,
+          673.2
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "version-3",
+      "title": "3rd version (using Napier’s rule)",
+      "statement": "**Answer and Marking Scheme:**\n\n**1 Determine length of the sides of the triangle** **[20]**\n\n$s_2 = 90^{\\circ} - 12^{\\circ}2' = 77^{\\circ}58' = 1.3608\\ rad, s_3 = 90^{\\circ} - 7^{\\circ}47' = 82^{\\circ}13' = 1.4350\\ rad; A_1 = (180^{\\circ} - 77^{\\circ}1') + (180^{\\circ} - 110^{\\circ}26') = 172^{\\circ}33' = 3.0116\\ rad$\n\nUsing Law of Cosines for sides\n\n$$\\cos s_1=(\\cos s_2)(\\cos s_3)+(\\sin s_2)(\\sin s_3)(\\cos A_1)$$\n\nto obtain $s_1 = 2.7724.\\mathrm{rad}$\n\n**2 Determine the angles of the triangle** **[30]**\n\nThen use\n\n$$\\cos s_2 = (\\cos s_1)(\\cos s_3) + (\\sin s_1)(\\sin s_3)(\\cos A_2)$$\n\nto obtain $A_2 = 0.35921$ rad. Similarly, use Law of Cosines\n\n$$\\cos s_3 = (\\cos s_1)(\\cos s_2) + (\\sin s_1)(\\sin s_2)(\\cos A_3)$$\n\nto get that $A_3 = 0.3642$ rad.\n\n**3 Find the latitude of the point** **[50]**\n\nLet $P$ be the southernmost point on the flight path. Since the triangle has a right triangle at P, then use one of Napier’s rules\n\n$$\\sin s_2'=\\sin s_3\\sin A_2$$\n\nto get $s_2' = 0.35576\\ rad = 20^{\\circ}23'$. Therefore, the latitude of $P$ is\n\n$$90^\\circ-20^\\circ23'=69^\\circ37'S$$",
+      "figures": [
+       {
+        "id": "p15-sol-fig4",
+        "alt": "Spherical geometry of the shortest flight path between Lima and Yogyakarta, with the source-labelled arcs and angles.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-short-final-bg/p15-sol-fig4.png",
+        "width": 491,
+        "height": 466,
+        "source": {
+         "page": 21,
+         "pdfRect": [
+          386.77,
+          574.2,
+          504.27,
+          685.89
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       },
+       {
+        "id": "p15-sol-fig5",
+        "alt": "Spherical geometry of the shortest flight path between Lima and Yogyakarta, with the source-labelled arcs and angles.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2015-theory-short-final-bg/p15-sol-fig5-v2.png",
+        "width": 518,
+        "height": 519,
+        "source": {
+         "page": 22,
+         "pdfRect": [
+          379.44,
+          213.84,
+          503.68,
+          338.17
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     }
+    ]
    },
    "sourceSpans": [
     {
      "document": "problems",
      "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 19
+    },
+    {
+     "document": "solutions",
+     "page": 20
+    },
+    {
+     "document": "solutions",
+     "page": 21
+    },
+    {
+     "document": "solutions",
+     "page": 22
     }
    ],
    "topics": [

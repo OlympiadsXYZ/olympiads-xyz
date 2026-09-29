@@ -1,0 +1,127 @@
+---
+id: iao-2006-theory-beta-ru-p5
+source: 'IAO 2006, Теория, Група β'
+title: 'Задача 5. Спутник Луны.'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IAO/2006/iao-2006-theory-beta-ru.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T20:03:09.156Z'
+verifier: 'single-pass'
+---
+
+*Задачи теоретического тура · 10 ноември 2006 г.*
+
+<details>
+<summary>Общее замечание</summary>
+
+Не исключено, что не во всех задачах вопросы поставлены корректно. Некоторые вопросы (возможно, главный вопрос задачи, возможно – подвопрос) могут не иметь смысла. В этом случае следует написать в ответе (по-русски или по-английски): **«ситуация невозможна - situation is impossible»**. Естественно, ответ должен быть подкреплён вычислениями или логическими рассуждениями.
+
+</details>
+
+<details>
+<summary>Source annotations</summary>
+
+Printed source inconsistencies are retained: the English telescope key repeats Δx_m on the right of its displacement identity; the galaxy key uses both1.89×10⁻³ and1.86×10⁻³rad; the alpha eccentricity ratio has a sign inconsistency before the later positive0.07 result. The English polar key prints71°06′N/72°48′S; the Russian copy has handwritten70°06′N/71°48′S. No scientific correction has been silently substituted. Russian telescope statement has a handwritten correction from refractor to reflector; Russian displacement identity is similarly corrected by hand. Russian galaxy key refers to English, which is retained in its original language. Top of the first equation on Russian key3 is slightly clipped; complete matching English equation confirms its symbols.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Таблица данных о планетах](#planetary-data)
+
+</nav>
+
+На рисунке представлены два фотоснимка Луны, полученные одной и той же камерой, установленной на спутнике Луны. Первый снимок был сделан, когда спутник находился вблизи периселения, второй – вблизи апоселения. Оцените, каков может быть максимальный период обращения такого спутника вокруг Луны. Орбиту обращения Луны вокруг Земли считайте круговой.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.9%', '--fig-max': '358px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2006-theory-beta-ru/p5-moon-pair.png" alt="p5 moon pair" width="1120" height="611" loading="lazy" decoding="async" />
+</figure>
+
+<ProblemSection id="planetary-data">
+
+### Таблица данных о планетах
+
+При решении каждой задачи можно использовать данные прилагаемой «Таблицы данных о планетах».
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '1588px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2006-theory-beta-ru/planetary-data.jpg" alt="planetary data" width="2481" height="3508" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+Полушарие Луны, запечатлённое на фотографиях, примерно то же, что мы видим с Земли. Учитывая, что Луна повёрнута к Земле одной стороной, можно сделать вывод, что фотографирование производилось из точек пространства, расположенных примерно между Землёй и Луной.
+
+По соотношению размеров изображений ($d_1\approx46{,}5$ мм, $d_2\approx40{,}5$ мм) находим, что отношение расстояний от Луны до спутника в периселении “P” и апоселении “A” равно $P/A=0{,}87$.
+
+Для того, чтобы спутник был бы именно спутником Луны необходимо, чтобы даже при максимальном удалении от Луны спутник находился бы в сфере притяжения Луны, а не Земли. Иными словами, в случае прохождения спутником апоселения на линии Луна–Земля, он должен находиться к Луне ближе, чем внутренняя точка Лагранжа.
+
+Найдём, на каком расстоянии “$x$” от центра Луны находится эта точка Лагранжа. Эта точка обращается вокруг Земли с той же угловой скоростью $\omega$, что и Луна. Условие равновесия тела в точке Лагранжа:
+
+$$
+\frac{GM}{(R-x)^2}-\frac{Gm}{x^2}=\omega^2(R-x),
+$$
+
+где $M$ и $m$ – массы Земли и Луны, $R$ – расстояние от Земли до Луны. Поскольку задача у нас оценочная, предположим, что $x$ много меньше $R$, и преобразуем первый член как:
+
+$$
+\frac{GM}{(R-x)^2}=\frac{GM}{R^2}+\frac{2GMx}{R^3},
+$$
+
+откуда
+
+$$
+\frac{GM}{R^2}+\frac{2GMx}{R^3}-\frac{Gm}{x^2}=\omega^2(R-x).
+$$
+
+Из условия движения Луны вокруг Земли: $GM/R^2=\omega^2R$ можно получить: $\omega=\sqrt{GM/R^3}$.
+
+Подставляя это в третью формулу, получаем
+
+$$
+\frac{GM}{R^2}+\frac{2GMx}{R^3}-\frac{Gm}{x^2}=\frac{GM}{R^3}(R-x),
+$$
+
+или $3GMx/R^3=Gm/x^2$.
+
+Отсюда $x=R\sqrt[3]{m/(3M)}$.
+
+Подставляя значения $R=384400$ км и $m/M=1/81{,}3$, получаем $x=R/6{,}25=61500$ км.
+
+Таким образом, расстояние $A$ в апоселении орбиты спутника не должно быть больше 61 500 км, а в периселении – не больше $P=P/A\times61500\ \text{км}=53300$ км. Таким образом, большая полуось орбиты спутника не превышает $a=(1/2+P/2A)\times61500\ \text{км}=57400$ км. Период обращения вокруг Луны спутника с такой большой полуосью равен
+
+$$
+T=2\pi\sqrt{\frac{a^3}{Gm}}
+$$
+
+или 14,3 суток. Правильный ответ (учитывая, что мы делали только оценку) – около 14 суток.
+
+<ProblemSection id="solution-jury-note">
+
+### Примечание для жюри
+
+Примечание для жюри, задачи4 и5. Из-за разницы в принтерах масштабы рисунков были разными у разных экземплярах условий. Поэтому измеренные длины могут быть не теми, как написано здесь в решениях. Однако, их отношения, необходимые для получения результатов, должны быть теми же.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theo1.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theo1.jpg)
+· официални решения: [theosol1.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theosol1.jpg)
+· допълнителни данни: [theo2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theo2.jpg)
+· допълнителни данни: [theodata1.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theodata1.pdf)
+· допълнителни данни: [theodata2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theodata2.jpg)
+· допълнителни данни: [constants.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%94%D0%B0%D0%BD%D0%BD%D0%B8/constants.jpg)
+· допълнителни данни: [theosol2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theosol2.jpg)
+· допълнителни данни: [theosol3.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A0%D1%83%D1%81%D0%BA%D0%B8/theosol3.jpg)
+· допълнителни данни: [theosol2.jpg](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IAO/2006/%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D0%BD/theosol2.jpg)
