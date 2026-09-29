@@ -5,8 +5,8 @@ title: 'Задача 14. Photographing a nanosatellite'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2019/ioaa-2019-theory-th-final.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:41:51.080Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T22:24:21.175Z'
+verifier: 'single-pass'
 ---
 
 *Theory problem sheet · 60 т.*
@@ -15,9 +15,16 @@ verifier: 'same-model'
 
 The very first, entirely Hungarian-made, satellite was "MASAT-1", a nanosatellite "cubesat". It was made mostly of aluminium with total mass 1 kg, sides length l = 10 cm and a longer communication aerial. It was designed and prepared at the Technical University of Budapest (BME) in 2009 by students. The launch occurred on February 13, 2012, using a Vega rocket from the Kourou launch site – together with several other cubesats from other countries. It operated successfully right up to the last minutes of its lifetime (the transmitted last data packages were captured by radio receivers on the evening of January 9, 2015, a few hours later the nanosatellite re-entered the atmosphere and disintegrated).
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '651px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p14-fig1.png" alt="Photograph of the MASAT-1 cubesat: a 10 cm cubic aluminium satellite covered with dark solar cells, with a yellow measuring tape beside it and the logo 'Masat-1' in the upper right corner." width="2035" height="1317" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '99.3%', '--fig-max': '636px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p14-fig1-v2.png" alt="Photograph of the MASAT-1 cubesat: a 10 cm cubic aluminium satellite covered with dark solar cells, with a yellow measuring tape beside it and the logo 'Masat-1' in the upper right corner." width="1988" height="1197" loading="lazy" decoding="async" />
 </figure>
+
+
+The orbital altitude of MASAT–1 changed between $h_{\min}=350\ \mathrm{km}$ and $h_{\max}=1450\ \mathrm{km}$ (due to its highly eccentric orbit), but in this question assume it to be in a circular orbit 900 km above the sea level.
+
+The MASAT team wished to photograph their nanosatellite from the ground. Thus, they called the staff of Baja Astronomical Observatory (South Hungary, $\lambda_B=19.010843^\circ$, $\varphi_B=46.180329^\circ$, $h_B=100\ \mathrm{m}$) to photograph the orbiting MASAT–1 with their telescope.
+
+The observatory has a Ritchey-Chrétien type reflecting telescope with a diameter of 50 cm, and focal ratio $f/8.4$. The CCD camera installed on the telescope had a $4096\times4096$ chip with $9\ \mu\mathrm{m}$ sized square pixels. The quantum efficiency of the CCD was about 70 %. The practical detection limit was about $19.5^{\mathrm m}$ visual band applying a $\tau_{\mathrm{exp}}=2\ \mathrm{min}$ exposure time. Disregard any effects of seeing. The orbital inclination of MASAT–1 was about $i=70^\circ$ and the direction of orbital motion was the same as the Earth rotation. In addition, let us assume that the reflection area always is $100\ \mathrm{cm}^2$. Throughout this event, the telescope was pointed to the local zenith, and its RA motor was tracking the stars. Consider only light from the Sun, you can ignore light reflected from Earth and Moon. Ignore the effects of atmospheric extinction.
 
 **a)** Calculate the apparent visual magnitude of this cubesat under ideal observational circumstances, i.e. when it was at the local zenith of the observing site (Baja, Hungary) at midnight. Omit all atmospheric effects, and consider the Earth to be a sphere. The albedo of a specular aluminium plate is $a \approx 0.70$.
 
@@ -33,7 +40,11 @@ The very first, entirely Hungarian-made, satellite was "MASAT-1", a nanosatellit
 
 <Spoiler title="Покажи официалното решение">
 
-a) As it was suggested in the hint the key is a comparison of the sunlight scattered from a 10 cm × 10 cm aluminium plate and the Moon to the observer (both are nearly at the local zenith).
+<ProblemSection id="solution-part-a">
+
+### a)
+
+As it was suggested in the hint the key is a comparison of the sunlight scattered from a 10 cm × 10 cm aluminium plate and the Moon to the observer (both are nearly at the local zenith).
 
 Let the distance of the Moon and the satellite from the observing site be $d_{\mathrm{Moon}}$, and $d_{\mathrm{MASAT}}$, respectively. Under the mentioned "ideal" circumstances, when both the Moon and the satellite is near the local zenith: $d_{\mathrm{MASAT}} = 900\ \mathrm{km}$, while
 
@@ -67,7 +78,13 @@ m_{\mathrm{MASAT}} = \boxed{9.72^{\mathrm m}}
 $$
 **(2 p)**
 
-b) A moving point-like object will generally cause a line on the CCD image, resulting less photoelectrons in a given pixel, than a similarly bright unmoving object. Since the MASAT-1 satellite is so small, it is not resolved by the telescope – it will cause a seeing-sized spot at the focus of a telescope, like any other stars on the sky, but since the text of the problem described: we should omit the seeing. Thus, the image of any point source will be formed by the diffraction – so we shall use the approximate formula of the Airy disk.
+</ProblemSection>
+
+<ProblemSection id="solution-part-b">
+
+### b)
+
+A moving point-like object will generally cause a line on the CCD image, resulting less photoelectrons in a given pixel, than a similarly bright unmoving object. Since the MASAT-1 satellite is so small, it is not resolved by the telescope – it will cause a seeing-sized spot at the focus of a telescope, like any other stars on the sky, but since the text of the problem described: we should omit the seeing. Thus, the image of any point source will be formed by the diffraction – so we shall use the approximate formula of the Airy disk.
 
 By the diffraction-limited imaging, the point-like sources illuminate a spot in the focal plane having the angular diameter of the so-called Airy disc determined by the formula:
 
@@ -191,11 +208,10 @@ $$
 $$
 **(1 p)**
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '79%', '--fig-max': '506px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p14-sol-fig1.png" alt="Диаграма: спътник на орбитата си с орбитална скорост V_a, лъч към телескопа; върху решетка от CCD пиксели (9 μm на 9 μm) е показано Airy-дисково изображение на точковия наносателят, движещо се с Δω, и неподвижни Airy-дискови изображения на звезди (поради проследяване); означения „one pixel on CCD“, „Airy-disc sized images of stars (fixed positions, due to tracking)“, „D~1pixel“, „Airy-disc sized image of the point-like source nanosatellite“, „the satellite orbit“." width="1581" height="1545" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.8%', '--fig-max': '441px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p14-sol-fig1-v2.png" alt="Original diagram of satellite orbital motion above the CCD pixel grid, including all printed pixel dimensions, Airy-disc labels and relative angular speed." width="1378" height="1345" loading="lazy" decoding="async" />
 </figure>
 
-[figure: satellite orbit above the CCD focal plane, with orbital speed $V_a$, relative angular speed $\Delta\omega$ across the pixel grid, 9 µm pixel sides, Airy-disc sized images of stars and of the point-like nanosatellite]
 
 Since the satellite image is moving with a given $\Delta\omega$ angular speed, this means that the flux coming from the satellite is falling onto a given pixel only for a very limited time (independently of the exposure time of the image, but acting similarly, than that). Considering our very simple approximation we get an approximate "illumination time" for one pixel falling onto the line of the orbit:
 
@@ -231,7 +247,13 @@ So, the trace of the moving $23.9^{\mathrm m}$ magnitude nanosatellite looks so 
 
 using that telescope.
 
-c) If we consider a real atmosphere, due to the effect of the atmospheric turbulences (the so-called seeing) during the 2 minutes-long exposure the images of the stars will never be described by the ideal Airy disk, but expanded to a much larger "seeing spot", which can be approximated by a Gaussian profile. As mentioned in the text: in Hungary, its diameter at half-maxima is typically $3.5''$. This means, that the flux coming from a $19.5^{\mathrm m}$ star will be distributed over about a
+</ProblemSection>
+
+<ProblemSection id="solution-part-c">
+
+### c)
+
+If we consider a real atmosphere, due to the effect of the atmospheric turbulences (the so-called seeing) during the 2 minutes-long exposure the images of the stars will never be described by the ideal Airy disk, but expanded to a much larger "seeing spot", which can be approximated by a Gaussian profile. As mentioned in the text: in Hungary, its diameter at half-maxima is typically $3.5''$. This means, that the flux coming from a $19.5^{\mathrm m}$ star will be distributed over about a
 
 $$
 \frac{\mathrm{FWHM}}{P} \times \frac{\mathrm{FWHM}}{P} = \frac{3.5''}{0.44''} \times \frac{3.5''}{0.44''} \approx 8 \times 8
@@ -265,6 +287,12 @@ Under real conditions the situation is much better: the trace of the small nanos
 
 **YES, WE COULD HAVE RECORDED THE MASAT–1.** **(2 p)**
 
+</ProblemSection>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.8%', '--fig-max': '441px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p14-sol-fig1-v2.png" alt="Original diagram of satellite orbital motion above the CCD pixel grid, including all printed pixel dimensions, Airy-disc labels and relative angular speed." width="1378" height="1345" loading="lazy" decoding="async" />
+</figure>
+
 
 </Spoiler>
 
@@ -272,3 +300,4 @@ Under real conditions the situation is much better: the trace of the small nanos
 
 Оригинал в Архива: [TH-problem-final.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2019/TH-problem-final.pdf#page=8)
 · официални решения: [TH-solution-final.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2019/TH-solution-final.pdf#page=24)
+· допълнителни данни: [TH-anssheet.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2019/Theoretical/TH-anssheet.pdf)

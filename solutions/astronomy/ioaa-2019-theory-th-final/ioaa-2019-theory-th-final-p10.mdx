@@ -5,8 +5,8 @@ title: 'Задача 10. South → East → North'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2019/ioaa-2019-theory-th-final.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:41:51.080Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T22:24:21.175Z'
+verifier: 'single-pass'
 ---
 
 *Theory problem sheet · 20 т.*
@@ -21,7 +21,11 @@ For the sake of simplicity measure the geographic longitude from $0^{\circ}$ to 
 
 <Spoiler title="Покажи официалното решение">
 
-1. The trivial solution of the problem is the North Pole ($N$). Starting from here we travel 6378 km to the South ($\widehat{NA}$) along a meridian (e.g. Greenwich meridian), then 6378 km to the East along a parallel ($\widehat{AB}$), and finally 6378 km to the North ($\widehat{BN}$) (see figure ($a$), where the black dashed lines are the Equator and the Greenwich meridian).
+<ProblemSection id="solution-case-1">
+
+### 1.
+
+The trivial solution of the problem is the North Pole ($N$). Starting from here we travel 6378 km to the South ($\widehat{NA}$) along a meridian (e.g. Greenwich meridian), then 6378 km to the East along a parallel ($\widehat{AB}$), and finally 6378 km to the North ($\widehat{BN}$) (see figure ($a$), where the black dashed lines are the Equator and the Greenwich meridian).
 
 For the general solution, mark the path to be taken in one direction with $s$ and determine what it may be!
 
@@ -29,52 +33,53 @@ Let us denote the longitude and latitude of the point $A$ by $\lambda_A$ and $\v
 
 The triangle $ANB$ is a spherical one only if the points $A$ and $B$ are on the Equator (see figure ($b$)), i.e. $\varphi_A=\varphi_B=0^{\circ}$ and $s=R\pi/2$, because the arc $\widehat{AB}$ is lying along a great circle only in this case, otherwise it is a part of a parallel. The point $A$ and $B$ can be below the Equator as well (figure ($c$)).
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '709px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p10-sol-fig1.png" alt="Three globes (a), (b), (c) with graticule showing red paths: a spherical triangle from the North Pole, a great-circle case with A and B on the Equator, and a case with A and B below the Equator; parameters printed above each globe." width="2216" height="839" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '715px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p10-sol-fig1-v2.png" alt="Three globes (a), (b), (c) with graticule showing red paths: a spherical triangle from the North Pole, a great-circle case with A and B on the Equator, and a case with A and B below the Equator; parameters printed above each globe." width="2233" height="790" loading="lazy" decoding="async" />
 </figure>
+
 
 Next, we measure the angles in radians.
 
 The central angle of the arc $\widehat{NA}$ on the meridian fitting to the point $A$ ($O$ is the centre of the sphere):
 
 $$
-NOA\sphericalangle=\frac{\pi}{2}-\varphi,\quad \text{where } \varphi=\varphi_A=\varphi_B
+(10.1)\quad NOA\sphericalangle=\frac{\pi}{2}-\varphi,\quad \text{where } \varphi=\varphi_A=\varphi_B
 $$
 
 Thus the length $s$ of the arc $\widehat{NA}$:
 
 $$
-s=R\left(\frac{\pi}{2}-\varphi\right),\quad \text{where } s<R\pi
+(10.2)\quad s=R\left(\frac{\pi}{2}-\varphi\right),\quad \text{where } s<R\pi
 $$
 
 The radius of the latitude circle fitting to the points $A$ and $B$:
 
 $$
-r_{AB}=R\sin\left(\frac{\pi}{2}-\varphi\right)=R\cos\varphi
+(10.3)\quad r_{AB}=R\sin\left(\frac{\pi}{2}-\varphi\right)=R\cos\varphi
 $$
 
 The central angle of the arc $\widehat{AB}$ is $\lambda_B-\lambda_A$, thus the length of the arc $\widehat{AB}$:
 
 $$
-s=r_{AB}\,(\lambda_B-\lambda_A)=R\cos\varphi\,(\lambda_B-\lambda_A)
+(10.4)\quad s=r_{AB}\,(\lambda_B-\lambda_A)=R\cos\varphi\,(\lambda_B-\lambda_A)
 $$
 
 From the Eq. (10.2) and Eq. (10.4):
 
 $$
-\varphi=\frac{\pi}{2}-\frac{s}{R}\quad \text{and}\quad \lambda_B-\lambda_A=\frac{s}{R\cos\varphi}
+(10.5)\quad \varphi=\frac{\pi}{2}-\frac{s}{R}\quad \text{and}\quad \lambda_B-\lambda_A=\frac{s}{R\cos\varphi}
 $$
 
 Substitute the expression of $\varphi$ from the first equation into the second equation:
 
 $$
-\lambda_B-\lambda_A=\frac{s}{R\cos\varphi}=\frac{\dfrac{s}{R}}{\cos\left(\dfrac{\pi}{2}-\dfrac{s}{R}\right)}=\frac{\dfrac{s}{R}}{\sin\dfrac{s}{R}}
+(10.6)\quad \lambda_B-\lambda_A=\frac{s}{R\cos\varphi}=\frac{\dfrac{s}{R}}{\cos\left(\dfrac{\pi}{2}-\dfrac{s}{R}\right)}=\frac{\dfrac{s}{R}}{\sin\dfrac{s}{R}}
 $$
 
 For a given arc length of $s$ ($s<R\pi$) the latitude $\varphi$ of the points $A$ and $B$, and the difference between their longitudes we can calculate from the following equations:
 
 $$
-\varphi=\frac{\pi}{2}-\frac{s}{R}\quad \text{and}\quad \lambda_B-\lambda_A=\frac{\dfrac{s}{R}}{\sin\dfrac{s}{R}}
+(10.7)\quad \varphi=\frac{\pi}{2}-\frac{s}{R}\quad \text{and}\quad \lambda_B-\lambda_A=\frac{\dfrac{s}{R}}{\sin\dfrac{s}{R}}
 $$
 
 ***** Supplement. It is just for the sake of completeness, not necessary for the full marks.
@@ -82,21 +87,22 @@ $$
 It is well known, that
 
 $$
-\lim_{x\to 0}\frac{\sin x}{x}=\lim_{x\to 0}\frac{x}{\sin x}=1,
+(10.8)\quad \lim_{x\to 0}\frac{\sin x}{x}=\lim_{x\to 0}\frac{x}{\sin x}=1,
 $$
 
 thus $\lambda_B-\lambda_A=1$ in case of $s\to 0$.
 
 Therefore the difference in longitude has a lower limit (1), but it has no upper limit. This means, that the distance between the points $A$ and $B$ will increase by increasing $s$, the difference between their longitudes will approximate $2\pi$ (see figure ($d$)), and in case of $\lambda_B-\lambda_A=2\pi$ the points $A$ and $B$ will be the same (see figure ($e$)). With further increasing of $s$ the difference $\lambda_B-\lambda_A$ will be larger than $2\pi$ (see figure ($f$)), thus we have to stop at that point on the circle where the length of the path along it reaches the value of $s$, and then turn to the North.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '709px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p10-sol-fig2.png" alt="Three globes (d), (e), (f) with graticule showing red lasso-type paths near the South Pole S, with lasso circles of varying circumference; parameters printed above each globe." width="2216" height="829" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '715px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p10-sol-fig2-v2.png" alt="Three globes (d), (e), (f) with graticule showing red lasso-type paths near the South Pole S, with lasso circles of varying circumference; parameters printed above each globe." width="2233" height="787" loading="lazy" decoding="async" />
 </figure>
+
 
 The arc length $s_{\mathrm{lim}}$ corresponding to the "limit case" of $\lambda_B-\lambda_A=2\pi$ we can derive from the numerical solution of the following transcendent equation:
 
 $$
-\frac{s^{\mathrm{lim}}}{R}-2\pi\sin\frac{s^{\mathrm{lim}}}{R}=0
+\frac{s_{\mathrm{lim}}}{R}-2\pi\sin\frac{s_{\mathrm{lim}}}{R}=0
 $$
 
 Thus find the root of the function
@@ -128,17 +134,17 @@ $$
 $\lambda_B-\lambda_A$ is strictly increasing function of $s$ and
 
 $$
-\lim_{s/R\to 0}\lambda_B-\lambda_A=1,\quad \lim_{s/R\to\pi}\lambda_B-\lambda_A=\infty,
+(10.9)\quad \lim_{s/R\to 0}\lambda_B-\lambda_A=1,\quad \lim_{s/R\to\pi}\lambda_B-\lambda_A=\infty,
 $$
 
 thus for any values of $0<s<R\pi$ can be found an appropriate angle $\lambda_B-\lambda_A$ (see the figure below).
 
-***** End of supplement.
-
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '87.4%', '--fig-max': '560px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p10-sol-fig3.png" alt="Graph of (λB − λA) versus s/R from 0 to π; the curve rises slowly and blows up near π, with horizontal dashed lines at 2π, 4π, 6π, 8π, 10π, vertical dashed lines and a boxed label s_lim/R." width="1749" height="1229" loading="lazy" decoding="async" />
-<figcaption>(λB − λA) = (s/R)/ sin(s/R), R = 6378 km</figcaption>
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '85.2%', '--fig-max': '545px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p10-sol-fig3-v2.png" alt="Graph of (λB − λA) versus s/R from 0 to π; the curve rises slowly and blows up near π, with horizontal dashed lines at 2π, 4π, 6π, 8π, 10π, vertical dashed lines and a boxed label s_lim/R." width="1704" height="1233" loading="lazy" decoding="async" />
 </figure>
+
+
+***** End of supplement.
 
 In conclusion, the solution in this case is the North Pole ($N$). **[2 p]**
 
@@ -149,7 +155,13 @@ $$
 $$
 **[3 p]**
 
-2. The non-trivial solutions are similar to the ($e$)-type ("lasso") solution of the previous part, only the starting point is not the North Pole, but its location depends on the given value of arc length $s$. The circle of the lasso will run south from the ($e$)-type "limit circle", because the circumference of parallels running north from it are greater than the north-south arc.
+</ProblemSection>
+
+<ProblemSection id="solution-case-2">
+
+### 2.
+
+The non-trivial solutions are similar to the ($e$)-type ("lasso") solution of the previous part, only the starting point is not the North Pole, but its location depends on the given value of arc length $s$. The circle of the lasso will run south from the ($e$)-type "limit circle", because the circumference of parallels running north from it are greater than the north-south arc.
 
 The procedure is the following.
 
@@ -212,9 +224,11 @@ For the further values of $k$ the procedure is very similar, but we have to perf
 
 Such kind of solution exists for any values of $0<s<s_{\mathrm{lim}}$.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '69.6%', '--fig-max': '446px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p10-sol-fig4.png" alt="Globe seen from above the South Pole showing point C on the dashed red parallel, point D on the continuous red parallel around the South Pole S, and meridian arcs in red, green, blue, gold and brown for k = 1…5; parameters printed above." width="1393" height="1404" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '87.3%', '--fig-max': '559px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2019-theory-th-final/p10-sol-fig4-v2.png" alt="Globe seen from above the South Pole showing point C on the dashed red parallel, point D on the continuous red parallel around the South Pole S, and meridian arcs in red, green, blue, gold and brown for k = 1…5; parameters printed above." width="1747" height="1654" loading="lazy" decoding="async" />
 </figure>
+
+</ProblemSection>
 
 
 </Spoiler>
@@ -223,3 +237,4 @@ Such kind of solution exists for any values of $0<s<s_{\mathrm{lim}}$.
 
 Оригинал в Архива: [TH-problem-final.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2019/TH-problem-final.pdf#page=5)
 · официални решения: [TH-solution-final.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2019/TH-solution-final.pdf#page=13)
+· допълнителни данни: [TH-anssheet.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2019/Theoretical/TH-anssheet.pdf)

@@ -24,22 +24,39 @@
    ]
   },
   "status": "review",
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IAO/2014/Практически/jupiter.pdf",
+    "pages": [
+     1
+    ]
+   },
+   "supplement-2": {
+    "archiveKey": "Астрономия/Състезания/IAO/2014/Практически/comet.pdf",
+    "pages": [
+     1,
+     2,
+     3
+    ]
+   }
+  },
   "transcription": {
    "method": "vision-pages",
-   "provider": "anthropic",
-   "model": "claude-sonnet-5",
-   "promptVersion": "v1",
-   "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
-   "requestId": "req_011Cf9SC3mK18GZvq81na1mM",
-   "at": "2026-09-17",
+   "provider": "agent",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/sidebar_astra",
+   "at": "2026-09-29",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "2040c48f457e0f2e18d2eb161a37d54dd8663402536cef5b74910b43daa4c2e4"
+    "problems": "2040c48f457e0f2e18d2eb161a37d54dd8663402536cef5b74910b43daa4c2e4",
+    "supplement-1": "d693aed30ecf3ac0498a6894d36a82caba77c27b4d1188c2b930ca8fcb721b62",
+    "supplement-2": "3ea0e67d8078a678fba1dd6ea5c133d6c9b977c1e57470f002e331270cfc1331"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-09-17",
-   "notes": "Изображения (3 фотографии Юпитера в задаче 7 и отдельный лист с фотографиями кометы в задаче 8) на странице не отображены/не приложены к предоставленному изображению страницы, поэтому фигуры не выделены (crop-боксы не предложены). Официальные решения к практическому раунду отсутствуют в предоставленных материалах."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Source-handout recovery from full 2014 archive inventory. Same reader personally read complete question sheets and all attached handout pages; retained whole original problems and stable IDs, numbers, text and tables. Restored actual Jupiter, comet and Pegasus handouts as applicable; removed contradicted missing-handout caveats. No separate checker. No official practical or observation key in year inventory."
   }
  },
  "problems": [
@@ -49,8 +66,27 @@
    "title": "Jupiter",
    "points": null,
    "problemType": "practical",
-   "statement": "In 2009, a nucleus of unknown comet or an asteroid crashed into Jupiter's atmosphere. A powerful explosion formed a dark cloud, which gradually stretched parallel to equator due to zonal flow in the atmosphere. Hubble Space Telescope was able to take a few pictures of Jupiter during this period.\n\nDetermine the rate at which the dark cloud on the surface of Jupiter increased its length after the impact with the comet or asteroid by measuring the length of image fragments on the set of the 3 top images displayed on the right.\n\nThe photos were taken in the same position of the cloud relative to the central meridian. The scale is determined from the image of Jupiter and position of the fragment marked on it. The equatorial diameter of Jupiter is 143842 km.",
-   "figures": [],
+   "statement": "In 2009, a nucleus of unknown comet or an asteroid crashed into Jupiter's atmosphere. A powerful explosion formed a dark cloud, which gradually stretched parallel to equator due to zonal flow in the atmosphere. Hubble Space Telescope was able to take a few pictures of Jupiter during this period.\n\nDetermine the rate at which the dark cloud on the surface of Jupiter increased its length after the impact with the comet or asteroid by measuring the length of image fragments on the set of the 3 top images displayed on the right.\n\nThe photos were taken in the same position of the cloud relative to the central meridian. The scale is determined from the image of Jupiter and position of the fragment marked on it. The equatorial diameter of Jupiter is 143842 km.\n\n![Jupiter and five dated cloud images, including the three upper panels used in the question](#jupiter-handout-r75)",
+   "figures": [
+    {
+     "id": "jupiter-handout-r75",
+     "alt": "Jupiter and five dated cloud images, including the three upper panels used in the question",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2014-practical-alpha/jupiter-handout-r75.png",
+     "width": 2216,
+     "height": 1425,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       34.51,
+       276.17,
+       566.15,
+       617.98
+      ],
+      "dpi": 300,
+      "document": "supplement-1"
+     }
+    }
+   ],
    "parts": [],
    "topics": [
     "astronomy/planetary-science",
@@ -67,6 +103,10 @@
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "supplement-1",
+     "page": 1
     }
    ]
   },
@@ -76,8 +116,63 @@
    "title": "Comet",
    "points": null,
    "problemType": "practical",
-   "statement": "In the middle of July 2014, an automatic interplanetary spacecraft Rosetta of European Space Agency made the discovery that the comet 67P/Churyumov–Gerasimenko had a bipartite nucleus. On September 5th Rosetta was able to determine that its albedo was about 0.04 and the maximum nucleus length, 4 km.\n\nOn a separate sheet are the pictures demonstrating rotation of the comet nucleus, taken with 40 minutes intervals. Each picture has the date when it was taken and the angle of nucleus rotation relative to the first picture indicated on it. Using these images, determine the rotation period of the comet and plot its light curve based on them. Assume the same albedo over the entire surface of the comet.\n\nAccording to NASA, the estimated distances at that time were as following:\n\nRosetta to Sun 557 794 935 km,\nRosetta to Earth 407 252 536 km,\nRosetta to the comet 12 294 km.",
-   "figures": [],
+   "statement": "In the middle of July 2014, an automatic interplanetary spacecraft Rosetta of European Space Agency made the discovery that the comet 67P/Churyumov–Gerasimenko had a bipartite nucleus. On September 5th Rosetta was able to determine that its albedo was about 0.04 and the maximum nucleus length, 4 km.\n\nOn a separate sheet are the pictures demonstrating rotation of the comet nucleus, taken with 40 minutes intervals. Each picture has the date when it was taken and the angle of nucleus rotation relative to the first picture indicated on it. Using these images, determine the rotation period of the comet and plot its light curve based on them. Assume the same albedo over the entire surface of the comet.\n\nAccording to NASA, the estimated distances at that time were as following:\n\nRosetta to Sun 557 794 935 km,\nRosetta to Earth 407 252 536 km,\nRosetta to the comet 12 294 km.\n\n![Comet rotation sheet 1: six dated images with angles and 5 km scales](#comet-handout-1-r75)\n\n![Comet rotation sheet 2: six dated images with angles and 5 km scales](#comet-handout-2-r75)\n\n![Comet rotation sheet 3: six dated images with angles and 5 km scales](#comet-handout-3-r75)",
+   "figures": [
+    {
+     "id": "comet-handout-1-r75",
+     "alt": "Comet rotation sheet 1: six dated images with angles and 5 km scales",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2014-practical-alpha/comet-handout-1-r75.png",
+     "width": 1943,
+     "height": 2898,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       67.28,
+       119.57,
+       533.39,
+       814.99
+      ],
+      "dpi": 300,
+      "document": "supplement-2"
+     }
+    },
+    {
+     "id": "comet-handout-2-r75",
+     "alt": "Comet rotation sheet 2: six dated images with angles and 5 km scales",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2014-practical-alpha/comet-handout-2-r75.png",
+     "width": 1943,
+     "height": 2895,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       67.28,
+       107.78,
+       533.39,
+       802.35
+      ],
+      "dpi": 300,
+      "document": "supplement-2"
+     }
+    },
+    {
+     "id": "comet-handout-3-r75",
+     "alt": "Comet rotation sheet 3: six dated images with angles and 5 km scales",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iao-2014-practical-alpha/comet-handout-3-r75.png",
+     "width": 1943,
+     "height": 2898,
+     "source": {
+      "page": 3,
+      "pdfRect": [
+       67.28,
+       119.57,
+       533.39,
+       814.99
+      ],
+      "dpi": 300,
+      "document": "supplement-2"
+     }
+    }
+   ],
    "parts": [],
    "topics": [
     "astronomy/comets",
@@ -94,6 +189,18 @@
     {
      "document": "problems",
      "page": 1
+    },
+    {
+     "document": "supplement-2",
+     "page": 1
+    },
+    {
+     "document": "supplement-2",
+     "page": 2
+    },
+    {
+     "document": "supplement-2",
+     "page": 3
     }
    ]
   }
