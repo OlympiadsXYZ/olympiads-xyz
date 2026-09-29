@@ -5,17 +5,26 @@ title: 'Задача 2'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2012/ioaa-2012-data-analysis-data-student-bg-doc.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-17T14:49:53.673Z'
-verifier: 'crop-audit'
+verifiedAt: '2026-09-29T22:46:03.451Z'
+verifier: 'single-pass'
 ---
 
 *6th International Olympiad on Astronomy and Astrophysics, 04 to 14 August, 2012 - Rio de Janeiro - Brazil · 4 август 2012 г.*
 
 <Warning title="Бележка към темата">
-В архива липсва файл с решения за тази задача от Data Analysis частта.
+Официалните отговори са на английски. В ключа за задача 1 означенията Night B и Night C следват предварителното условие Data_preliminary.doc: данните за B там са данните за C в българското условие, а данните за C там са данните за B тук. Оригиналните таблици и означения в ключа са запазени; това засяга отговора за облаците и надписите на графиките.
 </Warning>
 
 ## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Въпроси](#questions)
+- [Приложение C: оценка на ъгловия коефициент при метода на най-малките квадрати](#appendix-c)
+
+</nav>
 
 Цефеидите са много ярки променливи звезди, чиито средни абсолютни звездни величини са функция на техните периоди на пулсация. Това позволява лесно да се определят истинските им светимости.
 
@@ -39,30 +48,107 @@ verifier: 'crop-audit'
 | SW Vel | 23.44 | -5.09 |
 | SV Vul | 44.98 | -6.04 |
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '93.1%', '--fig-max': '596px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-data-student-bg-doc/p2-fig1.png" alt="Крива на блясъка на Цефеида 1: звездна величина m по вертикала (от 23,5 до 26,5) в зависимост от времето t в дни (от 0 до 100) по хоризонтала, показани като червени точки, повтарящи периодичен модел на две мащамания в блясъка." width="1864" height="1204" loading="lazy" decoding="async" />
+<ProblemSection id="questions">
+
+### Въпроси
+
+**1)** Начертайте диаграма показваща $\langle M_V \rangle$ като функция от десетичния логаритъм на периода (в дни) на пулсация за всички цефеиди, представени в таблицата. **[1 т.]**
+
+**2)** Приемайки, че зависимостта е линейна, апроксимирайте наблюдателните данни с права линия - $\langle M_V \rangle$ като функция на $\log_{10}(P_0)$. Използвайте метода на най-малките квадрати. Този метод позволява да се определи абсолютната звездна величина на всяка цефеида от нейния период на пулсации. **[1 т.]**
+
+**3)** Фигури 1 и 2 показват кривите на блясъка на две цефеиди. Използвайте наличните данни, за да определите разстоянията до тези две цефеиди. Оценете грешката на това разстояние (не е нужно да използвате точни формули за определяне на грешката). **[3 т.]**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.5%', '--fig-max': '580px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-data-student-bg-doc/p2-fig1-v2.png" alt="Крива на блясъка на Цефеида 1: червени точки, звездна величина m спрямо времето t в дни." width="1811" height="1148" loading="lazy" decoding="async" />
 <figcaption>Фигура 1</figcaption>
 </figure>
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '93.1%', '--fig-max': '596px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-data-student-bg-doc/p2-fig2.png" alt="Крива на блясъка на Цефеида 2: звездна величина m по вертикала (от 25 до 28) в зависимост от времето t в дни (от 0 до 40+) по хоризонтала, показани като червени точки, повтарящи периодичен модел." width="1864" height="1169" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.5%', '--fig-max': '580px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-data-student-bg-doc/p2-fig2-v2.png" alt="Крива на блясъка на Цефеида 2: звездна величина m по вертикала (от 25 до 28) в зависимост от времето t в дни (от 0 до 40+) по хоризонтала, показани като червени точки, повтарящи периодичен модел." width="1811" height="1120" loading="lazy" decoding="async" />
 <figcaption>Фигура 2</figcaption>
 </figure>
 
-**1)** Начертайте диаграма показваща $\langle M_V \rangle$ като функция от десетичния логаритъм на периода (в дни) на пулсация за всички цефеиди, представени в таблицата.
+**4)** Сравнете разликата между разстоянията до двете звезди с типичните размери на една галактика и оценете дали е възможно те да принадлежат на една и съща галактика. Запишете своя отговор като: "YES" или "NO". **[0,5 т.]**
 
-**2)** Приемайки, че зависимостта е линейна, апроксимирайте наблюдателните данни с права линия - $\langle M_V \rangle$ като функция на $\log_{10}(P_0)$. Използвайте метода на най-малките квадрати. Този метод позволява да се определи абсолютната звездна величина на всяка цефеида от нейния период на пулсации.
+</ProblemSection>
 
-**3)** Фигури 1 и 2 показват кривите на блясъка на две цефеиди. Използвайте наличните данни, за да определите разстоянията до тези две цефеиди. Оценете грешката на това разстояние (не е нужно да използвате точни формули за определяне на грешката).
+<ProblemSection id="appendix-c">
 
-**4)** Сравнете разликата между разстоянията до двете звезди с типичните размери на една галактика и оценете дали е възможно те да принадлежат на една и съща галактика. Запишете своя отговор като: "YES" или "NO".
+### Приложение C: оценка на ъгловия коефициент при метода на най-малките квадрати
+
+Нека една величина Y е функция на друга величина X. Ако за конкретните стойности $X_i$ (i=1…n) от наблюдения (експеримент), сме получили стойности $Y_i$ и предполагаме, че зависимостта между тях е линейна, то можем да получим параметрите на линейната зависимост от метода на най-малките квадрати. Този метод позволява, използвайки n на брой уравнения от вида:
+
+$$
+Y_i = \alpha + \beta \cdot X_i
+$$
+
+да получим най-добрите стойности за ъгловия коефициент β и за свободния член α. Методът на най-малките квадрати дава за ъгловия коефициент β следната формула:
+
+$$
+\beta = \frac{\sum_i^n x_i y_i - \frac{1}{n}\sum_i^n x_i \sum_i^n y_i}{\sum_i^n x_i^2 - \frac{1}{n}\left(\sum_i^n x_i\right)^2}
+$$
+
+</ProblemSection>
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архива липсва файл с решения за задачата от Data Analysis частта.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-scoring">
+
+### Pontuation
+
+| Item | Points |
+|---|---|
+| 1 | 1.0 |
+| 2 | 1.0 |
+| 3 | 3.0 (1.5 each star) |
+| 4 | 0.5 |
+
+</ProblemSection>
+
+<ProblemSection id="solution-items-1-2">
+
+### Answers: Itens 1,2
+
+Figure 1
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.4%', '--fig-max': '272px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-data-student-bg-doc/p2-sol-fig1.png" alt="Plot titled 'A=-1.20528530538 B=-2.88489462276 std=0.0500453306985': Absolute Magnitude (−1 to −7) versus log10(Period in days) (0.2 to 1.8); fifteen points on a straight fitted line falling from about −2 at 0.29 to about −6 at 1.65." width="849" height="667" loading="lazy" decoding="async" />
+<figcaption>Figure 1:</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-item-3">
+
+### 3
+
+Star1 : $m=25.35$, $P=48\,days$, $M=-6.06\pm0.05$, $d=19.1\pm0.4\,Mpc$
+
+Star2 : $m=26.25$, $P=22\,days$, $M=-5.08\pm0.05$, $d=18.4\pm0.4\,Mpc$
+
+</ProblemSection>
+
+<ProblemSection id="solution-item-4">
+
+### 4
+
+$\Delta d=0.67\,Mpc$. If one considers that a typical galaxy has a $100\,Kpc$ radius, then it is possible that they are in the same galaxy, considering the $0.4\,Mpc$ uncertainty of each distance.
+
+</ProblemSection>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.4%', '--fig-max': '272px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-data-student-bg-doc/p2-sol-fig1.png" alt="Plot titled 'A=-1.20528530538 B=-2.88489462276 std=0.0500453306985': Absolute Magnitude (−1 to −7) versus log10(Period in days) (0.2 to 1.8); fifteen points on a straight fitted line falling from about −2 at 0.29 to about −6 at 1.65." width="849" height="667" loading="lazy" decoding="async" />
+<figcaption>Figure 1:</figcaption>
+</figure>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [Data-student-bg.doc](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2012/Data%20Analysis/Data-student-bg.doc)
+· официални решения: [DataAnalysis_Solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2012/Data%20Analysis/DataAnalysis_Solutions.pdf#page=4)
+· допълнителни данни: [DataAnalysisFINAL.doc](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2012/Data%20Analysis/DataAnalysisFINAL.doc)
+· допълнителни данни: [Data_preliminary.doc](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2012/Data%20Analysis/Data_preliminary.doc)

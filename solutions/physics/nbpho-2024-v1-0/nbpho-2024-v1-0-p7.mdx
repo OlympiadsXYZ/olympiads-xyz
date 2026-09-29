@@ -1,0 +1,90 @@
+---
+id: nbpho-2024-v1-0-p7
+source: 'NBPhO 2024, Теория и експеримент'
+title: 'Задача 7. Waves'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2024/nbpho-2024-v1-0.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:46:13.672Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2024 · 4 т.*
+
+## Условие
+
+*— Janis Huns, Jaan Kalda.* The dispersion relation (i.e. the dependence of the circular frequency $\omega$ on the wave vector $k = \frac{2\pi}{\lambda}$) of capillary-gravity waves is
+
+$$
+\omega^2 = gk^\alpha + \frac{\sigma}{\rho}k^\beta,
+$$
+
+where $\sigma$ denotes the surface tension, $g = 9.81\,\mathrm{m\,s^{-2}}$, and $\rho = 1000\,\mathrm{kg\,m^{-3}}$.
+
+**i)** determine the values of the exponents $\alpha$ and $\beta$. **[1 т.]**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43.3%', '--fig-max': '277px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2024-v1-0/p7-fig1-v3.png" alt="Grey-scale photograph of the wake behind an object moving on a water surface: a light vertical bar (the object) at the top centre, from which V-shaped wave crests spread downwards towards the edges of the image; the label (a) U = 0.60 m/s is written vertically along the left edge." width="867" height="1226" loading="lazy" decoding="async" />
+<figcaption>F. Moisy, M. Rabaud, PRE 90, 023009 (2014)</figcaption>
+</figure>
+
+**ii)** In the image above, we can see how an object moving with a constant speed $U = 60\,\mathrm{cm\,s^{-1}}$ generates a wake — a set of waves of different wavelengths. Pay attention to the short-wavelength waves whose wave crest extends from the object almost up to the edges of the photo: the presence of a very long wavefront testifies that for these particular waves, the phase and group velocities are equal. Determine the surface tension of water. You can take measurements from the photo. Note that while phase speed is the speed of a constant phase of the wave, the group speed $v_g = \frac{\mathrm{d}\omega}{\mathrm{d}k}$ is the speed of a wave packet (a train of waves). **[3 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+*— Solution by Tudor Plopeanu.*
+
+<ProblemSection id="solution-sol-i">
+
+### i) (1 т.)
+
+Both $gk^\alpha$ and $\frac{\sigma}{\rho}k^\beta$’s dimensionalities are $\mathrm{s^{-2}}$, while $k$’s dimensionality is $\mathrm{m^{-1}}$. The surface tension’s dimensionality is $\mathrm{kg}/\mathrm{s^2}$. As such, $\alpha = 1$ and $\beta = 3$.
+
+**Grading**: (preliminary)
+
+1. Dimensional analysis (or similar technique). **(0.2 pts)**
+2. Units of $\sigma$ **(0.2 pts)**
+3. $\alpha = 1$. **(0.3 pts)**
+4. $\beta = 3$. **(0.3 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-sol-ii">
+
+### ii) (3 т.)
+
+The phase and group velocities of the wake are equal, i.e. $\frac{\mathrm{d}\omega}{\mathrm{d}k} = \frac{\omega}{k}$. We can find $\frac{\omega}{k}$ from the Mach angle formed by the wave front in the picture: $\sin\mu = \frac{\omega}{Uk}$. Differentiating the dispersion relation,
+
+$$
+2\omega\frac{\mathrm{d}\omega}{\mathrm{d}k} = (g + 3\frac{\sigma}{\rho}k^2) \implies 2\omega^2 = k(g + 3\frac{\sigma}{\rho}k^2).
+$$
+
+Substituting our dispersion relation, we obtain $g = \frac{\sigma}{\rho}k^2$ and $\omega^2 = 2gk$. Substituting $g^{\frac{1}{2}} = (\frac{\sigma}{\rho})^{\frac{1}{2}}k$, we reach $\frac{\omega^2}{k^2} = 2(\frac{g\sigma}{\rho})^{\frac{1}{2}}$. Thus, we can find
+
+$$
+\sigma = \frac{\rho U^4\sin^4\mu}{4g} \approx 60\,\mathrm{g\,s^{-2}}.
+$$
+
+for measured $\mu \approx 21.5^{\circ}$.
+
+**Grading**: (preliminary)
+
+1. Identifying $d\omega/dk = \omega/k$. **(0.6 pts)**
+2. Correct angle i.e. $\sin(\mu) = \omega/(Uk)$ **(0.6 pts)**
+3. Measuring $\mu$ from the picture **(0.4 pts)**
+4. Value $\mu \in [20^{\circ}, 30^{\circ}]$ **(0.3 pts)**
+5. Calculate the derivative $d\omega/dk$ **(0.4 pts)**
+6. Correct expression for $\sigma$ **(0.4 pts)**
+7. Value $\sigma \approx 60\,\mathrm{g\,s^{-2}}$ **(0.3 pts)**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2024_problems_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2024/NBPhO_2024_problems_v1.0.pdf#page=2)
+· официални решения: [NBPhO_2024_solutions_v0.98.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2024/NBPhO_2024_solutions_v0.98.pdf#page=6)

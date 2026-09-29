@@ -1,0 +1,434 @@
+---
+id: apho-2013-theory-3-p3
+source: 'APhO 2013, Теория'
+title: 'Задача 3. Physics of Spin'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/APhO/2013/apho-2013-theory-3.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T22:43:15.164Z'
+verifier: 'single-pass'
+---
+
+*Problem Physics of Spin — Theory Question 3 · 10 т.*
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Part A. Larmor precession](#a)
+- [Part B. Rotating frame](#b)
+- [Part C. Rabi oscillation](#c)
+- [Part D. Measurement incompatibility](#d)
+- [Summary Answer Sheet](#answer-sheet)
+
+</nav>
+
+All matters in the universe have fundamental properties called spin, besides their mass and charge. Spin is an intrinsic form of angular momentum carried by particles. Despite the fact that quantum mechanics is needed for a full treatment of spin, we can still study the physics of spin using the usual classical formalism. In this problem, we are investigating the influence of magnetic field on spin using its classical analogue.
+
+The classical torque equation of spin is given by
+
+$$
+\boldsymbol{\tau} = \frac{d\boldsymbol{L}}{dt} = \boldsymbol{\mu}\times\boldsymbol{B}.
+$$
+
+In this case, the angular momentum $\boldsymbol{L}$ represents the “intrinsic” spin of the particles, $\boldsymbol{\mu}$ is the magnetic moment of the particles, and $\boldsymbol{B}$ is magnetic field. The spin of a particle is associated with a magnetic moment via the equation
+
+$$
+\boldsymbol{\mu} = -\gamma\boldsymbol{L}
+$$
+
+where $\gamma$ is the gyromagnetic ratio.
+
+*In this problem, the term “frequency” means angular frequency (rad/s), which is a scalar quantity. All bold letters represent vectors; otherwise they represent scalars.*
+
+<ProblemSection id="a">
+
+### Part A. Larmor precession (1,6 т.)
+
+**1.** Prove that the magnitude of magnetic moment $\mu$ is always constant under the influence of a magnetic field $\boldsymbol{B}$. For a special case of stationary (constant) magnetic field, also show that the angle between $\boldsymbol{\mu}$ and $\boldsymbol{B}$ is constant.
+
+(*Hint*: You can use properties of vector products.) **[0,8 т.]**
+
+**2.** A uniform magnetic field $\boldsymbol{B}$ exists and it makes an angle $\phi$ with a particle's magnetic moment $\boldsymbol{\mu}$. Due to the torque by the magnetic field, the magnetic moment $\boldsymbol{\mu}$ rotates around the field $\boldsymbol{B}$, which is also known as Larmor precession. Determine the Larmor precession frequency $\omega_0$ of the magnetic moment with respect to $\boldsymbol{B} = B_0\boldsymbol{k}$. **[0,8 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### Part B. Rotating frame (3,4 т.)
+
+In this section, we choose a rotating frame $S'$ as our frame of reference. The rotating frame $S' = (x', y', z')$ rotates with an angular velocity $\omega\boldsymbol{k}$ as seen by an observer in the laboratory frame $S = (x, y, z)$, where the axes $x', y', z'$ intersect with $x, y, z$ at time $t = 0$. Any vector $\boldsymbol{A} = A_x\boldsymbol{i} + A_y\boldsymbol{j} + A_z\boldsymbol{k}$ in a lab frame can be written as $\boldsymbol{A} = A_x{}'\boldsymbol{i}' + A_y{}'\boldsymbol{j}' + A_z{}'\boldsymbol{k}'$ in the rotating frame $S'$. The time derivative of the vector becomes
+
+$$
+\frac{d\boldsymbol{A}}{dt} = \left(\frac{dA_x{}'}{dt}\boldsymbol{i}' + \frac{dA_y{}'}{dt}\boldsymbol{j}' + \frac{dA_z{}'}{dt}\boldsymbol{k}'\right) + \left(A_x{}'\frac{d\boldsymbol{i}'}{dt} + A_y{}'\frac{d\boldsymbol{j}'}{dt} + A_z{}'\frac{d\boldsymbol{k}'}{dt}\right)
+$$
+
+$$
+\left(\frac{d\boldsymbol{A}}{dt}\right)_{lab} = \left(\frac{d\boldsymbol{A}}{dt}\right)_{rot} + (\omega\mathbf{k}\times\boldsymbol{A}),
+$$
+
+where $\left(\frac{d\boldsymbol{A}}{dt}\right)_{lab}$ is the time derivative of vector $\boldsymbol{A}$ seen by an observer in the lab frame, and $\left(\frac{d\boldsymbol{A}}{dt}\right)_{rot}$ is the time derivative seen by an observer in the rotating frame. For all the following problems in this part, the answers are referred to the rotating frame $S'$.
+
+**1.** Show that the time evolution of the magnetic moment follows the equation
+
+$$
+\left(\frac{d\boldsymbol{\mu}}{dt}\right)_{rot} = -\gamma\,\boldsymbol{\mu}\times\boldsymbol{B}_{eff},
+$$
+
+where $\boldsymbol{B}_{eff} = \boldsymbol{B} - \frac{\omega}{\gamma}\boldsymbol{k}'$ is the effective magnetic field. **[0,8 т.]**
+
+**2.** For $\boldsymbol{B} = B_0\boldsymbol{k}$, what is the new precession frequency $\Delta$ in terms of $\omega_0$ and $\omega$? **[0,4 т.]**
+
+**3.** Now, let us consider the case of a time-varying magnetic field. Besides a constant magnetic field, we also apply a rotating magnetic field $\boldsymbol{b}(t) = b(\cos\omega t\,\boldsymbol{i} + \sin\omega t\,\boldsymbol{j})$, so $\boldsymbol{B} = B_0\boldsymbol{k} + \boldsymbol{b}(t)$. Show that the new Larmor precession frequency of the magnetic moment is
+
+$$
+\Omega = \gamma\sqrt{\left(B_0 - \frac{\omega}{\gamma}\right)^2 + b^2}.
+$$
+**[1,2 т.]**
+
+**4.** Instead of applying the field $\boldsymbol{b}(t) = b(\cos\omega t\,\boldsymbol{i} + \sin\omega t\,\boldsymbol{j})$, now we apply $\boldsymbol{b}(t) = b(\cos\omega t\,\boldsymbol{i} - \sin\omega t\,\boldsymbol{j})$, which rotates in the opposite direction and hence $\boldsymbol{B} = B_0\boldsymbol{k} + b(\cos\omega t\,\boldsymbol{i} - \sin\omega t\,\boldsymbol{j})$. What is the effective magnetic field $\boldsymbol{B}_{eff}$ for this case (in terms of the unit vectors $\boldsymbol{i}', \boldsymbol{j}', \boldsymbol{k}'$)? What is its time average, $\overline{\boldsymbol{B}_{eff}}$ (recall that $\overline{\cos 2\pi t/T} = \overline{\sin 2\pi t/T} = 0$)? **[1 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### Part C. Rabi oscillation (3 т.)
+
+For an ensemble of $N$ particles under the influence of a large magnetic field, the spin can have two quantum states: “up” and “down”. Consequently, the total population of spin up $N_\uparrow$ and down $N_\downarrow$ obeys the equation
+
+$$
+N_\uparrow + N_\downarrow = N.
+$$
+
+The difference of spin up population and spin down population yields the macroscopic magnetization along the $z$ axis:
+
+$$
+M = (N_\uparrow - N_\downarrow)\mu = N\mu_z.
+$$
+
+In a real experiment, two magnetic fields are usually applied, a large bias field $B_0\boldsymbol{k}$ and an oscillating field with amplitude $2b$ perpendicular to the bias field ($b \ll B_0$). Initially, only the large bias is applied, causing all the particles lie in the spin up states ($\boldsymbol{\mu}$ is oriented in the $z$-direction at $t = 0$). Then, the oscillating field is turned on, where its frequency $\omega$ is chosen to be in resonance with the Larmor precession frequency $\omega_0$, i.e. $\omega = \omega_0$. In other words, the total field after time $t = 0$ is given by
+
+$$
+\boldsymbol{B}(t) = B_0\boldsymbol{k} + 2b\cos\omega_0 t\,\boldsymbol{i}.
+$$
+
+**1.** In the rotating frame $S'$, show that the effective field can be approximated by
+
+$$
+\boldsymbol{B}_{eff} \approx b\boldsymbol{i}',
+$$
+
+which is commonly known as rotating wave approximation. What is the precession frequency $\Omega$ in frame $S'$? **[1,2 т.]**
+
+**2.** Determine the angle $\alpha$ that $\boldsymbol{\mu}$ makes with $\boldsymbol{B}_{eff}$. Also, prove that the magnetization varies with time as
+
+$$
+M(t) = N\mu(\cos\Omega t).
+$$
+**[0,6 т.]**
+
+**3.** Under the application of magnetic field described above, determine the fractional population of each spin up $P_\uparrow = N_\uparrow/N$ and spin down $P_\downarrow = N_\downarrow/N$ as a function of time. Plot $P_\uparrow(t)$ and $P_\downarrow(t)$ on the same graph vs. time $t$. The alternating spin up and spin down population as a function of time is called Rabi oscillation. **[1,2 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="d">
+
+### Part D. Measurement incompatibility (2 т.)
+
+Spin is in fact a vector quantity; but due to its quantum properties, we cannot measure each of its components simultaneously (i.e. we can know both $|\boldsymbol{\mu}|$ and $\mu_z$ as in above problems; but not all $|\boldsymbol{\mu}|, \mu_x, \mu_y$, and $\mu_z$ simultaneously). In this problem, we will do a calculation based on the Heisenberg uncertainty principle (using the relation $\Delta p_q\Delta q \ge \hbar$) to show how these measurements are incompatible with each other.
+
+**1.** Let us consider an oven source of silver atoms, which has a small opening. The atoms stream out of the opening along $-y$ direction (see Figure below) and experience a spatial varying field $\boldsymbol{B}_1$. The field $\boldsymbol{B}_1$ has strong bias field component in the $z$ direction, where the atoms with different magnetic moment $\mu_z = \pm\gamma\hbar$ are split in the $z$ direction. At a distance $D$ from the oven source, a screen $SC_1$ is put to allow only spin up atoms to pass (blocking spin down atoms). Thus, at the instant after passing the screen, the atoms are prepared in spin up states. After the screen, the atoms enter a region of non-homogenous field $\boldsymbol{B}_2$ where the atoms feel a force
+
+$$
+F_x = \mu_x C.
+$$
+
+The field $\boldsymbol{B}_2$ has strong bias field component in the $x$ direction, where the atoms have magnetic moment $\mu_x = \pm\gamma\hbar$.
+
+[figure fig1]
+
+In order to determine $\mu_x$ by observing the splitting in $x$ direction, show that the following condition must be fulfilled:
+
+$$
+\frac{1}{\hbar}|\mu_x|\Delta x C t \gg 1,
+$$
+
+where $t$ is the duration after leaving the screen $SC_1$ and $\Delta x$ is the opening width on $SC_1$. **[1 т.]**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '35.6%', '--fig-max': '228px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-3/fig1.png" alt="Oven, two magnetic fields and spin-selecting screen" width="713" height="520" loading="lazy" decoding="async" />
+</figure>
+
+**2.** The atoms are initially prepared in the spin up states right after leaving the screen, where $\mu_z = \gamma\hbar = |\mu_x|$. This means the atoms will precess at rates covering a range of values $\Delta\omega$ with respect to the $x$ component of $\boldsymbol{B}_2$, specifically $B_{2x} = B_0 + Cx$. Prove that the spread in the precession angle $\Delta\omega t$ is so large and hence we cannot measure both $\mu_x$ and $\mu_z$ simultaneously. In other words, the measurement of $\mu_x$ destroys the information on $\mu_z$. **[1 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="answer-sheet">
+
+### Summary Answer Sheet
+
+Student Code: □ □ □ □ □
+
+Physics of Spin (10 points)
+
+**Part A. Larmor Precession (1.6 points)**
+
+| Question | Answer | Marks |
+| --- | --- | --- |
+| 1. 0.8 pts | __________ | |
+| 2. 0.8 pts | $\omega_0=$ __________ | |
+
+**Part B. Rotating Frame (3.4 points)**
+
+| Question | Answer | Marks |
+| --- | --- | --- |
+| 1. 0.8 pts | __________ | |
+| 2. 0.4 pts | $\Delta=$ __________ | |
+| 3. 1.2 pts | __________ | |
+| 4. 1.0 pts | $\mathbf B_{eff}=$ __________; $\overline{\mathbf B_{eff}}=$ __________ | |
+
+**Part C. Rabi Oscillation (3.0 points)**
+
+| Question | Answer | Marks |
+| --- | --- | --- |
+| 1. 1.2 pts | __________; $\Omega=$ __________ | |
+| 2. 0.6 pts | $\alpha=$ __________; __________ | |
+| 3. 1.2 pts | $P_\uparrow=\frac{N_\uparrow}{N}=$ __________; $P_\downarrow=\frac{N_\downarrow}{N}=$ __________ | |
+
+**Part D. Measurement incompatibility (2.0 points)**
+
+| Question | Answer | Marks |
+| --- | --- | --- |
+| 1. 1.0 pts | __________ | |
+| 2. 1.0 pts | __________ | |
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-solution-1">
+
+### Part A. Larmor Precession
+
+1. From the two equations given in the text, we obtain the relation
+
+$$
+\frac{d\boldsymbol{\mu}}{dt} = -\gamma\boldsymbol{\mu}\times\mathbf{B}. \qquad (1)
+$$
+
+Taking the dot product of eq (1). with $\boldsymbol{\mu}$, we can prove that
+
+$$
+\begin{aligned} \boldsymbol{\mu}\cdot\frac{d\boldsymbol{\mu}}{dt} &= -\gamma\boldsymbol{\mu}\cdot(\boldsymbol{\mu}\times\mathbf{B}), \\ \frac{d|\boldsymbol{\mu}|^2}{dt} &= 0, \\ \mu = |\boldsymbol{\mu}| &= \mathrm{const.} \end{aligned} \qquad (2)
+$$
+
+Taking the dot product of eq. (1) with $\mathbf{B}$, we also prove that
+
+$$
+\begin{aligned} \mathbf{B}\cdot\frac{d\boldsymbol{\mu}}{dt} &= -\gamma\mathbf{B}\cdot(\boldsymbol{\mu}\times\mathbf{B}), \\ \mathbf{B}\cdot\frac{d\boldsymbol{\mu}}{dt} &= 0, \\ \mathbf{B}\cdot\boldsymbol{\mu} &= \mathrm{const.} \end{aligned} \qquad (3)
+$$
+
+An acute reader will notice that our master equation in (1) is identical to the equation of motion for a charged particle in a magnetic field
+
+$$
+\frac{d\mathbf{v}}{dt} = \frac{q}{m}\mathbf{v}\times\mathbf{B}. \qquad (4)
+$$
+
+Hence, the same argument for a charged particle in magnetic field can be applied in this case.
+
+2. For a magnetic moment making an angle of $\phi$ with $\mathbf{B}$,
+
+$$
+\begin{aligned} \frac{d\boldsymbol{\mu}}{dt} &= -\gamma\boldsymbol{\mu}\times\mathbf{B}, \\ |\boldsymbol{\mu}|\sin\phi\frac{d\theta}{dt} &= \gamma|\boldsymbol{\mu}|B_0\sin\phi, \\ \omega_0 = \frac{d\theta}{dt} &= \gamma B_0. \end{aligned} \qquad (5)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-2">
+
+### Part B. Rotating frame
+
+1. Using the relation given in the text, it is easily shown that
+
+$$
+\begin{aligned} \left(\frac{d\boldsymbol{\mu}}{dt}\right)_{\mathrm{rot}} &= \left(\frac{d\boldsymbol{\mu}}{dt}\right)_{\mathrm{lab}} - \boldsymbol{\omega}\times\boldsymbol{\mu} \\ &= -\gamma\boldsymbol{\mu}\times\mathbf{B} - \omega\mathbf{k}'\times\boldsymbol{\mu} \\ &= -\gamma\boldsymbol{\mu}\times\left(\mathbf{B} - \frac{\omega}{\gamma}\mathbf{k}'\right) \\ &= -\gamma\boldsymbol{\mu}\times\mathbf{B}_{\mathrm{eff}}. \end{aligned} \qquad (6)
+$$
+
+Note that $\mathbf{k}$ is equal to $\mathbf{k}'$ as observed in the rotating frame.
+
+2. The new precession frequency as viewed on the rotating frame $S'$ is
+
+$$
+\begin{aligned} \vec{\Delta} &= (\omega_0 - \omega)\,\mathbf{k}', \\ \Delta &= \gamma B_0 - \omega. \end{aligned} \qquad (7)
+$$
+
+3. Since the magnetic field as viewed in the rotating frame is $\mathbf{B} = B_0\mathbf{k}' + b\mathbf{i}'$,
+
+$$
+\mathbf{B}_{\mathrm{eff}} = \mathbf{B} - \omega/\gamma\mathbf{k}' = \left(B_0 - \frac{\omega}{\gamma}\right)\mathbf{k}' + b\mathbf{i}',
+$$
+
+and
+
+$$
+\begin{aligned} \Omega &= \gamma|\mathbf{B}_{\mathrm{eff}}|, \\ &= \gamma\sqrt{\left(B_0 - \frac{\omega}{\gamma}\right)^2 + b^2}. \end{aligned} \qquad (8)
+$$
+
+4. In this case, the effective magnetic field becomes
+
+$$
+\begin{aligned} \mathbf{B}_{\mathrm{eff}} &= \mathbf{B} - \omega/\gamma\mathbf{k}' \\ &= \left(B_0 - \frac{\omega}{\gamma}\right)\mathbf{k}' + b(\cos 2\omega t\mathbf{i}' - \sin 2\omega t\mathbf{j}') \end{aligned} \qquad (9)
+$$
+
+which has a time average of $\overline{\mathbf{B}_{\mathrm{eff}}} = \left(B_0 - \frac{\omega}{\gamma}\right)\mathbf{k}'$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-3">
+
+### Part C. Rabi oscillation
+
+1. The oscillating field can be considered as a superposition of two oppositely rotating field:
+
+$$
+2b\cos\omega_0 t\mathbf{i} = b(\cos\omega_0 t\mathbf{i} + \sin\omega_0 t\mathbf{j}) + b(\cos\omega_0 t\mathbf{i} - \sin\omega_0 t\mathbf{j}),
+$$
+
+which gives an effective field of (with $\omega = \omega_0 = \gamma B_0$):
+
+$$
+\mathbf{B}_{\mathrm{eff}} = \left(B_0 - \frac{\omega}{\gamma}\right)\mathbf{k}' + b\mathbf{i}' + b(\cos 2\omega_0 t\mathbf{i}' - \sin 2\omega_0 t\mathbf{j}').
+$$
+
+Since $\omega_0 \gg \gamma b$, the rotation of the term $b(\cos 2\omega_0 t\mathbf{i}' - \sin 2\omega_0 t\mathbf{j}')$ is so fast compared to the frequency $\gamma b$. This means that we can take the approximation
+
+$$
+\mathbf{B}_{\mathrm{eff}} \approx \left(B_0 - \frac{\omega}{\gamma}\right)\mathbf{k}' + b\mathbf{i}' = b\mathbf{i}', \qquad (10)
+$$
+
+where the magnetic moment precesses with frequency $\Omega = \gamma b$.
+
+As $\Omega = \gamma b \ll \omega_0$, the magnetic moment does not “feel” the rotating term $b(\cos 2\omega_0 t\mathbf{i}' - \sin 2\omega_0 t\mathbf{j}')$ which averaged to zero.
+
+2. Since the angle $\alpha$ that $\boldsymbol{\mu}$ makes with $\mathbf{B}_{\mathrm{eff}}$ stays constant and $\boldsymbol{\mu}$ is initially oriented along the $z$ axis, $\alpha$ is also the angle between $\mathbf{B}_{\mathrm{eff}}$ and the $z$ axis which is
+
+$$
+\tan\alpha = \frac{b}{B_0 - \frac{\omega}{\gamma}}. \qquad (11)
+$$
+
+[figure fig2]
+
+From the geometry of the system, we can show that ($\cos\theta = \mu_z/\mu$):
+
+$$
+\begin{aligned} 2\mu\sin\frac{\theta}{2} &= 2\mu\sin\alpha\sin\frac{\Omega t}{2}, \\ \sin^2\frac{\theta}{2} &= \sin^2\alpha\sin^2\frac{\Omega t}{2}, \\ \frac{1 - \cos\theta}{2} &= \sin^2\alpha\frac{1 - \cos\Omega t}{2}, \\ \cos\theta &= 1 - \sin^2\alpha + \sin^2\alpha\cos\Omega t, \\ \cos\theta &= \cos^2\alpha + \sin^2\alpha\cos\Omega t. \end{aligned}
+$$
+
+So, the projected magnetic moment along the $z$ axis is $\mu_z(t) = \mu\cos\theta$ and the magnetization is
+
+$$
+M = N\mu_z = N\mu\left(\cos^2\alpha + \sin^2\alpha\cos\Omega t\right). \qquad (12)
+$$
+
+Note that the magnetization does not depend on the reference frame $S$ or $S'$ ($\mu_z$ has the same value viewed in both frames).
+
+Taking $\omega = \omega_0 = \gamma B_0$, the angle $\alpha$ is $90^0$ and $M = N\mu\cos\Omega t$.
+
+3. From the relations
+
+$$
+\begin{aligned} P_\uparrow - P_\downarrow &= \frac{\mu_z}{\mu} = \cos\theta, \\ P_\uparrow + P_\downarrow &= 1, \end{aligned}
+$$
+
+we obtain the results ($\omega = \omega_0$)
+
+$$
+\begin{aligned} P_\downarrow &= \frac{1 - \cos\theta}{2} \\ &= \frac{1 - \cos^2\alpha - \sin^2\alpha\cos\Omega t}{2} \\ &= \sin^2\alpha\frac{1 - \cos\Omega t}{2} \\ &= \frac{b^2}{\left(B_0 - \frac{\omega}{\gamma}\right)^2 + b^2}\sin^2\frac{\Omega t}{2} \\ &= \sin^2\frac{\Omega t}{2}, \end{aligned} \qquad (13)
+$$
+
+and
+
+$$
+P_\uparrow = \frac{b^2}{\left(B_0 - \frac{\omega}{\gamma}\right)^2 + b^2}\cos^2\frac{\Omega t}{2} = \cos^2\frac{\Omega t}{2}. \qquad (14)
+$$
+
+[figure fig3]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '18.2%', '--fig-max': '117px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-3/fig2.png" alt="Magnetic-moment precession geometry" width="366" height="575" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '45.8%', '--fig-max': '293px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2013-theory-3/fig3.png" alt="Spin-up and spin-down population graph" width="917" height="506" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-4">
+
+### Part D. Measurement incompatibility
+
+1. In the $x$ direction, the uncertainty in position due to the screen opening is $\Delta x$. According to the uncertainty principle, the atom momentum uncertainty $\Delta p_x$ is given by
+
+$$
+\Delta p_x \approx \frac{\hbar}{\Delta x},
+$$
+
+which translates into an uncertainty in the $x$ velocity of the atom,
+
+$$
+v_x \approx \frac{\hbar}{m\Delta x}.
+$$
+
+Consequently, during the time of flight $t$ of the atoms through the device, the uncertainty in the width of the beam will grow by an amount $\delta x$ given by
+
+$$
+\delta x = \Delta v_x t \approx \frac{\hbar}{m\Delta x}t.
+$$
+
+So, the width of the beams is growing linearly in time. Meanwhile, the two beams are separating at a rate determined by the force $F_x$ and the separation between the beams after a time $t$ becomes
+
+$$
+d_x = 2\times\frac{1}{2}\frac{F_x}{m}t^2 = \frac{1}{m}|\mu_x|Ct^2.
+$$
+
+In order to be able to distinguish which beam a particle belongs to, the separation of the two beams must be greater than the widths of the beams; otherwise the two beams will overlap and it will be impossible to know what the $x$ component of the atom spin is. Thus, the condition must be satisfied is
+
+$$
+\begin{aligned} d_x &\gg \delta x, \\ \frac{1}{m}|\mu_x|Ct^2 &\gg \frac{\hbar}{m\Delta x}t, \\ \frac{1}{\hbar}|\mu_x|\Delta x C t &\gg 1. \end{aligned} \qquad (15)
+$$
+
+2. As the atoms pass through the screen, the variation of magnetic field strength across the beam width experienced by the atoms is
+
+$$
+\Delta B = \Delta x\frac{dB}{dx} = C\Delta x.
+$$
+
+This means the atoms will precess at rates covering a range of values $\Delta\omega$ given by
+
+$$
+\Delta\omega = \gamma\Delta B = \frac{\mu_z}{\hbar}\Delta B = \frac{|\mu_x|}{\hbar}C\Delta x,
+$$
+
+and, if previous condition in measuring $\mu_x$ is satisfied,
+
+$$
+\Delta\omega t \gg 1. \qquad (16)
+$$
+
+In other words, the spread in the angle $\Delta\omega t$ through which the magnetic moments precess is so large that the $z$ component of the spin is completely randomized or the measurement uncertainty is very large.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [3.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2013/Theory/3.pdf#page=1)
+· официални решения: [3_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2013/Theory/3_sol.pdf#page=1)
+· допълнителни данни: [3_anssheet.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2013/Theory/3_anssheet.pdf)

@@ -1,0 +1,1104 @@
+{
+ "paper": {
+  "id": "nbpho-2023-x",
+  "subject": "physics",
+  "competition": "NBPhO",
+  "year": 2023,
+  "round": null,
+  "roundType": "mixed",
+  "grade": null,
+  "lang": "en",
+  "title": "Nordic-Baltic Physics Olympiad 2023",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/NBPhO/2023/NBPhO_2023_problems.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/NBPhO/2023/NBPhO_2023_solutions.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/production_astra",
+   "at": "2026-09-29",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "cd981b012c3531b8b7da372c6d4812aaaba466d1a254b1ec83e3837f3e62fea6",
+    "solutions": "16aee1b44c3d3384a438b0312799eabb04ff0c2722b382706ad1dc2a30c3cc01"
+   },
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Fresh complete Astra source reading. Nine independent problems, 31 numbered parts plus unparted black-box experiment. All official solutions, alternatives and grading retained. Original draft reused with native solution sections and source-order figure placement. Printed source mistakes are retained, including black-box table headings and blank time constant, unbalanced equation, pack-of-papers derivative and notation slips, and surface-tension thickness-symbol discrepancy. Previously documented spelling normalizations restored to printed forms. No invented tolerances retained."
+  }
+ },
+ "problems": [
+  {
+   "id": "nbpho-2023-x-p1",
+   "number": 1,
+   "title": "Curling",
+   "points": 8,
+   "problemType": "theory",
+   "statement": "*— Oskar Vallhagen.*\n\nIn the sport of curling, participants take turns sliding near-cylindrical stones across an ice court towards a target, trying to get their stones as close to the target as possible after using a set of stones. A vertical cross section of a stone is depicted below, showing that the stone is in contact with the ice on a thin ring of radius $r$. The full radius of the stone is $R$, the mass of the stone is $m$ and the coefficient of friction with the ice is $\\mu$.\n\n\n\n[[figure:p1-fig1]]\n\nConsider the case when the stone is released at a speed $v_0$ with the aim of knocking out an opponent’s stone at a distance $s$.",
+   "figures": [
+    {
+     "id": "p1-fig1",
+     "alt": "Vertical cross section of a curling stone: a wide rounded body resting on the ice on a thin ring; horizontal arrows mark the full radius R from the left edge to the central axis and the contact-ring radius r.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p1-fig1.png",
+     "width": 800,
+     "height": 341,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       18.54,
+       150.62,
+       210.46,
+       232.15
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "i)",
+     "statement": "Give an expression for the sliding speed $v_s$ as a function of the time $t$ since the stone was released until the stone hits the opponent’s stone.",
+     "points": 1
+    },
+    {
+     "label": "ii)",
+     "statement": "What is the sliding speed $v_{\\mathrm{hit}}$ just before the stone hits the opponent’s stone?",
+     "points": 1,
+     "statementAfter": "Now the stone is given a small rotation at the initial angular speed $\\omega_0$ (this can be done to alter the deflection angle of the stone when it hits the opponent’s stone). Assume that the rotation speed $\\omega$ remains small throughout the sliding motion: $\\omega r \\ll v_s$. Keep only the main non-vanishing terms in your calculations, i.e. among the terms with a factor $(\\omega r/v_s)^n$, keep only the term with the smallest $n$. Depending on your approach you may use the following approximations for $x \\ll 1$: $(1+x)^{\\alpha} \\approx 1+\\alpha x+\\frac{1}{2}\\alpha(\\alpha-1)x^2$, $\\sin(\\alpha+x) \\approx \\sin\\alpha+x\\cos\\alpha$, $\\cos x \\approx 1-x^2/2$. You may also need the integral $\\int(at+b)^{-1}dt = a^{-1}\\ln|at+b|+C$."
+    },
+    {
+     "label": "iii)",
+     "statement": "By how much does the friction force on the stone change due to its rotation? Express your answer in terms of the current angular speed $\\omega$ and sliding speed $v_s$.",
+     "points": 2
+    },
+    {
+     "label": "iv)",
+     "statement": "Give an expression for the torque $T$ exerted on the stone.",
+     "points": 2
+    },
+    {
+     "label": "v)",
+     "statement": "What is the angular speed of the stone just before it hits the opponent’s stone?",
+     "points": 2
+    }
+   ],
+   "topics": [
+    "mechanics/friction",
+    "mechanics/rotation"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Jaan Kalda, Oskar Vallhagen, grading schemes by Oskar Vallhagen.*",
+    "sections": [
+     {
+      "id": "part-i",
+      "title": "i)",
+      "points": 1,
+      "statement": "As the stone is gliding over the ice everywhere on the contact surface, the friction force is $F_{fx} = \\mu m g$, i.e. the acceleration is $\\mu g$, directed in the negative $x$-direction (with the $x$-direction pointing towards the target stone). Thus, we get\n\n$$\\frac{dv_s}{dt} = -\\mu g \\Rightarrow v_s = v_0 - \\mu g t.$$\n\n**Grading:**\n\n- Correct friction force **(0.5 pts)**\n- Correct acceleration **(0.2 pts)**\n- correct $v_s$ **(0.3 pts)**"
+     },
+     {
+      "id": "part-ii",
+      "title": "ii)",
+      "points": 1,
+      "statement": "The simplest way to obtain the final velocity is to use energy conservation, noting that the friction force does a work $W_f = \\mu m g s$. Thus, we get\n\n$$\\frac{mv_0^2}{2} = \\frac{mv_{\\mathrm{hit}}^2}{2} + \\mu m g s \\Rightarrow v_{\\mathrm{hit}} = \\sqrt{v_0^2 - 2\\mu g s}.$$\n\n**Grading:**\n\n- Idea of using energy conservation **(0.2 pts)**\n- Calculating the work done by the friction force **(0.3 pts)**\n- Correct total energy conservation equation $v_s$ **(0.3 pts)**\n- Correct $v_{\\mathrm{hit}}$ **(0.2 pts)**\n\nAlternatively, one can first calculate the time $t_{\\mathrm{hit}}$ before the stone hits the opponents stone. Integrating the expression for $v_s$ up to this time gives\n\n$$s = v_0 t_{\\mathrm{hit}} - \\mu g\\frac{t_{\\mathrm{hit}}^2}{2}.$$\n\nSolving for $t_{\\mathrm{hit}}$, we get\n\n$$t_{\\mathrm{hit}} = \\frac{v_0}{\\mu g} - \\sqrt{\\frac{v_0^2}{\\mu^2 g^2} - \\frac{2s}{\\mu g}}$$\n\n(the solution with the plus sign gives a negative velocity). Inserting back into the expression for $v_s$ and simplifying gives\n\n$$v_{\\mathrm{hit}} = \\sqrt{v_0^2 - 2\\mu g s}.$$\n\n**Grading:**\n\n- Integration of the expression for $v_s$ **(0.4 pts)**\n- Solving for $t_{\\mathrm{hit}}$ **(0.4 pts)**\n- Inserting into expression for $v_s$ and final answer **(0.2 pts)**"
+     },
+     {
+      "id": "part-iii",
+      "title": "iii)",
+      "points": 2,
+      "statement": "Consider the motion of a point at the ring in contact with the ice at an angle $\\theta$ from the $x$-axis, moving at a velocity $v$ as depicted in the figure below. The components of this motion along the $x$ and $y$ axes can be seen to be $v_x = v_s - \\omega r\\sin\\theta$ and $v_y = \\omega r\\cos\\theta$, respectively.\n\n\n\n[[figure:p1-sol-fig1]]\n\nThe friction force per unit length has the magnitude\n\n$$F_f' = \\frac{\\mu m g}{2\\pi r}$$\n\neverywhere on the circle in contact with the ice, as before, but is now directed opposite to the local velocity $v$ rather than the sliding velocity $v_s$. The component of the force density in the $x$-direction thus becomes\n\n$$F_{fx}' = -F_f'\\cos\\varphi = -F_f'\\frac{v_x}{v}.$$\n\nFrom this point on, there are two ways to work out the mathematical calculations. **First**, consider an infinitesimal arc of the contact ring of central angle $\\mathrm{d}\\theta$; the friction force exerted on it has magnitude $\\mathrm{d}F_f = \\frac{\\mu m g}{2\\pi}\\mathrm{d}\\theta$. The total force is obviously directed antiparallel to the velocity of the stone as $y$-directional components of the acting on arcs at $\\theta$ and $\\pi - \\theta$ cancel pairwise out. The projection of the friction force acting on our arc is given by\n\n$$\\mathrm{d}F_x = \\frac{\\mu m g}{2\\pi}\\cos\\varphi\\,\\mathrm{d}\\theta$$\n\nUsing the small parameter $\\delta \\equiv \\omega r/v_s \\approx \\omega r/v \\ll 1$, we conclude that $\\varphi \\ll 1$, hence we can use approximation\n\n$$\\mathrm{d}F_x \\approx \\frac{\\mu m g}{2\\pi}\\left(1 - \\frac{1}{2}\\varphi^2\\right)\\mathrm{d}\\theta.$$\n\nThe angle $\\varphi$ can be found from the sine theorem assuming $\\sin\\varphi \\approx \\varphi$: $\\varphi \\approx \\sin\\left(\\frac{\\pi}{2} - \\theta\\right)\\frac{\\omega r}{v} \\approx \\cos\\theta\\frac{\\omega r}{v_s} \\equiv \\delta\\cos\\theta$. Alternatively, a similarly accurate expression cab be found by noting that\n\n$$\\varphi \\approx \\tan\\varphi = \\frac{v_y}{v_x} \\approx \\frac{v_y}{v_s} = \\frac{\\omega r\\cos\\theta}{v_s}.$$\n\nThus,\n\n$$\\mathrm{d}F_x = \\frac{\\mu m g}{2\\pi}\\left(1 - \\frac{\\delta^2}{2}\\cos^2\\theta\\right)\\mathrm{d}\\theta.$$\n\nRecognising that $\\int_0^{2\\pi}\\cos^2\\theta\\,d\\theta = \\pi$, this can be integrated to obtain\n\n$$F_x = \\mu m g\\left(1 - \\frac{\\omega^2 r^2}{4v_s^2}\\right)$$\n\nso that the final answer is\n\n$$\\Delta F_x = -\\frac{\\mu m g\\omega^2 r^2}{4v_s^2}.$$\n\n**The second way** is by continuing\n\n$$\\begin{aligned} F_{fx}' &= F_f'\\frac{v_x}{v} \\\\ &= F_f'\\frac{v_s - \\omega r\\sin\\theta}{\\sqrt{v_s^2 - 2v_s\\omega r\\sin\\theta + \\omega^2 r^2}} \\\\ &= F_f'\\frac{1 - \\delta\\sin\\theta}{\\sqrt{1 - 2\\delta\\sin\\theta + \\delta^2}}. \\end{aligned}$$\n\nTo second order in $\\delta$, we get, using the approximation suggested in the problem text for $x = -2\\delta\\sin\\theta + \\delta^2$ and doing some elementary algebra,\n\n$$F_{fx}' \\approx F_f'(1 - \\frac{1}{2}\\delta^2\\cos^2\\theta).$$\n\nThe total friction force can now be obtained by integrating over the length element of size $rd\\theta$ along the ring in contact with the ice, yielding, after simplifying and re-inserting the expression for $F_f'$,\n\n$$F_{fx} = \\int_0^{2\\pi} F_{fx}' r d\\theta = \\mu m g\\left(1 - \\frac{1}{4}\\delta^2\\right).$$\n\n**Grading:**\n\n- Understanding that the friction force is everywhere antiparallel with the local velocity **(0.4 pts)**\n- Calculating the magnitude of the force per unit length **(0.3 pts)**\n- Correct expression for the $x$ component **(0.2 pts)**\n\n**First solution:**\n\n- Approximate expression for $F_{fx}'$ or $\\mathrm{d}F_{fx}$ for small $\\varphi$ **(0.3 pts)**\n- Expressing $\\varphi$ in terms of $\\delta$ and $\\theta$ **(0.5 pts)**\n- Correct integral and final answer **(0.3 pts)**\n\n**Second solution:**\n\n- Expressing $F_{fx}'$ or $\\mathrm{d}F_{fx}$ in terms of $\\delta$ and $\\theta$ **(0.3 pts)**\n- Approximate expression for $F_{fx}'$ or $\\mathrm{d}F_{fx}$ for small $\\delta$ **(0.5 pts)**\n- Correct integral and final answer **(0.3 pts)**",
+      "figures": [
+       {
+        "id": "p1-sol-fig1",
+        "alt": "Top view of the contact ring: inner circle of radius r and outer circle of radius R around the centre with x and y axes; at a point on the ring at angle θ the velocity v is decomposed into v_s (horizontal) and ωr (tangential, dashed), with the angle φ between v and v_s and the angle θ − φ marked; an arrow v_s at the top right shows the sliding direction.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p1-sol-fig1.png",
+        "width": 825,
+        "height": 708,
+        "source": {
+         "page": 1,
+         "pdfRect": [
+          219.74,
+          159.52,
+          417.55,
+          329.17
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "part-iv",
+      "title": "iv)",
+      "points": 2,
+      "statement": "For the torque $\\tau'$ per unit length (around the central axis of the stone), we see from the figure that the angle between the local force per unit length and the radius is $\\theta - \\varphi$, yielding\n\n$$\\tau' = F_f' r\\sin(\\theta - \\varphi).$$\n\nFrom here on, there are again two ways to continue. **First,** we can use Taylor series and keep only the linear term: $\\sin(\\theta - \\varphi) \\approx \\sin\\theta - \\varphi\\cos\\theta$; by using the previously obtained expression $\\varphi \\approx \\delta\\cos\\theta$, we can express\n\n$$\\mathrm{d}\\tau = \\mu m g r(\\sin\\theta - \\delta\\cos^2\\theta)\\frac{\\mathrm{d}\\theta}{2\\pi}$$\n\nintegration of which yields\n\n$$\\tau = -\\frac{\\mu m g\\omega r^2}{2v_s}.$$\n\n**The second way** is to write\n\n$$\\begin{aligned} \\tau' &= F_f' r\\sin(\\theta - \\varphi) \\\\ &= F_f' r(\\sin\\theta\\cos\\varphi - \\cos\\theta\\sin\\varphi) \\\\ &= F_f' r(\\sin\\theta\\frac{v_x}{v} - \\cos\\theta\\frac{v_y}{v}), \\end{aligned}$$\n\nwhich, using the above expressions for $v_x$ and $v_y$, can be simplified to\n\n$$\\tau' = F_f' r\\frac{\\sin\\theta - \\delta}{\\sqrt{1 - 2\\delta\\sin\\theta + \\delta^2}}.$$\n\nApplying the same approximation as in the previous part and keeping only the first, now leading, order terms in $\\delta$, we get\n\n$$\\tau' \\approx F_f' r(\\sin\\theta - \\delta\\cos^2\\theta).$$\n\nIntegrating to find the total torque, we get\n\n$$\\tau = \\int_0^{2\\pi}\\tau' r d\\theta = -\\frac{1}{2}\\delta\\mu m g r.$$\n\n**Grading:**\n\n- Finding the angle between the local force per unit length and the radius **(0.5 pts)**\n- Correct expression for $\\tau'$ **(0.4 pts)**\n\n**First solution:**\n\n- Approximate expression for $\\tau'$ or $\\mathrm{d}\\tau$ for small $\\varphi$ **(0.3 pts)**\n- Expressing $\\varphi$ in terms of $\\delta$ and $\\theta$ **(0.5 pts)**\n- Correct integral and final answer **(0.3 pts)**\n\n**Second solution:**\n\n- Expressing $\\tau'$ or $\\mathrm{d}\\tau$ in terms of $\\delta$ and $\\theta$ **(0.3 pts)**\n- Approximate expression for $\\tau'$ or $\\mathrm{d}\\tau$ for small $\\delta$ **(0.5 pts)**\n- Correct integral and final answer **(0.3 pts)**"
+     },
+     {
+      "id": "part-v",
+      "title": "v)",
+      "points": 2,
+      "statement": "The equation describing the rotation is, now expressed in terms of $\\omega$ and $v_s$ rather than $\\delta$,\n\n$$I\\frac{d\\omega}{dt} = \\tau = -\\frac{1}{2}\\mu m g r^2\\frac{\\omega}{v_s},$$\n\nwhere the moment of inertia is $I \\approx \\frac{1}{2}mR^2$. As the correction to $F_{fx}$ is only of second order in $\\delta$, to the first, leading order approximation, we may neglect the effect of rotation on $F_{fx}$. Thus, the sliding speed $v_s$ has the same time dependenca as in part i). The equation above can then be separated as\n\n$$\\int_{\\omega_0}^{\\omega_{\\mathrm{hit}}}\\frac{d\\omega}{\\omega} = \\int_0^{t_{\\mathrm{hit}}} -\\mu g\\frac{r^2}{R^2}\\frac{dt}{v_0 - \\mu g t} \\Rightarrow$$\n\n$$\\ln\\frac{\\omega_{\\mathrm{hit}}}{\\omega_0} = \\frac{r^2}{R^2}\\ln\\frac{v_0 - \\mu g t_{\\mathrm{hit}}}{v_0},$$\n\nwhich, recognising that $v_0 - \\mu g t_{\\mathrm{hit}} = v_{\\mathrm{hit}}$, yields\n\n$$\\omega_{\\mathrm{hit}} = \\omega_0\\left(\\frac{v_{\\mathrm{hit}}}{v_0}\\right)^{\\frac{r^2}{R^2}}.$$\n\n**Grading:**\n\n- Correct equation of motion for the rotation **(0.5 pts)**\n- Realising that $v_s$ is unaffected by the rotation to leading order **(0.5 pts)**\n- Using separation of variabels **(0.5 pts)**\n- Final answer **(0.5 pts)**"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2023-x-p2",
+   "number": 2,
+   "title": "Nitrogen explosion",
+   "points": 8,
+   "problemType": "theory",
+   "statement": "*— Päivo Simson.*\n\nA half-sphere of radius $r = 0.1\\ \\mathrm{m}$ is filled with liquid nitrogen at the boiling point temperature of $T_1 = 77.4\\ \\mathrm{K}$ ($-195.8\\ ^{\\circ}\\mathrm{C}$). The other half is then firmly sealed onto the first, creating a sphere containing liquid nitrogen and nitrogen gas, each occupying one-half of the volume. The sphere is immediately thrown into $T_w = 20\\ ^{\\circ}\\mathrm{C}$ temperature water, where it floats exactly as shown in the figure below. After some time, it explodes.\n\n\n\n[[figure:p2-fig1]]\n\nThe sphere is made of PCTFE plastic of density $\\rho_p = 2130\\ \\mathrm{kg\\,m^{-3}}$, maximum tensile strength $\\sigma = 3.4 \\times 10^7\\ \\mathrm{N\\,m^{-2}}$ (above this stress, the plastic will break) and thermal conductivity $k = 0.84\\ \\mathrm{W\\,m^{-1}\\,K^{-1}}$. For liquid nitrogen, under the conditions considered here, the latent heat of vaporization is $\\lambda = 2.0 \\times 10^5\\ \\mathrm{J\\,kg^{-1}}$, specific heat $c_v = 2000\\ \\mathrm{J\\,kg^{-1}\\,K^{-1}}$ and density $\\rho_n = 808\\ \\mathrm{kg\\,m^{-3}}$. Molar mass $\\mathrm{M(N_2)} = 28\\ \\mathrm{g\\,mol^{-1}}$. The ideal gas constant $R = 8.31\\ \\mathrm{J\\,K^{-1}\\,mol^{-1}}$. Temperature dependence of saturated vapor pressure of nitrogen is shown below.\n\n[[figure:p2-fig2]]",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "alt": "A sphere floating half submerged: the upper half, labelled gas (dotted), is above the water line in air; the lower half, labelled liquid, is below the dashed water surface; labels air, water and 20 °C.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p2-fig1.png",
+     "width": 699,
+     "height": 266,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       234.04,
+       161.32,
+       401.58,
+       225
+      ],
+      "dpi": 300
+     }
+    },
+    {
+     "id": "p2-fig2",
+     "alt": "Graph of the saturated vapour pressure of nitrogen p (MPa), from 0 to 2.5, against temperature T (K), from 70 to 120; a rising convex curve from about 0.03 MPa at 70 K to about 2.5 MPa at 120 K, on a fine grid.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p2-fig2.png",
+     "width": 832,
+     "height": 438,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       218.07,
+       375.03,
+       417.55,
+       479.79
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "i)",
+     "statement": "What is the wall thickness $d$ of the sphere?",
+     "points": 1.5
+    },
+    {
+     "label": "ii)",
+     "statement": "What is the pressure $p_2$ inside the sphere right before it explodes? The outside pressure is $p_a = 1.0 \\times 10^5\\ \\mathrm{Pa}$.",
+     "points": 1.5
+    },
+    {
+     "label": "iii)",
+     "statement": "What is the temperature $T_2$ of liquid nitrogen right before the explosion?",
+     "points": 1.5
+    },
+    {
+     "label": "iv)",
+     "statement": "Calculate the mass of nitrogen that evaporates inside the sphere before the explosion.",
+     "points": 1.5
+    },
+    {
+     "label": "v)",
+     "statement": "Estimate the time it will take for the sphere to explode. The heat capacity of the plastic and the heat flux through the upper half of the sphere can be neglected.",
+     "points": 2
+    }
+   ],
+   "topics": [
+    "thermodynamics/phase-transitions",
+    "thermodynamics/heat-conduction",
+    "fluids/buoyancy"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Päivo Simson, grading schemes by Päivo Simson and ....*",
+    "sections": [
+     {
+      "id": "part-i",
+      "title": "i)",
+      "points": 1.5,
+      "statement": "As shown in the first figure of the problem, the sphere floats so that exactly half of it is submerged in water. When studying buoyancy, the mass of nitrogen gas can be considered negligibly small compared to the masses of liquid nitrogen and the plastic sphere. According to Archimedes’ principle, we have\n\n$$\\rho_n V_n + \\rho_p V_p = \\rho_w V_w,$$\n\nwhere $V_n$, $V_p$, and $V_w$ are the volumes of liquid nitrogen, plastic, and displaced water, respectively. We have\n\n$$\\frac{1}{2}\\cdot\\frac{4\\pi r^3\\rho_n}{3} + d\\cdot 4\\pi r^2\\rho_p = \\frac{1}{2}\\cdot\\frac{4\\pi r^3\\rho_w}{3},$$\n\nand solving for $d$ we get\n\n$$d = \\frac{r}{6}\\cdot\\frac{\\rho_w - \\rho_n}{\\rho_p} = 1.5\\ \\mathrm{mm}.$$\n\n**Grading:**\n\n- Archimedes’ principle **(0.3 pts)**\n- Correct volumes of liquid nitrogen, plastic, and displaced water **(0.6 pts)**\n- Correctly solving for $d$ **(0.3 pts)**\n- Correct answer $d = 1.5\\ \\mathrm{mm}$ **(0.3 pts)**"
+     },
+     {
+      "id": "part-ii",
+      "title": "ii)",
+      "points": 1.5,
+      "statement": "The sphere will explode when the pressure difference $p_2 - p_a$ is such that the maximum tensile strength of the plastic is reached. Let’s look at only one-half of the sphere and study the balance of the forces.\n\n\n\n[[figure:p2-sol-fig1]]\n\nThe resultant force due to pressure is $(p_2 - p_a)\\pi r^2$. This must always be balanced by the elastic forces in the plastic. Right before the explosion, we have the equality\n\n$$(p_2 - p_a)\\pi r^2 = \\sigma 2\\pi r d,$$\n\nwhere $2\\pi r d$ is the cross-sectional area of the plastic. Now solving for $p_2$ we get\n\n$$p_2 = p_a + \\frac{2\\sigma d}{r} = 1.1\\cdot 10^6\\ \\mathrm{Pa}.$$\n\n**Grading:**\n\n- Qualitative understanding of the conditions for the sphere to explode - resultant pressure force equals the total tensile strength **(0.4 pts)**\n- The idea of breaking the sphere in half and analysing the forces acting on only one side of the sphere **(0.4 pts)**\n- Correct condition for the sphere to explode: $(p_2 - p_a)\\pi r^2 = \\sigma 2\\pi r d$ **(0.4 pts)**\n- Correct final expression and answer **(0.3 pts)**",
+      "figures": [
+       {
+        "id": "p2-sol-fig1",
+        "alt": "A hemisphere of the plastic shell cut through its equator, with small arrows along the cut rim labelled elastic forces and a large arrow into the flat face labelled resultant of the pressure forces; the other hemisphere is drawn dashed, separated, at the upper right.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p2-sol-fig1-v3.png",
+        "width": 653,
+        "height": 615,
+        "source": {
+         "page": 2,
+         "pdfRect": [
+          446.22,
+          92.88,
+          602.78,
+          240.48
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "part-iii",
+      "title": "iii)",
+      "points": 1.5,
+      "statement": "During boiling at constant pressure, the temperature of the liquid does not change, even though the liquid is gaining energy all the time. If however the pressure changes, as we have in our problem, then so does the boiling point, following exactly the phase transition line on the phase diagram. Since we know the final pressure $p_2$, we can simply read the corresponding temperature of the diagram:\n\n$$p_2 = 1.1\\cdot 10^6\\ \\mathrm{Pa} \\implies T_2 = 106\\ \\mathrm{K}.$$\n\n**Grading:**\n\n- Correctly stating that the process $1 - 2$ follows the phase transition line. **(1.0 pts)**\n- Reading the correct temperature from the graph **(0.5 pts)**"
+     },
+     {
+      "id": "part-iv",
+      "title": "iv)",
+      "points": 1.5,
+      "statement": "If $p$, $V$, and $T$ are known, the mass of the nitrogen gas can be calculated using the ideal gas equation:\n\n$$pV = \\frac{m}{M}RT \\implies m = \\frac{pVM}{RT}.$$\n\nSince we know the initial and final states, the mass $\\Delta m$ of nitrogen that evaporated between these states is\n\n$$\\begin{aligned} \\Delta m &= m_2 - m_1 = \\\\ &= \\frac{2\\pi r^3 M}{3R}\\left(\\frac{p_2}{T_2} - \\frac{p_1}{T_1}\\right) = 0.065\\ \\mathrm{kg}. \\end{aligned}$$\n\n**Grading:**\n\n- The idea of calculating the mass of nitrogen gas in the initial and final state **(0.3 pts)**\n- Realizing that ideal gas law can be used to calculate the mass of nitrogen gas **(0.3 pts)**\n- Correct ideal gas law **(0.3 pts)**\n- Correctly using the molar mass **(0.3 pts)**\n- Correct calculation and correct final answer **(0.3 pts)**"
+     },
+     {
+      "id": "part-v",
+      "title": "v)",
+      "points": 2,
+      "statement": "Neglecting the heat capacity of the plastic and the heat flux through the upper half of the sphere, we only need to consider the heat of evaporation:\n\n$$Q_e = \\lambda\\Delta m = 1{,}31\\cdot 10^4\\ \\mathrm{J},$$\n\nand the heat for raising the temperature of the liquid nitrogen:\n\n$$\\begin{aligned} Q_l &= c_v m_l(T_2 - T_1) = \\\\ &= \\frac{2}{3}\\pi r^3\\rho_n c_v(T_2 - T_1) = 9{,}7\\cdot 10^4\\ \\mathrm{J}. \\end{aligned}$$\n\nThe heat for rising the temperature of the nitrogen gas can be neglected, as the mass of the gas is very small compared to the mass of liquid nitrogen ($\\approx 1.7\\ \\mathrm{kg}$). The total heat $Q_e + Q_l$ is taken from the water through the plastic. The average temperature of nitrogen is $T_n = (T_1 + T_2)/2 = 91.7\\ \\mathrm{K}$, and the average temperature difference between water and nitrogen is $T_w - T_n = 201.5\\ \\mathrm{K}$. The heat flux through the plastic is\n\n$$q = k\\cdot\\frac{T_w - T_n}{d}.$$\n\nThe total amount of heat carried through the lower half of the sphere during time $\\Delta t$ is\n\n$$\\Delta Q = qA\\Delta t = Q_e + Q_l,$$\n\nwhere $A = 2\\pi r^2$ is half of the surface area of the sphere. Finally, solving for $\\Delta t$, we have the estimated time it takes for the sphere to explode:\n\n$$\\Delta t = \\frac{d\\cdot(Q_e + Q_l)}{2\\pi r^2 k\\,(T_w - T_n)} = 15.5\\ \\mathrm{s}.$$\n\n**Grading:**\n\n- Understanding that $Q_e + Q_l$ must be equal to the total heat received from the water **(0.3 pts)**\n- Correct heat of evaporation **(0.2 pts)**\n- Correct heat for rising the temperature of liquid nitrogen **(0.2 pts)**\n- Correctly using the average temperature of nitrogen **(0.2 pts)**\n- Correctly using the average temperature difference **(0.2 pts)**\n- Correct expression for the heat flux $q$ though the plastic **(0.3 pts)**\n- Correct expression for the total heat $\\Delta Q$ received through the plastic **(0.3 pts)**\n- Correct final expression for calculating the time till explosion **(0.3 pts)**\n\n  Give full points for this part if the final expression and the answer are correct."
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2023-x-p3",
+   "number": 3,
+   "title": "Wobble",
+   "points": 8,
+   "problemType": "theory",
+   "statement": "*— Taavet Kalda.*\n\nWe investigate the so-called astrometric wobble method for detecting exoplanets. The method relies on the ability to measure the change in position in the sky that the host star experiences due to the gravitational influence of its orbiting planets. This method has become feasible in recent years due to the availability of more precise instruments.",
+   "parts": [
+    {
+     "label": "i)",
+     "statement": "Consider a system consisting of a host star, an inner planet $A$, and an outer planet $B$. Below is a measurement of the trajectory of the centre of the star in the plane perpendicular to the line of sight, measured over a period of $t = 10\\ \\mathrm{yr}$. In all of the subsequent parts, you may assume that both planets orbit in circular orbits in the plane of the diagram. What are the orbital periods $T_A$ and $T_B$ of the two planets?\n\n[[figure:p3-fig1]]",
+     "points": 2.5,
+     "figures": [
+      {
+       "id": "p3-fig1",
+       "alt": "Trajectory of the star's centre in the plane, axes x/(10^5 km) and y/(10^5 km) from 0 to 6: a looping curve (epicycloid-like) with small loops arranged around a large circle centred near (3, 3), starting near (4.3, 0.6) and ending near (4.6, 3.1).",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p3-fig1.png",
+       "width": 839,
+       "height": 829,
+       "source": {
+        "page": 1,
+        "pdfRect": [
+         423.45,
+         286.92,
+         624.69,
+         485.73
+        ],
+        "dpi": 300
+       }
+      }
+     ]
+    },
+    {
+     "label": "ii)",
+     "statement": "Based on direct imaging of planet $A$ in the infrared, the orbital radius of planet $A$ is measured to be $a_A = 1.5\\ \\mathrm{AU} = 2.2 \\times 10^8\\ \\mathrm{km}$. What is the mass $M$ of the host star, and the mass $m_A$ of planet $A$? The gravitational constant is $G = 6.67 \\times 10^{-11}\\ \\mathrm{m^3\\,kg^{-1}\\,s^{-2}}$.",
+     "points": 2.5
+    },
+    {
+     "label": "iii)",
+     "statement": "What is the mass $m_B$ of planet $B$?",
+     "points": 1
+    },
+    {
+     "label": "iv)",
+     "statement": "Now consider a similar $t = 10\\ \\mathrm{yr}$ measurement of a different system shown below, also consisting of a host star and two planets $A$ and $B$ (where $A$ is the inner planet). Similarly to before, find the mass $M$ of the host star, and the masses $m_A$, $m_B$ of the planets in the new system. As before, direct imaging yields that the orbital radius of planet $A$ is $a_A = 1.3\\ \\mathrm{AU} = 2.0 \\times 10^8\\ \\mathrm{km}$.\n\n[[figure:p3-fig2]]",
+     "points": 2,
+     "figures": [
+      {
+       "id": "p3-fig2",
+       "alt": "Trajectory of the star's centre for the second system, axes x/(10^5 km) and y/(10^5 km) from 0 to 4: several large overlapping nearly circular loops around a centre near (2, 2), starting near (2.2, 0.3) and ending near (3.8, 2.1).",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p3-fig2.png",
+       "width": 850,
+       "height": 835,
+       "source": {
+        "page": 1,
+        "pdfRect": [
+         628.07,
+         126.18,
+         831.78,
+         326.2
+        ],
+        "dpi": 300
+       }
+      }
+     ]
+    }
+   ],
+   "topics": [
+    "astronomy/exoplanets",
+    "mechanics/gravitation"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Taavet Kalda, grading schemes by ....*",
+    "sections": [
+     {
+      "id": "part-i",
+      "title": "i)",
+      "points": 2.5,
+      "statement": "The farther away a planet is from the host star, the bigger its orbital period. In a fixed period, we then expect planet $A$ to make more rotations around the star than planet $B$. The wobble effect comes from both the star and the planets orbiting around their common barycentre (centre of mass). The effect of one planet makes the star undergo a circular motion with some radius $x$ and frequency $\\omega$. The effect of two planets is additive, so the overall motion is the sum of two circular motions with radius’ $x_A$ and $x_B$ with different angular frequencies $\\omega_A$ and $\\omega_B$.\n\nIn the figure, we find the centre of circular motion of the star from the centre of the envelope (by for example using a ruler to find the diameter and then the centre-point). From there, we measure that lower frequency component covers an angle of $\\alpha = 290^{\\circ}$ within the measurement period $t = 10\\ \\mathrm{yr}$. The higher frequency component, in the meantime, undergoes 7.5 full rotations with respect to the lower frequency component. Hence, $\\omega_B t = \\alpha$ and $(\\omega_A - \\omega_B)t/(2\\pi) = 7.5$. This yields\n\n$$\\begin{aligned} T_B &= \\frac{2\\pi}{\\omega_B} = \\frac{2\\pi t}{\\alpha} = 12.4\\ \\mathrm{yr}, \\\\ T_A &= \\frac{2\\pi}{\\omega_A} = \\frac{1}{\\frac{1}{T_B} + \\frac{7.5}{t}} = 1.20\\ \\mathrm{yr}. \\end{aligned}$$\n\n**Grading:**\n\n- Realising that the higher frequency component is due to planet A and the lower frequency component is due to planet B **(0.5 pts)**\n- The higher frequency component undergoes 7.5 full rotations **(0.4 pts)**\n- The lower frequency component covers an angle of $290^{\\circ}$, or alternatively, $\\frac{7.5}{9}\\cdot 2\\pi$ **(0.4 pts)**\n- Finding $T_A$ **(0.8 pts)**\n- Finding $T_B$ **(0.4 pts)**"
+     },
+     {
+      "id": "part-ii",
+      "title": "ii)",
+      "points": 2.5,
+      "statement": "From the figure, we measure the extrema of the distance of the star from the origin as $l_1 = 1.6 \\times 10^5\\ \\mathrm{km}$ and $l_2 = 2.8 \\times 10^5\\ \\mathrm{km}$. The extrema corresponds to when the two circular motions are pointing in the same direction or the opposite direction. In other words, the distances are $l_1 = x_B - x_A$ and $l_2 = x_B + x_A$. Rearranging, $x_A = (l_2 - l_1)/2 = 6 \\times 10^4\\ \\mathrm{km}$ and $x_B = 2.2 \\times 10^5\\ \\mathrm{km}$. To infer the masses, we need to study the dynamics of the system.\n\nFirst, we can assume that the semi-major axis of the planets are much bigger than $x$. Indeed, $a_A/x_A = 4000 \\gg 1$. Either from force balance between gravity and centrifugal force, or through Kepler’s Third Law, we have $4\\pi^2/(GM) = T_A^2/a_A^3$ so the star’s mass is\n\n$$M = \\frac{4\\pi^2 a_A^3}{GT_A^2} = 4.4 \\times 10^{30}\\ \\mathrm{kg}.$$\n\nThe planet’s mass can be inferred from the property that planet and star rotate around their common centre of mass: $Mx_A = m_A a_A$. Hence,\n\n$$m_A = M\\frac{x_A}{a_A} = 1.2 \\times 10^{27}\\ \\mathrm{kg}.$$\n\n**Grading:**\n\n- Expressing $4\\pi^2/(GM) = T_A^2/a_A^3$ **(0.6 pts)**\n- Finding $M$ **(0.4 pts)**\n- Realising that the position of the centre of mass of $A$ and $M$ is conserved (with respect to $B$) **(0.5 pts)**\n- Inferring equation $Mx_A = m_A a_A$ **(0.5 pts)**\n- Finding $x_A$ from the trajectory **(0.3 pts)**\n- Finding $m_A$ **(0.2 pts)**\n\n[[figure:p3-sol-fig1]]",
+      "figures": [
+       {
+        "id": "p3-sol-fig1",
+        "alt": "The first trajectory (axes x/(10^5 km) and y/(10^5 km), 0 to 6) with a dashed blue outer envelope circle and a dashed red inner circle around the centre marked ×; a red arrow from the centre to the inner circle is labelled x_B − x_A and a blue arrow to the outer circle is labelled x_B + x_A.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p3-sol-fig1.png",
+        "width": 839,
+        "height": 837,
+        "source": {
+         "page": 3,
+         "pdfRect": [
+          423.45,
+          196.43,
+          624.69,
+          397.04
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "part-iii",
+      "title": "iii)",
+      "points": 1,
+      "statement": "Once again, from Kepler’s Third law, we get the semi-major axis of planet $B$ to be\n\n$$a_B = \\sqrt[3]{\\frac{T_B^2 GM}{4\\pi^2}} = 1.0 \\times 10^9\\ \\mathrm{km}.$$\n\nSimilarly to before, we get the mass as\n\n$$m_B = M\\frac{x_B}{a_B} = 9.3 \\times 10^{26}\\ \\mathrm{kg}.$$\n\nBoth of the planets are gas giants, similar to Jupiter (0.63 and 0.50 Jupiter masses respectively). This makes sense, as this method is more sensitive to higher mass exoplanets with bigger orbits.\n\n**Grading:**\n\n- Finding $a_B$ **(0.5 pts)**\n- Finding $m_B$ **(0.5 pts)**"
+     },
+     {
+      "id": "part-iv",
+      "title": "iv)",
+      "points": 2,
+      "statement": "The equations describing the system still hold, but reading off the frequencies is trickier. Nevertheless, we can still locate the origin and measure the extreme distances $l_1 = 1.20 \\times 10^5\\ \\mathrm{km}$ and $l_2 = 1.85 \\times 10^5\\ \\mathrm{km}$. We also note that the higher frequency component (corresponding to planet $A$) has a bigger radius than the lower frequency one (planet $B$). Hence, $l_1 = x_A - x_B$ and $l_2 = x_A + x_B$, and so $x_A = (l_1 + l_2)/2 = 1.5 \\times 10^5\\ \\mathrm{km}$, $x_B = (l_2 - l_1)/2 = 3.3 \\times 10^4\\ \\mathrm{km}$.\n\nThe higher frequency component does 3 full turns and, measuring from the figure, an extra $280^{\\circ}$ on top of it. This gives $T_A = t/(3 + 280^{\\circ}/360^{\\circ}) = 2.65\\ \\mathrm{yr}$. The lower frequency component, meanwhile, starts and ends from the farthest away point, and oscillates through the closest point 3 times. Hence it goes through 3 full rotations. Thus,\n\n$$\\left(\\frac{2\\pi}{T_A} - \\frac{2\\pi}{T_B}\\right)t = 6\\pi,$$\n\nand so\n\n$$T_B = \\frac{1}{\\frac{1}{T_A} - \\frac{3}{t}} = 12.9\\ \\mathrm{yr}.$$\n\nBy using the equations from the previous parts, we get\n\n$$\\begin{aligned} M &= \\frac{4\\pi^2 a_A^3}{GT_A^2} = 6.8 \\times 10^{29}\\ \\mathrm{kg}, \\\\ m_A &= M\\frac{x_A}{a_A} = 5.1 \\times 10^{26}\\ \\mathrm{kg}, \\\\ m_B &= Mx_B\\sqrt[3]{\\frac{4\\pi^2}{T_B^2 GM}} = 3.9 \\times 10^{25}\\ \\mathrm{kg}. \\end{aligned}$$\n\nThe first planet is once again a gas giant (0.26 Jupiter masses) while the second one is a “Super-Earth” (6.4 Earth masses).\n\n**Grading:**\n\n- Finding $T_A$ **(0.4 pts)**\n- Finding $T_B$ **(0.4 pts)**\n- Finding $M$ **(0.3 pts)**\n- Finding $m_A$ **(0.4 pts)**\n- Finding $m_B$ **(0.5 pts)**\n\n[[figure:p3-sol-fig2]]",
+      "figures": [
+       {
+        "id": "p3-sol-fig2",
+        "alt": "The second trajectory (axes x/(10^5 km) and y/(10^5 km), 0 to 4) with a dashed blue outer envelope circle and a dashed red inner circle around the centre marked ×; a red arrow labelled x_A − x_B and a blue arrow labelled x_A + x_B.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p3-sol-fig2.png",
+        "width": 849,
+        "height": 839,
+        "source": {
+         "page": 4,
+         "pdfRect": [
+          11.79,
+          11.93,
+          215.51,
+          213.12
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2023-x-p4",
+   "number": 4,
+   "title": "Black box",
+   "points": 12,
+   "problemType": "experiment",
+   "statement": "*— Jaan Kalda, Eero Uustalu.*\n\nTools: a black box with two output terminals, a multimeter, a stopwatch, wires.\n\nThe resistance of the multimeter is as follows: when used as microammeter — $103.2\\ \\Omega$; when used as a milliammeter — $4.2\\ \\Omega$; when used as a voltmeter — more than $10\\ \\mathrm{M\\Omega}$. When used as a voltmeter, the multimeter will automatically determine the optimum range, but this will slow it down; to make it faster, press the “Range” button to fix it to the current range.\n\nWhich four components (apart from the wires; there can be more than one of the same type) are in the black box? What are the values of the quantities that characterise these components and how could they be connected? Document and tabulate all your measurements and plot them graphically where appropriate.",
+   "parts": [],
+   "topics": [
+    "electricity/black-box",
+    "electricity/rc-circuits"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Jaan Kalda, grading schemes by ....*\n\nSince there can be elements causing inertia — $LR$ chains or $RC$ chains, one has to be patient when making measurements and wait for a long enough time to let the system relax towards an equilibrium. There are two types of measurements which can be done.\n\n1) After keeping the terminals short-circuited for a long enough time, release the short-circuting wire and measure the voltage $V$ as a function of time:\n\n| $V$ (mV) | $t$ (s) | $V$ (mV) | $t$ (s) |\n|---|---|---|---|\n| 0 | 1073 | 90 | 2977 |\n| 5 | 1317 | 100 | 3049 |\n| 10 | 1564 | 110 | 3073 |\n| 15 | 1765 | 120 | 3091 |\n| 20 | 1950 | 130 | 3116 |\n| 25 | 2109 | 149 | 3124 |\n| 30 | 2248 | 159 | 3131 |\n| 40 | 2465 | 160 | 3124 |\n| 50 | 2629 | 170 | 3131 |\n| 60 | 2751 | 180 | 3135 |\n| 70 | 2850 | 210 | 3145 |\n| 80 | 2921 | 400 | 3155 |\n\nThese data are plotted as $\\ln[(3155\\ \\mathrm{mV} - V)/\\mathrm{mV}]$ versus time. One can see a fairly nice linear plot which means that voltage is approaching exponentially the limit value $3155\\ \\mathrm{mV}$. The characteristic time can be found as the reciprocal of the trend line (we discard the rightmost data points as there, the voltage changes are small, so the relative errors are big), As a result we obtain $\\tau_1 = 34.5\\ \\mathrm{s}$.\n\n\n\n[[figure:p4-sol-fig1]]\n\n2) After keeping the terminals open for a long enough time, release the short-circuting wire and measure the current $I$ as a function of time:\n\n| $I$ (μA) | $t$ (s) | $I$ (12.3 μA) | $t$ (s) |\n|---|---|---|---|\n| 0 | 978 | 50 | 351 |\n| 5 | 794 | 60 | 345 |\n| 10 | 636 | 70 | 341 |\n| 15 | 535 | 80 | 340 |\n| 20 | 468 | 90 | 339 |\n| 25 | 425 | 100 | 339 |\n| 30 | 397 | 110 | 339 |\n| 40 | 365 | 120 | 339 |\n\nThese data are plotted as $\\ln[(I - 339\\ \\mu\\mathrm{A})/\\mu\\mathrm{A}]$ versus time. One can see a fairly nice linear plot which means that voltage is approaching exponentially the limit value $339\\ \\mu\\mathrm{A}$. The characteristic time can be found as the reciprocal of the trend line (we discard the rightmost data points as there, the voltage changes are small, so the relative errors are big), As a result we obtain $\\tau_1 =$ s.\n\n\n\n[[figure:p4-sol-fig2]]\n\nThese data mean that inside, there should be a battery to maintain a voltage, a capacitor to provide inertia — exponential decay towards an equilibrium, and resistors. In principle, one should consider also an option where there is an inductor instead of the capacitor; however, it can be excluded by various ways. First, it is not realistic to obtain long enough relaxation times with an inductor. Indeed, already the internal resistance of the ammeter is around a hundred of ohms, and characteristic time of about 20 seconds would mean that the inductance should be around kilohenry — even if such inductor exists, it would not fit into the box. Second, if there were a big inductor inside, it cannot be a lone element connected to one of the terminals. Indeed, when the ammeter is connected to the terminals, a non-zero current appears immediately, instead of starting from zero (what would be the case if there were an inductor). So, it must form a closed loop with a resistor and a battery. However, in that case, if we keep the terminals short-circuited for a while and then disconnect, the voltage at the terminals would jump discontinuosly as the current through one of the resistors would need to jump (to keep the inductor current continuous).\n\nThe first consideration is that there need to be two resistors because there are two different characteristic times (one resistor with two capacitors can produce still only one characteristic time, because the capacitors, either in parallel or in series, would combine effectively into one single capacitor). Next, the restriction (I): the battery and the capacitor cannot be in series, because they would combine effectively into a single capacitor. Second, the restriction (II): the battery and the capacitor cannot be in parallel, either, because they would combine effectively into a single battery. Then, restriction (III): neither capacitor nor battery can be connected directly to the output terminals as in one case, the ammeter current would asymptotically approach zero when connected to the output, and in the other case, the output voltage would be always constant. This excludes automatically many possibilities, see below. Also, (IV): there should not be a direct path from one terminal to the other going only through the capacitor and the battery as in that case, ammeter current would be very big, and the corresponding characteristic time would be very short. Finally, (V): the capacitor can be only in a parallel connection with something, because otherwise, there would be no capacitor current when a voltmeter is connected to the output, hence, the voltage would remain constant.\n\nTopologically, there are options (a) all in parallel — excluded by (I); (b) all in series — excluded by (II); (c) three elements in parallel, all together in series with the fourth element — excluded by (I) and (IV); (d) 3+1 parallel chains (i.e. 3 elements in one chain, and 1 element in the other chain) — excluded by (III) and (I); (d) one parallel pair in series with another parallel pair — excluded by (IV) and (II); (e) 2+2 parallel chains; (f) 1+2 parallel chains, all together in series with the fourth element; (g) a pair in parallel, all together in series with the third and fourth element.\n\nWith the option (e), battery and capacitor need to be in different chains, due to (I), this is the circuit A.\n\nWith the option (g), capacitor must be in the parallel pair with a resistor, due to (V) and (II), this is the circuit B.\n\nWith the option (f), due to (V), the capacitor needs to be in the parallel section, either (f1) as a single element, or (f2) paired in series with a resistor, because of (I). In the case of (f1), (III) tells us that battery must be in the other parallel section (in series with a resistor), this is the circuit C. In the case of (f2), combinatorics tells us that there are two positions for the battery — either as the single element in series which is the circuit (D), or in parallel with the capacitor-resistor series connection. The latter option, however, means that the battery would always maintain the same voltage on the capacitor-resistor series connection, i.e. the output voltage and current would remain always constant.\n\n\n\n[[figure:p4-sol-fig3]]\n\n\n\n[[figure:p4-sol-fig4]]\n\n\n\n[[figure:p4-sol-fig5]]\n\n\n\n[[figure:p4-sol-fig6]]\n\nIn all four cases, the voltmeter reading, when connected to the output, tends asymptotically towards the electromotive force of the battery, so $\\mathcal{E} = 3.155\\ \\mathrm{V}$.\n\nFor cases (A) and (D), the initial ammeter reading is $I_0 = \\mathcal{E}(R_1^{-1} + R_2^{-1}) = 978\\ \\mu\\mathrm{A}$ and the asymptotic ammeter reading is $I_f = \\mathcal{E}/R_2 = 339\\ \\mu\\mathrm{A}$; based on that we can calculate $R_2 = \\mathcal{E}/I_f = 9.31\\ \\mathrm{k\\Omega}$ and $R_1 = (I_0/\\mathcal{E} - 1/R_2)-1 = 4.94\\ \\mathrm{k\\Omega}$. For those cases, the initial voltage $U_i = \\mathcal{E}R_1/(R_1 + R_2)$, so we can check if everything fits: we obtained $R_1/(R_1+R_2) = 0.347$, and $U_i/\\mathcal{E} = 0.340$; this is a fit within the uncertainties.\n\nFor the very same cases, $\\tau_1 = (R_1 + R_2)C$ so that $C = \\tau_1/(R_1 + R_2) = 2.42\\ \\mathrm{mF}$. Alternatively we can calculate the same thing using $\\tau_2 = R_1 C$, hence $C = \\tau_2/R_1 = 2.50\\ \\mathrm{mF}$. Again, there is a match of results within the uncertainties.\n\nFinally, for (B) and (C), the initial ammeter reading is $I_0 = \\mathcal{E}/R_1 = 978\\ \\mu\\mathrm{A}$ and the asymptotic ammeter reading is $I_f = \\mathcal{E}/(R_1 + R_2) = 339\\ \\mu\\mathrm{A}$; based on that we can calculate $R_1 = \\mathcal{E}/I_0 = 3.23\\ \\mathrm{k\\Omega}$ and $R_2 = (I_f/\\mathcal{E} - R_1 = 6.08\\ \\mathrm{k\\Omega}$. The expression for the initial voltage remains unchanged, $U_i = \\mathcal{E}R_1/(R_1 + R_2)$, so we can again check if everything fits: we obtained $R_1/(R_1 + R_2) = 0.347$, and $U_i/\\mathcal{E} = 0.340$; this is a fit within the uncertainties.\n\nNow, $\\tau_1 = R_2 C$ so that $C = \\tau_1/R_2 = 5.67\\ \\mathrm{mF}$. Alternatively we can calculate the same thing using $\\tau_2 = R_1 R_2 C/(R_1 + R_2)$, hence $C = \\tau_2(R_1 + R_2)/(R_1 R_2) = 5.84\\ \\mathrm{mF}$. Again, there is a match of results within the uncertainties.\n\n**Grading:**\n\n- Black box circuit diagram is correct:\n  - The initial voltage $U_0 \\neq 0$, which means that the circuit contains battery of some sort **(0.5 pts)**\n  - The changing current suggests that the circuit contains a capacitor or an inductor **(0.3 pts)**\n  - The use of an inductor is unrealistic for the provided black box, consequently the circuit must contain a capacitor **(0.2 pts)**\n  - The discharging of the capacitor is not instantaneous, so there must be a resistor between the capacitor and output terminals **(1 pts)**\n  - The recharging of the capacitor is not instantaneous, so must be a resistor between the capacitor and the battery **(1 pts)**\n  - Correct circuit diagram is drawn **(2 pts)**\n  - **Additional notice**: if the suggested circuit is such that one element would be masked by another element (e.g. a capacitor is parallel to a battery in which case the capacitor would be always fully charged and undetectable, or a capacitor is series with a battery in which case the battery voltage would be compensated by the capacitor and undetectable), the marks for circuit will be reduced by 50%.\n- Electromotive force of the battery is found correctly based on the drawn circuit diagram **(1 pts)**\n- The resistance of both resistor is found correctly (circuit diagram dependent):\n  - When the capacitor is fully charged the current doesn’t flow through it, or in other words $R_C = \\infty$; either sum of two resistances or resistance of one of the resistors can be found **(1 pts)**\n  - Otherwise, when the capacitor is discharged $R_C = 0$ in the first moments after the recharging has begun; either resistance of one of the resistors can be found or the equation for both resistors can be written **(1 pts)**\n  - $R_1$ is found correctly **(0.5 pts)**\n  - $R_2$ is found correctly **(0.5 pts)**\n\n  Note: plausible resistance values are: $9.31\\ \\mathrm{k\\Omega}$, $4.94\\ \\mathrm{k\\Omega}$, $3.23\\ \\mathrm{k\\Omega}$, $6.08\\ \\mathrm{k\\Omega}$.\n- The capacitance of the capacitor is found correctly:\n  - Two tables of both voltage during the charging and current during the discharge are present; give half, if only one table is present **(1.2 pts)**\n  - The measurements of voltage or current are presented graphically **(0.8 pts)**\n  - The method to find the capacitance is found **(0.8 pts)**\n  - Correct capacitance $C \\approx 2.5\\ \\mathrm{mF}$ or $C \\approx 5.7\\ \\mathrm{mF}$ is found **(0.5 pts)**\n\nNote: the solution that uses a direct measurement of resistance with a multimeter to be given 0, since the circuit contains a battery; the solution that uses a direct measurement of capacitance with a multimeter to be given 0.2, since the capacitance is outside of limits of the provided multimeter.",
+    "figures": [
+     {
+      "id": "p4-sol-fig1",
+      "alt": "Plot of ln(V/mV) (0 to 8) versus t(s) (0 to 200+): blue crosses decreasing from about 7.7 at t = 0, with a straight trend line through the early points down to about t = 135 s; later points level off near 3 to 1.8.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p4-sol-fig1.png",
+      "width": 818,
+      "height": 472,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        219.74,
+        26.19,
+        415.89,
+        139.27
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p4-sol-fig2",
+      "alt": "Plot of ln(I/μA) (0 to 3) versus t(s) (ticks 0 to 80): blue crosses decreasing from about 2.8 at t = 0 along a straight trend line to about t = 40 s, with later points falling below the line.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p4-sol-fig2.png",
+      "width": 804,
+      "height": 477,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        219.74,
+        374.45,
+        412.52,
+        488.74
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p4-sol-fig3",
+      "caption": "Circuit (A):",
+      "alt": "Circuit (A): between the two output terminals two parallel branches — resistor R1 in series with capacitor C, and resistor R2 in series with battery ε.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p4-sol-fig3.png",
+      "width": 790,
+      "height": 349,
+      "source": {
+       "page": 4,
+       "pdfRect": [
+        635.62,
+        413.73,
+        825.03,
+        497.07
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p4-sol-fig4",
+      "caption": "Circuit (B):",
+      "alt": "Circuit (B): from the upper terminal a resistor R1 and battery ε in series lead to a parallel pair of resistor R2 and capacitor C connected to the lower terminal.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p4-sol-fig4.png",
+      "width": 849,
+      "height": 358,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        11.79,
+        10.71,
+        215.51,
+        96.43
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p4-sol-fig5",
+      "caption": "Circuit (C):",
+      "alt": "Circuit (C): from the upper terminal resistor R1 leads to a node; capacitor C connects this node to the lower line, and in parallel with it resistor R2 in series with battery ε connects to the lower line.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p4-sol-fig5.png",
+      "width": 868,
+      "height": 333,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        9.27,
+        110.7,
+        217.21,
+        190.49
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     },
+     {
+      "id": "p4-sol-fig6",
+      "caption": "Circuit (D):",
+      "alt": "Circuit (D): from the upper terminal battery ε leads to a node; from it resistor R2 goes to the lower line, and in parallel resistor R1 in series with capacitor C goes to the lower line.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p4-sol-fig6-v3.png",
+      "width": 868,
+      "height": 346,
+      "source": {
+       "page": 5,
+       "pdfRect": [
+        9.27,
+        207.76,
+        217.21,
+        290.48
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2023-x-p5",
+   "number": 5,
+   "title": "Force sensor",
+   "points": 5,
+   "problemType": "theory",
+   "statement": "*— Päivo Simson.*\n\nA force sensor is constructed from a flexible beam of working length $L$ and height $h$ to which four identical electrically resistive wires of length $l \\ll L$ are attached, as shown in the figure below. If a force $F$ is applied to the end of the beam, it will bend the beam and stretch the upper wires and compress the lower ones, causing changes in the electrical resistance. Using the Wheatstone bridge method, these changes can be converted into a voltmeter reading, allowing for the measurement of the applied force $F$.\n\n\n\n[[figure:p5-fig1]]\n\nIn what follows, assume that the deflection of the beam is very small.",
+   "figures": [
+    {
+     "id": "p5-fig1",
+     "alt": "Sensor cross-section: a beam clamped at the left inside a housing and bent slightly downward by a force F (arrow) at its right end; the axes x and z are marked at the clamped end, two wires R1, R1 lie on the upper face and two wires R2, R2 on the lower face; below, a top view of the beam with the two R1 wires in the middle and the length split into L/2 and L/2.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p5-fig1-v3.png",
+     "width": 836,
+     "height": 698,
+     "source": {
+      "page": 2,
+      "pdfRect": [
+       10.94,
+       163.71,
+       211.32,
+       330.98
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "i)",
+     "statement": "The bending moment $M(x)$ (i.e. the torque with which one fictitious half of the beam affects the other) is inversely proportional to the curvature radius $r(x)$ of the center line of the beam: $M = EI/r$, where $E$ is Young’s modulus and $I$ is a constant depending on the geometry of the of the beam’s cross-section (both are known). Find the elongation $\\Delta l$ of the upper wire when a force $F$ is applied to the sensor. Assume that the wires are placed in the middle of the beam.",
+     "points": 2
+    },
+    {
+     "label": "ii)",
+     "statement": "Find the resistances $R_1$ and $R_2$ when $\\Delta l$ from the previous section is known and the initial resistance of the wires is $R_0$. Assume that the volume of the wire remains constant during the deformation.",
+     "points": 1
+    },
+    {
+     "label": "iii)",
+     "statement": "The resistors are arranged in a Wheatstone bridge configuration shown in the figure below, where $U$ is the known battery voltage. Find the relationship between the measured voltage $V$ and the force $F$.\n\n[[figure:p5-fig2]]",
+     "points": 2,
+     "figures": [
+      {
+       "id": "p5-fig2",
+       "alt": "Wheatstone bridge: four variable resistors R1 (top left), R2 (top right), R2 (bottom left) and R1 (bottom right) in a diamond with a voltmeter V between the left and right nodes; the battery U is connected between the top and bottom nodes with + at the top and − at the bottom.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p5-fig2.png",
+       "width": 849,
+       "height": 390,
+       "source": {
+        "page": 2,
+        "pdfRect": [
+         217.21,
+         8.91,
+         420.93,
+         102.38
+        ],
+        "dpi": 300
+       }
+      }
+     ]
+    }
+   ],
+   "topics": [
+    "mechanics/elasticity",
+    "electricity/dc-circuits"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Päivo Simson, grading schemes by ....*",
+    "sections": [
+     {
+      "id": "part-i",
+      "title": "i)",
+      "points": 2,
+      "statement": "To find the elongation $\\Delta l$, we need to know the curvature radius $r$ of the beam at $x = L/2$. The torque created by the force $F$ at an arbitrary point $x$ is $F\\cdot(L - x)$. This must be balanced by the bending moment $M(x)$ of the beam. In the middle of the beam we have\n\n$$M = \\frac{EI}{r} = F\\frac{L}{2} \\implies r = \\frac{2EI}{FL}.$$\n\nIt is easy to see that if the upper wires elongate by $\\Delta l$, the lower ones shorten by the same amount. Now we need to relate the curvature radius $r$ with the elongation $\\Delta l$.\n\n\n\n[[figure:p5-sol-fig1]]\n\nThe arc length of a circle is $\\Delta s = r\\Delta\\phi$. Knowing this, we have from the above figure\n\n$$l + \\Delta l = \\left(r + \\frac{h}{2}\\right)\\Delta\\phi,$$\n\n$$l - \\Delta l = \\left(r - \\frac{h}{2}\\right)\\Delta\\phi.$$\n\nBy dividing the above equations, we get an equation for $\\Delta l$ that is easily solved:\n\n$$\\frac{l + \\Delta l}{l - \\Delta l} = \\frac{2r + h}{2r - h} \\implies \\Delta l = \\frac{lh}{2r}.$$\n\nCombining this with the expression for $r$ we have\n\n$$\\Delta l = \\frac{FLlh}{4EI}.$$\n\n**Grading:**\n\n- Correct moment equation $EI/r = FL/2$ at the center of the beam **(0.6 pts)**\n- Correct geometric relations for $l \\pm \\Delta l$ based on $\\Delta s = r\\Delta\\phi$ **(0.6 pts)**\n- correctly solving for $\\Delta l$ **(0.6 pts)**\n- correctly expressing the final answer **(0.2 pts)**",
+      "figures": [
+       {
+        "id": "p5-sol-fig1",
+        "alt": "Bent beam clamped at a hatched wall on the left with force F at the right end; axes x and z; the upper wire is labelled l+Δl and the lower wire l-Δl, the half-heights h/2 and h/2 are marked; two lines of length r from the ends of the wire segment converge downward to the centre of curvature, enclosing the angle Δφ.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p5-sol-fig1.png",
+        "width": 730,
+        "height": 774,
+        "source": {
+         "page": 6,
+         "pdfRect": [
+          23.58,
+          209.52,
+          198.68,
+          395.28
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "part-ii",
+      "title": "ii)",
+      "points": 1,
+      "statement": "Let $\\rho$ and $S$ be the resistivity and the cross-sectional area of the wires, respectively. The initial resistance $R_0$ of all the wires is\n\n$$R_0 = \\frac{\\rho l}{S} = \\frac{\\rho l^2}{lS},$$\n\nwhere $lS$ is the volume of the wire that remains constant during the deformation. Assuming $\\Delta l \\ll l$ we have\n\n$$R_1 = \\frac{\\rho(l + \\Delta l)^2}{lS} \\approx \\frac{\\rho l(1 + 2\\Delta l/l)}{S} = R_0 + \\Delta R,$$\n\n$$R_2 = \\frac{\\rho(l - \\Delta l)^2}{lS} \\approx \\frac{\\rho l(1 - 2\\Delta l/l)}{S} = R_0 - \\Delta R,$$\n\nwhere\n\n$$\\Delta R = \\frac{2\\rho\\Delta l}{S} = 2R_0\\frac{\\Delta l}{l} = R_0\\frac{FLh}{2EI}.$$\n\n**Grading:**\n\n- $R = \\rho l/S$ **(0.3 pts)**\n- Correct approximations **(0.3 pts)**\n- Correctly calculating the resistances and the change in resistance using the above relations **(0.4 pts)**"
+     },
+     {
+      "id": "part-iii",
+      "title": "iii)",
+      "points": 2,
+      "statement": "The total resistance $R$ of the circuit is\n\n$$R = \\frac{(R_1 + R_2)(R_1 + R_2)}{2R_1 + 2R_2} = \\frac{R_1 + R_2}{2}$$\n\nSince both sides of the circuit have the same total resistance $R_1 + R_2$, the current is also the same. The voltmeter reading is therefore\n\n$$\\begin{aligned} V &= \\frac{I}{2}R_2 - \\frac{I}{2}R_1 = \\frac{U}{2R}(R_1 - R_2) = \\\\ &= U\\frac{R_1 - R_2}{R_1 + R_2} = U\\frac{\\Delta R}{R_0} = U\\frac{FLh}{2EI}. \\end{aligned}$$\n\nFrom this, we finally have\n\n$$F = \\frac{2EIV}{LhU}.$$\n\n**Grading:**\n\n- Correct total resistance of the Wheatstone circuit **(0.5 pts)**\n- Assumes that the resistance of the Voltmeter is infinite **(0.5 pts)**\n- Correctly calculating the potential difference $V$ as a function of the change in the resistance **(0.5 pts)**\n- Expressing the final answer in the form given in the solution **(0.5 pts)**"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2023-x-p6",
+   "number": 6,
+   "title": "String-coupled masses",
+   "points": 5,
+   "problemType": "theory",
+   "statement": "*— Aleksi Kononen.*\n\nTwo small masses $m$ are connected and hung between walls by weightless strings as pictured below. The acceleration due to gravity is $g$. All oscillatory motion is assumed to have a small amplitude and the system is always in one of its normal modes (i.e. the oscillations are sinusoidal).",
+   "parts": [
+    {
+     "label": "i)",
+     "statement": "Find $\\omega_1$, the angular frequency of in-phase oscillations (by which the oscillation phases of the both masses are always equal), perpendicular to the plane of the figure.",
+     "points": 2
+    },
+    {
+     "label": "ii)",
+     "statement": "Find $\\omega_2$, the angular frequency of anti-phase oscillations (by which the oscillation phases of the both masses are always opposite), in terms of $\\omega_1$.\n\n[[figure:p6-fig1]]",
+     "points": 3,
+     "figures": [
+      {
+       "id": "p6-fig1",
+       "alt": "Two masses m hanging between two vertical walls: each is attached to its wall by a slanted string of length r making angle θ with the horizontal, and the masses are joined by a horizontal string made of two halves r and r on either side of the symmetry line x = 0; axes x (right) and z (down) are drawn at the left.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p6-fig1.png",
+       "width": 685,
+       "height": 279,
+       "source": {
+        "page": 2,
+        "pdfRect": [
+         234.04,
+         320.27,
+         398.2,
+         386.91
+        ],
+        "dpi": 300
+       }
+      }
+     ]
+    }
+   ],
+   "topics": [
+    "mechanics/oscillations"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Aleksi Kononen and Jaan Kalda, grading schemes by Aleksi Kononen.*",
+    "sections": [
+     {
+      "id": "part-i",
+      "title": "i)",
+      "points": 2,
+      "statement": "For in-phase oscillations, the string connecting the masses always remains parallel to the $x$-axis. In that case, the motion is confined to the $yz$-plane and is identical to a pendulum with length $r\\sin\\theta$ hung from the axis of rotation:\n\n$$\\omega_1 = \\sqrt{\\frac{g}{r\\sin\\theta}}$$\n\n**Grading:**\n\n- Stating $\\sum F_x = 0$, or stating that the connecting string remains parallel to the $x$-axis **(0.6 pts)**\n- Realising the effective pendulum length is $r\\sin\\theta$, i.e. the axis of rotation is the line connecting the wall points **(0.8 pts)**\n- Correct expression for $\\omega_1$ **(0.6 pts)**"
+     },
+     {
+      "id": "part-ii",
+      "title": "ii)",
+      "points": 3,
+      "statement": "Now suppose one of the balls moves along the $y$ axis to a distance $ym$ and the other ball — by $-y$. The length of the horizontal string remains constant, hence $y^2 + (r - x)^2 = r^2$, where $x$ denotes the displacement of the ball in $x$-direction. For small displacements, we can neglect the smallest term $x^2$, hence $x = y^2/2r$. The length of the slanted string remains also constant, hence $(r\\sin\\theta - z)^2 + (r\\cos\\theta + x)^2 + y^2 = r^2$, where $z$ denotes the vertical displacement. Neglecting here the smallest terms $z^2$ and $x^2$, we obtain $2rz\\sin\\theta = 2rx\\cos\\theta + y^2 = y^2(1 + \\cos\\theta)$, hence\n\n$$z = \\frac{y^2}{2r}\\frac{1 + \\cos\\theta}{\\sin\\theta}.$$\n\nNow we can write down energy conservation law: $\\frac{1}{2}\\dot{y}^2 + gz = const$, where dot denotes the time derivative. Differentiating this over time we obtain\n\n$$\\ddot{y} = -\\frac{gy}{r}\\frac{1 + \\cos\\theta}{\\sin\\theta}$$\n\nso that\n\n$$\\omega_2 = \\sqrt{|\\ddot{y}/y|} = \\omega_1\\sqrt{1 + \\cos\\theta}.$$\n\n**Grading:**\n\n- Equation for a cylinder surface **(0.4 pts)**\n- Equation for a sphere surface **(0.4 pts)**\n- Both surface equations correct and coordinates consistent **(0.2 pts)**\n- Realising $x^2$- and $z^2$-terms are negligible, and not discarding $y^2$ **(0.2 pts)**\n- Solving $z$ in terms of $y$ **(0.5 pts)**\n- Energy conservation between $z$ and $\\dot{y}$ **(0.3 pts)**\n- Solving relation between $\\ddot{y}$ and $y$ **(0.6 pts)**\n- Correct expression for $\\omega_2$ **(0.3 pts)**\n- $\\omega_2$ correctly in terms of $\\omega_1$ **(0.1 pts)**\n\n**Alternative solution:** Let one of the masses (mass A) be displaced by $y$ and the other by $-y$. Let $T'$ be the tension in the two outermost strings (equal magnitudes by symmetry) and $T$ in the connecting string. Newton’s law along the $y$-axis for mass A then yields\n\n$$-T'\\frac{y}{r} - T\\frac{y}{r} = m\\ddot{y},$$\n\ni.e.\n\n$$\\ddot{y} = -\\frac{T' + T}{mr}y.$$\n\nWithout oscillations, $T_0' = mg/\\sin\\theta$ and $T_0 = T_0'\\cos\\theta$. Let us write $T' = T_0' + \\Delta T'$ and $T = T_0 + \\Delta T$, i.e.\n\n$$T' + T = mg\\frac{1 + \\cos\\theta}{\\sin\\theta} + \\Delta T' + \\Delta T.$$\n\nLet us make some estimates. Clearly, $|\\Delta T| \\sim |\\Delta T'|$. The maximum of $\\Delta T'$ occurs when the mass swings by its lowest point with velocity $\\dot{y}$, where its trajectory has a radius of curvature $R \\sim r\\sin\\theta$. Moreover, small normal mode oscillations imply $y = A\\cos\\omega_2 t$ for some amplitude $A \\ll r\\sin\\theta$, i.e. $|\\dot{y}| \\le A\\omega_2$. Finally, assume $\\omega_2 = k\\omega_1$ holds for some $k \\sim 1$. We have\n\n$$|\\Delta T'| \\sim \\frac{m\\dot{y}^2}{R} \\sim \\frac{mk^2A^2g}{r^2\\sin^2\\theta} = k^2 mg\\left(\\frac{A}{r\\sin\\theta}\\right)^2,$$\n\ni.e. quadratically smaller in $(A/r\\sin\\theta)$ than $T_0'$. Thus, $T' + T \\approx mg\\frac{1 + \\cos\\theta}{\\sin\\theta}$ and\n\n$$\\omega_2 = \\sqrt{\\frac{T' + T}{mr}} = \\omega_1\\sqrt{1 + \\cos\\theta}.$$\n\n(The result shows $k \\le \\sqrt{2}$, i.e. the assumption holds.) **Grading:**\n\n- Force equation, either along $y$ or full vector form **(0.4 pts)**\n- Solving relation between $\\ddot{y}$ and $y$ in terms of tension forces **(0.4 pts)**\n- Unperturbed values for $T'$ and $T$ **(0.4 pts)**\n- Reasonable estimate of $|\\Delta T'|$ **(0.6 pts)**\n- Showing $|\\Delta T'|$ is quadratically smaller than $T'$ **(0.8 pts)**\n- Correct expression for $\\omega_2$ **(0.3 pts)**\n- $\\omega_2$ correctly in terms of $\\omega_1$ **(0.1 pts)**\n- **Remark:** Accept solution with assumption $\\Delta T'/T' \\ll 1$ without estimates"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2023-x-p7",
+   "number": 7,
+   "title": "A stack of papers",
+   "points": 8,
+   "problemType": "theory",
+   "statement": "*— Taavet Kalda and Jaan Kalda.*\n\nThere is a pack of $N \\gg 1$ identical sheets of papers lying on an infinite horizontal table. The coefficient of friction between the surface of the table, and between two sheets of paper are both equal to $\\mu$. Each sheet has dimensions $L \\times W$, with $L > W$. Sandra is trying to fetch the bottom-most sheet by pulling from a shorter edge of it with a constant velocity $u$ (while all the sheets lie almost exactly on top of each other, she managed to get hold of an edge of the bottom-most sheet).",
+   "parts": [
+    {
+     "label": "i)",
+     "statement": "Sketch a qualitative graph of how the acceleration $a$ of the pack (excluding the bottom-most sheet) depends on time when\n\n(a) the speed $u$ is very small.\n\n(b) the speed $u$ is very big.",
+     "points": 2
+    },
+    {
+     "label": "ii)",
+     "statement": "What is the minimal speed $u_{\\min}$ by which it is possible to pull the bottom-most sheet out (i.e. separating it completely from the remaining pack)?",
+     "points": 3
+    },
+    {
+     "label": "iii)",
+     "statement": "Assuming $u > u_{\\min}$, what is the speed of the remaining pack at the moment when the bottom-most sheet gets out of the pack (i.e. there is no longer overlapping areas)?",
+     "points": 1
+    },
+    {
+     "label": "iv)",
+     "statement": "Considering still $u > u_{\\min}$, what is the minimal distance $l$ between the pack of papers and the edge of the table such that the pack would not slide over the edge of the table? ($l$ is the maximal allowed travel distance of the pack.)",
+     "points": 2
+    }
+   ],
+   "topics": [
+    "mechanics/friction",
+    "mechanics/dynamics"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Taavet Kalda, grading schemes by Martin Rahe, Isak Fleig and Joonas Kalda.*",
+    "sections": [
+     {
+      "id": "part-i",
+      "title": "i)",
+      "points": 2,
+      "statement": "Clearly, when $u$ is very small, the pack gets dragged along with the bottom-most sheet, so the speed $v$ of the pack starts from 0, and ends up with $u$. Further, there is almost no slippage between the pack and the bottom sheet. The acceleration of the top sheet is then $g\\mu$ as long as its being accelerated, and 0 otherwise. The acceleration lasts for a duration of $u/(g\\mu)$.\n\n\n\n[[figure:p7-sol-fig1]]\n\nConversely at very large $v$, the bottom-most sheet gets pulled out so fast that the pack ends with very little speed. As the sheets gets pulled from under, the acceleration of the pack drops from $u/(g\\mu)$ to $-u/(g\\mu)$ over a duration of $L/u$.\n\n\n\n[[figure:p7-sol-fig2]]\n\n**Grading:**\n\n- Correct initial accelerations **(0.2 pts)**\n- Correct final accelerations **(0.2 pts)**\n- Correct durations of acceleration **(0.4 pts)**\n- Correct graph shapes **(0.6 pts)**\n- Physical explanations for the graph shapes **(0.6 pts)**\n\n(half of the points in each subsection are given for part (a) and half for part (b))",
+      "figures": [
+       {
+        "id": "p7-sol-fig1",
+        "alt": "Graph of a(t) versus t for very small u: the acceleration equals gμ from t = 0 until t = u/(gμ) and then drops to 0; the vertical axis is marked gμ, 0 and −gμ.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p7-sol-fig1.png",
+        "width": 765,
+        "height": 467,
+        "source": {
+         "page": 7,
+         "pdfRect": [
+          11.79,
+          300.6,
+          195.3,
+          412.52
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       },
+       {
+        "id": "p7-sol-fig2",
+        "alt": "Graph of a(t) versus t for very large u: the acceleration decreases linearly from gμ at t = 0 through zero at t = L/(2u) to −gμ at t = L/u, then jumps to 0; the vertical axis is marked gμ, 0 and −gμ.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p7-sol-fig2-v2.png",
+        "width": 762,
+        "height": 470,
+        "source": {
+         "page": 7,
+         "pdfRect": [
+          217.21,
+          11.93,
+          399.92,
+          124.43
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "part-ii",
+      "title": "ii)",
+      "points": 3,
+      "statement": "The problem is most conveniently analysed in a frame moving with the bottom-most sheet with speed $u$. In the new frame, $v' = v - u$ and $x' = x - ut$. Let the centre-point of the bottom-most sheet be $x' = 0$ and let’s track the movement of the pack using its right-most edge which will start at $x' = L/2$ with a speed of $v' = -u$ and lose contact with the bottom sheet at $x' = -L/2$.\n\nWhen the pack is in contact with the bottom sheet and in the process of slipping, the pack has a normal force of $N_1 = mg(L/2 + x')/L$ with the bottom-most sheet, and $N_2 = mg(L/2 - x')/L$ with the table. Friction force will then result in a net force of $F = N_1\\mu - N_2\\mu = 2mg\\mu x'/L$. The acceleration of the pack is thus $a' = 2g\\mu x'/L$. Note that this equation is that of a spring with a negative spring coefficient $k = 2g\\mu/L$ (which we will still denote with a positive $k$ value, only that the force repels from the equilibrium). Nevertheless, conservation of energy still holds, $v'^2/2 - kx'^2/2 = \\mathrm{const}$. The most critical point to overcome is at $x' = 0$ (after that the force starts helping the pack), which makes sense because then most of the bottom-most paper is out from underneath the pack, and the friction force from the table is dominant. The condition for this is simply $v'^2 - kx'^2 > 0$ or in other words, $u^2 - kL^2/4 > 0$. This gives\n\n$$u_{\\min} = \\frac{\\sqrt{k}L}{2} = \\sqrt{\\frac{g\\mu L}{2}}.$$\n\n**Grading:**\n\n- switching to the reference frame of the bottom-most sheet **(0.4 pts)**\n- Correct normal forces with bottom-most sheet and table **(0.6 pts)**\n- Correct net force on pack **(0.2 pts)**\n- Identifying the spring coefficient **(0.3 pts)**\n- Conservation of energy equation **(0.5 pts)**\n- Identifying critical point $x = 0$ **(0.6 pts)**\n- Deriving $u_{min}$ **(0.4 pts)**"
+     },
+     {
+      "id": "part-iii",
+      "title": "iii)",
+      "points": 1,
+      "statement": "As before, conservation of energy holds. This means that when the bottom sheet is separated at $x' = -L/2$, the potential energy is the same as when $x' = L/2$ so the speed of the pack is still $-u$. Surprisingly, the final speed of the pack in the table frame is therefore 0.\n\n**Grading:**\n\n- Potential energy when the sheet is separated is the same as when Sandra starts pulling **(0.6 pts)**\n- Correct final speed in the bottom-most sheet reference frame **(0.2 pts)**\n- Correct final speed in the table reference frame **(0.2 pts)**"
+     },
+     {
+      "id": "part-iv",
+      "title": "iv)",
+      "points": 2,
+      "statement": "The goal is to find the overall distance by which the pack slides in the table frame. Equivalently, we can find the duration $t_1$ for which it slides, because then it will have shifted by $-L$ in the paper frame, and the paper frame has shifted by $ut_1$ with respect to the table frame. The overall shift is then $l = ut_1 - L$.\n\nThe equation of motion for the pack was $a' = kx'$ with $k = 2g\\mu/L$. The solution for this is, instead of sine and cosine, hyperbolic sine and cosine. Seeing from the initial conditions, a possible solution could be $x' = x_0\\sinh(\\omega(t - \\Delta t))$. This indeed gives $v' = \\omega x_0\\sinh(\\omega(t - \\Delta t))$ and $a' = \\omega^2 x'$ such that $\\omega = \\sqrt{k}$ satisfies the equation of motion. We find the values for $x_0$ and $\\Delta t$ from the initial conditions at $t = 0$ so that $x' = -x_0\\sinh(\\omega\\Delta t) = L/2$ and $v' = x_0\\omega\\cosh(\\omega\\Delta t) = -u$. From here, we get\n\n$$\\Delta t = \\frac{1}{\\omega}\\tanh^{-1}\\left(\\frac{L\\omega}{2u}\\right),$$\n\n$$x_0 = -\\frac{L_0}{2\\sinh(\\omega\\Delta t)}.$$\n\nNow, from the form of $x'$, it’s clear that it will pass $x' = 0$ at $t = \\Delta t$, and reach $x' = -L/2$ at $t = 2\\Delta t$. Therefore, $t_1 = 2\\Delta t$ and the minimal distance between the paper pack and the edge has to be\n\n$$\\begin{aligned} l = ut_1 - L &= \\frac{2u}{\\omega}\\tanh^{-1}\\left(\\frac{L\\omega}{2u}\\right) - L \\\\ &= L\\left(\\frac{2u}{L\\omega}\\tanh^{-1}\\left(\\frac{L\\omega}{2u}\\right) - 1\\right). \\end{aligned}$$\n\n**Grading:**\n\n- Stating the formula $l = ut_1 - L$ **(0.2 pts)**\n- Stating the equation of motion $a' = kx'$ **(0.2 pts)**\n- Solution for the equation of motion **(0.4 pts)**\n- Correct values for $x_0$ and $\\Delta t$ **(0.6 pts)**\n- Justification for $t_1 = 2\\Delta t$ **(0.3 pts)**\n- Correct result for the minimal distance $l$ **(0.3 pts)**-"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2023-x-p8",
+   "number": 8,
+   "title": "Connected charges",
+   "points": 8,
+   "problemType": "theory",
+   "statement": "*— Jaan Kalda.*\n\nIn the region $0 < x < L$, there is an electric field $\\vec{E} = E_0\\hat{x}$, where $\\hat{x}$ denotes the unit vector parallel to the $x$-axis. Two small balls, each of mass $m$ and carrying charge $q$ ($qE_0 > 0$) are connected with a weightless non-stretchable string of length $l$. Initially, at the moment of time $t = 0$, the string is taut, the velocity of the both balls is $\\vec{v} = v_0\\hat{x}$, one of the balls, the ball $A$, is at $x = 0$ while the other ball, the ball $B$ is at $x < 0$. The electric field created by the balls can be neglected, and it can be assumed that $v_0$ is very small (much smaller than $\\sqrt{ELq/m}$).",
+   "parts": [
+    {
+     "label": "i)",
+     "statement": "Consider the case when the string is parallel to the $x$-axis, and $l = L$ Sketch the dependence of the velocity of the both balls as a function of time. Will the balls collide? If yes then when?",
+     "points": 2
+    },
+    {
+     "label": "ii)",
+     "statement": "Now, at $t = 0$, the string forms an angle of $45^{\\circ}$ with the $x$-axis, $l = 1.2291L$. By this string length, at the moment $t = T$ when the ball $A$ reaches $x = L$, the string is parallel to the $x$-axis. Find $T$.",
+     "points": 2
+    },
+    {
+     "label": "iii)",
+     "statement": "Under the assumptions of the previous task, what is the speed of the ball $A$ at the moment $t = T$?",
+     "points": 2
+    },
+    {
+     "label": "iv)",
+     "statement": "Now, at $t = 0$, the string forms a very small angle $\\phi$ with the $x$-axis. Similarly to the previous two tasks, at the moment $t = T'$ when the ball $A$ reaches $x = L$, the string is parallel to the $x$-axis. Find the string length $l$ assuming that $l > L$. *The answer to this point should contain only $L$ and numerical constants.*",
+     "points": 2
+    }
+   ],
+   "topics": [
+    "electricity/electrostatics",
+    "mechanics/dynamics"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Jaan Kalda, grading schemes by Jānis Cīmurs.*",
+    "sections": [
+     {
+      "id": "part-i",
+      "title": "i)",
+      "points": 2,
+      "statement": "As the ball $A$ enters the electric field, the force $qE$ is exerted on it, hence the acceleration of the system of two balls is $a_1 = qE/2m$; the acceleration remains constant until the ball $A$ exits the field. This will happen when $L = a_1 t_1^2/2$, hence $t_1 = \\sqrt{2L/a} = 2\\sqrt{Lm/qE}$ At that moment, the acceleration of the ball $A$ becomes zero, but at the very same moment, ball $B$ enters the field. The force $qE$ exerted on it will give it twice as big an acceleration as before, $a_2 = qE/m$, and the string becomes loose. So, the speed of the ball $B$ is now bigger than that of the ball $A$, and so they will eventually collide. The time $t_2$ spent by the ball $B$ in the field can be expressed as $t_2 = (v_f - v_i)/a_2$, where $v_i = \\sqrt{qEL/m}$ is its initial speed, and $v_f = \\sqrt{3qEL/m}$ — the final speed. So, $t_2 = \\sqrt{Lm/qE}(\\sqrt{3} - 1)$. At the moment when the ball $B$ exits the field, the distance between the balls is $s = L - (v_f - v_i)t_2/2 = v_i t_2 = L(\\sqrt{3} - 1)$, and the difference between the velocities of the balls is $\\Delta v = v_f - v_i = \\sqrt{qEL/m}(\\sqrt{3} - 1)$, hence the time remaining until the collision $t_3 = s/\\Delta v = \\sqrt{Lm/qE}$. Thus, the moment of collision $t = t_1 + t_2 + t_3 = \\sqrt{Lm/qE}(\\sqrt{3} + 2)$.\n\n**Grading:**\n\n- Initially both charges move with the same acceleration **(0.2 pts)**\n- When A escapes the field region A moves with constant speed, B moves with higher acceleration **(0.2 pts)**\n- When B escapes, both move with constant speed **(0.1 pts)**\n- Correct $a_1$ **(0.2 pts)**\n- Correct $t_1$ **(0.2 pts)**\n- Correct $a_2$ **(0.1 pts)**\n- Correct $v_i$ **(0.2 pts)**\n- Correct $v_f$ **(0.2 pts)**\n- Correct $t_2$ **(0.2 pts)**\n- Correct $s$ **(0.2 pts)**\n- Correct $t_3$ and $t$ **(0.2 pts)**"
+     },
+     {
+      "id": "part-ii",
+      "title": "ii)",
+      "points": 2,
+      "statement": "**First solution:** The centre of mass moves with constant acceleration $a_1 = qE/2m$, and has travelled distance $s_{CM} = L - l/2 + l/(2\\sqrt{2}) = 0.8200L = a_1 T^2/2$, hence $T = 1.811\\sqrt{\\frac{mL}{qE}}$.\n\n**Grading:**\n\n- Use $s_{CM} = a_1 T^2/2$ for centre of mass **(0.5 pts)**\n- Correct $a_1$ **(0.5 pts)**\n- Correct $s_{CM}$ **(0.6 pts)**\n- Correct $T$ **(0.4 pts)**\n- If you assume small angle oscillation to calculate time necessary for the string to align with the $x$-axis. **(up to 1.4 pts)**"
+     },
+     {
+      "id": "part-iii",
+      "title": "iii)",
+      "points": 2,
+      "statement": "**First solution:** Due to the conservation of $y$-directional momentum, the $y$-components of the balls are always equal. At $t = T$, the string is parallel to the $x$-axis; since it is not stretchable, $x$-components of the balls are equal, too, at that moment. Hence, the speeds are equal, and energy conservation law states $EqL = mv^2$ so that $v = \\sqrt{\\frac{qEL}{m}}$.\n\n**Grading:**\n\n- Using energy conservation law **(1.0 pts)**\n- Kinetic energy of both masses **(0.6 pts)**\n- Work done by electric field **(0.2 pts)**\n- Correct $v$ **(0.2 pts)**\n\n**Alternative solution:** The time period $0 < t < T$ is most conveniently analysed in the centre-of-mass frame. In that frame, there is a force of inertia equal to $F_i = -ma_1 = -qE/2$. Hence, both balls perform non-linear oscillations around the centre of mass (it is nonlinear because the amplitude is not small). The speed of the ball at $t = T$ can be found from the energy conservation law. At $t = 0$, the speed is zero so that the full energy is due to the potential energy in the homogeneous force field $qE/2$: $\\Delta U = \\frac{qE}{2}\\left(\\frac{l}{2} - \\frac{l}{2\\sqrt{2}}\\right) = \\frac{qEL}{8}(2 - \\sqrt{2}) = \\frac{mv_y^2}{2}$, hence $v_y^2 = \\frac{qEl}{4m}(2 - \\sqrt{2}) = 0.1800\\frac{qEL}{m}$. This gives us the velocity component in the $y$-direction; once we return to the laboratory frame, we need to add the $x$-component of the frame’s velocity $v_x = a_1 T = \\frac{qE}{2m}1.811\\sqrt{\\frac{mL}{qE}} = 0.9055\\sqrt{\\frac{qEL}{m}}$ so that $v = \\sqrt{v_x^2 + v_y^2} = \\sqrt{\\frac{qEL}{m}}$.\n\n**Grading:**\n\n- Horizontal speed $v_x$ **(0.4 pts)**\n- Use energy balance or something similar to find rotational speed $v_y$ **(0.4 pts)**\n- Correct distance travelled **(0.6 pts)**\n- Rotational speed $v_y$ **(0.4 pts)**\n- Pythagorean theorem **(0.2 pts)**"
+     },
+     {
+      "id": "part-iv",
+      "title": "iv)",
+      "points": 2,
+      "statement": "For the string to be parallel to the $x$-axis, the system must perform $n + \\frac{1}{2}$ half-periods, where $n$ is an integer. Since now the amplitude is small, the oscillations are harmonic, and the circular frequency $\\omega = \\sqrt{\\frac{qE}{ml}}$ (we can use the formula for a pendulum of length $l/2$ and equivalent gravity field $g = qE/2m$). So, the travel time must be $\\tau = \\pi\\sqrt{\\frac{ml}{qE}}(n + \\frac{1}{2})$. On the other hand, we can use the result from task ii: $\\tau = \\sqrt{\\frac{ml}{qE}}\\sqrt{4\\lambda - 2 + 2\\cos\\phi}$, where $\\lambda = L/l < 1$ and $\\cos\\phi \\approx 1$. So, $\\pi(n + \\frac{1}{2}) = \\sqrt{4\\lambda}$. Since $\\lambda < 1$, this equality can only be satisfied with $n = 0$, hence $\\lambda = \\frac{\\pi^2}{16} = 0.6169$ so that $l = L/\\lambda = 1.6211L$.\n\n**Grading:**\n\n- Correct circular frequency **(0.6 pts)**\n- If circular frequency deviates from the right by factor $\\sqrt{2}$ **(0.2 pts)**\n- Correct rotation time with $n$ **(0.6 pts)**\n- Correct rotation time without $n$ **(0.2 pts)**\n- Correct travel time from ii **(0.4 pts)**\n- Derivation of $l$ **(0.4 pts)**"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2023-x-p9",
+   "number": 9,
+   "title": "Surface tension",
+   "points": 10,
+   "problemType": "experiment",
+   "statement": "*— Jaan Kalda, Eero Uustalu.*\n\nTools: a syringe, a small glass plate, a support for holding the glass plate horizontally at an adjustable height, a cup with water (coefficient of refraction of water $n_w = 1.33$), a caliper, a sheet of graph paper. Your working room has ceiling lights at an approximate height of $3\\ \\mathrm{m}$. The glass plate holder is a short piece of plastic pipe with a nut; put the glass plate on top of the nut and turn the nut to adjust the height. By turning the nut, one can change the holder height only by the thickness of the nut; there are also spare nuts that can be stacked to increase the total height of the pipe-nuts system, and a cap that fits into the pipe — use it if there is a need to make the distance between the glass plate and the surface beneath it smaller than the height of the pipe. NB! Hold the glass plate only from its matte part and do not touch the glossy (transparent) part as fingerprints will affect the value of the contact angle. If you accidentally do touch, ask organisers to clean the glass surface.",
+   "parts": [
+    {
+     "label": "i)",
+     "statement": "Put a small drop of water onto the glass plate; this will form a plano-convex lens. Determine the focal length of this lens and measure its diameter.",
+     "points": 3
+    },
+    {
+     "label": "ii)",
+     "statement": "Calculate the curvature radius of the water surface and the water-glass contact angle $\\alpha$. The contact angle is defined as the angle under which the water surface (the air-water interface) meets the surface of the glass plate.",
+     "points": 2
+    },
+    {
+     "label": "iii)",
+     "statement": "Now increase the amount of water on the glass plate so that it covers a big part of the glass plate so that its top surface becomes almost flat. Determine the thickness of the water layer.",
+     "points": 3
+    },
+    {
+     "label": "iv)",
+     "statement": "Calculate the surface tension of water $\\sigma$. Hint: a given amount of water takes a shape which minimises its total potential energy. Use reasonable approximations. Keep in mind that the glass-water interface makes also a certain contribution $U_{gw}$ to the full surface energy, the magnitude of which is related to the contact angle: $U_{gw} = -\\sigma\\cos\\alpha A$, where $A$ denotes the surface area of the glass-water interface.",
+     "points": 2
+    }
+   ],
+   "topics": [
+    "fluids/surface-tension",
+    "optics/lenses"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "*— Solution by Jaan Kalda, grading schemes by ....*",
+    "sections": [
+     {
+      "id": "part-i",
+      "title": "i)",
+      "points": 3,
+      "statement": "The focal length can be found by adjusting the height of the plate holder; adjust the height so as to achieve a sharp image of the ceiling lights at the screen (either a sheet of paper beneath the holder, or the surface of the cap inside the holder. The height can be measured precisely by caliper. The diameter of the drop can be also measured by caliper, but it is more convenient to put the glass plate on top of the graph paper and take the diameter reading from the millimeter grid of the graph paper. A possible pair of data is $f = 15.9\\ \\mathrm{mm}$ and $d = 5.8\\ \\mathrm{mm}$.\n\n**Grading:**\n\n- Correct idea of searching for the focal length by adjusting the height of the plate holder in order to achieve a sharp image of the ceiling lights **(0.7 pts)**\n- student takes into consideration that the light source is at a finite length or mentions in solution that it can be considered that the light source is at a very large distance away. **(0.3 pts)**\n- Correctly taken height measurements with a caliper **(0.5 pts)**\n- Correctly taken diameter measurements of the drop using the caliper or using the millimeter grid on the graphing paper **(0.5 pts)**\n- The results should be roughly $f = 15.9\\ \\mathrm{mm}$ and $d = 5.8\\ \\mathrm{mm}$, but should later give accurate $\\alpha$ value. **(1 pts)**"
+     },
+     {
+      "id": "part-ii",
+      "title": "ii)",
+      "points": 2,
+      "statement": "Lensmaker’s equation can be used to relate the focal length to the curvature radius:\n\n$$\\frac{1}{f} = \\frac{n - 1}{R} \\Rightarrow R = f(n - 1) \\approx 5.3\\ \\mathrm{mm}.$$\n\nThose who don’t know the lensmaker’s formula can derive it easily from Snell’s law by considering a beam which falls onto the lens parallel to the optical axis, and by using small angle approximation, $\\sin x \\approx x$. The water-glass contact angle can be found using trigonometry:\n\n$$\\alpha = 90^{\\circ} - \\mathrm{acos}\\frac{d}{2R} \\approx 33.2^{\\circ}$$\n\n**Grading:**\n\n- Correct idea of calculating the radius using the Lensmaker’s equation. Other methods (for example using direct thickness measurement) only gives max 0.3 pts. **(0.5 pts)**\n- The result should be around $R = 5.3\\ \\mathrm{mm}$, but should later give accurate $\\alpha$ value. **(0.5 pts)**\n- Correct idea for determining the water-glass contact angle using previously calculated values $d$ and $R$. **(0.5 pts)**\n- The result should be around $\\alpha = 33.2^{\\circ}$. Give max points for $\\alpha = 28^{\\circ} - 38^{\\circ}$. **(0.5 pts)**"
+     },
+     {
+      "id": "part-iii",
+      "title": "iii)",
+      "points": 3,
+      "statement": "Increase the surface area of water covering the glass plate as much as possible — in that way the mistake in calculations introduced by the edge effects (the water surface is not flat near the edges of the water pool) is minimised. It is safe to let the water reach the edges of the glass plate as long as there is a small part of the perimeter where it does not reach the edge — this guarantees that the water surface at the edges forms with the horizon an angle equal to the contact angle. However, you shouldn’t let the water reach the edges of the plate over its entire perimeter as in that case, the angle formed by the water surface can become larger than the contact angle, due to the fact that at the edge, the direction of the glass plate’s surface normal changes discontinuously; this would result in a thicker water layer (this cannot happen if there is a part of the perimeter still not touching the edge as in that case, instead of increasing the depth, the water would spread to fill the unoccupied parts of the plate). It is also recommended to avoid water reaching the matte area as that part is not guaranteed to be clean and may have a different contact angle value. With water volume $V = 2.00\\ \\mathrm{ml}$, the water fills almost the entire glossy part of the plate. By putting the glass plate on top of the graph paper, one can count the squares of the grid, resulting in $A = 12.7\\ \\mathrm{cm^2}$. The thickness of water layer is found as $t = V/A \\approx 1.57\\ \\mathrm{mm}$.\n\n**Grading:**\n\n- Student understands that it is necessary to maximize the surface area of the water. **(0.5 pts)**\n- Student understands that the area of the water should not extend to the edges of the glass plate. **(0.5 pts)**\n- If measurement of water volume $V < 2.5\\ \\mathrm{ml}$. **(0.5 pts)**\n- If measurement of the surface area of the water. $A < 13.5\\ \\mathrm{cm^2}$ **(0.5 pts)**\n- Correct formula to determine thickness of the water layer. **(0.5 pts)**\n- The result should be around $t = 1.57\\ \\mathrm{mm}$. Give max points for $t = 1.45\\ \\mathrm{mm} - 1.70\\ \\mathrm{mm}$. **(0.5 pts)**\n- if the thickness is measured directly max receivable points are 0.5 for a reasonable result and 0.5 pts for a reasonable method if described as this has very poor precision because the caliper can not touch the water surface and the water surface has poor visibility."
+     },
+     {
+      "id": "part-iv",
+      "title": "iv)",
+      "points": 2,
+      "statement": "Total potential energy of the water is $U = \\sigma A(1 - \\cos\\alpha) + \\frac{1}{2}V\\rho g t$. If we plug in $A = V/t$, we obtain\n\n$$U = V\\left(\\sigma\\frac{1 - \\cos\\alpha}{t} + \\frac{\\rho g t}{2}\\right).$$\n\nIts minimum is easily found by equating $\\mathrm{d}U/\\mathrm{d}t = 0$, resulting in\n\n$$\\sigma = \\frac{\\rho g h^2}{2(1 - \\cos\\alpha)} \\approx 0.077\\ \\mathrm{N/m}.$$\n\n**Grading:**\n\n- Surface energy is shown in the expression for total potential energy. **(0.3 pts)**\n- $U_{gw}$ is taken into consideration in the expression for total potential energy. **(0.4 pts)**\n- Potention energy is shown in the expression for total potential energy. **(0.3 pts)**\n- Minimum total potential energy is correctly found. **(0.6 pts)**\n- The result should be around $\\sigma = 0.077\\ \\mathrm{N\\,m^{-1}}$. Give max points for $\\sigma = 0.060\\ \\mathrm{N\\,m^{-1}} - 0.094\\ \\mathrm{N\\,m^{-1}}$. **(0.4 pts)**"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    }
+   ]
+  }
+ ]
+}

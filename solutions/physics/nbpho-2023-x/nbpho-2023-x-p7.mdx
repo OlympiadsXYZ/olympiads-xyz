@@ -1,0 +1,149 @@
+---
+id: nbpho-2023-x-p7
+source: 'NBPhO 2023, Теория и експеримент'
+title: 'Задача 7. A stack of papers'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2023/nbpho-2023-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:46:24.406Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2023 · 8 т.*
+
+## Условие
+
+*— Taavet Kalda and Jaan Kalda.*
+
+There is a pack of $N \gg 1$ identical sheets of papers lying on an infinite horizontal table. The coefficient of friction between the surface of the table, and between two sheets of paper are both equal to $\mu$. Each sheet has dimensions $L \times W$, with $L > W$. Sandra is trying to fetch the bottom-most sheet by pulling from a shorter edge of it with a constant velocity $u$ (while all the sheets lie almost exactly on top of each other, she managed to get hold of an edge of the bottom-most sheet).
+
+**i)** Sketch a qualitative graph of how the acceleration $a$ of the pack (excluding the bottom-most sheet) depends on time when
+
+(a) the speed $u$ is very small.
+
+(b) the speed $u$ is very big. **[2 т.]**
+
+**ii)** What is the minimal speed $u_{\min}$ by which it is possible to pull the bottom-most sheet out (i.e. separating it completely from the remaining pack)? **[3 т.]**
+
+**iii)** Assuming $u > u_{\min}$, what is the speed of the remaining pack at the moment when the bottom-most sheet gets out of the pack (i.e. there is no longer overlapping areas)? **[1 т.]**
+
+**iv)** Considering still $u > u_{\min}$, what is the minimal distance $l$ between the pack of papers and the edge of the table such that the pack would not slide over the edge of the table? ($l$ is the maximal allowed travel distance of the pack.) **[2 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+*— Solution by Taavet Kalda, grading schemes by Martin Rahe, Isak Fleig and Joonas Kalda.*
+
+<ProblemSection id="solution-part-i">
+
+### i) (2 т.)
+
+Clearly, when $u$ is very small, the pack gets dragged along with the bottom-most sheet, so the speed $v$ of the pack starts from 0, and ends up with $u$. Further, there is almost no slippage between the pack and the bottom sheet. The acceleration of the top sheet is then $g\mu$ as long as its being accelerated, and 0 otherwise. The acceleration lasts for a duration of $u/(g\mu)$.
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.2%', '--fig-max': '245px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p7-sol-fig1.png" alt="Graph of a(t) versus t for very small u: the acceleration equals gμ from t = 0 until t = u/(gμ) and then drops to 0; the vertical axis is marked gμ, 0 and −gμ." width="765" height="467" loading="lazy" decoding="async" />
+</figure>
+
+
+Conversely at very large $v$, the bottom-most sheet gets pulled out so fast that the pack ends with very little speed. As the sheets gets pulled from under, the acceleration of the pack drops from $u/(g\mu)$ to $-u/(g\mu)$ over a duration of $L/u$.
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.1%', '--fig-max': '244px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p7-sol-fig2-v2.png" alt="Graph of a(t) versus t for very large u: the acceleration decreases linearly from gμ at t = 0 through zero at t = L/(2u) to −gμ at t = L/u, then jumps to 0; the vertical axis is marked gμ, 0 and −gμ." width="762" height="470" loading="lazy" decoding="async" />
+</figure>
+
+
+**Grading:**
+
+- Correct initial accelerations **(0.2 pts)**
+- Correct final accelerations **(0.2 pts)**
+- Correct durations of acceleration **(0.4 pts)**
+- Correct graph shapes **(0.6 pts)**
+- Physical explanations for the graph shapes **(0.6 pts)**
+
+(half of the points in each subsection are given for part (a) and half for part (b))
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-ii">
+
+### ii) (3 т.)
+
+The problem is most conveniently analysed in a frame moving with the bottom-most sheet with speed $u$. In the new frame, $v' = v - u$ and $x' = x - ut$. Let the centre-point of the bottom-most sheet be $x' = 0$ and let’s track the movement of the pack using its right-most edge which will start at $x' = L/2$ with a speed of $v' = -u$ and lose contact with the bottom sheet at $x' = -L/2$.
+
+When the pack is in contact with the bottom sheet and in the process of slipping, the pack has a normal force of $N_1 = mg(L/2 + x')/L$ with the bottom-most sheet, and $N_2 = mg(L/2 - x')/L$ with the table. Friction force will then result in a net force of $F = N_1\mu - N_2\mu = 2mg\mu x'/L$. The acceleration of the pack is thus $a' = 2g\mu x'/L$. Note that this equation is that of a spring with a negative spring coefficient $k = 2g\mu/L$ (which we will still denote with a positive $k$ value, only that the force repels from the equilibrium). Nevertheless, conservation of energy still holds, $v'^2/2 - kx'^2/2 = \mathrm{const}$. The most critical point to overcome is at $x' = 0$ (after that the force starts helping the pack), which makes sense because then most of the bottom-most paper is out from underneath the pack, and the friction force from the table is dominant. The condition for this is simply $v'^2 - kx'^2 > 0$ or in other words, $u^2 - kL^2/4 > 0$. This gives
+
+$$
+u_{\min} = \frac{\sqrt{k}L}{2} = \sqrt{\frac{g\mu L}{2}}.
+$$
+
+**Grading:**
+
+- switching to the reference frame of the bottom-most sheet **(0.4 pts)**
+- Correct normal forces with bottom-most sheet and table **(0.6 pts)**
+- Correct net force on pack **(0.2 pts)**
+- Identifying the spring coefficient **(0.3 pts)**
+- Conservation of energy equation **(0.5 pts)**
+- Identifying critical point $x = 0$ **(0.6 pts)**
+- Deriving $u_{min}$ **(0.4 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-iii">
+
+### iii) (1 т.)
+
+As before, conservation of energy holds. This means that when the bottom sheet is separated at $x' = -L/2$, the potential energy is the same as when $x' = L/2$ so the speed of the pack is still $-u$. Surprisingly, the final speed of the pack in the table frame is therefore 0.
+
+**Grading:**
+
+- Potential energy when the sheet is separated is the same as when Sandra starts pulling **(0.6 pts)**
+- Correct final speed in the bottom-most sheet reference frame **(0.2 pts)**
+- Correct final speed in the table reference frame **(0.2 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-iv">
+
+### iv) (2 т.)
+
+The goal is to find the overall distance by which the pack slides in the table frame. Equivalently, we can find the duration $t_1$ for which it slides, because then it will have shifted by $-L$ in the paper frame, and the paper frame has shifted by $ut_1$ with respect to the table frame. The overall shift is then $l = ut_1 - L$.
+
+The equation of motion for the pack was $a' = kx'$ with $k = 2g\mu/L$. The solution for this is, instead of sine and cosine, hyperbolic sine and cosine. Seeing from the initial conditions, a possible solution could be $x' = x_0\sinh(\omega(t - \Delta t))$. This indeed gives $v' = \omega x_0\sinh(\omega(t - \Delta t))$ and $a' = \omega^2 x'$ such that $\omega = \sqrt{k}$ satisfies the equation of motion. We find the values for $x_0$ and $\Delta t$ from the initial conditions at $t = 0$ so that $x' = -x_0\sinh(\omega\Delta t) = L/2$ and $v' = x_0\omega\cosh(\omega\Delta t) = -u$. From here, we get
+
+$$
+\Delta t = \frac{1}{\omega}\tanh^{-1}\left(\frac{L\omega}{2u}\right),
+$$
+
+$$
+x_0 = -\frac{L_0}{2\sinh(\omega\Delta t)}.
+$$
+
+Now, from the form of $x'$, it’s clear that it will pass $x' = 0$ at $t = \Delta t$, and reach $x' = -L/2$ at $t = 2\Delta t$. Therefore, $t_1 = 2\Delta t$ and the minimal distance between the paper pack and the edge has to be
+
+$$
+\begin{aligned} l = ut_1 - L &= \frac{2u}{\omega}\tanh^{-1}\left(\frac{L\omega}{2u}\right) - L \\ &= L\left(\frac{2u}{L\omega}\tanh^{-1}\left(\frac{L\omega}{2u}\right) - 1\right). \end{aligned}
+$$
+
+**Grading:**
+
+- Stating the formula $l = ut_1 - L$ **(0.2 pts)**
+- Stating the equation of motion $a' = kx'$ **(0.2 pts)**
+- Solution for the equation of motion **(0.4 pts)**
+- Correct values for $x_0$ and $\Delta t$ **(0.6 pts)**
+- Justification for $t_1 = 2\Delta t$ **(0.3 pts)**
+- Correct result for the minimal distance $l$ **(0.3 pts)**-
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2023_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2023/NBPhO_2023_problems.pdf#page=2)
+· официални решения: [NBPhO_2023_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2023/NBPhO_2023_solutions.pdf#page=7)

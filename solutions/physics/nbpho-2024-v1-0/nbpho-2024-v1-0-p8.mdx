@@ -1,0 +1,130 @@
+---
+id: nbpho-2024-v1-0-p8
+source: 'NBPhO 2024, Теория и експеримент'
+title: 'Задача 8. Airplanes'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2024/nbpho-2024-v1-0.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:46:13.672Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2024 · 7 т.*
+
+## Условие
+
+*— Janis Huns, Jaan Kalda.*
+
+Two airplanes pass each other while flying at a constant altitudes. While they have identical airspeeds, their ground speeds are $v_1$ and $v_2$, respectively, and the angle between the velocity vectors is $\alpha$. Based on this knowledge, what is the minimal possible value
+
+**i)** of the airspeed of the planes; **[1 т.]**
+
+**ii)** of the wind speed at the altitudes of the planes? **[3 т.]**
+
+**iii)** Answer the question ii) if now $v_1 = v_2 = v$, but it is known that the airspeed of one of the planes is two times bigger than that of the other. **[3 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+*— Solution by Tudor Plopeanu.*
+
+<ProblemSection id="solution-sol-i">
+
+### i) (1 т.)
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.8%', '--fig-max': '274px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2024-v1-0/p8-sol-fig1-v3.png" alt="Vector diagram for parts i) and ii): from the origin O, vectors v1 = w + u1 to point A and v2 = w + u2 to point B; the wind vector w from O to O′ on the dashed perpendicular bisector l of AB; dash-dotted segments from O′ to A and to B; a dashed segment w_min from O perpendicular to l." width="857" height="435" loading="lazy" decoding="async" />
+</figure>
+
+
+Let $\vec{w}$ be the speed of the wind at the airplanes’ altitude, and let $\vec{u}_1$ and $\vec{u}_2$ be the planes’ respective speeds in absence of wind. $\vec{v}_1 = \vec{w} + \vec{u}_1$, $\vec{v}_2 = \vec{w} + \vec{u}_2$. Let $O'$ be the point such that $\vec{OO'} = \vec{w}$, $A$ the point such that $\vec{OA} = \vec{v}_1$, and $B$ the point such that $\vec{OB} = \vec{v}_2$. As $|\vec{w} - \vec{v}_1| = |\vec{w} - \vec{v}_2|$, we know that $O'$ lies on the perpendicular bisector of $(AB)$, which we shall denote as $l$. A quick check also yields that all points on this line are valid selections for $\vec{w}$. $|\vec{u}_1| = |AO'|$. We can find the minimal airspeed as the length of the perpendicular from $A$ to $l$, of length $|AB|/2$. For a vector result in terms of $\vec{v}_1$ and $\vec{v}_2$, we have
+
+$$
+|\vec{u}_1|_{\min} = |\vec{v}_1 - \vec{v}_2|/2
+$$
+
+$$
+= \frac{1}{2}\sqrt{v_1^2 + v_2^2 - 2v_1v_2\cos\alpha}.
+$$
+
+**Grading:**
+
+This is relevant for all three subproblems. The solutions are mainly geometric, however several students have tried solving it in a more algebraic manner. If it yielded the correct answer or near correct answer, points were given, but otherwise partial points were not given.
+
+- Representing the problem with vectors and adding the velocities correctly **(0.2 pts)**
+- Wrong order or sign **(-0.1 pts)**
+- The wind velocity vector $w$ on perpendicular bisector of $(AB)$ **(0.4 pts)**
+- The minimum airspeed needs $w$ to lie on the intersection of $AB$ and the perpendicular bisector **(0.1 pts)**
+- calculating correct answer **(0.3 pts)**
+- Small error but reasonable answer with correct units, or not expanded answer that is simple to expand **(-0.1 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-sol-ii">
+
+### ii) (3 т.)
+
+The minimal wind speed is given by the length of the perpendicular from $O$ to $l$. This is the length of $(\vec{v}_1 + \vec{v}_2)/2$ projected on $\vec{v}_1 - \vec{v}_2$, and can be found as
+
+$$
+|\vec{w}|_{\min} = \frac{|(\vec{v}_1 + \vec{v}_2)\cdot(\vec{v}_1 - \vec{v}_2)|}{2|\vec{v}_1 - \vec{v}_2|}
+$$
+
+$$
+= \frac{\left||\vec{v}_1|^2 - |\vec{v}_2|^2\right|}{2|\vec{v}_1 - \vec{v}_2|}
+$$
+
+$$
+= \frac{|v_1^2 - v_2^2|}{2\sqrt{v_1^2 + v_2^2 - 2v_1v_2\cos\alpha}}.
+$$
+
+**Grading:**
+
+- Representing the problem with vectors and adding the velocities correctly **(0.5 pts)**
+- The wind velocity vector $w$ on perpendicular bisector of $(AB)$ **(0.5 pts)**
+- The wind velocity is smallest when it is perpendicular to $l$ **(0.5 pts)**
+- Calculating the correct answer **(1.5 pts)**
+- Small error but reasonable answer with correct units, or not expanded answer that is simple to expand **(-0.5 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-sol-iii">
+
+### iii) (3 т.)
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '41.6%', '--fig-max': '266px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2024-v1-0/p8-sol-fig2-v4.png" alt="Vector diagram for part iii): from the origin O, vectors v1 = w + u1 to A and v2 = w + u2 to B; the wind vector w from O to O′, which lies on a dashed circle (the Apollonius circle) with centre O″; a dotted line through A, B and O″; dashed segments from O′ to A and B." width="832" height="688" loading="lazy" decoding="async" />
+</figure>
+
+
+In this situation, $|\vec{w} - \vec{v}_1| = 2|\vec{w} - \vec{v}_2|$, so $O'$ is on the Apollonius’s circle with respect to the points $A$ and $B$, such that the points on the circle are 2 times closer to $B$ than to $A$. Let its center be $O''$. Its radius is $R_A = 2|\vec{v}_1 - \vec{v}_2|/3$ (this can be found by considering the intersection points of the Apollonius circle with the line $AB$). We are tasked to find the shortest distance from $O$ to this circle, which is found as $|OO''| - R_A$. We note that $\vec{OO''} = (4/3)\vec{v}_2 - (1/3)\vec{v}_1$. The minimal wind speed is thus
+
+$$
+|\vec{w}|_{\min} = \left|\frac{4}{3}\vec{v}_2 - \frac{1}{3}\vec{v}_1\right| - \frac{2}{3}|\vec{v}_2 - \vec{v}_1|
+$$
+
+$$
+= \frac{\sqrt{17 - 8\cos\alpha} - 4\sin\frac{\alpha}{2}}{3}v.
+$$
+
+**Grading:**
+
+- Representing the problem with vectors and adding the velocities correctly **(0.2 pts)**
+- The wind velocity vector $w$ needs to lie on the Apollonius circle (doesn’t need the name) **(1.3 pts)**
+- if one realises it is a circle, but not the correct one **(0.5 pts)** is given
+- Calculating the $R_A$ **(0.5 pts)**
+- Calculating the correct answer **(1 pts)**
+- Small error but reasonable answer with correct units, or not expanded answer that is simple to expand **(-0.5 pts)**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2024_problems_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2024/NBPhO_2024_problems_v1.0.pdf#page=2)
+· официални решения: [NBPhO_2024_solutions_v0.98.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2024/NBPhO_2024_solutions_v0.98.pdf#page=6)

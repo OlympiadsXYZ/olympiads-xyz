@@ -1,0 +1,151 @@
+---
+id: nbpho-2024-v1-0-p2
+source: 'NBPhO 2024, Теория и експеримент'
+title: 'Задача 2. Oklo fission reactor'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2024/nbpho-2024-v1-0.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:46:13.672Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2024 · 7 т.*
+
+## Условие
+
+*— Topi Löytäinen, Jaan Kalda.* Based on the ratio of the uranium isotopes $^{235}$U and $^{238}$U, as well as the abundances of the isotopes produced by nuclear reactors, researchers have established that self-sustaining natural nuclear reactors operated in Oklo ca $T_0 = 1.8\times 10^9$ years ago in Gabon, central Africa. For such reactors to exist, two conditions must be met: (a) presence of deposits with high enough concentration of uranium; (b) sufficiently high abundance of $^{235}$U in natural uranium. Rich uranium ores were created by floods: scattered uranium was dissolved in oxygen-rich water and transported by it to underground pools. Significant concentration of oxygen appeared in the atmosphere only around 2.5 billion years ago, so the first condition was not met earlier than that. You will learn below that the abundance of $^{235}$U decreases relatively fast in time, so the second condition ceased to be satisfied soon after the operation of Oklo’s reactor.
+
+What made the operation of Oklo’s reactor possible was a stable influx of ground water that kept the uranium deposits sufficiently wet. Water is the so-called moderator for the fission reactor: it slows down neutrons emerging from fission reactions, dramatically enhancing the chances of a neutron triggering the fission of a next $^{235}$U nucleus.
+
+In what follows, in addition to $T_0$, you can use the following numerical values.
+
+Energy released by the fission of a single $^{235}$U nucleus: $E_0 = 200\,\mathrm{MeV}$.
+
+Half-life of $^{235}$U: $\tau_5 \approx 7\times 10^8$ years.
+
+Half-life of $^{238}$U: $\tau_8 \approx 4.5\times 10^9$ years.
+
+Latent heat of evaporation of water: $L = 2260\,\mathrm{kJ\,kg^{-1}}$.
+
+Specific heat of water $c = 4200\,\mathrm{J\,kg^{-1}\,K^{-1}}$.
+
+Abundance of $^{235}$U in natural uranium today: $R = 0.72\%$. We define abundance as the number of atoms of the isotope, normalized to the number of atoms of the given element.
+
+Average abundance of $^{235}$U in the uranium from Oklo’s uranium ore today: $R_O = 0.62\%$.
+
+The total amount of uranium in Oklo’s mine today: $M = 5\times 10^8\,\mathrm{kg}$.
+
+The duration of the time period over which Oklo’s reactor operated: $T \approx 1\times 10^5$ year.
+
+Elementary charge: $e = 1.6\times 10^{-19}\,\mathrm{C}$.
+
+Atomic mass unit: $u = 1.66\times 10^{-27}\,\mathrm{kg}$.
+
+Avogadro’s number: $N_A = 6.02\times 10^{23}\,\mathrm{mol^{-1}}$.
+
+Note that: (a) the abundance of other isotopes of uranium besides $^{235}$U and $^{238}$U is negligibly small; (b) $^{235}$U is not among the decay products of $^{238}$U; and (c) fission channels other than the fission of $^{235}$U (e.g., synthesis and fission of plutonium) can be neglected.
+
+**i)** What was the abundance of $^{235}$U in natural uranium when the Oklo’s reactor operated? **[1,5 т.]**
+
+**ii)** What was the average power of the Oklo’s reactor? **[2 т.]**
+
+**iii)** Qualitatively explain why was Oklo’s reactor operating in a stable regime and did not blow up. Water inflow rate varied over time; what happened to the reactor when the water inflow rate increased two times? **[1,5 т.]**
+
+**iv)** Estimate the total mass of water that flowed into the Oklo’s reactor during its operation period. **[2 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+*— Solution by Tudor Plopeanu, Jaan Kalda and Topi Löytäinen.*
+
+<ProblemSection id="solution-sol-i">
+
+### i) (1,5 т.)
+
+The rate of natural decay is proportional to the amount of decaying material. If $\nu$ is the amount of $^{235}$U at some point in time, then $\frac{\mathrm{d}\nu}{\mathrm{d}t} = -k\nu$ for some positive constant $k$. Then, $\frac{\nu_b}{\nu_a} = \mathrm{e}^{-k(t_b - t_a)}$ for some moments $t_b > t_a$. The half-time is defined as the time until the amount of material is halved, so $k\tau_5 = \ln 2$, $k = \frac{\ln 2}{\tau_5}$, $\frac{\nu_b}{\nu_a} = (e^{\ln 2})^{\frac{t_b - t_a}{\tau_5}} = 2^{\frac{t_b - t_a}{\tau_5}}$. Therefore, the amount of $^{235}$U in natural uranium when the Oklo’s reactor operated was $2^{\frac{T_0}{\tau_5}}$ times higher. Similarly, the amount of $^{238}$U was $2^{\frac{T_0}{\tau_8}}$ higher. The natural abundance of $^{235}$U $T_0$ years ago was
+
+$$
+R_1 \approx \frac{\frac{\nu_5}{\nu_8}2^{\frac{T_0}{\tau_5}}}{\frac{\nu_5}{\nu_8}2^{\frac{T_0}{\tau_5}} + 2^{\frac{T_0}{\tau_8}}} \approx 3.16\%,
+$$
+
+where $\nu_5$ and $\nu_8$ represent the number of isotopes of uranium. Keep in mind that $R = \nu_5/(\nu_5 + \nu_8)$, so $\nu_5/\nu_8 = R/(1 - R)$.
+
+**Grading:** (preliminary)
+
+1. Amount of $^{238}$U during operation $\nu_8' = \nu_8 2^{T_0/\tau_8}$. **(0.3 pts)**
+2. Amount of $^{235}$U during operation $\nu_5' = \nu_5 2^{T_0/\tau_5}$. **(0.3 pts)**
+3. Abundance of $^{235}$U during operation expressed in terms of $\nu_5$ and $\nu_8$. **(0.3 pts)**
+4. Ratio $\nu_5/\nu_8$ expressed in terms of $R$. **(0.3 pts)**
+5. Abundance of $^{235}$U expressed in terms of $R$ and numerical answer. **(0.3 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-sol-ii">
+
+### ii) (2 т.)
+
+From here on we shall assume that before the Oklo reactor started operating, its abundance of uranium isotopes matched the natural abundance. After it finished operating, the $^{235}$U isotopes kept decaying at the normal rate, reaching the value we see today.
+
+The mass of $^{235}$U after the reactor finished operating was $M_1 \approx 2^{\frac{T_0}{\tau_5}}MR_O \approx 1.84\times 10^7\,\mathrm{kg}$.
+
+The $^{238}$U isotopes underwent normal decay, and we shall use them to compute the mass of $^{235}$U before the reactor started. The mass of $^{238}$U was approximately $M(1 - R)2^{\frac{T_0}{\tau_8}}$. The mass of $^{235}$U before the reactor operated can, as such, be estimated as
+
+$$
+M_0 = \frac{R_1}{1 - R_1}M(1 - R)2^{\frac{T_0}{\tau_8}} \approx 2.14\times 10^7\,\mathrm{kg}.
+$$
+
+The number of $^{235}$U nuclei which reacted is $\nu = [(M_0 - M_1)/0.235]\cdot N_A \approx 7.61\times 10^{30}$. The amount of energy generated through fission is the above value multiplied by $E_0$. The average power of the reactor is $\nu E_0/T \approx 7.73\times 10^7\,\mathrm{W}$.
+
+**Grading:** (preliminary)
+
+1. Mass of $^{235}$U by the end of operation $M_5' = 2^{T_0/\tau_5}MR_0$. **(0.4 pts)**
+2. Mass of $^{238}$U by the end of operation $M_8' = 2^{T_0/\tau_8}M(1 - R)$. **(0.3 pts)**
+3. Mass of $^{235}$U at the beginning of operation $2^{T_0/\tau_8}M(1 - R)\frac{R'}{1 - R'}$. **(0.3 pts)**
+4. Number of atoms that have undergone fission $N = N_A\Delta M/0.235$. **(0.3 pts**
+5. Energy $E = NE_0$. **(0.2 pts)**
+6. Units converted correctly. **(0.2 pts)**
+7. Power: expression and numerical value. **(0.3 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-sol-iii">
+
+### iii) (1,5 т.)
+
+Neutrons released from fission tend to have a high kinetic energy which have a low probability to cause further fissions. We need to slow them down to increase this probability. Water is relatively good for slowing down neutrons. This slowing down is called ”moderation”. The reactor could not explode since the water necessary for moderation would vapourize if the power increased too much. This would prevent an uncontrolled chain reactor from happening. The reactor’s power depends on water being present and thus the operation was self-regulating.
+
+When the water intake doubled, the amount of power doubled.
+
+**Grading**: (preliminary)
+
+1. Idea that neutrons from fission unlikely to cause fission unless moderated: **(0.3 pts)**
+2. Idea of water as a moderator: **(0.2 pts)**
+3. Idea of self-regulating behavior: **(0.5 pts)**
+4. Observation that power doubles when flow doubles: **(0.5 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-sol-iv">
+
+### iv) (2 т.)
+
+The amount of energy generated by the reactor was $\nu E_0$. We shall consider the vast majority of it to have gone into heating up and vaporizing water. Let us consider water flowing in at $0^{\circ}C$ and leaving at $100^{\circ}C$. Then, the amount of energy absorbed by $1\,\mathrm{kg}$ of water is $(100^{\circ}K)c + L = E_w = 2.68\times 10^6\,\mathrm{J}$. The total mass of water that flowed into Oklo’s reactor is $\nu E_0/E_w = 9.09\times 10^{13}\,\mathrm{kg}$.
+
+**Grading**: (preliminary)
+
+1. Approximation that all energy went into water **(0.5 p)**
+2. $\Delta T \approx 100$ **(0.3 p)**
+3. Both heating and vaporization considered **(0.3 p)**
+4. $E_w = 2.68\times 10^6\,\mathrm{J}$ or similar idea **(0.3 p)**
+5. $\nu E_0/E_w = 9.09\times 10^{13}\,\mathrm{kg}$ **(0.6 p)**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2024_problems_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2024/NBPhO_2024_problems_v1.0.pdf#page=1)
+· официални решения: [NBPhO_2024_solutions_v0.98.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2024/NBPhO_2024_solutions_v0.98.pdf#page=2)

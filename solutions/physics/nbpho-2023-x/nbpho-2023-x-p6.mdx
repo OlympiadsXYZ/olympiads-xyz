@@ -1,0 +1,137 @@
+---
+id: nbpho-2023-x-p6
+source: 'NBPhO 2023, Теория и експеримент'
+title: 'Задача 6. String-coupled masses'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2023/nbpho-2023-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:46:24.406Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2023 · 5 т.*
+
+## Условие
+
+*— Aleksi Kononen.*
+
+Two small masses $m$ are connected and hung between walls by weightless strings as pictured below. The acceleration due to gravity is $g$. All oscillatory motion is assumed to have a small amplitude and the system is always in one of its normal modes (i.e. the oscillations are sinusoidal).
+
+**i)** Find $\omega_1$, the angular frequency of in-phase oscillations (by which the oscillation phases of the both masses are always equal), perpendicular to the plane of the figure. **[2 т.]**
+
+**ii)** Find $\omega_2$, the angular frequency of anti-phase oscillations (by which the oscillation phases of the both masses are always opposite), in terms of $\omega_1$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '34.2%', '--fig-max': '219px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p6-fig1.png" alt="Two masses m hanging between two vertical walls: each is attached to its wall by a slanted string of length r making angle θ with the horizontal, and the masses are joined by a horizontal string made of two halves r and r on either side of the symmetry line x = 0; axes x (right) and z (down) are drawn at the left." width="685" height="279" loading="lazy" decoding="async" />
+</figure>
+
+**[3 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+*— Solution by Aleksi Kononen and Jaan Kalda, grading schemes by Aleksi Kononen.*
+
+<ProblemSection id="solution-part-i">
+
+### i) (2 т.)
+
+For in-phase oscillations, the string connecting the masses always remains parallel to the $x$-axis. In that case, the motion is confined to the $yz$-plane and is identical to a pendulum with length $r\sin\theta$ hung from the axis of rotation:
+
+$$
+\omega_1 = \sqrt{\frac{g}{r\sin\theta}}
+$$
+
+**Grading:**
+
+- Stating $\sum F_x = 0$, or stating that the connecting string remains parallel to the $x$-axis **(0.6 pts)**
+- Realising the effective pendulum length is $r\sin\theta$, i.e. the axis of rotation is the line connecting the wall points **(0.8 pts)**
+- Correct expression for $\omega_1$ **(0.6 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-ii">
+
+### ii) (3 т.)
+
+Now suppose one of the balls moves along the $y$ axis to a distance $ym$ and the other ball — by $-y$. The length of the horizontal string remains constant, hence $y^2 + (r - x)^2 = r^2$, where $x$ denotes the displacement of the ball in $x$-direction. For small displacements, we can neglect the smallest term $x^2$, hence $x = y^2/2r$. The length of the slanted string remains also constant, hence $(r\sin\theta - z)^2 + (r\cos\theta + x)^2 + y^2 = r^2$, where $z$ denotes the vertical displacement. Neglecting here the smallest terms $z^2$ and $x^2$, we obtain $2rz\sin\theta = 2rx\cos\theta + y^2 = y^2(1 + \cos\theta)$, hence
+
+$$
+z = \frac{y^2}{2r}\frac{1 + \cos\theta}{\sin\theta}.
+$$
+
+Now we can write down energy conservation law: $\frac{1}{2}\dot{y}^2 + gz = const$, where dot denotes the time derivative. Differentiating this over time we obtain
+
+$$
+\ddot{y} = -\frac{gy}{r}\frac{1 + \cos\theta}{\sin\theta}
+$$
+
+so that
+
+$$
+\omega_2 = \sqrt{|\ddot{y}/y|} = \omega_1\sqrt{1 + \cos\theta}.
+$$
+
+**Grading:**
+
+- Equation for a cylinder surface **(0.4 pts)**
+- Equation for a sphere surface **(0.4 pts)**
+- Both surface equations correct and coordinates consistent **(0.2 pts)**
+- Realising $x^2$- and $z^2$-terms are negligible, and not discarding $y^2$ **(0.2 pts)**
+- Solving $z$ in terms of $y$ **(0.5 pts)**
+- Energy conservation between $z$ and $\dot{y}$ **(0.3 pts)**
+- Solving relation between $\ddot{y}$ and $y$ **(0.6 pts)**
+- Correct expression for $\omega_2$ **(0.3 pts)**
+- $\omega_2$ correctly in terms of $\omega_1$ **(0.1 pts)**
+
+**Alternative solution:** Let one of the masses (mass A) be displaced by $y$ and the other by $-y$. Let $T'$ be the tension in the two outermost strings (equal magnitudes by symmetry) and $T$ in the connecting string. Newton’s law along the $y$-axis for mass A then yields
+
+$$
+-T'\frac{y}{r} - T\frac{y}{r} = m\ddot{y},
+$$
+
+i.e.
+
+$$
+\ddot{y} = -\frac{T' + T}{mr}y.
+$$
+
+Without oscillations, $T_0' = mg/\sin\theta$ and $T_0 = T_0'\cos\theta$. Let us write $T' = T_0' + \Delta T'$ and $T = T_0 + \Delta T$, i.e.
+
+$$
+T' + T = mg\frac{1 + \cos\theta}{\sin\theta} + \Delta T' + \Delta T.
+$$
+
+Let us make some estimates. Clearly, $|\Delta T| \sim |\Delta T'|$. The maximum of $\Delta T'$ occurs when the mass swings by its lowest point with velocity $\dot{y}$, where its trajectory has a radius of curvature $R \sim r\sin\theta$. Moreover, small normal mode oscillations imply $y = A\cos\omega_2 t$ for some amplitude $A \ll r\sin\theta$, i.e. $|\dot{y}| \le A\omega_2$. Finally, assume $\omega_2 = k\omega_1$ holds for some $k \sim 1$. We have
+
+$$
+|\Delta T'| \sim \frac{m\dot{y}^2}{R} \sim \frac{mk^2A^2g}{r^2\sin^2\theta} = k^2 mg\left(\frac{A}{r\sin\theta}\right)^2,
+$$
+
+i.e. quadratically smaller in $(A/r\sin\theta)$ than $T_0'$. Thus, $T' + T \approx mg\frac{1 + \cos\theta}{\sin\theta}$ and
+
+$$
+\omega_2 = \sqrt{\frac{T' + T}{mr}} = \omega_1\sqrt{1 + \cos\theta}.
+$$
+
+(The result shows $k \le \sqrt{2}$, i.e. the assumption holds.) **Grading:**
+
+- Force equation, either along $y$ or full vector form **(0.4 pts)**
+- Solving relation between $\ddot{y}$ and $y$ in terms of tension forces **(0.4 pts)**
+- Unperturbed values for $T'$ and $T$ **(0.4 pts)**
+- Reasonable estimate of $|\Delta T'|$ **(0.6 pts)**
+- Showing $|\Delta T'|$ is quadratically smaller than $T'$ **(0.8 pts)**
+- Correct expression for $\omega_2$ **(0.3 pts)**
+- $\omega_2$ correctly in terms of $\omega_1$ **(0.1 pts)**
+- **Remark:** Accept solution with assumption $\Delta T'/T' \ll 1$ without estimates
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2023_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2023/NBPhO_2023_problems.pdf#page=2)
+· официални решения: [NBPhO_2023_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2023/NBPhO_2023_solutions.pdf#page=6)

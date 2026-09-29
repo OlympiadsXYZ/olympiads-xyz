@@ -1,0 +1,94 @@
+---
+id: nbpho-2024-v1-0-p3
+source: 'NBPhO 2024, Теория и експеримент'
+title: 'Задача 3. Sticky ball'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2024/nbpho-2024-v1-0.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:46:13.672Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2024 · 4 т.*
+
+## Условие
+
+*— Jaan Kalda.*
+
+A glass ball of radius $R$ rests on a flat glass plate. A tiny droplet of water (of surface tension $\sigma$) is injected with a syringe so that water forms a small thin neck between the ball and the plate. Both the ball and the plate are perfectly hydrophilic, i.e. the contact angle of water is $0^{\circ}$. Find the increase of the normal force between the plate and the ball caused by the presence of the neck of water.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+*— Solution by Jaan Kalda, Tudor Plopeanu, grading schemes by Eppu Leinonen.*
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43.1%', '--fig-max': '276px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2024-v1-0/p3-sol-fig1-v4.png" alt="Cross-section of a large circle (the ball) of centre O and radius R resting on a horizontal line (the plate) at point A; a chord from D through O down to C on the plate, with point T where it meets the circle near the plate; the water neck between ball and plate shaded blue, bounded on each side by a small circle of radius r (point B marked on the right one); the neck radius ρ marked between A and C; a dashed horizontal line joins the tops of the two small circles." width="863" height="859" loading="lazy" decoding="async" />
+</figure>
+
+
+Let the radius of the neck be $\rho \ll R$ thus the force from surface tension at the contact of the sphere is negligible (angle to the horizontal $\approx 0$). Then, the curvature radius of the meniscus $r \ll \rho$ can be found from the intersecting secants theorem applied on a point $C$ on the bottom edge of the neck relative to the ball and approximating that the point $T$ is (near) the intersection of $CD$ and the circle: $2r\cdot 2R \approx \rho^2$. On the drawing, $AC^2 \approx CT\cdot CD$ and we approximate $CT$ as $2r$, $R + r$ as $R$, and $AC$ as $\rho$. The pressure difference between the water and the surrounding air is $\Delta p = \sigma/r$. Its total vertical component is equal to its amplitude times the vertical cross-section $S = \pi\rho^2$. As such, the total vertical force on the ball difference between the two cases (with and without water) is $\Delta F \approx \sigma\pi\rho^2/r = 4\pi\sigma R$.
+
+**Grading:** (preliminary) Note that differing sign conventions are tolerated
+
+- Stating that the meniscus is (roughly) inverse spherical or usage of constant $r$ to characterise the meniscus as inverse spherical **(0.5 pts)**
+- $r \ll \rho \ll R$ **(0.1 pts)**
+- Stating that surface tension from from contact is negligible or $\Delta F$ comes from the pressure difference (either explicitly or implicitly) **(0.5 pts)**
+- $2r\cdot 2R \approx \rho^2$ **(0.7 pts)** (if not found, partial points can be earned as below)
+  - $CT \approx 2r$ **(0.1 pts)**
+  - $R + r \approx R$ **(0.1 pts)**
+  - $AC \approx \rho$ **(0.2 pts)**
+  - $AC^2 \approx CT\cdot CD$ or statement of intersecting secants theorems **(0.3 pts)**
+- $\Delta p = \sigma/r$ **(1 pts)** (if not found, partial points can be earned as below)
+  - $\Delta p = \sigma(1/r_1 + 1/r_2)$ or any attempt to use a form of the Laplace-Young equation **(0.2 pts)**
+  - $\Delta p = \sigma(1/\rho - 1/r)$ **(0.3 pts)**
+- $S = \pi\rho^2$ (correct effective are for pressure) **(0.5 pts)**
+- $\Delta F = S\Delta p$ **(0.5 pts)**
+- $\Delta F \approx 4\pi\sigma R$ **(0.2 pts)** (0.1 pts for each of the following)
+  - $\Delta F > 0$ or noting that the contact force increases
+  - Correct dimensionless factor of $4\pi$ and correct dimensions (only if approach is correct)
+
+*Solution 2 by Eppu Leinonen*
+
+The position of the meniscus can be parameterised using the angle $\theta = \angle TOA$. The meniscus is small as the amount of water is small. Thus $|\theta| \ll 1$ and the radii can be approximated as $\rho = R\sin\theta \approx R\theta$ and $2r \approx R(1 - \cos\theta) \approx R\theta^2/2$. The change in normal force due to surface tension is $\Delta F_\sigma = 2\pi\sigma\rho\sin\theta \approx 2\pi\sigma R\theta^2 \approx 0$. Using the Young-Laplace equation $\Delta p = \sigma(1/\rho - 1/r) \approx \sigma(1/\theta - 4/\theta^2)$. Thus the total change in normal force due to pressure difference is $\Delta F_p = -S\Delta P = -\pi\rho^2\Delta P \approx \pi\sigma R(4 - \theta) \approx 4\pi\sigma R^2$. I.e. $\Delta F = \Delta F_p + \Delta F_\sigma \approx \Delta F_p \approx 4\pi\sigma R$.
+
+**Grading:** (preliminary) Note that differing sign conventions are tolerated
+
+- Stating that the meniscus is (roughly) inverse spherical or usage of constant $r$ to characterise the meniscus as inverse spherical **(0.5 pts)**
+- $|\theta| \ll 1$ **(0.1 pts)**
+- $\rho \approx R\theta$ **(0.2 pts)**
+- $AC \approx \rho$ **(0.2 pts)**
+- $r \approx R\theta^2/4$ **(0.3 pts)**
+- $\Delta F_\sigma \propto \theta^2 \ll \Delta F_p$ or any statement that the force from surface tension is negligible or $\Delta F = \Delta F_p$ **(0.5 pts)**
+- $\Delta p = \sigma/r$ **(1 pts)** (if not found, partial points can be earned as below)
+  - $\Delta p = \sigma(1/r_1 + 1/r_2)$ or any attempt to use a form of the Laplace-Young equation **(0.2 pts)**
+  - $\Delta p = \sigma(1/\rho - 1/r)$ **(0.3 pts)**
+- $S = \pi\rho^2$ (correct effective area for pressure) **(0.5 pts)**
+- $\Delta F_p = -S\Delta p$ **(0.5 pts)**
+- $\Delta F \approx 4\pi\sigma R$ **(0.2 pts)** (0.1 pts for each of the following)
+  - $\Delta F > 0$ or noting that the contact force increases
+  - Correct dimensionless factor of $4\pi$ and correct dimensions (only if approach is correct)
+
+*Note:* A common approach was to use the method of virtual displacement to solve for the force caused by the meniscus. However, it turns out that $\delta A_{lg} \propto \sqrt{r}\delta r$ (the area of the meniscus-air interface is roughly half of a spherical toroid with radii $\rho$ and $r$) which means that the change in potential energy due to the change in surface area is negligible ($r \ll R$). Thus the virtual work done by lifting the sphere only counteracts the virtual work done by the pressure, which reduces the problem back to either solution 1 or solution 2. Thus no points are granted for just mentioning this approach and telling that $\delta U = \sigma\delta A_{lg}$.
+
+*Solution 3 using virtual displacement (by Jaan Kalda).* Let us denote the contact area of water and plate with $A = \pi\rho^2$; then, the contact area of water and ball is also approximately $A$. Let the ball touch initially the plate, and then be raised by $\mathrm{d}x$. Since the volume of water is conserved, no work is made by atmospheric pressure, and $2r\mathrm{d}A = A\mathrm{d}x$, where $\mathrm{d}A$ is the change of the contact area; hence, $\frac{\mathrm{d}A}{\mathrm{d}x} = A/2r$. Meanwhile, for zero contact angle, the difference of surface energies at the air-solid interface, and at the water-solid interface equals to the surface energy of the water-air interface. This fact can be expressed in terms of the three surface tension coefficients denoted with $\sigma_1$, $\sigma_2$, and $\sigma$, respectively: $\sigma_1 - \sigma_2 = \sigma\cos\alpha = \sigma$. During our virtual displacement, the air-water interface remains almost constant; meanwhile, air-solid interface is increased by $2\mathrm{d}A$ (contributed equally by the ball and plate surfaces). Therefore, the surface energy is increased by $\mathrm{d}U = (\sigma_1 - \sigma_2)2\mathrm{d}A = 2\sigma\mathrm{d}A$. Now we can find force as $F = \frac{\mathrm{d}U}{\mathrm{d}x} = 2\sigma\frac{\mathrm{d}A}{\mathrm{d}x} = \sigma A/r$. This is the same expression we obtained from Young-Laplace equation. From this point on, the solution follows the steps made above.
+
+**Grading:** (preliminary) Note that differing sign conventions are tolerated.
+
+- Only the contact area between the solid and the liquid changes notably **(0.5 pts)**
+- $\frac{\mathrm{d}A}{\mathrm{d}x} = A/2r$ **(0.5 pts)**
+- $\sigma_1 - \sigma_2 = \sigma$ **(0.2 pts)**
+- $\mathrm{d}U = 2(\sigma_1 - \sigma_2)\mathrm{d}A$ **(0.3 pts)**
+- $F = \frac{\mathrm{d}U}{\mathrm{d}x}$ (only if $A$ has been identified correctly) **(0.3 pts)**
+- $F = \sigma A/r$ **(0.2 pts)**
+
+These replace noting that $\Delta F_\sigma \approx 0$, $\Delta p = \sigma/r$ and $\Delta F = S\Delta p$ from the other solutions.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2024_problems_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2024/NBPhO_2024_problems_v1.0.pdf#page=1)
+· официални решения: [NBPhO_2024_solutions_v0.98.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2024/NBPhO_2024_solutions_v0.98.pdf#page=2)

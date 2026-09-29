@@ -1,0 +1,313 @@
+---
+id: nbpho-2023-x-p1
+source: 'NBPhO 2023, Теория и експеримент'
+title: 'Задача 1. Curling'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2023/nbpho-2023-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:46:24.406Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2023 · 8 т.*
+
+## Условие
+
+*— Oskar Vallhagen.*
+
+In the sport of curling, participants take turns sliding near-cylindrical stones across an ice court towards a target, trying to get their stones as close to the target as possible after using a set of stones. A vertical cross section of a stone is depicted below, showing that the stone is in contact with the ice on a thin ring of radius $r$. The full radius of the stone is $R$, the mass of the stone is $m$ and the coefficient of friction with the ice is $\mu$.
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40%', '--fig-max': '256px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p1-fig1.png" alt="Vertical cross section of a curling stone: a wide rounded body resting on the ice on a thin ring; horizontal arrows mark the full radius R from the left edge to the central axis and the contact-ring radius r." width="800" height="341" loading="lazy" decoding="async" />
+</figure>
+
+
+Consider the case when the stone is released at a speed $v_0$ with the aim of knocking out an opponent’s stone at a distance $s$.
+
+**i)** Give an expression for the sliding speed $v_s$ as a function of the time $t$ since the stone was released until the stone hits the opponent’s stone. **[1 т.]**
+
+**ii)** What is the sliding speed $v_{\mathrm{hit}}$ just before the stone hits the opponent’s stone? **[1 т.]**
+
+Now the stone is given a small rotation at the initial angular speed $\omega_0$ (this can be done to alter the deflection angle of the stone when it hits the opponent’s stone). Assume that the rotation speed $\omega$ remains small throughout the sliding motion: $\omega r \ll v_s$. Keep only the main non-vanishing terms in your calculations, i.e. among the terms with a factor $(\omega r/v_s)^n$, keep only the term with the smallest $n$. Depending on your approach you may use the following approximations for $x \ll 1$: $(1+x)^{\alpha} \approx 1+\alpha x+\frac{1}{2}\alpha(\alpha-1)x^2$, $\sin(\alpha+x) \approx \sin\alpha+x\cos\alpha$, $\cos x \approx 1-x^2/2$. You may also need the integral $\int(at+b)^{-1}dt = a^{-1}\ln|at+b|+C$.
+
+**iii)** By how much does the friction force on the stone change due to its rotation? Express your answer in terms of the current angular speed $\omega$ and sliding speed $v_s$. **[2 т.]**
+
+**iv)** Give an expression for the torque $T$ exerted on the stone. **[2 т.]**
+
+**v)** What is the angular speed of the stone just before it hits the opponent’s stone? **[2 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+*— Solution by Jaan Kalda, Oskar Vallhagen, grading schemes by Oskar Vallhagen.*
+
+<ProblemSection id="solution-part-i">
+
+### i) (1 т.)
+
+As the stone is gliding over the ice everywhere on the contact surface, the friction force is $F_{fx} = \mu m g$, i.e. the acceleration is $\mu g$, directed in the negative $x$-direction (with the $x$-direction pointing towards the target stone). Thus, we get
+
+$$
+\frac{dv_s}{dt} = -\mu g \Rightarrow v_s = v_0 - \mu g t.
+$$
+
+**Grading:**
+
+- Correct friction force **(0.5 pts)**
+- Correct acceleration **(0.2 pts)**
+- correct $v_s$ **(0.3 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-ii">
+
+### ii) (1 т.)
+
+The simplest way to obtain the final velocity is to use energy conservation, noting that the friction force does a work $W_f = \mu m g s$. Thus, we get
+
+$$
+\frac{mv_0^2}{2} = \frac{mv_{\mathrm{hit}}^2}{2} + \mu m g s \Rightarrow v_{\mathrm{hit}} = \sqrt{v_0^2 - 2\mu g s}.
+$$
+
+**Grading:**
+
+- Idea of using energy conservation **(0.2 pts)**
+- Calculating the work done by the friction force **(0.3 pts)**
+- Correct total energy conservation equation $v_s$ **(0.3 pts)**
+- Correct $v_{\mathrm{hit}}$ **(0.2 pts)**
+
+Alternatively, one can first calculate the time $t_{\mathrm{hit}}$ before the stone hits the opponents stone. Integrating the expression for $v_s$ up to this time gives
+
+$$
+s = v_0 t_{\mathrm{hit}} - \mu g\frac{t_{\mathrm{hit}}^2}{2}.
+$$
+
+Solving for $t_{\mathrm{hit}}$, we get
+
+$$
+t_{\mathrm{hit}} = \frac{v_0}{\mu g} - \sqrt{\frac{v_0^2}{\mu^2 g^2} - \frac{2s}{\mu g}}
+$$
+
+(the solution with the plus sign gives a negative velocity). Inserting back into the expression for $v_s$ and simplifying gives
+
+$$
+v_{\mathrm{hit}} = \sqrt{v_0^2 - 2\mu g s}.
+$$
+
+**Grading:**
+
+- Integration of the expression for $v_s$ **(0.4 pts)**
+- Solving for $t_{\mathrm{hit}}$ **(0.4 pts)**
+- Inserting into expression for $v_s$ and final answer **(0.2 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-iii">
+
+### iii) (2 т.)
+
+Consider the motion of a point at the ring in contact with the ice at an angle $\theta$ from the $x$-axis, moving at a velocity $v$ as depicted in the figure below. The components of this motion along the $x$ and $y$ axes can be seen to be $v_x = v_s - \omega r\sin\theta$ and $v_y = \omega r\cos\theta$, respectively.
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '41.2%', '--fig-max': '264px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2023-x/p1-sol-fig1.png" alt="Top view of the contact ring: inner circle of radius r and outer circle of radius R around the centre with x and y axes; at a point on the ring at angle θ the velocity v is decomposed into v_s (horizontal) and ωr (tangential, dashed), with the angle φ between v and v_s and the angle θ − φ marked; an arrow v_s at the top right shows the sliding direction." width="825" height="708" loading="lazy" decoding="async" />
+</figure>
+
+
+The friction force per unit length has the magnitude
+
+$$
+F_f' = \frac{\mu m g}{2\pi r}
+$$
+
+everywhere on the circle in contact with the ice, as before, but is now directed opposite to the local velocity $v$ rather than the sliding velocity $v_s$. The component of the force density in the $x$-direction thus becomes
+
+$$
+F_{fx}' = -F_f'\cos\varphi = -F_f'\frac{v_x}{v}.
+$$
+
+From this point on, there are two ways to work out the mathematical calculations. **First**, consider an infinitesimal arc of the contact ring of central angle $\mathrm{d}\theta$; the friction force exerted on it has magnitude $\mathrm{d}F_f = \frac{\mu m g}{2\pi}\mathrm{d}\theta$. The total force is obviously directed antiparallel to the velocity of the stone as $y$-directional components of the acting on arcs at $\theta$ and $\pi - \theta$ cancel pairwise out. The projection of the friction force acting on our arc is given by
+
+$$
+\mathrm{d}F_x = \frac{\mu m g}{2\pi}\cos\varphi\,\mathrm{d}\theta
+$$
+
+Using the small parameter $\delta \equiv \omega r/v_s \approx \omega r/v \ll 1$, we conclude that $\varphi \ll 1$, hence we can use approximation
+
+$$
+\mathrm{d}F_x \approx \frac{\mu m g}{2\pi}\left(1 - \frac{1}{2}\varphi^2\right)\mathrm{d}\theta.
+$$
+
+The angle $\varphi$ can be found from the sine theorem assuming $\sin\varphi \approx \varphi$: $\varphi \approx \sin\left(\frac{\pi}{2} - \theta\right)\frac{\omega r}{v} \approx \cos\theta\frac{\omega r}{v_s} \equiv \delta\cos\theta$. Alternatively, a similarly accurate expression cab be found by noting that
+
+$$
+\varphi \approx \tan\varphi = \frac{v_y}{v_x} \approx \frac{v_y}{v_s} = \frac{\omega r\cos\theta}{v_s}.
+$$
+
+Thus,
+
+$$
+\mathrm{d}F_x = \frac{\mu m g}{2\pi}\left(1 - \frac{\delta^2}{2}\cos^2\theta\right)\mathrm{d}\theta.
+$$
+
+Recognising that $\int_0^{2\pi}\cos^2\theta\,d\theta = \pi$, this can be integrated to obtain
+
+$$
+F_x = \mu m g\left(1 - \frac{\omega^2 r^2}{4v_s^2}\right)
+$$
+
+so that the final answer is
+
+$$
+\Delta F_x = -\frac{\mu m g\omega^2 r^2}{4v_s^2}.
+$$
+
+**The second way** is by continuing
+
+$$
+\begin{aligned} F_{fx}' &= F_f'\frac{v_x}{v} \\ &= F_f'\frac{v_s - \omega r\sin\theta}{\sqrt{v_s^2 - 2v_s\omega r\sin\theta + \omega^2 r^2}} \\ &= F_f'\frac{1 - \delta\sin\theta}{\sqrt{1 - 2\delta\sin\theta + \delta^2}}. \end{aligned}
+$$
+
+To second order in $\delta$, we get, using the approximation suggested in the problem text for $x = -2\delta\sin\theta + \delta^2$ and doing some elementary algebra,
+
+$$
+F_{fx}' \approx F_f'(1 - \frac{1}{2}\delta^2\cos^2\theta).
+$$
+
+The total friction force can now be obtained by integrating over the length element of size $rd\theta$ along the ring in contact with the ice, yielding, after simplifying and re-inserting the expression for $F_f'$,
+
+$$
+F_{fx} = \int_0^{2\pi} F_{fx}' r d\theta = \mu m g\left(1 - \frac{1}{4}\delta^2\right).
+$$
+
+**Grading:**
+
+- Understanding that the friction force is everywhere antiparallel with the local velocity **(0.4 pts)**
+- Calculating the magnitude of the force per unit length **(0.3 pts)**
+- Correct expression for the $x$ component **(0.2 pts)**
+
+**First solution:**
+
+- Approximate expression for $F_{fx}'$ or $\mathrm{d}F_{fx}$ for small $\varphi$ **(0.3 pts)**
+- Expressing $\varphi$ in terms of $\delta$ and $\theta$ **(0.5 pts)**
+- Correct integral and final answer **(0.3 pts)**
+
+**Second solution:**
+
+- Expressing $F_{fx}'$ or $\mathrm{d}F_{fx}$ in terms of $\delta$ and $\theta$ **(0.3 pts)**
+- Approximate expression for $F_{fx}'$ or $\mathrm{d}F_{fx}$ for small $\delta$ **(0.5 pts)**
+- Correct integral and final answer **(0.3 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-iv">
+
+### iv) (2 т.)
+
+For the torque $\tau'$ per unit length (around the central axis of the stone), we see from the figure that the angle between the local force per unit length and the radius is $\theta - \varphi$, yielding
+
+$$
+\tau' = F_f' r\sin(\theta - \varphi).
+$$
+
+From here on, there are again two ways to continue. **First,** we can use Taylor series and keep only the linear term: $\sin(\theta - \varphi) \approx \sin\theta - \varphi\cos\theta$; by using the previously obtained expression $\varphi \approx \delta\cos\theta$, we can express
+
+$$
+\mathrm{d}\tau = \mu m g r(\sin\theta - \delta\cos^2\theta)\frac{\mathrm{d}\theta}{2\pi}
+$$
+
+integration of which yields
+
+$$
+\tau = -\frac{\mu m g\omega r^2}{2v_s}.
+$$
+
+**The second way** is to write
+
+$$
+\begin{aligned} \tau' &= F_f' r\sin(\theta - \varphi) \\ &= F_f' r(\sin\theta\cos\varphi - \cos\theta\sin\varphi) \\ &= F_f' r(\sin\theta\frac{v_x}{v} - \cos\theta\frac{v_y}{v}), \end{aligned}
+$$
+
+which, using the above expressions for $v_x$ and $v_y$, can be simplified to
+
+$$
+\tau' = F_f' r\frac{\sin\theta - \delta}{\sqrt{1 - 2\delta\sin\theta + \delta^2}}.
+$$
+
+Applying the same approximation as in the previous part and keeping only the first, now leading, order terms in $\delta$, we get
+
+$$
+\tau' \approx F_f' r(\sin\theta - \delta\cos^2\theta).
+$$
+
+Integrating to find the total torque, we get
+
+$$
+\tau = \int_0^{2\pi}\tau' r d\theta = -\frac{1}{2}\delta\mu m g r.
+$$
+
+**Grading:**
+
+- Finding the angle between the local force per unit length and the radius **(0.5 pts)**
+- Correct expression for $\tau'$ **(0.4 pts)**
+
+**First solution:**
+
+- Approximate expression for $\tau'$ or $\mathrm{d}\tau$ for small $\varphi$ **(0.3 pts)**
+- Expressing $\varphi$ in terms of $\delta$ and $\theta$ **(0.5 pts)**
+- Correct integral and final answer **(0.3 pts)**
+
+**Second solution:**
+
+- Expressing $\tau'$ or $\mathrm{d}\tau$ in terms of $\delta$ and $\theta$ **(0.3 pts)**
+- Approximate expression for $\tau'$ or $\mathrm{d}\tau$ for small $\delta$ **(0.5 pts)**
+- Correct integral and final answer **(0.3 pts)**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-v">
+
+### v) (2 т.)
+
+The equation describing the rotation is, now expressed in terms of $\omega$ and $v_s$ rather than $\delta$,
+
+$$
+I\frac{d\omega}{dt} = \tau = -\frac{1}{2}\mu m g r^2\frac{\omega}{v_s},
+$$
+
+where the moment of inertia is $I \approx \frac{1}{2}mR^2$. As the correction to $F_{fx}$ is only of second order in $\delta$, to the first, leading order approximation, we may neglect the effect of rotation on $F_{fx}$. Thus, the sliding speed $v_s$ has the same time dependenca as in part i). The equation above can then be separated as
+
+$$
+\int_{\omega_0}^{\omega_{\mathrm{hit}}}\frac{d\omega}{\omega} = \int_0^{t_{\mathrm{hit}}} -\mu g\frac{r^2}{R^2}\frac{dt}{v_0 - \mu g t} \Rightarrow
+$$
+
+$$
+\ln\frac{\omega_{\mathrm{hit}}}{\omega_0} = \frac{r^2}{R^2}\ln\frac{v_0 - \mu g t_{\mathrm{hit}}}{v_0},
+$$
+
+which, recognising that $v_0 - \mu g t_{\mathrm{hit}} = v_{\mathrm{hit}}$, yields
+
+$$
+\omega_{\mathrm{hit}} = \omega_0\left(\frac{v_{\mathrm{hit}}}{v_0}\right)^{\frac{r^2}{R^2}}.
+$$
+
+**Grading:**
+
+- Correct equation of motion for the rotation **(0.5 pts)**
+- Realising that $v_s$ is unaffected by the rotation to leading order **(0.5 pts)**
+- Using separation of variabels **(0.5 pts)**
+- Final answer **(0.5 pts)**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2023_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2023/NBPhO_2023_problems.pdf#page=1)
+· официални решения: [NBPhO_2023_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2023/NBPhO_2023_solutions.pdf#page=1)
