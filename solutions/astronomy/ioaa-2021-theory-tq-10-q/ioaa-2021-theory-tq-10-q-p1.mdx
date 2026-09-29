@@ -5,11 +5,25 @@ title: 'Задача 10. Terrestrial Transit (15 points).'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-theory-tq-10-q.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:17:55.368Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T16:46:29.780Z'
+verifier: 'single-pass'
 ---
 
 *Theory — Q10-1, English (Official) — Terrestrial Transit (15 points) · 15 т.*
+
+<details>
+<summary>Standard Table of Constants — orbital quantities</summary>
+
+Sun: mass $1.989\times10^{30}\ kg$; mean radius $695\ 500\ km$. Earth: orbital period $365.2564\ days$; semi-major axis $1.000000\ au$.
+
+</details>
+
+<details>
+<summary>Standard Table of Constants — units</summary>
+
+1 astronomical unit: $1\ au=1.496\times10^{11}m$.
+
+</details>
 
 ## Условие
 
@@ -23,17 +37,119 @@ Note: Assume perfect circular orbits in both questions below.
 
 <Spoiler title="Покажи отговорите">
 
-- **10.1** 13 h
-- **10.2** 0.068 days
+- **10.1** 12.97 h
+- **10.2** 2.3 days
 
 </Spoiler>
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+### 10.1
+
+The maximum duration occurs if Earth passes exactly along the diameter of the Sun. Now consider the following figure, where Sun rays are depicted as traveling to the right towards the hypothetical distant observer (reason why they can be considered parallel):
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44%', '--fig-max': '282px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-theory-tq-10-q/p1-sol-fig1-v2.png" alt="Central transit geometry: parallel solar rays, solar radius, orbital arc, and angle twice alpha." width="882" height="628" loading="lazy" decoding="async" />
+</figure>
+
+
+The arc along the circumference associated to the transit, $2\alpha$, can be easily found looking at the shaded triangle:
+
+$$
+\alpha=\sin^{-1}\left(\frac{R_\odot}{R_{orb}}\right)
+$$
+
+[2 points]
+
+being $R_{orb}$ the orbital radius of the Earth. Now the time of the transit can be found by considering the angular velocity of the Earth, for instance by means of the following proportionality relations:
+
+$$
+\frac{t_{tr}}{T_{orb}}=\frac{2\alpha}{2\pi}=\frac{\sin^{-1}(\frac{R_\odot}{R_{orb}})}{\pi}
+$$
+
+[2 points]
+
+Substituting with the known values for these quantities we get, i.e.,
+
+$$
+t_{tr}\sim12.97\ h=12h\ 58m
+$$
+
+[1 point]
+
+### 10.2
+
+First of all it must be said that the minimum orbital period is obtained if we assume that the transit occurs along the diameter of the star. In other cases, the planet would be crossing a shorter path in front of the star during the same time, meaning that it would have a smaller angular velocity and therefore a longer period.
+
+That said, it means that we can resort to the same expression of 10.1, yet this time we need 2 additional elements:
+
+- Using the small angle approximation:
+
+$$
+\sin(\alpha)\sim\alpha
+$$
+
+[1 point]
+
+- Invoking the full expression for the orbital period:
+
+$$
+T_{orb}=\frac{2\pi}{\sqrt{GM_*}}R_{orb}^{3/2}
+$$
+
+[1 point]
+
+Combining these results, we get:
+
+$$
+\frac{t_{tr}}{T_{orb}}=\frac{t_{tr}}{\frac{2\pi}{\sqrt{GM_*}}R_{orb}^{3/2}}=\frac{\frac{R_*}{R_{orb}}}{\pi}
+$$
+
+[2 points]
+
+And solving for $R_{orb}$:
+
+$$
+R_{orb}=\frac{GM_*t_{tr}^2}{2^2R_*^2}
+$$
+
+[2 points]
+
+Finally putting this last result back into the expression for the orbital period:
+
+$$
+T=\frac{\pi GM_*}{4R^3}t_{tr}^3
+$$
+
+[2 points]
+
+At this point, just a numerical evaluation is needed, though a more elegant solution can be achieved by means of scaling relations by noting that this very same expression must be true in the case of the Earth-Sun system as seen from far away. Having that 31 minutes is the 4% of 12.94h:
+
+$$
+T=365.25\cdot\frac{0.1}{0.1^3}\cdot0.04^3\sim2.3\ \text{días}\sim2d\ 7h
+$$
+
+[2 points]
+
+These values were inspired by the planetary system Trappist 1.
+
+
+</Spoiler>
+
+<details>
+<summary>Official source discrepancy</summary>
+
+The supplied key gives 12.97 h in 10.1 but refers to 12.94 h in the scaling argument in 10.2; both values are retained. Its last symbolic period formula prints R without a star subscript.
+
+</details>
 
 ---
 
 Оригинал в Архива: [TQ-10-Q.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-10-Q.pdf#page=1)
+· официални решения: [TQ10.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/solutions/TQ10.pdf#page=1)
+· допълнителни данни: [TQ-10-A.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-10-A.pdf)
+· допълнителни данни: [Standard-Table-of-constants.docx.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/Standard-Table-of-constants.docx.pdf)
+· допълнителни данни: [TQ-G.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-G.pdf)
+· допълнителни данни: [data.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Theoretical/data.pdf)

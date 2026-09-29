@@ -5,8 +5,8 @@ title: 'Задача 13. Lucy: The First Mission to the Trojan Asteroids (15 poi
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-theory-tq-13-q.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:01:42.186Z'
-verifier: 'same-model'
+verifiedAt: '2026-09-29T16:53:09.111Z'
+verifier: 'single-pass'
 ---
 
 *Theory — Q13-1 — English (Official) — Lucy: The First Mission to the Trojan Asteroids (15 points). · 15 т.*
@@ -46,12 +46,90 @@ CCD Data:
 
 **13.2** Given the radiation flux near Jupiter, what percentage of the total number of pixels in an image will be excited? **[5 т.]**
 
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **13.1** 716 pixels
+- **13.2** 2.08 %
+
+</Spoiler>
+
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+### 13.1
+
+A single electron deposits energy in the CCD, as follows:
+
+$$
+E_{\mathrm{deposited}}=\text{stopping power}\times\rho_{\mathrm{si}}\times\text{thickness}
+$$
+
+$$
+E_{\mathrm{deposited}}=3.012\frac{MeV\,cm^2}{g}\times\frac{2.34g}{cm^3}\times0.06cm=422.9\ keV
+$$
+
+[4 points]
+
+Since an electron with 15 MeV energy deposits 422.9 keV, we must calculate the number of pairs electron/hole
+
+$$
+422.9keV\times\frac1{2.36eV}=1.79\times10^5\frac eh
+$$
+
+[4 points]
+
+How many pixels will be able to excite $1.79\times10^5$ pairs of e/h?
+
+$$
+1.79\times10^5\times\frac1{250}=716\ pixels
+$$
+
+[2 points]
+
+### 13.2
+
+The number of electrons entering the detector area is:
+
+$$
+flux\times area\times t
+$$
+
+[1 point]
+
+$$
+\frac{600e}{cm^2s}\times[1.3\times1.3]cm^2\times0.03s=30\ e^-
+$$
+
+[1 point]
+
+~30 electrons enter the detector area, and we know that one electron excites 716 pixels, the total number of excited pixels is:
+
+$$
+716\frac{pixels}{electron}\times30.42\ electrons=2.18\times10^4pixels
+$$
+
+[1 point]
+
+If the CCD has a total of $1024\times1024$ pixels $=1.048\times10^6pixels$ then the total percentage of pixels that will be driven in a single image is ~2.08% [2 points]
+
+
+</Spoiler>
+
+<details>
+<summary>Official source discrepancy</summary>
+
+The supplied key rounds the incoming electron count to 30 and then uses 30.42 in the subsequent multiplication; both printed values are retained.
+
+</details>
 
 ---
 
 Оригинал в Архива: [TQ-13-Q.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-13-Q.pdf#page=1)
+· официални решения: [TQ13.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/solutions/TQ13.pdf#page=1)
+· допълнителни данни: [TQ-13-A.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-13-A.pdf)
+· допълнителни данни: [Standard-Table-of-constants.docx.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/Standard-Table-of-constants.docx.pdf)
+· допълнителни данни: [TQ-G.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/exam/TQ-G.pdf)
+· допълнителни данни: [data.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Theoretical/data.pdf)

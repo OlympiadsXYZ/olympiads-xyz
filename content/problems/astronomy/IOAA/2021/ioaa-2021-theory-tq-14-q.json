@@ -20,24 +20,85 @@
    ]
   },
   "status": "review",
+  "solutionSource": {
+   "archiveKey": "Астрономия/Състезания/IOAA/2021/solutions/TQ14_solution_revised.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2021/exam/TQ-14-A.pdf",
+    "pages": [
+     1,
+     2
+    ]
+   },
+   "supplement-2": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2021/exam/Standard-Table-of-constants.docx.pdf",
+    "pages": [
+     1,
+     2
+    ]
+   },
+   "supplement-3": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2021/exam/TQ-G.pdf",
+    "pages": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "supplement-4": {
+    "archiveKey": "Астрономия/Състезания/IOAA/2021/Theoretical/data.pdf",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   }
+  },
+  "documentNotes": [
+   {
+    "title": "Official source discrepancies",
+    "statement": "The separately archived revised TQ14 key is used. Its last derivation prints delta v = -0.259 v0 followed by positive delta v/v0 = 25.9%; both signs are retained. The older combined key ends on original page25 with different 14.8 numbers (18.35%, 34.74 degrees), and is not blended into this revised solution.",
+    "document": "solutions",
+    "page": 5,
+    "position": "after-problem"
+   }
+  ],
   "transcription": {
    "method": "vision-pages",
-   "provider": "zai",
-   "model": "glm-5.3-flash",
-   "promptVersion": "v1",
-   "promptSha256": "ed69e99947d4707af88409c3b4faf25fd9d263f55e9845c44422df99eda89d66",
-   "requestId": "202609140501457de37e5a8c624f98",
-   "at": "2026-09-13",
+   "provider": "agent",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/problem_structure_astra",
+   "at": "2026-09-29",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
-    "problems": "def99142711757cef6edec5909a08419768422beffb94bffce6bdbb3cb610b75"
+    "problems": "def99142711757cef6edec5909a08419768422beffb94bffce6bdbb3cb610b75",
+    "solutions": "8a0fad34e16569a7c6e2a62a3c09c8396715d15fc536cc08ff6cc5e4511f2d83",
+    "supplement-1": "1a181430cdc0e8029f5930b719708e8203472d7cee296702ed93f4609b2422ec",
+    "supplement-2": "c6c15cc1c33590e7892fa6d417ca7c5f68920e51a5c8af5c1e3f6949450ae6dd",
+    "supplement-3": "45b231be0cd63844541119d780262bcc1350806ff5f760e29bd49ef0a35c87a3",
+    "supplement-4": "6c391e8e8cbe4995f5e8a7a69138b19b10fd88d1b9142b6e715e7580984f0d2e"
    },
-   "verifiedBy": "zai:glm-5.3-flash (same-model checker, prompt v1)",
-   "verifiedAt": "2026-09-13",
-   "notes": "Single top-level problem (14, 'Formation of the Venus-2') with eight printed sub-tasks 14.1–14.8, transcribed as parts[] per instructions. Total printed points 35 = sum of part points. Answers to parts 14.1–14.8 are derived results, not from an official solutions document (none provided). Figure crop covers the orbit diagram only, excluding body text."
-  },
-  "caveat": "No official solutions document in the archive for this paper; answers are not verbatim from the source."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Astra single-pass recovery: personally read all new question, matching official key in the recorded original-page scope, and answer-form pages. Shared15 reference/instruction pages reused from prior personal reading only after exact document SHA equality. Full solutions and printed marking restored; no model checker. All final actual crops personally inspected; new/revised crops use --no-snap. Whole original problem IDs retained; genuine A/B/C groups restored as native sections."
+  }
  },
  "problems": [
   {
@@ -46,7 +107,7 @@
    "title": "Formation of the Venus-2",
    "points": 35,
    "problemType": "theory",
-   "statement": "A comet of mass $\\alpha m$ is heading (\"falls\") radially towards the Sun. It is known that the total mechanical energy of the comet is zero. The comet crashes into Venus, whose mass is $m$. We further assume that the orbit of Venus, before the collision, is circular with radius $R_0$. After the crash, the comet and Venus form a single object, called \"Venus-2\".",
+   "statement": "A comet of mass $\\alpha m$ is heading (\"falls\") radially towards the Sun. It is known that the total mechanical energy of the comet is zero. The comet crashes into Venus, whose mass is $m$. We further assume that the orbit of Venus, before the collision, is circular with radius $R_0$. After the crash, the comet and Venus form a single object, called \"Venus-2\".\n\n[figure: p14-fig1]",
    "figures": [
     {
      "id": "p14-fig1",
@@ -70,42 +131,74 @@
     {
      "label": "14.1",
      "statement": "Find the expression in terms of $M_{sun}$ and $R_0$ for the orbital speed, $v_0$ , of Venus before the collision.",
-     "points": 1
+     "points": 1,
+     "answer": {
+      "kind": "expression",
+      "latex": "v_0^2=GM/R_0"
+     }
     },
     {
      "label": "14.2",
      "statement": "Find an expression for the total mechanical energy of Venus in its orbit before colliding with the comet.",
-     "points": 1
+     "points": 1,
+     "answer": {
+      "kind": "expression",
+      "latex": "E_i=-GMm/(2R_0)"
+     }
     },
     {
      "label": "14.3",
      "statement": "Find an expression for the radial velocity, $v_r$ , the angular momentum, $L$ , of \"Venus-2\" immediately after the collision.",
-     "points": 10
+     "points": 10,
+     "answer": {
+      "kind": "expression",
+      "latex": "v_r=\\sqrt2\\alpha v_0/(1+\\alpha),\\quad L=R_0mv_0"
+     }
     },
     {
      "label": "14.4",
      "statement": "Find an expression for the mechanical energy of the combined object \"Venus-2\" and express it in terms of energy before the collision, $E_i$ and $\\alpha$ .",
-     "points": 5
+     "points": 5,
+     "answer": {
+      "kind": "expression",
+      "latex": "E_f=E_i(1+4\\alpha)/(1+\\alpha)"
+     }
     },
     {
      "label": "14.5",
      "statement": "Show that the post-collision orbit of \"Venus-2\" is elliptical and determine the semi-major axis of the orbit.",
-     "points": 5
+     "points": 5,
+     "answer": {
+      "kind": "expression",
+      "latex": "a_f=R_0(1+\\alpha)^2/(1+4\\alpha)"
+     }
     },
     {
      "label": "14.6",
      "statement": "Determine if the year for the inhabitants of \"Venus-2\" has been shortened or lengthened because of collision with the comet.  Write the ratio between the period of Venus-2 and Venus.",
-     "points": 3
+     "points": 3,
+     "answer": {
+      "kind": "expression",
+      "latex": "T_f/T_0=(1+\\alpha)^3/(1+4\\alpha)^{3/2}"
+     }
     },
     {
      "label": "14.7",
      "statement": "What should be the value of $\\alpha$ such that the post-collision orbit of Venus-2 would make it crash in the Sun? We will call this as $\\alpha_c$",
-     "points": 5
+     "points": 5,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\alpha_c=7.824"
+     }
     },
     {
      "label": "14.8",
      "statement": "A comet with $\\alpha = \\alpha_c$ collided with Venus.  Calculate the percentage change in the magnitude of Venus' velocity ($\\delta v$) and the change in the direction of the velocity vector ($\\delta\\theta$) immediately after the collision.",
-     "points": 5
+     "points": 5,
+     "answer": {
+      "kind": "expression",
+      "latex": "\\delta v=-0.259v_0,\\quad\\delta v/v_0=25.9\\%,\\quad\\delta\\theta=84.84^\\circ"
+     }
     }
    ],
    "topics": [
@@ -115,10 +208,27 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "",
-    "incomplete": true,
-    "incompleteReason": "No official solutions document was provided with this paper.",
-    "figures": []
+    "statement": "[figure: p14-sol-fig1]\n\n**14.1** Let $M$ be the mass of the Sun.\n\n$$\\frac{GMm}{R_0^2}=\\frac{mv_0^2}{R_0},\\qquad v_0^2=\\frac{GM}{R_0}.$$ \n\n[1 point]\n\n**14.2** The mechanical energy of Venus (before the collision) is:\n\n$$E_i=-\\frac{GMm}{R_0}+\\frac12mv_0^2=-\\frac{GMm}{2R_0}.$$\n\n[1 point]\n\n**14.3** Since the comet moves radially towards the Sun, it has no angular momentum (with respect to the origin in the Sun). Then the angular momentum of Venus is the same as that of Venus-2.\n\n$$L=R_0mv_0.$$ \n\n[2 points]\n\nThis allows us to find the angular component of the velocity of Venus, $v_\\theta$, just after collision. The angular momentum just after collision is:\n\n$$L=R_0mv_0=R_0(m+\\alpha m)v_\\theta.$$\n\n[1 point]\n\nSince angular momentum is conserved, it follows that\n\n$$v_\\theta=\\frac{v_0}{1+\\alpha}.$$\n\nThe comet has zero energy, so\n\n$$K=-U=+\\frac{GM\\alpha m}{R_0}=\\frac12\\alpha mv_c^2.$$\n\n[2 points]\n\nwhere $v_c$ is the velocity of the comet just before collision. It follows that\n\n$$v_c^2=\\frac{2GM}{R_0}=2v_0^2.$$\n\n[1 point]\n\nThe collision is inelastic, so total energy is not conserved. Also notice that the mass of Venus-2 is $(1+\\alpha)m$. [2 points]\n\nWe apply conservation of linear momentum. Along the radial direction:\n\n$$\\alpha mv_c=(m+\\alpha m)v_r.$$\n\n[1 point]\n\nwhere $v_r$ is the velocity of Venus-2 just after collision. It follows that\n\n$$v_r=\\frac{\\alpha}{1+\\alpha}v_c=\\frac{\\sqrt2\\alpha}{1+\\alpha}v_0.$$\n\n[1 point]\n\n**14.4** The mechanical energy of Venus-2 (evaluated just after collision) is\n\n$$E_f=U+K=-\\frac{GMm(1+\\alpha)}{R_0}+\\frac12m(1+\\alpha)(v_\\theta^2+v_r^2).$$\n\n[4 points]\n\n$$\\begin{aligned}\nE_f&=-(1+\\alpha)\\frac{GMm}{R_0}+\\frac12(1+\\alpha)\\left[2\\left(\\frac{\\alpha}{1+\\alpha}\\right)^2+\\frac1{(1+\\alpha)^2}\\right]\\frac{GMm}{R_0}\\\\\n&=-\\frac{GMm}{2R_0}\\left(\\frac{1+4\\alpha}{1+\\alpha}\\right)=E_i\\left(\\frac{1+4\\alpha}{1+\\alpha}\\right).\n\\end{aligned}$$\n\n[1 point]\n\n**14.5** The Venus-2 orbit is no longer a circle. Since the energy is negative, it must be elliptical. It follows that [1 point]\n\n$$E_f=-\\frac{GM(1+\\alpha)m}{2a_f}.$$\n\n[2 points]\n\nwhere $a_f$ is the semi-major axis of Venus-2. Now solving:\n\n$$-\\frac{GM(1+\\alpha)m}{2a_f}=E_i\\left(\\frac{1+4\\alpha}{1+\\alpha}\\right)=-\\frac{GMm}{2R_0}\\left(\\frac{1+4\\alpha}{1+\\alpha}\\right),$$\n\n$$\\frac{1+\\alpha}{a_f}=\\frac1{R_0}\\left(\\frac{1+4\\alpha}{1+\\alpha}\\right),\\qquad a_f=R_0\\frac{(1+\\alpha)^2}{1+4\\alpha}.$$\n\n[2 points]\n\n**14.6** Using Kepler's third law:\n\n$$\\frac{T_f}{T_0}=\\left(\\frac{a_f}{R_0}\\right)^{3/2}.$$\n\n[2 points]\n\n$$\\frac{T_f}{T_0}=\\left(\\frac{(1+\\alpha)^2}{1+4\\alpha}\\right)^{3/2}=\\frac{(1+\\alpha)^3}{(1+4\\alpha)^{3/2}}.$$\n\n[1 point]\n\nFor $\\alpha<2$, the year is shorter; for $\\alpha>2$, the year is longer; and for $\\alpha=2$, the year remains unchanged.\n\n**14.7** For Venus-2 to collide with the Sun, the perihelion radius of the post-collision orbit should be $R_\\odot$. [1 point]\n\n$$r_p=R_\\odot=6.955\\times10^8\\ \\mathrm m=\\left[\\frac{6.955\\times10^8}{0.723\\times1.496\\times10^{11}}\\right]R_0=0.00643R_0.$$\n\nLet $x=R_\\odot/R_0=0.00643$.\n\nWe apply conservation of angular momentum right after collision and when Venus-2 is at perihelion:\n\n$$L=mv_0R_0=(1+\\alpha)mv_pR_\\odot,$$\n\nwhere $v_p$ is the speed at perihelion. Solving:\n\n$$v_p=\\frac{v_0}{x(1+\\alpha_c)}.$$\n\nConservation of energy at the two instants:\n\n$$E_f=-\\frac{GM(1+\\alpha_c)m}{R_\\odot}+\\frac12m(1+\\alpha_c)v_p^2,$$\n\n$$-\\frac{1+4\\alpha_c}{1+\\alpha_c}\\frac{GMm}{2R_0}=-\\frac{GM(1+\\alpha_c)m}{xR_0}+\\frac12m(1+\\alpha_c)\\left(\\frac{v_0}{x(1+\\alpha_c)}\\right)^2,$$\n\n$$-\\frac{1+4\\alpha_c}{1+\\alpha_c}\\frac{GMm}{2R_0}=-\\frac{1+\\alpha_c}{x}\\frac{GMm}{R_0}+\\frac12(1+\\alpha_c)\\left(\\frac1{x(1+\\alpha_c)}\\right)^2\\frac{GMm}{R_0},$$\n\n$$-\\frac12\\frac{1+4\\alpha_c}{1+\\alpha_c}=-\\frac{1+\\alpha_c}{x}+\\frac12(1+\\alpha_c)\\left(\\frac1{x(1+\\alpha_c)}\\right)^2,$$\n\n$$1+4\\alpha_c=\\frac{2(1+\\alpha_c)^2}{x}-\\frac1{x^2}.$$\n\n[3 points]\n\n$$2x\\alpha_c^2+4x(1-x)\\alpha_c-(1-x)^2=0,$$\n\n$$\\alpha_c=(1-x)\\left(\\sqrt{1+\\frac1{2x}}-1\\right),\\qquad\\alpha_c=7.824.$$\n\n[1 point]\n\n**14.8** For the post-collision orbit:\n\n$$v_\\theta=\\frac1{1+\\alpha_c}v_0,\\qquad v_r=\\frac{\\sqrt2\\alpha_c}{1+\\alpha_c}v_0,$$\n\n$$v_f=\\sqrt{v_r^2+v_\\theta^2}.$$\n\n[1 point]\n\n$$v_f=\\frac{\\sqrt{2\\alpha_c^2+1}}{1+\\alpha_c}v_0.$$\n\n[3 points]\n\nThus,\n\n$$\\begin{aligned}\\delta v&=v_0-v_f\\\\&=\\left(1-\\frac{\\sqrt{2\\alpha_c^2+1}}{1+\\alpha_c}\\right)v_0\\\\&=-0.259v_0.\\end{aligned}$$\n\n$$\\frac{\\delta v}{v_0}=25.9\\%.$$\n\n[0.5 points]\n\n$$\\tan\\delta\\theta=\\frac{v_r}{v_\\theta},\\qquad\\tan\\delta\\theta=\\sqrt2\\alpha_c,$$\n\n$$\\delta\\theta=1.480\\ \\mathrm{rad}.$$\n\n[0.5 points]\n\n$$\\delta\\theta=84.84^\\circ.$$",
+    "figures": [
+     {
+      "id": "p14-sol-fig1",
+      "alt": "Venus and comet orbit geometry.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-theory-tq-14-q/p14-sol-fig1.png",
+      "width": 969,
+      "height": 691,
+      "source": {
+       "page": 1,
+       "pdfRect": [
+        127.89,
+        152.73,
+        360.18,
+        318.29
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
    },
    "sourceSpans": [
     {
@@ -128,6 +238,26 @@
     {
      "document": "problems",
      "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    },
+    {
+     "document": "solutions",
+     "page": 5
     }
    ]
   }
