@@ -1,0 +1,193 @@
+---
+id: iom-2018-theory-1-p1
+source: 'IOM 2018, Теория'
+title: 'Задача 1. Walk with a Dog'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IOM/2018/iom-2018-theory-1.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:46:27.406Z'
+verifier: 'single-pass'
+---
+
+*Problem 1: «Walk with a Dog» · 30 т.*
+
+## Условие
+
+During a walk, a dog and its owner stopped for a while, the leash was remaining slightly taut. Suddenly, the owner started to run at a constant speed $V_0$ along a straight horizontal road perpendicular to the initial direction of the leash. The leash of length $l$ can be considered as very light and almost inextensible, so that it remains slightly taut during the whole «run». The dog always runs along the leash. The ground, on which the dog runs, is also horizontal. Assume that initially the owner was at a point $O$, the origin of a cartesian coordinate frame $XOY$, the leash was aligned with $OY$, and the owner started to run along $OX$ in the positive direction.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.7%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2018-theory-1/p1-fig1.png" alt="Axes OY (vertical, labelled Y) and OX (horizontal, labelled X) with origin O. The owner is a dot on the OX axis with a velocity arrow labelled V0 pointing along X; the leash of length l runs up-left from the owner to a dot labelled dog; a red curve with an arrow shows the dog's path from a point on the OY axis down to the dog." width="1035" height="661" loading="lazy" decoding="async" />
+</figure>
+
+**1)** Determine the magnitude and direction of the initial acceleration $\vec{a}_0^{\,\mathrm{dog}}$ of the dog. Sketch the axes $OX$ and $OY$ and show the acceleration direction with an arrow. **[1 т.]**
+
+**2)** Determine the magnitude of dog velocity $V_A^{\mathrm{dog}}$ and the magnitude and direction of dog’s acceleration $\vec{a}_A^{\,\mathrm{dog}}$ when the dog passes a point $A$, at which the angle between the leash and the owner velocity is $\alpha = 45^{\circ}$. Sketch the axes $OX$ and $OY$ and show the direction of $\vec{a}_A^{\,\mathrm{dog}}$ with an arrow. **[3 т.]**
+
+**3)** Derive an equation of dog’s trajectory (either explicitly, in the form $y = y(x)$ or $x = x(y)$, or in a parametric form). Sketch the trajectory so that its main features are manifest (in the frame $XOY$). *Mathematical hint:* $\displaystyle\int_x^{\pi/2} \frac{dy}{\sin y} = \ln\left[\cot\left(\frac{x}{2}\right)\right]$. **[6 т.]**
+
+**4)** Derive the law motion of the dog (i.e. a time dependence of its coordinates $x$ and $y$). Derive and write down a time dependence of dog’s velocity $V^{\mathrm{dog}}(t)$. **[8 т.]**
+
+**5)** Assume that dog’s acceleration is only due to the horizontal component $F$ of a force exerted on the dog by the ground. Find a time dependence $F(t)$ of the force component. Neglect small «irregularities» of this function (due to discontinues nature of dog leaps). The dog mass is $m$. **[4 т.]**
+
+**6)** Find the law of motion of the dog (a dependence of $x$ and $y$ on $t$) after a time significantly exceeding $\tau = \dfrac{l}{V_0}$, provided the dog and the owner keep running according to the problem statement. **[2 т.]**
+
+**7)** A fly started chasing the dog from the initial point of dog motion when the dog had covered the distance $l$. The magnitude of fly velocity remains constant and equal to $V_0$ except for a very short period of acceleration at the start. The fly precisely follows the dog path. What is the minimal distance $r_{\min}$ that the fly could approach the dog in a very long time? **[4 т.]**
+
+**8)** Determine the magnitude of fly acceleration $a_A^{\mathrm{fly}}$ when it passes the point $A$. **[2 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Proposed Solution**
+
+<ProblemSection id="solution-part-1">
+
+### 1)
+
+Initially the dog is at rest and starts running in the negative direction of $OY$. The owner is moving along $OX$ and its coordinate depends on time as $x(t) = V_0 t$. Since the leash length is constant, a dog coordinate at the beginning varies with time as $y(t) = \sqrt{l^2 - V_0^2 t^2} \approx l - \dfrac{V_0^2 t^2}{2l}$. Therefore, the initial acceleration of the dog points in the negative direction of $OY$ and its magnitude equals $a_0^{\mathrm{dog}} = V_0^2 / l$ (in other words, the $OY$ component of the initial dog acceleration equals $a_y(t) = -V_0^2 / l$).
+
+One could also argue differently. Let us move to the owner frame (which is moving at a constant speed $V_0$ along $OX$). In this frame the instantaneous velocity of the dog is perpendicular to the leash (since the leash remains taut) and initially it equals $V_0$. Hence, the only component of the initial dog acceleration is along the leash (in the negative direction of $OY$) and its magnitude equals $V_0^2 / l$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-2">
+
+### 2)
+
+According to the problem statement, dog’s velocity is always directed along the leash. Again, from the invariance of the leash length it follows that the components of the dog and the owner velocities on the leash must be equal. Therefore, the magnitude of dog’s velocity at $A$ equals $V_A^{\mathrm{dog}} = V_0 \cos\alpha = \dfrac{V_0}{\sqrt{2}}$.
+
+Notice also that $y$-component of dog’s velocity at this moment is $V_y = -V_0 \cos\alpha \sin\alpha = -\dfrac{V_0}{2} \sin 2\alpha$, so its magnitude reaches the maximum exactly at $\alpha = 45^{\circ}$. Therefore, the $y$-component of dog’s acceleration at this value of $\alpha$ vanishes. Therefore, the desired dog’s acceleration is directed along $OX$.
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.7%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2018-theory-1/p1-sol-fig1-v2.png" alt="Axes Y and X with origin O. Point A (dog) joined to the owner on the X axis by the leash of length l at angle α to OX. At A: the velocity V_A^dog along the leash, V' perpendicular to the leash (right-angle mark), and -V0 horizontal forming the velocity triangle; a_n points along the leash toward the owner; the owner has velocity V0 along X." width="1035" height="657" loading="lazy" decoding="async" />
+</figure>
+
+
+To find the acceleration magnitude let us pass to the owner reference frame (moving at a constant speed $V_0$ along $OX$). In this frame the dog runs along a circle of radius $l$ at a varying velocity, at the moment under consideration its velocity $\vec{V}' = \vec{V}_A^{\mathrm{dog}} - \vec{V}_0$ is perpendicular to the leash and its magnitude equals $\dfrac{V_0}{\sqrt{2}}$. Hence, the dog centripetal acceleration is $|\vec{a}_n| = \dfrac{V'^2}{l} = \dfrac{V_0^2}{2l}$.
+
+The net acceleration directed in the positive direction of $OX$ is a vector sum of the centripetal and tangential accelerations. This means that the magnitude of dog’s acceleration equals $a_A^{\mathrm{dog}} = |\vec{a}_n| / \cos\alpha = |\vec{a}_n| \sqrt{2} = \dfrac{V_0^2}{l\sqrt{2}}$. Thus, $\vec{a}_A^{\,\mathrm{dog}} = \dfrac{V_0^2}{l\sqrt{2}} \cdot \vec{e}_x$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.7%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2018-theory-1/p1-sol-fig2-v2.png" alt="Axes Y and X with origin O. Point A joined to the owner on the X axis by the leash of length l at angle α. At A: a_n along the leash toward the owner, a_τ perpendicular to it (right-angle mark), and their resultant a_A^dog pointing horizontally along OX, completed by dotted lines into a rectangle; the owner velocity V0 along X." width="1035" height="667" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-3">
+
+### 3)
+
+It is easy to determine the dog $y$-coordinate when the leash makes an angle $\alpha$ with $OX$: $y(\alpha) = l \cdot \sin\alpha$. On the other hand, $\pi - \alpha$ is the tangent angle to the dog trajectory, i.e. $\dfrac{dy}{dx} = -\tan\alpha \Rightarrow l\cos\alpha \dfrac{d\alpha}{dx} = -\tan\alpha$. Therefore, $dx = -l \dfrac{\cos^2\alpha}{\sin\alpha} d\alpha$. Integrating this equation and using that $\alpha = \dfrac{\pi}{2}$ at $x = 0$, one obtains: $x(\alpha) = l \cdot \displaystyle\int_{\alpha}^{\pi/2} \frac{\cos^2\beta}{\sin\beta} d\beta = l \cdot \left\{\ln\left[\cot\left(\frac{\alpha}{2}\right)\right] - \cos\alpha\right\}$ (here the «mathematical hint» can be used). This is a parametric equation of the trajectory (angle $\alpha$ serves as the parameter). Solving the equation for $y$ one finds an explicit equation of the trajectory: $x(y) = l \cdot \ln\left(\dfrac{l + \sqrt{l^2 - y^2}}{y}\right) - \sqrt{l^2 - y^2}$. The curve specified by this equation is called ***tractrix***. It is sketched below (the curve shape could be guessed without an equation, just by considering the dog motion):
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.7%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2018-theory-1/p1-sol-fig3-v2.png" alt="Axes Y and X with origin O. A red tractrix starts on the Y axis with a vertical tangent and decreases monotonically, convex downward, approaching the X axis." width="1035" height="671" loading="lazy" decoding="async" />
+</figure>
+
+
+The main features:
+
+- a vertical tangent at the origin;
+- asymptotical approach to $x$-axis;
+- monotonous decline and downward convexity.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-4">
+
+### 4)
+
+Clearly, $x + l\cos(\alpha) = l \cdot \ln\left[\cot\left(\dfrac{\alpha}{2}\right)\right] = V_0 t$ because it is exactly the owner coordinate at $t$. It follows from this equation that
+
+$$
+\cot\left(\frac{\alpha}{2}\right) = \exp\left(\frac{V_0 t}{l}\right) \Rightarrow \cos\alpha = \tanh\left(\frac{V_0 t}{l}\right) \equiv \frac{e^{V_0 t/l} - e^{-V_0 t/l}}{e^{V_0 t/l} + e^{-V_0 t/l}}.
+$$
+
+Therefore, $x(t) = V_0 t - l \cdot \tanh\left(\dfrac{V_0 t}{l}\right)$. Since $\sin\alpha = \sqrt{1 - \tanh^2\left(\dfrac{V_0 t}{l}\right)} = \cosh^{-1}\left(\dfrac{V_0 t}{l}\right)$, one also obtains $y(t) = l \cdot \cosh^{-1}\left(\dfrac{V_0 t}{l}\right)$. Usage of hyperbolic functions simplifies the result but it can be written via exponents as well. Differentiating these equations, one obtains $V_x(t) = V_0 \cdot \tanh^2\left(\dfrac{V_0 t}{l}\right)$ and $V_y(t) = V_0 \cdot \tanh\left(\dfrac{V_0 t}{l}\right) \cdot \cosh^{-1}\left(\dfrac{V_0 t}{l}\right)$, so $V^{\mathrm{dog}}(t) = \sqrt{V_x^2 + V_y^2} = V_0 \cdot \tanh\left(\dfrac{V_0 t}{l}\right)$.
+
+Notice that the magnitude of the velocity can be found without differentiation: we have already shown in 2) that inextensibility of the leash implies $V = V_0 \cos\alpha$, then using the expression for the cosine one obtains the same expression.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-5">
+
+### 5)
+
+Differentiating one more time one gets $a_x(t) = 2\dfrac{V_0^2}{l} \cdot \tanh\left(\dfrac{V_0 t}{l}\right) \cosh^{-2}\left(\dfrac{V_0 t}{l}\right)$ and $a_y(t) = \dfrac{V_0^2}{l} \cdot \left[1 - 2\tanh^2\left(\dfrac{V_0 t}{l}\right)\right] \cosh^{-1}\left(\dfrac{V_0 t}{l}\right)$. Therefore, $a(t) = \dfrac{V_0^2}{l} \cdot \cosh^{-1}\left(\dfrac{V_0 t}{l}\right)$. According to the problem statement, this acceleration is due to the desired horizontal component of the force exerted on the dog by the ground (a leash tension is negligible), so $F(t) = ma(t) = \dfrac{mV_0^2}{l} \cdot \cosh^{-1}\left(\dfrac{V_0 t}{l}\right)$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-6">
+
+### 6)
+
+The answer to this question is obvious even without calculations: after such a long time the dog will run almost along $x$-axis, therefore, $x(t) \approx V_0 t - l$ and $y(t) \approx 0$ for $t \gg \dfrac{l}{V_0}$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-7">
+
+### 7)
+
+Neglecting a «very short» period of fly acceleration, one can see that the difference of the fly and dog speeds is $V_0 - V(t) = V_0 \cdot \left[1 - \tanh\left(\dfrac{V_0 t}{l}\right)\right]$. Thus, after a long time the distance along the trajectory separating the fly and the dog tends to
+
+$$
+s = \int_{t_0}^{\infty} [V_0 - V(t)]dt = l \cdot \int_{z_0}^{\infty} [1 - \tanh(z)]dz = 2l \cdot \int_{z_0}^{\infty} \frac{e^{-z}}{e^{z} + e^{-z}} dz = l \cdot \int_{0}^{\exp(-2z_0)} \frac{dy}{1 + y} = l \cdot \ln\left(1 + e^{-2z_0}\right)
+$$
+
+(here $t_0$ is start time of the fly, $z_0 = V_0 t_0 / l$, and the change of variables $y = e^{-2z}$ has been made when calculating the integral). By condition, $l = \displaystyle\int_0^{t_0} V(t)dt$, i.e. $1 = \displaystyle\int_0^{z_0} \mathrm{tah}\, z\, dz = \ln(\cosh z_0)$. Hence, $z_0 = \operatorname{arcosh} e$. After the transformation of the hyperbolic functions we obtain: $e^{-2z_0} = \left(e - \sqrt{e^2 - 1}\right)^2$, i.e. $s = l \cdot \ln\left(1 + \left(e - \sqrt{e^2 - 1}\right)^2\right)$.
+
+Therefore, after a very long time (when the owner, the dog, and the fly move along $x$-axis) the minimum distance between the fly and the dog tends to
+
+$$
+r_{\min} = l - s = l\left[1 - \ln\left(1 + \left(e - \sqrt{e^2 - 1}\right)^2\right)\right] \approx 0{,}964l.
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-8">
+
+### 8)
+
+In 2) we have already determined the magnitude of dog’s velocity at $A$, $V = \dfrac{V_0}{\sqrt{2}}$, and its centripetal acceleration at this point, $|\vec{a}_n| = \dfrac{V_0^2}{2l}$. Therefore, the curvature radius of dog’s trajectory at $A$ equals $R_A == \dfrac{V^2}{|\vec{a}_n|} = l$, and the magnitude of fly acceleration at $A$ is $a_A^{\mathrm{fly}} = \dfrac{V_0^2}{l}$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-marking">
+
+### Problem 1
+
+City ____________________ Name ____________________
+
+| № | ANSWER | Maximum Score | Score |
+|---|---|---|---|
+| 1 | Acceleration points toward the owner in the negative direction of $OY$, $a_0^{\mathrm{dog}} = V_0^2 / l$. | **1** | |
+| 2 | Magnitude of dog’s velocity at $A$, $V_A^{\mathrm{dog}} = V_0 \cos\alpha = \dfrac{V_0}{\sqrt{2}}$. | **1** | |
+| | Dog acceleration at $A$ is directed along $OX$, $\vec{a}_A^{\,\mathrm{dog}} = \dfrac{V_0^2}{l\sqrt{2}} \cdot \vec{e}_x$. | **2** | |
+| 3 | Dog trajectory in parametric form, $x(\alpha) = l \cdot \left\{\ln\left[\cot\left(\dfrac{\alpha}{2}\right)\right] - \cos\alpha\right\}$ and $y(\alpha) = l \cdot \sin\alpha$; in explicit form: $x(y) = l \cdot \ln\left(\dfrac{l + \sqrt{l^2 - y^2}}{y}\right) - \sqrt{l^2 - y^2}$. | **5 (for parametric form: 3 for *x* + 2 for *y*)** | |
+| | Sketch of dog trajectory, | **1** | |
+| 4 | Dog law of motion, $x(t) = V_0 t - l \cdot \tanh\left(\dfrac{V_0 t}{l}\right)$ and $y(t) = l \cdot \cosh^{-1}\left(\dfrac{V_0 t}{l}\right)$. | **5 = 3 for *x* and 2 for *y*** | |
+| | Time dependence of dog speed, $V^{\mathrm{dog}}(t) = V_0 \cdot \tanh\left(\dfrac{V_0 t}{l}\right)$. | **3** | |
+| 5 | Horizontal component of force exerted on dog by the ground versus time, $F(t) = \dfrac{mV_0^2}{l} \cdot \cosh^{-1}\left(\dfrac{V_0 t}{l}\right)$. | **4** | |
+| 6 | Dog law of motion after a long time (for $t \gg \dfrac{l}{V_0}$), $x(t) \approx V_0 t - l$, $y(t) \approx 0$. | **2** | |
+| 7 | Minimum distance between the dog and the fly after a long time, $r_{\min} = l\left[1 - \ln\left(1 + \left(e - \sqrt{e^2 - 1}\right)^2\right)\right] \approx 0{,}964l$. | **4 (if mistake is only in integral calculation - 2)** | |
+| 8 | Magnitude of fly’s acceleration at $A$, $a_A^{\mathrm{fly}} = \dfrac{V_0^2}{l}$. | **2** | |
+| | **TOTAL** | **30** | |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.3%', '--fig-max': '233px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/iom-2018-theory-1/p1-sol-fig4-v3.png" alt="Sketch of dog trajectory from the marking scheme: axes Y and X with origin O and a red tractrix starting on the Y axis and approaching the X axis." width="728" height="455" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [1.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOM%20%D0%9E%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0%20%D0%BC%D0%B5%D0%B3%D0%B0%D0%BF%D0%BE%D0%BB%D0%B8%D1%81%D0%BE%D0%B2/2018/1.pdf#page=1)
+· официални решения: [theory-criteria.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOM%20%D0%9E%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0%20%D0%BC%D0%B5%D0%B3%D0%B0%D0%BF%D0%BE%D0%BB%D0%B8%D1%81%D0%BE%D0%B2/2018/theory-criteria.pdf#page=1)

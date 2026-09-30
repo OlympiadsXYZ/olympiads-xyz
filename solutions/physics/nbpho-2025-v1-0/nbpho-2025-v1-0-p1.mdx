@@ -1,0 +1,161 @@
+---
+id: nbpho-2025-v1-0-p1
+source: 'NBPhO 2025, Теория и експеримент'
+title: 'Задача 1. Flying Dumbbell'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2025/nbpho-2025-v1-0.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:49:33.713Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2025 · 10 т.*
+
+## Условие
+
+— *Jaan Kalda.*
+
+In this problem, we shall study the dynamics of a dumbbell consisting of two steel balls, each with radius $r = 1\ \mathrm{cm}$, connected by a steel rod with diameter $d = 1\ \mathrm{mm}$ and length $l = 10\ \mathrm{cm}$, in the absence of gravity. Unless instructed otherwise, assume steel is perfectly elastic. You may simplify your calculations by assuming $l \gg r$.
+
+**i)** Given that the Young’s modulus of steel is $Y = 2\times 10^{11}\ \mathrm{Pa}$ and the density of steel is $\rho = 7800\ \mathrm{kg\,m^{-3}}$, determine the period $T$ of free longitudinal oscillations of the dumbbell. (Do not consider oscillations with standing waves in the rod where the balls remain almost at rest.) Young’s modulus is the ratio of a material’s stress (force per unit area) to its strain (relative deformation). **[2 т.]**
+
+**ii)** Estimate the impact time $\tau$ when a steel ball bounces off a steel wall. **[2 т.]**
+
+**iii)** The dumbbell moves toward a steel wall with velocity $\vec v = -v\hat x$, with its axis perpendicular to the wall, and bounces back. Here, $\hat x$ denotes a unit vector along the axis perpendicular to the wall. Sketch how the $x$-component $v_x$ of the front ball’s velocity (the ball that collides with the wall) depends on time. **[2 т.]**
+
+**iv)** Now, the dumbbell moves toward a steel wall with velocity $\vec v = -v\hat x$ as before, but its axis forms an angle $\alpha$ with the $x$-axis. The interaction of the front ball with the wall depends qualitatively on the angle $\alpha$, with a transition from one type of interaction to another occurring at $\alpha = \alpha_0$. Determine the value of $\alpha_0$. *Hint:* $\min\left(\frac{\sin x}{x}\right) \approx -0.217$. **[2 т.]**
+
+**v)** Under the assumptions of the previous task, let $\alpha > \alpha_0$. Additionally, assume that while steel is highly elastic, it is not infinitely so: any oscillations excited in the rod will decay by the time the rear ball collides with the wall. Determine the speed with which the centre of mass of the dumbbell departs from the wall. **[2 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+— *Solution by Jaan Kalda, grading schemes by Author 2.*
+
+<ProblemSection id="solution-solution-i">
+
+### i) (2 т.)
+
+Free oscillations of the dumbbell take place around the centre of mass, i.e. the centre of the rod. Therefore, we need the stiffness of a half of the rod. This stiffness is expressed as $k = Y\frac{\pi}{2}d^2/l$. We also need the mass of the ball $m = \frac{4}{3}\pi r^3\rho$. The oscillation angular frequency $\omega = \sqrt{k/m}$, hence the period
+
+$$
+T = 2\pi\sqrt{\frac{m}{k}} = 4\pi\frac{r}{d}\sqrt{\frac{2\rho rl}{3Y}} \approx 0.64\ \mathrm{ms}.
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-ii">
+
+### ii) (2 т.)
+
+The easiest way to estimate is to notice that a compressed ball is essentially a compression wave in steel, so the period is on the order of a wave with wave length $2r$. Knowing that the sound speed $c_s = \sqrt{Y/\rho}$, we obtain $\tau \sim 2r/c_s = 2r\sqrt{\rho/Y} = 4\ \mathrm{\mu s}$. Alternatively, one can approximate the ball as a spring of stiffness $\kappa \sim Yr$ and mass $\sim m$, and obtain a similar result with $\tau \sim 2\pi\sqrt{m/\kappa}$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-iii">
+
+### iii) (2 т.)
+
+When the dumbbell with axis perpendicular to the wall approaches with velocity $\vec v = -v\hat x$, the front ball impacts the wall first. Since the impact time ($\tau \approx 4\ \mu\mathrm{s}$) is much shorter than the oscillation period ($T \approx 0.64\ \mathrm{ms}$), the front ball’s velocity changes almost instantaneously from $-v$ to $+v$, while the rear ball continues with velocity $-v$. Since the balls have equal masses, the centre of mass remains stationary. The dumbbell then oscillates about this stationary centre of mass, with the front ball’s velocity following a half-period sinusoidal oscillation, changing from $+v$ to $-v$ over a time interval of $T/2$. When the velocity reaches $-v$, the front ball impacts the wall again, and its velocity changes instantaneously from $-v$ to $+v$. After this second impact, both balls move away from the wall, with the same velocity $+v$, so the dumbbell as a whole departs with velocity $+v$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40.3%', '--fig-max': '258px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p1-sol-fig1.png" alt="Sketch of the front ball’s velocity v versus time t (task iii): v is constant at −v, jumps up to +v, decreases along a half sine wave from +v to −v, then jumps back to +v and stays constant. Axes labelled v and t." width="807" height="485" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-iv">
+
+### iv) (2 т.)
+
+During the impact, the front ball velocity becomes opposite, so the centre of mass stops (as the rear ball moves still with its old speed). After the collision, the front ball obtains a component $v\cos\alpha$ along its axis, and $v\sin\alpha$ perpendicular to it. The former initiates oscillations of period $T$, and the latter — a rotation at angular speed
+
+$$
+\Omega = v\sin\alpha/(l/2) = 2v\sin\alpha/l
+$$
+
+. The ball will hit the wall twice if the rotation is slow, and only once if the rotation is fast enough; let us study this in more details. By time $t \ll 1/\Omega$, the rotation angle is $\Omega t$, and the distance of the farthest point of the ball from the rotation centre is $l/2 - a\sin(\omega t)$, where the oscillation amplitude can be obtained from the energy conservation law, $a = v\cos\alpha\sqrt{m/k} = v\cos\alpha/\omega$. So, the distance from the wall of the closest point of the ball is
+
+$$
+\begin{aligned} &\frac{l}{2}\cos\alpha - \left[\frac{l}{2} - a\sin(\omega t)\right]\cos(\alpha + \Omega t) \approx \\ &\approx \frac{l}{2}\Omega t\sin\alpha + a\cos\alpha\sin\omega t = \\ &= vt\sin^2\alpha + \frac{v}{\omega}\cos^2\alpha\sin\omega t = \\ &= \frac{v}{\omega}s\sin^2\alpha + \frac{v}{\omega}\cos^2\alpha\sin s, \quad s \equiv \omega t. \end{aligned}
+$$
+
+If this expression becomes negative, there will be a second collision. So, the cross-over value of $\alpha = \alpha_0$ is such that the expression becomes never negative, hence
+
+$$
+\tan^2\alpha_0 = -\min\frac{\sin s}{s} \approx 0.217,
+$$
+
+hence
+
+$$
+\alpha_0 = \arctan\sqrt{0.217} \approx 25^{\circ}.
+$$
+
+If we divide this expression by corresponding
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-v">
+
+### v) (2 т.)
+
+Using the results of the previous task, the angular speed after the initial collision is $\Omega = 2v\sin\alpha/l$. The dumbbell rotates around its centre of mass, longitudinal oscillations decay by the time of the second collision. It rotates until the other ball will hit the wall. At the moment of the second collision, the velocity of the ball is $v\sin\alpha$, and its projection to the surface normal of the wall is $-v\sin^2\alpha$. During the second collision, that components reverses sign, and as a result, both balls have now $x$-directional velocity component $v\sin^2\alpha$. Hence, this is also the speed of the centre of mass —- the speed with which the dumbbell departs from the wall.
+
+</ProblemSection>
+
+<ProblemSection id="solution-grading">
+
+### Grading: (preliminary)
+
+- i)
+- explaining that oscillation is symmetric around centre of the rod (invoking Newton’s third law suffices as well) **0.5 pts**
+- expressing stiffness of half-rod **0.5 pts**
+- minor mistake made in stiffness expression **−0.2 pts**
+- mass of the ball $m = \frac{4}{3}\pi r^3\rho$ **0.2 pts**
+- Realising that the system can be treated as a spring **0.3 pts**
+- oscillation period $T = 2\pi\sqrt{\frac{m}{k}}$ **0.3 pts**
+- final answer **0.2 pts**
+- ii)
+- Solution 1:
+- Realise compressed ball is essentially a compression wave **0.5 pts**
+- Formula for speed of sound **0.5 pts**
+- Relation between time, radius and speed **0.5 pts**
+- Final answer **0.5 pts**
+- Solution 2:
+- Realise the ball can be thought of as a spring **0.5 pts**
+- Estimate spring constant **0.5 pts**
+- Relation between spring constant and time or frequency **0.5 pts**
+- Final answer **0.5 pts**
+- iii)
+- 2 hits **0.4 pts**
+- velocity of front ball flips almost instantaneously **0.4 pts**
+- centre of mass stays at rest **0.4 pts**
+- sinusoidal movement of front ball **0.4 pts**
+- constant velocity $-v$ of front ball after second hit **0.4 pts**
+- iv)
+- Realise it behaves as in previous question (balls at velocity -v and v, CM at rest), but it now also rotates and oscillates around centre of mass **0.5 pts**
+- Expression for the angular speed of rotation **0.3 pts**
+- Expression of the amplitude of oscillations **0.2 pts**
+- Realise the difference in interaction is that if the first ball bounces once or twice **0.2 pts**
+- Formula for the distance of the front ball to the wall over time **0.3 pts**
+- Realise that if the distance is over 0 for all $t > 0$ the first ball does not hit the wall twice **0.2 pts**
+- Finding the critical angle given this condition **0.3 pts**
+- v)
+- Realise that the dumbbell rotates around its centre of mass (after first collision) **0.2 pts**
+- Realise that the longitudinal oscillations have decayed by the time of the second collision **0.4 pts**
+- Expression for velocity of ball $v\sin\alpha$ **0.5 pts**
+- Expression for the component of velocity of ball in direction of surface normal $v\sin^2\alpha$ **0.5 pts**
+- Realise the component of velocity of second ball in direction of surface normal is also $v\sin^2\alpha$ **0.2 pts**
+- Realise the speed of the centre of mass $v\sin^2\alpha$ **0.2 pts**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2025_problems_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2025/NBPhO_2025_problems_v1.0.pdf#page=1)
+· официални решения: [NBPhO_2025_solutions_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2025/NBPhO_2025_solutions_v1.0.pdf#page=1)

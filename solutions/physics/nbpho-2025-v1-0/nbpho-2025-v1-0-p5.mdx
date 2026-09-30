@@ -1,0 +1,142 @@
+---
+id: nbpho-2025-v1-0-p5
+source: 'NBPhO 2025, Теория и експеримент'
+title: 'Задача 5. Throwing'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2025/nbpho-2025-v1-0.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:49:33.713Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2025 · 6 т.*
+
+## Условие
+
+— *Eppu Leinonen.*
+
+**i)** A drone starts from the origin at rest and accelerates horizontally with an acceleration $g$ to the $+x$ direction. Simultaneously, a ball is thrown from the point with coordinates $(x,y) = (-h, -h)$. What is the minimum initial speed the ball needs to hit the drone? The free fall acceleration $g$ is antiparallel to the $y$-axis. **[2 т.]**
+
+**ii)** A stone is thrown from point $S$ (shown in the figure below) with an initial speed $v$. A boy at point $B$ wishes to hit the stone in midair by throwing a ball simultaneously with the stone’s release. He wants to use the minimum possible speed $u$ that will still allow the ball to hit the stone in midair. After calculating the stone’s trajectory, he determines the optimal trajectory for the ball and throws it according to his calculations. The collision point $C$ is shown in the figure. Using the scale provided and necessary measurements from the figure, find the initial speeds $v$ of the stone and $u$ of the ball. The free fall acceleration is $g = 9.8\ \mathrm{m\,s^{-2}}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.7%', '--fig-max': '242px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p5-fig1-v3.png" alt="Scale drawing: point S at the top edge of a step (ledge), point B on the ground below and to the right, point C (collision point) high up to the right; a scale bar of 10 m under the ground line." width="755" height="279" loading="lazy" decoding="async" />
+</figure>
+
+**[4 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+— *Solution by Eppu Leinonen and Jaan Kalda.*
+
+<ProblemSection id="solution-solution-i">
+
+### i) (2 т.)
+
+In the drone’s reference frame, the effective gravitational field is $(g, g)$, which has a magnitude of $g\sqrt{2}$ pointing at a $45^{\circ}$ angle. The initial kinetic energy of the ballis $\frac{1}{2}mv_0^2$, and the final energy: potential energy change is $m(g\sqrt{2})\cdot(h\sqrt{2})$, where $h\sqrt{2}$ is the displacement along the direction of the effective field From the energy conservation law we obtain $\frac{1}{2}mv_0^2 = m(g\sqrt{2})\cdot(h\sqrt{2})$, hence $v_0 = 2\sqrt{gh}$.
+
+**Grading:** (preliminary)
+
+- Idea of switching to the coaccelerating frame **1 pts**
+- Ball gains horizontal acceleration $g$ **0.3 pts**
+- Effective gravitational field $g\sqrt{2}$ point from drone to throwing point **0.2 pts**
+- Energy conservation or the respective kinematical equation **0.3 pts**
+- Correct answer **0.2 pts**
+
+*Solution 2 by Anne-Sofie Mårtensson and Adam Warnerbring:* In time $t$ the drone travels a distance $s = \frac{1}{2}gt^2$. For a collision to occur at time $t$ the ball must travel a distance $h$ up giving us an equation $h = vt\sin\alpha - \frac{1}{2}gt^2$ and a distance $h + s$ horizontally giving us an equation $h + s = vt\cos\alpha$. From these equations we get $vt\sin\alpha = vt\cos\alpha$, which means that $\alpha = 45^{\circ}$. This means that the initial $x$ and $y$-components of the velocity must be the same. Thus the initial speed minimised when the highest point of the trajectory is minimal which happens when it is a height $h$ away from the throwing point. From energy conservation we get $\frac{1}{2}\left(\frac{v_0}{\sqrt{2}}\right)^2 = gh$ to get $v_0 = 2\sqrt{gh}$
+
+- Correct kinematic equations **0.6 pts** (0.2 for each)
+- Getting the condition $\sin\alpha = \cos\alpha$ **0.3 pts**
+- $\alpha = 45^{\circ}$ **0.1 pts**
+- $v_{x,0} = v_{y,0}$ implies that the highest point of the trajectory has to be as low as possible **0.5 pts**
+- Energy conservation or the respective kinematical equation **0.3 pts**
+- Correct answer **0.2 pts**
+
+*Alternatively,* we can derive the minimal velocity from $\alpha = 45^{\circ}$ as follows. If we go back to our kinematical equations, we get that the condition for the drone and the ball to meet at the same $x$-coordinate is $vt\sin\alpha - \frac{1}{2}gt^2 = \frac{vt}{\sqrt{2}} - \frac{1}{2}gt^2 = h + s = h + \frac{1}{2}gt^2$. But also for the $y$ coordinate we have $h = vt\sin\alpha - \frac{1}{2}gt^2 = \frac{vt}{\sqrt{2}} - \frac{1}{2}gt^2$. I.e. both equations become $\frac{1}{2}gt^2 - \frac{vt}{\sqrt{2}} + h = 0$, so we only need to find out what is the minimal velocity that this equation has a solution. Since the equation is a quadratic, it has a solution when its discriminant $\Delta$ is non-negative. Now $\Delta = v^2/2 - 2gh$, which is an increasing function of $v$. Thus the minimal speed with which the collision is possible is when the discriminant is zero. Thus we get $v = 2\sqrt{gh}$.
+
+**Some students interpreted the task such that the drone has an acceleration $(g, -g)$. This interpretation makes the problem more difficult and will be accepted**. The following solution shows how this version of the problem can be solved *Solution for the alternative interpretation by Eppu Leinonen:* If we move to the coaccelerating frame of the drone, the ball will have a net acceleration $(-g,0)$, and the drone will stay in place. This invites us to rotate the coordinate axes that the acceleration of the ballis $(0, -g)$ and if we set the origin at the throwing point, the drone will be at $(-h, h)$. Now all the points reachable by the ball with an initial speed $v$ are given by the so called envelope curve which is known to have the equation $y \le v_0^2/2g - gx^2/2v_0^2$. With the minimal possible speed the drone will be on the envelope curve as otherwise the point is not reachable or the speed can be made smaller. So we need to find $v_0$ such that the equation $h = v_0^2/2g - gh^2/2v_0^2$ has a solution. Rearranging gives $v_0^4 - 2ghv_0^2 - g^2h^2 = 0$ which is a quadratic in $v_0^2$ (biquadratic in $v_0$) which has the solutions $v_0^2 = \frac{2gh\pm\sqrt{4g^2h^2+4g^2h^2}}{2} = gh \pm gh\sqrt{2}$ which is only positive if $\pm$ is $+$ so $v_0^2 = (1 + \sqrt{2})gh$ and as such $v_0 = \sqrt{(1 + \sqrt{2})gh}$.
+
+**Grading:**
+
+- Idea of switching to the coaccelerating frame **1 pts**
+- Ball gains vertical and horizontal acceleration $g$ **0.3 pts**
+- Effective gravitational field $(0, -g)$ (in the rotated coordinate frame, but this rotation is not necessary) **0.2 pts**
+- Drone must be on the envelope curve **0.2 pts**
+- Correct form for the envelope curve **0.1 pts**
+- Correct answer **0.2 pts**
+
+For other solutions, at most 0.6 points for kinematical equations that describe the conditions necessary for the ball and drone to collide – the rest of the analysis must be fully correct to get the rest of the points.
+
+**NB! If a student has interpreted that the drones acceleration is along the $y$-axis or that antiparallel to the $y$-axis means to the positive $y$-axis, it is automatically 0 points.**
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-ii">
+
+### ii) (4 т.)
+
+*Solution 1.* Let us use the free-falling frame of reference wherein the ball and the stone move along straight lines. That frame fell together with points $S$ and $B$ during the flight time of duration $t$ by $h = \frac{1}{2}gt^2$, so in that frame the position of the collision point $C'$ is obtained by shifting $C$ relative to $S$ and $B$ by distance $h$ upwards. In that frame, $|SC'| = vt$ and $|BC'| = ut$, hence $|SC'|/|BC'| = v/u$. We have $v$ fixed and want to have as small as possible $u$, so $|SC'|/|BC'|$ needs to be maximal. From the sine theorem, $|SC'|/|BC'| = \sin\angle SBC'/\sin\angle C'SB$. As $\angle C'SB$ is defined by the stone-throwing angle and is therefore fixed, the boy needs to maximize $\sin\angle C'BS$. Obviously, the maximum of 1 is reached for $\angle C'BS = 90^{\circ}$. Therefore, we need to draw a perpendicular to $SB$ at $B$, and find $C'$ as its intersection point with the vertical line drawn through $C$. Then $|CC'| = \frac{1}{2}gt^2$ from where we obtain $t = \sqrt{2|CC'|/g}$, $v = \sqrt{g}|SC'|/\sqrt{2|CC'|} \approx 12.3\ \mathrm{m\,s^{-1}}$ and $u = \sqrt{g}|BC'|/\sqrt{2|CC'|} \approx 10.9\ \mathrm{m\,s^{-1}}$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.5%', '--fig-max': '253px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p5-sol-fig1.png" alt="Geometric construction for task ii: ledge with point S, ground point B, collision point C and the shifted point C′ vertically above C; segments SC′, SB and BC′ drawn, with BC′ perpendicular to SB, and a vertical line through C and C′." width="790" height="549" loading="lazy" decoding="async" />
+</figure>
+
+
+**Grading:** (preliminary)
+
+- The idea of switching to the free-falling frame **0.5 pts**
+- Stating (explicitly or implicitly) that the stone and the ball travel in straight lines **0.5 pts**
+- $SC' = vt$ and $BC' = ut$ **0.2 pts** (0.1 for each)
+- Noticing that we need to minimise $|SC'|/|BC'|$ (or maximise the reciprocal) **0.3 pts**
+- Sine theorem (to minimise) **0.5 pts**
+- $\angle C'BS = 90^{\circ}$ **0.5 pts**
+- In the free falling frame $C'$ is shifted upwards with respect to $S$,$B$,$C$ **0.5 pts**
+- $|CC'| = \frac{1}{2}gt^2$ **0.1 pts**
+- Well drawn geometrical construction (that is correct) **0.5 pts**
+- $v = \sqrt{g}|SC'|/\sqrt{2|CC'|}$ and $u = \sqrt{g}|BC'|/\sqrt{2|CC'|}$ **0.2 pts** (0.1 for each)
+- $v \in [11.8, 12.7]\mathrm{m\,s^{-1}}$, $u \in [10.5, 11.4]\mathrm{m\,s^{-1}}$ **0.2 pts** (0.1 for each, only if correct method)
+
+*Note.* Well drawn means that straight lines are straight lines and the 90 degree angles look like 90 degree angles. The points will only be given if the construction is relevant for a correct solution to the problem.
+
+*Solution 2.* A purely geometric proof for $C'B \perp BSA$ to minimise $BC'/SC'$ goes as follows (the rest of the solution is the same). After going to the free fall frame, go to the frame moving with velocity $\vec v$. For the ball to hit the ball its velocity in this frame $\vec u'$ must point at the stone. I.e. we get that $\vec u' = k\overrightarrow{BS}$, where $k > 0$. On the other hand $\vec u' = \vec u - \vec v$. But now this means that $\vec v - \vec u$ must end up on the line $SB$. The possible ending points of $\vec v - \vec u$ are achieved by drawing a circle of radius $u$ around the ending point of $\vec v$. With the minimal $|\vec u|$ to achieve the condition of the relative velocity ending up on $SB$ the circle will be tangent to $SB$ which means that $\vec u \perp \overrightarrow{BS}$.
+
+This will replace minimising the ratio and using the sine law to give in total 0.8p for method and 0.5 for the correct angle.
+
+**Grading:**
+
+- Noticing that $\vec v - \vec u$ is on $SB$ **0.3 pts**
+- A valid argument that $u$ is minimal when $\vec u \perp \overrightarrow{SB}$ **0.5 pts**
+
+*Solution 3.* An analytic proof for $C'B \perp BS$ to minimise $BC'/SC'$ goes as follows (the rest of the solution is the same). Without the loss of generality we can put the point $S$ at (0,0) and the point $B$ at some $(q, 0)$ (i.e. we rotate and move our coordinate system to achieve this). The $SC'$ line is given by $y = kx$ for some $k$ and thus a general form for the point $C'$ is $(x, kx)$. Thus the ratio of the lengths becomes
+
+$$
+R = \frac{\sqrt{(x - q)^2 + k^2x^2}}{\sqrt{(k^2 + 1)x^2}}.
+$$
+
+Differentiating this (preferrably logarithimically) and finding the 0 of the the derivative gives
+
+$$
+x = q
+$$
+
+i.e. $C' = (q, kq)$ and as such $C'B \perp BS$.
+
+The following points replace the “Sine theorem (to minimise)” part from Solution 1
+
+**Grading:** (preliminary)
+
+- Correct $R$ function to maximise/minimise **0.2 pts**
+- Derivative $= 0$ **0.1 pts**
+- Performing the rest of the calculation fully correct **0.2 pts**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2025_problems_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2025/NBPhO_2025_problems_v1.0.pdf#page=2)
+· официални решения: [NBPhO_2025_solutions_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2025/NBPhO_2025_solutions_v1.0.pdf#page=5)

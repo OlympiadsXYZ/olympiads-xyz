@@ -1,0 +1,354 @@
+---
+id: nbpho-2025-v1-0-p9
+source: 'NBPhO 2025, Теория и експеримент'
+title: 'Задача 9. Hot Plate'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2025/nbpho-2025-v1-0.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:49:33.713Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2025 · 12 т.*
+
+## Условие
+
+— *Jaan Kalda.* *Tools:* a resistor with resistance $R = 220\ \Omega$ mounted in one corner of a foam plastic plate (resistor’s upper surface is painted black), a power supply (on the power supply, readings other than voltage are not reliable!), two identical $40\ \mathrm{mm}\times 40\ \mathrm{mm}$ aluminium plates that differ only in their coating: one is polished, the other is anodized black and can be assumed to be a black body, 4 silicone rubber pads of thickness $t = 0.8\ \mathrm{mm}$, a foam cup with hot water, tweezers, a stopwatch, an infrared thermometer (press the knob twice and take a reading) , sheets of graph paper and paper tissues for cleaning. Note that for thermal radiation, water can be also assumed to be a black body.
+
+**Do not apply voltages higher than $U = 15\ \mathrm{V}$ to the resistor as this will lead to a melting of the foam plastic! Please handle foam cups with care and do not break them (you will not get a spare one)!**
+
+**i)** Determine the emissivity (thermal radiation power relative to a black body) of the polished aluminium plate. *Hint*: infrared thermometers measure temperature via thermal radiation power (assume it is calibrated for objects of 100% emissivity); within relevant temperature ranges, this relationship can be approximated as linear, **[3 т.]**
+
+**ii)** Determine the heat transfer coefficient between the top surface of the black aluminium plate and air (i. e. the coefficient of proportionality between heat dissipation power and the temperature difference) that includes both conductive and radiative heat transfer. **[3 т.]**
+
+**iii)** Determine the heat capacity of a metal plate. **[2 т.]**
+
+**iv)** Determine the heat conductance of silicon rubber pads (neglect their heat capacitance). **[4 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+— *Jaan Kalda.*
+
+<ProblemSection id="solution-solution-i">
+
+### i) (3 т.)
+
+Both aluminium plates were immersed in hot water until thermal equilibrium was reached, then removed, dried with tissue paper, and measured using an infrared thermometer. The plates have identical thermal properties except for their surface coating, so they should have reached the same actual temperature in the hot water bath. Experimental measurements:
+
+| $T_{\mathrm{polished}}$ (°C) | $T_{\mathrm{black}}$ (°C) | $T_{\mathrm{room}}$ (°C) |
+|---|---|---|
+| 26.2 | 70.9 | 22.9 |
+| 26.0 | 70.7 | 22.9 |
+| 25.4 | 70.2 | 22.9 |
+
+The infrared thermometer measures temperature based on thermal radiation and we were told it is calibrated for emissivity $\varepsilon = 1$ (in reality, it is calibrated for $\varepsilon = 0.95$, but this difference is not significant). We were also told that the radiation power can be linearized: $P_{\mathrm{thermal}} = P_0 + \alpha T$. Objects with $\varepsilon < 1$ radiate $P_\varepsilon = \varepsilon(P_0 + \alpha T_\varepsilon)$, but they also reflect/scatter the radiation falling onto it from the environment. If the room is more or less at the thermal equilibrium at temperature $T_0$, the room is filled with the photons at thermal equilibrium with walls at temperature $T_0$. If the plate were to be black and also at temperature $T_0$, it would be in equilibrium with the radiation and emit $P = P_0 + \alpha T_\varepsilon$; so, there must be as much incident radiation from the surroundings regardless of its real emissivity and temperature. As it follows from the second law of thermodynamics, the reflectance must be $1 - \varepsilon$, so it reflects/scatters power equal to $P_r = (1 - \varepsilon)(P_0 + \alpha T_0)$. This means that the total power departing from it is $P_\varepsilon + P_r = P_0 + \varepsilon\alpha T_\varepsilon + (1 - \varepsilon)T_0$. The IR thermometer assumes this is a black body and equates this power to $P_0 + \alpha T_{\mathrm{reading}}$, hence were density as would have a room thermometer reading is a weighted average:
+
+$$
+T_{\mathrm{reading}} = \varepsilon\cdot T_\varepsilon + (1 - \varepsilon)\cdot T_0
+$$
+
+Since the black plate has $\varepsilon = 1$, its reading directly gives the actual temperature of both plates. Rearranging to solve for emissivity:
+
+$$
+\varepsilon = \frac{T_{\mathrm{polished}} - T_0}{T_{\mathrm{black}} - T_0}
+$$
+
+Calculating for each measurement:
+
+$$
+\begin{aligned} \varepsilon_1 &= \frac{26.2 - 22.9}{70.9 - 22.9} = 0.069 \\ \varepsilon_2 &= \frac{26.0 - 22.9}{70.7 - 22.9} = 0.065 \\ \varepsilon_3 &= \frac{25.4 - 22.9}{70.2 - 22.9} = 0.053 \end{aligned}
+$$
+
+Taking the average: $\varepsilon = \frac{0.069+0.065+0.053}{3} = 0.062 \approx 0.06$ The emissivity of the polished aluminium plate is $\varepsilon = 0.06 \pm 0.01$.
+
+**Grading:** (preliminary)
+
+- The idea of heating the two plates together in water (using alternative methods doesn’t guarantee equal temperatures for the plates well) **0.4 pts**
+- Measuring the radiance of the plates in a properly (plates are properly dried and measurements are done in a timely manner) **0.4 pts**
+- Making at least three measurements of the black plate, the polished plate and the surrounding environment (0.2 p for each set of 3, totalling) **0.6 pts**
+- Understanding that the IR temperature reading of the polished plate is affected not only by the plate itself, but also by the reflected radiation of the environment $T_{\mathrm{reading}} = \varepsilon\cdot T_{\mathrm{actual}} + (1 - \varepsilon)\cdot T_{\mathrm{ambient}}$ , not just $T_{\mathrm{reading}} = \varepsilon\cdot T_{\mathrm{actual}}$ **0.3 pts**
+- Deriving a correct formula for emissivity, expressed in terms of the three measured temperatures **0.7 pts**
+- Calculated value of emissivity in the range from 0.03 to 0.12 **0.6 pts** (for values from 0.02 to 0.2: 0.4 pts, for values from 0.01 to 0.3: 0.2 pts).
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-ii">
+
+### ii) (3 т.)
+
+*Solution 1.* Here the main idea is to heat the plate using the resistor. Once thermal equilibrium is reached with plate’s temperature $T = T_f$, the heating power $P = V^2/R$ equals to the power dissipated to the environment, $H(T_f - T_0)$ (with $T_0$ denoting the room temperature), hence we can determine the heat exchange coefficient as $H = V^2/R(T_f - T_0)$. The main difficulty with this approach is that the characteristic thermalization time is long, around 7 minutes, so for a more or less precise measurement, one should wait around half an hour.
+
+**Grading:** (preliminary)
+
+- The idea of using resistive heating and waiting for thermalization **0.5 pts**
+- For waiting long enough, up to **0.8 pts** ;as follows: for each five minutes missing from more than 30 minutes, subtract 0.2 pts (so, less than 30 minutes is 0.8 pts; less than 25 minutes is 0.6 pts ... etc).
+- The voltage is maximized to have maximal $T_f$ (needed to reduce the relative error of $T_f - T_0$ **0.4 pts** (the maximal allowed voltage of $15\ \mathrm{V}$ gives maximal points, each missing volt subtracts 0.1 pts.
+- Measuring the temperature and obtaining a value that is reasonable for the given voltage, i.e. difference is not bigger than $1\ ^{\circ}\mathrm{C}$ **0.6 pts**
+- Deriving a correct formula for $H$ **0.5 pts**
+- Evaluating correctly **0.2 pts** (any mistake, either with units or arithmetic, leads to no points)
+
+*Solution 2.* In order to avoid long waiting time, the following approach can be used. Although it involves more complicated data analysis, the analysis results are re-usable by part iii.
+
+The black aluminium plate was placed on the foam plastic with the resistor beneath it, providing continuous heating. Temperature readings were recorded at one-minute intervals (the first row shows time in minutes, the second — the measured temperature in °C:
+
+| 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|
+| 28.0 | 30.8 | 33.2 | 35.2 | 37.3 | 39.0 | 40.3 |
+
+For heating with constant power, the temperature evolution follows $T = T_f - \theta\mathrm{e}^{-\gamma t}$, where $T_f$ is the final equilibrium temperature, $\theta$ is a constant depending on the initial temperature, and $\gamma$ is the inverse of the characteristic time constant. To determine $\gamma$, we examine successive temperature increments $T(t + \tau) - T(t) = \theta\mathrm{e}^{-\gamma t}(\mathrm{e}^{\gamma\tau} - 1)$ with $\tau = 1\ \mathrm{min}$, which should decrease exponentially, i.e. $\ln\Delta T \equiv \ln[T(t + \tau) - T(t)] = -\gamma t + \mathrm{const}$ should be a linear function of time.
+
+| $t$ (min) | $\Delta T$(°C) | $\ln(\Delta)T$ |
+|---|---|---|
+| 0 | 2.80 | 1.0296 |
+| 1 | 2.40 | 0.8755 |
+| 2 | 2.00 | 0.6931 |
+| 3 | 2.10 | 0.7419 |
+| 4 | 1.70 | 0.5306 |
+| 5 | 1.30 | 0.2624 |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.3%', '--fig-max': '271px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p9-sol-fig1.png" alt="Plot of ln[T(t+1)−T(t)] (0.2 to 1.0) versus time (min, 0 to 5): six blue data points with a red decreasing linear fit line." width="846" height="616" loading="lazy" decoding="async" />
+</figure>
+
+
+Linear regression analysis of $\ln[T(t + 1) - T(t)]$ versus $t$ yields:
+
+$$
+\ln[T(t + \tau) - T(t)] = 1.0333 - 0.1378t
+$$
+
+with $R^2 = 0.9209$ indicating a good fit. Thus we obtain $\gamma = 0.1378\ \mathrm{min^{-1}}$, corresponding to the time constant of the thermal system $1/\gamma \approx 7.3$ minutes.
+
+We now plot $T$ versus $\mathrm{e}^{-\gamma t}$ to find $T_f$ as the intercept when $\mathrm{e}^{-\gamma t} = 0$:
+
+$$
+T = T_f - \theta\mathrm{e}^{-\gamma t}
+$$
+
+Computing $\mathrm{e}^{-0.1378n\tau}$, $n = 0, \dots 6$ values yields
+
+$$
+\mathrm{e}^{-\gamma n\tau} \in \{1.00, 0.87, 0.76, 0.66, 0.58, 0.50, 0.44\};
+$$
+
+the corresponding plot is provided below.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.4%', '--fig-max': '272px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p9-sol-fig2.png" alt="Plot of temperature (°C, 25 to 50) versus e^(−γt) (axis from 1.0 down to 0.0): blue points labelled 0min to 6min on a red straight fit line; legend “T = 49.9 - 22.0·e^(-0.1378t), R² = 0.9995” and a green dashed line at T_f ≈ 49.9°C." width="849" height="631" loading="lazy" decoding="async" />
+</figure>
+
+
+Linear regression of $T$ versus $\mathrm{e}^{-\gamma t}$ yields $T_f \approx 49.9^{\circ}C$, as shown in the equation:
+
+$$
+T = 49.9 - 22.0\cdot\mathrm{e}^{-0.1378t}
+$$
+
+with $R^2 = 0.9995$ indicating an excellent fit. At thermal equilibrium, the power dissipated equals the power supplied:
+
+$$
+P = \frac{U^2}{R} = h\cdot A\cdot(T_f - T_0) = H\cdot(T_f - T_0)
+$$
+
+where $h$ is the heat transfer coefficient per unit area, $H$ is the total heat transfer coefficient, $A$ is the plate area, $U$ is the applied voltage, and $R$ is the resistor’s resistance. Using $U = 15\ \mathrm{V}$, $R = 220\ \Omega$, $A = 40\times 40\ \mathrm{mm^2} = 1.6\times 10^{-3}\ \mathrm{m^2}$, and $T_0 = 22.9\ ^{\circ}\mathrm{C}$ we obtain
+
+$$
+h = \frac{U^2/R}{A\cdot(T_f - T_0)} \approx 23.6\ \mathrm{W/(m^2\cdot K)}.
+$$
+
+The total heat transfer coefficient $H$ is found as
+
+$$
+H = h\cdot A = 37.8\ \mathrm{mW\,K^{-1}}.
+$$
+
+**Grading:** (preliminary)
+
+- Coming up with the idea of analysing exponential decay of temperature change with a graph and deriving the heat transfer coefficient from that **0.5 pts**
+- Correct equation $T(t) = T_f - \theta\mathrm{e}^{-\gamma t}$. **0.3 pts**
+- Plotting the data to a graph to determine the $\gamma$ and to confirm the validity of collected data **0.3 pts**
+- At least 5 datapoints used. **0.1 pts**
+- Measure for at least 5 minutes. **0.1 pts**
+- Calculating the slope and retrieving $\gamma$ from it. **0.2 pts**
+- Finding the maximal temperature for used voltage used, using plot of $T$ vs $e^{-\gamma t}$. **0.5 pts**
+- Evaluating $P = \frac{U^2}{R} = h\cdot A\cdot(T_f - T_0) = H\cdot(T_f - T_0)$ without errors **0.5 pts**
+- Getting heat Transfer coefficient close to expected value **0.5 pts**
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-iii">
+
+### iii) (2 т.)
+
+*Solution 1* To determine the heat capacity, we can use the heating curve from Part 2. During heating, the energy balance is written as
+
+$$
+P_{\mathrm{in}} - P_{\mathrm{out}} \equiv \Delta P = C\frac{\mathrm{d}T}{\mathrm{d}t},
+$$
+
+where $P_{\mathrm{in}} = U^2/R$ is the input power, $P_{\mathrm{out}} = H(T - T_0)$ (where $T_0 = T_{\mathrm{room}}$ is the room temperature) is the power lost to the environment, $C$ is the heat capacity, and $\frac{\mathrm{d}T}{\mathrm{d}t}$ is the rate of temperature change. Using our exponential model $T = T_f - \theta\mathrm{e}^{-\gamma t}$, we find:
+
+$$
+\frac{\mathrm{d}T}{\mathrm{d}t} = \theta\gamma\mathrm{e}^{-\gamma t} = \gamma(T_f - T)
+$$
+
+Substituting into the energy balance:
+
+$$
+P_{\mathrm{in}} - H(T - T_0) = C\gamma(T_f - T).
+$$
+
+This allows us to calculate the heat capacity $C$ as
+
+$$
+C = \frac{P_{\mathrm{in}} - H(T - T_0)}{\gamma(T_f - T)}.
+$$
+
+Now we need to use the values from Parts 1 and 2:
+
+$$
+\begin{gathered} U = 15\ \mathrm{V},\ R = 220\ \Omega,\ H = 3.78\times 10^{-2}\ \mathrm{W\,K^{-1}} \\ T_0 = 22.9\ ^{\circ}\mathrm{C},\ T_f = 49.9\ ^{\circ}\mathrm{C},\ \gamma = 0.1378\ \mathrm{min^{-1}}. \end{gathered}
+$$
+
+The input power is evaluated as
+
+$$
+P_{\mathrm{in}} = \frac{U^2}{R} = \frac{15^2}{220} = 1.023\ \mathrm{W}.
+$$
+
+For each time point, we can calculate:
+
+| $t$ min | $T$ °C | $P_{\mathrm{out}}$ W | $\Delta P$ W | $\frac{\mathrm{d}T}{\mathrm{d}t}$ K/ min | $C$ $\mathrm{J\,K^{-1}}$ |
+|---|---|---|---|---|---|
+| 0 | 28.0 | 0.193 | 0.830 | 3.018 | 16.5 |
+| 1 | 30.8 | 0.299 | 0.724 | 2.629 | 16.5 |
+| 2 | 33.2 | 0.389 | 0.633 | 2.291 | 16.6 |
+| 3 | 35.2 | 0.465 | 0.558 | 1.996 | 16.7 |
+| 4 | 37.3 | 0.544 | 0.478 | 1.739 | 16.5 |
+| 5 | 39.0 | 0.609 | 0.414 | 1.515 | 16.4 |
+| 6 | 40.3 | 0.658 | 0.365 | 1.320 | 16.6 |
+
+The heat capacity values are remarkably consistent across different time points, which validates our model. Taking the average of the values in the tableˊyields
+
+$$
+C \approx 16.5\ \mathrm{J/K}.
+$$
+
+This value represents the heat capacity of the aluminium plate. For reference, the specific heat capacity of aluminium is approximately $c_{\mathrm{Al}} = 900\ \mathrm{J\,kg^{-1}\,K^{-1}}$, which means the plate has a mass of about $C/c_{\mathrm{Al}} = 18.3\ \mathrm{g}$. This is a reasonable value for a $40\ \mathrm{mm}\times 40\ \mathrm{mm}$ aluminium plate with a thickness of approximately $2\ \mathrm{mm}$.
+
+*Solution 2.* The calculated heat capacity represents the effective heat capacity of the system as observed in the experiment. This includes the aluminium plate and potentially some contribution from the heating resistor and its mounting. Therefore, a little better approach is to make an additional series of measurements to obtain a cooling temperature curve (similar to those what will be made in the next section), because then we could have let the plate cool on a flat part of the foam plastic, excluding thereby the contribution of the resistor’s thermal capacity. If part ii was solved using the solution 1, this is the only viable way.
+
+So, we heat the plate — the easier way is by immersing into hot water — and measure the time and temperature as it cools down. As a result, we obtain data about $T(t)$; the energy balance equation is
+
+$$
+P_{\mathrm{out}} = H[T(t) - T_0] = -C\frac{\mathrm{d}T}{\mathrm{d}t} = \gamma C[T(t) - T_0],
+$$
+
+hence
+
+$$
+C = H/\gamma.
+$$
+
+Similarly to the solution 1, we have used the fact that the plate cools exponentially in time and hence, $\frac{\mathrm{d}T}{\mathrm{d}t} = \gamma[T(t) - T_0]$. The decay rate can be found by plotting $\ln[T(t) - T_0]$ against $t$ and determining the slope of the linear fit line.
+
+- The idea of using the $T(t)$ dependence, either for cooling or heating with the resistor **0.2 pts**
+- Measuring and tabulating at least 6 data points **0.3 pts** (subtract 0.1 pts for each missing)
+- Data points cover at least 6 minutes **0.3 pts** (subtract 0.1 pts for each missing minute)
+- The idea of using log-linear plot for data linearization **0.2 pts**
+- Correct data plotting **0.2 pts**
+- Finding the slope of a fit line **0.2 pts**
+- The idea of substituting time derivative with multiplication by $\gamma$ **0.2 pts** (alternative approach of calculating derivative by finite difference ratio $\Delta T/\delta t$ is significantly less accurate).
+- Deriving a correct formula for $C$ **0.2 pts**
+- Obtaining a reasonable numerical value for $C$, i.e. from $13\ \mathrm{J\,K^{-1}}$ to 20 — **0.2 pts** (else from 10 to 25: 0.1 pts).
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-iv">
+
+### iv) (4 т.)
+
+For this part, cooling experiments were conducted with the aluminium plate covered by different numbers of silicone rubber layers. The plate was heated in water and then allowed to cool, with temperature recorded as a function of time.
+
+| $t$ (s) | 0 | 60 | 120 | 180 | 240 | 300 |
+|---|---|---|---|---|---|---|
+| $T_{1\ \mathrm{layer}}$ (°C) | 65.2 | 60.2 | 55.5 | 51.3 | 47.6 | 44.6 |
+| $T_{2\ \mathrm{layers}}$ (°C) | \* | 35.3 | 34.0 | 32.9 | 31.9 | 30.8 |
+| $T_{3\ \mathrm{layers}}$ (°C) | 45.4 | 43.1 | 41.6 | 40.0 | 38.9 | 37.3 |
+
+\*The data point at $t = 0$ for 2 layers is excluded as it did not represent complete thermal equilibrium across the silicone layers. For a cooling process with constant ambient temperature, the temperature follows an exponential decay:
+
+$$
+T(t) = T_0 - (T_{\mathrm{initial}} - T_0)e^{-\gamma t}
+$$
+
+The time constant $\gamma$ is related to the thermal resistance $\mathcal{R}$ and heat capacity $C$ by
+
+$$
+\gamma = \frac{1}{\mathcal{R}C}.
+$$
+
+Taking the natural logarithm of the temperature difference from ambient yields
+
+$$
+\ln[T(t) - T_0] = -\gamma t + \mathrm{const}
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.8%', '--fig-max': '274px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p9-sol-fig3.png" alt="Plot of ln(T−T₀) (2.00 to 3.75) versus time (s, 0 to 300) for three cooling series with linear fits: 1 layer (blue, γ = 0.00224 s⁻¹), 2 layers (red, γ = 0.00185 s⁻¹, dashed extrapolation to t = 0), 3 layers (green, γ = 0.00144 s⁻¹)." width="856" height="539" loading="lazy" decoding="async" />
+</figure>
+
+
+Using linear regression on the logarithmic cooling curves, we obtain:
+
+$$
+\begin{aligned} \gamma_{1\ \mathrm{layer}} &= 2.244\times 10^{-3}\ \mathrm{s^{-1}} \\ \gamma_{2\ \mathrm{layers}} &= 1.852\times 10^{-3}\ \mathrm{s^{-1}} \\ \gamma_{3\ \mathrm{layers}} &= 1.438\times 10^{-3}\ \mathrm{s^{-1}} \end{aligned}
+$$
+
+Using our previously determined heat capacity $C = 16.5$ J/K, we calculate the total thermal resistance for each case:
+
+$$
+\begin{aligned} R_{1\ \mathrm{layer}} &= \frac{1}{\gamma_{1\ \mathrm{layer}}\cdot C} = 27.0\ \mathrm{K/W} \\ R_{2\ \mathrm{layers}} &= \frac{1}{\gamma_{2\ \mathrm{layers}}\cdot C} = 32.7\ \mathrm{K/W} \\ R_{3\ \mathrm{layers}} &= \frac{1}{\gamma_{3\ \mathrm{layers}}\cdot C} = 42.1\ \mathrm{K/W} \end{aligned}
+$$
+
+The total thermal resistance includes the resistance of the silicone layers and the thermal resistance of convection and radiation. Each additional layer adds a resistance $\Delta R = \delta/(\kappa A)$, where $\delta$ is the layer thickness, $\kappa$ is the thermal conductivity, and $A$ is the area. The incremental resistances between layers are:
+
+$$
+\begin{aligned} \Delta R_{12} &= R_{2\ \mathrm{layers}} - R_{1\ \mathrm{layer}} = 5.7\ \mathrm{K\,W^{-1}} \\ \Delta R_{23} &= R_{3\ \mathrm{layers}} - R_{2\ \mathrm{layers}} = 9.4\ \mathrm{K\,W^{-1}} \end{aligned}
+$$
+
+Taking the average incremental resistance per layer:
+
+$$
+\overline{\Delta R} = \frac{\Delta R_{12} + \Delta R_{23}}{2} = 7.6\ \mathrm{K\,W^{-1}}
+$$
+
+With the silicone rubber pad thickness $\delta = 0.8$ mm $= 8\times 10^{-4}$ m and area $A = 40\times 40$ mm$^2 = 1.6\times 10^{-3}$ m$^2$, we can calculate the thermal conductivity:
+
+$$
+\kappa = \frac{\delta}{\overline{\Delta R}\cdot A} = 0.066\ \mathrm{W/(m\cdot K)}
+$$
+
+The precision of this experiment can be increased by longer runs and adding additional silicon layers.
+
+- The idea of letting the plate to cool down while covering it with a different number of silicon sheets and measuring the $T(t)$ dependencies, **0.3 pts**
+- For the quantity of recorded data: within each data series (i.e. a series with a different number of silicon sheets), at least 6 data points: 0.3 pts (subtract 0.1 for each missing), within up to three different data series — in total up to $3\times 0.3$pts, i.e. **0.9 pts**
+- Data points in each data series cover at least 6 minutes: 0.2 pts (0.1 pts if less than 6 but more than 4 minutes) — in total up to **0.6 pts**
+- The idea of using log-linear plot for data linearization **0.2 pts**
+- Correctly plotting the data: 0.1 pts each, up to **0.3 pts**
+- Calculating $\gamma$ for each of the series, 0.1 pts for each (up to for three data series), in total up to **0.3 pts**
+- Correctly expressing the heat conductivity in terms of a difference of the $\gamma$ values **0.7 pts**
+- Finding conductivity on the basis of all the $\gamma$ values (either by pair-wise calculation, or plotting and finding the fit line slope **0.4 pts** (divide by two if only one pair of $\gamma$ values was used)
+- Obtained value of $\kappa$ within a reasonable range, i.e from 0.05 to $0.1\ \mathrm{W\,m^{-1}\,K^{-1}}$: **0.3 pts** (else if from 0.04 to 0.12: 0.2 pts; else from 0.02 to 0.14: 0.1 pts).
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2025_problems_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2025/NBPhO_2025_problems_v1.0.pdf#page=2)
+· официални решения: [NBPhO_2025_solutions_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2025/NBPhO_2025_solutions_v1.0.pdf#page=8)

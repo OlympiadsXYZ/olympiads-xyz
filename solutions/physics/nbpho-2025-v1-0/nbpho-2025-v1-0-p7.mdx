@@ -1,0 +1,98 @@
+---
+id: nbpho-2025-v1-0-p7
+source: 'NBPhO 2025, Теория и експеримент'
+title: 'Задача 7. Charged Rod'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2025/nbpho-2025-v1-0.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-29T23:49:33.713Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2025 · 6 т.*
+
+## Условие
+
+— *Jaan Kalda.* A rod of mass $m$ carries a charge $q$; both the charge and the mass are homogeneously distributed over its entire length $l$. The system is in homogeneous magnetic field of strength $B$, parallel to the $z$-axis whereas the rod is in the $x$–$y$-plane. Neglect any forces except for the Lorentz force. One end of the rod is painted red, and the other — blue.
+
+**i)** Consider the case when the rod rotates around its centre of mass. What should be the angular speed $\omega$ for the mechanical tension force at the centre of the rod to be zero? **[2 т.]**
+
+**ii)** Consider now a case when initially the blue end of the rod is at the origin ($x = y = 0$), and the red end at $x = l$. The blue end’s initial speed is zero while the red end’s speed is $v$, parallel to the $y$-axis. It turns out that after a certain time $t$, the red end passes through the origin. Find the smallest possible value for $t$ and express the corresponding value of $v$ in terms of $m$, $q$ and $l$. **[4 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+— *Solution by Jaan Kalda, grading schemes by....*
+
+<ProblemSection id="solution-solution-i">
+
+### i) (2 т.)
+
+Notice that all particles with the same charge-to-mass ratio orbit in a homogeneous magnetic field $B$ with the same frequency $\omega_B = \frac{Bq}{m}$; the orbit is a circle of radius $r = \frac{v}{\omega_B}$. Indeed, the Lorentz force must provide the centripetal acceleration, hence $Bqv = mv\omega_B \Rightarrow \omega_B = \frac{Bq}{m}$.
+
+Since the mass-to-charge ratio is the same for all the fictitious pieces of the rod, if the rod rotates with angular speed $\omega = \frac{Bq}{m}$, then the Lorentz force provides exactly the needed acceleration to all these pieces, and the tension force is zero everywhere.
+
+On the other hand, if the angular speed were smaller or larger, we would have either $Bqv < mv\omega$ or $Bqv > mv\omega$ for all the pieces, resulting in either stretching or compressive tension force at the centre of the rod, respectively. Therefore, the answer is $\omega = \frac{Bq}{m}$.
+
+**Grading:** (preliminary)
+
+- Considers forces on an infinitesimal part of the rod **0.4 pts**
+- Equates, with justification, Lorentz and centrifugal forces $\mathrm{d}qvB = \mathrm{d}m\omega^2r$ **0.4 pts**
+- Uses $\omega = \frac{v}{r}$ **0.4 pts**
+- Uses $\frac{\mathrm{d}q}{\mathrm{d}m} = \frac{q}{m}$ **0.4 pts**
+- Expresses $\omega = \frac{qB}{m}$ **0.4 pts**
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-ii">
+
+### ii) (4 т.)
+
+To begin with, let us notice that if a system of charges with the same charge-to-mass ratio $\alpha = q/m$ moves in a homogeneous magnetic field, the centre of mass will move along a circle with cyclotron frequency $\omega_B$. Indeed, the total Lorentz force acting on the system is
+
+$$
+\begin{aligned} \sum_i q_i\frac{\mathrm{d}\vec r_i}{\mathrm{d}t}\times\vec B &= \alpha\sum_i m_i\frac{\mathrm{d}\vec r_i}{\mathrm{d}t}\times\vec B \\ &= \alpha\frac{\mathrm{d}\vec r_C}{\mathrm{d}t}\times\vec B\sum_i m_i. \end{aligned}
+$$
+
+So, Newton’s second law reads
+
+$$
+\frac{\mathrm{d}^2\vec r_C}{\mathrm{d}t^2}\sum_i m_i = \frac{q}{m}\frac{\mathrm{d}\vec r_C}{\mathrm{d}t}\times\vec B\sum_i m_i.
+$$
+
+The total mass of the system cancels out from this equation, and we can see that the centre of mass $\vec r_C$ moves in the same way as a point charge $q$ with mass $m$.
+
+*Alternatively,* the same can be achieved through integration. From Newton’s second law $m\vec a_C = \int\mathrm{d}q\,\vec v\times\vec B$, where $\vec v$ is the velocity of the charge element $\mathrm{d}q$. But since the mass and charge distributions are homogenous, $\mathrm{d}q = \frac{q}{m}\mathrm{d}m$ and $\vec B$ is constant so it can be taken out from the integral to achieve $m\vec a_C = \frac{q}{m}\left(\int\vec v\,\mathrm{d}m\right)\times\vec B$. But now the integral is just $m\vec v_C$ (can be seen directly or through the definition of centre of mass $\int\frac{\mathrm{d}\vec r}{\mathrm{d}t}\mathrm{d}m = \frac{\mathrm{d}}{\mathrm{d}t}\int\vec r\,\mathrm{d}m = m\vec r_C$. Thus we get $m\vec a_C = q\vec v_C\times\vec B$.
+
+Additionally, the rod can (and will) rotate with a constant speed. The fact that the angular speed must be constant follows from the conservation of kinetic energy of the rod, which is the sum of the kinetic energy of its centre of mass and the rotational energy around the centre of mass. The former is constant, so the latter must be as well.
+
+The centre of mass moves with speed $v/2$ and draws a circle of radius $R = \frac{mv}{2Bq}$ that passes through the point $(\frac{l}{2},0)$ and for which the $x$-axis is a symmetry axis. The red end can reach the origin only when the centre of mass is at a distance $\frac{l}{2}$ from the origin. This can happen either after a full cyclotron period $T = 2\pi/\omega_B$, or at any moment assuming $R = \frac{l}{2}$ and the circle is centred around the origin.
+
+To determine if this can happen earlier than after time $T$, let us assume that $R = \frac{mv}{2Bq} = \frac{l}{2}$. In that case, the angular speed of the rod’s rotation is $\Omega = \frac{v}{l}$, and we get $v = \frac{Bql}{m}$. This means $\Omega = \frac{Bq}{m} = \omega_B$, i. e., the rod’s rotational angular speed is the same as the centre of mass’ angular speed in its orbit, which would cause the blue end to remain at the origin.
+
+Next, we examine if the red end can reach the origin after time $T$. For this to happen, the condition is that $\Omega T = (2\pi n + \pi)$, where $n$ is an integer. Since $\Omega = v/l$ and we need to minimize $v$, we take $n = 0$ to obtain $v = \pi l/T = \frac{lBq}{2m}$.
+
+**Grading:** (preliminary)
+
+- Deduces, with justification, that the net force on the rod $\vec F = q\,\vec v_C\times\vec B$ **0.5 pts**
+- Uses $v_C = v/2$ **0.2 pts**
+- Justifies that the COM moves on a circular path **0.3 pts**
+- Expresses the radius of the path traced by the COM $R = \frac{mv}{2qB}$ **0.3 pts**
+- Concludes that the angular velocity of the COM is $\omega = \frac{qB}{m}$ **0.2 pts**
+- Expresses the angular velocity of the rotation around the COM $\Omega = \frac{v}{l}$ **0.2 pts**
+- Justifies that $\Omega$ is conserved **0.3 pts**
+- Argues that $t < \frac{2\pi}{\omega}$ is possible only if $R = l/2$ **0.5 pts**
+- Justifies that in this case, the red end will never end up at the origin **0.5 pts**
+- Justifies that $\Omega t = \pi + 2\pi k$ with $k \in \mathbb{Z}_{\geqslant 0}$ **0.4 pts**
+- Expresses $v = \frac{qBl}{m}(\frac{1}{2} + k)$ **0.6 pts**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2025_problems_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2025/NBPhO_2025_problems_v1.0.pdf#page=2)
+· официални решения: [NBPhO_2025_solutions_v1.0.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2025/NBPhO_2025_solutions_v1.0.pdf#page=6)

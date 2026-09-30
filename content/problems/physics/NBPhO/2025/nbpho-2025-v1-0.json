@@ -1,0 +1,958 @@
+{
+ "paper": {
+  "id": "nbpho-2025-v1-0",
+  "subject": "physics",
+  "competition": "NBPhO",
+  "year": 2025,
+  "round": null,
+  "roundType": "mixed",
+  "grade": null,
+  "lang": "en",
+  "title": "Nordic-Baltic Physics Olympiad 2025",
+  "totalPoints": null,
+  "timeLimitMin": null,
+  "source": {
+   "archiveKey": "Физика/Състезания/NBPhO/2025/NBPhO_2025_problems_v1.0.pdf",
+   "pages": [
+    1,
+    2
+   ]
+  },
+  "solutionSource": {
+   "archiveKey": "Физика/Състезания/NBPhO/2025/NBPhO_2025_solutions_v1.0.pdf",
+   "pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "status": "review",
+  "transcription": {
+   "method": "vision-pages",
+   "provider": "agent",
+   "model": "gpt-6-astra",
+   "promptVersion": "v2",
+   "requestId": "/root/production_astra",
+   "at": "2026-09-29",
+   "renderDpi": 160,
+   "figureDpi": 300,
+   "sourceSha256": {
+    "problems": "7bfabeda6bfa4d228ed457fe6343a5dc10470b92d75c940f38c7b3533dd9191e",
+    "solutions": "db40e4c393d588c47c62d10ec2557843d840dd51c28b0ad8dc7b4ef5da45cd6b"
+   },
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
+   "verifiedAt": "2026-09-29",
+   "notes": "Full original questions and official solutions read by Astra, including every alternative derivation, measurement table and preliminary grading rule. Nine independent problems retained (4 and 9 experimental); roman subquestions remain parts. Native solution sections restore source structure and inline figures. Prior draft reused only after direct reading and comparison; synthesized answers removed and its four wording normalizations reverted to printed originals. Printed mathematical inconsistencies and explicit official typo discussion retained. Results file checked separately, contains only scores."
+  }
+ },
+ "problems": [
+  {
+   "id": "nbpho-2025-v1-0-p1",
+   "number": 1,
+   "title": "Flying Dumbbell",
+   "points": 10,
+   "problemType": "theory",
+   "statement": "— *Jaan Kalda.*\n\nIn this problem, we shall study the dynamics of a dumbbell consisting of two steel balls, each with radius $r = 1\\ \\mathrm{cm}$, connected by a steel rod with diameter $d = 1\\ \\mathrm{mm}$ and length $l = 10\\ \\mathrm{cm}$, in the absence of gravity. Unless instructed otherwise, assume steel is perfectly elastic. You may simplify your calculations by assuming $l \\gg r$.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "i)",
+     "points": 2,
+     "statement": "Given that the Young’s modulus of steel is $Y = 2\\times 10^{11}\\ \\mathrm{Pa}$ and the density of steel is $\\rho = 7800\\ \\mathrm{kg\\,m^{-3}}$, determine the period $T$ of free longitudinal oscillations of the dumbbell. (Do not consider oscillations with standing waves in the rod where the balls remain almost at rest.) Young’s modulus is the ratio of a material’s stress (force per unit area) to its strain (relative deformation)."
+    },
+    {
+     "label": "ii)",
+     "points": 2,
+     "statement": "Estimate the impact time $\\tau$ when a steel ball bounces off a steel wall."
+    },
+    {
+     "label": "iii)",
+     "points": 2,
+     "statement": "The dumbbell moves toward a steel wall with velocity $\\vec v = -v\\hat x$, with its axis perpendicular to the wall, and bounces back. Here, $\\hat x$ denotes a unit vector along the axis perpendicular to the wall. Sketch how the $x$-component $v_x$ of the front ball’s velocity (the ball that collides with the wall) depends on time."
+    },
+    {
+     "label": "iv)",
+     "points": 2,
+     "statement": "Now, the dumbbell moves toward a steel wall with velocity $\\vec v = -v\\hat x$ as before, but its axis forms an angle $\\alpha$ with the $x$-axis. The interaction of the front ball with the wall depends qualitatively on the angle $\\alpha$, with a transition from one type of interaction to another occurring at $\\alpha = \\alpha_0$. Determine the value of $\\alpha_0$. *Hint:* $\\min\\left(\\frac{\\sin x}{x}\\right) \\approx -0.217$."
+    },
+    {
+     "label": "v)",
+     "points": 2,
+     "statement": "Under the assumptions of the previous task, let $\\alpha > \\alpha_0$. Additionally, assume that while steel is highly elastic, it is not infinitely so: any oscillations excited in the rod will decay by the time the rear ball collides with the wall. Determine the speed with which the centre of mass of the dumbbell departs from the wall."
+    }
+   ],
+   "topics": [
+    "mechanics/collisions",
+    "mechanics/oscillations",
+    "mechanics/elasticity"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Solution by Jaan Kalda, grading schemes by Author 2.*",
+    "sections": [
+     {
+      "id": "solution-i",
+      "title": "i)",
+      "points": 2,
+      "statement": "Free oscillations of the dumbbell take place around the centre of mass, i.e. the centre of the rod. Therefore, we need the stiffness of a half of the rod. This stiffness is expressed as $k = Y\\frac{\\pi}{2}d^2/l$. We also need the mass of the ball $m = \\frac{4}{3}\\pi r^3\\rho$. The oscillation angular frequency $\\omega = \\sqrt{k/m}$, hence the period\n\n$$T = 2\\pi\\sqrt{\\frac{m}{k}} = 4\\pi\\frac{r}{d}\\sqrt{\\frac{2\\rho rl}{3Y}} \\approx 0.64\\ \\mathrm{ms}.$$"
+     },
+     {
+      "id": "solution-ii",
+      "title": "ii)",
+      "points": 2,
+      "statement": "The easiest way to estimate is to notice that a compressed ball is essentially a compression wave in steel, so the period is on the order of a wave with wave length $2r$. Knowing that the sound speed $c_s = \\sqrt{Y/\\rho}$, we obtain $\\tau \\sim 2r/c_s = 2r\\sqrt{\\rho/Y} = 4\\ \\mathrm{\\mu s}$. Alternatively, one can approximate the ball as a spring of stiffness $\\kappa \\sim Yr$ and mass $\\sim m$, and obtain a similar result with $\\tau \\sim 2\\pi\\sqrt{m/\\kappa}$."
+     },
+     {
+      "id": "solution-iii",
+      "title": "iii)",
+      "points": 2,
+      "statement": "When the dumbbell with axis perpendicular to the wall approaches with velocity $\\vec v = -v\\hat x$, the front ball impacts the wall first. Since the impact time ($\\tau \\approx 4\\ \\mu\\mathrm{s}$) is much shorter than the oscillation period ($T \\approx 0.64\\ \\mathrm{ms}$), the front ball’s velocity changes almost instantaneously from $-v$ to $+v$, while the rear ball continues with velocity $-v$. Since the balls have equal masses, the centre of mass remains stationary. The dumbbell then oscillates about this stationary centre of mass, with the front ball’s velocity following a half-period sinusoidal oscillation, changing from $+v$ to $-v$ over a time interval of $T/2$. When the velocity reaches $-v$, the front ball impacts the wall again, and its velocity changes instantaneously from $-v$ to $+v$. After this second impact, both balls move away from the wall, with the same velocity $+v$, so the dumbbell as a whole departs with velocity $+v$.\n\n[[figure:p1-sol-fig1]]",
+      "figures": [
+       {
+        "id": "p1-sol-fig1",
+        "alt": "Sketch of the front ball’s velocity v versus time t (task iii): v is constant at −v, jumps up to +v, decreases along a half sine wave from +v to −v, then jumps back to +v and stays constant. Axes labelled v and t.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p1-sol-fig1.png",
+        "width": 807,
+        "height": 485,
+        "source": {
+         "page": 1,
+         "pdfRect": [
+          220.59,
+          11.93,
+          414.23,
+          127.98
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "solution-iv",
+      "title": "iv)",
+      "points": 2,
+      "statement": "During the impact, the front ball velocity becomes opposite, so the centre of mass stops (as the rear ball moves still with its old speed). After the collision, the front ball obtains a component $v\\cos\\alpha$ along its axis, and $v\\sin\\alpha$ perpendicular to it. The former initiates oscillations of period $T$, and the latter — a rotation at angular speed\n\n$$\\Omega = v\\sin\\alpha/(l/2) = 2v\\sin\\alpha/l$$\n\n. The ball will hit the wall twice if the rotation is slow, and only once if the rotation is fast enough; let us study this in more details. By time $t \\ll 1/\\Omega$, the rotation angle is $\\Omega t$, and the distance of the farthest point of the ball from the rotation centre is $l/2 - a\\sin(\\omega t)$, where the oscillation amplitude can be obtained from the energy conservation law, $a = v\\cos\\alpha\\sqrt{m/k} = v\\cos\\alpha/\\omega$. So, the distance from the wall of the closest point of the ball is\n\n$$\\begin{aligned} &\\frac{l}{2}\\cos\\alpha - \\left[\\frac{l}{2} - a\\sin(\\omega t)\\right]\\cos(\\alpha + \\Omega t) \\approx \\\\ &\\approx \\frac{l}{2}\\Omega t\\sin\\alpha + a\\cos\\alpha\\sin\\omega t = \\\\ &= vt\\sin^2\\alpha + \\frac{v}{\\omega}\\cos^2\\alpha\\sin\\omega t = \\\\ &= \\frac{v}{\\omega}s\\sin^2\\alpha + \\frac{v}{\\omega}\\cos^2\\alpha\\sin s, \\quad s \\equiv \\omega t. \\end{aligned}$$\n\nIf this expression becomes negative, there will be a second collision. So, the cross-over value of $\\alpha = \\alpha_0$ is such that the expression becomes never negative, hence\n\n$$\\tan^2\\alpha_0 = -\\min\\frac{\\sin s}{s} \\approx 0.217,$$\n\nhence\n\n$$\\alpha_0 = \\arctan\\sqrt{0.217} \\approx 25^{\\circ}.$$\n\nIf we divide this expression by corresponding"
+     },
+     {
+      "id": "solution-v",
+      "title": "v)",
+      "points": 2,
+      "statement": "Using the results of the previous task, the angular speed after the initial collision is $\\Omega = 2v\\sin\\alpha/l$. The dumbbell rotates around its centre of mass, longitudinal oscillations decay by the time of the second collision. It rotates until the other ball will hit the wall. At the moment of the second collision, the velocity of the ball is $v\\sin\\alpha$, and its projection to the surface normal of the wall is $-v\\sin^2\\alpha$. During the second collision, that components reverses sign, and as a result, both balls have now $x$-directional velocity component $v\\sin^2\\alpha$. Hence, this is also the speed of the centre of mass —- the speed with which the dumbbell departs from the wall."
+     },
+     {
+      "id": "grading",
+      "title": "Grading: (preliminary)",
+      "statement": "- i)\n- explaining that oscillation is symmetric around centre of the rod (invoking Newton’s third law suffices as well) **0.5 pts**\n- expressing stiffness of half-rod **0.5 pts**\n- minor mistake made in stiffness expression **−0.2 pts**\n- mass of the ball $m = \\frac{4}{3}\\pi r^3\\rho$ **0.2 pts**\n- Realising that the system can be treated as a spring **0.3 pts**\n- oscillation period $T = 2\\pi\\sqrt{\\frac{m}{k}}$ **0.3 pts**\n- final answer **0.2 pts**\n- ii)\n- Solution 1:\n- Realise compressed ball is essentially a compression wave **0.5 pts**\n- Formula for speed of sound **0.5 pts**\n- Relation between time, radius and speed **0.5 pts**\n- Final answer **0.5 pts**\n- Solution 2:\n- Realise the ball can be thought of as a spring **0.5 pts**\n- Estimate spring constant **0.5 pts**\n- Relation between spring constant and time or frequency **0.5 pts**\n- Final answer **0.5 pts**\n- iii)\n- 2 hits **0.4 pts**\n- velocity of front ball flips almost instantaneously **0.4 pts**\n- centre of mass stays at rest **0.4 pts**\n- sinusoidal movement of front ball **0.4 pts**\n- constant velocity $-v$ of front ball after second hit **0.4 pts**\n- iv)\n- Realise it behaves as in previous question (balls at velocity -v and v, CM at rest), but it now also rotates and oscillates around centre of mass **0.5 pts**\n- Expression for the angular speed of rotation **0.3 pts**\n- Expression of the amplitude of oscillations **0.2 pts**\n- Realise the difference in interaction is that if the first ball bounces once or twice **0.2 pts**\n- Formula for the distance of the front ball to the wall over time **0.3 pts**\n- Realise that if the distance is over 0 for all $t > 0$ the first ball does not hit the wall twice **0.2 pts**\n- Finding the critical angle given this condition **0.3 pts**\n- v)\n- Realise that the dumbbell rotates around its centre of mass (after first collision) **0.2 pts**\n- Realise that the longitudinal oscillations have decayed by the time of the second collision **0.4 pts**\n- Expression for velocity of ball $v\\sin\\alpha$ **0.5 pts**\n- Expression for the component of velocity of ball in direction of surface normal $v\\sin^2\\alpha$ **0.5 pts**\n- Realise the component of velocity of second ball in direction of surface normal is also $v\\sin^2\\alpha$ **0.2 pts**\n- Realise the speed of the centre of mass $v\\sin^2\\alpha$ **0.2 pts**"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2025-v1-0-p2",
+   "number": 2,
+   "title": "Evaporation",
+   "points": 7,
+   "problemType": "theory",
+   "statement": "— *Jaan Kalda.*\n\nFor the subsequent tasks, the graph shows how the density of saturated water vapour in $\\mathrm{g\\,m^{-3}}$ depends on the temperature in $^{\\circ}\\mathrm{C}$.\n\n[[figure:p2-fig1]]\n\nYou may also use the following characteristics of water. Specific heat capacity $c = 4200\\ \\mathrm{J\\,kg^{-1}\\,K^{-1}}$; latent heat of vaporization $L = 2260\\ \\mathrm{kJ\\,kg^{-1}}$; density $\\rho = 1000\\ \\mathrm{kg\\,m^{-3}}$; molar mass of water $\\mu = 18\\ \\mathrm{g\\,mol^{-1}}$. You may also assume water vapour to behave as an ideal gas. The universal gas constant is $R = 8.31\\ \\mathrm{J\\,mol^{-1}\\,K^{-1}}$.",
+   "figures": [
+    {
+     "id": "p2-fig1",
+     "alt": "Graph of the density ρ of saturated water vapour (vertical axis, g/m³, 0 to 800) versus temperature T (horizontal axis, °C, 40 to 105) on fine millimetre grid; the curve rises steeply from about 50 g/m³ at 40 °C to about 800 g/m³ near 105 °C.",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p2-fig1-v2.png",
+     "width": 836,
+     "height": 524,
+     "source": {
+      "page": 1,
+      "pdfRect": [
+       218.07,
+       35.1,
+       418.41,
+       160.74
+      ],
+      "dpi": 300
+     }
+    }
+   ],
+   "parts": [
+    {
+     "label": "i)",
+     "points": 2,
+     "statement": "A cylinder contains a certain amount of water at temperature $T_0 = 90\\ ^{\\circ}\\mathrm{C}$, see the figure. The cross-sectional area of the piston is $S = 1\\ \\mathrm{dm^2}$. What is the minimum pulling force required to move the piston? The pressure of the surrounding air is $p_0 = 100\\ \\mathrm{kPa}$.\n\n[[figure:p2-fig2]]",
+     "figures": [
+      {
+       "id": "p2-fig2",
+       "alt": "Horizontal cylinder: water (labelled H20) at the left end, closed by a piston; to the right of the piston the cylinder is open to air, labelled 1 atm.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p2-fig2-v2.png",
+       "width": 397,
+       "height": 130,
+       "source": {
+        "page": 1,
+        "pdfRect": [
+         267.7,
+         332.14,
+         362.83,
+         363.11
+        ],
+        "dpi": 300
+       }
+      }
+     ]
+    },
+    {
+     "label": "ii)",
+     "points": 2,
+     "statement": "If the piston is pulled so that it shifts by $a = 3\\ \\mathrm{dm}$, the water cools to a temperature of $T_1 = 89\\ ^{\\circ}\\mathrm{C}$; what is the mass of the water under the piston?",
+     "statementAfter": "Water evaporation has a cooling effect the intensity of which depends on the relative humidity and air convection intensity. It appears, however, that once a dynamical thermal equilibrium is reached, the equilibrium temperature of a wet surface depends only on the relative humidity and the temperature of air and does not depend on the convection speed (as long as the convection is not too weak). This is so because the two competing processes determining the equilibrium state both depend on the thickness of the laminar (non-turbulent) surface layer exactly in the same way. In what follows we shall use the following assumptions. (a) Atop a wet surface (such as a sweating bare skin), there is a layer with a laminar flow of a certain thickness $d$. (b) Atop the laminar layer, the surrounding turbulent flow keeps a constant temperature $T$ and relative humidity $r$, both equal to the respective values in the bulk of the surrounding air. (c) Heat flux from beneath the wet surface (e.g. through the skin) can be neglected. (d) The heat conductivity of air $\\kappa = 30\\ \\mathrm{mW\\,m^{-1}\\,K^{-1}}$ at $T = 70\\ ^{\\circ}\\mathrm{C}$ (neglect the temperature dependence), and the diffusivity of water molecules in air $D = 26\\ \\mathrm{mm^2\\,s^{-1}}$. Neglect the dependence of $D$ on the temperature. Note that the particle flux (net number of molecules passing a cross-section in $y$–$z$-plane per second and per cross-sectional area) can be found as $J = D\\frac{\\mathrm{d}n}{\\mathrm{d}x}$, where $n$ denotes the number density (number of molecules per volume)."
+    },
+    {
+     "label": "iii)",
+     "points": 3,
+     "statement": "Determine the temperature of sweating human skin in a sauna if the air temperature $T = 110\\ ^{\\circ}\\mathrm{C}$ and $r = 3\\%$."
+    }
+   ],
+   "topics": [
+    "thermodynamics/phase-transitions",
+    "thermodynamics/heat-transfer"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Solution by Jaan Kalda, grading schemes by Mattias Bjerklöv, Marko Tsengov, Eppu Leinonen.*",
+    "sections": [
+     {
+      "id": "solution-i",
+      "title": "i)",
+      "points": 2,
+      "statement": "Water is in a good approximation incompressible; hence, when the piston starts moving, the growing volume must be filled by gas which can be only the water vapours. Thus, the water starts boiling: these vapours must be in equilibrium with water, hence the vapour pressure must be equal to the pressure inside the piston. We can read from the graph that at $T_0$, the vapour density is $\\rho = 420\\ \\mathrm{g\\,m^{-3}}$; this corresponds to the pressure $p_1 = \\rho RT/\\mu = 70\\ \\mathrm{kPa}$. With atmospheric pressure $p_0 = 100\\ \\mathrm{kPa}$, the force needed to pull the piston is $S(p_0 - p_1) = 300\\ \\mathrm{N}$.\n\n- Realize that the pressure inside the the cylinder equals the saturated vapour pressure of water at temperature $T_0$. **0.8 pts**\n- Read the density $\\rho$ from the graph, in the range $[400, 440]\\mathrm{gm^{-3}}$. **0.2 pts**\n- Use the ideal gas law to find an expression for the pressure $p_1$ at temperature $T_0$. **0.4 pts**\n- Correct expression for the force: $S(p_0 - p_1)$. **0.4 pts**\n- Correct numerical answer. **0.2 pts**"
+     },
+     {
+      "id": "solution-ii",
+      "title": "ii)",
+      "points": 2,
+      "statement": "When the piston is pulled by displacement $a$, creating new volume $V_{\\mathrm{new}} = S\\times a$, the water partially evaporates to fill this volume with vapour and the remaining liquid water cools from temperature $T_0$ to $T_1$. The mass of vapour $m_v$ needed to fill the new volume can be calculated using the vapour density $\\rho_1 = 405\\ \\mathrm{g\\,m^{-3}}$ as $m_v = Sa\\rho_1$. For the heat balance, the energy needed for evaporation must come from the cooling of the remaining liquid water:\n\n$$m_vL = (m - m_v)\\cdot c\\cdot(T_0 - T_1); \\qquad (1)$$\n\nhere we have neglected the dependence of $L$ on temperature, and heat capacity of water vapours, because $\\mu L \\gg 4R(T_1 - T_0)$ (but we have not neglected the work done by piston, because $L$ is actually the enthalpy of evaporation already includes $p\\Delta V$). Similarly, since $L \\gg c(T_1 - T_0)$, we can neglect $m_v$ in the right-hand-side and express\n\n$$m = \\frac{m_vL}{c(T_0 - T_1)} = \\frac{\\rho_1 SaL}{c(T_0 - T_1)} = 650\\ \\mathrm{g}. \\qquad (2)$$\n\n- Read the vapour density $\\rho_1$ from the graph ($\\rho_1 \\in [390, 420]\\mathrm{gm^{-3}}$). **0.2 pts**\n- Correct expression for mass of water vapour. **0.3 pts**\n- Correct expression for the latent heat ($m_vL$). **0.3 pts**\n- Correct expression for heat lost by water ($(m - m_v)\\cdot c\\cdot(T_0 - T_1)$.) **0.3 pts**\n- Expression for energy conservation. **0.4 pts**\n- Correct expression for mass of water $m$. **0.3 pts**\n- Correct numerical answer $m \\in [630, 680]\\mathrm{g}$ (with correct dimension). **0.2 pts**"
+     },
+     {
+      "id": "solution-iii",
+      "title": "iii)",
+      "points": 3,
+      "statement": "At the thermal equilibrium, there is as much heat flux to the skin as there is heat loss due to evaporation. The former (per area) equals to $\\kappa\\frac{\\mathrm{d}T}{\\mathrm{d}x}$ and the latter (per area) — to $-LJm$ where $m$ is the mass of one molecule, which we find to be $m = \\mu/N_A$ to get $J\\mu L/N_A$. Note that the minus sign comes from the fact that the particles diffuse from higher density areas to lower density areas. Now from the ideal gas law $n = P/Tk_B = PN_A/TR$ to get $J = -D\\frac{\\mathrm{d}}{\\mathrm{d}x}\\frac{rp}{Tk_B} = -D\\frac{\\mathrm{d}}{\\mathrm{d}x}\\frac{PN_A}{RT}$. Now the pressure of the water vapour is related to $r$ through $P = rp$, where $p$ denotes the saturation pressure of vapour. So,\n\n$$\\kappa\\frac{\\mathrm{d}T}{\\mathrm{d}x} = -\\frac{DL\\mu}{R}\\frac{\\mathrm{d}}{\\mathrm{d}x}\\frac{rp}{T},$$\n\nwhere $p = p(T)$ denotes the water vapour saturation pressure at the local air temperature; hence by integrating over $x$ we obtain\n\n$$\\kappa(T - T_s) = \\frac{DL\\mu}{R}\\left[\\frac{p(T_s)}{T_s} - \\frac{rp(T)}{T}\\right],$$\n\nwhere the index $s$ denotes quantities evaluated at the skin surface. Also, we have used the fact that $r_s = 1$, because at the skin surface, the air is in direct contact with water (due to sweating, skin is wet), so that $pr_s = p(T_s)$. Substituting $\\rho = \\frac{p\\mu}{RT}$ we obtain\n\n$$\\rho(T_s) = r\\rho(T) + \\frac{\\kappa}{DL}(T - T_s).$$\n\nHere we evaluate from the graph $r\\rho(T) = 24.3\\ \\mathrm{g\\,m^{-3}}$ and $\\frac{\\kappa}{DL} = 0.51\\ \\mathrm{g\\,m^{-3}\\,K^{-1}}$. Now we can draw this straight line onto the graph provided to find the intersection point at $T_s = 41.5\\ ^{\\circ}\\mathrm{C}$.\n\n[[figure:p2-sol-fig1]]\n\n**Grading:** (preliminary)\n\nNB! the $\\rho = p\\mu/RT$ substitution can be done earlier so the schemes below represent only the relevant observations which can be done with $\\rho$ already. Also equivalent forms will give points (i.e. if using $k$ and $N_a$ instead of $R$ in the middle steps)\n\n- heat going away from skin (up) = heat going to skin (down) at the equilibrium **0.4 pts**\n- Heat flux down $\\kappa\\frac{\\mathrm{d}T}{\\mathrm{d}x}$ **0.2 pts**\n- Heat flux up magnitude $\\frac{DL\\mu}{R}\\frac{\\mathrm{d}}{\\mathrm{d}x}\\frac{P}{T}$ (partial points available for the equivalents to the steps below) **0.5 pts**\n  - Magnitude of heat flux up is $LJm$ **0.3 pts**\n  - $m = \\mu/N_A$ **0.1 pts**\n  - $n = P/Tk_B$ **0.1 pts**\n- Deducing that the direction of the heat flow is opposite to $\\frac{\\mathrm{d}n}{\\mathrm{d}x}$ (explicitly mentioned or with the existence of the minus sign in the equations) **0.1 pts**\n- $P = rp$ **0.1 pts**\n- $\\kappa(T - T_s) = \\frac{DL\\mu}{R}\\left[\\frac{p(T_s)}{T_s} - \\frac{rp(T)}{T}\\right]$ (i.e. integrating correctly) **0.4 pts**\n  - Or doing a change from $\\mathrm{d} \\to \\Delta$ in the derivatives has to be motivated properly (i.e. for heat conductivity no need for any explicit explanation but for Fick’s law one must state that $J$ is constant (due to the amount of particles is conserved)).\n- $\\rho = p\\mu/RT$ **0.1 pts**\n- Reading $\\rho$ correctly ($\\rho_1 \\in [800,815]\\mathrm{gm^{-3}}$)) **0.2p pts**\n- Graphical method **0.8 pts**\n  - Noticing that $\\rho(T_s) = r\\rho(T) + \\frac{\\kappa}{DL}(T - T_s)$ defines a straight line in $(T, \\rho)$ **0.8 pts**\n  - Any other valid numerical method that is explained is accepted\n- Correct final result $T \\in [36,47]^{\\circ}\\mathrm{C}$ **0.2 pts**\n\nIf working with $\\rho$ earlier on one can show that that the heat flux up magnitude is\n\n*Solution 2 by Eppu Leinonen:* One can also work directly with $\\rho$ through the fact that $n = N/V = MN_A/\\mu V = \\rho N_A/\\mu$. Then the heat flux magnitude will directly become $LJm = LmD\\frac{\\mathrm{d}n}{\\mathrm{d}x} = LmD\\frac{N_A}{\\mu}\\frac{\\mathrm{d}\\rho}{\\mathrm{d}x} = LD\\frac{\\mathrm{d}\\rho_v}{\\mathrm{d}x}$, where $\\rho_v$ is the density of the water vapour. Then with correct signs we get\n\n$$\\kappa\\frac{\\mathrm{d}T}{\\mathrm{d}x} = -LD\\frac{\\mathrm{d}\\rho_v}{\\mathrm{d}x}$$\n\nfrom which by integrating and using $\\rho_v = r\\rho$ we get\n\n$$\\rho(T_s) = r\\rho(T) + \\frac{\\kappa}{DL}(T - T_s)$$\n\nand the solution proceeds the same way as in solution 1.\n\nThe following grading scheme is given to provide exact correspondences to the scheme of solution 1. **Grading:**\n\n- heat going away from skin (up) = heat going to skin (down) at the equilibrium **0.4 pts**\n- Heat flux down $\\kappa\\frac{\\mathrm{d}T}{\\mathrm{d}x}$ **0.2 pts**\n- Heat flux up magnitude $LD\\frac{\\mathrm{d}\\rho_v}{\\mathrm{d}x}$ (partial points available for the equivalents to the steps below) **0.6 pts**\n  - Working with $\\rho$ directly **0.1 pts**\n  - Magnitude of heat flux up is $LJm$ **0.3 pts**\n  - $n = \\rho N_A/\\mu$ **0.1 pts**\n  - $\\mu = mN_A$ **0.1 pts**\n- Deducing that the direction of the heat flow is opposite to $\\frac{\\mathrm{d}n}{\\mathrm{d}x}$ (explicitly mentioned or with the existence of the minus sign in the equations) **0.1 pts**\n- $\\rho_v = r\\rho_v$ **0.1 pts**\n- $\\kappa(T - T_s) = LD(\\rho(T_s) - r\\rho(T))$ (i.e. integrating correctly) **0.4 pts**\n  - Or doing a change from $\\mathrm{d} \\to \\Delta$ in the derivatives has to be motivated properly (i.e. for heat conductivity no need for any explicit explanation but for Fick’s law one must state that $J$ is constant (due to the amount of particles is conserved)).\n- Reading $\\rho$ correctly ($\\rho_1 \\in [800,815]\\mathrm{gm^{-3}}$)) **0.2p pts**\n- Graphical method **0.8 pts**\n  - Noticing that $\\rho(T_s) = r\\rho(T) + \\frac{\\kappa}{DL}(T - T_s)$ defines a straight line in $(T, \\rho)$ **0.8 pts**\n  - Any other valid numerical method that is explained is accepted\n- Correct final result $T \\in [36,47]^{\\circ}\\mathrm{C}$ **0.2 pts**",
+      "figures": [
+       {
+        "id": "p2-sol-fig1",
+        "alt": "The saturated-vapour density graph ρ (g/m³, 0 to 800) versus T (°C, 40 to 105) from the problem, with a straight red line ρ(T_s) = rρ(T) + κ(T − T_s)/(DL) drawn near the bottom, intersecting the curve.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p2-sol-fig1-v2.png",
+        "width": 832,
+        "height": 527,
+        "source": {
+         "page": 2,
+         "pdfRect": [
+          218.07,
+          441.09,
+          417.55,
+          567.32
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2025-v1-0-p3",
+   "number": 3,
+   "title": "Nuclear Reactors",
+   "points": 6,
+   "problemType": "theory",
+   "statement": "— *Topi Lind.* In order to maintain a chain reaction in a modern thermal-neutron nuclear reactor one needs three things: 1. nuclear fuel (e. g. $\\mathrm{U}^{235}$), 2. moderator (e. g. water) and 3. coolant. In most cases the moderator acts as the coolant as well. Neutrons released from a thermal fission of $\\mathrm{U}^{235}$ have a mean kinetic energy of approximately $E_0 = 2\\ \\mathrm{MeV}$. However, neutrons which are that fast are inefficient in triggering fission of $\\mathrm{U}^{235}$: neutrons need to be slowed down to an average kinetic energy of $E_f = 0.025\\ \\mathrm{eV}$. In what follows, justify why non-relativistic approximations can be used unless explicitly instructed otherwise.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "i)",
+     "points": 1,
+     "statement": "The rest energy of neutrons $m_{\\mathrm{n}}c^2 = 940\\ \\mathrm{MeV}$, the Boltzmann constant $k_{\\mathrm{B}} = 1.38\\times 10^{-23}\\ \\mathrm{J\\,K^{-1}}$, and the elementary charge $e = 1.602\\times 10^{-19}\\ \\mathrm{C}$. What is the required speed of neutrons, i. e. the speed of neutrons with kinetic energy $E_f$? What is the temperature $T_f$ of a neutron gas where the average kinetic energy of neutrons is $E_f$?"
+    },
+    {
+     "label": "ii)",
+     "points": 1,
+     "statement": "What is the initial speed of neutrons, i. e. the speed of neutrons with energy $E_0$?"
+    },
+    {
+     "label": "iii)",
+     "points": 2.5,
+     "statement": "From a completely non-relativistic point of view, what should be the mass of the moderator’s atoms to slow down the fast neutrons as efficiently as possible? If the mass of the moderator’s atoms were to be $M = 135m_{\\mathrm{n}}$, how many collisions with such atoms at a temperature much lower than $T_f$ would a fast neutron need to experience to slow down from $E_0$ to $E_f$? Assume that all collisions are elastic and central."
+    },
+    {
+     "label": "iv)",
+     "points": 1.5,
+     "statement": "Nuclear fuel, i.e. $\\mathrm{U}^{235}$, is placed inside metal rods and pressurized with helium gas to $p_0 = 2.5\\ \\mathrm{MPa}$. During operation, as $\\mathrm{U}^{235}$ keeps on fissioning inside the fuel rods, there is a build up of gas inside the rods. With a non-invasive ultrasound measurement we can measure that the gas pressure inside the rod after it is finally picked out from the core is $p = 6.5\\ \\mathrm{MPa}$. Assuming that the gas released inside the rods is completely made of xenon isotope $^{135}_{54}\\mathrm{Xe}$ and that the initial gas volume drops from $V_0 = 18\\ \\mathrm{cm^3}$ to $V = 9\\ \\mathrm{cm^3}$ due to the swelling of the fuel pellets, how many moles of xenon are released from fission? What is the ratio of helium to xenon inside the rod? The measurements are done at $T_0 = 20\\ ^{\\circ}\\mathrm{C}$; the universal gas constant $R = 8.31\\ \\mathrm{J\\,mol^{-1}\\,K^{-1}}$."
+    }
+   ],
+   "topics": [
+    "modern-physics/nuclear",
+    "mechanics/collisions",
+    "thermodynamics/ideal-gas"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Solution and grading scheme by Topi Lind, Melvin Storbacka, Oleg Kosik, Aleksandr Sorokin and Ludmila Belogrudova.*",
+    "sections": [
+     {
+      "id": "solution-i",
+      "title": "i)",
+      "points": 1,
+      "statement": "If the speed of the particle is much less than the speed of light, we can use non-relativistic approach. For non-relativistic particles we know $v = \\sqrt{2E_k/m}$. Substituting values gives us $v_f = 2.2\\times 10^3\\ \\mathrm{m\\,s^{-1}}$. This is much less than the speed of light and thus justified. Another way to justify the applicability of the non-relativistic approach would be to say that kinetic energy is significantly less than the rest energy ($E_f \\ll m_{\\mathrm{n}}c^2$).\n\n*Typo in problem description. $E_f = 0.025\\ \\mathrm{eV}$ is the mode of the Maxwell–Boltzmann distribution which gives $E = k_bT$. Average gives $E = (3/2)k_bT$.*\n\nUsing the mode of the Maxwell–Boltzmann distribution, $E = k_{\\mathrm{B}}T$, and remembering to convert from eV to J correctly, we find\n\n$$T_f = \\frac{0.025\\cdot 1.602\\times 10^{-19}}{1.38\\times 10^{-23}} = 290\\ \\mathrm{K}.$$\n\nWith $E = (3/2)k_{\\mathrm{B}}T$ we find $T_f \\approx 193\\ \\mathrm{K}$."
+     },
+     {
+      "id": "solution-ii",
+      "title": "ii)",
+      "points": 1,
+      "statement": "The non-relativistic approach justified as in previous task. Same approach gives us $v_0 = 2.0\\times 10^7\\ \\mathrm{m\\,s^{-1}}$.\n\n**Grading i)+ii):** (preliminary)\n\n- Expresses $v_f = \\sqrt{2E_f/m}$ and/or $v_0 = \\sqrt{2E_0/m}$ **0.3 pts**\n- Calculates $v_f = 2.2\\times 10^3\\ \\mathrm{m\\,s^{-1}}$ and/or $v_0 = 2.0\\times 10^7\\ \\mathrm{m\\,s^{-1}}$ for two correct numerical values; **0.5 pts**; if only one value is correct **0.3 pts**.\n- Uses $E_f = \\frac{3}{2}k_BT$ **0.3 pts**\n- Using this formula calculates $T = 193\\ \\mathrm{K}$ **0.3 pts**\n- Justifies the validity of the classical approach in both cases **0.3 + 0.3 pts** *Remark.* Using $E_f = k_BT$ without justification and finding $T = 290\\ \\mathrm{K}$ gives **0 pts** for the formula and **0.3 pts** for the numerical calculation."
+     },
+     {
+      "id": "solution-iii",
+      "title": "iii)",
+      "points": 2.5,
+      "statement": "In a collision between particle 1 ($m_1, v_{1,i}$ and $v_{1,f}$) and particle 2 ($m_2, v_{2,i}$ and $v_{2,f}$) momentum is conserved,\n\n$$m_1(v_{1,f} - v_{1,i}) = m_2(v_{2,i} - v_{2,f})$$\n\nand since the collisions are elastic, kinetic energy is also conserved:\n\n$$m_1(v_{1,f}^2 - v_{1,i}^2) = m_2(v_{2,i}^2 - v_{2,f}^2).$$\n\nDividing the latter by the former leads to\n\n$$v_{1,i} + v_{1,f} = v_{2,i} + v_{2,f}.$$\n\nSubstituting this to the conservation of momentum gives for particle 1:\n\n$$v_{1,f} = \\frac{m_1 - m_2}{m_1 + m_2}v_{1,i} + \\frac{2m_2}{m_1 + m_2}v_{2,i},$$\n\nand similarly for particle 2:\n\n$$v_{2,f} = \\frac{2m_1}{m_1 + m_2}v_{1,i} + \\frac{m_1 - m_2}{m_1 + m_2}v_{2,i}.$$\n\nWe see that with $m_1 = m_2$ there is a maximum transfer of momentum. Assuming that particle 1 is the neutron and particle 2 is the target, and that the target is at rest for all intents and purposes, the mass of the moderators atoms should be the same as the neutrons.\n\nIn a single collision with a stationary atom of the moderator, the speed of the neutron decreases by the factor of $\\frac{m_1 - m_2}{m_1 + m_2}$, so the speed of the neutron after $N$ head-on collisions with stationary atoms of moderator will be\n\n$$v_N = v\\left(\\frac{m_1 - m_2}{m_1 + m_2}\\right)^N.$$\n\nHence,\n\n$$\\begin{aligned} N &= \\frac{\\ln(v_f/v_0)}{\\ln[(m_1 - m_2)/(m_1 + m_2)]} \\\\ &= \\frac{1}{2}\\frac{\\ln(E_f/E_0)}{\\ln[(m_1 - m_2)/(m_1 + m_2)]} = 614. \\end{aligned}$$\n\n**Grading:** (preliminary)\n\n- $T \\ll T_f$, so moderator atoms are essentially at rest **0.3 pts**\n- Justifies that maximum momentum transfer is when $m_{\\mathrm{n}} = M$ **0.4 pts**\n- Applies energy and momentum conservation **0.3 pts+ 0.3 pts**\n- Expresses $u = v\\frac{m_1 - m_2}{m_1 + m_2}$ **0.4 pts**\n- Expresses $v_f = v_0\\left(\\frac{m_1 - m_2}{m_1 + m_2}\\right)^N$ **0.5 pts**\n- Calculates $N = 614$ **0.3 pts**"
+     },
+     {
+      "id": "solution-iv",
+      "title": "iv)",
+      "points": 1.5,
+      "statement": "We can model the gas inside the rod as an ideal gas. Simply due to swelling the pressure inside the rod would increase from $2.5\\ \\mathrm{MPa}$ to $5\\ \\mathrm{MPa}$ as we know from Boyle’s law $P_1V_1 = P_2V_2 \\rightsquigarrow P_2 = P_1V_1/V_2$. Thus, the release of xenon must contribute $1.5\\ \\mathrm{MPa}$’s worth of pressure due to Dalton’s law $p_{\\mathrm{tot}} = p_{\\mathrm{He}} + p_{\\mathrm{Xe}}$. From ideal gas law we find the amount of xenon moles as\n\n$$n_{\\mathrm{Xe}} = p_{\\mathrm{Xe}}V/RT_0 = 5.5\\times 10^{-3}\\ \\mathrm{mol},$$\n\nwhere $p_{\\mathrm{Xe}} = 1.5\\ \\mathrm{MPa}$, $V_2 = 9\\ \\mathrm{cm^3}$ and $T = 293\\ \\mathrm{K}$. In a similar manner we find that the amount of helium in the beginning was\n\n$$n_{\\mathrm{He}} = p_{\\mathrm{He}}V_0/RT_0 = 1.8\\times 10^{-2}\\ \\mathrm{mol},$$\n\nwhere $P_{\\mathrm{He}} = 2.5\\ \\mathrm{MPa}$, $V_0 = 18\\ \\mathrm{cm^3}$ and $T_0 = 293\\ \\mathrm{K}$. The ratio of the two is\n\n$$\\frac{n_{\\mathrm{He}}}{n_{\\mathrm{Xe}}} \\approx 3.3.$$\n\n**Grading:** (preliminary)\n\n- Applies Boyle’s law **0.3 pts**\n- Applies Dalton’s law **0.4 pts**\n- Expresses $n_{\\mathrm{Xe}} = p_{\\mathrm{Xe}}V/RT_0$ **0.2 pts**\n- Calculates $n_{\\mathrm{Xe}} = 5.5\\times 10^{-3}\\ \\mathrm{mol}$ **0.2 pts**\n- Expresses $n_{\\mathrm{He}} = p_{\\mathrm{He}}V_0/RT_0$ **0.2 pts**\n- Calculates $\\frac{n_{\\mathrm{He}}}{n_{\\mathrm{Xe}}} = 3.3$ **0.2 pts**"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2025-v1-0-p4",
+   "number": 4,
+   "title": "Black Box",
+   "points": 12,
+   "problemType": "experiment",
+   "statement": "— *Eero Uustalu.* *Tools:* a black box with a yellow and a blue lead, two multimeters, a voltage source (that is connected in series with a resistor to limit the maximal current), wires, sheets of graph paper. In the black box, there are three diodes and a resistor.\n\n**You are allowed to connect your circuit to the power source only through the yellow lead with a built-in resistor** (that is already connected to the power source)!\n\n**For each series of measurements, also draw the circuit used!**",
+   "figures": [],
+   "parts": [
+    {
+     "label": "i)",
+     "points": 4,
+     "statement": "Determine the electrical circuit inside the black box."
+    },
+    {
+     "label": "ii)",
+     "points": 2,
+     "statement": "Determine the resistance of the resistor."
+    },
+    {
+     "label": "iii)",
+     "points": 6,
+     "statement": "Determine the opening voltages of all the diodes (at which the current reaches $1\\ \\mathrm{mA}$)."
+    }
+   ],
+   "topics": [
+    "electricity/dc-circuits",
+    "electricity/semiconductors"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Eero Uustalu.* First we need to assemble a simple circuit allowing us to measure the $V - I$ curve of the black box: voltmeter in parallel to the box, and ammeter in series. The measurement results are shown in the table below, both for forward current (blue) and for reverse current (red) (the headers of the reverse current data has minus sign).\n\n[[figure:p4-sol-fig1]]\n\n| V (V) | I (mA) | -V (V) | -I (mA) |\n|---|---|---|---|\n| 4.59 | 7.66 | 3.491 | 7.98 |\n| 4.55 | 6.53 | 3.458 | 6.98 |\n| 4.50 | 5.52 | 3.423 | 6.00 |\n| 4.46 | 4.53 | 3.379 | 4.94 |\n| 4.43 | 3.964 | 3.324 | 3.868 |\n| 4.41 | 3.665 | 3.279 | 3.178 |\n| 4.40 | 3.51 | 3.219 | 2.468 |\n| 4.36 | 3.08 | 3.180 | 2.088 |\n| 4.32 | 2.756 | 3.121 | 1.637 |\n| 4.25 | 2.54 | 3.044 | 1.186 |\n| 4.14 | 2.391 | 2.993 | 0.958 |\n| 3.98 | 2.23 | 2.956 | 0.817 |\n| 3.871 | 2.115 | 2.922 | 0.711 |\n| 3.656 | 1.897 | 2.880 | 0.595 |\n| 3.539 | 1.781 | 2.784 | 0.403 |\n| 3.436 | 1.67 | 2.713 | 0.2931 |\n| 3.282 | 1.519 | 2.607 | 0.1847 |\n| 3.079 | 1.314 | 2.423 | 0.0801 |\n| 2.923 | 1.159 | 2.156 | 0.0219 |\n| 2.762 | 0.998 | 1.807 | 0.0037 |\n| 2.625 | 0.862 | 1.451 | 0.0006 |\n| 2.498 | 0.736 | 0 | 0 |\n| 2.351 | 0.593 |  |  |\n| 2.246 | 0.491 |  |  |\n| 2.143 | 0.398 |  |  |\n| 2.036 | 0.2932 |  |  |\n| 1.931 | 0.1989 |  |  |\n| 1.815 | 0.1037 |  |  |\n| 1.732 | 0.0486 |  |  |\n| 1.670 | 0.021 |  |  |\n| 1.617 | 0.0087 |  |  |\n| 1.526 | 0.0016 |  |  |\n| 1.467 | 0.0005 |  |  |\n\nThese data will be used for all the tasks.",
+    "sections": [
+     {
+      "id": "solution-i",
+      "title": "i)",
+      "points": 4,
+      "statement": "Based on these data, we can determine that there is a single diode allowing negative currents to flow, with no other components in that branch, as the $V$-$I$ curve shows the classical exponential dependence characteristic of a diode.\n\nThe situation is more complex for positive currents: there must be two parallel branches allowing current to flow. One branch must contain a diode with a lower threshold voltage in series with a resistor, which explains why the initial exponential curve transitions into a linear relationship characteristic of resistive behaviour. The second branch must contain a diode with a higher threshold voltage (approximately $4.3\\ \\mathrm{V}$) that only conducts when this voltage is exceeded.\n\nThis second branch could be either in parallel with just a resistor, or in parallel with the series combination of the resistor and first diode. These two configurations cannot be distinguished based solely on the $V$-$I$ curves, and both will be considered correct interpretations of the data. The two possible circuits are shown below.\n\n[[figure:p4-sol-fig2]]\n\nNote that faulty measurements give no points in regard to data sufficiency (for example if the voltage was read from the power source without any corrections made)\nEach plot (forward and reverse current) gives 1.2 points:\n**Grading:** (preliminary)\n\n- Drawing and labeling a graph’s axes **0.2 pts**\n- Collecting sufficient data for the graph that shows both linear and non-linear characteristics of the circuit **0.5 pts**\n- Plotting the data to the graph **0.5 pts**\n\nIn total, the forward and reverse direction plots give 2.4 points. Drawing the circuit used in each the measurement gives 0.3p each for a total of 0.6p.\n\nFor drawing a possible circuit diagram (Refer to diagrams for option 1 and 2):\n**Grading:** (preliminary)\n\n- Placing the reverse diode $D_1$ correctly **0.3 pts**\n- Placing the forward diodes $D_2$, $D_3$ and the resistor correctly, i.e. as described in the previous paragraphs **0.7 pts**",
+      "figures": [
+       {
+        "id": "p4-sol-fig2",
+        "alt": "Two possible circuits between terminals A and B. Top (option 1): three parallel branches — diode D1 (reverse), lower-threshold diode D2 in series with resistor R, and higher-threshold diode D3. Bottom (option 2): D1 in parallel with D2, which is followed by R in parallel with D3.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p4-sol-fig2.png",
+        "width": 674,
+        "height": 842,
+        "source": {
+         "page": 4,
+         "pdfRect": [
+          15.16,
+          126.81,
+          176.8,
+          328.59
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "solution-ii",
+      "title": "ii)",
+      "points": 2,
+      "statement": "The resistor’s resistance is the inverse of the slope in the linear section of the curve. To ensure accuracy, the most linear segment should be selected for this calculation. The fit line is shown in purple in the figure above, yielding a resistance of $R = 1008\\ \\Omega$.\n\n**Grading:** (preliminary)\n\n- Method for getting $R_1$ **1 pts**\n- Reaching a close enough ( $\\pm 10\\%$) value for the resistance **1 pts**"
+     },
+     {
+      "id": "solution-iii",
+      "title": "iii)",
+      "points": 6,
+      "statement": "The accepted uncertainty of all subsequent results is $\\pm 10\\ \\%$ of the values presented here. The opening voltage $V_1$ of diode $D_1$ can be found at the point where the red curve intersects the $1\\ \\mathrm{mA}$ value. For greater precision, additional measurements could be performed by gradually adjusting the voltage until exactly $1\\ \\mathrm{mA}$ current is reached. Based on our current measurements, the result is $3.004\\ \\mathrm{V}$.\n\nThe value of $V_2$ can be found at the point where the blue curve reaches $1\\ \\mathrm{mA}$, from which we must subtract the resistor’s voltage drop $IR$. This calculation gives $V_2 = 1.757\\ \\mathrm{V}$.\n\nTo determine the opening voltage of diode $D_3$, we must first subtract the current through the resistor. This can be accomplished graphically by drawing a line parallel to the linear segment’s fit line, at a $1\\ \\mathrm{mA}$ distance, as illustrated in the figure. For option 1, this procedure directly yields $V_3 = 4.47\\ \\mathrm{V}$. For option 2 (the actual configuration inside the box), we need to subtract voltage $V_2$. Consequently, $V_3 = 2.71\\ \\mathrm{V}$ for option 2.\n\n**Grading:** (preliminary)\n\n- Reaching a close enough value for the opening voltage $V_1$ **1 pts**\n\nGetting value for $V_2$:\n\n- Reading the value of $V_2 + IR$ at $1\\ \\mathrm{mA}$ **0.5 pts**\n- Subtracting $IR$ based on the inverse of the slope at the linear section **0.5 pts**\n- Getting the value to within $10\\ \\%$ **1 pts**\n\nCalculating the value for $V_3$ depends on the schematic that was used. This schema is written for option 2. Valid solution for option 1 still gives the same max points.\n\n- Reading the total voltage where $1\\ \\mathrm{mA}$ is going through $D_3$ **0.5 pts**\n- Subtracting $V_2$ from the total **1.5 pts**\n- Reaching a close enough ( $\\pm 10\\%$) value for $V_3 = 2.71\\ \\mathrm{V}$ **1 pts**"
+     }
+    ],
+    "figures": [
+     {
+      "id": "p4-sol-fig1",
+      "alt": "Measured V–I curves of the black box: current (mA, 0 to 8) versus voltage (V, 0 to 5). Red squares: reverse current, rising steeply near 3 V (marked V1). Blue dots: forward current, a slow exponential rise turning into a straight segment, then a steep rise near 4.4 V (marked V3). Two parallel purple lines, 1 mA apart (marked 1mA): the linear fit and its shifted copy; a green line marks V2+IR.",
+      "caption": "Voltage and Current Measurements",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p4-sol-fig1.png",
+      "width": 821,
+      "height": 547,
+      "source": {
+       "page": 3,
+       "pdfRect": [
+        427.68,
+        438.12,
+        624.69,
+        569.07
+       ],
+       "dpi": 300,
+       "document": "solutions"
+      }
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 1
+    },
+    {
+     "document": "solutions",
+     "page": 3
+    },
+    {
+     "document": "solutions",
+     "page": 4
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2025-v1-0-p5",
+   "number": 5,
+   "title": "Throwing",
+   "points": 6,
+   "problemType": "theory",
+   "statement": "— *Eppu Leinonen.*",
+   "figures": [],
+   "parts": [
+    {
+     "label": "i)",
+     "points": 2,
+     "statement": "A drone starts from the origin at rest and accelerates horizontally with an acceleration $g$ to the $+x$ direction. Simultaneously, a ball is thrown from the point with coordinates $(x,y) = (-h, -h)$. What is the minimum initial speed the ball needs to hit the drone? The free fall acceleration $g$ is antiparallel to the $y$-axis."
+    },
+    {
+     "label": "ii)",
+     "points": 4,
+     "statement": "A stone is thrown from point $S$ (shown in the figure below) with an initial speed $v$. A boy at point $B$ wishes to hit the stone in midair by throwing a ball simultaneously with the stone’s release. He wants to use the minimum possible speed $u$ that will still allow the ball to hit the stone in midair. After calculating the stone’s trajectory, he determines the optimal trajectory for the ball and throws it according to his calculations. The collision point $C$ is shown in the figure. Using the scale provided and necessary measurements from the figure, find the initial speeds $v$ of the stone and $u$ of the ball. The free fall acceleration is $g = 9.8\\ \\mathrm{m\\,s^{-2}}$.\n\n[[figure:p5-fig1]]",
+     "figures": [
+      {
+       "id": "p5-fig1",
+       "alt": "Scale drawing: point S at the top edge of a step (ledge), point B on the ground below and to the right, point C (collision point) high up to the right; a scale bar of 10 m under the ground line.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p5-fig1-v3.png",
+       "width": 755,
+       "height": 279,
+       "source": {
+        "page": 2,
+        "pdfRect": [
+         21.06,
+         277.38,
+         202.05,
+         344.07
+        ],
+        "dpi": 300
+       }
+      }
+     ]
+    }
+   ],
+   "topics": [
+    "mechanics/projectile-motion",
+    "mechanics/reference-frames"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Solution by Eppu Leinonen and Jaan Kalda.*",
+    "sections": [
+     {
+      "id": "solution-i",
+      "title": "i)",
+      "points": 2,
+      "statement": "In the drone’s reference frame, the effective gravitational field is $(g, g)$, which has a magnitude of $g\\sqrt{2}$ pointing at a $45^{\\circ}$ angle. The initial kinetic energy of the ballis $\\frac{1}{2}mv_0^2$, and the final energy: potential energy change is $m(g\\sqrt{2})\\cdot(h\\sqrt{2})$, where $h\\sqrt{2}$ is the displacement along the direction of the effective field From the energy conservation law we obtain $\\frac{1}{2}mv_0^2 = m(g\\sqrt{2})\\cdot(h\\sqrt{2})$, hence $v_0 = 2\\sqrt{gh}$.\n\n**Grading:** (preliminary)\n\n- Idea of switching to the coaccelerating frame **1 pts**\n- Ball gains horizontal acceleration $g$ **0.3 pts**\n- Effective gravitational field $g\\sqrt{2}$ point from drone to throwing point **0.2 pts**\n- Energy conservation or the respective kinematical equation **0.3 pts**\n- Correct answer **0.2 pts**\n\n*Solution 2 by Anne-Sofie Mårtensson and Adam Warnerbring:* In time $t$ the drone travels a distance $s = \\frac{1}{2}gt^2$. For a collision to occur at time $t$ the ball must travel a distance $h$ up giving us an equation $h = vt\\sin\\alpha - \\frac{1}{2}gt^2$ and a distance $h + s$ horizontally giving us an equation $h + s = vt\\cos\\alpha$. From these equations we get $vt\\sin\\alpha = vt\\cos\\alpha$, which means that $\\alpha = 45^{\\circ}$. This means that the initial $x$ and $y$-components of the velocity must be the same. Thus the initial speed minimised when the highest point of the trajectory is minimal which happens when it is a height $h$ away from the throwing point. From energy conservation we get $\\frac{1}{2}\\left(\\frac{v_0}{\\sqrt{2}}\\right)^2 = gh$ to get $v_0 = 2\\sqrt{gh}$\n\n- Correct kinematic equations **0.6 pts** (0.2 for each)\n- Getting the condition $\\sin\\alpha = \\cos\\alpha$ **0.3 pts**\n- $\\alpha = 45^{\\circ}$ **0.1 pts**\n- $v_{x,0} = v_{y,0}$ implies that the highest point of the trajectory has to be as low as possible **0.5 pts**\n- Energy conservation or the respective kinematical equation **0.3 pts**\n- Correct answer **0.2 pts**\n\n*Alternatively,* we can derive the minimal velocity from $\\alpha = 45^{\\circ}$ as follows. If we go back to our kinematical equations, we get that the condition for the drone and the ball to meet at the same $x$-coordinate is $vt\\sin\\alpha - \\frac{1}{2}gt^2 = \\frac{vt}{\\sqrt{2}} - \\frac{1}{2}gt^2 = h + s = h + \\frac{1}{2}gt^2$. But also for the $y$ coordinate we have $h = vt\\sin\\alpha - \\frac{1}{2}gt^2 = \\frac{vt}{\\sqrt{2}} - \\frac{1}{2}gt^2$. I.e. both equations become $\\frac{1}{2}gt^2 - \\frac{vt}{\\sqrt{2}} + h = 0$, so we only need to find out what is the minimal velocity that this equation has a solution. Since the equation is a quadratic, it has a solution when its discriminant $\\Delta$ is non-negative. Now $\\Delta = v^2/2 - 2gh$, which is an increasing function of $v$. Thus the minimal speed with which the collision is possible is when the discriminant is zero. Thus we get $v = 2\\sqrt{gh}$.\n\n**Some students interpreted the task such that the drone has an acceleration $(g, -g)$. This interpretation makes the problem more difficult and will be accepted**. The following solution shows how this version of the problem can be solved *Solution for the alternative interpretation by Eppu Leinonen:* If we move to the coaccelerating frame of the drone, the ball will have a net acceleration $(-g,0)$, and the drone will stay in place. This invites us to rotate the coordinate axes that the acceleration of the ballis $(0, -g)$ and if we set the origin at the throwing point, the drone will be at $(-h, h)$. Now all the points reachable by the ball with an initial speed $v$ are given by the so called envelope curve which is known to have the equation $y \\le v_0^2/2g - gx^2/2v_0^2$. With the minimal possible speed the drone will be on the envelope curve as otherwise the point is not reachable or the speed can be made smaller. So we need to find $v_0$ such that the equation $h = v_0^2/2g - gh^2/2v_0^2$ has a solution. Rearranging gives $v_0^4 - 2ghv_0^2 - g^2h^2 = 0$ which is a quadratic in $v_0^2$ (biquadratic in $v_0$) which has the solutions $v_0^2 = \\frac{2gh\\pm\\sqrt{4g^2h^2+4g^2h^2}}{2} = gh \\pm gh\\sqrt{2}$ which is only positive if $\\pm$ is $+$ so $v_0^2 = (1 + \\sqrt{2})gh$ and as such $v_0 = \\sqrt{(1 + \\sqrt{2})gh}$.\n\n**Grading:**\n\n- Idea of switching to the coaccelerating frame **1 pts**\n- Ball gains vertical and horizontal acceleration $g$ **0.3 pts**\n- Effective gravitational field $(0, -g)$ (in the rotated coordinate frame, but this rotation is not necessary) **0.2 pts**\n- Drone must be on the envelope curve **0.2 pts**\n- Correct form for the envelope curve **0.1 pts**\n- Correct answer **0.2 pts**\n\nFor other solutions, at most 0.6 points for kinematical equations that describe the conditions necessary for the ball and drone to collide – the rest of the analysis must be fully correct to get the rest of the points.\n\n**NB! If a student has interpreted that the drones acceleration is along the $y$-axis or that antiparallel to the $y$-axis means to the positive $y$-axis, it is automatically 0 points.**"
+     },
+     {
+      "id": "solution-ii",
+      "title": "ii)",
+      "points": 4,
+      "statement": "*Solution 1.* Let us use the free-falling frame of reference wherein the ball and the stone move along straight lines. That frame fell together with points $S$ and $B$ during the flight time of duration $t$ by $h = \\frac{1}{2}gt^2$, so in that frame the position of the collision point $C'$ is obtained by shifting $C$ relative to $S$ and $B$ by distance $h$ upwards. In that frame, $|SC'| = vt$ and $|BC'| = ut$, hence $|SC'|/|BC'| = v/u$. We have $v$ fixed and want to have as small as possible $u$, so $|SC'|/|BC'|$ needs to be maximal. From the sine theorem, $|SC'|/|BC'| = \\sin\\angle SBC'/\\sin\\angle C'SB$. As $\\angle C'SB$ is defined by the stone-throwing angle and is therefore fixed, the boy needs to maximize $\\sin\\angle C'BS$. Obviously, the maximum of 1 is reached for $\\angle C'BS = 90^{\\circ}$. Therefore, we need to draw a perpendicular to $SB$ at $B$, and find $C'$ as its intersection point with the vertical line drawn through $C$. Then $|CC'| = \\frac{1}{2}gt^2$ from where we obtain $t = \\sqrt{2|CC'|/g}$, $v = \\sqrt{g}|SC'|/\\sqrt{2|CC'|} \\approx 12.3\\ \\mathrm{m\\,s^{-1}}$ and $u = \\sqrt{g}|BC'|/\\sqrt{2|CC'|} \\approx 10.9\\ \\mathrm{m\\,s^{-1}}$\n\n[[figure:p5-sol-fig1]]\n\n**Grading:** (preliminary)\n\n- The idea of switching to the free-falling frame **0.5 pts**\n- Stating (explicitly or implicitly) that the stone and the ball travel in straight lines **0.5 pts**\n- $SC' = vt$ and $BC' = ut$ **0.2 pts** (0.1 for each)\n- Noticing that we need to minimise $|SC'|/|BC'|$ (or maximise the reciprocal) **0.3 pts**\n- Sine theorem (to minimise) **0.5 pts**\n- $\\angle C'BS = 90^{\\circ}$ **0.5 pts**\n- In the free falling frame $C'$ is shifted upwards with respect to $S$,$B$,$C$ **0.5 pts**\n- $|CC'| = \\frac{1}{2}gt^2$ **0.1 pts**\n- Well drawn geometrical construction (that is correct) **0.5 pts**\n- $v = \\sqrt{g}|SC'|/\\sqrt{2|CC'|}$ and $u = \\sqrt{g}|BC'|/\\sqrt{2|CC'|}$ **0.2 pts** (0.1 for each)\n- $v \\in [11.8, 12.7]\\mathrm{m\\,s^{-1}}$, $u \\in [10.5, 11.4]\\mathrm{m\\,s^{-1}}$ **0.2 pts** (0.1 for each, only if correct method)\n\n*Note.* Well drawn means that straight lines are straight lines and the 90 degree angles look like 90 degree angles. The points will only be given if the construction is relevant for a correct solution to the problem.\n\n*Solution 2.* A purely geometric proof for $C'B \\perp BSA$ to minimise $BC'/SC'$ goes as follows (the rest of the solution is the same). After going to the free fall frame, go to the frame moving with velocity $\\vec v$. For the ball to hit the ball its velocity in this frame $\\vec u'$ must point at the stone. I.e. we get that $\\vec u' = k\\overrightarrow{BS}$, where $k > 0$. On the other hand $\\vec u' = \\vec u - \\vec v$. But now this means that $\\vec v - \\vec u$ must end up on the line $SB$. The possible ending points of $\\vec v - \\vec u$ are achieved by drawing a circle of radius $u$ around the ending point of $\\vec v$. With the minimal $|\\vec u|$ to achieve the condition of the relative velocity ending up on $SB$ the circle will be tangent to $SB$ which means that $\\vec u \\perp \\overrightarrow{BS}$.\n\nThis will replace minimising the ratio and using the sine law to give in total 0.8p for method and 0.5 for the correct angle.\n\n**Grading:**\n\n- Noticing that $\\vec v - \\vec u$ is on $SB$ **0.3 pts**\n- A valid argument that $u$ is minimal when $\\vec u \\perp \\overrightarrow{SB}$ **0.5 pts**\n\n*Solution 3.* An analytic proof for $C'B \\perp BS$ to minimise $BC'/SC'$ goes as follows (the rest of the solution is the same). Without the loss of generality we can put the point $S$ at (0,0) and the point $B$ at some $(q, 0)$ (i.e. we rotate and move our coordinate system to achieve this). The $SC'$ line is given by $y = kx$ for some $k$ and thus a general form for the point $C'$ is $(x, kx)$. Thus the ratio of the lengths becomes\n\n$$R = \\frac{\\sqrt{(x - q)^2 + k^2x^2}}{\\sqrt{(k^2 + 1)x^2}}.$$\n\nDifferentiating this (preferrably logarithimically) and finding the 0 of the the derivative gives\n\n$$x = q$$\n\ni.e. $C' = (q, kq)$ and as such $C'B \\perp BS$.\n\nThe following points replace the “Sine theorem (to minimise)” part from Solution 1\n\n**Grading:** (preliminary)\n\n- Correct $R$ function to maximise/minimise **0.2 pts**\n- Derivative $= 0$ **0.1 pts**\n- Performing the rest of the calculation fully correct **0.2 pts**",
+      "figures": [
+       {
+        "id": "p5-sol-fig1",
+        "alt": "Geometric construction for task ii: ledge with point S, ground point B, collision point C and the shifted point C′ vertically above C; segments SC′, SB and BC′ drawn, with BC′ perpendicular to SB, and a vertical line through C and C′.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p5-sol-fig1.png",
+        "width": 790,
+        "height": 549,
+        "source": {
+         "page": 5,
+         "pdfRect": [
+          639.85,
+          13.1,
+          829.26,
+          144.68
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 5
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2025-v1-0-p6",
+   "number": 6,
+   "title": "Birds",
+   "points": 4,
+   "problemType": "theory",
+   "statement": "— *Jaan Kalda.*\n\nA long and thin homogenous beam with uniform thickness and square cross-section floats horizontally in water with its top surface parallel to the water surface. A bird lands on one end of the beam, and as a result, the beam sinks so that the edge of the upper face on the bird’s side is exactly at the same height as the water surface, while at the other end of the beam the lower face does not rise above the water. What is the maximum number of such birds that this beam can hold above water?",
+   "figures": [],
+   "parts": [],
+   "topics": [
+    "mechanics/statics",
+    "hydrostatics/buoyancy"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Solution by Jaan Kalda.* Let us consider the torque balance with respect to the beam’s centre of mass. Note that as the beam is long and thin and the other end of the beam doesn’t rise above the water, the beam will stay approximately horizontal, which we will use to calculate the moment arms. First, the beam’s weight acts at its centre of mass, creating zero torque. The second contribution comes from the buoyancy force that can be split into two components: the upward buoyancy force as if the entire beam were submerged (acts at the centre of mass, creating zero torque), and the downward ”missing” buoyancy force of the triangular section above water (creates a torque). This missing buoyancy force $F$ is what becomes a real buoyancy force once additional birds land and press the beam fully underwater; if the length of the beam is $L$ then the arm of this force is the distance from the centre of mass of the beam to the centre of mass of the triangle which is at the intersection point of medians, which are a distance $\\frac{2}{3}L$ away from the bird. Thus the moment arm of $F$ is $(\\frac{2}{3} - \\frac{1}{2})L = \\frac{1}{6}L$. The arm of the bird’s weight $mg$ is $\\frac{1}{2}L$, hence $\\frac{1}{2}L\\cdot mg = \\frac{1}{6}L\\cdot F$, i.e. $F = 3mg$. This means that additionally, the beam can support up to 3 more birds, i.e. 4 birds in total.\n\n**Note:** according the official solution, the answer does not depend on how much of the beam is left in the water nor on any other unknown properties of the beam. As such, fixing any of these parameters does not create a maximum condition.\n\n**Grading** (preliminary)\n\n- Used any correct torque balance **0.6 pts**\n  - Used any correct force balance with the bird present **0.3 pts**\n- Moment arm for the force of the bird **0.2 pts**\n- Explicitly stated or derived the center of mass of a triangle **0.6 pts**\n- Moment arm for the buoyancy force **0.3 pts**\n- Justified numerical answer (4) **0.3 pts**\n- A final solution that does not depend on fixing any unknown parameters **2 pts**",
+    "figures": []
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2025-v1-0-p7",
+   "number": 7,
+   "title": "Charged Rod",
+   "points": 6,
+   "problemType": "theory",
+   "statement": "— *Jaan Kalda.* A rod of mass $m$ carries a charge $q$; both the charge and the mass are homogeneously distributed over its entire length $l$. The system is in homogeneous magnetic field of strength $B$, parallel to the $z$-axis whereas the rod is in the $x$–$y$-plane. Neglect any forces except for the Lorentz force. One end of the rod is painted red, and the other — blue.",
+   "figures": [],
+   "parts": [
+    {
+     "label": "i)",
+     "points": 2,
+     "statement": "Consider the case when the rod rotates around its centre of mass. What should be the angular speed $\\omega$ for the mechanical tension force at the centre of the rod to be zero?"
+    },
+    {
+     "label": "ii)",
+     "points": 4,
+     "statement": "Consider now a case when initially the blue end of the rod is at the origin ($x = y = 0$), and the red end at $x = l$. The blue end’s initial speed is zero while the red end’s speed is $v$, parallel to the $y$-axis. It turns out that after a certain time $t$, the red end passes through the origin. Find the smallest possible value for $t$ and express the corresponding value of $v$ in terms of $m$, $q$ and $l$."
+    }
+   ],
+   "topics": [
+    "electromagnetism/magnetic-force",
+    "mechanics/rigid-body"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Solution by Jaan Kalda, grading schemes by....*",
+    "sections": [
+     {
+      "id": "solution-i",
+      "title": "i)",
+      "points": 2,
+      "statement": "Notice that all particles with the same charge-to-mass ratio orbit in a homogeneous magnetic field $B$ with the same frequency $\\omega_B = \\frac{Bq}{m}$; the orbit is a circle of radius $r = \\frac{v}{\\omega_B}$. Indeed, the Lorentz force must provide the centripetal acceleration, hence $Bqv = mv\\omega_B \\Rightarrow \\omega_B = \\frac{Bq}{m}$.\n\nSince the mass-to-charge ratio is the same for all the fictitious pieces of the rod, if the rod rotates with angular speed $\\omega = \\frac{Bq}{m}$, then the Lorentz force provides exactly the needed acceleration to all these pieces, and the tension force is zero everywhere.\n\nOn the other hand, if the angular speed were smaller or larger, we would have either $Bqv < mv\\omega$ or $Bqv > mv\\omega$ for all the pieces, resulting in either stretching or compressive tension force at the centre of the rod, respectively. Therefore, the answer is $\\omega = \\frac{Bq}{m}$.\n\n**Grading:** (preliminary)\n\n- Considers forces on an infinitesimal part of the rod **0.4 pts**\n- Equates, with justification, Lorentz and centrifugal forces $\\mathrm{d}qvB = \\mathrm{d}m\\omega^2r$ **0.4 pts**\n- Uses $\\omega = \\frac{v}{r}$ **0.4 pts**\n- Uses $\\frac{\\mathrm{d}q}{\\mathrm{d}m} = \\frac{q}{m}$ **0.4 pts**\n- Expresses $\\omega = \\frac{qB}{m}$ **0.4 pts**"
+     },
+     {
+      "id": "solution-ii",
+      "title": "ii)",
+      "points": 4,
+      "statement": "To begin with, let us notice that if a system of charges with the same charge-to-mass ratio $\\alpha = q/m$ moves in a homogeneous magnetic field, the centre of mass will move along a circle with cyclotron frequency $\\omega_B$. Indeed, the total Lorentz force acting on the system is\n\n$$\\begin{aligned} \\sum_i q_i\\frac{\\mathrm{d}\\vec r_i}{\\mathrm{d}t}\\times\\vec B &= \\alpha\\sum_i m_i\\frac{\\mathrm{d}\\vec r_i}{\\mathrm{d}t}\\times\\vec B \\\\ &= \\alpha\\frac{\\mathrm{d}\\vec r_C}{\\mathrm{d}t}\\times\\vec B\\sum_i m_i. \\end{aligned}$$\n\nSo, Newton’s second law reads\n\n$$\\frac{\\mathrm{d}^2\\vec r_C}{\\mathrm{d}t^2}\\sum_i m_i = \\frac{q}{m}\\frac{\\mathrm{d}\\vec r_C}{\\mathrm{d}t}\\times\\vec B\\sum_i m_i.$$\n\nThe total mass of the system cancels out from this equation, and we can see that the centre of mass $\\vec r_C$ moves in the same way as a point charge $q$ with mass $m$.\n\n*Alternatively,* the same can be achieved through integration. From Newton’s second law $m\\vec a_C = \\int\\mathrm{d}q\\,\\vec v\\times\\vec B$, where $\\vec v$ is the velocity of the charge element $\\mathrm{d}q$. But since the mass and charge distributions are homogenous, $\\mathrm{d}q = \\frac{q}{m}\\mathrm{d}m$ and $\\vec B$ is constant so it can be taken out from the integral to achieve $m\\vec a_C = \\frac{q}{m}\\left(\\int\\vec v\\,\\mathrm{d}m\\right)\\times\\vec B$. But now the integral is just $m\\vec v_C$ (can be seen directly or through the definition of centre of mass $\\int\\frac{\\mathrm{d}\\vec r}{\\mathrm{d}t}\\mathrm{d}m = \\frac{\\mathrm{d}}{\\mathrm{d}t}\\int\\vec r\\,\\mathrm{d}m = m\\vec r_C$. Thus we get $m\\vec a_C = q\\vec v_C\\times\\vec B$.\n\nAdditionally, the rod can (and will) rotate with a constant speed. The fact that the angular speed must be constant follows from the conservation of kinetic energy of the rod, which is the sum of the kinetic energy of its centre of mass and the rotational energy around the centre of mass. The former is constant, so the latter must be as well.\n\nThe centre of mass moves with speed $v/2$ and draws a circle of radius $R = \\frac{mv}{2Bq}$ that passes through the point $(\\frac{l}{2},0)$ and for which the $x$-axis is a symmetry axis. The red end can reach the origin only when the centre of mass is at a distance $\\frac{l}{2}$ from the origin. This can happen either after a full cyclotron period $T = 2\\pi/\\omega_B$, or at any moment assuming $R = \\frac{l}{2}$ and the circle is centred around the origin.\n\nTo determine if this can happen earlier than after time $T$, let us assume that $R = \\frac{mv}{2Bq} = \\frac{l}{2}$. In that case, the angular speed of the rod’s rotation is $\\Omega = \\frac{v}{l}$, and we get $v = \\frac{Bql}{m}$. This means $\\Omega = \\frac{Bq}{m} = \\omega_B$, i. e., the rod’s rotational angular speed is the same as the centre of mass’ angular speed in its orbit, which would cause the blue end to remain at the origin.\n\nNext, we examine if the red end can reach the origin after time $T$. For this to happen, the condition is that $\\Omega T = (2\\pi n + \\pi)$, where $n$ is an integer. Since $\\Omega = v/l$ and we need to minimize $v$, we take $n = 0$ to obtain $v = \\pi l/T = \\frac{lBq}{2m}$.\n\n**Grading:** (preliminary)\n\n- Deduces, with justification, that the net force on the rod $\\vec F = q\\,\\vec v_C\\times\\vec B$ **0.5 pts**\n- Uses $v_C = v/2$ **0.2 pts**\n- Justifies that the COM moves on a circular path **0.3 pts**\n- Expresses the radius of the path traced by the COM $R = \\frac{mv}{2qB}$ **0.3 pts**\n- Concludes that the angular velocity of the COM is $\\omega = \\frac{qB}{m}$ **0.2 pts**\n- Expresses the angular velocity of the rotation around the COM $\\Omega = \\frac{v}{l}$ **0.2 pts**\n- Justifies that $\\Omega$ is conserved **0.3 pts**\n- Argues that $t < \\frac{2\\pi}{\\omega}$ is possible only if $R = l/2$ **0.5 pts**\n- Justifies that in this case, the red end will never end up at the origin **0.5 pts**\n- Justifies that $\\Omega t = \\pi + 2\\pi k$ with $k \\in \\mathbb{Z}_{\\geqslant 0}$ **0.4 pts**\n- Expresses $v = \\frac{qBl}{m}(\\frac{1}{2} + k)$ **0.6 pts**"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 6
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2025-v1-0-p8",
+   "number": 8,
+   "title": "Phase Spiral",
+   "points": 9,
+   "problemType": "theory",
+   "statement": "— *Taavet Kalda.* Here we shall study the motion of Milky Way stars in the Solar neighbourhood in the direction of the $z$-axis, i. e. perpendicular to the galactic plane. For our purposes, we can model the galactic gravity field as being created by a continuous mass density $\\rho$ (that accounts for the masses of stars, dark matter, gas, interstellar dust, etc), and assume that this mass forms an infinite mirror-symmetric plate, i. e. $\\rho \\equiv \\rho(z)$ and $\\rho(z) = \\rho(-z)$ is independent of $x$ and $y$. Throughout the problem, you may assume that each star’s total energy is conserved over the entire considered time period. Gravitational constant $G = 6.67\\times 10^{-11}\\ \\mathrm{m^3\\,kg^{-1}\\,s^{-2}} = 4.30\\times 10^{-3}\\ \\mathrm{pc\\,M_{\\odot}^{-1}\\,(km/s)^2}$.",
+   "parts": [
+    {
+     "label": "i)",
+     "points": 1,
+     "statement": "Assuming that the mass density is constant over the plate’s thickness. i.e. $\\rho(z) = \\rho_0$, what is the acceleration $a_z$ of a star at a distance $z$ from the mid-plane?"
+    },
+    {
+     "label": "ii)",
+     "points": 0.5,
+     "statement": "Consider a star that starts with zero velocity at a distance of $z = a$ from the mid-plane. With what period does it start oscillating around the mid-plane?",
+     "statementAfter": "In reality, density decreases with growing $|z|$. Measuring density has been a great challenge because of contributions from dark and other difficult-to-see matter. Here, we consider a breakthrough method of doing it. Consider the distributions of the stars in our neighbourhood on the $z$–$v_z$ phase plane, where each star is a dot with coordinates $(v_z,z)$; $v_z$ denotes the $z$-component the star’s velocity, and $z$ – the vertical coordinate. Initially, these dots were distributed nearly homogeneously, but some time ago, the Milky Way was perturbed externally, probably by a passing-by dwarf galaxy; this shuffled the positions and velocities of stars, creating a bar-shaped overdensity region. When moving within that bar-shaped region from the centre to the periphery, the total energy per mass of stars increased monotonously. Over time, this overdensity region started “winding up”, due to the oscillation periods of stars in the vertical plane depending on their oscillation amplitude $z_{\\mathrm{m}}$, and evolved into a spiral pictured below (Antoja et al. 2018, Nature 561, 360). An observation that you need to exploit below is that the ordering of stars by energies along the spiral today remains the same as it was at the time of perturbation.\n\nThe oscillation period of stars depends on the amplitude $z_{\\mathrm{m}}$ because the gravitational potential (the potential energy per mass) $\\Phi(z)$ is not parabolic. In such a case, the period can be approximately found by substituting the real $\\Phi(z)$ with a $kz^2$ matching $\\Phi(z)$ at $z = z_{\\mathrm{m}}$, i. e. with $k = \\Phi(z_{\\mathrm{m}})/z_{\\mathrm{m}}^2$.\n\n[[figure:p8-fig1]]",
+     "figures": [
+      {
+       "id": "p8-fig1",
+       "alt": "Phase spiral of stars in the z–v_z plane: v_z (km/s, −60 to 60) on the vertical axis versus z (kpc, −1.5 to 1.5) on the horizontal axis, on a light grid; a blue curve spirals outward from near the origin through about two and a half turns, ending at the upper left.",
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p8-fig1.png",
+       "width": 801,
+       "height": 723,
+       "source": {
+        "page": 2,
+        "pdfRect": [
+         426.83,
+         276.8,
+         618.79,
+         450.05
+        ],
+        "dpi": 300
+       }
+      }
+     ]
+    },
+    {
+     "label": "iii)",
+     "points": 2.5,
+     "statement": "At the intersection points of the spiral with $v_z = 0$, calculate $\\Phi(z)$ by interpolating data linearly where appropriate; plot your results (this follows the analysis of Guo et al. 2024, ApJ, 960, 133)."
+    },
+    {
+     "label": "iv)",
+     "points": 1,
+     "statement": "Assuming that the mass density is almost constant for $|z| \\le 0.3\\ \\mathrm{kpc}$, what is the mass density near $z = 0$?"
+    },
+    {
+     "label": "v)",
+     "points": 2,
+     "statement": "Dark matter is an “invisible” form of matter that only interacts by gravity. In general, it is found that dark matter forms halos that extend significantly farther than visible matter structures. By assuming that the dark matter density doesn’t vary significantly within the volume of interest and that it starts dominating far away from the galactic plane, from around $z = 0.7\\ \\mathrm{kpc}$, estimate the local dark matter density $\\rho_{\\mathrm{DM}}$."
+    },
+    {
+     "label": "vi)",
+     "points": 2,
+     "statement": "How long ago did the perturbation occur?"
+    }
+   ],
+   "topics": [
+    "astrophysics/galactic-dynamics",
+    "mechanics/gravitation",
+    "mechanics/oscillations"
+   ],
+   "difficulty": "Hard",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Taavet Kalda.*",
+    "sections": [
+     {
+      "id": "solution-i",
+      "title": "i)",
+      "points": 1,
+      "statement": "Gravitational acceleration obeys Gauss’ law, i.e., the number of field lines passing through a closed surface is proportional to the enclosed mass. We can see from the example of a point mass $M$ that $\\int g\\,\\mathrm{d}A = 4\\pi GM$. Applied for the case of an infinite plane with constant density with a cuboid of area $A$ and half-thickness $z$, we get $-2a_zA = 4\\pi G2Az\\rho_0$ so\n\n$$a_z = -4\\pi G\\rho_0 z.$$\n\n**Grading:** (preliminary)\n\n- Idea of using Gauss’ law **0.3 pts**\n- Formula relating the mass inside with gravitational flux **0.3 pts**\n- Application of Gauss’ law on a cuboid **0.2 pts**\n- Final result **0.2 pts**\n\n*Alternative solution:*\n\n- Finding the acceleration of a thin disk by integrating over its surface, of which: **0.5 pts**\n  - Writing down the integral **0.3 pts**\n  - Correct evaluation, including finding that the acceleration is independent of the displacement from the surface **0.2 pts**\n- Inferring that only the surface density inside $-a < z < a$ contributes to the final acceleration **0.3 pts**\n- Final result **0.2 pts**"
+     },
+     {
+      "id": "solution-ii",
+      "title": "ii)",
+      "points": 0.5,
+      "statement": "The acceleration is proportional to displacement and therefore corresponds to a harmonic oscillator. The period of oscillation is thus\n\n$$T = \\frac{2\\pi}{\\sqrt{4\\pi G\\rho_0}} = \\sqrt{\\frac{\\pi}{G\\rho_0}}.$$\n\n**Grading:** (preliminary)\n\n- Noticing that the movement is that of a harmonic oscillator **0.3 pts**\n- Expression for the oscillation period **0.2 pts**"
+     },
+     {
+      "id": "solution-iii",
+      "title": "iii)",
+      "points": 2.5,
+      "statement": "If we follow the trajectory of a single star that lies on the spiral, we would find it oscillating around the mid-plane with some period $T(z)$ that decreases with increasing $z$. Over the course of an orbit, the energy per unit mass is conserved and is given by $E = v_z^2/2 + \\Phi(z)$. We know that near the mid-plane, the gravitational potential is minimal and equal to zero, so $v_z$ is maximal and the kinetic energy is equal to the total energy. Hence, we know the total energy of stars at the seven intersection points of the spiral with $z = 0$. Similarly, when $v_z = 0$, the kinetic energy is minimal and equal to zero, so the total energy is equal to $\\Phi(z)$ at those points.\n\nAs one traces the various intersection points with $v_z = 0$ and $z = 0$ along the spiral, the maximal extent of the orbit keeps increasing. To the first order, if we assume that the maximal extent increases linearly with each crossing, we can find the potential energy of the crossings of $v_z = 0$ as the average between the kinetic energies of the previous and subsequent crossing over $z = 0$. This allows us to determine the potential energy at all the crossings with $v_z = 0$, as tabulated and plotted below.\n\n| $i$ | $z_i$ (kpc) | $\\Phi(z_i)$ $(\\mathrm{km^2/s^2})$ |\n|---|---|---|\n| 1 | 0.27 | 180 |\n| 2 | 0.39 | 330 |\n| 3 | 0.54 | 530 |\n| 4 | 0.72 | 800 |\n| 5 | 0.97 | 1200 |\n| 6 | 1.34 | 1800 |\n\n**Grading:** (preliminary)\n\n- Making use of the *total* energy at $z = 0$ intersection points being known (either explicitly or implicitly) **0.7 pts**\n- Interpolating the values at $v_z = 0$ from neighbouring $z = 0$ crossovers. This should be explicitly mentioned **0.8 pts**\n- Tabulating the potential, of which: **0.7 pts**\n  - using six points **0.7/0.7 pts**\n  - using four to five points **0.4/0.7 pts**\n  - using one to three points **0.1/0.7 pts**\n- $\\Phi(z)$ vs $z$ correctly plotted **0.3 pts**\n\n[[figure:p8-sol-fig1]]",
+      "figures": [
+       {
+        "id": "p8-sol-fig1",
+        "alt": "Plot of Φ(z) (km²/s², 0 to 2000) versus z (kpc, 0.0 to 1.4): six blue points rising from about 180 at z ≈ 0.27 to about 1800 at z ≈ 1.34.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p8-sol-fig1-v2.png",
+        "width": 800,
+        "height": 745,
+        "source": {
+         "page": 7,
+         "pdfRect": [
+          427.68,
+          83.34,
+          619.65,
+          261.95
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "solution-iv",
+      "title": "iv)",
+      "points": 1,
+      "statement": "For a harmonic oscillator, the potential energy would grow as $z^2$. Based on the plot of potential energy we obtained, it seems to grow roughly quadratically in the beginning, and then transition into a more linear regime, implying that smaller values of $z$ have more uniform $\\rho$. Taking the first value of $\\Phi(z_1) = 180\\ \\mathrm{km^2/s^2}$ that we obtained, we can estimate the mid-plane density. From the first part, $\\Phi(z) = \\int a_z\\,\\mathrm{d}z = 2\\pi G\\rho_0z^2$ and so\n\n$$\\begin{aligned} \\rho_0 &= \\frac{\\Phi(z_1)}{2\\pi Gz_1^2} = 6.1\\times 10^{-21}\\ \\mathrm{kg/m^3} \\\\ &= 0.090\\ \\mathrm{M_{\\odot}/pc^3}. \\end{aligned}$$\n\n**Grading:** (preliminary)\n\n- Connecting $\\Phi(z_1)$ with $\\rho_0$ by assuming constant mass density. **0.8 pts**\n- If the first data point is not used **−0.2 pts**\n- Final expression for $\\rho_0$ **0.1 pts**\n- Numerical value within $10\\ \\%$ **0.1 pts**"
+     },
+     {
+      "id": "solution-v",
+      "title": "v)",
+      "points": 2,
+      "statement": "We can compute the enclosed surface density $\\Sigma(z)$ between $0 < z$ by using the previous harmonic oscillator estimate. With the constant density approximation, the surface density is $\\Sigma(z) = \\rho_0z = \\Phi(z)/(2\\pi Gz)$ *Of course, here, $\\rho_0$ is a placeholder variable while using the constant profile approximation to simplify the calculus. The final result is expected to deviate from the true value by a numerical factor that’s close to unity.*\n\nAssuming that dark matter density dominates far away, we can use the difference between the farthest two datapoints at $z_5$ and $z_6$ to estimate the dark matter density via\n\n$$\\begin{aligned} \\Sigma(z_6) - \\Sigma(z_5) &= \\rho_{\\mathrm{DM}}(z_6 - z_5) \\\\ &= \\frac{1}{2\\pi G}\\left(\\frac{\\Phi(z_6)}{z_6} - \\frac{\\Phi(z_5)}{z_5}\\right). \\end{aligned}$$\n\nThus,\n\n$$\\begin{aligned} \\rho_{\\mathrm{DM}} &\\approx \\frac{1}{2\\pi G(z_6 - z_5)}\\left(\\frac{\\Phi(z_6)}{z_6} - \\frac{\\Phi(z_5)}{z_5}\\right) \\\\ &= 7.7\\times 10^{-22}\\ \\mathrm{kg/m^3} = 0.011\\ \\mathrm{M_{\\odot}/pc^3}. \\end{aligned}$$\n\nDark matter therefore makes up around $\\rho_{\\mathrm{DM}}/\\rho_0 = 13\\ \\%$ of the total local matter budget.\n\n**Grading:** (preliminary)\n\n- Obtaining an expression for the total mass contained within $z$ **0.7 pts**\n- Taking the difference between the total mass within $z_6$ and $z_5$ for calculating the dark matter content **0.9 pts**\n- Final expression for $\\rho_{\\mathrm{DM}}$ based on $z_6$ and $z_5$ **0.3 pts**\n- Numerical value within $10\\ \\%$ **0.1 pts**\n\n*Alternative scheme:*\n\n- Using the previous expression for $\\rho$ based on $\\Phi(z)$ to express $(z_6 - z_5)\\rho_{\\mathrm{DM}} = z_6\\rho(z_6) - z_5\\rho(z_5)$ **1.6 pts**\n- Final expression for $\\rho_{\\mathrm{DM}}$ based on $z_6$ and $z_5$ **0.3 pts**\n- Numerical value within $10\\ \\%$ **0.1 pts**"
+     },
+     {
+      "id": "solution-vi",
+      "title": "vi)",
+      "points": 2,
+      "statement": "We can estimate the time of the perturbation by using the winding rate between two points on the spiral and how many full turns around the origin they have made relative to each other. Using the harmonic estimate, firstly, $\\rho_0 = \\Phi(z)/(2\\pi Gz^2)$ and secondly the angular frequency is\n\n$$\\omega(z) = \\sqrt{4\\pi G\\rho_0} = \\sqrt{2\\Phi(z)/z^2}.$$\n\nBy, for example, picking points $z_1$ and $z_6$ and seeing that they have 2.5 full turns between them, we can express how long ago the perturbation happened:\n\n$$\\begin{aligned} T_0 &= 2.5\\frac{2\\pi}{\\omega(z_6) - \\omega(z_5)} \\\\ &= 5\\pi\\left(\\sqrt{2\\Phi(z_1)/z_1^2} - \\sqrt{2\\Phi(z_6)/z_6^2}\\right)^{-1} \\\\ &= 1.9\\times 10^{16}\\ \\mathrm{s} = 620\\ \\mathrm{Myr}. \\end{aligned}$$\n\nThe timescale is relatively long, but compared to the lifespan of the Milky Way, which is around 13.6 billion years, it’s relatively recent.\n\n**Grading:** (preliminary)\n\n- Idea of using differences in the winding rate between two points on the spiral **1.0 pts**\n- Expression for angular frequency $\\omega$ in terms of $\\Phi(z)$ by assuming a harmonic oscillator **0.5 pts**\n- Picking two points and connecting the age of the spiral, $\\omega$ and the winding amount **0.3 pts**\n- Numerical value within $10\\ \\%$ of the solution value **0.2 pts**"
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    }
+   ]
+  },
+  {
+   "id": "nbpho-2025-v1-0-p9",
+   "number": 9,
+   "title": "Hot Plate",
+   "points": 12,
+   "problemType": "experiment",
+   "statement": "— *Jaan Kalda.* *Tools:* a resistor with resistance $R = 220\\ \\Omega$ mounted in one corner of a foam plastic plate (resistor’s upper surface is painted black), a power supply (on the power supply, readings other than voltage are not reliable!), two identical $40\\ \\mathrm{mm}\\times 40\\ \\mathrm{mm}$ aluminium plates that differ only in their coating: one is polished, the other is anodized black and can be assumed to be a black body, 4 silicone rubber pads of thickness $t = 0.8\\ \\mathrm{mm}$, a foam cup with hot water, tweezers, a stopwatch, an infrared thermometer (press the knob twice and take a reading) , sheets of graph paper and paper tissues for cleaning. Note that for thermal radiation, water can be also assumed to be a black body.\n\n**Do not apply voltages higher than $U = 15\\ \\mathrm{V}$ to the resistor as this will lead to a melting of the foam plastic! Please handle foam cups with care and do not break them (you will not get a spare one)!**",
+   "figures": [],
+   "parts": [
+    {
+     "label": "i)",
+     "points": 3,
+     "statement": "Determine the emissivity (thermal radiation power relative to a black body) of the polished aluminium plate. *Hint*: infrared thermometers measure temperature via thermal radiation power (assume it is calibrated for objects of 100% emissivity); within relevant temperature ranges, this relationship can be approximated as linear,"
+    },
+    {
+     "label": "ii)",
+     "points": 3,
+     "statement": "Determine the heat transfer coefficient between the top surface of the black aluminium plate and air (i. e. the coefficient of proportionality between heat dissipation power and the temperature difference) that includes both conductive and radiative heat transfer."
+    },
+    {
+     "label": "iii)",
+     "points": 2,
+     "statement": "Determine the heat capacity of a metal plate."
+    },
+    {
+     "label": "iv)",
+     "points": 4,
+     "statement": "Determine the heat conductance of silicon rubber pads (neglect their heat capacitance)."
+    }
+   ],
+   "topics": [
+    "thermodynamics/heat-transfer",
+    "thermodynamics/thermal-radiation",
+    "experiment/data-analysis"
+   ],
+   "difficulty": "Normal",
+   "importance": 2,
+   "solution": {
+    "statement": "— *Jaan Kalda.*",
+    "sections": [
+     {
+      "id": "solution-i",
+      "title": "i)",
+      "points": 3,
+      "statement": "Both aluminium plates were immersed in hot water until thermal equilibrium was reached, then removed, dried with tissue paper, and measured using an infrared thermometer. The plates have identical thermal properties except for their surface coating, so they should have reached the same actual temperature in the hot water bath. Experimental measurements:\n\n| $T_{\\mathrm{polished}}$ (°C) | $T_{\\mathrm{black}}$ (°C) | $T_{\\mathrm{room}}$ (°C) |\n|---|---|---|\n| 26.2 | 70.9 | 22.9 |\n| 26.0 | 70.7 | 22.9 |\n| 25.4 | 70.2 | 22.9 |\n\nThe infrared thermometer measures temperature based on thermal radiation and we were told it is calibrated for emissivity $\\varepsilon = 1$ (in reality, it is calibrated for $\\varepsilon = 0.95$, but this difference is not significant). We were also told that the radiation power can be linearized: $P_{\\mathrm{thermal}} = P_0 + \\alpha T$. Objects with $\\varepsilon < 1$ radiate $P_\\varepsilon = \\varepsilon(P_0 + \\alpha T_\\varepsilon)$, but they also reflect/scatter the radiation falling onto it from the environment. If the room is more or less at the thermal equilibrium at temperature $T_0$, the room is filled with the photons at thermal equilibrium with walls at temperature $T_0$. If the plate were to be black and also at temperature $T_0$, it would be in equilibrium with the radiation and emit $P = P_0 + \\alpha T_\\varepsilon$; so, there must be as much incident radiation from the surroundings regardless of its real emissivity and temperature. As it follows from the second law of thermodynamics, the reflectance must be $1 - \\varepsilon$, so it reflects/scatters power equal to $P_r = (1 - \\varepsilon)(P_0 + \\alpha T_0)$. This means that the total power departing from it is $P_\\varepsilon + P_r = P_0 + \\varepsilon\\alpha T_\\varepsilon + (1 - \\varepsilon)T_0$. The IR thermometer assumes this is a black body and equates this power to $P_0 + \\alpha T_{\\mathrm{reading}}$, hence were density as would have a room thermometer reading is a weighted average:\n\n$$T_{\\mathrm{reading}} = \\varepsilon\\cdot T_\\varepsilon + (1 - \\varepsilon)\\cdot T_0$$\n\nSince the black plate has $\\varepsilon = 1$, its reading directly gives the actual temperature of both plates. Rearranging to solve for emissivity:\n\n$$\\varepsilon = \\frac{T_{\\mathrm{polished}} - T_0}{T_{\\mathrm{black}} - T_0}$$\n\nCalculating for each measurement:\n\n$$\\begin{aligned} \\varepsilon_1 &= \\frac{26.2 - 22.9}{70.9 - 22.9} = 0.069 \\\\ \\varepsilon_2 &= \\frac{26.0 - 22.9}{70.7 - 22.9} = 0.065 \\\\ \\varepsilon_3 &= \\frac{25.4 - 22.9}{70.2 - 22.9} = 0.053 \\end{aligned}$$\n\nTaking the average: $\\varepsilon = \\frac{0.069+0.065+0.053}{3} = 0.062 \\approx 0.06$ The emissivity of the polished aluminium plate is $\\varepsilon = 0.06 \\pm 0.01$.\n\n**Grading:** (preliminary)\n\n- The idea of heating the two plates together in water (using alternative methods doesn’t guarantee equal temperatures for the plates well) **0.4 pts**\n- Measuring the radiance of the plates in a properly (plates are properly dried and measurements are done in a timely manner) **0.4 pts**\n- Making at least three measurements of the black plate, the polished plate and the surrounding environment (0.2 p for each set of 3, totalling) **0.6 pts**\n- Understanding that the IR temperature reading of the polished plate is affected not only by the plate itself, but also by the reflected radiation of the environment $T_{\\mathrm{reading}} = \\varepsilon\\cdot T_{\\mathrm{actual}} + (1 - \\varepsilon)\\cdot T_{\\mathrm{ambient}}$ , not just $T_{\\mathrm{reading}} = \\varepsilon\\cdot T_{\\mathrm{actual}}$ **0.3 pts**\n- Deriving a correct formula for emissivity, expressed in terms of the three measured temperatures **0.7 pts**\n- Calculated value of emissivity in the range from 0.03 to 0.12 **0.6 pts** (for values from 0.02 to 0.2: 0.4 pts, for values from 0.01 to 0.3: 0.2 pts)."
+     },
+     {
+      "id": "solution-ii",
+      "title": "ii)",
+      "points": 3,
+      "statement": "*Solution 1.* Here the main idea is to heat the plate using the resistor. Once thermal equilibrium is reached with plate’s temperature $T = T_f$, the heating power $P = V^2/R$ equals to the power dissipated to the environment, $H(T_f - T_0)$ (with $T_0$ denoting the room temperature), hence we can determine the heat exchange coefficient as $H = V^2/R(T_f - T_0)$. The main difficulty with this approach is that the characteristic thermalization time is long, around 7 minutes, so for a more or less precise measurement, one should wait around half an hour.\n\n**Grading:** (preliminary)\n\n- The idea of using resistive heating and waiting for thermalization **0.5 pts**\n- For waiting long enough, up to **0.8 pts** ;as follows: for each five minutes missing from more than 30 minutes, subtract 0.2 pts (so, less than 30 minutes is 0.8 pts; less than 25 minutes is 0.6 pts ... etc).\n- The voltage is maximized to have maximal $T_f$ (needed to reduce the relative error of $T_f - T_0$ **0.4 pts** (the maximal allowed voltage of $15\\ \\mathrm{V}$ gives maximal points, each missing volt subtracts 0.1 pts.\n- Measuring the temperature and obtaining a value that is reasonable for the given voltage, i.e. difference is not bigger than $1\\ ^{\\circ}\\mathrm{C}$ **0.6 pts**\n- Deriving a correct formula for $H$ **0.5 pts**\n- Evaluating correctly **0.2 pts** (any mistake, either with units or arithmetic, leads to no points)\n\n*Solution 2.* In order to avoid long waiting time, the following approach can be used. Although it involves more complicated data analysis, the analysis results are re-usable by part iii.\n\nThe black aluminium plate was placed on the foam plastic with the resistor beneath it, providing continuous heating. Temperature readings were recorded at one-minute intervals (the first row shows time in minutes, the second — the measured temperature in °C:\n\n| 0 | 1 | 2 | 3 | 4 | 5 | 6 |\n|---|---|---|---|---|---|---|\n| 28.0 | 30.8 | 33.2 | 35.2 | 37.3 | 39.0 | 40.3 |\n\nFor heating with constant power, the temperature evolution follows $T = T_f - \\theta\\mathrm{e}^{-\\gamma t}$, where $T_f$ is the final equilibrium temperature, $\\theta$ is a constant depending on the initial temperature, and $\\gamma$ is the inverse of the characteristic time constant. To determine $\\gamma$, we examine successive temperature increments $T(t + \\tau) - T(t) = \\theta\\mathrm{e}^{-\\gamma t}(\\mathrm{e}^{\\gamma\\tau} - 1)$ with $\\tau = 1\\ \\mathrm{min}$, which should decrease exponentially, i.e. $\\ln\\Delta T \\equiv \\ln[T(t + \\tau) - T(t)] = -\\gamma t + \\mathrm{const}$ should be a linear function of time.\n\n| $t$ (min) | $\\Delta T$(°C) | $\\ln(\\Delta)T$ |\n|---|---|---|\n| 0 | 2.80 | 1.0296 |\n| 1 | 2.40 | 0.8755 |\n| 2 | 2.00 | 0.6931 |\n| 3 | 2.10 | 0.7419 |\n| 4 | 1.70 | 0.5306 |\n| 5 | 1.30 | 0.2624 |\n\n[[figure:p9-sol-fig1]]\n\nLinear regression analysis of $\\ln[T(t + 1) - T(t)]$ versus $t$ yields:\n\n$$\\ln[T(t + \\tau) - T(t)] = 1.0333 - 0.1378t$$\n\nwith $R^2 = 0.9209$ indicating a good fit. Thus we obtain $\\gamma = 0.1378\\ \\mathrm{min^{-1}}$, corresponding to the time constant of the thermal system $1/\\gamma \\approx 7.3$ minutes.\n\nWe now plot $T$ versus $\\mathrm{e}^{-\\gamma t}$ to find $T_f$ as the intercept when $\\mathrm{e}^{-\\gamma t} = 0$:\n\n$$T = T_f - \\theta\\mathrm{e}^{-\\gamma t}$$\n\nComputing $\\mathrm{e}^{-0.1378n\\tau}$, $n = 0, \\dots 6$ values yields\n\n$$\\mathrm{e}^{-\\gamma n\\tau} \\in \\{1.00, 0.87, 0.76, 0.66, 0.58, 0.50, 0.44\\};$$\n\nthe corresponding plot is provided below.\n\n[[figure:p9-sol-fig2]]\n\nLinear regression of $T$ versus $\\mathrm{e}^{-\\gamma t}$ yields $T_f \\approx 49.9^{\\circ}C$, as shown in the equation:\n\n$$T = 49.9 - 22.0\\cdot\\mathrm{e}^{-0.1378t}$$\n\nwith $R^2 = 0.9995$ indicating an excellent fit. At thermal equilibrium, the power dissipated equals the power supplied:\n\n$$P = \\frac{U^2}{R} = h\\cdot A\\cdot(T_f - T_0) = H\\cdot(T_f - T_0)$$\n\nwhere $h$ is the heat transfer coefficient per unit area, $H$ is the total heat transfer coefficient, $A$ is the plate area, $U$ is the applied voltage, and $R$ is the resistor’s resistance. Using $U = 15\\ \\mathrm{V}$, $R = 220\\ \\Omega$, $A = 40\\times 40\\ \\mathrm{mm^2} = 1.6\\times 10^{-3}\\ \\mathrm{m^2}$, and $T_0 = 22.9\\ ^{\\circ}\\mathrm{C}$ we obtain\n\n$$h = \\frac{U^2/R}{A\\cdot(T_f - T_0)} \\approx 23.6\\ \\mathrm{W/(m^2\\cdot K)}.$$\n\nThe total heat transfer coefficient $H$ is found as\n\n$$H = h\\cdot A = 37.8\\ \\mathrm{mW\\,K^{-1}}.$$\n\n**Grading:** (preliminary)\n\n- Coming up with the idea of analysing exponential decay of temperature change with a graph and deriving the heat transfer coefficient from that **0.5 pts**\n- Correct equation $T(t) = T_f - \\theta\\mathrm{e}^{-\\gamma t}$. **0.3 pts**\n- Plotting the data to a graph to determine the $\\gamma$ and to confirm the validity of collected data **0.3 pts**\n- At least 5 datapoints used. **0.1 pts**\n- Measure for at least 5 minutes. **0.1 pts**\n- Calculating the slope and retrieving $\\gamma$ from it. **0.2 pts**\n- Finding the maximal temperature for used voltage used, using plot of $T$ vs $e^{-\\gamma t}$. **0.5 pts**\n- Evaluating $P = \\frac{U^2}{R} = h\\cdot A\\cdot(T_f - T_0) = H\\cdot(T_f - T_0)$ without errors **0.5 pts**\n- Getting heat Transfer coefficient close to expected value **0.5 pts**",
+      "figures": [
+       {
+        "id": "p9-sol-fig1",
+        "alt": "Plot of ln[T(t+1)−T(t)] (0.2 to 1.0) versus time (min, 0 to 5): six blue data points with a red decreasing linear fit line.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p9-sol-fig1.png",
+        "width": 846,
+        "height": 616,
+        "source": {
+         "page": 8,
+         "pdfRect": [
+          628.88,
+          422.05,
+          831.78,
+          569.7
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       },
+       {
+        "id": "p9-sol-fig2",
+        "alt": "Plot of temperature (°C, 25 to 50) versus e^(−γt) (axis from 1.0 down to 0.0): blue points labelled 0min to 6min on a red straight fit line; legend “T = 49.9 - 22.0·e^(-0.1378t), R² = 0.9995” and a green dashed line at T_f ≈ 49.9°C.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p9-sol-fig2.png",
+        "width": 849,
+        "height": 631,
+        "source": {
+         "page": 9,
+         "pdfRect": [
+          11.79,
+          219.06,
+          215.51,
+          370.26
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "solution-iii",
+      "title": "iii)",
+      "points": 2,
+      "statement": "*Solution 1* To determine the heat capacity, we can use the heating curve from Part 2. During heating, the energy balance is written as\n\n$$P_{\\mathrm{in}} - P_{\\mathrm{out}} \\equiv \\Delta P = C\\frac{\\mathrm{d}T}{\\mathrm{d}t},$$\n\nwhere $P_{\\mathrm{in}} = U^2/R$ is the input power, $P_{\\mathrm{out}} = H(T - T_0)$ (where $T_0 = T_{\\mathrm{room}}$ is the room temperature) is the power lost to the environment, $C$ is the heat capacity, and $\\frac{\\mathrm{d}T}{\\mathrm{d}t}$ is the rate of temperature change. Using our exponential model $T = T_f - \\theta\\mathrm{e}^{-\\gamma t}$, we find:\n\n$$\\frac{\\mathrm{d}T}{\\mathrm{d}t} = \\theta\\gamma\\mathrm{e}^{-\\gamma t} = \\gamma(T_f - T)$$\n\nSubstituting into the energy balance:\n\n$$P_{\\mathrm{in}} - H(T - T_0) = C\\gamma(T_f - T).$$\n\nThis allows us to calculate the heat capacity $C$ as\n\n$$C = \\frac{P_{\\mathrm{in}} - H(T - T_0)}{\\gamma(T_f - T)}.$$\n\nNow we need to use the values from Parts 1 and 2:\n\n$$\\begin{gathered} U = 15\\ \\mathrm{V},\\ R = 220\\ \\Omega,\\ H = 3.78\\times 10^{-2}\\ \\mathrm{W\\,K^{-1}} \\\\ T_0 = 22.9\\ ^{\\circ}\\mathrm{C},\\ T_f = 49.9\\ ^{\\circ}\\mathrm{C},\\ \\gamma = 0.1378\\ \\mathrm{min^{-1}}. \\end{gathered}$$\n\nThe input power is evaluated as\n\n$$P_{\\mathrm{in}} = \\frac{U^2}{R} = \\frac{15^2}{220} = 1.023\\ \\mathrm{W}.$$\n\nFor each time point, we can calculate:\n\n| $t$ min | $T$ °C | $P_{\\mathrm{out}}$ W | $\\Delta P$ W | $\\frac{\\mathrm{d}T}{\\mathrm{d}t}$ K/ min | $C$ $\\mathrm{J\\,K^{-1}}$ |\n|---|---|---|---|---|---|\n| 0 | 28.0 | 0.193 | 0.830 | 3.018 | 16.5 |\n| 1 | 30.8 | 0.299 | 0.724 | 2.629 | 16.5 |\n| 2 | 33.2 | 0.389 | 0.633 | 2.291 | 16.6 |\n| 3 | 35.2 | 0.465 | 0.558 | 1.996 | 16.7 |\n| 4 | 37.3 | 0.544 | 0.478 | 1.739 | 16.5 |\n| 5 | 39.0 | 0.609 | 0.414 | 1.515 | 16.4 |\n| 6 | 40.3 | 0.658 | 0.365 | 1.320 | 16.6 |\n\nThe heat capacity values are remarkably consistent across different time points, which validates our model. Taking the average of the values in the tableˊyields\n\n$$C \\approx 16.5\\ \\mathrm{J/K}.$$\n\nThis value represents the heat capacity of the aluminium plate. For reference, the specific heat capacity of aluminium is approximately $c_{\\mathrm{Al}} = 900\\ \\mathrm{J\\,kg^{-1}\\,K^{-1}}$, which means the plate has a mass of about $C/c_{\\mathrm{Al}} = 18.3\\ \\mathrm{g}$. This is a reasonable value for a $40\\ \\mathrm{mm}\\times 40\\ \\mathrm{mm}$ aluminium plate with a thickness of approximately $2\\ \\mathrm{mm}$.\n\n*Solution 2.* The calculated heat capacity represents the effective heat capacity of the system as observed in the experiment. This includes the aluminium plate and potentially some contribution from the heating resistor and its mounting. Therefore, a little better approach is to make an additional series of measurements to obtain a cooling temperature curve (similar to those what will be made in the next section), because then we could have let the plate cool on a flat part of the foam plastic, excluding thereby the contribution of the resistor’s thermal capacity. If part ii was solved using the solution 1, this is the only viable way.\n\nSo, we heat the plate — the easier way is by immersing into hot water — and measure the time and temperature as it cools down. As a result, we obtain data about $T(t)$; the energy balance equation is\n\n$$P_{\\mathrm{out}} = H[T(t) - T_0] = -C\\frac{\\mathrm{d}T}{\\mathrm{d}t} = \\gamma C[T(t) - T_0],$$\n\nhence\n\n$$C = H/\\gamma.$$\n\nSimilarly to the solution 1, we have used the fact that the plate cools exponentially in time and hence, $\\frac{\\mathrm{d}T}{\\mathrm{d}t} = \\gamma[T(t) - T_0]$. The decay rate can be found by plotting $\\ln[T(t) - T_0]$ against $t$ and determining the slope of the linear fit line.\n\n- The idea of using the $T(t)$ dependence, either for cooling or heating with the resistor **0.2 pts**\n- Measuring and tabulating at least 6 data points **0.3 pts** (subtract 0.1 pts for each missing)\n- Data points cover at least 6 minutes **0.3 pts** (subtract 0.1 pts for each missing minute)\n- The idea of using log-linear plot for data linearization **0.2 pts**\n- Correct data plotting **0.2 pts**\n- Finding the slope of a fit line **0.2 pts**\n- The idea of substituting time derivative with multiplication by $\\gamma$ **0.2 pts** (alternative approach of calculating derivative by finite difference ratio $\\Delta T/\\delta t$ is significantly less accurate).\n- Deriving a correct formula for $C$ **0.2 pts**\n- Obtaining a reasonable numerical value for $C$, i.e. from $13\\ \\mathrm{J\\,K^{-1}}$ to 20 — **0.2 pts** (else from 10 to 25: 0.1 pts)."
+     },
+     {
+      "id": "solution-iv",
+      "title": "iv)",
+      "points": 4,
+      "statement": "For this part, cooling experiments were conducted with the aluminium plate covered by different numbers of silicone rubber layers. The plate was heated in water and then allowed to cool, with temperature recorded as a function of time.\n\n| $t$ (s) | 0 | 60 | 120 | 180 | 240 | 300 |\n|---|---|---|---|---|---|---|\n| $T_{1\\ \\mathrm{layer}}$ (°C) | 65.2 | 60.2 | 55.5 | 51.3 | 47.6 | 44.6 |\n| $T_{2\\ \\mathrm{layers}}$ (°C) | \\* | 35.3 | 34.0 | 32.9 | 31.9 | 30.8 |\n| $T_{3\\ \\mathrm{layers}}$ (°C) | 45.4 | 43.1 | 41.6 | 40.0 | 38.9 | 37.3 |\n\n\\*The data point at $t = 0$ for 2 layers is excluded as it did not represent complete thermal equilibrium across the silicone layers. For a cooling process with constant ambient temperature, the temperature follows an exponential decay:\n\n$$T(t) = T_0 - (T_{\\mathrm{initial}} - T_0)e^{-\\gamma t}$$\n\nThe time constant $\\gamma$ is related to the thermal resistance $\\mathcal{R}$ and heat capacity $C$ by\n\n$$\\gamma = \\frac{1}{\\mathcal{R}C}.$$\n\nTaking the natural logarithm of the temperature difference from ambient yields\n\n$$\\ln[T(t) - T_0] = -\\gamma t + \\mathrm{const}$$\n\n[[figure:p9-sol-fig3]]\n\nUsing linear regression on the logarithmic cooling curves, we obtain:\n\n$$\\begin{aligned} \\gamma_{1\\ \\mathrm{layer}} &= 2.244\\times 10^{-3}\\ \\mathrm{s^{-1}} \\\\ \\gamma_{2\\ \\mathrm{layers}} &= 1.852\\times 10^{-3}\\ \\mathrm{s^{-1}} \\\\ \\gamma_{3\\ \\mathrm{layers}} &= 1.438\\times 10^{-3}\\ \\mathrm{s^{-1}} \\end{aligned}$$\n\nUsing our previously determined heat capacity $C = 16.5$ J/K, we calculate the total thermal resistance for each case:\n\n$$\\begin{aligned} R_{1\\ \\mathrm{layer}} &= \\frac{1}{\\gamma_{1\\ \\mathrm{layer}}\\cdot C} = 27.0\\ \\mathrm{K/W} \\\\ R_{2\\ \\mathrm{layers}} &= \\frac{1}{\\gamma_{2\\ \\mathrm{layers}}\\cdot C} = 32.7\\ \\mathrm{K/W} \\\\ R_{3\\ \\mathrm{layers}} &= \\frac{1}{\\gamma_{3\\ \\mathrm{layers}}\\cdot C} = 42.1\\ \\mathrm{K/W} \\end{aligned}$$\n\nThe total thermal resistance includes the resistance of the silicone layers and the thermal resistance of convection and radiation. Each additional layer adds a resistance $\\Delta R = \\delta/(\\kappa A)$, where $\\delta$ is the layer thickness, $\\kappa$ is the thermal conductivity, and $A$ is the area. The incremental resistances between layers are:\n\n$$\\begin{aligned} \\Delta R_{12} &= R_{2\\ \\mathrm{layers}} - R_{1\\ \\mathrm{layer}} = 5.7\\ \\mathrm{K\\,W^{-1}} \\\\ \\Delta R_{23} &= R_{3\\ \\mathrm{layers}} - R_{2\\ \\mathrm{layers}} = 9.4\\ \\mathrm{K\\,W^{-1}} \\end{aligned}$$\n\nTaking the average incremental resistance per layer:\n\n$$\\overline{\\Delta R} = \\frac{\\Delta R_{12} + \\Delta R_{23}}{2} = 7.6\\ \\mathrm{K\\,W^{-1}}$$\n\nWith the silicone rubber pad thickness $\\delta = 0.8$ mm $= 8\\times 10^{-4}$ m and area $A = 40\\times 40$ mm$^2 = 1.6\\times 10^{-3}$ m$^2$, we can calculate the thermal conductivity:\n\n$$\\kappa = \\frac{\\delta}{\\overline{\\Delta R}\\cdot A} = 0.066\\ \\mathrm{W/(m\\cdot K)}$$\n\nThe precision of this experiment can be increased by longer runs and adding additional silicon layers.\n\n- The idea of letting the plate to cool down while covering it with a different number of silicon sheets and measuring the $T(t)$ dependencies, **0.3 pts**\n- For the quantity of recorded data: within each data series (i.e. a series with a different number of silicon sheets), at least 6 data points: 0.3 pts (subtract 0.1 for each missing), within up to three different data series — in total up to $3\\times 0.3$pts, i.e. **0.9 pts**\n- Data points in each data series cover at least 6 minutes: 0.2 pts (0.1 pts if less than 6 but more than 4 minutes) — in total up to **0.6 pts**\n- The idea of using log-linear plot for data linearization **0.2 pts**\n- Correctly plotting the data: 0.1 pts each, up to **0.3 pts**\n- Calculating $\\gamma$ for each of the series, 0.1 pts for each (up to for three data series), in total up to **0.3 pts**\n- Correctly expressing the heat conductivity in terms of a difference of the $\\gamma$ values **0.7 pts**\n- Finding conductivity on the basis of all the $\\gamma$ values (either by pair-wise calculation, or plotting and finding the fit line slope **0.4 pts** (divide by two if only one pair of $\\gamma$ values was used)\n- Obtained value of $\\kappa$ within a reasonable range, i.e from 0.05 to $0.1\\ \\mathrm{W\\,m^{-1}\\,K^{-1}}$: **0.3 pts** (else if from 0.04 to 0.12: 0.2 pts; else from 0.02 to 0.14: 0.1 pts).",
+      "figures": [
+       {
+        "id": "p9-sol-fig3",
+        "alt": "Plot of ln(T−T₀) (2.00 to 3.75) versus time (s, 0 to 300) for three cooling series with linear fits: 1 layer (blue, γ = 0.00224 s⁻¹), 2 layers (red, γ = 0.00185 s⁻¹, dashed extrapolation to t = 0), 3 layers (green, γ = 0.00144 s⁻¹).",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2025-v1-0/p9-sol-fig3.png",
+        "width": 856,
+        "height": 539,
+        "source": {
+         "page": 10,
+         "pdfRect": [
+          10.12,
+          217.26,
+          215.51,
+          346.45
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     }
+    ]
+   },
+   "sourceSpans": [
+    {
+     "document": "problems",
+     "page": 2
+    },
+    {
+     "document": "solutions",
+     "page": 8
+    },
+    {
+     "document": "solutions",
+     "page": 9
+    },
+    {
+     "document": "solutions",
+     "page": 10
+    }
+   ]
+  }
+ ]
+}
