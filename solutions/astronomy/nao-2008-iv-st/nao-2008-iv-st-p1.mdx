@@ -5,8 +5,8 @@ title: 'Задача 1. Изгрев на Слънцето'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/NAO/2008/nao-2008-iv-st.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T03:23:23.374Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-30T00:51:40.143Z'
+verifier: 'single-pass'
 ---
 
 *XI Национална олимпиада по астрономия — IV кръг, Теоретичен тур, Старша възраст*
@@ -17,10 +17,61 @@ verifier: 'mechanical'
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архива липсва файл с решения
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+Ако не отчитаме рефракцията, можем да приемем, че по време на изгрева Слънцето е било точно на небесния екватор. Тогава то е имало деклинация $\delta=0^\circ$. С течение на деня неговата деклинация е нараствала, защото е казано, че денят е от месец март, т.е. това е денят на пролетното равноденствие и Слънцето навлиза в северната небесна полусфера. Средната ъглова скорост на Слънцето по еклиптиката е $\omega_1=2\pi/T$, където $T=1$ година е орбиталният период на Земята. По време на равноденствие Слънцето се движи под ъгъл $\varepsilon=23.5^\circ$ спрямо небесния екватор (наклонът на еклиптиката към екватора). Тогава скоростта, с която то си изменя деклинацията, е $\omega_1\sin\varepsilon$. Можем да считаме, че продължителността на деня е била $t=12\ \mathrm h$, тъй като деклинацията на Слънцето се е изменила незначително в рамките на този интервал. Оттук следва, че деклинацията му при залеза е
+
+$$
+\delta_1=\omega_1t=\frac{2\pi}{T}t\sin\varepsilon\approx+11.8'
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.6%', '--fig-max': '324px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nao-2008-iv-st/p1-sol-fig1.png" alt="Геометрия на залеза без рефракция." width="1013" height="535" loading="lazy" decoding="async" />
+</figure>
+
+
+Ъгълът, под който екваторът пресича хоризонта в точката запад (W), е $90^\circ-\varphi$. Под този ъгъл изгряват и залязват всички светила за София. Следователно, можем да запишем връзката $\delta_1=x\sin(90^\circ-\varphi)$, където $x$ е отстоянието на точката на залеза от точката запад по хоризонта. Оттук намираме:
+
+$$
+x=\frac{\delta_1}{\sin(90^\circ-\varphi)}=\frac{2\pi t\sin\varepsilon}{T\cos\varphi}
+$$
+
+$$
+x\approx18'
+$$
+
+Ако се отчита рефракцията, трябва да се има предвид, че при изгрева деклинацията на Слънцето не е $0^\circ$. На фигурата е показана схема на изгрева на Слънцето. В момента на изгрева то в действителност се намира на определена дълбочина под хоризонта, която е равна на ъгъла на рефракция $\rho=35'$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.8%', '--fig-max': '312px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nao-2008-iv-st/p1-sol-fig2.png" alt="Истинско положение на Слънцето при изгрев с рефракция." width="975" height="623" loading="lazy" decoding="async" />
+</figure>
+
+
+От чертежа се вижда, че деклинацията на Слънцето тогава е била $\delta_2=-\rho\sin\varphi\approx-23.5'$. Тук отново ще считаме, че денят продължава $t=12\ \mathrm h$ време. Следователно, деклинацията на Слънцето при залеза ще е:
+
+$$
+\delta_3=\delta_2+\omega_1t=\delta_2+\frac{2\pi}{T}t\sin\varepsilon\approx5{,}5'
+$$
+
+На следващия чертеж е показана схемата на залеза:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.8%', '--fig-max': '364px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nao-2008-iv-st/p1-sol-fig3.png" alt="Геометрия на залеза с рефракция." width="1138" height="714" loading="lazy" decoding="async" />
+</figure>
+
+
+Слънцето залязва когато височината му под хоризонта е равна на $r$. Деклинацията на Слънцето ще се е повишила с $\rho$. Деклинацията на Слънцето ще се е повишила с $\Delta\delta=\rho\sin\varphi=23.4'$. Аналогично на първия случай намираме отстоянието на точката на залеза от точката запад:
+
+$$
+x=\frac{\delta_3+\Delta\delta}{\sin(90^\circ-\varphi)}\approx26'
+$$
+
+Тук също точката на залез ще е южно от точката запад.
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [NOA4_2008_STproblems.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2008/2008-IV/NOA4_2008_STproblems.pdf#page=1)
+· официални решения: [NOA4_2008_STsolutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0%20%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D0%B0/2008/2008-IV/NOA4_2008_STsolutions.pdf#page=1)

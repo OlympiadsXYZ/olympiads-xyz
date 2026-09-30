@@ -5,13 +5,27 @@ title: 'Задача 1. Question 1'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2012/ioaa-2012-data-analysis-final-doc.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T07:36:46.317Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-30T01:35:47.315Z'
+verifier: 'single-pass'
 ---
 
 *6th International Olympiad on Astronomy and Astrophysics, 04 to 14 August, 2012 - Rio de Janeiro - Brazil — Data analysis · 4 август 2012 г. · 13,5 т.*
 
 ## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Table 1](#table-1)
+- [Table 2: Night A](#table-2)
+- [Table 3: Night B](#table-3)
+- [Table 4: Night C](#table-4)
+- [Appendix A: extinction coefficients](#appendix-a)
+- [Appendix B: calibrated differential magnitude](#appendix-b)
+- [Appendix C: least squares estimation of angular coefficients](#appendix-c)
+
+</nav>
 
 A few facts about photometry of asteroids:
 
@@ -24,7 +38,7 @@ A few facts about photometry of asteroids:
   M(t) = \mathrm{M_r}(t)+5\log(RD)
   $$
 
-  where $m_r$ is usually called reduced magnitude (meaning the magnitude the asteroid would have if its distances from the Sun and the Earth were reduced both to 1 $AU$) and depends only on the visible illuminated surface area and on phase angle effects. $R$ and $D$ are, respectively, the heliocentric and geocentric distances.
+  where $m_r$ is usually called reduced magnitude (meaning the magnitude the asteroid would have if its distances from the Sun and the Earth were reduced both to 1 $AU$) and depends only on the visible illuminated surface area and on phase angle effects. $R$ and $D$ are, respectivelly, the heliocentric and geocentric distances.
 
 Consider now the following scenario. Light curves of a given asteroid were obtained at three different nights at different points of its orbit, and at each time a photometric standard was observed in the same frame of the asteroid. Table 1 shows the geometric configuration of the asteroid at each night (phase angle $\varphi$, in degrees, $R$ and $D$ in $AU$s), and the calibrated magnitude of the photometric standard star that was observed along with the asteroid. Consider the calibrated magnitude as the final apparent magnitude after all the effects are taken into account.
 
@@ -32,7 +46,27 @@ Tables 2, 3 and 4 contain, for each night, the time interval of each observation
 
 Air mass is the dimensionless thickness of the atmosphere along the line of sight, and is equal to 1 when looking to zenith.
 
-**Table 1**
+**1.** Plot the star magnitude *versus* air mass for each set **[1,5 т.]**
+
+**2.** Calculate the extinction coefficient for each night (see Appendix A at the end of the text) **[3 т.]**
+
+**3.** Were the observations affected by clouds in one night? Express your answer as: a) Night A, b) Night B, c) Night C, d) None of the nights. **[0,5 т.]**
+
+**4.** Plot the calibrated magnitude *versus* time for each set of observations of the asteroid (see Appendix B). **[3 т.]**
+
+**5.** Determine the rotation period for each night. Consider that the light curve for this asteroid has two minima and two maxima, and that the semi-period is the average of the intervals between the two maxima and the two minima. **[1,5 т.]**
+
+**6.** Determine the amplitude (difference from maximum to minimum) of the light curve for each night **[1,5 т.]**
+
+**7.** Plot the calibrated reduced magnitude M$_{\mathrm{r}}$ *versus* phase angle $\varphi$ (use the mean value of each light curve) **[1,5 т.]**
+
+**8.** Calculate the angular coefficient of the phase curve (the plot of the calibrated reduced magnitude versus the phase angle) considering only the points away from the opposition (See 3$^{\mathrm{rd}}$ bullet of facts about photometry of asteroids above) **[0,5 т.]**
+
+**9.** Is there any reason to assume a surface covered by fine dust (regolith)? Answer YES/NO. **[0,5 т.]**
+
+<ProblemSection id="table-1">
+
+### Table 1
 
 | Night | *D* | *R* | *φ* | M$_{\mathrm{star}}$ |
 |---|---|---|---|---|
@@ -40,7 +74,11 @@ Air mass is the dimensionless thickness of the atmosphere along the line of sigh
 | B | 1.15 | 2.13 | 8.6 | 8.0 |
 | C | 2.70 | 1.89 | 15.6 | 8.1 |
 
-**Table 2: Night A**
+</ProblemSection>
+
+<ProblemSection id="table-2">
+
+### Table 2: Night A
 
 | Δ*t* | Air mass | m$_{\mathrm{ast}}$ | m$_{\mathrm{star}}$ |
 |---|---|---|---|
@@ -63,7 +101,11 @@ Air mass is the dimensionless thickness of the atmosphere along the line of sigh
 | 7.09 | 2.62 | 7.87 | 9.14 |
 | 7.53 | 3.67 | 8.21 | 9.49 |
 
-**Table 3: Night B**
+</ProblemSection>
+
+<ProblemSection id="table-3">
+
+### Table 3: Night B
 
 | Δ*t* | Air mass | m$_{\mathrm{ast}}$ | m$_{\mathrm{star}}$ |
 |---|---|---|---|
@@ -86,7 +128,11 @@ Air mass is the dimensionless thickness of the atmosphere along the line of sigh
 | 7.09 | 2.62 | 13.44 | 8.65 |
 | 7.53 | 3.67 | 13.67 | 8.87 |
 
-**Table 4: Night C**
+</ProblemSection>
+
+<ProblemSection id="table-4">
+
+### Table 4: Night C
 
 | Δ*t* | Air mass | m$_{\mathrm{ast}}$ | m$_{\mathrm{star}}$ |
 |---|---|---|---|
@@ -109,25 +155,11 @@ Air mass is the dimensionless thickness of the atmosphere along the line of sigh
 | 7.09 | 2.62 | 12.14 | 9.19 |
 | 7.53 | 3.67 | 12.63 | 9.65 |
 
-**1.** Plot the star magnitude *versus* air mass for each set **[1,5 т.]**
+</ProblemSection>
 
-**2.** Calculate the extinction coefficient for each night (see Appendix A at the end of the text) **[3 т.]**
+<ProblemSection id="appendix-a">
 
-**3.** Were the observations affected by clouds in one night? Express your answer as: a) Night A, b) Night B, c) Night C, d) None of the nights. **[0,5 т.]**
-
-**4.** Plot the calibrated magnitude *versus* time for each set of observations of the asteroid (see Appendix B). **[3 т.]**
-
-**5.** Determine the rotation period for each night. Consider that the light curve for this asteroid has two minima and two maxima, and that the semi-period is the average of the intervals between the two maxima and the two minima. **[1,5 т.]**
-
-**6.** Determine the amplitude (difference from maximum to minimum) of the light curve for each night **[1,5 т.]**
-
-**7.** Plot the calibrated reduced magnitude M$_{\mathrm{r}}$ *versus* phase angle $\varphi$ (use the mean value of each light curve) **[1,5 т.]**
-
-**8.** Calculate the angular coefficient of the phase curve (the plot of the calibrated reduced magnitude versus the phase angle) considering only the points away from the opposition (See 3$^{\mathrm{rd}}$ bullet of facts about photometry of asteroids above) **[0,5 т.]**
-
-**9.** Is there any reason to assume a surface covered by fine dust (regolith)? Answer YES/NO. **[0,5 т.]**
-
-**Appendix A: extinction coefficients**
+### Appendix A: extinction coefficients
 
 The magnitude outside the atmosphere is given by:
 
@@ -137,7 +169,11 @@ $$
 
 where $A$ is the extinction coefficient and $B$ is the zero point coefficient for the night, $X$ is the airmass of the observation and $m$ is the instrumental magnitude (that is, the magnitude obtained directly from the image)
 
-**Appendix B: calibrated differential magnitude**
+</ProblemSection>
+
+<ProblemSection id="appendix-b">
+
+### Appendix B: calibrated differential magnitude
 
 If the standard star is the same frame as the object, the calibrated magnitude of the object can be obtained by:
 
@@ -145,7 +181,11 @@ $$
 M_{ast} = m_{ast} - m_{star} + M_{star}
 $$
 
-**Appendix C: least squares estimation of angular coefficients**
+</ProblemSection>
+
+<ProblemSection id="appendix-c">
+
+### Appendix C: least squares estimation of angular coefficients
 
 Given straight lines described by
 
@@ -159,11 +199,13 @@ $$
 \beta = \frac{\sum_i^n x_i y_i - \frac{1}{n}\sum_i^n x_i \sum_i^n y_i}{\sum_i^n x_i^2 - \frac{1}{n}\left(\sum_i^n x_i\right)^2}
 $$
 
+</ProblemSection>
+
 ## Отговори
 
 <Spoiler title="Покажи отговорите">
 
-- **2.** Night A: A = 0.3493; Night B: A = 0.4265; Night C: A = 0.2059
+- **2.** See Fig. 1-3.
 - **3.** b) Night B
 - **6.** Night A: 0.09; Night B: 0.2; Night C: 0.1
 - **8.** 0.0405
@@ -175,59 +217,71 @@ $$
 
 <Spoiler title="Покажи официалното решение">
 
-**Question 1**
+<ProblemSection id="solution-scoring">
 
-- Pontuation
-  - 1 : 1.5 (0.5 each plot)
-  - 2 : 3.0 (1 each coefficient)
-  - 3 : 0.5
-  - 4 : 3.0 (1 each plot)
-  - 5 : 1.5 (0.5 each)
-  - 6 : 1.5 (0.5 each)
-  - 7 : 1.5
-  - 8 : 0.5
-  - 9 : 0.5
-- Answers:
-  - Itens 1,2 **See Fig. 1-3.**
-  - Item 3: **Night B**
-  - Itens 4,5,6 **See Fig. 4-6.**
-  - Itens 7,8 **See Fig. 7.**
-  - Item 9 **Yes**
+### Pontuation
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '49%', '--fig-max': '314px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig1.png" alt="Plot titled 'Night A (A=0.3493)': instrumental magnitude of the star (vertical axis, 8.5 to 9.5, increasing downward) versus air mass (horizontal axis, 0 to 3.5); the points lie on a straight fitted line from air mass 1 to about 3.7." width="981" height="776" loading="lazy" decoding="async" />
+- 1 : 1.5 (0.5 each plot)
+- 2 : 3.0 (1 each coefficient)
+- 3 : 0.5
+- 4 : 3.0 (1 each plot)
+- 5 : 1.5 (0.5 each)
+- 6 : 1.5 (0.5 each)
+- 7 : 1.5
+- 8 : 0.5
+- 9 : 0.5
+
+</ProblemSection>
+
+<ProblemSection id="solution-answers">
+
+### Answers:
+
+- Itens 1,2 **See Fig. 1-3.**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.2%', '--fig-max': '322px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig1-v2.png" alt="Plot titled 'Night A (A=0.3493)': instrumental magnitude of the star (vertical axis, 8.5 to 9.5, increasing downward) versus air mass (horizontal axis, 0 to 3.5); the points lie on a straight fitted line from air mass 1 to about 3.7." width="1006" height="801" loading="lazy" decoding="async" />
 <figcaption>Figure 1:</figcaption>
 </figure>
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '49%', '--fig-max': '314px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig2.png" alt="Plot titled 'Night B (A=0.4265)': instrumental magnitude (8.5 to 9.5) versus air mass (0 to 3.5); straight fitted line with points scattered around it near air mass 1–1.3." width="981" height="748" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.2%', '--fig-max': '322px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig2-v2.png" alt="Plot titled 'Night B (A=0.4285)': instrumental magnitude (8.5 to 9.5) versus air mass (0 to 3.5); straight fitted line with points scattered around it near air mass 1–1.3." width="1006" height="765" loading="lazy" decoding="async" />
 <figcaption>Figure 2:</figcaption>
 </figure>
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '34.9%', '--fig-max': '285px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig7.png" alt="Plot (printed rotated by 90°) titled 'Phase curve (linear coef.: 0.0405)': reduced magnitude (8.5 to 9.5) versus phase angle in degrees (0 to 15); a straight line through the points at about 8.6° and 15.6°." width="892" height="699" loading="lazy" decoding="async" />
-<figcaption>Figure 7:</figcaption>
-</figure>
-
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.8%', '--fig-max': '322px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig3.png" alt="Plot (printed rotated by 90°) titled 'Night C (A=0.2059)': instrumental magnitude (8.2 to 9) versus air mass (0 to 3.5); points on a straight fitted line." width="1007" height="776" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40%', '--fig-max': '331px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig3-v2.png" alt="Night C: original instrumental stellar magnitude versus air mass, with printed fitted coefficient in the chart title; complete original axes and data retained." width="1033" height="801" loading="lazy" decoding="async" />
 <figcaption>Figure 3:</figcaption>
 </figure>
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.3%', '--fig-max': '333px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig4.png" alt="Light curve of Night A (printed rotated by 90°): calibrated magnitude (6.85 to 7) versus time in hours (0 to 7); arrows mark maxima interval = 2.5 h, minima interval = 3.8 h and Amplitude = 0.09." width="1040" height="786" loading="lazy" decoding="async" />
+- Item 3: **Night B**
+- Itens 4,5,6 **See Fig. 4-6.**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40.5%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig4-v2.png" alt="Light curve of Night A (printed rotated by 90°): calibrated magnitude (6.85 to 7) versus time in hours (0 to 7); arrows mark maxima interval = 2.5 h, minima interval = 3.8 h and Amplitude = 0.09." width="1065" height="812" loading="lazy" decoding="async" />
 <figcaption>Figure 4:</figcaption>
 </figure>
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.8%', '--fig-max': '333px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig5.png" alt="Light curve of Night B (printed rotated by 90°): calibrated magnitude (10.9 to 11.2) versus time in hours (0 to 7); arrows mark maxima interval = 3.1 h, minima interval = 3.1 h and Amplitude = 0.2." width="1040" height="738" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.6%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig5-v2.png" alt="Light curve of Night B (printed rotated by 90°): calibrated magnitude (10.9 to 11.2) versus time in hours (0 to 7); arrows mark maxima interval = 3.1 h, minima interval = 3.1 h and Amplitude = 0.2." width="1065" height="754" loading="lazy" decoding="async" />
 <figcaption>Figure 5:</figcaption>
 </figure>
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.5%', '--fig-max': '333px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig6.png" alt="Light curve of Night C (printed rotated by 90°): calibrated magnitude (12.8 to 13) versus time in hours (0 to 7); arrows mark maxima interval = 3.3 h, minima interval = 3.1 h and Amplitude = 0.1." width="1040" height="771" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.8%', '--fig-max': '341px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig6-v2.png" alt="Light curve of Night C (printed rotated by 90°): calibrated magnitude (12.8 to 13) versus time in hours (0 to 7); arrows mark maxima interval = 3.3 h, minima interval = 3.1 h and Amplitude = 0.1." width="1066" height="796" loading="lazy" decoding="async" />
 <figcaption>Figure 6:</figcaption>
 </figure>
+
+- Itens 7,8 **See Fig. 7.**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.2%', '--fig-max': '293px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p1-sol-fig7-v2.png" alt="Plot (printed rotated by 90°) titled 'Phase curve (linear coef.: 0.0405)': reduced magnitude (8.5 to 9.5) versus phase angle in degrees (0 to 15); a straight line through the points at about 8.6° and 15.6°." width="917" height="725" loading="lazy" decoding="async" />
+<figcaption>Figure 7:</figcaption>
+</figure>
+
+- Item 9 **Yes**
+
+</ProblemSection>
 
 
 </Spoiler>

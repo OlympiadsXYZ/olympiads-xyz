@@ -1,0 +1,406 @@
+---
+id: ioaa-2021-team-competition-bg-p1
+source: 'IOAA 2021, Отборен тур · български'
+title: 'Задача 1. Отборен тур: Радио-астрономия'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2021/ioaa-2021-team-competition-bg.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T01:14:55.494Z'
+verifier: 'single-pass'
+---
+
+*Отборен тур: Радио-астрономия (115 точки) · 115 т.*
+
+<details>
+<summary>Общи инструкции: Групова радиоастрономия (115 точки)</summary>
+
+17 ноември 2021г. Времето за изпълнения на отборната задача е 3 часа (в 30-часов времеви интервал) и този тур се оценява с максимум 115 точки.
+
+- Всяка страна ще получи Отборното състезание веднага след приключването на теоретичния тур.
+- Всякакви електронни таблици, за които не се изисква използването на Интернет разрешени.
+- Решенията трябва да бъдат изпратени до 21:00 (UT) на 18-ти ноември.
+- Всеки отбор може да изпрати само един текстов (Word) файл, озаглавен XXX-Y-Team.docx. Тук XXX е трибуквеният код на страната (можете да попитате квесторите за кодовете на Международния олимпийски комитет), а Y трябва да бъде заместено от М (основен отбор) или G (гост), например COL-M-Team.docx.
+- Всички таблици и чертежи трябва да бъдат вмъкнати в този текстов файл.
+- В някои части на тази задача се изисква да се напише кратък отговор с думи. Вие може да напишете тези отговори на Вашия език. Все пак, не използвайте сложни думи. За целите на проверката, Вашия отговор трябва да бъде преведен ан испански или английски език, използвайки компютърна програма.
+- Ако сте направили някакви графики на ръка и искате да ги включите във Вашето решение, обърнете се към квесторите на Вашия отбор, за да направят снимка и да Ви изпратят jpg-файл.
+- Вие трябва да превърнете текстовия файл във формат PDF, за да могат квесторите да публикуват Вашето решение.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Част 1](#part-1)
+- [Част 2](#part-2)
+- [Част 3](#part-3)
+- [Част 4](#part-4)
+
+</nav>
+
+Моля, прочетете общите инструкции, които са в отделен плик, преди да започнете да работите по тази задача.
+
+### Измерване на спиралния ръкав в Персей, използвайки данни, получени на линията 21 cm HI
+
+Нашата цел е по кинематичен начин да оценим разстоянието от спиралния ръкав в Персей (или от някаква част от него) (Фигура 1), до центъра на Млечния път, използвайки лъчевата скорост на водородния газ, измерена чрез емисионната линия на 21 cm.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91.8%', '--fig-max': '588px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition-bg/p1-fig1.png" alt="Карта на Млечния път с разстояния, галактични дължини и означени спирални ръкави." width="1836" height="1650" loading="lazy" decoding="async" />
+<figcaption>Фигура 1: Карта показваща разстоянието и галактичната дължина на ръкавите на Млечния път https://en.wikipedia.org/wiki/Perseus_Arm#/media/File:Milky_Way_Arms_ssc2008-10.svg</figcaption>
+</figure>
+
+
+За тази задача, ще използваме извадка от данни, получени от CGPS (Фигура 2), в която от единичните наблюдения на радио-телескопите може да се получи спектралната линия на 21cm, излъчена от всичкия неутрален водород в Галактиката, който е по лъча на зрение на телескопа.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '62%', '--fig-max': '397px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition-bg/p1-fig2.png" alt="Схема на ръкавите на Галактиката и областта на Canadian Galactic Plane Survey." width="1241" height="948" loading="lazy" decoding="async" />
+<figcaption>Фигура 2: Canadian galactic plane survey http://www.ras.ucalgary.ca/CGPS</figcaption>
+</figure>
+
+
+Чрез превръщането на доплеровото изместване на радиовълната на дължина 21cm в лъчева скорост е възможно да се идентифицират индивидуалните емисионни компоненти на линия, които съответстват на различни ръкави на Галактиката. Това позволява да се да се възстановяви формата на всеки ръкав, относно центъра на Галактиката.
+
+В спектъра, който е получен при съответното насочване на радио-телескопа, ръкавът в Персей може да лесно да бъде идентифициран, защото най-често неговата компонента е най-ярката по лъча на зрение.
+
+Може да се приеме, че центърът на отправната система на радио-наблюдението съвпада с Слънцето, което се намира на разстояние $R_0$ от центъра на Галактиката (GC). Телескопът наблюдава по зрителен лъч (LOS), дефиниран от галактична дължина $l$ и фиксирана галактична ширина $b=0$.
+
+По този лъч на зрение, телескопът регистрира излъчването на част от неутралният водороден газ от ръкава в Персей, която се намира на разстояние $r$ от Слънцето. Тази част от водородния газ се намира на разстояние $R$ от центъра на Галактиката.
+
+Нека да приемем, че и Слънцето, и тази част от водородния газ се движат по кръгови орбити около центъра на Млечния път. Също така, може да се предположи, че те се намират в регион от Млечния път, където кривата на въртене на Галактиката е хоризонтална. Означаваме измерената (доплерова) скорост с $\mathbf{v}_{\mathrm{LOS}}$, и тя е равна на компонентата на скоростта на тази част от газа, измерена по лъча на зрение.
+
+### Данни
+
+В тази задача е прикачен .csv файл (21cmsurvey_full.csv, който може да бъде прочетен от Excel и други програми за работа с електронни табцици), който съдържа данни за яркостната температура ($T_b$) на линията 21 cm HI като функция от лъчевата скорост ($V_{LOS}$) за различни галактики дължини (при галактична ширина = 0)
+
+Ред **1**: Скорост по лъча на зрение $v_{LOS}$ (173 стойности, мерна единица: $kms^{-1}$).
+
+Колона **1** (след ред 1): Галактична дължина $l$ (1024 стойности, мерна единица: $^{\circ}$).
+
+Редове **2-1025**: Яркостна температура $T_b$ (измерена в $K$) на линията 21 cm. На всеки ред съответства спектър, дефиниран от галактичната дължина $l$ (row name - колона 1). Следователно, имаме 1024 спектъра. Всеки спектър съдържа 173 измервания за $T_b$, по едно за всяка $v_{LOS}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91.4%', '--fig-max': '585px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition-bg/p1-fig3.png" alt="Оригинален екранен пример на CSV: колони A–G и редове 1–14 с дължина, скорости и яркостна температура." width="1829" height="948" loading="lazy" decoding="async" />
+</figure>
+
+
+[Оригинален файл 21cmsurvey_full.csv](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Team%20Competition/21cmsurvey_full.csv).
+
+<ProblemSection id="part-1">
+
+### Част 1 (50 т.)
+
+**1.1** Начертайте спектрално разпределение на $v_{LOS}$ като функция от $T_b$ за достатъчно голям брой различни стойности (поне 20) на галактичната дължина, покриващи целия диапазон на наблюденията. Идентифицирайте най-високата скорост по лъча на зрение на частта от газа в ръкава в Персей за всяка една от галактичните ширини, за които сте начертали разпределението. Уверете се, че използвате равномерна извадка от данни.
+
+**Бележка:** Изполвайте разпределението за първата и последната дължина като ориентир за правилните максималнални стойности на средните дължини. **[45 т.]**
+
+**1.2** Защо излъчването около $v_{LOS}=0$ (което ние асоциираме с ръкава, в който се намираме) има по-ниска яркостна температура от излъчването от ръкава в Персей? **[5 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="part-2">
+
+### Част 2 (20 т.)
+
+**2.1** Изведете израз, с който може да се пресметне $R$ от $v_{LOS}$, $v_{\odot}$, и $l$. Може да приемете, че:
+
+- Слънчевата система и частта от газа в ръкава в Персей имат изцяло тангенциални скорости с пренебрежимо малки лъчеви компоненти, относно лъча на зрение .
+- Кривата на въртене на Галактиката е хоризонтална, т.е.
+
+$$
+|\mathbf{v}|=|\mathbf{v}_{\odot}|
+$$
+
+където $\mathbf{v}$ е скоростта на частта от газа. **[20 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="part-3">
+
+### Част 3 (20 т.)
+
+**3.1** Използвайки стойностите на $v_{LOS}$, които вече намерихте, начертайте графика на галактичната дължина $l$ като функция на $R$ (разстояинието от центъра на Галактиката в kpc) за ръкава в Персей. Намерете средното разстояние за някакъв интервал по дължина. Също така, намерете стандартното отклонение на Вашия резултат. Използвайте следните стойности:
+
+$$
+v_{\odot}\approx225\ kms^{-1}
+$$
+
+$$
+R_0\approx8\ \mathrm{kpc}
+$$
+**[20 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="part-4">
+
+### Част 4 (25 т.)
+
+**4.1** В данните също така присъства и излъчването на 21cm от ръкава на Млечния път, който е в съзвездието Ъгломер и който е външен ръкав. Това излъчване се наблюдава най-ясно около галактична дължина $145^{o}$. Повторете упражнението за ръкава в съзвездието Ъгломер и намерете разстоянието от него до центъра на Галактиката. Използвайте поне пет точки, за да намерите това разстояние (около посочената галактична дължина). **[25 т.]**
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-part-1-a">
+
+### 1. (a)
+
+(Without the fitted orange lines) - also see spreadsheet in the folder
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '98.9%', '--fig-max': '634px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition-bg/p1-sol-fig1.png" alt="Three spectra of brightness temperature T_b (K) against v (km/s) from -120 to 20 km/s, titled l = 142.2°, l = 144.75° and l = 147.3°; each blue spectrum has a fitted orange Gaussian with legends 𝒩(μ ≈ -43.0, σ ≈ 6), 𝒩(μ ≈ -42.0, σ ≈ 6) and 𝒩(μ ≈ -34.0, σ ≈ 6) respectively." width="1980" height="704" loading="lazy" decoding="async" />
+<figcaption>Figure S1. Sample spectra.</figcaption>
+</figure>
+
+
+**Marking Scheme:**
+
+- Check how many plots at different longitudes they include in their solution. Each plot should include the correct scale and axis labeling (see Fig. S1): **1 point per plot. Maximum 20 points.**
+- If they maintain equal longitude spacing between consecutive plots: **5 points**
+- Correct identification of the 21 cm $v_{\mathrm{LOS}}$ peak in each spectrum, within ±2 km/s for each of the plots: **1 point per plot**. **Maximum 20 points.**
+  Note: Use Table S1 to check $v_{\mathrm{LOS}}$ values (not *R*, they are checked later). Keep in mind that they will not necessarily use the same longitude values, so they may be slightly different (within ±2 km/s of the nearest *l* value).
+
+| *l* | $v_{\mathrm{LOS}}$ | *R* |
+|---|---|---|
+| 142.195 | -42.69 | 11.586 |
+| 142.51 | -41.04 | 11.423 |
+| 142.83 | -41.86 | 11.560 |
+| 143.15 | -37.33 | 11.059 |
+| 143.47 | -40.21 | 11.433 |
+| 143.79 | -42.69 | 11.785 |
+| 144.11 | -41.04 | 11.613 |
+| 144.43 | -41.86 | 11.762 |
+| 144.75 | -42.27 | 11.861 |
+| 145.07 | -39.39 | 11.523 |
+| 145.39 | -39.39 | 11.564 |
+| 145.71 | -38.15 | 11.445 |
+| 146.03 | -37.33 | 11.378 |
+| 146.35 | -36.09 | 11.259 |
+| 146.67 | -34.85 | 11.141 |
+| 146.99 | -32.79 | 10.922 |
+| 147.31 | -32.38 | 10.906 |
+
+Table S1. Possible values of $v_{\mathrm{LOS}}$, *R* for 17 equally spaced longitude values.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-1-b">
+
+### 1. (b)
+
+Assuming that the Sun is not located at the inner rim of our Local Arm, along any given line of sight we would not be able to pick up all the H emission, as some H belonging to our arm would be behind each line of sight and therefore would not show up in our observations.
+
+**Marking Scheme:**
+
+- The core of the solution is that they realize that each measurement does not include all the gas in our arm, but it does include all the gas in the Perseus and the Norma arm. Therefore, it is not straightforward to compare the amount of gas in our arm vs. the other arms from these measurements. **5 points for a correct answer, 0 points for all other answers.**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-2">
+
+### 2.
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '66.2%', '--fig-max': '424px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition-bg/p1-sol-fig2.png" alt="Geometry sketch: the Galactic Center at the bottom, the Sun at distance R0 above it on the inner circle with velocity arrow v⊙ pointing right; the Perseus arm gas parcel on the outer circle at distance r from the Sun along the LOS arrow and at distance R from the Galactic Center; the gas parcel's velocity v is tangent to the outer circle, the blue arrow vLOS points from the parcel towards the Sun; red arcs mark the longitude angle l at the Sun and the angle β at the gas parcel." width="1324" height="882" loading="lazy" decoding="async" />
+<figcaption>Figure S2. Geometric layout with additional angle β.</figcaption>
+</figure>
+
+
+**Marking scheme:**
+
+- If they include a clear figure similar to Fig. S2 accompanying their deduction: **5 points**.
+- Check that the deduction follows the same mathematical/geometrical principles as the following:
+
+Inspection of the velocity vector components along the LOS in Fig. S2 yields,
+
+$$
+\begin{aligned} \mathbf{v}_{\mathrm{LOS}} &= (\mathbf{v} - \mathbf{v}_{\odot}) \cdot \hat{\mathbf{v}}_{\mathrm{LOS}} \\ v_{\mathrm{LOS}} &= v \cos\left(\frac{\pi}{2} - \beta\right) - v_{\odot} \cos\left(l - \frac{\pi}{2}\right) \\ v_{\mathrm{LOS}} &= v \sin\beta - v_{\odot} \sin l = v_{\odot} \sin\beta - v_{\odot} \sin l \\ \therefore \sin\beta &= \frac{v_{\mathrm{LOS}} + v_{\odot} \sin l}{v_{\odot}} \qquad (1) \end{aligned}
+$$
+
+Correctly deducing this equation: **10 points**.
+
+By the law of sines,
+
+$$
+\frac{R}{\sin l} = \frac{R_0}{\sin\beta}
+$$
+
+Substituting (1) above,
+
+$$
+R = R_0 \frac{v_{\odot} \sin l}{v_{\mathrm{LOS}} + v_{\odot} \sin l}\ . \qquad (2)
+$$
+
+Correctly deducing this equation: **5 points**.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-3">
+
+### 3.
+
+Perseus arm radius: *R* = 11.4 ± 0.3 kpc. Mean value and stdev as reported by libreoffice calc.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '96%', '--fig-max': '615px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition-bg/p1-sol-fig3.png" alt="Scatter plot of R (kpc), 0 to 14, against Galactic Longitude, 141 to 148: square markers between about 10.9 and 11.9 kpc from l ≈ 142.2 to 147.3, with a horizontal line at the mean value of about 11.4 kpc." width="1921" height="1014" loading="lazy" decoding="async" />
+<figcaption>Figure S3. Estimated radii of gas parcels in the Perseus arm for 20 pointings in the dataset according to the values in Table S1.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.7%', '--fig-max': '440px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition-bg/p1-sol-fig4.png" alt="Line plot of R (kpc), about 10.2 to 12.8, against l (°) from 142 to 147.3, strongly fluctuating mostly between 10.5 and 12.5 kpc." width="1375" height="909" loading="lazy" decoding="async" />
+<figcaption>Figure S4. Estimated radii of gas parcels in the Perseus arm for all pointings in the dataset.</figcaption>
+</figure>
+
+
+**Marking scheme:**
+
+- Finding *R* values within 0.2 kpc of data points in Figs. S3 or S4 for more than 5 longitudes: **10 points**.
+- Note: Use Fig. S4 to compare data points in case their longitude values selection does not match the longitudes in Table S1.
+- Check that they include a plot similar to Fig. S3 (properly labeled axes) from their data in part 1 of this problem. They should include at least 5 data points to make their conclusions meaningful and get full marks: **5 points.**
+- Get the final result with standard deviation (11.4 ± 0.3 kpc): **5 points**
+  Note: Their value should not differ by more than 0.2 kpc from this solution.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-4">
+
+### 4.
+
+Norma arm radius: *R* = 14.3 ± 0.3 kpc. Mean value and stdev as reported by libreoffice calc from 7 data points near the middle of the longitude range.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '56.5%', '--fig-max': '362px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2021-team-competition-bg/p1-sol-fig5.png" alt="Scatter plot titled 'l vs R' with legend 'l vs. R': R (kpc) from 8 to 20 against 'longitud galáctica' from 142 to 147; points scattered around 10–13 kpc for l below 144, rising to about 14–16 kpc between 144 and 146.5 and to 18–20 kpc near 147." width="1131" height="690" loading="lazy" decoding="async" />
+<figcaption>Figure S5. Estimated radii of gas parcels of the Norma Arm for all pointings in the dataset.</figcaption>
+</figure>
+
+
+**Marking scheme:**
+
+- Finding peak $v_{\mathrm{LOS}}$ for more than 5 longitudes near *l* = 145º: **8 points**.
+- Finding *R* values within 0.2 kpc of data points in Fig. S5 for more than 5 longitudes: **7 points**.
+- Check that they include a plot similar to Fig. S5 (properly labeled axes) from their data in part 1 of this problem. They should include at least 5 data points to make their conclusions meaningful and get full marks: **5 points.**
+  Note: Use Fig. S4 to compare *R* values.
+- Get the final result with standard deviation (14.3 ± 0.3 kpc): **5 points**
+  Note: Their value should not differ by more than 1 kpc from this solution.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+<details>
+<summary>Стандартна таблица с константи — Фундаментални константи</summary>
+
+| Величина | Символ | Стойност |
+|---|---|---|
+| Скорост на светлината във вакуум | $c$ | $2.998\times10^8\,ms^{-1}$ |
+| Константа на Планк | $h$ | $6.626\times10^{-34}\,Js$ |
+| Константа на Болцман | $k_B$ | $1.381\times10^{-23}\,JK^{-1}$ |
+| Константа на Стефан-Болцман | $\sigma$ | $5.670\times10^{-8}\,Wm^{-2}K^{-4}$ |
+| Елементарен заряд | $e$ | $1.602\times10^{-19}\,C$ |
+| Гравитационна константа | $G$ | $6.674\times10^{-11}\,Nm^2kg^{-2}$ |
+| Универсална газова константа | $R$ | $8.315\,Jmol^{-1}K^{-1}$ |
+| Число на Авогадро | $N_A$ | $6.022\times10^{23}\,mol^{-1}$ |
+| Закон на Вин | $\lambda_mT$ | $2.898\times10^{-3}\,m\cdot K$ |
+| Маса на електрона | $m_e$ | $9.109\times10^{-31}\,kg$ |
+| Маса на протона | $m_p$ | $1.673\times10^{-27}\,kg$ |
+| Маса на неутрона | $m_n$ | $1.675\times10^{-27}\,kg$ |
+| Атомна единица за маса | | $1.661\times10^{-27}\,kg$ |
+
+</details>
+
+<details>
+<summary>Астрономически данни</summary>
+
+| Величина | Символ | Стойност |
+|---|---|---|
+| 1 парсек | $1\,pc$ | $3.086\times10^{16}\,m=206\,265\,au=3.262\,ly$ |
+| 1 астрономическа единица | $1\,\mathrm{au}$ | $1.496\times10^{11}\,m$ |
+| 1 янски | $1\,\mathrm{Jy}$ | $10^{-26}\,Wm^{-2}Hz^{-1}$ |
+| константа на Хъбъл | $H_0$ | $70\,kms^{-1}Mpc^{-1}$ |
+| Светимост на Слънцето | $L$ | $3.826\times10^{26}\,W$ |
+| Видим ъглов диаметър на Слънцето | $\theta$ | $32'$ |
+| Ефективна температура на Слънцето | $T_{eff,}$ | $5778\,K$ |
+| Наклон на еклиптиката | $\varepsilon$ | $23.5^{\circ}$ |
+| Наклон на лунната орбита, спрямо еклиптиката | | $05^{\circ}08'43''$ |
+| Видима звездна величина на Луната | | $-12.74$ |
+| Северен еклиптичен полюс (J2000.0) | $(\alpha_E,\delta_E)$ | $(18^h00^m00^s,+66^{\circ}33'39'')$ |
+| Северен галактичен полюс (J2000.0) | $(\alpha_G,\delta_G)$ | $(12^h51^m26^s,+27^{\circ}07'42'')$ |
+| 1 звездно денонощие | | $23^d56^m04^s$ |
+| 1 тропическа година | | $365.2422\ solar\ days$ |
+| 1 звездна година | | |
+
+### Слънчеви звездни величини
+
+| Величина | Стойност |
+|---|---|
+| Видима визуална звездна величина | $-26.75$ |
+| Абсолютна визуална звездна величина | $+4.82$ |
+| Видима болометрична звездна величина | $-26.83$ |
+| Абсолютна болометрична звездна величина | $+4.74$ |
+
+</details>
+
+<details>
+<summary>Слънчева система</summary>
+
+| Обект | Среден радиус (km) | Маса (kg) | Голяма полуос (au) | Ексцентрицитет |
+|---|---|---|---|---|
+| Слънце | 695 500 | $1.988\times10^{30}$ | — | — |
+| Меркурий | 2 440 | $3.301\times10^{23}$ | 0.387 | 0.206 |
+| Венера | 6 052 | $4.867\times10^{24}$ | 0.723 | 0.007 |
+| Земя | 6 378 | $5.972\times10^{24}$ | 1.000000 | 0.016 710 |
+| Луна | 1 737 | $7.346\times10^{22}$ | 0.002572 | 0.054 900 |
+| Марс | 3 390 | $6.417\times10^{23}$ | 1.524 | 0.093 |
+| Юпитер | 69 911 | $1.898\times10^{27}$ | 5.203 | 0.048 |
+| Сатурн | 58 232 | $5.683\times10^{26}$ | 9.537 | 0.054 |
+| Уран | 25 362 | $8.681\times10^{25}$ | 19.189 | 0.047 |
+| Нептун | 24 622 | $1.024\times10^{26}$ | 30.070 | 0.009 |
+
+### Формули на Гаус
+
+Косинусова теорема:
+
+$$
+\cos a=\cos b\cos c+\sin b\sin c\cos A
+$$
+
+Синусова теорема:
+
+$$
+\frac{\sin a}{\sin A}=\frac{\sin b}{\sin B}=\frac{\sin c}{\sin C}
+$$
+
+Уравнение за линейна функция, намерена по метода на най-малките квадрати:
+
+$$
+y=b_1x+b_2
+$$
+
+където
+
+$$
+b_1=\frac{n\sum x_iy_i-(\sum x_i)(\sum y_i)}{n\sum x_i^2-(\sum x_i)^2}
+$$
+
+и
+
+$$
+b_2=\overline y-b_1\overline x
+$$
+
+$\overline x$ са $\overline y$ средноаритметичните стойности на $x$ и $y$.
+
+</details>
+
+---
+
+Оригинал в Архива: [task.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Team%20Competition/task.pdf#page=6)
+· официални решения: [Team_Solution.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Solutions/Team%20Competition/Team_Solution.pdf#page=1)
+· допълнителни данни: [instructions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2021/Team%20Competition/instructions.pdf)

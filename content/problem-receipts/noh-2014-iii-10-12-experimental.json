@@ -1,57 +1,112 @@
 {
   "paperId": "noh-2014-iii-10-12-experimental",
   "verdict": "pass",
-  "contentHash": "d5a222a80370ca1da46990eeb374d9ff8e74f764db35d0303651cad29dbab53b",
+  "contentHash": "6884f9a00fb41b263e41ae571cade41d1a4749f3d186e27b068c0dfef45c3931",
+  "sourceConversions": {},
+  "sourceReadScopes": {},
   "sourceHashes": {
     "problems": "f2e12b168f2a7a63f7927d88bf339e7fd4e233278826d5f74894f1b63249fd51"
   },
   "reviewer": {
-    "provider": "anthropic",
-    "model": "claude-opus-5",
-    "requestId": "req_011Cf9FWB4ppmJk1YvMVmDhB"
+    "provider": "mechanical",
+    "model": "single-pass-gates",
+    "requestId": "4c002e61cf908554b4d1a886bcf74757706b8497c13d91695769208f71eeef60"
   },
-  "checkedAt": "2026-09-17T15:30:29.012Z",
-  "promptVersion": "v1",
-  "checkerMode": "crops",
+  "checkedAt": "2026-09-30T01:33:25.305Z",
+  "promptVersion": "v2",
+  "checkerMode": "single-pass",
   "reader": {
-    "provider": "anthropic",
-    "model": "claude-sonnet-5",
-    "promptVersion": "v1",
-    "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
-    "requestId": "req_011Cf9FRaSrs7QFAVE6VqF4W",
-    "at": "2026-09-17"
-  },
-  "independence": {
-    "independent": true,
-    "differentProvider": false,
-    "allowSameModel": false
+    "provider": "agent",
+    "model": "gpt-6-astra",
+    "requestId": "/root/astra-reader-root-66",
+    "at": "2026-09-30",
+    "promptVersion": "v2"
   },
   "adjudicator": null,
-  "checkerVerdict": "pass",
-  "summary": "Crop audit (1 crop(s)): The single crop shows the complete distribution diagram with legend, axes and labels intact. mechanical pre-check (text layer, printed regions); no model was asked",
+  "independence": {
+    "independent": false,
+    "differentProvider": false,
+    "allowSameModel": true,
+    "separateChecker": false
+  },
+  "checkerVerdict": null,
+  "summary": "Single-pass source transcription with automated validation; no separate model checker.",
+  "readerEvidence": {
+    "reader": {
+      "provider": "agent",
+      "model": "gpt-6-astra",
+      "promptVersion": "v2",
+      "requestId": "/root/astra-reader-root-66",
+      "at": "2026-09-30T01:32:35.623Z"
+    },
+    "candidateSha256": "4c002e61cf908554b4d1a886bcf74757706b8497c13d91695769208f71eeef60",
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1,
+        "reading": "Full exam header/instruction, Part I qualitative analysis with requests1–2; Part II triprotic equilibria, six period-decimal constants, printed mole-fraction formula, distribution explanation and four reagents.",
+        "imageSha256": "324da01f3cefd18a089c8da58f73c782bd4b8c1e67e766369666895a31aa13ad"
+      },
+      {
+        "document": "problems",
+        "page": 2,
+        "reading": "Request3 explicitly references absent Figure2. Figure1 diagram and complete parenthetical caption; all five mixtures(i)–(v), request4a/b, 7.6mL context, request5a/b and final protocol instruction. Source incorrectly announces mixtures(i)–(vi).",
+        "imageSha256": "e01c690e5e8089ccef6bc7ac7dfadbe1c1498378054374f7c2f5e6a82166c750"
+      }
+    ],
+    "problemsRead": 1,
+    "figuresInspected": 1,
+    "cropInspection": [
+      {
+        "file": "D:/Projects/olympiads-xyz/tmp/tx/noh-2014-iii-10-12-experimental/figs/noh-2014-iii-10-12-experimental.astra-r1/problems/p1-fig1.png",
+        "sha256": "15094d3ad863ce7d70b6f0ad78aecba062a1a2bf904f2a9d04b89bfd2b85508e"
+      }
+    ],
+    "sources": {
+      "problems": "f2e12b168f2a7a63f7927d88bf339e7fd4e233278826d5f74894f1b63249fd51"
+    },
+    "sourceConversions": {},
+    "sourceReadScopes": {},
+    "checkpoints": [
+      {
+        "file": "work/codex-transcription/production/astra-reader-root-66/reading-checkpoint.json",
+        "sha256": "9fa545b32b48ed7bc4eae82c2ce9bb7eea3adcdd2dbf364492b7cbc2a1bd8984"
+      }
+    ],
+    "sourceGaps": [
+      "Printed Figure2, protocol and official experimental key are absent from the full2014 national chemistry archive inventory."
+    ],
+    "summary": "Personally read both original pages in full. One complete experimental problem retained with two native Parts and five requests, source-positioned diagram, mixture list and7.6mL context. Corrected six period-decimal constants against source and recovered entire second caption sentence and final protocol instruction. Fresh full2014 archive inventory confirms no Figure2/protocol/key there; source mismatch(i)–(vi) vs five actual mixtures is preserved. Original printed chemical formula retained. No independent model checker. The actual final crop was personally inspected in full: all axes, legend, boxed values and boundary lines are intact.",
+    "completedAt": "2026-09-30T01:33:24.348Z"
+  },
   "coverage": {
     "pagesRead": [
       {
         "document": "problems",
-        "page": 1
+        "page": 1,
+        "reading": "Full exam header/instruction, Part I qualitative analysis with requests1–2; Part II triprotic equilibria, six period-decimal constants, printed mole-fraction formula, distribution explanation and four reagents.",
+        "imageSha256": "324da01f3cefd18a089c8da58f73c782bd4b8c1e67e766369666895a31aa13ad"
       },
       {
         "document": "problems",
-        "page": 2
+        "page": 2,
+        "reading": "Request3 explicitly references absent Figure2. Figure1 diagram and complete parenthetical caption; all five mixtures(i)–(v), request4a/b, 7.6mL context, request5a/b and final protocol instruction. Source incorrectly announces mixtures(i)–(vi).",
+        "imageSha256": "e01c690e5e8089ccef6bc7ac7dfadbe1c1498378054374f7c2f5e6a82166c750"
       }
     ],
-    "problemsChecked": 1,
-    "figuresChecked": 1
+    "problemsRead": 1,
+    "figuresInspected": 1
+  },
+  "automatedChecks": {
+    "schemaAndMath": true,
+    "figureEvidence": true,
+    "warnings": []
   },
   "defects": [],
-  "informational": 0,
-  "ignoredResolvedFlags": 0,
   "blockers": [],
-  "candidateSha256": "d3d95d01c213669fe0167d03fd410f75d2dabb6eb17bae7a6e4cb19b6f9c5294",
-  "checkerCandidateSha256": "d3d95d01c213669fe0167d03fd410f75d2dabb6eb17bae7a6e4cb19b6f9c5294",
-  "checkerCrops": [
-    "p1-fig1"
-  ],
-  "promotedAt": "2026-09-17T15:30:29.701Z",
+  "informational": 1,
+  "candidateSha256": "4c002e61cf908554b4d1a886bcf74757706b8497c13d91695769208f71eeef60",
+  "checkerCandidateSha256": null,
+  "promotedAt": "2026-09-30T01:35:13.452Z",
   "promotedFile": "content\\problems\\chemistry\\NOH\\2014\\noh-2014-iii-10-12-experimental.json"
 }

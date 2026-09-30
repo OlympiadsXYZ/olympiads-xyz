@@ -5,8 +5,8 @@ title: 'Задача 2'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/astronomy/IOAA/2012/ioaa-2012-data-analysis-final-doc.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T07:36:46.317Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-30T01:35:47.315Z'
+verifier: 'single-pass'
 ---
 
 *6th International Olympiad on Astronomy and Astrophysics, 04 to 14 August, 2012 - Rio de Janeiro - Brazil — Data analysis · 4 август 2012 г. · 5,5 т.*
@@ -17,7 +17,7 @@ verifier: 'mechanical'
 
 В таблицата по-долу са дадени данни за няколко цефеиди. $P_0$ е периодът им на пулсация в дни, а $\langle M_V \rangle$ е средната им абсолютна звездна величина.
 
-| **Цефеида** | **P$_0$ (дни)** | **$\langle$M$_{\mathrm{V}}\rangle$** |
+| **Цефеида** | **P$_0$ (дни)** | **$\langle M_{\mathrm{V}}\rangle$** |
 |---|---|---|
 | SU Cas | 1.95 | -1.99 |
 | V1726 Cyg | 4.24 | -3.04 |
@@ -35,16 +35,6 @@ verifier: 'mechanical'
 | SW Vel | 23.44 | -5.09 |
 | SV Vul | 44.98 | -6.04 |
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.1%', '--fig-max': '577px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p2-fig1.png" alt="Light curve 'Цефеида 1': magnitude m (23,5 to 26,5, increasing downward) versus t (days) from 0 to 100; red points trace two cycles with maxima near 25,1 and minima near 25,9." width="1803" height="1178" loading="lazy" decoding="async" />
-<figcaption>Фигура 1</figcaption>
-</figure>
-
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.1%', '--fig-max': '577px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p2-fig2.png" alt="Light curve 'Цефеида 2': magnitude m (25 to 28, increasing downward) versus t (days) from 0 to about 50; red points trace two cycles with maxima near 25,6 and minima near 27,1." width="1803" height="1175" loading="lazy" decoding="async" />
-<figcaption>Фигура 2</figcaption>
-</figure>
-
 **1)** Начертайте диаграма показваща $\langle M_V \rangle$ като функция от десетичния логаритъм на периода на пулсация за всички цефеиди, представени в таблицата. **[1 т.]**
 
 **2)** Приближете права линия, описваща зависимостта между $\langle M_V \rangle$ и $\log_{10}(P_0)$. Използвайте метода на най-малките квадрати. Този метод позволява да се определи абсолютната звездна величина на всяка цефеида от нейния период на пулсации. **[1 т.]**
@@ -52,6 +42,17 @@ verifier: 'mechanical'
 **3)** Фигури 1 и 2 показват кривите на блясъка на две цефеиди. Използвайте наличните данни, за да определите разстоянията до тези две цефеиди. Оценете грешката на това разстояние (не е нужно да използвате точни формули за определяне на грешката). **[3 т.]**
 
 **4)** Сравнявайки разликата между разстоянията до двете звезди с типичните размери на една галактика, то отговорете дали е възможно те да принадлежат на една и съща галактика. Моля, запишете своя отговор като: “YES” или “NO”. **[0,5 т.]**
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91.4%', '--fig-max': '585px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p2-fig1-v2.png" alt="Цефеида 1: original red-point light curve, magnitude m versus time t in days; both cycles and all labelled axes retained." width="1829" height="1204" loading="lazy" decoding="async" />
+<figcaption>Фигура 1</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91.4%', '--fig-max': '585px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p2-fig2-v2.png" alt="Цефеида 2: original red-point light curve, magnitude m versus time t in days; both cycles and all labelled axes retained." width="1829" height="1200" loading="lazy" decoding="async" />
+<figcaption>Фигура 2</figcaption>
+</figure>
 
 ## Отговори
 
@@ -67,26 +68,36 @@ verifier: 'mechanical'
 
 <Spoiler title="Покажи официалното решение">
 
-**Question 2**
+<ProblemSection id="solution-scoring">
 
-- Pontuation
-  - 1 : 1.0
-  - 2 : 1.0
-  - 3 : 3.0 (1.5 each star)
-  - 4 : 0.5
-- Answers:
-  - Itens 1,2 : Figure 1
-  - 3:
+### Pontuation
 
-    Star1 : $m = 25.35$, $P = 48\,days$, $M = -6.06 \pm 0.05$, $d = 19.1 \pm 0.4\,Mpc$
+- 1 : 1.0
+- 2 : 1.0
+- 3 : 3.0 (1.5 each star)
+- 4 : 0.5
 
-    Star2 : $m = 26.25$, $P = 22\,days$, $M = -5.08 \pm 0.05$, $d = 18.4 \pm 0.4\,Mpc$
-  - 4: $\Delta d = 0.67\,Mpc$. If one considers that a typical galaxy has a $100\,Kpc$ radius, then it is possible that they are in the same galaxy, considering the $0.4\,Mpc$ uncertainty of each distance.
+</ProblemSection>
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.4%', '--fig-max': '272px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p2-sol-fig1.png" alt="Plot titled 'A=-1.20528530538 B=-2.88489462276 std=0.0500453306985': Absolute Magnitude (−1 to −7) versus log10(Period in days) (0.2 to 1.8); fifteen points on a straight fitted line falling from about −2 at 0.29 to about −6 at 1.65." width="849" height="667" loading="lazy" decoding="async" />
+<ProblemSection id="solution-answers">
+
+### Answers:
+
+- Itens 1,2 : Figure 1
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43.6%', '--fig-max': '280px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2012-data-analysis-final-doc/p2-sol-fig1-v2.png" alt="Plot titled 'A=-1.20528530538 B=-2.88489462276 std=0.0500453306985': Absolute Magnitude (−1 to −7) versus log10(Period in days) (0.2 to 1.8); fifteen points on a straight fitted line falling from about −2 at 0.29 to about −6 at 1.65." width="874" height="691" loading="lazy" decoding="async" />
 <figcaption>Figure 1:</figcaption>
 </figure>
+
+- 3:
+
+  Star1 : $m = 25.35$, $P = 48\,days$, $M = -6.06 \pm 0.05$, $d = 19.1 \pm 0.4\,Mpc$
+
+  Star2 : $m = 26.25$, $P = 22\,days$, $M = -5.08 \pm 0.05$, $d = 18.4 \pm 0.4\,Mpc$
+- 4: $\Delta d = 0.67\,Mpc$. If one considers that a typical galaxy has a $100\,Kpc$ radius, then it is possible that they are in the same galaxy, considering the $0.4\,Mpc$ uncertainty of each distance.
+
+</ProblemSection>
 
 
 </Spoiler>
