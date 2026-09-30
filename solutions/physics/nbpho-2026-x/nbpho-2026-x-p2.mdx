@@ -1,0 +1,169 @@
+---
+id: nbpho-2026-x-p2
+source: 'NBPhO 2026, Теория и експеримент'
+title: 'Задача 2. Lissajous bridge'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2026/nbpho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T00:10:50.353Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2026 · 6 т.*
+
+<details>
+<summary>Practicalities for moderation.</summary>
+
+When you are called to the moderation table to discuss your request with the graders, bring an item-by-item breakdown of the points you are claiming, following the detailed grading scheme — e.g., for P9 part (i): $0.5+0.2+0.1+0+0 = 0.8$ out of $0.5+0.2+0.3+0.3+0.2 = 1.5$. **Without this breakdown, the moderation discussion will not proceed.**
+
+</details>
+
+## Условие
+
+— *Jaan Kalda.* A circuit has four nodes $A$, $B$, $E$, $D$. An AC source of amplitude $V$ is applied between $A$ and $E$. A resistor $R_1$ connects $A$ to $B$ and a capacitor $C$ connects $B$ to $E$; a resistor $R_2$ connects $A$ to $D$ and an inductor $L$ connects $D$ to $E$. A potentiometer with a sliding contact $P$ is connected between $A$ and $E$. The voltage between $P$ and $B$ feeds the $x$-input of an oscilloscope, and the voltage between $P$ and $D$ feeds the $y$-input; both input channels have the same gain. The oscilloscope plots the voltage $V_x$ from the $x$-input and the voltage $V_y$ from the $y$-input in the $V_x$–$V_y$-plane. The position of the sliding contact $P$ is adjusted until the figure on the screen degenerates into a line segment. It appears that in that case, the line segment makes an angle $\alpha$ with the $x$-axis, and the sliding contact $P$ divides the potentiometer’s length in the ratio $1:2$ from left to right in the figure. Find the amplitude of the voltage between $B$ and $P$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.4%', '--fig-max': '272px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2026-x/p2-fig1.png" alt="Circuit diagram: AC source V between the left rail (node A) and the right rail (node E); branch A–R1–B–C–E at top; branch A–R2–D–L–E at bottom; a potentiometer between A and E in the middle with sliding contact P; wires from P, B and D go to an oscilloscope box with inputs x, COM and y (labelled OSCILLOSCOPE)." width="849" height="609" loading="lazy" decoding="async" />
+</figure>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+— *Solution by Jaan Kalda.* Set $V_E = 0$ and $V_A = V$ (phasor). Consider the RC branch: since $R_1$ and $C$ carry the same current, their voltages are in the impedance ratio $Z_C/Z_{R_1} = 1/(\mathrm{i}\omega R_1 C) = -\mathrm{i}/(\omega R_1 C)$. The factor $-\mathrm{i}$ is a $90^{\circ}$ *clockwise* rotation in the phasor plane, so $V_{BE}$ is $V_{AB}$ rotated $90^{\circ}$ clockwise — in particular, $V_{AB} \perp V_{BE}$, and $V_B$ lies in the lower half-plane ($\mathrm{Im}\, V_B < 0$).
+
+For the RL branch, $Z_L/Z_{R_2} = \mathrm{i}\omega L/R_2$: the factor $\mathrm{i}$ is a $90^{\circ}$ *counterclockwise* rotation, so $V_{DE}$ is $V_{AD}$ rotated $90^{\circ}$ counterclockwise, giving $V_{AD} \perp V_{DE}$ and $V_D$ in the upper half-plane ($\mathrm{Im}\, V_D > 0$).
+
+By Thales’ theorem applied to each branch, both $V_B$ and $V_D$ lie on the circle of diameter $\overline{AE}$ (centre $V/2$, radius $V/2$), on opposite semicircles.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '33.3%', '--fig-max': '213px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2026-x/p2-sol-fig1-v2.png" alt="Phasor diagram with axes Re and Im: a circle through E (origin side) and A on the real axis; point P on the real axis inside the circle; D on the upper arc and B on the lower arc; red arrows from P to D labelled V_PD and from P to B labelled V_PB, forming one straight line through P." width="667" height="611" loading="lazy" decoding="async" />
+</figure>
+
+
+The oscilloscope displays $V_{PB}$ on $x$ and $V_{PD}$ on $y$; the Lissajous figure degenerates to a line when these phasors are parallel or antiparallel — equivalently, when $P$, $B$, $D$ are collinear in the phasor plane. Since $V_B$ and $V_D$ are on opposite sides of the real axis, and $V_P$ is real (a fraction of $V$), $V_P$ lies *between* them on the line, so $V_{PB}$ and $V_{PD}$ are antiparallel. Hence the displayed line has negative slope and
+
+$$
+|\tan\alpha| = \frac{|V_{PD}|}{|V_{PB}|}.
+$$
+
+The potentiometer is split 1:2 from left to right; depending on the orientation this gives $V_P = V/3$ or $V_P = 2V/3$. The power of point $P$ with respect to the Thales circle,
+
+$$
+\mathrm{pow}(P) = V_P(V_P - V),
+$$
+
+takes the value $-2V^2/9$ in *both* cases (by symmetry of the quadratic about $V_P = V/2$). Since $P$ is inside the circle and the line $BPD$ cuts it at two points,
+
+$$
+|PB| \cdot |PD| = |\mathrm{pow}(P)| = \frac{2V^2}{9}.
+$$
+
+Combining with $|\tan\alpha| = |V_{PD}|/|V_{PB}|$:
+
+$$
+|V_{PB}|^2 |\tan\alpha| = \frac{2V^2}{9},
+$$
+
+$$
+\boxed{|V_{PB}| = \frac{V}{3}\sqrt{\frac{2}{|\tan\alpha|}}}\,.
+$$
+
+**Grading:** (6 points total)
+
+- Showing that $V_{AB} \perp V_{BE}$ **0.5 pts**
+- Showing that $V_{AD} \perp V_{DE}$ **0.5 pts**
+- Correctly identifying that $V_B$ lies in the lower half-plane ($\mathrm{Im}\, V_B < 0$) ($\mathrm{Im}\, V_B > 0$ if $V_A = 0$) **0.3 pts**
+- Correctly identifying that $V_D$ lies in the upper half-plane ($\mathrm{Im}\, V_D > 0$) ($\mathrm{Im}\, V_D < 0$ if $V_A = 0$) **0.3 pts**
+- Identifying that $V_B$ lies on a circle with $AE$ as a chord **0.3 pts**
+- Identifying that $V_D$ lies on a circle with $AE$ as a chord **0.3 pts**
+- Identifying $AE$ as the diameter of the (common) circle **0.3 pts**
+- Recognising that Lissajous degeneracy requires $B$, $P$, $D$ collinear in the phasor plane **1.5 pts**
+- Applying power of a point at $V_P$ to get $|PB| \cdot |PD| = 2V^2/9$ **1.0 pts**
+- Correctly relating $|\tan\alpha|$ to the voltage amplitude ratio $|V_{PD}|/|V_{PB}|$ (only if phasors considered) **0.5 pts**
+- Combining with the power-of-a-point result to obtain the final answer **0.5 pts**
+
+Since the condition *the line segment makes an angle $\alpha$ with the $x$-axis* could be understood in different ways, we did not deduct marks for failing to realize that the slope is negative or using $\tan\alpha$ without absolute value.
+
+<ProblemSection id="solution-section-1">
+
+### Alternative solution (pure algebraic/impedance method, for students who do not spot the Thales circle).
+
+Ground node $E$ and write $V_A = V$. The voltage dividers at $B$ and $D$ give
+
+$$
+V_B = \frac{V}{1 + \mathrm{i}\omega R_1 C}, \qquad V_D = \frac{V}{1 - \mathrm{i}R_2/(\omega L)},
+$$
+
+and the resistive slider gives $V_P = 2V/3$ (or $V/3$; the answer is insensitive to this choice). Introduce dimensionless parameters $u = \omega R_1 C$ and $w = R_2/(\omega L)$, so that
+
+$$
+V_B = \frac{V(1 - \mathrm{i}u)}{1 + u^2}, \qquad V_D = \frac{V(1 + \mathrm{i}w)}{1 + w^2}.
+$$
+
+Taking $V_P = 2V/3$, write $V_{PB}/V = X_B + \mathrm{i}Y_B$ and $V_{PD}/V = X_D + \mathrm{i}Y_D$:
+
+$$
+X_B = \frac{2u^2 - 1}{3(1 + u^2)}, \quad Y_B = \frac{u}{1 + u^2},
+$$
+
+$$
+X_D = \frac{2w^2 - 1}{3(1 + w^2)}, \quad Y_D = -\frac{w}{1 + w^2}.
+$$
+
+The Lissajous curve degenerates to a line iff $V_{PB}/V_{PD}$ is real, i.e., $X_B Y_D - Y_B X_D = 0$. Substituting and simplifying yields
+
+$$
+(u + w)(2uw - 1) = 0,
+$$
+
+so (since $u, w > 0$) the bridge condition is $uw = 1/2$, i.e., $R_1 R_2 C = L/2$. The slope of the displayed line equals the ratio of the phasors (both now real), conveniently computed from imaginary parts:
+
+$$
+\tan\alpha = \frac{Y_D}{Y_B} = -\frac{w(1 + u^2)}{u(1 + w^2)}.
+$$
+
+Substituting $w = 1/(2u)$ gives
+
+$$
+\tan\alpha = -\frac{2(1 + u^2)}{1 + 4u^2}, \quad \text{so} \quad \frac{1 + 4u^2}{1 + u^2} = \frac{2}{|\tan\alpha|}. \qquad (\dagger)
+$$
+
+The amplitude between $B$ and $P$ follows from $X_B^2 + Y_B^2$:
+
+$$
+\frac{|V_{PB}|^2}{V^2} = \frac{(2u^2 - 1)^2 + 9u^2}{9(1 + u^2)^2} = \frac{(4u^2 + 1)(1 + u^2)}{9(1 + u^2)^2} = \frac{4u^2 + 1}{9(1 + u^2)}.
+$$
+
+Using ($\dagger$):
+
+$$
+\boxed{|V_{PB}| = \frac{V}{3}\sqrt{\frac{4u^2 + 1}{1 + u^2}} = \frac{V}{3}\sqrt{\frac{2}{|\tan\alpha|}}}\,.
+$$
+
+**Grading (alternative solution):** 6 points total
+
+- Correctly computing $V_B$ as a phasor **0.5 pts**
+- Correctly computing $V_D$ as a phasor **0.5 pts**
+- Identifying $V_P = 2V/3$ (or $V/3$) **0.3 pts**
+- Expressing $V_{PB}/V$ and $V_{PD}/V$ in the form $X + \mathrm{i}Y$ with explicit real and imaginary parts **0.5 pts**
+- Recognising that the Lissajous curve degenerates to a line iff $V_{PB}/V_{PD}$ is real (i.e., $X_B Y_D - Y_B X_D = 0$, or equivalent condition) **0.7 pts**
+- Correctly deriving the bridge condition $R_1 R_2 C = L/2$ (equivalently $uw = 1/2$) **0.5 pts**
+- Expressing $\tan\alpha$ in terms of $u$ and $w$ (or equivalent parameters) **0.5 pts**
+- Substituting the bridge condition to write $\tan\alpha$ as a function of $u$ alone **0.5 pts**
+- Correctly computing $|V_{PB}|^2$ in terms of $u$ (before factoring) **0.7 pts**
+- Recognising the factoring $4u^4 + 5u^2 + 1 = (4u^2 + 1)(1 + u^2)$ that simplifies $|V_{PB}|^2$ **0.8 pts**
+- Eliminating $u$ using the $\tan\alpha$ expression **0.3 pts**
+- Obtaining the final answer $|V_{PB}| = (V/3)\sqrt{2/|\tan\alpha|}$ **0.2 pts**
+
+Students who reach the correct final form via either route receive full credit. Algebraic errors may lose the corresponding stage points but could retain partial credit if the overall structure is right.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2026_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2026/NBPhO_2026_problems.pdf#page=1)
+· официални решения: [NBPhO_2026_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2026/NBPhO_2026_solutions.pdf#page=4)

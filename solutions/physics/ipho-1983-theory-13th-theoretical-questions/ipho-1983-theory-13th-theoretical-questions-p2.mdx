@@ -5,22 +5,22 @@ title: 'Задача 2. Electricity – Problem II: Different kind of oscillatio
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/IPhO/1983/ipho-1983-theory-13th-theoretical-questions.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T13:59:32.444Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-30T00:11:33.831Z'
+verifier: 'single-pass'
 ---
 
 *IPhO 1983 Theoretical Questions · 8 т.*
 
 ## Условие
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '24.2%', '--fig-max': '155px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1983-theory-13th-theoretical-questions/p2-fig1-v2.png" alt="Circuit with the switch K closed: from top to bottom, coil L1, capacitor C1, capacitor C2 and coil L2 connected in parallel branches between a left and a right vertical wire; points A (between C1 and C2 on the right) and B (between C2 and L2 on the right), point 1 at the switch K; below, resistor R and an alternating-current source (~)." width="485" height="1077" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '22.6%', '--fig-max': '145px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1983-theory-13th-theoretical-questions/p2-fig1-v4.png" alt="Circuit with the switch K closed: from top to bottom, coil L1, capacitor C1, capacitor C2 and coil L2 connected in parallel branches between a left and a right vertical wire; points A (between C1 and C2 on the right) and B (between C2 and L2 on the right), point 1 at the switch K; below, resistor R and an alternating-current source (~)." width="452" height="1050" loading="lazy" decoding="async" />
 </figure>
 
 Let’s consider the electric circuit in the figure, for which $L_1 = 10\ \mathrm{mH}$ , $L_2 = 20\ \mathrm{mH}$ , $C_1 = 10\ \mathrm{nF}$ , $C_2 = 5\ \mathrm{nF}$ and $R = 100\ \mathrm{k\Omega}$ . The switch $K$ being closed the circuit is coupled with a source of alternating current. The current furnished by the source has constant intensity while the frequency of the current may be varied.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '27.8%', '--fig-max': '178px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1983-theory-13th-theoretical-questions/p2-fig2-v2.png" alt="Circuit after the switch is opened: coil L1, capacitor C1, capacitor C2 and coil L2 from top to bottom; point C on the left between C1 and C2, point A on the right between C1 and C2 with current i10 marked downward, point B on the right between C2 and L2 with current i20 marked upward; below the drawing: u_AC(t0) = u0." width="556" height="1047" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '27.3%', '--fig-max': '175px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1983-theory-13th-theoretical-questions/p2-fig2-v4.png" alt="Circuit after the switch is opened: coil L1, capacitor C1, capacitor C2 and coil L2 from top to bottom; point C on the left between C1 and C2, point A on the right between C1 and C2 with current i10 marked downward, point B on the right between C2 and L2 with current i20 marked upward; below the drawing: u_AC(t0) = u0." width="547" height="1049" loading="lazy" decoding="async" />
 </figure>
 
 **a.** Find the ratio of frequency $f_m$ for which the active power in circuit has the maximum value $P_m$ and the frequency difference $\Delta f = f_+ - f_-$ of the frequencies $f_+$ and $f_-$ for which the active power in the circuit is half of the maximum power $P_m$ .
@@ -37,10 +37,624 @@ The switch $K$ is now open. In the moment $t_0$ immediately after the switch is 
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-solution-1">
+
+### a.
+
+As is very well known in the study of AC circuits using the formalism of complex numbers, a complex inductive reactance $\bar X_L=L\omega j$, $(j=\sqrt{-1})$ is attached to the inductance $L$ - part of a circuit supplied with an alternative current having the pulsation $\omega$. Similar, a complex capacitive reactance $\bar X_C=-j/(C\omega)$ is attached to the capacity $C$. A parallel circuit will be characterized by his complex admittance $\bar Y$. The admittance of the AC circuit represented in the figure is
+
+$$
+\begin{aligned}\bar Y&=\frac1R+\frac1{L_1\omega j}+\frac1{L_2\omega j}-\frac{C_1\omega}j-\frac{C_2\omega}j\\&=\frac1R+j\left[(C_1+C_2)-\left(\frac1{L_1}+\frac1{L_2}\right)\right].\end{aligned}\qquad (2.1)
+$$
+
+The circuit behave as if has a parallel equivalent capacity $C$
+
+$$
+C=C_1+C_2\qquad (2.2)
+$$
+
+and a parallel equivalent inductance $L$
+
+$$
+\frac1L=\frac1{L_1}+\frac1{L_2},\qquad L=\frac{L_1L_2}{L_1+L_2},\qquad (2.3)
+$$
+
+The complex admittance of the circuit may be written as
+
+$$
+\bar Y=\frac1R+j\left(C\omega-\frac1{L\omega}\right).\qquad (2.4)
+$$
+
+and the complex impedance of the circuit will be
+
+$$
+\bar Z=\frac1{\bar Y}=\frac{\frac1R+j(\frac1{L\omega}-C\omega)}{\sqrt{(\frac1R)^2+(C\omega-\frac1{L\omega})^2}}.\qquad (2.5)
+$$
+
+The impedance $Z$ of the circuit, the inverse of the admittance of the circuit $Y$ is the modulus of the complex impedance $\bar Z$
+
+$$
+Z=|\bar Z|=\frac1{\sqrt{(\frac1R)^2+(C\omega-\frac1{L\omega})^2}}=\frac1Y.\qquad (2.6)
+$$
+
+The constant current source supplying the circuit furnish a current having a momentary value $i(t)$
+
+$$
+i=I\sqrt2\sin\omega t,\qquad (2.7)
+$$
+
+where $I$ is the effective intensity (constant), of the current and $\omega$ is the current pulsation (that can vary). The potential difference at the jacks of the circuit has the momentary value $u(t)$
+
+$$
+u=U\sqrt2\sin(\omega t+\varphi).\qquad (2.8)
+$$
+
+where $U$ is the effective value of the tension and $\varphi$ is the phase difference between tension and current.
+
+The effective values of the current and tension obey the relation
+
+$$
+U=IZ.\qquad (2.9)
+$$
+
+The active power in the circuit is
+
+$$
+P=\frac{U^2}R=\frac{Z^2I^2}R,\qquad (2.10)
+$$
+
+Because as in the enounce,
+
+$$
+I=\text{constant},\qquad R=\text{constant}.\qquad (2.11)
+$$
+
+the maximal active power is realized for the maximum value of the impedance that is the minimal value of the admittance. The admittance
+
+$$
+Y=\sqrt{\left(\frac1R\right)^2+\left(C\omega-\frac1{L\omega}\right)^2}.\qquad (2.12)
+$$
+
+has– as function of the pulsation $\omega$ - an „the smallest value”
+
+$$
+Y_{\min}=\frac1R\qquad (2.13)
+$$
+
+for the pulsation
+
+$$
+\omega_m=\frac1{\sqrt{LC}},\qquad (2.14)
+$$
+
+In this case
+
+$$
+C\omega-\frac1{L\omega}=0.\qquad (2.15)
+$$
+
+So, the minimal active power in the circuit has the value
+
+$$
+P_m=RI^2.\qquad (2.16)
+$$
+
+and occurs in the situation of alternative current furnished by the source at the frequency $f_m$
+
+$$
+f_m=\frac{\omega_m}{2\pi}=\frac1{2\pi\sqrt{CL}}.\qquad (2.17)
+$$
+
+To ensure that the active power is half of the maximum power it is necessary that
+
+$$
+P=\frac12P_m,\qquad\frac{Z^2I^2}R=\frac12RI^2,\qquad\frac2{R^2}=\frac1{Z^2}=Y^2.\qquad (2.18)
+$$
+
+That is
+
+$$
+\frac2{R^2}=\frac1{R^2}+\left(C\omega-\frac1{L\omega}\right)^2,\qquad\pm\frac1R=C\omega-\frac1{L\omega}.\qquad (2.19)
+$$
+
+The pulsation of the current ensuring an active power at half of the maximum power must satisfy one of the equations
+
+$$
+\omega^2\pm\frac\omega{RC}-\frac1{LC}=0.\qquad (2.20)
+$$
+
+The two second degree equation may furnish the four solutions
+
+$$
+\omega=\pm\frac1{2RC}\pm\frac12\sqrt{\left(\frac1{RC}\right)^2+\frac4{LC}}.\qquad (2.21)
+$$
+
+Because the pulsation is every time positive, and because
+
+$$
+\sqrt{\left(\frac1{RC}\right)^2+\frac4{LC}}>\frac1{RC},\qquad (2.22)
+$$
+
+the only two valid solutions are
+
+$$
+\omega_\pm=\frac12\sqrt{\left(\frac1{RC}\right)^2+\frac4{LC}}\pm\frac1{2RC}.\qquad (2.23)
+$$
+
+It exist two frequencies $f_\pm=\omega_\pm/(2\pi)$ allowing to obtain in the circuit an active power representing half of the maximum power.
+
+$$
+f_+=\frac1{2\pi}\left(\frac12\sqrt{\left(\frac1{RC}\right)^2+\frac4{LC}}+\frac1{2RC}\right),\qquad f_-=\frac1{2\pi}\left(\frac12\sqrt{\left(\frac1{RC}\right)^2+\frac4{LC}}-\frac1{2RC}\right).\qquad (2.24)
+$$
+
+The difference of these frequencies is
+
+$$
+\Delta f=f_+-f_-=\frac1{2\pi RC}.\qquad (2.25)
+$$
+
+the bandwidth of the circuit – the frequency interval around the resonance frequency having at the ends a signal representing $1/\sqrt2$ from the resonance signal. At the ends of the bandwidth the active power reduces at the half of his value at the resonance. The asked ratio is
+
+$$
+\frac{f_m}{\Delta f}=\frac{RC}{\sqrt{LC}}=R\sqrt{\frac CL}=R\sqrt{\frac{(C_1+C_2)(L_1+L_2)}{L_1L_2}}.\qquad (2.26)
+$$
+
+With $C=15\,\mathrm{nF}$, $L=\frac{20}3\,\mathrm{mH}$ and $\omega_m=10^5\,\mathrm{rad/s}$,
+
+$$
+\frac{f_m}{\Delta f}=R\sqrt{\frac CL}=100\times10^3\sqrt{\frac{3\cdot15\times10^{-9}}{20\times10^{-3}}}=150.\qquad (2.27)
+$$
+
+The (2.26) relation is the answer at the question a.
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-2">
+
+### b.
+
+The fact that immediately after the source is detached it is a current in the coils, allow as to admit that currents dependents on time will continue to flow through the coils.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '34.6%', '--fig-max': '222px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1983-theory-13th-theoretical-questions/p2-sol-fig1-v2.png" alt="Circuit with capacitor charges, branch currents and potentials." width="693" height="1268" loading="lazy" decoding="async" />
+<figcaption>Figure 2.1</figcaption>
+</figure>
+
+
+The capacitors will be charged with charges variable in time. The variation of the charges of the capacitors will results in currents flowing through the conductors linking the capacitors in the circuit. The momentary tension on the jacks of the coils and capacitors – identical for all elements in circuit – is also dependent on time. Let’s admit that the electrical potential of the points $C$ and $D$ is $u(t)$ and the potential of the points $A$ and $B$ is zero. If through the inductance $L_1$ passes the variable current having the momentary value $i_1(t)$, the relation between the current and potentials is
+
+$$
+u-L_1\frac{di_1}{dt}=0,\qquad (2.28)
+$$
+
+The current passing through the second inductance $i_2(t)$ has the expression,
+
+$$
+u-L_2\frac{di_2}{dt}=0.\qquad (2.29)
+$$
+
+If on the positive plate of the capacitor having the capacity $C_1$ is stocked the charge $q_1(t)$, then at the jacks of the capacitor the electrical tension is $u(t)$ and
+
+$$
+q_1=C_1u,\qquad (2.30)
+$$
+
+Deriving this relation it results
+
+$$
+\frac{dq_1}{dt}=C_1\frac{du}{dt},\qquad (2.31)
+$$
+
+But
+
+$$
+\frac{dq_1}{dt}=-i_3,\qquad (2.32)
+$$
+
+because the electrical current appears because of the diminishing of the electrical charge on capacitor plate. Consequently
+
+$$
+i_3=-C_1\frac{du}{dt}.\qquad (2.33)
+$$
+
+Analogous, for the other capacitor,
+
+$$
+i_4=-C_4\frac{du}{dt}.\qquad (2.34)
+$$
+
+Considering all obtained results
+
+$$
+\frac{di_1}{dt}=\frac u{L_1},\qquad\frac{di_2}{dt}=\frac u{L_2},\qquad (2.35)
+$$
+
+respectively
+
+$$
+\frac{di_3}{dt}=-C_1\frac{d^2u}{dt^2},\qquad\frac{di_4}{dt}=C_2\frac{d^2u}{dt^2}.\qquad (2.36)
+$$
+
+Denoting $i_5(t)$ the momentary intensity of the current flowing from point $B$ to the point $A$, then the same momentary intensity has the current through the points $C$ and $D$. For the point $A$ the Kirchhoff rule of the currents gives
+
+$$
+i_1+i_5=i_3,\qquad (2.37)
+$$
+
+For $B$ point the same rule produces
+
+$$
+i_4+i_5=i_2.\qquad (2.38)
+$$
+
+Considering (2.37) and (2.38) results
+
+$$
+i_1-i_3=i_4-i_2,\qquad (2.39)
+$$
+
+and deriving
+
+$$
+\frac{di_1}{dt}-\frac{di_3}{dt}=\frac{di_4}{dt}-\frac{di_2}{dt}.\qquad (2.40)
+$$
+
+that is
+
+$$
+-\frac u{L_1}-\frac u{L_2}=C_1\frac{d^2u}{dt^2}+C_2\frac{d^2u}{dt^2},\qquad-u\left(\frac1{L_1}+\frac1{L_2}\right)=\frac{d^2u}{dt^2}(C_1+C_2).\qquad (2.41)
+$$
+
+Using the symbols defined above
+
+$$
+-\frac uL=C\frac{d^2u}{dt^2},\qquad\ddot u+\frac1{LC}u=0.\qquad (2.42)
+$$
+
+Because the tension obeys the relation above, it must have a harmonic dependence on time
+
+$$
+u=A\sin(\omega t+\delta),\qquad (2.43)
+$$
+
+The pulsation of the tension is
+
+$$
+\omega=\frac1{\sqrt{LC}}.\qquad (2.44)
+$$
+
+Taking into account the relations (2.43) and (2.36) it results that
+
+$$
+i_3=-C_1\frac d{dt}(A\sin(\omega t+\delta))=-C_1A\omega\cos(\omega t+\delta),\qquad i_4=-C_2\frac d{dt}(A\sin(\omega t+\delta))=-C_2A\omega\cos(\omega t+\delta).\qquad (2.45)
+$$
+
+and
+
+$$
+\frac{di_1}{dt}=\frac u{L_1}=\frac A{L_1}\sin(\omega t+\delta),\qquad\frac{di_2}{dt}=\frac u{L_2}=\frac A{L_2}\sin(\omega t+\delta).\qquad (2.46)
+$$
+
+It results that
+
+$$
+i_1=\frac A{L_1\omega}\cos(\omega t+\delta)+M,\qquad i_2=\frac A{L_2\omega}\cos(\omega t+\delta)+N.\qquad (2.47)
+$$
+
+In the expression above, $A$, $M$, $N$ and $\delta$ are constants that must be determined using initially conditions. It is remarkable that the currents through capacitors are sinusoidal but the currents through the coils are the sum of sinusoidal and constant currents. In the first moment
+
+$$
+u(0)=u_0=40\,\mathrm V,\qquad i_1(0)=i_{01}=0.1\,\mathrm A,\qquad i_2(0)=i_{02}=0.2\,\mathrm A.\qquad (2.48)
+$$
+
+Because the values of the inductances and capacities are
+
+$$
+L_1=0.01\,\mathrm H,\quad L_2=0.02\,\mathrm H,\quad C_1=10\,\mathrm{nF},\quad C_2=5\,\mathrm{nF}.\qquad (2.49)
+$$
+
+the equivalent inductance and capacity is
+
+$$
+\frac1L=\frac1{L_1}+\frac1{L_2},\qquad L=\frac{L_1L_2}{L_1+L_2}=\frac{2\times10^{-4}}{3\times10^{-2}}\,\mathrm H=\frac1{150}\,\mathrm H,\qquad (2.50)
+$$
+
+respectively
+
+$$
+C=C_1+C_2=15\,\mathrm{nF}.\qquad (2.51)
+$$
+
+From (2.44) results
+
+$$
+\omega=\frac1{\sqrt{\frac1{150}\cdot15\times10^{-9}}}=10^5\,\mathrm{rad\,s^{-1}},\qquad (2.52)
+$$
+
+The value of the pulsation allows calculating the value of the requested frequency b. This frequency has the value $f$
+
+$$
+f=\frac\omega{2\pi}=\frac{10^5}{2\pi}\,\mathrm{Hz}.\qquad (2.53)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-3">
+
+### c.
+
+If the momentary tension on circuit is like in (2.43), one may write
+
+$$
+u(0)=A\sin\delta=u_0,\qquad\sin\delta=\frac{u_0}A.\qquad (2.54)
+$$
+
+From the currents (2.47) is possible to write
+
+$$
+i_{01}=\frac A{L_1\omega}\cos\delta+M,\qquad i_{02}=\frac A{L_2\omega}\cos\delta+N.\qquad (2.55)
+$$
+
+On the other side is possible to express (2.39) as
+
+$$
+\begin{aligned}i_1-i_3&=i_4-i_2,\\\frac A{L_1\omega}\cos(\omega t+\delta)+M+C_1A\omega\cos(\omega t+\delta)&=-C_2A\omega\cos(\omega t+\delta)-\frac A{L_2\omega}\cos(\omega t+\delta)-N.\end{aligned}\qquad (2.56)
+$$
+
+An identity as
+
+$$
+A\cos\alpha+B\equiv C\cos\alpha+D\qquad (2.57)
+$$
+
+is valuable for any value of the argument $\alpha$ only if
+
+$$
+A=C,\qquad B=D.\qquad (2.58)
+$$
+
+Considering (2.58), from (2.56) it results
+
+$$
+M+N=0,\qquad A\omega(C_1+C_2)=-\frac A\omega\left(\frac1{L_1}+\frac1{L_2}\right).\qquad (2.59)
+$$
+
+For the last equation it results that the circuit oscillate with the pulsation in the relation (2.44). Adding relations (2.55) and considering (2.54) and (2.59) results that
+
+$$
+\begin{aligned}i_{01}+i_{02}&=A\cos\delta\,\frac1\omega\left(\frac1{L_1}+\frac1{L_1}\right),\\A&=\frac{i_{01}+i_{02}}{\cos\delta\,\frac1\omega(\frac1{L_1}+\frac1{L_1})},\\\cos\delta&=\frac{i_{01}+i_{02}}{A\frac1\omega(\frac1{L_1}+\frac1{L_1})},\\\cos\delta&=\frac{(i_{01}+i_{02})L\omega}A.\end{aligned}\qquad (2.60)
+$$
+
+The numerical value of the amplitude of the electrical tension results by summing the last relations from (2.54) and (2.60)
+
+$$
+\begin{aligned}\sin\delta&=\frac{u_0}A,\\\cos\delta&=\frac{(i_{01}+i_{02})L\omega}A,\\(\cos\delta)^2+(\sin\delta)^2&=1,\\\left(\frac{u_0}A\right)^2+\left(\frac{(i_{01}+i_{02})L\omega}A\right)^2&=1,\\A&=\sqrt{u_0^2+((i_{01}+i_{02})L\omega)^2}.\end{aligned}\qquad (2.61)
+$$
+
+The numerical value of the electrical tension on the jacks of the circuit is
+
+$$
+A=\sqrt{40^2+(0.3\cdot\tfrac1{150}\cdot10^5)^2}=\sqrt{40^2+200^2}=40\sqrt{26}\,\mathrm V.\qquad (2.62)
+$$
+
+And consequently from (2.54) results
+
+$$
+\sin\delta=\frac{u_0}A=\frac{40}{40\sqrt{26}}=\frac1{\sqrt{26}}\qquad (2.63)
+$$
+
+and
+
+$$
+\cos\delta=\frac5{\sqrt{26}}.\qquad (2.64)
+$$
+
+Also
+
+$$
+\operatorname{tg}\delta=\frac15,\qquad\delta=\operatorname{arctg}(1/5).\qquad (2.65)
+$$
+
+From (2.55)
+
+$$
+M=i_{01}-\frac A{L_1\omega}\cos\delta,\qquad N=i_{02}-\frac A{L_2\omega}\cos\delta,\qquad (2.66)
+$$
+
+the corresponding numerical values are
+
+$$
+\begin{aligned}M&=\left(0.1-\frac1{0.01\cdot10^5}\,40\sqrt{26}\,\frac5{\sqrt{26}}\right)\mathrm A=-0.1\,\mathrm A,\\N&=\left(0.2-\frac1{0.02\cdot10^5}\,40\sqrt{26}\,\frac5{\sqrt{26}}\right)\mathrm A=0.1\,\mathrm A.\end{aligned}\qquad (2.67)
+$$
+
+The relations (2.47) becomes
+
+$$
+\begin{aligned}i_1&=\left(\frac{4\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))-0.1\right)\mathrm A=\tilde i_1-I_0,\\i_2&=\left(\frac{2\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))+0.1\right)\mathrm A=\tilde i_2+I_0.\end{aligned}\qquad (2.68)
+$$
+
+The currents through the coils are the superposition of sinusoidal currents having different amplitudes and a direct current passing only through the coils. This direct current has the constant value
+
+$$
+I_0=0.1\,\mathrm A\qquad (2.69)
+$$
+
+as in the figure 2.2.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.6%', '--fig-max': '254px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1983-theory-13th-theoretical-questions/p2-sol-fig2-v2.png" alt="Circuit showing constant coil circulation and alternating currents." width="793" height="1106" loading="lazy" decoding="async" />
+</figure>
+
+
+The alternative currents through the coils has the expressions
+
+$$
+\tilde i_1=\left(\frac{4\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))\right)\mathrm A,\qquad\tilde i_2=\left(\frac{2\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))\right)\mathrm A.\qquad (2.70)
+$$
+
+The currents through the capacitors has the forms
+
+$$
+\begin{aligned}i_3&=(-10\times10^{-4}\cdot40\sqrt{26}\cos(10^5t+\operatorname{arctg}(1/5)))\mathrm A,\\i_3&=\left(-\frac{4\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))\right)\mathrm A,\\i_4&=(-5\times10^{-4}\cdot40\sqrt{26}\cos(10^5t+\operatorname{arctg}(1/5)))\mathrm A,\\i_4&=\left(-\frac{2\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))\right)\mathrm A.\end{aligned}\qquad (2.71)
+$$
+
+The current $i_5$ has the expression
+
+$$
+i_5=i_3-i_1=\left(-\frac{8\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))+0.1\right)\mathrm A.\qquad (2.72)
+$$
+
+The value of the intensity of $i_5$ current is the answer from the question **c**. The initial value of this current is
+
+$$
+i_5=\left(-\frac{8\sqrt{26}}{100}\frac5{\sqrt{26}}+0.1\right)\mathrm A=-0.3\,\mathrm A.\qquad (2.73)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-solution-4">
+
+### d.
+
+The amplitude of the current through the inductance $L_1$ is
+
+$$
+\max(\tilde i_1)=\max\left(\frac{4\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))\right)\mathrm A=\frac{4\sqrt{26}}{100}\,\mathrm A\approx0.2\,\mathrm A,\qquad (2.74)
+$$
+
+representing the answer at the question **d**.
+
+*Professor Delia DAVIDESCU, National Department of Evaluation and Examination–Ministry of Education and Research- Bucharest, Romania*
+
+*Professor Adrian S. DAFINEI, PhD, Faculty of Physics – University of Bucharest, Romania*
+
+</ProblemSection>
+
+<ProblemSection id="solution-marking-scheme">
+
+### Marking scheme — Question 2
+
+### II.a. — 2.5 points
+
+| Marking scheme — The theoretical question II — Different kind of oscillation | Score |
+| --- | --- |
+| $C=C_1+C_2$; $L=L_1L_2/(L_1+L_2)$ | 0.2 |
+| The impedance $Z$ of the circuit $Z=\lvert\bar Z\rvert=1/\sqrt{(1/R)^2+(C\omega-1/(L\omega))^2}=1/Y$ | 0.2 |
+| $i(t)=I\sqrt2\sin(\omega t)$ | 0.2 |
+| $u(t)=U\sqrt2\sin(\omega t+\varphi)$ | 0.2 |
+| $P=U^2/R=Z^2I^2/R$ | 0.1 |
+| The maximal active power is realized for the maximum value of the impedance that is the minimal value of the admittance $Y_{\min}=1/R$. | 0.2 |
+| $P_m=RI^2$ | 0.2 |
+| $f_m=1/(2\pi\sqrt{CL})$ | 0.2 |
+| $P=\frac12P_m$ | 0.1 |
+| $Z^2I^2/R=\frac12RI^2$ | 0.1 |
+| $\omega^2\pm\omega/(RC)-1/(LC)=0$ | 0.2 |
+| The pulsation of the current ensuring an active power at the half of the maximum power: $f_\pm=\frac1{2\pi}(\frac12\sqrt{(1/(RC))^2+4/(LC)}\pm\frac1{2RC})$ | 0.2 |
+| The bandwidth of the circuit $\Delta f=f_+-f_-=1/(2\pi RC)$ | 0.1 |
+| $f_m/\Delta f=R\sqrt{C/L}=R\sqrt{(C_1+C_2)(L_1+L_2)/(L_1L_2)}$ | 0.2 |
+| Final result: $f_m/\Delta f=150$ | 0.1 |
+
+### II.b. — 2.2 points
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '19.6%', '--fig-max': '126px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1983-theory-13th-theoretical-questions/p2-rubric-fig1.png" alt="Marking-scheme circuit with currents and capacitor charges." width="393" height="685" loading="lazy" decoding="async" />
+</figure>
+
+
+| For | Score |
+| --- | --- |
+| $u(t)-L_1\,di_1/dt=0$ | 0.1 |
+| $u(t)-L_2\,di_2/dt=0$ | 0.1 |
+| $q_1=C_1u$ | 0.1 |
+| $dq_1/dt=-i_3$ | 0.1 |
+| $dq_1/dt=C_1\,du/dt$ | 0.1 |
+| $i_3=-C_1\,du/dt$ | 0.1 |
+| $i_4=-C_2\,du/dt$ | 0.1 |
+| $di_1/dt=u/L_1$; $di_2/dt=u/L_2$ | 0.2 |
+| $di_3/dt=-C_1\,d^2u/dt^2$; $di_4/dt=-C_2\,d^2u/dt^2$ | 0.2 |
+| The Kirchhoff rule of the currents for the point $A$: $i_1+i_5=i_3$ | 0.1 |
+| The Kirchhoff rule of the currents for the point $B$: $i_4+i_5=i_2$ | 0.1 |
+| $i_1-i_3=i_4-i_2$ | 0.1 |
+| $di_1/dt-di_3/dt=di_4/dt-di_2/dt$ | 0.1 |
+| $-u/L_1-u/L_2=C_1\,d^2u/dt^2+C_2\,d^2u/dt^2$; $-u(1/L_1+1/L_2)=(d^2u/dt^2)(C_1+C_2)$ | 0.2 |
+| $-u/L=(d^2u/dt^2)C$; $\ddot u+u/(LC)=0$ | 0.2 |
+| $\omega=1/\sqrt{LC}$ | 0.2 |
+| Final result: $\omega=10^5\,\mathrm{rad\,s^{-1}}$; $f=10^5/(2\pi)\,\mathrm{Hz}$ | 0.1 |
+
+### II.c. — 3.0 points
+
+| For | Score |
+| --- | --- |
+| $u(t)=A\sin(\omega t+\delta)$ | 0.1 |
+| $i_3=-C_1\frac d{dt}(A\sin(\omega t+\delta))=-C_1A\omega\cos(\omega t+\delta)$; $i_4=-C_2\frac d{dt}(A\sin(\omega t+\delta))=-C_2A\omega\cos(\omega t+\delta)$ | 0.2 |
+| $di_1/dt=u/L_1=(A/L_1)\sin(\omega t+\delta)$; $di_2/dt=u/L_2=(A/L_2)\sin(\omega t+\delta)$ | 0.2 |
+| $i_1=A\cos(\omega t+\delta)/(L_1\omega)+M$; $i_2=A\cos(\omega t+\delta)/(L_2\omega)+N$ | 0.2 |
+
+*Observation: in the expression above, $A$, $M$, $N$ and $\delta$ are constants that must be determined using initially conditions $(u_0=40\,\mathrm V,\ i_{01}=0.1\,\mathrm A,\ i_{02}=0.2\,\mathrm A)$.*
+
+| For | Score |
+| --- | --- |
+| $u(0)=A\sin\delta=u_0$; $\sin\delta=u_0/A$ | 0.1 |
+| $i_{01}=A\cos\delta/(L_1\omega)+M$; $i_{02}=A\cos\delta/(L_2\omega)+N$ | 0.2 |
+| $i_1-i_3=i_4-i_2$ and the expanded equation below | 0.2 |
+
+$$
+\frac A{L_1\omega}\cos(\omega t+\delta)+M+C_1A\omega\cos(\omega t+\delta)=-C_2A\omega\cos(\omega t+\delta)-\frac A{L_2\omega}\cos(\omega t+\delta)-N.
+$$
+
+*Observation: an identity as $A\cos\alpha+B\equiv C\cos\alpha+D$ is valuable for any value of the argument $\alpha$ only if $A=C$ and $B=D$.*
+
+| For | Score |
+| --- | --- |
+| $M+N=0$; $A\omega(C_1+C_2)=-\frac A\omega(1/L_1+1/L_2)$ | 0.1 |
+| $i_{01}+i_{02}=A\cos\delta\,\frac1\omega(1/L_1+1/L_1)$; $\cos\delta=(i_{01}+i_{02})/[A\frac1\omega(1/L_1+1/L_1)]$; $\cos\delta=(i_{01}+i_{02})L\omega/A$ | 0.2 |
+| $(\cos\delta)^2+(\sin\delta)^2=1$; $(u_0/A)^2+((i_{01}+i_{02})L\omega/A)^2=1$; $A=\sqrt{u_0^2+((i_{01}+i_{02})L\omega)^2}$ | 0.1 |
+| The numerical value of the electrical tension on the jacks of the circuit $A=40\sqrt{26}\,\mathrm V$ | 0.1 |
+| $\sin\delta=u_0/A$; $\sin\delta=1/\sqrt{26}$ | 0.1 |
+| $M=i_{01}-A\cos\delta/(L_1\omega)$; $N=i_{02}-A\cos\delta/(L_2\omega)$ | 0.1 |
+| $M=-0.1\,\mathrm A$; $N=0.1\,\mathrm A$ | 0.1 |
+| $i_1=(\frac{4\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))-0.1)\,\mathrm A=\tilde i_1-I_0$; $i_2=(\frac{2\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))+0.1)\,\mathrm A=\tilde i_2+I_0$ | 0.2 |
+
+*Observation: the currents through the coils are the superposition of sinusoidal currents having different amplitudes and a direct current passing only through the coils.*
+
+| For | Score |
+| --- | --- |
+| The direct current $I_0=0.1\,\mathrm A$ | 0.1 |
+| The alternative currents through the coils: $\tilde i_1=(\frac{4\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5)))\,\mathrm A$; $\tilde i_2=(\frac{2\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5)))\,\mathrm A$ | 0.2 |
+| The currents through the capacitors: $i_3=(-\frac{4\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5)))\,\mathrm A$; $i_4=(-\frac{2\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5)))\,\mathrm A$ | 0.2 |
+| $i_5=i_3-i_1$ | 0.1 |
+| Final result: $i_5=[-\frac{8\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}\frac15)+0.1]\,\mathrm A$ | 0.2 |
+
+### II.d. — 0.3 points
+
+For: the amplitude of the current through the inductance $L_1$
+
+$$
+\max(\tilde i_1)=\max\left(\frac{4\sqrt{26}}{100}\cos(10^5t+\operatorname{arctg}(1/5))\right)\mathrm A.
+$$
+
+**0.2 p**
+
+Final result: $\max(\tilde i_1)\approx0.2\,\mathrm A$. **0.1 p**
+
+**Total score theoretical question III: 8.0 points**
+
+</ProblemSection>
+
+
+</Spoiler>
 
 ---
 
 Оригинал в Архива: [13th_IPhO_1983_Theoretical Questions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_Theoretical%20Questions.pdf#page=1)
+· официални решения: [13th_IPhO_1983_Theo_I_Mechanics_Solution.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_Theo_I_Mechanics_Solution.pdf)
+· допълнителни данни: [13th_IPhO_1983_MarkingScheme_ ThQ_III_ Optics.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_MarkingScheme_%20ThQ_III_%20Optics.pdf)
+· допълнителни данни: [13th_IPhO_1983_MarkingScheme_ ThQ_II_ Electricity.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_MarkingScheme_%20ThQ_II_%20Electricity.pdf)
+· допълнителни данни: [13th_IPhO_1983_MarkingScheme_ ThQ_IV_ Atomics.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_MarkingScheme_%20ThQ_IV_%20Atomics.pdf)
+· допълнителни данни: [13th_IPhO_1983_MarkingScheme_ ThQ_I_ Mechanics.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_MarkingScheme_%20ThQ_I_%20Mechanics.pdf)
+· допълнителни данни: [13th_IPhO_1983_Theo_III_0ptics_Solution.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_Theo_III_0ptics_Solution.pdf)
+· допълнителни данни: [13th_IPhO_1983_Theo_II_Electricity_Solution.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_Theo_II_Electricity_Solution.pdf)
+· допълнителни данни: [13th_IPhO_1983_Theo_IV_Atomics_Solution.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_Theo_IV_Atomics_Solution.pdf)
+· допълнителни данни: [13th_IPhO_1983_Theo_V_IPhO's Logo_Solution.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1983/13th_IPhO_1983_Theo_V_IPhO's%20Logo_Solution.pdf)

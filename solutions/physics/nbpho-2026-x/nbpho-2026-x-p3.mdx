@@ -1,0 +1,181 @@
+---
+id: nbpho-2026-x-p3
+source: 'NBPhO 2026, Теория и експеримент'
+title: 'Задача 3. Kirill on a swing'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2026/nbpho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T00:10:50.353Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2026 · 8 т.*
+
+<details>
+<summary>Practicalities for moderation.</summary>
+
+When you are called to the moderation table to discuss your request with the graders, bring an item-by-item breakdown of the points you are claiming, following the detailed grading scheme — e.g., for P9 part (i): $0.5+0.2+0.1+0+0 = 0.8$ out of $0.5+0.2+0.3+0.3+0.2 = 1.5$. **Without this breakdown, the moderation discussion will not proceed.**
+
+</details>
+
+## Условие
+
+— *Kaarel Hänni.* A swing has rigid rods attaching it to a horizontal pivot, so it can rotate freely in a vertical plane. Initially the swing hangs vertically below the pivot with Kirill standing upright on the seat; his friend gives him an initial angular velocity $\omega_0$ about the pivot. Kirill is practising athletic swinging: whenever the swing momentarily has zero angular velocity, he quickly squats; whenever the rods are again vertical, he quickly stands up. Treat Kirill as a point mass at distance $a$ from the pivot when standing and $b$ when squatting ($a < b$); squatting and standing are motions along the rods. Neglect friction, air resistance, and the mass of the swing. Gravitational acceleration is $g$.
+
+**i)** Sketch, qualitatively, how Kirill’s angular speed depends on time during the first full period of the swing. **[1,5 т.]**
+
+**ii)** On the phase diagram (angular velocity vs. angle), sketch, qualitatively, the trajectory from the initial push until the swing first goes over the top. The total number of periods shown need not be correct. **[2 т.]**
+
+**iii)** Find how many times Kirill must stand up before the swing first goes over the top. Evaluate your answer for $a = 2.5\ \mathrm{m}$, $b = 3.0\ \mathrm{m}$, $\omega_0 = 1.0\ \mathrm{rad/s}$, and $g = 10\ \mathrm{m/s^2}$. **[4,5 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+— *Solution by Kaarel Hänni.*
+
+<ProblemSection id="solution-part-i">
+
+### i) (1,5 т.)
+
+Starting at the bottom with $|\omega| = \omega_0$, Kirill (standing, radius $a$) swings up; $|\omega|$ falls smoothly to 0 at the turning point, after a quarter-period $T_a/4 = (\pi/2)\sqrt{a/g}$. At the turning point Kirill squats (radius $a \to b$, no effect on the plot since $\omega = 0$). Swinging back while squatting, $|\omega|$ rises smoothly from 0 to $\eta_1$ (see part c; $\eta_1 = \omega_0\sqrt{a/b} < \omega_0$) after a quarter-period $T_b/4 = (\pi/2)\sqrt{b/g}$, which is *longer* than the first since $b > a$. At the bottom Kirill stands up: $|\omega|$ *jumps* from $\eta_1$ to $\omega_1 = \eta_1(b/a)^2 = \omega_0(b/a)^{3/2} > \omega_0$. The second half of the period repeats the pattern with new amplitudes $\omega_1$, $\eta_2 = \omega_1\sqrt{a/b} > \omega_0$, $\omega_2 = \omega_0(b/a)^3$.
+
+The sketch should therefore show:
+
+- smooth arches during swinging, cusps at the bottom (jumps) and smoothness at turning points;
+- the “squatting” arches taking longer than the “standing” ones;
+- growth of successive peaks.
+
+**Part (i): Angular speed vs time, first full period.**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.1%', '--fig-max': '269px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2026-x/p3-sol-fig1-v2.png" alt="Sketch of |ω| versus t: blue arches labelled standing (r = a) and red arches labelled squatting (r = b); the curve starts at ω0 (dashed level), falls to zero at the first squat, rises in red, jumps up (orange, stand-up), falls to zero at the second squat, rises in red and jumps again; labels squat, stand-up, squat, stand-up along the t axis." width="842" height="418" loading="lazy" decoding="async" />
+</figure>
+
+
+*Part (i) — qualitative sketch of $|\omega|$ (or signed $\omega$) vs $t$:*
+
+- Approximately sinusoidal arcs between jumps **0.3 pts**
+- Instantaneous jumps at the maximum values of $\omega$ (at the bottom of the swing, during stand-up) **0.6 pts**
+- Smaller amplitude during “squatting” arches, or equivalently a longer quarter-period while $r = b$ **0.3 pts**
+- Overall growth of peak $\omega$ over the period **0.3 pts**
+
+A sketch of signed $\omega$ (rather than $|\omega|$) receives full credit if the curve correctly corresponds to the axis labels and all other qualitative features are preserved. Failure to correctly mark $|\omega|$, where necessary, deducts **0.5 pts**. The same goes for not completing the full period of the first swing.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-ii">
+
+### ii) (2 т.)
+
+The trajectory in the $(\alpha, \omega)$ plane pieces together arcs of pendulum-like phase curves at two radii, $a$ and $b$. Each half-swing traces an arc of the energy conservation curve for the relevant radius. Stand-ups at $\alpha = 0$ appear as *vertical segments* where $|\omega|$ jumps from $\eta_i$ to $\omega_i = \eta_i(b/a)^2$. Squats at the turning points ($\omega = 0$) appear as smooth transitions (the radius-$a$ arc meets the radius-$b$ arc tangentially at $\omega = 0$).
+
+The motion is an outward spiral: each full cycle brings Kirill back to $\alpha = 0$ with a larger $|\omega|$. When $\omega$ at the bottom (standing, radius $a$) first exceeds $\omega_{\min} = 2\sqrt{g/a}$, the next upward arc does not close: it reaches $\alpha = \pi$ with $\omega > 0$ and continues past the top. This is the open curve on the sketch. **Part (ii): Phase diagram ($\omega$ vs $\varphi$), first three half-swings.**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.5%', '--fig-max': '240px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2026-x/p3-sol-fig2-v2.png" alt="Phase diagram ω versus φ with dashed verticals at −π and π: blue arcs labelled r = a, red arcs labelled r = b, orange vertical stand-up segments at φ = 0, starting point ω0 marked; the spiral grows outward and the final blue curve labelled goes over leaves through −π." width="751" height="640" loading="lazy" decoding="async" />
+</figure>
+
+
+Key features for grading:
+
+- lens-shaped/pendulum-like arcs (not ellipses);
+- vertical line segments only at $\alpha = 0$ (stand-ups), smooth meeting at turning points (squats);
+- spiral grows outward;
+- final open curve goes over the top with nonzero $\omega$.
+
+Failure to use the phase diagram of angular velocity and angle, deducts **0.5 pts** from the sum of part ii).
+
+The number of spiral loops is not required to match the actual answer $N$ computed in part (c).
+
+*Part (ii) — qualitative sketch of phase diagram $\omega$ vs $\varphi$:*
+
+- Elliptical arcs for small-amplitude (early) cycles, with standing arcs ($r = a$) visibly taller (steeper in $\omega$) than squatting arcs ($r = b$) **0.5 pts**
+- Trajectory passes *continuously* through the turning points ($\omega = 0$): no jump at maximum $|\varphi|$ **0.3 pts**
+- Vertical jumps at $\varphi = 0$ (during stand-up at the bottom): $\omega$ jumps by factor $(b/a)^2$ **0.4 pts**
+- Overall growth: each successive cycle encloses the previous one, spiralling outward **0.4 pts**
+- Final half-cycle goes over the top — trajectory crosses $\varphi = \pm\pi$ with $\omega$ still nonzero (no turning point on this segment) **0.4 pts**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-iii">
+
+### iii) (4,5 т.)
+
+**Growth factor per stand-up.** Let $\omega_i$ denote the angular velocity just after the $i$-th stand-up (at the bottom, standing, radius $a$); let $\eta_i$ denote the angular velocity just before that stand-up (at the bottom, squatting, radius $b$).
+
+Energy conservation on the way up (standing, radius $a$) to turning point at angle $\alpha$:
+
+$$
+\tfrac{1}{2}(\omega_i a)^2 = ga(1 - \cos\alpha) \implies \omega_i^2 a = 2g(1 - \cos\alpha).
+$$
+
+At the turning point $\omega = 0$, so the squat ($a \to b$) leaves $\alpha$ and $\omega$ unchanged. Swinging back down (squatting, radius $b$):
+
+$$
+\tfrac{1}{2}(\eta_{i+1} b)^2 = gb(1 - \cos\alpha)
+$$
+
+$$
+\implies \eta_{i+1}^2 b = 2g(1 - \cos\alpha).
+$$
+
+Equating: $\eta_{i+1} = \omega_i\sqrt{a/b}$. The stand-up is a purely radial motion, so angular momentum about the pivot is conserved: $\eta_{i+1} b^2 = \omega_{i+1} a^2$, whence
+
+$$
+\frac{\omega_{i+1}}{\omega_i} = \sqrt{\frac{a}{b}} \cdot \frac{b^2}{a^2} = \left(\frac{b}{a}\right)^{3/2}.
+$$
+
+After $N$ stand-ups, $\omega_N = \omega_0(b/a)^{3N/2}$.
+
+**Minimum angular velocity for a loop.** The rods are rigid, so the condition for reaching the top is simply that the kinetic energy at the bottom suffice to raise Kirill by $2a$:
+
+$$
+\tfrac{1}{2}(\omega_{\min} a)^2 = 2ga \implies \omega_{\min} = 2\sqrt{g/a}.
+$$
+
+**Counting.** Kirill first loops over when $\omega_N \geq \omega_{\min}$, i.e.
+
+$$
+N \geq \frac{2}{3}\,\frac{\ln(\omega_{\min}/\omega_0)}{\ln(b/a)}.
+$$
+
+**Numerical evaluation.** With $a = 2.5\ \mathrm{m}$, $b = 3.0\ \mathrm{m}$, $\omega_0 = 1.0\ \mathrm{rad/s}$, $g = 10\ \mathrm{m/s^2}$:
+
+$$
+b/a = 1.2, \quad (b/a)^{3/2} \approx 1.3145,
+$$
+
+$$
+\omega_{\min} = 2\sqrt{10/2.5} = 4\ \mathrm{rad/s},
+$$
+
+$$
+N \geq \frac{2}{3}\,\frac{\ln 4}{\ln 1.2} = \frac{2}{3} \cdot \frac{1.386}{0.1823} \approx 5.07
+$$
+
+$$
+\implies \boxed{N = 6}.
+$$
+
+Check: $\omega_5 = 1.2^{7.5} \approx 3.93\ \mathrm{rad/s}$ (just short); $\omega_6 = 1.2^9 \approx 5.16\ \mathrm{rad/s}$ (exceeds $\omega_{\min}$). So Kirill loops over on the swing-up following his *sixth* stand-up.
+
+**Grading (part c):**
+
+- Angular momentum conservation during the stand-up **0.7 pts**
+- Energy conservation during the swing **0.7 pts**
+- Growth factor $(b/a)^{3/2}$ per stand-up **0.7 pts**
+- Minimum angular velocity $\omega_{\min}^2 = 4g/a$ for the rigid-rod swing to loop over the top **0.8 pts**
+- Correct inequality for the over-the-top condition ($\omega_N \geq \omega_{\min}$ after the $N$th stand-up) **0.4 pts**
+- Solving the inequality for $N$ using the growth law $\omega_N = \omega_0(b/a)^{3N/2}$, yielding $N \geq \log[4g/(a\omega_0^2)]/[3\log(b/a)]$ **0.7 pts**
+- Numerical answer $N = 6$ **0.5 pts**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2026_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2026/NBPhO_2026_problems.pdf#page=1)
+· официални решения: [NBPhO_2026_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2026/NBPhO_2026_solutions.pdf#page=4)

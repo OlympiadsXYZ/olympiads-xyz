@@ -1,0 +1,218 @@
+---
+id: nbpho-2026-x-p7
+source: 'NBPhO 2026, Теория и експеримент'
+title: 'Задача 7. Water hose'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2026/nbpho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T00:10:50.353Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2026 · 5 т.*
+
+<details>
+<summary>Practicalities for moderation.</summary>
+
+When you are called to the moderation table to discuss your request with the graders, bring an item-by-item breakdown of the points you are claiming, following the detailed grading scheme — e.g., for P9 part (i): $0.5+0.2+0.1+0+0 = 0.8$ out of $0.5+0.2+0.3+0.3+0.2 = 1.5$. **Without this breakdown, the moderation discussion will not proceed.**
+
+</details>
+
+## Условие
+
+— *Ralf Robert Paabo.* A liquid with density $\rho$ flows in a pipe with diameter $D$. At low mean speeds $v$, the flow is laminar (uniform and without vortices); the drag force per unit area $F_{\mathrm{L}} = \mu\,\mathrm{d}u/\mathrm{d}r$ on the liquid comes from wall friction, where $\mu$ (unit $\mathrm{Pa \cdot s}$) is the dynamic viscosity, $u$ is the local speed, and $r$ is the distance from the axis. When $v$ is large enough, the flow becomes turbulent, filled with vortices whose velocity fluctuations are of the order of $v$ itself. The drag $F_{\mathrm{T}}$ still comes from wall friction $\mu\,\mathrm{d}u/\mathrm{d}r$, but the vortices squeeze the near-wall layer (across which the flow speed drops from $v$ to zero) to a thickness $\delta \ll D$ where the drag force per unit area $\mu v/\delta$ is of the order of the dynamic pressure $\rho v^2$ carried by the vortices.
+
+**i)** At any given flow speed, only one of the two mechanisms actually dominates the drag – but the dimensionless ratio of the two characteristic drag scales, $R = F_{\mathrm{T}}/F_{\mathrm{L}}$, can be computed regardless and tells us which regime we are in. This ratio is the *Reynolds number*. Express $R$ as a product of powers of $\rho$, $v$, $D$, and $\mu$. **[1,5 т.]**
+
+A water pump with output power $P = 250\ \mathrm{W}$ is used for watering a garden; it draws water from a depth $h = 20\ \mathrm{m}$ directly into a hose of length $s = 40\ \mathrm{m}$ and inner diameter $d = 13\ \mathrm{mm}$. Water leaves the end of the hose at a volumetric rate $Q = 25\ \mathrm{L \cdot min^{-1}}$. Density of water is $\rho_{\mathrm{w}} = 1000\ \mathrm{kg \cdot m^{-3}}$, viscosity $\mu_{\mathrm{w}} = 1.1 \times 10^{-3}\ \mathrm{Pa \cdot s}$ and gravitational acceleration is $g = 9.8\ \mathrm{N \cdot kg^{-1}}$.
+
+**ii)** Determine the flow type in the hose. It is known that flow is turbulent when $R > 2500$ and laminar otherwise. **[0,5 т.]**
+
+**iii)** The gardener is cleaning tools by directing the water jet onto dirty surfaces. Where the jet meets the surface, the pressure rises above atmospheric; this excess pressure is what removes dirt. To make cleaning more efficient, the gardener attaches a spray nozzle set to narrow-jet mode, so that the exit cross-section of the nozzle is $f = 15\,\%$ of the hose’s cross-section. By what factor does the volumetric flow rate $Q$ change? By what factor does the excess pressure at the dirty surface change? Find both within 1 % accuracy. You are allowed to use numerical methods. **[3 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+— *Solution by Ralf Robert Paabo and Jaan Kalda.*
+
+<ProblemSection id="solution-part-i">
+
+### i) (1,5 т.)
+
+**Solution 1 (direct from the problem’s drag scales).** The problem gives the laminar drag per unit area as $F_L \sim \mu v/D$ (the velocity gradient at the wall is of order $v/D$). The turbulent drag per unit area is $F_T \sim \rho v^2$ (dynamic pressure carried by the vortices). The dimensionless ratio is
+
+$$
+R = \frac{F_T}{F_L} \sim \frac{\rho v^2}{\mu v/D} = \frac{\rho vD}{\mu}.
+$$
+
+. Some solutions tried to add numerical factors, however, it is an impossible task, because drag force in turbulent case is chaotic. Therefore any numerical factor calculated is useless. However, no points are deducted unless the factor is very big ($> 10$). A very big factor would lead to inaccuracies when using $R$ to determine flow type.
+
+**Solution 2 (dimensional analysis).** Look for $R = D^d\rho^r\mu^m v^u$ to be dimensionless. Mass, length, and time give three equations:
+
+$$
+\begin{cases} r + m = 0, \\ d - 3r - m + u = 0, \\ -m - u = 0. \end{cases}
+$$
+
+Solving: $m = -r$, $u = r$, $d = r$. So $R = (Dv\rho/\mu)^r$. This seemingly leaves one degree of freedom, but $\mu$ appears only in the laminar drag (denominator of $F_T/F_L$), so $m = -1$ and hence $r = 1$:
+
+$$
+R = \frac{\rho vD}{\mu}.
+$$
+
+**Grading (Solution 1).**
+
+- $R = \frac{F_T}{F_L} \sim \frac{\rho v^2}{\mu du/dr}$ **0.5 pts**
+- $du/dr \sim v/D$ **0.5 pts**
+- $R = \rho vD/\mu$ **0.5 pts**
+- Includes numerical factor $> 10$ **−0.2 pts**
+
+**Grading (Solution 2).**
+
+- Setting up $R = D^d\rho^r\mu^m v^u$ as dimensionless **0.3 pts**
+- Correct system of equations from mass, length, time dimensions **0.5 pts**
+- Solving the system to obtain $R = (Dv\rho/\mu)^r$ **0.4 pts**
+- Correctly fixing $r = 1$ by noting $\mu$ enters with power $-1$ (or by appeal to the standard Reynolds-number form) **0.3 pts**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-ii">
+
+### ii) (0,5 т.)
+
+The hose has cross-section area $\pi d^2/4$, so by continuity the mean flow speed is
+
+$$
+v = \frac{Q}{\pi d^2/4} = \frac{4Q}{\pi d^2} \approx 3.1\ \frac{\mathrm{m}}{\mathrm{s}}.
+$$
+
+The Reynolds number is then
+
+$$
+R = \frac{\rho vd}{\mu} = \frac{4\rho Q}{\pi d\mu} \approx 37000.
+$$
+
+Since $37000 \gg 2500$, the flow is *turbulent*.
+
+**Grading.**
+
+- Computing the mean flow speed $v$ from $Q$ via continuity **0.2 pts**
+- Correctly evaluating $R \approx 37000$ **0.2 pts**
+- Concluding turbulent flow on the basis of the numerical comparison $R \gg 2500$ **0.1 pts**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-iii">
+
+### iii) (3 т.)
+
+The pump’s power $P$ goes into three reservoirs: gravitational potential energy of the lifted water, work against drag in the hose, and kinetic energy of the exiting jet. Per unit volume, these are $\rho gh$, $\Delta p_{\mathrm{drag}}$, and $\rho v_{\mathrm{exit}}^2/2$. The power balance is therefore
+
+$$
+P = Q\left(\rho gh + \Delta p_{\mathrm{drag}} + \tfrac{1}{2}\rho v_{\mathrm{exit}}^2\right).
+$$
+
+Since the flow is turbulent (part ii), the drag scales as $v^2$: $\Delta p_{\mathrm{drag}} = kv^2$, where $k$ is a constant for this hose.
+
+**Calibration (no nozzle).** With no nozzle, $v_{\mathrm{exit}} = v_0$ (the hose-exit speed from part ii, $v_0 \approx 3.14\ \frac{\mathrm{m}}{\mathrm{s}}$). Then
+
+$$
+P = Q\left(\rho gh + kv_0^2 + \tfrac{1}{2}\rho v_0^2\right).
+$$
+
+Numerically:
+
+$$
+\rho gh = 1.96 \times 10^5\ \mathrm{Pa}, \quad \tfrac{1}{2}\rho v_0^2 = 4.93 \times 10^3\ \mathrm{Pa},
+$$
+
+$$
+P/Q - \rho gh - \tfrac{1}{2}\rho v_0^2 = kv_0^2 \approx 3.99 \times 10^5\ \mathrm{Pa},
+$$
+
+$$
+k = \frac{3.99 \times 10^5\ \mathrm{Pa}}{v_0^2} \approx 4.04 \times 10^4\ \frac{\mathrm{Pa \cdot s^2}}{\mathrm{m}^2}.
+$$
+
+**With nozzle.** The exit area is $f$ times the hose area; by mass continuity, $v'_{\mathrm{exit}} = v'/f$, where $v'$ is the (new) hose flow speed. Substituting into the power balance:
+
+$$
+P = \frac{\pi d^2}{4}v'\left(\rho gh + kv'^2 + \frac{\rho v'^2}{2f^2}\right).
+$$
+
+This is a cubic in $v'$.
+
+**Dimensionless form.** Introduce $x = v'/v_0$. Each of the three reservoirs in the unblocked case contributes a fraction of the total power:
+
+$$
+a = \frac{\rho gh}{\rho gh + kv_0^2 + \frac{1}{2}\rho v_0^2}, \quad b = \frac{kv_0^2}{\rho gh + kv_0^2 + \frac{1}{2}\rho v_0^2},
+$$
+
+and $c = 1 - a - b$. Numerically: $a \approx 0.327$, $b \approx 0.665$, $c \approx 0.0082$. The power balance becomes
+
+$$
+x\left[a + \left(b + \frac{c}{f^2}\right)x^2\right] = 1.
+$$
+
+With $f = 0.15$, $c/f^2 \approx 0.364$, so $b + c/f^2 \approx 1.029$:
+
+$$
+x^3 + 0.318\,x = 0.972 \Rightarrow x = (0.972 - 0.318\,x)^{1/3}.
+$$
+
+**Iteration.** Starting from $x_0 = 1$ on the right-hand side:
+
+$$
+x_1 = (0.972 - 0.318)^{1/3} = 0.868,
+$$
+
+$$
+x_2 = (0.972 - 0.276)^{1/3} = 0.886,
+$$
+
+$$
+x_3 = (0.972 - 0.282)^{1/3} = 0.884,
+$$
+
+$$
+x_4 = (0.972 - 0.281)^{1/3} = 0.884.
+$$
+
+Converged: $x \approx 0.884$.
+
+**Results.**
+
+$$
+Q'/Q = v'/v_0 = x \approx \boxed{0.88}, \quad \text{so} \quad Q' \approx 22.1\ \frac{\mathrm{L}}{\mathrm{min}}.
+$$
+
+The exit speed is $v'_{\mathrm{exit}} = v'/f = xv_0/f$, and the dirty-surface excess pressure scales as $\rho v_{\mathrm{exit}}^2/2$:
+
+$$
+\frac{p'_{\mathrm{excess}}}{p_{\mathrm{excess}}} = \frac{v'^2_{\mathrm{exit}}}{v_0^2} = \frac{x^2}{f^2} = \frac{0.884^2}{0.15^2} \approx \boxed{35}.
+$$
+
+**Grading.**
+
+- Power balance: gravity term $\rho gh$ **0.2 pts**
+- Power balance: drag term $\Delta p_{\mathrm{drag}}$ **0.2 pts**
+- Power balance: exit kinetic energy term $\rho v_{\mathrm{exit}}^2/2$ **0.2 pts**
+- Identifying $\Delta p_{\mathrm{drag}} = kv^2$ from the turbulent-regime scaling **0.3 pts**
+- Calibrating $k$ from the unblocked case: $k \approx 4 \times 10^4\ \frac{\mathrm{Pa \cdot s^2}}{\mathrm{m}^2}$ **0.3 pts**
+- Mass continuity giving $Q_m = Q'_m$ **0.3 pts**
+- $v'_{\mathrm{exit}} = v'/f$ **0.2 pts**
+- Updated power balance with the kinetic-energy term boosted by $1/f^2$ **0.5 pts**
+- Volumetric flow rate ratio $Q'/Q \approx 0.88$ within tolerance ($\pm 0.02$) **0.4 pts**
+- Formula for excess-pressure ratio $(v'_{\mathrm{exit}}/v_0)^2$ **0.2 pts**
+- Excess-pressure ratio $\approx 35$ within tolerance ($\pm 1$) **0.2 pts**
+- If accuracy $> 1\,\%$ **−0.1 pts**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2026_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2026/NBPhO_2026_problems.pdf#page=2)
+· официални решения: [NBPhO_2026_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2026/NBPhO_2026_solutions.pdf#page=9)

@@ -1,0 +1,199 @@
+---
+id: nbpho-2026-x-p6
+source: 'NBPhO 2026, Теория и експеримент'
+title: 'Задача 6. Pull-up bar rope'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/NBPhO/2026/nbpho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T00:10:50.353Z'
+verifier: 'single-pass'
+---
+
+*Nordic-Baltic Physics Olympiad 2026 · 5 т.*
+
+<details>
+<summary>Practicalities for moderation.</summary>
+
+When you are called to the moderation table to discuss your request with the graders, bring an item-by-item breakdown of the points you are claiming, following the detailed grading scheme — e.g., for P9 part (i): $0.5+0.2+0.1+0+0 = 0.8$ out of $0.5+0.2+0.3+0.3+0.2 = 1.5$. **Without this breakdown, the moderation discussion will not proceed.**
+
+</details>
+
+## Условие
+
+— *Jaan Kalda.* A rope is thrown over a horizontal pull-up bar at height $H$ above the frictionless floor. One end of the rope is tied to a heavy weight resting on the floor; the other end is pulled so that the length of the rope between the bar and the weight decreases at a constant rate $v$. At a given moment, this segment makes an angle $\alpha$ with the vertical (see figure); the weight is still in contact with the floor. Gravitational acceleration is $g$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.6%', '--fig-max': '254px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/nbpho-2026-x/p6-fig1-v3.png" alt="A bar (black dot) at height H above a hatched floor; the rope runs from the bar down to the right to a small block on the floor, making angle α with the dashed vertical; the other end of the rope goes down to the left with an arrow labelled v." width="794" height="464" loading="lazy" decoding="async" />
+</figure>
+
+**i)** Find the speed $u$ of the weight. **[1 т.]**
+
+**ii)** Find the magnitude of the acceleration of the weight. **[1 т.]**
+
+**iii)** Find the angle $\alpha_0$ at which the weight lifts off the floor. **[3 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+— *Solution by Jaan Kalda.*
+
+<ProblemSection id="solution-part-i">
+
+### i) (1 т.)
+
+Place the bar at the origin of a coordinate system where $x$ is the horizontal distance from the bar to the weight along the floor, and $H$ is the height of the bar above the floor. The length of the bar-to-weight rope segment is
+
+$$
+L = \sqrt{x^2 + H^2}, \qquad \sin\alpha = x/L.
+$$
+
+**Method 1 (inextensibility / velocity projection).** Since the rope is inextensible, the velocity components of its two endpoints *along the rope direction* must match: whatever rate one end recedes from a point on the rope, the other end must approach it at the same rate. The puller’s hand pulls the rope along its own direction at speed $v$, so the rope shortens at rate $v$. The weight moves horizontally toward the bar at speed $u$; its velocity component along the rope (which makes angle $\alpha$ with the vertical, hence angle $\frac{\pi}{2} - \alpha$ with the floor) is $u\sin\alpha$. Equating:
+
+$$
+u\sin\alpha = v \quad \implies \quad \boxed{u = \frac{v}{\sin\alpha}}.
+$$
+
+**Method 2 (implicit differentiation).** Differentiating $L^2 = x^2 + H^2$ with respect to time:
+
+$$
+L\dot L = x\dot x.
+$$
+
+With $\dot L = -v$ (the segment shortens at constant rate) and $\sin\alpha = x/L$:
+
+$$
+\dot x = -\frac{Lv}{x} = -\frac{v}{\sin\alpha},
+$$
+
+$$
+u = |\dot x| = \frac{v}{\sin\alpha}.
+$$
+
+**Grading (Method 1).**
+
+- Recognising that the velocity components of the rope endpoints along the rope direction must match (rope inextensibility) **0.4 pts**
+- Identifying the projection $u\sin\alpha$ for the weight’s velocity along the rope **0.3 pts**
+- Final answer $u = v/\sin\alpha$ **0.3 pts**
+
+**Grading (Method 2).**
+
+- Setting up $L^2 = x^2 + H^2$ with $\dot L = -v$ **0.3 pts**
+- Correctly differentiating to obtain $L\dot L = x\dot x$ **0.4 pts**
+- Final answer $u = v/\sin\alpha$ **0.3 pts**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-ii">
+
+### ii) (1 т.)
+
+**Method 1 (continuing from $L\dot L = x\dot x$).** Differentiate again, with $\dot L = -v$ constant (so $\ddot L = 0$):
+
+$$
+\dot L^2 = \dot x^2 + x\ddot x,
+$$
+
+$$
+\ddot x = \frac{v^2 - \dot x^2}{x} = \frac{v^2 - u^2}{x}.
+$$
+
+Since $u^2 > v^2$, we have $\ddot x < 0$: the weight accelerates toward the bar. With $u = v/\sin\alpha$ and $x = H\tan\alpha$:
+
+$$
+|\ddot x| = \frac{u^2 - v^2}{x} = \frac{v^2(1 - \sin^2\alpha)/\sin^2\alpha}{H\tan\alpha},
+$$
+
+$$
+|\ddot x| = \boxed{\frac{v^2}{H}\cot^3\alpha}.
+$$
+
+- Correctly differentiating an incorrect result from the previous part **0.5 pts**.
+
+**Method 2 (direct differentiation of $u = v/\sin\alpha$).** The angle $\alpha$ changes in time as the weight slides; introduce $\omega = -\dot\alpha$ (positive as $\alpha$ decreases). The weight’s position is $x = H\tan\alpha$, so its speed is
+
+$$
+u = -\dot x = -\frac{H}{\cos^2\alpha}\,\dot\alpha = \frac{H\omega}{\cos^2\alpha}.
+$$
+
+Combined with $u = v/\sin\alpha$:
+
+$$
+\omega = \frac{u\cos^2\alpha}{H} = \frac{v\cos^2\alpha}{H\sin\alpha}.
+$$
+
+Differentiating $u = v/\sin\alpha$ with respect to time:
+
+$$
+\dot u = -\frac{v\cos\alpha}{\sin^2\alpha}\,\dot\alpha = \frac{v\omega\cos\alpha}{\sin^2\alpha}.
+$$
+
+Substituting $\omega$:
+
+$$
+|\ddot x| = \dot u = \frac{v\cos\alpha}{\sin^2\alpha} \cdot \frac{v\cos^2\alpha}{H\sin\alpha} = \boxed{\frac{v^2}{H}\cot^3\alpha}.
+$$
+
+**Grading (Method 1).**
+
+- Differentiating $L\dot L = x\dot x$ to obtain $\ddot x = (v^2 - u^2)/x$ **0.5 pts**
+- Substituting $u$ and $x$ to obtain final answer $a = (v^2/H)\cot^3\alpha$ **0.5 pts**
+
+**Grading (Method 2).**
+
+- Introducing $\omega = -\dot\alpha$ as the angular rate of the rope direction **0.2 pts**
+- Relating the weight’s speed to $\omega$: $u = H\omega/\cos^2\alpha$ **0.2 pts**
+- Deriving $\omega = v\cos^2\alpha/(H\sin\alpha)$ from $u = v/\sin\alpha$ **0.2 pts**
+- Differentiating $u = v/\sin\alpha$ to obtain $\dot u = v\omega\cos\alpha/\sin^2\alpha$ **0.2 pts**
+- Substituting $\omega$ and obtaining final answer $a = (v^2/H)\cot^3\alpha$ **0.2 pts**
+
+</ProblemSection>
+
+<ProblemSection id="solution-part-iii">
+
+### iii) (3 т.)
+
+While the weight is on the floor, the only horizontal force on it is the horizontal component of the rope tension $T\sin\alpha$, directed toward the bar. Newton’s second law in the horizontal direction:
+
+$$
+T\sin\alpha = M|\ddot x| = \frac{Mv^2\cos^3\alpha}{H\sin^3\alpha},
+$$
+
+$$
+T = \frac{Mv^2\cos^3\alpha}{H\sin^4\alpha}.
+$$
+
+Vertically, $T\cos\alpha + N = Mg$, where $N$ is the normal force from the floor. The weight lifts off when $N = 0$, i.e., $T\cos\alpha_0 = Mg$:
+
+$$
+\frac{Mv^2\cos^4\alpha_0}{H\sin^4\alpha_0} = Mg,
+$$
+
+$$
+\tan^4\alpha_0 = \frac{v^2}{gH},
+$$
+
+$$
+\boxed{\alpha_0 = \arctan\sqrt[4]{\frac{v^2}{gH}}}.
+$$
+
+**Grading.**
+
+- Identifying that the only horizontal force on the weight is $T\sin\alpha$ **0.3 pts**
+- Writing Newton’s second law horizontally: $T\sin\alpha = M|\ddot x|$ **0.3 pts**
+- Substituting the expression for $|\ddot x|$ from part (ii) **0.2 pts**
+- Isolating $T$ to obtain $T = Mv^2\cos^3\alpha/(H\sin^4\alpha)$ **0.2 pts**
+- Correctly setting up the vertical force balance $T\cos\alpha + N = Mg$ **0.5 pts**
+- Correct lift-off condition $N = 0$, i.e., $T\cos\alpha_0 = Mg$ **0.5 pts**
+- Algebraic manipulation to $\tan^4\alpha_0 = v^2/(gH)$ **0.5 pts**
+- Final answer $\alpha_0 = \arctan\sqrt[4]{v^2/(gH)}$ **0.5 pts**
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [NBPhO_2026_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2026/NBPhO_2026_problems.pdf#page=2)
+· официални решения: [NBPhO_2026_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/NBPhO/2026/NBPhO_2026_solutions.pdf#page=9)
