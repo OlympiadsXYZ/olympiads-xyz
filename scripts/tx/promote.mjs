@@ -12,7 +12,7 @@ import path from 'node:path';
 import { supplementarySourceErrors, sourceHashErrors } from './supplements.mjs';
 import { sourceConversionProblems } from './source-conversions.mjs';
 import { sourceReadScopeProblems } from './source-read-scope.mjs';
-import { assertReplacementLinks } from './replacement-links.mjs';
+import { assertReplacementLinks, assertPromotionNotRetired } from './replacement-links.mjs';
 import {
   parseArgs, fail, readJson, readManifest, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems, sha256File, contentPathFor, run, ROOT, nowIso, writeJson, listContentFiles, manifestFile,
 } from './lib.mjs';
@@ -50,6 +50,11 @@ const { validate } = compileSchema('final');
 if (!validate(final.data)) fail(`final paper fails schema before writing: ${JSON.stringify(validate.errors.slice(0, 3))}`);
 
 const target = contentPathFor(paperId, { subject: final.data.paper.subject, competition: final.data.paper.competition, year: final.data.paper.year });
+// A new passing transcription cannot undo a prior source duplicate/withdrawal
+// decision. Check before writing either canonical bytes or stored receipts.
+const existingFiles = listContentFiles().filter(f => path.basename(f) === `${paperId}.json`);
+try { assertPromotionNotRetired(paperId, readJson(path.join(ROOT,'content/problem-publication.json'),{papers:{}}).papers?.[paperId], existingFiles.map(f=>readJson(f))); }
+catch(error){ fail(error.message); }
 if (fs.existsSync(target) && !args.replace) fail(`${path.relative(ROOT, target)} already exists; pass --replace to overwrite (the publication ledger will then need a new approval)`);
 // a replacement whose year (or subject/competition) changed lands in another folder: the earlier file goes once the
 // new one is verified, or the tree holds the paper id twice (nao-2002-i-11-12 re-filed from 2001 to 2002)

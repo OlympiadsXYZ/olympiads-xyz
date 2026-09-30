@@ -245,7 +245,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
-exports.createPages =async ({ graphql, actions, reporter }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage, createRedirect } = actions;
   const aliasFile = './content/problem-aliases.json';
   if (fs.existsSync(aliasFile)) {
@@ -475,11 +475,14 @@ exports.createPages =async ({ graphql, actions, reporter }) => {
     next: unknown;
     lang: string | null;
     archiveYear: unknown;
+    editions: unknown;
+    primaryProblemId: string;
   } = (() => {
     const {
       writeProblemsIndex,
       writeProblemsTree,
       readProblemPapers,
+      readEditionProjection,
     } = require('./src/problems/index-node');
     const {
       problemNeighbours,
@@ -488,6 +491,17 @@ exports.createPages =async ({ graphql, actions, reporter }) => {
       foreignLang,
     } = require('./src/problems/page-links');
     const problemNodes = problems.map(({ node }) => node);
+    const { problemEditionLinks } = require('./src/problems/editions');
+    const editionUrls = new Map<string, string>(
+      problemNodes.map(node => [
+        node.uniqueId,
+        getProblemURL(node) + '/solution',
+      ])
+    );
+    const editionProjection = readEditionProjection(
+      __dirname,
+      new Set(editionUrls.keys())
+    );
     const count = writeProblemsIndex(__dirname, problemNodes);
     console.info(
       `[problems] wrote static/problems-data/index.json (${count} problems)`
@@ -510,10 +524,13 @@ exports.createPages =async ({ graphql, actions, reporter }) => {
       : null;
     return (id: string) => {
       const paper = papers.get(id);
+      const primaryProblemId = editionProjection.primaryById.get(id) ?? id;
       return {
-        prev: neighbours.get(id)?.prev ?? null,
-        next: neighbours.get(id)?.next ?? null,
+        prev: neighbours.get(primaryProblemId)?.prev ?? null,
+        next: neighbours.get(primaryProblemId)?.next ?? null,
         lang: foreignLang(paper?.lang),
+        editions: problemEditionLinks(id, editionProjection, editionUrls),
+        primaryProblemId,
         archiveYear:
           paper && yearPages && typeof paper.year === 'number'
             ? archiveYearLink(paper, yearPages)

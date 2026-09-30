@@ -18,6 +18,8 @@ export function useSidebarContent(): React.ReactElement | null {
   if (!(markdownLayoutInfo instanceof SolutionInfo)) return null;
   // problem.uniqueId and SolutionInfo.id are the same id
   const currentProblemId =
-    problemSolution?.problem?.uniqueId ?? markdownLayoutInfo.id;
+    problemSolution?.primaryProblemId ??
+    problemSolution?.problem?.uniqueId ??
+    markdownLayoutInfo.id;
   return <ProblemsTree currentProblemId={currentProblemId} />;
 }

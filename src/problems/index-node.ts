@@ -8,6 +8,13 @@
 // (see src/archive/catalog-node.ts).
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
+import {
+  buildEditionProjection,
+  primaryEditionPapers,
+  EditionProjection,
+  ProblemEditions,
+} from './editions';
 import {
   canonicalCompetition,
   COMPETITION_META,
@@ -225,7 +232,13 @@ export function writeProblemsIndex(
   repoRoot: string,
   nodes: ProblemNode[]
 ): number {
-  const entries = buildProblemsIndex(nodes, readProblemPapers(repoRoot));
+  const projection = readEditionProjection(
+    repoRoot,
+    new Set(nodes.map(n => n.uniqueId))
+  );
+  const entries = buildProblemsIndex(nodes, readProblemPapers(repoRoot)).filter(
+    entry => !projection.suppressedIds.has(entry.uniqueId)
+  );
   const dir = path.join(repoRoot, 'static', 'problems-data');
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.json'), JSON.stringify(entries));
@@ -272,6 +285,50 @@ export function readPaperFiles(repoRoot: string): PaperFile[] {
   const papers: PaperFile[] = [];
   forEachPaperFile(repoRoot, paper => papers.push(paper));
   return papers;
+}
+
+/** Read the explicit edition overlay, verifying the exact canonical inputs it was audited against. */
+export function readEditionProjection(
+  repoRoot: string,
+  availableIds: Set<string>,
+  papers = readPaperFiles(repoRoot)
+): EditionProjection {
+  const configFile = path.join(repoRoot, 'content/problem-editions.json');
+  let config: ProblemEditions | null = null;
+  try {
+    if (fs.existsSync(configFile))
+      config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
+  } catch (e) {
+    console.warn(`[problems] editions unreadable; keeping all editions: ${e}`);
+  }
+  const hashes = new Map<string, string>();
+  for (const [id, input] of Object.entries(config?.inputs ?? {})) {
+    // Only read canonical paper paths inside this checkout.
+    if (
+      !input?.path ||
+      !/^content\/problems\/.+\.json$/.test(input.path) ||
+      input.path.split('/').includes('..') ||
+      input.path.includes('\\')
+    )
+      continue;
+    const full = path.join(repoRoot, input.path);
+    if (fs.existsSync(full))
+      hashes.set(
+        id,
+        crypto.createHash('sha256').update(fs.readFileSync(full)).digest('hex')
+      );
+  }
+  const projection = buildEditionProjection(
+    config,
+    papers,
+    availableIds,
+    hashes
+  );
+  for (const issue of projection.issues)
+    console.warn(
+      `[problems] editions: ${issue}; keeping affected editions visible`
+    );
+  return projection;
 }
 
 /**
@@ -340,8 +397,17 @@ export function buildProblemsTree(
     if (!node || !node.uniqueId || urlById.has(node.uniqueId)) continue;
     urlById.set(node.uniqueId, getProblemURL(node) + '/solution');
   }
+  const papers = readPaperFiles(repoRoot);
+  const projection = readEditionProjection(
+    repoRoot,
+    new Set(urlById.keys()),
+    papers
+  );
   return assembleProblemsTree(
-    readPaperFiles(repoRoot),
+    primaryEditionPapers(papers, projection).map(file => ({
+      ...file,
+      problems: file.problems.filter(p => urlById.has(p.id)),
+    })),
     urlById,
     (pid, paper) =>
       console.warn(

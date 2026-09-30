@@ -25,17 +25,45 @@
 // Fix a failure in the overlays, never in the paper JSON (hash-bound to its publication receipt).
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { readPapers } from './lib/problem-data.mjs';
-import { loadNavigation, roundKey, paperNodeLabel, displayNumber, printedQuestionNumber } from './lib/navigation.mjs';
+import { readPapers, readJson } from './lib/problem-data.mjs';
+import {
+  loadNavigation,
+  roundKey,
+  paperNodeLabel,
+  displayNumber,
+  printedQuestionNumber,
+} from './lib/navigation.mjs';
 import { loadTreeModule } from './lib/load-tree.mjs';
+import { inspectPrimaryEditions } from './primary-editions.mjs';
+import { readConsolidations } from './lib/problem-consolidations.mjs';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // Latin words a node label may hold: Roman round numerals, the olympiads' own codes and proper names.
-export const LATIN_ALLOWED = new Set(['GeCAA', 'IAO', 'IOAA', 'IPhO', 'NAO', 'OM', 'OP', 'OT', 'Road', 'to', 'Invent', 'Yourself']);
+export const LATIN_ALLOWED = new Set([
+  'GeCAA',
+  'IAO',
+  'IOAA',
+  'IPhO',
+  'NAO',
+  'OM',
+  'OP',
+  'OT',
+  'Road',
+  'to',
+  'Invent',
+  'Yourself',
+]);
 const ROMAN = /^(?:I{1,3}|IV|VI{0,3}|IX|X{1,3}|XI{1,2})$/;
-const latinWords = label => (String(label).match(/[A-Za-z]{2,}/g) || []).filter(w => !ROMAN.test(w) && !LATIN_ALLOWED.has(w));
-const flat = s => String(s ?? '').replace(/\s+/g, ' ').trim().toLowerCase();
+const latinWords = label =>
+  (String(label).match(/[A-Za-z]{2,}/g) || []).filter(
+    w => !ROMAN.test(w) && !LATIN_ALLOWED.has(w)
+  );
+const flat = s =>
+  String(s ?? '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
 // the label holds the raw masthead: an English, dashed or long title ("IPhO 2016 — Theory Q1 — Two Problems in
 // Mechanics (10 points)", "МОН, XLVI НАЦИОНАЛНА ОЛИМПИАДА …"). A title that is itself a short Bulgarian round name
 // ("Анализ на данни", "Отборен тур") is a fine label; a title of a few characters proves nothing.
@@ -45,74 +73,203 @@ const holdsTitle = (label, title) => {
   return t.length > 40 || /[—–]/.test(t) || latinWords(title).length > 0;
 };
 
-export function checkNavigation(records, nav, tree = loadTreeModule(REPO), { pageName } = {}) {
-  const failures = [], warnings = [];
+export function checkNavigation(
+  records,
+  nav,
+  tree = loadTreeModule(REPO),
+  { pageName, editions, retiredProblemIds = new Set() } = {}
+) {
+  const failures = [],
+    warnings = [];
   const files = records.map(r => r.data);
-  const problemIds = new Set(), paperIds = new Set();
+  const problemIds = new Set(),
+    paperIds = new Set();
   for (const { paper, problems } of files) {
     paperIds.add(paper.id);
     for (const p of problems) problemIds.add(p.id);
     const label = paperNodeLabel(paper, nav.labels);
     if (label == null) {
-      failures.push(`${paper.id}: no round label for ${paper.competition} '${roundKey(paper)}' in content/round-labels.json`);
+      failures.push(
+        `${paper.id}: no round label for ${paper.competition} '${roundKey(
+          paper
+        )}' in content/round-labels.json`
+      );
       continue;
     }
-    if (!label) failures.push(`${paper.id}: empty sidebar label (round label '' and no grade)`);
+    if (!label)
+      failures.push(
+        `${paper.id}: empty sidebar label (round label '' and no grade)`
+      );
     const sidebar = tree.paperLabel(paper, nav.labels);
-    if (label && sidebar !== label) failures.push(`${paper.id}: sidebar label '${sidebar}' differs from page label '${label}'`);
-    const parts = { 'round label': tree.roundLabel(paper, nav.labels), suffix: nav.labels?.suffixes?.[paper.id], 'node label': label };
-    for (const [what, text] of Object.entries(parts)) if (text && holdsTitle(text, paper.title)) failures.push(`${paper.id}: the ${what} '${text}' is the raw paper.title; name the round in content/round-labels.json`);
-    if (!tree.hasCompetitionName(paper.competition)) failures.push(`${paper.id}: competition ${paper.competition} has no entry in src/archive/labels.ts COMPETITION_META (nor an alias in COMPETITION_ALIASES): the sidebar would show the raw code`);
+    if (label && sidebar !== label)
+      failures.push(
+        `${paper.id}: sidebar label '${sidebar}' differs from page label '${label}'`
+      );
+    const parts = {
+      'round label': tree.roundLabel(paper, nav.labels),
+      suffix: nav.labels?.suffixes?.[paper.id],
+      'node label': label,
+    };
+    for (const [what, text] of Object.entries(parts))
+      if (text && holdsTitle(text, paper.title))
+        failures.push(
+          `${paper.id}: the ${what} '${text}' is the raw paper.title; name the round in content/round-labels.json`
+        );
+    if (!tree.hasCompetitionName(paper.competition))
+      failures.push(
+        `${paper.id}: competition ${paper.competition} has no entry in src/archive/labels.ts COMPETITION_META (nor an alias in COMPETITION_ALIASES): the sidebar would show the raw code`
+      );
     for (const p of problems) {
       const shown = displayNumber(p, nav.numbers);
-      if (String(tree.displayNumber(p, nav.numbers)) !== String(shown)) failures.push(`${p.id}: sidebar and page display numbers differ`);
+      if (String(tree.displayNumber(p, nav.numbers)) !== String(shown))
+        failures.push(`${p.id}: sidebar and page display numbers differ`);
       const code = tree.gradeCode(p.title);
-      if (code && String(shown) !== code.n && !tree.numberNamesCode(shown, code)) failures.push(`${p.id}: title prints ${code.grade}-${code.n} ('${String(p.title).slice(0, 40)}') but the problem is shown as ${shown}; give it '${code.grade}.${code.n}' (or the paper's own form) in content/question-numbers.json`);
+      if (
+        code &&
+        String(shown) !== code.n &&
+        !tree.numberNamesCode(shown, code)
+      )
+        failures.push(
+          `${p.id}: title prints ${code.grade}-${code.n} ('${String(
+            p.title
+          ).slice(0, 40)}') but the problem is shown as ${shown}; give it '${
+            code.grade
+          }.${
+            code.n
+          }' (or the paper's own form) in content/question-numbers.json`
+        );
     }
     if (problems.length === 1) {
       const printed = printedQuestionNumber(paper.title);
       const shown = displayNumber(problems[0], nav.numbers);
-      if (printed != null && String(shown) !== String(printed)) failures.push(`${problems[0].id}: shown as ${shown} but paper.title prints question ${printed} (${String(paper.title).replace(/\s+/g, ' ').slice(0, 80)})`);
+      if (printed != null && String(shown) !== String(printed))
+        failures.push(
+          `${
+            problems[0].id
+          }: shown as ${shown} but paper.title prints question ${printed} (${String(
+            paper.title
+          )
+            .replace(/\s+/g, ' ')
+            .slice(0, 80)})`
+        );
     }
   }
   // one exam split by a suffix: one-question papers of one round, grade and language in several nodes, no collision
   const exams = new Map();
   for (const { paper, problems } of files) {
-    const base = [tree.paperCompetition(paper), paper.year, tree.roundLabel(paper, nav.labels), tree.gradeLabel(paper.grade, paper.subject, paper.competition, nav.labels), paper.lang ?? ''].join('|');
+    const base = [
+      tree.paperCompetition(paper),
+      paper.year,
+      tree.roundLabel(paper, nav.labels),
+      tree.gradeLabel(
+        paper.grade,
+        paper.subject,
+        paper.competition,
+        nav.labels
+      ),
+      paper.lang ?? '',
+    ].join('|');
     if (!exams.has(base)) exams.set(base, []);
     exams.get(base).push({ paper, problems });
   }
   for (const [base, list] of exams) {
-    const suffixes = new Set(list.map(x => nav.labels?.suffixes?.[x.paper.id] || ''));
-    if (suffixes.size < 2 || !list.every(x => x.problems.length === 1)) continue;
-    const numbers = list.map(x => String(displayNumber(x.problems[0], nav.numbers)));
-    if (new Set(numbers).size === numbers.length) failures.push(`${base.split('|').slice(0, 3).join(' ')}: the one-question papers ${list.map(x => x.paper.id).join(', ')} (questions ${numbers.join(', ')}) are one exam split into several nodes by content/round-labels.json suffixes`);
+    const suffixes = new Set(
+      list.map(x => nav.labels?.suffixes?.[x.paper.id] || '')
+    );
+    if (suffixes.size < 2 || !list.every(x => x.problems.length === 1))
+      continue;
+    const numbers = list.map(x =>
+      String(displayNumber(x.problems[0], nav.numbers))
+    );
+    if (new Set(numbers).size === numbers.length)
+      failures.push(
+        `${base
+          .split('|')
+          .slice(0, 3)
+          .join(' ')}: the one-question papers ${list
+          .map(x => x.paper.id)
+          .join(', ')} (questions ${numbers.join(
+          ', '
+        )}) are one exam split into several nodes by content/round-labels.json suffixes`
+      );
   }
-  // the sidebar itself: every problem gets a URL, so every paper is placed
-  const urls = new Map([...problemIds].map(id => [id, `/problems/${id}/solution`]));
-  const data = tree.assembleProblemsTree(files, urls, undefined, nav);
-  const problemById = new Map(files.flatMap(f => f.problems.map(p => [p.id, p])));
+  // Every original still receives the individual checks above. Only the
+  // source-audited alternate members are omitted from the discovery tree.
+  const urls = new Map(
+    [...problemIds].map(id => [id, `/problems/${id}/solution`])
+  );
+  const visibleFiles = files.map(f => ({
+    ...f,
+    problems: f.problems.filter(
+      p => !retiredProblemIds.has(p.id) && !editions?.suppressedIds.has(p.id)
+    ),
+  }));
+  if (editions)
+    failures.push(
+      ...editions.issues.map(issue => `problem-editions: ${issue}`)
+    );
+  const data = tree.assembleProblemsTree(visibleFiles, urls, undefined, nav);
+  const problemById = new Map(
+    files.flatMap(f => f.problems.map(p => [p.id, p]))
+  );
   let nodes = 0;
-  for (const s of data.subjects) for (const c of s.competitions) for (const y of c.years) for (const node of y.papers) {
-    nodes++;
-    const seen = new Map();
-    for (const p of node.problems) {
-      const key = String(p.number);
-      if (seen.has(key)) failures.push(`${c.code} ${y.year} '${node.label}': Задача ${key} twice (${seen.get(key)}, ${p.id})`);
-      else seen.set(key, p.id);
-      const row = tree.problemLabel(p);
-      if (!tree.labelLeadsWithNumber(row, p.number)) failures.push(`${p.id}: row '${row.slice(0, 60)}' does not lead with its number ${p.number}`);
-      if (pageName) {
-        const page = pageName(problemById.get(p.id), nav.numbers);
-        if (page !== row) failures.push(`${p.id}: page title '${page.slice(0, 60)}' differs from the sidebar row '${row.slice(0, 60)}'`);
-      }
-    }
-    if (/\([a-z0-9]+(?:-[a-z0-9]+)*\)$/.test(node.label)) failures.push(`${c.code} ${y.year} '${node.label}': told apart only by its paper id; give it a display number in content/question-numbers.json or a suffix in content/round-labels.json`);
-    const latin = latinWords(node.label);
-    if (latin.length) failures.push(`${c.code} ${y.year} '${node.label}': Latin text '${latin.join(' ')}' in a node label (translate it, or add a proper name to LATIN_ALLOWED)`);
-  }
-  for (const id of Object.keys(nav.numbers?.problems ?? {})) if (!problemIds.has(id)) warnings.push(`content/question-numbers.json: ${id} is not a problem of any paper`);
-  for (const section of ['papers', 'suffixes']) for (const id of Object.keys(nav.labels?.[section] ?? {})) if (!paperIds.has(id)) warnings.push(`content/round-labels.json ${section}: ${id} is not a paper (yet)`);
+  for (const s of data.subjects)
+    for (const c of s.competitions)
+      for (const y of c.years)
+        for (const node of y.papers) {
+          nodes++;
+          const seen = new Map();
+          for (const p of node.problems) {
+            const key = String(p.number);
+            if (seen.has(key))
+              failures.push(
+                `${c.code} ${y.year} '${
+                  node.label
+                }': Задача ${key} twice (${seen.get(key)}, ${p.id})`
+              );
+            else seen.set(key, p.id);
+            const row = tree.problemLabel(p);
+            if (!tree.labelLeadsWithNumber(row, p.number))
+              failures.push(
+                `${p.id}: row '${row.slice(
+                  0,
+                  60
+                )}' does not lead with its number ${p.number}`
+              );
+            if (pageName) {
+              const page = pageName(problemById.get(p.id), nav.numbers);
+              if (page !== row)
+                failures.push(
+                  `${p.id}: page title '${page.slice(
+                    0,
+                    60
+                  )}' differs from the sidebar row '${row.slice(0, 60)}'`
+                );
+            }
+          }
+          if (/\([a-z0-9]+(?:-[a-z0-9]+)*\)$/.test(node.label))
+            failures.push(
+              `${c.code} ${y.year} '${node.label}': told apart only by its paper id; give it a display number in content/question-numbers.json or a suffix in content/round-labels.json`
+            );
+          const latin = latinWords(node.label);
+          if (latin.length)
+            failures.push(
+              `${c.code} ${y.year} '${node.label}': Latin text '${latin.join(
+                ' '
+              )}' in a node label (translate it, or add a proper name to LATIN_ALLOWED)`
+            );
+        }
+  for (const id of Object.keys(nav.numbers?.problems ?? {}))
+    if (!problemIds.has(id))
+      warnings.push(
+        `content/question-numbers.json: ${id} is not a problem of any paper`
+      );
+  for (const section of ['papers', 'suffixes'])
+    for (const id of Object.keys(nav.labels?.[section] ?? {}))
+      if (!paperIds.has(id))
+        warnings.push(
+          `content/round-labels.json ${section}: ${id} is not a paper (yet)`
+        );
   return { failures, warnings, papers: files.length, nodes };
 }
 
@@ -120,11 +277,35 @@ async function main() {
   const rootArg = process.argv.indexOf('--root');
   const root = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : REPO;
   const { problemName } = await import('./problems-to-site.mjs');
-  const { failures, warnings, papers, nodes } = checkNavigation(readPapers(root), loadNavigation(root), undefined, { pageName: problemName });
+  const records = readPapers(root);
+  const { projection: editions } = inspectPrimaryEditions(root, records);
+  const { retiredProblemIds } = readConsolidations(
+    root,
+    records,
+    readJson(path.join(root, 'content/problem-publication.json'), {
+      papers: {},
+    })
+  );
+  const { failures, warnings, papers, nodes } = checkNavigation(
+    records,
+    loadNavigation(root),
+    undefined,
+    { pageName: problemName, editions, retiredProblemIds }
+  );
   for (const w of warnings) console.error(`warning: ${w}`);
   for (const f of failures) console.log(f);
-  console.log(`check-navigation: ${papers} papers, ${nodes} sidebar nodes, ${failures.length} failure(s), ${warnings.length} warning(s).`);
+  console.log(
+    `check-navigation: ${papers} papers, ${nodes} sidebar nodes, ${failures.length} failure(s), ${warnings.length} warning(s).`
+  );
   if (failures.length) process.exitCode = 1;
 }
-const invokedAsScript = (() => { try { return path.resolve(process.argv[1] || '') === fileURLToPath(import.meta.url); } catch { return false; } })();
+const invokedAsScript = (() => {
+  try {
+    return (
+      path.resolve(process.argv[1] || '') === fileURLToPath(import.meta.url)
+    );
+  } catch {
+    return false;
+  }
+})();
 if (invokedAsScript) main();

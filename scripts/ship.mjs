@@ -27,8 +27,9 @@ const gates = [
   ['node', ['scripts/problems-to-site.mjs']],
   // every paper has a canonical round label, no sidebar node shows one number twice, no number contradicts the title
   ['node', ['scripts/check-navigation.mjs']],
+  ['node', ['scripts/primary-editions.mjs']],
   ['node', ['scripts/check-mdx.mjs']],
-  ['node', ['--test', 'scripts/tests/problems.test.mjs', 'scripts/tests/tx.test.mjs', 'scripts/tests/navigation.test.mjs', 'scripts/tests/gatsby-problem-nodes.test.mjs', 'scripts/tests/figure-anchors.test.mjs', 'scripts/tests/editor.test.mjs', 'scripts/tests/publication-concurrency.test.mjs', 'scripts/tests/single-pass.test.mjs', 'scripts/tests/problem-sections.test.mjs', 'scripts/tests/problem-redirects.test.mjs', 'scripts/tests/source-conversions.test.mjs', 'scripts/tests/xlsx-source.test.mjs', 'scripts/tests/xls-source.test.mjs']],
+  ['node', ['--test', 'scripts/tests/problems.test.mjs', 'scripts/tests/tx.test.mjs', 'scripts/tests/navigation.test.mjs', 'scripts/tests/gatsby-problem-nodes.test.mjs', 'scripts/tests/figure-anchors.test.mjs', 'scripts/tests/editor.test.mjs', 'scripts/tests/publication-concurrency.test.mjs', 'scripts/tests/single-pass.test.mjs', 'scripts/tests/problem-sections.test.mjs', 'scripts/tests/problem-redirects.test.mjs', 'scripts/tests/problem-consolidations.test.mjs', 'scripts/tests/primary-editions.test.mjs', 'scripts/tests/source-conversions.test.mjs', 'scripts/tests/xlsx-source.test.mjs', 'scripts/tests/xls-source.test.mjs']],
   ['node', ['--test', 'scripts/tests/native-image-crop.test.mjs', 'scripts/tests/original-image-figure.test.mjs', 'scripts/tests/embedded-image-figure.test.mjs']],
   ['python3', ['scripts/validate-papers.py']],
 ];

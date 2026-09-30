@@ -24,6 +24,7 @@ import { classificationSearch, problemMetadataErrors } from './lib/problem-class
 import { readArchiveLabels } from './lib/labels.mjs';
 import { loadNavigation, roundLabel as navRoundLabel, gradeLabel as navGradeLabel, paperSuffix } from './lib/navigation.mjs';
 import { loadTreeModule } from './lib/load-tree.mjs';
+import { readConsolidations } from './lib/problem-consolidations.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -1357,6 +1358,7 @@ let answerNotes = {};
 function main() {
   const records = readPapers(ROOT);
   const ledger = readJson(path.join(ROOT, 'content/problem-publication.json'), { papers: {} });
+  const { aliases: consolidationAliases, retiredProblemIds } = readConsolidations(ROOT, records, ledger);
   taxonomy = readJson(path.join(ROOT, 'content/problem-topics.json'), { topics: [] });
   nav = loadNavigation(ROOT);
   answerNotes = readJson(path.join(ROOT, 'content/answer-note-formatting.json'), { notes: {} }).notes;
@@ -1368,7 +1370,7 @@ function main() {
   const routesFile = path.join(ROOT, 'content/problem-routes.json');
   const routes = readJson(routesFile, {});
   const allIds = new Set(records.flatMap(r => r.data.problems.map(p => p.id)));
-  const publishedIds = new Set(records.filter(r => publicationState(r, ledger).eligible).flatMap(r => r.data.problems.map(p => p.id)));
+  const publishedIds = new Set(records.filter(r => publicationState(r, ledger).eligible).flatMap(r => r.data.problems.filter(p => !retiredProblemIds.has(p.id)).map(p => p.id)));
   const owned = new Set(prior.problemIds);
   const planned = new Map(), generated = new Map(), excluded = [];
   const aliases = {};
@@ -1406,6 +1408,7 @@ function main() {
     if (!state.eligible) { excluded.push(`${record.data.paper.id}: ${state.reason}`); continue; }
     const { paper, problems } = record.data;
     for (const problem of problems) {
+      if (retiredProblemIds.has(problem.id)) continue;
       const relative = `solutions/${paper.subject}/${paper.id}/${problem.id}.mdx`;
       planned.set(relative, problemMdx(paper, problem, state, record.relativePath, figureOpts));
       generated.set(problem.id, problemInfo(paper, problem));
@@ -1413,7 +1416,8 @@ function main() {
       // (content/problem-routes.json, bootstrapped from production); any id not
       // in the frozen map is new and gets a stable id-based route.
       if (!routes[problem.id]) routes[problem.id] = `/problems/${problem.id}`;
-      for (const [from, to] of Object.entries(problemAliases(problem, routes, publishedIds))) {
+      const routeProblem = { ...problem, aliases: [...(problem.aliases || []), ...(consolidationAliases.get(problem.id) || [])] };
+      for (const [from, to] of Object.entries(problemAliases(routeProblem, routes, publishedIds))) {
         if (aliases[from] && aliases[from] !== to) throw new Error(`Alias collision: ${from}`);
         aliases[from] = to;
       }

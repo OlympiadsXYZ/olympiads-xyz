@@ -13,6 +13,8 @@ const ProblemSolutionContext = React.createContext<{
   prev?: ProblemNeighbour | null;
   next?: ProblemNeighbour | null;
   archiveYear?: ArchiveYearLink | null;
+  /** The explicit primary counterpart to highlight when this page is an alternate language edition. */
+  primaryProblemId?: string;
 } | null>(null);
 
 /** Publication quality of a transcribed page, from the publication ledger. */

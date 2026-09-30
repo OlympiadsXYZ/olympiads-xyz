@@ -1,4 +1,4 @@
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import * as React from 'react';
 import MarkdownLayout from '../components/MarkdownLayout/MarkdownLayout';
 import Layout from '../components/layout';
@@ -10,6 +10,7 @@ import { ComparePanelProvider } from '../components/ComparePanel/ComparePanelCon
 import { ProblemSolutionContext } from '../context/ProblemSolutionContext';
 import { SolutionInfo } from '../models/solution';
 import type { ArchiveYearLink, ProblemNeighbour } from '../problems/page-links';
+import type { ProblemEditionLink } from '../problems/editions';
 import { removeDuplicates } from '../utils/utils';
 
 /** Set by gatsby-node on transcribed problem pages (src/problems/page-links.ts). */
@@ -20,6 +21,8 @@ type SolutionPageContext = {
   /** The paper's language when it is not Bulgarian ("en", "ru", …). */
   lang?: string | null;
   archiveYear?: ArchiveYearLink | null;
+  editions?: ProblemEditionLink[];
+  primaryProblemId?: string;
 };
 
 export default function Template(props) {
@@ -82,6 +85,7 @@ export default function Template(props) {
             prev: pageContext.prev ?? null,
             next: pageContext.next ?? null,
             archiveYear: pageContext.archiveYear ?? null,
+            primaryProblemId: pageContext.primaryProblemId,
           }}
         >
           <ComparePanelProvider>
@@ -90,6 +94,27 @@ export default function Template(props) {
               headerContent={
                 <div className="pt-4">
                   <ProblemTopics tags={problemInfo.tags} />
+                  {!!pageContext.editions?.length && (
+                    <nav
+                      aria-label="Езикови издания"
+                      className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm"
+                    >
+                      <span className="text-gray-500 dark:text-dark-med-emphasis">
+                        Други езици:
+                      </span>
+                      {pageContext.editions.map(edition => (
+                        <Link
+                          key={edition.id}
+                          to={edition.url}
+                          lang={edition.lang || undefined}
+                          hrefLang={edition.lang || undefined}
+                          className="text-blue-600 dark:text-blue-400 hover:underline"
+                        >
+                          {edition.label}
+                        </Link>
+                      ))}
+                    </nav>
+                  )}
                 </div>
               }
             >
