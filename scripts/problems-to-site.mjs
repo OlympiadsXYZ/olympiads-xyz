@@ -1381,19 +1381,23 @@ const plainScripts = t => t.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/).map((seg, i
 // the formula shows the value when its leading digits appear in it ("\approx 36.76\ \text{km/s}")
 const showsValue = (latex, v) => latex.replace(/\{,\}|[{}\\ ,.]/g, '').includes(Math.abs(v).toExponential(6).split('e')[0].replace('.', '').replace(/0+$/, '').slice(0, 2) || '0');
 function renderAnswer(answer) {
-  const unit = answer.unit ? ` ${plainScripts(mdText(String(answer.unit)))}` : '';
-  if (answer.latex) return `$${answer.latex}$` + (typeof answer.value === 'number' && !showsValue(answer.latex, answer.value) ? ` ≈ $${texNumber(answer.value)}$${unit}` : '');
-  if (typeof answer.value === 'number') return /e/i.test(String(answer.value)) || Math.abs(answer.value) >= 1e6 ? `$${texNumber(answer.value)}$${unit}` : mdText(String(answer.value)) + unit;
-  if (answer.value != null) return plainScripts(mdText(String(answer.value))) + unit;
+  const unit = answer.unit ? ' ' + plainScripts(mdText(String(answer.unit))) : '';
+  let value = '';
+  if (answer.latex) value = '$' + answer.latex + '$' + (typeof answer.value === 'number' && !showsValue(answer.latex, answer.value) ? ' ≈ $' + texNumber(answer.value) + '$' + unit : '');
+  else if (typeof answer.value === 'number') value = /e/i.test(String(answer.value)) || Math.abs(answer.value) >= 1e6 ? '$' + texNumber(answer.value) + '$' + unit : mdText(String(answer.value)) + unit;
+  else if (answer.value != null) value = plainScripts(mdText(String(answer.value))) + unit;
   // An integer choice index is zero-based only when the source explicitly
   // includes the choices array; otherwise preserve the printed identifier.
-  if (answer.kind === 'choice' && answer.correct != null) {
+  else if (answer.kind === 'choice' && answer.correct != null) {
     const choice = Number.isInteger(answer.correct) && answer.choices?.[answer.correct] != null ? answer.choices[answer.correct] : answer.correct;
-    return mdText(String(choice));
+    value = mdText(String(choice));
   }
-  // an answer note written about the transcription run is not shown (visitorNoteText): the answer is left out
-  const note = visitorNoteText(answer.note);
-  return note ? mdText(note === answer.note ? answerNotes[note] ?? note : note) : '';
+  // Scientific explanations accompany the answer. Run notes remain filtered.
+  const scientificNote = visitorNoteText(answer.note);
+  const note = scientificNote ? plainScripts(mdText(scientificNote === answer.note ? answerNotes[scientificNote] ?? scientificNote : scientificNote)) : '';
+  // Keep multiline prose, tables and display equations inside this answer's
+  // Markdown list item rather than attaching them to the following answer.
+  return value && note ? value + '\n\n' + note.split('\n').map(line => '  ' + line).join('\n') : value || note;
 }
 
 // Run as a script only: validate.mjs and the tests import misplacedSolutionFigures from this file.

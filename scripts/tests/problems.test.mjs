@@ -209,6 +209,47 @@ test('top-level and part answers include zero and choice identifiers; missing so
   assert.match(f.read(f.output), /Непълно решение">\nВ архива няма официално решение на тази задача\./);
 });
 
+test('scientific answer notes accompany formulas, zero, choices and nested section answers', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  p.answer = { kind: 'numeric', latex: 'r=2', value: 2, note: 'The radius is $2R_\\oplus$.' };
+  p.parts = [
+    { label: 'a)', statement: 'Zero.', answer: { kind: 'numeric', value: 0, unit: 'm', note: 'The displacement vanishes; the time is 10^3 s.' } },
+    { label: 'b)', statement: 'Choice.', answer: { kind: 'choice', correct: 0, choices: ['Titan', 'Moon'], note: 'Titan has the largest diameter.' } },
+    { label: 'c)', statement: 'Text.', answer: { kind: 'text', value: 'Clockwise', note: 'Viewed from above.' } },
+    { label: 'd)', statement: 'Run metadata.', answer: { kind: 'numeric', value: 5, note: 'Official solution not transcribed in this window.' } },
+  ];
+  p.sections = [{ id: 'measurements', title: 'Measurements', statement: '', parts: [
+    { label: 'e)', statement: 'Nested.', answer: { kind: 'numeric', value: 7, note: 'Measured along the original axis.' } },
+  ] }];
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  assert.match(mdx, /- \$r=2\$\n\n  The radius is \$2R_\\oplus\$\./);
+  assert.match(mdx, /- \*\*a\)\*\* 0 m\n\n  The displacement vanishes; the time is 10³ s\./);
+  assert.match(mdx, /- \*\*b\)\*\* Titan\n\n  Titan has the largest diameter\./);
+  assert.match(mdx, /- \*\*c\)\*\* Clockwise\n\n  Viewed from above\./);
+  assert.match(mdx, /- \*\*d\)\*\* 5/);
+  assert.match(mdx, /- \*\*Measurements, e\)\*\* 7\n\n  Measured along the original axis\./);
+  assert.doesNotMatch(mdx, /window|not transcribed/);
+  assert.equal(f.run('--check').status, 0);
+});
+
+test('multiline scientific answer tables and display math compile within their answer item', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  p.answer = { kind: 'choice', correct: 'C', note: '**C:** Count the spots.\n\n| Quantity | Count |\n| --- | --- |\n| Groups | 10 |\n\n$$R=k(10g+s)$$' };
+  p.parts = [{ label: 'a)', statement: 'Next request.', answer: { kind: 'text', value: 'Next answer' } }];
+  f.write(f.file, f.paper); f.approve();
+  const result = f.run(); assert.equal(result.status, 0, result.stderr);
+  const mdx = f.read(f.output);
+  assert.match(mdx, /- C\n\n  \*\*C:\*\* Count the spots\./);
+  assert.match(mdx, /\n  \| Quantity \| Count \|\n  \| --- \| --- \|/);
+  assert.match(mdx, /\n  \$\$\n  R=k\(10g\+s\)\n  \$\$/);
+  assert.match(mdx, /\n- \*\*a\)\*\* Next answer/);
+  const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), '--warn', path.join(f.root, f.output)], { encoding: 'utf8' });
+  assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
+  assert.doesNotMatch(compiled.stdout + compiled.stderr, /KaTeX parse error/);
+});
+
 test('routes survive title edits; curated records do not duplicate extraProblems', t => {
   const f = fixture(t);
   f.write('content/test.problems.json', { MODULE_ID: 'st-kin-tricks', practice: [] });
