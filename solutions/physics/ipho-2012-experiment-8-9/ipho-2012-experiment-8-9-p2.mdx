@@ -5,11 +5,15 @@ title: 'Задача 2. Problem E2. Nonlinear Black Box'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/IPhO/2012/ipho-2012-experiment-8-9.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T15:01:54.966Z'
-verifier: 'mechanical'
+verifiedAt: '2026-09-30T09:17:55.098Z'
+verifier: 'single-pass'
 ---
 
 *The 43rd International Physics Olympiad — Experimental Competition · 19 юли 2012 г. · 10 т.*
+
+<Warning title="Бележка към темата">
+The complete alternate archive files Experiment/exp.pdf and Experiment/exp_sol.pdf contain the same two experiments and worked solutions as the primary originals. All 18 native pages of both editions were read. The printed question allocates 0.7 points to E1 B.iii, while its solution labels it 0.5 points; both are preserved. Native E1 Part C sign conventions, E2 charging formula Ic, Vmax unit mVs and angular-frequency unit MHz are preserved as printed. The cover mentions blank Answer, Solution and Draft Sheets, which are absent from these standalone source PDFs; no forms or extra marking scheme are invented.
+</Warning>
 
 <details>
 <summary>Корица</summary>
@@ -41,6 +45,10 @@ The multimeter can measure current and voltage simultaneously. You can store wit
 
 The constant current source supplies stable current as long as the voltage across its terminals stays between $-0.6125\ \mathrm{V}$ and $0.6125\ \mathrm{V}$. When switched off, the constant current source behaves as a large (essentially infinite) resistance.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.9%', '--fig-max': '313px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2012-experiment-8-9/p2-fig3-v2.png" alt="Circuit diagram of the current source in a dashed frame labelled “Current source”: terminals - and + with a current-source symbol (arrow downwards) and a switch in series, annotated “I=6mA U=-612.5mV...612.5mV”; next to it a photograph of the current source box with black (-) and red (+) terminals, a switch and a label “Current source 612.5mV 6mA”." width="979" height="538" loading="lazy" decoding="async" />
+</figure>
+
 The black box contains an electric double layer capacitor (which is a slightly nonlinear high capacitance capacitor), an unknown nonlinear element, and an inductor $L = 10\ \mu\mathrm{H}$ of negligible resistance, switchable as indicated on the circuit diagram. The nonlinear element can be considered as a resistance with a nonlinear dependence between the voltage and the current [$I(V)$ is a continuous function of $V$ with $I(0) = 0$]. Likewise, for the capacitor, the differential capacitance $C(V) = dQ/dV$ is not exactly constant.
 
 **We say that the voltage on the black box is positive when the potential on its red terminal is higher than the potential on the black terminal. Positive voltage will be acquired when the terminals of matching colours on the black box and the current source are connected (you are allowed to use negative voltages).**
@@ -60,10 +68,6 @@ In this part, keep the switch on the black box closed (push “I” down), so th
 **(1.0 pts)** Confirm that the output current of the current source is approximately $6\ \mathrm{mA}$, and determine the range within which it varies for voltages between 0 and $+480\ \mathrm{mV}$. Document the circuit diagram used. **[1 т.]**
 
 **ii.** **(1.2 pts)** Show that the differential capacitance $C(V)$ used in the black box is approximately $2\ \mathrm{F}$ by measuring its value for a single voltage of your choice $C(V_0) = C_0$. Document the circuit diagram.
-
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.9%', '--fig-max': '313px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2012-experiment-8-9/p2-fig3-v2.png" alt="Circuit diagram of the current source in a dashed frame labelled “Current source”: terminals - and + with a current-source symbol (arrow downwards) and a switch in series, annotated “I=6mA U=-612.5mV...612.5mV”; next to it a photograph of the current source box with black (-) and red (+) terminals, a switch and a label “Current source 612.5mV 6mA”." width="979" height="538" loading="lazy" decoding="async" />
-</figure>
 
 **iii.** **(2.2 pts)** Neglecting the nonlinearity of the capacitance [$C(V) \approx C_0$], determine the current–voltage characteristic of the nonlinear element used in the black box. Plot the $I(V)$ curve for obtainable positive voltages on the black box onto the answer sheet. Document the circuit diagram.
 
@@ -150,10 +154,6 @@ $$
 I_c = \frac{dQ}{dt} = \frac{dQ}{dV}\frac{dV}{dt} = C(V)\dot{V}
 $$
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '57.9%', '--fig-max': '371px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2012-experiment-8-9/p2-sol-fig2.png" alt="Graph of I (mA) from 0 to 6 versus V (V) from 0 to 0.5: Part A curve (blue, crosses) rises to about 4.7 mA at 0.06 V, falls smoothly to about 0.7 mA near 0.33 V and rises steeply above 0.45 V to about 5.5 mA at 0.52 V; Part B curve (red) follows it except between about 0.07 and 0.33 V, where it drops to about 1.8–2.3 mA and then jumps down to about 0.6 mA at 0.33 V." width="1158" height="896" loading="lazy" decoding="async" />
-</figure>
-
 There are several ways to determine the capacitance used in the black box based on chosen voltage.
 
 - When the voltage on the black box is close to zero, the current through the nonlinear element is also close to zero, because $I(V = 0) = 0$. After switching the current source on, most of the input current $I_0$ will at first go through the capacitor.
@@ -198,6 +198,10 @@ There are several ways to determine the capacitance used in the black box based 
   I(V) = -C_0\dot{V}_{\downarrow}(V).
   $$
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '57.9%', '--fig-max': '371px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2012-experiment-8-9/p2-sol-fig2.png" alt="Graph of I (mA) from 0 to 6 versus V (V) from 0 to 0.5: Part A curve (blue, crosses) rises to about 4.7 mA at 0.06 V, falls smoothly to about 0.7 mA near 0.33 V and rises steeply above 0.45 V to about 5.5 mA at 0.52 V; Part B curve (red) follows it except between about 0.07 and 0.33 V, where it drops to about 1.8–2.3 mA and then jumps down to about 0.6 mA at 0.33 V." width="1158" height="896" loading="lazy" decoding="async" />
+</figure>
+
 **iv. (2.6 pts)** In order to obtain the differential capacitance, we solve a system of linear equations by eliminating $I(V)$:
 
 $$
@@ -206,11 +210,11 @@ $$
 
 Therefore we need to take measurements during both charging and discharging the capacitor in the black box at the same voltages. A graph of measurement results follows.
 
-**Part B. Circuit with inductance** *(3 points)*
-
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.9%', '--fig-max': '326px'}}>
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2012-experiment-8-9/p2-sol-fig3-v2.png" alt="Graph of C (F) from 1.7 to 2.1 versus V (V) from 0 to 0.5: a noisy line with crosses at about 1.85 F near 0–0.12 V (dip to 1.82 at 0.12 V), rising roughly linearly to about 2.02 F at 0.46 V, then fluctuating and dropping sharply below 1.7 F at about 0.515 V." width="1019" height="819" loading="lazy" decoding="async" />
 </figure>
+
+**Part B. Circuit with inductance** *(3 points)*
 
 Measuring and plotting the current–voltage characteristic of the nonlinear element in the same way as in part **A-iii**, we obtain a graph that differs only in the negative differential resistance ($I'(V) < 0$) region, in our case $70\ \mathrm{mV} < V < 330\ \mathrm{mV}$. This is the region where, when we look at small-signal oscillations, the nonlinear element behaves as a negative-valued Ohmic resistance. After enabling the inductance we have a LC circuit whose oscillations are amplified (instead of being dampened) by the negative differential resistance. Because the resonant frequency $\omega = \sqrt{\frac{1}{LC_p}} \sim 30\ \mathrm{MHz}$ (with $C_p$ being the capacitance of the nonlinear element) is high, we actually measure the average current through the nonlinear element, while the real current oscillates all over the region of negative differential resistance.
 
@@ -219,5 +223,7 @@ Measuring and plotting the current–voltage characteristic of the nonlinear ele
 
 ---
 
-Оригинал в Архива: [2012-08-09 IPhO2012_Experimental_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2012/2012-08-09%20IPhO2012_Experimental_problems.pdf#page=4)
+Оригинал в Архива: [2012-08-09 IPhO2012_Experimental_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2012/2012-08-09%20IPhO2012_Experimental_problems.pdf#page=1)
 · официални решения: [2012-08-09 IPhO2012 Experiment_Solutions_ENG.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2012/2012-08-09%20IPhO2012%20Experiment_Solutions_ENG.pdf#page=3)
+· допълнителни данни: [exp.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2012/Experiment/exp.pdf)
+· допълнителни данни: [exp_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2012/Experiment/exp_sol.pdf)
