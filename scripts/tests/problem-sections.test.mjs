@@ -52,6 +52,36 @@ test('old frozen and id-based URLs both reach the canonical solution section', (
   assert.throws(() => problemAliases({ ...problem, aliases: [{ id: 'retired', sectionId: 'missing' }] }, {}), /Invalid alias/);
 });
 
+test('solution figures referenced by native sections render once in source order', async () => {
+  const marker = n => `Before ${n}.\n\n[[figure:p1-sol-fig${n}]]\n\nAfter ${n}.`;
+  const p = { id: 'test-2026-p1', number: 1, statement: 'Question.', solution: {
+    statement: 'Key introduction.', figures: [1, 2, 3, 4, 5].map(n => fig(`p1-sol-fig${n}`)),
+    sections: [{ id: 'answer', title: 'Answer', statement: marker(1),
+      parts: [{ label: 'a)', statement: marker(2), statementAfter: marker(3) }], statementAfterParts: marker(4) }]
+  } };
+  const mdx = problemMdx(paper, p, { quality: 'legacy' }, 'test.json');
+  for (const n of [1, 2, 3, 4, 5]) {
+    const src = `src="https://example.org/p1-sol-fig${n}.png"`;
+    assert.equal(mdx.split(src).length - 1, 1, `figure ${n}`);
+    const position = mdx.indexOf(src);
+    assert.ok(position > mdx.indexOf('<Spoiler'));
+    if (n < 5) assert.ok(position > mdx.indexOf(`Before ${n}.`) && position < mdx.indexOf(`After ${n}.`));
+    else assert.ok(position > mdx.indexOf('After 4.'));
+  }
+  await compile(mdx, { remarkPlugins: [gfm, math] });
+});
+
+test('solution figures moved from the question do not repeat native section figures', async () => {
+  const image = { ...fig('p1-sol-fig1'), source: { document: 'solutions', page: 1 } };
+  const p = { id: 'test-2026-p1', number: 1, statement: 'Question.', figures: [image],
+    solution: { sections: [{ id: 'answer', title: 'Answer', statement: 'Solution.', figures: [structuredClone(image)] }] } };
+  const mdx = problemMdx(paper, p, { quality: 'legacy' }, 'test.json');
+  const src = 'src="https://example.org/p1-sol-fig1.png"';
+  assert.equal(mdx.split(src).length - 1, 1);
+  assert.ok(mdx.indexOf(src) > mdx.indexOf('<Spoiler'));
+  await compile(mdx, { remarkPlugins: [gfm, math] });
+});
+
 test('native section questions keep labels and points outside figure and table blocks', async () => {
   const p = structuredClone(problem);
   p.sections[0].parts = [

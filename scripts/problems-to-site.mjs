@@ -387,7 +387,7 @@ export function textLayerLines(tsv) {
 }
 // the moved figures the solution does not already show (same crop url, or the same box on the same page)
 function movedSolutionFigures(misplaced, solution, candidates) {
-  const shown = [...(solution?.figures || [])];
+  const shown = [...(solution?.figures || []), ...sectionFigures(solution?.sections)];
   const text = solution?.statement || '';
   const out = [];
   for (const { fig } of misplaced) {
@@ -1124,10 +1124,10 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   const resolveSolution = target => resolveFigureTarget(target, solutionCandidates);
   const shown = (text, resolve) => resolveFigurePlaceholders(text, problem, resolve);
   const statementTexts = [problem.statement, problem.statementAfterParts, ...partTexts, ...sectionTexts(problem.sections)].map(t => shown(t, resolveStatement));
-  const solutionShown = shown(sol?.statement, resolveSolution);
+  const solutionTexts = [sol?.statement, ...sectionTexts(sol?.sections)].map(t => shown(t, resolveSolution));
   const statementFigs = figuresNotInline(problem.figures, statementTexts, statementCandidates).filter(inStatement);
   const partFigs = (problem.parts ?? []).map(part => figuresNotInline(part.figures, statementTexts, statementCandidates).filter(inStatement));
-  const solutionFigures = [...figuresNotInline(uniqueSolutionFigures, [solutionShown], solutionCandidates), ...movedSolutionFigures(misplaced, sol && { ...sol, statement: solutionShown }, solutionCandidates)];
+  const solutionFigures = [...figuresNotInline(uniqueSolutionFigures, solutionTexts, solutionCandidates), ...movedSolutionFigures(misplaced, sol && { ...sol, statement: solutionTexts.filter(Boolean).join('\n\n') }, solutionCandidates)];
   // a reader that left the printed "[3 т.]" in the text would show the points twice; the points field is canonical
   const partText = part => part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
   const fields = { statement: problem.statement, statementAfterParts: problem.statementAfterParts ?? '', 'solution/statement': sol?.statement ?? '' };
