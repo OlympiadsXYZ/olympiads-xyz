@@ -1,0 +1,541 @@
+---
+id: usaaao-2026-ii-x-p9
+source: 'USAAAO 2026, II кръг'
+title: 'Задача 9. Neutron Star Dynamics!'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/USAAAO/2026/usaaao-2026-ii-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T11:55:35.168Z'
+verifier: 'single-pass'
+---
+
+*2026 National Astronomy Competition · 85 т.*
+
+<Warning title="Бележка към темата">
+Questions 3 and 9 refer to designated answer sheets, and question 6 to provided grid paper; these sheets were not obtained in the two native 2026-II PDFs or their two-row same-folder archive catalogue. The separately attributed physical-constants.pdf is an undated common USAAAO archive reference; its identity as the table supplied for this exam is unproven.
+</Warning>
+
+<details>
+<summary>Instructions (Please Read Carefully)</summary>
+
+# 2026 National Astronomy Competition
+
+## 1 Instructions (Please Read Carefully)
+
+The top 15 eligible scorers on the NAC will be invited to the training camp. A third round will be conducted during the camp to select the national team for the IOAA 2026. In order to qualify for camp, you must be a high school student with US citizenship or permanent residency.
+
+The test must be completed within 2.5 hours (150 minutes) and the maximum number of points is **300 points**. The point breakdown per problem is as follows.
+
+| **Problem** | P1 | P2 | P3 | P4 | P5 | P6 | P7 | P8 | P9 | **Total** |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **Points** | 10 | 15 | 15 | 20 | 20 | 40 | 40 | 55 | 85 | **300** |
+
+Please solve each problem on a blank piece of paper and mark the number of the problem at the top of the page. Some problems may require a designated answer sheet; these will be provided. The contestant’s full name in capital letters should appear at the top of each solution page. If the contestant uses scratch papers, those should be labeled with the contestant’s name as well and marked as “scratch paper” at the top of the page. Scratch paper will not be graded. Partial credit will be available given that correct and legible work was displayed in the solution.
+
+This is a written exam. Contestants can only use a scientific calculator (non-programmable and non-graphing) for this exam. A table of physical constants will be provided. **Discussing the problems with other people is strictly prohibited in any way until the end of the examination period on April 20, 2026.** Receiving any external help during the exam is strictly prohibited. This means that the only allowed items are: a calculator, the provided table of constants, a pencil (or pen), an eraser, blank sheets of papers, and the exam. No books or notes are allowed during the exam. Students must be proctored during the entire duration of the exam.
+
+This exam sheet and your answer sheets (including scratch papers) should be returned to your proctors once the exam ended. Your proctors should upload your answer sheets to the Google Form provided to them.
+
+We acknowledge the following people for their contributions to this year’s exam:
+
+*Srihari (Hari) Balaji, Feodor Yevtushenko, Ferdinand, Hagan Hensley, Joe McCarty, Lucas Pinheiro, Vincent Bian, Elizabeth Lee*
+
+After reading the instructions, please make sure to sign, affirming that:
+
+1. All work on this exam has been completed by me.
+2. I took this exam under the supervision of a proctor.
+3. I did not receive any external help beyond the materials provided.
+4. I will not discuss the contents of this exam with anyone until April 20, 2026.
+5. Failure to follow these rules will result in disqualification from the exam.
+
+Student Signature: ____________________ Date: ____________________
+
+</details>
+
+<details>
+<summary>Undated common archive reference · Table of Physical Constants</summary>
+
+# Table of Physical Constants
+
+| Quantity | Symbol | Value |
+| --- | --- | --- |
+| Electron rest mass | $m_e$ | $9.109\times10^{-31}\,\mathrm{kg}$ |
+| Proton rest mass | $M_p$ | $1.6726\times10^{-27}\,\mathrm{kg}$ |
+| Electronic charge | $e$ | $1.6022\times10^{-19}\,\mathrm C$ |
+| Speed of light in free space | $c$ | $2.9979\times10^8\,\mathrm{m\,s^{-1}}$ |
+| Permeability of free space | $\mu_0$ | $4\pi\times10^{-7}\,\mathrm{H\,m^{-1}}$ |
+| Permittivity of free space | $\epsilon_0$ | $8.854\times10^{-12}\,\mathrm{F\,m^{-1}}$ |
+| Planck’s constant | $h$ | $6.626\times10^{-34}\,\mathrm{J\,s}$ |
+| Reduced Planck’s constant | $\hbar=h/2\pi$ | $1.0546\times10^{-34}\,\mathrm{J\,s}$ |
+| | $\hbar c$ | $197.33\,\mathrm{MeV\,fm}$ |
+| Boltzmann’s constant | $k_B$ | $1.3807\times10^{-23}\,\mathrm{J\,K^{-1}}$ |
+| Gas constant | $\mathcal R=k_B/m_H$ | $8.250\times10^3\,\mathrm{J\,kg^{-1}\,K^{-1}}$ |
+| Molar gas constant | $R$ | $8.315\,\mathrm{J\,mol^{-1}\,K^{-1}}$ |
+| Avogadro’s number | $N_A$ | $6.022\times10^{23}\,\mathrm{mol^{-1}}$ |
+| Standard molar volume | | $22.414\times10^{-3}\,\mathrm{m^3\,mol^{-1}}$ |
+| Unified atomic mass unit ($\vphantom{C}^{12}\mathrm C$ scale) | $u$ | $931.5\,\mathrm{MeV}/c^2=1.660538\times10^{-27}\,\mathrm{kg}$ |
+| Mass of hydrogen atom | $m_H$ | $1.0078u=1.6735\times10^{-27}\,\mathrm{kg}$ |
+| Bohr magneton | $\mu_B$ | $9.274\times10^{-24}\,\mathrm{A\,m^2}$ or $\mathrm{J\,T^{-1}}$ |
+| Nuclear magneton | $\mu_N$ | $5.051\times10^{-27}\,\mathrm{A\,m^2}$ or $\mathrm{J\,T^{-1}}$ |
+| Proton magnetic moment | $\mu_p$ | $2.7928\mu_N$ |
+| Neutron magnetic moment | $\mu_n$ | $-1.9130\mu_N$ |
+| Bohr radius | $a_0$ | $5.292\times10^{-11}\,\mathrm m$ |
+| Fine structure constant | $\alpha=e^2/(4\pi\epsilon_0\hbar c)$ | $(137.04)^{-1}$ |
+| Compton wavelength of electron | $\lambda_C=h/(m_ec)$ | $2.4263\times10^{-12}\,\mathrm m$ |
+| Rydberg’s constant | $R_\infty$ | $1.0974\times10^7\,\mathrm{m^{-1}}$ |
+| | $R_\infty hc$ | $13.606\,\mathrm{eV}$ |
+| Stefan-Boltzmann constant | $\sigma$ | $5.671\times10^{-8}\,\mathrm{W\,m^{-2}\,K^{-4}}$ |
+| Radiation density constant | $a=4\sigma/c$ | $7.561\times10^{-16}\,\mathrm{J\,m^{-3}\,K^{-4}}$ |
+| Gravitational constant | $G$ | $6.673\times10^{-11}\,\mathrm{N\,m^2\,kg^{-2}}$ |
+
+**Rest masses of some leptons and hadrons in $\mathrm{MeV}/c^2$:**
+
+$e^\pm$ 0.5110, $\mu^\pm$ 105.66, $\tau^\pm$ 1777, $\pi^0$ 134.98, $\pi^\pm$ 139.57, $\mathrm K^\pm$ 493.7, $\mathrm K^0$ 497.7, $\eta$ 547, $\mathrm D^0$ 1865, $\mathrm D^\pm$ 1869, p 938.3, n 939.6, $\Lambda^0$ 1115.7, $\Sigma^+$ 1189, $\Sigma^0$ 1193, $\Sigma^-$ 1197, $\Xi^0$ 1315, $\Xi^-$ 1321, $\Omega^-$ 1672, $\mathrm Z^0$ $91.187\times10^3$, $\mathrm W^\pm$ $80.41\times10^3$.
+
+| Quark | Charge | $I_3$ | $S$ | $C$ | $B$ | $T$ | Mass ($\mathrm{GeV}/c^2$) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| u | $+\frac23$ | $\frac12$ | 0 | 0 | 0 | 0 | $\sim0.003$ |
+| d | $-\frac13$ | $-\frac12$ | 0 | 0 | 0 | 0 | $\sim0.006$ |
+| c | $+\frac23$ | 0 | 0 | +1 | 0 | 0 | $\sim1.25$ |
+| s | $-\frac13$ | 0 | -1 | 0 | 0 | 0 | $\sim0.11$ |
+| t | $+\frac23$ | 0 | 0 | 0 | 0 | +1 | 174.3 |
+| b | $-\frac13$ | 0 | 0 | 0 | -1 | 0 | 4.2 |
+
+</details>
+
+<details>
+<summary>Undated common archive reference · Astrophysical Data and Conversion Factors</summary>
+
+# Astrophysical Data
+
+| Quantity | Symbol | Value |
+| --- | --- | --- |
+| 1 astronomical unit | AU | $1.496\times10^{11}\,\mathrm m$ |
+| 1 parsec | pc | $3.086\times10^{16}\,\mathrm m$ |
+| Luminosity of Sun | $L_\odot$ | $3.85\times10^{26}\,\mathrm W$ |
+| Mass of Sun | $M_\odot$ | $1.989\times10^{30}\,\mathrm{kg}$ |
+| Radius of Sun | $R_\odot$ | $6.96\times10^8\,\mathrm m$ |
+| Mass of Earth | $M_E$ | $5.9742\times10^{24}\,\mathrm{kg}$ |
+| Radius of Earth | $R_E$ | $6.3781\times10^6\,\mathrm m$ |
+
+## Other data and conversion factors
+
+| Quantity | Symbol | Value |
+| --- | --- | --- |
+| 1 ångstrom | Å | $10^{-10}\,\mathrm m$ |
+| 1 fermi | fm | $10^{-15}\,\mathrm m$ |
+| 1 barn | b | $10^{-28}\,\mathrm{m^2}$ |
+| 1 pascal | Pa | $1\,\mathrm{N\,m^{-2}}$ |
+| 1 standard atmosphere | | $1.0132\times10^5\,\mathrm{Pa}$ |
+| Standard acceleration due to gravity | $g$ | $9.807\,\mathrm{m\,s^{-2}}$ |
+| 1 electron volt | eV | $1.6022\times10^{-19}\,\mathrm J$ |
+| | $\mathrm{eV}/hc$ | $8.065\times10^5\,\mathrm{m^{-1}}$ |
+| | $\mathrm{eV}/k_B$ | $1.1604\times10^4\,\mathrm K$ |
+| Wavelength of 1 eV photon | | $1.2399\times10^{-6}\,\mathrm m$ |
+
+## Trigonometrical identities
+
+$$
+\sin(\theta+\phi)=\sin(\theta)\cos(\phi)+\cos(\theta)\sin(\phi)
+$$
+
+$$
+\cos(\theta+\phi)=\cos(\theta)\cos(\phi)-\sin(\theta)\sin(\phi)
+$$
+
+$$
+\sin\alpha+\sin\beta=2\sin\frac12(\alpha+\beta)\cos\frac12(\alpha-\beta)
+$$
+
+$$
+\cos\alpha+\cos\beta=2\cos\frac12(\alpha+\beta)\cos\frac12(\alpha-\beta)
+$$
+
+$$
+\cos\alpha-\cos\beta=2\sin\frac12(\alpha+\beta)\sin\frac12(\beta-\alpha)
+$$
+
+In a triangle ABC, $a/\sin A=b/\sin B=c/\sin C$
+
+and $a^2=b^2+c^2-2bc\cos A$
+
+## Prefixes
+
+| | |
+| --- | --- |
+| T = tera = $10^{12}$ | c = centi = $10^{-2}$ |
+| G = giga = $10^9$ | m = milli = $10^{-3}$ |
+| M = mega = $10^6$ | $\mu$ = micro = $10^{-6}$ |
+| k = kilo = $10^3$ | n = nano = $10^{-9}$ |
+| | p = pico = $10^{-12}$ |
+| | f = femto = $10^{-15}$ |
+
+</details>
+
+## Условие
+
+*Note that the provided **Answer Sheet** for this question is only for subtasks (c)(vi) and (d)(v). Do all other work on blank pages.*
+
+In this question, we do a detailed dive into several elements of neutron star dynamics and energy losses. While understanding the internal nature and makeup of a neutron star requires quantum chromodynamics and general relativity, other properties, such as rotation rate, are far more elementary to model. Over time, a neutron star’s rotation rate slowly decreases due to factors such as energy loss and mass accretion. By measuring changes in a neutron star’s rotation rate, astronomers can make inferences about the physics surrounding a neutron star and its environment. Neglect more complex behavior (such as QED/QCD/GR corrections), instead assuming Newtonian mechanics unless otherwise stated.
+
+Let $\Omega(t)$ be the star’s angular velocity around its axis as a function of time. In several scenarios, we can observe a proportionality relation of the form $\dot\Omega\propto-\Omega^n$, where $n$ is the neutron star’s **braking index**. *(Throughout this problem, dots denote time derivatives, i.e. $df/dt=\dot f$ and $d^2f/dt^2=\ddot f$.)*
+
+**(a)** **(10 points)** We will begin by examining the basic behavior of the time evolution of $\Omega$.
+
+(i) **(5 points)** Express $n$ in terms of $\Omega$, $\dot\Omega$, and $\ddot\Omega$.
+
+(ii) **(3 points)** If $n>1$, then we can deduce that $\Omega(t)\propto t^{-\alpha}$ for some $\alpha$. Compute $\alpha$ in terms of $n$.
+
+(iii) **(2 points)** What type of curve does $\Omega(t)$ versus $t$ trace if $n=1$?
+
+This relation allows astronomers to measure $n$ for a given star. We will now examine several mechanisms for rotational slowdown and the subsequent values of $n$, treat each of these mechanisms as **independent** of each other unless otherwise stated. (In other words, do not combine mechanisms until part (d)(v).)
+
+**(b)** **(8 points)** First, we will look at a primitive model for mass accretion. Let $M$ be the neutron star’s mass and $R$ be its radius. Assume the rate of mass accretion $\dot M$ is constant and that the infalling matter has no initial angular momentum relative to the rotation axis. Additionally, assume (slightly unrealistically) that the neutron star is a uniformly dense sphere of matter.
+
+(i) **(2 points)** Write down the expression for the angular momentum of the neutron star $L$ in terms of $M$, $R$, and $\Omega$, up to a numerical constant. Use the fact that $L$ stays constant for problems (ii) and (iii) of this subpart.
+
+(ii) **(3 points)** Now, assume that as the star accretes mass, the density $\rho$ stays constant over time. Calculate the value of $n$.
+
+(iii) **(3 points)** Frontier QCD simulations currently appear to imply that, in contrast to the above, $R$ stays relatively constant as $M$ changes. Treating this new relationship as exact, calculate the new value of $n$.
+
+**(c)** **(40 points)** Next, we will examine gravitational wave emission from the neutron star. To leading order, gravitational wave emission is caused by oscillations in the *mass quadrupole moment*, which is the deviation from spherical symmetry when projected onto an axis, of the neutron star. The general formula for the traceless quadrupole moment terms is
+
+$$
+Q_{ij}=\int\rho(\mathbf r)\left(r_i r_j-\frac13r^2\delta_{ij}\right)d^3\mathbf r,
+$$
+
+where $\mathbf r$ is the displacement from the center of the ellipsoid, $i,j\in\{x,y,z\}$ are coordinate axes, $r_i$ are projections of $\mathbf r$ onto these axes (so $r_x=x$), and $\delta_{ij}=1$ for $i=j$ with $\delta_{ij}=0$ otherwise. **Such integrals are over all space** unless otherwise specified. *(Formally, the quadrupole moment is a 3 by 3 matrix $Q$ with 9 terms $Q_{ij}$, but you will not need any knowledge of linear algebra for this problem.)*
+
+We model the neutron star as a rotating ellipsoid (which deviates very slightly from a perfect sphere).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.4%', '--fig-max': '252px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-ii-x/p9-rotating-ellipsoid.png" alt="Original rotating ellipsoid, xyz and primed body axes, Omega and Omega t, complete light gray and colored vectors." width="789" height="727" loading="lazy" decoding="async" />
+</figure>
+
+
+We establish a fixed $xyz$ coordinate system for reference, which the neutron star rotates at angular speed $\Omega$ relative to. The neutron star has body symmetry axes $x'$, $y'$, and $z'=z$, as per the diagram. By the definition of body symmetry axes,
+
+$$
+\int\rho(\mathbf r')(r'_i r'_j)d^3\mathbf r'=I_i\delta_{ij}.
+$$
+
+In other words, the moments of inertia around the body axes $x'$, $y'$, and $z'$ are $I_x$, $I_y$, and $I_z$, respectively, and all “cross” terms between different axes vanish. (Let $I_x>I_y$.) Some elementary trigonometry yields
+
+$$
+\begin{cases}x=x'\cos(\Omega t)-y'\sin(\Omega t),\\ y=x'\sin(\Omega t)+y'\cos(\Omega t),\\ z=z'.\end{cases}
+$$
+
+We will now compute the time evolution of $Q_{ij}$. Assume $\Omega$ is constant until part (v).
+
+(i) **(12 points)** Using the above coordinate transformations and inertia integrals, calculate all terms $Q_{ij}$, expressing your answer in terms of the body axis moments of inertia and trigonometric functions of $\Omega t$. For example,
+
+$$
+\begin{aligned}Q_{xz}&=\int\rho(\mathbf r)\left(xz-\frac13r^2\delta_{xz}\right)d^3\mathbf r=\int\rho(\mathbf r')(xz)d^3\mathbf r'=\int\rho(\mathbf r')(x'\cos(\Omega t)-y'\sin(\Omega t))z'd^3\mathbf r',\\ &=\cos(\Omega t)\int\rho(\mathbf r')x'z'd^3\mathbf r'-\sin(\Omega t)\int\rho(\mathbf r')y'z'd^3\mathbf r'=0,\end{aligned}
+$$
+
+since both integrals vanish as stated.
+
+(ii) **(7 points)** For the first step of our calculations, we will need the second time derivative $\frac{d^2Q_{ij}}{dt^2}$ of the quadrupole moment. Calculate these terms and indicate which ones are nonzero. *(You may find one or more of the identities $\cos2\alpha=\cos^2\alpha-\sin^2\alpha$, $\sin2\alpha=2\sin\alpha\cos\alpha$, and $\cos^2\alpha+\sin^2\alpha=1$ helpful.)*
+
+Detecting gravitational waves involves measuring the *strain* $h$, or the fractional change in length $\Delta L/L$ of spacetime caused by the gravitational wave. For the purposes of this problem, we ignore nuances such as viewing angle and GW polarization regimes. As such, we approximate the behavior as
+
+$$
+h_{ij}(t)=\frac{2G}{c^4d}\frac{d^2Q_{ij}}{dt^2},
+$$
+
+where $d$ is the distance from the observer to the neutron star. *(Note that there is a time offset due to the nonzero time it takes gravitational waves to reach the observer, but we ignore this, as it is not highly relevant in understanding the qualitative behavior of the system.)*
+
+(iii) **(3 points)** For convenience, we only look at one term of $h_{ij}$ to capture the underlying behavior. Calculate the amplitude $h_0$ and angular frequency $\Omega_{GW}$ of the oscillations in $h_{xx}$. Express your answers in terms of $I_z$, $\epsilon=\frac{I_x-I_y}{I_z}$, $\Omega$, and fundamental constants.
+
+(iv) **(6 points)** According to general relativity, the radiated power is given by
+
+$$
+P=\frac{G}{5c^5}\sum_{ij}\left(\frac{d^3Q_{ij}}{dt^3}\right)^2,
+$$
+
+where the sum runs over all 9 pairs of indices $i,j\in\{x,y,z\}$. Calculate $P$ in terms of $I_z$, $\epsilon$, $\Omega$, and fundamental constants.
+
+(v) **(6 points)** The power for the gravitational waves comes purely from the rotational kinetic energy $E=\frac12I_z\Omega^2$ of the neutron star. Assuming its mass, radius, and inertia moments stay constant, calculate the value of $\dot\Omega$ in terms of $\Omega$, $I_z$, $\epsilon$, and fundamental constants. From this, extract the value of $n$.
+
+(vi) **(6 points)** As the neutron star slowly loses rotational kinetic energy while keeping its inertia moments constant, oscillations of the observed gravitational wave strain $h$ change in both period and amplitude. On your **Answer Sheet**, sketch a graph for $h_{xx}(t)$ versus time $t$ that reflects these changes. *(Exaggerate your graph so that significant visible changes in both period and amplitude occur over the course of several periods. Your graph need not be to scale.)*
+
+**(d)** **(27 points)** Finally, we will consider magnetic dipole radiation, which is electromagnetic radiation induced by the rotation of the star and subsequent movement of its magnetic field. This is the main source of energy loss in pulsar systems. Let the magnetic dipole moment be $\mu$ with an inclination $\chi$ to the rotation axis (here, the z-axis). Take $\chi\in(0,\frac\pi2)$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '24.5%', '--fig-max': '157px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-ii-x/p9-magnetic-dipole.png" alt="Original neutron-star magnetic dipole diagram, full sphere and axis, Omega, mu, chi and dashed dipole trajectory." width="491" height="711" loading="lazy" decoding="async" />
+</figure>
+
+
+Some simple geometry gives
+
+$$
+\boldsymbol\mu(t)=\mu(\sin\chi\cos(\Omega t),\sin\chi\sin(\Omega t),\cos\chi)
+$$
+
+in component form.
+
+(i) **(4 points)** Calculate the second derivative $\ddot{\boldsymbol\mu}(t)$ in component form. Using this, evaluate its magnitude $|\ddot{\boldsymbol\mu}|$.
+
+(ii) **(5 points)** According to the Larmor formula, the power radiated by the magnetic dipole is given by
+
+$$
+P=\frac{\mu_0}{6\pi c^3}|\ddot{\boldsymbol\mu}|^2,
+$$
+
+where $\mu_0$ is the permeability of free space. As in the previous section, assume that this power comes from a change in the rotational kinetic energy $E=\frac12I_z\Omega^2$, where we again take $I_z$ as the (constant) moment of inertia around the rotation axis. Calculate $\dot\Omega$ as a function of $\Omega$ and any other relevant variables. Using this, calculate the value of $n$. (Refer to this value as $n_0$.)
+
+(iii) **(9 points)** Nevertheless, neutron stars are sometimes observed to have $n$-values that significantly differ from $n_0$. We will now model this. Specifically, take your same $P=-\dot E$ expression as before, but now assume that $\mu$ and $\chi$ are no longer fixed, instead potentially having small nonzero rates of change. Using your result from part (a)(i), calculate a new value for $n$. Express your answer in terms of $\Omega$, $\dot\Omega$, $\mu$, $\dot\mu$, $\chi$, $\dot\chi$, and fundamental constants. Again, assume that the mass, radius, and composition of the neutron star stay constant.
+
+(iv) **(2 points)** Assume that the neutron star’s magnetic moment decays exponentially according to
+
+$$
+\mu(t)\propto e^{-t/\tau_B}.
+$$
+
+Rewrite your expression for $n$ from part (iii) in terms of $\Omega$, $\dot\Omega$, $\tau_B$, $\chi$, $\dot\chi$, and fundamental constants.
+
+(v) **(7 points)** The Crab Pulsar is observed to have a long-term average braking index of $n_{obs}=2.51\pm0.01$. For each of the following, mark on your **Answer Sheet** whether it would cause $n$ to deviate **toward $n_{obs}$**, **away from $n_{obs}$**, or **have no change**, assuming a default value of $n=n_0$ (remember $\dot\Omega<0$ and $\chi\in(0,\frac\pi2)$):
+
+(A) A gradual increase in the inclination $\chi$,
+
+(B) A gradual decrease in the internal magnetic dipole moment $\mu$,
+
+(C) Gradual accretion of a nearby star (use your result from part (b)(iii) of the problem).
+
+(D) Significant gravitational wave emission (use your result from part (c) of the problem).
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:** *Note that in the below solutions, partial credit point values are indicated for certain key steps. Correct answers with reasonable work earn full credit as usual.*
+
+(a) **(10 points)**
+
+(i) **(5 points)** Let $\dot\Omega=-k\Omega^n\to\ddot\Omega=-nk\dot\Omega\Omega^{n-1}$ **(2 points)** for some constant $k$. Then $\frac{\ddot\Omega}{\dot\Omega}=n\frac{\dot\Omega}{\Omega}\to n=\boxed{\frac{\Omega\ddot\Omega}{\dot\Omega^2}}$. (This is how $n$ is computed in practice.)
+
+(ii) **(3 points)** We get
+
+$$
+\dot\Omega\propto t^{-1-\alpha}\propto\Omega^n\propto t^{-n\alpha}\to1+\alpha=n\alpha\to\alpha=\boxed{\frac1{n-1}}.
+$$
+
+(**1 point** for each step above).
+
+(iii) **(2 points)** Notice that the above relation diverges if $n=1$. Instead,
+
+$$
+\dot\Omega\propto-\Omega\leftrightarrow\dot\Omega=-k\Omega\leftrightarrow\Omega(t)=\Omega_0\exp(-kt),
+$$
+
+so $\Omega$ is $\boxed{\text{decreasing exponentially}}$.
+
+(b) **(8 points)**
+
+(i) **(2 points)** We just have $L=I\Omega$ and $I\propto MR^2$ up to a constant **(1 point)**. Thus $L\propto\boxed{\Omega MR^2}$. For the rest of part (b), we solely carry proportionalities in this solution for convenience.
+
+(ii) **(3 points)** Since $L$ is constant, $\Omega\propto\frac1{MR^2}$ **(0.5 points)** and $M\propto\rho R^3$ **(1 point)**, meaning $\Omega\propto M^{-\frac53}$ **(0.5 points)**. Using $\dot M=const$, we can now calculate $n$ using the formula from part (a), or alternatively we can scale the time axis so that $M=\alpha t$ for some constant $\alpha$, giving $\Omega\propto t^{-\frac53}\to\dot\Omega\propto t^{-\frac83}\propto\Omega^{\frac85}$, from which we can read off $n=\boxed{\frac85}$ **(1 point)**.
+
+(iii) **(3 points)** We write $\Omega\propto M^{-1}$ **(1 point)** and proceed as before, giving $\Omega\propto t^{-1}\to\dot\Omega\propto t^{-2}\propto\Omega^2$, from which we can read off $n=\boxed2$.
+
+(c) **(40 points)**
+
+(i) **(12 points)** Notice that $Q_{ij}=Q_{ji}$ since the formula is symmetric. As given in the problem, we know that $Q_{xz}=Q_{zx}=\boxed0$. Analogous logic (or symmetry) also yields $Q_{yz}=Q_{zy}=\boxed0$. Now, all we need to do is compute $Q_{xx}$, $Q_{yy}$, $Q_{zz}$, and $Q_{xy}=Q_{yx}$. We go in the above order for clarity (note that since we integrate over all space, we can trivially switch $d^3\mathbf r$ and $d^3\mathbf r'$ **(1 point)**, and recall $r^2=x^2+y^2+z^2=(r')^2=(x')^2+(y')^2+(z')^2$ **(1 point)**):
+
+$$
+\begin{aligned}Q_{xx}&=\int\rho(\mathbf r)\left(x^2-\frac13r^2\right)d^3\mathbf r=\int\rho(\mathbf r)\left(x^2-\frac13r^2\right)d^3\mathbf r'\\ &=\int\rho(\mathbf r)\left((x'\cos(\Omega t)-y'\sin(\Omega t))^2-\frac13(x')^2-\frac13(y')^2-\frac13(z')^2\right)d^3\mathbf r'\\ &=\int\rho(\mathbf r)(x')^2\left(\cos^2(\Omega t)-\frac13\right)d^3\mathbf r'+\int\rho(\mathbf r)(y')^2\left(\sin^2(\Omega t)-\frac13\right)d^3\mathbf r'\\ &\quad+\int\rho(\mathbf r)x'y'(-2\sin(\Omega t)\cos(\Omega t))d^3\mathbf r'+\int\rho(\mathbf r)(z')^2\left(-\frac13\right)d^3\mathbf r'\\ &=I_x\left(\cos^2(\Omega t)-\frac13\right)+I_y\left(\sin^2(\Omega t)-\frac13\right)+0(-2\sin(\Omega t)\cos(\Omega t))+I_z\left(-\frac13\right),\end{aligned}
+$$
+
+giving
+
+$$
+Q_{xx}=\boxed{I_x\cos^2(\Omega t)+I_y\sin^2(\Omega t)-\frac{I_x+I_y+I_z}3}.
+$$
+
+Switching the $x'$ expression for the $y'$ expression and using analogous logic yields
+
+$$
+Q_{yy}=\boxed{I_y\cos^2(\Omega t)+I_x\sin^2(\Omega t)-\frac{I_x+I_y+I_z}3}.
+$$
+
+Next, we get
+
+$$
+Q_{zz}=\int\rho(\mathbf r)\left(z^2-\frac13r^2\right)d^3\mathbf r=\int\rho(\mathbf r)\left(\frac23(z')^2-\frac13(x')^2-\frac13(y')^2\right)d^3\mathbf r=\boxed{\frac{2I_z-I_x-I_y}3},
+$$
+
+and
+
+$$
+\begin{aligned}Q_{xy}&=\int\rho(\mathbf r')(x'\cos(\Omega t)-y'\sin(\Omega t))(x'\sin(\Omega t)+y'\cos(\Omega t))d^3\mathbf r'\\ &=\int\rho(\mathbf r)(x')^2(\sin(\Omega t)\cos(\Omega t))d^3\mathbf r'+\int\rho(\mathbf r)(y')^2(-\sin(\Omega t)\cos(\Omega t))d^3\mathbf r'\\ &\quad+\int\rho(\mathbf r)x'y'(\cos^2(\Omega t)-\sin^2(\Omega t))d^3\mathbf r',\end{aligned}
+$$
+
+thus
+
+$$
+Q_{xy}=Q_{yx}=\boxed{(I_x-I_y)\sin(\Omega t)\cos(\Omega t)},
+$$
+
+finishing.
+
+*(**4 points** for interpreting the $\delta_{ij}$ terms and substituting the $x'y'z'$ system accordingly, **0.25 points** for each $Q_{ij}=0$ term, **1 point** for each distinct nonzero $Q_{ij}$, and **1 point** for getting everything correct.)*
+
+(ii) **(7 points)** Trivially, $Q_{xz}$, $Q_{yz}$, $Q_{zx}$, $Q_{zy}$ **(1 point)**, and $Q_{zz}$ **(0.5 points)** are all constant, so we only need to compute three distinct time derivatives. Notice that we can rewrite
+
+$$
+\begin{aligned}Q_{xx}&=I_x\cos^2(\Omega t)+I_y\sin^2(\Omega t)-\frac{I_x+I_y+I_z}3\\ &=(I_x-I_y)\frac{\cos^2(\Omega t)-\sin^2(\Omega t)}2+(I_x+I_y)\frac{\cos^2(\Omega t)+\sin^2(\Omega t)}2-\frac{I_x+I_y+I_z}3.\end{aligned}
+$$
+
+Now, since $\cos^2(\Omega t)+\sin^2(\Omega t)$ is constant and $\cos^2(\Omega t)-\sin^2(\Omega t)=\cos(2\Omega t)$, and the second derivative of this is just $-4\Omega^2\cos(2\Omega t)$, we can differentiate the time-varying term $\frac{I_x-I_y}2\cos(2\Omega t)$ twice to get,
+
+$$
+\ddot Q_{xx}=\boxed{-2\Omega^2(I_x-I_y)\cos(2\Omega t)}.
+$$
+
+Analogously, switching $I_x$ and $I_y$,
+
+$$
+\ddot Q_{yy}=\boxed{2\Omega^2(I_x-I_y)\cos(2\Omega t)}.
+$$
+
+Next, notice that $Q_{xy}=(I_x-I_y)\sin(\Omega t)\cos(\Omega t)=\frac12(I_x-I_y)\sin(2\Omega t)$, which differentiates twice to give,
+
+$$
+\ddot Q_{xy}=\ddot Q_{yx}=\boxed{-2\Omega^2(I_x-I_y)\sin(2\Omega t)}.
+$$
+
+Since all other terms are constant, their second time derivatives are zero, so we are done. *(**1.5 points** for each correct boxed expression. **1 point** extra for getting everything correct.)*
+
+(iii) **(3 points)** We substitute to get **(1 point)**
+
+$$
+h_{xx}(t)=\frac{-4\Omega^2G}{c^4d}(I_x-I_y)\sin(2\Omega t),
+$$
+
+which has amplitude $h_0=\frac{4\Omega^2G}{c^4d}(I_x-I_y)=\boxed{\frac{4\Omega^2G}{c^4d}I_z\epsilon}$ **(1 point)** and angular frequency $\Omega_{GW}=\boxed{2\Omega}$ **(1 point)**.
+
+(iv) **(6 points)** Using our results from (ii), the only terms (**0.5 points** for correctly ignoring all others) with nonzero third derivative are **(0.5 points each)**
+
+$$
+\overset{\cdots}{Q}_{xx}=-\overset{\cdots}{Q}_{yy}=4\Omega^3(I_x-I_y)\sin(2\Omega t)
+$$
+
+and **(0.5 points)**
+
+$$
+\overset{\cdots}{Q}_{xy}=\overset{\cdots}{Q}_{yx}=-4\Omega^3(I_x-I_y)\cos(2\Omega t),
+$$
+
+thus giving
+
+$$
+\begin{aligned}P&=\frac G{5c^5}\left(2(4\Omega^3(I_x-I_y)\sin(2\Omega t))^2+2(4\Omega^3(I_x-I_y)\cos(2\Omega t))^2\right)\\ &=\frac{32G}{5c^5}\Omega^6(I_x-I_y)^2(\sin^2(2\Omega t)+\cos^2(2\Omega t))=\boxed{\frac{32G}{5c^5}\Omega^6I_z^2\epsilon^2}.\end{aligned}
+$$
+
+*(**1.5 points** for any equivalent $P$, and **1.5 points** extra for a time-independent $P$.)*
+
+(v) **(6 points)** We know
+
+$$
+P=-\dot E=-I_z\Omega\dot\Omega=\frac{32G}{5c^5}\Omega^6I_z^2\epsilon^2,
+$$
+
+*(**2 points** for calculating $\dot E$ and **1 point** for substituting correctly)* yielding **(1.5 points)**
+
+$$
+\dot\Omega=\boxed{-\frac{32G}{5c^5}\Omega^5I_z\epsilon^2},
+$$
+
+and so $n=\boxed5$ **(1.5 points)**.
+
+(vi) **(6 points)** Recall from part (iii) that $h_0\propto\Omega^2$ and $\Omega_{GW}\propto\Omega$. As the star loses rotational kinetic energy $E=\frac12I_z\Omega^2$, since $I_z$ stays constant, $\Omega$ must decrease. From this, we see that both $h_0$ **(1.5 points)** and $\Omega_{GW}$ decrease **(1.5 points)**, meaning that our graph of $h_{xx}(t)$ decreases in amplitude and increases in period. We get a graph of the following form (note that, as requested, the changes are exaggerated relative to the true time scale of the system):
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '46.5%', '--fig-max': '298px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-ii-x/p9-sol-gw-evolution.png" alt="Original GW strain evolution graph, full native diminishing-amplitude/increasing-period curve and hxx(t), t axes." width="931" height="515" loading="lazy" decoding="async" />
+</figure>
+
+
+Figure 2: GW Signal Evolution
+
+*(**2 points** for a sinusoid-style shape and **1 point** for everything correct.)*
+
+(d) **(27 points)**
+
+(i) **(4 points)** We can calculate
+
+$$
+\ddot{\boldsymbol\mu}(t)=\boxed{\mu(-\Omega^2\sin\chi\cos(\Omega t),-\Omega^2\sin\chi\sin(\Omega t),0)},
+$$
+
+which has magnitude
+
+$$
+|\ddot{\boldsymbol\mu}|=\sqrt{(-\mu\Omega^2\sin\chi\cos(\Omega t))^2+(-\mu\Omega^2\sin\chi\sin(\Omega t))^2}=\boxed{\mu\Omega^2\sin\chi}.
+$$
+
+*(**1 point** per component and **1 point** for the magnitude.)*
+
+(ii) **(5 points)** We substitute **(4 points)**
+
+$$
+P=-\dot E=-I_z\Omega\dot\Omega=\frac{\mu_0}{6\pi c^3}(\mu\Omega^2\sin\chi)^2\to\dot\Omega=\boxed{-\frac{\mu_0}{6\pi c^3I_z}\mu^2\Omega^3\sin^2\chi},
+$$
+
+from which we read off $n_0=\boxed3$ **(1 point)**.
+
+(iii) **(9 points)** We want $n=\frac{\Omega\ddot\Omega}{\dot\Omega^2}$, so we start by computing $\ddot\Omega$: **(3 points)**
+
+$$
+\ddot\Omega=\frac d{dt}\left[-\frac{\mu_0}{6\pi c^3I_z}\mu^2\Omega^3\sin^2\chi\right]=-\frac{\mu_0}{6\pi c^3I_z}\frac d{dt}[\mu^2\Omega^3\sin^2\chi],
+$$
+
+and so, using the product rule, we calculate:
+
+$$
+\frac d{dt}[\mu^2\Omega^3\sin^2\chi]=\mu^2\Omega^3\sin^2\chi\left(\frac{2\dot\mu}\mu+\frac{3\dot\Omega}\Omega+\frac{2\dot\chi\cos\chi}{\sin\chi}\right),
+$$
+
+which yields **(3 points)**
+
+$$
+\ddot\Omega=-\frac{\mu_0}{6\pi c^3I_z}\mu^2\Omega^3\sin^2\chi\left(\frac{2\dot\mu}\mu+\frac{3\dot\Omega}\Omega+2\dot\chi\cot\chi\right),
+$$
+
+thus giving **(3 points)**
+
+$$
+\begin{aligned}n&=\frac{\Omega\ddot\Omega}{\dot\Omega^2}=\frac\Omega{\dot\Omega}\cdot\frac{-\frac{\mu_0}{6\pi c^3I_z}\mu^2\Omega^3\sin^2\chi\left(\frac{2\dot\mu}\mu+\frac{3\dot\Omega}\Omega+2\dot\chi\cot\chi\right)}{-\frac{\mu_0}{6\pi c^3I_z}\mu^2\Omega^3\sin^2\chi}\\ &=\boxed{3+\frac{2\Omega}{\dot\Omega}\left(\frac{\dot\mu}\mu+\dot\chi\cot\chi\right)}\end{aligned}
+$$
+
+as desired. Note that the problem statement asks us to express our answer in terms of $\dot\Omega$ and not $I_z$, so we do not substitute further. Additionally, setting $\dot\mu=0$ and $\dot\chi=0$ recovers $n_0=3$, which is a helpful sanity check for our result.
+
+(iv) **(2 points)** This translates to $\frac{\dot\mu}\mu=-\frac1{\tau_B}$ **(1 point)**, or
+
+$$
+n=\boxed{3+\frac{2\Omega}{\dot\Omega}\left(\dot\chi\cot\chi-\frac1{\tau_B}\right)}.
+$$
+
+(v) **(7 points)** We have $n_{obs}<n_0$. For choices (A) and (B), deviating toward $n_0$ manifests as having $\frac{2\Omega}{\dot\Omega}\left(\frac{\dot\mu}\mu+\dot\chi\cot\chi\right)<0$. Since $\dot\Omega<0$, this is equivalent to $\left(\frac{\dot\mu}\mu+\dot\chi\cot\chi\right)>0$. This is true if $\dot\chi>0$ and false if $\dot\mu>0$, so (A) causes it to deviate **toward** $n_{obs}$ and (B) causes it to deviate **away** from $n_{obs}$.
+
+For (C), remember that pure accretion causes a value of $n=2$, which is in the same direction of $n_0$ as $n_{obs}$. Evidently, since there are other relevant factors, $n$ will only go “part” of the way to 2, but this is still deviation **toward** $n_{obs}$.
+
+For (D), we have that pure GW emission causes a value of $n=5$, which is in the opposite direction of $n_{obs}$ from $n_0$. This causes GW emission to make the neutron star deviate **away** from $n_{obs}$.
+
+| | A | B | C | D |
+| --- | --- | --- | --- | --- |
+| **Toward $n_{obs}$** | x | | x | |
+| **Away From $n_{obs}$** | | x | | x |
+| **No Effect** | | | | |
+
+Table 1: Final Answers
+
+*(**1.5 points** per correct column, **1 point** for getting everything correct.)*
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [usaaao2026.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2026/2026-II/usaaao2026.pdf#page=9)
+· официални решения: [usaaao2026_sol.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2026/2026-II/usaaao2026_sol.pdf#page=26)
+· допълнителни данни: [physical-constants.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/physical-constants.pdf)

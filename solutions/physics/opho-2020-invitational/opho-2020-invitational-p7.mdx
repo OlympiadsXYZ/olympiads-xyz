@@ -1,0 +1,389 @@
+---
+id: opho-2020-invitational-p7
+source: 'OPhO 2020, Теория'
+title: 'Задача 7. Boltzmann Statistics'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2020/opho-2020-invitational.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T11:29:15.458Z'
+verifier: 'single-pass'
+---
+
+*2020 Online Physics Olympiad: Invitational Contest v1.4 · 24 т.*
+
+<Warning title="Бележка към темата">
+The v1.4 question paper, native Partial Solutions and separately attributed organizer clarifications are retained. The key is incomplete: Problem 1 is only marked TBD, Problem 8 has no key for parts f–h or an explicit critical power in e, and Problem 10 has no key for Part B f–h. Problems 2 and 9 also have source gaps noted below. Printed mathematical defects and differences between repeated questions in the key and the question original are not silently repaired. Problem2(e) gives a time-dependent spin result but no explicit answer in orbital angle; key2(c) refers to an absent diagram. Problem9(a) gives its ODE and initial conditions without an explicit speed, and 9(b) does not state whether the pressure increases or decreases. Native source typography is retained, including the Planck-constant value, missing electron-charge unit, missing kappa in key3(a), mismatched labels in key4, inconsistent theta indices and ring factors in key6, the negative probability/energy signs and r_B/K_B/k variants in key7, radiation expressions and fusion-rate/proton-rate difference in key8, and image/flux signs and field factors in key10. All these are printed-source issues, not repaired answers. Question2 omits the word define while the repeated key question includes it; the repeated key question7 adds For simplicity, ignore spin. The 4-page organizer clarification contradicts question1(d)’s frictionless table and also contains both only one final submission and multiple submissions instructions. The native original and the separately attributed clarifications remain visible.
+</Warning>
+
+<details>
+<summary>Original credits</summary>
+
+**2020 Online Physics Olympiad (OPhO): Invitational Contest v1.4**
+
+**OPhO Lead Organizers and Writers:** Adithya Balachandran, Eddie Chen, Ashmit Dutta, Ethan Hu, Viraj Jayam, Rishab Parthasarathy, Kushal Thaman, Max Wang, Qilin Xue
+
+**OPhO Website Developer:** Ben Oommen
+
+**Advisors:** Dr. Branislav Kisačanin, Kye Shi, Kevin Zhou
+
+July 3 - 6, 2020
+
+</details>
+
+<details>
+<summary>Указания</summary>
+
+If you wish to request a clarification, please use [this form](https://docs.google.com/forms/d/e/1FAIpQLSdTJ-IpUsbLsbI_WCyu_4eN2Bb_J4UJ_x29UYLcP-YO3lOQRg/viewform). To see all clarifications, see [this document](https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit).
+
+- This test contains 10 long answer questions.
+- The total base score for the exam is 300 points; a factor incorporating the number of teams who solved the question will be added in the marking scheme. The final scores of all the teams will be available a few days after the contest ends.
+- The team leader should submit their final solution document in this [here](https://forms.gle/J2wfpLxC5GQZzxSU9). We don’t anticipate a tie, but in the rare circumstance that there is one, the time you submit will be used to break it.
+- You can write on paper, type it up online, or a mix of both. If you wish to use a pre-made LaTeX template, we made one which you can choose to use [here](https://www.overleaf.com/project/5efbc24f2670ee0001e5a10d).
+- Since this is a long answer response, you will be judged on the quality of your work. To receive full points, you need to show your work, including deriving equations. As a general rule of thumb, any common equations (such as the ones in this [formula sheet](https://www.ioc.ee/~kalda/ipho/formulas.pdf)) can be cited without proof. Remember to state any approximations made, which system of equations were solved after every step. Explicitly showing every step of algebra is not necessary.
+- You may leave all final answers in symbolic form (in terms of variables) unless otherwise specified.2
+- Be sure to state all assumptions.
+
+</details>
+
+<details>
+<summary>Sponsors</summary>
+
+WOLFRAM · AwesomeMath (making x,y,z as easy as a,b,c) · Physics Olympiad · AoPS.com Art of Problem Solving
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e=9.11\cdot10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0=6.02\cdot10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R=8.31\ \mathrm{J/(mol\cdot K)}$
+- Boltzmann’s constant, $k_B=1.38\cdot10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e=1.60\cdot10^{-19}$
+- 1 electron volt, $1\ \mathrm{eV}=1.60\cdot10^{-19}\ \mathrm J$
+- Speed of light, $c=3.00\cdot10^8\ \mathrm{m/s}$
+- Universal Gravitational constant, $G=6.67\cdot10^{-11}\ \mathrm{(N\cdot m^2)/kg^2}$
+- Acceleration due to gravity, $g=9.81\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit, $1\ \mathrm u=1.66\cdot10^{-27}\ \mathrm{kg}=931\ \mathrm{MeV}/c^2$
+- Planck’s constant, $h=6.63\cdot10^{-34}\ \mathrm{J\cdot s}=4.41\cdot10^{-15}\ \mathrm{eV\cdot s}$
+- Permittivity of free space, $\epsilon_0=8.85\cdot10^{-12}\ \mathrm{C^2/(N\cdot m^2)}$
+- Coulomb’s law constant, $k=\frac1{4\pi\epsilon_0}=8.99\cdot10^9\ \mathrm{(N\cdot m^2)/C^2}$
+- Permeability of free space, $\mu_0=4\pi\cdot10^{-7}\ \mathrm{T\cdot m/A}$
+- Magnetic constant, $\frac{\mu_0}{4\pi}=1\cdot10^{-7}\ \mathrm{(T\cdot m)/A}$
+- 1 atmospheric pressure, $1\ \mathrm{atm}=1.01\cdot10^5\ \mathrm{N/m^2}=1.01\cdot10^5\ \mathrm{Pa}$
+- Wien’s displacement constant, $b=2.9\cdot10^{-3}\ \mathrm{m\cdot K}$
+- Stefan-Boltzmann constant, $\sigma=5.67\cdot10^{-8}\ \mathrm{W/m^2/K^4}$
+
+</details>
+
+<details>
+<summary>Native key title</summary>
+
+2020 Online Physics Olympiad (OPhO): Invitational Contest Partial Solutions
+
+The same organizer, writer, developer and advisor credits appear on this key cover.
+
+</details>
+
+<details>
+<summary>Organizer clarification document — major notes</summary>
+
+Separately quoted from the [organizer clarification document](https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit), titled **2020 OPhO Invitational Clarifications**:
+
+**MAJOR NOTES**
+
+- Hi everyone! **All team members are welcome to fill out this (optional) [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdytoUh6yTgYxr4lgNgENhAaH5O1Hj1diU4B5_C4dDryMKqyQ/viewform). Everyone who submits (and consents) will be entered in a draw to receive a \$25 Amazon gift card.**
+- Use [this link](https://forms.gle/DjhPb3zrpGaBnSaV7) to submit clarification requests. The problem writers may or may not deem it necessary to answer all clarification requests.
+- Link to the overleaf [template](https://www.overleaf.com/read/kswgrtgsrvgt) **(the link has been fixed)** for answer submission.
+- **Reminder: There is only one final submission at the end of the competition via the [submission form](https://docs.google.com/forms/d/e/1FAIpQLScJCIBlgI6LDUSIigYBpmb3Qyma45FehU004JRk7B9cgriAZg/viewform) only. Do NOT email us a copy of your submission. In case of internet connectivity issues, any team member may email us the file.**
+- Make sure to read over the instructions. You are expected to give symbolic answers unless *explicitly* otherwise stated. If the numerical values for a symbol are stated, you do not need to solve the problem for a general case.
+- Uploading a .jpeg on the overleaf for a graph is allowed.
+- **Please check the newest version v1.4 for revisions.**
+- Please provide clear reasoning or derivations of any obscure results. Directly citing them would not necessarily fetch full points.
+- We will be awarding a special prize for whichever team produces the **most creative and/or elegant solution** to certain problems. We will not be disclosing which problems until after the competition has concluded.
+
+**Note on submission of solutions:**
+
+It is highly recommended that the solutions to the invitational round be submitted in LaTeXed form. We recommend using [Overleaf](http://overleaf.com/). It is preferred that the solutions are quite detailed; this means that while you do not need to explicitly write all your algebra, all the relevant equations must be clearly written. A brief wording on how you solve a given system of equations is also optimal. Clearly state any approximations you make. Solutions typed in .doc/.docx, and ones neatly written by hand will also be accepted. Some students have a handwriting that’s hard to read; if that’s you, please read [this](http://www.johnkerl.org/doc/ortho/ortho.html). **You can submit solutions multiple times. Only the latest submission will count.**
+
+</details>
+
+## Условие
+
+In this problem, we will explore Boltzmann Statistics and using it to build similar models for quantum particles such as bosons and fermions.
+
+**a)** **(8 pts)** Consider a energy of a gaseous molecule in space is given by 5
+
+$$
+E=E_0(|x|^r+|y|^r+|z|^r)
+$$
+
+where the coordinates of the molecule are represented by $(x,y,z)$, $E_0$ is a constant with appropriate units, and $r$ is a non-negative real number. The system is in thermal equilibrium with a reservoir of temperature $T$. Calculate explicitly using appropriate statistical methods, the average energy of a thermodynamic system consisting of $N$ such gaseous molecules, considering the Maxwell-Boltzmann distribution. Analyse your result and provide a qualitative argument to support it.
+
+*Hint:* If you are not familiar with how to solve this part, try part (b) first.
+
+**b)** **(6 pts)** Consider a specific case in which
+
+$$
+E=E_0(x^2+y^2+z^2)
+$$
+
+except where $|x|,|y|,|z|<2$ and particles can only exist at integer values of $x,y,z$. If the system is still in thermal equilibrium at a temperature $T$, calculate the average energy.
+
+**c)** **(6 pts)** In this system, there are two particles. What is the probability that at least one of these particles will be in the ground state (energy is zero) if:
+
+(i) The two particles are distinct.
+
+(ii) The two particles are identical bosons.
+
+(iii) The two particles are identical fermions (fermions follow Pauli exclusion principle).
+
+For each of the parts, assume that there are no other interactions (e.g. electromagnetism) and focus mainly on a statistical argument.
+
+**d)** **(4 pts)** Rank the probabilities in part (c) from highest to lowest when the temperature is
+
+(i) high
+
+(ii) low
+
+For each, explain qualitatively why this must be true.
+
+**Published organizer clarifications (separate source)**
+
+Separately quoted from the [organizer clarification document](https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit):
+
+**Problem 7:**
+
+- Problem 7 a), the energy function has been changed from E = E_0 (x^r + y^r + z^r) to E = E_0 (|x|^r + |y|^r + |z|^r).
+- Problem 7 b), the wording is a bit vague. The particles can **only** exist at integer values of |x|,|y|,|z| < 2. (They cannot exist anywhere else).
+- Problem 7 c) The system is referring to the system in part (b).
+- (i) The distinct particles refer to distinct bosons.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution 7:**
+
+**(a)** In Maxwell-Boltzmann’s distribution, the probability that an isolated particle occupies the point $A(x,y,z)$ is given by
+
+$$
+\mathrm d\mathbb P(E)=\mathcal P(E)\mathrm dV=-\frac{e^{-\frac{E_0}{k_BT}}}{Z}
+$$
+
+where $Z$ denotes the partition function. Note that although we write the probability such that an isolated particle occupied the space, but for a system of $N$ particles, there would be an extra factor of $N!$ in the partition function, but since the particles are considered independent, this factor would cancel out in further calculation anyway. Now for the calculation of $Z$, we normalize the probability $\mathrm d\mathbb P(E)$ over all possible states; meaning that we convert the probability function to the probability density function by summing total probability as 1. This gives us
+
+$$
+Z=\iiint_{\mathbb R^3}e^{-\beta\cdot E_0\cdot(|x|^r+|y|^r+|z|^r)}dxdydz
+$$
+
+(More accurately, the partition function of a set of molecules would be found by summing, and not integrating over the space, but since it is a continuous function, the sum reduces to an integral.) From the statistical definition of average energy per unit particle, we have
+
+$$
+\langle E\rangle=\iiint_{\mathbb R^3}E\cdot\mathrm d\mathbb P(E)=\iiint_{\mathbb R^3}E_0(|x|^r+|y|^r+|z|^r)\mathrm d\mathbb P(E)
+$$
+
+Substituting the partition function from above, we obtain
+
+$$
+\langle E\rangle=\frac{\iiint_{\mathbb R^3}E_0(|x|^r+|y|^r+|z|^r)e^{\left(-\frac{E_0}{k_BT}(|x|^r+|y|^r+|z|^r)\right)}dxdydz}{\iiint_{\mathbb R^3}e^{\left(-\frac{E_0}{k_BT}(|x|^r+|y|^r+|z|^r)\right)}dxdydz}
+$$
+
+$$
+\langle E\rangle=\frac{\sum_{x_i\in(x,y,z)}\iiint_{\mathbb R^3}e^{-\frac{E_0x_i{}^r}{kT}}E_0x_i{}^rdx_i}{\sum_{x_i\in(x,y,z)}\iiint_{\mathbb R^3}e^{-\frac{E_0x_i{}^r}{k_BT}}dx_i}
+$$
+
+Now let us evaluate some integrals to obtain a closed form for $\langle E\rangle$ above. Applying by-parts, we have
+
+$$
+\begin{aligned}\int_0^\infty e^{-\frac{E_0x_i{}^r}{k_BT}}dx_i&=\int_0^\infty e^{-\left(\left(\frac{E_0}{k_BT}\right)^{\frac1r}x_i\right)^r}dx_i\\&=\left.x_i\left(\frac{E_0}{K_BT}\right)^{1/r}e^{-\frac{E_0x_i^r}{r_BT}}\right|_0^\infty+r\int_0^\infty\frac{E_0x_i^r}{K_BT}e^{-\frac{E_0x_i^r}{k_BT}}\mathrm d\left(x_i\left(\frac{E_0}{k_BT}\right)^{\frac1r}\right)\end{aligned}
+$$
+
+Note that after applying the bounds, $\left.x_i\left(\frac{E_0}{K_BT}\right)^{1/r}e^{-\frac{E_0x_i^r}{r_BT}}\right|_0^\infty$ reduces to 0. This gives
+
+$$
+\int_0^\infty e^{-\left(\left(\frac{E_0}{k_BT}\right)^{\frac1r}x_i\right)^r}dx_i=r\int_0^\infty\frac{E_0x_i^r}{K_BT}e^{-\frac{E_0x_i^r}{k_BT}}\mathrm d\left(x_i\left(\frac{E_0}{k_BT}\right)^{\frac1r}\right)
+$$
+
+The same integral ratio appeared in our original average energy per unit particle expression. However, the above integral was performed across one-dimension. In three dimensions (the integral is non-degenerate across all three dimensions), our average energy per particle expression becomes
+
+$$
+\langle E\rangle=\frac{\iiint_{\mathbb R^3}e^{-\frac{E_0x_i{}^r}{kT}}E_0x_i{}^rdx_i}{\sum_{x_i\in(x,y,z)}\iiint_{\mathbb R^3}e^{-\frac{E_0x_i{}^r}{k_BT}}dx_i}=E_0\times\frac{3k_BT}{rE_0}=\frac{3k_BT}{r}
+$$
+
+Hence, the average energy of a thermodynamic system of $N$ such particles is
+
+$$
+\langle E_s\rangle=\boxed{\frac{3Nk_BT}{r}}
+$$
+
+As a sanity check, note that the average energy is independent of $E_0$, which was expected. This is because for any quadratic function in space (specifically, here this is $r=2$) we have the ”Law of Equipartition”, which states that every degree of freedom has an average energy of $1/2k_BT$, which is confirmed by the obtained expression.
+
+**Aliter:** Consider the partition function:
+
+$$
+Z=\sum e^{-\beta E}=\sum e^{-\beta E_0(x^r+y^r+z^r)}
+$$
+
+We can turn this into the integral form:
+
+$$
+Z=\frac1{\delta x\delta y\delta z}\int_{-\infty}^\infty\int_{-\infty}^\infty\int_{-\infty}^\infty e^{-\beta E_0(x^r+y^r+z^r)}dx\,dy\,dz
+$$
+
+Letting $a=(\beta E_0)^{1/r}x$, $b=(\beta E_0)^{1/r}y$, and $c=(\beta E_0)^{1/r}z$, we can rewrite this as:
+
+$$
+Z=\frac1{\delta x\delta y\delta z(\beta E_0)^{3/r}}\int_{-\infty}^\infty\int_{-\infty}^\infty\int_{-\infty}^\infty e^{-(a^r+b^r+c^r)}da\,db\,dc=\frac C{\delta x\delta y\delta z(\beta E_0)^{3/r}}
+$$
+
+where $C$ is a constant, equal to the integral. The average energy is given by:
+
+$$
+\begin{aligned}E_{\mathrm{avg}}&=\frac{-1}{Z}\frac{\partial Z}{\partial\beta}\\&=\frac{-\delta x\delta y\delta z(\beta E_0)^{3/r}}C\frac C{\delta x\delta y\delta z}\left(\frac{-3}{r}E_0(\beta E_0)^{\frac{-3-r}{r}}\right)\\&=\frac3{r\beta}\\&=\frac3r k_BT\end{aligned}
+$$
+
+**(b)** The energy of any given particle can be 0,1,2,3 (working in units where $E_0=1$). We need to calculate the Boltzmann factor for each energy as well as how many ways each energy can be achieved.
+
+- Energy 0: $e^{0\beta}=1\to1$ way.
+- Energy 1: $e^{1\beta}\to6$ ways.
+- Energy 2: $e^{2\beta}\to12$ ways.
+- Energy 3: $e^{3\beta}\to8$ ways.
+
+In total, the partition function is:
+
+$$
+Z=1+6e^\beta+12e^{2\beta}+8e^{3\beta}
+$$
+
+The average energy is thus:
+
+$$
+\begin{aligned}E_{\mathrm{avg}}&=-\frac1Z\frac{\partial Z}{\partial\beta}\\&=-\frac{6e^{-\beta}+24e^{-2\beta}+24e^{-3\beta}}{1+6e^{-\beta}+12e^{-2\beta}+8e^{-3\beta}}\end{aligned}
+$$
+
+Note that this can be factored further.
+
+**(c)** The probability of at least one particle being in the ground state is equal to one minus the probability of no particles being in the ground state. The probability of having some energy $E_i$ is:
+
+$$
+P_i=\frac{(\text{number of ways this can happen})e^{-\beta E_i}}{Z}
+$$
+
+Summing up all the probabilities for nonzero energies gives us:
+
+$$
+P_{\text{at least 1 in ground state}}=1-\frac{Z_{\mathrm{restrictions}}}{Z_{\text{no restrictions}}}
+$$
+
+**(i)** If two particles are distinct, they can take on energies 1,2,3,4,5,6. Similar to part (b), we list out all the possible ways to achieve these energies if there are no restrictions:
+
+- Energy 0: $1^2=1$ way.
+- Energy 1: $2(1\cdot6)=12$ ways.
+- Energy 2: $2(1\cdot12)+6^2=60$ ways.
+- Energy 3: $2(1\cdot8)+2(6\cdot12)=160$ ways.
+- Energy 4: $2(6\cdot8)+12^2=240$ ways.
+- Energy 5: $2(12\cdot8)=192$ ways.
+- Energy 6: $8^2=64$ ways.
+
+If no particles are in the ground state, then:
+
+- Energy 2: $6^2=36$ ways.
+- Energy 3: $2(6\cdot12)=144$ ways.
+- Energy 4: $2(6\cdot8)+12^2=240$ ways.
+- Energy 5: $2(12\cdot8)=192$ ways.
+- Energy 6: $8^2=64$ ways.
+
+The probability is thus:
+
+$$
+P_1=1-\frac{36e^{-2\beta}+144e^{-3\beta}+240e^{-4\beta}+192e^{-5\beta}+64e^{-6\beta}}{1+12e^{-\beta}+60e^{-2\beta}+160e^{-3\beta}+240e^{-4\beta}+192e^{-5\beta}+64e^{-6\beta}}
+$$
+
+Perhaps an easier way to do this problem is to think of the partition functions as generating functions. The partition function for placing two particles with no restrictions is the square of placing a single particle:
+
+$$
+Z_{2,\text{no restriction}}=Z_{1,\text{no restriction}}^2=(1+6e^{-\beta}+12e^{-2\beta}+8e^{-3\beta})(1+6e^{-\beta}+12e^{-2\beta}+8e^{-3\beta})
+$$
+
+Any combination of two terms will yield a different distinct possibility. Therefore, it is possible to express the answer in terms of
+
+$$
+Z\equiv(1+6e^{-\beta}+12e^{-2\beta}+8e^{-3\beta})
+$$
+
+but we will not be doing that here, time to bash away!
+
+**(ii)** If two particles are identical bosons, they can take on the same energy, except we have to adjust for overcounting. With no restrictions:
+
+- Energy 0: 1 way.
+- Energy 1: $1\cdot6=6$ way.
+- Energy 2: $1\cdot12+\binom62+6=33$ ways.
+- Energy 3: $1\cdot8+6\cdot12=80$ ways.
+- Energy 4: $6\cdot8+\left(\binom{12}2+12\right)=126$ ways.
+- Energy 5: $12\cdot8=96$ ways.
+- Energy 6: $\binom82+8=36$ ways.
+
+With restrictions:
+
+- Energy 2: $\binom62+6=21$ ways.
+- Energy 3: $6\cdot12=72$ ways.
+- Energy 4: $6\cdot8+\left(\binom{12}2+12\right)=126$ ways.
+- Energy 5: $12\cdot8=96$ ways.
+- Energy 6: $\binom82+8=36$ ways.
+
+So:
+
+$$
+P_2=1-\frac{21e^{-2\beta}+72e^{-3\beta}+126e^{-4\beta}+96e^{-5\beta}+36e^{-6\beta}}{1+6e^{-\beta}+33e^{-2\beta}+80e^{-3\beta}+126e^{-4\beta}+96e^{-5\beta}+36e^{-6\beta}}
+$$
+
+**(iii)** If two particles are identical fermions, they can take on the same energy (except ground state), except they can’t be in the same state.
+
+- Energy 1: $1\cdot6=6$ ways.
+- Energy 2: $1\cdot12+1\cdot\binom62=27$ ways.
+- Energy 3: $1\cdot8+6\cdot12=80$ ways.
+- Energy 4: $6\cdot8+\left(\binom{12}2\right)=114$ ways.
+- Energy 5: $12\cdot8=96$ ways.
+- Energy 6: $\binom82=28$ ways.
+
+With restrictions:
+
+- Energy 2: $\binom62=15$ ways.
+- Energy 3: $6\cdot12=72$ ways.
+- Energy 4: $6\cdot8+\left(\binom{12}2\right)=114$ ways.
+- Energy 5: $12\cdot8=96$ ways.
+- Energy 6: $\binom82=28$ ways.
+
+$$
+P_3=1-\frac{15e^{-2\beta}+72e^{-3\beta}+114e^{-4\beta}+96e^{-5\beta}+28e^{-6\beta}}{6e^{-\beta}+27e^{-2\beta}+80e^{-3\beta}+114e^{-4\beta}+96e^{-5\beta}+28e^{-6\beta}}
+$$
+
+**(d)** For high temperature: fermion ¿ distinct ¿ boson. As well as including the math, justification needs to be on the lines of every state having an equal probability and thus we want the ratio between desired and total states.
+
+For low temperatures, it’s reversed. Particles will tend to settle in the lowest energy state (which is what we desire), and distinct particles have more ways to do it than identical bosons. Fermions cannot have two particles in the same state, further decreasing its chances.
+
+
+</Spoiler>
+
+<details>
+<summary>Organizer clarification document — other notes</summary>
+
+Separately quoted from the [organizer clarification document](https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit):
+
+**Other Notes**
+
+- Uploading images: View this [link](https://www.overleaf.com/learn/how-to/Including_images_on_Overleaf) to find how to upload images on overleaf.
+- You are allowed to mix LaTeX and handwritten PDFs for your answer sheet. Note that you need to write your solution to the problem alongside your final answers.
+- You can use basic formulae related to topics on the [IPhO syllabus](https://www.ioc.ee/~kalda/ipho/formulas.pdf) without derivation but all other formulae which go beyond that must be derived.
+- If you find that space is running out on your LaTeX file, try to use $\verb|\newpage|$ and see if that fixes it.
+
+</details>
+
+---
+
+Оригинал в Архива: [invitational.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2020/invitational.pdf#page=7)
+· официални решения: [invitational_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2020/invitational_sol.pdf#page=18)
+· допълнителни данни: [Clarifications.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2020/Clarifications.pdf)

@@ -51,22 +51,52 @@
     "position": "before-problem"
    }
   ],
+  "supplementarySources": {
+   "supplement-1": {
+    "archiveKey": "Физика/Състезания/IPhO/1999/IPhO_1999_Exp Question 1.pdf",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "supplement-2": {
+    "archiveKey": "Физика/Състезания/IPhO/1999/IPhO_1999_Exp Solution l.pdf",
+    "pages": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   }
+  },
+  "caveat": "И двете архивни копия съдържат 7 страници условие и 7 страници официално решение. На първата страница на условието е посочен комплект от 11 страници, включващ бланките за отговор. Четирите бланки липсват и в двете налични копия; не са възстановявани по предположение. Всичките осем задачи и наличното решение са запазени в една обща задача. В таблицата към задачи 5–6 оригиналът отпечатва единица N·µm, а фигура 8 използва N·mm; и двете означения са запазени. Числените резултати в решението са от предварителен пробен опит и са дадени само като ориентир.",
   "transcription": {
    "method": "vision-pages",
-   "provider": "agent",
-   "model": "opus-5-5",
+   "provider": "codex",
+   "model": "gpt-6.1-sol",
    "promptVersion": "v1",
-   "requestId": null,
-   "at": "2026-09-26",
+   "promptSha256": "6120d659b6b284a761faac81f6193f7ce6c962d5cd80e02b44cba5ca49fad854",
+   "requestId": "sol61-reader-root-22-ipho1999-experiment-native-sections-r1",
+   "at": "2026-09-30",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "1b42572d9eab266de0e9d9cad27630306bd5887798066f1b9b3a2bcc78eb7a3a",
-    "solutions": "f79181d4e08cab8cde83f7c83d3cef4f821c1ca1b29db53e180f3113bbbfabea"
+    "solutions": "f79181d4e08cab8cde83f7c83d3cef4f821c1ca1b29db53e180f3113bbbfabea",
+    "supplement-1": "5fab37d5b74e2d52c97672ae0dbe8809eb81dfbe72d33dad8b951661e728e700",
+    "supplement-2": "1454fef0891466c0a2b3f04a58c9dc34446216d44c023565d1b97fc8b3dcc8da"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-09-26",
-   "notes": "One experimental problem (Torsion pendulum) with eight numbered tasks 1.–8.; printed points 0.5 + 3 + 0.5 + 1 + 4 + 4.5 + 4 + 2.5 = 20, no printed total, so totalPoints is null. The page-1 instructions are kept in paper.documentNotes; the printed footnotes are placed after the paragraph or task that carries their marker. The printed point markers ([0.5 points] etc.) are kept in the points fields, not in the task text. Printed issues kept verbatim: in Figure 2 the tick under the start of the inner bar is printed as \"x-\" (the ℓ of x−ℓ is missing in the drawing); in the solution table for tasks 5–6 the column header prints y [N·µm] although the values (6.1 … 28.2) are in N·mm, as the title of Figure 8 shows; eq. (6) in the solution prints \"sinθ\" in italics as a product of letters, transcribed as sin\\theta without an operator; the solution gives κ = 0.055 N·m·rad⁻¹ while the caption of Figure 10 uses κ = 0.056 N·m/rad (stated there as one standard deviation off) — kept as printed. The answers of tasks 2, 6 and 7 are the test-run values of the official solution, given there only as a guide. Equations (2) and (3) of the solution are printed as two stacked lines sharing one number; each pair is set on one display line.",
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v1)",
+   "verifiedAt": "2026-09-30",
+   "notes": "Personally read all28 native original pages: both complete7-page question editions and both complete7-page official-key editions. Same whole experiment with eight tasks. Six native numbered key headings are structured sections; all original prose, equations, tables, captions and printed scientific discrepancies remain. Four absent answer forms explicitly disclosed. Ten retained source graphic byte streams were personally opened before receipt freeze. No independent model checker.",
    "edits": [
     {
      "path": "/problems/0/figures/4/caption",
@@ -86,7 +116,7 @@
    "title": "Torsion pendulum",
    "points": null,
    "problemType": "experiment",
-   "statement": "*In this experiment we want to study a relatively complex mechanical system – a torsion pendulum – and investigate its main parameters. When its rotation axis is horizontal it displays a simple example of bifurcation.*\n\n## Available equipment\n\n1. A torsion pendulum, consisting of an outer body (not longitudinally uniform) and an inner threaded rod, with a stand as shown in figure 1\n2. A steel wire with handle\n3. A long hexagonal nut that can be screwed onto the pendulum threaded rod (needed only for the last exercise)\n4. A ruler and a right triangle template\n5. A timer\n6. Hexagonal wrenches\n7. A3 Millimeter paper sheets.\n8. An adjustable clamp\n9. Adhesive tape\n10. A piece of T-shaped rod\n\nThe experimental apparatus is shown in figure 1; it is a torsion pendulum that can oscillate either around a horizontal rotation axis or around a vertical rotation axis. The rotation axis is defined by a short steel wire kept in tension. The pendulum has an inner part that is a threaded rod that may be screwed in and out, and can be fixed in place by means of a small hexagonal lock nut. This threaded rod can **not** be extracted from the pendulum body.\n\nWhen assembling the apparatus in step 5 the steel wire must pass through the brass blocks and through the hole in the pendulum, then must be locked in place by keeping it stretched: lock it first at one end, then use the handle to put it in tension and lock it at the other end.\n\n**Warning: The wire must be put in tension only to guarantee the pendulum stability. It's not necessary to strain it with a force larger than about 30 N. While straining it, don't bend the wire against the stand, because it might break.**\n\nThe variables characterizing the pendulum oscillations are:\n\n- the pendulum position defined by the angle $\\theta$ of deviation from the direction perpendicular to the plane of the stand frame, which is shown horizontal in figure 1.\n- the distance $x$ between the free end of the inner threaded rod and the pendulum rotation axis\n- the period $T$ of the pendulum oscillations.\n\nThe parameters characterizing the system are:\n\n- the torsional elastic constant $\\kappa$ (torque = $\\kappa \\cdot$ angle) of the steel wire;\n- the masses $M_1$ and $M_2$ of the two parts of the pendulum (1: outer cylinder$^{1}$ and 2: threaded rod);\n- the distances $R_1$ and $R_2$ of the center of mass of each pendulum part (1: outer cylinder and 2: threaded rod) from the rotation axis. In this case the inner mobile part (the threaded rod) is sufficiently uniform for computing $R_2$ on the basis of its mass, its length $\\ell$ and the distance $x$. $R_2$ is therefore a simple function of the other parameters;\n- the moments of inertia $I_1$ and $I_2$ of the two pendulum parts (1: outer cylinder and 2: threaded rod). In this case also we assume that the mobile part (the threaded rod) is sufficiently uniform for computing $I_2$ on the basis of its mass, its length $\\ell$ and the distance $x$. $I_2$ is therefore also a simple function of the other parameters;\n- the angular position $\\theta_0$ (measured between the pendulum and the perpendicular to the plane of the stand frame) where the elastic recall torque is zero. The pendulum is locked to the rotation axis by means of a hex screw, opposite to the threaded rod; therefore $\\theta_0$ varies with each installation of the apparatus.\n\n$^{1}$ Including the small hex locking nut.\n\nSumming up, the system is described by 7 parameters: $\\kappa$, $M_1$, $M_2$, $R_1$, $I_1$, $\\ell$, $\\theta_0$, but $\\theta_0$ changes each time the apparatus is assembled, so that only 6 of them are really constants and the purpose of the experiment is that of determining them, namely $\\kappa$, $M_1$, $M_2$, $R_1$, $I_1$, $\\ell$, **experimentally**. Please note that the inner threaded rod can’t be drawn out of the pendulum body, and initially only the total mass $M_1 + M_2$ is given (it is printed on each pendulum).\n\nIn this experiment several quantities are linear functions of one variable, and you must estimate the parameters of these linear functions. You can use a linear fit, but alternative approaches are also acceptable. The experimental uncertainties of the parameters can be estimated from the procedure of the linear fit or from the spread of experimental data about the fit.\n\nThe analysis also requires a simple formula for the moment of inertia of the inner part (we assume that its transverse dimensions are negligible with respect to its length, see figure 2):\n\n$$I_2(x) = \\int_{x-\\ell}^{x} \\lambda\\, s^2 ds = \\frac{\\lambda}{3}\\left(x^3 - (x-\\ell)^3\\right) = \\frac{\\lambda}{3}\\left(3\\ell x^2 - 3\\ell^2 x + \\ell^3\\right) \\tag{1}$$\n\nwhere $\\lambda = M_2/\\ell$ is the linear mass density, and therefore\n\n$$I_2(x) = M_2 x^2 - M_2 \\ell x + \\frac{M_2}{3}\\ell^2 \\tag{2}$$\n\nNow follow these steps to find the 6 parameters $M_1$, $M_2$, $\\kappa$, $R_1$, $\\ell$, $I_1$:",
+   "statement": "*In this experiment we want to study a relatively complex mechanical system – a torsion pendulum – and investigate its main parameters. When its rotation axis is horizontal it displays a simple example of bifurcation.*\n\n## Available equipment\n\n1. A torsion pendulum, consisting of an outer body (not longitudinally uniform) and an inner threaded rod, with a stand as shown in figure 1\n2. A steel wire with handle\n3. A long hexagonal nut that can be screwed onto the pendulum threaded rod (needed only for the last exercise)\n4. A ruler and a right triangle template\n5. A timer\n6. Hexagonal wrenches\n7. A3 Millimeter paper sheets.\n8. An adjustable clamp\n9. Adhesive tape\n10. A piece of T-shaped rod\n\nThe experimental apparatus is shown in figure 1; it is a torsion pendulum that can oscillate either around a horizontal rotation axis or around a vertical rotation axis. The rotation axis is defined by a short steel wire kept in tension. The pendulum has an inner part that is a threaded rod that may be screwed in and out, and can be fixed in place by means of a small hexagonal lock nut. This threaded rod can **not** be extracted from the pendulum body.\n\n![](p1-fig1)\n\nWhen assembling the apparatus in step 5 the steel wire must pass through the brass blocks and through the hole in the pendulum, then must be locked in place by keeping it stretched: lock it first at one end, then use the handle to put it in tension and lock it at the other end.\n\n**Warning: The wire must be put in tension only to guarantee the pendulum stability. It's not necessary to strain it with a force larger than about 30 N. While straining it, don't bend the wire against the stand, because it might break.**\n\nThe variables characterizing the pendulum oscillations are:\n\n- the pendulum position defined by the angle $\\theta$ of deviation from the direction perpendicular to the plane of the stand frame, which is shown horizontal in figure 1.\n- the distance $x$ between the free end of the inner threaded rod and the pendulum rotation axis\n- the period $T$ of the pendulum oscillations.\n\nThe parameters characterizing the system are:\n\n- the torsional elastic constant $\\kappa$ (torque = $\\kappa \\cdot$ angle) of the steel wire;\n- the masses $M_1$ and $M_2$ of the two parts of the pendulum (1: outer cylinder$^{1}$ and 2: threaded rod);\n- the distances $R_1$ and $R_2$ of the center of mass of each pendulum part (1: outer cylinder and 2: threaded rod) from the rotation axis. In this case the inner mobile part (the threaded rod) is sufficiently uniform for computing $R_2$ on the basis of its mass, its length $\\ell$ and the distance $x$. $R_2$ is therefore a simple function of the other parameters;\n- the moments of inertia $I_1$ and $I_2$ of the two pendulum parts (1: outer cylinder and 2: threaded rod). In this case also we assume that the mobile part (the threaded rod) is sufficiently uniform for computing $I_2$ on the basis of its mass, its length $\\ell$ and the distance $x$. $I_2$ is therefore also a simple function of the other parameters;\n- the angular position $\\theta_0$ (measured between the pendulum and the perpendicular to the plane of the stand frame) where the elastic recall torque is zero. The pendulum is locked to the rotation axis by means of a hex screw, opposite to the threaded rod; therefore $\\theta_0$ varies with each installation of the apparatus.\n\n$^{1}$ Including the small hex locking nut.\n\nSumming up, the system is described by 7 parameters: $\\kappa$, $M_1$, $M_2$, $R_1$, $I_1$, $\\ell$, $\\theta_0$, but $\\theta_0$ changes each time the apparatus is assembled, so that only 6 of them are really constants and the purpose of the experiment is that of determining them, namely $\\kappa$, $M_1$, $M_2$, $R_1$, $I_1$, $\\ell$, **experimentally**. Please note that the inner threaded rod can’t be drawn out of the pendulum body, and initially only the total mass $M_1 + M_2$ is given (it is printed on each pendulum).\n\nIn this experiment several quantities are linear functions of one variable, and you must estimate the parameters of these linear functions. You can use a linear fit, but alternative approaches are also acceptable. The experimental uncertainties of the parameters can be estimated from the procedure of the linear fit or from the spread of experimental data about the fit.\n\nThe analysis also requires a simple formula for the moment of inertia of the inner part (we assume that its transverse dimensions are negligible with respect to its length, see figure 2):\n\n$$I_2(x) = \\int_{x-\\ell}^{x} \\lambda\\, s^2 ds = \\frac{\\lambda}{3}\\left(x^3 - (x-\\ell)^3\\right) = \\frac{\\lambda}{3}\\left(3\\ell x^2 - 3\\ell^2 x + \\ell^3\\right) \\tag{1}$$\n\nwhere $\\lambda = M_2/\\ell$ is the linear mass density, and therefore\n\n$$I_2(x) = M_2 x^2 - M_2 \\ell x + \\frac{M_2}{3}\\ell^2 \\tag{2}$$\n\n![](p1-fig2)\n\nNow follow these steps to find the 6 parameters $M_1$, $M_2$, $\\kappa$, $R_1$, $\\ell$, $I_1$:",
    "figures": [
     {
      "id": "p1-fig1",
@@ -206,7 +236,7 @@
     },
     {
      "label": "4.",
-     "statement": "Write the pendulum equation of motion in the case of a horizontal rotation axis, as a function of the angle $\\theta$ (see figure 3) and of $x$, $\\kappa$, $\\theta_0$, $M_1$, $M_2$, the total moment of inertia $I$ and the position $R(x)$ of the center of mass.",
+     "statement": "Write the pendulum equation of motion in the case of a horizontal rotation axis, as a function of the angle $\\theta$ (see figure 3) and of $x$, $\\kappa$, $\\theta_0$, $M_1$, $M_2$, the total moment of inertia $I$ and the position $R(x)$ of the center of mass.\n\n![](p1-fig3)",
      "points": 1,
      "answer": {
       "kind": "expression",
@@ -215,7 +245,7 @@
     },
     {
      "label": "5.",
-     "statement": "In order to determine $\\kappa$, assemble now the pendulum and set it with its rotation axis horizontal. The threaded rod must initially be as far as possible inside the pendulum. Lock the pendulum to the steel wire, with the hex screw, at about half way between the wire clamps and in such a way that its equilibrium angle (under the combined action of weight and elastic recall) deviates sizeably from the vertical (see figure 4). Measure the equilibrium angle $\\theta_e$ for several values of $x$ (at least 5).",
+     "statement": "In order to determine $\\kappa$, assemble now the pendulum and set it with its rotation axis horizontal. The threaded rod must initially be as far as possible inside the pendulum. Lock the pendulum to the steel wire, with the hex screw, at about half way between the wire clamps and in such a way that its equilibrium angle (under the combined action of weight and elastic recall) deviates sizeably from the vertical (see figure 4). Measure the equilibrium angle $\\theta_e$ for several values of $x$ (at least 5).\n\n![](p1-fig4)",
      "points": 4
     },
     {
@@ -239,7 +269,7 @@
       "value": "ℓ = 230 mm ± 20 mm; I1 = 1.7·10^-4 kg·m² ± 0.7·10^-4 kg·m²",
       "note": "Values from the preliminary test run reported in the official solution, as a guide only."
      },
-     "statementAfter": "At this stage, after having found the system parameters, set the experimental apparatus as follows:\n\n- pendulum rotation axis horizontal\n- threaded rod as far as possible inside the pendulum\n- pendulum as vertical as possible near equilibrium\n- finally add the long hexagonal nut at the end of the threaded rod by screwing it a few turns (it can’t go further than that)\n\nIn this way the pendulum may have two equilibrium positions, and the situation varies according to the position of the threaded rod, as you can also see from the generic graph shown in figure 5, of the potential energy as a function of the angle $\\theta$.\n\nThe doubling of the potential energy minimum in figure 5 illustrates a phenomenon known in mathematics as *bifurcation*; it is also related to the various kinds of symmetry breaking that are studied in particle physics and statistical mechanics.\n\nWe can now study this bifurcation by measuring the period of the small oscillations about the equilibrium position:"
+     "statementAfter": "At this stage, after having found the system parameters, set the experimental apparatus as follows:\n\n- pendulum rotation axis horizontal\n- threaded rod as far as possible inside the pendulum\n- pendulum as vertical as possible near equilibrium\n- finally add the long hexagonal nut at the end of the threaded rod by screwing it a few turns (it can’t go further than that)\n\nIn this way the pendulum may have two equilibrium positions, and the situation varies according to the position of the threaded rod, as you can also see from the generic graph shown in figure 5, of the potential energy as a function of the angle $\\theta$.\n\nThe doubling of the potential energy minimum in figure 5 illustrates a phenomenon known in mathematics as *bifurcation*; it is also related to the various kinds of symmetry breaking that are studied in particle physics and statistical mechanics.\n\nWe can now study this bifurcation by measuring the period of the small oscillations about the equilibrium position:\n\n![](p1-fig5)"
     },
     {
      "label": "8.",
@@ -259,104 +289,143 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "The numerical values given in the text are those obtained in a preliminary test performed by a student of the University of Bologna$^{1}$, and are reported here only as a guide to the evaluation of the student solutions.\n\n$^{1}$ Mr. Maurizio Recchi.\n\n**1. and 2.** The distance from the center of mass to the rotation axis is:\n\n$$R(x) = \\frac{M_1 R_1 + M_2 (x - \\ell/2)}{M_1 + M_2} \\tag{1}$$\n\nand therefore, if we measure the position of the center of mass$^{2}$ as a function of $x$ we obtain a relationship between the system parameters, and by a linear fit of eq. (1) we obtain an angular coefficient equal to $M_2/(M_1 + M_2)$, and from these equations, making use of the given total mass $M_1 + M_2 =$ 41.0 g ± 0.1 g, we obtain $M_1$ and $M_2$. The following table shows some results obtained in the test run.\n\n$^{2}$ This can easily be done by balancing the pendulum, e.g. on the T-shaped rod provided.\n\n| *n* | *x* [mm] | *R(x)* [mm] |\n|---|---|---|\n| 1 | 204±1 | 76±1 |\n| 2 | 220±1 | 83±1 |\n| 3 | 236±1 | 89±1 |\n| 4 | 254±1 | 95±1 |\n| 5 | 269±1 | 101±1 |\n| 6 | 287±1 | 107±1 |\n| 7 | 302±1 | 113±1 |\n| 8 | 321±1 | 119±1 |\n\nFigure 6 shows the data concerning the position of the pendulum's center of mass together with a best fit straight line: the estimated error on the length measurements is now 1 mm and we treat it as a Gaussian error. Notice that both the dependent variable $R(x)$ and the independent variable $x$ are affected by the experimental uncertainty, however we decide to neglect the uncertainty on $x$, since it is smaller than 1%. The coefficients $a$ and $b$ in $R(x) = ax+b$ are\n\n$a = 0.366 \\pm 0.009$\n\n$b = 2\\ \\mathrm{mm} \\pm 2\\ \\mathrm{mm}$\n\n(therefore $b$ is compatible with 0)\n\nFor computing the masses only the $a$ value is needed; using the total pendulum mass we find:\n\n$M_1 = 26.1 \\pm 0.4\\ \\mathrm{g}$\n\n$M_2 = 15.0\\ \\mathrm{g} \\pm 0.4\\ \\mathrm{g}$\n\nEven though many non-programmable pocket calculators can carry out a linear regression, it is likely that many students will be unable to do such an analysis, and in particular they may be unable to estimate the uncertainty of the fit parameters even if their pocket calculators provide a linear regression mode. It is also acceptable to find $a$ and $b$ using several pairs of measurements and finally computing a weighted average of the results. For each pair of measurements $a$ and $b$ are given by\n\n$$a = \\frac{y_2 - y_1}{x_2 - x_1}, \\qquad b = y_2 - a x_2 \\tag{2}$$\n\nand the parameter uncertainties (assuming them gaussian) by\n\n$$\\Delta a = a\\sqrt{\\frac{\\Delta x_1^2 + \\Delta x_2^2}{(x_1 - x_2)^2} + \\frac{\\Delta y_1^2 + \\Delta y_2^2}{(y_1 - y_2)^2}}, \\qquad \\Delta b = \\sqrt{\\Delta y_2^2 + a^2 x_2^2 \\left(\\frac{\\Delta x_2^2}{x_2^2} + \\frac{\\Delta a^2}{a^2}\\right)} \\tag{3}$$\n\nIn order to calculate (2) and (3) the data can be paired with a scheme like $\\{1,5\\},\\{2,6\\},\\{3,7\\},\\{4,8\\}$, where \"far\" points are coupled in order to minimize the error on each pair.\n\nThere may be other alternative and equally acceptable approaches: they should all be considered valid if the order of magnitude of the estimated uncertainty is correct.\n\n**3.** The pendulum's total moment of inertia is the sum of the moments of its two parts, and from figure 3 we see that\n\n$$I(x) = I_1 + I_2(x) = M_2 x^2 - M_2 \\ell x + \\left(I_1 + \\frac{M_2}{3}\\ell^2\\right) \\tag{4}$$\n\n**4.** The pendulum's equation of motion is\n\n$$I(x)\\frac{d^2\\theta}{dt^2} = -\\kappa(\\theta - \\theta_0) \\tag{5}$$\n\nif the rotation axis is vertical, while it's\n\n$$I(x)\\frac{d^2\\theta}{dt^2} = -\\kappa(\\theta - \\theta_0) + (M_1 + M_2) g R(x) sin\\theta \\tag{6}$$\n\nif the rotation axis is horizontal.\n\n**5. and 6.** When the system is at rest in an equilibrium position, the angular acceleration is zero and therefore the equilibrium positions $\\theta_e$ can be found by solving the equation\n\n$$-\\kappa(\\theta_\\mathrm{e} - \\theta_0) + (M_1 + M_2) g R(x) \\sin\\theta_\\mathrm{e} = 0 \\tag{7}$$\n\nIf the value $x_i$ corresponds to the equilibrium angle $\\theta_{e,i}$, and if we define the quantity (that can be computed from the experimental data) $y_i = (M_1 + M_2) g R(x_i) \\sin\\theta_{e,i}$, then eq. (7) may be written as\n\n$$y_i = \\kappa\\theta_{e,i} - \\kappa\\theta_0 \\tag{8}$$\n\nand therefore the quantities $\\kappa$ and $\\kappa\\theta_0$ can be found with a linear fit. The following table shows several data collected in a trial run according to the geometry shown in figure 7.\n\n| *n* | *x* [mm] | *h* [mm] | $\\sin\\theta_\\mathrm{e} = h/x$ | $\\theta_\\mathrm{e}$ | *y* [N·µm] |\n|---|---|---|---|---|---|\n| 1 | 204±1 | 40±1 | 0.196±0.005 | 0.197±0.005 | 6.1±0.3 |\n| 2 | 220±1 | 62±1 | 0.282±0.005 | 0.286±0.005 | 9.4±0.4 |\n| 3 | 238±1 | 75±1 | 0.315±0.004 | 0.321±0.005 | 11.3±0.5 |\n| 4 | 255±1 | 89±1 | 0.349±0.004 | 0.357±0.004 | 13.4±0.5 |\n| 5 | 270±1 | 109±1 | 0.404±0.004 | 0.416±0.004 | 16.4±0.6 |\n| 6 | 286±1 | 131±1 | 0.458±0.004 | 0.476±0.004 | 19.7±0.7 |\n| 7 | 307±1 | 162±1 | 0.528±0.004 | 0.556±0.004 | 24.3±0.8 |\n| 8 | 321±1 | 188±1 | 0.586±0.004 | 0.626±0.004 | 28.2±0.9 |\n\nWe see that not only the dependent but also the independent variable is affected by a measurement uncertainty, but the relative uncertainty on $\\theta_\\mathrm{e}$ is much smaller than the relative uncertainty on $y$ and we neglect it. We obtain from such data (neglecting the first data point, see figure 8):\n\n$\\kappa = 0.055\\ \\mathrm{N{\\cdot}m{\\cdot}rad^{-1}} \\pm 0.001\\ \\mathrm{N{\\cdot}m{\\cdot}rad^{-1}}$\n\n$\\kappa\\theta_0 = -0.0063\\ \\mathrm{N{\\cdot}m} \\pm 0.0008\\ \\mathrm{N{\\cdot}m}$\n\nClearly in this case only the determination of the torsion coefficient $\\kappa$ is interesting. The fit of the experimental data is shown in figure 8.\n\n**7.** The moment of inertia can be found experimentally using the pendulum with its rotation axis vertical and recalling eq. (5); from this equation we see that the pendulum oscillates with angular frequency $\\omega(x) = \\sqrt{\\dfrac{\\kappa}{I(x)}}$ and therefore\n\n$$I(x) = \\frac{\\kappa T^2(x)}{4\\pi^2} \\tag{9}$$\n\nwhere $T$ is the measured oscillation period. Using eq. (9) we see that eq. (4) can be rewritten as\n\n$$\\frac{\\kappa}{4\\pi^2} T^2(x) - M_2 x^2 = -M_2 \\ell x + \\left(I_1 + \\frac{M_2}{3}\\ell^2\\right) \\tag{10}$$\n\nThe left-hand side in eq. (10) is known experimentally, and therefore with a simple linear fit we can find the coefficients $M_2 \\ell$ and $\\left(I_1 + \\dfrac{M_2}{3}\\ell^2\\right)$, as we did before. The experimental data are in this case:\n\n| *n* | *x* [mm] | *T* [s] |\n|---|---|---|\n| 1 | 204±1 | 0.502±0.002 |\n| 2 | 215±1 | 0.528±0.002 |\n| 3 | 231±1 | 0.562±0.002 |\n| 4 | 258±1 | 0.628±0.002 |\n| 5 | 290±1 | 0.708±0.002 |\n| 6 | 321±1 | 0.790±0.002 |\n\nThe low uncertainty on $T$ has been obtained measuring the total time required for 50 full periods.\n\nUsing the previous data and another linear fit, we find\n\n$\\ell = 230\\ \\mathrm{mm} \\pm 20\\ \\mathrm{mm}$\n\n$I_1 = 1.7 \\cdot 10^{-4}\\ \\mathrm{kg{\\cdot}m^2} \\pm 0.7 \\cdot 10^{-4}\\ \\mathrm{kg{\\cdot}m^2}$\n\nand the fit of the experimental data is shown in figure 9.\n\n**8.** Although in this case the period $T$ is a complicated function of $x$, its graph is simple, and it is shown in figure 10, along with the test experimental data.\n\nThe required answer is that there is a single local maximum.",
-    "figures": [
+    "statement": "The numerical values given in the text are those obtained in a preliminary test performed by a student of the University of Bologna$^{1}$, and are reported here only as a guide to the evaluation of the student solutions.\n\n$^{1}$ Mr. Maurizio Recchi.",
+    "sections": [
      {
-      "id": "p1-sol-fig1",
-      "caption": "Figure 6: Graph of the position of the pendulum's center of mass (with respect to the rotation axis) as a function of the variable $x$. The numbering of the data points corresponds to that mentioned in the main text. The estimated error is compatible with the fluctuations of the measured data.",
-      "alt": "Plot titled \"R(x) [mm] vs. x[mm]\": eight data points numbered 1–8 with error bars rising from about 76 mm at x = 204 mm to about 119 mm at x = 321 mm, lying on a best-fit straight line; x axis 200–340, y axis 80–120.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig1.png",
-      "width": 1291,
-      "height": 941,
-      "source": {
-       "page": 2,
-       "pdfRect": [
-        142.88,
-        124.61,
-        452.43,
-        350.23
-       ],
-       "dpi": 300,
-       "document": "solutions"
-      }
+      "id": "tasks-1-2",
+      "title": "1. and 2.",
+      "statement": "The distance from the center of mass to the rotation axis is:\n\n$$R(x) = \\frac{M_1 R_1 + M_2 (x - \\ell/2)}{M_1 + M_2} \\tag{1}$$\n\nand therefore, if we measure the position of the center of mass$^{2}$ as a function of $x$ we obtain a relationship between the system parameters, and by a linear fit of eq. (1) we obtain an angular coefficient equal to $M_2/(M_1 + M_2)$, and from these equations, making use of the given total mass $M_1 + M_2 =$ 41.0 g ± 0.1 g, we obtain $M_1$ and $M_2$. The following table shows some results obtained in the test run.\n\n$^{2}$ This can easily be done by balancing the pendulum, e.g. on the T-shaped rod provided.\n\n| *n* | *x* [mm] | *R(x)* [mm] |\n|---|---|---|\n| 1 | 204±1 | 76±1 |\n| 2 | 220±1 | 83±1 |\n| 3 | 236±1 | 89±1 |\n| 4 | 254±1 | 95±1 |\n| 5 | 269±1 | 101±1 |\n| 6 | 287±1 | 107±1 |\n| 7 | 302±1 | 113±1 |\n| 8 | 321±1 | 119±1 |\n\n![](p1-sol-fig1)\n\nFigure 6 shows the data concerning the position of the pendulum's center of mass together with a best fit straight line: the estimated error on the length measurements is now 1 mm and we treat it as a Gaussian error. Notice that both the dependent variable $R(x)$ and the independent variable $x$ are affected by the experimental uncertainty, however we decide to neglect the uncertainty on $x$, since it is smaller than 1%. The coefficients $a$ and $b$ in $R(x) = ax+b$ are\n\n$a = 0.366 \\pm 0.009$\n\n$b = 2\\ \\mathrm{mm} \\pm 2\\ \\mathrm{mm}$\n\n(therefore $b$ is compatible with 0)\n\nFor computing the masses only the $a$ value is needed; using the total pendulum mass we find:\n\n$M_1 = 26.1 \\pm 0.4\\ \\mathrm{g}$\n\n$M_2 = 15.0\\ \\mathrm{g} \\pm 0.4\\ \\mathrm{g}$\n\nEven though many non-programmable pocket calculators can carry out a linear regression, it is likely that many students will be unable to do such an analysis, and in particular they may be unable to estimate the uncertainty of the fit parameters even if their pocket calculators provide a linear regression mode. It is also acceptable to find $a$ and $b$ using several pairs of measurements and finally computing a weighted average of the results. For each pair of measurements $a$ and $b$ are given by\n\n$$a = \\frac{y_2 - y_1}{x_2 - x_1}, \\qquad b = y_2 - a x_2 \\tag{2}$$\n\nand the parameter uncertainties (assuming them gaussian) by\n\n$$\\Delta a = a\\sqrt{\\frac{\\Delta x_1^2 + \\Delta x_2^2}{(x_1 - x_2)^2} + \\frac{\\Delta y_1^2 + \\Delta y_2^2}{(y_1 - y_2)^2}}, \\qquad \\Delta b = \\sqrt{\\Delta y_2^2 + a^2 x_2^2 \\left(\\frac{\\Delta x_2^2}{x_2^2} + \\frac{\\Delta a^2}{a^2}\\right)} \\tag{3}$$\n\nIn order to calculate (2) and (3) the data can be paired with a scheme like $\\{1,5\\},\\{2,6\\},\\{3,7\\},\\{4,8\\}$, where \"far\" points are coupled in order to minimize the error on each pair.\n\nThere may be other alternative and equally acceptable approaches: they should all be considered valid if the order of magnitude of the estimated uncertainty is correct.",
+      "figures": [
+       {
+        "id": "p1-sol-fig1",
+        "caption": "Figure 6: Graph of the position of the pendulum's center of mass (with respect to the rotation axis) as a function of the variable $x$. The numbering of the data points corresponds to that mentioned in the main text. The estimated error is compatible with the fluctuations of the measured data.",
+        "alt": "Plot titled \"R(x) [mm] vs. x[mm]\": eight data points numbered 1–8 with error bars rising from about 76 mm at x = 204 mm to about 119 mm at x = 321 mm, lying on a best-fit straight line; x axis 200–340, y axis 80–120.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig1.png",
+        "width": 1291,
+        "height": 941,
+        "source": {
+         "page": 2,
+         "pdfRect": [
+          142.88,
+          124.61,
+          452.43,
+          350.23
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
      },
      {
-      "id": "p1-sol-fig2",
-      "caption": "Figure 7: Geometry of the measurements taken for finding the angle.",
-      "alt": "Side view of the stand on a table with the pendulum tilted by the equilibrium angle θe from the vertical; the distance x along the pendulum to the free end of the threaded rod is marked, a vertical line drops from the rod end to the table, and the horizontal distance h from the rotation axis to that line is marked; the angle θe is also shown at the rod end.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig2.png",
-      "width": 1514,
-      "height": 1186,
-      "source": {
-       "page": 4,
-       "pdfRect": [
-        116.1,
-        343.48,
-        479.25,
-        628.07
-       ],
-       "dpi": 300,
-       "document": "solutions"
-      }
+      "id": "task-3",
+      "title": "3.",
+      "statement": "The pendulum's total moment of inertia is the sum of the moments of its two parts, and from figure 3 we see that\n\n$$I(x) = I_1 + I_2(x) = M_2 x^2 - M_2 \\ell x + \\left(I_1 + \\frac{M_2}{3}\\ell^2\\right) \\tag{4}$$"
      },
      {
-      "id": "p1-sol-fig3",
-      "caption": "Figure 8: Fit of eq. (8) as a function of $\\theta$. In this case the estimated error is again compatible with the experimental data fluctuations. However the data points show a visible deviation from straightness which may be due to an error in the first measurement (the one at lowest $\\theta$).",
-      "alt": "Plot titled \"y = κθ − κθ0 [N·mm] vs. θ\": eight data points with error bars from about 6 at θ ≈ 0.2 rad to about 28 at θ ≈ 0.63 rad and a fitted straight line; x axis θ [rad] from 0 to 0.7, y axis 0 to 30.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig3.png",
-      "width": 1569,
-      "height": 1145,
-      "source": {
-       "page": 5,
-       "pdfRect": [
-        109.53,
-        155.74,
-        485.77,
-        430.2
-       ],
-       "dpi": 300,
-       "document": "solutions"
-      }
+      "id": "task-4",
+      "title": "4.",
+      "statement": "The pendulum's equation of motion is\n\n$$I(x)\\frac{d^2\\theta}{dt^2} = -\\kappa(\\theta - \\theta_0) \\tag{5}$$\n\nif the rotation axis is vertical, while it's\n\n$$I(x)\\frac{d^2\\theta}{dt^2} = -\\kappa(\\theta - \\theta_0) + (M_1 + M_2) g R(x) sin\\theta \\tag{6}$$\n\nif the rotation axis is horizontal."
      },
      {
-      "id": "p1-sol-fig4",
-      "caption": "Figure 9: Fit of eq. (10) as a function of $x$. In this case the estimated error is again compatible with the experimental data fluctuations.",
-      "alt": "Plot titled \"y = κT²(x)/(4π²) − M2x² [kg·m²] vs. x [m]\": six data points with error bars falling from about −0.00028 at x = 0.204 m to about −0.00067 at x = 0.321 m, on a fitted descending straight line; x axis 0.2–0.32 m, y axis −0.0003 to −0.0007.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig4.png",
-      "width": 1610,
-      "height": 1190,
-      "source": {
-       "page": 6,
-       "pdfRect": [
-        104.18,
-        471.46,
-        490.55,
-        756.9
-       ],
-       "dpi": 300,
-       "document": "solutions"
-      }
+      "id": "tasks-5-6",
+      "title": "5. and 6.",
+      "statement": "When the system is at rest in an equilibrium position, the angular acceleration is zero and therefore the equilibrium positions $\\theta_e$ can be found by solving the equation\n\n$$-\\kappa(\\theta_\\mathrm{e} - \\theta_0) + (M_1 + M_2) g R(x) \\sin\\theta_\\mathrm{e} = 0 \\tag{7}$$\n\nIf the value $x_i$ corresponds to the equilibrium angle $\\theta_{e,i}$, and if we define the quantity (that can be computed from the experimental data) $y_i = (M_1 + M_2) g R(x_i) \\sin\\theta_{e,i}$, then eq. (7) may be written as\n\n$$y_i = \\kappa\\theta_{e,i} - \\kappa\\theta_0 \\tag{8}$$\n\nand therefore the quantities $\\kappa$ and $\\kappa\\theta_0$ can be found with a linear fit. The following table shows several data collected in a trial run according to the geometry shown in figure 7.\n\n![](p1-sol-fig2)\n\n| *n* | *x* [mm] | *h* [mm] | $\\sin\\theta_\\mathrm{e} = h/x$ | $\\theta_\\mathrm{e}$ | *y* [N·µm] |\n|---|---|---|---|---|---|\n| 1 | 204±1 | 40±1 | 0.196±0.005 | 0.197±0.005 | 6.1±0.3 |\n| 2 | 220±1 | 62±1 | 0.282±0.005 | 0.286±0.005 | 9.4±0.4 |\n| 3 | 238±1 | 75±1 | 0.315±0.004 | 0.321±0.005 | 11.3±0.5 |\n| 4 | 255±1 | 89±1 | 0.349±0.004 | 0.357±0.004 | 13.4±0.5 |\n| 5 | 270±1 | 109±1 | 0.404±0.004 | 0.416±0.004 | 16.4±0.6 |\n| 6 | 286±1 | 131±1 | 0.458±0.004 | 0.476±0.004 | 19.7±0.7 |\n| 7 | 307±1 | 162±1 | 0.528±0.004 | 0.556±0.004 | 24.3±0.8 |\n| 8 | 321±1 | 188±1 | 0.586±0.004 | 0.626±0.004 | 28.2±0.9 |\n\nWe see that not only the dependent but also the independent variable is affected by a measurement uncertainty, but the relative uncertainty on $\\theta_\\mathrm{e}$ is much smaller than the relative uncertainty on $y$ and we neglect it. We obtain from such data (neglecting the first data point, see figure 8):\n\n$\\kappa = 0.055\\ \\mathrm{N{\\cdot}m{\\cdot}rad^{-1}} \\pm 0.001\\ \\mathrm{N{\\cdot}m{\\cdot}rad^{-1}}$\n\n$\\kappa\\theta_0 = -0.0063\\ \\mathrm{N{\\cdot}m} \\pm 0.0008\\ \\mathrm{N{\\cdot}m}$\n\nClearly in this case only the determination of the torsion coefficient $\\kappa$ is interesting. The fit of the experimental data is shown in figure 8.\n\n![](p1-sol-fig3)",
+      "figures": [
+       {
+        "id": "p1-sol-fig2",
+        "caption": "Figure 7: Geometry of the measurements taken for finding the angle.",
+        "alt": "Side view of the stand on a table with the pendulum tilted by the equilibrium angle θe from the vertical; the distance x along the pendulum to the free end of the threaded rod is marked, a vertical line drops from the rod end to the table, and the horizontal distance h from the rotation axis to that line is marked; the angle θe is also shown at the rod end.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig2.png",
+        "width": 1514,
+        "height": 1186,
+        "source": {
+         "page": 4,
+         "pdfRect": [
+          116.1,
+          343.48,
+          479.25,
+          628.07
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       },
+       {
+        "id": "p1-sol-fig3",
+        "caption": "Figure 8: Fit of eq. (8) as a function of $\\theta$. In this case the estimated error is again compatible with the experimental data fluctuations. However the data points show a visible deviation from straightness which may be due to an error in the first measurement (the one at lowest $\\theta$).",
+        "alt": "Plot titled \"y = κθ − κθ0 [N·mm] vs. θ\": eight data points with error bars from about 6 at θ ≈ 0.2 rad to about 28 at θ ≈ 0.63 rad and a fitted straight line; x axis θ [rad] from 0 to 0.7, y axis 0 to 30.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig3.png",
+        "width": 1569,
+        "height": 1145,
+        "source": {
+         "page": 5,
+         "pdfRect": [
+          109.53,
+          155.74,
+          485.77,
+          430.2
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
      },
      {
-      "id": "p1-sol-fig5",
-      "caption": "Figure 10: The period $T$ of the pendulum with horizontal axis as a function of $x$. In addition to the experimental points the figure shows the result of a theoretical calculation of the period in which the following values have been assumed: $g = 9.81\\ \\mathrm{m/s^2}$; $\\kappa = 0.056\\ \\mathrm{N{\\cdot}m/rad}$; $M_1 = 0.0261\\ \\mathrm{kg}$; $M_2 = 0.0150\\ \\mathrm{kg}$; $M_3 = 0.00664\\ \\mathrm{kg}$; $I_1 = 1.0 \\cdot 10^{-4}\\ \\mathrm{kg{\\cdot}m^2}$; $\\ell = 0.21\\ \\mathrm{m}$; $\\ell_3 = 0.025\\ \\mathrm{m}$; $a = 0.365$; $b = 0.0022\\ \\mathrm{m}$ (so that the position of the center of mass - excluding the final nut of length $\\ell_3$ - is $R(x) = ax+b$); these are the central measured values, with the exception of $\\kappa$, $I_1$ and $\\ell$ which are taken one standard deviation off their central value. Also, the value $\\theta_0 = 0.030\\ \\mathrm{rad} \\approx 1.7^{\\circ}$ has been assumed. Even though the theoretical curve is the result of just a few trial calculations using the measured values (± one standard deviation) and is not a true fit, it is quite close to the measured data.",
-      "alt": "Plot titled \"T [s] vs. x[m]\": a theoretical curve rising from about 1.3 s at x = 0.2 m to a sharp peak of about 4.9 s near x ≈ 0.256 m and falling to about 1.6 s at x = 0.32 m, with eight experimental points (e.g. 4.5 s at x ≈ 0.262 m) scattered near it; x axis 0.2–0.32 m, y axis 1.5–5 s.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig5.png",
-      "width": 1492,
-      "height": 1074,
-      "source": {
-       "page": 7,
-       "pdfRect": [
-        118.49,
-        213.84,
-        476.23,
-        471.46
-       ],
-       "dpi": 300,
-       "document": "solutions"
-      }
+      "id": "task-7",
+      "title": "7.",
+      "statement": "The moment of inertia can be found experimentally using the pendulum with its rotation axis vertical and recalling eq. (5); from this equation we see that the pendulum oscillates with angular frequency $\\omega(x) = \\sqrt{\\dfrac{\\kappa}{I(x)}}$ and therefore\n\n$$I(x) = \\frac{\\kappa T^2(x)}{4\\pi^2} \\tag{9}$$\n\nwhere $T$ is the measured oscillation period. Using eq. (9) we see that eq. (4) can be rewritten as\n\n$$\\frac{\\kappa}{4\\pi^2} T^2(x) - M_2 x^2 = -M_2 \\ell x + \\left(I_1 + \\frac{M_2}{3}\\ell^2\\right) \\tag{10}$$\n\nThe left-hand side in eq. (10) is known experimentally, and therefore with a simple linear fit we can find the coefficients $M_2 \\ell$ and $\\left(I_1 + \\dfrac{M_2}{3}\\ell^2\\right)$, as we did before. The experimental data are in this case:\n\n| *n* | *x* [mm] | *T* [s] |\n|---|---|---|\n| 1 | 204±1 | 0.502±0.002 |\n| 2 | 215±1 | 0.528±0.002 |\n| 3 | 231±1 | 0.562±0.002 |\n| 4 | 258±1 | 0.628±0.002 |\n| 5 | 290±1 | 0.708±0.002 |\n| 6 | 321±1 | 0.790±0.002 |\n\nThe low uncertainty on $T$ has been obtained measuring the total time required for 50 full periods.\n\nUsing the previous data and another linear fit, we find\n\n$\\ell = 230\\ \\mathrm{mm} \\pm 20\\ \\mathrm{mm}$\n\n$I_1 = 1.7 \\cdot 10^{-4}\\ \\mathrm{kg{\\cdot}m^2} \\pm 0.7 \\cdot 10^{-4}\\ \\mathrm{kg{\\cdot}m^2}$\n\nand the fit of the experimental data is shown in figure 9.\n\n![](p1-sol-fig4)",
+      "figures": [
+       {
+        "id": "p1-sol-fig4",
+        "caption": "Figure 9: Fit of eq. (10) as a function of $x$. In this case the estimated error is again compatible with the experimental data fluctuations.",
+        "alt": "Plot titled \"y = κT²(x)/(4π²) − M2x² [kg·m²] vs. x [m]\": six data points with error bars falling from about −0.00028 at x = 0.204 m to about −0.00067 at x = 0.321 m, on a fitted descending straight line; x axis 0.2–0.32 m, y axis −0.0003 to −0.0007.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig4.png",
+        "width": 1610,
+        "height": 1190,
+        "source": {
+         "page": 6,
+         "pdfRect": [
+          104.18,
+          471.46,
+          490.55,
+          756.9
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
+     },
+     {
+      "id": "task-8",
+      "title": "8.",
+      "statement": "Although in this case the period $T$ is a complicated function of $x$, its graph is simple, and it is shown in figure 10, along with the test experimental data.\n\nThe required answer is that there is a single local maximum.\n\n![](p1-sol-fig5)",
+      "figures": [
+       {
+        "id": "p1-sol-fig5",
+        "caption": "Figure 10: The period $T$ of the pendulum with horizontal axis as a function of $x$. In addition to the experimental points the figure shows the result of a theoretical calculation of the period in which the following values have been assumed: $g = 9.81\\ \\mathrm{m/s^2}$; $\\kappa = 0.056\\ \\mathrm{N{\\cdot}m/rad}$; $M_1 = 0.0261\\ \\mathrm{kg}$; $M_2 = 0.0150\\ \\mathrm{kg}$; $M_3 = 0.00664\\ \\mathrm{kg}$; $I_1 = 1.0 \\cdot 10^{-4}\\ \\mathrm{kg{\\cdot}m^2}$; $\\ell = 0.21\\ \\mathrm{m}$; $\\ell_3 = 0.025\\ \\mathrm{m}$; $a = 0.365$; $b = 0.0022\\ \\mathrm{m}$ (so that the position of the center of mass - excluding the final nut of length $\\ell_3$ - is $R(x) = ax+b$); these are the central measured values, with the exception of $\\kappa$, $I_1$ and $\\ell$ which are taken one standard deviation off their central value. Also, the value $\\theta_0 = 0.030\\ \\mathrm{rad} \\approx 1.7^{\\circ}$ has been assumed. Even though the theoretical curve is the result of just a few trial calculations using the measured values (± one standard deviation) and is not a true fit, it is quite close to the measured data.",
+        "alt": "Plot titled \"T [s] vs. x[m]\": a theoretical curve rising from about 1.3 s at x = 0.2 m to a sharp peak of about 4.9 s near x ≈ 0.256 m and falling to about 1.6 s at x = 0.32 m, with eight experimental points (e.g. 4.5 s at x ≈ 0.262 m) scattered near it; x axis 0.2–0.32 m, y axis 1.5–5 s.",
+        "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1999-experiment-exp/p1-sol-fig5.png",
+        "width": 1492,
+        "height": 1074,
+        "source": {
+         "page": 7,
+         "pdfRect": [
+          118.49,
+          213.84,
+          476.23,
+          471.46
+         ],
+         "dpi": 300,
+         "document": "solutions"
+        }
+       }
+      ]
      }
-    ]
+    ],
+    "incomplete": false
    },
    "sourceSpans": [
     {
@@ -413,6 +482,62 @@
     },
     {
      "document": "solutions",
+     "page": 7
+    },
+    {
+     "document": "supplement-1",
+     "page": 1
+    },
+    {
+     "document": "supplement-1",
+     "page": 2
+    },
+    {
+     "document": "supplement-1",
+     "page": 3
+    },
+    {
+     "document": "supplement-1",
+     "page": 4
+    },
+    {
+     "document": "supplement-1",
+     "page": 5
+    },
+    {
+     "document": "supplement-1",
+     "page": 6
+    },
+    {
+     "document": "supplement-1",
+     "page": 7
+    },
+    {
+     "document": "supplement-2",
+     "page": 1
+    },
+    {
+     "document": "supplement-2",
+     "page": 2
+    },
+    {
+     "document": "supplement-2",
+     "page": 3
+    },
+    {
+     "document": "supplement-2",
+     "page": 4
+    },
+    {
+     "document": "supplement-2",
+     "page": 5
+    },
+    {
+     "document": "supplement-2",
+     "page": 6
+    },
+    {
+     "document": "supplement-2",
      "page": 7
     }
    ]

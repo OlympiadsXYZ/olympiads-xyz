@@ -1,0 +1,352 @@
+---
+id: opho-2020-invitational-p10
+source: 'OPhO 2020, Теория'
+title: 'Задача 10. Magnetostatics'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2020/opho-2020-invitational.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T11:29:15.458Z'
+verifier: 'single-pass'
+---
+
+*2020 Online Physics Olympiad: Invitational Contest v1.4 · 62 т.*
+
+<Warning title="Бележка към темата">
+The v1.4 question paper, native Partial Solutions and separately attributed organizer clarifications are retained. The key is incomplete: Problem 1 is only marked TBD, Problem 8 has no key for parts f–h or an explicit critical power in e, and Problem 10 has no key for Part B f–h. Problems 2 and 9 also have source gaps noted below. Printed mathematical defects and differences between repeated questions in the key and the question original are not silently repaired. Problem2(e) gives a time-dependent spin result but no explicit answer in orbital angle; key2(c) refers to an absent diagram. Problem9(a) gives its ODE and initial conditions without an explicit speed, and 9(b) does not state whether the pressure increases or decreases. Native source typography is retained, including the Planck-constant value, missing electron-charge unit, missing kappa in key3(a), mismatched labels in key4, inconsistent theta indices and ring factors in key6, the negative probability/energy signs and r_B/K_B/k variants in key7, radiation expressions and fusion-rate/proton-rate difference in key8, and image/flux signs and field factors in key10. All these are printed-source issues, not repaired answers. Question2 omits the word define while the repeated key question includes it; the repeated key question7 adds For simplicity, ignore spin. The 4-page organizer clarification contradicts question1(d)’s frictionless table and also contains both only one final submission and multiple submissions instructions. The native original and the separately attributed clarifications remain visible.
+</Warning>
+
+<details>
+<summary>Original credits</summary>
+
+**2020 Online Physics Olympiad (OPhO): Invitational Contest v1.4**
+
+**OPhO Lead Organizers and Writers:** Adithya Balachandran, Eddie Chen, Ashmit Dutta, Ethan Hu, Viraj Jayam, Rishab Parthasarathy, Kushal Thaman, Max Wang, Qilin Xue
+
+**OPhO Website Developer:** Ben Oommen
+
+**Advisors:** Dr. Branislav Kisačanin, Kye Shi, Kevin Zhou
+
+July 3 - 6, 2020
+
+</details>
+
+<details>
+<summary>Указания</summary>
+
+If you wish to request a clarification, please use [this form](https://docs.google.com/forms/d/e/1FAIpQLSdTJ-IpUsbLsbI_WCyu_4eN2Bb_J4UJ_x29UYLcP-YO3lOQRg/viewform). To see all clarifications, see [this document](https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit).
+
+- This test contains 10 long answer questions.
+- The total base score for the exam is 300 points; a factor incorporating the number of teams who solved the question will be added in the marking scheme. The final scores of all the teams will be available a few days after the contest ends.
+- The team leader should submit their final solution document in this [here](https://forms.gle/J2wfpLxC5GQZzxSU9). We don’t anticipate a tie, but in the rare circumstance that there is one, the time you submit will be used to break it.
+- You can write on paper, type it up online, or a mix of both. If you wish to use a pre-made LaTeX template, we made one which you can choose to use [here](https://www.overleaf.com/project/5efbc24f2670ee0001e5a10d).
+- Since this is a long answer response, you will be judged on the quality of your work. To receive full points, you need to show your work, including deriving equations. As a general rule of thumb, any common equations (such as the ones in this [formula sheet](https://www.ioc.ee/~kalda/ipho/formulas.pdf)) can be cited without proof. Remember to state any approximations made, which system of equations were solved after every step. Explicitly showing every step of algebra is not necessary.
+- You may leave all final answers in symbolic form (in terms of variables) unless otherwise specified.2
+- Be sure to state all assumptions.
+
+</details>
+
+<details>
+<summary>Sponsors</summary>
+
+WOLFRAM · AwesomeMath (making x,y,z as easy as a,b,c) · Physics Olympiad · AoPS.com Art of Problem Solving
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e=9.11\cdot10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0=6.02\cdot10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R=8.31\ \mathrm{J/(mol\cdot K)}$
+- Boltzmann’s constant, $k_B=1.38\cdot10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e=1.60\cdot10^{-19}$
+- 1 electron volt, $1\ \mathrm{eV}=1.60\cdot10^{-19}\ \mathrm J$
+- Speed of light, $c=3.00\cdot10^8\ \mathrm{m/s}$
+- Universal Gravitational constant, $G=6.67\cdot10^{-11}\ \mathrm{(N\cdot m^2)/kg^2}$
+- Acceleration due to gravity, $g=9.81\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit, $1\ \mathrm u=1.66\cdot10^{-27}\ \mathrm{kg}=931\ \mathrm{MeV}/c^2$
+- Planck’s constant, $h=6.63\cdot10^{-34}\ \mathrm{J\cdot s}=4.41\cdot10^{-15}\ \mathrm{eV\cdot s}$
+- Permittivity of free space, $\epsilon_0=8.85\cdot10^{-12}\ \mathrm{C^2/(N\cdot m^2)}$
+- Coulomb’s law constant, $k=\frac1{4\pi\epsilon_0}=8.99\cdot10^9\ \mathrm{(N\cdot m^2)/C^2}$
+- Permeability of free space, $\mu_0=4\pi\cdot10^{-7}\ \mathrm{T\cdot m/A}$
+- Magnetic constant, $\frac{\mu_0}{4\pi}=1\cdot10^{-7}\ \mathrm{(T\cdot m)/A}$
+- 1 atmospheric pressure, $1\ \mathrm{atm}=1.01\cdot10^5\ \mathrm{N/m^2}=1.01\cdot10^5\ \mathrm{Pa}$
+- Wien’s displacement constant, $b=2.9\cdot10^{-3}\ \mathrm{m\cdot K}$
+- Stefan-Boltzmann constant, $\sigma=5.67\cdot10^{-8}\ \mathrm{W/m^2/K^4}$
+
+</details>
+
+<details>
+<summary>Native key title</summary>
+
+2020 Online Physics Olympiad (OPhO): Invitational Contest Partial Solutions
+
+The same organizer, writer, developer and advisor credits appear on this key cover.
+
+</details>
+
+<details>
+<summary>Organizer clarification document — major notes</summary>
+
+Separately quoted from the [organizer clarification document](https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit), titled **2020 OPhO Invitational Clarifications**:
+
+**MAJOR NOTES**
+
+- Hi everyone! **All team members are welcome to fill out this (optional) [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdytoUh6yTgYxr4lgNgENhAaH5O1Hj1diU4B5_C4dDryMKqyQ/viewform). Everyone who submits (and consents) will be entered in a draw to receive a \$25 Amazon gift card.**
+- Use [this link](https://forms.gle/DjhPb3zrpGaBnSaV7) to submit clarification requests. The problem writers may or may not deem it necessary to answer all clarification requests.
+- Link to the overleaf [template](https://www.overleaf.com/read/kswgrtgsrvgt) **(the link has been fixed)** for answer submission.
+- **Reminder: There is only one final submission at the end of the competition via the [submission form](https://docs.google.com/forms/d/e/1FAIpQLScJCIBlgI6LDUSIigYBpmb3Qyma45FehU004JRk7B9cgriAZg/viewform) only. Do NOT email us a copy of your submission. In case of internet connectivity issues, any team member may email us the file.**
+- Make sure to read over the instructions. You are expected to give symbolic answers unless *explicitly* otherwise stated. If the numerical values for a symbol are stated, you do not need to solve the problem for a general case.
+- Uploading a .jpeg on the overleaf for a graph is allowed.
+- **Please check the newest version v1.4 for revisions.**
+- Please provide clear reasoning or derivations of any obscure results. Directly citing them would not necessarily fetch full points.
+- We will be awarding a special prize for whichever team produces the **most creative and/or elegant solution** to certain problems. We will not be disclosing which problems until after the competition has concluded.
+
+**Note on submission of solutions:**
+
+It is highly recommended that the solutions to the invitational round be submitted in LaTeXed form. We recommend using [Overleaf](http://overleaf.com/). It is preferred that the solutions are quite detailed; this means that while you do not need to explicitly write all your algebra, all the relevant equations must be clearly written. A brief wording on how you solve a given system of equations is also optimal. Clearly state any approximations you make. Solutions typed in .doc/.docx, and ones neatly written by hand will also be accepted. Some students have a handwriting that’s hard to read; if that’s you, please read [this](http://www.johnkerl.org/doc/ortho/ortho.html). **You can submit solutions multiple times. Only the latest submission will count.**
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Part A](#part-a)
+- [Part B](#part-b)
+
+</nav>
+
+
+
+<ProblemSection id="part-a">
+
+### Part A
+
+In 3-D space, a permeable medium covers the region $x>0$, while the rest of the space is vacuum. The medium’s relative magnetic permeability is $\mu_r>1$. A magnetic dipole with dipole moment $m$ is placed a distance $d$ away from the permeable medium, at position $(-d,0,0)$. The dipole is pointed towards the $+x$ direction. Treat the dipole as ideal (point-sized).
+
+**a)** **(10 pts)** Find the force required to keep the dipole in place.
+
+**b)** **(3 pts)** How much work does it take to slowly pull the dipole from its original position to infinity (at $x=-\infty$)?
+
+**c)** **(5 pts)** How much work does it take to slowly rotate the dipole from its original orientation to one that makes an angle $\theta$ with the $+x$-axis?
+
+**d)** After the dipole is rotated an angle $\theta$, a superconducting ring with radius $R$ and self-inductance $L$ is brought in from infinity (with initially no current). It is placed so that the dipole is located at its center and its axis is the x-axis. Assume that $R\gg d$.
+
+**(16 pts)** Find the current $I$ in the ring.
+
+**e)** **(8 pts)** Find the force required to hold the dipole in place (not the torque).
+
+</ProblemSection>
+
+<ProblemSection id="part-b">
+
+### Part B
+
+From now on, there is no permeable medium. Ignore any radiation loss for all parts.
+
+**f)** **(7 pts)** The dipole (mass $M$), starts at a distance $h$ from the centre of the ring (kept fixed) and pointed towards the centre of the ring (along its axis), and is projected with a small velocity $v_0$ towards the centre. Find its speed $v$ as a function of $h$. Ignore gravity.
+
+**g)** **(7 pts)** Consider another scenario, in which the dipole is placed on the axis of a thin infinite magnetic tube with surface conductivity $\sigma$ (defined as the ratio of surface current density and the electric field) and radius $R$, placed at an arbitrary location inside it. (You may neglect the self inductance of the solenoid for the sake of this part.) We find that the motion of the dipole in this case is damped. Find the damping parameter of this motion. (Damping parameter is defined as the ratio of the resistive force to the speed.) Ignore gravity.
+
+**h)** **(6 pts)** Determine the terminal velocity of the magnet, assuming that it now falls under gravity. The tube may be considered infinitely long for all calculation purposes in this part.
+
+</ProblemSection>
+
+**Published organizer clarifications (separate source)**
+
+Separately quoted from the [organizer clarification document](https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit):
+
+**Problem 10:**
+
+Part B: different scenario from part A (but same dipole and ring)
+
+- consider the ring to be fixed.
+- the dipole lies on the axis of the ring.
+- The current in the ring is initially 0, when it is placed at infinity.
+- Surface conductivity is measured in 1/ohm, unlike regular conductivity. Though not needed, a lot of contestants have asked us to define surface conductivity: it is simply the surface current density over the electric field.
+- In part (g), the tube has a radius R.
+- Ignore any radiation effects for all parts.
+
+## Решение
+
+<Warning title="Непълно решение">
+The complete available printed key is retained. It covers Part A a–e only, with no solution for Part B f–h.
+</Warning>
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution 10:** For permeable media, two of Maxwell’s equations become
+
+$$
+\nabla\cdot\mathbf B=0
+$$
+
+$$
+\nabla\times\mathbf H=\mathbf J_{\mathrm{free}}
+$$
+
+where $\mathbf H=\mathbf B/\mu$ and $\mathbf J_{free}=0$ because there is no free current. Note that $\mu=\mu_r\mu_0$. Thus, the equations become $\nabla\cdot\mathbf B=0$ and $\nabla\times\mathbf H=0$. Applying these to the boundary, we get the following boundary conditions:
+
+$$
+B_{1,\perp}=B_{2,\perp}\qquad (1)
+$$
+
+$$
+H_{1,\parallel}=H_{2,\parallel}\qquad (2)
+$$
+
+where region 1 is $x<0$ and region 2 is $x>0$. We claim that if a magnetic monopole of magnetic charge $q$ is placed a distance $d$ away from the permeable medium instead of a dipole,
+
+(1) in the region $x<0$, the magnetic field is equivalent to that of the original monopole and a magnetic monopole placed at $(d,0,0)$ with magnetic charge $q_1=\frac{\mu_r-1}{\mu_r+1}q_0$ (2) in the region $x>0$, the magnetic field equivalent to that of the original monopole at its current position but with charge $q_2=\frac{2\mu_r}{\mu_r+1}q_0$.
+
+To show this, note that as long as we show that the boundary conditions are satisfied, we are done by the uniqueness theorem because the field in the rest of the space satisfies Laplace’s equation. For the region $x<0$, the boundary at the real magnetic monopole is already satisfied. Now the only boundary we need to consider is the interface $x=0$. Consider a point $P$ on the plane $x=0$ such that the line from $(-d,0,0)$ to $P$ forms an angle $\theta$ with the x-axis. Define $B_i$ to be the magnitude of the field at $P$ from $q_i$. According to the claim, the magnetic field near $P$ in region 1 has a magnetic field component perpendicular to the interface of $B_{1,\perp}=B_0\cos\theta-B_1\cos\theta$. This must be equal to the perpendicular component in region 2, so we have
+
+$$
+B_0\cos\theta-B_1\cos\theta=B_2\cos\theta\qquad (3)
+$$
+
+Now, the parallel component of $\mathbf H$ in region 1 is $\frac{B_0}{\mu_0}\sin\theta+\frac{B_1}{\mu_0}\sin\theta$, which must be equal to the parallel component of $\mathbf H$ in region 2, so
+
+$$
+\frac{B_0}{\mu_0}\sin\theta+\frac{B_1}{\mu_0}\sin\theta=\frac{B_2}{\mu}\sin\theta\qquad (4)
+$$
+
+Solving the two equations gives
+
+$$
+B_1=-\frac{\mu_r-1}{\mu_r+1}B_0\qquad (5)
+$$
+
+$$
+B_2=\frac{2\mu_r}{\mu_r+1}B_0\qquad (6)
+$$
+
+Noting that $B_i\propto q_i$, we see that the claim is true.
+
+We apply the claim to the problem via superposition. We treat the magnetic dipole as two magnetic monopoles of magnetic charges $q$ and $-q$ that are a small distance $s$ away from each other. Note that $m=qs$.
+
+**(a)** If the dipole is at $(-d,0,0)$ and pointed towards the $+x$ direction, the field in region 1 is equivalent to that of the same dipole superposed with another dipole at $(d,0,0)$ pointing in the $+x$ direction with moment $m_1=q_1s=\frac{\mu_r-1}{\mu_r+1}m$. The field produced by the latter magnetic dipole at position of the original dipole is given by $\frac{\mu_0m_1}{2\pi r^3}$, where $r=2d$. The magnetic force on the original dipole is given by
+
+$$
+F=m\frac{\partial B_x}{\partial x}=\frac{3\mu_0mm_1}{2\pi r^4}=\frac{3\mu_0mm_1}{32\pi d^4}=\boxed{\frac{3\mu_0(\mu_r-1)m^2}{32\pi(\mu_r+1)d^4}}\qquad (7)
+$$
+
+Note that the force is attractive.
+
+**(b)** We integrate the force from (a) to get the work done:
+
+$$
+W=\int_d^\infty\frac{3\mu_0(\mu_r-1)m^2}{32\pi(\mu_r+1)x^4}dx=\boxed{\frac{\mu_0(\mu_r-1)m^2}{32\pi(\mu_r+1)d^3}}\qquad (8)
+$$
+
+**(c)** Instead of rotating the dipole from the original orientation, we first bring the dipole to infinity, rotate it, and then bring it back to $(-d,0,0)$. From part (b), we have the work it takes to bring the dipole to infinity. Rotating it at infinity requires no work. Finally, to calculate the amount of work required to bring it back, we find the potential energy of the final system. From our claim, we can apply superposition to see that the setup is equivalent to one in which the permeable medium acts like a magnetic dipole at $(d,0,0)$ with moment $m_1=\frac{\mu_r-1}{\mu_r+1}$ and pointed in a direction that makes an angle $-\theta$ with the $+x$-axis. The general formula for dipole-dipole interaction is given by:
+
+$$
+U=\frac{\mu_0}{4\pi r^3}(\mathbf m_1\cdot\mathbf m_2-3(\mathbf m_1\cdot\hat{\mathbf r})(\mathbf m_2\cdot\hat{\mathbf r}))\qquad (9)
+$$
+
+which equals
+
+$$
+U=\frac{\mu_0}{4\pi(2d)^3}(mm_1\cos2\theta-3mm_1\cos^2\theta)=-\frac{\mu_0mm_1}{32\pi d^3}(\cos^2\theta+1)\qquad (10)
+$$
+
+However, this is not the work we do to bring it back from infinity; rather, it is twice our work. To see why, imagine an external agent bringing in the imaginary dipole from $+\infty$ as we are bringing in the real dipole from $-\infty$. By Newton’s third law, the force they apply is equal and opposite to ours, and so they do the same amount of work as we do. Thus, the work it takes to bring in the dipole from $-\infty$ is
+
+$$
+W=-\frac{\mu_0mm_1}{64\pi d^3}(\cos^2\theta+1)\qquad (11)
+$$
+
+In total, the amount of work done is
+
+$$
+W=\boxed{\frac{\mu_0(\mu_r-1)m^2\sin^2\theta}{64\pi(\mu_r+1)d^3}}\qquad (12)
+$$
+
+**(d)** By similar reasoning from the previous parts, we can see that the image of the ring with current $I$ will be a ring centered at $x=d$ with current $\frac{\mu_r-1}{\mu_r+1}I$ in the same direction.
+
+**Claim 1:** The mutual inductance between the real ring and the image dipole is given by $\frac{\mu_0R^2\cos\theta}{2(R^2+4d^2)^{\frac32}}*\frac{\mu_r-1}{\mu_r+1}A$, where $A$ is the area of the dipole.
+
+**Proof:** By the mutual inductance reciprocity theorem $(M_{12}=M_{21})$, we just need to calculate the flux through the dipole over a current $I$ in the ring. Since the dipole is ideal, we can find the field at the dipole and do $\Phi=BA\cos\theta$. After plugging in well-known expression $B=\frac{\mu_0R^2}{2(R^2+x^2)^{\frac32}}$, where $x=2d$, we get the desired answer.
+
+A natural corollary of this claim is that the mutual inductance between the real ring and the real dipole is $\frac{\mu_0\cos\theta}{2R}m$ **Claim 2:** The mutual inductance between the real ring and the image ring is given by $\mu_0R\ln\frac Rd$. **Proof:** Consider the field lines from the ring. Since $d\ll R$, the field lines near the edge of the ring are circular, so the flux through the image ring from the real ring is the same as the flux through a circle coplanar with the real ring with radius $R-d$. This is because of the fact that magnetic field has zero divergence. To find the flux through the circle of radius $R-d$, we use the fact
+
+$$
+\iint_S\mathbf B\cdot d\mathbf S=\oint_C\mathbf A\cdot d\mathbf l
+$$
+
+where $\mathbf A$ is the vector potential. By rotational symmetry, we only need to calculate the tangential component of $\mathbf A$ at a point $R-d$ from the center, and then multiply by $2\pi(R-d)$. We have
+
+$$
+\mathbf A=\frac{\mu_0}{4\pi}\int\frac{I\,d\mathbf l}{r}=\frac{\mu_0I}{4\pi}\int_0^{2\pi}\frac{R\cos\theta d\theta}{\sqrt{R^2+(R-d)^2-2R(R-d)\cos\theta}}\hat\theta
+$$
+
+We simplify to get
+
+$$
+A_\theta=\frac{\mu_0IR}{2\pi\sqrt{R(R-d)}}\int_0^\pi\frac{\cos\theta}{\sqrt{2+\frac{d^2}{R^2}-2\cos\theta}}d\theta\approx\frac{\mu_0I}{2\pi}\int_0^\pi\frac{\cos\theta}{\sqrt{2+\frac{d^2}{R^2}-2\cos\theta}}d\theta
+$$
+
+Now, we realize that the integral diverges if $d=0$. Thus, since $d\ll R$, we see that the integral is dominated by the region where $\theta$ is close to zero. We can use the small angle approximation $\cos\theta\approx1-\frac{\theta^2}{2}$. We simplify to get
+
+$$
+A\approx\frac{\mu_0I}{2\pi}\int_0^\pi\frac1{\sqrt{\theta^2+\frac{d^2}{R^2}}}d\theta=\left.\frac{\mu_0I}{2\pi}\ln\left(\sqrt{\left(\theta*\frac Rd\right)^2+1}+\theta*\frac Rd\right)\right|_0^\pi\approx\frac{\mu_0I}{2\pi}\ln\frac Rd
+$$
+
+Finally, we multiply by $2\pi R$ and divide by $I$ to get the desired mutual inductance. Note: the result can also be achieved using Grover’s formula.
+
+The flux through the superconducting ring must remain zero. The flux contributed by the ring itself is simply $LI$. The flux contributed by each dipole is the mutual inductance over the area times the dipole moment. The flux contributed by the image ring is the mutual inductance times the current in the image ring. Combining all the terms and setting it to zero gives:
+
+$$
+LI-\frac{\mu_0\cos\theta}{2R}m-\frac{\mu_0R^2\cos\theta}{2(R^2+4d^2)^{\frac32}}*\frac{\mu_r-1}{\mu_r+1}m+\mu_0R\ln\frac Rd*\frac{\mu_r-1}{\mu_r+1}I=0
+$$
+
+Solving, we get
+
+$$
+\boxed{I=\frac{\mu_0m\cos\theta}{2}\cdot\frac{\frac1R-\frac{\mu_r-1}{\mu_r+1}*\frac{R^2}{(R^2+4d^2)^{\frac32}}}{L+\mu_0R\frac{\mu_r-1}{\mu_r+1}\ln\frac Rd}}
+$$
+
+**(e)** The force on a dipole is given by $\mathbf F=\nabla(\mathbf p\cdot\mathbf B)$. We can break this force up into components. The x-component is given by $F_x=p_x\frac{\partial B_x}{\partial x}+p_y\frac{\partial B_x}{\partial y}$, where the dipole is in the x-y plane. Note that the ring contributes no gradient of $\mathbf B$ field at the dipole, so we only need to consider the field from the image ring and image dipole. First we find the force on the dipole due to the image ring. The field from the image ring is given by $B=\frac{\mu_0I_1R^2}{2(R^2+(2d)^2)^{\frac32}}$, so the gradient in the x direction is $\frac{3\mu_0I_1R^2d}{(R^2+(2d)^2)^{\frac52}}$. The x-component of the field from the image ring doesn’t change significantly in the y-direction, by symmetry, so we get $\frac{\partial B_x}{\partial y}=0$.
+
+Now we consider the y-component $F_y=p_x\frac{\partial B_y}{\partial x}+p_y\frac{\partial B_y}{\partial y}$. The y-component of the field from the ring along its axis is 0, so $\frac{\partial B_y}{\partial x}=0$. To find $\frac{\partial B_y}{\partial y}$, we use the fact that $\nabla\cdot\mathbf B=0$, so we get $\frac{\partial B_x}{\partial x}+2\frac{\partial B_y}{\partial y}=0$, where here we are only considering the field from the image ring. Thus, $\frac{\partial B_y}{\partial y}=-\frac{\partial B_x}{2\partial x}=-\frac{3\mu_0I_1R^2d}{2(R^2+(2d)^2)^{\frac52}}$.
+
+It remains to find the force between the image dipole and the real dipole. The dipole-dipole interaction is given by equation (9). To find the x-component of the force $F_x$, we can calculate the derivative of the potential energy in the x direction. Moving the dipole in the x direction only changes $r$, so we have $F_x=\frac{dU}{dr}=-\frac{3\mu_0}{4\pi r^4}(mm_1\cos(2\theta)-3mm_1\cos^2\theta)=\frac{3\mu_0}{4\pi(2d)^4}mm_1(\cos^2\theta+1)=\frac{3\mu_0}{64\pi d^4}mm_1(\cos^2\theta+1)$.
+
+To find the y-component of the force $F_y$, we can calculate the derivative of the potential energy in the y direction. Moving the dipole in the y direction does not change $r$ to first order, but does change $\hat{\mathbf r}$. Thus, $F_y=-\frac{dU}{dy}=-\frac{3\mu_0}{4\pi r^4}(2mm_1\cos\theta\sin\theta)=-\frac{3\mu_0}{32\pi d^4}mm_1\cos\theta\sin\theta$.
+
+Finally, we add up all the forces to get
+
+$$
+\boxed{\mathbf F=\mu_0\frac{\mu_r-1}{\mu_r+1}m\left(\left(-\frac{3IR^2d\cos\theta}{(R^2+4d^2)^{\frac52}}+\frac3{64\pi d^4}m(\cos^2\theta+1)\right)\hat{\mathbf x}+\left(\frac{3IR^2d\sin\theta}{2(R^2+4d^2)^{\frac52}}-\frac3{32\pi d^4}m\cos\theta\sin\theta\right)\hat{\mathbf y}\right)}
+$$
+
+, where $I$ is given in part (d).
+
+
+</Spoiler>
+
+<details>
+<summary>Organizer clarification document — other notes</summary>
+
+Separately quoted from the [organizer clarification document](https://docs.google.com/document/d/1V7fhbn7hb_mmpxHCtrZcWlAI3_GeFwxCh45IeTA7Ix8/edit):
+
+**Other Notes**
+
+- Uploading images: View this [link](https://www.overleaf.com/learn/how-to/Including_images_on_Overleaf) to find how to upload images on overleaf.
+- You are allowed to mix LaTeX and handwritten PDFs for your answer sheet. Note that you need to write your solution to the problem alongside your final answers.
+- You can use basic formulae related to topics on the [IPhO syllabus](https://www.ioc.ee/~kalda/ipho/formulas.pdf) without derivation but all other formulae which go beyond that must be derived.
+- If you find that space is running out on your LaTeX file, try to use $\verb|\newpage|$ and see if that fixes it.
+
+</details>
+
+---
+
+Оригинал в Архива: [invitational.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2020/invitational.pdf#page=11)
+· официални решения: [invitational_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2020/invitational_sol.pdf#page=29)
+· допълнителни данни: [Clarifications.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2020/Clarifications.pdf)
