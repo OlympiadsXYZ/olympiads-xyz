@@ -1,0 +1,218 @@
+---
+id: usapho-2026-x-p4
+source: 'USAPhO 2026, Полуфинал'
+title: 'B1. Radiant Bubbles'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2026/usapho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T06:33:12.825Z'
+verifier: 'single-pass'
+---
+
+*2026 USA Physics Olympiad Exam*
+
+<Warning title="Бележка към темата">
+The supplied archive folder contains the full question packet and the official interleaved key. The cover titled “Instructions for the Student” contains only a reference sheet and acknowledgements; no administrative instructions, timing, point allocations or blank answer sheets are supplied. These values remain unspecified. Printed source inconsistencies are preserved: A3's key changes $C_P,C_V$ to $c_p,c_v$, prints an empty equation label (0-5), has a plus sign in radial force balance (0-12) followed by a positive pressure gradient (0-13), and gives the exterior pressure without any radial dependence. B1's key prints an extra $V$ in its volumetric cooling-rate expression. B2 refers to “part (2)” despite lettered subparts, and its key uses the angle between the asymptote rays as the deflection angle. B3 refers to “part (1)” despite lettered subparts. The original key is transcribed without mathematical corrections.
+</Warning>
+
+<details>
+<summary>AAPT UNITED STATES PHYSICS TEAM — AIP 2026; USA Physics Olympiad Exam — Instructions for the Student — REFERENCE SHEET</summary>
+
+**Fundamental Constants**
+
+| | |
+| --- | --- |
+| $g=9.8\ \mathrm{N/kg}$ | $G=6.67\times10^{-11}\ \mathrm{N\cdot m^2/kg^2}$ |
+| $k=1/4\pi\epsilon_0=8.99\times10^9\ \mathrm{N\cdot m^2/C^2}$ | $k_m=\mu_0/4\pi=10^{-7}\ \mathrm{T\cdot m/A}$ |
+| $c=3.00\times10^8\ \mathrm{m/s}$ | $k_B=1.38\times10^{-23}\ \mathrm{J/K}$ |
+| $N_A=6.02\times10^{23}\ (\mathrm{mol})^{-1}$ | $R=N_Ak_B=8.31\ \mathrm{J/(mol\cdot K)}$ |
+| $\sigma=5.67\times10^{-8}\ \mathrm{J/(s\cdot m^2\cdot K^4)}$ | $e=1.602\times10^{-19}\ \mathrm{C}$ |
+| $1\ \mathrm{eV}=1.602\times10^{-19}\ \mathrm{J}$ | $h=6.63\times10^{-34}\ \mathrm{J\cdot s}=4.14\times10^{-15}\ \mathrm{eV\cdot s}$ |
+| $m_e=9.109\times10^{-31}\ \mathrm{kg}=0.511\ \mathrm{MeV}/c^2$ | |
+
+**Useful Approximations**
+
+$$
+(1+x)^n\approx1+nx+n(n-1)x^2/2\quad\text{for }|nx|\ll1
+$$
+
+$$
+e^x\approx1+x+x^2/2+x^3/6\quad\text{for }|x|\ll1
+$$
+
+$$
+\sin\theta\approx\theta-\theta^3/6\quad\text{for }|\theta|\ll1
+$$
+
+$$
+\cos\theta\approx1-\theta^2/2\quad\text{for }|\theta|\ll1
+$$
+
+**You may use this sheet for both parts of the exam.**
+
+We acknowledge the US Physics Team coaches and other people for their contributions to this year’s exam (in alphabetical order):
+
+Tengiz Bibilashvili, Eddie Chen, Kellan Colburn, Evan Erickson, Harry Kroft, Natalie LeBaron, Rishab Parthasarathy.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [(a)](#b1-a)
+- [(b)](#b1-b)
+- [(c)](#b1-c)
+- [(d) (i)](#b1-d-i)
+- [(ii)](#b1-d-ii)
+- [(iii)](#b1-d-iii)
+
+</nav>
+
+Hot stars emit vast amounts of ultraviolet photons. These photons ionize the surrounding neutral hydrogen gas, creating a bubble of ionized hydrogen known as a *Strömgren Sphere*.
+
+Consider a star at the center of a uniform cloud of hydrogen with mass density $\rho_H$. The star emits ionizing photons at a constant rate $Q_*$ (photons/s). Assume the ionized region is in a steady state where the total ionization rate equals the total recombination rate.
+
+Inside the sphere, the recombination rate per unit volume $R$ is:
+
+$$
+R = n_p n_e \alpha
+$$
+
+where $\alpha$ is the total volume recombination rate coefficient and $n_p$ and $n_e$ are the respective proton and electron number densities defined as
+
+$$
+n \equiv \frac{\rho}{m}
+$$
+
+where $m$ is the particle mass and $\rho$ is the particle density.
+
+<ProblemSection id="b1-a">
+
+### (a)
+
+Assume the gas inside the sphere is completely ionized and composed of only hydrogen. Derive an expression for the Strömgren radius, $r_s$, in terms of $Q_*$, $\alpha$, the number density of hydrogen $n_H$, and fundamental constants.
+
+</ProblemSection>
+
+<ProblemSection id="b1-b">
+
+### (b)
+
+When the star first starts emitting radiation, an ionization front sweeps outward through the surrounding gas as the ionized region expands. In this early stage, assume the gas is initially at rest, the front is a thin discontinuity, and recombinations behind the front can be neglected.
+
+Let $s$ be the speed of the front moving into neutral hydrogen of number density $n_H$. Let $J$ be the flux of ionizing photons reaching the front (photons per unit area per time).
+
+**(i)**  Derive the expansion speed $s$ in terms of $J$ and $n_H$.
+
+**(ii)**  Find the radius $r(t)$ of the ionization front as a function of time. Let $r(0) = 0$.
+
+</ProblemSection>
+
+<ProblemSection id="b1-c">
+
+### (c)
+
+Inside the sphere, the gas is hot ($T_{in} \approx 10^4$ K), while the neutral gas outside is cold ($T_{out} \approx 100$ K). Initially, the number densities of hydrogen are similar:
+
+$$
+n_{H,in} \approx n_{H,out}.
+$$
+
+Assume the gas is ideal, the ionized region remains fully ionized as it expands, and ionization balance is maintained.
+
+**(i)** Calculate the ratio of the internal pressure $P_{in}$ to external pressure $P_{out}$.
+
+**(ii)**  At some point the bubble will stop expanding. Find the final radius $r$ in terms of $r_s$ and the temperature ratio $(T_{in}/T_{out})$.
+
+</ProblemSection>
+
+<ProblemSection id="b1-d-i">
+
+### (d) (i)
+
+On a larger scale, galaxy clusters are filled with hot gas ($T \approx 10^7$ K) in hydrostatic equilibrium where gravitational forces are balanced by gas pressure:
+
+$$
+\frac{dP}{dr} = -\rho \frac{d\Phi}{dr},
+$$
+
+where $\Phi$ is the gravitational potential per unit mass. Assume the gas is ideal and approximately isothermal.
+
+If the gravitational potential satisfies
+
+$$
+\frac{d\Phi}{dr} = \frac{v_c^2}{r}
+$$
+
+where $v_c$ is constant, show that the gas density follows a power law
+
+$$
+\rho(r) \propto r^{-\beta}.
+$$
+
+Find $\beta$ in terms of $v_c$, $T$, and fundamental constants.
+
+</ProblemSection>
+
+<ProblemSection id="b1-d-ii">
+
+### (ii)
+
+ The gas cools by emitting X-ray photons through free-free emission at a volumetric rate
+
+$$
+\Lambda \propto n_e^2 \sqrt{T}.
+$$
+
+**i.**  If the cooling time scales as $t_{cool} \propto T^a \rho_e^b$, find $a$ and $b$.
+
+**ii.**  Express $t_{cool}$ as a function of $r$ and determine its behavior as $r \to 0$ and $r \to \infty$.
+
+</ProblemSection>
+
+<ProblemSection id="b1-d-iii">
+
+### (iii)
+
+ From observations of luminous X-rays, we know that the gas at the center of galaxy clusters is hot. Is this expected based on this model? Briefly explain why or why not.
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+(a) In steady state, $Q_* = \int R\, dV$. Since the medium is fully ionized, $\rho_e/m_e = \rho_p/m_p = \rho_H/m_H = n_H$ where $m_H \approx m_p$. Then,
+
+$$
+Q_* = \frac{4\pi}{3} r_s^3 n_H^2 \alpha \implies r_{strom} = \left(\frac{3Q_*}{4\pi\alpha n_H^2}\right)^{1/3}
+$$
+
+(b)(i) Atoms swallowed by front: $N_{at} = n_H (A \cdot s \cdot dt)$. Photons produced to ionize the atoms: $N_{ph} = J \cdot A \cdot dt$. Setting $N_{at} = N_{ph}$ yields $s = J/n_H$.
+
+(ii) Substituting $J$: $s = \frac{Q_*}{4\pi r^2 n_H}$ where $s = \frac{dr}{dt}$. Taking the integral $\int_0^r r^2 dr = \frac{Q_*}{4\pi n_H} t$ and solving for $r$ yields $r(t) = \left(\frac{3Q_*}{4\pi n_H} t\right)^{1/3}$.
+
+(c)(i) $P_{in} = 2n_H k_B T_{in}$ (since ionized gas has two particles per hydrogen atom) and $P_{out} = n_H k_B T_{out}$. Ratio: $\frac{P_{in}}{P_{out}} = \frac{2T_{in}}{T_{out}} = \frac{20000}{100} = 200$.
+
+(ii) At equilibrium, $n_{in} = n_{out}\left(\frac{T_{out}}{2T_{in}}\right)$. Since $r \propto n^{-2/3}$ from part (a), the final radius $r = r_s\left(\frac{2T_{in}}{T_{out}}\right)^{2/3}$.
+
+(d)(i) $2k_B T \frac{dn_H}{dr} = -n_H m_p \frac{v_c^2}{r} \implies \frac{dn_H}{n_H} = -\frac{m_p v_c^2}{2k_B T} \frac{dr}{r}$. Integrating gives $\beta = \frac{m_p v_c^2}{2k_B T}$.
+
+(ii) i. The rate of energy loss per time per volume $\Lambda \propto \rho_e \rho_p V\sqrt{T} \sim n_e^2 \sqrt{T}$. The energy of the medium $E \propto \rho_e k_B T$. Then, $t_{cool} = \frac{E}{\Lambda} \propto \frac{\rho_e k_B T}{\rho_e^2 \sqrt{T}} \propto \frac{\sqrt{T}}{\rho_e}$. Thus, $a = 1/2$ and $b = -1$.
+
+ii. Substituting $\rho_e \propto r^{-\beta}$, $t_{cool}(r) \propto \sqrt{T} r^{\beta}$. As $r \to 0$, $t_{cool} \to 0$ (instantaneous cooling at the center of the cluster). As $r \to \infty$, $t_{cool} \to \infty$ (negligible cooling at the outer edges of the cluster).
+
+(iii) No, we see that the center of the cluster cools almost instantaneously, however high temperatures are still observed at the center of clusters.
+
+For added context, this means that there has to be an additional mechanism that keeps the center of galaxy clusters hot. This mechanism must be able to produce the equivalent of an entire galaxy's luminosity. Thus, proposed explanations generally require a supermassive black hole which has the gravitational energy budget to produce outflows which can do enough work on the medium to heat it to the observed temperatures. For further reading, see e.g., Fabien (1994) and Hlavacek-Larrondo, Li, and Churazov (2022).
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2026-USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2026/2026-USAPhO.pdf#page=7)
+· официални решения: [2026-USAPhO-Solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2026/2026-USAPhO-Solutions.pdf#page=12)

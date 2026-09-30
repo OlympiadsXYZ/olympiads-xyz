@@ -1,0 +1,217 @@
+---
+id: usapho-2025-exam-25-p5
+source: 'USAPhO 2025, Полуфинал'
+title: 'B2. Where’s the Kaboom?'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2025/usapho-2025-exam-25.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T06:24:08.828Z'
+verifier: 'single-pass'
+---
+
+*2025 USA Physics Olympiad Exam · 25 т.*
+
+<Warning title="Бележка към темата">
+The supplied archive folder contains the complete question packet and the official interleaved solution packet. The separate problem cover sheets and blank response paper named in the instructions are absent. Printed source errors are retained: A2 refers to “part 1” and “part 5” despite its lettered subparts; A3's key uses $R$ in the wire-segment force although the question uses $a$; B1's key changes inertia symbols from $I_d,I_{cm}$ to $I_1,I_2$ and prints $v'=R/4$; B3's key uses a sum from $k=0$ to $N$ in its finite-mode derivation, and its Taylor expansion uses $1/3$ for the cubic sine term. The source is transcribed as printed, without mathematical corrections.
+</Warning>
+
+<details>
+<summary>AAPT UNITED STATES PHYSICS TEAM — AIP 2025; USA Physics Olympiad Exam — Instructions for the Student</summary>
+
+- All smartphones, tablets, smartwatches, and other internet-connected devices must be handed in before the exam begins. You may only use the desktop computer, laptop, or Chromebook designated for taking the exam.
+
+- You must remain in the exam room for the entire testing period.
+
+- You should receive:
+
+  - This instruction page
+  - A reference sheet (on the next page)
+  - Problem cover sheets
+  - Blank paper for solutions and scratch work
+
+Read this page carefully before the exam begins.
+
+- You may use a calculator, provided its memory has been cleared. You may not use any symbolic math, programming, or graphing features. Calculators may not be shared. Cell phones or any other unauthorized electronics may not be used at any time while the exam is in progress or while exam materials are present. Outside books or references are not allowed.
+
+- When the exam begins, click on the link for Part A. Once you click “Start,” a timer will begin. You will have 90 minutes to complete three problems. Each problem is worth 25 points, but they may differ in difficulty. When finished, you may review your work, but do not proceed to Part B.
+
+- After 90 minutes, your proctor will collect your Part A answer sheets. Do not include scratch work. You will then have a short break.
+
+- After the break, click on the link for Part B. You will again have 90 minutes to complete three problems. Each is worth 25 points.
+
+- At the end of Part B, you must return:
+
+  - Your Part B answer sheets (no scratch work)
+  - All blank and used scratch paper
+  - These instruction pages
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+<details>
+<summary>Instructions for Writing Your Solutions</summary>
+
+- Do not discuss any part of the exam until April 11th. Any violation may result in disqualification.
+
+Instructions for Writing Your Solutions
+
+- All work must be done on the provided blank pages. You may use as many plain and/or graph sheets as needed for each problem. Work outside of these pages will not be graded.
+
+- To help with grading, please draw a clear box around your final answer to each subpart.
+
+- Organize your work clearly and explain your reasoning concisely. Partial credit may be awarded for well-reasoned work, even if the final answer is incorrect.
+
+- You may write in either pencil or pen, but make sure your work is legible and scan-friendly.
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+<details>
+<summary>REFERENCE SHEET</summary>
+
+**Fundamental Constants**
+
+| | |
+| --- | --- |
+| $g=9.8\ \mathrm{N/kg}$ | $G=6.67\times10^{-11}\ \mathrm{N\cdot m^2/kg^2}$ |
+| $k=1/4\pi\epsilon_0=8.99\times10^9\ \mathrm{N\cdot m^2/C^2}$ | $k_m=\mu_0/4\pi=10^{-7}\ \mathrm{T\cdot m/A}$ |
+| $c=3.00\times10^8\ \mathrm{m/s}$ | $k_B=1.38\times10^{-23}\ \mathrm{J/K}$ |
+| $N_A=6.02\times10^{23}\ (\mathrm{mol})^{-1}$ | $R=N_Ak_B=8.31\ \mathrm{J/(mol\cdot K)}$ |
+| $\sigma=5.67\times10^{-8}\ \mathrm{J/(s\cdot m^2\cdot K^4)}$ | $e=1.602\times10^{-19}\ \mathrm{C}$ |
+| $1\ \mathrm{eV}=1.602\times10^{-19}\ \mathrm{J}$ | $h=6.63\times10^{-34}\ \mathrm{J\cdot s}=4.14\times10^{-15}\ \mathrm{eV\cdot s}$ |
+| $m_e=9.109\times10^{-31}\ \mathrm{kg}=0.511\ \mathrm{MeV}/c^2$ | |
+
+**Useful Approximations**
+
+$$
+(1+x)^n\approx1+nx+n(n-1)x^2/2\quad\text{for }|nx|\ll1
+$$
+
+$$
+e^x\approx1+x+x^2/2+x^3/6\quad\text{for }|x|\ll1
+$$
+
+$$
+\sin\theta\approx\theta-\theta^3/6\quad\text{for }|\theta|\ll1
+$$
+
+$$
+\cos\theta\approx1-\theta^2/2\quad\text{for }|\theta|\ll1
+$$
+
+**Useful Identities**
+
+$$
+\sum_{k=0}^{N}\cos(ka+\phi)=\frac{\sin\left(\frac{(N+1)a}{2}\right)\cdot\cos\left(\frac{Na}{2}+\phi\right)}{\sin\left(\frac a2\right)}
+$$
+
+$$
+\sum_{k=0}^{N}\sin(ka+\phi)=\frac{\sin\left(\frac{(N+1)a}{2}\right)\cdot\sin\left(\frac{Na}{2}+\phi\right)}{\sin\left(\frac a2\right)}
+$$
+
+$$
+\sum_{k=1}^{N}\cos^2(ka)=\frac N2+\frac12\sum_{k=1}^{N}\cos(2ka)
+$$
+
+$$
+\sum_{k=1}^{N}\sin^2(ka)=\frac N2-\frac12\sum_{k=1}^{N}\cos(2ka)
+$$
+
+**You may use this sheet for both parts of the exam.**
+
+End of Instructions for the Student
+
+**DO NOT CLICK THE LINK FOR PART A UNTIL YOU ARE TOLD TO BEGIN**
+
+We acknowledge the US Physics Team coaches and other people for their contributions to this year’s exam (in alphabetical order):
+
+Tengiz Bibilashvili, Kellan Colburn, Natalie LeBaron, Rishab Parthasarathy, Mai Qi, Kye Shi, Heng Yuan and Elena Yudovina.
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+## Условие
+
+A plane is flying horizontally at constant velocity $v$ and altitude $z = H$. The speed of sound at altitude $z$ is given by
+
+$$
+c(z) = \alpha\sqrt{T(z)},
+$$
+
+where $\alpha$ is a constant. Suppose $v > c(H)$, and define the Mach number as
+
+$$
+M \equiv \frac{v}{c(H)} > 1.
+$$
+
+If $c(z)$ is constant for all $z$, then the envelope is a cone with half angle $\theta$ where $\sin\theta = \frac{1}{M}$ and propagates with the speed of sound $c$.
+
+**a.** Sketch the envelope.
+
+**b.** Now, the speed of sound depends on the altitude because the temperature is not uniform. For the altitudes we are interested in, the following linear model works well:
+
+$$
+T(z) = T_0 - \beta z,
+$$
+
+where $\beta > 0$ is a constant. Sketch the envelope of the boom.
+
+**c.** If the Mach number is large enough then the sonic boom hits the ground. Assume it is large enough. On the ground, there are two sensors at $z = 0$ and $z = h$, one directly above the other. Assume $h \ll H$ and $\beta h \ll T_0$. At time $t_1$, the top sensor receives the sonic boom signal and at a later time, the bottom sensor also receives the signal. Express the Mach number $M$ of the airplane in terms of $H, h, t, T_0, \alpha, \beta$, where $t = t_2 - t_1$.
+
+**d.** If the plane travels slower without changing direction, its sonic boom could become no longer audible from the ground for the Mach number $1 < M < M_{max}$. What is the upper limit for the Mach number $M_{max}$ for which this can occur? Express your answer in terms of $T_0, H, \alpha, \beta$. You do not necessarily need all of these parameters.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.** The envelope is a cone with half angle $\theta$ where $\sin\theta = \frac{1}{M}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '32.1%', '--fig-max': '206px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2025-exam-25/p5-sol-fig1-v2.png" alt="Official key complete straight Mach cone with theta(H) and velocity arrow." width="644" height="410" loading="lazy" decoding="async" />
+</figure>
+
+
+**b.** The half angle of the cone $\theta$ is also the incident angle of the sonic boom ray, and since $c(z)$ is not constant, $\theta = \theta(z)$ depends on $z$. Using Snell's law on the sonic boom ray, we get $\frac{\sin\theta(0)}{c(0)} = \frac{\sin\theta(H)}{c(H)} = \frac{1}{v}$. This means that sonic wave travels on a curve with reduced steepness on the bottom.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '25%', '--fig-max': '160px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2025-exam-25/p5-sol-fig2.png" alt="Official key complete curved envelope with both theta(H) labels, theta(0) and dashed ray." width="501" height="516" loading="lazy" decoding="async" />
+</figure>
+
+
+**c.** The following pictures shows the boom at $t_1$ and $t_2$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '27.8%', '--fig-max': '178px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usapho-2025-exam-25/p5-sol-fig3.png" alt="Official key two boom positions with both dots and complete red h and vt labels." width="557" height="354" loading="lazy" decoding="async" />
+</figure>
+
+
+From expression $\sin\theta(0) = \frac{c(0)}{v}$, $\cot\theta(0) = \frac{vt}{h}$ and trigonometry identity $\cot^2\theta(0) + 1 = \frac{1}{\sin^2\theta(0)}$ we get
+
+$$
+v = \frac{1}{\sqrt{\frac{1}{\alpha^2 T_0} - \frac{t^2}{h^2}}}
+$$
+
+$$
+M = \frac{v}{c(H)} = \left[\left(1 - \frac{\beta H}{T_0}\right)\left(1 - \frac{\alpha^2 t^2 T_0}{h^2}\right)\right]^{-\frac{1}{2}} \approx \left(1 + \frac{\beta H}{2T_0}\right)\left(1 + \frac{\alpha^2 t^2 T_0}{2h^2}\right)
+$$
+
+**d.** When angle $\theta$ rises to $90^{\circ}$ the rays that are leading to the boom curve more and travel up. It is similar to the mirage phenomenon. So, the condition when it occurs near the ground is $\theta(0) = 90^{\circ}$. This means that $v = c(0)$, so the Mach number is
+
+$$
+M_{max} = \frac{c(0)}{c(H)} = \sqrt{\frac{T_0}{T_0 - \beta H}}.
+$$
+
+Real numbers: $\beta = 6.5$ K/km, $H = 11$ km, $T_0 = 300$ K give $M_{max} \approx 1.146$.
+
+Credit: Boom Technology uses this phenomenon to create their boomless supersonic jet XB-1 and Overture for commercial supersonic flights.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [USAPhO_Exam_25.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2025/USAPhO_Exam_25.pdf#page=8)
+· официални решения: [2025-USAPhO-Exam_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2025/2025-USAPhO-Exam_solutions.pdf#page=15)

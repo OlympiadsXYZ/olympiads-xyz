@@ -1,0 +1,93 @@
+---
+id: usapho-2026-x-p2
+source: 'USAPhO 2026, Полуфинал'
+title: 'A2. Straight on a Cone'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2026/usapho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T06:33:12.825Z'
+verifier: 'single-pass'
+---
+
+*2026 USA Physics Olympiad Exam*
+
+<Warning title="Бележка към темата">
+The supplied archive folder contains the full question packet and the official interleaved key. The cover titled “Instructions for the Student” contains only a reference sheet and acknowledgements; no administrative instructions, timing, point allocations or blank answer sheets are supplied. These values remain unspecified. Printed source inconsistencies are preserved: A3's key changes $C_P,C_V$ to $c_p,c_v$, prints an empty equation label (0-5), has a plus sign in radial force balance (0-12) followed by a positive pressure gradient (0-13), and gives the exterior pressure without any radial dependence. B1's key prints an extra $V$ in its volumetric cooling-rate expression. B2 refers to “part (2)” despite lettered subparts, and its key uses the angle between the asymptote rays as the deflection angle. B3 refers to “part (1)” despite lettered subparts. The original key is transcribed without mathematical corrections.
+</Warning>
+
+<details>
+<summary>AAPT UNITED STATES PHYSICS TEAM — AIP 2026; USA Physics Olympiad Exam — Instructions for the Student — REFERENCE SHEET</summary>
+
+**Fundamental Constants**
+
+| | |
+| --- | --- |
+| $g=9.8\ \mathrm{N/kg}$ | $G=6.67\times10^{-11}\ \mathrm{N\cdot m^2/kg^2}$ |
+| $k=1/4\pi\epsilon_0=8.99\times10^9\ \mathrm{N\cdot m^2/C^2}$ | $k_m=\mu_0/4\pi=10^{-7}\ \mathrm{T\cdot m/A}$ |
+| $c=3.00\times10^8\ \mathrm{m/s}$ | $k_B=1.38\times10^{-23}\ \mathrm{J/K}$ |
+| $N_A=6.02\times10^{23}\ (\mathrm{mol})^{-1}$ | $R=N_Ak_B=8.31\ \mathrm{J/(mol\cdot K)}$ |
+| $\sigma=5.67\times10^{-8}\ \mathrm{J/(s\cdot m^2\cdot K^4)}$ | $e=1.602\times10^{-19}\ \mathrm{C}$ |
+| $1\ \mathrm{eV}=1.602\times10^{-19}\ \mathrm{J}$ | $h=6.63\times10^{-34}\ \mathrm{J\cdot s}=4.14\times10^{-15}\ \mathrm{eV\cdot s}$ |
+| $m_e=9.109\times10^{-31}\ \mathrm{kg}=0.511\ \mathrm{MeV}/c^2$ | |
+
+**Useful Approximations**
+
+$$
+(1+x)^n\approx1+nx+n(n-1)x^2/2\quad\text{for }|nx|\ll1
+$$
+
+$$
+e^x\approx1+x+x^2/2+x^3/6\quad\text{for }|x|\ll1
+$$
+
+$$
+\sin\theta\approx\theta-\theta^3/6\quad\text{for }|\theta|\ll1
+$$
+
+$$
+\cos\theta\approx1-\theta^2/2\quad\text{for }|\theta|\ll1
+$$
+
+**You may use this sheet for both parts of the exam.**
+
+We acknowledge the US Physics Team coaches and other people for their contributions to this year’s exam (in alphabetical order):
+
+Tengiz Bibilashvili, Eddie Chen, Kellan Colburn, Evan Erickson, Harry Kroft, Natalie LeBaron, Rishab Parthasarathy.
+
+</details>
+
+## Условие
+
+In general relativity, particles in the absence of external forces move "straight" along curved spacetime. In this problem, we will analyze a classical mechanics analogue of this idea.
+
+Suppose a point mass $m$ is constrained to move along the surface of an infinite, fixed, frictionless cone of half-angle $\alpha$. Ignore gravity throughout this problem, and assume the only force on the mass is the normal force from the cone. Let the vertex of the cone be $O$.
+
+At time $t = 0$, the mass is at a point $A$, a distance $r_0$ from $O$, and its velocity has magnitude $v$ and is perpendicular to the displacement vector $\overrightarrow{OA}$ (i.e., tangent to the cone).
+
+**(a)** Find the normal force at time $t = 0$.
+
+**(b)** At some later time, the mass is at a point $B$, a distance $r_1$ from $O$. Find the angle $\psi$ its velocity vector makes with the displacement vector $\overrightarrow{OB}$.
+
+**(c)** At what time $t$ does the mass reach the point $B$?
+
+**(d)** After a long time, find the total number of revolutions the mass makes around the axis of the cone.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+(a) At $t=0$, the motion is along a circle of radius $\rho_0 = r_0\sin\alpha$ about the axis of the cone. Thus the required centripetal acceleration is $a_c = \frac{v^2}{\rho_0} = \frac{v^2}{r_0\sin\alpha}$. The normal force $N$ is the only force acting, and its horizontal component (after removing a component parallel to the cone) provides this centripetal acceleration. Since the normal makes an angle $\alpha$ with the horizontal plane, $\frac{N}{\cos\alpha} = m\frac{v^2}{r_0\sin\alpha}$. Thus, $N = \frac{mv^2}{r_0}\cot\alpha$.
+
+(b) The component of angular momentum about the axis of the cone is conserved, since the normal force exerts no torque about that axis. Let $\rho = r\sin\alpha$ be the distance from the axis. Then $L_z = m\rho v_\phi$. Initially, $L_z = m(r_0\sin\alpha)v$. At point $B$, if the velocity makes an angle $\psi$ with $\overrightarrow{OB}$, then the azimuthal component of velocity is $v_\phi = v\sin\psi$. Thus, $m(r_0\sin\alpha)v = m(r_1\sin\alpha)(v\sin\psi)$. Cancelling common factors gives $\sin\psi = \frac{r_0}{r_1}$. Therefore, $\psi = \arcsin\left(\frac{r_0}{r_1}\right)$.
+
+(c) The cone can be unrolled into a flat plane. Since the normal force is always perpendicular to the surface, the particle moves in a straight line with constant speed $v$ on this plane. In the unrolled plane, the motion forms a right triangle with sides $r_0$ and $r_1$, so the distance traveled is $\sqrt{r_1^2-r_0^2}$. Thus, $t = \frac{\sqrt{r_1^2-r_0^2}}{v}$.
+
+(d) On the unrolled plane, the trajectory is a straight line tangent to the circle of radius $r_0$. As $t\to\infty$, the angle swept in the plane is $\Delta\beta = \frac{\pi}{2}$. The relation between the angle $\beta$ in the plane and the azimuthal angle $\phi$ on the cone is $\beta = \phi\sin\alpha$. Thus, $\Delta\phi = \frac{\Delta\beta}{\sin\alpha} = \frac{\pi}{2\sin\alpha}$. The total number of revolutions is $N = \frac{\Delta\phi}{2\pi} = \frac{1}{4\sin\alpha}$.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2026-USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2026/2026-USAPhO.pdf#page=4)
+· официални решения: [2026-USAPhO-Solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2026/2026-USAPhO-Solutions.pdf#page=6)

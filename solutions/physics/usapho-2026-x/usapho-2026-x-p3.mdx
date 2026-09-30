@@ -1,0 +1,219 @@
+---
+id: usapho-2026-x-p3
+source: 'USAPhO 2026, Полуфинал'
+title: 'A3. Storm Chaser'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2026/usapho-2026-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T06:33:12.825Z'
+verifier: 'single-pass'
+---
+
+*2026 USA Physics Olympiad Exam*
+
+<Warning title="Бележка към темата">
+The supplied archive folder contains the full question packet and the official interleaved key. The cover titled “Instructions for the Student” contains only a reference sheet and acknowledgements; no administrative instructions, timing, point allocations or blank answer sheets are supplied. These values remain unspecified. Printed source inconsistencies are preserved: A3's key changes $C_P,C_V$ to $c_p,c_v$, prints an empty equation label (0-5), has a plus sign in radial force balance (0-12) followed by a positive pressure gradient (0-13), and gives the exterior pressure without any radial dependence. B1's key prints an extra $V$ in its volumetric cooling-rate expression. B2 refers to “part (2)” despite lettered subparts, and its key uses the angle between the asymptote rays as the deflection angle. B3 refers to “part (1)” despite lettered subparts. The original key is transcribed without mathematical corrections.
+</Warning>
+
+<details>
+<summary>AAPT UNITED STATES PHYSICS TEAM — AIP 2026; USA Physics Olympiad Exam — Instructions for the Student — REFERENCE SHEET</summary>
+
+**Fundamental Constants**
+
+| | |
+| --- | --- |
+| $g=9.8\ \mathrm{N/kg}$ | $G=6.67\times10^{-11}\ \mathrm{N\cdot m^2/kg^2}$ |
+| $k=1/4\pi\epsilon_0=8.99\times10^9\ \mathrm{N\cdot m^2/C^2}$ | $k_m=\mu_0/4\pi=10^{-7}\ \mathrm{T\cdot m/A}$ |
+| $c=3.00\times10^8\ \mathrm{m/s}$ | $k_B=1.38\times10^{-23}\ \mathrm{J/K}$ |
+| $N_A=6.02\times10^{23}\ (\mathrm{mol})^{-1}$ | $R=N_Ak_B=8.31\ \mathrm{J/(mol\cdot K)}$ |
+| $\sigma=5.67\times10^{-8}\ \mathrm{J/(s\cdot m^2\cdot K^4)}$ | $e=1.602\times10^{-19}\ \mathrm{C}$ |
+| $1\ \mathrm{eV}=1.602\times10^{-19}\ \mathrm{J}$ | $h=6.63\times10^{-34}\ \mathrm{J\cdot s}=4.14\times10^{-15}\ \mathrm{eV\cdot s}$ |
+| $m_e=9.109\times10^{-31}\ \mathrm{kg}=0.511\ \mathrm{MeV}/c^2$ | |
+
+**Useful Approximations**
+
+$$
+(1+x)^n\approx1+nx+n(n-1)x^2/2\quad\text{for }|nx|\ll1
+$$
+
+$$
+e^x\approx1+x+x^2/2+x^3/6\quad\text{for }|x|\ll1
+$$
+
+$$
+\sin\theta\approx\theta-\theta^3/6\quad\text{for }|\theta|\ll1
+$$
+
+$$
+\cos\theta\approx1-\theta^2/2\quad\text{for }|\theta|\ll1
+$$
+
+**You may use this sheet for both parts of the exam.**
+
+We acknowledge the US Physics Team coaches and other people for their contributions to this year’s exam (in alphabetical order):
+
+Tengiz Bibilashvili, Eddie Chen, Kellan Colburn, Evan Erickson, Harry Kroft, Natalie LeBaron, Rishab Parthasarathy.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Part A: Updraft](#a3-a)
+- [(c)](#a3-a-c)
+- [Part B: Vortex](#a3-b)
+
+</nav>
+
+The violent updrafts and vortices that power severe thunderstorms arise from atmospheric instability. Neglect moisture effects, and model the atmosphere as an ideal gas of molar mass $\mu$. Let $C_P$ and $C_V$ be the Molar heat capacities at constant pressure and volume, respectively, with $C_P = C_V + R$. Gravitational acceleration is $g$.
+
+<ProblemSection id="a3-a">
+
+### Part A: Updraft
+
+**(a)** Derive the relationship between atmospheric pressure and altitude, $\frac{dP}{dz}$, in terms of the atmospheric density $\rho$.
+
+**(b)** A parcel of air is lofted rapidly upward in a storm's updraft, exchanging no heat with its surroundings. Assume the parcel remains in pressure equilibrium with the surrounding atmosphere as it rises. Using your result from part (a) and the first law of thermodynamics, derive the rate at which the parcel's temperature changes with altitude, $\Gamma_p \equiv -\frac{dT_p}{dz}$.
+
+</ProblemSection>
+
+<ProblemSection id="a3-a-c">
+
+### (c)
+
+The atmosphere ahead of the storm has an environmental temperature profile $T_{env}(z)$ with lapse rate $\Gamma_{env} \equiv -\frac{dT_{env}}{dz}$ and surface temperature $T_{env}(0) = T_0$. A parcel in equilibrium at $z = 0$ is displaced upward by $\delta z$. Determine:
+
+**(i)**  The condition on $\Gamma_{env}$ for the atmosphere to be unstable, and
+
+**(ii)**  The oscillation frequency of the parcel when the atmosphere is stable.
+
+</ProblemSection>
+
+<ProblemSection id="a3-b">
+
+### Part B: Vortex
+
+In this section, treat the atmosphere as isothermal with uniform density $\rho_0$ and ambient pressure $P_\infty$.
+
+**(a)** A tornado can be modeled as a Rankine vortex: solid body rotation $v = \Omega r$ for $r < R$ and irrotational flow $v = \Omega R^2/r$ for $r > R$, with $P \to P_\infty$ as $r \to \infty$. Using radial force balance on a small parcel of air moving in a circular path, derive the radial pressure gradient and find the central pressure deficit $\Delta P = P_\infty - P(0)$.
+
+**(b)** Using a displacement argument analogous to A(c), derive the condition on the circulation $\gamma(r) \equiv rv(r)$ for a rotating fluid to be stable. Apply your result to the Rankine vortex.
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part A: Updraft**
+
+**(a)** Force balance on an air slab of area $A$ at $z$ with thickness $dz$:
+
+$$
+P(z)A=P(z+dz)A+\rho gA dz\quad\text{(0-1)}
+$$
+
+$$
+\frac{dP}{dz}=-\rho g\quad\text{(0-2)}
+$$
+
+**(b)** For an adiabatic process $dU=-PdV$. With $\frac{dU}{dT}=nc_v$ we have:
+
+$$
+nc_vdT=-PdV
+$$
+
+Differentiating ideal gas law and substituting gives:
+
+$$
+nc_vdT=VdP-nRdT\quad\text{(0-3)}
+$$
+
+$$
+n(c_v+R)dT=nc_pdT=VdP\quad\text{(0-4)}
+$$
+
+$$
+\text{(0-5)}
+$$
+
+Substituting result from a and dividing by mass:
+
+$$
+\frac{n}{m}c_pdT=-\frac{\rho gV}{m}dz\quad\text{(0-6)}
+$$
+
+$$
+\frac{c_p}{\mu}dT=-gdz\quad\text{(0-7)}
+$$
+
+$$
+\frac{dT}{dz}=-\frac{\mu g}{c_p}\equiv-\Gamma_p\quad\text{(0-8)}
+$$
+
+**(c)** The temperature of the parcel after displacement is $T_p=T_0-\Gamma_p\delta z$. The net force on the parcel per unit mass $f$ is:
+
+$$
+F=\rho_{env}Vg-\rho_pVg\quad\text{(0-9)}
+$$
+
+$$
+f=\frac{\rho_{env}-\rho_p}{\rho_p}g\quad\text{(0-10)}
+$$
+
+For an ideal gas $\rho\sim\frac{P}{T}$. Since we assume the parcel remains in pressure equilibrium, $P_p=P_{env}$, so we can substitute $\rho$ for $1/T$:
+
+$$
+f=\frac{T_p-T_{env}}{T_{env}}g\approx\frac{T_p-T_{env}}{T_0}g=\frac{(\Gamma_{env}-\Gamma_p)}{T_0}g\delta z\quad\text{(0-11)}
+$$
+
+So the atmosphere is unstable for $\Gamma_{env}>\Gamma_p$ and the oscillation frequency is $\sqrt{\frac{g}{T_0}(\Gamma_p-\Gamma_{env})}$
+
+**Part B: Vortex**
+
+**(a)** Analogously to part A(a), consider annulus of radius $r$ cross section $A$ and thickness $dr$:
+
+$$
+P(r)A=P(r+dr)A+\rho_0A\frac{v^2}{r}dr\quad\text{(0-12)}
+$$
+
+$$
+\frac{dP}{dr}=\frac{\rho_0v^2}{r}\quad\text{(0-13)}
+$$
+
+Integrating the velocity profile in the outer region gives $P(r)_{r>R}=P_\infty-\frac{\rho_0\Omega^2R^2}{2}$. Integrating in the inner region and boundary matching gives:
+
+$$
+\Delta P=P_\infty-P(0)=\rho_0\Omega^2R^2
+$$
+
+**(b)** Displace the parcel $r\to r+\delta r$. Angular momentum conservation means $\gamma=rv$ is conserved for the parcel, so at the new radius the resulting velocity of the parcel is:
+
+$$
+v_p=\frac{\gamma(r)}{r+\delta r}
+$$
+
+The environment, on the other hand, has:
+
+$$
+v_{env}=\frac{\gamma(r+\delta r)}{r+\delta r}
+$$
+
+The inward centripetal acceleration provided by the environmental pressure gradient is $\frac{v_{env}^2}{r+\delta r}$, while the parcel requires $\frac{v_p^2}{r+\delta r}$ to remain at the new radius. So $v_p<v_{env}$ is stable and $v_p>v_{env}$ is unstable. By comparing the velocities above we see this implies that stability requires $\gamma(r)<\gamma(r+dr)$, or:
+
+$$
+\frac{d\gamma}{dr}>0
+$$
+
+Applying to the Rankine vortex, for $r<R$, $\frac{d\gamma}{dr}>0$ and it is stable. For $r>R$, $\frac{d\gamma}{dr}=0$, so the system here is neutrally stable. The core of the vortex is stable and the exterior neither amplifies nor damps radial perturbations.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [2026-USAPhO.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2026/2026-USAPhO.pdf#page=5)
+· официални решения: [2026-USAPhO-Solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2026/2026-USAPhO-Solutions.pdf#page=9)

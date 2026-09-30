@@ -1,0 +1,278 @@
+---
+id: usapho-2025-exam-25-p2
+source: 'USAPhO 2025, Полуфинал'
+title: 'A2. Black Tides'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2025/usapho-2025-exam-25.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T06:24:08.828Z'
+verifier: 'single-pass'
+---
+
+*2025 USA Physics Olympiad Exam · 25 т.*
+
+<Warning title="Бележка към темата">
+The supplied archive folder contains the complete question packet and the official interleaved solution packet. The separate problem cover sheets and blank response paper named in the instructions are absent. Printed source errors are retained: A2 refers to “part 1” and “part 5” despite its lettered subparts; A3's key uses $R$ in the wire-segment force although the question uses $a$; B1's key changes inertia symbols from $I_d,I_{cm}$ to $I_1,I_2$ and prints $v'=R/4$; B3's key uses a sum from $k=0$ to $N$ in its finite-mode derivation, and its Taylor expansion uses $1/3$ for the cubic sine term. The source is transcribed as printed, without mathematical corrections.
+</Warning>
+
+<details>
+<summary>AAPT UNITED STATES PHYSICS TEAM — AIP 2025; USA Physics Olympiad Exam — Instructions for the Student</summary>
+
+- All smartphones, tablets, smartwatches, and other internet-connected devices must be handed in before the exam begins. You may only use the desktop computer, laptop, or Chromebook designated for taking the exam.
+
+- You must remain in the exam room for the entire testing period.
+
+- You should receive:
+
+  - This instruction page
+  - A reference sheet (on the next page)
+  - Problem cover sheets
+  - Blank paper for solutions and scratch work
+
+Read this page carefully before the exam begins.
+
+- You may use a calculator, provided its memory has been cleared. You may not use any symbolic math, programming, or graphing features. Calculators may not be shared. Cell phones or any other unauthorized electronics may not be used at any time while the exam is in progress or while exam materials are present. Outside books or references are not allowed.
+
+- When the exam begins, click on the link for Part A. Once you click “Start,” a timer will begin. You will have 90 minutes to complete three problems. Each problem is worth 25 points, but they may differ in difficulty. When finished, you may review your work, but do not proceed to Part B.
+
+- After 90 minutes, your proctor will collect your Part A answer sheets. Do not include scratch work. You will then have a short break.
+
+- After the break, click on the link for Part B. You will again have 90 minutes to complete three problems. Each is worth 25 points.
+
+- At the end of Part B, you must return:
+
+  - Your Part B answer sheets (no scratch work)
+  - All blank and used scratch paper
+  - These instruction pages
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+<details>
+<summary>Instructions for Writing Your Solutions</summary>
+
+- Do not discuss any part of the exam until April 11th. Any violation may result in disqualification.
+
+Instructions for Writing Your Solutions
+
+- All work must be done on the provided blank pages. You may use as many plain and/or graph sheets as needed for each problem. Work outside of these pages will not be graded.
+
+- To help with grading, please draw a clear box around your final answer to each subpart.
+
+- Organize your work clearly and explain your reasoning concisely. Partial credit may be awarded for well-reasoned work, even if the final answer is incorrect.
+
+- You may write in either pencil or pen, but make sure your work is legible and scan-friendly.
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+<details>
+<summary>REFERENCE SHEET</summary>
+
+**Fundamental Constants**
+
+| | |
+| --- | --- |
+| $g=9.8\ \mathrm{N/kg}$ | $G=6.67\times10^{-11}\ \mathrm{N\cdot m^2/kg^2}$ |
+| $k=1/4\pi\epsilon_0=8.99\times10^9\ \mathrm{N\cdot m^2/C^2}$ | $k_m=\mu_0/4\pi=10^{-7}\ \mathrm{T\cdot m/A}$ |
+| $c=3.00\times10^8\ \mathrm{m/s}$ | $k_B=1.38\times10^{-23}\ \mathrm{J/K}$ |
+| $N_A=6.02\times10^{23}\ (\mathrm{mol})^{-1}$ | $R=N_Ak_B=8.31\ \mathrm{J/(mol\cdot K)}$ |
+| $\sigma=5.67\times10^{-8}\ \mathrm{J/(s\cdot m^2\cdot K^4)}$ | $e=1.602\times10^{-19}\ \mathrm{C}$ |
+| $1\ \mathrm{eV}=1.602\times10^{-19}\ \mathrm{J}$ | $h=6.63\times10^{-34}\ \mathrm{J\cdot s}=4.14\times10^{-15}\ \mathrm{eV\cdot s}$ |
+| $m_e=9.109\times10^{-31}\ \mathrm{kg}=0.511\ \mathrm{MeV}/c^2$ | |
+
+**Useful Approximations**
+
+$$
+(1+x)^n\approx1+nx+n(n-1)x^2/2\quad\text{for }|nx|\ll1
+$$
+
+$$
+e^x\approx1+x+x^2/2+x^3/6\quad\text{for }|x|\ll1
+$$
+
+$$
+\sin\theta\approx\theta-\theta^3/6\quad\text{for }|\theta|\ll1
+$$
+
+$$
+\cos\theta\approx1-\theta^2/2\quad\text{for }|\theta|\ll1
+$$
+
+**Useful Identities**
+
+$$
+\sum_{k=0}^{N}\cos(ka+\phi)=\frac{\sin\left(\frac{(N+1)a}{2}\right)\cdot\cos\left(\frac{Na}{2}+\phi\right)}{\sin\left(\frac a2\right)}
+$$
+
+$$
+\sum_{k=0}^{N}\sin(ka+\phi)=\frac{\sin\left(\frac{(N+1)a}{2}\right)\cdot\sin\left(\frac{Na}{2}+\phi\right)}{\sin\left(\frac a2\right)}
+$$
+
+$$
+\sum_{k=1}^{N}\cos^2(ka)=\frac N2+\frac12\sum_{k=1}^{N}\cos(2ka)
+$$
+
+$$
+\sum_{k=1}^{N}\sin^2(ka)=\frac N2-\frac12\sum_{k=1}^{N}\cos(2ka)
+$$
+
+**You may use this sheet for both parts of the exam.**
+
+End of Instructions for the Student
+
+**DO NOT CLICK THE LINK FOR PART A UNTIL YOU ARE TOLD TO BEGIN**
+
+We acknowledge the US Physics Team coaches and other people for their contributions to this year’s exam (in alphabetical order):
+
+Tengiz Bibilashvili, Kellan Colburn, Natalie LeBaron, Rishab Parthasarathy, Mai Qi, Kye Shi, Heng Yuan and Elena Yudovina.
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [a.](#a2-a)
+- [b.](#a2-b)
+- [c.](#a2-c)
+- [d.](#a2-d)
+- [e.](#a2-e)
+- [f.](#a2-f)
+- [g.](#a2-g)
+
+</nav>
+
+Consider a spherically symmetric, nonrotating star of mass $m$ and radius $r$. If it gets too close to the supermassive black hole of mass $M \gg m$ at the center of a galaxy, it will be ripped apart by tidal forces. Throughout this problem, neglect relativistic effects and give answers in terms of $G$, $M$, $m$, and $r$. When asked for numbers, assume the star is Sun-like, so that $m = 2\times 10^{30}\ \mathrm{kg}$, $r = 7\times 10^{8}\ \mathrm{m}$, and $M = 10^{6}\, m$, and give all numeric answers to one significant figure.
+
+<ProblemSection id="a2-a">
+
+### a.
+
+Suppose the star orbits the black hole in a circle of radius $R$. What is the radius of curvature of the trajectory of each point on the star's surface? Note that the star does not rotate as it orbits.
+
+</ProblemSection>
+
+<ProblemSection id="a2-b">
+
+### b.
+
+Gas on the star's surface facing the black hole is attracted to the star by the star's gravity, and pulled away from the star by the black hole's tidal force. Write an expression for the tidal acceleration at the point closest to the black hole.
+
+</ProblemSection>
+
+<ProblemSection id="a2-c">
+
+### c.
+
+At a radius $R$ where the gravitational and tidal forces are in equilibrium, the star will start being tidally ripped apart. This effect can only be observed when $R$ is outside the black hole's Schwarzschild radius $R_s = 2GM/c^2$. Find an expression for $R$ and numerically evaluate the ratio $R/R_s$.
+
+For the rest of the problem, we consider a star on a parabolic orbit whose periapsis (distance of closest approach) is equal to the radius $R$ found in part 1. Near periapsis, the star will be torn apart in a "tidal disruption event". As a very rough model of this phenomenon, assume the star is initially a single rigid body. The moment it reaches periapsis, it fragments into many rigid pieces which do not interact with other, and feel only the black hole's gravity.
+
+</ProblemSection>
+
+<ProblemSection id="a2-d">
+
+### d.
+
+Afterward, some of the fragments will escape from the black hole, while the rest remain bound. Numerically evaluate the fraction of the mass which escapes.
+
+</ProblemSection>
+
+<ProblemSection id="a2-e">
+
+### e.
+
+An escaping fragment has speed $v_f$ when it is far from the black hole. Find the maximum possible value of $v_f$, among all fragments, and evaluate it numerically.
+
+</ProblemSection>
+
+<ProblemSection id="a2-f">
+
+### f.
+
+A bound fragment orbits with period $T_f$. Find the minimum possible value of $T_f$, among all fragments, and evaluate it numerically.
+
+As bound fragments return to the location of the initial disruption, they collide with other debris, causing them to be absorbed into the black hole's accretion disk. This process produces an enormous amount of light, with the luminosity (or energy emitted over time) proportional to the mass absorption rate. If $t = 0$ at the moment the star fragments apart, then light begins to be emitted at the time you found in part 5, and afterward the luminosity scales as $L \propto 1/t^n$ for a constant $n$.
+
+</ProblemSection>
+
+<ProblemSection id="a2-g">
+
+### g.
+
+Find the value of $n$. Assume for simplicity that the total energies of the bound fragments are uniformly distributed between their minimum and maximum values.
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.** As the star rotates about the black hole, each point on the surface will trace out a circle with radius $R$. The circle will be translated with respect to the star’s orbit.
+
+**b.** The tidal acceleration is equal to the difference in the gravitational acceleration due to the black hole at the center and the near surface of the star,
+
+$$
+g_T=\frac{GM}{(R-r)^2}-\frac{GM}{R^2}\approx\frac{2GMr}{R^3}
+$$
+
+where we used the binomial expansion.
+
+**c.** Setting the tidal acceleration expression equal to $Gm/r^2$ yields $R=r(2M/m)^{1/3}$. This is known as the solid-body Roche limit. In reality, a star can start breaking up at larger orbital radii, because its shape can be deformed, the star can be rotating, and the gas inside carries pressure. However, the Roche limit is a decent estimate of when tidal effects become very important.
+
+We then numerically compute $R=9\times10^{10}\ \mathrm{m}$ and $R_s=2GM/c^2=3\times10^9\ \mathrm{m}$, so the ratio is $R/R_s=30$. In other words, tidal disruption of such a star occurs well outside the black hole’s horizon, so the events are observable, and general relativistic effects can be safely neglected.
+
+For the rest of the problem, we consider a star on a parabolic orbit whose periapsis (distance of closest approach) is equal to the radius $R$ found in part 1. Near periapsis, the star will be torn apart in a "tidal disruption event". As a very rough model of this phenomenon, assume the star is initially a single rigid body. The moment it reaches periapsis, it fragments into many rigid pieces which do not interact with other, and feel only the black hole's gravity.
+
+**d.** Afterward, some of the fragments will escape from the black hole, while the rest remain bound. Numerically evaluate the fraction of the mass which escapes.
+
+The fragment at the center of the star has zero energy, since it's directly on the parabolic orbit. At periapsis, the fragments all have the same kinetic energy, since the star was a rigid body, but the ones further away from the black hole than the center have a less negative potential energy, so they have a positive total energy. Since $R \gg r$, about half of the star is further away than the center, so a fraction 0.5 of the mass escapes, independent of the parameters $m$, $M$, and $r$.
+
+**e.** An escaping fragment has speed $v_f$ when it is far from the black hole. Find the maximum possible value of $v_f$, among all fragments, and evaluate it numerically.
+
+At the moment of the disruption, the entire star has speed $v_0 = \sqrt{2GM/R}$. The fragments with the highest total energy are those at the far side of the star, a distance $R+r$ from the black hole. Applying conservation of energy per unit mass gives
+
+$$
+\frac{1}{2}v_f^2 = \frac{1}{2}v_0^2 - \frac{GM}{R+r} = \frac{GM}{R} - \frac{GM}{R+r} \approx \frac{GMr}{R^2}.
+$$
+
+Solving for $v_f$ and substituting in our earlier result for $R$ gives
+
+$$
+v_f = \left(\frac{2M}{m}\right)^{1/6}\sqrt{\frac{Gm}{r}} = 5\times 10^6\ \mathrm{m/s}.
+$$
+
+**f.** A bound fragment orbits with period $T_f$. Find the minimum possible value of $T_f$, among all fragments, and evaluate it numerically.
+
+The shortest period occurs for fragments at the near side of the star, a distance $R-r$ from the black hole. By similar reasoning to the previous part, the energy per unit mass of such fragments is $-GMr/R^2$. In addition, we know that the total energy per unit mass in an elliptical orbit is $-GM/(2a)$ where $a$ is the semimajor axis; combining these gives
+
+$$
+a = \frac{R^2}{2r} = \left(\frac{M}{m}\right)^{2/3}\frac{r}{2^{1/3}}.
+$$
+
+Finally, Kepler's third law states that the period is
+
+$$
+T_f = 2\pi\sqrt{\frac{a^3}{GM}} = 2\pi\sqrt{\frac{r^3}{2Gm}}\sqrt{\frac{M}{m}} = 7\times 10^6\ \mathrm{s} = 80\ \mathrm{days}.
+$$
+
+As bound fragments return to the location of the initial disruption, they collide with other debris, causing them to be absorbed into the black hole's accretion disk. This process produces an enormous amount of light, with the luminosity (or energy emitted over time) proportional to the mass absorption rate. If $t=0$ at the moment the star fragments apart, then light begins to be emitted at the time you found in part 5, and afterward the luminosity scales as $L \propto 1/t^n$ for a constant $n$.
+
+**g.** Find the value of $n$. Assume for simplicity that the total energies of the bound fragments are uniformly distributed between their minimum and maximum values.
+
+The mass that falls into the accretion disk in the interval $(t, t+dt)$ consists of particles whose orbital period $T_f$ is in that range. By Kepler's third law, the total energy of the particles is related to the orbital period as $E \propto T_f^{-2/3}$, so the width of the energy band of the particles that fall in during that time scales as $dE \propto T_f^{-5/3}dt$. Thus, we have $n = 5/3$. This is the canonical light curve power law for tidal disruption events. For further discussion, see the article *Stellar disruption by a supermassive black hole* by Lodato, King, and Pringle.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [USAPhO_Exam_25.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2025/USAPhO_Exam_25.pdf#page=5)
+· официални решения: [2025-USAPhO-Exam_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2025/2025-USAPhO-Exam_solutions.pdf#page=7)

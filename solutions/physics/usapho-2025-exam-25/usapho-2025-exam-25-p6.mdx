@@ -1,0 +1,364 @@
+---
+id: usapho-2025-exam-25-p6
+source: 'USAPhO 2025, Полуфинал'
+title: 'B3. Locked and Moded'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/USAPhO/2025/usapho-2025-exam-25.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T06:24:08.828Z'
+verifier: 'single-pass'
+---
+
+*2025 USA Physics Olympiad Exam · 25 т.*
+
+<Warning title="Бележка към темата">
+The supplied archive folder contains the complete question packet and the official interleaved solution packet. The separate problem cover sheets and blank response paper named in the instructions are absent. Printed source errors are retained: A2 refers to “part 1” and “part 5” despite its lettered subparts; A3's key uses $R$ in the wire-segment force although the question uses $a$; B1's key changes inertia symbols from $I_d,I_{cm}$ to $I_1,I_2$ and prints $v'=R/4$; B3's key uses a sum from $k=0$ to $N$ in its finite-mode derivation, and its Taylor expansion uses $1/3$ for the cubic sine term. The source is transcribed as printed, without mathematical corrections.
+</Warning>
+
+<details>
+<summary>AAPT UNITED STATES PHYSICS TEAM — AIP 2025; USA Physics Olympiad Exam — Instructions for the Student</summary>
+
+- All smartphones, tablets, smartwatches, and other internet-connected devices must be handed in before the exam begins. You may only use the desktop computer, laptop, or Chromebook designated for taking the exam.
+
+- You must remain in the exam room for the entire testing period.
+
+- You should receive:
+
+  - This instruction page
+  - A reference sheet (on the next page)
+  - Problem cover sheets
+  - Blank paper for solutions and scratch work
+
+Read this page carefully before the exam begins.
+
+- You may use a calculator, provided its memory has been cleared. You may not use any symbolic math, programming, or graphing features. Calculators may not be shared. Cell phones or any other unauthorized electronics may not be used at any time while the exam is in progress or while exam materials are present. Outside books or references are not allowed.
+
+- When the exam begins, click on the link for Part A. Once you click “Start,” a timer will begin. You will have 90 minutes to complete three problems. Each problem is worth 25 points, but they may differ in difficulty. When finished, you may review your work, but do not proceed to Part B.
+
+- After 90 minutes, your proctor will collect your Part A answer sheets. Do not include scratch work. You will then have a short break.
+
+- After the break, click on the link for Part B. You will again have 90 minutes to complete three problems. Each is worth 25 points.
+
+- At the end of Part B, you must return:
+
+  - Your Part B answer sheets (no scratch work)
+  - All blank and used scratch paper
+  - These instruction pages
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+<details>
+<summary>Instructions for Writing Your Solutions</summary>
+
+- Do not discuss any part of the exam until April 11th. Any violation may result in disqualification.
+
+Instructions for Writing Your Solutions
+
+- All work must be done on the provided blank pages. You may use as many plain and/or graph sheets as needed for each problem. Work outside of these pages will not be graded.
+
+- To help with grading, please draw a clear box around your final answer to each subpart.
+
+- Organize your work clearly and explain your reasoning concisely. Partial credit may be awarded for well-reasoned work, even if the final answer is incorrect.
+
+- You may write in either pencil or pen, but make sure your work is legible and scan-friendly.
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+<details>
+<summary>REFERENCE SHEET</summary>
+
+**Fundamental Constants**
+
+| | |
+| --- | --- |
+| $g=9.8\ \mathrm{N/kg}$ | $G=6.67\times10^{-11}\ \mathrm{N\cdot m^2/kg^2}$ |
+| $k=1/4\pi\epsilon_0=8.99\times10^9\ \mathrm{N\cdot m^2/C^2}$ | $k_m=\mu_0/4\pi=10^{-7}\ \mathrm{T\cdot m/A}$ |
+| $c=3.00\times10^8\ \mathrm{m/s}$ | $k_B=1.38\times10^{-23}\ \mathrm{J/K}$ |
+| $N_A=6.02\times10^{23}\ (\mathrm{mol})^{-1}$ | $R=N_Ak_B=8.31\ \mathrm{J/(mol\cdot K)}$ |
+| $\sigma=5.67\times10^{-8}\ \mathrm{J/(s\cdot m^2\cdot K^4)}$ | $e=1.602\times10^{-19}\ \mathrm{C}$ |
+| $1\ \mathrm{eV}=1.602\times10^{-19}\ \mathrm{J}$ | $h=6.63\times10^{-34}\ \mathrm{J\cdot s}=4.14\times10^{-15}\ \mathrm{eV\cdot s}$ |
+| $m_e=9.109\times10^{-31}\ \mathrm{kg}=0.511\ \mathrm{MeV}/c^2$ | |
+
+**Useful Approximations**
+
+$$
+(1+x)^n\approx1+nx+n(n-1)x^2/2\quad\text{for }|nx|\ll1
+$$
+
+$$
+e^x\approx1+x+x^2/2+x^3/6\quad\text{for }|x|\ll1
+$$
+
+$$
+\sin\theta\approx\theta-\theta^3/6\quad\text{for }|\theta|\ll1
+$$
+
+$$
+\cos\theta\approx1-\theta^2/2\quad\text{for }|\theta|\ll1
+$$
+
+**Useful Identities**
+
+$$
+\sum_{k=0}^{N}\cos(ka+\phi)=\frac{\sin\left(\frac{(N+1)a}{2}\right)\cdot\cos\left(\frac{Na}{2}+\phi\right)}{\sin\left(\frac a2\right)}
+$$
+
+$$
+\sum_{k=0}^{N}\sin(ka+\phi)=\frac{\sin\left(\frac{(N+1)a}{2}\right)\cdot\sin\left(\frac{Na}{2}+\phi\right)}{\sin\left(\frac a2\right)}
+$$
+
+$$
+\sum_{k=1}^{N}\cos^2(ka)=\frac N2+\frac12\sum_{k=1}^{N}\cos(2ka)
+$$
+
+$$
+\sum_{k=1}^{N}\sin^2(ka)=\frac N2-\frac12\sum_{k=1}^{N}\cos(2ka)
+$$
+
+**You may use this sheet for both parts of the exam.**
+
+End of Instructions for the Student
+
+**DO NOT CLICK THE LINK FOR PART A UNTIL YOU ARE TOLD TO BEGIN**
+
+We acknowledge the US Physics Team coaches and other people for their contributions to this year’s exam (in alphabetical order):
+
+Tengiz Bibilashvili, Kellan Colburn, Natalie LeBaron, Rishab Parthasarathy, Mai Qi, Kye Shi, Heng Yuan and Elena Yudovina.
+
+Copyright ©2025 American Association of Physics Teachers
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [a.](#b3-a)
+- [b.](#b3-b)
+- [c.](#b3-c)
+- [d.](#b3-d)
+- [e.](#b3-e)
+
+</nav>
+
+
+
+<ProblemSection id="b3-a">
+
+### a.
+
+Consider two mirrors facing each other separated by a distance $L$ (a Fabry–Pérot resonator). The cavity (the space between the two mirrors) is in vacuum (index of refraction $n=1$, no dispersion), and the mirrors have high reflectivities so that the main resonance condition is that an integer multiple of half-wavelengths fit into the cavity. A light pulse containing multiple different frequencies travels between the mirrors and interferes with itself.
+
+**i.** State the condition for resonance in terms of $L$ and wavelength $\lambda$.
+
+**ii.** Write down an expression for the resonant angular frequencies $\omega_m$, with $m$ counting each of the possible resonances.
+
+**iii.** What is the angular frequency spacing $\Delta\omega \equiv \omega_{m+1} - \omega_m$ between adjacent angular frequencies?
+
+</ProblemSection>
+
+<ProblemSection id="b3-b">
+
+### b.
+
+The electric field at the antinodes of the standing waves in the resonator is a superposition of oscillations at the resonant angular frequencies and is given by:
+
+$$
+E_{\text{before}}(t) = \sum_{k=-\infty}^{+\infty} E_k \cos\big[(k\,\Delta\omega)\,t\big].
+$$
+
+Now suppose we introduce a gain medium (such as a doped crystal) into the laser cavity. The gain medium completely absorbs incoming light and re-emits it over a finite range of $N$ angular frequencies centered around some angular frequency $\omega_0$, which coincides with one of the $\omega_m$ values determined above. Within this bandwidth, the gain medium amplifies and supports oscillations at all $\omega_m$ that fall within the range. (Assume $N$ is an odd number.)
+
+Assume that each of these $N$ angular frequencies—also referred to as modes—has the same amplitude $E_0$, and that their phases are locked such that there is zero relative phase between them at $t=0$. This condition is known as mode locking. Set their common phase so that all electric fields are expressed as cosine functions, consistent with the form of $E_{\text{before}}(t)$.
+
+**i.** Write an expression for the total electric field $E_{\text{after}}(t)$ as the sum of these $N$ equally spaced angular frequencies (with zero relative phase).
+
+**ii.** Show that in the limit of many angular frequencies ($\Delta\omega \ll \omega_0$, $N \gg 1$), the time-dependent electric field approximately takes the following form:
+
+$$
+E_{\text{after}}(t) \approx E_0 f(\omega_0, t)\frac{\sin\!\left(\frac{N(\Delta\omega)t}{2}\right)}{\sin\!\left(\frac{(\Delta\omega)t}{2}\right)}
+$$
+
+and determine the function $f(\omega_0, t)$.
+
+</ProblemSection>
+
+<ProblemSection id="b3-c">
+
+### c.
+
+To answer the next part of the problem, assume $N$ is odd and find the following limit when $a = \pi m$, where $m$ is an integer:
+
+$$
+\lim_{x\to a} \frac{\sin(Nx)}{\sin x}.
+$$
+
+</ProblemSection>
+
+<ProblemSection id="b3-d">
+
+### d.
+
+Mode locking can dramatically increase the peak intensity $I$ of the laser output. Use the expression $I = \gamma E^2$, where $\gamma$ is a known constant, to answer the following questions.
+
+**i.** Determine to the total instantaneous intensity $I_{\text{after}}(t)$ of the electric field.
+
+**ii.** What is the maximum possible intensity of the total field, and at what time(s) is this achieved?
+
+</ProblemSection>
+
+<ProblemSection id="b3-e">
+
+### e.
+
+The uncertainty principle states $\Delta x\,\Delta p \ge \frac{\hbar}{2}$. In optics, we are more commonly interested in the duration of the pulse rather than its spatial extent; the two are related via $\Delta x = c\,\Delta t$. Consider the problem of setting up a very short laser pulse. Use the uncertainty principle to estimate the required bandwidth (range of frequencies). Compare that to the relationship between pulse duration and gain bandwidth that we're achieving in this problem.
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**a.i.** For a Fabry–Pérot resonator of length $L$ in vacuum, an integer number of half-wavelengths must fit into the cavity. Mathematically, we express this resonance condition as:
+
+$$
+m\frac{\lambda}{2} = L,
+$$
+
+where $m$ is a positive integer. Rearranging gives
+
+$$
+\frac{\lambda}{2} = \frac{L}{m} \implies \lambda = \frac{2L}{m}
+$$
+
+**a.ii.** Now for the resonant angular frequencies:
+
+The angular frequency $\omega$ of light in vacuum is related to its wavelength by
+
+$$
+\omega = \frac{2\pi c}{\lambda},
+$$
+
+where $c$ is the speed of light in vacuum. Substituting $\lambda_m$ into this relation gives
+
+$$
+\omega_m = \frac{2\pi c}{\lambda_m} = \frac{2\pi c}{2L/m} = \frac{m\pi c}{L}.
+$$
+
+**a.iii.** The spacing between adjacent modes, e.g. for mode $m$ and $m+1$, is
+
+$$
+\Delta\omega = \omega_{m+1} - \omega_m = \frac{(m+1)\pi c}{L} - \frac{m\pi c}{L} = \frac{\pi c}{L}
+$$
+
+**b.i.** We assume $N$ frequencies equally spaced by $\Delta\omega$ around a central frequency $\omega_0$, all having amplitude $E_0$ and zero phase difference. One convenient way to index these frequencies is by letting $k$ run symmetrically about 0:
+
+$$
+\omega_k = \omega_0 + k\Delta\omega, \quad k = -\frac{N-1}{2}, -\frac{N-3}{2}, \ldots, \frac{N-3}{2}, \frac{N-1}{2}.
+$$
+
+(If $N$ is even, a similar indexing can be used, but the main idea remains the same.)
+
+Because all modes are in phase (zero relative phase), a real representation can be written by summing cosines:
+
+$$
+E_{\text{after}}(t) = E_0 \sum_{k=-\frac{N-1}{2}}^{+\frac{N-1}{2}} \cos\left[(\omega_0 + k\Delta\omega)t\right]
+$$
+
+**b.ii.**
+
+$$
+E_{\text{after}}(t) = E_0 \sum_{k=-\frac{N-1}{2}}^{+\frac{N-1}{2}} \cos\left[(\omega_0 + k\Delta\omega)t\right] = E_0 \sum_{k=0}^{N} \cos\left[\left(\omega_0 - \frac{N-1}{2}\Delta\omega + k\Delta\omega\right)t\right] =
+$$
+
+$$
+E_0 \cos\left(\omega_0 t + \frac{1}{2}\Delta\omega t\right)\frac{\sin\left(\frac{(N+1)\Delta\omega t}{2}\right)}{\sin\left(\frac{\Delta\omega t}{2}\right)} \approx E_0\cos(\omega_0 t)\frac{\sin\left(\frac{N(\Delta\omega)t}{2}\right)}{\sin\left(\frac{(\Delta\omega)t}{2}\right)}.
+$$
+
+$$
+f(\omega_0, t) = \cos(\omega_0 t).
+$$
+
+**c.** For indicated values of $a$, both numerator and denominator are approaching to 0. Using L'Hôpital's rule, we get
+
+$$
+\lim_{x\to\pi m}\frac{\sin(Nx)}{\sin x} = \lim_{x\to\pi m}\frac{N\cos(Nx)}{\cos x} = \frac{N\cos(\pi N m)}{\cos(\pi m)} = N.
+$$
+
+The answer is positive, because for odd values of $N$, $Nm$ and $m$ are both odd or both even.
+
+**d.i.**
+
+$$
+E_{\text{after}}(t) = E_0\cos(\omega_0 t)\frac{\sin\left(\frac{N(\Delta\omega)t}{2}\right)}{\sin\left(\frac{(\Delta\omega)t}{2}\right)}.
+$$
+
+Total instantaneous intensity $I_{\text{after}}(t)$: we're given
+
+$$
+I_{\text{after}}(t) = \gamma\left[E_{\text{after}}(t)\right]^2,
+$$
+
+Substituting $E_{\text{after}}(t)$ gives
+
+$$
+I_{\text{after}}(t) = \gamma\left[E_0\cos(\omega_0 t)\frac{\sin\left(\frac{N(\Delta\omega)t}{2}\right)}{\sin\left(\frac{(\Delta\omega)t}{2}\right)}\right]^2
+$$
+
+**d.ii.** All $N$ modes add constructively when their phases align. In the ideal phase-locked case, there is a moment in time (and corresponding phase) at which every mode's cosine term is at its maximum (i.e. $\cos(\omega_m t) = 1$ for each $m$). At that instant, the field amplitudes sum linearly:
+
+$$
+E_{\text{total}} = \sum_{m=1}^{N} E_0 = NE_0.
+$$
+
+Since $I_{\text{total}}(t) \propto \left[E_{\text{after}}(t)\right]^2$, the maximum intensity occurs when $|E_{\text{after}}|$ is largest, i.e. $E_{\text{after}} = NE_0$. Consequently,
+
+$$
+I_{max} = \gamma(NE_0)^2.
+$$
+
+This perfect alignment occurs when
+
+$$
+\omega_0 t + k\Delta\omega t \approx 2\pi \times (\text{integer})
+$$
+
+for each $k$ in the range $-\frac{N-1}{2}\ldots\frac{N-1}{2}$, which means $(\Delta\omega)t = 2\pi m$ for some integer $m$.
+
+You can also obtain this result by looking at the $\sin(Na)/\sin(a)$ term in the expression for the total field: the alignment occurs at zeros of the denominator, i.e. $\frac{(\Delta\omega)t}{2} = \pi\cdot m$, i.e.
+
+$$
+t = \frac{2\pi m}{\Delta\omega}.
+$$
+
+In theory, we should be worried about the value of the cosine term at that time; however, the constraint that $\omega_0$ as well as $\omega_0 + k(\Delta\omega)$ are all modes of the resonator ensures that $|\cos(\omega_0 t)| = 1$ at those times.
+
+**e.** From uncertainty principle: since $p = \frac{\hbar\omega}{c}$, the uncertainty principle can be stated as $\Delta t\Delta\omega \geq 1$, or "bandwidth $\geq 1/(\text{pulse duration})$".
+
+In our set-up, the bandwidth is $N\Delta\omega$ (not just $\Delta\omega$!), but we need to estimate the pulse duration. This is the time scale over which the intensity falls to a constant fraction of its original value. The intensity is dominated by the term $\frac{\sin(N(\Delta\omega)t/2)}{\sin((\Delta\omega)t/2)}$. If we Taylor-expand this around $t=0$, we write
+
+$$
+\frac{(N(\Delta\omega)t/2) - \frac{1}{3}(N(\Delta\omega)t/2)^3}{((\Delta\omega)t/2) - \frac{1}{3}((\Delta\omega)t/2)^3}.
+$$
+
+Cancelling out the linear term, we get
+
+$$
+N\left(1 - \frac{1}{3}N^2((\Delta\omega)t/2)^2\right)\left(1 + \frac{1}{3}((\Delta\omega)t/2)^2\right) = N\left(1 - \frac{1}{3}(N^2-1)((\Delta\omega)t/2)^2\right)
+$$
+
+This will become small when $(N^2-1)\left(\frac{(\Delta\omega)t}{2}\right)^2 \sim 1$, or $t \sim \frac{1}{N(\Delta\omega)}$, so the relationship is exactly as in the uncertainty principle.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [USAPhO_Exam_25.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2025/USAPhO_Exam_25.pdf#page=9)
+· официални решения: [2025-USAPhO-Exam_solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAPhO/2025/2025-USAPhO-Exam_solutions.pdf#page=18)
