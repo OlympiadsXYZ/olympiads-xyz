@@ -1,0 +1,1212 @@
+---
+id: ipho-2018-experiment-exp1-p1
+source: 'IPhO 2018, Експеримент'
+title: 'Задача 1. Paper transistor'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/2018/ipho-2018-experiment-exp1.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T13:50:07.083Z'
+verifier: 'single-pass'
+---
+
+*Paper transistor (10 points) · 23 юли 2018 г. · 10 т.*
+
+<Warning title="Бележка към темата">
+One complete connected Paper transistor experiment with Parts A–D and 20 native requests: 13 question, 19 official key and 15 native answer-sheet pages. The key version v1.4 is dated July 23, 2018. Complete apparatus, numeric sample measurements, derivations, graphs and blank forms retained. Printed source discrepancies remain with attributed local notes. No overall time limit, separate residual-current value or missing time measurements are invented.
+</Warning>
+
+<details>
+<summary>Official key edition</summary>
+
+Solutions to Experimental Problem 1 — Paper transistor. Authors: Elvira Fortunato, Luís Pereira, Rui Igreja, Paul Grey, Inês Cunha, Diana Gaspar, Rodrigo Martins. July 23, 2018, v1.4. The obtained historical key carries a “Confidential” watermark.
+
+</details>
+
+## Условие
+
+Electronic technology in modern society is based on a simple, yet powerful device: the transistor, which can be used both as a switch and as an amplifier. The switch mode is used for storage and processing of digital information.
+
+Here we will analyse two types of Field Effect Transistors (FET): JFET (Junction Field Effect Transistor) and the TFT (Thin Film Transistor).
+
+We shall briefly explain here how a FET works. A FET is a non-linear 3 terminal device (the terminals being named Gate: G; Source: S; and Drain: D) that can control the current flow between Source and Drain by acting upon the voltage applied between the Gate and the Source. In a simple, although imperfect analogy, a FET works similarly to a water tap, the knob acting as the Gate controlling the water flow.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '49.9%', '--fig-max': '319px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig1.png" alt="Complete native three-panel n-channel JFET cross-section, hydraulic analogy and circuit symbol, all G/S/D labels, p/n legend, current arrows and tap/flow." width="998" height="387" loading="lazy" decoding="async" />
+<figcaption>Figure 1. Scheme of an n-channel JFET (left), its hydraulic analogy (middle) and electric circuit symbol (right). The arrows in the JFET scheme indicate the flow of the electric current between Source (S) and Drain (D) through the narrow n-channel. The width of the channel depends on the applied voltage between the Gate (G) and the Source (S).</figcaption>
+</figure>
+
+
+The Junction-FET (JFET) relies upon the properties of the junction between two types of a semiconducting material, such as p and n doped silicon, hence its name. A JFET has a narrow channel through which the current flows between Source and Drain, and in a n-channel FET this channel is made of n-type material. The width of such channel can be controlled in a precise way by applying a **negative** voltage between the Gate and the Source, $V_{GS}=V_G-V_S$. For a fixed $V_{GS}$, the current flowing between Source and Drain depends non-linearly on the applied voltage between Drain and Source, $V_{DS}=V_D-V_S$. For small $V_{DS}$ voltages, however, the current does depend linearly on the applied voltage, thus the JFET displays ohmic behaviour. The output resistance, $R_{DS}=V_{DS}/I_{DS}$, however, does depend strongly on the applied $V_{GS}$ voltage, closely following the law:
+
+$$
+R_{DS}=\frac{R_{DS}^0}{1-V_{GS}/V_P},\qquad (1)
+$$
+
+where $R_{DS}^0$ is the output resistance at $V_{GS}=0$ and $V_P<0$ is a JFET parameter called the *pinch-off voltage*. Clearly, at the pinch-off voltage, the FET blocks current flow.
+
+For any fixed $V_{GS}>V_P$, the current between Source and Drain will start to depart from the linear behaviour as we increase $V_{DS}$, and will at some point saturate at an almost constant value. Let $I_{DSS}$ be the saturation current when $V_{GS}=0$. In the saturation regime (large applied $V_{DS}$), the saturation current will depend on $V_{GS}$ in the following way:
+
+$$
+I_{DS}=I_{DSS}(1-V_{GS}/V_P)^2.\qquad (2)
+$$
+
+We should stress two very important characteristics of a JFET. Although its voltage controlled output resistance can be quite low, the input resistance ($R_{GS}=V_{GS}/I_{GS}$) is extremely high, typically larger than $10^9\ \Omega$, so this device uses very little input current. Also, the capacitance of a small JFET is quite low making it a very fast device than can 'open and close' beyond MHz rates.
+
+We now proceed to describe how a different type of FET, the TFT, works.
+
+As any other FET, the TFT permits the control of a current between two contacts, the Drain and Source electrodes, by means of an applied potential at the third electrode, the Gate.
+
+The Gate electrode is physically separated from the semiconductor layer by a dielectric that allows for the establishment of a vertical electrical field that will control the free charge carriers existing in the semiconductor (field effect). The dielectric layer can be replaced by an electrolytic membrane such as paper where mobile ions exist (see Figure 2) and in this case the voltage applied at the Gate will push ions with opposite charge to the semiconductor interface, creating a sheet of ionic charges that will modulate the free carriers' density existing within the semiconductor (Electrolyte Gated Transistors - EGTs). Researchers at Universidade Nova, Lisbon, were pioneers in developing in 2008 the "paper transistor", and are world leaders in this field.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.9%', '--fig-max': '326px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig2.png" alt="Complete native paper thin-film-transistor cross-section including S/D/G electrodes, A/B/C material layers, X metal contact and all conventional current arrows." width="1018" height="572" loading="lazy" decoding="async" />
+<figcaption>Figure 2. Scheme of the paper thin film transistor (TFT) to be used in this problem. S - Source; D - Drain; G - Gate; A - paper (dielectric); B - substrate; C - semiconductor layer (Gallium-Indium-Zinc oxide (GIZO)); X - Metal contacts. The arrows indicate the conventional current flow.</figcaption>
+</figure>
+
+
+Similarly to JFETs, TFT transistors can operate in two fundamental operation modes, a linear mode and a saturation mode. In contrast to JFET, TFT intrinsic capacitance is a relevant parameter for the device performance.
+
+In this experimental problem you will examine how an n-channel JFET and a paper TFT work.
+
+You will determine the Characteristic Curves (CCs) of these devices by measuring the current between S and D ($I_{DS}$) through the application of distinct voltages at G ($V_{GS}$) and D ($V_{DS}$).
+
+The two most important CCs are the output and the transfer curves:
+
+- **Output Curve:** For this curve the current between Source and Drain ($I_{DS}$) will be measured and plotted as a function of the voltage between Source and Drain ($V_{DS}$), with $V_{DS}$ swept from $0\ \mathrm V$ up to $+3\ \mathrm V$, in steps, while keeping $V_{GS}$ constant.
+- **Transfer Curve:** For this curve $I_{DS}$ will be measured and plotted against $V_{GS}$. $V_{DS}$ will be kept constant at a suitable value for the transistor to work in the saturation mode and $V_{GS}$ will be swept in steps from $-3$ to $0\ \mathrm V$.
+
+**Equipment**
+
+The following set of equipment (Figure 3) is provided for this experimental problem:
+
+1. multimeter
+2. JFET transistor (provided inside a labelled plastic bag)
+3. cables (10) with alligator clips
+4. flat alligator clips (4, provided inside a plastic bag)
+5. battery pack ($4\times1.5\ \mathrm V$)
+6. battery holder
+7. mini-breadboard with support
+8. jumper wires (3) to connect to the mini-breadboard
+9. HB pencil
+10. silver ink conductive pen (Circuit Scribe)
+11. chronometer
+12. sheet of paper with printed circuits and an embedded TFT that uses paper as dielectric layer (Figure 4)
+13. bag with writing material (1 pen, 1 pencil, 1 eraser/sharpener, 1 ruler)
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '80.6%', '--fig-max': '516px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig3.png" alt="Entire native apparatus photograph with every numbered item 1–13, complete ruler/wires/pack/breadboard/transistor/paper/meter/pens/chronometer and full photograph boundaries." width="1613" height="2141" loading="lazy" decoding="async" />
+<figcaption>Figure 3. Equipment set.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '65.7%', '--fig-max': '421px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig4.png" alt="Complete printed circuit board and dimensioned carbon resistance track, all 1/2/3/4/R1/R2/RT1/RT2/RT3 labels, enlarged step, full track ends and 1cm/0.5mm dimension arrows." width="1315" height="1018" loading="lazy" decoding="async" />
+<figcaption>Figure 4. Left: Sheet of paper with printed circuits included in the equipment: paper (1), silver conductive tracks (2), carbon resistive tracks (3), paper transistor (4), voltage divider resistances ($R_1$ and $R_2$). Right: Physical dimensions of the voltage divider resistances (the steps of 0.5 mm are constant for each segment).</figcaption>
+</figure>
+
+
+**Important precaution:**
+
+**Do not fold** the sheet of paper with the printed circuits and embedded transistor as this will easily damage it. Try to leave it as flat as possible during measurements in order to reach best results.
+
+For the measurements it is important to take into account the following **important information**:
+
+- The multimeter should always be operated in DC mode.
+- The multimeter does not autorange and you should carefully choose the most appropriate ranges for your measurements. In case a overflow occurs the display will show either "1" or "-1" (left justified on the display), for positive and negative values, respectively, and you should change to a lower range.
+- The low-current ranges are protected by a $315\ \mathrm{mA}$ fuse. Avoid by all means to create a short circuit between the battery and the multimeter because a high current will blow up the fuse!
+- The internal resistance of the multimeter when operating in voltmeter mode is $10\ \mathrm{M\Omega}$.
+- When operating as ammeter, the internal resistance of the multimeter depends on the range as shown in the following table:
+
+| Range | $R_{int}/\Omega$ |
+| --- | --- |
+| $200\ \mathrm{mA}$ | 1.0 |
+| $20\ \mathrm{mA}$ | 10 |
+| $2\ \mathrm{mA}$ | 100 |
+
+Table 1. Internal resistance of the provided multimeter when operated as ammeter.
+
+Thus, when the multimeter is being used in DC ammeter mode, there will be a voltage drop up to $200\ \mathrm{mV}$ between its terminals at full scale when operated in any of the 3 available DC ranges.
+
+> **Source note:** The original overflow instruction says “change to a lower range”; that printed instruction is retained.
+
+**Part A. Circuit dimensioning (2.5 points)**
+
+To achieve the necessary $V_{DS}$ and $V_{GS}$ voltages you will use two carbon resistors printed on paper ($R_1$ and $R_2$, see Fig. 4) and voltage divider circuitry to dimension the circuit for the right potential drops. $R_1$ and $R_2$ will be the total resistance ($R_{tot}$) of a voltage divider circuit. When applying a constant voltage (in this case about $3\ \mathrm V$ from the battery) across $R_1$, for instance, we will see a voltage drop along it from $3\ \mathrm V$ ($V_{in}$, the positive contact of the battery) to ground ($0\ \mathrm V$; from now on, we designate as ground the common contact of the two battery packs). $R_{tot}$ can be divided into essentially two resistances ($R_x$ and $R_y$) to achieve the desirable $V_{out}$ (Figure 5).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '49.1%', '--fig-max': '315px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig5.png" alt="Complete pair of equivalent unloaded voltage-divider circuits, both grounds, Vin/Vout/Rtot/Rx/Ry and equality sign." width="983" height="545" loading="lazy" decoding="async" />
+<figcaption>Figure 5. Voltage divider circuit.</figcaption>
+</figure>
+
+**A.1** Write down the expression for the output voltage, $V_{out}$, as a function of $V_{in}$ and resistances $R_x$ and $R_y$. **[0,2 т.]**
+
+**A.2** Measure the resistance of the three test resistors on the bottom part of the sheet ($R_{T1}$, $R_{T2}$ and $R_{T3}$) with the multimeter. Carry out enough measurements with different positions on the silver contacts. Enter the values in the Answer Sheet. Calculate the average value and estimate the uncertainty for the resistance of each test resistor. **[0,5 т.]**
+
+**A.3** Show that the resistance of a square thin film with a certain resistivity, $\rho$, should be independent of the length of its side. This size-independent resistance is called sheet resistance and is denoted $R_{\square}$. **[0,3 т.]**
+
+**A.4** Calculate the average value of the sheet resistance of the carbon film from the data in A.2 and obtain the resistivity, $\rho$, of the carbon film with an estimation of its uncertainty (consider a thickness $t$ of the carbon film of $20\pm1\ \mathrm{\mu m}$). **[0,4 т.]**
+
+**A.5** Show that the theoretical value of the $R_1$ and $R_2$ resistances is $R_1=R_2=\kappa R_{\square}$, $\kappa\sim14.2897$. Measure $R_1$ and $R_2$ and write down the values in the Answer Sheet. Determine the experimental value of $\kappa$ and compare it with the theoretical value. **[0,5 т.]**
+
+Using the provided silver ink pen, draw 7 equally spaced conductive lines along each of the provided resistors (as exemplified in Figure 6). These individual lines will serve as the contact points for the voltage dividers.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '47.5%', '--fig-max': '304px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig6.png" alt="Entire native two-track contact scheme with Z/V/W, all A–G/H–N contacts, taper steps and seven silver contact lines on each track." width="951" height="457" loading="lazy" decoding="async" />
+<figcaption>Figure 6. Line drawing example and naming scheme of the contact points.</figcaption>
+</figure>
+
+**A.6** Measure the resistances $R_x$ and $R_y$ for all contact points. $R_x$ is defined as the resistance between the contact point and points V (resistor 1) or W (resistor 2), and $R_y$ is defined as the resistance between the contact point and point Z. Fill the provided tables in the Answer Sheet. **[0,3 т.]**
+
+Insert the 4 AA batteries in the battery holder. Please observe carefully the correct battery polarity and make sure you do not produce a short circuit. Then, physically connect the battery pack as depicted in Figure 7. Make sure you do not damage the silver tracks with the alligator clips.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.9%', '--fig-max': '326px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig7.png" alt="Complete original printed board and two 3V batteries, all wires, Z/V/W labels, test resistors and full lower return path." width="1018" height="1106" loading="lazy" decoding="async" />
+<figcaption>Figure 7. Battery connections</figcaption>
+</figure>
+
+**A.7** Measure $V_{out}$ at each contact point, $V_{out}$ being the voltage measured with respect to point Z and enter the values in the provided tables in the Answer Sheet. **[0,3 т.]**
+
+This concludes the circuit dimensioning part and you can now proceed to measure the CCs of the JFET transistor.
+
+**Part B. Characteristic Curves of the commercial JFET transistor (4.5 points)**
+
+In order to characterise the JFET transistor you will use the setup depicted in Figure 8. Start by identifying the three contacts (S, D and G) on the provided JFET transistor - **pay attention to the correct identification of the contacts, as the device is not symmetric!** You may use the provided minibreadboard with support to mount the JFET transistor. The provided jumper wires are to be used with the mini-breadboard.
+
+Using the provided cables, connect the Gate and the Source of the transistor to ground (point Z of the circuit, at $0\ \mathrm V$). Throughout this part of the problem, the Source of the JFET should always be kept connected to ground.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '67.6%', '--fig-max': '433px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig8.png" alt="Complete native JFET measuring circuit with meter, battery connections, red arrows, dashed excluded TFT region, complete upper S/G/D transistor inset and complete lower breadboard connectivity inset." width="1352" height="825" loading="lazy" decoding="async" />
+<figcaption>Figure 8. Setup for the determination of the JFET characteristic curves. The part of the circuit inside the dashed region that includes the TFT is not to be used in part B of the problem. The top inset shows how to identify the Gate, Source and Drain of the JFET transistor. The bottom inset shows how the holes of the mini-breadboard are connected. All holes in a numbered column are internally interconnected and isolated from the holes of other columns. The picture of the multimeter is merely illustrative: you are in charge of selecting the appropriate measuring mode and range in the rotary selector of the multimeter.</figcaption>
+</figure>
+
+**B.1** Connect the gate of the transistor to ground ($V_{GS}=0$). Then connect one of the cables of the multimeter, that should be used in DC current mode, to the drain of the transistor and with the other cable touch the point with the highest voltage available in the voltage dividers. Write down in the answer sheet the value of the current $I_{DS}$. **[0,2 т.]**
+
+**B.2** Measure the current $I_{DS}$ for different positive voltages applied to the Drain, while keeping $V_{GS}=0$. Then change the circuit to apply a negative voltage between the Gate and the Source of the transistor ($V_{GS}<0$) and repeat the measurements of $I_{DS}$ as a function of the positive applied voltage between Drain and Source. Fill with your values the tables provided in the Answer Sheet. **[0,8 т.]**
+
+When the voltage divider circuit is connected to a low resistance load (Figure 9), the voltage values provided by the voltage divider, $V_{out}^L$, are different from the nominal values $V_{out}$ measured when the load is a high resistance, such as the case of a high impedance voltmeter.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '19.5%', '--fig-max': '125px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig9.png" alt="Entire loaded voltage-divider circuit with Vin/VoutL/Rx/Ry/RL and both ground connections." width="390" height="475" loading="lazy" decoding="async" />
+<figcaption>Figure 9. Voltage divider with a load.</figcaption>
+</figure>
+
+**B.3** Consider that the voltage divider is connected to a load $R_L$. Obtain an expression for the correction factor $f=V_{out}^L/V_{out}$ as a function of $R_L$, $R_x$ and $R_y$. **[0,2 т.]**
+
+The JFET transistor has a low output resistance when $V_{GS}=0$, namely $R_{DS}^0\sim50\ \Omega$. However, this resistance increases significantly when the Gate is polarised negatively with respect to the Source. For $V_{GS}<0$ the output resistance follows closely the law given by equation (1).
+
+**B.4** Using the appropriate correction factors, calculate $V_{DS}$, the voltage drop between Drain and Source, for all the points measured in B.2. Consider the following nominal data for the JFET used in this problem: $R_{DS}^0=50\ \Omega$, $V_P=-1.4\ \mathrm V$. **[1,2 т.]**
+
+**B.5** Plot the output curves $I_{DS}(V_{DS})$ for your JFET transistor. **[0,5 т.]**
+
+**B.6** Consider the transistor in operation at small $V_{DS}$. Obtain the experimental values of $R_{DS}$ of your JFET for different $V_{GS}$ and plot the data. **[0,5 т.]**
+
+**B.7** Plot the transfer curve $I_{DS}(V_{GS})$ of your JFET transistor for $V_{DS}\sim+3\ \mathrm V$. **[0,3 т.]**
+
+When the JFET transistor is in saturation mode, the current $I_{DS}$ follows closely the law expressed by equation (2).
+
+**B.8** From the measured data, obtain $I_{DSS}$ and the pinch-off voltage, $V_P$, for your device. Compare the value obtained of $V_P$ with the nominal value. **[0,4 т.]**
+
+An important parameter of a JFET transistor, in particular when it is used in amplifiers, is the so called transistor transconductance, $g$, defined as
+
+$$
+g=\frac{\partial I_{DS}}{\partial V_{GS}}.\qquad (3)
+$$
+
+For a function of two variables $f(x,y)$, the notation $\frac{\partial f}{\partial x}$ means the derivative of $f$ with respect to $x$ when $y$ is kept constant.
+
+**B.9** Obtain, from the measured transfer curve, the transconductance of your device for $V_{GS}=-0.50\ \mathrm V$. Compare it with the calculated value obtained from the model equation (2). **[0,4 т.]**
+
+**Part C. The Paper Thin Film Transistor (2.0 points)**
+
+From now on, you discard the JFET, and all following tasks and questions relate to the paper thin film transistor (TFT) located in the upper corner of the printed circuit. The TFT Gate, Source and Drain are marked in Figure 10. Connect the TFT Gate and the Source to ground. Also in this part of the problem the Source of the paper TFT should always be connected to the common contact of the battery packs, i.e. $0\ \mathrm V$, as shown in Figure 10. Polarise the transistor with $V_{DS}>0$, via one of the voltage circuit dividers (Figure 10). Check that a current is flowing through the ammeter.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '80%', '--fig-max': '512px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig10.png" alt="Complete native TFT measuring setup including S/G/D contacts, all red current-meter wiring/arrows, batteries, complete printed board and lower return wire." width="1601" height="1513" loading="lazy" decoding="async" />
+<figcaption>Figure 10. Setup for measurements on the paper TFT. The picture of the multimeter is merely illustrative: you are in charge of selecting the appropriate measuring mode and range in the rotary selector of the multimeter.</figcaption>
+</figure>
+
+**C.1** Apply $V_{DS}=+3.0\ \mathrm V$. Close the transistor by applying $V_{GS}=-3.0\ \mathrm V$. Wait for $1\ \mathrm{min}$ so that the the transistor closes. Write down in the answer sheet the residual value of the current, $I_{closed}$. Then open the transistor by putting $V_{GS}=0$, while keeping $V_{DS}=+3.0\ \mathrm V$. Measure the current as function of time, starting at the instant when you open the transistor, for at least $5\ \mathrm{min}$ and collect the data $I_{DS}(t)$ in the answer sheet. **[0,8 т.]**
+
+**C.2** Plot $I_{DS}(t)$. There is a superposition of two exponential processes in the time dependence, one with a much larger time constant ($\tau_2$) than the other ($\tau_1$). Determine the shorter time constant, $\tau_1$. **[1,2 т.]**
+
+**Part D. Inverter circuit (1.0 points)**
+
+In microelectronic circuitry one of the most important circuits is the inverter, that is able to invert a digital input. For instance if $V_{in}=\text{high}$ then $V_{out}=\text{low}$ and vice-versa. A transistor is once again at the basis of the circuit and one of the simplest designs is the so called common source amplifier, depicted in Figure 11, using a transistor and a load resistance ($R_L$). In this case $V_{in}=V_{GS}$ and $V_{out}$ is the voltage measured at the Drain electrode of the transistor. Thus, in this part we will monitor what happens to $V_{out}$ while sweeping $V_{GS}$ from $-3\ \mathrm V$ to $0\ \mathrm V$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '24.8%', '--fig-max': '159px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig11.png" alt="Complete native common-source inverter schematic, +3V source/RL/Vout/VGS, full TFT symbol with G/S/D and ground." width="497" height="709" loading="lazy" decoding="async" />
+<figcaption>Figure 11. Common source amplifier and inverter circuit.</figcaption>
+</figure>
+
+
+In the setup of Figure 11 the transistor is the paper TFT and $R_L$ is a load resistance you are going to add now, manually, by connecting the Drain contact of the transistor with the Vin contact using a pencil track, as indicated in Figure 12. While you write, you are actually depositing thin layers of conductive graphite on the paper so the more layers you draw on top of each other, the lower the resistance will get. While drawing $R_L$ make sure to continuously monitor its resistance. To pull Vout as close to $0\ \mathrm V$ as possible the load resistance should be large enough. So, while drawing the resistance, aim for a value close to the target value $R_L=200\ \mathrm{k\Omega}$.
+
+You can either use the pencil to decrease $R_L$ or the eraser to increase it. You should aim to obtain a value differing not more than 10% from the aimed value.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '47.4%', '--fig-max': '303px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-fig12.png" alt="Entire inverter apparatus diagram with two batteries, complete printed board, S/G/D and manually drawn load RL track, all return wiring and both track endpoints." width="948" height="1014" loading="lazy" decoding="async" />
+<figcaption>Figure 12. Setup for the inverter/common source amplifier configuration.</figcaption>
+</figure>
+
+
+Use the included HB pencil and draw by hand a carbon resistor with value of $R_L\simeq200\ \mathrm{k\Omega}$ to be used as a load resistor of the paper TFT to build the inverter circuit (see Figure 12).
+
+**D.1** Write down in the Answer Sheet the measured $R_L$ value you have reached. Setup the inverter circuit (Figure 12) using the carbon track resistor and the paper TFT. Before the measurement, remember that you should turn the transistor fully off by applying $V_{GS}=-3\ \mathrm V$ and wait for $\sim1\ \mathrm{min}$. Then measure $V_{out}$ as you sweep $V_{GS}$ from $-3\ \mathrm V$ to $0\ \mathrm V$ and take readings of $V_{out}$ with a stabilization time for each point up to a maximum of $100\ \mathrm s$. Enter the measured values in the Answer Sheet. **[0,5 т.]**
+
+**D.2** Plot the measured $V_{out}(V_{in})$ voltage transfer curve and draw a smooth trend curve through the data points. **[0,5 т.]**
+
+**Native answer sheets**
+
+> These are the blank forms from the obtained 15-page official answer-sheet companion, in native page order. Blank cells and fields are deliberately left blank. They are not additional tasks or measured data.
+
+**Answer sheet A1-1**
+
+Write down the numbers 0 to 9 in the following table:
+
+| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |  |  |  |
+
+**Part A: Circuit Dimensioning (2.5 points)**
+
+**A.1 (0.2 pt)**
+
+$V_{out}=\underline{\qquad}$
+
+**A.2 (0.5 pt)**
+
+| # | $R_{T1}$ | $R_{T2}$ | $R_{T3}$ |
+| --- | --- | --- | --- |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+| $\bar R$ |  |  |  |
+| $\sigma_R$ |  |  |  |
+
+**Answer sheet A1-2**
+
+**A.3 (0.3 pt)**
+
+Demonstration:
+
+**A.4 (0.4 pt)**
+
+$R_{\square}=\underline{\qquad}\pm\underline{\qquad}$
+
+$\rho_{\text{Carbon film}}=\underline{\qquad}\pm\underline{\qquad}$
+
+**A.5 (0.5 pt)**
+
+Demonstration:
+
+Measured values:
+
+$R_1=\underline{\qquad}$
+
+$R_2=\underline{\qquad}$
+
+$\kappa=\underline{\qquad}$
+
+**Answer sheet A1-3**
+
+**A.6 (0.3 pt)**
+
+Resistor $R_1$:
+
+| Points | $R_x$ | $R_y$ |
+| --- | --- | --- |
+| Z |  |  |
+| A |  |  |
+| B |  |  |
+| C |  |  |
+| D |  |  |
+| E |  |  |
+| F |  |  |
+| G |  |  |
+| V |  |  |
+
+Resistor $R_2$:
+
+| Points | $R_x$ | $R_y$ |
+| --- | --- | --- |
+| Z |  |  |
+| H |  |  |
+| I |  |  |
+| J |  |  |
+| K |  |  |
+| L |  |  |
+| M |  |  |
+| N |  |  |
+| W |  |  |
+
+**A.7 (0.3 pt)**
+
+| Points | $V_{out}$ | Points | $V_{out}$ |
+| --- | --- | --- | --- |
+| A |  | H |  |
+| B |  | I |  |
+| C |  | J |  |
+| D |  | K |  |
+| E |  | L |  |
+| F |  | M |  |
+| G |  | N |  |
+| V |  | W |  |
+
+**Answer sheet A1-4**
+
+**Part B: Characteristic Curves of the JFET transistor (4.5 points)**
+
+**B.1 (0.2 pt)**
+
+$I_{DS}=\underline{\qquad}$
+
+**B.2 (0.8 pt)**
+
+$I_{DS}$ current values:
+
+| Gate/Drain | Z | H | I | J | K | L | M | N | W |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Z |  |  |  |  |  |  |  |  |  |
+| A |  |  |  |  |  |  |  |  |  |
+| B |  |  |  |  |  |  |  |  |  |
+| C |  |  |  |  |  |  |  |  |  |
+| D |  |  |  |  |  |  |  |  |  |
+| E |  |  |  |  |  |  |  |  |  |
+| F |  |  |  |  |  |  |  |  |  |
+| G |  |  |  |  |  |  |  |  |  |
+| V |  |  |  |  |  |  |  |  |  |
+
+**B.3 (0.2 pt)**
+
+$f=\underline{\qquad}$
+
+**Answer sheet A1-5**
+
+**B.4 (1.2 pt)**
+
+Use the empty columns to enter corrections factors you deem necessary.
+
+Gate A:
+
+$V_{GS}=\underline{\qquad}$
+
+$R_{DS}=\underline{\qquad}$
+
+| Drain point | $V_{out}$ | $V_{out}^{L}$ | **$V_{DS}$** | $I_{DS}$ |  |  |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+
+Gate B:
+
+$V_{GS}=\underline{\qquad}$
+
+$R_{DS}=\underline{\qquad}$
+
+| Drain point | $V_{out}$ | $V_{out}^{L}$ | **$V_{DS}$** | $I_{DS}$ |  |  |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+
+**Answer sheet A1-6**
+
+**B.4 cont.**
+
+Gate C:
+
+$V_{GS}=\underline{\qquad}$
+
+$R_{DS}=\underline{\qquad}$
+
+| Drain point | $V_{out}$ | $V_{out}^{L}$ | **$V_{DS}$** | $I_{DS}$ |  |  |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+
+Gate D:
+
+$V_{GS}=\underline{\qquad}$
+
+$R_{DS}=\underline{\qquad}$
+
+| Drain point | $V_{out}$ | $V_{out}^{L}$ | **$V_{DS}$** | $I_{DS}$ |  |  |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+
+**Answer sheet A1-7**
+
+**B.4 cont.**
+
+Gate E:
+
+$V_{GS}=\underline{\qquad}$
+
+$R_{DS}=\underline{\qquad}$
+
+| Drain point | $V_{out}$ | $V_{out}^{L}$ | **$V_{DS}$** | $I_{DS}$ |  |  |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+
+Gate F:
+
+$V_{GS}=\underline{\qquad}$
+
+$R_{DS}=\underline{\qquad}$
+
+| Drain points | $V_{out}$ | $V_{out}^{L}$ | **$V_{DS}$** | $I_{DS}$ |  |  |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+
+**Answer sheet A1-8**
+
+**B.4 cont.**
+
+Gate G:
+
+$V_{GS}=\underline{\qquad}$
+
+$R_{DS}=\underline{\qquad}$
+
+| Drain points | $V_{out}$ | $V_{out}^{L}$ | **$V_{DS}$** | $I_{DS}$ |  |  |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+
+Gate V:
+
+$V_{GS}=\underline{\qquad}$
+
+$R_{DS}=\underline{\qquad}$
+
+| Drain points | $V_{out}$ | $V_{out}^{L}$ | **$V_{DS}$** | $I_{DS}$ |  |  |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |
+
+**Answer sheet A1-9**
+
+**B.5 (0.5 pt)**
+
+Output curves:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '86.4%', '--fig-max': '553px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-ans-fig1.png" alt="Entire blank native orange grid for B.5 output curves, all original fine/coarse gridlines and full four boundaries." width="1729" height="1099" loading="lazy" decoding="async" />
+</figure>
+
+
+**Answer sheet A1-10**
+
+**B.6 (0.5 pt)**
+
+| $V_{GS}$ | $R_{DS}$ |
+| --- | --- |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+|  |  |
+
+Graph: $R_{DS}(V_{GS})$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '71.9%', '--fig-max': '460px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-ans-fig2.png" alt="Entire blank native orange grid for B.6 RDS(VGS), all fine/coarse gridlines and four boundaries." width="1439" height="920" loading="lazy" decoding="async" />
+</figure>
+
+
+**Answer sheet A1-11**
+
+**B.7 (0.3 pt)**
+
+Transfer curve:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '71.9%', '--fig-max': '460px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-ans-fig3.png" alt="Entire blank native orange grid for B.7 transfer curve, all fine/coarse gridlines and four boundaries." width="1439" height="920" loading="lazy" decoding="async" />
+</figure>
+
+
+**B.8 (0.4 pt)**
+
+$I_{DSS}=\underline{\qquad}$
+
+$V_P=\underline{\qquad}$
+
+**B.9 (0.4 pt)**
+
+Measured transconductance: $g=\underline{\qquad}$
+
+Calculated transconductance from JFET model: $g=\underline{\qquad}$
+
+**Answer sheet A1-12**
+
+**Part C: The Paper Thin Film Transistor (2.0 points)**
+
+**C.1 (0.8 pt)**
+
+$I_{closed}=\underline{\qquad}$
+
+| $t$ | $I$ | $t$ | $I$ |
+| --- | --- | --- | --- |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+
+**Answer sheet A1-13**
+
+**C.2 (1.2 pt)**
+
+Graph: $I_{DS}(t)$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '71.9%', '--fig-max': '460px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-ans-fig4.png" alt="Entire upper blank native orange C.2 IDS(t) graph grid, all fine/coarse gridlines and four boundaries." width="1439" height="913" loading="lazy" decoding="async" />
+</figure>
+
+
+Auxiliary graph to determine $\tau_1$:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '71.9%', '--fig-max': '460px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-ans-fig5.png" alt="Entire lower blank native orange C.2 auxiliary graph grid for tau1, all fine/coarse gridlines and four boundaries." width="1439" height="924" loading="lazy" decoding="async" />
+</figure>
+
+
+$\tau_1=\underline{\qquad}$
+
+**Answer sheet A1-14**
+
+**Part D: Inverter circuit (1.0 points)**
+
+**D.1 (0.5 pt)**
+
+$R_L=\underline{\qquad}$
+
+| $t$ | $V_{in}$ | $V_{out}$ |
+| --- | --- | --- |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+**Answer sheet A1-15**
+
+**D.2 (0.5 pt)**
+
+Graph: $V_{out}(V_{in})$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '86.4%', '--fig-max': '553px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-ans-fig6.png" alt="Entire blank native orange D.2 Vout(Vin) graph grid, all fine/coarse gridlines and four boundaries." width="1729" height="1099" loading="lazy" decoding="async" />
+</figure>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Sketch of the solutions:**
+
+**Part A. Circuit dimensioning (2.4 points)**
+
+> **Source note:** The key heading prints 2.4 points. The question and answer-sheet headings print 2.5 points; both source values are retained.
+
+**A.1**
+
+Using Ohm’s law, the current through the voltage divisor is $I=V_{in}/(R_x+R_y)$, and $V_{out}=R_y I$. Thus
+
+**A.1 (0.2 pt)**
+
+$$
+V_{out}=V_{in}\frac{R_y}{R_x+R_y}.
+$$
+
+**A.2 (0.5 pt)**
+
+Uncertainty in each measurement: $\pm0.01\ \Omega$
+
+| # | $R_{T1}$ | $R_{T2}$ | $R_{T3}$ |
+| --- | --- | --- | --- |
+| 1 | 122.3 | 125.3 | 125.3 |
+| 2 | 122.3 | 125.4 | 125.4 |
+| 3 | 122.3 | 125.3 | 125.4 |
+| 4 | 122.2 | 125.2 | 125.5 |
+| 5 | 122.3 | 125.4 | 125.4 |
+| 6 | 122.3 | 125.4 | 125.3 |
+| 7 | 122.2 | 125.4 | 125.4 |
+| 8 | 122.2 | 125.3 | 125.4 |
+| 9 | 122.2 | 125.4 | 125.4 |
+| 10 | 122.2 | 125.4 | 125.5 |
+| $\bar R$ | 122.25 | 125.35 | 125.40 |
+| $\sigma_R$ | 0.05 | 0.07 | 0.07 |
+
+**A.3 (0.3 pt)**
+
+For a parallelepiped conductor of length $l$, width $w$ and thickness $t$, the resistance is given by
+
+$$
+R=\rho\frac{l}{wt}.
+$$
+
+For a thin film of square shape, $l=w$, thus
+
+$$
+R=\rho\frac{l}{wt}=\frac{\rho}{t}=R_{\square}.
+$$
+
+**A.4**
+
+The weighted average value (weighed by $1/\sigma^2$) of the sheet resistance is $\bar R=123.94\pm0.04\ \Omega$ and $\rho=R_{\square}t$.
+
+**A.4 (0.4 pt)**
+
+$$
+\bar R=123.94\pm0.04\ \Omega
+$$
+
+$$
+\rho=2.5\pm0.1\times10^{-3}\ \Omega\,\mathrm m.
+$$
+
+**A.5 (0.5 pt)**
+
+For a rectangular thin film $R=R_{\square}\frac{l}{w}$, thus
+
+$$
+R_1=R_2=R_{\square}(1+1/0.9+1/0.8+1/0.7+1/0.6+1/0.5+1/0.4+1/0.3)=14.2897R_{\square}.
+$$
+
+Measured values:
+
+$$
+R_1=1776\pm1\ \Omega\qquad k_1=14.33
+$$
+
+$$
+R_2=1787\pm1\ \Omega\qquad k_2=14.42
+$$
+
+$$
+\bar\kappa=14.3\pm0.1
+$$
+
+Comparison with the theoretical value: the average value is compatible, within the assigned error bar, with the theoretical value.
+
+**A.6 (0.3 pt)**
+
+Uncertainty in resistance measurements: $\pm1\ \Omega$.
+
+Resistor $R_1$:
+
+| Points | $R_x/\Omega$ | $R_y/\Omega$ |
+| --- | --- | --- |
+| Z | 1776 | 0 |
+| A | 1708 | 165 |
+| B | 1578 | 296 |
+| C | 1421 | 452 |
+| D | 1239 | 607 |
+| E | 1033 | 829 |
+| F | 768 | 1072 |
+| G | 439 | 1394 |
+| V | 0 | 1782 |
+
+Resistor $R_2$:
+
+| Points | $R_x/\Omega$ | $R_y/\Omega$ |
+| --- | --- | --- |
+| Z | 1791 | 0 |
+| H | 1428 | 411 |
+| I | 1120 | 737 |
+| J | 882 | 996 |
+| K | 670 | 1200 |
+| L | 498 | 1396 |
+| M | 341 | 1555 |
+| N | 188 | 1719 |
+| W | 0 | 1793 |
+
+**A.7 (0.3 pt)**
+
+| Points | $V_{out}/\mathrm V$ | Points | $V_{out}/\mathrm V$ |
+| --- | --- | --- | --- |
+| Z | 0 | – | — |
+| A | -0.208 | H | 0.664 |
+| B | -0.435 | I | 1.171 |
+| C | -0.699 | J | 1.593 |
+| D | -1.003 | K | 1.939 |
+| E | -1.337 | L | 2.24 |
+| F | -1.756 | M | 2.51 |
+| G | -2.29 | N | 2.77 |
+| V | -2.99 | W | 3.00 |
+
+**Part B. Characteristic Curves of the JFET transistor (4.5 points)**
+
+**B.1 (0.2 pt)**
+
+$$
+I_{DS}=11.84\pm0.01\ \mathrm{mA}
+$$
+
+**B.2 (0.8 pt)**
+
+$I_{DS}$ currents in mA:
+
+| Gate/Drain | Z | H | I | J | K | L | M | N | W |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Z | 0 | 1.58 | 2.18 | 2.82 | 3.60 | 4.75 | 6.45 | 9.43 | 11.87 |
+| A | 0 | 1.52 | 2.13 | 2.67 | 3.47 | 4.53 | 6.04 | 7.82 | 8.78 |
+| B | 0 | 1.45 | 2.00 | 2.63 | 3.29 | 4.21 | 5.15 | 5.77 | 6.09 |
+| C | 0 | 1.28 | 1.79 | 2.23 | 2.59 | 2.85 | 2.99 | 3.08 | 3.16 |
+| D | 0 | 0.65 | 0.76 | 0.81 | 0.85 | 0.89 | 0.92 | 0.94 | 0.96 |
+| E | 0 | 0.03 | 0.04 | 0.05 | 0.05 | 0.05 | 0.05 | 0.06 | 0.07 |
+| F | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| G | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| V | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+**B.3**
+
+The unloaded voltage is
+
+$$
+V_{out}=V_{in}\frac{R_y}{R_x+R_y}
+$$
+
+and the loaded voltage is
+
+$$
+V_{out}^{L}=V_{in}\frac{R_y'}{R_x+R_y'},
+$$
+
+where $R_y'$ is the equivalent resistance of the parallel association between $R_y$ and $R_L$:
+
+$$
+R_y'=\frac{R_yR_L}{R_y+R_L}.
+$$
+
+Thus,
+
+$$
+f=\frac{\frac{R_y'}{R_x+R_y'}}{\frac{R_y}{R_x+R_y}}=\frac{(R_x+R_y)R_y'}{(R_x+R_y')R_y}=\frac{(R_x+R_y)\frac{R_L}{R_y+R_L}}{R_x+R_y\frac{R_L}{R_y+R_L}}.
+$$
+
+Note that in terms of $\eta=1/(1+\frac{R_y}{R_L})$, the factor $f$ can be written as
+
+$$
+f=\frac{(R_x+R_y)\eta}{R_x+R_y\eta}.
+$$
+
+When $R_L\gg R_y$, $\eta\to1$, and $f\to1$; when $R_L\ll R_y$, $\eta\to0$ and $f\to0$.
+
+**B.3 (0.2 pt)**
+
+$$
+f=\frac{(R_x+R_y)\eta}{R_x+R_y\eta}.
+$$
+
+**B.4 (0.7 pt)**
+
+Gate: A, $V_{GS}=0\ \mathrm V$, $R_{DS}=50.0$.
+
+| Drain | $V_{out}/\mathrm V$ | $V_{out}^{L}/\mathrm V$ | $V_{DS}/\mathrm V$ | $I_{DS}/\mathrm{mA}$ | $rI/\mathrm V$ | $f$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z | 0,000 | 0,000 | 0,000 | 0,00 | 0,000 | 1,000 |
+| H | 0,664 | 0,105 | 0,089 | 1,58 | 0,016 | 0,158 |
+| I | 1,171 | 0,139 | 0,117 | 2,18 | 0,022 | 0,119 |
+| J | 1,593 | 0,181 | 0,153 | 2,82 | 0,028 | 0,114 |
+| K | 1,939 | 0,237 | 0,201 | 3,60 | 0,036 | 0,122 |
+| L | 2,240 | 0,315 | 0,267 | 4,75 | 0,048 | 0,140 |
+| M | 2,510 | 0,443 | 0,379 | 6,45 | 0,065 | 0,177 |
+| N | 2,770 | 0,724 | 0,630 | 9,43 | 0,094 | 0,261 |
+| W | 3,000 | 3,000 | 2,881 | 11,87 | 0,119 | 1,000 |
+
+**B.4 cont. (0.7 pt)**
+
+Gate: B, $V_{GS}=-0.208\ \mathrm V$, $R_{DS}=58.73$.
+
+| Drain | $V_{out}/\mathrm V$ | $V_{out}^{L}/\mathrm V$ | $V_{DS}/\mathrm V$ | $I_{DS}/\mathrm{mA}$ | $rI/\mathrm V$ | $f$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z | 0.000 | 0.000 | 0.000 | 0.00 | 0.000 | 1.000 |
+| H | 0.664 | 0.118 | 0.102 | 1.52 | 0.015 | 0.177 |
+| I | 1.171 | 0.157 | 0.136 | 2.13 | 0.021 | 0.134 |
+| J | 1.593 | 0.204 | 0.177 | 2.67 | 0.027 | 0.128 |
+| K | 1.939 | 0.267 | 0.233 | 3.47 | 0.035 | 0.138 |
+| L | 2.240 | 0.353 | 0.308 | 4.53 | 0.045 | 0.158 |
+| M | 2.510 | 0.495 | 0.435 | 6.04 | 0.060 | 0.197 |
+| N | 2.770 | 0.799 | 0.721 | 7.82 | 0.078 | 0.289 |
+| W | 3.000 | 3.000 | 2.912 | 8.78 | 0.088 | 1.000 |
+
+**B.4 cont.**
+
+Gate: C, $V_{GS}=-0.435\ \mathrm V$, $R_{DS}=72.54$.
+
+| Drain | $V_{out}/\mathrm V$ | $V_{out}^{L}/\mathrm V$ | $V_{DS}/\mathrm V$ | $I_{DS}/\mathrm{mA}$ | $rI/\mathrm V$ | $f$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z | 0.000 | 0.000 | 0.000 | 0.00 | 0.000 | 1.000 |
+| H | 0.664 | 0.136 | 0.122 | 1.45 | 0.015 | 0.205 |
+| I | 1.171 | 0.183 | 0.163 | 2.00 | 0.020 | 0.157 |
+| J | 1.593 | 0.239 | 0.213 | 2.63 | 0.026 | 0.150 |
+| K | 1.939 | 0.312 | 0.279 | 3.29 | 0.033 | 0.161 |
+| L | 2.240 | 0.411 | 0.369 | 4.21 | 0.042 | 0.184 |
+| M | 2.510 | 0.572 | 0.520 | 5.15 | 0.052 | 0.228 |
+| N | 2.770 | 0.907 | 0.850 | 5.77 | 0.058 | 0.328 |
+| W | 3.000 | 3.000 | 2.939 | 6.09 | 0.061 | 1.000 |
+
+**B.4 cont. (0.7 pt)**
+
+Gate: D, $V_{GS}=-0.699\ \mathrm V$, $R_{DS}=99.86$.
+
+| Drain | $V_{out}/\mathrm V$ | $V_{out}^{L}/\mathrm V$ | $V_{DS}/\mathrm V$ | $I_{DS}/\mathrm{mA}$ | $rI/\mathrm V$ | $f$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z | 0.000 | 0.000 | 0.000 | 0.00 | 0.000 | 1.000 |
+| H | 0.664 | 0.170 | 0.157 | 1.28 | 0.013 | 0.256 |
+| I | 1.171 | 0.232 | 0.214 | 1.79 | 0.018 | 0.198 |
+| J | 1.593 | 0.303 | 0.281 | 2.23 | 0.022 | 0.190 |
+| K | 1.939 | 0.395 | 0.369 | 2.59 | 0.026 | 0.204 |
+| L | 2.240 | 0.516 | 0.487 | 2.85 | 0.029 | 0.230 |
+| M | 2.510 | 0.708 | 0.678 | 2.99 | 0.030 | 0.282 |
+| N | 2.770 | 1.089 | 1.059 | 3.08 | 0.031 | 0.393 |
+| W | 3.000 | 3.000 | 2.968 | 3.16 | 0.032 | 1.000 |
+
+**B.4 cont.**
+
+Gate: E, $V_{GS}=-1.003\ \mathrm V$, $R_{DS}=176.3$.
+
+| Drain | $V_{out}/\mathrm V$ | $V_{out}^{L}/\mathrm V$ | $V_{DS}/\mathrm V$ | $I_{DS}/\mathrm{mA}$ | $rI/\mathrm V$ | $f$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z | 0.000 | 0.000 | 0.000 | 0.00 | 0.000 | 1.000 |
+| H | 0.664 | 0.245 | 0.238 | 0.65 | 0.007 | 0.369 |
+| I | 1.171 | 0.346 | 0.338 | 0.76 | 0.008 | 0.295 |
+| J | 1.593 | 0.454 | 0.446 | 0.81 | 0.008 | 0.285 |
+| K | 1.939 | 0.586 | 0.578 | 0.85 | 0.009 | 0.302 |
+| L | 2.240 | 0.754 | 0.745 | 0.89 | 0.009 | 0.337 |
+| M | 2.510 | 1.004 | 0.994 | 0.92 | 0.009 | 0.400 |
+| N | 2.770 | 1.451 | 1.441 | 0.94 | 0.009 | 0.524 |
+| W | 3.000 | 3.000 | 2.990 | 0.96 | 0.010 | 1.000 |
+
+**B.4 cont. (1.2 pt)**
+
+Gate: F, $V_{GS}=-1.337\ \mathrm V$, $R_{DS}=1111$.
+
+| Drain | $V_{out}/\mathrm V$ | $V_{out}^{L}/\mathrm V$ | $V_{DS}/\mathrm V$ | $I_{DS}/\mathrm{mA}$ | $rI/\mathrm V$ | $f$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z | 0.000 | 0.000 | 0.000 | 0.00 | 0.000 | 1.000 |
+| H | 0.664 | 0.526 | 0.523 | 0.03 | 0.003 | 0.791 |
+| I | 1.171 | 0.857 | 0.853 | 0.04 | 0.004 | 0.732 |
+| J | 1.593 | 1.149 | 1.144 | 0.05 | 0.005 | 0.721 |
+| K | 1.939 | 1.431 | 1.426 | 0.05 | 0.005 | 0.738 |
+| L | 2.240 | 1.719 | 1.714 | 0.05 | 0.005 | 0.767 |
+| M | 2.510 | 2.039 | 2.034 | 0.05 | 0.005 | 0.812 |
+| N | 2.770 | 2.430 | 2.424 | 0.06 | 0.006 | 0.877 |
+| W | 3.000 | 3.000 | 2.993 | 0.07 | 0.007 | 1.000 |
+
+**B.4 cont.**
+
+Gate: G, $V_{GS}=-1.756\ \mathrm V$, $R_{DS}=\infty$.
+
+| Drain | $V_{out}/\mathrm V$ | $V_{out}^{L}/\mathrm V$ | $V_{DS}/\mathrm V$ | $I_{DS}/\mathrm{mA}$ | $rI/\mathrm V$ | $f$ |
+| --- | --- | --- | --- | --- | --- | --- |
+| Z | 0.000 | 0.000 | 0.000 | 0.00 | 0.000 | 1.000 |
+| H | 0.664 | -0.288 | -0.288 | 0.00 | 0.000 | -0.434 |
+| I | 1.171 | -0.325 | -0.325 | 0.00 | 0.000 | -0.278 |
+| J | 1.593 | -0.415 | -0.415 | 0.00 | 0.000 | -0.260 |
+| K | 1.939 | -0.562 | -0.562 | 0.00 | 0.000 | -0.290 |
+| L | 2.240 | -0.800 | -0.800 | 0.00 | 0.000 | -0.357 |
+| M | 2.510 | -1.325 | -1.325 | 0.00 | 0.000 | -0.528 |
+| N | 2.770 | -3.675 | -3.675 | 0.00 | 0.000 | -1.327 |
+| W | 3.000 | 3.000 | 3.000 | 0.00 | 0.000 | 1.000 |
+
+> **Source note:** B.4 prints 0.7 pt on key pages 7–9 and 1.2 pt on page 10; the question and answer sheet print 1.2 pt. The native key Gate A–G headings are shifted relative to the earlier A.7 and B.2 tables. All printed gate headings, decimal punctuation and Gate G negative correction values are retained.
+
+**B.5 (0.5 pt)**
+
+Output curves:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '79%', '--fig-max': '506px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig1.png" alt="Full native JFET output-curve graph, all six VGS legend series, data symbols/curves, IDS/mA and VDS/V axes, all ticks and complete plot frame." width="1581" height="1078" loading="lazy" decoding="async" />
+</figure>
+
+
+**B.6**
+
+The $R_{DS}$ values are obtained from the slopes of the linear region of the output curves (small $V_{DS}$ voltages). The last point in the plot $R_{DS}(V_{GS})$ has a large error bars as we are missing points in the linear regime, and will be ignored.
+
+The solid line in the plot is the result of a fit to $R_{DS}=R_{DS}^0(1-V_{GS}/V_P)$, that gave $R_{DS}^0=52(2)\ \Omega$, $V_P=-1.18(1)\ \mathrm V$.
+
+**B.6 (0.5 pt)**
+
+| $V_{GS}/\mathrm V$ | $R_{DS}/\Omega$ |
+| --- | --- |
+| 0 | $56.5\pm2$ |
+| -0.208 | $67.4\pm2$ |
+| -0.435 | $84.1\pm4$ |
+| -0.699 | $122.84\pm4$ |
+| -1.003 | $366.6\pm4$ |
+| -1.337 | $1111\pm100$ |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '73.5%', '--fig-max': '471px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig2.png" alt="Full native JFET RDS versus VGS graph, blue data points including frame-edge points, fitted curve, axis labels/ticks/title and complete frame." width="1472" height="1011" loading="lazy" decoding="async" />
+</figure>
+
+
+> **Source note:** The key’s B.6 fit formula multiplies by $(1-V_{GS}/V_P)$, whereas original question equation (1) divides by that factor. The printed key formula is preserved.
+
+**B.7**
+
+The data was obtained with $V_{DS}=+3\ \mathrm V$. The solid line is the result of the fit to the data of the function
+
+$$
+I_{DS}=I_{DSS}(1-V_{GS}/V_P)^2.
+$$
+
+The fitted parameters are $I_{DSS}=11.89\pm0.06\ \mathrm{mA}$ and $V_P=-1.42\pm0.02\ \mathrm V$.
+
+**B.7 (0.3 pt)**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.2%', '--fig-max': '437px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig3.png" alt="Full native JFET transfer curve with all data points, fitted saturation curve, IDS/mA and VGS/V axes, full ticks/title/frame." width="1365" height="930" loading="lazy" decoding="async" />
+</figure>
+
+
+**B.8**
+
+From
+
+$$
+I_{DS}=I_{DSS}(1-V_{GS}/V_P)^2
+$$
+
+a plot of $\sqrt{I_{DS}}$ as function of $V_{GS}$ should yield a straight line with slope $a=-\sqrt{I_{DS}}/V_P$ that intercepts the $x$-axis at $V_P$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.3%', '--fig-max': '438px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig4.png" alt="Full native square-root JFET transfer curve with all data points, fitted line, sqrt(IDS)/sqrt(mA) and VGS/V axes, full ticks/title/frame." width="1368" height="930" loading="lazy" decoding="async" />
+</figure>
+
+
+A linear fit to $fx)=a\,x+b$ gave $a=2.50(2)$ and $b=3.47(2)$. Thus, $V_P=-b/a=-1.39(2)\ \mathrm V$ and $I_{DSS}=4.23^2=12.0(2)\ \mathrm{mA}$.
+
+**B.8 (0.4 pt)**
+
+$$
+V_P=-b/a=-1.39(2)\ \mathrm V
+$$
+
+$$
+I_{DSS}=4.23^2=12.0(2)\ \mathrm{mA}.
+$$
+
+> **Source note:** The source prints $\sqrt{I_{DS}}$ in the slope expression, $fx)$ without an opening parenthesis, and $4.23^2=12.0(2)$ twice despite the stated intercept $b=3.47(2)$. These printed discrepancies are retained.
+
+**B.9**
+
+The transcondutance is the slope of the transfer curve at a given point. From the transfer plot, we draw the tangent at the point with abscissa $-0.50\ \mathrm V$ and read the slope from the graph, obtaining $g=10.8(1)\ \mathrm m^{-1}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.7%', '--fig-max': '440px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig5.png" alt="Full native JFET transconductance graph including transfer curve, tangent line, all blue points, axes labels/ticks/title and full frame." width="1375" height="930" loading="lazy" decoding="async" />
+</figure>
+
+
+From
+
+$$
+I_D=I_{DSS}(1-V_{GS}/V_P)^2,
+$$
+
+$$
+g=\frac{\partial I_{DS}}{\partial V_{GS}}=2I_{DSS}(1-V_{GS}/V_P)\left(-\frac1{V_P}\right)=\frac{2I_{DSS}}{V_P}(V_{GS}/V_P-1).
+$$
+
+Substituting values,
+
+$$
+g=10.8\ \mathrm m^{-1}
+$$
+
+a value that agrees with that obtained using the graphical method.
+
+**B.9 (0.4 pt)**
+
+$$
+g_{measured}=10.8(1)\ \mathrm m^{-1}
+$$
+
+$$
+g_{model}=10.8\ \mathrm m^{-1}
+$$
+
+> **Source note:** The native key visibly prints “m” followed by the exponent $-1$ for all these transconductance units; no ohm or siemens symbol is visible or present in the PDF text. The printed unit is retained without inserting a missing symbol. The starting equation uses $I_D$, then the derivative uses $I_{DS}$.
+
+**Part C: The Paper Thin Film Transistor (2.0 points)**
+
+**C.1 (0.8 pt)**
+
+| $t/\mathrm s$ | $I_{DS}/\mathrm{\mu A}$ | $t/\mathrm s$ | $I_{DS}/\mathrm{\mu A}$ |
+| --- | --- | --- | --- |
+| 0 | 0 | 110 | 112,0 |
+| 10 | 6.6 | 120 | 116.2 |
+| 20 | 25.8 | 180 | 137.7 |
+| 30 | 50.1 | 240 | 155.4 |
+| 40 | 66.2 | 300 | 171.2 |
+| 50 | 76.7 | 360 | 184.4 |
+| 60 | 83.8 | 420 | 197.9 |
+| 70 | 91.6 | 480 | 209.2 |
+| 80 | 97.2 | 540 | 219.1 |
+| 90 | 102.6 | 600 | 220.0 |
+| 100 | 107.4 | - | - |
+
+**C.2**
+
+The data is similar to that of the charge of a capacitor, superimposed with an almost linear component that corresponds to the charge of the second capacitor with a larger time constant.
+
+A least squares fit to a $A(1-\exp(-t/\tau_1))+B(1-\exp(-t/\tau_2))$ is also depicted, showing that the data can be well fitted by this model. The shorter time constant is $\tau_1=43(8)\ \mathrm s$, the longer time constant, $\tau_2$ is roughly 20 times larger.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '63.4%', '--fig-max': '406px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig6.png" alt="Full native TFT time-dependence graph, measured points, tau1+tau2/tau1/tau2 three-entry legend and curves, IDS/uA and t/s axes/ticks/title/frame." width="1268" height="885" loading="lazy" decoding="async" />
+</figure>
+
+
+Let $I_{DS}^{sub}=A(1-\exp(-t/\tau_1))$ be the data subtracted from the long time constant component. A logarithmic plot of $\log(A-I_{DS}^{sub})$ should be a straight line of slope $-1/\tau_1$. The constant $A$, the saturation current of the short $\tau_1$ component, can be easily estimated from the above plot.
+
+The slope of the line is $m=-0.023(1)$, from which we get $\tau_1=44(3)\ \mathrm s$. The error bar is underestimated, as it does not take into account the error in the subtraction of the $\tau_2$ component.
+
+**C.2 (1.2 pt)**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '63.9%', '--fig-max': '409px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig7.png" alt="Full native upper TFT time graph showing all blue measured/red subtracted data, long-component fit, axes labels/ticks/title and full frame." width="1278" height="888" loading="lazy" decoding="async" />
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '63.9%', '--fig-max': '409px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig8.png" alt="Full native lower TFT logarithmic-time graph including all blue points, fitted line, logarithmic axis labels/ticks/title and full frame." width="1278" height="892" loading="lazy" decoding="async" />
+</figure>
+
+
+$$
+\tau_1=44(3)\ \mathrm s.
+$$
+
+**Part D. Inverter Circuit (1.0 points)**
+
+**D.1 (0.5 pt)**
+
+$$
+R_L=198\ \mathrm{k\Omega}
+$$
+
+| $t$ | $V_{in}/\mathrm V$ | $V_{out}/\mathrm V$ |
+| --- | --- | --- |
+|  | -2.983 | 2.456 |
+|  | -2.760 | 2.470 |
+|  | -2.567 | 2.461 |
+|  | -2.340 | 2.461 |
+|  | -2.058 | 2.460 |
+|  | -1.719 | 2.252 |
+|  | -1.330 | 0.889 |
+|  | -0.775 | 0.039 |
+
+> **Source note:** Every $t$ cell in this native key table is blank; no times are supplied here.
+
+**D.2 (0.5 pt)**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '64%', '--fig-max': '410px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2018-experiment-exp1/p1-sol-fig9.png" alt="Full native TFT inverter transfer graph, all blue measured points and source endpoint at Vin0, fitted curve, axes labels/ticks/title/frame." width="1281" height="870" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Оценена трудност: 4/5.
+
+Електричество · Съвременна физика · Постояннотокови вериги · Полупроводници · Преходни процеси в RC вериги
+
+Предпоставки: Гимназиална подготовка, Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [exp1.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2018/Experiment/exp1.pdf#page=1)
+· официални решения: [exp1_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2018/Experiment/exp1_sol.pdf#page=1)
+· допълнителни данни: [exp1_anssheet.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2018/Experiment/exp1_anssheet.pdf)
