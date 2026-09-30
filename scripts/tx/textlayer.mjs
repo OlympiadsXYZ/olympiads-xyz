@@ -29,7 +29,7 @@
 // have is a defect (an invented printed error); an ineligible or unrecorded
 // change stays a defect with the mechanical restore-the-print fix, and a record
 // whose field holds the printed wording again has lapsed ('stale': not a defect,
-// not published). Omission runs are unchanged.
+// not published). Omission runs exempt only the matched, accepted tokens.
 // A document is checked only when its text layer is trustworthy: at least 80 %
 // of the candidate's own words for that document are found in it (a scan, a
 // garbled encoding or a Word export that lost its letters fails this and is
@@ -38,7 +38,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseArgs, fail, readJson, writeJson, readManifest, paperDir, walkStrings, splitMath, fixHomoglyphs, nowIso, pointerGet, EDIT_KINDS, editFieldState, ROOT } from './lib.mjs';
 
-export const TEXTLAYER_VERSION = 3; // 2: D-P23 recorded fixes (tx.edits); 3: eligibility, span-exact acceptance, lapsed records
+export const TEXTLAYER_VERSION = 4; // 2: D-P23 fixes; 3: span-exact eligibility; 4: accepted spans also end omission runs
 const MIN_TRUST = 0.8, MIN_LAYER_WORDS = 40;
 // fields whose words are the reader's own (alt text, notes) or not prose
 // sourceSpans: page provenance ({document: 'problems' | 'solutions' | 'supplement', page}), not printed text — a
@@ -658,6 +658,9 @@ export function textLayerCheck(candidate, manifest, paperId) {
         const line = pg.lines[t.line] || '';
         if (t.index === line.search(/\S/)) { const n = headingNumber(line); if (n != null) { const i = problemIndexByNumber.get(n); if (i != null) problemIdx = i; } }
         if (isNeutral(t)) continue;
+        // Only this exact approved span is explained by the recorded fix. End the
+        // omission run here so absent instructions on either side still fail.
+        if (acceptedTokens.has(t)) { flush(); continue; }
         // a word transcribed elsewhere in the paper (the solution reuses the statement's words) does not make it present here;
         // one present word inside an omitted sentence (a noun the statement uses elsewhere) does not end the run
         if (presentInDoc(t)) { if (run.length && gap === 0) gap = 1; else flush(); }

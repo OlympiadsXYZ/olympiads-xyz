@@ -1,0 +1,276 @@
+---
+id: x-ens-2009-mp-p2
+source: 'X-ENS 2009, Приемен изпит, математика и физика'
+title: 'Задача 2. Deuxième partie – Étude d’une lampe fer-hydrogène'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2009/x-ens-2009-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T07:47:55.160Z'
+verifier: 'single-pass'
+---
+
+*SESSION 2009 — Filière MP — PHYSIQUE MPI — Épreuve commune aux ENS de Paris, Lyon et Cachan*
+
+<Warning title="Бележка към темата">
+Le dossier d’archive ne contient pas de corrigé complet : le document complémentaire est le rapport du jury, conservé intégralement et clairement présenté comme tel. Aucun résultat ni barème n’a été inventé. À la question 14, le texte imprime « au voisinage de ω=2ω₀ », bien que ω ait été défini comme ωₑ/2; cette notation est conservée. À la question 49, la formule Δs=L/T₀ est suivie d’une phrase désignant T* comme température de changement d’état; les deux notations imprimées sont conservées.
+</Warning>
+
+<details>
+<summary>Consignes de l’épreuve</summary>
+
+L’usage des calculatrices de poche est autorisé, y compris les calculatrices programmables et alphanumériques ou à écran graphique, à condition que leur fonctionnement soit autonome et qu’il ne soit pas fait usage d’imprimante (circulaire n° 99018 du 1er février 1999).
+
+Il sera tenu compte du soin apporté à la rédaction et de la clarté des explications demandées.
+
+</details>
+
+<details>
+<summary>Ouverture à la physique des instabilités</summary>
+
+La thématique abordée dans ce sujet est celle de l’étude physique de certaines instabilités. Elle est explorée ici, à travers des exemples concrets empruntés, pour l’essentiel, à la mécanique et à la thermodynamique. À travers **trois problèmes totalement indépendants** traitant successivement l’étude de l’instabilité paramétrique du grand encensoir de Saint-Jacques de Compostelle, l’étude d’une lampe fer/hydrogène, et enfin, dans une dernière partie, l’étude de l’instabilité de croissance d’un germe solide (instabilité dite de Mullins et Sekerka), nous nous attacherons à décrire les conditions nécessaires à la naissance d’une instabilité de chaque système physique étudié. Les mécanismes non-linéaires limitant la croissance de l’énergie du système ne seront pas considérés explicitement dans ce sujet.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [I. Cas où la résistance est indépendante de T — A. Établissement de l’équation d’évolution](#i-a)
+- [B. Étude du régime stationnaire](#i-b)
+- [II. Cas où ρ dépend de T – Recherche des solutions stationnaires stables — A. Approche qualitative](#ii-a)
+- [B. Stabilité des solutions stationnaires](#ii-b)
+- [C. Étude à tension imposée](#ii-c)
+
+</nav>
+
+Une lampe fer-hydrogène est constituée d’un filament de fer de longueur supposée infinie :
+
+– de section droite de surface $A$ et de rayon $a$,
+
+– de conductivités thermique et électrique notées respectivement $\lambda$ et $\gamma=1/\rho$, en notant $\rho$ la résistivité électrique,
+
+– de masse volumique $\mu$ et de capacité calorifique massique $c$.
+
+Ce filament, parcouru par un courant continu d’intensité $I$ imposé par un générateur de courant, est situé dans une enceinte (ampoule) remplie de dihydrogène. Dans tout le problème, l’environnement de dihydrogène est maintenu à la température constante notée $T_e$. Ce filament est modélisé figure (3).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '80.6%', '--fig-max': '516px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p2-fig1.png" alt="Filament cylindrique avec courant I, rayon a, surface A, abscisses x=0, x, x+dx, dans le dihydrogène à température Te." width="1613" height="509" loading="lazy" decoding="async" />
+<figcaption>Figure 3 – Représentation du filament de la lampe fer-hydrogène.</figcaption>
+</figure>
+
+
+Dans tout le problème, on considérera que le système est quasi-unidimensionnel et on notera $T(x,t)$ la température qui règne, à l’instant $t$, en tout point $M$ du filament, situé à l’abscisse $x$. En $x=0$, la température du filament est maintenue à $T(x=0)=T_e$.
+
+<ProblemSection id="i-a">
+
+### I. Cas où la résistance est indépendante de T — A. Établissement de l’équation d’évolution
+
+**20.** Donner un ordre de grandeur de $\gamma$ et de $\lambda$ pour un métal.
+
+**21.** Énoncer clairement les lois phénoménologiques locales de Fourier et d’Ohm. Dans la suite, on supposera que ces lois s’appliquent au filament.
+
+Les transferts thermiques radiatifs et convectifs sont décrits par la densité de flux thermique $\vec j_h(x,t)$ au niveau de l’interface entre le filament et le dihydrogène. Dans la limite où $T(x,t)$ est voisine de $T_e$, on pourrait montrer que cette densité de flux s’exprime comme
+
+$$
+\vec j_h(x,t)=h(T(x,t)-T_e)\,\vec n_{\mathrm{ext}}
+$$
+
+où $h$ est un coefficient qui décrit les échanges thermiques entre le filament et son environnement, et $\vec n_{\mathrm{ext}}$ est un vecteur unitaire sortant, normal à la surface du filament.
+
+**22.** Exprimer le travail électrique $\delta^2W$ reçu par un élément de volume $\mathrm d\tau=A\,\mathrm dx$ du conducteur pendant un temps $\mathrm dt$, de la part du générateur. On exprimera le résultat en fonction de $I$, $\gamma$, $A$, $\mathrm dx$ et $\mathrm dt$.
+
+**23.** À l’aide d’un bilan d’énergie qu’on établira clairement, montrer que l’équation aux dérivées partielles satisfaite par $T(x,t)$ s’écrit :
+
+$$
+\frac{\partial T}{\partial t}=D\frac{\partial^2 T}{\partial x^2}-\alpha(T-T_e)+\beta\rho I^2
+$$
+
+où $D$, $\alpha$ et $\beta$ sont des constantes qu’on exprimera en fonction des paramètres du problème.
+
+</ProblemSection>
+
+<ProblemSection id="i-b">
+
+### B. Étude du régime stationnaire
+
+**Profil de température en régime stationnaire**
+
+**24.** Déterminer le profil de température $(T=T(x))$ en régime stationnaire. On supposera que le fil occupe le demi-axe $x\geq0$. On introduira une longueur caractéristique $\delta$ qu’on exprimera en fonction de $a$, $\lambda$ et $h$.
+
+**25.** Tracer le profil de $T(x)-T_e$. On précisera la température limite notée $T_\ell$ en fonction de $T_e$, $\rho$, $a$, $h$, et $I$.
+
+**26.** Y a-t-il conservation du flux thermique conductif ? On argumentera la réponse.
+
+**Mise en évidence du caractère dissipatif du système. Création d’entropie**
+
+On se propose à présent de déterminer le taux de création d’entropie $\sigma(x)$ par unité de longueur et de temps dans le filament, à l’abscisse $x$. Cette étude s’appuie sur un bilan d’entropie en régime stationnaire. Le système thermodynamique d’étude sera un élément de volume $\mathrm d\tau=A\,\mathrm dx$ du filament. On notera $\delta^2 S_{\mathrm{ech}}$ et $\delta^2 S_c$ l’entropie d’échange et l’entropie créée, pendant $\mathrm dt$.
+
+**27.** En régime stationnaire, déterminer le lien entre l’entropie d’échange $\delta^2S_{\mathrm{ech}}$ et l’entropie créée $\delta^2S_c$
+
+**28.** Exprimer l’entropie d’échange entrante $\delta S_{\mathrm{ech}}^e$ par la section d’abscisse $x$ pendant $\mathrm dt$. On exprimera le résultat en fonction de la densité de flux conductif $j_{\mathrm{cd}}(x)$, $T(x)$, $A$ et $\mathrm dt$.
+
+**29.** Exprimer de même l’entropie d’échange sortante $\delta S_{\mathrm{ech}}^s$ du cylindre de volume $\mathrm d\tau=A\,\mathrm dx$. On exprimera le résultat en fonction de $h$, $T_e$, $a$, $\mathrm dx$, $\mathrm dt$, $A$ et des fonctions $j_{\mathrm{cd}}$ et $T$ évaluées à des abscisses que vous préciserez.
+
+**30.** Montrer alors que le taux de création d’entropie $\sigma(x)$ par unité de longueur et de temps s’écrit :
+
+$$
+\sigma(x)=\frac{\delta^2 S_c}{\mathrm dx\,\mathrm dt}=\frac{\rho I^2}{AT}+\frac{\lambda A}{T^2}\left(\frac{\mathrm dT}{\mathrm dx}\right)^2+2\pi ah(T-T_e)\left(\frac{1}{T_e}-\frac{1}{T}\right)\qquad (3)
+$$
+
+On ne cherchera pas à établir une expression explicite de $\sigma(x)$ en fonction de $x$.
+
+**31.** Identifier les différentes sources d’irréversibilité du problème.
+
+**32.** À quelle condition l’état stationnaire est-il un état d’équilibre thermodynamique pour le filament ?
+
+**33.** À partir de l’équation (3), exprimer $\sigma$ (sans expliciter la dépendance en $x$) dans un régime de conduction thermique pure, c’est-à-dire en l’absence de courant, ainsi qu’en l’absence de transferts radiato-convectifs. Justifier le signe de $\lambda$.
+
+**34.** En vous appuyant sur l’équation (3), vérifier que tout contact thermique entre deux corps dont les températures de surface sont différentes constitue une source de création d’entropie.
+
+**35.** La loi d’Ohm locale « statique » se généralise au cas des régimes sinusoïdaux en remplaçant la conductivité électrique statique $\gamma_0$ par l’expression complexe suivante :
+
+$$
+\underline\gamma(\omega)=\frac{\gamma_0}{1+\mathrm i\omega\tau}
+$$
+
+Cette expression traduit la réponse du métal à l’application d’un champ électrique sinusoïdal homogène :
+
+$$
+\underline{\vec E}(\omega)=E_0 e^{\mathrm i\omega t}\,\vec e_x
+$$
+
+Une étude élémentaire permettrait de montrer que :
+
+$$
+\gamma_0=Ne^2\tau/m_e
+$$
+
+où $\tau$ est un temps caractéristique microscopique et $N$ est la densité volumique d’électrons de conduction dans le métal, $e$ et $m_e$ désignant respectivement la charge électrique élémentaire et la masse de l’électron.
+
+Estimer l’ordre de grandeur de $N$ dans un métal. En déduire l’ordre de grandeur de $\tau$. On rappelle que $m_e\sim10^{-30}\mathrm{kg}$ et $e\sim10^{-19}\mathrm C$.
+
+**36.** En régime sinusoïdal, montrer que, pour $\omega\tau\gg1$, un conducteur ohmique n’est plus dissipatif.
+
+**37.** Montrer que la variation d’entropie $\mathrm dS$ d’un système thermodynamique $(\Sigma)$ quelconque peut s’écrire, dans le cas général,
+
+$$
+\mathrm dS=\frac{\delta Q}{T}+\delta S_c^{\mathrm{int}}
+$$
+
+où $T$ est la température du système thermodynamique, $\delta Q$ le transfert thermique reçu par le système de l’environnement extérieur à la température $T_e$ et $\delta S_c^{\mathrm{int}}$ une création d’entropie due aux seuls processus dissipatifs internes au système. On exprimera $\delta S_c^{\mathrm{int}}$ en fonction de $\delta Q$, $T$, $T_e$ et de la création d’entropie totale $\delta S_c$.
+
+**38.** À la lumière du résultat précédent, déduire la nature des seules transformations thermodynamiques qui sont susceptibles d’être réversibles. À quel thermodynamicien doit-on ce résultat ?
+
+</ProblemSection>
+
+<ProblemSection id="ii-a">
+
+### II. Cas où ρ dépend de T – Recherche des solutions stationnaires stables — A. Approche qualitative
+
+On prend désormais en compte les variations de résistivité $\rho$ du métal en fonction de la température $T$. Des mesures, pour le fer, permettent d’obtenir la courbe $\rho(T)$ illustrée figure (4).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '63.5%', '--fig-max': '406px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p2-fig2.png" alt="Courbe croissante sigmoïde de résistivité ρ en fonction de la température T, avec température extérieure Te sur l’axe." width="1270" height="741" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Évolution de la résistivité ρ du filament en fonction de T.</figcaption>
+</figure>
+
+
+Dans cette partie, on supposera, dans une bonne approximation, que la température est homogène sur toute la longueur du filament.
+
+**39.** Montrer que la recherche des solutions stationnaires conduit à une équation de la forme :
+
+$$
+\rho(T)=y(T),\qquad (4)
+$$
+
+où $y(T)$ est l’équation d’une droite $\mathcal D$ dont on précisera la pente et l’ordonnée à l’origine, en fonction de $h$, $a$, $I$ et $T_e$. On appellera $T^*$ une température solution de l’équation (4).
+
+**40.** On supposera, dans toute cette étude, que $T_e$ est maintenue constante à la valeur indiquée sur la figure (4).
+
+Discuter graphiquement le nombre de solutions de l’équation (4) par rapport à l’intensité $I$. On nommera *points de fonctionnement* ces solutions. On indiquera très clairement sur la courbe les différents points de fonctionnement possibles.
+
+</ProblemSection>
+
+<ProblemSection id="ii-b">
+
+### B. Stabilité des solutions stationnaires
+
+Afin d’étudier la stabilité des solutions déterminées graphiquement à la question précédente, on examine le comportement du système face à une fluctuation de température notée $\epsilon(t)=T(t)-T^*$ avec $|\epsilon|\ll T^*$ et $T^*$ est la valeur de la température du point de fonctionnement considéré.
+
+**41.** Montrer que l’équation différentielle satisfaite par $\epsilon(t)$ s’écrit
+
+$$
+\frac{\mathrm d\epsilon(t)}{\mathrm dt}=\kappa(\tilde p(T^*)-p)\,\epsilon(t)
+$$
+
+où
+
+* $\kappa$ est à exprimer en fonction de $\beta$ et $I$,
+* $\tilde p(T^*)$ et $p$ sont des pentes que l’on précisera.
+
+**42.** Dégager un critère graphique simple permettant de conclure quant au caractère stable ou instable des points de fonctionnement étudiés. Représenter la zone instable.
+
+**43.** Déduire l’allure de la courbe donnant les variations de $T^*$ en fonction de $I$. On représentera sur cette courbe les différents points de fonctionnement.
+
+**44.** Supposons que l’on observe l’image du courant $I$ sur la voie $X$ d’un oscilloscope et celle de la température $T^*$ sur la voie $Y$. Quelles sont les parties de la courbe qu’on observerait effectivement en mode XY, en régime variable (faible fréquence) ? Préciser graphiquement l’amplitude minimale du courant qu’il faudra assurer pour observer une courbe $T^*(I)$ révélant les propriétés particulières du système.
+
+</ProblemSection>
+
+<ProblemSection id="ii-c">
+
+### C. Étude à tension imposée
+
+**45.** Reprendre la question 39 dans le cas où le filament est alimenté par un générateur de tension continue.
+
+**46.** Justifier physiquement que le point de fonctionnement trouvé est toujours stable, quelle que soit la valeur de $U$.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+<details>
+<summary>Rapport du Jury de Physique — Session 2009 – Filière MP(I)</summary>
+
+**Membres du jury : Alexia Auffèves, Sophie Brasselet, Pierre-Richard Dahoo, Brahim Lamine, Baptiste Portelli, Samuel Savineau, Jérôme Tignon.**
+
+Le thème du sujet de physique proposé aux concours d’entrée des écoles normales supérieures, session 2009, était celui des *instabilités*. Il s’articulait autour de trois problèmes complètement indépendants abordant successivement l’instabilité paramétrique du grand encensoir de Saint Jacques de Compostelle, l’étude d’un régulateur fer/hydrogène et enfin, l’instabilité de croissance de Mullins et Sekerka. Les thématiques abordées dans ce sujet étaient la mécanique du point matériel et la thermodynamique au sens large (transferts thermiques, second principe, changements d’état des corps purs).
+
+Bien qu’il était clairement spécifié que les trois problèmes étaient indépendants, la très grande majorité des candidats (environ 80%) a commencé par le premier problème. À l’avenir, nous invitons les candidats à prendre quelques minutes en début d’épreuve pour parcourir le sujet dans son ensemble et à débuter, quand cela est possible, par le problème qui semble le plus « engageant » . Nombre de candidats qui ont vu leur progression bloquée assez rapidement dans le premier problème (dont la complexité était réelle d’un point de vue calculatoire) ont montré qu’ils auraient pu réussir très convenablement le deuxième problème avec une meilleure gestion du temps.
+
+D’un point de vue général, le deuxième problème, centré sur l’étude de processus irréversibles au sein d’un barreau conducteur parcouru par un courant, est celui qui a le moins déstabilisé les candidats. Il est vrai qu’il reprenait les méthodes largement utilisées dans le cours de deuxième année sur les transferts thermiques. Le troisième problème n’a été abordé de façon sérieuse (et souvent réussie) que par une poignée de candidats. La très grande majorité des candidats a utilisé cette partie pour « glaner » quelques points en fin d’épreuve (questions simples sur l’homogénéité des résultats, démonstration de la relation de Clapeyron,...). Le premier problème a permis aux étudiants à l’aise en calcul de faire la différence. Certains candidats ont parfaitement cerné l’esprit des techniques mises en œuvre dans la description de l’instabilité d’un système physique. Nous les en félicitons car nous sommes confiants dans le fait qu’il s’agissait là de techniques nouvelles pour les candidats.
+
+Le jury rappelle aux candidats que le soin apporté à la copie, qu’il s’agisse de l’orthographe et de la présentation, est **effectivement** pris en compte dans la notation. Nous insistons également sur la nécessité de rédiger les arguments scientifiques (démonstrations, calculs, etc,...) de la façon la plus précise possible. Le jury est d’autant plus exigeant que les démonstrations demandées sont proches de celles du cours. À titre d’exemple, la démonstration du bilan d’énergie en début du deuxième problème a, le plus souvent, manqué de rigueur (système élémentaire non défini, confusion entre fonctions d’état et transferts d’énergie, signes non-justifiés,...). Très peu de candidats ont pu obtenir le maximum de points à cette question, jugée abordable par le jury. Même si cela peut paraître convenu pour les candidats, nous rappelons qu’il n’est pas permis de faire une étude mécanique sans préciser ni le système ni le référentiel d’étude. De même, en électronique, le jury aurait vivement souhaité que le candidat précise, lors de l’écriture d’une loi aux mailles, si les dipoles concernés étaient choisis en convention récepteur ou générateur.
+
+Le jury comprend parfaitement qu’un candidat veuille absolument aboutir à un résultat fourni par l’énoncé. Il est néanmoins regrettable que les moyens utilisés manquent parfois d’honnêteté scientifique. L’exemple type est le calcul de production d’entropie demandé dans le deuxième problème et dont l’expression à démontrer était donnée dans l’énoncé. Beaucoup trop de candidats justifient le terme de dissipation par effet Joule directement à partir de l’écriture du second principe en écrivant
+
+$$
+\mathrm dS=\frac{\delta Q}{T}+\frac{\delta W}{T}+\delta S_c
+$$
+
+qui est une **formule complètement fausse**. D’autres arguments peu scientifiques ont été également été avancés pour justifier la question 10 du premier problème.
+
+Ce rapport a pour but de recenser les points à améliorer pour les années à venir. Nous espérons qu’il pourra être utile aux candidats des générations futures.
+
+</details>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Трудност: неоценена.
+
+Топлинни явления · Електричество · Топлопроводност · Топлообмен · Ентропия и втори принцип · Първи принцип на термодинамиката · Закон на Ом · Електрична мощност и нагряване
+
+Предпоставки: Начална университетска подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [MP_2009.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2009.pdf#page=8)
+· допълнителни данни: [MP_2009_rapport.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2009_rapport.pdf)

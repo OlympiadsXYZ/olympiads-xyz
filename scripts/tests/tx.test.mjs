@@ -112,6 +112,63 @@ function sandbox(t) {
   return { root, dir, write, run, read: f => JSON.parse(fs.readFileSync(f, 'utf8')) };
 }
 
+function spacingTextLayerFixture(t, { secondPage = false, editPage = 1, adjacentOmissions = false } = {}) {
+  const s = sandbox(t);
+  const prose = 'Рассмотрим движение маленького тела вдоль горизонтальной поверхности. Начальная скорость известна. Ускорение направлено противоположно перемещению. Определите расстояние между начальным положением центра массы и конечной точкой остановки. Сопротивление воздуха отсутствует. Коэффициент трения постоянен. Измерения проводятся при одинаковой температуре окружающей среды. После завершения первого опыта повторите эксперимент для другого материала. Полученные значения сравните между собой. Объясните наблюдаемую зависимость времени торможения от массы тела. Приведите подробное рассуждение.';
+  const printed = 'тепло емко сти';
+  const context = adjacentOmissions ? `Медленно увеличивайте давление ${printed} Бережно сохраняйте образцы` : `Совпадающие ${printed}`;
+  const page = `Задача 1.\n${prose}\n${context}\n`;
+  const m = structuredClone(manifest);
+  m.meta.lang = 'ru';
+  delete m.documents.solutions;
+  m.documents.problems.pages = secondPage ? 2 : 1;
+  fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
+  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), page + (secondPage ? '\f' + page : ''));
+  s.write('manifest.json', m);
+  const c = {
+    paper: { id: PAPER, lang: 'ru', source: { pages: secondPage ? [1, 2] : [1] } },
+    problems: [{ number: 1, title: 'Совпадающие теплоемкости', statement: prose }],
+    tx: { edits: [{ path: '/problems/0/title', printed, fixed: 'теплоемкости', document: 'problems', page: editPage, kind: 'spacing' }] },
+  };
+  const file = s.write('spacing-candidate.json', c);
+  const out = path.join(s.dir, 'spacing-result.json');
+  const run = s.run('textlayer.mjs', [PAPER, '--candidate', file, '--out', out]);
+  assert.ok(fs.existsSync(out), run.stdout + run.stderr);
+  const result = s.read(out);
+  assert.equal(result.documents.problems.trusted, true, JSON.stringify(result.documents));
+  return { run, result };
+}
+
+test('text-layer spacing correction does not become an omitted three-token passage', t => {
+  const { run, result } = spacingTextLayerFixture(t);
+  assert.equal(result.summary.edits.accepted, 1);
+  assert.equal(run.status, 0, JSON.stringify(result.defects));
+  assert.deepEqual(result.defects, []);
+});
+
+test('text-layer spacing acceptance stays bound to the recorded page', t => {
+  const { run, result } = spacingTextLayerFixture(t, { secondPage: true });
+  assert.equal(result.summary.edits.accepted, 1);
+  assert.equal(run.status, 3);
+  assert.ok(result.defects.some(d => d.page === 2 && d.kind === 'omission'), JSON.stringify(result.defects));
+  assert.ok(!result.defects.some(d => d.page === 1), JSON.stringify(result.defects));
+});
+
+test('text-layer spacing record with a wrong page remains a gate failure', t => {
+  const { run, result } = spacingTextLayerFixture(t, { editPage: 2 });
+  assert.equal(run.status, 3);
+  assert.ok(result.summary.edits.rejected > 0, JSON.stringify(result.summary));
+});
+
+test('text-layer spacing acceptance does not hide surrounding missing instructions', t => {
+  const { run, result } = spacingTextLayerFixture(t, { adjacentOmissions: true });
+  assert.equal(result.summary.edits.accepted, 1);
+  assert.equal(run.status, 3);
+  const omissions = result.defects.filter(d => d.kind === 'omission').map(d => d.description).join(' ');
+  assert.match(omissions, /Медленно увеличивайте давление/);
+  assert.match(omissions, /Бережно сохраняйте образцы/);
+});
+
 test('supplement pages must be declared, reviewed and bound to their own hashes', async t => {
   const s = sandbox(t);
   const m = structuredClone(manifest);

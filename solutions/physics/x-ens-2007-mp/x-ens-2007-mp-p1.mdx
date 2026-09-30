@@ -1,0 +1,370 @@
+---
+id: x-ens-2007-mp-p1
+source: 'X-ENS 2007, Приемен изпит'
+title: 'Задача 1. Plasmons dans les métaux'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2007/x-ens-2007-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T07:51:16.764Z'
+verifier: 'single-pass'
+---
+
+*PHYSIQUE MPI — Filière MP*
+
+<Warning title="Бележка към темата">
+Le livret contient un seul problème, « Plasmons dans les métaux », avec deux parties principales et une numérotation continue de 1 à 58. Aucun corrigé ni barème n’est disponible. Le potentiel est écrit comme un produit UxUyUz dans la question 10, la question 36 demande une dépendance en x, et le nom est imprimé « Erich Kreschmann » dans la question 47 : ces formulations originales sont conservées.
+</Warning>
+
+<details>
+<summary>SESSION 2007 — Filière MP — PHYSIQUE MPI</summary>
+
+70.02M
+
+Épreuve commune aux ENS de Paris, Lyon et Cachan
+
+Durée : 5 heures
+
+L’usage de calculatrices électroniques de poche à alimentation autonome, non imprimantes et sans document d’accompagnement, est autorisé. Cependant, une seule calculatrice à la fois est admise sur la table ou le poste de travail, et aucun échange n’est autorisé entre les candidats.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [I.1. Modèle microscopique du comportement des électrons](#i-1)
+- [I.2. Plasmons dans un métal](#i-2)
+- [II.1. Propagation dans un métal](#ii-1)
+- [II.2. Plasmons de surface sur un métal](#ii-2)
+- [II.3. Excitation des plasmons de surface](#ii-3)
+- [II.3.1. Couplage par réflexion](#ii-3-1)
+- [II.3.2. Couplage par diffraction](#ii-3-2)
+- [II.4. Extraction de la lumière confinée sous forme d’onde de surface](#ii-4)
+
+</nav>
+
+Ce sujet porte sur les phénomènes liés aux oscillations collectives des électrons libres dans le volume et à la surface d’un métal. Ces oscillations, nommées plasmons, sont à l’origine de nombreuses applications en physique, chimie et biologie. La première partie de ce problème décrit la nature des plasmons dans un métal. La deuxième partie étudie les ondes de surface liées aux plasmons sur une interface air-métal. Les deux parties du problème peuvent être traitées de manière indépendante. L’usage des calculatrices de poche à alimentation autonome, non imprimantes et sans document d’accompagnement, est autorisé.
+
+On considérera que du point de vue de la propagation des ondes électromagnétiques l’air se comporte comme le vide et que le métal est non-magnétique.
+
+Dans tout le problème un métal sera modélisé par un milieu isotrope homogène conducteur, de conductivité statique $\gamma_0$, comprenant par unité de volume $N$ électrons mobiles dans un réseau fixe d’atomes. Seul un électron par atome participe à la conduction dans le métal. Chacun de ces électrons est assimilé à une particule de masse $m$ et de charge $(-e)$ libre de se mouvoir, les interactions subies se limitant à des chocs dont on ne cherchera pas à préciser la nature.
+
+**Constantes physiques et données numériques:**
+
+Permittivité du vide : $\varepsilon_0=8,85\ 10^{-12}\ \mathrm{F.m^{-1}}$
+
+Perméabilité magnétique du vide : $\mu_0=4\pi\ 10^{-7}\ \mathrm{H.m^{-1}}$
+
+Constante de Boltzmann : $k_B=1,38\ 10^{-23}\ \mathrm{J.K^{-1}}$
+
+Constante de Planck : $h=6,63\ 10^{-34}\ \mathrm{J.s}$
+
+Nombre d’Avogadro : $N_A=6,02\ 10^{23}\ \mathrm{mol^{-1}}$
+
+Masse de l’électron : $m=9,11\ 10^{-31}\ \mathrm{kg}$
+
+Charge de l’électron : $e=1,60\ 10^{-19}\ \mathrm{C}$
+
+Masse molaire atomique de l’or : $M=197\ \mathrm{g\ mol^{-1}}$
+
+Masse volumique de l’or : $d=19,3\ \mathrm{g.cm^{-3}}$
+
+Conductivité statique de l’or: $\gamma_0=45,5\ 10^6\ \mathrm{S.m^{-1}}$
+
+Notation des nombres complexes : $i^2=-1$
+
+**Relation d’analyse vectorielle :**
+
+$$
+\overrightarrow{\mathrm{rot}}(\overrightarrow{\mathrm{rot}}(\vec U))=\overrightarrow{\mathrm{grad}}(\mathrm{div}(\vec U))-\Delta(\vec U)
+$$
+
+**I. Oscillations électroniques dans un métal**
+
+<ProblemSection id="i-1">
+
+### I.1. Modèle microscopique du comportement des électrons
+
+On suppose que les électrons du métal subissent de nombreux chocs affectant leur mouvement de telle manière que leur vitesse après un choc est totalement indépendante de la vitesse avant ce choc, en module et en direction. Pour un électron donné les chocs surviennent aux temps $t_q$ avec $q=1\ldots n$, la durée $\Delta t$ entre deux chocs successifs obéissant à la loi de probabilité $P(\Delta t)=\frac1\tau\exp(-\Delta t/\tau)$. On considérera que la moyenne statistique d’une grandeur $G$ sur un grand nombre de chocs, notée $\langle G\rangle$, coïncide avec sa moyenne temporelle $\overline G$ définie par $\overline G=\int_0^\infty G(t)P(t)\mathrm{d}t$.
+
+**1.** Justifier que $\tau$ peut-être considéré comme la durée moyenne entre deux collisions, et calculer $\overline{\Delta t^2}$.
+
+**2.** Quelle est la valeur moyenne du vecteur vitesse d’un électron en l’absence de champ extérieur ?
+
+**3.** Définir et calculer la valeur quadratique moyenne $v_c$ de la vitesse d’agitation d’un électron en fonction de son énergie cinétique moyenne $E$. Calculer $v_c$ pour $E=5$ eV et commenter son ordre de grandeur.
+
+**4.** Montrer, en comparant la vitesse $v_c$ à la vitesse thermique des électrons, que l’énergie des électrons dans le métal n’est pas d’origine thermique.
+
+**5.** On place maintenant le matériau dans un champ électrique uniforme $\vec E_0=E_0\cdot\vec u_x$. On note $\vec v_q^+$ la vitesse de l’électron immédiatement après le choc survenu au temps $t_q$. Déterminer la vitesse instantanée $\vec v$ à tout instant $t\in]t_q,t_{q+1}[$ puis la grandeur $(\vec v_{q+1}^- -\vec v_q^+)$.
+
+**6.** La moyenne $\langle(\vec v_{q+1}^- -\vec v_q^+)\rangle$ est appelée vitesse de dérive $\vec v_d$ d’un électron sous l’effet du champ électrique. Exprimer $\vec v_d$ en fonction de $\vec E_0$, $e$, $\tau$, et $m$.
+
+**7.** Montrer qu’on obtiendrait la même expression de $\vec v_d$ qu’en **6.** en ignorant le mouvement désordonné des électrons mais en supposant que chacun d’eux est soumis à une force supplémentaire de friction $\vec F=-\zeta\vec v$. Donner l’expression de $\vec v_d$ et en déduire que $\zeta=m/\tau$.
+
+**8.** On adopte par la suite cette description utilisant la force de friction $\vec F$. On rappelle qu’un seul électron par atome contribue à la conductivité de l’or. Exprimer la conductivité $\gamma_0$ en fonction de $N$, $e$, $\tau$, $m$. Donner les valeurs numériques de $N$ et $\tau$ pour l’or.
+
+**9.** On applique une différence de potentiel de 1 V sur 1 mm de métal. Comparer les valeurs numériques de $v_c$ et $v_d$.
+
+**10.** Les observations précédentes montrent que l’énergie d’agitation $E$ provient d’une origine non thermique. Une approche quantique est nécessaire pour expliquer le comportement énergétique d’un gaz d’électrons libres dans le métal. En physique quantique, l’énergie $E$ associée au mouvement d’un électron dans une structure ordonnée d’ions fixes ne peut être quelconque : elle prend des valeurs discrètes $E_p$ (avec $p$ entier) auxquelles sont associées des fonctions d’onde de matière $\psi_p(x,y,z)$ qui traduisent le comportement spatial de l’électron dans l’état excité d’énergie $E_p$. L’électron est soumis à un potentiel périodique dans les trois dimensions $x$, $y$ et $z$ s’écrivant comme un produit $U(x,y,z)=U_x(x)U_y(y)U_z(z)$. On admet que la fonction $\psi(x,y,z)$ peut s’écrire comme le produit de trois fonctions de variables indépendantes $\psi(x,y,z)=f(x)g(y)h(z)$. A la fonction $f(x)$ (respectivement $g(y),h(z)$) on peut associer une énergie $E_x$ (respectivement $E_y,E_z$).
+
+A une dimension $x$, les grandeurs $(f(x),E_x)$ obéissent à l’équation de Schrödinger :
+
+$$
+\frac{-\hbar^2}{2m}\Delta f(x)+U_x(x)f(x)=E_xf(x)\qquad(1)
+$$
+
+Les grandeurs $(g(y),E_y)$ et $(h(z),E_z)$ obéissent à des équations similaires.
+
+On considère un domaine élémentaire de la structure cristalline périodique du métal dans la direction $x$, défini par $x\in[0,L_x]$, avec $U_x(x)=0$ à l’intérieur de ce domaine, et $U_x(x)=\infty$ sur ses bords. De plus $f(x)$ s’annule sur ces bords.
+
+Montrer que la fonction $f(x)$ s’écrit sous la forme: $f(x)=f_0\sin(K_xx)$, où $f_0$ et $K_x$ sont des constantes.
+
+**11.** Préciser l’unité de $K_x$ et montrer que $E_x=\hbar^2K_x^2/(2m)$.
+
+**12.** Montrer que les conditions aux limites imposent des valeurs particulières pour $K_x$ notées $K_{xp}$ (avec $p$ entier) et exprimer ces valeurs. Justifier que l’on peut se restreindre aux valeurs $K_{xp}>0$.
+
+**13.** Les conditions aux limites de $U_y(y)$ et $U_z(z)$ sont identiques à celles de $U_x(x)$ sur les domaines respectifs $y\in[0,L_y]$ et $z\in[0,L_z]$. Montrer qu’à trois dimensions la fonction d’onde totale peut s’écrire :
+
+$$
+\psi(x,y,z)=\psi_0\sin(K_xx)\sin(K_yy)\sin(K_zz)\qquad(2)
+$$
+
+avec $\psi_0$ une constante positive ou négative, $E_y=\hbar^2K_y^2/(2m)$ et $E_z=\hbar^2K_z^2/(2m)$.
+
+**14.** L’énergie $E$ associée à la fonction d’onde $\psi(x,y,z)$ vaut $E=E_x+E_y+E_z$. En déduire les valeurs d’énergie $E$ possibles pour l’électron.
+
+**15.** On souhaite calculer l’énergie totale du gaz d’électrons à partir de leurs énergies quantifiées $E_p$. On se place dans l’espace des $\vec K$, vecteurs d’onde de matière de composantes $K_x,K_y,K_z$. Cet espace est défini graphiquement par le repère $(K_x,K_y,K_z)$. Comment sont disposées dans cet espace les valeurs possibles de $\vec K$ imposées par les conditions aux limites de ce problème ?
+
+Donner les valeurs de $\Delta K_x,\Delta K_y,\Delta K_z$, entre deux points consécutifs dans chacune des directions respectives $K_x,K_y,K_z$. Justifier que le produit $\Delta K_x\cdot\Delta K_y\cdot\Delta K_z$ représente dans cet espace le volume occupé par un état électronique.
+
+**16.** Représenter dans l’espace des $\vec K$ la zone correspondant à des états d’énergie inférieure à une énergie $E$ donnée. Soit $n(E)$ le nombre d’états d’énergie inférieure à $E$. On admet que la prise en compte du spin de l’électron revient à multiplier par 2 le nombre d’états calculés.
+
+Donner l’expression de $\mathrm{d}n(E)$, nombre d’états correspondant à un vecteur d’onde de norme comprise entre $K$ et $K+\mathrm{d}K$, où $K$ est la norme du vecteur d’onde associé à l’énergie $E$. On supposera $n(E)$ très grand, si bien que $\mathrm{d}K_{x,y,z}\gg\Delta K_{x,y,z}$.
+
+**17.** En intégrant $\mathrm{d}n(E)$ entre $E=0$ et $E$, montrer que :
+
+$$
+n(E)=\frac{L_xL_yL_z}{3\pi^2\hbar^3}(2mE)^{\frac32}\qquad(3)
+$$
+
+**18.** L’énergie du gaz d’électrons dans le métal $E_F$ (appelée énergie de Fermi) est calculée par analogie avec la chimie : de la même façon que les propriétés des atomes sont définies par les électrons de plus haute énergie, l’énergie $E_F$ correspond à celle du dernier niveau rempli. En déduire que :
+
+$$
+E_F=\frac{\hbar^2}{2m}(3\pi^2N)^{\frac23}\qquad(4)
+$$
+
+Donner la valeur numérique de $E_F$ dans l’or et justifier la valeur de l’énergie cinétique d’agitation $E$ donnée dans la question **3.**.
+
+</ProblemSection>
+
+<ProblemSection id="i-2">
+
+### I.2. Plasmons dans un métal
+
+Dans cette partie on modélise les collisions subies par les électrons par une force de frottement fluide $-m\vec v/\tau$ introduite dans la section précédente, $\vec v$ étant la vitesse de l’électron et $\tau$ la constante de temps des collisions. Le champ électrique appliqué au métal est maintenant dépendant du temps et s’écrit $\vec E(t)$.
+
+**19.** Montrer que s’il existe à l’instant $t=0$ une densité volumique de charges $\rho_0$ en un point du conducteur de conductivité $\gamma_0$, celle-ci disparaît très rapidement. On calculera le temps de relaxation correspondant.
+
+**20.** Dans un régime forcé dans lequel le champ appliqué au métal est sinusoïdal et s’écrit en notation complexe $\vec E(t)=\vec E_0\exp(i\omega t)$, déterminer la vitesse d’un électron en régime permanent. En déduire, à partir de la loi d’Ohm locale, que la conductivité $\gamma(\omega)$ complexe en régime variable s’écrit :
+
+$$
+\gamma(\omega)=\frac{\gamma_0}{(1+i\omega\tau)}\qquad(5)
+$$
+
+**21.** Montrer que ce régime autorise pour la densité de charge $\rho(t)$ des oscillations amorties dont on donnera la pseudo-pulsation ainsi que le temps de décroissance en fonction de $\tau$ et de la pulsation $\omega_p=\sqrt{\gamma_0/\varepsilon_0\tau}$. Celle-ci est appelée pulsation plasmon par analogie à la pulsation plasma dans les gaz.
+
+**22.** En comparant les ordres de grandeur de $\omega_p$ et de $1/\tau$, commenter le comportement de $\rho(t)$.
+
+**23.** La pulsation plasmon provient d’une oscillation spatiale des charges propre au métal dont on peut retrouver l’origine en l’assimilant à un gaz d’électrons de densité $(-Ne)$ se superposant à un support de charges positives de densité $(Ne)$. Justifier que l’on peut considérer les ions du métal comme fixes par rapport aux électrons. Montrer que sous l’action d’un déplacement $\delta x$ du gaz d’électron dans la direction $x$, il se crée un champ électrique induit que l’on exprimera en fonction de $N$, $e$ et $\delta x$.
+
+**24.** Retrouver la pulsation propre des oscillations du gaz d’électrons sous la forme $\omega_p=\sqrt{Ne^2/m\varepsilon_0}$. On notera que dans cette oscillation, $\rho$ reste nul à l’intérieur du métal. Seule une charge surfacique apparaît à la surface du métal.
+
+**II. Couplage champ - plasmons**
+
+</ProblemSection>
+
+<ProblemSection id="ii-1">
+
+### II.1. Propagation dans un métal
+
+Dans cette partie on étudie le couplage d’une onde électromagnétique avec les oscillations plasmons décrites dans la partie précédente. Le conducteur métallique est parcouru par une onde électromagnétique plane progressive monochromatique de vecteur d’onde $\vec k$ suivant le sens positif de l’axe $z$. On notera le champ électrique complexe associé à cette onde : $\vec{\mathcal E}(z,t)=\vec E_0\exp(i(\omega t-kz))$. On négligera l’effet du champ magnétique sur le mouvement des électrons de telle manière que l’expression $\gamma(\omega)$ donnée en équation (5) reste valable.
+
+**25.** A partir des équations de Maxwell, démontrer la relation de dispersion du vecteur d’onde :
+
+$$
+k^2(\omega)=\frac{\omega^2}{c^2}\left(1-i\frac{\gamma(\omega)}{\omega\varepsilon_0}\right)\qquad(6)
+$$
+
+**26.** On suppose dans un premier temps que la pulsation de l’onde est faible devant la fréquence des collisions dans le métal de telle manière que $\omega\ll1/\tau$. Justifier pourquoi la conductivité est la même qu’à champ d’excitation constant. A quelle longueur d’onde dans le vide ce domaine de fréquences correspond-il ?
+
+**27.** En utilisant une expression simplifiée pour $k(\omega)$, montrer que dans ces conditions le champ s’écrit :
+
+$$
+\vec{\mathcal E}(z,t)=\vec E_0\exp(-z/\delta)\exp(i(\omega t-z/\delta))\qquad(7)
+$$
+
+Exprimer la profondeur de pénétration $\delta$ en fonction de $\gamma_0$, $\omega$ et $\mu_0$. Représenter graphiquement la dépendance en $z$ de l’amplitude spatiale du champ (en considérant $z=0$ à l’entrée du métal). Calculer $\delta$ pour des ondes de fréquences 50 Hz et 100 MHz.
+
+**28.** On se place maintenant dans le cas $\omega\gg1/\tau$. Montrer qu’en première approximation : $k^2(\omega)=\omega^2/c^2-\omega_p^2/c^2$. Sous quelle condition l’onde peut-elle se propager dans le métal ?
+
+**29.** Dans le domaine de fréquence dans lequel il n’y a pas propagation, donner l’expression de la distance de pénétration $\delta_p$ dans le métal en fonction de $\omega$, $\omega_p$ et $c$. Calculer cette distance pour une fréquence dans le visible.
+
+</ProblemSection>
+
+<ProblemSection id="ii-2">
+
+### II.2. Plasmons de surface sur un métal
+
+On étudie dans cette partie l’effet des oscillations électroniques à la surface d’un métal sur la propagation des ondes électromagnétiques. De la même manière que précédemment, il n’y a pas d’accumulation de charges à l’intérieur du métal. On considère une interface entre le métal occupant l’espace $z>0$ et l’air occupant l’espace $z<0$. Sur cette interface, on cherche les ondes électromagnétiques sous la forme d’ondes planes inhomogènes de champs électrique et magnétique complexes :
+
+$$
+\begin{aligned}\vec{\mathcal E}_l(x,z,t)&=\vec E_l(z)\exp(i(\omega t-k_xx))\\\vec{\mathcal B}_l(x,z,t)&=\vec B_l(z)\exp(i(\omega t-k_xx))\end{aligned}\qquad(8)
+$$
+
+avec $l=1$ dans l’air et $l=2$ dans le métal. $k_x$ est la composante suivant $x$ du vecteur d’onde dans les deux milieux et $\vec E_l(z)$ l’amplitude spatiale du champ.
+
+**30.** Exprimer dans le cas présent les équations de Maxwell satisfaites par les champs électriques et magnétiques dans l’air et le métal de conductivité $\gamma(\omega)$.
+
+**31.** On suppose que les champs $\vec E_l(z)$ $(l=1,2)$ sont polarisés dans le plan $(x,z)$. Montrer qu’alors le champ magnétique associé $\vec B_l(z)$ est dirigé suivant l’axe $y$, et que le problème se ramène à la recherche de la fonction scalaire $E_{lx}(z)$ dans chacun des deux milieux.
+
+**32.** Montrer que $E_{lx}(z)$ vérifie l’équation différentielle pour $l=1,2$ :
+
+$$
+\frac{\mathrm{d}^2E_{lx}(z)}{\mathrm{d}z^2}-(k_x^2-\omega^2\mu_0\varepsilon_l)E_{lx}(z)=0\qquad(9)
+$$
+
+avec $\varepsilon_1=\varepsilon_0$ la permittivité de l’air et $\varepsilon_2=\varepsilon_0-i\gamma(\omega)/\omega$ celle du métal.
+
+Dans toute la suite on considère les ondes de pulsation $\omega$ telle que $\omega\gg1/\tau$. Montrer qu’alors $\varepsilon_2$ est réel.
+
+**33.** Montrer que la forme générale des solutions de cette équation différentielle s’écrit $E_{lx}(z)=\alpha_l\exp(z/\delta_l)+\beta_l\exp(-z/\delta_l)$ pour $l=1,2$, avec des constantes $\delta_l$ dont on donnera l’expression en fonction de $k_x$ et $\varepsilon_l$.
+
+**34.** On cherche des solutions sous la forme d’ondes de surface : ces ondes se propagent dans la direction $x$, restent confinées au voisinage $z=0$ de part et d’autre de l’interface $(1-2)$, et s’annulent pour $z$ infini. Montrer qu’alors nécessairement $\delta_l$ est réel. On choisit $\delta_l$ positif pour $l=1,2$ : donner l’expression simplifiée de $E_{lx}(z)$ pour $l=1,2$.
+
+**35.** Donner la forme des autres composantes $E_{lz}(z)$ et $B_{ly}(z)$. Quel est l’état de polarisation du champ électrique dans le plan $(x,z)$ ?
+
+**36.** Représenter la dépendance en $x$ des amplitudes des vecteurs $\vec{\mathcal E}_l$ de chaque coté de l’interface. Représenter de même l’amplitude de la moyenne temporelle du vecteur de Poynting $\langle\vec\Pi_l\rangle(x,z)$ en fonction de $x$ puis de $z$.
+
+**37.** On admet que dans la description présente il n’y a pas lieu d’introduire de courant de surface. En utilisant les relations de continuité des champs sur l’interface $z=0$, montrer que :
+
+$$
+\varepsilon_1\delta_1+\varepsilon_2\delta_2=0\qquad(10)
+$$
+
+En déduire le signe de $\varepsilon_2$.
+
+**38.** Montrer que la relation de dispersion liant $k_x$ à $\omega$ s’écrit :
+
+$$
+k_x^2(\omega)=\frac{\varepsilon_1\varepsilon_2}{\varepsilon_1+\varepsilon_2}\mu_0\omega^2\qquad(11)
+$$
+
+**39.** Exprimer $k_x^2(\omega)$ en fonction de $\omega$, $\omega_p$ et $c$. En prenant en compte les caractéristiques des ondes de surface définies en **34.**, en déduire le domaine de fréquences autorisant la propagation d’une telle onde le long de l’interface $(1-2)$. Donner les expressions des profondeurs de pénétration de l’onde $\delta_l(\omega,\omega_p)$ $(l=1,2)$ de part et d’autre de l’interface et calculer ces distances pour une longueur d’onde dans le vide de 500 nm.
+
+**40.** Représenter graphiquement $k_x(\omega)$ dans le domaine de fréquences défini en **39.**. Discuter les cas : $\omega\ll\omega_p$, $\omega\rightarrow\omega_p/\sqrt2$.
+
+**41.** La solution à la pulsation $\omega=\omega_p/\sqrt2$ est appelée pulsation propre du plasmon de surface. En étudiant la limite du rapport $E_{lx}(z=0)/E_{lz}(z=0)$ pour $\omega\rightarrow\omega_p/\sqrt2$, donner la polarisation de cette onde dans le plan $(x,z)$.
+
+</ProblemSection>
+
+<ProblemSection id="ii-3">
+
+### II.3. Excitation des plasmons de surface
+
+Dans cette partie on cherche les conditions de création d’une onde de surface, confinée de part et d’autre de l’interface air-métal telle que décrite précédemment. On se place dans le domaine de longueurs d’onde telles que $\omega<\omega_p/\sqrt2$.
+
+</ProblemSection>
+
+<ProblemSection id="ii-3-1">
+
+### II.3.1. Couplage par réflexion
+
+Une onde plane monochromatique se propageant dans un milieu noté 3 parvient à l’interface $(x,y)$ sous une incidence $\theta_3$. Le champ électrique en $\vec r$ de cette onde s’écrit $\vec{\mathcal E}_3(\vec r,t)=\vec E_3\exp(i(\omega t-\vec k_3\cdot\vec r))$, où $\vec E_3$ et le vecteur d’onde $\vec k_3$ appartiennent au plan d’incidence $(x,z)$. On note $\vec k_3'$ et $\vec k_2$ les vecteurs d’onde des ondes éventuellement réfléchies ( d’amplitude $\vec E_3'$) et transmises (d’amplitude $\vec E_2$) par l’interface (figure 1).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '30.2%', '--fig-max': '194px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2007-mp/p1-fig1.png" alt="Diagramme original du couplage par réflexion, avec les trois milieux 3, 2 et 1, les axes x et z, tous vecteurs et les angles θ3 et θ3 prime." width="605" height="531" loading="lazy" decoding="async" />
+<figcaption>Figure 1: Couplage par réflexion</figcaption>
+</figure>
+
+**42.** Montrer que la relation de continuité des champs à l’interface $(3-2)$ impose que $\vec k_3$, $\vec k_3'$ et $\vec k_2$ soient coplanaires dans le plan d’incidence $(x,z)$, et qu’il y ait continuité des composantes tangentielles des vecteurs d’onde :
+
+$$
+k_{3x}=k'_{3x}=k_{2x}\qquad(12)
+$$
+
+Cette onde parvient sur une fine couche de métal (milieu 2) en contact avec l’air (milieu 1) en $z=0$ (figure 1). On souhaite faire propager une onde de surface sur l’interface $(1-2)$. L’épaisseur de la couche de métal est considérée comme suffisamment grande pour que la forme précédente des champs dans les milieux 1 et 2 reste valable (équation (8)), et suffisamment fine pour que l’onde de surface sur l’interface $(1-2)$ puisse éventuellement être excitée par couplage avec l’onde propagative du milieu 3. Son vecteur d’onde est alors défini par la relation (11).
+
+**43.** On suppose dans un premier temps que le milieu 3 est l’air : en exprimant $k_{3x}$ pour une incidence $\theta_3$, montrer que quelle que soit sa pulsation, l’onde propagative du milieu 3 ne peut exciter l’onde de surface : on utilisera pour cela une représentation graphique dans laquelle on utilisera les courbes respectives de $k_{lx}(\omega)$ dans l’air $(l=3)$ et le métal $(l=2)$.
+
+**44.** Que devient $k_{3x}$ si 3 est maintenant un milieu d’indice $n_3$ ? Montrer qu’il est alors possible d’exciter l’onde de surface à condition que l’angle $\theta_3$ dépasse une valeur limite que l’on donnera. On supposera $n_3$ indépendant de $\omega$.
+
+**45.** Pour une onde incidente propagative de pulsation $\omega$ montrer qu’il existe un unique angle $\theta_3=\theta_{3p}$ réalisant le couplage à l’onde de surface. Exprimer $\theta_{3p}$ en fonction de $\omega$, $\omega_p$ et $n_3$, et calculer cet angle pour une longueur d’onde incidente de 500 nm dans le vide et un indice $n_3=1,541$. On suppose que, lorsque l’onde de surface est excitée, l’énergie qu’elle transporte est absorbée. Que peut-on dire qualitativement du coefficient de réflexion de l’onde à $\theta_3=\theta_{3p}$ ?
+
+Donner un ordre de grandeur de l’épaisseur maximum à donner au métal pour que le confinement ait bien lieu à cette longueur d’onde.
+
+**46.** Expliquer pourquoi pour toutes les autres incidences, la réflexion sur l’interface est totale. Quelle est alors la direction du vecteur d’onde $\vec k_3'$ ? Représenter qualitativement en fonction de $\theta_3$, l’amplitude mesurée dans la direction $\theta_3'$ de l’onde éventuellement réfléchie.
+
+**47.** Cette configuration, introduite par Erich Kreschmann en 1968, permet de réaliser un dispositif de spectroscopie très sensible à des molécules déposées sur la surface libre du métal. En admettant que le remplacement de l’air (milieu 1) par un milieu d’indice $n$ revient à remplacer $\varepsilon_1$ par $n^2\varepsilon_0$ dans l’expression (11), donner la relation de dépendance à l’indice de l’angle de couplage $\theta_{3p}(n)$.
+
+**48.** Calculer $\mathrm{d}\theta_{3p}(n)/\mathrm{d}n$ en supposant que la permittivité $\varepsilon_2$ vérifie $|\varepsilon_2|\gg n^2\varepsilon_0$. Dans une bio-puce (capteur de molécules biologiques) utilisant ce procédé, le milieu d’indice $n$ est de l’eau $(n=1,333)$ dans laquelle on dilue des molécules biologiques en très faible quantité. L’attachement de ces molécules à la surface provoque de faibles variations d’indice au niveau de la surface. Donner la variation d’indice minimum mesurable $\mathrm{d}n_{min}$ sachant que la mesure de l’angle $\theta_{3p}$ par réflexion peut s’effectuer avec une précision de $10^{-3}$ degrés.
+
+**49.** On souhaite mesurer cette variation d’indice dans une lame d’épaisseur $e$ dans un interféromètre de Michelson de précision de mesure de déphasage de $10^{-4}$ rad, travaillant à une longueur d’onde de 500 nm : quelle est l’épaisseur minimum à donner à la lame pour que $\mathrm{d}n_{min}$ soit mesurable ? Commenter.
+
+**50.** Un brin d’ADN possède une masse molaire de $3\ 10^6$ g/mol. Sachant que la variation d’indice du milieu en fonction de la concentration en ADN est de $\mathrm{d}n/\mathrm{d}C=0,2$ mL/g, quelle est la concentration molaire minimum d’ADN observable en surface de cette bio-puce ?
+
+</ProblemSection>
+
+<ProblemSection id="ii-3-2">
+
+### II.3.2. Couplage par diffraction
+
+Une autre possibilité pour coupler une onde électromagnétique propagative à une onde de surface est de remplacer la surface plane métallique par une structure en réseau de diffraction telle que représentée sur la figure 2. On considère des bandes métalliques disposées périodiquement avec une période $\Lambda$. Ce réseau est éclairé par une onde plane d’angle d’incidence $\theta_3$ dans l’air, et on collecte l’intensité en réflexion. Les bandes du réseau sont d’épaisseur suffisamment petite devant la longueur d’onde pour considérer la structure comme une faible perturbation de l’interface plane.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '30.2%', '--fig-max': '194px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2007-mp/p1-fig2.png" alt="Diagramme original du réseau métallique, période Λ, onde incidente E3 et k3, angles θ3 et θq, rayon diffracté et axes x et z complets." width="605" height="506" loading="lazy" decoding="async" />
+<figcaption>Figure 2: Couplage par diffraction</figcaption>
+</figure>
+
+**51.** Définir les ordres de diffraction $q$ (avec $q$ entier) de ce réseau et donner leurs directions angulaires $\theta_q$ en réflexion. En déduire que la composante $k_{xq}$ selon $x$ du vecteur d’onde de l’ordre q diffracté s’écrit :
+
+$$
+k_{xq}(\omega)=\frac\omega c\sin\theta_3\pm q\frac{2\pi}{\Lambda}\qquad(13)
+$$
+
+En utilisant la relation de dispersion $k_x(\omega)$ de l’onde de surface déterminée en question **39.**, montrer qu’il est possible de coupler une onde diffractée à l’onde de surface du métal. On raisonnera graphiquement. Déterminer le pas de réseau minimum $\Lambda_{min}$ autorisant ce couplage à la longueur d’onde 500 nm dans le vide, pour une incidence de $\theta_3=45^\circ$.
+
+**52.** En 1902, Robert W. Wood observe que le spectre de diffraction d’une lumière blanche par un réseau de fines bandes métalliques possède des raies noires : expliquer ce phénomène. Quel est le nombre de raies présentes dans la zone spectrale 750 – 1500 nm pour un réseau de pas 10 $\mu$m illuminé sous une incidence de 45° ? On fera les approximations nécessaires en notant que dans ce domaine de longueurs d’onde $\omega\ll\omega_p$.
+
+</ProblemSection>
+
+<ProblemSection id="ii-4">
+
+### II.4. Extraction de la lumière confinée sous forme d’onde de surface
+
+Dans les questions suivantes on étudie le problème inverse de l’extraction de la lumière d’une surface métallique où celle-ci est initialement confinée sous forme d’une onde de surface à deux dimensions. Cette onde est définie par une décroissance exponentielle dans les directions $z>0$ et $z<0$, et une propagation isotrope dans le plan $(x,y)$, avec un vecteur d’onde $\vec k_{\parallel}$ de norme $k_{\parallel}$ constante.
+
+**53.** Justifier que le confinement de l’onde implique $k_{\parallel}>\omega/c$.
+
+**54.** On se place dans l’espace des $\vec k$ défini par les axes $(k_x,k_y,k_z)$. En se limitant à une projection dans le plan $(k_x,k_y)$, montrer que la région de ce plan correspondant à l’onde confinée est un cercle de rayon $k_{\parallel}$ (dénommé cercle de confinement), et que la région correspondant aux ondes se propageant librement dans le vide est un disque de rayon $\omega/c$ (dénommé disque de propagation libre). Justifier graphiquement que l’onde confinée ne peut se propager dans l’espace libre.
+
+**55.** On place sur la surface $(x,y)$ un réseau métallique périodique suivant la direction $x$ de période $\Lambda$, identique à la structure de la figure 2. Cette structure provoque un effet de diffraction sur l’onde de surface. Montrer que ceci résulte en un déplacement du cercle de confinement dans la direction $k_x$. Exprimer, pour l’ordre de diffraction $q$, ce déplacement en fonction de $q$ et $\Lambda$.
+
+**56.** Tracer dans le plan $(k_x,k_y)$ les cercles correspondant aux ondes diffractées et montrer qu’il est maintenant possible d’intercepter le disque de propagation libre avec un de ces cercles, moyennant une condition sur $\Lambda$ et $\omega$ que l’on donnera. Justifier que cela revient à extraire dans l’espace libre la lumière initialement confinée.
+
+**57.** On considère l’ordre $q=1$ de diffraction. Pour une pulsation $\omega$ donnée, quelle est la valeur à donner à $\Lambda$ pour que la direction de propagation dans la direction $z$ soit autorisée ? Représenter graphiquement les directions de propagation des ondes extraites de la structure par le réseau.
+
+**58.** Montrer qu’un réseau à deux dimensions de période $\Lambda$ dans les directions $x$ et $y$ permet d’extraire davantage de directions de propagation initialement confinées au plan $(x,y)$. Illustrer graphiquement le diagramme de rayonnement d’une telle structure.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [MP_2007.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2007.pdf#page=1)

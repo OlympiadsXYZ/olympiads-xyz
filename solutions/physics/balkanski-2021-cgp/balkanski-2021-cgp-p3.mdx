@@ -1,0 +1,230 @@
+---
+id: balkanski-2021-cgp-p3
+source: 'Балкански 2021, Теория'
+title: 'Задача 3. Une balançoire'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2021/balkanski-2021-cgp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T07:28:54.797Z'
+verifier: 'single-pass'
+---
+
+*Concours Général de Physique «Minko Balkanski» · 14 август 2021 г. · 7 т.*
+
+<Warning title="Бележка към темата">
+Le livret original contient les mêmes trois problèmes en français et en anglais. Les deux éditions sont conservées intégralement, ainsi que leurs différences de formulation et de notation. Aucun corrigé n’est fourni. La longueur de la balançoire passe de l à L dans les équations imprimées (3) et (6), et la règle de dérivation du cosinus manque une parenthèse fermante. Le texte français mentionne des vecteurs définis sur la figure de la balançoire, mais le dessin original ne comporte pas ces étiquettes.
+</Warning>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Étude du mouvement de l'enfant sans frottements](#sans-frottements)
+- [Cas d'une force de frottements fluides](#frottements-fluides)
+- [Faire monter la balançoire (BONUS pts)](#bonus)
+- [Part II — English: Problem III. A swing (7 pts)](#en-original)
+- [Study of the child's movement in the absence of drag](#en-without-drag)
+- [Case of linear friction force](#en-friction)
+- [Make the swing rise on our own (EXTRA pts)](#en-extra)
+
+</nav>
+
+**Première partie — Français**
+
+Un enfant faisant de la balançoire est modélisé par une masse ponctuelle $m$ située en $M$ et suspendue en $O$ par une tige rigide, de masse négligeable et de longueur $l$. Le champ de pesanteur $\vec{g}$ est supposé uniforme.
+
+On suppose que le mouvement de l'enfant est plan. L'angle que fait la tige de suspension avec la verticale est noté $\theta$. Les vecteurs unitaires $\vec{u_r}; \vec{u_\theta}; \vec{u_z} = \vec{u_r} \wedge \vec{u_\theta}$, tels que définis sur la figure, définissent un trièdre orthonormé direct lié à la balançoire.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '28%', '--fig-max': '180px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2021-cgp/p3-fig1.png" alt="Dessin original de la balançoire, enfant, tige, verticale en pointillés, flèche et supports hachurés. Aucun axe ou vecteur étiqueté dans le dessin imprimé." width="562" height="580" loading="lazy" decoding="async" />
+</figure>
+
+<ProblemSection id="sans-frottements">
+
+### Étude du mouvement de l'enfant sans frottements
+
+Dans cette partie, tout frottement de la tige sur son axe de rotation et tout frottement dû à la résistance de l'air sont négligés.
+
+**1.** A quelle condition, sur la durée de l'expérience, le référentiel terrestre peut-il être considéré comme galiléen (inertiel) ? On donnera un ordre de grandeur. Cette condition sera supposée être vérifiée dans toute la suite du problème.
+
+**2.** Établir l'équation différentielle du mouvement vérifiée par $\theta(t)$ (l'équation qui rélie l'accélération angulaire et l'angle $\theta(t)$) en utilisant une méthode de votre choix.
+
+**3.** A quelle condition l'enfant assis sur la balançoire sera-t-il un oscillateur harmonique ? Donner l'expression littérale de la pulsation propre $\omega_0$ correspondante.
+
+**4.** Exprimer dans ces conditions la vitesse maximale de l'enfant $v_{max}$ en fonction de $l$, $\omega_0$ et $\theta_{max}$.
+
+**5.** Application Numérique : l'enfant part d'un angle $\theta_0 = 30^{\circ}$ sans vitesse initiale. Avec les valeurs numériques suivantes : $l = 2.5m$, $g = 10m.s^{-2}$ et $m = 20kg$, calculer la période $T_0$ de l'oscillateur harmonique, ainsi que la vitesse maximale $v_{max}$ de l'enfant.
+
+</ProblemSection>
+
+<ProblemSection id="frottements-fluides">
+
+### Cas d'une force de frottements fluides
+
+Au niveau de la liaison pivot $Oz$ s'exercent des forces de frottement sur la tige. Le moment de ces forces (par rapport à $O$) est égal à $\overrightarrow{\Gamma_f} = -C\frac{d\theta}{dt}.\vec{u_z}$ où $C$ est une constante positive et $\frac{d\theta}{dt}$ est la dérivée de $\theta(t)$ par rapport au temps qui est la vitesse angulaire $\omega(t)$.
+
+**6.** Exprimer l'unité de $C$ en utilisant les unités fondamentales du Système International.
+
+**7.** Établir l'équation différentielle à laquelle doit maintenant obéir $\theta(t)$ (l'équation qui rélie l'accélération angulaire, la vitesse angulaire et l'angle $\theta(t)$). En supposant que les conditions de l'expérience sont telles qu'on peut utiliser l'approximation de petites angles, reécrire l'équation.
+
+*INDICATION : Approximation de petites angles : $\sin(\theta) \approx \theta$*
+
+**8.** Vérifier que $\theta(t)$ sous la forme suivante satisfait l'équation différentielle, étant donné qu'à l'instant initial $\theta = \theta_0$ et la balançoire part sans vitesse initiale :
+
+$$
+\theta(t) = e^{-\frac{C}{2mL^2}t}(A\cos(\Omega t) + B\sin(\Omega t)) \qquad (3)
+$$
+
+où $\Omega = \sqrt{\frac{g}{L} - \frac{C^2}{4m^2L^4}}$. Trouver $A$ et $B$.
+
+*INDICATION : On vous donne les "règles" nécessaire pour la dérivation :*
+
+*On note la dérivée par rapport au temps par $\frac{d}{dt}$.*
+
+*Soient $f$ et $g$ deux fonctions de la variable $t$. On a :*
+
+$\frac{d}{dt}(fg) = \frac{df}{dt}g + f\frac{dg}{dt}$ *et* $\frac{d}{dt}(f + g) = \frac{d}{dt}f + \frac{d}{dt}g$
+
+*On vous donne également les dérivées des quelques fonctions qui seront utiles :*
+
+$\frac{d}{dt}(e^{ct}) = c \cdot e^{ct}$ *et* $\frac{d}{dt}(\sin(At)) = A\cos(At)$, $\frac{d}{dt}(\cos(At) = -A\sin(At)$
+
+**9.** À quelle inégalité doit satisfaire $C$ pour que le mouvement de l'enfant puisse être considéré comme pseudo-périodique ?
+
+**10.** À quelle condition peut-on approcher la pseudo-période par la période propre $T_0$ ?
+
+**11.** Application numérique : Considérant cette condition satisfaite, on suppose que $\theta = 30^{\circ}$. On observe que l'amplitude du mouvement est réduite de moitié après 20 oscillations. Calculer la valeur de la constante $C$ avec les valeurs numériques données à la question.
+
+Les frottements ont pour conséquence d'amortir le balancement de l'enfant et un deuxième enfant vient donc aider le premier enfant qui se balance à maintenir une amplitude constante en le poussant avec une force horizontale vers l'avant, périodique non harmonique.
+
+**12.** A quel moment et à quelle fréquence l'enfant pousseur doit-il appliquer sa poussée (force appliquée pour une courte durée) sur l'enfant de la balançoire pour que son action soit la plus efficace possible ? Que vaut donc la période T de la force F(t) pour que l'action de l'enfant pousseur soit la plus efficace possible ?
+
+On suppose que l'impulsion est suffisamment courte et l'amortissement suffisamment faible pour qu'on puisse considérer que $\theta(t)$ suit une évolution sinusoïdale de pulsation $\omega_0$ et d'amplitude $\theta_0$.
+
+**13.** Déterminer la puissance moyenne dissipée par les frottements en fonction de $C$, $\omega_0$ la pulsation du mouvement et $\theta_0$ l'amplitude du mouvement.
+
+**14.** Application numérique : En déduire le travail fourni par l'enfant pousseur après 20 oscillations de l'enfant se balançant (les valeurs numériques des différents paramètres sont ceux utilisés ou calculés aux questions précedentes).
+
+</ProblemSection>
+
+<ProblemSection id="bonus">
+
+### Faire monter la balançoire (BONUS pts)
+
+Une manière de faire monter la balançoire est la suivante : l'enfant peut rester assis et mettre son dos alternativement en avant ou en arrière tout en repliant puis étendant ses jambes afin de faire lever ou abaisser son centre de gravité.
+
+On néglige à nouveau tous les frottements dans cette partie (soit $C = 0$) et, comme précédemment, on considère que la masse de la balançoire est négligeable.
+
+Expliquer avec des schèmas comment doit l'enfant faire pour monter la balançoire. Expliquer d'où vient l'énergie pour monter la balançoire. Modeliser ce mouvement de l'enfant et arriver à une équation pilote. La résoudre ou faire une analogie avec des phénomènes connus. Commenter la validité et les limits du modèle.
+
+**FIN DE L’ENONCE**
+
+</ProblemSection>
+
+<ProblemSection id="en-original">
+
+### Part II — English: Problem III. A swing (7 pts)
+
+A child on a swing is considered to be a point $M$ of mass $m$, suspended from point $O$ by a rigid rod of negligible mass and length $l$. The gravitational acceleration $\vec g$ is supposed to be uniform.
+
+Furthermore, we suppose the movement of the child to be in a plane. The angle between the vertical and the rigid rod is called $\theta$. The unitary vectors $\vec u_r;\vec u_\theta;\vec u_z=\vec u_r\wedge\vec u_\theta$, form an orthonormal right-hand triad.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '20.8%', '--fig-max': '133px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2021-cgp/p3-fig2.png" alt="Original swing drawing in the English edition; complete child, rod, dashed vertical, oscillation arrow and hatched supports." width="417" height="442" loading="lazy" decoding="async" />
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="en-without-drag">
+
+### Study of the child's movement in the absence of drag
+
+In this part of the problem, all friction between the rod and the axis of rotation and all drag due to air resistance, are neglected.
+
+**1.** What condition on the duration of the experiment should be true in order for the reference system to be considered as inertial? Give an order of magnitude. We suppose this condition to be met in the rest of the problem.
+
+**2.** Establish the differential equation of movement for $\theta(t)$ (the equation that connects the angular acceleration and the angle $\theta(t)$), using a method of your choosing.
+
+**3.** Under what condition the child on the swing will be a harmonic oscillator? Give the expression of the corresponding angular frequency $\omega_0$.
+
+**4.** Express the maximal velocity $v_{max}$ achieved by the child in those conditions as a function of $l$, $\omega_0$ and $\theta_{max}$.
+
+**5.** Numerical application: the child starts off from an angle $\theta_0=30^\circ$ without initial velocity. Calculate the period of oscillations $T_0$ and the maximal velocity $v_{max}$, given that $l=2.5m$, $g=10m.s^{-2}$ and $m=20kg$.
+
+</ProblemSection>
+
+<ProblemSection id="en-friction">
+
+### Case of linear friction force
+
+There is some friction at the pivot point $O$ where the rod is attached. We model this phenomenon by adding a torque (or a moment of force) accounting for this friction. The torque with respect to $O$ is given by $\vec\Gamma_f=-C\frac{d\theta}{dt}.\vec u_z$ where $C$ is a positive constant and $\frac{d\theta}{dt}$ is the derivative of $\theta(t)$ with respect to time, which is the angular velocity $\omega(t)$.
+
+**6.** Express the units of $C$ in terms of SI (Système International) units.
+
+**7.** Establish the differential equation that governs the behaviour of $\theta(t)$. Suppose that the experimental conditions allow us to use the small angles approximation and rewrite the equation using it.
+
+*HINT: Small angles approximation: $\sin(\theta)\approx\theta$*
+
+**8.** Given that at the initial moment $\theta=\theta_0$ and the swing has no initial velocity, check that $\theta(t)$ in the following form satisfies the differential equation:
+
+$$
+\theta(t)=e^{-\frac C{2mL^2}t}(A\cos(\Omega t)+B\sin(\Omega t))\qquad(6)
+$$
+
+where $\Omega=\sqrt{\frac gL-\frac{C^2}{4m^2L^4}}$. Find $A$ et $B$.
+
+*HINT: We remind you of the "rules" of taking derivatives:*
+
+*We note the derivative with respect to time by $\frac d{dt}$.*
+
+*Let $f$ and $g$ be two functions of the variable $t$. We have:*
+
+$\frac d{dt}(fg)=\frac{df}{dt}g+f\frac{dg}{dt}$ *and* $\frac d{dt}(f+g)=\frac d{dt}f+\frac d{dt}g$
+
+*We also give you the derivatives of some functions that might be useful:*
+
+$\frac d{dt}(e^{ct})=c\cdot e^{ct}$ *and* $\frac d{dt}(\sin(At))=A\cos(At)$, $\frac d{dt}(\cos(At)=-A\sin(At)$
+
+**9.** What inequality should $C$ satisfy in order for the movement of the child to be considered pseudo-periodic?
+
+**10.** Under what condition can we approximate the pseudo-period with the period found earlier $T_0$?
+
+**11.** Numerical application: Consider this condition to be met, we suppose that $\theta=30^\circ$. We make the observation that the amplitude of the movement is reduced in half over 20 oscillations. Calculate the value of the constant $C$.
+
+The friction is slowing down the swing and so a second child comes to help the first one by pushing the swing with a horizontal force, which is periodic, but not harmonic, and the 2nd child is compensating the effects of friction, so it tries to keep the maximal angle reached by the swing the same. This force is applied over a short period of time and is constant over that duration.
+
+**12.** At which instant and at what frequency should the 2nd child apply its force, in order to be most efficient? What is the period $T$ of that force $F(t)$?
+
+Suppose that the force is applied over a sufficiently small duration and the friction is weak enough so we can assume $\theta(t)$ is following a sinusoidal evolution of angular frequency $\omega_0$ and amplitude $\theta_0$.
+
+**13.** Determine the average power dissipated by the friction as a function of $C$, $\omega_0$ the angular frequency of the movement and $\theta_0$ - the amplitude of the movement.
+
+**14.** Numerical application: Deduce the amount of work the 2nd child has to generate over 20 oscillations.
+
+</ProblemSection>
+
+<ProblemSection id="en-extra">
+
+### Make the swing rise on our own (EXTRA pts)
+
+A way of making the swing rise is the following: the child stays seated and slightly moves its body back and forth, while simultaneously folding and expanding its legs to make its center of mass move up or down.
+
+We neglect the air drag (meaning $C=0$) and, as before, we consider the mass of the swing to be negligible.
+
+Explain, using diagrams, how precisely the child should move in order to make the swing rise and accelerate. Explain where the energy to rise the swing comes from. Model the movement of the child and find the equation that governs the behaviour of the swing. Solve it or make an analogy with a well known physics phenomenon. Comment on the validity and limitations of our model.
+
+**END OF PAPER**
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [CGP_2021.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2021.pdf#page=7)

@@ -1,0 +1,305 @@
+---
+id: x-ens-2009-mp-p1
+source: 'X-ENS 2009, Приемен изпит, математика и физика'
+title: 'Задача 1. Première partie – Étude d’une instabilité paramétrique'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2009/x-ens-2009-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T07:47:55.160Z'
+verifier: 'single-pass'
+---
+
+*SESSION 2009 — Filière MP — PHYSIQUE MPI — Épreuve commune aux ENS de Paris, Lyon et Cachan*
+
+<Warning title="Бележка към темата">
+Le dossier d’archive ne contient pas de corrigé complet : le document complémentaire est le rapport du jury, conservé intégralement et clairement présenté comme tel. Aucun résultat ni barème n’a été inventé. À la question 14, le texte imprime « au voisinage de ω=2ω₀ », bien que ω ait été défini comme ωₑ/2; cette notation est conservée. À la question 49, la formule Δs=L/T₀ est suivie d’une phrase désignant T* comme température de changement d’état; les deux notations imprimées sont conservées.
+</Warning>
+
+<details>
+<summary>Consignes de l’épreuve</summary>
+
+L’usage des calculatrices de poche est autorisé, y compris les calculatrices programmables et alphanumériques ou à écran graphique, à condition que leur fonctionnement soit autonome et qu’il ne soit pas fait usage d’imprimante (circulaire n° 99018 du 1er février 1999).
+
+Il sera tenu compte du soin apporté à la rédaction et de la clarté des explications demandées.
+
+</details>
+
+<details>
+<summary>Ouverture à la physique des instabilités</summary>
+
+La thématique abordée dans ce sujet est celle de l’étude physique de certaines instabilités. Elle est explorée ici, à travers des exemples concrets empruntés, pour l’essentiel, à la mécanique et à la thermodynamique. À travers **trois problèmes totalement indépendants** traitant successivement l’étude de l’instabilité paramétrique du grand encensoir de Saint-Jacques de Compostelle, l’étude d’une lampe fer/hydrogène, et enfin, dans une dernière partie, l’étude de l’instabilité de croissance d’un germe solide (instabilité dite de Mullins et Sekerka), nous nous attacherons à décrire les conditions nécessaires à la naissance d’une instabilité de chaque système physique étudié. Les mécanismes non-linéaires limitant la croissance de l’énergie du système ne seront pas considérés explicitement dans ce sujet.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [I. Origine physique de l’instabilité — A. Approche qualitative](#i-a)
+- [B. Mise en œuvre expérimentale](#i-b)
+- [II. Instabilité paramétrique du grand encensoir de Saint-Jacques de Compostelle — A. Équation de Mathieu](#ii-a)
+- [B. Diagramme de stabilité des solutions](#ii-b)
+- [C. Introduction d’un terme de dissipation.](#ii-c)
+
+</nav>
+
+Dans cette première partie, on se propose d’étudier le principe d’un oscillateur paramétrique, c’est-à-dire d’un oscillateur dont la période propre dépend du temps. L’exemple type de l’oscillateur paramétrique est celui d’une personne assise sur le siège d’une balançoire. Le mécanisme de déploiement et de repli des jambes au cours d’une période modifie la longueur effective du pendule et donc sa période propre qui devient un paramètre dépendant du temps.
+
+On débutera cette partie par l’examen de la condition à assurer entre la période propre de l’oscillateur et la période $T_e$ du mécanisme d’excitation afin que l’oscillateur devienne instable.
+
+Dans une deuxième étape, on propose une approche quantitative de l’oscillateur paramétrique, illustrée par l’étude du grand encensoir de Saint-Jacques de Compostelle (le *Botafumeiro*). Le but sera de déterminer le diagramme de stabilité de cet oscillateur, c’est-à-dire, les valeurs de l’amplitude de l’excitation $f$ qui, pour une pulsation excitatrice donnée, conduisent à l’instabilité.
+
+<ProblemSection id="i-a">
+
+### I. Origine physique de l’instabilité — A. Approche qualitative
+
+Pour interpréter physiquement l’origine de l’instabilité, on commence par raisonner sur un circuit électrique LC, oscillant à la période propre $T_0$.
+
+On imagine un dispositif permettant de moduler faiblement et périodiquement la distance $e$ séparant les deux armatures du condensateur supposé plan, comme représenté sur la figure ci-contre. On note $S$ la surface de chaque armature. Cette action mécanique est effectuée à la période excitatrice $T_e=2\pi/\omega_e$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '28%', '--fig-max': '180px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p1-fig1.png" alt="Circuit fermé avec bobine L et condensateur C dont la distance entre armatures est e(t)." width="561" height="345" loading="lazy" decoding="async" />
+</figure>
+
+**1.** Exprimer la variation d’énergie électrostatique $\Delta\mathcal U_{\mathrm{el}}$ emmagasinée dans le condensateur quand l’épaisseur $e$ passe de $e_0-\Delta e$ à $e_0+\Delta e$ avec $\Delta e/e_0=\epsilon$ et $0\leq\epsilon\ll1$. On supposera que la modification de la distance inter-armatures est « instantanée » pour ne pas modifier la charge $q(t)$. On exprimera le résultat en fonction de $\epsilon$, $q(t)$, et $C_0$, capacité d’un condensateur plan de surface $S$ et d’épaisseur $e_0$.
+
+**2.** Commenter cette variation dans le cas où $q(t)=0$.
+
+L’excitation paramétrique de l’oscillateur consiste à faire varier l’épaisseur du condensateur selon le mode suivant :
+
+– la distance $e$ augmente instantanément d’une quantité $2\Delta e$ chaque fois que la charge $q(t)$ atteint un extremum,
+
+– la distance $e$ passe de $e_{\max}=e_0+\Delta e=e_0(1+\epsilon)$ à $e_{\min}=e_0(1-\epsilon)$ à chaque passage de $q(t)$ par $0$.
+
+On a représenté figure (1) l’évolution temporelle de la charge $q(t)$ (en l’absence d’excitation), ainsi que les séquences d’excitation paramétrique (dans le cas où $T_e=T_0/2$). Le graphe présenté figure (1) correspond à un régime éloigné (de $nT_0$) de la phase de démarrage que l’on n’étudiera pas.
+
+**3.** Expliquer en quoi il est intéressant (d’un point de vue énergétique) de synchroniser l’instant où les armatures du condensateur se rapprochent (étape CD) avec celui où la charge du condensateur est nulle.
+
+**4.** Superposer sur la figure 1.b l’allure de la courbe d’énergie électrostatique $\mathcal U_{\mathrm{el}}(t)$ (cas du circuit excité). On présentera cette courbe en correspondance de la courbe donnant les variations de $e(t)$.
+
+**5.** Dessiner l’allure de l’évolution temporelle de $\mathcal U_{\mathrm{el}}(t)$ dans les cas où $T_e=T_0$ d’une part et $T_e=3T_0/2$ d’autre part.
+
+</ProblemSection>
+
+<ProblemSection id="i-b">
+
+### B. Mise en œuvre expérimentale
+
+Le circuit à capacité variable est simulé à l’aide d’un circuit électronique, utilisant un multiplieur supposé idéal (figure (2)), un condensateur de capacité $C$ et une bobine d’inductance propre $L$ et de résistance interne $r$.
+
+La tension, en sortie du multiplieur, s’écrit :
+
+$$
+u_s(t)=k\,u_e(t)\,u(t),
+$$
+
+où
+
+* $u_e(t)$ est une tension sinusoïdale, de pulsation $\omega_e$ et d’amplitude $U_e$, délivrée par un générateur de tension. On choisit l’origine des temps telle que :
+
+$$
+u_e(t)=U_e\cos(\omega_e t+\pi),
+$$
+
+* $u(t)$ est la tension aux bornes du condensateur,
+
+* $k$ est une constante de proportionnalité (dimensionnée) caractéristique du multiplieur.
+
+**6.** Montrer que la charge $q(t)$ du condensateur satisfait l’équation différentielle :
+
+$$
+\ddot q+2\lambda\omega_0\dot q+\omega_0^2(1+2f\cos(\omega_e t))\,q=0,
+$$
+
+où les coefficients $f$ et $\lambda$ seront exprimés en fonction de $k$, $r$, $L$, $C$ et $U_e$.
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '66.3%', '--fig-max': '425px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p1-fig2.png" alt="Deux graphes alignés : charge q(t)/qmax et modulation e(t), avec T0, Te, emax, e0, emin et les étapes A à E." width="1327" height="1611" loading="lazy" decoding="async" />
+<figcaption>Figure 1 – a) (en haut) Signal de charge q(t) (en l’absence d’excitation) – b) (en bas) Évolution de e(t).</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.4%', '--fig-max': '355px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p1-fig3.png" alt="Circuit avec condensateur C, bobine (L,r), multiplieur idéal, entrée ue(t), sorties u(t) et us(t), i=0 et masse." width="1109" height="741" loading="lazy" decoding="async" />
+<figcaption>Figure 2 – Montage simulant un oscillateur paramétrique.</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="ii-a">
+
+### II. Instabilité paramétrique du grand encensoir de Saint-Jacques de Compostelle — A. Équation de Mathieu
+
+Le grand encensoir de Saint-Jacques de Compostelle est assimilé à un pendule simple, de longueur $\ell$ et de masse $m$ (figure ci-contre). Le point de suspension $O'$ de ce pendule suit un mouvement de translation forcé sinusoïdalement à la pulsation $\omega_e$. Par rapport au repère fixe, dont l’origine $O$ est solidaire du plafond de la cathédrale, le mouvement de translation du point de suspension $O'$ s’écrit :
+
+$$
+\overrightarrow{OO'}(t)=h(t)\,\vec e_z=h_0\cos(\omega_e t)\,\vec e_z
+$$
+
+avec $0<h_0\ll\ell$. On repère la position de l’encensoir par rapport à la verticale par l’angle $\theta(t)$. On notera :
+
+* $\mathcal R$, le référentiel terrestre, supposé galiléen sur l’échelle de temps du mouvement de l’encensoir,
+* $\mathcal R'$, le repère attaché au point de suspension $O'$, effectuant un mouvement de translation oscillant par rapport au référentiel $\mathcal R$.
+
+Dans un premier temps, on négligera tout phénomène dissipatif.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '41.7%', '--fig-max': '267px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p1-fig4.png" alt="Pendule de longueur ℓ et masse M(m), suspension O’ mobile sous O, hauteur h(t), angle θ(t), pesanteur g0 et repère ex, ey, ez." width="834" height="752" loading="lazy" decoding="async" />
+<figcaption>Modèle mécanique de l’encensoir.</figcaption>
+</figure>
+
+**7.** Montrer que l’équation du mouvement est celle d’un pendule simple placé dans un champ de pesanteur effectif $g(t)$ que l’on exprimera en fonction de $g_0$ (intensité du champ gravitationnel présent à Saint-Jacques de Compostelle), $\omega_e$ et $h(t)$.
+
+**8.** Déduire que l’équation différentielle du mouvement peut s’écrire :
+
+$$
+\ddot\theta+\omega_0^2(1+2f\cos(\omega_e t))\sin\theta=0,\qquad (1)
+$$
+
+où
+
+* $f$ est une grandeur associée à l’excitation paramétrique que l’on exprimera en fonction de $h_0$, $\omega_e$ et $g_0$. Dans tout le problème, on limitera l’étude au cas où $f\ll1$.
+* $\omega_0$ une pulsation caractéristique qu’on exprimera en fonction de $g_0$ et $\ell$.
+
+**9.** Dans la suite, on étudie la naissance de l’instabilité, de sorte qu’il sera légitime de faire l’approximation des mouvements de faible amplitude. Donner alors la forme approchée de l’équation différentielle du mouvement. Cette équation est connue sous le nom d’*équation de Mathieu*.
+
+</ProblemSection>
+
+<ProblemSection id="ii-b">
+
+### B. Diagramme de stabilité des solutions
+
+Désormais, le but est de définir à quelle condition, sur les paramètres de l’excitation (amplitude $h_0$ et pulsation $\omega_e$), on parvient à déstabiliser l’oscillateur.
+
+La théorie mathématique de Floquet montre que l’on peut chercher la solution générale de l’équation de Mathieu sous la forme :
+
+$$
+\theta(t)=e^{\mu\omega_0 t}P(t)
+$$
+
+où $P(t)$ est une fonction de période $T=2\pi/(\omega_e/2)=4\pi/\omega_e$ et $\mu$ une grandeur réelle.
+
+L’approche la plus élémentaire consiste à chercher des solutions de l’équation de Mathieu sous la forme
+
+$$
+\theta(t)=\theta_0 e^{\mu\omega_0 t}\cos\left(\frac{\omega_e}{2}t+\phi\right)\quad\text{où }\phi\text{ est une constante.}\qquad (2)
+$$
+
+**10.** On note désormais $\omega=\omega_e/2$.
+
+En laissant de côté les termes de pulsation $3\omega$ qui apparaîtront dans le calcul (la question 15 portera sur la justification de cette approche), montrer que $\mu$ vérifie l’équation bicarrée suivante :
+
+$$
+\mu^4+2(\Omega^2+1)\mu^2+(\Omega^2-1)^2-f^2=0\quad\text{où }\Omega=\frac{\omega}{\omega_0}
+$$
+
+**11.** Montrer que l’instabilité paramétrique prend naissance dès lors que le paramètre d’excitation $f$ vérifie la condition
+
+$$
+f^2>(1-\Omega^2)^2=f_c^2
+$$
+
+**12.** Établir alors le diagramme de stabilité de l’encensoir dans le plan $(f,\Omega)$ ($f$ en ordonnée). Indiquer les zones de stabilité et d’instabilité.
+
+**13.** Commenter l’influence de l’amplitude de l’excitation à la résonance ainsi qu’en dehors de la résonance.
+
+**14.** Dans cette question, on excite l’oscillateur à une pulsation $\omega_e$ proche de $2\omega_0$. On pose $\omega_e=2\omega_0(1+\epsilon)$ où $|\epsilon|\ll1$. Déterminer la largeur $\Delta\omega$ de la zone instable en fonction de $f>f_c$ au voisinage de $\omega=2\omega_0$.
+
+On établira pour cela une relation très simple entre $f$, $\Delta\omega$ et $\omega_0$.
+
+**15.** On se propose à présent de justifier le caractère négligeable des termes de pulsation $3\omega$. Pour cela, on se situe, d’une part, près du seuil d’instabilité, (en notant que $\omega\simeq\omega_0$ conduit à la condition $\mu\ll1$) et, d’autre part, on limite l’étude au démarrage de l’instabilité.
+
+Dans ces conditions, on cherche désormais la solution de l’équation de Mathieu sous la forme
+
+$$
+\theta(t)=\theta_0\cos(\omega t+\phi)+\theta_1\cos(3\omega t+\Psi)
+$$
+
+Afin de ne pas alourdir les calculs, et sans restreindre la portée du résultat auquel on aboutira, on se placera dans le cas simplifié où $\phi=\Psi=0$, d’une part et $\omega\sim\omega_0$ d’autre part.
+
+En laissant désormais de côté les termes de pulsation $5\omega$, déterminer une relation entre $\theta_1$, $\theta_0$ et $f$. Justifier en particulier que $\theta_1$ et $f$ sont des « infiniment petits » du même ordre. Justifier alors l’hypothèse faite plus haut consistant à négliger les termes de pulsation $3\omega$.
+
+</ProblemSection>
+
+<ProblemSection id="ii-c">
+
+### C. Introduction d’un terme de dissipation.
+
+**16.** On étudie, à présent, l’influence des frottements sur le déclenchement de l’instabilité. On considérera que l’action de l’air sur l’encensoir se traduit simplement par un moment résistant (relativement au point O’) d’expression :
+
+$$
+\vec\Gamma_f=-2\lambda m\ell^2\omega_0\dot\theta\,\vec e_y,
+$$
+
+où $\lambda$ est une constante positive.
+
+Déterminer la nouvelle équation de Mathieu en présence de dissipation (toujours dans l’approximation des mouvements de faible amplitude).
+
+**17.** On cherche encore la solution $\theta(t)$ sous la forme
+
+$$
+\theta(t)=\theta_0e^{\mu\omega_0 t}\cos(\omega t+\phi)
+$$
+
+Montrer que l’équation de la nouvelle courbe de stabilité donnant $f_c$ en fonction de $\lambda$ et $\Omega=\omega/\omega_0$ est telle que
+
+$$
+f_c^2=(1-\Omega^2)^2+4\Omega^2\lambda^2
+$$
+
+On rappelle que $f_c$ est la valeur minimale de $f$ qu’il faut atteindre pour déclencher l’instabilité, à la pulsation $\omega$.
+
+**18.** Que dire de la largeur de la zone instable au voisinage de $\Omega=1$ par rapport au cas non dissipatif ?
+
+**19.** Tracer le nouveau diagramme de stabilité et interpréter.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+<details>
+<summary>Rapport du Jury de Physique — Session 2009 – Filière MP(I)</summary>
+
+**Membres du jury : Alexia Auffèves, Sophie Brasselet, Pierre-Richard Dahoo, Brahim Lamine, Baptiste Portelli, Samuel Savineau, Jérôme Tignon.**
+
+Le thème du sujet de physique proposé aux concours d’entrée des écoles normales supérieures, session 2009, était celui des *instabilités*. Il s’articulait autour de trois problèmes complètement indépendants abordant successivement l’instabilité paramétrique du grand encensoir de Saint Jacques de Compostelle, l’étude d’un régulateur fer/hydrogène et enfin, l’instabilité de croissance de Mullins et Sekerka. Les thématiques abordées dans ce sujet étaient la mécanique du point matériel et la thermodynamique au sens large (transferts thermiques, second principe, changements d’état des corps purs).
+
+Bien qu’il était clairement spécifié que les trois problèmes étaient indépendants, la très grande majorité des candidats (environ 80%) a commencé par le premier problème. À l’avenir, nous invitons les candidats à prendre quelques minutes en début d’épreuve pour parcourir le sujet dans son ensemble et à débuter, quand cela est possible, par le problème qui semble le plus « engageant » . Nombre de candidats qui ont vu leur progression bloquée assez rapidement dans le premier problème (dont la complexité était réelle d’un point de vue calculatoire) ont montré qu’ils auraient pu réussir très convenablement le deuxième problème avec une meilleure gestion du temps.
+
+D’un point de vue général, le deuxième problème, centré sur l’étude de processus irréversibles au sein d’un barreau conducteur parcouru par un courant, est celui qui a le moins déstabilisé les candidats. Il est vrai qu’il reprenait les méthodes largement utilisées dans le cours de deuxième année sur les transferts thermiques. Le troisième problème n’a été abordé de façon sérieuse (et souvent réussie) que par une poignée de candidats. La très grande majorité des candidats a utilisé cette partie pour « glaner » quelques points en fin d’épreuve (questions simples sur l’homogénéité des résultats, démonstration de la relation de Clapeyron,...). Le premier problème a permis aux étudiants à l’aise en calcul de faire la différence. Certains candidats ont parfaitement cerné l’esprit des techniques mises en œuvre dans la description de l’instabilité d’un système physique. Nous les en félicitons car nous sommes confiants dans le fait qu’il s’agissait là de techniques nouvelles pour les candidats.
+
+Le jury rappelle aux candidats que le soin apporté à la copie, qu’il s’agisse de l’orthographe et de la présentation, est **effectivement** pris en compte dans la notation. Nous insistons également sur la nécessité de rédiger les arguments scientifiques (démonstrations, calculs, etc,...) de la façon la plus précise possible. Le jury est d’autant plus exigeant que les démonstrations demandées sont proches de celles du cours. À titre d’exemple, la démonstration du bilan d’énergie en début du deuxième problème a, le plus souvent, manqué de rigueur (système élémentaire non défini, confusion entre fonctions d’état et transferts d’énergie, signes non-justifiés,...). Très peu de candidats ont pu obtenir le maximum de points à cette question, jugée abordable par le jury. Même si cela peut paraître convenu pour les candidats, nous rappelons qu’il n’est pas permis de faire une étude mécanique sans préciser ni le système ni le référentiel d’étude. De même, en électronique, le jury aurait vivement souhaité que le candidat précise, lors de l’écriture d’une loi aux mailles, si les dipoles concernés étaient choisis en convention récepteur ou générateur.
+
+Le jury comprend parfaitement qu’un candidat veuille absolument aboutir à un résultat fourni par l’énoncé. Il est néanmoins regrettable que les moyens utilisés manquent parfois d’honnêteté scientifique. L’exemple type est le calcul de production d’entropie demandé dans le deuxième problème et dont l’expression à démontrer était donnée dans l’énoncé. Beaucoup trop de candidats justifient le terme de dissipation par effet Joule directement à partir de l’écriture du second principe en écrivant
+
+$$
+\mathrm dS=\frac{\delta Q}{T}+\frac{\delta W}{T}+\delta S_c
+$$
+
+qui est une **formule complètement fausse**. D’autres arguments peu scientifiques ont été également été avancés pour justifier la question 10 du premier problème.
+
+Ce rapport a pour but de recenser les points à améliorer pour les années à venir. Nous espérons qu’il pourra être utile aux candidats des générations futures.
+
+</details>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Трудност: неоценена.
+
+Механика · Електричество · Механични трептения · Махала · Резонанс и затихване · Неинерциални отправни системи · Кондензатори и диелектрици · Променливотокови вериги
+
+Предпоставки: Начална университетска подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [MP_2009.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2009.pdf#page=2)
+· допълнителни данни: [MP_2009_rapport.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2009_rapport.pdf)

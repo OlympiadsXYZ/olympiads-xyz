@@ -1,0 +1,316 @@
+---
+id: x-ens-2009-mp-p3
+source: 'X-ENS 2009, Приемен изпит, математика и физика'
+title: 'Задача 3. Troisième partie – Instabilité de croissance de Mullins-Sekerka'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2009/x-ens-2009-mp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T07:47:55.160Z'
+verifier: 'single-pass'
+---
+
+*SESSION 2009 — Filière MP — PHYSIQUE MPI — Épreuve commune aux ENS de Paris, Lyon et Cachan*
+
+<Warning title="Бележка към темата">
+Le dossier d’archive ne contient pas de corrigé complet : le document complémentaire est le rapport du jury, conservé intégralement et clairement présenté comme tel. Aucun résultat ni barème n’a été inventé. À la question 14, le texte imprime « au voisinage de ω=2ω₀ », bien que ω ait été défini comme ωₑ/2; cette notation est conservée. À la question 49, la formule Δs=L/T₀ est suivie d’une phrase désignant T* comme température de changement d’état; les deux notations imprimées sont conservées.
+</Warning>
+
+<details>
+<summary>Consignes de l’épreuve</summary>
+
+L’usage des calculatrices de poche est autorisé, y compris les calculatrices programmables et alphanumériques ou à écran graphique, à condition que leur fonctionnement soit autonome et qu’il ne soit pas fait usage d’imprimante (circulaire n° 99018 du 1er février 1999).
+
+Il sera tenu compte du soin apporté à la rédaction et de la clarté des explications demandées.
+
+</details>
+
+<details>
+<summary>Ouverture à la physique des instabilités</summary>
+
+La thématique abordée dans ce sujet est celle de l’étude physique de certaines instabilités. Elle est explorée ici, à travers des exemples concrets empruntés, pour l’essentiel, à la mécanique et à la thermodynamique. À travers **trois problèmes totalement indépendants** traitant successivement l’étude de l’instabilité paramétrique du grand encensoir de Saint-Jacques de Compostelle, l’étude d’une lampe fer/hydrogène, et enfin, dans une dernière partie, l’étude de l’instabilité de croissance d’un germe solide (instabilité dite de Mullins et Sekerka), nous nous attacherons à décrire les conditions nécessaires à la naissance d’une instabilité de chaque système physique étudié. Les mécanismes non-linéaires limitant la croissance de l’énergie du système ne seront pas considérés explicitement dans ce sujet.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [I. Mise en place du problème – Description des conditions aux limites](#i)
+- [A. Relation de Gibbs-Thomson](#i-a)
+- [B. Bilan d’énergie à la traversée de l’interface](#i-b)
+- [II. Recherche de la solution stationnaire](#ii)
+- [III. Instabilité de forme – Croissance dendritique](#iii)
+
+</nav>
+
+Dans cette dernière partie, on se propose d’étudier la croissance d’un germe solide au sein d’un liquide sous-refroidi, c’est-à-dire dont la température est inférieure à la température de fusion. L’état sous-refroidi constitue un *état métastable* du liquide, c’est-à-dire un état stable vis-à-vis de faibles perturbations mais globalement instable vis-à-vis de fortes perturbations.
+
+Dans un premier temps, la question sera de caractériser l’état stationnaire de l’interface entre le germe solide et le liquide sous-refroidi.
+
+Dans un second temps, on montrera que la solution stationnaire trouvée se révèle être *instable* vis-à-vis de perturbations décrites sous la forme d’ondes de vecteur d’onde $\vec k$.
+
+L’expérience physique que nous étudions dans ce problème est décrite par le protocole suivant :
+
+– L’état initial est constitué d’un liquide sous-refroidi à la température $T=C^{\mathrm{te}}$. Cette température est la même en tout point du milieu.
+
+– On démarre l’instabilité de croissance en créant une perturbation localisée en un endroit précis de l’espace. On admettra que cette perturbation est d’amplitude suffisamment forte pour déstabiliser localement la phase de liquide sous-refroidi et créer un germe solide à la température de fusion $T^*$. Au voisinage du démarrage de la croissance, l’isotropie du milieu rend légitime une modélisation du germe solide par une sphère de rayon $R$.
+
+– Après un temps suffisamment grand, la croissance du germe sphérique est telle qu’on peut modéliser l’interface solide/liquide comme un front de solidification plan.
+
+<ProblemSection id="i">
+
+### I. Mise en place du problème – Description des conditions aux limites
+
+Dans cette première étape, on considère un germe solide sphérique de rayon $R$ immergé dans un liquide sous-refroidi (figure (5)). On supposera que les masses volumiques $\rho_\ell$ et $\rho_s$ des phases liquide et solide sont suffisamment proches pour être confondues à une même valeur notée $\rho$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.3%', '--fig-max': '233px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p3-fig1.png" alt="Germe solide sphérique de rayon R et pression Ps au sein d’un liquide sous-refroidi de pression Pℓ." width="727" height="730" loading="lazy" decoding="async" />
+<figcaption>Figure 5 – Germe solide baignant dans un liquide sous-refroidi. Le système est enfermé dans une enceinte fixant la température et la pression d’équilibre.</figcaption>
+</figure>
+
+
+On notera :
+
+* $P_s$ et $P_\ell$ les pressions régnant respectivement dans les phases solide et liquide,
+* $L$, la chaleur latente massique de fusion, que l’on supposera indépendante de la température dans la gamme de température visitée lors de l’instabilité de croissance,
+* $T_0$ et $P_0$ la température et la pression de changement d’état dans le cas d’une interface plane (rayon de courbure infini),
+* $\mu_\ell(P,T)$ et $\mu_s(P,T)$ les potentiels chimiques respectifs des phases liquide et solide. On rappelle la relation de Gibbs-Duhem, exprimant la différentielle du potentiel chimique
+
+$$
+\mathrm d\mu(P,T)=v_{\mathrm m}\,\mathrm dP-s_{\mathrm m}\,\mathrm dT,
+$$
+
+où $v_{\mathrm m}$ et $s_{\mathrm m}$ sont respectivement le volume molaire et l’entropie molaire du corps pur. On notera également $v$, $s$ et $M_{\mathrm{mol}}$ le volume massique, l’entropie massique et la masse molaire du corps pur.
+
+On introduira $\gamma$, le coefficient de *tension superficielle* associé à l’interface solide/liquide. Cette grandeur est directement liée au travail $\delta W$ nécessaire à la création d’une surface $\mathrm dS$ *via* $\delta W=\gamma\,\mathrm dS$. On admettra de plus *la loi de Laplace* qui fixe la différence de pression $P_s-P_\ell$ de part et d’autre d’une interface sphérique de rayon $R$ :
+
+$$
+P_s-P_\ell=2\frac{\gamma}{R}
+$$
+
+**47.** Préciser la dimension de $\gamma$.
+
+</ProblemSection>
+
+<ProblemSection id="i-a">
+
+### A. Relation de Gibbs-Thomson
+
+**48.** On modélisera, localement, une petite déformation d’une interface, initialement plane, par une calotte sphérique (figure (6)). Le modèle du germe sphérique permet alors d’étudier l’effet d’un tel défaut.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.7%', '--fig-max': '356px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p3-fig2.png" alt="Défaut d’interface liquide-solide modélisé par une calotte sphérique, sphère osculatrice de rayon R et flèche de défaut." width="1114" height="734" loading="lazy" decoding="async" />
+<figcaption>Figure 6 – Modélisation d’une déformation.</figcaption>
+</figure>
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '58.8%', '--fig-max': '376px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p3-fig3.png" alt="Interfaces plane et courbée, phases ℓ et s, températures T0 et T*, pressions P0 et P*=P0+2γ/R, rayon R." width="1176" height="730" loading="lazy" decoding="async" />
+<figcaption>Figure 7 – a.) (à gauche) État d’équilibre pour l’interface plane – b.) (à droite) État d’équilibre pour l’interface courbée.</figcaption>
+</figure>
+
+
+Comme le montrent les schémas de la figure 7, dans la limite où $2\gamma/R\ll P_0$, la courbure de l’interface est décrite comme une faible perturbation de l’état où l’interface est plane.
+
+Donner, dans ce cas, le développement de Taylor des potentiels chimiques $\mu_\ell$ et $\mu_s$ au premier ordre en $T^*-T_0$ et $P^*-P_0$.
+
+**49.** En admettant que l’équilibre physique entre les deux phases solide et liquide d’un corps pur se traduit, en particulier, par l’égalité des potentiels chimiques $\mu_s=\mu_\ell$, montrer que la température d’équilibre entre la phase solide et la phase liquide suit la relation thermodynamique de *Gibbs-Thomson*
+
+$$
+T^*\simeq T_0\left(1-\frac{2\gamma}{RL\rho}\right)\qquad (5)
+$$
+
+On rappelle que lors du changement d’état, la discontinuité de l’entropie massique est reliée à la chaleur latente *via*
+
+$$
+\Delta s=s_\ell-s_s=\frac{L}{T_0},
+$$
+
+cette relation étant écrite dans le cas de l’interface où la température de changement d’état est $T^*$.
+
+**50.** Vérifier l’homogénéité du résultat obtenu à la question 49.
+
+**51.** Retrouver le cas limite de l’interface rigoureusement plane.
+
+</ProblemSection>
+
+<ProblemSection id="i-b">
+
+### B. Bilan d’énergie à la traversée de l’interface
+
+À ce stade du problème, nous supposerons que nous sommes suffisamment éloignés de la phase de démarrage de l’instabilité. Dans cette limite, il est raisonnable de passer d’un modèle de germe sphérique à un modèle de *front de solidification plan*. On s’intéresse ici à la croissance de la phase solide dans la direction de l’axe $z'z$. Comme le montre le schéma de la figure (8), la croissance a lieu dans les deux sens. Dans ce problème, on choisit de ne traiter que la croissance dans le sens $z>0$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '84.7%', '--fig-max': '542px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p3-fig4.png" alt="Passage d’un germe sphérique en croissance à un front plan, phases ℓ et s, origine O, point A et axe z." width="1694" height="499" loading="lazy" decoding="async" />
+<figcaption>Figure 8 – Croissance de la phase solide et approximation du front de solidification plan. Les flèches indiquent la direction et le sens de croissance.</figcaption>
+</figure>
+
+
+On raisonne à présent sur une interface quasi-plane dont la position est repérée par la coordonnée cartésienne $z(t)$, fonction du temps (figure (9)).
+
+– On note $\lambda_s$ et $\lambda_\ell$ les conductivités thermiques des phases solide et liquide,
+
+– on note $\vec V=V(t)\,\vec e_z$ la vitesse d’avancée du front de solidification dans le référentiel galiléen $\mathcal R_0$ du laboratoire.
+
+– $\vec n$ est le vecteur unitaire normal à l’interface solide/liquide et dirigé de la phase solide **vers** la phase liquide.
+
+– dans tout le problème, on supposera que la phase liquide est au repos.
+
+**52.** Justifier que la cristallisation conduit à l’existence d’un gradient de température dont on précisera le sens.
+
+**53.** À partir d’un bilan d’énergie que l’on établira soigneusement, montrer, qu’à la traversée de l’interface :
+
+$$
+\rho LV(t)=\lambda_s\left(\frac{\partial T}{\partial z}\right)_{z(t)^-}-\lambda_\ell\left(\frac{\partial T}{\partial z}\right)_{z(t)^+}\qquad (6)
+$$
+
+Cette relation constitue une condition aux limites du problème.
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.1%', '--fig-max': '340px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p3-fig5.png" alt="Phases solide λs et liquide λℓ séparées en A à z(t), axe z, origine O, normale n et front de solidification." width="1062" height="499" loading="lazy" decoding="async" />
+<figcaption>Figure 9 – Interface plane.</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="ii">
+
+### II. Recherche de la solution stationnaire
+
+Dans cette partie, on cherchera à savoir s’il existe une solution stationnaire qui corresponde à la croissance d’une interface plane à vitesse constante $\vec V=V\,\vec e_z$. On commence par supposer qu’une telle solution existe.
+
+**54.** Par la méthode de votre choix, montrer que l’équation de la chaleur vérifiée dans le référentiel $\mathcal R_{\mathrm I}(A,\tilde z)$ de l’interface s’écrit
+
+$$
+\frac{\partial T}{\partial\tilde t}-V\frac{\partial T}{\partial\tilde z}=D\frac{\partial^2 T}{\partial\tilde z^2}\quad\text{où }\tilde z=z-Vt\quad\text{et }\tilde t=t\qquad (7)
+$$
+
+où $D$ est le coefficient de diffusivité thermique (noté $D_\ell$ et $D_s$ suivant que l’on étudie l’évolution de la température dans la phase du liquide sous-refroidi ou dans la phase solide).
+
+On notera $\theta_s(\tilde z)$ et $\theta_\ell(\tilde z)$ les solutions stationnaires de (7) établies respectivement dans la phase solide et dans la phase liquide. On supposera que la température du liquide, loin de l’interface, est constante. On la notera $T_\infty$.
+
+**55.** Déterminer la température $\theta_\ell(\tilde z)$ dans la phase liquide. On sera amené à introduire une longueur caractéristique $\delta_\ell$ qu’on exprimera en fonction de $D_\ell$ (coefficient de diffusivité dans la phase liquide) et de $V$.
+
+**56.** Sachant que $\theta_s(\tilde z=-Vt)=T_0$, justifier que la température $\theta_s(\tilde z)$ reste constante à l’intérieur de la phase solide.
+
+**57.** Tracer l’allure du profil stationnaire pour $\tilde z\in]{-Vt};+\infty[$.
+
+**58.** Dégager la signification physique de $\delta_\ell$.
+
+**59.** On note $\Delta=\frac{c}{L}(T_0-T_\infty)$ le coefficient de sous-refroidissement de la phase liquide où $c$ est la capacité calorifique massique de la phase liquide.
+
+Montrer que le profil stationnaire qui vient d’être établi dans cette partie n’est compatible avec le bilan énergétique établi à la question 53 que pour une valeur particulière de $\Delta$ qu’on déterminera.
+
+**Avertissement : Afin de ne pas alourdir inutilement les notations, on notera dès lors $z$, la grandeur $\tilde z$ introduite dans la partie II.**
+
+</ProblemSection>
+
+<ProblemSection id="iii">
+
+### III. Instabilité de forme – Croissance dendritique
+
+Pour que l’état stationnaire défini dans la partie II soit observable, il est nécessaire qu’il soit localement stable vis-à-vis de perturbations infinitésimales. Pour cette étude, on suppose que le profil de température stationnaire est perturbé, localement en un point $M(x,y,z)$ de l’espace et à un instant $t$, selon les équations ci-dessous
+
+$$
+\underline{T_s}(M,t)=\theta_s(z)+\underline{\delta T_s}(M,t)\quad\text{avec }\underline{\delta T_s}(M,t)=\tilde T_s e^{qz+\sigma t}e^{\mathrm i(\vec k\cdot\vec r-\omega t)}
+$$
+
+$$
+\underline{T_\ell}(M,t)=\theta_\ell(z)+\underline{\delta T_\ell}(M,t)\quad\text{avec }\underline{\delta T_\ell}(M,t)=\tilde T_\ell e^{-qz+\sigma t}e^{\mathrm i(\vec k\cdot\vec r-\omega t)}
+$$
+
+qui décrivent une onde thermique monochromatique pilotée par le vecteur d’onde $\vec k=k\,\vec u$ où $\vec u$ est un vecteur unitaire. On notera $\mathrm i$ la grandeur complexe définie par $\mathrm i^2=-1$.
+
+Dans ces expressions, $k\in\mathbb R$, $\sigma\in\mathbb R$, $q\in\mathbb R$ et $\omega\in\mathbb R$.
+
+Nous avons représenté figure (10) le réseau d’isothermes dans la phase du liquide sous-refroidi, pour un instant $t$ fixé, dans le cas où le front de solidification plan est perturbé localement.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '62.9%', '--fig-max': '403px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2009-mp/p3-fig6.png" alt="Interface solide-liquide déformée, réseau d’isothermes pointillés, axes x et z, origine O et points A, B, C, D, E, F." width="1258" height="1176" loading="lazy" decoding="async" />
+<figcaption>Figure 10 – Réseau d’isothermes dans le cas d’une perturbation localisée de l’interface plane.</figcaption>
+</figure>
+
+**60.** Représenter l’allure de la carte de champ du vecteur densité de flux thermique $\vec j_{\mathrm{th}}$ dans la phase liquide. On représentera, sur le schéma, les vecteurs $\vec j_{\mathrm{th}}$ aux points $A$, $B$, $C$, $D$, $E$ et $F$ indiqués sur la figure (10).
+
+**61.** En vous appuyant sur le schéma de la figure (10), justifier qualitativement que la perturbation représentée sera amplifiée au cours du temps.
+
+**62.** Proposer un nouveau schéma décrivant l’état de l’interface et l’allure du réseau d’isothermes à un instant ultérieur. Donner la condition portant sur $\sigma$, pour que la perturbation envisagée déstabilise le front de solidification plan.
+
+**63.** On montre, au terme d’une analyse qui n’est pas demandée, que $q\simeq k$ et que le taux de croissance de la perturbation, de vecteur d’onde $\vec k$, suit la loi suivante :
+
+$$
+\sigma(k)=kV\left(1-d_0\delta_\ell(1+n)k^2\right)\quad\text{où }d_0=\frac{\gamma T_0c}{\rho L^2}\quad\text{et }n=\frac{\lambda_s}{\lambda_\ell}
+$$
+
+Tracer l’évolution de $\sigma(k)$ en fonction de $k=2\pi/\lambda$. Préciser le domaine de vecteur d’onde $k$ qui est associé à une déstabilisation de l’interface plane.
+
+**64.** Déterminer la taille $\lambda_c$ de la plus petite structure pouvant se développer lors de la croissance et exprimer $\lambda_c$ en fonction de $d_0$, $\delta_\ell$ et $n$.
+
+On souhaite estimer numériquement la taille typique d’une dendrite. On supposera que le corps pur considéré est de l’eau.
+
+**65.** Donner les ordres de grandeur de la capacité calorifique massique $c$ et de la masse volumique $\rho$ de l’eau liquide.
+
+**66.** Sachant que
+
+$$
+V\sim10\,\mu\mathrm m.\mathrm s^{-1},\quad L\sim300\,\mathrm{kJ}.\mathrm{kg}^{-1},\quad\gamma\sim3.10^{-2}\mathrm{S.I},\quad\lambda_\ell\sim\lambda_s=1\mathrm{S.I}
+$$
+
+estimer l’ordre de grandeur de $d_0$ et de $\delta_\ell$.
+
+**67.** Estimer l’ordre de grandeur de la taille d’une dendrite.
+
+**68.** Commenter le rôle joué par $\gamma$ dans le mécanisme de l’instabilité. On s’interrogera sur le caractère stabilisant ou déstabilisant de $\gamma$.
+
+</ProblemSection>
+
+FIN DE L’ÉPREUVE
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+<details>
+<summary>Rapport du Jury de Physique — Session 2009 – Filière MP(I)</summary>
+
+**Membres du jury : Alexia Auffèves, Sophie Brasselet, Pierre-Richard Dahoo, Brahim Lamine, Baptiste Portelli, Samuel Savineau, Jérôme Tignon.**
+
+Le thème du sujet de physique proposé aux concours d’entrée des écoles normales supérieures, session 2009, était celui des *instabilités*. Il s’articulait autour de trois problèmes complètement indépendants abordant successivement l’instabilité paramétrique du grand encensoir de Saint Jacques de Compostelle, l’étude d’un régulateur fer/hydrogène et enfin, l’instabilité de croissance de Mullins et Sekerka. Les thématiques abordées dans ce sujet étaient la mécanique du point matériel et la thermodynamique au sens large (transferts thermiques, second principe, changements d’état des corps purs).
+
+Bien qu’il était clairement spécifié que les trois problèmes étaient indépendants, la très grande majorité des candidats (environ 80%) a commencé par le premier problème. À l’avenir, nous invitons les candidats à prendre quelques minutes en début d’épreuve pour parcourir le sujet dans son ensemble et à débuter, quand cela est possible, par le problème qui semble le plus « engageant » . Nombre de candidats qui ont vu leur progression bloquée assez rapidement dans le premier problème (dont la complexité était réelle d’un point de vue calculatoire) ont montré qu’ils auraient pu réussir très convenablement le deuxième problème avec une meilleure gestion du temps.
+
+D’un point de vue général, le deuxième problème, centré sur l’étude de processus irréversibles au sein d’un barreau conducteur parcouru par un courant, est celui qui a le moins déstabilisé les candidats. Il est vrai qu’il reprenait les méthodes largement utilisées dans le cours de deuxième année sur les transferts thermiques. Le troisième problème n’a été abordé de façon sérieuse (et souvent réussie) que par une poignée de candidats. La très grande majorité des candidats a utilisé cette partie pour « glaner » quelques points en fin d’épreuve (questions simples sur l’homogénéité des résultats, démonstration de la relation de Clapeyron,...). Le premier problème a permis aux étudiants à l’aise en calcul de faire la différence. Certains candidats ont parfaitement cerné l’esprit des techniques mises en œuvre dans la description de l’instabilité d’un système physique. Nous les en félicitons car nous sommes confiants dans le fait qu’il s’agissait là de techniques nouvelles pour les candidats.
+
+Le jury rappelle aux candidats que le soin apporté à la copie, qu’il s’agisse de l’orthographe et de la présentation, est **effectivement** pris en compte dans la notation. Nous insistons également sur la nécessité de rédiger les arguments scientifiques (démonstrations, calculs, etc,...) de la façon la plus précise possible. Le jury est d’autant plus exigeant que les démonstrations demandées sont proches de celles du cours. À titre d’exemple, la démonstration du bilan d’énergie en début du deuxième problème a, le plus souvent, manqué de rigueur (système élémentaire non défini, confusion entre fonctions d’état et transferts d’énergie, signes non-justifiés,...). Très peu de candidats ont pu obtenir le maximum de points à cette question, jugée abordable par le jury. Même si cela peut paraître convenu pour les candidats, nous rappelons qu’il n’est pas permis de faire une étude mécanique sans préciser ni le système ni le référentiel d’étude. De même, en électronique, le jury aurait vivement souhaité que le candidat précise, lors de l’écriture d’une loi aux mailles, si les dipoles concernés étaient choisis en convention récepteur ou générateur.
+
+Le jury comprend parfaitement qu’un candidat veuille absolument aboutir à un résultat fourni par l’énoncé. Il est néanmoins regrettable que les moyens utilisés manquent parfois d’honnêteté scientifique. L’exemple type est le calcul de production d’entropie demandé dans le deuxième problème et dont l’expression à démontrer était donnée dans l’énoncé. Beaucoup trop de candidats justifient le terme de dissipation par effet Joule directement à partir de l’écriture du second principe en écrivant
+
+$$
+\mathrm dS=\frac{\delta Q}{T}+\frac{\delta W}{T}+\delta S_c
+$$
+
+qui est une **formule complètement fausse**. D’autres arguments peu scientifiques ont été également été avancés pour justifier la question 10 du premier problème.
+
+Ce rapport a pour but de recenser les points à améliorer pour les années à venir. Nous espérons qu’il pourra être utile aux candidats des générations futures.
+
+</details>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Трудност: неоценена.
+
+Топлинни явления · Флуиди · Вълни и звук · Фазови преходи · Топлопроводност · Първи принцип на термодинамиката · Повърхностно напрежение и капилярност · Разпространение на вълни
+
+Предпоставки: Начална университетска подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [MP_2009.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2009.pdf#page=13)
+· допълнителни данни: [MP_2009_rapport.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/MP/MP_2009_rapport.pdf)

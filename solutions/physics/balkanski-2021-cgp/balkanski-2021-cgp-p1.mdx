@@ -1,0 +1,212 @@
+---
+id: balkanski-2021-cgp-p1
+source: 'Балкански 2021, Теория'
+title: 'Задача 1. Interception d''une fusée balistique'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2021/balkanski-2021-cgp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T07:28:54.797Z'
+verifier: 'single-pass'
+---
+
+*Concours Général de Physique «Minko Balkanski» · 14 август 2021 г. · 7 т.*
+
+<Warning title="Бележка към темата">
+Le livret original contient les mêmes trois problèmes en français et en anglais. Les deux éditions sont conservées intégralement, ainsi que leurs différences de formulation et de notation. Aucun corrigé n’est fourni. La longueur de la balançoire passe de l à L dans les équations imprimées (3) et (6), et la règle de dérivation du cosinus manque une parenthèse fermante. Le texte français mentionne des vecteurs définis sur la figure de la balançoire, mais le dessin original ne comporte pas ces étiquettes.
+</Warning>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Modélisation sans traînée](#sans-trainee)
+- [Modélisation tenant en compte la traînée](#avec-trainee)
+- [Part II — English: Problem I. Interception of a ballistic missile (7 pts)](#en-original)
+- [Modelisation in the absence of drag](#en-without-drag)
+- [Modelisation with drag](#en-with-drag)
+
+</nav>
+
+**Прочетете внимателно!**
+
+Част първа и част втора съдържат условията на задачите съответно на френски и английски език. Единствените външни документи, на които имате право, са френски и английски речници. Ако желаете, можете да ползвате калкулатори.
+
+При оценяването на задачите голяма тежест ще имат **яснотата и стилът** на изложените решения и аргументация. Не използвайте излишна проза в аргументите си, бъдете точни и кратки. Използването на схеми за онагледяване на разсъжденията Ви е желателно. **Пишете само на езика, който сте избрали (френски или английски).**
+
+Разполагате с **4 часа**. Успех!
+
+**Première partie — Français**
+
+Une fusée balistique, assimilée à un point matériel $M$ de masse $m$, est mise à feu à l'instant $t = 0$ depuis le point $O$ avec une vitesse $\vec{v_0}$ faisant un angle $\alpha$ avec le plan horizontal $Oxy$. La fusée se déplace uniquement dans le plan vertical Oxz. Le référentiel $R$ est considéré galiléen - il est rapporté au repère $(O, \vec{u_x}, \vec{u_y}, \vec{u_z})$. On note $\vec{g} = -g\vec{u_z}$ l'accélération de la pesanteur, et $\vec{r} = (x, y, z)$ le vecteur position de $M$.
+
+<ProblemSection id="sans-trainee">
+
+### Modélisation sans traînée
+
+Négligeons les effets de traînée de l'air. La seule force agissante sur le mouvement de la fusée sera donc celle de la gravité.
+
+**1.** Déterminer les expressions $x(t), y(t), z(t)$ de la position du point M en fonction des constantes du problème.
+
+**2.** En déduire l'équation de la trajectoire du point $M$ sous la forme $z = f(x)$.
+
+**3.** En déduire la portée $P$ et l'altitude maximale $h_{max}$ atteintes par la fusée. On définit la portée à partir de l'altitude initiale du tir $z_0 = 0$.
+
+**4.** Pour quelle valeur de $\alpha$ la portée $P$ est-elle maximale ? Que vaut la portée maximale $P_{max}$ ?
+
+On désire maintenant intercepter la fusée pendant le vol. Pour cela, on lâche sans vitesse initiale, à l'instant $t_1$ positif, un obus-appât au point $N_0$ coordonnées $(x_0, z_0)$. Cet obus sera assimilé à un point matériel $N$ de masse $m'$, de vecteur position $\vec r' = (x', y', z')$. On cherche à déterminer la date $t_1$ du lâcher et celle de l'interception $T$ en fonction de la position $N_0$ supposée connue.
+
+**5.** Déterminer les expressions $x'(t), y'(t), z'(t)$ de la position de l'obus en fonction des constantes du problème.
+
+**6.** En déduire à quel instant $T$ s'effectue l'interception.
+
+**7.** En déduire une équation du second degré en $t_1$ résultant de l'intersection des 2 trajectoires. On l'écrira en fonction des données du problème.
+
+**8.** À quelle condition existe-t-il une solution à cette équation ? Où doit se situer le point $N_0$ d'après cette condition ? Faire un schéma.
+
+**9.** Déterminer à quel instant $t_1$ l'obus doit être lâché afin de réussir l'interception. On exprimera le résultat en fonction de $T$ et autres données du problème. Montrer que la position de $N_0$ doit vérifier une seconde condition. Laquelle et pourquoi ? Faire un schéma récapitulant la zone de largage possible de l'obus.
+
+**10.** On suppose que la position initiale $(x_0, z_0)$ de l'obus par rapport à celle de la fusée est connue avec une précision relative de $0.01\%$ près. Quant aux composantes de la vitesse $\vec{v_0}$, elles sont connues à $0.1\%$ près. En déduire l'incertitude relative sur la date $T$. Faire l'application numérique.
+
+</ProblemSection>
+
+<ProblemSection id="avec-trainee">
+
+### Modélisation tenant en compte la traînée
+
+En fait, il est nécessaire de prendre en compte les frottements dus à l'air sur la fusée et l'obus. On considère que la fusée est suffisamment bien profilée pour qu'un modèle de force de frottement fluide linéaire soit convenable : l'air exerce donc une force $\overrightarrow{F_{tr}} = -\lambda\vec{v}$ sur la fusée, avec $\lambda > 0$ le coefficient de frottement. Par ailleurs, l'obus étant moins bien profilé, on le lâche toujours verticalement mais avec une vitesse initiale $\vec{v_0'} = -v_0'\vec{u_z}$ ($v_0'>0$), et on modélise les frottements de l'air par une force fluide quadratique : $\overrightarrow{F_{trq}} = -kv'\vec{v'}$, où $\vec{v'} = -v'\vec{u_z}$ est la vitesse de l'obus ($v' > 0$) et $k > 0$ le coefficient de frottement.
+
+**11.** Donner la dimension puis l'unité des coefficients $\lambda$ et $k$.
+
+**12.** Faire un schéma des forces appliquées à la fusée. Ecriver le principe fondamental de la dynamique pour la fusée.
+
+**13.** Résoudre l'équation établie dans la question précédente. Vérifier que :
+
+$$
+\vec{r}(t) = \tau(\vec{v_0} - \tau\vec{g})(1 - e^{-\frac{t}{\tau}}) + \tau\vec{g}t \qquad (1)
+$$
+
+et projéter cette expression selon les trois axes principals. On note $\tau = \frac{m}{\lambda}$
+
+*INDICATION : Pour arriver à l'expression de $\vec{r}$, il sera utile de pouvoir dériver. On vous donne les "règles" nécessaire pour y arriver :*
+
+*La vitesse est la dérivée de la position et l'accélération est la dérivée de la vitesse : $\vec{v} = \frac{d}{dt}\vec{r}$ et $\vec{a} = \frac{d}{dt}\vec{v}$ où on note la dérivée par rapport au temps par $\frac{d}{dt}$.*
+
+*Soient $f$ et $g$ deux fonctions de la variable $t$. On a :*
+
+$\frac{d}{dt}(fg) = \frac{df}{dt}g + f\frac{dg}{dt}$ *et* $\frac{d}{dt}(f + g) = \frac{d}{dt}f + \frac{d}{dt}g$
+
+*On vous donne également les dérivées des quelques fonctions qui seront utiles :*
+
+$\frac{d}{dt}(e^{ct}) = c \cdot e^{ct}$ *et* $\frac{d}{dt}(c \cdot t^n) = nc \cdot t^{n-1}$
+
+*Pour répondre à la question il est suffisante de vérifier que l'expression de $\vec{r}$ donnée satisfait l'équation établie.*
+
+**14.** Déterminer la nouvelle expression de la date $T'$ de l'interception. Vous pouvez utiliser l'expression de $\vec{r}(t)$ donnée dans la question précedente, même si vous ne l'avez pas vérifier.
+
+**15.** Etablir l'équation différentielle vérifiée par $v'$ pour l'obus. Montrer que ce mouvement admet une vitesse limite $v_l'$ qu'on exprimera en fonction des constantes du problème. Exprimer le temps caractéristique du problème $\tau_o$ en se servant de l'équation différentielle.
+
+Pour simplifier le problème on suppose que la vitesse de l'obus varie de façon linéaire jusqu'à ce qu'elle atteint la vitesse limite au bout d'une durée $\tau_o$ et elle reste constante ensuite.
+
+**16.** Commenter la validité de ce modèle. Tracer l'allure de $\vec{v}$ sur un graph.
+
+**17.** Obtenir l'expression de $z_{obus}(t)$ sachant que $T' > t_1' + \tau_o$.
+
+**18.** Etablir une équation de $t_1'$ et la résoudre.
+
+</ProblemSection>
+
+<ProblemSection id="en-original">
+
+### Part II — English: Problem I. Interception of a ballistic missile (7 pts)
+
+A ballistic missile, considered to be a point $M$ of mass $m$, is launched at the instant $t=0$ from the point $O$ with initial velocity $\vec v_0$, at an angle $\alpha$ with the horizontal plane $Oxy$. The movement of the missile is limited to the vertical plane $Oxz$. The frame of reference $R$ is considered to be inertial and its associated coordinate system is $(O,\vec u_x,\vec u_y,\vec u_z)$. We note $\vec g=-g\vec u_z$ the gravitational acceleration and $\vec r=(x,y,z)$ the position vector of $M$.
+
+</ProblemSection>
+
+<ProblemSection id="en-without-drag">
+
+### Modelisation in the absence of drag
+
+We neglect all effects of air drag. The only force taken into account is the gravitational one.
+
+**1.** Determine the expressions of $x(t),y(t),z(t)$ - the coordinates of point $M$, as a function of the constants of the problem.
+
+**2.** Deduce the trajectory equation of point $M$ in the form $z=f(x)$.
+
+**3.** Find the range $P$ and the maximal altitude $h_{max}$ of the missile. We measure those quantities from the launch altitude $z_0=0$.
+
+**4.** For what value of $\alpha$ the range $P$ is maximal? What is the maximal range $P_{max}$?
+
+We wish to intercept the missile during flight. We thus launch without initial velocity at the instant $t_1$ (such that $t_1>0$) a shell, which is a bait, from the point $N_0$ with coordinates $(x_0,z_0)$. We consider this shell to be a material point $N$ of mass $m'$ and its position is given by $\vec r'=(x',y',z')$. We are interested in the instant $t_1$ at which we should launch the shell in order to intercept the missile at the instant $T$ as a function of the initial position $N_0$, supposed to be known.
+
+**5.** Determine the expressions $x'(t),y'(t),z'(t)$ giving the position of the shell.
+
+**6.** Deduce at which instant $T$ the interception takes place.
+
+**7.** Deduce a second degree equation for $t_1$, which represents the intersection of the two trajectories. Write it down as a function of the problem's parameters.
+
+**8.** What condition should be satisfied in order for this equation to have a solution? Where should the point $N_0$ be situated to fulfil this condition? Make a diagram to illustrate it.
+
+**9.** Determine at what instant $t_1$ the shell should be launched in order to achieve a successful interception. Write down the result as a function of $T$ and other parameters of the problem. Show that the position of $N_0$ should satisfy a second condition. Why is that and what is the condition? Make a diagram showing the possible launch positions (the drop zone) for the shell.
+
+**10.** Suppose the initial position of the shell $(x_0,z_0)$, given in reference to the missile, is known with relative precision of $0.01\%$. The velocity components are each known within $0.1\%$ accuracy. Deduce the relative uncertainty when calculating the instant $T$. Calculate its numerical value.
+
+</ProblemSection>
+
+<ProblemSection id="en-with-drag">
+
+### Modelisation with drag
+
+It is actually necessary to take into account the air drag forces acting upon both the missile and the shell. Considering the aerodynamic profile of the missile, we are going to assume linear drag force acting upon it: therefore the air is acting with the following force on the missile $\vec F_{tr}=-\lambda\vec v$, where $\lambda>0$ is the linear drag coefficient. However, the shell having less aerodynamic shape, we launch it vertically this time with initial velocity $\vec v'_0=-v'_0\vec u_z$ and we are going to assume the drag force to be quadratic and taking the following form $\vec F_{trq}=-kv'\vec v'$, where $\vec v'=-v'\vec u_z$ is the velocity of the shell ($v'>0$) and $k>0$ is the quadratic drag coefficient.
+
+**11.** Determine the dimensions and the units of both drag coefficients $\lambda$ and $k$.
+
+**12.** Make a diagram showing the forces acting upon the missile. Write down Newton's law of motion for the missile.
+
+**13.** Find the solution to the equation established in the previous question. Check that $\vec r(t)$ takes the following form:
+
+$$
+\vec r(t)=\tau(\vec v_0-\tau\vec g)(1-e^{-t/\tau})+\tau\vec g\,t\qquad(4)
+$$
+
+and deduce the projections along the three principal axes. We note $\tau=\frac m\lambda$
+
+*HINT: To solve this question it would be helpful to know how to calculate derivatives. We thus give you the necessary "rules":*
+
+*The velocity is the derivative of the position and the acceleration is the derivative of the velocity: $\vec v=\frac d{dt}\vec r$ and $\vec a=\frac d{dt}\vec v$ where we note the derivative with respect to time with $\frac d{dt}$*
+
+*Let $f$ and $g$ be two functions of the variable $t$. We have:*
+
+$\frac d{dt}(fg)=\frac{df}{dt}g+f\frac{dg}{dt}$ *and* $\frac d{dt}(f+g)=\frac d{dt}f+\frac d{dt}g$
+
+*We also give you the derivatives of some functions that are going to be useful:*
+
+$\frac d{dt}(e^{ct})=c\cdot e^{ct}$ *et* $\frac d{dt}(c\cdot t^n)=nc\cdot t^{n-1}$
+
+*In order to answer the previous question it is sufficient to check that the given expression of $\vec r$ satisfies the established equation.*
+
+**14.** Determine the new expression of the instant of interception $T'$. You can use the expression of $\vec r(t)$ given in the previous question, even if you have not obtained it yourself.
+
+**15.** Establish the differential equation that $v'$ obeys, where $v'$ is the velocity of the shell. Show that this equation allows for a maximal limiting velocity $v'_l$ and give its expression as a function of the parameters of the problem. Deduce the characteristic time of the problem $\tau_o$ from the established equation.
+
+To simplify the problem we suppose that the velocity of the shell varies in a linear fashion until it reaches the maximal limiting velocity, which it does after accelerating for a duration $\tau_o$ and afterwards it stays constant.
+
+**16.** Comment on the validity of this model. Trace a graph showing the evolution of $\vec v'$ as a function of time.
+
+**17.** Obtain the expression $z_{shell}(t)$, knowing that $T'>t'_1+\tau_o$.
+
+**18.** Establish the equation determining $t'_1$ and solve it.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+---
+
+Оригинал в Архива: [CGP_2021.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2021.pdf#page=1)

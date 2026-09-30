@@ -1,0 +1,358 @@
+---
+id: x-ens-2018-pc-ulm-p2
+source: 'X-ENS 2018, Приемен изпит · Улм, физика и химия'
+title: 'Задача 2. 2 Détection interférométrique d’ondes gravitationnelles'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/X-ENS/2018/x-ens-2018-pc-ulm.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T08:02:59.825Z'
+verifier: 'single-pass'
+---
+
+*ÉCOLE NORMALE SUPÉRIEURE — CONCOURS D’ADMISSION 2018 — FILIÈRE PC — COMPOSITION DE PHYSIQUE – C – (U) — Détection interférométrique d’ondes gravitationnelles*
+
+<Warning title="Бележка към темата">
+Le dossier d’archive ne fournit pas de corrigé complet ni de barème détaillé. Le rapport du jury de Physique C est conservé intégralement et identifié comme commentaire, avec ses indications partielles et ses exemples explicitement présentés comme erreurs de candidats. Aucun résultat manquant n’a été inventé. La notation des matrices et des vecteurs ainsi que les valeurs numériques imprimées sont conservées.
+</Warning>
+
+<details>
+<summary>Consignes de l’épreuve</summary>
+
+L’usage de calculatrices électroniques de poche à alimentation autonome, non imprimantes et sans document d’accompagnement, est autorisé. Cependant, une seule calculatrice à la fois est admise sur la table ou le poste de travail, et aucun échange n’est autorisé entre les candidats.
+
+Le sujet comprend 14 pages numérotées de 1 à 14.
+
+Lorsque des applications numériques sont demandées, il convient de donner un résultat numérique avec trois chiffres significatifs.
+
+</details>
+
+<details>
+<summary>Détection interférométrique d’ondes gravitationnelles — Introduction commune</summary>
+
+L’existence d’ondes gravitationnelles a été prédite par la théorie de la relativité générale, formulée par Einstein au début du XXᵉ siècle. Ces oscillations de l’espace-temps ont été directement observées pour la première fois le 14 septembre 2015 par la collaboration scientifique LIGO, “Laser Interferometer Gravitational-Wave Observatory”. Au-delà d’un test positif de la théorie de la relativité générale, leur détection a marqué le début d’une nouvelle ère en astronomie, nous permettant d’observer l’Univers à l’aide de rayonnements physiquement différents des rayonnements électromagnétiques (lumière visible, ultraviolette ou infrarouge, rayons X ou gamma, radiofréquences) ou des rayons cosmiques (noyaux atomiques et particules de haute énergie).
+
+Ce sujet présente quelques propriétés des ondes gravitationnelles et des instruments qui ont permis de les détecter. Il est constitué de **trois parties indépendantes**. La première partie s’intéresse à la physique des ondes gravitationnelles et aux effets observables qu’elles produisent sur Terre. La deuxième partie consiste en une modélisation simplifiée des interféromètres optiques qui ont permis de détecter les premières ondes gravitationnelles. La troisième partie permet de déterminer une limite à la sensibilité de ces détecteurs liée aux fluctuations du nombre de photons qui y circulent.
+
+</details>
+
+<details>
+<summary>Table des matières originale</summary>
+
+| Partie native | Page imprimée |
+| --- | --- |
+| 1 Quelques propriétés des ondes gravitationnelles | 3 |
+| 1.1 Déformations de l’espace-temps | 3 |
+| 1.2 Sources d’ondes gravitationnelles | 4 |
+| 1.3 Rayonnement gravitationnel d’un système binaire | 5 |
+| 1.4 GW150914 | 6 |
+| 2 Détection interférométrique d’ondes gravitationnelles | 7 |
+| 2.1 Miroirs suspendus | 7 |
+| 2.2 Résonateurs optiques | 8 |
+| 2.3 Interféromètre de Michelson | 10 |
+| 3 Limites quantiques à la sensibilité des détecteurs | 11 |
+| 3.1 Bruit de grenaille | 11 |
+| 3.2 Fluctuations de la pression de radiation | 13 |
+| 3.3 Limite quantique standard | 13 |
+
+</details>
+
+<details>
+<summary>Constantes et formules utiles</summary>
+
+| Constante | Symbole | Valeur | Unité |
+| --- | --- | --- | --- |
+| Vitesse de la lumière | $c$ | $3{,}00\times10^8$ | $\mathrm m.\mathrm s^{-1}$ |
+| Constante universelle de la gravitation | $G$ | $6{,}67\times10^{-11}$ | $\mathrm m^3.\mathrm{kg}^{-1}.\mathrm s^{-2}$ |
+| Masse du Soleil | $M_\odot$ | $1{,}99\times10^{30}$ | $\mathrm{kg}$ |
+| Megaparsec | $\mathrm{Mpc}$ | $3{,}09\times10^{22}$ | $\mathrm m$ |
+| Accélération de la pesanteur terrestre | $g$ | $9{,}81$ | $\mathrm m.\mathrm s^{-2}$ |
+| Constante de Planck | $h=2\pi\hbar$ | $6{,}63\times10^{-34}$ | $\mathrm m^2.\mathrm{kg}.\mathrm s^{-1}$ |
+| Constante de Boltzmann | $k_B$ | $1{,}38\times10^{-23}$ | $\mathrm m^2.\mathrm{kg}.\mathrm s^{-2}.\mathrm K^{-1}$ |
+| Périmètre terrestre | $L_t$ | $40\,000$ | $\mathrm{km}$ |
+
+$$
+\cos^2(x)-\sin^2(x)=\cos(2x)
+$$
+
+$$
+2\cos(x)\sin(x)=\sin(2x)
+$$
+
+$$
+(1+x)^\alpha=1+\alpha x+\frac{\alpha(\alpha-1)}{2}x^2+O(x^3)
+$$
+
+La valeur moyenne d’une variable aléatoire $X$ est notée $\langle X\rangle$.
+
+Le produit scalaire de deux vecteurs $\vec u$ et $\vec v$ est noté $\vec u.\vec v$.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [2.1 Miroirs suspendus](#s-2-1)
+- [2.2 Résonateurs optiques](#s-2-2)
+- [2.3 Interféromètre de Michelson](#s-2-3)
+
+</nav>
+
+Cette partie décrit le principe de fonctionnement des détecteurs interférométriques d’ondes gravitationnelles, développés par le projet LIGO aux USA mais aussi par les projets VIRGO et GEO en Europe ou KAGRA au Japon. L’objectif de ces instruments est de détecter de très faibles fluctuations $\delta L$ de la distance $L$ entre deux objets isolés, de l’ordre de $\delta L/L\approx10^{-21}$ en valeur relative, causées par des ondes gravitationnelles.
+
+La figure 4 présente un schéma simplifié d’un détecteur interférométrique d’ondes gravitationnelles, constitué d’un interféromètre de Michelson contenant un résonateur optique dans chaque bras. Un faisceau laser, incident sur un miroir semi-réfléchissant SEP avec un angle de 45°, est séparé en deux faisceaux d’intensités égales. Ces faisceaux sont envoyés vers les résonateurs optiques constitués chacun d’un miroir d’entrée/sortie partiellement réfléchissant ME et d’un miroir de fin de cavité parfaitement réfléchissant MF. Les faisceaux qui reviennent de ces résonateurs interfèrent sur la séparatrice SEP et la puissance du faisceau sortant est mesurée par un détecteur optique.
+
+L’ensemble est placé sous vide poussé, et l’indice de réfraction optique dans cet interféromètre sera pris égal à 1. Les miroirs formant les résonateurs optiques sont suspendus par des fils très fins et sont libres d’osciller légèrement autour de leur point d’équilibre dans la direction normale à leur surface.
+
+<ProblemSection id="s-2-1">
+
+### 2.1 Miroirs suspendus
+
+On s’intéresse ici au comportement mécanique des miroirs suspendus, que l’on suppose identiques. On isole donc l’un de ces miroirs, MFx, que l’on modélise comme un objet ponctuel de masse $M$ suspendu à un fil inextensible sans masse de longueur $l$, libre d’osciller légèrement dans le plan $Oxz$ où $Oz$ est l’axe vertical. Ce miroir est soumis à son propre poids orienté suivant $Oz$ et à une force extérieure $\vec F(t)=Fe^{\mathrm i\omega t}\vec e_x$ orientée suivant l’axe $Ox$. La position du miroir sur l’axe $Ox$, et celle du point de suspension du fil au support, sont respectivement notées $x(t)$ et $x_f(t)$ (voir Figure 5). Elles satisfont à chaque instant $|x(t)-x_f(t)|\ll l$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '61%', '--fig-max': '391px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-pc-ulm/p2-fig1-v2.png" alt="Laser, séparatrice SEP, détecteur optique, cavités MEx–MFx et MEy–MFy, axesx,y et distanceslx,ly,Lx,Ly." width="1222" height="1005" loading="lazy" decoding="async" />
+<figcaption>Figure 4 – Schéma simplifié d’un détecteur interférométrique d’ondes gravitationnelles, constitué d’un interféromètre de Michelson contenant un résonateur optique dans chaque bras. SEP : séparatrice semi-réfléchissante; MEx/MEy : miroirs suspendus de transmission T ≪ 1 en intensité; MFx/MFy : miroirs suspendus parfaitement réfléchissants; lx/ly : distance SEP-MEx/SEP-MEy; Lx/Ly : distance MEx-MFx / MEy-MFy.</figcaption>
+</figure>
+
+**Q26** On suppose d’abord que le point d’attache est fixe : $x_f=0$. Écrire l’équation différentielle régissant $x(t)$ pour de petites oscillations. En régime forcé, déterminer l’amplitude $x_0$ de la solution $x(t)=x_0e^{\mathrm i\omega t}$ en fonction des paramètres du problème. Montrer que lorsque la pulsation $\omega$ est très grande devant une pulsation de résonance $\omega_0$ que l’on précisera, la réponse de ce système à la force $\vec F$ est identique à celle d’un système de masse $M$ soumis à cette force et à elle seule.
+
+On suppose maintenant que $\vec F=\vec0$ mais que le support auquel est accroché le fil de suspension vibre : la position $x_f$ du point de suspension du fil effectue un mouvement oscillant décrit par $x_f(t)=ae^{\mathrm i\omega t}$.
+
+**Q27** Écrire l’équation différentielle régissant $x(t)$ pour de petites oscillations dans ce cas, et montrer qu’on peut se ramener au cas précédent en remplaçant $F$ par une force que l’on déterminera.
+
+**Q28** Exprimer le rapport $H_1(\omega)=x_0/a$, où $x_0$ est l’amplitude de la solution forcée, en fonction de $\omega$ et $\omega_0$. Représenter l’allure de $H_1(\omega)$. On peut interpréter ce rapport comme la fonction de transfert d’un filtre mécanique, analogue à un filtre électronique : de quel type de filtre s’agit-il, et de quel ordre ? Comment doit-on choisir $\omega_0$ pour filtrer efficacement les vibrations du support ? Si on met $N$ filtres de ce type en cascade (en accrochant $N$ pendules les uns aux autres), quelle loi de puissance s’attend-on à obtenir pour le comportement de la fonction de transfert $H_N(\omega)$ dans la limite $\omega\gg\omega_0$ ?
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '26.9%', '--fig-max': '172px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-pc-ulm/p2-fig2-v2.png" alt="Support, fil l incliné, miroir ponctuel àx, point de suspension àxf, axez vertical etx horizontal." width="538" height="684" loading="lazy" decoding="async" />
+<figcaption>Figure 5 – Modélisation mécanique d’un miroir suspendu de LIGO.</figcaption>
+</figure>
+
+</ProblemSection>
+
+<ProblemSection id="s-2-2">
+
+### 2.2 Résonateurs optiques
+
+On s’intéresse maintenant à l’un des résonateurs optiques, les deux résonateurs étant identiques. On ne tiendra pas compte de la polarisation et de la diffraction des faisceaux, que l’on traitera comme des ondes planes scalaires. Ces ondes seront exprimées en notation complexe sous la forme
+
+$$
+\mathcal E(x,t)=E\left(t\pm\frac xc\right)e^{-\mathrm i(\omega t\pm kx)},\qquad(19)
+$$
+
+où $E(t\pm x/c)$ est une amplitude complexe lentement variable. On suppose que cette amplitude est constante pour le faisceau injecté dans le résonateur :
+
+$$
+\mathcal E_i(x,t)=E_i e^{-\mathrm i(\omega t-kx)},\qquad(20)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50%', '--fig-max': '320px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2018-pc-ulm/p2-fig3-v2.png" alt="Miroirs ME et MF séparés par L(t), amplitudes Ei,Eo,Ec,Eb, coefficientsτ,ρ,τ′,ρ′ surME et−1 surMF, directions de propagation rouges." width="1001" height="359" loading="lazy" decoding="async" />
+<figcaption>Figure 6 – Schéma simplifié d’un résonateur optique utilisé dans le détecteur d’ondes gravitationnelles.</figcaption>
+</figure>
+
+**Q29** Quelle propriété de l’onde $\mathcal E_i$ la condition ci-dessus traduit-elle ? Exprimer la pulsation $\omega$ et le vecteur d’onde $k$ en fonction de la longueur d’onde $\lambda$.
+
+Un schéma de ce résonateur est représenté sur la figure 6. Un miroir partiellement réfléchissant ME, supposé infiniment mince et sans pertes, est placé en $x=0$. Pour le champ $\mathcal E_i(x,t)$ incident sur le miroir depuis le demi-espace $x<0$, les coefficients de transmission et de réflexion en amplitude sont respectivement notés $\tau$ et $\rho$. Pour le champ $\mathcal E_b(x,t)$ incident depuis le demi-espace $x>0$, ces coefficients sont respectivement $\tau'$ et $\rho'$. Sans perte de généralité, on pourra supposer ces quatre coefficients réels, avec $\tau>0$ et $\tau'>0$. Les champs quittant le miroir dans les directions $x<0$ et $x>0$ sont respectivement notés $\mathcal E_o(x,t)$ et $\mathcal E_c(x,t)$.
+
+On commence par considérer ce miroir seul, en supposant que les champs incidents $\mathcal E_i(x,t)$ et $\mathcal E_b(x,t)$ sont contrôlés indépendamment.
+
+**Q30** Exprimer les amplitudes complexes $E_o(t)$ et $E_c(t)$ en fonction de $E_i$, $E_b(t)$, $\tau$, $\rho$, $\tau'$ et $\rho'$.
+
+**Q31** Par un argument de conservation de l’énergie, montrer qu’on doit avoir $\rho^2+\tau^2=1$, $\rho'^2+\tau'^2=1$, $\tau=\tau'$ et $\rho=-\rho'$. Dans la suite on prendra $\tau=\tau'=\sqrt T$ et $\rho=-\rho'=\sqrt{1-T}>0$.
+
+On tient maintenant compte de la présence du miroir MF de fin de cavité. On considère que ce miroir est parfaitement réfléchissant et que son coefficient de réflexion en amplitude dans la direction $x<0$ vaut $-1$. La distance entre le miroir ME et le miroir MF est notée $L(t)$. Ses variations sont très lentes par rapport au temps nécessaire à la lumière pour faire un aller-retour dans la cavité, et on pourra la considérer comme constante pendant ce temps.
+
+**Q32** Montrer que $E_c(t)=-E_b(t+t_L)e^{-\mathrm i\omega t_L}$ avec un temps $t_L$ que l’on exprimera en fonction de $L(t)$.
+
+On suppose que $L=L_0+x(t)$ où $L_0=n\lambda/2$ avec $n$ entier et $x(t)$ est un petit déplacement vérifiant $x(t)\ll\lambda\ll L_0$. Par ailleurs, les variations temporelles de l’enveloppe $E_b(t)$ sont très lentes devant $L/c$.
+
+**Q33** On cherche à simplifier l’expression de $E_c(t)$ de la question précédente en tenant compte des hypothèses ci-dessus. Développer le facteur $-E_b(t+t_L)$ à l’ordre 1 en $t_L$, en exprimant $t_L$ à l’ordre 0 en $x(t)/L_0$. Vérifier ensuite que $e^{-\mathrm i\omega t_L}=e^{-2\mathrm ikx(t)}$ et développer cette fonction exponentielle à l’ordre 1 en $kx(t)$. Déterminer enfin l’expression approchée de $E_c(t)$ en faisant le produit de ces deux développements et en négligeant le produit des infiniment petits.
+
+**Q34** Montrer que $E_b(t)$ exprimé obéit, à cet ordre d’approximation, à une équation différentielle de la forme
+
+$$
+\frac{\mathrm dE_b}{\mathrm dt}=-\kappa\left[\frac{\tau}{1-\rho}E_i+\left(1-\frac{\mathrm ix(t)}{\Lambda}\right)E_b(t)\right].\qquad(21)
+$$
+
+Déterminer les constantes $\kappa$ et $\Lambda$ en fonction des paramètres du problème. Pour $T\ll1$, simplifier leurs expressions en les développant à l’ordre 1 en $T$.
+
+On suppose d’abord que $\forall t,x(t)=0$.
+
+**Q35** Déterminer la solution stationnaire $E_b$. Évaluer numériquement la puissance $\mathcal P_{b,\max}$ circulant dans la cavité pour $T=1{,}4\%$ si la puissance incidente vaut $\mathcal P_i=100\,\mathrm W$.
+
+**Q36** On suppose ce régime stationnaire établi pour $t<0$. À $t=0$, on éteint brutalement le champ incident ($E_i\ne0$ constant pour $t<0$, $E_i=0$ pour $t>0$). Déterminer l’évolution temporelle de $E_b(t)$ et celle de la puissance intracavité $\mathcal P_b(t)$ pour $t>0$.
+
+On suppose maintenant que $\forall t,x(t)=x_0$ constant.
+
+**Q37** Déterminer la solution stationnaire $E_b$, et exprimer la puissance intracavité $\mathcal P_b$ en fonction de la puissance incidente $\mathcal P_i$ et des paramètres du problème. Déterminer $x_0$ tel que $\mathcal P_b=\mathcal P_{b,\max}/2$ où $\mathcal P_{b,\max}$ est la puissance déterminée pour $x_0=0$ à la question 35. Pour $T=1{,}4\%$ et $\lambda=1064\,\mathrm{nm}$, évaluer numériquement la précision typique avec laquelle on doit contrôler la longueur de la cavité pour qu’elle reste à résonance.
+
+On suppose enfin que $x(t)$ oscille sous l’effet d’une onde gravitationnelle ou d’une autre perturbation de pulsation $\Omega$, et on pose $x(t)=x_0\cos(\Omega t)$. En régime forcé, on cherche les solutions $E_b(t)$ sous la forme
+
+$$
+E_b(t)=E_b^{(0)}+E_b^{(+)}e^{-\mathrm i\Omega t}+E_b^{(-)}e^{\mathrm i\Omega t}\qquad(22)
+$$
+
+où les amplitudes des *bandes latérales* $E_b^{(+)}$ et $E_b^{(-)}$ sont très petites devant celle de la *porteuse* $E_b^{(0)}$.
+
+**Q38** Vérifier que, pour un signal typique $x_0\approx L_0\times10^{-21}$ produit par une onde gravitationnelle, avec $L_0=4000\,\mathrm m$, $\lambda=1064\,\mathrm{nm}$, et $T=1{,}4\%$ on a également $x_0/\Lambda\ll1$. Montrer qu’en négligeant les produits entre les petites quantités $x_0/\Lambda$ et $E_b^{(\pm)}/E_b^{(0)}$ on obtient
+
+$$
+E_b^{(0)}=-\frac{\tau}{1-\rho}E_i\qquad(23)
+$$
+
+$$
+E_b^{(\pm)}=-\mathrm i\frac{\tau}{1-\rho}\frac{x_0}{2\Lambda}\frac1{1\mp\mathrm i\Omega/\kappa}E_i\qquad(24)
+$$
+
+où les constantes $\kappa$ et $\Lambda$ ont été introduites dans la question 34.
+
+**Q39** Tracer l’allure de $\log_{10}(|E_b^{(\pm)}/E_i|^2)$ en fonction de $\log_{10}(\Omega)$. Exprimer la pulsation de coupure à $-3\,\mathrm{dB}$ de cette fonction de filtrage et l’évaluer numériquement pour $T=1{,}4\%$ et $L_0=4000\,\mathrm m$.
+
+**Q40** Exprimer l’amplitude complexe $E_o(t)$ du champ réfléchi par la cavité en fonction de $E_i$. En supposant que $\Omega$ est très inférieure à la pulsation de coupure déterminée dans la question précédente et en développant $\rho$ à l’ordre 1 en $T$, montrer que son expression peut être simplifiée en
+
+$$
+E_o(t)=-\left(1+\frac{2\mathrm ix_0}{\Lambda}\cos(\Omega t)\right)E_i\qquad(25)
+$$
+
+</ProblemSection>
+
+<ProblemSection id="s-2-3">
+
+### 2.3 Interféromètre de Michelson
+
+On considère maintenant l’ensemble du système optique, où les deux résonateurs optiques modélisés ci-dessus sont intégrés dans un interféromètre de Michelson. On choisit la position de la lame séparatrice semi-réfléchissante de cet interféromètre comme origine des coordonnées $Oxy$, où les vecteurs directeurs des axes $Ox$ et $Oy$ sont notés respectivement $\vec e_x$ et $\vec e_y$. Les distances entre cette lame séparatrice et les miroirs MEx et MEy, supposées fixes, valent respectivement $l_x=\lambda[n'+\theta/(4\pi)]$ et $l_y=\lambda[n'-\theta/(4\pi)]$ où $n'$ est entier et $\theta\in]{-\pi},\pi]$ est un paramètre contrôlé par l’expérimentateur. Les conventions de notation et les hypothèses sur les champs optiques sont les mêmes que précédemment.
+
+L’onde lumineuse $\mathcal E_0(\vec r,t)=E_0e^{-\mathrm i(\omega t-\vec k.\vec r)}=E_0e^{-\mathrm i(\omega t-kx)}$ émise par le laser est divisée sur la lame séparatrice orientée à 45° par rapport à sa direction de propagation. Les champs envoyés vers les résonateurs obéissent à
+
+$$
+\mathcal E_{ix}(\vec0,t)=\mathcal E_{iy}(\vec0,t)=\frac{\mathcal E_0(\vec0,t)}{\sqrt2}\qquad(26)
+$$
+
+tandis que le champ envoyé vers le détecteur optique est donné par
+
+$$
+\mathcal E_D(\vec0,t)=\frac{\mathcal E_{oy}(\vec0,t)-\mathcal E_{ox}(\vec0,t)}{\sqrt2}.\qquad(27)
+$$
+
+Sous l’effet d’une onde gravitationnelle, les longueurs $L_x$ et $L_y$ des deux résonateurs oscillent en opposition de phase : $L_x(t)=L_0+x_0\cos(\Omega t)$ et $L_y(t)=L_0-x_0\cos(\Omega t)$.
+
+**Q41** Déterminer les expressions des champs $\mathcal E_{ix}(l_x\vec e_x,t)$ et $\mathcal E_{iy}(l_y\vec e_y,t)$ incidents sur les résonateurs en fonction de $E_0$ et de constantes du problème.
+
+**Q42** Déterminer les expressions des champs $\mathcal E_{ox}(l_x\vec e_x,t)$ et $\mathcal E_{oy}(l_y\vec e_y,t)$ sortant des résonateurs en fonction de $E_0$ et de constantes du problème. On pourra utiliser l’expression simplifiée obtenue à la question 40.
+
+**Q43** Les oscillations des ondes gravitationnelles sont suffisamment lentes pour nous permettre de supposer $\Omega l_x/c\approx\Omega l_y/c\approx0$. Exprimer $\mathcal E_{ox}(\vec0,t)$ et $\mathcal E_{oy}(\vec0,t)$ en fonction des mêmes grandeurs et déterminer l’expression du champ $\mathcal E_D(\vec0,t)$ envoyé vers le détecteur optique.
+
+**Q44** Déterminer l’expression de la puissance $\mathcal P_D$ envoyée vers le détecteur optique en fonction de la puissance $\mathcal P_0$ produite par le laser, de la phase $\theta$, du signal $x(t)$ et de la constante $\Lambda$. Pour une onde gravitationnelle d’amplitude $h_G$ l’amplitude des oscillations du miroir vaut $x_0=L_0h_G/2$. Montrer dans ce cas que pour augmenter la sensibilité de ce détecteur d’ondes gravitationnelles on peut de manière équivalente allonger la longueur $L_0$ de la cavité ou diminuer la transmission $T$ du miroir d’entrée. Qu’arrive-t-il alors à sa bande passante ?
+
+**Q45** Pour $\theta=0$ et $\mathcal P_0=200\,\mathrm W$, estimer la puissance maximale $\mathcal P_{\max}$ envoyée vers le détecteur optique au passage d’un signal gravitationnel, et convertir cette puissance en nombre de photons détectés par seconde $\Phi_{\max}$. On rappelle que dans ce cas $x_0=L_0h_G/2$ avec $L_0=4000\,\mathrm m$, $h_G\approx10^{-21}$, $\lambda=1064\,\mathrm{nm}$ et $T=1{,}4\%$.
+
+</ProblemSection>
+
+## Решение
+
+<Warning title="Непълно решение">
+В архива няма официално решение на тази задача.
+</Warning>
+
+<details>
+<summary>Rapport du jury PC 2018 — Épreuve Physique C</summary>
+
+**Membres du jury : M. Berhanu, A. Bres, F. Levrier**
+
+### 1 Éléments statistiques
+
+– 401 copies rendues
+
+– Note minimale : 2,5
+
+– Note maximale : 20
+
+– Moyenne : 9,41
+
+– Écart-type : 3,78
+
+Les 50 meilleures copies (typiquement celles des candidats admissibles à Ulm) vont de 13,9 à 20, pour une moyenne de 16,37 et un écart-type de 1,89.
+
+### 2 Généralités
+
+Le sujet de cette session portait sur la physique des ondes gravitationnelles.
+
+La première partie questionnait d’abord leur influence sur la matière (dilatation et contraction des longueurs). Considérant une distribution quelconque de masse, et usant d’une analogie électromagnétique, on arrivait à la formule du quadrupôle d’Einstein. On se focalisait ensuite sur un système binaire (analogue aux mesures faites par VIRGO) pour déterminer les caractéristiques du signal émis, avant de finalement revenir aux données réelles du système GW150914.
+
+La seconde partie s’intéressait à la détection des ondes gravitationnelles par des dispositifs interférentiels. On commençait par s’interroger sur le filtrage mécanique du bruit auquel sont soumis les miroirs. Une étude simplifiée du résonateur optique (de type Fabry-Pérot) était ensuite proposée, permettant d’établir les ordres de grandeurs de la puissance récoltée ainsi que la forme des signaux de sortie. Enfin, un retour à l’interféromètre de Michelson permettait de traiter la question de la sensibilité du dispositif, et de son lien avec sa longueur et la qualité des miroirs.
+
+Enfin, la dernière partie se penchait sur le problème du bruit de mesure. L’étude du bruit de grenaille, lié à la statistique Poissonienne de la distribution de photons, était d’abord menée. On présentait ensuite le bruit lié à la pression de radiation. Enfin, les deux effets étaient combinés afin d’encadrer la sensibilité du détecteur.
+
+Cette année, le jury a été particulièrement peiné de constater le peu d’intérêt qu’accordaient les candidats à l’homogénéité de leurs résultats. Ainsi, il n’a pas été rare de croiser des $1/R^2\ll1$, des $v_g=\sqrt{v_\phi}=c$, ou même un $\omega^{5/3}\ll c$. Ces erreurs sont systématiquement pénalisées.
+
+À l’inverse, le jury se félicite d’avoir trouvé dans les meilleures copies une bonne maîtrise du cours de base, des expressions homogènes et pertinentes, et un sens physique certain. Le recul sur les notions acquises en classes préparatoires est indispensable pour aborder cette épreuve qui, bien qu’originale dans son contenu, n’exige rien qu’un élève ne sache après deux ans en CPGE.
+
+Il est attendu d’élèves présentant les concours des grandes écoles (et pas que ceux des Écoles Normales Supérieures) d’être au fait des règles fondamentales de présentation. Les copies raturées, recorrigées plusieurs fois, sans espace entre les questions, sans mise en avant des résultats, où les raisonnements doivent être suivis à l’aide de flèches (!), toutes ces raisons, ensemble ou individuellement, sont autant de motifs de ne pas accorder de points. Une copie n’est pas un brouillon de réflexion mais un moyen de communication avec le correcteur.
+
+### 3 Remarques particulières
+
+**Q1 :** Alors que le formulaire donnait le périmètre terrestre (40 000 km), une fraction non-négligeable des candidats n’a apparemment pas remarqué qu’un trajet de 10 000 km amenait nécessairement le voyageur du pôle Nord à l’Équateur.
+
+**Q3 :** Le jury a apprécié la grande quantité d’exemples d’ondes transverses fournis par les candidats, prouvant une culture physique riche. Cependant, il souhaiterait préciser que les exemples suivants n’en sont pas : les ondes sonores, les ondes de marées, les ondes sismiques (en général).
+
+**Q4 :** Il n’est pas acceptable à ce niveau de faire un développement limité sur une quantité matricielle, du moins pas sans justification. Les démonstrations acceptées sont celles qui passent aux coefficients pour faire le développement, avant de revenir à la notation matricielle à la fin.
+
+**Q5 :** Le sujet imposant la notation $h_{xx}$, $h_{yy}$, ... toute réponse impliquant $\mathbf h$ (seul) a été systématiquement refusée. Un candidat doit être à même de distinguer dans sa copie les quantités scalaires, vectorielles et matricielles.
+
+**Q6 :** Trop souvent pour cette question, les candidats se sont lancés dans des démonstrations à rallonge pour arriver à la conclusion (triviale ?) qu’une onde obéissant à l’équation de D’Alembert devait avoir $v_\phi=v_g=c$. Les candidats arrivés rapidement à cette conclusion sont peu nombreux.
+
+**Q7 :** Lorsque le sujet demande «À quelle grandeur physique $\mathbf Q$ est-il homogène », la mention de grandeur physique est essentielle. À ce titre, répondre $[Q]=ML^2$ est non-pertinent, quand le terme de moment d’inertie était attendu.
+
+**Q8 :** Cette question, certes calculatoire, a été très peu traitée correctement. Le jury s’étonne que des élèves de CPGE ne soient pas capables de mener correctement un développement limité à l’ordre 2. Dans trop de cas, les candidats se sont arrêtés un ordre trop tôt, ou n’ont pas suffisamment développé leur réponse.
+
+**Q11 :** Certains candidats ont pensé berner le jury en calculant a posteriori la bonne dimension de $\epsilon_0$ qui leur permettrait d’obtenir une puissance. Malheureusement pour eux, le jury n’est pas dupe, et les points n’ont pas été accordés. De manière générale, les candidats gagneraient à être plus honnêtes dans leurs copies, et devraient prendre conscience que le jury, plus expérimenté, détecte presque toujours les tentatives malhonnêtes. Celles-ci ne le mettent par ailleurs pas dans de bonnes dispositions pour le reste de la correction.
+
+**Q13 :** Le jury souhaite rappeler que l’hypothèse de système isolé conduit directement au fait que le barycentre du système est en translation rectiligne uniforme (ou immobile, naturellement). Énoncer que cette hypothèse veut dire que chacune des masses possède une accélération nulle est une erreur de mécanique élémentaire. Par ailleurs, la masse totale est conservée car chaque masse est constante comme l’annonce le sujet, pas parce que le système est isolé.
+
+**Q16 :** Si le jury est souvent bienveillant sur la question des facteurs numériques (quand ceux-ci sont proches de l’unité), il a été particulièrement vigilant à ceux-ci dans cette question. La distance entre les deux masses était de $2r$, il fallait bien entendu le prendre en compte. Tout résultat non-homogène (bien trop fréquent) a été sanctionné.
+
+**Q17 :** Savoir que l’énergie potentielle de gravitation est négative (lorsque son origine est prise nulle à l’infini, ce qui était précisé par le sujet) paraît faire partie des connaissances de base en mécanique du point. Malheureusement, une partie significative des candidats semblait l’ignorer.
+
+**Q22 :** L’étude du rayonnement dipolaire ayant disparu des programmes, démontrer que la taille typique de la distribution est faible devant la longueur d’onde n’est pas véritablement du cours. Cependant, montrer que le rapport de ces deux quantités se ramène à celui de la vitesse typique de la distribution sur la vitesse de la lumière demandait une ligne de calcul. Toute démonstration passant ce point et ne parvenant à démontrer ce qui était demandé qu’au prix d’une application numérique (souvent fausse, dimensionnellement et numériquement) a été ignorée.
+
+**Q23 :** Lorsqu’une quantité, ici $h$, est proportionnelle à $r^2\Omega^2$, et si $r$ dépend de $\Omega$, il est rigoureusement faux de prétendre que h croit avec $\Omega$. Peu de candidats se sont inquiétés du comportement de $r(\Omega)$ avant de répondre à cette question. En utilisant la question 16, on savait que $r\propto\Omega^{-2/3}$, et par conséquent $h\propto\Omega^{2/3}\propto\nu^{2/3}$.
+
+**Q24 :** La valeur typique de $h$ $(\approx10^{-21})$ étant donnée quelques lignes plus loin (début de la partie 2), il convenait de s’interroger sur des résultats fantaisistes. Le jury a ainsi pu se voir proposer une grande quantité d’exposants, allant de -90 à +60. Un tel manque de clairvoyance est préjudiciable.
+
+**Q26 :** Environ un quart des candidats seulement parvient à trouver l’équation du pendule simple forcé. Que ce pourcentage soit si faible est inquiétant pour des élèves de Mathématiques Spéciales composant pour le concours des Écoles Normales Supérieures.
+
+**Q27 :** Les candidats ayant abordé cette question ont trop souvent pensé qu’il suffisait de se placer dans le référentiel du point d’attache, non-galiléen, et de considérer que la force supplémentaire était la pseudo-force d’inertie d’entraînement. Ce faisant, il fallait cependant transformer $x$ en $x-x_f$ (repère relatif), et le terme d’accélération venait annuler cette pseudo-force, le nouveau terme venant de la projection du poids qui se traduisait finalement par une force supplémentaire $Mgx_f/l$. Un autre choix consistait à rester dans le référentiel du laboratoire, galiléen, où l’accélération s’écrivait toujours $\ddot x$, mais l’angle était devenu $\frac{x-x_f}{l}$, et donnait le même résultat.
+
+**Q29 :** Trop peu de candidats ont reconnu ici la condition dictant que l’onde étudiée était en fait monochromatique.
+
+**Q31 :** Les bilans fantaisistes d’énergie électromagnétique ont systématiquement été dépréciés. Les candidats ont souvent essayé dans cette question de plaquer un raisonnement de cours (où 3 ondes sont présentes) sur le cas d’étude (où 4 ondes sont présentes).
+
+**Q32 :** Les justifications pour cette question sont souvent fantaisistes. Le facteur -1 n’est certainement pas dû au fait que « l’onde se propage vers les x décroissants ». Le facteur de phase est souvent très mal justifié, de même que le signe de son argument. Une rigueur minimale et l’application des notions de bases sur les ondes progressives auraient pourtant dû permettre aux candidats de donner une démonstration propre de cette formule.
+
+**Q46 :** Le verbe « Vérifier » devait inciter les candidats à présenter une démonstration mathématique de la valeur de la moyenne et de l’écart-type d’une distribution Poissonienne. Une partie des candidats se sont fendu d’un simple « On sait que ... » et n’ont par conséquent pas reçu de points sur cette question.
+
+**Q47 :** Cette question est l’occasion de rappeler que toute notation supplémentaire doit être définie par le candidat dans sa copie. Ainsi, la réponse $\Phi_R=R\Phi_0$ n’a été acceptée que lorsque le candidat expliquait que $R=1-T$.
+
+**Q55 :** On peut regretter que sur cette question classique de cinétique des gaz, les candidats qui l’ont abordée aient parfois oublié le facteur 2 dans l’expression du transfert de quantité de mouvement.
+
+</details>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Трудност: неоценена.
+
+Механика · Оптика · Вълни и звук · Махала · Резонанс и затихване · Интерференция на светлината · Суперпозиция и интерференция
+
+Предпоставки: Начална университетска подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [PC_2018_ulm.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2018_ulm.pdf#page=7)
+· допълнителни данни: [PC_2018_ulm_rapport.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/ENS-X-exams/PC/PC_2018_ulm_rapport.pdf)
