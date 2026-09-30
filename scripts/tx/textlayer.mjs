@@ -38,12 +38,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseArgs, fail, readJson, writeJson, readManifest, paperDir, walkStrings, splitMath, fixHomoglyphs, nowIso, pointerGet, EDIT_KINDS, editFieldState, ROOT } from './lib.mjs';
 
-export const TEXTLAYER_VERSION = 4; // 2: D-P23 fixes; 3: span-exact eligibility; 4: accepted spans also end omission runs
+export const TEXTLAYER_VERSION = 5; // 4: accepted spans end omission runs; 5: source-attribution metadata is not printed prose
 const MIN_TRUST = 0.8, MIN_LAYER_WORDS = 40;
 // fields whose words are the reader's own (alt text, notes) or not prose
 // sourceSpans: page provenance ({document: 'problems' | 'solutions' | 'supplement', page}), not printed text — a
 // „supplement“ span was reported as a word printed nowhere (ioaa-2019-observational-nabl, 2026-09-26)
-const SKIP_PATH = /\/(tx|classification|sourceLayout|sourceSpans|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
+const SKIP_PATH = /\/(tx|classification|sourceLayout|sourceSpans|attribution|notes|note|caveat|url|id|archiveKey|topics|problemType|kind|unit|source|incompleteReason|solutionSource|lang|subject|competition|round|grade|difficulty|importance|latex|equivalentForms)(\/|$)/;
 const ALT_PATH = /\/alt$/; // the reader's own words: never "unprinted", but a misread printed term in it is still worth fixing
 const NO_EXTRAS = /\/answer(\/|$)|^\/paper\//; // answers are summarised by the reader; masthead fields come from letterheads that are often images
 // structural words the transcription encodes as fields, not prose

@@ -112,6 +112,31 @@ function sandbox(t) {
   return { root, dir, write, run, read: f => JSON.parse(fs.readFileSync(f, 'utf8')) };
 }
 
+test('text-layer comparison ignores source attribution but still detects omitted key instructions', t => {
+  const s = sandbox(t);
+  s.write('manifest.json', { ...manifest, meta: { ...manifest.meta, lang: 'en' } });
+  fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
+  const printed = 'The students arrived at the field site before assessment began. Each participant measured the residential block, recorded inhabited dwellings, calculated household population and estimated total area using the supplied map scale. Effective observation and completion of simple calculations were required. Evidence of working must include the measured area. Markers considered accurate estimates, acceptable observations, arithmetic mistakes, appropriate units, final density, clear explanations, individual methods, consistent notation, complete records and the stated limits. The original report retains all grading criteria and summary statistics.';
+  const instruction = 'Evidence of working must include the measured area. ';
+  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), printed.replace(instruction, '') + '\f');
+  fs.writeFileSync(path.join(s.dir, 'text', 'solutions.txt'), printed + '\f');
+  const c = candidate();
+  c.paper.lang = 'en';
+  c.paper.title = 'Assessment';
+  Object.assign(c.problems[0], { statement: printed.replace(instruction, ''), parts: [], figures: [], solution: { attribution: 'archive', statement: printed } });
+  const file = s.write('attribution-candidate.json', c), out = path.join(s.dir, 'attribution-result.json');
+  let run = s.run('textlayer.mjs', [PAPER, '--candidate', file, '--out', out]);
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.equal(s.read(out).documents.solutions.trusted, true);
+  c.problems[0].solution.statement = printed.replace(instruction, '');
+  s.write('attribution-candidate.json', c);
+  run = s.run('textlayer.mjs', [PAPER, '--candidate', file, '--out', out]);
+  assert.equal(run.status, 3, run.stdout + run.stderr);
+  const result = s.read(out);
+  assert(result.defects.some(d => d.path === '/problems/0/solution/statement' && d.description.includes('Evidence of working')));
+  assert(result.defects.every(d => d.path !== '/problems/0/solution/attribution'));
+});
+
 function spacingTextLayerFixture(t, { secondPage = false, editPage = 1, adjacentOmissions = false } = {}) {
   const s = sandbox(t);
   const prose = 'Рассмотрим движение маленького тела вдоль горизонтальной поверхности. Начальная скорость известна. Ускорение направлено противоположно перемещению. Определите расстояние между начальным положением центра массы и конечной точкой остановки. Сопротивление воздуха отсутствует. Коэффициент трения постоянен. Измерения проводятся при одинаковой температуре окружающей среды. После завершения первого опыта повторите эксперимент для другого материала. Полученные значения сравните между собой. Объясните наблюдаемую зависимость времени торможения от массы тела. Приведите подробное рассуждение.';
