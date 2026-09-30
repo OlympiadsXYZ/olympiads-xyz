@@ -1,0 +1,243 @@
+---
+id: usaaao-2026-iii-theory-p3
+source: 'USAAAO 2026, III кръг'
+title: 'Задача 3. Recession of the Moon'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/USAAAO/2026/usaaao-2026-iii-theory.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T10:54:52.891Z'
+verifier: 'single-pass'
+---
+
+*2026 USAAAO Third Exam (Theory) · 50 т.*
+
+<details>
+<summary>Instructions (Please Read Carefully)</summary>
+
+## 2026 USAAAO Third Exam (Theory)
+
+### 1 Instructions (Please Read Carefully)
+
+The test must be completed within 3.5 hours (210 minutes) and the maximum number of points is **260 points**. The point breakdown per problem is as follows.
+
+| Problem | P1 | P2 | P3 | P4 | P5 | Total |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Points** | 10 | 20 | 50 | 60 | 120 | **260** |
+
+Please solve each problem on a blank piece of paper and mark the number of the problem at the top of the page. Some problems may require a designated answer sheet; these will be provided. The contestant’s full name in capital letters should appear at the top of each solution page. If the contestant uses scratch papers, those should be labeled with the contestant’s name as well and marked as “scratch paper” at the top of the page. Scratch paper will not be graded. Partial credit will be available given that correct and legible work was displayed in the solution.
+
+This is a written exam. Contestants can only use a scientific calculator (non-programmable and non-graphing) for this exam. A table of physical constants will be provided. **Discussing the problems with other people is strictly prohibited in any way until the end of the examination period on June 25, 2026.** Receiving any external help during the exam is strictly prohibited. This means that the only allowed items are: a calculator, the provided table of constants, a pencil (or pen), an eraser, blank sheets of papers, and the exam. No books or notes are allowed during the exam. Students must be proctored during the entire duration of the exam.
+
+This exam sheet and your answer sheets (including scratch papers) should be returned to your proctors once the exam ended. Your proctors should upload your answer sheets to the Google Form provided to them.
+
+We acknowledge the following people for their contributions to this year’s theory exam:
+
+*Feodor Yevtushenko, Hagan Hensley, Joe McCarty, Lucas Pinheiro*
+
+After reading the instructions, please make sure to sign, affirming that:
+
+1. All work on this exam has been completed by me.
+2. I took this exam under the supervision of a proctor.
+3. I did not receive any external help beyond the materials provided.
+4. I will not discuss the contents of this exam with anyone until June 24, 2026.
+5. Failure to follow these rules will result in disqualification from the exam.
+
+Student Signature: ____________________ Date: ____________________
+
+</details>
+
+## Условие
+
+The Apollo missions placed retroreflectors¹ on the surface of the Moon, which has enabled precise measurement of the distance between the Earth and Moon, called *lunar laser ranging* experiments. These experiments determined that the Moon’s semi-major axis is increasing at a rate of 38 mm per year. This problem will explore why this happens and what it can teach us about the Earth-Moon system.
+
+Consider a simplified model where the Earth-Moon system is isolated (i.e., ignore any gravitational influence of the Sun and other planets), the Moon can be treated as a point mass, and the Moon’s orbit is circular, with $a$ as the distance between the centers of the Earth and Moon. Let $m$ and $M_\oplus$ be the masses of the Moon and Earth, respectively. Although the center of the Earth revolves around the center of mass of the Earth-Moon system, neglect that motion and treat the center of the Earth as stationary². Let $\Omega=2\pi/(1\text{ sidereal day})$ and $\omega=2\pi/(1\text{ sidereal month})$ be the angular velocities of the Earth’s rotation and the Moon’s revolution, respectively. A day is shorter than a month, so $\Omega>\omega$.
+
+*(Throughout this problem, dots denote time derivatives: $\dot f=df/dt=f'(t)$.)*
+
+**(a)** **(2 points)** What is the relationship between $\omega$ and $a$?
+
+**(b)** **(5 points)** Find the total angular momentum of the system in terms of $\Omega$, $M_\oplus$, $m$, $a$, and the moment of inertia of the Earth about its rotational axis, $I_\oplus$, which you can assume is constant. Since the Moon is moving away from the Earth, both $\Omega$ and $a$ are functions of time. What is the relationship between the time derivatives $\dot\Omega$ and $\dot a$?
+
+**(c)** **(7 points)** What is the mechanical energy $E$ (kinetic plus potential) of the system? We are treating the Moon as a point mass, so you can neglect its rotational kinetic energy. For this part, approximate the Earth as spherical for the purpose of calculating the gravitational potential energy of the Moon. Find $\dot E$ in terms of $m$, $a$, $\dot a$, $\Omega$, and $\omega$.
+
+The process which causes a loss of mechanical energy in this system is called *tidal dissipation*, which is what drove the Moon towards a synchronous orbit around the Earth and is slowly driving the Earth towards being mutually tidal locked with the Moon (which would happen when $\Omega=\omega$). The tidal force of the Moon on the Earth results in a tidal bulge, but because the Earth rotates faster than the Moon revolves, friction drags the bulge so that it is an angle $\epsilon$ ahead of the Moon (see Fig. 1)³. The bulge then exerts a torque on the Moon, which causes it to recede.
+
+¹ Retroreflectors are an arrangement of mirrors designed to reflect incident light back in the direction from which it came.
+
+² This assumption can be made more precise by using the reduced mass, but we won’t worry about that for the sake of this problem. The corrections to the recession rate end up being $O((m/M_\oplus)^2)$.
+
+³ In reality, there are separate bulges for the oceans and for the solid Earth, but we will treat it with a single, effective $\epsilon$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.1%', '--fig-max': '519px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-iii-theory/q3-tidal.png" alt="Original tidal interaction schematic: Earth, Moon, a, θ, ε and bulge." width="1622" height="562" loading="lazy" decoding="async" />
+</figure>
+
+
+*Figure 1: Schematic of the tidal interaction between the Earth and Moon. Not to scale.*
+
+**(d)** **(6 points)** Let $\tau$ be the torque exerted by the Earth’s bulge on the Moon. In terms of $\tau$, $\Omega$, and $\omega$, what is the total power $\dot E$ resulting from the torque of the Earth on the Moon and that of the Moon on the Earth?
+
+**(e)** **(7 points)** Working in the Earth-Moon plane with the center of the Earth as the origin, and approximating the Earth as a sphere with radius $R_\oplus\ll a$, expand the Moon’s gravitational potential to find the *tidal potential* $V_{\text{\char"263E}}^{(tidal)}(\theta)$ at the surface of the Earth, as a function of the angle between the Moon and a point on the Earth’s surface (see Fig. 1). Note that a constant potential has no effect, and a term proportional to $\sin\theta$ or $\cos\theta$ would produce a constant force (because such terms would be linear potentials in Cartesian coordinates), so your tidal potential $V_{\text{\char"263E}}^{(tidal)}(\theta)$ should only contain the term(s) in the expansion proportional to $\sin^2\theta$ and/or $\cos^2\theta$ that are lowest order in the small quantity $R_\oplus/a$.
+
+In order to calculate this torque, we need to know the gravitational effect of Earth’s tidal bulge. The potential produced by the Earth in response to the applied tidal potential $V_{\text{\char"263E}}(\theta)$, as a function of distance $r$ from the Earth, is
+
+$$
+V_\oplus(r,\theta)=k_\oplus\left(\frac{R_\oplus}{r}\right)^3 V_{\text{\char"263E}}^{(tidal)}(\theta-\epsilon),\qquad (1)
+$$
+
+where $k_\oplus$ is a constant called a *Love number*, which depends on the internal structure and mechanical properties of the Earth. This results in a torque on the Moon of
+
+$$
+\tau=aF_\perp=-am\left(\left.\frac1a\frac{dV_\oplus}{d\theta}\right|_{r=a,\theta=0}\right).\qquad (2)
+$$
+
+**(f)** **(8 points)** Find an expression for $\dot a$ in terms of $k_\oplus$, $\epsilon$, $a$, and constants.
+
+**(g)** **(6 points)** Based on the current $\dot a=38\ \mathrm{mm/yr}$, calculate the angle $\epsilon$ between the Earth’s tidal bulge and the Moon. Take $k_\oplus=0.3$.
+
+**(h)** **(9 points)** Suppose the Moon formed with $a\approx0$. Using the result of part (e), estimate the age of the Moon in years, assuming $k_\oplus$ and $\epsilon$ are constant over time. The assumption of constant $k_\oplus$ is probably reasonable, but $\epsilon$ may change significantly over geologic time as the tidal dissipation can vary with factors like configuration of continents and the possibility of a “snowball Earth”. Based on this, do you think that $\epsilon$ was larger, smaller, or about the same in the distant past?
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:** This solution mostly follows Chapter 4 of [Murray & Dermott (1999)](https://www.cambridge.org/core/books/solar-system-dynamics/108745217E4A18190CBA340ED5E477A2).
+
+**(a)** By Kepler’s Third Law, with $T=2\pi/\omega$ as the orbital period (and stationary center of the Earth corresponding to $M_\oplus\gg m$), $4\pi^2a^3=GM_\oplus T^2$, **(1 point)** so
+
+$$
+\boxed{\omega^2a^3=GM_\oplus}\quad\text{(1 point)}.\qquad (3)
+$$
+
+No points deducted for using $M_\oplus+m$ instead of just $M_\oplus$.
+
+**(b)** Angular momentum of the Earth: $I_\oplus\Omega$ **(1 point)**. Orbital angular momentum of the Moon: $ma^2\omega$ **(1 point)**. Combining and using Eq. 3,
+
+$$
+L=I_\oplus\Omega+ma^2\omega=\boxed{I_\oplus\Omega+m\sqrt{GM_\oplus a}}\quad\text{(1 point)}.\qquad (4)
+$$
+
+Differentiating and using conservation of angular momentum $\dot L=0$, **(1 point)**
+
+$$
+\begin{aligned}0&=I_\oplus\dot\Omega+\frac m2\sqrt{\frac{GM_\oplus}a}\dot a\\&\Rightarrow\boxed{I_\oplus\dot\Omega=-\frac m2\sqrt{\frac{GM_\oplus}a}\dot a}\quad\text{(1 point)}.\end{aligned}\qquad (5)
+$$
+
+**(c)** Rotational kinetic energy of the Earth: $\frac12I_\oplus\Omega^2$ **(2 points)**. Total orbital energy of the Moon: $-\frac{GM_\oplus m}{2a}$ **(2 points)**. Combining, **(1 point)**
+
+$$
+\boxed{E=\frac12I_\oplus\Omega^2-\frac{GM_\oplus m}{2a}}.\qquad (6)
+$$
+
+Differentiating **(1 point)** and inserting $\dot\Omega$ from Eq. 4,
+
+$$
+\begin{aligned}\dot E&=I_\oplus\Omega\dot\Omega+\frac{GM_\oplus m}{2a^2}\dot a=-\frac m2\sqrt{\frac{GM_\oplus}a}\dot a\Omega+\frac{GM_\oplus m}{2a^2}\dot a\\&=-\frac m2\sqrt{\frac{GM_\oplus}a}\dot a\left(\Omega-\sqrt{\frac{GM_\oplus}{a^3}}\right)=\boxed{-\frac m2\omega a\dot a(\Omega-\omega)}\quad\text{(1 point)}.\end{aligned}\qquad (7)
+$$
+
+Note that $\omega$ and $a$ are related by Eq. 3, so there are multiple accepted answers here. This form is nice because it makes it clear that, if $\dot E<0$ and $\Omega>\omega$, $\dot a>0$ (recession).
+
+**(d)** The work done by a torque $\tau$ as an object rotates by a small angle $\Delta\phi$ is $\tau\Delta\phi$, so the power of the Earth’s torque on the Moon is $\tau\omega$ **(2 points)**. By conservation of angular momentum, the Moon exerts the same magnitude of torque back on the Earth but with opposite sign **(2 points)**, so the power of the Moon’s torque on the Earth is $-\tau\Omega$ **(1 point)**. The total is
+
+$$
+\boxed{\dot E=-\tau(\Omega-\omega)}\quad\text{(1 point)}.\qquad (8)
+$$
+
+Note that $\dot E<0$ because $\Omega>\omega$.
+
+**(e)** The gravitational potential from the Moon at a distance $r_{\text{\char"263E}}$ from the Moon is **(1 point)**
+
+$$
+V_{\text{\char"263E}}=-\frac{Gm}{r_{\text{\char"263E}}}.
+$$
+
+By law of cosines, the distance from the Moon to a point on Earth’s surface is **(1 point)**
+
+$$
+r_{\text{\char"263E}}=\sqrt{a^2+R_\oplus^2-2aR_\oplus\cos\theta}=a\sqrt{1+(R_\oplus/a)^2-2(R_\oplus/a)\cos\theta},\qquad (9)
+$$
+
+so
+
+$$
+V_{\text{\char"263E}}=-\frac{Gm}a\left(1+(R_\oplus/a)^2-2(R_\oplus/a)\cos\theta\right)^{-1/2}.\qquad (10)
+$$
+
+Taylor expanding for small $x$, **(1 point)**
+
+$$
+\begin{aligned}(1+x)^{-1/2}&\approx1+\left.\frac d{dx}\left((1+x)^{-1/2}\right)\right|_{x=0}x+\left.\frac12\frac{d^2}{dx^2}\left((1+x)^{-1/2}\right)\right|_{x=0}x^2\\&=1-\frac12x+\frac38x^2.\end{aligned}\qquad (11)
+$$
+
+Here, using $x=(R_\oplus/a)^2-2(R_\oplus/a)\cos\theta$ **(1 point for realizing what to expand with)**, the only term that is lower than third order in $R_\oplus/a$ that will contain $\cos^2\theta$ comes from $x^2$ **(1 point)** (a higher order Taylor expansion would include more $\cos^2\theta$ terms, but they would be $\mathcal O((R_\oplus/a)^3)$). Writing down just that term and throwing away the rest,
+
+$$
+V_{\text{\char"263E}}^{(tidal)}(\theta)=-\frac{Gm}a\cdot\frac38\left(-2(R_\oplus/a)\cos\theta\right)^2=\boxed{-\frac{3GmR_\oplus^2}{2a^3}\cos^2(\theta)}.\qquad (12)
+$$
+
+**(2 points for final answer; fine if replaced $\cos^2$ with $-\sin^2$ because constant potential terms don’t matter)**
+
+Doing the Taylor expansion more completely,
+
+$$
+\begin{aligned}V_{\text{\char"263E}}&\approx-\frac{Gm}a\left(1-\frac12(R_\oplus/a)^2+(R_\oplus/a)\cos\theta+\frac38\left((R_\oplus/a)^2-2(R_\oplus/a)\cos\theta\right)^2+\mathcal O((R_\oplus/a)^3)\right)\\&\approx-\frac{Gm}a-\frac{Gm}{a^2}R_\oplus\cos\theta+\frac{GmR_\oplus^2}{2a^3}-\frac{3GmR_\oplus^2}{2a^3}\cos^2(\theta)+\frac{Gm}a\cdot\mathcal O((R_\oplus/a)^3).\end{aligned}\qquad (13)
+$$
+
+The first and third terms are constants. The second terms is proportional to $R_\oplus\cos\theta$, which is a Cartesian coordinate (e.g., $z$), so this term in the potential just gives the constant gravitational acceleration $Gm/a^2$. The fourth term is all that we are interested in here, because everything else is higher order in $(R_\oplus/a)$.
+
+**(f)** Inserting, **(1 point)**
+
+$$
+V_\oplus(r,\theta)=k_\oplus\left(\frac{R_\oplus}r\right)^3 V_{\text{\char"263E}}^{(tidal)}(\theta-\epsilon)=-\frac32k_\oplus\frac{GmR_\oplus^5}{a^3r^3}\cos^2(\theta-\epsilon),\qquad (14)
+$$
+
+so
+
+$$
+\begin{aligned}\tau&=-am\left(\left.\frac1a\frac{dV_\oplus}{d\theta}\right|_{r=a,\theta=0}\right)=\left.\frac32k_\oplus\frac{Gm^2R_\oplus^5}{a^6}\frac d{d\theta}\left(\cos^2(\theta-\epsilon)\right)\right|_{\theta=0}\\&=-3k_\oplus\cos(-\epsilon)\sin(-\epsilon)\frac{Gm^2R_\oplus^5}{a^6}\quad\text{(2 points for differentiating)}\\&=3k_\oplus\cos\epsilon\sin\epsilon\frac{Gm^2R_\oplus^5}{a^6}=\frac32k_\oplus\sin(2\epsilon)\frac{Gm^2R_\oplus^5}{a^6}\quad\text{(1 point)}.\end{aligned}\qquad (15)
+$$
+
+Equating Eqs. 7 and 8 **(1 point)**, dividing through by $\Omega-\omega\neq0$ **(1 point)**, and solving for $\dot a$ gives
+
+$$
+\begin{aligned}\dot a&=\frac{2\tau}{m\omega a}=\frac{2\tau}m\sqrt{\frac a{GM_\oplus}}\\&=\boxed{3k_\oplus\sin(2\epsilon)\frac m{M_\oplus}\sqrt{\frac{GM_\oplus}{R_\oplus}}\left(\frac{R_\oplus}a\right)^{11/2}}\quad\text{(2 points)}.\end{aligned}\qquad (16)
+$$
+
+**(g)** Rearranging Eq. 16, **(3 points)**
+
+$$
+\begin{aligned}\epsilon&=\frac12\sin^{-1}\left(\frac{M_\oplus}{3k_\oplus m}\left(\frac{a_{\text{\char"263E}}}{R_\oplus}\right)^{11/2}\sqrt{\frac{R_\oplus}{GM_\oplus}}\dot a_0\right)\\&=\frac12\sin^{-1}\left(\frac{5.976\times10^{24}}{3(0.3)(7.346\times10^{22})}\left(\frac{3.84399\times10^8}{6.371\times10^6}\right)^{11/2}\frac{1\ \mathrm{yr}}{365.2425\cdot24\cdot3600\ \mathrm{s}}\right.\\&\qquad\left.\cdot\sqrt{\frac{6.371\times10^6\ \mathrm{m}}{(6.674\times10^{-11}\ \mathrm{m^3/kg/s^2})(5.976\times10^{24}\ \mathrm{kg})}}(38\times10^{-3}\ \mathrm{m/yr})\right)\\&=2.4507^\circ,\end{aligned}\qquad (17)
+$$
+
+so $\boxed{\epsilon=2.5^\circ}$ **(3 points)**. Accept any answer that rounds to $2.4^\circ$ or $2.5^\circ$.
+
+**(h)** To simplify the calculations some, we can rewrite Eq. 16 under the assumption that $k_\oplus$ and $\epsilon$ are constants as
+
+$$
+\dot a=\dot a_0\left(\frac{a_{\text{\char"263E}}}a\right)^{11/2}.\qquad (18)
+$$
+
+Separating **(1 point)** and integrating **(2 points)** from $t=0$ (with $a(t=0)\approx0$, which is a fine approximation because the semi-major axis is raised to quite a large power) to the present (with $a=a_{\text{\char"263E}}$),
+
+$$
+a_{\text{\char"263E}}^{-11/2}\int_0^{a_{\text{\char"263E}}}a^{11/2}da=\left.\frac{2a_{\text{\char"263E}}}{13}(a/a_{\text{\char"263E}})^{13/2}\right|_0^{a_{\text{\char"263E}}}=\dot a_0\int_0^t dt',\qquad (19)
+$$
+
+so
+
+$$
+t=\frac{2a_{\text{\char"263E}}}{13\dot a_0}=\frac{2(3.84399\times10^8\ \mathrm{m})}{13(38\times10^{-3}\ \mathrm{m/yr})}=1.556\times10^9\ \mathrm{yr}\to\boxed{1.6\ \mathrm{Gyr}}.\qquad (20)
+$$
+
+**(1 point for a correct expression, 2 points for correct answer - subtract 1 if not in terms of years)**
+
+This is smaller than the age of the Moon by almost a factor of 3! **(1 point for knowing the age of the Moon)** This suggests that $\epsilon$ was $\boxed{\text{smaller}}$ in the past (i.e., less dissipation; slower recession) **(2 points for answer and justification)**.
+
+Gerstenkorn in the 1950s was the first to realize that backwards extrapolation of lunar recession leads to an event in which the Moon came very close to the Earth much more recently than the formation of the solar system, for which there is no geological evidence. For an example paper that takes into account many additional factors for orbital and tidal evolution (including time-dependence of $\epsilon$), see [Daher et al. (2021)](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2021JE006875).
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2026/2026-III/theory.pdf#page=2)

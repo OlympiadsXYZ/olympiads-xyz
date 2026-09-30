@@ -1,0 +1,500 @@
+---
+id: usaaao-2026-iii-theory-p5
+source: 'USAAAO 2026, III кръг'
+title: 'Задача 5. His Dark Materials'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/USAAAO/2026/usaaao-2026-iii-theory.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T10:54:52.891Z'
+verifier: 'single-pass'
+---
+
+*2026 USAAAO Third Exam (Theory) · 120 т.*
+
+<details>
+<summary>Instructions (Please Read Carefully)</summary>
+
+## 2026 USAAAO Third Exam (Theory)
+
+### 1 Instructions (Please Read Carefully)
+
+The test must be completed within 3.5 hours (210 minutes) and the maximum number of points is **260 points**. The point breakdown per problem is as follows.
+
+| Problem | P1 | P2 | P3 | P4 | P5 | Total |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Points** | 10 | 20 | 50 | 60 | 120 | **260** |
+
+Please solve each problem on a blank piece of paper and mark the number of the problem at the top of the page. Some problems may require a designated answer sheet; these will be provided. The contestant’s full name in capital letters should appear at the top of each solution page. If the contestant uses scratch papers, those should be labeled with the contestant’s name as well and marked as “scratch paper” at the top of the page. Scratch paper will not be graded. Partial credit will be available given that correct and legible work was displayed in the solution.
+
+This is a written exam. Contestants can only use a scientific calculator (non-programmable and non-graphing) for this exam. A table of physical constants will be provided. **Discussing the problems with other people is strictly prohibited in any way until the end of the examination period on June 25, 2026.** Receiving any external help during the exam is strictly prohibited. This means that the only allowed items are: a calculator, the provided table of constants, a pencil (or pen), an eraser, blank sheets of papers, and the exam. No books or notes are allowed during the exam. Students must be proctored during the entire duration of the exam.
+
+This exam sheet and your answer sheets (including scratch papers) should be returned to your proctors once the exam ended. Your proctors should upload your answer sheets to the Google Form provided to them.
+
+We acknowledge the following people for their contributions to this year’s theory exam:
+
+*Feodor Yevtushenko, Hagan Hensley, Joe McCarty, Lucas Pinheiro*
+
+After reading the instructions, please make sure to sign, affirming that:
+
+1. All work on this exam has been completed by me.
+2. I took this exam under the supervision of a proctor.
+3. I did not receive any external help beyond the materials provided.
+4. I will not discuss the contents of this exam with anyone until June 24, 2026.
+5. Failure to follow these rules will result in disqualification from the exam.
+
+Student Signature: ____________________ Date: ____________________
+
+</details>
+
+## Условие
+
+The Cosmic Microwave Background (CMB), first discovered in 1964, is a near-uniform microwave signal from outer space, and it is now widely accepted as being the thermal blackbody radiation from the early Universe.
+
+One of the greatest joint predictions of the Standard Model of particle physics and of modern cosmology is the existence of an analogous *Cosmic Neutrino Background*, or CNB. While the CNB has never been directly observed, its existence is nearly unambiguous in light of our modern understanding of physics. One of the most shocking things about the CNB is that, if it exists, it is possible to derive the ratio of its energy density $\rho_\nu c^2$ to the energy density $\rho_\gamma c^2$ of the CMB solely through a combination of particle physics, thermodynamics, and cosmology. Consequently, using modern CMB measurements, one can calculate the energy density of the CNB. In this problem, you will do exactly this.
+
+*(Note: This problem consists of two parts. Part A explores the underlying particle physics and thermodynamics and is worth more points, while Part B applies these results to cosmology and is shorter. In particular, these parts are ordered by content, not difficulty, and can be attempted in either order (they are independent). We strongly encourage you to try as much as you can.)*
+
+**Part A: Particle in a Box** (90 points)
+
+We will begin by establishing the key underlying thermal physics for how the energy of a system of particles depends on their temperature. Below, we list observed particle properties from Earth-based particle physics experiments (and their corresponding decoupling or annihilation temperatures according to our cosmological and quantum models).
+
+| Particle | Symbol | Mass | $g_{anti}$ | $g_{spin}$ | $N_{flavor}$ | Type | Decouple/Annihilate Temp |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Electron | $e^+/e^-$ | $m_e$ | 2 | 2 | 1 | Fermion | $\approx5\times10^9\ \mathrm{K}$ |
+| Photon | $\gamma$ | 0 | 1 | 2 | 1 | Boson | $\approx3000\ \mathrm{K}$ |
+| Neutrino | $\nu$ | $\approx0$ | 2 | 1 | 3 | Fermion | $\approx10^{10}\ \mathrm{K}$ |
+| All Others | – | – | – | – | – | – | $>10^{12}\ \mathrm{K}$ |
+
+Note that while experiments such as neutrino oscillations place a nonzero lower bound on the neutrino mass, we assume it is negligibly small, so treat neutrinos as massless throughout the problem. The antiparticle of the electron is the positron, and the two have the same mass. You may also find the integrals
+
+$$
+\int_0^\infty\frac{x^n}{e^x-1}dx=n!\,\zeta(n+1)\quad\text{and}\quad\int_0^\infty\frac{x^n}{e^x+1}dx=n!\left(1-\frac1{2^n}\right)\zeta(n+1)
+$$
+
+helpful, where $\zeta(2)=\pi^2/6$, $\zeta(3)\approx1.202$, and $\zeta(4)=\pi^4/90$. $n!$, or $n$ factorial, denotes the product of the integers from 1 to $n$, inclusive. The identities
+
+$$
+|r|<1\to\sum_{k=0}^\infty r^k=\frac1{1-r}\quad\text{and}\quad\sum_{k=0}^\infty kr^k=\frac{r}{(1-r)^2}
+$$
+
+may also prove useful.
+
+In the Standard Model of particle physics, energy modes associated with each particle type have a certain number of degrees of freedom $g$, which may arise due to a particle being distinct from its antiparticle (so positrons count as additional “degrees of freedom” for electrons), it having more than one observed spin state, or it arising in several flavors. Thus, to calculate the total energy stored in all modes for a given particle, it suffices to calculate the energy in one mode and multiply by the number of modes $g$.
+
+**(a)** **(2 points)** Based on the above table, propose and justify a chronological ordering of the four events below in the history of the Universe. You must give valid reasoning for credit.
+
+(i) The overwhelming majority of electrons and positrons pairwise annihilate each other.
+
+(ii) Photons decouple from ordinary matter and form the Cosmic Microwave Background.
+
+(iii) Neutrinos decouple from ordinary matter and form the Cosmic Neutrino Background.
+
+(iv) All other particles either decouple or annihilate.
+
+**(b)** **(2 points)** For each (named) particle in the above table, calculate $g$ by multiplying the three contributions to $g$ in the above table (including $N_{flavor}$). Comment on any practical slight deviations to any of the $N$ values, give an estimate, and briefly explain why.
+
+**(c)** **(1 point)** Later in this problem, we will derive that each fermionic degree of freedom contributes $\frac78$ of the energy density as each bosonic degree of freedom; adding this multiplicative correction gives us a new count $g^\star$. At sufficiently early times (just after the Big Bang), none of the Standard Model particles, such as quarks, had yet decoupled or annihilated, making all degrees of freedom active. Estimate the total effective number of degrees of freedom $g^\star_{tot}$ at this point due to all Standard Model particles.
+
+Throughout the rest of this problem, use per-particle $g$ and not $g^\star$.
+
+We will now begin by exploring the basic underlying principles from thermodynamics and statistical mechanics that we will use in this problem. In statistical mechanics, an open, macroscopic system that is in both thermal (exchange of heat) and chemical (exchange of particles) equilibrium with its environment is known as a **grand canonical ensemble**. For now, we only consider identical particles of a given particle type. In such a system, the chemical potential $\mu$ denotes the increase in internal energy associated with adding one extra particle to the **environment** (not the system). In other words, transferring a particle from the environment to a state of energy $\varepsilon$ in the system has a corresponding total energy change $\varepsilon-\mu$. For a system at temperature $T$, we write $\beta=1/(k_BT)$ for convenience. Together, the parameters $\beta$ and $\mu$ characterize the behavior of our system.
+
+First, consider a simple system where particles in the system can only be in one state of energy $\varepsilon$. Relative to a system with zero particles in the system, a state with $n$ particles has energy $E_n=n\varepsilon$. According to statistical mechanics, the probability of a system being in a state with energy $E$ is proportional to $e^{-\beta(E-n\mu)}$. We define the **grand partition function** $\Xi$ as the sum of $e^{-\beta(E-n\mu)}$ over all states, so here we have,
+
+$$
+\Xi=\sum_n e^{-\beta n(\varepsilon-\mu)},
+$$
+
+where $n$ runs over all possible numbers of particles in this system. In general, we can use this to express the probability of a system being in a state with energy $E$ and $n$ particles as $e^{-\beta(E-n\mu)}/\Xi$.
+
+**(d)** **(5 points)** Fermions are particles with half-integer spin. According to the Pauli exclusion principle, no two identical fermions can occupy the same quantum state, so $n\in\{0,1\}$ above.
+
+(i) Write out the expression for $\Xi$ for the above system if the particle in question is a fermion. Give the probabilities of the system being in the $n=0$ and $n=1$ states.
+
+(ii) Use this to calculate the expected value (average value) of the number of particles in the system $\langle n_\varepsilon\rangle$ and the expected energy of the system $\langle E_\varepsilon\rangle$.
+
+**(e)** **(5 points)** Bosons are particles with integer spin and face no such restrictions. As such, $n\geq0$ can be any nonnegative integer.
+
+(i) Write out and simplify the expression for $\Xi$ for the above system if the particle in question is a boson. Give the probability of the system being in the state with $n$ particles in terms of $n$.
+
+(ii) Use this to calculate the expected number of particles in the system $\langle n_\varepsilon\rangle$ and the expected energy of the system $\langle E_\varepsilon\rangle$.
+
+Now consider a system with many individual possible states for particles to occupy. A given state with energy $\varepsilon$ has the above probability distribution for its occupancy, independent of all other states. For a macroscopic system, we can simply take the overall energy and number of particles to be their expected values, giving
+
+$$
+E=\sum_\varepsilon\varepsilon\langle n_\varepsilon\rangle\quad\text{and}\quad N=\sum_\varepsilon\langle n_\varepsilon\rangle,
+$$
+
+where the sum is over all states (indexed by their energies $\varepsilon$). Partition functions over independent states multiply, so
+
+$$
+\Xi=\prod_\varepsilon\Xi_\varepsilon,
+$$
+
+where $\Xi_\varepsilon$ is the partition function for that state alone (independently of all others).
+
+**(f)** **(5 points)** Verify the identity
+
+$$
+E=-\left(\frac{\partial\ln\Xi}{\partial\beta}\right)_\mu+\mu N,
+$$
+
+holds for both the fermionic and bosonic cases, where, as usual, the subscript to the bottom-right of a partial derivative denotes keeping that variable constant while taking the partial derivative.
+
+We will now consider a macroscopic system of identical particles in a grand canonical ensemble of a known $V$, $\mu$, and $\beta$. We will make the following assumptions about the system:
+
+- Particles do not interact with each other. (Note that this does *not* mean that the states of all particles are independent, as principles like the Pauli exclusion principle may still apply. Rather, particles do not exert forces on each other and thus may be treated with the framework we establish.)
+- The system is homogeneous and isotropic, so the energy of a particle $\varepsilon$ solely depends on the magnitude of its momentum $p$.
+
+In particular, we assume that there is no external potential, meaning that we have a simple relationship between energy and momentum.
+
+**(g)** **(5 points)** Consider a particle of mass $m$ (possibly equal to zero) and momentum $p$. Give your answers to the below questions in terms of $m$, $p$, and physical constants.
+
+(i) According to relativity, what is the general expression for $\varepsilon$ in terms of the above variables that is valid for all speeds?
+
+(ii) Simplify your answer above if the particle is either massless or ultrarelativistic ($p\gg mc$).
+
+(iii) Instead, assume the particle is massive and not relativistic ($p\ll mc$). Give the Taylor expansion of the formula for $\varepsilon$ to leading nonzero order in $p$.
+
+In the below subparts, we will denote the energy of a state as being a function of its momentum via $\varepsilon(p)$. Now, according to quantum statistics, the number of single particle states in a given volume $d^3p$ of 3D momentum space (the state of all possible momenta of a particle) of a system with volume $V$ and degeneracy $g$ is $gV/(2\pi\hbar)^3\cdot d^3p$. Note that integrating over all of momentum space is equivalent to integrating each dimension of momentum ($p_x$, $p_y$, and $p_z$) from negative infinity to infinity. *(It may be helpful that in an isotropic system, this is equivalent to integrating $4\pi^2dp$ from zero to infinity.)*
+
+**(h)** **(10 points)** Write the total energy $E$ and number of particles $N$ as integrals over the **magnitude** of the momentum $p$. Express your answers in terms of $g$, $V$, $\hbar$, $\beta$, $\mu$, and the general functional form $\varepsilon(p)$. **You do not need to evaluate the integrals.** *(You may either do this separately for both fermions and bosons or do them together with a cleverly placed $\pm$ sign. If you do the latter, specify which branch corresponds to what particle type.)*
+
+Now, in the early Universe, photons could be created and destroyed freely in various events, so their chemical potential was $\mu_\gamma=0$.
+
+**(i)** **(10 points)** Calculate the energy density of a photon gas $u_\gamma=E_\gamma/V$ in terms of its temperature $T$ and fundamental constants. State how the energy density scales with temperature.
+
+**(j)** **(5 points)** Repeat this calculation for a massless or ultrarelativistic fermion gas of temperature $T$ and degrees of freedom $g$, again assuming that the chemical potential is zero. Substitute the values of $g$ for both electrons and neutrinos.
+
+We will now turn our attention to the entropy $S$ of the system. Letting $P$ be the pressure of the system, define the grand potential $\Omega$ as
+
+$$
+\Omega=-k_BT\ln\Xi=E-TS-\mu N=-PV.
+$$
+
+Also recall the differential form of the first law of thermodynamics:
+
+$$
+dE=TdS-PdV+\mu dN
+$$
+
+You may freely use all the above equations without proof. Be careful to not omit (relevant) terms when working with differentials.
+
+**(k)** **(5 points)** Prove the identity
+
+$$
+S=-\left(\frac{\partial\Omega}{\partial T}\right)_{V,\mu},
+$$
+
+where we keep the volume and chemical potential constant.
+
+**(l)** **(10 points)** Using the same integral form as earlier, express $S$ as an integral over $p$ using $V$, $\beta$, $\mu$, $\varepsilon(p)$, and fundamental constants. Be sure to handle both the fermion and boson cases.
+
+**(m)** **(15 points)** Now, consider only massless or ultrarelativistic particles. Express the energy $E$ in terms of the pressure $P$ and the volume $V$. *(It may be helpful to handle fermions and bosons separately and use integration by parts on an integral expression for $\ln\Xi$. Alternatively, you may also choose to use a more classical thermodynamic argument to directly obtain an expression for both cases simultaneously. Either way, you **must** give a complete derivation for credit.)*
+
+**(n)** **(10 points)** Use this to write the entropy density $s=S/V$ in terms of the energy density $u=E/V$, the number density $n=N/V$, $\mu$, and $T$ for massless or ultrarelativistic particles. Give a second simplified answer for the case $\mu=0$.
+
+**Part B: Nothing, Except Everything** (30 points)
+
+As the Universe continued to expand, after neutrinos decoupled from ordinary matter, electrons and positrons became less relativistic, after which virtually all electrons and positrons annihilated each other. Since photons had not yet decoupled from ordinary matter, the energy from the electrons and positrons went into heating the photon gas, but it did not heat the neutrino background. As a result, while neutrinos and photons were at the same temperature before the electron annihilation, the photon gas became warmer than the neutrino background. We will now compute the corresponding temperature and energy density ratios of the present-day photon and neutrino backgrounds.
+
+You may use the results $u\propto gg'T^4$ (energy density) and $s\propto gg'T^3$ (entropy density) for ultrarelativistic particles from the previous section throughout this section. Here, $g$ is the number of degrees of freedom from (b) and $g'$ is 1 if the particle is a boson or $7/8$ if it is a fermion.
+
+Assume a smooth, uniform expanding universe in equilibrium with itself. Consider a box of volume $V$ that expands with the Universe (it is comoving), so $V\propto a^3$, where $a$ is the scale factor. (Specifically, any distance $d$ in the present day corresponds to two points that were separated by a distance $ad$ in the past at a point where the scale factor was $a$, after which the points moved apart due to the expansion of the Universe.)
+
+**(o)** **(5 points)** First of all, we will show that the total energy in the box is likely *not* conserved. To do this, consider a universe made out of only a photon gas and state the proportionality relations for how $T$ and $U=uV$ scale with $a$.
+
+**(p)** **(10 points)** On the other hand, under these assumptions, the total entropy in the comoving box *is* conserved. Indeed, according to the First Law of Thermodynamics,
+
+$$
+dU=-PdV+TdS\to d(uV)=-PdV+TdS.
+$$
+
+Use this in conjunction with the Friedmann continuity equation
+
+$$
+\dot\rho+3H\left(\rho+\frac P{c^2}\right)=0
+$$
+
+to show that $dS=0$ over a differential timestep $dt$.
+
+Before neutrino decoupling, all three relevant types of particles (electrons, neutrinos, and photons) were ultrarelativistic and were at the same temperature. After neutrino decoupling, the comoving entropies of both the neutrino system and the electron plus photon system stayed constant. In particular,
+
+$$
+\frac{s_ea^3+s_\gamma a^3}{s_\nu a^3}=\mathrm{const}.
+$$
+
+**(q)** **(10 points)** By evaluating the above both before electron annihilation (while electrons were still ultrarelativistic) and after electron annihilation (where there were essentially no electrons), calculate the present-day photon to neutrino temperature ratio $T_\gamma/T_\nu$. Evaluate $T_\nu$ to three significant figures given $T_\gamma\approx2.725\ \mathrm{K}$.
+
+**(r)** **(5 points)** Calculate the energy density ratio $\rho_\nu/\rho_\gamma$ and evaluate this to three significant figures.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:** Solution to Question 5
+
+**(a)** Notice that as the Universe expands, it cools, so all we need to do is sort in decreasing order of $T$. This corresponds to $\boxed{\text{(iv), (iii), (i), (ii)}}$.
+
+**(b)** We multiply to get $g_e=2\cdot2\cdot1=\boxed4$, $g_\gamma=1\cdot2\cdot1=\boxed2$, and $g_\nu=2\cdot1\cdot3=\boxed6$. This is sufficient for full credit. (**Note that according to modern research, there is a slight correction to the effective neutrino $N$, bringing it closer to $3.044$.**)
+
+**(c)** Any response receives full credit.
+
+**(d)** We have the following:
+
+(i) $\Xi=\boxed{1+e^{-\beta(\varepsilon-\mu)}}$. Consequently, the probability it is in the $n=0$ state is $\boxed{\frac1{1+e^{-\beta(\varepsilon-\mu)}}}$ and the probability it is in the $n=1$ state is $\boxed{\frac{e^{-\beta(\varepsilon-\mu)}}{1+e^{-\beta(\varepsilon-\mu)}}}$.
+
+(ii) The expected number of particles in the system is just the probability that the system is in the $n=1$ state, which is $\boxed{\frac{e^{-\beta(\varepsilon-\mu)}}{1+e^{-\beta(\varepsilon-\mu)}}}$. The expected energy is just $(\varepsilon)\langle n_\varepsilon\rangle=\boxed{\varepsilon\frac{e^{-\beta(\varepsilon-\mu)}}{1+e^{-\beta(\varepsilon-\mu)}}}$. Note that we can re-express the expected number of particles as $\frac1{e^{\beta(\varepsilon-\mu)}+1}$.
+
+**(e)** (i) Now, the formula for $\Xi$ is slightly more nontrivial, but it can be evaluated as a geometric series:
+
+$$
+\Xi=\sum_{n\geq0}e^{-n\beta(\varepsilon-\mu)}=\boxed{\frac1{1-e^{-\beta(\varepsilon-\mu)}}}.
+$$
+
+This gives that the probability of being in a state with $n$ particles is just
+
+$$
+e^{-n\beta(\varepsilon-\mu)}/\Xi=\boxed{e^{-n\beta(\varepsilon-\mu)}(1-e^{-\beta(\varepsilon-\mu)})}.
+$$
+
+(ii) The expected number of particles is just
+
+$$
+\begin{aligned}\sum_n ne^{-n\beta(\varepsilon-\mu)}(1-e^{-\beta(\varepsilon-\mu)})&=(1-e^{-\beta(\varepsilon-\mu)})\sum_{n\geq0}ne^{-n\beta(\varepsilon-\mu)}\\&=(1-e^{-\beta(\varepsilon-\mu)})\cdot\frac{e^{-\beta(\varepsilon-\mu)}}{(1-e^{-\beta(\varepsilon-\mu)})^2}\end{aligned}
+$$
+
+thus giving
+
+$$
+\langle n_\varepsilon\rangle=\boxed{\frac1{e^{\beta(\varepsilon-\mu)}-1}}\to\langle E_\varepsilon\rangle=\boxed{\frac\varepsilon{e^{\beta(\varepsilon-\mu)}-1}}
+$$
+
+**(f)** Notice that $\ln\Xi=\sum_\varepsilon\ln\Xi_\varepsilon$, and
+
+$$
+\begin{aligned}\left(\frac{\partial\ln\Xi_\varepsilon}{\partial\beta}\right)_\mu&=\frac1{\Xi_\varepsilon}\left(\frac{\partial\Xi_\varepsilon}{\partial\beta}\right)_\mu=\frac{\sum_n-n(\varepsilon-\mu)e^{-\beta n(\varepsilon-\mu)}}{\sum_n e^{-\beta n(\varepsilon-\mu)}}\\&=\frac{\mu\sum_n ne^{-\beta n(\varepsilon-\mu)}-\sum_n n\varepsilon e^{-\beta n(\varepsilon-\mu)}}{\sum_n e^{-\beta n(\varepsilon-\mu)}},\end{aligned}
+$$
+
+which is just $\mu\langle n_\varepsilon\rangle-\langle E_\varepsilon\rangle$ for this state. Summing over all states gives
+
+$$
+\left(\frac{\partial\ln\Xi}{\partial\beta}\right)_\mu=\sum_\varepsilon\left(\frac{\partial\ln\Xi_\varepsilon}{\partial\beta}\right)_\mu=\sum_\varepsilon\mu\langle n_\varepsilon\rangle-\langle E_\varepsilon\rangle=\mu N-E,
+$$
+
+as desired.
+
+**(g)** We have the following results from relativity:
+
+(i) The general form is $\varepsilon=\boxed{\sqrt{(pc)^2+(mc^2)^2}}$. This can be derived from $\varepsilon=\gamma mc^2$ and $p=\gamma mv$.
+
+(ii) Dropping the $m$ term gives $\varepsilon=\boxed{pc}$.
+
+(iii) This is just
+
+$$
+\varepsilon=mc^2\sqrt{1+\left(\frac{pc}{mc^2}\right)^2}\approx mc^2\left(1+\frac{p^2}{2m^2c^2}\right)=\boxed{mc^2+\frac{p^2}{2m}}.
+$$
+
+Observe that this is just rest mass-energy plus the classical kinetic energy.
+
+**(h)** Combining our results from (d) and (e), observe the unified form
+
+$$
+\langle n_\varepsilon\rangle=\frac1{e^{\beta(\varepsilon-\mu)}\pm1},
+$$
+
+where we have the $+$ sign (top) for fermions and the $-$ sign (bottom) for bosons. We will use this going forward. Now notice that integrating $d^3p$ over $\mathbb R^3$ is equivalent to integrating $4\pi p^2dp$ over $p\in[0,\infty)$. This gives the integral forms
+
+$$
+N=\int_0^\infty\frac{gV}{(2\pi\hbar)^3}\cdot\frac1{e^{\beta(\varepsilon(p)-\mu)}\pm1}\cdot4\pi p^2dp
+$$
+
+and
+
+$$
+E=\int_0^\infty\frac{gV}{(2\pi\hbar)^3}\cdot\frac{\varepsilon(p)}{e^{\beta(\varepsilon(p)-\mu)}\pm1}\cdot4\pi p^2dp.
+$$
+
+**(i)** We substitute $g=2$, $\mu=0$, $\varepsilon(p)=pc$, the $-$ sign, and later the substitution $x=\beta pc$ to get
+
+$$
+\begin{aligned}u=\frac EV&=\int_0^\infty\frac2{(2\pi\hbar)^3}\cdot\frac{pc}{e^{\beta pc}-1}\cdot4\pi p^2dp=\frac{c\pi}{(\pi\hbar)^3}\int_0^\infty\frac{p^3dp}{e^{\beta pc}-1}\\&=\frac\pi{(\pi\hbar)^3\beta^4c^3}\int_0^\infty\frac{x^3dx}{e^x-1}\\&=\frac\pi{(\pi\hbar)^3\beta^4c^3}\cdot6\cdot\frac{\pi^4}{90}=\boxed{\frac{\pi^2k_B^4}{15c^3\hbar^3}T^4},\end{aligned}
+$$
+
+giving us the expected
+
+$$
+\boxed{u\propto T^4}
+$$
+
+from the Stefan-Boltzmann law.
+
+**(j)** We retrace the above calculation with the $+$ sign, giving:
+
+$$
+\begin{aligned}u=\frac EV&=\int_0^\infty\frac g{(2\pi\hbar)^3}\cdot\frac{pc}{e^{\beta pc}+1}\cdot4\pi p^2dp=\frac{gc\pi}{2(\pi\hbar)^3}\int_0^\infty\frac{p^3dp}{e^{\beta pc}+1}\\&=\frac{g\pi}{2(\pi\hbar)^3\beta^4c^3}\int_0^\infty\frac{x^3dx}{e^x+1}\\&=\frac{g\pi}{2(\pi\hbar)^3\beta^4c^3}\cdot6\cdot\frac78\cdot\frac{\pi^4}{90}=\boxed{\frac{7g\pi^2k_B^4}{240c^3\hbar^3}T^4},\end{aligned}
+$$
+
+which gives $g_e=4\to\frac{7\pi^2k_B^4}{60c^3\hbar^3}T^4$ for electrons and $g_\nu=6\to\frac{7\pi^2k_B^4}{40c^3\hbar^3}T^4$ for neutrinos at zero chemical potential and at high temperatures.
+
+**(k)** Taking the differential of the given equation,
+
+$$
+d\Omega=dE-d(TS)-d(\mu N)=(TdS-PdV+\mu dN)-(TdS+SdT+\mu dN+Nd\mu),
+$$
+
+so
+
+$$
+d\Omega=-PdV-SdT-Nd\mu\to\left(\frac{\partial\Omega}{\partial T}\right)_{V,\mu}=-S,
+$$
+
+as desired. As stated in the problem text, it is easy to mess up the differentials here by omitting terms: any term with a first-order differential must be tracked, as we have above.
+
+**(l)** Notice that the given equation implies
+
+$$
+TS=E-\mu N+k_BT\ln\Xi\to S=k_B\beta\left((E-\mu N)+\frac1\beta\ln\Xi\right).
+$$
+
+Now using the unified form (which we later convert to an integral)
+
+$$
+\ln\Xi=\sum_\varepsilon\pm\ln(1\pm e^{-\beta(\varepsilon-\mu)})
+$$
+
+with, as before, top signs denoting fermions and bottom signs denoting bosons, we have:
+
+$$
+s=\frac SV=\int_0^\infty\frac g{2\pi^2\hbar^3}k_B\left(\beta\frac{(\varepsilon(p)-\mu)}{e^{\beta(\varepsilon(p)-\mu)}\pm1}\pm\ln(1\pm e^{-\beta(\varepsilon(p)-\mu)})\right)\cdot p^2dp.
+$$
+
+**(m)** While it is possible to do this with statistical mechanics, we first sketch a clean, purely classical argument that extends to both the boson and the fermion case. Consider a particle moving at speed $c$ and x-velocity $v_x$ in an axis-aligned box of side length $L$. Upon reaching either of the boundaries of the container, say that the particle reflects elastically. Then the average time between collisions with a given face in the $yz$ plane is
+
+$$
+\delta t=\frac{2L}{v_x}
+$$
+
+and the average momentum imparted per collision is
+
+$$
+\delta p=2p_x=\frac{2Ev_x}{c^2}
+$$
+
+. Then the average force imparted is
+
+$$
+F=\frac{\delta p}{\delta t}=\frac{Ev_x^2}{Lc^2},
+$$
+
+giving an average pressure
+
+$$
+P=\frac F{L^2}=\frac{Ev_x^2}{c^2L^3}=\frac{Ev_x^2}{c^2V},
+$$
+
+where $V$ is the volume. But $\langle v_x^2\rangle=c^2/3$ by symmetry over the three dimensions, so
+
+$$
+\langle P\rangle=\frac E{3V}.
+$$
+
+From a macroscopic sum over all particles, this translates to
+
+$$
+E=\boxed{3PV},
+$$
+
+which is valid for both fermions and bosons.
+
+We now describe the alternative statistical mechanics argument. For brevity, we will only do the fermion case: the boson case is analogous. Observe that we have
+
+$$
+\ln\Xi=\frac{4\pi gV}{(2\pi\hbar)^3}\int_0^\infty\ln(1+e^{-\beta(pc-\mu)})p^2dp
+$$
+
+by our general integral construction. We now use integration by parts on the integral with
+
+$$
+A=\ln(1+e^{-\beta(pc-\mu)})\to dA=\frac{-\beta c e^{-\beta(pc-\mu)}dp}{1+e^{-\beta(pc-\mu)}}=\frac{-\beta c}{e^{\beta(pc-\mu)+1}}dp
+$$
+
+and
+
+$$
+dB=p^2dp\to B=\frac13p^3
+$$
+
+giving
+
+$$
+\int_0^\infty\ln(1+e^{-\beta(pc-\mu)})\cdot p^2dp=\left[\ln(1+e^{-\beta(pc-\mu)})\cdot\frac13p^3\right]_0^\infty-\int_0^\infty\frac{-\beta c}{e^{\beta(pc-\mu)+1}}dp\cdot\frac13p^3.
+$$
+
+The first term vanishes at both zero and infinity (as $p\to\infty$ it approaches $\frac13p^3e^{-\beta(pc-\mu)}$, which goes to zero because of the exponential). Furthermore, the second integral is exactly the integral for $E$ scaled by a factor:
+
+$$
+\ln\Xi=\frac\beta3\cdot\frac{4\pi gV}{(2\pi\hbar)^3}\cdot\int_0^\infty\frac{pc\cdot p^2dp}{e^{\beta(pc-\mu)}+1}=\frac\beta3\cdot E,
+$$
+
+so returning to our original $\Omega$ identity gives
+
+$$
+PV=-\Omega=k_BT\ln\Xi=\frac1\beta\cdot\frac{\beta E}3=\frac E3\to E=\boxed{3PV},
+$$
+
+finishing.
+
+**(n)** We simply substitute $E=3PV\to PV=\frac13E$ into the grand potential equation, giving
+
+$$
+TS=E+PV-\mu N=\frac43E-\mu N\to s=\boxed{\frac{4u}{3T}-\frac{\mu n}T}.
+$$
+
+Now if $\mu=0$, we have $s=\boxed{\frac{4u}{3T}}$, which scales as $T^3$. This will be useful in the next section.
+
+**(o)** By cosmology and what we have earlier, $\boxed{T\propto a^{-1}}$, $V\propto a^3$, and $u\propto T^4\propto a^{-4}$, giving $uV=\boxed{U\propto a^{-1}}$. So total energy is not an invariant here.
+
+**(p)** We have
+
+$$
+-PdV+TdS=d(uV)=Vdu+udV=c^2(Vd\rho+\rho dV)\to TdS=Vc^2d\rho+\rho c^2dV+PdV.
+$$
+
+Dividing the right hand side by $Vdt$ and noticing that $\frac{dV}V=3\frac{da}a=3H$,
+
+$$
+\frac{TdS}{Vdt}=\dot\rho c^2+3H(\rho c^2+P)=0,
+$$
+
+as desired.
+
+**(q)** We substitute $s\propto gg'T^3$, so canceling the $a^3$ terms,
+
+$$
+\frac{4\cdot\frac78\cdot T_e^3+2\cdot1\cdot T_\gamma^3}{6\cdot\frac78\cdot T_\nu^3}=C
+$$
+
+for some constant $C$. At sufficiently high Universe temperatures, all three species were in thermal equilibrium, giving $C=\frac{\frac72+2}{\frac{21}4}=\frac{22}{21}$. At sufficiently low universe temperatures, there were no electrons (so functionally $T_e=0$), giving,
+
+$$
+\frac{2\cdot T_\gamma^3}{\frac{21}4\cdot T_\nu^3}=\frac{22}{21}\to\frac{T_\gamma}{T_\nu}=\boxed{\left(\frac{11}4\right)^{1/3}}.
+$$
+
+Numerically, this gives $T_\nu\approx\boxed{1.95\ \mathrm{K}}$.
+
+**(r)** We have
+
+$$
+\rho_\nu/\rho_\gamma=\frac{g_\nu g'_\nu T_\nu^4}{g_\gamma g'_\gamma T_\gamma^4}=3\cdot\frac78\cdot\left(\frac4{11}\right)^{4/3}\approx\boxed{0.681}.
+$$
+
+Scoring: give full error carried forward. Penalize each individual mistake at either 1 or 2 points (“proportional” to the problem point value). Give partial credit proportional to progress into the problem.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2026/2026-III/theory.pdf#page=5)

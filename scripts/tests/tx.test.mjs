@@ -137,6 +137,28 @@ test('text-layer comparison ignores source attribution but still detects omitted
   assert(result.defects.every(d => d.path !== '/problems/0/solution/attribution'));
 });
 
+test('text-layer compares visible link labels and prose, excluding figure roles and narrowly encoded trig lettering', t => {
+  const s = sandbox(t);
+  const m = structuredClone(manifest);m.meta.lang='en';delete m.documents.solutions;
+  s.write('manifest.json',m);fs.mkdirSync(path.join(s.dir,'text'),{recursive:true});
+  const prose='The students arrived at the field site before assessment began. Each participant measured the residential block, recorded inhabited dwellings, calculated household population and estimated total area using the supplied map scale. Effective observation and completion of simple calculations were required. Evidence of working must include the measured area. Markers considered accurate estimates, acceptable observations, arithmetic mistakes, appropriate units, final density, clear explanations, individual methods, consistent notation, complete records and the stated limits.';
+  fs.writeFileSync(path.join(s.dir,'text','problems.txt'),prose+'\nConsult the reference Solar System Dynamics.\ncosp90˝ − δq + sin ε sinp90˝ − δq cosp90˝ + αq\f');
+  const c=candidate();c.paper.lang='en';c.paper.title='Assessment';
+  Object.assign(c.problems[0],{statement:prose+'\nConsult the reference [Solar System Dynamics](https://www.cambridge.org/books/hidden-annotation).\n$\\cos(90^{\\circ}-\\delta)+\\sin\\varepsilon\\sin(90^{\\circ}-\\delta)\\cos(90^{\\circ}+\\alpha)$',parts:[],figures:[{...c.problems[0].figures[0],role:'statement',alt:'Diagram'}]});delete c.problems[0].solution;
+  const file=s.write('visible-link-candidate.json',c),out=path.join(s.dir,'visible-link-result.json');
+  let run=s.run('textlayer.mjs',[PAPER,'--candidate',file,'--out',out]);assert.equal(run.status,0,run.stdout+run.stderr);assert.equal(s.read(out).documents.problems.trusted,true);
+  c.problems[0].statement=c.problems[0].statement.replace('Evidence of working must include the measured area. ','').replace('Solar System Dynamics','Incorrect Book Title');s.write('visible-link-candidate.json',c);
+  run=s.run('textlayer.mjs',[PAPER,'--candidate',file,'--out',out]);assert.equal(run.status,3,run.stdout+run.stderr);
+  assert(s.read(out).defects.some(d=>d.description.includes('Evidence of working')),'Real omitted instruction still fails');
+  assert(s.read(out).defects.some(d=>d.description.includes('Solar')),'Visible reference label still fails');
+});
+
+test('text-layer keeps nonmathematical cosp tokens as prose', async () => {
+  const {layerPages}=await import(txModule('textlayer.mjs'));
+  const pages=layerPages('The word cosp represents printed prose.\ncosp90˝ − δq');
+  const hits=pages[0].tokens.filter(t=>t.raw==='cosp');assert.equal(hits.length,2);assert(!hits[0].skip);assert.equal(hits[1].skip,true);
+});
+
 function spacingTextLayerFixture(t, { secondPage = false, editPage = 1, adjacentOmissions = false } = {}) {
   const s = sandbox(t);
   const prose = 'Рассмотрим движение маленького тела вдоль горизонтальной поверхности. Начальная скорость известна. Ускорение направлено противоположно перемещению. Определите расстояние между начальным положением центра массы и конечной точкой остановки. Сопротивление воздуха отсутствует. Коэффициент трения постоянен. Измерения проводятся при одинаковой температуре окружающей среды. После завершения первого опыта повторите эксперимент для другого материала. Полученные значения сравните между собой. Объясните наблюдаемую зависимость времени торможения от массы тела. Приведите подробное рассуждение.';

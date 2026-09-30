@@ -1,0 +1,571 @@
+---
+id: ioaa-2025-data-analysis-questions-pd02
+source: 'IOAA 2025, Анализ на данни'
+title: 'Задача 2. D02 · Predicting arrival times of coronal mass ejections on Earth'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2025/ioaa-2025-data-analysis-questions.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T11:19:11.046Z'
+verifier: 'single-pass'
+---
+
+*18th IOAA, Mumbai 2025 — Data Analysis Examination · 60 т.*
+
+<Warning title="Бележка към темата">
+The obtained Summary Answersheet contains D02 only. Referenced D01 response forms were unavailable; all D01 data graphs printed in the question and solution booklets are retained.
+</Warning>
+
+## Условие
+
+The Sun occasionally releases magnetized plasma, termed coronal mass ejections (CMEs), that originate from the surface of the Sun and propagate outwards. Accurate prediction of their arrival times at Earth is crucial for understanding and mitigating their potential effects on satellites orbiting the Earth. In this problem, we aim to predict the arrival times of CMEs by developing an empirical model, using the data of 10 CMEs. Throughout this problem, the distance between the Sun’s surface and Earth is taken to be $214\,R_\odot$. Further, assume that the Sun is not rotating.
+
+Due to electromagnetic, gravitational and drag forces, CMEs experience a variable acceleration throughout their propagation. In the first two parts of this problem, we assume that the region between the Sun and the Earth is vacuum.
+
+### CMEs through vacuum
+
+**(D02.1)** The initial velocity, $u$, at the solar surface $(=1\,R_\odot)$, the final velocity, $v$, upon reaching Earth, and the time to arrive at Earth after leaving the surface of the Sun (in hours), $\tau$, are given for 10 CMEs in the following table.
+
+| CME Name | $u$ ($\mathrm{km\ s^{-1}}$) | $v$ ($\mathrm{km\ s^{-1}}$) | $\tau$ ($\mathrm h$) |
+| --- | --- | --- | --- |
+| CME-A | 804 | 470 | 74.5 |
+| CME-B | 247 | 360 | 127.5 |
+| CME-C | 523 | 396 | 103.5 |
+| CME-D | 830 | 415 | 71.0 |
+| CME-E | 665 | 400 | 104.5 |
+| CME-F | 347 | 350 | 101.5 |
+| CME-G | 446 | 375 | 99.5 |
+| CME-H | 155 | 360 | 97.0 |
+| CME-I | 1016 | 515 | 67.0 |
+| CME-J | 683 | 410 | 54.0 |
+
+**(D02.1a) [3 marks]** Calculate the average acceleration, $a$, for each CME in $\mathrm{m\ s^{-2}}$.
+
+**(D02.1b) [15 marks]** We assume an empirical model for the acceleration, $a_{\mathrm{model}}$, of a CME, which depends on its initial velocity, $u$, as $a_{\mathrm{model}}=m\left(\frac u{u_0}\right)+\alpha$ where, $a_{\mathrm{model}}$ is expressed in $\mathrm{m\ s^{-2}}$, $u$ is expressed in $\mathrm{km\ s^{-1}}$ and $u_0=1.00\times10^3\ \mathrm{km\ s^{-1}}$.
+
+Determine the constants $m$ and $\alpha$ and their associated uncertainties using an appropriate graph (mark your graph as “D02.1b”).
+
+**(D02.1c) [4 marks]** For each CME, tabulate $a_{\mathrm{model}}$ in $\mathrm{m\ s^{-2}}$. Hence calculate the root-mean-square (rms) deviation of acceleration, $\delta a_{\mathrm{rms}}$, between the calculated accelerations, $a$, and the model values, $a_{\mathrm{model}}$.
+
+**(D02.2)** We consider two other CMEs: CME-1 and CME-2, with initial velocities, $u=1044\ \mathrm{km\ s^{-1}}$ and $273\ \mathrm{km\ s^{-1}}$, respectively.
+
+**(D02.2a) [4 marks]** Using the empirical model obtained in (D02.1b), calculate the predicted arrival times at Earth, $\tau_{1,m}$ and $\tau_{2,m}$ (in hours), for CME-1 and CME-2, respectively.
+
+**(D02.2b) [2 marks]** The observed arrival times at Earth of CME-1 and CME-2 are $46.0\ \mathrm h$ and $74.5\ \mathrm h$, respectively. The empirical model is considered to be VALID for a particular CME if its predicted arrival time is within 20% of its observed arrival time; otherwise, it is NOT VALID. Indicate the validity of the model for each CME by ticking (✓) the appropriate box in the Summary Answersheet.
+
+### CMEs in presence of solar wind
+
+In reality, the space between the Sun and the Earth is permeated with the solar wind, which exerts a drag force on CMEs. This drag force can either decelerate or accelerate a CME, depending on the CME’s velocity relative to that of the solar wind. To account for the solar wind’s influence, we will use a “drag-only” model for distances $R_{\mathrm{obs}}(t)\ge R_0$, where $R_0$ is the distance beyond which the drag force becomes the dominant force affecting the CME’s motion.
+
+The distance from the surface of the Sun as determined from the “drag-only” model, $R_D(t)$, and velocity, $V_D(t)$, of a CME in this model is given by
+
+$$
+R_D(t)=\frac S\gamma\ln[1+S\gamma(V_0-V_s)(t-t_0)]+V_s(t-t_0)+R_0
+$$
+
+$$
+V_D(t)=\frac{V_0-V_s}{1+S\gamma(V_0-V_s)(t-t_0)}+V_s
+$$
+
+where, $\gamma=2\times10^{-8}\ \mathrm{km^{-1}}$, $V_s$ is the constant speed of the solar wind, $R_0$ and $V_0$ are the distance and velocity, respectively, at time $t_0$, and $S$ is the sign factor. $S=1$ if $V_0>V_s$; $S=-1$ if $V_0\le V_s$.
+
+**(D02.3)** The tables below show the observed radial distance from the surface of the Sun, $R_{\mathrm{obs}}(t)$ (measured in $R_\odot$), as a function of time, $t$ (in hours), for two CMEs: CME-3 and CME-4. The last data point in each table (D5 and P8, respectively) corresponds to the arrival time of the respective CME at Earth. For this part, assume $V_s=330\ \mathrm{km\ s^{-1}}$.
+
+**CME-3**
+
+| Data point | $t$ (in h) | $R_{\mathrm{obs}}(t)$ (in $R_\odot$) |
+| --- | --- | --- |
+| D1 | 0.200 | 6.36 |
+| D2 | 0.480 | 7.99 |
+| D3 | 1.22 | 11.99 |
+| D4 | 1.49 | 13.51 |
+| D5 | 58.05 | 214 |
+
+**CME-4**
+
+| Data point | $t$ (in h) | $R_{\mathrm{obs}}(t)$ (in $R_\odot$) |
+| --- | --- | --- |
+| P1 | 1.00 | 4.00 |
+| P2 | 3.00 | 6.00 |
+| P3 | 4.00 | 9.00 |
+| P4 | 5.00 | 11.0 |
+| P5 | 21.0 | 43.0 |
+| P6 | 50.0 | 100 |
+| P7 | 85.0 | 170 |
+| P8 | 111 | 214 |
+
+We shall evaluate if the “drag-only” model satisfactorily predicts the arrival times of these CMEs. To use this model an appropriate choice of $t_0$, and corresponding $R_0$ and $V_0$ needs to be made.
+
+**(D02.3a) [6 marks]** For CME-3, take the following two cases:
+
+(C1) $t_0$ is taken as the midpoint of the interval D1 – D2
+
+(C2) $t_0$ is taken as the midpoint of the interval D3 – D4
+
+Assume the velocity remains constant in each specific interval D1–D2 and D3–D4, but may differ between the two intervals.
+
+Using $t_0$, $R_0$, and $V_0$, calculate the difference between the observed and the predicted radial distance, $\delta R_D\equiv R_{\mathrm{obs}}(t)-R_D(t)$ in units of $R_\odot$ at $t=58.05\ \mathrm h$, for each of the two cases.
+
+**(D02.3b) [4 marks]** Evaluate $R_D(t)$ at points, P5, P6, P7, and P8 between the Sun and the Earth for CME-4 for the following two cases adopting the procedure similar to (D02.3a):
+
+(C3) $t_0$ is taken as the midpoint of the interval P1 – P2
+
+(C4) $t_0$ is taken as the midpoint of the interval P3 – P4
+
+**(D02.3c) [10 marks]** Plot $R_D(t)$ (in $R_\odot$) vs $t$ (in hours) for the two cases, C3 and C4, for CME-4 at points, P5, P6, P7, and P8 (mark your graph as “D02.3c”). On the same graph, draw smooth curves of $R_D(t)$ for the above mentioned two cases. For this part, take the range of $x$ axis from 0 to 180 h.
+
+**(D02.3d) [4 marks]** Using the graph, estimate the absolute difference, $|\delta\tau|$ between the actual arrival time of CME-4 at the Earth and its time of arrival predicted by the drag-only model, for each of the cases C3 and C4.
+
+**(D02.3e) [1 mark]** Indicate whether the following statement is TRUE or FALSE by ticking (✓) the appropriate box in the Summary Answersheet (no written justification needed):
+
+“The drag forces exerted by the solar wind on CMEs become dominant for CME-3 at an earlier time compared to CME-4.”
+
+**(D02.4)** **[7 marks]** Consider drag as the dominant force acting on 10 CMEs in part D02.1. Assume that the “drag-only” model is applicable from the surface of the Sun $(R_0=1\,R_\odot)$ and beyond, for all CMEs. Estimate and tabulate the solar wind speed $V_s$ in $\mathrm{km\ s^{-1}}$ for each CME. Further, estimate the average solar wind speed $V_{s,\mathrm{avg}}$ for all 10 CMEs.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**(D02.1a) Solution:**
+
+Average acceleration (in $\mathrm{m\,s^{-2}}$) is given by the following relation,
+
+$$
+a=\frac{(v-u)\times10^3}{\tau\times3600}
+$$
+
+| CME Name | $u$ ($\mathrm{km\,s^{-1}}$) | $v$ ($\mathrm{km\,s^{-1}}$) | $\tau$ (h) | $a$ ($\mathrm{m\,s^{-2}}$) |
+| --- | --- | --- | --- | --- |
+| CME-A | 804 | 470 | 74.5 | −1.25 |
+| CME-B | 247 | 360 | 127.5 | 0.246 |
+| CME-C | 523 | 396 | 103.5 | −0.341 |
+| CME-D | 830 | 415 | 71.0 | −1.62 |
+| CME-E | 665 | 400 | 104.5 | −0.704 |
+| CME-F | 347 | 350 | 101.5 | 0.00821 |
+| CME-G | 446 | 375 | 99.5 | −0.198 |
+| CME-H | 155 | 360 | 97.0 | 0.587 |
+| CME-I | 1016 | 515 | 67.0 | −2.08 |
+| CME-J | 683 | 410 | 54.0 | −1.40 |
+
+**(D02.1b) Solution:**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '75.3%', '--fig-max': '482px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2025-data-analysis-questions/d02-sol-acceleration-fit-v2.png" alt="Original official acceleration versus initial-velocity fit, central/extreme lines, uncertainty computations, axes and scales." width="1507" height="1141" loading="lazy" decoding="async" />
+</figure>
+
+
+$$
+\boxed{m=(-3.05\pm0.09)\ \mathrm{m\,s^{-2}}}
+$$
+
+$$
+\boxed{\alpha=(1.08\pm0.06)\ \mathrm{m\,s^{-2}}}
+$$
+
+Thus, the expression obtained by fitting a straight line to $a$ vs $u/u_0$ is
+
+$$
+a_{\mathrm{model}}=-3.05\left(\frac{u}{u_0}\right)+1.08
+$$
+
+**(D02.1c) Solution:**
+
+| CME Name | $a_{\mathrm{model}}$ ($\mathrm{m\,s^{-2}}$) |
+| --- | --- |
+| CME-A | −1.37 |
+| CME-B | 0.327 |
+| CME-C | −0.515 |
+| CME-D | −1.45 |
+| CME-E | −0.948 |
+| CME-F | 0.0217 |
+| CME-G | −0.280 |
+| CME-H | 0.607 |
+| CME-I | −2.02 |
+| CME-J | −1.00 |
+
+The root mean square (rms) deviation of acceleration is given by
+
+$$
+\delta a_{\mathrm{rms}}=\sqrt{\frac{\sum_{i=1}^{10}(a_{\mathrm{model},i}-a_i)^2}{10}}
+$$
+
+Using this expression we get, $\boxed{\delta a_{\mathrm{rms}}=0.176\ \mathrm{m\,s^{-2}}}$
+
+**(D02.2a) Solution:**
+
+The time of arrival of a CME at the Earth, $\tau_{\mathrm m}$, can be calculated from the following relation.
+
+$$
+s=u\tau_{\mathrm m}+\frac12a_{\mathrm{model}}\tau_{\mathrm m}^2
+$$
+
+However, this would yield two solutions for $\tau_{\mathrm m}$, only one of which will be for a positive final velocity (acceptable), and the other for a negative final velocity (not acceptable). Since acceleration is constant, the final velocity $v_{\mathrm m}$ at Earth at a distance $s=214R_\odot$ is given by
+
+$$
+v_{\mathrm m}=\left|(u^2+2a_{\mathrm{model}}s)^{1/2}\right|=\left[u^2+2\left(m\frac{u}{u_0}+\alpha\right)s\right]^{1/2}
+$$
+
+Using this velocity, we get the arrival time $\tau$ as
+
+$$
+\tau_{\mathrm m}=\frac{v_{\mathrm m}-u}{a_{\mathrm{model}}}=\frac{v_{\mathrm m}-u}{m\frac{u}{u_0}+\alpha}
+$$
+
+Using the given value of $u$, and the obtained values of $m$ and $\alpha$, we get
+
+For CME-1:
+
+$v_{1,\mathrm m}=680.728\ \mathrm{km\,s^{-1}}$ which gives $\boxed{\tau_{1,\mathrm m}=48.0\ \mathrm h}$
+
+For CME-2:
+
+$v_{1,\mathrm m}=384.941\ \mathrm{km\,s^{-1}}$ which gives $\boxed{\tau_{2,\mathrm m}=126\ \mathrm h}$
+
+**(D02.2b) Solution:**
+
+The arrival time for CME-1 is $\tau_{1,\mathrm m}=48.0\ \mathrm h$,
+
+therefore the percentage error in the arrival time of CME-1 is,
+
+$$
+\Delta\tau_{1,\mathrm m}=\frac{48.0-46.0}{46.0}\times100\%=4.35\%
+$$
+
+Similarly, the arrival time for CME-2 is $\tau_{2,\mathrm m}=126\ \mathrm h$,
+
+hence the percentage error is arrival time for CME-2 is,
+
+$$
+\Delta\tau_{2,\mathrm m}=\frac{126-74.5}{74.5}\times100\%=69.1\%
+$$
+
+| | VALID | NOT VALID |
+| --- | --- | --- |
+| CME-1 | ✓ | |
+| CME-2 | | ✓ |
+
+**(D02.3a) Solution:**
+
+Inserting, $R_0$, $t_0$, $V_0$, and $V_s$ in the given expression
+
+$$
+R_D(t)=\frac S\gamma\ln[1+S\gamma(V_0-V_s)(t-t_0)]+V_s(t-t_0)+R_0,
+$$
+
+we get
+
+Case C1:
+
+$$
+R_0=\frac{7.99+6.36}{2}
+$$
+
+$$
+R_0=7.18R_\odot
+$$
+
+$$
+t_0=\frac{0.20+0.48}{2}=0.340\ \mathrm h
+$$
+
+$$
+V_0=\frac{(7.99-6.36)\times695700}{(0.48-0.20)\times3600}
+$$
+
+$$
+V_0=1.12\times10^3\ \mathrm{km\,s^{-1}}
+$$
+
+we get, $R_D=210.61R_\odot$ at $t=58.05\ \mathrm h$.
+
+Thus, $\boxed{\delta R_D=214-210.61=3.39R_\odot}$.
+
+Case C2:
+
+$$
+R_0=\frac{11.99+13.51}{2}=12.8R_\odot
+$$
+
+$$
+t_0=\frac{1.22+1.49}{2}=1.36\ \mathrm h
+$$
+
+$$
+V_0=\frac{(13.51-11.99)\times695700}{(1.49-1.22)\times3600}
+$$
+
+$$
+V_0=1.09\times10^3\ \mathrm{km\,s^{-1}}
+$$
+
+Using the expression above, $R_D=210.86R_\odot$ at $t=58.05$.
+
+Thus, $\boxed{\delta R_D=214-210.86=3.14R_\odot}$.
+
+**(D02.3b) Solution:**
+
+Case C3:
+
+$$
+R_0=\frac{6+4}{2}=5R_\odot
+$$
+
+$$
+t_0=\frac{3+1}{2}=2\ \mathrm h
+$$
+
+$$
+V_0=\frac{(6-4)\times695700}{(3-1)\times3600}=193\ \mathrm{km\,s^{-1}}
+$$
+
+Case C4:
+
+$$
+R_0=\frac{11+9}{2}=10R_\odot
+$$
+
+$$
+t_0=\frac{5+4}{2}=4.5\ \mathrm h
+$$
+
+$$
+V_0=\frac{(11-9)\times695700}{(5-4)\times3600}=386\ \mathrm{km\,s^{-1}}
+$$
+
+| Data Point | $t$ (h) | C3: $R_D(t)$ ($R_\odot$) | C4: $R_D(t)$ ($R_\odot$) |
+| --- | --- | --- | --- |
+| P5 | 21.0 | 25.1 | 42.8 |
+| P6 | 50.0 | 59.1 | 99.9 |
+| P7 | 85.0 | 104 | 168 |
+| P8 | 111 | 139 | 218 |
+
+**(D02.3c) Solution:**
+
+The plot below shows the data points of CME-4 and smooth variation of $R_D$ extrapolated up to $220R_\odot$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.3%', '--fig-max': '438px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2025-data-analysis-questions/d02-sol-drag-arrival.png" alt="Original official C3/C4 drag-arrival curves, all data points, axes/scales, 214 solar radii line and 109/167 hour intersections." width="1368" height="1765" loading="lazy" decoding="async" />
+</figure>
+
+
+**(D02.3d) Solution:**
+
+The arrival time of CME at Earth ($214R_\odot$) can be obtained by estimating the point of intersection between $R_D=214R_\odot=\mathrm{constant}$ and two smooth curves.
+
+The points of intersection are $167\ \mathrm h$ and $109\ \mathrm h$ for the cases C3 and C4, respectively.
+
+Thus, absolute time differences are:
+
+$\boxed{\mathrm{C3}:\ |\delta\tau|=56\ \mathrm h}$
+
+and
+
+$\boxed{\mathrm{C4}:\ |\delta\tau|=2\ \mathrm h}$.
+
+**(D02.3e) Solution:**
+
+The statement is **TRUE**.
+
+In the scenario of CME-3, the “drag-only” model predicts the arrival distance accurately when $R_D$ is computed using the initial velocity, $V_0$ and initial distance, $R_0$ at $0.20\ \mathrm h$ and beyond.
+
+While for CME-4, the “drag-only” model start accurately predicting the arrival times of CME-4 when $R_D$ is calculated using $V_0$ and $R_0$ at $4\ \mathrm h$ after the launch of the CME.
+
+**(D02.4) Solution:**
+
+$$
+V_D(t)=\frac{V_0-V_s}{1+S\gamma(V_0-V_s)(t-t_0)}+V_s
+$$
+
+$$
+v=\frac{u-V_s}{1+S\gamma(u-V_s)\tau}+V_s.
+$$
+
+Taking, $S=1$ if $v<u$, else $S=-1$ the above expression is quadratic equation, thus, we get two values of $V_s$. If $v<u$, choose the solution with $V_s<u$. If $v>u$, choose the solution with $V_s>u$.
+
+Calculating $V_s$ using the above conditions for all ten CMEs.
+
+| CME Name | $u$ ($\mathrm{km\,s^{-1}}$) | $v$ ($\mathrm{km\,s^{-1}}$) | $\tau$ (h) | $V_s$ ($\mathrm{km\,s^{-1}}$) |
+| --- | --- | --- | --- | --- |
+| CME-A | 804 | 470 | 74.5 | 337 |
+| CME-B | 247 | 360 | 127.5 | 428 |
+| CME-C | 523 | 396 | 103.5 | 314 |
+| CME-D | 830 | 415 | 71.0 | 270 |
+| CME-E | 665 | 400 | 104.5 | 303 |
+| CME-F | 347 | 350 | 101.5 | 369 |
+| CME-G | 446 | 375 | 99.5 | 305 |
+| CME-H | 155 | 360 | 97.0 | 457 |
+| CME-I | 1016 | 515 | 67.0 | 357 |
+| CME-J | 683 | 410 | 54.0 | 248 |
+
+Taking the average of the solar wind speed, $V_s$, for each case, we get
+
+$$
+\boxed{V_{s,\mathrm{avg}}=339\ \mathrm{km\,s^{-1}}}
+$$
+
+
+</Spoiler>
+
+<details>
+<summary>D02 Summary Answersheet — SA-1</summary>
+
+**Summary Answersheet — FRONT**
+
+Contestant Code: ______ – ______
+
+Q. No. **D02** · Page No. **SA-1**
+
+**Final answers**
+
+**(D02.1a) Marks (3.0)**
+
+| CME Name | $u$ ($\mathrm{km\,s^{-1}}$) | $v$ ($\mathrm{km\,s^{-1}}$) | $\tau$ (h) | | | |
+| --- | --- | --- | --- | --- | --- | --- |
+| CME-A | 804 | 470 | 74.5 | | | |
+| CME-B | 247 | 360 | 127.5 | | | |
+| CME-C | 523 | 396 | 103.5 | | | |
+| CME-D | 830 | 415 | 71.0 | | | |
+| CME-E | 665 | 400 | 104.5 | | | |
+| CME-F | 347 | 350 | 101.5 | | | |
+| CME-G | 446 | 375 | 99.5 | | | |
+| CME-H | 155 | 360 | 97.0 | | | |
+| CME-I | 1016 | 515 | 67.0 | | | |
+| CME-J | 683 | 410 | 54.0 | | | |
+
+**(D02.1b) Marks (15.0)**
+
+Graph number: **D02.1b**
+
+$m=$ ______
+
+$\alpha=$ ______
+
+</details>
+
+<details>
+<summary>D02 Summary Answersheet — SA-2</summary>
+
+**Summary Answersheet — BACK**
+
+Contestant Code: ______ – ______
+
+Q. No. **D02** · Page No. **SA-2**
+
+**Final answers**
+
+**(D02.1c) Marks (4.0)**
+
+| CME Name | $a_{\mathrm{model}}$ ($\mathrm{m\,s^{-2}}$) |
+| --- | --- |
+| CME-A | |
+| CME-B | |
+| CME-C | |
+| CME-D | |
+| CME-E | |
+| CME-F | |
+| CME-G | |
+| CME-H | |
+| CME-I | |
+| CME-J | |
+
+$\delta a_{\mathrm{rms}}=$ ______
+
+**(D02.2a) Marks (4.0)**
+
+$\tau_{1,\mathrm m}=$ ______ h
+
+$\tau_{2,\mathrm m}=$ ______ h
+
+**(D02.2b) Marks (2.0)**
+
+| | VALID | NOT VALID |
+| --- | --- | --- |
+| CME-1 | | |
+| CME-2 | | |
+
+</details>
+
+<details>
+<summary>D02 Summary Answersheet — SA-3</summary>
+
+**Summary Answersheet — FRONT**
+
+Contestant Code: ______ – ______
+
+Q. No. **D02** · Page No. **SA-3**
+
+**Final answers**
+
+**(D02.3a) Marks (6.0)**
+
+C1:
+
+$\delta R_D=$ ______ $R_\odot$
+
+C2:
+
+$\delta R_D=$ ______ $R_\odot$
+
+**(D02.3b) Marks (4.0)**
+
+| Data Point | $t$ (h) | C3: $R_D(t)$ ($R_\odot$) | C4: $R_D(t)$ ($R_\odot$) |
+| --- | --- | --- | --- |
+| P5 | 21.0 | | |
+| P6 | 50.0 | | |
+| P7 | 85.0 | | |
+| P8 | 111 | | |
+
+**(D02.3c) Marks (10.0)**
+
+Graph number: **D02.3c**
+
+</details>
+
+<details>
+<summary>D02 Summary Answersheet — SA-4</summary>
+
+**Summary Answersheet — BACK**
+
+Contestant Code: ______ – ______
+
+Q. No. **D02** · Page No. **SA-4**
+
+**Final answers**
+
+**(D02.3d) Marks (4.0)**
+
+C3: $|\delta\tau|=$ ______
+
+C4: $|\delta\tau|=$ ______
+
+**(D02.3e) Marks (1.0)**
+
+TRUE □  FALSE □
+
+**(D02.4) Marks (7.0)**
+
+| CME Name | $u$ ($\mathrm{km\,s^{-1}}$) | $v$ ($\mathrm{km\,s^{-1}}$) | $\tau$ (h) | $V_s$ ($\mathrm{km\,s^{-1}}$) |
+| --- | --- | --- | --- | --- |
+| CME-A | 804 | 470 | 74.5 | |
+| CME-B | 247 | 360 | 127.5 | |
+| CME-C | 523 | 396 | 103.5 | |
+| CME-D | 830 | 415 | 71.0 | |
+| CME-E | 665 | 400 | 104.5 | |
+| CME-F | 347 | 350 | 101.5 | |
+| CME-G | 446 | 375 | 99.5 | |
+| CME-H | 155 | 360 | 97.0 | |
+| CME-I | 1016 | 515 | 67.0 | |
+| CME-J | 683 | 410 | 54.0 | |
+
+$V_{s,\mathrm{avg}}=$ ______
+
+**Total:** ______
+
+**End of Summary Answersheet**
+
+</details>
+
+---
+
+Оригинал в Архива: [Data-Analysis-Questions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2025/Data%20Analysis/Data-Analysis-Questions.pdf#page=6)
+· официални решения: [Data-Analysis-Solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2025/Data%20Analysis/Data-Analysis-Solutions.pdf#page=15)
+· допълнителни данни: [Data-Analysis-Summary-Answersheet.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2025/Data%20Analysis/Data-Analysis-Summary-Answersheet.pdf)

@@ -1,0 +1,165 @@
+---
+id: usaaao-2026-iii-theory-p2
+source: 'USAAAO 2026, III кръг'
+title: 'Задача 2. Dubhe'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/USAAAO/2026/usaaao-2026-iii-theory.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T10:54:52.891Z'
+verifier: 'single-pass'
+---
+
+*2026 USAAAO Third Exam (Theory) · 20 т.*
+
+<details>
+<summary>Instructions (Please Read Carefully)</summary>
+
+## 2026 USAAAO Third Exam (Theory)
+
+### 1 Instructions (Please Read Carefully)
+
+The test must be completed within 3.5 hours (210 minutes) and the maximum number of points is **260 points**. The point breakdown per problem is as follows.
+
+| Problem | P1 | P2 | P3 | P4 | P5 | Total |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Points** | 10 | 20 | 50 | 60 | 120 | **260** |
+
+Please solve each problem on a blank piece of paper and mark the number of the problem at the top of the page. Some problems may require a designated answer sheet; these will be provided. The contestant’s full name in capital letters should appear at the top of each solution page. If the contestant uses scratch papers, those should be labeled with the contestant’s name as well and marked as “scratch paper” at the top of the page. Scratch paper will not be graded. Partial credit will be available given that correct and legible work was displayed in the solution.
+
+This is a written exam. Contestants can only use a scientific calculator (non-programmable and non-graphing) for this exam. A table of physical constants will be provided. **Discussing the problems with other people is strictly prohibited in any way until the end of the examination period on June 25, 2026.** Receiving any external help during the exam is strictly prohibited. This means that the only allowed items are: a calculator, the provided table of constants, a pencil (or pen), an eraser, blank sheets of papers, and the exam. No books or notes are allowed during the exam. Students must be proctored during the entire duration of the exam.
+
+This exam sheet and your answer sheets (including scratch papers) should be returned to your proctors once the exam ended. Your proctors should upload your answer sheets to the Google Form provided to them.
+
+We acknowledge the following people for their contributions to this year’s theory exam:
+
+*Feodor Yevtushenko, Hagan Hensley, Joe McCarty, Lucas Pinheiro*
+
+After reading the instructions, please make sure to sign, affirming that:
+
+1. All work on this exam has been completed by me.
+2. I took this exam under the supervision of a proctor.
+3. I did not receive any external help beyond the materials provided.
+4. I will not discuss the contents of this exam with anyone until June 24, 2026.
+5. Failure to follow these rules will result in disqualification from the exam.
+
+Student Signature: ____________________ Date: ____________________
+
+</details>
+
+## Условие
+
+On J2000.0, Dubhe’s ($\alpha$ UMa) equatorial coordinates were the following: $\delta=61^\circ45'$ and $\alpha=11\mathrm{h}04\mathrm{m}$.
+
+For this problem, neglect Earth’s nutation and Dubhe’s proper motion.
+
+**(a)** **(15 points)** Determine Dubhe’s declination on J5000.0.
+
+**(b)** **(5 points)** Determine Dubhe’s right ascension on J5000.0.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:**
+
+**(a)** The first step is to calculate the ecliptic coordinates of Dubhe. It is possible to obtain the expressions for the coordinate conversions from the PKX triangle in the figure below.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '55.3%', '--fig-max': '354px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-iii-theory/s2-sphere.png" alt="Original spherical coordinate diagram from Astronomy Principles and Practice by Roy and Clarke, complete PKX triangle, both poles and all coordinate arcs." width="1107" height="1271" loading="lazy" decoding="async" />
+</figure>
+
+
+Source of the image: Astronomy Principles and Practice by Roy and Clarke
+
+The ecliptic latitude ($\beta$) can be obtained using the spherical law of cosines.
+
+$$
+\begin{aligned}\cos(90^\circ-\beta)&=\cos\varepsilon\cos(90^\circ-\delta)+\sin\varepsilon\sin(90^\circ-\delta)\cos(90^\circ+\alpha)\\\sin\beta&=\cos\varepsilon\sin\delta-\sin\varepsilon\cos\delta\cos\alpha\\\sin\beta&=\cos23.44^\circ\sin61^\circ45'-\sin23.44^\circ\cos61^\circ45'\cos11\mathrm{h}04\mathrm{m}\\\sin\beta&=0.7626\\\beta&=49^\circ42'\end{aligned}
+$$
+
+The ecliptic longitude ($\lambda$) can also be obtained from the spherical law of cosines.
+
+$$
+\begin{aligned}\cos(90^\circ-\delta)&=\cos\varepsilon\cos(90^\circ-\beta)+\sin\varepsilon\sin(90^\circ-\beta)\cos(90^\circ-\lambda)\\\sin\delta&=\cos\varepsilon\sin\beta+\sin\varepsilon\cos\beta\sin\lambda\\\sin\lambda&=\frac{\sin\delta-\cos\varepsilon\sin\beta}{\sin\varepsilon\cos\beta}\\\sin\lambda&=\frac{\sin61^\circ45'-\cos23.44^\circ\sin49^\circ42'}{\sin23.44^\circ\cos49^\circ42'}\\\sin\lambda&=0.7042\end{aligned}
+$$
+
+It is important to be careful with an ambiguity here. There are two angles with the same sine, and since the range for $\lambda$ is $[0^\circ,360^\circ)$, it is not possible to know which of the angles is the correct one right away. It is possible to resolve this ambiguity with the cosine of $\lambda$, which can be obtained with the spherical law of sines.
+
+$$
+\begin{aligned}\frac{\sin(90^\circ-\lambda)}{\sin(90^\circ-\delta)}&=\frac{\sin(90^\circ+\alpha)}{\sin(90^\circ-\beta)}\\\frac{\cos\lambda}{\cos\delta}&=\frac{\cos\alpha}{\cos\beta}\\\cos\lambda&=\frac{\cos\delta\cos\alpha}{\cos\beta}\end{aligned}
+$$
+
+It is always true that $\cos\beta>0$ and $\cos\delta>0$. Since $\cos11\mathrm{h}04\mathrm{m}=-0.9703<0$, $\cos\lambda<0$. With a positive sine and a negative cosine, $\lambda$ must be in the second quadrant.
+
+$$
+\lambda=135^\circ14'
+$$
+
+The ecliptic longitude of the North Celestial Pole is $\lambda_{NCP}=90^\circ$. Therefore, it is west of Dubhe in the ecliptic system of coordinates. With this in mind, it is possible to draw the figure below.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.3%', '--fig-max': '578px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-iii-theory/s2-precession.png" alt="Original Dubhe precession geometry, both J2000.0 and J5000.0 celestial poles, North Ecliptic Pole, all angular labels and Dubhe." width="1807" height="971" loading="lazy" decoding="async" />
+</figure>
+
+
+The equatorial coordinates of Dubhe change throughout time due to Earth’s precession. Since the North Celestial Pole moves westward throughout the precession and the pole was already west of Dubhe on J2000.0, the pole will be even further from Dubhe’s meridian of ecliptic longitude by J5000.0.
+
+The angle $\gamma$ is simply the difference in ecliptic longitudes between the North Celestial Pole and Dubhe.
+
+$$
+\begin{aligned}\gamma&=\lambda-\lambda_{NCP}\\\gamma&=135^\circ14'-90^\circ\\\gamma&=45^\circ14'\end{aligned}
+$$
+
+Since the rate of precession is constant, it is possible to use the interval between J2000.0 and J5000.0 and the precession period to obtain the value of the angle $\theta$.
+
+$$
+\begin{aligned}\theta&=360^\circ\cdot\frac{3000}{25772}\\\theta&=41^\circ54'\end{aligned}
+$$
+
+Note that $\theta+\gamma<180^\circ$, so the spherical triangle with vertices at Dubhe, the North Ecliptic Pole, and the North Celestial Pole at J5000.0 is a valid spherical triangle.
+
+Applying the law of cosines to this triangle, it is possible to obtain the declination of Dubhe on J5000.0 ($\delta'$).
+
+$$
+\begin{aligned}\cos(90^\circ-\delta')&=\cos\varepsilon\cos(90^\circ-\beta)+\sin\varepsilon\sin(90^\circ-\beta)\cos(\theta+\gamma)\\\sin\delta'&=\cos\varepsilon\sin\beta+\sin\varepsilon\cos\beta\cos(\theta+\gamma)\\\sin\delta'&=\cos23.44^\circ\sin49^\circ42'+\sin23.44^\circ\cos49^\circ42'\cos(41^\circ54'+45^\circ14')\\\sin\delta'&=0.7125\end{aligned}
+$$
+
+$$
+\boxed{\delta'=45^\circ26'}
+$$
+
+**(b)** It is possible to use the law of cosines to obtain the right ascension of Dubhe on J5000.0 ($\alpha'$). It is worth noting that the internal angle at the North Celestial Pole on J5000.0 corresponds to $270^\circ-\alpha'$ becuse the right ascension of the North Ecliptic Pole corresponds to $270^\circ$, and Dubhe is west of the North Ecliptic pole in the equatorial system of coordinates.
+
+$$
+\begin{aligned}\cos(90^\circ-\beta)&=\cos\varepsilon\cos(90^\circ-\delta')+\sin\varepsilon\sin(90^\circ-\delta')\cos(270^\circ-\alpha')\\\sin\beta&=\cos\varepsilon\sin\delta'-\sin\varepsilon\cos\delta'\sin\alpha'\\\sin\alpha'&=\frac{\cos\varepsilon\sin\delta'-\sin\beta}{\sin\varepsilon\cos\delta'}\\\sin\alpha'&=\frac{\cos23.44^\circ\sin45^\circ26'-\sin49^\circ42'}{\cos23.44^\circ\cos45^\circ26'}\\\sin\alpha'&=-0.3902\end{aligned}
+$$
+
+There are two angles with this sine, but one of them would be over $270^\circ$ and therefore impossible with this geometry. Therefore, the correct right ascension is the one in the third quadrant.
+
+$$
+\boxed{\alpha'=13\mathrm{h}32\mathrm{m}}
+$$
+
+**Rubrics:**
+
+**Item A:**
+
+- **(2 points)** Determining the ecliptic latitude of Dubhe.
+- **(2 points)** Determining the ecliptic longitude of Dubhe.
+- **(1 points)** Realizing that the ecliptic longitude of the North Ecliptic Pole is $90^\circ$.
+- **(6 points)** Correctly drawing or describing the geometry of the problem.
+- **(1 point)** Determining the value of $\theta$.
+- **(1 point)** Determining the value of $\gamma$
+- **(2 points)** Correct final answer.
+
+**Item B:**
+
+- **(3 points)** Identifying the angle $270^\circ-\alpha'$ in the diagram.
+- **(2 points)** Correct final answer.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2026/2026-III/theory.pdf#page=2)

@@ -1,0 +1,413 @@
+---
+id: usaaao-2026-iii-theory-p4
+source: 'USAAAO 2026, III кръг'
+title: 'Задача 4. Stellar Odyssey'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/USAAAO/2026/usaaao-2026-iii-theory.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T10:54:52.891Z'
+verifier: 'single-pass'
+---
+
+*2026 USAAAO Third Exam (Theory) · 60 т.*
+
+<details>
+<summary>Instructions (Please Read Carefully)</summary>
+
+## 2026 USAAAO Third Exam (Theory)
+
+### 1 Instructions (Please Read Carefully)
+
+The test must be completed within 3.5 hours (210 minutes) and the maximum number of points is **260 points**. The point breakdown per problem is as follows.
+
+| Problem | P1 | P2 | P3 | P4 | P5 | Total |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Points** | 10 | 20 | 50 | 60 | 120 | **260** |
+
+Please solve each problem on a blank piece of paper and mark the number of the problem at the top of the page. Some problems may require a designated answer sheet; these will be provided. The contestant’s full name in capital letters should appear at the top of each solution page. If the contestant uses scratch papers, those should be labeled with the contestant’s name as well and marked as “scratch paper” at the top of the page. Scratch paper will not be graded. Partial credit will be available given that correct and legible work was displayed in the solution.
+
+This is a written exam. Contestants can only use a scientific calculator (non-programmable and non-graphing) for this exam. A table of physical constants will be provided. **Discussing the problems with other people is strictly prohibited in any way until the end of the examination period on June 25, 2026.** Receiving any external help during the exam is strictly prohibited. This means that the only allowed items are: a calculator, the provided table of constants, a pencil (or pen), an eraser, blank sheets of papers, and the exam. No books or notes are allowed during the exam. Students must be proctored during the entire duration of the exam.
+
+This exam sheet and your answer sheets (including scratch papers) should be returned to your proctors once the exam ended. Your proctors should upload your answer sheets to the Google Form provided to them.
+
+We acknowledge the following people for their contributions to this year’s theory exam:
+
+*Feodor Yevtushenko, Hagan Hensley, Joe McCarty, Lucas Pinheiro*
+
+After reading the instructions, please make sure to sign, affirming that:
+
+1. All work on this exam has been completed by me.
+2. I took this exam under the supervision of a proctor.
+3. I did not receive any external help beyond the materials provided.
+4. I will not discuss the contents of this exam with anyone until June 24, 2026.
+5. Failure to follow these rules will result in disqualification from the exam.
+
+Student Signature: ____________________ Date: ____________________
+
+</details>
+
+## Условие
+
+You would like to travel to potentially habitable exoplanet Kepler 22b, located 640 light-years away from Earth. Thankfully, your spaceship is powered by “sufficiently advanced technology” and can accelerate at 1 g ($9.81\ \mathrm{m/s^2}$) indefinitely. You plan to accelerate at 1 g until the halfway point of the trip, then turn around and decelerate at 1 g the rest of the way. Assume any relative velocity of Earth and Kepler 22b is negligible, and ignore gravity.
+
+First, let’s approach this problem with classical mechanics.
+
+**(a)** **(5 points)** According to classical mechanics, how long will the trip take and what is the maximum velocity you will reach during the trip?
+
+Based on these answers, is classical mechanics appropriate for describing this situation?
+
+Now let’s tackle the problem using special relativity.
+
+**Special Relativity Refresher:**
+
+A *Lorentz boost* is an origin-preserving coordinate transformation between reference frames moving with relative velocity $v$. To boost to a frame moving with velocity $v$ along the $+\hat x$ direction, we transform space and time coordinates as follows:
+
+$$
+\begin{aligned}ct'&=\gamma(ct-\beta x)\\x'&=\gamma(x-\beta ct)\\y'&=y\\z'&=z\end{aligned}
+$$
+
+where $\beta=v/c$ and $\gamma=1/\sqrt{1-\beta^2}$ is the usual Lorentz factor.
+
+Unlike in classical mechanics, the value of a particle’s acceleration depends on the reference frame. The *proper acceleration* of a particle is defined to be the acceleration that it experiences in its own (instantaneous) rest frame.
+
+**Some identities that might be helpful in this problem:**
+
+$$
+\frac{d}{dx}\arctan(x)=\frac1{x^2+1}
+$$
+
+$$
+\sin(\arctan(x))=\frac{x}{\sqrt{1+x^2}}
+$$
+
+$$
+\int\frac1{\sqrt{1+x^2}}dx=\sinh^{-1}(x)+C
+$$
+
+**(b)** **(14 points)** First, find an expression for the spacetime trajectory (or *worldline*) $x(t)$ for a massive object undergoing constant proper acceleration $a$, with initial condition $x(0)=v(0)=0$. For simplicity, consider one-dimensional motion along the $\hat x$ direction only, and assume the object is a point mass.
+
+*Hint:* You may be tempted to derive an expression relating acceleration to proper acceleration, find the acceleration in the Earth frame as a function of the ship’s velocity, and integrate the resulting differential equation. This method will give the right answer, but there are more elegant approaches that involve much less calculus!
+
+**(c)** **(4 points)** How long does the trip take in the Earth’s reference frame? Verify that this is longer than the light travel time of 640 years.
+
+**(d)** **(4 points)** What is the maximum velocity you will reach during the trip (in the Earth’s reference frame)? Since this is very close to $c$, alternatively you can give the maximum value of $\gamma$ rather than stating $v$.
+
+**(e)** **(6 points)** How long will the trip take (proper time) from the ship’s perspective?
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '80.4%', '--fig-max': '515px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-iii-theory/q4-photon.png" alt="Original photon arrival geometry in Earth and Ship frames, both ships, axes, velocities and incident photon arrows." width="1610" height="565" loading="lazy" decoding="async" />
+</figure>
+
+
+At various times during the trip, you plan to admire the view out the ship’s windows. Let’s try to understand what you should expect to see when moving at highly relativistic velocities.
+
+**(f)** **(10 points)**
+
+Consider a photon hitting the ship with wavelength $\lambda$ and approaching from angle $\theta$ relative to the ship’s direction of travel $+\hat x$ ($\lambda$ and $\theta$ are defined in Earth’s reference frame.) $\theta=0$ is defined to be hitting the ship from the the $+\hat x$ direction (therefore the photon is traveling in the $-\hat x$ direction.) If the ship is moving with velocity $v=\beta c$, what are the photon’s observed wavelength $\lambda'$ and angle $\theta'$ in the ship’s reference frame?
+
+Write your answer in terms of $\lambda$, $\theta$, and $\beta$ (and/or $\gamma$.)
+
+**(g)** **(14 points)**
+
+As you are watching out the side window, you see a planet pass by. You naively expect it to appear squished along the $\hat x$ direction due to relativistic length contraction. What shape does the planet actually appear to be? Prove your answer **quantitatively** using the result of (f).
+
+*Hint:* A useful intermediate step is to show that
+
+$$
+\frac{\sin\theta'}{\sin\theta}=\frac{d\theta'}{d\theta}
+$$
+
+**(h)** **(3 points)**
+
+Based on the result of (f), describe in words what you would see when looking out the front-facing window at the halfway point of the trip. Consider how different sources of light will be affected by the Lorentz boost.
+
+Do you think looking out the front-facing window is a good idea?
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Solution:**
+
+**(a)** In classical mechanics, we have $x=\frac12at^2$ for uniform acceleration $a$ starting from rest. If the total time of the trip is $T$, then we have $x=320$ light years at $t=T/2$ (the halfway point.) Therefore:
+
+$$
+320\text{ light years}=\frac12(9.81\ \mathrm{m/s^2})(T/2)^2
+$$
+
+$$
+T=\boxed{49.8\text{ years}}\quad\text{(2 points)}
+$$
+
+For the first half of the trip, your velocity is $v=at$. The maximum velocity reached at $T/2$ is $v_{\max}=\frac12(9.81\ \mathrm{m/s^2})(49.8\text{ years})$
+
+$$
+=\boxed{7.7\times10^9\ \mathrm{m/s}}\quad\text{(2 points)}
+$$
+
+This is about 26 times the speed of light, so clearly we need relativity to properly analyze this situation **(1 point)**.
+
+**(b)** There are many methods to solve this problem, which you can find online if you’re curious. Any valid argument gets **9 points**. Partial credit breakdown is not provided due to the open-ended nature of the problem.
+
+One particularly elegant approach is to use the *rapidity* defined as $w=\tanh^{-1}(\beta)$, which makes the derivation very simple. Another approach uses the velocity addition formula. Here I will go through a solution that doesn’t rely on any external formula knowledge.
+
+For any point along such an object’s trajectory, the worldline of the object is always the same in its own instantaneous rest frame. This is because it is always the worldline of an object undergoing constant proper acceleration $a$, and always has initial condition $x(0)=v(0)=0$. Therefore, whatever the worldline $x(t)$ looks like, it must be *invariant* under Lorentz boosts that transform between the ship’s instantaneous reference frames at different times (up to an overall shift of origin).
+
+Therefore, we can try to construct a worldline with this property, and see if it is the one we are looking for.
+
+In special relativity, the invariant interval between two points is $\Delta s^2=c^2\Delta t^2-\Delta x^2$ (or with the signs flipped, depending on your favored convention).
+
+If one of these points is the origin, we can just write $\Delta s^2=c^2t^2-x^2$. Since the origin is preserved under Lorentz boosts, we can think of this as being an invariant quantity that’s just associated with a single point in spacetime. (This is not invariant under the full set of Lorentz transformations that also includes spacetime translations, but for the sake of this argument we are only thinking about boosts.)
+
+The set of all points with equal $\Delta s^2$ from the origin should be preserved under a Lorentz boost, since any point in the set will be mapped to another point in the set. Let’s choose a value $x_0$ such that $\Delta s^2=-x_0^2$. Then we can write
+
+$$
+-x_0^2=c^2t^2-x^2
+$$
+
+$$
+x(t)=\pm\sqrt{c^2t^2+x_0^2}
+$$
+
+This gives a family of worldlines parametrized by the value of $x_0$. Technically, each value of $x_0$ gives two separate worldlines, so let’s take positive values of $x_0$ to correspond to the positive solution and negative values to correspond to the negative solution, so that $x(0)=x_0$.
+
+Drawing these worldlines on a spacetime diagram, we can see that they are hyperbolas, and an object following them has $v=0$ at $t=0$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.9%', '--fig-max': '390px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-iii-theory/s4-worldlines.png" alt="Original colored hyperbolic worldlines x0=−3…3, both axes and lightlike asymptotes v=±c." width="1219" height="1195" loading="lazy" decoding="async" />
+</figure>
+
+
+This is indeed the correct answer; these worldlines do correspond to a particle moving at constant proper acceleration. In fact, we have constructed all the timelike worldlines with this Lorentz-boost invariance property.
+
+Lastly, we need to actually find which worldline corresponds to the specific proper acceleration $a$ that we want.
+
+Using the expression for the positive solution, the acceleration at $t=0$ for the worldline given by $x_0$ is
+
+$$
+a=\left.\frac{d^2x(t)}{dt^2}\right|_{t=0}=\frac{c^2}{x_0}
+$$
+
+Therefore we can just plug in $x_0=\frac{c^2}a$:
+
+$$
+x(t)=\frac{c^2}a\sqrt{\left(\frac{at}c\right)^2+1}
+$$
+
+Note here that $x(0)=x_0$. If we want the spaceship to start at $x(0)=0$ we simply shift the origin by $-x_0=-\frac{c^2}a$:
+
+$$
+\boxed{x(t)=\frac{c^2}a\left(\sqrt{\left(\frac{at}c\right)^2+1}-1\right)}
+$$
+
+This is the correct final answer.
+
+- **5 points** for a fully correct final answer
+- **-1 point** for a mostly correct answer that does not satisfy $x(0)=0$
+- **-2 points** for a mostly correct answer with the wrong value of the acceleration
+- **No points** for any worldline that is not a hyperbola.
+
+**(c)** Again we call the total length of the trip $T$, and we have $x=320$ light years at $t=T/2$.
+
+Now solving for $T$ using the expression derived in the previous part for $x(t)$ gives
+
+$$
+320\text{ light years}=\frac{c^2}a\left(\sqrt{\left(\frac{aT}{2c}\right)^2+1}-1\right)
+$$
+
+$$
+T=642\text{ years}\quad\text{(3 points)}
+$$
+
+which is (slightly) longer than the light travel time **(1 point)**.
+
+**(d)** We can find the velocity $v(t)$ by differentiating the expression for $x(t)$:
+
+$$
+v(t)=\frac{at}{\sqrt{1+\left(\frac{at}c\right)^2}}
+$$
+
+Now we can just plug in $T/2=321$ years to the expression for $v(t)$. This gives
+
+$$
+v_{\max}=2.997911\times10^8\ \mathrm{m/s}=0.9999954c
+$$
+
+Calculators with finite numerical precision (or naively rounding to three significant figures) might struggle to tell this apart from $c$, so we can instead write rewrite the expression for $v(t)$ in terms of the Lorentz factor $\gamma$:
+
+$$
+\gamma(t)=\frac1{\sqrt{1-\dfrac{v(t)^2}{c^2}}}=\sqrt{1+\left(\frac{at}c\right)^2}
+$$
+
+$$
+\gamma_{\max}=\gamma(321\text{ years})=331
+$$
+
+- **4 points** for either the correct value of $\gamma$ or $v$
+- **-2 points** for incorrectly rounding $v$ and not giving $\gamma$.
+
+**(e)** The rate at which proper time passes on the ship is related to the rate of time passing on Earth by a factor of $\gamma$:
+
+$$
+d\tau=\frac{dt}{\gamma(t)}
+$$
+
+The proper time $\tau$ experienced by the ship can therefore be found by taking the integral of $\frac1{\gamma(t)}$ over the duration of the trip:
+
+$$
+\tau=\int_0^T\frac{dt}{\gamma(t)}
+$$
+
+We can use the expression for $\gamma(t)$ that we found in the previous part. The total time is twice the time taken for the first half of the trip:
+
+$$
+\tau=2\int_0^{T/2}\frac{dt}{\gamma(t)}=2\int_0^{T/2}\frac1{\sqrt{1+\left(\frac{at}c\right)^2}}dt
+$$
+
+(**3 points** for writing down this integral.) With one more substitution ($u=at/c$):
+
+$$
+\tau=\frac{2c}a\int_0^{aT/2c}\frac1{\sqrt{1+u^2}}du=\frac{2c}a\left(\sinh^{-1}\left(\frac{aT}{2c}\right)-\sinh^{-1}(0)\right)
+$$
+
+$$
+\tau=12.6\text{ years}\quad\text{(3 points)}
+$$
+
+Surprisingly, even though relativity imposes a speed limit, the trip actually goes by much *faster* from your perspective than classical mechanics would suggest! (As long as you’re not worried about how much time has passed back on Earth, that is.) You might actually live to see your destination!
+
+From the ship’s perspective, we can think of this relatively short travel time as the result of length contraction bringing the Earth and Kepler 22b much closer together.
+
+**(f)** Without loss of generality, we consider the photon’s direction of propagation to be in the $xy$ plane, with $0\leq\theta\leq\pi$. Since the system has axial symmetry about the $\hat x$ axis, the result we obtain should be valid for any photon trajectory in 3D.
+
+If the photon has energy $E$, its four-momentum in the Earth frame is:
+
+$$
+p=\frac Ec(1,-\cos\theta,-\sin\theta,0)\quad\text{(2 points)}
+$$
+
+Using a Lorentz boost given by the ship’s velocity $\beta c\hat x$, we can write the transformation of this four-vector into the ship’s reference frame:
+
+$$
+p'=\begin{pmatrix}\gamma&-\beta\gamma&0&0\\-\beta\gamma&\gamma&0&0\\0&0&1&0\\0&0&0&1\end{pmatrix}p=\frac Ec(\gamma+\beta\gamma\cos\theta,-\beta\gamma-\gamma\cos\theta,-\sin\theta,0)\quad\text{(2 points)}
+$$
+
+We can read off from $p'^0$ that this photon has energy $E'=E\gamma(1+\beta\cos\theta)$. Since $\lambda\propto\frac1E$, we have
+
+$$
+\boxed{\lambda'=\frac\lambda{\gamma(1+\beta\cos\theta)}}\quad\text{(3 points)}
+$$
+
+We also know that $\tan\theta'=\frac{p'^2}{p'^1}$, so we find that
+
+$$
+\boxed{\theta'=\arctan\left(\frac{\sin\theta}{\gamma(\beta+\cos\theta)}\right)}\quad\text{(3 points)}
+$$
+
+If you aren’t comfortable working with four-vectors, this problem can also be solved equivalently without them, by thinking about how the wavefronts of a plane wave transform under the Lorentz boost. This solution also receives full credit and I will detail it here.
+
+We describe the photon as a classical plane electromagnetic wave, with electric field amplitude $E(\vec x,t)=E_0\cos(\vec k\cdot\vec x-\omega t)$. The wavevector $\vec k=\frac{2\pi}\lambda(-\cos\theta,-\sin\theta,0)$ gives the direction of propagation of the photon, and the angular frequency is $\omega=\frac{2\pi c}\lambda$. Therefore we can write this out more fully as
+
+$$
+E(\vec x,t)=E_0\cos\left(\frac{2\pi}\lambda(-x\cos\theta-y\sin\theta-ct)\right)
+$$
+
+Now we can transform this expression using a Lorentz boost. Note that a proper treatment would include the mixing of the electric and magnetic fields under a Lorentz boost, but this does not matter if all we care about is the spacing of the peaks and troughs of the wave.
+
+$$
+\begin{aligned}E(\vec x',t')&=E_0\cos\left(\frac{2\pi}\lambda(-x\cos\theta-y\sin\theta-ct)\right)\\&=E_0\cos\left(\frac{2\pi}\lambda(-\gamma(x'+\beta ct')\cos\theta-y'\sin\theta-\gamma(ct'+\beta x'))\right)\\&=E_0\cos\left(\frac{2\pi}\lambda(-\gamma(\beta+\cos\theta)x'-y'\sin\theta-\gamma(1+\beta\cos\theta)ct')\right)\end{aligned}
+$$
+
+We would like to write this in the form $E(\vec x',t')=E_0\cos(\vec k'\cdot\vec x'-\omega't')$. Directly comparing, we can see $\omega'=\frac{2\pi}\lambda\gamma(1+\beta\cos\theta)=\omega\gamma(1+\beta\cos\theta)$. Since $\omega\propto\frac1\lambda$, we have
+
+$$
+\lambda'=\frac\lambda{\gamma(1+\beta\cos\theta)}
+$$
+
+which is in agreement with the result obtained by the four-vector method.
+
+We can also see that $\vec k'=-\frac{2\pi}\lambda(\hat x'\gamma(\beta+\cos\theta)+\hat y'\sin\theta)$. Thus we have
+
+$$
+\theta'=\arctan\frac{k'_{y'}}{k'_{x'}}=\arctan\left(\frac{\sin\theta}{\gamma(\beta+\cos\theta)}\right)
+$$
+
+again in agreement with the result obtained by the four-vector method.
+
+**(g)** Consider an observer at the same location as the ship at some time $t$, but at rest relative to the planet. At time $t$, some photons from the planet are arriving at the observer’s/ship’s location. The set of arrival angles of these photons form the image of the planet as seen by an observer. These photons also arrive at the same time in the ship’s frame, since two observers always agree on the simultaneity of events at the same location and time. Therefore, we can simply take the image of the planet seen by the observer and transform it using the coordinate transformation derived in (f) to find the image seen by the ship.
+
+For clarity, let’s adopt a spherical coordinate system where $\hat x$ points “north”, akin to the celestial sphere on Earth. We will take the approach of finding the apparent angular size of the planet along both the “declination”/“east-west” and “right ascension”/“north-south” directions, and showing that these are the same, which means that the planet appears round rather than squished.
+
+The planet has radius $r$ and is a distance $d$ from the ship at time $t$, so that, to this observer, it subtends an angular size of $\theta_p=\frac rd$. Also, as in (f), let’s say that the vector pointing from the observer to the planet makes an angle $\theta$ from the ship’s direction of travel ($\hat x$). (In our coordinate system, the “declination” would be $90^\circ-\theta$.) Then photons from the northern and southern edges of the planet can reach the observer at angles from $\theta_-=\theta-\theta_p$ to $\theta_+=\theta+\theta_p$.
+
+In the ship’s frame, these angles $\theta_-$ and $\theta_+$ are transformed according to the result of (f). Let’s use a first-order Taylor expansion of the result of (f), similar to a small-angle approximation.
+
+We have
+
+$$
+\theta'_\pm=\theta'\pm\theta_p\frac{d\theta'}{d\theta}
+$$
+
+The derivative here is somewhat annoying to evaluate, but it eventually simplifies nicely to
+
+$$
+\frac{d\theta'}{d\theta}=\frac1{\gamma(1+\beta\cos\theta)}
+$$
+
+Plugging this in, we have
+
+$$
+\theta'_\pm=\theta'\pm\frac{\theta_p}{\gamma(1+\beta\cos\theta)}
+$$
+
+The apparent angular size of the planet in the “declination” or “north-south” direction is therefore
+
+$$
+\theta'_{p,\delta}=\theta'_+-\theta'_-=\frac{2\theta_p}{\gamma(1+\beta\cos\theta)}\quad\text{(5 points)}
+$$
+
+How about the “east-west” or “right ascension” direction? Naively, you might think that the apparent angular size of the planet in this direction is unchanged, since there is no length contraction along the $\hat y$ and $\hat z$ directions. However, this is not true. Let’s consider the transformation of the coordinate system more carefully.
+
+The observer in the planet’s frame sees the eastern and western edges of the planet at declination $\delta=90^\circ-\theta$. Let’s say that the center of the planet is at right ascension $\alpha=0$. Since their angular separation is $2\alpha\cos\delta=2\theta_p$, their right ascension is $\alpha=\pm\frac{\theta_p}{\cos\delta}=\pm\frac{\theta_p}{\sin\theta}$. When we apply the Lorentz transform and shift into the ship’s frame, the declination of these points changes but the right ascension does not. In the ship frame, the new angular separation is now
+
+$$
+\theta'_{p,\alpha}=2\alpha\cos\delta'=2\alpha\sin\theta'=2\theta_p\frac{\sin\theta'}{\sin\theta}
+$$
+
+Plugging in once again the expression for $\theta'$ from (f):
+
+$$
+\theta'_{p,\alpha}=2\theta_p\frac{\sin\arctan\left(\dfrac{\sin\theta}{\gamma(\beta+\cos\theta)}\right)}{\sin\theta}
+$$
+
+Just one more round of algebra (worked through here in full because it is not obvious that this simplifies):
+
+$$
+\begin{aligned}\theta'_{p,\alpha}&=2\theta_p\frac{\dfrac{\sin\theta}{\gamma(\beta+\cos\theta)}}{\sin\theta\sqrt{1+\left(\dfrac{\sin\theta}{\gamma(\beta+\cos\theta)}\right)^2}}\\&=2\theta_p\frac1{\gamma(\beta+\cos\theta)\sqrt{1+\left(\dfrac{\sin\theta}{\gamma(\beta+\cos\theta)}\right)^2}}\\&=2\theta_p\frac1{\sqrt{\gamma^2(\beta+\cos\theta)^2+1-\cos^2\theta}}\\&=2\theta_p\frac1{\gamma\sqrt{1+2\beta\cos\theta+\beta^2\cos^2\theta}}=\frac{2\theta_p}{\gamma(1+\beta\cos\theta)}\quad\text{(5 points)}\end{aligned}
+$$
+
+Therefore, $\theta'_{p,\alpha}=\theta'_{p,\delta}$. So the planet appears to be circular, even though it is length contracted **(4 points)**. This is known as the Terrell-Penrose effect. An additional aspect of this effect, which we did not derive here, is that the planet also appears to be *rotated* relative to the orientation you would see if you were at rest with respect to it.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.8%', '--fig-max': '466px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/usaaao-2026-iii-theory/s4-celestial.png" alt="Original paired celestial spheres showing the planet image and coordinate grid in planet frame and ship frame v=0.95c, with both axis labels." width="1457" height="754" loading="lazy" decoding="async" />
+</figure>
+
+
+This figure shows how the apparent image of the planet, as well as an equally-spaced spherical coordinate grid, are transformed under a Lorentz boost. For circular objects to remain circular under a coordinate transformation, the transformation must be locally angle-preserving, or conformal. This has very deep connections to group theory: the restricted Lorentz group (the group of Lorentz boosts and rotations in three dimensions) is isomorphic to the group of conformal transformations on a sphere, known as Möbius transformations. In fact, the coordinate transformation we just derived is a Möbius transformation.
+
+**(h)** In the ultrarelativistic limit ($\beta\to1$, $\gamma\to\infty$) the expressions from (f) give $\lambda'\to0$ and $\theta'\to0$ for *any* $\theta\neq\pi$.
+
+Qualitatively, from an observer moving at ultrarelativistic speeds, this means that all the light incident on the observer will appear to contract down to a small point directly in front of the observer (around $\theta'=0$) and be blueshifted to very high energies (of order $E'=E\gamma$). Every other direction $\theta'>0$ will be completely dark since no photons are arriving from those directions. This effect is known as “relativistic beaming,” and can be seen in the figure from part (g) by the way that the spherical coordinate grid, which is equally spaced in the Earth frame, begins to “bunch up” near the north pole in the ship frame.
+
+The Cosmic Microwave Background emits light at a peak wavelength $\lambda_{\mathrm{CMB}}=\frac b{2.73\ \mathrm{K}}=1.06\mathrm{mm}$. With a peak $\gamma$ of 331, this is blueshifted all the way to a wavelength $\lambda'_{\mathrm{CMB}}\approx\frac{\lambda_{\mathrm{CMB}}}\gamma=3.2\mu\mathrm{m}$. This is still outside the visible spectrum, but it turns out that the tail of the blackbody radiation curve would overlap the visible spectrum enough that the CMB would be visible to the naked eye as a faint red glow!
+
+If it weren’t for the stars, that is... A Sun-like star, emitting light at a peak wavelength $\lambda_\odot=\frac b{T_\odot}=502\mathrm{nm}$ would be blueshifted all the way to a wavelength $\lambda'_\odot=1.5\mathrm{nm}$! This is ionizing radiation well into the range of X-rays. Perhaps you should have installed radiation shielding instead of a window.
+
+You do not have to mention these exact things; any well reasoned and thought out answer along these lines gets full credit **(3 points)**.
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/USAAAO/2026/2026-III/theory.pdf#page=3)

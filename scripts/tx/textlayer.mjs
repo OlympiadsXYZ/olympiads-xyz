@@ -38,7 +38,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseArgs, fail, readJson, writeJson, readManifest, paperDir, walkStrings, splitMath, fixHomoglyphs, nowIso, pointerGet, EDIT_KINDS, editFieldState, ROOT } from './lib.mjs';
 
-export const TEXTLAYER_VERSION = 5; // 4: accepted spans end omission runs; 5: source-attribution metadata is not printed prose
+export const TEXTLAYER_VERSION = 6; // 6: figure roles and Markdown destinations are metadata; narrow PDF math-parenthesis encoding
 const MIN_TRUST = 0.8, MIN_LAYER_WORDS = 40;
 // fields whose words are the reader's own (alt text, notes) or not prose
 // sourceSpans: page provenance ({document: 'problems' | 'solutions' | 'supplement', page}), not printed text — a
@@ -137,6 +137,10 @@ export function layerPages(text) {
       for (const t of tokenise(line)) {
         const tok = { ...t, line: li, page: pi + 1 };
         if (lettering || /^\p{L}\p{Ll}*\p{Lu}/u.test(t.raw)) tok.skip = true; // formula/lettering line, or a variable like rPS, mMS
+        // Some math fonts encode '(' as p and ')' as q: cosp90˝ − δq.
+        // Only a trig name followed immediately by a numerical degree argument
+        // is mathematical lettering. A prose word "cosp" remains checked.
+        if (/^(?:sin|cos|tan)p$/i.test(t.raw) && /^\d{1,3}[°˝]/u.test(line.slice(t.index + t.raw.length))) tok.skip = true;
         if (heads.has(t.index)) { tok.fragment = 'head'; tok.raw = t.raw + '-'; }
         else if (/^\p{Ll}/u.test(t.raw) && (t.index === line.search(/\S/) || /\s{2,}$/.test(line.slice(0, t.index)))) tok.fragment = 'tail';
         tokens.push(tok);
@@ -199,6 +203,7 @@ function candidateFields(c, hasSolutions) {
   const fields = [];
   walkStrings(c, (p, s) => {
     if (SKIP_PATH.test(p) || !/\p{L}/u.test(s)) return;
+    if (/\/figures\/\d+\/role$/.test(p)) return; // statement/solution figure placement enum, not printed prose
     const sharedNote = /^\/paper\/documentNotes\/(\d+)\/(.+)$/.exec(p);
     if (sharedNote && !['title', 'statement'].includes(sharedNote[2])) return;
     const doc = sharedNote ? c.paper.documentNotes[Number(sharedNote[1])].document : hasSolutions && /\/(solution|answer)(\/|$)/.test(p) ? 'solutions' : 'problems';
@@ -211,7 +216,11 @@ function candidateFields(c, hasSolutions) {
     const noImages = s.replace(LYRICS_NOTE, ' ').replace(/(?:!\[[^\]\n]*\]\([^)\n]*[/:][^)\n]*\)[ \t|]*)+\n+[ \t]*(\*{1,2}|_{1,2})[^\n*_]{1,200}\1[ \t]*(?=\n|$)/g, ' ').replace(/!\[[^\]\n]*\]\([^)\n]*\)/g, ' ');
     // an environment name is markup, never a printed word (\begin{cases}, \begin{aligned}, \begin{array}{cc}: agents
     // rewrote correct LaTeX to get past „cases“/„aligned“ flagged as unprinted, idpho-2020-theory-ipho-q2, ipho-2015-theory-1)
-    const segments = splitMath(noImages);
+    // PDF link destinations can be annotation data absent from visible print.
+    // Compare the visible Markdown label; retain bare printed URLs and labels
+    // that themselves contain a URL, so missing visible reference text fails.
+    const visibleLinks = noImages.replace(/(?<!!)\[([^\]\n]*)\]\(https?:\/\/[^\s\n)]+\)/g, (_, label) => label);
+    const segments = splitMath(visibleLinks);
     const prose = segments.map(seg => seg.math ? seg.text.replace(/\\(?:begin|end)\{[a-zA-Z*]+\}(?:\{[^}]*\})?/g, ' ').replace(/\\(?:text|mathrm|textbf|textit|mathbf|operatorname)\{([^}]*)\}/g, ' $1 ').replace(/\\[a-zA-Z]+/g, ' ') : seg.text).join(' ');
     const tokens = tokenise(prose);
     // a subscripted symbol is also present in the glued form the layer prints ($C_{cd}$ „Ccd“, $\Delta v_{tot}$ „vtot“):
