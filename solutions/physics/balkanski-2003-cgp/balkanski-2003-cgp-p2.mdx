@@ -1,0 +1,178 @@
+---
+id: balkanski-2003-cgp-p2
+source: 'Балкански 2003, Теория · френски'
+title: 'Задача 2. Deuxième Problème : Temps pour faire couler une casserole'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/Балкански/2003/balkanski-2003-cgp.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T01:51:38.152Z'
+verifier: 'single-pass'
+---
+
+*Concours Général de Physique “Minko Balkanski” — 3 mai 2003*
+
+<details>
+<summary>Concours Général de Physique “Minko Balkanski” — 3 mai 2003</summary>
+
+INSTITUT DES HAUTES ÉTUDES
+
+pour le développement de la culture, de la science et de la technologie en Bulgarie
+
+http://www.ccr.jussieu.fr/iheb/
+
+La rédaction doit être obligatoirement en **français**.
+
+Les quatres problèmes sont indépendants entre eux et peuvent être abordés dans n’importe quel ordre. La durée de la composition est de **4 heures**.
+
+La calculatrice **n’est pas** autorisée.
+
+</details>
+
+## Условие
+
+On cherche à calculer le temps que met une casserole percée au fond pour couler.
+
+On considère pour cela qu’il s’agit d’un cylindre creux, de masse $M$, avec un fond mais sans couvercle, de hauteur $H$, de surface de base $S$, dont le fond est percé en son centre d’un trou de surface $s$.
+
+On suppose que la casserole est plongée dans un réservoir d’eau de niveau constant et qu’elle coule verticalement. On appliquera le théorème de Bernoulli entre deux points infiniment voisins de part et d’autre de la parois inférieure de la casserole (voir fig. **??**).
+
+**Déterminer le temps mis par la casserole pour couler.**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '59.9%', '--fig-max': '384px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2003-cgp/p2-fig1.png" alt="Casserole percée partiellement remplie dans un réservoir." width="1200" height="608" loading="lazy" decoding="async" />
+<figcaption>Fig. 1 – Casserole en train de couler</figcaption>
+</figure>
+
+
+Note de source : le repère A n’est pas visible dans le dessin de l’énoncé ; le dessin du corrigé montre les deux repères A et B.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+On écrit la loi de Bernoulli pour une ligne de courant passant par A et B (Figure 1).
+
+$$
+P_A=P_B+\frac{\rho u^2}{2},\qquad (25)
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.1%', '--fig-max': '436px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/balkanski-2003-cgp/p2-fig2.png" alt="Casserole avec points A et B, hauteur H et axe Oz." width="1362" height="836" loading="lazy" decoding="async" />
+<figcaption>Fig. 1 – Casserole en train de couler</figcaption>
+</figure>
+
+
+avec $u$ la vitesse de l’écoulement dans le trou (on considère qu’en A le fluide est immobile).
+
+Or, d’après le principe fondamental de la dynamique, le poids de la casserole est équilibré par la pression exercée sur le fond :
+
+$$
+P_A-P_B=\frac{Mg}{S}\qquad (26)
+$$
+
+D’après (25) et (26)
+
+$$
+u=\sqrt{\frac{2Mg}{\rho S}}
+$$
+
+Par ailleurs la continuité de l’écoulement nous fournit une relation entre la vitesse du fluide dans la casserole et sa vitesse dans l’ouverture au fond, i.e. :
+
+$$
+Sv=su\qquad (27)
+$$
+
+Donc :
+
+$$
+\boxed{v=\frac sS\sqrt{\frac{2Mg}{\rho S}}=\sqrt{\frac{2Mgs^2}{\rho S^3}}}\qquad (28)
+$$
+
+Donc la casserole coule à vitesse constante et le temps qu’elle va mettre pour couler est indubitablement :
+
+$$
+\boxed{\tau=\frac Hv=H\sqrt{\frac{\rho S^3}{2Mgs^2}}}\qquad (29)
+$$
+
+<ProblemSection id="solution-aller-plus-loin">
+
+### Aller plus loin :
+
+En fait quand on a écrit le PFD (principe fondamental de la dynamique) on a omis le terme d’accélération qui quand il est pris en compte modifie un peu la solution finale (29). Ici on va donner une solution du problème dans ce cas, qui sort largement du programme de Mathématiques et Physique enseignées dans le lycée. Le raisonnement qui va suivre n’était pas du tout demandée aux candidats et toute remarque dans cette direction aurait été la bienvenue et plus que fortement recompensée.
+
+PDF pour la casserole :
+
+$$
+-P_BS+P_AS+Mg=M\frac{dv}{dt}
+$$
+
+et d’après (25) et (27) on aboutit à l’équation différentielle :
+
+$$
+\rho\frac{v^2}{2}\frac{S^2}{s^2}+\frac{Mg}{S}=\frac MS\frac{dv}{dt}
+$$
+
+qu’on résout par intégration :
+
+$$
+\int\frac{dv}{1+\beta^2v^2}=\int gdt
+$$
+
+avec $\beta^2=\frac{\rho S^3}{2Mgs^2}$. Cette équation admet comme solution
+
+$$
+v=\frac{\tan\beta gt}{\beta}
+$$
+
+et donc le temps nécessaire pour faire couler la casserole on obtient en intégrant la vitesse :
+
+$$
+z=-\frac1{\beta^2g}\ln\lvert\cos\beta gt\rvert+constante
+$$
+
+à $t=0$ $z=0$ donc la constante vaut 0. $\tau$ vérifie l’équation suivante :
+
+$$
+H=-\frac1{\beta^2g}\ln\lvert\cos\beta g\tau\rvert
+$$
+
+donc au final on trouve l’expression du temps recherchée en fonction de l’hauteur de la casserole $H$ et le paramètre .
+
+$$
+\tau=\frac1{\beta g}\operatorname{Arccos}e^{-H\beta^2g}
+$$
+
+Note de source : les signes imprimés dans cette extension et la solution trigonométrique correspondante sont conservés ; le texte laisse également vide le nom du « paramètre ».
+
+</ProblemSection>
+
+
+</Spoiler>
+
+<details>
+<summary>5 Formulaire</summary>
+
+Taille caractéristique de l’atome $a=0,53\cdot10^{-10}\mathrm m$
+
+Constante gravitationnelle $G=6,67\cdot10^{-11}\mathrm m^2\mathrm{kg}^{-2}$
+
+Masse caractéristique de l’atome $\mu=1,67\cdot10^{-27}\mathrm{kg}$
+
+Constante de Boltzmann $k=1,38\cdot10^{-23}\mathrm J\mathrm K^{-1}$
+
+Charge de l’électron $q_e=1,6\cdot10^{-19}\mathrm C$
+
+Relation utile :
+
+$$
+e^2=\frac{q_e^2}{4\pi\epsilon_0}=2,3\cdot10^{-28}\mathrm J\mathrm m\qquad (2)
+$$
+
+Note de source : l’unité de $G$ est reproduite telle qu’imprimée. Le renvoi « page 6 » de l’énoncé désigne ce formulaire, qui apparaît sur la page 4 du PDF. Les renvois « fig. ?? » sont également présents dans la source ; les figures correspondantes sont conservées.
+
+</details>
+
+---
+
+Оригинал в Архива: [CGP_2003.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2003.pdf#page=3)
+· официални решения: [CGP_2003_cr.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%9C%D0%B8%D0%BD%D0%BA%D0%BE%20%D0%91%D0%B0%D0%BB%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8/Phys/CGP_2003_cr.pdf#page=3)
