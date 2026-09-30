@@ -431,6 +431,23 @@ test('figure-id placeholders show their figure in place; one without a figure ke
   assert.doesNotMatch(mdx, /\]\((?!https?:)[^)]*\)|\[\[figure/);
 });
 
+test('native captions remain visible when matching image alt is replaced, while visible prose captions appear once', t => {
+  const f = fixture(t), p = f.paper.problems[0];
+  const caption = 'Figure 6. Use a logarithmic scale for magnification.';
+  p.figures = [{ id: 'p1-fig1', url: 'https://example.org/caption.png', alt: caption, caption }];
+  for (const visibleProse of [false, true]) {
+    p.statement = 'Source setup.\n\n![](p1-fig1)' + (visibleProse ? '\n\n' + caption : '') + '\n\nEnd.';
+    f.write(f.file, f.paper); f.approve();
+    const result = f.run(); assert.equal(result.status, 0, result.stderr);
+    const mdx = f.read(f.output);
+    assert.equal((mdx.match(/<figcaption>/g) || []).length, visibleProse ? 0 : 1);
+    assert.equal(mdx.replace(/alt="[^"]*"/g, '').split(caption).length - 1, 1);
+    assert.equal(mdx.split(p.figures[0].url).length - 1, 1);
+    const compiled = spawnSync(process.execPath, [path.join(repo, 'scripts/check-mdx.mjs'), '--warn', path.join(f.root, f.output)], { encoding: 'utf8' });
+    assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
+  }
+});
+
 test('a placeholder whose description holds brackets shows its figure in place (imcho-2013 p1)', t => {
   const f = fixture(t), p = f.paper.problems[0];
   const url = id => `https://example.org/${id}.png`;

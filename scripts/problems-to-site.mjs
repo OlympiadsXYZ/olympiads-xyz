@@ -201,7 +201,8 @@ export function placeInlineFigures(text, resolve) {
   const lines = String(text).split('\n');
   const out = [];
   let fence = null, math = false, blankNext = false;
-  const whole = plainWords(text);
+  // Image descriptions are replaced by figures and are not visible caption prose.
+  const whole = plainWords(String(text).replace(IMAGE_MD, ''));
   for (const line of lines) {
     const inside = !!fence || math;
     let emitted = line;
