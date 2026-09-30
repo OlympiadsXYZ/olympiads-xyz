@@ -1,0 +1,1062 @@
+---
+id: ipho-2017-experiment-exp2-p1
+source: 'IPhO 2017, Експеримент'
+title: 'Задача 2. Parallel Dipole Line Magnetic Trap for Earthquake and Volcanic Sensing'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/2017/ipho-2017-experiment-exp2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T05:05:17.710Z'
+verifier: 'single-pass'
+---
+
+*Parallel Dipole Line Magnetic Trap for Earthquake and Volcanic Sensing · 18 юли 2017 г. · 10 т.*
+
+<Warning title="Бележка към темата">
+The original official key prints a missing minus sign in the second expression for χ in A.9 and the impossible marking interval 22.8 < D < 22.2 cm in B.4. The original answer sheet labels division 4 as 4.0 points; the question and key give 3 points. These printed inconsistencies are preserved.
+</Warning>
+
+<details>
+<summary>General instructions: Experimental Examination</summary>
+
+July 18, 2017
+
+The experimental examination lasts for 5 hours and is worth a total of 20 points.
+
+**Before the exam**
+
+- You must not open the envelopes containing the problems before the sound signal indicating the beginning of the examination.
+- The beginning and end of the examination will be indicated by a sound signal. There will be announcements every hour indicating the elapsed time, as well as fifteen minutes before the end of the examination (before the final sound signal).
+
+**During the exam**
+
+- Dedicated answer sheets are provided for writing your answers. Enter the observations into the appropriate tables, boxes or graphs in the corresponding answer sheet. For every problem, there are work sheets for carrying out detailed work. Be sure to always use the work sheets that belong to the problem you are currently working on (check the problem number in the header). If you have written something on any sheet which you do not want to be graded, cross it out. Only use the front side of every page. Do not forget to put your student code numbers in each working sheets or answer sheets in the field provided. Answers or working results will not be graded if there is no student code numbers written.
+- In your answers, try to be as concise as possible: use equations, logical operators and sketches to illustrate your thoughts whenever possible. Avoid the use of long sentences.
+- Explicit error calculation is not required unless explicitly asked for. However, you are asked to give an appropriate number of significant digits when stating numbers. Also, you should decide on the appropriate number of data points or measurement repetitions unless specific instructions are given.
+- You may often be able to solve later parts of a problem without having solved the previous ones.
+- You are not allowed to leave your working place without permission. If you need any assistance (need to refill your drinking water bottle, broken calculator, need to visit a restroom, etc.), please draw the attention of a supervisor by lifting one of the three flags into the air ("Refill my water bottle, please", "I need to go to the toilet, please", or "I need help, please" in all other cases).
+
+**At the end of the exam**
+
+- At the end of the examination you must stop writing immediately.
+- For every problem, sort the corresponding sheets in the following order: questions, answer sheets, work sheets.
+
+</details>
+
+<details>
+<summary>At the end of the exam — continued</summary>
+
+- For E1 (Experimental Problem No. 1) you need to **enclose the millimeter block paper** that has been used for making the deflactogram. Please **make sure that you have written your student code numbers** and the **concentration of the solutions** that you used on this millimeter block paper.
+- You must write the **number and total number of pages used** on your **working sheets** at the bottom of each pages.
+- Put all the sheets belonging to one problem into the same envelope. Also put the general instructions into the remaining separate envelope (if available or just put it in outside the envelope if remaining separate envelope is not available). Also hand in empty sheets. You are not allowed to take any sheets of paper out of the examination area.
+- Leave your writing equipment (provided by the committee, if any) as well as the provided calculator on the experiment table.
+- Wait at your table until your envelopes and all the necessary equipment are collected. Once all envelopes and equipment are collected, your guide will escort you out of the examination area. Don’t forget to take your water bottle with you or your remaining snack.
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [A. Introduction](#introduction)
+- [B. Apparatus](#apparatus)
+- [[1] Determination of the magnet's magnetization ($M$) (2.5 pt.)](#magnetization)
+- [[2] The Magnetic Levitation effect and Magnetic Susceptibility ($\chi$) (1 pt.)](#levitation)
+- [[3] The camelback potential oscillation and magnetic susceptibility ($\chi$) (1 pts)](#oscillation)
+- [[4] Oscillator quality factor ($Q$) and estimate of air viscosity (3 pt.)](#damping)
+- [[5] PDL Trap Seismometer (0.5 pt.)](#seismometer)
+- [[6] PDL Trap Tiltmeter (2 pt.)](#tiltmeter)
+- [AE2 — Parallel Dipole Line Magnetic Trap for Earthquake & Volcanic Sensing (10 points)](#answer-sheets)
+
+</nav>
+
+
+
+<ProblemSection id="introduction">
+
+### A. Introduction
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '93%', '--fig-max': '596px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig1.png" alt="Map of Indonesia and historic disasters, pendulum seismometer diagram and volcano tiltmeter illustration." width="1861" height="1421" loading="lazy" decoding="async" />
+<figcaption>Figure. 1 (a) Map of Indonesia showing its well-known disasters. (b) Basic seismometer to detect earthquake. (c) Tiltmeter to monitor volcano.</figcaption>
+</figure>
+
+
+Indonesia is the world's largest archipelago, with about 17,000 islands sprawling in the tropics and thus often called "the jewel of the equator". Unfortunately, it has plenty of natural threats such as earthquake and volcanic eruptions. Colossal catastrophic events (Fig. 1a) such as the Sumatra-Andaman earthquake and tsunami (2004), Krakatau (1883) and Tambora (1815) volcanic eruptions are among the deadliest disasters in the recorded history of the world. To detect earthquake, we use a *seismometer*, usually a pendulum-based system to *measure the ground displacement or acceleration* (Fig. 1b). To monitor volcano, we use *tiltmeter* to detect a change in *ground inclination* due to underground magma movement (Fig. 1c). In this problem we will explore the physics and applications of a new kind of magnetic trap and sensor - called *Parallel Dipole Line* (PDL) trap system - for sensing earthquake and to monitor volcano.
+
+Parallel dipole line system is an arrangement of two linear distribution of magnetic dipole (also called a *dipole line*) as shown in Fig. 2. Recently two Indonesian physicists discovered a very interesting effect in this system: if the length of the dipole line is longer than certain critical length the magnetic field becomes stronger on the edges which produces a "*camelback* potential" as shown in Fig. 2a.* This "*camelback effect*" is important as it enables this system to serve as *a new type of magnetic trap called Parallel Dipole Line (PDL) trap*. Experimentally we can realize this PDL trap using a pair of diametric magnets *i.e.* a cylinder magnets with magnetization along diameter as shown in Fig. 2c where the north and south poles are on the curved sides instead of the flat faces.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '95.4%', '--fig-max': '611px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig2.png" alt="Four panels: camelback potential model, pair of diametric magnets, magnetic cross-section photograph and labelled x,y,z geometry." width="1910" height="675" loading="lazy" decoding="async" />
+<figcaption>Figure 2. (a) Parallel dipole line trap model with the camelback potential along z-direction. (b) Experimental setup using "diametric" magnets. (c) Cross section view. (d) Schematics of the PDL trap. [* Gunawan and Virgus, J. Appl. Phys. 121, 133902 (2017)].</figcaption>
+</figure>
+
+
+If we drop a graphite rod (ordinary pencil lead) into the trap it will levitate or gets trapped in a stable condition. This occurs because in $x$-direction the graphite is repelled by the magnets from both sides and in vertical ($y$) direction the magnetic repulsion force balance the gravity making it levitates at height $y_0$ (Fig. 2d). In longitudinal direction ($z$) the camelback potential holds the graphite stable.
+
+The *camelback potential* of the magnetic trap serves as a *one-dimensional oscillator*. If you give a little perturbation along the $z$-axis to the graphite rod, it will exhibit underdamped oscillation as shown in Fig. 3a. This PDL trap can be used as a sensitive seismometer. If the ground underneath shakes, the graphite rod tends to remain stable and its relative displacement (Fig. 3b) is the "earthquake" signal. Similarly, it can also be used as sensitive tiltmeter: if you tilt the trap slightly, the graphite rod will move significantly without any friction.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '97.3%', '--fig-max': '623px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig3.png" alt="Damped graphite oscillation versus time with exponential envelope and ground-vibration detection time trace." width="1948" height="826" loading="lazy" decoding="async" />
+<figcaption>Figure 3. (a) Underdamped oscillation of a graphite rod along the camelback potential. (b) Seismometer application: Ground vibration detection by PDL trap.</figcaption>
+</figure>
+
+
+We will now investigate the physics and application of this PDL trap in two sections.
+
+**Section A: Basic characteristics**
+
+(1) Determination of the magnet's magnetization $M$ (2.5 pt.)
+
+(2) Magnetic levitation and magnetic susceptibility $\chi$ (1.0 pt.)
+
+(3) The camelback potential oscillation and magnetic susceptibility $\chi$ (1.0 pt.)
+
+(4) Oscillator quality factor $Q$ and determination of air viscosity $\mu_A$ (3.0 pt.)
+
+**Section B: Applications**
+
+(5) *PDL Trap Seismometer* (0.5 pt.)
+
+(6) *PDL Trap Tiltmeter* (2.0 pt.)
+
+</ProblemSection>
+
+<ProblemSection id="apparatus">
+
+### B. Apparatus
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '95.4%', '--fig-max': '611px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig4-v2.png" alt="Complete experimental apparatus photograph with numbered items 1–15 and close-ups of single diametric magnet and PDL trap." width="1910" height="1141" loading="lazy" decoding="async" />
+<figcaption>Figure 4. The experimental setup.</figcaption>
+</figure>
+
+
+1. Single diametric magnet assembly. Yellow sticker is attached to mark magnetization.
+2. The PDL magnetic trap assembly, shown with levitating graphite. Please do not remove the magnets from the assembly.
+3. Top platform with 3 screws
+4. Bottom platform
+5. Tesla meter to measure magnetic field. Batteries are provided to power up the Tesla meter and a cable to connect the Hall probe to Tesla meter.
+6. Hall sensor probe of the Tesla meter
+7. Graphite rods (pencil leads) with 4 diameter sizes HB/0.3, HB/0.5, HB/0.7, and HB/0.9. See the constants and data for exact diameters. You may need to break these graphite rods to specific lengths as required.
+8. Stopwatch
+9. Magnifying glass
+10. Tweezer, anti-static
+11. Round yellow sticker—to mark the magnetization direction (north-south pole) of single magnet
+12. "Insert-ruler" to measure graphite levitation height
+13. Toothpick to move around the graphite rod
+14. Silly putty to stick magnet assemblies to platform
+15. Ruler
+
+**INSTRUCTIONS & WARNING:**
+
+1. **<u>Keep the single magnet and the PDL trap (double magnet) assemblies away from each other. They can hit each other and crack!</u>**
+2. **<u>Turn off the Tesla meter if not in use to save battery!</u>**
+3. Please detach items 7, 11-14 carefully from bottom platform (item 4) and then place the top platform (item 3) on the bottom platform.
+4. You can use the three screws to adjust the level of the top platform.
+
+**CONSTANTS AND DATA:**
+
+| | | |
+|---|---|---|
+| Radius of the diametric magnet | $R$ | 3.2 mm |
+| Length of the diametric magnet | $L$ | 25.4 mm |
+| Gap of the PDL trap | $g_M$ | 1.5 mm |
+| Mass density of graphite | $\rho$ | 1680 kg/m³ |
+| Graphite rod "HB/0.3" diameter | $d$ | 0.38 mm |
+| Graphite rod "HB/0.5" diameter | $d$ | 0.56 mm |
+| Graphite rod "HB/0.7" diameter | $d$ | 0.70 mm |
+| Graphite rod "HB/0.9" diameter | $d$ | 0.90 mm |
+| Room temperature | $T$ | 298 K |
+| Magnetic permeability in vacuum | $\mu_0$ | $1.257\times10^{-6}\ \mathrm{H/m}$ |
+| Boltzmann constant | $k_B$ | $1.38064852\times10^{-23}\ \mathrm{m^2\,kg/s^2\ K}$ |
+| Acceleration of gravity | $g$ | 9.8 m/s² |
+
+</ProblemSection>
+
+<ProblemSection id="magnetization">
+
+### [1] <u>Determination of the magnet's magnetization</u> ($M$) (2.5 pt.)
+
+**C. Experiment & Questions**
+
+**SECTION A. BASIC CHARACTERISTICS OF THE PDL TRAP**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91.1%', '--fig-max': '583px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig5.png" alt="Magnet and Hall-probe schematic, near/far-field log profile and photograph showing Hall sensor, magnetization mark and ruler." width="1823" height="913" loading="lazy" decoding="async" />
+<figcaption>Figure 5. (a) Measuring the magnetic field. (b) Magnetic field profile (c) Setup.</figcaption>
+</figure>
+
+
+The strength of the magnetic trap depends on the total magnetic dipole moment of the magnet $m$. It depends on the magnetization $M$ which is magnetic dipole per unit volume and a characteristics of the magnetic material. For our cylindrical magnet:
+
+$$
+M=\frac{m}{\pi R^2L}\qquad (1)
+$$
+
+where $R$ is the radius and $L$ is the length of the magnet (see Constants and Data). The value of $M$ is considered the same for all magnets in this experiment. We will study the magnetic field profile and the determine $M$ of the diametric magnet used in our PDL trap.
+
+Take <u>the single</u> diametric magnet assembly and setup the experiment as shown in Fig. 5c. Align the magnetization (as shown in Fig. 6a) pointing towards the Hall (magnetic field) sensor. Measure the strength of the magnetic field along the $x$-axis using Tesla meter. The magnetic field profile $B$ in near field or "Dipole Line" limit for approximately $x\leq16$ mm:
+
+$$
+B_I(x)=\frac{\mu_0m}{2\pi x^pL}\qquad (2)
+$$
+
+The $x$-axis is along the magnetization axis of the diametric magnet as shown in Figure 6a and $x$ refers to the distance from the center of diametric magnet to hall probe sensor inside the sensor chip. Please refer to issue of offset shown in Figure 6b.
+
+We will perform measurements only in the "Near field" region:
+
+**A.1** Record zero offset ($B_0$) of the Teslameter without any magnet nearby. Subtract subsequent field measurement with this value. **[0,1 т.]**
+
+**A.2** Measure magnetic field $B$ vs. $x$ *in the near field region* $(7\leq x\leq16\ \mathrm{mm})$! <u>Where $x$ is the position measured from the center of the magnet.</u> Record and plot your result on the answer sheet. Follow the "HINT & DIRECTIONS" below. **[1,15 т.]**
+
+**A.3** Use your experimental data to determine the value of the exponent $p$. **[0,75 т.]**
+
+**A.4** Determine the magnet's magnetization $M$. **[0,5 т.]**
+
+**HINTS & DIRECTIONS:**
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '96.7%', '--fig-max': '619px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig6.png" alt="Hall sensor board, magnet rotation to maximize field and actual Hall element at xOFFSET=4.0 mm." width="1935" height="615" loading="lazy" decoding="async" />
+<figcaption>Figure 6. Magnetic field measurement (a) Adjustment (b) Offset issue</figcaption>
+</figure>
+
+
+1. **<u>Turn off the Tesla meter if not in use to save battery!</u>**
+2. For Teslameter, wait approximately ~2 sec for each data point before taking reading.
+3. Note that $x$ is measured from the center of magnet. Magnet radius is $R=3.2$ mm.
+4. Use recommended measurement setup in Fig. 5c.
+5. See Fig. 6a, adjust the rotation of the magnet so its magnetization is pointing to the Hall sensor thus maximizing the field. You can use the yellow round sticker to mark the magnetization direction on the magnet.
+6. When the Hall sensor touches the magnet the actual distance between the center of the magnet and the actual Hall sensor element is the offset value given as: $x_{OFFSET}=4$ mm
+7. Start your measurement with Hall sensor at $x=5$ mm! Don't use the data when the sensor touches the magnet ($x=4$ mm) as the sensor is saturated or the probe is flexing during touch.
+
+</ProblemSection>
+
+<ProblemSection id="levitation">
+
+### [2] <u>The Magnetic Levitation effect and Magnetic Susceptibility</u> ($\chi$) (1 pt.)
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '75.6%', '--fig-max': '484px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig7.png" alt="Two-magnet cross section showing graphite, a, R, y0, gM, magnetization and x,y axes, alongside shaped insert ruler." width="1513" height="535" loading="lazy" decoding="async" />
+<figcaption>Figure 7. (a) The magnetic levitation effect in the PDL trap. (b) Insert ruler for measuring the levitation height $y_0$.</figcaption>
+</figure>
+
+
+The PDL trap also demonstrates magnetic levitation effect. The graphite levitates at the center of the trap at height $y_0$ as shown in Fig. 7(a). The graphite is repelled by the magnet with a force $F_M(y_0)$ that depends on the magnetic susceptibility $\chi$ and the rod position $y_0$. Magnetic susceptibility describes how much a material gets magnetized in response to an applied field. It appears in relation: $\mu=(1+\chi)\mu_0$ where $\mu$ is the magnetic permeability of the material. This magnetic repulsion force on a graphite rod in the PDL trap is given as:
+
+$$
+F_M(y_0)=-\frac{\mu_0M^2\chi V_r}{2}\frac{R^4}{a^5}f\left(\frac{y_0}{a}\right)\qquad (3)
+$$
+
+Note that when $F_M(y_0)$ is positive the force is directed upwards and there is <u>a negative sign</u> in the formula. Here $V_r$ is the volume of the graphite rod, $M$ is the volume magnetization of the magnet (obtained from Question 1), $a$ is the position of the magnet center given as: $a=R+g_M/2$ (see Fig. 7a) where $g_M$ is the gap between magnets: $g_M=1.5$ mm. $f(u)$ is the dimensionless function for the magnetic repulsion force in this trap given as:
+
+$$
+f(u)=\frac{4u(3-u^2)(1-u^2)}{(1+u^2)^5}\qquad (4)
+$$
+
+**A.5** Place gently a graphite rod HB/0.5 and length = 8 mm. Measure the levitation height $y_0$ of the rod (see Fig. 7a)! Hint: Use the insert ruler provided as shown in Fig. 7b. Press the ruler on the magnets to read the position of the graphite rod. **[0,1 т.]**
+
+**A.6** Use the result from part A.5 to determine the magnetic susceptibility $\chi$ of the graphite rod. **[0,8 т.]**
+
+**A.7** What kind of magnetic material is graphite? Choose one: (i) Ferromagnetic; (ii) Paramagnetic; or (iii) Diamagnetic? **[0,1 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="oscillation">
+
+### [3] <u>The camelback potential oscillation and magnetic susceptibility</u> ($\chi$) (1 pts)
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '96.7%', '--fig-max': '619px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig8.png" alt="Oscillating graphite rod above magnet and graph of camelback/parabolic magnetic potential versus z with ±L/2 and 0." width="1935" height="615" loading="lazy" decoding="async" />
+<figcaption>Figure 8. (a) Graphite oscillation at height $y_0$. (b) The camelback potential of the PDL trap and its parabolic approximation.</figcaption>
+</figure>
+
+
+We will determine $\chi$ independently using the oscillation in the magnetic "camelback potential" of the PDL trap as shown in Fig. 8. For small amplitude ($z<4$ mm) the magnetic potential can be approximated as a parabolic (shown as dotted curve in Fig. 8b):
+
+$$
+U_M=\frac{1}{2}k_zz^2\qquad (5)
+$$
+
+where $k_z$ is the spring constant of the potential and $z$ is center of mass displacement of the rod. This spring constant $k_z$ depends on the magnet magnetization $M$ (from Question 1) and $\chi$:
+
+$$
+k_z=-C_1\mu_0\chi M^2V_r\qquad (6)
+$$
+
+where $\mu_0$ is the magnetic permeability, $V_r$ is the volume of the graphite rod, $C_1=198.6/\mathrm{m^2}$ is a constant for this magnetic trap setup.
+
+Drop the graphite rod at the center of the magnetic trap. Adjust the platform level with the screw knobs so that the rod stays at the center of the trap. Displace the rod with a toothpick to induce oscillation along the camelback potential.
+
+**A.8** Perform an oscillation for the "HB/0.5" graphite and $l=8$ mm. Limit to small oscillation amplitude i.e. $A<4$mm. Determine the oscillation period. (The oscillation will decay over time due to damping, ignore this damping effect). **[0,2 т.]**
+
+**A.9** Calculate the magnetic susceptibility ($\chi$) of the graphite using this oscillation. **[0,8 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="damping">
+
+### [4] <u>Oscillator quality factor</u> ($Q$) <u>and estimate of air viscosity</u> (3 pt.)
+
+We observe that the graphite rod oscillation is damped due to the air friction and we want to understand how the friction depends on the size of the graphite rod (diameter and length) and estimate the air viscosity $\mu_A$. The motion of the rod can be modeled as underdamped oscillation: $z(t)=Ae^{-t/\tau}\sin(\omega t)$ as shown in Fig. 3(a) where $A$ is the initial amplitude and $\omega=2\pi f$ is the angular frequency and $t$ is time. The amplitude decays with time by a factor of $\exp(-t/\tau)$ where $\tau$ is the damping time constant. This determines the oscillator "quality factor" defined as: $Q=\omega\tau/2$. If $Q>0.5$ the oscillation is underdamped, $Q=0.5$ is critically damped and $Q<0.5$ is overdamped. *This quality factor is important for designing PDL trap as seismometer or tiltmeter sensors.*
+
+We can calculate the damping time constant $\tau$ by approximating the cylinder rods as long ellipsoid and calculate the Stokes drag force. The damping time constant is given as:
+
+$$
+\tau=\frac{2}{3}\frac{\rho r^2}{\mu_A}\ln\left(0.607\times\frac{l}{r}\right)\qquad (7)
+$$
+
+where $\rho$, $r$ and $l$ are the mass density, radius and length of the graphite rod and $\mu_A$ is the viscosity of the air. We want to estimate the air viscosity using this model.
+
+**A.10** We need to determine the damping time constant of the oscillation $\tau$. Sketch how you measure $\tau$ *in a simple way*. **[0,5 т.]**
+
+**A.11** Perform oscillation damping experiments with a group of rods with various diameters and fixed length of 8 mm. Determine the damping time constant $\tau$ for each rods. **[1,5 т.]**
+
+**A.12** Determine the air viscosity $\mu_A$. **[1 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="seismometer">
+
+### [5] <u>PDL Trap Seismometer</u> (0.5 pt.)
+
+**SECTION B. SENSOR APPLICATIONS**
+
+Imagine you are designing seismometer using this PDL magnetic trap. For seismometer application we want very high sensitivity or *very low acceleration "noise floor"* i.e. the lowest acceleration that it can detect. This acceleration noise floor is given as (in unit of $\mathrm{m/(s^2\,Hz^{0.5})}$):
+
+$$
+a_n=\sqrt{\frac{4k_BT\omega}{Qm_R}}\qquad (8)
+$$
+
+where $k_B$ is the Boltzmann constant, $T$ is the temperature (see Constants and Data), and $m_R$ is the mass of the rod, all are in SI units. In Question 4 you have measured $\tau$ of several graphite diameters. Pick one that you think will serve as the best seismometer.
+
+**B.1** Which diameter of rod do you choose? **[0,2 т.]**
+
+**B.2** Calculate the seismometer acceleration noise floor ($a_n$) for the rod of your choice. **[0,3 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="tiltmeter">
+
+### [6] <u>PDL Trap Tiltmeter</u> (2 pt.)
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '95.4%', '--fig-max': '611px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig9.png" alt="Tilted two-platform PDL trap, graphite displacement Δz, center, screw rotation, distance D and tilt angle θ." width="1910" height="597" loading="lazy" decoding="async" />
+<figcaption>Figure 9. PDL trap system as tiltmeter</figcaption>
+</figure>
+
+
+We will investigate the PDL trap as a very sensitive tiltmeter to monitor volcano. The change in the ground inclination is simulated by turning the screw and we want to determine the screw thread size $S$ where $S$ is the change of height per unit turn. We show that by measuring displacement of the graphite rod in the trap we can measure the inclination (tilt) precisely.
+
+Use pencil rod HB/0.5 and length $l=8$ mm in this experiment. Start from the center position. Assume the camelback potential can be approximated as harmonic potential like in problem 3:
+
+**B.3** Derive the relation theoretically between displacement $\Delta z$ with the screw thread size $S$ and the number of turns $(N)$. **[0,5 т.]**
+
+**B.4** By turning the screw slowly, determine the rod displacement $\Delta z$ vs. the number of screw turns $(N)$. Determine the thread size $S$. **[1,25 т.]**
+
+**B.5** When the ground tilt changes we want the graphite rod to go to equilibrium as fast as possible (instead of sustaining very long oscillation) to allow easy reading. What is the ideal $Q$ factor for a tiltmeter? **[0,25 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="answer-sheets">
+
+### AE2 — Parallel Dipole Line Magnetic Trap for Earthquake & Volcanic Sensing (10 points)
+
+| Student Code | | | | | | |
+|---|---|---|---|---|---|---|
+| | | | | | | |
+
+**A. BASIC CHARACTERISTICS OF PDL TRAP**
+
+**1. <u>Determination of the magnet's magnetization</u> ($M$) (2.5 pt.)**
+
+**Question — Answer — Marks**
+
+**A.1 — 0.1 pt.**
+
+Record zero offset ($B_0$) of the Teslameter without any magnet nearby. Subtract subsequent field measurement with this value.
+
+$B_0=$
+
+**A.2 — 1.15 pt.**
+
+Measure magnetic field $B$ vs. $x$ *in the near field region* $(7\leq x\leq16\ \mathrm{mm})$! <u>Where $x$ is the position measured from the center of the magnet.</u> Record and plot your result on the answer sheet.
+
+| | | | | | |
+|---|---|---|---|---|---|
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '64.1%', '--fig-max': '410px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-fig10.png" alt="Original blank graph paper for the AE2 A.2 magnetic-field measurement response." width="1282" height="1390" loading="lazy" decoding="async" />
+</figure>
+
+
+**A.3 — 0.75 pt.**
+
+Use your experimental data to determine the value of the exponent $p$.
+
+$p=$
+
+**A.4 — 0.5 pt.**
+
+Determine the magnet's magnetization $M$.
+
+$M=$
+
+**2. <u>The Magnetic Levitation effect and Magnetic Susceptibility</u> ($\xi$) (1.0 pt.)**
+
+**Question — Answer — Marks**
+
+**A.5 — 0.1 pt.**
+
+Place gently a graphite rod HB/0.5 and length = 8 mm in the trap. Measure the levitation height $y_0$ of the rod (see Fig. 7a)! Hint: Use the insert ruler provided as shown in Fig. 7b. Press the ruler on the magnets to read the position of the graphite rod.
+
+$y_0=$
+
+**A.6 — 0.8 pt.**
+
+Use the result from part A.5 to determine the magnetic susceptibility $\chi$ of the graphite rod.
+
+$\chi=$
+
+**A.7 — 0.1 pt.**
+
+What kind of magnetic material is graphite? Choose one: (i) Ferromagnetic; (ii) Paramagnetic; or (iii) Diamagnetic?
+
+
+
+**3. <u>The camelback potential oscillation and magnetic susceptibility</u> ($\chi$)**
+
+**Question — Answer — Marks**
+
+**A.8 — 0.2 pt.**
+
+Perform an oscillation for the "HB/0.5" graphite and $l=8$ mm. Limit to small oscillation amplitude i.e. $A<4$mm. Determine the oscillation period. (The oscillation will decay over time due to damping, ignore this damping effect).
+
+| | | | | | |
+|---|---|---|---|---|---|
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+
+
+
+**A.9 — 0.8 pt.**
+
+Calculate the magnetic susceptibility ($\chi$) of the graphite using this oscillation.
+
+$\chi=$
+
+**4. <u>Oscillator quality factor</u> ($Q$) <u>and estimate of air viscosity</u> $\mu_A$ (4.0 points)**
+
+**Question — Answer — Marks**
+
+**A.10 — 0.5 pt.**
+
+We need to determine the damping time constant of the oscillation $\tau$. Sketch how you measure $\tau$ *in a simple way*!
+
+
+
+**A.11 — 1.5 pt.**
+
+Perform oscillation damping experiments with a group of rods with various diameters and fixed length of 8 mm. Determine the damping time constant $\tau$ for each rods
+
+| | | | | | | |
+|---|---|---|---|---|---|---|
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+| | | | | | | |
+
+
+
+**A.12 — 1 pt.**
+
+Determine the air viscosity $\mu_A$.
+
+$\mu_A=$
+
+**B. SENSOR APPLICATION OF THE PDL TRAP**
+
+**5. <u>PDL Trap Seismometer</u> (0.5 pt.)**
+
+**Question — Answer — Marks**
+
+**B.1 — 0.2 pt.**
+
+Which diameter of rod do you choose?
+
+
+
+**B.2 — 0.3 pt.**
+
+Calculate the seismometer acceleration noise floor ($a_n$) for the rod of your choice.
+
+
+
+**6. <u>PDL Trap Tiltmeter</u> (2 pt.)**
+
+**Question — Answer — Marks**
+
+**B.3 — 0.5 pt.**
+
+Derive the relation theoretically between displacement $\Delta z$ with the screw thread size $S$ and the number of turns $(N)$.
+
+
+
+**B.4 — 1.25 pt.**
+
+By turning the screw slowly, determine the rod displacement $\Delta z$ vs. the number of screw turns $(N)$. Determine the thread size $S$.
+
+| | | | | | |
+|---|---|---|---|---|---|
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+| | | | | | |
+
+$S=$
+
+**B.5 — 0.25 pt.**
+
+When the ground tilt changes we want the graphite rod to go to equilibrium as fast as possible (instead of sustaining very long oscillation) to allow easy reading. What is the ideal $Q$ factor for a tiltmeter?
+
+$Q=$
+
+</ProblemSection>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- The official sample key gives M = 1.1×10⁶ A/m for subsequent questions; graphite is diamagnetic, χ ≈ −1.85×10⁻⁴ by levitation and −1.5×10⁻⁴ by oscillation; μA = 38.6×10⁻⁶ Pa.s; choose HB/0.9 for an = 1.5×10⁻⁸ m/(s² Hz⁰·⁵); S = 0.75 mm/turn and ideal tiltmeter Q = 0.5.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+E2. Marking Scheme & Solution
+
+Parallel Dipole Line Magnetic Trap for Earthquake & Volcanic Sensing (10 points)
+
+<ProblemSection id="solution-magnetization">
+
+### 1. <u>Determination of the magnet's magnetization</u> ($M$) (2.5 pts)
+
+A. BASIC CHARACTERISTICS OF PDL TRAP
+
+**A.1** *Record zero offset ($B_0$) of the Teslameter without any magnet nearby. Subtract subsequent field measurement with this value*
+
+Example from a Teslameter unit: $B_0=0.86$ mT
+
+**Marks**
+
+0.08 pts range (-10 mT to 10 mT)
+
+Correct unit: 0.02 pts **[0,1 т.]**
+
+**A.2** *Measure magnetic field $B$ vs. $x$ in the near field region $(7\leq x\leq16\ \mathrm{mm})$. <u>Where $x$ is the position measured from the center of the magnet.</u> Record and plot your result on the answer sheet.*
+
+$x_0=4$ mm, $B_0=0.86$ mT. $\Delta x$ is measured from surface. $B=B_{raw}-B_0$
+
+| $\Delta x$ (mm) | $X$ (mm) | $Braw$ (T) | $B$ (T) | $\ln(x)$ $x$ in m | $\ln(B)$ $B$ in T |
+|---|---|---|---|---|---|
+| 3 | 7 | 0.1576 | 0.1567 | -4.962 | -1.853 |
+| 4 | 8 | 0.1186 | 0.1177 | -4.828 | -2.139 |
+| 5 | 9 | 0.0951 | 0.0942 | -4.710 | -2.362 |
+| 6 | 10 | 0.0785 | 0.0776 | -4.605 | -2.556 |
+| 7 | 11 | 0.0657 | 0.0648 | -4.510 | -2.736 |
+| 8 | 12 | 0.0579 | 0.0570 | -4.423 | -2.864 |
+| 9 | 13 | 0.0445 | 0.0436 | -4.343 | -3.132 |
+| 10 | 14 | 0.0371 | 0.0362 | -4.269 | -3.318 |
+| 12 | 16 | 0.0321 | 0.0312 | -4.135 | -3.466 |
+
+Plot:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '38.4%', '--fig-max': '246px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-sol-fig1.png" alt="Official log magnetic field versus log distance plot with nine sample points, fitted line a=-11.765 and b=-1.997." width="770" height="615" loading="lazy" decoding="async" />
+</figure>
+
+
+**Marks**
+
+Correct label and unit for data: 0.1 pts
+
+Number of correct data for $x\leq16$ mm: 0.05 pts for each correct data, max 0.45 pts
+
+Plot:
+
+- Correct axis label and unit: 0.05 pts
+- Using around 75% of plot area: 0.05 pts
+- For each correct data point: 0.05 pts, max. 0.4 pts
+- Adding trendline: 0.1 pts **[1,15 т.]**
+
+**A.3** *Use your experimental data to determine the value of the exponent $p$.*
+
+Linear regression (LR) $y=a+bx$: $B=\frac{\mu_0m}{2\pi L}\frac{1}{x^p}$
+
+$$
+\ln(B)=a-p\ln x\quad\text{where}\quad a=\ln\left(\frac{\mu_0m}{2\pi L}\right).
+$$
+
+LR yields: $a=-11.765$ and $b=-1.997$
+
+The power exponent:
+
+$p=-b=2.0$
+
+Note that this is in very good agreement with the exact result: at short distance $(x<L)$ a diametric (or a dipole line) magnet has $B\sim1/r^2$ dependence. See Ref. [1], Fig. 2c.
+
+**Marks**
+
+Obtaining $p$ from graph: 0.05 pts
+
+Obtaining $p$ from linear regression: 0.1 pts
+
+Result:
+
+$p=1.8-2.2$: 0.65 pts
+
+$p=1.6-2.4$: 0.35 pts
+
+Result with wrong sign:
+
+$p=(-1.8)-(-2.2)$: 0.4pts
+
+$p=(-1.6)-(-2.4)$: 0.1pts
+
+More than two sig. figs.: minus 0.05 pts **[0,75 т.]**
+
+**A.4** *Determine the magnet's magnetization $M$.*
+
+$$
+m=\frac{2\pi L}{\mu_0}\exp(a)=0.987\ \mathrm{Am^2}
+$$
+
+$$
+M=\frac{m}{\pi R^2L}=1.2\mathrm{x}10^6\ \mathrm{A/m}
+$$
+
+This is close to the more accurate results from more extensive measurements to far field (see Ref. [1], Fig. 2c) and *we use this value for subsequent questions*:
+
+$$
+M=1.1\mathrm{x}10^6\ \mathrm{A/m}
+$$
+
+**Marks**
+
+Correct unit: 0.05 pts
+
+Obtaining intercept $(a)$ from graph: 0.025 pts
+
+Obtaining intercept from LR: 0.05 pts
+
+Correct formula for $m$ and/or $M$: 0.1 pts
+
+Result for $M$ (x10⁶ A/m):
+
+0.9 - 1.4: 0.3 pts
+
+0.1 - 2.5: 0.15 pts
+
+More than 2 sig. figs.: minus 0.05 pts **[0,5 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-levitation">
+
+### 2. <u>The Magnetic Levitation Effect and Magnetic Susceptibility</u> ($\chi$) (1 pts)
+
+**A.5** *Place gently a graphite rod HB/0.5 and length = 8 mm. Measure the levitation height $y_0$ of the rod (see Fig. 7a). Hint: Use the insert ruler provided as shown in Fig. 7b. Press the ruler on the magnets to read the position of the graphite rod*
+
+We levitate graphite HB/0.5, $l=8$mm. Using the insert-ruler, we measure approximately $\Delta y=1$ mm from the top of the magnet surface. Thus: $y_0=R-\Delta y=(3.2-1)$ mm $=2.2$ mm
+
+**Marks**
+
+correct unit: 0.02
+
+$y_0=(1.7-2.2)$ mm: 0.08 pts
+
+partial credit: Only $\Delta y=(1-1.5)$ mm: 0.03 pts **[0,1 т.]**
+
+**A.6** *Use the result from part A.5 to determine the magnetic susceptibility $\chi$ of the graphite rod.*
+
+Solving for $\chi$:
+
+$$
+mg=F_y=-\frac{\mu_0M^2\chi V_R}{2}\frac{R^4}{a^5}f_Y(y_0/a)
+$$
+
+$$
+\chi=-\frac{2\rho ga^5}{\mu_0M^2R^4f_Y(y_0/a)}
+$$
+
+We calculate: $a=R+g_M/2=(3.2+1.5/2)$ mm $=3.95$ mm.
+
+Using $y_0=2.2$ mm: $f_Y(u)=\frac{4u(3-u^2)(1-u^2)}{(1+u^2)^5}$,
+
+$f_Y(y_0/a)=f_Y(2.2/3.95)=1.07$
+
+Using the correct $M=1.1\mathrm{x}10^6$A/m; and $R=3.2$ mm, $\rho=1680$ kg/m³ we have: $\chi=-1.85\mathrm{x}10^{-4}$.
+
+Note that this is very good agreement with the literature value for graphite pencil lead: $\chi=-2\times10^{-4}$ (see Ref.[1], pg. 2 & Ref.[2]). The sign is negative indicating a diamagnetic material.
+
+**Marks**
+
+Correct expression for $\chi$: 0.4 pts
+
+Result for $\chi$ (x10⁻⁴)
+
+-(1.4 to 2.6): 0.4 pts
+
+-(0.5 to 4): 0.2 pts
+
+Wrong sign: minus 0.1 pts **[0,8 т.]**
+
+**A.7** *What kind of magnetic material is graphite? Choose one: (i) Ferromagnetic; (ii) Paramagnetic; or (iii) Diamagnetic?*
+
+(iii) Diamagnetic. Because:
+
+(1) Graphite is repelled by magnetic field
+
+(2) The sign of $\chi$ is negative.
+
+**Marks**
+
+Correct choice: 0.1 pts **[0,1 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-oscillation">
+
+### 3. <u>The camelback potential oscillation and magnetic susceptibility</u> ($\chi$) (1 points)
+
+**A.8** *Perform an oscillation for the "HB/0.5" graphite and $l=8$ mm. Limit to small oscillation amplitude i.e. $A<4$mm. Determine the oscillation period. (The oscillation will decay over time due to damping, ignore this damping effect).*
+
+Example, we measured 5 oscillations of HB/0.5 with length $l=8$ mm. We displaced it by ~3 mm and let it oscillates. We measured 5 oscillation periods:
+
+| Trial | $5T_z$ (s) |
+|---|---|
+| 1 | 6.12 |
+| 2 | 6.13 |
+| 3 | 6.14 |
+
+Average: $T_z=1.23$ s
+
+**Marks**
+
+Correct label and unit: 0.02 pts
+
+Number of correct data each 0.01 pts, max 0.03 pts
+
+Number of oscillation
+
+$<3$: 0 pts
+
+$\geq3$: 0.05 pts
+
+$T_z=(1.2-1.5)$ s: 0.1 pts **[0,2 т.]**
+
+**A.9** *Calculate the magnetic susceptibility ($\chi$) of the graphite using this oscillation*
+
+For harmonic oscillator: $k_z=m_R\omega^2$, solving for $\chi$:
+
+$$
+\chi=-\frac{k_z}{C_1\mu_0M^2V_r}=\frac{\omega^2\rho}{C_1\mu_0M^2}
+$$
+
+Using the correct $M=1.1\mathrm{x}10^6$A/m.
+
+Using $C_1=198.6/\mathrm{m^2}$, and $T_z=1.23$ s, we obtain $\chi=-1.5\times10^{-4}$.
+
+Note that this is in good agreement with the literature value of the graphite pencil lead: $\chi=-2\times10^{-4}$ (Ref.[1], pg. 2); and the sign is negative indicating a diamagnetic material.
+
+**Marks**
+
+Correct expression for $\chi$: 0.4 pts
+
+Result for $\chi$ (x10⁻⁴)
+
+-(1.4 to 2.6): 0.4 pts
+
+-(0.5 to 4): 0.2 pts
+
+Wrong sign: minus 0.1 pts **[0,8 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-damping">
+
+### 4. <u>Oscillator quality factor</u> ($Q$) <u>and estimate of air viscosity</u> $\mu_A$ (3.0 points)
+
+**A.10** *We need to determine the damping time constant of the oscillation $\tau$. Sketch how you measure $\tau$ in a simple way.*
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '64.9%', '--fig-max': '415px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-sol-fig2-v3.png" alt="Top-view PDL trap and graphite oscillation plus decaying z-versus-t graph labelled A, A/2, exp(-t/τ), Δt1/2 and axes." width="1298" height="479" loading="lazy" decoding="async" />
+</figure>
+
+
+The trick is to use "half-time" concept of exponential decay. We set the oscillation and measure the time taken for the amplitude to halve. The lifetime is:
+
+$$
+\tau=\frac{\Delta t_{1/2}}{\ln2}
+$$
+
+**Marks**
+
+Correct idea: 0.3 pts
+
+Correct expression for $\tau$: 0.2 pts **[0,5 т.]**
+
+**A.11** *Perform oscillation damping experiments with a group of rods with various diameters and fixed length of 8 mm. Determine the damping time constant $\tau$ for each rods*
+
+We displaced the graphite by ~4 mm, started the stopwatch and then waited until it decays to half.
+
+| Trial | Diam. (mm) | Actual Radius (mm) | $\Delta t_{1/2}$ (s) | Mean $\Delta t_{1/2}$ (s) | $\tau$ (s) | $r^2\mathrm{x}\ln(0.607\ l/r)$ (mm²) |
+|---|---|---|---|---|---|---|
+| 1 | 0.3 | 0.19 | 3.89 | 3.913 | 5.646 | 0.117 |
+| | | | 3.97 | | | |
+| | | | 3.88 | | | |
+| 2 | 0.5 | 0.28 | 7.69 | 7.617 | 10.989 | 0.224 |
+| | | | 7.57 | | | |
+| | | | 7.59 | | | |
+| 3 | 0.7 | 0.35 | 8.77 | 8.82 | 12.73 | 0.322 |
+| | | | 8.81 | | | |
+| | | | 8.88 | | | |
+| 4 | 0.9 | 0.45 | 12.4 | 11.70 | 16.88 | 0.482 |
+| | | | 11.33 | | | |
+| | | | 11.38 | | | |
+
+**Marks**
+
+Correct label and unit 0.1
+
+Number of correct data for each diameter (4):
+
+$<3$: 0.1 pts
+
+$\geq3$: 0.25 pts
+
+(max 1.0 pts)
+
+Positive monotonic trend for $\tau$ vs. diameter from 0.3 to 0.9 mm with $\tau=5$ to 20 sec: 0.4 pts **[1,5 т.]**
+
+**A.12** *Determine the air viscosity $\mu_A$*
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.2%', '--fig-max': '270px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-sol-fig3.png" alt="Official diameter variation of damping constant plot for l=8 mm, τ versus r² ln(0.607×l/r), four points and fitted B=29.02 s/mm²." width="844" height="730" loading="lazy" decoding="async" />
+</figure>
+
+
+We have: $\tau=br^2\ln\left(0.607\times\frac{l}{r}\right)$, where: $b=\frac{2}{3}\frac{\rho}{\mu_A}$. We performed linear regression $y=a+bx$, with $y=\tau$ and $x=r^2\ln\left(0.607\times\frac{l}{r}\right)$. We obtain: $b=29.02$ s/mm².
+
+$$
+\mu_A=\frac{2}{3}\frac{\rho}{b}=38.6\ 10^{-6}\ \mathrm{Pa.s}\quad(1\ \mathrm{Pa.s}=1\ \mathrm{kg/m\ s})
+$$
+
+Note that this is about 2.1x the actual viscosity of air of 18.2µ.Pa.s. The discrepancy is due to the ellipsoidal approximation of the Stokes drag (vs. the actual cylindrical shape of the rod) and the proximity effect of the rod to the magnet (wall effect). Another factor is the crude nature of our manual $\tau$ determination. See Ref. [1], pg. 8.
+
+**Marks**
+
+Correct unit: 0.05
+
+Obtaining result with linear regression or plot: 0.25 pts
+
+Result $\mu_A$ (x10⁻⁶ Pa.s):
+
+20 - 60: 0.7 pts
+
+10 - 80: 0.4 pts
+
+1 - 100: 0.1 pts **[1 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-seismometer">
+
+### 5. <u>PDL Trap Seismometer</u> (0.5 pts)
+
+B. SENSOR APPLICATION OF THE PDL TRAP
+
+**B.1** *Which diameter of rod do you choose?*
+
+To obtain the lowest acceleration noise floor "an" we should choose the largest diameter graphite i.e. 0.9 mm, because their damping time is the longest and the mass is the largest.
+
+**Marks**
+
+Correct answer: 0.2 pts **[0,2 т.]**
+
+**B.2** *Calculate the seismometer acceleration noise floor ($a_n$) for the rod of your choice!*
+
+For HB/0.9 and length $l=8$ mm:
+
+We use $\tau=16.9$ s; and $T=298$ K, we have: $m_R=\rho\pi r^2l=8.55\mathrm{x}10^{-6}$ kg:
+
+$$
+a_n=\sqrt{\frac{4k_BT\omega_0}{Qm_R}}=\sqrt{\frac{8k_BT}{\tau m_R}}=1.5\mathrm{x}10^{-8}\ \mathrm{m/(s^2\,Hz^{0.5})}
+$$
+
+**Marks**
+
+Correct unit: 0.1
+
+Correct answer: 0.2 pts **[0,3 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="solution-tiltmeter">
+
+### 6. <u>PDL Trap Tiltmeter</u> (2 pts)
+
+**B.3** *Derive the relation theoretically between displacement $\Delta z$ with the screw thread size $S$ and the number of turns $(N)$.*
+
+$$
+k_z\Delta z=mg\sin\theta=mgNS/D\qquad \Delta z=\frac{mgSN}{k_zD}
+$$
+
+From Question 3, we also have $k_z=m\omega^2$:
+
+$$
+\Delta z=\frac{gS}{\omega^2D}N
+$$
+
+**Marks**
+
+Correct expression: 0.5 pts
+
+Partial credit
+
+$k_z\Delta z=mg\sin\theta$: 0.2 **[0,5 т.]**
+
+**B.4** *By turning the screw slowly, determine the rod displacement $\Delta z$ vs. the number of screw turns $(N)$. Determine the thread size $S$*
+
+We measured the distance between screws: $D=22$ cm, and we used the period from Q3: $T_z=1.23$ s
+
+| $\Delta z$ (mm) | $\phi$ | $N$ (turn) |
+|---|---|---|
+| 0 | 0 | 0 |
+| 0.5 | 135 | 0.375 |
+| 1 | 270 | 0.75 |
+| 1.5 | 450 | 1.25 |
+| 2 | 585 | 1.625 |
+| 2.5 | 720 | 2.0 |
+| 3 | 855 | 2.375 |
+| 3.5 | 945 | 2.625 |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '64.5%', '--fig-max': '413px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2017-experiment-exp2/p1-sol-fig4.png" alt="Tilted camelback potential and diamagnetic rod diagram, beside official Δz versus N(turn) plot with eight points and B=1.287." width="1290" height="499" loading="lazy" decoding="async" />
+</figure>
+
+
+By performing linear regression: $y=a+bx$
+
+We have $b=1.287$ mm/turns: $S=\frac{b\omega^2D}{g}=0.75$ mm/turn.
+
+This is reasonably close to the actual value of the thread size: $S=(0.8\pm0.1)$ mm/turn.
+
+**Marks**
+
+Correct label and unit: 0.1 pts
+
+Distance between screws:
+
+$22.8<D<22.2$ cm: 0.1 pts
+
+Number of correct data:
+
+$<3$ sets: 0 pts
+
+3-5 sets: 0.15 pts
+
+$>5$ sets: 0.25 pts
+
+Obtaining result with linear regression or plot: 0.2 pts
+
+Result:
+
+$0.7<S<0.9$: 0.55 pts
+
+$0.5<S<1.1$: 0.15 pts
+
+Correct unit for $S$: 0.05 **[1,25 т.]**
+
+**B.5** *When the ground tilt changes we want the graphite rod to go to equilibrium as fast as possible (instead of sustaining very long oscillation) to allow easy reading. What is the ideal $Q$ factor for a tiltmeter?*
+
+We need critical damping thus: $Q=0.5$
+
+**Marks**
+
+Correct $Q$: 0.25 pts **[0,25 т.]**
+
+**REFERENCES:**
+
+[1] Gunawan, O. & Virgus, Y. *The one-dimensional camelback potential in the parallel dipole line trap: Stability conditions and finite size effect.* J. Appl. Phys. 121, 133902, (2017). DOI:10.1063/1.4978876.
+
+[2] Gunawan, O., Virgus, Y. & Fai Tai, K. *A parallel dipole line system.* Appl. Phys. Lett. 106, 062407, (2015). DOI: 10.1063/1.4907931.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Оценена трудност: 4/5.
+
+Магнетизъм и индукция · Механика · Флуиди · Магнитно поле · Механични трептения · Вискозитет и съпротивление
+
+Предпоставки: Гимназиална подготовка, Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [exp2.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2017/Experiment/exp2.pdf#page=1)
+· официални решения: [exp2_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2017/Experiment/exp2_sol.pdf#page=1)
+· допълнителни данни: [exp2_anssheet.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2017/Experiment/exp2_anssheet.pdf)
+· допълнителни данни: [exp_instructions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/2017/Experiment/exp_instructions.pdf)
