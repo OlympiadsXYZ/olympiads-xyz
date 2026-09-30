@@ -409,14 +409,19 @@ class CodeBlock extends React.Component<
                     )}
                 {tokens.length > 15 && !collapsed && <div className="h-8" />}
                 {isCodeBlockExpandable && tokens.length > 15 && (
-                  <div
+                  <button
+                    type="button"
+                    aria-label={
+                      collapsed ? 'Expand code block' : 'Collapse code block'
+                    }
+                    aria-expanded={!collapsed}
                     className={
                       (collapsed ? 'h-full' : 'h-12') +
-                      ' absolute inset-x-0 bottom-0 flex items-end justify-center group cursor-pointer lg:rounded-b'
+                      ' absolute inset-x-0 bottom-0 flex items-end justify-center group cursor-pointer lg:rounded-b focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500'
                     }
                     onClick={() => this.setCollapsed(!collapsed)}
                   >
-                    <div
+                    <span
                       className={
                         (collapsed ? 'h-20' : 'h-12') +
                         ' absolute inset-x-0 bottom-0 flex items-end justify-center'
@@ -448,8 +453,8 @@ class CodeBlock extends React.Component<
                           d="M19 9l-7 7-7-7"
                         />
                       </svg>
-                    </div>
-                  </div>
+                    </span>
+                  </button>
                 )}
               </pre>
             </div>

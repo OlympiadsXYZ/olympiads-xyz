@@ -1,0 +1,189 @@
+---
+id: ipho-1990-90-p3
+source: 'IPhO 1990, Теория и експеримент'
+title: 'Задача 3. The rotating neutron star.'
+author: 'Olympiads XYZ · транскрипция на архивни материали'
+canonicalSource: 'content/problems/physics/IPhO/1990/ipho-1990-90.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T06:51:06.425Z'
+verifier: 'single-pass'
+---
+
+*THE 21st INTERNATIONAL PHYSICS OLYMPIAD - 1990 · 10 т.*
+
+<Warning title="Бележка към темата">
+Complete combined archive booklet, attributed to Hans Jordens, contains three theory questions and two experiments with keys. Printed errors and gaps are preserved: the neutron-star key changes the flattening denominator and uses a square-law radius inference; the LED key references missing graphs, has printed inconsistent table values and one unassigned final value; magnet-speed tables print m/s but their values match cm/s. Native source values and all grading remain unchanged.
+</Warning>
+
+## Условие
+
+A 'millisecond pulsar' is a source of radiation in the universe that emits very short pulses with a period of one to several milliseconds. This radiation is in the radio range of wavelengths; and a suitable radio receiver can be used to detect the separate pulses and thereby to measure the period with great accuracy.
+
+These radio pulses originate from the surface of a particular sort of star, the so-called neutron star. These stars are very compact: they have a mass of the same order of magnitude as that of the sun, but their radius is only a few tens kilometers. They spin very quickly. Because of the fast rotation, a neutron star is slightly flattened (oblate).  
+Assume the axial cross-section of the surface to be an ellipse with almost equal axes.  
+Let $r_p$ be the polar and $r_e$ the equatorial radii; and let us define the flattening factor by:
+
+$$
+\epsilon=\frac{r_e-r_p}{r_p}
+$$
+
+Consider a neutron star with
+
+| Quantity | Value |
+| --- | --- |
+| a mass of | $2.0\cdot10^{30}\,\mathrm{kg}$ |
+| an average radius of | $1.0\cdot10^4\,\mathrm m$ |
+| and a rotation period of | $2.0\cdot10^{-2}\,\mathrm s$ |
+
+**a-** Calculate the flattening factor, given that the gravitational constant is $6.67\cdot10^{-11}\,\mathrm{N\,m^2\,kg^{-2}}$. **[5 т.]**
+
+In the long run (over many years) the rotation of the star slows down, due to energy loss, and this leads to a decrease in the flattening. The star has however a solid crust that floats on a liquid interior. The solid crust resists a continuous adjustment to equilibrium shape. Instead, starquakes occur with sudden changes in the shape of the crust towards equilibrium. During and after such a star-quake the angular velocity is observed to change according to figure 1.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.5%', '--fig-max': '464px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1990-90/p3-fig1.png" alt="Neutron-star crust angular velocity in inverse seconds against time in days; all numeric axes and omega0 omega1 omega2." width="1451" height="717" loading="lazy" decoding="async" />
+<figcaption>Figure 1. A sudden change in the shape of the crust of a neutron star results in a sudden change of the angular velocity.</figcaption>
+</figure>
+
+**b-** Calculate the average radius of the liquid interior, using the data of Fig. 1. Make the approximation that the densities of the crust and the interior are the same.  
+(Ignore the change in shape of the interior). **[5 т.]**
+
+## Решение
+
+<Spoiler title="Покажи решението от архива">
+
+<ProblemSection id="solution-a-method1">
+
+### a- 1st method
+
+For equilibrium we have $F_c=F_g+N$ where $N$ is normal to the surface.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '46.4%', '--fig-max': '297px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1990-90/p3-sol-fig1.png" alt="Normal force N, gravity Fg, centrifugal Fc, angular velocity omega and angles alpha phi at the stellar surface." width="928" height="510" loading="lazy" decoding="async" />
+</figure>
+
+
+Resolving into horizontal and vertical components, we find:
+
+$$
+\begin{aligned}F_g\cos(\phi)&=F_c+N\sin(\alpha)\\F_g\sin(\phi)&=N\cos(\alpha)\end{aligned}\quad\rightarrow\quad F_g\cos(\phi)=F_c+F_g\sin(\phi)\operatorname{tg}(\alpha)
+$$
+
+From:
+
+$$
+F_g=\frac{GM}{r^2},\quad F_c=\omega^2r,\quad x=r\cos(\phi),\quad y=r\sin(\phi)\quad\text{en}\quad\operatorname{tg}(\alpha)=\frac{dy}{dx}
+$$
+
+we find:
+
+$$
+y\,dy+\left(1-\frac{\omega^2r^3}{GM}\right)x\,dx=0
+$$
+
+where:
+
+$$
+\frac{\omega^2r^3}{GM}\approx7\cdot10^{-4}
+$$
+
+This means that, although $r$ depends on $x$ and $y$, the change in the factor in front of $x\,dx$ is so slight that we can take it to be constant. The solution of Eq. (1) is then an ellipse:
+
+$$
+\frac{x^2}{r_e^2}+\frac{y^2}{r_p^2}=1\quad\rightarrow\quad\frac{r_p}{r_e}=\sqrt{1-\frac{\omega^2r^3}{GM}}\approx1-\frac{\omega^2r^3}{2GM}
+$$
+
+and from this it follows that:
+
+$$
+\epsilon=\frac{r_e-r_p}{r_e}=\frac{\omega^2r^3}{2GM}\approx3{,}7\cdot10^{-4}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-a-method2">
+
+### 2nd method
+
+For a point mass of $1\,\mathrm{kg}$ on the surface,
+
+$$
+U_{pot}=-\frac{GM}{r}\qquad U_{kin}=\frac12\omega^2r^2\cos^2(\phi)
+$$
+
+The form of the surface is such that $U_{pot}-U_{kin}=\text{constant}$. For the equator ($\Phi=0$, $r=r_e$) and for the pole ($\Phi=\pi/2$, $r=r_p$) we have:
+
+$$
+\frac{GM}{r_p}=\frac{GM}{r_e}+\frac12\omega^2r_e^2\quad\rightarrow\quad\frac{r_e}{r_p}=1+\frac{\omega^2r_e^3}{2GM}
+$$
+
+Thus:
+
+$$
+\epsilon=\frac{r_e-r_p}{r_e}=\frac{1+\frac{\omega^2r_e^3}{2GM}-1}{1+\frac{\omega^2r_e^3}{2GM}}\approx\frac{\omega^2r_e^3}{2GM}\approx3{,}7\cdot10^{-4}
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b-
+
+As a consequence of the star-quake, the moment of inertia of the crust $I_m$ decreases by $\Delta I_m$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '40.4%', '--fig-max': '259px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1990-90/p3-sol-fig2.png" alt="Repeated native angular-velocity graph in the neutron-star solution, retaining its axes and omega labels." width="810" height="478" loading="lazy" decoding="async" />
+</figure>
+
+
+From the conservation of angular momentum, we have:
+
+$$
+I_m\omega_0=(I_m-\Delta I_m)\omega_1\quad\rightarrow\quad\Delta I_m=I_m\frac{\omega_1-\omega_0}{\omega_1}
+$$
+
+After the internal friction has equalized the angular velocities of the crust and the core, we have:
+
+$$
+(I_m+I_c)\omega_0=(I_m+I_c-\Delta I_m)\omega_2\quad\rightarrow\quad\Delta I_m=(I_m+I_c)\frac{\omega_2-\omega_0}{\omega_2}
+$$
+
+$$
+\frac{I_m}{I_m+I_c}=\frac{(\omega_2-\omega_0)\omega_1}{(\omega_1-\omega_0)\omega_2}\quad\rightarrow\quad1-\frac{I_c}{I_m+I_c}=\frac{(\omega_2-\omega_0)\omega_1}{(\omega_1-\omega_0)\omega_2}
+$$
+
+$$
+I\;(:)\;R^2
+$$
+
+$$
+\rightarrow\quad\frac{I_c}{I_m+I_c}=\frac{r_c^2}{r^2}\quad\rightarrow\quad\frac{r_c}{r}=\sqrt{1-\frac{(\omega_2-\omega_0)\omega_1}{(\omega_1-\omega_0)\omega_2}}\approx0.95
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-marking">
+
+### Marking breakdown
+
+| Part | Method / criterion | Marks |
+| --- | --- | --- |
+| a | 1st method — expressions for the forces | 1 |
+| a | 1st method — equation for the surface | 2 |
+| a | 1st method — equation of ellipse | 1 |
+| a | 1st method — flattening factor | 1 |
+| a | 2nd method — energy equation | 4 |
+| a | 2nd method — flattening factor | 1 |
+| b | conservation of angular momentum for crust | 1.5 |
+| b | conservation of angular momentum for crust and core | 1.5 |
+| b | moment of inertia for a sphere | 1 |
+| b | ratio $r_c/r$ | 1 |
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [ipho90.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1981_1990/1990/ipho90.pdf#page=3)
+· решение от архива: [ipho90.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1981_1990/1990/ipho90.pdf)
