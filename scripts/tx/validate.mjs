@@ -173,7 +173,7 @@ walkStrings(data, (p, s) => {
   if (/<\S/.test(prose)) warn(p, `"<" glued to what follows outside math (${/.{0,12}<\S.{0,12}/.exec(prose)?.[0]?.trim()}) — the site escapes it; check it is prose, not a tag or a formula`);
   if (/\/parts\/\d+\/statement$/.test(p) && /\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]\s*$/u.test(s)) warn(p, 'printed points marker left at the end of the part text; the points field is canonical and the page would show it twice');
   // unbalanced single dollars: after removing the recognised spans nothing may contain a lone $
-  const rest = splitMath(s).filter(x => !x.math).map(x => x.text).join('');
+  const rest = splitMath(s).filter(x => !x.math&&!x.code).map(x => x.text).join('');
   if (/\$/.test(rest.replace(/\\\$/g, ''))) err(p, 'unbalanced $ (math delimiter without a closing one on the same line)');
   for (const span of mathSpans(s)) {
     mathCount++;

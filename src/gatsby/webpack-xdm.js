@@ -12,22 +12,26 @@ const remarkAutolinkHeadings = require('remark-autolink-headings');
 const { getOptions } = require('loader-utils');
 const { xdm } = require('./xdm');
 const remarkEmoji = require('remark-emoji');
+const { mdxComments } = require('../mdx-plugins/fenced-code');
 
 module.exports = function (code) {
   const callback = this.async();
   xdm
     .compile(
       {
-        contents: code.replace(/<!--/g, '{/* ').replace(/-->/g, '*/}'),
+        contents: mdxComments(code),
         path: this.resourcePath,
       },
       {
         remarkPlugins: [
           gfm,
-          [remarkEmoji, {
-            emoticon: true,
-            padSpaceAfter: true,
-          }],
+          [
+            remarkEmoji,
+            {
+              emoticon: true,
+              padSpaceAfter: true,
+            },
+          ],
           remarkMath,
           remarkExternalLinks,
           remarkFrontmatter,

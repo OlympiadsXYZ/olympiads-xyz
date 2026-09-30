@@ -238,7 +238,7 @@ function replaceWord(text, from, to) {
   let done = false;
   const re = new RegExp(`(^|[^\\p{L}])(${from.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})(?=[^\\p{L}]|$)`, 'iu');
   return splitMath(text).map(seg => {
-    if (seg.math || done) return seg.text;
+    if (seg.math || seg.code || done) return seg.text;
     return seg.text.replace(re, (all, pre, word) => { done = true; return pre + matchCase(word, to); });
   }).join('');
 }

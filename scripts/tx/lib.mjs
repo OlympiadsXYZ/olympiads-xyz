@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { problemMetadataErrors } from '../lib/problem-classification.mjs';
 import { isDocumentId, supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
+import { splitFencedCode } from '../lib/fenced-code.mjs';
 
 const require = createRequire(import.meta.url);
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -307,7 +308,13 @@ export function schemaSupports(schema, pointer) {
 // Same split as mdText() in scripts/problems-to-site.mjs: odd segments are math.
 export const MATH_SPLIT = /(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/;
 export function splitMath(text) {
-  return String(text).split(MATH_SPLIT).map((seg, i) => ({ text: seg, math: i % 2 === 1 }));
+  return splitFencedCode(text).flatMap(part =>
+    part.code
+      ? [{ text: part.text, math: false, code: true }]
+      : part.text
+          .split(MATH_SPLIT)
+          .map((seg, i) => ({ text: seg, math: i % 2 === 1 }))
+  );
 }
 export function mathSpans(text) {
   return splitMath(text).filter(s => s.math).map(s => {
@@ -315,7 +322,11 @@ export function mathSpans(text) {
     return { display, raw: s.text, inner: display ? s.text.slice(2, -2) : s.text.slice(1, -1) };
   });
 }
-export const proseOnly = text => splitMath(text).filter(s => !s.math).map(s => s.text).join(' ');
+export const proseOnly = text =>
+  splitMath(text)
+    .filter(s => !s.math && !s.code)
+    .map(s => s.text)
+    .join(' ');
 // Normalised form of a LaTeX span for comparison: whitespace and decimal-comma
 // spelling differences vanish, a changed subscript, sign or exponent does not.
 export function normaliseLatex(inner) {
@@ -775,7 +786,7 @@ const NULLABLE_OPTIONAL = new Set(['caption', 'alt', 'title', 'held', 'organiser
 const HOMOGLYPHS = { a: 'а', e: 'е', o: 'о', p: 'р', c: 'с', x: 'х', y: 'у', i: 'і', A: 'А', B: 'В', C: 'С', E: 'Е', H: 'Н', K: 'К', M: 'М', O: 'О', P: 'Р', T: 'Т', X: 'Х' };
 export function fixHomoglyphs(s) {
   if (typeof s !== 'string' || !/[A-Za-z]/.test(s) || !/[Ѐ-ӿ]/.test(s)) return s;
-  return splitMath(s).map(seg => seg.math ? seg.text : seg.text.replace(/\p{L}+/gu, w => {
+  return splitMath(s).map(seg => seg.math||seg.code ? seg.text : seg.text.replace(/\p{L}+/gu, w => {
     const cyr = (w.match(/[Ѐ-ӿ]/g) || []).length, lat = w.match(/[A-Za-z]/g) || [];
     if (cyr < 2 || !lat.length || !lat.every(ch => HOMOGLYPHS[ch])) return w;
     return w.replace(/[A-Za-z]/g, ch => HOMOGLYPHS[ch]);
@@ -853,6 +864,43 @@ export function wrapBareFormulaParagraphs(s) {
   }).join('\n\n');
 }
 export function normaliseCandidate(c, opts = {}) {
+  if (!c || typeof c !== 'object') return c;
+  const blocks = [],
+    original = JSON.stringify(c);
+  let prefix = 'OLYMPIADS_LITERAL_FENCE_';
+  while (original.includes(prefix)) prefix += 'X';
+  walkStrings(c, (pointer, text) => {
+    if (/\/tx\b/.test(pointer)) return;
+    const masked = splitFencedCode(text)
+      .map(part => {
+        if (!part.code) return part.text;
+        const token = prefix + blocks.length + '_END';
+        blocks.push({ token, text: part.text });
+        return token;
+      })
+      .join('');
+    if (masked !== text) pointerSet(c, pointer, masked);
+  });
+  try {
+    return normaliseCandidateProse(c, opts);
+  } finally {
+    const restored = new Set();
+    walkStrings(c, (pointer, text) => {
+      let result = text;
+      for (const block of blocks)
+        if (result.includes(block.token)) {
+          result = result.replaceAll(block.token, () => block.text);
+          restored.add(block.token);
+        }
+      if (result !== text) pointerSet(c, pointer, result);
+    });
+    if (restored.size !== blocks.length)
+      throw new Error(
+        'Normalisation would discard a literal source code block'
+      );
+  }
+}
+function normaliseCandidateProse(c, opts = {}) {
   if (!c || typeof c !== 'object') return c;
   const changes = [];
   // No solutions document and no solution text: an answer the reader still wrote is its own derivation, not a
@@ -1106,7 +1154,7 @@ export function normaliseCandidate(c, opts = {}) {
   // for the validator.
   walkStrings(c, (p, s) => {
     if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p) || !/<\/?[a-zA-Z]/.test(s)) return;
-    const out = splitMath(s).map(seg => seg.math ? seg.text : seg.text
+    const out = splitMath(s).map(seg => seg.math||seg.code ? seg.text : seg.text
       .replace(/<\/?u>/gi, '')
       .replace(/<(b|strong)>([\s\S]*?)<\/\1>/gi, '**$2**')
       .replace(/<(i|em)>([\s\S]*?)<\/\1>/gi, '*$2*')
@@ -1120,7 +1168,7 @@ export function normaliseCandidate(c, opts = {}) {
   // space, \text{}/\mathrm{} their content, \textbf{} **bold**, \textit{} *italic*.
   walkStrings(c, (p, s) => {
     if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p) || !/\\/.test(s)) return;
-    let out = splitMath(s).map(seg => seg.math ? seg.text : seg.text
+    let out = splitMath(s).map(seg => seg.math||seg.code ? seg.text : seg.text
       .replace(/\\(?:text|textrm|textnormal|mathrm)\{([^{}]*)\}/g, '$1')
       .replace(/\\textbf\{([^{}]*)\}/g, '**$1**')
       .replace(/\\(?:textit|emph)\{([^{}]*)\}/g, '*$1*')

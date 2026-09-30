@@ -18,6 +18,7 @@ import remarkMath from 'remark-math';
 import remarkFrontmatter from 'remark-frontmatter';
 import { remarkMdxFrontmatter } from 'remark-mdx-frontmatter';
 import rehypeRaw from 'rehype-raw';
+import {splitFencedCode,mdxComments} from './lib/fenced-code.mjs';
 
 const require = createRequire(import.meta.url);
 const customRehypeKatex = require('../src/mdx-plugins/rehype-math.js');
@@ -43,14 +44,18 @@ for (const file of files) {
   // The compiled gatsby-node bundles parse-entities' *browser* decoder, which
   // calls document.createElement — any named character reference (&nbsp; …)
   // crashes the real build even though xdm alone compiles it fine.
-  const entities = [...content.matchAll(/&[a-zA-Z]+;/g)].map(m => m[0]);
+  const prose = splitFencedCode(content)
+    .filter(part => !part.code)
+    .map(part => part.text)
+    .join('');
+  const entities = [...prose.matchAll(/&[a-zA-Z]+;/g)].map(m => m[0]);
   if (entities.length) {
     failed++;
     console.log(`FAIL ${path.relative(ROOT, file)}\n     named HTML entities crash the Gatsby build (document is not defined): ${[...new Set(entities)].join(' ')} — use the literal character in the source JSON`);
     continue;
   }
   try {
-    const vfile = await compile(content.replace(/<!--/g, '{/* ').replace(/-->/g, '*/}'), {
+    const vfile = await compile(mdxComments(content), {
       remarkPlugins: [gfm, remarkMath, remarkFrontmatter, remarkMdxFrontmatter],
       rehypePlugins: [
         [rehypeRaw, { passThrough: ['mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression', 'mdxJsxFlowElement', 'mdxJsxTextElement'] }],

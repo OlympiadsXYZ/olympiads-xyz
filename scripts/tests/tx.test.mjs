@@ -967,6 +967,41 @@ test('LaTeX spacing and text commands outside math are normalised; a leftover co
   assert.match(r.stdout, /LaTeX command outside math \((\\\\|\\)alpha\)/); // the JSON report escapes the backslash
 });
 
+test('literal fenced code is allowed while invalid prose outside or behind incomplete fences still fails', t => {
+  const s = sandbox(t),
+    c = candidate();
+  const code = [
+    '```python',
+    '# Load the catalog',
+    'df = df.rename(columns={"Unnamed: 0": "Year"})',
+    'return f"{h:02d}:{m:02d}"',
+    't2[tmax < t2] -= one_day',
+    'literal = "<b>&amp;</b> $unmatched"',
+    '```',
+  ].join('\n');
+  c.problems[0].solution = { statement: code };
+  const run = (name, copy) =>
+    s.run('validate.mjs', [
+      s.write('candidates/' + name + '.json', copy),
+      '--paper-id',
+      PAPER,
+      '--manifest',
+      path.join(s.dir, 'manifest.json'),
+    ]);
+  const valid = run('code', c);
+  assert.equal(valid.status, 0, valid.stdout + valid.stderr);
+  const bare = structuredClone(c);
+  bare.problems[0].solution.statement = 'Outside {bad}\n\n' + code;
+  const rejected = run('outside', bare);
+  assert.notEqual(rejected.status, 0);
+  assert.match(rejected.stdout, /braces outside math/);
+  const incomplete = structuredClone(c);
+  incomplete.problems[0].solution.statement = code.slice(0, -3);
+  const unclosed = run('unclosed', incomplete);
+  assert.notEqual(unclosed.status, 0);
+  assert.match(unclosed.stdout, /braces outside math|unbalanced/);
+});
+
 test('validate rejects decoded LaTeX escape controls without rejecting layout whitespace', t => {
   const s = sandbox(t);
   const check = (name, update) => {

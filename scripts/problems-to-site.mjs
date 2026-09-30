@@ -25,6 +25,7 @@ import { readArchiveLabels } from './lib/labels.mjs';
 import { loadNavigation, roundLabel as navRoundLabel, gradeLabel as navGradeLabel, paperSuffix } from './lib/navigation.mjs';
 import { loadTreeModule } from './lib/load-tree.mjs';
 import { readConsolidations } from './lib/problem-consolidations.mjs';
+import { outsideFencedCode, splitFencedCode } from './lib/fenced-code.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -402,9 +403,19 @@ function movedSolutionFigures(misplaced, solution, candidates) {
 // a transcribed "# Part I" / "## Solutions" would compete with the page's "## Условие" / "## Решение" (and enter the
 // table of contents): the text's top heading level becomes h3, deeper ones keep their distance
 function demoteHeadings(md) {
-  const levels = [...String(md).matchAll(/^(#{1,6})[ \t]/gm)].map(m => m[1].length);
+  const prose = splitFencedCode(md)
+    .filter(part => !part.code)
+    .map(part => part.text)
+    .join('');
+  const levels = [...prose.matchAll(/^(#{1,6})[ \t]/gm)].map(m => m[1].length);
   const shift = levels.length ? Math.max(0, 3 - Math.min(...levels)) : 0;
-  return shift ? md.replace(/^(#{1,6})(?=[ \t])/gm, h => '#'.repeat(Math.min(6, h.length + shift))) : md;
+  return shift
+    ? outsideFencedCode(md, text =>
+        text.replace(/^(#{1,6})(?=[ \t])/gm, h =>
+          '#'.repeat(Math.min(6, h.length + shift))
+        )
+      )
+    : md;
 }
 // Placeholders a reader left where a figure is printed: "![alt](p2-sol-fig1)", "![alt](#p1-sol-fig2)",
 // "[[figure p2-sol-fig1]]", "[Figure: p1-sol-fig1]". The site read the image ones as relative URLs: 45 broken images on
@@ -849,23 +860,50 @@ const decodeEntities = t => String(t).replace(/&(#(\d+)|#x([0-9a-f]+)|([a-z][a-z
 const POINTS_SPACE = /(\d)[ \t]+(?=(?:т\.?|точк[аи]|точки|бала?|балла|points?|pts?\.?|marks?)(?![\p{L}\p{N}]))/gu;
 function mdText(s) {
   if (s == null) return s;
+  return outsideFencedCode(s, mdProse);
+}
+function mdProse(s) {
   if (/&(#\d+|#x[0-9a-f]+|[a-z][a-z0-9]{1,7});/i.test(s)) s = decodeEntities(s);
   // a "|" inside inline math on a table row splits the cell (eupho-2023-experiment-x: "$|\alpha| = 65^{\circ}$" left
   // "{\circ}" for MDX to parse as an expression); KaTeX draws \vert the same way
-  // a "$$" frame around a table ("$$| 2a [mm] |…|$$", eupho-2026-experiment-x) opens an expression MDX never closes;
+  // a "$" frame around a table ("$| 2a [mm] |…|$", eupho-2026-experiment-x) opens an expression MDX never closes;
   // the normaliser strips it from new candidates, the page does the same for the published ones
-  // (only a table row — a line that starts with "|" — counts: "\left|\delta\right|$$" closes an equation)
-  const framed = String(s).replace(/\$\$[ \t]*\n?[ \t]*(?=\|[^\n]*\|[ \t]*\n[ \t]*\|)/g, '').replace(/(\n[ \t]*\|[^\n]*\|)[ \t]*\n?[ \t]*\$\$(?=[ \t]*(?:\n|$))/g, '$1');
-  const tables = framed.split('\n').map(line => /^\s*\|/.test(line) ? line.replace(/\$[^$\n]*?\$/g, m => m.replace(/(?<!\\)\|/g, '\\vert ')) : line).join('\n');
+  // (only a table row — a line that starts with "|" — counts: "\left|\delta\right|$" closes an equation)
+  const framed = String(s)
+    .replace(/\$\$[ \t]*\n?[ \t]*(?=\|[^\n]*\|[ \t]*\n[ \t]*\|)/g, '')
+    .replace(
+      /(\n[ \t]*\|[^\n]*\|)[ \t]*\n?[ \t]*\$\$(?=[ \t]*(?:\n|$))/g,
+      '$1'
+    );
+  const tables = framed
+    .split('\n')
+    .map(line =>
+      /^\s*\|/.test(line)
+        ? line.replace(/\$[^$\n]*?\$/g, m => m.replace(/(?<!\\)\|/g, '\\vert '))
+        : line
+    )
+    .join('\n');
   const parts = tables.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]*?\$)/);
-  return emphasisFlanking(parts
-    // prose never carries HTML (validate.mjs refuses tags), so any "<" glued to what follows is text: '<', <=, <1
-    // (MDX would read <' or <a as the start of a JSX tag and the build would die)
-    // inside math: KaTeX in the site pipeline has no \nicefrac and rejects \tag outside a display environment
-    // (IPhO 2023 Q1 rendered its numbered equations raw); the printed equation number becomes "\qquad (n)"
-    // A lone trailing prose space is invisible; preserve Markdown's two-space breaks and all math.
-    .map((seg, i) => (i % 2 ? displayFences(seg, parts[i - 1]).replace(/\\nicefrac\b/g, '\\frac').replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)') : seg.replace(/(?<![\\ \t]) (?=\n)/g, '').replace(/<(?=\S)/g, '\\<').replace(/(?<!\\)[{}]/g, m => '\\' + m).replace(POINTS_SPACE, '$1\u00A0')))
-    .join(''));
+  return emphasisFlanking(
+    parts
+      // prose never carries HTML (validate.mjs refuses tags), so any "<" glued to what follows is text: '<', <=, <1
+      // (MDX would read <' or <a as the start of a JSX tag and the build would die)
+      // inside math: KaTeX in the site pipeline has no \nicefrac and rejects \tag outside a display environment
+      // (IPhO 2023 Q1 rendered its numbered equations raw); the printed equation number becomes "\qquad (n)"
+      // A lone trailing prose space is invisible; preserve Markdown's two-space breaks and all math.
+      .map((seg, i) =>
+        i % 2
+          ? displayFences(seg, parts[i - 1])
+              .replace(/\\nicefrac\b/g, '\\frac')
+              .replace(/\\tag\*?\{([^{}]*)\}/g, '\\qquad ($1)')
+          : seg
+              .replace(/(?<![\\ \t]) (?=\n)/g, '')
+              .replace(/<(?=\S)/g, '\\<')
+              .replace(/(?<!\\)[{}]/g, m => '\\' + m)
+              .replace(POINTS_SPACE, '$1\u00A0')
+      )
+      .join('')
+  );
 }
 // Markdown pairs "*"/"**" only when the marker is flanked right: a closing one after punctuation and before a letter
 // ("(*фиг.*3)", "**11.**вода") or an opening one after a letter and before punctuation ("0,5*(0,2;0)*") stays a
@@ -931,6 +969,9 @@ const OPENS_BLOCK = /^(?:[-+*](?:[ \t]|$)|\d{1,9}[.)](?:[ \t]|$)|#{1,6}(?:[ \t]|
 // or hyphen and the next line continues in lowercase, not with an "а)" item). Lines that open or belong to other blocks
 // (table rows, list items, headings, quotes, fences, JSX tags, "$$" blocks, frontmatter) are left alone.
 export function lineBreaks(mdx) {
+  return outsideFencedCode(mdx,lineBreaksProse);
+}
+function lineBreaksProse(mdx) {
   const lines = String(mdx).split('\n');
   let frontmatter = lines[0] === '---', code = false, block = false;
   const BLOCK = /^\s*(?:\||[-+*](?:[ \t]|$)|\d{1,9}[.)](?:[ \t]|$)|#{1,6}(?:[ \t]|$)|>|<|`{3}|~{3}|\$\$|=+\s*$|-{3,}\s*$|\{\/\*)/;
@@ -957,6 +998,9 @@ export function lineBreaks(mdx) {
 }
 
 export function displayMathLines(mdx) {
+  return outsideFencedCode(mdx,displayMathProse);
+}
+function displayMathProse(mdx) {
   const lines = String(mdx).split('\n'), out = [];
   // block: inside a "$$" fence, which only a "$$" line of its own closes; span: text math that runs on to a later line
   let frontmatter = lines[0] === '---', code = false, block = false, span = false;

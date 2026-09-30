@@ -1,0 +1,430 @@
+---
+id: ipho-1992-theory-23rd-theo-question-2-p2
+source: 'IPhO 1992, Теория'
+title: 'Задача 2. THE LONGITUDINAL MOTION OF A LINEAR MOLECULE'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/1992/ipho-1992-theory-23rd-theo-question-2.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T05:38:45.969Z'
+verifier: 'single-pass'
+---
+
+*XXIII IPHO — JULY 92 — PROBLEM 2*
+
+<Warning title="Бележка към темата">
+The official solution contains printed inconsistencies in several intermediate equations and figure labels, including equations (10), (13), (16), (19), (29), (41) and (45). They are retained as printed; equation number (41) is used twice. The later determinant results and numerical bond-constant estimates are also retained.
+</Warning>
+
+## Условие
+
+In this problem you will analyze the longitudinal motion of a linear molecule, i.e., the motion along the molecular axis. The rotational motion and the bending of the molecule are not considered. The molecule is assumed to consist of $N$ atoms of mass $m_1$, $m_2$, ..., $m_N$, respectively. Each atom is assumed to be connected to its neighbors by a chemical bond. Each bond is approximated by a massless spring which obeys Hooke's law with spring constants $k_1$, $k_2$, ... $k_{N-1}$. The molecule is shown in Fig. 1.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91%', '--fig-max': '582px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1992-theory-23rd-theo-question-2/p2-fig1.png" alt="Original linear chain of N atoms with masses m1, m2, mi, mN and bond spring constants k1, k2, kN−1." width="1820" height="408" loading="lazy" decoding="async" />
+<figcaption>Fig. 1. A linear molecule with N atoms.</figcaption>
+</figure>
+
+
+Use the following facts when solving this problem: The longitudinal vibrational motion of a linear molecule consists of a superposition of separate vibrational motions called normal vibrations, or normal modes. In a normal mode all atoms vibrate in simple harmonic motion with the same frequency and pass through their equilibrium positions simultaneously.
+
+**Questions**
+
+**1)** Let $x_i$ be the displacement of atom $i$ from its equilibrium position. Express the force $F_i$ acting on each atom as a function of the displacements $x_1$, $x_2$, ..., $x_N$ and the spring constants $k_1$, $k_2$, ... $k_{N-1}$. What relationship is there among the forces $F_1$, $F_2$, ..., $F_N$? Using this relationship, derive a relationship between the displacements $x_1$, $x_2$, ... $x_N$ and give a physical interpretation of this relationship.
+
+**2)** Analyze the motion of a diatomic molecule AB (Fig. 2). The value of the spring constant is $k$. Derive an expression for the forces acting on atoms A and B. Determine the possible types of motion of the molecule. Determine the corresponding vibrational frequencies and interpret the result. In particular, how is it possible for the atoms to vibrate with the same frequency even though their masses are not the same?
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.9%', '--fig-max': '582px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1992-theory-23rd-theo-question-2/p2-fig2.png" alt="Original two-atom AB molecule with spring k, masses mA and mB and displacement arrows xA and xB." width="1818" height="418" loading="lazy" decoding="async" />
+<figcaption>Fig. 2. The diatomic molecule AB.</figcaption>
+</figure>
+
+**3)** Analyze the motion of the triatomic molecule BA$_2$ (Fig. 3)
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91.4%', '--fig-max': '585px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1992-theory-23rd-theo-question-2/p2-fig3.png" alt="Original symmetric A-B-A molecule, both springs k, masses mA, mB, mA and displacement arrows x1, x2, x3." width="1828" height="650" loading="lazy" decoding="async" />
+<figcaption>Fig. 3. The triatomic molecule BA₂.</figcaption>
+</figure>
+
+
+Express the net force on each atom as a function of its displacement only. Deduce the possible motions of the molecule and the corresponding vibrational frequencies.
+
+**4)** The frequencies of the two longitudinal modes of vibration of the CO$_2$ molecule are $3.998\times10^{13}$ Hz and $7.042\times10^{13}$ Hz, respectively. Determine a numerical value for the spring constant of the CO bond.
+
+How well do you think this approximation for the bond structure of the molecule describes the vibrational motion of the real molecule?
+
+The atomic mass of the carbon atom = 12 amu and that of the oxygen atom = 16 amu. The atomic mass unit = $1.660\times10^{-27}$ kg.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- The official key obtains k₂ ≈ 1670 N/m and k₃ ≈ 1420 N/m and judges the agreement reasonable.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+The solution is given as several basically equivalent versions. The problem is formulated in such a way that no knowledge of matrix theory as applied to problems of this kind is assumed. However, as many of the participants produced elegant and balanced solutions using matrix theory, a brief sketch of this kind of solution is also presented below.
+
+**1)** The force on atom $i$ can be deduced from Fig. 1. below.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '46.1%', '--fig-max': '295px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1992-theory-23rd-theo-question-2/sol-p2-fig1.png" alt="Original adjacent atoms with k(i−1), ki and arrows x(i−1), xi, x(i+1)." width="923" height="313" loading="lazy" decoding="async" />
+<figcaption>Force diagram for atom i.</figcaption>
+</figure>
+
+
+A positive displacement $x_{i-1}$ of atom $i-1$ causes a shortening of the spring $k_{i-1}$. That causes a force $k_{i-1}x_{i-1}$ (acting to the right) on atom $i$. Correspondingly, a displacement $x_i$ of atom $i$ causes a force $-k_{i-1}x_{i-1}-k_ix_i$ acting to the left on atom $i$. Finally, a displacement $x_{i+1}$ on atom $i$ causes a force $k_{i+1}x_{i+1}$ acting to the right on atom $i$. The forces on atom $i$ add up to
+
+$$
+F_i=-k_{i-1}(x_i-x_{i-1})-k_i(x_i-x_{i+1})\qquad (1)
+$$
+
+Taking into account that atom 1 has no left neighbor and atom $N$ no right neighbor, the forces can be written
+
+$$
+\begin{aligned}F_1&=-k_1(x_1-x_2)\\F_2&=-k_1(x_2-x_1)-k_2(x_2-x_3)\\&\ldots\\F_i&=-k_{i-1}(x_i-x_{i-1})-k_i(x_i-x_{i+1})\\&\ldots\\F_N&=-k_{N-1}(x_N-x_{N-1})\end{aligned}\qquad (2)
+$$
+
+Adding up the forces gives the total force $F$ acting on the molecule:
+
+$$
+F=F_1+F_2+\ldots+F_N=0\qquad (3)
+$$
+
+According to Newton's second law, this force equals the mass of the molecule multiplied by the acceleration of its center of mass:
+
+$$
+F=Ma=0\qquad (4)
+$$
+
+Each separate force equals the mass of the corresponding atom multiplied by the acceleration of that atom:
+
+$$
+F_i=M_ia_i\qquad (5)
+$$
+
+(3) and (5) together give
+
+$$
+m_1a_1+m_2a_2+\ldots+m_Na_N=0\qquad (6)
+$$
+
+Relation (6) gives
+
+$$
+m_1v_1+m_2v_2+\ldots+m_Nv_N=Mv_0=\text{constant}\qquad (7)
+$$
+
+where $v_0$ denotes the velocity of the center of mass. If the molecule is observed in a coordinate system moving with the center of mass, this velocity equals zero. Thus, we find the following relation between the displacements of the separate atoms:
+
+$$
+m_1x_1+m_2x_2+\ldots+m_Nx_N=Mx_0=\text{constant}\qquad (8)
+$$
+
+This constant can be set equal to zero, meaning that the origin coincides with the center of mass of the molecule and that the motion of the center of mass is not influenced upon by the internal forces of the molecule.
+
+**2)** The molecule and the pertinent quantities are shown in the figure below:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '26.3%', '--fig-max': '169px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1992-theory-23rd-theo-question-2/sol-p2-fig2.png" alt="Original masses mA, mB, spring k and arrows xA, xB." width="527" height="310" loading="lazy" decoding="async" />
+<figcaption>Official diatomic molecule force diagram.</figcaption>
+</figure>
+
+
+The forces on the atoms can be expressed as
+
+$$
+\begin{aligned}F_A&=-k(x_A-x_B)=m_Aa_A\\F_B&=-k(x_B-x_A)=m_Ba_B\end{aligned}\qquad (9)
+$$
+
+Again,
+
+$$
+F_A+F_B=m_A+m_B=0\qquad (10)
+$$
+
+In the center - of - mass system there correspondingly holds
+
+$$
+m_Ax_A+m_Bx_B=0\qquad (11)
+$$
+
+and further
+
+$$
+x_B=-\frac{m_A}{m_B}x_A\qquad (12)
+$$
+
+Relations (9) can then be written
+
+$$
+\begin{aligned}F_A&=-k\left(x_A+\frac{m_A}{m_B}x_A\right)=-k\left(\frac{m_A+m_B}{m_A}\right)x_A\\F_B&=-k\left(x_B+\frac{m_B}{m_A}x_B\right)=-k\left(\frac{m_A+m_B}{m_B}\right)x_B\end{aligned}\qquad (13)
+$$
+
+According to the formulation of the problem, the force on each atom is proportional to its displacement. This can be expressed as
+
+$$
+\begin{aligned}F_A&=-r_Ax_A\\F_B&=-r_Bx_B\end{aligned}\qquad (14)
+$$
+
+The proportionality constants $r_A$ and $r_B$ are obtained by comparing (13) and (14):
+
+$$
+r_A=k\left(\frac{m_A+m_B}{m_B}\right);\quad r_B=k\left(\frac{m_A+m_B}{m_A}\right)\qquad (15)
+$$
+
+The crucial point in the solution is now to utilize the fact given in the formulation of the problem that the atoms vibrate with equal frequencies:
+
+$$
+\omega_A=\sqrt{\frac{r_A}{m_A}}=\sqrt{\frac{m_A+m_B}{m_Am_B}}=\omega_B\qquad (16)
+$$
+
+The other solution to be deduced from Eqns. (9) and (11) is the trivial one corresponding to
+
+$$
+x_A=x_B\qquad (17)
+$$
+
+giving $w=0$, which corresponds to a uniform translation of the molecule without vibrational motion, or in the center-of-mass system, to a molecule at rest.
+
+Another possible solution is obtained by assuming that $x_A$ and $x_B$ are proportional to each other, as can be inferred from the solution to Part 1 of the problem. Thus, we set
+
+$$
+x_B=cx_A\qquad (18)
+$$
+
+Inserting (18) into (13) gives
+
+$$
+\begin{aligned}F_A&=-k(x_A-cx_A)=-k(1-c_B)x_A=-r_Ax_A\\F_B&=-k\left(\frac{1}{C}x_B-x_B\right)=-k\left(\frac{1}{c_B}-1\right)x_B=-r_Bx_B\end{aligned}\qquad (19)
+$$
+
+The vibrational angular frequencies are
+
+$$
+\omega_A=\sqrt{\frac{r_A}{m_A}}=\sqrt{\frac{k(1-c)}{m_A}}=\omega_B=\sqrt{\frac{r_B}{m_B}}=\sqrt{\frac{k(\frac{1}{c}-1)}{m_B}}\qquad (20)
+$$
+
+Solving the resulting second-degree equation for $c$ gives the earlier derived results
+
+$$
+c_1=1,\quad c_2=-\frac{m_A}{m_B}\qquad (21)
+$$
+
+The solution $c_1=1$ directly gives $F_A=F_B=0$ without any further conditions on $x_A$ and $x_B$. The solution $c_2=-m_A/m_B$ corresponds to the genuine vibrational motion.
+
+A third way of obtaining the solution is, of course, to use the full equations of motion
+
+$$
+\begin{aligned}F_A&=m_A\ddot x_A=-k(x_A-x_B)\\F_B&=m_B\ddot x_B=-k(x_B-x_A)\end{aligned}\qquad (22)
+$$
+
+and assuming harmonic solutions of the form
+
+$$
+x_A=x_{A0}e^{i\omega t};\quad x_B=x_{B0}e^{i\omega t}\qquad (23)
+$$
+
+(23) inserted in (22) leads to the linear system of equations
+
+$$
+\begin{aligned}(k-m_A\omega^2)x_{A0}-kx_{B0}&=0\\-kx_{A0}+(k-m_B\omega^2)x_{B0}&=0\end{aligned}\qquad (24)
+$$
+
+Surprisingly many of the participants obtained the solution in this way, correctly utilizing the fact that the condition for a non-trivial solution is that the determinant of the coefficients of the unknowns equal zero:
+
+$$
+\begin{vmatrix}k-m_A\omega^2&-k\\-k&k-m_B\omega^2\end{vmatrix}=0\qquad (25)
+$$
+
+The solution to this equation again retrieves the earlier results:
+
+$$
+\omega_1=0;\quad\omega_2=\sqrt{\frac{k(m_A+m_B)}{m_Am_B}}\qquad (26)
+$$
+
+with the amplitudes $x_A$ and $x_B$ obtained as before.
+
+**3)** The molecule to be analyzed in the third part of the problem is illustrated in the following figure together with the pertinent quantities defined:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '46.7%', '--fig-max': '300px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1992-theory-23rd-theo-question-2/sol-p2-fig3.png" alt="Original figure labels its right atom mB although the question and subsequent equations use mA; all original labels preserved." width="936" height="429" loading="lazy" decoding="async" />
+<figcaption>Official triatomic molecule force diagram.</figcaption>
+</figure>
+
+
+The forces on the atoms are
+
+$$
+\begin{aligned}F_1&=-k(x_1-x_2)\\F_2&=-k(x_2-x_1)-k(x_2-x_3)=-k(-x_1+2x_2-x_3)\\F_3&=-k(x_3-x_2)\end{aligned}\qquad (27)
+$$
+
+Again we the displacements can be assumed proportional to each other, as the sum of the mass-weighted displacements is a constant:
+
+$$
+x_2=c_2x_1;\quad x_3=c_3x_1\qquad (28)
+$$
+
+where $c_2$ and $c_3$ are constants to be determined. According to the formulation of the problem, the participants were supposed to proceed by trying to express the force acting on each atom as a function of the displacement of that particular atom only. Inserting (28) in (27) then gives
+
+$$
+\begin{aligned}F_1&=-k(1-c_2)x_1=-r_1x_1\\F_2&=-k\left(-\frac{1}{c_2}+2-c_3\right)x_2=-r_2x_2\\F_3&=-k\left(1-\frac{c_2}{c_3}\right)x_3=-r_3x_3\end{aligned}\qquad (29)
+$$
+
+The constants $c_2$ and $c_3$ can now be determined from the condition that the atoms vibrate with equal angular frequencies:
+
+$$
+\omega_1=\sqrt{\frac{r_1}{m_A}}=\omega_2=\sqrt{\frac{r_2}{m_B}}=\omega_3=\sqrt{\frac{r_3}{m_A}}\qquad (30)
+$$
+
+Squaring the roots and using (29) gives the equations
+
+$$
+\frac{1-c_2}{m_A}=\frac{-\frac{1}{c_2}+2-\frac{c_3}{c_2}}{m_B}=\frac{1-\frac{c_2}{c_3}}{m_A}\qquad (31)
+$$
+
+These equations must hold simultaneously, so that there hold the relations
+
+$$
+1-c_2=1-\frac{c_2}{c_3}\qquad (32)
+$$
+
+$$
+\frac{1-c_2}{m_A}=\left(2-(1+c_3)\frac{1}{c_2}\right)\frac{1}{m_B}\qquad (33)
+$$
+
+The first of these equations has two different solutions:
+
+$$
+\begin{aligned}1)\quad &c_2=0\ \&\ c_3\ne0\\2)\quad &c_3=1\ \&\ c_2\ne0\end{aligned}\qquad (34)
+$$
+
+The first solution inserted in (33) gives the result
+
+$$
+\frac{1}{m_A}=\left(2-\frac{1+c_3}{c_2}\right)\frac{1}{m_B}\qquad (35)
+$$
+
+If $c_2$ is directly set = 0 in the right-hand member, the expression diverges. For that not to occur, the expression $1+c_3$ must vanish, implying the result
+
+$$
+c_3=-1\qquad (36)
+$$
+
+Thus, we have
+
+$$
+x_2=0,\quad x_3=-x_1\qquad (37)
+$$
+
+From (29) and (37) we obtain
+
+$$
+r_1=k;\quad\omega_1=\sqrt{\frac{k}{m_A}}\qquad (38)
+$$
+
+The angular frequency $w_3$ is equal to $w_1$, because the solution actually was obtained on that condition. An additional complication is that the frequency $w_2$ comes out indeterminate, as atom 2 does not move at all in this particular vibrational mode. The participants were not supposed to analyze that fact any further; obtaining the result that the central atom does not move was enough.
+
+The second solution in (34), i.e, $c_3=1$ and $c_2\ne0$ gives inserted in (33)
+
+$$
+\frac{1-c_2}{m_A}=2\left(1-\frac{1}{c_2}\right)\frac{1}{m_B}\qquad (39)
+$$
+
+This gives a second-degree equation for $c_2$:
+
+$$
+c_2^2+\left(\frac{2m_A}{m_B}-1\right)c_2-\frac{2m_A}{m_B}=0\qquad (40)
+$$
+
+The roots of this equation are
+
+$$
+c_{2,1}=1;\quad c_{2,2}=-\frac{2m_A}{m_B}\qquad (41)
+$$
+
+The first solution corresponds to equal amplitudes for all atoms, again implying that no bonds are stretched and no vibrational motion occurs. The second root gives
+
+$$
+F_1=-k\left(1+\frac{2m_A}{m_B}\right)=-r_1x_1\qquad (41)
+$$
+
+with the corresponding vibrational angular frequency
+
+$$
+\omega_1=\sqrt{\frac{r_1}{m_A}}=\sqrt{k\left(\frac{2}{m_B}+\frac{1}{m_A}\right)}\qquad (42)
+$$
+
+As in part 2 of this problem, the solution can also be obtained from the vanishing of the determinant formed from the equations of motion. They are
+
+$$
+\begin{aligned}F_1&=m_A\ddot x_1=-k(x_1-x_2)\\F_2&=m_B\ddot x_2=-k(-x_1+2x_2-x_3)\\F_3&=m_A\ddot x_3=-k(x_3-x_2)\end{aligned}\qquad (43)
+$$
+
+Again assuming an complex exponential solution
+
+$$
+x_i=x_{i0}e^{i\omega t}\qquad (44)
+$$
+
+a linear system of equations is obtained by factoring out the exponential:
+
+$$
+\begin{aligned}(k-m_A\omega^2)x_{10}-kx_{20}&=0\\-kx_{20}+(2k-m_B\omega^2)x_{20}-kx_{30}&=0\\kx_{20}+(k-m_A\omega^2)x_{30}&=0\end{aligned}\qquad (45)
+$$
+
+The condition for the existence of a non-vanishing solution is again
+
+$$
+\begin{vmatrix}k-m_A\omega^2&-k&0\\-k&2k-m_B\omega^2&-k\\0&-k&k-m_A\omega^2\end{vmatrix}=0\qquad (46)
+$$
+
+The roots for the determinant are obtained as
+
+$$
+\omega_1=0;\quad\omega_2=\sqrt{\frac{k}{m_A}};\quad\omega_3=\sqrt{k\left(\frac{2}{m_B}+\frac{1}{m_A}\right)}\qquad (47)
+$$
+
+thus reproducing the earlier results. The amplitudes are trivially solved by inserting the roots in the equation system one at a time. This method of solution is, of course, much faster than the one suggested in the text, but it was not assumed that the participants would have to master the more advanced techniques. On the other hand, those who did it were rewarded for a correct solution, even though they took a shorter route demanding less physical reasoning than that suggested in the formulation of the problem.
+
+**4)** Within the realm of the model adopted, we note that $w_3>w_2$, so that the higher vibrational frequency, i.e $7.042*10^{13}$ Hz, should be set to correspond to $w_3$ and the lower one, $3.998*10^{13}$ Hz, should be set to correspond to $w_2$. First the correspondence between the angular frequency and the frequency is noted:
+
+$$
+\omega=2\pi\nu\qquad (48)
+$$
+
+Thus, there holds
+
+$$
+\omega_2=2\pi\nu_2;\quad\omega_3=2\pi\nu_3\qquad (49)
+$$
+
+The estimates for $k$ come out as
+
+$$
+\begin{aligned}k_2&\approx m_A\omega_2^2\approx1670\ \mathrm{N/m}\\k_3&\approx\left(\frac{m_AmB}{2m_A+m_B}\right)\omega_3^2\approx1420\ \mathrm{N/m}\end{aligned}\qquad (50)
+$$
+
+The agreement is reasonable. The participants were not expected to produce any further speculations as to the reasons for the discrepancy. This part of the problem was rather meant as an illustration of the degree of accuracy inherent in a simple model of the kind presented here.
+
+
+</Spoiler>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Оценена трудност: 4/5.
+
+Механика · Механични трептения · Закони на Нютон · Център на масите
+
+Предпоставки: Гимназиална подготовка, Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [23rd_IPhO_1992_Theo_Question_2.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1992/23rd_IPhO_1992_Theo_Question_2.pdf#page=1)
+· официални решения: [2_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1991_2000/1992/2_sol.pdf#page=2)

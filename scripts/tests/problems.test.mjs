@@ -7,6 +7,81 @@ import { spawnSync } from 'node:child_process';
 import { sha256, jsonText, publicationState } from '../lib/problem-data.mjs';
 import { classificationFixture } from './classification-fixture.mjs';
 import { normaliseCandidate } from '../tx/lib.mjs';
+import { splitFencedCode } from '../lib/fenced-code.mjs';
+
+test('printed fenced Python survives normalisation, prose escaping and MDX compilation byte for byte', t => {
+  const f = fixture(t),
+    code = [
+      '```python',
+      '# Load the catalog',
+      'df = df.rename(columns={"Unnamed: 0": "Year"})',
+      'months = {m: i for i, m in enumerate(names, 1)}',
+      'return f"{h:02d}:{m:02d}:{s:02d}"',
+      't2[tmax < t2] = t2[tmax < t2] - one_day',
+      'literal = "<b>&amp;</b> $unmatched \\nicefrac"',
+      '```',
+    ].join('\n');
+  const p = f.paper.problems[0];
+  p.statement = '## Printed heading\n\nOutside $x=1$.\n\n' + code;
+  normaliseCandidate(f.paper);
+  assert(p.statement.includes(code));
+  f.write(f.file, f.paper);
+  f.approve();
+  const generated = f.run();
+  assert.equal(generated.status, 0, generated.stderr);
+  const mdx = f.raw(f.output);
+  assert(
+    mdx.includes(code),
+    'The entire original code listing must be byte-identical'
+  );
+  assert(mdx.includes('### Printed heading'));
+  assert.equal(f.run('--check').status, 0);
+  const compiled = spawnSync(
+    process.execPath,
+    [
+      path.join(repo, 'scripts/check-mdx.mjs'),
+      '--warn',
+      path.join(f.root, f.output),
+    ],
+    { encoding: 'utf8' }
+  );
+  assert.equal(compiled.status, 0, compiled.stdout + compiled.stderr);
+  assert.doesNotMatch(compiled.stdout + compiled.stderr, /KaTeX parse error/);
+});
+
+test('only matching complete fences bypass prose transforms, with longer fences and tilde fences preserved', async () => {
+  const { proseOnly, mathSpans } = await import('../tx/lib.mjs');
+  const { lineBreaks, displayMathLines } = await import(
+    '../problems-to-site.mjs'
+  );
+  const code = ['````python', '```', '<b>{value}</b> $broken', '````'].join(
+    '\n'
+  );
+  assert.equal(splitFencedCode(code).filter(x => x.code).length, 1);
+  assert.equal(proseOnly(code), '');
+  assert.equal(mathSpans(code).length, 0);
+  assert.equal(lineBreaks(code), code);
+  assert.equal(displayMathLines(code), code);
+  assert.equal(splitFencedCode('~~~python\n{value}\n~~~')[0].code, true);
+  for (const malformed of [
+    '```python\n{value}',
+    '````python\n{value}\n```',
+    '```python\n{value}\n~~~',
+  ])
+    assert(
+      proseOnly(malformed).includes('{value}'),
+      'Incomplete/mismatched fences must not hide invalid prose'
+    );
+  assert(proseOnly('Outside {invalid}\n\n' + code).includes('{invalid}'));
+  const { mdxComments } = await import('../lib/fenced-code.mjs');
+  const comments = '```python\nvalue = "<!-- literal -->"\n```';
+  assert.equal(
+    mdxComments(comments + '\n<!-- real comment -->'),
+    comments + '\n{/*  real comment */}'
+  );
+});
+
+
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 fs.mkdirSync(path.join(repo, 'tmp'), { recursive: true });

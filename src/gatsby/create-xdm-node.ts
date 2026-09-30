@@ -14,6 +14,7 @@ import rehypeSnippets from '../mdx-plugins/rehype-snippets';
 import remarkToC from '../mdx-plugins/remark-toc';
 import getGatsbyImage from './wrapped-gatsby-img-plugin';
 import { xdm } from './xdm';
+import { mdxComments } from '../mdx-plugins/fenced-code';
 
 // todo: migrate to resolver for even better development performance
 
@@ -38,53 +39,50 @@ export async function createXdmNode({ id, node, content }, api) {
   });
 
   try {
-    compiledResult = await xdm.compile(
-      content.replace(/<!--/g, '{/* ').replace(/-->/g, '*/}'),
-      {
-        remarkPlugins: [
-          gfm,
-          remarkMath,
-          remarkFrontmatter,
-          remarkMdxFrontmatter,
-          [remarkExtractAST, { mdast }],
-          remarkExternalLinks,
-          [remarkToC, { tableOfContents }],
-          remarkSlug,
-          [
-            remarkAutolinkHeadings,
-            {
-              linkProperties: {
-                ariaHidden: 'true',
-                tabIndex: -1,
-                className: 'anchor before',
-              },
-              content: {
-                type: 'mdxJsxFlowElement',
-                name: 'HeaderLink',
-              },
+    compiledResult = await xdm.compile(mdxComments(content), {
+      remarkPlugins: [
+        gfm,
+        remarkMath,
+        remarkFrontmatter,
+        remarkMdxFrontmatter,
+        [remarkExtractAST, { mdast }],
+        remarkExternalLinks,
+        [remarkToC, { tableOfContents }],
+        remarkSlug,
+        [
+          remarkAutolinkHeadings,
+          {
+            linkProperties: {
+              ariaHidden: 'true',
+              tabIndex: -1,
+              className: 'anchor before',
             },
-          ],
-          gatsbyImage,
-        ],
-        rehypePlugins: [
-          [
-            rehypeRaw,
-            {
-              passThrough: [
-                'mdxjsEsm',
-                'mdxFlowExpression',
-                'mdxTextExpression',
-                'mdxJsxFlowElement',
-                'mdxJsxTextElement',
-              ],
+            content: {
+              type: 'mdxJsxFlowElement',
+              name: 'HeaderLink',
             },
-          ],
-          customRehypeKatex,
-          rehypeSnippets,
+          },
         ],
-        outputFormat: 'function-body',
-      }
-    );
+        gatsbyImage,
+      ],
+      rehypePlugins: [
+        [
+          rehypeRaw,
+          {
+            passThrough: [
+              'mdxjsEsm',
+              'mdxFlowExpression',
+              'mdxTextExpression',
+              'mdxJsxFlowElement',
+              'mdxJsxTextElement',
+            ],
+          },
+        ],
+        customRehypeKatex,
+        rehypeSnippets,
+      ],
+      outputFormat: 'function-body',
+    });
     compiledResult = String(compiledResult);
   } catch (e) {
     // add the path of the file to simplify debugging error messages

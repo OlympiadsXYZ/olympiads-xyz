@@ -3,6 +3,7 @@ import remarkExternalLinks from 'remark-external-links';
 import remarkFrontmatter from 'remark-frontmatter';
 import gfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import { mdxComments } from '../../mdx-plugins/fenced-code';
 import { remarkMdxFrontmatter } from 'remark-mdx-frontmatter';
 import remarkSlug from 'remark-slug';
 import { compile as xdmCompile } from 'xdm/lib/compile';
@@ -25,40 +26,40 @@ const compile = async ({ markdown, problems }) => {
       }));
 
     const tableOfContents = {};
-    const compiledResult = await xdmCompile(
-      markdown.replace(/<!--/g, '{/* ').replace(/-->/g, '*/}'),
-      {
-        remarkPlugins: [
-          gfm,
-          [remarkEmoji, {
+    const compiledResult = await xdmCompile(mdxComments(markdown), {
+      remarkPlugins: [
+        gfm,
+        [
+          remarkEmoji,
+          {
             emoticon: true,
             padSpaceAfter: true,
-          }],
-          remarkMath,
-          remarkExternalLinks,
-          remarkFrontmatter,
-          [remarkMdxFrontmatter, { name: 'frontmatter' }],
-          [remarkToC, { tableOfContents }],
-          remarkSlug,
-          [
-            remarkAutolinkHeadings,
-            {
-              linkProperties: {
-                ariaHidden: 'true',
-                tabIndex: -1,
-                className: 'anchor before',
-              },
-              content: {
-                type: 'mdxJsxFlowElement',
-                name: 'HeaderLink',
-              },
-            },
-          ],
+          },
         ],
-        rehypePlugins: [customRehypeKatex, rehypeSnippets],
-        outputFormat: 'function-body',
-      }
-    );
+        remarkMath,
+        remarkExternalLinks,
+        remarkFrontmatter,
+        [remarkMdxFrontmatter, { name: 'frontmatter' }],
+        [remarkToC, { tableOfContents }],
+        remarkSlug,
+        [
+          remarkAutolinkHeadings,
+          {
+            linkProperties: {
+              ariaHidden: 'true',
+              tabIndex: -1,
+              className: 'anchor before',
+            },
+            content: {
+              type: 'mdxJsxFlowElement',
+              name: 'HeaderLink',
+            },
+          },
+        ],
+      ],
+      rehypePlugins: [customRehypeKatex, rehypeSnippets],
+      outputFormat: 'function-body',
+    });
 
     const code = String(compiledResult);
 
