@@ -1,0 +1,358 @@
+---
+id: owao-2025-theory-theoretical-p7
+source: 'OWAO 2025, Теория'
+title: 'Задача 7. Nothing to Do There'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2025/owao-2025-theory-theoretical.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T13:16:59.981Z'
+verifier: 'single-pass'
+---
+
+*2025 ◇ Theoretical Round ◇ Problems*
+
+<Warning title="Бележка към темата">
+All eight whole original tasks and 29 lettered parts, complete official worked solutions, alternatives and marking schemes are retained. Constants are native question page 5 and repeated key page 31, fully transcribed once as a shared reference. No paper/time/task/part total is printed, so no totals are inferred from marking criteria. Source mathematical/subscript/endpoint/equality discrepancies are preserved with attributed local notes. The separately printed cooler-star Criterion (x) remains inside original task 8; no extra problem is created.
+</Warning>
+
+<details>
+<summary>Константи</summary>
+
+**Universal**
+
+| | |
+| --- | --- |
+| Gravitational constant | $G=6.67\cdot10^{-11}\ \mathrm{m^3/(kg\cdot s^2)}$ |
+| Speed of light | $c=3.00\cdot10^8\ \mathrm{m/s}$ |
+| Planck constant | $h=6.63\cdot10^{-34}\ \mathrm{J\cdot s}$ |
+| Boltzmann constant | $k_B=1.38\cdot10^{-23}\ \mathrm{J/K}$ |
+| Gas constant | $\mathfrak R=8.314\ \mathrm{J/(mol\cdot K)}$ |
+| Proton mass | $m_p=1.673\cdot10^{-27}\ \mathrm{kg}$ |
+
+**Astronomical**
+
+| | |
+| --- | --- |
+| Astronomical unit | $1\ \mathrm{au}=149.6\cdot10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc}=206265\ \mathrm{au}$ |
+| Hubble constant | $H_0=70\ \mathrm{(km/s)/Mpc}$ |
+
+**Earth**
+
+| | |
+| --- | --- |
+| Radius | $R_\oplus=6371\ \mathrm{km}$ |
+| Mass | $\mathfrak M_\oplus=5.97\cdot10^{24}\ \mathrm{kg}$ |
+| Obliquity of ecliptic | $\varepsilon=23.4^\circ$ |
+| Surface gravity | $g=9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_\oplus=365.26\ \mathrm{days}$ |
+| Orbital eccentricity | $e_\oplus=0.0167$ |
+
+**Hydrogen spectrum**
+
+| | |
+| --- | --- |
+| Lyman $\mathrm L\alpha$ | $\lambda_{\mathrm L\alpha}=1215.7\ \text{Å}$ |
+| Balmer $\mathrm H\alpha$ | $\lambda_{\mathrm H\alpha}=6562.8\ \text{Å}$ |
+
+**Jupiter**
+
+| | |
+| --- | --- |
+| Radius | $R_J=6.99\cdot10^4\ \mathrm{km}$ |
+| Mass | $\mathfrak M_J=1.90\cdot10^{27}\ \mathrm{kg}$ |
+| Orbital radius | $a_J=5.20\ \mathrm{au}$ |
+| Orbital period | $T_J=11.86\ \mathrm{yr}$ |
+
+**Sun**
+
+| | |
+| --- | --- |
+| Radius | $R_\odot=6.96\cdot10^5\ \mathrm{km}$ |
+| Mass | $\mathfrak M_\odot=1.99\cdot10^{30}\ \mathrm{kg}$ |
+| Absolute magnitude | $M_\odot=4.74^{\mathrm m}\ \text{(bol.)}$ |
+| Effective temperature | $T_\odot=5.8\cdot10^3\ \mathrm K$ |
+| Luminosity | $L_\odot=3.828\cdot10^{26}\ \mathrm W$ |
+| Color index | $(B-V)_\odot=+0.65^{\mathrm m}$ |
+
+**Emission constants**
+
+| | |
+| --- | --- |
+| Stefan-Boltzmann | $\sigma=5.67\cdot10^{-8}\ \mathrm{W/(m^2\cdot K^4)}$ |
+| Wien’s displacement | $b=2898\ \mathrm{\mu m\cdot K}$ |
+
+**UBV… system** — Mean wavelengths
+
+| | |
+| --- | --- |
+| U band | $\lambda_U=364\ \mathrm{nm}$ |
+| B band | $\lambda_B=442\ \mathrm{nm}$ |
+| V band | $\lambda_V=540\ \mathrm{nm}$ |
+| K band | $\lambda_K=2190\ \mathrm{nm}$ |
+
+</details>
+
+## Условие
+
+A spacecraft moves along a Hohmann transfer ellipse in the ecliptic plane from the Earth to Jupiter. This ellipse touches the Earth’s orbit at perihelion and Jupiter’s orbit at aphelion.
+
+**a)** How long would the spacecraft take to travel from the Earth to Jupiter along this trajectory?
+
+At true anomaly $\theta_0=90^\circ$ (heliocentric distance $r_f$), the engine is fired briefly. The spacecraft receives a velocity change $\mathbf w$ with magnitude $|\mathbf w|=\frac12|\mathbf v_f|$, where $\mathbf v_f$ is its current velocity. The impulse makes an angle $i_0=20^\circ$ to the plane of the initial orbit, and its projection onto the ecliptic is aligned with the initial velocity. Assume the Earth’s and Jupiter’s orbits are circular and lie in the same plane.
+
+**b)** By what angle $\gamma$ does the spacecraft’s velocity vector turn after the impulse?
+
+**c)** Find the semi-major axis, eccentricity, and inclination of the new orbit after the impulse.
+
+**d)** How far above Jupiter’s orbit ($r_z$) will the spacecraft fly by?
+
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '92.5%', '--fig-max': '592px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2025-theory-theoretical/p7-fig1.png" alt="Complete original Earth/Jupiter/Hohmann and tilted escape trajectory drawing, all green/red/black orbital paths, Sun, arrows, dashed projections and theta0/rf/aJ/rz/v/vf/w/gamma/i0 labels. Native open left endpoints preserved." width="1851" height="1246" loading="lazy" decoding="async" />
+</figure>
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** $\Delta T\approx2.70\ \mathrm{yr}$.
+- **b)** $\gamma=6.6^\circ$.
+- **c)** $a=-1.4\ \mathrm{au}$, $e=1.9$, $i=8^\circ$.
+- **d)** $r_z\approx0.54\ \mathrm{au}$.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) First, we determine the semi-major axis and eccentricity of the Hohmann transfer ellipse:
+
+$$
+a_0=\frac{a_\oplus+a_J}2=\frac{1.00\ \mathrm{au}+5.20\ \mathrm{au}}2=3.10\ \mathrm{au},
+$$
+
+$$
+e_0=1-\frac{a_\oplus}{a_0}=1-\frac{1.00}{3.10}=0.68.
+$$
+
+Let us estimate the travel time. The transfer along the Hohmann ellipse covers half its circumference, so the time of flight is half its orbital period:
+
+$$
+\Delta T/\mathrm{yr}=\frac12(a_0/\mathrm{au})^{3/2}=\frac12\times3.10^{3/2}\approx2.70.
+$$
+
+b) The distance from the Sun on an elliptical orbit depends on the true anomaly as follows:
+
+$$
+r(\theta)=\frac{a(1-e^2)}{1+e\cos\theta}.
+$$
+
+For $\theta_0=90^\circ$ we obtain
+
+$$
+r_f=a_0(1-e_0^2)=3.10\ \mathrm{au}\times(1-0.68^2)=1.68\ \mathrm{au}.
+$$
+
+We can then find the velocity at this point using the vis-viva equation:
+
+$$
+v_f^2=G\mathfrak M_\odot\left(\frac2{r_f}-\frac1{a_0}\right)
+$$
+
+$$
+\Longrightarrow\quad v_f=\sqrt{6.67\cdot10^{-11}\ \mathrm{m^3/(kg\cdot s^2)}\times\frac{1.99\cdot10^{30}\ \mathrm{kg}}{1.496\cdot10^{11}\ \mathrm m}\left(\frac2{1.68}-\frac1{3.10}\right)}=27.8\ \mathrm{km/s}.
+$$
+
+The magnitude of the velocity increment is $|\mathbf w|=w=0.5v_f=13.9\ \mathrm{km/s}$. The spacecraft’s final velocity magnitude $v$ after the impulse can be found by applying the law of cosines to the velocity vector triangle:
+
+$$
+v^2=v_f^2+w^2-2v_f\cdot w\cdot\cos(180^\circ-i_0)
+$$
+
+$$
+\Longrightarrow\quad v/\mathrm{\frac{km}s}=\sqrt{27.8^2+13.9^2+2\times27.8\times13.9\times\cos20^\circ}=41.2.
+$$
+
+Finally, we determine the new orbital parameters. The inclination angle $\gamma$ of the velocity vector relative to the ecliptic plane is found by applying the law of cosines again:
+
+$$
+w^2=v_f^2+v^2-2vv_f\cos\gamma
+$$
+
+$$
+\Longrightarrow\quad\gamma=\arccos\frac{v_f^2+v^2-w^2}{2vv_f}=\arccos\frac{27.8^2+41.2^2-13.9^2}{2\times41.2\times27.8}=6.6^\circ.
+$$
+
+c) The new orbit’s semi-major axis is found using the vis-viva equation:
+
+$$
+v^2=G\mathfrak M_\odot\left(\frac2{r_f}-\frac1a\right)
+$$
+
+$$
+\Longrightarrow\quad a=\frac{r_f}{2-\frac{v^2r_f}{G\mathfrak M_\odot}}=\frac{1.68\ \mathrm{au}}{2-\frac{(41.2\cdot10^3\ \mathrm{m/s})^2\times1.68\times1.496\cdot10^{11}\ \mathrm m}{6.67\cdot10^{-11}\ \mathrm{m^3/(kg\cdot s^2)}\times1.99\cdot10^{30}\ \mathrm{kg}}}=-1.4\ \mathrm{au}.
+$$
+
+The orbit is hyperbolic. We estimate the orbit’s eccentricity using the conservation of angular momentum. This requires finding the angle between the new velocity vector and the radius vector.
+
+We introduce a Cartesian coordinate system with its origin at the Sun. The $x$-axis is directed toward the vertex of the focal parameter, the $y$-axis toward the apocenter of the Hohmann orbit, and the $z$-axis is perpendicular to the ecliptic. The angle between $\mathbf r_f$ and $\mathbf v_f$ is then determined from the law of conservation of angular momentum:
+
+$$
+v_fr_f\sin\alpha=\sqrt{G\mathfrak M_\odot a_0(1-e_0^2)}=\sqrt{G\mathfrak M_\odot r_f}\quad\Longrightarrow\quad\alpha=55.9^\circ.
+$$
+
+The components of the velocity vector $\mathbf v_f$ are
+
+$$
+v_{f,x}=v_f\cos\alpha=15.6\ \mathrm{km/s},
+$$
+
+$$
+v_{f,y}=v_f\sin\alpha=23.0\ \mathrm{km/s},
+$$
+
+$$
+v_{f,z}=0\ \mathrm{km/s}.
+$$
+
+The new velocity vector $\mathbf v$, which is inclined to the ecliptic, has a projection onto the ecliptic plane that also forms an angle $\alpha$ with the radius vector. Its components are
+
+$$
+v_x=v\cos\alpha\cos\gamma=22.9\ \mathrm{km/s},
+$$
+
+$$
+v_y=v\sin\alpha\cos\gamma=33.9\ \mathrm{km/s},
+$$
+
+$$
+v_z=v\sin\gamma=4.8\ \mathrm{km/s}.
+$$
+
+The position vector $\mathbf r_f$ has components:
+
+$$
+r_{f,x}=r_f=1.68\ \mathrm{au},\quad r_{f,y}=0\ \mathrm{au},\quad r_{f,z}=0\ \mathrm{au}.
+$$
+
+The angle $\beta$ between $\mathbf r_f$ and $\mathbf v$ is found from the dot product:
+
+$$
+\cos\beta=\frac{\mathbf v\cdot\mathbf r_f}{v\cdot r_f}=\frac{v_x\cdot r_{f,x}+v_y\cdot r_{f,y}+v_z\cdot r_{f,z}}{v\cdot r_f}=0.557\quad\Longrightarrow\quad\beta=56.1^\circ.
+$$
+
+The eccentricity of the new orbit is calculated using the conservation of angular momentum:
+
+$$
+vr_f\sin\beta=\sqrt{G\mathfrak M_\odot a(1-e^2)}
+$$
+
+$$
+\Longrightarrow\quad e=\sqrt{1-\frac{v^2r_f^2\sin^2\beta}{G\mathfrak M_\odot a}}=
+$$
+
+$$
+=\sqrt{1-\frac{(41.2\cdot10^3\ \mathrm{m/s})^2\times(1.68\times1.496\cdot10^{11}\ \mathrm m)^2\cdot\sin^256.1^\circ}{6.67\cdot10^{-11}\ \mathrm{m^3/(kg\cdot s^2)}\times1.99\cdot10^{30}\ \mathrm{kg}\times(-1.4)\times1.496\cdot10^{11}\ \mathrm m}}=1.9.
+$$
+
+The orbital inclination is determined from the $z$-component of the angular momentum vector:
+
+$$
+\mathbf L=\mathbf r\times\mathbf v=\begin{pmatrix}r_yv_z-r_zv_y\\r_zv_x-r_xv_z\\r_xv_y-r_yv_x\end{pmatrix}.
+$$
+
+The inclination of the new orbital plane relative to the ecliptic is given by
+
+$$
+\frac{L_z}L=\frac{r_{f,x}v_y-r_{f,y}v_x}{\sqrt{(r_{f,y}v_z-r_{f,x}v_y)^2+(r_{f,z}v_x-r_{f,x}v_z)^2+(r_{f,x}v_y-r_{f,y}v_x)^2}}=0.990,
+$$
+
+$$
+\therefore\ i=90^\circ-\arcsin\frac{L_z}L=90^\circ-\arcsin0.990=8^\circ.
+$$
+
+d) To determine the point where the spacecraft will pass above Jupiter’s orbit, we use the condition that its position in the previously defined coordinate system must satisfy $r_x^2+r_y^2=a_J^2$.
+
+Calculating this position accurately requires finding the rotation angle of the line of apsides relative to the radius vector at the maneuver point (the orbit’s ascending node). We begin with finding the true anomaly $\theta_1$ of the maneuver point on the hyperbolic trajectory:
+
+$$
+r_f=\frac{a(1-e^2)}{1+e\cos\theta_1}
+$$
+
+$$
+\Longrightarrow\quad\cos\theta_1=\frac1e\left[\frac{a(1-e^2)}{r_f}-1\right]=\frac1{1.9}\left[\frac{(-1.4)\times(1-1.9^2)}{1.68}-1\right]=0.62\quad\Longrightarrow\quad\theta_1=51^\circ.
+$$
+
+Let $r$ be the distance from the Sun to a point on the trajectory. The Cartesian coordinates of the point are defined as:
+
+$$
+r_x=r\cos(\theta-\theta_1),\quad r_y=r\sin(\theta-\theta_1)\cos i,\quad r_z=r\sin(\theta-\theta_1)\sin i.
+$$
+
+The condition for passing above Jupiter’s orbit leads to the following equation after substituting the orbital equation:
+
+$$
+(r\cos(\theta-\theta_1))^2+(r\sin(\theta-\theta_1)\cos i)^2=a_J^2,
+$$
+
+$$
+\frac1{(1+e\cos\theta)^2}\cdot(\cos^2(\theta-\theta_1)+\sin^2(\theta-\theta_1)\cos^2i)=\left(\frac{a_J}{a(1-e^2)}\right)^2.
+$$
+
+This equation is solved for the true anomaly $\theta$ using the bisection method. We define the function
+
+$$
+f(\theta)=\frac1{(1+e\cos\theta)^2}\cdot(\cos^2(\theta-\theta_1)+\sin^2(\theta-\theta_1)\cos^2i)-\left(\frac{a_J}{a(1-e^2)}\right)^2.
+$$
+
+The function values at several test points are listed in the table below.
+
+| $\theta$ | [$10^\circ$ | $100^\circ$] | [$75^\circ$ | $90^\circ$] | [$95^\circ$ | $99^\circ$] | $98^\circ$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $f(\theta)$ | −1.86 | 0.227 | −1.53 | −0.99 | −0.56 | 0.03 | −0.15 |
+
+The root of the equation lies between $\theta=98^\circ$ and $\theta=99^\circ$. For an approximate solution, we take $\theta=99^\circ$. The corresponding $z$-coordinate is then
+
+$$
+r_z=\frac{a(1-e^2)}{1+e\cos\theta}\sin(\theta-\theta_1)\sin i\approx0.54\ \mathrm{au}.
+$$
+
+**Marking Scheme:**
+
+- Question (a) Hohmann transfer time
+  1. Semi-major axis and eccentricity of the ellipse — **1+1 pt. = 2 pt.**
+  2. Transfer time (Kepler’s law, half time, and correct result) — **1+1+1 pt. = 3 pt.**
+- Question (b) Velocity vector turn
+  1. Formula for the elliptical radius vector, substituting $\theta_0=90^\circ$ — **1 pt.**
+  2. Velocity at the impulse point, using the vis-viva equation — **1 pt.**
+  3. Using the law of cosines to find the velocity $v$, angle $\gamma$, and correct result — **1+1+1 pt. = 3 pt.**
+- Question (c) Parameters of new orbit
+  1. Correct estimate for the semi-major axis — **2 pt.**
+  2. Angle $\alpha$ on the initial orbit and projections of $\mathbf r_f$ and $\mathbf v_f$ — **1 pt.**
+  3. Expressions for the angle $\beta$ and for the magnitude of angular momentum — **1 pt.**
+  4. Correct estimate for the eccentricity — **2 pt.**
+  5. Correct estimate for the inclination — **2 pt.**
+- Question (d) Above Jupiter’s orbit — **2 pt.**
+
+> **Source note:** On official key page 23 the first squared component in the printed denominator for $L_z/L$ is $(r_{f,y}v_z-r_{f,x}v_y)^2$, while the immediately preceding cross-product definition uses $r_yv_z-r_zv_y$. This printed subscript discrepancy and the key’s stated numerical value and inclination are retained.
+
+
+</Spoiler>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Оценена трудност: 4/5.
+
+Небесна механика · Орбитални преходи · Орбитални елементи · Орбитална енергия и напускане
+
+Предпоставки: Гимназиална подготовка, Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2025_Theoretical_Problems.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2025/Theory/OWAO_2025_Theoretical_Problems.pdf#page=3)
+· официални решения: [OWAO_2025_Theoretical_Solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2025/Theory/OWAO_2025_Theoretical_Solutions.pdf#page=20)

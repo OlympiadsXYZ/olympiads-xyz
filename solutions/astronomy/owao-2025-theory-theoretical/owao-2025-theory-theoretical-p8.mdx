@@ -1,0 +1,360 @@
+---
+id: owao-2025-theory-theoretical-p8
+source: 'OWAO 2025, Теория'
+title: 'Задача 8. Stellar Blends'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/OWAO/2025/owao-2025-theory-theoretical.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T13:16:59.981Z'
+verifier: 'single-pass'
+---
+
+*2025 ◇ Theoretical Round ◇ Problems*
+
+<Warning title="Бележка към темата">
+All eight whole original tasks and 29 lettered parts, complete official worked solutions, alternatives and marking schemes are retained. Constants are native question page 5 and repeated key page 31, fully transcribed once as a shared reference. No paper/time/task/part total is printed, so no totals are inferred from marking criteria. Source mathematical/subscript/endpoint/equality discrepancies are preserved with attributed local notes. The separately printed cooler-star Criterion (x) remains inside original task 8; no extra problem is created.
+</Warning>
+
+<details>
+<summary>Константи</summary>
+
+**Universal**
+
+| | |
+| --- | --- |
+| Gravitational constant | $G=6.67\cdot10^{-11}\ \mathrm{m^3/(kg\cdot s^2)}$ |
+| Speed of light | $c=3.00\cdot10^8\ \mathrm{m/s}$ |
+| Planck constant | $h=6.63\cdot10^{-34}\ \mathrm{J\cdot s}$ |
+| Boltzmann constant | $k_B=1.38\cdot10^{-23}\ \mathrm{J/K}$ |
+| Gas constant | $\mathfrak R=8.314\ \mathrm{J/(mol\cdot K)}$ |
+| Proton mass | $m_p=1.673\cdot10^{-27}\ \mathrm{kg}$ |
+
+**Astronomical**
+
+| | |
+| --- | --- |
+| Astronomical unit | $1\ \mathrm{au}=149.6\cdot10^6\ \mathrm{km}$ |
+| Parsec | $1\ \mathrm{pc}=206265\ \mathrm{au}$ |
+| Hubble constant | $H_0=70\ \mathrm{(km/s)/Mpc}$ |
+
+**Earth**
+
+| | |
+| --- | --- |
+| Radius | $R_\oplus=6371\ \mathrm{km}$ |
+| Mass | $\mathfrak M_\oplus=5.97\cdot10^{24}\ \mathrm{kg}$ |
+| Obliquity of ecliptic | $\varepsilon=23.4^\circ$ |
+| Surface gravity | $g=9.81\ \mathrm{m/s^2}$ |
+| Orbital period | $T_\oplus=365.26\ \mathrm{days}$ |
+| Orbital eccentricity | $e_\oplus=0.0167$ |
+
+**Hydrogen spectrum**
+
+| | |
+| --- | --- |
+| Lyman $\mathrm L\alpha$ | $\lambda_{\mathrm L\alpha}=1215.7\ \text{Å}$ |
+| Balmer $\mathrm H\alpha$ | $\lambda_{\mathrm H\alpha}=6562.8\ \text{Å}$ |
+
+**Jupiter**
+
+| | |
+| --- | --- |
+| Radius | $R_J=6.99\cdot10^4\ \mathrm{km}$ |
+| Mass | $\mathfrak M_J=1.90\cdot10^{27}\ \mathrm{kg}$ |
+| Orbital radius | $a_J=5.20\ \mathrm{au}$ |
+| Orbital period | $T_J=11.86\ \mathrm{yr}$ |
+
+**Sun**
+
+| | |
+| --- | --- |
+| Radius | $R_\odot=6.96\cdot10^5\ \mathrm{km}$ |
+| Mass | $\mathfrak M_\odot=1.99\cdot10^{30}\ \mathrm{kg}$ |
+| Absolute magnitude | $M_\odot=4.74^{\mathrm m}\ \text{(bol.)}$ |
+| Effective temperature | $T_\odot=5.8\cdot10^3\ \mathrm K$ |
+| Luminosity | $L_\odot=3.828\cdot10^{26}\ \mathrm W$ |
+| Color index | $(B-V)_\odot=+0.65^{\mathrm m}$ |
+
+**Emission constants**
+
+| | |
+| --- | --- |
+| Stefan-Boltzmann | $\sigma=5.67\cdot10^{-8}\ \mathrm{W/(m^2\cdot K^4)}$ |
+| Wien’s displacement | $b=2898\ \mathrm{\mu m\cdot K}$ |
+
+**UBV… system** — Mean wavelengths
+
+| | |
+| --- | --- |
+| U band | $\lambda_U=364\ \mathrm{nm}$ |
+| B band | $\lambda_B=442\ \mathrm{nm}$ |
+| V band | $\lambda_V=540\ \mathrm{nm}$ |
+| K band | $\lambda_K=2190\ \mathrm{nm}$ |
+
+</details>
+
+## Условие
+
+The figure shows the light curve of an eclipsing binary system observed in the $V$ band. The eclipses in the system are central. Both components are main-sequence stars, and one has spectral type A0V.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '652px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2025-theory-theoretical/p8-fig1.png" alt="Entire native V-band eclipse light curve with all graph gridlines, both primary minima and secondary minimum, Relative Magnitude and Time[days] axis labels, all ticks and graph boundary." width="2039" height="1327" loading="lazy" decoding="async" />
+</figure>
+
+**a)** Determine the spectral type of the second component of the system.
+
+**b)** Estimate the distance between the two components of the system.
+
+**c)** What is wrong with the given light curve?
+
+**d)** Sketch the curve of the system’s color index $(B-V)$ as a function of orbital phase, still assuming the validity of the given light curve.
+
+## Отговори
+
+<Spoiler title="Покажи отговорите">
+
+- **a)** G2V.
+- **b)** $a=0.038\ \mathrm{au}=5.7\cdot10^6\ \mathrm{km}\approx8R_\odot$.
+- **c)** Stellar deformation, hot spots/reflection effects, and limb darkening make the plotted idealized light curve unrealistic.
+- **d)** $(B-V)_{\mathrm{out}}=0.012$, $(B-V)_{\mathrm{pri}}=0.015$, $(B-V)_{\mathrm{sec}}=0.00\ \mathrm{mag}$; see the original key’s Figure 3.
+
+</Spoiler>
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+a) The figure shows the $V$-band light curve of a central-eclipse binary. One component is A0V with $T_{\mathrm{A0}}=9700\ \mathrm K$. The two eclipse depths read from the curve are
+
+$$
+\Delta m_{\mathrm{pri}}=0.244\ \mathrm{mag}\qquad\text{(deeper, hotter star eclipsed)};
+$$
+
+$$
+\Delta m_{\mathrm{sec}}=0.028\ \mathrm{mag}.
+$$
+
+The equal spacing between successive minima, together with their equal widths, indicates that the relative orbit is circular.
+
+A magnitude drop $\Delta m$ corresponds to a fractional flux loss
+
+$$
+\delta\equiv1-10^{-0.4\Delta m}.
+$$
+
+Hence
+
+$$
+\delta_{\mathrm{pri}}=1-10^{-0.4\times0.244}=0.2013,\qquad\delta_{\mathrm{sec}}=1-10^{-0.4\times0.028}=0.0255.
+$$
+
+For a central eclipse in which the smaller (cooler) star passes in front, the observed flux loss at primary minimum corresponds to the $V$-band flux from the portion of the hotter star hidden by the cooler companion, while at secondary minimum it corresponds to the entire flux of the cooler star being obscured:
+
+$$
+\Delta F_{\mathrm{pri}}=I_{h,V}A_c,\qquad\Delta F_{\mathrm{sec}}=I_{c,V}A_c,
+$$
+
+with $A_c$ denoting the projected disc area of the cool star and $I_{h,V},I_{c,V}$ the $V$-band surface brightnesses of the hot and cool stars, respectively. Taking the ratio of the two light losses (or equivalently, of the corresponding fractional losses) gives
+
+$$
+k_V\equiv\frac{I_{h,V}}{I_{c,V}}=\frac{\Delta F_{\mathrm{pri}}}{\Delta F_{\mathrm{sec}}}=\frac{\delta_{\mathrm{pri}}}{\delta_{\mathrm{sec}}}=\frac{0.2013}{0.0255}=7.9.
+$$
+
+The secondary depth also fixes the projected area ratio:
+
+$$
+\delta_{\mathrm{sec}}=\frac{F_{c,V}}{F_{h,V}+F_{c,V}}=\frac{I_{c,V}A_c}{I_{h,V}A_h+I_{c,V}A_c}=\frac{A_c/A_h}{k_V+A_c/A_h}
+$$
+
+$$
+\Longrightarrow\quad\frac{A_c}{A_h}=\frac{k_V\delta_{\mathrm{sec}}}{1-\delta_{\mathrm{sec}}}=\frac{7.9\times0.0255}{1-0.0255}=0.207,
+$$
+
+so that the radius ratio is
+
+$$
+\frac{R_c}{R_h}=\sqrt{\frac{A_c}{A_h}}=\sqrt{0.207}=0.455.
+$$
+
+***Now we consider A0V as the hotter, larger component.***
+
+Since bolometric corrections are negligible for A–G type dwarfs, we may take $I_{\mathrm{bol}}\propto T^4$ and approximate the $V$-band surface-brightness ratio by
+
+$$
+\frac{T_h}{T_c}\approx k_V^{1/4}=7.9^{1/4}=1.68.
+$$
+
+With $T_h=T_{\mathrm{A0}}=9700\ \mathrm K$ the companion’s temperature follows as $T_c=T_h/1.68\approx5.77\times10^3\ \mathrm K$, which corresponds to a Sun-like G2V star. The radius ratio derived from the light-curve minima is consistent with $R_{\mathrm{G2}}=1.0R_\odot$ and $R_{\mathrm{A0}}=2.2R_\odot$.
+
+b) Adopt main-sequence masses $M_{\mathrm{A0V}}\approx2.2\mathfrak M_\odot$ and $\mathfrak M_{\mathrm{G2V}}=1.0\mathfrak M_\odot$. From the light curve we read the orbital period $P=1.5\ \mathrm d$.
+
+Hence Kepler’s third law in (au; yr; $\mathfrak M_\odot$) units gives
+
+$$
+a/\mathrm{au}=\sqrt[3]{(\mathfrak M_1+\mathfrak M_2)\cdot(P/\mathrm{yr})^2}=\left[3.2\times\left(\frac{1.5}{365.25}\right)^2\right]^{1/3}=0.038;
+$$
+
+$$
+a=0.038\ \mathrm{au}=5.7\cdot10^6\ \mathrm{km}\approx8R_\odot.
+$$
+
+c) Note that $R_{\mathrm{A0V}}+R_{\mathrm{G2V}}\approx2.2R_\odot+1.0R_\odot=3.2R_\odot$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.1%', '--fig-max': '488px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2025-theory-theoretical/p8-sol-fig1.png" alt="Complete native two-star Roche-lobe diagram with all dotted lobe boundaries, both stellar discs, A0V/G2V labels and Roche lobe boundary label/arrow." width="1524" height="737" loading="lazy" decoding="async" />
+<figcaption>Figure 2: Schematic view of the system</figcaption>
+</figure>
+
+
+Because the stars are so close, out-of-eclipse variability should arise from both *ellipsoidal distortion* and *reflection effects*. Each star heats the hemisphere of its companion that faces it, creating *hot spots* and brightness variations. The plotted light curve, however, shows nearly vertical ingress and egress and flat minima, which are inconsistent with real stellar atmospheres: *limb darkening* smooths the contacts and rounds the minima. The figure therefore depicts an idealized, “boxy” light curve rather than a realistic one.
+
+d) A0V stars are used as calibration “white standards”, with $(B-V)_{\mathrm{A0}}=0.00\ \mathrm{mag}$. For the G2V companion we adopt the solar value from the constants table, $(B-V)_{\mathrm{G2}}=0.65\ \mathrm{mag}$.
+
+The out-of-eclipse color index of the system is
+
+$$
+(B-V)_{\mathrm{out}}=\underbrace{(B-V)_{\mathrm{A0}}}_{0}+\Delta B-\Delta V.
+$$
+
+Here $\Delta B$ and $\Delta V$ denote the changes in the system’s magnitudes caused by the presence of the secondary component.
+
+$$
+\Delta V=-2.5\lg\frac{F_{h,V}+F_{c,V}}{F_{h,V}}=2.5\lg(1-\delta_{\mathrm{sec}})=2.5\lg(1-0.0255)=-0.028,
+$$
+
+$$
+\Delta B=-2.5\lg\frac{F_{h,B}+F_{c,B}}{F_{h,B}}=-2.5\lg\frac{F_{h,V}+F_{c,V}\cdot10^{-0.4\times0.65}}{F_{h,V}}=
+$$
+
+$$
+=-2.5\lg\frac{I_{h,V}A_h+I_{c,V}A_c\cdot10^{-0.4\times0.65}}{I_{h,V}A_h}=-2.5\lg\left(1+\frac{A_c\cdot10^{-0.4\times0.65}}{k_VA_h}\right)=
+$$
+
+$$
+=-2.5\lg\left(1+\frac{0.207}{7.9}\times10^{-0.4\times0.65}\right)=-0.0155.
+$$
+
+$$
+\therefore\ (B-V)_{\mathrm{out}}=0.012\ \mathrm{mag}.
+$$
+
+At primary minimum the hotter star is partially eclipsed. The system becomes slightly redder:
+
+$$
+\Delta V'=-2.5\lg\frac{F_{h,V}\cdot\left(1-\frac{A_c}{A_h}\right)+F_{c,V}}{F_{h,V}}=-2.5\lg\frac{I_{h,V}A_h\cdot\left(1-\frac{A_c}{A_h}\right)+I_{c,V}A_c}{I_{h,V}A_h}=
+$$
+
+$$
+=-2.5\lg\left[\left(1-\frac{A_c}{A_h}\right)+\frac{A_c}{A_h}\cdot\frac1{k_V}\right]=-2.5\lg\left[1-\frac{A_c}{A_h}\left(1-\frac1{k_V}\right)\right]=
+$$
+
+$$
+=-2.5\lg\left[1-0.207\times\frac{6.9}{7.9}\right]=0.217,
+$$
+
+$$
+\Delta B'=-2.5\lg\frac{F_{h,B}\cdot\left(1-\frac{A_c}{A_h}\right)+F_{c,B}}{F_{h,B}}=-2.5\lg\frac{F_{h,V}\cdot\left(1-\frac{A_c}{A_h}\right)+F_{c,V}\cdot10^{-0.4\times0.65}}{F_{h,V}}=
+$$
+
+$$
+=-2.5\lg\frac{I_{h,V}A_h\cdot\left(1-\frac{A_c}{A_h}\right)+I_{c,V}A_c\cdot10^{-0.4\times0.65}}{I_{h,V}A_h}=
+$$
+
+$$
+=-2.5\lg\left[\left(1-\frac{A_c}{A_h}\right)+\frac{A_c}{A_h}\cdot\frac{10^{-0.4\times0.65}}{k_V}\right]=-2.5\lg\left[1-\frac{A_c}{A_h}\left(1-\frac{10^{-0.4\times0.65}}{k_V}\right)\right]=
+$$
+
+$$
+=-2.5\lg\left[1-0.207\times\left(1-\frac{10^{-0.4\times0.65}}{7.9}\right)\right]0.232.
+$$
+
+$$
+\therefore\ (B-V)_{\mathrm{pri}}=\Delta B'-\Delta V'=0.015\ \mathrm{mag}.
+$$
+
+*Brief consistency check:* $\Delta V'=\Delta m_{\mathrm{pri}}-\Delta m_{\mathrm{sec}}$.
+
+At secondary minimum only the A0 star remains visible, so $(B-V)_{\mathrm{sec}}=0.00\ \mathrm{mag}$.
+
+Hence the color index curve is nearly flat, with a tiny red “bump” at primary eclipse and a small blueward excursion (back to $\approx0$) at secondary eclipse (see Fig. 3).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '93%', '--fig-max': '596px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2025-theory-theoretical/p8-sol-fig2.png" alt="Entire native colour-index graph, complete grid/boundary, all ticks, Color Index(B−V)/Orbital Phase axis labels, both red bumps and secondary blueward minimum." width="1861" height="885" loading="lazy" decoding="async" />
+<figcaption>Figure 3: Sketch of the color index curve of the system</figcaption>
+</figure>
+
+
+***Let A0V be the cooler star.***
+
+With $T_c=T_{\mathrm{A0}}=9700\ \mathrm K$, the companion’s temperature is $T_h=T_c\times1.68\approx16.3\times10^3\ \mathrm K$, corresponding to a B3–B4V star. Taking $R_{\mathrm{A0}}=2.2R_\odot$, the radius ratio derived from the light curve minima gives
+
+$$
+R_h=\frac{R_c}{0.455}\approx4.8R_\odot.
+$$
+
+However, a typical B3–B4V star has $R_{\mathrm{B3-B4}}\approx3.5R_\odot$, significantly smaller than the required value. Such stars have a significant bolometric correction, which strongly affects the temperature estimate. We adopt the bolometric correction approximation (see Fig. 4)
+
+$$
+BC_V\approx-5.0\left(\frac{\lg T/\mathrm K-4}{0.8}\right),\qquad T\geq10^4\ \mathrm K.
+$$
+
+The self-consistency condition relates the bolometric surface brightness ratio ($\propto T^4$) to the measured $V$ band ratio $k_V$:
+
+$$
+\frac{T_h^4}{T_{\mathrm{A0}}^4}=k_V\cdot10^{-0.4BC_V(T_h)}=k_V\left(\frac{T_h}{10^4\ \mathrm K}\right)^{2.5}.
+$$
+
+This yields a closed-form solution
+
+$$
+T_h/\mathrm K=\left[\frac{(T_{\mathrm{A0}}/\mathrm K)^4k_V}{10^{10}}\right]^{2/3}=\left[\frac{(9.7\cdot10^3)^4\times7.9}{10^{10}}\right]^{2/3}\approx3.7\cdot10^4.
+$$
+
+This corresponds to a very hot star of spectral type O. Such stars have radii significantly larger than $R_h$ (from about $7R_\odot$ upward). Therefore, even taking the bolometric correction into account does not allow further development of this case.
+
+The only possible composition of the system is A0V + G2V.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '90.5%', '--fig-max': '580px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/owao-2025-theory-theoretical/p8-sol-fig3.png" alt="Complete original Flower bolometric-correction/effective-temperature graph with BC/logTeff axes, all ticks, entire curve/data/error bars and full three-entry legend." width="1812" height="1278" loading="lazy" decoding="async" />
+<figcaption>Figure 4: Bolometric correction – effective temperature relation according to Flower (1996)</figcaption>
+</figure>
+
+
+**Marking Scheme:**
+
+- Question (a) Spectral type of 2nd component
+  1. Ratio of the stars’ temperatures — **3 pt.**
+  2. Spectral type — **2 pt.**
+- Question (b) Distance between components
+  1. Mass-luminosity relation or a comparable method — **2 pt.**
+  2. Semi-major axis of the relative orbit (correct method + answer) — **2 pt.**
+- Question (c) What’s wrong
+  1. Mention of stellar deformation — **1 pt.**
+  2. Mention of hot spots — **1 pt.**
+  3. Mention of limb darkening — **1 pt.**
+- Question (d) Sketch for $(B-V)$
+  1. Quantitative analysis of $(B-V)$ curve — **2 pt.**
+  2. Schematic drawing — **3 pt.**
+- Criterion (x) Consideration of the case where the A0V star is the cooler component
+  **3 pt.**, includes 1 pt. for mentioning this case
+
+> **Source note:** The official key on page 28 omits the equality sign immediately before the final value $0.232$ in the last $\Delta B'$ line. The omission is retained. Its masses use ordinary $M_{\mathrm{A0V}}$ for the first component and fraktur $\mathfrak M$ elsewhere; this source notation is retained. The separately printed Criterion (x), including its full 3-point award and 1-point mention allowance, belongs to the original whole task and is preserved after parts (a)–(d); no extra problem or invented part (x) is introduced.
+
+
+</Spoiler>
+
+<details>
+<summary>Теми и трудност</summary>
+
+Оценена трудност: 4/5.
+
+Звезди · Светлина и астрономически измервания · Двойни звезди · Звездни величини · Свойства на звездите
+
+Предпоставки: Гимназиална подготовка, Разширена олимпиадна подготовка
+
+</details>
+
+---
+
+Оригинал в Архива: [OWAO_2025_Theoretical_Problems.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2025/Theory/OWAO_2025_Theoretical_Problems.pdf#page=4)
+· официални решения: [OWAO_2025_Theoretical_Solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OWAO/2025/Theory/OWAO_2025_Theoretical_Solutions.pdf#page=25)
