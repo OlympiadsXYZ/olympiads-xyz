@@ -1,0 +1,342 @@
+---
+id: ioaa-2023-theory-x-p10
+source: 'IOAA 2023, Теория'
+title: 'Задача 10. Aldebaran'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2023/ioaa-2023-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T16:12:15.095Z'
+verifier: 'single-pass'
+---
+
+*IOAA 2023 — Theoretical competition · 25 т.*
+
+<details>
+<summary>Указания</summary>
+
+- Do not touch envelopes until the start of the examination.
+- The theoretical examination lasts for 5 hours and is worth a total of 250 marks.
+- There are Answer Sheets for carrying out detailed work and Working Sheets for rough work, which are already marked with your student code and question number.
+- Use only the answer sheets for a particular question for your answer. Please write only on the printed side of the sheet. Do not use the reverse side. If you have written something on any sheet which you do not want to be evaluated, cross it out.
+- Use as many mathematical expressions as you think may help the evaluator to better understand your solutions. The evaluator may not understand your language. If it is necessary to explain something in words, please use short phrases (if possible in English).
+- You are not allowed to leave your work desk without permission. If you need any assistance (malfunctioning calculator, need to visit a restroom, etc.), please draw the attention of the supervisor.
+- The beginning and end of the examination will be indicated by the supervisor. The remaining time will be displayed on a clock.
+- At the end of the examination you must stop writing immediately. Put everything back in the envelope and leave it on the table.
+- Once all envelopes are collected, your student guide will escort you out of the examination room.
+- A list of constants and useful relations are included in the envelope.
+
+</details>
+
+<details>
+<summary>Table of Constants</summary>
+
+### Fundamental constants
+
+| Constant | Symbol | Value |
+| --- | --- | --- |
+| Speed of light in vacuum | $c$ | $2.998\times10^8\,\mathrm{m\,s^{-1}}$ |
+| Planck constant | $h$ | $6.626\times10^{-34}\,\mathrm{J\,s}$ |
+| Boltzmann constant | $k_B$ | $1.381\times10^{-23}\,\mathrm{J\,K^{-1}}$ |
+| Stefan-Boltzmann constant | $\sigma$ | $5.670\times10^{-8}\,\mathrm{W\,m^{-2}\,K^{-4}}$ |
+| Elementary charge | $e$ | $1.602\times10^{-19}\,\mathrm C$ |
+| Universal gravitational constant | $G$ | $6.674\times10^{-11}\,\mathrm{N\,m^2\,kg^{-2}}$ |
+| Universal electric constant | $\epsilon_0$ | $8.854\times10^{-12}\,\mathrm{m^{-3}\,kg^{-1}\,s^4\,A^2}$ |
+| Universal gas constant | $R$ | $8.315\,\mathrm{J\,mol^{-1}\,K^{-1}}$ |
+| Avogadro constant | $N_A$ | $6.022\times10^{23}\,\mathrm{mol^{-1}}$ |
+| Wien’s displacement constant | $b=\lambda_mT$ | $2.898\times10^{-3}\,\mathrm{m\,K}$ |
+| Mass of electron | $m_e$ | $9.109\times10^{-31}\,\mathrm{kg}$ |
+| Mass of proton | $m_p$ | $1.673\times10^{-27}\,\mathrm{kg}$ |
+| Mass of neutron | $m_n$ | $1.675\times10^{-27}\,\mathrm{kg}$ |
+| Mass of Helium nucleus | $m_{\mathrm{He}}$ | $6.645\times10^{-27}\,\mathrm{kg}$ |
+| Atomic mass unit (a.m.u., Dalton) | | $1.661\times10^{-27}\,\mathrm{kg}$ |
+
+### Astronomical data
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Hubble constant | $H_0$ | $70\,\mathrm{km\,s^{-1}\,Mpc^{-1}}$ |
+| North Ecliptic Pole ($J2000.0$) | $(\alpha_E,\delta_E)$ | $(18\mathrm h\,00\mathrm m\,00\mathrm s,+66^\circ33'39'')$ |
+| North Galactic Pole ($J2000.0$) | $(\alpha_G,\delta_G)$ | $(12\mathrm h\,51\mathrm m\,26\mathrm s,+27^\circ07'42'')$ |
+| 1 jansky | $1\,\mathrm{Jy}$ | $10^{-26}\,\mathrm{W\,m^{-2}\,Hz^{-1}}$ |
+| 1 parsec | $1\,\mathrm{pc}$ | $3.086\times10^{16}\,\mathrm m=206\,265\,\mathrm{au}=3.262\,\mathrm{ly}$ |
+| 1 astronomical unit (au) | $1\,\mathrm{au}$ | $1.496\times10^{11}\,\mathrm m$ |
+| 1 sidereal day | $T_{\mathrm{SD}}$ | $23.93444\,\mathrm h=23\mathrm h\,56\mathrm m\,04\mathrm s$ |
+| 1 tropical year | | $365.2422$ solar days |
+| 1 sidereal year | | $365.2564$ solar days |
+
+</details>
+
+<details>
+<summary>Approximations and Gauss’s formulae</summary>
+
+### Approximations
+
+$$
+(1+x)^n\approx1+nx
+$$
+
+$$
+(1+x)(1+y)\approx1+x+y\quad\text{if }x\ll1\text{ and }y\ll1
+$$
+
+### Gauss’s formulae
+
+Spherical law of cosines: $\cos a=\cos b\cos c+\sin b\sin c\cos A$
+
+Spherical law of sines: $\dfrac{\sin A}{\sin a}=\dfrac{\sin B}{\sin b}=\dfrac{\sin C}{\sin c}$.
+
+</details>
+
+<details>
+<summary>The Sun, Earth and Moon</summary>
+
+### The Sun
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Solar luminosity | $L_\odot$ | $3.826\times10^{26}\,\mathrm W$ |
+| Apparent angular diameter of Sun | $\theta_\odot$ | $32'$ |
+| Effective temperature of Sun | $T_{\mathrm{eff},\odot}$ | $5778\,\mathrm K$ |
+| Apparent visual magnitude | | $-26.75$ |
+| Absolute visual magnitude | | $+4.82$ |
+| Apparent bolometric magnitude | | $-26.83$ |
+| Absolute bolometric magnitude | | $+4.74$ |
+| Distance of the Sun from the Galactic centre | | $\approx8\,\mathrm{kpc}$ |
+
+### The Earth and Moon
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Obliquity of the ecliptic (Earth) | $\epsilon$ | $23.5'$ |
+| Platonic year (period of precession of Earth’s axis) | | $25\,765$ years |
+| Apparent visual magnitude of full Moon | | $-12.74$ |
+| Apparent angular diameter of Moon | $\theta_L$ | $31'$ |
+| Inclination of the lunar orbit to the ecliptic | | $05^\circ08'43''$ |
+| Inclination of the lunar equator to its orbital plane | | $6.687^\circ$ |
+| Lunar sidereal month | $T_{\mathrm{SL}}$ | $27.321661\,\mathrm d=655.71986\,\mathrm h$ |
+| Synodic month | | $29.530589\,\mathrm d$ |
+| Tropical month | | $27.321582\,\mathrm d$ |
+| Anomalistic month (the average time between two successive Moon’s perigees) | | $27.554550\,\mathrm d$ |
+| Draconic month (time between two successive transits of the Moon through the same node) | | $27.212221\,\mathrm d$ |
+
+</details>
+
+<details>
+<summary>The Solar System</summary>
+
+| Object | Mean radius [km] | Mass [kg] | Semimajor axis [au] | Eccentricity |
+| --- | --- | --- | --- | --- |
+| Sun | $695\,700$ | $1.988\times10^{30}$ | — | — |
+| Mercury | $2\,440$ | $3.301\times10^{23}$ | $0.387$ | $0.206$ |
+| Venus | $6\,052$ | $4.867\times10^{24}$ | $0.723$ | $0.007$ |
+| Earth | $6\,378$ | $5.972\times10^{24}$ | $1.000$ | $0.016\,710$ |
+| Moon | $1\,737$ | $7.346\times10^{22}$ | $3.844\times10^5\,\mathrm{km}$ | $0.054\,900$ (range $0.026$–$0.077$) |
+| Mars | $3\,390$ | $6.417\times10^{23}$ | $1.524$ | $0.093$ |
+| Jupiter | $69\,911$ | $1.898\times10^{27}$ | $5.203$ | $0.048$ |
+| Saturn | $58\,232$ | $5.683\times10^{26}$ | $9.537$ | $0.054$ |
+| Uranus | $25\,362$ | $8.681\times10^{25}$ | $19.189$ | $0.047$ |
+| Neptune | $24\,622$ | $1.024\times10^{26}$ | $30.070$ | $0.009$ |
+
+</details>
+
+<details>
+<summary>General Marking Scheme</summary>
+
+| Case | Marking |
+| --- | --- |
+| Using incorrect physical concept (despite correct answers) | No points given |
+| Giving correct answer without detailed calculation | Deduct 50% of the marks for that part |
+| Minor mistakes in the calculations, e.g., wrong signs, symbols, substitutions | Deduct 20% of the marks for that part |
+| Units missing from final answers | Deduct 0.5 pts |
+| Too few or too many significant figures in the final answer | Deduct 0.5 pts |
+| Error resulting from another error in an earlier part for which the student already lost marks, if the answer is physically reasonable. | Full points (i.e., no deductions) |
+| Error resulting from another error in an earlier part, where the student should have realised the answer was physically unreasonable. | Deduct 20% of the marks for that part |
+
+For example, if due to an error in an earlier part, the student calculates the mass of a star as $2.5\times10^{30}\,\mathrm{kg}$ instead of $2\times10^{30}\,\mathrm{kg}$, they will only lose marks for the earlier part. However, if, for the same reason, a student calculates the mass as $2\times10^{25}\,\mathrm{kg}$, they should realize this is wrong (a few times the Earth’s mass) and thus should lose some marks for this part as well.
+
+</details>
+
+## Условие
+
+On 9 March 1497, Nicolaus Copernicus observed the occultation of Aldebaran by the Moon from Bologna. In his work *De revolutionibus orbium cœlestium* (Book VI, Chapter 27) Copernicus described the event: ”I saw the star touching the dark edge of the Moon and disappearing at the end of the 5th hour of the night between the horns of the Moon, closer to the south horn by a third of the Moon’s diameter.”
+
+Assuming that the occultation was observed on the local meridian, that at maximum occultation Aldebaran was $0.32'$ above the southern edge of the Moon, and that the apparent angular diameter of the Moon as seen from Bologna was $31.5'$, solve the following tasks:
+
+**a.** Find the latitude $\varphi_1$ of a place with the same longitude as Bologna, from which Aldebaran would have appeared to pass behind the centre of the Moon. (6 points)
+
+**b.** Find the duration of the occultation as seen from latitude $\varphi_1$ if Aldebaran appeared to pass along the diameter of the lunar disk. For simplicity, also assume that the Moon and the observer are moving linearly at constant speed, that the Moon’s orbit is circular and that the declination of the Moon does not change during the occultation. (5 points)
+
+**c.** Find the topocentric angular velocity of the Moon against the background stars (for an observer on the surface of the Earth) during the occultation for an observer at latitude $\varphi_1$, in arcmin/hour, applying the same assumptions as in part (b). (7 points)
+
+**d.** Estimate the range of the Moon’s topocentric angular velocities (against the background stars for an observer on the surface of the Earth) in arcmin/hour at latitude $\varphi_1$, assuming a circular orbit. Show how this result can be justified by expressing the relative velocity of the Moon and observer in terms of their velocity vectors. (7 points)
+
+The declination of Aldebaran was $\delta_{\mathrm{A}} = 15.37^\circ$ in 1497 (due to precession), and the latitude of Bologna is $\varphi_{\mathrm{B}} = 44.44^\circ\,\mathrm{N}$.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+(a) Aldebaran is far enough away that the light rays from it can be considered to be parallel, thus the problem can be modelled by the following diagram:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.7%', '--fig-max': '491px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2023-theory-x/s10-latitude.png" alt="Original lunar occultation latitude/parallax construction, all points, rays, tangent and angles." width="1535" height="900" loading="lazy" decoding="async" />
+</figure>
+
+
+where the light ray through $C$ passes through the centre of the Earth and thus $\delta_{\mathrm{A}}$ is the declination of Aldebaran; the ray through $D$ and $B$ (Bologna) represents the situation observed by Copernicus, with Aldebaran behind the Moon and $0.32'$ above the south edge; and the ray through $M$ and $P$ represents the situation where Aldebaran is exactly behind the centre of the Moon. $\varphi_{\mathrm{B}}$ is the geocentric latitude of Bologna, $\varphi_1$ is the latitude of the place $P$ and $r$ is the radius of the Earth (assume the Earth is spherical).
+
+Calculating the latitude $\varphi_1$ is thus a matter of simple geometry, where:
+
+$$
+\begin{aligned}
+|CD|&=r\sin(\varphi_{\mathrm{B}}-\delta_{\mathrm{A}}),\\
+|CM|&=r\sin(\varphi_1-\delta_{\mathrm{A}}),
+\end{aligned}
+$$
+
+and the distance $|DM|$ is the fraction of the Moon’s radius given by:
+
+$$
+|DM|=1737\,\mathrm{km}\times\left(1-\frac{0.32'}{31.5'/2}\right)=1702\,\mathrm{km}.
+$$
+
+Therefore, since
+
+$$
+\begin{aligned}
+|CM|&=|CD|+|DM|=3099\,\mathrm{km}+1702\,\mathrm{km}=4801\,\mathrm{km},\\
+\Longrightarrow\quad\varphi_1&=\arcsin\left(\frac{4801}{6378}\right)+\delta_{\mathrm{A}}=64.19^\circ.
+\end{aligned}
+$$
+
+(6 points)
+
+(b) Given the assumptions, the duration of the occultation will just depend on the difference between the tangential speeds of the observer, $v_{\mathrm{obs}}$, and Moon, $v_{\mathrm{Moon}}$, and on the diameter of the Moon.
+
+For the observer, the tangential speed is given by the circumference of their path at latitude $\varphi_1$ divided by the sidereal day:
+
+$$
+v_{\mathrm{obs}}=\frac{2\pi r_{\mathrm{Earth}}\cos\varphi_1}{23^{\mathrm{h}}\,56^{\mathrm{m}}\,4^{\mathrm{s}}}=729\,\mathrm{km/h}
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.9%', '--fig-max': '492px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2023-theory-x/s10-speeds.png" alt="Original Earth/Moon velocity vectors, full planet geometry and arrows." width="1539" height="659" loading="lazy" decoding="async" />
+</figure>
+
+
+Similarly for the Moon, using the semi-major axis of the Moon’s orbit and the length of the sidereal month (from the table of constants):
+
+$$
+v_{\mathrm{Moon}}=\frac{2\pi\times3.844\times10^5\,\mathrm{km}}{27.321661\,\mathrm{d}\times24}=3683\,\mathrm{km/h}
+$$
+
+The difference of speeds is then:
+
+$$
+v_{\mathrm{rel}}=v_{\mathrm{Moon}}-v_{\mathrm{obs}}=2954\,\mathrm{km/h}
+$$
+
+and the time taken to move across the lunar diameter ($2\times1737\,\mathrm{km}$) at that speed is:
+
+$$
+t=\frac{2\times1737\,\mathrm{km}}{2954\,\mathrm{km/h}}=1.176\approx1.18\,\mathrm{hours}.
+$$
+
+(5 points)
+
+(c) To determine the topocentric angular velocity, we need to find the distance $d$ between the observer (at place $P$ at latitude $\varphi_1$) and the Moon:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '72.3%', '--fig-max': '463px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2023-theory-x/s10-distance.png" alt="Original Earth/Moon parallax triangle, distance/radius and angle labels." width="1447" height="659" loading="lazy" decoding="async" />
+</figure>
+
+
+where $a$ is the semi-major axis of the Moon’s orbit, $\delta$ is the geocentric declination of the Moon, and $\delta'$ is the topocentric declination of the Moon as seen by the observer. We can rewrite $\varrho=\delta-\delta'$ and $\alpha=180^\circ-(\varphi_1-\delta)-\varrho=180^\circ-(\varphi_1-\delta)-(\delta-\delta')=180^\circ-(\varphi_1-\delta')$, then using the sine theorem:
+
+$$
+\frac{d}{\sin(\varphi_1-\delta)}=\frac{a}{\sin(180^\circ-(\varphi_1-\delta'))}=\frac{r}{\sin(\delta-\delta')}
+$$
+
+Simplifying and substituting $\delta'=\delta_{\mathrm{A}}$:
+
+$$
+\frac{d}{\sin(\varphi_1-\delta)}=\frac{a}{\sin(\varphi_1-\delta_{\mathrm{A}})}=\frac{r}{\sin(\delta-\delta_{\mathrm{A}})}
+$$
+
+We can now calculate $\delta$:
+
+$$
+\delta=\arcsin\left(\frac{r\sin(\varphi_1-\delta_{\mathrm{A}})}{a}\right)+\delta_{\mathrm{A}}=16.08^\circ
+$$
+
+and $d$:
+
+$$
+d=a\frac{\sin(\varphi_1-\delta)}{\sin(\varphi_1-\delta_{\mathrm{A}})}=380203\,\mathrm{km}.
+$$
+
+Thus the angular velocity is:
+
+$$
+\omega=\left(\frac{2R_{\mathrm{Moon}}}{d}\right)\left(\frac{1}{1.176\,\mathrm{h}}\right)\,\mathrm{rad/h}=\left(\frac{2\times1737}{380203}\right)\left(\frac{1}{1.176\,\mathrm{h}}\right)\left(\frac{180\times60}{\pi}\right)=26.71\approx27\,\mathrm{arcmin/h}.
+$$
+
+(7 points)
+
+(d) The result in part (c), $27\,\mathrm{arcmin/h}$, was calculated for the situation when the Moon and observer are moving in the same direction, reducing their relative velocity, and thus represents the lower limit of the range of topocentric angular velocities. The upper limit is given by the situation when the Moon and observer are moving in the opposite direction, i.e. when the Moon is due north.
+
+Using the calculation from part (b), we find that the relative linear speed is:
+
+$$
+v'_{\mathrm{rel}}=v_{\mathrm{Moon}}+v_{\mathrm{obs}}=3683+729=4412\,\mathrm{km/h}
+$$
+
+Neglecting the effect of the slightly greater distance between the observer and the Moon when the Moon is on the northern side of the sky, the angular speed will be greater by the ratio of the linear speeds,
+
+$$
+\omega'=\omega\frac{4416}{2954}=39.89\approx40\,\mathrm{arcmin/h},
+$$
+
+thus the range is approximately $27$–$40\,\mathrm{arcmin/h}$. (3 points)
+
+If the additional distance is taken into account, the upper limit will be around 1% less.
+
+Expressing the velocities as vectors,
+
+$$
+\vec{v}_{\mathrm{rel}}=\vec{v}_{\mathrm{Moon}}-\vec{v}_{\mathrm{obs}},
+$$
+
+the magnitude of the relative velocity, $v_{\mathrm{rel}}=|\vec{v}_{\mathrm{rel}}|$ is given by the scalar projection of $\vec{v}_{\mathrm{obs}}$ on $\vec{v}_{\mathrm{Moon}}$:
+
+$$
+v_{\mathrm{rel}}=v_{\mathrm{Moon}}-v_{\mathrm{obs}}\cos\alpha
+$$
+
+where $\alpha$ is the angle between the vectors. From this it can be seen that the relative velocity must be minimum for $\alpha=0^\circ$ and maximum for $\alpha=180^\circ$. These conditions are met on the local meridian, due south or due north, respectively. (4 points)
+
+
+</Spoiler>
+
+<details>
+<summary>Original PDF comments</summary>
+
+The original solution PDF contains two comments attributed to IOAA on this page:
+
+“In previuos erratic version it was "... - 1".”
+
+“In previous erratic version it was L_2/L_1 = ...”
+
+</details>
+
+<details>
+<summary>Бележки за изданието</summary>
+
+The English question packet includes a Ukrainian answer form for problem 9. The constants table prints Earth’s obliquity as 23.5′ and the Moon’s semimajor axis in km under an au heading. In the eclipse key, the magnitude addition and luminosity-ratio labels differ from its derivation and results; the original PDF correction comments are retained. Aldebaran’s key prints 4412 km/h and then uses 4416 in the angular-speed numerator. The X-ray question and key allocate points to parts (c) and (d) differently. DART’s alternative calculation prints both 0.17622 and 0.17662 m/s. The LISA key labels the component-mass calculation Part (b), repeats one algebra line and prints the period factor with a positive square. These printed discrepancies remain literal.
+
+</details>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2023/Theoretical/theory.pdf#page=17)
+· официални решения: [th_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2023/Theoretical/th_solutions.pdf#page=23)

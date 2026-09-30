@@ -1,0 +1,261 @@
+---
+id: ioaa-2023-theory-x-p7
+source: 'IOAA 2023, Теория'
+title: 'Задача 7. Libration'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2023/ioaa-2023-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T16:12:15.095Z'
+verifier: 'single-pass'
+---
+
+*IOAA 2023 — Theoretical competition · 20 т.*
+
+<details>
+<summary>Указания</summary>
+
+- Do not touch envelopes until the start of the examination.
+- The theoretical examination lasts for 5 hours and is worth a total of 250 marks.
+- There are Answer Sheets for carrying out detailed work and Working Sheets for rough work, which are already marked with your student code and question number.
+- Use only the answer sheets for a particular question for your answer. Please write only on the printed side of the sheet. Do not use the reverse side. If you have written something on any sheet which you do not want to be evaluated, cross it out.
+- Use as many mathematical expressions as you think may help the evaluator to better understand your solutions. The evaluator may not understand your language. If it is necessary to explain something in words, please use short phrases (if possible in English).
+- You are not allowed to leave your work desk without permission. If you need any assistance (malfunctioning calculator, need to visit a restroom, etc.), please draw the attention of the supervisor.
+- The beginning and end of the examination will be indicated by the supervisor. The remaining time will be displayed on a clock.
+- At the end of the examination you must stop writing immediately. Put everything back in the envelope and leave it on the table.
+- Once all envelopes are collected, your student guide will escort you out of the examination room.
+- A list of constants and useful relations are included in the envelope.
+
+</details>
+
+<details>
+<summary>Table of Constants</summary>
+
+### Fundamental constants
+
+| Constant | Symbol | Value |
+| --- | --- | --- |
+| Speed of light in vacuum | $c$ | $2.998\times10^8\,\mathrm{m\,s^{-1}}$ |
+| Planck constant | $h$ | $6.626\times10^{-34}\,\mathrm{J\,s}$ |
+| Boltzmann constant | $k_B$ | $1.381\times10^{-23}\,\mathrm{J\,K^{-1}}$ |
+| Stefan-Boltzmann constant | $\sigma$ | $5.670\times10^{-8}\,\mathrm{W\,m^{-2}\,K^{-4}}$ |
+| Elementary charge | $e$ | $1.602\times10^{-19}\,\mathrm C$ |
+| Universal gravitational constant | $G$ | $6.674\times10^{-11}\,\mathrm{N\,m^2\,kg^{-2}}$ |
+| Universal electric constant | $\epsilon_0$ | $8.854\times10^{-12}\,\mathrm{m^{-3}\,kg^{-1}\,s^4\,A^2}$ |
+| Universal gas constant | $R$ | $8.315\,\mathrm{J\,mol^{-1}\,K^{-1}}$ |
+| Avogadro constant | $N_A$ | $6.022\times10^{23}\,\mathrm{mol^{-1}}$ |
+| Wien’s displacement constant | $b=\lambda_mT$ | $2.898\times10^{-3}\,\mathrm{m\,K}$ |
+| Mass of electron | $m_e$ | $9.109\times10^{-31}\,\mathrm{kg}$ |
+| Mass of proton | $m_p$ | $1.673\times10^{-27}\,\mathrm{kg}$ |
+| Mass of neutron | $m_n$ | $1.675\times10^{-27}\,\mathrm{kg}$ |
+| Mass of Helium nucleus | $m_{\mathrm{He}}$ | $6.645\times10^{-27}\,\mathrm{kg}$ |
+| Atomic mass unit (a.m.u., Dalton) | | $1.661\times10^{-27}\,\mathrm{kg}$ |
+
+### Astronomical data
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Hubble constant | $H_0$ | $70\,\mathrm{km\,s^{-1}\,Mpc^{-1}}$ |
+| North Ecliptic Pole ($J2000.0$) | $(\alpha_E,\delta_E)$ | $(18\mathrm h\,00\mathrm m\,00\mathrm s,+66^\circ33'39'')$ |
+| North Galactic Pole ($J2000.0$) | $(\alpha_G,\delta_G)$ | $(12\mathrm h\,51\mathrm m\,26\mathrm s,+27^\circ07'42'')$ |
+| 1 jansky | $1\,\mathrm{Jy}$ | $10^{-26}\,\mathrm{W\,m^{-2}\,Hz^{-1}}$ |
+| 1 parsec | $1\,\mathrm{pc}$ | $3.086\times10^{16}\,\mathrm m=206\,265\,\mathrm{au}=3.262\,\mathrm{ly}$ |
+| 1 astronomical unit (au) | $1\,\mathrm{au}$ | $1.496\times10^{11}\,\mathrm m$ |
+| 1 sidereal day | $T_{\mathrm{SD}}$ | $23.93444\,\mathrm h=23\mathrm h\,56\mathrm m\,04\mathrm s$ |
+| 1 tropical year | | $365.2422$ solar days |
+| 1 sidereal year | | $365.2564$ solar days |
+
+</details>
+
+<details>
+<summary>Approximations and Gauss’s formulae</summary>
+
+### Approximations
+
+$$
+(1+x)^n\approx1+nx
+$$
+
+$$
+(1+x)(1+y)\approx1+x+y\quad\text{if }x\ll1\text{ and }y\ll1
+$$
+
+### Gauss’s formulae
+
+Spherical law of cosines: $\cos a=\cos b\cos c+\sin b\sin c\cos A$
+
+Spherical law of sines: $\dfrac{\sin A}{\sin a}=\dfrac{\sin B}{\sin b}=\dfrac{\sin C}{\sin c}$.
+
+</details>
+
+<details>
+<summary>The Sun, Earth and Moon</summary>
+
+### The Sun
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Solar luminosity | $L_\odot$ | $3.826\times10^{26}\,\mathrm W$ |
+| Apparent angular diameter of Sun | $\theta_\odot$ | $32'$ |
+| Effective temperature of Sun | $T_{\mathrm{eff},\odot}$ | $5778\,\mathrm K$ |
+| Apparent visual magnitude | | $-26.75$ |
+| Absolute visual magnitude | | $+4.82$ |
+| Apparent bolometric magnitude | | $-26.83$ |
+| Absolute bolometric magnitude | | $+4.74$ |
+| Distance of the Sun from the Galactic centre | | $\approx8\,\mathrm{kpc}$ |
+
+### The Earth and Moon
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Obliquity of the ecliptic (Earth) | $\epsilon$ | $23.5'$ |
+| Platonic year (period of precession of Earth’s axis) | | $25\,765$ years |
+| Apparent visual magnitude of full Moon | | $-12.74$ |
+| Apparent angular diameter of Moon | $\theta_L$ | $31'$ |
+| Inclination of the lunar orbit to the ecliptic | | $05^\circ08'43''$ |
+| Inclination of the lunar equator to its orbital plane | | $6.687^\circ$ |
+| Lunar sidereal month | $T_{\mathrm{SL}}$ | $27.321661\,\mathrm d=655.71986\,\mathrm h$ |
+| Synodic month | | $29.530589\,\mathrm d$ |
+| Tropical month | | $27.321582\,\mathrm d$ |
+| Anomalistic month (the average time between two successive Moon’s perigees) | | $27.554550\,\mathrm d$ |
+| Draconic month (time between two successive transits of the Moon through the same node) | | $27.212221\,\mathrm d$ |
+
+</details>
+
+<details>
+<summary>The Solar System</summary>
+
+| Object | Mean radius [km] | Mass [kg] | Semimajor axis [au] | Eccentricity |
+| --- | --- | --- | --- | --- |
+| Sun | $695\,700$ | $1.988\times10^{30}$ | — | — |
+| Mercury | $2\,440$ | $3.301\times10^{23}$ | $0.387$ | $0.206$ |
+| Venus | $6\,052$ | $4.867\times10^{24}$ | $0.723$ | $0.007$ |
+| Earth | $6\,378$ | $5.972\times10^{24}$ | $1.000$ | $0.016\,710$ |
+| Moon | $1\,737$ | $7.346\times10^{22}$ | $3.844\times10^5\,\mathrm{km}$ | $0.054\,900$ (range $0.026$–$0.077$) |
+| Mars | $3\,390$ | $6.417\times10^{23}$ | $1.524$ | $0.093$ |
+| Jupiter | $69\,911$ | $1.898\times10^{27}$ | $5.203$ | $0.048$ |
+| Saturn | $58\,232$ | $5.683\times10^{26}$ | $9.537$ | $0.054$ |
+| Uranus | $25\,362$ | $8.681\times10^{25}$ | $19.189$ | $0.047$ |
+| Neptune | $24\,622$ | $1.024\times10^{26}$ | $30.070$ | $0.009$ |
+
+</details>
+
+<details>
+<summary>General Marking Scheme</summary>
+
+| Case | Marking |
+| --- | --- |
+| Using incorrect physical concept (despite correct answers) | No points given |
+| Giving correct answer without detailed calculation | Deduct 50% of the marks for that part |
+| Minor mistakes in the calculations, e.g., wrong signs, symbols, substitutions | Deduct 20% of the marks for that part |
+| Units missing from final answers | Deduct 0.5 pts |
+| Too few or too many significant figures in the final answer | Deduct 0.5 pts |
+| Error resulting from another error in an earlier part for which the student already lost marks, if the answer is physically reasonable. | Full points (i.e., no deductions) |
+| Error resulting from another error in an earlier part, where the student should have realised the answer was physically unreasonable. | Deduct 20% of the marks for that part |
+
+For example, if due to an error in an earlier part, the student calculates the mass of a star as $2.5\times10^{30}\,\mathrm{kg}$ instead of $2\times10^{30}\,\mathrm{kg}$, they will only lose marks for the earlier part. However, if, for the same reason, a student calculates the mass as $2\times10^{25}\,\mathrm{kg}$, they should realize this is wrong (a few times the Earth’s mass) and thus should lose some marks for this part as well.
+
+</details>
+
+## Условие
+
+As a result of libration, studied among others by Johannes Hevelius, more than half of the Moon’s surface can be observed from Earth. Assume that the observer is geocentric.
+
+**a.** Estimate $\phi_B$, the maximum angle of libration in latitude. The axial tilt (obliquity) of the Moon with respect to its orbital plane is $\alpha = 6^\circ 41'$.
+
+**b.** Estimate $\phi_L$, the maximum angle of libration in longitude. Assume that the Moon is always aligned with the same side facing towards the second focus F2 of its orbit, and that the eccentricity of the Moon’s orbit $e$ changes between $0.044$ and $0.064$ on a timescale of several months.
+
+**c.** Estimate the fraction of the Moon’s surface which can be seen from Earth.
+
+**d.** Calculate how many months (lunations) are needed for an observer to see the Moon’s surface determined in part (c).
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+(a) $\phi_B=\alpha=6^\circ41'$ (*conceptually difficult:* 5 points)
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '39.4%', '--fig-max': '252px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2023-theory-x/s7-latitude.png" alt="Original Earth/Moon latitude libration diagram: full colored geometry and inclination." width="789" height="509" loading="lazy" decoding="async" />
+</figure>
+
+
+(b) The maximum angle of libration $\phi_L$ occurs when the Moon is at point $M$ and for $e=0.064$:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '58.1%', '--fig-max': '372px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2023-theory-x/s7-longitude.png" alt="Original elliptical-orbit longitude libration diagram: all positions, axes, focus and angle labels." width="1163" height="934" loading="lazy" decoding="async" />
+</figure>
+
+
+$\phi_L$ is the Earth–Moon–F2 angle; $|EF2|=2c$.
+
+Therefore $\sin(\phi_L/2)=c/a=e\Longrightarrow\phi_L=2\arcsin(0.064)=7.34^\circ=7^\circ20'$ (5 points)
+
+(c) In the less accurate approximation,
+
+$$
+(2\phi_B+2\phi_L)/180^\circ=x/50\%\quad\Longrightarrow\quad x=8\%
+$$
+
+and the total area visible is $S\approx50\%+x=58\%$.
+
+This is less accurate as it counts the overlapping areas made visible by both librations twice.
+
+A slightly more accurate approximation is given by taking the average of $\phi_B$ and $\phi_L$, $7^\circ01'$. The belt made visible by libration will thus be $2\pi R_{\mathrm{Moon}}\cdot7^\circ/360^\circ\approx213\,\mathrm{km}$ wide. The surface area of the belt is then approximately $213\,\mathrm{km}\times2\pi R_{\mathrm{Moon}}=2.32\times10^6\,\mathrm{km^2}$, which accounts for about 6% of the lunar surface. If the students does this algebraically before substituting, they also get:
+
+$$
+\frac{2\pi R_{\mathrm{Moon}}\cdot2\pi R_{\mathrm{Moon}}}{4\pi\,2R_{\mathrm{Moon}}^2}\cdot\frac{7^\circ}{360^\circ}=\pi\frac{7^\circ}{360^\circ}\approx6\%.
+$$
+
+In either case the total area visible is $S\approx50\%+6\%=56\%$.
+
+(less accurate solution 4 points, better solution 5 points)
+
+(d) It is necessary to find a common multiple of the period of libration in latitude $P_B=27.2122\,\mathrm{d}$ (the draconic month) and the period of libration in longitude $P_L=27.5545\,\mathrm{d}$ (the anomalistic month).
+
+The simplest way is analogous to synodic periods:
+
+$$
+\frac{1}{T_{\mathrm{syn}}}=\frac1{T_1}-\frac1{T_2}
+$$
+
+thus
+
+$$
+\frac1T=\frac1{P_B}-\frac1{P_L}\quad\Longrightarrow\quad T\approx2190.5\,\mathrm{d}=74\,\mathrm{lunations}.
+$$
+
+Or using continued fractions:
+
+$$
+\frac{P_L}{P_B}=\frac{275545}{272122}\approx1+\frac1{79+\frac1{2+\frac1{131+\frac1{6+\ldots}}}}.
+$$
+
+With the first term we approximate $P_L/P_B\approx80/79$; since $80\times27.2122\approx2176.9\,\mathrm{d}$ and $79\times27.5545\approx2176.8\,\mathrm{d}$ this is already close enough, and $T$ is again equal to about 74 lunations. (3 points)
+
+Since we only need half the cycle to see everything once (as the Moon swings away and back again during the whole cycle) therefore $T/2=37$ months $\approx3$ years is enough to see all of the potentially visible parts of the Moon’s surface. (2 points)
+
+
+</Spoiler>
+
+<details>
+<summary>Original PDF comments</summary>
+
+The original solution PDF contains two comments attributed to IOAA on this page:
+
+“In previuos erratic version it was "... - 1".”
+
+“In previous erratic version it was L_2/L_1 = ...”
+
+</details>
+
+<details>
+<summary>Бележки за изданието</summary>
+
+The English question packet includes a Ukrainian answer form for problem 9. The constants table prints Earth’s obliquity as 23.5′ and the Moon’s semimajor axis in km under an au heading. In the eclipse key, the magnitude addition and luminosity-ratio labels differ from its derivation and results; the original PDF correction comments are retained. Aldebaran’s key prints 4412 km/h and then uses 4416 in the angular-speed numerator. The X-ray question and key allocate points to parts (c) and (d) differently. DART’s alternative calculation prints both 0.17622 and 0.17662 m/s. The LISA key labels the component-mass calculation Part (b), repeats one algebra line and prints the period factor with a positive square. These printed discrepancies remain literal.
+
+</details>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2023/Theoretical/theory.pdf#page=12)
+· официални решения: [th_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2023/Theoretical/th_solutions.pdf#page=13)

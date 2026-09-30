@@ -1,0 +1,349 @@
+---
+id: ioaa-2023-theory-x-p11
+source: 'IOAA 2023, Теория'
+title: 'Задача 11. X-ray emission from galaxy clusters'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/IOAA/2023/ioaa-2023-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T16:12:15.095Z'
+verifier: 'single-pass'
+---
+
+*IOAA 2023 — Theoretical competition · 30 т.*
+
+<details>
+<summary>Указания</summary>
+
+- Do not touch envelopes until the start of the examination.
+- The theoretical examination lasts for 5 hours and is worth a total of 250 marks.
+- There are Answer Sheets for carrying out detailed work and Working Sheets for rough work, which are already marked with your student code and question number.
+- Use only the answer sheets for a particular question for your answer. Please write only on the printed side of the sheet. Do not use the reverse side. If you have written something on any sheet which you do not want to be evaluated, cross it out.
+- Use as many mathematical expressions as you think may help the evaluator to better understand your solutions. The evaluator may not understand your language. If it is necessary to explain something in words, please use short phrases (if possible in English).
+- You are not allowed to leave your work desk without permission. If you need any assistance (malfunctioning calculator, need to visit a restroom, etc.), please draw the attention of the supervisor.
+- The beginning and end of the examination will be indicated by the supervisor. The remaining time will be displayed on a clock.
+- At the end of the examination you must stop writing immediately. Put everything back in the envelope and leave it on the table.
+- Once all envelopes are collected, your student guide will escort you out of the examination room.
+- A list of constants and useful relations are included in the envelope.
+
+</details>
+
+<details>
+<summary>Table of Constants</summary>
+
+### Fundamental constants
+
+| Constant | Symbol | Value |
+| --- | --- | --- |
+| Speed of light in vacuum | $c$ | $2.998\times10^8\,\mathrm{m\,s^{-1}}$ |
+| Planck constant | $h$ | $6.626\times10^{-34}\,\mathrm{J\,s}$ |
+| Boltzmann constant | $k_B$ | $1.381\times10^{-23}\,\mathrm{J\,K^{-1}}$ |
+| Stefan-Boltzmann constant | $\sigma$ | $5.670\times10^{-8}\,\mathrm{W\,m^{-2}\,K^{-4}}$ |
+| Elementary charge | $e$ | $1.602\times10^{-19}\,\mathrm C$ |
+| Universal gravitational constant | $G$ | $6.674\times10^{-11}\,\mathrm{N\,m^2\,kg^{-2}}$ |
+| Universal electric constant | $\epsilon_0$ | $8.854\times10^{-12}\,\mathrm{m^{-3}\,kg^{-1}\,s^4\,A^2}$ |
+| Universal gas constant | $R$ | $8.315\,\mathrm{J\,mol^{-1}\,K^{-1}}$ |
+| Avogadro constant | $N_A$ | $6.022\times10^{23}\,\mathrm{mol^{-1}}$ |
+| Wien’s displacement constant | $b=\lambda_mT$ | $2.898\times10^{-3}\,\mathrm{m\,K}$ |
+| Mass of electron | $m_e$ | $9.109\times10^{-31}\,\mathrm{kg}$ |
+| Mass of proton | $m_p$ | $1.673\times10^{-27}\,\mathrm{kg}$ |
+| Mass of neutron | $m_n$ | $1.675\times10^{-27}\,\mathrm{kg}$ |
+| Mass of Helium nucleus | $m_{\mathrm{He}}$ | $6.645\times10^{-27}\,\mathrm{kg}$ |
+| Atomic mass unit (a.m.u., Dalton) | | $1.661\times10^{-27}\,\mathrm{kg}$ |
+
+### Astronomical data
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Hubble constant | $H_0$ | $70\,\mathrm{km\,s^{-1}\,Mpc^{-1}}$ |
+| North Ecliptic Pole ($J2000.0$) | $(\alpha_E,\delta_E)$ | $(18\mathrm h\,00\mathrm m\,00\mathrm s,+66^\circ33'39'')$ |
+| North Galactic Pole ($J2000.0$) | $(\alpha_G,\delta_G)$ | $(12\mathrm h\,51\mathrm m\,26\mathrm s,+27^\circ07'42'')$ |
+| 1 jansky | $1\,\mathrm{Jy}$ | $10^{-26}\,\mathrm{W\,m^{-2}\,Hz^{-1}}$ |
+| 1 parsec | $1\,\mathrm{pc}$ | $3.086\times10^{16}\,\mathrm m=206\,265\,\mathrm{au}=3.262\,\mathrm{ly}$ |
+| 1 astronomical unit (au) | $1\,\mathrm{au}$ | $1.496\times10^{11}\,\mathrm m$ |
+| 1 sidereal day | $T_{\mathrm{SD}}$ | $23.93444\,\mathrm h=23\mathrm h\,56\mathrm m\,04\mathrm s$ |
+| 1 tropical year | | $365.2422$ solar days |
+| 1 sidereal year | | $365.2564$ solar days |
+
+</details>
+
+<details>
+<summary>Approximations and Gauss’s formulae</summary>
+
+### Approximations
+
+$$
+(1+x)^n\approx1+nx
+$$
+
+$$
+(1+x)(1+y)\approx1+x+y\quad\text{if }x\ll1\text{ and }y\ll1
+$$
+
+### Gauss’s formulae
+
+Spherical law of cosines: $\cos a=\cos b\cos c+\sin b\sin c\cos A$
+
+Spherical law of sines: $\dfrac{\sin A}{\sin a}=\dfrac{\sin B}{\sin b}=\dfrac{\sin C}{\sin c}$.
+
+</details>
+
+<details>
+<summary>The Sun, Earth and Moon</summary>
+
+### The Sun
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Solar luminosity | $L_\odot$ | $3.826\times10^{26}\,\mathrm W$ |
+| Apparent angular diameter of Sun | $\theta_\odot$ | $32'$ |
+| Effective temperature of Sun | $T_{\mathrm{eff},\odot}$ | $5778\,\mathrm K$ |
+| Apparent visual magnitude | | $-26.75$ |
+| Absolute visual magnitude | | $+4.82$ |
+| Apparent bolometric magnitude | | $-26.83$ |
+| Absolute bolometric magnitude | | $+4.74$ |
+| Distance of the Sun from the Galactic centre | | $\approx8\,\mathrm{kpc}$ |
+
+### The Earth and Moon
+
+| Data | Symbol | Value |
+| --- | --- | --- |
+| Obliquity of the ecliptic (Earth) | $\epsilon$ | $23.5'$ |
+| Platonic year (period of precession of Earth’s axis) | | $25\,765$ years |
+| Apparent visual magnitude of full Moon | | $-12.74$ |
+| Apparent angular diameter of Moon | $\theta_L$ | $31'$ |
+| Inclination of the lunar orbit to the ecliptic | | $05^\circ08'43''$ |
+| Inclination of the lunar equator to its orbital plane | | $6.687^\circ$ |
+| Lunar sidereal month | $T_{\mathrm{SL}}$ | $27.321661\,\mathrm d=655.71986\,\mathrm h$ |
+| Synodic month | | $29.530589\,\mathrm d$ |
+| Tropical month | | $27.321582\,\mathrm d$ |
+| Anomalistic month (the average time between two successive Moon’s perigees) | | $27.554550\,\mathrm d$ |
+| Draconic month (time between two successive transits of the Moon through the same node) | | $27.212221\,\mathrm d$ |
+
+</details>
+
+<details>
+<summary>The Solar System</summary>
+
+| Object | Mean radius [km] | Mass [kg] | Semimajor axis [au] | Eccentricity |
+| --- | --- | --- | --- | --- |
+| Sun | $695\,700$ | $1.988\times10^{30}$ | — | — |
+| Mercury | $2\,440$ | $3.301\times10^{23}$ | $0.387$ | $0.206$ |
+| Venus | $6\,052$ | $4.867\times10^{24}$ | $0.723$ | $0.007$ |
+| Earth | $6\,378$ | $5.972\times10^{24}$ | $1.000$ | $0.016\,710$ |
+| Moon | $1\,737$ | $7.346\times10^{22}$ | $3.844\times10^5\,\mathrm{km}$ | $0.054\,900$ (range $0.026$–$0.077$) |
+| Mars | $3\,390$ | $6.417\times10^{23}$ | $1.524$ | $0.093$ |
+| Jupiter | $69\,911$ | $1.898\times10^{27}$ | $5.203$ | $0.048$ |
+| Saturn | $58\,232$ | $5.683\times10^{26}$ | $9.537$ | $0.054$ |
+| Uranus | $25\,362$ | $8.681\times10^{25}$ | $19.189$ | $0.047$ |
+| Neptune | $24\,622$ | $1.024\times10^{26}$ | $30.070$ | $0.009$ |
+
+</details>
+
+<details>
+<summary>General Marking Scheme</summary>
+
+| Case | Marking |
+| --- | --- |
+| Using incorrect physical concept (despite correct answers) | No points given |
+| Giving correct answer without detailed calculation | Deduct 50% of the marks for that part |
+| Minor mistakes in the calculations, e.g., wrong signs, symbols, substitutions | Deduct 20% of the marks for that part |
+| Units missing from final answers | Deduct 0.5 pts |
+| Too few or too many significant figures in the final answer | Deduct 0.5 pts |
+| Error resulting from another error in an earlier part for which the student already lost marks, if the answer is physically reasonable. | Full points (i.e., no deductions) |
+| Error resulting from another error in an earlier part, where the student should have realised the answer was physically unreasonable. | Deduct 20% of the marks for that part |
+
+For example, if due to an error in an earlier part, the student calculates the mass of a star as $2.5\times10^{30}\,\mathrm{kg}$ instead of $2\times10^{30}\,\mathrm{kg}$, they will only lose marks for the earlier part. However, if, for the same reason, a student calculates the mass as $2\times10^{25}\,\mathrm{kg}$, they should realize this is wrong (a few times the Earth’s mass) and thus should lose some marks for this part as well.
+
+</details>
+
+## Условие
+
+Clusters of galaxies are strong X-ray sources. It has been established that the emission mechanism is thermal bremsstrahlung (free-free radiation) from a hot hydrogen and helium plasma inside the cluster. The luminosity $L_X$ (in Watts) of each component of the plasma is described by the formula:
+
+$$
+L_X = 6\times 10^{-41}N_e N_X T^{\frac12}V Z_X^2,
+$$
+
+where the symbols represent:
+
+- $X$ — Hydrogen (H) or Helium (He),
+- $N_e$ — number density of electrons [$\mathrm{m^{-3}}$],
+- $N_X$ — number density of ions $X$ [$\mathrm{m^{-3}}$],
+- $Z_X$ — atomic number of ion $X$,
+- $T$ — temperature of the plasma [$\mathrm{K}$],
+- $V$ — volume occupied by the plasma [$\mathrm{m^3}$].
+
+**a.** Determine the total mass (in solar masses) of the plasma which emits the X-rays, assuming that:
+
+- the plasma is fully ionized with 1 helium ion for every 10 hydrogen ions,
+- $L_{\mathrm{total}} = 1.0\times 10^{37}\,\mathrm{W}$,
+- $T = 80\times 10^6\,\mathrm{K}$,
+- the plasma is uniformly distributed in a sphere of radius $R = 500\,\mathrm{kpc}$,
+- self-absorption is negligible.
+
+(16 points)
+
+The photons of the cosmic microwave background (CMB) interact with plasma in a process known as inverse Compton scattering. The CMB normally has a thermal blackbody spectrum at a temperature of $2.73\,\mathrm{K}$. However, interaction with the plasma leads to distortion of the CMB spectrum (known as the Sunyaev-Zeldovich effect).
+
+**b.** Estimate the mean free path of CMB photons in the plasma, i.e. the average distance travelled by a photon before interacting with an electron. Express it in Mpc. The effective cross section for photon-electron interactions is $\sigma = 6.65\times 10^{-29}\,\mathrm{m^2}$. (5 points)
+
+**c.** Estimate the typical energy of CMB photons. (3 points)
+
+**d.** The energy of CMB photons can be increased by a factor of up to $(1+\beta)/(1-\beta)$ due to the inverse Compton scattering, where $v = \beta c$ is the velocity of electrons. Estimate the energy of scattered CMB photons. (6 points)
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Part (a)**
+
+Concentrations of electrons, $N_e$, and He nuclei, $N_{\mathrm{He}}$, is related to the concentration of H nuclei, $N_{\mathrm{H}}$:
+
+$$
+N_{\mathrm{He}}=0.1N_{\mathrm{H}}
+$$
+
+(1 point)
+
+$$
+N_e=N_{\mathrm{H}}+2N_{\mathrm{He}}=1.2N_{\mathrm{H}}
+$$
+
+(2 points)
+
+The total X-ray emission is a sum of the bremsstrahlung generated by interaction of electrons with H and He nuclei:
+
+$$
+L=6\cdot10^{-41}N_e T^{\frac12}V(N_{\mathrm{H}}+Z_{\mathrm{He}}^2N_{\mathrm{He}}),
+$$
+
+where $Z_{\mathrm{He}}=2$. The luminosity $L$ is expressed by the concentration of H nuclei:
+
+$$
+\begin{aligned}
+L&=6\cdot10^{-41}\,1.2N_{\mathrm{H}}T^{\frac12}V\,1.4N_{\mathrm{H}},\\
+\Longrightarrow\quad L&=(10.08\times10^{-41})T^{\frac12}VN_{\mathrm{H}}^2\approx10^{-40}T^{\frac12}VN_{\mathrm{H}}^2.
+\end{aligned}
+$$
+
+(3 points)
+
+The volume $V$ is given by:
+
+$$
+V=\frac43\pi R^3=1.54\cdot10^{67}\,\mathrm{m^3}.
+$$
+
+(3 points)
+
+Thus, the concentration of $N_{\mathrm{H}}$:
+
+$$
+N_{\mathrm{H}}=\left(\frac{L}{10^{-40}T^{\frac12}V}\right)^{1/2}\approx8.48\times10^2\,\mathrm{m^{-3}}.
+$$
+
+(3 points)
+
+To obtain the total mass of the plasma, $M$, one should multiply the volume $V$ by the sum of H and He mass densities:
+
+$$
+M=V(N_{\mathrm{H}}m_{\mathrm{H}}+N_{\mathrm{He}}m_{\mathrm{He}})=3.03\times10^{43}\,\mathrm{kg}\approx1.52\times10^{13}\,\mathrm{M_\odot}.
+$$
+
+(4 points)
+
+where $m_{\mathrm{H}}$ and $m_{\mathrm{He}}$ are the masses of hydrogen and helium atoms.
+
+**Part (b)**
+
+Let $L$ be the mean free path of a photon. The number of electrons in a cylinder with a cross section area of $\sigma$ and a length of $L$ equals
+
+$$
+N=nL\sigma=1\quad\Longrightarrow\quad L=1/(n\sigma).
+$$
+
+Assuming $n=N_e=1.2N_{\mathrm{H}}=1.018\times10^3\,\mathrm{m^{-3}}$, we get
+
+$$
+L=\frac1{1.018\times10^3\cdot6.65\times10^{-29}}=1.48\times10^{25}\,\mathrm{m}=4.79\times10^8\,\mathrm{pc}\approx500\,\mathrm{Mpc}.
+$$
+
+(5 points)
+
+(The radius of the cluster is $\sim1000$ times smaller than $L$, so the interactions between the CMB photons and hot electrons are rare.)
+
+**Part (c)**
+
+Using Wien’s law,
+
+$$
+\lambda=\frac bT=\frac{2.898\times10^{-3}}{2.73}=1.07\times10^{-3}\,\mathrm{m}
+$$
+
+$$
+\Longrightarrow\quad E_0=\frac{hc}{\lambda}=1.85\times10^{-22}\,\mathrm{J}
+$$
+
+(4 points)
+
+**Part (d)**
+
+We first have to estimate the typical velocity $v_e$ of electrons using the formula for the kinetic energy of the particles in a gas.
+
+$$
+\frac12mv^2=\frac32kT\quad\Longrightarrow\quad v_e=\sqrt{\frac{3kT}{m_e}}
+$$
+
+$$
+\therefore\ v_e=\sqrt{\frac{3\cdot1.381\times10^{-23}\cdot8\times10^7}{9.109\times10^{-31}}}=6.032\times10^7\,\mathrm{m\,s^{-1}}=0.202c
+$$
+
+(3 points)
+
+The energy of upscattered photons is:
+
+$$
+E'=\frac{1+\beta}{1-\beta}E_0\approx1.5E_0=2.78\times10^{-22}\,\mathrm{J}.
+$$
+
+(2 points)
+
+Note: The formula for the kinetic energy of particles in an ideal gas remains valid even at such high temperatures. This is because
+
+$$
+x=\frac{m_ec^2}{kT}=\frac{9.109\times10^{-31}\cdot(2.998\times10^8)^2}{1.381\times10^{-23}\cdot8\times10^7}=74.1\gg1,
+$$
+
+and the electrons can be treated as non-relativistic. The full relativistic formula for the rms velocity of particles in an ideal gas is
+
+$$
+\langle v_e^2\rangle=\frac{xc^2}{K_2(x)}\int_0^\infty\frac{\sinh^4\phi}{\cosh\phi}e^{-x\cosh\phi}\,d\phi,
+$$
+
+where $K_2(x)$ is a modified Bessel function of the second kind. It can be shown that for $x=74.1$ this formula yields $\sqrt{\langle v_e^2\rangle}=0.198c$, which is virtually identical to the prediction of the non-relativistic formula.
+
+
+</Spoiler>
+
+<details>
+<summary>Original PDF comments</summary>
+
+The original solution PDF contains two comments attributed to IOAA on this page:
+
+“In previuos erratic version it was "... - 1".”
+
+“In previous erratic version it was L_2/L_1 = ...”
+
+</details>
+
+<details>
+<summary>Бележки за изданието</summary>
+
+The English question packet includes a Ukrainian answer form for problem 9. The constants table prints Earth’s obliquity as 23.5′ and the Moon’s semimajor axis in km under an au heading. In the eclipse key, the magnitude addition and luminosity-ratio labels differ from its derivation and results; the original PDF correction comments are retained. Aldebaran’s key prints 4412 km/h and then uses 4416 in the angular-speed numerator. The X-ray question and key allocate points to parts (c) and (d) differently. DART’s alternative calculation prints both 0.17622 and 0.17662 m/s. The LISA key labels the component-mass calculation Part (b), repeats one algebra line and prints the period factor with a positive square. These printed discrepancies remain literal.
+
+</details>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2023/Theoretical/theory.pdf#page=18)
+· официални решения: [th_solutions.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IOAA/2023/Theoretical/th_solutions.pdf#page=27)

@@ -1,0 +1,295 @@
+---
+id: ipho-1993-theory-p3
+source: 'IPhO 1993, Теория'
+title: 'Задача 3. Electron Beam'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/IPhO/1993/ipho-1993-theory.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T16:46:52.828Z'
+verifier: 'single-pass'
+---
+
+*Theoretical Competition · 12 юли 1993 г. · 10 т.*
+
+<Warning title="Бележка към темата">
+The complete native cover, constants table and all three worked keys and grading schemes are included. The printed permeability value and charge-sign discrepancies are preserved and identified at their source expressions.
+</Warning>
+
+<details>
+<summary>Native theoretical competition cover and instructions</summary>
+
+COUNTRY: ____________________
+
+**XXIV INTERNATIONAL PHYSICS OLYMPIAD**
+
+**WILLIAMSBURG, VIRGINIA, U.S.A.**
+
+**THEORETICAL COMPETITION — July 12, 1993**
+
+**Time available: 5 hours. READ THIS FIRST! INSTRUCTIONS:**
+
+1. Use only the pen provided.
+2. Use only the marked side of the paper.
+3. Begin each problem on a separate sheet.
+4. Write at the top of each and every page: the number of the problem; the number of the page of your solution in each problem; the total number of pages in your solution to the problem.
+
+Example (for Problem 1): 1 1/4; 1 2/4; 1 3/4; 1 4/4.
+
+</details>
+
+<details>
+<summary>Native common constants table</summary>
+
+**General Tabulated Information**
+
+| Quantity | Symbol | Value |
+|---|---|---|
+| Earth's mean radius | $R_E$ | $6.4\times10^6\ \mathrm m$ |
+| acceleration due to gravity | $g$ | $9.8\ \mathrm{m\ s^{-2}}$ |
+| Newtonian gravitational constant | $G$ | $6.67\times10^{-11}\ \mathrm{N\ m^2\ kg^{-2}}$ |
+| permittivity of vacuum | $\varepsilon_0$ | $8.85\times10^{-12}\ \mathrm{C^2\ N^{-1}\ m^{-2}}$ |
+| permeability of vacuum | $\mu_0$ | $8.85\times10^{-7}\ \mathrm{N\ A^{-2}}$ |
+| speed of light in vacuum (or air) | $c$ | $3.00\times10^8\ \mathrm{m\ s^{-1}}$ |
+| elementary charge | $e$ | $1.60\times10^{-19}\ \mathrm C$ |
+| mass of electron | $m_e$ | $9.11\times10^{-31}\ \mathrm{kg}$ |
+| mass of proton | $m_p$ | $1.67\times10^{-27}\ \mathrm{kg}$ |
+| Planck constant | $h$ | $6.63\times10^{-34}\ \mathrm{J\ s}$ |
+| Avogadro constant | $N_A$ | $6.02\times10^{23}\ \mathrm{mol^{-1}}$ |
+| Boltzmann constant | $k$ | $1.38\times10^{-23}\ \mathrm{J\ K^{-1}}$ |
+| molar gas constant | $R$ | $8.31\ \mathrm{J\ mol^{-1}\ K^{-1}}$ |
+
+The permeability value $8.85\times10^{-7}\ \mathrm{N\ A^{-2}}$ is printed in the native constants table and is preserved as a source discrepancy.
+
+</details>
+
+## Условие
+
+An accelerating voltage $V_0$ produces a uniform, parallel beam of energetic electrons. The electrons pass a thin, long, positively charged copper wire stretched at right angles to the original direction of the beam, as shown in the figure. The symbol $b$ denotes the distance at which an electron would pass the wire if the wire were uncharged. The electrons then proceed to a screen (viewing surface) a distance $L$ ($\gg b$) beyond the wire, as shown. The beam initially extends to distances $\pm b_{\max}$ with respect to the axis of the wire. Both the width of the beam and the length of the wire may be considered infinite in the direction perpendicular to the paper.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '95.9%', '--fig-max': '614px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1993-theory/p3-fig1.png" alt="Entire native electronbeam/wire/viewingsurface setup,all arrows,b,L andcomplete perpendicularwire/not-to-scale caption." width="1918" height="589" loading="lazy" decoding="async" />
+</figure>
+
+
+Some numerical data are provided here; you will find other numerical data in the table at the front of the examination:
+
+| Quantity | Value |
+|---|---|
+| radius of wire | $r_0=10^{-6}\ \mathrm m$ |
+| maximum value of $b$ | $b_{\max}=10^{-4}\ \mathrm m$ |
+| electric charge per unit length of wire | $q_{\mathrm{linear}}=4.4\times10^{-11}\ \mathrm{C\ m^{-1}}$ |
+| accelerating voltage | $V_0=2\times10^4\ \mathrm V$ |
+| length from wire to observing screen | $L=0.3\ \mathrm m$ |
+
+**Note:** For parts 2–4, make reasonable approximations that lead to analytical and numerical solutions.
+
+**1)** Calculate the electric field $\mathbf E$ produced by the wire. Sketch the magnitude of $\mathbf E$ as a function of distance from the axis of the wire. **[1 т.]**
+
+**2)** Use classical physics to calculate the angular deflection of an electron. Do this for values of the parameter $b$ such that the electron does not strike the wire. Let $\theta_{\mathrm{final}}$ denote the (small) angle between the initial velocity of the electron and the velocity when the electron reaches the viewing surface. Hence, calculate $\theta_{\mathrm{final}}$. **[5 т.]**
+
+**3)** Calculate and sketch the pattern of impacts (i.e., the intensity distribution) on the viewing screen that classical physics predicts. **[1,5 т.]**
+
+**4)** Quantum physics predicts a major difference in the intensity distribution (relative to what classical physics predicts). Sketch the pattern for the quantum prediction and provide quantitative detail. **[2,5 т.]**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+<ProblemSection id="solution-part1">
+
+### 1) Wire electric field
+
+By symmetry, the electric field will point radially away from the wire, and its magnitude will depend only on the radius $r$ (in cylindrical coordinates). Place an imaginary cylinder around the wire and use Gauss's law:
+
+$$
+2\pi rE(r)=\frac{q_{\mathrm{linear}}}{\varepsilon_0}
+$$
+
+for a cylinder of radius $r$ and unit length, provided $r\geq r_0$. Therefore
+
+$$
+E(r)=\frac{q_{\mathrm{linear}}}{2\pi r\varepsilon_0}=\frac{0.791}r\ \mathrm{N/C}\quad\text{provided }r\geq r_0.
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '92.5%', '--fig-max': '592px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1993-theory/p3-sol-fig1-v2.png" alt="Complete native wire Gauss-law calculation block andE(r) curve,all formulas,fullaxes,0/r0/r labels; no clipped adjacent formula." width="1851" height="383" loading="lazy" decoding="async" />
+</figure>
+
+
+When $r<r_0$, the electric field is zero (because copper is a good conductor), that is, the electric field is zero inside the wire.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part2">
+
+### 2) Classical deflection: rough and integrated estimates
+
+The problem stated that the angular deflection is small. Estimate the deflection angle $\theta_{\mathrm{final}}$ by forming a quotient: the momentum acquired transverse to the initial velocity divided by the initial momentum:
+
+$$
+\theta_{\mathrm{final}}\cong\frac{|\Delta\mathbf p_\perp|}{mv_0}.
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.5%', '--fig-max': '272px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1993-theory/p3-sol-fig2.png" alt="Complete original weaklybent electrontrajectory/unchargedbaseline,b arrow andwire." width="851" height="316" loading="lazy" decoding="async" />
+</figure>
+
+
+A first estimate of the transverse momentum can be made as follows:
+
+The transverse force (where it is significant) is of order $eq_{\mathrm{linear}}/(2\pi\varepsilon_0b)$.
+
+The (significant) transverse force operates for a time such that the electron goes a distance of order $2b$, and hence that transverse force operates for a time of order $2b/v_0$.
+
+The product of force and operating time gives an estimate the transverse momentum:
+
+$$
+|\Delta\mathbf p_\perp|\cong\frac{eq_{\mathrm{linear}}2b}{2\pi\varepsilon_0bv_0}=\frac{eq_{\mathrm{linear}}}{\pi\varepsilon_0v_0},
+$$
+
+and so
+
+$$
+\theta_{\mathrm{final}}\cong\frac{eq_{\mathrm{linear}}}{\pi\varepsilon_0mv_0^2}=\frac{q_{\mathrm{linear}}}{\pi\varepsilon_0 2V_0}=3.96\times10^{-5}\ \text{radians}
+$$
+
+after one uses energy conservation to say $\tfrac12mv_0^2=eV_0$. Note that the deflection is extremely small and that the deflection is independent of the impact parameter $b$. Because the force between the positively charged wire and the electron is attractive, the deflection will bend the trajectory toward the wire — though only ever so slightly.
+
+A more accurate estimate can be made by setting up an elementary integration for $|\Delta\mathbf p_\perp|$, as follows. For the sake of the integration, approximate the actual trajectory by a straight line that passes the wire at distance $b$, as shown in the sketch.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.7%', '--fig-max': '388px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1993-theory/p3-sol-fig3.png" alt="Complete original impulseintegrationgeometry,b,r,phi,deltaphi,r-deltaphi,v0-deltat andallarrows." width="1214" height="361" loading="lazy" decoding="async" />
+</figure>
+
+
+$$
+|\mathbf F_\perp|=\frac{eq_{\mathrm{linear}}}{2\pi\varepsilon_0r}\cos\varphi,\qquad v_0\Delta t\cos\varphi=r\Delta\varphi,\qquad\Delta t=\frac{r\Delta\varphi}{v_0\cos\varphi}.
+$$
+
+$$
+|\mathbf F_\perp|\Delta t=\frac{eq_{\mathrm{linear}}}{2\pi\varepsilon_0r}\cos\varphi\frac{r\Delta\varphi}{v_0\cos\varphi}=\frac{eq_{\mathrm{linear}}}{2\pi\varepsilon_0v_0}\Delta\varphi.
+$$
+
+Adding up the increments in $\Delta\varphi$ over the range $-\pi/2$ to $\pi/2$ yields $|\Delta\mathbf p_\perp|=eq_{\mathrm{linear}}/(2\varepsilon_0v_0)$.
+
+The better estimate differs from the first estimate by merely the factor $\pi/2$. The better estimate yields
+
+$$
+\theta_{\mathrm{final}}\cong\frac{eq_{\mathrm{linear}}}{2\varepsilon_0mv_0^2}=\frac{q_{\mathrm{linear}}}{2\varepsilon_0 2V_0}=6.21\times10^{-5}\ \text{radians}.
+$$
+
+</ProblemSection>
+
+<ProblemSection id="solution-part3">
+
+### 3) Classical intensity distribution
+
+Most of the bending of the trajectory occurs within a distance from the wire of order $b$. On the scale of $L$, order $b$ is very small indeed. Therefore we may approximate the trajectory by two straight lines with a kink near the wire. Thus, at the viewing surface, the transverse displacement of each trajectory is
+
+$$
+\text{transverse displacement}=\theta_{\mathrm{final}}L=6.21\times10^{-5}\times0.3=1.86\times10^{-5}\ \text{meter}\cong19r_0\gg r_0.
+$$
+
+Thus the portions of the beam that pass on opposite sides of the wire have a region of overlap, as shown in the sketch.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '59.6%', '--fig-max': '382px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1993-theory/p3-sol-fig4.png" alt="Entire native classicalbeamoverlap/intensityprofile diagram,wire,allrays,bmax-thetaL,8.1e-5m,thetaL-r0,profile andnot-to-scale." width="1193" height="605" loading="lazy" decoding="async" />
+</figure>
+
+
+The full width of the overlap region is
+
+$$
+\text{full width}=2\times(\theta_{\mathrm{final}}L-r_0)\cong36r_0=36\times10^{-6}\ \text{meter}.
+$$
+
+The density of impacts is constant within each region and doubled in the overlap region.
+
+</ProblemSection>
+
+<ProblemSection id="solution-part4">
+
+### 4) Quantum interference and historical note
+
+Associated with the electron beam is a quantum wave pattern whose de Broglie wavelength is
+
+$$
+\lambda=\frac h{mv_0}=\frac h{\sqrt{2meV_0}}=8.68\times10^{-12}\ \text{meter}.
+$$
+
+The de Broglie wavelength is so much smaller than the beam width $2b_{\max}$ that one may ignore “single slit diffraction” effects. Rather, to the right of the wire, two plane waves that travel at a fixed angle relative to each other (an angle $2\theta_{\mathrm{final}}$) overlap and interfere. In the region where, classically, the two halves of the original beam overlap, there will be interference maxima and minima.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '60.9%', '--fig-max': '390px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-1993-theory/p3-sol-fig5.png" alt="Entire native quantumtwo-wave crest/trough diagram andschematic intensityprofile,theta_final,lambda/2,C/T legend,stepiny andinset." width="1218" height="679" loading="lazy" decoding="async" />
+</figure>
+
+
+Reference to the sketch indicates that
+
+$$
+\text{interval between adjacent constructive interference locations}
+=\text{step in }y
+=\frac{\lambda/2}{\sin\theta_{\mathrm{final}}}
+\cong\frac{\lambda/2}{\theta_{\mathrm{final}}}
+\cong\frac{\frac12\times8.68\times10^{-12}}{6.21\times10^{-5}}
+=7.00\times10^{-8}\ \text{meter}.
+$$
+
+Because the region of overlap has a full width of $\cong36\times10^{-6}$ meter, there will be roughly 500 interference maxima. Note that the interval between adjacent maxima does not depend on either $b$ or $b_{\max}$ (unlike the situation with ordinary “double slit interference”).
+
+**Historical note.** This problem is based on the now-classic experiment by G. Mollenstedt and H. Duker, “Observation and Measurement of BiPrism Interference with Electron Waves,” Zeitschrift fur Physik, 145, pp. 377–397 (1956).
+
+</ProblemSection>
+
+<ProblemSection id="solution-grading">
+
+### Grading Scheme
+
+**Theoretical Problem 3: Grading Scheme**
+
+**Part 1. 1 point.**
+
+$E(r)$ correct outside of wire: 1 point.
+
+$E(r)$ inside wire: ignore in the grading. (Some students may ignore the interior because there is no field there.)
+
+**Part 2. 5 points distributed as follows:**
+
+| Criterion | Points |
+|---|---|
+| $\theta_{\mathrm{final}}$ independent of $b$ | 1 |
+| $\theta_{\mathrm{final}}\propto eq_{\mathrm{linear}}/(\varepsilon_0mv_0^2)$ or $q_{\mathrm{linear}}/(\varepsilon_0V_0)$ or equivalent | +1 |
+| Numerical coefficient correct to within a factor of 4 | +2 |
+| Numerical coefficient correct to within 20% | +1 |
+
+**Part 3. 1.5 points:**
+
+| Criterion | Points |
+|---|---|
+| Overlap region exists | 0.5 |
+| Constant densities of impacts within each region | +0.25 |
+| Correct ratio of intensities | +0.25 |
+| Full width of pattern correct, given student's value for $\theta_{\mathrm{final}}$ | +0.25 |
+| Width of overlap region correct, given student's value for $\theta_{\mathrm{final}}$ | +0.25 |
+
+**Part 4. 2.5 points:**
+
+| Criterion | Points |
+|---|---|
+| Recognizes that “two wave” interference occurs | 0.5 |
+| Correct de Broglie wavelength | 0.5 |
+| Correct separation of maxima | +1.5 |
+
+[If separation of maxima is wrong by merely a factor of 2, then partial credit: +1 point.]
+
+Maxima in intensity = 4 times single-wave intensity: ignore in grading.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [ipho93.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1991_2000/1993/ipho93.pdf#page=16)
+· официални решения: [ipho93.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/IPhO/1991_2000/1993/ipho93.pdf#page=18)
