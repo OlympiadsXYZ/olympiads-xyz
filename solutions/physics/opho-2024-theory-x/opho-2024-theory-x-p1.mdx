@@ -1,0 +1,375 @@
+---
+id: opho-2024-theory-x-p1
+source: 'OPhO 2024, Теория'
+title: 'Задача 1. Penned Particles'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2024/opho-2024-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T10:02:47.249Z'
+verifier: 'single-pass'
+---
+
+*2024 Online Physics Olympiad: Invitational Contest — Theoretical Examination · 35 т.*
+
+<details>
+<summary>Sponsors</summary>
+
+This competition could not be possible without the help of our sponsors, who are all doing great things in physics, math, and education.
+
+Native cover sponsor marks include Jane Street, Wolfram Language, AwesomeMath, Beyond the Big Bang, and AoPS Art of Problem Solving; the original cover retains the other pale logo.
+
+</details>
+
+<details>
+<summary>Instructions for Theoretical Exam</summary>
+
+The theoretical examination consists of 4 long answer questions over 2 full days from August 30, 12:00AM UTC to September 1, 12:00 AM UTC.
+
+- **The team leader should submit their final solution document in [this google form](https://forms.gle/3hGRuuoMxqosZzc4A). We don’t anticipate a tie, but in the rare circumstance that there is one, the time you submit will be used to break it.**
+
+- If you wish to request a clarification, please use [this form](https://forms.gle/CgtWncLGQGWLLZVy9). To see all clarifications, view [this document](https://docs.google.com/document/d/1R9cwXuNRaYV00UPSfFl0sAOuBcJ47xE9kvfVsDOCavY/edit?usp=sharing).
+
+- Participants are given a Google Form where they are allowed to submit up 50 MB of data for each problem solution. It is recommended that participants write their solutions in LaTeX. However, handwritten solutions (or a combination of both) are accepted too. If participants have more than one photo of a handwritten solution (jpg, png, etc), it is required to organize them in the correct order in a pdf before submitting. If you wish a premade LaTeX template, we have made one for you [here](https://www.overleaf.com/read/nktkdjdqvwfs#ee4a4f).
+
+- Since each question is a long answer response, participants will be judged on the quality of your work. To receive full points, participants need to show their work, including deriving equations. As a general rule of thumb, any common equations (such as the ones in the [IPhO formula sheet](https://www.ioc.ee/~kalda/ipho/formulas.pdf)) can be cited without proof.
+
+- Remember to state any approximations made and which system of equations were solved after every step. Explicitly showing every step of algebra is not necessary. Participants may leave all final answers in symbolic form (in terms of variables) unless otherwise specified. Be sure to state all assumptions.
+
+**Problems**
+
+- T1: Penned Particles
+- T2: Bouncy Bubble
+- T3: Stellar Shaping
+- T4: Hot Solids
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e=9.11\cdot10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0=6.02\cdot10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R=8.31\ \mathrm{J/(mol\cdot K)}$
+- Boltzmann’s constant, $k_B=1.38\cdot10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e=1.60\cdot10^{-19}\ \mathrm C$
+- 1 electron volt, $1\ \mathrm{eV}=1.60\cdot10^{-19}\ \mathrm J$
+- Speed of light, $c=3.00\cdot10^8\ \mathrm{m/s}$
+- Universal Gravitational constant, $G=6.67\cdot10^{-11}\ \mathrm{(N\cdot m^2)/kg^2}$
+- Solar Mass, $M_\odot=1.988\cdot10^{30}\ \mathrm{kg}$
+- Acceleration due to gravity, $g=9.8\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit, $1\ \mathrm u=1.66\cdot10^{-27}\ \mathrm{kg}=931\ \mathrm{MeV}/c^2$
+- Planck’s constant, $h=6.63\cdot10^{-34}\ \mathrm{J\cdot s}=4.41\cdot10^{-15}\ \mathrm{eV\cdot s}$
+- Permittivity of free space, $\epsilon_0=8.85\cdot10^{-12}\ \mathrm{C^2/(N\cdot m^2)}$
+- Coulomb’s law constant, $k=\frac1{4\pi\epsilon_0}=8.99\cdot10^9\ \mathrm{(N\cdot m^2)/C^2}$
+- Permeability of free space, $\mu_0=4\pi\cdot10^{-7}\ \mathrm{T\cdot m/A}$
+- Magnetic constant, $\frac{\mu_0}{4\pi}=1\cdot10^{-7}\ \mathrm{(T\cdot m)/A}$
+- 1 atmospheric pressure, $1\ \mathrm{atm}=1.01\cdot10^5\ \mathrm{N/m^2}=1.01\cdot10^5\ \mathrm{Pa}$
+- Wien’s displacement constant, $b=2.9\cdot10^{-3}\ \mathrm{m\cdot K}$
+- Stefan-Boltzmann constant, $\sigma=5.67\cdot10^{-8}\ \mathrm{W/m^2/K^4}$
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [1.1](#s1-1)
+- [1.2](#s1-2)
+
+</nav>
+
+A Penning trap is a device used to store charged particles using static magnetic and electric fields. In this problem we will investigate the motion of an ion inside the trap.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '50.2%', '--fig-max': '322px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/opho-2024-theory-x/p1-circuit.png" alt="Complete native hand-drawn Penning trap circuit: both endcaps, ring, ion, z-axis direction, image-current arrow, resistor R and full connecting wires." width="1005" height="668" loading="lazy" decoding="async" />
+</figure>
+
+<ProblemSection id="s1-1">
+
+### 1.1
+
+**a.** The trap is a cylinder, parallel to the $z$-axis, with the origin at the center. Inside, the electric potential is $V=V_0\frac{z^2-r^2}{2d^2}$, where $d$ is the characteristic dimension of the trap. In order to generate the quadrupole field inside, there are two sets of electrodes: two endcaps and the ring electrode, which are held at potential difference $V_0$, and are solids of revolution. Refer to part (e) for a diagram. Let the minimum distance between endcaps be $2z_0$, and the smallest inside diameter of the ring be $2r_0$.
+
+- Take a cross section parallel to the $z$-axis through the origin. What are the equations of the cross section of the ring and endcap electrodes?
+- Express $d$ in terms of $r_0$ and $z_0$.
+
+**b.** The magnetic field $\mathbf B=B_0\hat z$ is homogeneous inside the trap. Suppose we have a particle with charge $q$ and mass $m$. Assume its speed is nonrelativistic, and neglect energy loss from radiation. Throughout the rest of the problem, assume $q$ is positive.
+
+- The $z$-axis motion is simple harmonic. Find the angular frequency $\omega_z$.
+- Write the differential equation for the motion in the $xy$-plane.
+- Suppose $\omega_z=0$. Solve the differential equation, and find the angular frequency of the motion $\omega_c$. This is the cyclotron frequency.
+
+Typically, $\omega_c\gg\omega_z$. Assume this for the rest of the problem.
+
+**c.** The motion of the electron in the $xy$-plane consists of two separate uniform circular motions overlaid on top of each other. One is the cyclotron motion and the other is the magnetron motion. Find expressions for the angular frequencies of the cyclotron motion and the magnetron motion, in terms of $\omega_z$ and $\omega_c$.
+
+</ProblemSection>
+
+<ProblemSection id="s1-2">
+
+### 1.2
+
+**d.** We will now consider the effects of radiation. Typically, the magnetron motion has a much lower frequency than the cyclotron motion, so the decay of the magnetron motion is negligible. The power radiated by an accelerating particle is:
+
+$$
+P=\frac{q^2a^2}{6\pi\epsilon_0c^3}.
+$$
+
+- The energy of the orbit decays as $e^{-t/\gamma_c}$. Find $\gamma_c$.
+- Now consider the radiation damping of the axial motion. The energy of the oscillation decays as $e^{-t/\gamma_z}$. Find $\gamma_z$.
+
+**e.** For an electron at typical $\omega_c$, $\gamma_c$ is quite small, allowing for easy damping. However, $\gamma_z$ is much larger, and for a proton, radiation damping is insignificant. In order to cool large particles, a circuit is used instead. We first consider axial damping.
+
+The oscillations of the ion induce image charges in the electrode, which can be interpreted as a current $I$. See the following circuit:
+
+[[figure:p1-circuit]]
+
+You may ignore the quadrupole potential in this part.
+
+- There will be a potential difference of $IR$ between the endcap and the ring (as well as the other endcap). This will produce an electric field $E\hat z$ proportional to $I$ inside the trap. Find $E$, up to a constant factor $\kappa$, which depends on the geometry of the electrodes. Hint: if the endcaps are infinite flat planes, $\kappa$ is equal to 1.
+- Consider the power lost through the resistor. Use this to derive the force on the ion, $f=-m\zeta\dot z$. Write an expression for $\zeta$.
+
+**f.** To conclude, we will consider how to cool the magnetron motion (decrease its radius).
+
+- Find the total energy of the magnetron motion. Assume $z=0$.
+
+The process works as follows. We shine photons of energy $\hbar(\omega_z+\omega_m)$, which interact with the ion. Let the quantum numbers of the $z$ motion and the magnetron motion be $k$ and $l$ respectively. Then, the cooling transition is from $(k,l)\to(k+1,l-1)$, and the heating transition is from $(k,l)\to(k-1,l+1)$. Using quantum mechanics, we can derive that these happen at rates proportional to $(k+1)l$ and $k(l+1)$ respectively. The magnetron motion will be cooled until $l=k$, at which point it will be in equilibrium, and there is no long term change in temperature.
+
+- We will now derive the equilibrium energy of the magnetron motion. Assume that at equilibrium, the axial and magnetron motions are at temperatures $T_z$ and $T_m$ respectively. As we continue to shine photons, consider the change in entropy. Use this to derive $T_m$ in terms of $\omega_m$, $\omega_z$, and $T_z$.
+
+</ProblemSection>
+
+**Published organizer clarifications** — separately quoted from the [2024 OPhO Clarifications document](https://docs.google.com/document/d/1R9cwXuNRaYV00UPSfFl0sAOuBcJ47xE9kvfVsDOCavY/edit?usp=sharing).
+
+**T1 - Penned Particles**
+
+**This problem’s last update: 8/31 16:15 GMT**
+
+**We have been made aware that a valid potential should be proportional to $(2z^2-r^2)$, and that $(z^2-r^2)$ is unphysical. This does not change anything in the problem except some numerical coefficients. You may solve the problem by consistently choosing either of:**
+
+1. $V=V_0(z^2-r^2)/2d^2$
+2. $V=V_0(2z^2-r^2)/2d^2$
+
+(a) In the potential function, r and z are coordinates. $r^2=x^2+y^2$.
+
+(b) You may answer using any of $r_0$, $z_0$, and $d$.
+
+(c)
+
+(d) You may use whatever quantities you deem necessary in the expressions for gamma. The formula for power from an accelerating charge should have an extra factor of pi in the denominator; we won’t penalize you if you use the formula as given in the original pdf. **The formula for power is now correct in the new pdf.**
+
+(e) The expression for zeta is meant to contain kappa. You may use any constant quantity in your expression.
+
+(f) You are supposed to find the energy in terms of the radius of the orbit. The first task is to solve for the energy, the second task is to solve for $T_m$. When it says $\hbar(w_z+w_m)$, it is supposed to be $\omega_z$ and $\omega_m$. **We’ve fixed this in the problem pdf.**
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Penned Particles – Solution**
+
+**Total: 35.0 pts**
+
+The problem originally stated the potential as $V=V_0\frac{z^2-r^2}{2d^2}$. However, this has a non-zero Laplacian, so it is invalid; a valid potential would be $V=V_0\frac{2z^2-r^2}{2d^2}$. We will give full points for using either potential throughout the problem.
+
+<ProblemSection id="solution-a">
+
+### a.
+
+The electrodes are equipotentials. The potential of the endcaps is $V=V_0\frac{z_0^2}{2d^2}$, while the potential of the ring is $V_0\frac{-r_0^2}{2d^2}$. Thus, $d^2=\frac12(z_0^2+r_0^2)$. The equation for the endcaps is $z^2=z_0^2+r^2$, and for the ring is $z^2=r^2-r_0^2$.
+
+**Grading Scheme: 5.0 pts total.**
+
+- 1.5 points for realizing the electrodes are equipotentials, or equivalent.
+- 1.5 points for correct equations for the cross sections: $z^2=z_0^2+r^2$ and $z^2=r^2-r_0^2$, OR $z^2=z_0^2+\frac12r^2$ and $z^2=\frac12r^2-\frac12r_0^2$.
+- 2.0 points for calculation of potential of endcaps and and ring, and using this to find an expression for $d$: $d=\frac12(z_0^2+r_0^2)$, OR $d=\frac12(2z_0^2+r_0^2)$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b.
+
+Because $E=-V_0\frac z{d^2}$, we find $\omega_z=\sqrt{\frac{qV_0}{md^2}}$. Then, the equations of motion are:
+
+$$
+m\ddot{\mathbf r}=q(\mathbf E+\dot{\mathbf r}\times\mathbf B)
+$$
+$$
+\ddot{\mathbf r}=q(V_0\mathbf r/md^2+\dot{\mathbf r}\times\mathbf B/m)
+$$
+$$
+\ddot{\mathbf r}=\omega_z^2\mathbf r+q\dot{\mathbf r}\times\mathbf B/m
+$$
+
+Some contestants wrote their equations in terms of $x$ and $y$ coordinates; we will also accept those as valid.
+
+We have $\ddot{\mathbf r}=q\dot{\mathbf r}\times\mathbf B/m$. It’s evident the particle performs uniform circular motion at frequency $\omega_c=\frac{qB_0}m$. Note that $\omega_c$ points opposite $\mathbf B$.
+
+**Grading Scheme: 7.0 pts total.**
+
+- 2 points for correct axial angular frequency: $\omega_z=\sqrt{\frac{qV_0}{md^2}}$ OR $\omega_z=\sqrt{\frac{2qV_0}{md^2}}$.
+- 2 points for correct differential equations.
+- 3 points for the correct cyclotron frequency.
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### c.
+
+To start, we have $\ddot{\mathbf r}=\omega_z^2\mathbf r+\dot{\mathbf r}\times\boldsymbol\omega_c$. Suppose we have $\mathbf r=(r,\omega t)$ in polar coordinates. Then $\dot{\mathbf r}=\omega r\hat\theta$, and $\ddot{\mathbf r}=-\omega^2\mathbf r$. We plug these into the differential equation, to get
+
+$$
+-\omega^2r=\omega_z^2r-\omega\omega_cr.
+$$
+
+Using the quadratic equation, this gives us
+
+$$
+\omega=\frac{\omega_c\pm\sqrt{\omega_c^2-4\omega_z^2}}2.
+$$
+
+Recall that when $\omega_z=0$, the cyclotron motion has frequency $\omega_c$, so we take
+
+$$
+\omega_c'=\frac{w_c+\sqrt{w_c^2-4\omega_z^2}}2.
+$$
+
+This is less than $\omega_c$ because of the radial potential pushing the ion outwards. Then, the magnetron frequency is
+
+$$
+\omega_m=\frac{\omega_c-\sqrt{\omega_c^2-4\omega_z^2}}2\approx\frac{\omega_z^2}{\omega_c}.
+$$
+
+We thus have $\omega_c\gg\omega_z\gg\omega_m$.
+
+**Grading Scheme: 8.0 pts total.**
+
+- 3 points for guessing a circular/periodic/complex exponential solution to the differential equation.
+- 4 points for solving the differential equation and correctly deriving the two possible frequencies.
+- 1 point for correctly identifying which frequency is the magnetron frequency and which is the cyclotron frequency.
+
+</ProblemSection>
+
+<ProblemSection id="solution-d">
+
+### d.
+
+The original formula for power provided was missing a factor of $\pi$; we will not penalize solutions that are missing this factor. Note that $E=\frac12m\dot r^2=\frac12m\omega_c^2r^2$. The acceleration is $\omega_c^2r$, so
+
+$$
+P=\frac{dE}{dt}=-\frac{q^2\omega_c^4r^2}{6\epsilon_0c^3}=-E\frac{q^2\omega_c^2}{3m\epsilon_0c^3}.
+$$
+
+Thus,
+
+$$
+\gamma_c=\frac{3m\epsilon_0c^3}{q^2\omega_c^2}.
+$$
+
+The energy is $qV_0\frac{z_m^2}{2d^2}=\frac12m\omega_z^2z_m^2$, where $z_m$ is the amplitude of the oscillation. We have $z=z_m\sin\omega_zt$, and $a=-\omega_z^2z$. Averaged over one oscillation, $\langle a^2\rangle=\frac12\omega_z^4z_m^2$. We then have
+
+$$
+P=-\frac{q^2\cdot\frac12\omega_z^4z_m^2}{6\epsilon_0c^3}.
+$$
+
+We then have
+
+$$
+\gamma_z=\frac{6m\epsilon_0c^3}{q^2\omega_z^2}.
+$$
+
+**Grading Scheme: 5.0 pts total.**
+
+- 0.5 points for correct expression for the energy of the cyclotron motion.
+- 1 point for correct expression for the power.
+- 0.5 points for correct damping constant $\gamma_c$.
+- 1 point for correct expression for the energy of the axial motion.
+- 1.5 points for the correct expression for the time-averaged power.
+- 0.5 points for correct damping constant $\gamma_z$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-e">
+
+### e.
+
+Supposing that the endcaps were infinite flat planes, the electric field will be $\frac{IR}{2z_0}$. So we have $E=\frac{\kappa IR}{2z_0}$.
+
+The power on the ion is $F\dot z=qE\dot z$, which we equate to $RI^2$:
+
+$$
+q\frac{\kappa IR}{2z_0}\dot z=RI^2\Rightarrow
+$$
+$$
+I=\frac{\kappa q\dot z}{2z_0}.
+$$
+
+Then
+
+$$
+F=q\frac{\kappa IR}{2z_0}=q^2\frac{\kappa^2R}{4z_0^2}\dot z.
+$$
+
+So we have
+
+$$
+\zeta=\frac Rm\left(\frac{\kappa q}{2z_0}\right)^2.
+$$
+
+**Grading Scheme: 5.0 pts total.**
+
+- 1.5 points for the correct electric field at the center of the trap.
+- 1.5 points for correct power on the ion, and equating it to the power lost through the resistor.
+- 1.5 points for solving for current in terms of $\dot z$, or equivalent derivation of the force in terms of $\dot z$.
+- 0.5 point for correct expression for $\zeta$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-f">
+
+### f.
+
+Note that:
+
+$$
+\begin{aligned}E&=\frac12m\omega_m^2r^2+qV=\frac12m\omega_m^2r^2-qV_0r^2/2d^2=\\&\frac12m\omega_m^2r^2-\frac12m\omega_z^2r^2.\end{aligned}
+$$
+
+Since $\omega_z\gg\omega_m$ this is obviously negative.
+
+Since the system is in equilibrium, over the long run the change in entropy must be zero. When photons interact with the ion, we can view it as adding heat $Q_z=\hbar\omega_z$ and $Q_m=\hbar\omega_m$ to reservoirs at temperatures $T_z$ and $T_m$ respectively. The change in entropy is
+
+$$
+\Delta S=\frac{Q_z}{T_z}+\frac{Q_m}{T_m}=0.
+$$
+
+. So, we have
+
+$$
+T_m=-\frac{\omega_m}{\omega_z}T_z.
+$$
+
+Many teams reported $T_m$ to be positive. Here is a subtle point about negative temperature. Earlier in the problem, we derived that the total energy of the magnetron motion was negative. If we were to add energy, the radius would shrink. Very informally, temperature is defined such that $T\,dS=dE$, and intuitively, an increase in the radius of the orbit is an increase in entropy. (This can all be formalized with quantum mechanics). Adding energy decreases the entropy, which is why $T_m$ is negative.
+
+**Grading Scheme: 5.0 pts total.**
+
+- 1 point for correct expression for the energy (up to first order).
+- 3 points for conserving entropy.
+- 1 point for correct expression for $T_m$. $-0.5$ points if positive.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/theory.pdf#page=4)
+· официални решения: [theory_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/theory_sol.pdf#page=4)
+· допълнителни данни: [Clarifications.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/Clarifications.pdf)

@@ -1,0 +1,507 @@
+---
+id: opho-2024-theory-x-p3
+source: 'OPhO 2024, Теория'
+title: 'Задача 3. Stellar Shaping'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2024/opho-2024-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T10:02:47.249Z'
+verifier: 'single-pass'
+---
+
+*2024 Online Physics Olympiad: Invitational Contest — Theoretical Examination · 35 т.*
+
+<details>
+<summary>Sponsors</summary>
+
+This competition could not be possible without the help of our sponsors, who are all doing great things in physics, math, and education.
+
+Native cover sponsor marks include Jane Street, Wolfram Language, AwesomeMath, Beyond the Big Bang, and AoPS Art of Problem Solving; the original cover retains the other pale logo.
+
+</details>
+
+<details>
+<summary>Instructions for Theoretical Exam</summary>
+
+The theoretical examination consists of 4 long answer questions over 2 full days from August 30, 12:00AM UTC to September 1, 12:00 AM UTC.
+
+- **The team leader should submit their final solution document in [this google form](https://forms.gle/3hGRuuoMxqosZzc4A). We don’t anticipate a tie, but in the rare circumstance that there is one, the time you submit will be used to break it.**
+
+- If you wish to request a clarification, please use [this form](https://forms.gle/CgtWncLGQGWLLZVy9). To see all clarifications, view [this document](https://docs.google.com/document/d/1R9cwXuNRaYV00UPSfFl0sAOuBcJ47xE9kvfVsDOCavY/edit?usp=sharing).
+
+- Participants are given a Google Form where they are allowed to submit up 50 MB of data for each problem solution. It is recommended that participants write their solutions in LaTeX. However, handwritten solutions (or a combination of both) are accepted too. If participants have more than one photo of a handwritten solution (jpg, png, etc), it is required to organize them in the correct order in a pdf before submitting. If you wish a premade LaTeX template, we have made one for you [here](https://www.overleaf.com/read/nktkdjdqvwfs#ee4a4f).
+
+- Since each question is a long answer response, participants will be judged on the quality of your work. To receive full points, participants need to show their work, including deriving equations. As a general rule of thumb, any common equations (such as the ones in the [IPhO formula sheet](https://www.ioc.ee/~kalda/ipho/formulas.pdf)) can be cited without proof.
+
+- Remember to state any approximations made and which system of equations were solved after every step. Explicitly showing every step of algebra is not necessary. Participants may leave all final answers in symbolic form (in terms of variables) unless otherwise specified. Be sure to state all assumptions.
+
+**Problems**
+
+- T1: Penned Particles
+- T2: Bouncy Bubble
+- T3: Stellar Shaping
+- T4: Hot Solids
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e=9.11\cdot10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0=6.02\cdot10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R=8.31\ \mathrm{J/(mol\cdot K)}$
+- Boltzmann’s constant, $k_B=1.38\cdot10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e=1.60\cdot10^{-19}\ \mathrm C$
+- 1 electron volt, $1\ \mathrm{eV}=1.60\cdot10^{-19}\ \mathrm J$
+- Speed of light, $c=3.00\cdot10^8\ \mathrm{m/s}$
+- Universal Gravitational constant, $G=6.67\cdot10^{-11}\ \mathrm{(N\cdot m^2)/kg^2}$
+- Solar Mass, $M_\odot=1.988\cdot10^{30}\ \mathrm{kg}$
+- Acceleration due to gravity, $g=9.8\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit, $1\ \mathrm u=1.66\cdot10^{-27}\ \mathrm{kg}=931\ \mathrm{MeV}/c^2$
+- Planck’s constant, $h=6.63\cdot10^{-34}\ \mathrm{J\cdot s}=4.41\cdot10^{-15}\ \mathrm{eV\cdot s}$
+- Permittivity of free space, $\epsilon_0=8.85\cdot10^{-12}\ \mathrm{C^2/(N\cdot m^2)}$
+- Coulomb’s law constant, $k=\frac1{4\pi\epsilon_0}=8.99\cdot10^9\ \mathrm{(N\cdot m^2)/C^2}$
+- Permeability of free space, $\mu_0=4\pi\cdot10^{-7}\ \mathrm{T\cdot m/A}$
+- Magnetic constant, $\frac{\mu_0}{4\pi}=1\cdot10^{-7}\ \mathrm{(T\cdot m)/A}$
+- 1 atmospheric pressure, $1\ \mathrm{atm}=1.01\cdot10^5\ \mathrm{N/m^2}=1.01\cdot10^5\ \mathrm{Pa}$
+- Wien’s displacement constant, $b=2.9\cdot10^{-3}\ \mathrm{m\cdot K}$
+- Stefan-Boltzmann constant, $\sigma=5.67\cdot10^{-8}\ \mathrm{W/m^2/K^4}$
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [3.1](#s3-1)
+- [3.2](#s3-2)
+- [3.3](#s3-3)
+
+</nav>
+
+In this problem, we investigate the formation of stellar systems.
+
+<ProblemSection id="s3-1">
+
+### 3.1
+
+Consider a cloud of dust of radius $R$ of mass $M$ with particles of mass $m$, all held at a constant temperature $T$. Assume that $kT\gg GMm/R$; i.e. the particles are far enough apart such that gravitational interactions are nearly negligible.
+
+**a.** What is the expected value and variance of the angular momentum of one particle in the $\hat x$ direction?
+
+**b.** What is variance in the total angular momentum of the cloud, $\langle L^2\rangle$?
+
+</ProblemSection>
+
+<ProblemSection id="s3-2">
+
+### 3.2
+
+Suppose some density fluctuations occur, which leads this cloud of gas into gravitational collapse. Now, we must take gravitational interaction into account; assume that the cloud remains at thermal equilibrium and that the total energy of the cloud remains constant–the work done by the exterior gas is small.
+
+**c.** Assume that the cloud remains spherically symmetric. Find the approximate distribution of densities $\rho(r)$. You can use the new equilibrium temperature in your expression, which will be calculated in part (f). The model you find should work under the limit
+
+$$
+r^2\gg k_bT/Gm.
+$$
+
+**d.** What is the new radius of the cloud, $R'$?
+
+**e.** Find the angular velocity $\omega$ of the cloud, assuming that the cloud rotates uniformly. Take the total angular momentum of the cloud to be $\sqrt{\langle L^2\rangle}\hat z$, which you found in part (b).
+
+**f.** What is the new temperature of the cloud, $T'$?
+
+</ProblemSection>
+
+<ProblemSection id="s3-3">
+
+### 3.3
+
+The nebula is not at its most stable state because of the high angular velocity. Suppose that the part of the cloud that reaches beyond a critical density limit $\rho_c$ collapses and begins forming a star.
+
+**g.** Find the initial radius of collapse, $R_c$, and the mass of the star $M_s$. Assume the radius of the star is a lot smaller than $R_c$.
+
+For the last two parts, we will assume that the gravitational potential is quadratic, $U=\frac12k(x^2+y^2+z^2)$, and the angular velocity of the particles is $\omega$. Leave answers in terms of the variables given in this part.
+
+**h.** Suppose all the leftover material, some $N$ particles at temperature $T'$, begins to settle into a gas. What is the expected value for $r^2$, the distance of these particles to the axis of rotation, once they reach their most stable state?
+
+**i.** What is the approximate variance in the orbital inclination for this leftover material–that eventually begins to form asteroids and planets? (to first order in $\omega^2$)
+
+</ProblemSection>
+
+**Published organizer clarifications** — separately quoted from the [2024 OPhO Clarifications document](https://docs.google.com/document/d/1R9cwXuNRaYV00UPSfFl0sAOuBcJ47xE9kvfVsDOCavY/edit?usp=sharing).
+
+**T3 - Stellar Shaping**
+
+- The particles are monatomic
+
+(a) The angular momentum is measured from the center of the sphere. Assume that there is an infinite expanse of gas at the same temperature outside the sphere.
+
+(b) of The cloud -> next time use context from other parts of the problem (part (e))
+
+(c) Assume that radiation pressure is negligible. The model you find should work under the limit $r^2\gg k_bT/Gm\rho$ (solution should approach a closed form) Only the cloud remains at thermal equilibrium.
+
+(d) Choose $R'$ such that the enclosed mass is still equal to $M$, and assume that the exterior gas mentioned in part (a) confines the cloud. Assume that the work done by the exterior gas is small.
+
+(h) $k$ here is NOT the Boltzmann constant, assume constant temperature here
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Stellar Shaping – Solution**
+
+**Total: 35.0 pts**
+
+<ProblemSection id="solution-a">
+
+### a.
+
+The expected value for the angular momentum in one dimension is 0 by symmetry.
+
+$$
+l_x^2=m^2(yv_z-zv_y)^2=m^2(y^2v_z^2-2yzv_zv_y+z^2v_y^2)
+$$
+
+Knowing that position and velocity are independent quantities, we take the expected value of this equation, obtaining
+
+$$
+\langle l_x^2\rangle=m^2(\langle y^2\rangle\langle v_z^2\rangle-2\langle yzv_zv_y\rangle+\langle z^2\rangle\langle v_y^2\rangle)=m^2(2\langle x^2\rangle\langle v_x^2\rangle)
+$$
+
+where we used the fact that the dimensions are symmetric, so the first and third term are equal and the second term is zero by symmetry. Now,
+
+$$
+\langle x^2\rangle=\langle r^2\rangle/3=\frac{\int_0^Rr^2\cdot4\pi r^2\,dr}{4\pi R^3}=\frac15R^2
+$$
+
+By the equipartition theorem and/or using the Boltzmann Distribution,
+
+$$
+\langle v_x^2\rangle=k_bT/m.
+$$
+
+So then, the variance is $m^2(2(\frac15R^2)(k_bT/m))=\frac25mkTR^2$.
+
+There are many ways to solve this–averaging angles, using cylindrical shells, finding the total angular momentum and using symmetry–all of these return the same answer and are equally valid.
+
+**Grading Scheme: 4.0 pts total.**
+
+- 0.5 pts for recognizing the expected value is 0 by symmetry.
+- 0.5 pts for using the equipartition theorem in some way.
+- 0.5 pts for realizing position and velocity are independent.
+- 2.5 pts for getting the correct expression for the variance.
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b.
+
+In total, there are $M/m$ particles. Then, by the central limit theorem, the total angular momentum of the cloud has a Gaussian distribution with variance in one dimension
+
+$$
+\langle L_x^2\rangle=\frac Mm\langle l_x^2\rangle=\frac Mm\frac25mkTR^2.
+$$
+
+Then
+
+$$
+\langle L^2\rangle=3\langle L_x^2\rangle=\frac65Mk_bTR^2.
+$$
+
+**Grading Scheme: 2.0 pts total.**
+
+- 0.5 pts for using some form of the central limit theorem.
+- 0.5 pts for using symmetry to find $L^2$. 4
+- 1 pt for correct answer.
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### c.
+
+Let $T'$ be the new temperature of the cloud after it reaches thermal equilibrium, which will be calculated in part(f). We can use hydro-static equilibrium:
+
+$$
+\frac{dP}{dr}=-\rho(r)g=-\rho(r)\frac{GM(r)}{r^2}
+$$
+
+with
+
+$$
+P(r)=\rho(r)kT'/m
+$$
+
+and
+
+$$
+M(r)=\int_0^r4\pi r^2\rho(r)\,dr
+$$
+
+This reduces to
+
+$$
+\frac d{dr}\left(\frac{r^2}\rho\frac{d\rho}{dr}\right)=-\frac{4\pi Gm}{k_bT'}r^2\rho.
+$$
+
+Since there are only powers in $r$ in this differential equation, we infer a power-law relationship, $\rho=ar^n$. Plugging this back, we get
+
+$$
+\frac d{dr}\left(\frac{r^2}{ar^n}\frac{d(ar^n)}{dr}\right)=-\frac{4\pi Gm}{k_bT'}r^2(ar^n)
+$$
+$$
+\frac d{dr}(nr)=-\frac{4\pi Gm}{k_bT'}ar^{n+2}
+$$
+$$
+n=-\frac{4\pi Gm}{k_bT'}ar^{n+2}.
+$$
+
+This results in a solution only when $n=-2$, which makes $a=\frac{k_bT}{2\pi Gm}$. So, then our distribution of densities should be
+
+$$
+\rho(r)=\frac{k_bT'}{2\pi Gmr^2}.
+$$
+
+However, this solution is nonphysical. For a spherically symmetric distribution we expect the density to be finite and that $\frac{d\rho}{dr}=0$ at the center. However, if we consider a small perturbation to our initial function,
+
+$$
+\rho(r)\approx\frac{k_bT'}{2\pi Gm(r^2+\delta^2)}
+$$
+
+both these conditions are satisfied. However, this modified function now doesn’t solve our differential equations. But in the limit
+
+$$
+r^2\gg\delta^2
+$$
+
+this is true, thus for all subsequent calculations we can use our aforementioned solution.
+
+In differential equations lingo, this is called the singular solution to the differential equation. Normally when solving a second-order differential equation, we would have 2 parameters to vary in order to match initial conditions. However, all solutions eventually approach this in the limit of $r$. The other solutions to these system of differential equations are non-analytic; see [Emden–Chandrasekhar Equation](https://en.wikipedia.org/wiki/Emden%E2%80%93Chandrasekhar_equation) for more information regarding this. Below is a numerical solution I performed in Python to solve the differential equation.
+
+The solutions to these equations are used to model the core of a star, as only the isothermal assumption remains valid in that region of the star. Beyond this region, that assumption must be broken as otherwise, there would be infinite mass, requiring us to bound the mass of the star in part (d).
+
+**Grading Scheme: 7.0 pts total.**
+
+- 2 pts for using Boltzmann Distribution, Hydro-static Equilibrium, Poission Equations or any physical equivalent.
+- 2 pts for correct differential equation (in any equivalent form).
+- 1 pt for guessing a power-law solution.
+- 1 pt mentioning any physical breakdowns (boundary conditions at $r=0$) and/or the significance of the limit.
+- 1 pt for correct answer.
+
+</ProblemSection>
+
+<ProblemSection id="solution-d">
+
+### d.
+
+As aforementioned, we have to use the radius to bound the total mass $M$ of the cloud. Integrating our expression for density, we get
+
+$$
+M(r)=\frac{2k_bT'}{Gm}r.
+$$
+
+Then $M(R')=M$ so
+
+$$
+R'=\frac{GMm}{2k_bT'}.
+$$
+
+**Grading Scheme: 3.0 pts total.**
+
+- 1 pt for recognizing that the radius must be chosen to bound the total mass $M$.
+- 1 pt for integrating the density distribution to find $M(r)$.
+- 1 pt for correct answer.
+
+</ProblemSection>
+
+<ProblemSection id="solution-e">
+
+### e.
+
+Let’s first find the moment of inertia of the ball. Using the new mass distribution, we integrate along spherical shells that have moment of inertia $\frac23r^2\,dM$.
+
+$$
+I=\int_0^M\frac23r^2\,dM=\int_0^{R'}\frac23r^2\left(\frac M{R'}\,dr\right)=\frac29MR'^2=\frac{G^2M^3m^2}{18k_b^2T'^2}
+$$
+
+Then the angular velocity of the cloud would be
+
+$$
+\omega=L/I=\frac{\sqrt{\frac65Mk_bTR^2}}{\frac29MR'^2}.
+$$
+
+The answer can be simplified further but points will be awarded to this step.
+
+**Grading Scheme: 4.0 pts total.**
+
+- 1 pt for using integration to find the moment of inertia.
+- 1 pt for using conservation of angular momentum.
+- 2 pt for correct answer. If initial angular momentum is incorrect, $-0.5$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-f">
+
+### f.
+
+First, let’s find the gravitational potential energy. In part (a) we assume that before it collapses it is negligible. Now, however, it is not. We calculate the GPE by imagining the work required to move concentric shells of radius $r$ and mass $dM$.
+
+$$
+E_g=-\int_0^M\frac{GM(r)}r\,dM=-GM^2/R'=-2\frac Mm k_bT'=-2Nk_bT'
+$$
+
+$$
+\begin{aligned}\frac32Nk_bT&=\frac32Nk_bT'-2Nk_bT'+\frac{L^2}{2I}\\&=-\frac12Nk_bT'+\frac{L^2(9k_b^2T'^2)}{G^2M^3m^2}\end{aligned}
+$$
+
+This is a quadratic in terms of $T'$, which can be solved using the quadratic formula.
+
+$$
+T'=\frac{G^2M^3m^2Nk_b}{36k_b^2L^2}\left(T+\sqrt{T^2+\frac{216k_bL^2}{G^2M^3m^2N}}\right)
+$$
+
+We take the correct sign for the root looking at the limiting case when the rotational kinetic energy is negligble compared to the gravitational potential.
+
+**Grading Scheme: 5.0 pts total.**
+
+- 1 pt for using integration to find the GPE
+- 1 pt for using conservation of energy.
+- 1 pt for correct algebraic equation.
+- 2 pt for correct answer. If initial angular momentum is incorrect, $-0.5$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-g">
+
+### g.
+
+We find the critical radius $R_c$ of the cloud by solving for $R_c$ in the density distribution.
+
+$$
+\rho_c=\frac{k_bT'}{2\pi GmR_c^2}
+$$
+$$
+R_c=\sqrt{\frac{k_bT'}{2\pi G\rho_c}}.
+$$
+$$
+M_c=MR_c/R'=M\sqrt{\frac{k_bT'}{2\pi Gm\rho_c}}\cdot\frac{2k_bT'}{Gm}
+$$
+
+**Grading Scheme: 1.0 pt total.**
+
+- 0.5 for correct setup.
+- 0.5 for correct calculation for mass.
+
+</ProblemSection>
+
+<ProblemSection id="solution-h">
+
+### h.
+
+The potential can be written as
+
+$$
+-\frac12m\omega^2r^2+\frac12k(r^2+z^2)
+$$
+
+where $r$ is the distance to the axis of symmetry. We can write the Boltzmann distribution
+
+$$
+e^{(\frac12m\omega^2-\frac12k)r^2}e^{-\frac12kz^2}.
+$$
+
+We recognize from the energy equation that the equipotnential surfaces are squished spheres/elipsoids with varying levels of $r$ with differential volume $\propto r^2\,dr$. This is because the differential volumes are taken between two squished spheres as the radius is the parameter–meaning that the thickness of the differential volume is different based on the height–so it isn’t just proportional to the surface area of an elipsoid. We also notice that $\langle r^2\rangle$ for these surfaces should be the same as if they were not squished–full spheres, because of this reason. Thus $\langle r^2\rangle=\frac23r^2$. Now we can integrate on these surfaces these to get expected value of $r^2$ of the entire gas. I’ll let $\alpha=\frac12k-\frac12m\omega^2$ and $\beta=\frac1{k_bT}$ for written simplicity.
+
+$$
+\langle r^2\rangle=\frac23\int_0^\infty r^4e^{-\beta\alpha r^2}\,dr\bigg/\int_0^\infty r^2e^{-\beta\alpha r^2}\,dr=\frac23\left(\frac3{8\alpha^2\beta^2}\right)\bigg/\left(\frac1{4\alpha\beta}\right)=\frac1{\alpha\beta}=\frac{2k_bT}{k-m\omega^2}
+$$
+
+We see that this makes sense by considering the case where $\omega^2$ tends to $k/m$, The expected value for $r^2$ tends to infinity.
+
+As this part was written somewhat hastily, the second part to this was not added. The particles initially start off with some angular velocity and should stabilize to conserve angular momentum. Here, it would be $L=M\frac29R'^2\omega_0=M\omega\frac{2k_bT}{k-m\omega^2}$ and $\omega$ would be found from there as the solution to a quadratic, assuming the star’s radius and therefore mass is small. From there, $\langle r^2\rangle$ could be calculated by plugging back $\omega$ in, and finding the new temperature by conserving energy, similarly to the second part. However, as this was not fully clarified, points were awarded for this solution.
+
+Because it wasn’t specified whether the potential was per unit mass or not, points were also given to solutions that treated $U$ as per unit mass.
+
+**Grading Scheme: 4.0 pt total.**
+
+- 2 pt for finding the correct boltzman distribution.
+- 1 pt for using symmetry/equipotential surfaces.
+- 1 pt for correct answer.
+
+</ProblemSection>
+
+<ProblemSection id="solution-i">
+
+### i.
+
+This equation asks to find the variance in the inclination. First, by symmetry, we know that the expected value of the inclination is 0. Let’s call the ratio $\epsilon=b/a=\sqrt{1-\frac mk\omega^2}$ of the major and minor axis of the eliptical equipotential surfaces. We know choosing a specific $r$ value doesn’t change the expected value for the variance of the inclination, as it just scales the elipsoid up and down. Thus, we can focus on the fraction of volume a certain $d\theta$ takes up with respect to the entire volume. Suppose we take the ellipsoid to have semi-major axis $a=1$ without loss of generality. At an inclination of $\theta$, we have
+
+$$
+r^2(\cos^2\theta+\sin^2\theta/\epsilon^2)=1
+$$
+
+from the equation of an ellipse.
+
+Then the fraction of volume taken up by $d\theta$ is a cone with volume
+
+$$
+dV\propto r^3\cos(\theta)\,d\theta
+$$
+
+Then the variance in $\theta$ is
+
+$$
+\langle\theta^2\rangle(\epsilon)=\int_{-\pi/2}^{\pi/2}\theta^2r^3\cos(\theta)\,d\theta\bigg/\int_{-\pi/2}^{\pi/2}r^3\cos(\theta)\,d\theta=\frac1{2\epsilon}\int_{-\pi/2}^{\pi/2}\theta^2r^3\cos(\theta)\,d\theta
+$$
+
+The first integral isn’t analytically solvable, so we look for an approximation around $\epsilon=1$. Evaluating the integral yields the variance of a $\cos(\theta)$ distribution, which is known. This is equal to $\frac{\pi^2-8}4$. Taking the derivative at $\epsilon=1$ is equal to
+
+$$
+\langle\theta^2\rangle'(1)=\frac12\int_{-\pi/2}^{\pi/2}\theta^2\,3r^2\left(\frac{dr}{d\epsilon}\right)\cos(\theta)\,d\theta-\left.\frac{\pi^2-8}{4\epsilon^2}\right|_{\epsilon=1}=\frac32\int_{-\pi/2}^{\pi/2}\theta^2\sin^2(\theta)\cos(\theta)\,d\theta-\frac{\pi^2-8}4
+$$
+
+using
+
+$$
+\frac{dr}{d\epsilon}(1)=\frac{2\epsilon(\epsilon^2\cos^2\theta+\sin^2\theta)-\epsilon^2(2\epsilon\cos^2\theta)}{2r(\epsilon^2\cos^2\theta+\sin^2\theta)}=\frac{2-2\cos^2(\theta)}2=\sin^2(\theta).
+$$
+
+Evaluating the integral leads to
+
+$$
+\frac{\pi^2}4-\frac{14}9-\frac{\pi^2-8}4=2-\frac9{14}=\frac5{14}
+$$
+
+this means we can write the variance to first order as:
+
+$$
+\langle\theta^2\rangle\approx\frac{\pi^2-8}4+\frac5{14}(\epsilon-1)=\frac{\pi^2-8}4+\frac5{14}\left(\sqrt{1-\frac mk\omega^2}-1\right)\approx\frac{\pi^2-8}4-\frac{5m\omega^2}{28k}
+$$
+
+As we expect, the variance decreases as we increase $\omega$. This approximation breaks down for large values of $\omega^2\frac km$, which we expect the variance to be around 0.
+
+Because it wasn’t specified whether the potential was per unit mass or not, points were given to solutions that treated $U$ as per unit mass. Since the first order wasn’t explicitly specified, we gave points to attempted solutions that were close to the actual value.
+
+**Grading Scheme: 5.0 pt total.**
+
+- 2 pt for the correct integral/setup for variance in inclination. ($-0.5$ for sign and algebraic errors)
+- 1 pt for obtaining the variance for $\omega^2\ll m/k$ in 0th order.
+- 1 pt for using an approximation.
+- 1 pt for correct expression.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/theory.pdf#page=7)
+· официални решения: [theory_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/theory_sol.pdf#page=13)
+· допълнителни данни: [Clarifications.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/Clarifications.pdf)

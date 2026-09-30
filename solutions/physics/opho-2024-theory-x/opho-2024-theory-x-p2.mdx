@@ -1,0 +1,304 @@
+---
+id: opho-2024-theory-x-p2
+source: 'OPhO 2024, Теория'
+title: 'Задача 2. Bouncy Bubble'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/physics/OPhO/2024/opho-2024-theory-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-09-30T10:02:47.249Z'
+verifier: 'single-pass'
+---
+
+*2024 Online Physics Olympiad: Invitational Contest — Theoretical Examination · 25 т.*
+
+<details>
+<summary>Sponsors</summary>
+
+This competition could not be possible without the help of our sponsors, who are all doing great things in physics, math, and education.
+
+Native cover sponsor marks include Jane Street, Wolfram Language, AwesomeMath, Beyond the Big Bang, and AoPS Art of Problem Solving; the original cover retains the other pale logo.
+
+</details>
+
+<details>
+<summary>Instructions for Theoretical Exam</summary>
+
+The theoretical examination consists of 4 long answer questions over 2 full days from August 30, 12:00AM UTC to September 1, 12:00 AM UTC.
+
+- **The team leader should submit their final solution document in [this google form](https://forms.gle/3hGRuuoMxqosZzc4A). We don’t anticipate a tie, but in the rare circumstance that there is one, the time you submit will be used to break it.**
+
+- If you wish to request a clarification, please use [this form](https://forms.gle/CgtWncLGQGWLLZVy9). To see all clarifications, view [this document](https://docs.google.com/document/d/1R9cwXuNRaYV00UPSfFl0sAOuBcJ47xE9kvfVsDOCavY/edit?usp=sharing).
+
+- Participants are given a Google Form where they are allowed to submit up 50 MB of data for each problem solution. It is recommended that participants write their solutions in LaTeX. However, handwritten solutions (or a combination of both) are accepted too. If participants have more than one photo of a handwritten solution (jpg, png, etc), it is required to organize them in the correct order in a pdf before submitting. If you wish a premade LaTeX template, we have made one for you [here](https://www.overleaf.com/read/nktkdjdqvwfs#ee4a4f).
+
+- Since each question is a long answer response, participants will be judged on the quality of your work. To receive full points, participants need to show their work, including deriving equations. As a general rule of thumb, any common equations (such as the ones in the [IPhO formula sheet](https://www.ioc.ee/~kalda/ipho/formulas.pdf)) can be cited without proof.
+
+- Remember to state any approximations made and which system of equations were solved after every step. Explicitly showing every step of algebra is not necessary. Participants may leave all final answers in symbolic form (in terms of variables) unless otherwise specified. Be sure to state all assumptions.
+
+**Problems**
+
+- T1: Penned Particles
+- T2: Bouncy Bubble
+- T3: Stellar Shaping
+- T4: Hot Solids
+
+</details>
+
+<details>
+<summary>List of Constants</summary>
+
+- Proton mass, $m_p=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Neutron mass, $m_n=1.67\cdot10^{-27}\ \mathrm{kg}$
+- Electron mass, $m_e=9.11\cdot10^{-31}\ \mathrm{kg}$
+- Avogadro’s constant, $N_0=6.02\cdot10^{23}\ \mathrm{mol^{-1}}$
+- Universal gas constant, $R=8.31\ \mathrm{J/(mol\cdot K)}$
+- Boltzmann’s constant, $k_B=1.38\cdot10^{-23}\ \mathrm{J/K}$
+- Electron charge magnitude, $e=1.60\cdot10^{-19}\ \mathrm C$
+- 1 electron volt, $1\ \mathrm{eV}=1.60\cdot10^{-19}\ \mathrm J$
+- Speed of light, $c=3.00\cdot10^8\ \mathrm{m/s}$
+- Universal Gravitational constant, $G=6.67\cdot10^{-11}\ \mathrm{(N\cdot m^2)/kg^2}$
+- Solar Mass, $M_\odot=1.988\cdot10^{30}\ \mathrm{kg}$
+- Acceleration due to gravity, $g=9.8\ \mathrm{m/s^2}$
+- 1 unified atomic mass unit, $1\ \mathrm u=1.66\cdot10^{-27}\ \mathrm{kg}=931\ \mathrm{MeV}/c^2$
+- Planck’s constant, $h=6.63\cdot10^{-34}\ \mathrm{J\cdot s}=4.41\cdot10^{-15}\ \mathrm{eV\cdot s}$
+- Permittivity of free space, $\epsilon_0=8.85\cdot10^{-12}\ \mathrm{C^2/(N\cdot m^2)}$
+- Coulomb’s law constant, $k=\frac1{4\pi\epsilon_0}=8.99\cdot10^9\ \mathrm{(N\cdot m^2)/C^2}$
+- Permeability of free space, $\mu_0=4\pi\cdot10^{-7}\ \mathrm{T\cdot m/A}$
+- Magnetic constant, $\frac{\mu_0}{4\pi}=1\cdot10^{-7}\ \mathrm{(T\cdot m)/A}$
+- 1 atmospheric pressure, $1\ \mathrm{atm}=1.01\cdot10^5\ \mathrm{N/m^2}=1.01\cdot10^5\ \mathrm{Pa}$
+- Wien’s displacement constant, $b=2.9\cdot10^{-3}\ \mathrm{m\cdot K}$
+- Stefan-Boltzmann constant, $\sigma=5.67\cdot10^{-8}\ \mathrm{W/m^2/K^4}$
+
+</details>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [2.1](#s2-1)
+- [2.2](#s2-2)
+
+</nav>
+
+In this problem, we will investigate the interaction between fast oscillations and gradual changes in a physical system.
+
+<ProblemSection id="s2-1">
+
+### 2.1
+
+A large volume of incompressible, non-viscous liquid with density $\rho$ is kept at temperature $T_c$ and pressure $P_c$. A spherical bubble consisting of $N$ particles of ideal gas with temperature $T_0>T_c$ is introduced into the liquid. Neglect surface tension and any heat transfer between the liquid and the gas.
+
+**a.** Find the equilibrium radius $R_0$ of the bubble.
+
+The bubble’s radius is perturbed slightly from equilibrium and its oscillations are observed; the gas remains near thermal equilibrium at all times. Assume that the motion of the liquid is laminar and radial, and that the density of the gas is negligible compared to $\rho$. You may express future answers in terms of $R_0$.
+
+**b.** Find the frequency $\omega$ of the bubble’s small oscillations.
+
+</ProblemSection>
+
+<ProblemSection id="s2-2">
+
+### 2.2
+
+Now, assume that the interface between the gas and the liquid has thermal conductance per unit area $\kappa$. Then, because of heat loss, the bubble will shrink over time, approaching a final radius $R_f$ (which you may use in future answers). The shrinkage is slow enough that the kinetic energy of the liquid can be neglected.
+
+**c.** If the bubble starts at radius $R_0$, find the approximate time $\tau$ until it shrinks to radius $(R_0+R_f)/2$. Express your answer to the lowest order in the quantity $\alpha=R_0/R_f-1$.
+
+**d.** Next, the bubble starts off oscillating around $R_0$ with amplitude $R_0\delta_0$, where $\delta_0\ll1$; assume that the oscillations are much faster than the shrinkage. Find the time-averaged final radius $R_f'$ of the bubble, to the lowest order in $\delta_0$. Qualitatively explain the reason for any difference between $R_f'$ and $R_f$.
+
+**e.** Given the situation in part (d), find the approximate time $\tau'$ until the bubble’s time-averaged radius shrinks to $(R_0+R_f')/2$, to the lowest orders in $\alpha'=R_0/R_f'-1$ and $\delta_0$.
+
+</ProblemSection>
+
+**Published organizer clarifications** — separately quoted from the [2024 OPhO Clarifications document](https://docs.google.com/document/d/1R9cwXuNRaYV00UPSfFl0sAOuBcJ47xE9kvfVsDOCavY/edit?usp=sharing).
+
+**T2 - Bouncy Bubble**
+
+The ideal gas is monatomic. “To the lowest order” means the lowest-order nonzero correction.
+
+(a) $T_0$ is the temperature at the bubble’s equilibrium radius.
+
+(c) $\kappa$ is the thermal conductance per unit area of the bubble’s surface. The bubble starts at radius $R_0$. You should express future answers in terms of $R_f$ instead of $T_c$ or $P_c$ (when possible).
+
+(d) The oscillations begin around radius $R_0$.
+
+(e) When expanding to the lowest order in $\alpha'$ and $\delta_0$, you may neglect the cross term. You may not use $R_f'$ in your answer.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Bouncy Bubble – Solution**
+
+**Total: 25.0 pts**
+
+<ProblemSection id="solution-a">
+
+### a.
+
+At equilibrium, the pressure in the bubble is $P_c$. Using the Ideal Gas Law:
+
+$$
+P_cV=P_c\cdot\frac43\pi R_0^3=NkT_0\Rightarrow R_0=\sqrt[3]{\frac{3NkT_0}{4\pi P_c}}
+$$
+
+**Grading Scheme: 1.0 pts total.**
+
+- 0.5 pts for use of the Ideal Gas Law.
+- 0.5 pts for a correct expression for $R_0$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-b">
+
+### b.
+
+Let the bubble have radius $R_0+x$. Setting $U=0$ at equilibrium, the work-energy theorem implies:
+
+$$
+U=\int_0^x4\pi R_0^2(P_c-P)\,da
+$$
+
+Using $PV^{5/3}=\mathrm{const}$:
+
+$$
+\begin{aligned}U&=\int_0^x4\pi R_0^2\left(P_c-\frac{P_c(\frac43\pi R_0^3)^{5/3}}{(\frac43\pi(R_0+a)^3)^{5/3}}\right)\,da\\&=\int_0^x4\pi R_0^2P_c\left(1-\left(1+\frac a{R_0}\right)^{-5}\right)\,da\\&\approx\int_0^x20\pi P_cR_0a\,da\\&=10\pi P_cR_0x^2\end{aligned}
+$$
+
+The kinetic energy comes from the motion of the liquid. If the bubble’s radius is changing at rate $\dot x$, the liquid at radius $r$ must have speed $\frac{R_0^2}{r^2}\dot x$ by incompressibility. Thus:
+
+$$
+K=\int_R^\infty\frac12(4\pi\rho r^2\,dr)\left(\frac{R_0^2}{r^2}\dot x\right)^2=2\pi\rho R_0^4\dot x^2\int_R^\infty\frac1{r^2}\,dr=2\pi\rho R_0^3\dot x^2
+$$
+
+We find $\omega=\frac1{R_0}\sqrt{\frac{5P_c}\rho}$.
+
+**Grading Scheme: 5.0 pts total**
+
+- 1.0 pts for using the work-energy theorem to find an integral for $U$ in terms of $P_c-P$
+- 1.0 pts for using the adiabatic condition to linearize $P_c-P$.
+- 0.5 pts for a correct expression for $U$.
+- 1.0 pts for using incompressibility to derive the velocity profile of the liquid, $v(r)\propto1/r^2$.
+- 0.5 pts for a correct expression for $K$.
+- 1.0 pts for a correct expression for $\omega$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-c">
+
+### c.
+
+Because the bubble begins at equilibrium and shrinks slowly, it will remain near equilibrium. Thus, we will always have $T=\frac{4\pi P_cr^3}{3Nk}$. Because the external pressure is constant:
+
+$$
+\dot H=\dot Q=-4\pi r^2\kappa(T-T_c)
+$$
+
+Using $H=\frac52NkT$, we have:
+
+$$
+\dot H=\frac52Nk\dot T=\frac52Nk\frac{dT}{dr}\dot r=10\pi P_cr^2\dot r\Rightarrow\dot r=-\frac{2\kappa}{5P_c}(T-T_c)=-\frac{8\pi\kappa}{15Nk}\left(r^3-\frac{3NkT_c}{4\pi P_c}\right)
+$$
+
+Note that $R_f^3=\frac{3NkT_c}{4\pi P_c}$. Separating variables:
+
+$$
+\int_{R_0}^{(R_0+R_f)/2}\frac1{r^3-R_f^3}\,dr=\int_0^\tau-\frac{8\pi\kappa}{15Nk}\,dt\Rightarrow\frac1{R_f^2}\int_{1+\alpha/2}^{1+\alpha}\frac1{x^3-1}\,dx=\frac{8\pi\kappa}{15Nk}\tau
+$$
+$$
+\int_{1+\alpha/2}^{1+\alpha}\frac1{x^3-1}\,dx\approx\int_{1+\alpha/2}^{1+\alpha}\left(\frac1{3(x-1)}-\frac13\right)\,dx=\frac{\ln(2)}3-\frac\alpha6
+$$
+
+Thus, $\tau=\frac{5\ln(2)Nk}{8\pi\kappa R_f^2}\left(1-\frac\alpha{2\ln(2)}\right)$.
+
+**Grading Scheme: 5.0 pts total.**
+
+- 0.5 pts for a correct expression for $\dot Q$ in terms of $T-T_c$
+- 1.0 pts for equating $\dot Q$ to $\dot H$ or $C_p\dot T$ due to constant external pressure.
+- 1.5 pts for substituting the expression for $T$ and obtaining a correct differential equation in $r$.
+- 1.0 pts for separating variables and approximating the integrand as shown.
+- 1.0 pts for a correct final answer, or 0.5 pts for an answer with a correct leading term.
+
+</ProblemSection>
+
+<ProblemSection id="solution-d">
+
+### d.
+
+Let the oscillating radius be $r(1+\delta\cos(\omega t))$. We claim that the total energy $E$ of the oscillations is proportional to $\omega$, giving $\delta=\frac{R_0^2}{r^2}\delta_0$. To see this, we consider the adiabatic invariant, $I$: the area enclosed by the system’s motion in phase space. For any simple harmonic oscillator, $I=2\pi E/\omega$. Crucially, $I$ remains approximately constant under slow external changes, giving $E\propto\omega$ as desired. You can read more [here](https://en.wikipedia.org/wiki/Adiabatic_invariant).
+
+Using $TV^{2/3}=\mathrm{const}$, the oscillating temperature is $\frac T{(1+\delta\cos(\omega t))^2}$. Thus, we have:
+
+$$
+\begin{aligned}\dot Q&=-4\pi\kappa r^2(1+\delta\cos(\omega t))^2\left(\frac T{(1+\delta\cos(\omega t))^2}-T_c\right)\\&=-4\pi\kappa r^2\left(T-(1+2\delta\cos(\omega t)+\delta^2\cos^2(\omega t))T_c\right)\end{aligned}
+$$
+$$
+\begin{aligned}\Rightarrow\langle\dot Q\rangle&=-4\pi\kappa r^2\left(T-\left(1+\frac{\delta^2}2\right)T_c\right)\\&=-4\pi\kappa r^2T_c\left(\frac{r^3}{R_f^3}-1-\frac{R_0^4\delta_0^2}{2r^4}\right)\end{aligned}
+$$
+
+At equilibrium, we must have $\langle\dot Q\rangle=0$. Thus, assuming that $R_f'=R_f(1+c)$:
+
+$$
+(1+c)^3-1-\frac{R_0^4\delta_0^2}{2R_f^4(1+c)^4}\approx3c-\frac{R_0^4\delta_0^2}{2R_f^4}=0\Rightarrow R_f'=R_f\left(1+\frac{R_0^4\delta_0^2}{6R_f^4}\right)
+$$
+
+The fundamental reason why $R_f'>R_f$ is that the rate of heat loss is a concave function under adiabatic perturbations of $r$. Thus, the rate of heat loss under the fast, roughly adiabatic oscillations averages out to less than it does with no oscillation, so the equilibrium radius is slightly larger.
+
+**Grading Scheme: 9.0 pts total.**
+
+- 3.0 pts for use of the adiabatic invariant or similar to derive $\delta(r)$.
+- 1.0 pts for obtaining $\delta(r)\propto1/r^2$.
+- 1.0 pts for finding an expression for the oscillating temperature using the adiabatic condition.
+- 1.5 pts for substituting the oscillating radius and temperature into $\dot Q$ and time-averaging
+- 0.5 pts for setting $\langle\dot Q\rangle=0$ at equilibrium.
+- 1.0 pts for a correct final answer.
+- 1.0 pts for mentioning the concavity of $\dot Q$ as the cause of the discrepancy between $R_f$ and $R_f'$, or 0.5 points for only mentioning nonlinearity.
+
+</ProblemSection>
+
+<ProblemSection id="solution-e">
+
+### e.
+
+Now, we must consider the change in energy of the oscillations in addition to the change in $H$. Thus:
+
+$$
+\dot H+\dot E=\dot H+\frac{dE}{dr}\dot r=\langle\dot Q\rangle
+$$
+
+Note that we do not time-average $\dot H$ because it is a state variable (when the system crosses through equilibrium, $H$ is uniquely determined by $r$). Then, using $E=10\pi P_cr^3\delta^2=10\pi P_c\frac{R_0^4\delta_0^2}r$:
+
+$$
+10\pi P_cr^2\dot r-10\pi P_c\frac{R_0^4\delta_0^2}{r^2}\dot r=-4\pi\kappa r^2T_c\left(\frac{r^3}{R_f^3}-1-\frac{R_0^4\delta_0^2}{2r^4}\right)
+$$
+$$
+\Rightarrow\dot r=-\frac{8\pi\kappa}{15Nk}\left(r^3-R_f^3\left(1+\frac{R_0^4\delta_0^2}{2r^4}\right)\right)\bigg/\left(1-\frac{R_0^4\delta_0^2}{r^4}\right)\approx-\frac{8\pi\kappa}{15Nk}\frac{r^3-R_f'^3}{1-\delta_0^2}
+$$
+
+Here, we take $\frac{R_0^4}{r^4}\approx1$ because we don’t care about the cross term between $\delta_0$ and $\alpha'$. Thus, we have:
+
+$$
+\tau'=\frac{15Nk(1-\delta_0^2)}{8\pi\kappa}\int_{R_0}^{(R_0+R_f')/2}\frac1{r^3-R_f'^3}\,dr\approx\frac{5\ln(2)Nk}{8\pi\kappa R_f'^2}\left(1-\frac{\alpha'}{2\ln(2)}\right)(1-\delta_0^2)
+$$
+
+Using $R_f'\approx R_f\left(1+\frac{\delta_0^2}6\right)$, we find $\tau'=\frac{5\ln(2)Nk}{8\pi\kappa R_f^2}\left(1-\frac{\alpha'}{2\ln(2)}\right)\left(1-\frac{4\delta_0^2}3\right)$.
+
+**Grading Scheme: 5.0 pts total.**
+
+- 1.0 pts for substituting the time-averaged $\dot Q$ into the differential equation; 0.5 pts if time-averaging $\dot H$ or $C_p\dot T$ as well.
+- 2.0 pts for realizing that the energy of the oscillations changes and adding this term into the differential equation.
+- 1.0 pts for obtaining a differential equation analogous to the equation given for part (c), with the substitution of $R_f'$ for $R_f$, and using the same techniques to obtain $\tau'$.
+- 1.0 pts for a correct final answer, or 0.5 pts for a final answer with the right correction for $\delta_0$.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [theory.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/theory.pdf#page=6)
+· официални решения: [theory_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/theory_sol.pdf#page=9)
+· допълнителни данни: [Clarifications.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/OPhO/2024/Clarifications.pdf)
