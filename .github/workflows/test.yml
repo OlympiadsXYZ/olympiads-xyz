@@ -1,17 +1,12 @@
 name: Tests
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
-    paths-ignore:
-      - 'content/**'
-      - 'solutions/**'
   pull_request:
     branches:
       - master
-    paths-ignore:
-      - 'content/**'
-      - 'solutions/**'
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -45,8 +40,8 @@ jobs:
       - name: Build GraphQL types
         run: npx gatsby build
         env:
-          GATSBY_CPU_COUNT: "1"
-          GATSBY_VERBOSE_LOGGING: "2"
+          GATSBY_CPU_COUNT: '1'
+          GATSBY_VERBOSE_LOGGING: '2'
           NODE_OPTIONS: --max-old-space-size=10240
 
       - name: Run tests
@@ -92,8 +87,8 @@ jobs:
           sudo mkswap /mnt/extra.swap && sudo swapon /mnt/extra.swap && free -m
       - run: npx gatsby build
         env:
-          GATSBY_CPU_COUNT: "1"
-          GATSBY_VERBOSE_LOGGING: "2"
+          GATSBY_CPU_COUNT: '1'
+          GATSBY_VERBOSE_LOGGING: '2'
           NODE_OPTIONS: --max-old-space-size=10240
 
       - name: run Lighthouse CI
