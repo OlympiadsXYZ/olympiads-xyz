@@ -193,6 +193,76 @@ test('unoverlaid printed numbers appear once in both the sidebar and page title'
 
 const records = files => files.map(data => ({ data }));
 
+test('native repeated grade numbers stay distinct and agree in sidebar and page titles', () => {
+  const file = paper(
+    {
+      id: 'printed-repeat',
+      competition: 'IPhO',
+      round: null,
+      roundType: 'theory',
+    },
+    [1, 2]
+  );
+  file.problems[0].title = '11.1. «Новые Архимеды»';
+  file.problems[1].title = '11.1. «Railgun»';
+  const numbers = {
+    problems: {
+      'printed-repeat-p1': '11-1',
+      'printed-repeat-p2': '11-1 (повтор)',
+    },
+  };
+  const [node] = nodesOf([file], { labels: LABELS, numbers });
+  assert.deepEqual(node.problems.map(tree.problemLabel), [
+    'Задача 11-1. «Новые Архимеды»',
+    'Задача 11-1 (повтор). «Railgun»',
+  ]);
+  assert.equal(
+    problemName(file.problems[1], numbers),
+    tree.problemLabel(node.problems[1])
+  );
+  assert.deepEqual(
+    checkNavigation(records([file]), { labels: LABELS, numbers }, tree)
+      .failures,
+    []
+  );
+  assert.equal(
+    tree.numberNamesCode('11-1 (повтор)', { grade: '11', n: '1' }),
+    true
+  );
+  assert.equal(
+    tree.numberNamesCode('10-1 (повтор)', { grade: '11', n: '1' }),
+    false
+  );
+  assert.equal(
+    tree.numberNamesCode('11-2 (повтор)', { grade: '11', n: '1' }),
+    false
+  );
+  assert.equal(
+    tree.numberNamesCode('11-1 (other)', { grade: '11', n: '1' }),
+    false
+  );
+  const wrong = {
+    problems: { ...numbers.problems, 'printed-repeat-p2': '11-2 (повтор)' },
+  };
+  assert.ok(
+    checkNavigation(
+      records([file]),
+      { labels: LABELS, numbers: wrong },
+      tree
+    ).failures.some(f => f.includes('printed-repeat-p2'))
+  );
+  const duplicate = {
+    problems: { ...numbers.problems, 'printed-repeat-p1': '11-1 (повтор)' },
+  };
+  assert.ok(
+    checkNavigation(
+      records([file]),
+      { labels: LABELS, numbers: duplicate },
+      tree
+    ).failures.some(f => f.includes('twice'))
+  );
+});
+
 test('gate passes a consistent corpus', () => {
   const files = [
     paper({ id: 'ipho-2016-theory-1', competition: 'IPhO', round: 'theory', roundType: 'theory', title: 'Theory Q1' }, [1]),

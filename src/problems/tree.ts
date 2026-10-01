@@ -244,7 +244,9 @@ export function numberNamesCode(
   number: number | string,
   code: { grade: string; n: string }
 ): boolean {
-  const s = dashes(String(number));
+  // The source can genuinely repeat a grade-task number. Its explicit repeat
+  // qualifier distinguishes sidebar rows while preserving the printed code.
+  const s = dashes(String(number).replace(/ \(повтор\)$/, ''));
   return [`${code.grade}.${code.n}`, `${code.grade}–${code.n}`].includes(s);
 }
 
