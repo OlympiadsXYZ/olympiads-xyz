@@ -44,6 +44,8 @@ function loadHooks() {
             throw new Error('Unexpected MDX compilation');
           },
         };
+      if (specifier === './src/problems/fragment-routes-node')
+        return { readProblemFragmentRoutes: () => new Map() };
       if (specifier === './src/problems/index-node')
         return {
           writeProblemsIndex: (_root, nodes) => {
@@ -307,6 +309,7 @@ test('the six rejected production IDs reach solution pages and keep the search i
         archiveYear: null,
         editions: [],
         primaryProblemId: page.context.id,
+        fragmentRoutes: [],
       }
     );
   }

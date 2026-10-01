@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  childrenHaveFragment,
+  useProblemFragment,
+} from './ProblemFragmentRoutes';
 
 export interface SpoilerProps {
   title: string;
@@ -27,6 +31,18 @@ const Spoiler = ({
   startExpanded = false,
 }: SpoilerProps): JSX.Element => {
   const [show, setShow] = React.useState(startExpanded);
+  const fragment = useProblemFragment();
+  const hasFragment = childrenHaveFragment(children, fragment);
+  React.useEffect(() => {
+    if (hasFragment) setShow(true);
+  }, [fragment, hasFragment]);
+  React.useEffect(() => {
+    if (!show || !hasFragment || !fragment) return;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(fragment)?.scrollIntoView();
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [fragment, hasFragment, show]);
 
   let expandCodeBlock = false;
   const arrChildren = React.Children.toArray(children);

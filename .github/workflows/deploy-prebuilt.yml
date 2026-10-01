@@ -19,7 +19,7 @@ on:
 
 concurrency:
   group: build-deploy
-  cancel-in-progress: true   # always build the last thing
+  cancel-in-progress: true # always build the last thing
 
 permissions:
   contents: write
@@ -51,7 +51,7 @@ jobs:
       - name: Primary language editions are consistent
         run: node scripts/primary-editions.mjs
       - name: Generator tests
-        run: node --test scripts/tests/problems.test.mjs scripts/tests/tx.test.mjs scripts/tests/gatsby-problem-nodes.test.mjs scripts/tests/navigation.test.mjs scripts/tests/figure-anchors.test.mjs scripts/tests/editor.test.mjs scripts/tests/publication-concurrency.test.mjs scripts/tests/single-pass.test.mjs scripts/tests/problem-sections.test.mjs scripts/tests/problem-media.test.mjs scripts/tests/problem-redirects.test.mjs scripts/tests/problem-consolidations.test.mjs scripts/tests/primary-editions.test.mjs scripts/tests/source-conversions.test.mjs scripts/tests/xlsx-source.test.mjs scripts/tests/xls-source.test.mjs scripts/tests/vercel-config.test.mjs scripts/tests/fonts.test.mjs
+        run: node --test scripts/tests/problems.test.mjs scripts/tests/tx.test.mjs scripts/tests/gatsby-problem-nodes.test.mjs scripts/tests/fragment-routes.test.mjs scripts/tests/navigation.test.mjs scripts/tests/figure-anchors.test.mjs scripts/tests/editor.test.mjs scripts/tests/publication-concurrency.test.mjs scripts/tests/single-pass.test.mjs scripts/tests/problem-sections.test.mjs scripts/tests/problem-media.test.mjs scripts/tests/problem-redirects.test.mjs scripts/tests/problem-consolidations.test.mjs scripts/tests/primary-editions.test.mjs scripts/tests/source-conversions.test.mjs scripts/tests/xlsx-source.test.mjs scripts/tests/xls-source.test.mjs scripts/tests/vercel-config.test.mjs scripts/tests/fonts.test.mjs
       - name: Verify source image extraction
         run: node --test scripts/tests/native-image-crop.test.mjs scripts/tests/original-image-figure.test.mjs scripts/tests/embedded-image-figure.test.mjs
       - name: Compile every solution MDX
@@ -66,13 +66,13 @@ jobs:
       - name: Build (archive on)
         timeout-minutes: 40
         env:
-          GATSBY_ARCHIVE_ENABLED: "true"
+          GATSBY_ARCHIVE_ENABLED: 'true'
           GATSBY_ARCHIVE_BASE_URL: https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev
           SITE_URL: https://www.olympiads.xyz
-          GATSBY_CPU_COUNT: "3"
-          GATSBY_VERBOSE_LOGGING: "2"
+          GATSBY_CPU_COUNT: '3'
+          GATSBY_VERBOSE_LOGGING: '2'
           NODE_OPTIONS: --max-old-space-size=10240
-          CI: "true"
+          CI: 'true'
         run: npx gatsby build
       - name: Assemble deploy tree
         run: |

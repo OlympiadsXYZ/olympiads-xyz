@@ -3,6 +3,11 @@ import * as React from 'react';
 import MarkdownLayout from '../components/MarkdownLayout/MarkdownLayout';
 import Layout from '../components/layout';
 import Markdown from '../components/markdown/Markdown';
+import {
+  ProblemFragmentProvider,
+  MovedProblemSections,
+} from '../components/markdown/ProblemFragmentRoutes';
+import type { ProblemFragmentRoute } from '../problems/fragment-routes';
 import SEO from '../components/seo';
 import ProblemTopics from '../components/ProblemTopics';
 import { ConfettiProvider } from '../context/ConfettiContext';
@@ -23,6 +28,7 @@ type SolutionPageContext = {
   archiveYear?: ArchiveYearLink | null;
   editions?: ProblemEditionLink[];
   primaryProblemId?: string;
+  fragmentRoutes?: ProblemFragmentRoute[];
 };
 
 export default function Template(props) {
@@ -121,7 +127,14 @@ export default function Template(props) {
               {/* a paper printed in English or Russian is read (and
                   hyphenated, spoken) in its own language */}
               <div className="py-4" lang={pageContext.lang ?? undefined}>
-                <Markdown body={body} />
+                <ProblemFragmentProvider
+                  key={pageContext.id}
+                  routes={pageContext.fragmentRoutes}
+                  routeHash={props.location?.hash}
+                >
+                  <Markdown body={body} />
+                  <MovedProblemSections routes={pageContext.fragmentRoutes} />
+                </ProblemFragmentProvider>
               </div>
             </MarkdownLayout>
           </ComparePanelProvider>

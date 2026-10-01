@@ -477,6 +477,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     archiveYear: unknown;
     editions: unknown;
     primaryProblemId: string;
+    fragmentRoutes: unknown;
   } = (() => {
     const {
       writeProblemsIndex,
@@ -492,12 +493,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     } = require('./src/problems/page-links');
     const problemNodes = problems.map(({ node }) => node);
     const { problemEditionLinks } = require('./src/problems/editions');
+    const {
+      readProblemFragmentRoutes,
+    } = require('./src/problems/fragment-routes-node');
     const editionUrls = new Map<string, string>(
       problemNodes.map(node => [
         node.uniqueId,
         getProblemURL(node) + '/solution',
       ])
     );
+    const fragmentRoutes = readProblemFragmentRoutes(__dirname, editionUrls);
     const editionProjection = readEditionProjection(
       __dirname,
       new Set(editionUrls.keys())
@@ -531,6 +536,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         lang: foreignLang(paper?.lang),
         editions: problemEditionLinks(id, editionProjection, editionUrls),
         primaryProblemId,
+        fragmentRoutes: fragmentRoutes.get(id) ?? [],
         archiveYear:
           paper && yearPages && typeof paper.year === 'number'
             ? archiveYearLink(paper, yearPages)

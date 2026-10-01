@@ -27,7 +27,7 @@ jobs:
 
       - run: yarn
       - name: Check archive file links
-        run: node --test scripts/tests/archive-links.test.mjs
+        run: node --test scripts/tests/archive-links.test.mjs scripts/tests/fragment-routes.test.mjs
       # Sourcing spikes the gatsby process to ~15 GB for about 30 s (seen 2026-09-23 at 1,093 papers; off-heap,
       # so NODE_OPTIONS does not cap it) and the 16 GB runner is killed. Swap absorbs the spike.
       - name: Add swap
@@ -36,11 +36,11 @@ jobs:
           sudo mkswap /mnt/extra.swap && sudo swapon /mnt/extra.swap && free -m
       - run: npx gatsby build
         env:
-          GATSBY_ARCHIVE_ENABLED: "true"
+          GATSBY_ARCHIVE_ENABLED: 'true'
           GATSBY_ARCHIVE_BASE_URL: https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev
           SITE_URL: https://www.olympiads.xyz
-          GATSBY_CPU_COUNT: "3"
-          GATSBY_VERBOSE_LOGGING: "2"
+          GATSBY_CPU_COUNT: '3'
+          GATSBY_VERBOSE_LOGGING: '2'
           NODE_OPTIONS: --max-old-space-size=10240
       - run: ./node_modules/.bin/serve public &
       - run: dart pub global activate linkcheck

@@ -209,6 +209,10 @@ export function displayNumber(
 // Returns the grade, the problem number and the length of the head.
 const GRADE_CODES: [RegExp, (m: RegExpExecArray) => [string, string]][] = [
   [
+    /^\s*(\d{1,2}(?:\.\d{1,2})*)\s+\((\d{1,2}(?:\(\d{1,2}\))?)\s*класс?\)\s*[.:]?\s*/iu,
+    m => [m[2], m[1]],
+  ],
+  [
     /^\s*(\d{1,2}\s*[-–]\s*\d{1,2})\s*класс?[ыа]?\.?,?\s*задача\s*№?\s*(\d{1,2})(?!\d)\s*[.:]?\s*/iu,
     m => [m[1], m[2]],
   ],

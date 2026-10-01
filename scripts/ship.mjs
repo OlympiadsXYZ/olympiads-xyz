@@ -13,15 +13,32 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const dry = process.argv.includes('--dry-run'), noPush = process.argv.includes('--no-push');
-const log = s => console.log(`[ship ${new Date().toISOString().slice(11, 19)}] ${s}`);
-const run = (cmd, args, opts = {}) => spawnSync(cmd, args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, env: { ...process.env, PYTHONUTF8: '1' }, ...opts });
+const dry = process.argv.includes('--dry-run'),
+  noPush = process.argv.includes('--no-push');
+const log = s =>
+  console.log(`[ship ${new Date().toISOString().slice(11, 19)}] ${s}`);
+const run = (cmd, args, opts = {}) =>
+  spawnSync(cmd, args, {
+    cwd: ROOT,
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+    env: { ...process.env, PYTHONUTF8: '1' },
+    ...opts,
+  });
 const git = args => run('git', args);
 
-const changed = git(['status', '--porcelain', '--', 'content', 'solutions']).stdout.trim().split('\n').filter(Boolean);
+const changed = git(['status', '--porcelain', '--', 'content', 'solutions'])
+  .stdout.trim()
+  .split('\n')
+  .filter(Boolean);
 const papers = changed.filter(l => /content\/problems\//.test(l)).length;
-if (!changed.length) { log('nothing to ship'); process.exit(0); }
-log(`${changed.length} changed path(s), ${papers} paper file(s); running the gates`);
+if (!changed.length) {
+  log('nothing to ship');
+  process.exit(0);
+}
+log(
+  `${changed.length} changed path(s), ${papers} paper file(s); running the gates`
+);
 const gates = [
   ['node', ['scripts/normalise-papers.mjs']],
   ['node', ['scripts/problems-to-site.mjs']],
@@ -30,8 +47,37 @@ const gates = [
   ['node', ['scripts/primary-editions.mjs']],
   ['node', ['scripts/check-mdx.mjs']],
   ['node', ['--test', 'scripts/tests/problem-media.test.mjs']],
-  ['node', ['--test', 'scripts/tests/problems.test.mjs', 'scripts/tests/tx.test.mjs', 'scripts/tests/navigation.test.mjs', 'scripts/tests/gatsby-problem-nodes.test.mjs', 'scripts/tests/figure-anchors.test.mjs', 'scripts/tests/editor.test.mjs', 'scripts/tests/publication-concurrency.test.mjs', 'scripts/tests/single-pass.test.mjs', 'scripts/tests/problem-sections.test.mjs', 'scripts/tests/problem-redirects.test.mjs', 'scripts/tests/problem-consolidations.test.mjs', 'scripts/tests/primary-editions.test.mjs', 'scripts/tests/source-conversions.test.mjs', 'scripts/tests/xlsx-source.test.mjs', 'scripts/tests/xls-source.test.mjs']],
-  ['node', ['--test', 'scripts/tests/native-image-crop.test.mjs', 'scripts/tests/original-image-figure.test.mjs', 'scripts/tests/embedded-image-figure.test.mjs']],
+  [
+    'node',
+    [
+      '--test',
+      'scripts/tests/problems.test.mjs',
+      'scripts/tests/tx.test.mjs',
+      'scripts/tests/navigation.test.mjs',
+      'scripts/tests/gatsby-problem-nodes.test.mjs',
+      'scripts/tests/fragment-routes.test.mjs',
+      'scripts/tests/figure-anchors.test.mjs',
+      'scripts/tests/editor.test.mjs',
+      'scripts/tests/publication-concurrency.test.mjs',
+      'scripts/tests/single-pass.test.mjs',
+      'scripts/tests/problem-sections.test.mjs',
+      'scripts/tests/problem-redirects.test.mjs',
+      'scripts/tests/problem-consolidations.test.mjs',
+      'scripts/tests/primary-editions.test.mjs',
+      'scripts/tests/source-conversions.test.mjs',
+      'scripts/tests/xlsx-source.test.mjs',
+      'scripts/tests/xls-source.test.mjs',
+    ],
+  ],
+  [
+    'node',
+    [
+      '--test',
+      'scripts/tests/native-image-crop.test.mjs',
+      'scripts/tests/original-image-figure.test.mjs',
+      'scripts/tests/embedded-image-figure.test.mjs',
+    ],
+  ],
   ['python3', ['scripts/validate-papers.py']],
 ];
 for (const [cmd, args] of gates) {
@@ -39,10 +85,20 @@ for (const [cmd, args] of gates) {
   if (r.status !== 0) {
     const diagnostic = path.join(ROOT, 'tmp', 'ship-last-failure.log');
     fs.mkdirSync(path.dirname(diagnostic), { recursive: true });
-    fs.writeFileSync(diagnostic, [r.stdout, r.stderr].filter(Boolean).join('\n'));
+    fs.writeFileSync(
+      diagnostic,
+      [r.stdout, r.stderr].filter(Boolean).join('\n')
+    );
     // Keep stdout failures visible even when stderr ends with many math warnings.
-    const tail = [r.stdout, r.stderr].filter(Boolean).map(s => s.trim().split('\n').slice(-12).join('\n')).join('\n');
-    log(`gate failed: ${cmd} ${args.join(' ')}\n${tail}\nFull output: ${diagnostic}`);
+    const tail = [r.stdout, r.stderr]
+      .filter(Boolean)
+      .map(s => s.trim().split('\n').slice(-12).join('\n'))
+      .join('\n');
+    log(
+      `gate failed: ${cmd} ${args.join(
+        ' '
+      )}\n${tail}\nFull output: ${diagnostic}`
+    );
     process.exit(2);
   }
 }
@@ -54,25 +110,84 @@ for (let attempt = 1; ; attempt++) {
   git(['add', 'content', 'solutions']);
   const r = run('node', ['scripts/problems-to-site.mjs', '--check']);
   if (r.status === 0) break;
-  if (attempt >= 4) { log(`gate failed: node scripts/problems-to-site.mjs --check\n${[r.stdout, r.stderr].filter(Boolean).join('\n').trim().split('\n').slice(-12).join('\n')}`); process.exit(2); }
-  log(`generated pages went stale during the gates (attempt ${attempt}); regenerating`);
+  if (attempt >= 4) {
+    log(
+      `gate failed: node scripts/problems-to-site.mjs --check\n${[
+        r.stdout,
+        r.stderr,
+      ]
+        .filter(Boolean)
+        .join('\n')
+        .trim()
+        .split('\n')
+        .slice(-12)
+        .join('\n')}`
+    );
+    process.exit(2);
+  }
+  log(
+    `generated pages went stale during the gates (attempt ${attempt}); regenerating`
+  );
   const g = run('node', ['scripts/problems-to-site.mjs']);
-  if (g.status !== 0) { log(`gate failed: node scripts/problems-to-site.mjs\n${[g.stdout, g.stderr].filter(Boolean).join('\n').trim().split('\n').slice(-12).join('\n')}`); process.exit(2); }
+  if (g.status !== 0) {
+    log(
+      `gate failed: node scripts/problems-to-site.mjs\n${[g.stdout, g.stderr]
+        .filter(Boolean)
+        .join('\n')
+        .trim()
+        .split('\n')
+        .slice(-12)
+        .join('\n')}`
+    );
+    process.exit(2);
+  }
 }
-const summary = (run('node', ['scripts/problems-to-site.mjs', '--check']).stdout.match(/\d+ papers; \d+ eligible problems/) || [''])[0];
+const summary = (run('node', [
+  'scripts/problems-to-site.mjs',
+  '--check',
+]).stdout.match(/\d+ papers; \d+ eligible problems/) || [''])[0];
 log(`gates green (${summary})`);
-if (dry) { log('dry run: not committing'); process.exit(0); }
-const ledger = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'problem-publication.json'), 'utf8'));
-const kinds = {}; for (const v of Object.values(ledger.papers || ledger)) kinds[v.kind] = (kinds[v.kind] || 0) + 1;
+if (dry) {
+  log('dry run: not committing');
+  process.exit(0);
+}
+const ledger = JSON.parse(
+  fs.readFileSync(
+    path.join(ROOT, 'content', 'problem-publication.json'),
+    'utf8'
+  )
+);
+const kinds = {};
+for (const v of Object.values(ledger.papers || ledger))
+  kinds[v.kind] = (kinds[v.kind] || 0) + 1;
 git(['add', 'content', 'solutions']);
-const staged = git(['diff', '--cached', '--name-only', '-z']).stdout.split('\0').filter(Boolean);
-if (!staged.length) { log('nothing staged after the gates'); process.exit(0); }
-const newPapers = staged.filter(f => /^content\/problems\/.*\.json$/.test(f)).length;
-const msg = `content: ship ${newPapers} promoted paper file(s) (${summary}; ledger ${Object.entries(kinds).map(([k, v]) => `${k} ${v}`).join(', ')})\n\nAutomated publication of checked content (scripts/ship.mjs). Per-paper receipts record transcription and review provenance.\n`;
+const staged = git(['diff', '--cached', '--name-only', '-z'])
+  .stdout.split('\0')
+  .filter(Boolean);
+if (!staged.length) {
+  log('nothing staged after the gates');
+  process.exit(0);
+}
+const newPapers = staged.filter(f =>
+  /^content\/problems\/.*\.json$/.test(f)
+).length;
+const msg = `content: ship ${newPapers} promoted paper file(s) (${summary}; ledger ${Object.entries(
+  kinds
+)
+  .map(([k, v]) => `${k} ${v}`)
+  .join(
+    ', '
+  )})\n\nAutomated publication of checked content (scripts/ship.mjs). Per-paper receipts record transcription and review provenance.\n`;
 const cr = run('git', ['commit', '-q', '-F', '-'], { input: msg });
-if (cr.status !== 0 && !/nothing to commit/.test(cr.stdout + cr.stderr)) { log(`commit failed: ${(cr.stderr || cr.stdout).slice(0, 300)}`); process.exit(1); }
+if (cr.status !== 0 && !/nothing to commit/.test(cr.stdout + cr.stderr)) {
+  log(`commit failed: ${(cr.stderr || cr.stdout).slice(0, 300)}`);
+  process.exit(1);
+}
 log(`committed ${git(['log', '--oneline', '-1']).stdout.trim()}`);
 if (noPush) process.exit(0);
 const p = git(['push', '-q', 'origin', 'HEAD']);
-if (p.status !== 0) { log(`push failed: ${(p.stderr || p.stdout).slice(0, 300)}`); process.exit(1); }
+if (p.status !== 0) {
+  log(`push failed: ${(p.stderr || p.stdout).slice(0, 300)}`);
+  process.exit(1);
+}
 log('pushed');
