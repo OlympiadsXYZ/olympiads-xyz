@@ -56,6 +56,7 @@ const gates = [
       'scripts/tests/navigation.test.mjs',
       'scripts/tests/gatsby-problem-nodes.test.mjs',
       'scripts/tests/fragment-routes.test.mjs',
+      'scripts/tests/archive-links.test.mjs',
       'scripts/tests/figure-anchors.test.mjs',
       'scripts/tests/editor.test.mjs',
       'scripts/tests/publication-concurrency.test.mjs',

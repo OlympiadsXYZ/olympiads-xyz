@@ -1,0 +1,333 @@
+---
+id: belpho-2005-iv-x-p8
+source: 'BelPhO 2005, Заключителен етап, 9–11 клас'
+title: 'Задача 10-Т3. 10-3. На автопилоте'
+author: 'Olympiads XYZ · транскрипция на архивни материали'
+canonicalSource: 'content/problems/physics/BelPhO/2005/belpho-2005-iv-x.json'
+verification: 'reviewed'
+verifiedAt: '2026-10-01T11:37:18.989Z'
+verifier: 'single-pass'
+---
+
+*Республиканская физическая олимпиада 2005 — заключительный этап, теоретический и экспериментальный туры, 9–11 классы*
+
+<Warning title="Бележка към темата">
+Полный оригинал: 33 страницы условий, 41 страница теоретических решений; 17 самостоятельных заданий (11T+6E), 99 нумерованных пунктов. Решения шести экспериментальных заданий отсутствуют в полном архивном комплекте. Исходные ошибки, противоречия, повторные номера и дефекты рисунков сохранены с отдельно указанными примечаниями читателя. Решения из архивного издания.
+</Warning>
+
+## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Часть I. «Ручное управление»](#manual)
+- [Часть II. «Автоматическое управление»](#automatic)
+
+</nav>
+
+В данной задаче вам предстоит проанализировать различные аспекты управления автомобилем.
+
+В качестве типичных взяты¹ характеристики автомобиля «ВАЗ-21063»:
+
+- масса снаряженного автомобиля $m=1{,}1\ \text{т}$;
+- максимальная мощность двигателя $P_{\max}=65\ \text{л.с.}$;
+- максимальная скорость по горизонтальной асфальтированной дороге $v_{\max}=100\ \text{км/час}$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '36.1%', '--fig-max': '231px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/belpho-2005-iv-x/p8-q-car.png" alt="Фотография автомобиля ВАЗ-21063 из оригинала" width="722" height="489" loading="lazy" decoding="async" />
+</figure>
+
+
+Для справки: $1\ \text{л.с.}\approx0{,}74\ \text{кВт}$; $1\ \text{час}=3600\ \text{с}$; $1\ \text{км}=1000\ \text{м}$; $1\ \text{т}=1000\ \text{кг}$.
+
+Будем считать, что во время движения на автомобиль действуют:
+
+- сила сопротивления воздуха, которая пропорциональна квадрату скорости автомобиля
+$$
+F_\text{сопр.}=\beta v^2;\qquad (1)
+$$
+- постоянная сила трения (которая включает в себя не только силу трения качения об асфальт, но силы трения внутренних деталей автомобиля) — $F_0$.
+
+Водитель по своему усмотрению может регулировать мощность двигателя $P$ в пределах от нуля до максимального значения («полный газ»).
+
+¹ Эти данные любезно предоставлены Л.Г. Марковичем, за что выражаем ему искреннюю признательность.
+
+<ProblemSection id="manual">
+
+### Часть I. «Ручное управление»
+
+**3.1** Запишите уравнения, описывающие ускорение автомобиля $a=\frac{\Delta v}{\Delta t}$ и скорость изменения его кинетической энергии $\frac{\Delta E}{\Delta t}$.
+
+**3.2** Для изучения характеристик автомобиля был поставлен следующий эксперимент: автомобиль разгонялся до скорости $v_0$, после чего отключался двигатель и измерялся путь $S$ автомобиля до полной остановки (без включения тормоза за отсутствием такового). Результаты эксперимента представлены в таблице и на графике, где нанесены как экспериментальные точки, так и аппроксимирующая кривая.
+
+| $v_0$, м/с | $S$, м |
+| --- | --- |
+| 2,0 | 6,3 |
+| 4,0 | 21,8 |
+| 6,0 | 52,8 |
+| 8,0 | 92,0 |
+| 10,0 | 136,7 |
+| 12,0 | 182,8 |
+| 14,0 | 202,9 |
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.3%', '--fig-max': '437px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/belpho-2005-iv-x/p8-q-coast.png" alt="Экспериментальные точки и аппроксимирующая кривая пути остановки S(v₀)" width="1367" height="728" loading="lazy" decoding="async" />
+</figure>
+
+
+Используя приведенные данные, определите характеристики сил сопротивления: постоянную силу $F_0$ и коэффициент сопротивления $\beta$. Рассчитайте отношение силы сопротивления воздуха при максимальной скорости автомобиля к силе постоянного трения $\gamma=\frac{\beta v_{\max}^2}{F_0}$.
+
+Независимо от полученного вами значения в дальнейших расчетах считайте, что $\gamma=3{,}5$.
+
+**3.3** Если двигатель работает с постоянной скоростью, то по прошествии некоторого времени автомобиль движется с постоянной скоростью, которую далее мы будем называть установившейся скоростью.
+
+Постройте график зависимости установившейся скорости автомобиля при движении по горизонтальной дороге от мощности двигателя. По осям координат отложите относительные величины: отношение скорости автомобиля к его максимальной скорости $\eta=\frac v{v_{\max}}$ и отношение мощности двигателя к его максимальной мощности $\kappa=\frac P{P_{\max}}$.
+
+**3.4** Используя полученный график, найдите скорость установившегося движения при постоянной мощности $P=0{,}75P_{\max}$, когда автомобиль поднимается по склону, образующему угол $\alpha=5{,}0^\circ$ с горизонтом.
+
+Определите также скорость установившегося движения автомобиля по горизонтальной дороге, если на его крыше помещен багажник, который увеличивает силу сопротивления воздуха на 20%.
+
+**3.5** Рассмотрим старт автомобиля. Пусть водитель, нажимая на педаль газа, равномерно увеличивает мощность автомобиля от нуля до максимального значения за время $\tau$.
+
+С каким ускорением начинает двигаться автомобиль?
+
+Рассчитайте численные значения этого ускорения для $\tau=10\ \text{с}$ и $\tau=1{,}0\ \text{с}$.
+
+**3.6** Пусть автомобиль движется по горизонтальной дороге с постоянной скоростью $v=\eta v_{\max}$, затем водитель «дает полный газ».
+
+Оцените характерное время разгона автомобиля до максимальной скорости.
+
+Рассчитайте численное значение этого времени для $\eta=0{,}75$.
+
+</ProblemSection>
+
+<ProblemSection id="automatic">
+
+### Часть II. «Автоматическое управление»
+
+Для поддержания постоянной скорости автомобиля $u$ (конечно, меньшей максимальной) в автомобиле установлен «автопилот», регулирующий скорость изменения мощности двигателя в зависимости от требуемой скорости $u$ и текущей скорости $v$. «Закон управления» мощностью предельно прост:
+$$
+\frac{\Delta P}{\Delta t}=C(u-v).\qquad (2)
+$$
+
+**3.7** Покажите, что при таком управлении скорость автомобиля будет стремиться к требуемой скорости $u$, как при случайном изменении скорости автомобиля, так и при изменении его характеристик — силы постоянного трения, коэффициента сопротивления воздуха, движении по наклонной дороге и т.д. При каких значениях постоянного параметра управления $C$ такое управление возможно? По каким критериям следует выбирать оптимальное значение этого параметра?
+
+**3.8** Пусть автомобиль движется с постоянной скоростью $u$, а затем его скорость резко уменьшилась (мощность двигателя за время изменения скорости измениться не успела). Постройте схематические графики изменения мощности двигателя и скорости автомобиля от времени после скачкообразного изменения скорости. Рассмотрите несколько различных случаев, отличающихся значением параметра управления $C$.
+
+</ProblemSection>
+
+## Решение
+
+<Spoiler title="Покажи решението от архива">
+
+**3.1** Сила тяги автомобиля связана с его мощностью $F_\text{тяги}=Pv$, поэтому на основании второго закона Ньютона можно записать
+$$
+m\frac{\Delta v}{\Delta t}=\frac Pv-F_0-\beta v^2.\qquad (1)
+$$
+Переход к уравнению для изменения кинетической энергии осуществляется традиционным методом: умножаем уравнение на скорость
+$$
+mv\frac{\Delta v}{\Delta t}=P-(F_0+\beta v^2)v,
+$$
+замечаем, что $\Delta E=\Delta\left(\frac{mv^2}2\right)=mv\Delta v$, и получаем
+$$
+\frac{\Delta E}{\Delta t}=P-(F_0+\beta v^2)v.\qquad (2)
+$$
+
+**3.2** При малых скоростях движения автомобиля $v$ можно пренебречь силой сопротивления воздуха, тогда на основании уравнения $\frac{mv_0^2}2\approx F_0S$, получим зависимость пути пройденного автомобилем $S\approx\frac{mv_0^2}{2F_0}$ от скорости.
+
+По приведенным экспериментальным данным построим график зависимости пути от квадрата начальной скорости. Действительно при малых скоростях эта зависимость линейна. Из наклона $k=\frac{\Delta S}{\Delta(v_0^2)}=\frac m{2F_0}\approx1{,}44\ \text{с}^2/\text{м}$ графика определяем силу постоянного сопротивления
+$$
+F_0=\frac m{2k}\approx0{,}38\ \text{кН}.
+$$
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '47.1%', '--fig-max': '302px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/belpho-2005-iv-x/p8-k-coast.png" alt="График S от квадрата начальной скорости; начальный наклон" width="944" height="531" loading="lazy" decoding="async" />
+</figure>
+
+
+Коэффициент пропорциональности в выражении для силы сопротивления воздуха определим, зная максимальные скорость и мощность автомобиля. При равномерном движении с максимальной скоростью выполняется соотношение $\frac{P_{\max}}{v_{\max}}-F_0-\beta v_{\max}^2=0$, из которого определяем
+$$
+\beta=\frac{\frac{P_{\max}}{v_{\max}}-F_0}{v_{\max}^2}\approx1{,}8\ \text{кг/м}.
+$$
+Требуемый параметр также рассчитывается
+$$
+\gamma=\frac{\beta v_{\max}^2}{F_0}\approx3{,}6.
+$$
+
+**3.3** В установившемся режиме выполняется соотношение $P=(F_0+\beta v^2)v$, аналогично — при движении с максимальной скоростью $P_{\max}=(F_0+\beta v_{\max}^2)v_{\max}$. Их отношение
+$$
+\frac P{P_{\max}}=\frac{(F_0+\beta v^2)v}{(F_0+\beta v_{\max}^2)v_{\max}}=
+\frac{1+\frac{\beta v_{\max}^2}{F_0}\left(\frac v{v_{\max}}\right)^2}{1+\frac{\beta v_{\max}^2}{F_0}}\cdot\frac v{v_{\max}}
+$$
+дает связь между относительными характеристиками
+$$
+\kappa=\frac{\eta(1+\gamma\eta^2)}{1+\gamma}.\qquad (3)
+$$
+Выразить в явном виде зависимость скорости от мощности сложно, зато легко построить график зависимости мощности от скорости, а затем его повернуть.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '98.4%', '--fig-max': '630px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/belpho-2005-iv-x/p8-k-steady.png" alt="Два взаимно повернутых графика относительной мощности κ и относительной скорости η" width="1969" height="990" loading="lazy" decoding="async" />
+</figure>
+
+
+**3.4** При движении в гору автомобиль должен также преодолевать проекцию силы тяжести равную $mg\sin\alpha$. Эта сила постоянна, поэтому можно считать, что она увеличивает параметр $F_0$ в рассматриваемых уравнениях. Аналогично, сопротивление воздуха изменяет параметр $\beta$. В обоих случаях изменяется величина параметра $\gamma$ в уравнении (3). Таким образом, нам следует разработать методику использования графического решения этого уравнения при изменении параметра $\gamma$.
+
+Для определения скорости установившегося движения необходимо решить уравнение
+$$
+P=v(F_0+\beta v^2),\qquad (4)
+$$
+которое можно преобразовать к виду (3) и использовать уже построенный график. Обозначим $\gamma_0=3{,}5$ и перепишем (4) в виде
+$$
+\sqrt{\frac{\beta}{\gamma_0F_0}}\frac P{F_0}\cdot\frac1{1+\gamma_0}=
+\frac{\left(\sqrt{\frac{\beta}{\gamma_0F_0}}v\right)
+\left(1+\gamma_0\left(\sqrt{\frac{\beta}{\gamma_0F_0}}v\right)^2\right)}{1+\gamma_0}.
+$$
+Мы имеем уравнение, совпадающее с решенным, только в нем вместо $\eta$ стоит неизвестная $\left(\sqrt{\frac{\beta}{\gamma_0F_0}}v\right)$, а вместо $\kappa$ — $\sqrt{\frac{\beta}{\gamma_0F_0}}\frac P{F_0}\cdot\frac1{1+\gamma_0}$. Теперь можно провести необходимые расчеты.
+
+При движении в гору:
+$$
+F_0'=F_0+mg\sin\alpha=1320\ \text{Н};\qquad
+\sqrt{\frac{\beta}{\gamma_0F_0}}\frac P{F_0}\cdot\frac1{1+\gamma_0}\approx0{,}12.
+$$
+По графику находим $\left(\sqrt{\frac{\beta}{\gamma_0F_0}}v\right)\approx0{,}3$. Следовательно,
+$$
+v=0{,}3\sqrt{\frac{\gamma_0F_0}{\beta}}\approx15\ \text{м/с}=55\ \text{км/час}.
+$$
+При движении с багажником $\sqrt{\frac{\beta}{\gamma_0F_0}}\frac P{F_0}\cdot\frac1{1+\gamma_0}=0{,}85$, из графика находим $\left(\sqrt{\frac{\beta}{\gamma_0F_0}}v\right)\approx0{,}92$, наконец,
+$$
+v=0{,}92\sqrt{\frac{\gamma_0F_0}{\beta}}\approx25\ \text{м/с}=90\ \text{км/час}.
+$$
+
+**3.5** Рассмотрим динамическое уравнение движения (1) в течении малого временного интервала. В течение этого промежутка скорость возрастает приблизительно пропорционально времени $v=at$, а мощность изменяется по закону $P=\frac{P_{\max}}{\tau}t$, а силой сопротивления воздуха можно пренебречь.
+
+Подставим эти выражения в уравнение (1)
+$$
+ma=\frac{P_{\max}}{\tau a}-F_0.\qquad (4)
+$$
+Мы получили квадратное уравнение относительно неизвестного ускорения $a$, решить которое не сложно
+$$
+a^2+\frac{F_0}m a-\frac{P_{\max}}{\tau m}=0\Rightarrow
+a=\sqrt{\left(\frac{F_0}{2m}\right)^2+\frac{P_{\max}}{\tau m}}-\frac{F_0}{2m}.\qquad (5)
+$$
+Подставляя численные значения, получим необходимые результаты:
+
+при $\tau=10\ \text{с}$, $a\approx1{,}9\ \text{м/с}$;
+
+при $\tau=1{,}0\ \text{с}$, $a\approx6{,}6\ \text{м/с}$.
+
+**3.6** Оценку времени разгона можно получить как отношение изменения скорости $\Delta v=v_{\max}-\eta v_{\max}=v_{\max}(1-\eta)$ к ускорению в начальный момент разгона, которое определяется из уравнения (1)
+$$
+a_0=\frac1m\left(\frac{P_{\max}}{v_{\max}}-(F_0+\beta v_{\max}^2)\right),
+$$
+Таким образом, получим
+$$
+\Delta t\approx\frac{mv_{\max}(1-\eta)}{\frac{P_{\max}}{v_{\max}}-(F_0+\beta v_{\max}^2)}\approx6{,}5\ \text{с}.
+$$
+
+**3.7** Описанное управление действительно возможно при положительных значениях коэффициента $C$. Так если автомобиль движется с требуемой скоростью, то мощность остается постоянной, если по каким-то причинам скорость стала меньше требуемой, то мощность двигателя начнет возрастать, и, наоборот, с ростом скорости мощность будет убывать.
+
+**3.8** Качественно динамика изменения скорости и мощности будет иметь вид: Мощность начнет возрастать, скорость также будет расти, когда скорость станет равной требуемой, мощность достигнет максимального значения, после чего начнет убывать, а скорость продолжать расти, возможно несколько периодов таких затухающих колебаний. Чем больше значение параметра управления $C$, тем резче будут эти колебания, при уменьшении параметра управления выравнивание скорости будет проходить медленнее, но зато без резких колебаний. Оптимальный выбор параметра управления определяется условием: минимальное время установления скорости без ее колебаний (критический режим).
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '100%', '--fig-max': '643px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/belpho-2005-iv-x/p8-k-control.png" alt="Три режима изменения мощности P и скорости v после скачка скорости; полные оси и легенды" width="2009" height="748" loading="lazy" decoding="async" />
+</figure>
+
+
+</Spoiler>
+
+<details>
+<summary>Original-reader source caveat</summary>
+
+Entire retained41-page key contains THEORY only, grades9/10/11. Six distinct experimental assignments have no available matching key in the complete authenticated two-PDF archive folder. Do not invent solutions or report complete experimental key coverage.
+
+</details>
+
+<details>
+<summary>Original-reader source caveat</summary>
+
+Q7 limiter text references рис.12 while actual caption is Рис.4. Q4 boat caption is Рис.4 despite missing Рис.3; all original cross-references retained.
+
+</details>
+
+<details>
+<summary>Original-reader source caveat</summary>
+
+Grade9 key crate graph Рис.22 is referenced as рис.21 in prose; multimeter key contains native equation-number/reference errors, 0.11Ω minimum, 45A warning and absolute/relative current-error wording. Retain literal source with separately attributed discrepancy notes.
+
+</details>
+
+<details>
+<summary>Original-reader source caveat</summary>
+
+Grade10 Kaleidoscope key positive mgh work for uphill gravity, native disk angle80° in prose against90° question and sin45° result. Charged oscillator key contains native missing V, z0/z and fifth/sixth-power discrepancies, repeated equation8, relaxation missing τ and complete ungraded appended derivation; no silent correction.
+
+</details>
+
+<details>
+<summary>Original-reader source caveat</summary>
+
+Autopilot Q10 photograph occludes footnote ending in original PDF. Native key contains Fтяги=Pv prose versus P/v equation, acceleration units m/s, maximum-speed initial-acceleration denominator issue; retain printed source and distinguish actual source defect from renderer loss.
+
+</details>
+
+<details>
+<summary>Original-reader source caveat</summary>
+
+Grade11 scaling key dipole field coefficient omits factor2, ξ∈[1,0] order literal. Engine key has reused Table3, process3–4 heading versus3→0, missing ΔT/extra heat-capacity factors, literal friction terms and sign differences; include complete native Maxwell-integral supplement.
+
+</details>
+
+<details>
+<summary>Original-reader source caveat</summary>
+
+Magnetic regulation Q19 particle a is diameter but key volume uses 4πa³/3 as radius. Gauss lateral surface missing Δz; later denominator plus/minus and extra equals0 printed discrepancies retained.
+
+</details>
+
+<details>
+<summary>Original-reader source caveat</summary>
+
+Q27 apparatus native bitmap callout words intrinsically clipped inside original figure. Grade10 experimental magnet part4 repeats labels3.2/3.3; nativeLabel preserved and occurrence qualifier only if strict schema requires distinction. Grade11 magnet first printed1.2 and Fpm notation retained. Q33 вводы literal typo.
+
+</details>
+
+<details>
+<summary>Титульные листы и состав полного комплекта</summary>
+
+Республиканская физическая олимпиада. 2005 год. г. Гродно. Теоретический тур. 9 класс / 10 класс / 11 класс. Экспериментальный тур. 9 класс / 10 класс / 11 класс. Полные оригинальные титульные листы Q1/Q6/Q14/Q22/Q26/Q30, эмблемы и повторяющийся декоративный знак сохранены в оригинальном PDF. Весь комплект содержит 17 самостоятельных заданий: 11 теоретических и 6 экспериментальных, 99 нумерованных пунктов. Разные классы и связанные части каждого задания сохранены раздельно.
+
+</details>
+
+<details>
+<summary>Original PDF text-layer footnote recovery</summary>
+
+The complete native PDF text layer preserves the full credit footnote: «Эти данные любезно предоставлены Л.Г. Марковичем, за что выражаем ему искреннюю признательность.» The printed Q10 car photograph overlaps/occludes its ending. The credit is transcribed from retained original bytes, not invented from the incomplete rendered ending.
+
+</details>
+
+<details>
+<summary>Повторяющиеся печатные номера</summary>
+
+В задании 10-Э2 пункты четвертой части имеют напечатанные номера 4.1, 3.2, 3.3. Первые появления 3.2 и 3.3 сохранены, вторые отображаются как 3.2 (повтор), 3.3 (повтор), с исходными nativeLabel и порядком появления в метаданных. Это только указатель второго появления; оба запроса и их исходная нумерация сохранены. В задании 11-Э1 первый пункт действительно напечатан как 1.2. Слово «вводы» в конце Q33 сохранено буквально.
+
+</details>
+
+<details>
+<summary>Additional literal source expressions</summary>
+
+Magnetic regulation K36 numerical volume is printed with (10⁻⁴)³, while Q19 calls a a particle diameter and the key uses a as radius. The question defines f₀ as half the maximum force; K36 prints maximum 7.02·10⁻⁶ N and f₀ 3.56·10⁻⁶ N. Preserve these printed approximate values. Preserve all printed calculations without silent correction. The source engine tables are retained as complete native crops, including every cell, equation, units and repeated caption Table3.
+
+</details>
+
+<details>
+<summary>Source scope and archive attribution</summary>
+
+All74native33Q41K pages personally read by GPT-6.1 Sol ultra in one registered original-source pass. Entire available theory keys and ungraded oscillator K17–18 / Maxwell-integral K34 supplements retained. Exactly two PDFs in the complete authenticated archive folder; no experimental key, separate answer form or scheme companion. Archive edition authority only: independently verified organizer-hosted official provenance not established. No independent checker.
+
+</details>
+
+---
+
+Оригинал в Архива: [2005problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BelPhO/IV/2005/2005problems.pdf#page=10)
+· решение от архива: [2005solutions.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/BelPhO/IV/2005/2005solutions.pdf#page=19)
