@@ -132,6 +132,56 @@ const core = load('src/problems/fragment-routes.ts');
 const node = load('src/problems/fragment-routes-node.ts');
 const ui = load('src/components/markdown/ProblemFragmentRoutes.tsx');
 const Spoiler = load('src/components/markdown/Spoiler.tsx').default;
+test('native cross-problem sections resolve to their full page, preserving query and literal fragment', () => {
+  assert.equal(
+    core.problemSectionHref(
+      '/problems/belpho-2016-iii-3-etap-theoretical-p7#native-note'
+    ),
+    '/problems/belpho-2016-iii-3-etap-theoretical-p7/solution#native-note'
+  );
+  assert.equal(
+    core.problemSectionHref('/problems/paper-p1?from=old#native%2Dnote'),
+    '/problems/paper-p1/solution?from=old#native%2Dnote'
+  );
+  for (const href of [
+    undefined,
+    '',
+    '#native-note',
+    '/problems/paper-p1',
+    '/problems/paper-p1/solution#native-note',
+    'https://outside.invalid/problems/paper-p1#native-note',
+    '/problems/paper-p1#%ZZ',
+  ])
+    assert.equal(core.problemSectionHref(href), href);
+  for (const hash of ['#%00', '#%1F', '#%20', '#%7F', '#%ZZ'])
+    assert.equal(core.decodedFragment(hash), null);
+});
+test('closed solution sections keep real native anchors in static HTML while their bodies stay hidden', () => {
+  const html = renderToStaticMarkup(
+    React.createElement(
+      Spoiler,
+      { title: 'Official key' },
+      React.createElement(
+        'section',
+        { id: 'solution-task-1-2' },
+        'Native solution'
+      )
+    )
+  );
+  const dom = new JSDOM(html);
+  const anchor = dom.window.document.getElementById('solution-task-1-2');
+  assert.ok(anchor);
+  assert.ok(anchor.closest('[hidden]'));
+  assert.equal(
+    dom.window.document.querySelector('button').getAttribute('aria-expanded'),
+    'false'
+  );
+  assert.equal(
+    dom.window.document.querySelectorAll('#solution-task-1-2').length,
+    1
+  );
+  dom.window.close();
+});
 const config = JSON.parse(
   fs.readFileSync(
     path.join(dataRoot, 'content/problem-fragment-routes.json'),

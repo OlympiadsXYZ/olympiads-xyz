@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ProblemSectionAnchor } from './ProblemSection';
 import { archiveHref } from '../../archive/links';
+import { problemSectionHref } from '../../problems/fragment-routes';
 import { useDarkMode } from '../../context/DarkModeContext';
 // type only: the component itself is loaded on demand (HighlightedCode)
 import type CodeBlockType from './CodeBlock/CodeBlock';
@@ -139,7 +140,7 @@ const a = ({ children, ...props }) => {
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
       {...props}
-      href={archiveHref(props.href)}
+      href={problemSectionHref(archiveHref(props.href))}
     >
       {children}
     </a>

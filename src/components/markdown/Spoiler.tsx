@@ -102,13 +102,14 @@ const Spoiler = ({
         <span className="flex-1">{title}</span>
       </button>
 
-      {show && (
-        <div className="p-4 spoiler-body bg-white dark:bg-dark-surface dark:bg-opacity-40 no-y-margin">
-          <SpoilerContext.Provider value={{ expandCodeBlock }}>
-            {children}
-          </SpoilerContext.Provider>
-        </div>
-      )}
+      <div
+        hidden={!show}
+        className="p-4 spoiler-body bg-white dark:bg-dark-surface dark:bg-opacity-40 no-y-margin"
+      >
+        <SpoilerContext.Provider value={{ expandCodeBlock }}>
+          {children}
+        </SpoilerContext.Provider>
+      </div>
     </div>
   );
 };

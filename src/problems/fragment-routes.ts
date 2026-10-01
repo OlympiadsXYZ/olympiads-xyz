@@ -9,12 +9,26 @@ export function decodedFragment(hash: string): string | null {
   if (!hash || hash[0] !== '#') return null;
   try {
     const fragment = decodeURIComponent(hash.slice(1));
-    return fragment && !/[\u0000-\u0020\u007f]/.test(fragment)
+    return fragment &&
+      !Array.from(fragment).some(
+        c => c.charCodeAt(0) <= 32 || c.charCodeAt(0) === 127
+      )
       ? fragment
       : null;
   } catch {
     return null;
   }
+}
+
+/** Native sections live on the problem's full statement/solution page. */
+export function problemSectionHref(
+  href: string | undefined
+): string | undefined {
+  if (!href) return href;
+  const match = /^(\/problems\/[^/?#]+)(\?[^#]*)?(#.+)$/.exec(href);
+  return match && decodedFragment(match[3])
+    ? match[1] + '/solution' + (match[2] || '') + match[3]
+    : href;
 }
 
 type FragmentLocation = { hash: string; search: string; pathname: string };
@@ -33,8 +47,9 @@ export function movedFragmentTarget(
     !target.pathname.endsWith('/solution') ||
     target.search ||
     !decodedFragment(target.hash)
-  )
+  ) {
     return null;
+  }
   const url = target.pathname + location.search + target.hash;
   return url === location.pathname + location.search + location.hash
     ? null
