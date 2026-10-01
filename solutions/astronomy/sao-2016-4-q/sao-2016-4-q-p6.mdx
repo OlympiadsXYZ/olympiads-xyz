@@ -1,0 +1,489 @@
+---
+id: sao-2016-4-q-p6
+source: 'SAO 2016, Теория и практика'
+title: 'Задача 6. Question 6'
+author: 'Olympiads XYZ · транскрипция на официалните материали'
+canonicalSource: 'content/problems/astronomy/SAO/2016/sao-2016-4-q.json'
+verification: 'reviewed'
+verifiedAt: '2026-10-01T05:52:07.414Z'
+verifier: 'single-pass'
+---
+
+*4th Singapore Astronomy Olympiad · 19 март 2016 г. · 16 т.*
+
+<Warning title="Бележка към темата">
+Suggested answers preserve native scoring and scientific differences: Q5 question 25 marks/key 24 marks; Q7 question 5 marks/key 6 marks. Original units, intermediate formulas, assumptions and printed descriptions are retained. The complete source-supported discrepancy list is bound in the source-reader evidence.
+</Warning>
+
+<details>
+<summary>Native cover, rules, constants and formulae</summary>
+
+**4th Singapore Astronomy Olympiad — 19 March 2016**
+
+Organized by **Astronomy.SG**. Sponsored by **DSO National Laboratories**.
+
+I hereby consent to provide my details to the organizing and sponsoring organisations, Astronomy.SG and DSO National Laboratories:
+
+Full Name: __________; School: __________; NRIC/FIN: __________; Email address: __________; Signature: __________.
+
+For official use only (the cover prints two identical tables):
+
+| Question | Score | Question | Score |
+|---|---|---|---|
+|1|/14|1|/14|
+|2|/8|2|/8|
+|3|/20|3|/20|
+|4|/12|4|/12|
+|5|/25|5|/25|
+|6|/16|6|/16|
+|7|/5|7|/5|
+
+**Rules**
+
+- Students may use pen or pencil to answer the paper.
+- Any working or answers on the question papers will not be considered.
+- Only the use of scientific calculators is allowed. Graphing/programmable calculators are not allowed.
+- Students are to bring their own stationery.
+- Students have 3 hours to complete the paper. If a student is late, no time extension is granted.
+- Students should **clearly state their assumptions** in their working, if any.
+- Students may leave any time upon submission of their solutions and question paper.
+- Cheating or allowing others to cheat is grounds for immediate disqualification.
+- No notes are allowed.
+- Question papers must be returned together with their scripts. **The cover page and Figure 2 are to be attached to the answer script.**
+
+**Constants / Values**
+
+| Constant / value | Printed value |
+|---|---|
+|Gravitational constant, $G$|$6.67\times10^{-11}\,\mathrm{m^3\,kg^{-1}\,s^{-2}}$|
+|Speed of light in vacuum, $c$|$3.0\times10^8\,\mathrm{m\,s^{-1}}$|
+|Hubble constant, $H_0$|$67.8\,\mathrm{km\,s^{-1}\,Mpc^{-1}}$|
+|Radius of Earth, $R_e$|$6.371\times10^6\,\mathrm m$|
+|Mass of Earth, $M_e$|$5.972\times10^{24}\,\mathrm{kg}$|
+|Solar mass|$2.0\times10^{30}\,\mathrm{kg}$|
+|Nominal solar luminosity|$3.828\times10^{26}\,\mathrm W$|
+|Thomson-cross section for an electron, $\sigma_T$|$6.65\times10^{-29}\,\mathrm{m^2}$|
+|Mass of a proton, $m_p$|$1.67\times10^{-27}\,\mathrm{kg}$|
+|Current density parameter for matter (baryonic and dark), $\Omega_{m,0}$|$0.31$|
+|Current density parameter for radiation|$\Omega_{r,0}\simeq9.1\times10^{-5}$|
+|[Errata] Apparent magnitude of the Sun|$-26.74$|
+
+**Formulae**
+
+Hawking Temperature of a black hole, $T_H=\hbar c^3/(8\pi GMk_B)$.
+
+Spatial curvature density, $\Omega_{k,0}=\Omega_{total,0}-\Omega_{r,0}-\Omega_{m,0}-\Omega_{\Lambda,0}$.
+
+</details>
+
+## Условие
+
+Linda is an alien who lives on planet Threa. She likes observing the planet Rams, which is also in her solar system. Sometime in the next 50 years, she would like to conduct an astronomy convention on a Thimssarc day, which is a religious festival significant to Threaean culture. It occurs annually exactly 280 days after Threa’s version of the Vernal Equinox. The highlight of the convention would be a Rams observation session, and Linda wants it to be the most epic Rams observation session in Threaean history by ensuring that Rams appears as large as possible in her telescopes. She thus asks the following question: What is the minimum distance from Threa that Rams would ever acquire on a Thimssarc day? [16m]
+
+- You can assume that Threa and Rams follow unchanging Keplerian orbits that do not precess. The following data about the two planets are provided:
+
+- Threa’s semi-major axis ($a_T$): 1.00 AU
+
+- Threa’s eccentricity ($e_T$): 0.00
+
+- Threa’s orbital period ($T_T$): 365 days
+
+- Rams’ semi-major axis ($a_R$): 1.52 AU
+
+- Rams’ eccentricity ($e_R$): 0.300
+
+- Rams’ orbital inclination ($i_R$): 15.3˚ to the ecliptic
+
+- Rams’ longitude of ascending node ($\Omega_R$): 49.6˚ (from the Vernal Equinox)
+
+- Rams’ argument of perihelion ($\omega_R$): 286.5˚ (from the ascending node)
+
+- Threa and Rams orbit in the same direction, which is the same as the directions in which Rams’ argument of perihelion and longitude of ascending node are measured.
+
+Hint: The definitions of the various orbital elements are as in the following diagram:
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.9%', '--fig-max': '345px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2016-4-q/q06-orbital-elements.png" alt="Complete orbital-element illustration with both planes, ascending node, body, gamma reference direction and all angular labels." width="1079" height="938" loading="lazy" decoding="async" />
+<figcaption>Figure 4. (By Lasunncty, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=8971052)</figcaption>
+</figure>
+
+
+Specifically:
+
+- Rams’ orbital inclination is the angle between Rams’ orbital plane and Threa’s ecliptic;
+
+- Rams’ ascending node is the point at which it crosses from the south to the north of Threa’s ecliptic;
+
+- Rams’ longitude of ascending node is the angle between its ascending node and Threa’s Vernal Equinox;
+
+- Rams’ argument of perihelion is the angle between its perihelion and its ascending node.
+
+**Another hint:** You may encounter the need to find the root of a quartic f(x) while solving this question. You do not need to provide any working to receive credit for solving the quartic. You may solve this using any analytical or numerical method of your choice. If you can’t think of any, you may find the following description of the Secant Method (one of the oldest numerical root- finding techniques) helpful:
+
+1. Find any two numbers a and b such that f(a) < 0 and f(b) > 0. There will definitely be a root somewhere between a and b, so they act as an upper and lower bound for a search range. Since a quartic may have more than one real root, ensure that your desired root exists between a and b, and that that is the only root between a and b.
+
+2. Find the equation of the line l connecting a and b.
+
+3. Find the root c of the line l. This will definitely lie between a and b.
+
+4. If f(c) < 0, then set a to c. If f(c) > 0, then set b to c. Now you have a smaller search range.
+
+5. Repeat steps 1 to 4 until c stops changing, to the desired accuracy.
+
+**Yet another hint:** If you’re stuck, you might find the following tips useful:
+
+- This problem can be reduced to a problem in coordinate geometry – finding the point on an ellipse closest to a given point.
+
+- The most convenient coordinate system to use for this problem is the right-handed Cartesian coordinate system defined with the origin in the centre of Rams’ orbit, the x-axis pointing towards Rams’ aphelion and the z-axis perpendicular to Rams’ orbit such that Rams orbits anti- clockwise when looking in the negative z direction.
+
+- The problem of finding the closest point on an ellipse can be reduced to the same problem in two dimensions – you just have to find out how.
+
+- The point P’ on an arbitrary curve C closest to a given point P is always such that the line connecting P and P’ is normal to C.
+
+- Finding the equation of the normal to a point on an ellipse may be difficult, but what about the equation of the tangent? Consider what happens when you compress or stretch the ellipse along the x-axis into a circle.
+
+## Решение
+
+<Spoiler title="Покажи официалното решение">
+
+**Celestial coordinate systems and geometric astronomy (16m)**
+
+<ProblemSection id="solution-calculating-threas-coordinates">
+
+### 1: Calculating Threa’s Coordinates
+
+In this solution, the subscript $R$ for Rams’ orbital elements are omitted as they are used very often.
+
+Additionally, the following parameters are used:
+
+- Rams’ semi-minor axis, $b$
+- Linear eccentricity of Rams’ orbit (i.e. distance between centre and either foci), $f=ae$
+
+Define a right-handed coordinate system $C_0$ such that
+
+- The origin is in the centre of Rams’ orbit.
+- The x-axis points in the direction of Rams’ aphelion.
+- The z-axis points perpendicular to Rams’ orbit.
+- When facing the negative z-direction, Rams orbits in the anti-clockwise direction.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '68.8%', '--fig-max': '441px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2016-4-q/q06-c0.png" alt="Whole native coordinate-system C0 ellipse, centre, axes, Rams and Threa vector." width="1378" height="772" loading="lazy" decoding="async" />
+<figcaption>Figure 1: The coordinate system $C_0$</figcaption>
+</figure>
+
+
+In this system, Threa will occupy the same coordinates on every Thimssarc day. This system will turn out to be the most useful system to work in later. We will obtain Threa’s coordinates in this system, $\vec r_0$ through a series of coordinate transformations.
+
+Then, define another right-handed coordinate system $C_1$ such that
+
+- The origin is in the centre of **Threa’s orbit**.
+- The y-axis points in the direction of **Rams’ descending node**.
+- The z-axis is perpendicular to **Threa’s orbit**.
+- When facing the negative z-direction, Threa orbits in the anti-clockwise direction.
+
+At vernal equinox, Threa is at the point in its orbit diametrically opposite the Vernal Point Υ, such that at local noon the Vernal Point is directly overhead.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '76.9%', '--fig-max': '492px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2016-4-q/q06-c1.png" alt="Whole native coordinate-system C1 circular orbit, axes, Threa, nodes, vernal point and all angles." width="1539" height="1369" loading="lazy" decoding="async" />
+<figcaption>Figure 2: The coordinate system $C_1$</figcaption>
+</figure>
+
+
+On Thimssarc day, Threa is
+
+$$
+\vartheta=\frac{280}{365}\times360^\circ=276.2^\circ
+$$
+
+anticlockwise from the point in its orbit diametrically opposite the Vernal Point, and thus an angle
+
+$$
+\phi=276.2^\circ-49.6^\circ=226.6^\circ
+$$
+
+ [B1]
+
+anticlockwise from the positive y-axis.
+
+Hence, Threa’s coordinates $\vec r_1$ in $C_1$ are
+
+$$
+\vec r_1=a_T\begin{pmatrix}-\sin\phi\\\cos\phi\\0\end{pmatrix}.
+$$
+
+Now, define the right-handed coordinate system $C_2$ such that
+
+- The origin is in the centre of Threa’s orbit.
+- The y-axis points in the direction of Rams’ descending node.
+- The z-axis is perpendicular to **Rams’ orbit**.
+- When facing the negative z-direction, **Rams** orbits in the anti-clockwise direction.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '88.1%', '--fig-max': '564px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2016-4-q/q06-c2.png" alt="Whole C2 inclined-orbit illustration and separate xz projection with all native vectors, angles and axes." width="1762" height="1243" loading="lazy" decoding="async" />
+<figcaption>Figure 3: The coordinate system $C_2$</figcaption>
+</figure>
+
+
+$C_2$ is $C_1$ rotated by $i=15.3^\circ$ about the y-axis, so the y-coordinate remains unchanged. Projecting to the xz-plane, the length of Threa’s position vector remains unchanged but is now an angle15.3° **below** the x-axis, so the new coordinates are
+
+$$
+\vec r_2=a_T\begin{pmatrix}-\sin\phi\cos i\\\cos\phi\\\sin\phi\sin i\end{pmatrix}=a_T\begin{pmatrix}0.7008\\-0.6871\\-0.1917\end{pmatrix}.
+$$
+
+ [B1]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '86%', '--fig-max': '550px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2016-4-q/q06-c3-v2.png" alt="Whole C3 orbital ellipse with nodes, apsides, coordinate origins, axes, rotation angles and eccentricity shift." width="1720" height="1026" loading="lazy" decoding="async" />
+<figcaption>Figure 4: The coordinate system $C_3$</figcaption>
+</figure>
+
+
+Lastly, define the right-handed coordinate system $C_3$ such that
+
+- The origin is in the centre of Threa’s orbit.
+- The **x-axis** points in the direction of **Rams’ aphelion**.
+- The z-axis is perpendicular to Rams’ orbit.
+- When facing the negative z-direction, Rams orbits in the anti-clockwise direction.
+
+$C_3$ is $C_2$ rotated by $\omega-270^\circ=286.5^\circ-270^\circ=16.5^\circ$ about the z-axis, so the z-coordinate remains unchanged. [B1] Let $\vec r'_2$ and $\vec r'_3$ be $\vec r_2$ and $\vec r_3$ projected to the xy-plane, and transform,
+
+$$
+\lVert\vec r'_2\rVert=a_T\sqrt{0.7008^2+(-0.6871)^2}=0.9814a_T.
+$$
+
+Angle of $\vec r'_2$ from y-axis $=\tan^{-1}\left(\frac{0.7008}{0.6871}\right)+180^\circ=225.57^\circ$. [B1]
+
+Angle of $\vec r'_3$ from y-axis $=225.57^\circ-16.5^\circ=209.07^\circ$.
+
+$$
+\vec r_3=a_T\begin{pmatrix}-0.9814\sin209.07^\circ\\0.9814\cos209.07^\circ\\-0.1917\end{pmatrix}=a_T\begin{pmatrix}0.4768\\-0.8578\\-0.1917\end{pmatrix}.
+$$
+
+ [B1]
+
+$C_0$ is simply $C_3$ translated in the negative x-direction by $f=ae=0.456\,\mathrm{AU}$, so we have
+
+$$
+\vec r_0=\vec r_3-\begin{pmatrix}ae\\0\\0\end{pmatrix}=\begin{pmatrix}0.02080\\-0.8578\\-0.1917\end{pmatrix}.
+$$
+
+ [B1]
+
+Award0.5m if the linear eccentricity $f$ is calculated but $\vec r_0$ is not.
+
+</ProblemSection>
+
+<ProblemSection id="solution-removing-a-dimension">
+
+### 2: Removing a Dimension
+
+Hence, we want to find the point $\vec r=(x,y,0)$ on Rams’ orbit that minimises its distance from $\vec r_0=(x_0,y_0,z_0)$. This is equivalent to minimising its square, which is given by
+
+$$
+\Delta^2=(x-x_0)^2+(y-y_0)^2+z_0^2.
+$$
+
+Since $z_0$ is constant, this is equivalent to minimising $(x-x_0)^2+(y-y_0)^2$, that is, projecting $\vec r$ onto the xy-plane and solving the two-dimensional problem of finding the point on Rams’ orbit that minimises its distance from $\vec r'=(x_0,y_0,0)$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-proof-of-the-lemma">
+
+### 3: Proof of the Lemma
+
+Consider an ellipse $E$ and a point $P$ inside the ellipse. We want to find the point $Q$ on $E$ that minimises its distance from $P$. We have the following:
+
+$PQ$ is normal to $E$ at $Q$.
+
+Using this lemma, we can then find $Q$ by finding the intersection of $PQ$ and $E$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '71.3%', '--fig-max': '457px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2016-4-q/q06-normal-lemma.png" alt="Complete native closest-point normal proof, ellipse E, tangent T, all P, Q, Q prime, X points and red normal line." width="1427" height="931" loading="lazy" decoding="async" />
+<figcaption>Figure 5: Proof that $PQ$ must be normal to $E$ at $Q$</figcaption>
+</figure>
+
+
+To prove this, draw the tangent $T$ to $E$ at $Q$. Assume, to prove a contradiction, that $PQ$ is not normal to $E$. Then, it is possible to find another point $Q$ on $T$ such that $PQQ'$ is isosceles. Choose any point $X$ between $QQ'$.
+
+Since $P$ is inside $E$ and $E$ is convex, the line $PX$ intersects $E$ at a point closer to $P$ than $QQ'$, hence the arc $QQ'$ of the circle centred at $P$, and hence $Q$, contradicting the fact that $Q$ is the point on $E$ closest to $P$. Hence proven by contradiction that $PQ$ is normal to $E$.
+
+</ProblemSection>
+
+<ProblemSection id="solution-finding-the-normal">
+
+### 4: Finding the Equation of the Normal
+
+Now we need to find the equation of $PQ$ in terms of the parameters of $E$ and the coordinates of $P$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.5%', '--fig-max': '330px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2016-4-q/q06-circle-lines.png" alt="Complete unit-circle l1/l2 diagram including tangent, all axis endpoints, origin and Q prime." width="1030" height="903" loading="lazy" decoding="async" />
+<figcaption>Figure 6: Lines $l_1$ and $l_2$</figcaption>
+</figure>
+
+
+Consider the transformation that scales along the y-axis by a factor of $1/b$ and along the x-axis by a factor of $1/a$. This transforms the ellipse $E$ into the unit circle and $Q$ with coordinates $(x_Q,y_Q)$ into another point $Q'$ with coordinates
+
+$$
+(x'_Q,y'_Q)=\left(\frac{x_Q}a,\frac{y_Q}b\right).
+$$
+
+Let $l_1$ be the line $OQ'$ and $l_2$ be the line normal to $l_1$ at $Q'$. $l_2$ would thus be tangent to the circle. Then, for $l_1$, we have
+
+$$
+y=\frac{y'_Q}{x'_Q}x.
+$$
+
+ [B1]
+
+For $l_2$, we have,
+
+$$
+y-y'_Q=-\frac{x'_Q}{y'_Q}(x-x'_Q).
+$$
+
+ [B1]
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '57%', '--fig-max': '365px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/sao-2016-4-q/q06-ellipse-lines.png" alt="Complete native ellipse l3/l4 diagram, tangent, normal, axes, O and Q." width="1142" height="812" loading="lazy" decoding="async" />
+<figcaption>Figure 7: Lines $l_3$ and $l_4$</figcaption>
+</figure>
+
+
+Now we transform $l_2$ back to find the equation of $l_3$, which is tangent to $E$ at $Q$,
+
+$$
+\frac yb-y'_Q=-\frac{x'_Q}{y'_Q}\left(\frac xa-x'_Q\right),\qquad\Rightarrow y-y_Q=-\frac{b^2x_Q}{a^2y_Q}(x-x_Q).
+$$
+
+ [B1]
+
+Then, we find the equation of $PQ$ by finding the equation of $l_4$, the line normal to $l_3$,
+
+$$
+y-y_Q=\frac{a^2y_Q}{b^2x_Q}(x-x_Q),\qquad\Rightarrow b^2x_Q(y-y_Q)=a^2y_Q(x-x_Q).
+$$
+
+ [B1]
+
+</ProblemSection>
+
+<ProblemSection id="solution-forming-the-quartic">
+
+### 5: Forming the Quartic
+
+We now change our notation to what we used in Section2 by replacing $(x,y)$ with $(x_0,y_0)$ and $(x_Q,y_Q)$ with $(x,y)$. The equation of the line becomes
+
+$$
+b^2x(y_0-y)=a^2y(x_0-x).
+$$
+
+We want to find the intersection of this line and the ellipse (we take the bottom half since $y_0=-0.8578<0$),
+
+$$
+\left(\frac xa\right)^2+\left(\frac yb\right)^2=1\quad\Rightarrow y=-\frac ba\sqrt{a^2-x^2}.
+$$
+
+Substituting the equation of the line into the equation of the ellipse $E$,
+
+$$
+b^2xy_0=a^2\left(-\frac ba\sqrt{a^2-x^2}\right)(x_0-x)+b^2x\left(-\frac ba\sqrt{a^2-x^2}\right),
+$$
+
+$$
+\Rightarrow b^2xy_0=\left(-\frac ba\sqrt{a^2-x^2}\right)[a^2x_0-a^2x+b^2x].
+$$
+
+Using $a^2-b^2=f^2$,
+
+$$
+\therefore b^2xy_0=\left(-\frac ba\sqrt{a^2-x^2}\right)[a^2x_0-f^2x].
+$$
+
+ [B1]
+
+Award this1m for substituting the equation of the line into that of the ellipse without any mistakes.
+
+Squaring both sides and expanding, we get a quartic,
+
+$$
+Ax^4+Bx^3+Cx^2+Dx+E=0.
+$$
+
+ [M1]
+
+Award this1m for formulating the quartic symbolically (mark also awarded if all working is done numerically – provided no mistakes were made in manipulation).
+
+with coefficients
+
+$$
+\begin{aligned}A&=-f^4=-0.04324\,\mathrm{AU^4},\\B&=2a^2f^2x_0=0.01999\,\mathrm{AU^5},\\C&=-a^4x_0^2-a^2b^2y_0^2+a^2f^4=-3.477\,\mathrm{AU^6},\\D&=-2a^4f^2x_0=-0.04617\,\mathrm{AU^7},\\E&=a^6x_0^2=0.005336\,\mathrm{AU^8},\end{aligned}
+$$
+
+ [A1]
+
+where we also use $b=a\sqrt{1-e^2}=1.450\,\mathrm{AU}$.
+
+Award this1m for calculating the values of all five coefficients without mistakes (their quartic may differ but still correct).
+
+</ProblemSection>
+
+<ProblemSection id="solution-solving-the-quartic">
+
+### 6: Solving the Quartic
+
+For convenience, make the first coefficient unity, then
+
+$$
+x^4-0.4622x^3+80.41x^2+1.068x-0.1234=0.
+$$
+
+We know, intuitively, that the solution should lie between $x_0$ and $a$. We can thus use any of the following techniques to solve the quartic:
+
+- Using a graphic calculator
+- Using the secant method with initial bounds $x_0$ and $a$
+- Using Newton’s method with initial guess $a$
+- Using binary search with initial bounds $x_0$ and $a$
+- Depressing the quartic and factorising into a sum of two squares
+- Writing the quartic as a product of two quadratics, expanding and comparing coefficients (not recommended)
+
+Regardless of which method we use, we get $x=0.03310$. (The other real root $x=-0.04636$ is rejected.) [A1]
+
+Award this1m for correct answer even if no working is shown and solution method is not stated.
+
+</ProblemSection>
+
+<ProblemSection id="solution-computing-the-answer">
+
+### 7: Computing the Answer
+
+Using the equation of the ellipse,
+
+$$
+y=-\frac ba\sqrt{a^2-x^2}=-1.450\,\mathrm{AU}.
+$$
+
+ [B1]
+
+Award this1m for finding $y$ (or $x$ if quartic was in $y$).
+
+Finally,
+
+$$
+\Delta=\sqrt{(x-x_0)^2+(y-y_0)^2+z_0^2}=\mathbf{0.623\,AU}.
+$$
+
+ [A1]
+
+Accept answers given to accuracy of either2s.f. or3s.f.
+
+Intended to be the most challenging question. Generally few participants made an attempt to answer the question; most attempts were generally short and led to no fruitful progress to solving the question.
+
+</ProblemSection>
+
+
+</Spoiler>
+
+---
+
+Оригинал в Архива: [SAO4_q.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%94%D1%80%D1%83%D0%B3%D0%B8/%D0%A1%D0%B8%D0%BD%D0%B3%D0%B0%D0%BF%D1%83%D1%80%D1%81%D0%BA%D0%B0/SAO4_q.pdf#page=12)
+· официални решения: [SAO4_sol.pdf](https://www.olympiads.xyz/archive/astronomy/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/%D0%94%D1%80%D1%83%D0%B3%D0%B8/%D0%A1%D0%B8%D0%BD%D0%B3%D0%B0%D0%BF%D1%83%D1%80%D1%81%D0%BA%D0%B0/SAO4_sol.pdf#page=27)
