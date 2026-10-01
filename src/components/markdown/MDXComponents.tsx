@@ -22,6 +22,7 @@ import Quiz from './Quiz';
 import { Resource, ResourcesList } from './ResourcesList';
 import Spoiler from './Spoiler';
 import ProblemSection from './ProblemSection';
+import ProblemVideo from './ProblemVideo';
 import Warning from './Warning';
 import YouTube from './YouTube';
 import DifficultyBox from '../DifficultyBox';
@@ -48,6 +49,7 @@ const MATHSPAN = props => {
 export const components = {
   Spoiler,
   ProblemSection,
+  ProblemVideo,
   Info,
   Warning,
   Optional,

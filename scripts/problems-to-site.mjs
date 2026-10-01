@@ -7,7 +7,7 @@
 //      the problems appear in the existing lists and can be pulled into a
 //      module with <Problems problems="…" />
 //
-// Nothing new is rendered: this only produces input for the inherited UI.
+// Generated MDX uses the site's native statement, section, figure and video components.
 //
 //   node scripts/problems-to-site.mjs [--check] [--root DIR]
 //
@@ -26,6 +26,7 @@ import { loadNavigation, roundLabel as navRoundLabel, gradeLabel as navGradeLabe
 import { loadTreeModule } from './lib/load-tree.mjs';
 import { readConsolidations } from './lib/problem-consolidations.mjs';
 import { outsideFencedCode, splitFencedCode } from './lib/fenced-code.mjs';
+import { readProblemMedia, problemMediaLines } from './lib/problem-media.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT = rootArg >= 0 ? path.resolve(process.argv[rootArg + 1]) : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -1193,6 +1194,8 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   }
   lines.push(...fieldLines('statement', problem.statement, t => sourceText(t, problem, resolveStatement).trimEnd(), true));
   for (const fig of unanchored(statementFigs)) lines.push(figureMarkdown(fig), '');
+  // Source-owned movies follow the complete statement and its figures; frozen choices/links stay in place.
+  lines.push(...problemMediaLines(problem.id, figureOpts.media));
   if (problem.parts?.length) {
     problem.parts.forEach((part, k) => {
       const text = part.points != null ? String(part.statement).replace(/\s*(\*\*)?\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\](\*\*)?\s*$/u, '') : part.statement;
@@ -1423,7 +1426,7 @@ function main() {
   const owned = new Set(prior.problemIds);
   const planned = new Map(), generated = new Map(), excluded = [];
   const aliases = {};
-  const figureOpts = { anchors: readFigureAnchors(ROOT), stats: newFigureStats() };
+  const figureOpts = { anchors: readFigureAnchors(ROOT), stats: newFigureStats(), media: readProblemMedia(ROOT, records, ledger, { retiredProblemIds }) };
 
   // Bootstrap ownership only from the exact generator signature. Never sweep
   // arbitrary authored solutions merely because they live under solutions/.
