@@ -233,6 +233,15 @@ const dashes = (s: string) => s.replace(/\s*[-–÷]\s*/g, '–');
 export function gradeCode(
   title: string | null | undefined
 ): { grade: string; n: string; head: number } | null {
+  // A native assignment can contain explicitly independent numbered tasks.
+  // Keep the child number only when it belongs to the printed parent code.
+  const nested =
+    /^\s*(\d{1,2})[-–](\d{1,2})\s*·\s*Задача\s+(\d{1,2}(?:\.\d{1,2})+)(?!\d)\.\s*/iu.exec(
+      String(title ?? '')
+    );
+  if (nested && nested[3].split('.')[0] === nested[2]) {
+    return { grade: nested[1], n: nested[3], head: nested[0].length };
+  }
   for (const [re, parts] of GRADE_CODES) {
     const m = re.exec(String(title ?? ''));
     if (m) {

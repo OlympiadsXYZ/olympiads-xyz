@@ -28,6 +28,7 @@ const tree = loadTreeModule(repo);
 
 const LABELS = {
   rounds: {
+    BelPhO: { 'theory|theory': 'Теория' },
     IPhO: {
       'theory|theory': 'Теория',
       '|theory': 'Теория',
@@ -592,6 +593,59 @@ test('native subtask numbers followed by a grade keep both identities without re
       { labels: LABELS, numbers: wrong },
       tree
     ).failures.some(f => f.includes('native-subtasks-p1'))
+  );
+});
+
+test('independent child tasks inside a grade assignment keep native numbers on pages and in navigation', () => {
+  const file = paper(
+    {
+      id: 'native-child-tasks',
+      competition: 'BelPhO',
+      round: 'theory',
+      roundType: 'theory',
+      grade: '11',
+    },
+    [1, 2]
+  );
+  file.problems[0].title =
+    '11-1 · Задача 1.1. Атмосфера с переменной температурой';
+  file.problems[1].title = '11-1 · Задача 1.2. Радиоактивные шары';
+  const numbers = {
+    problems: {
+      'native-child-tasks-p1': '11-1.1',
+      'native-child-tasks-p2': '11-1.2',
+    },
+  };
+  const [node] = nodesOf([file], { labels: LABELS, numbers });
+  assert.deepEqual(node.problems.map(tree.problemLabel), [
+    'Задача 11-1.1. Атмосфера с переменной температурой',
+    'Задача 11-1.2. Радиоактивные шары',
+  ]);
+  for (let i = 0; i < file.problems.length; i++) {
+    assert.equal(
+      problemName(file.problems[i], numbers),
+      tree.problemLabel(node.problems[i])
+    );
+  }
+  assert.deepEqual(
+    checkNavigation(records([file]), { labels: LABELS, numbers }, tree)
+      .failures,
+    []
+  );
+  const wrong = {
+    problems: { ...numbers.problems, 'native-child-tasks-p2': '11-1.1' },
+  };
+  assert(
+    checkNavigation(
+      records([file]),
+      { labels: LABELS, numbers: wrong },
+      tree
+    ).failures.some(x => x.includes('native-child-tasks-p2'))
+  );
+  assert.equal(tree.gradeCode('11-2 · Задача 1.2. Different parent').n, '2');
+  assert.equal(
+    tree.gradeCode('11-1 · Задача 1.2 without the native separator').n,
+    '1'
   );
 });
 
