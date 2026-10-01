@@ -10,19 +10,34 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { classificationFixture } from './classification-fixture.mjs';
-import { problemMetadataErrors, problemTaxonomy } from '../lib/problem-classification.mjs';
+import {
+  problemMetadataErrors,
+  problemTaxonomy,
+} from '../lib/problem-classification.mjs';
 
-const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const repo = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../..'
+);
 const txScript = name => path.join(repo, 'scripts', 'tx', name);
 const txModule = name => pathToFileURL(txScript(name)).href; // Windows needs file:// URLs for absolute imports
 const lib = await import(txModule('lib.mjs'));
 const { assembleWindows } = await import(txModule('assemble.mjs'));
-const { bindCheckerResult, adjudicationEvidenceProblems, evidenceKey } = await import(txModule('evidence.mjs'));
-const { supplementKeys, supplementarySourceErrors, sourceHashErrors } = await import(txModule('supplements.mjs'));
+const { bindCheckerResult, adjudicationEvidenceProblems, evidenceKey } =
+  await import(txModule('evidence.mjs'));
+const { supplementKeys, supplementarySourceErrors, sourceHashErrors } =
+  await import(txModule('supplements.mjs'));
 
 test('API checker binding uses the bytes sent, preserving a bad model echo for audit', () => {
-  const response = { candidateSha256: 'not supplied by old request', verdict: 'fail', defects: [] };
-  const bound = bindCheckerResult(response, { candidateSha256: 'a'.repeat(64), requestId: 'request-1' });
+  const response = {
+    candidateSha256: 'not supplied by old request',
+    verdict: 'fail',
+    defects: [],
+  };
+  const bound = bindCheckerResult(response, {
+    candidateSha256: 'a'.repeat(64),
+    requestId: 'request-1',
+  });
   assert.equal(bound.candidateSha256, 'a'.repeat(64));
   assert.equal(bound.modelClaimedCandidateSha256, response.candidateSha256);
   assert.equal(response.candidateSha256, 'not supplied by old request');
@@ -30,73 +45,313 @@ test('API checker binding uses the bytes sent, preserving a bad model echo for a
 
 test('an interrupted adjudication or stale candidate cannot become benchmark truth', () => {
   const candidates = [{ view: 'candidate.view.json', sha256: 'a'.repeat(64) }];
-  const checks = [{ file: 'check.json', data: { defects: [{ severity: 'critical' }] } }];
-  const complete = { candidates: [{ ...candidates[0], candidateSha256: candidates[0].sha256, verdict: 'fail', defects: [{ path: '/problems/0/statement', severity: 'critical', description: 'wrong unit' }] }], checkerFindings: [{ check: 'check.json', index: 0, truePositive: true, note: 'confirmed from page' }], escalations: [] };
-  assert.deepEqual(adjudicationEvidenceProblems(complete, candidates, checks, repo), []);
-  assert.match(adjudicationEvidenceProblems(null, candidates, checks, repo).join(), /incomplete/);
-  assert.match(adjudicationEvidenceProblems({ ...complete, checkerFindings: [] }, candidates, checks, repo).join(), /missing checker/);
-  assert.match(adjudicationEvidenceProblems(complete, [{ ...candidates[0], sha256: 'b'.repeat(64) }], checks, repo).join(), /stale candidate/);
-  assert.match(adjudicationEvidenceProblems({ ...complete, checkerFindings: [...complete.checkerFindings, ...complete.checkerFindings] }, candidates, checks, repo).join(), /duplicate checker/);
-  const cosmeticPass = { ...complete, candidates: [{ ...complete.candidates[0], verdict: 'pass' }] };
-  assert.deepEqual(adjudicationEvidenceProblems(cosmeticPass, candidates, checks, repo), []); // report tightens it to fail; evidence is still complete
-  assert.match(adjudicationEvidenceProblems({ ...complete, candidates: [{ ...complete.candidates[0], defects: [] }] }, candidates, checks, repo).join(), /without explaining defects/);
+  const checks = [
+    { file: 'check.json', data: { defects: [{ severity: 'critical' }] } },
+  ];
+  const complete = {
+    candidates: [
+      {
+        ...candidates[0],
+        candidateSha256: candidates[0].sha256,
+        verdict: 'fail',
+        defects: [
+          {
+            path: '/problems/0/statement',
+            severity: 'critical',
+            description: 'wrong unit',
+          },
+        ],
+      },
+    ],
+    checkerFindings: [
+      {
+        check: 'check.json',
+        index: 0,
+        truePositive: true,
+        note: 'confirmed from page',
+      },
+    ],
+    escalations: [],
+  };
+  assert.deepEqual(
+    adjudicationEvidenceProblems(complete, candidates, checks, repo),
+    []
+  );
+  assert.match(
+    adjudicationEvidenceProblems(null, candidates, checks, repo).join(),
+    /incomplete/
+  );
+  assert.match(
+    adjudicationEvidenceProblems(
+      { ...complete, checkerFindings: [] },
+      candidates,
+      checks,
+      repo
+    ).join(),
+    /missing checker/
+  );
+  assert.match(
+    adjudicationEvidenceProblems(
+      complete,
+      [{ ...candidates[0], sha256: 'b'.repeat(64) }],
+      checks,
+      repo
+    ).join(),
+    /stale candidate/
+  );
+  assert.match(
+    adjudicationEvidenceProblems(
+      {
+        ...complete,
+        checkerFindings: [
+          ...complete.checkerFindings,
+          ...complete.checkerFindings,
+        ],
+      },
+      candidates,
+      checks,
+      repo
+    ).join(),
+    /duplicate checker/
+  );
+  const cosmeticPass = {
+    ...complete,
+    candidates: [{ ...complete.candidates[0], verdict: 'pass' }],
+  };
+  assert.deepEqual(
+    adjudicationEvidenceProblems(cosmeticPass, candidates, checks, repo),
+    []
+  ); // report tightens it to fail; evidence is still complete
+  assert.match(
+    adjudicationEvidenceProblems(
+      { ...complete, candidates: [{ ...complete.candidates[0], defects: [] }] },
+      candidates,
+      checks,
+      repo
+    ).join(),
+    /without explaining defects/
+  );
 });
 
 test('benchmark does not call an arbitrary reference gold or charge competing checks to a reader', t => {
   const s = sandbox(t);
   const cand = s.write('candidates/zai__glm-5.3-flash.json', candidate());
   fs.mkdirSync(path.join(s.dir, 'checks'));
-  s.write('checks/own.json', { verdict: 'pass', candidateSha256: lib.sha256File(cand), checker: { provider: 'gemini', model: 'gemini-test', candidateSha256: lib.sha256File(cand), costUsd: 2 } });
-  s.write('checks/competitor.json', { verdict: 'pass', checker: { candidateSha256: 'f'.repeat(64), costUsd: 100 } });
-  fs.writeFileSync(path.join(s.root, 'runs.jsonl'), JSON.stringify({ paperId: PAPER, provider: 'zai', model: 'glm-5.3-flash', stage: 'reader', costUsd: 1, ok: true }) + '\n');
+  s.write('checks/own.json', {
+    verdict: 'pass',
+    candidateSha256: lib.sha256File(cand),
+    checker: {
+      provider: 'gemini',
+      model: 'gemini-test',
+      candidateSha256: lib.sha256File(cand),
+      costUsd: 2,
+    },
+  });
+  s.write('checks/competitor.json', {
+    verdict: 'pass',
+    checker: { candidateSha256: 'f'.repeat(64), costUsd: 100 },
+  });
+  fs.writeFileSync(
+    path.join(s.root, 'runs.jsonl'),
+    JSON.stringify({
+      paperId: PAPER,
+      provider: 'zai',
+      model: 'glm-5.3-flash',
+      stage: 'reader',
+      costUsd: 1,
+      ok: true,
+    }) + '\n'
+  );
   const fx = s.write('fixtures.json', [{ paperId: PAPER, reference: cand }]);
   const out = path.join(s.dir, 'report');
-  const run = s.run('bench.mjs', ['--fixtures', fx, '--candidates', cand, '--out-dir', out]);
+  const run = s.run('bench.mjs', [
+    '--fixtures',
+    fx,
+    '--candidates',
+    cand,
+    '--out-dir',
+    out,
+  ]);
   assert.equal(run.status, 0, run.stderr);
   const row = s.read(path.join(out, 'report.json')).papers[0];
   assert.equal(row.referenceKind, 'unverified-reference (not gold)');
   assert.equal(row.candidates[0].totalCostUsd, 3);
-  s.write('checks/own.json', { verdict: 'pass', candidateSha256: lib.sha256File(cand) });
-  assert.equal(s.run('bench.mjs', ['--fixtures', fx, '--candidates', cand, '--out-dir', out]).status, 0);
-  assert.equal(s.read(path.join(out, 'report.json')).papers[0].candidates[0].totalCostUsd, null);
+  s.write('checks/own.json', {
+    verdict: 'pass',
+    candidateSha256: lib.sha256File(cand),
+  });
+  assert.equal(
+    s.run('bench.mjs', [
+      '--fixtures',
+      fx,
+      '--candidates',
+      cand,
+      '--out-dir',
+      out,
+    ]).status,
+    0
+  );
+  assert.equal(
+    s.read(path.join(out, 'report.json')).papers[0].candidates[0].totalCostUsd,
+    null
+  );
 });
 
 test('benchmark catches lost shared instructions between and after subparts', t => {
   const s = sandbox(t);
   const reference = candidate();
-  reference.problems[0].parts[0].statementAfter = 'За втория опит напрежението е $U = 17$ V.';
-  reference.problems[0].statementAfterParts = 'Приемете плътност $\\rho = 987$ kg/m3.';
+  reference.problems[0].parts[0].statementAfter =
+    'За втория опит напрежението е $U = 17$ V.';
+  reference.problems[0].statementAfterParts =
+    'Приемете плътност $\\rho = 987$ kg/m3.';
   const refFile = s.write('reference.json', reference);
   const candFile = s.write('candidates/zai__glm-5.3-flash.json', candidate());
-  const fixtures = s.write('fixtures.json', [{ paperId: PAPER, reference: refFile }]);
+  const fixtures = s.write('fixtures.json', [
+    { paperId: PAPER, reference: refFile },
+  ]);
   const out = path.join(s.dir, 'report');
-  const run = s.run('bench.mjs', ['--fixtures', fixtures, '--candidates', candFile, '--out-dir', out]);
+  const run = s.run('bench.mjs', [
+    '--fixtures',
+    fixtures,
+    '--candidates',
+    candFile,
+    '--out-dir',
+    out,
+  ]);
   assert.equal(run.status, 0, run.stderr);
-  const comparison = s.read(path.join(out, 'report.json')).papers[0].candidates[0];
-  assert.ok(JSON.stringify(comparison).includes('987'), 'missing shared density must be visible in the comparison');
-  assert.ok(JSON.stringify(comparison).includes('17'), 'missing intervening voltage must be visible in the comparison');
+  const comparison = s.read(path.join(out, 'report.json')).papers[0]
+    .candidates[0];
+  assert.ok(
+    JSON.stringify(comparison).includes('987'),
+    'missing shared density must be visible in the comparison'
+  );
+  assert.ok(
+    JSON.stringify(comparison).includes('17'),
+    'missing intervening voltage must be visible in the comparison'
+  );
 });
 
 const PAPER = 'zz-2099-test-7';
 const size = { page: 1, widthPt: 595.276, heightPt: 841.89 };
 const manifest = {
-  paperId: PAPER, meta: { competition: 'ZZ', year: 2099, round: null, grade: '7', subject: 'physics', lang: 'bg' }, renderDpi: 160,
+  paperId: PAPER,
+  meta: {
+    competition: 'ZZ',
+    year: 2099,
+    round: null,
+    grade: '7',
+    subject: 'physics',
+    lang: 'bg',
+  },
+  renderDpi: 160,
   documents: {
-    problems: { key: 'Физика/zz/problems.pdf', file: 'src/problems.pdf', sha256: 'a'.repeat(64), bytes: 1, pages: 2, pageSizes: [size, { ...size, page: 2 }], pageImages: ['pages/problems-01.png', 'pages/problems-02.png'], text: 'text/problems.txt' },
-    solutions: { key: 'Физика/zz/solutions.pdf', file: 'src/solutions.pdf', sha256: 'b'.repeat(64), bytes: 1, pages: 1, pageSizes: [size], pageImages: ['pages/solutions-01.png'], text: 'text/solutions.txt' },
+    problems: {
+      key: 'Физика/zz/problems.pdf',
+      file: 'src/problems.pdf',
+      sha256: 'a'.repeat(64),
+      bytes: 1,
+      pages: 2,
+      pageSizes: [size, { ...size, page: 2 }],
+      pageImages: ['pages/problems-01.png', 'pages/problems-02.png'],
+      text: 'text/problems.txt',
+    },
+    solutions: {
+      key: 'Физика/zz/solutions.pdf',
+      file: 'src/solutions.pdf',
+      sha256: 'b'.repeat(64),
+      bytes: 1,
+      pages: 1,
+      pageSizes: [size],
+      pageImages: ['pages/solutions-01.png'],
+      text: 'text/solutions.txt',
+    },
   },
 };
 function candidate({ uploaded = true, dryRun = false } = {}) {
-  const fig = { id: 'p1-fig1', alt: 'Графика', tx: { document: 'problems', page: 1, bbox: [365, 275, 625, 430], file: 'figs/problems/p1-fig1.png' } };
-  if (uploaded) Object.assign(fig, { url: `${lib.R2_PUBLIC}/problems/${PAPER}/p1-fig1.png`, width: 600, height: 400, source: { page: 1, pdfRect: [100, 200, 300, 400], dpi: 300 } }, { tx: { ...fig.tx, public200: true, upload: 'new', dryRun: false } });
+  const fig = {
+    id: 'p1-fig1',
+    alt: 'Графика',
+    tx: {
+      document: 'problems',
+      page: 1,
+      bbox: [365, 275, 625, 430],
+      file: 'figs/problems/p1-fig1.png',
+    },
+  };
+  if (uploaded)
+    Object.assign(
+      fig,
+      {
+        url: `${lib.R2_PUBLIC}/problems/${PAPER}/p1-fig1.png`,
+        width: 600,
+        height: 400,
+        source: { page: 1, pdfRect: [100, 200, 300, 400], dpi: 300 },
+      },
+      { tx: { ...fig.tx, public200: true, upload: 'new', dryRun: false } }
+    );
   if (dryRun) fig.tx = { ...fig.tx, dryRun: true, upload: 'skipped (dry-run)' };
   return {
-    paper: { id: PAPER, subject: 'physics', competition: 'ZZ', year: 2099, round: null, roundType: 'theory', grade: '7 клас', lang: 'bg', title: 'Тест', totalPoints: 10, source: { archiveKey: manifest.documents.problems.key, pages: [1, 2] }, solutionSource: { archiveKey: manifest.documents.solutions.key, pages: [1] }, status: 'draft' },
+    paper: {
+      id: PAPER,
+      subject: 'physics',
+      competition: 'ZZ',
+      year: 2099,
+      round: null,
+      roundType: 'theory',
+      grade: '7 клас',
+      lang: 'bg',
+      title: 'Тест',
+      totalPoints: 10,
+      source: { archiveKey: manifest.documents.problems.key, pages: [1, 2] },
+      solutionSource: {
+        archiveKey: manifest.documents.solutions.key,
+        pages: [1],
+      },
+      status: 'draft',
+    },
     problems: [
-      { id: `${PAPER}-p1`, number: 1, points: 10, problemType: 'theory', statement: 'Токът е $I = 1\\ \\mathrm{mA}$ и $v_0/2$.', figures: [fig], parts: [{ label: 'а)', statement: 'Колко е зарядът за $t = 1\\ \\mathrm{min}$?', points: 10, answer: { kind: 'numeric', value: 0.06, unit: 'C' } }], topics: ['electricity/current'], difficulty: 'Easy', importance: 2,
-        solution: { statement: 'Решение: $q = I t = 0{,}06\\ \\mathrm{C}$.' }, tx: { sourceSpans: [{ document: 'problems', page: 1 }, { document: 'solutions', page: 1 }] } },
+      {
+        id: `${PAPER}-p1`,
+        number: 1,
+        points: 10,
+        problemType: 'theory',
+        statement: 'Токът е $I = 1\\ \\mathrm{mA}$ и $v_0/2$.',
+        figures: [fig],
+        parts: [
+          {
+            label: 'а)',
+            statement: 'Колко е зарядът за $t = 1\\ \\mathrm{min}$?',
+            points: 10,
+            answer: { kind: 'numeric', value: 0.06, unit: 'C' },
+          },
+        ],
+        topics: ['electricity/current'],
+        difficulty: 'Easy',
+        importance: 2,
+        solution: { statement: 'Решение: $q = I t = 0{,}06\\ \\mathrm{C}$.' },
+        tx: {
+          sourceSpans: [
+            { document: 'problems', page: 1 },
+            { document: 'solutions', page: 1 },
+          ],
+        },
+      },
     ],
-    tx: { printedMeta: 'Тест 2099, 7 клас', catalogDisagrees: false, textLayerTrustworthy: true, notes: 'reader rationale: I decided X because Y', reader: { provider: 'zai', model: 'glm-5.3-flash', promptVersion: 'v1', promptSha256: 'c'.repeat(64), requestId: 'req-1', at: '2026-09-06T00:00:00.000Z', costUsd: 0.01 } },
+    tx: {
+      printedMeta: 'Тест 2099, 7 клас',
+      catalogDisagrees: false,
+      textLayerTrustworthy: true,
+      notes: 'reader rationale: I decided X because Y',
+      reader: {
+        provider: 'zai',
+        model: 'glm-5.3-flash',
+        promptVersion: 'v1',
+        promptSha256: 'c'.repeat(64),
+        requestId: 'req-1',
+        at: '2026-09-06T00:00:00.000Z',
+        costUsd: 0.01,
+      },
+    },
   };
 }
 function sandbox(t) {
@@ -106,25 +361,55 @@ function sandbox(t) {
   fs.mkdirSync(path.join(dir, 'figs', 'problems'), { recursive: true });
   fs.mkdirSync(path.join(dir, 'candidates'), { recursive: true });
   fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify(manifest));
-  fs.writeFileSync(path.join(dir, 'figs', 'problems', 'p1-fig1.png'), 'not really a png');
-  const write = (name, value) => { const f = path.join(dir, name); fs.writeFileSync(f, JSON.stringify(value, null, 1) + '\n'); return f; };
-  const run = (script, argv) => spawnSync(process.execPath, [txScript(script), ...argv], { encoding: 'utf8', env: { ...process.env, OLYMPIADS_TX_DIR: root } });
-  return { root, dir, write, run, read: f => JSON.parse(fs.readFileSync(f, 'utf8')) };
+  fs.writeFileSync(
+    path.join(dir, 'figs', 'problems', 'p1-fig1.png'),
+    'not really a png'
+  );
+  const write = (name, value) => {
+    const f = path.join(dir, name);
+    fs.writeFileSync(f, JSON.stringify(value, null, 1) + '\n');
+    return f;
+  };
+  const run = (script, argv) =>
+    spawnSync(process.execPath, [txScript(script), ...argv], {
+      encoding: 'utf8',
+      env: { ...process.env, OLYMPIADS_TX_DIR: root },
+    });
+  return {
+    root,
+    dir,
+    write,
+    run,
+    read: f => JSON.parse(fs.readFileSync(f, 'utf8')),
+  };
 }
 
 test('text-layer comparison ignores source attribution but still detects omitted key instructions', t => {
   const s = sandbox(t);
-  s.write('manifest.json', { ...manifest, meta: { ...manifest.meta, lang: 'en' } });
+  s.write('manifest.json', {
+    ...manifest,
+    meta: { ...manifest.meta, lang: 'en' },
+  });
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
-  const printed = 'The students arrived at the field site before assessment began. Each participant measured the residential block, recorded inhabited dwellings, calculated household population and estimated total area using the supplied map scale. Effective observation and completion of simple calculations were required. Evidence of working must include the measured area. Markers considered accurate estimates, acceptable observations, arithmetic mistakes, appropriate units, final density, clear explanations, individual methods, consistent notation, complete records and the stated limits. The original report retains all grading criteria and summary statistics.';
+  const printed =
+    'The students arrived at the field site before assessment began. Each participant measured the residential block, recorded inhabited dwellings, calculated household population and estimated total area using the supplied map scale. Effective observation and completion of simple calculations were required. Evidence of working must include the measured area. Markers considered accurate estimates, acceptable observations, arithmetic mistakes, appropriate units, final density, clear explanations, individual methods, consistent notation, complete records and the stated limits. The original report retains all grading criteria and summary statistics.';
   const instruction = 'Evidence of working must include the measured area. ';
-  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), printed.replace(instruction, '') + '\f');
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'problems.txt'),
+    printed.replace(instruction, '') + '\f'
+  );
   fs.writeFileSync(path.join(s.dir, 'text', 'solutions.txt'), printed + '\f');
   const c = candidate();
   c.paper.lang = 'en';
   c.paper.title = 'Assessment';
-  Object.assign(c.problems[0], { statement: printed.replace(instruction, ''), parts: [], figures: [], solution: { attribution: 'archive', statement: printed } });
-  const file = s.write('attribution-candidate.json', c), out = path.join(s.dir, 'attribution-result.json');
+  Object.assign(c.problems[0], {
+    statement: printed.replace(instruction, ''),
+    parts: [],
+    figures: [],
+    solution: { attribution: 'archive', statement: printed },
+  });
+  const file = s.write('attribution-candidate.json', c),
+    out = path.join(s.dir, 'attribution-result.json');
   let run = s.run('textlayer.mjs', [PAPER, '--candidate', file, '--out', out]);
   assert.equal(run.status, 0, run.stdout + run.stderr);
   assert.equal(s.read(out).documents.solutions.trusted, true);
@@ -133,56 +418,139 @@ test('text-layer comparison ignores source attribution but still detects omitted
   run = s.run('textlayer.mjs', [PAPER, '--candidate', file, '--out', out]);
   assert.equal(run.status, 3, run.stdout + run.stderr);
   const result = s.read(out);
-  assert(result.defects.some(d => d.path === '/problems/0/solution/statement' && d.description.includes('Evidence of working')));
-  assert(result.defects.every(d => d.path !== '/problems/0/solution/attribution'));
+  assert(
+    result.defects.some(
+      d =>
+        d.path === '/problems/0/solution/statement' &&
+        d.description.includes('Evidence of working')
+    )
+  );
+  assert(
+    result.defects.every(d => d.path !== '/problems/0/solution/attribution')
+  );
 });
 
 test('text-layer compares visible link labels and prose, excluding figure roles and narrowly encoded trig lettering', t => {
   const s = sandbox(t);
-  const m = structuredClone(manifest);m.meta.lang='en';delete m.documents.solutions;
-  s.write('manifest.json',m);fs.mkdirSync(path.join(s.dir,'text'),{recursive:true});
-  const prose='The students arrived at the field site before assessment began. Each participant measured the residential block, recorded inhabited dwellings, calculated household population and estimated total area using the supplied map scale. Effective observation and completion of simple calculations were required. Evidence of working must include the measured area. Markers considered accurate estimates, acceptable observations, arithmetic mistakes, appropriate units, final density, clear explanations, individual methods, consistent notation, complete records and the stated limits.';
-  fs.writeFileSync(path.join(s.dir,'text','problems.txt'),prose+'\nConsult the reference Solar System Dynamics.\ncosp90˝ − δq + sin ε sinp90˝ − δq cosp90˝ + αq\f');
-  const c=candidate();c.paper.lang='en';c.paper.title='Assessment';
-  Object.assign(c.problems[0],{statement:prose+'\nConsult the reference [Solar System Dynamics](https://www.cambridge.org/books/hidden-annotation).\n$\\cos(90^{\\circ}-\\delta)+\\sin\\varepsilon\\sin(90^{\\circ}-\\delta)\\cos(90^{\\circ}+\\alpha)$',parts:[],figures:[{...c.problems[0].figures[0],role:'statement',alt:'Diagram'}]});delete c.problems[0].solution;
-  const file=s.write('visible-link-candidate.json',c),out=path.join(s.dir,'visible-link-result.json');
-  let run=s.run('textlayer.mjs',[PAPER,'--candidate',file,'--out',out]);assert.equal(run.status,0,run.stdout+run.stderr);assert.equal(s.read(out).documents.problems.trusted,true);
-  c.problems[0].statement=c.problems[0].statement.replace('Evidence of working must include the measured area. ','').replace('Solar System Dynamics','Incorrect Book Title');s.write('visible-link-candidate.json',c);
-  run=s.run('textlayer.mjs',[PAPER,'--candidate',file,'--out',out]);assert.equal(run.status,3,run.stdout+run.stderr);
-  assert(s.read(out).defects.some(d=>d.description.includes('Evidence of working')),'Real omitted instruction still fails');
-  assert(s.read(out).defects.some(d=>d.description.includes('Solar')),'Visible reference label still fails');
+  const m = structuredClone(manifest);
+  m.meta.lang = 'en';
+  delete m.documents.solutions;
+  s.write('manifest.json', m);
+  fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
+  const prose =
+    'The students arrived at the field site before assessment began. Each participant measured the residential block, recorded inhabited dwellings, calculated household population and estimated total area using the supplied map scale. Effective observation and completion of simple calculations were required. Evidence of working must include the measured area. Markers considered accurate estimates, acceptable observations, arithmetic mistakes, appropriate units, final density, clear explanations, individual methods, consistent notation, complete records and the stated limits.';
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'problems.txt'),
+    prose +
+      '\nConsult the reference Solar System Dynamics.\ncosp90˝ − δq + sin ε sinp90˝ − δq cosp90˝ + αq\f'
+  );
+  const c = candidate();
+  c.paper.lang = 'en';
+  c.paper.title = 'Assessment';
+  Object.assign(c.problems[0], {
+    statement:
+      prose +
+      '\nConsult the reference [Solar System Dynamics](https://www.cambridge.org/books/hidden-annotation).\n$\\cos(90^{\\circ}-\\delta)+\\sin\\varepsilon\\sin(90^{\\circ}-\\delta)\\cos(90^{\\circ}+\\alpha)$',
+    parts: [],
+    figures: [
+      { ...c.problems[0].figures[0], role: 'statement', alt: 'Diagram' },
+    ],
+  });
+  delete c.problems[0].solution;
+  const file = s.write('visible-link-candidate.json', c),
+    out = path.join(s.dir, 'visible-link-result.json');
+  let run = s.run('textlayer.mjs', [PAPER, '--candidate', file, '--out', out]);
+  assert.equal(run.status, 0, run.stdout + run.stderr);
+  assert.equal(s.read(out).documents.problems.trusted, true);
+  c.problems[0].statement = c.problems[0].statement
+    .replace('Evidence of working must include the measured area. ', '')
+    .replace('Solar System Dynamics', 'Incorrect Book Title');
+  s.write('visible-link-candidate.json', c);
+  run = s.run('textlayer.mjs', [PAPER, '--candidate', file, '--out', out]);
+  assert.equal(run.status, 3, run.stdout + run.stderr);
+  assert(
+    s
+      .read(out)
+      .defects.some(d => d.description.includes('Evidence of working')),
+    'Real omitted instruction still fails'
+  );
+  assert(
+    s.read(out).defects.some(d => d.description.includes('Solar')),
+    'Visible reference label still fails'
+  );
 });
 
 test('text-layer keeps nonmathematical cosp tokens as prose', async () => {
-  const {layerPages}=await import(txModule('textlayer.mjs'));
-  const pages=layerPages('The word cosp represents printed prose.\ncosp90˝ − δq');
-  const hits=pages[0].tokens.filter(t=>t.raw==='cosp');assert.equal(hits.length,2);assert(!hits[0].skip);assert.equal(hits[1].skip,true);
+  const { layerPages } = await import(txModule('textlayer.mjs'));
+  const pages = layerPages(
+    'The word cosp represents printed prose.\ncosp90˝ − δq'
+  );
+  const hits = pages[0].tokens.filter(t => t.raw === 'cosp');
+  assert.equal(hits.length, 2);
+  assert(!hits[0].skip);
+  assert.equal(hits[1].skip, true);
 });
 
-function spacingTextLayerFixture(t, { secondPage = false, editPage = 1, adjacentOmissions = false } = {}) {
+function spacingTextLayerFixture(
+  t,
+  { secondPage = false, editPage = 1, adjacentOmissions = false } = {}
+) {
   const s = sandbox(t);
-  const prose = 'Рассмотрим движение маленького тела вдоль горизонтальной поверхности. Начальная скорость известна. Ускорение направлено противоположно перемещению. Определите расстояние между начальным положением центра массы и конечной точкой остановки. Сопротивление воздуха отсутствует. Коэффициент трения постоянен. Измерения проводятся при одинаковой температуре окружающей среды. После завершения первого опыта повторите эксперимент для другого материала. Полученные значения сравните между собой. Объясните наблюдаемую зависимость времени торможения от массы тела. Приведите подробное рассуждение.';
+  const prose =
+    'Рассмотрим движение маленького тела вдоль горизонтальной поверхности. Начальная скорость известна. Ускорение направлено противоположно перемещению. Определите расстояние между начальным положением центра массы и конечной точкой остановки. Сопротивление воздуха отсутствует. Коэффициент трения постоянен. Измерения проводятся при одинаковой температуре окружающей среды. После завершения первого опыта повторите эксперимент для другого материала. Полученные значения сравните между собой. Объясните наблюдаемую зависимость времени торможения от массы тела. Приведите подробное рассуждение.';
   const printed = 'тепло емко сти';
-  const context = adjacentOmissions ? `Медленно увеличивайте давление ${printed} Бережно сохраняйте образцы` : `Совпадающие ${printed}`;
+  const context = adjacentOmissions
+    ? `Медленно увеличивайте давление ${printed} Бережно сохраняйте образцы`
+    : `Совпадающие ${printed}`;
   const page = `Задача 1.\n${prose}\n${context}\n`;
   const m = structuredClone(manifest);
   m.meta.lang = 'ru';
   delete m.documents.solutions;
   m.documents.problems.pages = secondPage ? 2 : 1;
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
-  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), page + (secondPage ? '\f' + page : ''));
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'problems.txt'),
+    page + (secondPage ? '\f' + page : '')
+  );
   s.write('manifest.json', m);
   const c = {
-    paper: { id: PAPER, lang: 'ru', source: { pages: secondPage ? [1, 2] : [1] } },
-    problems: [{ number: 1, title: 'Совпадающие теплоемкости', statement: prose }],
-    tx: { edits: [{ path: '/problems/0/title', printed, fixed: 'теплоемкости', document: 'problems', page: editPage, kind: 'spacing' }] },
+    paper: {
+      id: PAPER,
+      lang: 'ru',
+      source: { pages: secondPage ? [1, 2] : [1] },
+    },
+    problems: [
+      { number: 1, title: 'Совпадающие теплоемкости', statement: prose },
+    ],
+    tx: {
+      edits: [
+        {
+          path: '/problems/0/title',
+          printed,
+          fixed: 'теплоемкости',
+          document: 'problems',
+          page: editPage,
+          kind: 'spacing',
+        },
+      ],
+    },
   };
   const file = s.write('spacing-candidate.json', c);
   const out = path.join(s.dir, 'spacing-result.json');
-  const run = s.run('textlayer.mjs', [PAPER, '--candidate', file, '--out', out]);
+  const run = s.run('textlayer.mjs', [
+    PAPER,
+    '--candidate',
+    file,
+    '--out',
+    out,
+  ]);
   assert.ok(fs.existsSync(out), run.stdout + run.stderr);
   const result = s.read(out);
-  assert.equal(result.documents.problems.trusted, true, JSON.stringify(result.documents));
+  assert.equal(
+    result.documents.problems.trusted,
+    true,
+    JSON.stringify(result.documents)
+  );
   return { run, result };
 }
 
@@ -197,8 +565,14 @@ test('text-layer spacing acceptance stays bound to the recorded page', t => {
   const { run, result } = spacingTextLayerFixture(t, { secondPage: true });
   assert.equal(result.summary.edits.accepted, 1);
   assert.equal(run.status, 3);
-  assert.ok(result.defects.some(d => d.page === 2 && d.kind === 'omission'), JSON.stringify(result.defects));
-  assert.ok(!result.defects.some(d => d.page === 1), JSON.stringify(result.defects));
+  assert.ok(
+    result.defects.some(d => d.page === 2 && d.kind === 'omission'),
+    JSON.stringify(result.defects)
+  );
+  assert.ok(
+    !result.defects.some(d => d.page === 1),
+    JSON.stringify(result.defects)
+  );
 });
 
 test('text-layer spacing record with a wrong page remains a gate failure', t => {
@@ -208,10 +582,15 @@ test('text-layer spacing record with a wrong page remains a gate failure', t => 
 });
 
 test('text-layer spacing acceptance does not hide surrounding missing instructions', t => {
-  const { run, result } = spacingTextLayerFixture(t, { adjacentOmissions: true });
+  const { run, result } = spacingTextLayerFixture(t, {
+    adjacentOmissions: true,
+  });
   assert.equal(result.summary.edits.accepted, 1);
   assert.equal(run.status, 3);
-  const omissions = result.defects.filter(d => d.kind === 'omission').map(d => d.description).join(' ');
+  const omissions = result.defects
+    .filter(d => d.kind === 'omission')
+    .map(d => d.description)
+    .join(' ');
   assert.match(omissions, /Медленно увеличивайте давление/);
   assert.match(omissions, /Бережно сохраняйте образцы/);
 });
@@ -219,50 +598,135 @@ test('text-layer spacing acceptance does not hide surrounding missing instructio
 test('supplement pages must be declared, reviewed and bound to their own hashes', async t => {
   const s = sandbox(t);
   const m = structuredClone(manifest);
-  m.documents['supplement-1'] = { ...m.documents.solutions, key: 'Физика/zz/data.pdf', sha256: 'd'.repeat(64), pageImages: ['pages/supplement-1-01.png'] };
+  m.documents['supplement-1'] = {
+    ...m.documents.solutions,
+    key: 'Физика/zz/data.pdf',
+    sha256: 'd'.repeat(64),
+    pageImages: ['pages/supplement-1-01.png'],
+  };
   s.write('manifest.json', m);
   const c = candidate();
-  c.paper.supplementarySources = { 'supplement-1': { archiveKey: m.documents['supplement-1'].key, pages: [1] } };
-  c.paper.documentNotes = [{ title: 'Data', statement: '| A | B |\n|---|---|\n| 1 | 2 |', document: 'supplement-1', page: 1, position: 'before-problem' }];
+  c.paper.supplementarySources = {
+    'supplement-1': { archiveKey: m.documents['supplement-1'].key, pages: [1] },
+  };
+  c.paper.documentNotes = [
+    {
+      title: 'Data',
+      statement: '| A | B |\n|---|---|\n| 1 | 2 |',
+      document: 'supplement-1',
+      page: 1,
+      position: 'before-problem',
+    },
+  ];
   c.problems[0].tx.sourceSpans.push({ document: 'supplement-1', page: 1 });
   assert.deepEqual(supplementarySourceErrors(c, m), []);
   assert.equal(lib.pageImages(m).at(-1).document, 'supplement-1');
-  assert.deepEqual(supplementKeys(c.paper.supplementarySources), { 'supplement-1': 'Физика/zz/data.pdf' });
-  assert.throws(() => supplementKeys({ '../escape': 'data.pdf' }), /invalid supplement/);
+  assert.deepEqual(supplementKeys(c.paper.supplementarySources), {
+    'supplement-1': 'Физика/zz/data.pdf',
+  });
+  assert.throws(
+    () => supplementKeys({ '../escape': 'data.pdf' }),
+    /invalid supplement/
+  );
   for (const pages of [undefined, [], [1, 1], [0], [2]]) {
     const invalid = structuredClone(c);
     invalid.paper.supplementarySources['supplement-1'].pages = pages;
-    assert.ok(supplementarySourceErrors(invalid, m).length, `bad page list ${pages}`);
+    assert.ok(
+      supplementarySourceErrors(invalid, m).length,
+      `bad page list ${pages}`
+    );
   }
   const file = s.write('candidate.json', c);
-  assert.equal(s.run('validate.mjs', [file, '--manifest', path.join(s.dir, 'manifest.json')]).status, 0);
-  const check = { candidateSha256: lib.sha256File(file), verdict: 'pass', summary: 'full source review', coverage: { pagesRead: lib.pageImages(m).map(({ document, page }) => ({ document, page })), problemsChecked: 1, figuresChecked: 1 }, defects: [] };
-  const checkFile = s.write('check.json', check), receiptFile = path.join(s.dir, 'receipt.json');
-  const args = [PAPER, '--candidate', file, '--defects', checkFile, '--reviewer', 'agent:gpt-test:session', '--out', receiptFile];
+  assert.equal(
+    s.run('validate.mjs', [
+      file,
+      '--manifest',
+      path.join(s.dir, 'manifest.json'),
+    ]).status,
+    0
+  );
+  const check = {
+    candidateSha256: lib.sha256File(file),
+    verdict: 'pass',
+    summary: 'full source review',
+    coverage: {
+      pagesRead: lib
+        .pageImages(m)
+        .map(({ document, page }) => ({ document, page })),
+      problemsChecked: 1,
+      figuresChecked: 1,
+    },
+    defects: [],
+  };
+  const checkFile = s.write('check.json', check),
+    receiptFile = path.join(s.dir, 'receipt.json');
+  const args = [
+    PAPER,
+    '--candidate',
+    file,
+    '--defects',
+    checkFile,
+    '--reviewer',
+    'agent:gpt-test:session',
+    '--out',
+    receiptFile,
+  ];
   const receipt = s.run('receipt.mjs', args);
   assert.equal(receipt.status, 0, receipt.stdout + receipt.stderr);
   const hashes = s.read(receiptFile).sourceHashes;
   assert.equal(hashes['supplement-1'], 'd'.repeat(64));
   assert.deepEqual(sourceHashErrors(m, hashes), []);
-  assert.match(sourceHashErrors(m, { ...hashes, 'supplement-1': 'e'.repeat(64) }).join(), /supplement-1/);
+  assert.match(
+    sourceHashErrors(m, { ...hashes, 'supplement-1': 'e'.repeat(64) }).join(),
+    /supplement-1/
+  );
   delete hashes['supplement-1'];
   assert.match(sourceHashErrors(m, hashes).join(), /supplement-1/);
-  check.coverage.pagesRead.pop(); s.write('check.json', check);
-  assert.notEqual(s.run('receipt.mjs', args).status, 0, 'unread supplementary pages cannot pass');
+  check.coverage.pagesRead.pop();
+  s.write('check.json', check);
+  assert.notEqual(
+    s.run('receipt.mjs', args).status,
+    0,
+    'unread supplementary pages cannot pass'
+  );
   c.paper.supplementarySources['supplement-1'].archiveKey = 'wrong.pdf';
-  assert.match(supplementarySourceErrors(c, m).map(e => e.message).join(), /does not match/);
+  assert.match(
+    supplementarySourceErrors(c, m)
+      .map(e => e.message)
+      .join(),
+    /does not match/
+  );
   delete c.paper.supplementarySources;
-  assert.match(supplementarySourceErrors(c, m).map(e => e.message).join(), /not declared|undeclared/);
+  assert.match(
+    supplementarySourceErrors(c, m)
+      .map(e => e.message)
+      .join(),
+    /not declared|undeclared/
+  );
 });
 
 test('figure repairs retain a declared supplement identity and clear stale crop evidence', async () => {
   const { applyFixes } = await import(txModule('fixes.mjs'));
   const c = candidate();
   const field = '/problems/0/figures/0/tx/bbox';
-  const fix = { path: field, value: { document: 'supplement-1', page: 1, bbox: [100, 100, 500, 500] } };
-  const options = { defects: [{ path: field, kind: 'figure', severity: 'major', description: 'wrong document' }] };
+  const fix = {
+    path: field,
+    value: { document: 'supplement-1', page: 1, bbox: [100, 100, 500, 500] },
+  };
+  const options = {
+    defects: [
+      {
+        path: field,
+        kind: 'figure',
+        severity: 'major',
+        description: 'wrong document',
+      },
+    ],
+  };
   assert.equal(applyFixes(c, [fix], options).applied.length, 0);
-  c.paper.supplementarySources = { 'supplement-1': { archiveKey: 'data.pdf', pages: [1] } };
+  c.paper.supplementarySources = {
+    'supplement-1': { archiveKey: 'data.pdf', pages: [1] },
+  };
   assert.equal(applyFixes(c, [fix], options).applied.length, 1);
   assert.equal(c.problems[0].figures[0].tx.document, 'supplement-1');
   assert.ok(!c.problems[0].figures[0].tx.public200);
@@ -285,9 +749,20 @@ test('quarter-turn figure rotation validates and remains visible to the checker 
     const fig = c.problems[0].figures[0];
     fig.tx.rotation = rotation;
     fig.source.rotation = rotation;
-    assert.equal(candidateSchema(c), true, JSON.stringify(candidateSchema.errors));
-    assert.equal(finalSchema(lib.stripTx(c)), true, JSON.stringify(finalSchema.errors));
-    assert.equal(lib.checkerView(c).problems[0].figures[0].tx.rotation, rotation);
+    assert.equal(
+      candidateSchema(c),
+      true,
+      JSON.stringify(candidateSchema.errors)
+    );
+    assert.equal(
+      finalSchema(lib.stripTx(c)),
+      true,
+      JSON.stringify(finalSchema.errors)
+    );
+    assert.equal(
+      lib.checkerView(c).problems[0].figures[0].tx.rotation,
+      rotation
+    );
     assert.equal(lib.figureRotation(fig), rotation);
     delete fig.tx.rotation;
     assert.equal(lib.figureRotation(fig), rotation);
@@ -298,10 +773,17 @@ test('quarter-turn figure rotation validates and remains visible to the checker 
     const c = candidate();
     c.problems[0].figures[0].tx.rotation = rotation;
     assert.equal(candidateSchema(c), false, `candidate rotation ${rotation}`);
-    assert.throws(() => lib.figureRotation(c.problems[0].figures[0]), /rotation must be/);
+    assert.throws(
+      () => lib.figureRotation(c.problems[0].figures[0]),
+      /rotation must be/
+    );
     delete c.problems[0].figures[0].tx.rotation;
     c.problems[0].figures[0].source.rotation = rotation;
-    assert.equal(finalSchema(lib.stripTx(c)), false, `source rotation ${rotation}`);
+    assert.equal(
+      finalSchema(lib.stripTx(c)),
+      false,
+      `source rotation ${rotation}`
+    );
   }
 });
 
@@ -312,18 +794,37 @@ test('repair and refix preserve rotation when invalidating crop evidence', async
     const c = candidate();
     const fig = c.problems[0].figures[0];
     (fromSource ? fig.source : fig.tx).rotation = 90;
-    const defect = { path: '/problems/0/figures/0/tx/bbox', kind: 'figure', severity: 'major', suggestedFix: '[360,270,630,445]' };
+    const defect = {
+      path: '/problems/0/figures/0/tx/bbox',
+      kind: 'figure',
+      severity: 'major',
+      suggestedFix: '[360,270,630,445]',
+    };
     const file = s.write(`candidates/rotation-${fromSource}.json`, c);
-    const receipt = s.write(`rotation-${fromSource}.receipt.json`, { paperId: PAPER, candidateSha256: lib.sha256File(file), defects: [defect] });
+    const receipt = s.write(`rotation-${fromSource}.receipt.json`, {
+      paperId: PAPER,
+      candidateSha256: lib.sha256File(file),
+      defects: [defect],
+    });
     const out = path.join(s.dir, `rotation-${fromSource}.repaired.json`);
-    const r = s.run('repair.mjs', [PAPER, '--candidate', file, '--receipt', receipt, '--out', out]);
+    const r = s.run('repair.mjs', [
+      PAPER,
+      '--candidate',
+      file,
+      '--receipt',
+      receipt,
+      '--out',
+      out,
+    ]);
     assert.equal(r.status, 0, r.stdout + r.stderr);
     const repaired = s.read(out).problems[0].figures[0];
     assert.equal(repaired.tx.rotation, 90);
     assert.equal(repaired.tx.file, undefined);
     assert.equal(repaired.url, undefined);
     assert.equal(repaired.source, undefined);
-    applyFixes(c, [{ path: defect.path, value: [360, 270, 630, 445] }], { defects: [defect] });
+    applyFixes(c, [{ path: defect.path, value: [360, 270, 630, 445] }], {
+      defects: [defect],
+    });
     assert.equal(fig.tx.rotation, 90);
     assert.equal(fig.tx.public200, undefined);
     assert.equal(fig.source, undefined);
@@ -336,7 +837,9 @@ test('repair and refix preserve rotation when invalidating crop evidence', async
   assert.equal(c.problems[0].figures[0].tx.rotation, 270);
   assert.equal(c.problems[0].figures[0].url, undefined);
   assert.deepEqual(r.figuresToRedo, ['/problems/0/figures/0']);
-  const invalid = applyFixes(c, [{ path: rotationPath, value: 45 }], { defects });
+  const invalid = applyFixes(c, [{ path: rotationPath, value: 45 }], {
+    defects,
+  });
   assert.equal(invalid.applied.length, 0);
   assert.equal(c.problems[0].figures[0].tx.rotation, 270);
   c.problems[0].figures[0].id = 'invalid id';
@@ -345,7 +848,10 @@ test('repair and refix preserve rotation when invalidating crop evidence', async
 });
 
 test('normaliseLatex ignores spacing/decimal spelling but keeps subscripts and signs', () => {
-  assert.equal(lib.normaliseLatex('0{,}06\\ \\mathrm{C}'), lib.normaliseLatex('0,06 C'));
+  assert.equal(
+    lib.normaliseLatex('0{,}06\\ \\mathrm{C}'),
+    lib.normaliseLatex('0,06 C')
+  );
   assert.notEqual(lib.normaliseLatex('v_0/2'), lib.normaliseLatex('v_0'));
   assert.notEqual(lib.normaliseLatex('\\ell_1'), lib.normaliseLatex('\\ell_2'));
   assert.notEqual(lib.normaliseLatex('-5'), lib.normaliseLatex('5'));
@@ -353,135 +859,551 @@ test('normaliseLatex ignores spacing/decimal spelling but keeps subscripts and s
 
 test('isPrimaryCandidate skips derived copies, including models with dots', () => {
   assert.equal(lib.isPrimaryCandidate('zai__glm-5.3-flash.json'), true);
-  for (const f of ['zai__glm-5.3-flash.figs.json', 'zai__glm-5.3-flash.view.json', 'zai__glm-5.3-flash.dryrun.json', 'zai__glm-5.3-flash.window-problems-01-08.json', 'zai__glm-5.3-flash.r1.json', 'adjudicated__1.gold.json', 'receipt.json']) assert.equal(lib.isPrimaryCandidate(f), false, f);
+  for (const f of [
+    'zai__glm-5.3-flash.figs.json',
+    'zai__glm-5.3-flash.view.json',
+    'zai__glm-5.3-flash.dryrun.json',
+    'zai__glm-5.3-flash.window-problems-01-08.json',
+    'zai__glm-5.3-flash.r1.json',
+    'adjudicated__1.gold.json',
+    'receipt.json',
+  ])
+    assert.equal(lib.isPrimaryCandidate(f), false, f);
 });
 
 test('checkerView withholds the reader rationale and identity but keeps figure boxes, crop files and source pages', () => {
   const v = lib.checkerView(candidate());
   const text = JSON.stringify(v);
-  assert.doesNotMatch(text, /rationale|glm-5\.3-flash|printedMeta|textLayerTrustworthy|catalogDisagrees|costUsd/);
-  assert.deepEqual(v.problems[0].tx, { sourceSpans: [{ document: 'problems', page: 1 }, { document: 'solutions', page: 1 }] });
-  assert.deepEqual(v.problems[0].figures[0].tx, { document: 'problems', page: 1, bbox: [365, 275, 625, 430], file: 'figs/problems/p1-fig1.png' });
+  assert.doesNotMatch(
+    text,
+    /rationale|glm-5\.3-flash|printedMeta|textLayerTrustworthy|catalogDisagrees|costUsd/
+  );
+  assert.deepEqual(v.problems[0].tx, {
+    sourceSpans: [
+      { document: 'problems', page: 1 },
+      { document: 'solutions', page: 1 },
+    ],
+  });
+  assert.deepEqual(v.problems[0].figures[0].tx, {
+    document: 'problems',
+    page: 1,
+    bbox: [365, 275, 625, 430],
+    file: 'figs/problems/p1-fig1.png',
+  });
   assert.equal(v.tx, undefined);
 });
 
 test('independence needs a different model; same provider is flagged', () => {
-  assert.equal(lib.independence({ provider: 'zai', model: 'glm-5.3-flash' }, { provider: 'zai', model: 'glm-5.3-flash' }).independent, false);
-  const r = lib.independence({ provider: 'zai', model: 'glm-5.3-flash' }, { provider: 'zai', model: 'glm-4.6v' });
-  assert.equal(r.independent, true); assert.equal(r.differentProvider, false);
-  assert.equal(lib.independence({ provider: 'zai', model: 'x' }, { provider: 'gemini', model: 'y' }).differentProvider, true);
-  const repaired = lib.independence({ provider: 'agent', model: 'opus-5-5' }, { provider: 'agent', model: 'gpt-6-sol' }, { provider: 'agent', model: 'gpt-6-sol' });
-  assert.equal(repaired.independent, false, 'an older reader identity cannot disguise a same-model repair and check');
+  assert.equal(
+    lib.independence(
+      { provider: 'zai', model: 'glm-5.3-flash' },
+      { provider: 'zai', model: 'glm-5.3-flash' }
+    ).independent,
+    false
+  );
+  const r = lib.independence(
+    { provider: 'zai', model: 'glm-5.3-flash' },
+    { provider: 'zai', model: 'glm-4.6v' }
+  );
+  assert.equal(r.independent, true);
+  assert.equal(r.differentProvider, false);
+  assert.equal(
+    lib.independence(
+      { provider: 'zai', model: 'x' },
+      { provider: 'gemini', model: 'y' }
+    ).differentProvider,
+    true
+  );
+  const repaired = lib.independence(
+    { provider: 'agent', model: 'opus-5-5' },
+    { provider: 'agent', model: 'gpt-6-sol' },
+    { provider: 'agent', model: 'gpt-6-sol' }
+  );
+  assert.equal(
+    repaired.independent,
+    false,
+    'an older reader identity cannot disguise a same-model repair and check'
+  );
   assert.equal(repaired.adjudicatorSameModel, true);
-  assert.equal(lib.independence({ provider: 'agent', model: 'opus-5-5' }, { provider: 'agent', model: 'gpt-6-sol' }, { provider: 'agent', model: 'codex-parent-model-unspecified' }).independent, false);
+  assert.equal(
+    lib.independence(
+      { provider: 'agent', model: 'opus-5-5' },
+      { provider: 'agent', model: 'gpt-6-sol' },
+      { provider: 'agent', model: 'codex-parent-model-unspecified' }
+    ).independent,
+    false
+  );
 });
 
 test('pageWindows splits long documents with one-page overlap and leaves short ones whole', () => {
   assert.deepEqual(lib.pageWindows(manifest, 8), [null]);
-  const long = { documents: { problems: { pages: 15 }, solutions: { pages: 3 } } };
-  assert.deepEqual(lib.pageWindows(long, 8), [{ problems: [1, 8] }, { problems: [8, 15] }, { solutions: [1, 3] }]);
+  const long = {
+    documents: { problems: { pages: 15 }, solutions: { pages: 3 } },
+  };
+  assert.deepEqual(lib.pageWindows(long, 8), [
+    { problems: [1, 8] },
+    { problems: [8, 15] },
+    { solutions: [1, 3] },
+  ]);
 });
 
 test('figureEvidenceProblems flags dry-run and unverified figures', () => {
   assert.deepEqual(lib.figureEvidenceProblems(candidate()), []);
-  assert.match(lib.figureEvidenceProblems(candidate({ uploaded: false, dryRun: true }))[0].message, /dry-run/);
-  assert.match(lib.figureEvidenceProblems(candidate({ uploaded: false }))[0].message, /not uploaded/);
+  assert.match(
+    lib.figureEvidenceProblems(candidate({ uploaded: false, dryRun: true }))[0]
+      .message,
+    /dry-run/
+  );
+  assert.match(
+    lib.figureEvidenceProblems(candidate({ uploaded: false }))[0].message,
+    /not uploaded/
+  );
 });
 
 test('buildFinalPaper writes real provenance fields, no [tx] blob, deterministic hash, schema-valid', () => {
-  const prov = lib.provenanceFor(candidate(), { reviewer: { provider: 'gemini', model: 'gemini-3.8-flash' }, promptVersion: 'v1', checkedAt: '2026-09-06T01:00:00.000Z', sourceHashes: { problems: 'a'.repeat(64), solutions: 'b'.repeat(64) }, independent: true });
-  const a = lib.buildFinalPaper(candidate(), prov), b = lib.buildFinalPaper(candidate(), prov);
+  const prov = lib.provenanceFor(candidate(), {
+    reviewer: { provider: 'gemini', model: 'gemini-3.8-flash' },
+    promptVersion: 'v1',
+    checkedAt: '2026-09-06T01:00:00.000Z',
+    sourceHashes: { problems: 'a'.repeat(64), solutions: 'b'.repeat(64) },
+    independent: true,
+  });
+  const a = lib.buildFinalPaper(candidate(), prov),
+    b = lib.buildFinalPaper(candidate(), prov);
   assert.equal(a.contentHash, b.contentHash);
   const tr = a.data.paper.transcription;
-  assert.equal(tr.provider, 'zai'); assert.equal(tr.promptVersion, 'v1'); assert.equal(tr.promptSha256, 'c'.repeat(64)); assert.equal(tr.requestId, 'req-1');
-  assert.deepEqual(tr.sourceSha256, { problems: 'a'.repeat(64), solutions: 'b'.repeat(64) });
+  assert.equal(tr.provider, 'zai');
+  assert.equal(tr.promptVersion, 'v1');
+  assert.equal(tr.promptSha256, 'c'.repeat(64));
+  assert.equal(tr.requestId, 'req-1');
+  assert.deepEqual(tr.sourceSha256, {
+    problems: 'a'.repeat(64),
+    solutions: 'b'.repeat(64),
+  });
   assert.match(tr.verifiedBy, /independent checker/);
   assert.doesNotMatch(tr.notes || '', /\[tx\]/);
-  assert.equal(a.data.paper.status, 'review'); assert.equal(a.data.paper.grade, '7');
+  assert.equal(a.data.paper.status, 'review');
+  assert.equal(a.data.paper.grade, '7');
   assert.equal(JSON.stringify(a.data).includes('"tx"'), false);
-  assert.deepEqual(a.data.problems[0].sourceSpans, [{ document: 'problems', page: 1 }, { document: 'solutions', page: 1 }]);
+  assert.deepEqual(a.data.problems[0].sourceSpans, [
+    { document: 'problems', page: 1 },
+    { document: 'solutions', page: 1 },
+  ]);
   const { validate } = lib.compileSchema('final');
   assert.equal(validate(a.data), true, JSON.stringify(validate.errors));
-  assert.equal(lib.provenanceFor(candidate(), { reviewer: { provider: 'zai', model: 'glm-5.3-flash' }, promptVersion: 'v1', checkedAt: '2026-09-06', sourceHashes: {}, independent: false }).verifiedBy.includes('same-model checker'), true);
+  assert.equal(
+    lib
+      .provenanceFor(candidate(), {
+        reviewer: { provider: 'zai', model: 'glm-5.3-flash' },
+        promptVersion: 'v1',
+        checkedAt: '2026-09-06',
+        sourceHashes: {},
+        independent: false,
+      })
+      .verifiedBy.includes('same-model checker'),
+    true
+  );
+});
+
+test('source rendering DPI is explicit, consistent, and historical final bytes remain reproducible', () => {
+  const context = {
+    reviewer: { provider: 'mechanical', model: 'single-pass-gates' },
+    checkedAt: '2026-10-01',
+    promptVersion: 'v1',
+    sourceHashes: {},
+    independent: false,
+    mode: 'single-pass',
+  };
+  const old = lib.buildFinalPaper(
+    candidate(),
+    lib.provenanceFor(candidate(), context)
+  );
+  const dpi = lib.renderDpiFor({
+    renderDpi: 220,
+    documents: { problems: { renderDpi: 220 }, solutions: { renderDpi: 220 } },
+  });
+  const current = lib.buildFinalPaper(
+    candidate(),
+    lib.provenanceFor(candidate(), { ...context, renderDpi: dpi })
+  );
+  assert.equal(current.data.paper.transcription.renderDpi, 220);
+  assert.equal(old.data.paper.transcription.renderDpi, 160);
+  assert.equal(
+    old.contentHash,
+    lib.buildFinalPaper(candidate(), lib.provenanceFor(candidate(), context))
+      .contentHash
+  );
+  assert.notEqual(current.contentHash, old.contentHash);
+  assert.deepEqual(current.data.problems, old.data.problems);
+  assert.equal(
+    lib.renderDpiFor({ documents: { problems: { renderDpi: 220 } } }),
+    220
+  );
+  for (const bad of [0, -1, '220', NaN])
+    assert.throws(
+      () => lib.renderDpiFor({ renderDpi: bad }),
+      /Invalid source renderDpi/
+    );
+  assert.throws(
+    () =>
+      lib.renderDpiFor({
+        renderDpi: 220,
+        documents: { solutions: { renderDpi: 160 } },
+      }),
+    /differs for document solutions/
+  );
+});
+
+test('receipt binds actual220dpi and promoter refuses stale or contradictory rendering before canonical writes', t => {
+  const s = sandbox(t),
+    m = structuredClone(manifest);
+  m.renderDpi = 220;
+  for (const doc of Object.values(m.documents)) doc.renderDpi = 220;
+  s.write('manifest.json', m);
+  const cand = s.write('candidates/dpi.json', candidate());
+  const checker = s.write('dpi-check.json', {
+    verdict: 'pass',
+    candidateSha256: lib.sha256File(cand),
+    defects: [],
+    summary: 'DPI binding fixture coverage verified.',
+    coverage: {
+      pagesRead: [
+        { document: 'problems', page: 1 },
+        { document: 'problems', page: 2 },
+        { document: 'solutions', page: 1 },
+      ],
+      problemsChecked: 1,
+      figuresChecked: 1,
+    },
+  });
+  const out = path.join(s.dir, 'dpi.receipt.json');
+  const result = s.run('receipt.mjs', [
+    PAPER,
+    '--candidate',
+    cand,
+    '--defects',
+    checker,
+    '--reviewer',
+    'gemini:gemini-3.8-flash:dpi',
+    '--out',
+    out,
+  ]);
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  const receipt = s.read(out);
+  assert.equal(receipt.renderDpi, 220);
+  const prov = lib.provenanceFor(candidate(), {
+    reviewer: receipt.reviewer,
+    checkedAt: receipt.checkedAt,
+    promptVersion: receipt.promptVersion,
+    sourceHashes: receipt.sourceHashes,
+    independent: true,
+    renderDpi: receipt.renderDpi,
+  });
+  assert.equal(
+    lib.buildFinalPaper(candidate(), prov).contentHash,
+    receipt.contentHash
+  );
+  m.renderDpi = 160;
+  for (const doc of Object.values(m.documents)) doc.renderDpi = 160;
+  s.write('manifest.json', m);
+  let refused = s.run('promote.mjs', [
+    PAPER,
+    '--candidate',
+    cand,
+    '--receipt',
+    out,
+  ]);
+  assert.equal(refused.status, 1);
+  assert.match(refused.stdout + refused.stderr, /renderDpi changed/);
+  m.renderDpi = 220;
+  s.write('manifest.json', m);
+  refused = s.run('promote.mjs', [
+    PAPER,
+    '--candidate',
+    cand,
+    '--receipt',
+    out,
+  ]);
+  assert.equal(refused.status, 1);
+  assert.match(refused.stdout + refused.stderr, /differs for document/);
+});
+
+test('single-pass receipt records source DPI without changing reader identity or claiming a checker', t => {
+  const s = sandbox(t),
+    m = structuredClone(manifest);
+  m.renderDpi = 220;
+  for (const doc of Object.values(m.documents)) doc.renderDpi = 220;
+  s.write('manifest.json', m);
+  const c = candidate(),
+    cand = s.write('candidates/dpi-single.json', c);
+  const evidence = s.write('dpi-reader.json', {
+    reader: c.tx.reader,
+    candidateSha256: lib.sha256File(cand),
+    pagesRead: [
+      { document: 'problems', page: 1 },
+      { document: 'problems', page: 2 },
+      { document: 'solutions', page: 1 },
+    ],
+    problemsRead: 1,
+    figuresInspected: 1,
+    summary: 'Original source read.',
+    sourceGaps: [],
+  });
+  const out = path.join(s.dir, 'dpi-single.receipt.json'),
+    result = s.run('single-pass-receipt.mjs', [
+      PAPER,
+      '--candidate',
+      cand,
+      '--evidence',
+      evidence,
+      '--out',
+      out,
+    ]);
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  const receipt = s.read(out);
+  assert.equal(receipt.renderDpi, 220);
+  assert.equal(receipt.checkerMode, 'single-pass');
+  assert.equal(receipt.independence.separateChecker, false);
+  assert.equal(receipt.reader.model, c.tx.reader.model);
+  assert.equal(receipt.candidateSha256, lib.sha256File(cand));
 });
 
 test('classification and source order survive promotion bytes without changing legacy difficulty', () => {
-  const c = candidate(), p = c.problems[0];
+  const c = candidate(),
+    p = c.problems[0];
   p.classification = classificationFixture(p.id);
   p.classification.provenance.evidence = 'Private assessor notes';
   p.statementAfterParts = 'Общо заключение.';
   p.parts[0].statementAfter = 'Условие за следващата част.';
   p.sourceLayout = { underlines: ['Общо заключение.'] };
-  c.paper.documentNotes = [{ title: 'Обща инструкция', statement: 'Изберете три задачи.', document: 'problems', page: 1, position: 'before-problem' }];
-  const prov = lib.provenanceFor(c, { reviewer: { provider: 'agent', model: 'gpt-6-astra' }, checkedAt: '2026-09-14', promptVersion: 'v1', sourceHashes: { problems: 'a'.repeat(64) }, independent: false });
+  c.paper.documentNotes = [
+    {
+      title: 'Обща инструкция',
+      statement: 'Изберете три задачи.',
+      document: 'problems',
+      page: 1,
+      position: 'before-problem',
+    },
+  ];
+  const prov = lib.provenanceFor(c, {
+    reviewer: { provider: 'agent', model: 'gpt-6-astra' },
+    checkedAt: '2026-09-14',
+    promptVersion: 'v1',
+    sourceHashes: { problems: 'a'.repeat(64) },
+    independent: false,
+  });
   const final = lib.buildFinalPaper(c, prov);
   assert.deepEqual(final.data.problems[0].classification, p.classification);
-  assert.equal(lib.checkerView(c).problems[0].classification.provenance.rater, undefined);
-  assert.equal(lib.checkerView(c).problems[0].classification.provenance.evidence, undefined);
+  assert.equal(
+    lib.checkerView(c).problems[0].classification.provenance.rater,
+    undefined
+  );
+  assert.equal(
+    lib.checkerView(c).problems[0].classification.provenance.evidence,
+    undefined
+  );
   assert.equal(final.data.problems[0].difficulty, 'Easy');
-  assert.equal(final.data.problems[0].statementAfterParts, p.statementAfterParts);
-  assert.equal(final.data.problems[0].parts[0].statementAfter, p.parts[0].statementAfter);
+  assert.equal(
+    final.data.problems[0].statementAfterParts,
+    p.statementAfterParts
+  );
+  assert.equal(
+    final.data.problems[0].parts[0].statementAfter,
+    p.parts[0].statementAfter
+  );
   assert.deepEqual(final.data.paper.documentNotes, c.paper.documentNotes);
-  assert.deepEqual(lib.checkerView(c).paper.documentNotes, c.paper.documentNotes);
+  assert.deepEqual(
+    lib.checkerView(c).paper.documentNotes,
+    c.paper.documentNotes
+  );
   assert.deepEqual(final.data.problems[0].sourceLayout, p.sourceLayout);
   const { validate } = lib.compileSchema('final');
   assert.equal(validate(final.data), true, JSON.stringify(validate.errors));
   assert.deepEqual(problemMetadataErrors(final.data, manifest), []);
-  const changed = structuredClone(c); changed.problems[0].classification.difficulty.level = 4;
-  assert.notEqual(lib.buildFinalPaper(changed, prov).contentHash, final.contentHash);
+  const changed = structuredClone(c);
+  changed.problems[0].classification.difficulty.level = 4;
+  assert.notEqual(
+    lib.buildFinalPaper(changed, prov).contentHash,
+    final.contentHash
+  );
 });
 
 test('classification rejects unknown IDs, index-derived ratings, missing prerequisites and fictitious calibration', () => {
   const { validate } = lib.compileSchema('candidate');
-  const base = lib.stripTx(candidate()); base.problems[0].classification = classificationFixture(base.problems[0].id);
+  const base = lib.stripTx(candidate());
+  base.problems[0].classification = classificationFixture(base.problems[0].id);
   assert.equal(validate(base), true, JSON.stringify(validate.errors));
   const crossSubject = structuredClone(base);
-  crossSubject.problems[0].classification.conceptIds.push(problemTaxonomy.topics.find(t => t.id.startsWith('astronomy/')).id);
+  crossSubject.problems[0].classification.conceptIds.push(
+    problemTaxonomy.topics.find(t => t.id.startsWith('astronomy/')).id
+  );
   assert.equal(validate(crossSubject), true, JSON.stringify(validate.errors));
   assert.deepEqual(problemMetadataErrors(crossSubject, manifest), []);
   for (const mutate of [
     c => c.conceptIds.push('physics/invented/concept'),
-    c => { c.sourceRef.kind = 'index-record'; },
-    c => { c.provenance.basis = 'existing-labels'; },
-    c => { c.prerequisiteLevels = []; },
-    c => { c.difficulty.level = 6; },
-    c => { c.difficulty.status = 'unrated'; },
-    c => { c.difficulty.status = 'calibrated'; c.difficulty.anchorIds = ['invented-human-anchor']; c.provenance.reviewStatus = 'human-reviewed'; },
-    c => { c.difficulty = { level: null, status: 'unrated', rationale: null, confidence: null }; c.sourceRef.kind = 'index-record'; c.partAssessments = [{ label: 'а)', conceptIds: c.conceptIds, difficulty: { level: 2, status: 'estimated', rationale: 'Part', confidence: 'low' } }]; },
+    c => {
+      c.sourceRef.kind = 'index-record';
+    },
+    c => {
+      c.provenance.basis = 'existing-labels';
+    },
+    c => {
+      c.prerequisiteLevels = [];
+    },
+    c => {
+      c.difficulty.level = 6;
+    },
+    c => {
+      c.difficulty.status = 'unrated';
+    },
+    c => {
+      c.difficulty.status = 'calibrated';
+      c.difficulty.anchorIds = ['invented-human-anchor'];
+      c.provenance.reviewStatus = 'human-reviewed';
+    },
+    c => {
+      c.difficulty = {
+        level: null,
+        status: 'unrated',
+        rationale: null,
+        confidence: null,
+      };
+      c.sourceRef.kind = 'index-record';
+      c.partAssessments = [
+        {
+          label: 'а)',
+          conceptIds: c.conceptIds,
+          difficulty: {
+            level: 2,
+            status: 'estimated',
+            rationale: 'Part',
+            confidence: 'low',
+          },
+        },
+      ];
+    },
   ]) {
-    const c = structuredClone(base); mutate(c.problems[0].classification);
-    assert.equal(validate(c), false, JSON.stringify(c.problems[0].classification));
+    const c = structuredClone(base);
+    mutate(c.problems[0].classification);
+    assert.equal(
+      validate(c),
+      false,
+      JSON.stringify(c.problems[0].classification)
+    );
   }
-  const wrongId = structuredClone(base); wrongId.problems[0].classification.problemId = 'another-problem';
-  assert.match(problemMetadataErrors(wrongId, manifest).map(e => e.message).join(), /owning problem/);
-  const wrongHash = structuredClone(base); wrongHash.problems[0].classification.sourceRef.sha256 = 'f'.repeat(64);
-  assert.match(problemMetadataErrors(wrongHash, manifest).map(e => e.message).join(), /source hash/);
+  const wrongId = structuredClone(base);
+  wrongId.problems[0].classification.problemId = 'another-problem';
+  assert.match(
+    problemMetadataErrors(wrongId, manifest)
+      .map(e => e.message)
+      .join(),
+    /owning problem/
+  );
+  const wrongHash = structuredClone(base);
+  wrongHash.problems[0].classification.sourceRef.sha256 = 'f'.repeat(64);
+  assert.match(
+    problemMetadataErrors(wrongHash, manifest)
+      .map(e => e.message)
+      .join(),
+    /source hash/
+  );
 });
 
 test('assembleWindows merges parts by number and replaces placeholders', () => {
   const c = candidate();
-  const p1 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [1] }, solutionSource: undefined }, problems: [{ ...c.problems[0], solution: undefined, tx: { sourceSpans: [{ document: 'problems', page: 1 }] } }], tx: { window: { problems: [1, 2] }, notes: 'w1', reader: { ...c.tx.reader, inputTokens: 100, costUsd: 0.01 } } };
-  delete p1.paper.solutionSource; delete p1.problems[0].solution;
-  const p2 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [] } }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: lib.WINDOW_PLACEHOLDER, parts: [], solution: c.problems[0].solution, tx: { sourceSpans: [{ document: 'solutions', page: 1 }] } }], tx: { window: { solutions: [1, 1] }, reader: { ...c.tx.reader, inputTokens: 50, costUsd: 0.005 } } };
+  const p1 = {
+    paper: {
+      ...c.paper,
+      source: { ...c.paper.source, pages: [1] },
+      solutionSource: undefined,
+    },
+    problems: [
+      {
+        ...c.problems[0],
+        solution: undefined,
+        tx: { sourceSpans: [{ document: 'problems', page: 1 }] },
+      },
+    ],
+    tx: {
+      window: { problems: [1, 2] },
+      notes: 'w1',
+      reader: { ...c.tx.reader, inputTokens: 100, costUsd: 0.01 },
+    },
+  };
+  delete p1.paper.solutionSource;
+  delete p1.problems[0].solution;
+  const p2 = {
+    paper: { ...c.paper, source: { ...c.paper.source, pages: [] } },
+    problems: [
+      {
+        id: `${PAPER}-p1`,
+        number: 1,
+        statement: lib.WINDOW_PLACEHOLDER,
+        parts: [],
+        solution: c.problems[0].solution,
+        tx: { sourceSpans: [{ document: 'solutions', page: 1 }] },
+      },
+    ],
+    tx: {
+      window: { solutions: [1, 1] },
+      reader: { ...c.tx.reader, inputTokens: 50, costUsd: 0.005 },
+    },
+  };
   const { data, report } = assembleWindows([p1, p2], manifest);
   assert.equal(report.ok, true, JSON.stringify(report));
   assert.equal(data.problems.length, 1);
   assert.match(data.problems[0].statement, /Токът/);
   assert.match(data.problems[0].solution.statement, /Решение/);
-  assert.deepEqual(data.problems[0].tx.sourceSpans, [{ document: 'problems', page: 1 }, { document: 'solutions', page: 1 }]);
-  assert.deepEqual(data.paper.source.pages, [1]); assert.deepEqual(data.paper.solutionSource.pages, [1]);
-  assert.equal(data.tx.reader.inputTokens, 150); assert.equal(data.tx.reader.windows, 2);
+  assert.deepEqual(data.problems[0].tx.sourceSpans, [
+    { document: 'problems', page: 1 },
+    { document: 'solutions', page: 1 },
+  ]);
+  assert.deepEqual(data.paper.source.pages, [1]);
+  assert.deepEqual(data.paper.solutionSource.pages, [1]);
+  assert.equal(data.tx.reader.inputTokens, 150);
+  assert.equal(data.tx.reader.windows, 2);
   assert.deepEqual(report.uncoveredPages, [{ document: 'problems', page: 2 }]);
 });
 
 test('assembleWindows: a statement read from the solutions document never outranks the one from the problems document', () => {
   const c = candidate();
-  const p1 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } }, problems: [{ ...c.problems[0], solution: undefined, tx: { sourceSpans: [{ document: 'problems', page: 1 }] } }], tx: { window: { problems: [1, 2] }, reader: c.tx.reader } };
-  delete p1.paper.solutionSource; delete p1.problems[0].solution;
-  const narrative = 'Part a) Since the current is steady, the field is that of an infinite wire and the field lines are circles; '.repeat(6);
-  const p2 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [] } }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: narrative, parts: [{ label: 'а)', statement: narrative }], solution: c.problems[0].solution, tx: { sourceSpans: [{ document: 'solutions', page: 1 }] } }], tx: { window: { solutions: [1, 1] }, reader: c.tx.reader } };
+  const p1 = {
+    paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } },
+    problems: [
+      {
+        ...c.problems[0],
+        solution: undefined,
+        tx: { sourceSpans: [{ document: 'problems', page: 1 }] },
+      },
+    ],
+    tx: { window: { problems: [1, 2] }, reader: c.tx.reader },
+  };
+  delete p1.paper.solutionSource;
+  delete p1.problems[0].solution;
+  const narrative =
+    'Part a) Since the current is steady, the field is that of an infinite wire and the field lines are circles; '.repeat(
+      6
+    );
+  const p2 = {
+    paper: { ...c.paper, source: { ...c.paper.source, pages: [] } },
+    problems: [
+      {
+        id: `${PAPER}-p1`,
+        number: 1,
+        statement: narrative,
+        parts: [{ label: 'а)', statement: narrative }],
+        solution: c.problems[0].solution,
+        tx: { sourceSpans: [{ document: 'solutions', page: 1 }] },
+      },
+    ],
+    tx: { window: { solutions: [1, 1] }, reader: c.tx.reader },
+  };
   const { data, report } = assembleWindows([p1, p2], manifest);
-  assert.match(data.problems[0].statement, /Токът/, 'problems-window statement kept although the solutions window returned a longer one');
+  assert.match(
+    data.problems[0].statement,
+    /Токът/,
+    'problems-window statement kept although the solutions window returned a longer one'
+  );
   assert.equal(data.problems[0].parts.length, c.problems[0].parts.length);
   assert.match(data.problems[0].solution.statement, /Решение/);
   assert.deepEqual(report.solutionWindowStatements, []);
@@ -495,118 +1417,443 @@ test('a problem entry the paper does not print is removed last, and the ones aft
   const { applyFixes } = await import(txModule('fixes.mjs'));
   const c = candidate();
   const p1 = c.problems[0];
-  const mk = (n, extra = {}) => ({ ...JSON.parse(JSON.stringify(p1)), id: `${PAPER}-p${n}`, number: n, figures: [{ id: `p${n}-fig1`, alt: 'x', tx: { document: 'problems', page: 1, bbox: [100, 100, 400, 400] } }], ...extra });
-  c.problems = [mk(1), mk(2, { statement: 'Task E1.3 — a sub-task listed as a problem', tx: { sourceSpans: [{ document: 'solutions', page: 2 }] } }), mk(3, { statement: 'Третата задача.' })];
-  const defects = [
-    { path: '/problems/1', kind: 'metadata', severity: 'critical', description: 'invented problem entry (a sub-task of problem 1)' },
-    { path: '/problems/2/statement', kind: 'reworded', severity: 'major', description: 'wording' },
-    { path: '/problems/2/solution/incomplete', kind: 'other', severity: 'minor', description: 'the solution is complete' },
+  const mk = (n, extra = {}) => ({
+    ...JSON.parse(JSON.stringify(p1)),
+    id: `${PAPER}-p${n}`,
+    number: n,
+    figures: [
+      {
+        id: `p${n}-fig1`,
+        alt: 'x',
+        tx: { document: 'problems', page: 1, bbox: [100, 100, 400, 400] },
+      },
+    ],
+    ...extra,
+  });
+  c.problems = [
+    mk(1),
+    mk(2, {
+      statement: 'Task E1.3 — a sub-task listed as a problem',
+      tx: { sourceSpans: [{ document: 'solutions', page: 2 }] },
+    }),
+    mk(3, { statement: 'Третата задача.' }),
   ];
-  c.problems[2].solution.incomplete = true; c.problems[2].solution.incompleteReason = 'x';
-  const r = applyFixes(c, [
-    { path: '/problems/1', value: { remove: true }, note: 'sub-task of E1' },
-    { path: '/problems/2/statement', value: 'Третата задача, както е отпечатана.' },
-    { path: '/problems/2/solution/incomplete', value: 'false' },
-  ], { defects, round: 1 });
+  const defects = [
+    {
+      path: '/problems/1',
+      kind: 'metadata',
+      severity: 'critical',
+      description: 'invented problem entry (a sub-task of problem 1)',
+    },
+    {
+      path: '/problems/2/statement',
+      kind: 'reworded',
+      severity: 'major',
+      description: 'wording',
+    },
+    {
+      path: '/problems/2/solution/incomplete',
+      kind: 'other',
+      severity: 'minor',
+      description: 'the solution is complete',
+    },
+  ];
+  c.problems[2].solution.incomplete = true;
+  c.problems[2].solution.incompleteReason = 'x';
+  const r = applyFixes(
+    c,
+    [
+      { path: '/problems/1', value: { remove: true }, note: 'sub-task of E1' },
+      {
+        path: '/problems/2/statement',
+        value: 'Третата задача, както е отпечатана.',
+      },
+      { path: '/problems/2/solution/incomplete', value: 'false' },
+    ],
+    { defects, round: 1 }
+  );
   assert.equal(r.skipped.length, 0, JSON.stringify(r.skipped));
   assert.equal(c.problems.length, 2);
-  assert.deepEqual(c.problems.map(p => [p.number, p.id, p.figures[0].id]), [[1, `${PAPER}-p1`, 'p1-fig1'], [2, `${PAPER}-p2`, 'p2-fig1']]);
+  assert.deepEqual(
+    c.problems.map(p => [p.number, p.id, p.figures[0].id]),
+    [
+      [1, `${PAPER}-p1`, 'p1-fig1'],
+      [2, `${PAPER}-p2`, 'p2-fig1'],
+    ]
+  );
   // the removed sub-task's source pages now belong to the problem before it
-  assert.deepEqual(c.problems[0].tx.sourceSpans.map(s => `${s.document}#${s.page}`), ['problems#1', 'solutions#1', 'solutions#2']);
+  assert.deepEqual(
+    c.problems[0].tx.sourceSpans.map(s => `${s.document}#${s.page}`),
+    ['problems#1', 'solutions#1', 'solutions#2']
+  );
   assert.equal(c.problems[1].statement, 'Третата задача, както е отпечатана.'); // applied before the removal shifted it
-  assert.equal(c.problems[1].solution.incomplete, false); assert.equal(c.problems[1].solution.incompleteReason, undefined);
+  assert.equal(c.problems[1].solution.incomplete, false);
+  assert.equal(c.problems[1].solution.incompleteReason, undefined);
   assert.ok(r.applied.some(a => a.removed && a.path === '/problems/1'));
 });
 
 test('a fix that is nearly one neighbouring part is re-pointed there even when the addressed part shares its vocabulary (off-by-one part index)', async () => {
   const { repointByContent } = await import(txModule('fixes.mjs'));
-  const d1 = 'Compute the mean squared displacement MSD of the particle for small times and for large times, and express the power law using the quantities D, u0, delta0 and t.';
-  const d2 = 'Determine how the mean squared displacement MSD changes from small times to large times, as well as the characteristic time t star where this change occurs. Draw a rough graph of the MSD in a log-log plot, indicating the approximate location of t star. The histogram data in Fig. 3 are:';
-  const d3 = 'Figure 5 displays the MSD of those particles for several times; obtain the power law for each time range and express it using the quantities D, u0, delta0 and t.';
-  const c = { problems: [{ statement: 'Brownian motion.', parts: [{ label: 'D.1', statement: d1 }, { label: 'D.2', statement: d2 }, { label: 'D.3', statement: d3 }] }] };
+  const d1 =
+    'Compute the mean squared displacement MSD of the particle for small times and for large times, and express the power law using the quantities D, u0, delta0 and t.';
+  const d2 =
+    'Determine how the mean squared displacement MSD changes from small times to large times, as well as the characteristic time t star where this change occurs. Draw a rough graph of the MSD in a log-log plot, indicating the approximate location of t star. The histogram data in Fig. 3 are:';
+  const d3 =
+    'Figure 5 displays the MSD of those particles for several times; obtain the power law for each time range and express it using the quantities D, u0, delta0 and t.';
+  const c = {
+    problems: [
+      {
+        statement: 'Brownian motion.',
+        parts: [
+          { label: 'D.1', statement: d1 },
+          { label: 'D.2', statement: d2 },
+          { label: 'D.3', statement: d3 },
+        ],
+      },
+    ],
+  };
   const fix = d2.replace(' The histogram data in Fig. 3 are:', '');
-  assert.equal(repointByContent(c, '/problems/0/parts/2/statement', fix), '/problems/0/parts/1/statement');
-  assert.equal(repointByContent(c, '/problems/0/parts/1/statement', fix), '/problems/0/parts/1/statement');
+  assert.equal(
+    repointByContent(c, '/problems/0/parts/2/statement', fix),
+    '/problems/0/parts/1/statement'
+  );
+  assert.equal(
+    repointByContent(c, '/problems/0/parts/1/statement', fix),
+    '/problems/0/parts/1/statement'
+  );
 });
 
 test('validate: a problem entry with negative points is a penalty rule and is reported on the entry itself', t => {
   const s = sandbox(t);
   const bad = candidate();
-  bad.problems.push({ ...JSON.parse(JSON.stringify(bad.problems[0])), id: `${PAPER}-p2`, number: 2, title: 'Intentional damage penalty (-0.5 pts)', points: -0.5, figures: undefined, parts: [] });
-  delete bad.problems[1].figures; delete bad.problems[1].solution;
-  const r = s.run('validate.mjs', [s.write('candidates/neg.json', bad), '--paper-id', PAPER, '--manifest', path.join(s.dir, 'manifest.json')]);
+  bad.problems.push({
+    ...JSON.parse(JSON.stringify(bad.problems[0])),
+    id: `${PAPER}-p2`,
+    number: 2,
+    title: 'Intentional damage penalty (-0.5 pts)',
+    points: -0.5,
+    figures: undefined,
+    parts: [],
+  });
+  delete bad.problems[1].figures;
+  delete bad.problems[1].solution;
+  const r = s.run('validate.mjs', [
+    s.write('candidates/neg.json', bad),
+    '--paper-id',
+    PAPER,
+    '--manifest',
+    path.join(s.dir, 'manifest.json'),
+  ]);
   assert.notEqual(r.status, 0);
   assert.match(r.stdout + r.stderr, /"\/problems\/1"[\s\S]*negative points/);
 });
 
 test('a passage moves between sibling fields when both are returned; a solution left without text stays incomplete', async () => {
   const { applyFixes } = await import(txModule('fixes.mjs'));
-  const intro = 'The nearest Red Giant is 89 light-years distant, has a temperature of 3600 K and a diameter of 1.7e11 m; the telescope has a focal length of 20 m.';
-  const q1 = 'Calculate the diameter of a focused image of the star on the detector, assuming a perfect lens without diffraction.';
-  const mk = () => { const c = candidate(); const p = c.problems[0]; p.statement = 'Imaging a star.'; p.parts = [{ label: 'Part A', statement: q1 }, { label: 'A.1', statement: intro }]; return c; };
+  const intro =
+    'The nearest Red Giant is 89 light-years distant, has a temperature of 3600 K and a diameter of 1.7e11 m; the telescope has a focal length of 20 m.';
+  const q1 =
+    'Calculate the diameter of a focused image of the star on the detector, assuming a perfect lens without diffraction.';
+  const mk = () => {
+    const c = candidate();
+    const p = c.problems[0];
+    p.statement = 'Imaging a star.';
+    p.parts = [
+      { label: 'Part A', statement: q1 },
+      { label: 'A.1', statement: intro },
+    ];
+    return c;
+  };
   // both sides listed: a swap
   const c1 = mk();
-  const r1 = applyFixes(c1, [{ path: '/problems/0/parts/0/statement', value: intro }, { path: '/problems/0/parts/1/statement', value: q1 }], { defects: [
-    { path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'header carries A.1 question' },
-    { path: '/problems/0/parts/1/statement', kind: 'reworded', severity: 'minor', description: 'A.1 carries the intro' }], round: 1 });
+  const r1 = applyFixes(
+    c1,
+    [
+      { path: '/problems/0/parts/0/statement', value: intro },
+      { path: '/problems/0/parts/1/statement', value: q1 },
+    ],
+    {
+      defects: [
+        {
+          path: '/problems/0/parts/0/statement',
+          kind: 'reworded',
+          severity: 'minor',
+          description: 'header carries A.1 question',
+        },
+        {
+          path: '/problems/0/parts/1/statement',
+          kind: 'reworded',
+          severity: 'minor',
+          description: 'A.1 carries the intro',
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.equal(r1.skipped.length, 0, JSON.stringify(r1.skipped));
-  assert.equal(c1.problems[0].parts[0].statement, intro); assert.equal(c1.problems[0].parts[1].statement, q1);
+  assert.equal(c1.problems[0].parts[0].statement, intro);
+  assert.equal(c1.problems[0].parts[1].statement, q1);
   // only one side listed, the refix returns the destination as an extra entry
   const c2 = mk();
-  const r2 = applyFixes(c2, [{ path: '/problems/0/parts/0/statement', value: intro }, { path: '/problems/0/parts/1/statement', value: q1 }], { defects: [
-    { path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'header carries A.1 question' }], round: 1 });
+  const r2 = applyFixes(
+    c2,
+    [
+      { path: '/problems/0/parts/0/statement', value: intro },
+      { path: '/problems/0/parts/1/statement', value: q1 },
+    ],
+    {
+      defects: [
+        {
+          path: '/problems/0/parts/0/statement',
+          kind: 'reworded',
+          severity: 'minor',
+          description: 'header carries A.1 question',
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.equal(r2.skipped.length, 0, JSON.stringify(r2.skipped));
-  assert.equal(c2.problems[0].parts[0].statement, intro); assert.equal(c2.problems[0].parts[1].statement, q1);
+  assert.equal(c2.problems[0].parts[0].statement, intro);
+  assert.equal(c2.problems[0].parts[1].statement, q1);
   // a field that holds a copy of its sibling takes any printed replacement, resemblance or not
-  const c9 = mk(); c9.problems[0].parts = [{ label: 'c', statement: intro }, { label: 'd', statement: intro }];
-  const r9 = applyFixes(c9, [{ path: '/problems/0/parts/1/statement', value: 'The step height s (3 pts): estimate the height of the step from the recorded oscillation and give its uncertainty.' }], { defects: [{ path: '/problems/0/parts/1/statement', kind: 'omission', severity: 'critical', description: 'part d carries part c text' }], round: 1 });
+  const c9 = mk();
+  c9.problems[0].parts = [
+    { label: 'c', statement: intro },
+    { label: 'd', statement: intro },
+  ];
+  const r9 = applyFixes(
+    c9,
+    [
+      {
+        path: '/problems/0/parts/1/statement',
+        value:
+          'The step height s (3 pts): estimate the height of the step from the recorded oscillation and give its uncertainty.',
+      },
+    ],
+    {
+      defects: [
+        {
+          path: '/problems/0/parts/1/statement',
+          kind: 'omission',
+          severity: 'critical',
+          description: 'part d carries part c text',
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.equal(r9.skipped.length, 0, JSON.stringify(r9.skipped));
   assert.match(c9.problems[0].parts[1].statement, /step height/);
   // a problem whose statement is a copy of another problem's statement takes the printed replacement
-  const c11 = mk(); c11.problems.push({ ...JSON.parse(JSON.stringify(c11.problems[0])), id: `${PAPER}-p2`, number: 2, statement: c11.problems[0].statement, parts: [] });
-  const r11 = applyFixes(c11, [{ path: '/problems/1/statement', value: 'Определете масата на кометата по данните от таблицата и оценете грешката на резултата.' }], { defects: [{ path: '/problems/1/statement', kind: 'pairing', severity: 'critical', description: 'repeats problem 1 statement under problem 2' }], round: 1 });
+  const c11 = mk();
+  c11.problems.push({
+    ...JSON.parse(JSON.stringify(c11.problems[0])),
+    id: `${PAPER}-p2`,
+    number: 2,
+    statement: c11.problems[0].statement,
+    parts: [],
+  });
+  const r11 = applyFixes(
+    c11,
+    [
+      {
+        path: '/problems/1/statement',
+        value:
+          'Определете масата на кометата по данните от таблицата и оценете грешката на резултата.',
+      },
+    ],
+    {
+      defects: [
+        {
+          path: '/problems/1/statement',
+          kind: 'pairing',
+          severity: 'critical',
+          description: 'repeats problem 1 statement under problem 2',
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.equal(r11.skipped.length, 0, JSON.stringify(r11.skipped));
   assert.match(c11.problems[1].statement, /кометата/);
   // an alt text rewritten in the paper's language shares nothing with the old one and is still accepted
-  const c10 = mk(); c10.problems[0].solution.figures = [{ id: 'p1-sol-fig1', alt: 'График в логаритмични оси: крива, която първо расте линейно и после се насища.', tx: { document: 'solutions', page: 1, bbox: [100, 100, 500, 500] } }];
-  const r10 = applyFixes(c10, [{ path: '/problems/0/solution/figures/0/alt', value: 'Log-log plot of the mean squared displacement against time: a curve rising linearly at first and saturating later.' }], { defects: [{ path: '/problems/0/solution/figures/0/alt', kind: 'other', severity: 'minor', source: 'text-layer', description: "The alt text is not in the paper's language (en): „График…“ — rewrite it in the paper's language." }], round: 1 });
+  const c10 = mk();
+  c10.problems[0].solution.figures = [
+    {
+      id: 'p1-sol-fig1',
+      alt: 'График в логаритмични оси: крива, която първо расте линейно и после се насища.',
+      tx: { document: 'solutions', page: 1, bbox: [100, 100, 500, 500] },
+    },
+  ];
+  const r10 = applyFixes(
+    c10,
+    [
+      {
+        path: '/problems/0/solution/figures/0/alt',
+        value:
+          'Log-log plot of the mean squared displacement against time: a curve rising linearly at first and saturating later.',
+      },
+    ],
+    {
+      defects: [
+        {
+          path: '/problems/0/solution/figures/0/alt',
+          kind: 'other',
+          severity: 'minor',
+          source: 'text-layer',
+          description:
+            "The alt text is not in the paper's language (en): „График…“ — rewrite it in the paper's language.",
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.equal(r10.skipped.length, 0, JSON.stringify(r10.skipped));
   assert.match(c10.problems[0].solution.figures[0].alt, /^Log-log plot/);
   // one side only, nothing returned for the destination: still a paste, refused
   const c3 = mk();
-  const r3 = applyFixes(c3, [{ path: '/problems/0/parts/0/statement', value: intro }], { defects: [{ path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'x' }], round: 1 });
+  const r3 = applyFixes(
+    c3,
+    [{ path: '/problems/0/parts/0/statement', value: intro }],
+    {
+      defects: [
+        {
+          path: '/problems/0/parts/0/statement',
+          kind: 'reworded',
+          severity: 'minor',
+          description: 'x',
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.match(r3.skipped[0].reason, /pastes the text of part A\.1/);
   // an extra entry for a problem with no listed defect is ignored
-  const c4 = mk(); c4.problems.push({ ...JSON.parse(JSON.stringify(c4.problems[0])), id: `${PAPER}-p2`, number: 2 });
-  applyFixes(c4, [{ path: '/problems/1/statement', value: 'Something else entirely.' }], { defects: [{ path: '/problems/0/parts/0/statement', kind: 'reworded', severity: 'minor', description: 'x' }], round: 1 });
+  const c4 = mk();
+  c4.problems.push({
+    ...JSON.parse(JSON.stringify(c4.problems[0])),
+    id: `${PAPER}-p2`,
+    number: 2,
+  });
+  applyFixes(
+    c4,
+    [{ path: '/problems/1/statement', value: 'Something else entirely.' }],
+    {
+      defects: [
+        {
+          path: '/problems/0/parts/0/statement',
+          kind: 'reworded',
+          severity: 'minor',
+          description: 'x',
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.equal(c4.problems[1].statement, 'Imaging a star.');
   // an invented part label goes with its text folded into the statement: the removal and the statement fix together
-  const c7 = mk(); c7.problems[0].parts = [{ label: '', statement: intro }]; c7.problems[0].statement = 'Imaging a star.';
-  const r7 = applyFixes(c7, [{ path: '/problems/0/parts/0', value: { remove: true } }, { path: '/problems/0/statement', value: `Imaging a star. ${intro}` }], { defects: [
-    { path: '/problems/0/parts/0', kind: 'other', severity: 'major', description: 'invented empty label; the printed problem is one statement' },
-    { path: '/problems/0/statement', kind: 'omission', severity: 'major', description: 'the text of the invented part belongs here' }], round: 1 });
+  const c7 = mk();
+  c7.problems[0].parts = [{ label: '', statement: intro }];
+  c7.problems[0].statement = 'Imaging a star.';
+  const r7 = applyFixes(
+    c7,
+    [
+      { path: '/problems/0/parts/0', value: { remove: true } },
+      { path: '/problems/0/statement', value: `Imaging a star. ${intro}` },
+    ],
+    {
+      defects: [
+        {
+          path: '/problems/0/parts/0',
+          kind: 'other',
+          severity: 'major',
+          description:
+            'invented empty label; the printed problem is one statement',
+        },
+        {
+          path: '/problems/0/statement',
+          kind: 'omission',
+          severity: 'major',
+          description: 'the text of the invented part belongs here',
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.equal(r7.skipped.length, 0, JSON.stringify(r7.skipped));
-  assert.equal(c7.problems[0].parts.length, 0); assert.match(c7.problems[0].statement, /Red Giant/);
+  assert.equal(c7.problems[0].parts.length, 0);
+  assert.match(c7.problems[0].statement, /Red Giant/);
   // null for points means nothing is printed: the invented number is dropped
-  const c8 = mk(); c8.problems[0].parts[0].points = 6;
-  const r8 = applyFixes(c8, [{ path: '/problems/0/parts/0/points', value: null, note: 'no per-part points printed' }], { defects: [{ path: '/problems/0/parts/0/points', kind: 'points', severity: 'minor', description: 'invented points' }], round: 1 });
-  assert.equal(r8.applied.length, 1); assert.equal(c8.problems[0].parts[0].points, undefined);
+  const c8 = mk();
+  c8.problems[0].parts[0].points = 6;
+  const r8 = applyFixes(
+    c8,
+    [
+      {
+        path: '/problems/0/parts/0/points',
+        value: null,
+        note: 'no per-part points printed',
+      },
+    ],
+    {
+      defects: [
+        {
+          path: '/problems/0/parts/0/points',
+          kind: 'points',
+          severity: 'minor',
+          description: 'invented points',
+        },
+      ],
+      round: 1,
+    }
+  );
+  assert.equal(r8.applied.length, 1);
+  assert.equal(c8.problems[0].parts[0].points, undefined);
   // incomplete: false on a blank solution is refused, and a blank solution is marked incomplete
-  const c5 = mk(); c5.problems[0].solution = { statement: '', incomplete: true, incompleteReason: 'no solutions document' };
-  const r5 = applyFixes(c5, [{ path: '/problems/0/solution/incomplete', value: false }], { defects: [{ path: '/problems/0/solution/incomplete', kind: 'other', severity: 'minor', description: 'flag' }], round: 1 });
+  const c5 = mk();
+  c5.problems[0].solution = {
+    statement: '',
+    incomplete: true,
+    incompleteReason: 'no solutions document',
+  };
+  const r5 = applyFixes(
+    c5,
+    [{ path: '/problems/0/solution/incomplete', value: false }],
+    {
+      defects: [
+        {
+          path: '/problems/0/solution/incomplete',
+          kind: 'other',
+          severity: 'minor',
+          description: 'flag',
+        },
+      ],
+      round: 1,
+    }
+  );
   assert.match(r5.skipped[0].reason, /stays incomplete/);
-  const c6 = mk(); c6.problems[0].solution = { statement: '  ', incomplete: false };
+  const c6 = mk();
+  c6.problems[0].solution = { statement: '  ', incomplete: false };
   applyFixes(c6, [], { defects: [], round: 1 });
   assert.equal(c6.problems[0].solution.incomplete, true);
 });
 
 test('a paragraph that is nothing but LaTeX is wrapped as display math; prose with a stray command is not', () => {
-  const s = 'yields the final answer of the form\n\nn_0\\left(\\frac{R_0}{r}\\right)^{2}. \\qquad (18)\n\nThe initial momentum is $p_0$.\n\nВ \\textbf{тази} задача се търси скоростта на тялото.';
+  const s =
+    'yields the final answer of the form\n\nn_0\\left(\\frac{R_0}{r}\\right)^{2}. \\qquad (18)\n\nThe initial momentum is $p_0$.\n\nВ \\textbf{тази} задача се търси скоростта на тялото.';
   const out = lib.wrapBareFormulaParagraphs(s);
-  assert.equal(out, 'yields the final answer of the form\n\n$$n_0\\left(\\frac{R_0}{r}\\right)^{2}. \\qquad (18)$$\n\nThe initial momentum is $p_0$.\n\nВ \\textbf{тази} задача се търси скоростта на тялото.');
-  const c = candidate(); c.problems[0].solution.statement = s;
+  assert.equal(
+    out,
+    'yields the final answer of the form\n\n$$n_0\\left(\\frac{R_0}{r}\\right)^{2}. \\qquad (18)$$\n\nThe initial momentum is $p_0$.\n\nВ \\textbf{тази} задача се търси скоростта на тялото.'
+  );
+  const c = candidate();
+  c.problems[0].solution.statement = s;
   lib.normaliseCandidate(c);
-  assert.match(c.problems[0].solution.statement, /\$\$n_0\\left\(\\frac\{R_0\}\{r\}\\right\)\^\{2\}\. \\qquad \(18\)\$\$/);
+  assert.match(
+    c.problems[0].solution.statement,
+    /\$\$n_0\\left\(\\frac\{R_0\}\{r\}\\right\)\^\{2\}\. \\qquad \(18\)\$\$/
+  );
   assert.match(c.problems[0].solution.statement, /В \*\*тази\*\* задача/);
 });
 
@@ -614,56 +1861,149 @@ test('several problem entries read from one printed problem fold into the first 
   const c = candidate();
   const p1 = c.problems[0];
   c.problems = [
-    { ...JSON.parse(JSON.stringify(p1)), title: 'Advertising tricks [15 points]', points: 15, parts: [{ label: '1.1', statement: 'Estimate the mass.' }] },
-    { id: `${PAPER}-p2`, number: 2, title: 'Part 2. The tricky mirror', points: null, statement: 'Now consider the mirror.', parts: [{ label: '2.1', statement: 'Find the focal length.' }], figures: [{ id: 'p2-fig1', alt: 'mirror', tx: { document: 'problems', page: 2, bbox: [100, 100, 400, 400] } }], solution: { statement: 'The focal length follows from the mirror equation.' }, tx: { sourceSpans: [{ document: 'problems', page: 2 }] } },
+    {
+      ...JSON.parse(JSON.stringify(p1)),
+      title: 'Advertising tricks [15 points]',
+      points: 15,
+      parts: [{ label: '1.1', statement: 'Estimate the mass.' }],
+    },
+    {
+      id: `${PAPER}-p2`,
+      number: 2,
+      title: 'Part 2. The tricky mirror',
+      points: null,
+      statement: 'Now consider the mirror.',
+      parts: [{ label: '2.1', statement: 'Find the focal length.' }],
+      figures: [
+        {
+          id: 'p2-fig1',
+          alt: 'mirror',
+          tx: { document: 'problems', page: 2, bbox: [100, 100, 400, 400] },
+        },
+      ],
+      solution: {
+        statement: 'The focal length follows from the mirror equation.',
+      },
+      tx: { sourceSpans: [{ document: 'problems', page: 2 }] },
+    },
   ];
   assert.equal(lib.mergeProblemsIntoOne(c), true);
   assert.equal(c.problems.length, 1);
   const q = c.problems[0];
-  assert.deepEqual(q.parts.map(p => p.label), ['1.1', 'Part 2. The tricky mirror', '2.1']);
+  assert.deepEqual(
+    q.parts.map(p => p.label),
+    ['1.1', 'Part 2. The tricky mirror', '2.1']
+  );
   assert.equal(q.parts[1].statement, 'Now consider the mirror.');
   assert.equal(q.figures.length, 2);
-  assert.match(q.solution.statement, /\*\*Part 2\. The tricky mirror\*\*\n\nThe focal length/);
-  assert.deepEqual(q.tx.sourceSpans.map(s => `${s.document}#${s.page}`), ['problems#1', 'solutions#1', 'problems#2']);
+  assert.match(
+    q.solution.statement,
+    /\*\*Part 2\. The tricky mirror\*\*\n\nThe focal length/
+  );
+  assert.deepEqual(
+    q.tx.sourceSpans.map(s => `${s.document}#${s.page}`),
+    ['problems#1', 'solutions#1', 'problems#2']
+  );
   assert.equal(q.points, 15);
 });
 
 test('an empty part that is a printed section heading is folded into the next part; a bare empty part is dropped', () => {
   const c = candidate();
-  c.problems[0].parts = [{ label: '2.16', statement: 'Sketch the graph.' }, { label: 'Part 3. Engine with a Governor', statement: '' }, { label: '2.17', statement: 'Find the dependence.' }, { label: 'в)', statement: '  ' }];
+  c.problems[0].parts = [
+    { label: '2.16', statement: 'Sketch the graph.' },
+    { label: 'Part 3. Engine with a Governor', statement: '' },
+    { label: '2.17', statement: 'Find the dependence.' },
+    { label: 'в)', statement: '  ' },
+  ];
   lib.normaliseCandidate(c);
-  assert.deepEqual(c.problems[0].parts.map(p => [p.label, p.statement]), [['2.16', 'Sketch the graph.'], ['2.17', '**Part 3. Engine with a Governor**\n\nFind the dependence.']]);
+  assert.deepEqual(
+    c.problems[0].parts.map(p => [p.label, p.statement]),
+    [
+      ['2.16', 'Sketch the graph.'],
+      ['2.17', '**Part 3. Engine with a Governor**\n\nFind the dependence.'],
+    ]
+  );
 });
 
 test('display math that lost a closing $$ is closed at the paragraph break, so the blocks after it are not inverted', () => {
-  const good = 'The force is\n\n$$f = G\\frac{Mm}{r^2}. \\qquad (24)$$\n\nwhich means that the motion is described by\n\n$$m\\frac{dV}{dt} = f - f_g. \\qquad (25)$$\n\nBearing in mind that $V \\ll c$, we get\n\n$$R = \\frac{R_0}{1 - x}. \\qquad (26)$$\n\nThe end.';
+  const good =
+    'The force is\n\n$$f = G\\frac{Mm}{r^2}. \\qquad (24)$$\n\nwhich means that the motion is described by\n\n$$m\\frac{dV}{dt} = f - f_g. \\qquad (25)$$\n\nBearing in mind that $V \\ll c$, we get\n\n$$R = \\frac{R_0}{1 - x}. \\qquad (26)$$\n\nThe end.';
   assert.equal(lib.balanceDisplayMath(good), good);
   const broken = good.replace('(24)$$', '(24)'); // the first equation never closes
   assert.equal(lib.balanceDisplayMath(broken), good);
   // $$ used as a paragraph frame around prose with inline math: the frame goes
-  const framed = 'Intro.\n\n$$ **3.11** Исходя из графика, имеем $x_1 = -2{,}50$ и $x_2 = 1{,}20$. $$\n\n$$E = mc^2$$';
-  assert.equal(lib.balanceDisplayMath(framed), 'Intro.\n\n **3.11** Исходя из графика, имеем $x_1 = -2{,}50$ и $x_2 = 1{,}20$. \n\n$$E = mc^2$$');
-  const c = candidate(); c.problems[0].solution.statement = broken + ' Also $\\nicefrac{1}{2}V_0^2$.';
+  const framed =
+    'Intro.\n\n$$ **3.11** Исходя из графика, имеем $x_1 = -2{,}50$ и $x_2 = 1{,}20$. $$\n\n$$E = mc^2$$';
+  assert.equal(
+    lib.balanceDisplayMath(framed),
+    'Intro.\n\n **3.11** Исходя из графика, имеем $x_1 = -2{,}50$ и $x_2 = 1{,}20$. \n\n$$E = mc^2$$'
+  );
+  const c = candidate();
+  c.problems[0].solution.statement = broken + ' Also $\\nicefrac{1}{2}V_0^2$.';
   lib.normaliseCandidate(c);
-  assert.equal(c.problems[0].solution.statement, good + ' Also $\\frac{1}{2}V_0^2$.');
+  assert.equal(
+    c.problems[0].solution.statement,
+    good + ' Also $\\frac{1}{2}V_0^2$.'
+  );
 });
 
 test('a long printed field is never an "instruction", and a JSON answer never replaces a text field', async () => {
-  const { applyFixes, looksLikeInstruction, plausibleReplacement } = await import(txModule('fixes.mjs'));
-  const solution = '**(a) Drawing a $T(r)$ graph**\n\nThe graph should present or clearly infer the four elements shown in the figure. ' + 'The temperature falls with the radius as the gas expands adiabatically. '.repeat(40);
+  const { applyFixes, looksLikeInstruction, plausibleReplacement } =
+    await import(txModule('fixes.mjs'));
+  const solution =
+    '**(a) Drawing a $T(r)$ graph**\n\nThe graph should present or clearly infer the four elements shown in the figure. ' +
+    'The temperature falls with the radius as the gas expands adiabatically. '.repeat(
+      40
+    );
   assert.equal(looksLikeInstruction(solution), false);
   assert.equal(looksLikeInstruction('keep the intro paragraph'), true);
   // an editorial verb + noun is an instruction at any length (a checker quoting the paragraph it wants moved)
-  const long = "Move the paragraph 'On the left is a simple model of two adjacent sheets 1 and 2 separated by a distance h. The sheets are not connected, and the perimeter is open to space. Assume the sheets are large enough that edge effects can be neglected and that thermal radiation can be exchanged between the sheets, and thermal radiation escapes through the perimeter gap.' from C.1's statement to the end of Part C's statement, where it is printed, and keep C.1 as the question only.";
-  assert.ok(long.length > 400); assert.equal(looksLikeInstruction(long), true);
-  assert.equal(looksLikeInstruction('Премести изречението „Приемете, че…“ в края на условието на задачата, където е отпечатано.'), true);
-  assert.equal(looksLikeInstruction('Use the following data: the speed of light is 3e8 m/s, the mass of the electron is 9.1e-31 kg and the elementary charge is 1.6e-19 C; all surfaces are smooth and the gas is ideal throughout the whole experiment described below in parts a) to d) of this problem.'), false);
-  assert.equal(looksLikeInstruction('The value should be 3/5 c, e.g. see the solutions'), true);
-  const spans = '[{"document":"problems","page":1},{"document":"solutions","page":10}]';
-  assert.equal(plausibleReplacement(solution, spans, 'metadata', '/problems/0/solution/statement'), false);
-  const c = candidate(); c.problems[0].solution.statement = solution;
-  const defects = [{ path: '/problems/0/solution/statement', kind: 'metadata', severity: 'minor', description: 'spans under-reported' }];
-  const r = applyFixes(c, [{ path: '/problems/0/solution/statement', value: spans }], { defects, round: 1 });
+  const long =
+    "Move the paragraph 'On the left is a simple model of two adjacent sheets 1 and 2 separated by a distance h. The sheets are not connected, and the perimeter is open to space. Assume the sheets are large enough that edge effects can be neglected and that thermal radiation can be exchanged between the sheets, and thermal radiation escapes through the perimeter gap.' from C.1's statement to the end of Part C's statement, where it is printed, and keep C.1 as the question only.";
+  assert.ok(long.length > 400);
+  assert.equal(looksLikeInstruction(long), true);
+  assert.equal(
+    looksLikeInstruction(
+      'Премести изречението „Приемете, че…“ в края на условието на задачата, където е отпечатано.'
+    ),
+    true
+  );
+  assert.equal(
+    looksLikeInstruction(
+      'Use the following data: the speed of light is 3e8 m/s, the mass of the electron is 9.1e-31 kg and the elementary charge is 1.6e-19 C; all surfaces are smooth and the gas is ideal throughout the whole experiment described below in parts a) to d) of this problem.'
+    ),
+    false
+  );
+  assert.equal(
+    looksLikeInstruction('The value should be 3/5 c, e.g. see the solutions'),
+    true
+  );
+  const spans =
+    '[{"document":"problems","page":1},{"document":"solutions","page":10}]';
+  assert.equal(
+    plausibleReplacement(
+      solution,
+      spans,
+      'metadata',
+      '/problems/0/solution/statement'
+    ),
+    false
+  );
+  const c = candidate();
+  c.problems[0].solution.statement = solution;
+  const defects = [
+    {
+      path: '/problems/0/solution/statement',
+      kind: 'metadata',
+      severity: 'minor',
+      description: 'spans under-reported',
+    },
+  ];
+  const r = applyFixes(
+    c,
+    [{ path: '/problems/0/solution/statement', value: spans }],
+    { defects, round: 1 }
+  );
   assert.equal(r.applied.length, 0);
   assert.match(r.skipped[0].reason, /JSON/);
   assert.equal(c.problems[0].solution.statement, solution);
@@ -671,64 +2011,193 @@ test('a long printed field is never an "instruction", and a JSON answer never re
 
 test('"" drops a problem statement that is a copy of its own solution when the printed problem is only its parts', async () => {
   const { applyFixes } = await import(txModule('fixes.mjs'));
-  const narrative = 'In the absence of an externally imposed magnetic field, an infinite, straight, thin wire creates a magnetic field whose field lines are closed circles centred on the wire, and the flux tube argument gives the radius.';
-  const mk = () => { const c = candidate(); const p = c.problems[0]; p.statement = narrative; p.parts = [{ label: 'a)', statement: 'Sketch one of the field lines.' }]; p.solution.statement = `**Part a)** ${narrative} Hence the result.`; return c; };
-  const defects = [{ path: '/problems/0/statement', kind: 'other', severity: 'critical', description: 'the statement field holds the solution text' }];
+  const narrative =
+    'In the absence of an externally imposed magnetic field, an infinite, straight, thin wire creates a magnetic field whose field lines are closed circles centred on the wire, and the flux tube argument gives the radius.';
+  const mk = () => {
+    const c = candidate();
+    const p = c.problems[0];
+    p.statement = narrative;
+    p.parts = [{ label: 'a)', statement: 'Sketch one of the field lines.' }];
+    p.solution.statement = `**Part a)** ${narrative} Hence the result.`;
+    return c;
+  };
+  const defects = [
+    {
+      path: '/problems/0/statement',
+      kind: 'other',
+      severity: 'critical',
+      description: 'the statement field holds the solution text',
+    },
+  ];
   const c1 = mk();
-  const r1 = applyFixes(c1, [{ path: '/problems/0/statement', value: '' }], { defects, round: 1, problemsText: 'T3: Crossed wires. a) Current flows through an infinite, straight, thin wire. Sketch one of the field lines. b) Calculate d.' });
+  const r1 = applyFixes(c1, [{ path: '/problems/0/statement', value: '' }], {
+    defects,
+    round: 1,
+    problemsText:
+      'T3: Crossed wires. a) Current flows through an infinite, straight, thin wire. Sketch one of the field lines. b) Calculate d.',
+  });
   assert.equal(r1.skipped.length, 0, JSON.stringify(r1.skipped));
   assert.equal(c1.problems[0].statement, undefined);
   // the same text printed in the problems document is a statement the solutions merely reprint: kept
   const c2 = mk();
-  const r2 = applyFixes(c2, [{ path: '/problems/0/statement', value: '' }], { defects, round: 1, problemsText: `T3. ${narrative} a) Sketch one of the field lines.` });
+  const r2 = applyFixes(c2, [{ path: '/problems/0/statement', value: '' }], {
+    defects,
+    round: 1,
+    problemsText: `T3. ${narrative} a) Sketch one of the field lines.`,
+  });
   assert.equal(r2.applied.length, 0);
   assert.equal(c2.problems[0].statement, narrative);
   // a statement that does not open like the solution is never dropped by ""
-  const c3 = mk(); c3.problems[0].statement = 'A genuinely printed introduction about two crossed wires carrying equal currents in vacuum.';
-  const r3 = applyFixes(c3, [{ path: '/problems/0/statement', value: '' }], { defects, round: 1 });
+  const c3 = mk();
+  c3.problems[0].statement =
+    'A genuinely printed introduction about two crossed wires carrying equal currents in vacuum.';
+  const r3 = applyFixes(c3, [{ path: '/problems/0/statement', value: '' }], {
+    defects,
+    round: 1,
+  });
   assert.equal(r3.applied.length, 0);
 });
 
 test('assembleWindows stitches a solution that runs across windows: the beginning, then each continuation in window order', () => {
   const c = candidate();
-  const p1 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } }, problems: [{ ...c.problems[0], solution: undefined, tx: { sourceSpans: [{ document: 'problems', page: 1 }] } }], tx: { window: { problems: [1, 2] }, reader: c.tx.reader } };
-  delete p1.paper.solutionSource; delete p1.problems[0].solution;
-  const head = { ...c.problems[0].solution, statement: 'Решение. Първата част на решението. [извън прозореца — продължава]', incomplete: true, incompleteReason: 'продължава в следващия прозорец' };
-  const p2 = { paper: { ...c.paper }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: lib.WINDOW_PLACEHOLDER, parts: [], solution: head, tx: { sourceSpans: [{ document: 'solutions', page: 1 }] } }], tx: { window: { solutions: [1, 1] }, reader: c.tx.reader } };
+  const p1 = {
+    paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } },
+    problems: [
+      {
+        ...c.problems[0],
+        solution: undefined,
+        tx: { sourceSpans: [{ document: 'problems', page: 1 }] },
+      },
+    ],
+    tx: { window: { problems: [1, 2] }, reader: c.tx.reader },
+  };
+  delete p1.paper.solutionSource;
+  delete p1.problems[0].solution;
+  const head = {
+    ...c.problems[0].solution,
+    statement:
+      'Решение. Първата част на решението. [извън прозореца — продължава]',
+    incomplete: true,
+    incompleteReason: 'продължава в следващия прозорец',
+  };
+  const p2 = {
+    paper: { ...c.paper },
+    problems: [
+      {
+        id: `${PAPER}-p1`,
+        number: 1,
+        statement: lib.WINDOW_PLACEHOLDER,
+        parts: [],
+        solution: head,
+        tx: { sourceSpans: [{ document: 'solutions', page: 1 }] },
+      },
+    ],
+    tx: { window: { solutions: [1, 1] }, reader: c.tx.reader },
+  };
   // the continuation calls itself incomplete only because its beginning is in the earlier window: complete once stitched
-  const p3 = { paper: { ...c.paper }, problems: [{ id: `${PAPER}-p1`, number: 1, statement: lib.WINDOW_PLACEHOLDER, parts: [], solution: { statement: 'Втората част на решението, до края.', incomplete: true, incompleteReason: 'the beginning of the solution is on earlier pages covered by another window' }, tx: { continuation: true, sourceSpans: [{ document: 'solutions', page: 2 }] } }], tx: { window: { solutions: [1, 2] }, reader: c.tx.reader } };
-  const { data, report } = assembleWindows([p1, p2, p3], { ...manifest, documents: { ...manifest.documents, solutions: { ...manifest.documents.solutions, pages: 2 } } });
-  assert.equal(data.problems[0].solution.statement, 'Решение. Първата част на решението.\n\nВтората част на решението, до края.');
+  const p3 = {
+    paper: { ...c.paper },
+    problems: [
+      {
+        id: `${PAPER}-p1`,
+        number: 1,
+        statement: lib.WINDOW_PLACEHOLDER,
+        parts: [],
+        solution: {
+          statement: 'Втората част на решението, до края.',
+          incomplete: true,
+          incompleteReason:
+            'the beginning of the solution is on earlier pages covered by another window',
+        },
+        tx: {
+          continuation: true,
+          sourceSpans: [{ document: 'solutions', page: 2 }],
+        },
+      },
+    ],
+    tx: { window: { solutions: [1, 2] }, reader: c.tx.reader },
+  };
+  const { data, report } = assembleWindows([p1, p2, p3], {
+    ...manifest,
+    documents: {
+      ...manifest.documents,
+      solutions: { ...manifest.documents.solutions, pages: 2 },
+    },
+  });
+  assert.equal(
+    data.problems[0].solution.statement,
+    'Решение. Първата част на решението.\n\nВтората част на решението, до края.'
+  );
   assert.equal(data.problems[0].solution.incomplete, undefined);
   assert.equal(data.problems[0].solution.incompleteReason, undefined);
   assert.equal(data.problems[0].tx.continuation, undefined);
   assert.equal(report.orphanContinuations, undefined);
   // a continuation that re-transcribes the end of the beginning (the overlap page) is trimmed to what is new
-  const tail = 'Оттук за периода получаваме израз, който зависи само от дължината на махалото и от ускорението.';
-  const p2d = JSON.parse(JSON.stringify(p2)); p2d.problems[0].solution.statement = `Решение. Първата част на решението. ${tail}`;
-  const p3d = JSON.parse(JSON.stringify(p3)); p3d.problems[0].solution.statement = `[solution continues on the next page]\n\n${tail}\n\nВтората част на решението, до края.`;
-  const dedup = assembleWindows([p1, p2d, p3d], { ...manifest, documents: { ...manifest.documents, solutions: { ...manifest.documents.solutions, pages: 2 } } });
-  assert.equal(dedup.data.problems[0].solution.statement, `Решение. Първата част на решението. ${tail}\n\nВтората част на решението, до края.`);
+  const tail =
+    'Оттук за периода получаваме израз, който зависи само от дължината на махалото и от ускорението.';
+  const p2d = JSON.parse(JSON.stringify(p2));
+  p2d.problems[0].solution.statement = `Решение. Първата част на решението. ${tail}`;
+  const p3d = JSON.parse(JSON.stringify(p3));
+  p3d.problems[0].solution.statement = `[solution continues on the next page]\n\n${tail}\n\nВтората част на решението, до края.`;
+  const dedup = assembleWindows([p1, p2d, p3d], {
+    ...manifest,
+    documents: {
+      ...manifest.documents,
+      solutions: { ...manifest.documents.solutions, pages: 2 },
+    },
+  });
+  assert.equal(
+    dedup.data.problems[0].solution.statement,
+    `Решение. Първата част на решението. ${tail}\n\nВтората част на решението, до края.`
+  );
   // a solutions window that numbers the paper's only problem as the print does ("3") still feeds that problem
-  const p3b = JSON.parse(JSON.stringify(p3)); p3b.problems[0].number = 3; p3b.problems[0].id = `${PAPER}-p3`; p3b.problems[0].parts = [{ label: 'B-1', statement: 'not a part' }];
-  const renum = assembleWindows([p1, p2, p3b], { ...manifest, documents: { ...manifest.documents, solutions: { ...manifest.documents.solutions, pages: 2 } } });
+  const p3b = JSON.parse(JSON.stringify(p3));
+  p3b.problems[0].number = 3;
+  p3b.problems[0].id = `${PAPER}-p3`;
+  p3b.problems[0].parts = [{ label: 'B-1', statement: 'not a part' }];
+  const renum = assembleWindows([p1, p2, p3b], {
+    ...manifest,
+    documents: {
+      ...manifest.documents,
+      solutions: { ...manifest.documents.solutions, pages: 2 },
+    },
+  });
   assert.equal(renum.data.problems.length, 1);
   assert.deepEqual(renum.report.renumbered, [{ from: 3, to: 1 }]);
-  assert.equal(renum.data.problems[0].solution.statement, 'Решение. Първата част на решението.\n\nВтората част на решението, до края.');
+  assert.equal(
+    renum.data.problems[0].solution.statement,
+    'Решение. Първата част на решението.\n\nВтората част на решението, до края.'
+  );
   assert.equal(renum.data.problems[0].parts.length, c.problems[0].parts.length);
   // a continuation whose beginning no window produced is kept and reported, not dropped
   const orphan = assembleWindows([p1, p3], manifest);
-  assert.equal(orphan.data.problems[0].solution.statement, 'Втората част на решението, до края.');
+  assert.equal(
+    orphan.data.problems[0].solution.statement,
+    'Втората част на решението, до края.'
+  );
   assert.deepEqual(orphan.report.orphanContinuations, [1]);
 });
 
 test('validate.mjs accepts the synthetic candidate and rejects a pixel-sized box', t => {
   const s = sandbox(t);
   const f = s.write('candidates/zai__glm-5.3-flash.json', candidate());
-  const ok = s.run('validate.mjs', [f, '--paper-id', PAPER, '--manifest', path.join(s.dir, 'manifest.json')]);
+  const ok = s.run('validate.mjs', [
+    f,
+    '--paper-id',
+    PAPER,
+    '--manifest',
+    path.join(s.dir, 'manifest.json'),
+  ]);
   assert.equal(ok.status, 0, ok.stdout);
-  const bad = candidate(); bad.problems[0].figures[0].tx.bbox = [487, 522, 1323, 1870];
-  const r = s.run('validate.mjs', [s.write('candidates/bad.json', bad), '--paper-id', PAPER, '--manifest', path.join(s.dir, 'manifest.json')]);
+  const bad = candidate();
+  bad.problems[0].figures[0].tx.bbox = [487, 522, 1323, 1870];
+  const r = s.run('validate.mjs', [
+    s.write('candidates/bad.json', bad),
+    '--paper-id',
+    PAPER,
+    '--manifest',
+    path.join(s.dir, 'manifest.json'),
+  ]);
   assert.equal(r.status, 1);
   assert.match(r.stdout, /outside 0\.\.1000 permille/);
 });
@@ -737,118 +2206,387 @@ test('receipt.mjs: pass only with candidateSha256, independent checker, uploaded
   const s = sandbox(t);
   const cand = s.write('candidates/zai__glm-5.3-flash.figs.json', candidate());
   const sha = lib.sha256File(cand);
-  const base = { verdict: 'pass', summary: 'ok', coverage: { pagesRead: [{ document: 'problems', page: 1 }, { document: 'problems', page: 2 }, { document: 'solutions', page: 1 }], problemsChecked: 1, figuresChecked: 1 }, defects: [] };
+  const base = {
+    verdict: 'pass',
+    summary: 'ok',
+    coverage: {
+      pagesRead: [
+        { document: 'problems', page: 1 },
+        { document: 'problems', page: 2 },
+        { document: 'solutions', page: 1 },
+      ],
+      problemsChecked: 1,
+      figuresChecked: 1,
+    },
+    defects: [],
+  };
   const rec = (name, check, extra = []) => {
-    const r = s.run('receipt.mjs', [PAPER, '--candidate', cand, '--defects', s.write(`checks/${name}.json`, check), '--reviewer', 'gemini:gemini-3.8-flash:req-9', '--out', path.join(s.dir, `${name}.receipt.json`), ...extra]);
-    return { status: r.status, receipt: s.read(path.join(s.dir, `${name}.receipt.json`)), out: r.stdout + r.stderr };
+    const r = s.run('receipt.mjs', [
+      PAPER,
+      '--candidate',
+      cand,
+      '--defects',
+      s.write(`checks/${name}.json`, check),
+      '--reviewer',
+      'gemini:gemini-3.8-flash:req-9',
+      '--out',
+      path.join(s.dir, `${name}.receipt.json`),
+      ...extra,
+    ]);
+    return {
+      status: r.status,
+      receipt: s.read(path.join(s.dir, `${name}.receipt.json`)),
+      out: r.stdout + r.stderr,
+    };
   };
   fs.mkdirSync(path.join(s.dir, 'checks'), { recursive: true });
   const noSha = rec('nosha', base);
-  assert.equal(noSha.status, 1); assert.match(noSha.receipt.blockers.join(), /candidateSha256/);
+  assert.equal(noSha.status, 1);
+  assert.match(noSha.receipt.blockers.join(), /candidateSha256/);
   const good = rec('good', { ...base, candidateSha256: sha });
-  assert.equal(good.status, 0, good.out); assert.equal(good.receipt.verdict, 'pass'); assert.equal(good.receipt.independence.independent, true);
-  const incomplete = rec('incomplete', { ...base, candidateSha256: sha, coverage: { ...base.coverage, pagesRead: base.coverage.pagesRead.slice(0, 1) } });
-  assert.equal(incomplete.status, 1); assert.match(incomplete.receipt.blockers.join(), /not covered 2 source page/);
-  const absentDefects = rec('absent-defects', { ...base, candidateSha256: sha, defects: undefined });
-  assert.equal(absentDefects.status, 1); assert.match(absentDefects.receipt.blockers.join(), /missing is not empty/);
-  assert.equal(good.receipt.contentHash, lib.buildFinalPaper(candidate(), lib.provenanceFor(candidate(), { reviewer: { provider: 'gemini', model: 'gemini-3.8-flash' }, promptVersion: 'v1', checkedAt: good.receipt.checkedAt, sourceHashes: good.receipt.sourceHashes, independent: true })).contentHash);
-  const resolved = rec('resolved', { ...base, candidateSha256: sha, defects: [{ path: '/problems/0/statement', severity: 'critical', kind: 'wrong-value', description: '1mA vs 1A', resolved: true }] });
-  assert.equal(resolved.status, 1); assert.equal(resolved.receipt.defects.length, 1); assert.equal(resolved.receipt.ignoredResolvedFlags, 1);
+  assert.equal(good.status, 0, good.out);
+  assert.equal(good.receipt.verdict, 'pass');
+  assert.equal(good.receipt.independence.independent, true);
+  const incomplete = rec('incomplete', {
+    ...base,
+    candidateSha256: sha,
+    coverage: {
+      ...base.coverage,
+      pagesRead: base.coverage.pagesRead.slice(0, 1),
+    },
+  });
+  assert.equal(incomplete.status, 1);
+  assert.match(incomplete.receipt.blockers.join(), /not covered 2 source page/);
+  const absentDefects = rec('absent-defects', {
+    ...base,
+    candidateSha256: sha,
+    defects: undefined,
+  });
+  assert.equal(absentDefects.status, 1);
+  assert.match(absentDefects.receipt.blockers.join(), /missing is not empty/);
+  assert.equal(
+    good.receipt.contentHash,
+    lib.buildFinalPaper(
+      candidate(),
+      lib.provenanceFor(candidate(), {
+        reviewer: { provider: 'gemini', model: 'gemini-3.8-flash' },
+        promptVersion: 'v1',
+        checkedAt: good.receipt.checkedAt,
+        sourceHashes: good.receipt.sourceHashes,
+        independent: true,
+      })
+    ).contentHash
+  );
+  const resolved = rec('resolved', {
+    ...base,
+    candidateSha256: sha,
+    defects: [
+      {
+        path: '/problems/0/statement',
+        severity: 'critical',
+        kind: 'wrong-value',
+        description: '1mA vs 1A',
+        resolved: true,
+      },
+    ],
+  });
+  assert.equal(resolved.status, 1);
+  assert.equal(resolved.receipt.defects.length, 1);
+  assert.equal(resolved.receipt.ignoredResolvedFlags, 1);
   const stale = rec('stale', { ...base, candidateSha256: 'd'.repeat(64) });
-  assert.equal(stale.status, 1); assert.match(stale.receipt.blockers.join(), /different candidate bytes/);
-  const same = s.run('receipt.mjs', [PAPER, '--candidate', cand, '--defects', s.write('checks/same.json', { ...base, candidateSha256: sha }), '--reviewer', 'zai:glm-5.3-flash:req-2', '--out', path.join(s.dir, 'same.receipt.json')]);
-  assert.equal(same.status, 1); assert.match(s.read(path.join(s.dir, 'same.receipt.json')).blockers.join(), /same model/);
-  const allowed = s.run('receipt.mjs', [PAPER, '--candidate', cand, '--defects', path.join(s.dir, 'checks/same.json'), '--reviewer', 'zai:glm-5.3-flash:req-2', '--out', path.join(s.dir, 'allowed.receipt.json'), '--allow-same-model']);
-  assert.equal(allowed.status, 0); assert.equal(s.read(path.join(s.dir, 'allowed.receipt.json')).independence.allowSameModel, true);
-  const dryCand = s.write('candidates/dry.figs.json', candidate({ uploaded: false, dryRun: true }));
-  const dry = s.run('receipt.mjs', [PAPER, '--candidate', dryCand, '--defects', s.write('checks/dry.json', { ...base, candidateSha256: lib.sha256File(dryCand) }), '--reviewer', 'gemini:gemini-3.8-flash:req-3', '--out', path.join(s.dir, 'dry.receipt.json')]);
-  assert.equal(dry.status, 1); assert.match(s.read(path.join(s.dir, 'dry.receipt.json')).blockers.join(), /dry-run|schema/);
+  assert.equal(stale.status, 1);
+  assert.match(stale.receipt.blockers.join(), /different candidate bytes/);
+  const same = s.run('receipt.mjs', [
+    PAPER,
+    '--candidate',
+    cand,
+    '--defects',
+    s.write('checks/same.json', { ...base, candidateSha256: sha }),
+    '--reviewer',
+    'zai:glm-5.3-flash:req-2',
+    '--out',
+    path.join(s.dir, 'same.receipt.json'),
+  ]);
+  assert.equal(same.status, 1);
+  assert.match(
+    s.read(path.join(s.dir, 'same.receipt.json')).blockers.join(),
+    /same model/
+  );
+  const allowed = s.run('receipt.mjs', [
+    PAPER,
+    '--candidate',
+    cand,
+    '--defects',
+    path.join(s.dir, 'checks/same.json'),
+    '--reviewer',
+    'zai:glm-5.3-flash:req-2',
+    '--out',
+    path.join(s.dir, 'allowed.receipt.json'),
+    '--allow-same-model',
+  ]);
+  assert.equal(allowed.status, 0);
+  assert.equal(
+    s.read(path.join(s.dir, 'allowed.receipt.json')).independence
+      .allowSameModel,
+    true
+  );
+  const dryCand = s.write(
+    'candidates/dry.figs.json',
+    candidate({ uploaded: false, dryRun: true })
+  );
+  const dry = s.run('receipt.mjs', [
+    PAPER,
+    '--candidate',
+    dryCand,
+    '--defects',
+    s.write('checks/dry.json', {
+      ...base,
+      candidateSha256: lib.sha256File(dryCand),
+    }),
+    '--reviewer',
+    'gemini:gemini-3.8-flash:req-3',
+    '--out',
+    path.join(s.dir, 'dry.receipt.json'),
+  ]);
+  assert.equal(dry.status, 1);
+  assert.match(
+    s.read(path.join(s.dir, 'dry.receipt.json')).blockers.join(),
+    /dry-run|schema/
+  );
 });
 
 test('repair.mjs applies text/box/points fixes, resets touched figures, and reports what it could not apply', t => {
   const s = sandbox(t);
   const cand = s.write('candidates/c.figs.json', candidate());
-  const receipt = s.write('receipt.json', { paperId: PAPER, verdict: 'fail', candidateSha256: lib.sha256File(cand), defects: [
-    { path: '/problems/0/parts/0/statement', severity: 'critical', kind: 'wrong-value', description: 'min vs s', suggestedFix: 'Колко е зарядът за $t = 60\\ \\mathrm{s}$?' },
-    { path: '/problems/0/figures/0/tx/bbox', severity: 'critical', kind: 'figure', description: 'clipped', suggestedFix: '[365, 275, 625, 445]' },
-    { path: '/problems/0/points', severity: 'major', kind: 'points', description: 'printed 12', suggestedFix: '12' },
-    { path: '/problems/0/solution/statement', severity: 'major', kind: 'omission', description: 'missing line', suggestedFix: null },
-  ] });
+  const receipt = s.write('receipt.json', {
+    paperId: PAPER,
+    verdict: 'fail',
+    candidateSha256: lib.sha256File(cand),
+    defects: [
+      {
+        path: '/problems/0/parts/0/statement',
+        severity: 'critical',
+        kind: 'wrong-value',
+        description: 'min vs s',
+        suggestedFix: 'Колко е зарядът за $t = 60\\ \\mathrm{s}$?',
+      },
+      {
+        path: '/problems/0/figures/0/tx/bbox',
+        severity: 'critical',
+        kind: 'figure',
+        description: 'clipped',
+        suggestedFix: '[365, 275, 625, 445]',
+      },
+      {
+        path: '/problems/0/points',
+        severity: 'major',
+        kind: 'points',
+        description: 'printed 12',
+        suggestedFix: '12',
+      },
+      {
+        path: '/problems/0/solution/statement',
+        severity: 'major',
+        kind: 'omission',
+        description: 'missing line',
+        suggestedFix: null,
+      },
+    ],
+  });
   const out = path.join(s.dir, 'candidates', 'c.r1.json');
-  const r = s.run('repair.mjs', [PAPER, '--candidate', cand, '--receipt', receipt, '--out', out]);
+  const r = s.run('repair.mjs', [
+    PAPER,
+    '--candidate',
+    cand,
+    '--receipt',
+    receipt,
+    '--out',
+    out,
+  ]);
   assert.equal(r.status, 3, r.stdout + r.stderr);
   const rep = JSON.parse(r.stdout);
-  assert.equal(rep.applied, 3); assert.equal(rep.skipped, 1);
+  assert.equal(rep.applied, 3);
+  assert.equal(rep.skipped, 1);
   const fixed = s.read(out);
   assert.match(fixed.problems[0].parts[0].statement, /60/);
   assert.equal(fixed.problems[0].points, 12);
   const fig = fixed.problems[0].figures[0];
-  assert.deepEqual(fig.tx, { document: 'problems', page: 1, bbox: [365, 275, 625, 445], boxFrom: 'checker' }); // a judged box: snap.mjs leaves it alone
+  assert.deepEqual(fig.tx, {
+    document: 'problems',
+    page: 1,
+    bbox: [365, 275, 625, 445],
+    boxFrom: 'checker',
+  }); // a judged box: snap.mjs leaves it alone
   assert.equal(fig.url, undefined);
-  assert.equal(fixed.tx.repairs.length, 3); assert.equal(fixed.tx.repairs[0].round, 1);
+  assert.equal(fixed.tx.repairs.length, 3);
+  assert.equal(fixed.tx.repairs[0].round, 1);
 });
 
 test('adjudication evidence written on another machine still binds by its tmp/-relative path', () => {
-  const candidates = [{ view: 'tmp/tx/p/candidates/agent__sonnet.figs.view.json', sha256: 'b'.repeat(64) }];
-  const checks = [{ file: 'tmp/tx/p/checks/zai__glm-5.3-flash__for-agent__sonnet.json', data: { defects: [{ severity: 'major' }] } }];
+  const candidates = [
+    {
+      view: 'tmp/tx/p/candidates/agent__sonnet.figs.view.json',
+      sha256: 'b'.repeat(64),
+    },
+  ];
+  const checks = [
+    {
+      file: 'tmp/tx/p/checks/zai__glm-5.3-flash__for-agent__sonnet.json',
+      data: { defects: [{ severity: 'major' }] },
+    },
+  ];
   const mac = '/Users/someone/Projects/olympiads-xyz/';
   const win = 'D:\\Projects\\olympiads-xyz\\';
   const adjudication = {
-    candidates: [{ view: mac + candidates[0].view, candidateSha256: candidates[0].sha256, verdict: 'pass', defects: [] }],
-    checkerFindings: [{ check: win + checks[0].file.replace(/\//g, '\\'), index: 0, truePositive: false, note: 'label is visible on the page' }],
+    candidates: [
+      {
+        view: mac + candidates[0].view,
+        candidateSha256: candidates[0].sha256,
+        verdict: 'pass',
+        defects: [],
+      },
+    ],
+    checkerFindings: [
+      {
+        check: win + checks[0].file.replace(/\//g, '\\'),
+        index: 0,
+        truePositive: false,
+        note: 'label is visible on the page',
+      },
+    ],
     escalations: [],
   };
-  assert.deepEqual(adjudicationEvidenceProblems(adjudication, candidates, checks, repo), []);
+  assert.deepEqual(
+    adjudicationEvidenceProblems(adjudication, candidates, checks, repo),
+    []
+  );
   assert.equal(evidenceKey(mac + 'tmp/tx/p/x.json', repo), 'tmp/tx/p/x.json');
-  assert.equal(evidenceKey(win + 'tmp\\tx\\p\\x.json', repo), 'tmp/tx/p/x.json');
+  assert.equal(
+    evidenceKey(win + 'tmp\\tx\\p\\x.json', repo),
+    'tmp/tx/p/x.json'
+  );
   assert.equal(evidenceKey('tmp/tx/p/x.json', repo), 'tmp/tx/p/x.json');
 });
 
 test('figure proposals snap onto detected graphics, never onto scans or merged groups', async () => {
   const { snapBox } = await import(txModule('snap.mjs'));
-  const page = { scanned: false, regions: [
-    { bbox: [100, 100, 400, 300], core: [110, 110, 390, 290] },
-    { bbox: [600, 100, 900, 300], core: [610, 110, 890, 290] },
-  ] };
-  assert.equal(snapBox([120, 120, 380, 280], page).reason, 'region');           // overlaps one graphic: take its frame
-  assert.deepEqual(snapBox([120, 120, 380, 280], page).bbox, [94, 94, 406, 306]);
-  assert.equal(snapBox([100, 400, 400, 600], page).reason, 'nearest');          // on text: nearest free graphic
-  assert.equal(snapBox([100, 400, 400, 600], page, { taken: [0] }), null);          // the near graphic is taken and the other one is far: stay
-  assert.equal(snapBox([100, 100, 900, 300], page).reason, 'union');            // spans both: their union
-  assert.equal(snapBox([120, 120, 380, 280], { scanned: true, regions: page.regions }).reason, 'region'); // a scan's regions come from its pixels (pdfregions v3+)
-  assert.equal(snapBox([120, 120, 380, 280], { scanned: true, regions: [] }), null);
-  assert.equal(snapBox([120, 120, 380, 280], { scanned: false, regions: [{ ...page.regions[0], kind: 'formula' }] }), null); // never onto a formula
-  const group = { scanned: false, regions: [{ bbox: [0, 0, 1000, 600], core: [0, 0, 1000, 600] }] };
-  assert.equal(snapBox([100, 100, 300, 300], group), null);                     // region 30x the box: a merged group, keep the reader's box
-  const pair = { scanned: false, regions: [{ bbox: [128, 319, 906, 534], core: [128, 319, 906, 534] }] }; // Фиг. 1 (а) | Фиг. 1 (б) clustered together
-  assert.equal(snapBox([122, 313, 455, 540], pair), null);                      // a good left-half proposal is left alone (not merged into the block)
-  assert.deepEqual(snapBox([140, 340, 455, 500], pair).bbox, [134, 313, 461, 540]); // a short left-half proposal keeps its width, takes the block's height
+  const page = {
+    scanned: false,
+    regions: [
+      { bbox: [100, 100, 400, 300], core: [110, 110, 390, 290] },
+      { bbox: [600, 100, 900, 300], core: [610, 110, 890, 290] },
+    ],
+  };
+  assert.equal(snapBox([120, 120, 380, 280], page).reason, 'region'); // overlaps one graphic: take its frame
+  assert.deepEqual(
+    snapBox([120, 120, 380, 280], page).bbox,
+    [94, 94, 406, 306]
+  );
+  assert.equal(snapBox([100, 400, 400, 600], page).reason, 'nearest'); // on text: nearest free graphic
+  assert.equal(snapBox([100, 400, 400, 600], page, { taken: [0] }), null); // the near graphic is taken and the other one is far: stay
+  assert.equal(snapBox([100, 100, 900, 300], page).reason, 'union'); // spans both: their union
+  assert.equal(
+    snapBox([120, 120, 380, 280], { scanned: true, regions: page.regions })
+      .reason,
+    'region'
+  ); // a scan's regions come from its pixels (pdfregions v3+)
+  assert.equal(
+    snapBox([120, 120, 380, 280], { scanned: true, regions: [] }),
+    null
+  );
+  assert.equal(
+    snapBox([120, 120, 380, 280], {
+      scanned: false,
+      regions: [{ ...page.regions[0], kind: 'formula' }],
+    }),
+    null
+  ); // never onto a formula
+  const group = {
+    scanned: false,
+    regions: [{ bbox: [0, 0, 1000, 600], core: [0, 0, 1000, 600] }],
+  };
+  assert.equal(snapBox([100, 100, 300, 300], group), null); // region 30x the box: a merged group, keep the reader's box
+  const pair = {
+    scanned: false,
+    regions: [{ bbox: [128, 319, 906, 534], core: [128, 319, 906, 534] }],
+  }; // Фиг. 1 (а) | Фиг. 1 (б) clustered together
+  assert.equal(snapBox([122, 313, 455, 540], pair), null); // a good left-half proposal is left alone (not merged into the block)
+  assert.deepEqual(
+    snapBox([140, 340, 455, 500], pair).bbox,
+    [134, 313, 461, 540]
+  ); // a short left-half proposal keeps its width, takes the block's height
 });
 
 test('refix applies model-supplied values like repair.mjs and never invents a field', async () => {
   const { applyFixes } = await import(txModule('fixes.mjs'));
   const c = candidate();
   const defects = [
-    { path: '/problems/0/statement', kind: 'omission', severity: 'major', description: 'sentence missing' },
-    { path: '/problems/0/figures/0/tx/bbox', kind: 'figure', severity: 'critical', description: 'clips the label' },
-    { path: '/problems/0/points', kind: 'points', severity: 'minor', description: 'printed 12' },
-    { path: '/problems/0/solution/statement', kind: 'omission', severity: 'critical', description: 'unreadable' },
-    { path: '/problems/0/parts/0/answer', kind: 'wrong-value', severity: 'major', description: 'unit' },
+    {
+      path: '/problems/0/statement',
+      kind: 'omission',
+      severity: 'major',
+      description: 'sentence missing',
+    },
+    {
+      path: '/problems/0/figures/0/tx/bbox',
+      kind: 'figure',
+      severity: 'critical',
+      description: 'clips the label',
+    },
+    {
+      path: '/problems/0/points',
+      kind: 'points',
+      severity: 'minor',
+      description: 'printed 12',
+    },
+    {
+      path: '/problems/0/solution/statement',
+      kind: 'omission',
+      severity: 'critical',
+      description: 'unreadable',
+    },
+    {
+      path: '/problems/0/parts/0/answer',
+      kind: 'wrong-value',
+      severity: 'major',
+      description: 'unit',
+    },
   ];
   const fixes = [
-    { path: '/problems/0/statement', value: 'Токът е $I = 1\ \mathrm{mA}$ и $v_0/2$. Определете заряда.', note: 'p.1' },
+    {
+      path: '/problems/0/statement',
+      value: 'Токът е $I = 1 mathrm{mA}$ и $v_0/2$. Определете заряда.',
+      note: 'p.1',
+    },
     { path: '/problems/0/figures/0/tx/bbox', value: [360, 270, 630, 445] },
     { path: '/problems/0/points', value: '12' },
-    { path: '/problems/0/solution/statement', value: null, note: 'page 1 of the solutions is blank' },
+    {
+      path: '/problems/0/solution/statement',
+      value: null,
+      note: 'page 1 of the solutions is blank',
+    },
     { path: '/problems/0/parts/0/answer', value: 'C' },
   ];
-  const r = applyFixes(c, fixes, { defects, round: 2, by: 'zai:test refix', requestId: 'req-9' });
+  const r = applyFixes(c, fixes, {
+    defects,
+    round: 2,
+    by: 'zai:test refix',
+    requestId: 'req-9',
+  });
   assert.equal(r.applied.length, 3);
   assert.equal(r.skipped.length, 2);
   assert.match(r.skipped.map(s => s.reason).join(' | '), /could not settle/);
-  assert.match(r.skipped.map(s => s.reason).join(' | '), /cannot apply a string fix to a object field/);
+  assert.match(
+    r.skipped.map(s => s.reason).join(' | '),
+    /cannot apply a string fix to a object field/
+  );
   assert.equal(c.problems[0].points, 12);
-  assert.deepEqual(c.problems[0].figures[0].tx, { document: 'problems', page: 1, bbox: [360, 270, 630, 445], boxFrom: 'refix' });
+  assert.deepEqual(c.problems[0].figures[0].tx, {
+    document: 'problems',
+    page: 1,
+    bbox: [360, 270, 630, 445],
+    boxFrom: 'refix',
+  });
   assert.equal(c.problems[0].figures[0].url, undefined);
   assert.deepEqual(r.figuresToRedo, ['/problems/0/figures/0']);
   assert.equal(c.tx.repairs.length, 3);
@@ -861,13 +2599,27 @@ test('refix may create a field the reader omitted, but never an array element', 
   const c = candidate();
   delete c.problems[0].solution;
   const defects = [
-    { path: '/problems/0/solution/statement', kind: 'omission', severity: 'critical', description: 'solution missing' },
-    { path: '/problems/0/parts/1/statement', kind: 'omission', severity: 'critical', description: 'part б) missing' },
+    {
+      path: '/problems/0/solution/statement',
+      kind: 'omission',
+      severity: 'critical',
+      description: 'solution missing',
+    },
+    {
+      path: '/problems/0/parts/1/statement',
+      kind: 'omission',
+      severity: 'critical',
+      description: 'part б) missing',
+    },
   ];
-  const r = applyFixes(c, [
-    { path: '/problems/0/solution/statement', value: 'Решение: $q = I t$.' },
-    { path: '/problems/0/parts/1/statement', value: 'б) …' },
-  ], { defects });
+  const r = applyFixes(
+    c,
+    [
+      { path: '/problems/0/solution/statement', value: 'Решение: $q = I t$.' },
+      { path: '/problems/0/parts/1/statement', value: 'б) …' },
+    ],
+    { defects }
+  );
   assert.equal(c.problems[0].solution.statement, 'Решение: $q = I t$.');
   assert.equal(r.applied[0].created, true);
   assert.equal(r.skipped.length, 1);
@@ -877,18 +2629,31 @@ test('refix may create a field the reader omitted, but never an array element', 
 test('normaliseCandidate settles structural slips without touching the transcription', () => {
   const c = candidate();
   const fig = c.problems[0].figures[0];
-  delete fig.tx; Object.assign(fig, { document: 'problems', page: '1', bbox: '[365, 275, 625, 430]' });
+  delete fig.tx;
+  Object.assign(fig, {
+    document: 'problems',
+    page: '1',
+    bbox: '[365, 275, 625, 430]',
+  });
   c.problems[0].parts[0].answer = { kind: 'numeric', value: '0,06', unit: 'C' };
   c.problems[0].answer = { kind: 'numeric', value: 'R(\\sqrt{5}-1)/2' };
   c.paper.held = { from: 'ноември 2011', to: '2011-11-12', place: ['Пловдив'] };
   c.problems[0].statement = 'Ъгъл $0\\,^{\\circ}$ и $T_1$.';
   lib.normaliseCandidate(c);
-  assert.deepEqual(fig.tx, { document: 'problems', page: 1, bbox: [365, 275, 625, 430] });
+  assert.deepEqual(fig.tx, {
+    document: 'problems',
+    page: 1,
+    bbox: [365, 275, 625, 430],
+  });
   assert.equal(fig.document, undefined);
   assert.equal(c.problems[0].parts[0].answer.value, 0.06);
   assert.equal(c.problems[0].answer.kind, 'expression');
   assert.equal(c.problems[0].answer.latex, 'R(\\sqrt{5}-1)/2');
-  assert.deepEqual(c.paper.held, { from: '2011-11-12', to: '2011-11-12', place: 'Пловдив' });
+  assert.deepEqual(c.paper.held, {
+    from: '2011-11-12',
+    to: '2011-11-12',
+    place: 'Пловдив',
+  });
   assert.equal(c.problems[0].statement, 'Ъгъл $0\\,{}^{\\circ}$ и $T_1$.');
   assert.ok(c.tx.normalised.length >= 5);
 });
@@ -898,61 +2663,128 @@ test('a statement is cut where the next problem opens only when it carries that 
   const c = candidate();
   const first = { ...c.problems[0], parts: [], figures: [] };
   first.statement = `**Задача 1. Трение** (10 баллов)\n\n${shared} движение бруска по наклонной плоскости с трением.\n\nКоэффициент трения равен $\\mu$.`;
-  const second = { ...first, number: 2, statement: `${shared} колебания маятника в вязкой среде при малых углах отклонения.` };
+  const second = {
+    ...first,
+    number: 2,
+    statement: `${shared} колебания маятника в вязкой среде при малых углах отклонения.`,
+  };
   c.problems = [first, second];
   lib.normaliseCandidate(c);
-  assert.ok(c.problems[0].statement.includes('Коэффициент трения'), 'problem 1 keeps its own paragraphs');
+  assert.ok(
+    c.problems[0].statement.includes('Коэффициент трения'),
+    'problem 1 keeps its own paragraphs'
+  );
   // a real paste of problem 2 at the end of problem 1 is still cut
   const d = candidate();
-  const p1 = { ...d.problems[0], parts: [], figures: [], statement: `${shared} движение бруска по наклонной плоскости с трением.\n\n${second.statement}` };
+  const p1 = {
+    ...d.problems[0],
+    parts: [],
+    figures: [],
+    statement: `${shared} движение бруска по наклонной плоскости с трением.\n\n${second.statement}`,
+  };
   d.problems = [p1, { ...second }];
   lib.normaliseCandidate(d);
-  assert.equal(d.problems[0].statement, `${shared} движение бруска по наклонной плоскости с трением.`);
+  assert.equal(
+    d.problems[0].statement,
+    `${shared} движение бруска по наклонной плоскости с трением.`
+  );
 });
 
 test('a quoted sentence from the checker is spliced over the passage it corrects, not over the whole field', async () => {
   const { spliceFragment } = await import(txModule('fixes.mjs'));
-  const solution = 'Означаваме с Tк и Tз периодите на кометата и Земята. Ако не се включат двигателите в тчка А, по-нататъшното движение е по елипса. Следователно отговорът е 2 години.';
-  const out = spliceFragment(solution, 'Ако не се включат двигателите в точка А, по-нататъшното движение е по елипса.');
-  assert.equal(out, 'Означаваме с Tк и Tз периодите на кометата и Земята. Ако не се включат двигателите в точка А, по-нататъшното движение е по елипса. Следователно отговорът е 2 години.');
+  const solution =
+    'Означаваме с Tк и Tз периодите на кометата и Земята. Ако не се включат двигателите в тчка А, по-нататъшното движение е по елипса. Следователно отговорът е 2 години.';
+  const out = spliceFragment(
+    solution,
+    'Ако не се включат двигателите в точка А, по-нататъшното движение е по елипса.'
+  );
+  assert.equal(
+    out,
+    'Означаваме с Tк и Tз периодите на кометата и Земята. Ако не се включат двигателите в точка А, по-нататъшното движение е по елипса. Следователно отговорът е 2 години.'
+  );
   // the typo sits in the last words: replace the same number of words from the anchor on
-  const out2 = spliceFragment(solution, 'Ако не се включат двигателите в точка А');
+  const out2 = spliceFragment(
+    solution,
+    'Ако не се включат двигателите в точка А'
+  );
   assert.equal(out2, solution.replace('в тчка А', 'в точка А'));
   // a typo in the first word, and a quote the checker truncated with an ellipsis
-  const st = 'Младият астроном стои в къщи. След той се заема да пресмята орбитата на Юпитер и записва резултата.';
-  assert.equal(spliceFragment(st, 'После той се заема да пресмята…'), st.replace('След той', 'После той'));
-  assert.equal(spliceFragment(solution, 'Съвсем друг текст без котва в решението'), null);
+  const st =
+    'Младият астроном стои в къщи. След той се заема да пресмята орбитата на Юпитер и записва резултата.';
+  assert.equal(
+    spliceFragment(st, 'После той се заема да пресмята…'),
+    st.replace('След той', 'После той')
+  );
+  assert.equal(
+    spliceFragment(solution, 'Съвсем друг текст без котва в решението'),
+    null
+  );
   assert.equal(spliceFragment('кратко', 'по-дълъг текст от полето'), null);
 });
 
 test('normaliseCandidate drops a second copy of the same problem', () => {
   const c = candidate();
   const p = c.problems[0];
-  c.problems.push({ ...p, id: `${PAPER}-problem-1`, statement: 'Задача 1. ' + p.statement, parts: [] });
-  c.problems.push({ ...p, number: 2, id: `${PAPER}-p2`, statement: 'Друга задача.' });
+  c.problems.push({
+    ...p,
+    id: `${PAPER}-problem-1`,
+    statement: 'Задача 1. ' + p.statement,
+    parts: [],
+  });
+  c.problems.push({
+    ...p,
+    number: 2,
+    id: `${PAPER}-p2`,
+    statement: 'Друга задача.',
+  });
   lib.normaliseCandidate(c);
   assert.equal(c.problems.length, 2);
-  assert.deepEqual(c.problems.map(x => x.number), [1, 2]);
+  assert.deepEqual(
+    c.problems.map(x => x.number),
+    [1, 2]
+  );
   assert.match(c.tx.normalised.join(), /duplicate of problem 1/);
 });
 
 test('a Latin homoglyph inside a Cyrillic word is mapped, math and Latin words are left alone', () => {
-  assert.equal(lib.fixHomoglyphs('Виждa ли се звездата, ако скоростта e $v_p = 3$ km/s и Fc е силата?'), 'Вижда ли се звездата, ако скоростта e $v_p = 3$ km/s и Fc е силата?');
-  assert.equal(lib.fixHomoglyphs('да го снимa с телескопa'), 'да го снима с телескопа');
+  assert.equal(
+    lib.fixHomoglyphs(
+      'Виждa ли се звездата, ако скоростта e $v_p = 3$ km/s и Fc е силата?'
+    ),
+    'Вижда ли се звездата, ако скоростта e $v_p = 3$ km/s и Fc е силата?'
+  );
+  assert.equal(
+    lib.fixHomoglyphs('да го снимa с телескопa'),
+    'да го снима с телескопа'
+  );
   assert.equal(lib.fixHomoglyphs('Hello свят'), 'Hello свят');
 });
 
 test('text-layer check: omitted sentence, misread word (mechanical fix), unprinted words; a wordless layer is skipped', async t => {
   const s = sandbox(t);
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
-  const printed = 'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напреч-\nното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата. Отговорът дайте в кулони.';
-  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), `МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО\nЗадача 1. Ток в проводник\n${printed}\nа) Колко е зарядът за t = 1 min?\n\f`);
-  fs.writeFileSync(path.join(s.dir, 'text', 'solutions.txt'), 'Решения\nЗадача 1. Зарядът е q = I t = 0,06 C.\n');
+  const printed =
+    'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напреч-\nното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата. Отговорът дайте в кулони.';
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'problems.txt'),
+    `МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО\nЗадача 1. Ток в проводник\n${printed}\nа) Колко е зарядът за t = 1 min?\n\f`
+  );
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'solutions.txt'),
+    'Решения\nЗадача 1. Зарядът е q = I t = 0,06 C.\n'
+  );
   const c = candidate();
   c.paper.title = 'МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО';
   c.problems[0].title = 'Ток в проводник';
   // the reader dropped "Приемете, че…", typed "милиамер" and added a sentence the page does not print
-  c.problems[0].statement = printed.replace(/напреч-\nното/, 'напречното').replace(' Приемете, че съпротивлението на проводника не зависи от температурата.', '').replace('милиампер', 'милиамер') + ' Отговорът закръглете до стотни.';
+  c.problems[0].statement =
+    printed
+      .replace(/напреч-\nното/, 'напречното')
+      .replace(
+        ' Приемете, че съпротивлението на проводника не зависи от температурата.',
+        ''
+      )
+      .replace('милиампер', 'милиамер') + ' Отговорът закръглете до стотни.';
   const f = s.write('candidates/tl.json', c);
   const out = path.join(s.dir, 'checks', 'tl.json');
   const r = s.run('textlayer.mjs', [PAPER, '--candidate', f, '--out', out]);
@@ -977,56 +2809,140 @@ test('text-layer check: omitted sentence, misread word (mechanical fix), unprint
 test('text-layer check: a contiguous PDF split word cannot shorten correct prose, while real omissions and typos remain', t => {
   const s = sandbox(t);
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
-  const prose = 'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напречното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата.';
-  const sentence = 'Тъй като ускорението е успоредно на наклонената равнина, определете необходимата сила.';
+  const prose =
+    'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напречното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата.';
+  const sentence =
+    'Тъй като ускорението е успоредно на наклонената равнина, определете необходимата сила.';
   const c = candidate();
-  c.paper.title = ''; c.problems[0].title = ''; c.problems[0].parts = []; c.problems[0].figures = [];
-  const run = (sourceSentence, candidateSentence = sentence, candidateProse = prose) => {
-    fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), `Задача 1.\n${prose}\n${sourceSentence}\n`);
+  c.paper.title = '';
+  c.problems[0].title = '';
+  c.problems[0].parts = [];
+  c.problems[0].figures = [];
+  const run = (
+    sourceSentence,
+    candidateSentence = sentence,
+    candidateProse = prose
+  ) => {
+    fs.writeFileSync(
+      path.join(s.dir, 'text', 'problems.txt'),
+      `Задача 1.\n${prose}\n${sourceSentence}\n`
+    );
     c.problems[0].statement = candidateProse + '\n' + candidateSentence;
-    const input = s.write('candidates/split-word.json', c), out = path.join(s.dir, 'split-word-check.json');
-    const result = s.run('textlayer.mjs', [PAPER, '--candidate', input, '--out', out]);
+    const input = s.write('candidates/split-word.json', c),
+      out = path.join(s.dir, 'split-word-check.json');
+    const result = s.run('textlayer.mjs', [
+      PAPER,
+      '--candidate',
+      input,
+      '--out',
+      out,
+    ]);
     assert.ok([0, 3].includes(result.status), result.stderr + result.stdout);
     const checked = s.read(out);
     assert.equal(checked.documents.problems.trusted, true);
     return checked;
   };
   const split = sentence.replace('успоредно', 'ус поредно');
-  assert.deepEqual(run(split).defects, [], 'exact joined word and its neighbours agree; correct успоредно must not become поредно');
-  assert.match(c.problems[0].statement, /успоредно/, 'checking does not mutate candidate prose');
+  assert.deepEqual(
+    run(split).defects,
+    [],
+    'exact joined word and its neighbours agree; correct успоредно must not become поредно'
+  );
+  assert.match(
+    c.problems[0].statement,
+    /успоредно/,
+    'checking does not mutate candidate prose'
+  );
   // The rule is local and exact, not fuzzy joining across punctuation, columns or lines.
   for (const ambiguous of ['ус, поредно', 'ус  поредно', 'ус\nпоредно']) {
-    assert.ok(run(sentence.replace('успоредно', ambiguous)).defects.some(d => /поредно/.test(d.description)), ambiguous);
+    assert.ok(
+      run(sentence.replace('успоредно', ambiguous)).defects.some(d =>
+        /поредно/.test(d.description)
+      ),
+      ambiguous
+    );
   }
-  assert.ok(run(split, sentence.replace('ускорението е', 'ускорението остава')).defects.some(d => /поредно/.test(d.description)), 'different neighbouring words do not establish a join');
-  const omitted = prose.replace(' Приемете, че съпротивлението на проводника не зависи от температурата.', '');
-  const realDefects = run(split, sentence, omitted.replace('милиампер', 'милиамер')).defects;
-  assert.ok(realDefects.some(d => /Приемете, че съпротивлението/.test(d.description)), 'a real omitted sentence is still reported');
-  assert.ok(realDefects.some(d => d.suggestedFix?.includes('милиампер')), 'an unambiguous ordinary typo still receives its existing correction');
-  assert.ok(realDefects.every(d => !/поредно/.test(d.description)), 'the PDF split does not add a false defect');
+  assert.ok(
+    run(
+      split,
+      sentence.replace('ускорението е', 'ускорението остава')
+    ).defects.some(d => /поредно/.test(d.description)),
+    'different neighbouring words do not establish a join'
+  );
+  const omitted = prose.replace(
+    ' Приемете, че съпротивлението на проводника не зависи от температурата.',
+    ''
+  );
+  const realDefects = run(
+    split,
+    sentence,
+    omitted.replace('милиампер', 'милиамер')
+  ).defects;
+  assert.ok(
+    realDefects.some(d => /Приемете, че съпротивлението/.test(d.description)),
+    'a real omitted sentence is still reported'
+  );
+  assert.ok(
+    realDefects.some(d => d.suggestedFix?.includes('милиампер')),
+    'an unambiguous ordinary typo still receives its existing correction'
+  );
+  assert.ok(
+    realDefects.every(d => !/поредно/.test(d.description)),
+    'the PDF split does not add a false defect'
+  );
 });
 
 test('shared source note title and statement both count on their declared document', t => {
   const s = sandbox(t);
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
-  const prose = 'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напречното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата.';
-  const title = 'Внимание! (важи за решенията на всички задачи) Проверявайте самостоятелността оригиналността яснотата последователността аргументацията.';
-  const note = 'Приемат се всички правилни начини за решаване с подробно обяснение.';
-  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), `Задача 1.\n${prose}\n`);
-  fs.writeFileSync(path.join(s.dir, 'text', 'solutions.txt'), `Задача 1.\n${prose}\n${title}\n${note}\n`);
-  const c = candidate(); c.paper.title = ''; c.problems[0].statement = prose;
-  c.problems[0].parts = []; c.problems[0].figures = [];
+  const prose =
+    'Тънък проводник с дължина един метър е свързан към източник на постоянно напрежение и през него протича ток с големина един милиампер. Определете заряда, който преминава през напречното сечение на проводника за една минута, ако токът остава постоянен през цялото време на измерването. Приемете, че съпротивлението на проводника не зависи от температурата.';
+  const title =
+    'Внимание! (важи за решенията на всички задачи) Проверявайте самостоятелността оригиналността яснотата последователността аргументацията.';
+  const note =
+    'Приемат се всички правилни начини за решаване с подробно обяснение.';
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'problems.txt'),
+    `Задача 1.\n${prose}\n`
+  );
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'solutions.txt'),
+    `Задача 1.\n${prose}\n${title}\n${note}\n`
+  );
+  const c = candidate();
+  c.paper.title = '';
+  c.problems[0].statement = prose;
+  c.problems[0].parts = [];
+  c.problems[0].figures = [];
   c.problems[0].solution = { statement: prose };
-  c.paper.documentNotes = [{ title, statement: note, document: 'solutions', page: 1, position: 'after-problem' }];
-  const input = s.write('candidates/shared-notes.json', c), out = path.join(s.dir, 'shared-notes-check.json');
-  const result = s.run('textlayer.mjs', [PAPER, '--candidate', input, '--out', out]);
+  c.paper.documentNotes = [
+    {
+      title,
+      statement: note,
+      document: 'solutions',
+      page: 1,
+      position: 'after-problem',
+    },
+  ];
+  const input = s.write('candidates/shared-notes.json', c),
+    out = path.join(s.dir, 'shared-notes-check.json');
+  const result = s.run('textlayer.mjs', [
+    PAPER,
+    '--candidate',
+    input,
+    '--out',
+    out,
+  ]);
   assert.equal(result.status, 0, result.stderr + result.stdout);
   assert.equal(s.read(out).documents.solutions.trusted, true);
   assert.deepEqual(s.read(out).defects, []);
   c.paper.documentNotes[0].title = 'Общи бележки';
   s.write('candidates/shared-notes.json', c);
   s.run('textlayer.mjs', [PAPER, '--candidate', input, '--out', out]);
-  assert.ok(s.read(out).defects.some(d => /самостоятелността/.test(d.description)), JSON.stringify(s.read(out).defects));
+  assert.ok(
+    s.read(out).defects.some(d => /самостоятелността/.test(d.description)),
+    JSON.stringify(s.read(out).defects)
+  );
 });
 
 test('refix drops an unprinted caption, adds a figures array, and remembers a region that is not a figure', async () => {
@@ -1035,38 +2951,78 @@ test('refix drops an unprinted caption, adds a figures array, and remembers a re
   c.problems[0].figures[0].caption = 'Схема на опита';
   const region = { document: 'solutions', page: 1, bbox: [100, 100, 400, 300] };
   const defects = [
-    { path: '/problems/0/figures/0/caption', kind: 'reworded', severity: 'minor', description: 'not printed' },
-    { path: '/problems/0/solution/figures', kind: 'figure', severity: 'major', description: 'graphic not covered', region },
+    {
+      path: '/problems/0/figures/0/caption',
+      kind: 'reworded',
+      severity: 'minor',
+      description: 'not printed',
+    },
+    {
+      path: '/problems/0/solution/figures',
+      kind: 'figure',
+      severity: 'major',
+      description: 'graphic not covered',
+      region,
+    },
   ];
-  const added = { id: 'p1-sol-fig1', alt: 'Сили', tx: { document: 'solutions', page: 1, bbox: [100, 100, 400, 300] } };
-  const r = applyFixes(c, [{ path: '/problems/0/figures/0/caption', value: '' }, { path: '/problems/0/solution/figures', value: [added] }], { defects });
+  const added = {
+    id: 'p1-sol-fig1',
+    alt: 'Сили',
+    tx: { document: 'solutions', page: 1, bbox: [100, 100, 400, 300] },
+  };
+  const r = applyFixes(
+    c,
+    [
+      { path: '/problems/0/figures/0/caption', value: '' },
+      { path: '/problems/0/solution/figures', value: [added] },
+    ],
+    { defects }
+  );
   assert.equal(r.skipped.length, 0, JSON.stringify(r.skipped));
   assert.equal(c.problems[0].figures[0].caption, undefined);
   assert.deepEqual(c.problems[0].solution.figures, [added]);
   // the same region judged "not a figure": the array comes back unchanged and the region is remembered
   const c2 = candidate();
   c2.problems[0].solution.figures = [];
-  const r2 = applyFixes(c2, [{ path: '/problems/0/solution/figures', value: [], note: 'a formula' }], { defects: [defects[1]] });
+  const r2 = applyFixes(
+    c2,
+    [{ path: '/problems/0/solution/figures', value: [], note: 'a formula' }],
+    { defects: [defects[1]] }
+  );
   assert.equal(r2.applied.length, 1);
   assert.deepEqual(c2.tx.notFigures[0].bbox, region.bbox);
   // no solution at all: a figures array may not conjure one up
   const c3 = candidate();
   delete c3.problems[0].solution;
-  const r3 = applyFixes(c3, [{ path: '/problems/0/solution/figures', value: [added] }], { defects: [defects[1]] });
+  const r3 = applyFixes(
+    c3,
+    [{ path: '/problems/0/solution/figures', value: [added] }],
+    { defects: [defects[1]] }
+  );
   assert.equal(r3.skipped.length, 1);
   assert.equal(c3.problems[0].solution, undefined);
 });
 
 test('LaTeX spacing and text commands outside math are normalised; a leftover command fails validation', async t => {
   const c = candidate();
-  c.problems[0].solution.statement = '(2.1) \\quad $a_1 = \\dfrac{F}{m_1}$ \\ \\text{и} \\ $a_2 = \\dfrac{F}{m_2}$. \\quad **[1 т.]**';
+  c.problems[0].solution.statement =
+    '(2.1) \\quad $a_1 = \\dfrac{F}{m_1}$ \\ \\text{и} \\ $a_2 = \\dfrac{F}{m_2}$. \\quad **[1 т.]**';
   lib.normaliseCandidate(c);
-  assert.equal(c.problems[0].solution.statement, '(2.1) $a_1 = \\dfrac{F}{m_1}$ и $a_2 = \\dfrac{F}{m_2}$. **[1 т.]**');
+  assert.equal(
+    c.problems[0].solution.statement,
+    '(2.1) $a_1 = \\dfrac{F}{m_1}$ и $a_2 = \\dfrac{F}{m_2}$. **[1 т.]**'
+  );
   assert.match(c.tx.normalised.join(), /LaTeX spacing/);
   const s = sandbox(t);
   const bad = candidate();
   bad.problems[0].statement = 'Ъгълът \\alpha е даден.';
-  const r = s.run('validate.mjs', [s.write('candidates/latex.json', bad), '--paper-id', PAPER, '--manifest', path.join(s.dir, 'manifest.json')]);
+  const r = s.run('validate.mjs', [
+    s.write('candidates/latex.json', bad),
+    '--paper-id',
+    PAPER,
+    '--manifest',
+    path.join(s.dir, 'manifest.json'),
+  ]);
   assert.notEqual(r.status, 0);
   assert.match(r.stdout, /LaTeX command outside math \((\\\\|\\)alpha\)/); // the JSON report escapes the backslash
 });
@@ -1111,7 +3067,13 @@ test('validate rejects decoded LaTeX escape controls without rejecting layout wh
   const check = (name, update) => {
     const c = candidate();
     update(c);
-    const r = s.run('validate.mjs', [s.write(`candidates/${name}.json`, c), '--paper-id', PAPER, '--manifest', path.join(s.dir, 'manifest.json')]);
+    const r = s.run('validate.mjs', [
+      s.write(`candidates/${name}.json`, c),
+      '--paper-id',
+      PAPER,
+      '--manifest',
+      path.join(s.dir, 'manifest.json'),
+    ]);
     return { status: r.status, report: JSON.parse(r.stdout) };
   };
   for (const [name, broken, field] of [
@@ -1120,21 +3082,52 @@ test('validate rejects decoded LaTeX escape controls without rejecting layout wh
     ['frac', '$\frac{1}{2}$', '/problems/0/parts/0/statement'], // \f -> form feed
     ['rho', '$\rho$', '/problems/0/parts/0/statement'], // \r -> carriage return
   ]) {
-    const { status, report } = check(name, c => { c.problems[0].parts[0].statement = `Find ${broken}.`; });
+    const { status, report } = check(name, c => {
+      c.problems[0].parts[0].statement = `Find ${broken}.`;
+    });
     assert.notEqual(status, 0, `${name} must fail validation`);
-    assert.ok(report.errors.some(e => e.path === field && /control character|inside math/.test(e.message)), `${name}: ${JSON.stringify(report.errors)}`);
+    assert.ok(
+      report.errors.some(
+        e => e.path === field && /control character|inside math/.test(e.message)
+      ),
+      `${name}: ${JSON.stringify(report.errors)}`
+    );
   }
-  const raw = check('answer-latex', c => { c.problems[0].answer = { kind: 'expression', latex: '\tau^*' }; });
+  const raw = check('answer-latex', c => {
+    c.problems[0].answer = { kind: 'expression', latex: '\tau^*' };
+  });
   assert.notEqual(raw.status, 0);
-  assert.ok(raw.report.errors.some(e => e.path === '/problems/0/answer/latex' && /tab or carriage return|control character/.test(e.message)));
-  const rawRho = check('answer-rho', c => { c.problems[0].answer = { kind: 'expression', latex: '\rho' }; });
+  assert.ok(
+    raw.report.errors.some(
+      e =>
+        e.path === '/problems/0/answer/latex' &&
+        /tab or carriage return|control character/.test(e.message)
+    )
+  );
+  const rawRho = check('answer-rho', c => {
+    c.problems[0].answer = { kind: 'expression', latex: '\rho' };
+  });
   assert.notEqual(rawRho.status, 0);
-  assert.ok(rawRho.report.errors.some(e => e.path === '/problems/0/answer/latex' && /tab or carriage return/.test(e.message)));
-  const proseTau = check('prose-tau', c => { c.problems[0].statement = 'At time \tau^* find the displacement.'; });
+  assert.ok(
+    rawRho.report.errors.some(
+      e =>
+        e.path === '/problems/0/answer/latex' &&
+        /tab or carriage return/.test(e.message)
+    )
+  );
+  const proseTau = check('prose-tau', c => {
+    c.problems[0].statement = 'At time \tau^* find the displacement.';
+  });
   assert.notEqual(proseTau.status, 0);
-  assert.ok(proseTau.report.errors.some(e => e.path === '/problems/0/statement' && /command fragment/.test(e.message)));
+  assert.ok(
+    proseTau.report.errors.some(
+      e =>
+        e.path === '/problems/0/statement' && /command fragment/.test(e.message)
+    )
+  );
   const good = check('escaped-and-layout', c => {
-    c.problems[0].statement = 'First paragraph.\n\nSecond paragraph with $\\tau^*$, $\\beta$, $\\frac{1}{2}$, and $\\rho$.\nObject 1\t( )\tObject 2\t( )';
+    c.problems[0].statement =
+      'First paragraph.\n\nSecond paragraph with $\\tau^*$, $\\beta$, $\\frac{1}{2}$, and $\\rho$.\nObject 1\t( )\tObject 2\t( )';
     c.problems[0].answer = { kind: 'expression', latex: '\\tau^* + \\rho' };
   });
   assert.equal(good.status, 0, JSON.stringify(good.report.errors));
@@ -1144,27 +3137,86 @@ test('normaliseCandidate cleans parts: duplicated label, printed points markers,
   const c = candidate();
   const pr = c.problems[0];
   pr.parts = [
-    { label: 'а)', statement: 'а) а) Намерете отношението на масите на двете колички. [3 т.]', points: 3 },
-    { label: 'б)', statement: 'След колко време ще се ударят количките, ако и двете бъдат освободени? **[4 т.]**' },
-    { label: 'в)', statement: 'Пресметнете отношението на кинетичните енергии в момента на удара. [2 т]', points: 5 },
+    {
+      label: 'а)',
+      statement:
+        'а) а) Намерете отношението на масите на двете колички. [3 т.]',
+      points: 3,
+    },
+    {
+      label: 'б)',
+      statement:
+        'След колко време ще се ударят количките, ако и двете бъдат освободени? **[4 т.]**',
+    },
+    {
+      label: 'в)',
+      statement:
+        'Пресметнете отношението на кинетичните енергии в момента на удара. [2 т]',
+      points: 5,
+    },
   ];
-  pr.statement = 'Два магнита са закрепени върху две колички.\n\nа) Намерете отношението на масите на двете колички. [3 т.]\n\nб) След колко време ще се ударят количките, ако и двете бъдат освободени?\n\nПриемете, че силата не зависи от разстоянието.';
+  pr.statement =
+    'Два магнита са закрепени върху две колички.\n\nа) Намерете отношението на масите на двете колички. [3 т.]\n\nб) След колко време ще се ударят количките, ако и двете бъдат освободени?\n\nПриемете, че силата не зависи от разстоянието.';
   lib.normaliseCandidate(c);
-  assert.equal(pr.parts[0].statement, 'Намерете отношението на масите на двете колички.');
+  assert.equal(
+    pr.parts[0].statement,
+    'Намерете отношението на масите на двете колички.'
+  );
   assert.equal(pr.parts[1].points, 4);
-  assert.equal(pr.parts[1].statement, 'След колко време ще се ударят количките, ако и двете бъдат освободени?');
+  assert.equal(
+    pr.parts[1].statement,
+    'След колко време ще се ударят количките, ако и двете бъдат освободени?'
+  );
   assert.match(pr.parts[2].statement, /\[2 т\]$/); // disagrees with the points field: left for the checker
-  assert.equal(pr.statement, 'Два магнита са закрепени върху две колички.\n\nПриемете, че силата не зависи от разстоянието.');
+  assert.equal(
+    pr.statement,
+    'Два магнита са закрепени върху две колички.\n\nПриемете, че силата не зависи от разстоянието.'
+  );
 });
 
 test('a fix that pastes a sibling field into this one is refused', async () => {
-  const { applyFixes, duplicatesSiblings } = await import(txModule('fixes.mjs'));
+  const { applyFixes, duplicatesSiblings } = await import(
+    txModule('fixes.mjs')
+  );
   const c = candidate();
-  c.problems[0].parts = [{ label: 'а)', statement: 'Колко е зарядът, който преминава през сечението за една минута?', points: 10 }];
-  const whole = 'Токът е $I = 1\ \mathrm{mA}$ и $v_0/2$. Определете заряда.\n\nа) Колко е зарядът, който преминава през сечението за една минута?';
-  assert.equal(duplicatesSiblings(c, '/problems/0/statement', whole, c.problems[0].statement)?.what, 'part а)');
-  assert.equal(duplicatesSiblings(c, '/problems/0/statement', 'Токът е $I = 1\ \mathrm{mA}$ и $v_0/2$. Определете заряда.', c.problems[0].statement), null);
-  const r = applyFixes(c, [{ path: '/problems/0/statement', value: whole }], { defects: [{ path: '/problems/0/statement', kind: 'omission', severity: 'major', description: 'sentence missing' }] });
+  c.problems[0].parts = [
+    {
+      label: 'а)',
+      statement:
+        'Колко е зарядът, който преминава през сечението за една минута?',
+      points: 10,
+    },
+  ];
+  const whole =
+    'Токът е $I = 1 mathrm{mA}$ и $v_0/2$. Определете заряда.\n\nа) Колко е зарядът, който преминава през сечението за една минута?';
+  assert.equal(
+    duplicatesSiblings(
+      c,
+      '/problems/0/statement',
+      whole,
+      c.problems[0].statement
+    )?.what,
+    'part а)'
+  );
+  assert.equal(
+    duplicatesSiblings(
+      c,
+      '/problems/0/statement',
+      'Токът е $I = 1 mathrm{mA}$ и $v_0/2$. Определете заряда.',
+      c.problems[0].statement
+    ),
+    null
+  );
+  const r = applyFixes(c, [{ path: '/problems/0/statement', value: whole }], {
+    defects: [
+      {
+        path: '/problems/0/statement',
+        kind: 'omission',
+        severity: 'major',
+        description: 'sentence missing',
+      },
+    ],
+  });
   assert.equal(r.applied.length, 0);
   assert.match(r.skipped[0].reason, /pastes the text of part а\)/);
 });
@@ -1172,13 +3224,30 @@ test('a fix that pastes a sibling field into this one is refused', async () => {
 test('normaliseCandidate drops transient tx keys a refix flattened onto a figure and gives label-less parts their labels', () => {
   const c = candidate();
   const fig = c.problems[0].figures[0];
-  Object.assign(fig, { file: 'x.png', remoteKey: 'k', upload: 'new', cropped: true, dryRun: false, boxFrom: 'refix', bbox: [1, 2, 3, 4] });
+  Object.assign(fig, {
+    file: 'x.png',
+    remoteKey: 'k',
+    upload: 'new',
+    cropped: true,
+    dryRun: false,
+    boxFrom: 'refix',
+    bbox: [1, 2, 3, 4],
+  });
   c.problems[0].parts = [
     { statement: 'б) Намерете скоростта.', points: 2 },
     { statement: 'Намерете ускорението.', points: 3 },
   ];
   lib.normaliseCandidate(c);
-  for (const k of ['file', 'remoteKey', 'upload', 'cropped', 'dryRun', 'boxFrom', 'bbox']) assert.equal(fig[k], undefined, k);
+  for (const k of [
+    'file',
+    'remoteKey',
+    'upload',
+    'cropped',
+    'dryRun',
+    'boxFrom',
+    'bbox',
+  ])
+    assert.equal(fig[k], undefined, k);
   assert.deepEqual(fig.tx.bbox, [365, 275, 625, 430]); // the tx block keeps its own box
   assert.equal(c.problems[0].parts[0].label, 'б)');
   assert.equal(c.problems[0].parts[0].statement, 'Намерете скоростта.');
@@ -1188,18 +3257,49 @@ test('normaliseCandidate drops transient tx keys a refix flattened onto a figure
 test('a mangled checker path is repaired when the repair resolves in the candidate', async () => {
   const { repairDefectPath } = await import(txModule('fixes.mjs'));
   const c = candidate();
-  c.problems[0].solution.figures = [{ id: 'p1-sol-fig1', alt: 'x', tx: { document: 'solutions', page: 1, bbox: [1, 1, 2, 2] } }];
-  assert.equal(repairDefectPath(c, '/problems/0/problems/0/figures/0/tx/bbox'), '/problems/0/figures/0/tx/bbox');
-  assert.equal(repairDefectPath(c, '/problems/0/p1/statement'), '/problems/0/parts/0/statement');
-  assert.equal(repairDefectPath(c, '/problems/1/parts/0/statement'), '/problems/0/parts/0/statement'); // 1-based problem index
-  assert.equal(repairDefectPath(c, '/problems/0/figures/1/tx/bbox'), '/problems/0/solution/figures/1/tx/bbox' === repairDefectPath(c, '/problems/0/figures/1/tx/bbox') ? '/problems/0/solution/figures/1/tx/bbox' : '/problems/0/figures/1/tx/bbox');
-  assert.equal(repairDefectPath(c, '/problems/0/statement'), '/problems/0/statement');
-  assert.equal(repairDefectPath(c, '/problems/7/nowhere'), '/problems/7/nowhere'); // nothing resolves: left as written
+  c.problems[0].solution.figures = [
+    {
+      id: 'p1-sol-fig1',
+      alt: 'x',
+      tx: { document: 'solutions', page: 1, bbox: [1, 1, 2, 2] },
+    },
+  ];
+  assert.equal(
+    repairDefectPath(c, '/problems/0/problems/0/figures/0/tx/bbox'),
+    '/problems/0/figures/0/tx/bbox'
+  );
+  assert.equal(
+    repairDefectPath(c, '/problems/0/p1/statement'),
+    '/problems/0/parts/0/statement'
+  );
+  assert.equal(
+    repairDefectPath(c, '/problems/1/parts/0/statement'),
+    '/problems/0/parts/0/statement'
+  ); // 1-based problem index
+  assert.equal(
+    repairDefectPath(c, '/problems/0/figures/1/tx/bbox'),
+    '/problems/0/solution/figures/1/tx/bbox' ===
+      repairDefectPath(c, '/problems/0/figures/1/tx/bbox')
+      ? '/problems/0/solution/figures/1/tx/bbox'
+      : '/problems/0/figures/1/tx/bbox'
+  );
+  assert.equal(
+    repairDefectPath(c, '/problems/0/statement'),
+    '/problems/0/statement'
+  );
+  assert.equal(
+    repairDefectPath(c, '/problems/7/nowhere'),
+    '/problems/7/nowhere'
+  ); // nothing resolves: left as written
 });
 
 test('normaliseCandidate renames a figure that repeats an earlier id and clears its crop evidence', () => {
   const c = candidate();
-  c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p2`, number: 2 });
+  c.problems.push({
+    ...JSON.parse(JSON.stringify(c.problems[0])),
+    id: `${PAPER}-p2`,
+    number: 2,
+  });
   const dup = c.problems[1].figures[0];
   assert.equal(dup.id, 'p1-fig1');
   lib.normaliseCandidate(c);
@@ -1213,38 +3313,134 @@ test('normaliseCandidate renames a figure that repeats an earlier id and clears 
 test('a fix quoted under the wrong problem is re-pointed to the one prose field it resembles', async () => {
   const { repointByContent } = await import(txModule('fixes.mjs'));
   const c = candidate();
-  c.problems.push({ id: `${PAPER}-p2`, number: 2, points: 5, problemType: 'theory', statement: 'Газ в затворен съд се нагрява.', parts: [
-    { label: 'а)', statement: 'Какво ще бъде това отнемиение, ако температурата в съда се увеличи 2 пъти?', points: 2 },
-  ] });
-  const fix = 'Какво ще бъде това отношение, ако температурата в съда се увеличи 2 пъти?';
-  assert.equal(repointByContent(c, '/problems/0/parts/0/statement', fix), '/problems/1/parts/0/statement');
-  assert.equal(repointByContent(c, '/problems/1/parts/0/statement', fix), '/problems/1/parts/0/statement'); // already right
-  assert.equal(repointByContent(c, '/problems/0/statement', 'Нещо съвсем друго, което никъде го няма в тази тема.'), '/problems/0/statement'); // nothing resembles it: left alone
+  c.problems.push({
+    id: `${PAPER}-p2`,
+    number: 2,
+    points: 5,
+    problemType: 'theory',
+    statement: 'Газ в затворен съд се нагрява.',
+    parts: [
+      {
+        label: 'а)',
+        statement:
+          'Какво ще бъде това отнемиение, ако температурата в съда се увеличи 2 пъти?',
+        points: 2,
+      },
+    ],
+  });
+  const fix =
+    'Какво ще бъде това отношение, ако температурата в съда се увеличи 2 пъти?';
+  assert.equal(
+    repointByContent(c, '/problems/0/parts/0/statement', fix),
+    '/problems/1/parts/0/statement'
+  );
+  assert.equal(
+    repointByContent(c, '/problems/1/parts/0/statement', fix),
+    '/problems/1/parts/0/statement'
+  ); // already right
+  assert.equal(
+    repointByContent(
+      c,
+      '/problems/0/statement',
+      'Нещо съвсем друго, което никъде го няма в тази тема.'
+    ),
+    '/problems/0/statement'
+  ); // nothing resembles it: left alone
 });
 
 test('a statement that runs on into the next problem is cut where that problem opens; a leading-part fix is a truncation', async () => {
   const { plausibleReplacement } = await import(txModule('fixes.mjs'));
   const c = candidate();
-  c.problems.push({ id: `${PAPER}-p2`, number: 2, points: 5, problemType: 'theory', statement: 'Измерената лъчева скорост на звездата се променя периодично с амплитуда 30 km/s.', parts: [] });
-  c.problems[0].statement = 'Странността трябва да запази знака си.\n\nЗадача 2. Измерената лъчева скорост на звездата се променя периодично с амплитуда 30 km/s. Определете масата.';
+  c.problems.push({
+    id: `${PAPER}-p2`,
+    number: 2,
+    points: 5,
+    problemType: 'theory',
+    statement:
+      'Измерената лъчева скорост на звездата се променя периодично с амплитуда 30 km/s.',
+    parts: [],
+  });
+  c.problems[0].statement =
+    'Странността трябва да запази знака си.\n\nЗадача 2. Измерената лъчева скорост на звездата се променя периодично с амплитуда 30 km/s. Определете масата.';
   lib.normaliseCandidate(c);
-  assert.equal(c.problems[0].statement, 'Странността трябва да запази знака си.');
-  const cur = 'Странността трябва да запази знака си при всяко взаимодействие. Задача 2. Измерената лъчева скорост на звездата се променя периодично.';
-  assert.equal(plausibleReplacement(cur, 'Странността трябва да запази знака си при всяко взаимодействие.', 'other', '/problems/0/statement'), true); // drops a pasted next problem
-  const plain = 'Странността трябва да запази знака си при всяко взаимодействие. Измерената лъчева скорост на звездата се променя периодично.';
-  assert.equal(plausibleReplacement(plain, 'Странността трябва да запази знака си при всяко взаимодействие.', 'other', '/problems/0/statement'), false); // a truncation
-  assert.equal(plausibleReplacement(plain, 'Странността трябва да запази знака си при всяко взаимодействие. Измерената лъчева…(truncated)', 'other', '/problems/0/statement'), false);
-  assert.equal(plausibleReplacement(cur, 'Съвсем различен текст, който няма нищо общо с полето и е достатъчно дълъг.', 'other', '/problems/0/statement'), false);
+  assert.equal(
+    c.problems[0].statement,
+    'Странността трябва да запази знака си.'
+  );
+  const cur =
+    'Странността трябва да запази знака си при всяко взаимодействие. Задача 2. Измерената лъчева скорост на звездата се променя периодично.';
+  assert.equal(
+    plausibleReplacement(
+      cur,
+      'Странността трябва да запази знака си при всяко взаимодействие.',
+      'other',
+      '/problems/0/statement'
+    ),
+    true
+  ); // drops a pasted next problem
+  const plain =
+    'Странността трябва да запази знака си при всяко взаимодействие. Измерената лъчева скорост на звездата се променя периодично.';
+  assert.equal(
+    plausibleReplacement(
+      plain,
+      'Странността трябва да запази знака си при всяко взаимодействие.',
+      'other',
+      '/problems/0/statement'
+    ),
+    false
+  ); // a truncation
+  assert.equal(
+    plausibleReplacement(
+      plain,
+      'Странността трябва да запази знака си при всяко взаимодействие. Измерената лъчева…(truncated)',
+      'other',
+      '/problems/0/statement'
+    ),
+    false
+  );
+  assert.equal(
+    plausibleReplacement(
+      cur,
+      'Съвсем различен текст, който няма нищо общо с полето и е достатъчно дълъг.',
+      'other',
+      '/problems/0/statement'
+    ),
+    false
+  );
 });
 
 test('a printed statement that opens with an imperative-looking word is not an instruction; a note about the field is', async () => {
   const { looksLikeInstruction } = await import(txModule('fixes.mjs'));
-  assert.equal(looksLikeInstruction('Използвайки получения резулат за $P_x$, попълнете таблицата.'), false);
-  assert.equal(looksLikeInstruction('Вижда се, че силата не зависи от разстоянието.'), false);
-  assert.equal(looksLikeInstruction('Използвайте следните свойства на оптичните лещи:'), false);
-  assert.equal(looksLikeInstruction('Обединете въпроса в основното изявление и махнете етикета.'), true);
-  assert.equal(looksLikeInstruction('label: null (or "") — keep the paragraph as unbulleted statement text'), true);
-  assert.equal(looksLikeInstruction('Remove this figure entry from problem 4'), true);
+  assert.equal(
+    looksLikeInstruction(
+      'Използвайки получения резулат за $P_x$, попълнете таблицата.'
+    ),
+    false
+  );
+  assert.equal(
+    looksLikeInstruction('Вижда се, че силата не зависи от разстоянието.'),
+    false
+  );
+  assert.equal(
+    looksLikeInstruction('Използвайте следните свойства на оптичните лещи:'),
+    false
+  );
+  assert.equal(
+    looksLikeInstruction(
+      'Обединете въпроса в основното изявление и махнете етикета.'
+    ),
+    true
+  );
+  assert.equal(
+    looksLikeInstruction(
+      'label: null (or "") — keep the paragraph as unbulleted statement text'
+    ),
+    true
+  );
+  assert.equal(
+    looksLikeInstruction('Remove this figure entry from problem 4'),
+    true
+  );
 });
 
 test('text-layer lettering: math-italic formula lines and equation-editor leftovers are not printed prose; function names are not content words', async () => {
@@ -1258,56 +3454,151 @@ test('text-layer lettering: math-italic formula lines and equation-editor leftov
   const [page] = layerPages(lines.join('\n'));
   const skipped = n => page.tokens.filter(t => t.line === n).map(t => !!t.skip);
   assert.ok(skipped(0).length && skipped(0).every(s => !s), 'prose line kept');
-  assert.ok(skipped(1).length && skipped(1).every(s => s), 'math-italic formula line is lettering');
-  assert.ok(skipped(2).length && skipped(2).every(s => s), 'LaTeXiT source is lettering');
-  assert.ok(skipped(3).length && skipped(3).every(s => !s), 'prose after it kept');
+  assert.ok(
+    skipped(1).length && skipped(1).every(s => s),
+    'math-italic formula line is lettering'
+  );
+  assert.ok(
+    skipped(2).length && skipped(2).every(s => s),
+    'LaTeXiT source is lettering'
+  );
+  assert.ok(
+    skipped(3).length && skipped(3).every(s => !s),
+    'prose after it kept'
+  );
   const lat = profileFor('en');
-  for (const w of ['cos', 'min', 'ln', 'problems', 'figure']) assert.ok(lat.stop.test(w), `${w} is structural`);
-  for (const w of ['cosine', 'minimum', 'lens', 'along']) assert.ok(!lat.stop.test(w), `${w} is prose`);
+  for (const w of ['cos', 'min', 'ln', 'problems', 'figure'])
+    assert.ok(lat.stop.test(w), `${w} is structural`);
+  for (const w of ['cosine', 'minimum', 'lens', 'along'])
+    assert.ok(!lat.stop.test(w), `${w} is prose`);
 });
 
 test('inline HTML formatting becomes Markdown/LaTeX; the words stay and math is untouched', () => {
   const c = candidate();
-  c.problems[0].statement = 'Note the field <u>after 5 minutes</u> and H<sub>2</sub>O with <b>bold</b>, <i>italic</i>, x<sup>2</sup>, a<br/>break and $a < b$ in math.';
+  c.problems[0].statement =
+    'Note the field <u>after 5 minutes</u> and H<sub>2</sub>O with <b>bold</b>, <i>italic</i>, x<sup>2</sup>, a<br/>break and $a < b$ in math.';
   lib.normaliseCandidate(c);
-  assert.equal(c.problems[0].statement, 'Note the field after 5 minutes and H$_{2}$O with **bold**, *italic*, x$^{2}$, a\nbreak and $a < b$ in math.');
-  const d = candidate(); d.problems[0].statement = 'An unknown <table> tag stays for the validator.';
+  assert.equal(
+    c.problems[0].statement,
+    'Note the field after 5 minutes and H$_{2}$O with **bold**, *italic*, x$^{2}$, a\nbreak and $a < b$ in math.'
+  );
+  const d = candidate();
+  d.problems[0].statement = 'An unknown <table> tag stays for the validator.';
   lib.normaliseCandidate(d);
   assert.match(d.problems[0].statement, /<table>/);
 });
 
-test('a refix that pastes another problem\'s text into a field is refused unless that field moves in the same batch', async () => {
+test("a refix that pastes another problem's text into a field is refused unless that field moves in the same batch", async () => {
   const { applyFixes } = await import(txModule('fixes.mjs'));
-  const sentence = 'Estimate $w_1$, $w_2$, and $b$ by using a graphical proach.';
+  const sentence =
+    'Estimate $w_1$, $w_2$, and $b$ by using a graphical proach.';
   const mk = () => {
     const c = candidate();
-    c.problems[0].parts = [{ label: 'Task 4', statement: `Determine the weights $w_1$, $w_2$ and the bias $b$. Describe your measurements and document your data in a table. ${sentence}` }];
-    c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p2`, number: 2, statement: 'Hidden pattern.', figures: [], parts: [{ label: 'c', statement: 'The sinusoid amplitude $A$ (3 pts)' }, { label: 'd', statement: 'The step height $s$ (3 pts)' }] });
+    c.problems[0].parts = [
+      {
+        label: 'Task 4',
+        statement: `Determine the weights $w_1$, $w_2$ and the bias $b$. Describe your measurements and document your data in a table. ${sentence}`,
+      },
+    ];
+    c.problems.push({
+      ...JSON.parse(JSON.stringify(c.problems[0])),
+      id: `${PAPER}-p2`,
+      number: 2,
+      statement: 'Hidden pattern.',
+      figures: [],
+      parts: [
+        { label: 'c', statement: 'The sinusoid amplitude $A$ (3 pts)' },
+        { label: 'd', statement: 'The step height $s$ (3 pts)' },
+      ],
+    });
     return c;
   };
-  const defects = [{ path: '/problems/1/parts/1/statement', kind: 'reworded', severity: 'minor', description: 'x' }];
+  const defects = [
+    {
+      path: '/problems/1/parts/1/statement',
+      kind: 'reworded',
+      severity: 'minor',
+      description: 'x',
+    },
+  ];
   const c1 = mk();
-  const r1 = applyFixes(c1, [{ path: '/problems/1/parts/1/statement', value: sentence }], { defects, round: 7 });
+  const r1 = applyFixes(
+    c1,
+    [{ path: '/problems/1/parts/1/statement', value: sentence }],
+    { defects, round: 7 }
+  );
   assert.equal(r1.applied.length, 0);
   assert.match(r1.skipped[0].reason, /pastes the text of problem 1/);
-  assert.equal(c1.problems[1].parts[1].statement, 'The step height $s$ (3 pts)');
+  assert.equal(
+    c1.problems[1].parts[1].statement,
+    'The step height $s$ (3 pts)'
+  );
   // the same sentence moving out of problem 1's part in the same batch is a move, not a paste
   const c2 = mk();
-  const r2 = applyFixes(c2, [{ path: '/problems/1/parts/1/statement', value: sentence }, { path: '/problems/0/parts/0/statement', value: 'Determine the weights $w_1$, $w_2$ and the bias $b$; describe your measurements and document your data in a table.' }], { defects: [...defects, { path: '/problems/0/parts/0/statement', kind: 'other', severity: 'minor', description: 'y' }], round: 7 });
+  const r2 = applyFixes(
+    c2,
+    [
+      { path: '/problems/1/parts/1/statement', value: sentence },
+      {
+        path: '/problems/0/parts/0/statement',
+        value:
+          'Determine the weights $w_1$, $w_2$ and the bias $b$; describe your measurements and document your data in a table.',
+      },
+    ],
+    {
+      defects: [
+        ...defects,
+        {
+          path: '/problems/0/parts/0/statement',
+          kind: 'other',
+          severity: 'minor',
+          description: 'y',
+        },
+      ],
+      round: 7,
+    }
+  );
   assert.equal(r2.skipped.length, 0, JSON.stringify(r2.skipped));
 });
 
 test('a null solution statement or a remark about missing solutions is not solution text: the solution is marked incomplete', () => {
   const c = candidate();
   c.problems[0].solution = { statement: null };
-  c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p2`, number: 2, figures: [], solution: { statement: 'No official solutions document was provided in the archive for this paper.' } });
-  c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p3`, number: 3, figures: [], solution: { statement: 'Решение: няма официално решение в архива.' } });
-  c.problems.push({ ...JSON.parse(JSON.stringify(c.problems[0])), id: `${PAPER}-p4`, number: 4, figures: [], solution: { statement: 'The solution is not unique: any $v$ with $v^2 = 2gh$ solves the equation, as the marking scheme notes.' } });
+  c.problems.push({
+    ...JSON.parse(JSON.stringify(c.problems[0])),
+    id: `${PAPER}-p2`,
+    number: 2,
+    figures: [],
+    solution: {
+      statement:
+        'No official solutions document was provided in the archive for this paper.',
+    },
+  });
+  c.problems.push({
+    ...JSON.parse(JSON.stringify(c.problems[0])),
+    id: `${PAPER}-p3`,
+    number: 3,
+    figures: [],
+    solution: { statement: 'Решение: няма официално решение в архива.' },
+  });
+  c.problems.push({
+    ...JSON.parse(JSON.stringify(c.problems[0])),
+    id: `${PAPER}-p4`,
+    number: 4,
+    figures: [],
+    solution: {
+      statement:
+        'The solution is not unique: any $v$ with $v^2 = 2gh$ solves the equation, as the marking scheme notes.',
+    },
+  });
   lib.normaliseCandidate(c);
   assert.equal(c.problems[0].solution.statement, undefined);
   assert.equal(c.problems[0].solution.incomplete, true);
   assert.equal(c.problems[1].solution.statement, undefined);
-  assert.equal(c.problems[1].solution.incompleteReason, 'No official solutions document was provided in the archive for this paper.');
+  assert.equal(
+    c.problems[1].solution.incompleteReason,
+    'No official solutions document was provided in the archive for this paper.'
+  );
   assert.equal(c.problems[2].solution.statement, undefined);
   assert.equal(c.problems[2].solution.incomplete, true);
   assert.match(c.problems[3].solution.statement, /not unique/); // real solution prose with math stays
@@ -1317,31 +3608,86 @@ test('a null solution statement or a remark about missing solutions is not solut
 test('assembleWindows: printed labels in the titles pair a solutions-window placeholder with its problem when the two readings numbered the paper differently', () => {
   const c = candidate();
   const WP = lib.WINDOW_PLACEHOLDER || '[извън прозореца]';
-  const prob = (n, title, statement) => ({ id: `${PAPER}-p${n}`, number: n, title, statement, parts: [], tx: { sourceSpans: [{ document: 'problems', page: 1 }] } });
-  const sol = (n, title, text, page = 1) => ({ id: `${PAPER}-p${n}`, number: n, title, statement: WP, parts: [], solution: { statement: text }, tx: { sourceSpans: [{ document: 'solutions', page }] } });
-  const p1 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } }, problems: [prob(1, 'O5', 'Three reflectors are shown.'), prob(2, 'O6', 'Fill in the constellations.')], tx: { window: { problems: [1, 1] }, reader: c.tx.reader } };
-  const p2 = { paper: { ...c.paper, source: { ...c.paper.source, pages: [] } }, problems: [sol(1, 'Sol: O1', 'Night problem one.'), sol(5, 'Sol: O5', 'Reflector answers.'), sol(6, 'Sol: O6', 'Constellation answers.')], tx: { window: { solutions: [1, 1] }, reader: c.tx.reader } };
+  const prob = (n, title, statement) => ({
+    id: `${PAPER}-p${n}`,
+    number: n,
+    title,
+    statement,
+    parts: [],
+    tx: { sourceSpans: [{ document: 'problems', page: 1 }] },
+  });
+  const sol = (n, title, text, page = 1) => ({
+    id: `${PAPER}-p${n}`,
+    number: n,
+    title,
+    statement: WP,
+    parts: [],
+    solution: { statement: text },
+    tx: { sourceSpans: [{ document: 'solutions', page }] },
+  });
+  const p1 = {
+    paper: { ...c.paper, source: { ...c.paper.source, pages: [1] } },
+    problems: [
+      prob(1, 'O5', 'Three reflectors are shown.'),
+      prob(2, 'O6', 'Fill in the constellations.'),
+    ],
+    tx: { window: { problems: [1, 1] }, reader: c.tx.reader },
+  };
+  const p2 = {
+    paper: { ...c.paper, source: { ...c.paper.source, pages: [] } },
+    problems: [
+      sol(1, 'Sol: O1', 'Night problem one.'),
+      sol(5, 'Sol: O5', 'Reflector answers.'),
+      sol(6, 'Sol: O6', 'Constellation answers.'),
+    ],
+    tx: { window: { solutions: [1, 1] }, reader: c.tx.reader },
+  };
   const { data, report } = assembleWindows([p1, p2], manifest);
-  assert.deepEqual(data.problems.map(p => p.number), [1, 2]);
+  assert.deepEqual(
+    data.problems.map(p => p.number),
+    [1, 2]
+  );
   assert.match(data.problems[0].solution.statement, /Reflector answers/);
   assert.match(data.problems[1].solution.statement, /Constellation answers/);
-  assert.deepEqual(report.relabelled, [{ from: 5, to: 1, label: 'O5' }, { from: 6, to: 2, label: 'O6' }]);
+  assert.deepEqual(report.relabelled, [
+    { from: 5, to: 1, label: 'O5' },
+    { from: 6, to: 2, label: 'O6' },
+  ]);
   assert.deepEqual(report.droppedSolutions, [{ number: 1, label: 'O1' }]);
   assert.equal(report.problems.length, 0, JSON.stringify(report.problems));
   // without labels on every side nothing moves: a placeholder numbered like its problem is that problem
-  const q1 = { ...p1, problems: [prob(1, 'Reflectors', 'Three reflectors are shown.'), prob(2, 'Constellations', 'Fill in the constellations.')] };
-  const q2 = { ...p2, problems: [sol(1, null, 'Reflector answers.'), sol(2, null, 'Constellation answers.')] };
+  const q1 = {
+    ...p1,
+    problems: [
+      prob(1, 'Reflectors', 'Three reflectors are shown.'),
+      prob(2, 'Constellations', 'Fill in the constellations.'),
+    ],
+  };
+  const q2 = {
+    ...p2,
+    problems: [
+      sol(1, null, 'Reflector answers.'),
+      sol(2, null, 'Constellation answers.'),
+    ],
+  };
   const plain = assembleWindows([q1, q2], manifest);
   assert.equal(plain.report.relabelled, undefined);
   assert.match(plain.data.problems[0].solution.statement, /Reflector answers/);
 });
 
-test('text-layer check: a legacy inline image and its caption line are not the field\'s prose; a derived answer is dropped when the paper has no solutions', async t => {
+test("text-layer check: a legacy inline image and its caption line are not the field's prose; a derived answer is dropped when the paper has no solutions", async t => {
   const s = sandbox(t);
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });
-  const printed = 'На фигурата виждате илюстрация от астрономическа книга, издадена през хиляда шестстотин и шестдесета година. Тя показва хелиоцентричния модел на света според Коперник с планетите около Слънцето. Определете кои обекти са означени с цифрите от едно до пет и обяснете подредбата им. Планетите обикалят около Слънцето по почти кръгови орбити, а Луната обикаля около Земята и заедно с нея около Слънцето. Сравнете подредбата на планетите в този модел с подредбата, която познавате от съвременната астрономия, и посочете разликите.';
-  fs.writeFileSync(path.join(s.dir, 'text', 'problems.txt'), `Задача 1. Хелиоцентрична система\n${printed}\nФиг. 1. Хелиоцентрична система – към задача 1.\n\f`);
-  fs.writeFileSync(path.join(s.dir, 'text', 'solutions.txt'), 'Решения\nЗадача 1. Отговорът следва от подредбата на планетите около Слънцето според Коперник, както е показано на гравюрата.\n');
+  const printed =
+    'На фигурата виждате илюстрация от астрономическа книга, издадена през хиляда шестстотин и шестдесета година. Тя показва хелиоцентричния модел на света според Коперник с планетите около Слънцето. Определете кои обекти са означени с цифрите от едно до пет и обяснете подредбата им. Планетите обикалят около Слънцето по почти кръгови орбити, а Луната обикаля около Земята и заедно с нея около Слънцето. Сравнете подредбата на планетите в този модел с подредбата, която познавате от съвременната астрономия, и посочете разликите.';
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'problems.txt'),
+    `Задача 1. Хелиоцентрична система\n${printed}\nФиг. 1. Хелиоцентрична система – към задача 1.\n\f`
+  );
+  fs.writeFileSync(
+    path.join(s.dir, 'text', 'solutions.txt'),
+    'Решения\nЗадача 1. Отговорът следва от подредбата на планетите около Слънцето според Коперник, както е показано на гравюрата.\n'
+  );
   const c = candidate();
   c.problems[0].title = 'Хелиоцентрична система';
   c.problems[0].statement = `${printed}\n\n![Гравюра „Planisphaerium Copernicanum“ – хелиоцентрична система с обекти, означени с цифрите 1–5.](${lib.R2_PUBLIC}/problems/${PAPER}/p1-fig1.png)\n\n*Фиг. 1. Хелиоцентрична система – към задача 1.*`;
@@ -1350,93 +3696,193 @@ test('text-layer check: a legacy inline image and its caption line are not the f
   const out = path.join(s.dir, 'checks', 'tl.json');
   s.run('textlayer.mjs', [PAPER, '--candidate', f, '--out', out]);
   const res = s.read(out);
-  assert.equal(res.documents.problems.trusted, true, res.documents.problems.reason);
-  const unprinted = res.defects.filter(d => d.path === '/problems/0/statement' && /printed nowhere/.test(d.description));
-  assert.deepEqual(unprinted.map(d => d.words), [], JSON.stringify(unprinted));
+  assert.equal(
+    res.documents.problems.trusted,
+    true,
+    res.documents.problems.reason
+  );
+  const unprinted = res.defects.filter(
+    d =>
+      d.path === '/problems/0/statement' &&
+      /printed nowhere/.test(d.description)
+  );
+  assert.deepEqual(
+    unprinted.map(d => d.words),
+    [],
+    JSON.stringify(unprinted)
+  );
   // derived answers: no solutions document, no solution text → the answers go (a choice key stays)
   const d = candidate();
-  d.problems[0].solution = { incomplete: true, incompleteReason: 'no solutions file' };
-  d.problems[0].answer = { kind: 'expression', latex: 'v = \sqrt{GM/R}' };
+  d.problems[0].solution = {
+    incomplete: true,
+    incompleteReason: 'no solutions file',
+  };
+  d.problems[0].answer = { kind: 'expression', latex: 'v = sqrt{GM/R}' };
   d.problems[0].parts[0].answer = { kind: 'choice', correct: 'B' };
   lib.normaliseCandidate(d, { solutionsDocument: false });
   assert.equal(d.problems[0].answer, undefined);
-  assert.deepEqual(d.problems[0].parts[0].answer, { kind: 'choice', correct: 'B' });
-  const e = candidate(); e.problems[0].answer = { kind: 'expression', latex: 'x' };
+  assert.deepEqual(d.problems[0].parts[0].answer, {
+    kind: 'choice',
+    correct: 'B',
+  });
+  const e = candidate();
+  e.problems[0].answer = { kind: 'expression', latex: 'x' };
   lib.normaliseCandidate(e, { solutionsDocument: false }); // a solution with text keeps its answers
   assert.ok(e.problems[0].answer);
-  const g = candidate(); g.problems[0].solution = { incomplete: true }; g.problems[0].answer = { kind: 'expression', latex: 'x' };
+  const g = candidate();
+  g.problems[0].solution = { incomplete: true };
+  g.problems[0].answer = { kind: 'expression', latex: 'x' };
   lib.normaliseCandidate(g); // without the flag nothing is dropped
   assert.ok(g.problems[0].answer);
 });
 
 test('a formula fragment closed by a lone $$ is a typed-again equation tail: dropped when an earlier block ends with it, else its own block', () => {
   const c = candidate();
-  c.problems[0].solution.statement = 'Thus,\n\n$$\delta = 90.00^{\circ} - 50.30^{\circ} + 19.10^{\circ} = 58.80^{\circ} \quad \textbf{[2.0]}$$\n\n- **Missing $\cos\delta$ gets a penalty of 2.0.**\n\n58.80^{\circ}$$\n**Declination = ZA + Latitude also gets full credit.**\n\nFWHM beam size will be\n\nx = 2y$$\n\nas printed.';
+  c.problems[0].solution.statement =
+    'Thus,\n\n$$delta = 90.00^{circ} - 50.30^{circ} + 19.10^{circ} = 58.80^{circ} quad \textbf{[2.0]}$$\n\n- **Missing $cosdelta$ gets a penalty of 2.0.**\n\n58.80^{circ}$$\n**Declination = ZA + Latitude also gets full credit.**\n\nFWHM beam size will be\n\nx = 2y$$\n\nas printed.';
   lib.normaliseCandidate(c);
   const s = c.problems[0].solution.statement;
-  assert.doesNotMatch(s, /2\.0\.\*\*\n\n58\.80/, 'the typed-again tail is gone');
-  assert.match(s, /\*\*Declination = ZA \+ Latitude also gets full credit\.\*\*/);
-  assert.match(lib.proseOnly(s), /Declination = ZA \+ Latitude/, 'the sentence after it is prose, not math');
-  assert.match(s, /\$\$x = 2y\$\$/, 'a fragment no block ends with becomes its own block');
+  assert.doesNotMatch(
+    s,
+    /2\.0\.\*\*\n\n58\.80/,
+    'the typed-again tail is gone'
+  );
+  assert.match(
+    s,
+    /\*\*Declination = ZA \+ Latitude also gets full credit\.\*\*/
+  );
+  assert.match(
+    lib.proseOnly(s),
+    /Declination = ZA \+ Latitude/,
+    'the sentence after it is prose, not math'
+  );
+  assert.match(
+    s,
+    /\$\$x = 2y\$\$/,
+    'a fragment no block ends with becomes its own block'
+  );
 });
 
 test('a multi-line fix is a block replacement, never a fragment splice', async () => {
   const { spliceFragment } = await import(txModule('fixes.mjs'));
-  const current = 'I. M64, Coma Berenices (Com) — deduced by right ascension.\nII. M51, Canes Venatici (CVn).\nIII. M27 (2.5 pt). Vul Vulpecua (1.5 pt)\nIV. M42 (2.5 pt). Ori (Orion) (1.5 pt)\nV. M73 (2.5pt). Aqr (Aquatus) (1.5 pt)\n\nNotes on the ordering follow here at some length so that the key is under seventy percent of the field.';
-  const fix = 'I. M81 (2.5 pt). UMa (Ursa Major) (1.5 pt)\nII. M101 (2.5 pt). UMa (Ursa Major) (1.5 pt)\nIII. M27 (2.5 pt). Vul Vulpecua (1.5 pt)';
+  const current =
+    'I. M64, Coma Berenices (Com) — deduced by right ascension.\nII. M51, Canes Venatici (CVn).\nIII. M27 (2.5 pt). Vul Vulpecua (1.5 pt)\nIV. M42 (2.5 pt). Ori (Orion) (1.5 pt)\nV. M73 (2.5pt). Aqr (Aquatus) (1.5 pt)\n\nNotes on the ordering follow here at some length so that the key is under seventy percent of the field.';
+  const fix =
+    'I. M81 (2.5 pt). UMa (Ursa Major) (1.5 pt)\nII. M101 (2.5 pt). UMa (Ursa Major) (1.5 pt)\nIII. M27 (2.5 pt). Vul Vulpecua (1.5 pt)';
   assert.equal(spliceFragment(current, fix), null);
-  assert.match(spliceFragment('Скоростта в точка А е нла. Останалото следва, както и още едно изречение.', 'Скоростта в точка А е нула.'), /е нула\. Останалото/, 'a one-sentence fix still splices');
+  assert.match(
+    spliceFragment(
+      'Скоростта в точка А е нла. Останалото следва, както и още едно изречение.',
+      'Скоростта в точка А е нула.'
+    ),
+    /е нула\. Останалото/,
+    'a one-sentence fix still splices'
+  );
 });
 
-test('a transcriber\'s remark typed into a field moves to tx.notes', () => {
+test("a transcriber's remark typed into a field moves to tx.notes", () => {
   const c = candidate();
-  c.problems[0].solution.statement = 'Метеорите биха се виждали от борда на станцията. **(3 т.)**\n\n*Забележка към транскрипцията: в оригинала е изписано „100 000 години“ (вероятно вместо „светлинни години“); текстът е предаден дословно.*\n\nСледва още текст.';
+  c.problems[0].solution.statement =
+    'Метеорите биха се виждали от борда на станцията. **(3 т.)**\n\n*Забележка към транскрипцията: в оригинала е изписано „100 000 години“ (вероятно вместо „светлинни години“); текстът е предаден дословно.*\n\nСледва още текст.';
   lib.normaliseCandidate(c);
-  assert.equal(c.problems[0].solution.statement, 'Метеорите биха се виждали от борда на станцията. **(3 т.)**\n\nСледва още текст.');
+  assert.equal(
+    c.problems[0].solution.statement,
+    'Метеорите биха се виждали от борда на станцията. **(3 т.)**\n\nСледва още текст.'
+  );
   assert.match(c.tx.notes, /Забележка към транскрипцията: в оригинала/);
   assert.match(c.tx.notes, /reader rationale/, 'the earlier notes stay');
 });
 
 test('an omission fix that opens with the missing passage and continues with text the field has is inserted before that text', async () => {
   const { spliceFragment } = await import(txModule('fixes.mjs'));
-  const current = '**Solution:**\n\nExpressions lacking the approximation but otherwise correct will get a penalty of 2.0.\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet. This takes a few lines of algebra and a table of values.';
-  const fix = '**Use of approximation with proper justification at a later stage than at the first step will get full credit.**\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet.';
+  const current =
+    '**Solution:**\n\nExpressions lacking the approximation but otherwise correct will get a penalty of 2.0.\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet. This takes a few lines of algebra and a table of values.';
+  const fix =
+    '**Use of approximation with proper justification at a later stage than at the first step will get full credit.**\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet.';
   const out = spliceFragment(current, fix, 'omission');
   assert.equal(spliceFragment(current, fix), null, 'not for a wrong-value fix');
-  assert.equal(out, '**Solution:**\n\nExpressions lacking the approximation but otherwise correct will get a penalty of 2.0.\n\n**Use of approximation with proper justification at a later stage than at the first step will get full credit.**\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet. This takes a few lines of algebra and a table of values.');
-  assert.equal(spliceFragment(out, fix, 'omission'), null, 'already present: nothing to insert');
+  assert.equal(
+    out,
+    '**Solution:**\n\nExpressions lacking the approximation but otherwise correct will get a penalty of 2.0.\n\n**Use of approximation with proper justification at a later stage than at the first step will get full credit.**\n\n**(T12.8)** Combine the results of the wobble method and the transit method to determine the mass of the planet. This takes a few lines of algebra and a table of values.'
+  );
+  assert.equal(
+    spliceFragment(out, fix, 'omission'),
+    null,
+    'already present: nothing to insert'
+  );
 });
 
-test('a reader\'s aside about its own work in place of text moves to tx.notes', () => {
+test("a reader's aside about its own work in place of text moves to tx.notes", () => {
   const c = candidate();
-  c.problems[0].solution.statement = '(T10) Gravitational Lensing Telescope — introductory text and formula $\theta_b = 2R/r$ with figure (restated from the problem; see figure p10-sol-fig1).\n\nThe deflection follows from the lens equation.\n\n(The first printed line of this box, worth **1.0**, appears on page 16 of the solutions document; the solution began on an earlier page.)\n\n$$\theta = 4GM/(c^2 b)$$';
+  c.problems[0].solution.statement =
+    '(T10) Gravitational Lensing Telescope — introductory text and formula $\theta_b = 2R/r$ with figure (restated from the problem; see figure p10-sol-fig1).\n\nThe deflection follows from the lens equation.\n\n(The first printed line of this box, worth **1.0**, appears on page 16 of the solutions document; the solution began on an earlier page.)\n\n$$\theta = 4GM/(c^2 b)$$';
   lib.normaliseCandidate(c);
-  assert.equal(c.problems[0].solution.statement, 'The deflection follows from the lens equation.\n\n$$\theta = 4GM/(c^2 b)$$');
+  assert.equal(
+    c.problems[0].solution.statement,
+    'The deflection follows from the lens equation.\n\n$$\theta = 4GM/(c^2 b)$$'
+  );
   assert.match(c.tx.notes, /restated from the problem/);
   assert.match(c.tx.notes, /page 16 of the solutions document/);
-  const d = candidate(); d.problems[0].statement = 'Find the mass of the box. The first line of the table gives the density.';
+  const d = candidate();
+  d.problems[0].statement =
+    'Find the mass of the box. The first line of the table gives the density.';
   lib.normaliseCandidate(d);
-  assert.match(d.problems[0].statement, /mass of the box/, 'ordinary prose stays');
+  assert.match(
+    d.problems[0].statement,
+    /mass of the box/,
+    'ordinary prose stays'
+  );
   // a caption that prints an aside phrase stays when the text layer has it (idpho-2020-experiment-ipho-exp-q1)
-  const caption = 'Figure 8: Reflexes $(h = 2n+1, k = 0)$ are systematically absent. Note: Reflex $(0, 0)$ with relatively high intensity is omitted here for clarity.';
-  const e = candidate(); e.problems[0].figures = [{ id: 'p1-fig8', alt: 'Diffraction pattern.', caption, tx: { document: 'problems', page: 1, bbox: [0, 0, 500, 500] } }];
-  lib.normaliseCandidate(e, { printedText: 'figure 8: reflexes (h = 2n+1, k = 0) are systematically absent. note: reflex (0, 0) with relatively high intensity is omitted here for clarity.' });
+  const caption =
+    'Figure 8: Reflexes $(h = 2n+1, k = 0)$ are systematically absent. Note: Reflex $(0, 0)$ with relatively high intensity is omitted here for clarity.';
+  const e = candidate();
+  e.problems[0].figures = [
+    {
+      id: 'p1-fig8',
+      alt: 'Diffraction pattern.',
+      caption,
+      tx: { document: 'problems', page: 1, bbox: [0, 0, 500, 500] },
+    },
+  ];
+  lib.normaliseCandidate(e, {
+    printedText:
+      'figure 8: reflexes (h = 2n+1, k = 0) are systematically absent. note: reflex (0, 0) with relatively high intensity is omitted here for clarity.',
+  });
   assert.equal(e.problems[0].figures[0].caption, caption);
-  const f = candidate(); f.problems[0].figures = [{ id: 'p1-fig8', alt: 'Diffraction pattern.', caption, tx: { document: 'problems', page: 1, bbox: [0, 0, 500, 500] } }];
-  lib.normaliseCandidate(f, { printedText: 'figure 8: reflexes are systematically absent.' });
-  assert.equal(f.problems[0].figures[0].caption, '', 'not printed: still a remark');
+  const f = candidate();
+  f.problems[0].figures = [
+    {
+      id: 'p1-fig8',
+      alt: 'Diffraction pattern.',
+      caption,
+      tx: { document: 'problems', page: 1, bbox: [0, 0, 500, 500] },
+    },
+  ];
+  lib.normaliseCandidate(f, {
+    printedText: 'figure 8: reflexes are systematically absent.',
+  });
+  assert.equal(
+    f.problems[0].figures[0].caption,
+    '',
+    'not printed: still a remark'
+  );
 });
 
 test('a $$ frame around a Markdown table is not math: the frame goes, the table stays', () => {
   const c = candidate();
-  c.problems[0].solution.statement = 'Values are in Table 6.\n\n$$| 2a [mm] | 2b [mm] |\n|---|---|\n| 99 | 76 |\n| 87 | 69 |$$\n\nThe fit follows.\n\n$$E = mc^2$$';
+  c.problems[0].solution.statement =
+    'Values are in Table 6.\n\n$$| 2a [mm] | 2b [mm] |\n|---|---|\n| 99 | 76 |\n| 87 | 69 |$$\n\nThe fit follows.\n\n$$E = mc^2$$';
   lib.normaliseCandidate(c);
-  assert.equal(c.problems[0].solution.statement, 'Values are in Table 6.\n\n| 2a [mm] | 2b [mm] |\n|---|---|\n| 99 | 76 |\n| 87 | 69 |\n\nThe fit follows.\n\n$$E = mc^2$$');
+  assert.equal(
+    c.problems[0].solution.statement,
+    'Values are in Table 6.\n\n| 2a [mm] | 2b [mm] |\n|---|---|\n| 99 | 76 |\n| 87 | 69 |\n\nThe fit follows.\n\n$$E = mc^2$$'
+  );
 });
 
 test('an equation that ends in a bar keeps its closing $$ (the table-frame rule only strips frames around table rows)', () => {
   const d = candidate();
-  d.problems[0].solution.statement = 'Hence\n\n$$h = 90^\circ - \varphi + \left|\delta\right|$$\n\nand\n\n$$l = l_0 + a|\cos(\beta)|$$\n\nas printed.';
+  d.problems[0].solution.statement =
+    'Hence\n\n$$h = 90^circ - \varphi + left|delta\right|$$\n\nand\n\n$$l = l_0 + a|cos(\beta)|$$\n\nas printed.';
   const before = d.problems[0].solution.statement;
   lib.normaliseCandidate(d);
   assert.equal(d.problems[0].solution.statement, before);
@@ -1444,13 +3890,39 @@ test('an equation that ends in a bar keeps its closing $$ (the table-frame rule 
 
 test('with one document in the paper, figures and spans filed under another document name go to that one', () => {
   const c = candidate();
-  c.problems[0].solution.figures = [{ id: 'p1-sol-fig1', alt: 'x', tx: { document: 'solutions', page: 3, bbox: [100, 100, 400, 400] } }];
-  c.problems[0].tx.sourceSpans = [{ document: 'problems', page: 1 }, { document: 'solutions', page: 3 }];
+  c.problems[0].solution.figures = [
+    {
+      id: 'p1-sol-fig1',
+      alt: 'x',
+      tx: { document: 'solutions', page: 3, bbox: [100, 100, 400, 400] },
+    },
+  ];
+  c.problems[0].tx.sourceSpans = [
+    { document: 'problems', page: 1 },
+    { document: 'solutions', page: 3 },
+  ];
   lib.normaliseCandidate(c, { documents: ['problems'] });
   assert.equal(c.problems[0].solution.figures[0].tx.document, 'problems');
-  assert.equal(c.problems[0].solution.figures[0].tx.documentAsWritten, 'solutions');
-  assert.deepEqual(c.problems[0].tx.sourceSpans.map(s => s.document), ['problems', 'problems']);
-  const d = candidate(); d.problems[0].solution.figures = [{ id: 'p1-sol-fig1', alt: 'x', tx: { document: 'solutions', page: 3, bbox: [100, 100, 400, 400] } }];
+  assert.equal(
+    c.problems[0].solution.figures[0].tx.documentAsWritten,
+    'solutions'
+  );
+  assert.deepEqual(
+    c.problems[0].tx.sourceSpans.map(s => s.document),
+    ['problems', 'problems']
+  );
+  const d = candidate();
+  d.problems[0].solution.figures = [
+    {
+      id: 'p1-sol-fig1',
+      alt: 'x',
+      tx: { document: 'solutions', page: 3, bbox: [100, 100, 400, 400] },
+    },
+  ];
   lib.normaliseCandidate(d, { documents: ['problems', 'solutions'] });
-  assert.equal(d.problems[0].solution.figures[0].tx.document, 'solutions', 'two documents: nothing moves');
+  assert.equal(
+    d.problems[0].solution.figures[0].tx.document,
+    'solutions',
+    'two documents: nothing moves'
+  );
 });

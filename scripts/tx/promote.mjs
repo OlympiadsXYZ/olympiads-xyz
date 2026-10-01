@@ -12,65 +12,213 @@ import path from 'node:path';
 import { supplementarySourceErrors, sourceHashErrors } from './supplements.mjs';
 import { sourceConversionProblems } from './source-conversions.mjs';
 import { sourceReadScopeProblems } from './source-read-scope.mjs';
-import { assertReplacementLinks, assertPromotionNotRetired } from './replacement-links.mjs';
 import {
-  parseArgs, fail, readJson, readManifest, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems, sha256File, contentPathFor, run, ROOT, nowIso, writeJson, listContentFiles, manifestFile,
+  assertReplacementLinks,
+  assertPromotionNotRetired,
+} from './replacement-links.mjs';
+import {
+  parseArgs,
+  fail,
+  readJson,
+  readManifest,
+  buildFinalPaper,
+  provenanceFor,
+  compileSchema,
+  figureEvidenceProblems,
+  sha256File,
+  contentPathFor,
+  run,
+  ROOT,
+  nowIso,
+  writeJson,
+  listContentFiles,
+  manifestFile,
+  renderDpiFor,
 } from './lib.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['replace', 'no-approve'] });
+const args = parseArgs(process.argv.slice(2), {
+  flags: ['replace', 'no-approve'],
+});
 const paperId = args._[0];
-if (!paperId || !args.candidate || !args.receipt) fail('usage: promote.mjs <paperId> --candidate <f> --receipt <r> [--replace] [--no-approve]');
+if (!paperId || !args.candidate || !args.receipt)
+  fail(
+    'usage: promote.mjs <paperId> --candidate <f> --receipt <r> [--replace] [--no-approve]'
+  );
 const manifest = readManifest(paperId);
 if (!manifest) fail(`no manifest for ${paperId}`);
 const candidate = readJson(path.resolve(args.candidate), null);
 const receipt = readJson(path.resolve(args.receipt), null);
 if (!candidate || !receipt) fail('candidate or receipt not readable');
-if (receipt.paperId !== paperId || candidate.paper?.id !== paperId) fail('paper id mismatch between arguments, candidate and receipt');
-if (receipt.verdict !== 'pass') fail(`receipt verdict is "${receipt.verdict}", not pass — nothing promoted`);
-if (receipt.defects?.length) fail(`receipt lists ${receipt.defects.length} unresolved defect(s) — nothing promoted`);
-if (receipt.blockers?.length) fail(`receipt lists blockers: ${receipt.blockers.join('; ')}`);
-if (!receipt.reviewer?.provider || !receipt.reviewer?.model || !receipt.reviewer?.requestId) fail('receipt does not identify the reviewer');
-if (receipt.independence && !receipt.independence.independent && !receipt.independence.allowSameModel) fail('receipt records a same-model check that was not explicitly allowed');
-if (sha256File(path.resolve(args.candidate)) !== receipt.candidateSha256) fail('candidate bytes changed since the receipt was written');
-if (receipt.checkerCandidateSha256 && receipt.checkerCandidateSha256 !== receipt.candidateSha256) fail('receipt was issued for a candidate the checker did not check');
-const figProblems = figureEvidenceProblems(candidate, manifest, path.dirname(manifestFile(paperId)));
-if (figProblems.length) fail(`figure evidence missing: ${figProblems.map(p => `${p.path}: ${p.message}`).join('; ')}`);
-for (const message of sourceHashErrors(manifest, receipt.sourceHashes)) fail(message);
-for (const message of sourceConversionProblems(manifest, path.dirname(manifestFile(paperId)), receipt.sourceConversions || {})) fail(message);
-for (const message of sourceReadScopeProblems(manifest, candidate, receipt.sourceReadScopes || {})) fail(message);
-for (const issue of supplementarySourceErrors(candidate, manifest)) fail(`${issue.path}: ${issue.message}`);
+if (receipt.paperId !== paperId || candidate.paper?.id !== paperId)
+  fail('paper id mismatch between arguments, candidate and receipt');
+if (receipt.verdict !== 'pass')
+  fail(`receipt verdict is "${receipt.verdict}", not pass — nothing promoted`);
+if (receipt.defects?.length)
+  fail(
+    `receipt lists ${receipt.defects.length} unresolved defect(s) — nothing promoted`
+  );
+if (receipt.blockers?.length)
+  fail(`receipt lists blockers: ${receipt.blockers.join('; ')}`);
+if (
+  !receipt.reviewer?.provider ||
+  !receipt.reviewer?.model ||
+  !receipt.reviewer?.requestId
+)
+  fail('receipt does not identify the reviewer');
+if (
+  receipt.independence &&
+  !receipt.independence.independent &&
+  !receipt.independence.allowSameModel
+)
+  fail('receipt records a same-model check that was not explicitly allowed');
+if (sha256File(path.resolve(args.candidate)) !== receipt.candidateSha256)
+  fail('candidate bytes changed since the receipt was written');
+if (
+  receipt.checkerCandidateSha256 &&
+  receipt.checkerCandidateSha256 !== receipt.candidateSha256
+)
+  fail('receipt was issued for a candidate the checker did not check');
+const figProblems = figureEvidenceProblems(
+  candidate,
+  manifest,
+  path.dirname(manifestFile(paperId))
+);
+if (figProblems.length)
+  fail(
+    `figure evidence missing: ${figProblems
+      .map(p => `${p.path}: ${p.message}`)
+      .join('; ')}`
+  );
+for (const message of sourceHashErrors(manifest, receipt.sourceHashes))
+  fail(message);
+for (const message of sourceConversionProblems(
+  manifest,
+  path.dirname(manifestFile(paperId)),
+  receipt.sourceConversions || {}
+))
+  fail(message);
+for (const message of sourceReadScopeProblems(
+  manifest,
+  candidate,
+  receipt.sourceReadScopes || {}
+))
+  fail(message);
+for (const issue of supplementarySourceErrors(candidate, manifest))
+  fail(`${issue.path}: ${issue.message}`);
 
+if (receipt.renderDpi !== undefined) {
+  let actualDpi;
+  try {
+    actualDpi = renderDpiFor(manifest);
+  } catch (error) {
+    fail(error.message);
+  }
+  if (receipt.renderDpi !== actualDpi)
+    fail('Source renderDpi changed since the receipt was written');
+}
 const prov = provenanceFor(candidate, {
-  reviewer: receipt.reviewer, promptVersion: receipt.promptVersion, checkedAt: receipt.checkedAt, sourceHashes: receipt.sourceHashes,
-  independent: receipt.independence ? receipt.independence.independent : true, adjudicator: receipt.adjudicator || null, mode: receipt.checkerMode || null,
+  reviewer: receipt.reviewer,
+  promptVersion: receipt.promptVersion,
+  checkedAt: receipt.checkedAt,
+  sourceHashes: receipt.sourceHashes,
+  independent: receipt.independence ? receipt.independence.independent : true,
+  adjudicator: receipt.adjudicator || null,
+  mode: receipt.checkerMode || null,
+  ...(receipt.renderDpi !== undefined ? { renderDpi: receipt.renderDpi } : {}),
 });
 const final = buildFinalPaper(candidate, prov);
-if (final.contentHash !== receipt.contentHash) fail(`content hash mismatch: receipt ${receipt.contentHash.slice(0, 12)}… vs rebuilt ${final.contentHash.slice(0, 12)}… (schema or candidate changed since the receipt)`);
+if (final.contentHash !== receipt.contentHash)
+  fail(
+    `content hash mismatch: receipt ${receipt.contentHash.slice(
+      0,
+      12
+    )}… vs rebuilt ${final.contentHash.slice(
+      0,
+      12
+    )}… (schema or candidate changed since the receipt)`
+  );
 const { validate } = compileSchema('final');
-if (!validate(final.data)) fail(`final paper fails schema before writing: ${JSON.stringify(validate.errors.slice(0, 3))}`);
+if (!validate(final.data))
+  fail(
+    `final paper fails schema before writing: ${JSON.stringify(
+      validate.errors.slice(0, 3)
+    )}`
+  );
 
-const target = contentPathFor(paperId, { subject: final.data.paper.subject, competition: final.data.paper.competition, year: final.data.paper.year });
+const target = contentPathFor(paperId, {
+  subject: final.data.paper.subject,
+  competition: final.data.paper.competition,
+  year: final.data.paper.year,
+});
 // A new passing transcription cannot undo a prior source duplicate/withdrawal
 // decision. Check before writing either canonical bytes or stored receipts.
-const existingFiles = listContentFiles().filter(f => path.basename(f) === `${paperId}.json`);
-try { assertPromotionNotRetired(paperId, readJson(path.join(ROOT,'content/problem-publication.json'),{papers:{}}).papers?.[paperId], existingFiles.map(f=>readJson(f))); }
-catch(error){ fail(error.message); }
-if (fs.existsSync(target) && !args.replace) fail(`${path.relative(ROOT, target)} already exists; pass --replace to overwrite (the publication ledger will then need a new approval)`);
+const existingFiles = listContentFiles().filter(
+  f => path.basename(f) === `${paperId}.json`
+);
+try {
+  assertPromotionNotRetired(
+    paperId,
+    readJson(path.join(ROOT, 'content/problem-publication.json'), {
+      papers: {},
+    }).papers?.[paperId],
+    existingFiles.map(f => readJson(f))
+  );
+} catch (error) {
+  fail(error.message);
+}
+if (fs.existsSync(target) && !args.replace)
+  fail(
+    `${path.relative(
+      ROOT,
+      target
+    )} already exists; pass --replace to overwrite (the publication ledger will then need a new approval)`
+  );
 // a replacement whose year (or subject/competition) changed lands in another folder: the earlier file goes once the
 // new one is verified, or the tree holds the paper id twice (nao-2002-i-11-12 re-filed from 2001 to 2002)
-const previous = args.replace ? listContentFiles().filter(f => path.basename(f) === `${paperId}.json` && path.resolve(f) !== path.resolve(target)) : [];
+const previous = args.replace
+  ? listContentFiles().filter(
+      f =>
+        path.basename(f) === `${paperId}.json` &&
+        path.resolve(f) !== path.resolve(target)
+    )
+  : [];
 // Check the current file and any prior classification path before any write.
 if (args.replace) {
-  for (const file of [...(fs.existsSync(target) ? [target] : []), ...previous]) {
-    try { assertReplacementLinks(readJson(file), final.data); }
-    catch (error) { fail(`${path.relative(ROOT, file)}: ${error.message}`); }
+  for (const file of [
+    ...(fs.existsSync(target) ? [target] : []),
+    ...previous,
+  ]) {
+    try {
+      assertReplacementLinks(readJson(file), final.data);
+    } catch (error) {
+      fail(`${path.relative(ROOT, file)}: ${error.message}`);
+    }
   }
 }
 fs.mkdirSync(path.dirname(target), { recursive: true });
-{ // atomic, with the same rename retry writeJson has (the ship and other workers read this tree)
+{
+  // atomic, with the same rename retry writeJson has (the ship and other workers read this tree)
   const tmp = `${target}.${process.pid}.partial`;
   fs.writeFileSync(tmp, final.bytes);
-  for (let attempt = 1; ; attempt++) { try { fs.renameSync(tmp, target); break; } catch (e) { if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) { try { fs.unlinkSync(tmp); } catch {} throw e; } Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt); } }
+  for (let attempt = 1; ; attempt++) {
+    try {
+      fs.renameSync(tmp, target);
+      break;
+    } catch (e) {
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) {
+        try {
+          fs.unlinkSync(tmp);
+        } catch {}
+        throw e;
+      }
+      Atomics.wait(
+        new Int32Array(new SharedArrayBuffer(4)),
+        0,
+        0,
+        50 * attempt
+      );
+    }
+  }
 }
 
 // normalise must be a no-op on what we wrote; if it changes bytes the receipt no longer applies
@@ -78,22 +226,57 @@ run('node', [path.join(ROOT, 'scripts', 'normalise-papers.mjs')]);
 const onDisk = sha256File(target);
 if (onDisk !== receipt.contentHash) {
   fs.rmSync(target);
-  fail('normalise-papers.mjs changed the promoted bytes; receipt no longer matches — fix canonicalisation in scripts/tx/lib.mjs and re-run receipt.mjs');
+  fail(
+    'normalise-papers.mjs changed the promoted bytes; receipt no longer matches — fix canonicalisation in scripts/tx/lib.mjs and re-run receipt.mjs'
+  );
 }
 for (const f of previous) fs.rmSync(f);
 
 const receiptDir = path.join(ROOT, 'content', 'problem-receipts');
 const storedReceipt = path.join(receiptDir, `${paperId}.json`);
 const { candidate: _localCandidate, ...portable } = receipt; // no machine-local paths in the repository
-writeJson(storedReceipt, { ...portable, promotedAt: nowIso(), promotedFile: path.relative(ROOT, target) });
+writeJson(storedReceipt, {
+  ...portable,
+  promotedAt: nowIso(),
+  promotedFile: path.relative(ROOT, target),
+});
 
 let approved = false;
 if (!args['no-approve']) {
   const pub = path.join(ROOT, 'scripts', 'publication.mjs');
-  if (!fs.existsSync(pub)) fail(`scripts/publication.mjs is missing — promoted ${path.relative(ROOT, target)} and stored the receipt, but the publication ledger was NOT updated. Run: node scripts/publication.mjs approve --paper ${paperId} --receipt ${path.relative(ROOT, storedReceipt)}`);
-  const r = run('node', [pub, 'approve', '--paper', paperId, '--receipt', storedReceipt], { allowFail: true });
-  if (r.status !== 0) fail(`publication.mjs approve failed: ${(r.stderr || r.stdout).slice(0, 500)}`);
+  if (!fs.existsSync(pub))
+    fail(
+      `scripts/publication.mjs is missing — promoted ${path.relative(
+        ROOT,
+        target
+      )} and stored the receipt, but the publication ledger was NOT updated. Run: node scripts/publication.mjs approve --paper ${paperId} --receipt ${path.relative(
+        ROOT,
+        storedReceipt
+      )}`
+    );
+  const r = run(
+    'node',
+    [pub, 'approve', '--paper', paperId, '--receipt', storedReceipt],
+    { allowFail: true }
+  );
+  if (r.status !== 0)
+    fail(
+      `publication.mjs approve failed: ${(r.stderr || r.stdout).slice(0, 500)}`
+    );
   approved = true;
   process.stdout.write(r.stdout);
 }
-console.log(JSON.stringify({ paperId, file: path.relative(ROOT, target), contentHash: onDisk, receipt: path.relative(ROOT, storedReceipt), approved, verifiedBy: final.data.paper.transcription.verifiedBy }, null, 2));
+console.log(
+  JSON.stringify(
+    {
+      paperId,
+      file: path.relative(ROOT, target),
+      contentHash: onDisk,
+      receipt: path.relative(ROOT, storedReceipt),
+      approved,
+      verifiedBy: final.data.paper.transcription.verifiedBy,
+    },
+    null,
+    2
+  )
+);

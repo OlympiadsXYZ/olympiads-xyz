@@ -24,79 +24,194 @@ import { supplementarySourceErrors } from './supplements.mjs';
 import { sourceConversions } from './source-conversions.mjs';
 import { sourceReadScopes } from './source-read-scope.mjs';
 import {
-  parseArgs, fail, readJson, writeJson, readManifest, paperDir, buildFinalPaper, provenanceFor, compileSchema, figureEvidenceProblems,
-  independence, nowIso, sha256File, editsNeedingModel,
+  parseArgs,
+  fail,
+  readJson,
+  writeJson,
+  readManifest,
+  paperDir,
+  buildFinalPaper,
+  provenanceFor,
+  compileSchema,
+  figureEvidenceProblems,
+  independence,
+  nowIso,
+  sha256File,
+  editsNeedingModel,
+  renderDpiFor,
 } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['allow-same-model'] });
 const paperId = args._[0];
-if (!paperId || !args.candidate || !args.defects || !args.reviewer) fail('usage: receipt.mjs <paperId> --candidate <f> --defects <checker.json> --reviewer provider:model:requestId [--prompt-version v1] [--out <file>] [--allow-same-model] [--adjudicator provider:model:id]');
+if (!paperId || !args.candidate || !args.defects || !args.reviewer)
+  fail(
+    'usage: receipt.mjs <paperId> --candidate <f> --defects <checker.json> --reviewer provider:model:requestId [--prompt-version v1] [--out <file>] [--allow-same-model] [--adjudicator provider:model:id]'
+  );
 const manifest = readManifest(paperId);
 if (!manifest) fail(`no manifest for ${paperId}`);
 const candFile = path.resolve(args.candidate);
 const candidate = readJson(candFile, null);
 const checker = readJson(path.resolve(args.defects), null);
 if (!candidate || !checker) fail('candidate or checker output not readable');
-if (candidate.paper?.id !== paperId) fail(`candidate paper.id ${candidate.paper?.id} != ${paperId}`);
-const parseWho = (s, what) => { const [provider, model, ...rest] = String(s).split(':'); const id = rest.join(':'); if (!provider || !model || !id) fail(`--${what} must be provider:model:id`); return { provider, model, requestId: id }; };
+if (candidate.paper?.id !== paperId)
+  fail(`candidate paper.id ${candidate.paper?.id} != ${paperId}`);
+const parseWho = (s, what) => {
+  const [provider, model, ...rest] = String(s).split(':');
+  const id = rest.join(':');
+  if (!provider || !model || !id) fail(`--${what} must be provider:model:id`);
+  return { provider, model, requestId: id };
+};
 const reviewer = parseWho(args.reviewer, 'reviewer');
-const promptVersion = args['prompt-version'] || checker.checker?.promptVersion || 'v1';
-const adjudicator = args.adjudicator ? parseWho(args.adjudicator, 'adjudicator') : (candidate.tx?.adjudicator ? { provider: candidate.tx.adjudicator.provider || 'agent', model: candidate.tx.adjudicator.model || 'unknown', requestId: candidate.tx.adjudicator.requestId || candidate.tx.adjudicator.at || 'n/a' } : null);
+const promptVersion =
+  args['prompt-version'] || checker.checker?.promptVersion || 'v1';
+const adjudicator = args.adjudicator
+  ? parseWho(args.adjudicator, 'adjudicator')
+  : candidate.tx?.adjudicator
+  ? {
+      provider: candidate.tx.adjudicator.provider || 'agent',
+      model: candidate.tx.adjudicator.model || 'unknown',
+      requestId:
+        candidate.tx.adjudicator.requestId ||
+        candidate.tx.adjudicator.at ||
+        'n/a',
+    }
+  : null;
 
 const candidateSha256 = sha256File(candFile);
-const blockers = checkerEvidenceProblems(checker, candidate, manifest, candidateSha256);
-for (const issue of supplementarySourceErrors(candidate, manifest)) blockers.push(`${issue.path}: ${issue.message}`);
-const claimedSha = checker.candidateSha256 || checker.checker?.candidateSha256 || null;
+const blockers = checkerEvidenceProblems(
+  checker,
+  candidate,
+  manifest,
+  candidateSha256
+);
+for (const issue of supplementarySourceErrors(candidate, manifest))
+  blockers.push(`${issue.path}: ${issue.message}`);
+const claimedSha =
+  checker.candidateSha256 || checker.checker?.candidateSha256 || null;
 
 const defects = Array.isArray(checker.defects) ? checker.defects : [];
 const unresolved = defects.filter(d => d.severity !== 'info');
 const ignoredResolvedFlags = unresolved.filter(d => d.resolved).length;
 
-for (const p of figureEvidenceProblems(candidate, manifest, paperDir(paperId))) blockers.push(`${p.path}: ${p.message}`);
+for (const p of figureEvidenceProblems(candidate, manifest, paperDir(paperId)))
+  blockers.push(`${p.path}: ${p.message}`);
 
 const reader = candidate.tx?.reader || {};
 const indep = independence(reader, reviewer, adjudicator);
 const allowSame = !!args['allow-same-model'];
-if (!indep.independent && !allowSame) blockers.push(`checker ${reviewer.provider}:${reviewer.model} uses the same model as the reader or adjudicator, or a model identity is unknown; pass --allow-same-model to accept a non-independent check (recorded on the page)`);
+if (!indep.independent && !allowSame)
+  blockers.push(
+    `checker ${reviewer.provider}:${reviewer.model} uses the same model as the reader or adjudicator, or a model identity is unknown; pass --allow-same-model to accept a non-independent check (recorded on the page)`
+  );
 
 const checkedAt = nowIso();
-const sourceHashes = Object.fromEntries(Object.entries(manifest.documents).map(([id, doc]) => [id, doc.sha256]));
+const sourceHashes = Object.fromEntries(
+  Object.entries(manifest.documents).map(([id, doc]) => [id, doc.sha256])
+);
 const checkerMode = checker.mode || checker.checker?.mode || null; // 'crops': the model audited the figure crops; the text was verified mechanically
 // D-P23: an agreement fix has the shape of a real-word swap („начинает“ → „начинается“), so only a model reading the
 // page verifies it; the text-layer-only verification of a crops/mechanical check never publishes one
-if (checkerMode === 'crops' || reviewer.provider === 'mechanical') for (const e of editsNeedingModel(candidate)) blockers.push(`tx.edits[${e.index}] records an agreement fix („${e.printed}“ → „${e.fixed}“, ${e.document} p.${e.page}) that the text layer cannot verify: run the full model checker (--checker-mode full) on this paper`);
-const prov = provenanceFor(candidate, { reviewer, promptVersion, checkedAt, sourceHashes, independent: indep.independent, adjudicator, mode: checkerMode });
+if (checkerMode === 'crops' || reviewer.provider === 'mechanical')
+  for (const e of editsNeedingModel(candidate))
+    blockers.push(
+      `tx.edits[${e.index}] records an agreement fix („${e.printed}“ → „${e.fixed}“, ${e.document} p.${e.page}) that the text layer cannot verify: run the full model checker (--checker-mode full) on this paper`
+    );
+const renderDpi = renderDpiFor(manifest);
+const prov = provenanceFor(candidate, {
+  reviewer,
+  promptVersion,
+  checkedAt,
+  sourceHashes,
+  independent: indep.independent,
+  adjudicator,
+  mode: checkerMode,
+  renderDpi,
+});
 const final = buildFinalPaper(candidate, prov);
 const { validate } = compileSchema('final');
-if (!validate(final.data)) for (const e of validate.errors.slice(0, 10)) blockers.push(`final bytes fail schema at ${e.dataPath || '/'}: ${e.message}${e.params?.additionalProperty ? ` (${e.params.additionalProperty})` : ''}`);
+if (!validate(final.data))
+  for (const e of validate.errors.slice(0, 10))
+    blockers.push(
+      `final bytes fail schema at ${e.dataPath || '/'}: ${e.message}${
+        e.params?.additionalProperty ? ` (${e.params.additionalProperty})` : ''
+      }`
+    );
 
 let verdict;
 if (checker.verdict === 'escalate') verdict = 'escalate';
-else if (checker.verdict === 'pass' && unresolved.length === 0 && blockers.length === 0) verdict = 'pass';
+else if (
+  checker.verdict === 'pass' &&
+  unresolved.length === 0 &&
+  blockers.length === 0
+)
+  verdict = 'pass';
 else verdict = 'fail';
 
 const receipt = {
-  paperId, verdict,
+  paperId,
+  verdict,
   contentHash: final.contentHash,
   sourceHashes,
+  renderDpi,
   // promote.mjs binds image-to-PDF conversions and read scopes (pages of a compilation) to the receipt; without these
   // two fields every verified-route paper with a converted .jpg source or a readScope was refused at promote
   // (iao-2002-theory-alpha, ioaa-2009-*, 2026-09-26)
   sourceConversions: sourceConversions(manifest),
   sourceReadScopes: sourceReadScopes(manifest),
-  reviewer, checkedAt, promptVersion, ...(checkerMode ? { checkerMode } : {}),
-  reader: { provider: prov.provider, model: prov.model, promptVersion: prov.promptVersion, promptSha256: prov.promptSha256 ?? null, requestId: prov.requestId, at: prov.at },
+  reviewer,
+  checkedAt,
+  promptVersion,
+  ...(checkerMode ? { checkerMode } : {}),
+  reader: {
+    provider: prov.provider,
+    model: prov.model,
+    promptVersion: prov.promptVersion,
+    promptSha256: prov.promptSha256 ?? null,
+    requestId: prov.requestId,
+    at: prov.at,
+  },
   independence: { ...indep, allowSameModel: allowSame },
   adjudicator,
-  checkerVerdict: checker.verdict ?? null, summary: checker.summary || null, coverage: checker.coverage || null,
-  defects: unresolved.map(d => ({ path: d.path, document: d.document, page: d.page, severity: d.severity, kind: d.kind, description: d.description, suggestedFix: d.suggestedFix ?? null, confidence: d.confidence, ...(d.source ? { source: d.source } : {}), ...(d.region ? { region: d.region } : {}) })),
+  checkerVerdict: checker.verdict ?? null,
+  summary: checker.summary || null,
+  coverage: checker.coverage || null,
+  defects: unresolved.map(d => ({
+    path: d.path,
+    document: d.document,
+    page: d.page,
+    severity: d.severity,
+    kind: d.kind,
+    description: d.description,
+    suggestedFix: d.suggestedFix ?? null,
+    confidence: d.confidence,
+    ...(d.source ? { source: d.source } : {}),
+    ...(d.region ? { region: d.region } : {}),
+  })),
   informational: defects.filter(d => d.severity === 'info').length,
   ignoredResolvedFlags,
   blockers,
-  candidate: candFile, candidateSha256, checkerCandidateSha256: claimedSha,
+  candidate: candFile,
+  candidateSha256,
+  checkerCandidateSha256: claimedSha,
   checkerCrops: checker.checker?.crops ?? null,
 };
-const out = path.resolve(args.out || path.join(paperDir(paperId), 'receipt.json'));
+const out = path.resolve(
+  args.out || path.join(paperDir(paperId), 'receipt.json')
+);
 writeJson(out, receipt);
-console.log(JSON.stringify({ paperId, verdict, contentHash: receipt.contentHash, unresolved: unresolved.length, blockers, independent: indep.independent, out }, null, 2));
+console.log(
+  JSON.stringify(
+    {
+      paperId,
+      verdict,
+      contentHash: receipt.contentHash,
+      unresolved: unresolved.length,
+      blockers,
+      independent: indep.independent,
+      out,
+    },
+    null,
+    2
+  )
+);
 process.exit(verdict === 'pass' ? 0 : verdict === 'escalate' ? 3 : 1);

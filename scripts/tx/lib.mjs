@@ -2,9 +2,18 @@
 // Everything here is pure plumbing: paths, hashing, paper-id derivation,
 // schema compilation, math-span detection and the deterministic serialisation
 // that receipt.mjs and promote.mjs must agree on byte-for-byte.
-import { isNativeImageCrop, nativeImageCropEvidenceError } from './native-image-crop.mjs';
-import { isOriginalImageFigure, originalImageEvidenceError } from './original-image-figure.mjs';
-import { isEmbeddedImageFigure, embeddedImageEvidenceError } from './embedded-image-figure.mjs';
+import {
+  isNativeImageCrop,
+  nativeImageCropEvidenceError,
+} from './native-image-crop.mjs';
+import {
+  isOriginalImageFigure,
+  originalImageEvidenceError,
+} from './original-image-figure.mjs';
+import {
+  isEmbeddedImageFigure,
+  embeddedImageEvidenceError,
+} from './embedded-image-figure.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -17,9 +26,15 @@ import { isDocumentId, supplementKeys, SUPPLEMENT_ID } from './supplements.mjs';
 import { splitFencedCode } from '../lib/fenced-code.mjs';
 
 const require = createRequire(import.meta.url);
-export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
+export const ROOT = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '..',
+  '..'
+);
 // OLYMPIADS_TX_DIR lets the tests point the pipeline at a throw-away directory.
-export const TX_DIR = process.env.OLYMPIADS_TX_DIR ? path.resolve(process.env.OLYMPIADS_TX_DIR) : path.join(ROOT, 'tmp', 'tx');
+export const TX_DIR = process.env.OLYMPIADS_TX_DIR
+  ? path.resolve(process.env.OLYMPIADS_TX_DIR)
+  : path.join(ROOT, 'tmp', 'tx');
 export const CONTENT_DIR = path.join(ROOT, 'content', 'problems');
 export const SCHEMA_FILE = path.join(CONTENT_DIR, 'schema.json');
 export const BACKLOG_FILE = path.join(ROOT, 'tmp', 'shards', 'all.json');
@@ -28,14 +43,35 @@ export const JOBS_FILE = path.join(TX_DIR, 'jobs.json');
 export const PRICES_FILE = path.join(ROOT, 'scripts', 'tx', 'prices.json');
 export const PROMPTS_DIR = path.join(ROOT, 'scripts', 'tx', 'prompts');
 // OLYMPIADS_KEYS_FILE lets the tests point at a throw-away providers.env (the real one is never read by a test).
-export const KEYS_FILE = process.env.OLYMPIADS_KEYS_FILE ? path.resolve(process.env.OLYMPIADS_KEYS_FILE) : path.join(os.homedir(), '.config', 'olympiads-xyz', 'providers.env');
+export const KEYS_FILE = process.env.OLYMPIADS_KEYS_FILE
+  ? path.resolve(process.env.OLYMPIADS_KEYS_FILE)
+  : path.join(os.homedir(), '.config', 'olympiads-xyz', 'providers.env');
 export const R2_REMOTE = 'r2:olympiads-archive';
 export const R2_PUBLIC = 'https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev';
 export const RENDER_DPI = 160;
 export const FIGURE_DPI = 300;
+// A new receipt records the actual prepared page rendering. Historical receipts
+// without an explicit value retain their original deterministic default bytes.
+export function renderDpiFor(manifest) {
+  const documents = Object.entries(manifest.documents || {});
+  const dpi =
+    manifest.renderDpi ??
+    documents.find(([, doc]) => doc.renderDpi !== undefined)?.[1].renderDpi ??
+    RENDER_DPI;
+  if (!Number.isFinite(dpi) || dpi <= 0)
+    throw new Error(
+      'Invalid source renderDpi: expected a positive finite number'
+    );
+  for (const [id, doc] of documents) {
+    if (doc.renderDpi !== undefined && doc.renderDpi !== dpi)
+      throw new Error('Source renderDpi differs for document ' + id);
+  }
+  return dpi;
+}
 export const PDFCROP = path.join(ROOT, 'scripts', 'pdfcrop.py');
 // Windows Python defaults to the ANSI code page; archive keys and figure ids are Cyrillic.
-if (process.platform === 'win32' && !process.env.PYTHONUTF8) process.env.PYTHONUTF8 = '1';
+if (process.platform === 'win32' && !process.env.PYTHONUTF8)
+  process.env.PYTHONUTF8 = '1';
 export const STAGES = ['reader', 'checker', 'adjudicator'];
 // Figure boxes travel as permille of the page (0..1000, origin top-left, x right,
 // y down) so that a model which internally rescales the page image still
@@ -46,15 +82,26 @@ export const BBOX_SCALE = 1000;
 export const WINDOW_PLACEHOLDER = '[извън прозореца]';
 
 export const nowIso = () => new Date().toISOString();
-export const sha256 = value => crypto.createHash('sha256').update(value).digest('hex');
-export const md5 = value => crypto.createHash('md5').update(value).digest('hex');
+export const sha256 = value =>
+  crypto.createHash('sha256').update(value).digest('hex');
+export const md5 = value =>
+  crypto.createHash('md5').update(value).digest('hex');
 export const sha256File = file => sha256(fs.readFileSync(file));
-export const readJson = (file, fallback) => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
+export const readJson = (file, fallback) =>
+  fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
 // The same for a file that may be half-written or corrupt (a batch meta, a broker record, jobs.json read by a
 // scheduler): one bad file is logged and skipped instead of stopping the whole pass (reviewer finding 2026-09-17).
 export function readJsonSafe(file, fallback) {
-  try { return readJson(file, fallback); }
-  catch (e) { console.error(`[lib] ${path.relative(ROOT, file)} is not valid JSON (${e.message}); skipped`); return fallback; }
+  try {
+    return readJson(file, fallback);
+  } catch (e) {
+    console.error(
+      `[lib] ${path.relative(ROOT, file)} is not valid JSON (${
+        e.message
+      }); skipped`
+    );
+    return fallback;
+  }
 }
 export function writeJson(file, value, indent = 2) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -63,15 +110,28 @@ export function writeJson(file, value, indent = 2) {
   // Windows refuses the rename while another process has the target open (eight workers and the
   // ship share the ledger and jobs.json): wait a little and try again before giving up
   for (let attempt = 1; ; attempt++) {
-    try { fs.renameSync(tmp, file); return; }
-    catch (e) {
-      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) { try { fs.unlinkSync(tmp); } catch {} throw e; }
-      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt);
+    try {
+      fs.renameSync(tmp, file);
+      return;
+    } catch (e) {
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) {
+        try {
+          fs.unlinkSync(tmp);
+        } catch {}
+        throw e;
+      }
+      Atomics.wait(
+        new Int32Array(new SharedArrayBuffer(4)),
+        0,
+        0,
+        50 * attempt
+      );
     }
   }
 }
 export const paperDir = paperId => path.join(TX_DIR, paperId);
-export const manifestFile = paperId => path.join(paperDir(paperId), 'manifest.json');
+export const manifestFile = paperId =>
+  path.join(paperDir(paperId), 'manifest.json');
 export const readManifest = paperId => readJson(manifestFile(paperId), null);
 
 // ---------------------------------------------------------------- CLI args
@@ -81,7 +141,12 @@ export function parseArgs(argv, { flags = [] } = {}) {
     const a = argv[i];
     if (a.startsWith('--')) {
       const key = a.slice(2);
-      if (flags.includes(key) || i + 1 >= argv.length || argv[i + 1].startsWith('--')) out[key] = true;
+      if (
+        flags.includes(key) ||
+        i + 1 >= argv.length ||
+        argv[i + 1].startsWith('--')
+      )
+        out[key] = true;
       else out[key] = argv[++i];
     } else out._.push(a);
   }
@@ -93,23 +158,49 @@ export function fail(message, code = 1) {
 }
 
 // ---------------------------------------------------------------- shell
-export function run(cmd, args, { input, maxBuffer = 64 * 1024 * 1024, allowFail = false, cwd = ROOT } = {}) {
+export function run(
+  cmd,
+  args,
+  { input, maxBuffer = 64 * 1024 * 1024, allowFail = false, cwd = ROOT } = {}
+) {
   const r = spawnSync(cmd, args, { cwd, input, encoding: 'utf8', maxBuffer });
   if (r.error) throw r.error;
-  if (r.status !== 0 && !allowFail) throw new Error(`${cmd} ${args.join(' ')} failed (${r.status}): ${(r.stderr || '').slice(0, 2000)}`);
+  if (r.status !== 0 && !allowFail)
+    throw new Error(
+      `${cmd} ${args.join(' ')} failed (${r.status}): ${(r.stderr || '').slice(
+        0,
+        2000
+      )}`
+    );
   return r;
 }
 // `which` lives in Git's usr/bin; a node started from PowerShell may not have it, so fall back to where.exe
-export const which = cmd => spawnSync('which', [cmd], { encoding: 'utf8' }).status === 0 || (process.platform === 'win32' && spawnSync('where.exe', [cmd], { encoding: 'utf8' }).status === 0);
+export const which = cmd =>
+  spawnSync('which', [cmd], { encoding: 'utf8' }).status === 0 ||
+  (process.platform === 'win32' &&
+    spawnSync('where.exe', [cmd], { encoding: 'utf8' }).status === 0);
 // The text layer is poppler's: Git for Windows ships xpdf's pdftotext 4.00 ahead of MiKTeX's poppler on the Bash PATH,
 // and xpdf writes Latin-1 and lays text out differently (2026-09-23: every layer extracted from the Bash tool that day
 // lost its Cyrillic, so the verbatim check called it untrustworthy and skipped). Prefer a pdftotext that says Poppler.
 let popplerPdftotext = null;
 export function pdftotextBin() {
   if (popplerPdftotext) return popplerPdftotext;
-  const isPoppler = bin => /poppler/i.test(`${spawnSync(bin, ['-v'], { encoding: 'utf8' }).stderr || ''}`);
-  const found = (process.platform === 'win32' ? spawnSync('where.exe', ['pdftotext'], { encoding: 'utf8' }).stdout : spawnSync('which', ['-a', 'pdftotext'], { encoding: 'utf8' }).stdout) || '';
-  const candidates = ['pdftotext', ...found.split(/\r?\n/).map(s => s.trim()).filter(Boolean)];
+  const isPoppler = bin =>
+    /poppler/i.test(
+      `${spawnSync(bin, ['-v'], { encoding: 'utf8' }).stderr || ''}`
+    );
+  const found =
+    (process.platform === 'win32'
+      ? spawnSync('where.exe', ['pdftotext'], { encoding: 'utf8' }).stdout
+      : spawnSync('which', ['-a', 'pdftotext'], { encoding: 'utf8' }).stdout) ||
+    '';
+  const candidates = [
+    'pdftotext',
+    ...found
+      .split(/\r?\n/)
+      .map(s => s.trim())
+      .filter(Boolean),
+  ];
   popplerPdftotext = candidates.find(isPoppler) || 'pdftotext';
   return popplerPdftotext;
 }
@@ -128,28 +219,95 @@ export function pdftotextBin() {
 // proposal for papers that do not exist yet: paperIdFor()/resolvePaper() look the
 // archive key up in content/problems first and an existing id always wins.
 // Competition codes in Cyrillic ("Всерусийска", "Балкански", "ПУ") become ASCII slugs, as src/archive/labels.ts does.
-const CYR_TO_LAT = { а: 'a', б: 'b', в: 'v', г: 'g', д: 'd', е: 'e', ж: 'zh', з: 'z', и: 'i', й: 'y', к: 'k', л: 'l', м: 'm', н: 'n', о: 'o', п: 'p', р: 'r', с: 's', т: 't', у: 'u', ф: 'f', х: 'h', ц: 'ts', ч: 'ch', ш: 'sh', щ: 'sht', ъ: 'a', ь: 'y', ю: 'yu', я: 'ya', ы: 'y', э: 'e', ё: 'yo' };
-export const competitionSlug = code => String(code).toLowerCase().split('').map(c => CYR_TO_LAT[c] ?? c).join('').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+const CYR_TO_LAT = {
+  а: 'a',
+  б: 'b',
+  в: 'v',
+  г: 'g',
+  д: 'd',
+  е: 'e',
+  ж: 'zh',
+  з: 'z',
+  и: 'i',
+  й: 'y',
+  к: 'k',
+  л: 'l',
+  м: 'm',
+  н: 'n',
+  о: 'o',
+  п: 'p',
+  р: 'r',
+  с: 's',
+  т: 't',
+  у: 'u',
+  ф: 'f',
+  х: 'h',
+  ц: 'ts',
+  ч: 'ch',
+  ш: 'sh',
+  щ: 'sht',
+  ъ: 'a',
+  ь: 'y',
+  ю: 'yu',
+  я: 'ya',
+  ы: 'y',
+  э: 'e',
+  ё: 'yo',
+};
+export const competitionSlug = code =>
+  String(code)
+    .toLowerCase()
+    .split('')
+    .map(c => CYR_TO_LAT[c] ?? c)
+    .join('')
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 export function derivePaperId(entry) {
   const comp = competitionSlug(entry.competition);
   let roundTok = null;
   if (comp === 'esf') roundTok = 'esenno';
   else if (comp === 'psf') roundTok = 'proletno';
-  else if (entry.round) roundTok = String(entry.round).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  const base = path.basename(entry.problemsKey || '', '.pdf').replace(/\.txt$/i, '').toLowerCase(); // a plain-text edition (IYPT <year>.txt) derives like its PDF years
+  else if (entry.round)
+    roundTok = String(entry.round)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  const base = path
+    .basename(entry.problemsKey || '', '.pdf')
+    .replace(/\.txt$/i, '')
+    .toLowerCase(); // a plain-text edition (IYPT <year>.txt) derives like its PDF years
   let gradeTok;
   if (entry.grade) {
-    gradeTok = String(entry.grade).toLowerCase().replace(/\s*[–—-]\s*/g, '-').replace(/[^a-z0-9-]+/g, '');
+    gradeTok = String(entry.grade)
+      .toLowerCase()
+      .replace(/\s*[–—-]\s*/g, '-')
+      .replace(/[^a-z0-9-]+/g, '');
     if (comp === 'esf' && gradeTok === 'sp') gradeTok = 'st';
-    if (comp === 'nao' && /^(ml|st)$/.test(gradeTok) && /prak/.test(base)) gradeTok = `${gradeTok}-prak`;
+    if (comp === 'nao' && /^(ml|st)$/.test(gradeTok) && /prak/.test(base))
+      gradeTok = `${gradeTok}-prak`;
   } else if (/nabl|obs/.test(base)) {
     gradeTok = 'nabl' + (/map/.test(base) ? '-maps' : '');
   } else {
     // the file name minus the words every paper carries (problems, the competition code, the year, the round)
-    const strip = new RegExp(`(problems?|zad|prob|tema|noa\\d?_\\d{4}_?|nof\\d?_\\d{4}_?|proletni_\\d{4}_?|esenni_\\d{4}_?|${comp.replace(/-/g, '[-_]?')}|${entry.year}|${roundTok ? roundTok.replace(/-/g, '[-_]?') : 'NOMATCH'})`, 'g');
-    gradeTok = base.replace(strip, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x';
+    const strip = new RegExp(
+      `(problems?|zad|prob|tema|noa\\d?_\\d{4}_?|nof\\d?_\\d{4}_?|proletni_\\d{4}_?|esenni_\\d{4}_?|${comp.replace(
+        /-/g,
+        '[-_]?'
+      )}|${entry.year}|${
+        roundTok ? roundTok.replace(/-/g, '[-_]?') : 'NOMATCH'
+      })`,
+      'g'
+    );
+    gradeTok =
+      base
+        .replace(strip, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '') || 'x';
   }
-  return [comp, entry.year, roundTok, gradeTok].filter(Boolean).join('-').replace(/-+/g, '-');
+  return [comp, entry.year, roundTok, gradeTok]
+    .filter(Boolean)
+    .join('-')
+    .replace(/-+/g, '-');
 }
 // The archive catalogue (every archive-catalog/*.json array), cached.
 let catalogueCache = null;
@@ -157,7 +315,12 @@ export function loadCatalogue() {
   if (catalogueCache) return catalogueCache;
   const dir = path.join(ROOT, 'archive-catalog');
   let all = [];
-  for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'schema.json')) { const j = readJson(path.join(dir, f), []); if (Array.isArray(j)) all = all.concat(j); }
+  for (const f of fs
+    .readdirSync(dir)
+    .filter(f => f.endsWith('.json') && f !== 'schema.json')) {
+    const j = readJson(path.join(dir, f), []);
+    if (Array.isArray(j)) all = all.concat(j);
+  }
   return (catalogueCache = all);
 }
 export const loadBacklog = () => readJson(BACKLOG_FILE, []);
@@ -170,13 +333,16 @@ export function listContentFiles() {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
       const p = path.join(d, e.name);
       if (e.isDirectory()) stack.push(p);
-      else if (e.name.endsWith('.json') && e.name !== 'schema.json') out.push(p);
+      else if (e.name.endsWith('.json') && e.name !== 'schema.json')
+        out.push(p);
     }
   }
   return out.sort();
 }
 export function findContentFile(paperId) {
-  return listContentFiles().find(f => path.basename(f) === `${paperId}.json`) || null;
+  return (
+    listContentFiles().find(f => path.basename(f) === `${paperId}.json`) || null
+  );
 }
 // Index of already transcribed papers by id and by problems archive key. Reading
 // ~550 files takes well under a second and is the only reliable way to know
@@ -184,10 +350,15 @@ export function findContentFile(paperId) {
 let indexCache = null;
 export function existingPaperIndex(force = false) {
   if (indexCache && !force) return indexCache;
-  const byId = new Map(), byKey = new Map();
+  const byId = new Map(),
+    byKey = new Map();
   for (const file of listContentFiles()) {
     let data;
-    try { data = readJson(file); } catch { continue; }
+    try {
+      data = readJson(file);
+    } catch {
+      continue;
+    }
     const p = data?.paper;
     if (!p?.id) continue;
     byId.set(p.id, { file, paper: p });
@@ -206,13 +377,23 @@ export function paperIdFor(entry, index = existingPaperIndex()) {
 // Refuses to start a second paper for a PDF that is already transcribed under a
 // different id (the old workflow's ids are not fully derivable).
 export function resolvePaper(paperId, { problems, solutions } = {}) {
-  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(paperId)) throw new Error(`unsafe paper id: ${paperId}`);
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(paperId))
+    throw new Error(`unsafe paper id: ${paperId}`);
   const index = existingPaperIndex();
-  let meta = null, keys = { problems: problems || null, solutions: solutions || null }, origin = null;
+  let meta = null,
+    keys = { problems: problems || null, solutions: solutions || null },
+    origin = null;
   const existing = findContentFile(paperId);
   if (existing) {
     const p = readJson(existing).paper;
-    meta = { competition: p.competition, year: p.year, round: p.round ?? null, grade: p.grade ?? null, subject: p.subject, lang: p.lang };
+    meta = {
+      competition: p.competition,
+      year: p.year,
+      round: p.round ?? null,
+      grade: p.grade ?? null,
+      subject: p.subject,
+      lang: p.lang,
+    };
     keys.problems ||= p.source?.archiveKey || null;
     keys.solutions ||= p.solutionSource?.archiveKey || null;
     Object.assign(keys, supplementKeys(p.supplementarySources || {}));
@@ -220,11 +401,27 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
   }
   if (!meta || !keys.problems) {
     const backlog = loadBacklog();
-    const hit = backlog.find(e => paperIdFor(e, index) === paperId) || backlog.find(e => derivePaperId(e) === paperId);
+    const hit =
+      backlog.find(e => paperIdFor(e, index) === paperId) ||
+      backlog.find(e => derivePaperId(e) === paperId);
     if (hit) {
       const owner = index.byKey.get(hit.problemsKey);
-      if (owner && owner !== paperId) throw new Error(`${hit.problemsKey} is already transcribed as ${owner}; use that id (derived proposal ${derivePaperId(hit)} is not the committed one)`);
-      meta ||= { competition: hit.competition, year: hit.year, round: hit.round ?? null, grade: hit.grade ?? null, subject: hit.subject, lang: hit.lang || 'bg' };
+      if (owner && owner !== paperId)
+        throw new Error(
+          `${
+            hit.problemsKey
+          } is already transcribed as ${owner}; use that id (derived proposal ${derivePaperId(
+            hit
+          )} is not the committed one)`
+        );
+      meta ||= {
+        competition: hit.competition,
+        year: hit.year,
+        round: hit.round ?? null,
+        grade: hit.grade ?? null,
+        subject: hit.subject,
+        lang: hit.lang || 'bg',
+      };
       keys.problems ||= hit.problemsKey || null;
       keys.solutions ||= hit.solutionsKey || null;
       origin ||= 'tmp/shards/all.json';
@@ -232,37 +429,91 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
   }
   if (keys.problems) {
     const owner = index.byKey.get(keys.problems);
-    if (owner && owner !== paperId) throw new Error(`${keys.problems} is already transcribed as ${owner}; refusing to prepare it under ${paperId}`);
+    if (owner && owner !== paperId)
+      throw new Error(
+        `${keys.problems} is already transcribed as ${owner}; refusing to prepare it under ${paperId}`
+      );
   }
   // a paper outside the Bulgarian shards: its catalogue entry (found by the problems key) carries the metadata
   if (!meta && keys.problems) {
-    const e = loadCatalogue().find(x => x.file === keys.problems && x.kind === 'competition');
-    if (e) { meta = { competition: e.competition, year: e.year, round: e.round ?? null, grade: e.group ?? null, subject: e.subject, lang: e.lang || 'other' }; origin ||= 'archive-catalog'; }
+    const e = loadCatalogue().find(
+      x => x.file === keys.problems && x.kind === 'competition'
+    );
+    if (e) {
+      meta = {
+        competition: e.competition,
+        year: e.year,
+        round: e.round ?? null,
+        grade: e.group ?? null,
+        subject: e.subject,
+        lang: e.lang || 'other',
+      };
+      origin ||= 'archive-catalog';
+    }
   }
   if (!meta) {
     const m = /^([a-z]+)-(\d{4})-/.exec(paperId);
-    if (!m) throw new Error(`cannot derive metadata for ${paperId}; pass --problems/--solutions`);
-    meta = { competition: m[1].toUpperCase(), year: Number(m[2]), round: null, grade: null, subject: m[1] === 'nao' ? 'astronomy' : 'physics', lang: 'bg' };
+    if (!m)
+      throw new Error(
+        `cannot derive metadata for ${paperId}; pass --problems/--solutions`
+      );
+    meta = {
+      competition: m[1].toUpperCase(),
+      year: Number(m[2]),
+      round: null,
+      grade: null,
+      subject: m[1] === 'nao' ? 'astronomy' : 'physics',
+      lang: 'bg',
+    };
     origin ||= 'paper-id';
   }
-  if (!keys.problems) throw new Error(`no problems key known for ${paperId}; pass --problems <archive key>`);
+  if (!keys.problems)
+    throw new Error(
+      `no problems key known for ${paperId}; pass --problems <archive key>`
+    );
   // what the archive inventory (content/archive-index.json, GLM-indexed) lists in the problems document: the reader is
   // told how many top-level problems there are (an IPhO question with Parts A–C is one problem, not three)
   if (keys.problems) {
-    const row = (readJson(path.join(ROOT, 'content', 'archive-index.json'), null)?.rows || []).find(r => r.file === keys.problems && Array.isArray(r.problems) && r.problems.length);
+    const row = (
+      readJson(path.join(ROOT, 'content', 'archive-index.json'), null)?.rows ||
+      []
+    ).find(
+      r =>
+        r.file === keys.problems &&
+        Array.isArray(r.problems) &&
+        r.problems.length
+    );
     if (row) {
       // the inventory sometimes lists a problem's printed sections as problems of their own ("Experiment 1 (Part A) · The
       // short copper rod" next to "Experiment 1 · Heat Conduction…"): those are parts, and are not counted
-      const titles = row.problems.map(p => [p.number, p.title].filter(Boolean).join(' · '));
-      const isSection = t => /\((?:part|section|част)\s*[a-zа-я0-9]+\)|^\s*(?:part|част)\s+[a-zа-я0-9]+\b/i.test(t) || /^[^·]*\((?:part|част) [a-z0-9]+\)/i.test(String(t));
+      const titles = row.problems.map(p =>
+        [p.number, p.title].filter(Boolean).join(' · ')
+      );
+      const isSection = t =>
+        /\((?:part|section|част)\s*[a-zа-я0-9]+\)|^\s*(?:part|част)\s+[a-zа-я0-9]+\b/i.test(
+          t
+        ) || /^[^·]*\((?:part|част) [a-z0-9]+\)/i.test(String(t));
       const top = titles.filter(t => !isSection(t));
-      const parts = row.problems.filter((p, i) => !isSection(titles[i])).reduce((a, p) => a + (Number(p.parts) || 0), 0);
-      meta.listed = { problems: Math.max(1, top.length), titles: top.slice(0, 12), ...(parts ? { parts } : {}) };
+      const parts = row.problems
+        .filter((p, i) => !isSection(titles[i]))
+        .reduce((a, p) => a + (Number(p.parts) || 0), 0);
+      meta.listed = {
+        problems: Math.max(1, top.length),
+        titles: top.slice(0, 12),
+        ...(parts ? { parts } : {}),
+      };
     }
   }
   return { paperId, meta, keys, origin, existingFile: existing };
 }
-export const contentPathFor = (paperId, meta) => path.join(CONTENT_DIR, meta.subject, meta.competition, String(meta.year), `${paperId}.json`);
+export const contentPathFor = (paperId, meta) =>
+  path.join(
+    CONTENT_DIR,
+    meta.subject,
+    meta.competition,
+    String(meta.year),
+    `${paperId}.json`
+  );
 
 // ---------------------------------------------------------------- schema
 export function loadSchema() {
@@ -279,13 +530,25 @@ export function compileSchema(mode = 'final') {
   const schema = loadSchema();
   if (mode === 'candidate') {
     // tx.edits (D-P23) is published as paper.transcription.edits: its shape is checked from the first validate
-    schema.properties.tx = { type: 'object', properties: { edits: { type: 'array', items: { $ref: '#/$defs/transcriptionEdit' } } } };
+    schema.properties.tx = {
+      type: 'object',
+      properties: {
+        edits: { type: 'array', items: { $ref: '#/$defs/transcriptionEdit' } },
+      },
+    };
     schema.$defs.problem.properties.tx = { type: 'object' };
-    schema.$defs.figure.properties.tx = { type: 'object', properties: { rotation: { type: 'integer', enum: [0, 90, 180, 270] } } };
+    schema.$defs.figure.properties.tx = {
+      type: 'object',
+      properties: { rotation: { type: 'integer', enum: [0, 90, 180, 270] } },
+    };
     schema.$defs.figure.required = ['id'];
     schema.$defs.problem.properties.sourceSpans ||= { type: 'array' };
   }
-  const ajv = new Ajv({ allErrors: true, jsonPointers: true, schemaId: 'auto' });
+  const ajv = new Ajv({
+    allErrors: true,
+    jsonPointers: true,
+    schemaId: 'auto',
+  });
   return { validate: ajv.compile(schema), schema };
 }
 // problem.classification (D-P16, Codex's problem-search block) validated on its own: a reader that writes it in
@@ -295,13 +558,28 @@ export function classificationValid(obj) {
   if (!classificationValidator) {
     const Ajv = require('ajv');
     const schema = loadSchema();
-    const ajv = new Ajv({ allErrors: false, jsonPointers: true, schemaId: 'auto' });
-    classificationValidator = ajv.compile({ $ref: '#/$defs/classification', $defs: schema.$defs });
+    const ajv = new Ajv({
+      allErrors: false,
+      jsonPointers: true,
+      schemaId: 'auto',
+    });
+    classificationValidator = ajv.compile({
+      $ref: '#/$defs/classification',
+      $defs: schema.$defs,
+    });
   }
   return !!classificationValidator(obj);
 }
 export function schemaSupports(schema, pointer) {
-  return pointer.split('/').filter(Boolean).reduce((o, k) => (o && typeof o === 'object' ? o[k] : undefined), schema) !== undefined;
+  return (
+    pointer
+      .split('/')
+      .filter(Boolean)
+      .reduce(
+        (o, k) => (o && typeof o === 'object' ? o[k] : undefined),
+        schema
+      ) !== undefined
+  );
 }
 
 // ---------------------------------------------------------------- text & math
@@ -317,10 +595,16 @@ export function splitMath(text) {
   );
 }
 export function mathSpans(text) {
-  return splitMath(text).filter(s => s.math).map(s => {
-    const display = s.text.startsWith('$$');
-    return { display, raw: s.text, inner: display ? s.text.slice(2, -2) : s.text.slice(1, -1) };
-  });
+  return splitMath(text)
+    .filter(s => s.math)
+    .map(s => {
+      const display = s.text.startsWith('$$');
+      return {
+        display,
+        raw: s.text,
+        inner: display ? s.text.slice(2, -2) : s.text.slice(1, -1),
+      };
+    });
 }
 export const proseOnly = text =>
   splitMath(text)
@@ -331,9 +615,14 @@ export const proseOnly = text =>
 // spelling differences vanish, a changed subscript, sign or exponent does not.
 export function normaliseLatex(inner) {
   return String(inner)
-    .replace(/\\[,;:! ]/g, ' ').replace(/~/g, ' ')
-    .replace(/\\left|\\right/g, '').replace(/\\mathrm\{([^}]*)\}/g, '$1').replace(/\\text\{([^}]*)\}/g, '$1')
-    .replace(/\{,\}/g, ',').replace(/\\cdot/g, '*').replace(/\\times/g, '*')
+    .replace(/\\[,;:! ]/g, ' ')
+    .replace(/~/g, ' ')
+    .replace(/\\left|\\right/g, '')
+    .replace(/\\mathrm\{([^}]*)\}/g, '$1')
+    .replace(/\\text\{([^}]*)\}/g, '$1')
+    .replace(/\{,\}/g, ',')
+    .replace(/\\cdot/g, '*')
+    .replace(/\\times/g, '*')
     .replace(/\\dfrac|\\tfrac/g, '\\frac')
     .replace(/\s+/g, '')
     .replace(/([_^])\{([A-Za-z0-9])\}/g, '$1$2');
@@ -341,17 +630,25 @@ export function normaliseLatex(inner) {
 // Walk every string field of a paper with its JSON pointer-ish path.
 export function walkStrings(value, cb, p = '') {
   if (typeof value === 'string') cb(p, value);
-  else if (Array.isArray(value)) value.forEach((v, i) => walkStrings(v, cb, `${p}/${i}`));
-  else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) walkStrings(v, cb, `${p}/${k}`);
+  else if (Array.isArray(value))
+    value.forEach((v, i) => walkStrings(v, cb, `${p}/${i}`));
+  else if (value && typeof value === 'object')
+    for (const [k, v] of Object.entries(value)) walkStrings(v, cb, `${p}/${k}`);
 }
 // JSON-pointer get/set for repair.mjs ("/problems/1/parts/0/statement").
 export function pointerGet(obj, pointer) {
-  return pointer.split('/').filter(Boolean).reduce((o, k) => (o == null ? undefined : o[k]), obj);
+  return pointer
+    .split('/')
+    .filter(Boolean)
+    .reduce((o, k) => (o == null ? undefined : o[k]), obj);
 }
 export function pointerSet(obj, pointer, value) {
   const keys = pointer.split('/').filter(Boolean);
   let o = obj;
-  for (const k of keys.slice(0, -1)) { if (o == null || typeof o !== 'object') return false; o = o[k]; }
+  for (const k of keys.slice(0, -1)) {
+    if (o == null || typeof o !== 'object') return false;
+    o = o[k];
+  }
   if (o == null || typeof o !== 'object') return false;
   o[keys.at(-1)] = value;
   return true;
@@ -360,15 +657,48 @@ export function pointerSet(obj, pointer, value) {
 export function allFigures(data) {
   const out = [];
   (data.problems || []).forEach((pr, i) => {
-    (pr.figures || []).forEach((f, j) => out.push({ fig: f, path: `/problems/${i}/figures/${j}`, problem: pr }));
-    (pr.parts || []).forEach((pt, k) => (pt.figures || []).forEach((f, j) => out.push({ fig: f, path: `/problems/${i}/parts/${k}/figures/${j}`, problem: pr })));
-    for (const [sections, prefix] of [[pr.sections, `/problems/${i}`], [pr.solution?.sections, `/problems/${i}/solution`]]) {
+    (pr.figures || []).forEach((f, j) =>
+      out.push({ fig: f, path: `/problems/${i}/figures/${j}`, problem: pr })
+    );
+    (pr.parts || []).forEach((pt, k) =>
+      (pt.figures || []).forEach((f, j) =>
+        out.push({
+          fig: f,
+          path: `/problems/${i}/parts/${k}/figures/${j}`,
+          problem: pr,
+        })
+      )
+    );
+    for (const [sections, prefix] of [
+      [pr.sections, `/problems/${i}`],
+      [pr.solution?.sections, `/problems/${i}/solution`],
+    ]) {
       (sections || []).forEach((section, k) => {
-        (section.figures || []).forEach((f, j) => out.push({ fig: f, path: `${prefix}/sections/${k}/figures/${j}`, problem: pr }));
-        (section.parts || []).forEach((part, n) => (part.figures || []).forEach((f, j) => out.push({ fig: f, path: `${prefix}/sections/${k}/parts/${n}/figures/${j}`, problem: pr })));
+        (section.figures || []).forEach((f, j) =>
+          out.push({
+            fig: f,
+            path: `${prefix}/sections/${k}/figures/${j}`,
+            problem: pr,
+          })
+        );
+        (section.parts || []).forEach((part, n) =>
+          (part.figures || []).forEach((f, j) =>
+            out.push({
+              fig: f,
+              path: `${prefix}/sections/${k}/parts/${n}/figures/${j}`,
+              problem: pr,
+            })
+          )
+        );
       });
     }
-    ((pr.solution || {}).figures || []).forEach((f, j) => out.push({ fig: f, path: `/problems/${i}/solution/figures/${j}`, problem: pr }));
+    ((pr.solution || {}).figures || []).forEach((f, j) =>
+      out.push({
+        fig: f,
+        path: `/problems/${i}/solution/figures/${j}`,
+        problem: pr,
+      })
+    );
   });
   return out;
 }
@@ -376,7 +706,8 @@ export function stripTx(value) {
   if (Array.isArray(value)) return value.map(stripTx);
   if (value && typeof value === 'object') {
     const out = {};
-    for (const [k, v] of Object.entries(value)) if (k !== 'tx') out[k] = stripTx(v);
+    for (const [k, v] of Object.entries(value))
+      if (k !== 'tx') out[k] = stripTx(v);
     return out;
   }
   return value;
@@ -387,23 +718,36 @@ export function stripTx(value) {
 // verdict or catalogue disagreement flag.
 export function checkerView(candidate) {
   const view = stripTx(candidate);
-  for (const problem of view.problems || []) if (problem.classification?.provenance) {
-    delete problem.classification.provenance.rater;
-    delete problem.classification.provenance.evidence;
-  }
+  for (const problem of view.problems || [])
+    if (problem.classification?.provenance) {
+      delete problem.classification.provenance.rater;
+      delete problem.classification.provenance.evidence;
+    }
   (candidate.problems || []).forEach((src, i) => {
     const spans = src.tx?.sourceSpans;
-    if (spans) view.problems[i].tx = { sourceSpans: spans.map(s => ({ document: s.document, page: s.page })) };
+    if (spans)
+      view.problems[i].tx = {
+        sourceSpans: spans.map(s => ({ document: s.document, page: s.page })),
+      };
   });
   // the reader's recorded D-P23 fixes are claims the checker must verify against the page, not notes
   const edits = transcriptionEdits(candidate);
   if (edits.length) view.tx = { edits };
-  const srcFigs = allFigures(candidate), dstFigs = allFigures(view);
+  const srcFigs = allFigures(candidate),
+    dstFigs = allFigures(view);
   srcFigs.forEach((s, k) => {
     const t = s.fig.tx;
     if (!t) return;
     const keep = {};
-    for (const key of ['document', 'page', 'bbox', 'rotation', 'file', 'cropError']) if (t[key] !== undefined) keep[key] = t[key]; // cropError: the box produced no usable crop — a figure defect for the checker
+    for (const key of [
+      'document',
+      'page',
+      'bbox',
+      'rotation',
+      'file',
+      'cropError',
+    ])
+      if (t[key] !== undefined) keep[key] = t[key]; // cropError: the box produced no usable crop — a figure defect for the checker
     if (Object.keys(keep).length) dstFigs[k].fig.tx = keep;
   });
   return view;
@@ -425,27 +769,59 @@ export function figureEvidenceProblems(candidate, manifest, directory) {
       const message = originalImageEvidenceError(fig, manifest, directory);
       if (message) problems.push({ path: p, message });
     }
-    if (fig.tx?.dryRun) problems.push({ path: p, message: 'figure comes from a figures.mjs --dry-run (never uploaded)' });
-    else if (fig.tx?.bbox && fig.tx.public200 !== true) problems.push({ path: p, message: 'figure proposal was not uploaded and HEAD-verified by figures.mjs' });
+    if (fig.tx?.dryRun)
+      problems.push({
+        path: p,
+        message: 'figure comes from a figures.mjs --dry-run (never uploaded)',
+      });
+    else if (fig.tx?.bbox && fig.tx.public200 !== true)
+      problems.push({
+        path: p,
+        message:
+          'figure proposal was not uploaded and HEAD-verified by figures.mjs',
+      });
     else if (!fig.url) problems.push({ path: p, message: 'figure has no url' });
   }
   return problems;
 }
 // Geometry helpers: permille boxes <-> preview pixels of a rendered page.
-export const pagePx = (size, dpi = RENDER_DPI) => ({ w: size.widthPt * dpi / 72, h: size.heightPt * dpi / 72 });
+export const pagePx = (size, dpi = RENDER_DPI) => ({
+  w: (size.widthPt * dpi) / 72,
+  h: (size.heightPt * dpi) / 72,
+});
 // Clockwise rotation of the cropped bitmap; page coordinates never rotate.
 export function figureRotation(fig) {
-  const rotation = fig.tx?.rotation !== undefined ? fig.tx.rotation : fig.source?.rotation !== undefined ? fig.source.rotation : 0;
-  if (![0, 90, 180, 270].includes(rotation)) throw new Error(`${fig.id || 'figure'}: rotation must be 0, 90, 180 or 270 clockwise degrees`);
+  const rotation =
+    fig.tx?.rotation !== undefined
+      ? fig.tx.rotation
+      : fig.source?.rotation !== undefined
+      ? fig.source.rotation
+      : 0;
+  if (![0, 90, 180, 270].includes(rotation))
+    throw new Error(
+      `${
+        fig.id || 'figure'
+      }: rotation must be 0, 90, 180 or 270 clockwise degrees`
+    );
   return rotation;
 }
 export function bboxToPreviewPx(bbox, size, dpi = RENDER_DPI) {
   const { w, h } = pagePx(size, dpi);
-  return [bbox[0] * w / BBOX_SCALE, bbox[1] * h / BBOX_SCALE, bbox[2] * w / BBOX_SCALE, bbox[3] * h / BBOX_SCALE].map(v => +v.toFixed(1));
+  return [
+    (bbox[0] * w) / BBOX_SCALE,
+    (bbox[1] * h) / BBOX_SCALE,
+    (bbox[2] * w) / BBOX_SCALE,
+    (bbox[3] * h) / BBOX_SCALE,
+  ].map(v => +v.toFixed(1));
 }
 export function previewPxToBbox(px, size, dpi = RENDER_DPI) {
   const { w, h } = pagePx(size, dpi);
-  return [px[0] * BBOX_SCALE / w, px[1] * BBOX_SCALE / h, px[2] * BBOX_SCALE / w, px[3] * BBOX_SCALE / h].map(v => Math.round(v));
+  return [
+    (px[0] * BBOX_SCALE) / w,
+    (px[1] * BBOX_SCALE) / h,
+    (px[2] * BBOX_SCALE) / w,
+    (px[3] * BBOX_SCALE) / h,
+  ].map(v => Math.round(v));
 }
 
 // ---------------------------------------------------------------- canonicalisation
@@ -456,8 +832,13 @@ const ROUND_MAP = [
   [/^(II|2)\b.*(областен|regional|обл)/iu, 'II кръг (областен)'],
   [/^(III|3)\b.*(национал|national|нац)/iu, 'III кръг (национален)'],
   [/^(IV|4)\b/u, 'IV кръг'],
-  [/^I кръг$/u, 'I кръг (общински)'], [/^II кръг$/u, 'II кръг (областен)'], [/^III кръг$/u, 'III кръг (национален)'],
-  [/^общински/iu, 'I кръг (общински)'], [/^областен/iu, 'II кръг (областен)'], [/^национален/iu, 'III кръг (национален)'], [/^(финал|финален)/iu, 'IV кръг'],
+  [/^I кръг$/u, 'I кръг (общински)'],
+  [/^II кръг$/u, 'II кръг (областен)'],
+  [/^III кръг$/u, 'III кръг (национален)'],
+  [/^общински/iu, 'I кръг (общински)'],
+  [/^областен/iu, 'II кръг (областен)'],
+  [/^национален/iu, 'III кръг (национален)'],
+  [/^(финал|финален)/iu, 'IV кръг'],
 ];
 export function canonRound(r) {
   if (r == null) return r;
@@ -467,7 +848,11 @@ export function canonRound(r) {
 }
 export function canonGrade(g) {
   if (g == null) return g;
-  return String(g).trim().replace(/\s*(клас|кл\.?|class)\s*$/iu, '').replace(/\s*[–—-]\s*/g, '-').replace(/\.$/, '');
+  return String(g)
+    .trim()
+    .replace(/\s*(клас|кл\.?|class)\s*$/iu, '')
+    .replace(/\s*[–—-]\s*/g, '-')
+    .replace(/\.$/, '');
 }
 const SAFE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 export function canonProblemIds(d) {
@@ -487,11 +872,34 @@ export const serialisePaper = data => JSON.stringify(data, null, 1) + '\n';
 // Reader/checker independence (Codex §4): a different model at least, ideally a
 // different provider family. Recorded in the receipt; publicationState requires it.
 export function independence(reader, checker, adjudicator = null) {
-  const same = (a, b) => String(a || '').toLowerCase() === String(b || '').toLowerCase();
-  const sameModel = same(reader?.provider, checker?.provider) && same(reader?.model, checker?.model);
-  const sameAdjudicator = adjudicator && same(adjudicator.provider, checker?.provider) && same(adjudicator.model, checker?.model);
+  const same = (a, b) =>
+    String(a || '').toLowerCase() === String(b || '').toLowerCase();
+  const sameModel =
+    same(reader?.provider, checker?.provider) &&
+    same(reader?.model, checker?.model);
+  const sameAdjudicator =
+    adjudicator &&
+    same(adjudicator.provider, checker?.provider) &&
+    same(adjudicator.model, checker?.model);
   const known = who => !!who?.model && !/unknown|unspecified/i.test(who.model);
-  return { independent: known(reader) && known(checker) && !sameModel && (!adjudicator || (known(adjudicator) && !sameAdjudicator)), differentProvider: !!reader?.provider && !!checker?.provider && !same(reader.provider, checker.provider) && (!adjudicator || !same(adjudicator.provider, checker.provider)), ...(adjudicator ? { adjudicatorSameModel: !!sameAdjudicator, adjudicatorModelKnown: known(adjudicator) } : {}) };
+  return {
+    independent:
+      known(reader) &&
+      known(checker) &&
+      !sameModel &&
+      (!adjudicator || (known(adjudicator) && !sameAdjudicator)),
+    differentProvider:
+      !!reader?.provider &&
+      !!checker?.provider &&
+      !same(reader.provider, checker.provider) &&
+      (!adjudicator || !same(adjudicator.provider, checker.provider)),
+    ...(adjudicator
+      ? {
+          adjudicatorSameModel: !!sameAdjudicator,
+          adjudicatorModelKnown: known(adjudicator),
+        }
+      : {}),
+  };
 }
 
 // D-P23: the reader fixes what is obviously wrong in the print (a non-word misspelling, an agreement error, the
@@ -503,15 +911,39 @@ const EDIT_KEYS = ['path', 'printed', 'fixed', 'document', 'page', 'kind'];
 // 'printed' (the field holds the printed wording again: the fix was reverted and the record has lapsed), 'neither',
 // or 'no-field' (the path is not a text field of the transcription). Case, whitespace and Unicode composition are
 // ignored, word boundaries are not ('ампер' is not in 'милиампер').
-const editNorm = s => String(s).normalize('NFC').replace(/\s+/g, ' ').trim().toLowerCase();
-const hasSpan = (hay, needle) => new RegExp(`(?<![\\p{L}\\p{M}])${needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}\\p{M}])`, 'u').test(hay);
+const editNorm = s =>
+  String(s).normalize('NFC').replace(/\s+/g, ' ').trim().toLowerCase();
+const hasSpan = (hay, needle) =>
+  new RegExp(
+    `(?<![\\p{L}\\p{M}])${needle.replace(
+      /[.*+?^${}()|[\]\\]/g,
+      '\\$&'
+    )}(?![\\p{L}\\p{M}])`,
+    'u'
+  ).test(hay);
 export function editFieldState(candidate, e) {
-  if (!e || typeof e.path !== 'string' || !e.path.startsWith('/') || /^\/tx(\/|$)|\/tx\//.test(e.path)) return 'no-field';
+  if (
+    !e ||
+    typeof e.path !== 'string' ||
+    !e.path.startsWith('/') ||
+    /^\/tx(\/|$)|\/tx\//.test(e.path)
+  )
+    return 'no-field';
   const value = pointerGet(candidate, e.path);
   if (typeof value !== 'string') return 'no-field';
   const field = editNorm(value);
-  if (typeof e.fixed === 'string' && editNorm(e.fixed) && hasSpan(field, editNorm(e.fixed))) return 'fixed';
-  if (typeof e.printed === 'string' && editNorm(e.printed) && hasSpan(field, editNorm(e.printed))) return 'printed';
+  if (
+    typeof e.fixed === 'string' &&
+    editNorm(e.fixed) &&
+    hasSpan(field, editNorm(e.fixed))
+  )
+    return 'fixed';
+  if (
+    typeof e.printed === 'string' &&
+    editNorm(e.printed) &&
+    hasSpan(field, editNorm(e.printed))
+  )
+    return 'printed';
   return 'neither';
 }
 // A lapsed record (its field holds the printed wording again — a repair restored the print) describes nothing and
@@ -519,14 +951,31 @@ export function editFieldState(candidate, e) {
 export function transcriptionEdits(candidate) {
   const list = candidate?.tx?.edits;
   if (!Array.isArray(list)) return [];
-  return list.filter(e => e && typeof e === 'object' && editFieldState(candidate, e) !== 'printed').map(e => Object.fromEntries(EDIT_KEYS.filter(k => e[k] !== undefined).map(k => [k, e[k]])));
+  return list
+    .filter(
+      e =>
+        e && typeof e === 'object' && editFieldState(candidate, e) !== 'printed'
+    )
+    .map(e =>
+      Object.fromEntries(
+        EDIT_KEYS.filter(k => e[k] !== undefined).map(k => [k, e[k]])
+      )
+    );
 }
 // An agreement fix cannot be verified mechanically (a real-word swap such as „начинает“ → „начинается“ has the
 // same shape as „давление“ → „давления“): a paper that carries one needs a model checker that reads the page, not
 // the text-layer-only verification of --checker-mode crops/auto (receipt.mjs blocks that combination).
-export const editsNeedingModel = candidate => (Array.isArray(candidate?.tx?.edits) ? candidate.tx.edits : [])
-  .map((e, index) => ({ e, index })).filter(({ e }) => e && typeof e === 'object' && e.kind === 'agreement' && editFieldState(candidate, e) !== 'printed')
-  .map(({ e, index }) => ({ ...e, index })); // index = position in tx.edits
+export const editsNeedingModel = candidate =>
+  (Array.isArray(candidate?.tx?.edits) ? candidate.tx.edits : [])
+    .map((e, index) => ({ e, index }))
+    .filter(
+      ({ e }) =>
+        e &&
+        typeof e === 'object' &&
+        e.kind === 'agreement' &&
+        editFieldState(candidate, e) !== 'printed'
+    )
+    .map(({ e, index }) => ({ ...e, index })); // index = position in tx.edits
 
 // Build the exact paper promote.mjs writes: strip the working block, hoist
 // what the committed schema holds, stamp provenance, canonicalise.
@@ -541,16 +990,28 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
   const problemProps = schema.$defs?.problem?.properties || {};
   (candidate.problems || []).forEach((src, i) => {
     const spans = src.tx?.sourceSpans;
-    if (spans && problemProps.sourceSpans) data.problems[i].sourceSpans = spans.map(s => ({ document: s.document, page: s.page, ...(s.pdfRect ? { pdfRect: s.pdfRect } : {}) }));
+    if (spans && problemProps.sourceSpans)
+      data.problems[i].sourceSpans = spans.map(s => ({
+        document: s.document,
+        page: s.page,
+        ...(s.pdfRect ? { pdfRect: s.pdfRect } : {}),
+      }));
   });
-  const sourceProps = schema.$defs?.figure?.properties?.source?.properties || {};
+  const sourceProps =
+    schema.$defs?.figure?.properties?.source?.properties || {};
   for (const { fig } of allFigures(data)) {
-    if (fig.source && fig.source.document && !sourceProps.document) delete fig.source.document;
-    for (const k of Object.keys(fig)) if (!schema.$defs?.figure?.properties?.[k]) delete fig[k];
+    if (fig.source && fig.source.document && !sourceProps.document)
+      delete fig.source.document;
+    for (const k of Object.keys(fig))
+      if (!schema.$defs?.figure?.properties?.[k]) delete fig[k];
   }
-  const trProps = schema.properties?.paper?.properties?.transcription?.properties || {};
+  const trProps =
+    schema.properties?.paper?.properties?.transcription?.properties || {};
   const methods = trProps.method?.enum || [];
-  const notes = typeof txPaper.notes === 'string' && txPaper.notes.trim() ? txPaper.notes.trim() : undefined;
+  const notes =
+    typeof txPaper.notes === 'string' && txPaper.notes.trim()
+      ? txPaper.notes.trim()
+      : undefined;
   const full = {
     method: methods.includes('vision-pages') ? 'vision-pages' : 'vision',
     provider: prov.provider,
@@ -559,61 +1020,117 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
     promptSha256: prov.promptSha256 ?? undefined,
     requestId: prov.requestId ?? null,
     at: prov.at,
-    renderDpi: RENDER_DPI,
+    renderDpi: prov.renderDpi ?? RENDER_DPI,
     figureDpi: FIGURE_DPI,
     sourceSha256: prov.sourceSha256,
     verifiedBy: prov.verifiedBy ?? null,
     verifiedAt: prov.verifiedAt ?? null,
     notes,
-    edits: transcriptionEdits(candidate).length ? transcriptionEdits(candidate) : undefined, // absent, not [], so earlier papers keep their bytes
+    edits: transcriptionEdits(candidate).length
+      ? transcriptionEdits(candidate)
+      : undefined, // absent, not [], so earlier papers keep their bytes
   };
   const transcription = {};
   const dropped = [];
   for (const [k, v] of Object.entries(full)) {
     if (v === undefined) continue;
-    if (trProps[k]) transcription[k] = v; else dropped.push(k);
+    if (trProps[k]) transcription[k] = v;
+    else dropped.push(k);
   }
-  if (dropped.length) throw new Error(`content/problems/schema.json paper.transcription lacks ${dropped.join(', ')}; extend the schema instead of serialising provenance into notes`);
+  if (dropped.length)
+    throw new Error(
+      `content/problems/schema.json paper.transcription lacks ${dropped.join(
+        ', '
+      )}; extend the schema instead of serialising provenance into notes`
+    );
   paper.transcription = transcription;
   paper.status = 'review';
-  if (txPaper.caveat && !paper.caveat && schema.properties?.paper?.properties?.caveat) paper.caveat = txPaper.caveat;
+  if (
+    txPaper.caveat &&
+    !paper.caveat &&
+    schema.properties?.paper?.properties?.caveat
+  )
+    paper.caveat = txPaper.caveat;
   paper.grade = canonGrade(paper.grade);
   paper.round = canonRound(paper.round);
   canonProblemIds(data);
   const metadataErrors = problemMetadataErrors(data);
-  if (metadataErrors.length) throw new Error(`Invalid problem metadata: ${metadataErrors.map(e => `${e.path}: ${e.message}`).join('; ')}`);
+  if (metadataErrors.length)
+    throw new Error(
+      `Invalid problem metadata: ${metadataErrors
+        .map(e => `${e.path}: ${e.message}`)
+        .join('; ')}`
+    );
   const bytes = Buffer.from(serialisePaper(data), 'utf8');
-  return { data, bytes, contentHash: sha256(bytes), droppedTranscriptionFields: dropped };
+  return {
+    data,
+    bytes,
+    contentHash: sha256(bytes),
+    droppedTranscriptionFields: dropped,
+  };
 }
 
 // ---------------------------------------------------------------- providers & cost
 export function loadProviderKeys() {
   const keys = {};
-  if (!fs.existsSync(KEYS_FILE)) return { file: KEYS_FILE, exists: false, keys };
+  if (!fs.existsSync(KEYS_FILE))
+    return { file: KEYS_FILE, exists: false, keys };
   for (const line of fs.readFileSync(KEYS_FILE, 'utf8').split('\n')) {
     const m = /^\s*(?:export\s+)?([A-Z0-9_]+)\s*=\s*(.*?)\s*$/.exec(line);
     if (m) keys[m[1]] = m[2].replace(/^["']|["']$/g, '');
   }
   return { file: KEYS_FILE, exists: true, keys };
 }
-export const PROVIDER_KEY_NAME = { anthropic: 'ANTHROPIC_API_KEY', gemini: 'GEMINI_API_KEY', zai: 'ZAI_API_KEY', chatgpt: null }; // chatgpt: the desktop app, signed in by hand
+export const PROVIDER_KEY_NAME = {
+  anthropic: 'ANTHROPIC_API_KEY',
+  gemini: 'GEMINI_API_KEY',
+  zai: 'ZAI_API_KEY',
+  chatgpt: null,
+}; // chatgpt: the desktop app, signed in by hand
 // Documented request limits (checked before anything is sent). Anthropic: 5 MB per
 // image, 100 images, ~32 MB request. Gemini: 20 MB total inline request. Z.ai:
 // not documented in the repo — 20 MB is an assumption to be corrected on first error.
 export const PROVIDER_LIMITS = {
-  anthropic: { imageBytes: 5 * 1024 * 1024, images: 100, requestBytes: 32 * 1024 * 1024 },
-  gemini: { imageBytes: 20 * 1024 * 1024, images: 3000, requestBytes: 20 * 1024 * 1024 },
-  zai: { imageBytes: 20 * 1024 * 1024, images: 100, requestBytes: 20 * 1024 * 1024 },
+  anthropic: {
+    imageBytes: 5 * 1024 * 1024,
+    images: 100,
+    requestBytes: 32 * 1024 * 1024,
+  },
+  gemini: {
+    imageBytes: 20 * 1024 * 1024,
+    images: 3000,
+    requestBytes: 20 * 1024 * 1024,
+  },
+  zai: {
+    imageBytes: 20 * 1024 * 1024,
+    images: 100,
+    requestBytes: 20 * 1024 * 1024,
+  },
   // the ChatGPT desktop app took 20 files in one message on 2026-09-13 (scripts/tx/chatgpt-app); the cap beyond that is untested
-  chatgpt: { imageBytes: 20 * 1024 * 1024, images: 20, requestBytes: 200 * 1024 * 1024 },
+  chatgpt: {
+    imageBytes: 20 * 1024 * 1024,
+    images: 20,
+    requestBytes: 200 * 1024 * 1024,
+  },
 };
 export const readPrices = () => readJson(PRICES_FILE, { models: {} });
 // { batch: true }: the Anthropic Message Batches API bills 50% of the list price (prices.json note, verified 2026-09-17).
 export const BATCH_PRICE_FACTOR = 0.5;
-export function estimateCost(model, inputTokens, outputTokens, prices = readPrices(), { batch = false } = {}) {
+export function estimateCost(
+  model,
+  inputTokens,
+  outputTokens,
+  prices = readPrices(),
+  { batch = false } = {}
+) {
   const p = prices.models?.[model];
   if (!p) return null;
-  return +(((inputTokens || 0) * p.inputPerMTok + (outputTokens || 0) * p.outputPerMTok) / 1e6 * (batch ? BATCH_PRICE_FACTOR : 1)).toFixed(6);
+  return +(
+    (((inputTokens || 0) * p.inputPerMTok +
+      (outputTokens || 0) * p.outputPerMTok) /
+      1e6) *
+    (batch ? BATCH_PRICE_FACTOR : 1)
+  ).toFixed(6);
 }
 export function appendRun(record) {
   fs.mkdirSync(TX_DIR, { recursive: true });
@@ -623,71 +1140,177 @@ export function appendRun(record) {
 // whose holder is dead, or older than staleMs, is taken over; after waitMs the caller proceeds without it (and says
 // so) rather than hang. Used for jobs.json: two run.mjs processes parking in the same millisecond lost one's update
 // (re-read-then-write is atomic per file but not per entry; seen in the batch.mjs --batch-async test, 2026-09-17).
-export function withFileLock(lockFile, fn, { waitMs = 15000, staleMs = 60000 } = {}) {
+export function withFileLock(
+  lockFile,
+  fn,
+  { waitMs = 15000, staleMs = 60000 } = {}
+) {
   fs.mkdirSync(path.dirname(lockFile), { recursive: true });
   const started = Date.now();
   let held = false;
   for (;;) {
-    try { fs.writeFileSync(lockFile, JSON.stringify({ pid: process.pid, at: nowIso() }), { flag: 'wx' }); held = true; break; }
-    catch (e) {
+    try {
+      fs.writeFileSync(
+        lockFile,
+        JSON.stringify({ pid: process.pid, at: nowIso() }),
+        { flag: 'wx' }
+      );
+      held = true;
+      break;
+    } catch (e) {
       if (e.code !== 'EEXIST') throw e;
-      let cur; try { cur = JSON.parse(fs.readFileSync(lockFile, 'utf8')); } catch { cur = undefined; } // a lock being written this microsecond is held, not stale
-      if (cur === undefined) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20); if (Date.now() - started > waitMs) break; continue; }
-      const stale = !cur?.pid || (cur.pid !== process.pid && !pidAlive(cur.pid)) || Date.now() - Date.parse(cur.at || 0) > staleMs;
-      if (stale) { try { fs.unlinkSync(lockFile); } catch {} continue; }
-      if (Date.now() - started > waitMs) { console.error(`[lib] ${path.basename(lockFile)} held by pid ${cur.pid} since ${cur.at} for over ${waitMs} ms; proceeding without it`); break; }
+      let cur;
+      try {
+        cur = JSON.parse(fs.readFileSync(lockFile, 'utf8'));
+      } catch {
+        cur = undefined;
+      } // a lock being written this microsecond is held, not stale
+      if (cur === undefined) {
+        Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20);
+        if (Date.now() - started > waitMs) break;
+        continue;
+      }
+      const stale =
+        !cur?.pid ||
+        (cur.pid !== process.pid && !pidAlive(cur.pid)) ||
+        Date.now() - Date.parse(cur.at || 0) > staleMs;
+      if (stale) {
+        try {
+          fs.unlinkSync(lockFile);
+        } catch {}
+        continue;
+      }
+      if (Date.now() - started > waitMs) {
+        console.error(
+          `[lib] ${path.basename(lockFile)} held by pid ${cur.pid} since ${
+            cur.at
+          } for over ${waitMs} ms; proceeding without it`
+        );
+        break;
+      }
       Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20);
     }
   }
-  try { return fn(); }
-  finally { if (held) { try { if (readJson(lockFile, null)?.pid === process.pid) fs.unlinkSync(lockFile); } catch {} } }
+  try {
+    return fn();
+  } finally {
+    if (held) {
+      try {
+        if (readJson(lockFile, null)?.pid === process.pid)
+          fs.unlinkSync(lockFile);
+      } catch {}
+    }
+  }
 }
 // jobs.json read-modify-write under its lock: mutate(state) edits the freshly read state, which is then written.
 export function updateJobs(mutate) {
-  return withFileLock(`${JOBS_FILE}.lock`, () => { const state = readJson(JOBS_FILE, { version: 2, jobs: {} }); mutate(state); writeJson(JOBS_FILE, state); return state; });
+  return withFileLock(`${JOBS_FILE}.lock`, () => {
+    const state = readJson(JOBS_FILE, { version: 2, jobs: {} });
+    mutate(state);
+    writeJson(JOBS_FILE, state);
+    return state;
+  });
 }
-export const readRuns = () => fs.existsSync(RUNS_FILE) ? fs.readFileSync(RUNS_FILE, 'utf8').split('\n').filter(Boolean).map(l => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean) : [];
+export const readRuns = () =>
+  fs.existsSync(RUNS_FILE)
+    ? fs
+        .readFileSync(RUNS_FILE, 'utf8')
+        .split('\n')
+        .filter(Boolean)
+        .map(l => {
+          try {
+            return JSON.parse(l);
+          } catch {
+            return null;
+          }
+        })
+        .filter(Boolean)
+    : [];
 export const safeLabel = s => String(s).replace(/[^a-zA-Z0-9._-]+/g, '-');
-export const candidateFile = (paperId, provider, model) => path.join(paperDir(paperId), 'candidates', `${safeLabel(provider)}__${safeLabel(model)}.json`);
-export const checkFile = (paperId, provider, model) => path.join(paperDir(paperId), 'checks', `${safeLabel(provider)}__${safeLabel(model)}.json`);
-export const figureUrl = (paperId, figId) => `${R2_PUBLIC}/problems/${paperId}/${figId}.png`;
+export const candidateFile = (paperId, provider, model) =>
+  path.join(
+    paperDir(paperId),
+    'candidates',
+    `${safeLabel(provider)}__${safeLabel(model)}.json`
+  );
+export const checkFile = (paperId, provider, model) =>
+  path.join(
+    paperDir(paperId),
+    'checks',
+    `${safeLabel(provider)}__${safeLabel(model)}.json`
+  );
+export const figureUrl = (paperId, figId) =>
+  `${R2_PUBLIC}/problems/${paperId}/${figId}.png`;
 // Only primary candidates: <provider>__<model>.json (the model may contain dots),
 // not the derived .figs/.view/.dryrun/.window-*/.rN/.gold copies next to them.
-export const DERIVED_SUFFIX = /\.(figs|view|dryrun|window-[^.]+|r\d+|gold|repaired|repair|x|s\d+|norm|defects|response)\.json$/;
-export const isPrimaryCandidate = file => { const b = path.basename(file); return /^[^_]+__.+\.json$/.test(b) && !DERIVED_SUFFIX.test(b); };
+export const DERIVED_SUFFIX =
+  /\.(figs|view|dryrun|window-[^.]+|r\d+|gold|repaired|repair|x|s\d+|norm|defects|response)\.json$/;
+export const isPrimaryCandidate = file => {
+  const b = path.basename(file);
+  return /^[^_]+__.+\.json$/.test(b) && !DERIVED_SUFFIX.test(b);
+};
 // Crop PNGs figures.mjs produced for a candidate (dry or real): what a checker
 // must look at to judge a box, keyed by figure id.
 export function candidateCrops(candidate, paperId) {
   const out = [];
   for (const { fig, path: p } of allFigures(candidate)) {
     if (!fig.tx?.file) continue;
-    const file = path.isAbsolute(fig.tx.file) ? fig.tx.file : path.join(paperDir(paperId), fig.tx.file);
-    out.push({ id: fig.id, path: p, file, exists: fs.existsSync(file), document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox });
+    const file = path.isAbsolute(fig.tx.file)
+      ? fig.tx.file
+      : path.join(paperDir(paperId), fig.tx.file);
+    out.push({
+      id: fig.id,
+      path: p,
+      file,
+      exists: fs.existsSync(file),
+      document: fig.tx.document,
+      page: fig.tx.page,
+      bbox: fig.tx.bbox,
+    });
   }
   return out;
 }
 // Measured/guessed prompt tokens per 160-dpi A4 page image, for --dry-run estimates.
 // zai: measured 2026-09-06 (494 KB PSF 2024 page = 3,230 prompt tokens). Others: guesses.
-export const TOKENS_PER_PAGE = { zai: 3230, gemini: 1600, anthropic: 1600, chatgpt: 1600 };
+export const TOKENS_PER_PAGE = {
+  zai: 3230,
+  gemini: 1600,
+  anthropic: 1600,
+  chatgpt: 1600,
+};
 export const sleep = ms => new Promise(r => setTimeout(r, ms));
 // Provenance block shared by receipt.mjs and promote.mjs so both build the same
 // bytes. `ctx` = { reviewer: {provider, model}, promptVersion, checkedAt,
 // sourceHashes, independent, adjudicator? }.
 export function provenanceFor(candidate, ctx) {
   const reader = candidate.tx?.reader || {};
-  const sha = v => (typeof v === 'string' && /^[a-f0-9]{64}$/.test(v) ? v : undefined);
+  const sha = v =>
+    typeof v === 'string' && /^[a-f0-9]{64}$/.test(v) ? v : undefined;
   const who = `${ctx.reviewer.provider}:${ctx.reviewer.model}`;
-  const how = ctx.mode === 'single-pass' ? 'single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker'
-    : ctx.reviewer.provider === 'mechanical' ? 'mechanical check only: schema, text layer, printed figures; no second model'
-    : ctx.mode === 'crops' ? `${ctx.independent ? 'independent' : 'same-model'} crop audit; text verified mechanically against the PDF text layer`
-    : ctx.independent ? 'independent checker' : 'same-model checker';
-  const adj = ctx.adjudicator ? `; adjudicated by ${ctx.adjudicator.provider}:${ctx.adjudicator.model}` : '';
+  const how =
+    ctx.mode === 'single-pass'
+      ? 'single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker'
+      : ctx.reviewer.provider === 'mechanical'
+      ? 'mechanical check only: schema, text layer, printed figures; no second model'
+      : ctx.mode === 'crops'
+      ? `${
+          ctx.independent ? 'independent' : 'same-model'
+        } crop audit; text verified mechanically against the PDF text layer`
+      : ctx.independent
+      ? 'independent checker'
+      : 'same-model checker';
+  const adj = ctx.adjudicator
+    ? `; adjudicated by ${ctx.adjudicator.provider}:${ctx.adjudicator.model}`
+    : '';
   return {
-    provider: reader.provider || 'unknown', model: reader.model || 'unknown',
-    promptVersion: reader.promptVersion || ctx.promptVersion, promptSha256: sha(reader.promptSha256),
+    provider: reader.provider || 'unknown',
+    model: reader.model || 'unknown',
+    promptVersion: reader.promptVersion || ctx.promptVersion,
+    promptSha256: sha(reader.promptSha256),
     requestId: reader.requestId ?? null,
     at: String(reader.at || candidate.tx?.at || ctx.checkedAt).slice(0, 10),
     sourceSha256: ctx.sourceHashes,
+    ...(ctx.renderDpi !== undefined ? { renderDpi: ctx.renderDpi } : {}),
     verifiedBy: `${who} (${how}, prompt ${ctx.promptVersion}${adj})`,
     verifiedAt: String(ctx.checkedAt).slice(0, 10),
   };
@@ -696,7 +1319,14 @@ export function provenanceFor(candidate, ctx) {
 // Throttled HEAD verification of public URLs: at most 2 in flight, 150 ms apart.
 export async function headStatuses(urls) {
   const out = new Map();
-  const one = async url => { try { const r = await fetch(url, { method: 'HEAD' }); out.set(url, r.status); } catch { out.set(url, 0); } };
+  const one = async url => {
+    try {
+      const r = await fetch(url, { method: 'HEAD' });
+      out.set(url, r.status);
+    } catch {
+      out.set(url, 0);
+    }
+  };
   const list = [...new Set(urls)];
   for (let i = 0; i < list.length; i += 2) {
     await Promise.all(list.slice(i, i + 2).map(one));
@@ -709,7 +1339,12 @@ export async function headStatuses(urls) {
 export function loadPrompt(stage, version = 'v1') {
   const f = path.join(PROMPTS_DIR, version, `${stage}.md`);
   if (!fs.existsSync(f)) throw new Error(`prompt not found: ${f}`);
-  return { file: f, text: fs.readFileSync(f, 'utf8'), version, sha256: sha256File(f) };
+  return {
+    file: f,
+    text: fs.readFileSync(f, 'utf8'),
+    version,
+    sha256: sha256File(f),
+  };
 }
 // Ordered page images for a prepared paper: problems first, then solutions.
 // `window` = { problems: [from, to], solutions: [from, to] } restricts the pages.
@@ -723,7 +1358,12 @@ export function pageImages(manifest, window = null) {
     d.pageImages.forEach((rel, i) => {
       const page = i + 1;
       if (range && (page < range[0] || page > range[1])) return;
-      out.push({ document: doc, page, file: path.join(paperDir(manifest.paperId), rel), size: d.pageSizes[i] });
+      out.push({
+        document: doc,
+        page,
+        file: path.join(paperDir(manifest.paperId), rel),
+        size: d.pageSizes[i],
+      });
     });
   }
   return out;
@@ -737,7 +1377,10 @@ export function pageWindows(manifest, size) {
   if (!size || total <= size) return [null];
   const out = [];
   for (const [doc, d] of docs) {
-    if (d.pages <= size) { out.push({ [doc]: [1, d.pages] }); continue; }
+    if (d.pages <= size) {
+      out.push({ [doc]: [1, d.pages] });
+      continue;
+    }
     for (let from = 1; from <= d.pages; from += size - 1) {
       const to = Math.min(d.pages, from + size - 1);
       out.push({ [doc]: [from, to] });
@@ -746,31 +1389,86 @@ export function pageWindows(manifest, size) {
   }
   return out;
 }
-export const windowLabel = window => window ? Object.entries(window).map(([d, [a, b]]) => `${d}-${String(a).padStart(2, '0')}-${String(b).padStart(2, '0')}`).join('_') : 'all';
+export const windowLabel = window =>
+  window
+    ? Object.entries(window)
+        .map(
+          ([d, [a, b]]) =>
+            `${d}-${String(a).padStart(2, '0')}-${String(b).padStart(2, '0')}`
+        )
+        .join('_')
+    : 'all';
 export function windowBlock(manifest, window) {
   if (!window) return null;
-  const parts = Object.entries(window).map(([d, [a, b]]) => `${d} pages ${a}–${b} of ${manifest.documents[d].pages}`);
+  const parts = Object.entries(window).map(
+    ([d, [a, b]]) => `${d} pages ${a}–${b} of ${manifest.documents[d].pages}`
+  );
   return [
-    `PAGE WINDOW: you see only ${parts.join(' and ')}. The paper is transcribed in windows and assembled afterwards; other windows cover the rest.`,
+    `PAGE WINDOW: you see only ${parts.join(
+      ' and '
+    )}. The paper is transcribed in windows and assembled afterwards; other windows cover the rest.`,
     `- Transcribe every problem whose statement BEGINS on one of your pages, completely (a statement that continues onto the next page is in your window because windows overlap by one page).`,
     `- For an official solution on your pages whose problem statement is NOT on your pages, still emit the problem with its "number", "id", the "solution" and "tx.sourceSpans", and set "statement" to exactly "${WINDOW_PLACEHOLDER}" (parts: []). Assembly replaces the placeholder with the statement from the window that has it.`,
-    ...(window.solutions && !window.problems && manifest.documents.problems ? [`- Your pages are the SOLUTIONS document only. The problem statements are printed in the separate problems document and are transcribed from there by another window: set "statement" to "${WINDOW_PLACEHOLDER}" (parts: []) for EVERY problem you emit, even when the solutions restate the problem. Solution text never goes into "statement" or "parts".`] : []),
+    ...(window.solutions && !window.problems && manifest.documents.problems
+      ? [
+          `- Your pages are the SOLUTIONS document only. The problem statements are printed in the separate problems document and are transcribed from there by another window: set "statement" to "${WINDOW_PLACEHOLDER}" (parts: []) for EVERY problem you emit, even when the solutions restate the problem. Solution text never goes into "statement" or "parts".`,
+        ]
+      : []),
     `- For an official solution that BEGAN on a page before your first page and continues on your pages: emit its problem with the placeholder statement (parts: []) and, in "solution.statement", ONLY the text printed on your pages AFTER your first page (that page was covered by the previous window); set "tx.continuation": true on that problem. Assembly appends it to the beginning read by the earlier window. Never replace such a continuation by a note or a placeholder — transcribe it. A continuation is not "incomplete" because its beginning lies in an earlier window: set solution.incomplete only when the printed solution itself stops short of its end (it runs past your last page).`,
     `- Do not re-transcribe a problem statement that merely continues from a previous page — it belongs to the window where it begins; only solutions are continued, as above.`,
-    `- paper.source.pages / solutionSource.pages list only the pages you actually used; set "tx.window" to ${JSON.stringify(window)}.`,
+    `- paper.source.pages / solutionSource.pages list only the pages you actually used; set "tx.window" to ${JSON.stringify(
+      window
+    )}.`,
   ].join('\n');
 }
 export function contextBlock(manifest) {
   const m = manifest.meta;
-  const docs = Object.entries(manifest.documents || {}).map(([k, d]) => `- ${k}: ${d.pages} page(s), archive key "${d.key}", sha256 ${d.sha256.slice(0, 12)}…`).join('\n');
+  const docs = Object.entries(manifest.documents || {})
+    .map(
+      ([k, d]) =>
+        `- ${k}: ${d.pages} page(s), archive key "${
+          d.key
+        }", sha256 ${d.sha256.slice(0, 12)}…`
+    )
+    .join('\n');
   return [
     `PAPER CONTEXT (from the archive catalogue; the printed page wins when they disagree — say so in tx.catalogDisagrees):`,
     `- paperId: ${manifest.paperId}`,
-    `- subject: ${m.subject}; competition: ${m.competition}; catalogue year: ${m.year}; catalogue round: ${m.round ?? 'null'}; catalogue grade: ${m.grade ?? 'null'}; lang: ${m.lang || 'bg'}`,
+    `- subject: ${m.subject}; competition: ${m.competition}; catalogue year: ${
+      m.year
+    }; catalogue round: ${m.round ?? 'null'}; catalogue grade: ${
+      m.grade ?? 'null'
+    }; lang: ${m.lang || 'bg'}`,
     `- documents:\n${docs}`,
-    ...(Object.keys(manifest.documents || {}).some(id => SUPPLEMENT_ID.test(id)) ? [`- Supplementary PDFs keep their own identity: declare paper.supplementarySources as an object mapping each supplement-N to {archiveKey, pages}. Use that exact document id in source spans, figure tx, edits and documentNotes. Shared data tables belong in documentNotes with their printed heading and a Markdown table. Do not attribute a supplement page to the problems or solutions PDF, omit it, or invent a new problem for it.`] : []),
-    ...(m.listed?.problems ? [`- the archive inventory lists ${m.listed.problems} top-level problem(s) in the problems document (${m.listed.titles.join('; ')})${m.listed.parts ? ` with about ${m.listed.parts} printed sub-tasks` : ''}: emit exactly one problems[] entry per top-level problem; printed titled divisions inside one (Part A/B/C, Част I/II, Task E1/E2 within one experiment) are its sections[]; labelled sub-tasks inside a section are sections[].parts[], otherwise parts[]. Keep one entry per printed question with its label and points; never create separate problems or duplicate questions in introductory text. Say so in tx.notes if the page really prints a different number.`] : []),
-    ...(Object.values(manifest.documents || {}).some(d => /multi/i.test(String(d.key || d.file || ''))) ? [`- this file prints the same paper in SEVERAL LANGUAGES one after another: transcribe ONLY the ${m.lang || 'en'} version of every problem and solution — never the other languages' copies, never a mixture. Say in tx.notes which pages hold the ${m.lang || 'en'} version.`] : []),
+    ...(Object.keys(manifest.documents || {}).some(id => SUPPLEMENT_ID.test(id))
+      ? [
+          `- Supplementary PDFs keep their own identity: declare paper.supplementarySources as an object mapping each supplement-N to {archiveKey, pages}. Use that exact document id in source spans, figure tx, edits and documentNotes. Shared data tables belong in documentNotes with their printed heading and a Markdown table. Do not attribute a supplement page to the problems or solutions PDF, omit it, or invent a new problem for it.`,
+        ]
+      : []),
+    ...(m.listed?.problems
+      ? [
+          `- the archive inventory lists ${
+            m.listed.problems
+          } top-level problem(s) in the problems document (${m.listed.titles.join(
+            '; '
+          )})${
+            m.listed.parts
+              ? ` with about ${m.listed.parts} printed sub-tasks`
+              : ''
+          }: emit exactly one problems[] entry per top-level problem; printed titled divisions inside one (Part A/B/C, Част I/II, Task E1/E2 within one experiment) are its sections[]; labelled sub-tasks inside a section are sections[].parts[], otherwise parts[]. Keep one entry per printed question with its label and points; never create separate problems or duplicate questions in introductory text. Say so in tx.notes if the page really prints a different number.`,
+        ]
+      : []),
+    ...(Object.values(manifest.documents || {}).some(d =>
+      /multi/i.test(String(d.key || d.file || ''))
+    )
+      ? [
+          `- this file prints the same paper in SEVERAL LANGUAGES one after another: transcribe ONLY the ${
+            m.lang || 'en'
+          } version of every problem and solution — never the other languages' copies, never a mixture. Say in tx.notes which pages hold the ${
+            m.lang || 'en'
+          } version.`,
+        ]
+      : []),
     `- figure boxes are [x0, y0, x1, y1] in PERMILLE of the page (0–${BBOX_SCALE} across the width and across the height, origin top-left), independent of image resolution.`,
   ].join('\n');
 }
@@ -778,19 +1476,71 @@ export function contextBlock(manifest) {
 // Readers (GLM especially) emit `"caption": null` for optional fields the
 // schema types as string/array; that is a formatting slip, not a transcription
 // error. Drop null-valued optional keys everywhere before validation.
-const NULLABLE_OPTIONAL = new Set(['caption', 'alt', 'title', 'held', 'organiser', 'caveat', 'incompleteReason', 'note', 'latex', 'unit', 'tolerance', 'difficulty', 'importance', 'topics', 'parts', 'figures', 'answer', 'solutionSource', 'problemType', 'apparatus', 'measurementTable', 'label']);
+const NULLABLE_OPTIONAL = new Set([
+  'caption',
+  'alt',
+  'title',
+  'held',
+  'organiser',
+  'caveat',
+  'incompleteReason',
+  'note',
+  'latex',
+  'unit',
+  'tolerance',
+  'difficulty',
+  'importance',
+  'topics',
+  'parts',
+  'figures',
+  'answer',
+  'solutionSource',
+  'problemType',
+  'apparatus',
+  'measurementTable',
+  'label',
+]);
 // Structural slips readers make that a rule can settle without a model — applied
 // to every candidate before validation (reader output, refix output, run.mjs
 // validate stage). Nothing here touches transcribed text except a KaTeX
 // spelling ("0\,^{\circ}" -> "0\,{}^{\circ}", which KaTeX rejects otherwise).
-const HOMOGLYPHS = { a: 'а', e: 'е', o: 'о', p: 'р', c: 'с', x: 'х', y: 'у', i: 'і', A: 'А', B: 'В', C: 'С', E: 'Е', H: 'Н', K: 'К', M: 'М', O: 'О', P: 'Р', T: 'Т', X: 'Х' };
+const HOMOGLYPHS = {
+  a: 'а',
+  e: 'е',
+  o: 'о',
+  p: 'р',
+  c: 'с',
+  x: 'х',
+  y: 'у',
+  i: 'і',
+  A: 'А',
+  B: 'В',
+  C: 'С',
+  E: 'Е',
+  H: 'Н',
+  K: 'К',
+  M: 'М',
+  O: 'О',
+  P: 'Р',
+  T: 'Т',
+  X: 'Х',
+};
 export function fixHomoglyphs(s) {
-  if (typeof s !== 'string' || !/[A-Za-z]/.test(s) || !/[Ѐ-ӿ]/.test(s)) return s;
-  return splitMath(s).map(seg => seg.math||seg.code ? seg.text : seg.text.replace(/\p{L}+/gu, w => {
-    const cyr = (w.match(/[Ѐ-ӿ]/g) || []).length, lat = w.match(/[A-Za-z]/g) || [];
-    if (cyr < 2 || !lat.length || !lat.every(ch => HOMOGLYPHS[ch])) return w;
-    return w.replace(/[A-Za-z]/g, ch => HOMOGLYPHS[ch]);
-  })).join('');
+  if (typeof s !== 'string' || !/[A-Za-z]/.test(s) || !/[Ѐ-ӿ]/.test(s))
+    return s;
+  return splitMath(s)
+    .map(seg =>
+      seg.math || seg.code
+        ? seg.text
+        : seg.text.replace(/\p{L}+/gu, w => {
+            const cyr = (w.match(/[Ѐ-ӿ]/g) || []).length,
+              lat = w.match(/[A-Za-z]/g) || [];
+            if (cyr < 2 || !lat.length || !lat.every(ch => HOMOGLYPHS[ch]))
+              return w;
+            return w.replace(/[A-Za-z]/g, ch => HOMOGLYPHS[ch]);
+          })
+    )
+    .join('');
 }
 // A $$-block that runs into prose (paragraph break + a sentence, or inline $…$ inside it) is an unclosed
 // equation: close it at that paragraph break, then look again (each repair shifts the pairing that follows).
@@ -812,8 +1562,12 @@ export function balanceDisplayMath(s) {
       }
       // the paragraph after the break must read like a sentence (three lowercase words in its first line): an equation
       // broken over blank lines ("\mat\n\nrm\n\nn_0\left(…") is not prose (izho-2022-theory-eng-docx)
-      const m = /\n[ \t]*\n(?=[ \t]*(?:\*\*)?[A-Za-zА-Яа-я(][^\n$\\]*?\b[a-zа-я]{2,} [a-zа-я]{2,} [a-zа-я]{2,}\b)/.exec(inside);
-      const prosey = m && (inside.length > 400 || /\$[^$\n]+\$/.test(inside) || true);
+      const m =
+        /\n[ \t]*\n(?=[ \t]*(?:\*\*)?[A-Za-zА-Яа-я(][^\n$\\]*?\b[a-zа-я]{2,} [a-zа-я]{2,} [a-zа-я]{2,}\b)/.exec(
+          inside
+        );
+      const prosey =
+        m && (inside.length > 400 || /\$[^$\n]+\$/.test(inside) || true);
       if (!prosey) continue;
       parts[i] = inside.slice(0, m.index) + '$$' + inside.slice(m.index); // closes the equation, the next $$ opens again
       text = parts.join('$$');
@@ -833,35 +1587,98 @@ export function mergeProblemsIntoOne(c) {
   const base = list[0];
   base.parts = base.parts || [];
   for (const extra of list.slice(1)) {
-    const label = String(extra.title || (extra.number != null ? `Part ${extra.number}` : 'Part')).trim();
-    if (String(extra.statement || '').trim() || !(extra.parts || []).length) base.parts.push({ label, statement: String(extra.statement || '').trim(), ...(extra.points != null ? { points: extra.points } : {}) });
+    const label = String(
+      extra.title || (extra.number != null ? `Part ${extra.number}` : 'Part')
+    ).trim();
+    if (String(extra.statement || '').trim() || !(extra.parts || []).length)
+      base.parts.push({
+        label,
+        statement: String(extra.statement || '').trim(),
+        ...(extra.points != null ? { points: extra.points } : {}),
+      });
     for (const pt of extra.parts || []) base.parts.push(pt);
-    if ((extra.figures || []).length) base.figures = [...(base.figures || []), ...extra.figures];
-    if (extra.solution && (String(extra.solution.statement || '').trim() || (extra.solution.figures || []).length)) {
+    if ((extra.figures || []).length)
+      base.figures = [...(base.figures || []), ...extra.figures];
+    if (
+      extra.solution &&
+      (String(extra.solution.statement || '').trim() ||
+        (extra.solution.figures || []).length)
+    ) {
       base.solution = base.solution || { statement: '' };
       const text = String(extra.solution.statement || '').trim();
-      if (text) base.solution.statement = [String(base.solution.statement || '').trim(), `**${label}**`, text].filter(Boolean).join('\n\n');
-      if ((extra.solution.figures || []).length) base.solution.figures = [...(base.solution.figures || []), ...extra.solution.figures];
-      if (extra.solution.incomplete && !text) { base.solution.incomplete = true; base.solution.incompleteReason = base.solution.incompleteReason || extra.solution.incompleteReason; }
+      if (text)
+        base.solution.statement = [
+          String(base.solution.statement || '').trim(),
+          `**${label}**`,
+          text,
+        ]
+          .filter(Boolean)
+          .join('\n\n');
+      if ((extra.solution.figures || []).length)
+        base.solution.figures = [
+          ...(base.solution.figures || []),
+          ...extra.solution.figures,
+        ];
+      if (extra.solution.incomplete && !text) {
+        base.solution.incomplete = true;
+        base.solution.incompleteReason =
+          base.solution.incompleteReason || extra.solution.incompleteReason;
+      }
     }
-    const spans = [...(base.tx?.sourceSpans || []), ...(extra.tx?.sourceSpans || [])];
-    const seen = new Set(); base.tx = { ...(base.tx || {}), sourceSpans: spans.filter(s => { const k = `${s.document}#${s.page}`; if (seen.has(k)) return false; seen.add(k); return true; }) };
-    if (base.points == null && typeof extra.points === 'number') base.points = list.reduce((a, p) => a + (typeof p.points === 'number' ? p.points : 0), 0) || null;
+    const spans = [
+      ...(base.tx?.sourceSpans || []),
+      ...(extra.tx?.sourceSpans || []),
+    ];
+    const seen = new Set();
+    base.tx = {
+      ...(base.tx || {}),
+      sourceSpans: spans.filter(s => {
+        const k = `${s.document}#${s.page}`;
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      }),
+    };
+    if (base.points == null && typeof extra.points === 'number')
+      base.points =
+        list.reduce(
+          (a, p) => a + (typeof p.points === 'number' ? p.points : 0),
+          0
+        ) || null;
   }
   c.problems = [base];
   base.number = 1;
-  c.tx = { ...(c.tx || {}), normalised: [...(c.tx?.normalised || []), `problems 2–${list.length} folded into problem 1 as parts (one printed problem)`] };
+  c.tx = {
+    ...(c.tx || {}),
+    normalised: [
+      ...(c.tx?.normalised || []),
+      `problems 2–${list.length} folded into problem 1 as parts (one printed problem)`,
+    ],
+  };
   return true;
 }
 // A paragraph that is nothing but LaTeX (a formula the reader left without its $$: "n_0\left(\frac{R_0}{r}\right)^2.
 // \qquad (18)") is wrapped as display math; a paragraph with real words in it is prose and stays.
 export function wrapBareFormulaParagraphs(s) {
-  return String(s).split(/\n[ \t]*\n/).map(par => {
-    const p = par.trim();
-    if (!p || p.includes('$') || !/\\[a-zA-Z]+|[{}^_]/.test(p) || p.length > 600) return par;
-    const words = p.replace(/\\[a-zA-Z]+\*?/g, ' ').replace(/[{}^_()\[\]\\|=+\-*/.,;:0-9]/g, ' ').split(/\s+/).filter(w => /^[A-Za-zА-Яа-я]{3,}$/.test(w));
-    return words.length <= 1 ? par.replace(p, () => `$$${p}$$`) : par; // a function: replace() reads "$$" in a string as one "$"
-  }).join('\n\n');
+  return String(s)
+    .split(/\n[ \t]*\n/)
+    .map(par => {
+      const p = par.trim();
+      if (
+        !p ||
+        p.includes('$') ||
+        !/\\[a-zA-Z]+|[{}^_]/.test(p) ||
+        p.length > 600
+      )
+        return par;
+      const words = p
+        .replace(/\\[a-zA-Z]+\*?/g, ' ')
+        .replace(/[{}^_()\[\]\\|=+\-*/.,;:0-9]/g, ' ')
+        .split(/\s+/)
+        .filter(w => /^[A-Za-zА-Яа-я]{3,}$/.test(w));
+      return words.length <= 1 ? par.replace(p, () => `$$${p}$$`) : par; // a function: replace() reads "$$" in a string as one "$"
+    })
+    .join('\n\n');
 }
 export function normaliseCandidate(c, opts = {}) {
   if (!c || typeof c !== 'object') return c;
@@ -906,45 +1723,130 @@ function normaliseCandidateProse(c, opts = {}) {
   // No solutions document and no solution text: an answer the reader still wrote is its own derivation, not a
   // transcription (ioaa-2021-theory-tq-14-q: eight "derived results", one of them wrong; tq-6-q: a self-contradicting
   // note). A choice key may be printed with the problem and stays.
-  if (opts.solutionsDocument === false) (c.problems || []).forEach((pr, i) => {
-    const s = pr.solution;
-    if (s && typeof s === 'object' && String(s.statement || '').trim()) return;
-    const drop = (holder, p) => { const a = holder?.answer; if (a && typeof a === 'object' && a.kind !== 'choice') { delete holder.answer; changes.push(`${p}/answer: dropped — no solutions document and no solution text (a derived answer is not a transcription)`); } };
-    drop(pr, `/problems/${i}`); (pr.parts || []).forEach((pt, j) => drop(pt, `/problems/${i}/parts/${j}`));
-  });
+  if (opts.solutionsDocument === false)
+    (c.problems || []).forEach((pr, i) => {
+      const s = pr.solution;
+      if (s && typeof s === 'object' && String(s.statement || '').trim())
+        return;
+      const drop = (holder, p) => {
+        const a = holder?.answer;
+        if (a && typeof a === 'object' && a.kind !== 'choice') {
+          delete holder.answer;
+          changes.push(
+            `${p}/answer: dropped — no solutions document and no solution text (a derived answer is not a transcription)`
+          );
+        }
+      };
+      drop(pr, `/problems/${i}`);
+      (pr.parts || []).forEach((pt, j) =>
+        drop(pt, `/problems/${i}/parts/${j}`)
+      );
+    });
   // A paper with one document (a compilation that prints problems and solutions together: icho-best-1980-1990) whose
   // reader filed solution figures and spans under "solutions": the only document there is is the one meant
   // (figures.mjs failed every crop with "document solutions not prepared")
   if (Array.isArray(opts.documents) && opts.documents.length === 1) {
     const only = opts.documents[0];
-    for (const { fig, path: p } of allFigures(c)) if (fig.tx?.document && fig.tx.document !== only) { fig.tx.documentAsWritten = fig.tx.document; fig.tx.document = only; changes.push(`${p}: document ${fig.tx.documentAsWritten} → ${only} (the paper's only document)`); }
-    (c.problems || []).forEach((pr, i) => { for (const s of pr.tx?.sourceSpans || []) if (s.document && s.document !== only) { s.document = only; changes.push(`/problems/${i}/tx/sourceSpans: document → ${only}`); } });
+    for (const { fig, path: p } of allFigures(c))
+      if (fig.tx?.document && fig.tx.document !== only) {
+        fig.tx.documentAsWritten = fig.tx.document;
+        fig.tx.document = only;
+        changes.push(
+          `${p}: document ${fig.tx.documentAsWritten} → ${only} (the paper's only document)`
+        );
+      }
+    (c.problems || []).forEach((pr, i) => {
+      for (const s of pr.tx?.sourceSpans || [])
+        if (s.document && s.document !== only) {
+          s.document = only;
+          changes.push(`/problems/${i}/tx/sourceSpans: document → ${only}`);
+        }
+    });
   }
   // an invalid classification block is dropped rather than parking the paper (nof-2024-iv-exp1: taxonomyVersion,
   // sourceRef.sha256 and difficulty in the wrong shape on every problem)
   (c.problems || []).forEach((pr, i) => {
-    if (!pr || typeof pr !== 'object' || pr.classification === undefined) return;
-    if (!pr.classification || typeof pr.classification !== 'object' || !classificationValid(pr.classification)) { delete pr.classification; changes.push(`/problems/${i}/classification: not in the schema's shape, dropped`); }
+    if (!pr || typeof pr !== 'object' || pr.classification === undefined)
+      return;
+    if (
+      !pr.classification ||
+      typeof pr.classification !== 'object' ||
+      !classificationValid(pr.classification)
+    ) {
+      delete pr.classification;
+      changes.push(
+        `/problems/${i}/classification: not in the schema's shape, dropped`
+      );
+    }
   });
   // a figures array that is not an array, or an entry that is not an object (null, a string id), is dropped
   // (ipho-2026-theory-t2, apho-2024-theory-th: Sonnet wrote `figures: [null]` and Object.keys threw)
   (c.problems || []).forEach((pr, i) => {
-    const holders = [[pr, `/problems/${i}`], ...(pr.parts || []).map((pt, k) => [pt, `/problems/${i}/parts/${k}`]), ...(pr.solution && typeof pr.solution === 'object' ? [[pr.solution, `/problems/${i}/solution`]] : [])];
+    const holders = [
+      [pr, `/problems/${i}`],
+      ...(pr.parts || []).map((pt, k) => [pt, `/problems/${i}/parts/${k}`]),
+      ...(pr.solution && typeof pr.solution === 'object'
+        ? [[pr.solution, `/problems/${i}/solution`]]
+        : []),
+    ];
     for (const [h, hp] of holders) {
       if (!h || typeof h !== 'object' || h.figures === undefined) continue;
-      if (!Array.isArray(h.figures)) { delete h.figures; changes.push(`${hp}/figures: not an array, dropped`); continue; }
-      const kept = h.figures.filter(f => f && typeof f === 'object' && !Array.isArray(f));
-      if (kept.length !== h.figures.length) { changes.push(`${hp}/figures: ${h.figures.length - kept.length} non-object entr${h.figures.length - kept.length === 1 ? 'y' : 'ies'} dropped`); h.figures = kept; }
+      if (!Array.isArray(h.figures)) {
+        delete h.figures;
+        changes.push(`${hp}/figures: not an array, dropped`);
+        continue;
+      }
+      const kept = h.figures.filter(
+        f => f && typeof f === 'object' && !Array.isArray(f)
+      );
+      if (kept.length !== h.figures.length) {
+        changes.push(
+          `${hp}/figures: ${h.figures.length - kept.length} non-object entr${
+            h.figures.length - kept.length === 1 ? 'y' : 'ies'
+          } dropped`
+        );
+        h.figures = kept;
+      }
     }
   });
   for (const { fig, path: p } of allFigures(c)) {
     if (!fig || typeof fig !== 'object') continue;
     // document/page/bbox belong under tx (the schema forbids them on the figure); a refix that copies
     // a figure back sometimes flattens the rest of its tx block onto the figure as well
-    for (const k of ['document', 'page', 'bbox']) if (fig[k] !== undefined) { if (fig.tx?.[k] === undefined) fig.tx = { ...(fig.tx || {}), [k]: fig[k] }; delete fig[k]; changes.push(`${p}: ${k} moved under tx`); }
-    for (const k of Object.keys(fig)) if (!['id', 'caption', 'alt', 'url', 'width', 'height', 'source', 'tx'].includes(k)) { delete fig[k]; changes.push(`${p}: stray ${k} dropped from the figure`); }
-    if (typeof fig.tx?.bbox === 'string') { const m = fig.tx.bbox.match(/-?\d+(?:\.\d+)?/g); if (m?.length === 4) { fig.tx.bbox = m.map(Number); changes.push(`${p}: bbox parsed`); } }
-    if (typeof fig.tx?.page === 'string' && /^\d+$/.test(fig.tx.page)) { fig.tx.page = Number(fig.tx.page); changes.push(`${p}: page parsed`); }
+    for (const k of ['document', 'page', 'bbox'])
+      if (fig[k] !== undefined) {
+        if (fig.tx?.[k] === undefined)
+          fig.tx = { ...(fig.tx || {}), [k]: fig[k] };
+        delete fig[k];
+        changes.push(`${p}: ${k} moved under tx`);
+      }
+    for (const k of Object.keys(fig))
+      if (
+        ![
+          'id',
+          'caption',
+          'alt',
+          'url',
+          'width',
+          'height',
+          'source',
+          'tx',
+        ].includes(k)
+      ) {
+        delete fig[k];
+        changes.push(`${p}: stray ${k} dropped from the figure`);
+      }
+    if (typeof fig.tx?.bbox === 'string') {
+      const m = fig.tx.bbox.match(/-?\d+(?:\.\d+)?/g);
+      if (m?.length === 4) {
+        fig.tx.bbox = m.map(Number);
+        changes.push(`${p}: bbox parsed`);
+      }
+    }
+    if (typeof fig.tx?.page === 'string' && /^\d+$/.test(fig.tx.page)) {
+      fig.tx.page = Number(fig.tx.page);
+      changes.push(`${p}: page parsed`);
+    }
   }
   // Figure ids are unique and positional (pN-figM under problem N, pN-sol-figM under its solution); a
   // figure that repeats an earlier id (a refix copied a neighbour's) is renamed by its position, and loses
@@ -952,34 +1854,92 @@ function normaliseCandidateProse(c, opts = {}) {
   {
     const seen = new Set();
     (c.problems || []).forEach((pr, i) => {
-      const n = String(pr.number ?? i + 1).replace(/[^a-z0-9]/gi, '').toLowerCase() || String(i + 1);
-      const lists = [[pr.figures, `p${n}-fig`], ...(pr.parts || []).map(pt => [pt.figures, `p${n}-fig`]), [pr.solution?.figures, `p${n}-sol-fig`]];
+      const n =
+        String(pr.number ?? i + 1)
+          .replace(/[^a-z0-9]/gi, '')
+          .toLowerCase() || String(i + 1);
+      const lists = [
+        [pr.figures, `p${n}-fig`],
+        ...(pr.parts || []).map(pt => [pt.figures, `p${n}-fig`]),
+        [pr.solution?.figures, `p${n}-sol-fig`],
+      ];
       for (const [arr, stem] of lists) {
         if (!Array.isArray(arr)) continue;
         for (const fig of arr) {
           if (!fig || typeof fig !== 'object') continue;
           // a version suffix belongs to the remote key (p2-sol-fig2-v3.png), never to the id
-          if (typeof fig.id === 'string' && /-v\d+$/.test(fig.id)) { const from = fig.id; fig.id = fig.id.replace(/-v\d+$/, ''); changes.push(`/problems/${i}: figure id ${from} stripped of its version suffix`); }
+          if (typeof fig.id === 'string' && /-v\d+$/.test(fig.id)) {
+            const from = fig.id;
+            fig.id = fig.id.replace(/-v\d+$/, '');
+            changes.push(
+              `/problems/${i}: figure id ${from} stripped of its version suffix`
+            );
+          }
           // an id that is not a slug (a refix once wrote its advice into the id field: nao-2020-ii-9-10) counts as missing
-          if (typeof fig.id === 'string' && /^p[a-z0-9]+-(?:sol-)?fig\d+$/.test(fig.id) && !seen.has(fig.id)) { seen.add(fig.id); continue; }
-          let k = 1; while (seen.has(`${stem}${k}`)) k++;
-          const from = fig.id; fig.id = `${stem}${k}`; seen.add(fig.id);
-          const rotation = fig.tx?.rotation !== undefined ? fig.tx.rotation : fig.source?.rotation;
-          delete fig.url; delete fig.width; delete fig.height; delete fig.source;
-          if (fig.tx) fig.tx = { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox, ...(rotation !== undefined ? { rotation } : {}), ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}), ...(fig.tx.extraction === 'native-image-crop' ? { extraction: fig.tx.extraction } : {}) };
-          changes.push(`/problems/${i}: figure id ${from ?? '(none)'} renamed to ${fig.id} (duplicate or missing); crop evidence cleared`);
+          if (
+            typeof fig.id === 'string' &&
+            /^p[a-z0-9]+-(?:sol-)?fig\d+$/.test(fig.id) &&
+            !seen.has(fig.id)
+          ) {
+            seen.add(fig.id);
+            continue;
+          }
+          let k = 1;
+          while (seen.has(`${stem}${k}`)) k++;
+          const from = fig.id;
+          fig.id = `${stem}${k}`;
+          seen.add(fig.id);
+          const rotation =
+            fig.tx?.rotation !== undefined
+              ? fig.tx.rotation
+              : fig.source?.rotation;
+          delete fig.url;
+          delete fig.width;
+          delete fig.height;
+          delete fig.source;
+          if (fig.tx)
+            fig.tx = {
+              document: fig.tx.document,
+              page: fig.tx.page,
+              bbox: fig.tx.bbox,
+              ...(rotation !== undefined ? { rotation } : {}),
+              ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}),
+              ...(fig.tx.extraction === 'native-image-crop'
+                ? { extraction: fig.tx.extraction }
+                : {}),
+            };
+          changes.push(
+            `/problems/${i}: figure id ${from ?? '(none)'} renamed to ${
+              fig.id
+            } (duplicate or missing); crop evidence cleared`
+          );
         }
       }
     });
   }
   // a reader sometimes emits the same problem twice (the second copy headed "Задача N."): drop the later copy
   if (Array.isArray(c.problems)) {
-    const norm = s => String(s || '').replace(/^\s*задача\s*\d+\s*[.:)]?\s*/iu, '').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 80);
+    const norm = s =>
+      String(s || '')
+        .replace(/^\s*задача\s*\d+\s*[.:)]?\s*/iu, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .toLowerCase()
+        .slice(0, 80);
     const firstByNumber = new Map();
     const keep = [];
     c.problems.forEach((pr, i) => {
       const prev = firstByNumber.get(pr.number);
-      if (prev !== undefined && norm(pr.statement) === norm(c.problems[prev].statement) && !(pr.parts?.length > (c.problems[prev].parts?.length || 0))) { changes.push(`/problems/${i}: duplicate of problem ${pr.number}, dropped`); return; }
+      if (
+        prev !== undefined &&
+        norm(pr.statement) === norm(c.problems[prev].statement) &&
+        !(pr.parts?.length > (c.problems[prev].parts?.length || 0))
+      ) {
+        changes.push(
+          `/problems/${i}: duplicate of problem ${pr.number}, dropped`
+        );
+        return;
+      }
       if (prev === undefined) firstByNumber.set(pr.number, i);
       keep.push(pr);
     });
@@ -988,46 +1948,110 @@ function normaliseCandidateProse(c, opts = {}) {
   const fixAnswer = (a, p) => {
     if (!a || typeof a !== 'object') return;
     if (a.kind === 'numeric' && typeof a.value !== 'number') {
-      const n = typeof a.value === 'string' ? Number(a.value.trim().replace(',', '.').replace(/\s+/g, '')) : NaN;
-      if (Number.isFinite(n)) { a.value = n; changes.push(`${p}: numeric value parsed`); }
-      else if (a.value == null && typeof a.latex === 'string') { a.kind = 'expression'; changes.push(`${p}: numeric without a value -> expression`); }
-      else { const v = String(a.value ?? ''); if (/[\\^_{}]/.test(v)) { a.kind = 'expression'; if (!a.latex) a.latex = v; delete a.value; } else { a.kind = 'text'; a.value = v; } delete a.tolerance; changes.push(`${p}: numeric value is not a number -> ${a.kind}`); }
+      const n =
+        typeof a.value === 'string'
+          ? Number(a.value.trim().replace(',', '.').replace(/\s+/g, ''))
+          : NaN;
+      if (Number.isFinite(n)) {
+        a.value = n;
+        changes.push(`${p}: numeric value parsed`);
+      } else if (a.value == null && typeof a.latex === 'string') {
+        a.kind = 'expression';
+        changes.push(`${p}: numeric without a value -> expression`);
+      } else {
+        const v = String(a.value ?? '');
+        if (/[\\^_{}]/.test(v)) {
+          a.kind = 'expression';
+          if (!a.latex) a.latex = v;
+          delete a.value;
+        } else {
+          a.kind = 'text';
+          a.value = v;
+        }
+        delete a.tolerance;
+        changes.push(`${p}: numeric value is not a number -> ${a.kind}`);
+      }
     }
-    if (a.kind === 'expression' && !a.latex && typeof a.value === 'string') { a.latex = a.value; delete a.value; changes.push(`${p}: expression value -> latex`); }
-    if (a.tolerance != null && typeof a.tolerance !== 'number') { const t = Number(String(a.tolerance).replace(',', '.')); if (Number.isFinite(t)) a.tolerance = t; else delete a.tolerance; changes.push(`${p}: tolerance normalised`); }
+    if (a.kind === 'expression' && !a.latex && typeof a.value === 'string') {
+      a.latex = a.value;
+      delete a.value;
+      changes.push(`${p}: expression value -> latex`);
+    }
+    if (a.tolerance != null && typeof a.tolerance !== 'number') {
+      const t = Number(String(a.tolerance).replace(',', '.'));
+      if (Number.isFinite(t)) a.tolerance = t;
+      else delete a.tolerance;
+      changes.push(`${p}: tolerance normalised`);
+    }
   };
-  (c.problems || []).forEach((pr, i) => { fixAnswer(pr.answer, `/problems/${i}/answer`); (pr.parts || []).forEach((part, j) => fixAnswer(part.answer, `/problems/${i}/parts/${j}/answer`)); });
+  (c.problems || []).forEach((pr, i) => {
+    fixAnswer(pr.answer, `/problems/${i}/answer`);
+    (pr.parts || []).forEach((part, j) =>
+      fixAnswer(part.answer, `/problems/${i}/parts/${j}/answer`)
+    );
+  });
   // Parts: a label typed into the text again ("в) в) Пресметнете…") is dropped; a printed
   // points marker at the end of a part ("[2 т]", "**[3 т.]**") is the points field, not
   // prose — it sets the field when empty and is stripped when it agrees with it.
   const MARKER = /\s*\**\[\s*(\d+(?:[.,]\d+)?)\s*т\.?\s*\]\**\s*$/u;
-  (c.problems || []).forEach((pr, i) => (pr.parts || []).forEach((part, j) => {
-    if (typeof part.statement !== 'string') return;
-    const p = `/problems/${i}/parts/${j}/statement`;
-    // a part without its label: the printed label opens the text ("б) …", "2. …"), else the position gives it
-    if (part.label == null || part.label === '') {
-      const m = /^\s*((?:[а-я]|\d{1,2}|[ivx]{1,4})\s*[).])\s+/iu.exec(part.statement);
-      if (m) { part.label = m[1].replace(/\s+/g, ''); part.statement = part.statement.slice(m[0].length); changes.push(`${p}: label taken from the text`); }
-      else { part.label = ''; changes.push(`${p}: no printed label — left empty (the page shows none)`); } // never invent lettering the print does not have
-    }
-    if (part.label) {
-      const lab = String(part.label).trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const re = new RegExp(`^(?:\\s*${lab}\\s+)+`, 'u');
-      if (re.test(part.statement)) { part.statement = part.statement.replace(re, ''); changes.push(`${p}: leading part label removed`); }
-    }
-    const m = MARKER.exec(part.statement);
-    // Separate requests under one printed label can carry separate awards.
-    // The final award is not a total; retain every inline marker in that case.
-    const awards = part.statement.match(/\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]/gu) || [];
-    if (m && awards.length === 1) {
-      const n = Number(m[1].replace(',', '.'));
-      if (part.points == null) { part.points = n; part.statement = part.statement.replace(MARKER, ''); changes.push(`${p}: points ${n} taken from the printed marker`); }
-      else if (Math.abs(part.points - n) < 1e-9) { part.statement = part.statement.replace(MARKER, ''); changes.push(`${p}: printed points marker stripped`); }
-    }
-  }));
+  (c.problems || []).forEach((pr, i) =>
+    (pr.parts || []).forEach((part, j) => {
+      if (typeof part.statement !== 'string') return;
+      const p = `/problems/${i}/parts/${j}/statement`;
+      // a part without its label: the printed label opens the text ("б) …", "2. …"), else the position gives it
+      if (part.label == null || part.label === '') {
+        const m = /^\s*((?:[а-я]|\d{1,2}|[ivx]{1,4})\s*[).])\s+/iu.exec(
+          part.statement
+        );
+        if (m) {
+          part.label = m[1].replace(/\s+/g, '');
+          part.statement = part.statement.slice(m[0].length);
+          changes.push(`${p}: label taken from the text`);
+        } else {
+          part.label = '';
+          changes.push(
+            `${p}: no printed label — left empty (the page shows none)`
+          );
+        } // never invent lettering the print does not have
+      }
+      if (part.label) {
+        const lab = String(part.label)
+          .trim()
+          .replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const re = new RegExp(`^(?:\\s*${lab}\\s+)+`, 'u');
+        if (re.test(part.statement)) {
+          part.statement = part.statement.replace(re, '');
+          changes.push(`${p}: leading part label removed`);
+        }
+      }
+      const m = MARKER.exec(part.statement);
+      // Separate requests under one printed label can carry separate awards.
+      // The final award is not a total; retain every inline marker in that case.
+      const awards =
+        part.statement.match(/\[\s*\d+(?:[.,]\d+)?\s*т\.?\s*\]/gu) || [];
+      if (m && awards.length === 1) {
+        const n = Number(m[1].replace(',', '.'));
+        if (part.points == null) {
+          part.points = n;
+          part.statement = part.statement.replace(MARKER, '');
+          changes.push(`${p}: points ${n} taken from the printed marker`);
+        } else if (Math.abs(part.points - n) < 1e-9) {
+          part.statement = part.statement.replace(MARKER, '');
+          changes.push(`${p}: printed points marker stripped`);
+        }
+      }
+    })
+  );
   // A statement that repeats its own parts (a refix pasted the whole problem back): drop
   // every paragraph that opens like one of the parts; the closing paragraphs stay.
-  const firstWords = (s, n = 6) => proseOnly(String(s || '')).toLowerCase().replace(/^\s*[а-яa-z0-9]{1,3}[).]\s*/u, '').split(/\s+/).filter(Boolean).slice(0, n).join(' ');
+  const firstWords = (s, n = 6) =>
+    proseOnly(String(s || ''))
+      .toLowerCase()
+      .replace(/^\s*[а-яa-z0-9]{1,3}[).]\s*/u, '')
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, n)
+      .join(' ');
   // A statement that runs on into the next problem's text (a paste of the page) is cut where that problem opens.
   // A paste carries the whole opening, so 12 words must match: problems of one paper often open with the same printed
   // sentence ("В данной задаче вам предстоит рассмотреть …", belpho-2021-iii-11), and 6 words cut problem 1 at its own
@@ -1043,35 +2067,140 @@ function normaliseCandidateProse(c, opts = {}) {
       // cut the original text at the paragraph that holds the other problem's opening
       const paras = pr.statement.split(/\n\s*\n/);
       const keep = [];
-      for (const para of paras) { if (proseOnly(para).toLowerCase().includes(head)) break; keep.push(para); }
-      if (keep.length && keep.length < paras.length) { pr.statement = keep.join('\n\n').trim(); changes.push(`/problems/${i}/statement: cut where problem ${other.number} opens (pasted page text)`); }
+      for (const para of paras) {
+        if (proseOnly(para).toLowerCase().includes(head)) break;
+        keep.push(para);
+      }
+      if (keep.length && keep.length < paras.length) {
+        pr.statement = keep.join('\n\n').trim();
+        changes.push(
+          `/problems/${i}/statement: cut where problem ${other.number} opens (pasted page text)`
+        );
+      }
     }
   });
   (c.problems || []).forEach((pr, i) => {
-    if (typeof pr.statement !== 'string' || !(pr.parts || []).length || !/\n\s*\n/.test(pr.statement)) return;
-    const heads = (pr.parts || []).map(x => firstWords(x.statement)).filter(h => h.split(' ').length >= 4);
+    if (
+      typeof pr.statement !== 'string' ||
+      !(pr.parts || []).length ||
+      !/\n\s*\n/.test(pr.statement)
+    )
+      return;
+    const heads = (pr.parts || [])
+      .map(x => firstWords(x.statement))
+      .filter(h => h.split(' ').length >= 4);
     if (!heads.length) return;
     const paras = pr.statement.split(/\n\s*\n/);
-    const kept = paras.filter(para => { const w = firstWords(para); return !heads.some(h => w === h); });
-    if (kept.length !== paras.length) { pr.statement = kept.join('\n\n').trim(); changes.push(`/problems/${i}/statement: ${paras.length - kept.length} paragraph(s) repeating the parts dropped`); }
+    const kept = paras.filter(para => {
+      const w = firstWords(para);
+      return !heads.some(h => w === h);
+    });
+    if (kept.length !== paras.length) {
+      pr.statement = kept.join('\n\n').trim();
+      changes.push(
+        `/problems/${i}/statement: ${
+          paras.length - kept.length
+        } paragraph(s) repeating the parts dropped`
+      );
+    }
   });
   const h = c.paper?.held;
   if (h && typeof h === 'object') {
-    for (const k of ['from', 'to', 'place']) if (h[k] === null) { delete h[k]; changes.push(`/paper/held/${k}: null dropped`); }
-    for (const k of ['from', 'to']) if (h[k] != null && !/^\d{4}-\d{2}-\d{2}$/.test(String(h[k]))) { delete h[k]; changes.push(`/paper/held/${k}: not a date, dropped`); }
-    if (h.place != null && typeof h.place !== 'string') { h.place = Array.isArray(h.place) ? h.place.join(', ') : String(h.place); changes.push('/paper/held/place: made a string'); }
-    if (h.from && !h.to) h.to = h.from; else if (!h.from && h.to) h.from = h.to;
-    if (!h.from && !h.to && !h.place) { delete c.paper.held; changes.push('/paper/held: empty, dropped'); }
-  } else if (h != null) { delete c.paper.held; changes.push('/paper/held: not an object, dropped'); }
-  walkStrings(c, (p, s) => { if (/\\[,;: ][\^_]/.test(s)) { pointerSet(c, p, s.replace(/(\\[,;: ])([\^_])/g, '$1{}$2')); changes.push(`${p}: KaTeX spacing before ^/_`); } });
+    for (const k of ['from', 'to', 'place'])
+      if (h[k] === null) {
+        delete h[k];
+        changes.push(`/paper/held/${k}: null dropped`);
+      }
+    for (const k of ['from', 'to'])
+      if (h[k] != null && !/^\d{4}-\d{2}-\d{2}$/.test(String(h[k]))) {
+        delete h[k];
+        changes.push(`/paper/held/${k}: not a date, dropped`);
+      }
+    if (h.place != null && typeof h.place !== 'string') {
+      h.place = Array.isArray(h.place) ? h.place.join(', ') : String(h.place);
+      changes.push('/paper/held/place: made a string');
+    }
+    if (h.from && !h.to) h.to = h.from;
+    else if (!h.from && h.to) h.from = h.to;
+    if (!h.from && !h.to && !h.place) {
+      delete c.paper.held;
+      changes.push('/paper/held: empty, dropped');
+    }
+  } else if (h != null) {
+    delete c.paper.held;
+    changes.push('/paper/held: not an object, dropped');
+  }
+  walkStrings(c, (p, s) => {
+    if (/\\[,;: ][\^_]/.test(s)) {
+      pointerSet(c, p, s.replace(/(\\[,;: ])([\^_])/g, '$1{}$2'));
+      changes.push(`${p}: KaTeX spacing before ^/_`);
+    }
+  });
   // HTML entities typed by a reader ("&nbsp;&nbsp;&nbsp;" between two answers, "&deg;") become the characters they
   // name: a named entity in MDX crashes the Gatsby build ("document is not defined") (nof-2024-iii-11-12-exp2)
   {
-    const ENT = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", deg: '°', times: '×', minus: '−', middot: '·', ndash: '–', mdash: '—', laquo: '«', raquo: '»', hellip: '…', plusmn: '±', micro: 'µ', ohm: 'Ω', Omega: 'Ω', alpha: 'α', beta: 'β', gamma: 'γ', lambda: 'λ', pi: 'π', rho: 'ρ', theta: 'θ', omega: 'ω', bull: '•', frac12: '½', sup2: '²', sup3: '³', le: '≤', ge: '≥', ne: '≠', asymp: '≈', infin: '∞', rarr: '→', larr: '←', prime: '′' };
+    const ENT = {
+      nbsp: ' ',
+      amp: '&',
+      lt: '<',
+      gt: '>',
+      quot: '"',
+      apos: "'",
+      deg: '°',
+      times: '×',
+      minus: '−',
+      middot: '·',
+      ndash: '–',
+      mdash: '—',
+      laquo: '«',
+      raquo: '»',
+      hellip: '…',
+      plusmn: '±',
+      micro: 'µ',
+      ohm: 'Ω',
+      Omega: 'Ω',
+      alpha: 'α',
+      beta: 'β',
+      gamma: 'γ',
+      lambda: 'λ',
+      pi: 'π',
+      rho: 'ρ',
+      theta: 'θ',
+      omega: 'ω',
+      bull: '•',
+      frac12: '½',
+      sup2: '²',
+      sup3: '³',
+      le: '≤',
+      ge: '≥',
+      ne: '≠',
+      asymp: '≈',
+      infin: '∞',
+      rarr: '→',
+      larr: '←',
+      prime: '′',
+    };
     walkStrings(c, (p, s) => {
-      if (!/&(#\d+|#x[0-9a-f]+|[a-z][a-z0-9]{1,7});/i.test(s) || !/\/(statement|statementAfter|statementAfterParts|caption|alt|title|label|text)$/.test(p)) return;
-      const out = s.replace(/&(#(\d+)|#x([0-9a-f]+)|([a-z][a-z0-9]{1,7}));/gi, (m, _a, dec, hex, name) => dec ? String.fromCodePoint(Number(dec)) : hex ? String.fromCodePoint(parseInt(hex, 16)) : (ENT[name] ?? m));
-      if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: HTML entities decoded`); }
+      if (
+        !/&(#\d+|#x[0-9a-f]+|[a-z][a-z0-9]{1,7});/i.test(s) ||
+        !/\/(statement|statementAfter|statementAfterParts|caption|alt|title|label|text)$/.test(
+          p
+        )
+      )
+        return;
+      const out = s.replace(
+        /&(#(\d+)|#x([0-9a-f]+)|([a-z][a-z0-9]{1,7}));/gi,
+        (m, _a, dec, hex, name) =>
+          dec
+            ? String.fromCodePoint(Number(dec))
+            : hex
+            ? String.fromCodePoint(parseInt(hex, 16))
+            : ENT[name] ?? m
+      );
+      if (out !== s) {
+        pointerSet(c, p, out);
+        changes.push(`${p}: HTML entities decoded`);
+      }
     });
   }
   // Display math that lost a closing $$ flips every later block: the prose after it is "inside" math and the next
@@ -1080,20 +2209,36 @@ function normaliseCandidateProse(c, opts = {}) {
   // block is closed at that paragraph break — before the rule below, which would otherwise strip the spacing
   // commands of the equations it mistakes for prose. Word-exported LaTeX also brings \nicefrac, which KaTeX lacks.
   walkStrings(c, (p, s) => {
-    if (!/\/(statement|caption|alt|title)$/.test(p) || !/\$\$|\\nicefrac|\\[a-zA-Z]+/.test(s)) return;
+    if (
+      !/\/(statement|caption|alt|title)$/.test(p) ||
+      !/\$\$|\\nicefrac|\\[a-zA-Z]+/.test(s)
+    )
+      return;
     // a paragraph that is a formula fragment closed by a lone "$$" ("58.80^{\circ}$$": the tail of the previous
     // equation typed again — ioaa-2016-theory-x-1, where balancing then swallowed the next sentence into math)
     // is dropped when an earlier display block of the field already ends with it, else becomes its own block
     // a "$$" frame around a Markdown table ("$$| 2a [mm] | 2b [mm] |…|$$": eupho-2026-experiment-x — MDX then reads
     // the table as an open expression and the page does not compile) is not math: the frame goes, the table stays
     // (only a table row — a line that starts with "|" — counts: "\left|\delta\right|$$" closes an equation)
-    let out = s.replace(/\$\$[ \t]*\n?[ \t]*(?=\|[^\n]*\|[ \t]*\n[ \t]*\|)/g, '').replace(/(\n[ \t]*\|[^\n]*\|)[ \t]*\n?[ \t]*\$\$(?=[ \t]*(?:\n|$))/g, '$1');
-    out = out.replace(/(^|\n[ \t]*\n)([^\n$]{1,120}?)[ \t]*\$\$[ \t]*(?=\n|$)/g, (m, pre, frag, offset, whole) => {
-      const f = frag.trim();
-      if (!/[\\^_{}=]/.test(f)) return m; // prose, not a formula
-      const tails = [...whole.slice(0, offset).matchAll(/\$\$([\s\S]*?)\$\$/g)].map(x => x[1].replace(/\s+/g, ''));
-      return tails.some(t => t.endsWith(f.replace(/\s+/g, ''))) ? pre : `${pre}$$${f}$$`;
-    });
+    let out = s
+      .replace(/\$\$[ \t]*\n?[ \t]*(?=\|[^\n]*\|[ \t]*\n[ \t]*\|)/g, '')
+      .replace(
+        /(\n[ \t]*\|[^\n]*\|)[ \t]*\n?[ \t]*\$\$(?=[ \t]*(?:\n|$))/g,
+        '$1'
+      );
+    out = out.replace(
+      /(^|\n[ \t]*\n)([^\n$]{1,120}?)[ \t]*\$\$[ \t]*(?=\n|$)/g,
+      (m, pre, frag, offset, whole) => {
+        const f = frag.trim();
+        if (!/[\\^_{}=]/.test(f)) return m; // prose, not a formula
+        const tails = [
+          ...whole.slice(0, offset).matchAll(/\$\$([\s\S]*?)\$\$/g),
+        ].map(x => x[1].replace(/\s+/g, ''));
+        return tails.some(t => t.endsWith(f.replace(/\s+/g, '')))
+          ? pre
+          : `${pre}$$${f}$$`;
+      }
+    );
     out = balanceDisplayMath(out);
     // a lone "$$" after a formula fragment (a duplicated equation tail) leaves an empty block once balanced:
     // drop it, so the fragment is a bare formula paragraph for the wrapper below
@@ -1102,50 +2247,137 @@ function normaliseCandidateProse(c, opts = {}) {
     out = out.replace(/\\nicefrac\b/g, '\\frac');
     // KaTeX has no \mathbf/\mathrm/\mathit in text mode: inside a \text{…}/\tag{…} argument they become the
     // \textbf/\textrm/\textit the print shows anyway (ioaa-2019-data-analysis-da-final: "\textit{ApJ} \mathbf{452}")
-    out = out.replace(/\\(text|tag\*?|textbf|textit|textrm|mbox)\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}/g, (m, cmd, body) => `\\${cmd}{${body.replace(/\\math(bf|rm|it|sf|tt)\{/g, '\\text$1{')}}`);
-    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac / text-mode fonts`); }
+    out = out.replace(
+      /\\(text|tag\*?|textbf|textit|textrm|mbox)\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}/g,
+      (m, cmd, body) =>
+        `\\${cmd}{${body.replace(/\\math(bf|rm|it|sf|tt)\{/g, '\\text$1{')}}`
+    );
+    if (out !== s) {
+      pointerSet(c, p, out);
+      changes.push(
+        `${p}: display math balanced / bare formula paragraph wrapped / \\nicefrac / text-mode fonts`
+      );
+    }
   });
   // paper.documentNotes (D-P16 shared instructions): a note written as {text} or without its position/page is
   // coerced to the schema's shape; one with no text at all is dropped (izho-2024-experiment-exp-eng parked on it)
   if (c.paper && c.paper.documentNotes !== undefined) {
     // a note written as one string becomes one note; anything else non-array is dropped below
-    const notes = Array.isArray(c.paper.documentNotes) ? c.paper.documentNotes : typeof c.paper.documentNotes === 'string' && c.paper.documentNotes.trim() ? [{ text: c.paper.documentNotes }] : [];
+    const notes = Array.isArray(c.paper.documentNotes)
+      ? c.paper.documentNotes
+      : typeof c.paper.documentNotes === 'string' &&
+        c.paper.documentNotes.trim()
+      ? [{ text: c.paper.documentNotes }]
+      : [];
     const kept = [];
     notes.forEach((n, i) => {
-      if (!n || typeof n !== 'object') { changes.push(`/paper/documentNotes/${i}: not an object, dropped`); return; }
-      const statement = typeof n.statement === 'string' && n.statement.trim() ? n.statement : typeof n.text === 'string' && n.text.trim() ? n.text : typeof n.note === 'string' && n.note.trim() ? n.note : null;
-      if (!statement) { changes.push(`/paper/documentNotes/${i}: no text, dropped`); return; }
+      if (!n || typeof n !== 'object') {
+        changes.push(`/paper/documentNotes/${i}: not an object, dropped`);
+        return;
+      }
+      const statement =
+        typeof n.statement === 'string' && n.statement.trim()
+          ? n.statement
+          : typeof n.text === 'string' && n.text.trim()
+          ? n.text
+          : typeof n.note === 'string' && n.note.trim()
+          ? n.note
+          : null;
+      if (!statement) {
+        changes.push(`/paper/documentNotes/${i}: no text, dropped`);
+        return;
+      }
       const out = {
-        title: typeof n.title === 'string' && n.title.trim() ? n.title : (typeof n.heading === 'string' && n.heading.trim() ? n.heading : 'Note'),
+        title:
+          typeof n.title === 'string' && n.title.trim()
+            ? n.title
+            : typeof n.heading === 'string' && n.heading.trim()
+            ? n.heading
+            : 'Note',
         statement,
         document: isDocumentId(n.document) ? n.document : 'problems',
-        page: Number.isInteger(n.page) && n.page >= 1 ? n.page : (Number.isInteger(Number(n.page)) && Number(n.page) >= 1 ? Number(n.page) : 1),
-        position: n.position === 'after-problem' ? 'after-problem' : 'before-problem',
+        page:
+          Number.isInteger(n.page) && n.page >= 1
+            ? n.page
+            : Number.isInteger(Number(n.page)) && Number(n.page) >= 1
+            ? Number(n.page)
+            : 1,
+        position:
+          n.position === 'after-problem' ? 'after-problem' : 'before-problem',
       };
-      if (JSON.stringify(out) !== JSON.stringify(n)) changes.push(`/paper/documentNotes/${i}: coerced to {title, statement, document, page, position}`);
+      if (JSON.stringify(out) !== JSON.stringify(n))
+        changes.push(
+          `/paper/documentNotes/${i}: coerced to {title, statement, document, page, position}`
+        );
       kept.push(out);
     });
-    if (kept.length) c.paper.documentNotes = kept; else { delete c.paper.documentNotes; changes.push('/paper/documentNotes: empty, dropped'); }
+    if (kept.length) c.paper.documentNotes = kept;
+    else {
+      delete c.paper.documentNotes;
+      changes.push('/paper/documentNotes: empty, dropped');
+    }
   }
   // A transcriber's remark typed into the text ("*Забележка към транскрипцията: в оригинала … текстът е предаден
   // дословно.*", "Transcriber's note: …") is never printed; it moves to tx.notes (nao-2021-iii-9-10).
   // The same for a reader's aside about its own work in place of text ("(T10) … — introductory text and formula …
   // (restated from the problem; see figure p10-sol-fig1).", "(The first printed line of this box, worth 1.0, appears on
   // page 16 of the solutions document; …)" — ioaa-2016-theory-x-1): such phrases are never printed.
-  const ASIDE = /\b(?:restated from the (?:problem|statement)|see (?:the )?figures? p\d+|of the (?:solutions|problems) document|(?:first|last) printed line|this box|not transcribed|omitted here|reproduced here|as transcribed|in this transcription|в (?:документа|файла) (?:с решенията|със задачите)|виж фигура p\d+)\b/iu;
+  const ASIDE =
+    /\b(?:restated from the (?:problem|statement)|see (?:the )?figures? p\d+|of the (?:solutions|problems) document|(?:first|last) printed line|this box|not transcribed|omitted here|reproduced here|as transcribed|in this transcription|в (?:документа|файла) (?:с решенията|със задачите)|виж фигура p\d+)\b/iu;
   walkStrings(c, (p, s) => {
-    if (!/\/(statement|caption|alt)$/.test(p) || /\/tx\b/.test(p) || !(/транскрипци|transcri(?:ber|ption)/i.test(s) || ASIDE.test(s))) return;
-    const NOTE = /(?:^|\n)[ \t]*[*_]{0,2}[ \t]*(?:(?:забележка|бележка)\s+(?:към|на|от|за)\s+транскрип\S*|transcri(?:ber'?s?|ption)\s+note|note\s+(?:on|about)\s+the\s+transcription)[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/giu;
+    if (
+      !/\/(statement|caption|alt)$/.test(p) ||
+      /\/tx\b/.test(p) ||
+      !(/транскрипци|transcri(?:ber|ption)/i.test(s) || ASIDE.test(s))
+    )
+      return;
+    const NOTE =
+      /(?:^|\n)[ \t]*[*_]{0,2}[ \t]*(?:(?:забележка|бележка)\s+(?:към|на|от|за)\s+транскрип\S*|transcri(?:ber'?s?|ption)\s+note|note\s+(?:on|about)\s+the\s+transcription)[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/giu;
     const notes = [];
-    let out = s.replace(NOTE, m => { notes.push(m.trim().replace(/^[*_]+|[*_]+$/g, '').trim()); return '\n'; });
+    let out = s.replace(NOTE, m => {
+      notes.push(
+        m
+          .trim()
+          .replace(/^[*_]+|[*_]+$/g, '')
+          .trim()
+      );
+      return '\n';
+    });
     // an aside phrase the paper itself prints ("Reflex (0, 0) … is omitted here for clarity" in a Figure 8 caption,
     // idpho-2020-experiment-ipho-exp-q1) is text, not a remark: opts.printedText is the paper's text layer
-    const printedAside = t => { const m = ASIDE.exec(t); return !!(m && opts.printedText && opts.printedText.includes(m[0].toLowerCase())); };
-    out = out.split(/\n[ \t]*\n/).filter(para => { const t = para.trim(); if (t.length < 400 && !/\$\$/.test(t) && ASIDE.test(t) && !printedAside(t)) { notes.push(t); return false; } return true; }).join('\n\n');
+    const printedAside = t => {
+      const m = ASIDE.exec(t);
+      return !!(
+        m &&
+        opts.printedText &&
+        opts.printedText.includes(m[0].toLowerCase())
+      );
+    };
+    out = out
+      .split(/\n[ \t]*\n/)
+      .filter(para => {
+        const t = para.trim();
+        if (
+          t.length < 400 &&
+          !/\$\$/.test(t) &&
+          ASIDE.test(t) &&
+          !printedAside(t)
+        ) {
+          notes.push(t);
+          return false;
+        }
+        return true;
+      })
+      .join('\n\n');
     out = out.replace(/\n{3,}/g, '\n\n').trim();
     if (!notes.length || out === s) return;
     pointerSet(c, p, out);
-    c.tx = { ...(c.tx || {}), notes: [c.tx?.notes, ...notes.map(n => `[${p}] ${n}`)].filter(Boolean).join('\n') };
+    c.tx = {
+      ...(c.tx || {}),
+      notes: [c.tx?.notes, ...notes.map(n => `[${p}] ${n}`)]
+        .filter(Boolean)
+        .join('\n'),
+    };
     changes.push(`${p}: transcriber's remark moved to tx.notes`);
   });
   // Inline HTML a reader types for the print's formatting (<u>underlined</u>, <b>, <i>, <sub>, <sup>, <br>) is
@@ -1153,34 +2385,67 @@ function normaliseCandidateProse(c, opts = {}) {
   // rounds wrote the tag back): the formatting becomes Markdown/LaTeX, the words stay. Unknown tags are left
   // for the validator.
   walkStrings(c, (p, s) => {
-    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p) || !/<\/?[a-zA-Z]/.test(s)) return;
-    const out = splitMath(s).map(seg => seg.math||seg.code ? seg.text : seg.text
-      .replace(/<\/?u>/gi, '')
-      .replace(/<(b|strong)>([\s\S]*?)<\/\1>/gi, '**$2**')
-      .replace(/<(i|em)>([\s\S]*?)<\/\1>/gi, '*$2*')
-      .replace(/<sub>([^<$]*)<\/sub>/gi, (_, x) => `$_{${x.trim()}}$`)
-      .replace(/<sup>([^<$]*)<\/sup>/gi, (_, x) => `$^{${x.trim()}}$`)
-      .replace(/<br\s*\/?>/gi, '\n')).join('');
-    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: inline HTML formatting turned into Markdown`); }
+    if (
+      /\/(latex|notes|url|archiveKey|id)$/.test(p) ||
+      /\/tx\b/.test(p) ||
+      !/<\/?[a-zA-Z]/.test(s)
+    )
+      return;
+    const out = splitMath(s)
+      .map(seg =>
+        seg.math || seg.code
+          ? seg.text
+          : seg.text
+              .replace(/<\/?u>/gi, '')
+              .replace(/<(b|strong)>([\s\S]*?)<\/\1>/gi, '**$2**')
+              .replace(/<(i|em)>([\s\S]*?)<\/\1>/gi, '*$2*')
+              .replace(/<sub>([^<$]*)<\/sub>/gi, (_, x) => `$_{${x.trim()}}$`)
+              .replace(/<sup>([^<$]*)<\/sup>/gi, (_, x) => `$^{${x.trim()}}$`)
+              .replace(/<br\s*\/?>/gi, '\n')
+      )
+      .join('');
+    if (out !== s) {
+      pointerSet(c, p, out);
+      changes.push(`${p}: inline HTML formatting turned into Markdown`);
+    }
   });
   // LaTeX spacing and text commands OUTSIDE math ("(2.1) \quad $a = b$ \ \text{и} \ $c$",
   // a display-equation habit) render literally on the page: spacing becomes a
   // space, \text{}/\mathrm{} their content, \textbf{} **bold**, \textit{} *italic*.
   walkStrings(c, (p, s) => {
-    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p) || !/\\/.test(s)) return;
-    let out = splitMath(s).map(seg => seg.math||seg.code ? seg.text : seg.text
-      .replace(/\\(?:text|textrm|textnormal|mathrm)\{([^{}]*)\}/g, '$1')
-      .replace(/\\textbf\{([^{}]*)\}/g, '**$1**')
-      .replace(/\\(?:textit|emph)\{([^{}]*)\}/g, '*$1*')
-      .replace(/\\(?:quad|qquad)(?![a-zA-Z])|\\[,;:! ]/g, ' ')).join('');
-    if (out !== s) { out = out.replace(/(?<=\S)[ \t]{2,}(?=\S)/g, ' '); pointerSet(c, p, out); changes.push(`${p}: LaTeX spacing/text command outside math`); }
+    if (
+      /\/(latex|notes|url|archiveKey|id)$/.test(p) ||
+      /\/tx\b/.test(p) ||
+      !/\\/.test(s)
+    )
+      return;
+    let out = splitMath(s)
+      .map(seg =>
+        seg.math || seg.code
+          ? seg.text
+          : seg.text
+              .replace(/\\(?:text|textrm|textnormal|mathrm)\{([^{}]*)\}/g, '$1')
+              .replace(/\\textbf\{([^{}]*)\}/g, '**$1**')
+              .replace(/\\(?:textit|emph)\{([^{}]*)\}/g, '*$1*')
+              .replace(/\\(?:quad|qquad)(?![a-zA-Z])|\\[,;:! ]/g, ' ')
+      )
+      .join('');
+    if (out !== s) {
+      out = out.replace(/(?<=\S)[ \t]{2,}(?=\S)/g, ' ');
+      pointerSet(c, p, out);
+      changes.push(`${p}: LaTeX spacing/text command outside math`);
+    }
   });
   // A Latin letter inside a Cyrillic word ("Виждa", "снимa", "скоростта e") is a
   // text-layer artefact no model types back reliably; map the homoglyph, outside math only.
   walkStrings(c, (p, s) => {
-    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p)) return;
+    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p))
+      return;
     const out = fixHomoglyphs(s);
-    if (out !== s) { pointerSet(c, p, out); changes.push(`${p}: Latin homoglyph in a Cyrillic word`); }
+    if (out !== s) {
+      pointerSet(c, p, out);
+      changes.push(`${p}: Latin homoglyph in a Cyrillic word`);
+    }
   });
   // A printed section heading read as a part of its own ("Part 3. Engine with a Governor", empty statement) is
   // folded into the next part as a bold heading line (or the previous one when it is the last); a bare empty part
@@ -1190,13 +2455,28 @@ function normaliseCandidateProse(c, opts = {}) {
     if (!Array.isArray(parts)) return;
     for (let k = parts.length - 1; k >= 0; k--) {
       const pt = parts[k];
-      if (!pt || typeof pt !== 'object' || String(pt.statement || '').trim() || (pt.figures || []).length) continue;
+      if (
+        !pt ||
+        typeof pt !== 'object' ||
+        String(pt.statement || '').trim() ||
+        (pt.figures || []).length
+      )
+        continue;
       const label = String(pt.label || '').trim();
       const heading = /\p{L}{3,}/u.test(label) && label.length > 6;
-      const host = heading ? (parts[k + 1] || parts[k - 1]) : null;
-      if (host && typeof host.statement === 'string') host.statement = parts[k + 1] ? `**${label}**\n\n${host.statement}` : `${host.statement}\n\n**${label}**`;
+      const host = heading ? parts[k + 1] || parts[k - 1] : null;
+      if (host && typeof host.statement === 'string')
+        host.statement = parts[k + 1]
+          ? `**${label}**\n\n${host.statement}`
+          : `${host.statement}\n\n**${label}**`;
       parts.splice(k, 1);
-      changes.push(`/problems/${i}/parts/${k}: empty part ${heading ? `"${label}" folded into the neighbouring part as a heading` : 'dropped'}`);
+      changes.push(
+        `/problems/${i}/parts/${k}: empty part ${
+          heading
+            ? `"${label}" folded into the neighbouring part as a heading`
+            : 'dropped'
+        }`
+      );
     }
   });
   // a solution with no text and no figures is incomplete by definition (a refix once flipped the flag to false and
@@ -1206,29 +2486,62 @@ function normaliseCandidateProse(c, opts = {}) {
   // text-layer check then lists its words as printed nowhere; ioaa-2021-theory-tq-10-q/-15-q/-4-q). Neither is
   // solution text: the remark becomes the incompleteReason and the solution is marked incomplete.
   const REMARK = (() => {
-    const L = '(?<![\\p{L}\\p{N}])', R = '(?![\\p{L}\\p{N}])'; // \b is ASCII-only: Cyrillic words need lookarounds
-    return new RegExp(`^(?:[^.\\n]{0,80}${L}(?:solutions?|answer key|marking scheme|official answers?|решени[ея]|отговори)${R}[^.\\n]{0,120}${L}(?:not|no|never|missing|absent|unavailable|provided|available|included|supplied|found|exists?|липсва|липсват|няма|не е|не са|не бяха)${R}[^.\\n]{0,80}|(?:no|няма|липсва)\\s[^.\\n]{0,60}${L}(?:solutions?|решени[ея])${R}[^.\\n]{0,80})\\.?\\s*$`, 'iu');
+    const L = '(?<![\\p{L}\\p{N}])',
+      R = '(?![\\p{L}\\p{N}])'; // \b is ASCII-only: Cyrillic words need lookarounds
+    return new RegExp(
+      `^(?:[^.\\n]{0,80}${L}(?:solutions?|answer key|marking scheme|official answers?|решени[ея]|отговори)${R}[^.\\n]{0,120}${L}(?:not|no|never|missing|absent|unavailable|provided|available|included|supplied|found|exists?|липсва|липсват|няма|не е|не са|не бяха)${R}[^.\\n]{0,80}|(?:no|няма|липсва)\\s[^.\\n]{0,60}${L}(?:solutions?|решени[ея])${R}[^.\\n]{0,80})\\.?\\s*$`,
+      'iu'
+    );
   })();
   (c.problems || []).forEach((pr, i) => {
     const s = pr.solution;
     if (!s || typeof s !== 'object') return;
     if (s.statement != null && typeof s.statement !== 'string') return; // an object or array is the schema refix's to settle
-    if (s.statement === null) { delete s.statement; changes.push(`/problems/${i}/solution: null statement dropped`); }
-    const text = String(s.statement || '').trim();
-    if (text && text.length <= 220 && !/\$/.test(text) && REMARK.test(text) && !(s.figures || []).length) {
-      delete s.statement; s.incomplete = true; s.incompleteReason = s.incompleteReason || text;
-      changes.push(`/problems/${i}/solution: a remark about the missing solutions stood in for the solution; marked incomplete`);
+    if (s.statement === null) {
+      delete s.statement;
+      changes.push(`/problems/${i}/solution: null statement dropped`);
     }
-    if (!String(s.statement || '').trim() && !s.incomplete && !(s.figures || []).length && !(s.sections || []).length) { s.incomplete = true; s.incompleteReason = s.incompleteReason || 'no solution text'; changes.push(`/problems/${i}/solution: empty solution marked incomplete`); }
+    const text = String(s.statement || '').trim();
+    if (
+      text &&
+      text.length <= 220 &&
+      !/\$/.test(text) &&
+      REMARK.test(text) &&
+      !(s.figures || []).length
+    ) {
+      delete s.statement;
+      s.incomplete = true;
+      s.incompleteReason = s.incompleteReason || text;
+      changes.push(
+        `/problems/${i}/solution: a remark about the missing solutions stood in for the solution; marked incomplete`
+      );
+    }
+    if (
+      !String(s.statement || '').trim() &&
+      !s.incomplete &&
+      !(s.figures || []).length &&
+      !(s.sections || []).length
+    ) {
+      s.incomplete = true;
+      s.incompleteReason = s.incompleteReason || 'no solution text';
+      changes.push(`/problems/${i}/solution: empty solution marked incomplete`);
+    }
   });
-  if (changes.length) c.tx = { ...(c.tx || {}), normalised: [...(c.tx?.normalised || []), ...changes] };
+  if (changes.length)
+    c.tx = {
+      ...(c.tx || {}),
+      normalised: [...(c.tx?.normalised || []), ...changes],
+    };
   return c;
 }
 export function sanitizeCandidate(node) {
   if (Array.isArray(node)) return node.map(sanitizeCandidate);
   if (node && typeof node === 'object') {
     for (const k of Object.keys(node)) {
-      if (node[k] === null && NULLABLE_OPTIONAL.has(k)) { delete node[k]; continue; }
+      if (node[k] === null && NULLABLE_OPTIONAL.has(k)) {
+        delete node[k];
+        continue;
+      }
       node[k] = sanitizeCandidate(node[k]);
     }
   }
@@ -1241,10 +2554,15 @@ export function sanitizeCandidate(node) {
 // (forgot to escape), and an odd run of 3+ loses one (over-escaped, e.g. \\\left).
 export function repairJsonEscapes(s) {
   let out = '';
-  for (let i = 0; i < s.length;) {
-    if (s[i] !== '\\') { out += s[i++]; continue; }
-    let j = i; while (j < s.length && s[j] === '\\') j++;
-    const n = j - i, c = s[j];
+  for (let i = 0; i < s.length; ) {
+    if (s[i] !== '\\') {
+      out += s[i++];
+      continue;
+    }
+    let j = i;
+    while (j < s.length && s[j] === '\\') j++;
+    const n = j - i,
+      c = s[j];
     if (n % 2 === 0 || '"\\/bfnrtu'.includes(c)) out += s.slice(i, j);
     else if (n === 1) out += '\\\\';
     else out += '\\'.repeat(n - 1);
@@ -1266,12 +2584,18 @@ export function repairJsonEscapes(s) {
 // transcribe.mjs writes the meta first and the body last (atomically), because the broker keys on the body
 // file; the broker writes results atomically too, so a waiter never reads a half file. The Batch API bills
 // 50% of the list price; estimateCost(..., {batch: true}) applies that.
-export const ANTHROPIC_BASE_URL = String(process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com').replace(/\/+$/, '');
+export const ANTHROPIC_BASE_URL = String(
+  process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com'
+).replace(/\/+$/, '');
 export const BATCH_DIR = path.join(TX_DIR, 'anthropic-batch');
 export const BATCH_DIRS = {
-  queue: path.join(BATCH_DIR, 'queue'), submitted: path.join(BATCH_DIR, 'submitted'), results: path.join(BATCH_DIR, 'results'),
-  batches: path.join(BATCH_DIR, 'batches'), failed: path.join(BATCH_DIR, 'failed'),
-  log: path.join(BATCH_DIR, 'broker.log'), lock: path.join(BATCH_DIR, 'broker.lock'),
+  queue: path.join(BATCH_DIR, 'queue'),
+  submitted: path.join(BATCH_DIR, 'submitted'),
+  results: path.join(BATCH_DIR, 'results'),
+  batches: path.join(BATCH_DIR, 'batches'),
+  failed: path.join(BATCH_DIR, 'failed'),
+  log: path.join(BATCH_DIR, 'broker.log'),
+  lock: path.join(BATCH_DIR, 'broker.lock'),
 };
 // One batch.mjs --batch-async scheduler per machine (two would drive the same papers): {pid, at}, taken with 'wx',
 // a dead holder's lock is taken over (reviewer finding 2026-09-17).
@@ -1279,19 +2603,39 @@ export const BATCH_ASYNC_LOCK = path.join(TX_DIR, 'batch-async.lock');
 // tx-<40 hex of sha256(paperId|stage|window|sha256(body))>-<6 random hex>: 50 chars, inside the API's ^[a-zA-Z0-9_-]{1,64}$,
 // deterministic enough to recognise a request in the log and random enough that a retry never collides.
 export const BATCH_CUSTOM_ID = /^tx-[0-9a-f]{40}-[0-9a-f]{6}$/;
-export const batchCustomId = (paperId, stage, windowLabel, body) => `tx-${sha256(`${paperId}|${stage}|${windowLabel}|${sha256(body)}`).slice(0, 40)}-${crypto.randomBytes(3).toString('hex')}`;
+export const batchCustomId = (paperId, stage, windowLabel, body) =>
+  `tx-${sha256(`${paperId}|${stage}|${windowLabel}|${sha256(body)}`).slice(
+    0,
+    40
+  )}-${crypto.randomBytes(3).toString('hex')}`;
 export const batchFiles = customId => ({
-  body: path.join(BATCH_DIRS.queue, `${customId}.json`), meta: path.join(BATCH_DIRS.queue, `${customId}.meta.json`),
+  body: path.join(BATCH_DIRS.queue, `${customId}.json`),
+  meta: path.join(BATCH_DIRS.queue, `${customId}.meta.json`),
   result: path.join(BATCH_DIRS.results, `${customId}.json`),
 });
-export const pidAlive = pid => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+export const pidAlive = pid => {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (e) {
+    return e.code === 'EPERM';
+  }
+};
 // Windows refuses renames while another process holds the target: retry briefly, like writeJson.
 export function renameWithRetry(from, to) {
   for (let attempt = 1; ; attempt++) {
-    try { fs.renameSync(from, to); return; }
-    catch (e) {
-      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) throw e;
-      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 50 * attempt);
+    try {
+      fs.renameSync(from, to);
+      return;
+    } catch (e) {
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8)
+        throw e;
+      Atomics.wait(
+        new Int32Array(new SharedArrayBuffer(4)),
+        0,
+        0,
+        50 * attempt
+      );
     }
   }
 }
@@ -1299,10 +2643,18 @@ export function writeFileAtomic(file, data) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const tmp = `${file}.${process.pid}.partial`;
   fs.writeFileSync(tmp, data);
-  try { renameWithRetry(tmp, file); } catch (e) { try { fs.unlinkSync(tmp); } catch {} throw e; }
+  try {
+    renameWithRetry(tmp, file);
+  } catch (e) {
+    try {
+      fs.unlinkSync(tmp);
+    } catch {}
+    throw e;
+  }
 }
 export function enqueueBatchRequest(customId, body, meta) {
-  if (!BATCH_CUSTOM_ID.test(customId)) throw new Error(`bad batch custom id ${customId}`);
+  if (!BATCH_CUSTOM_ID.test(customId))
+    throw new Error(`bad batch custom id ${customId}`);
   const f = batchFiles(customId);
   writeJson(f.meta, { customId, ...meta, bytes: Buffer.byteLength(body) });
   writeFileAtomic(f.body, body);
@@ -1311,49 +2663,113 @@ export function enqueueBatchRequest(customId, body, meta) {
 export function readBatchResult(customId) {
   const f = batchFiles(customId).result;
   if (!fs.existsSync(f)) return null;
-  try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return null; }
+  try {
+    return JSON.parse(fs.readFileSync(f, 'utf8'));
+  } catch {
+    return null;
+  }
 }
 // 'queued' | 'submitted:<batchId>' | 'failed' | 'done' | 'unknown'
 export function batchRequestState(customId) {
   const f = batchFiles(customId);
   if (fs.existsSync(f.result)) return 'done';
   if (fs.existsSync(f.body)) return 'queued';
-  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) if (fs.existsSync(path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`))) return `submitted:${d}`; } catch {}
-  if (fs.existsSync(path.join(BATCH_DIRS.failed, `${customId}.meta.json`))) return 'failed';
+  try {
+    for (const d of fs.readdirSync(BATCH_DIRS.submitted))
+      if (
+        fs.existsSync(
+          path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`)
+        )
+      )
+        return `submitted:${d}`;
+  } catch {}
+  if (fs.existsSync(path.join(BATCH_DIRS.failed, `${customId}.meta.json`)))
+    return 'failed';
   return 'unknown';
 }
-export function brokerAlive() { const held = readJsonSafe(BATCH_DIRS.lock, null); return !!(held?.pid && pidAlive(held.pid)); }
+export function brokerAlive() {
+  const held = readJsonSafe(BATCH_DIRS.lock, null);
+  return !!(held?.pid && pidAlive(held.pid));
+}
 // The queue entry's sidecar wherever the broker moved it (queue/, submitted/<batchId>/, failed/); null when gone.
 export function batchMetaFile(customId) {
   const f = batchFiles(customId);
   if (fs.existsSync(f.meta)) return f.meta;
-  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) { const m = path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`); if (fs.existsSync(m)) return m; } } catch {}
+  try {
+    for (const d of fs.readdirSync(BATCH_DIRS.submitted)) {
+      const m = path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`);
+      if (fs.existsSync(m)) return m;
+    }
+  } catch {}
   const failed = path.join(BATCH_DIRS.failed, `${customId}.meta.json`);
   return fs.existsSync(failed) ? failed : null;
 }
-export function readBatchMeta(customId) { const f = batchMetaFile(customId); return f ? readJsonSafe(f, null) : null; }
+export function readBatchMeta(customId) {
+  const f = batchMetaFile(customId);
+  return f ? readJsonSafe(f, null) : null;
+}
 // A note on the sidecar wherever it lives (transcribe.mjs --batch-result marks a collected result: collectedAt).
-export function updateBatchMeta(customId, patch) { const f = batchMetaFile(customId); if (!f) return null; const m = readJsonSafe(f, null); if (!m) return null; const next = { ...m, ...patch }; writeJson(f, next); return next; }
+export function updateBatchMeta(customId, patch) {
+  const f = batchMetaFile(customId);
+  if (!f) return null;
+  const m = readJsonSafe(f, null);
+  if (!m) return null;
+  const next = { ...m, ...patch };
+  writeJson(f, next);
+  return next;
+}
 // A detached request already queued or submitted for the same work: customId prefix (sha256 of paperId|stage|
 // window|body: the same pages, candidate and prompt), the same attempt and ask, not yet collected. transcribe.mjs
 // --batch-async reuses it instead of queueing (and paying for) the same request twice when an earlier park was
 // lost (run.mjs crashed after the enqueue, a job re-created) — reviewer finding 2026-09-17. Returns
 // { customId, meta, state } or null. Entries in failed/ are never reused (their result is an error).
-export function findDetachedBatchRequest(prefix, { paperId, stage, window, attempt = 1, ask = 1, promptSha256 = null } = {}) {
+export function findDetachedBatchRequest(
+  prefix,
+  { paperId, stage, window, attempt = 1, ask = 1, promptSha256 = null } = {}
+) {
   const dirs = [BATCH_DIRS.queue];
-  try { for (const d of fs.readdirSync(BATCH_DIRS.submitted)) dirs.push(path.join(BATCH_DIRS.submitted, d)); } catch {}
+  try {
+    for (const d of fs.readdirSync(BATCH_DIRS.submitted))
+      dirs.push(path.join(BATCH_DIRS.submitted, d));
+  } catch {}
   for (const dir of dirs) {
-    let files; try { files = fs.readdirSync(dir).filter(f => f.startsWith(prefix) && f.endsWith('.meta.json')); } catch { continue; }
+    let files;
+    try {
+      files = fs
+        .readdirSync(dir)
+        .filter(f => f.startsWith(prefix) && f.endsWith('.meta.json'));
+    } catch {
+      continue;
+    }
     for (const f of files.sort()) {
       const customId = f.slice(0, -'.meta.json'.length);
       if (!BATCH_CUSTOM_ID.test(customId)) continue;
       const meta = readJsonSafe(path.join(dir, f), null);
       if (!meta?.detached || meta.collectedAt) continue;
-      if (meta.paperId !== paperId || meta.stage !== stage || meta.window !== window) continue;
-      if ((Number(meta.attempt) || 1) !== attempt || (Number(meta.ask) || 1) !== ask) continue;
-      if (promptSha256 && meta.promptSha256 && meta.promptSha256 !== promptSha256) continue;
+      if (
+        meta.paperId !== paperId ||
+        meta.stage !== stage ||
+        meta.window !== window
+      )
+        continue;
+      if (
+        (Number(meta.attempt) || 1) !== attempt ||
+        (Number(meta.ask) || 1) !== ask
+      )
+        continue;
+      if (
+        promptSha256 &&
+        meta.promptSha256 &&
+        meta.promptSha256 !== promptSha256
+      )
+        continue;
       const state = batchRequestState(customId);
-      if (state === 'queued' || state.startsWith('submitted:') || state === 'done') return { customId, meta, state };
+      if (
+        state === 'queued' ||
+        state.startsWith('submitted:') ||
+        state === 'done'
+      )
+        return { customId, meta, state };
     }
   }
   return null;
@@ -1365,15 +2781,23 @@ export function withdrawQueuedBatchRequest(customId) {
   const state = batchRequestState(customId);
   if (state !== 'queued') return state;
   const f = batchFiles(customId);
-  for (const file of [f.body, f.meta]) { try { fs.unlinkSync(file); } catch {} }
+  for (const file of [f.body, f.meta]) {
+    try {
+      fs.unlinkSync(file);
+    } catch {}
+  }
   return 'withdrawn';
 }
-export const readBatchRecord = batchId => readJsonSafe(path.join(BATCH_DIRS.batches, `${batchId}.json`), null);
+export const readBatchRecord = batchId =>
+  readJsonSafe(path.join(BATCH_DIRS.batches, `${batchId}.json`), null);
 // How long a waiter waits (transcribe.mjs sync batch mode). A request still queued (unpaid: no broker, or a broker
 // backing off) is given up after BATCH_QUEUED_TIMEOUT_MS; once the broker has submitted it, the batch record's
 // createdAt + the API's 24 h processing window + a grace period is the deadline (reviewer finding 2026-09-17: the
 // old flat 2 h cap abandoned paid requests). The TX_BATCH_* variables shorten the constants for the tests only.
-const envMs = (name, fallback) => { const v = Number(process.env[name]); return Number.isFinite(v) && v > 0 ? v : fallback; };
+const envMs = (name, fallback) => {
+  const v = Number(process.env[name]);
+  return Number.isFinite(v) && v > 0 ? v : fallback;
+};
 export const BATCH_WAIT = {
   queuedTimeoutMs: envMs('TX_BATCH_QUEUED_TIMEOUT_MS', 2 * 3600 * 1000),
   ttlMs: envMs('TX_BATCH_TTL_MS', 24 * 3600 * 1000),
@@ -1381,20 +2805,32 @@ export const BATCH_WAIT = {
 };
 // The moment after which a waiter gives up on customId, given its state, or null while it still has time.
 // Returns { state, deadline, batchId }.
-export function batchWaitDeadline(customId, startedMs, { queuedTimeoutMs = BATCH_WAIT.queuedTimeoutMs, ttlMs = BATCH_WAIT.ttlMs, graceMs = BATCH_WAIT.graceMs } = {}) {
+export function batchWaitDeadline(
+  customId,
+  startedMs,
+  {
+    queuedTimeoutMs = BATCH_WAIT.queuedTimeoutMs,
+    ttlMs = BATCH_WAIT.ttlMs,
+    graceMs = BATCH_WAIT.graceMs,
+  } = {}
+) {
   const state = batchRequestState(customId);
   if (state.startsWith('submitted:')) {
     const batchId = state.slice('submitted:'.length);
     const rec = readBatchRecord(batchId);
     // the record is written a moment after the files move; until then the submission time stands in for createdAt
-    const created = Date.parse(rec?.createdAt || rec?.submittedAt || '') || Date.now();
+    const created =
+      Date.parse(rec?.createdAt || rec?.submittedAt || '') || Date.now();
     return { state, batchId, deadline: created + ttlMs + graceMs };
   }
   return { state, batchId: null, deadline: startedMs + queuedTimeoutMs };
 }
 // Resolves with the result JSON, or null when the deadline passed without one (the state at that moment is on
 // waitForBatchResult.lastState). onWait(elapsedMs, state) runs every poll. timeoutMs (legacy) caps the queued wait.
-export async function waitForBatchResult(customId, { pollMs = 5000, timeoutMs, onWait, ...limits } = {}) {
+export async function waitForBatchResult(
+  customId,
+  { pollMs = 5000, timeoutMs, onWait, ...limits } = {}
+) {
   const started = Date.now();
   if (timeoutMs) limits.queuedTimeoutMs = timeoutMs;
   for (;;) {
@@ -1411,25 +2847,61 @@ export async function waitForBatchResult(customId, { pollMs = 5000, timeoutMs, o
 // null for a succeeded result; else {type, message, retryable}. Retryable = the request never reached the model
 // or the API was the problem (rate limit, overloaded, 5xx, batch expiry); a canceled batch is an operator's decision.
 export function batchResultError(result) {
-  if (!result || typeof result !== 'object') return { type: 'unreadable', message: 'result file is not a JSON object', retryable: false };
+  if (!result || typeof result !== 'object')
+    return {
+      type: 'unreadable',
+      message: 'result file is not a JSON object',
+      retryable: false,
+    };
   if (!result.error) return null;
-  const e = typeof result.error === 'object' ? result.error : { message: String(result.error) };
+  const e =
+    typeof result.error === 'object'
+      ? result.error
+      : { message: String(result.error) };
   const type = String(e.type || result.batch?.resultType || 'error');
   const message = String(e.message || '');
-  const retryable = ['rate_limit_error', 'overloaded_error', 'api_error', 'timeout_error', 'expired', 'missing_result'].includes(type) || /overloaded|rate limit|internal server error|try again/i.test(message);
+  const retryable =
+    [
+      'rate_limit_error',
+      'overloaded_error',
+      'api_error',
+      'timeout_error',
+      'expired',
+      'missing_result',
+    ].includes(type) ||
+    /overloaded|rate limit|internal server error|try again/i.test(message);
   return { type, message, retryable };
 }
 // Greedy grouping in the given order: a group closes when the next entry would take it over either cap.
 // Task limits are 200 requests / 200 MB (the API allows more; base64 pages make requests large).
 export const BATCH_LIMITS = { maxRequests: 200, maxBytes: 200 * 1024 * 1024 };
-export function groupBatchRequests(entries, { maxRequests = BATCH_LIMITS.maxRequests, maxBytes = BATCH_LIMITS.maxBytes } = {}) {
-  const groups = [], rejected = [];
-  let current = [], bytes = 0;
+export function groupBatchRequests(
+  entries,
+  {
+    maxRequests = BATCH_LIMITS.maxRequests,
+    maxBytes = BATCH_LIMITS.maxBytes,
+  } = {}
+) {
+  const groups = [],
+    rejected = [];
+  let current = [],
+    bytes = 0;
   for (const e of entries) {
     const size = Number(e.bytes) || 0;
-    if (size > maxBytes) { rejected.push(e); continue; }
-    if (current.length && (current.length + 1 > maxRequests || bytes + size > maxBytes)) { groups.push(current); current = []; bytes = 0; }
-    current.push(e); bytes += size;
+    if (size > maxBytes) {
+      rejected.push(e);
+      continue;
+    }
+    if (
+      current.length &&
+      (current.length + 1 > maxRequests || bytes + size > maxBytes)
+    ) {
+      groups.push(current);
+      current = [];
+      bytes = 0;
+    }
+    current.push(e);
+    bytes += size;
   }
   if (current.length) groups.push(current);
   return { groups, rejected };
