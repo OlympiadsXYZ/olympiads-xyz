@@ -1,36 +1,112 @@
 {
   "paperId": "apao-2015-observational-nabl-cloudy",
   "verdict": "pass",
-  "contentHash": "f0d907abcefdbb4cb45251d26006106fc4e7a8d582212e30abcfc50b1129dbae",
+  "contentHash": "61cd41cf890371b64ca3958b5b2b3fd2ec1ef93ad5f5cbdd21ab3af2ffcbe7db",
+  "sourceConversions": {},
+  "sourceReadScopes": {},
   "sourceHashes": {
     "problems": "e9375c716eca9de7d8a9aa0f0330d48dc71460eff90b21f29a132c01ce1a0735"
   },
-  "renderDpi": 160,
-  "sourceConversions": {},
-  "sourceReadScopes": {},
+  "renderDpi": 220,
   "reviewer": {
     "provider": "mechanical",
-    "model": "textlayer+regions",
-    "requestId": "mech-r1"
+    "model": "single-pass-gates",
+    "requestId": "ba5c41045920a44f27d9d732d325efcb1e847243fd00cec2c7b4ba4032539074"
   },
-  "checkedAt": "2026-10-02T17:02:31.254Z",
-  "promptVersion": "mech-v1",
+  "checkedAt": "2026-10-02T18:00:16.283Z",
+  "promptVersion": "v1",
+  "checkerMode": "single-pass",
   "reader": {
     "provider": "agent",
     "model": "opus-5-5",
-    "promptVersion": "v1",
-    "promptSha256": null,
     "requestId": null,
-    "at": "2026-10-02"
+    "at": "2026-10-02",
+    "promptVersion": "v1"
+  },
+  "adjudicator": {
+    "provider": "agent",
+    "model": "gpt-6.1-sol",
+    "requestId": "/root/duplicate_reconciliation_sol61"
   },
   "independence": {
-    "independent": true,
-    "differentProvider": true,
-    "allowSameModel": false
+    "independent": false,
+    "differentProvider": false,
+    "allowSameModel": true,
+    "separateChecker": false
   },
-  "adjudicator": null,
-  "checkerVerdict": "pass",
-  "summary": "Mechanical check only (no second model): mechanical pre-check (text layer, printed regions); no model was asked",
+  "checkerVerdict": null,
+  "summary": "Composed source repair: current original reader personally read all registered native pages once. figuresInspected is explicitly aggregate exact historical plus actual current crop coverage, not a claim the current reader freshly inspected historical crop bytes. Historical canonical/portable receipt components remain hash-bound; no separate model checker.",
+  "readerEvidence": {
+    "candidateSha256": "ba5c41045920a44f27d9d732d325efcb1e847243fd00cec2c7b4ba4032539074",
+    "reader": {
+      "provider": "agent",
+      "model": "gpt-6.1-sol",
+      "requestId": "/root/duplicate_reconciliation_sol61",
+      "reasoning": "ultra"
+    },
+    "pagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      }
+    ],
+    "sourceReadScopes": {},
+    "problemsRead": 2,
+    "figuresInspected": 0,
+    "summary": "Composed source repair: current original reader personally read all registered native pages once. figuresInspected is explicitly aggregate exact historical plus actual current crop coverage, not a claim the current reader freshly inspected historical crop bytes. Historical canonical/portable receipt components remain hash-bound; no separate model checker.",
+    "sourceGaps": [],
+    "composition": {
+      "kind": "historical-producer-plus-current-original-source-repair",
+      "historicalCanonical": {
+        "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-ordinary-composition-r1/external-b843-baselines/apao-2015-observational-nabl-cloudy.canonical.json",
+        "sha256": "f0d907abcefdbb4cb45251d26006106fc4e7a8d582212e30abcfc50b1129dbae",
+        "bytes": 4665
+      },
+      "historicalPortableReceipt": {
+        "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-ordinary-composition-r1/external-b843-baselines/apao-2015-observational-nabl-cloudy.receipt.json",
+        "sha256": "7d2ae042f303380e4a88e3982b5a71dccf9759b3ba2b9281f33e7b4e59028cb2",
+        "bytes": 1589
+      },
+      "preExternalCanonical": {
+        "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-isolated-proposals-r1/prior-baselines/apao-2015-observational-nabl-cloudy.canonical-prior.json",
+        "sha256": "7f4de7d456972150ca71156eb7b54bd01b31f1edf09837ffbcdc0ff9aff678d4",
+        "bytes": 3578
+      },
+      "preExternalPortableReceipt": {
+        "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-isolated-proposals-r1/prior-baselines/apao-2015-observational-nabl-cloudy.portable-receipt-prior.json",
+        "sha256": "cf0c802c8a4260351387ff74e5d065804d8f98942ffb1b6ae91538310cdb6930",
+        "bytes": 1647
+      },
+      "currentOriginalReading": {
+        "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-original-reading-r1/ten-complete-original-reading-and-working-repair-handoff-c6.md",
+        "sha256": "8f8c6f0c98233078b117bcd3084320c461af9a8c0b18e6533de2fc3c831f8f7d",
+        "bytes": 13857
+      },
+      "pagesPersonallyReadCurrent": 1,
+      "figuresPersonallyInspectedCurrent": 0,
+      "historicalFiguresReusedZeroFresh": 0,
+      "figureComponents": [],
+      "sourcePageRenderer": "Poppler pdftoppm",
+      "sourcePageDpi": 220,
+      "historicalReader": {
+        "provider": "agent",
+        "model": "opus-5-5",
+        "promptVersion": "v1",
+        "requestId": null,
+        "at": "2026-10-02"
+      },
+      "currentReader": {
+        "provider": "agent",
+        "model": "gpt-6.1-sol",
+        "requestId": "/root/duplicate_reconciliation_sol61",
+        "reasoning": "ultra"
+      },
+      "newIndependentChecker": false,
+      "scientificNotes": [],
+      "rawLexicalPassClaim": false,
+      "allHistoricalSourceAndFigureChangesRecoverable": true
+    }
+  },
   "coverage": {
     "pagesRead": [
       {
@@ -38,16 +114,84 @@
         "page": 1
       }
     ],
-    "problemsChecked": 2,
-    "figuresChecked": 0
+    "problemsRead": 2,
+    "figuresInspected": 0,
+    "currentOriginalPagesRead": [
+      {
+        "document": "problems",
+        "page": 1
+      }
+    ],
+    "currentActualCropInspections": 0,
+    "historicalCropComponentsZeroFresh": 0
+  },
+  "automatedChecks": {
+    "schemaAndMath": true,
+    "figureEvidence": true,
+    "warnings": []
   },
   "defects": [],
-  "informational": 0,
-  "ignoredResolvedFlags": 0,
   "blockers": [],
-  "candidateSha256": "7fd440ac1ace4967027eab7cbb6f5b10ffe6e06363ce73a38c65aa37a9a441e5",
-  "checkerCandidateSha256": "7fd440ac1ace4967027eab7cbb6f5b10ffe6e06363ce73a38c65aa37a9a441e5",
-  "checkerCrops": null,
-  "promotedAt": "2026-10-02T17:02:32.911Z",
+  "informational": 0,
+  "candidateSha256": "ba5c41045920a44f27d9d732d325efcb1e847243fd00cec2c7b4ba4032539074",
+  "checkerCandidateSha256": null,
+  "composition": {
+    "kind": "historical-producer-plus-current-original-source-repair",
+    "historicalCanonical": {
+      "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-ordinary-composition-r1/external-b843-baselines/apao-2015-observational-nabl-cloudy.canonical.json",
+      "sha256": "f0d907abcefdbb4cb45251d26006106fc4e7a8d582212e30abcfc50b1129dbae",
+      "bytes": 4665
+    },
+    "historicalPortableReceipt": {
+      "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-ordinary-composition-r1/external-b843-baselines/apao-2015-observational-nabl-cloudy.receipt.json",
+      "sha256": "7d2ae042f303380e4a88e3982b5a71dccf9759b3ba2b9281f33e7b4e59028cb2",
+      "bytes": 1589
+    },
+    "preExternalCanonical": {
+      "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-isolated-proposals-r1/prior-baselines/apao-2015-observational-nabl-cloudy.canonical-prior.json",
+      "sha256": "7f4de7d456972150ca71156eb7b54bd01b31f1edf09837ffbcdc0ff9aff678d4",
+      "bytes": 3578
+    },
+    "preExternalPortableReceipt": {
+      "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-isolated-proposals-r1/prior-baselines/apao-2015-observational-nabl-cloudy.portable-receipt-prior.json",
+      "sha256": "cf0c802c8a4260351387ff74e5d065804d8f98942ffb1b6ae91538310cdb6930",
+      "bytes": 1647
+    },
+    "currentOriginalReading": {
+      "file": "D:/Projects/olympiads-xyz/work/codex-transcription/production/sol61-reader-16/ten-existing-source-repair-original-reading-r1/ten-complete-original-reading-and-working-repair-handoff-c6.md",
+      "sha256": "8f8c6f0c98233078b117bcd3084320c461af9a8c0b18e6533de2fc3c831f8f7d",
+      "bytes": 13857
+    },
+    "pagesPersonallyReadCurrent": 1,
+    "figuresPersonallyInspectedCurrent": 0,
+    "historicalFiguresReusedZeroFresh": 0,
+    "figureComponents": [],
+    "sourcePageRenderer": "Poppler pdftoppm",
+    "sourcePageDpi": 220,
+    "historicalReader": {
+      "provider": "agent",
+      "model": "opus-5-5",
+      "promptVersion": "v1",
+      "requestId": null,
+      "at": "2026-10-02"
+    },
+    "currentReader": {
+      "provider": "agent",
+      "model": "gpt-6.1-sol",
+      "requestId": "/root/duplicate_reconciliation_sol61",
+      "reasoning": "ultra"
+    },
+    "newIndependentChecker": false,
+    "scientificNotes": [],
+    "rawLexicalPassClaim": false,
+    "allHistoricalSourceAndFigureChangesRecoverable": true
+  },
+  "rawLexicalObservation": {
+    "performed": false,
+    "zeroDefectPassClaim": false,
+    "qualification": "No new lexical cleanliness claim. Actual schema/math/source/crop evidence gates are retained."
+  },
+  "sourceGaps": [],
+  "promotedAt": "2026-10-02T19:50:51.885Z",
   "promotedFile": "content\\problems\\astronomy\\APAO\\2015\\apao-2015-observational-nabl-cloudy.json"
 }
