@@ -5,8 +5,8 @@ title: 'Задача 2. James Webb Space Telescope'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/IPhO/2022/ipho-2022-theory-q2.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T19:36:41.666Z'
-verifier: 'same-model'
+verifiedAt: '2026-10-02T16:26:13.823Z'
+verifier: 'mechanical'
 ---
 
 *Theory — Q2, English (Official) · 12 т.*
@@ -16,7 +16,7 @@ verifier: 'same-model'
 This is a question on the physics of the James Webb Space Telescope. Light from a star strikes the primary mirror, with an area of $A_{\mathrm{mirror}} = 25\ \mathrm{m^2}$, and reflects off of a secondary mirror. The focal length of the system is $f = 130\ \mathrm{m}$. The light is focused into the ISIM (Integrated Science Instrument Module), which contains the CCD (charged-coupled device) cameras.
 
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '51.6%', '--fig-max': '331px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p1-fig1.png" alt="Labeled NASA diagram of the James Webb Space Telescope showing the Sunshield, ISIM, Backplane, Optical Telescope Element (OTE) Primary Mirror, OTE Secondary Mirror, Spacecraft Bus, and Startrackers." width="1033" height="819" loading="lazy" decoding="async" />
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p1-fig1-v3.png" alt="Labeled NASA diagram of the James Webb Space Telescope showing the Sunshield, ISIM, Backplane, Optical Telescope Element (OTE) Primary Mirror, OTE Secondary Mirror, Spacecraft Bus, and Startrackers." width="1033" height="727" loading="lazy" decoding="async" />
 <figcaption>Image Credit: NASA</figcaption>
 </figure>
 
@@ -43,7 +43,11 @@ where $i_0$ is a constant. **[1,8 т.]**
 
 **B.1** From the dark current graph, provide an order of magnitude estimate for the temperature of a distant source of thermal photons that would just be capable of exciting an electron on the pixel. **[0,4 т.]**
 
+The electrons are collected in a capacitor, and after an exposure time $\tau$, the electrons are counted. There are three main sources of uncertainty in the process: a fixed uncertainty in the counting process called read out noise; a Poisson distribution error associated with the dark current, and a Poisson distribution error associated with the detected incoming photons. Poisson distribution errors are equal to the square root of the number of counts associated with a process. The measured photon count is equal to the number of electrons in the capacitor, minus the number of electrons associated with the dark current.
+
 **B.2** Write an expression for the total count uncertainty $\sigma_t$, if there is a readout noise $\sigma_r$, a dark current $i_d$, an incoming photon rate $p$, and an exposure time $\tau$. **[0,4 т.]**
+
+For remaining questions in this part assume the exposure time is $\tau = 10^4\ \mathrm{s}$ and the read out noise is a fixed $\sigma_r = 14$.
 
 **B.3** Assume an operating temperature of $T_{\mathrm{p}} = 7.5\ \mathrm{K}$. Calculate the minimum photon rate $p$ so that the photon count is ten times the count uncertainty. **[0,5 т.]**
 
@@ -578,7 +582,7 @@ $$
 
 The factor of two is because only half of the photons from any sheet are absorbed by the other sheet; the rest are reabsorbed by the first sheet.
 
-We don't have infinite sheets, so there will be a net flux of heat out of the system. There are at least two ways to approach this.
+We don't have infinite sheets, so there will be a net flux of heat out of the system. There are at least two ways to approach this
 
 **Choice A: Assume absorptive effective areas given by $\epsilon A$**
 
@@ -645,7 +649,7 @@ In the case of large $N$, half of this probability goes to each sheet; if $N$ is
 We just need to compute the average number of bounces:
 
 $$
-\bar{N} \approx \frac{2\pi}{\pi}\int_0^1 N(r)r\,dr = \frac{\pi}{8\phi} \approx 30
+\bar{N} \approx \frac{2\pi}{\pi}\int_0^1 N(r)r\,dr = 2\frac{\pi}{8\phi} \approx 30
 $$
 
 and then
@@ -791,7 +795,7 @@ Marking Scheme:
 | | |
 |---|---|
 | $T_1$ consistent with own formula | 0.1 pts |
-| $250\ \mathrm{K} < T_1 \leq 400\ \mathrm{K}$ | 0.1 pts |
+| $250\ \mathrm{K} \leq T_1 \leq 400\ \mathrm{K}$ | 0.1 pts |
 | $T_5$ consistent with own formula | 0.1 pts |
 | $45\ \mathrm{K} \leq T_5 \leq 200\ \mathrm{K}$ | 0.1 pts |
 | **sum** | **0.4 pt** |
@@ -831,8 +835,8 @@ Explanations by the students are not needed, and the final score for this task c
 
 The figure below shows the motion of a mole of gas through the plug; the mole is shown in pink. Gas to the left of the mole pushes the mole through the plug with a constant force $P_1 A$ through a volume $V_1$.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '28.5%', '--fig-max': '183px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p1-sol-fig2-v3.png" alt="Horizontal cylinder labelled Gas Parcel (top) and Porous Plug (bottom); a pink gas parcel on the left moves to the right through the porous plug shown as two blue/purple vertical elliptical segments; arrows on the left and right indicate the direction of motion." width="572" height="355" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.6%', '--fig-max': '311px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p1-sol-fig2.png" alt="Horizontal cylinder labelled Gas Parcel (top) and Porous Plug (bottom); a pink gas parcel to the left of the blue porous plug, arrows inside the cylinder pointing to the right." width="973" height="348" loading="lazy" decoding="async" />
 </figure>
 
 
@@ -1008,8 +1012,8 @@ with the $U$ intercept equal to the conserved $H_2$.
 
 An estimate can be made visually, but it is difficult to be accurate. Try constructing a line from the point $V_2 = 0.120$, $T_2 = 7.5$ that is tangent to the local isentrope, and the result will intercept the $U$ axis. This result is somewhere around 40. This is shown in green below.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '58.9%', '--fig-max': '377px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p2-sol-fig2-v3.png" alt="U–V graph (Int. Energy kJ/kg vs Volume m³/kg, 0–0.120) with isotherms, isentropes, a two-phase dome curve and a green straight tangent line from about U=40 near V=0 to V≈0.115." width="1179" height="808" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.5%', '--fig-max': '336px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p2-sol-fig2-v4.png" alt="U–V graph (Int. Energy kJ/kg against Volume m³/kg, 0–0.120) with isotherms, isentropes and the black two-phase boundary; a single green straight line runs from about U = 40 on the U axis down to V ≈ 0.100." width="1050" height="731" loading="lazy" decoding="async" />
 </figure>
 
 
@@ -1021,8 +1025,8 @@ Measuring the distance with a ruler, find the fractional distance between the tw
 
 This point is about 41 kJ/kg. The actual value for the conserved quantity is $U + PV = 40.7\ \mathrm{kJ/kg}$.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.5%', '--fig-max': '336px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p2-sol-fig3-v2.png" alt="Same U–V graph with two purple tangent lines drawn from U-axis intercepts 39 and 41, a highlighted green vertical segment at V≈0.120 and a green connecting line, illustrating interpolation to U+PV≈40.7 kJ/kg." width="1050" height="829" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '52.3%', '--fig-max': '335px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p2-sol-fig3-v3.png" alt="Same U–V graph with two purple tangent lines starting from about U = 39 and U = 41 on the U axis, a short highlighted segment between them at V = 0.100 and a green line connecting the two highlighted sections." width="1048" height="762" loading="lazy" decoding="async" />
 </figure>
 
 

@@ -5,8 +5,8 @@ title: 'Задача 2. Theoretical Problem 2: A ball on a turntable'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/APhO/2023/apho-2023-theory-t2.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T21:41:11.208Z'
-verifier: 'same-model'
+verifiedAt: '2026-10-02T16:26:07.483Z'
+verifier: 'mechanical'
 ---
 
 *Theoretical Problem 2: A ball on a turntable [10.0 points] — XXIII APhO MONGOLIA 2023, Theory, Q2 (English Official) · 10 т.*
@@ -81,7 +81,7 @@ You may write the final answers as vector expressions involving cross product (v
 
 **A.1** Express the ball's velocity $\vec{v}$ in terms of $\Omega, \vec{\omega}, r$ and $\vec{R}$ from a kinematic constraint. **[0,1 т.]**
 
-**A.2** Using Newton's equation and torque equation with respect to its center, find the acceleration of the ball $\vec{a} \equiv \dot{\vec{v}}$ in terms of $\Omega, \vec{\omega}, r, m$ and $I$. **[0,2 т.]**
+**A.2** Using Newton's equation and torque equation with respect to its center, find the acceleration of the ball $\vec{a} \equiv \dot{\vec{v}}$ in terms of $\Omega, \vec{v}, r, m$ and $I$. **[0,2 т.]**
 
 **A.3** Find the velocity $\vec{v}$ in terms of $\Omega, \vec{R}, \vec{v}_0, \vec{R}_0, r, m$ and $I$. **[0,2 т.]**
 
@@ -152,7 +152,7 @@ Sketch the trajectory. Is the charge of the surface negative or positive? For th
 #### 2.1 Part A
 
 **A.1**  
-The velocity of the ball $\vec v_b$ with respect to the turntable from the non-slipping condition is given by:
+The velocity of the ball $\vec v_b$ with respect to the turntable from the non–slipping condition is given by:
 $$
 \vec v_b = \vec\omega \times (r\hat z). \qquad (16)
 $$
@@ -190,7 +190,7 @@ $$
 
 **A.3**
 
-The last equation unequivocally shows that the motion of the ball is circular and the corresponding angular velocity of its center is $\frac{\Omega}{1+mr^2/I}$. Now we integrate this equation to find the radius and its center:
+The last equation unequivocally shows that the motion of the ball is circular and the corresponding angular velocity of its center is $\frac{\Omega}{1+ma^2/I}$. Now we integrate this equation to find the radius and its center:
 
 $$
 \vec v - \vec v_0 = \frac{\Omega}{1+mr^2/I}\,\hat z \times (\vec R - \vec R_0), \qquad (25)
@@ -427,8 +427,6 @@ $$
 
 ### 2.3 Part C
 
-It is often useful to analyze the equations governing the evolution of a system in a unitless form so that the general behavior can be studied without worrying about a specific values or units. For this purpose, we divide the $\vec R$ and $\Omega$ by 1 meter and 1 Hertz respectively. Also we divide the time variable by 1 second.
-
 C.1  
 Here it is given that $\Omega = const$. In addition, for the given mass distribution where the ball is filled up to half of its radius, the momentum of inertia becomes
 
@@ -468,48 +466,6 @@ $$
 
 C.2
 
-**2.3 Part C**
-
-C.1
-
-Here it is given that $\Omega = const$. In addition, for the given mass distribution where the ball is filled up to half of its radius, the momentum of inertia becomes
-
-$$
-I = \frac{mr^2}{10}. \qquad (70)
-$$
-
-In the presence of vertical uniform magnetic field $\vec{B}$ and if the ball is charged with uniform surface density $\rho = Q/4\pi r^2$, the equation of motions are changed as follows:
-
-$$
-m\dot{\vec{v}} = \vec{F}_f + Q\vec{v}\times\vec{B} \qquad (71)
-$$
-$$
-I\dot{\vec{\omega}} = -r\hat{z}\times\vec{F}_f + \vec{\tau}_s, \qquad (72)
-$$
-
-where $\tau_s = Qr^2\vec{\omega}\times\vec{B}/3$ is the torque due to spinning of the charged sphere and $F_f$ is the friction force. Calculation of $\tau_s$ is essentially identical to the mechanical moment of inertia for thin spherical shell. The torque is calculated as:
-
-$$
-\vec{\tau}_s = \int d\cos\theta d\phi \rho \vec{r}\times\left((\vec{\omega}\times\vec{r})\times\vec{B}\right) \qquad (73)
-$$
-$$
-= \int r^2 d\cos\theta d\phi\,\rho\,(\vec{\omega}\times\vec{r})\left(\vec{r}\cdot\vec{B}\right) \qquad (74)
-$$
-$$
-= \rho\vec{\omega}\times\int r^2 d\cos\theta d\phi\,\vec{r}\left(\vec{r}\cdot\vec{B}\right) \qquad (75)
-$$
-$$
-= \rho Br^4\vec{\omega}\times\int d\cos\theta d\phi \cos\theta\left(\sin\theta\cos\phi\hat{x} + \sin\theta\sin\phi\hat{y} + \cos\theta\hat{z}\right) \qquad (76)
-$$
-$$
-= \rho Br^4\vec{\omega}\times\hat{z}\int_{-1}^{1}d\cos\theta\,\cos^2\theta\int_0^{2\pi}d\phi \qquad (77)
-$$
-$$
-= \frac{Qr^2}{3}\vec{\omega}\times\vec{B}. \qquad (78)
-$$
-
-C.2
-
 In addition we have the non–slipping condition from which we get:
 
 $$
@@ -531,7 +487,7 @@ $$
 I(\Omega\vec{v} + \hat{z}\times\dot{\vec{v}}) = -r^2\hat{z}\times\left(m\dot{\vec{v}} - Q\vec{v}\times\vec{B}\right) + \frac{Qr^2B}{3}\left(\vec{v} - \Omega\hat{z}\times\vec{R}\right) \qquad (83)
 $$
 $$
-\left(I + mr^2\right)\ddot{\vec{v}} = \left(\frac{4Qr^2B}{3} - I\Omega\right)\vec{v}\times\hat{z} - \frac{Qr^2B}{3}\Omega\vec{R}. \qquad (84)
+\left(I + mr^2\right)\dot{\vec{v}} = \left(\frac{4Qr^2B}{3} - I\Omega\right)\vec{v}\times\hat{z} - \frac{Qr^2B}{3}\Omega\vec{R}. \qquad (84)
 $$
 
 The last equation maybe written as:
@@ -653,7 +609,7 @@ $$
 Then the total and per rotation changes in the kinetic energy associated to the motion of the ball's center per rotation are:
 
 $$
-\vec{v}\cdot\dot{\vec{v}} = \beta\vec{R}\cdot\vec{R} \to \qquad (106)
+\vec{v}\cdot\dot{\vec{v}} = \beta\dot{\vec{R}}\cdot\vec{R} \to \qquad (106)
 $$
 $$
 \Delta K = \frac{v^2 - v_0^2}{2} = \left(\frac{R^2 - R_0^2}{2}\right) = \frac{t^2}{2}, \qquad (107)
@@ -696,7 +652,7 @@ $$
 $$
 
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '48.6%', '--fig-max': '311px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t2/p1-sol-fig1-v2.png" alt="Sketch of a spiral trajectory winding outwards from the origin of the coordinate system; arrows along the curve show the direction of motion; the axes have numerical markings from about -20 to 15." width="973" height="1026" loading="lazy" decoding="async" />
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/apho-2023-theory-t2/p1-sol-fig1-v3.png" alt="Sketch of a spiral trajectory winding outwards from the origin of the coordinate system; arrows along the curve show the direction of motion; the axes have numerical markings from about -20 to 15." width="973" height="973" loading="lazy" decoding="async" />
 <figcaption>The sketch of the trajectory looks like</figcaption>
 </figure>
 
@@ -714,4 +670,4 @@ $$
 ---
 
 Оригинал в Архива: [T2.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2023/Theory/T2.pdf#page=1)
-· официални решения: [T2_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2023/Theory/T2_sol.pdf#page=1)
+· официални решения: [T2_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2023/Theory/T2_sol.pdf#page=6)

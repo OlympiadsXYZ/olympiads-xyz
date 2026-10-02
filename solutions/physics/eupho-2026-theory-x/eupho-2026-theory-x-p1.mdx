@@ -5,8 +5,8 @@ title: 'Задача 1. Jumper'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2026/eupho-2026-theory-x.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T05:01:13.779Z'
-verifier: 'same-model'
+verifiedAt: '2026-10-02T16:36:43.349Z'
+verifier: 'mechanical'
 ---
 
 *Theoretical Problems · 10 т.*
@@ -35,7 +35,7 @@ Jumper jumps after the hinge is released. Determine the maximum height $h$ reach
 
 **ENERGY APPROACH.** The motion of the jumper has two phases: a push-off phase and a free vertical flight phase after the jumper loses contact with the ground. During the push-off phase, the mechanical energy of the jumper is conserved, as the forces from the ground do no work on the jumper. Let us first analyse the push-off phase.
 
-The mechanical energy of the jumper consists of three parts: the elastic energy of the spring, $W_{el} = k(2\theta)^2/2 = 2k\theta^2$, gravitational potential energy of the jumper, (relative to the ground), $W_p = 2mgy^*$ where $y^*$ is the vertical position of the jumper's center of mass with respect to the ground; and the kinetic energy of the jumper, $W_k$.
+The mechanical energy of the jumper consists of three parts: the elastic energy of the spring, $W_{el} = k(2\theta)^2/2 = 2k\theta^2$, gravitational potential energy of the jumper (relative to the ground), $W_p = 2mgy^*$ where $y^*$ is the vertical position of the jumper's center of mass with respect to the ground; and the kinetic energy of the jumper, $W_k$.
 
 The motion of the jumper consists of the motion of its center of mass and the rotation of the rods about the hinge. During the push-off phase, these motions are connected.
 
@@ -57,7 +57,7 @@ $$
 W_k = m\ell^2\dot\theta^2/3.
 $$
 
-**Kinetic energy calculation 2.** The motion of one rod can also be described as two simultaneous rotations: the rod's center of mass moves along the circular trajectory (dashed red line in figure) of radius $\ell/2$ with the center at the red point with instantaneous speed $v^* = \ell\dot\theta/2$ and the rod also rotates about its center of mass with angular velocity $\omega = \dot\theta$. Instantaneous kinetic energy of one rod in these combined motions is
+**Kinetic energy calculation 2.** The motion of one rod can also be described as two simultaneous rotations: the rod's center of mass moves along the circular trajectory (dashed red line in figure) of radius $l/2$ with the center at the red point with instantaneous speed $v^* = \ell\dot\theta/2$ and the rod also rotates about its center of mass with angular velocity $\omega = \dot\theta$. Instantaneous kinetic energy of one rod in these combined motions is
 
 $$
 W_{k,1} = \frac{1}{2}m(\ell\dot\theta/2)^2 + \frac{1}{2}\cdot\frac{1}{12}m\ell^2\dot\theta^2 = m\ell^2\dot\theta^2/6
@@ -65,7 +65,7 @@ $$
 
 and for the two rods we get the same result for the kinetic energy of the jumper, $W_k = m\ell^2\dot\theta^2/3$. (To see, that instantaneous angular velocities of both rotations is $\dot\theta$, check how much the rod is rotated about its center of mass and what is the angle of center of mass rotation about the red point while $\theta$ changes from $\pi/2$ to 0.)
 
-**Energy conservation.** With the assumption given in the problem that $k \gg mgl$ we may neglect the change in the gravitational potential energy of the jumper during the push-off phase: during the push-off, all the released elastic energy of the spring is transformed into kinetic energy. At any moment during the push-off phase, $\theta$ and $\dot\theta$ are related by the equation
+**Energy conservation.** With the assumption given in the problem that $k \gg mg\ell$ we may neglect the change in the gravitational potential energy of the jumper during the push-off phase: during the push-off, all the released elastic energy of the spring is transformed into kinetic energy. At any moment during the push-off phase, $\theta$ and $\dot\theta$ are related by the equation
 
 $$
 2k\left(\pi^2/4 - \theta^2\right) = m\ell^2\dot\theta^2/3
@@ -113,8 +113,8 @@ $$
 I_O\ddot\theta = \tau_O,
 $$
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '14.5%', '--fig-max': '93px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p1-sol-fig2-v2.png" alt="Force and velocity diagram of the two rods: reaction forces R1 and -R1 at the hinge, R1 and R2 at the floor, velocities v1, v2, v*, center C, instantaneous rotation center O at distance ℓ/2 from C, angle θ." width="291" height="457" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '24.7%', '--fig-max': '158px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p1-sol-fig2-v3.png" alt="Force and velocity diagram of the two rods (the left rod dashed): reaction forces R1 (pointing left) and -R1 at the hinge, R2 at the foot of each rod, velocities v1 (up at the hinge), v2 (along the floor) and v*, centre C of the right rod, length ℓ, instantaneous rotation centre O at distance ℓ/2 from C, angle θ." width="494" height="457" loading="lazy" decoding="async" />
 </figure>
 
 where $\tau_O$ is the net total torque of all forces applied to the rod, and
@@ -123,7 +123,7 @@ $$
 I_0 = m\ell^2/12 + m(\ell/2)^2 = m\ell^2/3
 $$
 
-is the moment of inertia of the rod about $O$. From the symmetry of the system it follows that the reaction force at the hinge $\vec R_1$ on the right rod and its counteraction $-\vec R_1$ on the other rod are horizontal at any moment; therefore, $\vec R_1$ has no torque about $O$. The reaction $\vec R_2$ from the floor acts vertically toward $O$ and has no torque, as well. Therefore, the only nonzero torque on the rod is due to the torsional spring $\tau_O = -2k\theta$ where the minus sign accounts for the restoring character of the torque. The torque, due to gravity could be neglected, as far as $k \gg mgl$. Finally, we get the equation of motion:
+is the moment of inertia of the rod about $O$. From the symmetry of the system it follows that the reaction force at the hinge $\vec R_1$ on the right rod and its counteraction $-\vec R_1$ on the other rod are horizontal at any moment; therefore, $\vec R_1$ has no torque about $O$. The reaction $\vec R_2$ from the floor acts vertically toward $O$ and has no torque, as well. Therefore, the only nonzero torque on the rod is due to the torsional spring $\tau_O = -2k\theta$ where the minus sign accounts for the restoring character of the torque. The torque, due to gravity could be neglected, as far as $k \gg mgl$ Finally, we get the equation of motion:
 
 $$
 \ddot\theta = -\frac{6k}{m\ell^2}\theta,
@@ -147,7 +147,7 @@ $$
 \dot v^* = \ell\left(\cos(\theta)\dot\theta^2 + \sin(\theta)\ddot\theta\right)/2 = 0. \qquad (2)
 $$
 
-For the harmonic motion two identities hold at any moment: $\ddot\theta = -\omega^2\theta$ and $\theta^2/\omega^2 + \dot\theta^2 = \theta_0^2 = \pi^2/4$. Finally, the condition for detachment takes the form:
+For the harmonic motion two identities hold at any moment: $\ddot\theta = -\omega^2\theta$ and $\dot\theta^2/\omega^2 + \theta^2 = \theta_0^2 = \pi^2/4$. Finally, the condition for detachment takes the form:
 
 $$
 \mathrm{f}(\theta) = (\pi^2/4 - \theta^2)\cos\theta - \theta\sin\theta = 0
@@ -180,7 +180,9 @@ $$
 
 We have neglected the elevation $(\ell/2)\cos\theta \approx 0.276\ell$ of the center of mass at the moment of detachment, which is much smaller than $h$.
 
-A functional toy, similar to the jumper, can be seen here: [QR code]
+A functional toy, similar to the jumper, can be seen here:
+
+![p1-sol-fig3]
 
 ### T1: Marking scheme
 
@@ -188,7 +190,7 @@ The solution could be structured into three tasks, as specified below.
 
 **Task 1. Setting the equations for the pushup phase**
 
-| Task 1 - energy approach | Pts. |
+| Task 1 – energy approach | Pts. |
 |---|---|
 | A writes elastic energy $2k\theta^2$ | 0.5 |
 | B states there are 2 phases of jump, push-off and vertical throw | 0.5 |
@@ -202,7 +204,7 @@ The solution could be structured into three tasks, as specified below.
 | J derives a trascendental equation as the condition for the largest vertical speed with derivation | 1.0 |
 | **Partial sum T1 task 1 - energy approach** | **7.0** |
 
-| Task 1 - dynamics approach | Pts. |
+| Task 1 – dynamics approach | Pts. |
 |---|---|
 | A Draws the direction of velocities of the two rod ends and identifies the instantaneous center of rotation $O$ | 0.9 |
 | B Calculates the moment of inertia $I_O = 1/3m\ell^2$ by means of Steiner's theorem | 0.8 |
@@ -214,7 +216,7 @@ The solution could be structured into three tasks, as specified below.
 | H Derives expression for $v^*$, either imlicitly in terms of $\theta$ and $\dot\theta$ or explicitly as a function of $t$ | 0.5 |
 | I Rationalizes by means of Newton's second law that the C.M. acceleration $\dot v^* = 0$ in the moment of detachment | 0.5 |
 | J Derives trancedential equation for $\theta$ in the moment of detachment. | 1.2 |
-| **Partial sum T1 task 1 - dynamics approach** | **7.0** |
+| **Partial sum T1 task 1 – dynamics approach** | **7.0** |
 
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '22.2%', '--fig-max': '142px'}}>
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2026-theory-x/p1-sol-fig3.png" alt="Gold QR code printed after the sentence 'A functional toy, similar to the jumper, can be seen here:'." width="445" height="456" loading="lazy" decoding="async" />
@@ -222,19 +224,19 @@ The solution could be structured into three tasks, as specified below.
 
 **Task 2. Solving the equation**
 
-| Problem T1 - numerical solution | Pts. |
+| Problem T1 – numerical solution | Pts. |
 |---|---|
 | A States or illustrates the chosen method of iterative solution: bisection, Newton, etc. | 0.3 |
 | B Indicates the starting approximation (or interval) | 0.2 |
 | C Documents sufficient number of iterations to prove the convergence of the chosen method | 0.2 |
 | D Obtains $\theta = 0.987$ to a precision of three significant digits. | 0.3 |
-| **Partial Sum T1 task 2 - numerical solution** | **1.0** |
+| **Partial Sum T1 task 2 – numerical solution** | **1.0** |
 
 If the student comes to the correct solution for $\theta$ in a non-systematic way (say, trial-and-error), or does not document the convergence of the chosen numerical method, no points are assigned to C and D. Also, no points are assigned to D if the final result is represented with only one or two significant digits.
 
 **Task 3. Investigating the free vertical flight**
 
-| Problem T1 - vertical flight | Pts. |
+| Problem T1 – vertical flight | Pts. |
 |---|---|
 | A Obtains the expression $v^* = 1.2487\sqrt{k/m}$ for the C.M. velocity at the moment of detachment | 0.5 |
 | B States or illustrates that the center of mass moves like a points mass of initial velocity $v^*$ | 0.2 |

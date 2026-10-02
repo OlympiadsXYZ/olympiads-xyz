@@ -28,21 +28,30 @@
   "status": "review",
   "transcription": {
    "method": "vision-pages",
-   "provider": "anthropic",
-   "model": "claude-sonnet-5",
+   "provider": "agent",
+   "model": "opus-5-5",
    "promptVersion": "v1",
-   "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
-   "requestId": "req_011Cf9MZu6SvifPNKBQDxWWW",
-   "at": "2026-09-17",
+   "requestId": null,
+   "at": "2026-10-02",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "538089f26e1b1bebd7a973089b1d79a694dc57a9a22bf6328c6be316cf0d5292",
     "solutions": "92348bf5d1bc0d23489c947824229e153140b3c9034e40367c78c55c17e2d395"
    },
-   "verifiedBy": "anthropic:claude-opus-5 (independent crop audit; text verified mechanically against the PDF text layer, prompt v1)",
-   "verifiedAt": "2026-09-17",
-   "notes": "Points are not printed anywhere on the problem or solution pages for the sub-tasks or the whole problem, so all points fields are null. Solutions document is attributed to Attila Szabó, Grade 12, Leőwey Klára High School, Pécs, Hungary — a WoPhO Selection Round Problem 1 solution, matching this problems document. Part (f)'s numerical values ($s_1=0.1138$, $s_2=0.4781$) are transcribed exactly as printed in the solution."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-02",
+   "notes": "repaired 2026-10-02 from the independent verification (docs/verification/2026-10-02-*) of the anthropic/claude-sonnet-5 transcription: part c) answer no longer claims T falls to 0 at s=1 (the printed curve ends at about 0.01 = 1/101); the five printed subheadings (Stationary operation at small load / at arbitrary load, Efficiency, Stability, Negative slip) restored in place; solution Fig. 1 box widened to include the y-axis label 'T [a. u.]'; bold $\\boldsymbol{\\Omega}$ and $\\mathbf{B}$ in the model paragraph restored as printed. Printed grammar kept as is in the solution ('so it value becomes', 'Combining the equations give'). Points are not printed anywhere on the problem or solution pages for the sub-tasks or the whole problem, so all points fields are null. Solutions document is attributed to Attila Szabó, Grade 12, Leőwey Klára High School, Pécs, Hungary — a WoPhO Selection Round Problem 1 solution, matching this problems document. Part (f)'s numerical values ($s_1=0.1138$, $s_2=0.4781$) are transcribed exactly as printed in the solution.",
+   "edits": [
+    {
+     "path": "/problems/0/solution/statement",
+     "printed": "the magitude",
+     "fixed": "the magnitude",
+     "document": "solutions",
+     "page": 1,
+     "kind": "misspelling"
+    }
+   ]
   }
  },
  "problems": [
@@ -52,7 +61,7 @@
    "title": "Induction Motor",
    "points": null,
    "problemType": "theory",
-   "statement": "Induction (or asynchronous) motors are the simplest and most reliable electric motors. They are powered by alternating current, and they do not contain commutators, slip rings or brushes. They consist of a stator and a rotor (see fig. 1). The stator is a fixed set of coils, which produces a rotating magnetic field in the plane perpendicular to the axis of the motor. The rotor is just a cage, i.e., a set of closed metallic loops attached to the axis of the motor. The rotating magnetic field produced by the stator induces electric current in the loops of the cage, which behave as magnetic dipoles, and interact with the external field of the stator. As a result, a torque is exerted on the rotor, and it starts rotating.\n\nIn a simplified model (see fig. 2) we assume that the magnetic induction vector $\\mathbf{B}$ produced by the stator is rotating in the $x-y$ plane at a constant angular velocity $\\Omega$, and it has a constant magnitude $B$. The axis of the rotor is in the $z$ direction. The rotor is assumed to be a flat coil of area $A$, winding number $N$, Ohmic resistance $R$ and self inductance $L$. The vector $\\mathbf{n}$ perpendicular to this coil is rotating also in the $x-y$ plane.\n\n# Stationary operation\n\nFirst we study the stationary operation of the motor, when its angular velocity $\\omega$ and torque $T$ are constant. As we shall see, when the motor is loaded, its angular velocity $\\omega$ gets smaller than $\\Omega$. It is convenient to characterize this shift by the slip\n\n$$s = \\frac{\\Omega - \\omega}{\\Omega},$$\n\nwhich is a dimensionless number between 0 and 1.",
+   "statement": "Induction (or asynchronous) motors are the simplest and most reliable electric motors. They are powered by alternating current, and they do not contain commutators, slip rings or brushes. They consist of a stator and a rotor (see fig. 1). The stator is a fixed set of coils, which produces a rotating magnetic field in the plane perpendicular to the axis of the motor. The rotor is just a cage, i.e., a set of closed metallic loops attached to the axis of the motor. The rotating magnetic field produced by the stator induces electric current in the loops of the cage, which behave as magnetic dipoles, and interact with the external field of the stator. As a result, a torque is exerted on the rotor, and it starts rotating.\n\nIn a simplified model (see fig. 2) we assume that the magnetic induction vector $\\mathbf{B}$ produced by the stator is rotating in the $x-y$ plane at a constant angular velocity $\\boldsymbol{\\Omega}$, and it has a constant magnitude $\\mathbf{B}$. The axis of the rotor is in the $z$ direction. The rotor is assumed to be a flat coil of area $A$, winding number $N$, Ohmic resistance $R$ and self inductance $L$. The vector $\\mathbf{n}$ perpendicular to this coil is rotating also in the $x-y$ plane.\n\n# Stationary operation\n\nFirst we study the stationary operation of the motor, when its angular velocity $\\omega$ and torque $T$ are constant. As we shall see, when the motor is loaded, its angular velocity $\\omega$ gets smaller than $\\Omega$. It is convenient to characterize this shift by the slip\n\n$$s = \\frac{\\Omega - \\omega}{\\Omega},$$\n\nwhich is a dimensionless number between 0 and 1.\n\n### Stationary operation at small load",
    "figures": [
     {
      "id": "p1-fig1",
@@ -95,6 +104,7 @@
     {
      "label": "a)",
      "statement": "Assume that the load is small, so the slip $s \\ll 1$. Determine the time average of the torque $T$ exerted by the motor as a function of the slip $s$. (Use reasonable neglections.)",
+     "statementAfter": "### Stationary operation at arbitrary load",
      "points": null,
      "answer": {
       "kind": "expression",
@@ -117,12 +127,13 @@
      "points": null,
      "answer": {
       "kind": "text",
-      "value": "Introducing $\\beta = L\\Omega/R$, $T = \\dfrac{B^2A^2N^2\\Omega}{2R}\\dfrac{s}{1+\\beta^2s^2}$. For $\\beta=10$, the graph of $s/(1+\\beta^2s^2)$ on $0\\le s\\le1$ rises sharply from 0, peaks near $s=1/\\beta=0.1$, then decreases smoothly to 0 at $s=1$ (see solution figure)."
+      "value": "Introducing $\\beta = L\\Omega/R$, $T = \\dfrac{B^2A^2N^2\\Omega}{2R}\\dfrac{s}{1+\\beta^2s^2}$. For $\\beta=10$, the graph of $s/(1+\\beta^2s^2)$ on $0\\le s\\le1$ rises sharply from 0, peaks near $s=1/\\beta=0.1$, then decreases slowly, ending at $1/101 \\approx 0.01$ (not 0) at $s=1$ (see solution figure)."
      }
     },
     {
      "label": "d)",
      "statement": "Find the maximal stationary torque $T_{\\max}$ and the corresponding slip $s_0$.",
+     "statementAfter": "### Efficiency",
      "points": null,
      "answer": {
       "kind": "expression",
@@ -133,6 +144,7 @@
     {
      "label": "e)",
      "statement": "Determine the efficiency $\\eta$ of the motor as a function of the slip $s$. (Assume that there is no energy loss due to friction, radiation.)",
+     "statementAfter": "### Stability",
      "points": null,
      "answer": {
       "kind": "expression",
@@ -142,6 +154,7 @@
     {
      "label": "f)",
      "statement": "Assume that the motor is connected to an equipment (load) which has a linear $T_l(\\omega)$ characteristics, so for a stationary angular velocity $\\omega$ a torque $T_l(\\omega) = K\\omega$ is needed, where $K$ is a positive constant. Determine graphically the stable and unstable operation points on the $T(s)$ graph obtained in question c) for different $K$ -s.",
+     "statementAfter": "### Negative slip",
      "points": null,
      "answer": {
       "kind": "text",
@@ -171,14 +184,14 @@
      {
       "id": "p1-sol-fig1",
       "caption": "Figure 1. $T$ (in the units of $B^2A^2N^2\\Omega/2R$) as a function of $s$ and some load characteristics.",
-      "alt": "Plot of T versus s for beta=10 showing a peaked curve rising sharply then decreasing to 0 at s=1, together with several straight lines (in different colors) representing linear load characteristics $K\\Omega(1-s)$ for different K values, illustrating intersections at stable and unstable operating points.",
-      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-sol-fig1.png",
-      "width": 1797,
+      "alt": "Plot with vertical axis 'T [a. u.]' (ticks 0 to 0.07) and horizontal axis 's' (ticks 0 to 1). A black curve for beta=10 rises sharply from 0 to a peak of about 0.05 near s=0.1, then decreases slowly to about 0.01 at s=1. Five straight load lines all ending at T=0 at s=1 start on the T axis at about 0.069 (blue), 0.056 (red), 0.05 (blue), 0.038 (green) and 0.02 (blue); the green and red lines touch the curve at the critical operating points.",
+      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-sol-fig1-v2.png",
+      "width": 1874,
       "height": 952,
       "source": {
        "page": 1,
        "pdfRect": [
-        94.64,
+        76.18,
         556.47,
         525.65,
         784.62

@@ -5,8 +5,8 @@ title: 'Задача 3. T3: Fabry–Pérot interferometer'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/EuPhO/2024/eupho-2024-theory-x.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T05:19:06.320Z'
-verifier: 'same-model'
+verifiedAt: '2026-10-02T16:27:52.649Z'
+verifier: 'mechanical'
 ---
 
 *EuPhO 2024. KUTAISI. GEORGIA — Theoretical Problems. Language: English · 10 т.*
@@ -33,7 +33,7 @@ A Fabry–Pérot interferometer consists of two identical parallel planar mirror
 
 **T3: Fabry–Pérot interferometer - Solution**
 
-Throughout these solutions, we use a Cartesian coordinate system aligned so that the x axis points along the normal to mirrors. Let one mirror be positioned at x = 0 and the other at x = L, and suppose the beam approaches the interferometer from the negative-x direction. Let regions I, II and III be defined by x < 0, 0 < x < L and x < L respectively. Note that the mirrors are assumed thin for convenience here, but this does not change the answers.
+Throughout these solutions, we use a Cartesian coordinate system aligned so that the x axis points along the normal to the mirrors. Let one mirror be positioned at x = 0 and the other at x = L, and suppose the beam approaches the interferometer from the negative-x direction. Let regions I, II and III be defined by x < 0, 0 < x < L and x < L respectively. Note that the mirrors are assumed thin for convenience here, but this does not change the answers.
 
 **Solution 1**
 
@@ -86,7 +86,7 @@ $$
 
 This is a condition that $r$ and $t$ must satisfy in order for the setup in the question, with no back-reflected light from the interferometer, to be realizable.
 
-With lossless mirrors, there is one additional constraint that $r$ and $t$ must satisfy. When a wave passes through one of these mirrors, the incident power must equal the sum of the reflected and transmitted powers. Since every wave in the problem has the same speed, the power carried by them is proportional their amplitude squared, which means it is proportional to the modulus squared of the complex amplitude. Therefore, conservation of energy requires
+With lossless mirrors, there is one additional constraint that $r$ and $t$ must satisfy. When a wave passes through one of these mirrors, the incident power must equal the sum of the reflected and transmitted powers. Since every wave in the problem has the same speed, the power carried by them is proportional the their amplitude squared, which means it is proportional to the modulus squared of the complex amplitude. Therefore, conservation of energy requires
 
 $$
 |r|^2 + |t|^2 = 1\ . \qquad (18)
@@ -192,6 +192,10 @@ $$
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig1.png" alt="Complex-plane diagram: a circle through the origin with diameter along the real axis ending at 1; chords labelled $-r$ and $t$ from the origin meeting at a right angle on the circle." width="621" height="586" loading="lazy" decoding="async" />
 </figure>
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '44.5%', '--fig-max': '285px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig2-v2.png" alt="Diagram of a vertical mirror slab: incident wave from the left (amplitude A, phase 0), reflected wave to the left (amplitude A√R, phase θ), transmitted wave to the right (amplitude A√(1−R), phase ψ)." width="891" height="310" loading="lazy" decoding="async" />
+</figure>
+
 **Part d** Since the amplitude decays like
 $$
 R^n = \mathrm{e}^{-n\log 1/R} = \mathrm{e}^{-\log(1/R)t/\Delta t}\ ,
@@ -218,21 +222,19 @@ Here is an alternative approach to parts a and b that does not require complex n
 
 **Parts a and b** Consider the first mirror in isolation and suppose a light wave is incident upon it from the left with amplitude $A$, as shown in the diagram below. The reflected wave will have amplitude $A\sqrt{R}$ and may undergo a phase shift; we use $\theta$ to denote its phase angle relative to the incident wave. Similarly, the transmitted wave has amplitude $A\sqrt{1-R}$ and phase angle $\psi$ relative to the incident wave.
 
-[Diagram: incident wave from the left, amplitude $A$, phase 0; reflected wave to the left, amplitude $A\sqrt{R}$, phase $\theta$; transmitted wave to the right, amplitude $A\sqrt{1-R}$, phase $\psi$.]
-
 Now imagine a different scenario, in which there is a wave incident on the mirror from the right, as shown in Fig BLAH. This incident wave will have amplitude $A\sqrt{R}/\sqrt{1-R}$ and a phase angle $\pi + \theta - \psi$. There will be a reflected wave with amplitude $AR/\sqrt{1-R}$ (we multiply the amplitude by $\sqrt{R}$ upon reflection) and phase angle $\pi + 2\theta - \psi$ (we add $\theta$ to the phase upon reflection). There will be a transmitted wave with amplitude $A\sqrt{R}$ (we multiply the amplitude by $\sqrt{1-R}$ upon reflection) and phase angle $\pi + \theta$ (we add $\psi$ to the phase upon reflection).
 
-[Diagram: incident wave from the right, amplitude $A\sqrt{R}/\sqrt{1-R}$, phase $\pi + \theta - \psi$; reflected wave to the right, amplitude $AR/\sqrt{1-R}$, phase $\pi + 2\theta - \psi$; transmitted wave to the left, amplitude $A\sqrt{R}$, phase $\pi + \theta$.]
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '45.5%', '--fig-max': '292px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig3-v2.png" alt="Mirror slab with a wave incident from the right (amplitude: $A\sqrt{R}/\sqrt{1-R}$, phase: $\pi+\theta-\psi$), a wave travelling right (amplitude: $AR/\sqrt{1-R}$, phase: $\pi+2\theta-\psi$) and a wave travelling left (amplitude: $A\sqrt{R}$, phase: $\pi+\theta$)." width="912" height="293" loading="lazy" decoding="async" />
+</figure>
 
 Now we consider the superposition of these two scenarios. On the left side, the waves travelling to the left cancel out, since they have the same amplitude but have phases differing by $\pi$. This destructive interference leaves a wave travelling to the right with amplitude $A$. This is exactly what is happening at the first mirror of the interferometer. On the right side, there is a leftwards-propagating wave and two rightwards-propagating waves, as shown below.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.3%', '--fig-max': '341px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig4.png" alt="Diagram of the superposition at the first mirror: incident wave from the left (amplitude A, phase 0); leftwards wave (amplitude A√R/√(1−R), phase π+θ−ψ); rightwards waves (amplitude AR/√(1−R), phase π+2θ−ψ and amplitude A√(1−R), phase ψ)." width="1067" height="598" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '42.3%', '--fig-max': '271px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig4-v2.png" alt="Mirror slab: on the left an incident wave (amplitude: $A$, phase: 0); on the right a leftwards wave (amplitude: $A\sqrt{R}/\sqrt{1-R}$, phase: $\pi+\theta-\psi$) and two rightwards waves (amplitude: $AR/\sqrt{1-R}$, phase: $\pi+2\theta-\psi$; amplitude: $A\sqrt{1-R}$, phase: $\psi$)." width="847" height="397" loading="lazy" decoding="async" />
 </figure>
 
-[Diagram: incident wave from the left, amplitude $A$, phase 0; leftwards wave, amplitude $A\sqrt{R}/\sqrt{1-R}$, phase $\pi + \theta - \psi$; rightwards waves, amplitude $AR/\sqrt{1-R}$, phase $\pi + 2\theta - \psi$ and amplitude $A\sqrt{1-R}$, phase $\psi$.]
-
-Now we use the fact that the mirror is lossless, so the light energy in the incoming waves in the figure above must equal the light energy in the outgoing waves. Since energy is proportional to the square of the electric field, the incoming energy flux is propor­tional to
+Now we use the fact that the mirror is lossless, so the light energy in the incoming waves in the figure above must equal the light energy in the outgoing waves. Since energy is proportional to the square of the electric field, the incoming energy flux is proportional to
 $$
 I_{\mathrm{in}} = A^2 + A^2\left(\frac{R}{1-R}\right)\ .
 $$
@@ -242,17 +244,11 @@ I_{\mathrm{out}} = A^2(1-R) + A^2\left(\frac{R^2}{1-R}\right) - 2A^2R\cos(\pi + 
 $$
 $I_{\mathrm{in}} = I_{\mathrm{out}}$ can be rearranged to give $\cos(\pi + 2(\theta - \psi)) = 0$, so $2(\theta - \psi)$ is a multiple of $\pi$ and $\theta - \psi$ is $\pm\pi/2$. The reflected and transmitted waves must be out of phase by $90^{\circ}$.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.3%', '--fig-max': '341px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig2.png" alt="Diagram of a vertical mirror slab: incident wave from the left (amplitude A, phase 0), reflected wave to the left (amplitude A√R, phase θ), transmitted wave to the right (amplitude A√(1−R), phase ψ)." width="1067" height="580" loading="lazy" decoding="async" />
-</figure>
-
 ### Grading
 
 #### Part a
 
-**Part T3.a): Using sinusoidal waves**
-
-| Part T3.a): Using sinusoidal waves | Pts. |
+| **Part T3.a): Using sinusoidal waves** | **Pts.** |
 | --- | --- |
 | understanding that some light is initially reflected without entering the interferometer | 0.3 |
 | understanding that light bounces back and forth between the mirrors | 0.3 |
@@ -264,9 +260,7 @@ $I_{\mathrm{in}} = I_{\mathrm{out}}$ can be rearranged to give $\cos(\pi + 2(\th
 | indicating that the solutions $r$ and $t$ should be complex | 0.2 |
 | **Total on T3.a)** | **3.0** |
 
-**Part T3.a): Summing geometric series**
-
-| Part T3.a): Summing geometric series | Pts. |
+| **Part T3.a): Summing geometric series** | **Pts.** |
 | --- | --- |
 | understanding that some light is initially reflected without entering the interferometer | 0.3 |
 | understanding that light bounces back and forth between the mirrors | 0.3 |
@@ -279,9 +273,7 @@ $I_{\mathrm{in}} = I_{\mathrm{out}}$ can be rearranged to give $\cos(\pi + 2(\th
 | understanding that the solutions $r$ and $t$ should be complex | 0.2 |
 | **Total on T3.a)** | **3.0** |
 
-**Part T3.a): Assuming $1 + r = t$**
-
-| Part T3.a): Assuming $1 + r = t$ | Pts. |
+| **Part T3.a): Assuming** $1 + r = t$ | **Pts.** |
 | --- | --- |
 | understanding that some light is initially reflected without entering the interferometer | 0.3 |
 | understanding that light bounces back and forth between the mirrors | 0.3 |
@@ -292,11 +284,7 @@ $I_{\mathrm{in}} = I_{\mathrm{out}}$ can be rearranged to give $\cos(\pi + 2(\th
 | understanding that the solutions $r$ and $t$ should be complex | 0.2 |
 | **Total on T3.a)** | **3.0** |
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '53.3%', '--fig-max': '341px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/eupho-2024-theory-x/p3-sol-fig3.png" alt="Diagram of the second scenario: wave incident from the right (amplitude A√R/√(1−R), phase π+θ−ψ), wave to the left (amplitude A√R, phase π+θ), wave to the right (amplitude AR/√(1−R), phase π+2θ−ψ)." width="1067" height="580" loading="lazy" decoding="async" />
-</figure>
-
-### Part b
+#### Part b
 
 | Part T3.b: Algebraic method | Pts. |
 | --- | --- |
@@ -314,7 +302,7 @@ $I_{\mathrm{in}} = I_{\mathrm{out}}$ can be rearranged to give $\cos(\pi + 2(\th
 
 Notes on T3.a) and T3.b): different conventions for $r$ and $t$ (eg using $-r$ instead of $r$, different phase factors) are allowed.
 
-### Part c
+#### Part c
 
 | Part T3.c: Destructive interference | Pts. |
 | --- | --- |
@@ -333,7 +321,7 @@ Notes on T3.a) and T3.b): different conventions for $r$ and $t$ (eg using $-r$ i
 | Correct value for E | 0.5 |
 | **Total on T3.c** | **4.0** |
 
-### Part d
+#### Part d
 
 | Part T3.d: Removing waves | Pts. |
 | --- | --- |

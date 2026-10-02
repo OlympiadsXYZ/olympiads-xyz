@@ -5,8 +5,8 @@ title: 'Задача 1. Induction Motor'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/WoPhO/2013/wopho-2013-q1.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-17T16:51:05.527Z'
-verifier: 'crop-audit'
+verifiedAt: '2026-10-02T16:42:41.207Z'
+verifier: 'mechanical'
 ---
 
 *Problem Induction Motor — Deadline April, 1 2013*
@@ -20,7 +20,7 @@ Induction (or asynchronous) motors are the simplest and most reliable electric m
 <figcaption>Figure 1: The structure of an induction motor</figcaption>
 </figure>
 
-In a simplified model (see fig. 2) we assume that the magnetic induction vector $\mathbf{B}$ produced by the stator is rotating in the $x-y$ plane at a constant angular velocity $\Omega$, and it has a constant magnitude $B$. The axis of the rotor is in the $z$ direction. The rotor is assumed to be a flat coil of area $A$, winding number $N$, Ohmic resistance $R$ and self inductance $L$. The vector $\mathbf{n}$ perpendicular to this coil is rotating also in the $x-y$ plane.
+In a simplified model (see fig. 2) we assume that the magnetic induction vector $\mathbf{B}$ produced by the stator is rotating in the $x-y$ plane at a constant angular velocity $\boldsymbol{\Omega}$, and it has a constant magnitude $\mathbf{B}$. The axis of the rotor is in the $z$ direction. The rotor is assumed to be a flat coil of area $A$, winding number $N$, Ohmic resistance $R$ and self inductance $L$. The vector $\mathbf{n}$ perpendicular to this coil is rotating also in the $x-y$ plane.
 
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.4%', '--fig-max': '239px'}}>
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-fig2.png" alt="Diagram in the x-y plane showing angular velocity $\Omega$ of the rotating magnetic field $\mathbf{B}$, the normal vector $\mathbf{n}$ of the flat coil rotating at angular velocity $\omega$, the x and y axes, and a flat coil seen from its edge (drawn as a set of parallel lines)." width="748" height="605" loading="lazy" decoding="async" />
@@ -37,7 +37,11 @@ $$
 
 which is a dimensionless number between 0 and 1.
 
+##### Stationary operation at small load
+
 **a)** Assume that the load is small, so the slip $s \ll 1$. Determine the time average of the torque $T$ exerted by the motor as a function of the slip $s$. (Use reasonable neglections.)
+
+### Stationary operation at arbitrary load
 
 **b)** Determine the average torque $T$ as a function of an arbitrary slip value $s$ between 0 and 1.
 
@@ -45,9 +49,15 @@ which is a dimensionless number between 0 and 1.
 
 **d)** Find the maximal stationary torque $T_{\max}$ and the corresponding slip $s_0$.
 
+### Efficiency
+
 **e)** Determine the efficiency $\eta$ of the motor as a function of the slip $s$. (Assume that there is no energy loss due to friction, radiation.)
 
+### Stability
+
 **f)** Assume that the motor is connected to an equipment (load) which has a linear $T_l(\omega)$ characteristics, so for a stationary angular velocity $\omega$ a torque $T_l(\omega) = K\omega$ is needed, where $K$ is a positive constant. Determine graphically the stable and unstable operation points on the $T(s)$ graph obtained in question c) for different $K$ -s.
+
+### Negative slip
 
 **g)** Do the negative slip values have any physical meaning? If yes, what? If no, why?
 
@@ -59,7 +69,7 @@ which is a dimensionless number between 0 and 1.
 
   First-order result in $s$, obtained from the general expression $T = \dfrac{B^2A^2N^2R\Omega s}{2(R^2+\Omega^2L^2s^2)}$ by neglecting the $\Omega^2L^2s^2$ term.
 - **b)** $T = \dfrac{B^2A^2N^2R\Omega s}{2(R^2+\Omega^2L^2s^2)}$
-- **c)** Introducing $\beta = L\Omega/R$, $T = \dfrac{B^2A^2N^2\Omega}{2R}\dfrac{s}{1+\beta^2s^2}$. For $\beta=10$, the graph of $s/(1+\beta^2s^2)$ on $0\le s\le1$ rises sharply from 0, peaks near $s=1/\beta=0.1$, then decreases smoothly to 0 at $s=1$ (see solution figure).
+- **c)** Introducing $\beta = L\Omega/R$, $T = \dfrac{B^2A^2N^2\Omega}{2R}\dfrac{s}{1+\beta^2s^2}$. For $\beta=10$, the graph of $s/(1+\beta^2s^2)$ on $0\le s\le1$ rises sharply from 0, peaks near $s=1/\beta=0.1$, then decreases slowly, ending at $1/101 \approx 0.01$ (not 0) at $s=1$ (see solution figure).
 - **d)** $s_0 = \dfrac{1}{\beta} = \dfrac{R}{L\Omega}, \qquad T_{\max} = \dfrac{B^2A^2N^2}{4L}$
 
   Valid when $\beta \ge 1$; if $\beta<1$ then $s_0=1$ and $T_{\max} = \dfrac{B^2A^2N^2\Omega}{2R(1+L^2\Omega^2/R^2)}$.
@@ -114,8 +124,8 @@ $$
 
 Taking the numerical prefactor describing the motor equal to 1, we have to sketch the function $s/(1+\beta^2s^2)$ for $\beta=10$. The plot for the reasonable interval is in Fig. 1.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '89.8%', '--fig-max': '575px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-sol-fig1.png" alt="Plot of T versus s for beta=10 showing a peaked curve rising sharply then decreasing to 0 at s=1, together with several straight lines (in different colors) representing linear load characteristics $K\Omega(1-s)$ for different K values, illustrating intersections at stable and unstable operating points." width="1797" height="952" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '93.6%', '--fig-max': '600px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/wopho-2013-q1/p1-sol-fig1-v2.png" alt="Plot with vertical axis 'T [a. u.]' (ticks 0 to 0.07) and horizontal axis 's' (ticks 0 to 1). A black curve for beta=10 rises sharply from 0 to a peak of about 0.05 near s=0.1, then decreases slowly to about 0.01 at s=1. Five straight load lines all ending at T=0 at s=1 start on the T axis at about 0.069 (blue), 0.056 (red), 0.05 (blue), 0.038 (green) and 0.02 (blue); the green and red lines touch the curve at the critical operating points." width="1874" height="952" loading="lazy" decoding="async" />
 <figcaption>Figure 1. $T$ (in the units of $B^2A^2N^2\Omega/2R$) as a function of $s$ and some load characteristics.</figcaption>
 </figure>
 

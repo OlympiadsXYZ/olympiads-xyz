@@ -5,8 +5,8 @@ title: 'Задача 3. Вълнички в басейн'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/PSF/2013/psf-2013-proletno-sp.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T00:06:53.739Z'
-verifier: 'same-model'
+verifiedAt: '2026-10-02T16:35:49.033Z'
+verifier: 'mechanical'
 ---
 
 *МИНИСТЕРСТВО НА ОБРАЗОВАНИЕТО, МЛАДЕЖТА И НАУКАТА · Национално състезание по физика, Хисаря, 16 март 2013 г. · Специална тема · 16 март 2013 г.*
@@ -44,12 +44,7 @@ verifier: 'same-model'
 
 <Spoiler title="Покажи официалното решение">
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '43.4%', '--fig-max': '278px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/psf-2013-proletno-sp/p3-sol-fig1-v2.png" alt="Същият илюстративен чертеж като в условията: вълна над басейн, първи и втори случай на фокусиране на вертикални лъчи на дъното." width="869" height="1026" loading="lazy" decoding="async" />
-<figcaption>Чертежът е само за илюстрация. Отношенията на дадените размери $h,\lambda,A,R$ не са верни! Освен това двата случая не са възможни за една и съща амплитуда $A$.</figcaption>
-</figure>
-
-а) Наклонът на водната повърхност в произволна точка е равен на производната $\frac{dz}{dx} = A_1\frac{2\pi}{\lambda}\cos\left(\frac{2\pi}{\lambda}x - \frac{2\pi}{T}t\right)$. **[0.5 т.]** Следователно „плоската“ част на вълната сключва ъгъл $\alpha$ с хоризонталата, равен на $\alpha \approx tg\alpha = \frac{dz}{dx} = \frac{2\pi A_1}{\lambda}$. **[0.5 т.]** Това е и ъгълът, който сключва падащият вертикален лъч с нормалата на „плоската“ част на вълната. **[0.5 т.]** От закона на Снелиус, следва: $\frac{\sin\alpha}{\sin\beta} = \frac{n}{1}$, $n \approx \frac{\alpha}{\beta}$. **[0.5 т.]** От чертежа може да се намери, че $\frac{\lambda/4}{h} = \tan(\alpha - \beta) \approx \alpha - \beta = \frac{n-1}{n}\alpha = \frac{(n-1)}{n}\frac{2\pi A_1}{\lambda}$. **[0.5 т.]** Следователно $A_1 = \frac{1}{8\pi}\,\frac{n}{n-1}\,\frac{\lambda^2}{h}$ **[1 т.]**. След заместване с дадените стойности, $A_1 \approx 3{,}21\ \mathrm{mm}$. **[0.5 т.]**
+а) Наклонът на водната повърхност в произволна точка е равен на производната $\frac{dz}{dx} = A_1\frac{2\pi}{\lambda}\cos\left(\frac{2\pi}{\lambda}x - \frac{2\pi}{T}t\right)$. **[0.5 т.]** Следователно „плоската“ част на вълната сключва ъгъл $\alpha$ с хоризонталата, равен на $\alpha \approx tg\alpha = \frac{dz}{dx} = \frac{2\pi A_1}{\lambda}$. **[0.5 т.]** Това е и ъгълът, който сключва падащият вертикален лъч с нормалата на „плоската“ част на вълната. **[0.5 т.]** От закона на Снелиус, следва: $\frac{\sin\alpha}{\sin\beta} = \frac{n}{1} = n \approx \frac{\alpha}{\beta}$. **[0.5 т.]** От чертежа може да се намери, че $\frac{\lambda/4}{h} = \tan(\alpha - \beta) \approx \alpha - \beta = \frac{n-1}{n}\alpha = \frac{(n-1)}{n}\frac{2\pi A_1}{\lambda}$. **[0.5 т.]** Следователно $A_1 = \frac{1}{8\pi}\,\frac{n}{n-1}\,\frac{\lambda^2}{h}$ **[1 т.]**. След заместване с дадените стойности, $A_1 \approx 3{,}21\ \mathrm{mm}$. **[0.5 т.]**
 
 б) Нека изберем координатната система така, че в някакъв момент от време вълничката да се описва с уравнението $z(x) = A\cos\left(\frac{2\pi}{\lambda}x\right)$. Първата и втората производни в точката $x = 0$ са съответно $\frac{dz}{dx}(0) = 0$ **[0.5 т.]** и $\frac{d^2z}{dx^2}(0) = -\frac{4\pi^2}{\lambda^2}A$. **[0.5 т.]** Съгласно дадената формула, радиусът на кривината на водната повърхност в тази точка е $R = \frac{\lambda^2}{4\pi^2 A}$. **[1 т.]**
 
@@ -57,6 +52,25 @@ verifier: 'same-model'
 
 
 </Spoiler>
+
+<details>
+<summary>Полезна математика</summary>
+
+*1. Елипсата е такава крива, че сумата от разстоянията от произволна точка на елипсата до две точки, наречени фокуси на елипсата, е константа. В декартова координатна система с начало в центъра на елипсата и оси, ориентирани по осите на симетрия на елипсата, уравнението на елипсата е* $\left(\frac{x}{a}\right)^2 + \left(\frac{y}{b}\right)^2 = 1$, *където a и b са двете полуоси на елипсата. Интересно “оптично” свойство на елипсата е, че лъч, тръгнал от единия фокус, след “отражение” от елипсата минава през другия фокус на елипсата.*
+
+*2. Равенството* $A\sin x + B\cos x = 0$ *е тъждество за всяко x тогава и само тогава, когато* $A \equiv 0 \wedge B \equiv 0$.
+
+*3. Радиус ρ на кривината на крива, описвана с уравнението* $y(x)$ *в точка от кривата с координати* $(x_0, y(x_0))$, *е* $\rho = \left.\frac{\left[1 + \left(\frac{dy}{dx}\right)^2\right]^{\frac{3}{2}}}{\left|\frac{d^2y}{dx^2}\right|}\right|_{x=x_0}$. *4.* $(1+x)^n \approx 1 + nx,\ x \ll 1$.
+
+*5.* $\sin\frac{\alpha}{2} = \pm\sqrt{\frac{1-\cos\alpha}{2}}$, $\cos\frac{\alpha}{2} = \pm\sqrt{\frac{1+\cos\alpha}{2}}$, $\cos\alpha = \sin\left(\alpha + \frac{\pi}{2}\right)$.
+
+*6.* $\sin(\alpha \pm \beta) = \sin\alpha\cos\beta \pm \cos\alpha\sin\beta$, $\cos(\alpha \pm \beta) = \cos\alpha\cos\beta \mp \sin\alpha\sin\beta$.
+
+*7.* $\frac{d}{dx}\left(e^{ax}\right) = ae^{ax}$, $\frac{d}{dx}[\cos(ax)] = -a\sin(ax)$, $\frac{d}{dx}[\sin(ax)] = a\cos(ax)$.
+
+*8.* $\frac{d}{dx}[f(x).g(x)] = \left[\frac{d}{dx}f(x)\right].g(x) + f(x).\left[\frac{d}{dx}g(x)\right]$. *9.* $\sin\alpha \approx \tan\alpha \approx \alpha,\ \cos\alpha \approx 1,\ \alpha \ll 1$.
+
+</details>
 
 ---
 
