@@ -44,6 +44,7 @@ import { loadTreeModule } from './lib/load-tree.mjs';
 import { readConsolidations } from './lib/problem-consolidations.mjs';
 import { outsideFencedCode, splitFencedCode } from './lib/fenced-code.mjs';
 import { readProblemMedia, problemMediaLines } from './lib/problem-media.mjs';
+import { sourceDocumentFor } from './lib/problem-source-document.mjs';
 
 const rootArg = process.argv.indexOf('--root');
 const ROOT =
@@ -2196,6 +2197,12 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
     lines.push('</details>', '');
   }
   const src = paper.source?.archiveKey;
+  const solutionOriginal = sourceDocumentFor(
+    paper,
+    problem,
+    'solutions',
+    sourcePages
+  ).source;
   if (src) {
     lines.push('---', '');
     lines.push(
@@ -2205,8 +2212,8 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
         src
       )})`
     );
-    if (paper.solutionSource?.archiveKey) {
-      const s = paper.solutionSource.archiveKey;
+    if (solutionOriginal?.archiveKey) {
+      const s = solutionOriginal.archiveKey;
       lines.push(
         `· ${
           sol?.attribution === 'archive'
@@ -2243,6 +2250,12 @@ export function problemName(problem, numbers = nav.numbers) {
 
 function problemInfo(paper, problem) {
   const grade = gradeLabel(paper.grade, paper.subject, paper.competition);
+  const solutionOriginal = sourceDocumentFor(
+    paper,
+    problem,
+    'solutions',
+    sourcePages
+  ).source;
   const classification = classificationSearch(problem.classification);
   return {
     uniqueId: problem.id,
@@ -2256,12 +2269,12 @@ function problemInfo(paper, problem) {
     ),
     // The official solutions PDF, when the paper has one; the problem page's
     // compare panel offers it next to the problems PDF.
-    ...(paper.solutionSource?.archiveKey
+    ...(solutionOriginal?.archiveKey
       ? {
           solutionUrl: withPage(
-            archiveUrl(paper.subject, paper.solutionSource.archiveKey),
+            archiveUrl(paper.subject, solutionOriginal.archiveKey),
             sourcePage(paper, problem, 'solutions'),
-            paper.solutionSource.archiveKey
+            solutionOriginal.archiveKey
           ),
         }
       : {}),
@@ -2338,6 +2351,7 @@ export function originalFormat(key) {
 // none says: the link then opens the document at its start, never at a guessed page.
 export function sourcePage(paper, problem, doc, overlay = sourcePages) {
   const pinned = overlay?.[problem.id]?.[doc];
+  const selected = sourceDocumentFor(paper, problem, doc, overlay);
   if (
     pinned?.via === 'manual' &&
     Number.isInteger(pinned.page) &&
@@ -2345,7 +2359,12 @@ export function sourcePage(paper, problem, doc, overlay = sourcePages) {
   )
     return pinned.page;
   const span = (problem.sourceSpans || [])
-    .filter(s => s.document === doc && Number.isInteger(s.page) && s.page > 0)
+    .filter(
+      s =>
+        s.document === selected.document &&
+        Number.isInteger(s.page) &&
+        s.page > 0
+    )
     .map(s => s.page);
   if (span.length) return Math.min(...span);
   const own = overlay?.[problem.id]?.[doc]?.page;
@@ -2362,11 +2381,14 @@ export function sourcePage(paper, problem, doc, overlay = sourcePages) {
           ...sectionFigures(problem.solution?.sections),
         ];
   const printed = figures
-    .map(f => (figureDocument(f) === doc ? f.source?.page ?? f.tx?.page : null))
+    .map(f =>
+      figureDocument(f) === selected.document
+        ? f.source?.page ?? f.tx?.page
+        : null
+    )
     .filter(p => Number.isInteger(p) && p > 0);
   if (printed.length) return Math.min(...printed);
-  const pages = (doc === 'problems' ? paper.source : paper.solutionSource)
-    ?.pages;
+  const pages = selected.source?.pages;
   return Array.isArray(pages) &&
     pages.length === 1 &&
     Number.isInteger(pages[0])

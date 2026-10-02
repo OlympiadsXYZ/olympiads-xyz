@@ -2,14 +2,25 @@
 id: apho-2009-theory-th-p3
 source: 'APhO 2009, Теория'
 title: 'Задача 3. The Leidenfrost Phenomenon'
-author: 'Olympiads XYZ · транскрипция на официалните материали'
+author: 'Olympiads XYZ · транскрипция на архивни материали'
 canonicalSource: 'content/problems/physics/APhO/2009/apho-2009-theory-th.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-23T16:07:59.674Z'
-verifier: 'mechanical'
+verifiedAt: '2026-10-01T22:08:00.152Z'
+verifier: 'single-pass'
 ---
 
 *Theoretical competition, 26 April 2009*
+
+<Warning title="Бележка към темата">
+The complete archive solution originals for all three questions are now included. Their printed competition headings match the question packet; organizer-host provenance was not independently established.
+</Warning>
+
+<details>
+<summary>Obtained source packet</summary>
+
+All question and solution originals print “Theoretical competition”, 26 April 2009, and the APhO2009 Bangkok, Thailand logo. The three separate archive keys match the three complete questions and all 21 native numbered requests. The complete archive solutions are reproduced, including three methods for 1.7 and two methods for 2.6. No separate theory answer sheet, marking-scheme file, common instruction sheet or constants companion was obtained from the complete theory folder; no explicit total points or time limit is printed. Native per-part marks are retained. Archive appearance alone is not proof of organizer-host provenance.
+
+</details>
 
 ## Условие
 
@@ -57,10 +68,167 @@ where $C$ is an arbitrary constant of integration. **[0,5 т.]**
 
 ## Решение
 
-<Warning title="Непълно решение">
-В архива няма официално решение на тази задача.
-</Warning>
+<Spoiler title="Покажи решението от архива">
+
+### The Leidenfrost Phenomenon — archive solution original
+
+**3.1)** As given in the problem
+
+$$
+\frac{dv}{dz}=\left(\frac1\eta\frac{dP}{dr}\right)\cdot z.\qquad\text{(i)}
+$$
+
+Integrating (i) with respect to $z$, we get
+
+$$
+v(z)=\left(\frac1{2\eta}\frac{dP}{dr}\right)\cdot z^2+C.\qquad\text{(ii)}\quad\text{(0.5 point)}
+$$
+
+**3.2)**
+
+$$
+v\left(\frac b2\right)=0=\left(\frac1{2\eta}\frac{dP}{dr}\right)\cdot\left(\frac b2\right)^2+C.\qquad\text{(iii)}
+$$
+
+Therefore
+
+$$
+C=-\frac{b^2}{8\eta}\frac{dP}{dr}.\quad\text{(0.5 point)}
+$$
+
+Note that $C$ is not a real constant; its value depends on $\frac{dP}{dr}$ which is a function of $r$.
+
+**3.3)** Let $Q$ be the volume rate of flow of the vapour through the cylindrical surface of $2\pi rb$.
+
+$$
+\delta Q=v(z)\cdot2\pi r\delta z\quad\text{(0.3 point)}
+$$
+
+where from (ii) and (iii):
+
+$$
+v(z)=\left(\frac1{2\eta}\frac{dP}{dr}\right)\cdot\left[z^2-\frac{b^2}{4}\right].\qquad\text{(iv)}
+$$
+
+Therefore
+
+$$
+Q=2\int_{z=0}^{b/2}v(z)\cdot2\pi r\,dz=\left(\frac{2\pi r}{\eta}\frac{dP}{dr}\right)\int_{z=0}^{b/2}\left[z^2-\frac{b^2}{4}\right]dz,
+$$
+
+$$
+Q=-\frac{\pi rb^3}{6\eta}\frac{dP}{dr}.\qquad\text{(v)}\quad\text{(0.7 point)}
+$$
+
+**3.4)** The total rate of heat flow from the area $\pi r^2$ of the hot surface to the drop is $\frac{\pi r^2\mathcal K\Delta T}{b}$. We assume that this heat goes into vaporizing the drop.
+
+Hence
+
+$$
+\rho Q\ell=\frac{\pi r^2\mathcal K\Delta T}{b},
+$$
+
+and using (v) we get
+
+$$
+\frac{dP}{dr}=-\left(\frac{6\eta\mathcal K\Delta T}{\rho_{\mathrm V}\ell b^4}\right)\cdot r.\qquad\text{(vi)}\quad\text{(0.4 point)}
+$$
+
+This gives
+
+$$
+P(r)=-\left(\frac{3\eta\mathcal K\Delta T}{\rho_{\mathrm V}\ell b^4}\right)\cdot r^2+B.\quad\text{(0.4 point)}
+$$
+
+where $B$ is an arbitrary constant whose value can be found by applying the boundary condition $P(R)=P_{\mathrm a}$, the atmospheric pressure. Hence
+
+$$
+B=P_{\mathrm a}+\left(\frac{3\eta\mathcal K\Delta T}{\rho_{\mathrm V}\ell b^4}\right)\cdot R^2,\qquad\text{(vii)}\quad\text{(0.4 point)}
+$$
+
+and
+
+$$
+P(r)=P_{\mathrm a}+\left(\frac{3\eta\mathcal K\Delta T}{\rho_{\mathrm V}\ell b^4}\right)\cdot(R^2-r^2).\qquad\text{(viii)}\quad\text{(0.8 point)}
+$$
+
+**3.5)** The net force due to pressure is in the upward direction and of magnitude
+
+$$
+f=\int_{r=0}^R[P(r)-P_{\mathrm a}]2\pi r\,dr=\frac{3\pi\eta\mathcal K\Delta TR^4}{2\rho_{\mathrm V}\ell b^4}.\qquad\text{(ix)}\quad\text{(1.0 point)}
+$$
+
+The weight of the drop is $\frac23\pi R^3\rho_0g$, where $\rho_0$ is density of liquid. Therefore
+
+$$
+\frac23\pi R^3\rho_0g=\frac{3\pi\eta\mathcal K\Delta TR^4}{2\rho_{\mathrm V}\ell b^4},
+$$
+
+$$
+b=\left(\frac{9\eta\mathcal KR\Delta T}{4\rho_0\rho_{\mathrm V}\ell g}\right)^{1/4}.\qquad\text{(x)}
+$$
+
+Note that
+
+$$
+\frac{3\eta\mathcal K\Delta T}{\rho_{\mathrm V}\ell b^4}=\frac43\frac{\rho_0g}{R}.\qquad\text{(xi)}\quad\text{(1.0 point)}
+$$
+
+**3.6)** Use equations (xi) and (viii) to obtain
+
+$$
+P(r)=P_{\mathrm a}+\left(\frac43\frac{\rho_0g}{R}\right)\cdot(R^2-r^2),\qquad\text{(xii)}
+$$
+
+$$
+\frac{dP(r)}{dr}=-\left(\frac83\frac{\rho_0g}{R}\right)\cdot r.\qquad\text{(xiii)}\quad\text{(0.8 point)}
+$$
+
+Then use (v) to calculate the total mass-rate of vaporization $Q\rho_{\mathrm V}$ at $r=R$:
+
+$$
+Q\rho_{\mathrm V}=\left(\frac{2\pi b^3R}{12\eta}\right)\left(\frac83\frac{\rho_0g}{R}\right)R\rho_{\mathrm V}=\left(\frac{4\pi\rho_{\mathrm V}\rho_0gR}{9\eta}\right)b^3
+$$
+
+$$
+=\left(\frac{4\pi\rho_{\mathrm V}\rho_0gR}{9\eta}\right)\left(\frac{9\eta\mathcal KR\Delta T}{4\rho_0\rho_{\mathrm V}\ell g}\right)^{3/4}
+$$
+
+$$
+=\left(\frac{4\pi^4\mathcal K^3\rho_{\mathrm V}\rho_0g(\Delta T)^3}{9\eta\ell^3}\right)^{1/4}\cdot R^{7/4}=\beta R^{7/4}.\qquad\text{(xiv)}\quad\text{(1.2 points)}
+$$
+
+**3.7)** The life-time $(\tau)$ of the drop is to be found from
+
+$$
+\frac{d}{dt}\left(\frac23\pi R^3\rho_0\right)=-Q\rho_{\mathrm V}=-\beta R^{7/4},
+$$
+
+$$
+R^{1/4}\frac{dR}{dt}=-\frac\beta{2\pi\rho_0},
+$$
+
+$$
+\int_R^0R^{1/4}\,dR=-\int_0^\tau\frac\beta{2\pi\rho_0}\,dt,\quad\text{(1.0 point)}
+$$
+
+$$
+\tau=\frac{8\pi\rho_0}{5\beta}R^{5/4}=\frac85\left(\frac{9\eta\rho_0^3\ell^3}{4\mathcal K^3\rho_{\mathrm V}g(\Delta T)^3}\right)^{1/4}\cdot R^{5/4}.\quad\text{(1.0 point)}
+$$
+
+
+</Spoiler>
+
+<details>
+<summary>Printed source notation</summary>
+
+The dynamo key says that $\gamma$ must be positive for current growth but prints $\mu_0Na^2\omega/(2\ell)-R\ge0$ and labels the equality value $\omega_{\min}$. The original inequality and value are preserved; at equality the printed exponential has zero exponent. In the Leidenfrost key the first heat-balance equation prints bare $\rho$, whereas subsequent equations use $\rho_{\mathrm V}$; both native forms are retained. The rolling-cylinder key changes the directions of $\psi$ and $\phi$ for 1.7 as explicitly stated, then returns to equation (i) in 1.8.
+
+</details>
 
 ---
 
 Оригинал в Архива: [th_problems.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2009/Theory/th_problems.pdf#page=5)
+· решение от архива: [3_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2009/Theory/3_sol.pdf#page=1)
+· допълнителни данни: [2_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2009/Theory/2_sol.pdf)
+· допълнителни данни: [3_sol.pdf](https://www.olympiads.xyz/archive/physics/%D0%A1%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D1%8F/APhO/2009/Theory/3_sol.pdf)
