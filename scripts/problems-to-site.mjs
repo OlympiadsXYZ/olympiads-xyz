@@ -163,8 +163,9 @@ function figureGroupLines(items) {
   const out = [];
   for (let i = 0; i < items.length; ) {
     let j = i + 1;
-    if (items[i].row)
+    if (items[i].row) {
       while (j < items.length && items[j].row === items[i].row) j++;
+    }
     const blocks = items.slice(i, j).map(x => figureMarkdown(x.fig));
     out.push(
       blocks.length > 1
@@ -240,19 +241,21 @@ export function figureShownInline(fig, text, figs = [fig]) {
       isUrl(m[2])
         ? cropKey(m[2]) === key
         : resolveFigureTarget(m[2], figs) === fig
-    )
+    ) {
       return true;
+    }
   }
   return false;
 }
 export function newestInlineCrops(text, figs) {
   const newest = new Map();
-  for (const f of figs)
+  for (const f of figs) {
     if (f?.url) {
       const k = cropKey(f.url),
         cur = newest.get(k);
       if (!cur || cropVersion(f.url) > cropVersion(cur)) newest.set(k, f.url);
     }
+  }
   if (!newest.size || text == null) return text;
   return String(text).replace(INLINE_IMAGE, (m, pre, url) => {
     const n = newest.get(cropKey(url));
@@ -389,11 +392,13 @@ export function placeInlineFigures(text, resolve) {
     // fences and $$ blocks, as paragraphSpans reads them
     const f = /^\s*(`{3,}|~{3,})/.exec(line);
     if (fence) {
-      if (f && f[1][0] === fence[0] && f[1].length >= fence.length)
+      if (f && f[1][0] === fence[0] && f[1].length >= fence.length) {
         fence = null;
+      }
     } else if (f) fence = f[1];
-    else if ((line.replace(/\\\$/g, '').match(/\$\$/g) || []).length % 2)
+    else if ((line.replace(/\\\$/g, '').match(/\$\$/g) || []).length % 2) {
       math = !math;
+    }
   }
   return { text: out.join('\n'), jsx };
 }
@@ -440,20 +445,25 @@ export function figureDocument(fig) {
   return fig?.source?.document || fig?.tx?.document || 'problems';
 }
 function figurePlace(fig) {
-  if (Array.isArray(fig?.source?.pdfRect) && Number.isInteger(fig.source.page))
+  if (
+    Array.isArray(fig?.source?.pdfRect) &&
+    Number.isInteger(fig.source.page)
+  ) {
     return {
       doc: figureDocument(fig),
       page: fig.source.page,
       scheme: 'pdf',
       rect: fig.source.pdfRect,
     };
-  if (Array.isArray(fig?.tx?.bbox) && Number.isInteger(fig.tx.page))
+  }
+  if (Array.isArray(fig?.tx?.bbox) && Number.isInteger(fig.tx.page)) {
     return {
       doc: figureDocument(fig),
       page: fig.tx.page,
       scheme: 'bbox',
       rect: fig.tx.bbox,
     };
+  }
   return null;
 }
 const samePlace = (a, b) =>
@@ -590,8 +600,9 @@ export function figuresBelowSolutionHeading(paper, problem, layer) {
       !place ||
       place.doc !== 'problems' ||
       misplaced.has(item.fig)
-    )
+    ) {
       continue;
+    }
     const figTop =
       place.scheme === 'pdf'
         ? place.rect[1]
@@ -599,11 +610,12 @@ export function figuresBelowSolutionHeading(paper, problem, layer) {
         ? (place.rect[1] / BBOX_SCALE) * layer.heights[place.page]
         : null;
     if (figTop == null) continue;
-    if (place.page > page || (place.page === page && figTop >= top))
+    if (place.page > page || (place.page === page && figTop >= top)) {
       out.push({
         ...item,
         heading: { page, text: layer.lines[heading].text.trim().slice(0, 40) },
       });
+    }
   }
   return out;
 }
@@ -621,8 +633,9 @@ export function textLayerLines(tsv) {
       top = Number(c[7]);
     if (level === 1) heights[page] = Number(c[9]) || null;
     else if (level === 4) lines.push((line = { page, top, text: '' }));
-    else if (level === 5 && line)
+    else if (level === 5 && line) {
       line.text += (line.text ? ' ' : '') + c.slice(11).join('\t');
+    }
   }
   const out = lines
     .filter(l => l.text.trim())
@@ -645,8 +658,9 @@ function movedSolutionFigures(misplaced, solution, candidates) {
           (fig.url && s.url === fig.url) ||
           samePlace(figurePlace(s), figurePlace(fig))
       )
-    )
+    ) {
       continue;
+    }
     shown.push(fig);
     out.push(fig);
   }
@@ -724,10 +738,11 @@ export function readFigureAnchors(root) {
     data?.version !== 1 ||
     typeof data.problems !== 'object' ||
     !data.problems
-  )
+  ) {
     throw new Error(
       `${FIGURE_ANCHORS_FILE}: expected { version: 1, problems: {…} }`
     );
+  }
   return data.problems;
 }
 export function newFigureStats() {
@@ -764,11 +779,13 @@ export function paragraphSpans(text) {
     if (!inside && /^\s*(?:[-*+]|\d+[.)])\s/.test(line)) list = true;
     const f = /^\s*(`{3,}|~{3,})/.exec(line);
     if (fence) {
-      if (f && f[1][0] === fence[0] && f[1].length >= fence.length)
+      if (f && f[1][0] === fence[0] && f[1].length >= fence.length) {
         fence = null;
+      }
     } else if (f) fence = f[1];
-    else if ((line.replace(/\\\$/g, '').match(/\$\$/g) || []).length % 2)
+    else if ((line.replace(/\\\$/g, '').match(/\$\$/g) || []).length % 2) {
       math = !math;
+    }
   }
   return spans;
 }
@@ -824,8 +841,9 @@ export function anchorSlot(text, after, reviewed = false) {
     slot < spans.length &&
     splitsSentence(text, spans[slot - 1], spans[slot]);
     moved++
-  )
+  ) {
     slot++;
+  }
   return slot;
 }
 
@@ -838,7 +856,7 @@ function planFigureAnchors(problemId, groups, fields, anchors, stats) {
   const own = anchors?.[problemId];
   if (!own || typeof own !== 'object') return { slots, anchored };
   const rendered = new Set();
-  for (const { figs, solution } of groups)
+  for (const { figs, solution } of groups) {
     for (const fig of figs) {
       if (!fig.id || rendered.has(fig.id)) continue;
       rendered.add(fig.id);
@@ -860,15 +878,16 @@ function planFigureAnchors(problemId, groups, fields, anchors, stats) {
         ? 'a solution figure stays in the solution spoiler'
         : null;
       if (why) {
-        if (stats)
+        if (stats) {
           stats.refused.push(`${where}: ${a.field ?? '(no field)'} (${why})`);
+        }
         continue;
       }
       const text = fields[field];
       const slot =
         text === undefined ? null : anchorSlot(text, a.after, !!a.reviewed);
       if (slot == null) {
-        if (stats)
+        if (stats) {
           stats.notFound.push(
             `${where}: ${field}${
               text === undefined
@@ -876,6 +895,7 @@ function planFigureAnchors(problemId, groups, fields, anchors, stats) {
                 : ` "${String(a.after).slice(0, 40)}"`
             }`
           );
+        }
         continue;
       }
       if (!slots.has(field)) slots.set(field, []);
@@ -887,9 +907,12 @@ function planFigureAnchors(problemId, groups, fields, anchors, stats) {
       anchored.add(fig);
       if (stats) stats.placed++;
     }
-  if (stats)
-    for (const id of Object.keys(own))
+  }
+  if (stats) {
+    for (const id of Object.keys(own)) {
       if (!rendered.has(id)) stats.unused.push(`${problemId} ${id}`);
+    }
+  }
   for (const list of slots.values()) list.sort((a, b) => a.slot - b.slot); // stable: page order within a slot
   return { slots, anchored };
 }
@@ -909,8 +932,9 @@ function splitAtFigures(text, placed) {
   );
   const out = [];
   cuts.forEach((slot, i) => {
-    if (bySlot.has(slot))
+    if (bySlot.has(slot)) {
       out.push({ figures: figureGroupLines(bySlot.get(slot)) });
+    }
     const next = cuts[i + 1];
     if (next != null && next > slot) {
       const from = slot === 0 ? 0 : spans[slot].start,
@@ -929,8 +953,9 @@ export const LYRICS_NOTE =
   /\[Текстът на песента е в оригинала: (условието|решенията), с\. (\d+)\.\]/g;
 let lyricsPaper = null;
 export function linkLyrics(text, paper = lyricsPaper) {
-  if (!paper || !text || !String(text).includes('Текстът на песента'))
+  if (!paper || !text || !String(text).includes('Текстът на песента')) {
     return text;
+  }
   return String(text).replace(LYRICS_NOTE, (m, doc, page) => {
     const key =
       doc === 'решенията'
@@ -971,10 +996,11 @@ function sourceText(text, problem, resolve = () => null) {
     const scope = mdText(context),
       needle = mdText(passage);
     const offset = scope.indexOf(needle);
-    if (needle && offset !== -1)
+    if (needle && offset !== -1) {
       occurrences(scope, at =>
         ranges.push([at + offset, at + offset + needle.length])
       );
+    }
   }
   for (const passage of problem.sourceLayout?.underlines || []) {
     const needle = mdText(passage);
@@ -983,9 +1009,9 @@ function sourceText(text, problem, resolve = () => null) {
   const merged = [];
   for (const range of ranges.sort((a, b) => a[0] - b[0] || b[1] - a[1])) {
     const previous = merged.at(-1);
-    if (previous && range[0] <= previous[1])
+    if (previous && range[0] <= previous[1]) {
       previous[1] = Math.max(previous[1], range[1]);
-    else merged.push([...range]);
+    } else merged.push([...range]);
   }
   for (const [start, end] of merged.reverse()) {
     rendered = `${rendered.slice(0, start)}<u>${rendered.slice(
@@ -1117,8 +1143,9 @@ export function incompleteNoteText(t, hasSolutionText) {
     hasSolutionText ||
     !FOREIGN_NOTE(shown) ||
     !NO_ARCHIVE_SOLUTION.test(shown)
-  )
+  ) {
     return shown;
+  }
   return OPEN_RESEARCH.test(shown)
     ? OPEN_RESEARCH_LINE
     : NO_ARCHIVE_SOLUTION_LINE;
@@ -1165,15 +1192,17 @@ export function archiveNoteLeaks(mdx) {
       text
     );
   const leaks = [];
-  if (box && incompleteNoteText(box[1], hasSolutionText) !== box[1])
+  if (box && incompleteNoteText(box[1], hasSolutionText) !== box[1]) {
     leaks.push(box[1]);
+  }
   if (
     caveat &&
     box &&
     caveatNoteText(caveat[1], true) == null &&
     visitorNoteText(caveat[1]) != null
-  )
+  ) {
     leaks.push(caveat[1]);
+  }
   return leaks;
 }
 
@@ -1195,8 +1224,9 @@ function archiveRoundLabel(round, competition) {
   if (
     /^(?:I|II|III|IV)$/.test(round) &&
     !BULGARIAN_COMPETITIONS.has(competition)
-  )
+  ) {
     return round;
+  }
   return ROUND_LABELS[round] ?? round;
 }
 // The sidebar's own code (src/problems/tree.ts, transpiled on first use): the page title and the source line use the
@@ -1235,7 +1265,7 @@ const pageRound = paper =>
 function dateBg(iso) {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
   if (!m) return null;
-  return `${Number(m[3])} ${MONTHS_BG[Number(m[2]) - 1]} ${m[1]} г.`;
+  return `${Number(m[3])} ${MONTHS_BG[Number(m[2]) - 1]} ${m[1]}\u00a0г.`;
 }
 
 // "НОА 2026, II кръг (областен), 9–10 клас" — what the page heading leads with.
@@ -1302,11 +1332,12 @@ export function qualifyPapers(records) {
   );
   const collides = group => {
     const seen = new Set();
-    for (const paper of group)
+    for (const paper of group) {
       for (const t of titles.get(paper.id)) {
         if (seen.has(t)) return true;
         seen.add(t);
       }
+    }
     return false;
   };
   const byDescriptor = papers => {
@@ -1343,13 +1374,14 @@ export function qualifyPapers(records) {
   // a qualified descriptor that happens to equal another paper's ("X 2013, английски") takes the file too
   for (const group of byDescriptor(papers)) {
     if (group.length < 2 || !collides(group)) continue;
-    for (const paper of group)
+    for (const paper of group) {
       paperQualifiers.set(
         paper.id,
         [paperQualifiers.get(paper.id), fileLabel(paper)]
           .filter(Boolean)
           .join(', ')
       );
+    }
   }
   const result = paperQualifiers;
   paperQualifiers = saved;
@@ -1509,25 +1541,29 @@ export function emphasisFlanking(text) {
             if (
               !space(after) &&
               (!punct(after) || space(before) || punct(before))
-            )
+            ) {
               return true;
+            }
             if (word(before) && punct(after)) return found.push(m.index), true;
           } else {
             // closer: right-flanking, or stuck after punctuation before a letter
             if (
               !space(before) &&
               (!punct(before) || space(after) || punct(after))
-            )
+            ) {
               return true;
-            if (punct(before) && word(after))
+            }
+            if (punct(before) && word(after)) {
               return found.push(m.index + len), true;
+            }
           }
           return false;
         });
         if (ok) fixes.push(...found);
       }
-      for (const at of fixes.sort((a, b) => b - a))
+      for (const at of fixes.sort((a, b) => b - a)) {
         line = line.slice(0, at) + NNBSP + line.slice(at);
+      }
       return line;
     })
     .join('\n');
@@ -1542,8 +1578,9 @@ function displayFences(seg, before) {
     !seg.startsWith('$$') ||
     !seg.includes('\n') ||
     !/(^|\n)[ \t]*$/.test(before ?? '')
-  )
+  ) {
     return seg;
+  }
   const inner = seg.slice(2, -2);
   if (/^[ \t]*\n/.test(inner) && /\n[ \t]*$/.test(inner)) return seg;
   return `$$\n${inner.replace(/^[ \t]*\n/, '').replace(/\n[ \t]*$/, '')}\n$$`;
@@ -1733,8 +1770,9 @@ export function problemAliases(problem, routes, publishedIds = new Set()) {
       publishedIds.has(alias.id) ||
       (alias.sectionId != null &&
         !problem.sections?.some(s => s.id === alias.sectionId))
-    )
+    ) {
       throw new Error(`Invalid alias ${alias.id} on ${problem.id}`);
+    }
     const to = `${target}/solution${
       alias.sectionId == null ? '' : `#${alias.sectionId}`
     }`;
@@ -1785,14 +1823,16 @@ export function sectionLines(sections, problem, resolve, solution = false) {
       `### ${sourceText(section.title, problem, resolve)}${points}`,
       ''
     );
-    if (section.statement)
+    if (section.statement) {
       out.push(sourceText(section.statement, problem, resolve), '');
+    }
     const texts = sectionTexts([section]).map(text =>
       resolveFigurePlaceholders(text, problem, resolve)
     );
     const candidates = sectionFigures([section]);
-    for (const fig of figuresNotInline(section.figures, texts, candidates))
+    for (const fig of figuresNotInline(section.figures, texts, candidates)) {
       out.push(figureMarkdown(fig), '');
+    }
     for (const part of section.parts || []) {
       const pts =
         part.points == null
@@ -1800,13 +1840,16 @@ export function sectionLines(sections, problem, resolve, solution = false) {
           : ` **[${String(part.points).replace('.', ',')} т.]**`;
       const text = sourceText(part.statement, problem, resolve);
       out.push(labelledPartText(text, `**${mdText(part.label)}**`, pts), '');
-      for (const fig of figuresNotInline(part.figures, texts, candidates))
+      for (const fig of figuresNotInline(part.figures, texts, candidates)) {
         out.push(figureMarkdown(fig), '');
-      if (part.statementAfter)
+      }
+      if (part.statementAfter) {
         out.push(sourceText(part.statementAfter, problem, resolve), '');
+      }
     }
-    if (section.statementAfterParts)
+    if (section.statementAfterParts) {
       out.push(sourceText(section.statementAfterParts, problem, resolve), '');
+    }
     out.push('</ProblemSection>', '');
   }
   return out;
@@ -1825,6 +1868,47 @@ export function titleWithoutPoints(title, points) {
 // "5 април 2019 г.", "3 т.": the number and its unit stay on one line (the lead line broke as "2019" / "г.")
 const keepUnits = t =>
   String(t).replace(/(\d)[ \t]+(?=(?:г\.|т\.)(?![\p{L}\p{N}]))/gu, '$1 ');
+
+// An incomplete archive note is not evidence that the question PDF prints a key.
+// Keep explicit key spans/pins/figures and genuine separate official originals.
+export function solutionOriginalFor(paper, problem, overlay = {}) {
+  const selected = sourceDocumentFor(paper, problem, 'solutions', overlay);
+  const original = selected.source;
+  if (!original?.archiveKey) return null;
+  const sol = problem.solution;
+  const sectionContent = sections =>
+    (sections || []).some(
+      section =>
+        section.statement?.trim() ||
+        section.figures?.length ||
+        section.parts?.some(
+          part => part.statement?.trim() || part.figures?.length
+        ) ||
+        sectionContent(section.sections)
+    );
+  const metadataOnly =
+    sol?.attribution === 'archive' &&
+    sol?.incomplete &&
+    !sol.statement?.trim() &&
+    !sol.figures?.length &&
+    !sectionContent(sol.sections);
+  if (!metadataOnly) return original;
+  const positivePage = page => Number.isInteger(page) && page > 0;
+  const explicitSpan = (problem.sourceSpans || []).some(
+    span => span.document === selected.document && positivePage(span.page)
+  );
+  const pin = overlay?.[problem.id]?.solutions;
+  const explicitPin = pin?.via === 'manual' && positivePage(pin.page);
+  const keyFigures = [
+    ...(problem.solution?.figures || []),
+    ...sectionFigures(problem.solution?.sections),
+  ].some(
+    fig =>
+      figureDocument(fig) === selected.document &&
+      positivePage(fig.source?.page ?? fig.tx?.page)
+  );
+  return explicitSpan || explicitPin || keyFigures ? original : null;
+}
 
 export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   lyricsPaper = paper; // linkLyrics: the paper whose originals a lyrics note links to
@@ -1848,11 +1932,12 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
     `canonicalSource: ${yamlStr(String(sourceFile).split(path.sep).join('/'))}`
   ); // repo-relative with forward slashes on every OS
   lines.push(`verification: ${yamlStr(state.quality)}`);
-  if (state.quality === 'reviewed' && state.verifiedAt)
+  if (state.quality === 'reviewed' && state.verifiedAt) {
     lines.push(`verifiedAt: ${yamlStr(state.verifiedAt)}`);
+  }
   // the page must not claim an independent model when the receipt records a same-model check (D-P7, D-P10)
   // a mechanical-only receipt (D-P21: no second model) is named as such, never as an independent model
-  if (state.quality === 'reviewed')
+  if (state.quality === 'reviewed') {
     lines.push(
       `verifier: ${yamlStr(
         state.singlePass
@@ -1866,6 +1951,7 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
           : 'independent'
       )}`
     );
+  }
   lines.push('---');
   lines.push('');
   // Lead line: the paper's printed masthead (ground truth), the date and the points.
@@ -1889,13 +1975,14 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
   ].filter(Boolean);
   if (lead.length) lines.push(`*${keepUnits(lead.join(' · '))}*`, '');
   const caveat = caveatNoteText(paper.caveat, !!problem.solution?.incomplete);
-  if (caveat)
+  if (caveat) {
     lines.push(
       '<Warning title="Бележка към темата">',
       mdText(caveat),
       '</Warning>',
       ''
     );
+  }
   lines.push(...documentNoteLines(paper, 'before-problem'));
   lines.push(`## Условие`);
   lines.push('');
@@ -2016,8 +2103,9 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       '**В тази задача**',
       ''
     );
-    for (const section of problem.sections)
+    for (const section of problem.sections) {
       lines.push(`- [${mdText(section.title)}](#${section.id})`);
+    }
     lines.push('', '</nav>', '');
   }
   lines.push(
@@ -2028,8 +2116,9 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       true
     )
   );
-  for (const fig of unanchored(statementFigs))
+  for (const fig of unanchored(statementFigs)) {
     lines.push(figureMarkdown(fig), '');
+  }
   // Source-owned movies follow the complete statement and its figures; frozen choices/links stay in place.
   lines.push(...problemMediaLines(problem.id, figureOpts.media));
   if (problem.parts?.length) {
@@ -2081,8 +2170,9 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
           )
         );
       }
-      for (const fig of unanchored(partFigs[k]))
+      for (const fig of unanchored(partFigs[k])) {
         lines.push(figureMarkdown(fig), '');
+      }
       lines.push(
         ...fieldLines(`parts/${k}/statementAfter`, part.statementAfter, t =>
           sourceText(t, problem, resolveStatement)
@@ -2149,31 +2239,35 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
         ''
       );
     }
-    if (sol?.statement || sol?.sections?.length)
+    if (sol?.statement || sol?.sections?.length) {
       lines.push(
         sol.attribution === 'archive'
           ? '<Spoiler title="Покажи решението от архива">'
           : '<Spoiler title="Покажи официалното решение">',
         ''
       );
-    else if (solutionFigures.length)
+    } else if (solutionFigures.length) {
       lines.push(
         sol?.attribution === 'archive'
           ? '<Spoiler title="Покажи фигурите от решението в архива">'
           : '<Spoiler title="Покажи фигурите от официалното решение">',
         ''
       );
-    if (sol?.statement || solutionFigures.length)
+    }
+    if (sol?.statement || solutionFigures.length) {
       lines.push(
         ...fieldLines('solution/statement', sol?.statement, t =>
           sourceText(t, problem, resolveSolution)
         )
       );
+    }
     lines.push(...sectionLines(sol?.sections, problem, resolveSolution, true));
-    for (const fig of unanchored(solutionFigures))
+    for (const fig of unanchored(solutionFigures)) {
       lines.push(figureMarkdown(fig), '');
-    if (sol?.statement || sol?.sections?.length || solutionFigures.length)
+    }
+    if (sol?.statement || sol?.sections?.length || solutionFigures.length) {
       lines.push('', '</Spoiler>', '');
+    }
   }
   lines.push(...documentNoteLines(paper, 'after-problem'));
   const classification = classificationSearch(problem.classification);
@@ -2187,22 +2281,18 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       classification.tags.map(tag => mdText(tag)).join(' · '),
       ''
     );
-    if (classification.prerequisiteLabels.length)
+    if (classification.prerequisiteLabels.length) {
       lines.push(
         `Предпоставки: ${classification.prerequisiteLabels
           .map(x => mdText(x))
           .join(', ')}`,
         ''
       );
+    }
     lines.push('</details>', '');
   }
   const src = paper.source?.archiveKey;
-  const solutionOriginal = sourceDocumentFor(
-    paper,
-    problem,
-    'solutions',
-    sourcePages
-  ).source;
+  const solutionOriginal = solutionOriginalFor(paper, problem, sourcePages);
   if (src) {
     lines.push('---', '');
     lines.push(
@@ -2248,14 +2338,9 @@ export function problemName(problem, numbers = nav.numbers) {
   return tree().problemDisplayName(problem, numbers);
 }
 
-function problemInfo(paper, problem) {
+export function problemInfo(paper, problem) {
   const grade = gradeLabel(paper.grade, paper.subject, paper.competition);
-  const solutionOriginal = sourceDocumentFor(
-    paper,
-    problem,
-    'solutions',
-    sourcePages
-  ).source;
+  const solutionOriginal = solutionOriginalFor(paper, problem, sourcePages);
   const classification = classificationSearch(problem.classification);
   return {
     uniqueId: problem.id,
@@ -2356,8 +2441,9 @@ export function sourcePage(paper, problem, doc, overlay = sourcePages) {
     pinned?.via === 'manual' &&
     Number.isInteger(pinned.page) &&
     pinned.page > 0
-  )
+  ) {
     return pinned.page;
+  }
   const span = (problem.sourceSpans || [])
     .filter(
       s =>
@@ -2404,10 +2490,11 @@ export function readSourcePages(root) {
     data?.version !== 1 ||
     typeof data.problems !== 'object' ||
     !data.problems
-  )
+  ) {
     throw new Error(
       'content/problem-source-pages.json: expected { version: 1, problems: {…} }'
     );
+  }
   return data.problems;
 }
 // 2e+30 -> 2 \times 10^{30}, 10000000000 -> 1 \times 10^{10}; any other number prints as the data holds it (the decimal
@@ -2470,7 +2557,7 @@ function renderAnswer(answer) {
     ? ' ' + plainScripts(mdText(String(answer.unit)))
     : '';
   let value = '';
-  if (answer.latex)
+  if (answer.latex) {
     value =
       '$' +
       answer.latex +
@@ -2479,13 +2566,14 @@ function renderAnswer(answer) {
       !showsValue(answer.latex, answer.value)
         ? ' ≈ $' + texNumber(answer.value) + '$' + unit
         : '');
-  else if (typeof answer.value === 'number')
+  } else if (typeof answer.value === 'number') {
     value =
       /e/i.test(String(answer.value)) || Math.abs(answer.value) >= 1e6
         ? '$' + texNumber(answer.value) + '$' + unit
         : mdText(String(answer.value)) + unit;
-  else if (answer.value != null)
+  } else if (answer.value != null) {
     value = plainScripts(mdText(String(answer.value))) + unit;
+  }
   // An integer choice index is zero-based only when the source explicitly
   // includes the choices array; otherwise preserve the printed identifier.
   else if (answer.kind === 'choice' && answer.correct != null) {
@@ -2602,21 +2690,25 @@ function main() {
     f.endsWith('.problems.json')
   );
   const modules = moduleFiles.map(file => ({ file, data: readJson(file) }));
-  for (const { data } of modules)
-    for (const [key, entries] of Object.entries(data))
-      if (key !== 'MODULE_ID' && Array.isArray(entries))
+  for (const { data } of modules) {
+    for (const [key, entries] of Object.entries(data)) {
+      if (key !== 'MODULE_ID' && Array.isArray(entries)) {
         for (const p of entries) oldMetadata.set(p.uniqueId, p);
+      }
+    }
+  }
   paperQualifiers = qualifyPapers(
     records.filter(r => publicationState(r, ledger).eligible).map(r => r.data)
   );
   for (const record of records) {
     const metadataErrors = problemMetadataErrors(record.data);
-    if (metadataErrors.length)
+    if (metadataErrors.length) {
       throw new Error(
         `${record.relativePath}: ${metadataErrors
           .map(e => `${e.path}: ${e.message}`)
           .join('; ')}`
       );
+    }
     const state = publicationState(record, ledger);
     if (!state.eligible) {
       excluded.push(`${record.data.paper.id}: ${state.reason}`);
@@ -2645,8 +2737,9 @@ function main() {
       for (const [from, to] of Object.entries(
         problemAliases(routeProblem, routes, publishedIds)
       )) {
-        if (aliases[from] && aliases[from] !== to)
+        if (aliases[from] && aliases[from] !== to) {
           throw new Error(`Alias collision: ${from}`);
+        }
         aliases[from] = to;
       }
     }
@@ -2655,10 +2748,12 @@ function main() {
   // cannot change bookmarks or accidentally give an old route to another ID.
   const routeOwners = new Map();
   for (const [id, route] of Object.entries(routes)) {
-    if (!route.startsWith('/problems/') || route.includes('..'))
+    if (!route.startsWith('/problems/') || route.includes('..')) {
       throw new Error(`Invalid route for ${id}`);
-    if (routeOwners.has(route) && routeOwners.get(route) !== id)
+    }
+    if (routeOwners.has(route) && routeOwners.get(route) !== id) {
       throw new Error(`Route collision: ${id}, ${routeOwners.get(route)}`);
+    }
     routeOwners.set(route, id);
   }
   const inModules = new Set(),
@@ -2672,15 +2767,18 @@ function main() {
       moduleTables.push(path.relative(ROOT, file));
       planned.set(path.relative(ROOT, file), jsonText(data));
     }
-    for (const [key, entries] of Object.entries(data))
-      if (key !== 'MODULE_ID' && Array.isArray(entries))
+    for (const [key, entries] of Object.entries(data)) {
+      if (key !== 'MODULE_ID' && Array.isArray(entries)) {
         for (const item of entries) {
-          if (allIds.has(item.uniqueId) && !generated.has(item.uniqueId))
+          if (allIds.has(item.uniqueId) && !generated.has(item.uniqueId)) {
             throw new Error(
               `Ineligible paper referenced by authored module table: ${file}:${item.uniqueId}`
             );
+          }
           inModules.add(item.uniqueId);
         }
+      }
+    }
   }
   const unmanaged = extra.EXTRA_PROBLEMS.filter(
     p => !owned.has(p.uniqueId) && !allIds.has(p.uniqueId)
@@ -2729,16 +2827,18 @@ function main() {
       !relative.startsWith('solutions/') ||
       relative.includes('..') ||
       path.isAbsolute(relative)
-    )
+    ) {
       throw new Error('Unsafe owned path: ' + relative);
+    }
     const file = path.join(ROOT, relative);
     if (!fs.existsSync(file)) continue;
     stale++;
     if (!check) {
-      if (sha256(fs.readFileSync(file)) !== digest)
+      if (sha256(fs.readFileSync(file)) !== digest) {
         throw new Error(
           `Refusing to remove edited generated file: ${relative}; move the edit to canonical JSON first.`
         );
+      }
       fs.unlinkSync(file);
     }
   }
@@ -2769,12 +2869,13 @@ function main() {
       ['refused', s.refused],
       ['unused', s.unused],
     ]) {
-      if (list.length)
+      if (list.length) {
         console.log(
           `  ${label}: ${list.slice(0, 10).join('; ')}${
             list.length > 10 ? `; … ${list.length - 10} more` : ''
           }`
         );
+      }
     }
   }
   if (check && (changed || stale)) process.exitCode = 1;
