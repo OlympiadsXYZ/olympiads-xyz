@@ -5,35 +5,35 @@ title: 'Задача 2. Designing an experimental setup, planning an experiment.
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/IZhO/2021/izho-2021-experiment-exp-eng.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T20:15:28.634Z'
-verifier: 'same-model'
+verifiedAt: '2026-10-02T17:02:48.955Z'
+verifier: 'mechanical'
 ---
 
-*XVII International Zhautykov Olimpiad/Experimental Competition — January 9, 2021 — COMPUTER EXPERIMENT: A mathematical pendulum or what angle can be considered rather small ... · At its core, physics is an experimental science and this is definitely its strength. However, without comprehending a large number of experimental facts, physics would degenerate into a description of a huge amount of phenomena and processes. This is how the physical laws and the corresponding models came to life in the remote past by ignoring insignificant features of the subject under consideration. In recent decades, rapid progress has been witnessed in such a field as computer modeling or, as it has become common to say, a computer experiment. The point is that the developed physical models can be directly implemented on a computer in the form of a computational process and the regularities of interest can be thoroughly investigated in their pure forms. In this competition, you are asked to carry out such a computer experiment for a well-known system of a mathematical pendulum. · A formula is well known for the period of oscillation of a mathematical pendulum of length $l$ subject to a uniform gravity field of the Earth, characterized by the acceleration of gravity $g$. However, this formula is only applicable for rather small deflection angles. The main question that you have to answer when doing this computational experiment is: *"What angular deflection can be considered small?"* · In the educational literature on laboratory experiments, you can find an indication that the maximum deflection angle should not exceed $1°$, $2°$, $5°$, etc. You must answer the above question on the basis of this computer experiment! Namely, you are asked to study the dependence of the oscillation period of a mathematical pendulum on its amplitude, which is the maximum angular deflection from the vertical. · The order of conducting and processing the results of a computer experiment does not differ much from the order of a real, full-scale experiment. Therefore, the parts of this problem directly correspond to the main stages of a real physical experiment. · 9 януари 2021 г.*
+*XVII International Zhautykov Olimpiad/Experimental Competition — January 9, 2021 — COMPUTER EXPERIMENT: A mathematical pendulum or what angle can be considered rather small ... · At its core, physics is an experimental science and this is definitely its strength. However, without comprehending a large number of experimental facts, physics would degenerate into a description of a huge amount of phenomena and processes. This is how the physical laws and the corresponding models came to life in the remote past by ignoring insignificant features of the subject under consideration. In recent decades, rapid progress has been witnessed in such a field as computer modeling or, as it has become common to say, a computer experiment. The point is that the developed physical models can be directly implemented on a computer in the form of a computational process and the regularities of interest can be thoroughly investigated in their pure forms. In this competition, you are asked to carry out such a computer experiment for a well-known system of a mathematical pendulum. · A formula is well known for the period of oscillation of a mathematical pendulum of length $l$ subject to a uniform gravity field of the Earth, characterized by the acceleration of gravity $g$. However, this formula is only applicable for rather small deflection angles. The main question that you have to answer when doing this computational experiment is: *"What angular deflection can be considered small?"* · In the educational literature on laboratory experiments, you can find an indication that the maximum deflection angle should not exceed $1°$, $2°$, $5°$, etc. You must answer the above question on the basis of this computer experiment! Namely, you are asked to study the dependence of the oscillation period of a mathematical pendulum on its amplitude, which is the maximum angular deflection from the vertical. · The order of conducting and processing the results of a computer experiment does not differ much from the order of a real, full-scale experiment. Therefore, the parts of this problem directly correspond to the main stages of a real physical experiment. · 9 януари 2021 г. · 1,5 т.*
 
 ## Условие
 
 In a computer experiment, this stage corresponds to the development of a calculation algorithm. In this case, the main idea of numerical (computer) calculations is to divide the trajectory of motion into small sections, in which the motion is described approximately.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '37.2%', '--fig-max': '238px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2021-experiment-exp-eng/p2-fig1-v3.png" alt="Fan diagram of the pendulum thread positions from $\varphi_0$ down to $\varphi_N = 0$, with splitting points $\varphi_0, \varphi_1, \varphi_k, \varphi_{k+1}, \varphi_N$ and interval $\Delta\varphi$ marked on an arc." width="745" height="730" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '35.5%', '--fig-max': '227px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2021-experiment-exp-eng/p2-fig1-v4.png" alt="Fan diagram of the pendulum thread positions from $\varphi_0$ down to $\varphi_N = 0$, with splitting points $\varphi_0, \varphi_1, \varphi_k, \varphi_{k+1}, \varphi_N$ and interval $\Delta\varphi$ marked on an arc." width="710" height="702" loading="lazy" decoding="async" />
 </figure>
 
 We divide the interval of motion from $\varphi = \varphi_0$ to $\varphi = 0$ into $N$ equal intervals of width $\Delta\varphi$. Let us denote the splitting points as $\varphi_k$, $k = 0, 1, ...N$ and the angular velocities at these points as $\omega_k$. The main approximation used in further calculations is that at each interval from $\varphi_k$ to $\varphi_{k+1}$ the motion of the pendulum is considered uniformly accelerated. It is natural to expect that with an increase in the number of partition intervals $N$, the calculation accuracy should grow.
 
 Within the framework of the approximation made, it is straightforward to find the time of the pendulum motion in the interval from $\varphi_0$ to 0. For a given amplitude $\varphi_0$ and the number of partition intervals $N$, the calculation algorithm is revealed in the sequence of answers to the following questions.
 
-**2.1** Determine the partition interval $\Delta\varphi$.
+**2.1** Determine the partition interval $\Delta\varphi$. **[0,1 т.]**
 
-**2.2** Determine the coordinates of the splitting points $\varphi_k$.
+**2.2** Determine the coordinates of the splitting points $\varphi_k$. **[0,1 т.]**
 
-**2.3** Express the angular velocity $\omega_k$ at the point $\varphi_k$ at an arbitrary initial angle of deflection $\varphi_0$. Write down this formula for a particular case of $\varphi_0 = \dfrac{\pi}{2}$.
+**2.3** Express the angular velocity $\omega_k$ at the point $\varphi_k$ at an arbitrary initial angle of deflection $\varphi_0$. Write down this formula for a particular case of $\varphi_0 = \dfrac{\pi}{2}$. **[0,1 т.]**
 
-**2.4** Determine the travel time $\Delta t_k$ for the $k$-th interval from $\varphi_{k-1}$ to $\varphi_k$.
+**2.4** Determine the travel time $\Delta t_k$ for the $k$-th interval from $\varphi_{k-1}$ to $\varphi_k$. **[1 т.]**
 
-**2.5** Find an expression for the time $t_k$ it takes the ball to reach the angle $\varphi_k$. To simplify matters, express it in terms of the travel time $t_{k-1}$ to the previous value of the angle $\varphi_{k-1}$.
+**2.5** Find an expression for the time $t_k$ it takes the ball to reach the angle $\varphi_k$. To simplify matters, express it in terms of the travel time $t_{k-1}$ to the previous value of the angle $\varphi_{k-1}$. **[0,1 т.]**
 
-**2.6** Put down a formula for the oscillation period $T_N$ for a given split into intervals.
+**2.6** Put down a formula for the oscillation period $T_N$ for a given split into intervals. **[0,1 т.]**
 
 ## Отговори
 
@@ -95,6 +95,16 @@ at the initial condition $t_0 = 0$.
 $$
 T_N = 4t_N. \qquad (15)
 $$
+
+| | Content | Total for each part | Points |
+|---|---|---|---|
+| | **2. Designing an experimental setup, planning an experiment.** | **1.5** | |
+| 2.1 | Formula (10): $\Delta\varphi = \dfrac{\varphi_0}{N}$ | **0.1** | 0.1 |
+| 2.2 | Formula (11): $\varphi_k = \varphi_{k-1} - \Delta\varphi$ | **0.1** | 0.1 |
+| 2.3 | Formula (12): $\omega_k = \sqrt{\cos\varphi_k - \cos\varphi_0}$ | **0.1** | 0.1 |
+| 2.4 | Uniformly accelerated motion — Main idea $\langle\omega\rangle = \dfrac{1}{2}(\omega_{k-1} + \omega_k)$ — Formula (13): $\Delta t_k = \dfrac{2\Delta\varphi}{\omega_{k-1} + \omega_k}$ | **1.0** | 0.5, 0.5 |
+| 2.5 | Formula (14): $t_k = t_{k-1} + \Delta t_k$ | **0.1** | 0.1 |
+| 2.6 | Formula (15): $T_N = 4t_N$ | **0.1** | 0.1 |
 
 
 </Spoiler>

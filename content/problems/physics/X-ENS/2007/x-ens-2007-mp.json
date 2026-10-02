@@ -42,19 +42,19 @@
   "caveat": "Le livret contient un seul problème, « Plasmons dans les métaux », avec deux parties principales et une numérotation continue de 1 à 58. Aucun corrigé ni barème n’est disponible. Le potentiel est écrit comme un produit UxUyUz dans la question 10, la question 36 demande une dépendance en x, et le nom est imprimé « Erich Kreschmann » dans la question 47 : ces formulations originales sont conservées.",
   "transcription": {
    "method": "vision-pages",
-   "provider": "openai",
-   "model": "gpt-6.1-sol",
-   "promptVersion": "source-native-single-pass-v1",
-   "requestId": "codex-sol61-reader-11-x-ens-2007-mp-single-pass-source",
-   "at": "2026-09-30",
+   "provider": "agent",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-02",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "bb7e4d3f2d0e09970c13d51e64fc60528f401cfedbbe829473a5b48127272595"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt source-native-single-pass-v1)",
-   "verifiedAt": "2026-09-30",
-   "notes": "Complete personal visual reading of all 12 original scan pages. No text layer (0 characters). Native whole problem preserved with two main-part headers, seven numbered-question groups and parent II.3 introduction: eight source sections plus both native I/II parent headings, 58 native question labels and all13 equation labels. Common introduction, all11 physical data/notation entries, vector identity, complete cover calculator restrictions and 5-hour duration retained. Both actual final 300-dpi native diagram crop files personally inspected; every outer axis arrow, field/wavevector label, angle, medium number and period arrow retained. Final crop hashes match the inspected dry-run and uploaded/public HEAD-200 objects. Queue est2 reflects main parts, not native whole-problem count. No source key supplied."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-02",
+   "notes": "Complete personal visual reading of all 12 original scan pages. No text layer (0 characters). Native whole problem preserved with two main-part headers, seven numbered-question groups and parent II.3 introduction: eight source sections plus both native I/II parent headings, 58 native question labels and all13 equation labels. Common introduction, all11 physical data/notation entries, vector identity, complete cover calculator restrictions and 5-hour duration retained. Both actual final 300-dpi native diagram crop files personally inspected; every outer axis arrow, field/wavevector label, angle, medium number and period arrow retained. Final crop hashes match the inspected dry-run and uploaded/public HEAD-200 objects. Queue est2 reflects main parts, not native whole-problem count. No source key supplied. Repaired 2026-10-02 from the independent verification (docs/verification/2026-10-02-*) of the openai:gpt-6.1-sol transcription: I.1 questions 5 and 6 restored to the printed $\\overrightarrow{v_q}$, $(\\overrightarrow{v_{q+1}}-\\overrightarrow{v_q})$ without the invented +/- superscripts (page 3)."
   }
  },
  "problems": [
@@ -64,7 +64,6 @@
    "title": "Plasmons dans les métaux",
    "problemType": "theory",
    "statement": "Ce sujet porte sur les phénomènes liés aux oscillations collectives des électrons libres dans le volume et à la surface d’un métal. Ces oscillations, nommées plasmons, sont à l’origine de nombreuses applications en physique, chimie et biologie. La première partie de ce problème décrit la nature des plasmons dans un métal. La deuxième partie étudie les ondes de surface liées aux plasmons sur une interface air-métal. Les deux parties du problème peuvent être traitées de manière indépendante. L’usage des calculatrices de poche à alimentation autonome, non imprimantes et sans document d’accompagnement, est autorisé.\n\nOn considérera que du point de vue de la propagation des ondes électromagnétiques l’air se comporte comme le vide et que le métal est non-magnétique.\n\nDans tout le problème un métal sera modélisé par un milieu isotrope homogène conducteur, de conductivité statique $\\gamma_0$, comprenant par unité de volume $N$ électrons mobiles dans un réseau fixe d’atomes. Seul un électron par atome participe à la conduction dans le métal. Chacun de ces électrons est assimilé à une particule de masse $m$ et de charge $(-e)$ libre de se mouvoir, les interactions subies se limitant à des chocs dont on ne cherchera pas à préciser la nature.\n\n**Constantes physiques et données numériques:**\n\nPermittivité du vide : $\\varepsilon_0=8,85\\ 10^{-12}\\ \\mathrm{F.m^{-1}}$\n\nPerméabilité magnétique du vide : $\\mu_0=4\\pi\\ 10^{-7}\\ \\mathrm{H.m^{-1}}$\n\nConstante de Boltzmann : $k_B=1,38\\ 10^{-23}\\ \\mathrm{J.K^{-1}}$\n\nConstante de Planck : $h=6,63\\ 10^{-34}\\ \\mathrm{J.s}$\n\nNombre d’Avogadro : $N_A=6,02\\ 10^{23}\\ \\mathrm{mol^{-1}}$\n\nMasse de l’électron : $m=9,11\\ 10^{-31}\\ \\mathrm{kg}$\n\nCharge de l’électron : $e=1,60\\ 10^{-19}\\ \\mathrm{C}$\n\nMasse molaire atomique de l’or : $M=197\\ \\mathrm{g\\ mol^{-1}}$\n\nMasse volumique de l’or : $d=19,3\\ \\mathrm{g.cm^{-3}}$\n\nConductivité statique de l’or: $\\gamma_0=45,5\\ 10^6\\ \\mathrm{S.m^{-1}}$\n\nNotation des nombres complexes : $i^2=-1$\n\n**Relation d’analyse vectorielle :**\n\n$$\\overrightarrow{\\mathrm{rot}}(\\overrightarrow{\\mathrm{rot}}(\\vec U))=\\overrightarrow{\\mathrm{grad}}(\\mathrm{div}(\\vec U))-\\Delta(\\vec U)$$\n\n**I. Oscillations électroniques dans un métal**",
-   "figures": [],
    "sections": [
     {
      "id": "i-1",
@@ -89,11 +88,11 @@
       },
       {
        "label": "5.",
-       "statement": "On place maintenant le matériau dans un champ électrique uniforme $\\vec E_0=E_0\\cdot\\vec u_x$. On note $\\vec v_q^+$ la vitesse de l’électron immédiatement après le choc survenu au temps $t_q$. Déterminer la vitesse instantanée $\\vec v$ à tout instant $t\\in]t_q,t_{q+1}[$ puis la grandeur $(\\vec v_{q+1}^- -\\vec v_q^+)$."
+       "statement": "On place maintenant le matériau dans un champ électrique uniforme $\\vec E_0=E_0\\cdot\\vec u_x$. On note $\\overrightarrow{v_q}$ la vitesse de l’électron immédiatement après le choc survenu au temps $t_q$. Déterminer la vitesse instantanée $\\vec v$ à tout instant $t\\in]t_q,t_{q+1}[$ puis la grandeur $(\\overrightarrow{v_{q+1}}-\\overrightarrow{v_q})$."
       },
       {
        "label": "6.",
-       "statement": "La moyenne $\\langle(\\vec v_{q+1}^- -\\vec v_q^+)\\rangle$ est appelée vitesse de dérive $\\vec v_d$ d’un électron sous l’effet du champ électrique. Exprimer $\\vec v_d$ en fonction de $\\vec E_0$, $e$, $\\tau$, et $m$."
+       "statement": "La moyenne $\\langle(\\overrightarrow{v_{q+1}}-\\overrightarrow{v_q})\\rangle$ est appelée vitesse de dérive $\\vec v_d$ d’un électron sous l’effet du champ électrique. Exprimer $\\vec v_d$ en fonction de $\\vec E_0$, $e$, $\\tau$, et $m$."
       },
       {
        "label": "7.",
@@ -318,16 +317,16 @@
        "id": "p1-fig1",
        "caption": "Figure 1: Couplage par réflexion",
        "alt": "Diagramme original du couplage par réflexion, avec les trois milieux 3, 2 et 1, les axes x et z, tous vecteurs et les angles θ3 et θ3 prime.",
-       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2007-mp/p1-fig1.png",
-       "width": 605,
-       "height": 531,
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2007-mp/p1-fig1-v2.png",
+       "width": 705,
+       "height": 571,
        "source": {
         "page": 9,
         "pdfRect": [
-         226.44,
-         231.12,
-         371.39,
-         358.47
+         214.47,
+         227.74,
+         383.4,
+         364.36
         ],
         "dpi": 300
        }
@@ -353,16 +352,16 @@
        "id": "p1-fig2",
        "caption": "Figure 2: Couplage par diffraction",
        "alt": "Diagramme original du réseau métallique, période Λ, onde incidente E3 et k3, angles θ3 et θq, rayon diffracté et axes x et z complets.",
-       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2007-mp/p1-fig2.png",
-       "width": 605,
-       "height": 506,
+       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/x-ens-2007-mp/p1-fig2-v2.png",
+       "width": 632,
+       "height": 542,
        "source": {
         "page": 11,
         "pdfRect": [
-         226.44,
-         249.62,
-         371.39,
-         371.02
+         222.84,
+         246.24,
+         374.4,
+         376.11
         ],
         "dpi": 300
        }
@@ -404,7 +403,6 @@
    ],
    "solution": {
     "statement": "",
-    "figures": [],
     "incomplete": true,
     "incompleteReason": "Aucun corrigé ni barème n’est présent dans le livret original ou les fichiers associés de l’entrée du catalogue."
    },

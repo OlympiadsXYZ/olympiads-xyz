@@ -5,23 +5,31 @@ title: 'Задача 1. Constructing a theoretical model.'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/IZhO/2021/izho-2021-experiment-exp-eng.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-13T20:15:28.634Z'
-verifier: 'same-model'
+verifiedAt: '2026-10-02T17:02:48.955Z'
+verifier: 'mechanical'
 ---
 
-*XVII International Zhautykov Olimpiad/Experimental Competition — January 9, 2021 — COMPUTER EXPERIMENT: A mathematical pendulum or what angle can be considered rather small ... · At its core, physics is an experimental science and this is definitely its strength. However, without comprehending a large number of experimental facts, physics would degenerate into a description of a huge amount of phenomena and processes. This is how the physical laws and the corresponding models came to life in the remote past by ignoring insignificant features of the subject under consideration. In recent decades, rapid progress has been witnessed in such a field as computer modeling or, as it has become common to say, a computer experiment. The point is that the developed physical models can be directly implemented on a computer in the form of a computational process and the regularities of interest can be thoroughly investigated in their pure forms. In this competition, you are asked to carry out such a computer experiment for a well-known system of a mathematical pendulum. · A formula is well known for the period of oscillation of a mathematical pendulum of length $l$ subject to a uniform gravity field of the Earth, characterized by the acceleration of gravity $g$. However, this formula is only applicable for rather small deflection angles. The main question that you have to answer when doing this computational experiment is: *"What angular deflection can be considered small?"* · In the educational literature on laboratory experiments, you can find an indication that the maximum deflection angle should not exceed $1°$, $2°$, $5°$, etc. You must answer the above question on the basis of this computer experiment! Namely, you are asked to study the dependence of the oscillation period of a mathematical pendulum on its amplitude, which is the maximum angular deflection from the vertical. · The order of conducting and processing the results of a computer experiment does not differ much from the order of a real, full-scale experiment. Therefore, the parts of this problem directly correspond to the main stages of a real physical experiment. · 9 януари 2021 г.*
+*XVII International Zhautykov Olimpiad/Experimental Competition — January 9, 2021 — COMPUTER EXPERIMENT: A mathematical pendulum or what angle can be considered rather small ... · At its core, physics is an experimental science and this is definitely its strength. However, without comprehending a large number of experimental facts, physics would degenerate into a description of a huge amount of phenomena and processes. This is how the physical laws and the corresponding models came to life in the remote past by ignoring insignificant features of the subject under consideration. In recent decades, rapid progress has been witnessed in such a field as computer modeling or, as it has become common to say, a computer experiment. The point is that the developed physical models can be directly implemented on a computer in the form of a computational process and the regularities of interest can be thoroughly investigated in their pure forms. In this competition, you are asked to carry out such a computer experiment for a well-known system of a mathematical pendulum. · A formula is well known for the period of oscillation of a mathematical pendulum of length $l$ subject to a uniform gravity field of the Earth, characterized by the acceleration of gravity $g$. However, this formula is only applicable for rather small deflection angles. The main question that you have to answer when doing this computational experiment is: *"What angular deflection can be considered small?"* · In the educational literature on laboratory experiments, you can find an indication that the maximum deflection angle should not exceed $1°$, $2°$, $5°$, etc. You must answer the above question on the basis of this computer experiment! Namely, you are asked to study the dependence of the oscillation period of a mathematical pendulum on its amplitude, which is the maximum angular deflection from the vertical. · The order of conducting and processing the results of a computer experiment does not differ much from the order of a real, full-scale experiment. Therefore, the parts of this problem directly correspond to the main stages of a real physical experiment. · 9 януари 2021 г. · 1,5 т.*
 
 ## Условие
 
 Consider a mathematical pendulum, which is a small massive ball suspended on an inextensible thread of length $l$. The pendulum is subject to the gravity field with the free fall acceleration $g$. In the following neglect the air resistance completely.
 
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '24.6%', '--fig-max': '157px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2021-experiment-exp-eng/p1-fig1.png" alt="Diagram of a mathematical pendulum: a vertical dashed line, a thread of length $l$ deflected by angle $\varphi$ with amplitude angle $\varphi_0$ marked, a small ball on the arc, and velocity vector $\vec V$." width="492" height="579" loading="lazy" decoding="async" />
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '25.3%', '--fig-max': '162px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/izho-2021-experiment-exp-eng/p1-fig1-v2.png" alt="Diagram of a mathematical pendulum: a vertical dashed line, a thread of length $l$ deflected by angle $\varphi$ with amplitude angle $\varphi_0$ marked, a small ball on the arc, and velocity vector $\vec V$." width="507" height="579" loading="lazy" decoding="async" />
 </figure>
+
+**1.1** Write down a formula for the period $T$ of small oscillations of a mathematical pendulum. **[0,1 т.]**
 
 Assume that at the initial moment of time $t_0 = 0$ the angle of the thread deflection from the vertical is $\varphi_0$, and the initial velocity of the ball is equal to zero. The ball moves along an arc of a circle, therefore, its position is determined by the angle of the thread deflection from the vertical $\varphi$, and the rate of change of this angle in time is determined by the angular velocity $\omega = \dfrac{d\varphi}{dt}$.
 
+**1.2** Obtain an exact formula for the dependence of the angular velocity of the pendulum on the deflection angle $\omega(\varphi)$ for a given angular amplitude $\varphi_0$ and known values of $l$, $g$. **[0,4 т.]**
+
 The motion of the pendulum is symmetrical with respect to the vertical, therefore, to calculate the period of oscillation, it is sufficient to evaluate the time $t_1$ of its motion from the maximum to zero deflection.
+
+**1.3** Write down an exact expression for calculating the time $t_1$ from the known dependence of the angular velocity on the deflection angle $\omega(\varphi)$. **[0,3 т.]**
+
+**1.4** Express a period of oscillations $T$ in terms of time $t_1$. **[0,1 т.]**
 
 In a computer experiment, when performing calculations, real dimensional quantities are rarely used, since they can have very different orders of magnitude and are extremely inconvenient. Usually, all quantities are made dimensionless or reduced with the aid of some values characteristic for a given problem. For example, in our study, the characteristic time is the period of oscillations, so it is convenient to introduce the dimensionless time $\tau$, which is determined by the following formula:
 
@@ -29,15 +37,13 @@ $$
 \tau = t\sqrt{\frac{g}{l}}.
 $$
 
+**1.5** Write down a formula relating the angular velocity in dimensionless units $\tilde{\omega} = \dfrac{d\varphi}{d\tau}$ to the previously defined angular velocity $\omega$. **[0,2 т.]**
+
+**1.6** Determine a period $\tilde{T}$ of small oscillations of the mathematical pendulum in the dimensionless units of time. **[0,2 т.]**
+
+**1.7** Determine a dependence of the angular velocity $\tilde{\omega}$ on the deflection angle $\varphi$: $\tilde{\omega}(\varphi)$. **[0,2 т.]**
+
 **ATTENTION! In what follows, the introduced dimensionless quantities are used everywhere: time $\tau$, period $\tilde{T}$ and angular velocity $\tilde{\omega}$, which are respectively denoted as $t$, $T$ and $\omega$.**
-
-**1.1** Write down a formula for the period $T$ of small oscillations of a mathematical pendulum.
-
-**1.2** Obtain an exact formula for the dependence of the angular velocity of the pendulum on the deflection angle $\omega(\varphi)$ for a given angular amplitude $\varphi_0$ and known values of $l$, $g$.
-
-**1.3** Write down an exact expression for calculating the time $t_1$ from the known dependence of the angular velocity on the deflection angle $\omega(\varphi)$.
-
-**1.4** Express a period of oscillations $T$ in terms of time $t_1$.
 
 ## Отговори
 
@@ -47,6 +53,9 @@ $$
 - **1.2** $\omega(\varphi) = \sqrt{\frac{2g}{l}\,(\cos\varphi - \cos\varphi_0)}$
 - **1.3** $t_1 = \int_{0}^{\varphi_0}\frac{d\varphi}{\omega(\varphi)}$
 - **1.4** $T = 4t_1$
+- **1.5** $\tilde{\omega} = \sqrt{\frac{l}{g}}\,\omega$
+- **1.6** $\tilde{T} = 2\pi$
+- **1.7** $\tilde{\omega}(\varphi) = \sqrt{2(\cos\varphi - \cos\varphi_0)}$
 
 </Spoiler>
 
@@ -110,16 +119,6 @@ $$
 | 1.5 | Formula (7): $\tilde{\omega} = \sqrt{\dfrac{l}{g}}\,\omega$ | **0.2** | 0.2 |
 | 1.6 | Formula (8): $\tilde{T} = 2\pi$ | **0.2** | 0.2 |
 | 1.7 | Formula (9): $\tilde{\omega}(\varphi) = \sqrt{2(\cos\varphi - \cos\varphi_0)}$ | **0.2** | 0.2 |
-
-| | Content | Total for each part | Points |
-|---|---|---|---|
-| | **2. Designing an experimental setup, planning an experiment.** | **1.5** | |
-| 2.1 | Formula (10): $\Delta\varphi = \dfrac{\varphi_0}{N}$ | **0.1** | 0.1 |
-| 2.2 | Formula (11): $\varphi_k = \varphi_{k-1} - \Delta\varphi$ | **0.1** | 0.1 |
-| 2.3 | Formula (12): $\omega_k = \sqrt{\cos\varphi_k - \cos\varphi_0}$ | **0.1** | 0.1 |
-| 2.4 | Uniformly accelerated motion — Main idea $\langle\omega\rangle = \dfrac{1}{2}(\omega_{k-1} + \omega_k)$ — Formula (13): $\Delta t_k = \dfrac{2\Delta\varphi}{\omega_{k-1} + \omega_k}$ | **1.0** | 0.5, 0.5 |
-| 2.5 | Formula (14): $t_k = t_{k-1} + \Delta t_k$ | **0.1** | 0.1 |
-| 2.6 | Formula (15): $T_N = 4t_N$ | **0.1** | 0.1 |
 
 
 </Spoiler>
