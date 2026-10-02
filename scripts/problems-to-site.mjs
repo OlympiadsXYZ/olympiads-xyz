@@ -1069,6 +1069,9 @@ function documentNoteLines(paper, position) {
       )
       // a document note can be printed text ("assemble your equipment"): only the unmistakable run notes go
       .filter(n => !PIPELINE_LEAK.test(n.statement || ''))
+      // and the pipeline sentences inside an editorial note (withoutPipelineSentences)
+      .map(n => ({ ...n, statement: withoutPipelineSentences(n.statement) }))
+      .filter(n => String(n.statement || '').trim())
       .flatMap(note => [
         `<details>`,
         `<summary>${mdText(noteTitle(note.title))}</summary>`,
@@ -1095,7 +1098,22 @@ const NO_OFFICIAL_SOLUTION =
   /\bno official solution|official solutions? (?:(?:document|file)s? )?(?:(?:is|are|was|were) )?not (?:supplied|provided|available|present|included)|не съдържа решението|няма официално решение/i;
 export const NO_OFFICIAL_SOLUTION_LINE =
   'Официално решение не е налично в източника.';
+// A sentence about the reading pipeline itself — which physical pages of a compilation are read so far, the parent
+// compilation's holds/history, "source-scoped" children, a pointer to tx.notes — is never for visitors; the sentences
+// around it (the edition's attribution, its teaching terms, what the source lacks) stay. The IChO compilation children
+// (icho-1968…1976 caveats) carried „Only physical1–64 has been source-read;65–408 remains unread and the parent
+// compilation/holds/history is preserved.“
+export const PIPELINE_SENTENCE =
+  /\bphysical\d|\bnext-ordinal\b|\bparent (?:compilation|partial)\b|holds\/history|\bsource-scoped\b|\bsource-read\b|\bremains unread\b|\boriginal reader\b|\binherited common|\bsourceSpans\b|\d+\s?numbered requests\b|\bauthenticated folder\b|\bnative pages\d|\bpersonally read\b/i;
+export function withoutPipelineSentences(t) {
+  if (t == null) return t;
+  const text = String(t).replace(/\s*[—–-]\s*виж tx\.notes/gi, '');
+  if (!PIPELINE_SENTENCE.test(text)) return text;
+  // split after sentence ends (also ";" glued to the next sentence); pieces that are not pipeline talk are kept verbatim
+  return text.split(/(?<=[.!?;])(?=\s|\d|[A-ZА-Я])/u).filter(s => !PIPELINE_SENTENCE.test(s)).join('').trim();
+}
 export function visitorNoteText(t) {
+  t = withoutPipelineSentences(t);
   if (!t || !String(t).trim()) return null;
   if (!PIPELINE_NOTE.test(t)) return String(t);
   return NO_OFFICIAL_SOLUTION.test(t) || NO_ARCHIVE_SOLUTION.test(t)

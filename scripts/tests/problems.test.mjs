@@ -461,6 +461,19 @@ test('a placeholder whose description holds brackets shows its figure in place (
   assert.ok(mdx.indexOf(url('p1-fig2')) > mdx.indexOf('Determine the reaction order') && mdx.indexOf(url('p1-fig2')) < mdx.indexOf('End.'));
 });
 
+test('pipeline sentences leave a visitor note; the attribution and the source facts around them stay', async () => {
+  const { withoutPipelineSentences, visitorNoteText } = await import('../problems-to-site.mjs');
+  const caveat = 'This is the attributed 2008 Volume 1 compilation edited by Anton Sirota. Reproduced for teaching with the Volume 1 attribution; Not for sale. Missing practical keys are not invented. Only physical1–64 has been source-read;65–408 remains unread and the parent compilation/holds/history is preserved.';
+  const shown = withoutPipelineSentences(caveat);
+  assert.match(shown, /edited by Anton Sirota/);
+  assert.match(shown, /Not for sale\./);
+  assert.match(shown, /Missing practical keys are not invented\.$/);
+  assert.doesNotMatch(shown, /physical\d|remains unread|holds\/history/);
+  assert.equal(visitorNoteText('The original reader has completed physical1–119; this child uses only its scope plus inherited common1–5.'), null);
+  assert.equal(withoutPipelineSentences('някои формули и цифри са трудни за четене — виж tx.notes.'), 'някои формули и цифри са трудни за четене.');
+  for (const t of ['A plain note. Value 1.3 m.', 'Physical constants are given on the formula sheet.', 'If this child jumps, find the speed.']) assert.equal(withoutPipelineSentences(t), t);
+});
+
 test('a lyrics note links to its page of the original PDF (problems or solutions document)', async () => {
   const { linkLyrics } = await import('../problems-to-site.mjs');
   const paper = { subject: 'astronomy', source: { archiveKey: 'Астрономия/Състезания/Samara/2018/Tasks.pdf' }, solutionSource: { archiveKey: 'Астрономия/Състезания/Samara/2018/Decisions.pdf' } };
