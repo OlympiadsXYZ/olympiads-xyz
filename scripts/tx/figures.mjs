@@ -77,6 +77,19 @@ function unplacedGraphics(candidate, manifest, paperId) {
   const key = n => { const s = String(n ?? '').trim().toLowerCase(); const roman = { i: 1, ii: 2, iii: 3, iv: 4, v: 5, vi: 6, vii: 7, viii: 8, ix: 9, x: 10 }; return String(roman[s] || Number(s) || s); };
   const byNumber = new Map(problems.map((p, i) => [key(p.number), i]));
   const figs = allFigures(candidate);
+  // the box a figure covers: its tx box, or for a finished figure passed through unchanged (url + source.pdfRect, no
+  // tx) its published rectangle in permille (nof-2024-iii-11-12-exp2: two restored figure objects otherwise left their
+  // own drawings "uncovered"); source.document is omitted for the problems document
+  const boxOf = fig => {
+    if (fig.tx?.bbox) return { document: fig.tx.document, page: fig.tx.page, bbox: fig.tx.bbox };
+    const s = fig.url && !fig.tx ? fig.source : null;
+    const doc = s?.document || 'problems';
+    const size = s?.pdfRect && manifest.documents[doc]?.pageSizes?.[s.page - 1];
+    if (!size) return null;
+    const [x0, y0, x1, y1] = s.pdfRect;
+    return { document: doc, page: s.page, bbox: [x0 / size.widthPt, y0 / size.heightPt, x1 / size.widthPt, y1 / size.heightPt].map(v => v * 1000) };
+  };
+  const boxes = figs.map(f => ({ ...f, box: boxOf(f.fig) })).filter(f => f.box);
   const notFigures = candidate.tx?.notFigures || [];
   for (const doc of Object.keys(manifest.documents)) {
     const regs = regionsFor(paperId, manifest, doc);
@@ -100,11 +113,11 @@ function unplacedGraphics(candidate, manifest, paperId) {
           if (g.bbox[3] <= 100 || g.bbox[1] >= 930) continue; // header/footer band: logos, stamps, page numbers
           if (furniture(g)) continue;
           // covered when a box holds most of the graphic, or when a box sits inside the region (the region is a frame around a figure and its text)
-          if (figs.some(f => f.fig.tx?.document === doc && f.fig.tx?.page === pg.page && f.fig.tx?.bbox && (coverFrac(g.core, f.fig.tx.bbox) >= 0.5 || coverFrac(f.fig.tx.bbox, g.bbox) >= 0.8))) continue;
+          if (boxes.some(f => f.box.document === doc && f.box.page === pg.page && (coverFrac(g.core, f.box.bbox) >= 0.5 || coverFrac(f.box.bbox, g.bbox) >= 0.8))) continue;
           if (notFigures.some(x => x.document === doc && x.page === pg.page && iou(x.bbox, g.bbox) >= 0.5)) continue;
           let idx = heading ? byNumber.get(key(heading.number)) : undefined;
           if (idx === undefined) { const spanning = problems.map((p, i) => (p.tx?.sourceSpans || []).some(s => s.document === doc && s.page === pg.page) ? i : -1).filter(i => i >= 0); if (spanning.length === 1) idx = spanning[0]; }
-          if (idx === undefined) { const withFig = [...new Set(figs.filter(f => f.fig.tx?.document === doc && f.fig.tx?.page === pg.page).map(f => problems.indexOf(f.problem)))]; if (withFig.length === 1) idx = withFig[0]; }
+          if (idx === undefined) { const withFig = [...new Set(boxes.filter(f => f.box.document === doc && f.box.page === pg.page).map(f => problems.indexOf(f.problem)))]; if (withFig.length === 1) idx = withFig[0]; }
           const solutionSide = doc === 'solutions';
           const parentOk = idx !== undefined && (!solutionSide || (problems[idx].solution && typeof problems[idx].solution === 'object'));
           const path = parentOk ? `/problems/${idx}/${solutionSide ? 'solution/' : ''}figures` : null;
