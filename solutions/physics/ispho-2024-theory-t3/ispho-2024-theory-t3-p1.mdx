@@ -5,25 +5,11 @@ title: 'Задача 3. T3. Hydraulic jump'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/ISPhO/2024/ispho-2024-theory-t3.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-17T17:12:17.686Z'
-verifier: 'crop-audit'
+verifiedAt: '2026-10-03T04:22:34.888Z'
+verifier: 'mechanical'
 ---
 
 *ISPhO — July, 2024 — T3. Hydraulic jump*
-
-<details>
-<summary>Бележка</summary>
-
-The entire problem considers the flow of water, which can be considered an incompressible fluid with a density $\rho = 1.0 \cdot 10^3\ \mathrm{kg/m^3}$. The acceleration of free fall is $g = 9.8\ \mathrm{m/s^2}$.
-
-</details>
-
-<details>
-<summary>Бележка</summary>
-
-It should be noted that throughout the entirety of the problem, the atmospheric pressure does not affect the fluid flow. Consequently, its contribution to the Bernoulli equation and to the expressions for forces can be ignored.
-
-</details>
 
 ## Условие
 
@@ -33,8 +19,6 @@ A hydraulic jump is a phenomenon in which the rapid flow of fluid slows down abr
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t3/p1-fig1.png" alt="Photograph of a circular hydraulic jump formed by a vertical water jet striking a flat horizontal surface, with two rods dipping into the thin fast-flowing layer near the jump." width="1802" height="1302" loading="lazy" decoding="async" />
 <figcaption>Hydraulic jump around a fluid jet falling on a flat surface. From the work of G. Jannes, R. Piquet, P. Maïssa, C. Mathis, and G. Rousseaux Phys. Rev. E 83, 056312</figcaption>
 </figure>
-
-Hydraulic jump around a fluid jet falling on a flat surface. From the work of G. Jannes, R. Piquet, P. Maïssa, C. Mathis, and G. Rousseaux Phys. Rev. E 83, 056312
 
 The entire problem considers the flow of water, which can be considered an incompressible fluid with a density $\rho = 1.0 \cdot 10^3\ \mathrm{kg/m^3}$. The acceleration of free fall is $g = 9.8\ \mathrm{m/s^2}$.
 
@@ -62,9 +46,13 @@ It should be noted that throughout the entirety of the problem, the atmospheric 
 
 **A3** Determine the fluid velocity $v_c$ and Froude number $Fr_c$ in the case of critical depth. The answer should be expressed in terms of $Q$, $b$, $g$.
 
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '25.2%', '--fig-max': '161px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t3/p1-fig2.png" alt="Diagram of the canal (Part A, before A4): water of depth d1 flows with velocity v1 over a flat bottom; the bottom then rises by a step of height H (dashed line marks the original bottom level) and the water depth above the step is d2 with velocity v2; the free surface drops down over the step." width="504" height="345" loading="lazy" decoding="async" />
+</figure>
+
 **A4** Suppose now that at some point the bottom of the canal rises to a height $H$ and its width remains unchanged. Let $d_1$ and $v_1$ be the water depth and flow velocity before the change of the depth, $d_2$, $v_2$ – after the change.
 
-Write two equations following from the laws of conservation of mass and energy of water that relate these quantities. These equations may also include $g$ and $H$. It is assumed that at all points of the flow the flow is laminar and Bernoulli's law is fulfilled.
+Write two equations following from the laws of conservation of mass and energy of water that relate these quantities. These equations may also include $g$ and $H$. It is assumed that at all points of the flow the flow is laminar and Bernoulli's law is fulfilled
 
 **A5** The equations written in the previous task can not be solved exactly. Therefore, we will assume that the height $H$ is small. Consequently, $\Delta v = v_2 - v_1 \ll v_1$ and $\Delta d = d_2 - d_1 \ll d_1$ are small changes in velocity and depth of flow. In all calculations, we limit ourselves to first-order contributions of $H$, $\Delta v$, and $\Delta d$. Determine the values of the ratio $\Delta v/v_1$ and the ratio $\Delta d/d_1$.
 
@@ -75,6 +63,10 @@ Write two equations following from the laws of conservation of mass and energy o
 1. an initial part of fast flow of small depth, where velocity and depth are $v_1$ and $d_1$;
 2. a transition part, the flow in which is highly turbulent and the depth changes and energy losses occur, so the Bernoulli equation cannot be used;
 3. a part of slow flow of constant velocity $v_2$ and depth $d_2$.
+
+<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31%', '--fig-max': '199px'}}>
+<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t3/p1-fig3.png" alt="Diagram of the hydraulic jump (Part B): canal divided by two vertical dashed lines into regions 1, 2, 3; in region 1 the flow has depth d1 and velocity v1, in region 3 depth d2 and velocity v2; in region 2 the surface rises along a dashed line." width="621" height="457" loading="lazy" decoding="async" />
+</figure>
 
 To describe the hydrodynamic jump, let us select the volume of water in the canal in such a way that the left boundary of the selected region lies in part 1 and the right boundary lies in part 3. The law of conservation of mass and the law of momentum change can be applied to the selected volume.
 
@@ -186,7 +178,7 @@ $$
 From Bernoulli's equation for a fluid that flows on a surface
 
 $$
-\frac{v_1^2}{2} + gd_1 = \frac{v_2^2}{2} + g(d_2+H).
+\frac{v_1^2}{2}2 + gd_1 = \frac{v_2^2}{2} + g(d_2+H).
 $$
 
 Here it is taken into account that the height of the liquid surface in the second part of the canal is $d_2+H$. As was shown in task A1, the same values would be obtained at any depth.
@@ -212,10 +204,6 @@ Expanding to first order by $\Delta v$ and reducing the same summands, we obtain
 $$
 v_1\Delta v - \frac{gd_1}{v_1}\Delta v + gH = 0,
 $$
-
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '25.2%', '--fig-max': '161px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t3/p1-sol-fig1.png" alt="Diagram used in the derivation for Part A showing a canal with water flowing over a raised bottom of height H, depths d1 and d2, velocities v1, v2." width="504" height="345" loading="lazy" decoding="async" />
-</figure>
 
 whence
 
@@ -264,10 +252,6 @@ v_1d_1 = v_2d_2.
 $$
 
 In time $dt$, a mass of fluid $dm = \rho Q\,dt = \rho b d_1v_1\,dt = \rho b d_2v_2\,dt$ passes through any cross section of the flow. Then the momentum of the fluid entering the area
-
-<figure className="problem-figure problem-figure--sized" style={{'--fig-w': '31%', '--fig-max': '199px'}}>
-<img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2024-theory-t3/p1-sol-fig2.png" alt="Diagram used in the derivation for Part B showing three regions 1, 2, 3 of the canal with the transition region marked by dashed lines, depths d1, d2, velocities v1, v2." width="621" height="457" loading="lazy" decoding="async" />
-</figure>
 
 $$
 dp_1 = dm\,v_1 = \rho b d_1v_1^2\,dt,
@@ -362,7 +346,7 @@ $$
 Then the velocity after the jump
 
 $$
-v_2^2 = v_1^2\frac{d_1^2}{d_2^2} = \frac{gd_1}{2d_2}(d_1+d_2).
+v_2^2 = v_2^2\frac{d_2^2}{d_1^2} = \frac{gd_1}{2d_2}(d_1+d_2).
 $$
 
 Substituting these results into the energy change, we obtain

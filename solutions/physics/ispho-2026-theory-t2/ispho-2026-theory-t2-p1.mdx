@@ -5,13 +5,32 @@ title: 'Задача 2. Air shower'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/ISPhO/2026/ispho-2026-theory-t2.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-17T17:10:35.435Z'
-verifier: 'crop-audit'
+verifiedAt: '2026-10-03T04:21:13.273Z'
+verifier: 'mechanical'
 ---
 
 *ISPhO Theory Q2-1 — Air shower · 10 т.*
 
 ## Условие
+
+<nav className="problem-sections-toc" aria-label="Части на задачата">
+
+**В тази задача**
+
+- [Part A. Electromagnetic shower (2.0 points)](#a)
+- [Part B. Hadronic shower (2.0 points).](#b)
+- [Part C. Air shower (3.0 points).](#c)
+- [Part D. Data Analysis (3.0 points).](#d)
+
+</nav>
+
+
+
+<ProblemSection id="a">
+
+### Part A. Electromagnetic shower (2.0 points) (2 т.)
+
+**Bremsstrahlung**
 
 When passing through matter, charged particles interact with the atoms and molecules of the material and, as a result, lose their kinetic energy. There are various mechanisms of energy loss: ionization of matter, bremsstrahlung, production of electron-positron pairs, and others. The fraction of energy lost through each of these mechanisms depends on the parameters of the particle and its motion — its kinetic energy, the particle mass, and its charge. In this problem, we will consider ultrarelativistic ($\beta \simeq 1$, $E_{\mathrm{kin}} \gg m_e c^2$) electrons (as well as *positrons* — positively charged electrons), for which the main mechanism of energy loss is bremsstrahlung.
 
@@ -51,10 +70,34 @@ The interaction of photons with matter is also simplified in this model. After t
 
 The development of an electromagnetic shower initiated by a single high-energy photon in matter is shown schematically in Fig. 1a. At the 0th step, there is one high-energy photon. After traversing one splitting length, the photon converts into an electron-positron pair. At the next step, after traversing another splitting length, the electron and positron each emit one photon, which in turn initiate their own showers. Thus, the shower continues to grow until the energies of the particles fall below the critical energy, at which point the development of the electromagnetic shower terminates.
 
+**Problem**
+
+A photon with energy $E_\gamma = 10\ \mathrm{GeV} = 10 \cdot 10^9\ \mathrm{eV}$ enters air of constant density $\rho_0 = 1.3\ \mathrm{kg/m^3}$. The electron charge is $q_e = -1.6 \cdot 10^{-19}\ \mathrm{C}$.
+
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '91.8%', '--fig-max': '588px'}}>
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-theory-t2/p1-fig1.png" alt="Two schematic tree diagrams. (a) Electromagnetic shower: photon gamma at n=0 splits into e+ and e- at n=1, each emitting a photon (wavy line) which splits again at n=2, n=3, forming a symmetric binary tree of alternating solid (electron/positron) and wavy (photon) lines. (b) Hadronic shower: proton p at n=0 splits into 5 pi+ + 4 pi- and 6 pi0 -> 12 gamma at n=1; the charged pions continue to n=2 splitting again into 6 pi0 -> 12 gamma and further charged pions, shown as fan of lines with wavy photon lines labeled 12 gamma." width="1836" height="822" loading="lazy" decoding="async" />
 <figcaption>Fig. 1. Schematic illustration of shower development in air.</figcaption>
 </figure>
+
+**A.0** Using the given value of the radiation length of air $X_0$, calculate the splitting length $d_e$. Express your answer in g/cm² and round it to one decimal place. **[0,2 т.]**
+
+**Note**: We will call the number of shower generations $n$ the quantity , which denotes how many successive splittings have occurred since the beginning of the shower development.
+
+**A.1** Determine the number of shower generations $n_{\max}$ after which the energy of the particles in the shower becomes less than the critical energy. **[0,4 т.]**
+
+**A.2** Determine the geometric distance $l_e$ traveled by the shower (in m) in air by the time the maximum number of particles is reached. **[0,4 т.]**
+
+**A.3** Determine the maximum number of particles $N_{\max}$ in the shower. **[0,2 т.]**
+
+**A.4** Determine the total charge $Q_e$ (in C) carried by the electrons in the shower by the time its development ceases. **[0,8 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="b">
+
+### Part B. Hadronic shower (2.0 points). (2 т.)
+
+**Theory**
 
 When charged hadrons (protons $p$ or pions $\pi^{\pm}$) pass through matter, the situation becomes somewhat more complicated. In addition to electromagnetic interactions, hadrons also undergo inelastic interactions with the nuclei of the medium via the **strong interaction**. An inelastic interaction means that new particles are produced in the interaction, carrying away part of the energy. For example, the interaction of a proton $p$ with a nucleus $N$ can be represented schematically as
 
@@ -74,11 +117,33 @@ $$
 
 Thus, when charged hadrons pass through air, a hadronic shower develops. It consists of an electromagnetic component (neutral pions decay into photons and initiate electromagnetic shower) and a hadronic component (charged pions generate further hadronic showers). The development of a hadronic shower initiated by a single high-energy proton in matter is shown schematically in Fig. 1b. A proton enters the medium and, after it travels one hadronic splitting length $d_h$, transforms into five $\pi^+$, four $\pi^-$, and six $\pi^0$ mesons. Each neutral pion then decays into two photons $\gamma$, which initiate electromagnetic showers, while the charged pions continue propagating until, after traveling another hadronic splitting length $d_h$, they generate the next generation of the hadronic shower. In this process, a $\pi^+$ produces five $\pi^+$, four $\pi^-$, and six $\pi^0$ mesons (just like the proton), whereas a $\pi^-$ produces four $\pi^+$, five $\pi^-$, and six $\pi^0$ mesons. This process continues as long as the particles have sufficient energy, that is, until their energies fall below the corresponding critical values.
 
+**Problem**
+
+In a collider experiment, a leak occurred, and a proton with energy $E_p = 7\ \mathrm{TeV} = 7 \cdot 10^{12}\ \mathrm{eV}$ entered the atmosphere filled with air of density $\rho_0 = 1.3\ \mathrm{kg/m^3}$.
+
+**B.1** Determine the maximum number of generations of the hadronic component of the shower $n_{\mathrm{hadr}}^{\max}$. **[0,4 т.]**
+
+**B.2** Determine the maximum number of generations of the entire shower $n_{\mathrm{EM}}^{\max}$, taking into account the electromagnetic component. **[1 т.]**
+
+**B.3** Determine the fraction of the shower energy carried away by muons and neutrinos $\beta_{\mathrm{miss}}$. Round your answer to two decimal places. **[0,6 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="c">
+
+### Part C. Air shower (3.0 points). (3 т.)
+
+A cosmic-ray proton of ultra-high energy $E = 100\ \mathrm{TeV}$ enters the Earth's atmosphere vertically from above and initiates a hadronic shower. Assume the atmosphere to be isothermal, with an exponential density profile:
+
 $$
-\rho(h) = \rho_0 e^{-h/H}, \qquad (7)
+\rho(h) = \rho_0 e^{-\frac{h}{H}}, \qquad (7)
 $$
 
 where $h$ is the altitude (in meters) above the Earth's surface, $\rho_0 = 1.3\ \mathrm{kg/m^3}$ is the air density at sea level, and $H = 8\ \mathrm{km}$ is the atmospheric scale height.
+
+**C.1** Determine the altitude $h_{\mathrm{stop}}$ at which the shower development ceases. Express your answer in kilometers and round it to one decimal place. **[1,3 т.]**
+
+**C.2** Determine what fraction of the shower energy, $\beta_{\mathrm{EM}}$, ends up in the electromagnetic component. Round your answer to two decimal places. **[0,5 т.]**
 
 After the shower development ceases, its radius can be estimated as
 
@@ -96,19 +161,33 @@ $$
 
 where $x_i$ and $y_i$ are the geometric Cartesian coordinates of the shower particles relative to its center.
 
+**C.3** Estimate the shower radius $R_{\mathrm{stop}}$ at the altitude $h_{\mathrm{stop}}$. Express your answer in meters and round it to the nearest integer. **[0,2 т.]**
+
 Assume that the shower radius $R$ decreases inversely proportional to the air density as it propagates downward without energy losses:
 
 $$
 R \propto \frac{1}{\rho}. \qquad (9)
 $$
 
+**C.4** Estimate the area of the shower $S$ at the Earth's surface. Express your answer in m² and keep 2 significant figures. **[0,2 т.]**
+
 Assume that the particles propagate at the speed of light $c = 3 \cdot 10^8\ \mathrm{m/s}$, and that the thickness of the shower front is determined by the difference in path lengths of particles diverging at an angle $\theta \approx R_{\mathrm{stop}}/h_{\mathrm{stop}}$.
+
+**C.5** Estimate the characteristic signal duration $\Delta t$ at a detector located on the Earth's surface at the center of the shower. Express your answer in ns and round it to one decimal place. **[0,8 т.]**
+
+</ProblemSection>
+
+<ProblemSection id="d">
+
+### Part D. Data Analysis (3.0 points). (3 т.)
 
 To detect particles in high-energy physics, various types of detectors are used. In this problem, we consider a scintillation detector as an example. When a particle passes through such a detector, it produces optical photons (i.e., visible light), which are then detected by photomultiplier tubes (PMTs). In this system, a particle generates a digital signal in the detector that is proportional to its energy. One can introduce a proportionality coefficient $\kappa$. Neglecting detector noise, a particle with energy $E$ striking the scintillation detector is registered with an amplitude $A$:
 
 $$
 A = \kappa E.
 $$
+
+**Problem**
 
 A photon $\gamma$ with initial energy $E_0$ enters the Earth's atmosphere vertically downward, toward the center of the Earth, and initiates an electromagnetic shower. A highly granular scintillation detector is installed on the ground. This means that the detector consists of many cells, each of which is a system composed of a scintillator and a PMT. The arrival coordinate of a particle is determined by which detector cell was triggered, while the signal amplitude is obtained from the PMT.
 
@@ -123,55 +202,23 @@ $y_{\mathrm{cm}}$ — coordinate of the triggered detector along the $y$-axis (i
 Assume the atmosphere to be isothermal, with an exponential density profile as a function of altitude:
 
 $$
-\rho(h) = \rho_{\mathrm{atm}} e^{-h/H}, \qquad (10)
+\rho(h) = \rho_{\mathrm{atm}} e^{-\frac{h}{H}}, \qquad (10)
 $$
 
 where $\rho_{\mathrm{atm}}$ is the air density at the Earth's surface and $H$ is the atmospheric scale height.
-
-**A.0** Using the given value of the radiation length of air $X_0$, calculate the splitting length $d_e$. Express your answer in g/cm² and round it to one decimal place. **[0,2 т.]**
-
-**A.1** Determine the number of shower generations $n_{\max}$ after which the energy of the particles in the shower becomes less than the critical energy.
-
-**Note**: We will call the number of shower generations $n$ the quantity, which denotes how many successive splittings have occurred since the beginning of the shower development.
-
-A photon with energy $E_\gamma = 10\ \mathrm{GeV} = 10 \cdot 10^9\ \mathrm{eV}$ enters air of constant density $\rho_0 = 1.3\ \mathrm{kg/m^3}$. The electron charge is $q_e = -1.6 \cdot 10^{-19}\ \mathrm{C}$. **[0,4 т.]**
-
-**A.2** Determine the geometric distance $l_e$ traveled by the shower (in m) in air by the time the maximum number of particles is reached. **[0,4 т.]**
-
-**A.3** Determine the maximum number of particles $N_{\max}$ in the shower. **[0,2 т.]**
-
-**A.4** Determine the total charge $Q_e$ (in C) carried by the electrons in the shower by the time its development ceases. **[0,8 т.]**
-
-**B.1** In a collider experiment, a leak occurred, and a proton with energy $E_p = 7\ \mathrm{TeV} = 7 \cdot 10^{12}\ \mathrm{eV}$ entered the atmosphere filled with air of density $\rho_0 = 1.3\ \mathrm{kg/m^3}$.
-
-Determine the maximum number of generations of the hadronic component of the shower $n_{\mathrm{hadr}}^{\max}$. **[0,4 т.]**
-
-**B.2** Determine the maximum number of generations of the entire shower $n_{\mathrm{EM}}^{\max}$, taking into account the electromagnetic component. **[1 т.]**
-
-**B.3** Determine the fraction of the shower energy carried away by muons and neutrinos $\beta_{\mathrm{miss}}$. Round your answer to two decimal places. **[0,6 т.]**
-
-**C.1** A cosmic-ray proton of ultra-high energy $E = 100\ \mathrm{TeV}$ enters the Earth's atmosphere vertically from above and initiates a hadronic shower. Assume the atmosphere to be isothermal, with an exponential density profile.
-
-Determine the altitude $h_{\mathrm{stop}}$ at which the shower development ceases. Express your answer in kilometers and round it to one decimal place. **[1,3 т.]**
-
-**C.2** Determine what fraction of the shower energy, $\beta_{\mathrm{EM}}$, ends up in the electromagnetic component. Round your answer to two decimal places. **[0,5 т.]**
-
-**C.3** Estimate the shower radius $R_{\mathrm{stop}}$ at the altitude $h_{\mathrm{stop}}$. Express your answer in meters and round it to the nearest integer. **[0,2 т.]**
-
-**C.4** Estimate the area of the shower $S$ at the Earth's surface. Express your answer in m² and keep 2 significant figures. **[0,2 т.]**
-
-**C.5** Estimate the characteristic signal duration $\Delta t$ at a detector located on the Earth's surface at the center of the shower. Express your answer in ns and round it to one decimal place. **[0,8 т.]**
-
-**D.1** Determine the coefficient $\kappa$ of the detector at the Earth's surface. **[1 т.]**
-
-**D.2** Determine the energy of the initial photon $E_0$. **[0,5 т.]**
-
-**D.3** Calculate the atmospheric density at the Earth's surface $\rho_{\mathrm{atm}}$. **[1,5 т.]**
 
 <figure className="problem-figure problem-figure--sized" style={{'--fig-w': '81.9%', '--fig-max': '524px'}}>
 <img src="https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ispho-2026-theory-t2/p1-fig2-v2.png" alt="2D color histogram (viridis colormap) titled 'Average Signal (a.u.)' with X (m) and Y (m) axes ranging roughly from -220 to 220, showing a roughly circular cluster of colored cells centered near origin with a few bright yellow-green outlier cells around (100, -80) and (120, -30); colorbar on right scaled 1e8 from 0 to about 1.3." width="1638" height="1422" loading="lazy" decoding="async" />
 <figcaption>Fig. 2. Example of the 2D histogram of the detector signal at the Earth's surface.</figcaption>
 </figure>
+
+**D.1** Determine the coefficient $\kappa$ of the detector at the Earth's surface. **[1 т.]**
+
+**D.2** Determine the energy of the initial photon $E_0$. **[0,5 т.]**
+
+**D.3** Calculate the atmospheric density at the Earth's surface $\rho_{\mathrm{atm}}$. **[1,5 т.]**
+
+</ProblemSection>
 
 ## Решение
 
