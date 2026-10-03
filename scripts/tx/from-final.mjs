@@ -24,9 +24,15 @@ const report = { figures: 0, converted: 0, unplaced: [], spans: 0 };
 for (const { fig, path: p } of allFigures(data)) {
   report.figures++;
   const s = fig.source;
+  // A figure with no source.document: figures.mjs omits it for the problems document, but the pre-pipeline publisher
+  // (2026-09-05, e.g. nao-2001-iii-11-12) also omitted it for solution figures cropped from the solutions document. So
   // a solution figure is on the solutions document, unless the paper has none (solutions printed in the problems
-  // file): it then comes from the problems document (the box was dropped, and agents rebuilt it from pdfRect by hand)
-  const doc = s?.document || (/\/solution\//.test(p) && manifest.documents.solutions ? 'solutions' : 'problems');
+  // file) or its problem's sourceSpans put that page in the problems document only (nof-2024-iii-11-12-exp2: the
+  // experimental solution is printed in the problems file while an unrelated theory key is the solutions document).
+  const pi = Number((p.match(/^\/problems\/(\d+)\//) || [])[1]);
+  const spans = Number.isInteger(pi) ? data.problems[pi]?.sourceSpans || [] : [];
+  const spanned = d => spans.some(x => (x.document || 'problems') === d && x.page === s?.page);
+  const doc = s?.document || (/\/solution\//.test(p) && manifest.documents.solutions && !(spanned('problems') && !spanned('solutions')) ? 'solutions' : 'problems');
   const size = manifest.documents[doc]?.pageSizes?.[(s?.page || 0) - 1];
   if (!s?.pdfRect || !size) { report.unplaced.push({ id: fig.id, path: p, reason: !s?.pdfRect ? 'no source.pdfRect' : `no page ${s.page} in ${doc}`, dropped: !!args['drop-unplaced'] }); if (args['drop-unplaced']) { fig.__drop = true; continue; } }
   else {
