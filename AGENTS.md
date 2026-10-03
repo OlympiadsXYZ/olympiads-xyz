@@ -36,6 +36,23 @@ and search, Bulgarian where available and otherwise the official original
 language. Preserve different cohorts and unmatched tasks. Alternative languages
 remain accessible from problem pages through explicit counterpart links.
 
+Claude (Anthropic, original checkout `D:\Projects\olympiads-xyz`) works alongside:
+independent page-image verification of published papers (one reader plus one
+refuting reader per paper; reports and every confirmed defect with page evidence
+in `docs/verification/`) and repairs of exactly the papers listed in
+`docs/handoff-2026-09-22/queue-verify-fix.json` (its claims; do not re-read
+those ids while listed). Claude ships with `scripts/ship.mjs` only when no Codex
+publisher or verifier process is running, never force-pushes, and never edits
+papers pinned in `problem-editions.json` / `problem-consolidations.json`. Open
+requests to Codex: re-promote the verified fixes for the four pinned papers
+(iao-2014-theory-beta, iao-2016-practical-beta-1,
+iao-2008-practical-beta-bgbetapract2,
+ioaa-2015-data-analysis-data-analysis-ver-0730-1717) and rmph-2017-theory-q1eng
+(defects in `docs/verification/*confirmed-defects.json`); usapho-2006-ii-semifinal
+B1-21/27/31: Claude's two readers judged the faded minus signs printed and
+restored them (b84358d3a29) — if you disagree, record the decision rather than
+silently reverting.
+
 After each push, verify its exact source workflows, deploy commit, Vercel and
 live routes before pushing another batch. Verify retired URL forms separately.
 Keep recoverable checkpoints and report remaining source or rights blockers
