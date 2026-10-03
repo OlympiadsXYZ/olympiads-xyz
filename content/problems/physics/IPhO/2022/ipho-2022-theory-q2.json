@@ -36,23 +36,21 @@
    ]
   },
   "status": "review",
-  "caveat": "Solution incomplete in this window: Part D.2 continues past solutions page 6 (pages 7–9 of 9).",
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "opus-5-5",
-   "promptVersion": "v1",
-   "requestId": null,
-   "at": "2026-10-02",
+   "model": "gpt-6.1-sol",
+   "promptVersion": "source-native-v1",
+   "requestId": "ipho-2022-theory-q2-native24-original-single-pass-r1",
+   "at": "2026-10-03",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "6566f8eff10a54679574c2834ed1d1e9888fe4533a5b6d7f546d061fe53c0337",
     "solutions": "fdd0ff69b52ce6d8d5e936df4da89b53cfa4b73bc33405e62dfeb18e140a466f"
    },
-   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
-   "verifiedAt": "2026-10-02",
-   "notes": "[window 1] Една задача от най-високо ниво (James Webb Space Telescope), печатните подраздели Part A/B/C/D и A.1…D.5 са предадени като parts. Указанието в червено на стр. 2 („For remaining questions in this part assume the exposure time is τ = 10^4 s and the read out noise is a fixed σ_r = 14.“) е включено в statement на част B.3 (то важи за B.3 нататък). Точките на частите събират до 12, както е отпечатано в заглавието. Решенията не са видяни в този прозорец.\n[window 2] This window covers solutions pages 1–6 only; the problem statement lives in the separate problems document (IPhO_2022_Q2.pdf) and is transcribed by another window, hence statement = '[извън прозореца]'. The archive lists one top-level problem (T2 · James Webb Space Telescope, 10 pts) whose printed sub-tasks (Part A 1–3, Part B 1–4, Part C 1–3, Part D 1–2) are reproduced inside the solution text. The solution of Part D.2 is cut off at the bottom of solutions page 6 ('...through a volume V_2.'); the remaining text is on solutions pages 7–9 (other window). In Part C.2 Choice B the printed average-bounce formula reads N̄ ≈ (2π/π)∫₀¹ N(r) r dr = π/(8φ) ≈ 30 — transcribed as printed although the arithmetic of π/(8φ) with φ = 0.025 gives ≈ 15.7, not 30. In the numeric tables of Part C.3 the fifth-sheet column is headed T_2 (K) in the source; transcribed as printed. In Part B.4 the printed I = E/t / A uses E = 1.8e-21 J/s while the energy line above gives 1.9e-21 J; both kept verbatim. Marking-scheme tables are rendered as Markdown tables; the two solutions figures are proposed as crops (p1-sol-fig1 on solutions p.3, p1-sol-fig2 on solutions p.6).\n[window 3] Window covers solutions pages 7–9 only (page 6 was covered by the previous window, so its text — end of Part C.3 table and Part D question 1 — is not repeated here). This continuation belongs to problem 2 (James Webb Space Telescope, Part D: The Cryo-Cooler). Preserved source errors: 'contruction' (for 'construction') in the marking scheme on page 9; the line 'Upper bound for estimate set' is printed twice in the marking scheme on page 8; sum '0.5/0.6 pt' printed as such on page 7. Figure captions are absent in the source; alt texts are our descriptions. Bounding boxes are estimates in permille of the page.\nrepaired 2026-10-02 from the independent verification (docs/verification/2026-10-02-*) of the zai glm-5.3-flash transcription: restored the B.1–B.2 paragraph (\"The electrons are collected in a capacitor ...\") and the red B.2–B.3 instruction (tau = 10^4 s, sigma_r = 14) as statementAfter (problems p.2); C.2 Choice B formula restored to = 2 pi/(8 phi) ≈ 30 as printed (solutions p.5), so the earlier note that π/(8φ) does not give 30 no longer applies; C.3 marking range restored to 250K ≤ T1 ≤ 400K (solutions p.6); re-cut p1-sol-fig2 (solutions p.6 Gas Parcel/Porous Plug drawing), p2-sol-fig2 (solutions p.8 left, single green line) and p2-sol-fig3 (solutions p.8 right, purple lines); removed a period the print does not have after \"two ways to approach this\" (solutions p.4). The note in window 1 that the red instruction was in B.3 was wrong; it is now in parts[6].statementAfter."
+   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt source-native-v1)",
+   "verifiedAt": "2026-10-03"
   }
  },
  "problems": [
@@ -85,7 +83,7 @@
     {
      "id": "p1-fig2",
      "caption": "The graph shows how dark current varies with temperature. The units for dark current, e-/s should be thought of as counting a number of electrons per second.",
-     "alt": "Log-log plot of dark current $i_d$ (e-/s) from 10^-3 to 10^2 against 1/T (1/K) from 0.11 to 0.17; a straight descending line from about (0.117, 10^2) to (0.167, 10^-3).",
+     "alt": "Semilog plot of dark current $i_d$ (e-/s) from 10^-3 to 10^2 against 1/T (1/K) from 0.11 to 0.17; a straight descending line from about (0.117, 10^2) to (0.167, 10^-3).",
      "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p1-fig2-v3.png",
      "width": 1033,
      "height": 812,
@@ -122,16 +120,16 @@
      "id": "p1-fig4",
      "caption": "On the left is a simple model of two adjacent sheets 1 and 2 separated by a distance h. The sheets are not connected, and the perimeter is open to space. Assume the sheets are parallel. Thermal radiation can be exchanged between the sheets, and thermal radiation can escape through the perimeter gap. On the right, the perimeter gap has been shaded to help visualize.",
      "alt": "Two parallelogram sheets labeled 1 and 2 separated by gap h (left), and the same pair with the perimeter gap shaded gray (right).",
-     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/p1-fig4-v3.png",
+     "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ipho-2022-theory-q2/sol61-p1-fig4-full-h-native300-fb534e0466057057.png",
      "width": 1033,
-     "height": 1049,
+     "height": 1065,
      "source": {
       "page": 3,
       "pdfRect": [
        173.84,
        477.36,
        421.47,
-       729.09
+       732.8
       ],
       "dpi": 300
      }

@@ -703,7 +703,9 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["id"],
+            "required": [
+              "id"
+            ],
             "additionalProperties": false,
             "properties": {
               "id": {
@@ -712,8 +714,27 @@
               "sectionId": {
                 "type": "string",
                 "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "preservePlainRoute": {
+                "type": "boolean",
+                "const": true,
+                "description": "Keep the former plain URL on the native question section; its /solution form still opens the full solution view."
               }
-            }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "required": [
+                    "preservePlainRoute"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "sectionId"
+                  ]
+                }
+              }
+            ]
           },
           "description": "Former problem IDs redirected to this problem or an optional section; not separate problems."
         }

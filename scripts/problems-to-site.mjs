@@ -1110,7 +1110,11 @@ export function withoutPipelineSentences(t) {
   const text = String(t).replace(/\s*[—–-]\s*виж tx\.notes/gi, '');
   if (!PIPELINE_SENTENCE.test(text)) return text;
   // split after sentence ends (also ";" glued to the next sentence); pieces that are not pipeline talk are kept verbatim
-  return text.split(/(?<=[.!?;])(?=\s|\d|[A-ZА-Я])/u).filter(s => !PIPELINE_SENTENCE.test(s)).join('').trim();
+  return text
+    .split(/(?<=[.!?;])(?=\s|\d|[A-ZА-Я])/u)
+    .filter(s => !PIPELINE_SENTENCE.test(s))
+    .join('')
+    .trim();
 }
 export function visitorNoteText(t) {
   t = withoutPipelineSentences(t);
@@ -1791,13 +1795,20 @@ export function problemAliases(problem, routes, publishedIds = new Set()) {
     ) {
       throw new Error(`Invalid alias ${alias.id} on ${problem.id}`);
     }
+    if (alias.preservePlainRoute === true && alias.sectionId == null) {
+      throw new Error(
+        `Plain native-section alias requires sectionId: ${alias.id}`
+      );
+    }
     const to = `${target}/solution${
       alias.sectionId == null ? '' : `#${alias.sectionId}`
     }`;
+    const plain =
+      alias.preservePlainRoute === true ? `${target}#${alias.sectionId}` : to;
     for (const from of new Set(
       [routes[alias.id], `/problems/${alias.id}`].filter(Boolean)
     )) {
-      aliases[from] = to;
+      aliases[from] = plain;
       aliases[`${from}/solution`] = to;
     }
   }
@@ -1817,6 +1828,9 @@ function sectionTexts(sections) {
     s.statementAfterParts,
     ...(s.parts || []).flatMap(p => [p.statement, p.statementAfter]),
   ]);
+}
+export function displayPartLabel(label) {
+  return label == null ? '' : label;
 }
 function labelledPartText(body, prefix, suffix) {
   const opensBlock = /^\s*(?:\||#{1,6}[ \t]|<figure|<div)/.test(body);
@@ -1857,7 +1871,11 @@ export function sectionLines(sections, problem, resolve, solution = false) {
           ? ''
           : ` **[${String(part.points).replace('.', ',')} т.]**`;
       const text = sourceText(part.statement, problem, resolve);
-      out.push(labelledPartText(text, `**${mdText(part.label)}**`, pts), '');
+      const shownLabel = displayPartLabel(part.label);
+      out.push(
+        labelledPartText(text, shownLabel === '' ? '' : `**${mdText(shownLabel)}**`, pts),
+        ''
+      );
       for (const fig of figuresNotInline(part.figures, texts, candidates)) {
         out.push(figureMarkdown(fig), '');
       }
@@ -2163,7 +2181,8 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
         part.points != null && !alreadyPrinted
           ? ` **[${String(part.points).replace('.', ',')}\u00A0т.]**`
           : '';
-      const label = part.label && part.label !== '*' ? `**${part.label}**` : '';
+      const shownLabel = displayPartLabel(part.label);
+      const label = shownLabel && shownLabel !== '*' ? `**${shownLabel}**` : '';
       const renderPart = (value, prefix, suffix) => {
         const body = sourceText(value, problem, resolveStatement);
         return labelledPartText(body, prefix, suffix);
@@ -2211,12 +2230,14 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       (section.parts ?? [])
         .filter(part => part.answer)
         .map(part => ({
-          label: `${section.title}, ${part.label}`,
+          label: displayPartLabel(part.label) === ''
+            ? section.title
+            : `${section.title}, ${part.label}`,
           answer: part.answer,
         }))
     ),
   ]
-    .map(p => ({ label: p.label, shown: renderAnswer(p.answer) }))
+    .map(p => ({ label: displayPartLabel(p.label), shown: renderAnswer(p.answer) }))
     .filter(p => p.shown);
   if (answers.length) {
     lines.push('## Отговори', '');
