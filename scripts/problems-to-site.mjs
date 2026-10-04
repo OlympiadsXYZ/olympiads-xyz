@@ -715,6 +715,14 @@ export function resolveFigurePlaceholders(
         const fig = resolve(a || b);
         return fig ? image('', fig) : m;
       }
+    )
+    .replace(
+      /\[\[(?:figure\s*:?\s*|fig\s*:\s*)([A-Za-z0-9][A-Za-z0-9_-]*)\s*\]\]|(?<!\[)\[(?:figure|фигура)(?:\s*:\s*|\s+)([A-Za-z0-9][A-Za-z0-9_-]*)\s*\](?!\])/giu,
+      (m, a, b) => {
+        const target = a || b;
+        const fig = resolve(target);
+        return fig?.id === target ? image('', fig) : m;
+      }
     );
 }
 // ---- figures inside the text (content/figure-anchors.json) ----

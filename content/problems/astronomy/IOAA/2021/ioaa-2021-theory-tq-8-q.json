@@ -66,27 +66,20 @@
   },
   "documentNotes": [
    {
-    "title": "Standard Table of Constants — Earth",
-    "statement": "Earth: mean radius $6\\ 378\\ km$. Inclination of axis to orbit $23^\\circ26'$.",
+    "title": "Solar System",
+    "statement": "| Object | Mean radius (km) | Mass (kg) | Semi-major axis (au) | Eccentricity |\n|---|---|---|---|---|\n| Earth | $6\\ 378$ | $5.972\\times10^{24}$ | $1.000000$ | $0.016\\ 710$ |",
     "document": "supplement-3",
     "page": 4,
     "position": "before-problem"
-   },
-   {
-    "title": "Official source discrepancy",
-    "statement": "The supplied key prints cos(4,35,54), calls its cosine rule spherical, and repeats d₁₋₂ in the denominator of 8.2. These printed expressions are retained without correction.",
-    "document": "solutions",
-    "page": 1,
-    "position": "after-problem"
    }
   ],
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/problem_structure_astra",
-   "at": "2026-09-29",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-03",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
@@ -97,9 +90,9 @@
     "supplement-3": "45b231be0cd63844541119d780262bcc1350806ff5f760e29bd49ef0a35c87a3",
     "supplement-4": "6c391e8e8cbe4995f5e8a7a69138b19b10fd88d1b9142b6e715e7580984f0d2e"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-29",
-   "notes": "Astra single-pass recovery: personally read all new question, exact matching official solution and answer-form pages. Shared 15 reference/instruction pages reused from prior personal reading only after exact document SHA equality. Full solutions and printed marking restored; no model checker. All final actual crops inspected; new or revised crops use --no-snap. Whole original IDs/native parts retained. Source discrepancies are documented separately, not silently corrected."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-03",
+   "notes": "repaired 2026-10-03 from the independent verification (docs/verification/2026-10-03-round4*) of the agent gpt-6-astra (v2) transcription: the supplement-3 p.4 documentNote invented 'Inclination of axis to orbit 23°26''' (not printed anywhere; the constants table prints obliquity of the ecliptic ε = 23.5°); it now carries the printed Earth row of the G0-4 Solar System table. The editorial documentNote 'Official source discrepancy' (not printed) was removed from documentNotes; its content is kept here: the official key prints cos(4,35,54) in Δy, calls its plane cosine rule 'Cosine rule for spherical triangle', and prints d_{1-2} d_{1-2} in the denominator of 8.2; these are kept verbatim. Restored the printed parentheses in √(x²+y²+z²) and in the numerator of cos(A). Previous notes:Astra single-pass recovery: personally read all new question, exact matching official solution and answer-form pages. Shared 15 reference/instruction pages reused from prior personal reading only after exact document SHA equality. Full solutions and printed marking restored; no model checker. All final actual crops inspected; new or revised crops use --no-snap. Whole original IDs/native parts retained. Source discrepancies are documented separately, not silently corrected."
   }
  },
  "problems": [
@@ -220,8 +213,7 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "### 8.1\n\nAssuming $R=6378\\ \\mathrm{km}$ (as per the table of constants)\n\n$$\\Delta x=R\\cdot[(4^\\circ36'18'')-(4^\\circ35'30'')]\\cdot\\frac{\\pi}{180}=1.4842\\ \\mathrm{km}$$\n\n$$\\Delta y=R\\cdot[(74^\\circ3'19'')-(74^\\circ3'15'')]\\cdot\\frac{\\pi\\cdot\\cos(4{,}35{,}54)}{180}=0.1237\\ \\mathrm{km}$$\n\n$$\\Delta z=(3.100-3.296)=-0.196\\ \\mathrm{km}$$\n\n[2 points]\n\n$$d_{2-3}=\\sqrt{x^2+y^2+z^2}=1.502\\ \\mathrm{km}$$\n\n[1 point]\n\n### 8.2\n\nEstimate the angular separation (in degrees) between Guadalupe (2) and Monserrate (3) as observed from the National Astronomical Observatory of Colombia (1). Take point 1 as the vertex.\n\nUsing the same method as part 8.1:\n\n$$d_{1-2}=2.722\\ \\mathrm{km}$$\n\n[2 points]\n\n$$d_{1-3}=2.580\\ \\mathrm{km}$$\n\n[2 points]\n\nUsing Cosine rule for spherical triangle,\n\n$$\\cos(A)=\\frac{d_{1-2}^2+d_{1-3}^2-d_{2-3}^2}{2d_{1-2}d_{1-2}}=0.841$$\n\n$$A=32.78^\\circ$$\n\n[2 points]\n\n### 8.3\n\n$$\\alpha=\\tan^{-1}\\left(\\frac{-\\sin(\\beta)\\cdot\\sin(\\varepsilon)+\\cos(\\beta)\\cdot\\cos(\\varepsilon)\\cdot\\sin(\\lambda)}{\\cos(\\beta)\\cdot\\cos(\\lambda)}\\right)$$\n\n$$\\alpha=12^\\circ43'3''=0h\\ 50m\\ 52s$$\n\n[3 points]\n\n$$\\delta=\\sin^{-1}(\\sin(\\beta)\\cdot\\cos(\\varepsilon)+\\cos(\\beta)\\cdot\\sin(\\varepsilon)\\cdot\\sin(\\lambda))$$\n\n$$\\delta=1^\\circ33'43''$$\n\n[3 points]",
-    "figures": []
+    "statement": "### 8.1\n\nAssuming $R=6378\\ \\mathrm{km}$ (as per the table of constants)\n\n$$\\Delta x=R\\cdot[(4^\\circ36'18'')-(4^\\circ35'30'')]\\cdot\\frac{\\pi}{180}=1.4842\\ \\mathrm{km}$$\n\n$$\\Delta y=R\\cdot[(74^\\circ3'19'')-(74^\\circ3'15'')]\\cdot\\frac{\\pi\\cdot\\cos(4{,}35{,}54)}{180}=0.1237\\ \\mathrm{km}$$\n\n$$\\Delta z=(3.100-3.296)=-0.196\\ \\mathrm{km}$$\n\n[2 points]\n\n$$d_{2-3}=\\sqrt{(x^2+y^2+z^2)}=1.502\\ \\mathrm{km}$$\n\n[1 point]\n\n### 8.2\n\nEstimate the angular separation (in degrees) between Guadalupe (2) and Monserrate (3) as observed from the National Astronomical Observatory of Colombia (1). Take point 1 as the vertex.\n\nUsing the same method as part 8.1:\n\n$$d_{1-2}=2.722\\ \\mathrm{km}$$\n\n[2 points]\n\n$$d_{1-3}=2.580\\ \\mathrm{km}$$\n\n[2 points]\n\nUsing Cosine rule for spherical triangle,\n\n$$\\cos(A)=\\frac{(d_{1-2}^2+d_{1-3}^2-d_{2-3}^2)}{2d_{1-2}d_{1-2}}=0.841$$\n\n$$A=32.78^\\circ$$\n\n[2 points]\n\n### 8.3\n\n$$\\alpha=\\tan^{-1}\\left(\\frac{-\\sin(\\beta)\\cdot\\sin(\\varepsilon)+\\cos(\\beta)\\cdot\\cos(\\varepsilon)\\cdot\\sin(\\lambda)}{\\cos(\\beta)\\cdot\\cos(\\lambda)}\\right)$$\n\n$$\\alpha=12^\\circ43'3''=0h\\ 50m\\ 52s$$\n\n[3 points]\n\n$$\\delta=\\sin^{-1}(\\sin(\\beta)\\cdot\\cos(\\varepsilon)+\\cos(\\beta)\\cdot\\sin(\\varepsilon)\\cdot\\sin(\\lambda))$$\n\n$$\\delta=1^\\circ33'43''$$\n\n[3 points]"
    },
    "sourceSpans": [
     {

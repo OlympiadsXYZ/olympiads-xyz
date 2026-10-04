@@ -5,8 +5,8 @@ title: 'B1'
 author: 'Olympiads XYZ · транскрипция на официалните материали'
 canonicalSource: 'content/problems/physics/USAPhO/2000/usapho-2000-ii-semifinal.json'
 verification: 'reviewed'
-verifiedAt: '2026-09-30T00:57:08.909Z'
-verifier: 'single-pass'
+verifiedAt: '2026-10-03T10:00:11.360Z'
+verifier: 'mechanical'
 ---
 
 *2000 Semi-Final Exam · 40 т.*
@@ -108,17 +108,27 @@ The spherical shells are not concentric as shown in Figure b at the right. The i
 
 ### a. (10 т.)
 
-Because the charge distribution is uniform, there is spherical symmetry and we can use Gauss’s Law to calculate the electrostatic field. This yields $\vec E=kq_{enc}\hat e_R/R^2$, where $R=\sqrt{x^2+y^2+z^2}$ $q_{enc}$ is the charge enclosed by a Gaussian surface of radius R, and $\hat e_R$ is a unit vector in the $R$ direction.
-
-In region I, $R<b$ and $q_{enc}=0$, so $\vec E_I=0$.
-
-In region II, $c>R>b$ and $q_{enc}=-Q$, so
+Because the charge distribution is uniform, there is spherical symmetry and we can use Gauss’s Law to calculate the electrostatic field. This yields
 
 $$
-\vec E_{II}=-\frac{kQ}{R^2}\hat e_R,\quad\text{or }E_{II}=\frac{kQ}{R^2}\text{ directed radially inward}.\qquad (B1.1)
+\vec E=k\frac{q_{enc}}{R^2}\vec e_R
 $$
 
-In region III, $R>c$ and $q_{enc}=-Q+Q=0$, so $\vec E_{III}=0$.
+where $R=\sqrt{x^2+y^2+z^2}$, $q_{enc}$ is the charge enclosed by a Gaussian surface of radius R, and $\vec e_R$ is a unit vector in the $\boldsymbol{R}$ direction.
+
+Region I: A Gaussian surface of radius $R<b$ encloses no charge, so $E_I=0$
+
+Region II: A Gaussian surface of radius $c>R>b$ encloses $q_{enc}=-Q$
+
+Thus
+
+$$
+\vec E_{II}=-k\frac{Q}{R^2}\vec e_R\qquad\text{or}\qquad E_{II}=k\frac{Q}{R^2}\ \text{ radially inward.}\qquad (B1.1)
+$$
+
+Region III: A Gaussian surface of radius $R>c$ encloses $q_{enc}=-Q+Q=0$
+
+Therefore $E_{III}=0$
 
 </ProblemSection>
 
@@ -126,25 +136,21 @@ In region III, $R>c$ and $q_{enc}=-Q+Q=0$, so $\vec E_{III}=0$.
 
 ### b. (10 т.)
 
-Region III: Since the field is zero, the potential is a constant throughout the region. Its value at any point in III is the same as its value at infinity $V_{III}=0$.
+Region III: Since the field is zero, the potential is a constant throughout the region. Its value at any point in III is the same as its value at infinity $V_{III}=0$
 
-In region II,
-
-$$
-V_{II}(R)-V_{II}(c)=-\int_c^R\vec E\cdot d\vec l.
-$$
-
-Using (B1.1), $d\vec l=(-\hat e_R)(-dR)=\hat e_RdR$ and $V_{II}(c)=V_{III}(c)=0$,
+Region II:
 
 $$
-V_{II}(R)=\int_c^R\frac{kQ}{r^2}\,dr=\left.-\frac{kQ}{r}\right|_{r=c}^{R}=\frac{kQ}{c}-\frac{kQ}{R}=kQ\left(\frac1c-\frac1R\right).
+V_{II}(R)-V_{II}(c)=-\int_c^R\vec E\cdot d\vec l
 $$
 
-In region I the field is zero, so the potential is constant and equals the potential at $R=b$:
+Using (B1.1), $d\vec l=(-\vec e_R)(-dR)=\vec e_RdR$, and noting $V_{II}(c)=V_{III}(c)=0$
 
 $$
-V_I=kQ\left(\frac1c-\frac1b\right).
+V_{II}(R)=\int_c^Rk\frac{Q}{r^2}\,dr=\left.-k\frac{Q}{r}\right|_{r=c}^{R}=k\frac{Q}{c}-k\frac{Q}{R}=kQ\left(\frac1c-\frac1R\right)
 $$
+
+Region I: Since the field is zero, the potential is constant and is everywhere equal to its value on the boundary $V_I=V_{II}$ at $R=b$. Thus $V_I=kQ\left(\frac1c-\frac1b\right)$.
 
 </ProblemSection>
 

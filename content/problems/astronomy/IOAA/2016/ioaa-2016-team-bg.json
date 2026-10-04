@@ -52,10 +52,10 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/problem_structure_astra",
-   "at": "2026-09-29",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-03",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
@@ -64,9 +64,27 @@
     "supplement-1": "191861c82e36d3d77ba3419e2d2501570ea37690ec4948e22abbfbe1ca872904",
     "supplement-2": "fa7eb712a044eafa93823c443ab48feb9f9c5e2aa4492026e21f3a837869dd07"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-29",
-   "notes": "Astra single-pass: personally visually read all 15 original prepared pages (3 Bulgarian question,8 English key,2+2 English question editions), including every table and diagram. Recovered full supplied official English primary solutions for all nine subquestions under the original single Bulgarian whole-problem ID. Existing English transcription reused only after comparison against the full original key; native numbered solution sections and cancellation marks restored. No independent model checker."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-03",
+   "notes": "Astra single-pass: personally visually read all 15 original prepared pages (3 Bulgarian question,8 English key,2+2 English question editions), including every table and diagram. Recovered full supplied official English primary solutions for all nine subquestions under the original single Bulgarian whole-problem ID. Existing English transcription reused only after comparison against the full original key; native numbered solution sections and cancellation marks restored. No independent model checker. repaired 2026-10-03 from the independent verification (docs/verification/2026-10-03-round4*) of the agent:gpt-6-astra (v2) transcription: solutions page 8, data table row July 4 distance restored to the printed 5.2933308160 (was transposed as 5.2933081600); all 92 table rows re-checked against the page and the text layer, no other differences. Agent fix round: recorded the existing statement fixes доближдаването→доближаването (misspelling) and й→ѝ (pronoun) in tx.edits; rewrote six English solution-figure alt texts in Bulgarian (alt only, figure objects otherwise unchanged); header logo and the image-set G1.6 coordinates recorded in tx.notFigures.",
+   "edits": [
+    {
+     "path": "/problems/0/statement",
+     "printed": "доближдаването",
+     "fixed": "доближаването",
+     "document": "problems",
+     "page": 1,
+     "kind": "misspelling"
+    },
+    {
+     "path": "/problems/0/statement",
+     "printed": "й",
+     "fixed": "ѝ",
+     "document": "problems",
+     "page": 1,
+     "kind": "pronoun"
+    }
+   ]
   }
  },
  "problems": [
@@ -214,7 +232,7 @@
       "figures": [
        {
         "id": "p1-sol-fig6",
-        "alt": "Graph labelled G1.4: ecliptic longitude (135–145 degrees) plotted against date (Jun-01 to Aug-30 1979); curve rises slowly to about 137.5° by Jul-10, then steeply to about 143.6° by Aug-30.",
+        "alt": "Графика с надпис G1.4: еклиптичната дължина (135–145 градуса) като функция на датата (от Jun-01 до Aug-30 1979); кривата расте бавно до около 137,5° към Jul-10, след това стръмно до около 143,6° към Aug-30.",
         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-team-bg/p1-sol-fig6-v2.png",
         "width": 1465,
         "height": 821,
@@ -245,7 +263,7 @@
        {
         "id": "p1-sol-fig4",
         "caption": "Figure 4",
-        "alt": "Sun S at centre with Earth's orbit and Jupiter J on an outer orbit; arrow labelled 'To V.E.' upward from S; lines SE and SJ drawn.",
+        "alt": "Слънцето S в центъра, орбитата на Земята и Юпитер J на външна орбита; стрелка с надпис „To V.E.“ нагоре от S; начертани са отсечките SE и SJ.",
         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-team-bg/p1-sol-fig4.png",
         "width": 621,
         "height": 745,
@@ -263,7 +281,7 @@
        },
        {
         "id": "p1-sol-fig5",
-        "alt": "Geometry of the encounter: Sun S at top right with angle δλ between directions to A and C; spacecraft path A–B–C near Jupiter J with angles φ1 at A, φ2 at C, and velocity direction JD labelled u.",
+        "alt": "Геометрия на прелитането: Слънцето S горе вдясно с ъгъл δλ между направленията към A и C; пътят на кораба A–B–C близо до Юпитер J с ъгли φ1 при A и φ2 при C и направление JD, означено с u.",
         "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-team-bg/p1-sol-fig5-v3.png",
         "width": 597,
         "height": 899,
@@ -299,7 +317,7 @@
      {
       "id": "solution-data",
       "title": "Data",
-      "statement": "| Month | Date | λ (°) | Distance (AU) | Month | Date | λ (°) | Distance (AU) |\n|---|---|---|---|---|---|---|---|\n| June | 1 | 135.8870 | 5.1589731906 | July | 17 | 138.4707 | 5.3684017790 |\n| June | 2 | 135.9339 | 5.1629499712 | July | 18 | 138.5949 | 5.3722377051 |\n| June | 3 | 135.9806 | 5.1669246607 | July | 19 | 138.7183 | 5.3760047603 |\n| June | 4 | 136.0272 | 5.1708975373 | July | 20 | 138.8409 | 5.3797188059 |\n| June | 5 | 136.0736 | 5.1748689006 | July | 21 | 138.9628 | 5.3833913528 |\n| June | 6 | 136.1200 | 5.1788390741 | July | 22 | 139.0841 | 5.3870310297 |\n| June | 7 | 136.1662 | 5.1828084082 | July | 23 | 139.2048 | 5.390644477 |\n| June | 8 | 136.2122 | 5.1867772826 | July | 24 | 139.3250 | 5.3942369174 |\n| June | 9 | 136.2582 | 5.1907461105 | July | 25 | 139.4448 | 5.3978125344 |\n| June | 10 | 136.3040 | 5.1947153428 | July | 26 | 139.5641 | 5.4013747321 |\n| June | 11 | 136.3496 | 5.1986854723 | July | 27 | 139.6831 | 5.4049263181 |\n| June | 12 | 136.3951 | 5.2026570402 | July | 28 | 139.8016 | 5.4084696349 |\n| June | 13 | 136.4405 | 5.2066306418 | July | 29 | 139.9198 | 5.4120066575 |\n| June | 14 | 136.4857 | 5.2106069354 | July | 30 | 140.0377 | 5.4155390662 |\n| June | 15 | 136.5307 | 5.2145866506 | July | 31 | 140.1553 | 5.4190683021 |\n| June | 16 | 136.5756 | 5.2185705999 | August | 1 | 140.2725 | 5.4225956100 |\n| June | 17 | 136.6202 | 5.2225596924 | August | 2 | 140.3895 | 5.4261220723 |\n| June | 18 | 136.6647 | 5.2265549493 | August | 3 | 140.5062 | 5.4296486357 |\n| June | 19 | 136.7090 | 5.2305575243 | August | 4 | 140.6225 | 5.4331761326 |\n| June | 20 | 136.7532 | 5.2345687280 | August | 5 | 140.7387 | 5.4367052982 |\n| June | 21 | 136.7970 | 5.2385900582 | August | 6 | 140.8546 | 5.4402367851 |\n| June | 22 | 136.8407 | 5.2426232385 | August | 7 | 140.9702 | 5.4437711745 |\n| June | 23 | 136.8841 | 5.2466702671 | August | 8 | 141.0856 | 5.4473089863 |\n| June | 24 | 136.9273 | 5.2507334797 | August | 9 | 141.2007 | 5.4508506867 |\n| June | 25 | 136.9702 | 5.2548156324 | August | 10 | 141.3157 | 5.4543966955 |\n| June | 26 | 137.0127 | 5.2589200110 | August | 11 | 141.4303 | 5.4579473912 |\n| June | 27 | 137.0550 | 5.2630505798 | August | 12 | 141.5448 | 5.4615031166 |\n| June | 28 | 137.0969 | 5.2672121872 | August | 13 | 141.6591 | 5.4650641822 |\n| June | 29 | 137.1384 | 5.2714108557 | August | 14 | 141.7731 | 5.4686308707 |\n| June | 30 | 137.1795 | 5.2756542053 | August | 15 | 141.8869 | 5.4722034391 |\n| July | 1 | 137.2200 | 5.2799520895 | August | 16 | 142.0006 | 5.4757821220 |\n| July | 2 | 137.2600 | 5.2843175880 | August | 17 | 142.1140 | 5.4793671340 |\n| July | 3 | 137.2993 | 5.2887686308 | August | 18 | 142.2272 | 5.4829586711 |\n| July | 4 | 137.3378 | 5.2933081600 | August | 19 | 142.3402 | 5.4865569133 |\n| July | 5 | 137.3754 | 5.2980426654 | August | 20 | 142.4530 | 5.4901620256 |\n| July | 6 | 137.4118 | 5.3029664212 | August | 21 | 142.5657 | 5.4937741595 |\n| July | 7 | 137.4467 | 5.3082133835 | August | 22 | 142.6781 | 5.4973934544 |\n| July | 8 | 137.4798 | 5.3140161793 | August | 23 | 142.7904 | 5.5010200385 |\n| July | 9 | 137.5116 | 5.3210070441 | August | 24 | 142.9024 | 5.5046540300 |\n| July | 10 | 137.5628 | 5.3312091210 | August | 25 | 143.0143 | 5.5082955377 |\n| July | 11 | 137.6898 | 5.3405592121 | August | 26 | 143.1260 | 5.5119446617 |\n| July | 12 | 137.8266 | 5.3466522674 | August | 27 | 143.2375 | 5.5156014948 |\n| July | 13 | 137.9599 | 5.3516661563 | August | 28 | 143.3488 | 5.5192661222 |\n| July | 14 | 138.0903 | 5.3561848203 | August | 29 | 143.4599 | 5.5229386226 |\n| July | 15 | 138.2186 | 5.3604205657 | August | 30 | 143.5709 | 5.5266190687 |\n| July | 16 | 138.3453 | 5.3644742164 | August | 31 | 143.6817 | 5.5303075275 |"
+      "statement": "| Month | Date | λ (°) | Distance (AU) | Month | Date | λ (°) | Distance (AU) |\n|---|---|---|---|---|---|---|---|\n| June | 1 | 135.8870 | 5.1589731906 | July | 17 | 138.4707 | 5.3684017790 |\n| June | 2 | 135.9339 | 5.1629499712 | July | 18 | 138.5949 | 5.3722377051 |\n| June | 3 | 135.9806 | 5.1669246607 | July | 19 | 138.7183 | 5.3760047603 |\n| June | 4 | 136.0272 | 5.1708975373 | July | 20 | 138.8409 | 5.3797188059 |\n| June | 5 | 136.0736 | 5.1748689006 | July | 21 | 138.9628 | 5.3833913528 |\n| June | 6 | 136.1200 | 5.1788390741 | July | 22 | 139.0841 | 5.3870310297 |\n| June | 7 | 136.1662 | 5.1828084082 | July | 23 | 139.2048 | 5.390644477 |\n| June | 8 | 136.2122 | 5.1867772826 | July | 24 | 139.3250 | 5.3942369174 |\n| June | 9 | 136.2582 | 5.1907461105 | July | 25 | 139.4448 | 5.3978125344 |\n| June | 10 | 136.3040 | 5.1947153428 | July | 26 | 139.5641 | 5.4013747321 |\n| June | 11 | 136.3496 | 5.1986854723 | July | 27 | 139.6831 | 5.4049263181 |\n| June | 12 | 136.3951 | 5.2026570402 | July | 28 | 139.8016 | 5.4084696349 |\n| June | 13 | 136.4405 | 5.2066306418 | July | 29 | 139.9198 | 5.4120066575 |\n| June | 14 | 136.4857 | 5.2106069354 | July | 30 | 140.0377 | 5.4155390662 |\n| June | 15 | 136.5307 | 5.2145866506 | July | 31 | 140.1553 | 5.4190683021 |\n| June | 16 | 136.5756 | 5.2185705999 | August | 1 | 140.2725 | 5.4225956100 |\n| June | 17 | 136.6202 | 5.2225596924 | August | 2 | 140.3895 | 5.4261220723 |\n| June | 18 | 136.6647 | 5.2265549493 | August | 3 | 140.5062 | 5.4296486357 |\n| June | 19 | 136.7090 | 5.2305575243 | August | 4 | 140.6225 | 5.4331761326 |\n| June | 20 | 136.7532 | 5.2345687280 | August | 5 | 140.7387 | 5.4367052982 |\n| June | 21 | 136.7970 | 5.2385900582 | August | 6 | 140.8546 | 5.4402367851 |\n| June | 22 | 136.8407 | 5.2426232385 | August | 7 | 140.9702 | 5.4437711745 |\n| June | 23 | 136.8841 | 5.2466702671 | August | 8 | 141.0856 | 5.4473089863 |\n| June | 24 | 136.9273 | 5.2507334797 | August | 9 | 141.2007 | 5.4508506867 |\n| June | 25 | 136.9702 | 5.2548156324 | August | 10 | 141.3157 | 5.4543966955 |\n| June | 26 | 137.0127 | 5.2589200110 | August | 11 | 141.4303 | 5.4579473912 |\n| June | 27 | 137.0550 | 5.2630505798 | August | 12 | 141.5448 | 5.4615031166 |\n| June | 28 | 137.0969 | 5.2672121872 | August | 13 | 141.6591 | 5.4650641822 |\n| June | 29 | 137.1384 | 5.2714108557 | August | 14 | 141.7731 | 5.4686308707 |\n| June | 30 | 137.1795 | 5.2756542053 | August | 15 | 141.8869 | 5.4722034391 |\n| July | 1 | 137.2200 | 5.2799520895 | August | 16 | 142.0006 | 5.4757821220 |\n| July | 2 | 137.2600 | 5.2843175880 | August | 17 | 142.1140 | 5.4793671340 |\n| July | 3 | 137.2993 | 5.2887686308 | August | 18 | 142.2272 | 5.4829586711 |\n| July | 4 | 137.3378 | 5.2933308160 | August | 19 | 142.3402 | 5.4865569133 |\n| July | 5 | 137.3754 | 5.2980426654 | August | 20 | 142.4530 | 5.4901620256 |\n| July | 6 | 137.4118 | 5.3029664212 | August | 21 | 142.5657 | 5.4937741595 |\n| July | 7 | 137.4467 | 5.3082133835 | August | 22 | 142.6781 | 5.4973934544 |\n| July | 8 | 137.4798 | 5.3140161793 | August | 23 | 142.7904 | 5.5010200385 |\n| July | 9 | 137.5116 | 5.3210070441 | August | 24 | 142.9024 | 5.5046540300 |\n| July | 10 | 137.5628 | 5.3312091210 | August | 25 | 143.0143 | 5.5082955377 |\n| July | 11 | 137.6898 | 5.3405592121 | August | 26 | 143.1260 | 5.5119446617 |\n| July | 12 | 137.8266 | 5.3466522674 | August | 27 | 143.2375 | 5.5156014948 |\n| July | 13 | 137.9599 | 5.3516661563 | August | 28 | 143.3488 | 5.5192661222 |\n| July | 14 | 138.0903 | 5.3561848203 | August | 29 | 143.4599 | 5.5229386226 |\n| July | 15 | 138.2186 | 5.3604205657 | August | 30 | 143.5709 | 5.5266190687 |\n| July | 16 | 138.3453 | 5.3644742164 | August | 31 | 143.6817 | 5.5303075275 |"
      }
     ],
     "incomplete": true,
@@ -308,7 +326,7 @@
      {
       "id": "p1-sol-fig1",
       "caption": "Figure 1",
-      "alt": "Anti-parallel case: planet moving right with velocity u, spacecraft approaching from below with velocity v, making a loop around the planet and leaving in the direction of u.",
+      "alt": "Противоположни посоки: планетата се движи надясно със скорост u, корабът се приближава отдолу със скорост v, заобикаля планетата и се отдалечава по посоката на u.",
       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-team-bg/p1-sol-fig1-v2.png",
       "width": 519,
       "height": 327,
@@ -327,7 +345,7 @@
      {
       "id": "p1-sol-fig2",
       "caption": "Figure 2",
-      "alt": "General case: planet moving right with velocity u, spacecraft approaches with velocity v at angle θ to the horizontal and leaves deflected upward.",
+      "alt": "Общ случай: планетата се движи надясно със скорост u, корабът се приближава със скорост v под ъгъл θ спрямо хоризонталата и се отдалечава, отклонен нагоре.",
       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-team-bg/p1-sol-fig2-v2.png",
       "width": 531,
       "height": 503,
@@ -346,7 +364,7 @@
      {
       "id": "p1-sol-fig3",
       "caption": "Figure 3",
-      "alt": "Voyager 2 trajectory diagram with the printed planetary labels and encounter dates.",
+      "alt": "Схема на траекторията на Voyager 2 с отпечатаните надписи на планетите и датите на прелитане.",
       "url": "https://pub-43290baaaff14857b5dd59610ea438c7.r2.dev/problems/ioaa-2016-team-bg/p1-sol-fig3.png",
       "width": 633,
       "height": 541,

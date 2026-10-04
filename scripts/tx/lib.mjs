@@ -1290,6 +1290,8 @@ export function provenanceFor(candidate, ctx) {
   const how =
     ctx.mode === 'single-pass'
       ? 'single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker'
+      : ctx.mode === 'repair-ancestry'
+      ? 'preserved source reading and recorded repairs; automated schema, math and figure-evidence checks; no new model checker'
       : ctx.reviewer.provider === 'mechanical'
       ? 'mechanical check only: schema, text layer, printed figures; no second model'
       : ctx.mode === 'crops'

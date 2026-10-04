@@ -19,6 +19,15 @@
    ]
   },
   "status": "review",
+  "documentNotes": [
+   {
+    "title": "Бележка",
+    "statement": "За решаването на някои от задачите са необходими астрономически величини, които трябва да намерите в справочна литература.\n\nКраен срок за предаване на решенията **23 декември 2001 г.**",
+    "document": "problems",
+    "page": 2,
+    "position": "after-problem"
+   }
+  ],
   "solutionSource": {
    "archiveKey": "Астрономия/Състезания/Национална олимпиада/2002/2002-I/a02-I.docx",
    "pages": [
@@ -32,19 +41,37 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/problem_structure_astra",
-   "at": "2026-09-30",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-03",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "7b7e438af4c2e9ac6c8e8dfa68c1c619fd33208e50ee80d767e081d39ce44bf9",
     "solutions": "de1ebe123fb6b46920c43a8005da4544085ad6f7143965c6e6fc3674c4b97464"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-30",
-   "notes": "Single-pass Astra: both junior question pages newly personally read; all5shared-key pages reused from own solutions77 reading after verifying originalDOCX bytes and all5renderedPNG hashes identical. DerivedPDF hashes differ after Word re-export and are explicitly distinguished. Six complete junior keys, excluding senior-only additions. All three actual final crops personally inspected. No separate model checker."
+   "verifiedBy": "mechanical:confirmed-repair-ancestry-gates (preserved source reading and recorded repairs; automated schema, math and figure-evidence checks; no new model checker, prompt v1)",
+   "verifiedAt": "2026-10-04",
+   "notes": "repaired 2026-10-03 from the independent verification (docs/verification/2026-10-03-round4*) of the agent gpt-6-astra (prompt v2, 2026-09-30) transcription: restored the two printed closing sentences of problems page 2 (reference literature; deadline 23 декември 2001 г.) as paper.documentNotes, and joined the split word „Избройте“ in problem 5. The two pronoun fixes й → ѝ (problems 3 and 4) were already published and are now recorded in tx.edits. Printed misspellings in the official solutions („Сллънцето“, „пробеми“, „небесниите“, „бясък“, „набюдаваме“) are kept verbatim. The solutions file is shared by all grades; the „Допълнение“ paragraphs for IX-X and XI-XII and the IX-X/XI-XII problems on solutions pages 3–5 are not part of this paper. Earlier reader note: Single-pass Astra: both junior question pages newly personally read; all5shared-key pages reused from own solutions77 reading after verifying originalDOCX bytes and all5renderedPNG hashes identical. DerivedPDF hashes differ after Word re-export and are explicitly distinguished. Six complete junior keys, excluding senior-only additions. All three actual final crops personally inspected. No separate model checker.",
+   "edits": [
+    {
+     "path": "/problems/2/statement",
+     "printed": "движението й",
+     "fixed": "движението ѝ",
+     "document": "problems",
+     "page": 1,
+     "kind": "pronoun"
+    },
+    {
+     "path": "/problems/3/statement",
+     "printed": "сърцето й",
+     "fixed": "сърцето ѝ",
+     "document": "problems",
+     "page": 1,
+     "kind": "pronoun"
+    }
+   ]
   }
  },
  "problems": [
@@ -55,7 +82,6 @@
    "points": null,
    "problemType": "theory",
    "statement": "Откъде е по-лесно да се изстреля космически кораб – от земната повърхност или от повърхността на Луната? Обосновете отговора си, като посочите всички фактори, които имат значение.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/space-flight"
@@ -64,7 +90,6 @@
    "importance": 1,
    "solution": {
     "statement": "По-лесно е да се изстреля космически кораб от Луната, отколкото от Земята, защото:\n\n1) Гравитационното привличане на повърхността на Земята е по-силно, отколкото на лунната повърхност.\n\n2) При изстрелване от Земята корабът трябва да преодолее и съпротивлението на атмосферата, а Луната няма атмосфера.\n\nКакто е известно линейната скорост, с която се движат точките по земната повърхност поради околоосното въртене на Земята, също се използва за улесняване на изстрелването на космически кораби от нашата планета. В това отношение Земята има известно предимство пред Луната, понеже се върти значително по-бързо около оста си. Но то е твърде слабо в сравнение с другите предимства на Луната.",
-    "figures": [],
     "incomplete": false
    },
    "sourceSpans": [
@@ -85,7 +110,6 @@
    "points": null,
    "problemType": "theory",
    "statement": "На повърхността на Марс работи малък изследователски апарат, подобен на радиоуправляем автомобил-играчка. Той се движи по команди от Земята, изпращани чрез радиосигнали. Също чрез радиосигнали обратно на Земята се предава изображението, което регистрират видеокамерите, монтирани на апарата.\n\nЗемният оператор подава команда. Колко време след това той може да види реакцията на апарата? Считайте, че Марс е в противостоене (най-близо до Земята), и че двете планети се движат по кръгови орбити.\n\nПресметнете времето и за апарат, изпратен да изследва Плутон.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/solar-system",
@@ -95,7 +119,6 @@
    "importance": 2,
    "solution": {
     "statement": "Приемаме марсианската орбита за кръгова с радиус $r_M=1.52\\,\\mathrm{AU}$. В противостоене Марс е на разстояние от Земята $\\Delta r=r_M-r_\\text{З}=0.52\\,\\mathrm{AU}$, където $r_\\text{З}=1\\,\\mathrm{AU}$ е радиусът на земната орбита. Светлината се движи със скорост $c=300000\\,\\mathrm{km/sec}$. Това е не само скоростта на светлината, но и на всички електромагнитни вълни, включително и на радиовълните. Радиосигналът, подаден от Земята, стига до Марс за време $\\Delta t=\\Delta r/c$. Още толкова време е необходимо на сигнала, с който се предава видеоизображението на Марс, за да стигне обратно до Земята. Като знаем, че $1\\,\\mathrm{AU}=150\\times10^6\\,\\mathrm{km}$, пресмятаме, че щом подаде командата към апарата на Марс, земният оператор ще чака $8^{\\mathrm{min}}40^s$, докато види реакцията му.\n\nПлутон е на средно разстояние 39.5 AU от Слънцето и в противостоене е на 38.5 AU от Земята. В едната посока радиосигналите ще пътуват около 5 h 21 min, а в двете посоки 10 h 42 min. Това ще създаде много сериозни пробеми при дистанционното управление на подвижния апарат от Земята и за да функционира ефективно, той трябва да е снабден с по-съвършено компютърно управление, така че до голяма степен да може да взема самостоятелно решения как да реагира при движението си по повърхността на Плутон.",
-    "figures": [],
     "incomplete": false
    },
    "sourceSpans": [
@@ -116,7 +139,6 @@
    "points": null,
    "problemType": "theory",
    "statement": "Какво разстояние изминаваме заедно със Земята при движението ѝ около Слънцето, седейки на училищните чинове в продължение на един учебен час от 40 минути?",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/orbital-mechanics"
@@ -125,7 +147,6 @@
    "importance": 1,
    "solution": {
     "statement": "Орбиталната скорост на Земята около Сллънцето е приблизително 30 km/sec. Тя може да се намери в литературата или да се пресметне, като се знае радиусът на земната орбита ($150\\times10^6\\,\\mathrm{km}$) и продължителността на годината ($\\approx365.25$ денонощия по 24 часа). За 40 мин. Земята изминава разстояние:\n\n$$40\\,\\mathrm{min}\\times60\\,\\mathrm{s}\\times30\\,\\mathrm{km/s}=72000\\,\\mathrm{km}.$$",
-    "figures": [],
     "incomplete": false
    },
    "sourceSpans": [
@@ -146,7 +167,6 @@
    "points": null,
    "problemType": "theory",
    "statement": "В тайнствено африканско царство на екватора живее принцеса, прекрасна като шоколад. Четирима воини, победили много лъвове и крокодили, си съперничат за ръката и сърцето ѝ. Царят, нейният баща, им устройва състезание в деня на пролетното равноденствие. Принцесата ще получи този, който успее да стигне на най-голямо разстояние от двореца, като върви без да спира от изгрев слънце, докато види следващия изгрев на слънцето. Първият воин тръгва на север, вторият – на юг, третият – на изток, четвъртият – на запад. Ако приемем, че и четиримата се движат с еднаква скорост, то ще има ли победител в състезанието? В случай, че има, кой ще бъде той? Обяснете отговора си.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/spherical-astronomy",
@@ -156,7 +176,6 @@
    "importance": 2,
    "solution": {
     "statement": "Ако стоим само в царския дворец, времето от изгрева на Слънцето до следващия му изгрев е 24 часа. (Пренебрегваме ефектите, свързани с изменението на деклинацията на Слънцето и неравномерното му движение по еклиптиката). Същото е и за воините, които тръгват на север и на юг. За онзи, който тръгва на изток, не е така. Самата Земя се върти от запад на изток и поради това се наблюдава видимото денонощно движение на небесниите светила в обратната посока (от изток на запад). Воинът, който върви на изток, се движи около оста на Земята със скорост, малко по-голяма от скоростта на точките от земната повърхност. Следователно за него видимото движение на Слънцето ще е по-бързо и времето от първия изгрев на Слънцето до следващия изгрев, който той вижда, ще е малко по-малко от 24 часа. Обратно, за онзи, който тръгва на запад, това време ще е по-дълго от 24 часа. Ето защо той ще може да извърви най-дълго разстояние и ще бъде победител в състезанието.",
-    "figures": [],
     "incomplete": false
    },
    "sourceSpans": [
@@ -180,8 +199,7 @@
    "title": "Най-ярките небесни светила",
    "points": null,
    "problemType": "theory",
-   "statement": "Изброй те шестте най-ярки небесни светила по реда на намаляване на блясъка им. За онези от тях, чиито видим блясък се изменя с времето, вземете предвид максималния блясък.",
-   "figures": [],
+   "statement": "Избройте шестте най-ярки небесни светила по реда на намаляване на блясъка им. За онези от тях, чиито видим блясък се изменя с времето, вземете предвид максималния блясък.",
    "parts": [],
    "topics": [
     "astronomy/observational-astronomy"
@@ -190,7 +208,6 @@
    "importance": 1,
    "solution": {
     "statement": "Очевидно, най-яркото светило на нашето небе е Слънцето, а второто по блясък е Луната. В астрономически календар или алманах за която и да е година, в таблиците за физически наблюдения на планетите може да се види, че третото поред светило е Венера. Нейният блясък достига до $-4.6^m$. Четвърти е Юпитер, пети Меркурий. Следващата по яркост планета е Сатурн, чиито бясък достига до $-0.1^m$, но преди нея на шесто място трябва да поставим звездата Сириус, чиято звездна величина е $-1.5^m$. Шестте най-ярки светила, по реда на намаляване на блясъка им, са: Слънце, Луна, Венера, Юпитер, Меркурий, Сириус.",
-    "figures": [],
     "incomplete": false
    },
    "sourceSpans": [

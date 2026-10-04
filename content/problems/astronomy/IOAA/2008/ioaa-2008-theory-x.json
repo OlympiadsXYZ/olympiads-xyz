@@ -113,10 +113,10 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/problem_structure_astra",
-   "at": "2026-09-29",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-03",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
@@ -125,9 +125,9 @@
     "supplement-1": "c257e17ea13e94a65becfd4787b0ff4ed02b5c261deb033158e770fc6be5e251",
     "supplement-2": "80cf5f4422ebb2a5baeaa3c82825cfd0fa2095f64a3ade380a115bebc1ca3acd"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-29",
-   "notes": "Astra single-pass: all33 original prepared pages personally read and checkpoints recorded. Source ownership matched by content: short_sol question10 is final long1/p16, long_sol question1 is final short10/p10. All18 original IDs and full independent problems retained. Full supplied keys and marking percentages restored. Constants DOC matches question tables, including printed helium mass1.646723e-27kg. Printed discrepancies preserved: Q1 alpha<< incomplete notation; Q5 density6.7vs7.1e-30; Q6 Doppler denominator; Q10 differing separation values; Q14 positive8 exponent in substitution and graph labels disagree with table; Q15 pc/cm/kg units and arithmetic; Q17 BCsign and4.75 solarbolometric value versus reference4.72; Q18 key introduction and timeline3/2 versus calculation2/3 and finalquestion2/3, original keya,b,c correspond finala,c,d (finalb is explanatory note). No inferred corrections or separate model checker."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-03",
+   "notes": "Astra single-pass: all33 original prepared pages personally read and checkpoints recorded. Source ownership matched by content: short_sol question10 is final long1/p16, long_sol question1 is final short10/p10. All18 original IDs and full independent problems retained. Full supplied keys and marking percentages restored. Constants DOC matches question tables, including printed helium mass1.646723e-27kg. Printed discrepancies preserved: Q1 alpha<< incomplete notation; Q5 density6.7vs7.1e-30; Q6 Doppler denominator; Q10 differing separation values; Q14 graph labels disagree with table; Q15 pc/cm/kg units and arithmetic; Q17 BCsign and4.75 solarbolometric value versus reference4.72; Q18 key introduction and timeline3/2 versus calculation2/3 and finalquestion2/3, original keya,b,c correspond finala,c,d (finalb is explanatory note). No inferred corrections or separate model checker. Q18 c): the printed middle term (t_o/t_r) carries no exponent (S_o/S_r = (t_o/t_r) = (1.5e10 years/3e5 years)^{2/3}); kept as printed. repaired 2026-10-03 from the independent verification (docs/verification/2026-10-03-round4*) of the agent:gpt-6-astra transcription: Q14 m-formula denominator restored to 5.15×10^-8 as printed on solutions p15; Q18 c) exponent removed from the middle term as printed on supplement-1 p5. Q15 solution (solutions p16): the M_B line prints \"+ 3.15 −21.83\" with no equals sign before the result; kept as printed. The last formula line on p16 is printed on a red highlight; it is transcribed as math, not cropped."
   }
  },
  "problems": [
@@ -138,7 +138,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "Two persons, on the equator of the Earth separated by nearly 180° in longitude, observe the Moon’s position with respect to the background star field at the same time. If the declination of the Moon is zero, sketch the situation and calculate the difference in apparent right ascension seen by those two persons.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/spherical-astronomy",
@@ -187,7 +186,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "On April 2, 2008 a telescope (10 cm diameter, *f*/10) at the Bosscha Observatory was used to observe the Sun and found an active region 0987 (based on the NOAA number) at $8^{\\mathrm{o}}$ South and $40^{\\mathrm{o}}$ West from the center of the solar disk. The region was recorded with a CCD SBIG ST-8 Camera (1600 × 1200 pixels, (9 µm × 9 µm)/ pixel) and its size was 5 × 4 pixels. According to the Astronomical Almanac, the solar diameter is 32'. How large is the corrected area of the active region in unit of millionth of solar hemisphere (msh)?",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/sun",
@@ -196,8 +194,7 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "Pixel size (″) = 206265 × pixel size (μm)/(1000 × focal length (mm))\n\n$$=206265\\times9/(1000\\times1000)=1.86''\\qquad(30\\%)$$\n\nSolar diameter $=32\\times60''/1.86''/\\text{pixel}=1034$ pixels $=9306\\ \\mu\\mathrm m$\n\nSolar radius, $R=4653\\ \\mu\\mathrm m$ **(25%)**\n\nIf $A_s$ is the measured area, then\n\n$$A_s=5\\times4\\times81\\ \\mu\\mathrm m^2=1620\\ \\mu\\mathrm m^2\\qquad(15\\%)$$\n\nThe corrected area due to the projection effect is\n\n$$A_m=A_s\\cdot10^6/(2\\pi R^2\\cos B\\cos L)$$\n\n$$=1620\\times10^6/(2\\times3.14\\times4653^2\\times\\cos8^\\circ\\times\\cos40^\\circ)$$\n\n$$=15.7\\text{ msh}\\qquad(30\\%)$$",
-    "figures": []
+    "statement": "Pixel size (″) = 206265 × pixel size (μm)/(1000 × focal length (mm))\n\n$$=206265\\times9/(1000\\times1000)=1.86''\\qquad(30\\%)$$\n\nSolar diameter $=32\\times60''/1.86''/\\text{pixel}=1034$ pixels $=9306\\ \\mu\\mathrm m$\n\nSolar radius, $R=4653\\ \\mu\\mathrm m$ **(25%)**\n\nIf $A_s$ is the measured area, then\n\n$$A_s=5\\times4\\times81\\ \\mu\\mathrm m^2=1620\\ \\mu\\mathrm m^2\\qquad(15\\%)$$\n\nThe corrected area due to the projection effect is\n\n$$A_m=A_s\\cdot10^6/(2\\pi R^2\\cos B\\cos L)$$\n\n$$=1620\\times10^6/(2\\times3.14\\times4653^2\\times\\cos8^\\circ\\times\\cos40^\\circ)$$\n\n$$=15.7\\text{ msh}\\qquad(30\\%)$$"
    },
    "sourceSpans": [
     {
@@ -221,7 +218,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "A full moon occurred on June 19, 2008 at $00^{\\mathrm{h}}\\ 30^{\\mathrm{m}}$ West Indonesian Time (local civil time for western part of Indonesia with meridian of 105° E). Calculate the minimum and maximum possible values of duration of the Moon above the horizon for observers at Bosscha Observatory (longitude: 107º 35' 00″.0 E, latitude: 6º 49' 00″.0 S, Elevation: 1300.0 m). Time zone = UT $+7^{\\mathrm{h}}\\,00^{\\mathrm{m}}$.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/spherical-astronomy",
@@ -274,7 +270,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "Suppose a star has a mass of $20\\ \\mathfrak{M}_{\\odot}$. If 20% of the star's mass is now in the form of helium, calculate the helium-burning lifetime of this star. Assume that the luminosity of the star is $100\\ L_{\\odot}$, in which 30% is contributed by helium burning. The carbon mass, $^{12}\\mathrm{C}$, is 12.000000 amu. Helium burning to Carbon: $3\\ {}^{4}\\mathrm{He} \\longrightarrow {}^{12}\\mathrm{C} + \\gamma$.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/stellar-evolution",
@@ -283,8 +278,7 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "The mass of three helium nuclei $=3\\times4.002603$ amu $=12.007809$ amu **(20%)**\n\nThe mass converted to energy is the difference between the sum of the masses of three helium nuclei and the mass of the resulting carbon nucleus:\n\n$$12.007809\\text{ amu}-12.000000\\text{ amu}=7.81\\times10^{-3}\\text{ amu}.\\qquad(15\\%)$$\n\nThis represents a fractional loss of mass of $\\frac{7.81\\times10^{-3}}{12.007809}=6.5\\times10^{-4}$ of the original mass. **(15%)**\n\nThe stellar mass $m=20\\times(1.99\\times10^{33})=3.98\\times10^{34}$ g\n\nThus $6.5\\times10^{-4}$ of 20% of the star's mass will be converted into energy during triple-α process, or\n\n$$E=mc^2=0.2(3.98\\times10^{34})(6.5\\times10^{-4})(3\\times10^{10})^2=4.66\\times10^{51}\\text{ erg}\\qquad(25\\%)$$\n\nThe helium-burning lifetime is\n\n$$t=\\frac E{0.3L}=\\frac{4.66\\times10^{51}}{0.3(100)(3.96\\times10^{33})}=3.92\\times10^{16}\\text{ s}=1.24\\times10^9\\text{ years}\\qquad(25\\%)$$",
-    "figures": []
+    "statement": "The mass of three helium nuclei $=3\\times4.002603$ amu $=12.007809$ amu **(20%)**\n\nThe mass converted to energy is the difference between the sum of the masses of three helium nuclei and the mass of the resulting carbon nucleus:\n\n$$12.007809\\text{ amu}-12.000000\\text{ amu}=7.81\\times10^{-3}\\text{ amu}.\\qquad(15\\%)$$\n\nThis represents a fractional loss of mass of $\\frac{7.81\\times10^{-3}}{12.007809}=6.5\\times10^{-4}$ of the original mass. **(15%)**\n\nThe stellar mass $m=20\\times(1.99\\times10^{33})=3.98\\times10^{34}$ g\n\nThus $6.5\\times10^{-4}$ of 20% of the star's mass will be converted into energy during triple-α process, or\n\n$$E=mc^2=0.2(3.98\\times10^{34})(6.5\\times10^{-4})(3\\times10^{10})^2=4.66\\times10^{51}\\text{ erg}\\qquad(25\\%)$$\n\nThe helium-burning lifetime is\n\n$$t=\\frac E{0.3L}=\\frac{4.66\\times10^{51}}{0.3(100)(3.96\\times10^{33})}=3.92\\times10^{16}\\text{ s}=1.24\\times10^9\\text{ years}\\qquad(25\\%)$$"
    },
    "sourceSpans": [
     {
@@ -308,7 +302,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "The average temperature of the Cosmic Microwave Background (CMB) is currently $T = 2.73$ K, and it yields the origin of CMB to be at redshift $z_{CMB} = 1100$. The current densities of the Dark Energy, Dark Matter, and Normal Matter components of the Universe as a whole are $\\rho_{DE} = 7.1 \\times 10^{-30}\\ \\mathrm{g/cm^{3}}$, $\\rho_{\\mathrm{DM}} = 2.4 \\times 10^{-30}\\ \\mathrm{g/cm^{3}}$, and $\\rho_{\\mathrm{NM}} = 0.5 \\times 10^{-30}\\ \\mathrm{g/cm^{3}}$, respectively. What is the ratio between the density of Dark Matter to the density of Dark Energy at the time CMB was emitted, if we assume that the dark energy is vacuum energy?",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/cosmology"
@@ -317,7 +310,6 @@
    "importance": 2,
    "solution": {
     "statement": "Universe change in size and redshift relation:\n\n$$1+z=\\frac{\\mathrm{size}_{\\rm now}}{\\mathrm{size}_{\\rm at\\ z}}\\Longrightarrow\\mathrm{size}_{\\rm at\\ z}=\\frac1{1+z}\\mathrm{size}_{\\rm now}=\\frac1{1+1100}\\mathrm{size}_{\\rm now}=0.00091\\mathrm{size}_{\\rm now}$$\n\nso that the size of the Universe at the time of CMB emission was 0.00091 of its $\\mathrm{size}_{\\rm now}$. **(50%)**\n\nIf $A=\\frac{V_{\\rm CMB\\ at\\ emission\\ time}}{V_{\\rm Now}}=(0.00091)^3=7.5\\times10^{-10}$ then the density of the Dark Matter at CMB emission time\n\n$$\\rho_{DM\\ \\rm at\\ CMB}=\\frac{\\rho_{DM}}A=\\frac{2.4\\times10^{-30}}{7.5\\times10^{-10}}=3.2\\times10^{-21}\\text{ g/cm}^3.\\qquad(25\\%)$$\n\nThe ratio between the density of Dark Matter to the density of Dark Energy at the time CMB was emitted\n\n$$=\\frac{\\rho_{DM\\ \\rm at\\ CMB}}{\\rho_\\Lambda}=\\frac{3.2\\times10^{-21}}{6.7\\times10^{-30}}=4.8\\times10^8\\qquad(25\\%)$$",
-    "figures": [],
     "incomplete": true,
     "incompleteReason": "The supplied official key uses dark-energy density 6.7 × 10⁻³⁰ g/cm³; the final question specifies 7.1 × 10⁻³⁰ g/cm³. The key is preserved, but no supplied numerical solution for the exact final data was found."
    },
@@ -343,7 +335,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "Radio wavelength observations of gas cloud swirling around a black hole in the center of our galaxy show that radiation from the hydrogen spin-flip transition (rest frequency = 1420.41 MHz) is detected at a frequency of 1421.23 MHz. If this gas cloud is located at a distance of 0.2 pc from the black hole and is orbiting in a circle, determine the speed of this cloud and whether it's moving toward or away from us and calculate the mass of the black hole.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/doppler-effect",
@@ -352,8 +343,7 @@
    "difficulty": "Easy",
    "importance": 2,
    "solution": {
-    "statement": "Rest frequency $\\nu_o=1420.41$ MHz\n\nDetected frequency $\\nu=1421.23$ MHz\n\n$$\\Delta\\nu=\\nu_o-\\nu=1420.41-1421.23=-0.82\\text{ MHz}\\qquad(25\\%)$$\n\nUsing Doppler’s shift, the speed of the cloud is:\n\n$$v=\\frac{\\Delta\\nu}{\\nu_o}c=\\frac{-0.82}{1421.23}(3\\times10^{10})=-1.73\\times10^7\\text{ cm/s}\\qquad(15\\%)$$\n\nSince $v$ is negative, then the cloud is moving toward us. **(10%)**\n\n(Since $\\nu>\\nu_o$, then the cloud is moving toward us)\n\nIf $\\mathcal M$ is mass of black hole, $v$ is the speed of the cloud and $R$ is the orbital radius of cloud, then\n\n$$\\mathcal M=\\frac{Rv^2}G\\qquad(25\\%)$$\n\n$R=0.2\\text{ pc}=0.2\\times(3.086\\times10^{18}\\text{ cm})=6.17\\times10^{17}\\text{ cm}$, and from the Table of Astronomical and Physical constants: $G=6.67\\times10^{-8}\\text{ cm}^3/\\text{s}^2\\text{ g}$\n\nThen,\n\n$$\\mathcal M=\\frac{Rv^2}G=\\frac{(6.17\\times10^{17})(-1.73\\times10^7)^2}{6.67\\times10^{-8}}=2.78\\times10^{39}\\text{ gr}=1.40\\times10^6\\mathcal M_\\odot\\qquad(25\\%)$$",
-    "figures": []
+    "statement": "Rest frequency $\\nu_o=1420.41$ MHz\n\nDetected frequency $\\nu=1421.23$ MHz\n\n$$\\Delta\\nu=\\nu_o-\\nu=1420.41-1421.23=-0.82\\text{ MHz}\\qquad(25\\%)$$\n\nUsing Doppler’s shift, the speed of the cloud is:\n\n$$v=\\frac{\\Delta\\nu}{\\nu_o}c=\\frac{-0.82}{1421.23}(3\\times10^{10})=-1.73\\times10^7\\text{ cm/s}\\qquad(15\\%)$$\n\nSince $v$ is negative, then the cloud is moving toward us. **(10%)**\n\n(Since $\\nu>\\nu_o$, then the cloud is moving toward us)\n\nIf $\\mathcal M$ is mass of black hole, $v$ is the speed of the cloud and $R$ is the orbital radius of cloud, then\n\n$$\\mathcal M=\\frac{Rv^2}G\\qquad(25\\%)$$\n\n$R=0.2\\text{ pc}=0.2\\times(3.086\\times10^{18}\\text{ cm})=6.17\\times10^{17}\\text{ cm}$, and from the Table of Astronomical and Physical constants: $G=6.67\\times10^{-8}\\text{ cm}^3/\\text{s}^2\\text{ g}$\n\nThen,\n\n$$\\mathcal M=\\frac{Rv^2}G=\\frac{(6.17\\times10^{17})(-1.73\\times10^7)^2}{6.67\\times10^{-8}}=2.78\\times10^{39}\\text{ gr}=1.40\\times10^6\\mathcal M_\\odot\\qquad(25\\%)$$"
    },
    "sourceSpans": [
     {
@@ -377,7 +367,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "A main sequence star at a distance 20 pc is barely visible through a certain space-based telescope which can record all wavelengths. The star will eventually move up along the giant branch, during which time its temperature drops by a factor of 3 and its radius increases 100 times. What is the new maximum distance at which the star can still be (barely) visible using the same telescope?",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/stellar-physics",
@@ -386,8 +375,7 @@
    "difficulty": "Easy",
    "importance": 2,
    "solution": {
-    "statement": "$L=$ Luminosity of the giant stars in the giant branch\n\n$L_{MS}=$ Luminosity of the main sequence star\n\n$F=$ Flux of the giant stars in the giant branch\n\n$F_{MS}=$ Flux of the main sequence star\n\n$T=$ Temperature of the giant star\n\n$T_{MS}=$ Temperature of the main sequence star\n\n$R=$ Radius of the giant star\n\n$R_{MS}=$ Radius of the main sequence star\n\nUse the radius-luminosity-temperature relation\n\n$$\\frac L{L_{MS}}=\\frac{R^2T^4}{R_{MS}^2T_{MS}^4}=\\left(\\frac R{R_{MS}}\\right)^2\\left(\\frac T{T_{MS}}\\right)^4=(100)^2\\left(\\frac13\\right)^4=123.5\\qquad(50\\%)$$\n\n$$F=\\frac L{4\\pi d^2},\\qquad\\frac F{F_{MS}}=\\frac L{L_{MS}}\\left(\\frac{d_{MS}}d\\right)^2$$\n\nthat is, the star becomes 123.5 times brighter when it becomes a giant star. To be just barely visible using the same telescope, we push the star farther so that it becomes 123.5 times dimmer (flux is inversely proportional to a square of the distance).\n\n$$\\frac1{123.5}=\\left[\\frac{1/d}{1/d_{MS}}\\right]^2\\Longrightarrow\\frac d{d_{MS}}=11.11\\Longrightarrow d=11.11d_{MS}$$\n\n$$=11.11(20)\\text{ pc}=222.20\\text{ pc}\\qquad(50\\%)$$",
-    "figures": []
+    "statement": "$L=$ Luminosity of the giant stars in the giant branch\n\n$L_{MS}=$ Luminosity of the main sequence star\n\n$F=$ Flux of the giant stars in the giant branch\n\n$F_{MS}=$ Flux of the main sequence star\n\n$T=$ Temperature of the giant star\n\n$T_{MS}=$ Temperature of the main sequence star\n\n$R=$ Radius of the giant star\n\n$R_{MS}=$ Radius of the main sequence star\n\nUse the radius-luminosity-temperature relation\n\n$$\\frac L{L_{MS}}=\\frac{R^2T^4}{R_{MS}^2T_{MS}^4}=\\left(\\frac R{R_{MS}}\\right)^2\\left(\\frac T{T_{MS}}\\right)^4=(100)^2\\left(\\frac13\\right)^4=123.5\\qquad(50\\%)$$\n\n$$F=\\frac L{4\\pi d^2},\\qquad\\frac F{F_{MS}}=\\frac L{L_{MS}}\\left(\\frac{d_{MS}}d\\right)^2$$\n\nthat is, the star becomes 123.5 times brighter when it becomes a giant star. To be just barely visible using the same telescope, we push the star farther so that it becomes 123.5 times dimmer (flux is inversely proportional to a square of the distance).\n\n$$\\frac1{123.5}=\\left[\\frac{1/d}{1/d_{MS}}\\right]^2\\Longrightarrow\\frac d{d_{MS}}=11.11\\Longrightarrow d=11.11d_{MS}$$\n\n$$=11.11(20)\\text{ pc}=222.20\\text{ pc}\\qquad(50\\%)$$"
    },
    "sourceSpans": [
     {
@@ -411,7 +399,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "Gravitational forces of the Sun and the Moon lead to the raising and lowering of sea water surfaces. Let $\\varphi$ be the difference in longitude between points A and B, where both points are at the equator and A is on the sea surface. Derive the horizontal acceleration of sea water at position A due to Moon’s gravitational force at the time when the Moon is above point B according to observers on the Earth (express it in $\\varphi$, the radius $\\boldsymbol{R}$ of Earth, and the Earth-Moon distance $r$).",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/tides",
@@ -468,7 +455,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "The radiation incoming to the Earth from the Sun must penetrate the Earth’s atmosphere before reaching the earth surface. The Earth also releases radiation to its environment and this radiation must penetrate the Earth’s atmosphere before going out to the outer space. In general, the transmittance ($t_1$) of the Sun radiation during its penetration through the Earth’s atmosphere is higher than that of the radiation from the Earth ($t_2$). Let $T_{\\mathrm{eff}\\,\\odot}$ be the effective temperature of the Sun, $R_{\\odot}$ the radius of the Sun, $r_{\\oplus}$ the radius of the Earth, and $x$ the distance between the Sun and the Earth. Derive the temperature of the Earth’s surface as a function of the aforementioned parameters.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/radiation",
@@ -521,7 +507,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "The coordinates of the components of Visual Binary Star $\\mu$ Sco on August 22, 2008 are given in the table below\n\n| | $\\alpha$ (RA) | $\\delta$ (Dec) |\n|---|---|---|\n| $\\mu$ Sco 1 (primary) | $20^{\\mathrm{h}}\\ 17^{\\mathrm{m}}\\ 38^{\\mathrm{s}}.90$ | -12˚ 30' 30\" |\n| $\\mu$ Sco 2 (secondary) | $20^{\\mathrm{h}}\\ 18^{\\mathrm{m}}\\ 03^{\\mathrm{s}}.30$ | -12˚ 32' 41\" |\n\nThe stars are observed using Zeiss refractor telescope at the Bosscha Observatory with aperture and focal length are 600 mm and 10 780 mm, respectively. The telescope is equipped with 765 × 510 pixels CCD camera. The pixel size of the chip is 9 µm × 9 µm.",
-   "figures": [],
    "parts": [
     {
      "label": "a.",
@@ -656,7 +641,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "Consider a type Ia supernova, in a distant galaxy, which has a luminosity of $5.8 \\times 10^{9} L_{\\odot}$ at maximum light. Suppose you observe this supernova using your telescope and find that its brightness is $1.6 \\times 10^{-7}$ times the brightness of Vega. The redshift of its host galaxy is known to be $z = 0.03$. Calculate the distance of this galaxy (in pc) using the data of the supernova and also the Hubble time.",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/cosmology",
@@ -665,8 +649,7 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "The relation between flux $F$ and luminosity $L$: $F=\\frac L{4\\pi d^2}$\n\nFor Vega: $F_V=\\frac{L_V}{4\\pi d_V^2}$\n\nFor Supernova: $F_{SN}=\\frac{L_{SN}}{4\\pi d_{SN}^2}$\n\n$$F_{SN}=1.6\\times10^{-7}F_V\\Longrightarrow\\frac{L_{SN}}{4\\pi d_{SN}^2}=(1.6\\times10^{-7})\\frac{L_V}{4\\pi d_V^2}$$\n\n$$L_{SN}d_V^2=(1.6\\times10^{-7})L_Vd_{SN}^2\\qquad(25\\%)$$\n\n$$d_{SN}=d_V\\left[\\frac1{1.6\\times10^{-7}}\\frac{L_{SN}}{L_V}\\right]^{1/2}=7.76\\left[\\frac1{1.6\\times10^{-7}}\\frac{5.8\\times10^9}{130}\\right]^{1/2}=129581812.59\\text{ pc}$$\n\n$$=1.3\\times10^8\\text{ pc}\\qquad(35\\%)$$\n\nIf $t_H$ is the Hubble time, then the relation between redshift, distance, and Hubble time is:\n\n$$t_H=\\frac{d_{SN}}{cz}=\\left[\\frac{1.3\\times10^8\\text{ pc}}{(1\\text{ lyr/yr})(0.03)}\\right]\\left[\\frac{3.26\\text{ lyr}}{1\\text{ pc}}\\right]=1.41\\times10^{10}\\text{ years}\\qquad(40\\%)$$",
-    "figures": []
+    "statement": "The relation between flux $F$ and luminosity $L$: $F=\\frac L{4\\pi d^2}$\n\nFor Vega: $F_V=\\frac{L_V}{4\\pi d_V^2}$\n\nFor Supernova: $F_{SN}=\\frac{L_{SN}}{4\\pi d_{SN}^2}$\n\n$$F_{SN}=1.6\\times10^{-7}F_V\\Longrightarrow\\frac{L_{SN}}{4\\pi d_{SN}^2}=(1.6\\times10^{-7})\\frac{L_V}{4\\pi d_V^2}$$\n\n$$L_{SN}d_V^2=(1.6\\times10^{-7})L_Vd_{SN}^2\\qquad(25\\%)$$\n\n$$d_{SN}=d_V\\left[\\frac1{1.6\\times10^{-7}}\\frac{L_{SN}}{L_V}\\right]^{1/2}=7.76\\left[\\frac1{1.6\\times10^{-7}}\\frac{5.8\\times10^9}{130}\\right]^{1/2}=129581812.59\\text{ pc}$$\n\n$$=1.3\\times10^8\\text{ pc}\\qquad(35\\%)$$\n\nIf $t_H$ is the Hubble time, then the relation between redshift, distance, and Hubble time is:\n\n$$t_H=\\frac{d_{SN}}{cz}=\\left[\\frac{1.3\\times10^8\\text{ pc}}{(1\\text{ lyr/yr})(0.03)}\\right]\\left[\\frac{3.26\\text{ lyr}}{1\\text{ pc}}\\right]=1.41\\times10^{10}\\text{ years}\\qquad(40\\%)$$"
    },
    "sourceSpans": [
     {
@@ -690,7 +673,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "In the journey of a space craft, scientists make a close encounter with an object and they would like to investigate the object more carefully using their on-board telescope. For simplicity, we assume this to be a two-dimensional problem and that the position of the space craft is stationary in (0,0). The shape of the object is a disk and the boundary has the equation\n\n$$x^{2} + y^{2} - 10x - 8y + 40 = 0.$$\n\nFind the exact values of maximum and minimum of tan $\\varphi$ where $\\varphi$ is the angle of the telescope with respect to the $x$ direction during investigation from one edge to the other edge.",
-   "figures": [],
    "parts": [],
    "topics": [
     "mathematics/analytic-geometry"
@@ -699,7 +681,6 @@
    "importance": 1,
    "solution": {
     "statement": "",
-    "figures": [],
     "sections": [
      {
       "id": "method-1",
@@ -779,7 +760,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "Consider a Potentially Hazardous Object (PHO) moving in a closed orbit under the influence of the Earth’s gravitational force. Let $u$ be the inverse of the distance of the object from the Earth and $p$ be the magnitude of its linear momentum. As the object travels, the graph of $u$ as a function of $p$ passes through points A and B as shown in the following table. Find the mass and the total energy of the object, and express u as a function of p and sketch the shape of $u$ curve from A to B.\n\n| | $p$ ($\\times 10^{9}$ kg m s$^{-1}$) | $u$ ($\\times 10^{-8}$ m$^{-1}$) |\n|---|---|---|\n| A | 0.052 | 5.15 |\n| B | 1.94 | 194.17 |",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/celestial-mechanics"
@@ -787,7 +767,7 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "The mechanical energy is conserved and has the form **(10%)**\n\n$$E=\\frac{p^2}{2m}-\\frac{G\\mathcal Mm}{r}=\\frac{p^2}{2m}-G\\mathcal Mmu$$\n\nInsert the values for $p$ and $u$ for points A and B and solve for $m$ and $E$.\n\n**(20%)**\n\n$$E_A=\\frac{p_A^2}{2m}-G\\mathcal Mmu_A,\\qquad E_B=\\frac{p_B^2}{2m}-G\\mathcal Mmu_B$$\n\n$$\\frac{p_A^2}{2m}-G\\mathcal Mmu_A=\\frac{p_B^2}{2m}-G\\mathcal Mmu_B$$\n\n$$m=\\sqrt{\\frac{p_A^2-p_B^2}{2G\\mathcal M(u_A-u_B)}}$$\n\n$$m=\\sqrt{\\frac{(5.2\\times10^7)^2-(1.94\\times10^9)^2}{2(6.6726\\times10^{-11})(5.9736\\times10^{24})(5.15\\times10^8-1.94\\times10^{-6})}}=50\\text{ tons}.\\qquad(20\\%)$$\n\nThus,\n\n$$E=E_A=\\frac{p_A^2}{2m}-G\\mathcal Mmu_A$$\n\n$$E=\\frac{(5.20\\times10^7)^2}{2(50000)}-(6.6726\\times10^{-11})(5.9736\\times10^{24})(50000)(5.15\\times10^{-8})$$\n\n$$=-1.0\\times10^{12}\\text{ J}\\qquad(20\\%)$$\n\nTo sketch the curve, we use the equation\n\n$$E=\\frac{p^2}{2m}-G\\mathcal Mmu\\Longrightarrow u=\\frac1{2G\\mathcal Mm^2}p^2-\\frac E{G\\mathcal Mm}\\Longrightarrow\\text{Parabolic curve}\\qquad(10\\%)$$\n\n**Figure: (20%)**",
+    "statement": "The mechanical energy is conserved and has the form **(10%)**\n\n$$E=\\frac{p^2}{2m}-\\frac{G\\mathcal Mm}{r}=\\frac{p^2}{2m}-G\\mathcal Mmu$$\n\nInsert the values for $p$ and $u$ for points A and B and solve for $m$ and $E$.\n\n**(20%)**\n\n$$E_A=\\frac{p_A^2}{2m}-G\\mathcal Mmu_A,\\qquad E_B=\\frac{p_B^2}{2m}-G\\mathcal Mmu_B$$\n\n$$\\frac{p_A^2}{2m}-G\\mathcal Mmu_A=\\frac{p_B^2}{2m}-G\\mathcal Mmu_B$$\n\n$$m=\\sqrt{\\frac{p_A^2-p_B^2}{2G\\mathcal M(u_A-u_B)}}$$\n\n$$m=\\sqrt{\\frac{(5.2\\times10^7)^2-(1.94\\times10^9)^2}{2(6.6726\\times10^{-11})(5.9736\\times10^{24})(5.15\\times10^{-8}-1.94\\times10^{-6})}}=50\\text{ tons}.\\qquad(20\\%)$$\n\nThus,\n\n$$E=E_A=\\frac{p_A^2}{2m}-G\\mathcal Mmu_A$$\n\n$$E=\\frac{(5.20\\times10^7)^2}{2(50000)}-(6.6726\\times10^{-11})(5.9736\\times10^{24})(50000)(5.15\\times10^{-8})$$\n\n$$=-1.0\\times10^{12}\\text{ J}\\qquad(20\\%)$$\n\nTo sketch the curve, we use the equation\n\n$$E=\\frac{p^2}{2m}-G\\mathcal Mmu\\Longrightarrow u=\\frac1{2G\\mathcal Mm^2}p^2-\\frac E{G\\mathcal Mm}\\Longrightarrow\\text{Parabolic curve}\\qquad(10\\%)$$\n\n**Figure: (20%)**",
     "figures": [
      {
       "id": "p14-sol-fig1",
@@ -831,7 +811,6 @@
    "points": 20,
    "problemType": "theory",
    "statement": "Galaxy NGC 2639 is morphologically identified as an Sa galaxy with measured maximum rotational velocity $v_{\\mathrm{max}}$ of 324 km/s. After corrections for any extinction, its apparent magnitude in $B$ is $m_B = 12.22$. It is customary to measure a radius $R_{25}$ (in units of kpc) at which the galaxy’s surface brightness falls to 25 mag$_B$/arcsec$^{2}$. Spiral galaxies tend to follow a typical relation:\n\n$$\\log R_{25} = -0.249M_B - 4.00,$$\n\nwhere $M_{\\mathrm{B}}$ is the absolute magnitude in $B$. Apply the $B$-band Tully-Fisher relation for Sa spirals\n\n$$M_B = -9.95 \\log v_{max} + 3.15 \\quad (v_{max}\\ \\ \\mathrm{in\\ km/s})$$\n\nto calculate the mass of NGC 2639 out to $R_{25}$. If colour index of the sun is $(m_{B_{\\odot}} - m_{V_{\\odot}}) = 0.64$, write the mass (of NGC 2639) in units of solar mass $\\mathfrak{M}_{\\odot}$ and its luminosity $B$-band in unit of $L_{\\odot}$ .",
-   "figures": [],
    "parts": [],
    "topics": [
     "astronomy/galaxies",
@@ -840,8 +819,7 @@
    "difficulty": "Hard",
    "importance": 2,
    "solution": {
-    "statement": "Absolute B magnitude of NGC 2639:\n\n$$M_B=-9.95\\log v_{max}+3.15=-9.95\\log(324)+3.15=-21.83\\qquad(20\\%)$$\n\n$$\\log R_{25}=-0.249M_B-4.00=1.4357\\Longrightarrow R_{25}=27.2678\\text{ pc}=8.41\\times10^{19}\\text{ cm}\\qquad(20\\%)$$\n\nMass estimation of NGC 2639:\n\n$$\\mathcal M=\\frac{v^2R_{25}}G=\\frac{(324\\times10^5)^2(8.41\\times10^{19})}{6.6726\\times10^{-8}}=1.32\\times10^{42}\\text{ kg}=6.62\\times10^{11}\\mathcal M_\\odot\\qquad(20\\%)$$\n\nThe B magnitude of the Sun:\n\n$$M_{B\\odot}=M_{V\\odot}+(m_{B\\odot}-m_{V\\odot})=4.82+0.64=5.46\\qquad(20\\%)$$\n\nmeaning the Sun is fainter in the blue band relative to the A0 standard star.\n\nLuminosity of NGC 2639 in solar luminosity ($L_\\odot$):\n\n$$L=10^{0.4(M_{B\\odot}-M_B)}=10^{0.4(5.46+21.83)}L_\\odot=8.24\\times10^{10}L_\\odot\\qquad(20\\%)$$",
-    "figures": []
+    "statement": "Absolute B magnitude of NGC 2639:\n\n$$M_B=-9.95\\log v_{max}+3.15=-9.95\\log(324)+3.15\\ -21.83\\qquad(20\\%)$$\n\n$$\\log R_{25}=-0.249M_B-4.00=1.4357\\Longrightarrow R_{25}=27.2678\\text{ pc}=8.41\\times10^{19}\\text{ cm}\\qquad(20\\%)$$\n\nMass estimation of NGC 2639:\n\n$$\\mathcal M=\\frac{v^2R_{25}}G=\\frac{(324\\times10^5)^2(8.41\\times10^{19})}{6.6726\\times10^{-8}}=1.32\\times10^{42}\\text{ kg}=6.62\\times10^{11}\\mathcal M_\\odot\\qquad(20\\%)$$\n\nThe B magnitude of the Sun:\n\n$$M_{B\\odot}=M_{V\\odot}+(m_{B\\odot}-m_{V\\odot})=4.82+0.64=5.46\\qquad(20\\%)$$\n\nmeaning the Sun is fainter in the blue band relative to the A0 standard star.\n\nLuminosity of NGC 2639 in solar luminosity ($L_\\odot$):\n\n$$L=10^{0.4(M_{B\\odot}-M_B)}=10^{0.4(5.46+21.83)}L_\\odot=8.24\\times10^{10}L_\\odot\\qquad(20\\%)$$"
    },
    "sourceSpans": [
     {
@@ -953,7 +931,6 @@
    "points": 100,
    "problemType": "theory",
    "statement": "A *UBV* photometric (*UBV* Johnson’s) observation of a star gives $U = 8.15$, $B = 8.50$, and $V = 8.14$. Based on the spectral class, one gets the intrinsic color $(U - B)_{\\mathrm{o}} = -0.45$. If the star is known to have radius of $2.3\\ R_{\\odot}$, absolute bolometric magnitude of -0.25, and bolometric correction (*BC*) of -0.15, determine:",
-   "figures": [],
    "parts": [
     {
      "label": "a.",
@@ -980,7 +957,6 @@
    "importance": 2,
    "solution": {
     "statement": "$U=8.15$, $B=8.50$, and $V=8.14$.\n\n$(U-B)_o=-0.45$, $R=2.3R_\\odot=1.60\\times10^{11}$ cm,\n\n$M_{bol}=-0.25$, $BC=-0.15$",
-    "figures": [],
     "sections": [
      {
       "id": "part-1",
@@ -1028,7 +1004,6 @@
    "points": 100,
    "problemType": "theory",
    "statement": "Measurement of the cosmic microwave background radiation (CMB) shows that its temperature is practically the same at every point in the sky to a very high degree of accuracy. Let us assume that light emitted at the moment of recombination ($T_r \\approx 3000$ K, $t_r \\approx 300000$ years) is only reaching us now ($T_{\\mathrm{o}} \\approx 3$ K, $t_{\\mathrm{o}} \\approx 1.5$ x $10^{10}$ years). Scale factor $S$ is defined as such $S_0 = S\\left(t = t_o\\right) = 1$ and $S_t = S\\left(t < t_o\\right) < 1$. Note that the radiation dominated period was between the time when the inflation stopped ($t = 10^{-32}$ seconds) and the time when the recombination took place, while the matter dominated period started at the recombination time. During the radiation dominated period $S$ is proportional to $t^{1/2}$, while during the matter dominated period $S$ is proportional to $t^{2/3}$.",
-   "figures": [],
    "parts": [
     {
      "label": "a.",
@@ -1058,7 +1033,6 @@
    "importance": 2,
    "solution": {
     "statement": "",
-    "figures": [],
     "sections": [
      {
       "id": "part-1",
@@ -1094,7 +1068,7 @@
      {
       "id": "part-3",
       "title": "c)",
-      "statement": "From the time at recombination ($t_r$) to the current time ($t_o$) $S\\propto t^{2/3}$, we derive\n\n$$\\frac{S_o}{S_r}=\\left(\\frac{t_o}{t_r}\\right)^{2/3}=\\left(\\frac{1.5\\times10^{10}\\text{ years}}{3\\times10^5\\text{ years}}\\right)^{2/3}=1.36\\times10^3$$\n\nThe size of our universe at $t_r$ is\n\n$$\\frac{1.5\\times10^{10}\\text{ light years}}{1.36\\times10^3}=1.11\\times10^7\\text{ light years}\\qquad(20\\%)$$\n\nWhen the inflation stopped, the Universe was radiation dominated ($t_r=3\\times10^5$ years to $t_i=10^{-32}$ s), we get\n\n$$\\frac{S_r}{S_i}=\\left(\\frac{t_r}{t_i}\\right)^{1/2}=\\left(\\frac{9.46\\times10^{12}\\text{ s}}{10^{-32}\\text{ s}}\\right)^{1/2}=3.08\\times10^{22}.$$\n\nThe size of universe at the end of the inflation period was\n\n$$\\frac{1.1\\times10^7\\text{ light years}}{3.08\\times10^{22}}=3.57\\times10^{-16}\\text{ light years}\\approx3\\text{ m}\\qquad(20\\%)$$",
+      "statement": "From the time at recombination ($t_r$) to the current time ($t_o$) $S\\propto t^{2/3}$, we derive\n\n$$\\frac{S_o}{S_r}=\\left(\\frac{t_o}{t_r}\\right)=\\left(\\frac{1.5\\times10^{10}\\text{ years}}{3\\times10^5\\text{ years}}\\right)^{2/3}=1.36\\times10^3$$\n\nThe size of our universe at $t_r$ is\n\n$$\\frac{1.5\\times10^{10}\\text{ light years}}{1.36\\times10^3}=1.11\\times10^7\\text{ light years}\\qquad(20\\%)$$\n\nWhen the inflation stopped, the Universe was radiation dominated ($t_r=3\\times10^5$ years to $t_i=10^{-32}$ s), we get\n\n$$\\frac{S_r}{S_i}=\\left(\\frac{t_r}{t_i}\\right)^{1/2}=\\left(\\frac{9.46\\times10^{12}\\text{ s}}{10^{-32}\\text{ s}}\\right)^{1/2}=3.08\\times10^{22}.$$\n\nThe size of universe at the end of the inflation period was\n\n$$\\frac{1.1\\times10^7\\text{ light years}}{3.08\\times10^{22}}=3.57\\times10^{-16}\\text{ light years}\\approx3\\text{ m}\\qquad(20\\%)$$",
       "figures": [
        {
         "id": "p18-sol-fig2",
