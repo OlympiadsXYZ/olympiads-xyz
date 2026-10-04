@@ -108,16 +108,93 @@ nodeTest(
   }
 );
 nodeTest(
-  'question navigation cannot be redirected to a supplementary key',
+  'explicit registered question pin selects its own original without changing the key',
   () => {
+    const overlay = {
+      [p.id]: {
+        problems: { document: 'supplement-1', page: 1, via: 'manual' },
+      },
+    };
+    assert.deepEqual(sourceDocumentFor(paper, p, 'problems', overlay), {
+      document: 'supplement-1',
+      source: paper.supplementarySources['supplement-1'],
+    });
+    assert.deepEqual(sourceDocumentFor(paper, p, 'solutions', overlay), {
+      document: 'solutions',
+      source: paper.solutionSource,
+    });
+  }
+);
+
+nodeTest(
+  'both roles reject invalid role, via, document and registered-page coverage',
+  () => {
+    for (const role of ['problems', 'solutions']) {
+      const overlay = (document, page = 1, via = 'manual') => ({
+        [p.id]: { [role]: { document, page, via } },
+      });
+      for (const via of ['text', 'heading', '', null]) {
+        assert.throws(
+          () =>
+            sourceDocumentFor(paper, p, role, overlay('supplement-1', 1, via)),
+          /explicit manual/
+        );
+      }
+      for (const document of [
+        'absent',
+        'https://example.org/fake.pdf',
+        '__proto__',
+      ]) {
+        assert.throws(
+          () => sourceDocumentFor(paper, p, role, overlay(document)),
+          /Unregistered/
+        );
+      }
+      for (const document of [null, 1, {}]) {
+        assert.throws(
+          () => sourceDocumentFor(paper, p, role, overlay(document)),
+          /explicit manual/
+        );
+      }
+      for (const page of [0, -1, 4, 1.5, '1']) {
+        assert.throws(
+          () =>
+            sourceDocumentFor(paper, p, role, overlay('supplement-1', page)),
+          /outside/
+        );
+      }
+      assert.throws(
+        () =>
+          sourceDocumentFor(paper, p, role, {
+            [p.id]: { [role]: { document: 'supplement-1', page: 1 } },
+          }),
+        /explicit manual/
+      );
+      assert.throws(
+        () =>
+          sourceDocumentFor(paper, p, role, {
+            [p.id]: { [role]: { document: 'supplement-1', via: 'manual' } },
+          }),
+        /outside/
+      );
+      for (const badSource of [
+        { pages: [1] },
+        { archiveKey: key('x.pdf') },
+        { archiveKey: key('x.pdf'), pages: [2] },
+      ]) {
+        assert.throws(() =>
+          sourceDocumentFor(
+            { ...paper, supplementarySources: { 'supplement-1': badSource } },
+            p,
+            role,
+            overlay('supplement-1')
+          )
+        );
+      }
+    }
     assert.throws(
-      () =>
-        sourceDocumentFor(paper, p, 'problems', {
-          [p.id]: {
-            problems: { document: 'supplement-1', page: 1, via: 'manual' },
-          },
-        }),
-      /explicit manual/
+      () => sourceDocumentFor(paper, p, 'question', {}),
+      /Unknown source navigation role/
     );
   }
 );
@@ -253,3 +330,70 @@ nodeTest('actual generator refuses an unregistered original selection', t => {
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /Unregistered original key document/);
 });
+
+nodeTest(
+  'actual generator question companion footer and compare URL use the same registered source; primary/key links stay exact',
+  t => {
+    const f = fixture(t);
+    f.write('content/problem-source-pages.json', {
+      version: 1,
+      problems: {
+        'source-nav-fixture-p1': {
+          problems: { page: 3, via: 'manual' },
+          solutions: { page: 2, via: 'manual' },
+        },
+        'source-nav-fixture-p2': {
+          problems: { document: 'supplement-1', page: 2, via: 'manual' },
+          solutions: { document: 'supplement-2', page: 3, via: 'manual' },
+        },
+        'source-nav-fixture-p3': {
+          problems: { document: 'supplement-2', page: 1, via: 'manual' },
+        },
+      },
+    });
+    const result = f.run();
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+    for (const [n, name, page] of [
+      [1, 'th_problems.pdf', 3],
+      [2, '2_sol.pdf', 2],
+      [3, '3_sol.pdf', 1],
+    ]) {
+      const info = f
+        .entries()
+        .find(x => x.uniqueId === `source-nav-fixture-p${n}`);
+      assert(info.url.endsWith(`/${name}#page=${page}`), info.url);
+      assert(f.mdx(n).includes(`Оригинал в Архива: [${name}](`));
+      assert(f.mdx(n).includes(`/${name}#page=${page}`));
+      if (n > 1) {
+        assert(!f.mdx(n).includes('Оригинал в Архива: [th_problems.pdf]('));
+      }
+    }
+    const p1 = f.entries().find(x => x.uniqueId === 'source-nav-fixture-p1');
+    assert(p1.solutionUrl.endsWith('/1_sol.pdf#page=2'));
+    const p2 = f.entries().find(x => x.uniqueId === 'source-nav-fixture-p2');
+    assert(p2.solutionUrl.endsWith('/3_sol.pdf#page=3'));
+  }
+);
+
+nodeTest(
+  'actual generator rejects unregistered, computed or uncovered question selections',
+  t => {
+    const f = fixture(t);
+    for (const problems of [
+      { document: 'foreign-question', page: 1, via: 'manual' },
+      { document: 'supplement-1', page: 1, via: 'text' },
+      { document: 'supplement-1', page: 4, via: 'manual' },
+    ]) {
+      f.write('content/problem-source-pages.json', {
+        version: 1,
+        problems: { 'source-nav-fixture-p2': { problems } },
+      });
+      const result = f.run();
+      assert.notEqual(result.status, 0);
+      assert.match(
+        result.stderr,
+        /Unregistered original question document|explicit manual|outside/
+      );
+    }
+  }
+);

@@ -11,13 +11,11 @@ export function sourceDocumentFor(paper, problem, role, overlay = {}) {
   if (document === undefined || document === role) {
     return { document: role, source: original };
   }
-  if (
-    role !== 'solutions' ||
-    pinned.via !== 'manual' ||
-    typeof document !== 'string'
-  ) {
+  const label = role === 'solutions' ? 'key' : 'question';
+  const pinRole = role === 'solutions' ? 'solution' : 'question';
+  if (pinned.via !== 'manual' || typeof document !== 'string') {
     throw new Error(
-      `A named key document requires an explicit manual solution pin: ${problem?.id}`
+      `A named ${label} document requires an explicit manual ${pinRole} pin: ${problem?.id}`
     );
   }
   const source = Object.hasOwn(paper.supplementarySources || {}, document)
@@ -25,7 +23,7 @@ export function sourceDocumentFor(paper, problem, role, overlay = {}) {
     : null;
   if (!source?.archiveKey) {
     throw new Error(
-      `Unregistered original key document ${document}: ${problem?.id}`
+      `Unregistered original ${label} document ${document}: ${problem?.id}`
     );
   }
   if (
@@ -35,7 +33,11 @@ export function sourceDocumentFor(paper, problem, role, overlay = {}) {
     !source.pages.includes(pinned.page)
   ) {
     throw new Error(
-      `Key page is outside the registered original scope ${document}: ${problem?.id}`
+      `${
+        label === 'key' ? 'Key' : 'Question'
+      } page is outside the registered original scope ${document}: ${
+        problem?.id
+      }`
     );
   }
   return { document, source };

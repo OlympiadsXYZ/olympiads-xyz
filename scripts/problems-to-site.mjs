@@ -1873,7 +1873,11 @@ export function sectionLines(sections, problem, resolve, solution = false) {
       const text = sourceText(part.statement, problem, resolve);
       const shownLabel = displayPartLabel(part.label);
       out.push(
-        labelledPartText(text, shownLabel === '' ? '' : `**${mdText(shownLabel)}**`, pts),
+        labelledPartText(
+          text,
+          shownLabel === '' ? '' : `**${mdText(shownLabel)}**`,
+          pts
+        ),
         ''
       );
       for (const fig of figuresNotInline(part.figures, texts, candidates)) {
@@ -2230,14 +2234,18 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
       (section.parts ?? [])
         .filter(part => part.answer)
         .map(part => ({
-          label: displayPartLabel(part.label) === ''
-            ? section.title
-            : `${section.title}, ${part.label}`,
+          label:
+            displayPartLabel(part.label) === ''
+              ? section.title
+              : `${section.title}, ${part.label}`,
           answer: part.answer,
         }))
     ),
   ]
-    .map(p => ({ label: displayPartLabel(p.label), shown: renderAnswer(p.answer) }))
+    .map(p => ({
+      label: displayPartLabel(p.label),
+      shown: renderAnswer(p.answer),
+    }))
     .filter(p => p.shown);
   if (answers.length) {
     lines.push('## Отговори', '');
@@ -2330,7 +2338,8 @@ export function problemMdx(paper, problem, state, sourceFile, figureOpts = {}) {
     }
     lines.push('</details>', '');
   }
-  const src = paper.source?.archiveKey;
+  const src = sourceDocumentFor(paper, problem, 'problems', sourcePages).source
+    ?.archiveKey;
   const solutionOriginal = solutionOriginalFor(paper, problem, sourcePages);
   if (src) {
     lines.push('---', '');
@@ -2378,6 +2387,12 @@ export function problemName(problem, numbers = nav.numbers) {
 }
 
 export function problemInfo(paper, problem) {
+  const questionOriginal = sourceDocumentFor(
+    paper,
+    problem,
+    'problems',
+    sourcePages
+  ).source;
   const grade = gradeLabel(paper.grade, paper.subject, paper.competition);
   const solutionOriginal = solutionOriginalFor(paper, problem, sourcePages);
   const classification = classificationSearch(problem.classification);
@@ -2387,9 +2402,9 @@ export function problemInfo(paper, problem) {
     name: problemName(problem),
     // the original opens on the problem's own page (sourcePage); a Word or text original has no pages to open
     url: withPage(
-      archiveUrl(paper.subject, paper.source.archiveKey),
+      archiveUrl(paper.subject, questionOriginal.archiveKey),
       sourcePage(paper, problem, 'problems'),
-      paper.source.archiveKey
+      questionOriginal.archiveKey
     ),
     // The official solutions PDF, when the paper has one; the problem page's
     // compare panel offers it next to the problems PDF.
