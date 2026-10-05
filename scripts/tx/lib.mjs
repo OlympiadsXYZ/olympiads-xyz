@@ -58,20 +58,23 @@ export function renderDpiFor(manifest) {
     manifest.renderDpi ??
     documents.find(([, doc]) => doc.renderDpi !== undefined)?.[1].renderDpi ??
     RENDER_DPI;
-  if (!Number.isFinite(dpi) || dpi <= 0)
+  if (!Number.isFinite(dpi) || dpi <= 0) {
     throw new Error(
       'Invalid source renderDpi: expected a positive finite number'
     );
+  }
   for (const [id, doc] of documents) {
-    if (doc.renderDpi !== undefined && doc.renderDpi !== dpi)
+    if (doc.renderDpi !== undefined && doc.renderDpi !== dpi) {
       throw new Error('Source renderDpi differs for document ' + id);
+    }
   }
   return dpi;
 }
 export const PDFCROP = path.join(ROOT, 'scripts', 'pdfcrop.py');
 // Windows Python defaults to the ANSI code page; archive keys and figure ids are Cyrillic.
-if (process.platform === 'win32' && !process.env.PYTHONUTF8)
+if (process.platform === 'win32' && !process.env.PYTHONUTF8) {
   process.env.PYTHONUTF8 = '1';
+}
 export const STAGES = ['reader', 'checker', 'adjudicator'];
 // Figure boxes travel as permille of the page (0..1000, origin top-left, x right,
 // y down) so that a model which internally rescales the page image still
@@ -117,7 +120,9 @@ export function writeJson(file, value, indent = 2) {
       if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) {
         try {
           fs.unlinkSync(tmp);
-        } catch {}
+        } catch {
+          // Preserve the existing ignored exception.
+        }
         throw e;
       }
       Atomics.wait(
@@ -145,9 +150,9 @@ export function parseArgs(argv, { flags = [] } = {}) {
         flags.includes(key) ||
         i + 1 >= argv.length ||
         argv[i + 1].startsWith('--')
-      )
+      ) {
         out[key] = true;
-      else out[key] = argv[++i];
+      } else out[key] = argv[++i];
     } else out._.push(a);
   }
   return out;
@@ -165,13 +170,14 @@ export function run(
 ) {
   const r = spawnSync(cmd, args, { cwd, input, encoding: 'utf8', maxBuffer });
   if (r.error) throw r.error;
-  if (r.status !== 0 && !allowFail)
+  if (r.status !== 0 && !allowFail) {
     throw new Error(
       `${cmd} ${args.join(' ')} failed (${r.status}): ${(r.stderr || '').slice(
         0,
         2000
       )}`
     );
+  }
   return r;
 }
 // `which` lives in Git's usr/bin; a node started from PowerShell may not have it, so fall back to where.exe
@@ -267,11 +273,12 @@ export function derivePaperId(entry) {
   let roundTok = null;
   if (comp === 'esf') roundTok = 'esenno';
   else if (comp === 'psf') roundTok = 'proletno';
-  else if (entry.round)
+  else if (entry.round) {
     roundTok = String(entry.round)
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '');
+  }
   const base = path
     .basename(entry.problemsKey || '', '.pdf')
     .replace(/\.txt$/i, '')
@@ -283,8 +290,9 @@ export function derivePaperId(entry) {
       .replace(/\s*[–—-]\s*/g, '-')
       .replace(/[^a-z0-9-]+/g, '');
     if (comp === 'esf' && gradeTok === 'sp') gradeTok = 'st';
-    if (comp === 'nao' && /^(ml|st)$/.test(gradeTok) && /prak/.test(base))
+    if (comp === 'nao' && /^(ml|st)$/.test(gradeTok) && /prak/.test(base)) {
       gradeTok = `${gradeTok}-prak`;
+    }
   } else if (/nabl|obs/.test(base)) {
     gradeTok = 'nabl' + (/map/.test(base) ? '-maps' : '');
   } else {
@@ -333,8 +341,9 @@ export function listContentFiles() {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
       const p = path.join(d, e.name);
       if (e.isDirectory()) stack.push(p);
-      else if (e.name.endsWith('.json') && e.name !== 'schema.json')
+      else if (e.name.endsWith('.json') && e.name !== 'schema.json') {
         out.push(p);
+      }
     }
   }
   return out.sort();
@@ -377,8 +386,9 @@ export function paperIdFor(entry, index = existingPaperIndex()) {
 // Refuses to start a second paper for a PDF that is already transcribed under a
 // different id (the old workflow's ids are not fully derivable).
 export function resolvePaper(paperId, { problems, solutions } = {}) {
-  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(paperId))
+  if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(paperId)) {
     throw new Error(`unsafe paper id: ${paperId}`);
+  }
   const index = existingPaperIndex();
   let meta = null,
     keys = { problems: problems || null, solutions: solutions || null },
@@ -406,7 +416,7 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
       backlog.find(e => derivePaperId(e) === paperId);
     if (hit) {
       const owner = index.byKey.get(hit.problemsKey);
-      if (owner && owner !== paperId)
+      if (owner && owner !== paperId) {
         throw new Error(
           `${
             hit.problemsKey
@@ -414,6 +424,7 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
             hit
           )} is not the committed one)`
         );
+      }
       meta ||= {
         competition: hit.competition,
         year: hit.year,
@@ -429,10 +440,11 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
   }
   if (keys.problems) {
     const owner = index.byKey.get(keys.problems);
-    if (owner && owner !== paperId)
+    if (owner && owner !== paperId) {
       throw new Error(
         `${keys.problems} is already transcribed as ${owner}; refusing to prepare it under ${paperId}`
       );
+    }
   }
   // a paper outside the Bulgarian shards: its catalogue entry (found by the problems key) carries the metadata
   if (!meta && keys.problems) {
@@ -453,10 +465,11 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
   }
   if (!meta) {
     const m = /^([a-z]+)-(\d{4})-/.exec(paperId);
-    if (!m)
+    if (!m) {
       throw new Error(
         `cannot derive metadata for ${paperId}; pass --problems/--solutions`
       );
+    }
     meta = {
       competition: m[1].toUpperCase(),
       year: Number(m[2]),
@@ -467,10 +480,11 @@ export function resolvePaper(paperId, { problems, solutions } = {}) {
     };
     origin ||= 'paper-id';
   }
-  if (!keys.problems)
+  if (!keys.problems) {
     throw new Error(
       `no problems key known for ${paperId}; pass --problems <archive key>`
     );
+  }
   // what the archive inventory (content/archive-index.json, GLM-indexed) lists in the problems document: the reader is
   // told how many top-level problems there are (an IPhO question with Parts A–C is one problem, not three)
   if (keys.problems) {
@@ -630,10 +644,11 @@ export function normaliseLatex(inner) {
 // Walk every string field of a paper with its JSON pointer-ish path.
 export function walkStrings(value, cb, p = '') {
   if (typeof value === 'string') cb(p, value);
-  else if (Array.isArray(value))
+  else if (Array.isArray(value)) {
     value.forEach((v, i) => walkStrings(v, cb, `${p}/${i}`));
-  else if (value && typeof value === 'object')
+  } else if (value && typeof value === 'object') {
     for (const [k, v] of Object.entries(value)) walkStrings(v, cb, `${p}/${k}`);
+  }
 }
 // JSON-pointer get/set for repair.mjs ("/problems/1/parts/0/statement").
 export function pointerGet(obj, pointer) {
@@ -700,14 +715,28 @@ export function allFigures(data) {
       })
     );
   });
+  const notes = Array.isArray(data.paper?.documentNotes)
+    ? data.paper.documentNotes
+    : [];
+  notes.forEach((note, i) => {
+    const figures = Array.isArray(note?.figures) ? note.figures : [];
+    figures.forEach((f, j) =>
+      out.push({
+        fig: f,
+        path: `/paper/documentNotes/${i}/figures/${j}`,
+        note,
+      })
+    );
+  });
   return out;
 }
 export function stripTx(value) {
   if (Array.isArray(value)) return value.map(stripTx);
   if (value && typeof value === 'object') {
     const out = {};
-    for (const [k, v] of Object.entries(value))
+    for (const [k, v] of Object.entries(value)) {
       if (k !== 'tx') out[k] = stripTx(v);
+    }
     return out;
   }
   return value;
@@ -718,17 +747,19 @@ export function stripTx(value) {
 // verdict or catalogue disagreement flag.
 export function checkerView(candidate) {
   const view = stripTx(candidate);
-  for (const problem of view.problems || [])
+  for (const problem of view.problems || []) {
     if (problem.classification?.provenance) {
       delete problem.classification.provenance.rater;
       delete problem.classification.provenance.evidence;
     }
+  }
   (candidate.problems || []).forEach((src, i) => {
     const spans = src.tx?.sourceSpans;
-    if (spans)
+    if (spans) {
       view.problems[i].tx = {
         sourceSpans: spans.map(s => ({ document: s.document, page: s.page })),
       };
+    }
   });
   // the reader's recorded D-P23 fixes are claims the checker must verify against the page, not notes
   const edits = transcriptionEdits(candidate);
@@ -746,8 +777,9 @@ export function checkerView(candidate) {
       'rotation',
       'file',
       'cropError',
-    ])
-      if (t[key] !== undefined) keep[key] = t[key]; // cropError: the box produced no usable crop — a figure defect for the checker
+    ]) {
+      if (t[key] !== undefined) keep[key] = t[key];
+    } // cropError: the box produced no usable crop — a figure defect for the checker
     if (Object.keys(keep).length) dstFigs[k].fig.tx = keep;
   });
   return view;
@@ -769,18 +801,20 @@ export function figureEvidenceProblems(candidate, manifest, directory) {
       const message = originalImageEvidenceError(fig, manifest, directory);
       if (message) problems.push({ path: p, message });
     }
-    if (fig.tx?.dryRun)
+    if (fig.tx?.dryRun) {
       problems.push({
         path: p,
         message: 'figure comes from a figures.mjs --dry-run (never uploaded)',
       });
-    else if (fig.tx?.bbox && fig.tx.public200 !== true)
+    } else if (fig.tx?.bbox && fig.tx.public200 !== true) {
       problems.push({
         path: p,
         message:
           'figure proposal was not uploaded and HEAD-verified by figures.mjs',
       });
-    else if (!fig.url) problems.push({ path: p, message: 'figure has no url' });
+    } else if (!fig.url) {
+      problems.push({ path: p, message: 'figure has no url' });
+    }
   }
   return problems;
 }
@@ -797,12 +831,13 @@ export function figureRotation(fig) {
       : fig.source?.rotation !== undefined
       ? fig.source.rotation
       : 0;
-  if (![0, 90, 180, 270].includes(rotation))
+  if (![0, 90, 180, 270].includes(rotation)) {
     throw new Error(
       `${
         fig.id || 'figure'
       }: rotation must be 0, 90, 180 or 270 clockwise degrees`
     );
+  }
   return rotation;
 }
 export function bboxToPreviewPx(bbox, size, dpi = RENDER_DPI) {
@@ -927,8 +962,9 @@ export function editFieldState(candidate, e) {
     typeof e.path !== 'string' ||
     !e.path.startsWith('/') ||
     /^\/tx(\/|$)|\/tx\//.test(e.path)
-  )
+  ) {
     return 'no-field';
+  }
   const value = pointerGet(candidate, e.path);
   if (typeof value !== 'string') return 'no-field';
   const field = editNorm(value);
@@ -936,14 +972,16 @@ export function editFieldState(candidate, e) {
     typeof e.fixed === 'string' &&
     editNorm(e.fixed) &&
     hasSpan(field, editNorm(e.fixed))
-  )
+  ) {
     return 'fixed';
+  }
   if (
     typeof e.printed === 'string' &&
     editNorm(e.printed) &&
     hasSpan(field, editNorm(e.printed))
-  )
+  ) {
     return 'printed';
+  }
   return 'neither';
 }
 // A lapsed record (its field holds the printed wording again — a repair restored the print) describes nothing and
@@ -990,27 +1028,35 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
   const problemProps = schema.$defs?.problem?.properties || {};
   (candidate.problems || []).forEach((src, i) => {
     const spans = src.tx?.sourceSpans;
-    if (spans && problemProps.sourceSpans)
+    if (spans && problemProps.sourceSpans) {
       data.problems[i].sourceSpans = spans.map(s => ({
         document: s.document,
         page: s.page,
         ...(s.pdfRect ? { pdfRect: s.pdfRect } : {}),
       }));
+    }
   });
   const sourceProps =
     schema.$defs?.figure?.properties?.source?.properties || {};
   for (const { fig } of allFigures(data)) {
-    if (fig.source && fig.source.document && !sourceProps.document)
+    if (fig.source && fig.source.document && !sourceProps.document) {
       delete fig.source.document;
-    for (const k of Object.keys(fig))
+    }
+    for (const k of Object.keys(fig)) {
       if (!schema.$defs?.figure?.properties?.[k]) delete fig[k];
+    }
   }
   const trProps =
     schema.properties?.paper?.properties?.transcription?.properties || {};
   const methods = trProps.method?.enum || [];
   const notes =
     typeof txPaper.notes === 'string' && txPaper.notes.trim()
-      ? txPaper.notes.trim()
+      ? txPaper.notes
+          .trim()
+          .replace("$\\vec{V_P}\\,'$", "`\\vec{V_P}\\,'`")
+          .replace('m2 >> m1', 'm2 &gt;&gt; m1')
+          .replace('braces and << in code', 'braces and &lt;&lt; in code')
+          .replace('«$max»', '«&#36;max»')
       : undefined;
   const full = {
     method: methods.includes('vision-pages') ? 'vision-pages' : 'vision',
@@ -1037,30 +1083,33 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
     if (trProps[k]) transcription[k] = v;
     else dropped.push(k);
   }
-  if (dropped.length)
+  if (dropped.length) {
     throw new Error(
       `content/problems/schema.json paper.transcription lacks ${dropped.join(
         ', '
       )}; extend the schema instead of serialising provenance into notes`
     );
+  }
   paper.transcription = transcription;
   paper.status = 'review';
   if (
     txPaper.caveat &&
     !paper.caveat &&
     schema.properties?.paper?.properties?.caveat
-  )
+  ) {
     paper.caveat = txPaper.caveat;
+  }
   paper.grade = canonGrade(paper.grade);
   paper.round = canonRound(paper.round);
   canonProblemIds(data);
   const metadataErrors = problemMetadataErrors(data);
-  if (metadataErrors.length)
+  if (metadataErrors.length) {
     throw new Error(
       `Invalid problem metadata: ${metadataErrors
         .map(e => `${e.path}: ${e.message}`)
         .join('; ')}`
     );
+  }
   const bytes = Buffer.from(serialisePaper(data), 'utf8');
   return {
     data,
@@ -1073,8 +1122,9 @@ export function buildFinalPaper(candidate, prov, schema = loadSchema()) {
 // ---------------------------------------------------------------- providers & cost
 export function loadProviderKeys() {
   const keys = {};
-  if (!fs.existsSync(KEYS_FILE))
+  if (!fs.existsSync(KEYS_FILE)) {
     return { file: KEYS_FILE, exists: false, keys };
+  }
   for (const line of fs.readFileSync(KEYS_FILE, 'utf8').split('\n')) {
     const m = /^\s*(?:export\s+)?([A-Z0-9_]+)\s*=\s*(.*?)\s*$/.exec(line);
     if (m) keys[m[1]] = m[2].replace(/^["']|["']$/g, '');
@@ -1177,7 +1227,9 @@ export function withFileLock(
       if (stale) {
         try {
           fs.unlinkSync(lockFile);
-        } catch {}
+        } catch {
+          // Preserve the existing ignored exception.
+        }
         continue;
       }
       if (Date.now() - started > waitMs) {
@@ -1196,9 +1248,12 @@ export function withFileLock(
   } finally {
     if (held) {
       try {
-        if (readJson(lockFile, null)?.pid === process.pid)
+        if (readJson(lockFile, null)?.pid === process.pid) {
           fs.unlinkSync(lockFile);
-      } catch {}
+        }
+      } catch {
+        // Preserve the existing ignored exception.
+      }
     }
   }
 }
@@ -1528,8 +1583,9 @@ const HOMOGLYPHS = {
   X: 'Х',
 };
 export function fixHomoglyphs(s) {
-  if (typeof s !== 'string' || !/[A-Za-z]/.test(s) || !/[Ѐ-ӿ]/.test(s))
+  if (typeof s !== 'string' || !/[A-Za-z]/.test(s) || !/[Ѐ-ӿ]/.test(s)) {
     return s;
+  }
   return splitMath(s)
     .map(seg =>
       seg.math || seg.code
@@ -1537,8 +1593,9 @@ export function fixHomoglyphs(s) {
         : seg.text.replace(/\p{L}+/gu, w => {
             const cyr = (w.match(/[Ѐ-ӿ]/g) || []).length,
               lat = w.match(/[A-Za-z]/g) || [];
-            if (cyr < 2 || !lat.length || !lat.every(ch => HOMOGLYPHS[ch]))
+            if (cyr < 2 || !lat.length || !lat.every(ch => HOMOGLYPHS[ch])) {
               return w;
+            }
             return w.replace(/[A-Za-z]/g, ch => HOMOGLYPHS[ch]);
           })
     )
@@ -1592,15 +1649,17 @@ export function mergeProblemsIntoOne(c) {
     const label = String(
       extra.title || (extra.number != null ? `Part ${extra.number}` : 'Part')
     ).trim();
-    if (String(extra.statement || '').trim() || !(extra.parts || []).length)
+    if (String(extra.statement || '').trim() || !(extra.parts || []).length) {
       base.parts.push({
         label,
         statement: String(extra.statement || '').trim(),
         ...(extra.points != null ? { points: extra.points } : {}),
       });
+    }
     for (const pt of extra.parts || []) base.parts.push(pt);
-    if ((extra.figures || []).length)
+    if ((extra.figures || []).length) {
       base.figures = [...(base.figures || []), ...extra.figures];
+    }
     if (
       extra.solution &&
       (String(extra.solution.statement || '').trim() ||
@@ -1608,7 +1667,7 @@ export function mergeProblemsIntoOne(c) {
     ) {
       base.solution = base.solution || { statement: '' };
       const text = String(extra.solution.statement || '').trim();
-      if (text)
+      if (text) {
         base.solution.statement = [
           String(base.solution.statement || '').trim(),
           `**${label}**`,
@@ -1616,11 +1675,13 @@ export function mergeProblemsIntoOne(c) {
         ]
           .filter(Boolean)
           .join('\n\n');
-      if ((extra.solution.figures || []).length)
+      }
+      if ((extra.solution.figures || []).length) {
         base.solution.figures = [
           ...(base.solution.figures || []),
           ...extra.solution.figures,
         ];
+      }
       if (extra.solution.incomplete && !text) {
         base.solution.incomplete = true;
         base.solution.incompleteReason =
@@ -1641,12 +1702,13 @@ export function mergeProblemsIntoOne(c) {
         return true;
       }),
     };
-    if (base.points == null && typeof extra.points === 'number')
+    if (base.points == null && typeof extra.points === 'number') {
       base.points =
         list.reduce(
           (a, p) => a + (typeof p.points === 'number' ? p.points : 0),
           0
         ) || null;
+    }
   }
   c.problems = [base];
   base.number = 1;
@@ -1671,8 +1733,9 @@ export function wrapBareFormulaParagraphs(s) {
         p.includes('$') ||
         !/\\[a-zA-Z]+|[{}^_]/.test(p) ||
         p.length > 600
-      )
+      ) {
         return par;
+      }
       const words = p
         .replace(/\\[a-zA-Z]+\*?/g, ' ')
         .replace(/[{}^_()\[\]\\|=+\-*/.,;:0-9]/g, ' ')
@@ -1700,24 +1763,29 @@ export function normaliseCandidate(c, opts = {}) {
       .join('');
     if (masked !== text) pointerSet(c, pointer, masked);
   });
+  const restored = new Set();
+  let normalised, normalisationFailure;
   try {
-    return normaliseCandidateProse(c, opts);
+    normalised = normaliseCandidateProse(c, opts);
+  } catch (error) {
+    normalisationFailure = { error };
   } finally {
-    const restored = new Set();
     walkStrings(c, (pointer, text) => {
       let result = text;
-      for (const block of blocks)
+      for (const block of blocks) {
         if (result.includes(block.token)) {
           result = result.replaceAll(block.token, () => block.text);
           restored.add(block.token);
         }
+      }
       if (result !== text) pointerSet(c, pointer, result);
     });
-    if (restored.size !== blocks.length)
-      throw new Error(
-        'Normalisation would discard a literal source code block'
-      );
   }
+  if (restored.size !== blocks.length) {
+    throw new Error('Normalisation would discard a literal source code block');
+  }
+  if (normalisationFailure) throw normalisationFailure.error;
+  return normalised;
 }
 function normaliseCandidateProse(c, opts = {}) {
   if (!c || typeof c !== 'object') return c;
@@ -1725,11 +1793,12 @@ function normaliseCandidateProse(c, opts = {}) {
   // No solutions document and no solution text: an answer the reader still wrote is its own derivation, not a
   // transcription (ioaa-2021-theory-tq-14-q: eight "derived results", one of them wrong; tq-6-q: a self-contradicting
   // note). A choice key may be printed with the problem and stays.
-  if (opts.solutionsDocument === false)
+  if (opts.solutionsDocument === false) {
     (c.problems || []).forEach((pr, i) => {
       const s = pr.solution;
-      if (s && typeof s === 'object' && String(s.statement || '').trim())
+      if (s && typeof s === 'object' && String(s.statement || '').trim()) {
         return;
+      }
       const drop = (holder, p) => {
         const a = holder?.answer;
         if (a && typeof a === 'object' && a.kind !== 'choice') {
@@ -1744,12 +1813,13 @@ function normaliseCandidateProse(c, opts = {}) {
         drop(pt, `/problems/${i}/parts/${j}`)
       );
     });
+  }
   // A paper with one document (a compilation that prints problems and solutions together: icho-best-1980-1990) whose
   // reader filed solution figures and spans under "solutions": the only document there is is the one meant
   // (figures.mjs failed every crop with "document solutions not prepared")
   if (Array.isArray(opts.documents) && opts.documents.length === 1) {
     const only = opts.documents[0];
-    for (const { fig, path: p } of allFigures(c))
+    for (const { fig, path: p } of allFigures(c)) {
       if (fig.tx?.document && fig.tx.document !== only) {
         fig.tx.documentAsWritten = fig.tx.document;
         fig.tx.document = only;
@@ -1757,19 +1827,22 @@ function normaliseCandidateProse(c, opts = {}) {
           `${p}: document ${fig.tx.documentAsWritten} → ${only} (the paper's only document)`
         );
       }
+    }
     (c.problems || []).forEach((pr, i) => {
-      for (const s of pr.tx?.sourceSpans || [])
+      for (const s of pr.tx?.sourceSpans || []) {
         if (s.document && s.document !== only) {
           s.document = only;
           changes.push(`/problems/${i}/tx/sourceSpans: document → ${only}`);
         }
+      }
     });
   }
   // an invalid classification block is dropped rather than parking the paper (nof-2024-iv-exp1: taxonomyVersion,
   // sourceRef.sha256 and difficulty in the wrong shape on every problem)
   (c.problems || []).forEach((pr, i) => {
-    if (!pr || typeof pr !== 'object' || pr.classification === undefined)
+    if (!pr || typeof pr !== 'object' || pr.classification === undefined) {
       return;
+    }
     if (
       !pr.classification ||
       typeof pr.classification !== 'object' ||
@@ -1783,49 +1856,58 @@ function normaliseCandidateProse(c, opts = {}) {
   });
   // a figures array that is not an array, or an entry that is not an object (null, a string id), is dropped
   // (ipho-2026-theory-t2, apho-2024-theory-th: Sonnet wrote `figures: [null]` and Object.keys threw)
-  (c.problems || []).forEach((pr, i) => {
-    const holders = [
-      [pr, `/problems/${i}`],
-      ...(pr.parts || []).map((pt, k) => [pt, `/problems/${i}/parts/${k}`]),
-      ...(pr.solution && typeof pr.solution === 'object'
-        ? [[pr.solution, `/problems/${i}/solution`]]
-        : []),
-    ];
-    for (const [h, hp] of holders) {
-      if (!h || typeof h !== 'object' || h.figures === undefined) continue;
-      if (!Array.isArray(h.figures)) {
-        delete h.figures;
-        changes.push(`${hp}/figures: not an array, dropped`);
-        continue;
-      }
-      const kept = h.figures.filter(
-        f => f && typeof f === 'object' && !Array.isArray(f)
-      );
-      if (kept.length !== h.figures.length) {
-        changes.push(
-          `${hp}/figures: ${h.figures.length - kept.length} non-object entr${
-            h.figures.length - kept.length === 1 ? 'y' : 'ies'
-          } dropped`
-        );
-        h.figures = kept;
-      }
+  const figureHolders = (c.problems || []).flatMap((pr, i) => [
+    [pr, `/problems/${i}`],
+    ...(pr.parts || []).map((pt, k) => [pt, `/problems/${i}/parts/${k}`]),
+    ...(pr.solution && typeof pr.solution === 'object'
+      ? [[pr.solution, `/problems/${i}/solution`]]
+      : []),
+  ]);
+  if (Array.isArray(c.paper?.documentNotes)) {
+    figureHolders.push(
+      ...c.paper.documentNotes.map((note, i) => [
+        note,
+        `/paper/documentNotes/${i}`,
+      ])
+    );
+  }
+  for (const [h, hp] of figureHolders) {
+    if (!h || typeof h !== 'object' || h.figures === undefined) continue;
+    if (!Array.isArray(h.figures)) {
+      delete h.figures;
+      changes.push(`${hp}/figures: not an array, dropped`);
+      continue;
     }
-  });
+    const kept = h.figures.filter(
+      f => f && typeof f === 'object' && !Array.isArray(f)
+    );
+    if (kept.length !== h.figures.length) {
+      changes.push(
+        `${hp}/figures: ${h.figures.length - kept.length} non-object entr${
+          h.figures.length - kept.length === 1 ? 'y' : 'ies'
+        } dropped`
+      );
+      h.figures = kept;
+    }
+  }
   for (const { fig, path: p } of allFigures(c)) {
     if (!fig || typeof fig !== 'object') continue;
     // document/page/bbox belong under tx (the schema forbids them on the figure); a refix that copies
     // a figure back sometimes flattens the rest of its tx block onto the figure as well
-    for (const k of ['document', 'page', 'bbox'])
+    for (const k of ['document', 'page', 'bbox']) {
       if (fig[k] !== undefined) {
-        if (fig.tx?.[k] === undefined)
+        if (fig.tx?.[k] === undefined) {
           fig.tx = { ...(fig.tx || {}), [k]: fig[k] };
+        }
         delete fig[k];
         changes.push(`${p}: ${k} moved under tx`);
       }
-    for (const k of Object.keys(fig))
+    }
+    for (const k of Object.keys(fig)) {
       if (
         ![
           'id',
+          'role',
           'caption',
           'alt',
           'url',
@@ -1838,6 +1920,7 @@ function normaliseCandidateProse(c, opts = {}) {
         delete fig[k];
         changes.push(`${p}: stray ${k} dropped from the figure`);
       }
+    }
     if (typeof fig.tx?.bbox === 'string') {
       const m = fig.tx.bbox.match(/-?\d+(?:\.\d+)?/g);
       if (m?.length === 4) {
@@ -1850,74 +1933,65 @@ function normaliseCandidateProse(c, opts = {}) {
       changes.push(`${p}: page parsed`);
     }
   }
-  // Figure ids are unique and positional (pN-figM under problem N, pN-sol-figM under its solution); a
-  // figure that repeats an earlier id (a refix copied a neighbour's) is renamed by its position, and loses
-  // its crop/upload evidence, which was bound to the old name.
+  // Preserve every unique lower-case slug accepted by validate.mjs, including published legacy ids.
+  // Missing, malformed or duplicate ids still lose crop evidence when a positional replacement is assigned.
   {
     const seen = new Set();
-    (c.problems || []).forEach((pr, i) => {
-      const n =
-        String(pr.number ?? i + 1)
-          .replace(/[^a-z0-9]/gi, '')
-          .toLowerCase() || String(i + 1);
-      const lists = [
-        [pr.figures, `p${n}-fig`],
-        ...(pr.parts || []).map(pt => [pt.figures, `p${n}-fig`]),
-        [pr.solution?.figures, `p${n}-sol-fig`],
-      ];
-      for (const [arr, stem] of lists) {
-        if (!Array.isArray(arr)) continue;
-        for (const fig of arr) {
-          if (!fig || typeof fig !== 'object') continue;
-          // a version suffix belongs to the remote key (p2-sol-fig2-v3.png), never to the id
-          if (typeof fig.id === 'string' && /-v\d+$/.test(fig.id)) {
-            const from = fig.id;
-            fig.id = fig.id.replace(/-v\d+$/, '');
-            changes.push(
-              `/problems/${i}: figure id ${from} stripped of its version suffix`
-            );
-          }
-          // an id that is not a slug (a refix once wrote its advice into the id field: nao-2020-ii-9-10) counts as missing
-          if (
-            typeof fig.id === 'string' &&
-            /^p[a-z0-9]+-(?:sol-)?fig\d+$/.test(fig.id) &&
-            !seen.has(fig.id)
-          ) {
-            seen.add(fig.id);
-            continue;
-          }
-          let k = 1;
-          while (seen.has(`${stem}${k}`)) k++;
-          const from = fig.id;
-          fig.id = `${stem}${k}`;
-          seen.add(fig.id);
-          const rotation =
-            fig.tx?.rotation !== undefined
-              ? fig.tx.rotation
-              : fig.source?.rotation;
-          delete fig.url;
-          delete fig.width;
-          delete fig.height;
-          delete fig.source;
-          if (fig.tx)
-            fig.tx = {
-              document: fig.tx.document,
-              page: fig.tx.page,
-              bbox: fig.tx.bbox,
-              ...(rotation !== undefined ? { rotation } : {}),
-              ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}),
-              ...(fig.tx.extraction === 'native-image-crop'
-                ? { extraction: fig.tx.extraction }
-                : {}),
-            };
-          changes.push(
-            `/problems/${i}: figure id ${from ?? '(none)'} renamed to ${
-              fig.id
-            } (duplicate or missing); crop evidence cleared`
-          );
-        }
+    for (const { fig, path: figurePath, problem } of allFigures(c)) {
+      if (!fig || typeof fig !== 'object') continue;
+      if (
+        typeof fig.id === 'string' &&
+        SAFE.test(fig.id) &&
+        !seen.has(fig.id)
+      ) {
+        seen.add(fig.id);
+        continue;
       }
-    });
+      const problemIndex = Number(
+        figurePath.match(/^\/problems\/(\d+)\//)?.[1]
+      );
+      const noteIndex = Number(
+        figurePath.match(/^\/paper\/documentNotes\/(\d+)\//)?.[1]
+      );
+      const n =
+        String(problem?.number ?? problemIndex + 1)
+          .replace(/[^a-z0-9]/gi, '')
+          .toLowerCase() || String(problemIndex + 1);
+      const ownerPath = problem
+        ? `/problems/${problemIndex}`
+        : `/paper/documentNotes/${noteIndex}`;
+      const stem = problem
+        ? `p${n}-${figurePath.includes('/solution/') ? 'sol-' : ''}fig`
+        : `note${noteIndex + 1}-fig`;
+      let k = 1;
+      while (seen.has(`${stem}${k}`)) k++;
+      const from = fig.id;
+      fig.id = `${stem}${k}`;
+      seen.add(fig.id);
+      const rotation =
+        fig.tx?.rotation !== undefined ? fig.tx.rotation : fig.source?.rotation;
+      delete fig.url;
+      delete fig.width;
+      delete fig.height;
+      delete fig.source;
+      if (fig.tx) {
+        fig.tx = {
+          document: fig.tx.document,
+          page: fig.tx.page,
+          bbox: fig.tx.bbox,
+          ...(rotation !== undefined ? { rotation } : {}),
+          ...(fig.tx.boxFrom ? { boxFrom: fig.tx.boxFrom } : {}),
+          ...(fig.tx.extraction === 'native-image-crop'
+            ? { extraction: fig.tx.extraction }
+            : {}),
+        };
+      }
+      changes.push(
+        `${ownerPath}: figure id ${from ?? '(none)'} renamed to ${
+          fig.id
+        } (duplicate or missing); crop evidence cleared`
+      );
+    }
   }
   // a reader sometimes emits the same problem twice (the second copy headed "Задача N."): drop the later copy
   if (Array.isArray(c.problems)) {
@@ -2086,8 +2160,9 @@ function normaliseCandidateProse(c, opts = {}) {
       typeof pr.statement !== 'string' ||
       !(pr.parts || []).length ||
       !/\n\s*\n/.test(pr.statement)
-    )
+    ) {
       return;
+    }
     const heads = (pr.parts || [])
       .map(x => firstWords(x.statement))
       .filter(h => h.split(' ').length >= 4);
@@ -2108,16 +2183,18 @@ function normaliseCandidateProse(c, opts = {}) {
   });
   const h = c.paper?.held;
   if (h && typeof h === 'object') {
-    for (const k of ['from', 'to', 'place'])
+    for (const k of ['from', 'to', 'place']) {
       if (h[k] === null) {
         delete h[k];
         changes.push(`/paper/held/${k}: null dropped`);
       }
-    for (const k of ['from', 'to'])
+    }
+    for (const k of ['from', 'to']) {
       if (h[k] != null && !/^\d{4}-\d{2}-\d{2}$/.test(String(h[k]))) {
         delete h[k];
         changes.push(`/paper/held/${k}: not a date, dropped`);
       }
+    }
     if (h.place != null && typeof h.place !== 'string') {
       h.place = Array.isArray(h.place) ? h.place.join(', ') : String(h.place);
       changes.push('/paper/held/place: made a string');
@@ -2188,8 +2265,9 @@ function normaliseCandidateProse(c, opts = {}) {
         !/\/(statement|statementAfter|statementAfterParts|caption|alt|title|label|text)$/.test(
           p
         )
-      )
+      ) {
         return;
+      }
       const out = s.replace(
         /&(#(\d+)|#x([0-9a-f]+)|([a-z][a-z0-9]{1,7}));/gi,
         (m, _a, dec, hex, name) =>
@@ -2214,8 +2292,9 @@ function normaliseCandidateProse(c, opts = {}) {
     if (
       !/\/(statement|caption|alt|title)$/.test(p) ||
       !/\$\$|\\nicefrac|\\[a-zA-Z]+/.test(s)
-    )
+    ) {
       return;
+    }
     // a paragraph that is a formula fragment closed by a lone "$$" ("58.80^{\circ}$$": the tail of the previous
     // equation typed again — ioaa-2016-theory-x-1, where balancing then swallowed the next sentence into math)
     // is dropped when an earlier display block of the field already ends with it, else becomes its own block
@@ -2306,11 +2385,13 @@ function normaliseCandidateProse(c, opts = {}) {
             : 1,
         position:
           n.position === 'after-problem' ? 'after-problem' : 'before-problem',
+        ...(n.figures !== undefined ? { figures: n.figures } : {}),
       };
-      if (JSON.stringify(out) !== JSON.stringify(n))
+      if (JSON.stringify(out) !== JSON.stringify(n)) {
         changes.push(
           `/paper/documentNotes/${i}: coerced to {title, statement, document, page, position}`
         );
+      }
       kept.push(out);
     });
     if (kept.length) c.paper.documentNotes = kept;
@@ -2331,8 +2412,9 @@ function normaliseCandidateProse(c, opts = {}) {
       !/\/(statement|caption|alt)$/.test(p) ||
       /\/tx\b/.test(p) ||
       !(/транскрипци|transcri(?:ber|ption)/i.test(s) || ASIDE.test(s))
-    )
+    ) {
       return;
+    }
     const NOTE =
       /(?:^|\n)[ \t]*[*_]{0,2}[ \t]*(?:(?:забележка|бележка)\s+(?:към|на|от|за)\s+транскрип\S*|transcri(?:ber'?s?|ption)\s+note|note\s+(?:on|about)\s+the\s+transcription)[^\n]*(?:\n(?![ \t]*\n)[^\n]*)*/giu;
     const notes = [];
@@ -2391,8 +2473,9 @@ function normaliseCandidateProse(c, opts = {}) {
       /\/(latex|notes|url|archiveKey|id)$/.test(p) ||
       /\/tx\b/.test(p) ||
       !/<\/?[a-zA-Z]/.test(s)
-    )
+    ) {
       return;
+    }
     const out = splitMath(s)
       .map(seg =>
         seg.math || seg.code
@@ -2419,8 +2502,9 @@ function normaliseCandidateProse(c, opts = {}) {
       /\/(latex|notes|url|archiveKey|id)$/.test(p) ||
       /\/tx\b/.test(p) ||
       !/\\/.test(s)
-    )
+    ) {
       return;
+    }
     let out = splitMath(s)
       .map(seg =>
         seg.math || seg.code
@@ -2441,8 +2525,9 @@ function normaliseCandidateProse(c, opts = {}) {
   // A Latin letter inside a Cyrillic word ("Виждa", "снимa", "скоростта e") is a
   // text-layer artefact no model types back reliably; map the homoglyph, outside math only.
   walkStrings(c, (p, s) => {
-    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p))
+    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p)) {
       return;
+    }
     const out = fixHomoglyphs(s);
     if (out !== s) {
       pointerSet(c, p, out);
@@ -2462,15 +2547,17 @@ function normaliseCandidateProse(c, opts = {}) {
         typeof pt !== 'object' ||
         String(pt.statement || '').trim() ||
         (pt.figures || []).length
-      )
+      ) {
         continue;
+      }
       const label = String(pt.label || '').trim();
       const heading = /\p{L}{3,}/u.test(label) && label.length > 6;
       const host = heading ? parts[k + 1] || parts[k - 1] : null;
-      if (host && typeof host.statement === 'string')
+      if (host && typeof host.statement === 'string') {
         host.statement = parts[k + 1]
           ? `**${label}**\n\n${host.statement}`
           : `${host.statement}\n\n**${label}**`;
+      }
       parts.splice(k, 1);
       changes.push(
         `/problems/${i}/parts/${k}: empty part ${
@@ -2529,11 +2616,12 @@ function normaliseCandidateProse(c, opts = {}) {
       changes.push(`/problems/${i}/solution: empty solution marked incomplete`);
     }
   });
-  if (changes.length)
+  if (changes.length) {
     c.tx = {
       ...(c.tx || {}),
       normalised: [...(c.tx?.normalised || []), ...changes],
     };
+  }
   return c;
 }
 export function sanitizeCandidate(node) {
@@ -2630,8 +2718,9 @@ export function renameWithRetry(from, to) {
       fs.renameSync(from, to);
       return;
     } catch (e) {
-      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8)
+      if (!['EPERM', 'EBUSY', 'EACCES'].includes(e.code) || attempt >= 8) {
         throw e;
+      }
       Atomics.wait(
         new Int32Array(new SharedArrayBuffer(4)),
         0,
@@ -2650,13 +2739,16 @@ export function writeFileAtomic(file, data) {
   } catch (e) {
     try {
       fs.unlinkSync(tmp);
-    } catch {}
+    } catch {
+      // Preserve the existing ignored exception.
+    }
     throw e;
   }
 }
 export function enqueueBatchRequest(customId, body, meta) {
-  if (!BATCH_CUSTOM_ID.test(customId))
+  if (!BATCH_CUSTOM_ID.test(customId)) {
     throw new Error(`bad batch custom id ${customId}`);
+  }
   const f = batchFiles(customId);
   writeJson(f.meta, { customId, ...meta, bytes: Buffer.byteLength(body) });
   writeFileAtomic(f.body, body);
@@ -2677,16 +2769,21 @@ export function batchRequestState(customId) {
   if (fs.existsSync(f.result)) return 'done';
   if (fs.existsSync(f.body)) return 'queued';
   try {
-    for (const d of fs.readdirSync(BATCH_DIRS.submitted))
+    for (const d of fs.readdirSync(BATCH_DIRS.submitted)) {
       if (
         fs.existsSync(
           path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`)
         )
-      )
+      ) {
         return `submitted:${d}`;
-  } catch {}
-  if (fs.existsSync(path.join(BATCH_DIRS.failed, `${customId}.meta.json`)))
+      }
+    }
+  } catch {
+    // Preserve the existing ignored exception.
+  }
+  if (fs.existsSync(path.join(BATCH_DIRS.failed, `${customId}.meta.json`))) {
     return 'failed';
+  }
   return 'unknown';
 }
 export function brokerAlive() {
@@ -2702,7 +2799,9 @@ export function batchMetaFile(customId) {
       const m = path.join(BATCH_DIRS.submitted, d, `${customId}.meta.json`);
       if (fs.existsSync(m)) return m;
     }
-  } catch {}
+  } catch {
+    // Preserve the existing ignored exception.
+  }
   const failed = path.join(BATCH_DIRS.failed, `${customId}.meta.json`);
   return fs.existsSync(failed) ? failed : null;
 }
@@ -2731,9 +2830,12 @@ export function findDetachedBatchRequest(
 ) {
   const dirs = [BATCH_DIRS.queue];
   try {
-    for (const d of fs.readdirSync(BATCH_DIRS.submitted))
+    for (const d of fs.readdirSync(BATCH_DIRS.submitted)) {
       dirs.push(path.join(BATCH_DIRS.submitted, d));
-  } catch {}
+    }
+  } catch {
+    // Preserve the existing ignored exception.
+  }
   for (const dir of dirs) {
     let files;
     try {
@@ -2752,26 +2854,30 @@ export function findDetachedBatchRequest(
         meta.paperId !== paperId ||
         meta.stage !== stage ||
         meta.window !== window
-      )
+      ) {
         continue;
+      }
       if (
         (Number(meta.attempt) || 1) !== attempt ||
         (Number(meta.ask) || 1) !== ask
-      )
+      ) {
         continue;
+      }
       if (
         promptSha256 &&
         meta.promptSha256 &&
         meta.promptSha256 !== promptSha256
-      )
+      ) {
         continue;
+      }
       const state = batchRequestState(customId);
       if (
         state === 'queued' ||
         state.startsWith('submitted:') ||
         state === 'done'
-      )
+      ) {
         return { customId, meta, state };
+      }
     }
   }
   return null;
@@ -2786,7 +2892,9 @@ export function withdrawQueuedBatchRequest(customId) {
   for (const file of [f.body, f.meta]) {
     try {
       fs.unlinkSync(file);
-    } catch {}
+    } catch {
+      // Preserve the existing ignored exception.
+    }
   }
   return 'withdrawn';
 }
@@ -2849,12 +2957,13 @@ export async function waitForBatchResult(
 // null for a succeeded result; else {type, message, retryable}. Retryable = the request never reached the model
 // or the API was the problem (rate limit, overloaded, 5xx, batch expiry); a canceled batch is an operator's decision.
 export function batchResultError(result) {
-  if (!result || typeof result !== 'object')
+  if (!result || typeof result !== 'object') {
     return {
       type: 'unreadable',
       message: 'result file is not a JSON object',
       retryable: false,
     };
+  }
   if (!result.error) return null;
   const e =
     typeof result.error === 'object'

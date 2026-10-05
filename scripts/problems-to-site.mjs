@@ -1073,22 +1073,40 @@ function documentNoteLines(paper, position) {
       .filter(
         n =>
           !JUNK_NOTE.test(plainNote(n.statement)) &&
-          plainNote(n.statement) !== plainNote(n.title)
+          (plainNote(n.statement) !== plainNote(n.title) || n.figures?.length)
       )
       // a document note can be printed text ("assemble your equipment"): only the unmistakable run notes go
       .filter(n => !PIPELINE_LEAK.test(n.statement || ''))
       // and the pipeline sentences inside an editorial note (withoutPipelineSentences)
       .map(n => ({ ...n, statement: withoutPipelineSentences(n.statement) }))
       .filter(n => String(n.statement || '').trim())
-      .flatMap(note => [
-        `<details>`,
-        `<summary>${mdText(noteTitle(note.title))}</summary>`,
-        '',
-        mdText(note.statement),
-        '',
-        `</details>`,
-        '',
-      ])
+      .flatMap(note => {
+        const figures = note.figures || [];
+        const resolve = target => resolveFigureTarget(target, figures);
+        const text = figures.length
+          ? newestInlineCrops(
+              resolveFigurePlaceholders(note.statement, { figures }, resolve),
+              figures
+            )
+          : note.statement;
+        const placed = figures.length
+          ? placeInlineFigures(text, resolve)
+          : { text, jsx: [] };
+        return [
+          `<details>`,
+          `<summary>${mdText(noteTitle(note.title))}</summary>`,
+          '',
+          figures.length
+            ? restoreFigures(mdText(placed.text), placed.jsx)
+            : mdText(note.statement),
+          '',
+          ...figureGroupLines(
+            figuresNotInline(figures, [text]).map(fig => ({ fig }))
+          ),
+          `</details>`,
+          '',
+        ];
+      })
   );
 }
 
