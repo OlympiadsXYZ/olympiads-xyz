@@ -1,0 +1,476 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "collection",
+    "source",
+    "chapters",
+    "tasks",
+    "introduction",
+    "referenceAppendix"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "subject",
+        "competition",
+        "language",
+        "edition",
+        "contestYear",
+        "round",
+        "publicationYear",
+        "publicationYearEvidence",
+        "contestYears"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "competition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "language": {
+          "type": "string",
+          "minLength": 1
+        },
+        "edition": {
+          "const": "edited-compilation"
+        },
+        "contestYear": {
+          "type": "null"
+        },
+        "round": {
+          "type": "null"
+        },
+        "publicationYear": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        },
+        "publicationYearEvidence": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contestYears": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1950
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "document",
+        "publicUrl",
+        "pageCount",
+        "attribution",
+        "printedConditions",
+        "conditionsEvidence"
+      ],
+      "properties": {
+        "document": {
+          "$ref": "#/definitions/ref"
+        },
+        "publicUrl": {
+          "type": ["string", "null"]
+        },
+        "pageCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attribution": {
+          "type": "string",
+          "minLength": 1
+        },
+        "printedConditions": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conditionsEvidence": {
+          "$ref": "#/definitions/ref"
+        }
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "number",
+          "keyNumber",
+          "questionNativePages",
+          "keyNativePages"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "keyNumber": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "questionNativePages": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "keyNativePages": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "contextBlocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "placement", "taskId", "nativePages", "body"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                },
+                "placement": {
+                  "enum": ["prefix", "suffix", "before-question", "before-key"]
+                },
+                "taskId": {
+                  "type": ["string", "null"]
+                },
+                "nativePages": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "body": {
+                  "$ref": "#/definitions/ref"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "chapterId",
+          "section",
+          "printedNumber",
+          "printedTags",
+          "questionNativePages",
+          "keyNativePages",
+          "sourceTask",
+          "annualCorrespondence",
+          "presentation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "chapterId": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "printedNumber": {
+            "type": "string",
+            "minLength": 1
+          },
+          "printedTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "questionNativePages": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "keyNativePages": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "sourceTask": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["container", "pointer"],
+            "properties": {
+              "container": {
+                "$ref": "#/definitions/ref"
+              },
+              "pointer": {
+                "type": "string",
+                "pattern": "^/"
+              }
+            }
+          },
+          "annualCorrespondence": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["status", "links", "evidence"],
+                "properties": {
+                  "status": {
+                    "const": "unestablished"
+                  },
+                  "links": {
+                    "type": "array",
+                    "maxItems": 0
+                  },
+                  "evidence": {
+                    "type": "null"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["status", "links", "evidence"],
+                "properties": {
+                  "status": {
+                    "enum": ["same-original", "edited-variant"]
+                  },
+                  "links": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": ["language", "label", "url", "primary"],
+                      "properties": {
+                        "language": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "url": {
+                          "type": "string",
+                          "pattern": "^/problems/[^\\s]+$"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  "evidence": {
+                    "$ref": "#/definitions/ref"
+                  }
+                }
+              }
+            ]
+          },
+          "presentation": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["question", "key", "completeSourceNoLoss"],
+                "properties": {
+                  "question": {
+                    "$ref": "#/definitions/ref"
+                  },
+                  "key": {
+                    "$ref": "#/definitions/ref"
+                  },
+                  "completeSourceNoLoss": {
+                    "$ref": "#/definitions/ref"
+                  }
+                }
+              }
+            ]
+          },
+          "nativeAssets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "role",
+                "nativePage",
+                "width",
+                "height",
+                "original",
+                "privateCopy",
+                "url",
+                "sourceBinding",
+                "display"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "role": {
+                  "enum": ["question", "key"]
+                },
+                "nativePage": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "width": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "height": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "original": {
+                  "$ref": "#/definitions/ref"
+                },
+                "privateCopy": {
+                  "$ref": "#/definitions/ref"
+                },
+                "url": {
+                  "type": "string",
+                  "pattern": "^/collections/[a-z0-9]+(?:-[a-z0-9]+)*/assets/[0-9a-f]{64}\\.png$"
+                },
+                "sourceBinding": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["container", "pointer"],
+                  "properties": {
+                    "container": {
+                      "$ref": "#/definitions/ref"
+                    },
+                    "pointer": {
+                      "type": "string",
+                      "pattern": "^/"
+                    }
+                  }
+                },
+                "display": {
+                  "enum": ["already-in-body", "append-to-body", "detail-only"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "introduction": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "referenceAppendix": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Native edited topical collection, separate from a contest paper",
+  "definitions": {
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "sha256", "bytes"],
+      "properties": {
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

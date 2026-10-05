@@ -311,6 +311,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
+      collections: allXdm(
+        filter: { fileAbsolutePath: { regex: "/collections/" } }
+      ) {
+        nodes {
+          frontmatter {
+            id
+          }
+          fileAbsolutePath
+        }
+      }
       problems: allProblemInfo {
         edges {
           node {
@@ -346,6 +356,51 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   `);
   if (result.errors) {
     reporter.panicOnBuild('🚨 ERROR: Loading "createPages" query');
+  }
+
+  // Native collections use Xdm but have no ProblemInfo or contest-year nodes.
+  const collectionIndexFile = path.join(__dirname, 'collections', 'index.json');
+  if (fs.existsSync(collectionIndexFile)) {
+    const collectionIndex = JSON.parse(
+      fs.readFileSync(collectionIndexFile, 'utf8')
+    );
+    const nodes = new Map<string, { fileAbsolutePath: string }>(
+      result.data.collections.nodes.map(node => [node.frontmatter.id, node])
+    );
+    if (nodes.size !== collectionIndex.pages.length) {
+      throw new Error('Collection page inventory mismatch');
+    }
+    const paths = new Set();
+    for (const page of collectionIndex.pages) {
+      const node = nodes.get(page.context.id);
+      if (
+        !node ||
+        path.basename(node.fileAbsolutePath) !== page.file ||
+        !/^\/collections\/[a-z0-9-]+\/(?:[a-z0-9-]+\/)?$/.test(page.url) ||
+        paths.has(page.url)
+      ) {
+        throw new Error('Invalid or duplicate collection page');
+      }
+      paths.add(page.url);
+      createPage({
+        path: page.url,
+        component: path.resolve('./src/templates/collectionTemplate.tsx'),
+        context: page.context,
+      });
+    }
+    const ids = new Set(collectionIndex.entries.map(entry => entry.id));
+    if (
+      ids.size !== collectionIndex.entries.length ||
+      collectionIndex.entries.some(entry => entry.kind !== 'collection')
+    ) {
+      throw new Error('Invalid collection search inventory');
+    }
+    const collectionData = path.join(__dirname, 'public', 'collections-data');
+    fs.mkdirSync(collectionData, { recursive: true });
+    fs.writeFileSync(
+      path.join(collectionData, 'index.json'),
+      JSON.stringify(collectionIndex.entries)
+    );
   }
 
   if (ARCHIVE_ENABLED) {

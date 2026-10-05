@@ -1,7 +1,9 @@
 require('dotenv').config();
 
-const SITE_URL = (process.env.SITE_URL || 'https://www.olympiads.xyz')
-  .replace(/\/$/, '');
+const SITE_URL = (process.env.SITE_URL || 'https://www.olympiads.xyz').replace(
+  /\/$/,
+  ''
+);
 
 const flags = {
   FAST_DEV: true,
@@ -80,6 +82,13 @@ const plugins = [
     options: {
       path: `${__dirname}/solutions`,
       name: `solutions`,
+    },
+  },
+  {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      path: `${__dirname}/collections`,
+      name: `collections`,
     },
   },
   {

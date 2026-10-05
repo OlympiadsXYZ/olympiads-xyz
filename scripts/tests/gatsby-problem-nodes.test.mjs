@@ -19,7 +19,7 @@ const { buildSchema, graphql } = require('graphql');
 // compiling MDX, or writing generated indexes. Only those side effects are stubbed.
 function loadHooks() {
   const modules = new Map();
-  const captured = {};
+  const captured = { collectionWrites: [], collectionDirectories: [] };
   const sandboxProcess = {
     ...process,
     env: {
@@ -36,6 +36,32 @@ function loadHooks() {
     modules.set(file, module);
     const localRequire = createRequire(file);
     const dependency = specifier => {
+      if (specifier === 'fs') {
+        const directory = path.join(repo, 'public', 'collections-data');
+        const indexFile = path.join(directory, 'index.json');
+        return {
+          ...fs,
+          mkdirSync: (file, ...args) => {
+            if (path.resolve(file) === directory) {
+              assert.deepEqual(args, [{ recursive: true }]);
+              captured.collectionDirectories.push(directory);
+              return;
+            }
+            return fs.mkdirSync(file, ...args);
+          },
+          writeFileSync: (file, value, ...args) => {
+            if (path.resolve(file) === indexFile) {
+              assert.deepEqual(args, []);
+              captured.collectionWrites.push({
+                file: indexFile,
+                bytes: Buffer.from(value),
+              });
+              return;
+            }
+            return fs.writeFileSync(file, value, ...args);
+          },
+        };
+      }
       if (specifier === 'child_process')
         return { execSync: () => Buffer.from('') };
       if (specifier === './src/gatsby/create-xdm-node')
@@ -252,12 +278,17 @@ test('the six rejected production IDs reach solution pages and keep the search i
     input StringFilter { regex: String }
     input XdmFilter { fileAbsolutePath: StringFilter }
     type XdmEdge { node: Xdm }
-    type XdmConnection { edges: [XdmEdge!]! }
+    type XdmConnection { edges: [XdmEdge!]! nodes: [Xdm!]! }
     type ProblemInfoEdge { node: ProblemInfo }
     type ProblemInfoConnection { edges: [ProblemInfoEdge!]! }
     type Query { allXdm(filter: XdmFilter): XdmConnection! allProblemInfo: ProblemInfoConnection! }
   `
   );
+  const collectionIndex = JSON.parse(
+    fs.readFileSync(path.join(repo, 'collections', 'index.json'), 'utf8')
+  );
+  assert.equal(collectionIndex.pages.length, 11);
+  assert.equal(collectionIndex.entries.length, 1);
   const pages = [];
   await hooks.createPages({
     graphql: query =>
@@ -272,6 +303,13 @@ test('the six rejected production IDs reach solution pages and keep the search i
                     node: {
                       frontmatter: { id: row.uniqueId, title: row.name },
                     },
+                  }))
+                : [],
+            nodes:
+              filter?.fileAbsolutePath?.regex === '/collections/'
+                ? collectionIndex.pages.map(page => ({
+                    frontmatter: { id: page.context.id },
+                    fileAbsolutePath: path.join(repo, 'collections', page.file),
                   }))
                 : [],
           }),
@@ -296,6 +334,32 @@ test('the six rejected production IDs reach solution pages and keep the search i
       .map(page => page.context.id)
       .sort(),
     [...expected].sort()
+  );
+  const collectionPages = pages.filter(page =>
+    page.path.startsWith('/collections/')
+  );
+  assert.equal(collectionPages.length, 11);
+  assert.deepEqual(
+    collectionPages,
+    collectionIndex.pages.map(page => ({
+      path: page.url,
+      component: path.resolve('./src/templates/collectionTemplate.tsx'),
+      context: page.context,
+    }))
+  );
+  assert.deepEqual(captured.collectionDirectories, [
+    path.join(repo, 'public', 'collections-data'),
+  ]);
+  assert.equal(captured.collectionWrites.length, 1);
+  assert.equal(
+    captured.collectionWrites[0].file,
+    path.join(repo, 'public', 'collections-data', 'index.json')
+  );
+  assert.ok(
+    captured.collectionWrites[0].bytes.equals(
+      Buffer.from(JSON.stringify(collectionIndex.entries))
+    ),
+    'Exact single collection entry bytes are captured without shared output'
   );
   // the problem page's links (src/problems/page-links.ts) ride in its context, null without a tree or an archive
   for (const page of pages.filter(p => p.path.endsWith('/solution'))) {

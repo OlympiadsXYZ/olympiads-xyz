@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/layout';
 import ProblemHits from '../components/ProblemsPage/ProblemHits';
+import CollectionHits from '../components/ProblemsPage/CollectionHits';
 import {
   DEFAULT_SORT,
   DIFFICULTY_ORDER,
@@ -503,6 +504,7 @@ export default function ProblemsPage({ location }: PageProps) {
                 </select>
               </label>
             </div>
+            <CollectionHits query={query} filters={filters} />
             {problems === null ? (
               <p className="text-gray-500 dark:text-dark-med-emphasis text-center py-8">
                 …

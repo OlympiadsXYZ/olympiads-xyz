@@ -26,6 +26,7 @@ const navigations = [];
 // MDX compiler, source rereading or scientific reviewer runs in this fixture.
 function loadModules() {
   const cache = new Map();
+  const capturedCollections = { collectionWrites: [], collectionDirectories: [] };
   const load = relative => {
     const logical = path.join(repo, relative);
     if (cache.has(logical)) return cache.get(logical).exports;
@@ -45,6 +46,32 @@ function loadModules() {
             return Promise.resolve();
           },
         };
+      if (specifier === 'fs') {
+        const directory = path.join(repo, 'public', 'collections-data');
+        const indexFile = path.join(directory, 'index.json');
+        return {
+          ...fs,
+          mkdirSync: (file, ...args) => {
+            if (path.resolve(file) === directory) {
+              assert.deepEqual(args, [{ recursive: true }]);
+              capturedCollections.collectionDirectories.push(directory);
+              return;
+            }
+            return fs.mkdirSync(file, ...args);
+          },
+          writeFileSync: (file, value, ...args) => {
+            if (path.resolve(file) === indexFile) {
+              assert.deepEqual(args, []);
+              capturedCollections.collectionWrites.push({
+                file: indexFile,
+                bytes: Buffer.from(value),
+              });
+              return;
+            }
+            return fs.writeFileSync(file, value, ...args);
+          },
+        };
+      }
       if (specifier === 'child_process')
         return { execSync: () => Buffer.from('') };
       if (specifier === './src/gatsby/create-xdm-node')
@@ -125,9 +152,9 @@ function loadModules() {
     });
     return module.exports;
   };
-  return { load };
+  return { load, capturedCollections };
 }
-const { load } = loadModules();
+const { load, capturedCollections } = loadModules();
 const core = load('src/problems/fragment-routes.ts');
 const node = load('src/problems/fragment-routes-node.ts');
 const ui = load('src/components/markdown/ProblemFragmentRoutes.tsx');
@@ -530,6 +557,11 @@ test('actual Gatsby hook retains all whole pages and injects the real17 fragment
   const hooks = load('gatsby-node.ts'),
     pages = [],
     redirects = [];
+  const collectionIndex = JSON.parse(
+    fs.readFileSync(path.join(repo, 'collections', 'index.json'), 'utf8')
+  );
+  assert.equal(collectionIndex.pages.length, 11);
+  assert.equal(collectionIndex.entries.length, 1);
   const problems = papers.flatMap(p =>
     p.problems.map(problem => ({
       node: {
@@ -547,6 +579,12 @@ test('actual Gatsby hook retains all whole pages and injects the real17 fragment
   await hooks.createPages({
     graphql: async () => ({
       data: {
+        collections: {
+          nodes: collectionIndex.pages.map(page => ({
+            frontmatter: { id: page.context.id },
+            fileAbsolutePath: path.join(repo, 'collections', page.file),
+          })),
+        },
         modules: { edges: [] },
         problems: { edges: problems },
         solutions: {
@@ -569,6 +607,32 @@ test('actual Gatsby hook retains all whole pages and injects the real17 fragment
       },
     },
   });
+  const collectionPages = pages.filter(page =>
+    page.path.startsWith('/collections/')
+  );
+  assert.equal(collectionPages.length, 11);
+  assert.deepEqual(
+    collectionPages,
+    collectionIndex.pages.map(page => ({
+      path: page.url,
+      component: path.resolve('./src/templates/collectionTemplate.tsx'),
+      context: page.context,
+    }))
+  );
+  assert.deepEqual(capturedCollections.collectionDirectories, [
+    path.join(repo, 'public', 'collections-data'),
+  ]);
+  assert.equal(capturedCollections.collectionWrites.length, 1);
+  assert.equal(
+    capturedCollections.collectionWrites[0].file,
+    path.join(repo, 'public', 'collections-data', 'index.json')
+  );
+  assert.ok(
+    capturedCollections.collectionWrites[0].bytes.equals(
+      Buffer.from(JSON.stringify(collectionIndex.entries))
+    ),
+    'Exact single collection entry bytes are captured without shared output'
+  );
   const solutionPages = pages.filter(p => p.path.endsWith('/solution'));
   assert.equal(solutionPages.length, urls.size);
   const byId = new Map(solutionPages.map(p => [p.context.id, p]));
