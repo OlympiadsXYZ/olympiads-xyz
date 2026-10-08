@@ -408,8 +408,17 @@ function mergeTextLayer(candFile, checkOut) {
     const iou = (a, b) => { const ix = Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])), iy = Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1])); const inter = ix * iy; const ua = (a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - inter; return ua > 0 ? inter / ua : 0; };
     return own.some(t => iou(t.bbox, u.bbox) >= 0.6);
   };
-  const unplaced = (figRep?.unplaced || []).filter(u => u.defect && !(isReprint(u) && reprints.push(u))).map(u => u.defect);
-  check.regions = { unplaced: (figRep?.unplaced || []).length, raised: unplaced.length, ...(reprints.length ? { reprints: reprints.map(u => ({ page: u.page, bbox: u.bbox.map(Math.round) })) } : {}) };
+  let unplaced = (figRep?.unplaced || []).filter(u => u.defect && !(isReprint(u) && reprints.push(u))).map(u => u.defect);
+  // A text-only repair (OLYMPIADS_TEXT_ONLY_REPAIR=1) whose every figure is the published figure object unchanged
+  // (same ids, urls and sources, no tx box, none added or removed) cannot have introduced a figure gap: graphics the
+  // published paper already left uncovered are recorded as pre-existing information, not raised against the repair.
+  let preExisting = 0;
+  if (process.env.OLYMPIADS_TEXT_ONLY_REPAIR === '1' && unplaced.length && textOnlyFiguresUnchanged(candidate)) {
+    preExisting = unplaced.length;
+    (check.defects ||= []).push(...unplaced.map(d => ({ ...d, severity: 'info', description: `[pre-existing in the published paper; this text-only repair keeps every figure unchanged] ${d.description}` })));
+    unplaced = [];
+  }
+  check.regions = { unplaced: (figRep?.unplaced || []).length, raised: unplaced.length, ...(preExisting ? { preExisting } : {}), ...(reprints.length ? { reprints: reprints.map(u => ({ page: u.page, bbox: u.bbox.map(Math.round) })) } : {}) };
   if (reprints.length) (check.defects ||= []).push(...reprints.map(u => ({ path: u.path, document: u.document, page: u.page, severity: 'info', kind: 'figure', source: 'regions', confidence: 0.9, description: `[the solutions page reprints the problem's figure at ${JSON.stringify(u.bbox.map(Math.round))}; not a figure to add] ` })));
   if (unplaced.length) {
     check.defects = [...(check.defects || []), ...unplaced];
@@ -437,6 +446,20 @@ function mergeTextLayer(candFile, checkOut) {
 }
 // The free checks alone, shaped like a checker output so mergeTextLayer/repair.mjs read it unchanged: an empty
 // verdict-pass check that the text layer and the region check then fill. Returns the open (non-info) defects.
+// Every figure of the candidate is its published figure object unchanged (a text-only repair): the same id set, the
+// same url and source per id, no tx box. False for an unpublished paper or when a figure was added, removed or re-boxed.
+function textOnlyFiguresUnchanged(cand) {
+  const file = findContentFile(paperId);
+  if (!file) return false;
+  const byId = data => new Map(allFigures(data).map(({ fig }) => [fig?.id, fig]));
+  const P = byId(readJson(file)), C = byId(cand);
+  if (P.size !== C.size) return false;
+  for (const [id, f] of C) {
+    const p = P.get(id);
+    if (!p || f?.tx?.bbox || f.url !== p.url || JSON.stringify(f.source) !== JSON.stringify(p.source)) return false;
+  }
+  return true;
+}
 function mechanicalPrecheck(candFile) {
   const candidate = readJson(candFile, null);
   if (!candidate) return null;

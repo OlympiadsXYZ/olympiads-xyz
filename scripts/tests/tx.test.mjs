@@ -2760,6 +2760,30 @@ test('a Latin homoglyph inside a Cyrillic word is mapped, math and Latin words a
   assert.equal(lib.fixHomoglyphs('Hello свят'), 'Hello свят');
 });
 
+test('normaliseCandidate maps homoglyphs in statements but leaves reader-written figure alt text alone', () => {
+  const c = {
+    paper: { id: 'x-2000-alt', title: 'T' },
+    problems: [
+      {
+        id: 'x-2000-alt-p1',
+        number: 1,
+        statement: 'Виждa ли се звездата?',
+        figures: [
+          {
+            id: 'p1-fig1',
+            alt: 'Схема: точкиA/B и всеT',
+            url: 'https://example.invalid/p1-fig1.png',
+            source: { page: 1, pdfRect: [0, 0, 10, 10], dpi: 300 },
+          },
+        ],
+      },
+    ],
+  };
+  lib.normaliseCandidate(c);
+  assert.equal(c.problems[0].statement, 'Вижда ли се звездата?');
+  assert.equal(c.problems[0].figures[0].alt, 'Схема: точкиA/B и всеT');
+});
+
 test('text-layer check: omitted sentence, misread word (mechanical fix), unprinted words; a wordless layer is skipped', async t => {
   const s = sandbox(t);
   fs.mkdirSync(path.join(s.dir, 'text'), { recursive: true });

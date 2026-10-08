@@ -2523,9 +2523,10 @@ function normaliseCandidateProse(c, opts = {}) {
     }
   });
   // A Latin letter inside a Cyrillic word ("Виждa", "снимa", "скоростта e") is a
-  // text-layer artefact no model types back reliably; map the homoglyph, outside math only.
+  // text-layer artefact no model types back reliably; map the homoglyph, outside math only. Not in alt texts:
+  // those are reader-written descriptions whose Latin figure labels often abut a Cyrillic word ("точкиA/B").
   walkStrings(c, (p, s) => {
-    if (/\/(latex|notes|url|archiveKey|id)$/.test(p) || /\/tx\b/.test(p)) {
+    if (/\/(latex|notes|url|archiveKey|id|alt)$/.test(p) || /\/tx\b/.test(p)) {
       return;
     }
     const out = fixHomoglyphs(s);
