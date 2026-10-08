@@ -425,6 +425,24 @@ function mergeTextLayer(candFile, checkOut) {
     if (check.verdict === 'pass') check.verdict = 'fail';
     check.summary = `${check.summary || ''} Region check: ${unplaced.length} printed graphic(s) not covered by any figure.`.trim();
   }
+  // A text-only repair touches a few string fields of an already published paper with every figure unchanged:
+  // findings on fields it did not change are pre-existing, so they are recorded as information and never repaired
+  // mechanically here (13 handoff repairs otherwise had unrelated sentences rewritten by the text-layer repair).
+  if (process.env.OLYMPIADS_TEXT_ONLY_REPAIR === '1' && textOnlyFiguresUnchanged(candidate)) {
+    const changed = textOnlyChangedPointers(candidate);
+    if (changed) {
+      const inScope = p => changed.some(c => p === c || p.startsWith(c + '/') || c.startsWith(p + '/'));
+      let outOfScope = 0;
+      for (const d of check.defects || []) {
+        if (!d.severity || d.severity === 'info' || (d.path && inScope(String(d.path)))) continue;
+        d.severity = 'info';
+        delete d.suggestedFix;
+        d.description = `[pre-existing in the published paper; outside the fields this text-only repair changed] ${d.description || ''}`;
+        outOfScope++;
+      }
+      if (outOfScope) check.textOnlyOutOfScope = outOfScope;
+    }
+  }
   // the verdict follows the defect list (a model sometimes says pass while listing defects, and the receipt refuses that every round)
   if (check.verdict !== 'escalate') { const open = (check.defects || []).some(d => d.severity && d.severity !== 'info'); if (open && check.verdict === 'pass') { check.verdict = 'fail'; check.verdictAdjusted = 'pass with defects listed'; } else if (!open && check.verdict === 'fail') { check.verdict = 'pass'; check.verdictAdjusted = 'fail with no open defect'; } }
   // every defect the receipt will read — the checker's, the text layer's, the region check's, a disputed one carried
@@ -459,6 +477,21 @@ function textOnlyFiguresUnchanged(cand) {
     if (!p || f?.tx?.bbox || f.url !== p.url || JSON.stringify(f.source) !== JSON.stringify(p.source)) return false;
   }
   return true;
+}
+// The string fields a text-only repair changed relative to the published paper (tx blocks, figure urls/sources and
+// the pipeline's own provenance fields excluded); null for an unpublished paper.
+function textOnlyChangedPointers(cand) {
+  const file = findContentFile(paperId);
+  if (!file) return null;
+  const leaves = (o, p = '', out = {}) => {
+    if (typeof o === 'string') out[p] = o;
+    else if (Array.isArray(o)) o.forEach((v, i) => leaves(v, `${p}/${i}`, out));
+    else if (o && typeof o === 'object') for (const [k, v] of Object.entries(o)) if (!['tx', 'url', 'source', 'transcription', 'status'].includes(k)) leaves(v, `${p}/${k}`, out);
+    return out;
+  };
+  const pub = readJson(file);
+  const A = leaves({ paper: pub.paper, problems: pub.problems }), B = leaves({ paper: cand.paper, problems: cand.problems });
+  return [...new Set([...Object.keys(A), ...Object.keys(B)])].filter(k => A[k] !== B[k]);
 }
 function mechanicalPrecheck(candFile) {
   const candidate = readJson(candFile, null);
