@@ -45,18 +45,18 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/production_astra",
-   "at": "2026-09-30",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-08",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "7f4e566fe7d2c50083c6fd497e6a9b84144f6e3a248dc83da8e1e067c38d935a"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-30",
-   "notes": "Direct full13page visual read. Original English version and detailed marking schemes explicitly not conserved per source. All reconstructed solutions and historical context retained. Comparison-only alternate1967.pdf: all13 normalized text pages equivalent after legacy parenthesis mapping; alternatepages1,5,9,11,12 personally viewed only. No foreign candidate or independent checker."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-08",
+   "notes": "Direct full13page visual read. Original English version and detailed marking schemes explicitly not conserved per source. All reconstructed solutions and historical context retained. Comparison-only alternate1967.pdf: all13 normalized text pages equivalent after legacy parenthesis mapping; alternatepages1,5,9,11,12 personally viewed only. No foreign candidate or independent checker. 2026-10-08: 1 text correction(s) from Codex's gpt-6.1-sol original-source reading (work/codex-transcription/production/sol61-fast-source/ipho-1967-67/handoff.json), each checked against the printed page by Claude opus-5-5 (docs/verification/2026-10-08-codex-handoff-check.json) and published by Claude at Margulan's request after Codex stopped at its usage limit."
   }
  },
  "problems": [
@@ -275,10 +275,8 @@
    "number": 4,
    "problemType": "theory",
    "statement": "Comment: *The Organizing Committee prepared three theoretical problems. Unfortunately, at the time of the 1st Olympiad the Romanian students from the last class had the entrance examinations at the universities. For that Romania sent a team consisting of students from younger classes. They were not familiar with electricity. To give them a chance the Organizers (under agreement of the International Board) added the fourth problem presented here. The students (not only from Romania) were allowed to chose three problems. The maximum possible scores for the problems were: 1st problem – 10 points, 2nd problem – 10 points, 3rd problem – 10 points and 4th problem – 6 points. The fourth problem was solved by 8 students. Only four of them solved the problem for 6 points.*\n\nA closed vessel with volume $V_0=10$ l contains dry air in the normal conditions ($t_0=0^\\circ$C, $p_0=1$ atm). In some moment 3 g of water were added to the vessel and the system was warmed up to $t=100^\\circ$C. Find the pressure in the vessel. Discuss assumption you made to solve the problem.",
-   "figures": [],
    "solution": {
-    "statement": "The water added to the vessel evaporates. Assume that the whole portion of water evaporated. Then the density of water vapor in $100^\\circ$C should be 0.300 g/l. It is less than the density of saturated vapor at $100^\\circ$C equal to 0.597 g/l. (The students were allowed to use physical tables.) So, at $100^\\circ$C the vessel contains air and unsaturated water vapor only (without any liquid phase).\n\nNow we assume that both air and unsaturated water vapor behave as ideal gases. In view of Dalton law, the total pressure $p$ in the vessel at $100^\\circ$C is equal to the sum of partial pressures of the air $p_a$ and unsaturated water vapor $p_v$:\n\n$$p=p_a+p_v.$$\n\nAs the volume of the vessel is constant, we may apply the Gay-Lussac law to the air. We obtain:\n\n$$p_a=p_0\\left(\\frac{273+t}{273}\\right).$$\n\nThe pressure of the water vapor may be found from the equation of state of the ideal gas:\n\n$$\\frac{p_vV_0}{273+t}=\\frac m\\mu R,$$\n\nwhere $m$ denotes the mass of the vapor, $\\mu$ - the molecular mass of the water and $R$ – the universal gas constant. Thus,\n\n$$p_v=\\frac m\\mu R\\frac{273+t}{V_0}$$\n\nand finally\n\n$$p=p_0\\frac{273+t}{273}+\\frac m\\mu R\\frac{273+t}{V_0}.$$\n\nNumerically:\n\n$$p=(1.366+0.516)\\mathrm{atm}\\approx1.88\\mathrm{atm}.$$\n",
-    "figures": []
+    "statement": "The water added to the vessel evaporates. Assume that the whole portion of water evaporated. Then the density of water vapor in $100^\\circ$C should be 0.300 g/l. It is less than the density of saturated vapor at $100^\\circ$C equal to 0.597 g/l. (The students were allowed to use physical tables.) So, at $100^\\circ$C the vessel contains air and unsaturated water vapor only (without any liquid phase).\n\nNow we assume that both air and unsaturated water vapor behave as ideal gases. In view of Dalton law, the total pressure $p$ in the vessel at $100^\\circ$C is equal to the sum of partial pressures of the air $p_a$ and unsaturated water vapor $p_v$:\n\n$$p=p_a+p_v.$$\n\nAs the volume of the vessel is constant, we may apply the Gay-Lussac law to the air. We obtain:\n\n$$p_a=p_0\\left(\\frac{273+t}{273}\\right).$$\n\nThe pressure of the water vapor may be found from the equation of state of the ideal gas:\n\n$$\\frac{p_vV_0}{273+t}=\\frac m\\mu R,$$\n\nwhere $m$ denotes the mass of the vapor, $\\mu$ - the molecular mass of the water and $R$ – the universal gas constant. Thus,\n\n$$p_v=\\frac m\\mu R\\frac{273+t}{V_0}$$\n\nand finally\n\n$$p=p_0\\frac{273+t}{273}+\\frac m\\mu R\\frac{273+t}{V_0}.$$\n\nNumerically:\n\n$$p=(1.366+0.516)\\mathrm{atm}\\approx1.88\\mathrm{atm}.$$\n"
    },
    "points": 6,
    "sourceSpans": [
@@ -296,11 +294,9 @@
    "id": "ipho-1967-67-p5",
    "number": "Experimental problem",
    "problemType": "experiment",
-   "statement": "The following devices and materials are given:\n\n1. Balance (without weights)\n2. Calorimeter\n3. Thermometer\n4. Source of voltage\n5. Switches\n6. Wires\n7. Electric heater\n8. Stop-watch\n9. Beakers\n10. Water\n11. Petroleum\n12. Sand (for balancing)\n\nDetermine specific heat of petroleum. The specific heat of water is 1 cal/(g·°C). The specific heat of calorimeter is 0.092 cal/(g·°C).\n\nDiscuss assumptions made in the solution.",
-   "figures": [],
+   "statement": "The following devices and materials are given:\n\n1. Balance (without weights)\n2. Calorimeter\n3. Thermometer\n4. Source of voltage\n5. Switches\n6. Wires\n7. Electric heater\n8. Stop-watch\n9. Beakers\n10. Water\n11. Petroleum\n12. Sand (for balancing)\n\nDetermine specific heat of petroleum. The specific heat of water is 1 cal/(g·°C). The specific heat of the calorimeter is 0.092 cal/(g·°C).\n\nDiscuss assumptions made in the solution.",
    "solution": {
     "statement": "The devices given to the students allowed using several methods. The students used the following three methods:\n\n1. Comparison of velocity of warming up water and petroleum;\n2. Comparison of cooling down water and petroleum;\n3. Traditional heat balance.\n\nAs no weights were given, the students had to use the sand to find portions of petroleum and water with masses equal to the mass of calorimeter.",
-    "figures": [],
     "sections": [
      {
       "id": "warming",

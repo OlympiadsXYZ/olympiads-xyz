@@ -35,21 +35,20 @@
   "status": "review",
   "transcription": {
    "method": "vision-pages",
-   "provider": "anthropic",
-   "model": "claude-sonnet-5",
+   "provider": "agent",
+   "model": "opus-5-5",
    "promptVersion": "v1",
-   "promptSha256": "e25a89d96274b19097495693a7aec61cca9d2ad68357640c03c25274b8876921",
-   "requestId": "req_011Cf9PvHeoRQA1SHFCSUNKq",
-   "at": "2026-09-17",
+   "requestId": null,
+   "at": "2026-10-08",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "3143a3a62be59c1608359fc8e982fb59a1da7da15526ed05106349e2a32553aa",
     "solutions": "b5176b0296772f5cd3736cb0ca98a848e1a3a7d95026732b39276e9d248a0c4c"
    },
-   "verifiedBy": "anthropic:claude-opus-5 (independent crop audit; text verified mechanically against the PDF text layer, prompt v1)",
-   "verifiedAt": "2026-09-17",
-   "notes": "No printed round/grade/year appears on the pages themselves except the '18th IOAA, Mumbai, India – 2025' logo, which supplies the year and location used in paper.held/year. Problems are labelled OT01 and OT02 in the source, mapped to problems[].number 1 and 2. Sub-tasks OT01.1, OT01.2, OT01.3 and OT02.1 transcribed as parts with printed point values in boxes to the right of each task (6, 7, 12 for OT01; 25 for OT02). Grading rubric tables from the solutions document reproduced in solution/answer notes as closely as possible in prose form since Markdown tables were used in the source for grading breakdowns; some minor restructuring done to keep this readable but all point values are preserved verbatim."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-08",
+   "notes": "No printed round/grade/year appears on the pages themselves except the '18th IOAA, Mumbai, India – 2025' logo, which supplies the year and location used in paper.held/year. Problems are labelled OT01 and OT02 in the source, mapped to problems[].number 1 and 2. Sub-tasks OT01.1, OT01.2, OT01.3 and OT02.1 transcribed as parts with printed point values in boxes to the right of each task (6, 7, 12 for OT01; 25 for OT02). Grading rubric tables from the solutions document reproduced in solution/answer notes as closely as possible in prose form since Markdown tables were used in the source for grading breakdowns; some minor restructuring done to keep this readable but all point values are preserved verbatim. 2026-10-08: 1 text correction(s) from Codex's gpt-6.1-sol original-source reading (work/codex-transcription/production/sol61-fast-source/ioaa-2025-observational-nabl-telescope/handoff.json), each checked against the printed page by Claude opus-5-5 (docs/verification/2026-10-08-codex-handoff-check.json) and published by Claude at Margulan's request after Codex stopped at its usage limit."
   }
  },
  "problems": [
@@ -60,7 +59,6 @@
    "points": 25,
    "problemType": "observation",
    "statement": "You are given a sky map “Map-OT01” along with the question paper. This map shows only stars but no diffuse objects.\n\nFour known stars (S1, S2, S3 and S4), which are present in the map above, are given in the table below with their Common names, Bayer designations and Equatorial coordinates.\n\n| Sr. No. | Common Name | Bayer Name | RA | Dec |\n|---|---|---|---|---|\n| S1 | Alpheratz | $\\alpha$ Andromedae | 00h 08m 24s | $29^{\\circ}5'16''$ |\n| S2 | Markab | $\\alpha$ Pegasi | 23h 04m 46s | $15^{\\circ}12'17''$ |\n| S3 | Scheat | $\\beta$ Pegasi | 23h 03m 47s | $28^{\\circ}4'58''$ |\n| S4 | Algenib | $\\gamma$ Pegasi | 00h 13m 14s | $15^{\\circ}10'59''$ |\n\nComplete the tasks (OT01.1) and (OT01.2) while you are planning the observations.\n\nThe following task is to be performed once you reach the telescope station.\n\nOn the screen diagonally opposite to your station, initially a welcome message, followed by a sample sky (sky unrelated to the question) will be displayed along with a countdown timer. You may use this time to orient the telescope towards the screen and familiarize yourself with other equipment provided at the station. At the end of this time a part of the sky given in the map “Map-OT01” will be projected on the screen for the next 6 minutes. Note that the scale of the projection shown on the screen is different from the actual scale seen in the sky.",
-   "figures": [],
    "parts": [
     {
      "label": "(OT01.1)",
@@ -97,7 +95,7 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "Solution to (OT01.1): [See figure.]\n\nSolution to (OT01.2): Realize that two stars have almost the same RA and two of them have almost the same declination. We draw a line through them indicating constant RA and constant Declination. Given the scale of the map and the separation between the 4 stars and the new object we can assume that the celestial grid will be almost linear. We can thus mark 'Z' at its given coordinates ($\\alpha = 21^h36^m$, $\\delta = -26^{\\circ}10'$), as shown in the figure.\n\nSolution to (OT01.3): After marking the new object on the given sky map, we carefully look at its position and the star pattern surrounding it. Using the 25 mm focal length eyepiece we try to locate it. By doing some fine adjustments, we try to bring the same pattern into the 10 mm focal length eyepiece (which has a crosshair).",
+    "statement": "Solution to (OT01.1): [See figure.]\n\nSolution to (OT01.2): Realize that two stars have almost the same RA and two of them have almost the same declination. We draw a line through them indicating constant RA and constant Declination. Given the scale of the map and the separation between the 4 stars and the new object we can assume that the celestial grid will be almost linear. We can thus mark 'Z' at its given coordinates.\n\nSolution to (OT01.3): After marking the new object on the given sky map, we carefully look at its position and the star pattern surrounding it. Using the 25 mm focal length eyepiece we try to locate it. By doing some fine adjustments, we try to bring the same pattern into the 10 mm focal length eyepiece (which has a crosshair).",
     "figures": [
      {
       "id": "p1-sol-fig1",
@@ -202,8 +200,7 @@
    "difficulty": "Hard",
    "importance": 3,
    "solution": {
-    "statement": "The solution is $t_{\\mathrm{DA}} = 1694\\,\\mathrm{d}$, $t_{\\mathrm{DB}} = 1651\\,\\mathrm{d}$ and $t_{\\mathrm{DC}} = 2485\\,\\mathrm{d}$.\n\n| | |\n| --- | --- |\n| Pointing towards the screen | 1.0 |\n| Choice of correct eyepiece | 1.0 |\n\nFor each of images A, B, C, D\n\n| | |\n| --- | --- |\n| Timings of image | 2.0 |\n| At least one reading | 1.0 |\n| Extra reading (0.5 each, maximum 1.0) | 1.0 |\n\nCalculation of time differences\n\n| | |\n| --- | --- |\n| Calculation each of $t_{\\mathrm{DA}}$, $t_{\\mathrm{DB}}$ and $t_{\\mathrm{DC}}$ | 3.0 |\n\n| Half credit lower limit | Full credit range | Half credit upper limit |\n| --- | --- | --- |\n| Value $-50$ d | Value $-25$ d to Value $+25$ d | Value $+50$ d |\n\n| | |\n| --- | --- |\n| Scaling from seconds to days for each interval | 1.0 |\n\n| | |\n| --- | --- |\n| Correct order ($t_{\\mathrm{DC}} > t_{\\mathrm{DA}} > t_{\\mathrm{DB}}$) | 3.0 |",
-    "figures": []
+    "statement": "The solution is $t_{\\mathrm{DA}} = 1694\\,\\mathrm{d}$, $t_{\\mathrm{DB}} = 1651\\,\\mathrm{d}$ and $t_{\\mathrm{DC}} = 2485\\,\\mathrm{d}$.\n\n| | |\n| --- | --- |\n| Pointing towards the screen | 1.0 |\n| Choice of correct eyepiece | 1.0 |\n\nFor each of images A, B, C, D\n\n| | |\n| --- | --- |\n| Timings of image | 2.0 |\n| At least one reading | 1.0 |\n| Extra reading (0.5 each, maximum 1.0) | 1.0 |\n\nCalculation of time differences\n\n| | |\n| --- | --- |\n| Calculation each of $t_{\\mathrm{DA}}$, $t_{\\mathrm{DB}}$ and $t_{\\mathrm{DC}}$ | 3.0 |\n\n| Half credit lower limit | Full credit range | Half credit upper limit |\n| --- | --- | --- |\n| Value $-50$ d | Value $-25$ d to Value $+25$ d | Value $+50$ d |\n\n| | |\n| --- | --- |\n| Scaling from seconds to days for each interval | 1.0 |\n\n| | |\n| --- | --- |\n| Correct order ($t_{\\mathrm{DC}} > t_{\\mathrm{DA}} > t_{\\mathrm{DB}}$) | 3.0 |"
    },
    "sourceSpans": [
     {

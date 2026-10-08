@@ -1,0 +1,44 @@
+{
+  "kind": "legacy",
+  "contentHash": "5e61bb33f3eb5b2ad4d742506ec61d2036e4f14f6edef36a9a8ede19fd302341",
+  "sourceCommit": "afd56bd73a99aec6a7bf89c7c6676a8866371273",
+  "recordedAt": "2026-09-05T22:35:21.873Z",
+  "evidence": {
+    "transcriber": {
+      "model": "claude-opus-5",
+      "agentId": "a0d0db8b084012b19",
+      "finishedAt": "2026-09-05T11:30:58.311Z",
+      "finishedAtSource": "transcript",
+      "run": "wf_11d62c58-e66",
+      "ok": false,
+      "problems": 3,
+      "figures": 0
+    },
+    "verifier": {
+      "model": "claude-opus-5",
+      "agentId": "a46d4d132822aa4cf",
+      "finishedAt": "2026-09-05T11:30:22.434763Z",
+      "finishedAtSource": "journal-mtime",
+      "run": "wf_da079b74-94f",
+      "verdict": "fixed",
+      "defectsFound": 3,
+      "defectsFixed": 3,
+      "remaining": [
+        "Content was complete on arrival (3 problems, all parts, all solutions, 11 figures) — no truncation.",
+        "Verbatim check against scans (problems p1-3, solutions p1-2): every statement, number, subscript, unit and printed point value matches: l_в=1,6 m, L_в=2,9 m, ratio 2,5, 1,425; a) 2 т., b) 1 т., c) 3 т., d) 4 т.; Task 2 A 7 т. / B 3 т. (25 %, S=20 cm², m=80 kg, g=10 N/kg, p_atm=10^5 Pa); Task 3 a) 1 т. / b) 9 т. (9 V, 0,9 A, 1,35 A, 8,1 W, 0,54 A, 9,6 W, 4,8 V). Solution point breakdown matches the official criteria line for line.",
+        "All 11 figure URLs return HTTP 200, declared width/height match the actual PNGs, and each crop was downloaded and inspected: complete figure, no clipping, no swallowed body text (fig. 5a-5d crops contain only the schematics, the data boxes are transcribed as a Markdown table as documented).",
+        "paper.year=2018, round='III кръг (национален)', grade='7' all match page 1 ('НАЦИОНАЛЕН КРЪГ, 3 април 2018 г., Русе', 'Тема 7.клас'); JSON validates against content/problems/schema.json; no bare << or >>, no raw HTML.",
+        "Fixed 1: problem 2 carried an invented title 'Двете части на задачата са независими!' — that printed line is an instruction, not a title (and duplicated the statement); title field removed, statement kept.",
+        "Fixed 2: problem 3 part 'б)' repeated the label inline at the start of its statement ('б) Като използвате…') while the part label already reads 'б)'; the duplicate marker was dropped.",
+        "Fixed 3: the fig. 4 object inside problem 3 was id 'p2-fig4' with a matching p2-fig4.png URL; copied the identical PNG to problems/nof-2018-iii-7/p3-fig4.png in R2 (nothing overwritten, old key left in place) and updated id/url.",
+        "No source errors found; the answer 'Толеранс' notes are editorial (house convention seen in already-promoted files), not printed in the original."
+      ]
+    },
+    "postVerificationEdits": false,
+    "fileTime": "2026-09-05T11:24:03.731647Z",
+    "fileCommittedAt": "2026-09-05T14:47:45+03:00",
+    "fileDirty": false,
+    "evidenceQuality": "journal",
+    "attachedAt": "2026-09-05T22:37:13.797Z"
+  }
+}

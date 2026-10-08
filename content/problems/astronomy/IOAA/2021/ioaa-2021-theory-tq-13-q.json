@@ -19,7 +19,7 @@
    ]
   },
   "status": "review",
-  "caveat": "No official solutions document is present; answers are unknown.",
+  "caveat": "",
   "solutionSource": {
    "archiveKey": "Астрономия/Състезания/IOAA/2021/solutions/TQ13.pdf",
    "pages": [
@@ -76,10 +76,10 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/problem_structure_astra",
-   "at": "2026-09-29",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-08",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
@@ -90,9 +90,9 @@
     "supplement-3": "45b231be0cd63844541119d780262bcc1350806ff5f760e29bd49ef0a35c87a3",
     "supplement-4": "6c391e8e8cbe4995f5e8a7a69138b19b10fd88d1b9142b6e715e7580984f0d2e"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-29",
-   "notes": "Astra single-pass recovery: personally read all new question, exact matching official solution and answer-form pages. Shared 15 reference/instruction pages reused from prior personal reading only after exact document SHA equality. Full solutions and printed marking restored; no model checker. All final actual crops inspected; new or revised crops use --no-snap. Whole original IDs/native parts retained. Source discrepancies are documented separately, not silently corrected."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-08",
+   "notes": "Astra single-pass recovery: personally read all new question, exact matching official solution and answer-form pages. Shared 15 reference/instruction pages reused from prior personal reading only after exact document SHA equality. Full solutions and printed marking restored; no model checker. All final actual crops inspected; new or revised crops use --no-snap. Whole original IDs/native parts retained. Source discrepancies are documented separately, not silently corrected. 2026-10-08: 1 text correction(s) from Codex's gpt-6.1-sol original-source reading (work/codex-transcription/production/sol61-fast188-private-reading-r1/minor066_093/ioaa-2021-theory-tq-13-q/handoff.json), each checked against the printed page by Claude opus-5-5 (docs/verification/2026-10-08-codex-handoff-check.json) and published by Claude at Margulan's request after Codex stopped at its usage limit."
   }
  },
  "problems": [
@@ -151,8 +151,7 @@
    "difficulty": "Normal",
    "importance": 2,
    "solution": {
-    "statement": "### 13.1\n\nA single electron deposits energy in the CCD, as follows:\n\n$$E_{\\mathrm{deposited}}=\\text{stopping power}\\times\\rho_{\\mathrm{si}}\\times\\text{thickness}$$\n\n$$E_{\\mathrm{deposited}}=3.012\\frac{MeV\\,cm^2}{g}\\times\\frac{2.34g}{cm^3}\\times0.06cm=422.9\\ keV$$\n\n[4 points]\n\nSince an electron with 15 MeV energy deposits 422.9 keV, we must calculate the number of pairs electron/hole\n\n$$422.9keV\\times\\frac1{2.36eV}=1.79\\times10^5\\frac eh$$\n\n[4 points]\n\nHow many pixels will be able to excite $1.79\\times10^5$ pairs of e/h?\n\n$$1.79\\times10^5\\times\\frac1{250}=716\\ pixels$$\n\n[2 points]\n\n### 13.2\n\nThe number of electrons entering the detector area is:\n\n$$flux\\times area\\times t$$\n\n[1 point]\n\n$$\\frac{600e}{cm^2s}\\times[1.3\\times1.3]cm^2\\times0.03s=30\\ e^-$$\n\n[1 point]\n\n~30 electrons enter the detector area, and we know that one electron excites 716 pixels, the total number of excited pixels is:\n\n$$716\\frac{pixels}{electron}\\times30.42\\ electrons=2.18\\times10^4pixels$$\n\n[1 point]\n\nIf the CCD has a total of $1024\\times1024$ pixels $=1.048\\times10^6pixels$ then the total percentage of pixels that will be driven in a single image is ~2.08% [2 points]",
-    "figures": []
+    "statement": "### 13.1\n\nA single electron deposits energy in the CCD, as follows:\n\n$$E_{\\mathrm{deposited}}=\\text{stopping power}\\times\\rho_{\\mathrm{si}}\\times\\text{thickness}$$\n\n$$E_{\\mathrm{deposited}}=3.012\\frac{MeV\\,cm^2}{g}\\times\\frac{2.34g}{cm^3}\\times0.06cm=422.9\\ keV$$\n\n[4 points]\n\nSince an electron with 15 MeV energy deposits 422.9 keV, we must calculate the number of pairs electron/hole\n\n$$422.9keV\\times\\frac1{2.36eV}=1.79\\times10^5\\frac eh$$\n\n[4 points]\n\nHow many pixels will be able to excite $1.79\\times10^5$ pairs of e/h?\n\n$$1.79\\times10^5\\times\\frac1{250}=716\\ pixels$$\n\n[2 points]\n\n### 13.2\n\nThe number of electrons entering the detector area is:\n\n$$flux\\times area\\times t$$\n\n[1 point]\n\n$$\\frac{600e}{cm^2s}\\times[1.3\\times1.3]cm^2\\times0.03s=30\\ e^-$$\n\n[1 point]\n\n~30 electrons enter the detector area, and we know that one electron excites 716 pixels, the total number of excited pixels is:\n\n$$716\\frac{pixels}{electron}\\times30.42\\ electrons=2.18\\times10^4pixels$$\n\n[1 point]\n\nIf the CCD has a total of $1024\\times1024$ pixels $=1.048\\times10^6pixels$ then the total percentage of pixels that will be driven in a single image is ~2.08% [2 points]"
    },
    "sourceSpans": [
     {

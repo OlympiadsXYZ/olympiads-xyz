@@ -105,10 +105,10 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/problem_structure_astra",
-   "at": "2026-09-29",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-08",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
@@ -119,9 +119,9 @@
     "supplement-3": "469b8c6294906f054df40fde193a97589b3ee06edeb8a1d5d2881e6afd82bdab",
     "supplement-4": "155a9a2e280741bf408e6c96b605c5530d5c674b39142274305eff1a80e8d5e7"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-29",
-   "notes": "Astra single-pass source recovery. All42preparedpages personally visually read in two recorded windows; both original English question copies, both official key editions and both marking schemes compared. Original two IDs and whole D1/D2 grouping retained. Full worked solutions, native tables, grading rules and six original graph crops restored. Typeset key wording and rubric used, with earlier source discrepancies explicitly described. No independent model checker."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-08",
+   "notes": "Astra single-pass source recovery. All42preparedpages personally visually read in two recorded windows; both original English question copies, both official key editions and both marking schemes compared. Original two IDs and whole D1/D2 grouping retained. Full worked solutions, native tables, grading rules and six original graph crops restored. Typeset key wording and rubric used, with earlier source discrepancies explicitly described. No independent model checker. 2026-10-08: 1 text correction(s) from Codex's gpt-6.1-sol original-source reading (work/codex-transcription/production/sol61-fast188-private-reading-r1/minor066_093/ioaa-2024-data-analysis-examination-4be56bf77fe045b9b48eb5cc0c83d0fa-preview-1/handoff.json), each checked against the printed page by Claude opus-5-5 (docs/verification/2026-10-08-codex-handoff-check.json) and published by Claude at Margulan's request after Codex stopped at its usage limit."
   }
  },
  "problems": [
@@ -132,7 +132,6 @@
    "points": 75,
    "problemType": "data-analysis",
    "statement": "You are an astronomer working with large photometric surveys, such as the Sloan Digital Sky Survey (SDSS) and the Dark Energy Survey (DES), both of which have your host, Observatório Nacional, as a participant. SDSS used a 2.5 m telescope in Apache Point, USA, during the 2000s, and DES used a 4 m telescope in Cerro Tololo, Chile, from 2013 to 2019. Even though they mostly covered different hemispheres of the sky, they had an equatorial region in common known as Stripe 82 that you can use to compare and calibrate the photometry of different data sets, like SDSS and DES.\n\nThe following tables containing object positions and magnitudes from Stripe 82 were downloaded for analysis. However, due to a file system corruption on the computer, the file names were scrambled, and now you cannot tell which table belongs to which survey.\n\nTables 1 and 2 appear next to each other below, with an identification number for each source, its equatorial coordinates, and its magnitude in the $g$-band ($m_g$) with its error (err $m_g$).\n\nTable 1:\n\n| $ID_1$ | RA (deg) | Dec (deg) | $m_g$ (mag) | err $m_g$ (mag) |\n|---|---|---|---|---|\n| 1 | 0.047255 | 0.000406 | 21.7649 | 0.0120 |\n| 2 | 0.064741 | 0.021568 | 21.1111 | 0.0067 |\n| 3 | 0.064911 | 0.026395 | 21.3931 | 0.0084 |\n| 4 | 0.098343 | 0.054871 | 21.3934 | 0.0088 |\n| 5 | 0.022256 | 0.039129 | 21.9933 | 0.0157 |\n| 6 | 0.006188 | 0.066928 | 21.5490 | 0.0088 |\n| 7 | 0.083945 | 0.074259 | 21.9395 | 0.0126 |\n| 8 | 0.076715 | 0.079496 | 21.4808 | 0.0089 |\n| 9 | 0.057422 | 0.076006 | 21.8897 | 0.0127 |\n| 10 | 0.024412 | 0.087688 | 21.8341 | 0.0126 |\n| 11 | 0.044723 | 0.091782 | 21.8868 | 0.0172 |\n| 12 | 0.071089 | 0.091053 | 21.4390 | 0.0098 |\n\nTable 2:\n\n| $ID_2$ | RA (deg) | Dec (deg) | $m_g$ (mag) | err $m_g$ (mag) |\n|---|---|---|---|---|\n| 1 | 0.006167 | 0.066874 | 21.9020 | 0.0576 |\n| 2 | 0.018660 | 0.007450 | 21.8039 | 0.0529 |\n| 3 | 0.047853 | 0.061487 | 21.3007 | 0.0418 |\n| 4 | 0.050870 | 0.015659 | 21.1678 | 0.0388 |\n| 5 | 0.051270 | 0.020812 | 21.2524 | 0.0401 |\n| 6 | 0.057414 | 0.075999 | 21.8884 | 0.0578 |\n| 7 | 0.064745 | 0.021583 | 21.3634 | 0.0422 |\n| 8 | 0.064910 | 0.026419 | 21.6428 | 0.0488 |\n| 9 | 0.071102 | 0.091058 | 21.9259 | 0.0751 |\n| 10 | 0.074946 | 0.002792 | 21.3258 | 0.0410 |\n| 11 | 0.076709 | 0.079474 | 21.5303 | 0.0476 |\n| 12 | 0.092635 | 0.077395 | 21.6995 | 0.0513 |\n| 13 | 0.098343 | 0.054854 | 21.6542 | 0.0499 |\n| 14 | 0.099332 | 0.093711 | 21.8802 | 0.0577 |",
-   "figures": [],
    "parts": [
     {
      "label": "(a)",
@@ -168,7 +167,6 @@
    "importance": 2,
    "solution": {
     "statement": "",
-    "figures": [],
     "sections": [
      {
       "id": "solution-a",
@@ -210,7 +208,7 @@
      {
       "id": "solution-d",
       "title": "(d)",
-      "statement": "One tip for this question is that the student should realize that the SDSS RA coordinate is sorted, so it can be used as the reference for the scanning of DES coordinates to perform the match. These are the stars that can be matched between catalogs:\n\n| $ID_1$ | RA (deg) | Dec (deg) | $m_g$ (mag) | err $m_g$ (mag) | $ID_2$ | RA (deg) | Dec (deg) | $m_g$ (mag) | err $m_g$ (mag) | Sep (arcsec) |\n|---|---|---|---|---|---|---|---|---|---|---|\n| 3 | 0.064911 | 0.026395 | 21.3931 | 0.0084 | 8 | 0.064910 | 0.026419 | 21.6428 | 0.0488 | 0.08475 |\n| 9 | 0.057422 | 0.076006 | 21.8897 | 0.0127 | 6 | 0.057414 | 0.075999 | 21.8884 | 0.0578 | 0.03724 |\n| 4 | 0.098343 | 0.054871 | 21.3934 | 0.0088 | 13 | 0.098343 | 0.054854 | 21.6542 | 0.0499 | 0.06186 |\n| 6 | 0.006188 | 0.066928 | 21.5490 | 0.0088 | 1 | 0.006167 | 0.066874 | 21.9020 | 0.0576 | 0.2076 |\n| 12 | 0.071089 | 0.091053 | 21.4390 | 0.0098 | 9 | 0.071102 | 0.091058 | 21.9259 | 0.0751 | 0.05009 |\n| 2 | 0.064741 | 0.021568 | 21.1111 | 0.0067 | 7 | 0.064745 | 0.021583 | 21.3634 | 0.0422 | 0.0565 |\n| 8 | 0.076715 | 0.079496 | 21.4808 | 0.0089 | 11 | 0.076709 | 0.079474 | 21.5303 | 0.0476 | 0.08276 |",
+      "statement": "One tip for this question is that the student should realize that the SDSS RA coordinate is sorted, so it can be used as a reference for the scanning of DES coordinates to perform the match. These are the stars that can be matched between catalogs:\n\n| $ID_1$ | RA (deg) | Dec (deg) | $m_g$ (mag) | err $m_g$ (mag) | $ID_2$ | RA (deg) | Dec (deg) | $m_g$ (mag) | err $m_g$ (mag) | Sep (arcsec) |\n|---|---|---|---|---|---|---|---|---|---|---|\n| 3 | 0.064911 | 0.026395 | 21.3931 | 0.0084 | 8 | 0.064910 | 0.026419 | 21.6428 | 0.0488 | 0.08475 |\n| 9 | 0.057422 | 0.076006 | 21.8897 | 0.0127 | 6 | 0.057414 | 0.075999 | 21.8884 | 0.0578 | 0.03724 |\n| 4 | 0.098343 | 0.054871 | 21.3934 | 0.0088 | 13 | 0.098343 | 0.054854 | 21.6542 | 0.0499 | 0.06186 |\n| 6 | 0.006188 | 0.066928 | 21.5490 | 0.0088 | 1 | 0.006167 | 0.066874 | 21.9020 | 0.0576 | 0.2076 |\n| 12 | 0.071089 | 0.091053 | 21.4390 | 0.0098 | 9 | 0.071102 | 0.091058 | 21.9259 | 0.0751 | 0.05009 |\n| 2 | 0.064741 | 0.021568 | 21.1111 | 0.0067 | 7 | 0.064745 | 0.021583 | 21.3634 | 0.0422 | 0.0565 |\n| 8 | 0.076715 | 0.079496 | 21.4808 | 0.0089 | 11 | 0.076709 | 0.079474 | 21.5303 | 0.0476 | 0.08276 |",
       "figures": []
      },
      {
@@ -268,6 +266,10 @@
      }
     ],
     "attribution": "official"
+   },
+   "answer": {
+    "kind": "text",
+    "value": "(a) Table 1: DES; Table 2: SDSS. (b) SDSS: $A=0.2780$, $B=-7.3108$; DES: $A=0.4063$, $B=-10.7597$. (c) SDSS: $S/N=22$; DES: $S/N=106$. (d) Matching IDs $(ID_1,ID_2)$: $(3,8),(9,6),(4,13),(6,1),(12,9),(2,7),(8,11)$. (e) Table 1 IDs 8 and 9 for zero offset; 2, 3, 4 and 6 for non-zero offset."
    },
    "sourceSpans": [
     {
@@ -330,11 +332,7 @@
      "document": "supplement-3",
      "page": 4
     }
-   ],
-   "answer": {
-    "kind": "text",
-    "value": "(a) Table 1: DES; Table 2: SDSS. (b) SDSS: $A=0.2780$, $B=-7.3108$; DES: $A=0.4063$, $B=-10.7597$. (c) SDSS: $S/N=22$; DES: $S/N=106$. (d) Matching IDs $(ID_1,ID_2)$: $(3,8),(9,6),(4,13),(6,1),(12,9),(2,7),(8,11)$. (e) Table 1 IDs 8 and 9 for zero offset; 2, 3, 4 and 6 for non-zero offset."
-   }
+   ]
   },
   {
    "id": "ioaa-2024-data-analysis-examination-4be56bf77fe045b9b48eb5cc0c83d0fa-preview-1-p2",
@@ -343,7 +341,6 @@
    "points": 75,
    "problemType": "data-analysis",
    "statement": "Globular clusters are one of the oldest components of galaxies. About a century ago, Harlow Shapley studied the distribution of globular clusters in the Milky Way in order to determine the distance from the Sun to the Galactic Centre, with the hypothesis that globular clusters were symmetrically distributed around the Galactic Centre. The table below shows the positions and distance moduli of a few known globular clusters in the Milky Way. The first three columns in the table show the cluster name, galactic longitude ($l$), and galactic latitude ($b$). The fourth column shows the distance modulus (i.e. the difference between the apparent and absolute magnitude), for which the values are extinction-corrected. Based on the data in the table:\n\n| Name | $l$ (degrees) | $b$ (degrees) | Distance modulus (mag) |\n|---|---|---|---|\n| NGC 6522 | 1.025 | -3.926 | 14.3 |\n| NGC 6401 | 3.450 | 3.980 | 14.4 |\n| NGC 6342 | 4.898 | 9.725 | 14.5 |\n| NGC 6553 | 5.253 | -3.029 | 13.6 |\n| NGC 6440 | 7.729 | 3.801 | 14.6 |\n| Ter 12 | 8.358 | -2.101 | 13.6 |\n| VVV-CL160 | 10.151 | 0.302 | 14.2 |\n| 2MASS-GC01 | 10.471 | 0.100 | 12.6 |\n| NGC 6517 | 19.225 | 6.762 | 14.8 |\n| NGC 6402 | 21.324 | 14.804 | 14.8 |\n| NGC 6712 | 25.354 | -4.318 | 14.3 |\n| NGC 6426 | 28.087 | 16.234 | 16.6 |\n| NGC 5466 | 42.150 | 73.592 | 16.0 |\n| NGC 7089 | 53.371 | -35.770 | 15.3 |\n| NGC 288 | 151.285 | -89.380 | 14.8 |\n| NGC 2298 | 245.629 | -16.006 | 15.0 |\n| NGC 4590 | 299.626 | 36.051 | 15.1 |\n| NGC 4372 | 300.993 | -9.884 | 13.8 |\n| NGC 362 | 301.533 | -46.247 | 14.7 |\n| BH 140 | 303.171 | -4.307 | 13.4 |\n| NGC 5927 | 326.604 | 4.860 | 14.6 |\n| Patchick 126 | 340.381 | -3.826 | 14.5 |\n| NGC 5897 | 342.946 | 30.294 | 15.5 |\n| NGC 6380 | 350.182 | -3.422 | 14.9 |\n| Djor 1 | 356.675 | -2.484 | 15.0 |",
-   "figures": [],
    "parts": [
     {
      "label": "(a)",
@@ -375,7 +372,6 @@
    "importance": 2,
    "solution": {
     "statement": "",
-    "figures": [],
     "sections": [
      {
       "id": "solution-a",
@@ -469,6 +465,10 @@
     ],
     "attribution": "official"
    },
+   "answer": {
+    "kind": "text",
+    "value": "$D=6187.73\\ \\mathrm{pc}$, $\\delta D=812.28\\ \\mathrm{pc}$. $\\Phi_x=0.429$, $\\Phi_y=0.422$, $\\Phi_z=0.588$: all asymmetrical; **False**."
+   },
    "sourceSpans": [
     {
      "document": "problems",
@@ -558,11 +558,7 @@
      "document": "supplement-3",
      "page": 9
     }
-   ],
-   "answer": {
-    "kind": "text",
-    "value": "$D=6187.73\\ \\mathrm{pc}$, $\\delta D=812.28\\ \\mathrm{pc}$. $\\Phi_x=0.429$, $\\Phi_y=0.422$, $\\Phi_z=0.588$: all asymmetrical; **False**."
-   }
+   ]
   }
  ]
 }

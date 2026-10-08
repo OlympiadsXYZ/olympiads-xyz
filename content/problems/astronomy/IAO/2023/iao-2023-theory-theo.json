@@ -81,10 +81,10 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/production_astra",
-   "at": "2026-09-25",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-08",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
@@ -92,9 +92,9 @@
     "solutions": "7e3ce778d7c13e55ca305bbff15d819f705edc37a4a9ebb81a476417bab81370",
     "supplement-1": "c37bbddd55ad86e445254ee55aded1f17c509373d2fc70579f6a7dc54d3a4ab3"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-25",
-   "notes": "Fresh direct original-page Astra reading. Seven independent tasks, Russian and English native sections. Questions pp2 and3 repeat the Russian second page; pp6–8 repeat reference supplement content. All 8+8+3 prepared pages visually read. Official solution sketches and full basic criteria retained; printed defects and handwritten annotations explicitly preserved. Data images are tables, not new tasks. No inherited adjudicator."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-08",
+   "notes": "Fresh direct original-page Astra reading. Seven independent tasks, Russian and English native sections. Questions pp2 and3 repeat the Russian second page; pp6–8 repeat reference supplement content. All 8+8+3 prepared pages visually read. Official solution sketches and full basic criteria retained; printed defects and handwritten annotations explicitly preserved. Data images are tables, not new tasks. No inherited adjudicator. 2026-10-08: 5 text correction(s) from Codex's gpt-6.1-sol original-source reading (work/codex-transcription/production/sol61-fast-source/iao-2023-theory-theo/handoff.json), each checked against the printed page by Claude opus-5-5 (docs/verification/2026-10-08-codex-handoff-check.json) and published by Claude at Margulan's request after Codex stopped at its usage limit."
   }
  },
  "problems": [
@@ -104,13 +104,12 @@
    "statement": "",
    "points": 8,
    "problemType": "theory",
-   "figures": [],
    "parts": [],
    "sections": [
     {
      "id": "ru",
      "title": "Русский",
-     "statement": "Каков сейчас реальный физический диаметр (в км и астрономических единицах) Крабовидной туманности? Крабовидная туманность – остатки сверхновой, вспышку которой на Земле зафиксировали 4 июля 1054 года. Она находится в созвездии Тельца и в настоящее время её видимый угловой размер составляет около 5′.",
+     "statement": "Каков сейчас реальный физический диаметр (в км и астрономических единицах) Крабовидной туманности? Крабовидная туманность – остатки сверхновой, вспышку которой на Земле зафиксировали 4 июля 1054 года. Она расположена в созвездии Тельца и в настоящее время её видимый угловой размер составляет около 5′.",
      "parts": [],
      "figures": []
     },
@@ -150,7 +149,6 @@
    ],
    "solution": {
     "statement": "The distance to an object having a parallax of 0.0005″ (this value can be found in the table of stars and objects) is equal to:\n\n$$L=\\frac1p=\\frac1{0.0005}=2000\\ pc\\approx6500\\ ly.$$\n\nThe apparent angular size of 5′ at this distance corresponds to the physical size\n\n$$2000\\ pc\\times\\frac{5'}{3438'}=2{,}9\\ pc\\approx3\\ pc\\quad\\text{или}\\quad6500\\ ly\\times\\frac{5'}{3438'}\\approx9.5\\ ly,$$\n\nwhich is\n\n$$2{,}9\\ pc\\times206265\\frac{au}{pc}\\approx6\\cdot10^5\\ au\\approx9\\cdot10^{13}\\ km\\quad\\text{or}\\quad9.5\\times365\\times86400\\times300000\\approx9\\cdot10^{13}\\ km.$$\n\nHowever, this is the size of the nebula at the time when the light from it began to come to us, that is, 6500 years ago. Thus, the total age of the Crab Nebula is currently 969 + 6500 ≈ 7500 years. And if in 969 years it expanded to $6\\cdot10^5$ au or $9\\cdot10^{13}$ km, then, assuming a linear expansion, in 7500 years it expanded by\n\n$$6\\cdot10^5\\ au\\times\\frac{7500\\ year}{969\\ year}=4{,}6\\cdot10^6\\ au\\approx5\\cdot10^6\\ au\\quad\\text{или}\\quad9\\cdot10^{13}\\ km\\times\\frac{7500\\ year}{969\\ year}\\approx7\\cdot10^{14}\\ km.$$\n\nOr, calculating differently, in astronomical units it will be\n\n$$9\\cdot10^{13}\\ km\\times\\frac{7500\\ year}{969\\ year}\\approx7\\cdot10^{14}\\ km\\bigg/150000000\\frac{km}{au}\\approx4.7\\cdot10^6\\ au.$$\n\nAnswer: $7\\cdot10^{14}$ km, $5\\cdot10^6$ au Accuracy with more than 1 significant digit is inappropriate.",
-    "figures": [],
     "sections": [
      {
       "id": "criteria",
@@ -243,7 +241,6 @@
    "statement": "",
    "points": 8,
    "problemType": "theory",
-   "figures": [],
    "parts": [],
    "sections": [
     {
@@ -307,7 +304,6 @@
    ],
    "solution": {
     "statement": "From the condition\n\n$$m\\frac{V^2}{R+h}=\\frac{GMm}{(R+h)^2}$$\n\nwe get that the speed of the apparatus is equal to\n\n$$V=\\sqrt{\\frac{GM}{R+h}}=\\sqrt{\\frac{6.674\\cdot10^{-11}\\times5.97\\cdot10^{24}}{6.37\\cdot10^6+0.32\\cdot10^6}}=7.72\\frac{km}{s}.$$\n\nDuring this time, the apparatus overcomes the distance\n\n$$S=Vt=7.72\\frac{km}{s}\\times110\\ s\\approx850\\ km,$$\n\nhalf of which it is visible before passing the zenith point, and half after. At such distances, we can neglect the curvature of the Earth and consider motion in a flat approximation. Thus, the satellite is visible at altitudes above\n\n$$\\beta=\\operatorname{arcctg}\\left(\\frac{s/2}{h}\\right)=\\operatorname{arcctg}\\left(\\frac{425\\ km}{320\\ km}\\right)=37^\\circ.$$\n\nIf from the zenith point the light from the device passes a layer of polluted air $h_0$, then from a point at an altitude of 37° it passes a layer\n\n$$h_1=h_0/\\sin\\beta=1.66h_0.$$\n\nWe will assume that the limit of visibility with the naked eye is $6^m$. Thus, an additional layer $h_1-h_0=0.66h_0$ weakens the light by $6^m-1.5^m=4.5^m$. Accordingly, the $h_0$ layer will weaken the light by $4.5^m/0.66=6.8^m$. So we find that extra-atmospheric apparent magnitude of the apparatus is equal to $1.5^m-6.8^m=-5.3^m$. Under the most favorable conditions, a layer of one atmosphere weakens the light by $0.23^m$. Thus, at the zenith, under the most favorable conditions, the device would be visible as an object of $-5{,}3^m+0{,}23^m\\approx5^m$ magnitude.",
-    "figures": [],
     "sections": [
      {
       "id": "criteria",
@@ -401,7 +397,6 @@
    "statement": "",
    "points": 8,
    "problemType": "theory",
-   "figures": [],
    "parts": [],
    "sections": [
     {
@@ -411,7 +406,7 @@
      "parts": [
       {
        "label": "3.1.",
-       "statement": "На каком расстоянии тормозящий корабль сравняется по яркости с Солнцем для наблюдателей-центаврян?",
+       "statement": "На каком расстоянии тормозящий корабль сравнится по яркости с Солнцем для наблюдателей-центаврян?",
        "figures": []
       },
       {
@@ -494,7 +489,6 @@
    ],
    "solution": {
     "statement": "",
-    "figures": [],
     "sections": [
      {
       "id": "s31",
@@ -621,7 +615,6 @@
    "statement": "",
    "points": 8,
    "problemType": "theory",
-   "figures": [],
    "parts": [],
    "sections": [
     {
@@ -634,7 +627,7 @@
     {
      "id": "en",
      "title": "English",
-     "statement": "A hybrid eclipse is a solar eclipse that in some places on Earth is seen as annular, and in some others as total. On April 20 this year one of these eclipses was observed. Its band passed through the Indian Ocean, Australia, East Timor, Indonesia and the Pacific Ocean. A separate sheet shows a map-scheme of the path of the eclipse (not to scale). The asterisks are marked: 1 – the approximate transition point from annular eclipse to total, the altitude of the Sun above the horizon at that time was 10°, 2 – the observation point of the eclipse with the maximum phase, the altitude of the Sun was 67°, and 3 – the approximate transition point from total eclipse to annular, the altitude of the Sun was 10°. Calculate the maximum width of the path of the totality.",
+     "statement": "A hybrid eclipse is a solar eclipse that in some places on Earth is seen as annular, and in some others as total. On April 20 this year one of these eclipses was observed. Its band passed through the Indian Ocean, Australia, East Timor, Indonesia and the Pacific Ocean. A separate sheet shows a map-scheme of the path of the eclipse (not to scale). The asterisks are marked: 1 – the approximate transition point from annular eclipse to total, the altitude of the Sun above the horizon at that time was 10°, 2 – the observation point of the eclipse with the maximum phase, the altitude of the Sun was 67°, and 3 – the approximate transition point from total eclipse to an annular, the altitude of the Sun was 10°. Calculate the maximum width of the path of the totality.",
      "parts": [],
      "figures": []
     },
@@ -694,7 +687,6 @@
    ],
    "solution": {
     "statement": "(Drawing is desirable). At points 1 and 3, where the annular eclipse changed to the total and the total to the annular, the apparent angular dimensions of the Moon and the Sun coincide. These points are on the tip of the cone of total eclipse. Compared to the center of the Earth, these points are closer to the Moon by\n\n$$L_1=R_E\\sin10^\\circ=6370\\ km\\times0.173\\approx1100\\ km$$\n\n(here we took into account the almost central passage of the cone around the globe, the cosine of the corresponding angle of deviation is almost equal to 1). Point 2, where a total eclipse with a maximum phase is observed, is closer to the Moon (also compared to the center of the Earth) by\n\n$$L_2=R_E\\sin67^\\circ=6370\\ km\\times0{,}92\\approx5850\\ km.$$\n\nThe difference between these distances is\n\n$$\\Delta L=L_1-L_2=R_E(\\sin67^\\circ-\\sin10^\\circ)\\approx4750\\ km.$$\n\nThe width of the cone of the Moon's shadow at this distance is\n\n$$D=\\Delta L\\cdot\\beta=4750\\ km\\times32'/3438'\\approx44\\ km.$$\n\nThe axis of the cone come to the Earth's surface at an angle of 67° to the normal and almost perpendicular to the trajectory of the shadow, so to get the width of the path, you just need to divide the diameter of the cone by the sine of the angle of the axis of the cone to the normal.\n\n$$W=D/\\sin67^\\circ\\approx44\\ km/0{,}92\\approx48\\ km,$$\n\nand, taking into account a low accuracy of our calculations,\n\n$$\\approx50\\ km.$$\n\n*Note. In reality, the maximum width of the path of this totality was 49 km.*",
-    "figures": [],
     "sections": [
      {
       "id": "criteria",
@@ -790,7 +782,6 @@
    "statement": "",
    "points": 8,
    "problemType": "theory",
-   "figures": [],
    "parts": [],
    "sections": [
     {
@@ -832,7 +823,6 @@
    ],
    "solution": {
     "statement": "",
-    "figures": [],
     "sections": [
      {
       "id": "s51",
@@ -945,7 +935,6 @@
    "statement": "",
    "points": 8,
    "problemType": "theory",
-   "figures": [],
    "parts": [],
    "sections": [
     {
@@ -989,7 +978,7 @@
     {
      "id": "en",
      "title": "English",
-     "statement": "The distant future. The Earthlings built a Dyson sphere. Its size is such that the temperature conditions for its inhabitants are similar to the current most favorable climatic conditions on Earth. The material of the planet Earth was used for the construction. The constructed sphere does not rotate.",
+     "statement": "The distant future. The Earthlings built a Dyson sphere. Its size is such that the temperature conditions for its inhabitants are similar to the current most favorable climatic conditions on Earth. The material of the planet Earth was used for its construction. The constructed sphere does not rotate.",
      "parts": [
       {
        "label": "6.1.",
@@ -1085,7 +1074,6 @@
    ],
    "solution": {
     "statement": "",
-    "figures": [],
     "sections": [
      {
       "id": "s61",
@@ -1241,7 +1229,6 @@
    "statement": "",
    "points": 8,
    "problemType": "theory",
-   "figures": [],
    "parts": [],
    "sections": [
     {
@@ -1319,7 +1306,6 @@
    ],
    "solution": {
     "statement": "",
-    "figures": [],
     "sections": [
      {
       "id": "s71",
@@ -1357,7 +1343,7 @@
      {
       "id": "s73",
       "title": "7.3.",
-      "statement": "Considering cosmological redshift, the gravitational wave frequency seen by the observer at $t_o$ becomes [0.5 points]\n\n$$f_o=\\frac{f_e}{1+z},$$\n\nand the rate of change of frequency with time becomes\n\n$$\\dot f_o=\\frac{\\Delta f_o}{\\Delta t_o}=\\frac{\\Delta f_e/(1+z)}{\\Delta t_e(1+z)}=\\frac{\\dot f_e}{(1+z)^2}.$$\n\nTherefore, we see that\n\n$$\\mathcal M_o\\propto f_o^{-11/5}\\dot f_o^{3/5}=f_e^{-11/5}\\dot f_e^{3/5}(1+z),$$\n\ni.e. [0.5 points]\n\n$$\\mathcal M_o=\\mathcal M_e(1+z).$$\n\nFurthermore, the distance of the gravitational wave source defined in the questions satisfies\n\n$$d_o\\propto\\mathcal M_o^{5/3}f_o^{2/3}=\\mathcal M_e^{5/3}f_e^{2/3}(1+z),$$\n\nwhich means [0.5 points]\n\n$$d_o\\propto1+z.$$\n\nThis means that this distance is the luminosity distance.\n\nLuminosity distance. [1 point]",
+      "statement": "Considering cosmological redshift, the gravitational wave frequency seen by the observer at $t_o$ becomes [0.5 points]\n\n$$f_o=\\frac{f_e}{1+z},$$\n\nand the rate of change of frequency with time becomes\n\n$$\\dot f_o=\\frac{\\Delta f_o}{\\Delta t_o}=\\frac{\\Delta f_e/(1+z)}{\\Delta t_e(1+z)}=\\frac{\\dot f_e}{(1+z)^2}.$$\n\nTherefore, we see that\n\n$$\\mathcal M_o\\propto f_o^{-11/5}\\dot f_o^{3/5}=f_e^{-11/5}\\dot f_e^{3/5}(1+z),$$\n\ni.e. [0.5 points]\n\n$$\\mathcal M_o=\\mathcal M_e(1+z).$$\n\nFurthermore, the distance of the gravitational wave source defined in the question satisfies\n\n$$d_o\\propto\\mathcal M_o^{5/3}f_o^{2/3}=\\mathcal M_e^{5/3}f_e^{2/3}(1+z),$$\n\nwhich means [0.5 points]\n\n$$d_o\\propto1+z.$$\n\nThis means that this distance is the luminosity distance.\n\nLuminosity distance. [1 point]",
       "parts": [],
       "figures": []
      },

@@ -31,19 +31,19 @@
   "transcription": {
    "method": "vision-pages",
    "provider": "agent",
-   "model": "gpt-6-astra",
-   "promptVersion": "v2",
-   "requestId": "/root/sidebar_astra",
-   "at": "2026-09-30",
+   "model": "opus-5-5",
+   "promptVersion": "v1",
+   "requestId": null,
+   "at": "2026-10-08",
    "renderDpi": 160,
    "figureDpi": 300,
    "sourceSha256": {
     "problems": "5fcf0913227493a975f11e3f16f70738157fd4c21bf0b54a76639edbc7d861fb",
     "solutions": "1b1ead9d2524452a0f9554acdc676eedcd6dc0c51ff2540e4756255fa4af2ebf"
    },
-   "verifiedBy": "mechanical:single-pass-gates (single-pass source transcription; automated schema, math and crop-evidence checks; no separate model checker, prompt v2)",
-   "verifiedAt": "2026-09-30",
-   "notes": "Astra single-pass full visual reading of all six original pages. One whole problem retained, four native Parts plus theoretical introduction, four solution Parts. Both tables copied literally, not recalculated. The source blank after равна is preserved; baseline inferred m0 removed. Source spelling slips retained. Numeric answer metadata formerly attached to flattened Parts is represented in full official native solution text. No separate checker."
+   "verifiedBy": "mechanical:textlayer+regions (mechanical check only: schema, text layer, printed figures; no second model, prompt mech-v1)",
+   "verifiedAt": "2026-10-08",
+   "notes": "Astra single-pass full visual reading of all six original pages. One whole problem retained, four native Parts plus theoretical introduction, four solution Parts. Both tables copied literally, not recalculated. The source blank after равна is preserved; baseline inferred m0 removed. Source spelling slips retained. Numeric answer metadata formerly attached to flattened Parts is represented in full official native solution text. No separate checker. 2026-10-08: 1 text correction(s) from Codex's gpt-6.1-sol original-source reading (work/codex-transcription/production/sol61-fast-source/iepho-2017-experiment-9-1/handoff.json), each checked against the printed page by Claude opus-5-5 (docs/verification/2026-10-08-codex-handoff-check.json) and published by Claude at Margulan's request after Codex stopped at its usage limit."
   }
  },
  "problems": [
@@ -54,7 +54,6 @@
    "points": null,
    "problemType": "experiment",
    "statement": "**В этой задаче нужно оценивать погрешности!**\n\nОборудование. Прозрачное ведро с закрепленной металлической линейкой; второе ведро; мерный стакан; два стакана по 0.5 л; вода; резиновый воздушный шарик с клапаном; манометр; электронные весы; салфетки.\n\nЗамечание 1. Не надувайте шарик без необходимости! Рекомендуется обойтись одним надуванием в соответствии с прописанными в условии указаниями.\n\nЗамечание 2. При погружении шарика в воду следите за тем, чтобы свободный конец подсоединенной к нему трубочки, а также место стыка шарика и трубочки оставались выше поверхности воды.\n\nЗадание.",
-   "figures": [],
    "topics": [
     "thermodynamics/ideal-gas",
     "mechanics/buoyancy",
@@ -101,7 +100,7 @@
      {
       "id": "part-3",
       "title": "Часть 3. Теоретическая.",
-      "statement": "Силу тяжести, действующую на воздух внутри шарика, можно найти, используя уравнение Менделеева-Клапейрона:\n\n$$F_T = mg = \\dfrac{pV\\mu}{RT}g \\qquad (1)$$\n\nСила Архимеда может быть определена как сила, действующая на объем воздуха, совпадающий по величине с объемом надутого шарика, но взятый при условиях окружающей среды. Эта сила, в свою очередь, равна силе тяжести, действующей на этот объем воздуха, так как он находится в равновесии среди окружающего его воздуха. Тогда значение силы Архимеда составит:\n\n$$F_a = m'g = \\dfrac{p_0 V\\mu}{RT}g, \\qquad (2)$$\n\nгде $m'$ — масса воздуха, занимающая объем шарика, но находящаяся при атмфосферном давлении (т.е. масса вытесненного шариком воздуха).\n\nТогда вес шарика на весах может быть найден как сумма силы тяжести оболочки с клапаном, силы тяжести воздуха внутри шарика и взятой с обратным знаком силы Архимеда. А показания весов связаны с весом шарика через ускорение свободного падения:\n\n$$P = m_0 g + (m - m')g \\qquad (3)$$\n\n$$m_{\\text{вес}} = P/g = m_0 + \\dfrac{\\Delta p V \\mu}{RT} \\qquad (4)$$",
+      "statement": "Силу тяжести, действующую на воздух внутри шарика, можно найти, используя уравнение Менделеева-Клапейрона:\n\n$$F_T = mg = \\dfrac{pV\\mu}{RT}g \\qquad (1)$$\n\nСила Архимеда может быть определена как сила, действующая на объем воздуха, совпадающий по величине с объемом надутого шарика, но взятый при условиях окружающей среды. Эта сила, в свою очередь, равна силе тяжести, действующей на этот объем воздуха, так как он находится в равновесии среди окружающего его воздуха. Тогда значение силы Архимеда составит:\n\n$$F_a = m'g = \\dfrac{p_0 V\\mu}{RT}g, \\qquad (2)$$\n\nгде $m'$ — масса воздуха, занимающая объем шарика, но находящаяся при атмфосферном давлении (т.е. масса вытесненного шариком воздуха).\n\nТогда вес шарика на весах может быть найден как сумма силы тяжести оболочки с клапаном, сила тяжести воздуха внутри шарика и взятой с обратным знаком силы Архимеда. А показания весов связаны с весом шарика через ускорение свободного падения:\n\n$$P = m_0 g + (m - m')g \\qquad (3)$$\n\n$$m_{\\text{вес}} = P/g = m_0 + \\dfrac{\\Delta p V \\mu}{RT} \\qquad (4)$$",
       "figures": []
      },
      {
