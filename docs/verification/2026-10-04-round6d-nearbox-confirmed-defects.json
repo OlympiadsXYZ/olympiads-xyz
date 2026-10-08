@@ -1,0 +1,46 @@
+[
+ {
+  "id": "psf-2023-proletno-sp",
+  "model": "claude-opus-5",
+  "sev": "minor",
+  "kind": "wrong-value",
+  "path": "problems[1].figures[3].alt",
+  "page": "problems 3",
+  "printed": "alpha-Polonium diffractogram shows 10 peaks (26.5, 37.8, 46.8, 54.7, 61.8, 68.4, 80.9, 87.0, 93.0, 99.1)",
+  "published": "„... с единадесет тесни пика ...“",
+  "evidence": "problems-03.png, top figure (alpha-Polonium diffractogram): I count exactly 10 sharp peaks, at about 26.5, 37.8, 46.8, 54.7, 61.8, 68.4, 80.9, 87.0, 93.0 and 99.1 degrees. The published alt text of problems[1].figures[3] (p2-fig4) says „единадесет тесни пика“ (eleven narrow peaks), which is a wrong count. The figure crop itself (page 3, pdfRect 81,72-524.25,357.75) is complete and shows all 10 peaks, so a student still has the correct data. Only the descriptive alt text is wrong, so minor is the right severity."
+ },
+ {
+  "id": "nao-2021-iv-obs-maps",
+  "model": "claude-opus-5",
+  "sev": "minor",
+  "kind": "extra-text",
+  "path": "problems[1].solution.statement",
+  "page": "solutions 9",
+  "printed": "(table) … По [1.5 т.] точки за верен обект.",
+  "published": "Положенията на обектите са показани на номерираната снимка. По [1.5 т.] точки за верен обект.",
+  "evidence": "On solutions page 9, the table is followed directly by the numbered Moon photo, and the only red text underneath is 'По [1.5 т.] точки за верен обект.' The sentence 'Положенията на обектите са показани на номерираната снимка.' does not appear anywhere on the page, so it is added editorial text, though it does not change the meaning. Also, the 'От чертежа α ∈ [47°; 53°].' on solutions page 10 is not printed as solution text. It appears only as the cyan label 'α ∈ [47°; 53°]' inside the drawing, which the published figure p2-sol-moon-far-v2 also shows. That makes it a second small editorial addition with no change in meaning. Severity stays minor."
+ },
+ {
+  "id": "ioaa-2012-theory-theoretical-bg",
+  "model": "opus-5-5",
+  "sev": "critical",
+  "kind": "wrong-formula",
+  "path": "/problems/8/solution/sections/0/statement",
+  "page": "solutions 4",
+  "printed": "(B − V)_1 = (B − V) + (E_B − E_v)·D + …; (U − V)_1 = (U − V) + (E_U − E_v)·D + … (lowercase subscript v)",
+  "published": "(B-V)_1=(B-V)+(E_B-E_b)D+…; (U-V)_1=(U-V)+(E_U-E_b)D+…, and the caveat says the key 'displays lowercase b'",
+  "evidence": "I zoomed into solutions page S4 (problem 9, first-star equations). The first two lines clearly print (E_B − E_v)·D and (E_U − E_v)·D. The subscript is an italic lowercase v in Cambria Math, the same glyph as the v in v' on S6, not a b. The second-star lines on the same page also print E_v. The published text has (E_B-E_b)D and (E_U-E_b)D, and its caveat wrongly says the key prints a lowercase b. In the official solution formula this turns the V-band extinction into a B or b term, so E_B − E_b reads as zero. The extinction term is changed, so I raise the severity to critical."
+ },
+ {
+  "id": "ioaa-2012-theory-theoretical-bg",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "altered-wording",
+  "path": "/problems/12/solution/sections/0/statement",
+  "page": "solutions 6",
+  "printed": "an arc of length φ = 2π/T on the great circle",
+  "published": "an arc $\\varphi=2\\pi t/T$ on the great circle",
+  "evidence": "Solutions page S6, problem 13, second paragraph, prints 'an arc of length ϕ = 2π/T on the great circle' with no t, although 'After some time t' comes just before it. The published text has $\\varphi=2\\pi t/T$, which silently corrects a printed formula slip that should have been kept or flagged. The surrounding text makes the meaning clear and the answer does not change, so minor."
+ }
+]

@@ -1,0 +1,222 @@
+[
+ {
+  "id": "balkan-2022-x",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "structure",
+  "path": "problems[0].solution.statement",
+  "page": "solutions 2",
+  "printed": "B1.  (9 points)_  (bold section heading)",
+  "published": "$$**B1. (9 points)**\\_$$ — the heading is wrapped in display math, so it renders as math (literal asterisks, italic letters) instead of a bold heading like A1–A3, B2, B3, C",
+  "evidence": "solutions-02.png prints the plain bold section heading 'B1.  (9 points)_' between A3 and the B1 equations. The published problems[0].solution.statement has '$$**B1. (9 points)**\\_$$', so the heading sits inside display math. KaTeX would show the asterisks as literal characters and render 'B1. (9 points)' as italic math with its spaces collapsed, which adds visible characters that are not printed. Every other heading (A1–A3, B2) is plain Markdown bold. No number, formula or point value is lost, so the severity stays minor: it is a garbled heading, not a change in content."
+ },
+ {
+  "id": "ipho-1974-74",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "other",
+  "path": "/problems/3/solution/figures/3/alt",
+  "page": "problems 12",
+  "printed": "Fig. 10: branch B (diode + resistor) and branch A (single diode); both diode symbols point the same way (to the right)",
+  "published": "alt: \"...in parallel with branch A (lower) with a single diode pointing in the opposite direction.\"",
+  "evidence": "I cropped problems-12.png at the Fig. 10 region (pdfRect about 231-371 x 410-503). Two diode triangles are printed: one in upper branch B, in series with the resistor, and one in lower branch A. Both point to the right, so they face the same way. The published alt text for p4-sol-fig4 says branch A has a diode 'pointing in the opposite direction', which contradicts the printed drawing. That may be the physically intended circuit, since the box conducts both ways, but the drawing as printed shows the same direction. The figure image itself (p4-sol-fig4) is complete and correct, and the solution text has no direction claim, so readers lose no information from the figure. The only error is the alt text describing a detail the page does not show. Severity: minor."
+ },
+ {
+  "id": "iao-2002-theory-alpha",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "missing-text",
+  "path": "problems[3].solution.statement",
+  "page": "supplement-1 p1",
+  "printed": "the part of the sky below the ecliptic is equal to ε/π is below than line of ecliptic.",
+  "published": "the part of the sky below the ecliptic is equal to $\\varepsilon/\\pi$.",
+  "evidence": "supplement-1 p1, A4: the page prints 'the part of the sky below the ecliptic is equal to ε/π is below than line of ecliptic. ε is the angle between ...'. The published text stops at '$\\varepsilon/\\pi$.', which drops the redundant, garbled tail clause without a note. It also adds 'Here' before 'ε is the angle'. The values and the answer (23°26'/180° ≈ 0.13, 13%) match the page, so the meaning is unchanged."
+ },
+ {
+  "id": "iao-2002-theory-alpha",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "altered-wording",
+  "path": "problems[1].solution.statement",
+  "page": "solutions p1",
+  "printed": "part of π·(α·h/2)², projection give us some factor about 2^1/2",
+  "published": "part of $\\pi(\\alpha h/2)^2$. Projection gives some factor about $2^{1/2}$",
+  "evidence": "solutions p1, problem 2: the page prints '1/3.3·10^7 part of π·(α·h/2)^2, projection give us some factor about 2^1/2'. The published text reads 'part of $\\pi(\\alpha h/2)^2$. Projection gives some factor about $2^{1/2}$'. The printed 'give us' became 'gives' and one sentence became two. This is a grammar edit to real words, not a fix of a non-word misspelling. The formulas and numbers are unchanged."
+ },
+ {
+  "id": "iao-2002-theory-alpha",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "altered-wording",
+  "path": "problems[5].solution.statement",
+  "page": "supplement-1 p1",
+  "printed": "where g0 and R0 – values near the earth surface ... where T – period of the Earth revolution ... the value 6 150 km already not 'small variation'",
+  "published": "where $g_0$ and $R_0$ are values near the earth surface ... where $T$ is period of the Earth revolution ... the value 6150 km already is not a 'small variation'",
+  "evidence": "supplement-1 p1, A6: the page prints 'where g0 and R0 – values near the earth surface', 'where T – period of the Earth revolution' and 'the value 6 150 km already not ‘small variation’'. The published text adds 'are', 'is' and 'is a'. 'Finaly' became 'Finally', which is an allowed fix. All formulas and values (42 200 km, -6150 km, about 6000 km) match the page. The changes are grammar only and do not change the meaning."
+ },
+ {
+  "id": "iao-2002-theory-alpha",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "structure",
+  "path": "problems[2].solution.statement",
+  "page": "supplement-1 p1",
+  "printed": "IAU dot figure between 'quite understandable message:' and the 'International Astronomical Union' line",
+  "published": "![](iau-message-astra-s22-r1) — the placeholder id does not match the figure id p3-sol-fig1",
+  "evidence": "supplement-1 p1: the IAU dot figure is printed between 'quite understandable message:' and the '“International Astronomical Union” or “1 astronomical unit”' line. The published statement uses the placeholder ![](iau-message-astra-s22-r1), but the only figure id is p3-sol-fig1. resolveFigureTarget in scripts/problems-to-site.mjs (lines 205-232) returns null for this id, and lines 267-276 say such a placeholder is dropped. The figure is therefore no longer shown inline at its printed position; it is only appended as an unplaced figure, after the caption line it should come before. The crop is complete (pdfRect covers the dot pattern), so no information is lost, only its position. Minor."
+ },
+ {
+  "id": "ioaa-2014-theory-th-short-ver1",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "figure-cropped",
+  "path": "problems[11].figures[0] (p12-fig1)",
+  "page": "problems 7",
+  "printed": "Figure 13 shows the label 'VEGA star' at the left end of the dashed optical axis, outside the camera box",
+  "published": "The crop starts at the camera box, so the 'VEGA star' label is cut off. The alt text still names VEGA, and the statement says the light comes from Vega.",
+  "evidence": "problems-07.png: Figure 13 prints 'VEGA star' to the left of the lens, above the dashed optical axis and outside the camera box. The published crop p12-fig1-v2.png starts at the dashed axis just left of the box, so the label is missing. Vega is named in the statement and the alt text, so nothing a student needs is lost."
+ },
+ {
+  "id": "ioaa-2014-theory-th-short-ver1",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "figure-cropped",
+  "path": "problems[5].figures[0] (p6-fig1)",
+  "page": "problems 5",
+  "printed": "Figure 6 has boxed axis titles 'log L/L_S' (left) and 'log M/M_S' (below)",
+  "published": "The crop keeps the grid, the data points and the tick values but leaves out both axis-title boxes. The statement text and the alt text name the axes.",
+  "evidence": "problems-05.png: Figure 6 prints a boxed 'log L/...' title left of the grid and a boxed 'log M/...' title below the x tick labels. The published crop p6-fig1-v2.png keeps the grid, the points, the line and the tick values (-1..4; -0,5..1,0) but neither title box. The statement says the plot is log(L/L_S)=f(log(M/M_S)), so the axes stay recoverable."
+ },
+ {
+  "id": "ioaa-2014-theory-th-short-ver1",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "figure-cropped",
+  "path": "problems[12].solution.figures[0] (p13-sol-fig1)",
+  "page": "solutions 26",
+  "printed": "The heading 'Galactic North Pole' sits above point J",
+  "published": "The top edge of the crop cuts through the words 'Galactic North Pole', so they are only partly visible. The alt text gives the label.",
+  "evidence": "solutions-26.png: 'Galactic North Pole' is printed above J. In the published crop p13-sol-fig1.png the top edge cuts the heading, so only the lower half of the glyphs shows. The alt text and the label J keep the meaning."
+ },
+ {
+  "id": "igeo-2010-experiment-fwt-all-questions",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "missing-text",
+  "path": "paper.documentNotes[2].statement",
+  "page": "solutions 5",
+  "printed": "I am grateful to the team that prepared the resources, ... welcome specific questions and general comments / With best wishes, / Lex Chalmers, Convener, FWT Marking Panel",
+  "published": "(section 3 note ends at '...papers will not be returned to students.'; the closing paragraph and signature are omitted)",
+  "evidence": "solutions-05.png: after 'papers will not be returned to students.' the page prints the paragraph 'I am grateful to the team that prepared the resources, and to those who committed so much time to the assessment process. I remain happy with the outcome, but welcome specific questions and general comments', then 'With best wishes,' and 'Lex Chalmers, / Convener, FWT Marking Panel'. Published documentNotes[2].statement ends at '...papers will not be returned to students.' and none of this text appears anywhere else in the file (grep finds 'Lex Chalmers' only in the header kept in the problem 1 solution and in the notes). The notes say the letter's 'greetings are omitted', but they also keep the letter header, greeting and thanks paragraphs at the start, so this omission is inconsistent. The 'grateful' paragraph is a real sentence, not just a greeting. It is the letter's closing and has no effect on any task or answer, so minor is the right severity."
+ },
+ {
+  "id": "opho-2025-theory-x",
+  "model": "opus-5-5",
+  "sev": "major",
+  "kind": "wrong-formula",
+  "path": "problems[2].solution.statement (eq. 38, C.2)",
+  "page": "solutions 23",
+  "printed": "-\\frac12 \\frac{y}{\\sqrt{D}\\,t^{3/2}}\\frac{df}{dz} = D\\frac{1}{Dt}\\frac{d^2f}{dz^2}  (the square root covers only D; t^{3/2} is outside it)",
+  "published": "-\\frac{1}{2}\\frac{y}{\\sqrt{Dt}^{\\frac{3}{2}}}\\frac{df}{dz} = D\\frac{1}{Dt}\\frac{d^2 f}{dz^2}",
+  "evidence": "I zoomed in on eq. (38) on solutions-23.png. The radical bar covers only D, and t^{3/2} sits outside it, so the denominator is \\sqrt{D}\\,t^{3/2}, which is what differentiating z = y/\\sqrt{Dt} gives. The published text has \\sqrt{Dt}^{\\frac{3}{2}}, which renders as (Dt)^{3/4}, a different expression. This is a formula error in an intermediate step of the official solution. Eq. (39) and the final answer are transcribed correctly, so major (not critical) is the right severity."
+ },
+ {
+  "id": "baao-2016-x",
+  "model": "opus-5-5",
+  "sev": "major",
+  "kind": "missing-text",
+  "path": "problems[1].solution.statement",
+  "page": "solutions 4-5",
+  "printed": "Supermoons — The term \"supermoon\" was coined by astrologer Richard Nolle in 1979. He defined a supermoon as a new or full moon ... (within 90% of) its closest approach ... The value of 90% was arbitrarily chosen ... Lunar Data ... a) Calculate how many days separate a supermoon. b). Show that the mean difference ... f). Calculate the gravitational force of the supermoon on the Earth. What mass increase would a Moon at apogee need, to create the same gravitational force?",
+  "published": "Solution begins at \"**Solutions**\\n\\na). 27.554550/(29.530589 − 27.554550) = 13.9443 ...\"; the solutions document's own introduction (Nolle 1979 / 90% definition sentences), its lunar data list and its restated parts a)–f) (worded differently from the paper, e.g. 'gravitational force', 'mean difference') are omitted",
+  "evidence": "solutions-04.png prints a 'Supermoons' section that opens with sentences found nowhere in the published file: the term \"supermoon\" was coined by astrologer Richard Nolle in 1979, the 'within 90% of' definition, and the note that the value of 90% was arbitrarily chosen. It continues with the lunar data list. solutions-05.png then restates parts a)–f) before the 'Solutions' heading. This restatement is worded differently from the paper. For example, f) asks for the 'gravitational force of the supermoon on the Earth' and the 'mass increase' a Moon at apogee would need, where the published part f says 'gravitational field' and 'fractional mass increase'. a) reads 'how many days separate a supermoon', and b) says 'mean difference'. The published problems[1].solution.statement starts at '**Solutions**\\n\\na). 27.554550/...', so the whole preamble and the restated question are lost. This is not a consistent de-duplication policy: problems[0].solution keeps the solution booklet's italic question restatements. The lost passage is several sentences of unique printed text plus a differently worded question. It does not change the computed answers, so the severity is major rather than critical."
+ },
+ {
+  "id": "balkan-2023-x",
+  "model": "opus-5-5",
+  "sev": "major",
+  "kind": "missing-text",
+  "path": "problems[3].solution.statement",
+  "page": "solutions 10",
+  "printed": "A circuit diagram is given in the figure. It contains a battery with voltage E, ... The notations of the measured electric currents are given in the figure. From the data presented, calculate (all additionally calculated data must be present in the empty columns of the table):",
+  "published": "(omitted; solution goes from 'Electric circuit (Solution)' straight to the table)",
+  "evidence": "solutions-10.png prints a full paragraph under 'Electric circuit (Solution)', beside the circuit figure and before the table. It begins 'A circuit diagram is given in the figure...' and ends '...empty columns of the table):'. In problems[3].solution.statement the heading 'Electric circuit (Solution)' is followed directly by the table. The string 'circuit diagram' appears in the solution only in the alt text of figure p4-sol-fig1, and 'notations' does not appear at all, so the restatement was dropped. The same information is in the problem statement and no solution data or answer is lost. Even so, the rubric rates several missing printed sentences as major, not minor."
+ },
+ {
+  "id": "usapho-2026-fma-exam",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "figure-cropped",
+  "path": "problems[22].figures[0] (p23-fig1)",
+  "page": "problems 24",
+  "printed": "Nested-hexagon figure whose outer hexagon has a bottom edge with the label √3a printed below it",
+  "published": "The crop stops above the outer hexagon's bottom edge. The bottom side and the √3a side-length label are cut off. The alt text still mentions √3a, and the statement gives the side length √3a, so nothing needed to compute the answer is lost.",
+  "evidence": "Page problems-24.png prints the full figure. The outer grey hexagon has a bottom edge at about y=730px, and the √3a label sits below it at about y=765px. The published crop p23-fig1.png (850x727, pdfRect y 153.63–327.87 pt) ends inside the grey fill, so the outer hexagon's lower vertices and bottom edge are missing, and so is the √3a label. The a and a/√3 labels are kept. The statement and the alt text both give the side length √3a, so no data needed for the computation is lost. Minor is the right severity; re-crop with a larger bottom pdfRect bound (about 345 pt)."
+ },
+ {
+  "id": "iepho-2019-experiment-10-1-gas",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "garbled",
+  "path": "problems[0].solution.statement",
+  "page": "problems 2",
+  "printed": "Решение (bold italic section heading)",
+  "published": "$$**_Решение_**$$",
+  "evidence": "Page problems-02.png prints the bold italic heading 'Решение' at the top, before item 1. In the published file content/problems/physics/IEPhO/2019/iepho-2019-experiment-10-1-gas.json, problems[0].solution.statement begins with the literal string \"$$**_Решение_**$$\". That puts the Markdown emphasis markers inside display math, so they render as TeX: the asterisks print literally, the underscore acts as a subscript, and the Cyrillic word sits in math mode, which can raise a KaTeX error. The heading comes out garbled instead of as the printed heading word. No problem content is lost, so the severity stays minor."
+ },
+ {
+  "id": "usaaao-2022-i-frst-exam",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "other",
+  "path": "problems[25].figures[0] (p26-fig1, url p26-fig1-v2.png)",
+  "page": "problems 12",
+  "printed": "Sky photograph (all-sky fisheye image) ending at its lower edge; option list '(a) Scorpius ...' printed below it as text",
+  "published": "The figure crop includes the whole photograph but also the option text line '(a) Scorpius' beneath it, so option (a) appears twice on the page (once in the image, once in the statement)",
+  "evidence": "Page problems-12.png prints the all-sky photo for Q26, and the option list (a) Scorpius ... (e) Taurus follows below it as separate text. The published crop p26-fig1-v2.png (pdfRect [108.32,97.43,496.35,426.11], 1618x1371) has the full photo plus white space, then the text line '(a) Scorpius' along its bottom edge. The statement also lists '(a) Scorpius', so option (a) appears twice on the page. The whole photograph is in the crop and nothing is lost. The only fault is that the crop runs too far down and picks up duplicated option text, so minor is correct."
+ },
+ {
+  "id": "samara-2019-i-8-9",
+  "model": "opus-5-5",
+  "sev": "major",
+  "kind": "figure-cropped",
+  "path": "problems[15].solution.figures[0] (p16-sol-fig1, url p16-sol-fig1-v2.png)",
+  "page": "solutions 21",
+  "printed": "Fig. 7 shows Jupiter's disk in full with the label \"J\" above it, plus the full caption \"Рис. 7: к определению эклиптической широты Юпитера.\"",
+  "published": "The crop cuts the top edge: Jupiter's disk is clipped and the label \"J\" is missing. The solution uses that point in JA and SJ. A truncated caption fragment (\"эклиптичес… широты Юпитера\") is also baked into the image.",
+  "evidence": "solutions-21.png shows Fig. 7 with Jupiter's orange disk drawn whole and the label 'J' above it to the upper right. In the published p16-sol-fig1-v2.png the top edge of the disk is cut off and the 'J' label is missing; only a tiny fragment of it is left at the corner. The solution names this point in JA and SJ, so the labelled point is lost from the figure. The image also contains the printed caption, cut off at the right ('эклиптичес' with no ending) and repeated under it as 'широты Юпитера.', while the caption field already gives the full text. The page cannot be refuted on either point. The crop needs to start higher and end before the caption. The rest of the figure is intact (S, E, A, a_J, a⊕, i_J, β_max), so this is major, not critical."
+ },
+ {
+  "id": "igeo-2016-theory-written-response-test-question-and-answer-book",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "figure-cropped",
+  "path": "problems[0].parts[1].figures[0] (p1-fig1, url p1-fig1-v2.png)",
+  "page": "problems 3",
+  "printed": "Chart box headed 'Pacific Harbour, island of Viti Levu, Fiji' / 'Altitude: 6 m  Climate: Af  °C: 24.8  mm: 2673', with right-axis title 'Rainfall (mm)'",
+  "published": "The crop (pdfRect top 276.98 pt, right 498.87 pt) starts below both header lines and cuts off the right-axis title 'Rainfall (mm)'. The bars, the line and the data table are complete, the monthly data is also given as a table in the statement, and the alt text repeats the header. Nothing needed for the answer is lost.",
+  "evidence": "Page problems-03.png prints the chart inside a box. At the top of the box are the title 'Pacific Harbour, island of Viti Levu, Fiji' and the line 'Altitude: 6 m  Climate: Af  °C: 24.8  mm: 2673'. On the right side is the vertical axis title 'Rainfall (mm)'. The published p1-fig1-v2.png is 1799x902 px, which matches pdfRect [67.28, 276.98, 498.87, 493.38] at 300 dpi. That crop starts at the left-axis value 27, so both header lines are missing. It also cuts off the right edge, leaving only a fragment of the 'Rainfall (mm)' title. All 12 bars, the temperature line, both axis scales, the data table and the caption are complete. The statement's Markdown table repeats the monthly data. The alt text gives the header and the axis title, but a reader looking at the image cannot see them. The figure therefore loses printed context (altitude 6 m, climate type Af, annual mean 24.8 °C, annual total 2673 mm, and the right-axis label). None of it is needed to answer which 4 months have the highest landslide risk, so minor is the right severity."
+ },
+ {
+  "id": "mosa-2026-theory-10",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "missing-text",
+  "path": "problems[6].solution.statement",
+  "page": "solutions 15",
+  "printed": "Фотография с сайта https://ciclops.org/. Цвет инвертирован для печати.",
+  "published": "(caption/attribution line under the repeated Saturn photo omitted; the photo is not repeated in the solution)",
+  "evidence": "solutions-15.png prints the repeated Saturn photo with the caption 'Фотография с сайта https://ciclops.org/. Цвет инвертирован для печати.' Nothing in problems[6] contains 'ciclops' or 'инвертирован': not the statement, not the solution, not the figure caption (that one is 'К задаче 7', from problems-04). So the source attribution is lost from the page entirely. It is attribution only, so minor."
+ },
+ {
+  "id": "mosa-2026-theory-10",
+  "model": "opus-5-5",
+  "sev": "minor",
+  "kind": "missing-text",
+  "path": "problems[7].statement",
+  "page": "solutions 18",
+  "printed": "…воспользуйтесь зависимостью¹ … footnote ¹F. J. Ballesteros",
+  "published": "Для оценки температуры абсолютного чёрного тела воспользуйтесь зависимостью (no footnote or source)",
+  "evidence": "solutions-18.png prints 'воспользуйтесь зависимостью¹' with the footnote '¹F. J. Ballesteros' (a link). problems[7] does not contain 'Ballesteros' anywhere. The statement follows the problems PDF and the solution does not restate the condition, so the formula's source attribution is lost. The formula itself is intact, so minor."
+ }
+]
